@@ -4,6 +4,7 @@ import { renderMarkdown } from './markdown';
 import { Icons } from './icons';
 import { escapeHtml } from '@/utils/html';
 import { createCodeEditor } from './code-editor';
+import { createProofEditor, type ProofEditor } from './proof-editor';
 import type { TestResult } from './code-runner';
 import { evaluateWrittenExercise } from '@/utils/gemini-eval';
 import { progressStorage } from '@/core/storage';
@@ -139,18 +140,37 @@ function createQuestionElement(
     }
 
     case 'written': {
-      const textarea = document.createElement('textarea');
-      textarea.className = 'text-input';
-      textarea.placeholder = 'Write your answer...';
-      textarea.value = answer !== undefined ? String(answer) : '';
-
       if (showFeedback) {
-        textarea.disabled = true;
-        const isCorrect = normalizeAnswer(answer) === normalizeAnswer(question.correctAnswer);
-        textarea.classList.add(isCorrect ? 'correct' : 'incorrect');
-      }
+        // After submission: show answer as read-only text
+        const answerDisplay = document.createElement('div');
+        answerDisplay.className = 'written-answer-display';
+        answerDisplay.innerHTML = answer ? renderMarkdown(String(answer)) : '<em>No answer provided</em>';
+        answerContainer.appendChild(answerDisplay);
+      } else {
+        // During exam: use proof editor (without AI evaluate button)
+        const editorContainer = document.createElement('div');
+        editorContainer.className = 'proof-editor-shell';
+        answerContainer.appendChild(editorContainer);
 
-      answerContainer.appendChild(textarea);
+        const initialValue = answer !== undefined ? String(answer) : '';
+
+        const proofEditor = createProofEditor(editorContainer, {
+          initialValue,
+          height: '250px',
+          storageKey: `quiz_written_${question.id}`,
+          // Don't pass problem/solution - this disables the AI evaluate button during exam
+          // AI evaluation happens after submission via runWrittenQuestionEvaluation
+        });
+
+        // Store initial value and track changes
+        questionDiv.dataset.writtenContent = initialValue;
+        proofEditor.editor.onDidChangeModelContent(() => {
+          questionDiv.dataset.writtenContent = proofEditor.getValue();
+        });
+
+        // Store editor reference for disposal
+        (questionDiv as HTMLElement & { _proofEditor?: ProofEditor })._proofEditor = proofEditor;
+      }
       break;
     }
 
@@ -263,6 +283,20 @@ function normalizeAnswer(value: string | number | boolean | undefined): string {
   return String(value).trim().toLowerCase();
 }
 
+/**
+ * Dispose all proof editors in a container to prevent memory leaks
+ */
+function disposeWrittenEditors(container: HTMLElement): void {
+  const questionElements = container.querySelectorAll('.quiz-question');
+  questionElements.forEach((element) => {
+    const proofEditor = (element as HTMLElement & { _proofEditor?: ProofEditor })._proofEditor;
+    if (proofEditor) {
+      proofEditor.dispose();
+      delete (element as HTMLElement & { _proofEditor?: ProofEditor })._proofEditor;
+    }
+  });
+}
+
 function collectAnswer(questionElement: HTMLElement, question: QuizQuestion): any {
   const answerContainer = questionElement.querySelector('.answer-container');
   if (!answerContainer) {
@@ -284,8 +318,8 @@ function collectAnswer(questionElement: HTMLElement, question: QuizQuestion): an
       return input ? input.value : undefined;
     }
     case 'written': {
-      const textarea = answerContainer.querySelector('textarea') as HTMLTextAreaElement;
-      return textarea ? textarea.value : undefined;
+      // Get value from dataset (set by proof editor's onDidChangeModelContent)
+      return questionElement.dataset.writtenContent || undefined;
     }
     case 'coding': {
       const code = questionElement.dataset.codingCode || '';
@@ -518,6 +552,8 @@ export function renderQuiz(
   container.appendChild(questionsContainer);
 
   function render() {
+    // Dispose any existing proof editors before clearing
+    disposeWrittenEditors(questionsContainer);
     questionsContainer.innerHTML = '';
 
     if (config.oneAtATime) {
@@ -629,6 +665,7 @@ export function renderQuiz(
 
     // For oneAtATime mode, show all questions in review mode
     if (config.oneAtATime) {
+      disposeWrittenEditors(questionsContainer);
       questionsContainer.innerHTML = '';
       quiz.questions.forEach((question, index) => {
         const questionElement = createQuestionElement(
