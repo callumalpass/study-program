@@ -8,12 +8,15 @@ import type {
   ProjectSubmission,
   UserSettings,
 } from './types';
+import { githubService } from '../services/github';
 
 const STORAGE_KEY = 'cs_degree_progress';
 const CURRENT_VERSION = 1;
+const SYNC_DEBOUNCE_MS = 5000; // Sync at most every 5 seconds
 
 export class ProgressStorage {
   private progress: UserProgress;
+  private syncTimeout: any = null;
 
   constructor() {
     this.progress = this.load();
@@ -44,14 +47,43 @@ export class ProgressStorage {
   }
 
   /**
-   * Save progress to localStorage
+   * Save progress to localStorage and trigger sync
    */
   save(): void {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(this.progress));
+      this.triggerSync();
     } catch (error) {
       console.error('Failed to save progress to localStorage:', error);
     }
+  }
+
+  /**
+   * Trigger background sync to GitHub Gist
+   */
+  private triggerSync(): void {
+    // Only sync if credentials exist
+    if (!this.progress.settings.githubToken || !this.progress.settings.gistId) {
+      return;
+    }
+
+    // Clear existing timeout
+    if (this.syncTimeout) {
+      clearTimeout(this.syncTimeout);
+    }
+
+    // Debounce the sync call
+    this.syncTimeout = setTimeout(async () => {
+      try {
+        const { githubToken, gistId } = this.progress.settings;
+        if (githubToken && gistId) {
+          await githubService.updateGist(githubToken, gistId, this.progress);
+          console.log('Progress synced to GitHub Gist');
+        }
+      } catch (error) {
+        console.error('Failed to sync to GitHub Gist:', error);
+      }
+    }, SYNC_DEBOUNCE_MS);
   }
 
   /**

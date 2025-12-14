@@ -158,6 +158,8 @@ export interface UserSettings {
   theme: Theme;
   codeEditorFontSize: number;
   showCompletedItems: boolean;
+  githubToken?: string;
+  gistId?: string;
 }
 
 // Route Types

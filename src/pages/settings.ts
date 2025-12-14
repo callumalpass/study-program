@@ -1,6 +1,7 @@
 // Settings page
 import type { Theme, UserSettings } from '@/core/types';
-import { progressStorage, resetProgress } from '@/core/storage';
+import { progressStorage, resetProgress, importProgress } from '@/core/storage';
+import { githubService } from '@/services/github';
 
 /**
  * Render the settings page
@@ -106,6 +107,44 @@ export function renderSettingsPage(container: HTMLElement): void {
                 >
                 <span class="toggle-slider"></span>
               </label>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="settings-section">
+        <h2>Cloud Sync</h2>
+        <div class="settings-group">
+          <div class="setting-item">
+            <div class="setting-info">
+              <h3>GitHub Gist Sync</h3>
+              <p>Sync your progress across devices using a GitHub Gist.</p>
+              <div class="help-text">
+                <small>
+                  1. <a href="https://github.com/settings/tokens/new?scopes=gist&description=CS+Degree+Progress" target="_blank" rel="noopener noreferrer">Generate a Personal Access Token</a> with 'gist' scope.<br>
+                  2. Paste it below and click Connect.
+                </small>
+              </div>
+            </div>
+            <div class="setting-control vertical">
+               <div class="input-group" style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;">
+                  <input 
+                    type="password" 
+                    id="github-token-input" 
+                    class="text-input" 
+                    placeholder="ghp_..." 
+                    value="${settings.githubToken || ''}"
+                    style="flex: 1; padding: 0.5rem; border: 1px solid var(--color-border-default); border-radius: 4px; background: var(--color-bg-surface); color: var(--color-text-primary);"
+                  >
+                  <button id="connect-github-btn" class="btn btn-primary">
+                    ${settings.githubToken ? 'Update' : 'Connect'}
+                  </button>
+               </div>
+               <div id="github-status" class="status-message ${settings.gistId ? 'success' : ''}" style="font-size: 0.9em; color: var(--text-secondary);">
+                 ${settings.gistId 
+                   ? `✅ Connected to Gist ID: ${settings.gistId.substring(0, 8)}...` 
+                   : '⚪ Not connected'}
+               </div>
             </div>
           </div>
         </div>
@@ -294,6 +333,76 @@ function handleResetProgress(container: HTMLElement): void {
  */
 function attachEventListeners(container: HTMLElement): void {
   const settings = progressStorage.getSettings();
+
+  // GitHub Sync Handlers
+  const githubTokenInput = container.querySelector('#github-token-input') as HTMLInputElement;
+  const connectGithubBtn = container.querySelector('#connect-github-btn') as HTMLButtonElement;
+  const githubStatus = container.querySelector('#github-status') as HTMLElement;
+
+  if (connectGithubBtn && githubTokenInput) {
+    connectGithubBtn.addEventListener('click', async () => {
+      const token = githubTokenInput.value.trim();
+      if (!token) return;
+
+      connectGithubBtn.disabled = true;
+      const originalBtnText = connectGithubBtn.textContent;
+      connectGithubBtn.textContent = 'Connecting...';
+      githubStatus.textContent = 'Validating token...';
+      githubStatus.style.color = 'var(--text-secondary)';
+
+      try {
+        const isValid = await githubService.validateToken(token);
+        if (!isValid) {
+          throw new Error('Invalid token');
+        }
+
+        githubStatus.textContent = 'Searching for existing gist...';
+        let gistId = await githubService.findGist(token);
+        
+        if (gistId) {
+           githubStatus.textContent = 'Found gist! Syncing...';
+           // Load remote data
+           const remoteProgress = await githubService.loadGist(token, gistId);
+           if (remoteProgress) {
+             // We need to preserve the token in the new settings
+             remoteProgress.settings.githubToken = token;
+             remoteProgress.settings.gistId = gistId;
+             
+             // Import (this saves to local storage)
+             importProgress(JSON.stringify(remoteProgress));
+             githubStatus.textContent = `✅ Synced with Gist: ${gistId.substring(0, 8)}...`;
+             githubStatus.style.color = 'var(--color-success)';
+             
+             // Refresh page to show new data/settings
+             setTimeout(() => renderSettingsPage(container), 1000);
+             return; 
+           }
+        } else {
+           githubStatus.textContent = 'Creating new gist...';
+           // Create new gist with current data
+           // First update local settings to include token (so it's saved in the gist)
+           progressStorage.updateSettings({ githubToken: token });
+           const currentProgress = progressStorage.getProgress();
+           
+           gistId = await githubService.createGist(token, currentProgress);
+           if (gistId) {
+             progressStorage.updateSettings({ gistId });
+             githubStatus.textContent = `✅ Created Gist: ${gistId.substring(0, 8)}...`;
+             githubStatus.style.color = 'var(--color-success)';
+           } else {
+             throw new Error('Failed to create Gist');
+           }
+        }
+      } catch (error) {
+        console.error(error);
+        githubStatus.textContent = '❌ Error: ' + (error instanceof Error ? error.message : 'Unknown error');
+        githubStatus.style.color = 'var(--color-error)';
+      } finally {
+        connectGithubBtn.disabled = false;
+        connectGithubBtn.textContent = originalBtnText === 'Connect' ? 'Update' : originalBtnText;
+      }
+    });
+  }
 
   // Theme selection
   container.querySelectorAll('.theme-option').forEach(button => {
