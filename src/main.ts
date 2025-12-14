@@ -19,7 +19,7 @@ import { renderExportPage } from './pages/export';
 
 // Import all subject content for assessments
 import { cs101Quizzes, cs101Exercises, cs101Projects, cs101Exams } from './data/subjects/cs101';
-import { math101Quizzes, math101Exercises, math101Projects } from './data/subjects/math101';
+import { math101Quizzes, math101Exercises, math101Exams } from './data/subjects/math101';
 import { cs102Quizzes, cs102Exercises, cs102Projects } from './data/subjects/cs102';
 import { cs103Quizzes, cs103Exercises, cs103Projects } from './data/subjects/cs103';
 import { math102Quizzes, math102Exercises, math102Projects } from './data/subjects/math102';
@@ -43,6 +43,7 @@ const allQuizzes: Quiz[] = [
 
 const allExams: Exam[] = [
   ...cs101Exams,
+  ...math101Exams,
 ];
 
 const allExercises: Exercise[] = [
@@ -58,7 +59,7 @@ const allExercises: Exercise[] = [
 
 const allProjects: Project[] = [
   ...cs101Projects,
-  ...math101Projects,
+  // math101 projects retired - uses exams instead
   ...cs102Projects,
   ...cs103Projects,
   ...math102Projects,

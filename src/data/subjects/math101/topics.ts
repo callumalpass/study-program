@@ -4,13 +4,15 @@ import topic2Content from '../../../content/subjects/math101/topic-2.md?raw';
 import topic3Content from '../../../content/subjects/math101/topic-3.md?raw';
 import topic4Content from '../../../content/subjects/math101/topic-4.md?raw';
 import topic5Content from '../../../content/subjects/math101/topic-5.md?raw';
+import topic6Content from '../../../content/subjects/math101/topic-6.md?raw';
+import topic7Content from '../../../content/subjects/math101/topic-7.md?raw';
 
 export const math101Topics: Topic[] = [
   {
     id: 'math101-topic-1',
     title: 'Propositional Logic',
     content: topic1Content,
-    quizIds: ['math101-quiz-1'],
+    quizIds: ['math101-quiz-1a', 'math101-quiz-1b', 'math101-quiz-1c'],
     exerciseIds: [
       'math101-t1-drill-1',
       'math101-t1-drill-2',
@@ -38,7 +40,7 @@ export const math101Topics: Topic[] = [
     id: 'math101-topic-2',
     title: 'Proof Techniques',
     content: topic2Content,
-    quizIds: ['math101-quiz-2'],
+    quizIds: ['math101-quiz-2a', 'math101-quiz-2b', 'math101-quiz-2c'],
     exerciseIds: [
       'math101-t2-drill-1',
       'math101-t2-drill-2',
@@ -66,7 +68,7 @@ export const math101Topics: Topic[] = [
     id: 'math101-topic-3',
     title: 'Sets and Set Operations',
     content: topic3Content,
-    quizIds: ['math101-quiz-3'],
+    quizIds: ['math101-quiz-3a', 'math101-quiz-3b', 'math101-quiz-3c'],
     exerciseIds: [
       'math101-t3-drill-1',
       'math101-t3-drill-2',
@@ -94,7 +96,7 @@ export const math101Topics: Topic[] = [
     id: 'math101-topic-4',
     title: 'Relations',
     content: topic4Content,
-    quizIds: ['math101-quiz-4'],
+    quizIds: ['math101-quiz-4a', 'math101-quiz-4b', 'math101-quiz-4c'],
     exerciseIds: [
       'math101-t4-drill-1',
       'math101-t4-drill-2',
@@ -122,7 +124,7 @@ export const math101Topics: Topic[] = [
     id: 'math101-topic-5',
     title: 'Functions',
     content: topic5Content,
-    quizIds: ['math101-quiz-5'],
+    quizIds: ['math101-quiz-5a', 'math101-quiz-5b', 'math101-quiz-5c'],
     exerciseIds: [
       'math101-t5-drill-1',
       'math101-t5-drill-2',
@@ -144,6 +146,62 @@ export const math101Topics: Topic[] = [
       'math101-t5-ex14',
       'math101-t5-ex15',
       'math101-t5-ex16'
+    ]
+  },
+  {
+    id: 'math101-topic-6',
+    title: 'Predicate Logic and Quantifiers',
+    content: topic6Content,
+    quizIds: ['math101-quiz-6a', 'math101-quiz-6b', 'math101-quiz-6c'],
+    exerciseIds: [
+      'math101-t6-drill-1',
+      'math101-t6-drill-2',
+      'math101-t6-drill-3',
+      'math101-t6-drill-4',
+      'math101-t6-ex01',
+      'math101-t6-ex02',
+      'math101-t6-ex03',
+      'math101-t6-ex04',
+      'math101-t6-ex05',
+      'math101-t6-ex06',
+      'math101-t6-ex07',
+      'math101-t6-ex08',
+      'math101-t6-ex09',
+      'math101-t6-ex10',
+      'math101-t6-ex11',
+      'math101-t6-ex12',
+      'math101-t6-ex13',
+      'math101-t6-ex14',
+      'math101-t6-ex15',
+      'math101-t6-ex16'
+    ]
+  },
+  {
+    id: 'math101-topic-7',
+    title: 'Sequences and Summations',
+    content: topic7Content,
+    quizIds: ['math101-quiz-7a', 'math101-quiz-7b', 'math101-quiz-7c'],
+    exerciseIds: [
+      'math101-t7-drill-1',
+      'math101-t7-drill-2',
+      'math101-t7-drill-3',
+      'math101-t7-drill-4',
+      'math101-t7-ex01',
+      'math101-t7-ex02',
+      'math101-t7-ex03',
+      'math101-t7-ex04',
+      'math101-t7-ex05',
+      'math101-t7-ex06',
+      'math101-t7-ex07',
+      'math101-t7-ex08',
+      'math101-t7-ex09',
+      'math101-t7-ex10',
+      'math101-t7-ex11',
+      'math101-t7-ex12',
+      'math101-t7-ex13',
+      'math101-t7-ex14',
+      'math101-t7-ex15',
+      'math101-t7-ex16'
     ]
   }
 ];

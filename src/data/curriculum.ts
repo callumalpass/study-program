@@ -49,18 +49,20 @@ export const curriculum: Subject[] = [
     year: 1,
     semester: 1,
     prerequisites: [],
-    description: 'Introduction to discrete mathematical structures essential for computer science. Topics include propositional and predicate logic, proof techniques, set theory, relations, and functions. This course develops mathematical reasoning skills crucial for algorithm analysis and theoretical computer science.',
+    description: 'Introduction to discrete mathematical structures essential for computer science. Topics include propositional and predicate logic, proof techniques, set theory, relations, functions, predicate logic with quantifiers, and sequences. This course develops mathematical reasoning skills crucial for algorithm analysis and theoretical computer science.',
     learningObjectives: [
       'Construct truth tables and evaluate logical expressions using propositional logic',
       'Apply proof techniques including direct proof, proof by contradiction, and mathematical induction',
       'Perform set operations and understand set notation and properties',
       'Analyze and classify relations including equivalence relations and partial orders',
       'Define and work with functions, including injective, surjective, and bijective functions',
-      'Use logical reasoning to solve problems and verify arguments',
-      'Apply discrete mathematics concepts to computer science applications'
+      'Translate statements using predicate logic and quantifiers',
+      'Work with sequences, summations, and recurrence relations',
+      'Use logical reasoning to solve problems and verify arguments'
     ],
     estimatedHours: 100,
-    topics: math101Topics
+    topics: math101Topics,
+    examIds: ['math101-exam-midterm', 'math101-exam-final']
   },
 
   {

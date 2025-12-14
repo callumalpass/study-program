@@ -1,0 +1,674 @@
+import type { Exam } from '@/core/types';
+
+export const math101Exams: Exam[] = [
+  {
+    id: 'math101-exam-midterm',
+    subjectId: 'math101',
+    title: 'Math101 Midterm Exam',
+    durationMinutes: 75,
+    instructions: [
+      'This exam covers Topics 1-4: Propositional Logic, Proof Techniques, Sets, and Relations.',
+      'Show your work where applicable. Partial credit may be given.',
+      'For fill-in questions, use standard mathematical notation.',
+      'Written questions require clear, logical explanations.',
+    ],
+    questions: [
+      // ========== PROPOSITIONAL LOGIC (7 questions) ==========
+      {
+        id: 'mid-q1',
+        type: 'multiple_choice',
+        prompt: 'Which of the following is logically equivalent to P → Q?',
+        options: ['P ∧ Q', '¬P ∨ Q', 'Q → P', '¬P ∧ ¬Q'],
+        correctAnswer: 1,
+        explanation: 'An implication P → Q is equivalent to ¬P ∨ Q. The implication is only false when P is true and Q is false.'
+      },
+      {
+        id: 'mid-q2',
+        type: 'true_false',
+        prompt: 'The proposition P ∧ ¬P is a contradiction (always false).',
+        correctAnswer: true,
+        explanation: 'P ∧ ¬P requires P to be both true and false simultaneously, which is impossible. It\'s always false.'
+      },
+      {
+        id: 'mid-q3',
+        type: 'multiple_choice',
+        prompt: 'What is the contrapositive of "If it rains, then the streets are wet"?',
+        options: [
+          'If it does not rain, then the streets are not wet',
+          'If the streets are wet, then it rains',
+          'If the streets are not wet, then it does not rain',
+          'It rains if and only if the streets are wet'
+        ],
+        correctAnswer: 2,
+        explanation: 'The contrapositive of P → Q is ¬Q → ¬P. "Streets not wet" → "It did not rain."'
+      },
+      {
+        id: 'mid-q4',
+        type: 'fill_blank',
+        prompt: 'By De Morgan\'s Law, ¬(P ∨ Q) is equivalent to ¬P ____ ¬Q.',
+        correctAnswer: '∧',
+        explanation: 'De Morgan\'s Law: ¬(P ∨ Q) ≡ ¬P ∧ ¬Q. The negation of OR becomes AND with negated operands.'
+      },
+      {
+        id: 'mid-q5',
+        type: 'multiple_choice',
+        prompt: 'Which of the following is a tautology?',
+        options: [
+          'P ∨ Q',
+          '(P → Q) ∨ (Q → P)',
+          'P → ¬P',
+          '(P ∧ Q) → P'
+        ],
+        correctAnswer: 3,
+        explanation: '(P ∧ Q) → P is always true. If both P and Q are true, then certainly P is true. This is called simplification.'
+      },
+      {
+        id: 'mid-q6',
+        type: 'multiple_choice',
+        prompt: 'The negation of "All cats are mammals" is:',
+        options: [
+          'No cats are mammals',
+          'All cats are not mammals',
+          'Some cats are not mammals',
+          'Some cats are mammals'
+        ],
+        correctAnswer: 2,
+        explanation: 'The negation of "All A are B" is "Some A are not B." Not all cats need to fail; just one counterexample suffices.'
+      },
+      {
+        id: 'mid-q7',
+        type: 'written',
+        prompt: 'Construct a truth table for (P → Q) ↔ (¬P ∨ Q) and determine whether this is a tautology, contradiction, or contingency.',
+        correctAnswer: 'tautology',
+        explanation: 'The biconditional of an expression with its logical equivalent is always true.',
+        modelAnswer: 'P | Q | P→Q | ¬P | ¬P∨Q | (P→Q)↔(¬P∨Q)\nT | T |  T  | F  |  T   |      T\nT | F |  F  | F  |  F   |      T\nF | T |  T  | T  |  T   |      T\nF | F |  T  | T  |  T   |      T\n\nSince all entries in the final column are True, this is a TAUTOLOGY. This confirms that P→Q and ¬P∨Q are logically equivalent.'
+      },
+
+      // ========== PROOF TECHNIQUES (7 questions) ==========
+      {
+        id: 'mid-q8',
+        type: 'multiple_choice',
+        prompt: 'To prove "If n² is odd, then n is odd" by contrapositive, you would prove:',
+        options: [
+          'If n is odd, then n² is odd',
+          'If n is even, then n² is even',
+          'If n² is even, then n is even',
+          'n is odd if and only if n² is odd'
+        ],
+        correctAnswer: 1,
+        explanation: 'The contrapositive of "n² odd → n odd" is "n not odd → n² not odd", i.e., "n even → n² even."'
+      },
+      {
+        id: 'mid-q9',
+        type: 'true_false',
+        prompt: 'In proof by contradiction, we assume the statement we want to prove is FALSE and derive a contradiction.',
+        correctAnswer: true,
+        explanation: 'In proof by contradiction, assume ¬P and show this leads to a logical contradiction, proving P must be true.'
+      },
+      {
+        id: 'mid-q10',
+        type: 'multiple_choice',
+        prompt: 'What are the two steps required in a proof by mathematical induction?',
+        options: [
+          'Base case and assumption',
+          'Base case and inductive step',
+          'Hypothesis and conclusion',
+          'Direct proof and contrapositive'
+        ],
+        correctAnswer: 1,
+        explanation: 'Induction requires (1) proving the base case P(1), and (2) showing P(k) → P(k+1) for arbitrary k.'
+      },
+      {
+        id: 'mid-q11',
+        type: 'fill_blank',
+        prompt: 'To disprove a universal statement "For all x, P(x)", it suffices to find a single ____ where P(x) is false.',
+        correctAnswer: 'counterexample',
+        explanation: 'A counterexample shows that not all x satisfy P, disproving the universal claim.'
+      },
+      {
+        id: 'mid-q12',
+        type: 'multiple_choice',
+        prompt: 'Which proof technique assumes the negation of what you want to prove?',
+        options: [
+          'Direct proof',
+          'Proof by contrapositive',
+          'Proof by contradiction',
+          'Proof by cases'
+        ],
+        correctAnswer: 2,
+        explanation: 'Proof by contradiction assumes ¬P and derives a contradiction, thereby proving P.'
+      },
+      {
+        id: 'mid-q13',
+        type: 'true_false',
+        prompt: 'In strong induction, the inductive hypothesis assumes P(n) holds for all values from the base case up to k.',
+        correctAnswer: true,
+        explanation: 'Strong induction uses the assumption P(base), P(base+1), ..., P(k) to prove P(k+1).'
+      },
+      {
+        id: 'mid-q14',
+        type: 'written',
+        prompt: 'Prove by induction that 1 + 2 + 3 + ... + n = n(n+1)/2 for all positive integers n.',
+        correctAnswer: 'induction',
+        explanation: 'A standard induction proof with base case n=1 and inductive step.',
+        modelAnswer: 'Proof by induction:\n\nBase case (n=1):\nLHS = 1\nRHS = 1(2)/2 = 1\nLHS = RHS ✓\n\nInductive hypothesis: Assume the formula holds for some k ≥ 1:\n1 + 2 + ... + k = k(k+1)/2\n\nInductive step: Prove for n = k+1:\n1 + 2 + ... + k + (k+1)\n= k(k+1)/2 + (k+1)  [by IH]\n= (k+1)(k/2 + 1)\n= (k+1)(k + 2)/2\n= (k+1)((k+1) + 1)/2 ✓\n\nBy induction, the formula holds for all positive integers n. □'
+      },
+
+      // ========== SETS AND SET OPERATIONS (6 questions) ==========
+      {
+        id: 'mid-q15',
+        type: 'multiple_choice',
+        prompt: 'If A = {1, 2, 3, 4} and B = {3, 4, 5, 6}, what is A ∩ B?',
+        options: ['{1, 2, 3, 4, 5, 6}', '{3, 4}', '{1, 2, 5, 6}', '∅'],
+        correctAnswer: 1,
+        explanation: 'The intersection contains elements in BOTH sets: {3, 4}.'
+      },
+      {
+        id: 'mid-q16',
+        type: 'multiple_choice',
+        prompt: 'How many elements are in the power set of {a, b, c}?',
+        options: ['3', '6', '8', '9'],
+        correctAnswer: 2,
+        explanation: 'The power set of a set with n elements has 2^n elements. 2³ = 8.'
+      },
+      {
+        id: 'mid-q17',
+        type: 'fill_blank',
+        prompt: 'The set difference A - B contains all elements that are in A but not in ____.',
+        correctAnswer: 'B',
+        explanation: 'A - B = {x : x ∈ A and x ∉ B}.'
+      },
+      {
+        id: 'mid-q18',
+        type: 'true_false',
+        prompt: 'For any set A: A ∪ ∅ = A and A ∩ ∅ = ∅.',
+        correctAnswer: true,
+        explanation: 'Union with empty set gives A; intersection with empty set gives empty (no common elements).'
+      },
+      {
+        id: 'mid-q19',
+        type: 'multiple_choice',
+        prompt: 'If |A| = 5, |B| = 7, and |A ∩ B| = 3, what is |A ∪ B|?',
+        options: ['12', '9', '15', '10'],
+        correctAnswer: 1,
+        explanation: 'By inclusion-exclusion: |A ∪ B| = |A| + |B| - |A ∩ B| = 5 + 7 - 3 = 9.'
+      },
+      {
+        id: 'mid-q20',
+        type: 'multiple_choice',
+        prompt: 'Which of the following equals (A ∩ B)̄ according to De Morgan\'s Law for sets?',
+        options: ['Ā ∩ B̄', 'Ā ∪ B̄', 'A ∪ B', '(A ∪ B)̄'],
+        correctAnswer: 1,
+        explanation: 'De Morgan\'s Law for sets: (A ∩ B)̄ = Ā ∪ B̄.'
+      },
+
+      // ========== RELATIONS (6 questions) ==========
+      {
+        id: 'mid-q21',
+        type: 'multiple_choice',
+        prompt: 'A relation R on set A is reflexive if:',
+        options: [
+          'For some a ∈ A, (a, a) ∈ R',
+          'For all a ∈ A, (a, a) ∈ R',
+          'For all a, b ∈ A, (a, b) ∈ R implies (b, a) ∈ R',
+          'For all a ∈ A, (a, a) ∉ R'
+        ],
+        correctAnswer: 1,
+        explanation: 'Reflexive means every element is related to itself: aRa for all a in A.'
+      },
+      {
+        id: 'mid-q22',
+        type: 'true_false',
+        prompt: 'An equivalence relation is reflexive, symmetric, and transitive.',
+        correctAnswer: true,
+        explanation: 'By definition, an equivalence relation must have all three properties: reflexive, symmetric, and transitive.'
+      },
+      {
+        id: 'mid-q23',
+        type: 'multiple_choice',
+        prompt: 'A partial order is:',
+        options: [
+          'Reflexive, symmetric, transitive',
+          'Reflexive, antisymmetric, transitive',
+          'Irreflexive, symmetric, transitive',
+          'Reflexive, symmetric, antisymmetric'
+        ],
+        correctAnswer: 1,
+        explanation: 'A partial order is reflexive, antisymmetric, and transitive. Examples: ≤ on numbers, ⊆ on sets.'
+      },
+      {
+        id: 'mid-q24',
+        type: 'multiple_choice',
+        prompt: 'The relation "is a divisor of" on positive integers is:',
+        options: [
+          'Symmetric',
+          'Antisymmetric',
+          'Neither symmetric nor antisymmetric',
+          'Both symmetric and antisymmetric'
+        ],
+        correctAnswer: 1,
+        explanation: 'If a|b and b|a for positive integers, then a = b. Thus it\'s antisymmetric. It\'s not symmetric (2|4 but 4∤2).'
+      },
+      {
+        id: 'mid-q25',
+        type: 'fill_blank',
+        prompt: 'An equivalence relation on a set partitions it into disjoint equivalence ____.',
+        correctAnswer: 'classes',
+        explanation: 'Each equivalence class contains all elements equivalent to each other. The classes partition the set.'
+      },
+      {
+        id: 'mid-q26',
+        type: 'written',
+        prompt: 'Let R be the relation on ℤ defined by: aRb if and only if a - b is even. Prove that R is an equivalence relation.',
+        correctAnswer: 'equivalence',
+        explanation: 'Must show reflexive, symmetric, and transitive properties.',
+        modelAnswer: 'Proof that R is an equivalence relation:\n\nReflexive: For any a ∈ ℤ, a - a = 0, which is even. So aRa. ✓\n\nSymmetric: Suppose aRb. Then a - b is even, so a - b = 2k for some integer k.\nThen b - a = -(a - b) = -2k = 2(-k), which is also even.\nSo bRa. ✓\n\nTransitive: Suppose aRb and bRc.\nThen a - b = 2k and b - c = 2m for some integers k, m.\na - c = (a - b) + (b - c) = 2k + 2m = 2(k + m), which is even.\nSo aRc. ✓\n\nSince R is reflexive, symmetric, and transitive, R is an equivalence relation. □\n\nNote: R has exactly two equivalence classes: even integers and odd integers.'
+      }
+    ]
+  },
+  {
+    id: 'math101-exam-final',
+    subjectId: 'math101',
+    title: 'Math101 Final Exam',
+    durationMinutes: 120,
+    instructions: [
+      'Comprehensive exam covering all seven topics.',
+      'Show your work for partial credit on proofs and calculations.',
+      'Written questions should include clear reasoning and justification.',
+      'For fill-in questions, use standard notation (∀, ∃, ∧, ∨, etc.).',
+    ],
+    questions: [
+      // ========== PROPOSITIONAL LOGIC (5 questions) ==========
+      {
+        id: 'final-q1',
+        type: 'multiple_choice',
+        prompt: 'Which logical equivalence correctly represents ¬(P → Q)?',
+        options: ['¬P ∨ ¬Q', 'P ∧ ¬Q', '¬P → ¬Q', 'P ∨ ¬Q'],
+        correctAnswer: 1,
+        explanation: '¬(P → Q) ≡ ¬(¬P ∨ Q) ≡ P ∧ ¬Q by De Morgan and double negation.'
+      },
+      {
+        id: 'final-q2',
+        type: 'true_false',
+        prompt: 'P ↔ Q is logically equivalent to (P → Q) ∧ (Q → P).',
+        correctAnswer: true,
+        explanation: 'The biconditional "P if and only if Q" means both implications hold.'
+      },
+      {
+        id: 'final-q3',
+        type: 'multiple_choice',
+        prompt: 'If P is false and Q is true, what is the truth value of P → Q?',
+        options: ['True', 'False', 'Unknown', 'Undefined'],
+        correctAnswer: 0,
+        explanation: 'An implication with a false antecedent is vacuously true. P → Q is only false when P is true and Q is false.'
+      },
+      {
+        id: 'final-q4',
+        type: 'fill_blank',
+        prompt: 'A proposition that is always true is called a ____.',
+        correctAnswer: 'tautology',
+        explanation: 'A tautology is true under all possible truth assignments to its variables.'
+      },
+      {
+        id: 'final-q5',
+        type: 'multiple_choice',
+        prompt: 'Which represents "Neither P nor Q"?',
+        options: ['P ∧ Q', 'P ∨ Q', '¬P ∧ ¬Q', '¬(P ∧ Q)'],
+        correctAnswer: 2,
+        explanation: '"Neither P nor Q" means both are false: ¬P ∧ ¬Q.'
+      },
+
+      // ========== PROOF TECHNIQUES (5 questions) ==========
+      {
+        id: 'final-q6',
+        type: 'multiple_choice',
+        prompt: 'Which proof technique directly shows that assuming P leads to Q?',
+        options: ['Direct proof', 'Proof by contrapositive', 'Proof by contradiction', 'Proof by cases'],
+        correctAnswer: 0,
+        explanation: 'A direct proof assumes P and derives Q through logical steps.'
+      },
+      {
+        id: 'final-q7',
+        type: 'true_false',
+        prompt: 'A single counterexample is sufficient to disprove a universal statement.',
+        correctAnswer: true,
+        explanation: 'To disprove "For all x, P(x)", you only need one x where P(x) fails.'
+      },
+      {
+        id: 'final-q8',
+        type: 'multiple_choice',
+        prompt: 'In the inductive step of mathematical induction, what do you assume?',
+        options: [
+          'P(1) is true',
+          'P(k) is true for some arbitrary k',
+          'P(n) is true for all n',
+          'P(k+1) is true'
+        ],
+        correctAnswer: 1,
+        explanation: 'The inductive hypothesis assumes P(k) is true for an arbitrary k ≥ base case.'
+      },
+      {
+        id: 'final-q9',
+        type: 'fill_blank',
+        prompt: 'Proof by ____ assumes the negation of what you want to prove and derives a logical impossibility.',
+        correctAnswer: 'contradiction',
+        explanation: 'Proof by contradiction: assume ¬P, derive a contradiction, conclude P is true.'
+      },
+      {
+        id: 'final-q10',
+        type: 'multiple_choice',
+        prompt: 'The contrapositive of P → Q is:',
+        options: ['Q → P', '¬P → ¬Q', '¬Q → ¬P', '¬P ↔ ¬Q'],
+        correctAnswer: 2,
+        explanation: 'The contrapositive swaps and negates: P → Q becomes ¬Q → ¬P.'
+      },
+
+      // ========== SETS (5 questions) ==========
+      {
+        id: 'final-q11',
+        type: 'multiple_choice',
+        prompt: 'If A = {1, 2, 3} and B = {2, 3, 4}, what is A △ B (symmetric difference)?',
+        options: ['{1, 4}', '{2, 3}', '{1, 2, 3, 4}', '∅'],
+        correctAnswer: 0,
+        explanation: 'A △ B = (A - B) ∪ (B - A) = {1} ∪ {4} = {1, 4}.'
+      },
+      {
+        id: 'final-q12',
+        type: 'true_false',
+        prompt: 'The empty set is a proper subset of every non-empty set.',
+        correctAnswer: true,
+        explanation: '∅ ⊂ A for any non-empty A because ∅ ⊆ A and ∅ ≠ A.'
+      },
+      {
+        id: 'final-q13',
+        type: 'multiple_choice',
+        prompt: 'What is |P({1, 2, 3, 4, 5})|, the cardinality of the power set?',
+        options: ['5', '10', '25', '32'],
+        correctAnswer: 3,
+        explanation: '|P(A)| = 2^|A| = 2^5 = 32.'
+      },
+      {
+        id: 'final-q14',
+        type: 'fill_blank',
+        prompt: 'The ____ product A × B consists of all ordered pairs (a, b) where a ∈ A and b ∈ B.',
+        correctAnswer: 'Cartesian',
+        explanation: 'The Cartesian product creates all ordered pairs from two sets.'
+      },
+      {
+        id: 'final-q15',
+        type: 'multiple_choice',
+        prompt: 'Which property states A ∩ (B ∪ C) = (A ∩ B) ∪ (A ∩ C)?',
+        options: ['Associative', 'Commutative', 'Distributive', 'Absorption'],
+        correctAnswer: 2,
+        explanation: 'Intersection distributes over union (and vice versa).'
+      },
+
+      // ========== RELATIONS (5 questions) ==========
+      {
+        id: 'final-q16',
+        type: 'multiple_choice',
+        prompt: 'Which property is NOT required for an equivalence relation?',
+        options: ['Reflexive', 'Symmetric', 'Antisymmetric', 'Transitive'],
+        correctAnswer: 2,
+        explanation: 'Equivalence relations are reflexive, symmetric, and transitive. Antisymmetric is for partial orders.'
+      },
+      {
+        id: 'final-q17',
+        type: 'true_false',
+        prompt: 'The relation "less than or equal to" (≤) on real numbers is a partial order.',
+        correctAnswer: true,
+        explanation: '≤ is reflexive (a ≤ a), antisymmetric (a ≤ b and b ≤ a implies a = b), and transitive.'
+      },
+      {
+        id: 'final-q18',
+        type: 'multiple_choice',
+        prompt: 'If an equivalence relation on a 12-element set has 4 equivalence classes, what is true about the class sizes?',
+        options: [
+          'All classes have 3 elements',
+          'The sizes sum to 12',
+          'Each class has at least 4 elements',
+          'All classes have the same size'
+        ],
+        correctAnswer: 1,
+        explanation: 'Equivalence classes partition the set, so the sizes must sum to 12. They need not be equal.'
+      },
+      {
+        id: 'final-q19',
+        type: 'fill_blank',
+        prompt: 'A relation that is reflexive, antisymmetric, and transitive is called a ____ order.',
+        correctAnswer: 'partial',
+        explanation: 'Partial orders have these three properties. If also total (all pairs comparable), it\'s a total/linear order.'
+      },
+      {
+        id: 'final-q20',
+        type: 'multiple_choice',
+        prompt: 'The transitive closure of R adds which pairs?',
+        options: [
+          'All (a, a) pairs',
+          'All (b, a) if (a, b) ∈ R',
+          'All (a, c) if there\'s a path from a to c in R',
+          'All pairs not in R'
+        ],
+        correctAnswer: 2,
+        explanation: 'Transitive closure adds (a, c) whenever there\'s a sequence a→b₁→b₂→...→c in R.'
+      },
+
+      // ========== FUNCTIONS (6 questions) ==========
+      {
+        id: 'final-q21',
+        type: 'multiple_choice',
+        prompt: 'A function f: A → B is bijective if it is:',
+        options: [
+          'Injective only',
+          'Surjective only',
+          'Both injective and surjective',
+          'Neither injective nor surjective'
+        ],
+        correctAnswer: 2,
+        explanation: 'A bijection is both one-to-one (injective) and onto (surjective).'
+      },
+      {
+        id: 'final-q22',
+        type: 'true_false',
+        prompt: 'If f: A → B is a bijection, then f has an inverse f⁻¹: B → A.',
+        correctAnswer: true,
+        explanation: 'Only bijections have inverses. The inverse reverses the mapping.'
+      },
+      {
+        id: 'final-q23',
+        type: 'multiple_choice',
+        prompt: 'If f(x) = x² with domain ℝ, f is:',
+        options: ['Injective', 'Surjective', 'Bijective', 'None of the above'],
+        correctAnswer: 3,
+        explanation: 'f is not injective (f(-2) = f(2)) and not surjective (negative numbers not in range).'
+      },
+      {
+        id: 'final-q24',
+        type: 'fill_blank',
+        prompt: 'For composition (g ∘ f)(x), we first apply ____ then apply g.',
+        correctAnswer: 'f',
+        explanation: '(g ∘ f)(x) = g(f(x)). Apply f first, then g to the result.'
+      },
+      {
+        id: 'final-q25',
+        type: 'multiple_choice',
+        prompt: 'The floor function ⌊3.7⌋ equals:',
+        options: ['4', '3', '3.7', '0'],
+        correctAnswer: 1,
+        explanation: 'The floor function gives the greatest integer ≤ the input. ⌊3.7⌋ = 3.'
+      },
+      {
+        id: 'final-q26',
+        type: 'true_false',
+        prompt: 'The composition of two surjective functions is surjective.',
+        correctAnswer: true,
+        explanation: 'If f: A → B and g: B → C are both onto, then g ∘ f: A → C is also onto.'
+      },
+
+      // ========== PREDICATE LOGIC (6 questions) ==========
+      {
+        id: 'final-q27',
+        type: 'multiple_choice',
+        prompt: 'The negation of ∀x P(x) is:',
+        options: ['∀x ¬P(x)', '∃x ¬P(x)', '¬∃x P(x)', '∃x P(x)'],
+        correctAnswer: 1,
+        explanation: '¬∀x P(x) ≡ ∃x ¬P(x). "Not all have P" means "some don\'t have P."'
+      },
+      {
+        id: 'final-q28',
+        type: 'true_false',
+        prompt: '∀x ∃y P(x,y) and ∃y ∀x P(x,y) are logically equivalent.',
+        correctAnswer: false,
+        explanation: 'Quantifier order matters! The first says "for each x, some y works." The second says "one y works for all x."'
+      },
+      {
+        id: 'final-q29',
+        type: 'multiple_choice',
+        prompt: 'How do you express "All dogs are mammals" in predicate logic? (D(x) = dog, M(x) = mammal)',
+        options: [
+          '∀x (D(x) ∧ M(x))',
+          '∀x (D(x) → M(x))',
+          '∃x (D(x) ∧ M(x))',
+          '∃x (D(x) → M(x))'
+        ],
+        correctAnswer: 1,
+        explanation: '"All A are B" translates to ∀x (A(x) → B(x)). Use implication with ∀.'
+      },
+      {
+        id: 'final-q30',
+        type: 'fill_blank',
+        prompt: 'The uniqueness quantifier ∃! means there exists exactly ____ element satisfying the property.',
+        correctAnswer: 'one',
+        explanation: '∃!x P(x) means "exactly one x satisfies P."'
+      },
+      {
+        id: 'final-q31',
+        type: 'multiple_choice',
+        prompt: 'What is the negation of ∃x (P(x) ∧ Q(x))?',
+        options: [
+          '∃x (¬P(x) ∧ ¬Q(x))',
+          '∀x (¬P(x) ∨ ¬Q(x))',
+          '∀x (P(x) → ¬Q(x))',
+          'Both B and C are correct'
+        ],
+        correctAnswer: 3,
+        explanation: '¬∃x(P∧Q) ≡ ∀x¬(P∧Q) ≡ ∀x(¬P∨¬Q) ≡ ∀x(P→¬Q). Both B and C are equivalent.'
+      },
+      {
+        id: 'final-q32',
+        type: 'written',
+        prompt: 'Translate to predicate logic and then negate: "Every student passed at least one exam." Use S(x) for "x is a student", P(x,y) for "x passed exam y".',
+        correctAnswer: 'quantifier',
+        explanation: 'Translation and negation involving nested quantifiers.',
+        modelAnswer: 'Original: "Every student passed at least one exam."\nTranslation: ∀x (S(x) → ∃y P(x, y))\n\nNegation:\n¬[∀x (S(x) → ∃y P(x, y))]\n≡ ∃x ¬(S(x) → ∃y P(x, y))\n≡ ∃x (S(x) ∧ ¬∃y P(x, y))\n≡ ∃x (S(x) ∧ ∀y ¬P(x, y))\n\nIn English: "Some student failed all exams" or "There exists a student who passed no exams."'
+      },
+
+      // ========== SEQUENCES AND SUMMATIONS (7 questions) ==========
+      {
+        id: 'final-q33',
+        type: 'multiple_choice',
+        prompt: 'What is the 15th term of the arithmetic sequence 3, 7, 11, 15, ...?',
+        options: ['55', '59', '63', '67'],
+        correctAnswer: 1,
+        explanation: 'a₁ = 3, d = 4. a₁₅ = 3 + (15-1)·4 = 3 + 56 = 59.'
+      },
+      {
+        id: 'final-q34',
+        type: 'multiple_choice',
+        prompt: 'What is Σ(i=1 to 50) i using the formula?',
+        options: ['1250', '1275', '2500', '2550'],
+        correctAnswer: 1,
+        explanation: 'Σi = n(n+1)/2 = 50(51)/2 = 1275.'
+      },
+      {
+        id: 'final-q35',
+        type: 'true_false',
+        prompt: 'The sum 1 + 2 + 4 + 8 + 16 + ... (infinite geometric series with r=2) converges.',
+        correctAnswer: false,
+        explanation: 'A geometric series converges only when |r| < 1. Here r = 2 > 1, so it diverges.'
+      },
+      {
+        id: 'final-q36',
+        type: 'fill_blank',
+        prompt: 'In a geometric sequence, consecutive terms have a constant ____.',
+        correctAnswer: 'ratio',
+        explanation: 'Geometric: aₙ = r·aₙ₋₁. Arithmetic sequences have constant difference.'
+      },
+      {
+        id: 'final-q37',
+        type: 'multiple_choice',
+        prompt: 'The sum Σ(i=0 to ∞) (1/3)ⁱ equals:',
+        options: ['1', '3/2', '2', '3'],
+        correctAnswer: 1,
+        explanation: 'Infinite geometric series with a=1, r=1/3: S = a/(1-r) = 1/(1-1/3) = 1/(2/3) = 3/2.'
+      },
+      {
+        id: 'final-q38',
+        type: 'multiple_choice',
+        prompt: 'Which recurrence relation has solution aₙ = 2ⁿ?',
+        options: ['aₙ = aₙ₋₁ + 2', 'aₙ = 2aₙ₋₁', 'aₙ = aₙ₋₁ + n', 'aₙ = n·aₙ₋₁'],
+        correctAnswer: 1,
+        explanation: 'If aₙ = 2aₙ₋₁ and a₀ = 1, then aₙ = 2ⁿ.'
+      },
+      {
+        id: 'final-q39',
+        type: 'written',
+        prompt: 'Prove by induction that Σ(i=1 to n) i² = n(n+1)(2n+1)/6 for all positive integers n.',
+        correctAnswer: 'induction',
+        explanation: 'Standard induction proof for sum of squares formula.',
+        modelAnswer: 'Proof by induction:\n\nBase case (n=1):\nLHS: 1² = 1\nRHS: 1(2)(3)/6 = 6/6 = 1 ✓\n\nInductive hypothesis: Assume Σ(i=1 to k) i² = k(k+1)(2k+1)/6\n\nInductive step (prove for n = k+1):\nΣ(i=1 to k+1) i² = Σ(i=1 to k) i² + (k+1)²\n= k(k+1)(2k+1)/6 + (k+1)²     [by IH]\n= (k+1)[k(2k+1)/6 + (k+1)]\n= (k+1)[k(2k+1) + 6(k+1)]/6\n= (k+1)[2k² + k + 6k + 6]/6\n= (k+1)[2k² + 7k + 6]/6\n= (k+1)(k+2)(2k+3)/6\n= (k+1)((k+1)+1)(2(k+1)+1)/6 ✓\n\nBy induction, the formula holds for all positive integers n. □'
+      },
+
+      // ========== COMPREHENSIVE/MIXED (5 questions) ==========
+      {
+        id: 'final-q40',
+        type: 'multiple_choice',
+        prompt: 'If R is an equivalence relation and S is a partial order on the same set A, which statement is generally FALSE?',
+        options: [
+          'R partitions A into equivalence classes',
+          'S may have incomparable elements',
+          'R is always transitive',
+          'R is always antisymmetric'
+        ],
+        correctAnswer: 3,
+        explanation: 'Equivalence relations are symmetric, not antisymmetric. The only relation both symmetric and antisymmetric has only (a,a) pairs.'
+      },
+      {
+        id: 'final-q41',
+        type: 'true_false',
+        prompt: 'If f: A → B is injective and g: B → C is injective, then g ∘ f is injective.',
+        correctAnswer: true,
+        explanation: 'The composition of injections is injective. Similarly for surjections.'
+      },
+      {
+        id: 'final-q42',
+        type: 'written',
+        prompt: 'Prove that for any set A with n elements, |P(A)| = 2ⁿ using a counting argument.',
+        correctAnswer: 'counting',
+        explanation: 'Each element is either in or not in a subset, giving 2ⁿ choices.',
+        modelAnswer: 'Proof by counting:\n\nTo form a subset S ⊆ A, for each element a ∈ A, we must decide:\n- Include a in S, OR\n- Exclude a from S\n\nEach element has 2 independent choices (in or out).\n\nSince A has n elements, and each element\'s inclusion is independent:\nTotal number of subsets = 2 × 2 × ... × 2 (n times) = 2ⁿ\n\nTherefore |P(A)| = 2ⁿ. □\n\nAlternative: This also follows from the binomial theorem:\n|P(A)| = Σ(k=0 to n) C(n,k) = (1+1)ⁿ = 2ⁿ'
+      },
+      {
+        id: 'final-q43',
+        type: 'multiple_choice',
+        prompt: 'Which statement correctly combines quantifiers and set notation?',
+        options: [
+          '∀x ∈ A, ∃y ∈ B: x + y = 0  means every element of A has an additive inverse in B',
+          '∃x ∈ A, ∀y ∈ B: x < y  means A has a lower bound in B',
+          '∀x ∈ A ∩ B: P(x) means P holds for elements in both A and B',
+          'All of the above are correct interpretations'
+        ],
+        correctAnswer: 3,
+        explanation: 'All three statements correctly interpret the combination of quantifiers and set notation.'
+      },
+      {
+        id: 'final-q44',
+        type: 'written',
+        prompt: 'Let f: ℤ → ℤ be defined by f(n) = 2n + 1. Determine whether f is injective, surjective, or bijective. Prove your answer.',
+        correctAnswer: 'injective',
+        explanation: 'f is injective but not surjective (only odd integers in range).',
+        modelAnswer: 'Claim: f(n) = 2n + 1 is injective but not surjective.\n\nInjective (one-to-one):\nSuppose f(n₁) = f(n₂).\nThen 2n₁ + 1 = 2n₂ + 1\n2n₁ = 2n₂\nn₁ = n₂\nSince f(n₁) = f(n₂) implies n₁ = n₂, f is injective. ✓\n\nNot surjective:\nThe range of f consists of all 2n + 1 for n ∈ ℤ, which are all odd integers.\nConsider m = 2 (an even integer).\nIf f(n) = 2, then 2n + 1 = 2, so 2n = 1, so n = 1/2.\nBut 1/2 ∉ ℤ, so 2 is not in the range of f.\nTherefore f is not surjective. ✗\n\nConclusion: f is injective but not surjective, so f is NOT bijective.'
+      }
+    ]
+  }
+];
