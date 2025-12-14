@@ -119,14 +119,6 @@ function createSubjectItem(
   const status = progress?.status || 'not_started';
   const progressPercent = calculateSubjectProgress(subject, progress);
   const isActive = currentRoute?.includes(`/subject/${subject.id}`);
-  const firstTopic = subject.topics[0];
-  const firstQuizId = subject.topics.find((t) => t.quizIds.length > 0)?.quizIds[0];
-  const firstExerciseId = subject.topics.find((t) => t.exerciseIds.length > 0)?.exerciseIds[0];
-  const firstTopicWithExercises = subject.topics.find((t) => t.exerciseIds.length > 0);
-  const topicTitleMap = subject.topics.reduce<Record<string, string>>((acc, topic) => {
-    acc[topic.id] = topic.title;
-    return acc;
-  }, {});
   const subjectQuizzes = quizzes.filter((q) => q.subjectId === subject.id);
   const subjectExercises = exercises.filter((e) => e.subjectId === subject.id);
   const subjectExams = exams.filter((e) => e.subjectId === subject.id);
@@ -149,7 +141,7 @@ function createSubjectItem(
     </a>
   `;
 
-  if (firstTopic || firstQuizId || firstExerciseId || subjectQuizzes.length || subjectExercises.length || subjectExams.length || subjectProjects.length) {
+  if (subject.topics.length || subjectQuizzes.length || subjectExercises.length || subjectExams.length || subjectProjects.length) {
     const hoverMenu = document.createElement('div');
     hoverMenu.className = 'subject-hover-menu';
     hoverMenu.innerHTML = `
@@ -159,36 +151,16 @@ function createSubjectItem(
           <span class="menu-title">Open subject</span>
           <span class="menu-subtitle">Overview · ${progressPercent}% complete</span>
         </span>
-        <span class="menu-chevron">${Icons.ChevronRight}</span>
+        <span class="menu-chevron">${Icons.ArrowRight}</span>
       </button>
-      ${firstTopic ? `
-        <button class="menu-action" data-topic="${firstTopic.id}">
+      ${subject.topics.length ? `
+        <button class="menu-action" data-submenu="topics">
           <span class="menu-icon">${Icons.AcademicCap}</span>
           <span class="menu-text">
-            <span class="menu-title">Start ${firstTopic.title}</span>
-            <span class="menu-subtitle">Topic 1 of ${subject.topics.length}</span>
+            <span class="menu-title">Topics</span>
+            <span class="menu-subtitle">${subject.topics.length} topic${subject.topics.length > 1 ? 's' : ''}</span>
           </span>
-          <span class="menu-chevron">${Icons.ArrowRight}</span>
-        </button>
-      ` : ''}
-      ${firstQuizId ? `
-        <button class="menu-action" data-quiz="${firstQuizId}">
-          <span class="menu-icon">${Icons.StatQuiz}</span>
-          <span class="menu-text">
-            <span class="menu-title">First quiz</span>
-            <span class="menu-subtitle">Warm up with practice</span>
-          </span>
-          <span class="menu-chevron">${Icons.ArrowRight}</span>
-        </button>
-      ` : ''}
-      ${firstExerciseId ? `
-        <button class="menu-action" data-exercise="${firstExerciseId}">
-          <span class="menu-icon">${Icons.StatCode}</span>
-          <span class="menu-text">
-            <span class="menu-title">First exercise</span>
-            <span class="menu-subtitle">Hands-on practice</span>
-          </span>
-          <span class="menu-chevron">${Icons.ArrowRight}</span>
+          <span class="menu-chevron">${Icons.ChevronRight}</span>
         </button>
       ` : ''}
       ${subjectQuizzes.length ? `
@@ -201,14 +173,14 @@ function createSubjectItem(
           <span class="menu-chevron">${Icons.ArrowRight}</span>
         </button>
       ` : ''}
-      ${subjectExercises.length && firstTopicWithExercises ? `
-        <button class="menu-action" data-practice-topic="${firstTopicWithExercises.id}">
+      ${subjectExercises.length ? `
+        <button class="menu-action" data-submenu="exercises">
           <span class="menu-icon">${Icons.StatCode}</span>
           <span class="menu-text">
             <span class="menu-title">Exercises</span>
             <span class="menu-subtitle">${subjectExercises.length} available</span>
           </span>
-          <span class="menu-chevron">${Icons.ArrowRight}</span>
+          <span class="menu-chevron">${Icons.ChevronRight}</span>
         </button>
       ` : ''}
       ${subjectExams.length ? `
@@ -234,6 +206,8 @@ function createSubjectItem(
     `;
 
     let hideTimeout: number | null = null;
+    let hideSubmenuTimeout: number | null = null;
+    let activeSubmenu: HTMLElement | null = null;
 
     const positionMenu = () => {
       const rect = item.getBoundingClientRect();
@@ -251,12 +225,24 @@ function createSubjectItem(
       item.classList.add('menu-open');
     };
 
+    const closeAllSubmenus = () => {
+      if (activeSubmenu) {
+        activeSubmenu.classList.remove('open');
+        activeSubmenu = null;
+      }
+      hoverMenu.querySelectorAll('[data-submenu]').forEach((trigger) => {
+        trigger.classList.remove('submenu-open');
+      });
+    };
+
     const scheduleClose = () => {
       if (hideTimeout) {
         clearTimeout(hideTimeout);
       }
       hideTimeout = window.setTimeout(() => {
+        if (activeSubmenu) return;
         item.classList.remove('menu-open');
+        closeAllSubmenus();
       }, 120);
     };
 
@@ -265,6 +251,9 @@ function createSubjectItem(
         event.preventDefault();
         event.stopPropagation();
         const target = event.currentTarget as HTMLElement;
+
+        // Submenu triggers don't navigate on click
+        if (target.dataset.submenu) return;
 
         const topicId = target.dataset.topic;
         const quizId = target.dataset.quiz;
@@ -320,6 +309,157 @@ function createSubjectItem(
         navigateToSubject(subject.id);
       });
     });
+
+    // Build topics submenu
+    const topicsTrigger = hoverMenu.querySelector('[data-submenu="topics"]') as HTMLElement | null;
+    if (topicsTrigger && subject.topics.length > 0) {
+      const topicsPanel = document.createElement('div');
+      topicsPanel.className = 'subject-submenu';
+      topicsPanel.innerHTML = subject.topics.map((topic, index) => `
+        <button class="menu-action menu-condensed" data-topic-nav="${topic.id}">
+          <span class="menu-text">
+            <span class="menu-title">${topic.title}</span>
+            <span class="menu-subtitle">Topic ${index + 1}</span>
+          </span>
+          <span class="menu-chevron">${Icons.ArrowRight}</span>
+        </button>
+      `).join('');
+      document.body.appendChild(topicsPanel);
+
+      const positionTopicsPanel = () => {
+        const rect = topicsTrigger.getBoundingClientRect();
+        topicsPanel.style.position = 'fixed';
+        topicsPanel.style.left = `${rect.right + 8}px`;
+        topicsPanel.style.top = `${rect.top}px`;
+      };
+
+      const openTopicsPanel = () => {
+        if (hideSubmenuTimeout) {
+          clearTimeout(hideSubmenuTimeout);
+          hideSubmenuTimeout = null;
+        }
+        closeAllSubmenus();
+        positionTopicsPanel();
+        topicsPanel.classList.add('open');
+        topicsTrigger.classList.add('submenu-open');
+        activeSubmenu = topicsPanel;
+      };
+
+      const scheduleCloseTopicsSubmenu = () => {
+        if (hideSubmenuTimeout) {
+          clearTimeout(hideSubmenuTimeout);
+        }
+        hideSubmenuTimeout = window.setTimeout(() => {
+          topicsPanel.classList.remove('open');
+          topicsTrigger.classList.remove('submenu-open');
+          if (activeSubmenu === topicsPanel) {
+            activeSubmenu = null;
+          }
+          scheduleClose();
+        }, 140);
+      };
+
+      topicsTrigger.addEventListener('mouseenter', openTopicsPanel);
+      topicsTrigger.addEventListener('focusin', openTopicsPanel);
+      topicsTrigger.addEventListener('mouseleave', scheduleCloseTopicsSubmenu);
+      topicsTrigger.addEventListener('focusout', scheduleCloseTopicsSubmenu);
+      topicsPanel.addEventListener('mouseenter', () => {
+        openTopicsPanel();
+        openMenu();
+      });
+      topicsPanel.addEventListener('mouseleave', scheduleCloseTopicsSubmenu);
+
+      topicsPanel.querySelectorAll('[data-topic-nav]').forEach((btn) => {
+        btn.addEventListener('click', (evt) => {
+          evt.preventDefault();
+          evt.stopPropagation();
+          const topicId = (evt.currentTarget as HTMLElement).dataset.topicNav;
+          if (topicId) {
+            navigateToTopic(subject.id, topicId);
+          }
+        });
+      });
+    }
+
+    // Build exercises submenu with topics
+    const exercisesTrigger = hoverMenu.querySelector('[data-submenu="exercises"]') as HTMLElement | null;
+    if (exercisesTrigger) {
+      const topicsWithExercises = subject.topics.filter(t => t.exerciseIds.length > 0);
+      if (topicsWithExercises.length > 0) {
+        const panel = document.createElement('div');
+        panel.className = 'subject-submenu';
+        panel.innerHTML = topicsWithExercises.map(topic => `
+          <button class="menu-action menu-condensed" data-practice-topic="${topic.id}">
+            <span class="menu-text">
+              <span class="menu-title">${topic.title}</span>
+              <span class="menu-subtitle">${topic.exerciseIds.length} exercise${topic.exerciseIds.length > 1 ? 's' : ''}</span>
+            </span>
+            <span class="menu-chevron">${Icons.ArrowRight}</span>
+          </button>
+        `).join('');
+        document.body.appendChild(panel);
+
+        const positionPanel = () => {
+          const rect = exercisesTrigger.getBoundingClientRect();
+          panel.style.position = 'fixed';
+          panel.style.left = `${rect.right + 8}px`;
+          panel.style.top = `${rect.top}px`;
+        };
+
+        const openPanel = () => {
+          if (hideSubmenuTimeout) {
+            clearTimeout(hideSubmenuTimeout);
+            hideSubmenuTimeout = null;
+          }
+          closeAllSubmenus();
+          positionPanel();
+          panel.classList.add('open');
+          exercisesTrigger.classList.add('submenu-open');
+          activeSubmenu = panel;
+        };
+
+        const scheduleCloseSubmenu = () => {
+          if (hideSubmenuTimeout) {
+            clearTimeout(hideSubmenuTimeout);
+          }
+          hideSubmenuTimeout = window.setTimeout(() => {
+            panel.classList.remove('open');
+            exercisesTrigger.classList.remove('submenu-open');
+            if (activeSubmenu === panel) {
+              activeSubmenu = null;
+            }
+            scheduleClose();
+          }, 140);
+        };
+
+        exercisesTrigger.addEventListener('mouseenter', openPanel);
+        exercisesTrigger.addEventListener('focusin', openPanel);
+        exercisesTrigger.addEventListener('mouseleave', scheduleCloseSubmenu);
+        exercisesTrigger.addEventListener('focusout', scheduleCloseSubmenu);
+        panel.addEventListener('mouseenter', () => {
+          openPanel();
+          openMenu();
+        });
+        panel.addEventListener('mouseleave', scheduleCloseSubmenu);
+
+        panel.querySelectorAll('[data-practice-topic]').forEach((btn) => {
+          btn.addEventListener('click', (evt) => {
+            evt.preventDefault();
+            evt.stopPropagation();
+            const topicId = (evt.currentTarget as HTMLElement).dataset.practiceTopic;
+            if (topicId) {
+              navigateToTopic(subject.id, topicId);
+              setTimeout(() => {
+                const section = document.getElementById('practice-section');
+                if (section) {
+                  section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+              }, 100);
+            }
+          });
+        });
+      }
+    }
 
     item.addEventListener('mouseenter', openMenu);
     item.addEventListener('mouseleave', scheduleClose);
@@ -385,6 +525,9 @@ export function renderSidebar(
   exams: Exam[] = [],
   projects: Project[] = []
 ): void {
+  // Clean up any existing submenu panels from document body
+  document.querySelectorAll('.subject-submenu').forEach((panel) => panel.remove());
+
   container.innerHTML = '';
   container.className = 'sidebar';
 
