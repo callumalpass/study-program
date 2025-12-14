@@ -1,0 +1,265 @@
+// Curriculum overview page
+import type { Subject } from '@/core/types';
+import { progressStorage } from '@/core/storage';
+import {
+  getSubjectsByYearAndSemester,
+  arePrerequisitesMet,
+  calculateSubjectCompletion,
+} from '@/core/progress';
+import { navigateToSubject } from '@/core/router';
+
+interface CurriculumFilters {
+  selectedYear: number | null;
+  showCompleted: boolean;
+}
+
+let currentFilters: CurriculumFilters = {
+  selectedYear: null,
+  showCompleted: true,
+};
+
+/**
+ * Render the curriculum overview page
+ */
+export function renderCurriculumPage(container: HTMLElement, subjects: Subject[]): void {
+  const userProgress = progressStorage.getProgress();
+  const groupedSubjects = getSubjectsByYearAndSemester(subjects);
+
+  container.innerHTML = `
+    <div class="curriculum-page">
+      <header class="curriculum-header">
+        <div>
+          <h1>CS Degree Curriculum</h1>
+          <p class="subtitle">4-Year Computer Science Program</p>
+        </div>
+        <div class="curriculum-filters">
+          <div class="filter-group">
+            <label for="year-filter">Year:</label>
+            <select id="year-filter" class="filter-select">
+              <option value="">All Years</option>
+              <option value="1">Year 1</option>
+              <option value="2">Year 2</option>
+              <option value="3">Year 3</option>
+              <option value="4">Year 4</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label class="checkbox-label">
+              <input type="checkbox" id="show-completed-filter" ${currentFilters.showCompleted ? 'checked' : ''}>
+              <span>Show completed</span>
+            </label>
+          </div>
+        </div>
+      </header>
+
+      <div class="curriculum-legend">
+        <div class="legend-item">
+          <span class="status-badge status-not-started"></span>
+          <span>Not Started</span>
+        </div>
+        <div class="legend-item">
+          <span class="status-badge status-locked"></span>
+          <span>Locked</span>
+        </div>
+        <div class="legend-item">
+          <span class="status-badge status-in-progress"></span>
+          <span>In Progress</span>
+        </div>
+        <div class="legend-item">
+          <span class="status-badge status-completed"></span>
+          <span>Completed</span>
+        </div>
+      </div>
+
+      <div class="curriculum-content">
+        ${renderCurriculumTree(groupedSubjects, subjects, userProgress, currentFilters)}
+      </div>
+    </div>
+  `;
+
+  attachEventListeners(container, subjects);
+}
+
+/**
+ * Render the curriculum tree view
+ */
+function renderCurriculumTree(
+  groupedSubjects: Map<number, Map<number, Subject[]>>,
+  allSubjects: Subject[],
+  userProgress: any,
+  filters: CurriculumFilters
+): string {
+  const years = Array.from(groupedSubjects.keys()).sort();
+
+  return years
+    .filter(year => !filters.selectedYear || year === filters.selectedYear)
+    .map(year => {
+      const semesters = groupedSubjects.get(year)!;
+      const semesterNumbers = Array.from(semesters.keys()).sort();
+
+      return `
+        <div class="year-section">
+          <h2 class="year-title">Year ${year}</h2>
+          <div class="semesters-container">
+            ${semesterNumbers.map(semester => {
+              const subjects = semesters.get(semester)!;
+              const filteredSubjects = subjects.filter(subject => {
+                const progress = userProgress.subjects[subject.id];
+                const isCompleted = progress?.status === 'completed';
+                return filters.showCompleted || !isCompleted;
+              });
+
+              if (filteredSubjects.length === 0) return '';
+
+              return `
+                <div class="semester-section">
+                  <h3 class="semester-title">Semester ${semester}</h3>
+                  <div class="subjects-grid">
+                    ${filteredSubjects.map(subject => renderSubjectCard(subject, allSubjects, userProgress)).join('')}
+                  </div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        </div>
+      `;
+    }).join('');
+}
+
+/**
+ * Render a single subject card
+ */
+function renderSubjectCard(subject: Subject, allSubjects: Subject[], userProgress: any): string {
+  const progress = userProgress.subjects[subject.id];
+  const status = getSubjectStatus(subject, userProgress, allSubjects);
+  const completion = progress ? calculateSubjectCompletion(subject, progress) : 0;
+  const isLocked = status === 'locked';
+
+  // Get prerequisite names
+  const prerequisiteNames = subject.prerequisites
+    .map(prereqId => {
+      const prereq = allSubjects.find(s => s.id === prereqId);
+      return prereq ? prereq.title : prereqId;
+    });
+
+  return `
+    <div class="subject-card ${isLocked ? 'locked' : ''}" data-subject-id="${subject.id}">
+      <div class="subject-status">
+        <span class="status-badge status-${status}"></span>
+      </div>
+      <div class="subject-content">
+        <div class="subject-header">
+          <h4>${subject.title}</h4>
+          <span class="subject-code">${subject.code}</span>
+        </div>
+        <p class="subject-description">${truncateText(subject.description, 100)}</p>
+
+        ${progress && progress.status !== 'not_started' ? `
+          <div class="subject-progress">
+            <div class="progress-bar-small">
+              <div class="progress-bar" style="width: ${completion}%"></div>
+            </div>
+            <span class="progress-text">${completion}%</span>
+          </div>
+        ` : ''}
+
+        ${subject.prerequisites.length > 0 ? `
+          <div class="subject-prerequisites">
+            <span class="prereq-label">Prerequisites:</span>
+            <div class="prereq-list">
+              ${prerequisiteNames.map(name => `
+                <span class="prereq-tag ${isPrerequisiteMet(subject.id, userProgress) ? 'met' : 'unmet'}">${name}</span>
+              `).join('')}
+            </div>
+          </div>
+        ` : ''}
+
+        <div class="subject-meta">
+          <span class="meta-item">
+            <span class="meta-icon">⏱️</span>
+            ${subject.estimatedHours} hours
+          </span>
+          <span class="meta-item">
+            <span class="meta-icon">📚</span>
+            ${subject.topics.length} topics
+          </span>
+        </div>
+
+        ${isLocked ? `
+          <div class="locked-overlay">
+            <span class="lock-icon">🔒</span>
+            <span class="lock-text">Complete prerequisites to unlock</span>
+          </div>
+        ` : ''}
+      </div>
+    </div>
+  `;
+}
+
+/**
+ * Get the status of a subject
+ */
+function getSubjectStatus(subject: Subject, userProgress: any, allSubjects: Subject[]): string {
+  const progress = userProgress.subjects[subject.id];
+
+  // Check if prerequisites are met
+  const prerequisitesMet = arePrerequisitesMet(subject, userProgress);
+
+  if (!prerequisitesMet) {
+    return 'locked';
+  }
+
+  if (!progress) {
+    return 'not-started';
+  }
+
+  return progress.status.replace('_', '-');
+}
+
+/**
+ * Check if all prerequisites for a subject are met
+ */
+function isPrerequisiteMet(subjectId: string, userProgress: any): boolean {
+  const progress = userProgress.subjects[subjectId];
+  return progress?.status === 'completed';
+}
+
+/**
+ * Truncate text to a maximum length
+ */
+function truncateText(text: string, maxLength: number): string {
+  if (text.length <= maxLength) return text;
+  return text.slice(0, maxLength).trim() + '...';
+}
+
+/**
+ * Attach event listeners
+ */
+function attachEventListeners(container: HTMLElement, subjects: Subject[]): void {
+  // Subject card clicks
+  container.querySelectorAll('.subject-card:not(.locked)').forEach(card => {
+    card.addEventListener('click', () => {
+      const subjectId = (card as HTMLElement).dataset.subjectId;
+      if (subjectId) navigateToSubject(subjectId);
+    });
+  });
+
+  // Year filter
+  const yearFilter = container.querySelector('#year-filter') as HTMLSelectElement;
+  if (yearFilter) {
+    yearFilter.addEventListener('change', (e) => {
+      const value = (e.target as HTMLSelectElement).value;
+      currentFilters.selectedYear = value ? parseInt(value) : null;
+      renderCurriculumPage(container, subjects);
+    });
+  }
+
+  // Show completed filter
+  const showCompletedFilter = container.querySelector('#show-completed-filter') as HTMLInputElement;
+  if (showCompletedFilter) {
+    showCompletedFilter.addEventListener('change', (e) => {
+      currentFilters.showCompleted = (e.target as HTMLInputElement).checked;
+      renderCurriculumPage(container, subjects);
+    });
+  }
+}

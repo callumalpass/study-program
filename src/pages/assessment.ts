@@ -1,0 +1,638 @@
+// Assessment pages (Quiz, Exercise, Project)
+import type { Subject, Quiz, CodingExercise, WrittenExercise, Exercise, Project, QuizAttempt, ExerciseCompletion, ProjectSubmission } from '@/core/types';
+import { progressStorage } from '@/core/storage';
+import { navigateToSubject } from '@/core/router';
+
+// Type guard for CodingExercise
+function isCodingExercise(exercise: Exercise): exercise is CodingExercise {
+  return 'testCases' in exercise && 'starterCode' in exercise;
+}
+
+/**
+ * Render quiz page
+ */
+export function renderQuizPage(
+  container: HTMLElement,
+  subjects: Subject[],
+  quizzes: Quiz[],
+  subjectId: string,
+  quizId: string
+): void {
+  const subject = subjects.find(s => s.id === subjectId);
+  const quiz = quizzes.find(q => q.id === quizId);
+
+  if (!subject || !quiz) {
+    renderNotFound(container, 'Quiz', subjectId);
+    return;
+  }
+
+  const attempts = progressStorage.getQuizAttempts(subjectId, quizId);
+  const bestAttempt = attempts.length > 0
+    ? attempts.reduce((best, current) => current.score > best.score ? current : best)
+    : null;
+
+  container.innerHTML = `
+    <div class="quiz-page">
+      <nav class="breadcrumb">
+        <a href="#/curriculum">Curriculum</a>
+        <span class="separator">/</span>
+        <a href="#/subject/${subjectId}">${subject.title}</a>
+        <span class="separator">/</span>
+        <span class="current">${quiz.title}</span>
+      </nav>
+
+      <header class="quiz-header">
+        <div class="quiz-title-section">
+          <h1>${quiz.title}</h1>
+          ${bestAttempt ? `
+            <div class="best-score">
+              <span class="label">Best Score:</span>
+              <span class="score ${bestAttempt.score >= 70 ? 'passed' : 'failed'}">${bestAttempt.score}%</span>
+            </div>
+          ` : ''}
+        </div>
+        <div class="quiz-info">
+          <span class="info-item">
+            <span class="icon">❓</span>
+            ${quiz.questions.length} questions
+          </span>
+          ${attempts.length > 0 ? `
+            <span class="info-item">
+              <span class="icon">🔄</span>
+              ${attempts.length} attempt${attempts.length > 1 ? 's' : ''}
+            </span>
+          ` : ''}
+        </div>
+      </header>
+
+      ${attempts.length > 0 ? `
+        <section class="previous-attempts">
+          <h2>Previous Attempts</h2>
+          <div class="attempts-list">
+            ${attempts.slice(-5).reverse().map((attempt, index) => `
+              <div class="attempt-card ${attempt.score >= 70 ? 'passed' : 'failed'}">
+                <div class="attempt-info">
+                  <span class="attempt-number">Attempt ${attempts.length - index}</span>
+                  <span class="attempt-date">${formatDate(attempt.timestamp)}</span>
+                </div>
+                <div class="attempt-score">${attempt.score}%</div>
+              </div>
+            `).join('')}
+          </div>
+        </section>
+      ` : ''}
+
+      <section class="quiz-content">
+        <div id="quiz-container">
+          <div class="quiz-start">
+            <h2>Ready to ${attempts.length > 0 ? 'try again' : 'start'}?</h2>
+            <p>This quiz contains ${quiz.questions.length} questions. Take your time and good luck!</p>
+            <button class="btn btn-primary btn-large" id="start-quiz-btn">
+              ${attempts.length > 0 ? 'Start New Attempt' : 'Start Quiz'}
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <div class="quiz-actions">
+        <button class="btn btn-secondary" id="back-to-subject">
+          ← Back to Subject
+        </button>
+      </div>
+    </div>
+  `;
+
+  attachQuizEventListeners(container, subjectId, quiz);
+}
+
+/**
+ * Render exercise page
+ */
+export function renderExercisePage(
+  container: HTMLElement,
+  subjects: Subject[],
+  exercises: Exercise[],
+  subjectId: string,
+  exerciseId: string
+): void {
+  const subject = subjects.find(s => s.id === subjectId);
+  const exercise = exercises.find(e => e.id === exerciseId);
+
+  if (!subject || !exercise) {
+    renderNotFound(container, 'Exercise', subjectId);
+    return;
+  }
+
+  // Render different views based on exercise type
+  if (isCodingExercise(exercise)) {
+    renderCodingExercisePage(container, subject, exercise, subjectId, exerciseId);
+  } else {
+    renderWrittenExercisePage(container, subject, exercise, subjectId);
+  }
+}
+
+/**
+ * Render a coding exercise page
+ */
+function renderCodingExercisePage(
+  container: HTMLElement,
+  subject: Subject,
+  exercise: CodingExercise,
+  subjectId: string,
+  exerciseId: string
+): void {
+  const completions = progressStorage.getExerciseCompletions(subjectId, exerciseId);
+  const isPassed = completions.some(c => c.passed);
+  const bestCompletion = completions.length > 0
+    ? completions.reduce((best, current) =>
+        current.passedTestCases > best.passedTestCases ? current : best
+      )
+    : null;
+
+  container.innerHTML = `
+    <div class="exercise-page">
+      <nav class="breadcrumb">
+        <a href="#/curriculum">Curriculum</a>
+        <span class="separator">/</span>
+        <a href="#/subject/${subjectId}">${subject.title}</a>
+        <span class="separator">/</span>
+        <span class="current">${exercise.title}</span>
+      </nav>
+
+      <header class="exercise-header">
+        <div class="exercise-title-section">
+          <h1>${exercise.title}</h1>
+          ${isPassed ? `
+            <span class="completion-badge passed">✓ Completed</span>
+          ` : bestCompletion ? `
+            <span class="completion-badge partial">
+              ${bestCompletion.passedTestCases} / ${bestCompletion.totalTestCases} tests passed
+            </span>
+          ` : ''}
+        </div>
+        <div class="exercise-info">
+          <span class="info-item">
+            <span class="icon">💻</span>
+            ${formatLanguage(exercise.language)}
+          </span>
+          <span class="info-item">
+            <span class="icon">🧪</span>
+            ${exercise.testCases.length} test cases
+          </span>
+          ${completions.length > 0 ? `
+            <span class="info-item">
+              <span class="icon">🔄</span>
+              ${completions.length} attempt${completions.length > 1 ? 's' : ''}
+            </span>
+          ` : ''}
+        </div>
+      </header>
+
+      <section class="exercise-description">
+        <h2>Description</h2>
+        <div class="description-content">
+          ${renderMarkdown(exercise.description)}
+        </div>
+      </section>
+
+      <section class="exercise-workspace">
+        <h2>Code Editor</h2>
+        <div class="editor-container">
+          <div class="editor-header">
+            <span class="language-label">${formatLanguage(exercise.language)}</span>
+            <div class="editor-actions">
+              <button class="btn btn-small" id="reset-code-btn">Reset</button>
+              <button class="btn btn-small" id="show-hint-btn">
+                💡 Hint (${exercise.hints.length} available)
+              </button>
+            </div>
+          </div>
+          <textarea id="code-editor" class="code-editor">${exercise.starterCode}</textarea>
+        </div>
+      </section>
+
+      <section class="test-results" id="test-results" style="display: none;">
+        <h2>Test Results</h2>
+        <div id="results-container"></div>
+      </section>
+
+      <div class="exercise-actions">
+        <button class="btn btn-secondary" id="back-to-subject">
+          ← Back to Subject
+        </button>
+        <button class="btn btn-primary btn-large" id="run-tests-btn">
+          Run Tests
+        </button>
+      </div>
+
+      <div class="hints-modal" id="hints-modal" style="display: none;">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3>Hints</h3>
+            <button class="modal-close" id="close-hints-btn">×</button>
+          </div>
+          <div class="modal-body">
+            <ol class="hints-list">
+              ${exercise.hints.map(hint => `<li>${hint}</li>`).join('')}
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  attachCodingExerciseEventListeners(container, subjectId, exercise);
+}
+
+/**
+ * Render a written exercise page
+ */
+function renderWrittenExercisePage(
+  container: HTMLElement,
+  subject: Subject,
+  exercise: WrittenExercise,
+  subjectId: string
+): void {
+  container.innerHTML = `
+    <div class="exercise-page">
+      <nav class="breadcrumb">
+        <a href="#/curriculum">Curriculum</a>
+        <span class="separator">/</span>
+        <a href="#/subject/${subjectId}">${subject.title}</a>
+        <span class="separator">/</span>
+        <span class="current">${exercise.title}</span>
+      </nav>
+
+      <header class="exercise-header">
+        <div class="exercise-title-section">
+          <h1>${exercise.title}</h1>
+          <span class="exercise-type-badge">Written Exercise</span>
+        </div>
+      </header>
+
+      <section class="exercise-description">
+        <h2>Problem</h2>
+        <div class="description-content">
+          ${renderMarkdown(exercise.description)}
+        </div>
+      </section>
+
+      ${exercise.hints.length > 0 ? `
+        <section class="exercise-hints">
+          <h2>Hints</h2>
+          <details>
+            <summary>Click to reveal hints</summary>
+            <ol class="hints-list">
+              ${exercise.hints.map(hint => `<li>${hint}</li>`).join('')}
+            </ol>
+          </details>
+        </section>
+      ` : ''}
+
+      <section class="exercise-solution">
+        <h2>Solution</h2>
+        <details>
+          <summary>Click to reveal solution</summary>
+          <div class="solution-content">
+            ${renderMarkdown(exercise.solution)}
+          </div>
+        </details>
+      </section>
+
+      <div class="exercise-actions">
+        <button class="btn btn-secondary" id="back-to-subject">
+          ← Back to Subject
+        </button>
+      </div>
+    </div>
+  `;
+
+  const backBtn = container.querySelector('#back-to-subject');
+  if (backBtn) {
+    backBtn.addEventListener('click', () => navigateToSubject(subjectId));
+  }
+}
+
+/**
+ * Render project page
+ */
+export function renderProjectPage(
+  container: HTMLElement,
+  subjects: Subject[],
+  projects: Project[],
+  subjectId: string,
+  projectId: string
+): void {
+  const subject = subjects.find(s => s.id === subjectId);
+  const project = projects.find(p => p.id === projectId);
+
+  if (!subject || !project) {
+    renderNotFound(container, 'Project', subjectId);
+    return;
+  }
+
+  const submissions = progressStorage.getProjectSubmissions(subjectId, projectId);
+  const latestSubmission = submissions.length > 0 ? submissions[submissions.length - 1] : null;
+
+  container.innerHTML = `
+    <div class="project-page">
+      <nav class="breadcrumb">
+        <a href="#/curriculum">Curriculum</a>
+        <span class="separator">/</span>
+        <a href="#/subject/${subjectId}">${subject.title}</a>
+        <span class="separator">/</span>
+        <span class="current">${project.title}</span>
+      </nav>
+
+      <header class="project-header">
+        <div class="project-title-section">
+          <h1>${project.title}</h1>
+          ${submissions.length > 0 ? `
+            <span class="submission-count">${submissions.length} submission${submissions.length > 1 ? 's' : ''}</span>
+          ` : ''}
+        </div>
+        <div class="project-info">
+          <span class="info-item">
+            <span class="icon">⏱️</span>
+            ~${project.estimatedHours} hours
+          </span>
+        </div>
+      </header>
+
+      <section class="project-description">
+        <h2>Description</h2>
+        <div class="description-content">
+          ${renderMarkdown(project.description)}
+        </div>
+      </section>
+
+      <section class="project-requirements">
+        <h2>Requirements</h2>
+        <ul class="requirements-list">
+          ${project.requirements.map(req => `<li>${req}</li>`).join('')}
+        </ul>
+      </section>
+
+      <section class="project-rubric">
+        <h2>Grading Rubric</h2>
+        <div class="rubric-table">
+          ${project.rubric.map(criterion => `
+            <div class="rubric-criterion">
+              <div class="criterion-header">
+                <h3>${criterion.name}</h3>
+                <span class="criterion-weight">${criterion.weight}%</span>
+              </div>
+              <div class="criterion-levels">
+                ${criterion.levels.map(level => `
+                  <div class="rubric-level">
+                    <div class="level-score">${level.score}</div>
+                    <div class="level-content">
+                      <div class="level-label">${level.label}</div>
+                      <div class="level-description">${level.description}</div>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </section>
+
+      ${latestSubmission ? `
+        <section class="latest-submission">
+          <h2>Your Latest Submission</h2>
+          <div class="submission-card">
+            <div class="submission-meta">
+              <span class="submission-date">${formatDate(latestSubmission.timestamp)}</span>
+            </div>
+            ${latestSubmission.repositoryUrl ? `
+              <div class="submission-link">
+                <span class="label">Repository:</span>
+                <a href="${latestSubmission.repositoryUrl}" target="_blank" rel="noopener">${latestSubmission.repositoryUrl}</a>
+              </div>
+            ` : ''}
+            ${latestSubmission.demoUrl ? `
+              <div class="submission-link">
+                <span class="label">Demo:</span>
+                <a href="${latestSubmission.demoUrl}" target="_blank" rel="noopener">${latestSubmission.demoUrl}</a>
+              </div>
+            ` : ''}
+            <div class="submission-description">
+              <span class="label">Description:</span>
+              <p>${latestSubmission.description}</p>
+            </div>
+            ${latestSubmission.notes ? `
+              <div class="submission-notes">
+                <span class="label">Notes:</span>
+                <p>${latestSubmission.notes}</p>
+              </div>
+            ` : ''}
+          </div>
+        </section>
+      ` : ''}
+
+      <section class="project-submission-form">
+        <h2>${submissions.length > 0 ? 'Submit New Version' : 'Submit Project'}</h2>
+        <form id="project-submission-form" class="submission-form">
+          <div class="form-group">
+            <label for="description">Description *</label>
+            <textarea id="description" required placeholder="Describe what you've built..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="repository-url">Repository URL</label>
+            <input type="url" id="repository-url" placeholder="https://github.com/...">
+          </div>
+
+          <div class="form-group">
+            <label for="demo-url">Demo URL</label>
+            <input type="url" id="demo-url" placeholder="https://...">
+          </div>
+
+          <div class="form-group">
+            <label>Self-Assessment</label>
+            <div class="self-assessment-grid">
+              ${project.rubric.map(criterion => `
+                <div class="assessment-item">
+                  <label>${criterion.name}</label>
+                  <select class="self-assessment-select" data-criterion="${criterion.name}">
+                    ${criterion.levels.map(level => `
+                      <option value="${level.score}">${level.label} (${level.score})</option>
+                    `).join('')}
+                  </select>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="notes">Additional Notes</label>
+            <textarea id="notes" placeholder="Any additional comments or reflections..."></textarea>
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="btn btn-secondary" id="back-to-subject">Cancel</button>
+            <button type="submit" class="btn btn-primary">Submit Project</button>
+          </div>
+        </form>
+      </section>
+    </div>
+  `;
+
+  attachProjectEventListeners(container, subjectId, project);
+}
+
+/**
+ * Render not found page
+ */
+function renderNotFound(container: HTMLElement, itemType: string, subjectId: string): void {
+  container.innerHTML = `
+    <div class="error-page">
+      <h1>${itemType} Not Found</h1>
+      <p>The ${itemType.toLowerCase()} you're looking for doesn't exist.</p>
+      <button class="btn btn-primary" id="back-to-subject">Back to Subject</button>
+    </div>
+  `;
+
+  const backBtn = container.querySelector('#back-to-subject');
+  if (backBtn) {
+    backBtn.addEventListener('click', () => navigateToSubject(subjectId));
+  }
+}
+
+/**
+ * Render markdown (simple implementation)
+ */
+function renderMarkdown(content: string): string {
+  return content.split('\n\n').map(paragraph => `<p>${paragraph}</p>`).join('\n');
+}
+
+/**
+ * Format date for display
+ */
+function formatDate(isoString: string): string {
+  const date = new Date(isoString);
+  return date.toLocaleString();
+}
+
+/**
+ * Format programming language
+ */
+function formatLanguage(lang: string): string {
+  const languageMap: Record<string, string> = {
+    javascript: 'JavaScript',
+    typescript: 'TypeScript',
+    python: 'Python',
+    java: 'Java',
+    cpp: 'C++',
+    c: 'C',
+    rust: 'Rust',
+    go: 'Go',
+  };
+  return languageMap[lang] || lang;
+}
+
+/**
+ * Attach event listeners for quiz page
+ */
+function attachQuizEventListeners(container: HTMLElement, subjectId: string, quiz: Quiz): void {
+  const backBtn = container.querySelector('#back-to-subject');
+  if (backBtn) {
+    backBtn.addEventListener('click', () => navigateToSubject(subjectId));
+  }
+
+  const startBtn = container.querySelector('#start-quiz-btn');
+  if (startBtn) {
+    startBtn.addEventListener('click', () => {
+      // TODO: Implement quiz component rendering
+      alert('Quiz functionality will be implemented with the Quiz component');
+    });
+  }
+}
+
+/**
+ * Attach event listeners for coding exercise page
+ */
+function attachCodingExerciseEventListeners(container: HTMLElement, subjectId: string, exercise: CodingExercise): void {
+  const backBtn = container.querySelector('#back-to-subject');
+  if (backBtn) {
+    backBtn.addEventListener('click', () => navigateToSubject(subjectId));
+  }
+
+  const resetBtn = container.querySelector('#reset-code-btn');
+  const codeEditor = container.querySelector('#code-editor') as HTMLTextAreaElement;
+  if (resetBtn && codeEditor) {
+    resetBtn.addEventListener('click', () => {
+      if (confirm('Are you sure you want to reset the code to the starter template?')) {
+        codeEditor.value = exercise.starterCode;
+      }
+    });
+  }
+
+  const hintBtn = container.querySelector('#show-hint-btn');
+  const hintsModal = container.querySelector('#hints-modal') as HTMLElement;
+  const closeHintsBtn = container.querySelector('#close-hints-btn');
+  if (hintBtn && hintsModal) {
+    hintBtn.addEventListener('click', () => {
+      hintsModal.style.display = 'flex';
+    });
+  }
+  if (closeHintsBtn && hintsModal) {
+    closeHintsBtn.addEventListener('click', () => {
+      hintsModal.style.display = 'none';
+    });
+  }
+
+  const runTestsBtn = container.querySelector('#run-tests-btn');
+  if (runTestsBtn) {
+    runTestsBtn.addEventListener('click', () => {
+      // TODO: Implement code execution and testing
+      alert('Code execution will be implemented with the CodeEditor component');
+    });
+  }
+}
+
+/**
+ * Attach event listeners for project page
+ */
+function attachProjectEventListeners(container: HTMLElement, subjectId: string, project: Project): void {
+  const backBtn = container.querySelector('#back-to-subject');
+  if (backBtn) {
+    backBtn.addEventListener('click', () => navigateToSubject(subjectId));
+  }
+
+  const form = container.querySelector('#project-submission-form') as HTMLFormElement;
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const description = (container.querySelector('#description') as HTMLTextAreaElement).value;
+      const repositoryUrl = (container.querySelector('#repository-url') as HTMLInputElement).value;
+      const demoUrl = (container.querySelector('#demo-url') as HTMLInputElement).value;
+      const notes = (container.querySelector('#notes') as HTMLTextAreaElement).value;
+
+      // Collect self-assessment scores
+      const selfAssessment: Record<string, number> = {};
+      container.querySelectorAll('.self-assessment-select').forEach(select => {
+        const criterion = (select as HTMLElement).dataset.criterion!;
+        const score = parseInt((select as HTMLSelectElement).value);
+        selfAssessment[criterion] = score;
+      });
+
+      const submission: ProjectSubmission = {
+        submissionId: `submission_${Date.now()}`,
+        timestamp: new Date().toISOString(),
+        description,
+        repositoryUrl: repositoryUrl || undefined,
+        demoUrl: demoUrl || undefined,
+        selfAssessment,
+        notes,
+      };
+
+      progressStorage.addProjectSubmission(subjectId, project.id, submission);
+
+      alert('Project submitted successfully!');
+      navigateToSubject(subjectId);
+    });
+  }
+}

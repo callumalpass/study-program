@@ -1,0 +1,114 @@
+import './styles/variables.css';
+import './styles/base.css';
+import './styles/layout.css';
+import './styles/components.css';
+import './styles/pages.css';
+
+import { onRouteChange } from './core/router';
+import { progressStorage } from './core/storage';
+import { curriculum } from './data/curriculum';
+import { renderSidebar } from './components/sidebar';
+import { renderHomePage } from './pages/home';
+import { renderCurriculumPage } from './pages/curriculum';
+import { renderSubjectPage } from './pages/subject';
+import { renderProgressPage } from './pages/progress';
+import { renderSettingsPage } from './pages/settings';
+import { renderQuizPage, renderExercisePage, renderProjectPage } from './pages/assessment';
+
+// Import all subject content for assessments
+import { cs101Quizzes, cs101Exercises, cs101Projects } from './data/subjects/cs101';
+import { math101Quizzes, math101Exercises, math101Projects } from './data/subjects/math101';
+import { cs102Quizzes, cs102Exercises, cs102Projects } from './data/subjects/cs102';
+import { cs103Quizzes, cs103Exercises, cs103Projects } from './data/subjects/cs103';
+import { math102Quizzes, math102Exercises, math102Projects } from './data/subjects/math102';
+import { cs104Quizzes, cs104Exercises, cs104Projects } from './data/subjects/cs104';
+import { cs105Quizzes, cs105Exercises, cs105Projects } from './data/subjects/cs105';
+
+import type { Quiz, Exercise, Project } from './core/types';
+
+// Aggregate all content
+const allQuizzes: Quiz[] = [
+  ...cs101Quizzes,
+  ...math101Quizzes,
+  ...cs102Quizzes,
+  ...cs103Quizzes,
+  ...math102Quizzes,
+  ...cs104Quizzes,
+  ...cs105Quizzes,
+];
+
+const allExercises: Exercise[] = [
+  ...cs101Exercises,
+  ...math101Exercises,
+  ...cs102Exercises,
+  ...cs103Exercises,
+  ...math102Exercises,
+  ...cs104Exercises,
+  ...cs105Exercises,
+];
+
+const allProjects: Project[] = [
+  ...cs101Projects,
+  ...math101Projects,
+  ...cs102Projects,
+  ...cs103Projects,
+  ...math102Projects,
+  ...cs104Projects,
+  ...cs105Projects,
+];
+
+// Initialize the application
+function initApp(): void {
+  const sidebarEl = document.getElementById('sidebar');
+  const mainEl = document.getElementById('main-content');
+
+  if (!sidebarEl || !mainEl) {
+    console.error('Required DOM elements not found');
+    return;
+  }
+
+  // Set up route change handler
+  onRouteChange((route) => {
+    const { path, params } = route;
+
+    // Get fresh progress for each route change
+    const userProgress = progressStorage.getProgress();
+
+    // Render sidebar for all routes
+    renderSidebar(sidebarEl, path, curriculum, userProgress.subjects);
+
+    // Route to appropriate page
+    if (path === '/' || path === '') {
+      renderHomePage(mainEl, curriculum);
+    } else if (path === '/curriculum') {
+      renderCurriculumPage(mainEl, curriculum);
+    } else if (path === '/progress') {
+      renderProgressPage(mainEl, curriculum);
+    } else if (path === '/settings') {
+      renderSettingsPage(mainEl);
+    } else if (path.startsWith('/subject/')) {
+      const subjectId = params.id;
+
+      if (params.topicId) {
+        renderSubjectPage(mainEl, curriculum, subjectId, params.topicId, allProjects);
+      } else if (params.quizId) {
+        renderQuizPage(mainEl, curriculum, allQuizzes, subjectId, params.quizId);
+      } else if (params.exId) {
+        renderExercisePage(mainEl, curriculum, allExercises, subjectId, params.exId);
+      } else if (params.projId) {
+        renderProjectPage(mainEl, curriculum, allProjects, subjectId, params.projId);
+      } else {
+        renderSubjectPage(mainEl, curriculum, subjectId, undefined, allProjects);
+      }
+    }
+  });
+
+  // Router initializes itself via constructor - no need to call init()
+}
+
+// Initialize when DOM is ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initApp);
+} else {
+  initApp();
+}
