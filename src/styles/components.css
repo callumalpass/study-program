@@ -1060,3 +1060,102 @@
   display: flex;
   gap: var(--space-md);
 }
+
+/* Proof Editor Container */
+.proof-editor-container {
+  position: relative;
+  background-color: var(--code-bg);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: var(--space-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.proof-editor-container.fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  border-radius: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.proof-editor-container.fullscreen .editor-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.proof-editor-container.fullscreen .editor-element {
+  flex: 1;
+  height: auto !important;
+}
+
+.proof-editor-container.light-theme {
+  background-color: #ffffff;
+  border-color: #d0d7de;
+}
+
+/* Save Status Indicator */
+.save-status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: var(--font-size-xs);
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-sm);
+}
+
+.save-status.saved {
+  color: var(--color-success);
+  background-color: rgba(86, 211, 100, 0.1);
+}
+
+.save-status.saved svg {
+  width: 12px;
+  height: 12px;
+}
+
+.save-status.unsaved {
+  color: var(--color-warning);
+  background-color: rgba(210, 153, 34, 0.1);
+}
+
+/* Proof Instructions */
+.proof-instructions {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-md);
+  line-height: var(--line-height-relaxed);
+}
+
+.proof-instructions code {
+  background-color: var(--color-bg-elevated);
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+}
+
+/* Completion Badge for Written Exercises */
+.completion-badge.saved {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-xs) var(--space-sm);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  border-radius: var(--radius-sm);
+  background-color: rgba(86, 211, 100, 0.15);
+  color: var(--color-success);
+}
+
+.completion-badge.saved svg {
+  width: 12px;
+  height: 12px;
+}

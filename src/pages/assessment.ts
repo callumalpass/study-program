@@ -4,6 +4,7 @@ import { progressStorage } from '@/core/storage';
 import { navigateToSubject, navigateToExercise, navigateToTopic } from '@/core/router';
 import { Icons } from '@/components/icons';
 import { createCodeEditor, type CodeEditor } from '@/components/code-editor';
+import { createProofEditor, type ProofEditor } from '@/components/proof-editor';
 import type { TestResult } from '@/components/code-runner';
 
 // Helper to find adjacent exercises within the same topic
@@ -182,7 +183,7 @@ function renderCodingExercisePage(
   const isPassed = completions.some(c => c.passed);
   const bestCompletion = completions.length > 0
     ? completions.reduce((best, current) =>
-        current.passedTestCases > best.passedTestCases ? current : best
+        (current.passedTestCases ?? 0) > (best.passedTestCases ?? 0) ? current : best
       )
     : null;
 
@@ -382,6 +383,11 @@ function renderWrittenExercisePage(
   currentIndex: number,
   totalExercises: number
 ): void {
+  const exerciseId = exercise.id;
+  const completions = progressStorage.getExerciseCompletions(subjectId, exerciseId);
+  const hasSavedProof = completions.some(c => c.type === 'written' && c.code.trim().length > 0);
+  const latestCompletion = completions.filter(c => c.type === 'written').pop();
+
   container.innerHTML = `
     <div class="exercise-page">
       <nav class="breadcrumb">
@@ -400,6 +406,9 @@ function renderWrittenExercisePage(
           <span class="exercise-counter">Exercise ${currentIndex + 1} of ${totalExercises}</span>
           <span class="meta-separator"></span>
           <span class="exercise-type-badge">Written</span>
+          ${hasSavedProof ? `
+            <span class="completion-badge saved">${Icons.Check} Proof Saved</span>
+          ` : ''}
         </div>
       </header>
 
@@ -410,26 +419,10 @@ function renderWrittenExercisePage(
         </div>
       </section>
 
-      ${exercise.hints.length > 0 ? `
-        <section class="exercise-hints">
-          <h2>Hints</h2>
-          <details>
-            <summary>Click to reveal hints</summary>
-            <ol class="hints-list">
-              ${exercise.hints.map(hint => `<li>${hint}</li>`).join('')}
-            </ol>
-          </details>
-        </section>
-      ` : ''}
-
-      <section class="exercise-solution">
-        <h2>Solution</h2>
-        <details>
-          <summary>Click to reveal solution</summary>
-          <div class="solution-content">
-            ${renderMarkdown(exercise.solution)}
-          </div>
-        </details>
+      <section class="exercise-workspace">
+        <h2>Your Proof</h2>
+        <p class="proof-instructions">Write your proof below. You can use Markdown formatting and LaTeX notation (e.g., <code>$x^2$</code> for inline math). Your work is auto-saved as a draft, but click "Save Proof" to save it to your progress.</p>
+        <div id="proof-editor-container"></div>
       </section>
 
       <nav class="exercise-navigation">
@@ -462,13 +455,60 @@ function renderWrittenExercisePage(
     </div>
   `;
 
-  // Navigation event handlers
+  // Initialize proof editor
+  const editorContainer = container.querySelector('#proof-editor-container') as HTMLElement;
+  if (editorContainer) {
+    const proofEditor = createProofEditor(editorContainer, {
+      initialValue: latestCompletion?.code || '',
+      height: '300px',
+      storageKey: `proof_${subjectId}_${exerciseId}`,
+      hints: exercise.hints,
+      solution: exercise.solution,
+      onSave: (content: string, timeSpentSeconds: number) => {
+        const completion: ExerciseCompletion = {
+          completionId: `completion_${Date.now()}`,
+          timestamp: new Date().toISOString(),
+          code: content,
+          passed: content.trim().length > 0,
+          timeSpentSeconds,
+          type: 'written',
+        };
+
+        progressStorage.addExerciseCompletion(subjectId, exerciseId, completion);
+
+        // Update the header badge
+        const metaRow = container.querySelector('.exercise-meta-row');
+        if (metaRow && content.trim().length > 0) {
+          const existingBadge = metaRow.querySelector('.completion-badge');
+          if (!existingBadge) {
+            const badge = document.createElement('span');
+            badge.className = 'completion-badge saved';
+            badge.innerHTML = `${Icons.Check} Proof Saved`;
+            metaRow.appendChild(badge);
+          }
+        }
+      },
+    });
+
+    // Store editor reference for cleanup
+    (container as HTMLElement & { _proofEditor?: ProofEditor })._proofEditor = proofEditor;
+  }
+
+  // Navigation event handlers with cleanup
+  const disposeAndNavigate = (callback: () => void) => {
+    const editorRef = (container as HTMLElement & { _proofEditor?: ProofEditor })._proofEditor;
+    if (editorRef) {
+      editorRef.dispose();
+    }
+    callback();
+  };
+
   const prevBtn = container.querySelector('#prev-exercise');
   if (prevBtn) {
     prevBtn.addEventListener('click', () => {
       const prevId = (prevBtn as HTMLElement).dataset.exerciseId;
       if (prevId) {
-        navigateToExercise(subjectId, prevId);
+        disposeAndNavigate(() => navigateToExercise(subjectId, prevId));
       }
     });
   }
@@ -478,19 +518,23 @@ function renderWrittenExercisePage(
     nextBtn.addEventListener('click', () => {
       const nextId = (nextBtn as HTMLElement).dataset.exerciseId;
       if (nextId) {
-        navigateToExercise(subjectId, nextId);
+        disposeAndNavigate(() => navigateToExercise(subjectId, nextId));
       }
     });
   }
 
   const backToTopicBtn = container.querySelector('#back-to-topic');
   if (backToTopicBtn) {
-    backToTopicBtn.addEventListener('click', () => navigateToTopic(subjectId, exercise.topicId));
+    backToTopicBtn.addEventListener('click', () => {
+      disposeAndNavigate(() => navigateToTopic(subjectId, exercise.topicId));
+    });
   }
 
   const doneBtn = container.querySelector('#back-to-topic-done');
   if (doneBtn) {
-    doneBtn.addEventListener('click', () => navigateToTopic(subjectId, exercise.topicId));
+    doneBtn.addEventListener('click', () => {
+      disposeAndNavigate(() => navigateToTopic(subjectId, exercise.topicId));
+    });
   }
 }
 
