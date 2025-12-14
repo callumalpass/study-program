@@ -30,7 +30,7 @@ CS101 (Intro to Programming) has:
    - Missing topics that should be covered
    - Topics with insufficient depth
    - Insufficient quizzes (target: 3 per topic, 5 questions each)
-   - Insufficient exercises (target: 16 per topic, difficulty 1-5)
+   - Insufficient exercises (target: at least 16 per topic, difficulty 1-5)
    - Missing exams
 
 3. **Determine assessment strategy**:
@@ -55,9 +55,9 @@ CS101 (Intro to Programming) has:
       - Best practices
       - Summary
 
-   b. **Exercises** (16 per topic):
-      - Difficulties 1-2: 4-5 exercises (fundamentals)
-      - Difficulties 3: 5-6 exercises (intermediate)
+   b. **Exercises** ( at least 16 per topic):
+      - Difficulties 1-2: at least 4-5 exercises (fundamentals)
+      - Difficulties 3: at least 5-6 exercises (intermediate)
       - Difficulties 4-5: 5-6 exercises (challenging)
       - Each exercise needs: description, starter code, solution, test cases (visible + hidden), hints
 
@@ -68,14 +68,14 @@ CS101 (Intro to Programming) has:
       - Question types: multiple_choice, true_false, code_output, fill_blank
 
    d. **Exams** (if applicable for this subject):
-      - **Midterm**: ~25-30 questions, 60-75 minutes, covers first half of topics
-      - **Final**: ~40-45 questions, 90-120 minutes, comprehensive
+      - **Midterm**: ~25-30 questions (calibrate for subject), 60-75 minutes, covers first half of topics
+      - **Final**: ~40-45 questions (calibrate for subject), 90-180 minutes, comprehensive
       - Include mix of question types:
         - multiple_choice (conceptual understanding)
         - code_output (tracing/prediction)
         - fill_blank (syntax/terminology)
         - true_false (common misconceptions)
-        - written (explain concepts, compare approaches)
+        - **written** (explain concepts, compare approaches, write proofs)
         - coding (with test cases, for programming subjects)
       - Include "find the bug" or debugging questions where appropriate
       - Add hidden test cases to coding questions
@@ -147,10 +147,3 @@ src/content/subjects/[subject]/
 - Include "what's wrong with this code" debugging questions
 - Keep 1-2 projects for practical systems programming
 
----
-
-## Usage
-
-Replace `[SUBJECT_ID]` with one of: `cs102`, `cs103`, `cs104`, `cs105`, `math101`, `math102`, `math203`
-
-Then provide this prompt to Claude Code and ask it to upgrade that specific subject.
