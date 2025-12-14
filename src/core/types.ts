@@ -138,9 +138,10 @@ export interface ExerciseCompletion {
   timestamp: string; // ISO date string
   code: string;
   passed: boolean;
-  passedTestCases: number;
-  totalTestCases: number;
+  passedTestCases?: number; // Optional for written exercises
+  totalTestCases?: number; // Optional for written exercises
   timeSpentSeconds: number;
+  type?: 'coding' | 'written'; // Type of exercise
 }
 
 export interface ProjectSubmission {
