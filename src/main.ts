@@ -7,6 +7,7 @@ import './styles/pages.css';
 import { onRouteChange } from './core/router';
 import { progressStorage } from './core/storage';
 import { curriculum } from './data/curriculum';
+import type { Theme } from './core/types';
 import { renderSidebar } from './components/sidebar';
 import { renderHomePage } from './pages/home';
 import { renderCurriculumPage } from './pages/curriculum';
@@ -59,6 +60,36 @@ const allProjects: Project[] = [
 ];
 
 /**
+ * Apply the theme to the document
+ */
+function applyTheme(theme: Theme): void {
+  const root = document.documentElement;
+
+  if (theme === 'auto') {
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    root.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+  } else {
+    root.setAttribute('data-theme', theme);
+  }
+}
+
+/**
+ * Initialize theme on app startup and listen for system changes
+ */
+function initTheme(): void {
+  const settings = progressStorage.getSettings();
+  applyTheme(settings.theme);
+
+  // Listen for system theme changes when in 'auto' mode
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+    const currentSettings = progressStorage.getSettings();
+    if (currentSettings.theme === 'auto') {
+      applyTheme('auto');
+    }
+  });
+}
+
+/**
  * Render an error page when something goes wrong
  */
 function renderErrorPage(container: HTMLElement, error: Error, path: string): void {
@@ -104,6 +135,9 @@ function safeRender(
 
 // Initialize the application
 function initApp(): void {
+  // Initialize theme first to prevent flash of wrong theme
+  initTheme();
+
   const sidebarEl = document.getElementById('sidebar');
   const mainEl = document.getElementById('main-content');
 

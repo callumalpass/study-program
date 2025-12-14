@@ -37,6 +37,12 @@ export interface CodeEditor {
 // Local storage key prefix
 const STORAGE_PREFIX = 'cs_degree_editor_';
 
+// Get the editor theme from the app's current theme
+function getEditorThemeFromApp(): 'vs-dark' | 'vs-light' {
+  const appTheme = document.documentElement.getAttribute('data-theme');
+  return appTheme === 'light' ? 'vs-light' : 'vs-dark';
+}
+
 export function createCodeEditor(
   container: HTMLElement,
   config: EditorConfig = {}
@@ -44,12 +50,18 @@ export function createCodeEditor(
   container.innerHTML = '';
   container.className = 'code-editor-container';
 
-  let currentTheme = config.theme || 'vs-dark';
+  // Default to app theme if no explicit theme provided
+  let currentTheme = config.theme || getEditorThemeFromApp();
   let currentFontSize = config.fontSize || 14;
   let isFullscreen = false;
   let hintsRevealed = 0;
   let vimModeEnabled = localStorage.getItem('cs_degree_vim_mode') === 'true';
   let vimModeInstance: VimMode | null = null;
+
+  // Apply light theme class if needed
+  if (currentTheme === 'vs-light') {
+    container.classList.add('light-theme');
+  }
 
   // Load saved code from localStorage if available
   const storageKey = config.storageKey ? `${STORAGE_PREFIX}${config.storageKey}` : null;
