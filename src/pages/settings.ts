@@ -364,8 +364,20 @@ function attachEventListeners(container: HTMLElement): void {
            // Load remote data
            const remoteProgress = await githubService.loadGist(token, gistId);
            if (remoteProgress) {
+             // Merge remote progress with current local settings (including the token we just verified).
+             // This ensures we don't accidentally pull a stale/revoked token or empty settings from the gist.
+             const currentSettings = progressStorage.getSettings();
+             const progressToImport = {
+               ...remoteProgress,
+               settings: {
+                 ...currentSettings,
+                 githubToken: token,
+                 gistId: gistId
+               }
+             };
+
              // Import (this saves to local storage)
-             importProgress(JSON.stringify(remoteProgress));
+             importProgress(JSON.stringify(progressToImport));
              githubStatus.textContent = `✅ Synced with Gist: ${gistId.substring(0, 8)}...`;
              githubStatus.style.color = 'var(--color-success)';
              
