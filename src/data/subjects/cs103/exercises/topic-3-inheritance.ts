@@ -128,5 +128,69 @@ export const topic3Exercises: CodingExercise[] = [
     ],
     hints: ['Base class defines interface with NotImplementedError', 'Subclasses must implement process_payment()'],
     language: 'python'
+  },
+  {
+    id: 'cs103-t3-ex09',
+    subjectId: 'cs103',
+    topicId: 'cs103-3',
+    title: 'Mixin Classes',
+    difficulty: 4,
+    description: 'Create a JSONMixin that adds a to_json() method. Create a Product class that uses this mixin alongside regular inheritance.',
+    starterCode: 'import json\n\nclass JSONMixin:\n    def to_json(self):\n        pass\n\nclass Item:\n    def __init__(self, name):\n        self.name = name\n\nclass Product(Item, JSONMixin):\n    def __init__(self, name, price):\n        pass\n\np = Product("Widget", 9.99)\nprint(p.to_json())',
+    solution: 'import json\n\nclass JSONMixin:\n    def to_json(self):\n        return json.dumps(self.__dict__)\n\nclass Item:\n    def __init__(self, name):\n        self.name = name\n\nclass Product(Item, JSONMixin):\n    def __init__(self, name, price):\n        super().__init__(name)\n        self.price = price\n\np = Product("Widget", 9.99)\nprint(p.to_json())',
+    testCases: [
+      { input: 'import json; p = Product("X", 5); json.loads(p.to_json())["name"]', expectedOutput: 'X', isHidden: false, description: 'JSON has name' },
+      { input: 'import json; p = Product("Y", 10); json.loads(p.to_json())["price"]', expectedOutput: '10', isHidden: true, description: 'JSON has price' }
+    ],
+    hints: ['Mixin provides reusable functionality', 'self.__dict__ contains all instance attributes'],
+    language: 'python'
+  },
+  {
+    id: 'cs103-t3-ex10',
+    subjectId: 'cs103',
+    topicId: 'cs103-3',
+    title: 'Method Resolution Order',
+    difficulty: 5,
+    description: 'Create a diamond inheritance pattern and use super() correctly. Classes A -> B, A -> C, and D inherits from both B and C.',
+    starterCode: 'class A:\n    def greet(self):\n        return "A"\n\nclass B(A):\n    def greet(self):\n        return "B-" + super().greet()\n\nclass C(A):\n    def greet(self):\n        return "C-" + super().greet()\n\nclass D(B, C):\n    def greet(self):\n        return "D-" + super().greet()\n\nd = D()\nprint(d.greet())\nprint([c.__name__ for c in D.__mro__])',
+    solution: 'class A:\n    def greet(self):\n        return "A"\n\nclass B(A):\n    def greet(self):\n        return "B-" + super().greet()\n\nclass C(A):\n    def greet(self):\n        return "C-" + super().greet()\n\nclass D(B, C):\n    def greet(self):\n        return "D-" + super().greet()\n\nd = D()\nprint(d.greet())\nprint([c.__name__ for c in D.__mro__])',
+    testCases: [
+      { input: 'd = D(); d.greet()', expectedOutput: 'D-B-C-A', isHidden: false, description: 'MRO followed' },
+      { input: '[c.__name__ for c in D.__mro__]', expectedOutput: "['D', 'B', 'C', 'A', 'object']", isHidden: true, description: 'MRO list' }
+    ],
+    hints: ['MRO follows C3 linearization', 'super() follows MRO, not just parent'],
+    language: 'python'
+  },
+  {
+    id: 'cs103-t3-drill-1',
+    subjectId: 'cs103',
+    topicId: 'cs103-3',
+    title: 'Basic Inheritance',
+    difficulty: 1,
+    description: 'Create a Child class that inherits from Parent. Child should inherit the greet() method.',
+    starterCode: 'class Parent:\n    def greet(self):\n        return "Hello from Parent"\n\nclass Child(Parent):\n    pass\n\nc = Child()\nprint(c.greet())',
+    solution: 'class Parent:\n    def greet(self):\n        return "Hello from Parent"\n\nclass Child(Parent):\n    pass\n\nc = Child()\nprint(c.greet())',
+    testCases: [
+      { input: 'Child().greet()', expectedOutput: 'Hello from Parent', isHidden: false, description: 'Inherited method' },
+      { input: 'isinstance(Child(), Parent)', expectedOutput: 'True', isHidden: true, description: 'Is instance of Parent' }
+    ],
+    hints: ['Put parent class name in parentheses after class name', 'Child inherits all methods from Parent'],
+    language: 'python'
+  },
+  {
+    id: 'cs103-t3-drill-2',
+    subjectId: 'cs103',
+    topicId: 'cs103-3',
+    title: 'Calling super()',
+    difficulty: 1,
+    description: 'Create a Square class that inherits from Rectangle. Use super() to initialize width and height to the same value.',
+    starterCode: 'class Rectangle:\n    def __init__(self, width, height):\n        self.width = width\n        self.height = height\n    \n    def area(self):\n        return self.width * self.height\n\nclass Square(Rectangle):\n    def __init__(self, side):\n        pass\n\ns = Square(5)\nprint(s.area())',
+    solution: 'class Rectangle:\n    def __init__(self, width, height):\n        self.width = width\n        self.height = height\n    \n    def area(self):\n        return self.width * self.height\n\nclass Square(Rectangle):\n    def __init__(self, side):\n        super().__init__(side, side)\n\ns = Square(5)\nprint(s.area())',
+    testCases: [
+      { input: 'Square(5).area()', expectedOutput: '25', isHidden: false, description: 'Square area' },
+      { input: 'Square(3).width', expectedOutput: '3', isHidden: true, description: 'Width inherited' }
+    ],
+    hints: ['Call super().__init__(side, side)', 'Square is a Rectangle with equal sides'],
+    language: 'python'
   }
 ];

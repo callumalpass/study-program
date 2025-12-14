@@ -130,5 +130,68 @@ export const topic2Exercises: CodingExercise[] = [
     ],
     hints: ['Never store or return the actual password', 'Compare hashes instead'],
     language: 'python'
+  },
+  {
+    id: 'cs103-t2-ex09',
+    subjectId: 'cs103',
+    topicId: 'cs103-2',
+    title: 'Lazy Property Initialization',
+    difficulty: 4,
+    description: 'Create a DataLoader class with an expensive data property that computes only once (lazy loading). Use a cached property pattern.',
+    starterCode: 'class DataLoader:\n    def __init__(self, source):\n        self.source = source\n        self._data = None\n    \n    @property\n    def data(self):\n        # Load data only on first access\n        pass\n    \n    def _load_data(self):\n        print(f"Loading from {self.source}...")\n        return [1, 2, 3, 4, 5]\n\nloader = DataLoader("database")\nprint(loader.data)  # Should print loading message\nprint(loader.data)  # Should NOT print loading message',
+    solution: 'class DataLoader:\n    def __init__(self, source):\n        self.source = source\n        self._data = None\n    \n    @property\n    def data(self):\n        if self._data is None:\n            self._data = self._load_data()\n        return self._data\n    \n    def _load_data(self):\n        print(f"Loading from {self.source}...")\n        return [1, 2, 3, 4, 5]\n\nloader = DataLoader("database")\nprint(loader.data)\nprint(loader.data)',
+    testCases: [
+      { input: 'l = DataLoader("x"); l.data; l.data; l._data', expectedOutput: '[1, 2, 3, 4, 5]', isHidden: false, description: 'Data loaded once' }
+    ],
+    hints: ['Check if _data is None before loading', 'Store result after first load'],
+    language: 'python'
+  },
+  {
+    id: 'cs103-t2-ex10',
+    subjectId: 'cs103',
+    topicId: 'cs103-2',
+    title: 'Encapsulated Collection',
+    difficulty: 4,
+    description: 'Create a TodoList class that encapsulates a list of items. Return copies to prevent external modification. Provide add, remove, and list methods.',
+    starterCode: 'class TodoList:\n    def __init__(self):\n        self._items = []\n    \n    def add(self, item):\n        pass\n    \n    def remove(self, item):\n        pass\n    \n    @property\n    def items(self):\n        # Return a copy to prevent external modification\n        pass\n    \n    def __len__(self):\n        pass\n\ntodo = TodoList()\ntodo.add("Task 1")\nitems = todo.items\nitems.append("Hacked!")  # Should not affect internal list\nprint(len(todo))',
+    solution: 'class TodoList:\n    def __init__(self):\n        self._items = []\n    \n    def add(self, item):\n        self._items.append(item)\n    \n    def remove(self, item):\n        if item in self._items:\n            self._items.remove(item)\n    \n    @property\n    def items(self):\n        return list(self._items)\n    \n    def __len__(self):\n        return len(self._items)\n\ntodo = TodoList()\ntodo.add("Task 1")\nitems = todo.items\nitems.append("Hacked!")\nprint(len(todo))',
+    testCases: [
+      { input: 't = TodoList(); t.add("A"); t.items.append("X"); len(t)', expectedOutput: '1', isHidden: false, description: 'External mod blocked' },
+      { input: 't = TodoList(); t.add("A"); t.add("B"); t.remove("A"); len(t)', expectedOutput: '1', isHidden: true, description: 'Remove works' }
+    ],
+    hints: ['Return list(self._items) to return a copy', 'Modifications to returned list should not affect internal state'],
+    language: 'python'
+  },
+  {
+    id: 'cs103-t2-drill-1',
+    subjectId: 'cs103',
+    topicId: 'cs103-2',
+    title: 'Simple Getter',
+    difficulty: 1,
+    description: 'Create a Secret class with a private _value and a getter method get_value().',
+    starterCode: 'class Secret:\n    def __init__(self, value):\n        self._value = value\n    \n    def get_value(self):\n        pass\n\ns = Secret(42)\nprint(s.get_value())',
+    solution: 'class Secret:\n    def __init__(self, value):\n        self._value = value\n    \n    def get_value(self):\n        return self._value\n\ns = Secret(42)\nprint(s.get_value())',
+    testCases: [
+      { input: 'Secret(42).get_value()', expectedOutput: '42', isHidden: false, description: 'Get value' },
+      { input: 'Secret("hello").get_value()', expectedOutput: 'hello', isHidden: true, description: 'Get string' }
+    ],
+    hints: ['Return self._value from the getter', '_value is accessible but convention says use getter'],
+    language: 'python'
+  },
+  {
+    id: 'cs103-t2-drill-2',
+    subjectId: 'cs103',
+    topicId: 'cs103-2',
+    title: 'Property Basics',
+    difficulty: 1,
+    description: 'Convert a getter method to a @property decorator. Create a Name class with a name property.',
+    starterCode: 'class Name:\n    def __init__(self, name):\n        self._name = name\n    \n    @property\n    def name(self):\n        pass\n\nn = Name("Alice")\nprint(n.name)  # Note: no parentheses!',
+    solution: 'class Name:\n    def __init__(self, name):\n        self._name = name\n    \n    @property\n    def name(self):\n        return self._name\n\nn = Name("Alice")\nprint(n.name)',
+    testCases: [
+      { input: 'Name("Alice").name', expectedOutput: 'Alice', isHidden: false, description: 'Property access' },
+      { input: 'Name("Bob").name', expectedOutput: 'Bob', isHidden: true, description: 'Another name' }
+    ],
+    hints: ['@property makes a method accessible like an attribute', 'No parentheses when accessing: n.name not n.name()'],
+    language: 'python'
   }
 ];

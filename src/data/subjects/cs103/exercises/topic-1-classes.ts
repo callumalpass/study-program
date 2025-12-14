@@ -130,5 +130,69 @@ export const topic1Exercises: CodingExercise[] = [
     ],
     hints: ['Store items as a list in ShoppingCart', 'Use list comprehension to filter when removing'],
     language: 'python'
+  },
+  {
+    id: 'cs103-t1-ex09',
+    subjectId: 'cs103',
+    topicId: 'cs103-1',
+    title: 'Class Variables vs Instance Variables',
+    difficulty: 3,
+    description: 'Create a Dog class with a class variable species shared by all dogs, an instance counter, and instance variables name and age.',
+    starterCode: 'class Dog:\n    species = "Canis familiaris"\n    count = 0\n    \n    def __init__(self, name, age):\n        pass\n    \n    def describe(self):\n        pass\n\nd1 = Dog("Buddy", 3)\nd2 = Dog("Max", 5)\nprint(Dog.count)\nprint(d1.species)',
+    solution: 'class Dog:\n    species = "Canis familiaris"\n    count = 0\n    \n    def __init__(self, name, age):\n        self.name = name\n        self.age = age\n        Dog.count += 1\n    \n    def describe(self):\n        return f"{self.name} is {self.age} years old"\n\nd1 = Dog("Buddy", 3)\nd2 = Dog("Max", 5)\nprint(Dog.count)\nprint(d1.species)',
+    testCases: [
+      { input: 'Dog.count = 0; d1 = Dog("A", 1); d2 = Dog("B", 2); Dog.count', expectedOutput: '2', isHidden: false, description: 'Count increments' },
+      { input: 'd = Dog("X", 1); d.species', expectedOutput: 'Canis familiaris', isHidden: true, description: 'Shared species' }
+    ],
+    hints: ['Increment Dog.count in __init__, not self.count', 'Class variables are accessed via ClassName.variable or self.variable'],
+    language: 'python'
+  },
+  {
+    id: 'cs103-t1-ex10',
+    subjectId: 'cs103',
+    topicId: 'cs103-1',
+    title: 'Library Book System',
+    difficulty: 4,
+    description: 'Create Book and Library classes. Library can add books, find books by title, and list all books. Books track if they are checked out.',
+    starterCode: 'class Book:\n    def __init__(self, title, author):\n        pass\n    \n    def check_out(self):\n        pass\n    \n    def return_book(self):\n        pass\n\nclass Library:\n    def __init__(self):\n        pass\n    \n    def add_book(self, book):\n        pass\n    \n    def find_by_title(self, title):\n        pass\n    \n    def list_available(self):\n        pass\n\nlib = Library()\nlib.add_book(Book("Python 101", "Author A"))\nlib.add_book(Book("Java Guide", "Author B"))\nprint(len(lib.list_available()))',
+    solution: 'class Book:\n    def __init__(self, title, author):\n        self.title = title\n        self.author = author\n        self.is_checked_out = False\n    \n    def check_out(self):\n        if not self.is_checked_out:\n            self.is_checked_out = True\n            return True\n        return False\n    \n    def return_book(self):\n        self.is_checked_out = False\n\nclass Library:\n    def __init__(self):\n        self.books = []\n    \n    def add_book(self, book):\n        self.books.append(book)\n    \n    def find_by_title(self, title):\n        for book in self.books:\n            if book.title == title:\n                return book\n        return None\n    \n    def list_available(self):\n        return [b for b in self.books if not b.is_checked_out]\n\nlib = Library()\nlib.add_book(Book("Python 101", "Author A"))\nlib.add_book(Book("Java Guide", "Author B"))\nprint(len(lib.list_available()))',
+    testCases: [
+      { input: 'lib = Library(); lib.add_book(Book("X", "Y")); len(lib.list_available())', expectedOutput: '1', isHidden: false, description: 'One book available' },
+      { input: 'lib = Library(); b = Book("X", "Y"); lib.add_book(b); b.check_out(); len(lib.list_available())', expectedOutput: '0', isHidden: true, description: 'None available after checkout' }
+    ],
+    hints: ['Track is_checked_out state in Book', 'list_available filters by is_checked_out'],
+    language: 'python'
+  },
+  {
+    id: 'cs103-t1-drill-1',
+    subjectId: 'cs103',
+    topicId: 'cs103-1',
+    title: 'Basic Class Definition',
+    difficulty: 1,
+    description: 'Create a simple Car class with make and model attributes. Add a describe() method that returns "Make: X, Model: Y".',
+    starterCode: 'class Car:\n    def __init__(self, make, model):\n        pass\n    \n    def describe(self):\n        pass\n\nc = Car("Toyota", "Camry")\nprint(c.describe())',
+    solution: 'class Car:\n    def __init__(self, make, model):\n        self.make = make\n        self.model = model\n    \n    def describe(self):\n        return f"Make: {self.make}, Model: {self.model}"\n\nc = Car("Toyota", "Camry")\nprint(c.describe())',
+    testCases: [
+      { input: 'c = Car("Toyota", "Camry"); c.describe()', expectedOutput: 'Make: Toyota, Model: Camry', isHidden: false, description: 'Describe car' },
+      { input: 'c = Car("Honda", "Civic"); c.make', expectedOutput: 'Honda', isHidden: true, description: 'Access make' }
+    ],
+    hints: ['Use self.attribute to store values', 'Use f-string for formatting'],
+    language: 'python'
+  },
+  {
+    id: 'cs103-t1-drill-2',
+    subjectId: 'cs103',
+    topicId: 'cs103-1',
+    title: '__str__ Method',
+    difficulty: 1,
+    description: 'Create a Point class with x and y. Implement __str__ to return "(x, y)" format.',
+    starterCode: 'class Point:\n    def __init__(self, x, y):\n        pass\n    \n    def __str__(self):\n        pass\n\np = Point(3, 4)\nprint(p)',
+    solution: 'class Point:\n    def __init__(self, x, y):\n        self.x = x\n        self.y = y\n    \n    def __str__(self):\n        return f"({self.x}, {self.y})"\n\np = Point(3, 4)\nprint(p)',
+    testCases: [
+      { input: 'str(Point(3, 4))', expectedOutput: '(3, 4)', isHidden: false, description: 'Point string' },
+      { input: 'str(Point(0, 0))', expectedOutput: '(0, 0)', isHidden: true, description: 'Origin point' }
+    ],
+    hints: ['__str__ is called by print() and str()', 'Return a formatted string'],
+    language: 'python'
   }
 ];

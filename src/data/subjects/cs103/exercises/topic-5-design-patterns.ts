@@ -126,5 +126,68 @@ export const topic5Exercises: CodingExercise[] = [
     ],
     hints: ['Adapter wraps old interface', 'print() calls print_text() internally'],
     language: 'python'
+  },
+  {
+    id: 'cs103-t5-ex09',
+    subjectId: 'cs103',
+    topicId: 'cs103-5',
+    title: 'Facade Pattern',
+    difficulty: 4,
+    description: 'Create a ComputerFacade that simplifies interaction with complex CPU, Memory, and HardDrive subsystems.',
+    starterCode: 'class CPU:\n    def start(self):\n        return "CPU starting"\n\nclass Memory:\n    def load(self):\n        return "Memory loaded"\n\nclass HardDrive:\n    def read(self):\n        return "HardDrive reading"\n\nclass ComputerFacade:\n    def __init__(self):\n        pass\n    \n    def start(self):\n        # Call all subsystems and return combined result\n        pass\n\ncomputer = ComputerFacade()\nprint(computer.start())',
+    solution: 'class CPU:\n    def start(self):\n        return "CPU starting"\n\nclass Memory:\n    def load(self):\n        return "Memory loaded"\n\nclass HardDrive:\n    def read(self):\n        return "HardDrive reading"\n\nclass ComputerFacade:\n    def __init__(self):\n        self.cpu = CPU()\n        self.memory = Memory()\n        self.hard_drive = HardDrive()\n    \n    def start(self):\n        results = []\n        results.append(self.cpu.start())\n        results.append(self.memory.load())\n        results.append(self.hard_drive.read())\n        return "; ".join(results)\n\ncomputer = ComputerFacade()\nprint(computer.start())',
+    testCases: [
+      { input: '"CPU" in ComputerFacade().start() and "Memory" in ComputerFacade().start()', expectedOutput: 'True', isHidden: false, description: 'Facade calls subsystems' }
+    ],
+    hints: ['Facade creates and manages subsystems', 'Single method coordinates multiple complex operations'],
+    language: 'python'
+  },
+  {
+    id: 'cs103-t5-ex10',
+    subjectId: 'cs103',
+    topicId: 'cs103-5',
+    title: 'State Pattern',
+    difficulty: 5,
+    description: 'Create a TrafficLight using the State pattern. States: Red, Yellow, Green. Each state transitions to the next.',
+    starterCode: 'class State:\n    def handle(self, context):\n        raise NotImplementedError\n\nclass RedState(State):\n    def handle(self, context):\n        pass\n\nclass YellowState(State):\n    def handle(self, context):\n        pass\n\nclass GreenState(State):\n    def handle(self, context):\n        pass\n\nclass TrafficLight:\n    def __init__(self):\n        self.state = RedState()\n    \n    def change(self):\n        pass\n    \n    def current(self):\n        pass\n\nlight = TrafficLight()\nprint(light.current())\nlight.change()\nprint(light.current())',
+    solution: 'class State:\n    def handle(self, context):\n        raise NotImplementedError\n\nclass RedState(State):\n    def handle(self, context):\n        context.state = GreenState()\n    def __str__(self):\n        return "Red"\n\nclass YellowState(State):\n    def handle(self, context):\n        context.state = RedState()\n    def __str__(self):\n        return "Yellow"\n\nclass GreenState(State):\n    def handle(self, context):\n        context.state = YellowState()\n    def __str__(self):\n        return "Green"\n\nclass TrafficLight:\n    def __init__(self):\n        self.state = RedState()\n    \n    def change(self):\n        self.state.handle(self)\n    \n    def current(self):\n        return str(self.state)\n\nlight = TrafficLight()\nprint(light.current())\nlight.change()\nprint(light.current())',
+    testCases: [
+      { input: 'l = TrafficLight(); l.current()', expectedOutput: 'Red', isHidden: false, description: 'Starts red' },
+      { input: 'l = TrafficLight(); l.change(); l.current()', expectedOutput: 'Green', isHidden: true, description: 'Red -> Green' }
+    ],
+    hints: ['Each state knows its successor', 'State.handle() changes context.state'],
+    language: 'python'
+  },
+  {
+    id: 'cs103-t5-drill-1',
+    subjectId: 'cs103',
+    topicId: 'cs103-5',
+    title: 'Simple Singleton',
+    difficulty: 2,
+    description: 'Create a Logger singleton using a class variable to store the single instance.',
+    starterCode: 'class Logger:\n    _instance = None\n    \n    @classmethod\n    def get_instance(cls):\n        pass\n    \n    def log(self, message):\n        return f"LOG: {message}"\n\nl1 = Logger.get_instance()\nl2 = Logger.get_instance()\nprint(l1 is l2)',
+    solution: 'class Logger:\n    _instance = None\n    \n    @classmethod\n    def get_instance(cls):\n        if cls._instance is None:\n            cls._instance = cls()\n        return cls._instance\n    \n    def log(self, message):\n        return f"LOG: {message}"\n\nl1 = Logger.get_instance()\nl2 = Logger.get_instance()\nprint(l1 is l2)',
+    testCases: [
+      { input: 'Logger.get_instance() is Logger.get_instance()', expectedOutput: 'True', isHidden: false, description: 'Same instance' },
+      { input: 'Logger.get_instance().log("test")', expectedOutput: 'LOG: test', isHidden: true, description: 'Log works' }
+    ],
+    hints: ['Check if _instance is None before creating', 'Return existing instance if it exists'],
+    language: 'python'
+  },
+  {
+    id: 'cs103-t5-drill-2',
+    subjectId: 'cs103',
+    topicId: 'cs103-5',
+    title: 'Simple Factory',
+    difficulty: 2,
+    description: 'Create a simple factory function (not class) that returns different animal objects based on type.',
+    starterCode: 'class Dog:\n    def speak(self):\n        return "Woof"\n\nclass Cat:\n    def speak(self):\n        return "Meow"\n\ndef create_animal(animal_type):\n    pass\n\ndog = create_animal("dog")\ncat = create_animal("cat")\nprint(dog.speak())\nprint(cat.speak())',
+    solution: 'class Dog:\n    def speak(self):\n        return "Woof"\n\nclass Cat:\n    def speak(self):\n        return "Meow"\n\ndef create_animal(animal_type):\n    if animal_type == "dog":\n        return Dog()\n    elif animal_type == "cat":\n        return Cat()\n    return None\n\ndog = create_animal("dog")\ncat = create_animal("cat")\nprint(dog.speak())\nprint(cat.speak())',
+    testCases: [
+      { input: 'create_animal("dog").speak()', expectedOutput: 'Woof', isHidden: false, description: 'Factory creates dog' },
+      { input: 'create_animal("cat").speak()', expectedOutput: 'Meow', isHidden: true, description: 'Factory creates cat' }
+    ],
+    hints: ['Use if/elif to check animal_type', 'Return instance of appropriate class'],
+    language: 'python'
   }
 ];

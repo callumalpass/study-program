@@ -127,5 +127,69 @@ export const topic4Exercises: CodingExercise[] = [
     ],
     hints: ['__enter__ starts timing, __exit__ stops', 'Return self from __enter__ to use as t'],
     language: 'python'
+  },
+  {
+    id: 'cs103-t4-ex09',
+    subjectId: 'cs103',
+    topicId: 'cs103-4',
+    title: 'Callable Objects',
+    difficulty: 4,
+    description: 'Create a Multiplier class that can be called like a function using __call__.',
+    starterCode: 'class Multiplier:\n    def __init__(self, factor):\n        pass\n    \n    def __call__(self, value):\n        pass\n\ndouble = Multiplier(2)\ntriple = Multiplier(3)\nprint(double(5))\nprint(triple(5))',
+    solution: 'class Multiplier:\n    def __init__(self, factor):\n        self.factor = factor\n    \n    def __call__(self, value):\n        return value * self.factor\n\ndouble = Multiplier(2)\ntriple = Multiplier(3)\nprint(double(5))\nprint(triple(5))',
+    testCases: [
+      { input: 'Multiplier(2)(5)', expectedOutput: '10', isHidden: false, description: 'Double 5' },
+      { input: 'Multiplier(10)(3)', expectedOutput: '30', isHidden: true, description: '10x multiplier' }
+    ],
+    hints: ['__call__ makes instances callable', 'double(5) invokes double.__call__(5)'],
+    language: 'python'
+  },
+  {
+    id: 'cs103-t4-ex10',
+    subjectId: 'cs103',
+    topicId: 'cs103-4',
+    title: 'Indexing and Slicing',
+    difficulty: 4,
+    description: 'Create a Sentence class that supports indexing to get words and len() to get word count.',
+    starterCode: 'class Sentence:\n    def __init__(self, text):\n        pass\n    \n    def __getitem__(self, index):\n        pass\n    \n    def __len__(self):\n        pass\n\ns = Sentence("Hello world from Python")\nprint(s[0])\nprint(s[2])\nprint(len(s))',
+    solution: 'class Sentence:\n    def __init__(self, text):\n        self.words = text.split()\n    \n    def __getitem__(self, index):\n        return self.words[index]\n    \n    def __len__(self):\n        return len(self.words)\n\ns = Sentence("Hello world from Python")\nprint(s[0])\nprint(s[2])\nprint(len(s))',
+    testCases: [
+      { input: 's = Sentence("a b c"); s[1]', expectedOutput: 'b', isHidden: false, description: 'Index word' },
+      { input: 's = Sentence("one two three"); len(s)', expectedOutput: '3', isHidden: true, description: 'Word count' }
+    ],
+    hints: ['Split text into words in __init__', '__getitem__ enables indexing with []'],
+    language: 'python'
+  },
+  {
+    id: 'cs103-t4-drill-1',
+    subjectId: 'cs103',
+    topicId: 'cs103-4',
+    title: 'Basic Method Override',
+    difficulty: 1,
+    description: 'Create Animal base class with speak(). Create Dog that overrides speak() to return "Woof".',
+    starterCode: 'class Animal:\n    def speak(self):\n        return "..."\n\nclass Dog(Animal):\n    def speak(self):\n        pass\n\nd = Dog()\nprint(d.speak())',
+    solution: 'class Animal:\n    def speak(self):\n        return "..."\n\nclass Dog(Animal):\n    def speak(self):\n        return "Woof"\n\nd = Dog()\nprint(d.speak())',
+    testCases: [
+      { input: 'Dog().speak()', expectedOutput: 'Woof', isHidden: false, description: 'Dog speaks' },
+      { input: 'Animal().speak()', expectedOutput: '...', isHidden: true, description: 'Animal speaks' }
+    ],
+    hints: ['Override means redefine the method in child class', 'Child method replaces parent method'],
+    language: 'python'
+  },
+  {
+    id: 'cs103-t4-drill-2',
+    subjectId: 'cs103',
+    topicId: 'cs103-4',
+    title: '__eq__ Override',
+    difficulty: 1,
+    description: 'Create a Point class where two points are equal if they have same x and y.',
+    starterCode: 'class Point:\n    def __init__(self, x, y):\n        self.x = x\n        self.y = y\n    \n    def __eq__(self, other):\n        pass\n\np1 = Point(1, 2)\np2 = Point(1, 2)\np3 = Point(3, 4)\nprint(p1 == p2)\nprint(p1 == p3)',
+    solution: 'class Point:\n    def __init__(self, x, y):\n        self.x = x\n        self.y = y\n    \n    def __eq__(self, other):\n        return self.x == other.x and self.y == other.y\n\np1 = Point(1, 2)\np2 = Point(1, 2)\np3 = Point(3, 4)\nprint(p1 == p2)\nprint(p1 == p3)',
+    testCases: [
+      { input: 'Point(1, 2) == Point(1, 2)', expectedOutput: 'True', isHidden: false, description: 'Equal points' },
+      { input: 'Point(1, 2) == Point(3, 4)', expectedOutput: 'False', isHidden: true, description: 'Different points' }
+    ],
+    hints: ['__eq__ is called when you use ==', 'Compare both x and y values'],
+    language: 'python'
   }
 ];
