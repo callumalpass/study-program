@@ -25,6 +25,7 @@ import { cs103Quizzes, cs103Exercises, cs103Projects } from './data/subjects/cs1
 import { math102Quizzes, math102Exercises, math102Projects } from './data/subjects/math102';
 import { cs104Quizzes, cs104Exercises, cs104Projects } from './data/subjects/cs104';
 import { cs105Quizzes, cs105Exercises, cs105Projects } from './data/subjects/cs105';
+import { math203Quizzes, math203Exercises, math203Projects } from './data/subjects/math203';
 
 import type { Quiz, Exercise, Project } from './core/types';
 
@@ -37,6 +38,7 @@ const allQuizzes: Quiz[] = [
   ...math102Quizzes,
   ...cs104Quizzes,
   ...cs105Quizzes,
+  ...math203Quizzes,
 ];
 
 const allExercises: Exercise[] = [
@@ -47,6 +49,7 @@ const allExercises: Exercise[] = [
   ...math102Exercises,
   ...cs104Exercises,
   ...cs105Exercises,
+  ...math203Exercises,
 ];
 
 const allProjects: Project[] = [
@@ -57,6 +60,7 @@ const allProjects: Project[] = [
   ...math102Projects,
   ...cs104Projects,
   ...cs105Projects,
+  ...math203Projects,
 ];
 
 /**
