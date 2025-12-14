@@ -1,10 +1,36 @@
 // Assessment pages (Quiz, Exercise, Project)
 import type { Subject, Quiz, CodingExercise, WrittenExercise, Exercise, Project, QuizAttempt, ExerciseCompletion, ProjectSubmission } from '@/core/types';
 import { progressStorage } from '@/core/storage';
-import { navigateToSubject } from '@/core/router';
+import { navigateToSubject, navigateToExercise, navigateToTopic } from '@/core/router';
 import { Icons } from '@/components/icons';
 import { createCodeEditor, type CodeEditor } from '@/components/code-editor';
 import type { TestResult } from '@/components/code-runner';
+
+// Helper to find adjacent exercises within the same topic
+function findAdjacentExercises(
+  exercises: Exercise[],
+  currentExerciseId: string,
+  subjectId: string
+): { prev: Exercise | null; next: Exercise | null; current: Exercise | null; topicExercises: Exercise[] } {
+  const currentExercise = exercises.find(e => e.id === currentExerciseId);
+  if (!currentExercise) {
+    return { prev: null, next: null, current: null, topicExercises: [] };
+  }
+
+  // Get all exercises for this topic in order
+  const topicExercises = exercises.filter(
+    e => e.subjectId === subjectId && e.topicId === currentExercise.topicId
+  );
+
+  const currentIndex = topicExercises.findIndex(e => e.id === currentExerciseId);
+
+  return {
+    prev: currentIndex > 0 ? topicExercises[currentIndex - 1] : null,
+    next: currentIndex < topicExercises.length - 1 ? topicExercises[currentIndex + 1] : null,
+    current: currentExercise,
+    topicExercises
+  };
+}
 
 // Type guard for CodingExercise
 function isCodingExercise(exercise: Exercise): exercise is CodingExercise {
@@ -126,11 +152,15 @@ export function renderExercisePage(
     return;
   }
 
+  // Find adjacent exercises for navigation
+  const { prev, next, topicExercises } = findAdjacentExercises(exercises, exerciseId, subjectId);
+  const currentIndex = topicExercises.findIndex(e => e.id === exerciseId);
+
   // Render different views based on exercise type
   if (isCodingExercise(exercise)) {
-    renderCodingExercisePage(container, subject, exercise, subjectId, exerciseId);
+    renderCodingExercisePage(container, subject, exercise, subjectId, exerciseId, prev, next, currentIndex, topicExercises.length);
   } else {
-    renderWrittenExercisePage(container, subject, exercise, subjectId);
+    renderWrittenExercisePage(container, subject, exercise, subjectId, prev, next, currentIndex, topicExercises.length);
   }
 }
 
@@ -142,7 +172,11 @@ function renderCodingExercisePage(
   subject: Subject,
   exercise: CodingExercise,
   subjectId: string,
-  exerciseId: string
+  exerciseId: string,
+  prevExercise: Exercise | null,
+  nextExercise: Exercise | null,
+  currentIndex: number,
+  totalExercises: number
 ): void {
   const completions = progressStorage.getExerciseCompletions(subjectId, exerciseId);
   const isPassed = completions.some(c => c.passed);
@@ -159,21 +193,16 @@ function renderCodingExercisePage(
         <span class="separator">/</span>
         <a href="#/subject/${subjectId}">${subject.title}</a>
         <span class="separator">/</span>
+        <a href="#/subject/${subjectId}/topic/${exercise.topicId}">Topic</a>
+        <span class="separator">/</span>
         <span class="current">${exercise.title}</span>
       </nav>
 
       <header class="exercise-header">
-        <div class="exercise-title-section">
-          <h1>${exercise.title}</h1>
-          ${isPassed ? `
-            <span class="completion-badge passed">${Icons.Check} Completed</span>
-          ` : bestCompletion ? `
-            <span class="completion-badge partial">
-              ${bestCompletion.passedTestCases} / ${bestCompletion.totalTestCases} tests passed
-            </span>
-          ` : ''}
-        </div>
-        <div class="exercise-info">
+        <h1>${exercise.title}</h1>
+        <div class="exercise-meta-row">
+          <span class="exercise-counter">Exercise ${currentIndex + 1} of ${totalExercises}</span>
+          <span class="meta-separator"></span>
           <span class="info-item">
             <span class="icon">${Icons.StatCode}</span>
             ${formatLanguage(exercise.language)}
@@ -186,6 +215,13 @@ function renderCodingExercisePage(
             <span class="info-item">
               <span class="icon">${Icons.Refresh}</span>
               ${completions.length} attempt${completions.length > 1 ? 's' : ''}
+            </span>
+          ` : ''}
+          ${isPassed ? `
+            <span class="completion-badge passed">${Icons.Check} Completed</span>
+          ` : bestCompletion ? `
+            <span class="completion-badge partial">
+              ${bestCompletion.passedTestCases}/${bestCompletion.totalTestCases} passed
             </span>
           ` : ''}
         </div>
@@ -203,11 +239,33 @@ function renderCodingExercisePage(
         <div id="monaco-editor-container"></div>
       </section>
 
-      <div class="exercise-actions">
-        <button class="btn btn-secondary" id="back-to-subject">
-          ${Icons.ChevronLeft} Back to Subject
-        </button>
-      </div>
+      <nav class="exercise-navigation">
+        <div class="nav-left">
+          ${prevExercise ? `
+            <button class="btn btn-secondary" id="prev-exercise" data-exercise-id="${prevExercise.id}">
+              ${Icons.ChevronLeft} Previous
+            </button>
+          ` : `
+            <button class="btn btn-secondary" id="back-to-topic">
+              ${Icons.ChevronLeft} Back to Topic
+            </button>
+          `}
+        </div>
+        <div class="nav-center">
+          <span class="nav-counter">${currentIndex + 1} / ${totalExercises}</span>
+        </div>
+        <div class="nav-right">
+          ${nextExercise ? `
+            <button class="btn btn-primary" id="next-exercise" data-exercise-id="${nextExercise.id}">
+              Next ${Icons.ChevronRight}
+            </button>
+          ` : `
+            <button class="btn btn-primary" id="back-to-topic-done">
+              Done ${Icons.Check}
+            </button>
+          `}
+        </div>
+      </nav>
     </div>
   `;
 
@@ -263,16 +321,50 @@ function renderCodingExercisePage(
     (container as HTMLElement & { _codeEditor?: CodeEditor })._codeEditor = codeEditor;
   }
 
-  // Back button handler
-  const backBtn = container.querySelector('#back-to-subject');
-  if (backBtn) {
-    backBtn.addEventListener('click', () => {
-      // Dispose editor before navigating
-      const editorRef = (container as HTMLElement & { _codeEditor?: CodeEditor })._codeEditor;
-      if (editorRef) {
-        editorRef.dispose();
+  // Navigation event handlers
+  const disposeAndNavigate = (callback: () => void) => {
+    const editorRef = (container as HTMLElement & { _codeEditor?: CodeEditor })._codeEditor;
+    if (editorRef) {
+      editorRef.dispose();
+    }
+    callback();
+  };
+
+  // Previous exercise button
+  const prevBtn = container.querySelector('#prev-exercise');
+  if (prevBtn) {
+    prevBtn.addEventListener('click', () => {
+      const prevId = (prevBtn as HTMLElement).dataset.exerciseId;
+      if (prevId) {
+        disposeAndNavigate(() => navigateToExercise(subjectId, prevId));
       }
-      navigateToSubject(subjectId);
+    });
+  }
+
+  // Next exercise button
+  const nextBtn = container.querySelector('#next-exercise');
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => {
+      const nextId = (nextBtn as HTMLElement).dataset.exerciseId;
+      if (nextId) {
+        disposeAndNavigate(() => navigateToExercise(subjectId, nextId));
+      }
+    });
+  }
+
+  // Back to topic button (when at first exercise)
+  const backToTopicBtn = container.querySelector('#back-to-topic');
+  if (backToTopicBtn) {
+    backToTopicBtn.addEventListener('click', () => {
+      disposeAndNavigate(() => navigateToTopic(subjectId, exercise.topicId));
+    });
+  }
+
+  // Done button (when at last exercise)
+  const doneBtn = container.querySelector('#back-to-topic-done');
+  if (doneBtn) {
+    doneBtn.addEventListener('click', () => {
+      disposeAndNavigate(() => navigateToTopic(subjectId, exercise.topicId));
     });
   }
 }
@@ -284,7 +376,11 @@ function renderWrittenExercisePage(
   container: HTMLElement,
   subject: Subject,
   exercise: WrittenExercise,
-  subjectId: string
+  subjectId: string,
+  prevExercise: Exercise | null,
+  nextExercise: Exercise | null,
+  currentIndex: number,
+  totalExercises: number
 ): void {
   container.innerHTML = `
     <div class="exercise-page">
@@ -293,13 +389,17 @@ function renderWrittenExercisePage(
         <span class="separator">/</span>
         <a href="#/subject/${subjectId}">${subject.title}</a>
         <span class="separator">/</span>
+        <a href="#/subject/${subjectId}/topic/${exercise.topicId}">Topic</a>
+        <span class="separator">/</span>
         <span class="current">${exercise.title}</span>
       </nav>
 
       <header class="exercise-header">
-        <div class="exercise-title-section">
-          <h1>${exercise.title}</h1>
-          <span class="exercise-type-badge">Written Exercise</span>
+        <h1>${exercise.title}</h1>
+        <div class="exercise-meta-row">
+          <span class="exercise-counter">Exercise ${currentIndex + 1} of ${totalExercises}</span>
+          <span class="meta-separator"></span>
+          <span class="exercise-type-badge">Written</span>
         </div>
       </header>
 
@@ -332,17 +432,65 @@ function renderWrittenExercisePage(
         </details>
       </section>
 
-      <div class="exercise-actions">
-        <button class="btn btn-secondary" id="back-to-subject">
-          ${Icons.ChevronLeft} Back to Subject
-        </button>
-      </div>
+      <nav class="exercise-navigation">
+        <div class="nav-left">
+          ${prevExercise ? `
+            <button class="btn btn-secondary" id="prev-exercise" data-exercise-id="${prevExercise.id}">
+              ${Icons.ChevronLeft} Previous
+            </button>
+          ` : `
+            <button class="btn btn-secondary" id="back-to-topic">
+              ${Icons.ChevronLeft} Back to Topic
+            </button>
+          `}
+        </div>
+        <div class="nav-center">
+          <span class="nav-counter">${currentIndex + 1} / ${totalExercises}</span>
+        </div>
+        <div class="nav-right">
+          ${nextExercise ? `
+            <button class="btn btn-primary" id="next-exercise" data-exercise-id="${nextExercise.id}">
+              Next ${Icons.ChevronRight}
+            </button>
+          ` : `
+            <button class="btn btn-primary" id="back-to-topic-done">
+              Done ${Icons.Check}
+            </button>
+          `}
+        </div>
+      </nav>
     </div>
   `;
 
-  const backBtn = container.querySelector('#back-to-subject');
-  if (backBtn) {
-    backBtn.addEventListener('click', () => navigateToSubject(subjectId));
+  // Navigation event handlers
+  const prevBtn = container.querySelector('#prev-exercise');
+  if (prevBtn) {
+    prevBtn.addEventListener('click', () => {
+      const prevId = (prevBtn as HTMLElement).dataset.exerciseId;
+      if (prevId) {
+        navigateToExercise(subjectId, prevId);
+      }
+    });
+  }
+
+  const nextBtn = container.querySelector('#next-exercise');
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => {
+      const nextId = (nextBtn as HTMLElement).dataset.exerciseId;
+      if (nextId) {
+        navigateToExercise(subjectId, nextId);
+      }
+    });
+  }
+
+  const backToTopicBtn = container.querySelector('#back-to-topic');
+  if (backToTopicBtn) {
+    backToTopicBtn.addEventListener('click', () => navigateToTopic(subjectId, exercise.topicId));
+  }
+
+  const doneBtn = container.querySelector('#back-to-topic-done');
+  if (doneBtn) {
+    doneBtn.addEventListener('click', () => navigateToTopic(subjectId, exercise.topicId));
   }
 }
 

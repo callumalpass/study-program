@@ -235,7 +235,8 @@ function renderTopicView(
   allSubjects: Subject[],
   userProgress: any
 ): void {
-  const topic = subject.topics.find(t => t.id === topicId);
+  const topicIndex = subject.topics.findIndex(t => t.id === topicId);
+  const topic = topicIndex >= 0 ? subject.topics[topicIndex] : null;
 
   if (!topic) {
     renderSubjectOverview(
@@ -250,6 +251,8 @@ function renderTopicView(
   }
 
   const progress = userProgress.subjects[subject.id];
+  const prevTopic = topicIndex > 0 ? subject.topics[topicIndex - 1] : null;
+  const nextTopic = topicIndex < subject.topics.length - 1 ? subject.topics[topicIndex + 1] : null;
 
   container.innerHTML = `
     <div class="topic-page">
@@ -262,7 +265,10 @@ function renderTopicView(
       </nav>
 
       <header class="page-header">
-        <h1>${topic.title}</h1>
+        <div class="topic-title-section">
+          <h1>${topic.title}</h1>
+          <span class="topic-counter">Topic ${topicIndex + 1} of ${subject.topics.length}</span>
+        </div>
       </header>
 
       <section class="content-section">
@@ -315,9 +321,33 @@ function renderTopicView(
         </section>
       ` : ''}
 
-      <div class="page-actions">
-        <button class="btn btn-secondary" id="back-to-subject">${Icons.ChevronLeft} Back to ${subject.code}</button>
-      </div>
+      <nav class="topic-navigation">
+        <div class="nav-left">
+          ${prevTopic ? `
+            <a href="#/subject/${subject.id}/topic/${prevTopic.id}" class="btn btn-secondary">
+              ${Icons.ChevronLeft} ${prevTopic.title}
+            </a>
+          ` : `
+            <a href="#/subject/${subject.id}" class="btn btn-secondary">
+              ${Icons.ChevronLeft} Back to ${subject.code}
+            </a>
+          `}
+        </div>
+        <div class="nav-center">
+          <span class="nav-counter">${topicIndex + 1} / ${subject.topics.length}</span>
+        </div>
+        <div class="nav-right">
+          ${nextTopic ? `
+            <a href="#/subject/${subject.id}/topic/${nextTopic.id}" class="btn btn-primary">
+              ${nextTopic.title} ${Icons.ChevronRight}
+            </a>
+          ` : `
+            <a href="#/subject/${subject.id}" class="btn btn-primary">
+              Complete ${Icons.Check}
+            </a>
+          `}
+        </div>
+      </nav>
     </div>
   `;
 
@@ -351,13 +381,6 @@ function attachSubjectEventListeners(container: HTMLElement, subjectId: string):
 }
 
 function attachTopicEventListeners(container: HTMLElement, subjectId: string): void {
-  const backBtn = container.querySelector('#back-to-subject');
-  if (backBtn) {
-    backBtn.addEventListener('click', () => {
-      window.location.hash = `#/subject/${subjectId}`;
-    });
-  }
-
   container.querySelectorAll('[data-quiz-id]').forEach(btn => {
     const quizId = (btn as HTMLElement).dataset.quizId;
     if (quizId) {
