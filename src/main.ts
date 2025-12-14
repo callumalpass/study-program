@@ -163,7 +163,7 @@ function initApp(): void {
 
     // Render sidebar (wrapped in error boundary)
     safeRender(sidebarEl, path, () => {
-      renderSidebar(sidebarEl, path, curriculum, userProgress.subjects);
+      renderSidebar(sidebarEl, path, curriculum, userProgress.subjects, undefined, allQuizzes, allExercises, allExams, allProjects);
     });
 
     // Route to appropriate page (wrapped in error boundary)

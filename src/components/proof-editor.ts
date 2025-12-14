@@ -1,6 +1,8 @@
 import * as monaco from 'monaco-editor';
 import { initVimMode, VimMode } from 'monaco-vim';
 import { Icons } from './icons';
+import { evaluateWrittenExercise, type EvaluationResult } from '@/utils/gemini-eval';
+import { progressStorage } from '@/core/storage';
 
 export interface ProofEditorConfig {
   initialValue?: string;
@@ -9,7 +11,9 @@ export interface ProofEditorConfig {
   storageKey?: string;
   hints?: string[];
   solution?: string;
+  problem?: string; // Problem description for AI evaluation
   onSave?: (content: string, timeSpentSeconds: number) => void;
+  onEvaluate?: (result: EvaluationResult) => void;
 }
 
 export interface ProofEditor {
@@ -69,6 +73,19 @@ export function createProofEditor(
   saveButton.title = 'Save your proof (Ctrl+S)';
   saveButton.onclick = () => save();
   toolbarLeft.appendChild(saveButton);
+
+  // AI Evaluate button (only show if API key is configured and problem is provided)
+  const geminiApiKey = progressStorage.getSettings().geminiApiKey;
+  const canEvaluate = geminiApiKey && config.problem && config.solution;
+
+  let evaluateButton: HTMLButtonElement | null = null;
+  if (canEvaluate) {
+    evaluateButton = document.createElement('button');
+    evaluateButton.className = 'btn btn-secondary btn-evaluate';
+    evaluateButton.innerHTML = `<span class="btn-icon">${Icons.Beaker}</span> AI Evaluate`;
+    evaluateButton.title = 'Get AI feedback on your proof';
+    toolbarLeft.appendChild(evaluateButton);
+  }
 
   // Save status indicator
   const saveStatus = document.createElement('span');
@@ -285,6 +302,31 @@ export function createProofEditor(
     container.appendChild(solutionPanel);
   }
 
+  // AI Evaluation results panel
+  let evaluationPanel: HTMLElement | null = null;
+  let evaluationContent: HTMLElement | null = null;
+
+  if (canEvaluate) {
+    evaluationPanel = document.createElement('div');
+    evaluationPanel.className = 'evaluation-panel hidden';
+
+    const evalHeader = document.createElement('div');
+    evalHeader.className = 'evaluation-header';
+
+    const evalTitle = document.createElement('span');
+    evalTitle.className = 'evaluation-title';
+    evalTitle.innerHTML = `<span class="panel-icon">${Icons.Beaker}</span> AI Evaluation`;
+    evalHeader.appendChild(evalTitle);
+
+    evaluationPanel.appendChild(evalHeader);
+
+    evaluationContent = document.createElement('div');
+    evaluationContent.className = 'evaluation-content';
+    evaluationPanel.appendChild(evaluationContent);
+
+    container.appendChild(evaluationPanel);
+  }
+
   // Create Monaco editor with markdown for LaTeX/proof support
   const editor = monaco.editor.create(editorElement, {
     value: initialContent,
@@ -393,6 +435,87 @@ export function createProofEditor(
     setTimeout(() => {
       saveButton.innerHTML = `<span class="btn-icon">${Icons.Check}</span> Save Proof`;
     }, 1500);
+  }
+
+  // AI Evaluation function
+  async function runAiEvaluation() {
+    if (!evaluateButton || !evaluationPanel || !evaluationContent) return;
+    if (!geminiApiKey || !config.problem || !config.solution) return;
+
+    const content = editor.getValue().trim();
+    if (!content) {
+      alert('Please write your proof before requesting AI evaluation.');
+      return;
+    }
+
+    // Update UI to show loading state
+    evaluateButton.disabled = true;
+    evaluateButton.innerHTML = `<span class="btn-icon">${Icons.Beaker}</span> Evaluating...`;
+    evaluationPanel.classList.remove('hidden');
+    evaluationContent.innerHTML = '<div class="evaluation-loading">Analyzing your proof...</div>';
+
+    try {
+      const result = await evaluateWrittenExercise(
+        geminiApiKey,
+        config.problem,
+        config.solution,
+        content
+      );
+
+      // Display results
+      const passedClass = result.passed ? 'passed' : 'not-passed';
+      const passedIcon = result.passed ? Icons.Check : Icons.Cross;
+      const passedText = result.passed ? 'Passed' : 'Needs Work';
+
+      evaluationContent.innerHTML = `
+        <div class="evaluation-result ${passedClass}">
+          <div class="result-header">
+            <span class="result-badge ${passedClass}">${passedIcon} ${passedText}</span>
+            <span class="result-score">Score: ${result.score}/100</span>
+          </div>
+          <div class="result-feedback">
+            <p>${result.feedback}</p>
+          </div>
+          ${result.strengths.length > 0 ? `
+            <div class="result-section strengths">
+              <h4>Strengths</h4>
+              <ul>
+                ${result.strengths.map(s => `<li>${s}</li>`).join('')}
+              </ul>
+            </div>
+          ` : ''}
+          ${result.improvements.length > 0 ? `
+            <div class="result-section improvements">
+              <h4>Suggestions for Improvement</h4>
+              <ul>
+                ${result.improvements.map(i => `<li>${i}</li>`).join('')}
+              </ul>
+            </div>
+          ` : ''}
+        </div>
+      `;
+
+      // Call onEvaluate callback if provided
+      if (config.onEvaluate) {
+        config.onEvaluate(result);
+      }
+    } catch (error) {
+      console.error('AI evaluation error:', error);
+      evaluationContent.innerHTML = `
+        <div class="evaluation-error">
+          <p><strong>Error:</strong> ${error instanceof Error ? error.message : 'Failed to evaluate'}</p>
+          <p>Please check your API key in Settings and try again.</p>
+        </div>
+      `;
+    } finally {
+      evaluateButton.disabled = false;
+      evaluateButton.innerHTML = `<span class="btn-icon">${Icons.Beaker}</span> AI Evaluate`;
+    }
+  }
+
+  // Attach evaluate button handler
+  if (evaluateButton) {
+    evaluateButton.onclick = runAiEvaluation;
   }
 
   // Set theme

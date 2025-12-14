@@ -142,7 +142,13 @@ function startExamAttempt(container: HTMLElement, subjectId: string, exam: Exam)
   renderQuiz(quizContainer as HTMLElement, exam, (attempt) => {
     progressStorage.addExamAttempt(subjectId, exam.id, attempt);
     handleExamCompletion(container, subjectId, exam);
-  }, { oneAtATime: true });
+  }, {
+    oneAtATime: true,
+    durationMinutes: exam.durationMinutes,
+    isExam: true,
+    subjectId,
+    examId: exam.id,
+  });
 }
 
 function handleExamCompletion(container: HTMLElement, subjectId: string, exam: Exam): void {

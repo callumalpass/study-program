@@ -3,6 +3,7 @@ import type { Theme, UserSettings } from '@/core/types';
 import { progressStorage, resetProgress, importProgress } from '@/core/storage';
 import { githubService } from '@/services/github';
 import { Icons } from '@/components/icons';
+import { validateGeminiApiKey } from '@/utils/gemini-eval';
 
 /**
  * Render the settings page
@@ -145,6 +146,44 @@ export function renderSettingsPage(container: HTMLElement): void {
                  ${settings.gistId 
                    ? `${Icons.Check} Connected to Gist ID: ${settings.gistId.substring(0, 8)}...` 
                    : `${Icons.StatusNotStarted} Not connected`}
+               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="settings-section">
+        <h2>AI Features</h2>
+        <div class="settings-group">
+          <div class="setting-item">
+            <div class="setting-info">
+              <h3>Gemini API Key</h3>
+              <p>Enable AI-powered evaluation for written exercises.</p>
+              <div class="help-text">
+                <small>
+                  1. <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener noreferrer">Get an API key from Google AI Studio</a><br>
+                  2. Paste it below and click Save.
+                </small>
+              </div>
+            </div>
+            <div class="setting-control vertical">
+               <div class="input-group" style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;">
+                  <input
+                    type="password"
+                    id="gemini-api-key-input"
+                    class="text-input"
+                    placeholder="AI..."
+                    value="${settings.geminiApiKey || ''}"
+                    style="flex: 1; padding: 0.5rem; border: 1px solid var(--color-border-default); border-radius: 4px; background: var(--color-bg-surface); color: var(--color-text-primary);"
+                  >
+                  <button id="save-gemini-key-btn" class="btn btn-primary">
+                    ${settings.geminiApiKey ? 'Update' : 'Save'}
+                  </button>
+               </div>
+               <div id="gemini-status" class="status-message ${settings.geminiApiKey ? 'success' : ''}" style="font-size: 0.9em; color: var(--text-secondary);">
+                 ${settings.geminiApiKey
+                   ? `${Icons.Check} API key configured`
+                   : `${Icons.StatusNotStarted} Not configured`}
                </div>
             </div>
           </div>
@@ -409,6 +448,51 @@ function attachEventListeners(container: HTMLElement): void {
       } finally {
         connectGithubBtn.disabled = false;
         connectGithubBtn.textContent = originalBtnText === 'Connect' ? 'Update' : originalBtnText;
+      }
+    });
+  }
+
+  // Gemini API Key Handler
+  const geminiApiKeyInput = container.querySelector('#gemini-api-key-input') as HTMLInputElement;
+  const saveGeminiKeyBtn = container.querySelector('#save-gemini-key-btn') as HTMLButtonElement;
+  const geminiStatus = container.querySelector('#gemini-status') as HTMLElement;
+
+  if (saveGeminiKeyBtn && geminiApiKeyInput) {
+    saveGeminiKeyBtn.addEventListener('click', async () => {
+      const apiKey = geminiApiKeyInput.value.trim();
+
+      if (!apiKey) {
+        // Clear the key
+        progressStorage.updateSettings({ geminiApiKey: undefined });
+        geminiStatus.innerHTML = `${Icons.StatusNotStarted} Not configured`;
+        geminiStatus.style.color = 'var(--text-secondary)';
+        saveGeminiKeyBtn.textContent = 'Save';
+        return;
+      }
+
+      saveGeminiKeyBtn.disabled = true;
+      const originalBtnText = saveGeminiKeyBtn.textContent;
+      saveGeminiKeyBtn.textContent = 'Validating...';
+      geminiStatus.textContent = 'Checking API key...';
+      geminiStatus.style.color = 'var(--text-secondary)';
+
+      try {
+        const isValid = await validateGeminiApiKey(apiKey);
+        if (!isValid) {
+          throw new Error('Invalid API key');
+        }
+
+        progressStorage.updateSettings({ geminiApiKey: apiKey });
+        geminiStatus.innerHTML = `${Icons.Check} API key configured`;
+        geminiStatus.style.color = 'var(--color-success)';
+        saveGeminiKeyBtn.textContent = 'Update';
+      } catch (error) {
+        console.error(error);
+        geminiStatus.innerHTML = `${Icons.Cross} Error: ` + (error instanceof Error ? error.message : 'Invalid key');
+        geminiStatus.style.color = 'var(--color-error)';
+        saveGeminiKeyBtn.textContent = originalBtnText || 'Save';
+      } finally {
+        saveGeminiKeyBtn.disabled = false;
       }
     });
   }

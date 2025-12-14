@@ -357,6 +357,7 @@ function renderWrittenExercisePage(
       storageKey: `proof_${subjectId}_${exerciseId}`,
       hints: exercise.hints,
       solution: exercise.solution,
+      problem: exercise.description, // For AI evaluation
       onSave: (content: string, timeSpentSeconds: number) => {
         const completion: ExerciseCompletion = {
           completionId: `completion_${Date.now()}`,

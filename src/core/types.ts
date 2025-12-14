@@ -63,6 +63,7 @@ export interface QuizQuestion {
   testCases?: TestCase[];
   language?: ProgrammingLanguage;
   solution?: string;
+  modelAnswer?: string; // Full model answer for AI evaluation of written questions
 }
 
 // Coding Exercise Types
@@ -159,12 +160,18 @@ export interface SubjectProgress {
   projectSubmissions: Record<string, ProjectSubmission[]>;
 }
 
+export interface AiGrade {
+  score: number; // 0-100
+  passed: boolean;
+}
+
 export interface QuizAttempt {
   attemptId: string;
   timestamp: string; // ISO date string
   answers: Record<string, any>;
   score: number; // Percentage
   timeSpentSeconds: number;
+  aiGrades?: Record<string, AiGrade>; // AI grades for written questions, keyed by question ID
 }
 
 export interface ExamAttempt {
@@ -173,6 +180,7 @@ export interface ExamAttempt {
   answers: Record<string, any>;
   score: number; // Percentage
   timeSpentSeconds: number;
+  aiGrades?: Record<string, AiGrade>; // AI grades for written questions, keyed by question ID
 }
 
 export interface ExerciseCompletion {

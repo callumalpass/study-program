@@ -1,4 +1,20 @@
-import type { Subject, SubjectProgress, SubjectStatus } from '@/core/types';
+import type {
+  Exercise,
+  Project,
+  Quiz,
+  Subject,
+  SubjectProgress,
+  SubjectStatus,
+  Exam,
+} from '@/core/types';
+import {
+  navigateToExam,
+  navigateToExercise,
+  navigateToQuiz,
+  navigateToProject,
+  navigateToSubject,
+  navigateToTopic,
+} from '@/core/router';
 import { Icons } from './icons';
 
 interface SidebarState {
@@ -92,7 +108,11 @@ function createNavLink(
 function createSubjectItem(
   subject: Subject,
   progress?: SubjectProgress,
-  currentRoute?: string
+  currentRoute?: string,
+  quizzes: Quiz[] = [],
+  exercises: Exercise[] = [],
+  exams: Exam[] = [],
+  projects: Project[] = []
 ): HTMLElement {
   const item = document.createElement('div');
   item.className = 'subject-item';
@@ -100,6 +120,17 @@ function createSubjectItem(
   const status = progress?.status || 'not_started';
   const progressPercent = calculateSubjectProgress(subject, progress);
   const isActive = currentRoute?.includes(`/subject/${subject.id}`);
+  const firstTopic = subject.topics[0];
+  const firstQuizId = subject.topics.find((t) => t.quizIds.length > 0)?.quizIds[0];
+  const firstExerciseId = subject.topics.find((t) => t.exerciseIds.length > 0)?.exerciseIds[0];
+  const topicTitleMap = subject.topics.reduce<Record<string, string>>((acc, topic) => {
+    acc[topic.id] = topic.title;
+    return acc;
+  }, {});
+  const subjectQuizzes = quizzes.filter((q) => q.subjectId === subject.id);
+  const subjectExercises = exercises.filter((e) => e.subjectId === subject.id);
+  const subjectExams = exams.filter((e) => e.subjectId === subject.id);
+  const subjectProjects = projects.filter((p) => p.subjectId === subject.id);
 
   item.innerHTML = `
     <a href="#/subject/${subject.id}" class="subject-link ${isActive ? 'active' : ''}">
@@ -117,6 +148,329 @@ function createSubjectItem(
       </div>
     </a>
   `;
+
+  if (firstTopic || firstQuizId || firstExerciseId || subjectQuizzes.length || subjectExercises.length || subjectExams.length || subjectProjects.length) {
+    const hoverMenu = document.createElement('div');
+    hoverMenu.className = 'subject-hover-menu';
+    hoverMenu.innerHTML = `
+      <button class="menu-action" data-action="subject">
+        <span class="menu-icon">${Icons.Curriculum}</span>
+        <span class="menu-text">
+          <span class="menu-title">Open subject</span>
+          <span class="menu-subtitle">Overview · ${progressPercent}% complete</span>
+        </span>
+        <span class="menu-chevron">${Icons.ChevronRight}</span>
+      </button>
+      ${firstTopic ? `
+        <button class="menu-action" data-topic="${firstTopic.id}">
+          <span class="menu-icon">${Icons.AcademicCap}</span>
+          <span class="menu-text">
+            <span class="menu-title">Start ${firstTopic.title}</span>
+            <span class="menu-subtitle">Topic 1 of ${subject.topics.length}</span>
+          </span>
+          <span class="menu-chevron">${Icons.ArrowRight}</span>
+        </button>
+      ` : ''}
+      ${firstQuizId ? `
+        <button class="menu-action" data-quiz="${firstQuizId}">
+          <span class="menu-icon">${Icons.StatQuiz}</span>
+          <span class="menu-text">
+            <span class="menu-title">First quiz</span>
+            <span class="menu-subtitle">Warm up with practice</span>
+          </span>
+          <span class="menu-chevron">${Icons.ArrowRight}</span>
+        </button>
+      ` : ''}
+      ${firstExerciseId ? `
+        <button class="menu-action" data-exercise="${firstExerciseId}">
+          <span class="menu-icon">${Icons.StatCode}</span>
+          <span class="menu-text">
+            <span class="menu-title">First exercise</span>
+            <span class="menu-subtitle">Hands-on practice</span>
+          </span>
+          <span class="menu-chevron">${Icons.ArrowRight}</span>
+        </button>
+      ` : ''}
+      ${subjectQuizzes.length ? `
+        <button class="menu-action" data-submenu="quizzes">
+          <span class="menu-icon">${Icons.StatQuiz}</span>
+          <span class="menu-text">
+            <span class="menu-title">Quizzes</span>
+            <span class="menu-subtitle">${subjectQuizzes.length} available</span>
+          </span>
+          <span class="menu-chevron">${Icons.ChevronRight}</span>
+        </button>
+      ` : ''}
+      ${subjectExercises.length ? `
+        <button class="menu-action" data-submenu="exercises">
+          <span class="menu-icon">${Icons.StatCode}</span>
+          <span class="menu-text">
+            <span class="menu-title">Exercises</span>
+            <span class="menu-subtitle">${subjectExercises.length} available</span>
+          </span>
+          <span class="menu-chevron">${Icons.ChevronRight}</span>
+        </button>
+      ` : ''}
+      ${subjectExams.length ? `
+        <button class="menu-action" data-submenu="exams">
+          <span class="menu-icon">${Icons.Beaker}</span>
+          <span class="menu-text">
+            <span class="menu-title">Exams</span>
+            <span class="menu-subtitle">${subjectExams.length} scheduled</span>
+          </span>
+          <span class="menu-chevron">${Icons.ChevronRight}</span>
+        </button>
+      ` : ''}
+      ${subjectProjects.length ? `
+        <button class="menu-action" data-submenu="projects">
+          <span class="menu-icon">${Icons.StatProject}</span>
+          <span class="menu-text">
+            <span class="menu-title">Projects</span>
+            <span class="menu-subtitle">${subjectProjects.length} to build</span>
+          </span>
+          <span class="menu-chevron">${Icons.ChevronRight}</span>
+        </button>
+      ` : ''}
+    `;
+
+    let hideTimeout: number | null = null;
+    let hideSubmenuTimeout: number | null = null;
+    let activeSubmenu: HTMLElement | null = null;
+
+    hoverMenu.querySelectorAll('.menu-action').forEach((btn) => {
+      btn.addEventListener('click', (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        const target = event.currentTarget as HTMLElement;
+        if (target.dataset.submenu) return;
+
+        const topicId = target.dataset.topic;
+        const quizId = target.dataset.quiz;
+        const exerciseId = target.dataset.exercise;
+        const examId = target.dataset.exam;
+        const projectId = target.dataset.project;
+
+        if (topicId) {
+          navigateToTopic(subject.id, topicId);
+          return;
+        }
+        if (quizId) {
+          navigateToQuiz(subject.id, quizId);
+          return;
+        }
+        if (exerciseId) {
+          navigateToExercise(subject.id, exerciseId);
+          return;
+        }
+        if (examId) {
+          navigateToExam(subject.id, examId);
+          return;
+        }
+        if (projectId) {
+          navigateToProject(subject.id, projectId);
+          return;
+        }
+
+        navigateToSubject(subject.id);
+      });
+    });
+
+    const closeAllSubmenus = () => {
+      if (activeSubmenu) {
+        activeSubmenu.classList.remove('open');
+        activeSubmenu = null;
+      }
+      hoverMenu.querySelectorAll('[data-submenu]').forEach((trigger) => {
+        trigger.classList.remove('submenu-open');
+      });
+    };
+
+    const buildSubmenu = (
+      key: string,
+      trigger: HTMLElement,
+      entries: Array<{ id: string; title: string; subtitle?: string; action: () => void }>
+    ) => {
+      const panel = document.createElement('div');
+      panel.className = 'subject-submenu';
+      panel.dataset.submenuPanel = key;
+      panel.innerHTML = entries
+        .map(
+          (entry) => `
+          <button class="menu-action menu-condensed" data-submenu-item="${entry.id}">
+            <span class="menu-text">
+              <span class="menu-title">${entry.title}</span>
+              ${entry.subtitle ? `<span class="menu-subtitle">${entry.subtitle}</span>` : ''}
+            </span>
+            <span class="menu-chevron">${Icons.ChevronRight}</span>
+          </button>
+        `
+        )
+        .join('');
+      hoverMenu.appendChild(panel);
+
+      const positionPanel = () => {
+        const rect = trigger.getBoundingClientRect();
+        panel.style.position = 'fixed';
+        panel.style.left = `${rect.right + 8}px`;
+        panel.style.top = `${rect.top}px`;
+      };
+
+      const openPanel = () => {
+        if (hideSubmenuTimeout) {
+          clearTimeout(hideSubmenuTimeout);
+          hideSubmenuTimeout = null;
+        }
+        closeAllSubmenus();
+        positionPanel();
+        panel.classList.add('open');
+        trigger.classList.add('submenu-open');
+        activeSubmenu = panel;
+      };
+
+      const scheduleCloseSubmenu = () => {
+        if (hideSubmenuTimeout) {
+          clearTimeout(hideSubmenuTimeout);
+        }
+        hideSubmenuTimeout = window.setTimeout(() => {
+          panel.classList.remove('open');
+          trigger.classList.remove('submenu-open');
+          if (activeSubmenu === panel) {
+            activeSubmenu = null;
+          }
+        }, 140);
+      };
+
+      trigger.addEventListener('mouseenter', openPanel);
+      trigger.addEventListener('focusin', openPanel);
+      trigger.addEventListener('mouseleave', scheduleCloseSubmenu);
+      trigger.addEventListener('focusout', scheduleCloseSubmenu);
+      panel.addEventListener('mouseenter', openPanel);
+      panel.addEventListener('mouseleave', scheduleCloseSubmenu);
+
+      panel.querySelectorAll('[data-submenu-item]').forEach((entryBtn) => {
+        entryBtn.addEventListener('click', (evt) => {
+          evt.preventDefault();
+          evt.stopPropagation();
+          const id = (evt.currentTarget as HTMLElement).dataset.submenuItem;
+          const entry = entries.find((e) => e.id === id);
+          if (entry) {
+            entry.action();
+          }
+        });
+      });
+    };
+
+    const submenuConfigs: Array<{
+      key: string;
+      trigger?: HTMLElement | null;
+      entries: Array<{ id: string; title: string; subtitle?: string; action: () => void }>;
+    }> = [];
+
+    const quizTrigger = hoverMenu.querySelector('[data-submenu="quizzes"]') as HTMLElement | null;
+    if (quizTrigger && subjectQuizzes.length) {
+      submenuConfigs.push({
+        key: 'quizzes',
+        trigger: quizTrigger,
+        entries: subjectQuizzes.map((quiz) => ({
+          id: quiz.id,
+          title: quiz.title,
+          subtitle: quiz.topicId ? topicTitleMap[quiz.topicId] || 'Quiz' : undefined,
+          action: () => navigateToQuiz(subject.id, quiz.id),
+        })),
+      });
+    }
+
+    const exerciseTrigger = hoverMenu.querySelector('[data-submenu="exercises"]') as HTMLElement | null;
+    if (exerciseTrigger && subjectExercises.length) {
+      submenuConfigs.push({
+        key: 'exercises',
+        trigger: exerciseTrigger,
+        entries: subjectExercises.map((exercise) => ({
+          id: exercise.id,
+          title: exercise.title,
+          subtitle: exercise.topicId ? topicTitleMap[exercise.topicId] || 'Exercise' : undefined,
+          action: () => navigateToExercise(subject.id, exercise.id),
+        })),
+      });
+    }
+
+    const examTrigger = hoverMenu.querySelector('[data-submenu="exams"]') as HTMLElement | null;
+    if (examTrigger && subjectExams.length) {
+      submenuConfigs.push({
+        key: 'exams',
+        trigger: examTrigger,
+        entries: subjectExams.map((exam) => ({
+          id: exam.id,
+          title: exam.title,
+          subtitle: `${exam.durationMinutes ? `${exam.durationMinutes} min · ` : ''}${exam.topicId ? (topicTitleMap[exam.topicId] || 'Exam') : 'Exam'}`,
+          action: () => navigateToExam(subject.id, exam.id),
+        })),
+      });
+    }
+
+    const projectTrigger = hoverMenu.querySelector('[data-submenu="projects"]') as HTMLElement | null;
+    if (projectTrigger && subjectProjects.length) {
+      submenuConfigs.push({
+        key: 'projects',
+        trigger: projectTrigger,
+        entries: subjectProjects.map((project) => ({
+          id: project.id,
+          title: project.title,
+          subtitle: `${project.estimatedHours} hrs · ${subject.code}`,
+          action: () => navigateToProject(subject.id, project.id),
+        })),
+      });
+    }
+
+    submenuConfigs.forEach(({ key, trigger, entries }) => {
+      if (trigger && entries.length) {
+        buildSubmenu(key, trigger, entries);
+      }
+    });
+
+    // Position the menu relative to viewport so it can escape the sidebar
+    const positionMenu = () => {
+      const rect = item.getBoundingClientRect();
+      hoverMenu.style.position = 'fixed';
+      hoverMenu.style.left = `${rect.right + 8}px`;
+      hoverMenu.style.top = `${rect.top + rect.height / 2}px`;
+    };
+
+    const openMenu = () => {
+      if (hideTimeout) {
+        clearTimeout(hideTimeout);
+        hideTimeout = null;
+      }
+      positionMenu();
+      item.classList.add('menu-open');
+    };
+
+    const scheduleClose = () => {
+      if (hideTimeout) {
+        clearTimeout(hideTimeout);
+      }
+      hideTimeout = window.setTimeout(() => {
+        item.classList.remove('menu-open');
+        closeAllSubmenus();
+      }, 120);
+    };
+
+    item.addEventListener('mouseenter', openMenu);
+    item.addEventListener('mouseleave', scheduleClose);
+    item.addEventListener('focusin', openMenu);
+    item.addEventListener('focusout', () => {
+      window.setTimeout(() => {
+        if (!item.contains(document.activeElement)) {
+          scheduleClose();
+        }
+      }, 0);
+    });
+
+    hoverMenu.addEventListener('mouseenter', openMenu);
+    hoverMenu.addEventListener('mouseleave', scheduleClose);
+
+    item.appendChild(hoverMenu);
+  }
 
   return item;
 }
@@ -159,7 +513,11 @@ export function renderSidebar(
   currentRoute: string,
   subjects?: Subject[],
   userProgress?: Record<string, SubjectProgress>,
-  currentSubject?: Subject
+  currentSubject?: Subject,
+  quizzes: Quiz[] = [],
+  exercises: Exercise[] = [],
+  exams: Exam[] = [],
+  projects: Project[] = []
 ): void {
   container.innerHTML = '';
   container.className = `sidebar ${state.collapsed ? 'collapsed' : ''}`;
@@ -246,7 +604,7 @@ export function renderSidebar(
       groupSubjects.forEach((subject) => {
         const progress = userProgress?.[subject.id];
         subjectsList.appendChild(
-          createSubjectItem(subject, progress, currentRoute)
+          createSubjectItem(subject, progress, currentRoute, quizzes, exercises, exams, projects)
         );
       });
     });

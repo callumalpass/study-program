@@ -5,9 +5,15 @@ import { Icons } from './icons';
 import { escapeHtml } from '@/utils/html';
 import { createCodeEditor } from './code-editor';
 import type { TestResult } from './code-runner';
+import { evaluateWrittenExercise } from '@/utils/gemini-eval';
+import { progressStorage } from '@/core/storage';
 
 interface QuizConfig {
   oneAtATime?: boolean;
+  durationMinutes?: number;
+  isExam?: boolean; // When true, hides feedback during the exam
+  subjectId?: string; // Required for exam AI grading storage
+  examId?: string; // Required for exam AI grading storage
 }
 
 interface QuizState {
@@ -22,7 +28,8 @@ function createQuestionElement(
   question: QuizQuestion,
   index: number,
   answer?: any,
-  showFeedback = false
+  showFeedback = false,
+  isExam = false
 ): HTMLElement {
   const questionDiv = document.createElement('div');
   questionDiv.className = 'quiz-question';
@@ -150,7 +157,9 @@ function createQuestionElement(
     case 'coding': {
       const hint = document.createElement('div');
       hint.className = 'form-hint';
-      hint.textContent = 'Write code and run tests to validate.';
+      hint.textContent = isExam
+        ? 'Write code and run to see output. Test results will be shown after submission.'
+        : 'Write code and run tests to validate.';
       answerContainer.appendChild(hint);
 
       const editorContainer = document.createElement('div');
@@ -159,7 +168,7 @@ function createQuestionElement(
 
       const status = document.createElement('div');
       status.className = 'form-hint';
-      status.textContent = 'Tests not run yet.';
+      status.textContent = 'Code not run yet.';
       answerContainer.appendChild(status);
 
       const initialCode = answer && typeof answer === 'object' && 'code' in answer
@@ -173,13 +182,21 @@ function createQuestionElement(
         testCases: question.testCases,
         solution: question.solution,
         showRunButton: true,
+        hideTestResults: isExam && !showFeedback, // Hide pass/fail during exam
         onTestResults: (results: TestResult[], allPassed: boolean) => {
           questionDiv.dataset.codingPassed = allPassed ? 'true' : 'false';
-          status.textContent = allPassed
-            ? `${Icons.Check} All tests passed`
-            : `${results.filter(r => r.passed).length}/${results.length} tests passed`;
-          status.className = `form-hint ${allPassed ? 'text-success' : ''}`;
           questionDiv.dataset.codingCode = editor.getValue();
+
+          // In exam mode (without feedback), only show that code was run
+          if (isExam && !showFeedback) {
+            status.textContent = 'Code executed. Results shown after submission.';
+            status.className = 'form-hint';
+          } else {
+            status.textContent = allPassed
+              ? `${Icons.Check} All tests passed`
+              : `${results.filter(r => r.passed).length}/${results.length} tests passed`;
+            status.className = `form-hint ${allPassed ? 'text-success' : ''}`;
+          }
         },
       });
 
@@ -280,6 +297,12 @@ function collectAnswer(questionElement: HTMLElement, question: QuizQuestion): an
   }
 }
 
+function formatTimeRemaining(seconds: number): string {
+  const mins = Math.floor(seconds / 60);
+  const secs = seconds % 60;
+  return `${mins}:${secs.toString().padStart(2, '0')}`;
+}
+
 function calculateScore(quiz: Quiz | Exam, answers: Record<string, any>): number {
   let correct = 0;
   quiz.questions.forEach((question) => {
@@ -290,7 +313,7 @@ function calculateScore(quiz: Quiz | Exam, answers: Record<string, any>): number
   return Math.round((correct / quiz.questions.length) * 100);
 }
 
-function createScoreSummary(quiz: Quiz | Exam, answers: Record<string, any>): HTMLElement {
+function createScoreSummary(quiz: Quiz | Exam, answers: Record<string, any>, timedOut = false): HTMLElement {
   const summary = document.createElement('div');
   summary.className = 'quiz-summary';
 
@@ -298,8 +321,14 @@ function createScoreSummary(quiz: Quiz | Exam, answers: Record<string, any>): HT
   const total = quiz.questions.length;
   const percentage = calculateScore(quiz, answers);
 
+  // Determine if this is an exam based on presence of durationMinutes
+  const isExam = 'durationMinutes' in quiz;
+  const completeText = timedOut
+    ? "Time's Up!"
+    : isExam ? 'Exam Complete!' : 'Quiz Complete!';
+
   summary.innerHTML = `
-    <div class="summary-header">Quiz Complete!</div>
+    <div class="summary-header">${completeText}</div>
     <div class="summary-score">
       <div class="score-circle ${percentage >= 70 ? 'pass' : 'fail'}">
         <span class="score-value">${percentage}%</span>
@@ -312,6 +341,134 @@ function createScoreSummary(quiz: Quiz | Exam, answers: Record<string, any>): HT
   `;
 
   return summary;
+}
+
+/**
+ * Delay helper for sequential processing
+ */
+function delay(ms: number): Promise<void> {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+/**
+ * Run AI evaluation on written questions after exam submission.
+ * Processes questions sequentially with delays to avoid rate limiting.
+ * Saves grades to storage as they complete.
+ */
+async function runWrittenQuestionEvaluation(
+  quiz: Quiz | Exam,
+  answers: Record<string, any>,
+  questionsContainer: HTMLElement,
+  subjectId: string,
+  examId: string
+): Promise<void> {
+  const geminiApiKey = progressStorage.getSettings().geminiApiKey;
+  if (!geminiApiKey) {
+    return; // No API key configured, skip AI evaluation
+  }
+
+  const writtenQuestions = quiz.questions.filter(q => q.type === 'written');
+  if (writtenQuestions.length === 0) {
+    return; // No written questions to evaluate
+  }
+
+  // Process questions sequentially with delays to avoid rate limiting
+  let isFirst = true;
+  for (const question of writtenQuestions) {
+    const answer = answers[question.id];
+    if (!answer || typeof answer !== 'string' || !answer.trim()) {
+      continue; // Skip empty answers
+    }
+
+    // Add delay between API calls (skip for first question)
+    if (!isFirst) {
+      await delay(1500); // 1.5 second delay between requests
+    }
+    isFirst = false;
+
+    const questionElement = questionsContainer.querySelector(
+      `.quiz-question[data-question-id="${question.id}"]`
+    );
+    if (!questionElement) continue;
+
+    // Add loading indicator
+    const aiSection = document.createElement('div');
+    aiSection.className = 'ai-evaluation-section';
+    aiSection.innerHTML = `
+      <div class="ai-evaluation-header">
+        <span class="ai-icon">${Icons.Beaker}</span>
+        <span>AI Evaluation</span>
+      </div>
+      <div class="ai-evaluation-content loading">
+        Analyzing your answer...
+      </div>
+    `;
+    questionElement.appendChild(aiSection);
+
+    try {
+      // Use modelAnswer if available, fall back to explanation
+      const modelAnswer = question.modelAnswer || question.explanation;
+
+      const result = await evaluateWrittenExercise(
+        geminiApiKey,
+        question.prompt,
+        modelAnswer,
+        answer
+      );
+
+      // Save grade to storage
+      progressStorage.updateExamAiGrade(subjectId, examId, question.id, {
+        score: result.score,
+        passed: result.passed,
+      });
+
+      const contentEl = aiSection.querySelector('.ai-evaluation-content');
+      if (contentEl) {
+        const passedClass = result.passed ? 'passed' : 'not-passed';
+        const passedIcon = result.passed ? Icons.Check : Icons.Cross;
+        const passedText = result.passed ? 'Passed' : 'Needs Work';
+
+        contentEl.className = 'ai-evaluation-content';
+        contentEl.innerHTML = `
+          <div class="evaluation-result ${passedClass}">
+            <div class="result-header">
+              <span class="result-badge ${passedClass}">${passedIcon} ${passedText}</span>
+              <span class="result-score">Score: ${result.score}/100</span>
+            </div>
+            <div class="result-feedback">
+              <p>${result.feedback}</p>
+            </div>
+            ${result.strengths.length > 0 ? `
+              <div class="result-section strengths">
+                <h4>Strengths</h4>
+                <ul>
+                  ${result.strengths.map(s => `<li>${s}</li>`).join('')}
+                </ul>
+              </div>
+            ` : ''}
+            ${result.improvements.length > 0 ? `
+              <div class="result-section improvements">
+                <h4>Suggestions for Improvement</h4>
+                <ul>
+                  ${result.improvements.map(i => `<li>${i}</li>`).join('')}
+                </ul>
+              </div>
+            ` : ''}
+          </div>
+        `;
+      }
+    } catch (error) {
+      const contentEl = aiSection.querySelector('.ai-evaluation-content');
+      if (contentEl) {
+        contentEl.className = 'ai-evaluation-content error';
+        contentEl.innerHTML = `
+          <div class="evaluation-error">
+            Unable to get AI feedback: ${error instanceof Error ? error.message : 'Unknown error'}
+          </div>
+        `;
+      }
+    }
+  }
 }
 
 export function renderQuiz(
@@ -341,6 +498,21 @@ export function renderQuiz(
   `;
   container.appendChild(quizHeader);
 
+  // Timer setup
+  let timerInterval: ReturnType<typeof setInterval> | null = null;
+  let timerElement: HTMLElement | null = null;
+  let timeRemaining = config.durationMinutes ? config.durationMinutes * 60 : 0;
+
+  if (config.durationMinutes) {
+    timerElement = document.createElement('div');
+    timerElement.className = 'quiz-timer';
+    timerElement.innerHTML = `
+      <span class="timer-icon">${Icons.StatusInProgress}</span>
+      <span class="timer-value">${formatTimeRemaining(timeRemaining)}</span>
+    `;
+    quizHeader.appendChild(timerElement);
+  }
+
   const questionsContainer = document.createElement('div');
   questionsContainer.className = 'questions-container';
   container.appendChild(questionsContainer);
@@ -355,7 +527,8 @@ export function renderQuiz(
         question,
         state.currentQuestionIndex,
         state.answers[question.id],
-        state.showExplanations
+        state.showExplanations,
+        config.isExam
       );
       questionsContainer.appendChild(questionElement);
 
@@ -398,7 +571,8 @@ export function renderQuiz(
           question,
           index,
           state.answers[question.id],
-          state.showExplanations
+          state.showExplanations,
+          config.isExam
         );
         questionsContainer.appendChild(questionElement);
       });
@@ -411,16 +585,39 @@ export function renderQuiz(
   const submitButton = document.createElement('button');
   submitButton.className = 'btn btn-primary submit-button';
   submitButton.textContent = 'Submit Quiz';
-  submitButton.onclick = () => {
-    // Collect all answers
-    const questionElements = questionsContainer.querySelectorAll('.quiz-question');
-    questionElements.forEach((element, index) => {
-      const question = quiz.questions[index];
-      const answer = collectAnswer(element as HTMLElement, question);
-      if (answer !== undefined) {
-        state.answers[question.id] = answer;
+
+  // Extracted submit logic so it can be called by button or timer
+  function submitQuiz(timedOut = false) {
+    // Prevent double submission
+    if (state.submitted) return;
+
+    // Stop the timer
+    if (timerInterval) {
+      clearInterval(timerInterval);
+      timerInterval = null;
+    }
+
+    // Collect all answers (need to handle oneAtATime mode)
+    if (config.oneAtATime) {
+      // Collect current question's answer before submitting
+      const currentQuestionEl = questionsContainer.querySelector('.quiz-question') as HTMLElement;
+      if (currentQuestionEl) {
+        const currentQuestion = quiz.questions[state.currentQuestionIndex];
+        const answer = collectAnswer(currentQuestionEl, currentQuestion);
+        if (answer !== undefined) {
+          state.answers[currentQuestion.id] = answer;
+        }
       }
-    });
+    } else {
+      const questionElements = questionsContainer.querySelectorAll('.quiz-question');
+      questionElements.forEach((element, index) => {
+        const question = quiz.questions[index];
+        const answer = collectAnswer(element as HTMLElement, question);
+        if (answer !== undefined) {
+          state.answers[question.id] = answer;
+        }
+      });
+    }
 
     // Calculate score
     const timeSpent = Math.floor((Date.now() - state.startTime) / 1000);
@@ -429,14 +626,42 @@ export function renderQuiz(
     // Show feedback
     state.showExplanations = true;
     state.submitted = true;
-    render();
+
+    // For oneAtATime mode, show all questions in review mode
+    if (config.oneAtATime) {
+      questionsContainer.innerHTML = '';
+      quiz.questions.forEach((question, index) => {
+        const questionElement = createQuestionElement(
+          question,
+          index,
+          state.answers[question.id],
+          true, // showFeedback
+          false // isExam - false here since we're in review mode showing results
+        );
+        questionsContainer.appendChild(questionElement);
+      });
+    } else {
+      render();
+    }
 
     // Add summary
-    const summary = createScoreSummary(quiz, state.answers);
+    const summary = createScoreSummary(quiz, state.answers, timedOut);
     container.insertBefore(summary, questionsContainer);
 
-    // Hide submit button
+    // For exams, run AI evaluation on written questions
+    if (config.isExam && config.subjectId && config.examId) {
+      runWrittenQuestionEvaluation(quiz, state.answers, questionsContainer, config.subjectId, config.examId);
+    }
+
+    // Hide submit button and update timer display
     submitButton.style.display = 'none';
+    if (timerElement) {
+      timerElement.classList.add('timer-finished');
+      const timerValueEl = timerElement.querySelector('.timer-value');
+      if (timerValueEl) {
+        timerValueEl.textContent = timedOut ? "Time's up!" : 'Submitted';
+      }
+    }
 
     // Call completion callback
     const attempt: QuizAttempt = {
@@ -447,7 +672,33 @@ export function renderQuiz(
       timeSpentSeconds: timeSpent,
     };
     onComplete(attempt);
-  };
+  }
 
+  submitButton.onclick = () => submitQuiz(false);
   container.appendChild(submitButton);
+
+  // Start timer countdown if duration is set
+  if (config.durationMinutes && timerElement) {
+    timerInterval = setInterval(() => {
+      timeRemaining--;
+
+      const timerValueEl = timerElement!.querySelector('.timer-value');
+      if (timerValueEl) {
+        timerValueEl.textContent = formatTimeRemaining(timeRemaining);
+      }
+
+      // Add warning classes based on time remaining
+      if (timeRemaining <= 60) {
+        timerElement!.classList.add('timer-critical');
+        timerElement!.classList.remove('timer-warning');
+      } else if (timeRemaining <= 300) {
+        timerElement!.classList.add('timer-warning');
+      }
+
+      // Auto-submit when time runs out
+      if (timeRemaining <= 0) {
+        submitQuiz(true);
+      }
+    }, 1000);
+  }
 }

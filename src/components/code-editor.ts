@@ -18,6 +18,7 @@ export interface EditorConfig {
   hints?: string[];
   solution?: string;
   storageKey?: string; // For auto-save to localStorage
+  hideTestResults?: boolean; // For exam mode - hide pass/fail until submission
   onRun?: (code: string, output: string) => void;
   onTestResults?: (results: TestResult[], allPassed: boolean) => void;
 }
@@ -530,8 +531,8 @@ export function createCodeEditor(
         outputPanel.classList.add('error');
       }
 
-      // Render test results
-      renderTestResults(results);
+      // Render test results (hide in exam mode)
+      renderTestResults(results, config.hideTestResults);
 
       if (config.onTestResults) {
         config.onTestResults(results, allPassed);
@@ -553,8 +554,22 @@ export function createCodeEditor(
   }
 
   // Render test results
-  function renderTestResults(results: TestResult[]) {
+  function renderTestResults(results: TestResult[], hideResults = false) {
     testResultsContent.innerHTML = '';
+
+    // In exam mode (hideResults), don't show pass/fail - just show that tests ran
+    if (hideResults) {
+      const summaryEl = document.createElement('div');
+      summaryEl.className = 'test-result exam-mode';
+      summaryEl.innerHTML = `
+        <div class="test-result-header">
+          <span class="test-name">${results.length} test${results.length !== 1 ? 's' : ''} executed</span>
+          <span class="test-status">Results shown after submission</span>
+        </div>
+      `;
+      testResultsContent.appendChild(summaryEl);
+      return;
+    }
 
     results.forEach((result, index) => {
       const testCase = result.testCase;

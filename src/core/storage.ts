@@ -8,6 +8,7 @@ import type {
   ExerciseCompletion,
   ProjectSubmission,
   UserSettings,
+  AiGrade,
 } from './types';
 import { githubService } from '../services/github';
 
@@ -237,6 +238,21 @@ export class ProgressStorage {
     return attempts.reduce((best, current) =>
       current.score > best.score ? current : best
     );
+  }
+
+  /**
+   * Update AI grade for a question in the latest exam attempt
+   */
+  updateExamAiGrade(subjectId: string, examId: string, questionId: string, grade: AiGrade): void {
+    const attempts = this.progress.subjects[subjectId]?.examAttempts[examId];
+    if (!attempts || attempts.length === 0) return;
+
+    const latestAttempt = attempts[attempts.length - 1];
+    if (!latestAttempt.aiGrades) {
+      latestAttempt.aiGrades = {};
+    }
+    latestAttempt.aiGrades[questionId] = grade;
+    this.save();
   }
 
   /**
