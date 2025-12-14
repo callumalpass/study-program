@@ -223,6 +223,7 @@ function renderTopicView(
 ): void {
   const topicIndex = subject.topics.findIndex(t => t.id === topicId);
   const topic = topicIndex >= 0 ? subject.topics[topicIndex] : null;
+  const hasPractice = topic ? (topic.quizIds.length > 0 || topic.exerciseIds.length > 0) : false;
 
   if (!topic) {
     renderSubjectOverview(
@@ -258,12 +259,36 @@ function renderTopicView(
         </div>
       </header>
 
+      ${hasPractice ? `
+        <div class="practice-quick-nav">
+          <div class="practice-quick-title">
+            <span class="icon">${Icons.Progress}</span>
+            Practice quick access
+          </div>
+          <div class="practice-quick-actions">
+            <button class="btn btn-secondary btn-sm" data-scroll-target="#practice-section">
+              Jump to practice
+            </button>
+            ${topic.quizIds[0] ? `
+              <button class="btn btn-primary btn-sm" data-first-quiz="${topic.quizIds[0]}">
+                Start Quiz 1
+              </button>
+            ` : ''}
+            ${topic.exerciseIds[0] ? `
+              <button class="btn btn-primary btn-sm" data-first-exercise="${topic.exerciseIds[0]}">
+                Start Exercise 1
+              </button>
+            ` : ''}
+          </div>
+        </div>
+      ` : ''}
+
       <section class="content-section">
         ${renderMarkdown(topic.content)}
       </section>
 
       ${topic.quizIds.length > 0 || topic.exerciseIds.length > 0 ? `
-        <section class="section">
+        <section class="section" id="practice-section">
           <h2>Practice</h2>
           <div class="assessment-list">
             ${topic.quizIds.map((quizId, index) => {
@@ -379,4 +404,36 @@ function attachTopicEventListeners(container: HTMLElement, subjectId: string): v
       btn.addEventListener('click', () => navigateToExercise(subjectId, exerciseId));
     }
   });
+
+  const scrollBtn = container.querySelector('[data-scroll-target]');
+  if (scrollBtn) {
+    scrollBtn.addEventListener('click', () => {
+      const targetSelector = (scrollBtn as HTMLElement).dataset.scrollTarget;
+      if (!targetSelector) return;
+      const targetEl = container.querySelector(targetSelector);
+      if (targetEl) {
+        targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  }
+
+  const firstQuizBtn = container.querySelector('[data-first-quiz]');
+  if (firstQuizBtn) {
+    firstQuizBtn.addEventListener('click', () => {
+      const quizId = (firstQuizBtn as HTMLElement).dataset.firstQuiz;
+      if (quizId) {
+        navigateToQuiz(subjectId, quizId);
+      }
+    });
+  }
+
+  const firstExerciseBtn = container.querySelector('[data-first-exercise]');
+  if (firstExerciseBtn) {
+    firstExerciseBtn.addEventListener('click', () => {
+      const exerciseId = (firstExerciseBtn as HTMLElement).dataset.firstExercise;
+      if (exerciseId) {
+        navigateToExercise(subjectId, exerciseId);
+      }
+    });
+  }
 }

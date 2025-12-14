@@ -140,8 +140,8 @@ export const cs101Projects: Project[] = [
         'Polish: clear instructions, formatted output, happy-path demo run.'
       ],
       starterResources: [
-        { label: 'Function stubs', description: 'load_data(path), save_data(path), add_student(book, name), add_score(book, name, score), class_stats(book)' },
-        { label: 'Sample payload', description: '{"Alice": [90, 82], "Bob": [75]}' }
+        { label: 'Starter file', description: 'load/save helpers, menu loop skeleton', link: 'starter/cs101/gradebook.py' },
+        { label: 'Sample payload', description: 'JSON to test load/save/averages', link: 'starter/cs101/gradebook_sample.json' }
       ],
       tips: [
         'Keep raw scores in one place; derive averages/letters on demand.',
@@ -289,8 +289,7 @@ export const cs101Projects: Project[] = [
         'Polish: help command, invalid-command handling, 6+ rooms and 3+ items.'
       ],
       starterResources: [
-        { label: 'Room seed', description: 'Three-room sample graph with one key item to test movement + take.' },
-        { label: 'Command handlers', description: 'Stub signatures: handle_go(dir), handle_take(item), handle_use(item), handle_help().' }
+        { label: 'Starter file', description: '3-room map, state object, save/load helper, command registry', link: 'starter/cs101/adventure.py' }
       ],
       tips: [
         'Parse commands as verb + remainder; normalize to lowercase/trim.',
@@ -439,8 +438,8 @@ export const cs101Projects: Project[] = [
         'Polish: currency formatting and a clean menu flow.'
       ],
       starterResources: [
-        { label: 'Function stubs', description: 'add_transaction(book, txn), list_transactions(book, filter?), monthly_summary(book, month).' },
-        { label: 'Sample data', description: '[{"date":"2024-01-02","type":"income","amount":1200,"category":"Salary","description":"Paycheck"}]' }
+        { label: 'Starter file', description: 'Persistence helpers, menu skeleton, categories', link: 'starter/cs101/budget.py' },
+        { label: 'Sample data', description: 'Transactions to test summaries', link: 'starter/cs101/budget_sample.json' }
       ],
       tips: [
         'Normalize category strings once (upper/lower) to avoid mismatches.',
@@ -590,8 +589,8 @@ export const cs101Projects: Project[] = [
         'Practice mode/hints and polished messaging.'
       ],
       starterResources: [
-        { label: 'Function stubs', description: 'load_questions(path), run_quiz(questions), record_high_score(name, score).' },
-        { label: 'Sample questions', description: 'Seed 3–5 questions per category to test flow.' }
+        { label: 'Starter file', description: 'Question loader, quiz loop skeleton, high scores stub', link: 'starter/cs101/quiz_app.py' },
+        { label: 'Sample questions', description: 'Seed questions to run immediately', link: 'starter/cs101/questions_sample.json' }
       ],
       tips: [
         'Keep question selection pure; separate I/O from logic.',
