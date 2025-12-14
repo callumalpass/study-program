@@ -1,4 +1,5 @@
 import * as monaco from 'monaco-editor';
+import { initVimMode, VimMode } from 'monaco-vim';
 import { runPython, runTests, type TestResult } from './code-runner';
 import type { TestCase } from '@/core/types';
 import { Icons } from './icons';
@@ -47,6 +48,8 @@ export function createCodeEditor(
   let currentFontSize = config.fontSize || 14;
   let isFullscreen = false;
   let hintsRevealed = 0;
+  let vimModeEnabled = localStorage.getItem('cs_degree_vim_mode') === 'true';
+  let vimModeInstance: VimMode | null = null;
 
   // Load saved code from localStorage if available
   const storageKey = config.storageKey ? `${STORAGE_PREFIX}${config.storageKey}` : null;
@@ -215,6 +218,13 @@ export function createCodeEditor(
   };
   toolbarRight.appendChild(fullscreenButton);
 
+  // Vim mode toggle
+  const vimToggle = document.createElement('button');
+  vimToggle.className = `btn btn-ghost btn-vim ${vimModeEnabled ? 'active' : ''}`;
+  vimToggle.innerHTML = 'VIM';
+  vimToggle.title = 'Toggle vim mode';
+  toolbarRight.appendChild(vimToggle);
+
   toolbar.appendChild(toolbarLeft);
   toolbar.appendChild(toolbarRight);
   editorWrapper.appendChild(toolbar);
@@ -224,6 +234,12 @@ export function createCodeEditor(
   editorElement.className = 'editor-element';
   editorElement.style.height = config.height || '400px';
   editorWrapper.appendChild(editorElement);
+
+  // Vim status bar
+  const vimStatusBar = document.createElement('div');
+  vimStatusBar.className = 'vim-status-bar';
+  vimStatusBar.style.display = vimModeEnabled ? 'block' : 'none';
+  editorWrapper.appendChild(vimStatusBar);
 
   // Output panel
   const outputPanel = document.createElement('div');
@@ -388,6 +404,42 @@ export function createCodeEditor(
 
   // Error decorations collection
   let errorDecorations: string[] = [];
+
+  // Vim mode functions
+  function enableVimMode() {
+    if (!vimModeInstance) {
+      vimModeInstance = initVimMode(editor, vimStatusBar);
+    }
+    vimModeEnabled = true;
+    localStorage.setItem('cs_degree_vim_mode', 'true');
+    vimToggle.classList.add('active');
+    vimStatusBar.style.display = 'block';
+  }
+
+  function disableVimMode() {
+    if (vimModeInstance) {
+      vimModeInstance.dispose();
+      vimModeInstance = null;
+    }
+    vimModeEnabled = false;
+    localStorage.setItem('cs_degree_vim_mode', 'false');
+    vimToggle.classList.remove('active');
+    vimStatusBar.style.display = 'none';
+  }
+
+  // Initialize vim mode if enabled
+  if (vimModeEnabled) {
+    enableVimMode();
+  }
+
+  // Vim toggle click handler
+  vimToggle.onclick = () => {
+    if (vimModeEnabled) {
+      disableVimMode();
+    } else {
+      enableVimMode();
+    }
+  };
 
   // Run code function
   async function runCode() {
@@ -601,6 +653,10 @@ export function createCodeEditor(
       return editor.getValue();
     },
     dispose: () => {
+      if (vimModeInstance) {
+        vimModeInstance.dispose();
+        vimModeInstance = null;
+      }
       editor.dispose();
     },
     updateOptions: (options: monaco.editor.IStandaloneEditorConstructionOptions) => {
