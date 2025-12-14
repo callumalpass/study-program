@@ -409,7 +409,7 @@
    ========================================================================== */
 
 .curriculum-page {
-  max-width: var(--content-wide-max-width);
+  /* max-width: var(--content-wide-max-width); */
   margin: 0 auto;
 }
 
@@ -2524,3 +2524,43 @@ textarea.code-editor::placeholder {
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+/* View Toggle */
+.view-toggle {
+  display: flex;
+  background: var(--color-bg-elevated);
+  padding: 4px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border-default);
+}
+
+.toggle-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-xs) var(--space-md);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.toggle-btn:hover {
+  color: var(--color-text-primary);
+}
+
+.toggle-btn.active {
+  background: var(--color-bg-surface);
+  color: var(--color-accent-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.toggle-btn svg {
+  width: 16px;
+  height: 16px;
+}
+

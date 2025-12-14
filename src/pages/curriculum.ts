@@ -8,15 +8,18 @@ import {
 } from '@/core/progress';
 import { navigateToSubject } from '@/core/router';
 import { Icons } from '@/components/icons';
+import { CurriculumGraph } from '@/components/curriculum-graph';
 
 interface CurriculumFilters {
   selectedYear: number | null;
   showCompleted: boolean;
+  viewMode: 'list' | 'graph';
 }
 
 let currentFilters: CurriculumFilters = {
   selectedYear: null,
   showCompleted: true,
+  viewMode: 'list',
 };
 
 /**
@@ -34,6 +37,20 @@ export function renderCurriculumPage(container: HTMLElement, subjects: Subject[]
           <p class="subtitle">4-Year Computer Science Program</p>
         </div>
         <div class="curriculum-filters">
+          <div class="view-toggle">
+            <button class="toggle-btn ${currentFilters.viewMode === 'list' ? 'active' : ''}" data-view="list">
+              ${Icons.Curriculum} List
+            </button>
+            <button class="toggle-btn ${currentFilters.viewMode === 'graph' ? 'active' : ''}" data-view="graph">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="6" cy="6" r="3"></circle>
+                <circle cx="6" cy="18" r="3"></circle>
+                <line x1="20" y1="4" x2="8.12" y2="15.88"></line>
+                <line x1="14.47" y1="14.48" x2="20" y2="20"></line>
+                <line x1="8.12" y1="8.12" x2="12" y2="12"></line>
+              </svg> Graph
+            </button>
+          </div>
           <div class="filter-group">
             <label for="year-filter">Year:</label>
             <select id="year-filter" class="filter-select">
@@ -72,11 +89,27 @@ export function renderCurriculumPage(container: HTMLElement, subjects: Subject[]
         </div>
       </div>
 
-      <div class="curriculum-content">
-        ${renderCurriculumTree(groupedSubjects, subjects, userProgress, currentFilters)}
+      <div class="curriculum-content" id="curriculum-content-area">
+        ${currentFilters.viewMode === 'list' 
+          ? renderCurriculumTree(groupedSubjects, subjects, userProgress, currentFilters)
+          : ''}
       </div>
     </div>
   `;
+
+  if (currentFilters.viewMode === 'graph') {
+    const contentArea = container.querySelector('#curriculum-content-area');
+    if (contentArea) {
+      // Filter subjects based on year if selected
+      let displaySubjects = subjects;
+      if (currentFilters.selectedYear) {
+        displaySubjects = subjects.filter(s => s.year === currentFilters.selectedYear);
+      }
+      
+      const graph = new CurriculumGraph(displaySubjects, userProgress);
+      contentArea.appendChild(graph.render());
+    }
+  }
 
   attachEventListeners(container, subjects);
 }
@@ -242,6 +275,15 @@ function attachEventListeners(container: HTMLElement, subjects: Subject[]): void
     card.addEventListener('click', () => {
       const subjectId = (card as HTMLElement).dataset.subjectId;
       if (subjectId) navigateToSubject(subjectId);
+    });
+  });
+
+  // View toggle
+  container.querySelectorAll('.toggle-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const view = (e.currentTarget as HTMLElement).dataset.view as 'list' | 'graph';
+      currentFilters.viewMode = view;
+      renderCurriculumPage(container, subjects);
     });
   });
 
