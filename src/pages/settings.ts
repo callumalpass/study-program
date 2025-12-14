@@ -2,6 +2,7 @@
 import type { Theme, UserSettings } from '@/core/types';
 import { progressStorage, resetProgress, importProgress } from '@/core/storage';
 import { githubService } from '@/services/github';
+import { Icons } from '@/components/icons';
 
 /**
  * Render the settings page
@@ -35,21 +36,21 @@ export function renderSettingsPage(container: HTMLElement): void {
                   class="theme-option ${settings.theme === 'light' ? 'active' : ''}"
                   data-theme="light"
                 >
-                  <span class="theme-icon">☀️</span>
+                  <span class="theme-icon">${Icons.Sun}</span>
                   <span class="theme-label">Light</span>
                 </button>
                 <button
                   class="theme-option ${settings.theme === 'dark' ? 'active' : ''}"
                   data-theme="dark"
                 >
-                  <span class="theme-icon">🌙</span>
+                  <span class="theme-icon">${Icons.Moon}</span>
                   <span class="theme-label">Dark</span>
                 </button>
                 <button
                   class="theme-option ${settings.theme === 'auto' ? 'active' : ''}"
                   data-theme="auto"
                 >
-                  <span class="theme-icon">💻</span>
+                  <span class="theme-icon">${Icons.Monitor}</span>
                   <span class="theme-label">Auto</span>
                 </button>
               </div>
@@ -142,8 +143,8 @@ export function renderSettingsPage(container: HTMLElement): void {
                </div>
                <div id="github-status" class="status-message ${settings.gistId ? 'success' : ''}" style="font-size: 0.9em; color: var(--text-secondary);">
                  ${settings.gistId 
-                   ? `✅ Connected to Gist ID: ${settings.gistId.substring(0, 8)}...` 
-                   : '⚪ Not connected'}
+                   ? `${Icons.Check} Connected to Gist ID: ${settings.gistId.substring(0, 8)}...` 
+                   : `${Icons.StatusNotStarted} Not connected`}
                </div>
             </div>
           </div>
@@ -180,7 +181,7 @@ export function renderSettingsPage(container: HTMLElement): void {
               <p>Permanently delete all your progress data. This action cannot be undone.</p>
               ${hasProgress ? `
                 <div class="warning-message">
-                  <span class="warning-icon">⚠️</span>
+                  <span class="warning-icon">${Icons.Alert}</span>
                   <span>You have progress in ${totalSubjects} subject${totalSubjects > 1 ? 's' : ''}. Consider exporting your data first.</span>
                 </div>
               ` : ''}
@@ -378,7 +379,7 @@ function attachEventListeners(container: HTMLElement): void {
 
              // Import (this saves to local storage)
              importProgress(JSON.stringify(progressToImport));
-             githubStatus.textContent = `✅ Synced with Gist: ${gistId.substring(0, 8)}...`;
+             githubStatus.innerHTML = `${Icons.Check} Synced with Gist: ${gistId.substring(0, 8)}...`;
              githubStatus.style.color = 'var(--color-success)';
              
              // Refresh page to show new data/settings
@@ -395,7 +396,7 @@ function attachEventListeners(container: HTMLElement): void {
            gistId = await githubService.createGist(token, currentProgress);
            if (gistId) {
              progressStorage.updateSettings({ gistId });
-             githubStatus.textContent = `✅ Created Gist: ${gistId.substring(0, 8)}...`;
+             githubStatus.innerHTML = `${Icons.Check} Created Gist: ${gistId.substring(0, 8)}...`;
              githubStatus.style.color = 'var(--color-success)';
            } else {
              throw new Error('Failed to create Gist');
@@ -403,7 +404,7 @@ function attachEventListeners(container: HTMLElement): void {
         }
       } catch (error) {
         console.error(error);
-        githubStatus.textContent = '❌ Error: ' + (error instanceof Error ? error.message : 'Unknown error');
+        githubStatus.innerHTML = `${Icons.Cross} Error: ` + (error instanceof Error ? error.message : 'Unknown error');
         githubStatus.style.color = 'var(--color-error)';
       } finally {
         connectGithubBtn.disabled = false;

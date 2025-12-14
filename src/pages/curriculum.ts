@@ -7,6 +7,7 @@ import {
   calculateSubjectCompletion,
 } from '@/core/progress';
 import { navigateToSubject } from '@/core/router';
+import { Icons } from '@/components/icons';
 
 interface CurriculumFilters {
   selectedYear: number | null;
@@ -176,18 +177,18 @@ function renderSubjectCard(subject: Subject, allSubjects: Subject[], userProgres
 
         <div class="subject-meta">
           <span class="meta-item">
-            <span class="meta-icon">⏱️</span>
+            <span class="meta-icon">${Icons.Clock}</span>
             ${subject.estimatedHours} hours
           </span>
           <span class="meta-item">
-            <span class="meta-icon">📚</span>
+            <span class="meta-icon">${Icons.Curriculum}</span>
             ${subject.topics.length} topics
           </span>
         </div>
 
         ${isLocked ? `
           <div class="locked-overlay">
-            <span class="lock-icon">🔒</span>
+            <span class="lock-icon">${Icons.Lock}</span>
             <span class="lock-text">Complete prerequisites to unlock</span>
           </div>
         ` : ''}

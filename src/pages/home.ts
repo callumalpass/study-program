@@ -7,6 +7,7 @@ import {
   getNextRecommendedSubject,
 } from '@/core/progress';
 import { navigateToSubject, navigateToCurriculum } from '@/core/router';
+import { Icons } from '../components/icons';
 
 /**
  * Render the home/dashboard page
@@ -118,28 +119,28 @@ export function renderHomePage(container: HTMLElement, subjects: Subject[]): voi
         <h2>Your Statistics</h2>
         <div class="stats-grid">
           <div class="stat-card">
-            <div class="stat-icon">📝</div>
+            <div class="stat-icon">${Icons.StatQuiz}</div>
             <div class="stat-content">
               <span class="stat-number">${stats.quizzesCompleted}</span>
               <span class="stat-description">Quizzes Completed</span>
             </div>
           </div>
           <div class="stat-card">
-            <div class="stat-icon">💻</div>
+            <div class="stat-icon">${Icons.StatCode}</div>
             <div class="stat-content">
               <span class="stat-number">${stats.exercisesCompleted}</span>
               <span class="stat-description">Exercises Solved</span>
             </div>
           </div>
           <div class="stat-card">
-            <div class="stat-icon">🚀</div>
+            <div class="stat-icon">${Icons.StatProject}</div>
             <div class="stat-content">
               <span class="stat-number">${stats.projectsSubmitted}</span>
               <span class="stat-description">Projects Submitted</span>
             </div>
           </div>
           <div class="stat-card">
-            <div class="stat-icon">🎯</div>
+            <div class="stat-icon">${Icons.StatTarget}</div>
             <div class="stat-content">
               <span class="stat-number">${stats.averageQuizScore}%</span>
               <span class="stat-description">Average Quiz Score</span>
@@ -152,15 +153,15 @@ export function renderHomePage(container: HTMLElement, subjects: Subject[]): voi
         <h2>Quick Actions</h2>
         <div class="actions-grid">
           <button class="action-card" id="view-curriculum-action">
-            <span class="action-icon">📚</span>
+            <span class="action-icon">${Icons.Curriculum}</span>
             <span class="action-label">View Curriculum</span>
           </button>
           <button class="action-card" id="view-progress-action">
-            <span class="action-icon">📊</span>
+            <span class="action-icon">${Icons.Progress}</span>
             <span class="action-label">View Progress</span>
           </button>
           <button class="action-card" id="view-settings-action">
-            <span class="action-icon">⚙️</span>
+            <span class="action-icon">${Icons.Settings}</span>
             <span class="action-label">Settings</span>
           </button>
         </div>

@@ -13,6 +13,7 @@ import {
   navigateToCurriculum,
 } from '@/core/router';
 import { renderMarkdown } from '@/components/markdown';
+import { Icons } from '../components/icons';
 
 // Store projects globally for access
 let currentProjects: Project[] = [];
@@ -87,7 +88,7 @@ function renderSubjectOverview(
     <div class="subject-page">
       <nav class="breadcrumb">
         <a href="#/curriculum">Curriculum</a>
-        <span class="separator">›</span>
+        <span class="separator">${Icons.ChevronRight}</span>
         <span class="current">${subject.title}</span>
       </nav>
 
@@ -122,7 +123,7 @@ function renderSubjectOverview(
               const isCompleted = prereqProgress?.status === 'completed';
               return `
                 <li class="${isCompleted ? 'completed' : ''}">
-                  <span class="checkbox">${isCompleted ? '✓' : '○'}</span>
+                  <span class="checkbox">${isCompleted ? Icons.Check : Icons.StatusNotStarted}</span>
                   ${prereq.title} (${prereq.code})
                 </li>
               `;
@@ -188,7 +189,7 @@ function renderTopicItem(topic: Topic, number: number, subjectId: string, userPr
         <div class="topic-meta">
           ${topic.quizIds.length > 0 ? `<span>${quizzesCompleted}/${topic.quizIds.length} quizzes</span>` : ''}
           ${topic.exerciseIds.length > 0 ? `<span>${exercisesCompleted}/${topic.exerciseIds.length} exercises</span>` : ''}
-          ${isCompleted ? '<span class="completed-tag">✓ Complete</span>' : ''}
+          ${isCompleted ? `<span class="completed-tag">${Icons.Check} Complete</span>` : ''}
         </div>
       </div>
       <button class="btn btn-secondary btn-sm view-topic-btn" data-topic-id="${topic.id}">
@@ -214,7 +215,7 @@ function renderProjectItem(project: Project, subjectId: string, userProgress: an
         <div class="project-meta">
           <span>${project.estimatedHours} hours</span>
           <span>${project.requirements.length} requirements</span>
-          ${hasSubmission ? `<span class="submitted-tag">✓ Submitted</span>` : ''}
+          ${hasSubmission ? `<span class="submitted-tag">${Icons.Check} Submitted</span>` : ''}
         </div>
       </div>
       <button class="btn btn-primary btn-sm view-project-btn" data-project-id="${project.id}">
@@ -254,9 +255,9 @@ function renderTopicView(
     <div class="topic-page">
       <nav class="breadcrumb">
         <a href="#/curriculum">Curriculum</a>
-        <span class="separator">›</span>
+        <span class="separator">${Icons.ChevronRight}</span>
         <a href="#/subject/${subject.id}">${subject.code}</a>
-        <span class="separator">›</span>
+        <span class="separator">${Icons.ChevronRight}</span>
         <span class="current">${topic.title}</span>
       </nav>
 
@@ -302,7 +303,7 @@ function renderTopicView(
                   <div class="assessment-info">
                     <span class="assessment-type">Exercise</span>
                     <span class="assessment-title">Exercise ${index + 1}</span>
-                    ${passed ? '<span class="assessment-score passed">✓</span>' : ''}
+                    ${passed ? `<span class="assessment-score passed">${Icons.Check}</span>` : ''}
                   </div>
                   <button class="btn btn-primary btn-sm" data-exercise-id="${exerciseId}">
                     ${completions.length > 0 ? 'Retry' : 'Start'}
@@ -315,7 +316,7 @@ function renderTopicView(
       ` : ''}
 
       <div class="page-actions">
-        <button class="btn btn-secondary" id="back-to-subject">← Back to ${subject.code}</button>
+        <button class="btn btn-secondary" id="back-to-subject">${Icons.ChevronLeft} Back to ${subject.code}</button>
       </div>
     </div>
   `;

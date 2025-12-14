@@ -376,9 +376,10 @@
   position: relative;
   background-color: var(--code-bg);
   border: 1px solid var(--color-border-default);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-lg);
   overflow: hidden;
   margin-bottom: var(--space-lg);
+  box-shadow: var(--shadow-sm);
 }
 
 .code-editor-header {
@@ -386,14 +387,15 @@
   justify-content: space-between;
   align-items: center;
   padding: var(--space-sm) var(--space-md);
-  background-color: var(--color-bg-elevated);
+  background-color: var(--color-bg-deep); /* Darker header */
   border-bottom: 1px solid var(--color-border-default);
 }
 
 .code-editor-lang {
+  font-family: var(--font-mono);
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-medium);
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   text-transform: uppercase;
 }
 
@@ -403,7 +405,7 @@
 }
 
 .code-editor-body {
-  padding: var(--space-md);
+  padding: 0; /* Remove padding to let textarea fill */
   overflow-x: auto;
 }
 

@@ -7,6 +7,7 @@ import {
   getSubjectProgressDetails,
 } from '@/core/progress';
 import { navigateToSubject } from '@/core/router';
+import { Icons } from '@/components/icons';
 
 interface ExpandedYears {
   [key: number]: boolean;
@@ -154,7 +155,7 @@ export function renderProgressPage(container: HTMLElement, subjects: Subject[]):
             <h3>Export Progress</h3>
             <p>Download your progress data as a JSON file for backup</p>
             <button class="btn btn-primary" id="export-progress-btn">
-              <span class="icon">📥</span>
+              <span class="icon">${Icons.Download}</span>
               Export Progress
             </button>
           </div>
@@ -163,7 +164,7 @@ export function renderProgressPage(container: HTMLElement, subjects: Subject[]):
             <p>Restore your progress from a previously exported file</p>
             <input type="file" id="import-file-input" accept=".json" style="display: none">
             <button class="btn btn-primary" id="import-progress-btn">
-              <span class="icon">📤</span>
+              <span class="icon">${Icons.Upload}</span>
               Import Progress
             </button>
           </div>
@@ -192,7 +193,7 @@ function renderSubjectBreakdown(
       <div class="year-breakdown-section">
         <div class="year-breakdown-header" data-year="${year}">
           <h3>
-            <span class="expand-icon">${isExpanded ? '▼' : '▶'}</span>
+            <span class="expand-icon">${isExpanded ? Icons.ChevronDown : Icons.ChevronRight}</span>
             Year ${year}
           </h3>
         </div>
@@ -320,7 +321,7 @@ function calculateAchievements(subjects: Subject[], userProgress: any): Array<{
       id: 'first_subject',
       title: 'Getting Started',
       description: 'Complete your first subject',
-      icon: '🎯',
+      icon: Icons.StatTarget,
       unlocked: overallProgress.completedSubjects >= 1,
       unlockedDate: overallProgress.completedSubjects >= 1 ? userProgress.startedAt : undefined,
       progress: Math.min(100, (overallProgress.completedSubjects / 1) * 100),
@@ -329,7 +330,7 @@ function calculateAchievements(subjects: Subject[], userProgress: any): Array<{
       id: 'year_one',
       title: 'First Year Complete',
       description: 'Complete all Year 1 subjects',
-      icon: '🎓',
+      icon: Icons.AcademicCap,
       unlocked: isYearComplete(subjects, userProgress, 1),
       progress: calculateYearProgress(subjects, userProgress, 1),
     },
@@ -337,7 +338,7 @@ function calculateAchievements(subjects: Subject[], userProgress: any): Array<{
       id: 'quiz_master',
       title: 'Quiz Master',
       description: 'Pass 25 quizzes',
-      icon: '📝',
+      icon: Icons.StatQuiz,
       unlocked: totalQuizzesPassed >= 25,
       progress: Math.min(100, (totalQuizzesPassed / 25) * 100),
     },
@@ -345,7 +346,7 @@ function calculateAchievements(subjects: Subject[], userProgress: any): Array<{
       id: 'code_warrior',
       title: 'Code Warrior',
       description: 'Complete 50 coding exercises',
-      icon: '💻',
+      icon: Icons.StatCode,
       unlocked: totalExercisesPassed >= 50,
       progress: Math.min(100, (totalExercisesPassed / 50) * 100),
     },
@@ -353,7 +354,7 @@ function calculateAchievements(subjects: Subject[], userProgress: any): Array<{
       id: 'halfway',
       title: 'Halfway There',
       description: 'Complete 50% of the degree',
-      icon: '🚀',
+      icon: Icons.StatProject,
       unlocked: overallProgress.percentageComplete >= 50,
       progress: Math.min(100, overallProgress.percentageComplete * 2),
     },
@@ -361,7 +362,7 @@ function calculateAchievements(subjects: Subject[], userProgress: any): Array<{
       id: 'graduation',
       title: 'Graduate',
       description: 'Complete all subjects',
-      icon: '👨‍🎓',
+      icon: Icons.AcademicCap,
       unlocked: overallProgress.percentageComplete === 100,
       progress: overallProgress.percentageComplete,
     },

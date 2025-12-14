@@ -1,5 +1,6 @@
 import type { Subject, Quiz, Exercise, Project } from '../core/types';
 import { generateSubjectPDF, getSubjectContentStats } from '../services/pdf-export';
+import { Icons } from '../components/icons';
 
 interface ExportPageState {
   selectedSubjectId: string | null;
@@ -116,7 +117,7 @@ export function renderExportPage(
                 <span class="btn-spinner"></span>
                 <span>${state.progress || 'Generating...'}</span>
               ` : `
-                <span class="btn-icon">📄</span>
+                <span class="btn-icon">${Icons.Export}</span>
                 <span>Generate PDF</span>
               `}
             </button>

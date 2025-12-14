@@ -2,6 +2,7 @@
 import type { Subject, Quiz, CodingExercise, WrittenExercise, Exercise, Project, QuizAttempt, ExerciseCompletion, ProjectSubmission } from '@/core/types';
 import { progressStorage } from '@/core/storage';
 import { navigateToSubject } from '@/core/router';
+import { Icons } from '@/components/icons';
 
 // Type guard for CodingExercise
 function isCodingExercise(exercise: Exercise): exercise is CodingExercise {
@@ -53,12 +54,12 @@ export function renderQuizPage(
         </div>
         <div class="quiz-info">
           <span class="info-item">
-            <span class="icon">❓</span>
+            <span class="icon">${Icons.Help}</span>
             ${quiz.questions.length} questions
           </span>
           ${attempts.length > 0 ? `
             <span class="info-item">
-              <span class="icon">🔄</span>
+              <span class="icon">${Icons.Refresh}</span>
               ${attempts.length} attempt${attempts.length > 1 ? 's' : ''}
             </span>
           ` : ''}
@@ -96,7 +97,7 @@ export function renderQuizPage(
 
       <div class="quiz-actions">
         <button class="btn btn-secondary" id="back-to-subject">
-          ← Back to Subject
+          ${Icons.ChevronLeft} Back to Subject
         </button>
       </div>
     </div>
@@ -163,7 +164,7 @@ function renderCodingExercisePage(
         <div class="exercise-title-section">
           <h1>${exercise.title}</h1>
           ${isPassed ? `
-            <span class="completion-badge passed">✓ Completed</span>
+            <span class="completion-badge passed">${Icons.Check} Completed</span>
           ` : bestCompletion ? `
             <span class="completion-badge partial">
               ${bestCompletion.passedTestCases} / ${bestCompletion.totalTestCases} tests passed
@@ -172,16 +173,16 @@ function renderCodingExercisePage(
         </div>
         <div class="exercise-info">
           <span class="info-item">
-            <span class="icon">💻</span>
+            <span class="icon">${Icons.StatCode}</span>
             ${formatLanguage(exercise.language)}
           </span>
           <span class="info-item">
-            <span class="icon">🧪</span>
+            <span class="icon">${Icons.Beaker}</span>
             ${exercise.testCases.length} test cases
           </span>
           ${completions.length > 0 ? `
             <span class="info-item">
-              <span class="icon">🔄</span>
+              <span class="icon">${Icons.Refresh}</span>
               ${completions.length} attempt${completions.length > 1 ? 's' : ''}
             </span>
           ` : ''}
@@ -203,7 +204,7 @@ function renderCodingExercisePage(
             <div class="editor-actions">
               <button class="btn btn-small" id="reset-code-btn">Reset</button>
               <button class="btn btn-small" id="show-hint-btn">
-                💡 Hint (${exercise.hints.length} available)
+                ${Icons.LightBulb} Hint (${exercise.hints.length} available)
               </button>
             </div>
           </div>
@@ -218,7 +219,7 @@ function renderCodingExercisePage(
 
       <div class="exercise-actions">
         <button class="btn btn-secondary" id="back-to-subject">
-          ← Back to Subject
+          ${Icons.ChevronLeft} Back to Subject
         </button>
         <button class="btn btn-primary btn-large" id="run-tests-btn">
           Run Tests
@@ -301,7 +302,7 @@ function renderWrittenExercisePage(
 
       <div class="exercise-actions">
         <button class="btn btn-secondary" id="back-to-subject">
-          ← Back to Subject
+          ${Icons.ChevronLeft} Back to Subject
         </button>
       </div>
     </div>
@@ -353,7 +354,7 @@ export function renderProjectPage(
         </div>
         <div class="project-info">
           <span class="info-item">
-            <span class="icon">⏱️</span>
+            <span class="icon">${Icons.Clock}</span>
             ~${project.estimatedHours} hours
           </span>
         </div>

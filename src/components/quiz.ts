@@ -1,6 +1,7 @@
 import type { Quiz, QuizQuestion, QuizAttempt } from '@/core/types';
 import Prism from 'prismjs';
 import { renderMarkdown } from './markdown';
+import { Icons } from './icons';
 
 interface QuizConfig {
   oneAtATime?: boolean;
@@ -136,7 +137,7 @@ function createQuestionElement(
     feedbackDiv.className = `feedback ${isCorrect ? 'correct' : 'incorrect'}`;
     feedbackDiv.innerHTML = `
       <div class="feedback-header">
-        ${isCorrect ? '✓ Correct!' : '✗ Incorrect'}
+        ${isCorrect ? `${Icons.Check} Correct!` : `${Icons.Cross} Incorrect`}
       </div>
       <div class="feedback-explanation">
         ${renderMarkdown(question.explanation)}
@@ -293,7 +294,7 @@ export function renderQuiz(
       if (state.currentQuestionIndex > 0) {
         const prevButton = document.createElement('button');
         prevButton.className = 'btn btn-secondary';
-        prevButton.textContent = '← Previous';
+        prevButton.innerHTML = `${Icons.ChevronLeft} Previous`;
         prevButton.onclick = () => {
           state.currentQuestionIndex--;
           render();
@@ -304,7 +305,7 @@ export function renderQuiz(
       if (state.currentQuestionIndex < quiz.questions.length - 1) {
         const nextButton = document.createElement('button');
         nextButton.className = 'btn btn-primary';
-        nextButton.textContent = 'Next →';
+        nextButton.innerHTML = `Next ${Icons.ChevronRight}`;
         nextButton.onclick = () => {
           // Collect current answer
           const answer = collectAnswer(questionElement, question);

@@ -1,4 +1,5 @@
 import type { Subject, SubjectProgress, SubjectStatus } from '@/core/types';
+import { Icons } from './icons';
 
 interface SidebarState {
   collapsed: boolean;
@@ -26,13 +27,13 @@ function getStatusColor(status: SubjectStatus): string {
 function getStatusIcon(status: SubjectStatus): string {
   switch (status) {
     case 'completed':
-      return '✓';
+      return Icons.StatusCompleted;
     case 'in_progress':
-      return '◐';
+      return Icons.StatusInProgress;
     case 'not_started':
-      return '○';
+      return Icons.StatusNotStarted;
     default:
-      return '○';
+      return Icons.StatusNotStarted;
   }
 }
 
@@ -168,11 +169,11 @@ export function renderSidebar(
   header.className = 'sidebar-header';
   header.innerHTML = `
     <div class="sidebar-logo">
-      <span class="logo-icon">🎓</span>
+      <span class="logo-icon">${Icons.Logo}</span>
       <span class="logo-text">CS Degree</span>
     </div>
     <button class="sidebar-toggle" aria-label="Toggle sidebar">
-      ${state.collapsed ? '→' : '←'}
+      ${state.collapsed ? Icons.ChevronRight : Icons.ChevronLeft}
     </button>
   `;
 
@@ -180,7 +181,9 @@ export function renderSidebar(
   toggleButton.addEventListener('click', () => {
     state.collapsed = !state.collapsed;
     container.classList.toggle('collapsed');
-    toggleButton.textContent = state.collapsed ? '→' : '←';
+    
+    // Re-render the button icon
+    toggleButton.innerHTML = state.collapsed ? Icons.ChevronRight : Icons.ChevronLeft;
   });
 
   container.appendChild(header);
@@ -190,11 +193,11 @@ export function renderSidebar(
   nav.className = 'sidebar-nav';
 
   const navLinks = [
-    { route: '/dashboard', icon: '📊', label: 'Dashboard' },
-    { route: '/curriculum', icon: '📚', label: 'Curriculum' },
-    { route: '/progress', icon: '📈', label: 'Progress' },
-    { route: '/export', icon: '📄', label: 'Export PDF' },
-    { route: '/settings', icon: '⚙️', label: 'Settings' },
+    { route: '/dashboard', icon: Icons.Dashboard, label: 'Dashboard' },
+    { route: '/curriculum', icon: Icons.Curriculum, label: 'Curriculum' },
+    { route: '/progress', icon: Icons.Progress, label: 'Progress' },
+    { route: '/export', icon: Icons.Export, label: 'Export PDF' },
+    { route: '/settings', icon: Icons.Settings, label: 'Settings' },
   ];
 
   navLinks.forEach(({ route, icon, label }) => {
