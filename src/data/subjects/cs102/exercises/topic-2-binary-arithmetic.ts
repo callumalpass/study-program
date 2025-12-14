@@ -169,5 +169,106 @@ export const topic2Exercises: CodingExercise[] = [
       'Shortcut: for n-bit twos complement of -x, compute 2^n - x'
     ],
     language: 'python'
+  },
+  {
+    id: 'cs102-t2-ex09',
+    subjectId: 'cs102',
+    topicId: 'cs102-2',
+    title: 'Binary Division (Restoring)',
+    difficulty: 4,
+    description: 'Implement unsigned binary division using the restoring division algorithm. Return the tuple (quotient, remainder) as binary strings.',
+    starterCode: '# Unsigned binary restoring division\ndef binary_divide(dividend, divisor):\n    # Your code here\n    pass\n\nprint(binary_divide(\"1101\", \"11\"))  # (100, 1)',
+    solution: 'def binary_divide(dividend, divisor):\n    if divisor == \"0\":\n        raise ValueError(\"divide by zero\")\n    n = len(dividend)\n    divisor_int = int(divisor, 2)\n    remainder = 0\n    quotient_bits = []\n    for bit in dividend:\n        remainder = (remainder << 1) + int(bit)\n        if remainder >= divisor_int:\n            remainder -= divisor_int\n            quotient_bits.append(\"1\")\n        else:\n            quotient_bits.append(\"0\")\n    q = \"\".join(quotient_bits).lstrip(\"0\") or \"0\"\n    r = bin(remainder)[2:]\n    return (q, r)\n\nprint(binary_divide(\"1101\", \"11\"))',
+    testCases: [
+      { input: '"1101", "11"', expectedOutput: "('100', '1')", isHidden: false, description: '13 / 3 = 4 r1' },
+      { input: '"1010", "10"', expectedOutput: "('101', '0')", isHidden: false, description: '10 / 2 = 5' },
+      { input: '"1111", "101"', expectedOutput: "('11', '0')", isHidden: true, description: '15 / 5 = 3 remainder 0' }
+    ],
+    hints: [
+      'Process bits left to right, keeping a running remainder.',
+      'Shift remainder, bring down next bit, compare to divisor.',
+      'Set quotient bit to 1 when remainder >= divisor, then subtract.'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs102-t2-ex10',
+    subjectId: 'cs102',
+    topicId: 'cs102-2',
+    title: 'Saturating Add (8-bit signed)',
+    difficulty: 3,
+    description: 'Implement 8-bit signed addition with saturation. If overflow would occur, clamp to 01111111 (+127) or 10000000 (-128) instead of wrapping.',
+    starterCode: '# Saturating add for 8-bit signed\ndef saturating_add(bin1, bin2):\n    # Return saturated 8-bit binary string\n    pass\n\nprint(saturating_add(\"01111111\", \"00000001\"))  # clamp to 01111111',
+    solution: `def saturating_add(bin1, bin2):
+    bin1 = bin1.zfill(8)
+    bin2 = bin2.zfill(8)
+    a = int(bin1, 2)
+    b = int(bin2, 2)
+    # Interpret as signed
+    def to_signed(x):
+        return x - 256 if x & 0b10000000 else x
+    def to_unsigned(x):
+        return x & 0xFF
+    sa, sb = to_signed(a), to_signed(b)
+    s = sa + sb
+    if s > 127:
+        return "01111111"
+    if s < -128:
+        return "10000000"
+    return bin(to_unsigned(s))[2:].zfill(8)
+
+print(saturating_add("01111111", "00000001"))`,
+    testCases: [
+      { input: '"01111111", "00000001"', expectedOutput: '01111111', isHidden: false, description: 'Clamp positive overflow' },
+      { input: '"10000000", "10000000"', expectedOutput: '10000000', isHidden: false, description: 'Clamp negative overflow' },
+      { input: '"00000101", "11111011"', expectedOutput: '00000000', isHidden: true, description: '5 + (-5) = 0, no clamp' }
+    ],
+    hints: [
+      'Convert to signed ints, add, then clamp to [-128, 127].',
+      'Convert back to 8-bit two\'s complement.',
+      'Be careful to preserve leading zeros when returning binary.'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs102-t2-drill-1',
+    subjectId: 'cs102',
+    topicId: 'cs102-2',
+    title: 'Check Signed Overflow (8-bit)',
+    difficulty: 1,
+    description: 'Given two 8-bit signed binaries, return True if adding them would overflow in two\'s complement.',
+    starterCode: '# Detect signed overflow in 8-bit add\ndef will_overflow(a, b):\n    # Your code here\n    pass\n\nprint(will_overflow(\"01111111\", \"00000001\"))  # True',
+    solution: 'def will_overflow(a, b):\n    a = a.zfill(8)\n    b = b.zfill(8)\n    sign_a, sign_b = a[0], b[0]\n    # add to get sign of result\n    res = add_bits(a, b)\n    sign_r = res[0]\n    return sign_a == sign_b and sign_r != sign_a\n\ndef add_bits(x, y):\n    max_len = max(len(x), len(y))\n    x = x.zfill(max_len)\n    y = y.zfill(max_len)\n    carry = 0\n    out = []\n    for i in range(max_len - 1, -1, -1):\n        s = int(x[i]) + int(y[i]) + carry\n        out.append(str(s % 2))\n        carry = s // 2\n    if carry:\n        out.append(\"1\")\n    return \"\".join(reversed(out))[-8:]\n\nprint(will_overflow(\"01111111\", \"00000001\"))',
+    testCases: [
+      { input: '"01111111", "00000001"', expectedOutput: 'True', isHidden: false, description: '127 + 1 overflows' },
+      { input: '"10000000", "10000000"', expectedOutput: 'True', isHidden: false, description: '-128 + -128 overflows' },
+      { input: '"01000000", "11111111"', expectedOutput: 'False', isHidden: true, description: '64 + (-1) no overflow' }
+    ],
+    hints: [
+      'Overflow only when signs of operands match but differ from result sign.',
+      'You can simulate addition or reuse existing add logic.',
+      'Keep width at 8 bits.'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs102-t2-drill-2',
+    subjectId: 'cs102',
+    topicId: 'cs102-2',
+    title: 'Half Adder Bitwise',
+    difficulty: 1,
+    description: 'Implement a pure-bitwise half-adder function that returns (sum, carry) for inputs a,b ∈ {0,1}.',
+    starterCode: '# Half adder using bitwise ops\ndef half_adder_bit(a, b):\n    # Your code here\n    pass\n\nprint(half_adder_bit(1, 1))',
+    solution: 'def half_adder_bit(a, b):\n    sum_bit = a ^ b\n    carry = a & b\n    return (sum_bit, carry)\n\nprint(half_adder_bit(1, 1))',
+    testCases: [
+      { input: '1, 1', expectedOutput: '(0, 1)', isHidden: false, description: '1+1' },
+      { input: '1, 0', expectedOutput: '(1, 0)', isHidden: false, description: '1+0' },
+      { input: '0, 0', expectedOutput: '(0, 0)', isHidden: true, description: '0+0' }
+    ],
+    hints: [
+      'sum = XOR, carry = AND.',
+      'Inputs are 0/1 integers.'
+    ],
+    language: 'python'
   }
 ];

@@ -30,6 +30,21 @@ export const cs102Quizzes: Quiz[] = [
         options: ['2 bits', '4 bits', '8 bits', '16 bits'],
         correctAnswer: 1,
         explanation: 'Each hexadecimal digit represents 16 possible values (0-15), which requires exactly 4 binary bits (2^4 = 16).'
+      },
+      {
+        id: 'cs102-q1-4',
+        type: 'true_false',
+        prompt: 'Binary 100000 equals octal 40.',
+        correctAnswer: true,
+        explanation: '100000₂ = 32 + 0 + 0 + 0 + 0 + 0 = 32₁₀. 40₈ = 4·8 + 0 = 32₁₀, so they match.'
+      },
+      {
+        id: 'cs102-q1-5',
+        type: 'multiple_choice',
+        prompt: 'Which base is most convenient to group binary into 3-bit chunks?',
+        options: ['Base 4', 'Base 8', 'Base 10', 'Base 16'],
+        correctAnswer: 1,
+        explanation: 'Octal (base 8) maps 1 digit ↔ 3 bits (2^3 = 8), making grouping natural.'
       }
     ]
   },
@@ -61,6 +76,22 @@ export const cs102Quizzes: Quiz[] = [
         prompt: 'In two\'s complement representation, there is only one representation for zero.',
         correctAnswer: true,
         explanation: 'True. One advantage of two\'s complement over sign-magnitude representation is that zero has only one representation (all bits zero), eliminating the problem of negative zero.'
+      },
+      {
+        id: 'cs102-q2-4',
+        type: 'multiple_choice',
+        prompt: 'What is the two\'s complement 8-bit representation of -1?',
+        options: ['0000 0001', '1111 1111', '1000 0000', '0111 1111'],
+        correctAnswer: 1,
+        explanation: 'Start from 0000 0001, flip bits → 1111 1110, add 1 → 1111 1111.'
+      },
+      {
+        id: 'cs102-q2-5',
+        type: 'multiple_choice',
+        prompt: 'Binary 0101 1010 + 0011 0011 (unsigned) equals:',
+        options: ['1000 1101', '0111 1101', '1100 1101', '1001 0000'],
+        correctAnswer: 0,
+        explanation: '90 + 51 = 141 decimal → 1000 1101₂.'
       }
     ]
   },
@@ -92,6 +123,22 @@ export const cs102Quizzes: Quiz[] = [
         prompt: 'Floating-point representation can exactly represent all decimal numbers.',
         correctAnswer: false,
         explanation: 'False. Floating-point representation cannot exactly represent many decimal numbers (like 0.1) due to the binary nature of computers, leading to precision limitations.'
+      },
+      {
+        id: 'cs102-q3-4',
+        type: 'multiple_choice',
+        prompt: 'Which of these byte sequences is valid UTF-8?',
+        options: ['FF FE', 'C3 A9', '80 80', 'C0 AF'],
+        correctAnswer: 1,
+        explanation: 'C3 A9 is UTF-8 for é (U+00E9). FF FE is a UTF-16 BOM, 80 80 and C0 AF are invalid UTF-8 forms.'
+      },
+      {
+        id: 'cs102-q3-5',
+        type: 'multiple_choice',
+        prompt: 'In IEEE 754 single-precision, the exponent bias is:',
+        options: ['127', '128', '1023', '2047'],
+        correctAnswer: 0,
+        explanation: 'Single-precision uses an 8-bit exponent with bias 127. Double uses 11 bits with bias 1023.'
       }
     ]
   },
@@ -124,6 +171,21 @@ export const cs102Quizzes: Quiz[] = [
         options: ['0', '1', 'Both inputs', 'Neither input'],
         correctAnswer: 1,
         explanation: 'An XOR (exclusive OR) gate outputs 1 when the inputs are different (one 0 and one 1), and outputs 0 when both inputs are the same.'
+      },
+      {
+        id: 'cs102-q4-4',
+        type: 'true_false',
+        prompt: 'NAND gates alone can be combined to build any Boolean function.',
+        correctAnswer: true,
+        explanation: 'True. NAND is functionally complete; you can derive NOT, AND, OR, and any other gate from it.'
+      },
+      {
+        id: 'cs102-q4-5',
+        type: 'multiple_choice',
+        prompt: 'Simplify the expression (A ∧ 1) ∨ (A ∧ 0).',
+        options: ['A', '¬A', '1', '0'],
+        correctAnswer: 0,
+        explanation: 'A ∧ 1 = A, A ∧ 0 = 0, so expression reduces to A ∨ 0 = A.'
       }
     ]
   },
@@ -155,6 +217,22 @@ export const cs102Quizzes: Quiz[] = [
         prompt: 'Cache memory is larger but slower than main memory (RAM).',
         correctAnswer: false,
         explanation: 'False. Cache memory is smaller but much faster than main memory. It sits between the CPU and RAM to provide quick access to frequently used data.'
+      },
+      {
+        id: 'cs102-q5-4',
+        type: 'multiple_choice',
+        prompt: 'Which component holds the address of the next instruction to fetch?',
+        options: ['Instruction register', 'Program counter', 'Stack pointer', 'Memory address register'],
+        correctAnswer: 1,
+        explanation: 'The program counter (PC) tracks the address of the next instruction to fetch.'
+      },
+      {
+        id: 'cs102-q5-5',
+        type: 'multiple_choice',
+        prompt: 'A cache hit means:',
+        options: ['Data found in main memory', 'Data found in cache', 'Data found on disk', 'Data lost'],
+        correctAnswer: 1,
+        explanation: 'A cache hit finds the requested data in the cache, avoiding a slower main-memory access.'
       }
     ]
   }

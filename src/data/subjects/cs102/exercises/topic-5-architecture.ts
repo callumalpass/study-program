@@ -168,5 +168,86 @@ export const topic5Exercises: CodingExercise[] = [
       'JNZ: jump only if zero flag is not set'
     ],
     language: 'python'
+  },
+  {
+    id: 'cs102-t5-ex09',
+    subjectId: 'cs102',
+    topicId: 'cs102-5',
+    title: 'Direct-Mapped Cache Simulator',
+    difficulty: 4,
+    description: 'Simulate a tiny direct-mapped cache. Given a list of byte addresses, a cache size in lines, and a line size in bytes, return the number of hits and misses.',
+    starterCode: '# Direct-mapped cache simulator\ndef cache_sim(addresses, num_lines, line_size):\n    # addresses: list of ints\n    # Return tuple (hits, misses)\n    pass\n\nprint(cache_sim([0, 4, 8, 0, 16, 4], num_lines=2, line_size=4))',
+    solution: 'def cache_sim(addresses, num_lines, line_size):\n    cache_tags = [None] * num_lines\n    hits = misses = 0\n    for addr in addresses:\n        line_index = (addr // line_size) % num_lines\n        tag = addr // line_size\n        if cache_tags[line_index] == tag:\n            hits += 1\n        else:\n            misses += 1\n            cache_tags[line_index] = tag\n    return (hits, misses)\n\nprint(cache_sim([0, 4, 8, 0, 16, 4], num_lines=2, line_size=4))',
+    testCases: [
+      { input: '[0, 4, 8, 0, 16, 4], 2, 4', expectedOutput: '(2, 4)', isHidden: false, description: 'Hits on second 0 and second 4' },
+      { input: '[0, 1, 2, 3, 4, 5, 6, 7], 1, 4', expectedOutput: '(0, 8)', isHidden: false, description: 'Single-line cache thrashes' },
+      { input: '[0, 32, 0, 32], 4, 8', expectedOutput: '(2, 2)', isHidden: true, description: 'Alternating tags map to different lines' }
+    ],
+    hints: [
+      'Line index = (address / line_size) mod num_lines.',
+      'Tag = address / line_size (integer division).',
+      'On miss, replace the line with the new tag.'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs102-t5-ex10',
+    subjectId: 'cs102',
+    topicId: 'cs102-5',
+    title: 'Instruction Trace Logger',
+    difficulty: 3,
+    description: 'Extend the simple CPU simulator to emit a trace of (pc, instruction) for each step. Return the trace list. Use the same instruction set as the earlier CPUWithBranching exercise.',
+    starterCode: 'class TracingCPU:\n    def __init__(self, program):\n        self.program = program\n        self.pc = 0\n        self.registers = {\"R0\": 0, \"R1\": 0}\n        self.zero_flag = False\n        self.trace = []\n    \n    def step(self):\n        # Execute one instruction and log (pc, instruction)\n        pass\n    \n    def run(self):\n        while self.pc < len(self.program):\n            self.step()\n\nprog = [\"LOAD R0 2\", \"SUB R0 R0 1\", \"JNZ 1\", \"HALT\"]\ncpu = TracingCPU(prog)\ncpu.run()\nprint(cpu.trace)',
+    solution: 'class TracingCPU:\n    def __init__(self, program):\n        self.program = program\n        self.pc = 0\n        self.registers = {\"R0\": 0, \"R1\": 0}\n        self.zero_flag = False\n        self.halted = False\n        self.trace = []\n    \n    def step(self):\n        if self.halted or self.pc >= len(self.program):\n            return\n        instr = self.program[self.pc]\n        self.trace.append((self.pc, instr))\n        parts = instr.split()\n        op = parts[0]\n        if op == \"LOAD\":\n            self.registers[parts[1]] = int(parts[2])\n            self.zero_flag = (self.registers[parts[1]] == 0)\n            self.pc += 1\n        elif op == \"SUB\":\n            dest, src, imm = parts[1], parts[2], int(parts[3])\n            self.registers[dest] = self.registers[src] - imm\n            self.zero_flag = (self.registers[dest] == 0)\n            self.pc += 1\n        elif op == \"JNZ\":\n            target = int(parts[1])\n            if not self.zero_flag:\n                self.pc = target\n            else:\n                self.pc += 1\n        elif op == \"HALT\":\n            self.halted = True\n        else:\n            self.pc += 1\n    \n    def run(self):\n        while not self.halted and self.pc < len(self.program):\n            self.step()\n\nprog = [\"LOAD R0 2\", \"SUB R0 R0 1\", \"JNZ 1\", \"HALT\"]\ncpu = TracingCPU(prog)\ncpu.run()\nprint(cpu.trace)',
+    testCases: [
+      { input: 'prog = ["LOAD R0 2", "SUB R0 R0 1", "JNZ 1", "HALT"]; cpu = TracingCPU(prog); cpu.run(); cpu.trace', expectedOutput: '[(0, "LOAD R0 2"), (1, "SUB R0 R0 1"), (2, "JNZ 1"), (1, "SUB R0 R0 1"), (2, "JNZ 1"), (3, "HALT")]', isHidden: false, description: 'Loop twice then halt' },
+      { input: 'prog = ["LOAD R0 1", "SUB R0 R0 1", "JNZ 1", "HALT"]; cpu = TracingCPU(prog); cpu.run(); cpu.trace', expectedOutput: '[(0, "LOAD R0 1"), (1, "SUB R0 R0 1"), (2, "JNZ 1"), (3, "HALT")]', isHidden: true, description: 'Skip jump when zero' }
+    ],
+    hints: [
+      'Log (pc, instruction) before executing it.',
+      'Update zero_flag after arithmetic and loads.',
+      'Stop on HALT or when pc runs off the end.'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs102-t5-drill-1',
+    subjectId: 'cs102',
+    topicId: 'cs102-5',
+    title: 'Program Counter Increment',
+    difficulty: 1,
+    description: 'Given a starting PC and instruction size (bytes), compute the next PC after sequential execution of n instructions.',
+    starterCode: '# Compute next PC after n sequential instructions\ndef next_pc(start_pc, instr_size, n):\n    # Your code here\n    pass\n\nprint(next_pc(0, 4, 3))  # 12',
+    solution: 'def next_pc(start_pc, instr_size, n):\n    return start_pc + instr_size * n\n\nprint(next_pc(0, 4, 3))',
+    testCases: [
+      { input: '0, 4, 3', expectedOutput: '12', isHidden: false, description: '3 instructions * 4 bytes' },
+      { input: '100, 2, 5', expectedOutput: '110', isHidden: false, description: '5 short instructions' },
+      { input: '16, 1, 0', expectedOutput: '16', isHidden: true, description: 'No instructions' }
+    ],
+    hints: [
+      'Sequential execution just increments by instr_size each step.',
+      'Arithmetic only.'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs102-t5-drill-2',
+    subjectId: 'cs102',
+    topicId: 'cs102-5',
+    title: 'Cycles vs Time',
+    difficulty: 1,
+    description: 'Given CPU frequency in MHz and number of cycles, return the elapsed time in microseconds.',
+    starterCode: '# Convert cycles to microseconds\ndef cycles_to_us(cycles, mhz):\n    # Your code here\n    pass\n\nprint(cycles_to_us(10_000, 100))  # 100 us',
+    solution: 'def cycles_to_us(cycles, mhz):\n    # period per cycle in microseconds = 1 / (mhz)\n    period_us = 1.0 / mhz\n    return cycles * period_us\n\nprint(cycles_to_us(10_000, 100))',
+    testCases: [
+      { input: '10000, 100', expectedOutput: '100.0', isHidden: false, description: '10k cycles at 100 MHz' },
+      { input: '1, 50', expectedOutput: '0.02', isHidden: false, description: 'Single cycle' },
+      { input: '500, 200', expectedOutput: '2.5', isHidden: true, description: '500 cycles' }
+    ],
+    hints: [
+      '1 MHz = 1 cycle per microsecond.',
+      'Time = cycles / (frequency in cycles per microsecond).'
+    ],
+    language: 'python'
   }
 ];

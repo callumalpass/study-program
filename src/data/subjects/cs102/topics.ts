@@ -4,36 +4,162 @@ export const cs102Topics: Topic[] = [
   {
     id: 'cs102-1',
     title: 'Number Systems and Conversion',
-    content: 'Number systems are foundational to understanding how computers represent and process data. The decimal system (base-10) is what humans naturally use, but computers operate using binary (base-2), where each digit is either 0 or 1. Hexadecimal (base-16) provides a compact way to represent binary values, using digits 0-9 and letters A-F. Converting between these systems is essential for computer science.\n\nTo convert from binary to decimal, multiply each bit by its corresponding power of 2 and sum the results. For example, binary 1011 equals 8+0+2+1=11 in decimal. Converting from decimal to binary involves repeatedly dividing by 2 and recording remainders. Hexadecimal conversion often uses binary as an intermediate step, where each hex digit represents exactly 4 binary bits.\n\nOctal (base-8) is less common but still used in some systems. Understanding these conversions helps programmers work with memory addresses, color codes, file permissions, and low-level debugging. Mastering number systems provides insight into how computers fundamentally represent all information as sequences of bits.',
+    content: String.raw`## Why Number Systems Matter
+
+Everything a computer stores is a sequence of bits. We use different bases to make those bits readable:
+- **Binary (base 2):** Hardware view (0/1 signals).
+- **Hex (base 16):** Compact human view; 1 hex digit = 4 bits.
+- **Octal (base 8):** Historical/Unix permissions shorthand.
+- **Decimal (base 10):** Human default.
+
+## Converting Between Bases
+- **Binary → Decimal:** Sum each bit × its power of 2. Example: 1011 = 1·2^3 + 0·2^2 + 1·2^1 + 1·2^0 = 11.
+- **Decimal → Binary:** Repeated divide-by-2; collect remainders in reverse.
+- **Hex ↔ Binary:** Replace each hex digit with its 4-bit binary nibble (A = 1010, F = 1111).
+- **Decimal → Hex:** Divide by 16, track remainders 0–F.
+
+## Worked Example: 0x3F to Decimal
+0x3F = 3·16^1 + 15·16^0 = 48 + 15 = 63. In binary, 0x3F = 0011 1111.
+
+## Practical Uses
+- Memory addresses, color values (#RRGGBB), bit masks, Unix permissions (0755).
+- Network masks (e.g., /24), checksums, encoding/decoding tasks.
+
+## Common Pitfalls
+- Forgetting to pad binary before grouping for hex.
+- Mixing up digit weights (rightmost is 2^0, 16^0, etc.).
+- Case sensitivity in hex parsing (a-f vs A-F).`,
     quizIds: ['cs102-quiz-1'],
-    exerciseIds: ['cs102-ex-1', 'cs102-t1-ex02', 'cs102-t1-ex03', 'cs102-t1-ex04', 'cs102-t1-ex05', 'cs102-t1-ex06', 'cs102-t1-ex07', 'cs102-t1-ex08']
+    exerciseIds: ['cs102-ex-1', 'cs102-t1-ex02', 'cs102-t1-ex03', 'cs102-t1-ex04', 'cs102-t1-ex05', 'cs102-t1-ex06', 'cs102-t1-ex07', 'cs102-t1-ex08', 'cs102-t1-ex09', 'cs102-t1-ex10', 'cs102-t1-drill-1', 'cs102-t1-drill-2']
   },
   {
     id: 'cs102-2',
     title: 'Binary Arithmetic',
-    content: 'Binary arithmetic forms the basis of all computer calculations. Addition in binary follows similar rules to decimal addition, but carries occur when the sum reaches 2 rather than 10. For example, 1+1=10 in binary (which is 2 in decimal). Binary subtraction can be performed directly, but computers typically use addition with negative numbers instead.\n\nTwo\'s complement representation is the standard method for representing signed integers in computers. To find the two\'s complement of a number, invert all bits (ones\' complement) and add 1. This elegant system allows the same hardware to perform both addition and subtraction, and eliminates the problem of having two representations for zero.\n\nOverflow occurs when an arithmetic operation produces a result too large to fit in the allocated number of bits. Understanding overflow is critical for writing robust software, as it can lead to subtle bugs and security vulnerabilities. Binary multiplication and division follow algorithms similar to decimal long multiplication and division, but are simpler due to only having two possible digits.',
+    content: String.raw`## Core Ideas
+- Binary addition mirrors decimal, but carries on 2 instead of 10.
+- Two's complement encodes negatives so addition hardware also does subtraction.
+- Overflow happens when the representable range is exceeded (sign flips unexpectedly).
+
+## Two's Complement Refresher
+1. Ones complement: flip all bits.
+2. Add 1 to get two's complement.
+Example (8-bit): 0000 0101 (+5) → flip → 1111 1010 → +1 → 1111 1011 (-5).
+
+## Overflow Rules (Signed)
+- Adding two positives yields negative → overflow.
+- Adding two negatives yields positive → overflow.
+- Mixed-sign addition cannot overflow.
+
+## Worked Example: 0111 1111 + 0000 0001
+- Unsigned: 127 + 1 = 128 (fits unsigned 8-bit).
+- Signed: +127 + +1 = -128 (overflow, sign flipped).
+
+## Beyond Addition
+- **Subtraction:** A - B = A + (two's complement of B).
+- **Multiplication (shift-and-add):** For each 1 bit in multiplier, add a shifted multiplicand.
+- **Division (shift-subtract):** Align divisor, subtract when possible, shift remainder.
+
+## Pitfalls
+- Dropping leading zeros and losing width context (sign bit meaning changes).
+- Misinterpreting the same bits as signed vs unsigned values.`,
     quizIds: ['cs102-quiz-2'],
-    exerciseIds: ['cs102-ex-2', 'cs102-t2-ex02', 'cs102-t2-ex03', 'cs102-t2-ex04', 'cs102-t2-ex05', 'cs102-t2-ex06', 'cs102-t2-ex07', 'cs102-t2-ex08']
+    exerciseIds: ['cs102-ex-2', 'cs102-t2-ex02', 'cs102-t2-ex03', 'cs102-t2-ex04', 'cs102-t2-ex05', 'cs102-t2-ex06', 'cs102-t2-ex07', 'cs102-t2-ex08', 'cs102-t2-ex09', 'cs102-t2-ex10', 'cs102-t2-drill-1', 'cs102-t2-drill-2']
   },
   {
     id: 'cs102-3',
     title: 'Data Representation',
-    content: 'Computers represent all data as binary numbers, but different types of data require different encoding schemes. Integers can be represented as unsigned (only positive values) or signed (using two\'s complement for negative values). The range of representable values depends on the number of bits allocated: an 8-bit unsigned integer can represent 0-255, while an 8-bit signed integer represents -128 to 127.\n\nFloating-point representation allows computers to approximate real numbers. The IEEE 754 standard defines formats for single-precision (32-bit) and double-precision (64-bit) floating-point numbers. These formats divide bits into sign, exponent, and mantissa fields, enabling representation of very large and very small numbers, though with limited precision.\n\nCharacter encoding maps characters to numbers. ASCII uses 7 or 8 bits to represent 128 or 256 characters, sufficient for English but not for international text. Unicode, particularly UTF-8 encoding, has become the standard for representing text in any language. Understanding data representation helps programmers choose appropriate data types, avoid precision errors, and work with binary file formats.',
+    content: String.raw`## Integers
+- **Unsigned n-bit:** 0 to 2^n - 1.
+- **Signed (two's complement):** -2^(n-1) to 2^(n-1) - 1.
+- Width matters: the same bits mean different numbers if you change n.
+
+## Floating Point (IEEE 754)
+- **Single (32-bit):** 1 sign, 8 exponent, 23 fraction bits.
+- **Double (64-bit):** 1 sign, 11 exponent, 52 fraction bits.
+- Value = (-1)^sign × 1.fraction × 2^(exponent-bias).
+- Special cases: zeros, subnormals, ±∞, NaN.
+- Precision is finite: 0.1 cannot be represented exactly in binary.
+
+## Characters and Text
+- **ASCII:** 7-bit (128 chars), extended 8-bit variants differ.
+- **UTF-8:** Variable length, backwards compatible with ASCII, can encode all Unicode.
+- **Code point vs encoding:** U+1F600 (😀) encoded in UTF-8 as F0 9F 98 80.
+
+## Endianness
+- Little endian: least significant byte first (x86).
+- Big endian: most significant byte first (network byte order).
+- Matters when reading/writing binary formats or doing pointer casts.
+
+## Pitfalls
+- Misreading raw bytes without knowing encoding.
+- Assuming floats are exact for decimals.
+- Forgetting sign-extension vs zero-extension when widening values.`,
     quizIds: ['cs102-quiz-3'],
-    exerciseIds: ['cs102-ex-3', 'cs102-t3-ex02', 'cs102-t3-ex03', 'cs102-t3-ex04', 'cs102-t3-ex05', 'cs102-t3-ex06', 'cs102-t3-ex07', 'cs102-t3-ex08']
+    exerciseIds: ['cs102-ex-3', 'cs102-t3-ex02', 'cs102-t3-ex03', 'cs102-t3-ex04', 'cs102-t3-ex05', 'cs102-t3-ex06', 'cs102-t3-ex07', 'cs102-t3-ex08', 'cs102-t3-ex09', 'cs102-t3-ex10', 'cs102-t3-drill-1', 'cs102-t3-drill-2']
   },
   {
     id: 'cs102-4',
     title: 'Boolean Algebra and Logic Gates',
-    content: 'Boolean algebra is the mathematical foundation of digital logic, operating on binary values (true/false or 1/0). The fundamental operations are AND, OR, and NOT. AND produces 1 only when both inputs are 1; OR produces 1 when either input is 1; NOT inverts its input. From these basic operations, we can derive NAND, NOR, XOR, and XNOR gates, which have specific applications in circuit design.\n\nBoolean algebra follows laws similar to regular algebra, including commutative, associative, and distributive properties, plus unique laws like De Morgan\'s theorems. These laws allow us to simplify complex Boolean expressions, which is essential for optimizing digital circuits. Truth tables provide a systematic way to evaluate Boolean expressions for all possible input combinations.\n\nLogic gates are physical implementations of Boolean operations using transistors. By combining logic gates, we can build complex digital circuits that perform arithmetic, store data, and make decisions. Understanding Boolean algebra and logic gates bridges the gap between abstract computer science concepts and physical hardware implementation, revealing how software instructions ultimately become electrical signals.',
+    content: String.raw`## Boolean Building Blocks
+- **Primitives:** AND, OR, NOT.
+- **Derived:** NAND, NOR, XOR, XNOR. NAND/NOR are functionally complete (can build any gate).
+- **Truth Tables:** Enumerate all input combos to verify behavior.
+
+## Key Laws (Simplification Toolkit)
+- Identity/Null: p ∧ 1 = p, p ∨ 0 = p.
+- Domination: p ∧ 0 = 0, p ∨ 1 = 1.
+- Idempotent: p ∧ p = p, p ∨ p = p.
+- Complement: p ∧ ¬p = 0, p ∨ ¬p = 1.
+- De Morgan: ¬(p ∧ q) = ¬p ∨ ¬q; ¬(p ∨ q) = ¬p ∧ ¬q.
+- Distributive: p ∧ (q ∨ r) = (p ∧ q) ∨ (p ∧ r).
+
+## From Algebra to Gates
+- Expressions map directly to gate networks.
+- XOR handy for parity and adders; NAND common in hardware due to transistor efficiency.
+- Simplification reduces gate count → lower cost, faster circuits.
+
+## Example Simplification
+Expression: ¬(A ∧ B) ∨ (A ∧ B)
+- By complement law: 1. Output is always true (a tautology).
+
+## Common Pitfalls
+- Mixing up XOR (different) with OR (at least one).
+- Forgetting that NAND/NOR invert outputs.
+- Not normalizing expression width before wiring to gates.`,
     quizIds: ['cs102-quiz-4'],
-    exerciseIds: ['cs102-ex-4', 'cs102-t4-ex02', 'cs102-t4-ex03', 'cs102-t4-ex04', 'cs102-t4-ex05', 'cs102-t4-ex06', 'cs102-t4-ex07', 'cs102-t4-ex08', 'cs102-t4-ex09']
+    exerciseIds: ['cs102-ex-4', 'cs102-t4-ex02', 'cs102-t4-ex03', 'cs102-t4-ex04', 'cs102-t4-ex05', 'cs102-t4-ex06', 'cs102-t4-ex07', 'cs102-t4-ex08', 'cs102-t4-ex09', 'cs102-t4-ex10', 'cs102-t4-ex11', 'cs102-t4-drill-1', 'cs102-t4-drill-2']
   },
   {
     id: 'cs102-5',
     title: 'Basic Computer Architecture',
-    content: 'Computer architecture describes the fundamental organization of computer systems. The Von Neumann architecture, used in most modern computers, consists of a CPU (Central Processing Unit), memory, and I/O devices connected by buses. The CPU contains the ALU (Arithmetic Logic Unit) for computations, control unit for managing instruction execution, and registers for fast temporary storage.\n\nThe fetch-decode-execute cycle is the basic operation of a CPU. During fetch, an instruction is retrieved from memory at the address in the program counter. During decode, the control unit interprets the instruction to determine what operation to perform. During execute, the CPU carries out the instruction, which might involve arithmetic operations, memory access, or changing the program counter.\n\nMemory hierarchy optimizes the tradeoff between speed and cost. Registers are fastest but smallest and most expensive. Cache memory provides fast access to frequently used data. Main memory (RAM) is larger but slower. Secondary storage (hard drives, SSDs) is largest but slowest. Understanding computer architecture helps programmers write efficient code that takes advantage of hardware capabilities and understand performance characteristics of different operations.',
+    content: String.raw`## Big Picture
+- **Von Neumann model:** Single memory for code/data, CPU, I/O, interconnected by buses.
+- **CPU pieces:** ALU (compute), Control Unit (orchestration), Registers (fast scratchpad), PC (program counter).
+
+## Fetch-Decode-Execute
+1. Fetch instruction at PC from memory into instruction register.
+2. Decode opcode/operands (control signals set).
+3. Execute: ALU ops, memory load/store, branch to new PC if needed.
+4. Repeat.
+
+## Memory Hierarchy
+- Registers (1 cycle) → L1/L2/L3 cache → Main memory → SSD/HDD.
+- Locality of reference (temporal/spatial) makes caches effective.
+- Performance depends on cache hits/misses; alignment and access patterns matter.
+
+## Instruction Formats
+- Typical fields: opcode, destination register, source registers/immediates, addressing mode.
+- RISC vs CISC: fixed-size simple ops vs variable-length complex ops.
+
+## Input/Output
+- Memory-mapped I/O: devices appear as addresses.
+- Interrupts allow devices to signal the CPU asynchronously.
+
+## Pitfalls
+- Assuming memory access cost is uniform.
+- Forgetting endianness when reading raw memory.
+- Off-by-one in program counter changes during branching.`,
     quizIds: ['cs102-quiz-5'],
-    exerciseIds: ['cs102-ex-5', 'cs102-t5-ex02', 'cs102-t5-ex03', 'cs102-t5-ex04', 'cs102-t5-ex05', 'cs102-t5-ex06', 'cs102-t5-ex07', 'cs102-t5-ex08']
+    exerciseIds: ['cs102-ex-5', 'cs102-t5-ex02', 'cs102-t5-ex03', 'cs102-t5-ex04', 'cs102-t5-ex05', 'cs102-t5-ex06', 'cs102-t5-ex07', 'cs102-t5-ex08', 'cs102-t5-ex09', 'cs102-t5-ex10', 'cs102-t5-drill-1', 'cs102-t5-drill-2']
   }
 ];

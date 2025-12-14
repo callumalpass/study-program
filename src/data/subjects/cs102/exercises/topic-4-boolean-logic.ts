@@ -187,5 +187,86 @@ export const topic4Exercises: CodingExercise[] = [
       'Carry out = carry from either half adder'
     ],
     language: 'python'
+  },
+  {
+    id: 'cs102-t4-ex10',
+    subjectId: 'cs102',
+    topicId: 'cs102-4',
+    title: 'Truth Table Generator',
+    difficulty: 4,
+    description: 'Write a function that, given a Boolean expression using variables A, B, C and operators &, |, ^, ~, and parentheses, returns its truth table as a list of (assignment, result). Assume the expression is safe to eval.',
+    starterCode: 'import itertools\n\n# Generate truth table for expression like \"(A & B) | ~C\"\ndef truth_table(expr):\n    # Your code here\n    pass\n\nprint(truth_table(\"A & B\"))',
+    solution: 'import itertools\n\ndef truth_table(expr):\n    results = []\n    for vals in itertools.product([0, 1], repeat=3):\n        A, B, C = vals\n        result = int(eval(expr.replace(\"~\", \"1-\")))  # replace ~x with 1-x for NOT\n        results.append(((A, B, C), result))\n    return results\n\nprint(truth_table(\"A & B\"))',
+    testCases: [
+      { input: '"A & B"', expectedOutput: '[((0, 0, 0), 0), ((0, 1, 0), 0), ((1, 0, 0), 0), ((1, 1, 0), 1), ((0, 0, 1), 0), ((0, 1, 1), 0), ((1, 0, 1), 0), ((1, 1, 1), 1)]', isHidden: false, description: 'AND of A and B' },
+      { input: '"A ^ B"', expectedOutput: '[((0, 0, 0), 0), ((0, 1, 0), 1), ((1, 0, 0), 1), ((1, 1, 0), 0), ((0, 0, 1), 0), ((0, 1, 1), 1), ((1, 0, 1), 1), ((1, 1, 1), 0)]', isHidden: true, description: 'XOR' }
+    ],
+    hints: [
+      'Iterate over all 2^3 assignments of A,B,C.',
+      'Replace ~ with Python-friendly form (e.g., 1- or not).',
+      'Use eval cautiously; assume trusted input for this exercise.'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs102-t4-ex11',
+    subjectId: 'cs102',
+    topicId: 'cs102-4',
+    title: 'Boolean Simplifier (Algebraic)',
+    difficulty: 3,
+    description: 'Implement a simple algebraic simplifier that applies a few laws: idempotent (X|X = X, X&X = X), annihilator (X|1 = 1, X&0 = 0), identity (X|0 = X, X&1 = X), complement (X|~X = 1, X&~X = 0). Expression variables are single uppercase letters; operators: | for OR, & for AND, ~ for NOT. No parentheses.',
+    starterCode: '# Very small Boolean simplifier\ndef simplify(expr):\n    # expr like \"A|A\" or \"A&1\" or \"A|~A\"\n    # Your code here\n    pass\n\nprint(simplify(\"A|A\"))\nprint(simplify(\"A&1\"))\nprint(simplify(\"A|~A\"))',
+    solution: 'def simplify(expr):\n    expr = expr.replace(\" \", \"\")\n    # Handle complement forms first\n    if \"|~\" in expr or \"~\" in expr and \"|\" in expr:\n        parts = expr.split(\"|\")\n        if len(parts) == 2 and parts[1].startswith(\"~\") and parts[1][1:] == parts[0]:\n            return \"1\"\n    if \"&~\" in expr or \"~\" in expr and \"&\" in expr:\n        parts = expr.split(\"&\")\n        if len(parts) == 2 and parts[1].startswith(\"~\") and parts[1][1:] == parts[0]:\n            return \"0\"\n    # Idempotent\n    if \"|\" in expr:\n        a, b = expr.split(\"|\")\n        if a == b:\n            return a\n        if a == \"1\" or b == \"1\":\n            return \"1\"\n        if a == \"0\":\n            return b\n        if b == \"0\":\n            return a\n    if \"&\" in expr:\n        a, b = expr.split(\"&\")\n        if a == b:\n            return a\n        if a == \"0\" or b == \"0\":\n            return \"0\"\n        if a == \"1\":\n            return b\n        if b == \"1\":\n            return a\n    return expr\n\nprint(simplify(\"A|A\"))\nprint(simplify(\"A&1\"))\nprint(simplify(\"A|~A\"))',
+    testCases: [
+      { input: '"A|A"', expectedOutput: 'A', isHidden: false, description: 'Idempotent' },
+      { input: '"A&1"', expectedOutput: 'A', isHidden: false, description: 'Identity' },
+      { input: '"A&~A"', expectedOutput: '0', isHidden: true, description: 'Complement annihilates' }
+    ],
+    hints: [
+      'Handle complement cases A|~A=1 and A&~A=0 early.',
+      'Then apply idempotent and identity/annihilator laws.',
+      'Assume no parentheses and only one operator for simplicity.'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs102-t4-drill-1',
+    subjectId: 'cs102',
+    topicId: 'cs102-4',
+    title: 'XOR Parity Bit',
+    difficulty: 1,
+    description: 'Given a binary string, return 1 if it has odd parity (odd number of 1s), else 0. Use XOR, not count().',
+    starterCode: '# Parity using XOR\ndef parity(bit_str):\n    # Your code here\n    pass\n\nprint(parity(\"1011\"))  # 1',
+    solution: 'def parity(bit_str):\n    p = 0\n    for b in bit_str:\n        p ^= int(b)\n    return p\n\nprint(parity("1011"))',
+    testCases: [
+      { input: '"1011"', expectedOutput: '1', isHidden: false, description: 'Three ones -> odd' },
+      { input: '"1111"', expectedOutput: '0', isHidden: false, description: 'Four ones -> even' },
+      { input: '"0"', expectedOutput: '0', isHidden: true, description: 'No ones' }
+    ],
+    hints: [
+      'Initialize parity bit to 0 and XOR with each input bit.',
+      'XOR accumulates odd/even counts of 1s.'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs102-t4-drill-2',
+    subjectId: 'cs102',
+    topicId: 'cs102-4',
+    title: 'NAND from AND/NOT',
+    difficulty: 1,
+    description: 'Implement a NAND function using only Python’s logical operations (not using bitwise operators). Inputs are booleans.',
+    starterCode: '# NAND using and/not\ndef nand(a, b):\n    # Your code here\n    pass\n\nprint(nand(True, True))',
+    solution: 'def nand(a, b):\n    return not (a and b)\n\nprint(nand(True, True))',
+    testCases: [
+      { input: 'True, True', expectedOutput: 'False', isHidden: false, description: '1,1 -> 0' },
+      { input: 'True, False', expectedOutput: 'True', isHidden: false, description: '1,0 -> 1' },
+      { input: 'False, False', expectedOutput: 'True', isHidden: true, description: '0,0 -> 1' }
+    ],
+    hints: [
+      'NAND is the negation of AND.',
+      'Use logical operators, not bitwise.'
+    ],
+    language: 'python'
   }
 ];

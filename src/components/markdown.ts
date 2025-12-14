@@ -1,5 +1,7 @@
 import { marked } from 'marked';
 import Prism from 'prismjs';
+import katex from 'katex';
+import 'katex/dist/katex.min.css';
 
 // Import core Prism languages
 import 'prismjs/components/prism-python';
@@ -108,12 +110,28 @@ export function renderMarkdown(content: string): string {
 function processLatex(html: string): string {
   // Display math ($$...$$)
   html = html.replace(/\$\$([\s\S]+?)\$\$/g, (match, math) => {
-    return `<div class="math-display" data-math="${escapeHtml(math.trim())}">$$${escapeHtml(math.trim())}$$</div>`;
+    try {
+      return `<div class="math-display">${katex.renderToString(math.trim(), {
+        displayMode: true,
+        throwOnError: false,
+      })}</div>`;
+    } catch (error) {
+      console.error('KaTeX display render error:', error);
+      return match;
+    }
   });
 
   // Inline math ($...$)
   html = html.replace(/\$([^\$\n]+?)\$/g, (match, math) => {
-    return `<span class="math-inline" data-math="${escapeHtml(math.trim())}">$${escapeHtml(math.trim())}$</span>`;
+    try {
+      return `<span class="math-inline">${katex.renderToString(math.trim(), {
+        displayMode: false,
+        throwOnError: false,
+      })}</span>`;
+    } catch (error) {
+      console.error('KaTeX inline render error:', error);
+      return match;
+    }
   });
 
   return html;
@@ -160,40 +178,9 @@ export function renderMarkdownToElement(
  * This is a placeholder for future KaTeX integration.
  */
 function initializeLatexRendering(container: HTMLElement): void {
-  // Check if KaTeX is available
-  if (typeof (window as any).katex !== 'undefined') {
-    const katex = (window as any).katex;
-
-    // Render display math
-    container.querySelectorAll('.math-display').forEach((element) => {
-      const math = element.getAttribute('data-math');
-      if (math) {
-        try {
-          katex.render(math, element, {
-            displayMode: true,
-            throwOnError: false,
-          });
-        } catch (error) {
-          console.error('KaTeX rendering error:', error);
-        }
-      }
-    });
-
-    // Render inline math
-    container.querySelectorAll('.math-inline').forEach((element) => {
-      const math = element.getAttribute('data-math');
-      if (math) {
-        try {
-          katex.render(math, element, {
-            displayMode: false,
-            throwOnError: false,
-          });
-        } catch (error) {
-          console.error('KaTeX rendering error:', error);
-        }
-      }
-    });
-  }
+  // Rendering is performed during markdown processing via katex.renderToString.
+  // This function remains as a no-op for compatibility with existing callers.
+  void container;
 }
 
 /**

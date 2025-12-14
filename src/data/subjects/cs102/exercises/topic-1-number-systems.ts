@@ -170,5 +170,87 @@ export const topic1Exercises: CodingExercise[] = [
       'Check each character against valid digits for that base'
     ],
     language: 'python'
+  },
+  {
+    id: 'cs102-t1-ex09',
+    subjectId: 'cs102',
+    topicId: 'cs102-1',
+    title: 'Gray Code to Binary',
+    difficulty: 3,
+    description: 'Write a function that converts an n-bit Gray code string to its binary representation.',
+    starterCode: '# Convert Gray code to binary\ndef gray_to_binary(gray_str):\n    # Your code here\n    pass\n\nprint(gray_to_binary(\"1101\"))  # -> 1011',
+    solution: 'def gray_to_binary(gray_str):\n    # First bit is the same\n    binary = gray_str[0]\n    for i in range(1, len(gray_str)):\n        # XOR previous binary bit with current gray bit\n        prev_bit = int(binary[-1])\n        gbit = int(gray_str[i])\n        bbit = prev_bit ^ gbit\n        binary += str(bbit)\n    return binary\n\nprint(gray_to_binary(\"1101\"))',
+    testCases: [
+      { input: '"1101"', expectedOutput: '1011', isHidden: false, description: 'Gray 1101 = Binary 1011' },
+      { input: '"0"', expectedOutput: '0', isHidden: false, description: 'Single bit' },
+      { input: '"111"', expectedOutput: '100', isHidden: true, description: 'Gray 111 = 100' }
+    ],
+    hints: [
+      'First binary bit equals first Gray bit.',
+      'Each next binary bit = previous binary bit XOR current Gray bit.',
+      'Process left to right.'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs102-t1-ex10',
+    subjectId: 'cs102',
+    topicId: 'cs102-1',
+    title: 'Binary Fraction to Decimal',
+    difficulty: 3,
+    description: 'Convert a binary fraction string like "101.101" to its decimal floating value without using float().',
+    starterCode: '# Convert binary fraction to decimal\ndef binary_fraction_to_decimal(binary_str):\n    # Your code here\n    pass\n\nprint(binary_fraction_to_decimal(\"101.101\"))  # 5.625',
+    solution: 'def binary_fraction_to_decimal(binary_str):\n    if "." in binary_str:\n        int_part, frac_part = binary_str.split(".")\n    else:\n        int_part, frac_part = binary_str, ""\n    # Integer part\n    total = 0\n    for bit in int_part:\n        total = total * 2 + int(bit)\n    # Fractional part\n    power = 0.5\n    for bit in frac_part:\n        if bit == "1":\n            total += power\n        power /= 2\n    return total\n\nprint(binary_fraction_to_decimal(\"101.101\"))',
+    testCases: [
+      { input: '"101.101"', expectedOutput: '5.625', isHidden: false, description: '5 + 1/2 + 0/4 + 1/8' },
+      { input: '"0.01"', expectedOutput: '0.25', isHidden: false, description: '1/4' },
+      { input: '"1"', expectedOutput: '1', isHidden: true, description: 'No fractional part' }
+    ],
+    hints: [
+      'Split integer and fractional parts on "."',
+      'Left of dot: same as normal binary conversion.',
+      'Right of dot: weights are 1/2, 1/4, 1/8, ...'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs102-t1-drill-1',
+    subjectId: 'cs102',
+    topicId: 'cs102-1',
+    title: 'Hex Digit to Binary',
+    difficulty: 1,
+    description: 'Write a function that takes a single hex digit (0-9, A-F) and returns its 4-bit binary string.',
+    starterCode: '# Hex digit to binary nibble\ndef hex_digit_to_bin(ch):\n    # Your code here\n    pass\n\nprint(hex_digit_to_bin("A"))  # 1010',
+    solution: 'def hex_digit_to_bin(ch):\n    ch = ch.lower()\n    digits = "0123456789abcdef"\n    val = digits.index(ch)\n    return bin(val)[2:].zfill(4)\n\nprint(hex_digit_to_bin("A"))',
+    testCases: [
+      { input: '"A"', expectedOutput: '1010', isHidden: false, description: 'A = 10' },
+      { input: '"0"', expectedOutput: '0000', isHidden: false, description: '0 = 0' },
+      { input: '"F"', expectedOutput: '1111', isHidden: true, description: 'F = 15' }
+    ],
+    hints: [
+      'Map hex digit to its value 0–15, then format as 4-bit binary.',
+      'Use zfill(4) to pad leading zeros.'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs102-t1-drill-2',
+    subjectId: 'cs102',
+    topicId: 'cs102-1',
+    title: 'Binary Padding for Hex',
+    difficulty: 1,
+    description: 'Write a function that pads a binary string to a multiple of 4 bits by adding leading zeros.',
+    starterCode: '# Pad binary to nibble boundary\ndef pad_binary(binary_str):\n    # Your code here\n    pass\n\nprint(pad_binary("101"))   # 0101\nprint(pad_binary("10101")) # 00010101',
+    solution: 'def pad_binary(binary_str):\n    while len(binary_str) % 4 != 0:\n        binary_str = "0" + binary_str\n    return binary_str\n\nprint(pad_binary("101"))\nprint(pad_binary("10101"))',
+    testCases: [
+      { input: '"101"', expectedOutput: '0101', isHidden: false, description: 'Pad to 4 bits' },
+      { input: '"10101"', expectedOutput: '00010101', isHidden: false, description: 'Pad to 8 bits' },
+      { input: '"1"', expectedOutput: '0001', isHidden: true, description: 'Single bit pad' }
+    ],
+    hints: [
+      'Prepend zeros until length % 4 == 0.',
+      'Return the padded string.'
+    ],
+    language: 'python'
   }
 ];

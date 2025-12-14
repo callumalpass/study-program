@@ -169,5 +169,104 @@ export const topic3Exercises: CodingExercise[] = [
       'Use bit manipulation to extract and combine bits'
     ],
     language: 'python'
+  },
+  {
+    id: 'cs102-t3-ex09',
+    subjectId: 'cs102',
+    topicId: 'cs102-3',
+    title: 'Float Bit Breakdown',
+    difficulty: 4,
+    description: 'Given a 32-bit binary string, interpret it as an IEEE 754 single-precision float and return a tuple (sign, exponent, fraction, value).',
+    starterCode: '# Interpret IEEE 754 single precision bits\ndef decode_float32(bits):\n    # bits: 32-char string of 0/1\n    # Return (sign_bit, exponent_int, fraction_int, numeric_value)\n    pass\n\nprint(decode_float32(\"01000000101000000000000000000000\"))  # 5.0',
+    solution: `import struct
+
+def decode_float32(bits):
+    if len(bits) != 32:
+        raise ValueError("need 32 bits")
+    sign_bit = int(bits[0], 2)
+    exponent_bits = bits[1:9]
+    fraction_bits = bits[9:]
+    exponent = int(exponent_bits, 2)
+    fraction = int(fraction_bits, 2)
+    # Convert to actual float using struct
+    as_int = int(bits, 2)
+    packed = as_int.to_bytes(4, byteorder="big")
+    value = struct.unpack('>f', packed)[0]
+    return (sign_bit, exponent, fraction, value)
+
+print(decode_float32("01000000101000000000000000000000"))`,
+    testCases: [
+      { input: '"01000000101000000000000000000000"', expectedOutput: '(0, 128, 524288, 5.0)', isHidden: false, description: '5.0' },
+      { input: '"00111111100000000000000000000000"', expectedOutput: '(0, 127, 0, 1.0)', isHidden: false, description: '1.0' },
+      { input: '"10111100000000000000000000000000"', expectedOutput: '(1, 120, 0, -0.0078125)', isHidden: true, description: '-2^-7' }
+    ],
+    hints: [
+      'Split bits into sign (1), exponent (8), fraction (23).',
+      'You can reuse Python struct to get numeric value; the point is to show the pieces.',
+      'Remember exponent bias is 127.'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs102-t3-ex10',
+    subjectId: 'cs102',
+    topicId: 'cs102-3',
+    title: 'Endian Swap 32-bit',
+    difficulty: 2,
+    description: 'Write a function that takes an 8-hex-digit string (e.g., "1234ABCD") and returns the bytes swapped from little endian to big endian (e.g., "CDAB3412").',
+    starterCode: '# Swap endian of 32-bit hex string\ndef swap_endian32(hex_str):\n    # Your code here\n    pass\n\nprint(swap_endian32(\"1234ABCD\"))',
+    solution: 'def swap_endian32(hex_str):\n    if len(hex_str) != 8:\n        raise ValueError(\"need exactly 8 hex chars\")\n    hex_str = hex_str.lower()\n    bytes_list = [hex_str[i:i+2] for i in range(0, 8, 2)]\n    bytes_list.reverse()\n    return \"\".join(bytes_list)\n\nprint(swap_endian32(\"1234ABCD\"))',
+    testCases: [
+      { input: '"1234ABCD"', expectedOutput: 'cdab3412', isHidden: false, description: 'Swap four bytes' },
+      { input: '"deadbeef"', expectedOutput: 'efbeadde', isHidden: false, description: 'Classic pattern' },
+      { input: '"00000001"', expectedOutput: '01000000', isHidden: true, description: 'LSB moves to front' }
+    ],
+    hints: [
+      'Group hex string into bytes (2 hex chars each).',
+      'Reverse byte order, then join back.',
+      'Assume valid hex input of length 8.'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs102-t3-drill-1',
+    subjectId: 'cs102',
+    topicId: 'cs102-3',
+    title: 'Unsigned vs Signed Interpret',
+    difficulty: 1,
+    description: 'Given an 8-bit binary string, return a tuple (unsigned_value, signed_value).',
+    starterCode: '# Interpret 8-bit value as unsigned and signed\ndef interpret_byte(bits):\n    # Your code here\n    pass\n\nprint(interpret_byte(\"11111111\"))  # (255, -1)',
+    solution: 'def interpret_byte(bits):\n    bits = bits.zfill(8)\n    unsigned_val = int(bits, 2)\n    signed_val = unsigned_val - 256 if bits[0] == "1" else unsigned_val\n    return (unsigned_val, signed_val)\n\nprint(interpret_byte("11111111"))',
+    testCases: [
+      { input: '"11111111"', expectedOutput: '(255, -1)', isHidden: false, description: 'All ones' },
+      { input: '"01111111"', expectedOutput: '(127, 127)', isHidden: false, description: 'Max positive' },
+      { input: '"10000000"', expectedOutput: '(128, -128)', isHidden: true, description: 'Min negative' }
+    ],
+    hints: [
+      'Unsigned: plain base-2.',
+      'Signed: subtract 256 if sign bit is 1.',
+      'Ensure string is 8 bits.'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs102-t3-drill-2',
+    subjectId: 'cs102',
+    topicId: 'cs102-3',
+    title: 'Printable ASCII Check',
+    difficulty: 1,
+    description: 'Given a byte value (0-255), return True if it is a printable ASCII character (0x20-0x7E).',
+    starterCode: '# Check printable ASCII\ndef is_printable(byte_val):\n    # Your code here\n    pass\n\nprint(is_printable(65))  # True for "A"',
+    solution: 'def is_printable(byte_val):\n    return 0x20 <= byte_val <= 0x7E\n\nprint(is_printable(65))',
+    testCases: [
+      { input: '65', expectedOutput: 'True', isHidden: false, description: 'A' },
+      { input: '10', expectedOutput: 'False', isHidden: false, description: 'LF is not printable' },
+      { input: '127', expectedOutput: 'False', isHidden: true, description: 'DEL not printable' }
+    ],
+    hints: [
+      'Printable ASCII ranges from 32 (space) to 126 (~).',
+      'Return boolean.'
+    ],
+    language: 'python'
   }
 ];
