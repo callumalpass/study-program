@@ -124,7 +124,31 @@ export const cs101Projects: Project[] = [
         ]
       }
     ],
-    estimatedHours: 8
+    estimatedHours: 8,
+    scaffolding: {
+      overview: 'Use these guardrails to get working persistence and stats quickly; you still choose the structure.',
+      gettingStarted: [
+        'Define a gradebook shape: { [studentName]: number[] } and pick a JSON filename.',
+        'Add two helpers first: load_data(path) -> dict and save_data(path, data) -> None.',
+        'Write a minimal menu loop that only prints options and accepts a choice.'
+      ],
+      milestones: [
+        'Load/save works on a small sample gradebook without the menu.',
+        'Menu + add/list students and scores (no averages yet).',
+        'Per-student averages + letter grades, plus class min/max/avg.',
+        'Input validation and friendly errors for missing students or bad scores.',
+        'Polish: clear instructions, formatted output, happy-path demo run.'
+      ],
+      starterResources: [
+        { label: 'Function stubs', description: 'load_data(path), save_data(path), add_student(book, name), add_score(book, name, score), class_stats(book)' },
+        { label: 'Sample payload', description: '{"Alice": [90, 82], "Bob": [75]}' }
+      ],
+      tips: [
+        'Keep raw scores in one place; derive averages/letters on demand.',
+        'Handle file errors gracefully instead of crashing.',
+        'Draft a short “demo script” of inputs before coding to stay focused.'
+      ]
+    }
   },
   {
     id: 'cs101-project-2',
@@ -249,7 +273,31 @@ export const cs101Projects: Project[] = [
         ]
       }
     ],
-    estimatedHours: 12
+    estimatedHours: 12,
+    scaffolding: {
+      overview: 'Get a playable loop fast, then layer story and puzzles. Follow the milestones to avoid rabbit holes.',
+      gettingStarted: [
+        'Define a rooms dictionary: each room has description, exits {n/s/e/w}, and items [].',
+        'Create a command registry mapping strings to handler functions.',
+        'Add a game state object: current_room, inventory, move_count, flags.'
+      ],
+      milestones: [
+        'Movement only: go north/south and look prints room description.',
+        'Inventory basics: take/drop/list items; block taking what is not present.',
+        'Win/lose paths: add one win condition and one failure path.',
+        'Save/load: write/read game state (room, inventory, flags) to JSON.',
+        'Polish: help command, invalid-command handling, 6+ rooms and 3+ items.'
+      ],
+      starterResources: [
+        { label: 'Room seed', description: 'Three-room sample graph with one key item to test movement + take.' },
+        { label: 'Command handlers', description: 'Stub signatures: handle_go(dir), handle_take(item), handle_use(item), handle_help().' }
+      ],
+      tips: [
+        'Parse commands as verb + remainder; normalize to lowercase/trim.',
+        'Keep room definitions immutable; store current state separately.',
+        'Ship one clear objective first; add side puzzles only after the loop works.'
+      ]
+    }
   },
   {
     id: 'cs101-project-3',
@@ -375,7 +423,31 @@ export const cs101Projects: Project[] = [
         ]
       }
     ],
-    estimatedHours: 10
+    estimatedHours: 10,
+    scaffolding: {
+      overview: 'Build the data backbone first, then add reports and search.',
+      gettingStarted: [
+        'Pick a JSON filename and define a transaction shape: {date, type, amount, category, description}.',
+        'Write helpers: load_transactions(path) and save_transactions(path, data).',
+        'Create category constants and a validate_category helper.'
+      ],
+      milestones: [
+        'Add/view transactions works with running balance.',
+        'Filter by category and search by description keyword.',
+        'Monthly summary (income, expenses, net, per-category totals).',
+        'Input validation for amounts/dates/categories.',
+        'Polish: currency formatting and a clean menu flow.'
+      ],
+      starterResources: [
+        { label: 'Function stubs', description: 'add_transaction(book, txn), list_transactions(book, filter?), monthly_summary(book, month).' },
+        { label: 'Sample data', description: '[{"date":"2024-01-02","type":"income","amount":1200,"category":"Salary","description":"Paycheck"}]' }
+      ],
+      tips: [
+        'Normalize category strings once (upper/lower) to avoid mismatches.',
+        'Keep calculations pure; format currency at the edge when printing.',
+        'Guard file operations with try/except and user-friendly messages.'
+      ]
+    }
   },
   {
     id: 'cs101-project-4',
@@ -502,6 +574,30 @@ export const cs101Projects: Project[] = [
         ]
       }
     ],
-    estimatedHours: 10
+    estimatedHours: 10,
+    scaffolding: {
+      overview: 'Treat this like a product slice: load questions → play quiz → show results → save scores.',
+      gettingStarted: [
+        'Define a question shape {text, options[], answer, category, explanation?} and a JSON file layout.',
+        'Write question loader with validation and a safe fallback if the file is missing.',
+        'Sketch the quiz loop: pick questions, ask, read answer, score, feedback.'
+      ],
+      milestones: [
+        'Load questions and list categories without crashing.',
+        'Run a single quiz session (mixed or by category) with scoring.',
+        'Add review-mistakes output and simple timer toggle (optional).',
+        'High scores file save/load with name, score, date.',
+        'Practice mode/hints and polished messaging.'
+      ],
+      starterResources: [
+        { label: 'Function stubs', description: 'load_questions(path), run_quiz(questions), record_high_score(name, score).' },
+        { label: 'Sample questions', description: 'Seed 3–5 questions per category to test flow.' }
+      ],
+      tips: [
+        'Keep question selection pure; separate I/O from logic.',
+        'When the timer is off, reuse the same loop; avoid branching everywhere.',
+        'Persist high scores after each session to avoid losing progress.'
+      ]
+    }
   }
 ];

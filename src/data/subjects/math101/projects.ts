@@ -124,7 +124,31 @@ export const math101Projects: Project[] = [
         ]
       }
     ],
-    estimatedHours: 15
+    estimatedHours: 15,
+    scaffolding: {
+      overview: 'Stage the build: tokenizer → parser → evaluator → truth tables → CNF/DNF/equivalence.',
+      gettingStarted: [
+        'Define token types (VAR, NOT, AND, OR, IMPLIES, IFF, LPAREN, RPAREN) and write a tokenizer.',
+        'Sketch AST node shapes (Variable, Not, Binary) and a precedence table.',
+        'Plan an eval(node, env) function before writing the parser.'
+      ],
+      milestones: [
+        'Tokenizer passes a handful of sample inputs.',
+        'Parser builds ASTs for 5 sample expressions (no evaluation yet).',
+        'Evaluator returns correct booleans for given assignments.',
+        'Truth table generator works for ≤5 vars and flags tautology/contradiction.',
+        'CNF/DNF conversion + equivalence checker working on simple cases.'
+      ],
+      starterResources: [
+        { label: 'Test seeds', description: 'P, -P, P & Q, P -> Q, (P -> Q) & -R, (P | Q) <-> (Q | P).' },
+        { label: 'AST sketch', description: 'Node types: Var {name}, Not {child}, Bin {op,left,right}.' }
+      ],
+      tips: [
+        'Keep tokenizer/parser pure; separate from I/O.',
+        'Collect variables by walking the AST once; reuse for tables.',
+        'Apply De Morgan + distribution rules on the AST for CNF/DNF—keep it simple.'
+      ]
+    }
   },
   {
     id: 'math101-project-2',
@@ -247,7 +271,31 @@ export const math101Projects: Project[] = [
         ]
       }
     ],
-    estimatedHours: 12
+    estimatedHours: 12,
+    scaffolding: {
+      overview: 'Ship a minimal REPL + core operations first; then layer visualizations and identity checks.',
+      gettingStarted: [
+        'Choose a set representation (arrays) and normalize by sorting/unique on input.',
+        'Write pure helpers for union/intersection/diff/symmetricDiff/cartesian.',
+        'Create a REPL loop that parses input into a command + args.'
+      ],
+      milestones: [
+        'Core operations return correct lists for small sets.',
+        'Power set works with guardrails for size > 10 (warn instead of crash).',
+        'Subset/proper subset checks and text Venn for two sets.',
+        'Identity verifier plugs A/B/C samples into both sides and compares.',
+        'Save/load user-defined sets; add one quiz-mode prompt.'
+      ],
+      starterResources: [
+        { label: 'Sample sets', description: 'A={1,2,3}, B={2,3,4}, C={1,4}; EVENS up to 10 for property-based input.' },
+        { label: 'Function stubs', description: 'union(a,b), intersect(a,b), diff(a,b), symDiff(a,b), cartesian(a,b).' }
+      ],
+      tips: [
+        'Normalize inputs early to simplify every operation.',
+        'Keep visualizations optional; render text Venn from membership tests.',
+        'Identity checks can use random samples of small sets for quick feedback.'
+      ]
+    }
   },
   {
     id: 'math101-project-3',
@@ -344,7 +392,31 @@ export const math101Projects: Project[] = [
         ]
       }
     ],
-    estimatedHours: 15
+    estimatedHours: 15,
+    scaffolding: {
+      overview: 'Tackle it in layers: parsing input → property checks → classification → extras (closure, random generation).',
+      gettingStarted: [
+        'Normalize input: parse set A and relation R into an array of ordered pairs.',
+        'Represent R as both a pair list and an adjacency matrix for easier checks.',
+        'Write small predicates: is_reflexive(A, R), is_symmetric(R), is_transitive(R).'
+      ],
+      milestones: [
+        'Matrix display renders correctly for small sets.',
+        'Property checks return accurate booleans.',
+        'Classification labels Equivalence/Partial/Total/Strict correctly.',
+        'Equivalence classes or Hasse edges produced based on classification.',
+        'Transitive closure implemented (Warshall/BFS) + random relation generator.'
+      ],
+      starterResources: [
+        { label: 'Sample inputs', description: 'R1 on {1,2,3}: {(1,1),(2,2),(3,3)}; R2: {(1,2),(2,3)}; R3: {(a,a),(b,b),(a,b),(b,a)}.' },
+        { label: 'Helper stubs', description: 'to_matrix(A,R), closure(R), equivalence_classes(A,R), hasse_edges(A,R).' }
+      ],
+      tips: [
+        'Reuse the matrix for reflexive/symmetric/transitive checks to avoid rework.',
+        'Keep parsing isolated so property functions assume clean data.',
+        'Start with tiny sets (size 3–4) to validate every property quickly.'
+      ]
+    }
   },
   {
     id: 'math101-project-4',
@@ -467,6 +539,30 @@ export const math101Projects: Project[] = [
         ]
       }
     ],
-    estimatedHours: 10
+    estimatedHours: 10,
+    scaffolding: {
+      overview: 'Ship the core function library, then add interactive challenges and visual cues.',
+      gettingStarted: [
+        'Define data types for Sets and Functions (domain, codomain, mapping).',
+        'Implement pure helpers: compose(f,g), inverse(f), image(f,A), preimage(f,B).',
+        'Create a simple input format and parser for functions and sets.'
+      ],
+      milestones: [
+        'Parsing and core operations work on 2–3 sample functions.',
+        'Composition/inverse validated with small domain/codomain sets.',
+        'Challenge mode: generate a random function and ask the user to classify it.',
+        'Visual output (text grid) for mappings or small “arrow diagram” print.',
+        'Save/load user-defined functions and sets.'
+      ],
+      starterResources: [
+        { label: 'Sample functions', description: 'f: A={1,2,3} -> B={a,b} with pairs {(1,a),(2,a),(3,b)}; g: B -> C={true,false}.' },
+        { label: 'Function stubs', description: 'is_injective(f), is_surjective(f), compose(f,g), to_table(f).' }
+      ],
+      tips: [
+        'Validate domain/codomain membership before computing any property.',
+        'Compose carefully: g∘f means apply f then g; guard incompatible signatures.',
+        'Keep challenge prompts small and fast so students get immediate feedback.'
+      ]
+    }
   }
 ];

@@ -234,8 +234,8 @@ function calculateStats(subjects: Subject[], userProgress: any): {
     });
 
     // Count exercises
-    Object.values(progress.exerciseCompletions).forEach((completions: any) => {
-      if (completions && completions.some((c: any) => c.passed)) {
+    Object.values(progress.exerciseCompletions).forEach((completion: any) => {
+      if (completion && completion.passed) {
         exercisesCompleted++;
       }
     });

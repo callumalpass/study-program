@@ -1,5 +1,5 @@
 // Project page rendering
-import type { Subject, Project, ProjectSubmission } from '@/core/types';
+import type { Subject, Project, ProjectSubmission, StarterResource } from '@/core/types';
 import { progressStorage } from '@/core/storage';
 import { navigateToSubject } from '@/core/router';
 import { Icons } from '@/components/icons';
@@ -58,6 +58,8 @@ export function renderProjectPage(
           ${renderMarkdown(project.description)}
         </div>
       </section>
+
+      ${project.scaffolding ? renderProjectScaffolding(project) : ''}
 
       <section class="project-requirements">
         <h2>Requirements</h2>
@@ -173,6 +175,66 @@ export function renderProjectPage(
   `;
 
   attachProjectEventListeners(container, subjectId, project);
+}
+
+function renderProjectScaffolding(project: Project): string {
+  const { scaffolding } = project;
+  if (!scaffolding) return '';
+
+  const hasContent = [
+    scaffolding.overview,
+    scaffolding.gettingStarted,
+    scaffolding.milestones,
+    scaffolding.starterResources,
+    scaffolding.tips,
+  ].some(Boolean);
+
+  if (!hasContent) return '';
+
+  return `
+    <section class="project-scaffolding">
+      <div class="project-scaffolding-header">
+        <h2>Scaffolding & Milestones</h2>
+        ${scaffolding.overview ? `<p class="scaffolding-overview">${scaffolding.overview}</p>` : ''}
+      </div>
+      <div class="scaffolding-grid">
+        ${renderScaffoldingList('Getting Started', scaffolding.gettingStarted)}
+        ${renderScaffoldingList('Milestones', scaffolding.milestones)}
+        ${renderScaffoldingResources(scaffolding.starterResources)}
+        ${renderScaffoldingList('Tips', scaffolding.tips)}
+      </div>
+    </section>
+  `;
+}
+
+function renderScaffoldingList(title: string, items?: string[]): string {
+  if (!items || items.length === 0) return '';
+  return `
+    <div class="scaffolding-card">
+      <h3>${title}</h3>
+      <ul>
+        ${items.map(item => `<li>${item}</li>`).join('')}
+      </ul>
+    </div>
+  `;
+}
+
+function renderScaffoldingResources(resources?: StarterResource[]): string {
+  if (!resources || resources.length === 0) return '';
+
+  return `
+    <div class="scaffolding-card">
+      <h3>Starter Resources</h3>
+      <ul class="resource-list">
+        ${resources.map(res => `
+          <li>
+            <div class="resource-label">${res.label}${res.link ? ` <a href="${res.link}" target="_blank" rel="noopener">Open</a>` : ''}</div>
+            ${res.description ? `<div class="resource-description">${res.description}</div>` : ''}
+          </li>
+        `).join('')}
+      </ul>
+    </div>
+  `;
 }
 
 /**

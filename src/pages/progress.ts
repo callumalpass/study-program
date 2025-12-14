@@ -208,15 +208,15 @@ function renderSubjectBreakdown(
                     const details = getSubjectProgressDetails(subject);
                     return `
                       <div class="subject-breakdown-item" data-subject-id="${subject.id}">
-                        <div class="subject-breakdown-header">
-                          <div class="subject-info">
-                            <h5>${subject.title}</h5>
-                            <span class="subject-code">${subject.code}</span>
+                          <div class="subject-breakdown-header">
+                            <div class="subject-info">
+                              <h5>${subject.title}</h5>
+                              <span class="subject-code">${subject.code}</span>
+                            </div>
+                            <span class="subject-status-pill status-${details.status.replace('_', '-')}">
+                              ${formatStatus(details.status)}
+                            </span>
                           </div>
-                          <span class="status-badge status-${details.status.replace('_', '-')}">
-                            ${formatStatus(details.status)}
-                          </span>
-                        </div>
                         ${details.status !== 'not_started' ? `
                           <div class="subject-breakdown-progress">
                             <div class="progress-bar-container">
@@ -309,8 +309,8 @@ function calculateAchievements(subjects: Subject[], userProgress: any): Array<{
       }
     });
 
-    Object.values(subjectProgress.exerciseCompletions).forEach((completions: any) => {
-      if (completions && completions.some((c: any) => c.passed)) {
+    Object.values(subjectProgress.exerciseCompletions).forEach((completion: any) => {
+      if (completion && completion.passed) {
         totalExercisesPassed++;
       }
     });

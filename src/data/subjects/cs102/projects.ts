@@ -178,7 +178,31 @@ This project integrates all major concepts from CS102: binary representation for
         ]
       }
     ],
-    estimatedHours: 25
+    estimatedHours: 25,
+    scaffolding: {
+      overview: 'Build bottom-up: gate primitives → circuit graph → evaluator → truth tables → simplification/UI.',
+      gettingStarted: [
+        'Define a Gate interface/class with type, inputs, and an evaluate method.',
+        'Create a simple graph structure: nodes are gates, edges are connections by id.',
+        'Write a small library of pure gate functions (and, or, not, nand, nor, xor).'
+      ],
+      milestones: [
+        'Unit tests for individual gates and multi-input support.',
+        'Circuit builder can add gates and connect them; evaluation works for small graphs.',
+        'Truth table generator given N inputs produces outputs; prebuilt half/full-adder work.',
+        'Boolean simplification for expressions or small circuits.',
+        'Interface layer (CLI/GUI) to create, load, and run circuits with error messages.'
+      ],
+      starterResources: [
+        { label: 'Example circuits', description: 'Half-adder, full-adder, 2:1 multiplexer with expected outputs.' },
+        { label: 'Function stubs', description: 'evaluate_gate(gate, inputs), evaluate_circuit(graph, inputVector), generate_truth_table(graph).' }
+      ],
+      tips: [
+        'Keep gate evaluation pure; avoid mixing with UI.',
+        'Validate connections (no cycles for combinational circuits) before evaluating.',
+        'Cache intermediate outputs when generating truth tables to speed up larger inputs.'
+      ]
+    }
   },
   {
     id: 'cs102-project-2',
@@ -247,7 +271,31 @@ This project integrates all major concepts from CS102: binary representation for
         ]
       }
     ],
-    estimatedHours: 18
+    estimatedHours: 18,
+    scaffolding: {
+      overview: 'Treat each tool as a subcommand; build converters first, then encoding helpers, then cache calculator.',
+      gettingStarted: [
+        'Set up a CLI command router (e.g., encode, decode, float, twos, cache).',
+        'Write base conversion helpers with step-by-step breakdown strings.',
+        'Decide on data models for IEEE-754 parts and UTF-8 byte sequences.'
+      ],
+      milestones: [
+        'Base converter works both directions with fractional support.',
+        'Two’s complement visualizer shows sign/extend for configurable widths.',
+        'IEEE-754 parser prints sign/exponent/fraction and special-case labels.',
+        'UTF-8 encode/decode round-trips for ASCII + multi-byte examples.',
+        'Cache estimator consumes traces and reports hit/miss counts.'
+      ],
+      starterResources: [
+        { label: 'Example scripts', description: 'ip-mask, color hex, emoji, NaN/Inf, simple cache trace.' },
+        { label: 'Function stubs', description: 'to_base(value, base), from_base(str, base), parse_ieee(bits), utf8_encode(cp).' }
+      ],
+      tips: [
+        'Keep math pure; have UI functions only format steps.',
+        'Validate inputs early and give corrective hints.',
+        'Add a --demo flag to run the scripted examples for quick regression checks.'
+      ]
+    }
   },
   {
     id: 'cs102-project-3',
@@ -307,7 +355,31 @@ This project integrates all major concepts from CS102: binary representation for
         ]
       }
     ],
-    estimatedHours: 20
+    estimatedHours: 20,
+    scaffolding: {
+      overview: 'Approach it like a lab: trace, document phases, script inputs; keep a notes file as you go.',
+      gettingStarted: [
+        'Set up a disassembly/trace loop that logs registers and branches per step.',
+        'Identify input phases and expected lengths/types for each.',
+        'Create a scratchpad for mapping registers/variables to semantic names.'
+      ],
+      milestones: [
+        'Can step through one phase and predict register changes.',
+        'Recover the required input for the first two phases.',
+        'Document patterns (loops, arithmetic, comparisons) for later phases.',
+        'Automate running all found inputs to verify no “explosions.”',
+        'Write a concise walkthrough explaining how each input is derived.'
+      ],
+      starterResources: [
+        { label: 'Trace template', description: 'Table columns: pc, instr, r0..r5 (or eax..), notes/outcome.' },
+        { label: 'Phase checklist', description: 'Length/type guesses, branch conditions, constants spotted.' }
+      ],
+      tips: [
+        'Look for magic constants or string compares to anchor your reasoning.',
+        'Rename registers/slots once you infer meaning to reduce cognitive load.',
+        'Automate verification early so you can iterate without manual typing.'
+      ]
+    }
   },
   {
     id: 'cs102-project-4',
@@ -366,6 +438,30 @@ This project integrates all major concepts from CS102: binary representation for
         ]
       }
     ],
-    estimatedHours: 15
+    estimatedHours: 15,
+    scaffolding: {
+      overview: 'Build a core simulator first, then add visualizations and multiple policies.',
+      gettingStarted: [
+        'Define cache line structure: valid, tag, dirty, lastUsed, data?.',
+        'Write address breakdown helpers for tag/index/offset given cache config.',
+        'Implement direct-mapped access path with read/write handling.'
+      ],
+      milestones: [
+        'Direct-mapped mode returns correct hit/miss stats on small traces.',
+        'N-way set associative with LRU eviction works on provided traces.',
+        'Write-back + write-allocate implemented; add optional write-through toggle.',
+        'Visualization table shows sets/lines with valid/tag/dirty updates.',
+        'Include three sample traces (linear, random, tight loop) and a summary report.'
+      ],
+      starterResources: [
+        { label: 'Trace seeds', description: 'Linear 0x0000-0x00FF, Random 50 accesses, Loop: repeat 0x0100-0x0120.' },
+        { label: 'Function stubs', description: 'access(address, isWrite), make_cache(config), format_cache_state(cache).' }
+      ],
+      tips: [
+        'Unit test the address-splitting math separately from the simulator.',
+        'Keep config (block size, sets, associativity) immutable during a run.',
+        'Log hits/misses per access to debug visualization issues.'
+      ]
+    }
   }
 ];

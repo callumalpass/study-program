@@ -94,6 +94,7 @@ export interface Project {
   requirements: string[];
   rubric: RubricCriterion[];
   estimatedHours: number;
+  scaffolding?: ProjectScaffolding;
 }
 
 export interface RubricCriterion {
@@ -106,6 +107,20 @@ export interface RubricLevel {
   score: number;
   label: string;
   description: string;
+}
+
+export interface ProjectScaffolding {
+  overview?: string;
+  gettingStarted?: string[];
+  milestones?: string[];
+  starterResources?: StarterResource[];
+  tips?: string[];
+}
+
+export interface StarterResource {
+  label: string;
+  description?: string;
+  link?: string;
 }
 
 // User Progress Types
