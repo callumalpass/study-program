@@ -7,49 +7,59 @@ type RouteHandler = (route: Route) => void;
 export interface RouteDefinition {
   pattern: RegExp;
   paramNames: string[];
+  template: string; // Path template like '/subject/:id/topic/:topicId'
 }
 
 export class Router {
   private handlers: RouteHandler[] = [];
   private currentRoute: Route | null = null;
 
-  // Route patterns
+  // Route patterns - template is the single source of truth for path structure
   private routes: Record<string, RouteDefinition> = {
     home: {
       pattern: /^#?\/$/,
       paramNames: [],
+      template: '/',
     },
     curriculum: {
       pattern: /^#?\/curriculum$/,
       paramNames: [],
+      template: '/curriculum',
     },
     subject: {
       pattern: /^#?\/subject\/([^\/]+)$/,
       paramNames: ['id'],
+      template: '/subject/:id',
     },
     topic: {
       pattern: /^#?\/subject\/([^\/]+)\/topic\/([^\/]+)$/,
       paramNames: ['id', 'topicId'],
+      template: '/subject/:id/topic/:topicId',
     },
     quiz: {
       pattern: /^#?\/subject\/([^\/]+)\/quiz\/([^\/]+)$/,
       paramNames: ['id', 'quizId'],
+      template: '/subject/:id/quiz/:quizId',
     },
     exercise: {
       pattern: /^#?\/subject\/([^\/]+)\/exercise\/([^\/]+)$/,
       paramNames: ['id', 'exId'],
+      template: '/subject/:id/exercise/:exId',
     },
     project: {
       pattern: /^#?\/subject\/([^\/]+)\/project\/([^\/]+)$/,
       paramNames: ['id', 'projId'],
+      template: '/subject/:id/project/:projId',
     },
     progress: {
       pattern: /^#?\/progress$/,
       paramNames: [],
+      template: '/progress',
     },
     settings: {
       pattern: /^#?\/settings$/,
       paramNames: [],
+      template: '/settings',
     },
   };
 
@@ -101,31 +111,18 @@ export class Router {
   }
 
   /**
-   * Reconstruct the path from route name and params
+   * Reconstruct the path from route name and params using the template
    */
   private reconstructPath(name: string, params: RouteParams): string {
-    switch (name) {
-      case 'home':
-        return '/';
-      case 'curriculum':
-        return '/curriculum';
-      case 'subject':
-        return `/subject/${params.id}`;
-      case 'topic':
-        return `/subject/${params.id}/topic/${params.topicId}`;
-      case 'quiz':
-        return `/subject/${params.id}/quiz/${params.quizId}`;
-      case 'exercise':
-        return `/subject/${params.id}/exercise/${params.exId}`;
-      case 'project':
-        return `/subject/${params.id}/project/${params.projId}`;
-      case 'progress':
-        return '/progress';
-      case 'settings':
-        return '/settings';
-      default:
-        return '/';
+    const route = this.routes[name];
+    if (!route) {
+      return '/';
     }
+
+    // Replace :param placeholders with actual values
+    return route.template.replace(/:([^/]+)/g, (_, paramName) => {
+      return encodeURIComponent(params[paramName] || '');
+    });
   }
 
   /**

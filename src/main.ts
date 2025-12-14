@@ -57,6 +57,50 @@ const allProjects: Project[] = [
   ...cs105Projects,
 ];
 
+/**
+ * Render an error page when something goes wrong
+ */
+function renderErrorPage(container: HTMLElement, error: Error, path: string): void {
+  console.error('Page rendering error:', error);
+
+  container.innerHTML = `
+    <div class="error-boundary">
+      <div class="error-icon">⚠️</div>
+      <h1>Something went wrong</h1>
+      <p class="error-message">An error occurred while rendering this page.</p>
+      <details class="error-details">
+        <summary>Technical details</summary>
+        <p><strong>Path:</strong> <code>${path}</code></p>
+        <p><strong>Error:</strong> <code>${error.message}</code></p>
+        ${error.stack ? `<pre class="error-stack">${error.stack}</pre>` : ''}
+      </details>
+      <div class="error-actions">
+        <button class="btn btn-primary" onclick="location.reload()">Reload Page</button>
+        <a href="#/" class="btn btn-secondary">Go Home</a>
+      </div>
+    </div>
+  `;
+}
+
+/**
+ * Safely render a page with error boundary
+ */
+function safeRender(
+  container: HTMLElement,
+  path: string,
+  renderFn: () => void
+): void {
+  try {
+    renderFn();
+  } catch (error) {
+    renderErrorPage(
+      container,
+      error instanceof Error ? error : new Error(String(error)),
+      path
+    );
+  }
+}
+
 // Initialize the application
 function initApp(): void {
   const sidebarEl = document.getElementById('sidebar');
@@ -74,33 +118,37 @@ function initApp(): void {
     // Get fresh progress for each route change
     const userProgress = progressStorage.getProgress();
 
-    // Render sidebar for all routes
-    renderSidebar(sidebarEl, path, curriculum, userProgress.subjects);
+    // Render sidebar (wrapped in error boundary)
+    safeRender(sidebarEl, path, () => {
+      renderSidebar(sidebarEl, path, curriculum, userProgress.subjects);
+    });
 
-    // Route to appropriate page
-    if (path === '/' || path === '') {
-      renderHomePage(mainEl, curriculum);
-    } else if (path === '/curriculum') {
-      renderCurriculumPage(mainEl, curriculum);
-    } else if (path === '/progress') {
-      renderProgressPage(mainEl, curriculum);
-    } else if (path === '/settings') {
-      renderSettingsPage(mainEl);
-    } else if (path.startsWith('/subject/')) {
-      const subjectId = params.id;
+    // Route to appropriate page (wrapped in error boundary)
+    safeRender(mainEl, path, () => {
+      if (path === '/' || path === '') {
+        renderHomePage(mainEl, curriculum);
+      } else if (path === '/curriculum') {
+        renderCurriculumPage(mainEl, curriculum);
+      } else if (path === '/progress') {
+        renderProgressPage(mainEl, curriculum);
+      } else if (path === '/settings') {
+        renderSettingsPage(mainEl);
+      } else if (path.startsWith('/subject/')) {
+        const subjectId = params.id;
 
-      if (params.topicId) {
-        renderSubjectPage(mainEl, curriculum, subjectId, params.topicId, allProjects);
-      } else if (params.quizId) {
-        renderQuizPage(mainEl, curriculum, allQuizzes, subjectId, params.quizId);
-      } else if (params.exId) {
-        renderExercisePage(mainEl, curriculum, allExercises, subjectId, params.exId);
-      } else if (params.projId) {
-        renderProjectPage(mainEl, curriculum, allProjects, subjectId, params.projId);
-      } else {
-        renderSubjectPage(mainEl, curriculum, subjectId, undefined, allProjects);
+        if (params.topicId) {
+          renderSubjectPage(mainEl, curriculum, subjectId, params.topicId, allProjects);
+        } else if (params.quizId) {
+          renderQuizPage(mainEl, curriculum, allQuizzes, subjectId, params.quizId);
+        } else if (params.exId) {
+          renderExercisePage(mainEl, curriculum, allExercises, subjectId, params.exId);
+        } else if (params.projId) {
+          renderProjectPage(mainEl, curriculum, allProjects, subjectId, params.projId);
+        } else {
+          renderSubjectPage(mainEl, curriculum, subjectId, undefined, allProjects);
+        }
       }
-    }
+    });
   });
 
   // Router initializes itself via constructor - no need to call init()

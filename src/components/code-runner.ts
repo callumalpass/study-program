@@ -1,4 +1,5 @@
 import type { TestCase } from '@/core/types';
+import type { PyodideInterface, loadPyodide as LoadPyodideType } from 'pyodide';
 
 export interface TestResult {
   testCase: TestCase;
@@ -7,20 +8,18 @@ export interface TestResult {
   error?: string;
 }
 
-interface PyodideInterface {
-  runPythonAsync: (code: string) => Promise<any>;
-  loadPackage: (packages: string | string[]) => Promise<void>;
-  globals: any;
-}
-
 let pyodideInstance: PyodideInterface | null = null;
 let pyodideLoading: Promise<PyodideInterface> | null = null;
 
 declare global {
   interface Window {
-    loadPyodide: (config?: { indexURL?: string }) => Promise<PyodideInterface>;
+    loadPyodide: typeof LoadPyodideType;
   }
 }
+
+// Pyodide version - keep in sync with package.json devDependencies
+const PYODIDE_VERSION = '0.24.1';
+const PYODIDE_CDN_BASE = `https://cdn.jsdelivr.net/pyodide/v${PYODIDE_VERSION}/full`;
 
 /**
  * Initialize Pyodide lazily. Only loads when first needed.
@@ -39,7 +38,7 @@ export async function initPyodide(): Promise<PyodideInterface> {
       // Load Pyodide from CDN
       if (!window.loadPyodide) {
         const script = document.createElement('script');
-        script.src = 'https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js';
+        script.src = `${PYODIDE_CDN_BASE}/pyodide.js`;
         document.head.appendChild(script);
 
         await new Promise<void>((resolve, reject) => {
@@ -49,7 +48,7 @@ export async function initPyodide(): Promise<PyodideInterface> {
       }
 
       pyodideInstance = await window.loadPyodide({
-        indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.24.1/full/',
+        indexURL: `${PYODIDE_CDN_BASE}/`,
       });
 
       return pyodideInstance;
