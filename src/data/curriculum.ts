@@ -264,6 +264,35 @@ export const curriculum: Subject[] = [
   },
 
   {
+    id: 'math203',
+    code: 'MATH203',
+    title: 'Calculus I',
+    year: 2,
+    semester: 1,
+    prerequisites: [],
+    description: 'Introduction to single-variable calculus covering limits, continuity, differentiation, and applications of derivatives. This course develops rigorous understanding of differential calculus, including optimization, related rates, and curve sketching. Students learn to apply calculus techniques to solve problems in physics, engineering, and other sciences.',
+    learningObjectives: [
+      'Evaluate limits using algebraic techniques and L\'Hôpital\'s rule',
+      'Understand and apply the formal definition of continuity',
+      'Compute derivatives using the limit definition and differentiation rules',
+      'Apply the chain rule, product rule, and quotient rule',
+      'Solve optimization problems using calculus techniques',
+      'Analyze functions using derivatives to find extrema, inflection points, and asymptotes',
+      'Apply implicit differentiation and related rates to real-world problems'
+    ],
+    estimatedHours: 120,
+    topics: [
+      { id: 'math203-1', title: 'Limits and Continuity', content: '', quizIds: [], exerciseIds: [] },
+      { id: 'math203-2', title: 'Definition of the Derivative', content: '', quizIds: [], exerciseIds: [] },
+      { id: 'math203-3', title: 'Differentiation Rules', content: '', quizIds: [], exerciseIds: [] },
+      { id: 'math203-4', title: 'Applications of Derivatives', content: '', quizIds: [], exerciseIds: [] },
+      { id: 'math203-5', title: 'Optimization Problems', content: '', quizIds: [], exerciseIds: [] },
+      { id: 'math203-6', title: 'Related Rates', content: '', quizIds: [], exerciseIds: [] },
+      { id: 'math203-7', title: 'Curve Sketching', content: '', quizIds: [], exerciseIds: [] }
+    ]
+  },
+
+  {
     id: 'cs204',
     code: 'CS204',
     title: 'Software Engineering',
@@ -381,6 +410,35 @@ export const curriculum: Subject[] = [
       { id: 'math202-5', title: 'Hypothesis Testing', content: '', quizIds: [], exerciseIds: [] },
       { id: 'math202-6', title: 'Regression Analysis', content: '', quizIds: [], exerciseIds: [] },
       { id: 'math202-7', title: 'Bayesian Inference', content: '', quizIds: [], exerciseIds: [] }
+    ]
+  },
+
+  {
+    id: 'math204',
+    code: 'MATH204',
+    title: 'Calculus II',
+    year: 2,
+    semester: 2,
+    prerequisites: ['math203'],
+    description: 'Continuation of single-variable calculus focusing on integration techniques, applications of integrals, sequences, and infinite series. This course develops rigorous understanding of integral calculus and introduces Taylor series and convergence tests. Students learn to apply integration to problems in area, volume, arc length, and physics.',
+    learningObjectives: [
+      'Evaluate definite and indefinite integrals using fundamental techniques',
+      'Apply integration by parts, substitution, partial fractions, and trigonometric substitution',
+      'Calculate areas, volumes of revolution, and arc lengths using integrals',
+      'Evaluate improper integrals and understand convergence conditions',
+      'Analyze sequences and determine convergence or divergence',
+      'Apply convergence tests to infinite series including ratio, root, and comparison tests',
+      'Construct and manipulate Taylor and Maclaurin series representations'
+    ],
+    estimatedHours: 120,
+    topics: [
+      { id: 'math204-1', title: 'Antiderivatives and Indefinite Integrals', content: '', quizIds: [], exerciseIds: [] },
+      { id: 'math204-2', title: 'Definite Integrals and Fundamental Theorem', content: '', quizIds: [], exerciseIds: [] },
+      { id: 'math204-3', title: 'Integration Techniques', content: '', quizIds: [], exerciseIds: [] },
+      { id: 'math204-4', title: 'Applications of Integration', content: '', quizIds: [], exerciseIds: [] },
+      { id: 'math204-5', title: 'Improper Integrals', content: '', quizIds: [], exerciseIds: [] },
+      { id: 'math204-6', title: 'Sequences and Series', content: '', quizIds: [], exerciseIds: [] },
+      { id: 'math204-7', title: 'Taylor and Maclaurin Series', content: '', quizIds: [], exerciseIds: [] }
     ]
   },
 
@@ -506,6 +564,64 @@ export const curriculum: Subject[] = [
     ]
   },
 
+  {
+    id: 'math301',
+    code: 'MATH301',
+    title: 'Multivariable Calculus',
+    year: 3,
+    semester: 1,
+    prerequisites: ['math204', 'math201'],
+    description: 'Extension of calculus to functions of several variables. This course covers partial derivatives, multiple integrals, vector calculus, and the fundamental theorems of vector analysis. Students learn to analyze surfaces, optimize multivariable functions, and apply vector calculus to physics and engineering problems.',
+    learningObjectives: [
+      'Compute partial derivatives and directional derivatives of multivariable functions',
+      'Apply the gradient, divergence, and curl operators to vector fields',
+      'Optimize functions of several variables using Lagrange multipliers',
+      'Evaluate double and triple integrals in various coordinate systems',
+      'Compute line integrals and surface integrals',
+      'Apply Green\'s Theorem, Stokes\' Theorem, and the Divergence Theorem',
+      'Model physical phenomena using multivariable calculus'
+    ],
+    estimatedHours: 120,
+    topics: [
+      { id: 'math301-1', title: 'Vectors and Vector-Valued Functions', content: '', quizIds: [], exerciseIds: [] },
+      { id: 'math301-2', title: 'Partial Derivatives', content: '', quizIds: [], exerciseIds: [] },
+      { id: 'math301-3', title: 'Gradient, Directional Derivatives, and Tangent Planes', content: '', quizIds: [], exerciseIds: [] },
+      { id: 'math301-4', title: 'Optimization and Lagrange Multipliers', content: '', quizIds: [], exerciseIds: [] },
+      { id: 'math301-5', title: 'Multiple Integrals', content: '', quizIds: [], exerciseIds: [] },
+      { id: 'math301-6', title: 'Line Integrals and Surface Integrals', content: '', quizIds: [], exerciseIds: [] },
+      { id: 'math301-7', title: 'Vector Calculus Theorems', content: '', quizIds: [], exerciseIds: [] }
+    ]
+  },
+
+  {
+    id: 'math302',
+    code: 'MATH302',
+    title: 'Ordinary Differential Equations',
+    year: 3,
+    semester: 1,
+    prerequisites: ['math204'],
+    description: 'Study of ordinary differential equations and their applications. This course covers first-order equations, linear systems, series solutions, Laplace transforms, and numerical methods. Students learn to model dynamic systems and solve differential equations analytically and numerically.',
+    learningObjectives: [
+      'Solve first-order differential equations using separation of variables, integrating factors, and exact equations',
+      'Analyze and solve second-order linear differential equations with constant coefficients',
+      'Apply the method of undetermined coefficients and variation of parameters',
+      'Solve systems of linear differential equations using eigenvalue methods',
+      'Use Laplace transforms to solve initial value problems',
+      'Apply power series methods to solve differential equations near ordinary points',
+      'Model real-world phenomena including population dynamics, circuits, and mechanical systems'
+    ],
+    estimatedHours: 110,
+    topics: [
+      { id: 'math302-1', title: 'First-Order Differential Equations', content: '', quizIds: [], exerciseIds: [] },
+      { id: 'math302-2', title: 'Second-Order Linear Equations', content: '', quizIds: [], exerciseIds: [] },
+      { id: 'math302-3', title: 'Higher-Order Linear Equations', content: '', quizIds: [], exerciseIds: [] },
+      { id: 'math302-4', title: 'Systems of Differential Equations', content: '', quizIds: [], exerciseIds: [] },
+      { id: 'math302-5', title: 'Laplace Transforms', content: '', quizIds: [], exerciseIds: [] },
+      { id: 'math302-6', title: 'Series Solutions', content: '', quizIds: [], exerciseIds: [] },
+      { id: 'math302-7', title: 'Applications and Modeling', content: '', quizIds: [], exerciseIds: [] }
+    ]
+  },
+
   // ============================================================================
   // YEAR 3 - SEMESTER 2: Intermediate Topics Continued
   // ============================================================================
@@ -595,6 +711,64 @@ export const curriculum: Subject[] = [
       { id: 'cs307-5', title: 'Secure Coding Practices', content: '', quizIds: [], exerciseIds: [] },
       { id: 'cs307-6', title: 'Network Security', content: '', quizIds: [], exerciseIds: [] },
       { id: 'cs307-7', title: 'Security Testing', content: '', quizIds: [], exerciseIds: [] }
+    ]
+  },
+
+  {
+    id: 'math303',
+    code: 'MATH303',
+    title: 'Real Analysis',
+    year: 3,
+    semester: 2,
+    prerequisites: ['math204', 'math101'],
+    description: 'Rigorous treatment of the foundations of real analysis. This course covers the real number system, sequences, limits, continuity, differentiation, and integration from a theoretical perspective. Students develop skills in constructing mathematical proofs and gain deep understanding of the theoretical underpinnings of calculus.',
+    learningObjectives: [
+      'Understand the construction and properties of the real number system',
+      'Prove convergence properties of sequences and series using epsilon-delta arguments',
+      'Analyze continuity and uniform continuity of functions rigorously',
+      'Prove the fundamental theorems of differentiation including the Mean Value Theorem',
+      'Construct the Riemann integral and prove its properties',
+      'Understand sequences and series of functions and uniform convergence',
+      'Apply real analysis concepts to prove calculus theorems rigorously'
+    ],
+    estimatedHours: 130,
+    topics: [
+      { id: 'math303-1', title: 'The Real Number System', content: '', quizIds: [], exerciseIds: [] },
+      { id: 'math303-2', title: 'Sequences and Limits', content: '', quizIds: [], exerciseIds: [] },
+      { id: 'math303-3', title: 'Series', content: '', quizIds: [], exerciseIds: [] },
+      { id: 'math303-4', title: 'Continuity', content: '', quizIds: [], exerciseIds: [] },
+      { id: 'math303-5', title: 'Differentiation', content: '', quizIds: [], exerciseIds: [] },
+      { id: 'math303-6', title: 'Riemann Integration', content: '', quizIds: [], exerciseIds: [] },
+      { id: 'math303-7', title: 'Sequences and Series of Functions', content: '', quizIds: [], exerciseIds: [] }
+    ]
+  },
+
+  {
+    id: 'math304',
+    code: 'MATH304',
+    title: 'Abstract Algebra',
+    year: 3,
+    semester: 2,
+    prerequisites: ['math101', 'math201'],
+    description: 'Introduction to abstract algebraic structures including groups, rings, and fields. This course develops abstract thinking and proof skills while exploring the fundamental algebraic structures underlying modern mathematics and computer science applications like cryptography and coding theory.',
+    learningObjectives: [
+      'Understand group axioms and prove basic properties of groups',
+      'Analyze subgroups, cosets, and Lagrange\'s theorem',
+      'Work with cyclic groups, permutation groups, and group homomorphisms',
+      'Understand quotient groups and the isomorphism theorems',
+      'Study rings, integral domains, and fields',
+      'Work with ideals and quotient rings',
+      'Apply abstract algebra to cryptography and error-correcting codes'
+    ],
+    estimatedHours: 120,
+    topics: [
+      { id: 'math304-1', title: 'Groups and Subgroups', content: '', quizIds: [], exerciseIds: [] },
+      { id: 'math304-2', title: 'Cyclic Groups and Generators', content: '', quizIds: [], exerciseIds: [] },
+      { id: 'math304-3', title: 'Permutation Groups', content: '', quizIds: [], exerciseIds: [] },
+      { id: 'math304-4', title: 'Cosets and Lagrange\'s Theorem', content: '', quizIds: [], exerciseIds: [] },
+      { id: 'math304-5', title: 'Group Homomorphisms and Isomorphisms', content: '', quizIds: [], exerciseIds: [] },
+      { id: 'math304-6', title: 'Rings and Fields', content: '', quizIds: [], exerciseIds: [] },
+      { id: 'math304-7', title: 'Applications to Cryptography', content: '', quizIds: [], exerciseIds: [] }
     ]
   },
 
@@ -720,6 +894,64 @@ export const curriculum: Subject[] = [
     ]
   },
 
+  {
+    id: 'math401',
+    code: 'MATH401',
+    title: 'Complex Analysis',
+    year: 4,
+    semester: 1,
+    prerequisites: ['math303', 'math301'],
+    description: 'Study of functions of complex variables and their applications. This course covers complex differentiation, integration, power series, residue theory, and conformal mappings. Complex analysis provides powerful tools for evaluating real integrals, solving differential equations, and applications in physics and engineering.',
+    learningObjectives: [
+      'Perform arithmetic operations with complex numbers and understand the complex plane',
+      'Analyze analytic functions and apply the Cauchy-Riemann equations',
+      'Compute complex integrals using Cauchy\'s integral formula and theorem',
+      'Represent functions as power series and Laurent series',
+      'Apply residue theory to evaluate complex and real integrals',
+      'Understand conformal mappings and their applications',
+      'Apply complex analysis to problems in physics and engineering'
+    ],
+    estimatedHours: 120,
+    topics: [
+      { id: 'math401-1', title: 'Complex Numbers and the Complex Plane', content: '', quizIds: [], exerciseIds: [] },
+      { id: 'math401-2', title: 'Analytic Functions', content: '', quizIds: [], exerciseIds: [] },
+      { id: 'math401-3', title: 'Complex Integration', content: '', quizIds: [], exerciseIds: [] },
+      { id: 'math401-4', title: 'Cauchy\'s Theorem and Integral Formula', content: '', quizIds: [], exerciseIds: [] },
+      { id: 'math401-5', title: 'Power Series and Taylor Series', content: '', quizIds: [], exerciseIds: [] },
+      { id: 'math401-6', title: 'Laurent Series and Residues', content: '', quizIds: [], exerciseIds: [] },
+      { id: 'math401-7', title: 'Conformal Mappings', content: '', quizIds: [], exerciseIds: [] }
+    ]
+  },
+
+  {
+    id: 'math402',
+    code: 'MATH402',
+    title: 'Numerical Methods',
+    year: 4,
+    semester: 1,
+    prerequisites: ['math201', 'math302', 'cs101'],
+    description: 'Computational methods for solving mathematical problems that cannot be solved analytically. This course covers numerical solutions of equations, interpolation, numerical integration and differentiation, and numerical solutions of differential equations. Students implement algorithms and analyze error bounds and convergence.',
+    learningObjectives: [
+      'Analyze numerical errors including truncation and round-off errors',
+      'Implement root-finding algorithms including bisection, Newton\'s method, and secant method',
+      'Apply interpolation methods including Lagrange and Newton polynomials',
+      'Compute numerical derivatives and integrals using various quadrature rules',
+      'Solve systems of linear equations using direct and iterative methods',
+      'Implement numerical methods for ordinary differential equations',
+      'Analyze convergence and stability of numerical algorithms'
+    ],
+    estimatedHours: 110,
+    topics: [
+      { id: 'math402-1', title: 'Error Analysis and Computer Arithmetic', content: '', quizIds: [], exerciseIds: [] },
+      { id: 'math402-2', title: 'Root-Finding Methods', content: '', quizIds: [], exerciseIds: [] },
+      { id: 'math402-3', title: 'Interpolation and Approximation', content: '', quizIds: [], exerciseIds: [] },
+      { id: 'math402-4', title: 'Numerical Differentiation and Integration', content: '', quizIds: [], exerciseIds: [] },
+      { id: 'math402-5', title: 'Direct Methods for Linear Systems', content: '', quizIds: [], exerciseIds: [] },
+      { id: 'math402-6', title: 'Iterative Methods for Linear Systems', content: '', quizIds: [], exerciseIds: [] },
+      { id: 'math402-7', title: 'Numerical ODEs', content: '', quizIds: [], exerciseIds: [] }
+    ]
+  },
+
   // ============================================================================
   // YEAR 4 - SEMESTER 2: Capstone and Advanced Electives
   // ============================================================================
@@ -811,6 +1043,64 @@ export const curriculum: Subject[] = [
       { id: 'cs407-6', title: 'Big Data Technologies', content: '', quizIds: [], exerciseIds: [] },
       { id: 'cs407-7', title: 'Data Science Workflows', content: '', quizIds: [], exerciseIds: [] },
       { id: 'cs407-8', title: 'Ethics in Data Science', content: '', quizIds: [], exerciseIds: [] }
+    ]
+  },
+
+  {
+    id: 'math403',
+    code: 'MATH403',
+    title: 'Introduction to Topology',
+    year: 4,
+    semester: 2,
+    prerequisites: ['math303'],
+    description: 'Introduction to point-set topology and its applications. This course covers topological spaces, continuity, connectedness, compactness, and metric spaces. Topology provides a foundation for advanced mathematics and has applications in data analysis, robotics, and theoretical computer science.',
+    learningObjectives: [
+      'Define and work with topological spaces and their basic properties',
+      'Understand bases, subbases, and methods for generating topologies',
+      'Characterize continuous functions in topological terms',
+      'Analyze connectedness and path-connectedness of spaces',
+      'Apply compactness and understand its consequences',
+      'Work with metric spaces and understand the relationship to topological spaces',
+      'Explore applications of topology to computer science and data analysis'
+    ],
+    estimatedHours: 110,
+    topics: [
+      { id: 'math403-1', title: 'Topological Spaces and Open Sets', content: '', quizIds: [], exerciseIds: [] },
+      { id: 'math403-2', title: 'Bases and Subbases', content: '', quizIds: [], exerciseIds: [] },
+      { id: 'math403-3', title: 'Continuity and Homeomorphisms', content: '', quizIds: [], exerciseIds: [] },
+      { id: 'math403-4', title: 'Connectedness', content: '', quizIds: [], exerciseIds: [] },
+      { id: 'math403-5', title: 'Compactness', content: '', quizIds: [], exerciseIds: [] },
+      { id: 'math403-6', title: 'Metric Spaces', content: '', quizIds: [], exerciseIds: [] },
+      { id: 'math403-7', title: 'Applications of Topology', content: '', quizIds: [], exerciseIds: [] }
+    ]
+  },
+
+  {
+    id: 'math404',
+    code: 'MATH404',
+    title: 'Optimization Theory',
+    year: 4,
+    semester: 2,
+    prerequisites: ['math201', 'math301'],
+    description: 'Mathematical foundations of optimization with applications to machine learning, operations research, and engineering. This course covers linear programming, convex optimization, duality theory, and nonlinear optimization methods. Students learn to formulate and solve optimization problems arising in various fields.',
+    learningObjectives: [
+      'Formulate real-world problems as mathematical optimization problems',
+      'Solve linear programs using the simplex method and understand duality',
+      'Recognize and solve convex optimization problems',
+      'Apply KKT conditions for constrained optimization',
+      'Implement gradient-based methods for unconstrained optimization',
+      'Understand convergence properties of optimization algorithms',
+      'Apply optimization techniques to machine learning and data science problems'
+    ],
+    estimatedHours: 120,
+    topics: [
+      { id: 'math404-1', title: 'Optimization Problem Formulation', content: '', quizIds: [], exerciseIds: [] },
+      { id: 'math404-2', title: 'Linear Programming', content: '', quizIds: [], exerciseIds: [] },
+      { id: 'math404-3', title: 'Duality Theory', content: '', quizIds: [], exerciseIds: [] },
+      { id: 'math404-4', title: 'Convex Sets and Functions', content: '', quizIds: [], exerciseIds: [] },
+      { id: 'math404-5', title: 'Convex Optimization', content: '', quizIds: [], exerciseIds: [] },
+      { id: 'math404-6', title: 'Gradient Methods', content: '', quizIds: [], exerciseIds: [] },
+      { id: 'math404-7', title: 'Constrained Optimization and KKT Conditions', content: '', quizIds: [], exerciseIds: [] }
     ]
   }
 ];
