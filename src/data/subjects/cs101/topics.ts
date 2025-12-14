@@ -4,6 +4,8 @@ import topic2Content from '../../../content/subjects/cs101/topic-2.md?raw';
 import topic3Content from '../../../content/subjects/cs101/topic-3.md?raw';
 import topic4Content from '../../../content/subjects/cs101/topic-4.md?raw';
 import topic5Content from '../../../content/subjects/cs101/topic-5.md?raw';
+import topic6Content from '../../../content/subjects/cs101/topic-6.md?raw';
+import topic7Content from '../../../content/subjects/cs101/topic-7.md?raw';
 
 export const cs101Topics: Topic[] = [
   {
@@ -40,5 +42,19 @@ export const cs101Topics: Topic[] = [
     content: topic5Content,
     quizIds: ['cs101-quiz-5', 'cs101-quiz-5b', 'cs101-quiz-5c'],
     exerciseIds: ['cs101-exercise-5', 'cs101-t5-ex02', 'cs101-t5-ex03', 'cs101-t5-ex04', 'cs101-t5-ex05', 'cs101-t5-ex06', 'cs101-t5-ex07', 'cs101-t5-ex08', 'cs101-t5-ex09', 'cs101-t5-ex10', 'cs101-t5-ex11', 'cs101-t5-ex12', 'cs101-t5-ex13', 'cs101-t5-ex14', 'cs101-t5-ex15', 'cs101-t5-ex16']
+  },
+  {
+    id: 'cs101-topic-6',
+    title: 'Error Handling and Debugging',
+    content: topic6Content,
+    quizIds: ['cs101-quiz-6', 'cs101-quiz-6b', 'cs101-quiz-6c'],
+    exerciseIds: ['cs101-exercise-6', 'cs101-t6-ex02', 'cs101-t6-ex03', 'cs101-t6-ex04', 'cs101-t6-ex05', 'cs101-t6-ex06', 'cs101-t6-ex07', 'cs101-t6-ex08', 'cs101-t6-ex09', 'cs101-t6-ex10', 'cs101-t6-ex11', 'cs101-t6-ex12', 'cs101-t6-ex13', 'cs101-t6-ex14', 'cs101-t6-ex15', 'cs101-t6-ex16']
+  },
+  {
+    id: 'cs101-topic-7',
+    title: 'Recursion',
+    content: topic7Content,
+    quizIds: ['cs101-quiz-7', 'cs101-quiz-7b', 'cs101-quiz-7c'],
+    exerciseIds: ['cs101-exercise-7', 'cs101-t7-ex02', 'cs101-t7-ex03', 'cs101-t7-ex04', 'cs101-t7-ex05', 'cs101-t7-ex06', 'cs101-t7-ex07', 'cs101-t7-ex08', 'cs101-t7-ex09', 'cs101-t7-ex10', 'cs101-t7-ex11', 'cs101-t7-ex12', 'cs101-t7-ex13', 'cs101-t7-ex14', 'cs101-t7-ex15', 'cs101-t7-ex16']
   }
 ];

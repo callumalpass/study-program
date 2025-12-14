@@ -5,7 +5,7 @@ export const cs101Exams: Exam[] = [
     id: 'cs101-exam-midterm',
     subjectId: 'cs101',
     title: 'CS101 Midterm',
-    durationMinutes: 60,
+    durationMinutes: 75,
     instructions: [
       'Closed-book style: rely on concepts, not copy/paste.',
       'Answer all questions; passing is 70% or higher.',
@@ -13,7 +13,7 @@ export const cs101Exams: Exam[] = [
       'Coding prompts include runnable tests—ensure they pass.',
     ],
     questions: [
-      // === Variables and Data Types ===
+      // === Variables and Data Types (6 questions) ===
       {
         id: 'mid-q1',
         type: 'multiple_choice',
@@ -65,7 +65,7 @@ print(name[0] + name[-1])`,
         explanation: 'name[0] is "P" (first character), name[-1] is "n" (last character). Concatenated: "Pn".',
       },
 
-      // === Control Flow ===
+      // === Control Flow (6 questions) ===
       {
         id: 'mid-q7',
         type: 'code_output',
@@ -115,10 +115,21 @@ print(total)`,
         correctAnswer: 0,
         explanation: '`and` has higher precedence than `or`. So: (True and False) or True = False or True = True.',
       },
-
-      // === Functions ===
       {
         id: 'mid-q12',
+        type: 'code_output',
+        prompt: 'What does this code print?',
+        codeSnippet: `for i in range(5):
+    if i == 3:
+        break
+    print(i, end=" ")`,
+        correctAnswer: '0 1 2 ',
+        explanation: 'The loop prints 0, 1, 2, then breaks when i equals 3.',
+      },
+
+      // === Functions (6 questions) ===
+      {
+        id: 'mid-q13',
         type: 'multiple_choice',
         prompt: 'What is the primary reason to wrap logic in functions?',
         options: [
@@ -131,7 +142,7 @@ print(total)`,
         explanation: 'Functions encapsulate behavior for reuse, clarity, testing, and separation of concerns.',
       },
       {
-        id: 'mid-q13',
+        id: 'mid-q14',
         type: 'code_output',
         prompt: 'What does this code print?',
         codeSnippet: `def greet(name="World"):
@@ -143,7 +154,27 @@ print(greet("Alice"))`,
         explanation: 'The first call uses the default parameter; the second overrides it with "Alice".',
       },
       {
-        id: 'mid-q14',
+        id: 'mid-q15',
+        type: 'multiple_choice',
+        prompt: 'What happens if a function does not have a return statement?',
+        options: ['It raises an error', 'It returns 0', 'It returns None', 'It returns an empty string'],
+        correctAnswer: 2,
+        explanation: 'Functions without an explicit return statement return None by default.',
+      },
+      {
+        id: 'mid-q16',
+        type: 'code_output',
+        prompt: 'What does this code print?',
+        codeSnippet: `def add(a, b, c=0):
+    return a + b + c
+
+print(add(5, 3))
+print(add(5, 3, 2))`,
+        correctAnswer: '8\n10',
+        explanation: 'First call: 5+3+0=8. Second call: 5+3+2=10.',
+      },
+      {
+        id: 'mid-q17',
         type: 'coding',
         prompt: 'Write a function `first_even(nums)` that returns the first even number in a list, or -1 if none are found.',
         starterCode: 'def first_even(nums):\n    # TODO: implement\n    return -1',
@@ -153,21 +184,36 @@ print(greet("Alice"))`,
           { input: 'first_even([1, 3, 5])', expectedOutput: '-1', isHidden: false, description: 'No even values' },
           { input: 'first_even([1, 4, 6])', expectedOutput: '4', isHidden: false, description: 'Returns first even' },
           { input: 'first_even([2])', expectedOutput: '2', isHidden: false, description: 'Single element' },
+          { input: 'first_even([])', expectedOutput: '-1', isHidden: true, description: 'Empty list' },
         ],
         correctAnswer: true,
         explanation: 'Iterate through the list and return the first number divisible by 2; default to -1.',
       },
-
-      // === Lists, Tuples, and Dictionaries ===
       {
-        id: 'mid-q15',
+        id: 'mid-q18',
+        type: 'code_output',
+        prompt: 'What does this code print?',
+        codeSnippet: `def outer():
+    x = 10
+    def inner():
+        return x * 2
+    return inner()
+
+print(outer())`,
+        correctAnswer: '20',
+        explanation: 'inner() can access x from the enclosing scope. Returns 10 * 2 = 20.',
+      },
+
+      // === Lists, Tuples, and Dictionaries (6 questions) ===
+      {
+        id: 'mid-q19',
         type: 'true_false',
         prompt: 'A list in Python preserves insertion order.',
         correctAnswer: true,
         explanation: 'Lists are ordered collections; iteration returns items in the order they were added.',
       },
       {
-        id: 'mid-q16',
+        id: 'mid-q20',
         type: 'multiple_choice',
         prompt: 'What data structure best models a mapping of product IDs to prices?',
         options: ['List', 'Tuple', 'Dictionary', 'Set'],
@@ -175,7 +221,7 @@ print(greet("Alice"))`,
         explanation: 'Dictionaries map keys (product IDs) to values (prices) efficiently.',
       },
       {
-        id: 'mid-q17',
+        id: 'mid-q21',
         type: 'multiple_choice',
         prompt: 'Given `grades = {"alice": 90, "bob": 80}`, what does `grades.get("carol", 0)` return?',
         options: ['KeyError', 'None', '0', '"carol"'],
@@ -183,14 +229,14 @@ print(greet("Alice"))`,
         explanation: 'dict.get() returns the default value (0) when the key is not found, avoiding a KeyError.',
       },
       {
-        id: 'mid-q18',
+        id: 'mid-q22',
         type: 'true_false',
         prompt: 'Tuples are mutable, meaning you can change their elements after creation.',
         correctAnswer: false,
         explanation: 'Tuples are immutable. Once created, their elements cannot be changed.',
       },
       {
-        id: 'mid-q19',
+        id: 'mid-q23',
         type: 'code_output',
         prompt: 'What does this code print?',
         codeSnippet: `point = (3, 4)
@@ -199,15 +245,31 @@ print(x + y)`,
         correctAnswer: '7',
         explanation: 'Tuple unpacking assigns 3 to x and 4 to y. Their sum is 7.',
       },
-
-      // === File I/O ===
       {
-        id: 'mid-q20',
+        id: 'mid-q24',
+        type: 'code_output',
+        prompt: 'What does this code print?',
+        codeSnippet: `nums = [1, 2, 3, 4, 5]
+print(nums[1:4])`,
+        correctAnswer: '[2, 3, 4]',
+        explanation: 'Slicing [1:4] gets elements at indices 1, 2, 3.',
+      },
+
+      // === File I/O (2 questions) ===
+      {
+        id: 'mid-q25',
         type: 'multiple_choice',
         prompt: 'Which file mode opens a file for writing, creating it if it does not exist and truncating it if it does?',
         options: ['"r"', '"w"', '"a"', '"r+"'],
         correctAnswer: 1,
         explanation: '"w" mode opens for writing, creates the file if needed, and truncates existing content.',
+      },
+      {
+        id: 'mid-q26',
+        type: 'true_false',
+        prompt: 'Using the "with" statement when opening files automatically closes the file when done.',
+        correctAnswer: true,
+        explanation: 'The "with" statement is a context manager that handles file closing, even if an error occurs.',
       },
     ],
   },
@@ -215,7 +277,7 @@ print(x + y)`,
     id: 'cs101-exam-final',
     subjectId: 'cs101',
     title: 'CS101 Final Exam',
-    durationMinutes: 90,
+    durationMinutes: 120,
     instructions: [
       'Comprehensive exam covering all course topics.',
       'Mix of multiple choice, code reading, short answers, and coding.',
@@ -223,7 +285,7 @@ print(x + y)`,
       'Aim for at least 70% to pass.',
     ],
     questions: [
-      // === Variables and Data Types ===
+      // === Variables and Data Types (5 questions) ===
       {
         id: 'final-q1',
         type: 'multiple_choice',
@@ -254,7 +316,7 @@ print(b)`,
           'type(3) == type(3.0)',
         ],
         correctAnswer: 2,
-        explanation: '"hello" has 5 characters, so len("hello") == 5 is True. String comparison is lexicographic ("a" < "b"), 10 != "10" (different types), int != float.',
+        explanation: '"hello" has 5 characters, so len("hello") == 5 is True.',
       },
       {
         id: 'final-q4',
@@ -265,15 +327,6 @@ print(b)`,
       },
       {
         id: 'final-q5',
-        type: 'code_output',
-        prompt: 'What does this code print?',
-        codeSnippet: `text = "Python"
-print(text[1:4])`,
-        correctAnswer: 'yth',
-        explanation: 'Slicing [1:4] extracts characters at indices 1, 2, 3: "yth".',
-      },
-      {
-        id: 'final-q6',
         type: 'written',
         prompt: 'Briefly explain the difference between the `==` and `is` operators in Python.',
         correctAnswer: 'value',
@@ -281,9 +334,9 @@ print(text[1:4])`,
         modelAnswer: 'The `==` operator compares values (equality) - it checks whether two objects have the same content or value. The `is` operator compares identity - it checks whether two variables refer to the exact same object in memory. For example, two different lists with the same contents would be equal with `==` but not identical with `is`, because they are separate objects stored at different memory locations.',
       },
 
-      // === Control Flow ===
+      // === Control Flow (5 questions) ===
       {
-        id: 'final-q7',
+        id: 'final-q6',
         type: 'code_output',
         prompt: 'What does this code print?',
         codeSnippet: `count = 0
@@ -295,20 +348,7 @@ print(count)`,
         explanation: 'Even numbers in range(5) are 0, 2, 4 — that\'s 3 numbers.',
       },
       {
-        id: 'final-q8',
-        type: 'code_output',
-        prompt: 'What does this code print?',
-        codeSnippet: `i = 0
-while i < 5:
-    if i == 3:
-        break
-    print(i, end=" ")
-    i += 1`,
-        correctAnswer: '0 1 2 ',
-        explanation: 'The loop prints 0, 1, 2, then breaks when i equals 3.',
-      },
-      {
-        id: 'final-q9',
+        id: 'final-q7',
         type: 'multiple_choice',
         prompt: 'What does the `continue` statement do inside a loop?',
         options: [
@@ -321,7 +361,7 @@ while i < 5:
         explanation: '`continue` skips the rest of the current iteration and moves to the next one.',
       },
       {
-        id: 'final-q10',
+        id: 'final-q8',
         type: 'code_output',
         prompt: 'What does this code print?',
         codeSnippet: `result = []
@@ -332,8 +372,31 @@ print(len(result))`,
         correctAnswer: '6',
         explanation: 'Nested loops: 3 × 2 = 6 tuples are appended.',
       },
+      {
+        id: 'final-q9',
+        type: 'code_output',
+        prompt: 'What does this code print?',
+        codeSnippet: `for i in range(5):
+    if i == 3:
+        break
+else:
+    print("Complete")
+print("End")`,
+        correctAnswer: 'End',
+        explanation: 'The else block after a for loop only runs if the loop completes without break. Since break is called, "Complete" is skipped.',
+      },
+      {
+        id: 'final-q10',
+        type: 'code_output',
+        prompt: 'What does this code print?',
+        codeSnippet: `nums = [1, 2, 3]
+for i, num in enumerate(nums, start=1):
+    print(f"{i}:{num}", end=" ")`,
+        correctAnswer: '1:1 2:2 3:3 ',
+        explanation: 'enumerate with start=1 begins indexing at 1 instead of 0.',
+      },
 
-      // === Functions ===
+      // === Functions (5 questions) ===
       {
         id: 'final-q11',
         type: 'true_false',
@@ -355,16 +418,12 @@ print(add(5, 3))`,
       },
       {
         id: 'final-q13',
-        type: 'multiple_choice',
-        prompt: 'What happens if a function does not have a `return` statement?',
-        options: [
-          'It raises an error',
-          'It returns 0',
-          'It returns None',
-          'It returns an empty string',
-        ],
-        correctAnswer: 2,
-        explanation: 'Functions without an explicit return statement return None by default.',
+        type: 'code_output',
+        prompt: 'What does this code print?',
+        codeSnippet: `square = lambda x: x ** 2
+print(square(5))`,
+        correctAnswer: '25',
+        explanation: 'Lambda functions are anonymous functions. "lambda x: x ** 2" squares its input. 5**2 = 25.',
       },
       {
         id: 'final-q14',
@@ -377,21 +436,30 @@ print(add(5, 3))`,
           { input: 'count_vowels("hello")', expectedOutput: '2', isHidden: false, description: 'basic case' },
           { input: 'count_vowels("sky")', expectedOutput: '0', isHidden: false, description: 'no vowels' },
           { input: 'count_vowels("aeiou")', expectedOutput: '5', isHidden: false, description: 'all vowels' },
+          { input: 'count_vowels("")', expectedOutput: '0', isHidden: true, description: 'empty string' },
         ],
         correctAnswer: true,
         explanation: 'Iterate through characters and count those that are in the vowel set.',
       },
-
-      // === Lists, Tuples, and Dictionaries ===
       {
         id: 'final-q15',
+        type: 'multiple_choice',
+        prompt: 'What does *args allow in a function definition?',
+        options: ['Required arguments only', 'Keyword arguments only', 'Variable number of positional arguments', 'Exactly two arguments'],
+        correctAnswer: 2,
+        explanation: '*args collects any number of positional arguments into a tuple.',
+      },
+
+      // === Lists, Tuples, and Dictionaries (6 questions) ===
+      {
+        id: 'final-q16',
         type: 'fill_blank',
         prompt: 'The built-in function used to iterate over a list with both index and value is ____.',
         correctAnswer: 'enumerate',
         explanation: 'enumerate() yields (index, value) pairs when iterating.',
       },
       {
-        id: 'final-q16',
+        id: 'final-q17',
         type: 'multiple_choice',
         prompt: 'Given `nums = [1, 2, 3, 4]`, what does `[n * n for n in nums if n % 2 == 0]` produce?',
         options: [
@@ -404,7 +472,7 @@ print(add(5, 3))`,
         explanation: 'The list comprehension squares only even numbers: 2²=4, 4²=16.',
       },
       {
-        id: 'final-q17',
+        id: 'final-q18',
         type: 'code_output',
         prompt: 'What does this snippet print?',
         codeSnippet: `items = {"a": 1, "b": 2}
@@ -414,30 +482,7 @@ for key, value in items.items():
         explanation: '.items() yields key-value pairs. They print in insertion order.',
       },
       {
-        id: 'final-q18',
-        type: 'code_output',
-        prompt: 'What is printed?',
-        codeSnippet: `def mystery(n):
-    total = 0
-    for i, ch in enumerate(str(n)):
-        if i % 2 == 0:
-            total += int(ch)
-    return total
-
-print(mystery(12345))`,
-        correctAnswer: '9',
-        explanation: 'Characters at even indices (0, 2, 4) are "1", "3", "5". Sum: 1+3+5=9.',
-      },
-      {
         id: 'final-q19',
-        type: 'written',
-        prompt: 'Name one advantage of using a dictionary over a list when you need to look up values by a key.',
-        correctAnswer: 'fast',
-        explanation: 'Dictionaries provide fast lookups by key, while lists require scanning through elements.',
-        modelAnswer: 'Dictionaries provide fast (constant-time) lookups by key. When you access a value using a key like `my_dict["name"]`, Python can find it almost instantly regardless of how many items are in the dictionary. With a list, you would need to search through each element one by one to find a matching value, which gets slower as the list grows. This makes dictionaries much more efficient for key-based data retrieval.',
-      },
-      {
-        id: 'final-q20',
         type: 'multiple_choice',
         prompt: 'Which of the following creates a tuple with one element?',
         options: ['(1)', '(1,)', '[1]', '{1}'],
@@ -445,7 +490,7 @@ print(mystery(12345))`,
         explanation: 'A single-element tuple requires a trailing comma: (1,). Without it, (1) is just the integer 1 in parentheses.',
       },
       {
-        id: 'final-q21',
+        id: 'final-q20',
         type: 'code_output',
         prompt: 'What does this code print?',
         codeSnippet: `data = [("alice", 85), ("bob", 92), ("carol", 78)]
@@ -455,7 +500,7 @@ print(data[0][0])`,
         explanation: 'Sorting by the second element (score) in ascending order puts carol (78) first.',
       },
       {
-        id: 'final-q22',
+        id: 'final-q21',
         type: 'coding',
         prompt: 'Write `unique_sorted(nums)` that returns a sorted list of unique integers from the input list.',
         starterCode: 'def unique_sorted(nums):\n    # TODO: implement\n    return []',
@@ -470,16 +515,16 @@ print(data[0][0])`,
         explanation: 'Convert to set to remove duplicates, then sort the result.',
       },
 
-      // === File I/O ===
+      // === File I/O (4 questions) ===
       {
-        id: 'final-q23',
+        id: 'final-q22',
         type: 'true_false',
         prompt: 'Files opened with `with open(...)` are automatically closed when the block exits.',
         correctAnswer: true,
         explanation: 'The context manager (with statement) ensures the file is closed, even if an exception occurs.',
       },
       {
-        id: 'final-q24',
+        id: 'final-q23',
         type: 'multiple_choice',
         prompt: 'Which file mode appends to a file without overwriting existing content?',
         options: ['"r"', '"w"', '"a"', '"x"'],
@@ -487,7 +532,7 @@ print(data[0][0])`,
         explanation: '"a" (append) mode adds new content to the end of the file without truncating.',
       },
       {
-        id: 'final-q25',
+        id: 'final-q24',
         type: 'multiple_choice',
         prompt: 'What does `file.readlines()` return?',
         options: [
@@ -500,14 +545,224 @@ print(data[0][0])`,
         explanation: 'readlines() returns a list where each element is a line from the file (including newlines).',
       },
       {
+        id: 'final-q25',
+        type: 'written',
+        prompt: 'Explain why it\'s better to use `with open(filename) as f:` rather than `f = open(filename)` followed by `f.close()`.',
+        correctAnswer: 'automatically',
+        explanation: 'The with statement guarantees the file is closed even if an exception occurs.',
+        modelAnswer: 'Using `with open(filename) as f:` is better because it guarantees the file will be closed automatically when the block exits, even if an exception occurs. With the manual approach (`f = open(...)` followed by `f.close()`), if an exception happens between opening and closing, the file may remain open, potentially causing resource leaks or data corruption. The context manager handles cleanup automatically and makes the code safer and more readable.',
+      },
+
+      // === Error Handling (6 questions) ===
+      {
         id: 'final-q26',
+        type: 'multiple_choice',
+        prompt: 'What exception is raised when you try to convert "hello" to an integer using int()?',
+        options: ['TypeError', 'ValueError', 'ConversionError', 'IntegerError'],
+        correctAnswer: 1,
+        explanation: 'ValueError is raised when a function receives an argument of the right type but inappropriate value.',
+      },
+      {
+        id: 'final-q27',
         type: 'code_output',
-        prompt: 'Assuming `data.txt` contains the text "hello\\nworld", what does this code print?',
-        codeSnippet: `with open("data.txt", "r") as f:
-    lines = f.readlines()
-print(len(lines))`,
-        correctAnswer: '2',
-        explanation: 'The file has two lines ("hello\\n" and "world"), so readlines() returns a list of length 2.',
+        prompt: 'What does this code print?',
+        codeSnippet: `try:
+    x = 10 / 0
+except ZeroDivisionError:
+    print("Error!")
+finally:
+    print("Done")`,
+        correctAnswer: 'Error!\nDone',
+        explanation: 'The exception is caught and "Error!" prints. The finally block always runs, printing "Done".',
+      },
+      {
+        id: 'final-q28',
+        type: 'multiple_choice',
+        prompt: 'When does the `else` clause in a try/except/else block execute?',
+        options: [
+          'Always after the try block',
+          'Only when an exception occurs',
+          'Only when no exception occurs in the try block',
+          'Only when the finally block is missing',
+        ],
+        correctAnswer: 2,
+        explanation: 'The else clause runs only if the try block completes successfully without raising any exceptions.',
+      },
+      {
+        id: 'final-q29',
+        type: 'code_output',
+        prompt: 'What does this code print?',
+        codeSnippet: `def validate(n):
+    if n < 0:
+        raise ValueError("Negative!")
+    return n * 2
+
+try:
+    result = validate(-5)
+except ValueError as e:
+    result = 0
+print(result)`,
+        correctAnswer: '0',
+        explanation: 'validate(-5) raises ValueError, which is caught and result is set to 0.',
+      },
+      {
+        id: 'final-q30',
+        type: 'true_false',
+        prompt: 'Using a bare `except:` clause (without specifying an exception type) is considered good practice.',
+        correctAnswer: false,
+        explanation: 'Bare except clauses catch all exceptions including KeyboardInterrupt and SystemExit. Always catch specific exceptions.',
+      },
+      {
+        id: 'final-q31',
+        type: 'coding',
+        prompt: 'Write a function `safe_divide(a, b)` that returns a/b if b is not zero, otherwise returns None.',
+        starterCode: 'def safe_divide(a, b):\n    # TODO: implement\n    pass',
+        language: 'python',
+        solution: 'def safe_divide(a, b):\n    try:\n        return a / b\n    except ZeroDivisionError:\n        return None',
+        testCases: [
+          { input: 'safe_divide(10, 2)', expectedOutput: '5.0', isHidden: false, description: 'normal division' },
+          { input: 'safe_divide(10, 0)', expectedOutput: 'None', isHidden: false, description: 'division by zero' },
+          { input: 'safe_divide(0, 5)', expectedOutput: '0.0', isHidden: true, description: 'zero numerator' },
+        ],
+        correctAnswer: true,
+        explanation: 'Use try/except to catch ZeroDivisionError and return None in that case.',
+      },
+
+      // === Recursion (6 questions) ===
+      {
+        id: 'final-q32',
+        type: 'multiple_choice',
+        prompt: 'What is the "base case" in a recursive function?',
+        options: [
+          'The first call to the function',
+          'The condition that stops the recursion',
+          'The recursive call itself',
+          'The return type of the function',
+        ],
+        correctAnswer: 1,
+        explanation: 'The base case is the condition where the function returns a result without making another recursive call.',
+      },
+      {
+        id: 'final-q33',
+        type: 'code_output',
+        prompt: 'What does this code print?',
+        codeSnippet: `def factorial(n):
+    if n <= 1:
+        return 1
+    return n * factorial(n - 1)
+
+print(factorial(5))`,
+        correctAnswer: '120',
+        explanation: 'factorial(5) = 5 * 4 * 3 * 2 * 1 = 120.',
+      },
+      {
+        id: 'final-q34',
+        type: 'code_output',
+        prompt: 'What does this code print?',
+        codeSnippet: `def sum_digits(n):
+    if n < 10:
+        return n
+    return n % 10 + sum_digits(n // 10)
+
+print(sum_digits(1234))`,
+        correctAnswer: '10',
+        explanation: 'Sums the digits: 4 + 3 + 2 + 1 = 10. Each recursive call extracts and sums the last digit.',
+      },
+      {
+        id: 'final-q35',
+        type: 'multiple_choice',
+        prompt: 'What error occurs when a recursive function has no base case or never reaches it?',
+        options: ['ValueError', 'RecursionError', 'StackOverflowError', 'InfiniteLoopError'],
+        correctAnswer: 1,
+        explanation: 'Python raises RecursionError when the maximum recursion depth is exceeded.',
+      },
+      {
+        id: 'final-q36',
+        type: 'coding',
+        prompt: 'Write a recursive function `power(base, exp)` that calculates base^exp. Assume exp >= 0.',
+        starterCode: 'def power(base, exp):\n    # TODO: implement recursively\n    pass',
+        language: 'python',
+        solution: 'def power(base, exp):\n    if exp == 0:\n        return 1\n    return base * power(base, exp - 1)',
+        testCases: [
+          { input: 'power(2, 3)', expectedOutput: '8', isHidden: false, description: '2^3 = 8' },
+          { input: 'power(5, 0)', expectedOutput: '1', isHidden: false, description: 'any^0 = 1' },
+          { input: 'power(3, 4)', expectedOutput: '81', isHidden: true, description: '3^4 = 81' },
+        ],
+        correctAnswer: true,
+        explanation: 'Base case: exp == 0 returns 1. Recursive case: base * power(base, exp - 1).',
+      },
+      {
+        id: 'final-q37',
+        type: 'code_output',
+        prompt: 'What does this code print?',
+        codeSnippet: `def fib(n):
+    if n <= 1:
+        return n
+    return fib(n - 1) + fib(n - 2)
+
+print(fib(6))`,
+        correctAnswer: '8',
+        explanation: 'Fibonacci sequence: F(0)=0, F(1)=1, F(2)=1, F(3)=2, F(4)=3, F(5)=5, F(6)=8.',
+      },
+
+      // === Debugging and Bug Finding (4 questions) ===
+      {
+        id: 'final-q38',
+        type: 'multiple_choice',
+        prompt: 'What is wrong with this code?\n\n```python\ndef sum_evens(nums):\n    total = 0\n    for i in range(len(nums)):\n        if nums[i] % 2 == 0:\n            total += nums[i + 1]\n    return total\n```',
+        options: [
+          'The modulo operator is wrong',
+          'It adds nums[i + 1] instead of nums[i]',
+          'The range should start at 1',
+          'total should start at 1',
+        ],
+        correctAnswer: 1,
+        explanation: 'The bug is adding nums[i + 1] instead of nums[i]. This adds the wrong element and may cause IndexError.',
+      },
+      {
+        id: 'final-q39',
+        type: 'multiple_choice',
+        prompt: 'What is the output of this buggy code?\n\n```python\ndef print_1_to_n(n):\n    for i in range(n):\n        print(i)\n\nprint_1_to_n(3)\n```',
+        options: ['1 2 3', '0 1 2', '1 2', '0 1 2 3'],
+        correctAnswer: 1,
+        explanation: 'range(n) produces 0 to n-1, so it prints 0, 1, 2 instead of 1, 2, 3. Should use range(1, n+1).',
+      },
+      {
+        id: 'final-q40',
+        type: 'written',
+        prompt: 'Explain what is wrong with using a mutable default argument like `def add_item(item, lst=[])` and how to fix it.',
+        correctAnswer: 'none',
+        explanation: 'Mutable default arguments are shared between calls. Use None as default and create a new list inside the function.',
+        modelAnswer: 'The problem is that mutable default arguments (like lists) are evaluated once when the function is defined, not each time it\'s called. This means the same list object is reused across all calls, causing items to accumulate unexpectedly. For example, calling add_item(1) then add_item(2) would result in [1, 2] instead of [2]. To fix it, use None as the default and create the list inside the function: `def add_item(item, lst=None): if lst is None: lst = [] ...`',
+      },
+      {
+        id: 'final-q41',
+        type: 'code_output',
+        prompt: 'What does this code print?',
+        codeSnippet: `numbers = [1, 2, 3, 4, 5]
+for num in numbers:
+    if num % 2 == 0:
+        numbers.remove(num)
+print(numbers)`,
+        correctAnswer: '[1, 3, 5]',
+        explanation: 'Modifying a list while iterating can skip elements, but in this case it happens to work. However, this is dangerous and should use a copy.',
+      },
+
+      // === Comprehensive Coding Challenge (1 question) ===
+      {
+        id: 'final-q42',
+        type: 'coding',
+        prompt: 'Write a function `word_frequency(text)` that takes a string and returns a dictionary mapping each word (lowercase) to its count. Ignore punctuation by splitting on whitespace only.',
+        starterCode: 'def word_frequency(text):\n    # TODO: implement\n    return {}',
+        language: 'python',
+        solution: 'def word_frequency(text):\n    words = text.lower().split()\n    freq = {}\n    for word in words:\n        freq[word] = freq.get(word, 0) + 1\n    return freq',
+        testCases: [
+          { input: 'word_frequency("the cat and the dog")', expectedOutput: "{'the': 2, 'cat': 1, 'and': 1, 'dog': 1}", isHidden: false, description: 'basic frequency count' },
+          { input: 'word_frequency("")', expectedOutput: '{}', isHidden: false, description: 'empty string' },
+          { input: 'word_frequency("Hello hello HELLO")', expectedOutput: "{'hello': 3}", isHidden: true, description: 'case insensitive' },
+        ],
+        correctAnswer: true,
+        explanation: 'Convert to lowercase, split into words, and count occurrences using a dictionary.',
       },
     ],
   },

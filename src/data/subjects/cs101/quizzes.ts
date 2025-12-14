@@ -753,5 +753,336 @@ export const cs101Quizzes: Quiz[] = [
         explanation: 'json.dumps() with indent=2 produces formatted JSON. It starts with "{", then newline, then 2 spaces for indentation.'
       }
     ]
+  },
+
+  // ============================================================================
+  // TOPIC 6: Error Handling and Debugging (3 quizzes)
+  // ============================================================================
+  {
+    id: 'cs101-quiz-6',
+    subjectId: 'cs101',
+    topicId: 'cs101-topic-6',
+    title: 'Error Handling - Fundamentals',
+    questions: [
+      {
+        id: 'q6-1',
+        type: 'multiple_choice',
+        prompt: 'What keyword is used to handle exceptions in Python?',
+        options: ['catch', 'except', 'handle', 'error'],
+        correctAnswer: 1,
+        explanation: 'Python uses "except" to catch exceptions. The syntax is try/except, not try/catch like in some other languages.'
+      },
+      {
+        id: 'q6-2',
+        type: 'multiple_choice',
+        prompt: 'What exception is raised when you try to divide by zero?',
+        options: ['ValueError', 'TypeError', 'ZeroDivisionError', 'MathError'],
+        correctAnswer: 2,
+        explanation: 'ZeroDivisionError is raised when attempting to divide a number by zero.'
+      },
+      {
+        id: 'q6-3',
+        type: 'code_output',
+        prompt: 'What will this code print?',
+        codeSnippet: 'try:\n    x = int("hello")\nexcept ValueError:\n    print("Oops")\nprint("Done")',
+        correctAnswer: 'Oops\nDone',
+        explanation: 'int("hello") raises ValueError which is caught. "Oops" is printed, then execution continues normally to print "Done".'
+      },
+      {
+        id: 'q6-4',
+        type: 'true_false',
+        prompt: 'Using a bare "except:" clause (without specifying an exception type) is considered good practice.',
+        correctAnswer: false,
+        explanation: 'Bare except clauses catch all exceptions including system ones like KeyboardInterrupt. Always specify the exception type you want to catch.'
+      },
+      {
+        id: 'q6-5',
+        type: 'multiple_choice',
+        prompt: 'What exception is raised when accessing a dictionary key that does not exist?',
+        options: ['IndexError', 'KeyError', 'ValueError', 'AttributeError'],
+        correctAnswer: 1,
+        explanation: 'KeyError is raised when a dictionary key is not found. IndexError is for lists, not dictionaries.'
+      }
+    ]
+  },
+  {
+    id: 'cs101-quiz-6b',
+    subjectId: 'cs101',
+    topicId: 'cs101-topic-6',
+    title: 'Error Handling - Try/Except/Finally',
+    questions: [
+      {
+        id: 'q6b-1',
+        type: 'code_output',
+        prompt: 'What will this code print?',
+        codeSnippet: 'try:\n    x = 1 / 0\nexcept ZeroDivisionError:\n    print("Error")\nfinally:\n    print("Done")',
+        correctAnswer: 'Error\nDone',
+        explanation: 'The exception is caught and "Error" is printed. The finally block always runs, so "Done" is printed regardless.'
+      },
+      {
+        id: 'q6b-2',
+        type: 'multiple_choice',
+        prompt: 'When does the "else" clause in a try/except/else block execute?',
+        options: [
+          'Always',
+          'Only when an exception occurs',
+          'Only when no exception occurs',
+          'Never - else is not valid with try'
+        ],
+        correctAnswer: 2,
+        explanation: 'The else clause runs only if the try block completes without raising any exceptions.'
+      },
+      {
+        id: 'q6b-3',
+        type: 'code_output',
+        prompt: 'What will this code print?',
+        codeSnippet: 'try:\n    print("A")\n    x = 5\nexcept:\n    print("B")\nelse:\n    print("C")\nfinally:\n    print("D")',
+        correctAnswer: 'A\nC\nD',
+        explanation: 'No exception occurs: "A" prints, try succeeds so else runs ("C"), finally always runs ("D"). "B" is skipped.'
+      },
+      {
+        id: 'q6b-4',
+        type: 'true_false',
+        prompt: 'The finally block executes even if a return statement is in the try block.',
+        correctAnswer: true,
+        explanation: 'The finally block always executes, even if the try block contains return, break, or continue statements.'
+      },
+      {
+        id: 'q6b-5',
+        type: 'multiple_choice',
+        prompt: 'How do you catch multiple exception types in a single except clause?',
+        options: [
+          'except ValueError, TypeError:',
+          'except (ValueError, TypeError):',
+          'except ValueError or TypeError:',
+          'except ValueError and TypeError:'
+        ],
+        correctAnswer: 1,
+        explanation: 'Use a tuple of exception types: except (ValueError, TypeError). The parentheses are required.'
+      }
+    ]
+  },
+  {
+    id: 'cs101-quiz-6c',
+    subjectId: 'cs101',
+    topicId: 'cs101-topic-6',
+    title: 'Error Handling - Raising and Custom Exceptions',
+    questions: [
+      {
+        id: 'q6c-1',
+        type: 'code_output',
+        prompt: 'What will this code print?',
+        codeSnippet: 'def check(n):\n    if n < 0:\n        raise ValueError("Negative!")\n    return n * 2\n\ntry:\n    print(check(-5))\nexcept ValueError as e:\n    print(e)',
+        correctAnswer: 'Negative!',
+        explanation: 'check(-5) raises ValueError with the message "Negative!". The exception is caught and its message is printed.'
+      },
+      {
+        id: 'q6c-2',
+        type: 'multiple_choice',
+        prompt: 'What is the purpose of "raise" without an argument inside an except block?',
+        options: [
+          'It raises a new exception',
+          'It re-raises the current exception',
+          'It clears the current exception',
+          'It is a syntax error'
+        ],
+        correctAnswer: 1,
+        explanation: 'Using "raise" alone inside an except block re-raises the exception that was just caught, preserving the original traceback.'
+      },
+      {
+        id: 'q6c-3',
+        type: 'true_false',
+        prompt: 'Assertions should be used to validate user input in production code.',
+        correctAnswer: false,
+        explanation: 'Assertions are for catching programmer errors, not user input. They can be disabled with -O flag. Use exceptions for user input validation.'
+      },
+      {
+        id: 'q6c-4',
+        type: 'code_output',
+        prompt: 'What will this code print?',
+        codeSnippet: 'class MyError(Exception):\n    pass\n\ntry:\n    raise MyError("Custom!")\nexcept MyError as e:\n    print(type(e).__name__)',
+        correctAnswer: 'MyError',
+        explanation: 'type(e).__name__ gives the class name of the exception, which is "MyError".'
+      },
+      {
+        id: 'q6c-5',
+        type: 'multiple_choice',
+        prompt: 'What does "raise ValueError from original_error" do?',
+        options: [
+          'Replaces the original error',
+          'Chains the exceptions, preserving context',
+          'Raises both exceptions simultaneously',
+          'Ignores the original error'
+        ],
+        correctAnswer: 1,
+        explanation: 'The "from" clause chains exceptions. The new exception\'s __cause__ attribute references the original, preserving the error context.'
+      }
+    ]
+  },
+
+  // ============================================================================
+  // TOPIC 7: Recursion (3 quizzes)
+  // ============================================================================
+  {
+    id: 'cs101-quiz-7',
+    subjectId: 'cs101',
+    topicId: 'cs101-topic-7',
+    title: 'Recursion - Fundamentals',
+    questions: [
+      {
+        id: 'q7-1',
+        type: 'multiple_choice',
+        prompt: 'What is recursion in programming?',
+        options: [
+          'A loop that runs forever',
+          'A function that calls itself',
+          'A way to iterate over lists',
+          'A type of error handling'
+        ],
+        correctAnswer: 1,
+        explanation: 'Recursion is when a function calls itself to solve a problem by breaking it into smaller subproblems.'
+      },
+      {
+        id: 'q7-2',
+        type: 'multiple_choice',
+        prompt: 'What is the "base case" in a recursive function?',
+        options: [
+          'The first call to the function',
+          'The condition that stops the recursion',
+          'The recursive call itself',
+          'The return value'
+        ],
+        correctAnswer: 1,
+        explanation: 'The base case is the condition that stops recursion. Without it, the function would call itself forever.'
+      },
+      {
+        id: 'q7-3',
+        type: 'code_output',
+        prompt: 'What will this code print?',
+        codeSnippet: 'def factorial(n):\n    if n <= 1:\n        return 1\n    return n * factorial(n - 1)\n\nprint(factorial(4))',
+        correctAnswer: '24',
+        explanation: 'factorial(4) = 4 * 3 * 2 * 1 = 24. The recursion unfolds as 4 * factorial(3) * factorial(2) * factorial(1).'
+      },
+      {
+        id: 'q7-4',
+        type: 'true_false',
+        prompt: 'Every recursive function must have at least one base case.',
+        correctAnswer: true,
+        explanation: 'Without a base case, recursion never stops, causing infinite recursion and eventually a stack overflow error.'
+      },
+      {
+        id: 'q7-5',
+        type: 'multiple_choice',
+        prompt: 'What error occurs when a recursive function calls itself too many times?',
+        options: ['MemoryError', 'RecursionError', 'StackOverflowError', 'LoopError'],
+        correctAnswer: 1,
+        explanation: 'Python raises RecursionError when the maximum recursion depth is exceeded (typically around 1000 calls).'
+      }
+    ]
+  },
+  {
+    id: 'cs101-quiz-7b',
+    subjectId: 'cs101',
+    topicId: 'cs101-topic-7',
+    title: 'Recursion - Tracing and Patterns',
+    questions: [
+      {
+        id: 'q7b-1',
+        type: 'code_output',
+        prompt: 'What will this code print?',
+        codeSnippet: 'def countdown(n):\n    if n <= 0:\n        print("Go!")\n        return\n    print(n)\n    countdown(n - 1)\n\ncountdown(3)',
+        correctAnswer: '3\n2\n1\nGo!',
+        explanation: 'Each call prints n, then calls countdown(n-1). When n reaches 0, it prints "Go!" and returns.'
+      },
+      {
+        id: 'q7b-2',
+        type: 'code_output',
+        prompt: 'What will this code print?',
+        codeSnippet: 'def sum_list(lst):\n    if len(lst) == 0:\n        return 0\n    return lst[0] + sum_list(lst[1:])\n\nprint(sum_list([2, 3, 5]))',
+        correctAnswer: '10',
+        explanation: 'The function recursively adds: 2 + sum_list([3, 5]) = 2 + 3 + sum_list([5]) = 2 + 3 + 5 + sum_list([]) = 10.'
+      },
+      {
+        id: 'q7b-3',
+        type: 'multiple_choice',
+        prompt: 'In the Fibonacci sequence, what is F(6)?',
+        options: ['5', '8', '13', '21'],
+        correctAnswer: 1,
+        explanation: 'F(0)=0, F(1)=1, F(2)=1, F(3)=2, F(4)=3, F(5)=5, F(6)=8. Each number is the sum of the two before it.'
+      },
+      {
+        id: 'q7b-4',
+        type: 'code_output',
+        prompt: 'What will this code print?',
+        codeSnippet: 'def mystery(n):\n    if n == 0:\n        return 0\n    return n % 10 + mystery(n // 10)\n\nprint(mystery(123))',
+        correctAnswer: '6',
+        explanation: 'This sums the digits: 3 + mystery(12) = 3 + 2 + mystery(1) = 3 + 2 + 1 + mystery(0) = 6.'
+      },
+      {
+        id: 'q7b-5',
+        type: 'true_false',
+        prompt: 'A recursive solution can always be converted to an iterative (loop-based) solution.',
+        correctAnswer: true,
+        explanation: 'Any recursive algorithm can be rewritten using loops and explicit stacks, though the recursive version may be more elegant.'
+      }
+    ]
+  },
+  {
+    id: 'cs101-quiz-7c',
+    subjectId: 'cs101',
+    topicId: 'cs101-topic-7',
+    title: 'Recursion - Advanced Concepts',
+    questions: [
+      {
+        id: 'q7c-1',
+        type: 'code_output',
+        prompt: 'What will this code print?',
+        codeSnippet: 'def power(base, exp):\n    if exp == 0:\n        return 1\n    return base * power(base, exp - 1)\n\nprint(power(2, 4))',
+        correctAnswer: '16',
+        explanation: 'power(2, 4) = 2 * power(2, 3) = 2 * 2 * power(2, 2) = ... = 2 * 2 * 2 * 2 * 1 = 16.'
+      },
+      {
+        id: 'q7c-2',
+        type: 'multiple_choice',
+        prompt: 'What is "memoization" in the context of recursion?',
+        options: [
+          'Writing down the algorithm steps',
+          'Caching results to avoid redundant calculations',
+          'Converting recursion to iteration',
+          'Limiting recursion depth'
+        ],
+        correctAnswer: 1,
+        explanation: 'Memoization caches the results of function calls so that repeated calls with the same arguments return instantly.'
+      },
+      {
+        id: 'q7c-3',
+        type: 'code_output',
+        prompt: 'What will this code print?',
+        codeSnippet: 'def reverse(s):\n    if len(s) <= 1:\n        return s\n    return s[-1] + reverse(s[:-1])\n\nprint(reverse("abc"))',
+        correctAnswer: 'cba',
+        explanation: 'reverse("abc") = "c" + reverse("ab") = "c" + "b" + reverse("a") = "c" + "b" + "a" = "cba".'
+      },
+      {
+        id: 'q7c-4',
+        type: 'code_output',
+        prompt: 'What will this code print?',
+        codeSnippet: 'def count(n):\n    if n <= 0:\n        return 0\n    return 1 + count(n // 2)\n\nprint(count(8))',
+        correctAnswer: '4',
+        explanation: 'count(8)=1+count(4)=1+1+count(2)=1+1+1+count(1)=1+1+1+1+count(0)=4. This counts floor(log2(n))+1.'
+      },
+      {
+        id: 'q7c-5',
+        type: 'multiple_choice',
+        prompt: 'Why is the naive recursive Fibonacci function inefficient for large n?',
+        options: [
+          'It uses too much memory',
+          'It recalculates the same values many times',
+          'Python cannot handle large numbers',
+          'The base case is wrong'
+        ],
+        correctAnswer: 1,
+        explanation: 'Naive Fibonacci has exponential time complexity because it recalculates F(k) multiple times. Memoization solves this.'
+      }
+    ]
   }
 ];
