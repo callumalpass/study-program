@@ -38,7 +38,8 @@ export const curriculum: Subject[] = [
       'Apply problem-solving strategies to break down programming challenges'
     ],
     estimatedHours: 120,
-    topics: cs101Topics
+    topics: cs101Topics,
+    examIds: ['cs101-exam-midterm', 'cs101-exam-final']
   },
 
   {

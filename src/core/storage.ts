@@ -4,6 +4,7 @@ import type {
   UserProgress,
   SubjectProgress,
   QuizAttempt,
+  ExamAttempt,
   ExerciseCompletion,
   ProjectSubmission,
   UserSettings,
@@ -11,7 +12,7 @@ import type {
 import { githubService } from '../services/github';
 
 const STORAGE_KEY = 'cs_degree_progress';
-const CURRENT_VERSION = 1;
+const CURRENT_VERSION = 2;
 const SYNC_DEBOUNCE_MS = 5000; // Sync at most every 5 seconds
 
 export class ProgressStorage {
@@ -106,13 +107,23 @@ export class ProgressStorage {
    * Migrate progress from older versions
    */
   migrate(oldProgress: UserProgress): UserProgress {
-    // Currently only version 1 exists, but this allows for future migrations
     const migrated = { ...oldProgress };
     migrated.version = CURRENT_VERSION;
 
     // Add any missing fields with defaults
     if (!migrated.settings) {
       migrated.settings = this.getDefaults().settings;
+    }
+
+    // Ensure subject containers include new structures
+    if (migrated.subjects) {
+      Object.keys(migrated.subjects).forEach(subjectId => {
+        const subjectProgress = migrated.subjects[subjectId] as SubjectProgress;
+        subjectProgress.quizAttempts = subjectProgress.quizAttempts || {};
+        subjectProgress.examAttempts = subjectProgress.examAttempts || {};
+        subjectProgress.exerciseCompletions = subjectProgress.exerciseCompletions || {};
+        subjectProgress.projectSubmissions = subjectProgress.projectSubmissions || {};
+      });
     }
 
     return migrated;
@@ -140,6 +151,7 @@ export class ProgressStorage {
       this.progress.subjects[subjectId] = {
         status: 'not_started',
         quizAttempts: {},
+        examAttempts: {},
         exerciseCompletions: {},
         projectSubmissions: {},
       };
@@ -149,6 +161,20 @@ export class ProgressStorage {
       ...this.progress.subjects[subjectId],
       ...updates,
     };
+
+    // Ensure new collections exist after merge
+    if (!this.progress.subjects[subjectId].quizAttempts) {
+      this.progress.subjects[subjectId].quizAttempts = {};
+    }
+    if (!this.progress.subjects[subjectId].examAttempts) {
+      this.progress.subjects[subjectId].examAttempts = {};
+    }
+    if (!this.progress.subjects[subjectId].exerciseCompletions) {
+      this.progress.subjects[subjectId].exerciseCompletions = {};
+    }
+    if (!this.progress.subjects[subjectId].projectSubmissions) {
+      this.progress.subjects[subjectId].projectSubmissions = {};
+    }
 
     this.save();
   }
@@ -175,6 +201,42 @@ export class ProgressStorage {
    */
   getQuizAttempts(subjectId: string, quizId: string): QuizAttempt[] {
     return this.progress.subjects[subjectId]?.quizAttempts[quizId] || [];
+  }
+
+  /**
+   * Add an exam attempt
+   */
+  addExamAttempt(subjectId: string, examId: string, attempt: ExamAttempt): void {
+    if (!this.progress.subjects[subjectId]) {
+      this.updateSubjectProgress(subjectId, { status: 'in_progress' });
+    }
+
+    const subjectProgress = this.progress.subjects[subjectId];
+    if (!subjectProgress.examAttempts[examId]) {
+      subjectProgress.examAttempts[examId] = [];
+    }
+
+    subjectProgress.examAttempts[examId].push(attempt);
+    this.save();
+  }
+
+  /**
+   * Get all attempts for a specific exam
+   */
+  getExamAttempts(subjectId: string, examId: string): ExamAttempt[] {
+    return this.progress.subjects[subjectId]?.examAttempts[examId] || [];
+  }
+
+  /**
+   * Get the best exam attempt (highest score)
+   */
+  getBestExamAttempt(subjectId: string, examId: string): ExamAttempt | undefined {
+    const attempts = this.getExamAttempts(subjectId, examId);
+    if (attempts.length === 0) return undefined;
+
+    return attempts.reduce((best, current) =>
+      current.score > best.score ? current : best
+    );
   }
 
   /**

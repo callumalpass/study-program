@@ -200,6 +200,16 @@ function calculateSubjectCompletion(subject: Subject, progress: any): number {
     });
   });
 
+  const examIds = subject.examIds || [];
+  examIds.forEach(examId => {
+    totalItems++;
+    const attempts = progress.examAttempts?.[examId];
+    if (attempts && attempts.length > 0) {
+      const bestScore = Math.max(...attempts.map((a: any) => a.score));
+      if (bestScore >= 70) completedItems++;
+    }
+  });
+
   return totalItems === 0 ? 0 : Math.round((completedItems / totalItems) * 100);
 }
 

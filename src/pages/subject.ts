@@ -1,5 +1,5 @@
 // Subject detail page
-import type { Subject, Topic, Project, UserProgress } from '@/core/types';
+import type { Subject, Topic, Project, UserProgress, Exam } from '@/core/types';
 import { progressStorage } from '@/core/storage';
 import {
   arePrerequisitesMet,
@@ -11,6 +11,7 @@ import {
 } from '@/core/progress';
 import {
   navigateToQuiz,
+  navigateToExam,
   navigateToExercise,
   navigateToProject,
   navigateToCurriculum,
@@ -26,10 +27,12 @@ export function renderSubjectPage(
   subjects: Subject[],
   subjectId: string,
   topicId?: string,
-  projects?: Project[]
+  projects?: Project[],
+  exams?: Exam[]
 ): void {
   const subject = subjects.find(s => s.id === subjectId);
   const subjectProjects = projects ? projects.filter(p => p.subjectId === subjectId) : [];
+  const subjectExams = exams ? exams.filter(exam => exam.subjectId === subjectId) : [];
 
   if (!subject) {
     container.innerHTML = `
@@ -59,7 +62,7 @@ export function renderSubjectPage(
   if (topicId) {
     renderTopicView(container, subject, topicId, subjects, userProgress);
   } else {
-    renderSubjectOverview(container, subject, subjects, userProgress, prerequisitesMet, progressDetails, subjectProjects);
+    renderSubjectOverview(container, subject, subjects, userProgress, prerequisitesMet, progressDetails, subjectProjects, subjectExams);
   }
 }
 
@@ -73,7 +76,8 @@ function renderSubjectOverview(
   userProgress: UserProgress,
   prerequisitesMet: boolean,
   progressDetails: ReturnType<typeof getSubjectProgressDetails>,
-  subjectProjects: Project[]
+  subjectProjects: Project[],
+  subjectExams: Exam[]
 ): void {
   const prerequisiteSubjects = subject.prerequisites.map(prereqId =>
     allSubjects.find(s => s.id === prereqId)
@@ -141,6 +145,15 @@ function renderSubjectOverview(
         </div>
       </section>
 
+      ${subjectExams.length > 0 ? `
+        <section class="section">
+          <h2>Exams</h2>
+          <div class="exams-list">
+            ${subjectExams.map(exam => renderExamItem(exam, subject.id, userProgress)).join('')}
+          </div>
+        </section>
+      ` : ''}
+
       ${subjectProjects.length > 0 ? `
         <section class="section">
           <h2>Projects</h2>
@@ -180,6 +193,33 @@ function renderTopicItem(topic: Topic, number: number, subjectId: string, userPr
       </div>
       <button class="btn btn-secondary btn-sm view-topic-btn" data-topic-id="${topic.id}">
         View
+      </button>
+    </div>
+  `;
+}
+
+/**
+ * Render an exam item in the list
+ */
+function renderExamItem(exam: Exam, subjectId: string, userProgress: UserProgress): string {
+  const progress = userProgress.subjects[subjectId];
+  const attempts = progress?.examAttempts?.[exam.id] || [];
+  const bestScore = attempts.length > 0 ? Math.max(...attempts.map((a: any) => a.score)) : null;
+  const passed = bestScore !== null && bestScore >= 70;
+
+  return `
+    <div class="exam-item ${passed ? 'passed' : ''}">
+      <div class="exam-info">
+        <h3>${exam.title}</h3>
+        <p>${exam.instructions?.[0] || 'Cumulative assessment covering core CS101 concepts.'}</p>
+        <div class="exam-meta">
+          <span>${exam.questions.length} questions</span>
+          ${exam.durationMinutes ? `<span>${exam.durationMinutes} min</span>` : ''}
+          ${bestScore !== null ? `<span class="assessment-score ${passed ? 'passed' : ''}">${bestScore}%</span>` : ''}
+        </div>
+      </div>
+      <button class="btn btn-primary btn-sm view-exam-btn" data-exam-id="${exam.id}">
+        ${attempts.length > 0 ? 'Retry' : 'Start'}
       </button>
     </div>
   `;
@@ -233,7 +273,8 @@ function renderTopicView(
       userProgress,
       arePrerequisitesMet(subject, userProgress),
       getSubjectProgressDetails(subject),
-      [] // No projects in fallback case
+      [], // No projects in fallback case
+      []
     );
     return;
   }
@@ -385,6 +426,15 @@ function attachSubjectEventListeners(container: HTMLElement, subjectId: string):
       const projectId = (btn as HTMLElement).dataset.projectId;
       if (projectId) {
         navigateToProject(subjectId, projectId);
+      }
+    });
+  });
+
+  container.querySelectorAll('.view-exam-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const examId = (btn as HTMLElement).dataset.examId;
+      if (examId) {
+        navigateToExam(subjectId, examId);
       }
     });
   });

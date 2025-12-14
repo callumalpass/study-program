@@ -1,10 +1,11 @@
 // Core type definitions for CS Degree Learning Platform
 
 export type SubjectStatus = 'not_started' | 'in_progress' | 'completed';
-export type QuestionType = 'multiple_choice' | 'fill_blank' | 'true_false' | 'code_output';
+export type QuestionType = 'multiple_choice' | 'fill_blank' | 'true_false' | 'code_output' | 'coding' | 'written';
 export type ProgrammingLanguage = 'javascript' | 'typescript' | 'python' | 'java' | 'cpp' | 'c' | 'rust' | 'go';
 export type Theme = 'light' | 'dark' | 'auto';
 export type ExerciseDifficulty = 1 | 2 | 3 | 4 | 5; // 1=easiest, 5=hardest (internal use)
+export type AssessmentType = 'quiz' | 'exam';
 
 // Subject and Curriculum Types
 export interface Subject {
@@ -18,6 +19,7 @@ export interface Subject {
   learningObjectives: string[];
   topics: Topic[];
   estimatedHours: number;
+  examIds?: string[];
 }
 
 export interface Topic {
@@ -26,6 +28,17 @@ export interface Topic {
   content: string;
   quizIds: string[];
   exerciseIds: string[];
+}
+
+// Exam Types (share question structure with quizzes)
+export interface Exam {
+  id: string;
+  subjectId: string;
+  topicId?: string;
+  title: string;
+  durationMinutes?: number;
+  instructions?: string[];
+  questions: QuizQuestion[];
 }
 
 // Quiz Types
@@ -45,6 +58,11 @@ export interface QuizQuestion {
   correctAnswer: string | number | boolean;
   explanation: string;
   codeSnippet?: string; // For code_output questions
+  // Optional fields for coding/written variants
+  starterCode?: string;
+  testCases?: TestCase[];
+  language?: ProgrammingLanguage;
+  solution?: string;
 }
 
 // Coding Exercise Types
@@ -136,6 +154,7 @@ export interface SubjectProgress {
   startedAt?: string; // ISO date string
   completedAt?: string; // ISO date string
   quizAttempts: Record<string, QuizAttempt[]>;
+  examAttempts: Record<string, ExamAttempt[]>;
   exerciseCompletions: Record<string, ExerciseCompletion>; // Single best/latest attempt per exercise
   projectSubmissions: Record<string, ProjectSubmission[]>;
 }
@@ -143,7 +162,15 @@ export interface SubjectProgress {
 export interface QuizAttempt {
   attemptId: string;
   timestamp: string; // ISO date string
-  answers: Record<string, string | number | boolean>;
+  answers: Record<string, any>;
+  score: number; // Percentage
+  timeSpentSeconds: number;
+}
+
+export interface ExamAttempt {
+  attemptId: string;
+  timestamp: string; // ISO date string
+  answers: Record<string, any>;
   score: number; // Percentage
   timeSpentSeconds: number;
 }
@@ -176,6 +203,7 @@ export interface UserSettings {
   showCompletedItems: boolean;
   githubToken?: string;
   gistId?: string;
+  geminiApiKey?: string;
 }
 
 // Route Types
@@ -201,6 +229,11 @@ export interface TopicRouteParams extends RouteParams {
 export interface QuizRouteParams extends RouteParams {
   id: string;
   quizId: string;
+}
+
+export interface ExamRouteParams extends RouteParams {
+  id: string;
+  examId: string;
 }
 
 export interface ExerciseRouteParams extends RouteParams {

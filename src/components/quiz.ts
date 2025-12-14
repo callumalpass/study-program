@@ -1,8 +1,10 @@
-import type { Quiz, QuizQuestion, QuizAttempt } from '@/core/types';
+import type { Quiz, Exam, QuizQuestion, QuizAttempt } from '@/core/types';
 import Prism from 'prismjs';
 import { renderMarkdown } from './markdown';
 import { Icons } from './icons';
 import { escapeHtml } from '@/utils/html';
+import { createCodeEditor } from './code-editor';
+import type { TestResult } from './code-runner';
 
 interface QuizConfig {
   oneAtATime?: boolean;
@@ -10,7 +12,7 @@ interface QuizConfig {
 
 interface QuizState {
   currentQuestionIndex: number;
-  answers: Record<string, string | number | boolean>;
+  answers: Record<string, any>;
   submitted: boolean;
   startTime: number;
   showExplanations: boolean;
@@ -19,7 +21,7 @@ interface QuizState {
 function createQuestionElement(
   question: QuizQuestion,
   index: number,
-  answer?: string | number | boolean,
+  answer?: any,
   showFeedback = false
 ): HTMLElement {
   const questionDiv = document.createElement('div');
@@ -110,7 +112,7 @@ function createQuestionElement(
       break;
 
     case 'fill_blank':
-    case 'code_output':
+    case 'code_output': {
       const input = document.createElement('input');
       input.type = 'text';
       input.className = 'text-input';
@@ -127,6 +129,68 @@ function createQuestionElement(
 
       answerContainer.appendChild(input);
       break;
+    }
+
+    case 'written': {
+      const textarea = document.createElement('textarea');
+      textarea.className = 'text-input';
+      textarea.placeholder = 'Write your answer...';
+      textarea.value = answer !== undefined ? String(answer) : '';
+
+      if (showFeedback) {
+        textarea.disabled = true;
+        const isCorrect = normalizeAnswer(answer) === normalizeAnswer(question.correctAnswer);
+        textarea.classList.add(isCorrect ? 'correct' : 'incorrect');
+      }
+
+      answerContainer.appendChild(textarea);
+      break;
+    }
+
+    case 'coding': {
+      const hint = document.createElement('div');
+      hint.className = 'form-hint';
+      hint.textContent = 'Write code and run tests to validate.';
+      answerContainer.appendChild(hint);
+
+      const editorContainer = document.createElement('div');
+      editorContainer.className = 'code-editor-shell';
+      answerContainer.appendChild(editorContainer);
+
+      const status = document.createElement('div');
+      status.className = 'form-hint';
+      status.textContent = 'Tests not run yet.';
+      answerContainer.appendChild(status);
+
+      const initialCode = answer && typeof answer === 'object' && 'code' in answer
+        ? (answer as any).code
+        : (question.starterCode || '');
+
+      const editor = createCodeEditor(editorContainer, {
+        language: question.language || 'python',
+        initialValue: initialCode,
+        starterCode: question.starterCode || '',
+        testCases: question.testCases,
+        solution: question.solution,
+        showRunButton: true,
+        onTestResults: (results: TestResult[], allPassed: boolean) => {
+          questionDiv.dataset.codingPassed = allPassed ? 'true' : 'false';
+          status.textContent = allPassed
+            ? `${Icons.Check} All tests passed`
+            : `${results.filter(r => r.passed).length}/${results.length} tests passed`;
+          status.className = `form-hint ${allPassed ? 'text-success' : ''}`;
+          questionDiv.dataset.codingCode = editor.getValue();
+        },
+      });
+
+      // Persist code edits even if tests are not run
+      questionDiv.dataset.codingCode = initialCode;
+      editor.editor.onDidChangeModelContent(() => {
+        questionDiv.dataset.codingCode = editor.getValue();
+      });
+
+      break;
+    }
   }
 
   questionDiv.appendChild(answerContainer);
@@ -152,7 +216,7 @@ function createQuestionElement(
 
 function checkAnswer(
   question: QuizQuestion,
-  answer?: string | number | boolean
+  answer?: any
 ): boolean {
   if (answer === undefined) {
     return false;
@@ -166,6 +230,10 @@ function checkAnswer(
     case 'fill_blank':
     case 'code_output':
       return normalizeAnswer(answer) === normalizeAnswer(question.correctAnswer);
+    case 'written':
+      return normalizeAnswer(answer) === normalizeAnswer(question.correctAnswer);
+    case 'coding':
+      return typeof answer === 'object' && (answer as any).passed === true;
     default:
       return false;
   }
@@ -178,7 +246,7 @@ function normalizeAnswer(value: string | number | boolean | undefined): string {
   return String(value).trim().toLowerCase();
 }
 
-function collectAnswer(questionElement: HTMLElement, question: QuizQuestion): string | number | boolean | undefined {
+function collectAnswer(questionElement: HTMLElement, question: QuizQuestion): any {
   const answerContainer = questionElement.querySelector('.answer-container');
   if (!answerContainer) {
     return undefined;
@@ -198,12 +266,21 @@ function collectAnswer(questionElement: HTMLElement, question: QuizQuestion): st
       const input = answerContainer.querySelector('input[type="text"]') as HTMLInputElement;
       return input ? input.value : undefined;
     }
+    case 'written': {
+      const textarea = answerContainer.querySelector('textarea') as HTMLTextAreaElement;
+      return textarea ? textarea.value : undefined;
+    }
+    case 'coding': {
+      const code = questionElement.dataset.codingCode || '';
+      const passed = questionElement.dataset.codingPassed === 'true';
+      return { code, passed };
+    }
     default:
       return undefined;
   }
 }
 
-function calculateScore(quiz: Quiz, answers: Record<string, string | number | boolean>): number {
+function calculateScore(quiz: Quiz | Exam, answers: Record<string, any>): number {
   let correct = 0;
   quiz.questions.forEach((question) => {
     if (checkAnswer(question, answers[question.id])) {
@@ -213,7 +290,7 @@ function calculateScore(quiz: Quiz, answers: Record<string, string | number | bo
   return Math.round((correct / quiz.questions.length) * 100);
 }
 
-function createScoreSummary(quiz: Quiz, answers: Record<string, string | number | boolean>): HTMLElement {
+function createScoreSummary(quiz: Quiz | Exam, answers: Record<string, any>): HTMLElement {
   const summary = document.createElement('div');
   summary.className = 'quiz-summary';
 
@@ -239,7 +316,7 @@ function createScoreSummary(quiz: Quiz, answers: Record<string, string | number 
 
 export function renderQuiz(
   container: HTMLElement,
-  quiz: Quiz,
+  quiz: Quiz | Exam,
   onComplete: (attempt: QuizAttempt) => void,
   config: QuizConfig = {}
 ): void {

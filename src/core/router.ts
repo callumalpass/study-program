@@ -41,6 +41,11 @@ export class Router {
       paramNames: ['id', 'quizId'],
       template: '/subject/:id/quiz/:quizId',
     },
+    exam: {
+      pattern: /^#?\/subject\/([^\/]+)\/exam\/([^\/]+)$/,
+      paramNames: ['id', 'examId'],
+      template: '/subject/:id/exam/:examId',
+    },
     exercise: {
       pattern: /^#?\/subject\/([^\/]+)\/exercise\/([^\/]+)$/,
       paramNames: ['id', 'exId'],
@@ -216,6 +221,8 @@ export const navigateToTopic = (subjectId: string, topicId: string) =>
   navigate(`/subject/${subjectId}/topic/${topicId}`);
 export const navigateToQuiz = (subjectId: string, quizId: string) =>
   navigate(`/subject/${subjectId}/quiz/${quizId}`);
+export const navigateToExam = (subjectId: string, examId: string) =>
+  navigate(`/subject/${subjectId}/exam/${examId}`);
 export const navigateToExercise = (subjectId: string, exId: string) =>
   navigate(`/subject/${subjectId}/exercise/${exId}`);
 export const navigateToProject = (subjectId: string, projId: string) =>

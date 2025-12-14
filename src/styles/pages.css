@@ -849,6 +849,42 @@
   flex-wrap: wrap;
 }
 
+.exams-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.exam-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-lg);
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+}
+
+.exam-item.passed {
+  border-color: var(--color-success);
+}
+
+.exam-info h3 {
+  margin-bottom: var(--space-xs);
+}
+
+.exam-info p {
+  margin: 0 0 var(--space-sm) 0;
+  color: var(--color-text-secondary);
+}
+
+.exam-meta {
+  display: flex;
+  gap: var(--space-md);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
 /* Assessment List */
 .assessment-list {
   display: flex;

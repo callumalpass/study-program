@@ -14,11 +14,11 @@ import { renderCurriculumPage } from './pages/curriculum';
 import { renderSubjectPage } from './pages/subject';
 import { renderProgressPage } from './pages/progress';
 import { renderSettingsPage } from './pages/settings';
-import { renderQuizPage, renderExercisePage, renderProjectPage } from './pages/assessment';
+import { renderQuizPage, renderExercisePage, renderProjectPage, renderExamPage } from './pages/assessment';
 import { renderExportPage } from './pages/export';
 
 // Import all subject content for assessments
-import { cs101Quizzes, cs101Exercises, cs101Projects } from './data/subjects/cs101';
+import { cs101Quizzes, cs101Exercises, cs101Projects, cs101Exams } from './data/subjects/cs101';
 import { math101Quizzes, math101Exercises, math101Projects } from './data/subjects/math101';
 import { cs102Quizzes, cs102Exercises, cs102Projects } from './data/subjects/cs102';
 import { cs103Quizzes, cs103Exercises, cs103Projects } from './data/subjects/cs103';
@@ -27,7 +27,7 @@ import { cs104Quizzes, cs104Exercises, cs104Projects } from './data/subjects/cs1
 import { cs105Quizzes, cs105Exercises, cs105Projects } from './data/subjects/cs105';
 import { math203Quizzes, math203Exercises, math203Projects } from './data/subjects/math203';
 
-import type { Quiz, Exercise, Project } from './core/types';
+import type { Quiz, Exercise, Project, Exam } from './core/types';
 
 // Aggregate all content
 const allQuizzes: Quiz[] = [
@@ -39,6 +39,10 @@ const allQuizzes: Quiz[] = [
   ...cs104Quizzes,
   ...cs105Quizzes,
   ...math203Quizzes,
+];
+
+const allExams: Exam[] = [
+  ...cs101Exams,
 ];
 
 const allExercises: Exercise[] = [
@@ -178,15 +182,17 @@ function initApp(): void {
         const subjectId = params.id;
 
         if (params.topicId) {
-          renderSubjectPage(mainEl, curriculum, subjectId, params.topicId, allProjects);
+          renderSubjectPage(mainEl, curriculum, subjectId, params.topicId, allProjects, allExams);
         } else if (params.quizId) {
           renderQuizPage(mainEl, curriculum, allQuizzes, subjectId, params.quizId);
+        } else if (params.examId) {
+          renderExamPage(mainEl, curriculum, allExams, subjectId, params.examId);
         } else if (params.exId) {
           renderExercisePage(mainEl, curriculum, allExercises, subjectId, params.exId);
         } else if (params.projId) {
           renderProjectPage(mainEl, curriculum, allProjects, subjectId, params.projId);
         } else {
-          renderSubjectPage(mainEl, curriculum, subjectId, undefined, allProjects);
+          renderSubjectPage(mainEl, curriculum, subjectId, undefined, allProjects, allExams);
         }
       }
     });

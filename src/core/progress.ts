@@ -48,6 +48,19 @@ export function calculateSubjectCompletion(
     });
   });
 
+  // Count exams if present
+  const examIds = subject.examIds || [];
+  examIds.forEach(examId => {
+    totalItems++;
+    const attempts = progress.examAttempts?.[examId];
+    if (attempts && attempts.length > 0) {
+      const bestScore = Math.max(...attempts.map(a => a.score));
+      if (bestScore >= 70) {
+        completedItems++;
+      }
+    }
+  });
+
   // If no items, return 0
   if (totalItems === 0) {
     return 0;
@@ -285,6 +298,8 @@ export function getSubjectProgressDetails(subject: Subject): {
   completionPercentage: number;
   quizzesCompleted: number;
   totalQuizzes: number;
+  examsCompleted: number;
+  totalExams: number;
   exercisesCompleted: number;
   totalExercises: number;
   startedAt?: string;
@@ -294,6 +309,8 @@ export function getSubjectProgressDetails(subject: Subject): {
 
   let totalQuizzes = 0;
   let quizzesCompleted = 0;
+  let totalExams = subject.examIds?.length ?? 0;
+  let examsCompleted = 0;
   let totalExercises = 0;
   let exercisesCompleted = 0;
 
@@ -323,11 +340,26 @@ export function getSubjectProgressDetails(subject: Subject): {
     }
   });
 
+  // Count exams
+  if (progress && subject.examIds) {
+    subject.examIds.forEach(examId => {
+      const attempts = progress.examAttempts?.[examId];
+      if (attempts && attempts.length > 0) {
+        const bestScore = Math.max(...attempts.map(a => a.score));
+        if (bestScore >= 70) {
+          examsCompleted++;
+        }
+      }
+    });
+  }
+
   return {
     status: progress?.status || 'not_started',
     completionPercentage: calculateSubjectCompletion(subject, progress),
     quizzesCompleted,
     totalQuizzes,
+    examsCompleted,
+    totalExams,
     exercisesCompleted,
     totalExercises,
     startedAt: progress?.startedAt,
