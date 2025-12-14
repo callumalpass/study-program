@@ -1,38 +1,93 @@
 import type { WrittenExercise } from '../../../../core/types';
 
 export const topic4Exercises: WrittenExercise[] = [
-  // EXISTING exercise - preserve ID
+  // --- DRILLS (Simple Checks) ---
+  {
+    id: 'math101-t4-drill-1',
+    subjectId: 'math101',
+    topicId: 'math101-topic-4',
+    type: 'written',
+    difficulty: 1,
+    title: 'Drill: Reflexive Check',
+    description: 'Let A = {1}. Is the relation R = {(1, 1)} reflexive on A?',
+    hints: ['Reflexive means every element is related to itself.'],
+    solution: 'Yes. 1 is related to 1.'
+  },
+  {
+    id: 'math101-t4-drill-2',
+    subjectId: 'math101',
+    topicId: 'math101-topic-4',
+    type: 'written',
+    difficulty: 1,
+    title: 'Drill: Symmetric Check',
+    description: 'Let R = {(1, 2)}. Is R symmetric?',
+    hints: ['Symmetric means if (a,b) is there, (b,a) must be there.'],
+    solution: 'No. (1, 2) is in R, but (2, 1) is not.'
+  },
+  {
+    id: 'math101-t4-drill-3',
+    subjectId: 'math101',
+    topicId: 'math101-topic-4',
+    type: 'written',
+    difficulty: 1,
+    title: 'Drill: Transitive Check',
+    description: 'Let R = {(1, 2), (2, 3)}. Is R transitive?',
+    hints: ['Transitive means if a->b and b->c, then a->c must be there.'],
+    solution: 'No. We have 1->2 and 2->3, but we are missing 1->3.'
+  },
+  {
+    id: 'math101-t4-drill-4',
+    subjectId: 'math101',
+    topicId: 'math101-topic-4',
+    type: 'written',
+    difficulty: 1,
+    title: 'Drill: Ordered Pairs',
+    description: 'Is the ordered pair (1, 2) the same as (2, 1)?',
+    hints: ['Order matters.'],
+    solution: 'No. The first element is different.'
+  },
+
+  // --- CORE EXERCISES ---
   {
     id: 'math101-ex-4',
     subjectId: 'math101',
     topicId: 'math101-topic-4',
     type: 'written',
-    difficulty: 4,
-    title: 'Relations and Their Properties',
-    description: 'Consider the relation R on the set A = {1,2,3,4} defined by R = {(1,1), (1,2), (2,1), (2,2), (3,3), (4,4)}. Determine whether R is reflexive, symmetric, antisymmetric, and/or transitive. Justify each answer. Then define an equivalence relation on the set of integers Z where aRb if a and b have the same remainder when divided by 3. Prove it is an equivalence relation and describe the equivalence classes.',
+    difficulty: 2,
+    title: 'Relation Properties',
+    description: 'Let A = {1, 2, 3} and R be a relation on A defined as R = {(1,1), (1,2), (2,1), (2,2), (3,3)}. Determine if R is reflexive, symmetric, antisymmetric, or transitive. Explain why.',
     hints: [
-      'Reflexive: Check if (a,a) ∈ R for all a ∈ A.',
-      'Symmetric: Check if (a,b) ∈ R implies (b,a) ∈ R.',
-      'Antisymmetric: Check if (a,b) ∈ R and (b,a) ∈ R implies a = b.',
-      'Transitive: Check if (a,b) ∈ R and (b,c) ∈ R implies (a,c) ∈ R.',
-      'For equivalence relation, prove all three properties: reflexive, symmetric, transitive.'
+      'Reflexive: (x,x) must be in R for ALL x in A.',
+      'Symmetric: If (x,y) is in R, (y,x) must be in R.',
+      'Antisymmetric: If (x,y) and (y,x) are in R, then x must equal y.',
+      'Transitive: If (x,y) and (y,z) are in R, (x,z) must be in R.'
     ],
-    solution: 'Analysis of R:\n- Reflexive: YES. All pairs (1,1), (2,2), (3,3), (4,4) are in R.\n- Symmetric: YES. We have (1,2) and (2,1) both in R. All other pairs are symmetric by being reflexive.\n- Antisymmetric: NO. We have both (1,2) and (2,1) in R, but 1 ≠ 2.\n- Transitive: YES. Check all cases: (1,1)∘(1,2)→(1,2)✓, (1,2)∘(2,1)→(1,1)✓, (1,2)∘(2,2)→(1,2)✓, etc.\n\nProof that "same remainder mod 3" is an equivalence relation:\n\n1. Reflexive: Any integer a has the same remainder as itself when divided by 3, so aRa.\n\n2. Symmetric: If aRb (same remainder mod 3), then bRa (order doesn\'t matter for equality).\n\n3. Transitive: If aRb and bRc, then a and b have the same remainder r₁, and b and c have the same remainder r₂. Since b has remainder r₁ and r₂, we have r₁ = r₂. Thus a and c both have remainder r₁, so aRc.\n\nEquivalence classes: [0] = {...,-6,-3,0,3,6,...}, [1] = {...,-5,-2,1,4,7,...}, [2] = {...,-4,-1,2,5,8,...}'
+    solution: `Reflexive: YES. (1,1), (2,2), (3,3) are all present.
+Symmetric: YES. (1,2) is present and (2,1) is present. All other pairs are diagonal.
+Antisymmetric: NO. We have (1,2) and (2,1) but 1 ≠ 2.
+Transitive: YES. The only "chain" is 1->2 and 2->1. This requires 1->1 (present). Also 2->1 and 1->2 requires 2->2 (present).`
   },
   {
     id: 'math101-t4-ex02',
     subjectId: 'math101',
     topicId: 'math101-topic-4',
     type: 'written',
-    difficulty: 1,
-    title: 'Relation Properties',
-    description: 'For A = {1, 2, 3}, determine which properties (reflexive, symmetric, antisymmetric, transitive) each relation has:\n(a) R₁ = {(1,1), (2,2), (3,3)}\n(b) R₂ = {(1,2), (2,1)}\n(c) R₃ = {(1,2), (2,3), (1,3)}',
+    difficulty: 3,
+    title: 'Equivalence Relations',
+    description: 'Let R be a relation on the integers Z defined by: aRb if and only if a - b is divisible by 5. Prove that R is an equivalence relation.',
     hints: [
-      'Check each property systematically',
-      'Reflexive needs (a,a) for ALL elements',
-      'One counterexample is enough to fail a property'
+      'Prove Reflexive: Is a - a divisible by 5?',
+      'Prove Symmetric: If a - b is divisible by 5, is b - a?',
+      'Prove Transitive: If a - b = 5k and b - c = 5m, what about a - c?'
     ],
-    solution: '(a) R₁ = {(1,1), (2,2), (3,3)} - the identity relation\n- Reflexive: YES (all diagonal pairs present)\n- Symmetric: YES (vacuously - no non-diagonal pairs)\n- Antisymmetric: YES (only diagonal pairs)\n- Transitive: YES (vacuously - can\'t form chains)\n\n(b) R₂ = {(1,2), (2,1)}\n- Reflexive: NO (missing (1,1), (2,2), (3,3))\n- Symmetric: YES ((1,2) and (2,1) both present)\n- Antisymmetric: NO (1R₂2 and 2R₂1 but 1≠2)\n- Transitive: NO ((1,2) and (2,1) but (1,1) missing)\n\n(c) R₃ = {(1,2), (2,3), (1,3)}\n- Reflexive: NO (no diagonal pairs)\n- Symmetric: NO ((1,2) but no (2,1))\n- Antisymmetric: YES (no symmetric pairs)\n- Transitive: YES ((1,2), (2,3) → (1,3) ✓)'
+    solution: `1. Reflexive: a - a = 0. 0 is divisible by 5. Yes.
+2. Symmetric: Assume a - b = 5k. Then b - a = -(a - b) = -5k = 5(-k). Yes.
+3. Transitive: Assume a - b = 5k and b - c = 5m.
+Sum them: (a - b) + (b - c) = 5k + 5m
+a - c = 5(k + m).
+Since k+m is integer, a-c is divisible by 5. Yes.
+
+Since it is Ref, Sym, and Trans, it is an Equivalence Relation.`
   },
   {
     id: 'math101-t4-ex03',
@@ -40,14 +95,22 @@ export const topic4Exercises: WrittenExercise[] = [
     topicId: 'math101-topic-4',
     type: 'written',
     difficulty: 2,
-    title: 'Partial Order',
-    description: 'The divisibility relation | on the set A = {1, 2, 3, 6} is defined as: a|b if a divides b. List all pairs in this relation and verify it is a partial order.',
+    title: 'Matrix Representation',
+    description: 'Write the matrix M representing the relation R = {(1,1), (1,3), (2,2), (3,1), (3,2)} on set A={1,2,3}.',
     hints: [
-      'a divides b means b = ka for some integer k',
-      'A partial order is reflexive, antisymmetric, and transitive',
-      'Draw the Hasse diagram to visualize'
+      'Create a 3x3 matrix.',
+      'Put a 1 in row i, column j if (i,j) is in R.',
+      'Put 0 otherwise.'
     ],
-    solution: 'First, list all pairs where a|b (a divides b):\n\n1 divides everything: (1,1), (1,2), (1,3), (1,6)\n2 divides 2 and 6: (2,2), (2,6)\n3 divides 3 and 6: (3,3), (3,6)\n6 divides 6: (6,6)\n\nR = {(1,1), (1,2), (1,3), (1,6), (2,2), (2,6), (3,3), (3,6), (6,6)}\n\nVerifying partial order properties:\n\n1. Reflexive: YES\n   (1,1), (2,2), (3,3), (6,6) all present.\n   Every number divides itself.\n\n2. Antisymmetric: YES\n   If a|b and b|a, then a = b (for positive integers).\n   Check: The only pairs (a,b), (b,a) with both in R are the diagonal pairs.\n\n3. Transitive: YES\n   If a|b and b|c, then a|c.\n   Check: (1,2),(2,6)→(1,6)✓  (1,3),(3,6)→(1,6)✓\n   All transitivity chains check out.\n\nTherefore | is a partial order on A.'
+    solution: `  1 2 3
+1 1 0 1
+2 0 1 0
+3 1 1 0
+
+M = 
+[1 0 1]
+[0 1 0]
+[1 1 0]`
   },
   {
     id: 'math101-t4-ex04',
@@ -55,29 +118,43 @@ export const topic4Exercises: WrittenExercise[] = [
     topicId: 'math101-topic-4',
     type: 'written',
     difficulty: 2,
-    title: 'Equivalence Classes',
-    description: 'Define a relation R on ℤ by: aRb if and only if a - b is even. Prove R is an equivalence relation and find all equivalence classes.',
+    title: 'Digraph Representation',
+    description: 'Draw the directed graph for the relation R = {(a,b), (b,c), (c,a)} on {a,b,c}. Is it transitive?',
     hints: [
-      'a - b even means a - b = 2k for some integer k',
-      'Check reflexive, symmetric, transitive',
-      'Equivalence classes partition ℤ'
+      'Draw nodes a, b, c.',
+      'Draw arrows for each pair.',
+      'Transitive means if a->b and b->c, there must be a->c.'
     ],
-    solution: 'Proof that R is an equivalence relation:\n\n1. Reflexive: For any a ∈ ℤ, a - a = 0 = 2(0), which is even.\n   So aRa. ✓\n\n2. Symmetric: Suppose aRb. Then a - b = 2k for some k ∈ ℤ.\n   Then b - a = -(a - b) = -2k = 2(-k), which is even.\n   So bRa. ✓\n\n3. Transitive: Suppose aRb and bRc.\n   Then a - b = 2k and b - c = 2m for some k, m ∈ ℤ.\n   Then a - c = (a - b) + (b - c) = 2k + 2m = 2(k + m), which is even.\n   So aRc. ✓\n\nEquivalence Classes:\nTwo integers are related iff they differ by an even number.\nThis means they have the same parity (both even or both odd).\n\n[0] = {..., -4, -2, 0, 2, 4, ...} = all even integers\n[1] = {..., -3, -1, 1, 3, 5, ...} = all odd integers\n\nThere are exactly 2 equivalence classes, partitioning ℤ into even and odd integers.'
+    solution: `Graph has edges a->b, b->c, c->a (a cycle).
+
+Is it transitive? NO.
+We have a->b and b->c, but NO a->c edge.
+(Similarly, b->c and c->a but no b->a).`
   },
   {
     id: 'math101-t4-ex05',
     subjectId: 'math101',
     topicId: 'math101-topic-4',
     type: 'written',
-    difficulty: 3,
-    title: 'Relation Composition',
-    description: 'Let R = {(1,2), (2,3), (3,1)} and S = {(1,3), (2,1), (3,2)} be relations on {1,2,3}. Find R ∘ S and S ∘ R.',
+    difficulty: 4,
+    title: 'Transitive Closure',
+    description: 'Find the transitive closure of R = {(1,2), (2,3), (3,4)} on set {1,2,3,4}.',
     hints: [
-      'R ∘ S means "first apply S, then R"',
-      '(a,c) ∈ R ∘ S if there exists b with (a,b) ∈ S and (b,c) ∈ R',
-      'Check all possible combinations systematically'
+      'The closure R* contains R plus all "implied" shortcuts.',
+      'If 1->2 and 2->3, add 1->3.',
+      'Continue until no new edges can be added.'
     ],
-    solution: 'For R ∘ S: (a,c) ∈ R ∘ S if ∃b: (a,b) ∈ S and (b,c) ∈ R\n\nCheck each element of S as the first step:\n- (1,3) ∈ S: Look for (3,?) in R. (3,1) ∈ R → (1,1) ∈ R∘S\n- (2,1) ∈ S: Look for (1,?) in R. (1,2) ∈ R → (2,2) ∈ R∘S\n- (3,2) ∈ S: Look for (2,?) in R. (2,3) ∈ R → (3,3) ∈ R∘S\n\nR ∘ S = {(1,1), (2,2), (3,3)}\n\nFor S ∘ R: (a,c) ∈ S ∘ R if ∃b: (a,b) ∈ R and (b,c) ∈ S\n\nCheck each element of R as the first step:\n- (1,2) ∈ R: Look for (2,?) in S. (2,1) ∈ S → (1,1) ∈ S∘R\n- (2,3) ∈ R: Look for (3,?) in S. (3,2) ∈ S → (2,2) ∈ S∘R\n- (3,1) ∈ R: Look for (1,?) in S. (1,3) ∈ S → (3,3) ∈ S∘R\n\nS ∘ R = {(1,1), (2,2), (3,3)}\n\nInterestingly, R ∘ S = S ∘ R = Identity relation in this case!'
+    solution: `Original edges:
+(1,2), (2,3), (3,4)
+
+Step 1 (Path length 2):
+1->2->3 adds (1,3)
+2->3->4 adds (2,4)
+
+Step 2 (Path length 3):
+1->2->3->4 adds (1,4)
+
+Transitive Closure R* = {(1,2), (2,3), (3,4), (1,3), (2,4), (1,4)}`
   },
   {
     id: 'math101-t4-ex06',
@@ -85,43 +162,207 @@ export const topic4Exercises: WrittenExercise[] = [
     topicId: 'math101-topic-4',
     type: 'written',
     difficulty: 3,
-    title: 'Closures',
-    description: 'Let R = {(1,2), (2,3), (3,4)} on A = {1,2,3,4}. Find:\n(a) The reflexive closure of R\n(b) The symmetric closure of R\n(c) The transitive closure of R',
+    title: 'Partial Orders (Hasse Diagrams)',
+    description: 'Consider the "divides" relation | on the set {1, 2, 3, 4, 6, 12}. Draw the Hasse diagram.',
     hints: [
-      'Reflexive closure: add diagonal pairs',
-      'Symmetric closure: add reverse of each pair',
-      'Transitive closure: add all pairs needed for transitivity'
+      'a|b means a divides b.',
+      'In a Hasse diagram, lower elements divide higher elements.',
+      'Draw lines only for direct divisibility (exclude transitive lines like 1->4 since 1->2->4).'
     ],
-    solution: 'R = {(1,2), (2,3), (3,4)}\n\n(a) Reflexive Closure r(R):\nAdd (a,a) for all a ∈ A:\nr(R) = R ∪ {(1,1), (2,2), (3,3), (4,4)}\n     = {(1,1), (1,2), (2,2), (2,3), (3,3), (3,4), (4,4)}\n\n(b) Symmetric Closure s(R):\nAdd (b,a) for each (a,b) in R:\ns(R) = R ∪ {(2,1), (3,2), (4,3)}\n     = {(1,2), (2,1), (2,3), (3,2), (3,4), (4,3)}\n\n(c) Transitive Closure t(R):\nRepeatedly add (a,c) when (a,b) and (b,c) exist:\n\nStart: {(1,2), (2,3), (3,4)}\n\nFirst pass:\n- (1,2), (2,3) → add (1,3)\n- (2,3), (3,4) → add (2,4)\n\nSecond pass:\n- (1,3), (3,4) → add (1,4)\n- (1,2), (2,4) → add (1,4) (already adding)\n\nt(R) = {(1,2), (1,3), (1,4), (2,3), (2,4), (3,4)}\n\nNote: This forms a total order 1 < 2 < 3 < 4'
+    solution: `Structure:
+- 1 is at the bottom (divides everything).
+- 2 and 3 are above 1.
+- 4 is above 2 (2|4).
+- 6 is above 2 and 3 (2|6 and 3|6).
+- 12 is above 4 and 6 (4|12 and 6|12).
+
+Diagram Edges:
+1-2, 1-3
+2-4, 2-6
+3-6
+4-12, 6-12`
   },
   {
     id: 'math101-t4-ex07',
     subjectId: 'math101',
     topicId: 'math101-topic-4',
     type: 'written',
-    difficulty: 4,
-    title: 'Total Order vs Partial Order',
-    description: 'Consider the subset relation ⊆ on P({a,b}) = {∅, {a}, {b}, {a,b}}. Show this is a partial order but not a total order. Draw the Hasse diagram.',
+    difficulty: 2,
+    title: 'Inverse Relation',
+    description: 'If R = {(x,y) | x < y} on integers, describe the inverse relation R⁻¹.',
     hints: [
-      'Check reflexive, antisymmetric, transitive',
-      'Total order requires every pair to be comparable',
-      'Find two elements that are not related either way'
+      'R⁻¹ contains (y,x) whenever (x,y) is in R.',
+      'Swap the components.'
     ],
-    solution: 'P({a,b}) = {∅, {a}, {b}, {a,b}}\n\nList all subset relations:\n∅ ⊆ ∅, ∅ ⊆ {a}, ∅ ⊆ {b}, ∅ ⊆ {a,b}\n{a} ⊆ {a}, {a} ⊆ {a,b}\n{b} ⊆ {b}, {b} ⊆ {a,b}\n{a,b} ⊆ {a,b}\n\nPartial Order Verification:\n1. Reflexive: Every set is a subset of itself. ✓\n2. Antisymmetric: If A ⊆ B and B ⊆ A, then A = B. ✓\n3. Transitive: If A ⊆ B and B ⊆ C, then A ⊆ C. ✓\n\nNot a Total Order:\n{a} and {b} are NOT comparable:\n- {a} ⊄ {b} (a is not in {b})\n- {b} ⊄ {a} (b is not in {a})\n\nSo neither {a} ⊆ {b} nor {b} ⊆ {a}.\n\nHasse Diagram:\n      {a,b}\n      /   \\\n    {a}   {b}\n      \\   /\n        ∅\n\n{a} and {b} are on the same level (incomparable).'
+    solution: `R⁻¹ = {(y,x) | x < y}
+Switching variables to standard form: {(a,b) | b < a}, which is simply {(a,b) | a > b}.
+
+So the inverse of "less than" is "greater than".`
   },
   {
     id: 'math101-t4-ex08',
     subjectId: 'math101',
     topicId: 'math101-topic-4',
     type: 'written',
-    difficulty: 5,
-    title: 'Partition and Equivalence Relation',
-    description: 'Prove: Every equivalence relation on a set A induces a partition of A, and conversely, every partition of A induces an equivalence relation.',
+    difficulty: 3,
+    title: 'Composition of Relations',
+    description: 'Let R = {(1,2), (2,3)} and S = {(2,a), (3,b)}. Find S ∘ R.',
     hints: [
-      'Equivalence classes are non-empty, disjoint, and cover A',
-      'For partition → relation: define aRb if a and b are in the same block',
-      'Verify all properties carefully'
+      'S ∘ R contains (x,z) if there is a y such that (x,y) ∈ R and (y,z) ∈ S.',
+      'Trace the path: R first, then S.'
     ],
-    solution: 'Theorem: Equivalence relations and partitions are in bijective correspondence.\n\nPart 1: Equivalence Relation → Partition\n\nLet R be an equivalence relation on A. The equivalence classes form a partition.\n\n1. Non-empty: Each class [a] contains at least a (since aRa).\n\n2. Disjoint: Suppose [a] ∩ [b] ≠ ∅. Let c ∈ [a] ∩ [b].\n   Then aRc and bRc.\n   By symmetry: cRb.\n   By transitivity: aRb.\n   So for any x ∈ [a], we have xRa and aRb, giving xRb, so x ∈ [b].\n   Similarly [b] ⊆ [a]. Thus [a] = [b].\n   Contrapositive: If [a] ≠ [b], they are disjoint.\n\n3. Cover A: For any a ∈ A, a ∈ [a], so every element is in some class.\n\nPart 2: Partition → Equivalence Relation\n\nLet P = {B₁, B₂, ...} be a partition of A. Define aRb iff a and b are in the same block.\n\n1. Reflexive: a is in the same block as a. ✓\n\n2. Symmetric: If a and b are in the same block, then b and a are in the same block. ✓\n\n3. Transitive: If a,b are in block Bᵢ and b,c are in the same block, then since b is in exactly one block, c must also be in Bᵢ. So a,c are in the same block. ✓\n\nQ.E.D.'
+    solution: `1 maps to 2 via R. 2 maps to a via S. -> (1,a)
+2 maps to 3 via R. 3 maps to b via S. -> (2,b)
+
+S ∘ R = {(1,a), (2,b)}`
+  },
+  {
+    id: 'math101-t4-ex09',
+    subjectId: 'math101',
+    topicId: 'math101-topic-4',
+    type: 'written',
+    difficulty: 3,
+    title: 'Congruence Modulo n',
+    description: 'The relation a ≡ b (mod n) is an equivalence relation. For n=4, list the equivalence classes [0], [1], [2], [3].',
+    hints: [
+      'The class [x] contains all integers y such that y ≡ x (mod 4).',
+      'This means y = 4k + x.'
+    ],
+    solution: `[0] = {..., -8, -4, 0, 4, 8, ...} (multiples of 4)
+[1] = {..., -7, -3, 1, 5, 9, ...} (remainder 1)
+[2] = {..., -6, -2, 2, 6, 10, ...} (remainder 2)
+[3] = {..., -5, -1, 3, 7, 11, ...} (remainder 3)`
+  },
+  {
+    id: 'math101-t4-ex10',
+    subjectId: 'math101',
+    topicId: 'math101-topic-4',
+    type: 'written',
+    difficulty: 3,
+    title: 'Total vs Partial Order',
+    description: 'Is the "subset" relation (⊆) on the power set of {a, b} a total order or just a partial order? Explain.',
+    hints: [
+      'A total order requires EVERY pair of elements to be comparable (xRy or yRx).',
+      'Look at {a} and {b}.'
+    ],
+    solution: `It is just a Partial Order.
+Consider the elements {a} and {b}.
+{a} ⊈ {b} and {b} ⊈ {a}.
+Since these two elements are incomparable, the order is not Total.`
+  },
+  {
+    id: 'math101-t4-ex11',
+    subjectId: 'math101',
+    topicId: 'math101-topic-4',
+    type: 'written',
+    difficulty: 4,
+    title: 'Proving Antisymmetry',
+    description: 'Let R be a relation on positive integers defined by aRb if a divides b. Prove R is antisymmetric.',
+    hints: [
+      'Assume a|b and b|a.',
+      'Use definitions: b = ak and a = bm.',
+      'Substitute and solve for k and m.'
+    ],
+    solution: `Assume a|b and b|a.
+Then b = ak and a = bm for some integers k, m.
+Substituting: a = (ak)m = a(km).
+Dividing by a (valid since a > 0): 1 = km.
+Since k and m are integers, they must both be 1 or both -1.
+Since we are working with positive integers, k=1, m=1.
+Thus b = a(1) = a.
+Since a|b and b|a implies a=b, R is antisymmetric.`
+  },
+  {
+    id: 'math101-t4-ex12',
+    subjectId: 'math101',
+    topicId: 'math101-topic-4',
+    type: 'written',
+    difficulty: 2,
+    title: 'Equivalence Classes Calculation',
+    description: `Let A = {string of bits}. Let xRy if x and y have the same number of 1s. 
+(a) Is this an equivalence relation?
+(b) Describe the equivalence class of the string "101".`,
+    hints: [
+      'Reflexive: Does x have same number of 1s as x?',
+      'Symmetric/Transitive check.',
+      'Class of "101" contains all strings with exactly two 1s.'
+    ],
+    solution: `(a) Yes. The number of 1s is a well-defined property. Equality of property is always an equivalence relation.
+(b) "101" has two 1s.
+The equivalence class ["101"] is the set of all bit strings that contain exactly two 1s.
+Examples: "11", "011", "11000", ...`
+  },
+  {
+    id: 'math101-t4-ex13',
+    subjectId: 'math101',
+    topicId: 'math101-topic-4',
+    type: 'written',
+    difficulty: 4,
+    title: 'Lexicographic Order',
+    description: 'Arrange the following tuples in lexicographic (dictionary) order: (1,3), (2,1), (1,2), (2,2), (1,3,1).',
+    hints: [
+      'Compare first element first.',
+      'If first elements equal, compare second.',
+      'Shorter prefix comes first.'
+    ],
+    solution: `1. (1, 2)    [starts with 1, 2 < 3]
+2. (1, 3)    [starts with 1, 3rd is shorter than 3,1?? No, usually strictly defined on fixed length, but standard dictionary: prefix < longer word]
+Wait, (1,3) is a prefix of (1,3,1).
+So order:
+1. (1, 2)
+2. (1, 3)
+3. (1, 3, 1)
+4. (2, 1)
+5. (2, 2)`
+  },
+  {
+    id: 'math101-t4-ex14',
+    subjectId: 'math101',
+    topicId: 'math101-topic-4',
+    type: 'written',
+    difficulty: 3,
+    title: 'Zero-One Matrices',
+    description: 'If M_R is the matrix for relation R, what matrix operation corresponds to the composition S ∘ R?',
+    hints: [
+      'Matrix multiplication.',
+      'Use Boolean arithmetic (AND instead of multiply, OR instead of add).'
+    ],
+    solution: `The Boolean Product of the matrices.
+M_(S∘R) = M_R ⊙ M_S
+(Note the order might depend on row/col convention, but usually it corresponds to matrix multiplication logic).`
+  },
+  {
+    id: 'math101-t4-ex15',
+    subjectId: 'math101',
+    topicId: 'math101-topic-4',
+    type: 'written',
+    difficulty: 2,
+    title: 'Database Relations',
+    description: `In a relational database, a "relation" is a table. 
+Table: Student(ID, Name).
+This is a subset of the Cartesian product of which sets?`,
+    hints: [
+      'Columns define the domains.',
+      'ID is usually Integer.',
+      'Name is usually String.'
+    ],
+    solution: `It is a subset of Integers × Strings.
+Specifically, Domain(ID) × Domain(Name).`
+  },
+  {
+    id: 'math101-t4-ex16',
+    subjectId: 'math101',
+    topicId: 'math101-topic-4',
+    type: 'written',
+    difficulty: 3,
+    title: 'N-ary Relations',
+    description: 'A binary relation involves 2 sets. Give an example of a ternary (3-ary) relation.',
+    hints: [
+      'Think of a relationship involving 3 entities.',
+      'Example: (Student, Course, Grade).'
+    ],
+    solution: `Example: A relation "Enrollment" consisting of triples (Student, Course, Semester).
+(Alice, CS101, Fall2023) ∈ R means Alice took CS101 in Fall 2023.
+This is a subset of Students × Courses × Semesters.`
   }
 ];

@@ -1,53 +1,95 @@
 import type { WrittenExercise } from '../../../../core/types';
 
 export const topic5Exercises: WrittenExercise[] = [
-  // EXISTING exercise - preserve ID
+  // --- DRILLS (Simple Checks) ---
+  {
+    id: 'math101-t5-drill-1',
+    subjectId: 'math101',
+    topicId: 'math101-topic-5',
+    type: 'written',
+    difficulty: 1,
+    title: 'Drill: Evaluation',
+    description: 'If f(x) = x + 1, what is f(2)?',
+    hints: ['Substitute 2 for x.'] ,
+    solution: '3'
+  },
+  {
+    id: 'math101-t5-drill-2',
+    subjectId: 'math101',
+    topicId: 'math101-topic-5',
+    type: 'written',
+    difficulty: 1,
+    title: 'Drill: Injective Check',
+    description: 'Is f(x) = x² injective on all Real numbers?',
+    hints: ['Does f(-1) equal f(1)?'],
+    solution: 'No, because (-1)² = 1² = 1.'
+  },
+  {
+    id: 'math101-t5-drill-3',
+    subjectId: 'math101',
+    topicId: 'math101-topic-5',
+    type: 'written',
+    difficulty: 1,
+    title: 'Drill: Domain',
+    description: 'What is the one real number NOT in the domain of f(x) = 1/x?',
+    hints: ['Division by zero is undefined.'] ,
+    solution: '0'
+  },
+  {
+    id: 'math101-t5-drill-4',
+    subjectId: 'math101',
+    topicId: 'math101-topic-5',
+    type: 'written',
+    difficulty: 1,
+    title: 'Drill: Floor',
+    description: 'What is floor(3.9)?',
+    hints: ['Round down to the nearest integer.'] ,
+    solution: '3'
+  },
+
+  // EXISTING exercise
   {
     id: 'math101-ex-5',
     subjectId: 'math101',
     topicId: 'math101-topic-5',
     type: 'written',
-    difficulty: 4,
-    title: 'Function Properties and Composition',
-    description: 'Let f: ℝ → ℝ be defined by f(x) = 3x - 2 and g: ℝ → ℝ be defined by g(x) = x² + 1. (a) Find (f ∘ g)(x) and (g ∘ f)(x). (b) Determine if f is injective, surjective, and/or bijective. (c) Find f⁻¹(x) if it exists. (d) Prove that if f: A → B and g: B → C are both injective, then g ∘ f: A → C is also injective.',
+    difficulty: 2,
+    title: 'Domain and Range',
+    description: 'Find the domain and range of the function f(x) = x² where f: Z → Z (Z is integers).',
     hints: [
-      'For composition, substitute one function into the other.',
-      'For injectivity, check if f(x₁) = f(x₂) implies x₁ = x₂.',
-      'For surjectivity, check if every y in codomain has a preimage.',
-      'To find inverse, solve y = f(x) for x in terms of y.',
-      'Use the definitions directly in the proof about composition.'
+      'Domain is given in the definition.',
+      'Range is the set of possible outputs.',
+      'Can x² be negative?'
     ],
-    solution: '(a) (f ∘ g)(x) = f(g(x)) = f(x² + 1) = 3(x² + 1) - 2 = 3x² + 1\n    (g ∘ f)(x) = g(f(x)) = g(3x - 2) = (3x - 2)² + 1 = 9x² - 12x + 5\n\n(b) Injective: Suppose f(x₁) = f(x₂). Then 3x₁ - 2 = 3x₂ - 2, so 3x₁ = 3x₂, thus x₁ = x₂. YES, injective.\n    Surjective: For any y ∈ ℝ, we need x such that 3x - 2 = y. Solving: x = (y + 2)/3, which exists for all y. YES, surjective.\n    Bijective: YES (both injective and surjective).\n\n(c) To find f⁻¹: Let y = 3x - 2. Solve for x: x = (y + 2)/3. Therefore f⁻¹(x) = (x + 2)/3.\n\n(d) Proof: Let f: A → B and g: B → C both be injective. We must show g ∘ f is injective.\n    Suppose (g ∘ f)(a₁) = (g ∘ f)(a₂) for a₁, a₂ ∈ A.\n    Then g(f(a₁)) = g(f(a₂)).\n    Since g is injective, f(a₁) = f(a₂).\n    Since f is injective, a₁ = a₂.\n    Therefore g ∘ f is injective.'
+    solution: `Domain: Z (All integers, as defined).\nRange: {0, 1, 4, 9, ...} (Perfect squares).\nMore formally: {y ∈ Z | ∃x ∈ Z, y = x²}.`
   },
   {
     id: 'math101-t5-ex02',
     subjectId: 'math101',
     topicId: 'math101-topic-5',
     type: 'written',
-    difficulty: 1,
-    title: 'Function Basics',
-    description: 'Determine whether each relation is a function from A = {1,2,3} to B = {a,b,c}:\n(a) {(1,a), (2,b), (3,c)}\n(b) {(1,a), (2,a), (3,a)}\n(c) {(1,a), (1,b), (2,c)}\n(d) {(1,a), (2,b)}',
+    difficulty: 3,
+    title: 'Injectivity Check',
+    description: 'Determine if f(x) = 2x + 1 is injective (one-to-one) on the real numbers R. Prove your answer.',
     hints: [
-      'A function assigns EXACTLY one output to each input',
-      'Every element in domain must have an output',
-      'Same input cannot have different outputs'
+      'Assume f(x) = f(y).',
+      'Show that this implies x = y.'
     ],
-    solution: '(a) {(1,a), (2,b), (3,c)}\nYES, this is a function.\n- Each element of A appears exactly once\n- Each element maps to exactly one element of B\n- This is also a bijection (one-to-one and onto)\n\n(b) {(1,a), (2,a), (3,a)}\nYES, this is a function.\n- Each element of A appears exactly once\n- Multiple inputs can map to the same output\n- This is a constant-like function (not injective)\n\n(c) {(1,a), (1,b), (2,c)}\nNO, this is NOT a function.\n- Element 1 maps to both a AND b\n- A function cannot have one input with multiple outputs\n- Also, 3 has no output\n\n(d) {(1,a), (2,b)}\nNO, this is NOT a function.\n- Element 3 from domain A has no output\n- Every element in the domain must have exactly one output'
+    solution: `Assume f(x) = f(y).\n2x + 1 = 2y + 1\nSubtract 1: 2x = 2y\nDivide by 2: x = y\n\nSince f(x)=f(y) implies x=y, the function is Injective.`
   },
   {
     id: 'math101-t5-ex03',
     subjectId: 'math101',
     topicId: 'math101-topic-5',
     type: 'written',
-    difficulty: 2,
-    title: 'Injective and Surjective',
-    description: 'For each function, determine if it is injective, surjective, both, or neither:\n(a) f: ℤ → ℤ, f(x) = x + 1\n(b) g: ℤ → ℤ, g(x) = x²\n(c) h: ℝ → ℝ₊, h(x) = eˣ\n(d) k: ℝ → ℝ, k(x) = x³',
+    difficulty: 3,
+    title: 'Surjectivity Check',
+    description: 'Is f(x) = x² surjective (onto) from R to R? If not, restrict the codomain to make it surjective.',
     hints: [
-      'Injective: different inputs → different outputs',
-      'Surjective: every element in codomain is hit',
-      'Consider the domain and codomain carefully'
+      'Can you get output -1?',
+      'The range of x² is non-negative numbers.'
     ],
-    solution: '(a) f: ℤ → ℤ, f(x) = x + 1\n- Injective: YES. If x₁ + 1 = x₂ + 1, then x₁ = x₂.\n- Surjective: YES. For any y ∈ ℤ, x = y - 1 gives f(x) = y.\n- BIJECTIVE ✓\n\n(b) g: ℤ → ℤ, g(x) = x²\n- Injective: NO. g(2) = g(-2) = 4 but 2 ≠ -2.\n- Surjective: NO. Negative integers (like -1) and some positives (like 2) have no preimage. Only perfect squares are in the range.\n- NEITHER\n\n(c) h: ℝ → ℝ₊, h(x) = eˣ (where ℝ₊ = positive reals)\n- Injective: YES. eˣ¹ = eˣ² implies x₁ = x₂ (ln is well-defined).\n- Surjective: YES. For any y > 0, x = ln(y) gives eˣ = y.\n- BIJECTIVE ✓\n\n(d) k: ℝ → ℝ, k(x) = x³\n- Injective: YES. x₁³ = x₂³ implies x₁ = x₂ (cube root is unique).\n- Surjective: YES. For any y ∈ ℝ, x = ∛y gives k(x) = y.\n- BIJECTIVE ✓'
+    solution: `No, it is not surjective onto R because negative numbers have no preimage (no real x exists such that x² = -1).\nTo make it surjective, restrict the codomain to [0, ∞) (non-negative reals).`
   },
   {
     id: 'math101-t5-ex04',
@@ -56,13 +98,12 @@ export const topic5Exercises: WrittenExercise[] = [
     type: 'written',
     difficulty: 2,
     title: 'Function Composition',
-    description: 'Let f(x) = 2x + 1 and g(x) = x² - 3. Compute:\n(a) (f ∘ g)(2)\n(b) (g ∘ f)(2)\n(c) (f ∘ f)(x)\n(d) (g ∘ g)(x)',
+    description: 'Let f(x) = x + 1 and g(x) = 2x. Find (f ∘ g)(x) and (g ∘ f)(x). Are they the same?',
     hints: [
-      '(f ∘ g)(x) = f(g(x)): apply g first, then f',
-      'Work from the inside out',
-      'Simplify the resulting expressions'
+      '(f ∘ g)(x) means f(g(x)).',
+      'Plug g(x) into f.'
     ],
-    solution: '(a) (f ∘ g)(2) = f(g(2))\n    g(2) = 2² - 3 = 4 - 3 = 1\n    f(1) = 2(1) + 1 = 3\n    Answer: 3\n\n(b) (g ∘ f)(2) = g(f(2))\n    f(2) = 2(2) + 1 = 5\n    g(5) = 5² - 3 = 25 - 3 = 22\n    Answer: 22\n\nNote: f ∘ g ≠ g ∘ f (composition is not commutative)\n\n(c) (f ∘ f)(x) = f(f(x))\n    f(x) = 2x + 1\n    f(2x + 1) = 2(2x + 1) + 1 = 4x + 2 + 1 = 4x + 3\n    Answer: (f ∘ f)(x) = 4x + 3\n\n(d) (g ∘ g)(x) = g(g(x))\n    g(x) = x² - 3\n    g(x² - 3) = (x² - 3)² - 3\n             = x⁴ - 6x² + 9 - 3\n             = x⁴ - 6x² + 6\n    Answer: (g ∘ g)(x) = x⁴ - 6x² + 6'
+    solution: `(f ∘ g)(x) = f(g(x)) = f(2x) = 2x + 1.\n(g ∘ f)(x) = g(f(x)) = g(x + 1) = 2(x + 1) = 2x + 2.\n\nThey are NOT the same (2x + 1 ≠ 2x + 2).`
   },
   {
     id: 'math101-t5-ex05',
@@ -70,29 +111,29 @@ export const topic5Exercises: WrittenExercise[] = [
     topicId: 'math101-topic-5',
     type: 'written',
     difficulty: 3,
-    title: 'Finding Inverses',
-    description: 'Find the inverse of each bijective function:\n(a) f(x) = 5x - 7\n(b) g(x) = (x + 3)/(x - 1) for x ≠ 1\n(c) h(x) = ∛(x - 2)',
+    title: 'Inverse Function',
+    description: 'Find the inverse of f(x) = (x - 3) / 2.',
     hints: [
-      'Set y = f(x) and solve for x',
-      'Then swap x and y for the final answer',
-      'For (b), multiply both sides by (x-1) first'
+      'Set y = (x - 3) / 2.',
+      'Swap x and y.',
+      'Solve for y.'
     ],
-    solution: '(a) f(x) = 5x - 7\n    Let y = 5x - 7\n    y + 7 = 5x\n    x = (y + 7)/5\n    \n    f⁻¹(x) = (x + 7)/5\n    \n    Verify: f(f⁻¹(x)) = 5·(x+7)/5 - 7 = x + 7 - 7 = x ✓\n\n(b) g(x) = (x + 3)/(x - 1)\n    Let y = (x + 3)/(x - 1)\n    y(x - 1) = x + 3\n    yx - y = x + 3\n    yx - x = y + 3\n    x(y - 1) = y + 3\n    x = (y + 3)/(y - 1)\n    \n    g⁻¹(x) = (x + 3)/(x - 1)  (for x ≠ 1)\n    \n    Note: g is its own inverse! This is called an involution.\n\n(c) h(x) = ∛(x - 2)\n    Let y = ∛(x - 2)\n    y³ = x - 2\n    x = y³ + 2\n    \n    h⁻¹(x) = x³ + 2\n    \n    Verify: h(h⁻¹(x)) = ∛((x³ + 2) - 2) = ∛(x³) = x ✓'
+    solution: `y = (x - 3) / 2\nSwap: x = (y - 3) / 2\nSolve for y:\n2x = y - 3\n2x + 3 = y\n\nInverse function f⁻¹(x) = 2x + 3.`
   },
   {
     id: 'math101-t5-ex06',
     subjectId: 'math101',
     topicId: 'math101-topic-5',
     type: 'written',
-    difficulty: 3,
-    title: 'Counting Functions',
-    description: 'Let A = {1, 2, 3} and B = {a, b, c, d}. Find:\n(a) The total number of functions from A to B\n(b) The number of injective functions from A to B\n(c) Why are there no surjective functions from A to B?',
+    difficulty: 2,
+    title: 'Floor and Ceiling',
+    description: 'Compute ⌊2.9⌋, ⌈2.1⌉, ⌊-2.1⌋, ⌈-2.9⌉.',
     hints: [
-      'For total functions: each element of A can map to any element of B',
-      'For injective: first element has |B| choices, second has |B|-1, etc.',
-      'For surjective: consider the pigeonhole principle'
+      'Floor: Greatest integer less than or equal.',
+      'Ceiling: Smallest integer greater than or equal.',
+      'Be careful with negatives: -3 is less than -2.1.'
     ],
-    solution: '(a) Total number of functions from A to B:\nEach of the 3 elements in A can independently map to any of 4 elements in B.\nTotal = 4 × 4 × 4 = 4³ = 64 functions\n\n(b) Number of injective functions from A to B:\nFor injective, different inputs must give different outputs.\n- Element 1 can map to any of 4 elements: 4 choices\n- Element 2 must map to a different element: 3 choices\n- Element 3 must differ from both: 2 choices\n\nTotal = 4 × 3 × 2 = 24 injective functions\n\nAlternatively: P(4,3) = 4!/(4-3)! = 4!/1! = 24\n\n(c) Why no surjective functions from A to B?\nA surjective function must hit every element in the codomain.\n|A| = 3 and |B| = 4.\n\nWith only 3 inputs, we can produce at most 3 distinct outputs.\nBut B has 4 elements that all need to be hit.\n\nBy the Pigeonhole Principle, it\'s impossible for 3 inputs to cover 4 outputs.\n\nFor surjection to be possible, we need |A| ≥ |B|.'
+    solution: `⌊2.9⌋ = 2\n⌈2.1⌉ = 3\n⌊-2.1⌋ = -3 (since -3 < -2.1)\n⌈-2.9⌉ = -2`
   },
   {
     id: 'math101-t5-ex07',
@@ -100,28 +141,138 @@ export const topic5Exercises: WrittenExercise[] = [
     topicId: 'math101-topic-5',
     type: 'written',
     difficulty: 4,
-    title: 'Image and Preimage',
-    description: 'Let f: ℝ → ℝ be defined by f(x) = x² - 4. Find:\n(a) f({-2, -1, 0, 1, 2})\n(b) f⁻¹({0})\n(c) f⁻¹({-4, 0, 5})\n(d) f⁻¹({-5})',
+    title: 'Pigeonhole Principle (Functions)',
+    description: 'If f: A → B and |A| > |B|, prove f cannot be injective.',
     hints: [
-      'f(S) = {f(x) | x ∈ S} is the image of set S',
-      'f⁻¹(T) = {x | f(x) ∈ T} is the preimage of set T',
-      'Preimage exists even when inverse function doesn\'t'
+      'If you have more pigeons (A) than holes (B), what happens?',
+      'At least two elements of A must map to the same element of B.'
     ],
-    solution: 'f(x) = x² - 4\n\n(a) f({-2, -1, 0, 1, 2}):\nf(-2) = 4 - 4 = 0\nf(-1) = 1 - 4 = -3\nf(0) = 0 - 4 = -4\nf(1) = 1 - 4 = -3\nf(2) = 4 - 4 = 0\n\nf({-2, -1, 0, 1, 2}) = {-4, -3, 0}\n\n(b) f⁻¹({0}):\nSolve x² - 4 = 0\nx² = 4\nx = ±2\n\nf⁻¹({0}) = {-2, 2}\n\n(c) f⁻¹({-4, 0, 5}):\nFor -4: x² - 4 = -4 → x² = 0 → x = 0\nFor 0: x² - 4 = 0 → x² = 4 → x = ±2\nFor 5: x² - 4 = 5 → x² = 9 → x = ±3\n\nf⁻¹({-4, 0, 5}) = {-3, -2, 0, 2, 3}\n\n(d) f⁻¹({-5}):\nSolve x² - 4 = -5\nx² = -1\nNo real solutions.\n\nf⁻¹({-5}) = ∅'
+    solution: `By the Pigeonhole Principle, if we map |A| elements into |B| targets and |A| > |B|, at least two elements from A (say a1, a2) must map to the same target in B.\nSo f(a1) = f(a2) with a1 ≠ a2.\nTherefore, f is not injective.`
   },
   {
     id: 'math101-t5-ex08',
     subjectId: 'math101',
     topicId: 'math101-topic-5',
     type: 'written',
-    difficulty: 5,
-    title: 'Composition and Inverses',
-    description: 'Prove that if f: A → B and g: B → C are both bijections, then:\n(a) g ∘ f is a bijection\n(b) (g ∘ f)⁻¹ = f⁻¹ ∘ g⁻¹',
+    difficulty: 3,
+    title: 'Recursion',
+    description: 'A function is defined recursively: f(0) = 1, f(n) = n * f(n-1). What does this function compute? Calculate f(4).',
     hints: [
-      'For bijection, prove both injective and surjective',
-      'For the inverse formula, show both directions',
-      'Use the fact that composition is associative'
+      'Trace the execution for small n.',
+      'f(1) = 1*1 = 1',
+      'f(2) = 2*1 = 2'
     ],
-    solution: '(a) Proof that g ∘ f is a bijection:\n\nInjective:\nSuppose (g ∘ f)(a₁) = (g ∘ f)(a₂).\nThen g(f(a₁)) = g(f(a₂)).\nSince g is injective: f(a₁) = f(a₂).\nSince f is injective: a₁ = a₂.\nTherefore g ∘ f is injective. ✓\n\nSurjective:\nLet c ∈ C be arbitrary.\nSince g is surjective, ∃b ∈ B with g(b) = c.\nSince f is surjective, ∃a ∈ A with f(a) = b.\nThen (g ∘ f)(a) = g(f(a)) = g(b) = c.\nTherefore g ∘ f is surjective. ✓\n\n(b) Proof that (g ∘ f)⁻¹ = f⁻¹ ∘ g⁻¹:\n\nWe need to show (f⁻¹ ∘ g⁻¹) ∘ (g ∘ f) = id_A and (g ∘ f) ∘ (f⁻¹ ∘ g⁻¹) = id_C.\n\nFirst direction:\n(f⁻¹ ∘ g⁻¹) ∘ (g ∘ f)\n= f⁻¹ ∘ (g⁻¹ ∘ g) ∘ f    [associativity]\n= f⁻¹ ∘ id_B ∘ f         [g⁻¹ ∘ g = id]\n= f⁻¹ ∘ f                 [identity]\n= id_A                    [f⁻¹ ∘ f = id]\n\nSecond direction:\n(g ∘ f) ∘ (f⁻¹ ∘ g⁻¹)\n= g ∘ (f ∘ f⁻¹) ∘ g⁻¹    [associativity]\n= g ∘ id_B ∘ g⁻¹         [f ∘ f⁻¹ = id]\n= g ∘ g⁻¹                [identity]\n= id_C                   [g ∘ g⁻¹ = id]\n\nTherefore (g ∘ f)⁻¹ = f⁻¹ ∘ g⁻¹.\n\nNote: The order reverses! "Socks then shoes on, shoes then socks off."'
+    solution: `f(4) = 4 * f(3)\n     = 4 * (3 * f(2))\n     = 4 * 3 * (2 * f(1))\n     = 4 * 3 * 2 * (1 * f(0))\n     = 4 * 3 * 2 * 1 * 1\n     = 24.\n\nThis function computes the Factorial of n (n!).`
+  },
+  {
+    id: 'math101-t5-ex09',
+    subjectId: 'math101',
+    topicId: 'math101-topic-5',
+    type: 'written',
+    difficulty: 2,
+    title: 'Characteristic Function',
+    description: 'The characteristic function of a set A, denoted χ_A(x), is 1 if x ∈ A and 0 if x ∉ A.\nExpress χ_(A ∩ B)(x) in terms of χ_A(x) and χ_B(x).',
+    hints: [
+      'Intersection requires x to be in A AND x to be in B.',
+      'Look at multiplication.'
+    ],
+    solution: `χ_(A ∩ B)(x) = χ_A(x) · χ_B(x).\n\nIf x is in both, 1·1 = 1.\nIf x is missing from either, the product is 0.`
+  },
+  {
+    id: 'math101-t5-ex10',
+    subjectId: 'math101',
+    topicId: 'math101-topic-5',
+    type: 'written',
+    difficulty: 4,
+    title: 'Counting Functions',
+    description: 'How many distinct functions are there from a set A with 3 elements to a set B with 4 elements?',
+    hints: [
+      'For each element in A, how many choices in B?',
+      'Are the choices independent?'
+    ],
+    solution: `Let A = {1, 2, 3}.\nf(1) can be any of 4 values.\nf(2) can be any of 4 values.\nf(3) can be any of 4 values.\n\nTotal functions = 4 × 4 × 4 = 4³ = 64.`
+  },
+  {
+    id: 'math101-t5-ex11',
+    subjectId: 'math101',
+    topicId: 'math101-topic-5',
+    type: 'written',
+    difficulty: 3,
+    title: 'Partial Functions',
+    description: 'The function f(x) = 1/x is a "partial function" from R to R. Why? How can we make it total?',
+    hints: [
+      'Is f defined for all real numbers?',
+      'Consider x = 0.'
+    ],
+    solution: `It is partial because f(0) is undefined, so 0 is in the domain R but has no mapping.\nTo make it total, we can either:\n1. Remove 0 from the domain: f: R-{0} → R.\n2. Define a value for f(0), e.g., f(0) = 0 (though this makes it discontinuous).`
+  },
+  {
+    id: 'math101-t5-ex12',
+    subjectId: 'math101',
+    topicId: 'math101-topic-5',
+    type: 'written',
+    difficulty: 2,
+    title: 'Increasing Functions',
+    description: 'Prove that if f(x) is strictly increasing (x < y implies f(x) < f(y)), then f is injective.',
+    hints: [
+      'Injective means x ≠ y implies f(x) ≠ f(y).',
+      'If x ≠ y, then either x < y or y < x.'
+    ],
+    solution: `Proof:\nAssume x ≠ y.\nCase 1: x < y. Then f(x) < f(y), so f(x) ≠ f(y).\nCase 2: y < x. Then f(y) < f(x), so f(x) ≠ f(y).\nIn all cases, distinct inputs yield distinct outputs.\nTherefore, f is injective.`
+  },
+  {
+    id: 'math101-t5-ex13',
+    subjectId: 'math101',
+    topicId: 'math101-topic-5',
+    type: 'written',
+    difficulty: 3,
+    title: 'Lambda Notation',
+    description: 'In Computer Science, functions are often written as λx.E.\nEvaluate (λx. x² + 1)(5).',
+    hints: [
+      'Substitute the argument (5) for the variable (x) in the expression.'
+    ],
+    solution: '(λx. x² + 1)(5) = 5² + 1 = 25 + 1 = 26.'
+  },
+  {
+    id: 'math101-t5-ex14',
+    subjectId: 'math101',
+    topicId: 'math101-topic-5',
+    type: 'written',
+    difficulty: 3,
+    title: 'Images and Preimages',
+    description: `Let f: Z → Z, f(x) = x². \n(a) Find the Image of the set A = {-1, 0, 1, 2}.\n(b) Find the Preimage of B = {4, 9}.`,
+    hints: [
+      'Image: Apply f to every element in A.',
+      'Preimage: Find all x such that f(x) is in B.'
+    ],
+    solution: `(a) Image f(A) = {(-1)², 0², 1², 2²} = {1, 0, 1, 4} = {0, 1, 4}.\n(b) Preimage f⁻¹(B) = {x | x² ∈ {4, 9}} = {-2, 2, -3, 3}.`
+  },
+  {
+    id: 'math101-t5-ex15',
+    subjectId: 'math101',
+    topicId: 'math101-topic-5',
+    type: 'written',
+    difficulty: 2,
+    title: 'Identity Function',
+    description: 'Let id(x) = x. Prove that for any function f: A → B, f ∘ id_A = f.',
+    hints: [
+      'Evaluate (f ∘ id)(x) for any x in A.',
+      'id(x) returns x.'
+    ],
+    solution: `For any x ∈ A:\n(f ∘ id_A)(x) = f(id_A(x)) = f(x).\nSince the output is identical for all inputs, the functions are equal.`
+  },
+  {
+    id: 'math101-t5-ex16',
+    subjectId: 'math101',
+    topicId: 'math101-topic-5',
+    type: 'written',
+    difficulty: 4,
+    title: 'Well-Definedness',
+    description: 'Let f: Q → Z be defined by f(p/q) = p + q. Is f well-defined?',
+    hints: [
+      'Rational numbers have multiple representations (e.g., 1/2 = 2/4).',
+      'Check if f(1/2) equals f(2/4).'
+    ],
+    solution: `f(1/2) = 1 + 2 = 3.\nf(2/4) = 2 + 4 = 6.\nSince 1/2 = 2/4 but f(1/2) ≠ f(2/4), the function gives different outputs for the same input.\nTherefore, f is NOT well-defined.`
   }
 ];

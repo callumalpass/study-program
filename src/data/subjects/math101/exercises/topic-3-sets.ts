@@ -1,23 +1,75 @@
 import type { WrittenExercise } from '../../../../core/types';
 
 export const topic3Exercises: WrittenExercise[] = [
-  // EXISTING exercise - preserve ID
+  // --- DRILLS (Simple Checks) ---
+  {
+    id: 'math101-t3-drill-1',
+    subjectId: 'math101',
+    topicId: 'math101-topic-3',
+    type: 'written',
+    difficulty: 1,
+    title: 'Drill: Element Check',
+    description: 'Is 3 an element of the set {1, 2, 3}?',
+    hints: ['Look for the number 3 inside the curly braces.'] ,
+    solution: 'Yes.'
+  },
+  {
+    id: 'math101-t3-drill-2',
+    subjectId: 'math101',
+    topicId: 'math101-topic-3',
+    type: 'written',
+    difficulty: 1,
+    title: 'Drill: Union',
+    description: 'Find the union of {1} and {2}.',
+    hints: ['Combine all elements.'] ,
+    solution: '{1, 2}'
+  },
+  {
+    id: 'math101-t3-drill-3',
+    subjectId: 'math101',
+    topicId: 'math101-topic-3',
+    type: 'written',
+    difficulty: 1,
+    title: 'Drill: Intersection',
+    description: 'Find the intersection of {1, 2} and {2, 3}.',
+    hints: ['Find the common elements.'] ,
+    solution: '{2}'
+  },
+  {
+    id: 'math101-t3-drill-4',
+    subjectId: 'math101',
+    topicId: 'math101-topic-3',
+    type: 'written',
+    difficulty: 1,
+    title: 'Drill: Subset Check',
+    description: 'Is {1} a subset of {1, 2}?',
+    hints: ['Is every element of the first set in the second set?'] ,
+    solution: 'Yes.'
+  },
+
+  // EXISTING exercise
   {
     id: 'math101-ex-3',
     subjectId: 'math101',
     topicId: 'math101-topic-3',
     type: 'written',
-    difficulty: 3,
-    title: 'Set Operations and Identities',
-    description: 'Let U = {1,2,3,4,5,6,7,8,9,10}, A = {1,2,3,4,5}, and B = {4,5,6,7,8}. Find: (a) A ∪ B, (b) A ∩ B, (c) A - B, (d) B - A, (e) A\', (f) (A ∪ B)\'. Then prove using set algebra that A ∩ (B ∪ C) = (A ∩ B) ∪ (A ∩ C) for arbitrary sets.',
+    difficulty: 2,
+    title: 'Set Operations',
+    description: `Given the sets A = {1, 2, 3, 4, 5}, B = {4, 5, 6, 7, 8}, and the universal set U = {1, 2, ..., 10}, compute the following:
+(a) A ∪ B
+(b) A ∩ B
+(c) A - B
+(d) The complement of (A ∪ B)`,
     hints: [
-      'For union, combine all unique elements from both sets.',
-      'For intersection, find only common elements.',
-      'For set difference A - B, include elements in A but not in B.',
-      'Complement includes all elements in U not in the set.',
-      'Use element argument or algebraic laws to prove the distributive property.'
+      'Union combines all elements.',
+      'Intersection takes only common elements.',
+      'Difference A-B removes elements of B from A.',
+      'Complement takes all elements in U not in the set.'
     ],
-    solution: '(a) A ∪ B = {1,2,3,4,5,6,7,8}\n(b) A ∩ B = {4,5}\n(c) A - B = {1,2,3}\n(d) B - A = {6,7,8}\n(e) A\' = {6,7,8,9,10}\n(f) (A ∪ B)\' = {9,10}\n\nProof of distributive law A ∩ (B ∪ C) = (A ∩ B) ∪ (A ∩ C):\n\nLet x be an arbitrary element. We show x is in the left side if and only if x is in the right side.\n\n(→) Suppose x ∈ A ∩ (B ∪ C). Then x ∈ A and x ∈ (B ∪ C). So x ∈ A and (x ∈ B or x ∈ C). By distributive law of logic: (x ∈ A and x ∈ B) or (x ∈ A and x ∈ C). Therefore x ∈ (A ∩ B) or x ∈ (A ∩ C), which means x ∈ (A ∩ B) ∪ (A ∩ C).\n\n(←) Similar argument in reverse direction. Therefore the sets are equal.'
+    solution: `(a) A ∪ B = {1, 2, 3, 4, 5, 6, 7, 8}
+(b) A ∩ B = {4, 5}
+(c) A - B = {1, 2, 3}
+(d) (A ∪ B)' = U - {1, 2, 3, 4, 5, 6, 7, 8} = {9, 10}`
   },
   {
     id: 'math101-t3-ex02',
@@ -25,14 +77,23 @@ export const topic3Exercises: WrittenExercise[] = [
     topicId: 'math101-topic-3',
     type: 'written',
     difficulty: 1,
-    title: 'Set Builder Notation',
-    description: 'Write the following sets in set-builder notation:\n(a) {2, 4, 6, 8, 10, ...}\n(b) {1, 4, 9, 16, 25, ...}\n(c) {..., -6, -3, 0, 3, 6, 9, ...}',
+    title: 'Subsets',
+    description: 'List all subsets of the set A = {x, y, z}. How many are there?',
     hints: [
-      'Identify the pattern that generates each set',
-      'Use {x | condition} or {x ∈ D | condition} format',
-      'Consider what domain the elements come from'
+      'Don\'t forget the empty set and the set itself.',
+      'The number of subsets is 2^n where n is the number of elements.'
     ],
-    solution: '(a) {2, 4, 6, 8, 10, ...} - positive even integers\n= {x ∈ ℤ⁺ | x is even}\n= {2n | n ∈ ℤ⁺}\n= {x | x = 2n for some positive integer n}\n\n(b) {1, 4, 9, 16, 25, ...} - perfect squares\n= {n² | n ∈ ℤ⁺}\n= {x ∈ ℤ⁺ | x is a perfect square}\n= {x | x = n² for some positive integer n}\n\n(c) {..., -6, -3, 0, 3, 6, 9, ...} - multiples of 3\n= {3n | n ∈ ℤ}\n= {x ∈ ℤ | 3 divides x}\n= {x ∈ ℤ | x ≡ 0 (mod 3)}'
+    solution: `Subsets of {x, y, z}:
+1. ∅
+2. {x}
+3. {y}
+4. {z}
+5. {x, y}
+6. {x, z}
+7. {y, z}
+8. {x, y, z}
+
+There are 8 subsets total (2³ = 8).`
   },
   {
     id: 'math101-t3-ex03',
@@ -40,88 +101,306 @@ export const topic3Exercises: WrittenExercise[] = [
     topicId: 'math101-topic-3',
     type: 'written',
     difficulty: 2,
-    title: 'Power Set',
-    description: 'Find the power set of A = {a, b, c}. How many elements does P(A) have? In general, if |A| = n, what is |P(A)|?',
+    title: 'Venn Diagrams',
+    description: 'Draw (or describe) a Venn diagram shading the region corresponding to A ∩ (B ∪ C).',
     hints: [
-      'Power set includes ALL subsets, including ∅ and A itself',
-      'List subsets systematically by size',
-      'Each element is either in or out of a subset'
+      'Draw three overlapping circles A, B, C.',
+      'First identify B ∪ C (everything in B or C).',
+      'Then overlap that with A.'
     ],
-    solution: 'A = {a, b, c}\n\nP(A) = {\n  ∅,                    (0 elements)\n  {a}, {b}, {c},        (1 element each)\n  {a,b}, {a,c}, {b,c},  (2 elements each)\n  {a,b,c}               (3 elements)\n}\n\n|P(A)| = 1 + 3 + 3 + 1 = 8 = 2³\n\nIn general, if |A| = n, then |P(A)| = 2ⁿ.\n\nReason: For each subset, each of the n elements is either included or excluded. That\'s 2 choices per element, giving 2 × 2 × ... × 2 (n times) = 2ⁿ possible subsets.'
+    solution: `Description of shaded region:
+The region consists of two parts:
+1. The central region where all three circles overlap (A ∩ B ∩ C).
+2. The regions where A overlaps strictly with B (but not C) and where A overlaps strictly with C (but not B).
+
+Basically, shade any part of A that is ALSO inside either B or C.`
   },
   {
     id: 'math101-t3-ex04',
     subjectId: 'math101',
     topicId: 'math101-topic-3',
     type: 'written',
-    difficulty: 2,
-    title: 'Cartesian Product',
-    description: 'Let A = {1, 2} and B = {x, y, z}. Find:\n(a) A × B\n(b) B × A\n(c) |A × B|\n(d) Is A × B = B × A?',
+    difficulty: 3,
+    title: 'Set Identities Proof',
+    description: 'Prove the distributive law using set builder notation: A ∩ (B ∪ C) = (A ∩ B) ∪ (A ∩ C).',
     hints: [
-      'A × B = {(a, b) | a ∈ A and b ∈ B}',
-      'Order matters in ordered pairs',
-      '|A × B| = |A| × |B|'
+      'Start with x ∈ LHS.',
+      'Convert to logic: x ∈ A ∧ (x ∈ B ∨ x ∈ C).',
+      'Use logical distributivity.',
+      'Convert back to set notation.'
     ],
-    solution: '(a) A × B = {(a, b) | a ∈ A, b ∈ B}\n= {(1, x), (1, y), (1, z), (2, x), (2, y), (2, z)}\n\n(b) B × A = {(b, a) | b ∈ B, a ∈ A}\n= {(x, 1), (x, 2), (y, 1), (y, 2), (z, 1), (z, 2)}\n\n(c) |A × B| = |A| × |B| = 2 × 3 = 6\n\n(d) A × B ≠ B × A\n\nThey have the same cardinality (6 elements each), but the elements are different because order matters in ordered pairs. For example:\n(1, x) ∈ A × B but (1, x) ∉ B × A\n(x, 1) ∈ B × A but (x, 1) ∉ A × B\n\nIn general, A × B = B × A only when A = B or one of the sets is empty.'
+    solution: `Proof:
+Let x be an arbitrary element.
+x ∈ A ∩ (B ∪ C)
+⟺ x ∈ A ∧ x ∈ (B ∪ C)    [Def of Intersection]
+⟺ x ∈ A ∧ (x ∈ B ∨ x ∈ C)    [Def of Union]
+⟺ (x ∈ A ∧ x ∈ B) ∨ (x ∈ A ∧ x ∈ C)    [Distributive Law of Logic]
+⟺ (x ∈ A ∩ B) ∨ (x ∈ A ∩ C)    [Def of Intersection]
+⟺ x ∈ (A ∩ B) ∪ (A ∩ C)    [Def of Union]
+
+Since the steps are reversible equivalences, LHS = RHS.`
   },
   {
     id: 'math101-t3-ex05',
     subjectId: 'math101',
     topicId: 'math101-topic-3',
     type: 'written',
-    difficulty: 3,
-    title: 'De Morgan\'s Laws for Sets',
-    description: 'Prove De Morgan\'s laws for sets:\n(a) (A ∪ B)\' = A\' ∩ B\'\n(b) (A ∩ B)\' = A\' ∪ B\'',
+    difficulty: 2,
+    title: 'Cartesian Product',
+    description: 'Let A = {1, 2} and B = {a, b, c}. List the elements of A × B and B × A. Are they equal?',
     hints: [
-      'Show each side is a subset of the other',
-      'Use element-chasing argument',
-      'x ∈ (A ∪ B)\' means x ∉ A ∪ B'
+      'A × B consists of ordered pairs (a, b) where a ∈ A and b ∈ B.',
+      'Order matters in the pairs.'
     ],
-    solution: '(a) Proof that (A ∪ B)\' = A\' ∩ B\'\n\n(⊆) Let x ∈ (A ∪ B)\'.\nThen x ∉ A ∪ B.\nSo x ∉ A AND x ∉ B.\nThus x ∈ A\' AND x ∈ B\'.\nTherefore x ∈ A\' ∩ B\'.\n\n(⊇) Let x ∈ A\' ∩ B\'.\nThen x ∈ A\' AND x ∈ B\'.\nSo x ∉ A AND x ∉ B.\nThus x ∉ A ∪ B.\nTherefore x ∈ (A ∪ B)\'.\n\nSince each set is a subset of the other, (A ∪ B)\' = A\' ∩ B\'.\n\n(b) Proof that (A ∩ B)\' = A\' ∪ B\'\n\n(⊆) Let x ∈ (A ∩ B)\'.\nThen x ∉ A ∩ B.\nSo NOT(x ∈ A AND x ∈ B).\nBy logic: x ∉ A OR x ∉ B.\nThus x ∈ A\' OR x ∈ B\'.\nTherefore x ∈ A\' ∪ B\'.\n\n(⊇) Similar argument in reverse.\n\nQ.E.D.'
+    solution: `A × B = {(1,a), (1,b), (1,c), (2,a), (2,b), (2,c)}
+B × A = {(a,1), (a,2), (b,1), (b,2), (c,1), (c,2)}
+
+They are NOT equal because (1,a) ≠ (a,1).`
   },
   {
     id: 'math101-t3-ex06',
     subjectId: 'math101',
     topicId: 'math101-topic-3',
     type: 'written',
-    difficulty: 2,
-    title: 'Venn Diagrams',
-    description: 'In a class of 40 students, 25 study Math, 20 study Physics, and 10 study both. Using set notation, find:\n(a) Students studying Math or Physics\n(b) Students studying only Math\n(c) Students studying neither subject',
+    difficulty: 3,
+    title: 'Set Difference Properties',
+    description: 'Prove or disprove: A - (B ∩ C) = (A - B) ∩ (A - C).',
     hints: [
-      'Use inclusion-exclusion: |A ∪ B| = |A| + |B| - |A ∩ B|',
-      'Only Math = Math - Both',
-      'Neither = Total - (Math or Physics)'
+      'Try a Venn diagram or a concrete example first.',
+      'Let A={1,2}, B={2}, C={2}.'
     ],
-    solution: 'Let M = students studying Math, P = students studying Physics.\n|M| = 25, |P| = 20, |M ∩ P| = 10, |U| = 40\n\n(a) Students studying Math or Physics: |M ∪ P|\nBy inclusion-exclusion:\n|M ∪ P| = |M| + |P| - |M ∩ P|\n        = 25 + 20 - 10\n        = 35 students\n\n(b) Students studying only Math: |M - P| or |M ∩ P\'|\n|M - P| = |M| - |M ∩ P|\n       = 25 - 10\n       = 15 students\n\n(c) Students studying neither: |(M ∪ P)\'|\n|(M ∪ P)\'| = |U| - |M ∪ P|\n          = 40 - 35\n          = 5 students'
+    solution: `Disproof by counterexample.
+Let A = {1, 2}, B = {2}, C = {1}.
+
+LHS: B ∩ C = ∅. So A - ∅ = {1, 2}.
+RHS: A - B = {1}. A - C = {2}. Intersection = {1} ∩ {2} = ∅.
+
+{1, 2} ≠ ∅.
+
+Correct Identity: A - (B ∩ C) = (A - B) ∪ (A - C) (De Morgan's Law for sets).`
   },
   {
     id: 'math101-t3-ex07',
     subjectId: 'math101',
     topicId: 'math101-topic-3',
     type: 'written',
-    difficulty: 4,
-    title: 'Subset Proofs',
-    description: 'Prove that for any sets A, B, C:\n(a) If A ⊆ B, then A ∩ C ⊆ B ∩ C\n(b) If A ⊆ B and C ⊆ D, then A × C ⊆ B × D',
+    difficulty: 3,
+    title: 'Inclusion-Exclusion Principle',
+    description: 'In a class of 50 students, 30 take Math, 25 take CS, and 10 take both. How many take neither?',
     hints: [
-      'To prove X ⊆ Y, show every element of X is in Y',
-      'Let x be an arbitrary element of the left side',
-      'Use the given subset relationships'
+      'Use |A ∪ B| = |A| + |B| - |A ∩ B|.',
+      'The "neither" group is Total - |A ∪ B|.'
     ],
-    solution: '(a) Proof: If A ⊆ B, then A ∩ C ⊆ B ∩ C\n\nLet x ∈ A ∩ C.\nThen x ∈ A AND x ∈ C.\nSince A ⊆ B and x ∈ A, we have x ∈ B.\nSo x ∈ B AND x ∈ C.\nTherefore x ∈ B ∩ C.\n\nSince every element of A ∩ C is in B ∩ C, we have A ∩ C ⊆ B ∩ C. ✓\n\n(b) Proof: If A ⊆ B and C ⊆ D, then A × C ⊆ B × D\n\nLet (x, y) ∈ A × C.\nBy definition of Cartesian product: x ∈ A AND y ∈ C.\nSince A ⊆ B and x ∈ A, we have x ∈ B.\nSince C ⊆ D and y ∈ C, we have y ∈ D.\nSo x ∈ B AND y ∈ D.\nTherefore (x, y) ∈ B × D.\n\nSince every element of A × C is in B × D, we have A × C ⊆ B × D. ✓\n\nQ.E.D.'
+    solution: `Let M be set of Math students, C be set of CS students.
+|M| = 30, |C| = 25, |M ∩ C| = 10.
+
+Students taking at least one (Union):
+|M ∪ C| = |M| + |C| - |M ∩ C|
+|M ∪ C| = 30 + 25 - 10 = 45.
+
+Students taking neither:
+Total - |M ∪ C| = 50 - 45 = 5.`
   },
   {
     id: 'math101-t3-ex08',
     subjectId: 'math101',
     topicId: 'math101-topic-3',
     type: 'written',
-    difficulty: 4,
-    title: 'Set Algebra Proof',
-    description: 'Prove the absorption law: A ∪ (A ∩ B) = A',
+    difficulty: 2,
+    title: 'Set Builder Notation',
+    description: 'Express the set of all odd integers using set builder notation.',
     hints: [
-      'Show A ⊆ A ∪ (A ∩ B) and A ∪ (A ∩ B) ⊆ A',
-      'For the first inclusion, use that A ⊆ A ∪ X for any X',
-      'For the second, note both parts of the union are subsets of A'
+      'An odd integer can be written as 2k+1 where k is an integer.',
+      'Use Z for the set of integers.'
     ],
-    solution: 'Proof of Absorption Law: A ∪ (A ∩ B) = A\n\nWe prove double inclusion:\n\n(⊇) Prove A ⊆ A ∪ (A ∩ B):\nLet x ∈ A.\nSince x ∈ A, we have x ∈ A ∪ Y for any set Y.\nIn particular, x ∈ A ∪ (A ∩ B).\nThus A ⊆ A ∪ (A ∩ B). ✓\n\n(⊆) Prove A ∪ (A ∩ B) ⊆ A:\nLet x ∈ A ∪ (A ∩ B).\nThen x ∈ A OR x ∈ (A ∩ B).\n\nCase 1: x ∈ A. Then we\'re done.\n\nCase 2: x ∈ A ∩ B. Then x ∈ A AND x ∈ B.\nSo x ∈ A.\n\nIn both cases, x ∈ A.\nThus A ∪ (A ∩ B) ⊆ A. ✓\n\nSince A ⊆ A ∪ (A ∩ B) and A ∪ (A ∩ B) ⊆ A, we have A ∪ (A ∩ B) = A.\n\nQ.E.D.\n\nNote: The dual absorption law A ∩ (A ∪ B) = A can be proven similarly.'
+    solution: '{x ∈ Z | ∃k ∈ Z, x = 2k + 1}'
+  },
+  {
+    id: 'math101-t3-ex09',
+    subjectId: 'math101',
+    topicId: 'math101-topic-3',
+    type: 'written',
+    difficulty: 3,
+    title: 'Symmetric Difference',
+    description: `The symmetric difference A ⊕ B (or A Δ B) contains elements in A or B but NOT in both. 
+(a) Compute {1, 2, 3} ⊕ {3, 4, 5}.
+(b) Prove A ⊕ B = (A - B) ∪ (B - A).`,
+    hints: [
+      'Think "XOR" for sets.',
+      'Identify elements unique to each set.'
+    ],
+    solution: `(a) {1, 2, 3} ⊕ {3, 4, 5}
+Elements in first only: {1, 2}
+Elements in second only: {4, 5}
+Union: {1, 2, 4, 5}
+
+(b) Proof:
+x ∈ A ⊕ B 
+⟺ (x ∈ A ∨ x ∈ B) ∧ ¬(x ∈ A ∧ x ∈ B)  [Def of XOR]
+⟺ (x ∈ A ∧ x ∉ B) ∨ (x ∈ B ∧ x ∉ A)   [Logical equivalence]
+⟺ x ∈ (A - B) ∨ x ∈ (B - A)           [Def of Set Difference]
+⟺ x ∈ (A - B) ∪ (B - A)               [Def of Union]`
+  },
+  {
+    id: 'math101-t3-ex10',
+    subjectId: 'math101',
+    topicId: 'math101-topic-3',
+    type: 'written',
+    difficulty: 1,
+    title: 'Disjoint Sets',
+    description: 'Are the sets of prime numbers and composite numbers disjoint? Why or why not?',
+    hints: [
+      'Two sets are disjoint if their intersection is empty.',
+      'Consider definitions of prime and composite.',
+      'Is there any number that is both? Is there any number that is neither?'
+    ],
+    solution: `Yes, they are disjoint.
+A prime number has exactly 2 divisors (1 and itself).
+A composite number has more than 2 divisors.
+No number can satisfy both definitions simultaneously. Therefore Primes ∩ Composites = ∅.
+
+(Note: The number 1 is neither prime nor composite, but that doesn\'t affect disjointness).`
+  },
+  {
+    id: 'math101-t3-ex11',
+    subjectId: 'math101',
+    topicId: 'math101-topic-3',
+    type: 'written',
+    difficulty: 4,
+    title: 'Partitions',
+    description: `Let S = {1, 2, 3, 4, 5, 6}. Definition: A partition is a collection of non-empty disjoint subsets whose union is S.
+Which of the following are valid partitions of S?
+(a) {{1, 2}, {3, 4, 5}, {6}}
+(b) {{1, 2, 3}, {3, 4, 5, 6}}
+(c) {{1, 2}, {4, 5, 6}}`,
+    hints: [
+      'Check 1: Are subsets non-empty?',
+      'Check 2: Are they disjoint (no overlaps)?',
+      'Check 3: Do they cover all of S?'
+    ],
+    solution: `(a) Valid. Disjoint and union is S.
+(b) Invalid. Sets overlap at {3} (not disjoint).
+(c) Invalid. Element 3 is missing (union is not S).`
+  },
+  {
+    id: 'math101-t3-ex12',
+    subjectId: 'math101',
+    topicId: 'math101-topic-3',
+    type: 'written',
+    difficulty: 5,
+    title: 'Power Set Cardinality',
+    description: 'If set A has n elements, prove that its Power Set P(A) has 2^n elements using induction or combinatorial argument.',
+    hints: [
+      'Combinatorial: For each element, you have 2 choices (include or exclude).',
+      'Induction: What happens when you add one element to a set?'
+    ],
+    solution: `Combinatorial Proof:
+To form a subset, we consider each of the n elements in A one by one.
+For the first element, we have 2 choices: either it is in the subset or it is not.
+For the second element, we have 2 choices.
+...
+For the nth element, we have 2 choices.
+
+Total ways to form a subset = 2 × 2 × ... × 2 (n times) = 2ⁿ.`
+  },
+  {
+    id: 'math101-t3-ex13',
+    subjectId: 'math101',
+    topicId: 'math101-topic-3',
+    type: 'written',
+    difficulty: 3,
+    title: 'Subset Proof',
+    description: 'Prove that A ⊆ B if and only if A ∪ B = B.',
+    hints: [
+      'Prove two directions: (1) If A ⊆ B then A ∪ B = B. (2) If A ∪ B = B then A ⊆ B.'
+    ],
+    solution: `Direction 1 (⇒): Assume A ⊆ B.
+We know B ⊆ A ∪ B always.
+Let x ∈ A ∪ B. Then x ∈ A or x ∈ B.
+If x ∈ A, since A ⊆ B, then x ∈ B.
+So in all cases x ∈ B.
+Thus A ∪ B ⊆ B.
+Combining gives A ∪ B = B.
+
+Direction 2 (⇐): Assume A ∪ B = B.
+Let x ∈ A.
+Then x ∈ A ∪ B (definition of union).
+Since A ∪ B = B, then x ∈ B.
+Therefore A ⊆ B.`
+  },
+  {
+    id: 'math101-t3-ex14',
+    subjectId: 'math101',
+    topicId: 'math101-topic-3',
+    type: 'written',
+    difficulty: 4,
+    title: 'Generalized Union/Intersection',
+    description: `Let A_n = [0, 1/n) for n = 1, 2, 3... (Interval notation).
+Find the infinite intersection ∩(n=1 to ∞) A_n.`,
+    hints: [
+      'Write out the first few sets: [0, 1), [0, 1/2), [0, 1/3)...',
+      'What element is in ALL of them?',
+      'Is there any positive number epsilon > 0 that is in all of them?'
+    ],
+    solution: `The intersection is {0}.
+
+Reasoning:
+0 is in every interval [0, 1/n) because 0 < 1/n for all positive integers n.
+
+Suppose there is some positive number x > 0 in the intersection.
+By the Archimedean property, there exists an integer N such that 1/N < x.
+Then x is NOT in the interval [0, 1/N).
+So x cannot be in the intersection.
+
+Thus, only 0 remains.`
+  },
+  {
+    id: 'math101-t3-ex15',
+    subjectId: 'math101',
+    topicId: 'math101-topic-3',
+    type: 'written',
+    difficulty: 5,
+    title: 'Russell\'s Paradox',
+    description: `Let R be the set of all sets that do not contain themselves as an element. R = {S | S ∉ S}.
+Is R ∈ R? Explain the contradiction.`,
+    hints: [
+      'Assume R ∈ R. What does the definition of R imply?',
+      'Assume R ∉ R. What does the definition of R imply?',
+      'This paradox shows naive set theory is flawed.'
+    ],
+    solution: `Case 1: Assume R ∈ R.
+By definition of R, if a set is in R, it does NOT contain itself.
+So R ∈ R implies R ∉ R. Contradiction.
+
+Case 2: Assume R ∉ R.
+By definition of R, if a set does NOT contain itself, it must be in R.
+So R ∉ R implies R ∈ R. Contradiction.
+
+Conclusion: Such a set R cannot exist. This necessitated the development of axiomatic set theory (ZFC) which restricts how sets can be constructed.`
+  },
+  {
+    id: 'math101-t3-ex16',
+    subjectId: 'math101',
+    topicId: 'math101-topic-3',
+    type: 'written',
+    difficulty: 3,
+    title: 'Bit Vector Representation',
+    description: `Suppose the universal set is U = {1, 2, 3, 4, 5, 6, 7, 8}. A subset can be represented by an 8-bit binary string where the ith bit is 1 if i is in the set.
+(a) What is the bit string for A = {1, 3, 4, 8}?
+(b) What set operation corresponds to the bitwise AND of two strings?
+(c) What set operation corresponds to bitwise OR?`,
+    hints: [
+      'Order the bits from 1 to 8.',
+      'AND is 1 only if both inputs are 1.',
+      'OR is 1 if either input is 1.'
+    ],
+    solution: `(a) Set: {1, 3, 4, 8}
+Positions: 1 2 3 4 5 6 7 8
+Bits:      1 0 1 1 0 0 0 1
+String: 10110001
+
+(b) Bitwise AND corresponds to Intersection (∩). An element is in the result only if it is in BOTH sets.
+
+(c) Bitwise OR corresponds to Union (∪). An element is in the result if it is in EITHER set.`
   }
 ];

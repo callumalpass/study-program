@@ -129,14 +129,77 @@ export async function generateSubjectPDF(
       doc.setTextColor(0, 0, 0);
     }
 
-    // Add each line of code with indentation
-    const codeLines = code.split('\n');
-    doc.setTextColor(50, 50, 80);
+    // Switch to monospace font
+    doc.setFont('courier', 'normal');
+    doc.setFontSize(9);
+    
+    // Sanitize code: normalize line endings and replace tabs
+    const safeCode = code.replace(/\r\n/g, '\n').replace(/\t/g, '    ');
+    
+    const codeLines = safeCode.split('\n');
+    const lineHeight = 5; // Slightly taller line height for better readability
+
     for (const line of codeLines) {
-      addText('    ' + line, 9);
+      // Preserve leading whitespace
+      const leadingSpaces = line.match(/^\s*/)?.[0].length || 0;
+      const indentString = ' '.repeat(leadingSpaces);
+      const content = line.trim();
+
+      // Even empty lines get a background to maintain the block look
+      if (!content) {
+        checkNewPage(lineHeight);
+        
+        // Background
+        doc.setFillColor(240, 240, 240); // Clearly visible light gray
+        doc.rect(margin, y - 1, contentWidth, lineHeight, 'F');
+        
+        // Left accent border (darker gray)
+        doc.setFillColor(200, 200, 200);
+        doc.rect(margin, y - 1, 1, lineHeight, 'F');
+        
+        y += lineHeight;
+        continue;
+      }
+
+      // Wrap content
+      const indentWidth = leadingSpaces * 2; 
+      const availableWidth = contentWidth - indentWidth - 2; // -2 for right padding
+      
+      // Ensure font is active for splitTextToSize calculation
+      doc.setFont('courier', 'normal');
+      const wrappedLines = doc.splitTextToSize(content, availableWidth);
+
+      for (const wLine of wrappedLines) {
+         checkNewPage(lineHeight);
+         
+         // 1. Draw Background
+         doc.setFillColor(240, 240, 240);
+         doc.rect(margin, y - 1, contentWidth, lineHeight, 'F');
+
+         // 2. Draw Left Accent Border
+         doc.setFillColor(200, 200, 200);
+         doc.rect(margin, y - 1, 1, lineHeight, 'F');
+
+         // 3. Draw Text
+         const displayText = (wLine === wrappedLines[0]) 
+           ? indentString + wLine 
+           : indentString + '  ' + wLine;
+
+         doc.setFont('courier', 'normal'); // Re-apply font
+         doc.setFontSize(9);
+         doc.setTextColor(50, 50, 80); // Dark blue-gray text
+         
+         // Offset x by 3mm (1mm border + 2mm padding)
+         doc.text(displayText, margin + 3, y + 2.5); 
+         
+         y += lineHeight;
+      }
     }
+
+    // Revert to standard font
+    doc.setFont('helvetica', 'normal');
     doc.setTextColor(0, 0, 0);
-    y += 2;
+    y += 4; // Add some space after the block
   };
 
   // ============ COVER PAGE ============
