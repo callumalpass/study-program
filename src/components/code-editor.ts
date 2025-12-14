@@ -3,6 +3,7 @@ import { initVimMode, VimMode } from 'monaco-vim';
 import { runPython, runTests, type TestResult } from './code-runner';
 import type { TestCase } from '@/core/types';
 import { Icons } from './icons';
+import { escapeHtml } from '@/utils/html';
 
 export interface EditorConfig {
   language?: string;
@@ -685,11 +686,4 @@ export function createCodeEditor(
     setTheme,
     setFontSize,
   };
-}
-
-// Utility function to escape HTML
-function escapeHtml(text: string): string {
-  const div = document.createElement('div');
-  div.textContent = text;
-  return div.innerHTML;
 }

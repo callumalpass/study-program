@@ -1,10 +1,13 @@
 // Subject detail page
-import type { Subject, Topic, Project } from '@/core/types';
+import type { Subject, Topic, Project, UserProgress } from '@/core/types';
 import { progressStorage } from '@/core/storage';
 import {
   arePrerequisitesMet,
   startSubject,
   getSubjectProgressDetails,
+  isQuizCompleted,
+  isExerciseCompleted,
+  getQuizBestScore,
 } from '@/core/progress';
 import {
   navigateToQuiz,
@@ -14,9 +17,6 @@ import {
 } from '@/core/router';
 import { renderMarkdown } from '@/components/markdown';
 import { Icons } from '../components/icons';
-
-// Store projects globally for access
-let currentProjects: Project[] = [];
 
 /**
  * Render the subject detail page
@@ -29,11 +29,7 @@ export function renderSubjectPage(
   projects?: Project[]
 ): void {
   const subject = subjects.find(s => s.id === subjectId);
-
-  // Store projects for this subject
-  if (projects) {
-    currentProjects = projects.filter(p => p.subjectId === subjectId);
-  }
+  const subjectProjects = projects ? projects.filter(p => p.subjectId === subjectId) : [];
 
   if (!subject) {
     container.innerHTML = `
@@ -63,7 +59,7 @@ export function renderSubjectPage(
   if (topicId) {
     renderTopicView(container, subject, topicId, subjects, userProgress);
   } else {
-    renderSubjectOverview(container, subject, subjects, userProgress, prerequisitesMet, progressDetails);
+    renderSubjectOverview(container, subject, subjects, userProgress, prerequisitesMet, progressDetails, subjectProjects);
   }
 }
 
@@ -74,15 +70,14 @@ function renderSubjectOverview(
   container: HTMLElement,
   subject: Subject,
   allSubjects: Subject[],
-  userProgress: any,
+  userProgress: UserProgress,
   prerequisitesMet: boolean,
-  progressDetails: any
+  progressDetails: ReturnType<typeof getSubjectProgressDetails>,
+  subjectProjects: Project[]
 ): void {
   const prerequisiteSubjects = subject.prerequisites.map(prereqId =>
     allSubjects.find(s => s.id === prereqId)
   ).filter(Boolean) as Subject[];
-
-  const subjectProjects = currentProjects;
 
   container.innerHTML = `
     <div class="subject-page">
@@ -163,19 +158,10 @@ function renderSubjectOverview(
 /**
  * Render a topic item in the list
  */
-function renderTopicItem(topic: Topic, number: number, subjectId: string, userProgress: any): string {
+function renderTopicItem(topic: Topic, number: number, subjectId: string, userProgress: UserProgress): string {
   const progress = userProgress.subjects[subjectId];
-  const quizzesCompleted = topic.quizIds.filter(quizId => {
-    const attempts = progress?.quizAttempts[quizId];
-    if (!attempts || attempts.length === 0) return false;
-    const bestScore = Math.max(...attempts.map((a: any) => a.score));
-    return bestScore >= 70;
-  }).length;
-
-  const exercisesCompleted = topic.exerciseIds.filter(exerciseId => {
-    const completion = progress?.exerciseCompletions[exerciseId];
-    return completion?.passed;
-  }).length;
+  const quizzesCompleted = topic.quizIds.filter(quizId => isQuizCompleted(quizId, progress)).length;
+  const exercisesCompleted = topic.exerciseIds.filter(exerciseId => isExerciseCompleted(exerciseId, progress)).length;
 
   const totalAssessments = topic.quizIds.length + topic.exerciseIds.length;
   const completedAssessments = quizzesCompleted + exercisesCompleted;
@@ -202,7 +188,7 @@ function renderTopicItem(topic: Topic, number: number, subjectId: string, userPr
 /**
  * Render a project item in the list
  */
-function renderProjectItem(project: Project, subjectId: string, userProgress: any): string {
+function renderProjectItem(project: Project, subjectId: string, userProgress: UserProgress): string {
   const progress = userProgress.subjects[subjectId];
   const submissions = progress?.projectSubmissions?.[project.id] || [];
   const hasSubmission = submissions.length > 0;
@@ -233,7 +219,7 @@ function renderTopicView(
   subject: Subject,
   topicId: string,
   allSubjects: Subject[],
-  userProgress: any
+  userProgress: UserProgress
 ): void {
   const topicIndex = subject.topics.findIndex(t => t.id === topicId);
   const topic = topicIndex >= 0 ? subject.topics[topicIndex] : null;
@@ -245,7 +231,8 @@ function renderTopicView(
       allSubjects,
       userProgress,
       arePrerequisitesMet(subject, userProgress),
-      getSubjectProgressDetails(subject)
+      getSubjectProgressDetails(subject),
+      [] // No projects in fallback case
     );
     return;
   }
@@ -281,10 +268,8 @@ function renderTopicView(
           <div class="assessment-list">
             ${topic.quizIds.map((quizId, index) => {
               const attempts = progress?.quizAttempts[quizId] || [];
-              const bestScore = attempts.length > 0
-                ? Math.max(...attempts.map((a: any) => a.score))
-                : null;
-              const passed = bestScore !== null && bestScore >= 70;
+              const bestScore = getQuizBestScore(quizId, progress);
+              const passed = isQuizCompleted(quizId, progress);
 
               return `
                 <div class="assessment-item ${passed ? 'passed' : ''}">
@@ -302,7 +287,7 @@ function renderTopicView(
 
             ${topic.exerciseIds.map((exerciseId, index) => {
               const completion = progress?.exerciseCompletions[exerciseId];
-              const passed = completion?.passed;
+              const passed = isExerciseCompleted(exerciseId, progress);
 
               return `
                 <div class="assessment-item ${passed ? 'passed' : ''}">

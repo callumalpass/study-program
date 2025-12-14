@@ -2,6 +2,7 @@ import { marked } from 'marked';
 import Prism from 'prismjs';
 import katex from 'katex';
 import 'katex/dist/katex.min.css';
+import { escapeHtml } from '@/utils/html';
 
 // Import core Prism languages
 import 'prismjs/components/prism-python';
@@ -138,16 +139,8 @@ function processLatex(html: string): string {
 }
 
 /**
- * Escape HTML special characters.
- */
-function escapeHtml(text: string): string {
-  const div = document.createElement('div');
-  div.textContent = text;
-  return div.innerHTML;
-}
-
-/**
  * Render markdown to a DOM element.
+ * @internal Not currently used - available for future features
  *
  * @param container - Container element to render into
  * @param content - Markdown content
@@ -168,24 +161,12 @@ export function renderMarkdownToElement(
       Prism.highlightElement(block as HTMLElement);
     }
   });
-
-  // TODO: Initialize KaTeX for math rendering if available
-  initializeLatexRendering(container);
-}
-
-/**
- * Initialize LaTeX rendering if KaTeX is available.
- * This is a placeholder for future KaTeX integration.
- */
-function initializeLatexRendering(container: HTMLElement): void {
-  // Rendering is performed during markdown processing via katex.renderToString.
-  // This function remains as a no-op for compatibility with existing callers.
-  void container;
 }
 
 /**
  * Extract plain text from markdown (strips formatting).
  * Useful for previews and search.
+ * @internal Not currently used - available for future features
  */
 export function extractPlainText(markdown: string): string {
   const html = renderMarkdown(markdown);
@@ -196,6 +177,7 @@ export function extractPlainText(markdown: string): string {
 
 /**
  * Generate a table of contents from markdown headers.
+ * @internal Not currently used - available for future features
  */
 export function generateTableOfContents(markdown: string): Array<{
   level: number;

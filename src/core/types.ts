@@ -172,3 +172,28 @@ export interface Route {
   path: string;
   params: RouteParams;
 }
+
+// Typed route parameter interfaces for better type safety
+export interface SubjectRouteParams extends RouteParams {
+  id: string;
+}
+
+export interface TopicRouteParams extends RouteParams {
+  id: string;
+  topicId: string;
+}
+
+export interface QuizRouteParams extends RouteParams {
+  id: string;
+  quizId: string;
+}
+
+export interface ExerciseRouteParams extends RouteParams {
+  id: string;
+  exId: string;
+}
+
+export interface ProjectRouteParams extends RouteParams {
+  id: string;
+  projId: string;
+}

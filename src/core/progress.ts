@@ -335,6 +335,45 @@ export function getSubjectProgressDetails(subject: Subject): {
   };
 }
 
+/**
+ * Check if a quiz is completed (passed with >= 70% score)
+ */
+export function isQuizCompleted(
+  quizId: string,
+  progress: SubjectProgress | undefined
+): boolean {
+  if (!progress) return false;
+  const attempts = progress.quizAttempts[quizId];
+  if (!attempts || attempts.length === 0) return false;
+  const bestScore = Math.max(...attempts.map(a => a.score));
+  return bestScore >= 70;
+}
+
+/**
+ * Get the best score for a quiz (or null if no attempts)
+ */
+export function getQuizBestScore(
+  quizId: string,
+  progress: SubjectProgress | undefined
+): number | null {
+  if (!progress) return null;
+  const attempts = progress.quizAttempts[quizId];
+  if (!attempts || attempts.length === 0) return null;
+  return Math.max(...attempts.map(a => a.score));
+}
+
+/**
+ * Check if an exercise is completed (passed)
+ */
+export function isExerciseCompleted(
+  exerciseId: string,
+  progress: SubjectProgress | undefined
+): boolean {
+  if (!progress) return false;
+  const completion = progress.exerciseCompletions[exerciseId];
+  return completion?.passed ?? false;
+}
+
 // Export convenience functions that use the singleton storage
 export const getProgress = () => progressStorage.getProgress();
 export const getSubjectProgress = (id: string) => progressStorage.getSubjectProgress(id);

@@ -2,6 +2,7 @@ import type { Quiz, QuizQuestion, QuizAttempt } from '@/core/types';
 import Prism from 'prismjs';
 import { renderMarkdown } from './markdown';
 import { Icons } from './icons';
+import { escapeHtml } from '@/utils/html';
 
 interface QuizConfig {
   oneAtATime?: boolean;
@@ -175,12 +176,6 @@ function normalizeAnswer(value: string | number | boolean | undefined): string {
     return '';
   }
   return String(value).trim().toLowerCase();
-}
-
-function escapeHtml(text: string): string {
-  const div = document.createElement('div');
-  div.textContent = text;
-  return div.innerHTML;
 }
 
 function collectAnswer(questionElement: HTMLElement, question: QuizQuestion): string | number | boolean | undefined {
