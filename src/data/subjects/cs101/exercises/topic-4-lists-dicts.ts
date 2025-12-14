@@ -14,19 +14,16 @@ export const topic4Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '"hello world hello"',
-        expectedOutput: "{'hello': 2, 'world': 1}",
         isHidden: false,
         description: 'Simple repeated word'
       },
       {
         input: '"the quick brown fox jumps over the lazy dog"',
-        expectedOutput: "{'the': 2, 'quick': 1, 'brown': 1, 'fox': 1, 'jumps': 1, 'over': 1, 'lazy': 1, 'dog': 1}",
         isHidden: false,
         description: 'Multiple words with one repeat'
       },
       {
         input: '"a a a b b c"',
-        expectedOutput: "{'a': 3, 'b': 2, 'c': 1}",
         isHidden: true,
         description: 'Different frequencies'
       }
@@ -51,19 +48,16 @@ export const topic4Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '[1, 2, 3, 4, 5]',
-        expectedOutput: '15',
         isHidden: false,
         description: 'Sum positive numbers'
       },
       {
         input: '[10, -5, 3]',
-        expectedOutput: '8',
         isHidden: false,
         description: 'Sum with negative'
       },
       {
         input: '[]',
-        expectedOutput: '0',
         isHidden: true,
         description: 'Empty list'
       }
@@ -88,19 +82,16 @@ export const topic4Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '{"name": "Alice"}, "name"',
-        expectedOutput: 'Alice',
         isHidden: false,
         description: 'Key exists'
       },
       {
         input: '{"name": "Alice"}, "email", "not found"',
-        expectedOutput: 'not found',
         isHidden: false,
         description: 'Key missing with default'
       },
       {
         input: '{}, "key"',
-        expectedOutput: 'None',
         isHidden: true,
         description: 'Empty dictionary'
       }
@@ -124,19 +115,16 @@ export const topic4Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '[1, 2, 3, 4, 5]',
-        expectedOutput: '[5, 4, 3, 2, 1]',
         isHidden: false,
         description: 'Reverse numbers'
       },
       {
         input: '["a", "b", "c"]',
-        expectedOutput: "['c', 'b', 'a']",
         isHidden: false,
         description: 'Reverse strings'
       },
       {
         input: '[1]',
-        expectedOutput: '[1]',
         isHidden: true,
         description: 'Single element'
       }
@@ -161,19 +149,16 @@ export const topic4Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '{"x": 1, "y": 2}, {"y": 3, "z": 4}',
-        expectedOutput: "{'x': 1, 'y': 3, 'z': 4}",
         isHidden: false,
         description: 'Merge with overlap'
       },
       {
         input: '{"a": 1}, {"b": 2}',
-        expectedOutput: "{'a': 1, 'b': 2}",
         isHidden: false,
         description: 'No overlap'
       },
       {
         input: '{}, {"x": 1}',
-        expectedOutput: "{'x': 1}",
         isHidden: true,
         description: 'Empty first dict'
       }
@@ -198,19 +183,16 @@ export const topic4Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]',
-        expectedOutput: '[2, 4, 6, 8, 10]',
         isHidden: false,
         description: 'Mixed numbers'
       },
       {
         input: '[1, 3, 5, 7]',
-        expectedOutput: '[]',
         isHidden: false,
         description: 'All odd numbers'
       },
       {
         input: '[0, 2, 4]',
-        expectedOutput: '[0, 2, 4]',
         isHidden: true,
         description: 'All even including zero'
       }
@@ -235,19 +217,16 @@ export const topic4Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '{"a": 1, "b": 2, "c": 3}',
-        expectedOutput: "{1: 'a', 2: 'b', 3: 'c'}",
         isHidden: false,
         description: 'String keys to int'
       },
       {
         input: '{1: "one", 2: "two"}',
-        expectedOutput: "{'one': 1, 'two': 2}",
         isHidden: false,
         description: 'Int keys to string'
       },
       {
         input: '{}',
-        expectedOutput: '{}',
         isHidden: true,
         description: 'Empty dictionary'
       }
@@ -271,13 +250,11 @@ export const topic4Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '["apple", "banana", "apricot", "cherry", "blueberry"]',
-        expectedOutput: "{'a': ['apple', 'apricot'], 'b': ['banana', 'blueberry'], 'c': ['cherry']}",
         isHidden: false,
         description: 'Group fruits'
       },
       {
         input: '["one", "two", "three"]',
-        expectedOutput: "{'o': ['one'], 't': ['two', 'three']}",
         isHidden: true,
         description: 'Group numbers'
       }
@@ -302,19 +279,16 @@ export const topic4Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '{"a": {"b": {"c": 1}}}, ["a", "b", "c"]',
-        expectedOutput: '1',
         isHidden: false,
         description: 'Deep access success'
       },
       {
         input: '{"a": {"b": 2}}, ["a", "x"]',
-        expectedOutput: 'None',
         isHidden: false,
         description: 'Missing key'
       },
       {
         input: '{}, ["a"]',
-        expectedOutput: 'None',
         isHidden: true,
         description: 'Empty dictionary'
       }
@@ -339,19 +313,16 @@ export const topic4Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '[1, 2, 2, 3, 1, 4]',
-        expectedOutput: '[1, 2, 3, 4]',
         isHidden: false,
         description: 'Remove duplicate numbers'
       },
       {
         input: '["a", "b", "a", "c"]',
-        expectedOutput: "['a', 'b', 'c']",
         isHidden: false,
         description: 'Remove duplicate strings'
       },
       {
         input: '[1, 1, 1]',
-        expectedOutput: '[1]',
         isHidden: true,
         description: 'All duplicates'
       }
@@ -376,19 +347,16 @@ export const topic4Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '[[1, 2], [3, 4], [5]]',
-        expectedOutput: '[1, 2, 3, 4, 5]',
         isHidden: false,
         description: 'Flatten numbers'
       },
       {
         input: '[["a"], ["b", "c"]]',
-        expectedOutput: "['a', 'b', 'c']",
         isHidden: false,
         description: 'Flatten strings'
       },
       {
         input: '[[], [1], []]',
-        expectedOutput: '[1]',
         isHidden: true,
         description: 'With empty lists'
       }
@@ -412,19 +380,16 @@ export const topic4Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '["a", "b", "c"], [1, 2, 3]',
-        expectedOutput: "{'a': 1, 'b': 2, 'c': 3}",
         isHidden: false,
         description: 'Basic pairing'
       },
       {
         input: '["name", "age"], ["Alice", 30]',
-        expectedOutput: "{'name': 'Alice', 'age': 30}",
         isHidden: false,
         description: 'Mixed types'
       },
       {
         input: '[], []',
-        expectedOutput: '{}',
         isHidden: true,
         description: 'Empty lists'
       }
@@ -448,19 +413,16 @@ export const topic4Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '[1, 2, 3, 4], [3, 4, 5, 6]',
-        expectedOutput: '[3, 4]',
         isHidden: false,
         description: 'Common numbers'
       },
       {
         input: '["a", "b", "c"], ["b", "d"]',
-        expectedOutput: "['b']",
         isHidden: false,
         description: 'Common strings'
       },
       {
         input: '[1, 2], [3, 4]',
-        expectedOutput: '[]',
         isHidden: true,
         description: 'No common elements'
       }
@@ -485,13 +447,11 @@ export const topic4Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '{"Alice": 85, "Bob": 92, "Charlie": 78}',
-        expectedOutput: "[('Bob', 92), ('Alice', 85), ('Charlie', 78)]",
         isHidden: false,
         description: 'Sort scores descending'
       },
       {
         input: '{"a": 1, "b": 2}',
-        expectedOutput: "[('b', 2), ('a', 1)]",
         isHidden: true,
         description: 'Simple sort'
       }
@@ -516,13 +476,11 @@ export const topic4Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '[1, 2, 3, 6, 12, 15, 18, 24]',
-        expectedOutput: '[6, 12, 18, 24]',
         isHidden: false,
         description: 'Filter by divisibility'
       },
       {
         input: '[1, 2, 3, 4, 5]',
-        expectedOutput: '[]',
         isHidden: true,
         description: 'None divisible'
       }
@@ -546,13 +504,11 @@ export const topic4Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '[[1, 2, 3], [4, 5, 6]]',
-        expectedOutput: '[[1, 4], [2, 5], [3, 6]]',
         isHidden: false,
         description: '2x3 to 3x2'
       },
       {
         input: '[[1], [2], [3]]',
-        expectedOutput: '[[1, 2, 3]]',
         isHidden: true,
         description: '3x1 to 1x3'
       }

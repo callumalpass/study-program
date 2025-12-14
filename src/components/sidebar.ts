@@ -65,8 +65,8 @@ function calculateSubjectProgress(
   const completedQuizzes = Object.keys(progress.quizAttempts || {}).length;
   const completedExercises = Object.keys(progress.exerciseCompletions || {}).filter(
     (id) => {
-      const completions = progress.exerciseCompletions[id];
-      return completions && completions.some((c) => c.passed);
+      const completion = progress.exerciseCompletions[id];
+      return completion?.passed;
     }
   ).length;
 

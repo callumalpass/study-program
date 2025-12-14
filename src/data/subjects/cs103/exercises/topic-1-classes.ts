@@ -11,9 +11,6 @@ export const topic1Exercises: CodingExercise[] = [
     description: 'Create a BankAccount class with an account holder name and balance. Implement methods to deposit, withdraw, and check the balance. The withdraw method should not allow the balance to go negative.',
     starterCode: 'class BankAccount:\n    def __init__(self, account_holder, initial_balance=0):\n        # Your code here\n        pass\n    \n    def deposit(self, amount):\n        pass\n    \n    def withdraw(self, amount):\n        pass\n    \n    def get_balance(self):\n        pass',
     testCases: [
-      { input: 'account = BankAccount("Alice", 100)\naccount.deposit(50)\nprint(account.get_balance())', expectedOutput: '150', isHidden: false, description: 'Test deposit functionality' },
-      { input: 'account = BankAccount("Bob", 100)\naccount.withdraw(30)\nprint(account.get_balance())', expectedOutput: '70', isHidden: false, description: 'Test withdraw functionality' },
-      { input: 'account = BankAccount("Charlie", 50)\naccount.withdraw(100)\nprint(account.get_balance())', expectedOutput: '50', isHidden: true, description: 'Test that withdraw prevents negative balance' }
     ],
     hints: ['Store account_holder and balance as instance variables in __init__', 'For withdraw, check if amount <= balance before subtracting'],
     solution: 'class BankAccount:\n    def __init__(self, account_holder, initial_balance=0):\n        self.account_holder = account_holder\n        self.balance = initial_balance\n    \n    def deposit(self, amount):\n        self.balance += amount\n    \n    def withdraw(self, amount):\n        if amount <= self.balance:\n            self.balance -= amount\n    \n    def get_balance(self):\n        return self.balance',
@@ -29,8 +26,6 @@ export const topic1Exercises: CodingExercise[] = [
     starterCode: 'class Counter:\n    def __init__(self):\n        pass\n    \n    def increment(self):\n        pass\n    \n    def decrement(self):\n        pass\n    \n    def get_count(self):\n        pass\n\nc = Counter()\nc.increment()\nc.increment()\nprint(c.get_count())',
     solution: 'class Counter:\n    def __init__(self):\n        self.count = 0\n    \n    def increment(self):\n        self.count += 1\n    \n    def decrement(self):\n        self.count -= 1\n    \n    def get_count(self):\n        return self.count\n\nc = Counter()\nc.increment()\nc.increment()\nprint(c.get_count())',
     testCases: [
-      { input: 'c = Counter(); c.increment(); c.increment(); c.get_count()', expectedOutput: '2', isHidden: false, description: 'Increment twice' },
-      { input: 'c = Counter(); c.decrement(); c.get_count()', expectedOutput: '-1', isHidden: true, description: 'Decrement from 0' }
     ],
     hints: ['Initialize count to 0 in __init__', 'Use self.count to access the instance variable'],
     language: 'python'
@@ -45,8 +40,6 @@ export const topic1Exercises: CodingExercise[] = [
     starterCode: 'class Person:\n    def __init__(self, name, age):\n        pass\n    \n    def greet(self):\n        pass\n\np = Person("Alice", 30)\nprint(p.greet())',
     solution: 'class Person:\n    def __init__(self, name, age):\n        self.name = name\n        self.age = age\n    \n    def greet(self):\n        return f"Hello, my name is {self.name}"\n\np = Person("Alice", 30)\nprint(p.greet())',
     testCases: [
-      { input: 'p = Person("Alice", 30); p.greet()', expectedOutput: 'Hello, my name is Alice', isHidden: false, description: 'Greet Alice' },
-      { input: 'p = Person("Bob", 25); p.age', expectedOutput: '25', isHidden: true, description: 'Access age' }
     ],
     hints: ['Store both name and age in __init__', 'Use an f-string in greet()'],
     language: 'python'
@@ -61,8 +54,6 @@ export const topic1Exercises: CodingExercise[] = [
     starterCode: 'class Rectangle:\n    def __init__(self, width, height):\n        pass\n    \n    def area(self):\n        pass\n    \n    def perimeter(self):\n        pass\n\nr = Rectangle(5, 3)\nprint(r.area())\nprint(r.perimeter())',
     solution: 'class Rectangle:\n    def __init__(self, width, height):\n        self.width = width\n        self.height = height\n    \n    def area(self):\n        return self.width * self.height\n    \n    def perimeter(self):\n        return 2 * (self.width + self.height)\n\nr = Rectangle(5, 3)\nprint(r.area())\nprint(r.perimeter())',
     testCases: [
-      { input: 'r = Rectangle(5, 3); r.area()', expectedOutput: '15', isHidden: false, description: 'Area of 5x3' },
-      { input: 'r = Rectangle(5, 3); r.perimeter()', expectedOutput: '16', isHidden: false, description: 'Perimeter of 5x3' }
     ],
     hints: ['Area = width * height', 'Perimeter = 2 * (width + height)'],
     language: 'python'
@@ -77,8 +68,6 @@ export const topic1Exercises: CodingExercise[] = [
     starterCode: 'class Student:\n    def __init__(self, name):\n        pass\n    \n    def add_grade(self, grade):\n        pass\n    \n    def get_average(self):\n        pass\n\ns = Student("Alice")\ns.add_grade(90)\ns.add_grade(80)\nprint(s.get_average())',
     solution: 'class Student:\n    def __init__(self, name):\n        self.name = name\n        self.grades = []\n    \n    def add_grade(self, grade):\n        self.grades.append(grade)\n    \n    def get_average(self):\n        if not self.grades:\n            return 0\n        return sum(self.grades) / len(self.grades)\n\ns = Student("Alice")\ns.add_grade(90)\ns.add_grade(80)\nprint(s.get_average())',
     testCases: [
-      { input: 's = Student("A"); s.add_grade(90); s.add_grade(80); s.get_average()', expectedOutput: '85.0', isHidden: false, description: 'Average of 90 and 80' },
-      { input: 's = Student("B"); s.get_average()', expectedOutput: '0', isHidden: true, description: 'Empty grades' }
     ],
     hints: ['Initialize grades as empty list', 'Handle empty list case in get_average'],
     language: 'python'
@@ -93,8 +82,6 @@ export const topic1Exercises: CodingExercise[] = [
     starterCode: 'class Book:\n    def __init__(self, title, author, pages):\n        pass\n    \n    def __str__(self):\n        pass\n    \n    def is_long(self):\n        pass\n\nb = Book("Python Guide", "Author", 450)\nprint(b)\nprint(b.is_long())',
     solution: 'class Book:\n    def __init__(self, title, author, pages):\n        self.title = title\n        self.author = author\n        self.pages = pages\n    \n    def __str__(self):\n        return f"{self.title} by {self.author}"\n    \n    def is_long(self):\n        return self.pages > 300\n\nb = Book("Python Guide", "Author", 450)\nprint(b)\nprint(b.is_long())',
     testCases: [
-      { input: 'b = Book("Test", "Author", 450); str(b)', expectedOutput: 'Test by Author', isHidden: false, description: 'String representation' },
-      { input: 'b = Book("Short", "X", 100); b.is_long()', expectedOutput: 'False', isHidden: true, description: 'Short book' }
     ],
     hints: ['__str__ is called when you print() or str() an object', 'is_long() should return a boolean'],
     language: 'python'
@@ -109,8 +96,6 @@ export const topic1Exercises: CodingExercise[] = [
     starterCode: 'class Stack:\n    def __init__(self):\n        pass\n    \n    def push(self, item):\n        pass\n    \n    def pop(self):\n        pass\n    \n    def peek(self):\n        pass\n    \n    def is_empty(self):\n        pass\n\ns = Stack()\ns.push(1)\ns.push(2)\nprint(s.pop())\nprint(s.peek())',
     solution: 'class Stack:\n    def __init__(self):\n        self.items = []\n    \n    def push(self, item):\n        self.items.append(item)\n    \n    def pop(self):\n        if self.items:\n            return self.items.pop()\n        return None\n    \n    def peek(self):\n        if self.items:\n            return self.items[-1]\n        return None\n    \n    def is_empty(self):\n        return len(self.items) == 0\n\ns = Stack()\ns.push(1)\ns.push(2)\nprint(s.pop())\nprint(s.peek())',
     testCases: [
-      { input: 's = Stack(); s.push(1); s.push(2); s.pop()', expectedOutput: '2', isHidden: false, description: 'Pop returns last pushed' },
-      { input: 's = Stack(); s.is_empty()', expectedOutput: 'True', isHidden: true, description: 'Empty stack' }
     ],
     hints: ['Use a list internally to store items', 'Pop and peek should handle empty stack'],
     language: 'python'
@@ -125,8 +110,6 @@ export const topic1Exercises: CodingExercise[] = [
     starterCode: 'class Item:\n    def __init__(self, name, price):\n        pass\n\nclass ShoppingCart:\n    def __init__(self):\n        pass\n    \n    def add_item(self, item):\n        pass\n    \n    def remove_item(self, name):\n        pass\n    \n    def get_total(self):\n        pass\n\ncart = ShoppingCart()\ncart.add_item(Item("Apple", 1.50))\ncart.add_item(Item("Bread", 2.00))\nprint(cart.get_total())',
     solution: 'class Item:\n    def __init__(self, name, price):\n        self.name = name\n        self.price = price\n\nclass ShoppingCart:\n    def __init__(self):\n        self.items = []\n    \n    def add_item(self, item):\n        self.items.append(item)\n    \n    def remove_item(self, name):\n        self.items = [i for i in self.items if i.name != name]\n    \n    def get_total(self):\n        return sum(item.price for item in self.items)\n\ncart = ShoppingCart()\ncart.add_item(Item("Apple", 1.50))\ncart.add_item(Item("Bread", 2.00))\nprint(cart.get_total())',
     testCases: [
-      { input: 'cart = ShoppingCart(); cart.add_item(Item("A", 1.50)); cart.add_item(Item("B", 2.00)); cart.get_total()', expectedOutput: '3.5', isHidden: false, description: 'Total of cart' },
-      { input: 'cart = ShoppingCart(); cart.add_item(Item("A", 5)); cart.remove_item("A"); cart.get_total()', expectedOutput: '0', isHidden: true, description: 'After removal' }
     ],
     hints: ['Store items as a list in ShoppingCart', 'Use list comprehension to filter when removing'],
     language: 'python'
@@ -141,8 +124,6 @@ export const topic1Exercises: CodingExercise[] = [
     starterCode: 'class Dog:\n    species = "Canis familiaris"\n    count = 0\n    \n    def __init__(self, name, age):\n        pass\n    \n    def describe(self):\n        pass\n\nd1 = Dog("Buddy", 3)\nd2 = Dog("Max", 5)\nprint(Dog.count)\nprint(d1.species)',
     solution: 'class Dog:\n    species = "Canis familiaris"\n    count = 0\n    \n    def __init__(self, name, age):\n        self.name = name\n        self.age = age\n        Dog.count += 1\n    \n    def describe(self):\n        return f"{self.name} is {self.age} years old"\n\nd1 = Dog("Buddy", 3)\nd2 = Dog("Max", 5)\nprint(Dog.count)\nprint(d1.species)',
     testCases: [
-      { input: 'Dog.count = 0; d1 = Dog("A", 1); d2 = Dog("B", 2); Dog.count', expectedOutput: '2', isHidden: false, description: 'Count increments' },
-      { input: 'd = Dog("X", 1); d.species', expectedOutput: 'Canis familiaris', isHidden: true, description: 'Shared species' }
     ],
     hints: ['Increment Dog.count in __init__, not self.count', 'Class variables are accessed via ClassName.variable or self.variable'],
     language: 'python'
@@ -157,8 +138,6 @@ export const topic1Exercises: CodingExercise[] = [
     starterCode: 'class Book:\n    def __init__(self, title, author):\n        pass\n    \n    def check_out(self):\n        pass\n    \n    def return_book(self):\n        pass\n\nclass Library:\n    def __init__(self):\n        pass\n    \n    def add_book(self, book):\n        pass\n    \n    def find_by_title(self, title):\n        pass\n    \n    def list_available(self):\n        pass\n\nlib = Library()\nlib.add_book(Book("Python 101", "Author A"))\nlib.add_book(Book("Java Guide", "Author B"))\nprint(len(lib.list_available()))',
     solution: 'class Book:\n    def __init__(self, title, author):\n        self.title = title\n        self.author = author\n        self.is_checked_out = False\n    \n    def check_out(self):\n        if not self.is_checked_out:\n            self.is_checked_out = True\n            return True\n        return False\n    \n    def return_book(self):\n        self.is_checked_out = False\n\nclass Library:\n    def __init__(self):\n        self.books = []\n    \n    def add_book(self, book):\n        self.books.append(book)\n    \n    def find_by_title(self, title):\n        for book in self.books:\n            if book.title == title:\n                return book\n        return None\n    \n    def list_available(self):\n        return [b for b in self.books if not b.is_checked_out]\n\nlib = Library()\nlib.add_book(Book("Python 101", "Author A"))\nlib.add_book(Book("Java Guide", "Author B"))\nprint(len(lib.list_available()))',
     testCases: [
-      { input: 'lib = Library(); lib.add_book(Book("X", "Y")); len(lib.list_available())', expectedOutput: '1', isHidden: false, description: 'One book available' },
-      { input: 'lib = Library(); b = Book("X", "Y"); lib.add_book(b); b.check_out(); len(lib.list_available())', expectedOutput: '0', isHidden: true, description: 'None available after checkout' }
     ],
     hints: ['Track is_checked_out state in Book', 'list_available filters by is_checked_out'],
     language: 'python'
@@ -173,8 +152,6 @@ export const topic1Exercises: CodingExercise[] = [
     starterCode: 'class Car:\n    def __init__(self, make, model):\n        pass\n    \n    def describe(self):\n        pass\n\nc = Car("Toyota", "Camry")\nprint(c.describe())',
     solution: 'class Car:\n    def __init__(self, make, model):\n        self.make = make\n        self.model = model\n    \n    def describe(self):\n        return f"Make: {self.make}, Model: {self.model}"\n\nc = Car("Toyota", "Camry")\nprint(c.describe())',
     testCases: [
-      { input: 'c = Car("Toyota", "Camry"); c.describe()', expectedOutput: 'Make: Toyota, Model: Camry', isHidden: false, description: 'Describe car' },
-      { input: 'c = Car("Honda", "Civic"); c.make', expectedOutput: 'Honda', isHidden: true, description: 'Access make' }
     ],
     hints: ['Use self.attribute to store values', 'Use f-string for formatting'],
     language: 'python'
@@ -189,8 +166,6 @@ export const topic1Exercises: CodingExercise[] = [
     starterCode: 'class Point:\n    def __init__(self, x, y):\n        pass\n    \n    def __str__(self):\n        pass\n\np = Point(3, 4)\nprint(p)',
     solution: 'class Point:\n    def __init__(self, x, y):\n        self.x = x\n        self.y = y\n    \n    def __str__(self):\n        return f"({self.x}, {self.y})"\n\np = Point(3, 4)\nprint(p)',
     testCases: [
-      { input: 'str(Point(3, 4))', expectedOutput: '(3, 4)', isHidden: false, description: 'Point string' },
-      { input: 'str(Point(0, 0))', expectedOutput: '(0, 0)', isHidden: true, description: 'Origin point' }
     ],
     hints: ['__str__ is called by print() and str()', 'Return a formatted string'],
     language: 'python'

@@ -195,8 +195,8 @@ function calculateSubjectCompletion(subject: Subject, progress: any): number {
 
     topic.exerciseIds.forEach(exerciseId => {
       totalItems++;
-      const completions = progress.exerciseCompletions[exerciseId];
-      if (completions && completions.some((c: any) => c.passed)) completedItems++;
+      const completion = progress.exerciseCompletions[exerciseId];
+      if (completion?.passed) completedItems++;
     });
   });
 

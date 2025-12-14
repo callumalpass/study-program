@@ -173,8 +173,8 @@ function renderTopicItem(topic: Topic, number: number, subjectId: string, userPr
   }).length;
 
   const exercisesCompleted = topic.exerciseIds.filter(exerciseId => {
-    const completions = progress?.exerciseCompletions[exerciseId];
-    return completions && completions.some((c: any) => c.passed);
+    const completion = progress?.exerciseCompletions[exerciseId];
+    return completion?.passed;
   }).length;
 
   const totalAssessments = topic.quizIds.length + topic.exerciseIds.length;
@@ -301,8 +301,8 @@ function renderTopicView(
             }).join('')}
 
             ${topic.exerciseIds.map((exerciseId, index) => {
-              const completions = progress?.exerciseCompletions[exerciseId] || [];
-              const passed = completions.some((c: any) => c.passed);
+              const completion = progress?.exerciseCompletions[exerciseId];
+              const passed = completion?.passed;
 
               return `
                 <div class="assessment-item ${passed ? 'passed' : ''}">
@@ -312,7 +312,7 @@ function renderTopicView(
                     ${passed ? `<span class="assessment-score passed">${Icons.Check}</span>` : ''}
                   </div>
                   <button class="btn btn-primary btn-sm" data-exercise-id="${exerciseId}">
-                    ${completions.length > 0 ? 'Retry' : 'Start'}
+                    ${completion ? 'Continue' : 'Start'}
                   </button>
                 </div>
               `;

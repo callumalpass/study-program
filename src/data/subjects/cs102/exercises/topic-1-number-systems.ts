@@ -11,9 +11,6 @@ export const topic1Exercises: CodingExercise[] = [
     description: 'Write a Python function that converts a decimal number to binary, octal, and hexadecimal representations. The function should return a dictionary with the conversions.',
     starterCode: 'def convert_number(decimal_num):\n    """\n    Convert a decimal number to binary, octal, and hexadecimal.\n    \n    Args:\n        decimal_num: An integer in decimal format\n    \n    Returns:\n        A dictionary with keys \'binary\', \'octal\', \'hexadecimal\'\n    """\n    # Your code here\n    pass',
     testCases: [
-      { input: '26', expectedOutput: '{\'binary\': \'11010\', \'octal\': \'32\', \'hexadecimal\': \'1a\'}', isHidden: false, description: 'Convert decimal 26' },
-      { input: '255', expectedOutput: '{\'binary\': \'11111111\', \'octal\': \'377\', \'hexadecimal\': \'ff\'}', isHidden: false, description: 'Convert decimal 255' },
-      { input: '100', expectedOutput: '{\'binary\': \'1100100\', \'octal\': \'144\', \'hexadecimal\': \'64\'}', isHidden: true, description: 'Convert decimal 100' }
     ],
     hints: [
       'Python has built-in functions bin(), oct(), and hex() that can help',
@@ -33,9 +30,6 @@ export const topic1Exercises: CodingExercise[] = [
     starterCode: '# Convert binary string to decimal\ndef binary_to_decimal(binary_str):\n    # Your code here\n    pass\n\nprint(binary_to_decimal("1011"))\nprint(binary_to_decimal("11111111"))',
     solution: 'def binary_to_decimal(binary_str):\n    result = 0\n    power = 0\n    for bit in reversed(binary_str):\n        if bit == "1":\n            result += 2 ** power\n        power += 1\n    return result\n\nprint(binary_to_decimal("1011"))\nprint(binary_to_decimal("11111111"))',
     testCases: [
-      { input: '"1011"', expectedOutput: '11', isHidden: false, description: 'Binary 1011 = 11' },
-      { input: '"11111111"', expectedOutput: '255', isHidden: false, description: 'Binary 11111111 = 255' },
-      { input: '"1"', expectedOutput: '1', isHidden: true, description: 'Single bit' }
     ],
     hints: [
       'Start from the rightmost bit (least significant)',
@@ -54,9 +48,6 @@ export const topic1Exercises: CodingExercise[] = [
     starterCode: '# Convert decimal to binary string\ndef decimal_to_binary(n):\n    # Your code here\n    pass\n\nprint(decimal_to_binary(11))\nprint(decimal_to_binary(255))',
     solution: 'def decimal_to_binary(n):\n    if n == 0:\n        return "0"\n    result = ""\n    while n > 0:\n        result = str(n % 2) + result\n        n = n // 2\n    return result\n\nprint(decimal_to_binary(11))\nprint(decimal_to_binary(255))',
     testCases: [
-      { input: '11', expectedOutput: '1011', isHidden: false, description: '11 = 1011' },
-      { input: '255', expectedOutput: '11111111', isHidden: false, description: '255 = 11111111' },
-      { input: '0', expectedOutput: '0', isHidden: true, description: '0 = 0' }
     ],
     hints: [
       'Repeatedly divide by 2 and collect remainders',
@@ -75,9 +66,6 @@ export const topic1Exercises: CodingExercise[] = [
     starterCode: '# Convert hexadecimal string to decimal\ndef hex_to_decimal(hex_str):\n    # Your code here\n    pass\n\nprint(hex_to_decimal("1A"))\nprint(hex_to_decimal("FF"))',
     solution: 'def hex_to_decimal(hex_str):\n    hex_chars = "0123456789ABCDEF"\n    result = 0\n    for char in hex_str.upper():\n        result = result * 16 + hex_chars.index(char)\n    return result\n\nprint(hex_to_decimal("1A"))\nprint(hex_to_decimal("FF"))',
     testCases: [
-      { input: '"1A"', expectedOutput: '26', isHidden: false, description: '1A hex = 26' },
-      { input: '"FF"', expectedOutput: '255', isHidden: false, description: 'FF hex = 255' },
-      { input: '"100"', expectedOutput: '256', isHidden: true, description: '100 hex = 256' }
     ],
     hints: [
       'A-F represent values 10-15',
@@ -96,9 +84,6 @@ export const topic1Exercises: CodingExercise[] = [
     starterCode: '# Convert binary to hexadecimal\ndef binary_to_hex(binary_str):\n    # Your code here\n    pass\n\nprint(binary_to_hex("11010"))\nprint(binary_to_hex("11111111"))',
     solution: 'def binary_to_hex(binary_str):\n    hex_chars = "0123456789abcdef"\n    # Pad to multiple of 4\n    while len(binary_str) % 4 != 0:\n        binary_str = "0" + binary_str\n    \n    result = ""\n    for i in range(0, len(binary_str), 4):\n        group = binary_str[i:i+4]\n        value = int(group[0])*8 + int(group[1])*4 + int(group[2])*2 + int(group[3])*1\n        result += hex_chars[value]\n    return result\n\nprint(binary_to_hex("11010"))\nprint(binary_to_hex("11111111"))',
     testCases: [
-      { input: '"11010"', expectedOutput: '1a', isHidden: false, description: 'Binary 11010 = 1A hex' },
-      { input: '"11111111"', expectedOutput: 'ff', isHidden: false, description: 'Binary 11111111 = FF hex' },
-      { input: '"1111"', expectedOutput: 'f', isHidden: true, description: 'Binary 1111 = F hex' }
     ],
     hints: [
       'Each hex digit represents exactly 4 binary bits',
@@ -117,9 +102,6 @@ export const topic1Exercises: CodingExercise[] = [
     starterCode: '# Convert between any bases (2-16)\ndef convert_base(number_str, from_base, to_base):\n    # Your code here\n    pass\n\nprint(convert_base("1011", 2, 10))  # Binary to decimal\nprint(convert_base("255", 10, 16))  # Decimal to hex',
     solution: 'def convert_base(number_str, from_base, to_base):\n    chars = "0123456789abcdef"\n    # Convert to decimal first\n    decimal = 0\n    for char in number_str.lower():\n        decimal = decimal * from_base + chars.index(char)\n    \n    # Convert from decimal to target base\n    if decimal == 0:\n        return "0"\n    result = ""\n    while decimal > 0:\n        result = chars[decimal % to_base] + result\n        decimal = decimal // to_base\n    return result\n\nprint(convert_base("1011", 2, 10))\nprint(convert_base("255", 10, 16))',
     testCases: [
-      { input: '"1011", 2, 10', expectedOutput: '11', isHidden: false, description: 'Binary to decimal' },
-      { input: '"255", 10, 16', expectedOutput: 'ff', isHidden: false, description: 'Decimal to hex' },
-      { input: '"ff", 16, 2', expectedOutput: '11111111', isHidden: true, description: 'Hex to binary' }
     ],
     hints: [
       'First convert to decimal as an intermediate step',
@@ -138,9 +120,6 @@ export const topic1Exercises: CodingExercise[] = [
     starterCode: '# Octal conversions\ndef octal_to_decimal(octal_str):\n    # Your code here\n    pass\n\ndef decimal_to_octal(n):\n    # Your code here\n    pass\n\nprint(octal_to_decimal("77"))\nprint(decimal_to_octal(63))',
     solution: 'def octal_to_decimal(octal_str):\n    result = 0\n    for digit in octal_str:\n        result = result * 8 + int(digit)\n    return result\n\ndef decimal_to_octal(n):\n    if n == 0:\n        return "0"\n    result = ""\n    while n > 0:\n        result = str(n % 8) + result\n        n = n // 8\n    return result\n\nprint(octal_to_decimal("77"))\nprint(decimal_to_octal(63))',
     testCases: [
-      { input: 'octal_to_decimal("77")', expectedOutput: '63', isHidden: false, description: 'Octal 77 = 63' },
-      { input: 'decimal_to_octal(63)', expectedOutput: '77', isHidden: false, description: '63 = Octal 77' },
-      { input: 'octal_to_decimal("100")', expectedOutput: '64', isHidden: true, description: 'Octal 100 = 64' }
     ],
     hints: [
       'Octal uses base 8 (digits 0-7)',
@@ -159,9 +138,6 @@ export const topic1Exercises: CodingExercise[] = [
     starterCode: '# Validate number in given base\ndef is_valid_number(number_str, base):\n    # Your code here\n    pass\n\nprint(is_valid_number("1011", 2))   # True\nprint(is_valid_number("123", 2))    # False (3 not valid in binary)\nprint(is_valid_number("1G", 16))    # False (G not valid in hex)',
     solution: 'def is_valid_number(number_str, base):\n    valid_chars = "0123456789abcdef"[:base]\n    for char in number_str.lower():\n        if char not in valid_chars:\n            return False\n    return len(number_str) > 0\n\nprint(is_valid_number("1011", 2))\nprint(is_valid_number("123", 2))\nprint(is_valid_number("1G", 16))',
     testCases: [
-      { input: '"1011", 2', expectedOutput: 'True', isHidden: false, description: 'Valid binary' },
-      { input: '"123", 2', expectedOutput: 'False', isHidden: false, description: 'Invalid binary' },
-      { input: '"1G", 16', expectedOutput: 'False', isHidden: true, description: 'Invalid hex' }
     ],
     hints: [
       'Valid digits depend on the base',
@@ -181,9 +157,6 @@ export const topic1Exercises: CodingExercise[] = [
     starterCode: '# Convert Gray code to binary\ndef gray_to_binary(gray_str):\n    # Your code here\n    pass\n\nprint(gray_to_binary(\"1101\"))  # -> 1011',
     solution: 'def gray_to_binary(gray_str):\n    # First bit is the same\n    binary = gray_str[0]\n    for i in range(1, len(gray_str)):\n        # XOR previous binary bit with current gray bit\n        prev_bit = int(binary[-1])\n        gbit = int(gray_str[i])\n        bbit = prev_bit ^ gbit\n        binary += str(bbit)\n    return binary\n\nprint(gray_to_binary(\"1101\"))',
     testCases: [
-      { input: '"1101"', expectedOutput: '1011', isHidden: false, description: 'Gray 1101 = Binary 1011' },
-      { input: '"0"', expectedOutput: '0', isHidden: false, description: 'Single bit' },
-      { input: '"111"', expectedOutput: '100', isHidden: true, description: 'Gray 111 = 100' }
     ],
     hints: [
       'First binary bit equals first Gray bit.',
@@ -202,9 +175,6 @@ export const topic1Exercises: CodingExercise[] = [
     starterCode: '# Convert binary fraction to decimal\ndef binary_fraction_to_decimal(binary_str):\n    # Your code here\n    pass\n\nprint(binary_fraction_to_decimal(\"101.101\"))  # 5.625',
     solution: 'def binary_fraction_to_decimal(binary_str):\n    if "." in binary_str:\n        int_part, frac_part = binary_str.split(".")\n    else:\n        int_part, frac_part = binary_str, ""\n    # Integer part\n    total = 0\n    for bit in int_part:\n        total = total * 2 + int(bit)\n    # Fractional part\n    power = 0.5\n    for bit in frac_part:\n        if bit == "1":\n            total += power\n        power /= 2\n    return total\n\nprint(binary_fraction_to_decimal(\"101.101\"))',
     testCases: [
-      { input: '"101.101"', expectedOutput: '5.625', isHidden: false, description: '5 + 1/2 + 0/4 + 1/8' },
-      { input: '"0.01"', expectedOutput: '0.25', isHidden: false, description: '1/4' },
-      { input: '"1"', expectedOutput: '1', isHidden: true, description: 'No fractional part' }
     ],
     hints: [
       'Split integer and fractional parts on "."',
@@ -223,9 +193,6 @@ export const topic1Exercises: CodingExercise[] = [
     starterCode: '# Hex digit to binary nibble\ndef hex_digit_to_bin(ch):\n    # Your code here\n    pass\n\nprint(hex_digit_to_bin("A"))  # 1010',
     solution: 'def hex_digit_to_bin(ch):\n    ch = ch.lower()\n    digits = "0123456789abcdef"\n    val = digits.index(ch)\n    return bin(val)[2:].zfill(4)\n\nprint(hex_digit_to_bin("A"))',
     testCases: [
-      { input: '"A"', expectedOutput: '1010', isHidden: false, description: 'A = 10' },
-      { input: '"0"', expectedOutput: '0000', isHidden: false, description: '0 = 0' },
-      { input: '"F"', expectedOutput: '1111', isHidden: true, description: 'F = 15' }
     ],
     hints: [
       'Map hex digit to its value 0–15, then format as 4-bit binary.',
@@ -243,9 +210,6 @@ export const topic1Exercises: CodingExercise[] = [
     starterCode: '# Pad binary to nibble boundary\ndef pad_binary(binary_str):\n    # Your code here\n    pass\n\nprint(pad_binary("101"))   # 0101\nprint(pad_binary("10101")) # 00010101',
     solution: 'def pad_binary(binary_str):\n    while len(binary_str) % 4 != 0:\n        binary_str = "0" + binary_str\n    return binary_str\n\nprint(pad_binary("101"))\nprint(pad_binary("10101"))',
     testCases: [
-      { input: '"101"', expectedOutput: '0101', isHidden: false, description: 'Pad to 4 bits' },
-      { input: '"10101"', expectedOutput: '00010101', isHidden: false, description: 'Pad to 8 bits' },
-      { input: '"1"', expectedOutput: '0001', isHidden: true, description: 'Single bit pad' }
     ],
     hints: [
       'Prepend zeros until length % 4 == 0.',

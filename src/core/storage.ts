@@ -190,7 +190,7 @@ export class ProgressStorage {
   }
 
   /**
-   * Add an exercise completion
+   * Save an exercise completion (keeps best attempt based on passed status and test cases)
    */
   addExerciseCompletion(subjectId: string, exerciseId: string, completion: ExerciseCompletion): void {
     if (!this.progress.subjects[subjectId]) {
@@ -198,27 +198,43 @@ export class ProgressStorage {
     }
 
     const subjectProgress = this.progress.subjects[subjectId];
-    if (!subjectProgress.exerciseCompletions[exerciseId]) {
-      subjectProgress.exerciseCompletions[exerciseId] = [];
+    const existing = subjectProgress.exerciseCompletions[exerciseId];
+
+    // Determine if new completion is better than existing
+    const shouldReplace = !existing ||
+      // New is passed, old wasn't
+      (completion.passed && !existing.passed) ||
+      // Both passed/failed, but new has more test cases passed
+      (completion.passed === existing.passed &&
+       (completion.passedTestCases ?? 0) > (existing.passedTestCases ?? 0)) ||
+      // For written exercises: always update if new has content
+      (completion.type === 'written' && completion.code.trim().length > 0);
+
+    if (shouldReplace) {
+      // Accumulate total time spent
+      const totalTime = (existing?.timeSpentSeconds ?? 0) + completion.timeSpentSeconds;
+      subjectProgress.exerciseCompletions[exerciseId] = {
+        ...completion,
+        timeSpentSeconds: totalTime,
+      };
     }
 
-    subjectProgress.exerciseCompletions[exerciseId].push(completion);
     this.save();
   }
 
   /**
-   * Get all completions for a specific exercise
+   * Get completion for a specific exercise
    */
-  getExerciseCompletions(subjectId: string, exerciseId: string): ExerciseCompletion[] {
-    return this.progress.subjects[subjectId]?.exerciseCompletions[exerciseId] || [];
+  getExerciseCompletion(subjectId: string, exerciseId: string): ExerciseCompletion | undefined {
+    return this.progress.subjects[subjectId]?.exerciseCompletions[exerciseId];
   }
 
   /**
    * Check if an exercise has been passed
    */
   isExercisePassed(subjectId: string, exerciseId: string): boolean {
-    const completions = this.getExerciseCompletions(subjectId, exerciseId);
-    return completions.some(c => c.passed);
+    const completion = this.getExerciseCompletion(subjectId, exerciseId);
+    return completion?.passed ?? false;
   }
 
   /**

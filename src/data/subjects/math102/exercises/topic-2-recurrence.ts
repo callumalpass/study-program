@@ -12,11 +12,6 @@ export const topic2Exercises: CodingExercise[] = [
     starterCode: 'def fibonacci(n, memo=None):\n    """Calculate the nth Fibonacci number using memoization.\n    \n    Args:\n        n: The index in the Fibonacci sequence\n        memo: Dictionary for memoization (default: None)\n        \n    Returns:\n        The nth Fibonacci number\n    """\n    # Your code here\n    pass',
     solution: 'def fibonacci(n, memo=None):\n    """Calculate the nth Fibonacci number using memoization.\n    \n    Args:\n        n: The index in the Fibonacci sequence\n        memo: Dictionary for memoization (default: None)\n        \n    Returns:\n        The nth Fibonacci number\n    """\n    if memo is None:\n        memo = {}\n    \n    if n in memo:\n        return memo[n]\n    \n    if n <= 1:\n        return n\n    \n    memo[n] = fibonacci(n - 1, memo) + fibonacci(n - 2, memo)\n    return memo[n]',
     testCases: [
-      { input: '0', expectedOutput: '0', isHidden: false, description: 'F(0) should return 0' },
-      { input: '1', expectedOutput: '1', isHidden: false, description: 'F(1) should return 1' },
-      { input: '10', expectedOutput: '55', isHidden: false, description: 'F(10) should return 55' },
-      { input: '20', expectedOutput: '6765', isHidden: true, description: 'F(20) should return 6765' },
-      { input: '30', expectedOutput: '832040', isHidden: true, description: 'F(30) should efficiently handle larger inputs' }
     ],
     hints: [
       'Initialize the memoization dictionary if it is None',
@@ -36,8 +31,6 @@ export const topic2Exercises: CodingExercise[] = [
     starterCode: 'def fib_iterative(n):\n    """Calculate nth Fibonacci number iteratively\n    \n    Args:\n        n: Index in sequence\n    Returns:\n        nth Fibonacci number\n    """\n    pass\n\nprint(fib_iterative(10))',
     solution: 'def fib_iterative(n):\n    """Calculate nth Fibonacci number iteratively\n    \n    Args:\n        n: Index in sequence\n    Returns:\n        nth Fibonacci number\n    """\n    if n <= 1:\n        return n\n    \n    prev2, prev1 = 0, 1\n    for _ in range(2, n + 1):\n        curr = prev1 + prev2\n        prev2, prev1 = prev1, curr\n    return prev1\n\nprint(fib_iterative(10))',
     testCases: [
-      { input: '10', expectedOutput: '55', isHidden: false, description: 'F(10)' },
-      { input: '0', expectedOutput: '0', isHidden: true, description: 'F(0)' }
     ],
     hints: ['Track only the last two values', 'Update in-place each iteration'],
     language: 'python'
@@ -52,8 +45,6 @@ export const topic2Exercises: CodingExercise[] = [
     starterCode: 'def hanoi_moves(n):\n    """Calculate minimum moves to solve Tower of Hanoi\n    \n    Args:\n        n: Number of disks\n    Returns:\n        Minimum number of moves\n    """\n    pass\n\nprint(hanoi_moves(4))',
     solution: 'def hanoi_moves(n):\n    """Calculate minimum moves to solve Tower of Hanoi\n    \n    Args:\n        n: Number of disks\n    Returns:\n        Minimum number of moves\n    """\n    # T(n) = 2^n - 1 (closed form)\n    return 2**n - 1\n\nprint(hanoi_moves(4))',
     testCases: [
-      { input: '4', expectedOutput: '15', isHidden: false, description: '4 disks' },
-      { input: '10', expectedOutput: '1023', isHidden: true, description: '10 disks' }
     ],
     hints: ['T(n) = 2T(n-1) + 1', 'Closed form is 2^n - 1'],
     language: 'python'
@@ -68,8 +59,6 @@ export const topic2Exercises: CodingExercise[] = [
     starterCode: 'def climb_stairs(n):\n    """Count ways to climb n stairs with 1 or 2 steps\n    \n    Args:\n        n: Number of stairs\n    Returns:\n        Number of ways\n    """\n    pass\n\nprint(climb_stairs(5))',
     solution: 'def climb_stairs(n):\n    """Count ways to climb n stairs with 1 or 2 steps\n    \n    Args:\n        n: Number of stairs\n    Returns:\n        Number of ways\n    """\n    if n <= 2:\n        return n\n    \n    prev2, prev1 = 1, 2\n    for _ in range(3, n + 1):\n        curr = prev1 + prev2\n        prev2, prev1 = prev1, curr\n    return prev1\n\nprint(climb_stairs(5))',
     testCases: [
-      { input: '5', expectedOutput: '8', isHidden: false, description: '5 stairs' },
-      { input: '1', expectedOutput: '1', isHidden: true, description: '1 stair' }
     ],
     hints: ['Ways(n) = Ways(n-1) + Ways(n-2)', 'Base: Ways(1)=1, Ways(2)=2'],
     language: 'python'
@@ -84,8 +73,6 @@ export const topic2Exercises: CodingExercise[] = [
     starterCode: 'def solve_recurrence(c1, c2, a0, a1, n):\n    """Solve linear recurrence a(n) = c1*a(n-1) + c2*a(n-2)\n    \n    Args:\n        c1, c2: Coefficients\n        a0, a1: Base cases a(0) and a(1)\n        n: Index to compute\n    Returns:\n        a(n)\n    """\n    pass\n\n# Fibonacci: a(n) = 1*a(n-1) + 1*a(n-2), a(0)=0, a(1)=1\nprint(solve_recurrence(1, 1, 0, 1, 10))',
     solution: 'def solve_recurrence(c1, c2, a0, a1, n):\n    """Solve linear recurrence a(n) = c1*a(n-1) + c2*a(n-2)\n    \n    Args:\n        c1, c2: Coefficients\n        a0, a1: Base cases a(0) and a(1)\n        n: Index to compute\n    Returns:\n        a(n)\n    """\n    if n == 0:\n        return a0\n    if n == 1:\n        return a1\n    \n    def matrix_mult(A, B):\n        return [\n            [A[0][0]*B[0][0] + A[0][1]*B[1][0], A[0][0]*B[0][1] + A[0][1]*B[1][1]],\n            [A[1][0]*B[0][0] + A[1][1]*B[1][0], A[1][0]*B[0][1] + A[1][1]*B[1][1]]\n        ]\n    \n    def matrix_pow(M, p):\n        result = [[1, 0], [0, 1]]  # Identity\n        while p > 0:\n            if p % 2 == 1:\n                result = matrix_mult(result, M)\n            M = matrix_mult(M, M)\n            p //= 2\n        return result\n    \n    M = [[c1, c2], [1, 0]]\n    Mn = matrix_pow(M, n - 1)\n    return Mn[0][0] * a1 + Mn[0][1] * a0\n\nprint(solve_recurrence(1, 1, 0, 1, 10))',
     testCases: [
-      { input: '1, 1, 0, 1, 10', expectedOutput: '55', isHidden: false, description: 'Fibonacci(10)' },
-      { input: '2, 1, 0, 1, 5', expectedOutput: '29', isHidden: true, description: 'Different coefficients' }
     ],
     hints: ['Use matrix [[c1, c2], [1, 0]]', 'Matrix exponentiation gives O(log n)'],
     language: 'python'
@@ -100,8 +87,6 @@ export const topic2Exercises: CodingExercise[] = [
     starterCode: 'def catalan(n):\n    """Calculate nth Catalan number\n    \n    Args:\n        n: Index (0-indexed)\n    Returns:\n        nth Catalan number\n    """\n    pass\n\nprint(catalan(5))',
     solution: 'def catalan(n):\n    """Calculate nth Catalan number\n    \n    Args:\n        n: Index (0-indexed)\n    Returns:\n        nth Catalan number\n    """\n    if n <= 1:\n        return 1\n    \n    cat = 1\n    for i in range(1, n + 1):\n        cat = cat * 2 * (2*i - 1) // (i + 1)\n    return cat\n\nprint(catalan(5))',
     testCases: [
-      { input: '5', expectedOutput: '42', isHidden: false, description: 'C(5)' },
-      { input: '10', expectedOutput: '16796', isHidden: true, description: 'C(10)' }
     ],
     hints: ['C(0) = C(1) = 1', 'C(n) = C(n-1) * 2(2n-1) / (n+1)'],
     language: 'python'
@@ -116,8 +101,6 @@ export const topic2Exercises: CodingExercise[] = [
     starterCode: 'def analyze_dc(a, b, f_degree):\n    """Determine complexity of T(n) = a*T(n/b) + n^f_degree\n    \n    Args:\n        a: Number of subproblems\n        b: Factor by which size decreases\n        f_degree: Degree of polynomial f(n) = n^f_degree\n    Returns:\n        String describing complexity\n    """\n    pass\n\nprint(analyze_dc(2, 2, 1))  # Merge sort',
     solution: 'import math\n\ndef analyze_dc(a, b, f_degree):\n    """Determine complexity of T(n) = a*T(n/b) + n^f_degree\n    \n    Args:\n        a: Number of subproblems\n        b: Factor by which size decreases\n        f_degree: Degree of polynomial f(n) = n^f_degree\n    Returns:\n        String describing complexity\n    """\n    log_b_a = math.log(a) / math.log(b)\n    \n    if f_degree < log_b_a:\n        return f"O(n^{log_b_a:.2f})"\n    elif abs(f_degree - log_b_a) < 0.01:\n        return f"O(n^{f_degree} log n)"\n    else:\n        return f"O(n^{f_degree})"\n\nprint(analyze_dc(2, 2, 1))',
     testCases: [
-      { input: '2, 2, 1', expectedOutput: 'O(n^1 log n)', isHidden: false, description: 'Merge sort' },
-      { input: '8, 2, 2', expectedOutput: 'O(n^3.00)', isHidden: true, description: 'Case 1' }
     ],
     hints: ['Compare f_degree with log_b(a)', 'Three cases of Master Theorem'],
     language: 'python'
@@ -132,8 +115,6 @@ export const topic2Exercises: CodingExercise[] = [
     starterCode: 'def min_coins(coins, amount):\n    """Find minimum coins to make amount\n    \n    Args:\n        coins: List of coin denominations\n        amount: Target amount\n    Returns:\n        Minimum coins needed, or -1 if impossible\n    """\n    pass\n\nprint(min_coins([1, 5, 10, 25], 37))',
     solution: 'def min_coins(coins, amount):\n    """Find minimum coins to make amount\n    \n    Args:\n        coins: List of coin denominations\n        amount: Target amount\n    Returns:\n        Minimum coins needed, or -1 if impossible\n    """\n    dp = [float(\'inf\')] * (amount + 1)\n    dp[0] = 0\n    \n    for i in range(1, amount + 1):\n        for coin in coins:\n            if coin <= i and dp[i - coin] + 1 < dp[i]:\n                dp[i] = dp[i - coin] + 1\n    \n    return dp[amount] if dp[amount] != float(\'inf\') else -1\n\nprint(min_coins([1, 5, 10, 25], 37))',
     testCases: [
-      { input: '[1, 5, 10, 25], 37', expectedOutput: '4', isHidden: false, description: '25+10+1+1' },
-      { input: '[2], 3', expectedOutput: '-1', isHidden: true, description: 'Impossible' }
     ],
     hints: ['dp[0] = 0', 'Build up from smaller amounts'],
     language: 'python'

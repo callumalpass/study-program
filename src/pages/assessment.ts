@@ -179,13 +179,8 @@ function renderCodingExercisePage(
   currentIndex: number,
   totalExercises: number
 ): void {
-  const completions = progressStorage.getExerciseCompletions(subjectId, exerciseId);
-  const isPassed = completions.some(c => c.passed);
-  const bestCompletion = completions.length > 0
-    ? completions.reduce((best, current) =>
-        (current.passedTestCases ?? 0) > (best.passedTestCases ?? 0) ? current : best
-      )
-    : null;
+  const completion = progressStorage.getExerciseCompletion(subjectId, exerciseId);
+  const isPassed = completion?.passed ?? false;
 
   container.innerHTML = `
     <div class="exercise-page">
@@ -212,17 +207,11 @@ function renderCodingExercisePage(
             <span class="icon">${Icons.Beaker}</span>
             ${exercise.testCases.length} test cases
           </span>
-          ${completions.length > 0 ? `
-            <span class="info-item">
-              <span class="icon">${Icons.Refresh}</span>
-              ${completions.length} attempt${completions.length > 1 ? 's' : ''}
-            </span>
-          ` : ''}
           ${isPassed ? `
             <span class="completion-badge passed">${Icons.Check} Completed</span>
-          ` : bestCompletion ? `
+          ` : completion ? `
             <span class="completion-badge partial">
-              ${bestCompletion.passedTestCases}/${bestCompletion.totalTestCases} passed
+              ${completion.passedTestCases ?? 0}/${completion.totalTestCases ?? 0} passed
             </span>
           ` : ''}
         </div>
@@ -384,9 +373,8 @@ function renderWrittenExercisePage(
   totalExercises: number
 ): void {
   const exerciseId = exercise.id;
-  const completions = progressStorage.getExerciseCompletions(subjectId, exerciseId);
-  const hasSavedProof = completions.some(c => c.type === 'written' && c.code.trim().length > 0);
-  const latestCompletion = completions.filter(c => c.type === 'written').pop();
+  const completion = progressStorage.getExerciseCompletion(subjectId, exerciseId);
+  const hasSavedProof = completion?.type === 'written' && completion.code.trim().length > 0;
 
   container.innerHTML = `
     <div class="exercise-page">
@@ -459,7 +447,7 @@ function renderWrittenExercisePage(
   const editorContainer = container.querySelector('#proof-editor-container') as HTMLElement;
   if (editorContainer) {
     const proofEditor = createProofEditor(editorContainer, {
-      initialValue: latestCompletion?.code || '',
+      initialValue: completion?.code || '',
       height: '300px',
       storageKey: `proof_${subjectId}_${exerciseId}`,
       hints: exercise.hints,

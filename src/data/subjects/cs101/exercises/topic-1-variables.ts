@@ -14,19 +14,16 @@ export const topic1Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '0',
-        expectedOutput: '32.0',
         isHidden: false,
         description: 'Freezing point of water'
       },
       {
         input: '100',
-        expectedOutput: '212.0',
         isHidden: false,
         description: 'Boiling point of water'
       },
       {
         input: '37',
-        expectedOutput: '98.6',
         isHidden: true,
         description: 'Normal body temperature'
       }
@@ -50,19 +47,16 @@ export const topic1Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '5, 10',
-        expectedOutput: '(10, 5)',
         isHidden: false,
         description: 'Swap two positive integers'
       },
       {
         input: '"hello", "world"',
-        expectedOutput: "('world', 'hello')",
         isHidden: false,
         description: 'Swap two strings'
       },
       {
         input: '0, -5',
-        expectedOutput: '(-5, 0)',
         isHidden: true,
         description: 'Swap with zero and negative'
       }
@@ -86,25 +80,21 @@ export const topic1Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '42',
-        expectedOutput: 'integer',
         isHidden: false,
         description: 'Integer type'
       },
       {
         input: '3.14',
-        expectedOutput: 'float',
         isHidden: false,
         description: 'Float type'
       },
       {
         input: '"hello"',
-        expectedOutput: 'string',
         isHidden: false,
         description: 'String type'
       },
       {
         input: 'True',
-        expectedOutput: 'boolean',
         isHidden: true,
         description: 'Boolean type'
       }
@@ -128,19 +118,16 @@ export const topic1Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '1',
-        expectedOutput: '3.14159',
         isHidden: false,
         description: 'Unit circle'
       },
       {
         input: '5',
-        expectedOutput: '78.53975',
         isHidden: false,
         description: 'Radius of 5'
       },
       {
         input: '10',
-        expectedOutput: '314.159',
         isHidden: true,
         description: 'Radius of 10'
       }
@@ -164,19 +151,16 @@ export const topic1Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '"Alice", 25',
-        expectedOutput: 'Hello, my name is Alice and I am 25 years old.',
         isHidden: false,
         description: 'Basic greeting'
       },
       {
         input: '"Bob", 30',
-        expectedOutput: 'Hello, my name is Bob and I am 30 years old.',
         isHidden: false,
         description: 'Another greeting'
       },
       {
         input: '"Charlie", 0',
-        expectedOutput: 'Hello, my name is Charlie and I am 0 years old.',
         isHidden: true,
         description: 'Edge case with zero age'
       }
@@ -200,19 +184,16 @@ export const topic1Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '3.14159, 2',
-        expectedOutput: '3.14',
         isHidden: false,
         description: 'Round to 2 decimal places'
       },
       {
         input: '2.71828, 3',
-        expectedOutput: '2.718',
         isHidden: false,
         description: 'Round to 3 decimal places'
       },
       {
         input: '1.999, 1',
-        expectedOutput: '2.0',
         isHidden: true,
         description: 'Rounding up'
       }
@@ -236,19 +217,16 @@ export const topic1Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '70, 1.75',
-        expectedOutput: '22.9',
         isHidden: false,
         description: 'Normal BMI'
       },
       {
         input: '85, 1.80',
-        expectedOutput: '26.2',
         isHidden: false,
         description: 'Overweight BMI'
       },
       {
         input: '50, 1.60',
-        expectedOutput: '19.5',
         isHidden: true,
         description: 'Lower BMI'
       }
@@ -272,19 +250,16 @@ export const topic1Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '1000, 0.05, 12, 10',
-        expectedOutput: '1647.01',
         isHidden: false,
         description: '$1000 at 5% monthly for 10 years'
       },
       {
         input: '5000, 0.03, 4, 5',
-        expectedOutput: '5808.08',
         isHidden: false,
         description: '$5000 at 3% quarterly for 5 years'
       },
       {
         input: '10000, 0.07, 1, 20',
-        expectedOutput: '38696.84',
         isHidden: true,
         description: '$10000 at 7% annually for 20 years'
       }
@@ -309,19 +284,16 @@ export const topic1Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '25, 100',
-        expectedOutput: '25.0',
         isHidden: false,
         description: '25 out of 100'
       },
       {
         input: '3, 12',
-        expectedOutput: '25.0',
         isHidden: false,
         description: '3 out of 12'
       },
       {
         input: '50, 200',
-        expectedOutput: '25.0',
         isHidden: true,
         description: '50 out of 200'
       }
@@ -345,19 +317,16 @@ export const topic1Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '"Hi"',
-        expectedOutput: 'short',
         isHidden: false,
         description: 'Short string'
       },
       {
         input: '"Hello"',
-        expectedOutput: 'medium',
         isHidden: false,
         description: 'Medium string'
       },
       {
         input: '"Hello, World!"',
-        expectedOutput: 'long',
         isHidden: true,
         description: 'Long string'
       }
@@ -381,13 +350,11 @@ export const topic1Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '100',
-        expectedOutput: '108.5',
         isHidden: false,
         description: 'Price of 100'
       },
       {
         input: '50',
-        expectedOutput: '54.25',
         isHidden: true,
         description: 'Price of 50'
       }
@@ -411,19 +378,16 @@ export const topic1Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '"john doe"',
-        expectedOutput: 'JD',
         isHidden: false,
         description: 'Lowercase name'
       },
       {
         input: '"Alice Smith"',
-        expectedOutput: 'AS',
         isHidden: false,
         description: 'Capitalized name'
       },
       {
         input: '"bob JONES"',
-        expectedOutput: 'BJ',
         isHidden: true,
         description: 'Mixed case'
       }
@@ -447,19 +411,16 @@ export const topic1Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '1',
-        expectedOutput: '1.61',
         isHidden: false,
         description: '1 mile'
       },
       {
         input: '5',
-        expectedOutput: '8.05',
         isHidden: false,
         description: '5 miles'
       },
       {
         input: '10',
-        expectedOutput: '16.09',
         isHidden: true,
         description: '10 miles'
       }
@@ -482,25 +443,21 @@ export const topic1Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '42, "int"',
-        expectedOutput: 'True',
         isHidden: false,
         description: 'Integer matches int'
       },
       {
         input: '"hello", "str"',
-        expectedOutput: 'True',
         isHidden: false,
         description: 'String matches str'
       },
       {
         input: '3.14, "int"',
-        expectedOutput: 'False',
         isHidden: false,
         description: 'Float does not match int'
       },
       {
         input: 'True, "bool"',
-        expectedOutput: 'True',
         isHidden: true,
         description: 'Boolean matches bool'
       }
@@ -524,19 +481,16 @@ export const topic1Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '"10,20"',
-        expectedOutput: '(10.0, 20.0)',
         isHidden: false,
         description: 'Integer coordinates'
       },
       {
         input: '"3.5,7.2"',
-        expectedOutput: '(3.5, 7.2)',
         isHidden: false,
         description: 'Float coordinates'
       },
       {
         input: '"invalid"',
-        expectedOutput: 'None',
         isHidden: true,
         description: 'Invalid input'
       }
@@ -561,19 +515,16 @@ export const topic1Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '1234.5, "USD"',
-        expectedOutput: '$1,234.50',
         isHidden: false,
         description: 'USD formatting'
       },
       {
         input: '1000000, "EUR"',
-        expectedOutput: '€1,000,000.00',
         isHidden: false,
         description: 'EUR with millions'
       },
       {
         input: '99.9, "GBP"',
-        expectedOutput: '£99.90',
         isHidden: true,
         description: 'GBP small amount'
       }

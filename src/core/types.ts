@@ -80,7 +80,7 @@ export type Exercise = CodingExercise | WrittenExercise;
 
 export interface TestCase {
   input: string;
-  expectedOutput: string;
+  expectedOutput?: string; // Optional - will be generated from solution if not provided
   isHidden: boolean;
   description: string;
 }
@@ -121,7 +121,7 @@ export interface SubjectProgress {
   startedAt?: string; // ISO date string
   completedAt?: string; // ISO date string
   quizAttempts: Record<string, QuizAttempt[]>;
-  exerciseCompletions: Record<string, ExerciseCompletion[]>;
+  exerciseCompletions: Record<string, ExerciseCompletion>; // Single best/latest attempt per exercise
   projectSubmissions: Record<string, ProjectSubmission[]>;
 }
 

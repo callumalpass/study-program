@@ -40,9 +40,9 @@ export function calculateSubjectCompletion(
     // Count exercises
     topic.exerciseIds.forEach(exerciseId => {
       totalItems++;
-      const completions = progress.exerciseCompletions[exerciseId];
-      // Consider exercise completed if passed at least once
-      if (completions && completions.some(c => c.passed)) {
+      const completion = progress.exerciseCompletions[exerciseId];
+      // Consider exercise completed if passed
+      if (completion?.passed) {
         completedItems++;
       }
     });
@@ -313,10 +313,10 @@ export function getSubjectProgressDetails(subject: Subject): {
         }
       });
 
-      // Count completed exercises (passed at least once)
+      // Count completed exercises
       topic.exerciseIds.forEach(exerciseId => {
-        const completions = progress.exerciseCompletions[exerciseId];
-        if (completions && completions.some(c => c.passed)) {
+        const completion = progress.exerciseCompletions[exerciseId];
+        if (completion?.passed) {
           exercisesCompleted++;
         }
       });

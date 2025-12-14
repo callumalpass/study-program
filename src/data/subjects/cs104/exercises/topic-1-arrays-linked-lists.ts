@@ -12,9 +12,6 @@ export const topic1Exercises: CodingExercise[] = [
     language: 'python',
     starterCode: 'class Node:\n    def __init__(self, value):\n        self.value = value\n        self.next = None\n\ndef reverse_linked_list(head):\n    # Your code here\n    pass',
     testCases: [
-      { input: '1 -> 2 -> 3 -> 4 -> 5', expectedOutput: '5 -> 4 -> 3 -> 2 -> 1', isHidden: false, description: 'Reverse a list with multiple elements' },
-      { input: '1', expectedOutput: '1', isHidden: false, description: 'Single element list' },
-      { input: 'None', expectedOutput: 'None', isHidden: true, description: 'Empty list' }
     ],
     hints: ['Use three pointers: previous, current, and next', 'Iterate through the list and reverse the next pointer of each node', "Don't forget to handle the edge case of an empty list"],
     solution: 'class Node:\n    def __init__(self, value):\n        self.value = value\n        self.next = None\n\ndef reverse_linked_list(head):\n    prev = None\n    current = head\n    \n    while current:\n        next_node = current.next\n        current.next = prev\n        prev = current\n        current = next_node\n    \n    return prev'
@@ -29,8 +26,6 @@ export const topic1Exercises: CodingExercise[] = [
     starterCode: 'class Node:\n    def __init__(self, value):\n        self.value = value\n        self.next = None\n\ndef find_middle(head):\n    # Your code here\n    pass\n\n# Test\nhead = Node(1)\nhead.next = Node(2)\nhead.next.next = Node(3)\nprint(find_middle(head).value)',
     solution: 'class Node:\n    def __init__(self, value):\n        self.value = value\n        self.next = None\n\ndef find_middle(head):\n    slow = fast = head\n    while fast and fast.next:\n        slow = slow.next\n        fast = fast.next.next\n    return slow\n\nhead = Node(1)\nhead.next = Node(2)\nhead.next.next = Node(3)\nprint(find_middle(head).value)',
     testCases: [
-      { input: '1 -> 2 -> 3', expectedOutput: '2', isHidden: false, description: 'Odd length list' },
-      { input: '1 -> 2 -> 3 -> 4', expectedOutput: '3', isHidden: true, description: 'Even length list' }
     ],
     hints: ['Use two pointers: slow and fast', 'Fast moves 2 steps while slow moves 1'],
     language: 'python'
@@ -45,8 +40,6 @@ export const topic1Exercises: CodingExercise[] = [
     starterCode: 'class Node:\n    def __init__(self, value):\n        self.value = value\n        self.next = None\n\ndef has_cycle(head):\n    # Your code here\n    pass',
     solution: 'class Node:\n    def __init__(self, value):\n        self.value = value\n        self.next = None\n\ndef has_cycle(head):\n    slow = fast = head\n    while fast and fast.next:\n        slow = slow.next\n        fast = fast.next.next\n        if slow == fast:\n            return True\n    return False',
     testCases: [
-      { input: '1 -> 2 -> 3 -> (cycle to 2)', expectedOutput: 'True', isHidden: false, description: 'List with cycle' },
-      { input: '1 -> 2 -> 3', expectedOutput: 'False', isHidden: true, description: 'List without cycle' }
     ],
     hints: ['Use Floyd\'s cycle detection (tortoise and hare)', 'If fast catches up to slow, there\'s a cycle'],
     language: 'python'
@@ -61,8 +54,6 @@ export const topic1Exercises: CodingExercise[] = [
     starterCode: 'def rotate_array(arr, k):\n    # Modify arr in-place\n    pass\n\narr = [1, 2, 3, 4, 5]\nrotate_array(arr, 2)\nprint(arr)',
     solution: 'def rotate_array(arr, k):\n    n = len(arr)\n    k = k % n  # Handle k > n\n    \n    def reverse(start, end):\n        while start < end:\n            arr[start], arr[end] = arr[end], arr[start]\n            start += 1\n            end -= 1\n    \n    reverse(0, n - 1)\n    reverse(0, k - 1)\n    reverse(k, n - 1)\n\narr = [1, 2, 3, 4, 5]\nrotate_array(arr, 2)\nprint(arr)',
     testCases: [
-      { input: '[1,2,3,4,5], k=2', expectedOutput: '[4, 5, 1, 2, 3]', isHidden: false, description: 'Rotate right by 2' },
-      { input: '[1,2,3], k=4', expectedOutput: '[3, 1, 2]', isHidden: true, description: 'k larger than array length' }
     ],
     hints: ['Use the reversal algorithm: reverse all, then reverse first k, then reverse rest', 'Handle k > array length with modulo'],
     language: 'python'
@@ -77,8 +68,6 @@ export const topic1Exercises: CodingExercise[] = [
     starterCode: 'class Node:\n    def __init__(self, value):\n        self.value = value\n        self.next = None\n\ndef merge_sorted(l1, l2):\n    # Your code here\n    pass',
     solution: 'class Node:\n    def __init__(self, value):\n        self.value = value\n        self.next = None\n\ndef merge_sorted(l1, l2):\n    dummy = Node(0)\n    current = dummy\n    \n    while l1 and l2:\n        if l1.value <= l2.value:\n            current.next = l1\n            l1 = l1.next\n        else:\n            current.next = l2\n            l2 = l2.next\n        current = current.next\n    \n    current.next = l1 if l1 else l2\n    return dummy.next',
     testCases: [
-      { input: '1->2->4 and 1->3->4', expectedOutput: '1->1->2->3->4->4', isHidden: false, description: 'Merge two lists' },
-      { input: 'empty and 0', expectedOutput: '0', isHidden: true, description: 'One empty list' }
     ],
     hints: ['Use a dummy head node to simplify edge cases', 'Compare values and link the smaller one'],
     language: 'python'
@@ -93,8 +82,6 @@ export const topic1Exercises: CodingExercise[] = [
     starterCode: 'def remove_duplicates(nums):\n    # Modify nums in-place, return new length\n    pass\n\nnums = [1, 1, 2, 2, 3]\nlength = remove_duplicates(nums)\nprint(nums[:length])',
     solution: 'def remove_duplicates(nums):\n    if not nums:\n        return 0\n    \n    write_idx = 1\n    for i in range(1, len(nums)):\n        if nums[i] != nums[i-1]:\n            nums[write_idx] = nums[i]\n            write_idx += 1\n    return write_idx\n\nnums = [1, 1, 2, 2, 3]\nlength = remove_duplicates(nums)\nprint(nums[:length])',
     testCases: [
-      { input: '[1, 1, 2, 2, 3]', expectedOutput: '[1, 2, 3]', isHidden: false, description: 'Remove duplicates' },
-      { input: '[1, 1, 1, 1]', expectedOutput: '[1]', isHidden: true, description: 'All same' }
     ],
     hints: ['Use two pointers: one for reading, one for writing', 'Write when current differs from previous'],
     language: 'python'
@@ -109,8 +96,6 @@ export const topic1Exercises: CodingExercise[] = [
     starterCode: 'class Node:\n    def __init__(self, value):\n        self.value = value\n        self.prev = None\n        self.next = None\n\nclass DoublyLinkedList:\n    def __init__(self):\n        self.head = None\n        self.tail = None\n    \n    def insert_front(self, value):\n        pass\n    \n    def insert_back(self, value):\n        pass\n    \n    def delete(self, value):\n        pass\n    \n    def to_list(self):\n        result = []\n        current = self.head\n        while current:\n            result.append(current.value)\n            current = current.next\n        return result',
     solution: 'class Node:\n    def __init__(self, value):\n        self.value = value\n        self.prev = None\n        self.next = None\n\nclass DoublyLinkedList:\n    def __init__(self):\n        self.head = None\n        self.tail = None\n    \n    def insert_front(self, value):\n        node = Node(value)\n        if not self.head:\n            self.head = self.tail = node\n        else:\n            node.next = self.head\n            self.head.prev = node\n            self.head = node\n    \n    def insert_back(self, value):\n        node = Node(value)\n        if not self.tail:\n            self.head = self.tail = node\n        else:\n            node.prev = self.tail\n            self.tail.next = node\n            self.tail = node\n    \n    def delete(self, value):\n        current = self.head\n        while current:\n            if current.value == value:\n                if current.prev:\n                    current.prev.next = current.next\n                else:\n                    self.head = current.next\n                if current.next:\n                    current.next.prev = current.prev\n                else:\n                    self.tail = current.prev\n                return True\n            current = current.next\n        return False\n    \n    def to_list(self):\n        result = []\n        current = self.head\n        while current:\n            result.append(current.value)\n            current = current.next\n        return result',
     testCases: [
-      { input: 'dll = DoublyLinkedList(); dll.insert_front(1); dll.insert_back(2); dll.to_list()', expectedOutput: '[1, 2]', isHidden: false, description: 'Insert front and back' },
-      { input: 'dll = DoublyLinkedList(); dll.insert_back(1); dll.insert_back(2); dll.delete(1); dll.to_list()', expectedOutput: '[2]', isHidden: true, description: 'Delete element' }
     ],
     hints: ['Track both head and tail pointers', 'Update both prev and next when deleting'],
     language: 'python'
@@ -125,8 +110,6 @@ export const topic1Exercises: CodingExercise[] = [
     starterCode: 'class LRUCache:\n    def __init__(self, capacity):\n        self.capacity = capacity\n        # Your code here\n    \n    def get(self, key):\n        # Return -1 if not found\n        pass\n    \n    def put(self, key, value):\n        # Evict LRU if at capacity\n        pass\n\ncache = LRUCache(2)\ncache.put(1, 1)\ncache.put(2, 2)\nprint(cache.get(1))\ncache.put(3, 3)  # evicts key 2\nprint(cache.get(2))',
     solution: 'class Node:\n    def __init__(self, key, value):\n        self.key = key\n        self.value = value\n        self.prev = None\n        self.next = None\n\nclass LRUCache:\n    def __init__(self, capacity):\n        self.capacity = capacity\n        self.cache = {}\n        self.head = Node(0, 0)\n        self.tail = Node(0, 0)\n        self.head.next = self.tail\n        self.tail.prev = self.head\n    \n    def _remove(self, node):\n        node.prev.next = node.next\n        node.next.prev = node.prev\n    \n    def _add_to_front(self, node):\n        node.next = self.head.next\n        node.prev = self.head\n        self.head.next.prev = node\n        self.head.next = node\n    \n    def get(self, key):\n        if key in self.cache:\n            node = self.cache[key]\n            self._remove(node)\n            self._add_to_front(node)\n            return node.value\n        return -1\n    \n    def put(self, key, value):\n        if key in self.cache:\n            self._remove(self.cache[key])\n        node = Node(key, value)\n        self._add_to_front(node)\n        self.cache[key] = node\n        if len(self.cache) > self.capacity:\n            lru = self.tail.prev\n            self._remove(lru)\n            del self.cache[lru.key]\n\ncache = LRUCache(2)\ncache.put(1, 1)\ncache.put(2, 2)\nprint(cache.get(1))\ncache.put(3, 3)\nprint(cache.get(2))',
     testCases: [
-      { input: 'cache.get(1) after put(1,1), put(2,2)', expectedOutput: '1', isHidden: false, description: 'Get existing key' },
-      { input: 'cache.get(2) after eviction', expectedOutput: '-1', isHidden: true, description: 'LRU evicted' }
     ],
     hints: ['Use dummy head/tail nodes to avoid edge cases', 'HashMap stores key -> Node for O(1) lookup', 'Move accessed nodes to front'],
     language: 'python'

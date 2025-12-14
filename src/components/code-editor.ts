@@ -497,6 +497,11 @@ export function createCodeEditor(
       return [];
     }
 
+    if (!config.solution) {
+      console.error('No solution provided for test validation');
+      return [];
+    }
+
     const code = editor.getValue();
     outputContent.textContent = 'Running tests...';
     outputPanel.classList.add('show');
@@ -509,7 +514,7 @@ export function createCodeEditor(
     const startTime = performance.now();
 
     try {
-      const results = await runTests(code, config.testCases);
+      const results = await runTests(code, config.testCases, config.solution);
       const endTime = performance.now();
       const executionMs = Math.round(endTime - startTime);
 
@@ -572,7 +577,7 @@ export function createCodeEditor(
         content += `
           <div class="test-details">
             ${!isHidden ? `<div class="test-input"><strong>Input:</strong> <code>${escapeHtml(testCase.input || '(none)')}</code></div>` : ''}
-            ${!isHidden ? `<div class="test-expected"><strong>Expected:</strong> <code>${escapeHtml(testCase.expectedOutput)}</code></div>` : ''}
+            ${!isHidden ? `<div class="test-expected"><strong>Expected:</strong> <code>${escapeHtml(result.expectedOutput)}</code></div>` : ''}
             ${!result.passed ? `<div class="test-actual"><strong>Got:</strong> <code>${escapeHtml(result.actualOutput || result.error || '(no output)')}</code></div>` : ''}
           </div>
         `;

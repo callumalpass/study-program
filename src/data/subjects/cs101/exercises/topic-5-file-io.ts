@@ -14,19 +14,16 @@ export const topic5Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '"sample.txt"',
-        expectedOutput: '5',
         isHidden: false,
         description: 'File with 5 lines'
       },
       {
         input: '"empty.txt"',
-        expectedOutput: '0',
         isHidden: false,
         description: 'Empty file'
       },
       {
         input: '"nonexistent.txt"',
-        expectedOutput: '0',
         isHidden: true,
         description: 'File does not exist'
       }
@@ -51,13 +48,11 @@ export const topic5Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '"hello.txt"',
-        expectedOutput: 'Hello, World!',
         isHidden: false,
         description: 'Read hello.txt'
       },
       {
         input: '"nonexistent.txt"',
-        expectedOutput: '',
         isHidden: true,
         description: 'File not found'
       }
@@ -82,7 +77,6 @@ export const topic5Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '"output.txt", "Hello"',
-        expectedOutput: 'True',
         isHidden: false,
         description: 'Write succeeds'
       }
@@ -107,7 +101,6 @@ export const topic5Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '"log.txt", "Entry 1"',
-        expectedOutput: '',
         isHidden: false,
         description: 'Append line'
       }
@@ -132,13 +125,11 @@ export const topic5Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '"document.txt"',
-        expectedOutput: '10',
         isHidden: false,
         description: 'File with 10 words'
       },
       {
         input: '"empty.txt"',
-        expectedOutput: '0',
         isHidden: true,
         description: 'Empty file'
       }
@@ -163,13 +154,11 @@ export const topic5Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '"data.txt"',
-        expectedOutput: "['line1', 'line2', 'line3']",
         isHidden: false,
         description: 'Read and strip lines'
       },
       {
         input: '"nonexistent.txt"',
-        expectedOutput: '[]',
         isHidden: true,
         description: 'File not found'
       }
@@ -194,7 +183,6 @@ export const topic5Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '"people.csv"',
-        expectedOutput: "[{'name': 'Alice', 'age': '30', 'city': 'NYC'}, {'name': 'Bob', 'age': '25', 'city': 'LA'}]",
         isHidden: false,
         description: 'Read CSV with 2 rows'
       }
@@ -219,7 +207,6 @@ export const topic5Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '"test.txt", "old", "new"',
-        expectedOutput: 'True',
         isHidden: false,
         description: 'Replace succeeds'
       }
@@ -244,7 +231,6 @@ export const topic5Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '["a.txt", "b.txt"], "out.txt"',
-        expectedOutput: '',
         isHidden: false,
         description: 'Merge two files'
       }
@@ -270,7 +256,6 @@ export const topic5Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '"source.txt", "backup.txt"',
-        expectedOutput: 'File copied!',
         isHidden: false,
         description: 'Copy file successfully'
       }
@@ -295,13 +280,11 @@ export const topic5Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '"existing.txt"',
-        expectedOutput: 'True',
         isHidden: false,
         description: 'File exists'
       },
       {
         input: '"nonexistent.txt"',
-        expectedOutput: 'False',
         isHidden: false,
         description: 'File does not exist'
       }
@@ -326,7 +309,6 @@ export const topic5Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '"names.txt", ["Alice", "Bob", "Charlie"]',
-        expectedOutput: 'List written!',
         isHidden: false,
         description: 'Write list to file'
       }
@@ -351,7 +333,6 @@ export const topic5Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '"document.txt", "error"',
-        expectedOutput: 'Error occurred on line 5\nAnother error here',
         isHidden: false,
         description: 'Find lines with keyword'
       }
@@ -376,7 +357,6 @@ export const topic5Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '"config.json", "version", "2.0"',
-        expectedOutput: 'JSON updated!',
         isHidden: false,
         description: 'Update JSON key'
       }
@@ -401,7 +381,6 @@ export const topic5Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '"app.log", "Test message"',
-        expectedOutput: 'Logs written!',
         isHidden: false,
         description: 'Write log entry'
       }
@@ -426,7 +405,6 @@ export const topic5Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '"document.txt"',
-        expectedOutput: "{'lines': 10, 'words': 50, 'chars': 300, 'most_common': 'the'}",
         isHidden: false,
         description: 'Get file statistics'
       }

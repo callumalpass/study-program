@@ -14,19 +14,16 @@ export const topic3Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '[3, 7, 2, 9, 1]',
-        expectedOutput: '9',
         isHidden: false,
         description: 'Positive numbers'
       },
       {
         input: '[-5, -2, -10, -1]',
-        expectedOutput: '-1',
         isHidden: false,
         description: 'Negative numbers'
       },
       {
         input: '[42]',
-        expectedOutput: '42',
         isHidden: true,
         description: 'Single element'
       }
@@ -51,19 +48,16 @@ export const topic3Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '5',
-        expectedOutput: '10',
         isHidden: false,
         description: 'Double 5'
       },
       {
         input: '-3',
-        expectedOutput: '-6',
         isHidden: false,
         description: 'Double negative number'
       },
       {
         input: '0',
-        expectedOutput: '0',
         isHidden: true,
         description: 'Double zero'
       }
@@ -86,19 +80,16 @@ export const topic3Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '',
-        expectedOutput: 'Hello, World!',
         isHidden: false,
         description: 'Default greeting'
       },
       {
         input: '"Alice"',
-        expectedOutput: 'Hello, Alice!',
         isHidden: false,
         description: 'Custom greeting'
       },
       {
         input: '"Python"',
-        expectedOutput: 'Hello, Python!',
         isHidden: true,
         description: 'Another custom greeting'
       }
@@ -122,19 +113,16 @@ export const topic3Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '[1, 2, 3, 4, 5]',
-        expectedOutput: '3.0',
         isHidden: false,
         description: 'Average of 1-5'
       },
       {
         input: '[10, 20]',
-        expectedOutput: '15.0',
         isHidden: false,
         description: 'Average of two numbers'
       },
       {
         input: '[]',
-        expectedOutput: '0',
         isHidden: true,
         description: 'Empty list'
       }
@@ -159,19 +147,16 @@ export const topic3Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '2, 3',
-        expectedOutput: '8',
         isHidden: false,
         description: '2^3 = 8'
       },
       {
         input: '5, 2',
-        expectedOutput: '25',
         isHidden: false,
         description: '5^2 = 25'
       },
       {
         input: '3, 0',
-        expectedOutput: '1',
         isHidden: true,
         description: 'Any number to 0 is 1'
       }
@@ -196,19 +181,16 @@ export const topic3Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '"hello", 3',
-        expectedOutput: 'hello hello hello',
         isHidden: false,
         description: 'Repeat with space'
       },
       {
         input: '"hi", 4, "-"',
-        expectedOutput: 'hi-hi-hi-hi',
         isHidden: false,
         description: 'Repeat with dash'
       },
       {
         input: '"x", 1',
-        expectedOutput: 'x',
         isHidden: true,
         description: 'Single repeat'
       }
@@ -232,19 +214,16 @@ export const topic3Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '5',
-        expectedOutput: '120',
         isHidden: false,
         description: '5! = 120'
       },
       {
         input: '0',
-        expectedOutput: '1',
         isHidden: false,
         description: '0! = 1'
       },
       {
         input: '7',
-        expectedOutput: '5040',
         isHidden: true,
         description: '7! = 5040'
       }
@@ -269,19 +248,16 @@ export const topic3Exercises: CodingExercise[] = [
     testCases: [
       {
         input: 'square, [1, 2, 3, 4]',
-        expectedOutput: '[1, 4, 9, 16]',
         isHidden: false,
         description: 'Square all elements'
       },
       {
         input: 'double, [1, 2, 3, 4]',
-        expectedOutput: '[2, 4, 6, 8]',
         isHidden: false,
         description: 'Double all elements'
       },
       {
         input: 'square, []',
-        expectedOutput: '[]',
         isHidden: true,
         description: 'Empty list'
       }
@@ -306,19 +282,16 @@ export const topic3Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '[1, 2, 3, 4, 5]',
-        expectedOutput: '15',
         isHidden: false,
         description: 'Sum of 1-5'
       },
       {
         input: '[10]',
-        expectedOutput: '10',
         isHidden: false,
         description: 'Single element'
       },
       {
         input: '[]',
-        expectedOutput: '0',
         isHidden: true,
         description: 'Empty list'
       }
@@ -343,19 +316,16 @@ export const topic3Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '[1, 2, 2, 3, 2], 2',
-        expectedOutput: '3',
         isHidden: false,
         description: 'Count 2s in list'
       },
       {
         input: '["a", "b", "a"], "a"',
-        expectedOutput: '2',
         isHidden: false,
         description: 'Count strings'
       },
       {
         input: '[1, 2, 3], 4',
-        expectedOutput: '0',
         isHidden: true,
         description: 'Value not in list'
       }
@@ -380,19 +350,16 @@ export const topic3Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '[3, 1, 4, 1, 5, 9]',
-        expectedOutput: '(1, 9)',
         isHidden: false,
         description: 'Multiple numbers'
       },
       {
         input: '[5]',
-        expectedOutput: '(5, 5)',
         isHidden: false,
         description: 'Single element'
       },
       {
         input: '[-5, 0, 5]',
-        expectedOutput: '(-5, 5)',
         isHidden: true,
         description: 'With negative'
       }
@@ -416,7 +383,6 @@ export const topic3Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '5',
-        expectedOutput: '11',
         isHidden: false,
         description: 'add_one(double(5)) = 11'
       }
@@ -441,19 +407,16 @@ export const topic3Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '10',
-        expectedOutput: '55',
         isHidden: false,
         description: '10th Fibonacci number'
       },
       {
         input: '30',
-        expectedOutput: '832040',
         isHidden: false,
         description: '30th Fibonacci number'
       },
       {
         input: '0',
-        expectedOutput: '0',
         isHidden: true,
         description: '0th Fibonacci'
       }
@@ -478,7 +441,6 @@ export const topic3Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '',
-        expectedOutput: 'Hello!\nHello!\nHello!\nCalled 3 times',
         isHidden: false,
         description: 'Counts 3 calls'
       }
@@ -503,7 +465,6 @@ export const topic3Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '',
-        expectedOutput: '18',
         isHidden: false,
         description: 'Partial with 10 + 5 + 3'
       }
@@ -528,13 +489,11 @@ export const topic3Exercises: CodingExercise[] = [
     testCases: [
       {
         input: '5',
-        expectedOutput: '10',
         isHidden: false,
         description: 'Positive number works'
       },
       {
         input: '-3',
-        expectedOutput: 'Error: Number must be positive, got -3',
         isHidden: false,
         description: 'Negative raises error'
       }

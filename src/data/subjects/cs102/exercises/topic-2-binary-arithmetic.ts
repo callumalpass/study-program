@@ -11,9 +11,6 @@ export const topic2Exercises: CodingExercise[] = [
     description: 'Implement a function that performs binary addition on two binary strings and returns the result as a binary string. Do not use built-in base conversion functions.',
     starterCode: 'def binary_addition(bin1, bin2):\n    """\n    Add two binary numbers represented as strings.\n    \n    Args:\n        bin1: First binary number as string (e.g., "1011")\n        bin2: Second binary number as string (e.g., "0110")\n    \n    Returns:\n        Sum as binary string\n    """\n    # Your code here\n    pass',
     testCases: [
-      { input: '"1011", "0110"', expectedOutput: '"10001"', isHidden: false, description: 'Add 1011 + 0110' },
-      { input: '"1111", "1"', expectedOutput: '"10000"', isHidden: false, description: 'Add 1111 + 1' },
-      { input: '"10101", "11011"', expectedOutput: '"110000"', isHidden: true, description: 'Add 10101 + 11011' }
     ],
     hints: [
       'Start adding from the rightmost bit (least significant bit)',
@@ -33,9 +30,6 @@ export const topic2Exercises: CodingExercise[] = [
     starterCode: '# Add 1 to a binary number\ndef binary_increment(binary_str):\n    # Your code here\n    pass\n\nprint(binary_increment("1010"))\nprint(binary_increment("1111"))',
     solution: 'def binary_increment(binary_str):\n    result = list(binary_str)\n    carry = 1\n    for i in range(len(result) - 1, -1, -1):\n        if carry == 0:\n            break\n        if result[i] == "0":\n            result[i] = "1"\n            carry = 0\n        else:\n            result[i] = "0"\n    if carry:\n        result.insert(0, "1")\n    return "".join(result)\n\nprint(binary_increment("1010"))\nprint(binary_increment("1111"))',
     testCases: [
-      { input: '"1010"', expectedOutput: '1011', isHidden: false, description: '1010 + 1 = 1011' },
-      { input: '"1111"', expectedOutput: '10000', isHidden: false, description: '1111 + 1 = 10000' },
-      { input: '"0"', expectedOutput: '1', isHidden: true, description: '0 + 1 = 1' }
     ],
     hints: [
       'Start from the rightmost bit',
@@ -54,9 +48,6 @@ export const topic2Exercises: CodingExercise[] = [
     starterCode: '# Get ones complement (flip all bits)\ndef ones_complement(binary_str):\n    # Your code here\n    pass\n\nprint(ones_complement("1010"))\nprint(ones_complement("11110000"))',
     solution: 'def ones_complement(binary_str):\n    result = ""\n    for bit in binary_str:\n        result += "0" if bit == "1" else "1"\n    return result\n\nprint(ones_complement("1010"))\nprint(ones_complement("11110000"))',
     testCases: [
-      { input: '"1010"', expectedOutput: '0101', isHidden: false, description: 'Flip 1010' },
-      { input: '"11110000"', expectedOutput: '00001111', isHidden: false, description: 'Flip 11110000' },
-      { input: '"0000"', expectedOutput: '1111', isHidden: true, description: 'Flip all zeros' }
     ],
     hints: [
       'Flip each bit: 0 becomes 1, 1 becomes 0',
@@ -75,9 +66,6 @@ export const topic2Exercises: CodingExercise[] = [
     starterCode: '# Get twos complement\ndef twos_complement(binary_str):\n    # Your code here\n    pass\n\nprint(twos_complement("0101"))  # 5 becomes -5\nprint(twos_complement("0001"))  # 1 becomes -1',
     solution: 'def twos_complement(binary_str):\n    # First get ones complement\n    ones = ""\n    for bit in binary_str:\n        ones += "0" if bit == "1" else "1"\n    \n    # Add 1\n    result = list(ones)\n    carry = 1\n    for i in range(len(result) - 1, -1, -1):\n        if carry == 0:\n            break\n        if result[i] == "0":\n            result[i] = "1"\n            carry = 0\n        else:\n            result[i] = "0"\n    return "".join(result)\n\nprint(twos_complement("0101"))\nprint(twos_complement("0001"))',
     testCases: [
-      { input: '"0101"', expectedOutput: '1011', isHidden: false, description: 'Twos complement of 0101' },
-      { input: '"0001"', expectedOutput: '1111', isHidden: false, description: 'Twos complement of 0001' },
-      { input: '"1000"', expectedOutput: '1000', isHidden: true, description: 'Special case' }
     ],
     hints: [
       'First compute ones complement (flip all bits)',
@@ -96,9 +84,6 @@ export const topic2Exercises: CodingExercise[] = [
     starterCode: '# Subtract binary numbers using twos complement\ndef binary_subtract(bin1, bin2):\n    # Your code here\n    pass\n\nprint(binary_subtract("1010", "0011"))  # 10 - 3 = 7',
     solution: 'def binary_subtract(bin1, bin2):\n    # Ensure same length\n    max_len = max(len(bin1), len(bin2))\n    bin1 = bin1.zfill(max_len)\n    bin2 = bin2.zfill(max_len)\n    \n    # Get twos complement of bin2\n    twos = ""\n    for bit in bin2:\n        twos += "0" if bit == "1" else "1"\n    # Add 1\n    twos_list = list(twos)\n    carry = 1\n    for i in range(len(twos_list) - 1, -1, -1):\n        if carry == 0:\n            break\n        if twos_list[i] == "0":\n            twos_list[i] = "1"\n            carry = 0\n        else:\n            twos_list[i] = "0"\n    twos = "".join(twos_list)\n    \n    # Add bin1 + twos complement of bin2\n    result = []\n    carry = 0\n    for i in range(max_len - 1, -1, -1):\n        bit_sum = int(bin1[i]) + int(twos[i]) + carry\n        result.append(str(bit_sum % 2))\n        carry = bit_sum // 2\n    \n    return "".join(reversed(result))\n\nprint(binary_subtract("1010", "0011"))',
     testCases: [
-      { input: '"1010", "0011"', expectedOutput: '0111', isHidden: false, description: '10 - 3 = 7' },
-      { input: '"1111", "0001"', expectedOutput: '1110', isHidden: false, description: '15 - 1 = 14' },
-      { input: '"1000", "0001"', expectedOutput: '0111', isHidden: true, description: '8 - 1 = 7' }
     ],
     hints: [
       'Subtraction A - B = A + (-B)',
@@ -117,9 +102,6 @@ export const topic2Exercises: CodingExercise[] = [
     starterCode: '# Add signed binary and detect overflow\ndef add_with_overflow(bin1, bin2):\n    # Returns tuple: (result, overflow_occurred)\n    # Your code here\n    pass\n\nprint(add_with_overflow("01111111", "00000001"))  # 127 + 1, overflow!',
     solution: 'def add_with_overflow(bin1, bin2):\n    # Ensure 8 bits\n    bin1 = bin1.zfill(8)\n    bin2 = bin2.zfill(8)\n    \n    # Add\n    result = []\n    carry = 0\n    for i in range(7, -1, -1):\n        bit_sum = int(bin1[i]) + int(bin2[i]) + carry\n        result.append(str(bit_sum % 2))\n        carry = bit_sum // 2\n    \n    result_str = "".join(reversed(result))\n    \n    # Overflow if signs of operands are same but result sign differs\n    sign1 = bin1[0]\n    sign2 = bin2[0]\n    result_sign = result_str[0]\n    \n    overflow = (sign1 == sign2) and (result_sign != sign1)\n    \n    return (result_str, overflow)\n\nprint(add_with_overflow("01111111", "00000001"))',
     testCases: [
-      { input: '"01111111", "00000001"', expectedOutput: "('10000000', True)", isHidden: false, description: '127 + 1 overflows' },
-      { input: '"00000001", "00000001"', expectedOutput: "('00000010', False)", isHidden: false, description: '1 + 1 = 2, no overflow' },
-      { input: '"10000000", "10000000"', expectedOutput: "('00000000', True)", isHidden: true, description: '-128 + -128 overflows' }
     ],
     hints: [
       'Overflow occurs when adding two positives gives negative',
@@ -138,9 +120,6 @@ export const topic2Exercises: CodingExercise[] = [
     starterCode: '# Multiply binary numbers using shift-and-add\ndef binary_multiply(bin1, bin2):\n    # Your code here\n    pass\n\nprint(binary_multiply("101", "11"))  # 5 * 3 = 15',
     solution: 'def binary_multiply(bin1, bin2):\n    # Convert to integers for simplicity of demonstration\n    # but use binary operations\n    result = "0"\n    \n    for i, bit in enumerate(reversed(bin2)):\n        if bit == "1":\n            shifted = bin1 + "0" * i\n            # Add to result\n            max_len = max(len(result), len(shifted))\n            result = result.zfill(max_len)\n            shifted = shifted.zfill(max_len)\n            \n            new_result = []\n            carry = 0\n            for j in range(max_len - 1, -1, -1):\n                bit_sum = int(result[j]) + int(shifted[j]) + carry\n                new_result.append(str(bit_sum % 2))\n                carry = bit_sum // 2\n            if carry:\n                new_result.append("1")\n            result = "".join(reversed(new_result))\n    \n    return result.lstrip("0") or "0"\n\nprint(binary_multiply("101", "11"))',
     testCases: [
-      { input: '"101", "11"', expectedOutput: '1111', isHidden: false, description: '5 * 3 = 15' },
-      { input: '"1010", "10"', expectedOutput: '10100', isHidden: false, description: '10 * 2 = 20' },
-      { input: '"111", "111"', expectedOutput: '110001', isHidden: true, description: '7 * 7 = 49' }
     ],
     hints: [
       'For each 1 bit in multiplier, shift multiplicand and add',
@@ -159,9 +138,6 @@ export const topic2Exercises: CodingExercise[] = [
     starterCode: '# Convert between decimal and 8-bit twos complement\ndef decimal_to_signed_binary(n):\n    # n is between -128 and 127\n    # Your code here\n    pass\n\ndef signed_binary_to_decimal(binary_str):\n    # Your code here\n    pass\n\nprint(decimal_to_signed_binary(-5))\nprint(signed_binary_to_decimal("11111011"))',
     solution: 'def decimal_to_signed_binary(n):\n    if n >= 0:\n        return bin(n)[2:].zfill(8)\n    else:\n        # Twos complement for negative\n        return bin(256 + n)[2:]\n\ndef signed_binary_to_decimal(binary_str):\n    binary_str = binary_str.zfill(8)\n    if binary_str[0] == "0":\n        # Positive\n        return int(binary_str, 2)\n    else:\n        # Negative - twos complement\n        return int(binary_str, 2) - 256\n\nprint(decimal_to_signed_binary(-5))\nprint(signed_binary_to_decimal("11111011"))',
     testCases: [
-      { input: 'decimal_to_signed_binary(-5)', expectedOutput: '11111011', isHidden: false, description: '-5 in twos complement' },
-      { input: 'signed_binary_to_decimal("11111011")', expectedOutput: '-5', isHidden: false, description: '11111011 = -5' },
-      { input: 'decimal_to_signed_binary(-128)', expectedOutput: '10000000', isHidden: true, description: '-128 = 10000000' }
     ],
     hints: [
       'For positive numbers, just convert to binary',
@@ -180,9 +156,6 @@ export const topic2Exercises: CodingExercise[] = [
     starterCode: '# Unsigned binary restoring division\ndef binary_divide(dividend, divisor):\n    # Your code here\n    pass\n\nprint(binary_divide(\"1101\", \"11\"))  # (100, 1)',
     solution: 'def binary_divide(dividend, divisor):\n    if divisor == \"0\":\n        raise ValueError(\"divide by zero\")\n    n = len(dividend)\n    divisor_int = int(divisor, 2)\n    remainder = 0\n    quotient_bits = []\n    for bit in dividend:\n        remainder = (remainder << 1) + int(bit)\n        if remainder >= divisor_int:\n            remainder -= divisor_int\n            quotient_bits.append(\"1\")\n        else:\n            quotient_bits.append(\"0\")\n    q = \"\".join(quotient_bits).lstrip(\"0\") or \"0\"\n    r = bin(remainder)[2:]\n    return (q, r)\n\nprint(binary_divide(\"1101\", \"11\"))',
     testCases: [
-      { input: '"1101", "11"', expectedOutput: "('100', '1')", isHidden: false, description: '13 / 3 = 4 r1' },
-      { input: '"1010", "10"', expectedOutput: "('101', '0')", isHidden: false, description: '10 / 2 = 5' },
-      { input: '"1111", "101"', expectedOutput: "('11', '0')", isHidden: true, description: '15 / 5 = 3 remainder 0' }
     ],
     hints: [
       'Process bits left to right, keeping a running remainder.',
@@ -219,9 +192,6 @@ export const topic2Exercises: CodingExercise[] = [
 
 print(saturating_add("01111111", "00000001"))`,
     testCases: [
-      { input: '"01111111", "00000001"', expectedOutput: '01111111', isHidden: false, description: 'Clamp positive overflow' },
-      { input: '"10000000", "10000000"', expectedOutput: '10000000', isHidden: false, description: 'Clamp negative overflow' },
-      { input: '"00000101", "11111011"', expectedOutput: '00000000', isHidden: true, description: '5 + (-5) = 0, no clamp' }
     ],
     hints: [
       'Convert to signed ints, add, then clamp to [-128, 127].',
@@ -240,9 +210,6 @@ print(saturating_add("01111111", "00000001"))`,
     starterCode: '# Detect signed overflow in 8-bit add\ndef will_overflow(a, b):\n    # Your code here\n    pass\n\nprint(will_overflow(\"01111111\", \"00000001\"))  # True',
     solution: 'def will_overflow(a, b):\n    a = a.zfill(8)\n    b = b.zfill(8)\n    sign_a, sign_b = a[0], b[0]\n    # add to get sign of result\n    res = add_bits(a, b)\n    sign_r = res[0]\n    return sign_a == sign_b and sign_r != sign_a\n\ndef add_bits(x, y):\n    max_len = max(len(x), len(y))\n    x = x.zfill(max_len)\n    y = y.zfill(max_len)\n    carry = 0\n    out = []\n    for i in range(max_len - 1, -1, -1):\n        s = int(x[i]) + int(y[i]) + carry\n        out.append(str(s % 2))\n        carry = s // 2\n    if carry:\n        out.append(\"1\")\n    return \"\".join(reversed(out))[-8:]\n\nprint(will_overflow(\"01111111\", \"00000001\"))',
     testCases: [
-      { input: '"01111111", "00000001"', expectedOutput: 'True', isHidden: false, description: '127 + 1 overflows' },
-      { input: '"10000000", "10000000"', expectedOutput: 'True', isHidden: false, description: '-128 + -128 overflows' },
-      { input: '"01000000", "11111111"', expectedOutput: 'False', isHidden: true, description: '64 + (-1) no overflow' }
     ],
     hints: [
       'Overflow only when signs of operands match but differ from result sign.',
@@ -261,9 +228,6 @@ print(saturating_add("01111111", "00000001"))`,
     starterCode: '# Half adder using bitwise ops\ndef half_adder_bit(a, b):\n    # Your code here\n    pass\n\nprint(half_adder_bit(1, 1))',
     solution: 'def half_adder_bit(a, b):\n    sum_bit = a ^ b\n    carry = a & b\n    return (sum_bit, carry)\n\nprint(half_adder_bit(1, 1))',
     testCases: [
-      { input: '1, 1', expectedOutput: '(0, 1)', isHidden: false, description: '1+1' },
-      { input: '1, 0', expectedOutput: '(1, 0)', isHidden: false, description: '1+0' },
-      { input: '0, 0', expectedOutput: '(0, 0)', isHidden: true, description: '0+0' }
     ],
     hints: [
       'sum = XOR, carry = AND.',

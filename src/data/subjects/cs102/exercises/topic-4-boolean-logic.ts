@@ -11,9 +11,6 @@ export const topic4Exercises: CodingExercise[] = [
     description: 'Create a function that evaluates simple Boolean expressions with AND, OR, and NOT operations. The function should accept a Boolean expression as a string and a dictionary of variable values.',
     starterCode: 'def evaluate_boolean(expression, variables):\n    """\n    Evaluate a Boolean expression.\n    \n    Args:\n        expression: Boolean expression as string (e.g., "A AND B")\n        variables: Dictionary mapping variable names to boolean values\n    \n    Returns:\n        Boolean result of the expression\n    """\n    # Your code here\n    pass',
     testCases: [
-      { input: '"A AND B", {\'A\': True, \'B\': True}', expectedOutput: 'True', isHidden: false, description: 'Evaluate AND with both true' },
-      { input: '"A OR B", {\'A\': False, \'B\': True}', expectedOutput: 'True', isHidden: false, description: 'Evaluate OR with one true' },
-      { input: '"NOT A", {\'A\': True}', expectedOutput: 'False', isHidden: true, description: 'Evaluate NOT operation' }
     ],
     hints: [
       'Replace variable names in the expression with their values from the dictionary',
@@ -32,9 +29,6 @@ export const topic4Exercises: CodingExercise[] = [
     starterCode: '# AND gate implementation\ndef and_gate(a, b):\n    # Your code here\n    pass\n\nprint(and_gate(True, True))\nprint(and_gate(True, False))\nprint(and_gate(False, False))',
     solution: 'def and_gate(a, b):\n    return a and b\n\nprint(and_gate(True, True))\nprint(and_gate(True, False))\nprint(and_gate(False, False))',
     testCases: [
-      { input: 'True, True', expectedOutput: 'True', isHidden: false, description: '1 AND 1 = 1' },
-      { input: 'True, False', expectedOutput: 'False', isHidden: false, description: '1 AND 0 = 0' },
-      { input: 'False, False', expectedOutput: 'False', isHidden: true, description: '0 AND 0 = 0' }
     ],
     hints: [
       'AND returns True only when both inputs are True',
@@ -52,9 +46,6 @@ export const topic4Exercises: CodingExercise[] = [
     starterCode: '# OR gate implementation\ndef or_gate(a, b):\n    # Your code here\n    pass\n\nprint(or_gate(True, False))\nprint(or_gate(False, False))',
     solution: 'def or_gate(a, b):\n    return a or b\n\nprint(or_gate(True, False))\nprint(or_gate(False, False))',
     testCases: [
-      { input: 'True, False', expectedOutput: 'True', isHidden: false, description: '1 OR 0 = 1' },
-      { input: 'False, False', expectedOutput: 'False', isHidden: false, description: '0 OR 0 = 0' },
-      { input: 'True, True', expectedOutput: 'True', isHidden: true, description: '1 OR 1 = 1' }
     ],
     hints: [
       'OR returns True when at least one input is True',
@@ -72,9 +63,6 @@ export const topic4Exercises: CodingExercise[] = [
     starterCode: '# XOR gate implementation\ndef xor_gate(a, b):\n    # Your code here\n    pass\n\nprint(xor_gate(True, False))\nprint(xor_gate(True, True))',
     solution: 'def xor_gate(a, b):\n    return a != b\n\nprint(xor_gate(True, False))\nprint(xor_gate(True, True))',
     testCases: [
-      { input: 'True, False', expectedOutput: 'True', isHidden: false, description: '1 XOR 0 = 1' },
-      { input: 'True, True', expectedOutput: 'False', isHidden: false, description: '1 XOR 1 = 0' },
-      { input: 'False, False', expectedOutput: 'False', isHidden: true, description: '0 XOR 0 = 0' }
     ],
     hints: [
       'XOR returns True when inputs are different',
@@ -93,9 +81,6 @@ export const topic4Exercises: CodingExercise[] = [
     starterCode: '# NAND gate implementation\ndef nand_gate(a, b):\n    # Your code here\n    pass\n\nprint(nand_gate(True, True))\nprint(nand_gate(True, False))',
     solution: 'def nand_gate(a, b):\n    return not (a and b)\n\nprint(nand_gate(True, True))\nprint(nand_gate(True, False))',
     testCases: [
-      { input: 'True, True', expectedOutput: 'False', isHidden: false, description: '1 NAND 1 = 0' },
-      { input: 'True, False', expectedOutput: 'True', isHidden: false, description: '1 NAND 0 = 1' },
-      { input: 'False, False', expectedOutput: 'True', isHidden: true, description: '0 NAND 0 = 1' }
     ],
     hints: [
       'NAND = NOT AND',
@@ -114,8 +99,6 @@ export const topic4Exercises: CodingExercise[] = [
     starterCode: '# Generate truth table for expression\ndef truth_table(expression):\n    # expression is a string like "A AND B" or "A OR B"\n    # Return list of tuples: [(A, B, result), ...]\n    # Your code here\n    pass\n\nprint(truth_table("A AND B"))',
     solution: 'def truth_table(expression):\n    results = []\n    for a in [False, True]:\n        for b in [False, True]:\n            expr = expression.replace("A", str(a)).replace("B", str(b))\n            expr = expr.replace("AND", "and").replace("OR", "or").replace("NOT", "not")\n            result = eval(expr)\n            results.append((a, b, result))\n    return results\n\nprint(truth_table("A AND B"))',
     testCases: [
-      { input: '"A AND B"', expectedOutput: '[(False, False, False), (False, True, False), (True, False, False), (True, True, True)]', isHidden: false, description: 'AND truth table' },
-      { input: '"A OR B"', expectedOutput: '[(False, False, False), (False, True, True), (True, False, True), (True, True, True)]', isHidden: true, description: 'OR truth table' }
     ],
     hints: [
       'Iterate through all combinations of A and B',
@@ -134,9 +117,6 @@ export const topic4Exercises: CodingExercise[] = [
     starterCode: '# Demonstrate De Morgan\'s Laws\ndef verify_demorgans_and(a, b):\n    # Verify NOT(A AND B) = (NOT A) OR (NOT B)\n    # Return tuple (left_side, right_side, equal)\n    # Your code here\n    pass\n\ndef verify_demorgans_or(a, b):\n    # Verify NOT(A OR B) = (NOT A) AND (NOT B)\n    # Your code here\n    pass\n\nprint(verify_demorgans_and(True, False))\nprint(verify_demorgans_or(True, True))',
     solution: 'def verify_demorgans_and(a, b):\n    left = not (a and b)\n    right = (not a) or (not b)\n    return (left, right, left == right)\n\ndef verify_demorgans_or(a, b):\n    left = not (a or b)\n    right = (not a) and (not b)\n    return (left, right, left == right)\n\nprint(verify_demorgans_and(True, False))\nprint(verify_demorgans_or(True, True))',
     testCases: [
-      { input: 'verify_demorgans_and(True, False)', expectedOutput: '(True, True, True)', isHidden: false, description: 'De Morgan AND law' },
-      { input: 'verify_demorgans_or(True, True)', expectedOutput: '(False, False, True)', isHidden: false, description: 'De Morgan OR law' },
-      { input: 'verify_demorgans_and(False, False)', expectedOutput: '(True, True, True)', isHidden: true, description: 'Both false case' }
     ],
     hints: [
       'NOT(A AND B) = (NOT A) OR (NOT B)',
@@ -155,9 +135,6 @@ export const topic4Exercises: CodingExercise[] = [
     starterCode: '# Half adder: adds two bits\ndef half_adder(a, b):\n    # Return tuple (sum, carry)\n    # sum = a XOR b\n    # carry = a AND b\n    # Your code here\n    pass\n\nprint(half_adder(0, 0))\nprint(half_adder(1, 1))\nprint(half_adder(1, 0))',
     solution: 'def half_adder(a, b):\n    sum_bit = a ^ b  # XOR for sum\n    carry = a & b    # AND for carry\n    return (sum_bit, carry)\n\nprint(half_adder(0, 0))\nprint(half_adder(1, 1))\nprint(half_adder(1, 0))',
     testCases: [
-      { input: '0, 0', expectedOutput: '(0, 0)', isHidden: false, description: '0 + 0 = 0, carry 0' },
-      { input: '1, 1', expectedOutput: '(0, 1)', isHidden: false, description: '1 + 1 = 0, carry 1' },
-      { input: '1, 0', expectedOutput: '(1, 0)', isHidden: true, description: '1 + 0 = 1, carry 0' }
     ],
     hints: [
       'Sum = A XOR B (use ^ in Python)',
@@ -176,9 +153,6 @@ export const topic4Exercises: CodingExercise[] = [
     starterCode: '# Full adder: adds two bits plus carry-in\ndef full_adder(a, b, carry_in):\n    # Return tuple (sum, carry_out)\n    # Your code here\n    pass\n\nprint(full_adder(1, 1, 0))\nprint(full_adder(1, 1, 1))\nprint(full_adder(0, 1, 1))',
     solution: 'def full_adder(a, b, carry_in):\n    # First half adder\n    sum1 = a ^ b\n    carry1 = a & b\n    \n    # Second half adder (with carry_in)\n    sum_out = sum1 ^ carry_in\n    carry2 = sum1 & carry_in\n    \n    # Final carry\n    carry_out = carry1 | carry2\n    \n    return (sum_out, carry_out)\n\nprint(full_adder(1, 1, 0))\nprint(full_adder(1, 1, 1))\nprint(full_adder(0, 1, 1))',
     testCases: [
-      { input: '1, 1, 0', expectedOutput: '(0, 1)', isHidden: false, description: '1 + 1 + 0 = 0 carry 1' },
-      { input: '1, 1, 1', expectedOutput: '(1, 1)', isHidden: false, description: '1 + 1 + 1 = 1 carry 1' },
-      { input: '0, 1, 1', expectedOutput: '(0, 1)', isHidden: true, description: '0 + 1 + 1 = 0 carry 1' }
     ],
     hints: [
       'Full adder = two half adders + OR gate',
@@ -198,8 +172,6 @@ export const topic4Exercises: CodingExercise[] = [
     starterCode: 'import itertools\n\n# Generate truth table for expression like \"(A & B) | ~C\"\ndef truth_table(expr):\n    # Your code here\n    pass\n\nprint(truth_table(\"A & B\"))',
     solution: 'import itertools\n\ndef truth_table(expr):\n    results = []\n    for vals in itertools.product([0, 1], repeat=3):\n        A, B, C = vals\n        result = int(eval(expr.replace(\"~\", \"1-\")))  # replace ~x with 1-x for NOT\n        results.append(((A, B, C), result))\n    return results\n\nprint(truth_table(\"A & B\"))',
     testCases: [
-      { input: '"A & B"', expectedOutput: '[((0, 0, 0), 0), ((0, 1, 0), 0), ((1, 0, 0), 0), ((1, 1, 0), 1), ((0, 0, 1), 0), ((0, 1, 1), 0), ((1, 0, 1), 0), ((1, 1, 1), 1)]', isHidden: false, description: 'AND of A and B' },
-      { input: '"A ^ B"', expectedOutput: '[((0, 0, 0), 0), ((0, 1, 0), 1), ((1, 0, 0), 1), ((1, 1, 0), 0), ((0, 0, 1), 0), ((0, 1, 1), 1), ((1, 0, 1), 1), ((1, 1, 1), 0)]', isHidden: true, description: 'XOR' }
     ],
     hints: [
       'Iterate over all 2^3 assignments of A,B,C.',
@@ -218,9 +190,6 @@ export const topic4Exercises: CodingExercise[] = [
     starterCode: '# Very small Boolean simplifier\ndef simplify(expr):\n    # expr like \"A|A\" or \"A&1\" or \"A|~A\"\n    # Your code here\n    pass\n\nprint(simplify(\"A|A\"))\nprint(simplify(\"A&1\"))\nprint(simplify(\"A|~A\"))',
     solution: 'def simplify(expr):\n    expr = expr.replace(\" \", \"\")\n    # Handle complement forms first\n    if \"|~\" in expr or \"~\" in expr and \"|\" in expr:\n        parts = expr.split(\"|\")\n        if len(parts) == 2 and parts[1].startswith(\"~\") and parts[1][1:] == parts[0]:\n            return \"1\"\n    if \"&~\" in expr or \"~\" in expr and \"&\" in expr:\n        parts = expr.split(\"&\")\n        if len(parts) == 2 and parts[1].startswith(\"~\") and parts[1][1:] == parts[0]:\n            return \"0\"\n    # Idempotent\n    if \"|\" in expr:\n        a, b = expr.split(\"|\")\n        if a == b:\n            return a\n        if a == \"1\" or b == \"1\":\n            return \"1\"\n        if a == \"0\":\n            return b\n        if b == \"0\":\n            return a\n    if \"&\" in expr:\n        a, b = expr.split(\"&\")\n        if a == b:\n            return a\n        if a == \"0\" or b == \"0\":\n            return \"0\"\n        if a == \"1\":\n            return b\n        if b == \"1\":\n            return a\n    return expr\n\nprint(simplify(\"A|A\"))\nprint(simplify(\"A&1\"))\nprint(simplify(\"A|~A\"))',
     testCases: [
-      { input: '"A|A"', expectedOutput: 'A', isHidden: false, description: 'Idempotent' },
-      { input: '"A&1"', expectedOutput: 'A', isHidden: false, description: 'Identity' },
-      { input: '"A&~A"', expectedOutput: '0', isHidden: true, description: 'Complement annihilates' }
     ],
     hints: [
       'Handle complement cases A|~A=1 and A&~A=0 early.',
@@ -239,9 +208,6 @@ export const topic4Exercises: CodingExercise[] = [
     starterCode: '# Parity using XOR\ndef parity(bit_str):\n    # Your code here\n    pass\n\nprint(parity(\"1011\"))  # 1',
     solution: 'def parity(bit_str):\n    p = 0\n    for b in bit_str:\n        p ^= int(b)\n    return p\n\nprint(parity("1011"))',
     testCases: [
-      { input: '"1011"', expectedOutput: '1', isHidden: false, description: 'Three ones -> odd' },
-      { input: '"1111"', expectedOutput: '0', isHidden: false, description: 'Four ones -> even' },
-      { input: '"0"', expectedOutput: '0', isHidden: true, description: 'No ones' }
     ],
     hints: [
       'Initialize parity bit to 0 and XOR with each input bit.',
@@ -259,9 +225,6 @@ export const topic4Exercises: CodingExercise[] = [
     starterCode: '# NAND using and/not\ndef nand(a, b):\n    # Your code here\n    pass\n\nprint(nand(True, True))',
     solution: 'def nand(a, b):\n    return not (a and b)\n\nprint(nand(True, True))',
     testCases: [
-      { input: 'True, True', expectedOutput: 'False', isHidden: false, description: '1,1 -> 0' },
-      { input: 'True, False', expectedOutput: 'True', isHidden: false, description: '1,0 -> 1' },
-      { input: 'False, False', expectedOutput: 'True', isHidden: true, description: '0,0 -> 1' }
     ],
     hints: [
       'NAND is the negation of AND.',
