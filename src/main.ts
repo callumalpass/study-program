@@ -141,10 +141,85 @@ function safeRender(
   }
 }
 
+/**
+ * Initialize mobile navigation
+ */
+function initMobileNav(): void {
+  const hamburgerBtn = document.getElementById('hamburger-btn');
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('mobile-overlay');
+  const closeBtn = document.getElementById('sidebar-close-btn');
+
+  if (!hamburgerBtn || !sidebar || !overlay) {
+    return;
+  }
+
+  const openMenu = () => {
+    sidebar.classList.add('open');
+    overlay.classList.add('active');
+    hamburgerBtn.classList.add('active');
+    hamburgerBtn.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeMenu = () => {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('active');
+    hamburgerBtn.classList.remove('active');
+    hamburgerBtn.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  };
+
+  hamburgerBtn.addEventListener('click', () => {
+    const isOpen = sidebar.classList.contains('open');
+    if (isOpen) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
+  });
+
+  overlay.addEventListener('click', closeMenu);
+
+  if (closeBtn) {
+    closeBtn.addEventListener('click', closeMenu);
+  }
+
+  // Close menu when pressing Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+      closeMenu();
+    }
+  });
+
+  // Close menu when clicking a nav link (on mobile)
+  sidebar.addEventListener('click', (e) => {
+    const target = e.target as HTMLElement;
+    if (target.closest('.sidebar-nav-link') || target.closest('.subject-link')) {
+      // Small delay to allow navigation to start
+      setTimeout(closeMenu, 100);
+    }
+  });
+
+  // Close menu on window resize if becoming desktop
+  let resizeTimer: number;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = window.setTimeout(() => {
+      if (window.innerWidth > 768 && sidebar.classList.contains('open')) {
+        closeMenu();
+      }
+    }, 100);
+  });
+}
+
 // Initialize the application
 function initApp(): void {
   // Initialize theme first to prevent flash of wrong theme
   initTheme();
+
+  // Initialize mobile navigation
+  initMobileNav();
 
   const sidebarEl = document.getElementById('sidebar');
   const mainEl = document.getElementById('main-content');

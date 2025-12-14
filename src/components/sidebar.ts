@@ -8,6 +8,7 @@ import type {
   Exam,
 } from '@/core/types';
 import {
+  navigate,
   navigateToExam,
   navigateToExercise,
   navigateToQuiz,
@@ -18,12 +19,10 @@ import {
 import { Icons } from './icons';
 
 interface SidebarState {
-  collapsed: boolean;
   currentSubject: string | null;
 }
 
 const state: SidebarState = {
-  collapsed: false,
   currentSubject: null,
 };
 
@@ -123,6 +122,7 @@ function createSubjectItem(
   const firstTopic = subject.topics[0];
   const firstQuizId = subject.topics.find((t) => t.quizIds.length > 0)?.quizIds[0];
   const firstExerciseId = subject.topics.find((t) => t.exerciseIds.length > 0)?.exerciseIds[0];
+  const firstTopicWithExercises = subject.topics.find((t) => t.exerciseIds.length > 0);
   const topicTitleMap = subject.topics.reduce<Record<string, string>>((acc, topic) => {
     acc[topic.id] = topic.title;
     return acc;
@@ -192,243 +192,49 @@ function createSubjectItem(
         </button>
       ` : ''}
       ${subjectQuizzes.length ? `
-        <button class="menu-action" data-submenu="quizzes">
+        <button class="menu-action" data-section="topics-section">
           <span class="menu-icon">${Icons.StatQuiz}</span>
           <span class="menu-text">
             <span class="menu-title">Quizzes</span>
             <span class="menu-subtitle">${subjectQuizzes.length} available</span>
           </span>
-          <span class="menu-chevron">${Icons.ChevronRight}</span>
+          <span class="menu-chevron">${Icons.ArrowRight}</span>
         </button>
       ` : ''}
-      ${subjectExercises.length ? `
-        <button class="menu-action" data-submenu="exercises">
+      ${subjectExercises.length && firstTopicWithExercises ? `
+        <button class="menu-action" data-practice-topic="${firstTopicWithExercises.id}">
           <span class="menu-icon">${Icons.StatCode}</span>
           <span class="menu-text">
             <span class="menu-title">Exercises</span>
             <span class="menu-subtitle">${subjectExercises.length} available</span>
           </span>
-          <span class="menu-chevron">${Icons.ChevronRight}</span>
+          <span class="menu-chevron">${Icons.ArrowRight}</span>
         </button>
       ` : ''}
       ${subjectExams.length ? `
-        <button class="menu-action" data-submenu="exams">
+        <button class="menu-action" data-section="exams-section">
           <span class="menu-icon">${Icons.Beaker}</span>
           <span class="menu-text">
             <span class="menu-title">Exams</span>
             <span class="menu-subtitle">${subjectExams.length} scheduled</span>
           </span>
-          <span class="menu-chevron">${Icons.ChevronRight}</span>
+          <span class="menu-chevron">${Icons.ArrowRight}</span>
         </button>
       ` : ''}
       ${subjectProjects.length ? `
-        <button class="menu-action" data-submenu="projects">
+        <button class="menu-action" data-section="projects-section">
           <span class="menu-icon">${Icons.StatProject}</span>
           <span class="menu-text">
             <span class="menu-title">Projects</span>
             <span class="menu-subtitle">${subjectProjects.length} to build</span>
           </span>
-          <span class="menu-chevron">${Icons.ChevronRight}</span>
+          <span class="menu-chevron">${Icons.ArrowRight}</span>
         </button>
       ` : ''}
     `;
 
     let hideTimeout: number | null = null;
-    let hideSubmenuTimeout: number | null = null;
-    let activeSubmenu: HTMLElement | null = null;
 
-    hoverMenu.querySelectorAll('.menu-action').forEach((btn) => {
-      btn.addEventListener('click', (event) => {
-        event.preventDefault();
-        event.stopPropagation();
-        const target = event.currentTarget as HTMLElement;
-        if (target.dataset.submenu) return;
-
-        const topicId = target.dataset.topic;
-        const quizId = target.dataset.quiz;
-        const exerciseId = target.dataset.exercise;
-        const examId = target.dataset.exam;
-        const projectId = target.dataset.project;
-
-        if (topicId) {
-          navigateToTopic(subject.id, topicId);
-          return;
-        }
-        if (quizId) {
-          navigateToQuiz(subject.id, quizId);
-          return;
-        }
-        if (exerciseId) {
-          navigateToExercise(subject.id, exerciseId);
-          return;
-        }
-        if (examId) {
-          navigateToExam(subject.id, examId);
-          return;
-        }
-        if (projectId) {
-          navigateToProject(subject.id, projectId);
-          return;
-        }
-
-        navigateToSubject(subject.id);
-      });
-    });
-
-    const closeAllSubmenus = () => {
-      if (activeSubmenu) {
-        activeSubmenu.classList.remove('open');
-        activeSubmenu = null;
-      }
-      hoverMenu.querySelectorAll('[data-submenu]').forEach((trigger) => {
-        trigger.classList.remove('submenu-open');
-      });
-    };
-
-    const buildSubmenu = (
-      key: string,
-      trigger: HTMLElement,
-      entries: Array<{ id: string; title: string; subtitle?: string; action: () => void }>
-    ) => {
-      const panel = document.createElement('div');
-      panel.className = 'subject-submenu';
-      panel.dataset.submenuPanel = key;
-      panel.innerHTML = entries
-        .map(
-          (entry) => `
-          <button class="menu-action menu-condensed" data-submenu-item="${entry.id}">
-            <span class="menu-text">
-              <span class="menu-title">${entry.title}</span>
-              ${entry.subtitle ? `<span class="menu-subtitle">${entry.subtitle}</span>` : ''}
-            </span>
-            <span class="menu-chevron">${Icons.ChevronRight}</span>
-          </button>
-        `
-        )
-        .join('');
-      hoverMenu.appendChild(panel);
-
-      const positionPanel = () => {
-        const rect = trigger.getBoundingClientRect();
-        panel.style.position = 'fixed';
-        panel.style.left = `${rect.right + 8}px`;
-        panel.style.top = `${rect.top}px`;
-      };
-
-      const openPanel = () => {
-        if (hideSubmenuTimeout) {
-          clearTimeout(hideSubmenuTimeout);
-          hideSubmenuTimeout = null;
-        }
-        closeAllSubmenus();
-        positionPanel();
-        panel.classList.add('open');
-        trigger.classList.add('submenu-open');
-        activeSubmenu = panel;
-      };
-
-      const scheduleCloseSubmenu = () => {
-        if (hideSubmenuTimeout) {
-          clearTimeout(hideSubmenuTimeout);
-        }
-        hideSubmenuTimeout = window.setTimeout(() => {
-          panel.classList.remove('open');
-          trigger.classList.remove('submenu-open');
-          if (activeSubmenu === panel) {
-            activeSubmenu = null;
-          }
-        }, 140);
-      };
-
-      trigger.addEventListener('mouseenter', openPanel);
-      trigger.addEventListener('focusin', openPanel);
-      trigger.addEventListener('mouseleave', scheduleCloseSubmenu);
-      trigger.addEventListener('focusout', scheduleCloseSubmenu);
-      panel.addEventListener('mouseenter', openPanel);
-      panel.addEventListener('mouseleave', scheduleCloseSubmenu);
-
-      panel.querySelectorAll('[data-submenu-item]').forEach((entryBtn) => {
-        entryBtn.addEventListener('click', (evt) => {
-          evt.preventDefault();
-          evt.stopPropagation();
-          const id = (evt.currentTarget as HTMLElement).dataset.submenuItem;
-          const entry = entries.find((e) => e.id === id);
-          if (entry) {
-            entry.action();
-          }
-        });
-      });
-    };
-
-    const submenuConfigs: Array<{
-      key: string;
-      trigger?: HTMLElement | null;
-      entries: Array<{ id: string; title: string; subtitle?: string; action: () => void }>;
-    }> = [];
-
-    const quizTrigger = hoverMenu.querySelector('[data-submenu="quizzes"]') as HTMLElement | null;
-    if (quizTrigger && subjectQuizzes.length) {
-      submenuConfigs.push({
-        key: 'quizzes',
-        trigger: quizTrigger,
-        entries: subjectQuizzes.map((quiz) => ({
-          id: quiz.id,
-          title: quiz.title,
-          subtitle: quiz.topicId ? topicTitleMap[quiz.topicId] || 'Quiz' : undefined,
-          action: () => navigateToQuiz(subject.id, quiz.id),
-        })),
-      });
-    }
-
-    const exerciseTrigger = hoverMenu.querySelector('[data-submenu="exercises"]') as HTMLElement | null;
-    if (exerciseTrigger && subjectExercises.length) {
-      submenuConfigs.push({
-        key: 'exercises',
-        trigger: exerciseTrigger,
-        entries: subjectExercises.map((exercise) => ({
-          id: exercise.id,
-          title: exercise.title,
-          subtitle: exercise.topicId ? topicTitleMap[exercise.topicId] || 'Exercise' : undefined,
-          action: () => navigateToExercise(subject.id, exercise.id),
-        })),
-      });
-    }
-
-    const examTrigger = hoverMenu.querySelector('[data-submenu="exams"]') as HTMLElement | null;
-    if (examTrigger && subjectExams.length) {
-      submenuConfigs.push({
-        key: 'exams',
-        trigger: examTrigger,
-        entries: subjectExams.map((exam) => ({
-          id: exam.id,
-          title: exam.title,
-          subtitle: `${exam.durationMinutes ? `${exam.durationMinutes} min · ` : ''}${exam.topicId ? (topicTitleMap[exam.topicId] || 'Exam') : 'Exam'}`,
-          action: () => navigateToExam(subject.id, exam.id),
-        })),
-      });
-    }
-
-    const projectTrigger = hoverMenu.querySelector('[data-submenu="projects"]') as HTMLElement | null;
-    if (projectTrigger && subjectProjects.length) {
-      submenuConfigs.push({
-        key: 'projects',
-        trigger: projectTrigger,
-        entries: subjectProjects.map((project) => ({
-          id: project.id,
-          title: project.title,
-          subtitle: `${project.estimatedHours} hrs · ${subject.code}`,
-          action: () => navigateToProject(subject.id, project.id),
-        })),
-      });
-    }
-
-    submenuConfigs.forEach(({ key, trigger, entries }) => {
-      if (trigger && entries.length) {
-        buildSubmenu(key, trigger, entries);
-      }
-    });
-
-    // Position the menu relative to viewport so it can escape the sidebar
     const positionMenu = () => {
       const rect = item.getBoundingClientRect();
       hoverMenu.style.position = 'fixed';
@@ -451,9 +257,69 @@ function createSubjectItem(
       }
       hideTimeout = window.setTimeout(() => {
         item.classList.remove('menu-open');
-        closeAllSubmenus();
       }, 120);
     };
+
+    hoverMenu.querySelectorAll('.menu-action').forEach((btn) => {
+      btn.addEventListener('click', (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        const target = event.currentTarget as HTMLElement;
+
+        const topicId = target.dataset.topic;
+        const quizId = target.dataset.quiz;
+        const exerciseId = target.dataset.exercise;
+        const examId = target.dataset.exam;
+        const projectId = target.dataset.project;
+        const sectionId = target.dataset.section;
+        const practiceTopicId = target.dataset.practiceTopic;
+
+        if (topicId) {
+          navigateToTopic(subject.id, topicId);
+          return;
+        }
+        if (practiceTopicId) {
+          // Navigate to topic page and scroll to practice section
+          navigateToTopic(subject.id, practiceTopicId);
+          setTimeout(() => {
+            const section = document.getElementById('practice-section');
+            if (section) {
+              section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          }, 100);
+          return;
+        }
+        if (quizId) {
+          navigateToQuiz(subject.id, quizId);
+          return;
+        }
+        if (exerciseId) {
+          navigateToExercise(subject.id, exerciseId);
+          return;
+        }
+        if (examId) {
+          navigateToExam(subject.id, examId);
+          return;
+        }
+        if (projectId) {
+          navigateToProject(subject.id, projectId);
+          return;
+        }
+        if (sectionId) {
+          // Navigate to subject page and scroll to section after render
+          navigateToSubject(subject.id);
+          setTimeout(() => {
+            const section = document.getElementById(sectionId);
+            if (section) {
+              section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          }, 100);
+          return;
+        }
+
+        navigateToSubject(subject.id);
+      });
+    });
 
     item.addEventListener('mouseenter', openMenu);
     item.addEventListener('mouseleave', scheduleClose);
@@ -520,7 +386,7 @@ export function renderSidebar(
   projects: Project[] = []
 ): void {
   container.innerHTML = '';
-  container.className = `sidebar ${state.collapsed ? 'collapsed' : ''}`;
+  container.className = 'sidebar';
 
   // Header with logo/title
   const header = document.createElement('div');
@@ -530,19 +396,7 @@ export function renderSidebar(
       <span class="logo-icon">${Icons.Logo}</span>
       <span class="logo-text">CS Degree</span>
     </div>
-    <button class="sidebar-toggle" aria-label="Toggle sidebar">
-      ${state.collapsed ? Icons.ChevronRight : Icons.ChevronLeft}
-    </button>
   `;
-
-  const toggleButton = header.querySelector('.sidebar-toggle') as HTMLButtonElement;
-  toggleButton.addEventListener('click', () => {
-    state.collapsed = !state.collapsed;
-    container.classList.toggle('collapsed');
-    
-    // Re-render the button icon
-    toggleButton.innerHTML = state.collapsed ? Icons.ChevronRight : Icons.ChevronLeft;
-  });
 
   container.appendChild(header);
 

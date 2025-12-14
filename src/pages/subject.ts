@@ -138,7 +138,7 @@ function renderSubjectOverview(
         </ul>
       </section>
 
-      <section class="section">
+      <section class="section" id="topics-section">
         <h2>Topics</h2>
         <div class="topics-list">
           ${subject.topics.map((topic, index) => renderTopicItem(topic, index + 1, subject.id, userProgress)).join('')}
@@ -146,7 +146,7 @@ function renderSubjectOverview(
       </section>
 
       ${subjectExams.length > 0 ? `
-        <section class="section">
+        <section class="section" id="exams-section">
           <h2>Exams</h2>
           <div class="exams-list">
             ${subjectExams.map(exam => renderExamItem(exam, subject.id, userProgress)).join('')}
@@ -155,7 +155,7 @@ function renderSubjectOverview(
       ` : ''}
 
       ${subjectProjects.length > 0 ? `
-        <section class="section">
+        <section class="section" id="projects-section">
           <h2>Projects</h2>
           <div class="projects-list">
             ${subjectProjects.map(project => renderProjectItem(project, subject.id, userProgress)).join('')}

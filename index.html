@@ -10,8 +10,26 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   </head>
   <body>
+    <!-- Mobile Header (visible on smaller screens) -->
+    <header id="mobile-header" class="mobile-header">
+      <div class="mobile-logo">
+        <span class="logo-icon">🎓</span>
+        <span>CS Degree</span>
+      </div>
+      <button id="hamburger-btn" class="hamburger-btn" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </header>
+
+    <!-- Mobile Overlay -->
+    <div id="mobile-overlay" class="mobile-overlay"></div>
+
     <div id="app">
-      <aside id="sidebar" class="sidebar"></aside>
+      <aside id="sidebar" class="sidebar">
+        <button id="sidebar-close-btn" class="sidebar-close-btn" aria-label="Close navigation menu">&times;</button>
+      </aside>
       <main id="main-content" class="main-content"></main>
     </div>
     <script type="module" src="/src/main.ts"></script>

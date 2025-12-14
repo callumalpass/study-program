@@ -1599,6 +1599,8 @@ textarea.code-editor::placeholder {
 .test-result-item.failed {
   border-left: 4px solid var(--color-error);
 }
+
+.level-score {
   font-size: var(--font-size-2xl);
   font-weight: var(--font-weight-bold);
   color: var(--color-accent-primary);
@@ -2748,4 +2750,329 @@ textarea.code-editor::placeholder {
 .toggle-btn svg {
   width: 16px;
   height: 16px;
+}
+
+/* ==========================================================================
+   Enhanced Mobile Responsive Styles
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  /* Page titles smaller on mobile */
+  .page-header h1,
+  h1 {
+    font-size: var(--font-size-2xl);
+  }
+
+  h2 {
+    font-size: var(--font-size-xl);
+  }
+
+  h3 {
+    font-size: var(--font-size-lg);
+  }
+
+  /* Circular progress responsive */
+  .circular-progress svg {
+    width: 160px;
+    height: 160px;
+  }
+
+  .progress-text {
+    font-size: var(--font-size-2xl);
+  }
+
+  /* Progress stats grid */
+  .progress-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-md);
+  }
+
+  .stat-box {
+    padding: var(--space-sm);
+  }
+
+  .stat-box .stat-value {
+    font-size: var(--font-size-xl);
+  }
+
+  /* Year cards mobile */
+  .year-cards {
+    grid-template-columns: 1fr;
+  }
+
+  /* Breadcrumb truncation */
+  .breadcrumb {
+    flex-wrap: wrap;
+    font-size: var(--font-size-xs);
+  }
+
+  /* Subject card mobile */
+  .subject-card {
+    padding: var(--space-md);
+  }
+
+  .subject-card .subject-meta {
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+  }
+
+  /* Topic and project items mobile */
+  .topic-item,
+  .project-item,
+  .exam-item {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-md);
+  }
+
+  .topic-item .btn,
+  .project-item .btn,
+  .exam-item .btn {
+    width: 100%;
+  }
+
+  /* Topic number smaller */
+  .topic-number {
+    width: 32px;
+    height: 32px;
+    font-size: var(--font-size-sm);
+  }
+
+  /* Topic navigation stacking */
+  .topic-navigation,
+  .exercise-navigation {
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .topic-navigation .nav-left,
+  .topic-navigation .nav-right,
+  .exercise-navigation .nav-left,
+  .exercise-navigation .nav-right {
+    width: 100%;
+    text-align: center;
+  }
+
+  .topic-navigation .btn,
+  .exercise-navigation .btn {
+    width: 100%;
+    max-width: none;
+  }
+
+  /* Practice quick nav mobile */
+  .practice-quick-nav {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .practice-quick-actions {
+    justify-content: stretch;
+  }
+
+  .practice-quick-actions .btn {
+    flex: 1;
+  }
+
+  /* Settings item stacking */
+  .setting-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-md);
+  }
+
+  .setting-item > * {
+    width: 100%;
+  }
+
+  /* Achievement cards */
+  .achievements-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Data actions */
+  .data-actions {
+    grid-template-columns: 1fr;
+  }
+
+  /* Subject status badge smaller */
+  .subject-status-badge {
+    font-size: var(--font-size-xs);
+    padding: var(--space-xs) var(--space-sm);
+  }
+
+  /* Attempt card mobile */
+  .attempt-card {
+    flex-direction: column;
+    gap: var(--space-sm);
+    text-align: center;
+  }
+
+  /* Submission form mobile */
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .form-actions .btn {
+    width: 100%;
+  }
+
+  /* Self assessment grid */
+  .self-assessment-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Scaffolding grid */
+  .scaffolding-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Exercise header title section */
+  .topic-title-section {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-sm);
+  }
+}
+
+/* Small phones additional adjustments */
+@media (max-width: 480px) {
+  /* Even smaller circular progress */
+  .circular-progress svg {
+    width: 120px;
+    height: 120px;
+  }
+
+  .progress-text {
+    font-size: var(--font-size-xl);
+  }
+
+  /* Stats 1 column on tiny screens */
+  .progress-stats {
+    grid-template-columns: 1fr;
+  }
+
+  /* Progress stats grid single column */
+  .progress-stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Smaller page padding */
+  .progress-card,
+  .progress-overview-card {
+    padding: var(--space-md);
+  }
+
+  /* Subject breakdown item compact */
+  .subject-breakdown-item {
+    padding: var(--space-sm);
+  }
+
+  .subject-breakdown-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-sm);
+  }
+
+  /* Content section compact */
+  .content-section {
+    padding: var(--space-md);
+  }
+
+  /* Hide less important info on very small screens */
+  .topic-meta {
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .project-meta,
+  .exam-meta {
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+}
+
+/* ==========================================================================
+   Overflow and Scrolling Fixes
+   ========================================================================== */
+
+/* Horizontal scroll for tables */
+.rubric-table,
+table {
+  display: block;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Ensure table contents don't break layout */
+@media (max-width: 768px) {
+  .rubric-table {
+    min-width: 500px;
+  }
+
+  /* Wrap table in scrollable container if needed */
+  .table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: 0 calc(-1 * var(--space-md));
+    padding: 0 var(--space-md);
+  }
+}
+
+/* Code blocks horizontal scroll */
+pre {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.code-snippet {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Prevent content overflow */
+.main-content {
+  overflow-x: hidden;
+}
+
+/* Long text truncation utilities */
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Word break for long URLs and code */
+.break-word {
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Ensure images don't overflow */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ==========================================================================
+   Safe Area Support for Notched Devices
+   ========================================================================== */
+
+@supports (padding: max(0px)) {
+  .mobile-header {
+    padding-left: max(var(--space-md), env(safe-area-inset-left));
+    padding-right: max(var(--space-md), env(safe-area-inset-right));
+  }
+
+  .sidebar {
+    padding-left: max(var(--space-lg), env(safe-area-inset-left));
+    padding-bottom: max(var(--space-lg), env(safe-area-inset-bottom));
+  }
+
+  @media (max-width: 768px) {
+    .main-content {
+      padding-left: max(var(--space-md), env(safe-area-inset-left));
+      padding-right: max(var(--space-md), env(safe-area-inset-right));
+      padding-bottom: max(var(--space-md), env(safe-area-inset-bottom));
+    }
+  }
 }

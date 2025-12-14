@@ -1624,3 +1624,207 @@
   width: 12px;
   height: 12px;
 }
+
+/* ==========================================================================
+   Mobile Responsive Styles
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  /* Touch-friendly button sizes */
+  .btn {
+    min-height: 44px;
+    padding: var(--space-md) var(--space-lg);
+  }
+
+  .btn-sm {
+    min-height: 36px;
+    padding: var(--space-sm) var(--space-md);
+  }
+
+  .btn-lg {
+    min-height: 52px;
+    padding: var(--space-lg) var(--space-xl);
+  }
+
+  /* Touch-friendly quiz options */
+  .quiz-option {
+    padding: var(--space-lg);
+    min-height: 56px;
+  }
+
+  .option-label {
+    padding: var(--space-lg);
+    min-height: 56px;
+  }
+
+  /* Quiz header stacking */
+  .quiz-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .quiz-info {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .quiz-timer {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Code editor toolbar mobile layout */
+  .editor-toolbar {
+    padding: var(--space-sm);
+  }
+
+  .toolbar-left,
+  .toolbar-right {
+    gap: var(--space-xs);
+  }
+
+  .toolbar-separator {
+    display: none;
+  }
+
+  /* Font controls compact on mobile */
+  .font-controls {
+    display: none;
+  }
+
+  /* Editor element min-height for touch */
+  .editor-element {
+    min-height: 250px;
+  }
+
+  /* Output panel adjustments */
+  .output-content {
+    max-height: 200px;
+    font-size: var(--font-size-xs);
+  }
+
+  /* Test results compact layout */
+  .test-result {
+    padding: var(--space-sm);
+  }
+
+  .test-result-header {
+    flex-wrap: wrap;
+  }
+
+  .test-name {
+    flex: 1 1 100%;
+    margin-bottom: var(--space-xs);
+  }
+
+  /* Form elements touch-friendly */
+  .form-input,
+  .form-textarea,
+  .form-select {
+    min-height: 44px;
+    font-size: 16px; /* Prevents iOS zoom on focus */
+  }
+
+  /* Checkbox and radio touch targets */
+  .form-checkbox,
+  .form-radio {
+    min-height: 44px;
+    padding: var(--space-sm) 0;
+  }
+
+  .form-checkbox input,
+  .form-radio input {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* Card padding adjustment */
+  .card {
+    padding: var(--space-md);
+  }
+
+  /* Question navigation stacking */
+  .question-nav {
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .question-nav .btn {
+    width: 100%;
+  }
+
+  /* Summary score compact */
+  .summary-score {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .score-circle {
+    width: 80px;
+    height: 80px;
+  }
+
+  /* Quiz question compact */
+  .quiz-question {
+    padding: var(--space-md);
+  }
+
+  .quiz-question-header {
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  /* Alert compact */
+  .alert {
+    padding: var(--space-sm) var(--space-md);
+    font-size: var(--font-size-sm);
+  }
+
+  /* Rubric mobile layout */
+  .rubric-table th,
+  .rubric-table td {
+    padding: var(--space-sm);
+    font-size: var(--font-size-xs);
+  }
+}
+
+/* Small phones */
+@media (max-width: 480px) {
+  /* Even more compact button spacing */
+  .btn {
+    padding: var(--space-sm) var(--space-md);
+  }
+
+  /* Stack quiz timer elements */
+  .quiz-timer {
+    padding: 6px 10px;
+    font-size: var(--font-size-sm);
+  }
+
+  /* Compact code editor */
+  .code-editor-container {
+    border-radius: var(--radius-md);
+  }
+
+  .editor-element {
+    min-height: 200px;
+  }
+
+  /* Hide vim button on very small screens */
+  .btn-vim {
+    display: none;
+  }
+
+  /* Quiz options even larger touch targets */
+  .quiz-option,
+  .option-label {
+    padding: var(--space-md);
+  }
+
+  /* Compact badges */
+  .badge {
+    font-size: 10px;
+    padding: 2px var(--space-xs);
+  }
+}
