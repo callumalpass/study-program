@@ -53,6 +53,7 @@ export class GitHubService {
    */
   async createGist(token: string, progress: UserProgress): Promise<string | null> {
     try {
+      const { settings, ...progressToSave } = progress; // Exclude settings
       const response = await fetch('https://api.github.com/gists', {
         method: 'POST',
         headers: {
@@ -65,7 +66,7 @@ export class GitHubService {
           public: false, // Private gist
           files: {
             [GIST_FILENAME]: {
-              content: JSON.stringify(progress, null, 2),
+              content: JSON.stringify(progressToSave, null, 2),
             },
           },
         }),
@@ -86,6 +87,7 @@ export class GitHubService {
    */
   async updateGist(token: string, gistId: string, progress: UserProgress): Promise<boolean> {
     try {
+      const { settings, ...progressToSave } = progress; // Exclude settings
       const response = await fetch(`https://api.github.com/gists/${gistId}`, {
         method: 'PATCH',
         headers: {
@@ -96,7 +98,7 @@ export class GitHubService {
         body: JSON.stringify({
           files: {
             [GIST_FILENAME]: {
-              content: JSON.stringify(progress, null, 2),
+              content: JSON.stringify(progressToSave, null, 2),
             },
           },
         }),
