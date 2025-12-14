@@ -4,6 +4,7 @@ export type SubjectStatus = 'not_started' | 'in_progress' | 'completed';
 export type QuestionType = 'multiple_choice' | 'fill_blank' | 'true_false' | 'code_output';
 export type ProgrammingLanguage = 'javascript' | 'typescript' | 'python' | 'java' | 'cpp' | 'c' | 'rust' | 'go';
 export type Theme = 'light' | 'dark' | 'auto';
+export type ExerciseDifficulty = 1 | 2 | 3 | 4 | 5; // 1=easiest, 5=hardest (internal use)
 
 // Subject and Curriculum Types
 export interface Subject {
@@ -53,6 +54,7 @@ export interface CodingExercise {
   topicId: string;
   title: string;
   description: string;
+  difficulty?: ExerciseDifficulty;
   starterCode: string;
   testCases: TestCase[];
   hints: string[];
@@ -68,6 +70,7 @@ export interface WrittenExercise {
   type: 'written';
   title: string;
   description: string;
+  difficulty?: ExerciseDifficulty;
   hints: string[];
   solution: string;
 }

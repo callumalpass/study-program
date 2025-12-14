@@ -1,0 +1,173 @@
+import { CodingExercise } from '../../../../core/types';
+
+export const topic2Exercises: CodingExercise[] = [
+  // EXISTING exercise - preserve ID for backward compatibility
+  {
+    id: 'cs102-ex-2',
+    subjectId: 'cs102',
+    topicId: 'cs102-2',
+    title: 'Binary Addition Calculator',
+    difficulty: 3,
+    description: 'Implement a function that performs binary addition on two binary strings and returns the result as a binary string. Do not use built-in base conversion functions.',
+    starterCode: 'def binary_addition(bin1, bin2):\n    """\n    Add two binary numbers represented as strings.\n    \n    Args:\n        bin1: First binary number as string (e.g., "1011")\n        bin2: Second binary number as string (e.g., "0110")\n    \n    Returns:\n        Sum as binary string\n    """\n    # Your code here\n    pass',
+    testCases: [
+      { input: '"1011", "0110"', expectedOutput: '"10001"', isHidden: false, description: 'Add 1011 + 0110' },
+      { input: '"1111", "1"', expectedOutput: '"10000"', isHidden: false, description: 'Add 1111 + 1' },
+      { input: '"10101", "11011"', expectedOutput: '"110000"', isHidden: true, description: 'Add 10101 + 11011' }
+    ],
+    hints: [
+      'Start adding from the rightmost bit (least significant bit)',
+      'Keep track of the carry bit as you move left',
+      'Pad the shorter string with leading zeros to make both strings equal length'
+    ],
+    solution: 'def binary_addition(bin1, bin2):\n    max_len = max(len(bin1), len(bin2))\n    bin1 = bin1.zfill(max_len)\n    bin2 = bin2.zfill(max_len)\n    \n    result = []\n    carry = 0\n    \n    for i in range(max_len - 1, -1, -1):\n        bit_sum = int(bin1[i]) + int(bin2[i]) + carry\n        result.append(str(bit_sum % 2))\n        carry = bit_sum // 2\n    \n    if carry:\n        result.append("1")\n    \n    return "".join(reversed(result))',
+    language: 'python'
+  },
+  {
+    id: 'cs102-t2-ex02',
+    subjectId: 'cs102',
+    topicId: 'cs102-2',
+    title: 'Binary Increment',
+    difficulty: 1,
+    description: 'Write a function that adds 1 to a binary number string.',
+    starterCode: '# Add 1 to a binary number\ndef binary_increment(binary_str):\n    # Your code here\n    pass\n\nprint(binary_increment("1010"))\nprint(binary_increment("1111"))',
+    solution: 'def binary_increment(binary_str):\n    result = list(binary_str)\n    carry = 1\n    for i in range(len(result) - 1, -1, -1):\n        if carry == 0:\n            break\n        if result[i] == "0":\n            result[i] = "1"\n            carry = 0\n        else:\n            result[i] = "0"\n    if carry:\n        result.insert(0, "1")\n    return "".join(result)\n\nprint(binary_increment("1010"))\nprint(binary_increment("1111"))',
+    testCases: [
+      { input: '"1010"', expectedOutput: '1011', isHidden: false, description: '1010 + 1 = 1011' },
+      { input: '"1111"', expectedOutput: '10000', isHidden: false, description: '1111 + 1 = 10000' },
+      { input: '"0"', expectedOutput: '1', isHidden: true, description: '0 + 1 = 1' }
+    ],
+    hints: [
+      'Start from the rightmost bit',
+      'If bit is 0, change to 1 and done',
+      'If bit is 1, change to 0 and continue (carry)'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs102-t2-ex03',
+    subjectId: 'cs102',
+    topicId: 'cs102-2',
+    title: 'Ones Complement',
+    difficulty: 1,
+    description: 'Write a function that returns the ones complement of a binary string (flip all bits).',
+    starterCode: '# Get ones complement (flip all bits)\ndef ones_complement(binary_str):\n    # Your code here\n    pass\n\nprint(ones_complement("1010"))\nprint(ones_complement("11110000"))',
+    solution: 'def ones_complement(binary_str):\n    result = ""\n    for bit in binary_str:\n        result += "0" if bit == "1" else "1"\n    return result\n\nprint(ones_complement("1010"))\nprint(ones_complement("11110000"))',
+    testCases: [
+      { input: '"1010"', expectedOutput: '0101', isHidden: false, description: 'Flip 1010' },
+      { input: '"11110000"', expectedOutput: '00001111', isHidden: false, description: 'Flip 11110000' },
+      { input: '"0000"', expectedOutput: '1111', isHidden: true, description: 'Flip all zeros' }
+    ],
+    hints: [
+      'Flip each bit: 0 becomes 1, 1 becomes 0',
+      'Process each character in the string',
+      'Build the result string'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs102-t2-ex04',
+    subjectId: 'cs102',
+    topicId: 'cs102-2',
+    title: 'Twos Complement',
+    difficulty: 2,
+    description: 'Write a function that returns the twos complement of a binary string. Twos complement = ones complement + 1.',
+    starterCode: '# Get twos complement\ndef twos_complement(binary_str):\n    # Your code here\n    pass\n\nprint(twos_complement("0101"))  # 5 becomes -5\nprint(twos_complement("0001"))  # 1 becomes -1',
+    solution: 'def twos_complement(binary_str):\n    # First get ones complement\n    ones = ""\n    for bit in binary_str:\n        ones += "0" if bit == "1" else "1"\n    \n    # Add 1\n    result = list(ones)\n    carry = 1\n    for i in range(len(result) - 1, -1, -1):\n        if carry == 0:\n            break\n        if result[i] == "0":\n            result[i] = "1"\n            carry = 0\n        else:\n            result[i] = "0"\n    return "".join(result)\n\nprint(twos_complement("0101"))\nprint(twos_complement("0001"))',
+    testCases: [
+      { input: '"0101"', expectedOutput: '1011', isHidden: false, description: 'Twos complement of 0101' },
+      { input: '"0001"', expectedOutput: '1111', isHidden: false, description: 'Twos complement of 0001' },
+      { input: '"1000"', expectedOutput: '1000', isHidden: true, description: 'Special case' }
+    ],
+    hints: [
+      'First compute ones complement (flip all bits)',
+      'Then add 1 to the result',
+      'Handle the carry propagation'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs102-t2-ex05',
+    subjectId: 'cs102',
+    topicId: 'cs102-2',
+    title: 'Binary Subtraction',
+    difficulty: 3,
+    description: 'Write a function that subtracts two binary numbers (bin1 - bin2) using twos complement addition.',
+    starterCode: '# Subtract binary numbers using twos complement\ndef binary_subtract(bin1, bin2):\n    # Your code here\n    pass\n\nprint(binary_subtract("1010", "0011"))  # 10 - 3 = 7',
+    solution: 'def binary_subtract(bin1, bin2):\n    # Ensure same length\n    max_len = max(len(bin1), len(bin2))\n    bin1 = bin1.zfill(max_len)\n    bin2 = bin2.zfill(max_len)\n    \n    # Get twos complement of bin2\n    twos = ""\n    for bit in bin2:\n        twos += "0" if bit == "1" else "1"\n    # Add 1\n    twos_list = list(twos)\n    carry = 1\n    for i in range(len(twos_list) - 1, -1, -1):\n        if carry == 0:\n            break\n        if twos_list[i] == "0":\n            twos_list[i] = "1"\n            carry = 0\n        else:\n            twos_list[i] = "0"\n    twos = "".join(twos_list)\n    \n    # Add bin1 + twos complement of bin2\n    result = []\n    carry = 0\n    for i in range(max_len - 1, -1, -1):\n        bit_sum = int(bin1[i]) + int(twos[i]) + carry\n        result.append(str(bit_sum % 2))\n        carry = bit_sum // 2\n    \n    return "".join(reversed(result))\n\nprint(binary_subtract("1010", "0011"))',
+    testCases: [
+      { input: '"1010", "0011"', expectedOutput: '0111', isHidden: false, description: '10 - 3 = 7' },
+      { input: '"1111", "0001"', expectedOutput: '1110', isHidden: false, description: '15 - 1 = 14' },
+      { input: '"1000", "0001"', expectedOutput: '0111', isHidden: true, description: '8 - 1 = 7' }
+    ],
+    hints: [
+      'Subtraction A - B = A + (-B)',
+      '-B in binary is the twos complement of B',
+      'Add bin1 and the twos complement of bin2'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs102-t2-ex06',
+    subjectId: 'cs102',
+    topicId: 'cs102-2',
+    title: 'Detect Overflow',
+    difficulty: 3,
+    description: 'Write a function that adds two signed binary numbers and detects if overflow occurred. Use 8-bit signed representation.',
+    starterCode: '# Add signed binary and detect overflow\ndef add_with_overflow(bin1, bin2):\n    # Returns tuple: (result, overflow_occurred)\n    # Your code here\n    pass\n\nprint(add_with_overflow("01111111", "00000001"))  # 127 + 1, overflow!',
+    solution: 'def add_with_overflow(bin1, bin2):\n    # Ensure 8 bits\n    bin1 = bin1.zfill(8)\n    bin2 = bin2.zfill(8)\n    \n    # Add\n    result = []\n    carry = 0\n    for i in range(7, -1, -1):\n        bit_sum = int(bin1[i]) + int(bin2[i]) + carry\n        result.append(str(bit_sum % 2))\n        carry = bit_sum // 2\n    \n    result_str = "".join(reversed(result))\n    \n    # Overflow if signs of operands are same but result sign differs\n    sign1 = bin1[0]\n    sign2 = bin2[0]\n    result_sign = result_str[0]\n    \n    overflow = (sign1 == sign2) and (result_sign != sign1)\n    \n    return (result_str, overflow)\n\nprint(add_with_overflow("01111111", "00000001"))',
+    testCases: [
+      { input: '"01111111", "00000001"', expectedOutput: "('10000000', True)", isHidden: false, description: '127 + 1 overflows' },
+      { input: '"00000001", "00000001"', expectedOutput: "('00000010', False)", isHidden: false, description: '1 + 1 = 2, no overflow' },
+      { input: '"10000000", "10000000"', expectedOutput: "('00000000', True)", isHidden: true, description: '-128 + -128 overflows' }
+    ],
+    hints: [
+      'Overflow occurs when adding two positives gives negative',
+      'Or when adding two negatives gives positive',
+      'Check the sign bit (MSB) of inputs and result'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs102-t2-ex07',
+    subjectId: 'cs102',
+    topicId: 'cs102-2',
+    title: 'Binary Multiplication',
+    difficulty: 4,
+    description: 'Write a function that multiplies two binary numbers using the shift-and-add method.',
+    starterCode: '# Multiply binary numbers using shift-and-add\ndef binary_multiply(bin1, bin2):\n    # Your code here\n    pass\n\nprint(binary_multiply("101", "11"))  # 5 * 3 = 15',
+    solution: 'def binary_multiply(bin1, bin2):\n    # Convert to integers for simplicity of demonstration\n    # but use binary operations\n    result = "0"\n    \n    for i, bit in enumerate(reversed(bin2)):\n        if bit == "1":\n            shifted = bin1 + "0" * i\n            # Add to result\n            max_len = max(len(result), len(shifted))\n            result = result.zfill(max_len)\n            shifted = shifted.zfill(max_len)\n            \n            new_result = []\n            carry = 0\n            for j in range(max_len - 1, -1, -1):\n                bit_sum = int(result[j]) + int(shifted[j]) + carry\n                new_result.append(str(bit_sum % 2))\n                carry = bit_sum // 2\n            if carry:\n                new_result.append("1")\n            result = "".join(reversed(new_result))\n    \n    return result.lstrip("0") or "0"\n\nprint(binary_multiply("101", "11"))',
+    testCases: [
+      { input: '"101", "11"', expectedOutput: '1111', isHidden: false, description: '5 * 3 = 15' },
+      { input: '"1010", "10"', expectedOutput: '10100', isHidden: false, description: '10 * 2 = 20' },
+      { input: '"111", "111"', expectedOutput: '110001', isHidden: true, description: '7 * 7 = 49' }
+    ],
+    hints: [
+      'For each 1 bit in multiplier, shift multiplicand and add',
+      'Shift left = append zeros',
+      'Sum all the shifted partial products'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs102-t2-ex08',
+    subjectId: 'cs102',
+    topicId: 'cs102-2',
+    title: 'Signed Integer Representation',
+    difficulty: 5,
+    description: 'Write functions to convert between decimal and 8-bit twos complement signed binary.',
+    starterCode: '# Convert between decimal and 8-bit twos complement\ndef decimal_to_signed_binary(n):\n    # n is between -128 and 127\n    # Your code here\n    pass\n\ndef signed_binary_to_decimal(binary_str):\n    # Your code here\n    pass\n\nprint(decimal_to_signed_binary(-5))\nprint(signed_binary_to_decimal("11111011"))',
+    solution: 'def decimal_to_signed_binary(n):\n    if n >= 0:\n        return bin(n)[2:].zfill(8)\n    else:\n        # Twos complement for negative\n        return bin(256 + n)[2:]\n\ndef signed_binary_to_decimal(binary_str):\n    binary_str = binary_str.zfill(8)\n    if binary_str[0] == "0":\n        # Positive\n        return int(binary_str, 2)\n    else:\n        # Negative - twos complement\n        return int(binary_str, 2) - 256\n\nprint(decimal_to_signed_binary(-5))\nprint(signed_binary_to_decimal("11111011"))',
+    testCases: [
+      { input: 'decimal_to_signed_binary(-5)', expectedOutput: '11111011', isHidden: false, description: '-5 in twos complement' },
+      { input: 'signed_binary_to_decimal("11111011")', expectedOutput: '-5', isHidden: false, description: '11111011 = -5' },
+      { input: 'decimal_to_signed_binary(-128)', expectedOutput: '10000000', isHidden: true, description: '-128 = 10000000' }
+    ],
+    hints: [
+      'For positive numbers, just convert to binary',
+      'For negative numbers, use twos complement',
+      'Shortcut: for n-bit twos complement of -x, compute 2^n - x'
+    ],
+    language: 'python'
+  }
+];
