@@ -113,7 +113,7 @@ _output
 
 /**
  * Run test cases against user code.
- * Each test case provides input and expected output.
+ * Each test case provides input (function arguments) and expected output.
  */
 export async function runTests(
   code: string,
@@ -122,10 +122,24 @@ export async function runTests(
 ): Promise<TestResult[]> {
   const results: TestResult[] = [];
 
+  // Extract function name from the code (look for 'def function_name(')
+  const funcMatch = code.match(/def\s+(\w+)\s*\(/);
+  const funcName = funcMatch ? funcMatch[1] : null;
+
   for (const testCase of tests) {
     try {
-      // Prepare code with input injection
-      const testCode = prepareTestCode(code, testCase.input);
+      let testCode: string;
+
+      if (funcName && testCase.input) {
+        // Function-based test: call the function with test input
+        testCode = prepareFunctionTestCode(code, funcName, testCase.input);
+      } else if (testCase.input) {
+        // Input-based test: mock stdin
+        testCode = prepareStdinTestCode(code, testCase.input);
+      } else {
+        // No input: just run the code
+        testCode = code;
+      }
 
       const actualOutput = await runPython(testCode, timeout);
       const normalizedActual = normalizeOutput(actualOutput);
@@ -134,7 +148,7 @@ export async function runTests(
       results.push({
         testCase,
         passed: normalizedActual === normalizedExpected,
-        actualOutput,
+        actualOutput: normalizedActual,
       });
     } catch (error) {
       results.push({
@@ -150,14 +164,79 @@ export async function runTests(
 }
 
 /**
- * Prepare code for testing by injecting input.
- * Handles input() function calls by pre-defining input values.
+ * Prepare code for function-based testing.
+ * Strips existing print/test calls and adds a call with test input.
  */
-function prepareTestCode(code: string, input: string): string {
-  if (!input) {
-    return code;
+function prepareFunctionTestCode(code: string, funcName: string, input: string): string {
+  // Split the code into lines
+  const lines = code.split('\n');
+
+  // Find where the function definition ends (track indentation)
+  let inFunction = false;
+  let functionIndent = 0;
+  const functionLines: string[] = [];
+  const otherLines: string[] = [];
+
+  for (const line of lines) {
+    // Check if this is the start of the target function
+    if (line.match(new RegExp(`^def\\s+${funcName}\\s*\\(`))) {
+      inFunction = true;
+      functionIndent = line.search(/\S/);
+      functionLines.push(line);
+      continue;
+    }
+
+    if (inFunction) {
+      // Check if we've exited the function (non-empty line with same or less indentation)
+      const trimmed = line.trim();
+      if (trimmed.length > 0) {
+        const currentIndent = line.search(/\S/);
+        if (currentIndent <= functionIndent && !line.match(/^\s*#/)) {
+          inFunction = false;
+          // Don't include test calls from the original code
+          if (!isTestCall(line)) {
+            otherLines.push(line);
+          }
+        } else {
+          functionLines.push(line);
+        }
+      } else {
+        functionLines.push(line);
+      }
+    } else {
+      // Skip test calls and print statements that call our function
+      if (!isTestCall(line) && !line.match(new RegExp(`print\\s*\\(\\s*${funcName}\\s*\\(`))) {
+        otherLines.push(line);
+      }
+    }
   }
 
+  // Build the test code: function definition + single print with test input
+  const testCode = [...functionLines, ...otherLines, `print(${funcName}(${input}))`].join('\n');
+
+  return testCode;
+}
+
+/**
+ * Check if a line is a test/example call that should be skipped.
+ */
+function isTestCall(line: string): boolean {
+  const trimmed = line.trim();
+  // Skip lines that are just comments, empty, or example calls
+  if (trimmed.startsWith('#')) return false;
+  if (trimmed === '') return false;
+  // Skip common test patterns
+  if (trimmed.match(/^print\s*\(/)) return true;
+  if (trimmed.match(/^result\s*=/)) return true;
+  if (trimmed.match(/^assert\s/)) return true;
+  return false;
+}
+
+/**
+ * Prepare code for stdin-based testing.
+ * Handles input() function calls by pre-defining input values.
+ */
+function prepareStdinTestCode(code: string, input: string): string {
   // Split input into lines for multiple input() calls
   const inputLines = input.split('\n').filter(line => line.trim());
 
@@ -173,7 +252,6 @@ def _mock_input(prompt=''):
     if _input_index < len(_input_data):
         value = _input_data[_input_index]
         _input_index += 1
-        print(prompt + value)  # Echo the input like real input()
         return value
     return ''
 

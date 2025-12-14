@@ -3,6 +3,8 @@ import type { Subject, Quiz, CodingExercise, WrittenExercise, Exercise, Project,
 import { progressStorage } from '@/core/storage';
 import { navigateToSubject } from '@/core/router';
 import { Icons } from '@/components/icons';
+import { createCodeEditor, type CodeEditor } from '@/components/code-editor';
+import type { TestResult } from '@/components/code-runner';
 
 // Type guard for CodingExercise
 function isCodingExercise(exercise: Exercise): exercise is CodingExercise {
@@ -198,51 +200,81 @@ function renderCodingExercisePage(
 
       <section class="exercise-workspace">
         <h2>Code Editor</h2>
-        <div class="editor-container">
-          <div class="editor-header">
-            <span class="language-label">${formatLanguage(exercise.language)}</span>
-            <div class="editor-actions">
-              <button class="btn btn-small" id="reset-code-btn">Reset</button>
-              <button class="btn btn-small" id="show-hint-btn">
-                ${Icons.LightBulb} Hint (${exercise.hints.length} available)
-              </button>
-            </div>
-          </div>
-          <textarea id="code-editor" class="code-editor">${exercise.starterCode}</textarea>
-        </div>
-      </section>
-
-      <section class="test-results" id="test-results" style="display: none;">
-        <h2>Test Results</h2>
-        <div id="results-container"></div>
+        <div id="monaco-editor-container"></div>
       </section>
 
       <div class="exercise-actions">
         <button class="btn btn-secondary" id="back-to-subject">
           ${Icons.ChevronLeft} Back to Subject
         </button>
-        <button class="btn btn-primary btn-large" id="run-tests-btn">
-          Run Tests
-        </button>
-      </div>
-
-      <div class="hints-modal" id="hints-modal" style="display: none;">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h3>Hints</h3>
-            <button class="modal-close" id="close-hints-btn">×</button>
-          </div>
-          <div class="modal-body">
-            <ol class="hints-list">
-              ${exercise.hints.map(hint => `<li>${hint}</li>`).join('')}
-            </ol>
-          </div>
-        </div>
       </div>
     </div>
   `;
 
-  attachCodingExerciseEventListeners(container, subjectId, exercise);
+  // Initialize Monaco code editor
+  const editorContainer = container.querySelector('#monaco-editor-container') as HTMLElement;
+  if (editorContainer) {
+    const startTime = Date.now();
+
+    const codeEditor = createCodeEditor(editorContainer, {
+      language: exercise.language,
+      initialValue: exercise.starterCode,
+      starterCode: exercise.starterCode,
+      testCases: exercise.testCases,
+      hints: exercise.hints,
+      solution: exercise.solution,
+      storageKey: `exercise_${subjectId}_${exerciseId}`,
+      height: '400px',
+      onTestResults: (results: TestResult[], allPassed: boolean) => {
+        const endTime = Date.now();
+        const timeSpent = Math.round((endTime - startTime) / 1000);
+
+        // Save completion to progress storage
+        const completion: ExerciseCompletion = {
+          completionId: `completion_${Date.now()}`,
+          timestamp: new Date().toISOString(),
+          code: codeEditor.getValue(),
+          passed: allPassed,
+          passedTestCases: results.filter(r => r.passed).length,
+          totalTestCases: results.length,
+          timeSpentSeconds: timeSpent,
+        };
+
+        progressStorage.addExerciseCompletion(subjectId, exerciseId, completion);
+
+        // Update the header badge if passed
+        if (allPassed) {
+          const titleSection = container.querySelector('.exercise-title-section');
+          const existingBadge = titleSection?.querySelector('.completion-badge');
+          if (existingBadge) {
+            existingBadge.className = 'completion-badge passed';
+            existingBadge.innerHTML = `${Icons.Check} Completed`;
+          } else if (titleSection) {
+            const badge = document.createElement('span');
+            badge.className = 'completion-badge passed';
+            badge.innerHTML = `${Icons.Check} Completed`;
+            titleSection.appendChild(badge);
+          }
+        }
+      },
+    });
+
+    // Store editor reference for cleanup
+    (container as HTMLElement & { _codeEditor?: CodeEditor })._codeEditor = codeEditor;
+  }
+
+  // Back button handler
+  const backBtn = container.querySelector('#back-to-subject');
+  if (backBtn) {
+    backBtn.addEventListener('click', () => {
+      // Dispose editor before navigating
+      const editorRef = (container as HTMLElement & { _codeEditor?: CodeEditor })._codeEditor;
+      if (editorRef) {
+        editorRef.dispose();
+      }
+      navigateToSubject(subjectId);
+    });
+  }
 }
 
 /**
@@ -551,47 +583,6 @@ function attachQuizEventListeners(container: HTMLElement, subjectId: string, qui
   }
 }
 
-/**
- * Attach event listeners for coding exercise page
- */
-function attachCodingExerciseEventListeners(container: HTMLElement, subjectId: string, exercise: CodingExercise): void {
-  const backBtn = container.querySelector('#back-to-subject');
-  if (backBtn) {
-    backBtn.addEventListener('click', () => navigateToSubject(subjectId));
-  }
-
-  const resetBtn = container.querySelector('#reset-code-btn');
-  const codeEditor = container.querySelector('#code-editor') as HTMLTextAreaElement;
-  if (resetBtn && codeEditor) {
-    resetBtn.addEventListener('click', () => {
-      if (confirm('Are you sure you want to reset the code to the starter template?')) {
-        codeEditor.value = exercise.starterCode;
-      }
-    });
-  }
-
-  const hintBtn = container.querySelector('#show-hint-btn');
-  const hintsModal = container.querySelector('#hints-modal') as HTMLElement;
-  const closeHintsBtn = container.querySelector('#close-hints-btn');
-  if (hintBtn && hintsModal) {
-    hintBtn.addEventListener('click', () => {
-      hintsModal.style.display = 'flex';
-    });
-  }
-  if (closeHintsBtn && hintsModal) {
-    closeHintsBtn.addEventListener('click', () => {
-      hintsModal.style.display = 'none';
-    });
-  }
-
-  const runTestsBtn = container.querySelector('#run-tests-btn');
-  if (runTestsBtn) {
-    runTestsBtn.addEventListener('click', () => {
-      // TODO: Implement code execution and testing
-      alert('Code execution will be implemented with the CodeEditor component');
-    });
-  }
-}
 
 /**
  * Attach event listeners for project page

@@ -371,7 +371,406 @@
   color: var(--color-error);
 }
 
-/* Code Editor Wrapper */
+/* Code Editor Container */
+.code-editor-container {
+  position: relative;
+  background-color: var(--code-bg);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: var(--space-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.code-editor-container.fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  border-radius: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.code-editor-container.fullscreen .editor-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.code-editor-container.fullscreen .editor-element {
+  flex: 1;
+  height: auto !important;
+}
+
+.code-editor-container.light-theme {
+  background-color: #ffffff;
+  border-color: #d0d7de;
+}
+
+/* Editor Wrapper */
+.editor-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Editor Toolbar */
+.editor-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-sm) var(--space-md);
+  background-color: var(--color-bg-deep);
+  border-bottom: 1px solid var(--color-border-default);
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.toolbar-left,
+.toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+.toolbar-separator {
+  width: 1px;
+  height: 20px;
+  background-color: var(--color-border-default);
+  margin: 0 var(--space-xs);
+}
+
+/* Font Controls */
+.font-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.font-size-display {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  min-width: 36px;
+  text-align: center;
+}
+
+.btn-font {
+  padding: var(--space-xs) var(--space-sm);
+  min-width: 32px;
+}
+
+/* Button Icons */
+.btn-icon {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+}
+
+.btn-icon svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* Panel Icons */
+.panel-icon {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+  margin-right: var(--space-xs);
+}
+
+.panel-icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Editor Element */
+.editor-element {
+  width: 100%;
+  min-height: 200px;
+}
+
+/* Output Panel */
+.output-panel {
+  display: none;
+  border-top: 1px solid var(--color-border-default);
+  background-color: var(--color-bg-deep);
+}
+
+.output-panel.show {
+  display: block;
+}
+
+.output-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-sm) var(--space-md);
+  background-color: var(--color-bg-elevated);
+  border-bottom: 1px solid var(--color-border-default);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+}
+
+.execution-time {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
+.output-content {
+  padding: var(--space-md);
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.output-panel.error .output-content {
+  color: var(--color-error);
+}
+
+/* Test Results Panel */
+.test-results-panel {
+  display: none;
+  border-top: 1px solid var(--color-border-default);
+  background-color: var(--color-bg-surface);
+}
+
+.test-results-panel.show {
+  display: block;
+}
+
+.test-results-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-sm) var(--space-md);
+  background-color: var(--color-bg-elevated);
+  border-bottom: 1px solid var(--color-border-default);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+}
+
+.test-results-content {
+  padding: var(--space-md);
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.test-result {
+  padding: var(--space-md);
+  margin-bottom: var(--space-sm);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border-default);
+}
+
+.test-result:last-child {
+  margin-bottom: 0;
+}
+
+.test-result.passed {
+  background-color: rgba(86, 211, 100, 0.1);
+  border-color: var(--color-success);
+}
+
+.test-result.failed {
+  background-color: rgba(248, 81, 73, 0.1);
+  border-color: var(--color-error);
+}
+
+.test-result-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-sm);
+}
+
+.test-badge {
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.test-badge svg {
+  width: 14px;
+  height: 14px;
+}
+
+.test-badge.passed {
+  background-color: var(--color-success);
+  color: white;
+}
+
+.test-badge.failed {
+  background-color: var(--color-error);
+  color: white;
+}
+
+.test-name {
+  flex: 1;
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+  line-height: 1.4;
+}
+
+.test-status {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+}
+
+.test-status.passed {
+  color: var(--color-success);
+  background-color: rgba(86, 211, 100, 0.15);
+}
+
+.test-status.failed {
+  color: var(--color-error);
+  background-color: rgba(248, 81, 73, 0.15);
+}
+
+.test-details {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.test-details > div {
+  margin-bottom: var(--space-xs);
+}
+
+.test-details code {
+  background-color: var(--color-bg-elevated);
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+}
+
+/* Hints Panel */
+.hints-panel {
+  border-top: 1px solid var(--color-border-default);
+  background-color: var(--color-bg-surface);
+}
+
+.hints-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-sm) var(--space-md);
+  background-color: rgba(210, 153, 34, 0.1);
+  border-bottom: 1px solid var(--color-border-default);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-warning);
+}
+
+.hints-title {
+  display: flex;
+  align-items: center;
+}
+
+.hints-content {
+  padding: var(--space-md);
+}
+
+.hints-content:empty {
+  display: none;
+}
+
+.hint-item {
+  padding: var(--space-sm) var(--space-md);
+  margin-bottom: var(--space-sm);
+  background-color: var(--color-bg-elevated);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.hint-item:last-child {
+  margin-bottom: 0;
+}
+
+.hint-number {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-warning);
+  margin-right: var(--space-sm);
+}
+
+/* Solution Panel */
+.solution-panel {
+  border-top: 1px solid var(--color-border-default);
+  background-color: var(--color-bg-surface);
+}
+
+.solution-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-sm) var(--space-md);
+  background-color: rgba(88, 166, 255, 0.1);
+  border-bottom: 1px solid var(--color-border-default);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-accent-primary);
+}
+
+.solution-title {
+  display: flex;
+  align-items: center;
+}
+
+.solution-content {
+  padding: var(--space-md);
+}
+
+.solution-content.hidden {
+  display: none;
+}
+
+.solution-code {
+  margin: 0;
+  padding: var(--space-md);
+  background-color: var(--color-bg-deep);
+  border-radius: var(--radius-md);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+  white-space: pre-wrap;
+  overflow-x: auto;
+}
+
+/* Error Line Highlighting in Monaco */
+.error-line-highlight {
+  background-color: rgba(248, 81, 73, 0.2) !important;
+}
+
+.error-glyph {
+  background-color: var(--color-error);
+  border-radius: 50%;
+  margin-left: 3px;
+}
+
+/* Legacy Code Editor Styles (textarea fallback) */
 .code-editor {
   position: relative;
   background-color: var(--code-bg);
@@ -387,7 +786,7 @@
   justify-content: space-between;
   align-items: center;
   padding: var(--space-sm) var(--space-md);
-  background-color: var(--color-bg-deep); /* Darker header */
+  background-color: var(--color-bg-deep);
   border-bottom: 1px solid var(--color-border-default);
 }
 
@@ -405,7 +804,7 @@
 }
 
 .code-editor-body {
-  padding: 0; /* Remove padding to let textarea fill */
+  padding: 0;
   overflow-x: auto;
 }
 
