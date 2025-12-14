@@ -1,5 +1,7 @@
 // Gemini AI evaluation service for written exercises
 
+import type { QuizQuestion } from '@/core/types';
+
 export interface EvaluationResult {
   passed: boolean;
   score: number; // 0-100
@@ -141,5 +143,167 @@ export async function validateGeminiApiKey(apiKey: string): Promise<boolean> {
     return response.ok;
   } catch {
     return false;
+  }
+}
+
+/**
+ * Generate a practice question based on an original exam question
+ */
+export async function generatePracticeQuestion(
+  apiKey: string,
+  originalQuestion: QuizQuestion,
+  subjectContext: string,
+  previousQuestions: QuizQuestion[]
+): Promise<QuizQuestion> {
+  const prompt = buildPracticeQuestionPrompt(originalQuestion, subjectContext, previousQuestions);
+
+  const response = await fetch(GEMINI_API_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-goog-api-key': apiKey,
+    },
+    body: JSON.stringify({
+      contents: [{ parts: [{ text: prompt }] }],
+      generationConfig: {
+        thinkingConfig: { thinkingLevel: 'high' },
+        responseMimeType: 'application/json',
+      },
+    }),
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Gemini API error: ${response.status} - ${errorText}`);
+  }
+
+  const data = await response.json();
+
+  const textContent = data.candidates?.[0]?.content?.parts?.find(
+    (part: { text?: string }) => part.text
+  )?.text;
+
+  if (!textContent) {
+    throw new Error('No text content in Gemini response');
+  }
+
+  try {
+    const result = JSON.parse(textContent) as QuizQuestion;
+    // Ensure required fields are present
+    return {
+      id: `practice-${Date.now()}`,
+      type: result.type || originalQuestion.type,
+      prompt: result.prompt || '',
+      correctAnswer: result.correctAnswer,
+      explanation: result.explanation || '',
+      options: result.options,
+      codeSnippet: result.codeSnippet,
+      starterCode: result.starterCode,
+      testCases: result.testCases,
+      language: result.language,
+      solution: result.solution,
+      modelAnswer: result.modelAnswer,
+    };
+  } catch {
+    throw new Error('Failed to parse practice question response');
+  }
+}
+
+/**
+ * Build the prompt for generating a practice question
+ */
+function buildPracticeQuestionPrompt(
+  originalQuestion: QuizQuestion,
+  subjectContext: string,
+  previousQuestions: QuizQuestion[]
+): string {
+  const typeSpecificInstructions = getTypeSpecificInstructions(originalQuestion.type);
+
+  const previousQuestionsSection = previousQuestions.length > 0
+    ? `
+## Previously Generated Questions (avoid repetition)
+${JSON.stringify(previousQuestions.map(q => ({ prompt: q.prompt, correctAnswer: q.correctAnswer })), null, 2)}
+
+IMPORTANT: Generate a question that is different from all the questions listed above. Use different values, scenarios, or examples.`
+    : '';
+
+  return `You are generating a practice question for a computer science student. Create a question similar in style and difficulty to the original, but with different specific content.
+
+## Subject Context
+${subjectContext}
+
+## Original Question
+${JSON.stringify(originalQuestion, null, 2)}
+${previousQuestionsSection}
+
+## Requirements
+- Question type must be: ${originalQuestion.type}
+- Similar difficulty level to the original
+- Different specific values, examples, or scenarios
+- The question must have a clear, unambiguous correct answer
+${typeSpecificInstructions}
+
+## Response Format
+Return a JSON object with these fields:
+{
+  "type": "${originalQuestion.type}",
+  "prompt": "The question text",
+  "correctAnswer": <correct answer - type depends on question type>,
+  "explanation": "Clear explanation of why this is correct"${getTypeSpecificFields(originalQuestion.type)}
+}
+
+## Important Notes
+- For multiple_choice: correctAnswer is the 0-based index of the correct option
+- For true_false: correctAnswer is boolean (true or false)
+- For fill_blank and code_output: correctAnswer is a string (case-insensitive matching will be used)
+- For coding: provide working Python code with test cases that will actually pass
+- For written: provide a comprehensive modelAnswer for AI evaluation
+
+Return ONLY the JSON object, no other text.`;
+}
+
+/**
+ * Get type-specific instructions for the prompt
+ */
+function getTypeSpecificInstructions(type: string): string {
+  switch (type) {
+    case 'multiple_choice':
+      return '- Provide exactly 4 options\n- Ensure only one option is correct\n- Make distractors plausible but clearly wrong';
+    case 'true_false':
+      return '- Create a statement that is clearly true or false\n- Avoid ambiguous phrasing';
+    case 'fill_blank':
+      return '- The blank should have a single, clear answer\n- Use ____ to indicate where the blank goes in the prompt';
+    case 'code_output':
+      return '- Provide a Python code snippet that produces a specific output\n- The code must be valid and runnable\n- The expected output should be exactly what print() would produce';
+    case 'coding':
+      return '- Provide starterCode with a function signature\n- Provide testCases array with input, expectedOutput, isHidden, and description\n- Provide a working solution\n- Ensure the test cases actually work with the solution';
+    case 'written':
+      return '- Create a conceptual or theoretical question\n- Provide a comprehensive modelAnswer that covers all key points\n- The question should test understanding, not just recall';
+    default:
+      return '';
+  }
+}
+
+/**
+ * Get type-specific fields for the response format
+ */
+function getTypeSpecificFields(type: string): string {
+  switch (type) {
+    case 'multiple_choice':
+      return ',\n  "options": ["option1", "option2", "option3", "option4"]';
+    case 'code_output':
+      return ',\n  "codeSnippet": "python code here"';
+    case 'coding':
+      return `,
+  "starterCode": "def function_name(params):\\n    # Your code here\\n    pass",
+  "testCases": [
+    {"input": "test input", "expectedOutput": "expected output", "isHidden": false, "description": "Test description"}
+  ],
+  "solution": "working solution code",
+  "language": "python"`;
+    case 'written':
+      return ',\n  "modelAnswer": "comprehensive model answer for evaluation"';
+    default:
+      return '';
   }
 }

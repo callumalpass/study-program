@@ -1906,6 +1906,200 @@ textarea.code-editor::placeholder {
   font-size: var(--font-size-md);
 }
 
+/* Exam Start Buttons */
+.exam-start-buttons {
+  display: flex;
+  gap: var(--space-md);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Practice Mode */
+.practice-mode {
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+}
+
+.practice-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-xl);
+  padding-bottom: var(--space-md);
+  border-bottom: 1px solid var(--color-border-default);
+}
+
+.practice-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-xs) var(--space-sm);
+  background: var(--color-accent-primary);
+  color: white;
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+}
+
+.practice-badge svg {
+  width: 16px;
+  height: 16px;
+}
+
+.practice-count {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.practice-header #exit-practice-btn {
+  margin-left: auto;
+}
+
+#practice-question-container {
+  min-height: 200px;
+}
+
+#practice-actions,
+#practice-next-actions {
+  display: flex;
+  gap: var(--space-md);
+  margin-top: var(--space-lg);
+  padding-top: var(--space-lg);
+  border-top: 1px solid var(--color-border-default);
+}
+
+#practice-feedback {
+  margin-top: var(--space-lg);
+}
+
+/* Practice Loading & Error States */
+.practice-loading,
+.practice-evaluating {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2xl);
+  text-align: center;
+  color: var(--color-text-secondary);
+}
+
+.practice-loading p,
+.practice-evaluating p {
+  margin-top: var(--space-md);
+  margin-bottom: 0;
+}
+
+.practice-error {
+  padding: var(--space-xl);
+  text-align: center;
+  background: var(--color-bg-elevated);
+  border-radius: var(--radius-md);
+}
+
+.practice-error p {
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-md);
+}
+
+.practice-error a {
+  color: var(--color-accent-primary);
+}
+
+/* Loading Spinner */
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--color-border-default);
+  border-top-color: var(--color-accent-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Test Results (for coding questions) */
+.test-results {
+  margin: var(--space-md) 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.test-result {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm);
+  background: var(--color-bg-elevated);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-sm);
+}
+
+.test-result.passed {
+  border-left: 3px solid var(--color-success);
+}
+
+.test-result.failed {
+  border-left: 3px solid var(--color-error);
+}
+
+.test-icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.test-result.passed .test-icon svg {
+  color: var(--color-success);
+}
+
+.test-result.failed .test-icon svg {
+  color: var(--color-error);
+}
+
+.test-desc {
+  flex: 1;
+}
+
+.test-error {
+  color: var(--color-error);
+  font-size: var(--font-size-xs);
+}
+
+/* Solution Details */
+.solution-details {
+  margin-top: var(--space-md);
+}
+
+.solution-details summary {
+  cursor: pointer;
+  color: var(--color-accent-primary);
+  font-weight: var(--font-weight-medium);
+}
+
+.solution-details pre {
+  margin-top: var(--space-sm);
+  padding: var(--space-md);
+  background: var(--color-bg-elevated);
+  border-radius: var(--radius-md);
+  overflow-x: auto;
+}
+
+/* Correct Answer Display */
+.correct-answer {
+  margin: var(--space-md) 0;
+  padding: var(--space-md);
+  background: var(--color-bg-elevated);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+}
+
 /* ==========================================================================
    Progress Page
    ========================================================================== */

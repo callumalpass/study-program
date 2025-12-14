@@ -25,7 +25,7 @@ interface QuizState {
   showExplanations: boolean;
 }
 
-function createQuestionElement(
+export function createQuestionElement(
   question: QuizQuestion,
   index: number,
   answer?: any,
@@ -251,7 +251,7 @@ function createQuestionElement(
   return questionDiv;
 }
 
-function checkAnswer(
+export function checkAnswer(
   question: QuizQuestion,
   answer?: any
 ): boolean {
@@ -276,7 +276,7 @@ function checkAnswer(
   }
 }
 
-function normalizeAnswer(value: string | number | boolean | undefined): string {
+export function normalizeAnswer(value: string | number | boolean | undefined): string {
   if (value === undefined) {
     return '';
   }
@@ -297,7 +297,7 @@ function disposeWrittenEditors(container: HTMLElement): void {
   });
 }
 
-function collectAnswer(questionElement: HTMLElement, question: QuizQuestion): any {
+export function collectAnswer(questionElement: HTMLElement, question: QuizQuestion): any {
   const answerContainer = questionElement.querySelector('.answer-container');
   if (!answerContainer) {
     return undefined;
