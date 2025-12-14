@@ -326,5 +326,243 @@ export const topic4Exercises: CodingExercise[] = [
       'Return None if any access fails'
     ],
     language: 'python'
+  },
+  {
+    id: 'cs101-t4-ex10',
+    subjectId: 'cs101',
+    topicId: 'cs101-topic-4',
+    title: 'Remove Duplicates',
+    difficulty: 2,
+    description: 'Write a function that removes duplicate values from a list while preserving the original order. Return a new list.',
+    starterCode: '# Remove duplicates preserving order\ndef remove_duplicates(items):\n    # Your code here\n    pass\n\n# Test your function\nprint(remove_duplicates([1, 2, 2, 3, 1, 4]))\nprint(remove_duplicates(["a", "b", "a", "c"]))',
+    solution: 'def remove_duplicates(items):\n    seen = []\n    for item in items:\n        if item not in seen:\n            seen.append(item)\n    return seen\n\nprint(remove_duplicates([1, 2, 2, 3, 1, 4]))\nprint(remove_duplicates(["a", "b", "a", "c"]))',
+    testCases: [
+      {
+        input: '[1, 2, 2, 3, 1, 4]',
+        expectedOutput: '[1, 2, 3, 4]',
+        isHidden: false,
+        description: 'Remove duplicate numbers'
+      },
+      {
+        input: '["a", "b", "a", "c"]',
+        expectedOutput: "['a', 'b', 'c']",
+        isHidden: false,
+        description: 'Remove duplicate strings'
+      },
+      {
+        input: '[1, 1, 1]',
+        expectedOutput: '[1]',
+        isHidden: true,
+        description: 'All duplicates'
+      }
+    ],
+    hints: [
+      'Create an empty list for seen items',
+      'Only add items if they are not already in seen',
+      'Use "if item not in seen" to check',
+      'This preserves order unlike using set()'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs101-t4-ex11',
+    subjectId: 'cs101',
+    topicId: 'cs101-topic-4',
+    title: 'Flatten List',
+    difficulty: 3,
+    description: 'Write a function that takes a list of lists and returns a single flattened list.',
+    starterCode: '# Flatten a list of lists\ndef flatten(nested):\n    # Your code here\n    pass\n\n# Test your function\nprint(flatten([[1, 2], [3, 4], [5]]))\nprint(flatten([["a"], ["b", "c"]]))',
+    solution: 'def flatten(nested):\n    result = []\n    for sublist in nested:\n        for item in sublist:\n            result.append(item)\n    return result\n\nprint(flatten([[1, 2], [3, 4], [5]]))\nprint(flatten([["a"], ["b", "c"]]))',
+    testCases: [
+      {
+        input: '[[1, 2], [3, 4], [5]]',
+        expectedOutput: '[1, 2, 3, 4, 5]',
+        isHidden: false,
+        description: 'Flatten numbers'
+      },
+      {
+        input: '[["a"], ["b", "c"]]',
+        expectedOutput: "['a', 'b', 'c']",
+        isHidden: false,
+        description: 'Flatten strings'
+      },
+      {
+        input: '[[], [1], []]',
+        expectedOutput: '[1]',
+        isHidden: true,
+        description: 'With empty lists'
+      }
+    ],
+    hints: [
+      'Use nested loops: outer for sublists, inner for items',
+      'Append each item to the result list',
+      'Or use list comprehension: [item for sub in nested for item in sub]'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs101-t4-ex12',
+    subjectId: 'cs101',
+    topicId: 'cs101-topic-4',
+    title: 'Dictionary from Lists',
+    difficulty: 2,
+    description: 'Write a function that takes two lists (keys and values) and returns a dictionary pairing them together.',
+    starterCode: '# Create dictionary from two lists\ndef lists_to_dict(keys, values):\n    # Your code here\n    pass\n\n# Test your function\nprint(lists_to_dict(["a", "b", "c"], [1, 2, 3]))\nprint(lists_to_dict(["name", "age"], ["Alice", 30]))',
+    solution: 'def lists_to_dict(keys, values):\n    result = {}\n    for i in range(len(keys)):\n        result[keys[i]] = values[i]\n    return result\n\nprint(lists_to_dict(["a", "b", "c"], [1, 2, 3]))\nprint(lists_to_dict(["name", "age"], ["Alice", 30]))',
+    testCases: [
+      {
+        input: '["a", "b", "c"], [1, 2, 3]',
+        expectedOutput: "{'a': 1, 'b': 2, 'c': 3}",
+        isHidden: false,
+        description: 'Basic pairing'
+      },
+      {
+        input: '["name", "age"], ["Alice", 30]',
+        expectedOutput: "{'name': 'Alice', 'age': 30}",
+        isHidden: false,
+        description: 'Mixed types'
+      },
+      {
+        input: '[], []',
+        expectedOutput: '{}',
+        isHidden: true,
+        description: 'Empty lists'
+      }
+    ],
+    hints: [
+      'Loop through indices of both lists',
+      'Pair keys[i] with values[i]',
+      'Or use zip(): dict(zip(keys, values))'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs101-t4-ex13',
+    subjectId: 'cs101',
+    topicId: 'cs101-topic-4',
+    title: 'Find Common Elements',
+    difficulty: 3,
+    description: 'Write a function that finds elements that appear in both lists. Return them in the order they appear in the first list.',
+    starterCode: '# Find elements common to both lists\ndef find_common(list1, list2):\n    # Your code here\n    pass\n\n# Test your function\nprint(find_common([1, 2, 3, 4], [3, 4, 5, 6]))\nprint(find_common(["a", "b", "c"], ["b", "d"]))',
+    solution: 'def find_common(list1, list2):\n    common = []\n    for item in list1:\n        if item in list2 and item not in common:\n            common.append(item)\n    return common\n\nprint(find_common([1, 2, 3, 4], [3, 4, 5, 6]))\nprint(find_common(["a", "b", "c"], ["b", "d"]))',
+    testCases: [
+      {
+        input: '[1, 2, 3, 4], [3, 4, 5, 6]',
+        expectedOutput: '[3, 4]',
+        isHidden: false,
+        description: 'Common numbers'
+      },
+      {
+        input: '["a", "b", "c"], ["b", "d"]',
+        expectedOutput: "['b']",
+        isHidden: false,
+        description: 'Common strings'
+      },
+      {
+        input: '[1, 2], [3, 4]',
+        expectedOutput: '[]',
+        isHidden: true,
+        description: 'No common elements'
+      }
+    ],
+    hints: [
+      'Loop through list1',
+      'Check if each item is in list2',
+      'Also check if already added to avoid duplicates',
+      'Append to result if both conditions pass'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs101-t4-ex14',
+    subjectId: 'cs101',
+    topicId: 'cs101-topic-4',
+    title: 'Sort Dictionary by Value',
+    difficulty: 4,
+    description: 'Write a function that takes a dictionary and returns a list of (key, value) tuples sorted by value in descending order.',
+    starterCode: '# Sort dictionary by values descending\ndef sort_by_value(d):\n    # Your code here\n    pass\n\n# Test your function\nscores = {"Alice": 85, "Bob": 92, "Charlie": 78}\nprint(sort_by_value(scores))',
+    solution: 'def sort_by_value(d):\n    items = list(d.items())\n    sorted_items = sorted(items, key=lambda x: x[1], reverse=True)\n    return sorted_items\n\nscores = {"Alice": 85, "Bob": 92, "Charlie": 78}\nprint(sort_by_value(scores))',
+    testCases: [
+      {
+        input: '{"Alice": 85, "Bob": 92, "Charlie": 78}',
+        expectedOutput: "[('Bob', 92), ('Alice', 85), ('Charlie', 78)]",
+        isHidden: false,
+        description: 'Sort scores descending'
+      },
+      {
+        input: '{"a": 1, "b": 2}',
+        expectedOutput: "[('b', 2), ('a', 1)]",
+        isHidden: true,
+        description: 'Simple sort'
+      }
+    ],
+    hints: [
+      'Use d.items() to get key-value pairs',
+      'Use sorted() with a key function',
+      'lambda x: x[1] gets the value from each tuple',
+      'Set reverse=True for descending order'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs101-t4-ex15',
+    subjectId: 'cs101',
+    topicId: 'cs101-topic-4',
+    title: 'List Comprehension Practice',
+    difficulty: 3,
+    description: 'Write a function that uses list comprehension to return all numbers from a list that are divisible by both 2 and 3.',
+    starterCode: '# Find numbers divisible by 2 AND 3\ndef divisible_by_2_and_3(numbers):\n    # Use list comprehension\n    pass\n\n# Test your function\nprint(divisible_by_2_and_3([1, 2, 3, 6, 12, 15, 18, 24]))',
+    solution: 'def divisible_by_2_and_3(numbers):\n    return [n for n in numbers if n % 2 == 0 and n % 3 == 0]\n\nprint(divisible_by_2_and_3([1, 2, 3, 6, 12, 15, 18, 24]))',
+    testCases: [
+      {
+        input: '[1, 2, 3, 6, 12, 15, 18, 24]',
+        expectedOutput: '[6, 12, 18, 24]',
+        isHidden: false,
+        description: 'Filter by divisibility'
+      },
+      {
+        input: '[1, 2, 3, 4, 5]',
+        expectedOutput: '[]',
+        isHidden: true,
+        description: 'None divisible'
+      }
+    ],
+    hints: [
+      'List comprehension syntax: [expr for item in list if condition]',
+      'Check n % 2 == 0 AND n % 3 == 0',
+      'Or simply check n % 6 == 0'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs101-t4-ex16',
+    subjectId: 'cs101',
+    topicId: 'cs101-topic-4',
+    title: 'Matrix Transpose',
+    difficulty: 5,
+    description: 'Write a function that transposes a matrix (list of lists). Rows become columns and columns become rows.',
+    starterCode: '# Transpose a matrix\ndef transpose(matrix):\n    # Your code here\n    pass\n\n# Test your function\nm = [[1, 2, 3], [4, 5, 6]]\nprint(transpose(m))',
+    solution: 'def transpose(matrix):\n    if not matrix or not matrix[0]:\n        return []\n    rows = len(matrix)\n    cols = len(matrix[0])\n    result = []\n    for j in range(cols):\n        new_row = []\n        for i in range(rows):\n            new_row.append(matrix[i][j])\n        result.append(new_row)\n    return result\n\nm = [[1, 2, 3], [4, 5, 6]]\nprint(transpose(m))',
+    testCases: [
+      {
+        input: '[[1, 2, 3], [4, 5, 6]]',
+        expectedOutput: '[[1, 4], [2, 5], [3, 6]]',
+        isHidden: false,
+        description: '2x3 to 3x2'
+      },
+      {
+        input: '[[1], [2], [3]]',
+        expectedOutput: '[[1, 2, 3]]',
+        isHidden: true,
+        description: '3x1 to 1x3'
+      }
+    ],
+    hints: [
+      'The new matrix has swapped dimensions',
+      'Original row count becomes column count',
+      'Element at [i][j] moves to [j][i]',
+      'Or use: list(map(list, zip(*matrix)))'
+    ],
+    language: 'python'
   }
 ];

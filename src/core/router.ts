@@ -61,6 +61,11 @@ export class Router {
       paramNames: [],
       template: '/settings',
     },
+    export: {
+      pattern: /^#?\/export$/,
+      paramNames: [],
+      template: '/export',
+    },
   };
 
   constructor() {
@@ -217,6 +222,7 @@ export const navigateToProject = (subjectId: string, projId: string) =>
   navigate(`/subject/${subjectId}/project/${projId}`);
 export const navigateToProgress = () => navigate('/progress');
 export const navigateToSettings = () => navigate('/settings');
+export const navigateToExport = () => navigate('/export');
 
 // Export route matching utilities
 export const onRouteChange = (handler: RouteHandler) => router.onRouteChange(handler);

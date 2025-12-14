@@ -347,5 +347,268 @@ export const topic2Exercises: CodingExercise[] = [
       'Handle edge cases for n <= 0 and n == 1'
     ],
     language: 'python'
+  },
+  {
+    id: 'cs101-t2-ex10',
+    subjectId: 'cs101',
+    topicId: 'cs101-topic-2',
+    title: 'Leap Year Checker',
+    difficulty: 3,
+    description: 'Write a function that returns True if a year is a leap year. A leap year is divisible by 4, except for years divisible by 100 (unless also divisible by 400).',
+    starterCode: '# Check if a year is a leap year\ndef is_leap_year(year):\n    # Your code here\n    pass\n\n# Test your function\nprint(is_leap_year(2020))\nprint(is_leap_year(1900))\nprint(is_leap_year(2000))',
+    solution: 'def is_leap_year(year):\n    if year % 400 == 0:\n        return True\n    if year % 100 == 0:\n        return False\n    if year % 4 == 0:\n        return True\n    return False\n\nprint(is_leap_year(2020))\nprint(is_leap_year(1900))\nprint(is_leap_year(2000))',
+    testCases: [
+      {
+        input: '2020',
+        expectedOutput: 'True',
+        isHidden: false,
+        description: '2020 is a leap year'
+      },
+      {
+        input: '1900',
+        expectedOutput: 'False',
+        isHidden: false,
+        description: '1900 is not a leap year'
+      },
+      {
+        input: '2000',
+        expectedOutput: 'True',
+        isHidden: false,
+        description: '2000 is a leap year'
+      },
+      {
+        input: '2021',
+        expectedOutput: 'False',
+        isHidden: true,
+        description: '2021 is not a leap year'
+      }
+    ],
+    hints: [
+      'Check divisibility by 400 first (these are leap years)',
+      'Then check divisibility by 100 (these are NOT leap years)',
+      'Then check divisibility by 4 (these are leap years)',
+      'All other years are not leap years'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs101-t2-ex11',
+    subjectId: 'cs101',
+    topicId: 'cs101-topic-2',
+    title: 'Number Guesser Validator',
+    difficulty: 2,
+    description: 'Write a function that takes a guess and a target number. Return "too high", "too low", or "correct".',
+    starterCode: '# Validate a number guess\ndef check_guess(guess, target):\n    # Your code here\n    pass\n\n# Test your function\nprint(check_guess(50, 75))\nprint(check_guess(80, 75))\nprint(check_guess(75, 75))',
+    solution: 'def check_guess(guess, target):\n    if guess > target:\n        return "too high"\n    elif guess < target:\n        return "too low"\n    else:\n        return "correct"\n\nprint(check_guess(50, 75))\nprint(check_guess(80, 75))\nprint(check_guess(75, 75))',
+    testCases: [
+      {
+        input: '50, 75',
+        expectedOutput: 'too low',
+        isHidden: false,
+        description: 'Guess is too low'
+      },
+      {
+        input: '80, 75',
+        expectedOutput: 'too high',
+        isHidden: false,
+        description: 'Guess is too high'
+      },
+      {
+        input: '75, 75',
+        expectedOutput: 'correct',
+        isHidden: true,
+        description: 'Correct guess'
+      }
+    ],
+    hints: [
+      'Compare guess to target using > and <',
+      'Use if/elif/else for the three cases',
+      'Return the appropriate string for each case'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs101-t2-ex12',
+    subjectId: 'cs101',
+    topicId: 'cs101-topic-2',
+    title: 'Find First Negative',
+    difficulty: 3,
+    description: 'Write a function that finds the first negative number in a list and returns its index. Return -1 if there are no negative numbers.',
+    starterCode: '# Find index of first negative number\ndef first_negative(numbers):\n    # Your code here\n    pass\n\n# Test your function\nprint(first_negative([1, 2, -3, 4]))\nprint(first_negative([1, 2, 3, 4]))',
+    solution: 'def first_negative(numbers):\n    for i in range(len(numbers)):\n        if numbers[i] < 0:\n            return i\n    return -1\n\nprint(first_negative([1, 2, -3, 4]))\nprint(first_negative([1, 2, 3, 4]))',
+    testCases: [
+      {
+        input: '[1, 2, -3, 4]',
+        expectedOutput: '2',
+        isHidden: false,
+        description: 'Negative at index 2'
+      },
+      {
+        input: '[1, 2, 3, 4]',
+        expectedOutput: '-1',
+        isHidden: false,
+        description: 'No negatives'
+      },
+      {
+        input: '[-1, 2, 3]',
+        expectedOutput: '0',
+        isHidden: true,
+        description: 'Negative at start'
+      }
+    ],
+    hints: [
+      'Use enumerate() or range(len()) to get indices',
+      'Check if each number is less than 0',
+      'Return the index immediately when found',
+      'Return -1 after the loop if nothing found'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs101-t2-ex13',
+    subjectId: 'cs101',
+    topicId: 'cs101-topic-2',
+    title: 'Password Strength Checker',
+    difficulty: 4,
+    description: 'Write a function that checks password strength. Return "weak" if under 8 chars, "medium" if 8+ chars but no digits, "strong" if 8+ chars with at least one digit.',
+    starterCode: '# Check password strength\ndef check_password(password):\n    # Your code here\n    pass\n\n# Test your function\nprint(check_password("abc"))\nprint(check_password("password"))\nprint(check_password("password123"))',
+    solution: 'def check_password(password):\n    if len(password) < 8:\n        return "weak"\n    \n    has_digit = False\n    for char in password:\n        if char.isdigit():\n            has_digit = True\n            break\n    \n    if has_digit:\n        return "strong"\n    return "medium"\n\nprint(check_password("abc"))\nprint(check_password("password"))\nprint(check_password("password123"))',
+    testCases: [
+      {
+        input: '"abc"',
+        expectedOutput: 'weak',
+        isHidden: false,
+        description: 'Too short'
+      },
+      {
+        input: '"password"',
+        expectedOutput: 'medium',
+        isHidden: false,
+        description: 'Long but no digits'
+      },
+      {
+        input: '"password123"',
+        expectedOutput: 'strong',
+        isHidden: false,
+        description: 'Long with digits'
+      },
+      {
+        input: '"12345678"',
+        expectedOutput: 'strong',
+        isHidden: true,
+        description: 'All digits'
+      }
+    ],
+    hints: [
+      'First check the length with len()',
+      'Loop through characters to check for digits',
+      'Use .isdigit() to check if a character is a number',
+      'Use break to exit the loop early when a digit is found'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs101-t2-ex14',
+    subjectId: 'cs101',
+    topicId: 'cs101-topic-2',
+    title: 'Collatz Sequence',
+    difficulty: 4,
+    description: 'Write a function that returns the Collatz sequence starting from n until reaching 1. If n is even, divide by 2. If odd, multiply by 3 and add 1.',
+    starterCode: '# Generate Collatz sequence from n to 1\ndef collatz(n):\n    # Your code here\n    pass\n\n# Test your function\nprint(collatz(6))\nprint(collatz(3))',
+    solution: 'def collatz(n):\n    sequence = [n]\n    while n != 1:\n        if n % 2 == 0:\n            n = n // 2\n        else:\n            n = 3 * n + 1\n        sequence.append(n)\n    return sequence\n\nprint(collatz(6))\nprint(collatz(3))',
+    testCases: [
+      {
+        input: '6',
+        expectedOutput: '[6, 3, 10, 5, 16, 8, 4, 2, 1]',
+        isHidden: false,
+        description: 'Starting from 6'
+      },
+      {
+        input: '3',
+        expectedOutput: '[3, 10, 5, 16, 8, 4, 2, 1]',
+        isHidden: false,
+        description: 'Starting from 3'
+      },
+      {
+        input: '1',
+        expectedOutput: '[1]',
+        isHidden: true,
+        description: 'Starting from 1'
+      }
+    ],
+    hints: [
+      'Start with a list containing n',
+      'Use a while loop until n becomes 1',
+      'Check if n is even with n % 2 == 0',
+      'Update n and append to the sequence each iteration'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs101-t2-ex15',
+    subjectId: 'cs101',
+    topicId: 'cs101-topic-2',
+    title: 'Pattern Printer',
+    difficulty: 3,
+    description: 'Write a function that prints a right triangle of asterisks with n rows. Each row should have row_number asterisks.',
+    starterCode: '# Print a right triangle pattern\ndef print_triangle(n):\n    # Your code here\n    pass\n\n# Test your function\nprint_triangle(4)',
+    solution: 'def print_triangle(n):\n    for i in range(1, n + 1):\n        print("*" * i)\n\nprint_triangle(4)',
+    testCases: [
+      {
+        input: '4',
+        expectedOutput: '*\n**\n***\n****',
+        isHidden: false,
+        description: 'Triangle of height 4'
+      },
+      {
+        input: '3',
+        expectedOutput: '*\n**\n***',
+        isHidden: true,
+        description: 'Triangle of height 3'
+      }
+    ],
+    hints: [
+      'Use a for loop from 1 to n+1',
+      'Print i asterisks on each line',
+      'You can multiply strings: "*" * 3 gives "***"'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs101-t2-ex16',
+    subjectId: 'cs101',
+    topicId: 'cs101-topic-2',
+    title: 'Find All Primes',
+    difficulty: 5,
+    description: 'Write a function that returns a list of all prime numbers up to n (inclusive). Use the Sieve of Eratosthenes or simple trial division.',
+    starterCode: '# Find all primes up to n\ndef primes_up_to(n):\n    # Your code here\n    pass\n\n# Test your function\nprint(primes_up_to(20))\nprint(primes_up_to(10))',
+    solution: 'def primes_up_to(n):\n    if n < 2:\n        return []\n    \n    primes = []\n    for num in range(2, n + 1):\n        is_prime = True\n        for i in range(2, int(num ** 0.5) + 1):\n            if num % i == 0:\n                is_prime = False\n                break\n        if is_prime:\n            primes.append(num)\n    return primes\n\nprint(primes_up_to(20))\nprint(primes_up_to(10))',
+    testCases: [
+      {
+        input: '20',
+        expectedOutput: '[2, 3, 5, 7, 11, 13, 17, 19]',
+        isHidden: false,
+        description: 'Primes up to 20'
+      },
+      {
+        input: '10',
+        expectedOutput: '[2, 3, 5, 7]',
+        isHidden: false,
+        description: 'Primes up to 10'
+      },
+      {
+        input: '1',
+        expectedOutput: '[]',
+        isHidden: true,
+        description: 'No primes under 2'
+      }
+    ],
+    hints: [
+      'Check each number from 2 to n',
+      'A number is prime if no smaller number divides it evenly',
+      'Only check divisors up to the square root',
+      'Use break to exit the inner loop early'
+    ],
+    language: 'python'
   }
 ];

@@ -330,5 +330,221 @@ export const topic3Exercises: CodingExercise[] = [
       'numbers[1:] gets all elements except the first'
     ],
     language: 'python'
+  },
+  {
+    id: 'cs101-t3-ex10',
+    subjectId: 'cs101',
+    topicId: 'cs101-topic-3',
+    title: 'Count Occurrences',
+    difficulty: 2,
+    description: 'Write a function that counts how many times a value appears in a list.',
+    starterCode: '# Count occurrences of value in list\ndef count_value(items, value):\n    # Your code here\n    pass\n\n# Test your function\nprint(count_value([1, 2, 2, 3, 2], 2))\nprint(count_value(["a", "b", "a"], "a"))',
+    solution: 'def count_value(items, value):\n    count = 0\n    for item in items:\n        if item == value:\n            count += 1\n    return count\n\nprint(count_value([1, 2, 2, 3, 2], 2))\nprint(count_value(["a", "b", "a"], "a"))',
+    testCases: [
+      {
+        input: '[1, 2, 2, 3, 2], 2',
+        expectedOutput: '3',
+        isHidden: false,
+        description: 'Count 2s in list'
+      },
+      {
+        input: '["a", "b", "a"], "a"',
+        expectedOutput: '2',
+        isHidden: false,
+        description: 'Count strings'
+      },
+      {
+        input: '[1, 2, 3], 4',
+        expectedOutput: '0',
+        isHidden: true,
+        description: 'Value not in list'
+      }
+    ],
+    hints: [
+      'Initialize a counter to 0',
+      'Loop through each item',
+      'Increment counter when item equals value',
+      'Return the final count'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs101-t3-ex11',
+    subjectId: 'cs101',
+    topicId: 'cs101-topic-3',
+    title: 'Min and Max',
+    difficulty: 2,
+    description: 'Write a function that returns both the minimum and maximum values from a list as a tuple. Do not use built-in min() or max().',
+    starterCode: '# Find min and max of list\ndef min_max(numbers):\n    # Your code here\n    pass\n\n# Test your function\nprint(min_max([3, 1, 4, 1, 5, 9]))\nprint(min_max([5]))',
+    solution: 'def min_max(numbers):\n    if not numbers:\n        return None\n    min_val = numbers[0]\n    max_val = numbers[0]\n    for num in numbers:\n        if num < min_val:\n            min_val = num\n        if num > max_val:\n            max_val = num\n    return (min_val, max_val)\n\nprint(min_max([3, 1, 4, 1, 5, 9]))\nprint(min_max([5]))',
+    testCases: [
+      {
+        input: '[3, 1, 4, 1, 5, 9]',
+        expectedOutput: '(1, 9)',
+        isHidden: false,
+        description: 'Multiple numbers'
+      },
+      {
+        input: '[5]',
+        expectedOutput: '(5, 5)',
+        isHidden: false,
+        description: 'Single element'
+      },
+      {
+        input: '[-5, 0, 5]',
+        expectedOutput: '(-5, 5)',
+        isHidden: true,
+        description: 'With negative'
+      }
+    ],
+    hints: [
+      'Start with first element as both min and max',
+      'Loop through and update min/max as needed',
+      'Return a tuple: (min_val, max_val)'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs101-t3-ex12',
+    subjectId: 'cs101',
+    topicId: 'cs101-topic-3',
+    title: 'Compose Functions',
+    difficulty: 4,
+    description: 'Write a function that takes two functions f and g, and returns a new function that computes f(g(x)).',
+    starterCode: '# Create a composed function f(g(x))\ndef compose(f, g):\n    # Your code here\n    pass\n\n# Test functions\ndef add_one(x):\n    return x + 1\n\ndef double(x):\n    return x * 2\n\n# Test your function\ncomposed = compose(add_one, double)\nprint(composed(5))  # Should print 11: double(5)=10, add_one(10)=11',
+    solution: 'def compose(f, g):\n    def composed_func(x):\n        return f(g(x))\n    return composed_func\n\ndef add_one(x):\n    return x + 1\n\ndef double(x):\n    return x * 2\n\ncomposed = compose(add_one, double)\nprint(composed(5))',
+    testCases: [
+      {
+        input: '5',
+        expectedOutput: '11',
+        isHidden: false,
+        description: 'add_one(double(5)) = 11'
+      }
+    ],
+    hints: [
+      'Define a new inner function inside compose',
+      'The inner function should call g(x) first',
+      'Then pass that result to f()',
+      'Return the inner function (not the result)'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs101-t3-ex13',
+    subjectId: 'cs101',
+    topicId: 'cs101-topic-3',
+    title: 'Memoized Fibonacci',
+    difficulty: 5,
+    description: 'Write a function that calculates the nth Fibonacci number using memoization (caching) to avoid redundant calculations.',
+    starterCode: '# Memoized Fibonacci\ndef fib_memo(n, cache=None):\n    if cache is None:\n        cache = {}\n    # Your code here\n    pass\n\n# Test your function\nprint(fib_memo(10))\nprint(fib_memo(30))',
+    solution: 'def fib_memo(n, cache=None):\n    if cache is None:\n        cache = {}\n    \n    if n in cache:\n        return cache[n]\n    \n    if n <= 1:\n        return n\n    \n    result = fib_memo(n - 1, cache) + fib_memo(n - 2, cache)\n    cache[n] = result\n    return result\n\nprint(fib_memo(10))\nprint(fib_memo(30))',
+    testCases: [
+      {
+        input: '10',
+        expectedOutput: '55',
+        isHidden: false,
+        description: '10th Fibonacci number'
+      },
+      {
+        input: '30',
+        expectedOutput: '832040',
+        isHidden: false,
+        description: '30th Fibonacci number'
+      },
+      {
+        input: '0',
+        expectedOutput: '0',
+        isHidden: true,
+        description: '0th Fibonacci'
+      }
+    ],
+    hints: [
+      'Check if n is already in the cache first',
+      'Base cases: fib(0) = 0, fib(1) = 1',
+      'Recursively calculate and store result in cache',
+      'Pass the cache to recursive calls'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs101-t3-ex14',
+    subjectId: 'cs101',
+    topicId: 'cs101-topic-3',
+    title: 'Decorator Counter',
+    difficulty: 5,
+    description: 'Write a simple decorator that counts how many times a function has been called. The count should be accessible as an attribute of the function.',
+    starterCode: '# Create a call counter decorator\ndef count_calls(func):\n    # Your code here\n    pass\n\n@count_calls\ndef say_hello():\n    print("Hello!")\n\n# Test your decorator\nsay_hello()\nsay_hello()\nsay_hello()\nprint(f"Called {say_hello.calls} times")',
+    solution: 'def count_calls(func):\n    def wrapper(*args, **kwargs):\n        wrapper.calls += 1\n        return func(*args, **kwargs)\n    wrapper.calls = 0\n    return wrapper\n\n@count_calls\ndef say_hello():\n    print("Hello!")\n\nsay_hello()\nsay_hello()\nsay_hello()\nprint(f"Called {say_hello.calls} times")',
+    testCases: [
+      {
+        input: '',
+        expectedOutput: 'Hello!\nHello!\nHello!\nCalled 3 times',
+        isHidden: false,
+        description: 'Counts 3 calls'
+      }
+    ],
+    hints: [
+      'Create a wrapper function inside the decorator',
+      'Add a .calls attribute to the wrapper',
+      'Increment the count each time wrapper is called',
+      'Return the wrapper function'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs101-t3-ex15',
+    subjectId: 'cs101',
+    topicId: 'cs101-topic-3',
+    title: 'Partial Application',
+    difficulty: 4,
+    description: 'Write a function that takes a function and some arguments, and returns a new function with those arguments pre-filled.',
+    starterCode: '# Create a partial application\ndef partial(func, *args):\n    # Your code here\n    pass\n\ndef add(a, b, c):\n    return a + b + c\n\n# Test your function\nadd_10 = partial(add, 10)\nprint(add_10(5, 3))  # Should print 18: 10 + 5 + 3',
+    solution: 'def partial(func, *args):\n    def wrapper(*more_args):\n        return func(*args, *more_args)\n    return wrapper\n\ndef add(a, b, c):\n    return a + b + c\n\nadd_10 = partial(add, 10)\nprint(add_10(5, 3))',
+    testCases: [
+      {
+        input: '',
+        expectedOutput: '18',
+        isHidden: false,
+        description: 'Partial with 10 + 5 + 3'
+      }
+    ],
+    hints: [
+      'Create an inner function that accepts remaining args',
+      'Combine the pre-filled args with the new args',
+      'Use *args to handle variable arguments',
+      'Return the inner function'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs101-t3-ex16',
+    subjectId: 'cs101',
+    topicId: 'cs101-topic-3',
+    title: 'Validate Arguments',
+    difficulty: 3,
+    description: 'Write a function that validates its arguments. It should take a number and ensure it is positive. Raise a ValueError with a helpful message if not.',
+    starterCode: '# Validate that number is positive\ndef process_positive(number):\n    # Your code here - validate then return doubled value\n    pass\n\n# Test your function\ntry:\n    print(process_positive(5))\n    print(process_positive(-3))\nexcept ValueError as e:\n    print(f"Error: {e}")',
+    solution: 'def process_positive(number):\n    if number <= 0:\n        raise ValueError(f"Number must be positive, got {number}")\n    return number * 2\n\ntry:\n    print(process_positive(5))\n    print(process_positive(-3))\nexcept ValueError as e:\n    print(f"Error: {e}")',
+    testCases: [
+      {
+        input: '5',
+        expectedOutput: '10',
+        isHidden: false,
+        description: 'Positive number works'
+      },
+      {
+        input: '-3',
+        expectedOutput: 'Error: Number must be positive, got -3',
+        isHidden: false,
+        description: 'Negative raises error'
+      }
+    ],
+    hints: [
+      'Check if number is <= 0 at the start',
+      'Use raise ValueError("message") to throw an error',
+      'Include the invalid value in the error message',
+      'Return the processed value if valid'
+    ],
+    language: 'python'
   }
 ];

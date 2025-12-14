@@ -257,5 +257,187 @@ export const topic5Exercises: CodingExercise[] = [
       'Handle missing files gracefully'
     ],
     language: 'python'
+  },
+  {
+    id: 'cs101-t5-ex10',
+    subjectId: 'cs101',
+    topicId: 'cs101-topic-5',
+    title: 'Copy File',
+    difficulty: 2,
+    description: 'Write a function that copies the contents of one file to another file.',
+    starterCode: '# Copy contents from source to destination\ndef copy_file(source, destination):\n    # Your code here\n    pass\n\n# Test your function\ncopy_file("source.txt", "backup.txt")\nprint("File copied!")',
+    solution: 'def copy_file(source, destination):\n    try:\n        with open(source, "r") as src:\n            content = src.read()\n        with open(destination, "w") as dst:\n            dst.write(content)\n        return True\n    except FileNotFoundError:\n        return False\n\ncopy_file("source.txt", "backup.txt")\nprint("File copied!")',
+    testCases: [
+      {
+        input: '"source.txt", "backup.txt"',
+        expectedOutput: 'File copied!',
+        isHidden: false,
+        description: 'Copy file successfully'
+      }
+    ],
+    hints: [
+      'Open source file for reading',
+      'Read all content from source',
+      'Open destination file for writing',
+      'Write the content to destination'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs101-t5-ex11',
+    subjectId: 'cs101',
+    topicId: 'cs101-topic-5',
+    title: 'File Exists Check',
+    difficulty: 1,
+    description: 'Write a function that checks if a file exists. Return True if it exists, False otherwise.',
+    starterCode: '# Check if file exists\ndef file_exists(filename):\n    # Your code here\n    pass\n\n# Test your function\nprint(file_exists("existing.txt"))\nprint(file_exists("nonexistent.txt"))',
+    solution: 'def file_exists(filename):\n    try:\n        with open(filename, "r") as f:\n            return True\n    except FileNotFoundError:\n        return False\n\nprint(file_exists("existing.txt"))\nprint(file_exists("nonexistent.txt"))',
+    testCases: [
+      {
+        input: '"existing.txt"',
+        expectedOutput: 'True',
+        isHidden: false,
+        description: 'File exists'
+      },
+      {
+        input: '"nonexistent.txt"',
+        expectedOutput: 'False',
+        isHidden: false,
+        description: 'File does not exist'
+      }
+    ],
+    hints: [
+      'Try to open the file for reading',
+      'If successful, the file exists',
+      'Catch FileNotFoundError if it does not exist',
+      'You can also use os.path.exists() from the os module'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs101-t5-ex12',
+    subjectId: 'cs101',
+    topicId: 'cs101-topic-5',
+    title: 'Write List to File',
+    difficulty: 2,
+    description: 'Write a function that takes a list of strings and writes each one to a file on its own line.',
+    starterCode: '# Write list items to file, one per line\ndef write_list(filename, items):\n    # Your code here\n    pass\n\n# Test your function\nwrite_list("names.txt", ["Alice", "Bob", "Charlie"])\nprint("List written!")',
+    solution: 'def write_list(filename, items):\n    with open(filename, "w") as file:\n        for item in items:\n            file.write(item + "\\n")\n\nwrite_list("names.txt", ["Alice", "Bob", "Charlie"])\nprint("List written!")',
+    testCases: [
+      {
+        input: '"names.txt", ["Alice", "Bob", "Charlie"]',
+        expectedOutput: 'List written!',
+        isHidden: false,
+        description: 'Write list to file'
+      }
+    ],
+    hints: [
+      'Open file in write mode',
+      'Loop through each item in the list',
+      'Write each item followed by a newline',
+      'Or use writelines() with newlines added'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs101-t5-ex13',
+    subjectId: 'cs101',
+    topicId: 'cs101-topic-5',
+    title: 'Search in File',
+    difficulty: 3,
+    description: 'Write a function that searches for a keyword in a file and returns all lines containing that keyword.',
+    starterCode: '# Find all lines containing keyword\ndef search_file(filename, keyword):\n    # Your code here\n    pass\n\n# Test your function\nresults = search_file("document.txt", "error")\nfor line in results:\n    print(line)',
+    solution: 'def search_file(filename, keyword):\n    matches = []\n    try:\n        with open(filename, "r") as file:\n            for line in file:\n                if keyword.lower() in line.lower():\n                    matches.append(line.strip())\n    except FileNotFoundError:\n        pass\n    return matches\n\nresults = search_file("document.txt", "error")\nfor line in results:\n    print(line)',
+    testCases: [
+      {
+        input: '"document.txt", "error"',
+        expectedOutput: 'Error occurred on line 5\nAnother error here',
+        isHidden: false,
+        description: 'Find lines with keyword'
+      }
+    ],
+    hints: [
+      'Open file and iterate through lines',
+      'Check if keyword is in each line',
+      'Use .lower() for case-insensitive search',
+      'Append matching lines to result list'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs101-t5-ex14',
+    subjectId: 'cs101',
+    topicId: 'cs101-topic-5',
+    title: 'JSON Read and Modify',
+    difficulty: 4,
+    description: 'Write a function that reads a JSON file, updates a specific key, and writes it back.',
+    starterCode: 'import json\n\n# Update a key in JSON file\ndef update_json(filename, key, value):\n    # Your code here\n    pass\n\n# Test your function\nupdate_json("config.json", "version", "2.0")\nprint("JSON updated!")',
+    solution: 'import json\n\ndef update_json(filename, key, value):\n    try:\n        with open(filename, "r") as file:\n            data = json.load(file)\n        \n        data[key] = value\n        \n        with open(filename, "w") as file:\n            json.dump(data, file, indent=2)\n        return True\n    except FileNotFoundError:\n        return False\n\nupdate_json("config.json", "version", "2.0")\nprint("JSON updated!")',
+    testCases: [
+      {
+        input: '"config.json", "version", "2.0"',
+        expectedOutput: 'JSON updated!',
+        isHidden: false,
+        description: 'Update JSON key'
+      }
+    ],
+    hints: [
+      'Use json.load() to read JSON file',
+      'Modify the dictionary directly',
+      'Use json.dump() to write back',
+      'Add indent=2 for pretty formatting'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs101-t5-ex15',
+    subjectId: 'cs101',
+    topicId: 'cs101-topic-5',
+    title: 'Log File Writer',
+    difficulty: 3,
+    description: 'Write a function that appends a timestamped log entry to a log file. Format: "[TIMESTAMP] message"',
+    starterCode: 'from datetime import datetime\n\n# Append timestamped log entry\ndef log_message(filename, message):\n    # Your code here\n    pass\n\n# Test your function\nlog_message("app.log", "Application started")\nlog_message("app.log", "User logged in")\nprint("Logs written!")',
+    solution: 'from datetime import datetime\n\ndef log_message(filename, message):\n    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")\n    entry = f"[{timestamp}] {message}\\n"\n    with open(filename, "a") as file:\n        file.write(entry)\n\nlog_message("app.log", "Application started")\nlog_message("app.log", "User logged in")\nprint("Logs written!")',
+    testCases: [
+      {
+        input: '"app.log", "Test message"',
+        expectedOutput: 'Logs written!',
+        isHidden: false,
+        description: 'Write log entry'
+      }
+    ],
+    hints: [
+      'Use datetime.now() to get current time',
+      'Format with strftime() for readable timestamp',
+      'Open file in append mode ("a")',
+      'Write the formatted log entry'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs101-t5-ex16',
+    subjectId: 'cs101',
+    topicId: 'cs101-topic-5',
+    title: 'File Statistics',
+    difficulty: 5,
+    description: 'Write a function that analyzes a text file and returns statistics: line count, word count, character count, and most common word.',
+    starterCode: '# Analyze file and return statistics\ndef file_stats(filename):\n    # Your code here\n    pass\n\n# Test your function\nstats = file_stats("document.txt")\nprint(stats)',
+    solution: 'def file_stats(filename):\n    try:\n        with open(filename, "r") as file:\n            content = file.read()\n        \n        lines = content.split("\\n")\n        words = content.split()\n        chars = len(content)\n        \n        word_counts = {}\n        for word in words:\n            word = word.lower().strip(".,!?;:")\n            if word:\n                word_counts[word] = word_counts.get(word, 0) + 1\n        \n        most_common = max(word_counts, key=word_counts.get) if word_counts else ""\n        \n        return {\n            "lines": len(lines),\n            "words": len(words),\n            "chars": chars,\n            "most_common": most_common\n        }\n    except FileNotFoundError:\n        return None\n\nstats = file_stats("document.txt")\nprint(stats)',
+    testCases: [
+      {
+        input: '"document.txt"',
+        expectedOutput: "{'lines': 10, 'words': 50, 'chars': 300, 'most_common': 'the'}",
+        isHidden: false,
+        description: 'Get file statistics'
+      }
+    ],
+    hints: [
+      'Read entire file content first',
+      'Use split("\\n") for lines, split() for words',
+      'len(content) gives character count',
+      'Count word frequencies with a dictionary',
+      'Use max() with key parameter to find most common'
+    ],
+    language: 'python'
   }
 ];

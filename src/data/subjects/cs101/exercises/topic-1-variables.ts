@@ -296,5 +296,293 @@ export const topic1Exercises: CodingExercise[] = [
       'Remember to round to 2 decimal places'
     ],
     language: 'python'
+  },
+  {
+    id: 'cs101-t1-ex09',
+    subjectId: 'cs101',
+    topicId: 'cs101-topic-1',
+    title: 'Percentage Calculator',
+    difficulty: 2,
+    description: 'Write a function that takes a value and a total, and returns what percentage the value is of the total. For example, percentage(25, 100) should return 25.0.',
+    starterCode: '# Calculate what percentage value is of total\ndef percentage(value, total):\n    # Your code here\n    pass\n\n# Test your function\nprint(percentage(25, 100))\nprint(percentage(3, 12))',
+    solution: 'def percentage(value, total):\n    return (value / total) * 100\n\nprint(percentage(25, 100))\nprint(percentage(3, 12))',
+    testCases: [
+      {
+        input: '25, 100',
+        expectedOutput: '25.0',
+        isHidden: false,
+        description: '25 out of 100'
+      },
+      {
+        input: '3, 12',
+        expectedOutput: '25.0',
+        isHidden: false,
+        description: '3 out of 12'
+      },
+      {
+        input: '50, 200',
+        expectedOutput: '25.0',
+        isHidden: true,
+        description: '50 out of 200'
+      }
+    ],
+    hints: [
+      'Divide value by total to get the fraction',
+      'Multiply by 100 to convert to percentage',
+      'The formula is: (value / total) * 100'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs101-t1-ex10',
+    subjectId: 'cs101',
+    topicId: 'cs101-topic-1',
+    title: 'String Length Checker',
+    difficulty: 1,
+    description: 'Write a function that takes a string and returns its length. Then return whether it is "short" (less than 5 chars), "medium" (5-10 chars), or "long" (more than 10 chars).',
+    starterCode: '# Classify string length\ndef classify_length(text):\n    # Your code here\n    pass\n\n# Test your function\nprint(classify_length("Hi"))\nprint(classify_length("Hello"))\nprint(classify_length("Hello, World!"))',
+    solution: 'def classify_length(text):\n    length = len(text)\n    if length < 5:\n        return "short"\n    elif length <= 10:\n        return "medium"\n    else:\n        return "long"\n\nprint(classify_length("Hi"))\nprint(classify_length("Hello"))\nprint(classify_length("Hello, World!"))',
+    testCases: [
+      {
+        input: '"Hi"',
+        expectedOutput: 'short',
+        isHidden: false,
+        description: 'Short string'
+      },
+      {
+        input: '"Hello"',
+        expectedOutput: 'medium',
+        isHidden: false,
+        description: 'Medium string'
+      },
+      {
+        input: '"Hello, World!"',
+        expectedOutput: 'long',
+        isHidden: true,
+        description: 'Long string'
+      }
+    ],
+    hints: [
+      'Use len() to get the string length',
+      'Use if/elif/else to check the ranges',
+      'Less than 5 is short, 5-10 is medium, more than 10 is long'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs101-t1-ex11',
+    subjectId: 'cs101',
+    topicId: 'cs101-topic-1',
+    title: 'Debug the Code',
+    difficulty: 3,
+    description: 'The following code has bugs. Fix them so the function correctly calculates and returns the total price with tax. The tax rate is 8.5%.',
+    starterCode: '# Fix the bugs in this code\ndef calculate_total(price):\n    tax_rate = "8.5"  # Bug 1\n    tax = price * tax_rate  # Bug 2\n    total = price + tax\n    # Bug 3: missing return\n\n# Test - should print 108.5\nresult = calculate_total(100)\nprint(result)',
+    solution: 'def calculate_total(price):\n    tax_rate = 0.085\n    tax = price * tax_rate\n    total = price + tax\n    return total\n\nresult = calculate_total(100)\nprint(result)',
+    testCases: [
+      {
+        input: '100',
+        expectedOutput: '108.5',
+        isHidden: false,
+        description: 'Price of 100'
+      },
+      {
+        input: '50',
+        expectedOutput: '54.25',
+        isHidden: true,
+        description: 'Price of 50'
+      }
+    ],
+    hints: [
+      'The tax rate should be a number (0.085), not a string',
+      'You cannot multiply a number by a string',
+      'The function needs to return the total'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs101-t1-ex12',
+    subjectId: 'cs101',
+    topicId: 'cs101-topic-1',
+    title: 'Extract Initials',
+    difficulty: 3,
+    description: 'Write a function that takes a full name (first and last) and returns the initials in uppercase. For example, "john doe" should return "JD".',
+    starterCode: '# Extract initials from a full name\ndef get_initials(full_name):\n    # Your code here\n    pass\n\n# Test your function\nprint(get_initials("john doe"))\nprint(get_initials("Alice Smith"))',
+    solution: 'def get_initials(full_name):\n    parts = full_name.split()\n    first_initial = parts[0][0].upper()\n    last_initial = parts[1][0].upper()\n    return first_initial + last_initial\n\nprint(get_initials("john doe"))\nprint(get_initials("Alice Smith"))',
+    testCases: [
+      {
+        input: '"john doe"',
+        expectedOutput: 'JD',
+        isHidden: false,
+        description: 'Lowercase name'
+      },
+      {
+        input: '"Alice Smith"',
+        expectedOutput: 'AS',
+        isHidden: false,
+        description: 'Capitalized name'
+      },
+      {
+        input: '"bob JONES"',
+        expectedOutput: 'BJ',
+        isHidden: true,
+        description: 'Mixed case'
+      }
+    ],
+    hints: [
+      'Use .split() to separate the first and last name',
+      'Get the first character with [0]',
+      'Use .upper() to convert to uppercase'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs101-t1-ex13',
+    subjectId: 'cs101',
+    topicId: 'cs101-topic-1',
+    title: 'Distance Converter',
+    difficulty: 2,
+    description: 'Write a function that converts miles to kilometers. 1 mile = 1.60934 kilometers. Round the result to 2 decimal places.',
+    starterCode: '# Convert miles to kilometers\ndef miles_to_km(miles):\n    # Your code here\n    pass\n\n# Test your function\nprint(miles_to_km(1))\nprint(miles_to_km(5))',
+    solution: 'def miles_to_km(miles):\n    km = miles * 1.60934\n    return round(km, 2)\n\nprint(miles_to_km(1))\nprint(miles_to_km(5))',
+    testCases: [
+      {
+        input: '1',
+        expectedOutput: '1.61',
+        isHidden: false,
+        description: '1 mile'
+      },
+      {
+        input: '5',
+        expectedOutput: '8.05',
+        isHidden: false,
+        description: '5 miles'
+      },
+      {
+        input: '10',
+        expectedOutput: '16.09',
+        isHidden: true,
+        description: '10 miles'
+      }
+    ],
+    hints: [
+      'Multiply miles by the conversion factor (1.60934)',
+      'Use round(value, 2) to round to 2 decimal places'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs101-t1-ex14',
+    subjectId: 'cs101',
+    topicId: 'cs101-topic-1',
+    title: 'Type Validator',
+    difficulty: 4,
+    description: 'Write a function that takes a value and an expected type name (as a string: "int", "float", "str", "bool") and returns True if the value matches that type, False otherwise.',
+    starterCode: '# Check if value matches expected type\ndef validate_type(value, expected_type):\n    # Your code here\n    pass\n\n# Test your function\nprint(validate_type(42, "int"))\nprint(validate_type("hello", "str"))\nprint(validate_type(3.14, "int"))',
+    solution: 'def validate_type(value, expected_type):\n    type_map = {\n        "int": int,\n        "float": float,\n        "str": str,\n        "bool": bool\n    }\n    if expected_type not in type_map:\n        return False\n    if expected_type == "int" and isinstance(value, bool):\n        return False\n    return isinstance(value, type_map[expected_type])\n\nprint(validate_type(42, "int"))\nprint(validate_type("hello", "str"))\nprint(validate_type(3.14, "int"))',
+    testCases: [
+      {
+        input: '42, "int"',
+        expectedOutput: 'True',
+        isHidden: false,
+        description: 'Integer matches int'
+      },
+      {
+        input: '"hello", "str"',
+        expectedOutput: 'True',
+        isHidden: false,
+        description: 'String matches str'
+      },
+      {
+        input: '3.14, "int"',
+        expectedOutput: 'False',
+        isHidden: false,
+        description: 'Float does not match int'
+      },
+      {
+        input: 'True, "bool"',
+        expectedOutput: 'True',
+        isHidden: true,
+        description: 'Boolean matches bool'
+      }
+    ],
+    hints: [
+      'Create a dictionary mapping type names to actual types',
+      'Use isinstance() to check if value is the expected type',
+      'Be careful: bool is a subclass of int in Python'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs101-t1-ex15',
+    subjectId: 'cs101',
+    topicId: 'cs101-topic-1',
+    title: 'Parse Coordinates',
+    difficulty: 4,
+    description: 'Write a function that takes a coordinate string like "10,20" and returns a tuple of two floats (10.0, 20.0). Handle potential conversion errors by returning None.',
+    starterCode: '# Parse coordinate string to tuple of floats\ndef parse_coordinates(coord_string):\n    # Your code here\n    pass\n\n# Test your function\nprint(parse_coordinates("10,20"))\nprint(parse_coordinates("3.5,7.2"))\nprint(parse_coordinates("invalid"))',
+    solution: 'def parse_coordinates(coord_string):\n    try:\n        parts = coord_string.split(",")\n        if len(parts) != 2:\n            return None\n        x = float(parts[0])\n        y = float(parts[1])\n        return (x, y)\n    except ValueError:\n        return None\n\nprint(parse_coordinates("10,20"))\nprint(parse_coordinates("3.5,7.2"))\nprint(parse_coordinates("invalid"))',
+    testCases: [
+      {
+        input: '"10,20"',
+        expectedOutput: '(10.0, 20.0)',
+        isHidden: false,
+        description: 'Integer coordinates'
+      },
+      {
+        input: '"3.5,7.2"',
+        expectedOutput: '(3.5, 7.2)',
+        isHidden: false,
+        description: 'Float coordinates'
+      },
+      {
+        input: '"invalid"',
+        expectedOutput: 'None',
+        isHidden: true,
+        description: 'Invalid input'
+      }
+    ],
+    hints: [
+      'Use .split(",") to separate x and y',
+      'Convert each part to float',
+      'Use try/except to handle conversion errors',
+      'Return None if parsing fails'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs101-t1-ex16',
+    subjectId: 'cs101',
+    topicId: 'cs101-topic-1',
+    title: 'Format Currency',
+    difficulty: 5,
+    description: 'Write a function that takes an amount and a currency code (USD, EUR, GBP) and returns a formatted string. USD uses $, EUR uses €, GBP uses £. Format with 2 decimal places and thousand separators.',
+    starterCode: '# Format amount as currency\ndef format_currency(amount, currency="USD"):\n    # Your code here\n    pass\n\n# Test your function\nprint(format_currency(1234.5, "USD"))\nprint(format_currency(1000000, "EUR"))\nprint(format_currency(99.9, "GBP"))',
+    solution: 'def format_currency(amount, currency="USD"):\n    symbols = {\n        "USD": "$",\n        "EUR": "€",\n        "GBP": "£"\n    }\n    symbol = symbols.get(currency, "$")\n    formatted = f"{amount:,.2f}"\n    return f"{symbol}{formatted}"\n\nprint(format_currency(1234.5, "USD"))\nprint(format_currency(1000000, "EUR"))\nprint(format_currency(99.9, "GBP"))',
+    testCases: [
+      {
+        input: '1234.5, "USD"',
+        expectedOutput: '$1,234.50',
+        isHidden: false,
+        description: 'USD formatting'
+      },
+      {
+        input: '1000000, "EUR"',
+        expectedOutput: '€1,000,000.00',
+        isHidden: false,
+        description: 'EUR with millions'
+      },
+      {
+        input: '99.9, "GBP"',
+        expectedOutput: '£99.90',
+        isHidden: true,
+        description: 'GBP small amount'
+      }
+    ],
+    hints: [
+      'Create a dictionary mapping currency codes to symbols',
+      'Use f-string formatting: {amount:,.2f} for comma separators and 2 decimals',
+      'Combine the symbol with the formatted amount'
+    ],
+    language: 'python'
   }
 ];

@@ -193,6 +193,7 @@ export function renderSidebar(
     { route: '/dashboard', icon: '📊', label: 'Dashboard' },
     { route: '/curriculum', icon: '📚', label: 'Curriculum' },
     { route: '/progress', icon: '📈', label: 'Progress' },
+    { route: '/export', icon: '📄', label: 'Export PDF' },
     { route: '/settings', icon: '⚙️', label: 'Settings' },
   ];
 

@@ -12,6 +12,7 @@ import {
   navigateToProject,
   navigateToCurriculum,
 } from '@/core/router';
+import { renderMarkdown } from '@/components/markdown';
 
 // Store projects globally for access
 let currentProjects: Project[] = [];
@@ -320,41 +321,6 @@ function renderTopicView(
   `;
 
   attachTopicEventListeners(container, subject.id);
-}
-
-/**
- * Simple markdown renderer
- */
-function renderMarkdown(content: string): string {
-  if (!content) return '<p>No content available yet.</p>';
-
-  return content
-    .split('\n\n')
-    .map(paragraph => {
-      if (paragraph.startsWith('# ')) return `<h1>${paragraph.slice(2)}</h1>`;
-      if (paragraph.startsWith('## ')) return `<h2>${paragraph.slice(3)}</h2>`;
-      if (paragraph.startsWith('### ')) return `<h3>${paragraph.slice(4)}</h3>`;
-
-      if (paragraph.startsWith('```')) {
-        const lines = paragraph.split('\n');
-        const code = lines.slice(1, -1).join('\n');
-        return `<pre><code>${escapeHtml(code)}</code></pre>`;
-      }
-
-      if (paragraph.includes('\n- ')) {
-        const items = paragraph.split('\n').filter(line => line.startsWith('- '));
-        return `<ul>${items.map(item => `<li>${item.slice(2)}</li>`).join('')}</ul>`;
-      }
-
-      return `<p>${paragraph}</p>`;
-    })
-    .join('\n');
-}
-
-function escapeHtml(text: string): string {
-  const div = document.createElement('div');
-  div.textContent = text;
-  return div.innerHTML;
 }
 
 function formatStatus(status: string): string {

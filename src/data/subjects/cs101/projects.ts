@@ -250,5 +250,258 @@ export const cs101Projects: Project[] = [
       }
     ],
     estimatedHours: 12
+  },
+  {
+    id: 'cs101-project-3',
+    subjectId: 'cs101',
+    title: 'Personal Budget Tracker',
+    description: 'Build a personal finance application that helps users track their income and expenses. The program should allow users to add transactions, categorize them, view spending by category, generate monthly reports, and save/load data from files. This project combines all core Python concepts: variables for amounts, functions for calculations, dictionaries for categories, lists for transaction history, and file I/O for persistence.',
+    requirements: [
+      'Create a menu-driven interface with options: Add Income, Add Expense, View Transactions, View by Category, Monthly Report, Save & Exit',
+      'Store each transaction with: date, type (income/expense), amount, category, and description',
+      'Implement at least 5 expense categories (Food, Transport, Entertainment, Bills, Other) and 3 income categories (Salary, Freelance, Other)',
+      'Calculate and display running balance after each transaction',
+      'Create a function to filter and display transactions by category',
+      'Generate a monthly summary showing: total income, total expenses, net savings, and breakdown by category',
+      'Save all transaction data to a JSON file with proper formatting',
+      'Load existing data when the program starts (handle missing file gracefully)',
+      'Validate all user input (positive amounts, valid dates, valid categories)',
+      'Display amounts formatted as currency with 2 decimal places',
+      'Include a search function to find transactions by description keyword'
+    ],
+    rubric: [
+      {
+        name: 'Core Functionality',
+        weight: 35,
+        levels: [
+          {
+            score: 100,
+            label: 'Excellent',
+            description: 'All transaction types work perfectly, categories function correctly, balance calculations are accurate'
+          },
+          {
+            score: 75,
+            label: 'Good',
+            description: 'Most features work with minor calculation or display issues'
+          },
+          {
+            score: 50,
+            label: 'Satisfactory',
+            description: 'Basic add/view functionality works but missing some features'
+          },
+          {
+            score: 25,
+            label: 'Needs Improvement',
+            description: 'Core functionality incomplete or has major bugs'
+          }
+        ]
+      },
+      {
+        name: 'Data Management',
+        weight: 25,
+        levels: [
+          {
+            score: 100,
+            label: 'Excellent',
+            description: 'Perfect file save/load, data persists correctly, handles edge cases'
+          },
+          {
+            score: 75,
+            label: 'Good',
+            description: 'File operations work with minor issues'
+          },
+          {
+            score: 50,
+            label: 'Satisfactory',
+            description: 'Basic save/load works but may lose data or crash on errors'
+          },
+          {
+            score: 25,
+            label: 'Needs Improvement',
+            description: 'File operations missing or non-functional'
+          }
+        ]
+      },
+      {
+        name: 'Code Quality',
+        weight: 20,
+        levels: [
+          {
+            score: 100,
+            label: 'Excellent',
+            description: 'Well-structured with clear functions, good naming, appropriate comments'
+          },
+          {
+            score: 75,
+            label: 'Good',
+            description: 'Reasonable structure with some functions and organization'
+          },
+          {
+            score: 50,
+            label: 'Satisfactory',
+            description: 'Code works but lacks clear organization'
+          },
+          {
+            score: 25,
+            label: 'Needs Improvement',
+            description: 'Disorganized code that is hard to follow'
+          }
+        ]
+      },
+      {
+        name: 'Reports & Analysis',
+        weight: 20,
+        levels: [
+          {
+            score: 100,
+            label: 'Excellent',
+            description: 'Clear, well-formatted reports with category breakdowns and useful statistics'
+          },
+          {
+            score: 75,
+            label: 'Good',
+            description: 'Reports show key information with decent formatting'
+          },
+          {
+            score: 50,
+            label: 'Satisfactory',
+            description: 'Basic summary available but limited analysis'
+          },
+          {
+            score: 25,
+            label: 'Needs Improvement',
+            description: 'No meaningful reports or summaries'
+          }
+        ]
+      }
+    ],
+    estimatedHours: 10
+  },
+  {
+    id: 'cs101-project-4',
+    subjectId: 'cs101',
+    title: 'Quiz Application',
+    description: 'Create an interactive quiz application that loads questions from a file, presents them to users, tracks scores, and maintains a high score leaderboard. This meta-project lets you build something similar to the learning tools you have been using. It reinforces all CS101 concepts: control flow for game logic, functions for organization, dictionaries for questions, lists for tracking, and file I/O for persistence.',
+    requirements: [
+      'Load quiz questions from a JSON file containing question text, multiple choice options, and correct answers',
+      'Create at least 15 questions across 3 different categories/topics',
+      'Present questions one at a time with numbered answer options',
+      'Track correct answers and calculate percentage score',
+      'Implement a timer option that limits time per question (optional bonus)',
+      'Display immediate feedback after each answer (correct/incorrect with explanation)',
+      'Show final score with grade and personalized message',
+      'Maintain a high scores file with top 10 scores (name, score, date)',
+      'Allow users to choose quiz category or take a mixed quiz',
+      'Implement a "review mistakes" feature at the end showing incorrect answers',
+      'Add a practice mode that shows hints and allows retries',
+      'Handle all file errors gracefully with helpful messages'
+    ],
+    rubric: [
+      {
+        name: 'Quiz Mechanics',
+        weight: 30,
+        levels: [
+          {
+            score: 100,
+            label: 'Excellent',
+            description: 'Smooth question flow, accurate scoring, proper answer validation, all modes work'
+          },
+          {
+            score: 75,
+            label: 'Good',
+            description: 'Core quiz functionality works well with minor issues'
+          },
+          {
+            score: 50,
+            label: 'Satisfactory',
+            description: 'Basic quiz works but missing some features'
+          },
+          {
+            score: 25,
+            label: 'Needs Improvement',
+            description: 'Quiz has significant bugs or missing core features'
+          }
+        ]
+      },
+      {
+        name: 'Question Quality',
+        weight: 20,
+        levels: [
+          {
+            score: 100,
+            label: 'Excellent',
+            description: '15+ well-written questions, clear wording, good variety, accurate answers'
+          },
+          {
+            score: 75,
+            label: 'Good',
+            description: 'Adequate questions with reasonable quality'
+          },
+          {
+            score: 50,
+            label: 'Satisfactory',
+            description: 'Minimum questions present but quality could improve'
+          },
+          {
+            score: 25,
+            label: 'Needs Improvement',
+            description: 'Too few questions or poor quality'
+          }
+        ]
+      },
+      {
+        name: 'Data Persistence',
+        weight: 25,
+        levels: [
+          {
+            score: 100,
+            label: 'Excellent',
+            description: 'Questions load correctly, high scores save and load perfectly, handles missing files'
+          },
+          {
+            score: 75,
+            label: 'Good',
+            description: 'File operations work with minor issues'
+          },
+          {
+            score: 50,
+            label: 'Satisfactory',
+            description: 'Basic file operations work but error handling is weak'
+          },
+          {
+            score: 25,
+            label: 'Needs Improvement',
+            description: 'File operations missing or frequently fail'
+          }
+        ]
+      },
+      {
+        name: 'User Experience',
+        weight: 25,
+        levels: [
+          {
+            score: 100,
+            label: 'Excellent',
+            description: 'Engaging interface, clear instructions, helpful feedback, polished presentation'
+          },
+          {
+            score: 75,
+            label: 'Good',
+            description: 'Pleasant to use with clear navigation'
+          },
+          {
+            score: 50,
+            label: 'Satisfactory',
+            description: 'Functional but could be more user-friendly'
+          },
+          {
+            score: 25,
+            label: 'Needs Improvement',
+            description: 'Confusing or frustrating user experience'
+          }
+        ]
+      }
+    ],
+    estimatedHours: 10
   }
 ];
