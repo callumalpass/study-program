@@ -271,15 +271,15 @@ function initApp(): void {
           // Topic view (may redirect to subtopic if topic has subtopics)
           renderSubjectPage(mainEl, curriculum, subjectId, params.topicId, allProjects, allExams, undefined, allQuizzes, allExercises);
         } else if (params.quizId) {
-          renderQuizPage(mainEl, curriculum, allQuizzes, subjectId, params.quizId);
+          renderQuizPage(mainEl, curriculum, allQuizzes, subjectId, params.quizId, allExercises, allExams, allProjects);
         } else if (params.examId) {
-          renderExamPage(mainEl, curriculum, allExams, subjectId, params.examId);
+          renderExamPage(mainEl, curriculum, allExams, subjectId, params.examId, allQuizzes, allExercises, allProjects);
         } else if (params.exId) {
           renderExercisePage(mainEl, curriculum, allExercises, subjectId, params.exId, allQuizzes, allExams, allProjects);
         } else if (params.projId) {
           renderProjectPage(mainEl, curriculum, allProjects, subjectId, params.projId);
         } else {
-          renderSubjectPage(mainEl, curriculum, subjectId, undefined, allProjects, allExams);
+          renderSubjectPage(mainEl, curriculum, subjectId, undefined, allProjects, allExams, undefined, allQuizzes, allExercises);
         }
       }
     });

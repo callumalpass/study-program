@@ -101,6 +101,11 @@ export function ContentNavigator({
   }, [currentTopic, currentSubtopicSlug]);
 
   const topicIndex = currentTopic ? subject.topics.findIndex(t => t.id === currentTopicId) : -1;
+  const subtopicIndex = useMemo(() => {
+    if (!currentSubtopic || !currentTopic?.subtopics?.length) return -1;
+    return currentTopic.subtopics.findIndex(st => st.id === currentSubtopic.id);
+  }, [currentSubtopic, currentTopic]);
+  const subtopicCount = currentTopic?.subtopics?.length ?? 0;
 
   const hasPracticeItems = practiceQuizzes.length > 0
     || practiceExercises.length > 0
@@ -118,7 +123,7 @@ export function ContentNavigator({
     if (currentSubtopic) {
       onSubtopicView(currentSubtopic.id);
     }
-  }, [currentSubtopic?.id]);
+  }, [currentSubtopic?.id, onSubtopicView]);
 
   // Progress helpers
   const isTopicCompleted = useCallback((topic: Topic): boolean => {
@@ -566,7 +571,15 @@ export function ContentNavigator({
                 <>
                   <a href={`#/subject/${subject.id}`}>{subject.code}</a>
                   <span class="separator" dangerouslySetInnerHTML={{ __html: Icons.ChevronRight }} />
-                  <span class="current">{currentTopic.title}</span>
+                  {currentSubtopic ? (
+                    <>
+                      <a href={`#/subject/${subject.id}/topic/${currentTopic.id}`}>{currentTopic.title}</a>
+                      <span class="separator" dangerouslySetInnerHTML={{ __html: Icons.ChevronRight }} />
+                      <span class="current">{currentSubtopic.title}</span>
+                    </>
+                  ) : (
+                    <span class="current">{currentTopic.title}</span>
+                  )}
                 </>
               ) : (
                 <span class="current">{subject.title}</span>
@@ -581,7 +594,11 @@ export function ContentNavigator({
                   <h1>{currentTopic ? currentTopic.title : subject.title}</h1>
                 </div>
                 {currentTopic ? (
-                  <span class="topic-counter">Topic {topicIndex + 1} of {subject.topics.length}</span>
+                  currentSubtopic && subtopicIndex >= 0 ? (
+                    <span class="topic-counter">Section {subtopicIndex + 1} of {subtopicCount}</span>
+                  ) : (
+                    <span class="topic-counter">Topic {topicIndex + 1} of {subject.topics.length}</span>
+                  )
                 ) : (
                   <div class={`subject-status-badge status-${progressStatus.replace('_', '-')}`}>
                     {formatStatus(progressStatus)}
