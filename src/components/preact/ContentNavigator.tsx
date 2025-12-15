@@ -48,6 +48,7 @@ export function ContentNavigator({
 }: ContentNavigatorProps) {
   const [showAllExercises, setShowAllExercises] = useState(false);
   const [showAllQuizzes, setShowAllQuizzes] = useState(false);
+  const [mobilePanel, setMobilePanel] = useState<'topics' | 'practice'>('topics');
 
   // Filter content for this subject
   const subjectQuizzes = useMemo(() => quizzes.filter(q => q.subjectId === subject.id), [quizzes, subject.id]);
@@ -61,12 +62,50 @@ export function ContentNavigator({
     [subject.topics, currentTopicId]
   );
 
+  // When a topic is selected, scope Practice items to that topic (otherwise show all for the subject).
+  const practiceQuizzes = useMemo(() => {
+    if (!currentTopicId || !currentTopic) return subjectQuizzes;
+
+    const quizById = new Map(subjectQuizzes.map(q => [q.id, q] as const));
+    const orderedFromTopic = currentTopic.quizIds
+      .map(id => quizById.get(id))
+      .filter((q): q is Quiz => Boolean(q));
+
+    const topicIdSet = new Set(currentTopic.quizIds);
+    const extras = subjectQuizzes.filter(q => q.topicId === currentTopicId && !topicIdSet.has(q.id));
+    return [...orderedFromTopic, ...extras];
+  }, [currentTopicId, currentTopic, subjectQuizzes]);
+
+  const practiceExercises = useMemo(() => {
+    if (!currentTopicId || !currentTopic) return subjectExercises;
+
+    const exerciseById = new Map(subjectExercises.map(e => [e.id, e] as const));
+    const orderedFromTopic = currentTopic.exerciseIds
+      .map(id => exerciseById.get(id))
+      .filter((e): e is Exercise => Boolean(e));
+
+    const topicIdSet = new Set(currentTopic.exerciseIds);
+    const extras = subjectExercises.filter(e => e.topicId === currentTopicId && !topicIdSet.has(e.id));
+    return [...orderedFromTopic, ...extras];
+  }, [currentTopicId, currentTopic, subjectExercises]);
+
   const currentSubtopic = useMemo(() => {
     if (!currentTopic?.subtopics?.length || !currentSubtopicSlug) return null;
     return currentTopic.subtopics.find(st => st.slug === currentSubtopicSlug) || currentTopic.subtopics[0];
   }, [currentTopic, currentSubtopicSlug]);
 
   const topicIndex = currentTopic ? subject.topics.findIndex(t => t.id === currentTopicId) : -1;
+
+  const hasPracticeItems = practiceQuizzes.length > 0
+    || practiceExercises.length > 0
+    || subjectExams.length > 0
+    || subjectProjects.length > 0;
+
+  // Reset "show more" state when switching topics to avoid confusing carry-over.
+  useEffect(() => {
+    setShowAllExercises(false);
+    setShowAllQuizzes(false);
+  }, [currentTopicId]);
 
   // Track subtopic view
   useEffect(() => {
@@ -289,11 +328,33 @@ export function ContentNavigator({
   };
 
   return (
-    <div class="content-navigator">
+    <div class="content-navigator" data-mobile-panel={mobilePanel}>
       {/* Left sidebar */}
       <nav class="content-sidebar" aria-label="Subject navigation">
+        {/* Mobile panel tabs (shown via CSS on small screens) */}
+        <div class="content-sidebar-tabs" role="tablist" aria-label="Subject panels">
+          <button
+            type="button"
+            class={`content-sidebar-tab ${mobilePanel === 'topics' ? 'active' : ''}`}
+            aria-selected={mobilePanel === 'topics'}
+            onClick={() => setMobilePanel('topics')}
+          >
+            <span class="tab-icon" dangerouslySetInnerHTML={{ __html: Icons.Curriculum }} />
+            <span class="tab-label">Topics</span>
+          </button>
+          <button
+            type="button"
+            class={`content-sidebar-tab ${mobilePanel === 'practice' ? 'active' : ''}`}
+            aria-selected={mobilePanel === 'practice'}
+            onClick={() => setMobilePanel('practice')}
+          >
+            <span class="tab-icon" dangerouslySetInnerHTML={{ __html: Icons.Progress }} />
+            <span class="tab-label">Practice</span>
+          </button>
+        </div>
+
         {/* Topics section */}
-        <div class="sidebar-section">
+        <div class="sidebar-section topics-section">
           <div class="sidebar-section-header">
             <span class="section-icon" dangerouslySetInnerHTML={{ __html: Icons.Curriculum }} />
             <span>Topics</span>
@@ -363,16 +424,20 @@ export function ContentNavigator({
             <span>Practice</span>
           </div>
 
+          {!hasPracticeItems && (
+            <div class="practice-empty">No practice items for this topic yet.</div>
+          )}
+
           {/* Quizzes */}
-          {subjectQuizzes.length > 0 && (
+          {practiceQuizzes.length > 0 && (
             <div class="practice-group">
               <div class="practice-group-header">
                 <span>Quizzes</span>
                 <span class="practice-count">
-                  {subjectQuizzes.filter(q => isQuizAttempted(q.id)).length}/{subjectQuizzes.length}
+                  {practiceQuizzes.filter(q => isQuizAttempted(q.id)).length}/{practiceQuizzes.length}
                 </span>
               </div>
-              {subjectQuizzes.slice(0, showAllQuizzes ? undefined : INITIAL_QUIZ_COUNT).map((quiz, index) => {
+              {practiceQuizzes.slice(0, showAllQuizzes ? undefined : INITIAL_QUIZ_COUNT).map((quiz, index) => {
                 const attempted = isQuizAttempted(quiz.id);
                 return (
                   <button
@@ -387,24 +452,24 @@ export function ContentNavigator({
                   </button>
                 );
               })}
-              {subjectQuizzes.length > INITIAL_QUIZ_COUNT && (
+              {practiceQuizzes.length > INITIAL_QUIZ_COUNT && (
                 <button class="practice-toggle" onClick={() => setShowAllQuizzes(!showAllQuizzes)}>
-                  {showAllQuizzes ? 'Show less' : `+${subjectQuizzes.length - INITIAL_QUIZ_COUNT} more`}
+                  {showAllQuizzes ? 'Show less' : `+${practiceQuizzes.length - INITIAL_QUIZ_COUNT} more`}
                 </button>
               )}
             </div>
           )}
 
           {/* Exercises */}
-          {subjectExercises.length > 0 && (
+          {practiceExercises.length > 0 && (
             <div class="practice-group">
               <div class="practice-group-header">
                 <span>Exercises</span>
                 <span class="practice-count">
-                  {subjectExercises.filter(e => isExerciseComplete(e.id)).length}/{subjectExercises.length}
+                  {practiceExercises.filter(e => isExerciseComplete(e.id)).length}/{practiceExercises.length}
                 </span>
               </div>
-              {subjectExercises.slice(0, showAllExercises ? undefined : INITIAL_EXERCISE_COUNT).map((exercise, index) => {
+              {practiceExercises.slice(0, showAllExercises ? undefined : INITIAL_EXERCISE_COUNT).map((exercise, index) => {
                 const completed = isExerciseComplete(exercise.id);
                 return (
                   <button
@@ -419,9 +484,9 @@ export function ContentNavigator({
                   </button>
                 );
               })}
-              {subjectExercises.length > INITIAL_EXERCISE_COUNT && (
+              {practiceExercises.length > INITIAL_EXERCISE_COUNT && (
                 <button class="practice-toggle" onClick={() => setShowAllExercises(!showAllExercises)}>
-                  {showAllExercises ? 'Show less' : `+${subjectExercises.length - INITIAL_EXERCISE_COUNT} more`}
+                  {showAllExercises ? 'Show less' : `+${practiceExercises.length - INITIAL_EXERCISE_COUNT} more`}
                 </button>
               )}
             </div>

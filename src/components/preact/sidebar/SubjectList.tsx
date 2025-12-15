@@ -1,6 +1,6 @@
 import { h } from 'preact';
 import { useState, useMemo, useCallback } from 'preact/hooks';
-import type { Subject, SubjectProgress, Quiz, Exercise, Exam, Project } from '@/core/types';
+import type { Subject, SubjectProgress, Quiz, Exercise } from '@/core/types';
 import { SubjectItem } from './SubjectItem';
 
 type FilterType = 'all' | 'in_progress' | 'completed';
@@ -9,12 +9,8 @@ interface SubjectListProps {
   subjects: Subject[];
   userProgress: Record<string, SubjectProgress>;
   currentPath: string;
-  expandedSubjectId: string | null;
-  onExpandSubject: (subjectId: string | null) => void;
   quizzes: Quiz[];
   exercises: Exercise[];
-  exams: Exam[];
-  projects: Project[];
 }
 
 interface GroupedSubjects {
@@ -25,12 +21,8 @@ export function SubjectList({
   subjects,
   userProgress,
   currentPath,
-  expandedSubjectId,
-  onExpandSubject,
   quizzes,
   exercises,
-  exams,
-  projects,
 }: SubjectListProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [filter, setFilter] = useState<FilterType>('all');
@@ -101,14 +93,6 @@ export function SubjectList({
       return next;
     });
   }, []);
-
-  const handleToggleSubject = useCallback((subjectId: string) => {
-    if (expandedSubjectId === subjectId) {
-      onExpandSubject(null);
-    } else {
-      onExpandSubject(subjectId);
-    }
-  }, [expandedSubjectId, onExpandSubject]);
 
   const isSubjectActive = (subjectId: string): boolean => {
     return currentPath.includes(`/subject/${subjectId}`);
@@ -195,13 +179,8 @@ export function SubjectList({
                         subject={subject}
                         progress={userProgress[subject.id]}
                         isActive={isSubjectActive(subject.id)}
-                        isExpanded={expandedSubjectId === subject.id}
-                        onToggle={() => handleToggleSubject(subject.id)}
                         quizzes={quizzes}
                         exercises={exercises}
-                        exams={exams}
-                        projects={projects}
-                        currentPath={currentPath}
                       />
                     ))}
                 </div>

@@ -1,21 +1,14 @@
 import { h } from 'preact';
 import { useCallback } from 'preact/hooks';
-import type { Subject, SubjectProgress, SubjectStatus, Quiz, Exercise, Exam, Project } from '@/core/types';
-import { Icons } from '@/components/icons';
+import type { Subject, SubjectProgress, SubjectStatus, Quiz, Exercise } from '@/core/types';
 import { navigateToSubject } from '@/core/router';
-import { TopicList } from './TopicList';
 
 interface SubjectItemProps {
   subject: Subject;
   progress?: SubjectProgress;
   isActive: boolean;
-  isExpanded: boolean;
-  onToggle: () => void;
   quizzes: Quiz[];
   exercises: Exercise[];
-  exams: Exam[];
-  projects: Project[];
-  currentPath: string;
 }
 
 function getStatusColor(status: SubjectStatus): string {
@@ -68,13 +61,8 @@ export function SubjectItem({
   subject,
   progress,
   isActive,
-  isExpanded,
-  onToggle,
   quizzes,
   exercises,
-  exams,
-  projects,
-  currentPath,
 }: SubjectItemProps) {
   const status = progress?.status || 'not_started';
 
@@ -87,67 +75,26 @@ export function SubjectItem({
 
   const handleHeaderClick = useCallback((e: Event) => {
     e.preventDefault();
-    if (isActive) {
-      onToggle();
-    } else {
-      navigateToSubject(subject.id);
-    }
-  }, [subject.id, isActive, onToggle]);
-
-  const handleExpandClick = useCallback((e: Event) => {
-    e.preventDefault();
-    e.stopPropagation();
-    onToggle();
-  }, [onToggle]);
-
-  const handleKeyDown = useCallback((e: KeyboardEvent) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      onToggle();
-    }
-  }, [onToggle]);
+    navigateToSubject(subject.id);
+  }, [subject.id]);
 
   return (
-    <div class={`subject-item-new ${isActive ? 'active' : ''} ${isExpanded ? 'expanded' : ''}`}>
+    <div class={`subject-item-new ${isActive ? 'active' : ''}`}>
       <div
         class="subject-header-new"
         onClick={handleHeaderClick}
-        onKeyDown={handleKeyDown}
         tabIndex={0}
         role="button"
-        aria-expanded={isExpanded}
       >
         <div class="subject-info-new">
           <div class="subject-code-new">{subject.code}</div>
           <div class="subject-title-new">{subject.title}</div>
         </div>
-        <button
-          class={`expand-btn ${isExpanded ? 'expanded' : ''}`}
-          onClick={handleExpandClick}
-          aria-label={isExpanded ? 'Collapse subject' : 'Expand subject'}
-          tabIndex={-1}
-        >
-          <span dangerouslySetInnerHTML={{ __html: Icons.ChevronDown }} />
-        </button>
         {/* Progress bar at bottom of header */}
         <div
           class="subject-progress-bar"
           style={{ '--progress': `${progressPercent}%`, '--progress-color': statusColor } as any}
         />
-      </div>
-
-      <div class={`topic-list ${isExpanded ? 'expanded' : ''}`}>
-        {isExpanded && (
-          <TopicList
-            subject={subject}
-            progress={progress}
-            quizzes={quizzes}
-            exercises={exercises}
-            exams={exams}
-            projects={projects}
-            currentPath={currentPath}
-          />
-        )}
       </div>
     </div>
   );

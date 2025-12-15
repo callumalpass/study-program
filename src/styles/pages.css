@@ -671,7 +671,7 @@
   gap: var(--space-md);
 }
 
-.topic-item {
+.topics-list .topic-item {
   display: flex;
   align-items: center;
   gap: var(--space-lg);
@@ -682,11 +682,11 @@
   transition: border-color var(--transition-fast);
 }
 
-.topic-item:hover {
+.topics-list .topic-item:hover {
   border-color: var(--color-border-emphasis);
 }
 
-.topic-item.completed {
+.topics-list .topic-item.completed {
   border-color: var(--color-success);
 }
 
@@ -703,7 +703,7 @@
   flex-shrink: 0;
 }
 
-.topic-item.completed .topic-number {
+.topics-list .topic-item.completed .topic-number {
   background: rgba(86, 211, 100, 0.15);
   color: var(--color-success);
 }
@@ -2584,22 +2584,22 @@ textarea.code-editor::placeholder {
     gap: var(--space-md);
   }
 
-  .topic-item {
+  .topics-list .topic-item {
     flex-direction: column;
     align-items: flex-start;
   }
 
-  .topic-item .btn {
+  .topics-list .topic-item .btn {
     width: 100%;
     margin-top: var(--space-md);
   }
 
-  .project-item {
+  .projects-list .project-item {
     flex-direction: column;
     align-items: flex-start;
   }
 
-  .project-item .btn {
+  .projects-list .project-item .btn {
     width: 100%;
     margin-top: var(--space-md);
   }
@@ -3010,17 +3010,17 @@ textarea.code-editor::placeholder {
   }
 
   /* Topic and project items mobile */
-  .topic-item,
-  .project-item,
-  .exam-item {
+  .topics-list .topic-item,
+  .projects-list .project-item,
+  .exams-list .exam-item {
     flex-direction: column;
     align-items: stretch;
     gap: var(--space-md);
   }
 
-  .topic-item .btn,
-  .project-item .btn,
-  .exam-item .btn {
+  .topics-list .topic-item .btn,
+  .projects-list .project-item .btn,
+  .exams-list .exam-item .btn {
     width: 100%;
   }
 

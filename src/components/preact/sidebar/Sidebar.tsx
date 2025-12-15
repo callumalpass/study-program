@@ -1,5 +1,4 @@
 import { h } from 'preact';
-import { useState, useEffect, useCallback } from 'preact/hooks';
 import type { Subject, SubjectProgress, Quiz, Exercise, Exam, Project } from '@/core/types';
 import { Icons } from '@/components/icons';
 import { Nav } from './Nav';
@@ -24,44 +23,9 @@ export function Sidebar({
   exams,
   projects,
 }: SidebarProps) {
-  const [expandedSubjectId, setExpandedSubjectId] = useState<string | null>(null);
-
-  // Auto-expand subject based on current route
-  useEffect(() => {
-    const subjectMatch = currentPath.match(/\/subject\/([^/]+)/);
-    if (subjectMatch) {
-      const subjectId = subjectMatch[1];
-      setExpandedSubjectId(subjectId);
-    }
-  }, [currentPath]);
-
-  const handleExpandSubject = useCallback((subjectId: string | null) => {
-    setExpandedSubjectId(subjectId);
-  }, []);
-
-  // Handle keyboard navigation
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      // Only handle keyboard navigation when sidebar has focus
-      const sidebar = document.querySelector('.sidebar');
-      if (!sidebar?.contains(document.activeElement)) {
-        return;
-      }
-
-      if (e.key === 'Escape' && expandedSubjectId) {
-        e.preventDefault();
-        setExpandedSubjectId(null);
-        // Focus back to the subject header
-        const subjectEl = document.querySelector(
-          `.subject-item-new.expanded .subject-header-new`
-        ) as HTMLElement;
-        subjectEl?.focus();
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [expandedSubjectId]);
+  // Keep unused props for now (exams/projects) to avoid churn in call sites.
+  void exams;
+  void projects;
 
   return (
     <div class="sidebar-content">
@@ -83,12 +47,8 @@ export function Sidebar({
           subjects={subjects}
           userProgress={userProgress}
           currentPath={currentPath}
-          expandedSubjectId={expandedSubjectId}
-          onExpandSubject={handleExpandSubject}
           quizzes={quizzes}
           exercises={exercises}
-          exams={exams}
-          projects={projects}
         />
       </div>
     </div>
