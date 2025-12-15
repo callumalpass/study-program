@@ -2207,13 +2207,14 @@
   gap: var(--space-xl);
   min-height: calc(100vh - 200px);
   max-width: 1200px;  /* 280px sidebar + gap + ~880px content */
+  align-items: start; /* Align grid items to start for sticky to work */
 }
 
 /* Sidebar */
 .content-navigator .content-sidebar {
   position: sticky;
   top: var(--space-lg);
-  height: fit-content;
+  align-self: start; /* Critical for sticky within grid */
   max-height: calc(100vh - 100px);
   overflow-y: auto;
   padding-right: var(--space-md);
