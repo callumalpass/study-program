@@ -1,0 +1,281 @@
+import { CodingExercise } from '../../../../core/types';
+
+export const cs201Topic6Exercises: CodingExercise[] = [
+  // 1-4: Activity Selection Problem Variants
+  {
+    id: 'cs201-ex-6-1',
+    subjectId: 'cs201',
+    topicId: 'cs201-6',
+    title: 'Basic Activity Selection',
+    description: 'Given activities with start and finish times, select the maximum number of non-overlapping activities. Sort by finish time and greedily select activities.',
+    difficulty: 2,
+    language: 'python',
+    starterCode: 'def activity_selection(activities):\n    # activities is a list of tuples (start, finish)\n    # Return list of selected activities\n    pass',
+    solution: 'def activity_selection(activities):\n    if not activities:\n        return []\n    # Sort by finish time\n    sorted_activities = sorted(activities, key=lambda x: x[1])\n    selected = [sorted_activities[0]]\n    last_finish = sorted_activities[0][1]\n    \n    for i in range(1, len(sorted_activities)):\n        if sorted_activities[i][0] >= last_finish:\n            selected.append(sorted_activities[i])\n            last_finish = sorted_activities[i][1]\n    \n    return selected',
+    testCases: [
+      { input: '[(1, 3), (2, 5), (4, 7), (1, 8), (5, 9)]', expectedOutput: '[(1, 3), (4, 7), (5, 9)]', isHidden: false, description: 'Multiple activities' },
+      { input: '[(1, 2), (2, 3), (3, 4)]', expectedOutput: '[(1, 2), (2, 3), (3, 4)]', isHidden: false, description: 'All compatible' },
+      { input: '[]', expectedOutput: '[]', isHidden: true, description: 'Empty input' }
+    ],
+    hints: ['Sort activities by finish time.', 'Greedily select the first activity that doesn\'t overlap with the last selected.']
+  },
+  {
+    id: 'cs201-ex-6-2',
+    subjectId: 'cs201',
+    topicId: 'cs201-6',
+    title: 'Activity Selection Count',
+    description: 'Return the count of maximum non-overlapping activities that can be selected.',
+    difficulty: 2,
+    language: 'python',
+    starterCode: 'def max_activities_count(activities):\n    # activities is a list of tuples (start, finish)\n    # Return the maximum count\n    pass',
+    solution: 'def max_activities_count(activities):\n    if not activities:\n        return 0\n    sorted_activities = sorted(activities, key=lambda x: x[1])\n    count = 1\n    last_finish = sorted_activities[0][1]\n    \n    for i in range(1, len(sorted_activities)):\n        if sorted_activities[i][0] >= last_finish:\n            count += 1\n            last_finish = sorted_activities[i][1]\n    \n    return count',
+    testCases: [
+      { input: '[(1, 3), (2, 5), (4, 7), (1, 8), (5, 9)]', expectedOutput: '3', isHidden: false, description: 'Multiple activities' },
+      { input: '[(1, 10), (2, 3), (4, 5)]', expectedOutput: '2', isHidden: false, description: 'Long overlapping activity' },
+      { input: '[(1, 2)]', expectedOutput: '1', isHidden: true, description: 'Single activity' }
+    ],
+    hints: ['Similar to activity selection, but return count.', 'Greedy choice: earliest finish time.']
+  },
+  {
+    id: 'cs201-ex-6-3',
+    subjectId: 'cs201',
+    topicId: 'cs201-6',
+    title: 'Activity Selection with Weights',
+    description: 'Each activity has a value. Find the maximum value of non-overlapping activities. Note: This is more complex than basic greedy and might need dynamic programming for optimal solution, but use greedy by value/duration ratio.',
+    difficulty: 3,
+    language: 'python',
+    starterCode: 'def weighted_activity_selection(activities):\n    # activities is a list of tuples (start, finish, value)\n    # Return maximum total value (greedy approach)\n    pass',
+    solution: 'def weighted_activity_selection(activities):\n    if not activities:\n        return 0\n    # Greedy: sort by value/duration ratio\n    def ratio(act):\n        duration = act[1] - act[0]\n        if duration == 0:\n            return float(\'inf\')\n        return act[2] / duration\n    \n    sorted_activities = sorted(activities, key=ratio, reverse=True)\n    selected_value = 0\n    last_finish = 0\n    \n    for act in sorted_activities:\n        if act[0] >= last_finish:\n            selected_value += act[2]\n            last_finish = act[1]\n    \n    return selected_value',
+    testCases: [
+      { input: '[(1, 3, 20), (2, 5, 30), (4, 7, 25)]', expectedOutput: '45', isHidden: false, description: 'Select by value/duration' },
+      { input: '[(0, 2, 10), (1, 3, 20), (2, 4, 15)]', expectedOutput: '30', isHidden: false, description: 'High value activities' },
+      { input: '[]', expectedOutput: '0', isHidden: true, description: 'Empty activities' }
+    ],
+    hints: ['Try greedy approach: select by value/duration ratio.', 'This gives good results but may not always be optimal.']
+  },
+  {
+    id: 'cs201-ex-6-4',
+    subjectId: 'cs201',
+    topicId: 'cs201-6',
+    title: 'Minimum Rooms Required',
+    description: 'Given meeting times, find the minimum number of rooms required to schedule all meetings.',
+    difficulty: 3,
+    language: 'python',
+    starterCode: 'def min_rooms(meetings):\n    # meetings is a list of tuples (start, end)\n    # Return minimum rooms needed\n    pass',
+    solution: 'def min_rooms(meetings):\n    if not meetings:\n        return 0\n    \n    starts = sorted([m[0] for m in meetings])\n    ends = sorted([m[1] for m in meetings])\n    \n    rooms = 0\n    max_rooms = 0\n    i = j = 0\n    \n    while i < len(starts):\n        if starts[i] < ends[j]:\n            rooms += 1\n            max_rooms = max(max_rooms, rooms)\n            i += 1\n        else:\n            rooms -= 1\n            j += 1\n    \n    return max_rooms',
+    testCases: [
+      { input: '[(0, 30), (5, 10), (15, 20)]', expectedOutput: '2', isHidden: false, description: 'Overlapping meetings' },
+      { input: '[(1, 5), (2, 3), (4, 6), (5, 7)]', expectedOutput: '3', isHidden: false, description: 'Multiple overlaps' },
+      { input: '[(1, 2), (3, 4)]', expectedOutput: '1', isHidden: true, description: 'No overlap' }
+    ],
+    hints: ['Separate start and end times.', 'Sort both arrays separately.', 'Track how many meetings are active at any time.']
+  },
+
+  // 5-8: Fractional Knapsack
+  {
+    id: 'cs201-ex-6-5',
+    subjectId: 'cs201',
+    topicId: 'cs201-6',
+    title: 'Fractional Knapsack Basic',
+    description: 'Given items with weights and values, and a knapsack capacity, maximize value. You can take fractions of items. Use greedy approach: sort by value/weight ratio.',
+    difficulty: 2,
+    language: 'python',
+    starterCode: 'def fractional_knapsack(capacity, items):\n    # items is a list of tuples (weight, value)\n    # Return maximum value\n    pass',
+    solution: 'def fractional_knapsack(capacity, items):\n    if not items or capacity <= 0:\n        return 0.0\n    \n    # Sort by value/weight ratio in descending order\n    items_ratio = [(v/w, w, v) for w, v in items]\n    items_ratio.sort(reverse=True)\n    \n    total_value = 0.0\n    remaining_capacity = capacity\n    \n    for ratio, weight, value in items_ratio:\n        if remaining_capacity >= weight:\n            total_value += value\n            remaining_capacity -= weight\n        else:\n            total_value += ratio * remaining_capacity\n            break\n    \n    return total_value',
+    testCases: [
+      { input: '50, [(20, 100), (10, 60), (30, 120)]', expectedOutput: '240.0', isHidden: false, description: 'Full capacity used' },
+      { input: '10, [(5, 50), (10, 100), (20, 200)]', expectedOutput: '110.0', isHidden: false, description: 'Partial item taken' },
+      { input: '0, [(10, 50)]', expectedOutput: '0.0', isHidden: true, description: 'Zero capacity' }
+    ],
+    hints: ['Sort items by value/weight ratio.', 'Greedily take items with highest ratio first.', 'Take fraction of last item if needed.']
+  },
+  {
+    id: 'cs201-ex-6-6',
+    subjectId: 'cs201',
+    topicId: 'cs201-6',
+    title: 'Fractional Knapsack with Selection',
+    description: 'Return both the maximum value and the list of items (with fractions) selected.',
+    difficulty: 3,
+    language: 'python',
+    starterCode: 'def fractional_knapsack_selection(capacity, items):\n    # items is a list of tuples (weight, value)\n    # Return (max_value, selected_items)\n    # selected_items is list of (weight, value, fraction_taken)\n    pass',
+    solution: 'def fractional_knapsack_selection(capacity, items):\n    if not items or capacity <= 0:\n        return (0.0, [])\n    \n    items_with_idx = [(v/w, w, v, i) for i, (w, v) in enumerate(items)]\n    items_with_idx.sort(reverse=True)\n    \n    total_value = 0.0\n    remaining_capacity = capacity\n    selected = []\n    \n    for ratio, weight, value, idx in items_with_idx:\n        if remaining_capacity >= weight:\n            total_value += value\n            remaining_capacity -= weight\n            selected.append((weight, value, 1.0))\n        elif remaining_capacity > 0:\n            fraction = remaining_capacity / weight\n            total_value += value * fraction\n            selected.append((weight, value, fraction))\n            break\n    \n    return (total_value, selected)',
+    testCases: [
+      { input: '50, [(20, 100), (10, 60), (30, 120)]', expectedOutput: '(240.0, [(10, 60, 1.0), (20, 100, 1.0), (30, 120, 1.0)])', isHidden: false, description: 'All items fit' },
+      { input: '15, [(10, 60), (20, 100)]', expectedOutput: '(85.0, [(10, 60, 1.0), (20, 100, 0.25)])', isHidden: false, description: 'Partial last item' }
+    ],
+    hints: ['Track which items are selected and their fractions.', 'Fraction is 1.0 for fully taken items.']
+  },
+  {
+    id: 'cs201-ex-6-7',
+    subjectId: 'cs201',
+    topicId: 'cs201-6',
+    title: 'Multiple Knapsacks',
+    description: 'Given multiple knapsacks with different capacities, distribute items to maximize total value using greedy approach.',
+    difficulty: 4,
+    language: 'python',
+    starterCode: 'def multiple_knapsacks(capacities, items):\n    # capacities is a list of knapsack capacities\n    # items is a list of tuples (weight, value)\n    # Return maximum total value\n    pass',
+    solution: 'def multiple_knapsacks(capacities, items):\n    if not items or not capacities:\n        return 0.0\n    \n    # Sort items by value/weight ratio\n    items_ratio = [(v/w, w, v) for w, v in items]\n    items_ratio.sort(reverse=True)\n    \n    # Sort capacities in descending order\n    sorted_caps = sorted(capacities, reverse=True)\n    \n    total_value = 0.0\n    cap_idx = 0\n    remaining = sorted_caps[0] if sorted_caps else 0\n    \n    for ratio, weight, value in items_ratio:\n        while cap_idx < len(sorted_caps):\n            if remaining >= weight:\n                total_value += value\n                remaining -= weight\n                break\n            elif remaining > 0:\n                fraction = remaining / weight\n                total_value += value * fraction\n                remaining = 0\n                cap_idx += 1\n                if cap_idx < len(sorted_caps):\n                    remaining = sorted_caps[cap_idx]\n                break\n            else:\n                cap_idx += 1\n                if cap_idx < len(sorted_caps):\n                    remaining = sorted_caps[cap_idx]\n                else:\n                    break\n    \n    return total_value',
+    testCases: [
+      { input: '[30, 20], [(10, 60), (20, 100), (30, 120)]', expectedOutput: '280.0', isHidden: false, description: 'Two knapsacks' },
+      { input: '[10], [(5, 50), (10, 100)]', expectedOutput: '150.0', isHidden: false, description: 'One knapsack, partial fit' }
+    ],
+    hints: ['Process items by value/weight ratio.', 'Fill knapsacks one by one with highest ratio items.']
+  },
+  {
+    id: 'cs201-ex-6-8',
+    subjectId: 'cs201',
+    topicId: 'cs201-6',
+    title: 'Bounded Fractional Knapsack',
+    description: 'Each item has a limited quantity available. Maximize knapsack value.',
+    difficulty: 4,
+    language: 'python',
+    starterCode: 'def bounded_fractional_knapsack(capacity, items):\n    # items is list of tuples (weight, value, quantity)\n    # Return maximum value\n    pass',
+    solution: 'def bounded_fractional_knapsack(capacity, items):\n    if not items or capacity <= 0:\n        return 0.0\n    \n    # Create expanded list with ratios\n    items_ratio = [(v/w, w, v, q) for w, v, q in items]\n    items_ratio.sort(reverse=True)\n    \n    total_value = 0.0\n    remaining_capacity = capacity\n    \n    for ratio, weight, value, quantity in items_ratio:\n        total_weight_available = weight * quantity\n        \n        if remaining_capacity >= total_weight_available:\n            total_value += value * quantity\n            remaining_capacity -= total_weight_available\n        else:\n            # Take as much as we can\n            items_can_take = remaining_capacity / weight\n            total_value += value * items_can_take\n            break\n    \n    return total_value',
+    testCases: [
+      { input: '50, [(10, 60, 2), (20, 100, 1)]', expectedOutput: '220.0', isHidden: false, description: 'Multiple quantities' },
+      { input: '25, [(10, 100, 5)]', expectedOutput: '250.0', isHidden: false, description: 'Take partial quantity' },
+      { input: '100, [(10, 50, 3), (20, 120, 2)]', expectedOutput: '390.0', isHidden: true, description: 'All items fit' }
+    ],
+    hints: ['Consider total available weight for each item type.', 'May take fractional quantity of last item type.']
+  },
+
+  // 9-12: Coin Change and Making Change
+  {
+    id: 'cs201-ex-6-9',
+    subjectId: 'cs201',
+    topicId: 'cs201-6',
+    title: 'Coin Change Greedy',
+    description: 'Given coin denominations [1, 5, 10, 25] and an amount, return minimum coins needed using greedy approach (works for these denominations).',
+    difficulty: 2,
+    language: 'python',
+    starterCode: 'def min_coins_greedy(amount):\n    # Use standard US coins: [1, 5, 10, 25]\n    # Return minimum number of coins\n    pass',
+    solution: 'def min_coins_greedy(amount):\n    coins = [25, 10, 5, 1]\n    count = 0\n    \n    for coin in coins:\n        if amount >= coin:\n            count += amount // coin\n            amount = amount % coin\n    \n    return count',
+    testCases: [
+      { input: '41', expectedOutput: '4', isHidden: false, description: '25+10+5+1' },
+      { input: '99', expectedOutput: '9', isHidden: false, description: 'Multiple coins' },
+      { input: '1', expectedOutput: '1', isHidden: true, description: 'Single penny' }
+    ],
+    hints: ['Start with largest denomination.', 'Take as many as possible, then move to next.']
+  },
+  {
+    id: 'cs201-ex-6-10',
+    subjectId: 'cs201',
+    topicId: 'cs201-6',
+    title: 'Coin Change with Denominations',
+    description: 'Given custom coin denominations and an amount, use greedy approach to find minimum coins. Note: greedy may not always give optimal solution for arbitrary denominations.',
+    difficulty: 3,
+    language: 'python',
+    starterCode: 'def min_coins_custom(amount, denominations):\n    # denominations is a list of coin values\n    # Return minimum number of coins (greedy approach)\n    pass',
+    solution: 'def min_coins_custom(amount, denominations):\n    if amount == 0:\n        return 0\n    \n    denominations = sorted(denominations, reverse=True)\n    count = 0\n    \n    for coin in denominations:\n        if amount >= coin:\n            count += amount // coin\n            amount = amount % coin\n    \n    if amount > 0:\n        return -1  # Cannot make exact change\n    \n    return count',
+    testCases: [
+      { input: '11, [1, 5, 6]', expectedOutput: '2', isHidden: false, description: 'Greedy gives 6+5, optimal is 6+5' },
+      { input: '30, [1, 10, 25]', expectedOutput: '6', isHidden: false, description: '25+1+1+1+1+1' },
+      { input: '7, [3, 5]', expectedOutput: '-1', isHidden: true, description: 'Cannot make change' }
+    ],
+    hints: ['Sort denominations in descending order.', 'Greedy doesn\'t always give optimal for arbitrary coins.']
+  },
+  {
+    id: 'cs201-ex-6-11',
+    subjectId: 'cs201',
+    topicId: 'cs201-6',
+    title: 'Making Change with Coin List',
+    description: 'Return the actual list of coins used to make change, not just the count.',
+    difficulty: 3,
+    language: 'python',
+    starterCode: 'def make_change(amount):\n    # Use standard US coins: [1, 5, 10, 25]\n    # Return list of coins used\n    pass',
+    solution: 'def make_change(amount):\n    coins = [25, 10, 5, 1]\n    result = []\n    \n    for coin in coins:\n        while amount >= coin:\n            result.append(coin)\n            amount -= coin\n    \n    return result',
+    testCases: [
+      { input: '41', expectedOutput: '[25, 10, 5, 1]', isHidden: false, description: 'One of each large coin' },
+      { input: '30', expectedOutput: '[25, 5]', isHidden: false, description: 'Two coins' },
+      { input: '3', expectedOutput: '[1, 1, 1]', isHidden: true, description: 'Only pennies' }
+    ],
+    hints: ['Build the list as you select coins.', 'Add coins to result as you use them.']
+  },
+  {
+    id: 'cs201-ex-6-12',
+    subjectId: 'cs201',
+    topicId: 'cs201-6',
+    title: 'Cashier Problem',
+    description: 'Given the cost and amount paid, return the change using minimum coins.',
+    difficulty: 2,
+    language: 'python',
+    starterCode: 'def cashier_change(cost, paid):\n    # Return dictionary of {coin_value: count}\n    # Use coins: [1, 5, 10, 25, 100]\n    pass',
+    solution: 'def cashier_change(cost, paid):\n    change = paid - cost\n    if change < 0:\n        return {}\n    \n    coins = [100, 25, 10, 5, 1]\n    result = {}\n    \n    for coin in coins:\n        if change >= coin:\n            count = change // coin\n            result[coin] = count\n            change = change % coin\n    \n    return result',
+    testCases: [
+      { input: '157, 200', expectedOutput: '{25: 1, 10: 1, 5: 1, 1: 3}', isHidden: false, description: 'Change of 43 cents' },
+      { input: '50, 100', expectedOutput: '{25: 2}', isHidden: false, description: 'Even 50 cents' },
+      { input: '100, 100', expectedOutput: '{}', isHidden: true, description: 'No change needed' }
+    ],
+    hints: ['Calculate change first.', 'Build dictionary with coin counts.']
+  },
+
+  // 13-16: Job Scheduling, Interval Scheduling, Huffman Basics
+  {
+    id: 'cs201-ex-6-13',
+    subjectId: 'cs201',
+    topicId: 'cs201-6',
+    title: 'Job Scheduling - Minimize Completion Time',
+    description: 'Given jobs with processing times, schedule them to minimize total completion time. Greedy: process shortest job first.',
+    difficulty: 3,
+    language: 'python',
+    starterCode: 'def schedule_jobs(jobs):\n    # jobs is list of processing times\n    # Return order of job indices and total completion time\n    pass',
+    solution: 'def schedule_jobs(jobs):\n    if not jobs:\n        return ([], 0)\n    \n    # Create list of (time, original_index)\n    indexed_jobs = [(time, i) for i, time in enumerate(jobs)]\n    # Sort by processing time (shortest first)\n    indexed_jobs.sort()\n    \n    order = [idx for time, idx in indexed_jobs]\n    \n    # Calculate total completion time\n    total_completion = 0\n    current_time = 0\n    for time, idx in indexed_jobs:\n        current_time += time\n        total_completion += current_time\n    \n    return (order, total_completion)',
+    testCases: [
+      { input: '[3, 1, 2]', expectedOutput: '([1, 2, 0], 10)', isHidden: false, description: 'Three jobs' },
+      { input: '[5, 2, 3]', expectedOutput: '([1, 2, 0], 17)', isHidden: false, description: 'Shortest job first' },
+      { input: '[1]', expectedOutput: '([0], 1)', isHidden: true, description: 'Single job' }
+    ],
+    hints: ['Sort jobs by processing time.', 'Process shortest jobs first to minimize waiting.']
+  },
+  {
+    id: 'cs201-ex-6-14',
+    subjectId: 'cs201',
+    topicId: 'cs201-6',
+    title: 'Job Scheduling with Deadlines',
+    description: 'Each job has a deadline and profit. Schedule jobs to maximize profit (each job takes 1 unit time).',
+    difficulty: 4,
+    language: 'python',
+    starterCode: 'def schedule_with_deadlines(jobs):\n    # jobs is list of tuples (deadline, profit)\n    # Return maximum profit\n    pass',
+    solution: 'def schedule_with_deadlines(jobs):\n    if not jobs:\n        return 0\n    \n    # Sort by profit (descending)\n    sorted_jobs = sorted(jobs, key=lambda x: x[1], reverse=True)\n    \n    # Find maximum deadline\n    max_deadline = max(job[0] for job in jobs)\n    \n    # Create schedule slots\n    schedule = [-1] * max_deadline\n    total_profit = 0\n    \n    for deadline, profit in sorted_jobs:\n        # Find latest available slot before deadline\n        for slot in range(min(deadline, max_deadline) - 1, -1, -1):\n            if schedule[slot] == -1:\n                schedule[slot] = profit\n                total_profit += profit\n                break\n    \n    return total_profit',
+    testCases: [
+      { input: '[(2, 100), (1, 50), (2, 10), (1, 20)]', expectedOutput: '150', isHidden: false, description: 'Schedule highest profit jobs' },
+      { input: '[(3, 20), (1, 10), (2, 40), (3, 30)]', expectedOutput: '90', isHidden: false, description: 'Multiple deadlines' },
+      { input: '[(1, 100), (1, 50)]', expectedOutput: '100', isHidden: true, description: 'Conflicting deadlines' }
+    ],
+    hints: ['Sort jobs by profit (highest first).', 'For each job, find latest available slot before deadline.']
+  },
+  {
+    id: 'cs201-ex-6-15',
+    subjectId: 'cs201',
+    topicId: 'cs201-6',
+    title: 'Interval Partitioning',
+    description: 'Given intervals, partition them into minimum number of groups such that no two intervals in same group overlap.',
+    difficulty: 4,
+    language: 'python',
+    starterCode: 'def interval_partitioning(intervals):\n    # intervals is list of tuples (start, end)\n    # Return minimum number of partitions needed\n    pass',
+    solution: 'def interval_partitioning(intervals):\n    if not intervals:\n        return 0\n    \n    # Sort by start time\n    intervals.sort()\n    \n    # Use list to track end time of each partition\n    partitions = []\n    \n    for start, end in intervals:\n        # Find partition where this interval can fit\n        placed = False\n        for i in range(len(partitions)):\n            if start >= partitions[i]:\n                partitions[i] = end\n                placed = True\n                break\n        \n        if not placed:\n            partitions.append(end)\n    \n    return len(partitions)',
+    testCases: [
+      { input: '[(1, 3), (2, 5), (4, 7), (6, 9)]', expectedOutput: '2', isHidden: false, description: 'Two partitions needed' },
+      { input: '[(1, 2), (2, 3), (3, 4)]', expectedOutput: '1', isHidden: false, description: 'All non-overlapping' },
+      { input: '[(1, 5), (2, 6), (3, 7)]', expectedOutput: '3', isHidden: true, description: 'All overlapping' }
+    ],
+    hints: ['Sort intervals by start time.', 'Track end time of last interval in each partition.', 'Similar to minimum rooms problem.']
+  },
+  {
+    id: 'cs201-ex-6-16',
+    subjectId: 'cs201',
+    topicId: 'cs201-6',
+    title: 'Huffman Encoding Frequencies',
+    description: 'Given character frequencies, build a Huffman tree and return the total encoding length. This is a simplified version focusing on the greedy merging process.',
+    difficulty: 5,
+    language: 'python',
+    starterCode: 'def huffman_encoding_length(frequencies):\n    # frequencies is a list of character frequencies\n    # Return total bits needed for encoding\n    pass',
+    solution: 'def huffman_encoding_length(frequencies):\n    import heapq\n    \n    if not frequencies:\n        return 0\n    if len(frequencies) == 1:\n        return frequencies[0]\n    \n    # Use min heap\n    heap = frequencies[:]\n    heapq.heapify(heap)\n    \n    total_cost = 0\n    \n    while len(heap) > 1:\n        # Get two minimum frequency nodes\n        freq1 = heapq.heappop(heap)\n        freq2 = heapq.heappop(heap)\n        \n        # Merge them\n        merged = freq1 + freq2\n        total_cost += merged\n        \n        # Add back to heap\n        heapq.heappush(heap, merged)\n    \n    return total_cost',
+    testCases: [
+      { input: '[5, 9, 12, 13, 16, 45]', expectedOutput: '224', isHidden: false, description: 'Standard Huffman example' },
+      { input: '[1, 1, 1, 1]', expectedOutput: '8', isHidden: false, description: 'Equal frequencies' },
+      { input: '[10, 20]', expectedOutput: '30', isHidden: true, description: 'Two characters' }
+    ],
+    hints: ['Use a min heap to efficiently get two smallest frequencies.', 'Total cost is sum of all internal node frequencies.', 'Greedy: always merge two smallest frequency nodes.']
+  }
+];
