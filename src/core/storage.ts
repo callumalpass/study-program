@@ -9,6 +9,7 @@ import type {
   ProjectSubmission,
   UserSettings,
   AiGrade,
+  SubtopicView,
 } from './types';
 import { githubService } from '../services/github';
 
@@ -124,6 +125,7 @@ export class ProgressStorage {
         subjectProgress.examAttempts = subjectProgress.examAttempts || {};
         subjectProgress.exerciseCompletions = subjectProgress.exerciseCompletions || {};
         subjectProgress.projectSubmissions = subjectProgress.projectSubmissions || {};
+        subjectProgress.subtopicViews = subjectProgress.subtopicViews || {};
       });
     }
 
@@ -155,6 +157,7 @@ export class ProgressStorage {
         examAttempts: {},
         exerciseCompletions: {},
         projectSubmissions: {},
+        subtopicViews: {},
       };
     }
 
@@ -313,6 +316,52 @@ export class ProgressStorage {
   isExercisePassed(subjectId: string, exerciseId: string): boolean {
     const completion = this.getExerciseCompletion(subjectId, exerciseId);
     return completion?.passed ?? false;
+  }
+
+  /**
+   * Record a subtopic view
+   */
+  recordSubtopicView(subjectId: string, subtopicId: string): void {
+    if (!this.progress.subjects[subjectId]) {
+      this.updateSubjectProgress(subjectId, { status: 'in_progress' });
+    }
+
+    const subjectProgress = this.progress.subjects[subjectId];
+    if (!subjectProgress.subtopicViews) {
+      subjectProgress.subtopicViews = {};
+    }
+
+    const now = new Date().toISOString();
+    const existing = subjectProgress.subtopicViews[subtopicId];
+
+    if (existing) {
+      existing.lastViewedAt = now;
+      existing.viewCount += 1;
+    } else {
+      subjectProgress.subtopicViews[subtopicId] = {
+        firstViewedAt: now,
+        lastViewedAt: now,
+        viewCount: 1,
+      };
+    }
+
+    this.save();
+  }
+
+  /**
+   * Get subtopic view data
+   */
+  getSubtopicView(subjectId: string, subtopicId: string): SubtopicView | undefined {
+    return this.progress.subjects[subjectId]?.subtopicViews?.[subtopicId];
+  }
+
+  /**
+   * Check if all subtopics in a topic have been viewed
+   */
+  areAllSubtopicsViewed(subjectId: string, subtopicIds: string[]): boolean {
+    const views = this.progress.subjects[subjectId]?.subtopicViews;
+    if (!views) return false;
+    return subtopicIds.every(id => views[id] !== undefined);
   }
 
   /**

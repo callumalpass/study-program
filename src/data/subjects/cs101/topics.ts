@@ -1,4 +1,4 @@
-import { Topic } from '../../../core/types';
+import { Topic, Subtopic } from '../../../core/types';
 import topic1Content from '../../../content/subjects/cs101/topic-1.md?raw';
 import topic2Content from '../../../content/subjects/cs101/topic-2.md?raw';
 import topic3Content from '../../../content/subjects/cs101/topic-3.md?raw';
@@ -7,11 +7,31 @@ import topic5Content from '../../../content/subjects/cs101/topic-5.md?raw';
 import topic6Content from '../../../content/subjects/cs101/topic-6.md?raw';
 import topic7Content from '../../../content/subjects/cs101/topic-7.md?raw';
 
+// Topic 1 Subtopics
+import t1Introduction from '../../../content/subjects/cs101/topic-1/01-introduction.md?raw';
+import t1NamingRules from '../../../content/subjects/cs101/topic-1/02-naming-rules.md?raw';
+import t1IntegersFloats from '../../../content/subjects/cs101/topic-1/03-integers-floats.md?raw';
+import t1Strings from '../../../content/subjects/cs101/topic-1/04-strings.md?raw';
+import t1Booleans from '../../../content/subjects/cs101/topic-1/05-booleans.md?raw';
+import t1TypeConversion from '../../../content/subjects/cs101/topic-1/06-type-conversion.md?raw';
+import t1Patterns from '../../../content/subjects/cs101/topic-1/07-patterns-best-practices.md?raw';
+
+const topic1Subtopics: Subtopic[] = [
+  { id: 'cs101-t1-intro', slug: 'introduction', title: 'Introduction', content: t1Introduction, order: 1 },
+  { id: 'cs101-t1-naming', slug: 'naming-rules', title: 'Variable Naming Rules', content: t1NamingRules, order: 2 },
+  { id: 'cs101-t1-numbers', slug: 'integers-floats', title: 'Integers & Floats', content: t1IntegersFloats, order: 3 },
+  { id: 'cs101-t1-strings', slug: 'strings', title: 'Strings', content: t1Strings, order: 4 },
+  { id: 'cs101-t1-bools', slug: 'booleans', title: 'Booleans', content: t1Booleans, order: 5 },
+  { id: 'cs101-t1-conversion', slug: 'type-conversion', title: 'Type Conversion', content: t1TypeConversion, order: 6 },
+  { id: 'cs101-t1-patterns', slug: 'patterns-best-practices', title: 'Patterns & Best Practices', content: t1Patterns, order: 7 },
+];
+
 export const cs101Topics: Topic[] = [
   {
     id: 'cs101-topic-1',
     title: 'Variables and Data Types',
     content: topic1Content,
+    subtopics: topic1Subtopics,
     quizIds: ['cs101-quiz-1', 'cs101-quiz-1b', 'cs101-quiz-1c'],
     exerciseIds: ['cs101-exercise-1', 'cs101-t1-ex02', 'cs101-t1-ex03', 'cs101-t1-ex04', 'cs101-t1-ex05', 'cs101-t1-ex06', 'cs101-t1-ex07', 'cs101-t1-ex08', 'cs101-t1-ex09', 'cs101-t1-ex10', 'cs101-t1-ex11', 'cs101-t1-ex12', 'cs101-t1-ex13', 'cs101-t1-ex14', 'cs101-t1-ex15', 'cs101-t1-ex16']
   },

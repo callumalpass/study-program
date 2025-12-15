@@ -22,10 +22,19 @@ export interface Subject {
   examIds?: string[];
 }
 
+export interface Subtopic {
+  id: string;           // e.g., 'cs101-t1-intro'
+  slug: string;         // URL-friendly: 'introduction'
+  title: string;        // Display title
+  content: string;      // Markdown content
+  order: number;        // For ordering: 1, 2, 3...
+}
+
 export interface Topic {
   id: string;
   title: string;
   content: string;
+  subtopics?: Subtopic[];  // Optional array of subtopics
   quizIds: string[];
   exerciseIds: string[];
 }
@@ -150,6 +159,12 @@ export interface UserProgress {
   settings: UserSettings;
 }
 
+export interface SubtopicView {
+  firstViewedAt: string;   // ISO date string
+  lastViewedAt: string;    // ISO date string
+  viewCount: number;
+}
+
 export interface SubjectProgress {
   status: SubjectStatus;
   startedAt?: string; // ISO date string
@@ -158,6 +173,7 @@ export interface SubjectProgress {
   examAttempts: Record<string, ExamAttempt[]>;
   exerciseCompletions: Record<string, ExerciseCompletion>; // Single best/latest attempt per exercise
   projectSubmissions: Record<string, ProjectSubmission[]>;
+  subtopicViews?: Record<string, SubtopicView>; // Track subtopic views
 }
 
 export interface AiGrade {
@@ -232,6 +248,12 @@ export interface SubjectRouteParams extends RouteParams {
 export interface TopicRouteParams extends RouteParams {
   id: string;
   topicId: string;
+}
+
+export interface SubtopicRouteParams extends RouteParams {
+  id: string;
+  topicId: string;
+  subtopicSlug: string;
 }
 
 export interface QuizRouteParams extends RouteParams {

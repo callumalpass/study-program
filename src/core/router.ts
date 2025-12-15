@@ -36,6 +36,11 @@ export class Router {
       paramNames: ['id', 'topicId'],
       template: '/subject/:id/topic/:topicId',
     },
+    subtopic: {
+      pattern: /^#?\/subject\/([^\/]+)\/topic\/([^\/]+)\/subtopic\/([^\/]+)$/,
+      paramNames: ['id', 'topicId', 'subtopicSlug'],
+      template: '/subject/:id/topic/:topicId/subtopic/:subtopicSlug',
+    },
     quiz: {
       pattern: /^#?\/subject\/([^\/]+)\/quiz\/([^\/]+)$/,
       paramNames: ['id', 'quizId'],
@@ -219,6 +224,8 @@ export const navigateToCurriculum = () => navigate('/curriculum');
 export const navigateToSubject = (id: string) => navigate(`/subject/${id}`);
 export const navigateToTopic = (subjectId: string, topicId: string) =>
   navigate(`/subject/${subjectId}/topic/${topicId}`);
+export const navigateToSubtopic = (subjectId: string, topicId: string, subtopicSlug: string) =>
+  navigate(`/subject/${subjectId}/topic/${topicId}/subtopic/${subtopicSlug}`);
 export const navigateToQuiz = (subjectId: string, quizId: string) =>
   navigate(`/subject/${subjectId}/quiz/${quizId}`);
 export const navigateToExam = (subjectId: string, examId: string) =>

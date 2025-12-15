@@ -9,6 +9,7 @@ import { math102Topics } from './subjects/math102/topics';
 import { cs104Topics } from './subjects/cs104/topics';
 import { cs105Topics } from './subjects/cs105/topics';
 import { math203Topics } from './subjects/math203/topics';
+import { cs201Topics } from './subjects/cs201/topics';
 
 /**
  * Complete Computer Science Degree Curriculum
@@ -200,16 +201,8 @@ export const curriculum: Subject[] = [
       'Prove algorithm correctness and analyze worst-case, average-case, and best-case scenarios'
     ],
     estimatedHours: 130,
-    topics: [
-      { id: 'cs201-1', title: 'Algorithm Analysis and Big-O', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs201-2', title: 'Sorting Algorithms', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs201-3', title: 'Searching Algorithms', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs201-4', title: 'Divide and Conquer', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs201-5', title: 'Dynamic Programming', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs201-6', title: 'Greedy Algorithms', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs201-7', title: 'Graph Algorithms', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs201-8', title: 'Algorithm Correctness', content: '', quizIds: [], exerciseIds: [] }
-    ]
+    topics: cs201Topics,
+    examIds: ['cs201-exam-midterm', 'cs201-exam-final']
   },
 
   {
