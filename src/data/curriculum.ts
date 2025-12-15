@@ -8,6 +8,7 @@ import { cs103Topics } from './subjects/cs103/topics';
 import { math102Topics } from './subjects/math102/topics';
 import { cs104Topics } from './subjects/cs104/topics';
 import { cs105Topics } from './subjects/cs105/topics';
+import { math203Topics } from './subjects/math203/topics';
 
 /**
  * Complete Computer Science Degree Curriculum
@@ -83,7 +84,8 @@ export const curriculum: Subject[] = [
       'Understand the fetch-decode-execute cycle and instruction execution'
     ],
     estimatedHours: 90,
-    topics: cs102Topics
+    topics: cs102Topics,
+    examIds: ['cs102-midterm', 'cs102-final']
   },
 
   {
@@ -104,7 +106,8 @@ export const curriculum: Subject[] = [
       'Write unit tests for object-oriented code'
     ],
     estimatedHours: 110,
-    topics: cs103Topics
+    topics: cs103Topics,
+    examIds: ['cs103-exam-midterm', 'cs103-exam-final']
   },
 
   // ============================================================================
@@ -150,7 +153,8 @@ export const curriculum: Subject[] = [
       'Analyze time and space complexity of data structure operations'
     ],
     estimatedHours: 120,
-    topics: cs104Topics
+    topics: cs104Topics,
+    examIds: ['cs104-exam-midterm', 'cs104-exam-final']
   },
 
   {
@@ -284,15 +288,8 @@ export const curriculum: Subject[] = [
       'Apply implicit differentiation and related rates to real-world problems'
     ],
     estimatedHours: 120,
-    topics: [
-      { id: 'math203-1', title: 'Limits and Continuity', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math203-2', title: 'Definition of the Derivative', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math203-3', title: 'Differentiation Rules', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math203-4', title: 'Applications of Derivatives', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math203-5', title: 'Optimization Problems', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math203-6', title: 'Related Rates', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math203-7', title: 'Curve Sketching', content: '', quizIds: [], exerciseIds: [] }
-    ]
+    topics: math203Topics,
+    examIds: ['math203-exam-midterm', 'math203-exam-final']
   },
 
   {

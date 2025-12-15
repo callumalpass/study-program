@@ -1,0 +1,685 @@
+import type { Exam } from '@/core/types';
+
+export const math203Exams: Exam[] = [
+  {
+    id: 'math203-exam-midterm',
+    subjectId: 'math203',
+    title: 'Math203 Midterm - Calculus I',
+    durationMinutes: 75,
+    instructions: [
+      'This exam covers Topics 1-4: Limits, Derivatives, Differentiation Rules, and Applications.',
+      'Show all work for full credit on written questions.',
+      'Calculators are NOT permitted.',
+      'Fill-in-blank answers should be simplified and use standard mathematical notation.',
+      'Passing score is 70% or higher.',
+    ],
+    questions: [
+      // === TOPIC 1: Limits and Continuity (7 questions) ===
+      {
+        id: 'math203-mid-q1',
+        type: 'multiple_choice',
+        prompt: 'Evaluate: $\\lim_{x \\to 3} \\frac{x^2 - 9}{x - 3}$',
+        options: ['3', '6', '9', 'Does not exist'],
+        correctAnswer: 1,
+        explanation:
+          'Factor: $\\frac{(x-3)(x+3)}{x-3} = x + 3$ for $x \\neq 3$. As $x \\to 3$, this equals $6$.',
+      },
+      {
+        id: 'math203-mid-q2',
+        type: 'multiple_choice',
+        prompt: 'Which of the following limits equals $e$?',
+        options: [
+          '$\\lim_{x \\to 0} \\frac{e^x - 1}{x}$',
+          '$\\lim_{x \\to \\infty} \\left(1 + \\frac{1}{x}\\right)^x$',
+          '$\\lim_{x \\to 0} \\frac{\\sin x}{x}$',
+          '$\\lim_{x \\to \\infty} \\frac{x}{e^x}$'
+        ],
+        correctAnswer: 1,
+        explanation:
+          'The definition of $e$ is $\\lim_{x \\to \\infty} (1 + 1/x)^x = e$. The other limits equal 1, 1, and 0 respectively.',
+      },
+      {
+        id: 'math203-mid-q3',
+        type: 'true_false',
+        prompt: 'If $f$ is continuous at $x = a$, then $f$ is differentiable at $x = a$.',
+        correctAnswer: false,
+        explanation:
+          'False. Continuity does not imply differentiability. Example: $f(x) = |x|$ is continuous at $x = 0$ but not differentiable there.',
+      },
+      {
+        id: 'math203-mid-q4',
+        type: 'fill_blank',
+        prompt: 'The three conditions for $f$ to be continuous at $x = a$ are: (1) $f(a)$ is defined, (2) $\\lim_{x \\to a} f(x)$ exists, and (3) $\\lim_{x \\to a} f(x) = $ ____.',
+        correctAnswer: 'f(a)',
+        explanation: 'The limit must equal the function value for continuity.',
+      },
+      {
+        id: 'math203-mid-q5',
+        type: 'multiple_choice',
+        prompt: 'Use L\'Hôpital\'s Rule: $\\lim_{x \\to 0} \\frac{\\sin x - x}{x^3}$',
+        options: ['$0$', '$-\\frac{1}{6}$', '$\\frac{1}{6}$', '$-1$'],
+        correctAnswer: 1,
+        explanation:
+          'Apply L\'Hôpital three times: $\\frac{\\cos x - 1}{3x^2} \\to \\frac{-\\sin x}{6x} \\to \\frac{-\\cos x}{6} = -\\frac{1}{6}$.',
+      },
+      {
+        id: 'math203-mid-q6',
+        type: 'multiple_choice',
+        prompt: 'What is $\\lim_{x \\to \\infty} \\frac{5x^3 - 2x}{3x^3 + x^2}$?',
+        options: ['$0$', '$\\frac{5}{3}$', '$\\infty$', '$1$'],
+        correctAnswer: 1,
+        explanation:
+          'Same degree numerator and denominator: limit is ratio of leading coefficients $\\frac{5}{3}$.',
+      },
+      {
+        id: 'math203-mid-q7',
+        type: 'written',
+        prompt: 'Explain why the function $f(x) = \\frac{x^2 - 4}{x - 2}$ is not continuous at $x = 2$, and identify the type of discontinuity. Then determine what value $f(2)$ should be defined as to make the function continuous.',
+        correctAnswer: 'The function has a removable discontinuity at x = 2 because the limit exists but f(2) is undefined. f(2) should be defined as 4.',
+        modelAnswer: 'At $x = 2$, the denominator equals zero, so $f(2)$ is undefined - failing the first condition for continuity. However, $\\lim_{x \\to 2} \\frac{x^2-4}{x-2} = \\lim_{x \\to 2} \\frac{(x-2)(x+2)}{x-2} = \\lim_{x \\to 2}(x+2) = 4$. Since the limit exists but the function is undefined, this is a **removable discontinuity**. To make $f$ continuous, define $f(2) = 4$.',
+        explanation: 'The limit exists and equals 4, so defining f(2) = 4 removes the discontinuity.',
+      },
+
+      // === TOPIC 2: Definition of the Derivative (7 questions) ===
+      {
+        id: 'math203-mid-q8',
+        type: 'multiple_choice',
+        prompt: 'The derivative $f\'(a)$ represents:',
+        options: [
+          'The average rate of change from 0 to $a$',
+          'The slope of the secant line at $x = a$',
+          'The slope of the tangent line at $x = a$',
+          'The area under the curve at $x = a$'
+        ],
+        correctAnswer: 2,
+        explanation:
+          'The derivative at a point gives the instantaneous rate of change, which is the slope of the tangent line.',
+      },
+      {
+        id: 'math203-mid-q9',
+        type: 'fill_blank',
+        prompt: 'Using the limit definition, $f\'(x) = \\lim_{h \\to 0} $ ____.',
+        correctAnswer: '(f(x+h) - f(x))/h',
+        explanation: 'This is the definition of the derivative as the limit of the difference quotient.',
+      },
+      {
+        id: 'math203-mid-q10',
+        type: 'multiple_choice',
+        prompt: 'At which point(s) is $f(x) = |x - 2|$ NOT differentiable?',
+        options: ['$x = 0$', '$x = 2$', '$x = -2$', 'It is differentiable everywhere'],
+        correctAnswer: 1,
+        explanation:
+          'The absolute value function has a corner at $x = 2$, where left and right derivatives differ.',
+      },
+      {
+        id: 'math203-mid-q11',
+        type: 'true_false',
+        prompt: 'If $f\'(a) = 0$, then $f$ has either a local maximum or local minimum at $x = a$.',
+        correctAnswer: false,
+        explanation:
+          'False. $f\'(a) = 0$ could also indicate an inflection point with horizontal tangent, like $f(x) = x^3$ at $x = 0$.',
+      },
+      {
+        id: 'math203-mid-q12',
+        type: 'multiple_choice',
+        prompt: 'Using the limit definition, find the derivative of $f(x) = 3x^2 - 2x$ at $x = 1$.',
+        options: ['$1$', '$4$', '$6$', '$3$'],
+        correctAnswer: 1,
+        explanation:
+          '$f\'(x) = 6x - 2$, so $f\'(1) = 6(1) - 2 = 4$.',
+      },
+      {
+        id: 'math203-mid-q13',
+        type: 'multiple_choice',
+        prompt: 'If position is given by $s(t) = t^3 - 6t^2 + 9t$, what is the velocity at $t = 2$?',
+        options: ['$-3$', '$0$', '$3$', '$-6$'],
+        correctAnswer: 0,
+        explanation:
+          'Velocity $v(t) = s\'(t) = 3t^2 - 12t + 9$. At $t = 2$: $v(2) = 12 - 24 + 9 = -3$.',
+      },
+      {
+        id: 'math203-mid-q14',
+        type: 'written',
+        prompt: 'Use the limit definition of the derivative to find $f\'(x)$ where $f(x) = \\frac{1}{x+1}$. Show all steps.',
+        correctAnswer: "f'(x) = -1/(x+1)^2",
+        modelAnswer: '$f\'(x) = \\lim_{h \\to 0} \\frac{f(x+h) - f(x)}{h} = \\lim_{h \\to 0} \\frac{\\frac{1}{x+h+1} - \\frac{1}{x+1}}{h}$\n\n$= \\lim_{h \\to 0} \\frac{(x+1) - (x+h+1)}{h(x+h+1)(x+1)} = \\lim_{h \\to 0} \\frac{-h}{h(x+h+1)(x+1)}$\n\n$= \\lim_{h \\to 0} \\frac{-1}{(x+h+1)(x+1)} = \\frac{-1}{(x+1)^2}$',
+        explanation: 'Apply the definition, find common denominator, simplify, then take the limit as h approaches 0.',
+      },
+
+      // === TOPIC 3: Differentiation Rules (7 questions) ===
+      {
+        id: 'math203-mid-q15',
+        type: 'multiple_choice',
+        prompt: 'Find $\\frac{d}{dx}[x^4 \\ln x]$.',
+        options: [
+          '$4x^3 \\ln x$',
+          '$x^3(4\\ln x + 1)$',
+          '$x^3(1 + 4\\ln x)$',
+          '$4x^3 + \\frac{1}{x}$'
+        ],
+        correctAnswer: 1,
+        explanation:
+          'Product rule: $4x^3 \\ln x + x^4 \\cdot \\frac{1}{x} = 4x^3 \\ln x + x^3 = x^3(4\\ln x + 1)$.',
+      },
+      {
+        id: 'math203-mid-q16',
+        type: 'fill_blank',
+        prompt: '$\\frac{d}{dx}[\\cos(2x)] = $ ____.',
+        correctAnswer: '-2sin(2x)',
+        explanation: 'Chain rule: $-\\sin(2x) \\cdot 2 = -2\\sin(2x)$.',
+      },
+      {
+        id: 'math203-mid-q17',
+        type: 'multiple_choice',
+        prompt: 'Find $\\frac{d}{dx}\\left[\\frac{e^x}{x^2}\\right]$.',
+        options: [
+          '$\\frac{e^x}{2x}$',
+          '$\\frac{e^x(x-2)}{x^3}$',
+          '$\\frac{e^x(x^2 - 2x)}{x^4}$',
+          '$\\frac{e^x - 2x}{x^2}$'
+        ],
+        correctAnswer: 1,
+        explanation:
+          'Quotient rule: $\\frac{e^x \\cdot x^2 - e^x \\cdot 2x}{x^4} = \\frac{e^x x(x - 2)}{x^4} = \\frac{e^x(x-2)}{x^3}$.',
+      },
+      {
+        id: 'math203-mid-q18',
+        type: 'multiple_choice',
+        prompt: 'What is $\\frac{d}{dx}[\\sin^3(x)]$?',
+        options: [
+          '$3\\sin^2(x)$',
+          '$3\\cos^2(x)\\sin(x)$',
+          '$3\\sin^2(x)\\cos(x)$',
+          '$\\cos^3(x)$'
+        ],
+        correctAnswer: 2,
+        explanation:
+          'Chain rule: $3\\sin^2(x) \\cdot \\cos(x) = 3\\sin^2(x)\\cos(x)$.',
+      },
+      {
+        id: 'math203-mid-q19',
+        type: 'true_false',
+        prompt: 'The derivative of $\\ln(x^3)$ is $\\frac{1}{x^3}$.',
+        correctAnswer: false,
+        explanation:
+          'False. $\\ln(x^3) = 3\\ln x$, so its derivative is $\\frac{3}{x}$. Alternatively, chain rule gives $\\frac{1}{x^3} \\cdot 3x^2 = \\frac{3}{x}$.',
+      },
+      {
+        id: 'math203-mid-q20',
+        type: 'multiple_choice',
+        prompt: 'Find $\\frac{d}{dx}[e^{\\sin x}]$.',
+        options: [
+          '$e^{\\sin x}$',
+          '$e^{\\cos x}$',
+          '$\\cos(x) e^{\\sin x}$',
+          '$\\sin(x) e^{\\cos x}$'
+        ],
+        correctAnswer: 2,
+        explanation:
+          'Chain rule: $e^{\\sin x} \\cdot \\cos x$.',
+      },
+      {
+        id: 'math203-mid-q21',
+        type: 'written',
+        prompt: 'Use implicit differentiation to find $\\frac{dy}{dx}$ for the curve $x^2 + xy + y^2 = 7$. Then find the slope of the tangent line at the point $(1, 2)$.',
+        correctAnswer: 'dy/dx = -(2x + y)/(x + 2y); slope at (1,2) is -4/5',
+        modelAnswer: 'Differentiate implicitly: $2x + y + x\\frac{dy}{dx} + 2y\\frac{dy}{dx} = 0$\n\n$\\frac{dy}{dx}(x + 2y) = -2x - y$\n\n$\\frac{dy}{dx} = \\frac{-2x - y}{x + 2y}$\n\nAt $(1, 2)$: $\\frac{dy}{dx} = \\frac{-2(1) - 2}{1 + 4} = \\frac{-4}{5}$',
+        explanation: 'Use implicit differentiation treating y as a function of x, then solve for dy/dx.',
+      },
+
+      // === TOPIC 4: Applications of Derivatives (7 questions) ===
+      {
+        id: 'math203-mid-q22',
+        type: 'multiple_choice',
+        prompt: 'Find the critical points of $f(x) = x^3 - 6x^2 + 9x + 1$.',
+        options: ['$x = 1, 3$', '$x = 0, 3$', '$x = -1, 3$', '$x = 1, -3$'],
+        correctAnswer: 0,
+        explanation:
+          '$f\'(x) = 3x^2 - 12x + 9 = 3(x^2 - 4x + 3) = 3(x-1)(x-3) = 0$ gives $x = 1$ and $x = 3$.',
+      },
+      {
+        id: 'math203-mid-q23',
+        type: 'multiple_choice',
+        prompt: 'For $f(x) = x^4 - 4x^3$, the second derivative test at $x = 3$ gives:',
+        options: ['Local maximum', 'Local minimum', 'Inconclusive', 'Inflection point'],
+        correctAnswer: 1,
+        explanation:
+          '$f\'(x) = 4x^3 - 12x^2 = 4x^2(x-3)$; $f\'\'(x) = 12x^2 - 24x$; $f\'\'(3) = 108 - 72 = 36 > 0$, so local minimum.',
+      },
+      {
+        id: 'math203-mid-q24',
+        type: 'fill_blank',
+        prompt: 'If $f\'\'(x) < 0$ on an interval, then $f$ is concave ____ on that interval.',
+        correctAnswer: 'down',
+        explanation: 'Negative second derivative means the function is concave down (curving downward).',
+      },
+      {
+        id: 'math203-mid-q25',
+        type: 'true_false',
+        prompt: 'The Mean Value Theorem requires that $f$ be differentiable on the closed interval $[a, b]$.',
+        correctAnswer: false,
+        explanation:
+          'False. MVT requires continuity on $[a,b]$ and differentiability on the open interval $(a,b)$.',
+      },
+      {
+        id: 'math203-mid-q26',
+        type: 'multiple_choice',
+        prompt: 'Find the absolute maximum of $f(x) = x^2 - 4x + 3$ on $[0, 4]$.',
+        options: ['$-1$', '$0$', '$3$', '$4$'],
+        correctAnswer: 2,
+        explanation:
+          '$f\'(x) = 2x - 4 = 0$ gives $x = 2$. Check: $f(0) = 3$, $f(2) = -1$, $f(4) = 3$. Maximum is $3$ at $x = 0$ and $x = 4$.',
+      },
+      {
+        id: 'math203-mid-q27',
+        type: 'multiple_choice',
+        prompt: 'The inflection points of $f(x) = x^4 - 6x^2$ occur at:',
+        options: ['$x = 0$', '$x = \\pm 1$', '$x = \\pm\\sqrt{3}$', '$x = 0, \\pm\\sqrt{3}$'],
+        correctAnswer: 1,
+        explanation:
+          '$f\'\'(x) = 12x^2 - 12 = 12(x^2 - 1) = 0$ gives $x = \\pm 1$. Sign changes at both, confirming inflection points.',
+      },
+      {
+        id: 'math203-mid-q28',
+        type: 'written',
+        prompt: 'A particle moves along a line with position $s(t) = t^3 - 9t^2 + 24t$ for $t \\geq 0$. Find: (a) when the particle is at rest, (b) when it is moving in the positive direction, and (c) the total distance traveled in the first 5 seconds.',
+        correctAnswer: 'At rest: t=2, t=4; Positive: 0<t<2 and t>4; Distance: 28 units',
+        modelAnswer: '(a) At rest when $v(t) = s\'(t) = 3t^2 - 18t + 24 = 3(t-2)(t-4) = 0$, so $t = 2$ and $t = 4$.\n\n(b) $v(t) > 0$ when $t < 2$ or $t > 4$ (sign analysis). Positive direction: $(0, 2) \\cup (4, \\infty)$.\n\n(c) $s(0) = 0$, $s(2) = 20$, $s(4) = 16$, $s(5) = 20$.\nDistance = $|s(2)-s(0)| + |s(4)-s(2)| + |s(5)-s(4)| = 20 + 4 + 4 = 28$ units.',
+        explanation: 'Find velocity, analyze sign changes, compute position at turning points and endpoints.',
+      },
+    ],
+  },
+
+  {
+    id: 'math203-exam-final',
+    subjectId: 'math203',
+    title: 'Math203 Final Exam - Calculus I (Comprehensive)',
+    durationMinutes: 120,
+    instructions: [
+      'This is a comprehensive exam covering all 7 topics.',
+      'Show all work for full credit on written questions.',
+      'Calculators are NOT permitted.',
+      'Budget your time wisely: approximately 2.5 minutes per question.',
+      'Passing score is 70% or higher.',
+    ],
+    questions: [
+      // === TOPIC 1: Limits and Continuity (6 questions) ===
+      {
+        id: 'math203-final-q1',
+        type: 'multiple_choice',
+        prompt: 'Evaluate: $\\lim_{x \\to 4} \\frac{\\sqrt{x} - 2}{x - 4}$',
+        options: ['$\\frac{1}{2}$', '$\\frac{1}{4}$', '$2$', '$4$'],
+        correctAnswer: 1,
+        explanation:
+          'Rationalize: $\\frac{1}{\\sqrt{x}+2} \\to \\frac{1}{4}$ as $x \\to 4$.',
+      },
+      {
+        id: 'math203-final-q2',
+        type: 'multiple_choice',
+        prompt: 'What is $\\lim_{x \\to 0} \\frac{\\tan(3x)}{x}$?',
+        options: ['$0$', '$1$', '$3$', '$\\frac{1}{3}$'],
+        correctAnswer: 2,
+        explanation:
+          '$\\frac{\\tan(3x)}{x} = \\frac{\\sin(3x)}{x\\cos(3x)} = 3 \\cdot \\frac{\\sin(3x)}{3x} \\cdot \\frac{1}{\\cos(3x)} \\to 3 \\cdot 1 \\cdot 1 = 3$.',
+      },
+      {
+        id: 'math203-final-q3',
+        type: 'fill_blank',
+        prompt: '$\\lim_{x \\to 0^+} x \\ln x = $ ____. (Hint: This requires L\'Hôpital\'s Rule after rewriting.)',
+        correctAnswer: '0',
+        explanation: 'Rewrite as $\\frac{\\ln x}{1/x}$ (form $-\\infty/\\infty$), apply L\'Hôpital: $\\frac{1/x}{-1/x^2} = -x \\to 0$.',
+      },
+      {
+        id: 'math203-final-q4',
+        type: 'true_false',
+        prompt: 'If $\\lim_{x \\to a^-} f(x) = \\lim_{x \\to a^+} f(x) = L$, then $f(a) = L$.',
+        correctAnswer: false,
+        explanation: 'False. The limit can equal $L$ but $f(a)$ may be undefined or have a different value.',
+      },
+      {
+        id: 'math203-final-q5',
+        type: 'multiple_choice',
+        prompt: 'Which statement correctly describes a jump discontinuity?',
+        options: [
+          'The function approaches infinity',
+          'The limit exists but doesn\'t equal the function value',
+          'The left and right limits both exist but are different',
+          'The function oscillates without settling'
+        ],
+        correctAnswer: 2,
+        explanation: 'A jump discontinuity occurs when both one-sided limits exist but have different values.',
+      },
+      {
+        id: 'math203-final-q6',
+        type: 'multiple_choice',
+        prompt: 'Using the Squeeze Theorem, evaluate $\\lim_{x \\to \\infty} \\frac{\\cos x}{x}$.',
+        options: ['$1$', '$0$', '$-1$', 'Does not exist'],
+        correctAnswer: 1,
+        explanation: '$-\\frac{1}{x} \\leq \\frac{\\cos x}{x} \\leq \\frac{1}{x}$, and both bounds approach $0$.',
+      },
+
+      // === TOPIC 2: Definition of the Derivative (5 questions) ===
+      {
+        id: 'math203-final-q7',
+        type: 'multiple_choice',
+        prompt: 'The difference quotient $\\frac{f(a+h) - f(a)}{h}$ geometrically represents:',
+        options: [
+          'The slope of the tangent line at $x = a$',
+          'The slope of the secant line through $(a, f(a))$ and $(a+h, f(a+h))$',
+          'The instantaneous rate of change',
+          'The average value of $f$ from $a$ to $a+h$'
+        ],
+        correctAnswer: 1,
+        explanation: 'The difference quotient is the slope of the secant line. The tangent slope comes from taking the limit.',
+      },
+      {
+        id: 'math203-final-q8',
+        type: 'true_false',
+        prompt: 'Every differentiable function is continuous.',
+        correctAnswer: true,
+        explanation: 'True. Differentiability implies continuity (but not vice versa).',
+      },
+      {
+        id: 'math203-final-q9',
+        type: 'multiple_choice',
+        prompt: 'The function $f(x) = x^{2/3}$ is NOT differentiable at:',
+        options: ['$x = 1$', '$x = 0$', '$x = -1$', 'It is differentiable everywhere'],
+        correctAnswer: 1,
+        explanation: '$f\'(x) = \\frac{2}{3}x^{-1/3}$ is undefined at $x = 0$ (vertical tangent).',
+      },
+      {
+        id: 'math203-final-q10',
+        type: 'fill_blank',
+        prompt: 'If $s(t)$ is position and $v(t) = s\'(t)$ is velocity, then acceleration $a(t) = $ ____.',
+        correctAnswer: "v'(t)",
+        explanation: 'Acceleration is the derivative of velocity: $a(t) = v\'(t) = s\'\'(t)$.',
+      },
+      {
+        id: 'math203-final-q11',
+        type: 'multiple_choice',
+        prompt: 'Find the equation of the tangent line to $f(x) = x^3$ at $x = 2$.',
+        options: ['$y = 12x - 16$', '$y = 12x - 8$', '$y = 6x - 4$', '$y = 8x - 8$'],
+        correctAnswer: 0,
+        explanation: '$f(2) = 8$, $f\'(x) = 3x^2$, $f\'(2) = 12$. Line: $y - 8 = 12(x - 2)$, so $y = 12x - 16$.',
+      },
+
+      // === TOPIC 3: Differentiation Rules (6 questions) ===
+      {
+        id: 'math203-final-q12',
+        type: 'multiple_choice',
+        prompt: 'Find $\\frac{d}{dx}[(2x+1)^5]$.',
+        options: ['$5(2x+1)^4$', '$10(2x+1)^4$', '$2(2x+1)^4$', '$5(2x+1)^4 \\cdot 2x$'],
+        correctAnswer: 1,
+        explanation: 'Chain rule: $5(2x+1)^4 \\cdot 2 = 10(2x+1)^4$.',
+      },
+      {
+        id: 'math203-final-q13',
+        type: 'fill_blank',
+        prompt: '$\\frac{d}{dx}[\\sec x] = $ ____.',
+        correctAnswer: 'sec(x)tan(x)',
+        explanation: 'The derivative of $\\sec x$ is $\\sec x \\tan x$.',
+      },
+      {
+        id: 'math203-final-q14',
+        type: 'multiple_choice',
+        prompt: 'Find $\\frac{d}{dx}[\\ln(\\cos x)]$.',
+        options: ['$\\frac{1}{\\cos x}$', '$-\\tan x$', '$\\tan x$', '$-\\frac{\\sin x}{\\cos x}$'],
+        correctAnswer: 1,
+        explanation: 'Chain rule: $\\frac{1}{\\cos x} \\cdot (-\\sin x) = -\\tan x$.',
+      },
+      {
+        id: 'math203-final-q15',
+        type: 'multiple_choice',
+        prompt: 'Using logarithmic differentiation, $\\frac{d}{dx}[x^{\\sin x}]$ equals:',
+        options: [
+          '$\\sin x \\cdot x^{\\sin x - 1}$',
+          '$x^{\\sin x}(\\cos x \\ln x + \\frac{\\sin x}{x})$',
+          '$x^{\\sin x} \\cos x$',
+          '$x^{\\sin x} \\cdot \\frac{\\sin x}{x}$'
+        ],
+        correctAnswer: 1,
+        explanation: 'Let $y = x^{\\sin x}$. $\\ln y = \\sin x \\ln x$. $\\frac{y\'}{y} = \\cos x \\ln x + \\frac{\\sin x}{x}$.',
+      },
+      {
+        id: 'math203-final-q16',
+        type: 'true_false',
+        prompt: 'The quotient rule states: $\\left(\\frac{f}{g}\\right)\' = \\frac{f\'g - fg\'}{g^2}$.',
+        correctAnswer: true,
+        explanation: 'True. This is the correct statement of the quotient rule.',
+      },
+      {
+        id: 'math203-final-q17',
+        type: 'multiple_choice',
+        prompt: 'Find $\\frac{d^2y}{dx^2}$ for $y = e^{2x}$.',
+        options: ['$2e^{2x}$', '$4e^{2x}$', '$e^{2x}$', '$2e^x$'],
+        correctAnswer: 1,
+        explanation: '$y\' = 2e^{2x}$, $y\'\' = 4e^{2x}$.',
+      },
+
+      // === TOPIC 4: Applications of Derivatives (6 questions) ===
+      {
+        id: 'math203-final-q18',
+        type: 'multiple_choice',
+        prompt: 'For $f(x) = x^3 - 3x + 2$, classify the critical point at $x = -1$.',
+        options: ['Local maximum', 'Local minimum', 'Neither (inflection point)', 'Cannot determine'],
+        correctAnswer: 0,
+        explanation: '$f\'(x) = 3x^2 - 3 = 0$ at $x = \\pm 1$. $f\'\'(x) = 6x$, $f\'\'(-1) = -6 < 0$, so local max.',
+      },
+      {
+        id: 'math203-final-q19',
+        type: 'fill_blank',
+        prompt: 'Rolle\'s Theorem is a special case of the Mean Value Theorem when $f(a) = $ ____.',
+        correctAnswer: 'f(b)',
+        explanation: 'When $f(a) = f(b)$, MVT guarantees a point where $f\'(c) = 0$.',
+      },
+      {
+        id: 'math203-final-q20',
+        type: 'multiple_choice',
+        prompt: 'On what interval is $f(x) = x^3 - 3x^2$ concave up?',
+        options: ['$(-\\infty, 1)$', '$(1, \\infty)$', '$(0, 2)$', '$(-\\infty, 0)$'],
+        correctAnswer: 1,
+        explanation: '$f\'\'(x) = 6x - 6 > 0$ when $x > 1$.',
+      },
+      {
+        id: 'math203-final-q21',
+        type: 'true_false',
+        prompt: 'If $f\'(c) = 0$ and $f$ changes from increasing to decreasing at $c$, then $c$ is a local minimum.',
+        correctAnswer: false,
+        explanation: 'False. If $f$ changes from increasing to decreasing, $c$ is a local maximum (not minimum).',
+      },
+      {
+        id: 'math203-final-q22',
+        type: 'multiple_choice',
+        prompt: 'The absolute minimum of $f(x) = x^3 - 12x$ on $[-3, 3]$ is:',
+        options: ['$-16$', '$-9$', '$16$', '$-27$'],
+        correctAnswer: 0,
+        explanation: '$f\'(x) = 3x^2 - 12 = 0$ at $x = \\pm 2$. Check: $f(-3)=9$, $f(-2)=16$, $f(2)=-16$, $f(3)=-9$. Min is $-16$.',
+      },
+      {
+        id: 'math203-final-q23',
+        type: 'multiple_choice',
+        prompt: 'For the function $f(x) = \\frac{1}{1+x^2}$, the inflection points are at:',
+        options: ['$x = 0$', '$x = \\pm 1$', '$x = \\pm\\frac{1}{\\sqrt{3}}$', 'No inflection points'],
+        correctAnswer: 2,
+        explanation: '$f\'\'(x) = 0$ gives inflection points at $x = \\pm\\frac{1}{\\sqrt{3}}$ where concavity changes.',
+      },
+
+      // === TOPIC 5: Optimization Problems (6 questions) ===
+      {
+        id: 'math203-final-q24',
+        type: 'multiple_choice',
+        prompt: 'To maximize the area of a rectangle inscribed in a circle of radius $r$, the rectangle should be:',
+        options: [
+          'As tall as possible',
+          'As wide as possible',
+          'A square',
+          'Twice as wide as it is tall'
+        ],
+        correctAnswer: 2,
+        explanation: 'By symmetry and calculus, the inscribed rectangle with maximum area is a square.',
+      },
+      {
+        id: 'math203-final-q25',
+        type: 'fill_blank',
+        prompt: 'In optimization, the function to be maximized or minimized is called the ____ function.',
+        correctAnswer: 'objective',
+        explanation: 'The objective function is what we optimize subject to constraints.',
+      },
+      {
+        id: 'math203-final-q26',
+        type: 'multiple_choice',
+        prompt: 'A box with square base and no top has volume 32 cm³. To minimize surface area, the base side length should be:',
+        options: ['$2$ cm', '$4$ cm', '$8$ cm', '$\\sqrt[3]{32}$ cm'],
+        correctAnswer: 1,
+        explanation: 'Let base = $s$, height = $h$. $V = s^2h = 32$. $S = s^2 + 4sh$. Minimize to get $s = 4$ cm.',
+      },
+      {
+        id: 'math203-final-q27',
+        type: 'true_false',
+        prompt: 'In optimization problems, the absolute maximum on a closed interval always occurs at a critical point.',
+        correctAnswer: false,
+        explanation: 'False. The absolute maximum can occur at an endpoint or a critical point.',
+      },
+      {
+        id: 'math203-final-q28',
+        type: 'written',
+        prompt: 'A farmer wants to fence a rectangular field along a river (no fence needed on the river side). If the farmer has 400 meters of fencing, what dimensions maximize the enclosed area? Show your work.',
+        correctAnswer: '100m x 200m, Area = 20000 sq m',
+        modelAnswer: 'Let $x$ = width (sides perpendicular to river), $y$ = length (parallel to river).\n\nConstraint: $2x + y = 400$, so $y = 400 - 2x$.\n\nObjective: $A = xy = x(400-2x) = 400x - 2x^2$.\n\n$A\'(x) = 400 - 4x = 0 \\Rightarrow x = 100$.\n\n$A\'\'(x) = -4 < 0$, confirming maximum.\n\nDimensions: $x = 100$ m, $y = 200$ m. Area = $20,000$ m².',
+        explanation: 'Use constraint to reduce to one variable, differentiate, find critical point, verify maximum.',
+      },
+      {
+        id: 'math203-final-q29',
+        type: 'multiple_choice',
+        prompt: 'The point on the curve $y = \\sqrt{x}$ closest to $(4, 0)$ is:',
+        options: ['$(1, 1)$', '$(4, 2)$', '$(\\frac{7}{2}, \\sqrt{\\frac{7}{2}})$', '$(2, \\sqrt{2})$'],
+        correctAnswer: 2,
+        explanation: 'Minimize $D^2 = (x-4)^2 + x$. $\\frac{d(D^2)}{dx} = 2(x-4) + 1 = 0$ gives $x = 7/2$.',
+      },
+
+      // === TOPIC 6: Related Rates (6 questions) ===
+      {
+        id: 'math203-final-q30',
+        type: 'multiple_choice',
+        prompt: 'In a related rates problem, known constant values should be substituted:',
+        options: [
+          'Before differentiating',
+          'After differentiating',
+          'Either before or after',
+          'Never - keep variables throughout'
+        ],
+        correctAnswer: 1,
+        explanation: 'Always differentiate first, then substitute values. Substituting before treats variables as constants.',
+      },
+      {
+        id: 'math203-final-q31',
+        type: 'fill_blank',
+        prompt: 'For a sphere, $V = \\frac{4}{3}\\pi r^3$. Differentiating with respect to time: $\\frac{dV}{dt} = $ ____.',
+        correctAnswer: '4πr²(dr/dt)',
+        explanation: 'Chain rule: $\\frac{dV}{dt} = 4\\pi r^2 \\frac{dr}{dt}$.',
+      },
+      {
+        id: 'math203-final-q32',
+        type: 'multiple_choice',
+        prompt: 'A 10-foot ladder leans against a wall. The bottom slides away at 2 ft/s. When the bottom is 6 ft from the wall, how fast is the top sliding down?',
+        options: ['$\\frac{3}{2}$ ft/s', '$\\frac{6}{4}$ ft/s', '$\\frac{3}{4}$ ft/s', '$2$ ft/s'],
+        correctAnswer: 0,
+        explanation: '$x^2 + y^2 = 100$. When $x=6$, $y=8$. $2x\\frac{dx}{dt} + 2y\\frac{dy}{dt} = 0$. $\\frac{dy}{dt} = -\\frac{6 \\cdot 2}{8} = -\\frac{3}{2}$ ft/s.',
+      },
+      {
+        id: 'math203-final-q33',
+        type: 'true_false',
+        prompt: 'If water drains from a tank at a constant rate, the water level drops at a constant rate regardless of the tank shape.',
+        correctAnswer: false,
+        explanation: 'False. The rate of level change depends on cross-sectional area. Narrower sections drain faster.',
+      },
+      {
+        id: 'math203-final-q34',
+        type: 'multiple_choice',
+        prompt: 'An oil spill spreads as a circle. If area increases at 50 m²/min, how fast is the radius increasing when $r = 10$ m?',
+        options: ['$\\frac{5}{2\\pi}$ m/min', '$\\frac{50}{20\\pi}$ m/min', '$\\frac{5}{\\pi}$ m/min', '$\\frac{1}{\\pi}$ m/min'],
+        correctAnswer: 0,
+        explanation: '$A = \\pi r^2$, $\\frac{dA}{dt} = 2\\pi r \\frac{dr}{dt}$. $50 = 2\\pi(10)\\frac{dr}{dt}$, so $\\frac{dr}{dt} = \\frac{50}{20\\pi} = \\frac{5}{2\\pi}$.',
+      },
+      {
+        id: 'math203-final-q35',
+        type: 'written',
+        prompt: 'A conical tank (vertex down) has radius 3 m and height 6 m. Water flows in at 2 m³/min. How fast is the water level rising when the water is 2 m deep? (Note: For a cone, $V = \\frac{1}{3}\\pi r^2 h$, and by similar triangles $r = h/2$.)',
+        correctAnswer: '2/π m/min',
+        modelAnswer: 'By similar triangles: $\\frac{r}{h} = \\frac{3}{6} = \\frac{1}{2}$, so $r = \\frac{h}{2}$.\n\n$V = \\frac{1}{3}\\pi r^2 h = \\frac{1}{3}\\pi \\left(\\frac{h}{2}\\right)^2 h = \\frac{\\pi h^3}{12}$\n\n$\\frac{dV}{dt} = \\frac{\\pi h^2}{4} \\cdot \\frac{dh}{dt}$\n\nWhen $h = 2$: $2 = \\frac{\\pi (4)}{4} \\cdot \\frac{dh}{dt} = \\pi \\frac{dh}{dt}$\n\n$\\frac{dh}{dt} = \\frac{2}{\\pi}$ m/min',
+        explanation: 'Use similar triangles to express r in terms of h, substitute into volume formula, differentiate, solve for dh/dt.',
+      },
+
+      // === TOPIC 7: Curve Sketching (7 questions) ===
+      {
+        id: 'math203-final-q36',
+        type: 'multiple_choice',
+        prompt: 'For $f(x) = \\frac{x^2 - 1}{x^2 - 4}$, the horizontal asymptote is:',
+        options: ['$y = 0$', '$y = 1$', '$y = \\frac{1}{4}$', 'No horizontal asymptote'],
+        correctAnswer: 1,
+        explanation: 'Same degree numerator and denominator: $y = \\frac{1}{1} = 1$.',
+      },
+      {
+        id: 'math203-final-q37',
+        type: 'multiple_choice',
+        prompt: 'The function $f(x) = \\frac{x^3 + 1}{x^2}$ has:',
+        options: [
+          'A horizontal asymptote',
+          'An oblique (slant) asymptote',
+          'No asymptote as $x \\to \\infty$',
+          'A curved asymptote'
+        ],
+        correctAnswer: 1,
+        explanation: 'Degree of numerator (3) = degree of denominator (2) + 1, so there is an oblique asymptote.',
+      },
+      {
+        id: 'math203-final-q38',
+        type: 'fill_blank',
+        prompt: 'If $f(-x) = f(x)$ for all $x$, then $f$ is an ____ function.',
+        correctAnswer: 'even',
+        explanation: 'Even functions satisfy $f(-x) = f(x)$ and are symmetric about the y-axis.',
+      },
+      {
+        id: 'math203-final-q39',
+        type: 'true_false',
+        prompt: 'A function can have at most two horizontal asymptotes.',
+        correctAnswer: true,
+        explanation: 'True. A function can have different limits as $x \\to +\\infty$ and $x \\to -\\infty$, giving at most two horizontal asymptotes.',
+      },
+      {
+        id: 'math203-final-q40',
+        type: 'multiple_choice',
+        prompt: 'For $f(x) = xe^{-x}$, as $x \\to +\\infty$:',
+        options: [
+          '$f(x) \\to +\\infty$',
+          '$f(x) \\to 0$',
+          '$f(x) \\to -\\infty$',
+          '$f(x) \\to 1$'
+        ],
+        correctAnswer: 1,
+        explanation: 'Exponential decay dominates polynomial growth: $\\lim_{x \\to \\infty} xe^{-x} = 0$.',
+      },
+      {
+        id: 'math203-final-q41',
+        type: 'multiple_choice',
+        prompt: 'The graph of $f(x) = \\frac{x}{x^2+1}$ is:',
+        options: [
+          'Even (symmetric about y-axis)',
+          'Odd (symmetric about origin)',
+          'Neither',
+          'Both'
+        ],
+        correctAnswer: 1,
+        explanation: '$f(-x) = \\frac{-x}{x^2+1} = -f(x)$, so the function is odd.',
+      },
+      {
+        id: 'math203-final-q42',
+        type: 'written',
+        prompt: 'Sketch the graph of $f(x) = \\frac{x^2}{x^2 - 1}$ by finding: (a) domain, (b) intercepts, (c) asymptotes, (d) intervals of increase/decrease, and (e) concavity. Provide a summary of key features.',
+        correctAnswer: 'Domain: x≠±1; y-int: (0,0); VA: x=±1; HA: y=1; local max at x=0; concave up on (-∞,-1)∪(1,∞), down on (-1,1)',
+        modelAnswer: '(a) **Domain**: $x \\neq \\pm 1$ (where denominator = 0).\n\n(b) **Intercepts**: $f(0) = 0$ (y-intercept at origin). $f(x) = 0$ when $x = 0$ (x-intercept at origin).\n\n(c) **Asymptotes**: \n- Vertical: $x = 1$ and $x = -1$\n- Horizontal: $y = 1$ (degrees equal, ratio of leading coefficients)\n\n(d) **Increasing/Decreasing**: $f\'(x) = \\frac{-2x}{(x^2-1)^2}$. $f\'(x) > 0$ for $x < 0$, $f\'(x) < 0$ for $x > 0$. Increasing on $(-\\infty, -1) \\cup (-1, 0)$, decreasing on $(0, 1) \\cup (1, \\infty)$. Local max at $x = 0$.\n\n(e) **Concavity**: $f\'\'(x) = \\frac{2(3x^2+1)}{(x^2-1)^3}$. Concave up on $|x| > 1$, concave down on $|x| < 1$.',
+        explanation: 'Systematically analyze domain, intercepts, asymptotes, first derivative for extrema, second derivative for concavity.',
+      },
+    ],
+  },
+];

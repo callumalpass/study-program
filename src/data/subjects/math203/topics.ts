@@ -12,7 +12,7 @@ export const math203Topics: Topic[] = [
     id: 'math203-topic-1',
     title: 'Limits and Continuity',
     content: topic1Content,
-    quizIds: ['math203-quiz-1'],
+    quizIds: ['math203-quiz-1a', 'math203-quiz-1b', 'math203-quiz-1c'],
     exerciseIds: [
       'math203-t1-drill-1',
       'math203-t1-drill-2',
@@ -40,7 +40,7 @@ export const math203Topics: Topic[] = [
     id: 'math203-topic-2',
     title: 'Definition of the Derivative',
     content: topic2Content,
-    quizIds: ['math203-quiz-2'],
+    quizIds: ['math203-quiz-2a', 'math203-quiz-2b', 'math203-quiz-2c'],
     exerciseIds: [
       'math203-t2-drill-1',
       'math203-t2-drill-2',
@@ -68,7 +68,7 @@ export const math203Topics: Topic[] = [
     id: 'math203-topic-3',
     title: 'Differentiation Rules',
     content: topic3Content,
-    quizIds: ['math203-quiz-3'],
+    quizIds: ['math203-quiz-3a', 'math203-quiz-3b', 'math203-quiz-3c'],
     exerciseIds: [
       'math203-t3-drill-1',
       'math203-t3-drill-2',
@@ -96,7 +96,7 @@ export const math203Topics: Topic[] = [
     id: 'math203-topic-4',
     title: 'Applications of Derivatives',
     content: topic4Content,
-    quizIds: ['math203-quiz-4'],
+    quizIds: ['math203-quiz-4a', 'math203-quiz-4b', 'math203-quiz-4c'],
     exerciseIds: [
       'math203-t4-drill-1',
       'math203-t4-drill-2',
@@ -124,7 +124,7 @@ export const math203Topics: Topic[] = [
     id: 'math203-topic-5',
     title: 'Optimization Problems',
     content: topic5Content,
-    quizIds: ['math203-quiz-5'],
+    quizIds: ['math203-quiz-5a', 'math203-quiz-5b', 'math203-quiz-5c'],
     exerciseIds: [
       'math203-t5-drill-1',
       'math203-t5-drill-2',
@@ -152,7 +152,7 @@ export const math203Topics: Topic[] = [
     id: 'math203-topic-6',
     title: 'Related Rates',
     content: topic6Content,
-    quizIds: ['math203-quiz-6'],
+    quizIds: ['math203-quiz-6a', 'math203-quiz-6b', 'math203-quiz-6c'],
     exerciseIds: [
       'math203-t6-drill-1',
       'math203-t6-drill-2',
@@ -180,7 +180,7 @@ export const math203Topics: Topic[] = [
     id: 'math203-topic-7',
     title: 'Curve Sketching',
     content: topic7Content,
-    quizIds: ['math203-quiz-7'],
+    quizIds: ['math203-quiz-7a', 'math203-quiz-7b', 'math203-quiz-7c'],
     exerciseIds: [
       'math203-t7-drill-1',
       'math203-t7-drill-2',

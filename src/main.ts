@@ -21,11 +21,11 @@ import { renderExportPage } from './pages/export';
 import { cs101Quizzes, cs101Exercises, cs101Projects, cs101Exams } from './data/subjects/cs101';
 import { math101Quizzes, math101Exercises, math101Exams } from './data/subjects/math101';
 import { cs102Quizzes, cs102Exercises, cs102Projects } from './data/subjects/cs102';
-import { cs103Quizzes, cs103Exercises, cs103Projects } from './data/subjects/cs103';
+import { cs103Quizzes, cs103Exercises, cs103Projects, cs103Exams } from './data/subjects/cs103';
 import { math102Quizzes, math102Exercises, math102Projects } from './data/subjects/math102';
 import { cs104Quizzes, cs104Exercises, cs104Projects } from './data/subjects/cs104';
 import { cs105Quizzes, cs105Exercises, cs105Projects } from './data/subjects/cs105';
-import { math203Quizzes, math203Exercises, math203Projects } from './data/subjects/math203';
+import { math203Quizzes, math203Exercises, math203Projects, math203Exams } from './data/subjects/math203';
 
 import type { Quiz, Exercise, Project, Exam } from './core/types';
 
@@ -44,6 +44,8 @@ const allQuizzes: Quiz[] = [
 const allExams: Exam[] = [
   ...cs101Exams,
   ...math101Exams,
+  ...cs103Exams,
+  ...math203Exams,
 ];
 
 const allExercises: Exercise[] = [
