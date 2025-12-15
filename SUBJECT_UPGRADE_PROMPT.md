@@ -29,11 +29,12 @@ CS101 (Intro to Programming) has:
 
 2. **Identify gaps** compared to CS101:
    - Missing topics that should be covered
-   - Topics with insufficient depth (should have subtopics)
+   - Topics with insufficient depth (each topic should have subtopics)
    - Topics without subtopics that would benefit from being split
    - Insufficient quizzes (target: 3 per topic, 5 questions each)
-   - Insufficient exercises (target: at least 16 per topic, difficulty 1-5)
-   - Missing exams
+   - Insufficient exercises (target: at LEAST 16 per topic, difficulty 1-5)
+   - Missing exams or exams which are too short
+   - Missing projects (where necessary)
 
 3. **Determine assessment strategy**:
 
@@ -51,10 +52,11 @@ CS101 (Intro to Programming) has:
 4. **Upgrade the subject** following this order:
 
    a. **Topics with Subtopics** (see detailed section below)
-   b. **Exercises** (see detailed section below)
-   c. **Quizzes** (see detailed section below)
-   d. **Exams** (see detailed section below)
-   e. **Projects** (evaluate and potentially retire)
+   b. **Readings** (see detailed section below - for intermediate/advanced subjects)
+   c. **Exercises** (see detailed section below)
+   d. **Quizzes** (see detailed section below)
+   e. **Exams** (see detailed section below)
+   f. **Projects** (see detailed section below - required for some subjects)
 
 ---
 
@@ -173,6 +175,181 @@ Each subtopic markdown file should have:
 5. Booleans (true/false, comparisons)
 6. Type Conversion (casting between types)
 7. Patterns & Best Practices (common idioms, mistakes)
+
+---
+
+## Readings
+
+Readings are academic references (papers, documentation, textbook excerpts) that supplement topic content. They provide depth, historical context, and exposure to primary sources—mirroring a traditional university curriculum.
+
+### When to Include Readings
+
+**Readings are valuable for:**
+- **Foundational CS papers** (algorithms, data structures, systems)
+- **Official documentation** (language specs, framework docs)
+- **RFCs and standards** (networking, protocols)
+- **Classic textbook sections** (when freely available)
+
+**Subjects where readings add significant value:**
+- **CS201** (Algorithms): Dijkstra, Hoare, Knuth papers
+- **CS202** (Databases): Codd's relational model, CAP theorem paper
+- **CS204** (Operating Systems): Ritchie & Thompson Unix paper
+- **CS205** (Networking): Relevant RFCs
+- **CS301** (Compilers): Aho et al. foundational work
+
+**Subjects where readings are less critical:**
+- **CS101** (Intro to Programming): Beginners benefit more from tutorials than papers
+- **Math courses**: Textbook-style exposition works better than research papers
+
+### Reading Interface
+
+```typescript
+type ReadingType = 'paper' | 'documentation' | 'textbook' | 'article' | 'rfc' | 'video';
+
+interface Reading {
+  id: string;              // Unique ID: '[subject]-t[N]-reading-[N]'
+  title: string;           // Title of the reading
+  authors?: string[];      // Author(s) if applicable
+  url: string;             // URL to the reading (prefer stable, freely accessible links)
+  type: ReadingType;       // Type of reading material
+  year?: number;           // Publication year
+  required: boolean;       // Required vs optional (further reading)
+  description?: string;    // Brief description of what this reading covers
+  estimatedMinutes?: number; // Estimated reading time
+}
+```
+
+### Adding Readings to Topics
+
+Readings are added to topics in `topics.ts`:
+
+```typescript
+import { Topic, Reading } from '../../../core/types';
+
+const topic3Readings: Reading[] = [
+  {
+    id: 'cs201-t3-reading-1',
+    title: 'A Note on Two Problems in Connexion with Graphs',
+    authors: ['Edsger W. Dijkstra'],
+    url: 'https://www-m3.ma.tum.de/foswiki/pub/MN0506/WebHome/dijkstra.pdf',
+    type: 'paper',
+    year: 1959,
+    required: true,
+    description: 'The original paper introducing Dijkstra\'s shortest path algorithm.',
+    estimatedMinutes: 30,
+  },
+  {
+    id: 'cs201-t3-reading-2',
+    title: 'Python heapq Documentation',
+    url: 'https://docs.python.org/3/library/heapq.html',
+    type: 'documentation',
+    required: false,
+    description: 'Python\'s priority queue implementation, useful for efficient graph algorithms.',
+    estimatedMinutes: 15,
+  },
+];
+
+// In the topic definition:
+{
+  id: 'cs201-topic-3',
+  title: 'Shortest Path Algorithms',
+  content: topic3Content,
+  subtopics: topic3Subtopics,
+  readings: topic3Readings,  // Add readings array
+  quizIds: [...],
+  exerciseIds: [...],
+}
+```
+
+### Reading Guidelines
+
+**Finding good readings:**
+- **arXiv**: Free preprints for many CS papers
+- **Author's website**: Many researchers post PDFs
+- **ACM Digital Library**: Some papers are open access
+- **Official documentation**: Always freely available
+- **RFC Editor**: All RFCs are public
+
+**Choosing readings:**
+- Prefer papers that are readable without extensive background
+- Include a mix of foundational classics and practical documentation
+- Keep estimated reading time realistic (15-60 min per reading)
+- Limit to 2-4 readings per topic to avoid overwhelming students
+
+**Required vs. Optional:**
+- **Required**: Essential context that enhances understanding of the topic
+- **Optional (Further Reading)**: Deeper dives for curious students
+
+**Writing descriptions:**
+- Explain what the student will learn from this reading
+- Mention if it introduces a concept they'll use in exercises
+- Note historical significance for classic papers
+
+### Reading ID Conventions
+
+- Format: `[subject]-t[topic]-reading-[N]`
+- Examples: `cs201-t3-reading-1`, `cs202-t5-reading-2`
+
+### Example Readings by Subject
+
+**CS201 (Algorithms):**
+```typescript
+{
+  id: 'cs201-t1-reading-1',
+  title: 'Quicksort',
+  authors: ['C. A. R. Hoare'],
+  url: 'https://academic.oup.com/comjnl/article/5/1/10/395338',
+  type: 'paper',
+  year: 1962,
+  required: true,
+  description: 'The original quicksort paper. Remarkably readable and shows the elegance of the algorithm.',
+  estimatedMinutes: 25,
+}
+```
+
+**CS202 (Databases):**
+```typescript
+{
+  id: 'cs202-t1-reading-1',
+  title: 'A Relational Model of Data for Large Shared Data Banks',
+  authors: ['E. F. Codd'],
+  url: 'https://www.seas.upenn.edu/~zives/03f/cis550/codd.pdf',
+  type: 'paper',
+  year: 1970,
+  required: true,
+  description: 'The foundational paper that introduced the relational model. Essential reading for understanding why databases work the way they do.',
+  estimatedMinutes: 45,
+}
+```
+
+**CS204 (Operating Systems):**
+```typescript
+{
+  id: 'cs204-t2-reading-1',
+  title: 'The UNIX Time-Sharing System',
+  authors: ['Dennis M. Ritchie', 'Ken Thompson'],
+  url: 'https://dsf.berkeley.edu/cs262/unix.pdf',
+  type: 'paper',
+  year: 1974,
+  required: true,
+  description: 'The classic paper introducing Unix. Explains the philosophy behind many OS design decisions still relevant today.',
+  estimatedMinutes: 35,
+}
+```
+
+**Networking (with RFC):**
+```typescript
+{
+  id: 'cs205-t4-reading-1',
+  title: 'RFC 791: Internet Protocol',
+  url: 'https://www.rfc-editor.org/rfc/rfc791',
+  type: 'rfc',
+  year: 1981,
+  required: true,
+  description: 'The specification of IPv4. Understanding RFC format is valuable for any network engineer.',
+  estimatedMinutes: 60,
+}
+```
 
 ---
 
@@ -644,6 +821,238 @@ print(x % y)`,
 
 ---
 
+## Projects
+
+Projects are larger, multi-step assignments that assess practical application of course concepts. Unlike exercises (which test isolated skills), projects require students to integrate multiple topics and produce a cohesive deliverable.
+
+### When to Include Projects
+
+**Projects are REQUIRED for subjects where:**
+- Practical implementation skills are essential to learning outcomes
+- Real-world application cannot be assessed through exams alone
+- Integration of multiple concepts is a key learning goal
+
+**Subjects that NEED projects:**
+- **CS103** (OOP): 1-2 projects for design patterns, class hierarchies
+- **CS104** (Data Structures): 1 project for implementing a complete data structure or algorithm application
+- **CS105** (Systems Programming): 1-2 projects for memory management, file I/O, systems concepts
+- **CS201** (Algorithms): 1 project for algorithm implementation and analysis
+- **CS202** (Database Systems): 1-2 projects for database design and query optimization
+- **CS203** (Web Development): 2-3 projects for frontend, backend, and full-stack work
+
+**Subjects that should NOT have projects:**
+- **Math101, Math102, Math203**: Pure math subjects - use written exercises and exams
+- **CS102** (Computer Organization): Theory-heavy - use exams and calculation exercises
+
+### Project Interface
+
+```typescript
+interface Project {
+  id: string;                    // Unique ID: '[subject]-project-[N]'
+  subjectId: string;             // e.g., 'cs103'
+  title: string;                 // Display title
+  description: string;           // Full project description (markdown)
+  objectives: string[];          // Learning objectives
+  prerequisites?: string[];      // Topics/concepts students should know
+  estimatedHours?: number;       // Expected time to complete
+  milestones: ProjectMilestone[];
+  rubric: RubricItem[];
+  starterCode?: string;          // Optional starter code or template
+  resources?: ProjectResource[]; // Helpful links, documentation
+}
+
+interface ProjectMilestone {
+  id: string;                    // e.g., 'milestone-1'
+  title: string;                 // e.g., 'Basic Structure'
+  description: string;           // What to accomplish
+  deliverables: string[];        // What to submit/demonstrate
+  hints?: string[];              // Optional guidance
+}
+
+interface RubricItem {
+  criterion: string;             // What's being evaluated
+  points: number;                // Maximum points
+  levels: {                      // Performance levels
+    excellent: string;
+    good: string;
+    satisfactory: string;
+    needsImprovement: string;
+  };
+}
+
+interface ProjectResource {
+  title: string;
+  url?: string;
+  description: string;
+}
+```
+
+### Project File Structure
+
+```
+src/data/subjects/[subject]/
+├── projects.ts        # All projects for the subject
+└── ...
+
+src/content/subjects/[subject]/projects/
+├── project-1.md       # Detailed project description (optional, if description is long)
+└── project-2.md
+```
+
+### Project File Example
+
+```typescript
+// src/data/subjects/cs103/projects.ts
+import type { Project } from '@/core/types';
+
+export const cs103Projects: Project[] = [
+  {
+    id: 'cs103-project-1',
+    subjectId: 'cs103',
+    title: 'Library Management System',
+    description: `
+Design and implement a library management system using object-oriented principles.
+
+Your system should model:
+- Books (with ISBN, title, author, availability status)
+- Members (with ID, name, borrowed books, due dates)
+- Library (managing inventory, loans, returns)
+
+Focus on proper use of encapsulation, inheritance, and polymorphism.
+    `.trim(),
+    objectives: [
+      'Apply encapsulation to protect object state',
+      'Use inheritance to model related entities',
+      'Implement polymorphism for flexible behavior',
+      'Practice designing class hierarchies',
+    ],
+    prerequisites: [
+      'cs103-topic-1', // Classes and Objects
+      'cs103-topic-2', // Encapsulation
+      'cs103-topic-3', // Inheritance
+      'cs103-topic-4', // Polymorphism
+    ],
+    estimatedHours: 8,
+    milestones: [
+      {
+        id: 'milestone-1',
+        title: 'Core Classes',
+        description: 'Create the Book and Member classes with proper encapsulation.',
+        deliverables: [
+          'Book class with private attributes and public methods',
+          'Member class with borrowing functionality',
+          'Unit tests for both classes',
+        ],
+        hints: [
+          'Start with the attributes each class needs',
+          'Consider what operations each class should support',
+        ],
+      },
+      {
+        id: 'milestone-2',
+        title: 'Library Class',
+        description: 'Implement the Library class to manage books and members.',
+        deliverables: [
+          'Library class with inventory management',
+          'Borrow and return functionality',
+          'Search capabilities',
+        ],
+      },
+      {
+        id: 'milestone-3',
+        title: 'Extensions',
+        description: 'Add inheritance and polymorphism.',
+        deliverables: [
+          'Different book types (Textbook, Novel, Reference)',
+          'Different member types (Student, Faculty) with different limits',
+          'Demonstrate polymorphic behavior',
+        ],
+      },
+    ],
+    rubric: [
+      {
+        criterion: 'Encapsulation',
+        points: 25,
+        levels: {
+          excellent: 'All attributes private with appropriate getters/setters; validation in setters',
+          good: 'Most attributes encapsulated; some validation',
+          satisfactory: 'Basic encapsulation present',
+          needsImprovement: 'Public attributes or missing encapsulation',
+        },
+      },
+      {
+        criterion: 'Inheritance',
+        points: 25,
+        levels: {
+          excellent: 'Clear hierarchy with appropriate use of super(); no code duplication',
+          good: 'Working inheritance with minor issues',
+          satisfactory: 'Basic inheritance implemented',
+          needsImprovement: 'Missing or incorrect inheritance',
+        },
+      },
+      {
+        criterion: 'Polymorphism',
+        points: 25,
+        levels: {
+          excellent: 'Method overriding used effectively; code works with base class references',
+          good: 'Polymorphism present with minor issues',
+          satisfactory: 'Basic polymorphism attempted',
+          needsImprovement: 'No polymorphic behavior',
+        },
+      },
+      {
+        criterion: 'Code Quality',
+        points: 25,
+        levels: {
+          excellent: 'Clean, readable code; good naming; proper documentation',
+          good: 'Generally clean with minor issues',
+          satisfactory: 'Functional but messy',
+          needsImprovement: 'Difficult to read or understand',
+        },
+      },
+    ],
+    resources: [
+      {
+        title: 'Python OOP Documentation',
+        url: 'https://docs.python.org/3/tutorial/classes.html',
+        description: 'Official Python documentation on classes',
+      },
+    ],
+  },
+  // ... more projects
+];
+```
+
+### Project Guidelines
+
+**Number of projects per subject:**
+- Subjects with projects should have 1-3 projects total
+- Each project should integrate concepts from multiple topics
+- Space projects throughout the course (e.g., after Topic 3, after Topic 6)
+
+**Project scope:**
+- **Small project** (4-6 hours): Integrates 2-3 topics, 2 milestones
+- **Medium project** (6-10 hours): Integrates 3-4 topics, 3 milestones
+- **Large project** (10-15 hours): Comprehensive, 4+ milestones (use sparingly)
+
+**Milestone guidelines:**
+- Each project should have 2-4 milestones
+- Milestones should build on each other progressively
+- First milestone should be achievable quickly to build momentum
+- Final milestone should demonstrate mastery
+
+**Rubric guidelines:**
+- Include 4-6 rubric items
+- Each item should have clear performance levels
+- Total points should align with project weight in course
+
+### Project ID Conventions
+
+- Format: `[subject]-project-[N]`
+- Examples: `cs103-project-1`, `cs104-project-1`, `cs105-project-2`
+
+---
+
 ## Quality Checklist
 
 ### Subtopics
@@ -652,6 +1061,15 @@ print(x % y)`,
 - [ ] Subtopics are imported and defined in `topics.ts`
 - [ ] Subtopic slugs are URL-friendly (lowercase, hyphenated)
 - [ ] Each subtopic is ~1000 words
+
+### Readings (for intermediate/advanced subjects)
+- [ ] Determined whether subject benefits from readings (see "When to Include Readings")
+- [ ] 2-4 readings per topic (if applicable)
+- [ ] Mix of required and optional readings
+- [ ] All URLs point to freely accessible content
+- [ ] Each reading has a clear description
+- [ ] Reading IDs follow naming conventions
+- [ ] Estimated reading times are realistic (15-60 min)
 
 ### Exercises
 - [ ] Each topic has at least 16 exercises
@@ -677,6 +1095,15 @@ print(x % y)`,
 - [ ] Written questions have model answers for AI grading
 - [ ] Duration is specified
 
+### Projects (for applicable subjects)
+- [ ] Determined whether subject needs projects (see "When to Include Projects")
+- [ ] 1-3 projects total per subject (if applicable)
+- [ ] Each project has clear objectives and prerequisites
+- [ ] Each project has 2-4 milestones with deliverables
+- [ ] Each project has a rubric with 4-6 criteria
+- [ ] Projects integrate concepts from multiple topics
+- [ ] Project IDs follow naming conventions
+
 ### General
 - [ ] All TypeScript types are correct
 - [ ] IDs follow naming conventions and are stable
@@ -687,6 +1114,7 @@ print(x % y)`,
 ## Subject-Specific Notes
 
 **For Math subjects (Math101, Math102, Math203):**
+- **No projects** - use written exercises and exams instead
 - Exercises may be proof-based or calculation-based rather than coding
 - Use `WrittenExercise` type for non-coding problems
 - Quizzes should test definitions, theorem application, and problem-solving
@@ -694,21 +1122,40 @@ print(x % y)`,
 - Subtopics work well for breaking down complex proofs or theorem progressions
 
 **For CS102 (Computer Organization):**
+- **No projects** - theory-heavy subject better suited for exams
 - Exercises involve number conversions, Boolean expressions, circuit analysis
 - Exams should test binary arithmetic, data representation, Boolean algebra
 - Include "what is the output" style questions for assembly-like concepts
 
 **For CS103 (OOP):**
+- **1-2 projects required** - practical design pattern implementation
 - Balance conceptual questions with code examples
 - Include UML or design-related questions
-- Keep 1-2 projects for practical design pattern implementation
+- Projects should demonstrate class design, inheritance hierarchies, and polymorphism
 
 **For CS104 (Data Structures):**
+- **1 project required** - implementing a complete data structure application
 - Heavy emphasis on algorithm tracing and complexity analysis
 - Include "what does this code output" for recursive/iterative algorithms
-- Keep 1 implementation project
+- Project should integrate multiple data structures (e.g., graph traversal with priority queue)
 
-**For CS105 (C Programming):**
+**For CS105 (C Programming / Systems):**
+- **1-2 projects required** - practical systems programming
 - Focus on pointer arithmetic, memory management, common pitfalls
 - Include "what's wrong with this code" debugging questions
-- Keep 1-2 projects for practical systems programming
+- Projects should involve file I/O, memory allocation, or process management
+
+**For CS201 (Algorithms):**
+- **1 project required** - algorithm implementation and analysis
+- Focus on algorithm design, correctness proofs, and complexity analysis
+- Project should compare different algorithmic approaches to the same problem
+
+**For CS202 (Database Systems):**
+- **1-2 projects required** - database design and querying
+- Include schema design, normalization, and query optimization
+- Projects should involve designing a complete database for a realistic scenario
+
+**For CS203 (Web Development):**
+- **2-3 projects required** - this is a highly practical subject
+- Separate projects for frontend, backend, and full-stack work
+- Projects are the primary assessment method; exams are secondary
