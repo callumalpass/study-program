@@ -125,12 +125,12 @@ export async function runTests(
 ): Promise<TestResult[]> {
   const results: TestResult[] = [];
 
-  // Extract function name from the code (look for 'def function_name(')
-  const funcMatch = code.match(/def\s+(\w+)\s*\(/);
+  // Extract a top-level function name from the code (avoid matching class methods)
+  const funcMatch = code.match(/^def\s+(\w+)\s*\(/m);
   const funcName = funcMatch ? funcMatch[1] : null;
 
   // Extract function name from solution (should match)
-  const solutionFuncMatch = solution.match(/def\s+(\w+)\s*\(/);
+  const solutionFuncMatch = solution.match(/^def\s+(\w+)\s*\(/m);
   const solutionFuncName = solutionFuncMatch ? solutionFuncMatch[1] : null;
 
   for (const testCase of tests) {
@@ -143,9 +143,16 @@ export async function runTests(
         testCode = prepareFunctionTestCode(code, funcName, testCase.input);
         solutionTestCode = prepareFunctionTestCode(solution, solutionFuncName || funcName, testCase.input);
       } else if (testCase.input) {
-        // Input-based test: mock stdin
-        testCode = prepareStdinTestCode(code, testCase.input);
-        solutionTestCode = prepareStdinTestCode(solution, testCase.input);
+        // No top-level function detected.
+        // If code reads stdin, mock input(); otherwise append a test snippet.
+        const usesStdin = /\binput\s*\(/.test(code) || /\binput\s*\(/.test(solution);
+        if (usesStdin) {
+          testCode = prepareStdinTestCode(code, testCase.input);
+          solutionTestCode = prepareStdinTestCode(solution, testCase.input);
+        } else {
+          testCode = prepareSnippetTestCode(code, testCase.input);
+          solutionTestCode = prepareSnippetTestCode(solution, testCase.input);
+        }
       } else {
         // No input: just run the code
         testCode = code;
@@ -277,6 +284,14 @@ input = _mock_input
 `;
 
   return inputSetup + '\n' + code;
+}
+
+/**
+ * Prepare code for snippet-based testing.
+ * Appends a snippet that should print/raise/assert to validate behavior.
+ */
+function prepareSnippetTestCode(code: string, snippet: string): string {
+  return `${code}\n\n# === TEST SNIPPET ===\n${snippet}\n`;
 }
 
 /**
