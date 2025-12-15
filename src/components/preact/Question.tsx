@@ -1,9 +1,11 @@
 import { h } from 'preact';
-import { useEffect, useRef } from 'preact/hooks';
+import { useEffect, useRef, useState, useCallback } from 'preact/hooks';
 import type { QuizQuestion } from '@/core/types';
 import { renderMarkdown } from '@/components/markdown';
 import { escapeHtml } from '@/utils/html';
 import { Icons } from '@/components/icons';
+import { CompactCodeEditor } from './CodeEditor';
+import type { TestResult } from '@/components/code-runner';
 import Prism from 'prismjs';
 
 interface QuestionProps {
@@ -31,6 +33,7 @@ export function Question({
   isCorrect,
 }: QuestionProps) {
   const codeRef = useRef<HTMLElement>(null);
+  const [codingTestsPassed, setCodingTestsPassed] = useState<boolean | null>(null);
 
   // Apply syntax highlighting to code snippets
   useEffect(() => {
@@ -56,6 +59,19 @@ export function Question({
       onAnswerChange(question.id, value);
     }
   };
+
+  const handleCodeChange = useCallback((code: string) => {
+    if (!showFeedback) {
+      onAnswerChange(question.id, { code, passed: codingTestsPassed ?? false });
+    }
+  }, [question.id, showFeedback, codingTestsPassed, onAnswerChange]);
+
+  const handleTestResults = useCallback((results: TestResult[], allPassed: boolean) => {
+    setCodingTestsPassed(allPassed);
+    // Update answer with test results
+    const currentCode = typeof answer === 'object' ? answer.code : answer || question.starterCode || '';
+    onAnswerChange(question.id, { code: currentCode, passed: allPassed, results });
+  }, [question.id, question.starterCode, answer, onAnswerChange]);
 
   const renderAnswerInput = () => {
     switch (question.type) {
@@ -166,15 +182,49 @@ export function Question({
           </div>
         );
 
-      case 'coding':
-        // Coding questions need Monaco editor - for now, show a placeholder
+      case 'coding': {
+        const currentCode = typeof answer === 'object' ? answer.code : answer || question.starterCode || '';
+        const testsPassed = typeof answer === 'object' ? answer.passed : null;
+
         return (
-          <div class="answer-container">
-            <div class="form-hint">
-              Coding exercises require the full editor. This question type will be supported in a future update.
-            </div>
+          <div class="answer-container coding-container">
+            {showFeedback ? (
+              <div class="coding-feedback">
+                <div class={`coding-result ${testsPassed ? 'passed' : 'failed'}`}>
+                  <span
+                    class="result-icon"
+                    dangerouslySetInnerHTML={{ __html: testsPassed ? Icons.Check : Icons.Cross }}
+                  />
+                  <span class="result-text">
+                    {testsPassed ? 'All tests passed!' : 'Some tests failed'}
+                  </span>
+                </div>
+                <div class="submitted-code">
+                  <div class="code-header">Your submitted code:</div>
+                  <pre class="code-display"><code>{currentCode}</code></pre>
+                </div>
+                {question.solution && (
+                  <details class="solution-details">
+                    <summary>View Solution</summary>
+                    <pre class="solution-code"><code>{question.solution}</code></pre>
+                  </details>
+                )}
+              </div>
+            ) : (
+              <CompactCodeEditor
+                language={question.language || 'python'}
+                initialValue={currentCode}
+                height="250px"
+                testCases={question.testCases || []}
+                solution={question.solution}
+                hideTestResults={isExam}
+                onChange={handleCodeChange}
+                onTestResults={handleTestResults}
+              />
+            )}
           </div>
         );
+      }
 
       default:
         return null;
