@@ -1,10 +1,12 @@
 // Quiz page rendering
-import type { Subject, Quiz } from '@/core/types';
+import { h } from 'preact';
+import type { Subject, Quiz, QuizAttempt } from '@/core/types';
 import { progressStorage } from '@/core/storage';
 import { navigateToSubject } from '@/core/router';
 import { Icons } from '@/components/icons';
-import { renderQuiz } from '@/components/quiz';
 import { renderNotFound, formatDate } from './assessment-utils';
+import { render } from 'preact';
+import { Quiz as QuizComponent } from '@/components/preact';
 
 function getQuizStartTemplate(quiz: Quiz, attemptsCount: number): string {
   return `
@@ -138,12 +140,18 @@ function startQuizAttempt(container: HTMLElement, subjectId: string, quiz: Quiz)
   const quizContainer = container.querySelector('#quiz-container');
   if (!quizContainer) return;
 
-  // Clear start prompt and render interactive quiz
+  // Clear start prompt and render Preact quiz component
   quizContainer.innerHTML = '';
-  renderQuiz(quizContainer as HTMLElement, quiz, (attempt) => {
+
+  const handleComplete = (attempt: QuizAttempt) => {
     progressStorage.addQuizAttempt(subjectId, quiz.id, attempt);
     handleQuizCompletion(container, subjectId, quiz);
-  });
+  };
+
+  render(
+    <QuizComponent quiz={quiz} onComplete={handleComplete} />,
+    quizContainer
+  );
 }
 
 function handleQuizCompletion(container: HTMLElement, subjectId: string, quiz: Quiz): void {
