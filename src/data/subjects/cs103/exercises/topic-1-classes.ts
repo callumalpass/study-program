@@ -8,13 +8,59 @@ export const topic1Exercises: CodingExercise[] = [
     topicId: 'cs103-1',
     title: 'Create a BankAccount Class',
     difficulty: 2,
-    description: 'Create a BankAccount class with an account holder name and balance. Implement methods to deposit, withdraw, and check the balance. The withdraw method should not allow the balance to go negative.',
-    starterCode: 'class BankAccount:\n    def __init__(self, account_holder, initial_balance=0):\n        # Your code here\n        pass\n    \n    def deposit(self, amount):\n        pass\n    \n    def withdraw(self, amount):\n        pass\n    \n    def get_balance(self):\n        pass',
+    description:
+      'Create a `BankAccount` class with an account holder name and balance. Implement methods to deposit, withdraw, and get the balance. The `withdraw` method must not allow the balance to go negative.',
+    starterCode:
+      'class BankAccount:\n' +
+      '    def __init__(self, account_holder, initial_balance=0):\n' +
+      '        # TODO: store account_holder and balance\n' +
+      '        pass\n' +
+      '\n' +
+      '    def deposit(self, amount):\n' +
+      '        # TODO\n' +
+      '        pass\n' +
+      '\n' +
+      '    def withdraw(self, amount):\n' +
+      '        # TODO: only withdraw if amount <= balance\n' +
+      '        pass\n' +
+      '\n' +
+      '    def get_balance(self):\n' +
+      '        # TODO\n' +
+      '        pass\n',
+    solution:
+      'class BankAccount:\n' +
+      '    def __init__(self, account_holder, initial_balance=0):\n' +
+      '        self.account_holder = account_holder\n' +
+      '        self.balance = initial_balance\n' +
+      '\n' +
+      '    def deposit(self, amount):\n' +
+      '        self.balance += amount\n' +
+      '\n' +
+      '    def withdraw(self, amount):\n' +
+      '        if amount <= self.balance:\n' +
+      '            self.balance -= amount\n' +
+      '\n' +
+      '    def get_balance(self):\n' +
+      '        return self.balance\n',
     testCases: [
+      {
+        input: 'acc = BankAccount("A", 100)\nacc.deposit(50)\nacc.withdraw(30)\nprint(acc.get_balance())',
+        isHidden: false,
+        description: 'Deposit then withdraw',
+      },
+      {
+        input: 'acc = BankAccount("B", 10)\nacc.withdraw(999)\nprint(acc.get_balance())',
+        isHidden: true,
+        description: 'Cannot overdraw',
+      },
+      {
+        input: 'acc = BankAccount("C")\nprint(acc.account_holder, acc.get_balance())',
+        isHidden: false,
+        description: 'Default initial balance',
+      },
     ],
-    hints: ['Store account_holder and balance as instance variables in __init__', 'For withdraw, check if amount <= balance before subtracting'],
-    solution: 'class BankAccount:\n    def __init__(self, account_holder, initial_balance=0):\n        self.account_holder = account_holder\n        self.balance = initial_balance\n    \n    def deposit(self, amount):\n        self.balance += amount\n    \n    def withdraw(self, amount):\n        if amount <= self.balance:\n            self.balance -= amount\n    \n    def get_balance(self):\n        return self.balance',
-    language: 'python'
+    hints: ['Store values on `self` in `__init__`', 'Only subtract if `amount <= self.balance`', 'Return the balance from `get_balance`'],
+    language: 'python',
   },
   {
     id: 'cs103-t1-ex02',
@@ -22,13 +68,40 @@ export const topic1Exercises: CodingExercise[] = [
     topicId: 'cs103-1',
     title: 'Simple Counter Class',
     difficulty: 1,
-    description: 'Create a Counter class that starts at 0 and has methods to increment, decrement, and get the current count.',
-    starterCode: 'class Counter:\n    def __init__(self):\n        pass\n    \n    def increment(self):\n        pass\n    \n    def decrement(self):\n        pass\n    \n    def get_count(self):\n        pass\n\nc = Counter()\nc.increment()\nc.increment()\nprint(c.get_count())',
-    solution: 'class Counter:\n    def __init__(self):\n        self.count = 0\n    \n    def increment(self):\n        self.count += 1\n    \n    def decrement(self):\n        self.count -= 1\n    \n    def get_count(self):\n        return self.count\n\nc = Counter()\nc.increment()\nc.increment()\nprint(c.get_count())',
+    description: 'Create a `Counter` class that starts at 0 and has methods to increment, decrement, and get the current count.',
+    starterCode:
+      'class Counter:\n' +
+      '    def __init__(self):\n' +
+      '        pass\n' +
+      '\n' +
+      '    def increment(self):\n' +
+      '        pass\n' +
+      '\n' +
+      '    def decrement(self):\n' +
+      '        pass\n' +
+      '\n' +
+      '    def get_count(self):\n' +
+      '        pass\n',
+    solution:
+      'class Counter:\n' +
+      '    def __init__(self):\n' +
+      '        self._count = 0\n' +
+      '\n' +
+      '    def increment(self):\n' +
+      '        self._count += 1\n' +
+      '\n' +
+      '    def decrement(self):\n' +
+      '        self._count -= 1\n' +
+      '\n' +
+      '    def get_count(self):\n' +
+      '        return self._count\n',
     testCases: [
+      { input: 'c = Counter()\nc.increment(); c.increment(); c.decrement()\nprint(c.get_count())', isHidden: false, description: 'Basic increments/decrement' },
+      { input: 'c = Counter()\nprint(c.get_count())', isHidden: false, description: 'Starts at 0' },
+      { input: 'c = Counter()\nc.decrement(); c.decrement()\nprint(c.get_count())', isHidden: true, description: 'Can go negative' },
     ],
-    hints: ['Initialize count to 0 in __init__', 'Use self.count to access the instance variable'],
-    language: 'python'
+    hints: ['Store the count as an instance variable (e.g., `self._count`)', 'Update that variable in increment/decrement', 'Return it in `get_count`'],
+    language: 'python',
   },
   {
     id: 'cs103-t1-ex03',
@@ -36,13 +109,29 @@ export const topic1Exercises: CodingExercise[] = [
     topicId: 'cs103-1',
     title: 'Person Class',
     difficulty: 1,
-    description: 'Create a Person class with name and age attributes. Add a greet() method that returns "Hello, my name is [name]".',
-    starterCode: 'class Person:\n    def __init__(self, name, age):\n        pass\n    \n    def greet(self):\n        pass\n\np = Person("Alice", 30)\nprint(p.greet())',
-    solution: 'class Person:\n    def __init__(self, name, age):\n        self.name = name\n        self.age = age\n    \n    def greet(self):\n        return f"Hello, my name is {self.name}"\n\np = Person("Alice", 30)\nprint(p.greet())',
+    description: 'Create a `Person` class with `name` and `age` attributes. Add a `greet()` method that returns `"Hello, my name is [name]"`.',
+    starterCode:
+      'class Person:\n' +
+      '    def __init__(self, name, age):\n' +
+      '        pass\n' +
+      '\n' +
+      '    def greet(self):\n' +
+      '        pass\n',
+    solution:
+      'class Person:\n' +
+      '    def __init__(self, name, age):\n' +
+      '        self.name = name\n' +
+      '        self.age = age\n' +
+      '\n' +
+      '    def greet(self):\n' +
+      '        return f"Hello, my name is {self.name}"\n',
     testCases: [
+      { input: 'p = Person("Alice", 30)\nprint(p.greet())', isHidden: false, description: 'Greeting uses name' },
+      { input: 'p = Person("Bob", 0)\nprint(p.name, p.age)', isHidden: false, description: 'Stores attributes' },
+      { input: 'p = Person("Eve", 99)\nprint(p.greet())', isHidden: true, description: 'Works for any name' },
     ],
-    hints: ['Store both name and age in __init__', 'Use an f-string in greet()'],
-    language: 'python'
+    hints: ['Assign `name` and `age` to `self`', 'Use an f-string in `greet()`'],
+    language: 'python',
   },
   {
     id: 'cs103-t1-ex04',
@@ -50,69 +139,202 @@ export const topic1Exercises: CodingExercise[] = [
     topicId: 'cs103-1',
     title: 'Rectangle Class',
     difficulty: 2,
-    description: 'Create a Rectangle class with width and height. Add methods to calculate area and perimeter.',
-    starterCode: 'class Rectangle:\n    def __init__(self, width, height):\n        pass\n    \n    def area(self):\n        pass\n    \n    def perimeter(self):\n        pass\n\nr = Rectangle(5, 3)\nprint(r.area())\nprint(r.perimeter())',
-    solution: 'class Rectangle:\n    def __init__(self, width, height):\n        self.width = width\n        self.height = height\n    \n    def area(self):\n        return self.width * self.height\n    \n    def perimeter(self):\n        return 2 * (self.width + self.height)\n\nr = Rectangle(5, 3)\nprint(r.area())\nprint(r.perimeter())',
+    description: 'Create a `Rectangle` class with `width` and `height`. Add methods to calculate `area()` and `perimeter()`.',
+    starterCode:
+      'class Rectangle:\n' +
+      '    def __init__(self, width, height):\n' +
+      '        pass\n' +
+      '\n' +
+      '    def area(self):\n' +
+      '        pass\n' +
+      '\n' +
+      '    def perimeter(self):\n' +
+      '        pass\n',
+    solution:
+      'class Rectangle:\n' +
+      '    def __init__(self, width, height):\n' +
+      '        self.width = width\n' +
+      '        self.height = height\n' +
+      '\n' +
+      '    def area(self):\n' +
+      '        return self.width * self.height\n' +
+      '\n' +
+      '    def perimeter(self):\n' +
+      '        return 2 * (self.width + self.height)\n',
     testCases: [
+      { input: 'r = Rectangle(5, 3)\nprint(r.area(), r.perimeter())', isHidden: false, description: 'Area and perimeter' },
+      { input: 'r = Rectangle(1, 1)\nprint(r.area(), r.perimeter())', isHidden: true, description: 'Square edge case' },
+      { input: 'r = Rectangle(10, 0)\nprint(r.area(), r.perimeter())', isHidden: true, description: 'Zero height' },
     ],
-    hints: ['Area = width * height', 'Perimeter = 2 * (width + height)'],
-    language: 'python'
+    hints: ['Area = width * height', 'Perimeter = 2*(width+height)'],
+    language: 'python',
   },
   {
     id: 'cs103-t1-ex05',
     subjectId: 'cs103',
     topicId: 'cs103-1',
-    title: 'Student Class',
+    title: 'Student Grade Average',
     difficulty: 2,
-    description: 'Create a Student class with name and a list of grades. Add methods to add a grade and calculate the average.',
-    starterCode: 'class Student:\n    def __init__(self, name):\n        pass\n    \n    def add_grade(self, grade):\n        pass\n    \n    def get_average(self):\n        pass\n\ns = Student("Alice")\ns.add_grade(90)\ns.add_grade(80)\nprint(s.get_average())',
-    solution: 'class Student:\n    def __init__(self, name):\n        self.name = name\n        self.grades = []\n    \n    def add_grade(self, grade):\n        self.grades.append(grade)\n    \n    def get_average(self):\n        if not self.grades:\n            return 0\n        return sum(self.grades) / len(self.grades)\n\ns = Student("Alice")\ns.add_grade(90)\ns.add_grade(80)\nprint(s.get_average())',
+    description: 'Create a `Student` class with `name` and a list of grades. Add methods to `add_grade(grade)` and `get_average()`.',
+    starterCode:
+      'class Student:\n' +
+      '    def __init__(self, name):\n' +
+      '        pass\n' +
+      '\n' +
+      '    def add_grade(self, grade):\n' +
+      '        pass\n' +
+      '\n' +
+      '    def get_average(self):\n' +
+      '        pass\n',
+    solution:
+      'class Student:\n' +
+      '    def __init__(self, name):\n' +
+      '        self.name = name\n' +
+      '        self.grades = []\n' +
+      '\n' +
+      '    def add_grade(self, grade):\n' +
+      '        self.grades.append(grade)\n' +
+      '\n' +
+      '    def get_average(self):\n' +
+      '        if not self.grades:\n' +
+      '            return 0\n' +
+      '        return sum(self.grades) / len(self.grades)\n',
     testCases: [
+      { input: 's = Student("A")\ns.add_grade(90); s.add_grade(80)\nprint(s.get_average())', isHidden: false, description: 'Average of two grades' },
+      { input: 's = Student("B")\nprint(s.get_average())', isHidden: true, description: 'No grades returns 0' },
+      { input: 's = Student("C")\ns.add_grade(100)\nprint(s.get_average())', isHidden: false, description: 'Single grade' },
     ],
-    hints: ['Initialize grades as empty list', 'Handle empty list case in get_average'],
-    language: 'python'
+    hints: ['Store grades in a list', 'Return 0 if no grades', 'Average = sum / count'],
+    language: 'python',
   },
   {
     id: 'cs103-t1-ex06',
     subjectId: 'cs103',
     topicId: 'cs103-1',
-    title: 'Book Class',
-    difficulty: 3,
-    description: 'Create a Book class with title, author, and pages. Add a __str__ method and a method to check if the book is long (>300 pages).',
-    starterCode: 'class Book:\n    def __init__(self, title, author, pages):\n        pass\n    \n    def __str__(self):\n        pass\n    \n    def is_long(self):\n        pass\n\nb = Book("Python Guide", "Author", 450)\nprint(b)\nprint(b.is_long())',
-    solution: 'class Book:\n    def __init__(self, title, author, pages):\n        self.title = title\n        self.author = author\n        self.pages = pages\n    \n    def __str__(self):\n        return f"{self.title} by {self.author}"\n    \n    def is_long(self):\n        return self.pages > 300\n\nb = Book("Python Guide", "Author", 450)\nprint(b)\nprint(b.is_long())',
+    title: 'TodoList Class',
+    difficulty: 2,
+    description: 'Create a `TodoList` class that can add tasks, mark tasks as done, and list pending tasks.',
+    starterCode:
+      'class TodoList:\n' +
+      '    def __init__(self):\n' +
+      '        pass\n' +
+      '\n' +
+      '    def add(self, task):\n' +
+      '        pass\n' +
+      '\n' +
+      '    def done(self, task):\n' +
+      '        pass\n' +
+      '\n' +
+      '    def pending(self):\n' +
+      '        pass\n',
+    solution:
+      'class TodoList:\n' +
+      '    def __init__(self):\n' +
+      '        self._tasks = []\n' +
+      '        self._done = set()\n' +
+      '\n' +
+      '    def add(self, task):\n' +
+      '        self._tasks.append(task)\n' +
+      '\n' +
+      '    def done(self, task):\n' +
+      '        self._done.add(task)\n' +
+      '\n' +
+      '    def pending(self):\n' +
+      '        return [t for t in self._tasks if t not in self._done]\n',
     testCases: [
+      { input: 't = TodoList(); t.add("a"); t.add("b"); t.done("a"); print(t.pending())', isHidden: false, description: 'Pending excludes done task' },
+      { input: 't = TodoList(); t.add("x"); print(t.pending())', isHidden: true, description: 'Single pending task' },
+      { input: 't = TodoList(); print(t.pending())', isHidden: true, description: 'Empty list' },
     ],
-    hints: ['__str__ is called when you print() or str() an object', 'is_long() should return a boolean'],
-    language: 'python'
+    hints: ['Store tasks in a list', 'Track completed tasks (e.g., set)', 'Return only tasks not marked done'],
+    language: 'python',
   },
   {
     id: 'cs103-t1-ex07',
     subjectId: 'cs103',
     topicId: 'cs103-1',
-    title: 'Stack Class',
+    title: 'Shopping Cart Total',
     difficulty: 3,
-    description: 'Create a Stack class that implements push, pop, peek (view top without removing), and is_empty methods.',
-    starterCode: 'class Stack:\n    def __init__(self):\n        pass\n    \n    def push(self, item):\n        pass\n    \n    def pop(self):\n        pass\n    \n    def peek(self):\n        pass\n    \n    def is_empty(self):\n        pass\n\ns = Stack()\ns.push(1)\ns.push(2)\nprint(s.pop())\nprint(s.peek())',
-    solution: 'class Stack:\n    def __init__(self):\n        self.items = []\n    \n    def push(self, item):\n        self.items.append(item)\n    \n    def pop(self):\n        if self.items:\n            return self.items.pop()\n        return None\n    \n    def peek(self):\n        if self.items:\n            return self.items[-1]\n        return None\n    \n    def is_empty(self):\n        return len(self.items) == 0\n\ns = Stack()\ns.push(1)\ns.push(2)\nprint(s.pop())\nprint(s.peek())',
+    description: 'Create `Item` and `ShoppingCart` classes. Items have `name` and `price`. The cart can add/remove items and compute the total price.',
+    starterCode:
+      'class Item:\n' +
+      '    def __init__(self, name, price):\n' +
+      '        pass\n' +
+      '\n' +
+      'class ShoppingCart:\n' +
+      '    def __init__(self):\n' +
+      '        pass\n' +
+      '\n' +
+      '    def add_item(self, item):\n' +
+      '        pass\n' +
+      '\n' +
+      '    def remove_by_name(self, name):\n' +
+      '        pass\n' +
+      '\n' +
+      '    def get_total(self):\n' +
+      '        pass\n',
+    solution:
+      'class Item:\n' +
+      '    def __init__(self, name, price):\n' +
+      '        self.name = name\n' +
+      '        self.price = price\n' +
+      '\n' +
+      'class ShoppingCart:\n' +
+      '    def __init__(self):\n' +
+      '        self.items = []\n' +
+      '\n' +
+      '    def add_item(self, item):\n' +
+      '        self.items.append(item)\n' +
+      '\n' +
+      '    def remove_by_name(self, name):\n' +
+      '        self.items = [i for i in self.items if i.name != name]\n' +
+      '\n' +
+      '    def get_total(self):\n' +
+      '        return sum(i.price for i in self.items)\n',
     testCases: [
+      {
+        input: 'cart = ShoppingCart(); cart.add_item(Item("Apple", 1.5)); cart.add_item(Item("Bread", 2.0)); print(cart.get_total())',
+        isHidden: false,
+        description: 'Sum of two items',
+      },
+      { input: 'cart = ShoppingCart(); cart.add_item(Item("A", 1)); cart.add_item(Item("A", 2)); cart.remove_by_name("A"); print(cart.get_total())', isHidden: true, description: 'Remove all matching names' },
+      { input: 'cart = ShoppingCart(); print(cart.get_total())', isHidden: true, description: 'Empty cart totals 0' },
     ],
-    hints: ['Use a list internally to store items', 'Pop and peek should handle empty stack'],
-    language: 'python'
+    hints: ['Store items in a list', 'Use list comprehension to remove by name', 'Use sum() over item prices'],
+    language: 'python',
   },
   {
     id: 'cs103-t1-ex08',
     subjectId: 'cs103',
     topicId: 'cs103-1',
-    title: 'Shopping Cart',
-    difficulty: 4,
-    description: 'Create Item and ShoppingCart classes. Item has name and price. Cart can add items, remove items, and calculate total.',
-    starterCode: 'class Item:\n    def __init__(self, name, price):\n        pass\n\nclass ShoppingCart:\n    def __init__(self):\n        pass\n    \n    def add_item(self, item):\n        pass\n    \n    def remove_item(self, name):\n        pass\n    \n    def get_total(self):\n        pass\n\ncart = ShoppingCart()\ncart.add_item(Item("Apple", 1.50))\ncart.add_item(Item("Bread", 2.00))\nprint(cart.get_total())',
-    solution: 'class Item:\n    def __init__(self, name, price):\n        self.name = name\n        self.price = price\n\nclass ShoppingCart:\n    def __init__(self):\n        self.items = []\n    \n    def add_item(self, item):\n        self.items.append(item)\n    \n    def remove_item(self, name):\n        self.items = [i for i in self.items if i.name != name]\n    \n    def get_total(self):\n        return sum(item.price for item in self.items)\n\ncart = ShoppingCart()\ncart.add_item(Item("Apple", 1.50))\ncart.add_item(Item("Bread", 2.00))\nprint(cart.get_total())',
+    title: 'Point Equality',
+    difficulty: 3,
+    description: 'Create a `Point` class with `x` and `y`. Implement `__eq__` so two points compare equal when their coordinates match.',
+    starterCode:
+      'class Point:\n' +
+      '    def __init__(self, x, y):\n' +
+      '        pass\n' +
+      '\n' +
+      '    def __eq__(self, other):\n' +
+      '        # TODO\n' +
+      '        pass\n',
+    solution:
+      'class Point:\n' +
+      '    def __init__(self, x, y):\n' +
+      '        self.x = x\n' +
+      '        self.y = y\n' +
+      '\n' +
+      '    def __eq__(self, other):\n' +
+      '        if not isinstance(other, Point):\n' +
+      '            return False\n' +
+      '        return self.x == other.x and self.y == other.y\n',
     testCases: [
+      { input: 'print(Point(1, 2) == Point(1, 2))', isHidden: false, description: 'Equal points' },
+      { input: 'print(Point(1, 2) == Point(2, 1))', isHidden: false, description: 'Different points' },
+      { input: 'print(Point(1, 2) == (1, 2))', isHidden: true, description: 'Different type' },
     ],
-    hints: ['Store items as a list in ShoppingCart', 'Use list comprehension to filter when removing'],
-    language: 'python'
+    hints: ['Compare `x` and `y`', 'Return False when `other` is not a Point'],
+    language: 'python',
   },
   {
     id: 'cs103-t1-ex09',
@@ -120,13 +342,36 @@ export const topic1Exercises: CodingExercise[] = [
     topicId: 'cs103-1',
     title: 'Class Variables vs Instance Variables',
     difficulty: 3,
-    description: 'Create a Dog class with a class variable species shared by all dogs, an instance counter, and instance variables name and age.',
-    starterCode: 'class Dog:\n    species = "Canis familiaris"\n    count = 0\n    \n    def __init__(self, name, age):\n        pass\n    \n    def describe(self):\n        pass\n\nd1 = Dog("Buddy", 3)\nd2 = Dog("Max", 5)\nprint(Dog.count)\nprint(d1.species)',
-    solution: 'class Dog:\n    species = "Canis familiaris"\n    count = 0\n    \n    def __init__(self, name, age):\n        self.name = name\n        self.age = age\n        Dog.count += 1\n    \n    def describe(self):\n        return f"{self.name} is {self.age} years old"\n\nd1 = Dog("Buddy", 3)\nd2 = Dog("Max", 5)\nprint(Dog.count)\nprint(d1.species)',
+    description: 'Create a `Dog` class with a class variable `species` and a class variable `count` tracking how many Dogs have been created.',
+    starterCode:
+      'class Dog:\n' +
+      '    species = "Canis familiaris"\n' +
+      '    count = 0\n' +
+      '\n' +
+      '    def __init__(self, name, age):\n' +
+      '        pass\n' +
+      '\n' +
+      '    def describe(self):\n' +
+      '        pass\n',
+    solution:
+      'class Dog:\n' +
+      '    species = "Canis familiaris"\n' +
+      '    count = 0\n' +
+      '\n' +
+      '    def __init__(self, name, age):\n' +
+      '        self.name = name\n' +
+      '        self.age = age\n' +
+      '        Dog.count += 1\n' +
+      '\n' +
+      '    def describe(self):\n' +
+      '        return f"{self.name} is {self.age} years old"\n',
     testCases: [
+      { input: 'Dog.count = 0\nDog("A", 1); Dog("B", 2)\nprint(Dog.count)', isHidden: false, description: 'Count increments per instance' },
+      { input: 'd = Dog("C", 3)\nprint(d.species)', isHidden: false, description: 'Species is shared' },
+      { input: 'Dog.count = 0\nDog("X", 0)\nprint(Dog.count)', isHidden: true, description: 'Single instance count' },
     ],
-    hints: ['Increment Dog.count in __init__, not self.count', 'Class variables are accessed via ClassName.variable or self.variable'],
-    language: 'python'
+    hints: ['Increment `Dog.count` in `__init__`', 'Class variables belong to the class, not the instance'],
+    language: 'python',
   },
   {
     id: 'cs103-t1-ex10',
@@ -134,13 +379,219 @@ export const topic1Exercises: CodingExercise[] = [
     topicId: 'cs103-1',
     title: 'Library Book System',
     difficulty: 4,
-    description: 'Create Book and Library classes. Library can add books, find books by title, and list all books. Books track if they are checked out.',
-    starterCode: 'class Book:\n    def __init__(self, title, author):\n        pass\n    \n    def check_out(self):\n        pass\n    \n    def return_book(self):\n        pass\n\nclass Library:\n    def __init__(self):\n        pass\n    \n    def add_book(self, book):\n        pass\n    \n    def find_by_title(self, title):\n        pass\n    \n    def list_available(self):\n        pass\n\nlib = Library()\nlib.add_book(Book("Python 101", "Author A"))\nlib.add_book(Book("Java Guide", "Author B"))\nprint(len(lib.list_available()))',
-    solution: 'class Book:\n    def __init__(self, title, author):\n        self.title = title\n        self.author = author\n        self.is_checked_out = False\n    \n    def check_out(self):\n        if not self.is_checked_out:\n            self.is_checked_out = True\n            return True\n        return False\n    \n    def return_book(self):\n        self.is_checked_out = False\n\nclass Library:\n    def __init__(self):\n        self.books = []\n    \n    def add_book(self, book):\n        self.books.append(book)\n    \n    def find_by_title(self, title):\n        for book in self.books:\n            if book.title == title:\n                return book\n        return None\n    \n    def list_available(self):\n        return [b for b in self.books if not b.is_checked_out]\n\nlib = Library()\nlib.add_book(Book("Python 101", "Author A"))\nlib.add_book(Book("Java Guide", "Author B"))\nprint(len(lib.list_available()))',
+    description: 'Create `Book` and `Library` classes. The library can add books, find a book by title, and list available books. Books track whether they are checked out.',
+    starterCode:
+      'class Book:\n' +
+      '    def __init__(self, title, author):\n' +
+      '        pass\n' +
+      '\n' +
+      '    def check_out(self):\n' +
+      '        pass\n' +
+      '\n' +
+      '    def return_book(self):\n' +
+      '        pass\n' +
+      '\n' +
+      'class Library:\n' +
+      '    def __init__(self):\n' +
+      '        pass\n' +
+      '\n' +
+      '    def add_book(self, book):\n' +
+      '        pass\n' +
+      '\n' +
+      '    def find_by_title(self, title):\n' +
+      '        pass\n' +
+      '\n' +
+      '    def list_available(self):\n' +
+      '        pass\n',
+    solution:
+      'class Book:\n' +
+      '    def __init__(self, title, author):\n' +
+      '        self.title = title\n' +
+      '        self.author = author\n' +
+      '        self.is_checked_out = False\n' +
+      '\n' +
+      '    def check_out(self):\n' +
+      '        if self.is_checked_out:\n' +
+      '            return False\n' +
+      '        self.is_checked_out = True\n' +
+      '        return True\n' +
+      '\n' +
+      '    def return_book(self):\n' +
+      '        self.is_checked_out = False\n' +
+      '\n' +
+      'class Library:\n' +
+      '    def __init__(self):\n' +
+      '        self.books = []\n' +
+      '\n' +
+      '    def add_book(self, book):\n' +
+      '        self.books.append(book)\n' +
+      '\n' +
+      '    def find_by_title(self, title):\n' +
+      '        for b in self.books:\n' +
+      '            if b.title == title:\n' +
+      '                return b\n' +
+      '        return None\n' +
+      '\n' +
+      '    def list_available(self):\n' +
+      '        return [b for b in self.books if not b.is_checked_out]\n',
     testCases: [
+      {
+        input: 'lib = Library(); lib.add_book(Book("A", "X")); lib.add_book(Book("B", "Y"))\nprint(len(lib.list_available()))',
+        isHidden: false,
+        description: 'All books initially available',
+      },
+      {
+        input: 'lib = Library(); b = Book("A", "X"); lib.add_book(b); b.check_out(); print(len(lib.list_available()))',
+        isHidden: false,
+        description: 'Checked-out book not listed',
+      },
+      { input: 'lib = Library(); lib.add_book(Book("A", "X")); print(lib.find_by_title("Z"))', isHidden: true, description: 'Not found returns None' },
     ],
-    hints: ['Track is_checked_out state in Book', 'list_available filters by is_checked_out'],
-    language: 'python'
+    hints: ['Track `is_checked_out` on each book', 'Library stores books in a list', 'Filter available books by state'],
+    language: 'python',
+  },
+  {
+    id: 'cs103-t1-ex11',
+    subjectId: 'cs103',
+    topicId: 'cs103-1',
+    title: 'Circle with Computed Properties',
+    difficulty: 3,
+    description: 'Create a `Circle` class with `radius`. Provide computed properties `diameter` and `area` (use `pi = 3.14159`).',
+    starterCode:
+      'class Circle:\n' +
+      '    def __init__(self, radius):\n' +
+      '        pass\n' +
+      '\n' +
+      '    @property\n' +
+      '    def diameter(self):\n' +
+      '        pass\n' +
+      '\n' +
+      '    @property\n' +
+      '    def area(self):\n' +
+      '        pass\n',
+    solution:
+      'class Circle:\n' +
+      '    def __init__(self, radius):\n' +
+      '        self.radius = radius\n' +
+      '\n' +
+      '    @property\n' +
+      '    def diameter(self):\n' +
+      '        return self.radius * 2\n' +
+      '\n' +
+      '    @property\n' +
+      '    def area(self):\n' +
+      '        pi = 3.14159\n' +
+      '        return pi * (self.radius ** 2)\n',
+    testCases: [
+      { input: 'c = Circle(5)\nprint(c.diameter)', isHidden: false, description: 'Diameter computed' },
+      { input: 'c = Circle(2)\nprint(round(c.area, 5))', isHidden: false, description: 'Area computed' },
+      { input: 'c = Circle(0)\nprint(c.area)', isHidden: true, description: 'Zero radius' },
+    ],
+    hints: ['Use `@property` for computed attributes', 'diameter = 2*radius', 'area = pi * radius^2'],
+    language: 'python',
+  },
+  {
+    id: 'cs103-t1-ex12',
+    subjectId: 'cs103',
+    topicId: 'cs103-1',
+    title: 'Alternate Constructor with @classmethod',
+    difficulty: 4,
+    description:
+      'Create a `Time` class storing `hours` and `minutes`. Add a `@classmethod from_minutes(total)` that converts total minutes into a `Time` instance.',
+    starterCode:
+      'class Time:\n' +
+      '    def __init__(self, hours, minutes):\n' +
+      '        pass\n' +
+      '\n' +
+      '    @classmethod\n' +
+      '    def from_minutes(cls, total_minutes):\n' +
+      '        # TODO\n' +
+      '        pass\n',
+    solution:
+      'class Time:\n' +
+      '    def __init__(self, hours, minutes):\n' +
+      '        self.hours = hours\n' +
+      '        self.minutes = minutes\n' +
+      '\n' +
+      '    @classmethod\n' +
+      '    def from_minutes(cls, total_minutes):\n' +
+      '        hours = total_minutes // 60\n' +
+      '        minutes = total_minutes % 60\n' +
+      '        return cls(hours, minutes)\n',
+    testCases: [
+      { input: 't = Time.from_minutes(130)\nprint(t.hours, t.minutes)', isHidden: false, description: '130 minutes => 2h10m' },
+      { input: 't = Time.from_minutes(59)\nprint(t.hours, t.minutes)', isHidden: true, description: 'Less than an hour' },
+      { input: 't = Time.from_minutes(0)\nprint(t.hours, t.minutes)', isHidden: true, description: 'Zero minutes' },
+    ],
+    hints: ['Use integer division `//` for hours', 'Use modulo `%` for remaining minutes', 'Return `cls(...)` from classmethod'],
+    language: 'python',
+  },
+  {
+    id: 'cs103-t1-ex13',
+    subjectId: 'cs103',
+    topicId: 'cs103-1',
+    title: 'Vector Addition (__add__)',
+    difficulty: 4,
+    description: 'Create a `Vector2D` class with `x` and `y`. Implement `__add__` to add vectors and `__repr__` to show `Vector2D(x, y)`.',
+    starterCode:
+      'class Vector2D:\n' +
+      '    def __init__(self, x, y):\n' +
+      '        pass\n' +
+      '\n' +
+      '    def __add__(self, other):\n' +
+      '        pass\n' +
+      '\n' +
+      '    def __repr__(self):\n' +
+      '        pass\n',
+    solution:
+      'class Vector2D:\n' +
+      '    def __init__(self, x, y):\n' +
+      '        self.x = x\n' +
+      '        self.y = y\n' +
+      '\n' +
+      '    def __add__(self, other):\n' +
+      '        return Vector2D(self.x + other.x, self.y + other.y)\n' +
+      '\n' +
+      '    def __repr__(self):\n' +
+      '        return f"Vector2D({self.x}, {self.y})"\n',
+    testCases: [
+      { input: 'print(Vector2D(1, 2) + Vector2D(3, 4))', isHidden: false, description: 'Adds components' },
+      { input: 'v = Vector2D(-1, 5) + Vector2D(1, -2)\nprint(v)', isHidden: true, description: 'Works with negatives' },
+      { input: 'print(repr(Vector2D(0, 0)))', isHidden: true, description: 'repr format' },
+    ],
+    hints: ['Return a new Vector2D from `__add__`', 'Use `other.x` and `other.y`', 'Make `__repr__` unambiguous'],
+    language: 'python',
+  },
+  {
+    id: 'cs103-t1-ex14',
+    subjectId: 'cs103',
+    topicId: 'cs103-1',
+    title: 'Restrict Attributes with __slots__',
+    difficulty: 5,
+    description:
+      'Create a `User` class using `__slots__ = ("username",)` so instances only allow a `username` attribute. Attempting to set any other attribute should raise an AttributeError.',
+    starterCode:
+      'class User:\n' +
+      '    # TODO: add __slots__\n' +
+      '    def __init__(self, username):\n' +
+      '        pass\n',
+    solution:
+      'class User:\n' +
+      '    __slots__ = ("username",)\n' +
+      '\n' +
+      '    def __init__(self, username):\n' +
+      '        self.username = username\n',
+    testCases: [
+      { input: 'u = User("alice")\nprint(u.username)', isHidden: false, description: 'Username stored' },
+      {
+        input: 'u = User("bob")\ntry:\n    u.age = 10\n    print("no error")\nexcept AttributeError:\n    print("attrerror")',
+        isHidden: false,
+        description: 'Setting unknown attribute fails',
+      },
+      { input: 'u = User("x")\nprint(hasattr(u, "__dict__"))', isHidden: true, description: 'No instance dict with slots' },
+    ],
+    hints: ['Add `__slots__ = ("username",)` at class level', 'Slots restrict which attributes can be assigned'],
+    language: 'python',
   },
   {
     id: 'cs103-t1-drill-1',
@@ -148,13 +599,29 @@ export const topic1Exercises: CodingExercise[] = [
     topicId: 'cs103-1',
     title: 'Basic Class Definition',
     difficulty: 1,
-    description: 'Create a simple Car class with make and model attributes. Add a describe() method that returns "Make: X, Model: Y".',
-    starterCode: 'class Car:\n    def __init__(self, make, model):\n        pass\n    \n    def describe(self):\n        pass\n\nc = Car("Toyota", "Camry")\nprint(c.describe())',
-    solution: 'class Car:\n    def __init__(self, make, model):\n        self.make = make\n        self.model = model\n    \n    def describe(self):\n        return f"Make: {self.make}, Model: {self.model}"\n\nc = Car("Toyota", "Camry")\nprint(c.describe())',
+    description: 'Create a simple `Car` class with `make` and `model` attributes. Add a `describe()` method that returns `"Make: X, Model: Y"`.',
+    starterCode:
+      'class Car:\n' +
+      '    def __init__(self, make, model):\n' +
+      '        pass\n' +
+      '\n' +
+      '    def describe(self):\n' +
+      '        pass\n',
+    solution:
+      'class Car:\n' +
+      '    def __init__(self, make, model):\n' +
+      '        self.make = make\n' +
+      '        self.model = model\n' +
+      '\n' +
+      '    def describe(self):\n' +
+      '        return f"Make: {self.make}, Model: {self.model}"\n',
     testCases: [
+      { input: 'print(Car("Toyota", "Camry").describe())', isHidden: false, description: 'Formats string' },
+      { input: 'c = Car("A", "B")\nprint(c.make, c.model)', isHidden: true, description: 'Stores attributes' },
+      { input: 'print(Car("", "").describe())', isHidden: true, description: 'Empty strings' },
     ],
-    hints: ['Use self.attribute to store values', 'Use f-string for formatting'],
-    language: 'python'
+    hints: ['Store values on `self`', 'Use an f-string for formatting'],
+    language: 'python',
   },
   {
     id: 'cs103-t1-drill-2',
@@ -162,12 +629,29 @@ export const topic1Exercises: CodingExercise[] = [
     topicId: 'cs103-1',
     title: '__str__ Method',
     difficulty: 1,
-    description: 'Create a Point class with x and y. Implement __str__ to return "(x, y)" format.',
-    starterCode: 'class Point:\n    def __init__(self, x, y):\n        pass\n    \n    def __str__(self):\n        pass\n\np = Point(3, 4)\nprint(p)',
-    solution: 'class Point:\n    def __init__(self, x, y):\n        self.x = x\n        self.y = y\n    \n    def __str__(self):\n        return f"({self.x}, {self.y})"\n\np = Point(3, 4)\nprint(p)',
+    description: 'Create a `Point` class with `x` and `y`. Implement `__str__` to return `"(x, y)"` format.',
+    starterCode:
+      'class Point:\n' +
+      '    def __init__(self, x, y):\n' +
+      '        pass\n' +
+      '\n' +
+      '    def __str__(self):\n' +
+      '        pass\n',
+    solution:
+      'class Point:\n' +
+      '    def __init__(self, x, y):\n' +
+      '        self.x = x\n' +
+      '        self.y = y\n' +
+      '\n' +
+      '    def __str__(self):\n' +
+      '        return f"({self.x}, {self.y})"\n',
     testCases: [
+      { input: 'p = Point(3, 4)\nprint(str(p))', isHidden: false, description: 'Uses __str__' },
+      { input: 'p = Point(0, 0)\nprint(p)', isHidden: true, description: 'Print calls __str__' },
+      { input: 'p = Point(-1, 2)\nprint(p)', isHidden: true, description: 'Negative values' },
     ],
-    hints: ['__str__ is called by print() and str()', 'Return a formatted string'],
-    language: 'python'
-  }
+    hints: ['Return a formatted string', '`print(obj)` uses `__str__` if available'],
+    language: 'python',
+  },
 ];
+

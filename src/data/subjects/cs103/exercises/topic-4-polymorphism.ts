@@ -6,168 +6,611 @@ export const topic4Exercises: CodingExercise[] = [
     id: 'cs103-ex-4',
     subjectId: 'cs103',
     topicId: 'cs103-4',
-    title: 'Implement Polymorphism with Shapes',
+    title: 'Duck-Typed Renderer',
     difficulty: 2,
-    description: 'Create a Shape base class with an area() method. Create Circle and Rectangle subclasses that implement area() differently.',
-    starterCode: 'import math\n\nclass Shape:\n    def area(self):\n        pass\n\nclass Circle(Shape):\n    def __init__(self, radius):\n        pass\n    \n    def area(self):\n        pass\n\nclass Rectangle(Shape):\n    def __init__(self, width, height):\n        pass\n    \n    def area(self):\n        pass',
+    description:
+      'Create two classes `Text` and `Html` that both implement a `render()` method. Write a `Renderer` class with method `render_all(items)` that returns a list of each item’s rendered string.',
+    starterCode:
+      'class Text:\n' +
+      '    def __init__(self, value):\n' +
+      '        pass\n' +
+      '    def render(self):\n' +
+      '        pass\n' +
+      '\n' +
+      'class Html:\n' +
+      '    def __init__(self, value):\n' +
+      '        pass\n' +
+      '    def render(self):\n' +
+      '        pass\n' +
+      '\n' +
+      'class Renderer:\n' +
+      '    def render_all(self, items):\n' +
+      '        pass\n',
+    solution:
+      'class Text:\n' +
+      '    def __init__(self, value):\n' +
+      '        self.value = value\n' +
+      '    def render(self):\n' +
+      '        return self.value\n' +
+      '\n' +
+      'class Html:\n' +
+      '    def __init__(self, value):\n' +
+      '        self.value = value\n' +
+      '    def render(self):\n' +
+      '        return f"<p>{self.value}</p>"\n' +
+      '\n' +
+      'class Renderer:\n' +
+      '    def render_all(self, items):\n' +
+      '        return [item.render() for item in items]\n',
     testCases: [
+      { input: 'r = Renderer()\nprint(r.render_all([Text("a"), Html("b")]))', isHidden: false, description: 'Works across types' },
+      { input: 'r = Renderer()\nprint(r.render_all([]))', isHidden: true, description: 'Empty list' },
+      { input: 'r = Renderer()\nprint(r.render_all([Html("x"), Html("y")]))', isHidden: true, description: 'All HTML' },
     ],
-    hints: ['Circle area: π * radius²', 'Rectangle area: width * height'],
-    solution: 'import math\n\nclass Shape:\n    def area(self):\n        return 0\n\nclass Circle(Shape):\n    def __init__(self, radius):\n        self.radius = radius\n    \n    def area(self):\n        return math.pi * self.radius ** 2\n\nclass Rectangle(Shape):\n    def __init__(self, width, height):\n        self.width = width\n        self.height = height\n    \n    def area(self):\n        return self.width * self.height',
-    language: 'python'
+    hints: ['Polymorphism here is “anything with render() works”', 'Use a list comprehension in `render_all`'],
+    language: 'python',
   },
   {
     id: 'cs103-t4-ex02',
     subjectId: 'cs103',
     topicId: 'cs103-4',
-    title: 'Duck Typing Example',
-    difficulty: 1,
-    description: 'Create Duck and Person classes with walk() method. Write a function that works with any object that can walk().',
-    starterCode: 'class Duck:\n    def walk(self):\n        pass\n\nclass Person:\n    def walk(self):\n        pass\n\ndef make_it_walk(thing):\n    pass\n\nd = Duck()\np = Person()\nprint(make_it_walk(d))\nprint(make_it_walk(p))',
-    solution: 'class Duck:\n    def walk(self):\n        return "Duck waddles"\n\nclass Person:\n    def walk(self):\n        return "Person strides"\n\ndef make_it_walk(thing):\n    return thing.walk()\n\nd = Duck()\np = Person()\nprint(make_it_walk(d))\nprint(make_it_walk(p))',
+    title: 'Polymorphic Shape Areas',
+    difficulty: 2,
+    description:
+      'Create `Rectangle` and `Circle` classes each with an `area()` method. Create `AreaCalculator` with method `total(shapes)` summing their areas (pi = 3.14159).',
+    starterCode:
+      'class Rectangle:\n' +
+      '    def __init__(self, w, h):\n' +
+      '        pass\n' +
+      '    def area(self):\n' +
+      '        pass\n' +
+      '\n' +
+      'class Circle:\n' +
+      '    def __init__(self, r):\n' +
+      '        pass\n' +
+      '    def area(self):\n' +
+      '        pass\n' +
+      '\n' +
+      'class AreaCalculator:\n' +
+      '    def total(self, shapes):\n' +
+      '        pass\n',
+    solution:
+      'class Rectangle:\n' +
+      '    def __init__(self, w, h):\n' +
+      '        self.w = w\n' +
+      '        self.h = h\n' +
+      '    def area(self):\n' +
+      '        return self.w * self.h\n' +
+      '\n' +
+      'class Circle:\n' +
+      '    def __init__(self, r):\n' +
+      '        self.r = r\n' +
+      '    def area(self):\n' +
+      '        pi = 3.14159\n' +
+      '        return pi * (self.r ** 2)\n' +
+      '\n' +
+      'class AreaCalculator:\n' +
+      '    def total(self, shapes):\n' +
+      '        return sum(s.area() for s in shapes)\n',
     testCases: [
+      { input: 'calc = AreaCalculator(); print(round(calc.total([Rectangle(2, 3), Circle(2)]), 5))', isHidden: false, description: 'Sum mixed shapes' },
+      { input: 'calc = AreaCalculator(); print(calc.total([]))', isHidden: true, description: 'Empty sum' },
+      { input: 'calc = AreaCalculator(); print(calc.total([Rectangle(0, 10)]))', isHidden: true, description: 'Zero area' },
     ],
-    hints: ['Duck typing: if it walks like a duck...', 'Function doesn\'t care about type, just that walk() exists'],
-    language: 'python'
+    hints: ['Each shape implements area()', 'Use sum(...) to add them up'],
+    language: 'python',
   },
   {
     id: 'cs103-t4-ex03',
     subjectId: 'cs103',
     topicId: 'cs103-4',
-    title: 'Operator Overloading - __add__',
-    difficulty: 2,
-    description: 'Create a Vector class that supports addition using the + operator.',
-    starterCode: 'class Vector:\n    def __init__(self, x, y):\n        pass\n    \n    def __add__(self, other):\n        pass\n    \n    def __repr__(self):\n        return f"Vector({self.x}, {self.y})"\n\nv1 = Vector(1, 2)\nv2 = Vector(3, 4)\nprint(v1 + v2)',
-    solution: 'class Vector:\n    def __init__(self, x, y):\n        self.x = x\n        self.y = y\n    \n    def __add__(self, other):\n        return Vector(self.x + other.x, self.y + other.y)\n    \n    def __repr__(self):\n        return f"Vector({self.x}, {self.y})"\n\nv1 = Vector(1, 2)\nv2 = Vector(3, 4)\nprint(v1 + v2)',
+    title: 'Operator Overload: __len__',
+    difficulty: 3,
+    description: 'Create a `Playlist` class that stores songs and supports `len(playlist)` via `__len__`.',
+    starterCode:
+      'class Playlist:\n' +
+      '    def __init__(self):\n' +
+      '        pass\n' +
+      '    def add(self, song):\n' +
+      '        pass\n' +
+      '    def __len__(self):\n' +
+      '        pass\n',
+    solution:
+      'class Playlist:\n' +
+      '    def __init__(self):\n' +
+      '        self._songs = []\n' +
+      '    def add(self, song):\n' +
+      '        self._songs.append(song)\n' +
+      '    def __len__(self):\n' +
+      '        return len(self._songs)\n',
     testCases: [
+      { input: 'p = Playlist(); p.add("a"); p.add("b"); print(len(p))', isHidden: false, description: 'len counts songs' },
+      { input: 'p = Playlist(); print(len(p))', isHidden: true, description: 'Empty length' },
+      { input: 'p = Playlist(); p.add("x"); print(len(p))', isHidden: true, description: 'Single item' },
     ],
-    hints: ['__add__ is called when you use +', 'Return a new Vector with summed components'],
-    language: 'python'
+    hints: ['Store songs in a list', 'Return length of that list from `__len__`'],
+    language: 'python',
   },
   {
     id: 'cs103-t4-ex04',
     subjectId: 'cs103',
     topicId: 'cs103-4',
-    title: 'Operator Overloading - __len__ and __str__',
-    difficulty: 2,
-    description: 'Create a Playlist class that supports len() and str().',
-    starterCode: 'class Playlist:\n    def __init__(self, name):\n        self.name = name\n        self.songs = []\n    \n    def add_song(self, song):\n        pass\n    \n    def __len__(self):\n        pass\n    \n    def __str__(self):\n        pass\n\np = Playlist("My Hits")\np.add_song("Song A")\np.add_song("Song B")\nprint(len(p))\nprint(str(p))',
-    solution: 'class Playlist:\n    def __init__(self, name):\n        self.name = name\n        self.songs = []\n    \n    def add_song(self, song):\n        self.songs.append(song)\n    \n    def __len__(self):\n        return len(self.songs)\n    \n    def __str__(self):\n        return f"{self.name} ({len(self.songs)} songs)"\n\np = Playlist("My Hits")\np.add_song("Song A")\np.add_song("Song B")\nprint(len(p))\nprint(str(p))',
+    title: 'Operator Overload: __add__ for Money',
+    difficulty: 3,
+    description:
+      'Create a `Money` class with `amount` and `currency`. Implement `__add__` to add two Money objects with the same currency, otherwise raise ValueError.',
+    starterCode:
+      'class Money:\n' +
+      '    def __init__(self, amount, currency):\n' +
+      '        pass\n' +
+      '    def __add__(self, other):\n' +
+      '        pass\n' +
+      '    def __repr__(self):\n' +
+      '        pass\n',
+    solution:
+      'class Money:\n' +
+      '    def __init__(self, amount, currency):\n' +
+      '        self.amount = amount\n' +
+      '        self.currency = currency\n' +
+      '    def __add__(self, other):\n' +
+      '        if self.currency != other.currency:\n' +
+      '            raise ValueError("currency mismatch")\n' +
+      '        return Money(self.amount + other.amount, self.currency)\n' +
+      '    def __repr__(self):\n' +
+      '        return f"Money({self.amount}, {self.currency})"\n',
     testCases: [
+      { input: 'print(Money(5, "USD") + Money(7, "USD"))', isHidden: false, description: 'Adds same currency' },
+      { input: 'try:\n    Money(1, "USD") + Money(1, "EUR")\n    print("no")\nexcept ValueError:\n    print("yes")', isHidden: false, description: 'Reject mismatched currency' },
+      { input: 'm = Money(0, "USD") + Money(0, "USD")\nprint(m)', isHidden: true, description: 'Zero addition' },
     ],
-    hints: ['__len__ is called by len()', '__str__ is called by str() or print()'],
-    language: 'python'
+    hints: ['Check currencies before adding', 'Return a new Money instance'],
+    language: 'python',
   },
   {
     id: 'cs103-t4-ex05',
     subjectId: 'cs103',
     topicId: 'cs103-4',
-    title: 'Comparison Overloading',
-    difficulty: 3,
-    description: 'Create a Student class that can be compared by GPA using <, >, and ==.',
-    starterCode: 'class Student:\n    def __init__(self, name, gpa):\n        pass\n    \n    def __lt__(self, other):\n        pass\n    \n    def __gt__(self, other):\n        pass\n    \n    def __eq__(self, other):\n        pass\n\ns1 = Student("Alice", 3.5)\ns2 = Student("Bob", 3.8)\nprint(s1 < s2)',
-    solution: 'class Student:\n    def __init__(self, name, gpa):\n        self.name = name\n        self.gpa = gpa\n    \n    def __lt__(self, other):\n        return self.gpa < other.gpa\n    \n    def __gt__(self, other):\n        return self.gpa > other.gpa\n    \n    def __eq__(self, other):\n        return self.gpa == other.gpa\n\ns1 = Student("Alice", 3.5)\ns2 = Student("Bob", 3.8)\nprint(s1 < s2)',
+    title: 'Strategy Pattern: Discount Policies',
+    difficulty: 4,
+    description:
+      'Create discount policy classes `NoDiscount` and `PercentDiscount` each with `apply(subtotal)` returning the discounted total. Create a `Checkout` class that composes a policy.',
+    starterCode:
+      'class NoDiscount:\n' +
+      '    def apply(self, subtotal):\n' +
+      '        pass\n' +
+      '\n' +
+      'class PercentDiscount:\n' +
+      '    def __init__(self, percent):\n' +
+      '        pass\n' +
+      '    def apply(self, subtotal):\n' +
+      '        pass\n' +
+      '\n' +
+      'class Checkout:\n' +
+      '    def __init__(self, policy):\n' +
+      '        pass\n' +
+      '    def total(self, subtotal):\n' +
+      '        pass\n',
+    solution:
+      'class NoDiscount:\n' +
+      '    def apply(self, subtotal):\n' +
+      '        return subtotal\n' +
+      '\n' +
+      'class PercentDiscount:\n' +
+      '    def __init__(self, percent):\n' +
+      '        self.percent = percent\n' +
+      '    def apply(self, subtotal):\n' +
+      '        return subtotal * (1 - self.percent / 100)\n' +
+      '\n' +
+      'class Checkout:\n' +
+      '    def __init__(self, policy):\n' +
+      '        self.policy = policy\n' +
+      '    def total(self, subtotal):\n' +
+      '        return self.policy.apply(subtotal)\n',
     testCases: [
+      { input: 'print(Checkout(NoDiscount()).total(100))', isHidden: false, description: 'No discount' },
+      { input: 'print(Checkout(PercentDiscount(10)).total(200))', isHidden: false, description: '10% off' },
+      { input: 'print(round(Checkout(PercentDiscount(25)).total(80), 2))', isHidden: true, description: 'Other percentage' },
     ],
-    hints: ['__lt__ handles <, __gt__ handles >', 'Compare GPAs, not names'],
-    language: 'python'
+    hints: ['Policies share the same method name: apply()', 'Checkout delegates to the policy'],
+    language: 'python',
   },
   {
     id: 'cs103-t4-ex06',
     subjectId: 'cs103',
     topicId: 'cs103-4',
-    title: 'Polymorphic Payment Processing',
-    difficulty: 3,
-    description: 'Create payment types that all have pay() method. Write function to process any payment type.',
-    starterCode: 'class Cash:\n    def pay(self, amount):\n        pass\n\nclass CreditCard:\n    def __init__(self, number):\n        pass\n    \n    def pay(self, amount):\n        pass\n\nclass Crypto:\n    def __init__(self, wallet):\n        pass\n    \n    def pay(self, amount):\n        pass\n\ndef process_payment(method, amount):\n    pass\n\nprint(process_payment(Cash(), 50))',
-    solution: 'class Cash:\n    def pay(self, amount):\n        return f"Paid ${amount} in cash"\n\nclass CreditCard:\n    def __init__(self, number):\n        self.number = number\n    \n    def pay(self, amount):\n        return f"Charged ${amount} to card ending {self.number[-4:]}"\n\nclass Crypto:\n    def __init__(self, wallet):\n        self.wallet = wallet\n    \n    def pay(self, amount):\n        return f"Sent ${amount} to wallet {self.wallet[:8]}..."\n\ndef process_payment(method, amount):\n    return method.pay(amount)\n\nprint(process_payment(Cash(), 50))',
+    title: 'Iterable via __iter__',
+    difficulty: 4,
+    description: 'Create a `Team` class that stores members and supports iteration with `for member in team:`.',
+    starterCode:
+      'class Team:\n' +
+      '    def __init__(self):\n' +
+      '        pass\n' +
+      '    def add(self, member):\n' +
+      '        pass\n' +
+      '    def __iter__(self):\n' +
+      '        pass\n',
+    solution:
+      'class Team:\n' +
+      '    def __init__(self):\n' +
+      '        self._members = []\n' +
+      '    def add(self, member):\n' +
+      '        self._members.append(member)\n' +
+      '    def __iter__(self):\n' +
+      '        return iter(self._members)\n',
     testCases: [
+      { input: 't = Team(); t.add("a"); t.add("b"); print([m for m in t])', isHidden: false, description: 'Iterates members' },
+      { input: 't = Team(); print([m for m in t])', isHidden: true, description: 'Empty iteration' },
+      { input: 't = Team(); t.add("x"); print(list(t))', isHidden: true, description: 'Works with list()' },
     ],
-    hints: ['All payment types have pay() method', 'process_payment works with any payment type'],
-    language: 'python'
+    hints: ['Return an iterator from `__iter__`', 'Use `iter(self._members)`'],
+    language: 'python',
   },
   {
     id: 'cs103-t4-ex07',
     subjectId: 'cs103',
     topicId: 'cs103-4',
-    title: 'Iterator Protocol',
-    difficulty: 4,
-    description: 'Create a Range class that works with for loops (implement __iter__ and __next__).',
-    starterCode: 'class Range:\n    def __init__(self, start, end):\n        pass\n    \n    def __iter__(self):\n        pass\n    \n    def __next__(self):\n        pass\n\nfor i in Range(1, 4):\n    print(i)',
-    solution: 'class Range:\n    def __init__(self, start, end):\n        self.start = start\n        self.end = end\n        self.current = start\n    \n    def __iter__(self):\n        self.current = self.start\n        return self\n    \n    def __next__(self):\n        if self.current >= self.end:\n            raise StopIteration\n        value = self.current\n        self.current += 1\n        return value\n\nfor i in Range(1, 4):\n    print(i)',
+    title: 'Polymorphic Notifications',
+    difficulty: 3,
+    description:
+      'Create `EmailNotifier` and `SMSNotifier` each with `send(message)` returning a string. Create `NotificationService` that sends via any notifier.',
+    starterCode:
+      'class EmailNotifier:\n' +
+      '    def __init__(self, address):\n' +
+      '        pass\n' +
+      '    def send(self, message):\n' +
+      '        pass\n' +
+      '\n' +
+      'class SMSNotifier:\n' +
+      '    def __init__(self, phone):\n' +
+      '        pass\n' +
+      '    def send(self, message):\n' +
+      '        pass\n' +
+      '\n' +
+      'class NotificationService:\n' +
+      '    def __init__(self, notifier):\n' +
+      '        pass\n' +
+      '    def notify(self, message):\n' +
+      '        pass\n',
+    solution:
+      'class EmailNotifier:\n' +
+      '    def __init__(self, address):\n' +
+      '        self.address = address\n' +
+      '    def send(self, message):\n' +
+      '        return f"email:{self.address}:{message}"\n' +
+      '\n' +
+      'class SMSNotifier:\n' +
+      '    def __init__(self, phone):\n' +
+      '        self.phone = phone\n' +
+      '    def send(self, message):\n' +
+      '        return f"sms:{self.phone}:{message}"\n' +
+      '\n' +
+      'class NotificationService:\n' +
+      '    def __init__(self, notifier):\n' +
+      '        self.notifier = notifier\n' +
+      '    def notify(self, message):\n' +
+      '        return self.notifier.send(message)\n',
     testCases: [
+      { input: 'print(NotificationService(EmailNotifier("a@b")).notify("hi"))', isHidden: false, description: 'Email path' },
+      { input: 'print(NotificationService(SMSNotifier("123")).notify("hi"))', isHidden: false, description: 'SMS path' },
+      { input: 'print(NotificationService(EmailNotifier("x@y")).notify(""))', isHidden: true, description: 'Empty message' },
     ],
-    hints: ['__iter__ returns self and resets position', '__next__ raises StopIteration when done'],
-    language: 'python'
+    hints: ['Both notifiers implement the same method name', 'Service delegates to `send`'],
+    language: 'python',
   },
   {
     id: 'cs103-t4-ex08',
     subjectId: 'cs103',
     topicId: 'cs103-4',
-    title: 'Context Manager Protocol',
-    difficulty: 5,
-    description: 'Create a Timer context manager that measures code execution time.',
-    starterCode: 'import time\n\nclass Timer:\n    def __enter__(self):\n        pass\n    \n    def __exit__(self, *args):\n        pass\n    \n    def elapsed(self):\n        pass\n\nwith Timer() as t:\n    time.sleep(0.1)\nprint(f"Took about {t.elapsed():.1f} seconds")',
-    solution: 'import time\n\nclass Timer:\n    def __enter__(self):\n        self.start = time.time()\n        return self\n    \n    def __exit__(self, *args):\n        self.end = time.time()\n    \n    def elapsed(self):\n        return self.end - self.start\n\nwith Timer() as t:\n    time.sleep(0.1)\nprint(f"Took about {t.elapsed():.1f} seconds")',
+    title: 'Comparable via __lt__',
+    difficulty: 4,
+    description: 'Create a `Task` class with `priority` and implement `__lt__` so tasks can be sorted by priority.',
+    starterCode:
+      'class Task:\n' +
+      '    def __init__(self, name, priority):\n' +
+      '        pass\n' +
+      '    def __lt__(self, other):\n' +
+      '        pass\n' +
+      '    def __repr__(self):\n' +
+      '        pass\n',
+    solution:
+      'class Task:\n' +
+      '    def __init__(self, name, priority):\n' +
+      '        self.name = name\n' +
+      '        self.priority = priority\n' +
+      '    def __lt__(self, other):\n' +
+      '        return self.priority < other.priority\n' +
+      '    def __repr__(self):\n' +
+      '        return f"Task({self.name},{self.priority})"\n',
     testCases: [
+      { input: 'tasks = [Task("a", 2), Task("b", 1)]; tasks.sort(); print(tasks)', isHidden: false, description: 'Sort uses __lt__' },
+      { input: 'tasks = [Task("x", 0), Task("y", 0)]; tasks.sort(); print(tasks)', isHidden: true, description: 'Equal priorities ok' },
+      { input: 'print(Task("a", 1) < Task("b", 2))', isHidden: true, description: 'Direct comparison' },
     ],
-    hints: ['__enter__ starts timing, __exit__ stops', 'Return self from __enter__ to use as t'],
-    language: 'python'
+    hints: ['Compare priorities in `__lt__`', 'Implement a simple __repr__ for readable output'],
+    language: 'python',
   },
   {
     id: 'cs103-t4-ex09',
     subjectId: 'cs103',
     topicId: 'cs103-4',
-    title: 'Callable Objects',
+    title: 'Polymorphic Serialization',
     difficulty: 4,
-    description: 'Create a Multiplier class that can be called like a function using __call__.',
-    starterCode: 'class Multiplier:\n    def __init__(self, factor):\n        pass\n    \n    def __call__(self, value):\n        pass\n\ndouble = Multiplier(2)\ntriple = Multiplier(3)\nprint(double(5))\nprint(triple(5))',
-    solution: 'class Multiplier:\n    def __init__(self, factor):\n        self.factor = factor\n    \n    def __call__(self, value):\n        return value * self.factor\n\ndouble = Multiplier(2)\ntriple = Multiplier(3)\nprint(double(5))\nprint(triple(5))',
+    description:
+      'Create `User` and `Admin` classes each with `to_dict()` returning a dict. `Admin` should include an extra field `role="admin"`. Show that code can serialize either type.',
+    starterCode:
+      'class User:\n' +
+      '    def __init__(self, username):\n' +
+      '        pass\n' +
+      '    def to_dict(self):\n' +
+      '        pass\n' +
+      '\n' +
+      'class Admin(User):\n' +
+      '    def to_dict(self):\n' +
+      '        pass\n',
+    solution:
+      'class User:\n' +
+      '    def __init__(self, username):\n' +
+      '        self.username = username\n' +
+      '    def to_dict(self):\n' +
+      '        return {"username": self.username}\n' +
+      '\n' +
+      'class Admin(User):\n' +
+      '    def to_dict(self):\n' +
+      '        data = super().to_dict()\n' +
+      '        data["role"] = "admin"\n' +
+      '        return data\n',
     testCases: [
+      { input: 'print(User("a").to_dict())', isHidden: false, description: 'User dict' },
+      { input: 'print(Admin("root").to_dict())', isHidden: false, description: 'Admin dict extends user' },
+      { input: 'objs = [User("x"), Admin("y")]; print([o.to_dict() for o in objs])', isHidden: true, description: 'List comprehension works' },
     ],
-    hints: ['__call__ makes instances callable', 'double(5) invokes double.__call__(5)'],
-    language: 'python'
+    hints: ['Return a dict', 'Admin can call `super().to_dict()` then add a field'],
+    language: 'python',
   },
   {
     id: 'cs103-t4-ex10',
     subjectId: 'cs103',
     topicId: 'cs103-4',
-    title: 'Indexing and Slicing',
+    title: 'Callable Objects (__call__)',
     difficulty: 4,
-    description: 'Create a Sentence class that supports indexing to get words and len() to get word count.',
-    starterCode: 'class Sentence:\n    def __init__(self, text):\n        pass\n    \n    def __getitem__(self, index):\n        pass\n    \n    def __len__(self):\n        pass\n\ns = Sentence("Hello world from Python")\nprint(s[0])\nprint(s[2])\nprint(len(s))',
-    solution: 'class Sentence:\n    def __init__(self, text):\n        self.words = text.split()\n    \n    def __getitem__(self, index):\n        return self.words[index]\n    \n    def __len__(self):\n        return len(self.words)\n\ns = Sentence("Hello world from Python")\nprint(s[0])\nprint(s[2])\nprint(len(s))',
+    description: 'Create a `Multiplier` class initialized with a factor and make instances callable (using `__call__`) to multiply numbers.',
+    starterCode:
+      'class Multiplier:\n' +
+      '    def __init__(self, factor):\n' +
+      '        pass\n' +
+      '    def __call__(self, x):\n' +
+      '        pass\n',
+    solution:
+      'class Multiplier:\n' +
+      '    def __init__(self, factor):\n' +
+      '        self.factor = factor\n' +
+      '    def __call__(self, x):\n' +
+      '        return self.factor * x\n',
     testCases: [
+      { input: 'double = Multiplier(2)\nprint(double(5))', isHidden: false, description: 'Callable multiplies' },
+      { input: 'm = Multiplier(-1)\nprint(m(10))', isHidden: true, description: 'Negative factor' },
+      { input: 'm = Multiplier(0)\nprint(m(999))', isHidden: true, description: 'Zero factor' },
     ],
-    hints: ['Split text into words in __init__', '__getitem__ enables indexing with []'],
-    language: 'python'
+    hints: ['Store factor in __init__', 'Return `factor * x` in `__call__`'],
+    language: 'python',
+  },
+  {
+    id: 'cs103-t4-ex11',
+    subjectId: 'cs103',
+    topicId: 'cs103-4',
+    title: 'Context Manager (__enter__/__exit__)',
+    difficulty: 5,
+    description:
+      'Create a `Timer` context manager that records start/stop. When used in `with Timer() as t:`, it should set `t.seconds` to a non-negative float when exiting.',
+    starterCode:
+      'import time\n' +
+      '\n' +
+      'class Timer:\n' +
+      '    def __enter__(self):\n' +
+      '        pass\n' +
+      '    def __exit__(self, exc_type, exc, tb):\n' +
+      '        pass\n',
+    solution:
+      'import time\n' +
+      '\n' +
+      'class Timer:\n' +
+      '    def __enter__(self):\n' +
+      '        self._start = time.time()\n' +
+      '        self.seconds = 0.0\n' +
+      '        return self\n' +
+      '    def __exit__(self, exc_type, exc, tb):\n' +
+      '        self.seconds = max(0.0, time.time() - self._start)\n' +
+      '        return False\n',
+    testCases: [
+      { input: 'with Timer() as t:\n    x = 1 + 1\nprint(t.seconds >= 0.0)', isHidden: false, description: 'Produces seconds' },
+      { input: 'with Timer() as t:\n    pass\nprint(isinstance(t.seconds, float))', isHidden: true, description: 'Seconds is float' },
+      { input: 'with Timer() as t:\n    pass\nprint(t.seconds >= 0.0)', isHidden: true, description: 'Non-negative' },
+    ],
+    hints: ['Return `self` from `__enter__`', 'Set `seconds` in `__exit__`', 'Return False to re-raise exceptions'],
+    language: 'python',
+  },
+  {
+    id: 'cs103-t4-ex12',
+    subjectId: 'cs103',
+    topicId: 'cs103-4',
+    title: 'Polymorphic Filtering',
+    difficulty: 3,
+    description:
+      'Create `EvenFilter` and `OddFilter` classes each with `keep(n)` returning True/False. Create `Filterer` that uses any filter to filter a list.',
+    starterCode:
+      'class EvenFilter:\n' +
+      '    def keep(self, n):\n' +
+      '        pass\n' +
+      '\n' +
+      'class OddFilter:\n' +
+      '    def keep(self, n):\n' +
+      '        pass\n' +
+      '\n' +
+      'class Filterer:\n' +
+      '    def __init__(self, filt):\n' +
+      '        pass\n' +
+      '    def apply(self, nums):\n' +
+      '        pass\n',
+    solution:
+      'class EvenFilter:\n' +
+      '    def keep(self, n):\n' +
+      '        return n % 2 == 0\n' +
+      '\n' +
+      'class OddFilter:\n' +
+      '    def keep(self, n):\n' +
+      '        return n % 2 != 0\n' +
+      '\n' +
+      'class Filterer:\n' +
+      '    def __init__(self, filt):\n' +
+      '        self.filt = filt\n' +
+      '    def apply(self, nums):\n' +
+      '        return [n for n in nums if self.filt.keep(n)]\n',
+    testCases: [
+      { input: 'print(Filterer(EvenFilter()).apply([1,2,3,4]))', isHidden: false, description: 'Keeps evens' },
+      { input: 'print(Filterer(OddFilter()).apply([1,2,3,4]))', isHidden: false, description: 'Keeps odds' },
+      { input: 'print(Filterer(EvenFilter()).apply([]))', isHidden: true, description: 'Empty list' },
+    ],
+    hints: ['Each filter implements `keep(n)`', 'Filterer composes a filter and delegates'],
+    language: 'python',
+  },
+  {
+    id: 'cs103-t4-ex13',
+    subjectId: 'cs103',
+    topicId: 'cs103-4',
+    title: 'Proxy Object (Forwarding)',
+    difficulty: 5,
+    description:
+      'Create a `LoggingList` wrapper around a list. It should implement `append(x)` and `__len__`, and keep a list of appended items in `log`.',
+    starterCode:
+      'class LoggingList:\n' +
+      '    def __init__(self):\n' +
+      '        pass\n' +
+      '    def append(self, x):\n' +
+      '        pass\n' +
+      '    def __len__(self):\n' +
+      '        pass\n',
+    solution:
+      'class LoggingList:\n' +
+      '    def __init__(self):\n' +
+      '        self._data = []\n' +
+      '        self.log = []\n' +
+      '    def append(self, x):\n' +
+      '        self.log.append(x)\n' +
+      '        self._data.append(x)\n' +
+      '    def __len__(self):\n' +
+      '        return len(self._data)\n',
+    testCases: [
+      { input: 'll = LoggingList(); ll.append(1); ll.append(2)\nprint(len(ll), ll.log)', isHidden: false, description: 'Tracks appended values' },
+      { input: 'll = LoggingList(); print(len(ll), ll.log)', isHidden: true, description: 'Starts empty' },
+      { input: 'll = LoggingList(); ll.append("x")\nprint(ll.log)', isHidden: true, description: 'Works for non-numbers' },
+    ],
+    hints: ['Wrap a list inside the class', 'Append to log and underlying list', 'Return len of underlying list'],
+    language: 'python',
+  },
+  {
+    id: 'cs103-t4-ex14',
+    subjectId: 'cs103',
+    topicId: 'cs103-4',
+    title: 'Polymorphic Formatter',
+    difficulty: 5,
+    description:
+      'Create `UpperFormatter` and `LowerFormatter` each with `format(text)`. Create `FormatterPipeline` that applies a list of formatters in order.',
+    starterCode:
+      'class UpperFormatter:\n' +
+      '    def format(self, text):\n' +
+      '        pass\n' +
+      '\n' +
+      'class LowerFormatter:\n' +
+      '    def format(self, text):\n' +
+      '        pass\n' +
+      '\n' +
+      'class FormatterPipeline:\n' +
+      '    def __init__(self, formatters):\n' +
+      '        pass\n' +
+      '    def run(self, text):\n' +
+      '        pass\n',
+    solution:
+      'class UpperFormatter:\n' +
+      '    def format(self, text):\n' +
+      '        return text.upper()\n' +
+      '\n' +
+      'class LowerFormatter:\n' +
+      '    def format(self, text):\n' +
+      '        return text.lower()\n' +
+      '\n' +
+      'class FormatterPipeline:\n' +
+      '    def __init__(self, formatters):\n' +
+      '        self.formatters = list(formatters)\n' +
+      '    def run(self, text):\n' +
+      '        out = text\n' +
+      '        for f in self.formatters:\n' +
+      '            out = f.format(out)\n' +
+      '        return out\n',
+    testCases: [
+      { input: 'p = FormatterPipeline([UpperFormatter()]); print(p.run("Hi"))', isHidden: false, description: 'Uppercase' },
+      { input: 'p = FormatterPipeline([LowerFormatter()]); print(p.run("Hi"))', isHidden: false, description: 'Lowercase' },
+      { input: 'p = FormatterPipeline([UpperFormatter(), LowerFormatter()]); print(p.run("Hi"))', isHidden: true, description: 'Order matters' },
+    ],
+    hints: ['Pipeline applies each formatter sequentially', 'Each formatter has the same method name: format'],
+    language: 'python',
   },
   {
     id: 'cs103-t4-drill-1',
     subjectId: 'cs103',
     topicId: 'cs103-4',
-    title: 'Basic Method Override',
+    title: 'Duck Typing Basics',
     difficulty: 1,
-    description: 'Create Animal base class with speak(). Create Dog that overrides speak() to return "Woof".',
-    starterCode: 'class Animal:\n    def speak(self):\n        return "..."\n\nclass Dog(Animal):\n    def speak(self):\n        pass\n\nd = Dog()\nprint(d.speak())',
-    solution: 'class Animal:\n    def speak(self):\n        return "..."\n\nclass Dog(Animal):\n    def speak(self):\n        return "Woof"\n\nd = Dog()\nprint(d.speak())',
+    description: 'Create `Dog` and `Cat` classes each with a `speak()` method returning a string.',
+    starterCode:
+      'class Dog:\n' +
+      '    def speak(self):\n' +
+      '        pass\n' +
+      '\n' +
+      'class Cat:\n' +
+      '    def speak(self):\n' +
+      '        pass\n',
+    solution:
+      'class Dog:\n' +
+      '    def speak(self):\n' +
+      '        return "woof"\n' +
+      '\n' +
+      'class Cat:\n' +
+      '    def speak(self):\n' +
+      '        return "meow"\n',
     testCases: [
+      { input: 'print(Dog().speak(), Cat().speak())', isHidden: false, description: 'Both speak' },
+      { input: 'print(Dog().speak().upper())', isHidden: true, description: 'String output' },
+      { input: 'print(Cat().speak())', isHidden: true, description: 'Cat output' },
     ],
-    hints: ['Override means redefine the method in child class', 'Child method replaces parent method'],
-    language: 'python'
+    hints: ['Return simple strings', 'Both classes share the same method name'],
+    language: 'python',
   },
   {
     id: 'cs103-t4-drill-2',
     subjectId: 'cs103',
     topicId: 'cs103-4',
-    title: '__eq__ Override',
+    title: 'Basic Operator Overloading',
     difficulty: 1,
-    description: 'Create a Point class where two points are equal if they have same x and y.',
-    starterCode: 'class Point:\n    def __init__(self, x, y):\n        self.x = x\n        self.y = y\n    \n    def __eq__(self, other):\n        pass\n\np1 = Point(1, 2)\np2 = Point(1, 2)\np3 = Point(3, 4)\nprint(p1 == p2)\nprint(p1 == p3)',
-    solution: 'class Point:\n    def __init__(self, x, y):\n        self.x = x\n        self.y = y\n    \n    def __eq__(self, other):\n        return self.x == other.x and self.y == other.y\n\np1 = Point(1, 2)\np2 = Point(1, 2)\np3 = Point(3, 4)\nprint(p1 == p2)\nprint(p1 == p3)',
+    description: 'Create a `Box` class with `value` and implement `__str__` to return the string form of value.',
+    starterCode:
+      'class Box:\n' +
+      '    def __init__(self, value):\n' +
+      '        pass\n' +
+      '    def __str__(self):\n' +
+      '        pass\n',
+    solution:
+      'class Box:\n' +
+      '    def __init__(self, value):\n' +
+      '        self.value = value\n' +
+      '    def __str__(self):\n' +
+      '        return str(self.value)\n',
     testCases: [
+      { input: 'print(Box(5))', isHidden: false, description: 'Print uses __str__' },
+      { input: 'print(str(Box("x")))', isHidden: true, description: 'Works with strings' },
+      { input: 'print(Box(None))', isHidden: true, description: 'Works with None' },
     ],
-    hints: ['__eq__ is called when you use ==', 'Compare both x and y values'],
-    language: 'python'
-  }
+    hints: ['Return `str(self.value)`', '`print(obj)` uses __str__'],
+    language: 'python',
+  },
 ];
+

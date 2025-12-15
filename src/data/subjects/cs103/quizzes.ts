@@ -1,209 +1,1273 @@
 import { Quiz } from '../../../core/types';
 
 export const cs103Quizzes: Quiz[] = [
+  // ============================================================================
+  // Topic 1: Classes and Objects
+  // ============================================================================
   {
     id: 'cs103-quiz-1',
     subjectId: 'cs103',
     topicId: 'cs103-1',
-    title: 'Classes and Objects',
+    title: 'Classes and Objects — Quiz A (Fundamentals)',
     questions: [
       {
-        id: 'cs103-q1-1',
+        id: 'cs103-q1a-1',
         type: 'multiple_choice',
-        prompt: 'What is the purpose of the __init__ method in a Python class?',
+        prompt: 'In OOP, what is a class best described as?',
+        options: ['A specific instance with state', 'A blueprint for creating objects', 'A module that holds functions', 'A variable that stores methods'],
+        correctAnswer: 1,
+        explanation: 'A class defines the structure and behavior that its instances (objects) will have.',
+      },
+      {
+        id: 'cs103-q1a-2',
+        type: 'fill_blank',
+        prompt: 'In Python, the constructor method that runs when an object is created is named ____.',
+        correctAnswer: '__init__',
+        explanation: '`__init__` initializes a new instance after it has been created.',
+      },
+      {
+        id: 'cs103-q1a-3',
+        type: 'true_false',
+        prompt: 'Instance variables are shared across all instances of a class.',
+        correctAnswer: false,
+        explanation: 'Instance variables belong to each individual object; class variables are shared.',
+      },
+      {
+        id: 'cs103-q1a-4',
+        type: 'multiple_choice',
+        prompt: 'What does `self` represent inside an instance method?',
+        options: ['The class object', 'The parent class', 'The current instance', 'A global reference'],
+        correctAnswer: 2,
+        explanation: '`self` is the current object (instance) the method is operating on.',
+      },
+      {
+        id: 'cs103-q1a-5',
+        type: 'multiple_choice',
+        prompt: 'Which dunder method is used by `print(obj)` to produce a human-readable string?',
+        options: ['__repr__', '__str__', '__call__', '__len__'],
+        correctAnswer: 1,
+        explanation: '`__str__` is used for user-friendly string output; `__repr__` is for debugging.',
+      },
+    ],
+  },
+  {
+    id: 'cs103-quiz-1b',
+    subjectId: 'cs103',
+    topicId: 'cs103-1',
+    title: 'Classes and Objects — Quiz B (Application)',
+    questions: [
+      {
+        id: 'cs103-q1b-1',
+        type: 'code_output',
+        prompt: 'What is printed by this code?',
+        codeSnippet: `class Counter:
+    def __init__(self):
+        self.count = 0
+    def inc(self):
+        self.count += 1
+
+c1 = Counter()
+c2 = Counter()
+c1.inc()
+c1.inc()
+c2.inc()
+print(c1.count, c2.count)`,
+        correctAnswer: '2 1',
+        explanation: 'Each instance has its own `count`. `c1` is incremented twice; `c2` once.',
+      },
+      {
+        id: 'cs103-q1b-2',
+        type: 'multiple_choice',
+        prompt: 'Which statement correctly creates an instance of class `Dog`?',
+        options: ['Dog = Dog()', 'd = new Dog()', 'd = Dog()', 'Dog(d)'],
+        correctAnswer: 2,
+        explanation: 'In Python you instantiate a class by calling it: `d = Dog()`.',
+      },
+      {
+        id: 'cs103-q1b-3',
+        type: 'code_output',
+        prompt: 'What is printed by this code?',
+        codeSnippet: `class A:
+    x = 0
+    def __init__(self):
+        A.x += 1
+
+A()
+A()
+print(A.x)`,
+        correctAnswer: '2',
+        explanation: '`x` is a class variable. Each instantiation increments `A.x`.',
+      },
+      {
+        id: 'cs103-q1b-4',
+        type: 'fill_blank',
+        prompt: 'To define a method that belongs to the class (not the instance), you use the ____ decorator.',
+        correctAnswer: 'classmethod',
+        explanation: '`@classmethod` receives `cls` and is bound to the class rather than an instance.',
+      },
+      {
+        id: 'cs103-q1b-5',
+        type: 'true_false',
+        prompt: 'If a class defines `__repr__` but not `__str__`, `print(obj)` will fall back to using `__repr__`.',
+        correctAnswer: true,
+        explanation: 'Python uses `__str__` if available; otherwise it falls back to `__repr__`.',
+      },
+    ],
+  },
+  {
+    id: 'cs103-quiz-1c',
+    subjectId: 'cs103',
+    topicId: 'cs103-1',
+    title: 'Classes and Objects — Quiz C (Advanced)',
+    questions: [
+      {
+        id: 'cs103-q1c-1',
+        type: 'multiple_choice',
+        prompt: 'Which is the correct way to avoid a mutable default argument in `__init__`?',
         options: [
-          'To delete an object',
-          'To initialize a new object with starting values',
-          'To define class variables',
-          'To create a string representation of the object'
+          'def __init__(self, items=[]): self.items = items',
+          'def __init__(self, items=None): self.items = [] if items is None else items',
+          'def __init__(self, items={}): self.items = items',
+          'def __init__(self, items=list()): self.items = items',
         ],
         correctAnswer: 1,
-        explanation: 'The __init__ method is a constructor that initializes new objects when they are created, setting up initial attribute values.'
+        explanation: 'Using `None` avoids sharing a single default list/dict across instances.',
       },
       {
-        id: 'cs103-q1-2',
+        id: 'cs103-q1c-2',
+        type: 'code_output',
+        prompt: 'What is printed by this code?',
+        codeSnippet: `class C:
+    def __init__(self):
+        self.x = 1
+
+c = C()
+c.y = 99
+print(hasattr(c, "y"), c.y)`,
+        correctAnswer: 'True 99',
+        explanation: 'Python objects can have attributes added at runtime unless restricted (e.g., via `__slots__`).',
+      },
+      {
+        id: 'cs103-q1c-3',
         type: 'multiple_choice',
-        prompt: 'What does the self parameter represent in a Python instance method?',
+        prompt: 'What is the main purpose of `__slots__` in a class?',
         options: [
-          'The class itself',
-          'The parent class',
-          'The instance of the object calling the method',
-          'A static reference'
+          'To automatically generate getters and setters',
+          'To prevent inheritance',
+          'To restrict allowed instance attributes and reduce memory usage',
+          'To make methods static by default',
         ],
         correctAnswer: 2,
-        explanation: 'The self parameter refers to the specific instance of the object that called the method, allowing access to that instance\'s attributes and methods.'
+        explanation: '`__slots__` prevents per-instance `__dict__` (in many cases), limiting attributes and saving memory.',
       },
       {
-        id: 'cs103-q1-3',
+        id: 'cs103-q1c-4',
         type: 'true_false',
-        prompt: 'Multiple objects created from the same class share the same instance variables.',
+        prompt: 'A `@staticmethod` receives `self` automatically when called on an instance.',
         correctAnswer: false,
-        explanation: 'Each object has its own copy of instance variables. Only class variables are shared among all instances of a class.'
-      }
-    ]
+        explanation: 'Static methods receive no implicit first argument; they are plain functions stored on a class.',
+      },
+      {
+        id: 'cs103-q1c-5',
+        type: 'fill_blank',
+        prompt: 'The dunder method used to customize object creation (before `__init__`) is ____.',
+        correctAnswer: '__new__',
+        explanation: '`__new__` creates the instance; `__init__` initializes it.',
+      },
+    ],
   },
+
+  // ============================================================================
+  // Topic 2: Encapsulation
+  // ============================================================================
   {
     id: 'cs103-quiz-2',
     subjectId: 'cs103',
     topicId: 'cs103-2',
-    title: 'Encapsulation',
+    title: 'Encapsulation — Quiz A (Fundamentals)',
     questions: [
       {
-        id: 'cs103-q2-1',
+        id: 'cs103-q2a-1',
         type: 'multiple_choice',
-        prompt: 'In Python, what does a single underscore prefix (_variable) indicate?',
+        prompt: 'What is encapsulation primarily about?',
         options: [
-          'A private variable that cannot be accessed',
-          'A protected variable intended for internal use',
-          'A public variable',
-          'A constant variable'
+          'Making classes inherit from each other',
+          'Hiding internal state and exposing a controlled interface',
+          'Overloading operators for custom types',
+          'Ensuring code runs faster',
         ],
         correctAnswer: 1,
-        explanation: 'A single underscore prefix indicates a protected member intended for internal use, though it\'s still technically accessible.'
+        explanation: 'Encapsulation protects internal state and provides a safe, stable API.',
       },
       {
-        id: 'cs103-q2-2',
+        id: 'cs103-q2a-2',
         type: 'multiple_choice',
-        prompt: 'What is the main benefit of using the @property decorator in Python?',
-        options: [
-          'It makes variables faster',
-          'It allows implementing getters and setters with attribute-like syntax',
-          'It prevents all access to the variable',
-          'It automatically validates all inputs'
-        ],
+        prompt: 'In Python, a leading single underscore (e.g., `_balance`) conventionally means:',
+        options: ['Truly private and inaccessible', 'Protected/internal use by convention', 'A constant value', 'A class variable'],
         correctAnswer: 1,
-        explanation: 'The @property decorator provides a clean way to implement getters and setters while maintaining simple attribute-like access syntax.'
+        explanation: 'Python relies on conventions: `_name` signals internal/protected usage.',
       },
       {
-        id: 'cs103-q2-3',
+        id: 'cs103-q2a-3',
+        type: 'fill_blank',
+        prompt: 'The decorator that lets you access a method like an attribute is ____.',
+        correctAnswer: 'property',
+        explanation: '`@property` creates a managed attribute with getter/setter behavior.',
+      },
+      {
+        id: 'cs103-q2a-4',
         type: 'true_false',
-        prompt: 'Encapsulation allows changing internal implementation without affecting external code.',
+        prompt: 'Encapsulation makes it easier to change a class’s internal implementation without breaking callers.',
         correctAnswer: true,
-        explanation: 'Encapsulation hides implementation details, allowing you to modify internal code without breaking external code that depends on the public interface.'
-      }
-    ]
+        explanation: 'Callers depend on the public interface, not the internal representation.',
+      },
+      {
+        id: 'cs103-q2a-5',
+        type: 'multiple_choice',
+        prompt: 'What is name mangling for `__balance` inside class `Account`?',
+        options: ['_balance', '__balance__', '_Account__balance', 'Account__balance'],
+        correctAnswer: 2,
+        explanation: 'Double-underscore attributes are name-mangled to `_ClassName__attr`.',
+      },
+    ],
   },
+  {
+    id: 'cs103-quiz-2b',
+    subjectId: 'cs103',
+    topicId: 'cs103-2',
+    title: 'Encapsulation — Quiz B (Application)',
+    questions: [
+      {
+        id: 'cs103-q2b-1',
+        type: 'code_output',
+        prompt: 'What is printed by this code?',
+        codeSnippet: `class User:
+    def __init__(self, age):
+        self._age = age
+
+    @property
+    def age(self):
+        return self._age
+
+u = User(10)
+print(u.age)`,
+        correctAnswer: '10',
+        explanation: '`age` is exposed as a read-only property backed by `_age`.',
+      },
+      {
+        id: 'cs103-q2b-2',
+        type: 'multiple_choice',
+        prompt: 'Why might you return a copy from a getter like `def items(self): return list(self._items)`?',
+        options: [
+          'To speed up iteration',
+          'To prevent callers from mutating internal state directly',
+          'To allow multiple inheritance',
+          'To enable operator overloading',
+        ],
+        correctAnswer: 1,
+        explanation: 'Defensive copies avoid leaking mutable internal state.',
+      },
+      {
+        id: 'cs103-q2b-3',
+        type: 'fill_blank',
+        prompt: 'To define the setter for a property named `age`, you write `@age.____`.',
+        correctAnswer: 'setter',
+        explanation: 'Property setters use `@prop_name.setter`.',
+      },
+      {
+        id: 'cs103-q2b-4',
+        type: 'true_false',
+        prompt: 'Encapsulation means you must make every attribute private using name mangling.',
+        correctAnswer: false,
+        explanation: 'Good encapsulation is about controlling access where needed; Python commonly uses conventions and properties.',
+      },
+      {
+        id: 'cs103-q2b-5',
+        type: 'code_output',
+        prompt: 'What is printed by this code?',
+        codeSnippet: `class A:
+    def __init__(self):
+        self.__x = 5
+
+a = A()
+print(hasattr(a, "__x"), hasattr(a, "_A__x"))`,
+        correctAnswer: 'False True',
+        explanation: 'Double-underscore attributes are name-mangled, so `__x` becomes `_A__x` on the instance.',
+      },
+    ],
+  },
+  {
+    id: 'cs103-quiz-2c',
+    subjectId: 'cs103',
+    topicId: 'cs103-2',
+    title: 'Encapsulation — Quiz C (Advanced)',
+    questions: [
+      {
+        id: 'cs103-q2c-1',
+        type: 'multiple_choice',
+        prompt: 'Which statement about Python “private” attributes is most accurate?',
+        options: [
+          'They cannot be accessed outside the class',
+          'They are enforced by the interpreter',
+          'They are name-mangled to reduce accidental access',
+          'They are encrypted in memory',
+        ],
+        correctAnswer: 2,
+        explanation: 'Name mangling is a convention-based mechanism; it discourages accidental access but doesn’t make access impossible.',
+      },
+      {
+        id: 'cs103-q2c-2',
+        type: 'code_output',
+        prompt: 'What is printed by this code?',
+        codeSnippet: `class Box:
+    def __init__(self, items):
+        self._items = items
+    @property
+    def items(self):
+        return list(self._items)
+
+b = Box([1, 2])
+copy = b.items
+copy.append(3)
+print(b.items)`,
+        correctAnswer: '[1, 2]',
+        explanation: 'The property returns a copy; mutating the copy does not mutate internal state.',
+      },
+      {
+        id: 'cs103-q2c-3',
+        type: 'true_false',
+        prompt: 'A property can compute its value dynamically and does not have to store a backing field.',
+        correctAnswer: true,
+        explanation: 'Properties can be computed on access (e.g., `area` from `radius`).',
+      },
+      {
+        id: 'cs103-q2c-4',
+        type: 'fill_blank',
+        prompt: 'A class that prevents setting attributes not listed is typically implemented using ____.',
+        correctAnswer: '__slots__',
+        explanation: '`__slots__` can restrict instance attributes and reduce memory use.',
+      },
+      {
+        id: 'cs103-q2c-5',
+        type: 'multiple_choice',
+        prompt: 'What is a good reason to use a custom exception class in an API?',
+        options: [
+          'It makes code shorter',
+          'It creates faster stack traces',
+          'It lets callers catch and handle domain-specific errors reliably',
+          'It prevents all runtime errors',
+        ],
+        correctAnswer: 2,
+        explanation: 'Custom exceptions communicate intent and enable targeted error handling.',
+      },
+    ],
+  },
+
+  // ============================================================================
+  // Topic 3: Inheritance
+  // ============================================================================
   {
     id: 'cs103-quiz-3',
     subjectId: 'cs103',
     topicId: 'cs103-3',
-    title: 'Inheritance',
+    title: 'Inheritance — Quiz A (Fundamentals)',
     questions: [
       {
-        id: 'cs103-q3-1',
+        id: 'cs103-q3a-1',
         type: 'multiple_choice',
-        prompt: 'What relationship does inheritance model between classes?',
+        prompt: 'Inheritance most directly models which relationship?',
+        options: ['Has-a', 'Is-a', 'Part-of', 'Depends-on'],
+        correctAnswer: 1,
+        explanation: 'Inheritance represents an “is-a” relationship between subtype and supertype.',
+      },
+      {
+        id: 'cs103-q3a-2',
+        type: 'fill_blank',
+        prompt: 'In Python, a subclass is declared using `class Child(____):`.',
+        correctAnswer: 'Parent',
+        explanation: 'The parent class appears in parentheses after the subclass name.',
+      },
+      {
+        id: 'cs103-q3a-3',
+        type: 'true_false',
+        prompt: 'A subclass automatically inherits methods and attributes from its parent class.',
+        correctAnswer: true,
+        explanation: 'Unless overridden, the subclass uses the inherited implementations.',
+      },
+      {
+        id: 'cs103-q3a-4',
+        type: 'multiple_choice',
+        prompt: 'What does `super()` allow you to do?',
         options: [
-          'Has-a relationship',
-          'Is-a relationship',
-          'Uses-a relationship',
-          'Creates-a relationship'
+          'Call methods on a child class',
+          'Call methods on the next class in the MRO (often the parent)',
+          'Skip method overriding',
+          'Disable inheritance',
         ],
         correctAnswer: 1,
-        explanation: 'Inheritance models an "is-a" relationship, where the child class is a specialized type of the parent class.'
+        explanation: '`super()` calls the next implementation in the MRO, enabling cooperative inheritance.',
       },
       {
-        id: 'cs103-q3-2',
+        id: 'cs103-q3a-5',
         type: 'multiple_choice',
-        prompt: 'What does the super() function do in Python?',
+        prompt: 'What is MRO in Python?',
+        options: ['Memory read-only', 'Method resolution order', 'Module runtime override', 'Multi-return output'],
+        correctAnswer: 1,
+        explanation: 'MRO determines which method implementation is chosen in multiple inheritance.',
+      },
+    ],
+  },
+  {
+    id: 'cs103-quiz-3b',
+    subjectId: 'cs103',
+    topicId: 'cs103-3',
+    title: 'Inheritance — Quiz B (Application)',
+    questions: [
+      {
+        id: 'cs103-q3b-1',
+        type: 'code_output',
+        prompt: 'What is printed by this code?',
+        codeSnippet: `class A:
+    def f(self):
+        return "A"
+
+class B(A):
+    def f(self):
+        return "B"
+
+print(B().f())`,
+        correctAnswer: 'B',
+        explanation: 'The subclass overrides `f`, so `B().f()` uses the overridden method.',
+      },
+      {
+        id: 'cs103-q3b-2',
+        type: 'code_output',
+        prompt: 'What is printed by this code?',
+        codeSnippet: `class Base:
+    def __init__(self):
+        self.x = 1
+
+class Child(Base):
+    def __init__(self):
+        super().__init__()
+        self.x += 2
+
+print(Child().x)`,
+        correctAnswer: '3',
+        explanation: '`super().__init__()` sets `x=1`, then the child adds 2.',
+      },
+      {
+        id: 'cs103-q3b-3',
+        type: 'multiple_choice',
+        prompt: 'If you override `__init__` in a subclass, what is commonly necessary to preserve base initialization?',
+        options: ['Call `Base.__new__()`', 'Call `super().__init__()`', 'Call `del self`', 'Nothing is needed'],
+        correctAnswer: 1,
+        explanation: 'Calling `super().__init__()` ensures the base class sets up its part of the object.',
+      },
+      {
+        id: 'cs103-q3b-4',
+        type: 'true_false',
+        prompt: 'It is always best to use inheritance instead of composition for code reuse.',
+        correctAnswer: false,
+        explanation: 'Composition often produces more flexible designs and avoids fragile inheritance trees.',
+      },
+      {
+        id: 'cs103-q3b-5',
+        type: 'fill_blank',
+        prompt: 'In multiple inheritance, Python chooses methods following the ____.',
+        correctAnswer: 'MRO',
+        explanation: 'MRO (Method Resolution Order) determines the lookup path.',
+      },
+    ],
+  },
+  {
+    id: 'cs103-quiz-3c',
+    subjectId: 'cs103',
+    topicId: 'cs103-3',
+    title: 'Inheritance — Quiz C (Advanced)',
+    questions: [
+      {
+        id: 'cs103-q3c-1',
+        type: 'multiple_choice',
+        prompt: 'Which is a common warning sign that inheritance may be the wrong tool?',
         options: [
-          'Creates a new parent class',
-          'Deletes the parent class',
-          'Calls methods from the parent class',
-          'Prevents inheritance'
+          'You need polymorphic behavior',
+          'You are modeling a clear “is-a” relationship',
+          'You are inheriting only to reuse a couple of methods',
+          'You need a shared interface across implementations',
         ],
         correctAnswer: 2,
-        explanation: 'The super() function allows calling methods from the parent class, enabling you to extend functionality rather than completely replace it.'
+        explanation: 'Using inheritance mainly for code reuse can create tight coupling; composition is often better.',
       },
       {
-        id: 'cs103-q3-3',
+        id: 'cs103-q3c-2',
+        type: 'code_output',
+        prompt: 'What is printed by this code?',
+        codeSnippet: `class A:
+    def f(self): return "A"
+class B(A):
+    def f(self): return "B"
+class C(A):
+    def f(self): return "C"
+class D(B, C):
+    pass
+
+print(D().f())`,
+        correctAnswer: 'B',
+        explanation: 'With `class D(B, C)`, MRO checks `B` before `C`, so `B.f` is chosen.',
+      },
+      {
+        id: 'cs103-q3c-3',
         type: 'true_false',
-        prompt: 'Python supports multiple inheritance, allowing a class to inherit from multiple parent classes.',
+        prompt: 'Calling `super()` in multiple inheritance can support cooperative method chaining when all classes participate.',
         correctAnswer: true,
-        explanation: 'Python does support multiple inheritance, though it should be used carefully to avoid complexity and potential conflicts.'
-      }
-    ]
+        explanation: 'If each class calls `super()`, method calls can flow through the MRO cleanly.',
+      },
+      {
+        id: 'cs103-q3c-4',
+        type: 'fill_blank',
+        prompt: 'A class used to provide a focused feature via inheritance (not meant to stand alone) is often called a ____.',
+        correctAnswer: 'mixin',
+        explanation: 'Mixins add small, reusable behavior to other classes through inheritance.',
+      },
+      {
+        id: 'cs103-q3c-5',
+        type: 'multiple_choice',
+        prompt: 'What does Liskov Substitution Principle (LSP) require?',
+        options: [
+          'Subclasses must have more methods than base classes',
+          'Objects of a subclass should be usable wherever the base class is expected, without breaking behavior',
+          'Every class must have a private attribute',
+          'Inheritance must be single, not multiple',
+        ],
+        correctAnswer: 1,
+        explanation: 'LSP is about behavioral substitutability and preserving base class contracts.',
+      },
+    ],
   },
+
+  // ============================================================================
+  // Topic 4: Polymorphism
+  // ============================================================================
   {
     id: 'cs103-quiz-4',
     subjectId: 'cs103',
     topicId: 'cs103-4',
-    title: 'Polymorphism',
+    title: 'Polymorphism — Quiz A (Fundamentals)',
     questions: [
       {
-        id: 'cs103-q4-1',
+        id: 'cs103-q4a-1',
         type: 'multiple_choice',
-        prompt: 'What is polymorphism in object-oriented programming?',
+        prompt: 'What is polymorphism in OOP?',
         options: [
-          'Using multiple variables',
-          'The ability of different objects to respond to the same method call in different ways',
-          'Creating multiple classes',
-          'Having multiple constructors'
+          'A class having many constructors',
+          'Different objects responding to the same interface in different ways',
+          'Using many variables in one function',
+          'Storing objects in multiple lists',
         ],
         correctAnswer: 1,
-        explanation: 'Polymorphism allows objects of different classes to respond to the same method call in their own specific ways.'
+        explanation: 'Polymorphism means the same operation can work with different types that share an interface.',
       },
       {
-        id: 'cs103-q4-2',
-        type: 'multiple_choice',
-        prompt: 'What Python feature enables polymorphism without requiring explicit inheritance?',
-        options: [
-          'Static typing',
-          'Duck typing',
-          'Strong typing',
-          'Type hints'
-        ],
-        correctAnswer: 1,
-        explanation: 'Duck typing allows polymorphism based on whether an object has the required methods, regardless of its inheritance hierarchy.'
-      },
-      {
-        id: 'cs103-q4-3',
+        id: 'cs103-q4a-2',
         type: 'true_false',
-        prompt: 'Operator overloading in Python is achieved through special methods like __add__ and __str__.',
+        prompt: 'Duck typing is a form of polymorphism that does not require explicit inheritance.',
         correctAnswer: true,
-        explanation: 'Python uses special methods (dunder methods) to enable operator overloading, allowing custom objects to work with built-in operators.'
-      }
-    ]
+        explanation: 'Duck typing relies on behavior (“has the right methods”), not type hierarchy.',
+      },
+      {
+        id: 'cs103-q4a-3',
+        type: 'fill_blank',
+        prompt: 'The dunder method for adding two objects with `+` is ____.',
+        correctAnswer: '__add__',
+        explanation: '`__add__` implements the `+` operator for a custom type.',
+      },
+      {
+        id: 'cs103-q4a-4',
+        type: 'multiple_choice',
+        prompt: 'Which built-in function demonstrates polymorphism across types in Python?',
+        options: ['len', 'id', 'type', 'dir'],
+        correctAnswer: 0,
+        explanation: '`len()` works on strings, lists, dictionaries, and any object implementing `__len__`.',
+      },
+      {
+        id: 'cs103-q4a-5',
+        type: 'multiple_choice',
+        prompt: 'Which approach is the most “Pythonic” way to support polymorphism?',
+        options: ['Switch on type using many `if isinstance(...)` checks', 'Duck typing and small interfaces', 'Global variables', 'Deep inheritance trees'],
+        correctAnswer: 1,
+        explanation: 'Python favors duck typing and simple, behavior-based interfaces.',
+      },
+    ],
   },
+  {
+    id: 'cs103-quiz-4b',
+    subjectId: 'cs103',
+    topicId: 'cs103-4',
+    title: 'Polymorphism — Quiz B (Application)',
+    questions: [
+      {
+        id: 'cs103-q4b-1',
+        type: 'code_output',
+        prompt: 'What is printed by this code?',
+        codeSnippet: `class Dog:
+    def speak(self): return "woof"
+class Cat:
+    def speak(self): return "meow"
+
+def chorus(animals):
+    for a in animals:
+        print(a.speak())
+
+chorus([Dog(), Cat(), Dog()])`,
+        correctAnswer: 'woof\nmeow\nwoof',
+        explanation: '`chorus` relies on the `speak` method; both classes satisfy the interface.',
+      },
+      {
+        id: 'cs103-q4b-2',
+        type: 'multiple_choice',
+        prompt: 'What is the main downside of writing many `if isinstance(x, ...)` branches to choose behavior?',
+        options: ['It is too fast', 'It couples behavior to concrete types and is hard to extend', 'It prevents unit tests', 'It makes inheritance impossible'],
+        correctAnswer: 1,
+        explanation: 'Type-check branching is brittle; adding a new type often requires editing many branches.',
+      },
+      {
+        id: 'cs103-q4b-3',
+        type: 'code_output',
+        prompt: 'What is printed by this code?',
+        codeSnippet: `class Vec:
+    def __init__(self, x): self.x = x
+    def __add__(self, other): return Vec(self.x + other.x)
+    def __str__(self): return str(self.x)
+
+print(Vec(2) + Vec(5))`,
+        correctAnswer: '7',
+        explanation: '`__add__` returns a new `Vec` whose `x` is summed; printing uses `__str__`.',
+      },
+      {
+        id: 'cs103-q4b-4',
+        type: 'true_false',
+        prompt: 'Operator overloading can improve readability when it matches user expectations for a domain type.',
+        correctAnswer: true,
+        explanation: 'Overloading is useful when it expresses natural operations (e.g., vector addition).',
+      },
+      {
+        id: 'cs103-q4b-5',
+        type: 'fill_blank',
+        prompt: 'To support iteration in `for x in obj:`, a class can implement the ____ dunder method.',
+        correctAnswer: '__iter__',
+        explanation: '`__iter__` returns an iterator; alternatively `__getitem__` can sometimes enable iteration.',
+      },
+    ],
+  },
+  {
+    id: 'cs103-quiz-4c',
+    subjectId: 'cs103',
+    topicId: 'cs103-4',
+    title: 'Polymorphism — Quiz C (Advanced)',
+    questions: [
+      {
+        id: 'cs103-q4c-1',
+        type: 'multiple_choice',
+        prompt: 'In duck typing, what is the most reliable way to ensure compatibility?',
+        options: ['Check the exact type', 'Check method names and required behavior (interface)', 'Use global flags', 'Avoid functions'],
+        correctAnswer: 1,
+        explanation: 'Compatibility is about required operations/behavior, not concrete types.',
+      },
+      {
+        id: 'cs103-q4c-2',
+        type: 'code_output',
+        prompt: 'What is printed by this code?',
+        codeSnippet: `class A:
+    def __len__(self): return 3
+
+print(len(A()))`,
+        correctAnswer: '3',
+        explanation: 'Python’s `len()` calls the object’s `__len__` method.',
+      },
+      {
+        id: 'cs103-q4c-3',
+        type: 'multiple_choice',
+        prompt: 'What does `functools.singledispatch` primarily provide?',
+        options: ['Multiple inheritance', 'Runtime function overloading based on the first argument type', 'Static method binding', 'Automatic property generation'],
+        correctAnswer: 1,
+        explanation: '`singledispatch` selects an implementation based on the type of the first argument at runtime.',
+      },
+      {
+        id: 'cs103-q4c-4',
+        type: 'true_false',
+        prompt: 'It is always better to overload operators rather than provide explicit method names.',
+        correctAnswer: false,
+        explanation: 'Operator overloading can be confusing if it doesn’t match expectations; explicit method names are often clearer.',
+      },
+      {
+        id: 'cs103-q4c-5',
+        type: 'fill_blank',
+        prompt: 'The method that provides a developer-oriented representation of an object is ____.',
+        correctAnswer: '__repr__',
+        explanation: '`__repr__` is intended to be unambiguous and helpful for debugging.',
+      },
+    ],
+  },
+
+  // ============================================================================
+  // Topic 5: Design Patterns Intro
+  // ============================================================================
   {
     id: 'cs103-quiz-5',
     subjectId: 'cs103',
     topicId: 'cs103-5',
-    title: 'Design Patterns',
+    title: 'Design Patterns — Quiz A (Fundamentals)',
     questions: [
       {
-        id: 'cs103-q5-1',
+        id: 'cs103-q5a-1',
         type: 'multiple_choice',
         prompt: 'What is a design pattern?',
         options: [
-          'A specific piece of code to copy',
-          'A reusable solution to a commonly occurring problem in software design',
-          'A programming language feature',
-          'A type of algorithm'
+          'A finished library you install',
+          'A reusable solution template to a common design problem',
+          'A rule that all code must follow',
+          'A compiler optimization technique',
         ],
         correctAnswer: 1,
-        explanation: 'Design patterns are reusable solutions to common software design problems, representing best practices that have proven effective over time.'
+        explanation: 'Patterns describe proven design approaches, not drop-in code.',
       },
       {
-        id: 'cs103-q5-2',
+        id: 'cs103-q5a-2',
         type: 'multiple_choice',
-        prompt: 'What does the Singleton pattern ensure?',
-        options: [
-          'Multiple instances are created efficiently',
-          'A class has only one instance and provides global access to it',
-          'Objects are created in pairs',
-          'Classes cannot be instantiated'
-        ],
-        correctAnswer: 1,
-        explanation: 'The Singleton pattern ensures a class has only one instance and provides a global point of access to that instance.'
+        prompt: 'Which category does the Factory pattern belong to?',
+        options: ['Creational', 'Structural', 'Behavioral', 'Concurrency'],
+        correctAnswer: 0,
+        explanation: 'Factories are about object creation and decoupling construction from use.',
       },
       {
-        id: 'cs103-q5-3',
+        id: 'cs103-q5a-3',
         type: 'true_false',
-        prompt: 'Design patterns should be applied to every programming problem to ensure best practices.',
+        prompt: 'Design patterns should be applied to every problem to ensure best practices.',
         correctAnswer: false,
-        explanation: 'Design patterns should be used judiciously. Applying them unnecessarily can add complexity. They should only be used when they genuinely improve the design.'
-      }
-    ]
-  }
+        explanation: 'Overusing patterns can add complexity; use them when they solve a real design need.',
+      },
+      {
+        id: 'cs103-q5a-4',
+        type: 'fill_blank',
+        prompt: 'The Observer pattern is primarily used for ____-driven programming (e.g., event notifications).',
+        correctAnswer: 'event',
+        explanation: 'Observers are notified when something changes, enabling event-driven designs.',
+      },
+      {
+        id: 'cs103-q5a-5',
+        type: 'multiple_choice',
+        prompt: 'What does a Singleton pattern guarantee?',
+        options: [
+          'Many instances created efficiently',
+          'Exactly one instance with a global access point',
+          'No instances can be created',
+          'Instances are immutable',
+        ],
+        correctAnswer: 1,
+        explanation: 'Singleton restricts instantiation and provides a single shared instance.',
+      },
+    ],
+  },
+  {
+    id: 'cs103-quiz-5b',
+    subjectId: 'cs103',
+    topicId: 'cs103-5',
+    title: 'Design Patterns — Quiz B (Application)',
+    questions: [
+      {
+        id: 'cs103-q5b-1',
+        type: 'multiple_choice',
+        prompt: 'Which scenario best fits the Factory pattern?',
+        options: [
+          'You need to sort a list',
+          'You need to create different objects based on a configuration value',
+          'You need to store one global number',
+          'You need to compare two strings',
+        ],
+        correctAnswer: 1,
+        explanation: 'Factories select/construct concrete types based on inputs/config without exposing creation logic to callers.',
+      },
+      {
+        id: 'cs103-q5b-2',
+        type: 'code_output',
+        prompt: 'What is printed by this code?',
+        codeSnippet: `class Notifier:
+    def __init__(self):
+        self._subs = []
+    def subscribe(self, fn):
+        self._subs.append(fn)
+    def notify(self, msg):
+        for fn in self._subs:
+            fn(msg)
+
+n = Notifier()
+n.subscribe(lambda m: print("A:" + m))
+n.subscribe(lambda m: print("B:" + m))
+n.notify("hi")`,
+        correctAnswer: 'A:hi\nB:hi',
+        explanation: 'Observer-style: multiple subscribers are notified with the message.',
+      },
+      {
+        id: 'cs103-q5b-3',
+        type: 'true_false',
+        prompt: 'A key benefit of patterns is that they can reduce coupling between modules/classes.',
+        correctAnswer: true,
+        explanation: 'Many patterns isolate responsibilities and dependencies (e.g., Factory, Strategy, Observer).',
+      },
+      {
+        id: 'cs103-q5b-4',
+        type: 'fill_blank',
+        prompt: 'In the Strategy pattern, you typically swap out an object that implements a ____ (algorithm/policy) at runtime.',
+        correctAnswer: 'strategy',
+        explanation: 'The Strategy object represents the interchangeable algorithm/policy.',
+      },
+      {
+        id: 'cs103-q5b-5',
+        type: 'multiple_choice',
+        prompt: 'When is a Singleton usually a bad idea?',
+        options: [
+          'When you need shared configuration',
+          'When global mutable state makes testing and reasoning harder',
+          'When you want a single logger',
+          'When you want one instance of a dataclass',
+        ],
+        correctAnswer: 1,
+        explanation: 'Singletons can hide dependencies and create global state that is difficult to test.',
+      },
+    ],
+  },
+  {
+    id: 'cs103-quiz-5c',
+    subjectId: 'cs103',
+    topicId: 'cs103-5',
+    title: 'Design Patterns — Quiz C (Advanced)',
+    questions: [
+      {
+        id: 'cs103-q5c-1',
+        type: 'multiple_choice',
+        prompt: 'What is the primary design goal of the Adapter pattern?',
+        options: [
+          'Guarantee a single instance',
+          'Translate one interface into another expected by clients',
+          'Broadcast messages to many listeners',
+          'Create objects based on type',
+        ],
+        correctAnswer: 1,
+        explanation: 'Adapters wrap an object to present a compatible interface.',
+      },
+      {
+        id: 'cs103-q5c-2',
+        type: 'multiple_choice',
+        prompt: 'Which statement about patterns is most accurate?',
+        options: [
+          'Patterns are always faster than non-pattern code',
+          'Patterns eliminate the need for refactoring',
+          'Patterns help communicate design intent and typical trade-offs',
+          'Patterns force all code into rigid templates',
+        ],
+        correctAnswer: 2,
+        explanation: 'Patterns are vocabulary plus trade-offs; they don’t guarantee performance or perfection.',
+      },
+      {
+        id: 'cs103-q5c-3',
+        type: 'true_false',
+        prompt: 'A “God Object” is considered an anti-pattern because it centralizes too much responsibility.',
+        correctAnswer: true,
+        explanation: 'God Objects are hard to test, maintain, and extend because everything depends on them.',
+      },
+      {
+        id: 'cs103-q5c-4',
+        type: 'fill_blank',
+        prompt: 'A pattern that adds behavior to an object without modifying its class is ____.',
+        correctAnswer: 'Decorator',
+        explanation: 'Decorator wraps an object to extend behavior while preserving its interface.',
+      },
+      {
+        id: 'cs103-q5c-5',
+        type: 'code_output',
+        prompt: 'What is printed by this code?',
+        codeSnippet: `class Service:
+    def run(self): return "ok"
+
+class LoggingDecorator:
+    def __init__(self, svc): self._svc = svc
+    def run(self):
+        result = self._svc.run()
+        return "LOG:" + result
+
+print(LoggingDecorator(Service()).run())`,
+        correctAnswer: 'LOG:ok',
+        explanation: 'Decorator wraps the service and adds behavior (prefixing the result).',
+      },
+    ],
+  },
+
+  // ============================================================================
+  // Topic 6: Abstraction and Interfaces
+  // ============================================================================
+  {
+    id: 'cs103-quiz-6a',
+    subjectId: 'cs103',
+    topicId: 'cs103-6',
+    title: 'Abstraction and Interfaces — Quiz A (Fundamentals)',
+    questions: [
+      {
+        id: 'cs103-q6a-1',
+        type: 'multiple_choice',
+        prompt: 'What is the primary goal of abstraction?',
+        options: [
+          'Make code shorter',
+          'Hide internal details and expose essential capabilities',
+          'Force all classes to inherit from one base class',
+          'Avoid using functions',
+        ],
+        correctAnswer: 1,
+        explanation: 'Abstraction helps you focus on what an object can do, reducing coupling to implementation details.',
+      },
+      {
+        id: 'cs103-q6a-2',
+        type: 'fill_blank',
+        prompt: 'Python’s module for defining abstract base classes is named ____.',
+        correctAnswer: 'abc',
+        explanation: 'The `abc` module provides `ABC` and `@abstractmethod`.',
+      },
+      {
+        id: 'cs103-q6a-3',
+        type: 'true_false',
+        prompt: 'An abstract method can have an implementation, but the subclass is still required to override it (unless the subclass remains abstract).',
+        correctAnswer: true,
+        explanation: 'Abstract methods may include partial/shared logic, but they still must be implemented by concrete subclasses.',
+      },
+      {
+        id: 'cs103-q6a-4',
+        type: 'multiple_choice',
+        prompt: 'What is the key idea behind a `typing.Protocol`?',
+        options: [
+          'Only classes that inherit the Protocol are compatible',
+          'Compatibility is based on having the required methods (structural typing)',
+          'It disables inheritance',
+          'It is used only for runtime performance',
+        ],
+        correctAnswer: 1,
+        explanation: 'Protocols express “has the right methods” without forcing inheritance.',
+      },
+      {
+        id: 'cs103-q6a-5',
+        type: 'multiple_choice',
+        prompt: 'Which pattern is commonly used when a base class defines algorithm steps and subclasses fill in the details?',
+        options: ['Factory', 'Template Method', 'Singleton', 'Observer'],
+        correctAnswer: 1,
+        explanation: 'Template Method defines a skeleton algorithm in a base class and defers steps to subclasses.',
+      },
+    ],
+  },
+  {
+    id: 'cs103-quiz-6b',
+    subjectId: 'cs103',
+    topicId: 'cs103-6',
+    title: 'Abstraction and Interfaces — Quiz B (Application)',
+    questions: [
+      {
+        id: 'cs103-q6b-1',
+        type: 'code_output',
+        prompt: 'What happens when you try to instantiate this class?',
+        codeSnippet: `from abc import ABC, abstractmethod
+
+class A(ABC):
+    @abstractmethod
+    def f(self):
+        pass
+
+A()`,
+        correctAnswer: 'TypeError',
+        explanation: 'A class with unimplemented abstract methods cannot be instantiated; Python raises a TypeError.',
+      },
+      {
+        id: 'cs103-q6b-2',
+        type: 'multiple_choice',
+        prompt: 'What is a good reason to accept a dependency via a constructor parameter?',
+        options: [
+          'It guarantees faster code',
+          'It improves testability and reduces coupling',
+          'It prevents polymorphism',
+          'It forces singletons',
+        ],
+        correctAnswer: 1,
+        explanation: 'Dependency injection makes it easy to swap implementations and write unit tests.',
+      },
+      {
+        id: 'cs103-q6b-3',
+        type: 'true_false',
+        prompt: 'Using an interface/ABC can allow you to add new implementations without changing the calling code.',
+        correctAnswer: true,
+        explanation: 'Callers depend on the contract, so new implementations can be plugged in.',
+      },
+      {
+        id: 'cs103-q6b-4',
+        type: 'fill_blank',
+        prompt: 'In a template method, the base class typically calls “step” methods, which are often marked as ____.',
+        correctAnswer: 'abstractmethod',
+        explanation: 'Abstract “steps” ensure subclasses provide required details.',
+      },
+      {
+        id: 'cs103-q6b-5',
+        type: 'multiple_choice',
+        prompt: 'Which choice is usually best for a small “capability” interface in Python?',
+        options: ['Deep inheritance tree', 'Global variables', 'A small Protocol or duck-typed interface', 'A monolithic base class with dozens of methods'],
+        correctAnswer: 2,
+        explanation: 'Small, behavior-focused interfaces are easier to implement and test.',
+      },
+    ],
+  },
+  {
+    id: 'cs103-quiz-6c',
+    subjectId: 'cs103',
+    topicId: 'cs103-6',
+    title: 'Abstraction and Interfaces — Quiz C (Advanced)',
+    questions: [
+      {
+        id: 'cs103-q6c-1',
+        type: 'multiple_choice',
+        prompt: 'Which is a risk of overly large interfaces?',
+        options: [
+          'They increase runtime speed',
+          'They force implementations to define irrelevant methods (poor cohesion)',
+          'They eliminate the need for testing',
+          'They prevent polymorphism',
+        ],
+        correctAnswer: 1,
+        explanation: 'Large interfaces reduce cohesion and increase coupling; implementations end up with meaningless stubs.',
+      },
+      {
+        id: 'cs103-q6c-2',
+        type: 'code_output',
+        prompt: 'What does this code print?',
+        codeSnippet: `class A:
+    def f(self): return "A"
+class B(A):
+    def f(self): return "B"
+
+def g(x: A):
+    print(x.f())
+
+g(B())`,
+        correctAnswer: 'B',
+        explanation: 'Substitutability: a `B` can be used where an `A` is expected.',
+      },
+      {
+        id: 'cs103-q6c-3',
+        type: 'true_false',
+        prompt: 'A Protocol can be used for type checking without requiring explicit inheritance by the implementing class.',
+        correctAnswer: true,
+        explanation: 'That is the key benefit of structural typing.',
+      },
+      {
+        id: 'cs103-q6c-4',
+        type: 'fill_blank',
+        prompt: 'Depending on abstractions rather than concrete implementations is known as the Dependency ____ Principle.',
+        correctAnswer: 'Inversion',
+        explanation: 'Dependency Inversion encourages high-level code to depend on abstractions.',
+      },
+      {
+        id: 'cs103-q6c-5',
+        type: 'multiple_choice',
+        prompt: 'When might an ABC be preferred over a Protocol?',
+        options: [
+          'When you need runtime `isinstance` checks and shared template logic',
+          'When you want to avoid any inheritance in your project',
+          'When you want to prevent type checking entirely',
+          'When you need global variables',
+        ],
+        correctAnswer: 0,
+        explanation: 'ABCs support runtime checks and can provide shared algorithm structure via base methods.',
+      },
+    ],
+  },
+
+  // ============================================================================
+  // Topic 7: Design Principles and Testing
+  // ============================================================================
+  {
+    id: 'cs103-quiz-7a',
+    subjectId: 'cs103',
+    topicId: 'cs103-7',
+    title: 'Design Principles and Testing — Quiz A (Fundamentals)',
+    questions: [
+      {
+        id: 'cs103-q7a-1',
+        type: 'multiple_choice',
+        prompt: '“Composition over inheritance” mainly recommends:',
+        options: [
+          'Never use inheritance',
+          'Prefer building behavior by combining objects rather than subclassing for reuse',
+          'Always use multiple inheritance',
+          'Replace classes with global functions',
+        ],
+        correctAnswer: 1,
+        explanation: 'Composition can reduce coupling and make designs more flexible.',
+      },
+      {
+        id: 'cs103-q7a-2',
+        type: 'multiple_choice',
+        prompt: 'Which SOLID principle is most directly about “one reason to change”?',
+        options: ['SRP', 'OCP', 'LSP', 'DIP'],
+        correctAnswer: 0,
+        explanation: 'Single Responsibility Principle (SRP) recommends focused classes/modules.',
+      },
+      {
+        id: 'cs103-q7a-3',
+        type: 'true_false',
+        prompt: 'Dependency injection generally improves testability.',
+        correctAnswer: true,
+        explanation: 'Injecting dependencies makes it easy to swap real implementations for fakes in tests.',
+      },
+      {
+        id: 'cs103-q7a-4',
+        type: 'fill_blank',
+        prompt: 'A test double that records calls and arguments is often called a ____.',
+        correctAnswer: 'spy',
+        explanation: 'Spies track interactions so tests can assert how collaborators were used.',
+      },
+      {
+        id: 'cs103-q7a-5',
+        type: 'multiple_choice',
+        prompt: 'What is the best focus for a unit test of a class?',
+        options: ['Private helper methods', 'Public behavior and outputs', 'Exact line-by-line execution order', 'Internal variable names'],
+        correctAnswer: 1,
+        explanation: 'Unit tests should validate externally visible behavior, not internal implementation details.',
+      },
+    ],
+  },
+  {
+    id: 'cs103-quiz-7b',
+    subjectId: 'cs103',
+    topicId: 'cs103-7',
+    title: 'Design Principles and Testing — Quiz B (Application)',
+    questions: [
+      {
+        id: 'cs103-q7b-1',
+        type: 'multiple_choice',
+        prompt: 'What is a common symptom of high coupling?',
+        options: [
+          'Changes are localized',
+          'Small changes require edits in many places',
+          'Tests are fast and simple',
+          'Classes are small and focused',
+        ],
+        correctAnswer: 1,
+        explanation: 'High coupling causes change ripples across the codebase.',
+      },
+      {
+        id: 'cs103-q7b-2',
+        type: 'code_output',
+        prompt: 'What is printed by this code?',
+        codeSnippet: `class FakeSender:
+    def __init__(self): self.sent = []
+    def send(self, to, subject): self.sent.append((to, subject))
+
+class Notifier:
+    def __init__(self, sender): self.sender = sender
+    def welcome(self, email): self.sender.send(email, "Welcome")
+
+sender = FakeSender()
+Notifier(sender).welcome("a@example.com")
+print(sender.sent)`,
+        correctAnswer: "[('a@example.com', 'Welcome')]",
+        explanation: 'A fake dependency captures calls so you can assert behavior without real side effects.',
+      },
+      {
+        id: 'cs103-q7b-3',
+        type: 'true_false',
+        prompt: 'Constructors (`__init__`) should generally avoid slow or external operations (network, disk).',
+        correctAnswer: true,
+        explanation: 'Keeping constructors lightweight makes code easier to test and reason about.',
+      },
+      {
+        id: 'cs103-q7b-4',
+        type: 'fill_blank',
+        prompt: 'Refactoring means improving internal code structure without changing ____ behavior.',
+        correctAnswer: 'external',
+        explanation: 'Refactoring changes design while preserving what the program does from the outside.',
+      },
+      {
+        id: 'cs103-q7b-5',
+        type: 'multiple_choice',
+        prompt: 'Which is the best reason to introduce an interface/abstraction?',
+        options: [
+          'Because patterns require it',
+          'Because you have only one implementation',
+          'Because you need to swap implementations or isolate dependencies',
+          'Because it makes code longer',
+        ],
+        correctAnswer: 2,
+        explanation: 'Abstractions are useful when they reduce coupling and support extension/testing.',
+      },
+    ],
+  },
+  {
+    id: 'cs103-quiz-7c',
+    subjectId: 'cs103',
+    topicId: 'cs103-7',
+    title: 'Design Principles and Testing — Quiz C (Advanced)',
+    questions: [
+      {
+        id: 'cs103-q7c-1',
+        type: 'multiple_choice',
+        prompt: 'Which change most strongly improves testability of a class?',
+        options: [
+          'Make all fields global',
+          'Hard-code dependencies inside methods',
+          'Inject dependencies through the constructor',
+          'Use inheritance everywhere',
+        ],
+        correctAnswer: 2,
+        explanation: 'Injected dependencies can be replaced by fakes in tests.',
+      },
+      {
+        id: 'cs103-q7c-2',
+        type: 'true_false',
+        prompt: 'A unit test that asserts private attributes directly is usually brittle.',
+        correctAnswer: true,
+        explanation: 'Private/internal details change during refactors; tests should focus on public behavior.',
+      },
+      {
+        id: 'cs103-q7c-3',
+        type: 'fill_blank',
+        prompt: 'When a subclass strengthens preconditions or weakens postconditions, it risks violating ____.',
+        correctAnswer: 'LSP',
+        explanation: 'Liskov Substitution Principle requires subclasses to honor base class contracts.',
+      },
+      {
+        id: 'cs103-q7c-4',
+        type: 'multiple_choice',
+        prompt: 'Which is a good heuristic for deciding to refactor?',
+        options: [
+          'Refactor every file daily',
+          'Refactor when you feel real design pressure (duplication, confusing dependencies, hard-to-test code)',
+          'Refactor only after adding new features',
+          'Never refactor working code',
+        ],
+        correctAnswer: 1,
+        explanation: 'Refactor to reduce friction and risk when the design is making change difficult.',
+      },
+      {
+        id: 'cs103-q7c-5',
+        type: 'code_output',
+        prompt: 'What is printed by this code?',
+        codeSnippet: `class TaxPolicy:
+    def rate(self): return 0.2
+
+class Cart:
+    def __init__(self, policy): self.policy = policy
+    def total_with_tax(self, subtotal):
+        return subtotal * (1 + self.policy.rate())
+
+print(Cart(TaxPolicy()).total_with_tax(100))`,
+        correctAnswer: '120.0',
+        explanation: 'Cart composes a policy object; changing the policy changes behavior without subclassing Cart.',
+      },
+    ],
+  },
 ];
+

@@ -5,7 +5,8 @@ Experienced developers notice that certain problems come up repeatedly: "I need 
 **Why This Matters:**
 Design patterns aren't just academic—they're the building blocks of professional software. Frameworks like Django, React, and Java's standard library use patterns extensively. Understanding patterns helps you recognize good architecture, communicate effectively with other developers, and avoid reinventing the wheel.
 
-**Learning Objectives:**
+## Learning Objectives
+
 - Understand what design patterns are and when to use them
 - Implement the Singleton pattern for global state
 - Use the Factory pattern to create objects flexibly
@@ -431,6 +432,13 @@ response = requests.get('https://api.example.com')
 4. **Python has a better way:** Decorators, context managers, generators often replace patterns.
 
 ---
+
+## Summary
+
+- Design patterns are reusable design templates, not copy/paste code.
+- Patterns provide shared vocabulary and reduce accidental complexity when used appropriately.
+- Singleton, Factory, and Observer solve common creation and communication problems.
+- Avoid patterns when they don’t add clarity or flexibility.
 
 ## Further Exploration
 

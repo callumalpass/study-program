@@ -6,168 +6,659 @@ export const topic2Exercises: CodingExercise[] = [
     id: 'cs103-ex-2',
     subjectId: 'cs103',
     topicId: 'cs103-2',
-    title: 'Implement Encapsulation with Properties',
-    difficulty: 3,
-    description: 'Create a Temperature class that stores temperature in Celsius but prevents invalid temperatures below absolute zero (-273.15°C). Use a property to encapsulate the temperature attribute with validation.',
-    starterCode: 'class Temperature:\n    def __init__(self, celsius):\n        pass\n    \n    @property\n    def celsius(self):\n        pass\n    \n    @celsius.setter\n    def celsius(self, value):\n        pass',
+    title: 'Validated Temperature',
+    difficulty: 2,
+    description:
+      'Create a `Temperature` class storing a temperature in Celsius. Use a property `celsius` with a setter that rejects values below -273.15 (absolute zero).',
+    starterCode:
+      'class Temperature:\n' +
+      '    def __init__(self, celsius):\n' +
+      '        # TODO\n' +
+      '        pass\n' +
+      '\n' +
+      '    @property\n' +
+      '    def celsius(self):\n' +
+      '        pass\n' +
+      '\n' +
+      '    @celsius.setter\n' +
+      '    def celsius(self, value):\n' +
+      '        # TODO: raise ValueError if value < -273.15\n' +
+      '        pass\n',
+    solution:
+      'class Temperature:\n' +
+      '    def __init__(self, celsius):\n' +
+      '        self.celsius = celsius\n' +
+      '\n' +
+      '    @property\n' +
+      '    def celsius(self):\n' +
+      '        return self._celsius\n' +
+      '\n' +
+      '    @celsius.setter\n' +
+      '    def celsius(self, value):\n' +
+      '        if value < -273.15:\n' +
+      '            raise ValueError("Temperature below absolute zero")\n' +
+      '        self._celsius = value\n',
     testCases: [
+      { input: 't = Temperature(0)\nprint(t.celsius)', isHidden: false, description: 'Initial value stored' },
+      {
+        input: 't = Temperature(1)\nt.celsius = 10\nprint(t.celsius)',
+        isHidden: false,
+        description: 'Setter updates',
+      },
+      {
+        input: 'try:\n    Temperature(-300)\n    print("no")\nexcept ValueError:\n    print("yes")',
+        isHidden: true,
+        description: 'Reject below absolute zero',
+      },
     ],
-    hints: ['Use a private variable like _celsius', 'In the setter, check if value >= -273.15'],
-    solution: 'class Temperature:\n    def __init__(self, celsius):\n        self._celsius = celsius if celsius >= -273.15 else 0\n    \n    @property\n    def celsius(self):\n        return self._celsius\n    \n    @celsius.setter\n    def celsius(self, value):\n        if value >= -273.15:\n            self._celsius = value',
-    language: 'python'
+    hints: ['Use a backing field like `self._celsius`', 'In `__init__`, assign through the property to reuse validation'],
+    language: 'python',
   },
   {
     id: 'cs103-t2-ex02',
     subjectId: 'cs103',
     topicId: 'cs103-2',
-    title: 'Private Counter',
+    title: 'Read-Only Full Name',
     difficulty: 1,
-    description: 'Create a Counter class with a private count variable. Provide a get_count method and an increment method.',
-    starterCode: 'class Counter:\n    def __init__(self):\n        # Use _count for private variable\n        pass\n    \n    def get_count(self):\n        pass\n    \n    def increment(self):\n        pass\n\nc = Counter()\nc.increment()\nprint(c.get_count())',
-    solution: 'class Counter:\n    def __init__(self):\n        self._count = 0\n    \n    def get_count(self):\n        return self._count\n    \n    def increment(self):\n        self._count += 1\n\nc = Counter()\nc.increment()\nprint(c.get_count())',
+    description: 'Create a `User` class with `first_name` and `last_name` and a read-only property `full_name`.',
+    starterCode:
+      'class User:\n' +
+      '    def __init__(self, first_name, last_name):\n' +
+      '        pass\n' +
+      '\n' +
+      '    @property\n' +
+      '    def full_name(self):\n' +
+      '        pass\n',
+    solution:
+      'class User:\n' +
+      '    def __init__(self, first_name, last_name):\n' +
+      '        self.first_name = first_name\n' +
+      '        self.last_name = last_name\n' +
+      '\n' +
+      '    @property\n' +
+      '    def full_name(self):\n' +
+      '        return f"{self.first_name} {self.last_name}".strip()\n',
     testCases: [
+      { input: 'u = User("Ada", "Lovelace")\nprint(u.full_name)', isHidden: false, description: 'Combines names' },
+      { input: 'u = User("Ada", "")\nprint(u.full_name)', isHidden: true, description: 'Handles missing last name' },
+      { input: 'u = User("", "Lovelace")\nprint(u.full_name)', isHidden: true, description: 'Handles missing first name' },
     ],
-    hints: ['Use _ prefix for private variables', 'External code should use get_count() not _count'],
-    language: 'python'
+    hints: ['Use `@property` for a computed attribute', 'Return a string built from first/last name'],
+    language: 'python',
   },
   {
     id: 'cs103-t2-ex03',
     subjectId: 'cs103',
     topicId: 'cs103-2',
-    title: 'Read-Only Property',
+    title: 'Protected Balance with Methods',
     difficulty: 2,
-    description: 'Create a Circle class where radius can be set but area is read-only (calculated property).',
-    starterCode: 'import math\n\nclass Circle:\n    def __init__(self, radius):\n        pass\n    \n    @property\n    def area(self):\n        # Read-only: no setter\n        pass\n\nc = Circle(5)\nprint(round(c.area, 2))',
-    solution: 'import math\n\nclass Circle:\n    def __init__(self, radius):\n        self.radius = radius\n    \n    @property\n    def area(self):\n        return math.pi * self.radius ** 2\n\nc = Circle(5)\nprint(round(c.area, 2))',
+    description:
+      'Create an `Account` class that stores its balance in `_balance` and only changes it through `deposit(amount)` and `withdraw(amount)`. Reject negative deposits/withdrawals.',
+    starterCode:
+      'class Account:\n' +
+      '    def __init__(self, initial_balance=0):\n' +
+      '        pass\n' +
+      '\n' +
+      '    def deposit(self, amount):\n' +
+      '        pass\n' +
+      '\n' +
+      '    def withdraw(self, amount):\n' +
+      '        pass\n' +
+      '\n' +
+      '    def get_balance(self):\n' +
+      '        pass\n',
+    solution:
+      'class Account:\n' +
+      '    def __init__(self, initial_balance=0):\n' +
+      '        self._balance = initial_balance\n' +
+      '\n' +
+      '    def deposit(self, amount):\n' +
+      '        if amount < 0:\n' +
+      '            raise ValueError("amount must be >= 0")\n' +
+      '        self._balance += amount\n' +
+      '\n' +
+      '    def withdraw(self, amount):\n' +
+      '        if amount < 0:\n' +
+      '            raise ValueError("amount must be >= 0")\n' +
+      '        if amount > self._balance:\n' +
+      '            return False\n' +
+      '        self._balance -= amount\n' +
+      '        return True\n' +
+      '\n' +
+      '    def get_balance(self):\n' +
+      '        return self._balance\n',
     testCases: [
+      { input: 'a = Account(10)\na.deposit(5)\nprint(a.get_balance())', isHidden: false, description: 'Deposit works' },
+      { input: 'a = Account(10)\nprint(a.withdraw(7), a.get_balance())', isHidden: false, description: 'Withdraw returns True and updates balance' },
+      { input: 'a = Account(10)\nprint(a.withdraw(99), a.get_balance())', isHidden: true, description: 'Over-withdraw returns False' },
     ],
-    hints: ['@property without setter makes it read-only', 'Use math.pi for calculations'],
-    language: 'python'
+    hints: ['Use `_balance` backing field', 'Raise for negative amounts', 'Return False if insufficient funds'],
+    language: 'python',
   },
   {
     id: 'cs103-t2-ex04',
     subjectId: 'cs103',
     topicId: 'cs103-2',
-    title: 'Age Validation',
-    difficulty: 2,
-    description: 'Create a Person class where age is validated (must be 0-150). Invalid ages should be ignored.',
-    starterCode: 'class Person:\n    def __init__(self, name, age):\n        self.name = name\n        self._age = 0\n        self.age = age  # Use setter\n    \n    @property\n    def age(self):\n        pass\n    \n    @age.setter\n    def age(self, value):\n        pass\n\np = Person("Alice", 30)\nprint(p.age)',
-    solution: 'class Person:\n    def __init__(self, name, age):\n        self.name = name\n        self._age = 0\n        self.age = age\n    \n    @property\n    def age(self):\n        return self._age\n    \n    @age.setter\n    def age(self, value):\n        if 0 <= value <= 150:\n            self._age = value\n\np = Person("Alice", 30)\nprint(p.age)',
+    title: 'Email Property Validation',
+    difficulty: 3,
+    description: 'Create a `Profile` class with an `email` property. Reject emails that do not contain exactly one `@`.',
+    starterCode:
+      'class Profile:\n' +
+      '    def __init__(self, email):\n' +
+      '        pass\n' +
+      '\n' +
+      '    @property\n' +
+      '    def email(self):\n' +
+      '        pass\n' +
+      '\n' +
+      '    @email.setter\n' +
+      '    def email(self, value):\n' +
+      '        pass\n',
+    solution:
+      'class Profile:\n' +
+      '    def __init__(self, email):\n' +
+      '        self.email = email\n' +
+      '\n' +
+      '    @property\n' +
+      '    def email(self):\n' +
+      '        return self._email\n' +
+      '\n' +
+      '    @email.setter\n' +
+      '    def email(self, value):\n' +
+      '        if value.count("@") != 1:\n' +
+      '            raise ValueError("invalid email")\n' +
+      '        self._email = value\n',
     testCases: [
+      { input: 'p = Profile("a@b")\nprint(p.email)', isHidden: false, description: 'Valid email' },
+      {
+        input: 'try:\n    Profile("ab")\n    print("no")\nexcept ValueError:\n    print("yes")',
+        isHidden: false,
+        description: 'Missing @ invalid',
+      },
+      {
+        input: 'p = Profile("a@b")\np.email = "x@y"\nprint(p.email)',
+        isHidden: true,
+        description: 'Setter re-validates',
+      },
     ],
-    hints: ['Check 0 <= value <= 150 in setter', 'Invalid values should not change _age'],
-    language: 'python'
+    hints: ['Store backing field like `_email`', 'Use `value.count("@")` to validate'],
+    language: 'python',
   },
   {
     id: 'cs103-t2-ex05',
     subjectId: 'cs103',
     topicId: 'cs103-2',
-    title: 'Bank Account with Balance Protection',
+    title: 'Defensive Copy for List',
     difficulty: 3,
-    description: 'Create a BankAccount where balance can only be modified through deposit/withdraw methods, not directly.',
-    starterCode: 'class BankAccount:\n    def __init__(self, initial):\n        self.__balance = initial\n    \n    @property\n    def balance(self):\n        pass\n    \n    def deposit(self, amount):\n        pass\n    \n    def withdraw(self, amount):\n        pass\n\nacc = BankAccount(100)\nacc.deposit(50)\nprint(acc.balance)',
-    solution: 'class BankAccount:\n    def __init__(self, initial):\n        self.__balance = initial\n    \n    @property\n    def balance(self):\n        return self.__balance\n    \n    def deposit(self, amount):\n        if amount > 0:\n            self.__balance += amount\n    \n    def withdraw(self, amount):\n        if 0 < amount <= self.__balance:\n            self.__balance -= amount\n\nacc = BankAccount(100)\nacc.deposit(50)\nprint(acc.balance)',
+    description:
+      'Create a `Bag` class that stores items internally and exposes an `items` property that returns a copy (so callers cannot mutate internal state directly).',
+    starterCode:
+      'class Bag:\n' +
+      '    def __init__(self, items=None):\n' +
+      '        pass\n' +
+      '\n' +
+      '    def add(self, item):\n' +
+      '        pass\n' +
+      '\n' +
+      '    @property\n' +
+      '    def items(self):\n' +
+      '        pass\n',
+    solution:
+      'class Bag:\n' +
+      '    def __init__(self, items=None):\n' +
+      '        self._items = list(items) if items is not None else []\n' +
+      '\n' +
+      '    def add(self, item):\n' +
+      '        self._items.append(item)\n' +
+      '\n' +
+      '    @property\n' +
+      '    def items(self):\n' +
+      '        return list(self._items)\n',
     testCases: [
+      { input: 'b = Bag([1, 2]); copy = b.items; copy.append(3)\nprint(b.items)', isHidden: false, description: 'Mutation of copy does not affect bag' },
+      { input: 'b = Bag(); b.add("x"); print(b.items)', isHidden: false, description: 'Add works' },
+      { input: 'b = Bag(None); print(b.items)', isHidden: true, description: 'None initializes to empty' },
     ],
-    hints: ['Use __ prefix for name mangling', 'No setter for balance = truly protected'],
-    language: 'python'
+    hints: ['Store internal list as `_items`', 'Return `list(self._items)` from the property'],
+    language: 'python',
   },
   {
     id: 'cs103-t2-ex06',
     subjectId: 'cs103',
     topicId: 'cs103-2',
-    title: 'Email Validation',
-    difficulty: 3,
-    description: 'Create a User class with email property that validates email contains @ symbol.',
-    starterCode: 'class User:\n    def __init__(self, name, email):\n        self.name = name\n        self._email = ""\n        self.email = email\n    \n    @property\n    def email(self):\n        pass\n    \n    @email.setter\n    def email(self, value):\n        pass\n\nu = User("Alice", "alice@test.com")\nprint(u.email)',
-    solution: 'class User:\n    def __init__(self, name, email):\n        self.name = name\n        self._email = ""\n        self.email = email\n    \n    @property\n    def email(self):\n        return self._email\n    \n    @email.setter\n    def email(self, value):\n        if "@" in value:\n            self._email = value\n\nu = User("Alice", "alice@test.com")\nprint(u.email)',
+    title: 'Read-Only ID with Name Mangling',
+    difficulty: 2,
+    description: 'Create a `Ticket` class with a “private” `__id` field set in `__init__` and a read-only `id` property.',
+    starterCode:
+      'class Ticket:\n' +
+      '    def __init__(self, ticket_id):\n' +
+      '        pass\n' +
+      '\n' +
+      '    @property\n' +
+      '    def id(self):\n' +
+      '        pass\n',
+    solution:
+      'class Ticket:\n' +
+      '    def __init__(self, ticket_id):\n' +
+      '        self.__id = ticket_id\n' +
+      '\n' +
+      '    @property\n' +
+      '    def id(self):\n' +
+      '        return self.__id\n',
     testCases: [
+      { input: 't = Ticket(123)\nprint(t.id)', isHidden: false, description: 'Expose id via property' },
+      { input: 't = Ticket(1)\nprint(hasattr(t, "__id"), hasattr(t, "_Ticket__id"))', isHidden: true, description: 'Name mangling' },
+      { input: 't = Ticket("x")\nprint(t.id)', isHidden: true, description: 'Works for any value type' },
     ],
-    hints: ['Check if "@" in value', 'Reject emails without @'],
-    language: 'python'
+    hints: ['Store as `self.__id`', 'Expose via `@property def id(self): return ...`'],
+    language: 'python',
   },
   {
     id: 'cs103-t2-ex07',
     subjectId: 'cs103',
     topicId: 'cs103-2',
-    title: 'Immutable Point',
-    difficulty: 4,
-    description: 'Create a Point class where x and y are set once in constructor and cannot be changed afterward.',
-    starterCode: 'class Point:\n    def __init__(self, x, y):\n        self.__x = x\n        self.__y = y\n    \n    @property\n    def x(self):\n        pass\n    \n    @property\n    def y(self):\n        pass\n    \n    def distance_from_origin(self):\n        pass\n\np = Point(3, 4)\nprint(p.distance_from_origin())',
-    solution: 'class Point:\n    def __init__(self, x, y):\n        self.__x = x\n        self.__y = y\n    \n    @property\n    def x(self):\n        return self.__x\n    \n    @property\n    def y(self):\n        return self.__y\n    \n    def distance_from_origin(self):\n        return (self.__x ** 2 + self.__y ** 2) ** 0.5\n\np = Point(3, 4)\nprint(p.distance_from_origin())',
+    title: 'Clamped Volume (0–100)',
+    difficulty: 3,
+    description: 'Create a `Speaker` class with a `volume` property that clamps values into the range 0..100.',
+    starterCode:
+      'class Speaker:\n' +
+      '    def __init__(self, volume=50):\n' +
+      '        pass\n' +
+      '\n' +
+      '    @property\n' +
+      '    def volume(self):\n' +
+      '        pass\n' +
+      '\n' +
+      '    @volume.setter\n' +
+      '    def volume(self, value):\n' +
+      '        pass\n',
+    solution:
+      'class Speaker:\n' +
+      '    def __init__(self, volume=50):\n' +
+      '        self.volume = volume\n' +
+      '\n' +
+      '    @property\n' +
+      '    def volume(self):\n' +
+      '        return self._volume\n' +
+      '\n' +
+      '    @volume.setter\n' +
+      '    def volume(self, value):\n' +
+      '        if value < 0:\n' +
+      '            value = 0\n' +
+      '        if value > 100:\n' +
+      '            value = 100\n' +
+      '        self._volume = value\n',
     testCases: [
+      { input: 's = Speaker(-10)\nprint(s.volume)', isHidden: false, description: 'Clamps low' },
+      { input: 's = Speaker(999)\nprint(s.volume)', isHidden: false, description: 'Clamps high' },
+      { input: 's = Speaker(); s.volume = 80\nprint(s.volume)', isHidden: true, description: 'Setter works' },
     ],
-    hints: ['Read-only properties = no setter', 'Distance = sqrt(x^2 + y^2)'],
-    language: 'python'
+    hints: ['Assign through the property in `__init__`', 'Clamp values below 0 and above 100'],
+    language: 'python',
   },
   {
     id: 'cs103-t2-ex08',
     subjectId: 'cs103',
     topicId: 'cs103-2',
-    title: 'Password Hasher',
-    difficulty: 5,
-    description: 'Create a UserAccount class where password is stored hashed (use simple hash for demo). Password can only be verified, not retrieved.',
-    starterCode: 'class UserAccount:\n    def __init__(self, username, password):\n        self.username = username\n        self.__password_hash = self._hash(password)\n    \n    def _hash(self, value):\n        # Simple hash for demo\n        return sum(ord(c) for c in value)\n    \n    def verify_password(self, password):\n        pass\n    \n    def change_password(self, old_pw, new_pw):\n        pass\n\nu = UserAccount("alice", "secret")\nprint(u.verify_password("secret"))',
-    solution: 'class UserAccount:\n    def __init__(self, username, password):\n        self.username = username\n        self.__password_hash = self._hash(password)\n    \n    def _hash(self, value):\n        return sum(ord(c) for c in value)\n    \n    def verify_password(self, password):\n        return self._hash(password) == self.__password_hash\n    \n    def change_password(self, old_pw, new_pw):\n        if self.verify_password(old_pw):\n            self.__password_hash = self._hash(new_pw)\n            return True\n        return False\n\nu = UserAccount("alice", "secret")\nprint(u.verify_password("secret"))',
+    title: 'Immutable Money Value Object',
+    difficulty: 4,
+    description:
+      'Create a `Money` class with `amount` and `currency`. Prevent changing these after initialization by making them read-only properties.',
+    starterCode:
+      'class Money:\n' +
+      '    def __init__(self, amount, currency):\n' +
+      '        pass\n' +
+      '\n' +
+      '    @property\n' +
+      '    def amount(self):\n' +
+      '        pass\n' +
+      '\n' +
+      '    @property\n' +
+      '    def currency(self):\n' +
+      '        pass\n',
+    solution:
+      'class Money:\n' +
+      '    def __init__(self, amount, currency):\n' +
+      '        self._amount = amount\n' +
+      '        self._currency = currency\n' +
+      '\n' +
+      '    @property\n' +
+      '    def amount(self):\n' +
+      '        return self._amount\n' +
+      '\n' +
+      '    @property\n' +
+      '    def currency(self):\n' +
+      '        return self._currency\n',
     testCases: [
+      { input: 'm = Money(10, "USD")\nprint(m.amount, m.currency)', isHidden: false, description: 'Stores values' },
+      {
+        input: 'm = Money(1, "USD")\ntry:\n    m.amount = 2\n    print("no")\nexcept AttributeError:\n    print("yes")',
+        isHidden: false,
+        description: 'Read-only amount',
+      },
+      {
+        input: 'm = Money(1, "USD")\ntry:\n    m.currency = "EUR"\n    print("no")\nexcept AttributeError:\n    print("yes")',
+        isHidden: true,
+        description: 'Read-only currency',
+      },
     ],
-    hints: ['Never store or return the actual password', 'Compare hashes instead'],
-    language: 'python'
+    hints: ['Expose read-only properties (no setters)', 'Store backing fields like `_amount`'],
+    language: 'python',
   },
   {
     id: 'cs103-t2-ex09',
     subjectId: 'cs103',
     topicId: 'cs103-2',
-    title: 'Lazy Property Initialization',
+    title: 'Lazy Computed Property',
     difficulty: 4,
-    description: 'Create a DataLoader class with an expensive data property that computes only once (lazy loading). Use a cached property pattern.',
-    starterCode: 'class DataLoader:\n    def __init__(self, source):\n        self.source = source\n        self._data = None\n    \n    @property\n    def data(self):\n        # Load data only on first access\n        pass\n    \n    def _load_data(self):\n        print(f"Loading from {self.source}...")\n        return [1, 2, 3, 4, 5]\n\nloader = DataLoader("database")\nprint(loader.data)  # Should print loading message\nprint(loader.data)  # Should NOT print loading message',
-    solution: 'class DataLoader:\n    def __init__(self, source):\n        self.source = source\n        self._data = None\n    \n    @property\n    def data(self):\n        if self._data is None:\n            self._data = self._load_data()\n        return self._data\n    \n    def _load_data(self):\n        print(f"Loading from {self.source}...")\n        return [1, 2, 3, 4, 5]\n\nloader = DataLoader("database")\nprint(loader.data)\nprint(loader.data)',
+    description:
+      'Create a `Text` class with a string `value`. Provide a property `word_count` that computes the count of words (split by whitespace).',
+    starterCode:
+      'class Text:\n' +
+      '    def __init__(self, value):\n' +
+      '        pass\n' +
+      '\n' +
+      '    @property\n' +
+      '    def word_count(self):\n' +
+      '        pass\n',
+    solution:
+      'class Text:\n' +
+      '    def __init__(self, value):\n' +
+      '        self.value = value\n' +
+      '\n' +
+      '    @property\n' +
+      '    def word_count(self):\n' +
+      '        parts = self.value.split()\n' +
+      '        return len(parts)\n',
     testCases: [
+      { input: 't = Text("hello world")\nprint(t.word_count)', isHidden: false, description: 'Two words' },
+      { input: 't = Text("  a   b c  ")\nprint(t.word_count)', isHidden: true, description: 'Multiple spaces' },
+      { input: 't = Text("")\nprint(t.word_count)', isHidden: true, description: 'Empty string' },
     ],
-    hints: ['Check if _data is None before loading', 'Store result after first load'],
-    language: 'python'
+    hints: ['Use `split()` without arguments', 'Return `len(...)`'],
+    language: 'python',
   },
   {
     id: 'cs103-t2-ex10',
     subjectId: 'cs103',
     topicId: 'cs103-2',
-    title: 'Encapsulated Collection',
-    difficulty: 4,
-    description: 'Create a TodoList class that encapsulates a list of items. Return copies to prevent external modification. Provide add, remove, and list methods.',
-    starterCode: 'class TodoList:\n    def __init__(self):\n        self._items = []\n    \n    def add(self, item):\n        pass\n    \n    def remove(self, item):\n        pass\n    \n    @property\n    def items(self):\n        # Return a copy to prevent external modification\n        pass\n    \n    def __len__(self):\n        pass\n\ntodo = TodoList()\ntodo.add("Task 1")\nitems = todo.items\nitems.append("Hacked!")  # Should not affect internal list\nprint(len(todo))',
-    solution: 'class TodoList:\n    def __init__(self):\n        self._items = []\n    \n    def add(self, item):\n        self._items.append(item)\n    \n    def remove(self, item):\n        if item in self._items:\n            self._items.remove(item)\n    \n    @property\n    def items(self):\n        return list(self._items)\n    \n    def __len__(self):\n        return len(self._items)\n\ntodo = TodoList()\ntodo.add("Task 1")\nitems = todo.items\nitems.append("Hacked!")\nprint(len(todo))',
+    title: 'Validated Age (0–130)',
+    difficulty: 3,
+    description: 'Create a `Person` class with an `age` property that must be between 0 and 130 (inclusive).',
+    starterCode:
+      'class Person:\n' +
+      '    def __init__(self, age):\n' +
+      '        pass\n' +
+      '\n' +
+      '    @property\n' +
+      '    def age(self):\n' +
+      '        pass\n' +
+      '\n' +
+      '    @age.setter\n' +
+      '    def age(self, value):\n' +
+      '        pass\n',
+    solution:
+      'class Person:\n' +
+      '    def __init__(self, age):\n' +
+      '        self.age = age\n' +
+      '\n' +
+      '    @property\n' +
+      '    def age(self):\n' +
+      '        return self._age\n' +
+      '\n' +
+      '    @age.setter\n' +
+      '    def age(self, value):\n' +
+      '        if value < 0 or value > 130:\n' +
+      '            raise ValueError("invalid age")\n' +
+      '        self._age = value\n',
     testCases: [
+      { input: 'p = Person(0)\nprint(p.age)', isHidden: false, description: 'Lower bound' },
+      { input: 'p = Person(130)\nprint(p.age)', isHidden: true, description: 'Upper bound' },
+      { input: 'try:\n    Person(131)\n    print("no")\nexcept ValueError:\n    print("yes")', isHidden: false, description: 'Out of range raises' },
     ],
-    hints: ['Return list(self._items) to return a copy', 'Modifications to returned list should not affect internal state'],
-    language: 'python'
+    hints: ['Validate in the setter', 'Assign through the property in `__init__`'],
+    language: 'python',
+  },
+  {
+    id: 'cs103-t2-ex11',
+    subjectId: 'cs103',
+    topicId: 'cs103-2',
+    title: 'Settings with Dependent Values',
+    difficulty: 4,
+    description:
+      'Create a `Settings` class with a boolean `debug` property. When `debug` is set to True, also set `log_level` to `"DEBUG"`. Otherwise set it to `"INFO"`.',
+    starterCode:
+      'class Settings:\n' +
+      '    def __init__(self):\n' +
+      '        pass\n' +
+      '\n' +
+      '    @property\n' +
+      '    def debug(self):\n' +
+      '        pass\n' +
+      '\n' +
+      '    @debug.setter\n' +
+      '    def debug(self, value):\n' +
+      '        pass\n' +
+      '\n' +
+      '    @property\n' +
+      '    def log_level(self):\n' +
+      '        pass\n',
+    solution:
+      'class Settings:\n' +
+      '    def __init__(self):\n' +
+      '        self._debug = False\n' +
+      '        self._log_level = "INFO"\n' +
+      '\n' +
+      '    @property\n' +
+      '    def debug(self):\n' +
+      '        return self._debug\n' +
+      '\n' +
+      '    @debug.setter\n' +
+      '    def debug(self, value):\n' +
+      '        self._debug = bool(value)\n' +
+      '        self._log_level = "DEBUG" if self._debug else "INFO"\n' +
+      '\n' +
+      '    @property\n' +
+      '    def log_level(self):\n' +
+      '        return self._log_level\n',
+    testCases: [
+      { input: 's = Settings()\nprint(s.debug, s.log_level)', isHidden: false, description: 'Default values' },
+      { input: 's = Settings(); s.debug = True\nprint(s.debug, s.log_level)', isHidden: false, description: 'Debug toggles level' },
+      { input: 's = Settings(); s.debug = True; s.debug = False\nprint(s.log_level)', isHidden: true, description: 'Back to INFO' },
+    ],
+    hints: ['Update dependent state in the setter', 'Expose `log_level` as read-only'],
+    language: 'python',
+  },
+  {
+    id: 'cs103-t2-ex12',
+    subjectId: 'cs103',
+    topicId: 'cs103-2',
+    title: 'Rate Limited Counter',
+    difficulty: 4,
+    description:
+      'Create a `RateLimitedCounter` with a max value `limit`. The `increment()` method increases the counter but must never exceed the limit.',
+    starterCode:
+      'class RateLimitedCounter:\n' +
+      '    def __init__(self, limit):\n' +
+      '        pass\n' +
+      '\n' +
+      '    def increment(self):\n' +
+      '        pass\n' +
+      '\n' +
+      '    def value(self):\n' +
+      '        pass\n',
+    solution:
+      'class RateLimitedCounter:\n' +
+      '    def __init__(self, limit):\n' +
+      '        self._limit = limit\n' +
+      '        self._value = 0\n' +
+      '\n' +
+      '    def increment(self):\n' +
+      '        if self._value < self._limit:\n' +
+      '            self._value += 1\n' +
+      '\n' +
+      '    def value(self):\n' +
+      '        return self._value\n',
+    testCases: [
+      { input: 'c = RateLimitedCounter(2)\nc.increment(); c.increment(); c.increment()\nprint(c.value())', isHidden: false, description: 'Stops at limit' },
+      { input: 'c = RateLimitedCounter(0)\nc.increment()\nprint(c.value())', isHidden: true, description: 'Zero limit' },
+      { input: 'c = RateLimitedCounter(1)\nprint(c.value())', isHidden: true, description: 'Starts at 0' },
+    ],
+    hints: ['Store `_limit` and `_value`', 'Only increment while `_value < _limit`'],
+    language: 'python',
+  },
+  {
+    id: 'cs103-t2-ex13',
+    subjectId: 'cs103',
+    topicId: 'cs103-2',
+    title: 'Sanitized Username',
+    difficulty: 5,
+    description:
+      'Create an `Account` class with a `username` property. The setter should strip whitespace and reject empty usernames.',
+    starterCode:
+      'class Account:\n' +
+      '    def __init__(self, username):\n' +
+      '        pass\n' +
+      '\n' +
+      '    @property\n' +
+      '    def username(self):\n' +
+      '        pass\n' +
+      '\n' +
+      '    @username.setter\n' +
+      '    def username(self, value):\n' +
+      '        pass\n',
+    solution:
+      'class Account:\n' +
+      '    def __init__(self, username):\n' +
+      '        self.username = username\n' +
+      '\n' +
+      '    @property\n' +
+      '    def username(self):\n' +
+      '        return self._username\n' +
+      '\n' +
+      '    @username.setter\n' +
+      '    def username(self, value):\n' +
+      '        value = str(value).strip()\n' +
+      '        if value == "":\n' +
+      '            raise ValueError("username cannot be empty")\n' +
+      '        self._username = value\n',
+    testCases: [
+      { input: 'a = Account("  alice  ")\nprint(a.username)', isHidden: false, description: 'Strips whitespace' },
+      { input: 'try:\n    Account("   ")\n    print("no")\nexcept ValueError:\n    print("yes")', isHidden: false, description: 'Rejects empty after strip' },
+      { input: 'a = Account("bob"); a.username = "  bobby "\\nprint(a.username)', isHidden: true, description: 'Setter sanitizes too' },
+    ],
+    hints: ['Use `strip()`', 'Validate after stripping', 'Store a backing field like `_username`'],
+    language: 'python',
+  },
+  {
+    id: 'cs103-t2-ex14',
+    subjectId: 'cs103',
+    topicId: 'cs103-2',
+    title: 'Safe Dictionary Exposure',
+    difficulty: 5,
+    description:
+      'Create a `Headers` class that stores a dict of headers internally. Expose a `data` property that returns a copy so callers can’t mutate internal state.',
+    starterCode:
+      'class Headers:\n' +
+      '    def __init__(self, initial=None):\n' +
+      '        pass\n' +
+      '\n' +
+      '    def set(self, key, value):\n' +
+      '        pass\n' +
+      '\n' +
+      '    @property\n' +
+      '    def data(self):\n' +
+      '        pass\n',
+    solution:
+      'class Headers:\n' +
+      '    def __init__(self, initial=None):\n' +
+      '        self._data = dict(initial) if initial is not None else {}\n' +
+      '\n' +
+      '    def set(self, key, value):\n' +
+      '        self._data[key] = value\n' +
+      '\n' +
+      '    @property\n' +
+      '    def data(self):\n' +
+      '        return dict(self._data)\n',
+    testCases: [
+      { input: 'h = Headers({"a": "1"}); d = h.data; d["a"] = "9"; print(h.data["a"])', isHidden: false, description: 'Copy prevents mutation' },
+      { input: 'h = Headers(); h.set("x", "y"); print(h.data)', isHidden: false, description: 'Set adds key' },
+      { input: 'h = Headers({"a": "1"}); print(sorted(list(h.data.keys())))', isHidden: true, description: 'Keys preserved' },
+    ],
+    hints: ['Use `dict(...)` to copy a dict', 'Never return the internal dict directly'],
+    language: 'python',
   },
   {
     id: 'cs103-t2-drill-1',
     subjectId: 'cs103',
     topicId: 'cs103-2',
-    title: 'Simple Getter',
+    title: 'Getter-Only Property',
     difficulty: 1,
-    description: 'Create a Secret class with a private _value and a getter method get_value().',
-    starterCode: 'class Secret:\n    def __init__(self, value):\n        self._value = value\n    \n    def get_value(self):\n        pass\n\ns = Secret(42)\nprint(s.get_value())',
-    solution: 'class Secret:\n    def __init__(self, value):\n        self._value = value\n    \n    def get_value(self):\n        return self._value\n\ns = Secret(42)\nprint(s.get_value())',
+    description: 'Create a `Config` class with a read-only `version` property set in the constructor.',
+    starterCode:
+      'class Config:\n' +
+      '    def __init__(self, version):\n' +
+      '        pass\n' +
+      '\n' +
+      '    @property\n' +
+      '    def version(self):\n' +
+      '        pass\n',
+    solution:
+      'class Config:\n' +
+      '    def __init__(self, version):\n' +
+      '        self._version = version\n' +
+      '\n' +
+      '    @property\n' +
+      '    def version(self):\n' +
+      '        return self._version\n',
     testCases: [
+      { input: 'c = Config("1.0")\nprint(c.version)', isHidden: false, description: 'Read version' },
+      { input: 'c = Config(2)\nprint(c.version)', isHidden: true, description: 'Any type' },
+      { input: 'c = Config("x")\ntry:\n    c.version = "y"\n    print("no")\nexcept AttributeError:\n    print("yes")', isHidden: true, description: 'No setter' },
     ],
-    hints: ['Return self._value from the getter', '_value is accessible but convention says use getter'],
-    language: 'python'
+    hints: ['Store a backing field', 'Provide a property without a setter'],
+    language: 'python',
   },
   {
     id: 'cs103-t2-drill-2',
     subjectId: 'cs103',
     topicId: 'cs103-2',
-    title: 'Property Basics',
+    title: 'Simple Validation',
     difficulty: 1,
-    description: 'Convert a getter method to a @property decorator. Create a Name class with a name property.',
-    starterCode: 'class Name:\n    def __init__(self, name):\n        self._name = name\n    \n    @property\n    def name(self):\n        pass\n\nn = Name("Alice")\nprint(n.name)  # Note: no parentheses!',
-    solution: 'class Name:\n    def __init__(self, name):\n        self._name = name\n    \n    @property\n    def name(self):\n        return self._name\n\nn = Name("Alice")\nprint(n.name)',
+    description: 'Create a `Percentage` class with a `value` property that must be between 0 and 100 inclusive.',
+    starterCode:
+      'class Percentage:\n' +
+      '    def __init__(self, value):\n' +
+      '        pass\n' +
+      '\n' +
+      '    @property\n' +
+      '    def value(self):\n' +
+      '        pass\n' +
+      '\n' +
+      '    @value.setter\n' +
+      '    def value(self, v):\n' +
+      '        pass\n',
+    solution:
+      'class Percentage:\n' +
+      '    def __init__(self, value):\n' +
+      '        self.value = value\n' +
+      '\n' +
+      '    @property\n' +
+      '    def value(self):\n' +
+      '        return self._value\n' +
+      '\n' +
+      '    @value.setter\n' +
+      '    def value(self, v):\n' +
+      '        if v < 0 or v > 100:\n' +
+      '            raise ValueError("out of range")\n' +
+      '        self._value = v\n',
     testCases: [
+      { input: 'p = Percentage(50)\nprint(p.value)', isHidden: false, description: 'Stores 50' },
+      { input: 'try:\n    Percentage(-1)\n    print("no")\nexcept ValueError:\n    print("yes")', isHidden: false, description: 'Rejects -1' },
+      { input: 'p = Percentage(0); p.value = 100\nprint(p.value)', isHidden: true, description: 'Setter accepts bounds' },
     ],
-    hints: ['@property makes a method accessible like an attribute', 'No parentheses when accessing: n.name not n.name()'],
-    language: 'python'
-  }
+    hints: ['Validate in setter', 'Assign through property in `__init__`'],
+    language: 'python',
+  },
 ];
+

@@ -6,168 +6,614 @@ export const topic3Exercises: CodingExercise[] = [
     id: 'cs103-ex-3',
     subjectId: 'cs103',
     topicId: 'cs103-3',
-    title: 'Create a Vehicle Inheritance Hierarchy',
+    title: 'Animal Inheritance',
     difficulty: 2,
-    description: 'Create a base Vehicle class with make, model, and year attributes. Then create a Car subclass that adds a num_doors attribute and overrides a describe() method.',
-    starterCode: 'class Vehicle:\n    def __init__(self, make, model, year):\n        pass\n    \n    def describe(self):\n        pass\n\nclass Car(Vehicle):\n    def __init__(self, make, model, year, num_doors):\n        pass\n    \n    def describe(self):\n        pass',
+    description:
+      'Create an `Animal` base class with a `name` and a `speak()` method. Create a `Dog` subclass that overrides `speak()`.',
+    starterCode:
+      'class Animal:\n' +
+      '    def __init__(self, name):\n' +
+      '        pass\n' +
+      '\n' +
+      '    def speak(self):\n' +
+      '        pass\n' +
+      '\n' +
+      'class Dog(Animal):\n' +
+      '    def speak(self):\n' +
+      '        pass\n',
+    solution:
+      'class Animal:\n' +
+      '    def __init__(self, name):\n' +
+      '        self.name = name\n' +
+      '\n' +
+      '    def speak(self):\n' +
+      '        return "..." \n' +
+      '\n' +
+      'class Dog(Animal):\n' +
+      '    def speak(self):\n' +
+      '        return f"{self.name} says woof"\n',
     testCases: [
+      { input: 'a = Animal("X")\nprint(a.speak())', isHidden: false, description: 'Base speak exists' },
+      { input: 'd = Dog("Buddy")\nprint(d.speak())', isHidden: false, description: 'Dog overrides speak' },
+      { input: 'd = Dog("Max")\nprint(isinstance(d, Animal))', isHidden: true, description: 'Dog is an Animal' },
     ],
-    hints: ['Use super().__init__() in Car', 'Override describe() in Car to add door info'],
-    solution: 'class Vehicle:\n    def __init__(self, make, model, year):\n        self.make = make\n        self.model = model\n        self.year = year\n    \n    def describe(self):\n        return f"{self.year} {self.make} {self.model}"\n\nclass Car(Vehicle):\n    def __init__(self, make, model, year, num_doors):\n        super().__init__(make, model, year)\n        self.num_doors = num_doors\n    \n    def describe(self):\n        return f"{self.year} {self.make} {self.model} ({self.num_doors} doors)"',
-    language: 'python'
+    hints: ['Store `name` in the base class', 'Override `speak` in the subclass'],
+    language: 'python',
   },
   {
     id: 'cs103-t3-ex02',
     subjectId: 'cs103',
     topicId: 'cs103-3',
-    title: 'Animal Hierarchy',
-    difficulty: 1,
-    description: 'Create an Animal base class with name and speak() method. Create Dog and Cat subclasses that override speak().',
-    starterCode: 'class Animal:\n    def __init__(self, name):\n        pass\n    \n    def speak(self):\n        pass\n\nclass Dog(Animal):\n    def speak(self):\n        pass\n\nclass Cat(Animal):\n    def speak(self):\n        pass\n\nd = Dog("Buddy")\nprint(d.speak())',
-    solution: 'class Animal:\n    def __init__(self, name):\n        self.name = name\n    \n    def speak(self):\n        return "..."\n\nclass Dog(Animal):\n    def speak(self):\n        return f"{self.name} says Woof!"\n\nclass Cat(Animal):\n    def speak(self):\n        return f"{self.name} says Meow!"\n\nd = Dog("Buddy")\nprint(d.speak())',
+    title: 'Calling super().__init__()',
+    difficulty: 2,
+    description:
+      'Create a base class `Vehicle` storing `make`. Create a subclass `Car` storing `make` and `doors`. Use `super().__init__()` in `Car`.',
+    starterCode:
+      'class Vehicle:\n' +
+      '    def __init__(self, make):\n' +
+      '        pass\n' +
+      '\n' +
+      'class Car(Vehicle):\n' +
+      '    def __init__(self, make, doors):\n' +
+      '        # TODO: call super\n' +
+      '        pass\n',
+    solution:
+      'class Vehicle:\n' +
+      '    def __init__(self, make):\n' +
+      '        self.make = make\n' +
+      '\n' +
+      'class Car(Vehicle):\n' +
+      '    def __init__(self, make, doors):\n' +
+      '        super().__init__(make)\n' +
+      '        self.doors = doors\n',
     testCases: [
+      { input: 'c = Car("Toyota", 4)\nprint(c.make, c.doors)', isHidden: false, description: 'Both attributes set' },
+      { input: 'c = Car("A", 2)\nprint(isinstance(c, Vehicle))', isHidden: true, description: 'Subclass relationship' },
+      { input: 'v = Vehicle("X")\nprint(v.make)', isHidden: true, description: 'Base class stores make' },
     ],
-    hints: ['Dog and Cat inherit name from Animal', 'Each subclass has its own speak() implementation'],
-    language: 'python'
+    hints: ['Call `super().__init__(make)` in `Car.__init__`', 'Store `doors` on `self`'],
+    language: 'python',
   },
   {
     id: 'cs103-t3-ex03',
     subjectId: 'cs103',
     topicId: 'cs103-3',
-    title: 'Employee Hierarchy',
-    difficulty: 2,
-    description: 'Create Employee base class with name and salary. Create Manager subclass that adds department attribute.',
-    starterCode: 'class Employee:\n    def __init__(self, name, salary):\n        pass\n    \n    def get_info(self):\n        pass\n\nclass Manager(Employee):\n    def __init__(self, name, salary, department):\n        pass\n    \n    def get_info(self):\n        pass\n\nm = Manager("Alice", 80000, "Engineering")\nprint(m.get_info())',
-    solution: 'class Employee:\n    def __init__(self, name, salary):\n        self.name = name\n        self.salary = salary\n    \n    def get_info(self):\n        return f"{self.name}: ${self.salary}"\n\nclass Manager(Employee):\n    def __init__(self, name, salary, department):\n        super().__init__(name, salary)\n        self.department = department\n    \n    def get_info(self):\n        return f"{self.name}: ${self.salary}, {self.department} dept"\n\nm = Manager("Alice", 80000, "Engineering")\nprint(m.get_info())',
+    title: 'Method Extension with super()',
+    difficulty: 3,
+    description:
+      'Create a base class `Logger` with method `format(message)` returning `"LOG: " + message`. Create a subclass `TimestampLogger` that prefixes `"[t] "` before the base format.',
+    starterCode:
+      'class Logger:\n' +
+      '    def format(self, message):\n' +
+      '        pass\n' +
+      '\n' +
+      'class TimestampLogger(Logger):\n' +
+      '    def format(self, message):\n' +
+      '        # TODO: use super().format\n' +
+      '        pass\n',
+    solution:
+      'class Logger:\n' +
+      '    def format(self, message):\n' +
+      '        return "LOG: " + message\n' +
+      '\n' +
+      'class TimestampLogger(Logger):\n' +
+      '    def format(self, message):\n' +
+      '        return "[t] " + super().format(message)\n',
     testCases: [
+      { input: 'print(Logger().format("hi"))', isHidden: false, description: 'Base format' },
+      { input: 'print(TimestampLogger().format("hi"))', isHidden: false, description: 'Extended format' },
+      { input: 'print(isinstance(TimestampLogger(), Logger))', isHidden: true, description: 'Is-a Logger' },
     ],
-    hints: ['Use super() to initialize Employee attributes', 'Override get_info() to include department'],
-    language: 'python'
+    hints: ['Implement base behavior in `Logger`', 'Call `super().format(message)` in the subclass'],
+    language: 'python',
   },
   {
     id: 'cs103-t3-ex04',
     subjectId: 'cs103',
     topicId: 'cs103-3',
-    title: 'Shape Hierarchy with Method Extension',
-    difficulty: 2,
-    description: 'Create Shape base class with color. Create Rectangle subclass that adds width, height and area() method.',
-    starterCode: 'class Shape:\n    def __init__(self, color):\n        pass\n    \n    def describe(self):\n        pass\n\nclass Rectangle(Shape):\n    def __init__(self, color, width, height):\n        pass\n    \n    def area(self):\n        pass\n    \n    def describe(self):\n        pass\n\nr = Rectangle("red", 4, 5)\nprint(r.describe())',
-    solution: 'class Shape:\n    def __init__(self, color):\n        self.color = color\n    \n    def describe(self):\n        return f"A {self.color} shape"\n\nclass Rectangle(Shape):\n    def __init__(self, color, width, height):\n        super().__init__(color)\n        self.width = width\n        self.height = height\n    \n    def area(self):\n        return self.width * self.height\n    \n    def describe(self):\n        return f"A {self.color} rectangle ({self.width}x{self.height})"\n\nr = Rectangle("red", 4, 5)\nprint(r.describe())',
+    title: 'Employee and Manager',
+    difficulty: 3,
+    description:
+      'Create an `Employee` class with `name` and `salary`. Create a `Manager` subclass with an additional `bonus` and a method `total_comp()` returning salary + bonus.',
+    starterCode:
+      'class Employee:\n' +
+      '    def __init__(self, name, salary):\n' +
+      '        pass\n' +
+      '\n' +
+      'class Manager(Employee):\n' +
+      '    def __init__(self, name, salary, bonus):\n' +
+      '        pass\n' +
+      '\n' +
+      '    def total_comp(self):\n' +
+      '        pass\n',
+    solution:
+      'class Employee:\n' +
+      '    def __init__(self, name, salary):\n' +
+      '        self.name = name\n' +
+      '        self.salary = salary\n' +
+      '\n' +
+      'class Manager(Employee):\n' +
+      '    def __init__(self, name, salary, bonus):\n' +
+      '        super().__init__(name, salary)\n' +
+      '        self.bonus = bonus\n' +
+      '\n' +
+      '    def total_comp(self):\n' +
+      '        return self.salary + self.bonus\n',
     testCases: [
+      { input: 'm = Manager("A", 100, 20)\nprint(m.total_comp())', isHidden: false, description: 'Salary + bonus' },
+      { input: 'e = Employee("B", 50)\nprint(e.name, e.salary)', isHidden: false, description: 'Employee stores fields' },
+      { input: 'm = Manager("C", 0, 0)\nprint(isinstance(m, Employee))', isHidden: true, description: 'Manager is Employee' },
     ],
-    hints: ['Call super().__init__(color)', 'area() is new method in Rectangle'],
-    language: 'python'
+    hints: ['Call `super().__init__`', 'Compute total compensation from stored fields'],
+    language: 'python',
   },
   {
     id: 'cs103-t3-ex05',
     subjectId: 'cs103',
     topicId: 'cs103-3',
-    title: 'Using super() for Method Extension',
+    title: 'Abstract-ish Base with NotImplementedError',
     difficulty: 3,
-    description: 'Create a Logger class with log() method. Create TimestampLogger that extends log() to add timestamp prefix.',
-    starterCode: 'from datetime import datetime\n\nclass Logger:\n    def log(self, message):\n        pass\n\nclass TimestampLogger(Logger):\n    def log(self, message):\n        # Call parent log with timestamp prefix\n        pass\n\nlogger = TimestampLogger()\nprint(logger.log("Hello"))',
-    solution: 'from datetime import datetime\n\nclass Logger:\n    def log(self, message):\n        return f"LOG: {message}"\n\nclass TimestampLogger(Logger):\n    def log(self, message):\n        timestamp = datetime.now().strftime("%H:%M:%S")\n        return f"[{timestamp}] {super().log(message)}"\n\nlogger = TimestampLogger()\nprint(logger.log("Hello"))',
+    description:
+      'Create a base class `Shape` with `area()` raising `NotImplementedError`. Create `Square` and `Circle` subclasses implementing `area()` (use pi = 3.14159).',
+    starterCode:
+      'class Shape:\n' +
+      '    def area(self):\n' +
+      '        pass\n' +
+      '\n' +
+      'class Square(Shape):\n' +
+      '    def __init__(self, side):\n' +
+      '        pass\n' +
+      '    def area(self):\n' +
+      '        pass\n' +
+      '\n' +
+      'class Circle(Shape):\n' +
+      '    def __init__(self, radius):\n' +
+      '        pass\n' +
+      '    def area(self):\n' +
+      '        pass\n',
+    solution:
+      'class Shape:\n' +
+      '    def area(self):\n' +
+      '        raise NotImplementedError\n' +
+      '\n' +
+      'class Square(Shape):\n' +
+      '    def __init__(self, side):\n' +
+      '        self.side = side\n' +
+      '    def area(self):\n' +
+      '        return self.side * self.side\n' +
+      '\n' +
+      'class Circle(Shape):\n' +
+      '    def __init__(self, radius):\n' +
+      '        self.radius = radius\n' +
+      '    def area(self):\n' +
+      '        pi = 3.14159\n' +
+      '        return pi * (self.radius ** 2)\n',
     testCases: [
+      { input: 'print(Square(3).area())', isHidden: false, description: 'Square area' },
+      { input: 'print(round(Circle(2).area(), 5))', isHidden: false, description: 'Circle area' },
+      { input: 'try:\n    Shape().area()\n    print("no")\nexcept NotImplementedError:\n    print("yes")', isHidden: true, description: 'Base raises' },
     ],
-    hints: ['Use super().log(message) to get parent result', 'Add timestamp before the parent message'],
-    language: 'python'
+    hints: ['Base class should raise NotImplementedError', 'Override area in subclasses'],
+    language: 'python',
   },
   {
     id: 'cs103-t3-ex06',
     subjectId: 'cs103',
     topicId: 'cs103-3',
-    title: 'Bank Account Types',
-    difficulty: 3,
-    description: 'Create BankAccount base class. Create SavingsAccount with interest rate and add_interest() method.',
-    starterCode: 'class BankAccount:\n    def __init__(self, balance):\n        pass\n    \n    def deposit(self, amount):\n        pass\n    \n    def get_balance(self):\n        pass\n\nclass SavingsAccount(BankAccount):\n    def __init__(self, balance, interest_rate):\n        pass\n    \n    def add_interest(self):\n        pass\n\ns = SavingsAccount(1000, 0.05)\ns.add_interest()\nprint(s.get_balance())',
-    solution: 'class BankAccount:\n    def __init__(self, balance):\n        self.balance = balance\n    \n    def deposit(self, amount):\n        self.balance += amount\n    \n    def get_balance(self):\n        return self.balance\n\nclass SavingsAccount(BankAccount):\n    def __init__(self, balance, interest_rate):\n        super().__init__(balance)\n        self.interest_rate = interest_rate\n    \n    def add_interest(self):\n        interest = self.balance * self.interest_rate\n        self.deposit(interest)\n\ns = SavingsAccount(1000, 0.05)\ns.add_interest()\nprint(s.get_balance())',
+    title: 'Overriding __str__ in a Subclass',
+    difficulty: 2,
+    description:
+      'Create a `Person` class with `name`. Create a `Student` subclass with `student_id`. Override `__str__` in Student to include both.',
+    starterCode:
+      'class Person:\n' +
+      '    def __init__(self, name):\n' +
+      '        pass\n' +
+      '\n' +
+      'class Student(Person):\n' +
+      '    def __init__(self, name, student_id):\n' +
+      '        pass\n' +
+      '\n' +
+      '    def __str__(self):\n' +
+      '        pass\n',
+    solution:
+      'class Person:\n' +
+      '    def __init__(self, name):\n' +
+      '        self.name = name\n' +
+      '\n' +
+      'class Student(Person):\n' +
+      '    def __init__(self, name, student_id):\n' +
+      '        super().__init__(name)\n' +
+      '        self.student_id = student_id\n' +
+      '\n' +
+      '    def __str__(self):\n' +
+      '        return f"{self.name} ({self.student_id})"\n',
     testCases: [
+      { input: 'print(Student("A", 1))', isHidden: false, description: 'String includes name and id' },
+      { input: 's = Student("B", "X")\nprint(s.name, s.student_id)', isHidden: true, description: 'Inherited name + new id' },
+      { input: 'p = Person("C")\nprint(p.name)', isHidden: true, description: 'Base still works' },
     ],
-    hints: ['SavingsAccount inherits deposit() from BankAccount', 'add_interest() uses self.deposit()'],
-    language: 'python'
+    hints: ['Use `super().__init__(name)`', 'Return a formatted string'],
+    language: 'python',
   },
   {
     id: 'cs103-t3-ex07',
     subjectId: 'cs103',
     topicId: 'cs103-3',
-    title: 'Multi-level Inheritance',
+    title: 'Mixin for JSON-like Dict',
     difficulty: 4,
-    description: 'Create Person -> Student -> GraduateStudent hierarchy. Each level adds attributes.',
-    starterCode: 'class Person:\n    def __init__(self, name):\n        pass\n\nclass Student(Person):\n    def __init__(self, name, student_id):\n        pass\n\nclass GraduateStudent(Student):\n    def __init__(self, name, student_id, thesis_topic):\n        pass\n    \n    def describe(self):\n        pass\n\ng = GraduateStudent("Alice", "G123", "AI Research")\nprint(g.describe())',
-    solution: 'class Person:\n    def __init__(self, name):\n        self.name = name\n\nclass Student(Person):\n    def __init__(self, name, student_id):\n        super().__init__(name)\n        self.student_id = student_id\n\nclass GraduateStudent(Student):\n    def __init__(self, name, student_id, thesis_topic):\n        super().__init__(name, student_id)\n        self.thesis_topic = thesis_topic\n    \n    def describe(self):\n        return f"{self.name} ({self.student_id}): {self.thesis_topic}"\n\ng = GraduateStudent("Alice", "G123", "AI Research")\nprint(g.describe())',
+    description:
+      'Create a `ToDictMixin` that provides `to_dict()` returning `self.__dict__`. Use it in a `Book` class with `title` and `author`.',
+    starterCode:
+      'class ToDictMixin:\n' +
+      '    def to_dict(self):\n' +
+      '        pass\n' +
+      '\n' +
+      'class Book(ToDictMixin):\n' +
+      '    def __init__(self, title, author):\n' +
+      '        pass\n',
+    solution:
+      'class ToDictMixin:\n' +
+      '    def to_dict(self):\n' +
+      '        return dict(self.__dict__)\n' +
+      '\n' +
+      'class Book(ToDictMixin):\n' +
+      '    def __init__(self, title, author):\n' +
+      '        self.title = title\n' +
+      '        self.author = author\n',
     testCases: [
+      { input: 'b = Book("T", "A")\nprint(b.to_dict())', isHidden: false, description: 'to_dict returns fields' },
+      { input: 'b = Book("X", "Y")\nprint(sorted(b.to_dict().keys()))', isHidden: true, description: 'Keys include title/author' },
+      { input: 'b = Book("", "")\nprint(b.to_dict())', isHidden: true, description: 'Empty strings still included' },
     ],
-    hints: ['Each level calls super().__init__() with appropriate args', 'GraduateStudent has access to all parent attributes'],
-    language: 'python'
+    hints: ['Return a copy of `__dict__`', 'Inherit from the mixin'],
+    language: 'python',
   },
   {
     id: 'cs103-t3-ex08',
     subjectId: 'cs103',
     topicId: 'cs103-3',
-    title: 'Abstract Base Class Simulation',
-    difficulty: 5,
-    description: 'Create a PaymentProcessor base class. Subclasses CreditCard and PayPal implement process_payment() differently.',
-    starterCode: 'class PaymentProcessor:\n    def process_payment(self, amount):\n        raise NotImplementedError("Subclass must implement")\n    \n    def validate_amount(self, amount):\n        return amount > 0\n\nclass CreditCard(PaymentProcessor):\n    def __init__(self, card_number):\n        pass\n    \n    def process_payment(self, amount):\n        pass\n\nclass PayPal(PaymentProcessor):\n    def __init__(self, email):\n        pass\n    \n    def process_payment(self, amount):\n        pass\n\ncc = CreditCard("1234")\nprint(cc.process_payment(100))',
-    solution: 'class PaymentProcessor:\n    def process_payment(self, amount):\n        raise NotImplementedError("Subclass must implement")\n    \n    def validate_amount(self, amount):\n        return amount > 0\n\nclass CreditCard(PaymentProcessor):\n    def __init__(self, card_number):\n        self.card_number = card_number\n    \n    def process_payment(self, amount):\n        if self.validate_amount(amount):\n            return f"Charged ${amount} to card {self.card_number[-4:]}"\n        return "Invalid amount"\n\nclass PayPal(PaymentProcessor):\n    def __init__(self, email):\n        self.email = email\n    \n    def process_payment(self, amount):\n        if self.validate_amount(amount):\n            return f"Paid ${amount} via PayPal ({self.email})"\n        return "Invalid amount"\n\ncc = CreditCard("1234567890")\nprint(cc.process_payment(100))',
+    title: 'Multiple Inheritance (Simple MRO)',
+    difficulty: 4,
+    description:
+      'Create classes `A` and `B` each with method `who()` returning `"A"` / `"B"`. Create `C(A, B)` and call `who()` to show MRO uses `A` first.',
+    starterCode:
+      'class A:\n' +
+      '    def who(self):\n' +
+      '        pass\n' +
+      '\n' +
+      'class B:\n' +
+      '    def who(self):\n' +
+      '        pass\n' +
+      '\n' +
+      'class C(A, B):\n' +
+      '    pass\n',
+    solution:
+      'class A:\n' +
+      '    def who(self):\n' +
+      '        return "A"\n' +
+      '\n' +
+      'class B:\n' +
+      '    def who(self):\n' +
+      '        return "B"\n' +
+      '\n' +
+      'class C(A, B):\n' +
+      '    pass\n',
     testCases: [
+      { input: 'print(C().who())', isHidden: false, description: 'Uses A due to MRO' },
+      { input: 'print([cls.__name__ for cls in C.mro()][:3])', isHidden: true, description: 'Inspect MRO prefix' },
+      { input: 'print(B().who())', isHidden: true, description: 'B who works' },
     ],
-    hints: ['Base class defines interface with NotImplementedError', 'Subclasses must implement process_payment()'],
-    language: 'python'
+    hints: ['Define `who` in both classes', 'C inherits from A first'],
+    language: 'python',
   },
   {
     id: 'cs103-t3-ex09',
     subjectId: 'cs103',
     topicId: 'cs103-3',
-    title: 'Mixin Classes',
+    title: 'Polymorphic Pay Calculation',
     difficulty: 4,
-    description: 'Create a JSONMixin that adds a to_json() method. Create a Product class that uses this mixin alongside regular inheritance.',
-    starterCode: 'import json\n\nclass JSONMixin:\n    def to_json(self):\n        pass\n\nclass Item:\n    def __init__(self, name):\n        self.name = name\n\nclass Product(Item, JSONMixin):\n    def __init__(self, name, price):\n        pass\n\np = Product("Widget", 9.99)\nprint(p.to_json())',
-    solution: 'import json\n\nclass JSONMixin:\n    def to_json(self):\n        return json.dumps(self.__dict__)\n\nclass Item:\n    def __init__(self, name):\n        self.name = name\n\nclass Product(Item, JSONMixin):\n    def __init__(self, name, price):\n        super().__init__(name)\n        self.price = price\n\np = Product("Widget", 9.99)\nprint(p.to_json())',
+    description:
+      'Create `HourlyEmployee` and `SalariedEmployee` subclasses of `Employee`, each implementing `weekly_pay()`. Hourly pay is `hours * rate`; salaried pay is `salary / 52`.',
+    starterCode:
+      'class Employee:\n' +
+      '    def weekly_pay(self):\n' +
+      '        pass\n' +
+      '\n' +
+      'class HourlyEmployee(Employee):\n' +
+      '    def __init__(self, rate, hours):\n' +
+      '        pass\n' +
+      '    def weekly_pay(self):\n' +
+      '        pass\n' +
+      '\n' +
+      'class SalariedEmployee(Employee):\n' +
+      '    def __init__(self, salary):\n' +
+      '        pass\n' +
+      '    def weekly_pay(self):\n' +
+      '        pass\n',
+    solution:
+      'class Employee:\n' +
+      '    def weekly_pay(self):\n' +
+      '        raise NotImplementedError\n' +
+      '\n' +
+      'class HourlyEmployee(Employee):\n' +
+      '    def __init__(self, rate, hours):\n' +
+      '        self.rate = rate\n' +
+      '        self.hours = hours\n' +
+      '    def weekly_pay(self):\n' +
+      '        return self.rate * self.hours\n' +
+      '\n' +
+      'class SalariedEmployee(Employee):\n' +
+      '    def __init__(self, salary):\n' +
+      '        self.salary = salary\n' +
+      '    def weekly_pay(self):\n' +
+      '        return self.salary / 52\n',
     testCases: [
+      { input: 'print(HourlyEmployee(20, 10).weekly_pay())', isHidden: false, description: 'Hourly pay' },
+      { input: 'print(round(SalariedEmployee(52000).weekly_pay(), 2))', isHidden: false, description: 'Salaried pay' },
+      { input: 'try:\n    Employee().weekly_pay()\n    print("no")\nexcept NotImplementedError:\n    print("yes")', isHidden: true, description: 'Base raises' },
     ],
-    hints: ['Mixin provides reusable functionality', 'self.__dict__ contains all instance attributes'],
-    language: 'python'
+    hints: ['Override `weekly_pay` in each subclass', 'Salaried weekly = salary/52'],
+    language: 'python',
   },
   {
     id: 'cs103-t3-ex10',
     subjectId: 'cs103',
     topicId: 'cs103-3',
-    title: 'Method Resolution Order',
-    difficulty: 5,
-    description: 'Create a diamond inheritance pattern and use super() correctly. Classes A -> B, A -> C, and D inherits from both B and C.',
-    starterCode: 'class A:\n    def greet(self):\n        return "A"\n\nclass B(A):\n    def greet(self):\n        return "B-" + super().greet()\n\nclass C(A):\n    def greet(self):\n        return "C-" + super().greet()\n\nclass D(B, C):\n    def greet(self):\n        return "D-" + super().greet()\n\nd = D()\nprint(d.greet())\nprint([c.__name__ for c in D.__mro__])',
-    solution: 'class A:\n    def greet(self):\n        return "A"\n\nclass B(A):\n    def greet(self):\n        return "B-" + super().greet()\n\nclass C(A):\n    def greet(self):\n        return "C-" + super().greet()\n\nclass D(B, C):\n    def greet(self):\n        return "D-" + super().greet()\n\nd = D()\nprint(d.greet())\nprint([c.__name__ for c in D.__mro__])',
+    title: 'Reuse via Base Method',
+    difficulty: 3,
+    description:
+      'Create a base class `Greeter` with method `greet(name)` returning `"Hello, <name>"`. Create a subclass `ExcitedGreeter` that reuses the base greet and adds `!`.',
+    starterCode:
+      'class Greeter:\n' +
+      '    def greet(self, name):\n' +
+      '        pass\n' +
+      '\n' +
+      'class ExcitedGreeter(Greeter):\n' +
+      '    def greet(self, name):\n' +
+      '        pass\n',
+    solution:
+      'class Greeter:\n' +
+      '    def greet(self, name):\n' +
+      '        return f"Hello, {name}"\n' +
+      '\n' +
+      'class ExcitedGreeter(Greeter):\n' +
+      '    def greet(self, name):\n' +
+      '        return super().greet(name) + "!"\n',
     testCases: [
+      { input: 'print(Greeter().greet("A"))', isHidden: false, description: 'Base greeting' },
+      { input: 'print(ExcitedGreeter().greet("A"))', isHidden: false, description: 'Adds excitement' },
+      { input: 'print(isinstance(ExcitedGreeter(), Greeter))', isHidden: true, description: 'Is-a relation' },
     ],
-    hints: ['MRO follows C3 linearization', 'super() follows MRO, not just parent'],
-    language: 'python'
+    hints: ['Call `super().greet(name)` in subclass', 'Append "!"'],
+    language: 'python',
+  },
+  {
+    id: 'cs103-t3-ex11',
+    subjectId: 'cs103',
+    topicId: 'cs103-3',
+    title: 'Base Class Contract (LSP-friendly)',
+    difficulty: 4,
+    description:
+      'Create a `Stack` base class with `push(x)` and `pop()`. Implement `ListStack(Stack)` using a list. `pop()` should raise IndexError on empty.',
+    starterCode:
+      'class Stack:\n' +
+      '    def push(self, x):\n' +
+      '        pass\n' +
+      '    def pop(self):\n' +
+      '        pass\n' +
+      '\n' +
+      'class ListStack(Stack):\n' +
+      '    def __init__(self):\n' +
+      '        pass\n' +
+      '    def push(self, x):\n' +
+      '        pass\n' +
+      '    def pop(self):\n' +
+      '        pass\n',
+    solution:
+      'class Stack:\n' +
+      '    def push(self, x):\n' +
+      '        raise NotImplementedError\n' +
+      '    def pop(self):\n' +
+      '        raise NotImplementedError\n' +
+      '\n' +
+      'class ListStack(Stack):\n' +
+      '    def __init__(self):\n' +
+      '        self._data = []\n' +
+      '    def push(self, x):\n' +
+      '        self._data.append(x)\n' +
+      '    def pop(self):\n' +
+      '        return self._data.pop()\n',
+    testCases: [
+      { input: 's = ListStack(); s.push(1); s.push(2); print(s.pop(), s.pop())', isHidden: false, description: 'LIFO order' },
+      { input: 's = ListStack();\ntry:\n    s.pop()\n    print("no")\nexcept IndexError:\n    print("yes")', isHidden: false, description: 'Empty pop raises IndexError' },
+      { input: 'print(isinstance(ListStack(), Stack))', isHidden: true, description: 'Subclasses Stack' },
+    ],
+    hints: ['Use a list for storage', 'Use list.pop() to raise IndexError on empty'],
+    language: 'python',
+  },
+  {
+    id: 'cs103-t3-ex12',
+    subjectId: 'cs103',
+    topicId: 'cs103-3',
+    title: 'Overriding with Different Return Type',
+    difficulty: 4,
+    description:
+      'Create a base class `Parser` with `parse(text)` returning a list of tokens. Create `CSVParser(Parser)` overriding `parse` to split by commas (and strip whitespace).',
+    starterCode:
+      'class Parser:\n' +
+      '    def parse(self, text):\n' +
+      '        pass\n' +
+      '\n' +
+      'class CSVParser(Parser):\n' +
+      '    def parse(self, text):\n' +
+      '        pass\n',
+    solution:
+      'class Parser:\n' +
+      '    def parse(self, text):\n' +
+      '        raise NotImplementedError\n' +
+      '\n' +
+      'class CSVParser(Parser):\n' +
+      '    def parse(self, text):\n' +
+      '        if text.strip() == "":\n' +
+      '            return []\n' +
+      '        return [p.strip() for p in text.split(",")]\n',
+    testCases: [
+      { input: 'print(CSVParser().parse("a, b, c"))', isHidden: false, description: 'Splits and strips' },
+      { input: 'print(CSVParser().parse(""))', isHidden: true, description: 'Empty input' },
+      { input: 'print(CSVParser().parse("x"))', isHidden: true, description: 'Single token' },
+    ],
+    hints: ['Split by comma', 'Strip whitespace around parts', 'Return [] for empty text'],
+    language: 'python',
+  },
+  {
+    id: 'cs103-t3-ex13',
+    subjectId: 'cs103',
+    topicId: 'cs103-3',
+    title: 'Cooperative super() Chain',
+    difficulty: 5,
+    description:
+      'Create mixins `A` and `B` each implementing `build()` returning a string and calling `super().build()`. Create `Base` with `build()` returning `"base"`. In `C(A, B, Base)`, calling `build()` should include all layers.',
+    starterCode:
+      'class Base:\n' +
+      '    def build(self):\n' +
+      '        pass\n' +
+      '\n' +
+      'class A:\n' +
+      '    def build(self):\n' +
+      '        pass\n' +
+      '\n' +
+      'class B:\n' +
+      '    def build(self):\n' +
+      '        pass\n' +
+      '\n' +
+      'class C(A, B, Base):\n' +
+      '    pass\n',
+    solution:
+      'class Base:\n' +
+      '    def build(self):\n' +
+      '        return "base"\n' +
+      '\n' +
+      'class A:\n' +
+      '    def build(self):\n' +
+      '        return "A(" + super().build() + ")"\n' +
+      '\n' +
+      'class B:\n' +
+      '    def build(self):\n' +
+      '        return "B(" + super().build() + ")"\n' +
+      '\n' +
+      'class C(A, B, Base):\n' +
+      '    pass\n',
+    testCases: [
+      { input: 'print(C().build())', isHidden: false, description: 'Chains through MRO' },
+      { input: 'print([c.__name__ for c in C.mro()][:4])', isHidden: true, description: 'MRO includes A then B then Base' },
+      { input: 'print(isinstance(C(), Base))', isHidden: true, description: 'Still a Base' },
+    ],
+    hints: ['Each mixin should call `super().build()`', 'Order of bases controls MRO', 'Base terminates the chain'],
+    language: 'python',
+  },
+  {
+    id: 'cs103-t3-ex14',
+    subjectId: 'cs103',
+    topicId: 'cs103-3',
+    title: 'Custom Exception in Base Class',
+    difficulty: 5,
+    description:
+      'Create an exception `NotSupportedError`. Create base class `Storage` with `load(key)` raising NotSupportedError. Create `DictStorage(Storage)` that implements load from an internal dict.',
+    starterCode:
+      'class NotSupportedError(Exception):\n' +
+      '    pass\n' +
+      '\n' +
+      'class Storage:\n' +
+      '    def load(self, key):\n' +
+      '        pass\n' +
+      '\n' +
+      'class DictStorage(Storage):\n' +
+      '    def __init__(self, data):\n' +
+      '        pass\n' +
+      '    def load(self, key):\n' +
+      '        pass\n',
+    solution:
+      'class NotSupportedError(Exception):\n' +
+      '    pass\n' +
+      '\n' +
+      'class Storage:\n' +
+      '    def load(self, key):\n' +
+      '        raise NotSupportedError\n' +
+      '\n' +
+      'class DictStorage(Storage):\n' +
+      '    def __init__(self, data):\n' +
+      '        self._data = dict(data)\n' +
+      '    def load(self, key):\n' +
+      '        return self._data.get(key)\n',
+    testCases: [
+      { input: 'print(DictStorage({"a": 1}).load("a"))', isHidden: false, description: 'Loads existing key' },
+      { input: 'print(DictStorage({"a": 1}).load("x"))', isHidden: true, description: 'Missing key returns None' },
+      { input: 'try:\n    Storage().load("a")\n    print("no")\nexcept NotSupportedError:\n    print("yes")', isHidden: false, description: 'Base raises custom exception' },
+    ],
+    hints: ['Raise the custom exception in the base class', 'Subclass overrides to implement behavior', 'Use dict.get for missing keys'],
+    language: 'python',
   },
   {
     id: 'cs103-t3-drill-1',
     subjectId: 'cs103',
     topicId: 'cs103-3',
-    title: 'Basic Inheritance',
+    title: 'Basic Subclass',
     difficulty: 1,
-    description: 'Create a Child class that inherits from Parent. Child should inherit the greet() method.',
-    starterCode: 'class Parent:\n    def greet(self):\n        return "Hello from Parent"\n\nclass Child(Parent):\n    pass\n\nc = Child()\nprint(c.greet())',
-    solution: 'class Parent:\n    def greet(self):\n        return "Hello from Parent"\n\nclass Child(Parent):\n    pass\n\nc = Child()\nprint(c.greet())',
+    description: 'Create a `Cat` class that inherits from `Animal` and overrides `speak()` to return `"meow"`.',
+    starterCode:
+      'class Animal:\n' +
+      '    def speak(self):\n' +
+      '        pass\n' +
+      '\n' +
+      'class Cat(Animal):\n' +
+      '    def speak(self):\n' +
+      '        pass\n',
+    solution:
+      'class Animal:\n' +
+      '    def speak(self):\n' +
+      '        return "..." \n' +
+      '\n' +
+      'class Cat(Animal):\n' +
+      '    def speak(self):\n' +
+      '        return "meow"\n',
     testCases: [
+      { input: 'print(Cat().speak())', isHidden: false, description: 'Cat meows' },
+      { input: 'print(isinstance(Cat(), Animal))', isHidden: true, description: 'Cat is Animal' },
+      { input: 'print(Animal().speak())', isHidden: true, description: 'Base speaks' },
     ],
-    hints: ['Put parent class name in parentheses after class name', 'Child inherits all methods from Parent'],
-    language: 'python'
+    hints: ['Use `class Cat(Animal):`', 'Return the correct string'],
+    language: 'python',
   },
   {
     id: 'cs103-t3-drill-2',
     subjectId: 'cs103',
     topicId: 'cs103-3',
-    title: 'Calling super()',
+    title: 'Override a Method',
     difficulty: 1,
-    description: 'Create a Square class that inherits from Rectangle. Use super() to initialize width and height to the same value.',
-    starterCode: 'class Rectangle:\n    def __init__(self, width, height):\n        self.width = width\n        self.height = height\n    \n    def area(self):\n        return self.width * self.height\n\nclass Square(Rectangle):\n    def __init__(self, side):\n        pass\n\ns = Square(5)\nprint(s.area())',
-    solution: 'class Rectangle:\n    def __init__(self, width, height):\n        self.width = width\n        self.height = height\n    \n    def area(self):\n        return self.width * self.height\n\nclass Square(Rectangle):\n    def __init__(self, side):\n        super().__init__(side, side)\n\ns = Square(5)\nprint(s.area())',
+    description: 'Create `Bird` inheriting from `Animal` and override `speak()` to return `"chirp"`.',
+    starterCode:
+      'class Animal:\n' +
+      '    def speak(self):\n' +
+      '        pass\n' +
+      '\n' +
+      'class Bird(Animal):\n' +
+      '    def speak(self):\n' +
+      '        pass\n',
+    solution:
+      'class Animal:\n' +
+      '    def speak(self):\n' +
+      '        return "..." \n' +
+      '\n' +
+      'class Bird(Animal):\n' +
+      '    def speak(self):\n' +
+      '        return "chirp"\n',
     testCases: [
+      { input: 'print(Bird().speak())', isHidden: false, description: 'Bird chirps' },
+      { input: 'print(isinstance(Bird(), Animal))', isHidden: true, description: 'Bird is Animal' },
+      { input: 'print(Bird().speak().upper())', isHidden: true, description: 'String result' },
     ],
-    hints: ['Call super().__init__(side, side)', 'Square is a Rectangle with equal sides'],
-    language: 'python'
-  }
+    hints: ['Override `speak` in subclass', 'Return "chirp"'],
+    language: 'python',
+  },
 ];
+

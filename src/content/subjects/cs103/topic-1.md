@@ -5,7 +5,8 @@ Everything in the real world can be thought of as an "object": a car has propert
 **Why This Matters:**
 OOP is the dominant paradigm in modern software development. From web applications to mobile apps to game engines, understanding classes and objects is essential for writing maintainable, scalable code. Most job interviews will test your OOP knowledge, and most codebases you'll work with use these concepts daily.
 
-**Learning Objectives:**
+## Learning Objectives
+
 - Understand the difference between classes and objects (blueprints vs instances)
 - Create classes with attributes and methods in Python
 - Use the `__init__` constructor to initialize objects
@@ -287,6 +288,21 @@ class DataPipeline:
 ```
 
 ---
+
+## Best Practices
+
+- Prefer clear, small classes with focused responsibilities.
+- Keep instance state consistent by validating inputs in `__init__` and setters.
+- Use `__repr__` for debugging-friendly output and `__str__` for user-friendly output.
+- Avoid mutable default arguments (use `None` and create a new list/dict inside `__init__`).
+- Document class behavior through method names and simple examples (and tests when possible).
+
+## Summary
+
+- Classes define blueprints; objects are instances with their own state.
+- `__init__` sets initial state; `self` refers to the current instance.
+- Instance variables are per-object; class variables are shared across instances.
+- Dunder methods let your objects integrate naturally with Python features.
 
 ## Further Exploration
 

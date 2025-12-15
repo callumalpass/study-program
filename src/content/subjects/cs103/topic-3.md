@@ -5,7 +5,8 @@ Nature is full of hierarchies: all dogs are mammals, all mammals are animals. In
 **Why This Matters:**
 Inheritance is fundamental to code reuse and polymorphism. It allows you to build on existing code without duplicating it, create specialized versions of general concepts, and design extensible systems. Understanding inheritance is crucial for working with frameworks like Django, Flask, or any GUI toolkit.
 
-**Learning Objectives:**
+## Learning Objectives
+
 - Create child classes that inherit from parent classes
 - Override methods to provide specialized behavior
 - Use `super()` to call parent class methods
@@ -406,6 +407,13 @@ class MyTest(TestCase):
 ```
 
 ---
+
+## Summary
+
+- Inheritance models “is-a” relationships and enables reuse through base classes.
+- Overriding and `super()` let subclasses extend behavior while preserving base guarantees.
+- Multiple inheritance uses MRO; use it carefully and keep hierarchies simple.
+- Prefer composition when inheritance creates tight coupling or fragility.
 
 ## Further Exploration
 

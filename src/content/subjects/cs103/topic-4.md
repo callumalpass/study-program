@@ -5,7 +5,8 @@ The word "polymorphism" comes from Greek, meaning "many forms." In programming, 
 **Why This Matters:**
 Polymorphism is what makes object-oriented code truly flexible. It lets you write generic code that works with any object that follows a certain interface, without knowing the specific type at compile time. This is the foundation of plugin architectures, framework extensibility, and clean API design.
 
-**Learning Objectives:**
+## Learning Objectives
+
 - Understand method overriding as a form of polymorphism
 - Apply duck typing: "if it walks like a duck..."
 - Implement operator overloading with special methods
@@ -432,6 +433,13 @@ for plugin in plugins:
 ```
 
 ---
+
+## Summary
+
+- Polymorphism allows the same interface to operate across many concrete types.
+- Overriding enables subtype polymorphism; duck typing enables structural polymorphism.
+- Operator overloading uses dunder methods to integrate with Python operators and built-ins.
+- Strong polymorphic designs rely on small, stable interfaces.
 
 ## Further Exploration
 

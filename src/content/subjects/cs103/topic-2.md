@@ -5,7 +5,8 @@ Imagine a bank vault: you can deposit and withdraw money through the teller wind
 **Why This Matters:**
 Encapsulation is one of the four pillars of OOP. It protects your data from accidental corruption, allows you to change internal implementation without breaking external code, and makes your classes easier to use correctly. Without encapsulation, bugs multiply as code grows.
 
-**Learning Objectives:**
+## Learning Objectives
+
 - Understand why restricting direct access to data is important
 - Use Python naming conventions for access control (public, protected, private)
 - Implement getters and setters using the `@property` decorator
@@ -376,6 +377,13 @@ class User:
 ```
 
 ---
+
+## Summary
+
+- Encapsulation protects internal state behind a stable public interface.
+- Python relies on conventions (`_name`, `__name`) plus properties for controlled access.
+- `@property` enables validation and computed attributes without changing caller code.
+- Good encapsulation improves correctness, refactorability, and usability.
 
 ## Further Exploration
 
