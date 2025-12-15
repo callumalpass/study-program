@@ -8,7 +8,7 @@ import { onRouteChange } from './core/router';
 import { progressStorage } from './core/storage';
 import { curriculum } from './data/curriculum';
 import type { Theme } from './core/types';
-import { renderSidebar } from './components/sidebar';
+import { renderSidebar } from './components/preact/sidebar';
 import { renderHomePage } from './pages/home';
 import { renderCurriculumPage } from './pages/curriculum';
 import { renderSubjectPage } from './pages/subject';
@@ -25,6 +25,7 @@ import { cs103Quizzes, cs103Exercises, cs103Projects, cs103Exams } from './data/
 import { math102Quizzes, math102Exercises, math102Projects } from './data/subjects/math102';
 import { cs104Quizzes, cs104Exercises, cs104Projects } from './data/subjects/cs104';
 import { cs105Quizzes, cs105Exercises, cs105Projects } from './data/subjects/cs105';
+import { cs201Quizzes, cs201Exercises, cs201Projects, cs201Exams } from './data/subjects/cs201';
 import { math203Quizzes, math203Exercises, math203Projects, math203Exams } from './data/subjects/math203';
 
 import type { Quiz, Exercise, Project, Exam } from './core/types';
@@ -38,6 +39,7 @@ const allQuizzes: Quiz[] = [
   ...math102Quizzes,
   ...cs104Quizzes,
   ...cs105Quizzes,
+  ...cs201Quizzes,
   ...math203Quizzes,
 ];
 
@@ -45,6 +47,7 @@ const allExams: Exam[] = [
   ...cs101Exams,
   ...math101Exams,
   ...cs103Exams,
+  ...cs201Exams,
   ...math203Exams,
 ];
 
@@ -56,6 +59,7 @@ const allExercises: Exercise[] = [
   ...math102Exercises,
   ...cs104Exercises,
   ...cs105Exercises,
+  ...cs201Exercises,
   ...math203Exercises,
 ];
 
@@ -67,6 +71,7 @@ const allProjects: Project[] = [
   ...math102Projects,
   ...cs104Projects,
   ...cs105Projects,
+  ...cs201Projects,
   ...math203Projects,
 ];
 
@@ -241,7 +246,7 @@ function initApp(): void {
 
     // Render sidebar (wrapped in error boundary)
     safeRender(sidebarEl, path, () => {
-      renderSidebar(sidebarEl, path, curriculum, userProgress.subjects, undefined, allQuizzes, allExercises, allExams, allProjects);
+      renderSidebar(sidebarEl, path, curriculum, userProgress.subjects, allQuizzes, allExercises, allExams, allProjects);
     });
 
     // Route to appropriate page (wrapped in error boundary)
@@ -259,8 +264,12 @@ function initApp(): void {
       } else if (path.startsWith('/subject/')) {
         const subjectId = params.id;
 
-        if (params.topicId) {
-          renderSubjectPage(mainEl, curriculum, subjectId, params.topicId, allProjects, allExams);
+        if (params.subtopicSlug) {
+          // Subtopic view
+          renderSubjectPage(mainEl, curriculum, subjectId, params.topicId, allProjects, allExams, params.subtopicSlug, allQuizzes, allExercises);
+        } else if (params.topicId) {
+          // Topic view (may redirect to subtopic if topic has subtopics)
+          renderSubjectPage(mainEl, curriculum, subjectId, params.topicId, allProjects, allExams, undefined, allQuizzes, allExercises);
         } else if (params.quizId) {
           renderQuizPage(mainEl, curriculum, allQuizzes, subjectId, params.quizId);
         } else if (params.examId) {
