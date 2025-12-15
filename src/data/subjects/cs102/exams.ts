@@ -209,6 +209,31 @@ export const cs102Exams: Exam[] = [
         codeSnippet: '1 XOR 1 XOR 0',
         correctAnswer: '0',
         explanation: '1^1=0, 0^0=0.'
+      },
+      // Written Questions
+      {
+        id: 'cs102-mid-26',
+        type: 'written',
+        prompt: 'Explain the difference between signed and unsigned integer representations. What is the range of an 8-bit signed vs. unsigned integer, and why?',
+        correctAnswer: '',
+        explanation: 'Unsigned uses all bits for magnitude (0-255); signed uses MSB as sign bit with two\'s complement.',
+        modelAnswer: 'Unsigned integers use all bits to represent magnitude. An 8-bit unsigned integer ranges from 0 to 255 (2^8 - 1), using all 256 bit patterns for non-negative values.\n\nSigned integers (using two\'s complement) reserve the most significant bit (MSB) to indicate sign. The MSB = 1 indicates negative numbers. An 8-bit signed integer ranges from -128 to +127.\n\nWhy the asymmetry? In two\'s complement:\n- Positive numbers: 0 to 01111111 (0 to +127)\n- Zero: 00000000\n- Negative numbers: 10000000 to 11111111 (-128 to -1)\n\nThe bit pattern 10000000 represents -128 (no positive counterpart in 8 bits), while positive values max at +127 (01111111). This gives us 128 negative values (-128 to -1) and 128 non-negative values (0 to +127).'
+      },
+      {
+        id: 'cs102-mid-27',
+        type: 'written',
+        prompt: 'Why are NAND and NOR gates called "universal gates"? Briefly explain how you could implement an AND gate using only NAND gates.',
+        correctAnswer: '',
+        explanation: 'Universal gates can implement any other logic gate. AND from NAND: NAND the inputs, then NAND the result with itself.',
+        modelAnswer: 'NAND and NOR are called "universal gates" because any Boolean function can be implemented using only NAND gates (or only NOR gates). This means you can build NOT, AND, OR, XOR, and any other gate using just one type of universal gate.\n\nThis is significant for manufacturing: a chip can use a single gate type throughout, simplifying production and design.\n\nImplementing AND using only NAND gates:\n1. A AND B = NOT(A NAND B)\n2. NOT can be implemented as: NOT(X) = X NAND X\n\nSo: A AND B = (A NAND B) NAND (A NAND B)\n\nFirst NAND the two inputs to get the complement of AND, then NAND that result with itself to invert it back.\n\nCircuit:\n- Gate 1: A NAND B → produces ¬(A∧B)\n- Gate 2: (result of Gate 1) NAND (result of Gate 1) → produces ¬¬(A∧B) = A∧B'
+      },
+      {
+        id: 'cs102-mid-28',
+        type: 'written',
+        prompt: 'What is the IEEE 754 floating-point representation, and why can\'t it represent all decimal numbers exactly? Give an example of a decimal number that cannot be exactly represented.',
+        correctAnswer: '',
+        explanation: 'IEEE 754 uses binary fractions; many decimal fractions (like 0.1) have infinite binary representations.',
+        modelAnswer: 'IEEE 754 represents floating-point numbers using three fields:\n1. Sign bit (1 bit): 0 = positive, 1 = negative\n2. Exponent (8 bits for single precision): biased by 127\n3. Mantissa/Significand (23 bits): the fractional part after the implicit leading 1\n\nValue = (-1)^sign × 1.mantissa × 2^(exponent - bias)\n\nWhy some decimals can\'t be exactly represented:\nIEEE 754 uses binary fractions. Just as 1/3 = 0.333... is infinite in decimal, many simple decimal fractions have infinite binary representations.\n\nExample: 0.1 (one-tenth)\nIn binary, 0.1 = 0.0001100110011... (repeating forever)\n\nSince the mantissa has finite bits (23), this infinite sequence must be truncated, introducing a small rounding error. This is why:\n- 0.1 + 0.2 ≠ 0.3 exactly in floating-point\n- Financial calculations should use fixed-point or decimal types\n\nOther examples: 0.2, 0.3, 0.4, 0.6, 0.7, 0.8, 0.9 all have infinite binary representations.'
       }
     ]
   },
@@ -559,6 +584,22 @@ JGT loop`,
         options: ['Making the CPU clock faster', 'Allowing devices to transfer blocks to/from RAM without per-byte CPU involvement', 'Eliminating the need for caches', 'Storing all programs in ROM'],
         correctAnswer: 1,
         explanation: 'DMA moves data between I/O devices and RAM with minimal CPU overhead; the CPU sets up the transfer and is notified when it completes.'
+      },
+      {
+        id: 'cs102-fin-43',
+        type: 'written',
+        prompt: 'Explain the difference between polling and interrupts for I/O. When would you prefer each approach?',
+        correctAnswer: '',
+        explanation: 'Polling repeatedly checks device status (wastes CPU); interrupts let the device notify the CPU when ready.',
+        modelAnswer: 'Polling:\nThe CPU repeatedly checks a device\'s status register in a loop, waiting for the device to become ready. The CPU actively "polls" the device.\n\nAdvantages:\n- Simple to implement\n- Predictable timing (no interrupt latency)\n- No context-switch overhead\n\nDisadvantages:\n- Wastes CPU cycles while waiting\n- CPU cannot do other work during polling\n- Poor for slow or unpredictable devices\n\nInterrupts:\nThe device signals the CPU when it needs attention. The CPU continues other work until interrupted, then runs an interrupt handler.\n\nAdvantages:\n- CPU can do useful work while waiting\n- Efficient for slow, infrequent events\n- Scales better with multiple devices\n\nDisadvantages:\n- Interrupt handling has overhead (context save/restore)\n- More complex implementation\n- Can cause latency issues if interrupts are frequent\n\nWhen to use each:\n- Polling: Very fast devices, tight timing requirements, simple embedded systems, or when device is almost always ready\n- Interrupts: Slow devices (keyboard, disk), unpredictable events, multi-tasking systems, when CPU utilization matters'
+      },
+      {
+        id: 'cs102-fin-44',
+        type: 'written',
+        prompt: 'Describe the purpose of the function prologue and epilogue in assembly language. What specific operations are typically performed in each?',
+        correctAnswer: '',
+        explanation: 'Prologue sets up stack frame (save registers, allocate locals); epilogue reverses it (deallocate, restore, return).',
+        modelAnswer: 'Function Prologue (executed at function entry):\nPurpose: Set up the stack frame for the function, preserving the caller\'s context.\n\nTypical operations:\n1. Push the frame pointer (FP/BP) to save caller\'s frame reference\n2. Set FP = SP to establish new frame base\n3. Subtract from SP to allocate space for local variables\n4. Push any callee-saved registers the function will use\n\nExample (x86-64):\npush rbp        ; Save caller\'s frame pointer\nmov rbp, rsp    ; Set up our frame pointer\nsub rsp, 32     ; Allocate local variable space\npush rbx        ; Save callee-saved register\n\nFunction Epilogue (executed before return):\nPurpose: Tear down the stack frame, restore caller\'s state, and return.\n\nTypical operations:\n1. Pop any callee-saved registers (in reverse order)\n2. Restore SP (deallocate local variables)\n3. Pop the old frame pointer back into FP\n4. Return to caller (RET instruction)\n\nExample (x86-64):\npop rbx         ; Restore callee-saved register\nmov rsp, rbp    ; Deallocate locals\npop rbp         ; Restore caller\'s frame pointer\nret             ; Return to caller\n\nThe prologue and epilogue are symmetric—the epilogue undoes exactly what the prologue did, ensuring the stack returns to its original state.'
       }
     ]
   }

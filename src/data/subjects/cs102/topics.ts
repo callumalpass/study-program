@@ -1,4 +1,4 @@
-import type { Subtopic, Topic } from '../../../core/types';
+import type { Subtopic, Topic, Reading } from '../../../core/types';
 import topic1Content from '../../../content/subjects/cs102/topic-1.md?raw';
 import topic2Content from '../../../content/subjects/cs102/topic-2.md?raw';
 import topic3Content from '../../../content/subjects/cs102/topic-3.md?raw';
@@ -105,6 +105,99 @@ const topic7Subtopics: Subtopic[] = [
   { id: 'cs102-t7-performance-tradeoffs', slug: 'performance-tradeoffs', title: 'Performance Tradeoffs', content: t7s5, order: 5 }
 ];
 
+// ============================================================================
+// Readings
+// ============================================================================
+
+const topic3Readings: Reading[] = [
+  {
+    id: 'cs102-t3-reading-1',
+    title: 'What Every Computer Scientist Should Know About Floating-Point Arithmetic',
+    authors: ['David Goldberg'],
+    url: 'https://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html',
+    type: 'article',
+    year: 1991,
+    required: true,
+    description: 'The classic article explaining floating-point representation, rounding errors, and why 0.1 + 0.2 ≠ 0.3. Essential for understanding IEEE 754 quirks.',
+    estimatedMinutes: 45,
+  },
+  {
+    id: 'cs102-t3-reading-2',
+    title: 'The Absolute Minimum Every Software Developer Must Know About Unicode',
+    authors: ['Joel Spolsky'],
+    url: 'https://www.joelonsoftware.com/2003/10/08/the-absolute-minimum-every-software-developer-absolutely-positively-must-know-about-unicode-and-character-sets-no-excuses/',
+    type: 'article',
+    year: 2003,
+    required: false,
+    description: 'A practical and entertaining introduction to character encoding, explaining why "plain text" is more complicated than it seems.',
+    estimatedMinutes: 20,
+  },
+];
+
+const topic4Readings: Reading[] = [
+  {
+    id: 'cs102-t4-reading-1',
+    title: 'A Symbolic Analysis of Relay and Switching Circuits',
+    authors: ['Claude E. Shannon'],
+    url: 'https://www.cs.virginia.edu/~evans/greatworks/shannon38.pdf',
+    type: 'paper',
+    year: 1938,
+    required: true,
+    description: 'Shannon\'s master\'s thesis that founded digital circuit design by showing Boolean algebra could model electrical circuits. Often called the most important master\'s thesis of the 20th century.',
+    estimatedMinutes: 40,
+  },
+  {
+    id: 'cs102-t4-reading-2',
+    title: 'An Investigation of the Laws of Thought (Excerpt)',
+    authors: ['George Boole'],
+    url: 'https://www.gutenberg.org/files/15114/15114-pdf.pdf',
+    type: 'textbook',
+    year: 1854,
+    required: false,
+    description: 'The foundational work that created Boolean algebra. Reading the introduction gives historical perspective on how logic became mathematical.',
+    estimatedMinutes: 30,
+  },
+];
+
+const topic5Readings: Reading[] = [
+  {
+    id: 'cs102-t5-reading-1',
+    title: 'First Draft of a Report on the EDVAC',
+    authors: ['John von Neumann'],
+    url: 'https://web.mit.edu/STS.035/www/PDFs/edvac.pdf',
+    type: 'paper',
+    year: 1945,
+    required: true,
+    description: 'The paper that defined stored-program computer architecture. Every computer you use today follows this basic design. Remarkably readable for its historical importance.',
+    estimatedMinutes: 35,
+  },
+  {
+    id: 'cs102-t5-reading-2',
+    title: 'Computer Architecture: A Quantitative Approach (Chapter 1)',
+    authors: ['John L. Hennessy', 'David A. Patterson'],
+    url: 'https://acs.pub.ro/~cpop/SMPA/Computer%20Architecture%20A%20Quantitative%20Approach%20(5th%20edition).pdf',
+    type: 'textbook',
+    year: 2011,
+    required: false,
+    description: 'The definitive textbook on computer architecture. Chapter 1 provides an excellent overview of fundamental concepts and design trade-offs.',
+    estimatedMinutes: 60,
+  },
+];
+
+const topic7Readings: Reading[] = [
+  {
+    id: 'cs102-t7-reading-1',
+    title: 'What Every Programmer Should Know About Memory',
+    authors: ['Ulrich Drepper'],
+    url: 'https://people.freebsd.org/~lstewart/articles/cpumemory.pdf',
+    type: 'article',
+    year: 2007,
+    required: false,
+    description: 'A comprehensive guide to how memory works in modern systems, from RAM to caches. Sections 2-3 on CPU caches are particularly relevant to this topic.',
+    estimatedMinutes: 45,
+  },
+];
+
 export const cs102Topics: Topic[] = [
   {
     id: 'cs102-1',
@@ -127,6 +220,7 @@ export const cs102Topics: Topic[] = [
     title: 'Data Representation',
     content: topic3Content,
     subtopics: topic3Subtopics,
+    readings: topic3Readings,
     quizIds: ['cs102-quiz-3', 'cs102-quiz-3-b', 'cs102-quiz-3-c'],
     exerciseIds: ['cs102-ex-3', 'cs102-t3-ex02', 'cs102-t3-ex03', 'cs102-t3-ex04', 'cs102-t3-ex05', 'cs102-t3-ex06', 'cs102-t3-ex07', 'cs102-t3-ex08', 'cs102-t3-ex09', 'cs102-t3-ex10', 'cs102-t3-drill-1', 'cs102-t3-drill-2', 'cs102-t3-ex13', 'cs102-t3-ex14', 'cs102-t3-ex15', 'cs102-t3-ex16']
   },
@@ -135,6 +229,7 @@ export const cs102Topics: Topic[] = [
     title: 'Boolean Algebra and Logic Gates',
     content: topic4Content,
     subtopics: topic4Subtopics,
+    readings: topic4Readings,
     quizIds: ['cs102-quiz-4', 'cs102-quiz-4-b', 'cs102-quiz-4-c'],
     exerciseIds: ['cs102-ex-4', 'cs102-t4-ex02', 'cs102-t4-ex03', 'cs102-t4-ex04', 'cs102-t4-ex05', 'cs102-t4-ex06', 'cs102-t4-ex07', 'cs102-t4-ex08', 'cs102-t4-ex09', 'cs102-t4-ex10', 'cs102-t4-ex11', 'cs102-t4-drill-1', 'cs102-t4-drill-2', 'cs102-t4-ex14', 'cs102-t4-ex15', 'cs102-t4-ex16']
   },
@@ -143,6 +238,7 @@ export const cs102Topics: Topic[] = [
     title: 'Basic Computer Architecture',
     content: topic5Content,
     subtopics: topic5Subtopics,
+    readings: topic5Readings,
     quizIds: ['cs102-quiz-5', 'cs102-quiz-5-b', 'cs102-quiz-5-c'],
     exerciseIds: ['cs102-ex-5', 'cs102-t5-ex02', 'cs102-t5-ex03', 'cs102-t5-ex04', 'cs102-t5-ex05', 'cs102-t5-ex06', 'cs102-t5-ex07', 'cs102-t5-ex08', 'cs102-t5-ex09', 'cs102-t5-ex10', 'cs102-t5-drill-1', 'cs102-t5-drill-2', 'cs102-t5-ex13', 'cs102-t5-ex14', 'cs102-t5-ex15', 'cs102-t5-ex16']
   },
@@ -159,6 +255,7 @@ export const cs102Topics: Topic[] = [
     title: 'Memory Hierarchy and I/O',
     content: topic7Content,
     subtopics: topic7Subtopics,
+    readings: topic7Readings,
     quizIds: ['cs102-quiz-7', 'cs102-quiz-7-b', 'cs102-quiz-7-c'],
     exerciseIds: ['cs102-t7-ex01', 'cs102-t7-ex02', 'cs102-t7-ex03', 'cs102-t7-ex04', 'cs102-t7-ex05', 'cs102-t7-ex06', 'cs102-t7-ex07', 'cs102-t7-ex08', 'cs102-t7-ex09', 'cs102-t7-ex10', 'cs102-t7-ex11', 'cs102-t7-ex12', 'cs102-t7-ex13', 'cs102-t7-ex14', 'cs102-t7-ex15', 'cs102-t7-ex16']
   }
