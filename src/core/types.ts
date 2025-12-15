@@ -30,11 +30,27 @@ export interface Subtopic {
   order: number;        // For ordering: 1, 2, 3...
 }
 
+// Reading types for academic references
+export type ReadingType = 'paper' | 'documentation' | 'textbook' | 'article' | 'rfc' | 'video';
+
+export interface Reading {
+  id: string;              // Unique ID: '[subject]-t[N]-reading-[N]'
+  title: string;           // Title of the reading
+  authors?: string[];      // Author(s) if applicable
+  url: string;             // URL to the reading
+  type: ReadingType;       // Type of reading material
+  year?: number;           // Publication year
+  required: boolean;       // Required vs optional reading
+  description?: string;    // Brief description of what this reading covers
+  estimatedMinutes?: number; // Estimated reading time
+}
+
 export interface Topic {
   id: string;
   title: string;
   content: string;
   subtopics?: Subtopic[];  // Optional array of subtopics
+  readings?: Reading[];    // Optional academic readings for the topic
   quizIds: string[];
   exerciseIds: string[];
 }

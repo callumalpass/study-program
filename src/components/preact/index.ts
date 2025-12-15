@@ -6,3 +6,4 @@ export { ExercisePage } from './ExercisePage';
 export { ExamPage } from './ExamPage';
 export { PracticeMode } from './PracticeMode';
 export { ContentNavigator } from './ContentNavigator';
+export { ReadingList } from './ReadingList';

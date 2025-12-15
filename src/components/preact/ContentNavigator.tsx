@@ -11,6 +11,7 @@ import {
   navigateToProject,
 } from '@/core/router';
 import { renderMarkdown } from '@/components/markdown';
+import { ReadingList } from './ReadingList';
 
 interface ContentNavigatorProps {
   subject: Subject;
@@ -233,6 +234,10 @@ export function ContentNavigator({
             class="content-body markdown-content"
             dangerouslySetInnerHTML={{ __html: renderMarkdown(currentSubtopic.content) }}
           />
+          {/* Show readings for the current topic */}
+          {currentTopic?.readings && currentTopic.readings.length > 0 && (
+            <ReadingList readings={currentTopic.readings} topicTitle={currentTopic.title} />
+          )}
           <nav class="content-pagination">
             <div class="pagination-left">
               {prevSubtopic && (
@@ -278,6 +283,10 @@ export function ContentNavigator({
             class="content-body markdown-content"
             dangerouslySetInnerHTML={{ __html: renderMarkdown(currentTopic.content) }}
           />
+          {/* Show readings for the current topic */}
+          {currentTopic.readings && currentTopic.readings.length > 0 && (
+            <ReadingList readings={currentTopic.readings} topicTitle={currentTopic.title} />
+          )}
         </div>
       );
     }
