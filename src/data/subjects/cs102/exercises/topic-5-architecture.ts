@@ -218,5 +218,57 @@ export const topic5Exercises: CodingExercise[] = [
       'Time = cycles / (frequency in cycles per microsecond).'
     ],
     language: 'python'
+  },
+  {
+    id: 'cs102-t5-ex13',
+    subjectId: 'cs102',
+    topicId: 'cs102-5',
+    title: 'CPI Calculation',
+    difficulty: 2,
+    description: 'Calculate Cycles Per Instruction (CPI). `CPI = Total_Cycles / Instruction_Count`.',
+    starterCode: 'def calc_cpi(cycles, instr_count):\n    pass\n\nprint(calc_cpi(1000, 500))',
+    solution: 'def calc_cpi(cycles, instr_count):\n    return cycles / instr_count\n\nprint(calc_cpi(1000, 500))',
+    testCases: [],
+    hints: ['Divide total cycles by instruction count.'],
+    language: 'python'
+  },
+  {
+    id: 'cs102-t5-ex14',
+    subjectId: 'cs102',
+    topicId: 'cs102-5',
+    title: 'MIPS Calculation',
+    difficulty: 2,
+    description: 'Calculate MIPS (Million Instructions Per Second). `MIPS = (Instr_Count / Execution_Time_Seconds) / 10^6`.',
+    starterCode: 'def calc_mips(instr_count, seconds):\n    pass\n\nprint(calc_mips(2000000, 1))',
+    solution: 'def calc_mips(instr_count, seconds):\n    return (instr_count / seconds) / 1000000.0\n\nprint(calc_mips(2000000, 1))',
+    testCases: [],
+    hints: ['Instructions per second, divided by 1 million.'],
+    language: 'python'
+  },
+  {
+    id: 'cs102-t5-ex15',
+    subjectId: 'cs102',
+    topicId: 'cs102-5',
+    title: 'Amdahl\'s Law Speedup',
+    difficulty: 3,
+    description: 'Calculate theoretical speedup. `Speedup = 1 / ((1 - p) + (p / s))`, where `p` is portion parallelizable, `s` is speedup of that portion.',
+    starterCode: 'def amdahl_speedup(p, s):\n    pass\n\nprint(amdahl_speedup(0.5, 2))',
+    solution: 'def amdahl_speedup(p, s):\n    return 1.0 / ((1.0 - p) + (p / s))\n\nprint(amdahl_speedup(0.5, 2))',
+    testCases: [],
+    hints: ['Apply the formula.'],
+    language: 'python'
+  },
+  {
+    id: 'cs102-t5-ex16',
+    subjectId: 'cs102',
+    topicId: 'cs102-5',
+    title: 'Clock Period',
+    difficulty: 1,
+    description: 'Calculate Clock Period (T) given Frequency (f). `T = 1 / f`. Input f is in Hz, return T in seconds.',
+    starterCode: 'def clock_period(freq_hz):\n    pass\n\nprint(clock_period(1000000000)) # 1 GHz -> 1e-9 sec',
+    solution: 'def clock_period(freq_hz):\n    return 1.0 / freq_hz\n\nprint(clock_period(1000000000))',
+    testCases: [],
+    hints: ['Inverse of frequency.'],
+    language: 'python'
   }
 ];

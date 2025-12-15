@@ -231,5 +231,44 @@ export const topic4Exercises: CodingExercise[] = [
       'Use logical operators, not bitwise.'
     ],
     language: 'python'
+  },
+  {
+    id: 'cs102-t4-ex14',
+    subjectId: 'cs102',
+    topicId: 'cs102-4',
+    title: 'NOR Gate',
+    difficulty: 1,
+    description: 'Implement a NOR gate (NOT OR). Returns True only if both inputs are False.',
+    starterCode: 'def nor_gate(a, b):\n    pass\n\nprint(nor_gate(False, False))',
+    solution: 'def nor_gate(a, b):\n    return not (a or b)\n\nprint(nor_gate(False, False))',
+    testCases: [],
+    hints: ['Negate the result of OR.'],
+    language: 'python'
+  },
+  {
+    id: 'cs102-t4-ex15',
+    subjectId: 'cs102',
+    topicId: 'cs102-4',
+    title: 'XNOR Gate',
+    difficulty: 1,
+    description: 'Implement XNOR (Exclusive NOR). Returns True if inputs are the same.',
+    starterCode: 'def xnor_gate(a, b):\n    pass\n\nprint(xnor_gate(True, True))',
+    solution: 'def xnor_gate(a, b):\n    return a == b\n\nprint(xnor_gate(True, True))',
+    testCases: [],
+    hints: ['Check if a equals b.'],
+    language: 'python'
+  },
+  {
+    id: 'cs102-t4-ex16',
+    subjectId: 'cs102',
+    topicId: 'cs102-4',
+    title: 'Majority Gate',
+    difficulty: 2,
+    description: 'Return True if more than half of the 3 inputs are True.',
+    starterCode: 'def majority(a, b, c):\n    pass\n\nprint(majority(True, True, False))',
+    solution: 'def majority(a, b, c):\n    return (a + b + c) >= 2\n\nprint(majority(True, True, False))',
+    testCases: [],
+    hints: ['Sum the boolean values (True=1).', 'Check if sum >= 2.'],
+    language: 'python'
   }
 ];

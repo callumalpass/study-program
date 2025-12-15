@@ -234,5 +234,57 @@ print(decode_float32("01000000101000000000000000000000"))`,
       'Return boolean.'
     ],
     language: 'python'
+  },
+  {
+    id: 'cs102-t3-ex13',
+    subjectId: 'cs102',
+    topicId: 'cs102-3',
+    title: 'ASCII Is Upper',
+    difficulty: 1,
+    description: 'Return True if `char` is an uppercase ASCII letter (A-Z), without using .isupper().',
+    starterCode: 'def is_upper_ascii(char):\n    # Your code here\n    pass\n\nprint(is_upper_ascii("A"))',
+    solution: 'def is_upper_ascii(char):\n    return 0x41 <= ord(char) <= 0x5A\n\nprint(is_upper_ascii("A"))',
+    testCases: [],
+    hints: ['A is 65 (0x41), Z is 90 (0x5A).', 'Use ord().'],
+    language: 'python'
+  },
+  {
+    id: 'cs102-t3-ex14',
+    subjectId: 'cs102',
+    topicId: 'cs102-3',
+    title: 'ASCII To Lower',
+    difficulty: 1,
+    description: 'Convert an uppercase ASCII char to lowercase by manipulating the bit value. Hint: \'a\' - \'A\' = 32.',
+    starterCode: 'def to_lower_ascii(char):\n    # Your code here\n    pass\n\nprint(to_lower_ascii("G"))',
+    solution: 'def to_lower_ascii(char):\n    if "A" <= char <= "Z":\n        return chr(ord(char) | 0x20)\n    return char\n\nprint(to_lower_ascii("G"))',
+    testCases: [],
+    hints: ['OR with 0x20 (32) sets the 6th bit, converting upper to lower.'],
+    language: 'python'
+  },
+  {
+    id: 'cs102-t3-ex15',
+    subjectId: 'cs102',
+    topicId: 'cs102-3',
+    title: 'Hex Dump String',
+    difficulty: 2,
+    description: 'Given a string, return a space-separated string of hex values for each character.',
+    starterCode: 'def hex_dump(s):\n    # Your code here\n    pass\n\nprint(hex_dump("Hi")) # "48 69"',
+    solution: 'def hex_dump(s):\n    return " ".join(format(ord(c), "02x") for c in s)\n\nprint(hex_dump("Hi"))',
+    testCases: [],
+    hints: ['Iterate chars.', 'Convert each to hex.', 'Join with spaces.'],
+    language: 'python'
+  },
+  {
+    id: 'cs102-t3-ex16',
+    subjectId: 'cs102',
+    topicId: 'cs102-3',
+    title: 'Simple RLE',
+    difficulty: 3,
+    description: 'Run Length Encode a string of 0s and 1s. E.g., "00011" -> "0312".',
+    starterCode: 'def rle_encode(s):\n    # Your code here\n    pass\n\nprint(rle_encode("00011"))',
+    solution: 'def rle_encode(s):\n    if not s: return ""\n    res = ""\n    count = 1\n    curr = s[0]\n    for c in s[1:]:\n        if c == curr:\n            count += 1\n        else:\n            res += curr + str(count)\n            curr = c\n            count = 1\n    res += curr + str(count)\n    return res\n\nprint(rle_encode("00011"))',
+    testCases: [],
+    hints: ['Track current char and count.', 'Append to result when char changes.'],
+    language: 'python'
   }
 ];

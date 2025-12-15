@@ -234,5 +234,57 @@ print(saturating_add("01111111", "00000001"))`,
       'Inputs are 0/1 integers.'
     ],
     language: 'python'
+  },
+  {
+    id: 'cs102-t2-ex13',
+    subjectId: 'cs102',
+    topicId: 'cs102-2',
+    title: 'Logical Shift Left',
+    difficulty: 1,
+    description: 'Implement logical left shift `x << n` without using `<<` operator. Assume 8-bit width.',
+    starterCode: 'def logical_lshift(x, n):\n    # Your code here\n    pass\n\nprint(logical_lshift(3, 2)) # 12',
+    solution: 'def logical_lshift(x, n):\n    return (x * (2**n)) & 0xFF\n\nprint(logical_lshift(3, 2))',
+    testCases: [],
+    hints: ['Left shift by n is equivalent to multiplying by 2^n.', 'Mask with 0xFF to keep 8 bits.'],
+    language: 'python'
+  },
+  {
+    id: 'cs102-t2-ex14',
+    subjectId: 'cs102',
+    topicId: 'cs102-2',
+    title: 'Logical Shift Right',
+    difficulty: 1,
+    description: 'Implement logical right shift `x >> n` without `>>`.',
+    starterCode: 'def logical_rshift(x, n):\n    # Your code here\n    pass\n\nprint(logical_rshift(12, 2)) # 3',
+    solution: 'def logical_rshift(x, n):\n    return x // (2**n)\n\nprint(logical_rshift(12, 2))',
+    testCases: [],
+    hints: ['Right shift by n is integer division by 2^n.'],
+    language: 'python'
+  },
+  {
+    id: 'cs102-t2-ex15',
+    subjectId: 'cs102',
+    topicId: 'cs102-2',
+    title: 'Rotate Left (8-bit)',
+    difficulty: 3,
+    description: 'Rotate bits of an 8-bit integer `x` left by `n` positions.',
+    starterCode: 'def rotate_left(x, n):\n    # Your code here\n    pass\n\nprint(rotate_left(0b10000001, 1)) # 0b00000011 (3)',
+    solution: 'def rotate_left(x, n):\n    n = n % 8\n    return ((x << n) | (x >> (8 - n))) & 0xFF\n\nprint(rotate_left(0x81, 1))',
+    testCases: [],
+    hints: ['Combine left shift and right shift.', 'Mask with 0xFF.'],
+    language: 'python'
+  },
+  {
+    id: 'cs102-t2-ex16',
+    subjectId: 'cs102',
+    topicId: 'cs102-2',
+    title: 'Hamming Weight',
+    difficulty: 2,
+    description: 'Count the number of 1s in the binary representation of `x` (population count).',
+    starterCode: 'def pop_count(x):\n    # Your code here\n    pass\n\nprint(pop_count(15)) # 4 (1111)',
+    solution: 'def pop_count(x):\n    return bin(x).count("1")\n\nprint(pop_count(15))',
+    testCases: [],
+    hints: ['Convert to binary string and count "1"s.'],
+    language: 'python'
   }
 ];

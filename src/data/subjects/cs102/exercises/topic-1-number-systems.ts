@@ -216,5 +216,57 @@ export const topic1Exercises: CodingExercise[] = [
       'Return the padded string.'
     ],
     language: 'python'
+  },
+  {
+    id: 'cs102-t1-ex13',
+    subjectId: 'cs102',
+    topicId: 'cs102-1',
+    title: 'Base-4 Conversion',
+    difficulty: 2,
+    description: 'Write a function `to_base4(n)` that converts a decimal integer to a base-4 string.',
+    starterCode: 'def to_base4(n):\n    # Your code here\n    pass\n\nprint(to_base4(10)) # 22 (2*4 + 2)',
+    solution: 'def to_base4(n):\n    if n == 0: return "0"\n    res = ""\n    while n > 0:\n        res = str(n % 4) + res\n        n //= 4\n    return res\n\nprint(to_base4(10))',
+    testCases: [],
+    hints: ['Repeatedly divide by 4 and take remainders.'],
+    language: 'python'
+  },
+  {
+    id: 'cs102-t1-ex14',
+    subjectId: 'cs102',
+    topicId: 'cs102-1',
+    title: 'Binary Palindrome',
+    difficulty: 2,
+    description: 'Return True if the binary representation of `n` reads the same forwards and backwards.',
+    starterCode: 'def binary_palindrome(n):\n    # Your code here\n    pass\n\nprint(binary_palindrome(9)) # 1001 -> True',
+    solution: 'def binary_palindrome(n):\n    b = bin(n)[2:]\n    return b == b[::-1]\n\nprint(binary_palindrome(9))',
+    testCases: [],
+    hints: ['Convert to binary string.', 'Check if string equals its reverse.'],
+    language: 'python'
+  },
+  {
+    id: 'cs102-t1-ex15',
+    subjectId: 'cs102',
+    topicId: 'cs102-1',
+    title: 'Power of Two Check',
+    difficulty: 1,
+    description: 'Return True if `n` is a power of two, using bitwise operations (no loops or log).',
+    starterCode: 'def is_power_of_two(n):\n    # Your code here\n    pass\n\nprint(is_power_of_two(16)) # True\nprint(is_power_of_two(18)) # False',
+    solution: 'def is_power_of_two(n):\n    return n > 0 and (n & (n - 1)) == 0\n\nprint(is_power_of_two(16))',
+    testCases: [],
+    hints: ['n & (n-1) removes the lowest set bit.', 'If n is a power of two, it has exactly one bit set.'],
+    language: 'python'
+  },
+  {
+    id: 'cs102-t1-ex16',
+    subjectId: 'cs102',
+    topicId: 'cs102-1',
+    title: 'Hamming Distance',
+    difficulty: 3,
+    description: 'Calculate the Hamming distance between two integers `x` and `y` (number of bits that differ).',
+    starterCode: 'def hamming_dist(x, y):\n    # Your code here\n    pass\n\nprint(hamming_dist(1, 4)) # 001 vs 100 -> 2 bits differ',
+    solution: 'def hamming_dist(x, y):\n    return bin(x ^ y).count("1")\n\nprint(hamming_dist(1, 4))',
+    testCases: [],
+    hints: ['XOR the numbers.', 'Count the 1s in the result.'],
+    language: 'python'
   }
 ];

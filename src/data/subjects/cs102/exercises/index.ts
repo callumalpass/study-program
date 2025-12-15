@@ -4,6 +4,8 @@ import { topic2Exercises } from './topic-2-binary-arithmetic';
 import { topic3Exercises } from './topic-3-data-representation';
 import { topic4Exercises } from './topic-4-boolean-logic';
 import { topic5Exercises } from './topic-5-architecture';
+import { topic6Exercises } from './topic-6-assembly';
+import { topic7Exercises } from './topic-7-memory';
 
 export const cs102Exercises: CodingExercise[] = [
   ...topic1Exercises,
@@ -11,6 +13,8 @@ export const cs102Exercises: CodingExercise[] = [
   ...topic3Exercises,
   ...topic4Exercises,
   ...topic5Exercises,
+  ...topic6Exercises,
+  ...topic7Exercises,
 ];
 
 export {
@@ -19,4 +23,6 @@ export {
   topic3Exercises,
   topic4Exercises,
   topic5Exercises,
+  topic6Exercises,
+  topic7Exercises,
 };
