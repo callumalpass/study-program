@@ -24,9 +24,10 @@ export function renderExamPage(
   }
 
   // Clear container and render Preact component
+  // Key prop ensures Preact creates a new component instance on navigation
   container.innerHTML = '';
   render(
-    <ExamPage subject={subject} exam={exam} />,
+    <ExamPage key={examId} subject={subject} exam={exam} />,
     container
   );
 }

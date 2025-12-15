@@ -275,7 +275,7 @@ function initApp(): void {
         } else if (params.examId) {
           renderExamPage(mainEl, curriculum, allExams, subjectId, params.examId);
         } else if (params.exId) {
-          renderExercisePage(mainEl, curriculum, allExercises, subjectId, params.exId);
+          renderExercisePage(mainEl, curriculum, allExercises, subjectId, params.exId, allQuizzes, allExams, allProjects);
         } else if (params.projId) {
           renderProjectPage(mainEl, curriculum, allProjects, subjectId, params.projId);
         } else {

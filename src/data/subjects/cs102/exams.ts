@@ -422,8 +422,6 @@ export const cs102Exams: Exam[] = [
         correctAnswer: '1',
         explanation: '0 AND 0 = 0. 1 OR 0 = 1.'
       },
-      // ... filling up to 30 for brevity in this output, but logic implies 40.
-      // I will add placeholders for the rest to reach ~30-40 conceptually.
       {
         id: 'cs102-fin-26',
         type: 'multiple_choice',
@@ -462,6 +460,105 @@ export const cs102Exams: Exam[] = [
         options: ['1010', '1001', '1100', '1110'],
         correctAnswer: 0,
         explanation: '8+2=10.'
+      },
+      {
+        id: 'cs102-fin-31',
+        type: 'multiple_choice',
+        prompt: 'Sign extension means:',
+        options: ['Adding 0s to the right', 'Repeating the sign bit on the left when widening', 'Flipping all bits', 'Adding 1 to the value'],
+        correctAnswer: 1,
+        explanation: 'When widening a two’s complement value (e.g., 8-bit to 16-bit), you preserve the numeric value by copying the sign bit into the new high bits.'
+      },
+      {
+        id: 'cs102-fin-32',
+        type: 'fill_blank',
+        prompt: 'In IEEE-754 single-precision (32-bit) floating point, the exponent bias is ____.',
+        correctAnswer: '127',
+        explanation: 'Single-precision uses an 8-bit exponent with bias 127.'
+      },
+      {
+        id: 'cs102-fin-33',
+        type: 'code_output',
+        prompt: 'What is the final value of R0?',
+        codeSnippet: `MOV R0, #0
+MOV R1, #5
+loop:
+ADD R0, R0, R1
+SUB R1, R1, #1
+CMP R1, #0
+JGT loop`,
+        correctAnswer: '15',
+        explanation: 'R0 accumulates 5+4+3+2+1 = 15; loop stops when R1 becomes 0.'
+      },
+      {
+        id: 'cs102-fin-34',
+        type: 'true_false',
+        prompt: 'On a little-endian machine, the 32-bit value 0x01020304 is stored in memory (low→high addresses) as 04 03 02 01.',
+        correctAnswer: true,
+        explanation: 'Little endian stores the least significant byte at the lowest address.'
+      },
+      {
+        id: 'cs102-fin-35',
+        type: 'multiple_choice',
+        prompt: 'You access a memory block for the first time and it is not in the cache. This miss is best described as:',
+        options: ['Conflict miss', 'Capacity miss', 'Compulsory miss', 'Write-back miss'],
+        correctAnswer: 2,
+        explanation: 'The first access to a block must miss because the cache has never loaded it: a compulsory (cold) miss.'
+      },
+      {
+        id: 'cs102-fin-36',
+        type: 'written',
+        prompt: 'Define temporal locality and spatial locality. Give one concrete example of each in a program.',
+        correctAnswer: '',
+        explanation: 'Temporal locality: recently accessed data/instructions are likely to be accessed again soon (e.g., repeatedly reading/updating a loop counter or frequently called function code). Spatial locality: nearby memory locations are likely to be accessed soon (e.g., iterating through an array sequentially so accessing arr[i] makes arr[i+1] likely).',
+        modelAnswer: 'Temporal locality: recently accessed data/instructions are likely to be accessed again soon (e.g., repeatedly reading/updating a loop counter or frequently called function code). Spatial locality: nearby memory locations are likely to be accessed soon (e.g., iterating through an array sequentially so accessing arr[i] makes arr[i+1] likely).'
+      },
+      {
+        id: 'cs102-fin-37',
+        type: 'multiple_choice',
+        prompt: 'Which expression is equivalent to XOR (A ⊕ B)?',
+        options: ['(A AND B) OR (NOT A AND NOT B)', '(A AND NOT B) OR (NOT A AND B)', '(A OR B) AND (A AND B)', 'NOT(A OR B)'],
+        correctAnswer: 1,
+        explanation: 'XOR is true exactly when the inputs differ: (A ∧ ¬B) ∨ (¬A ∧ B).'
+      },
+      {
+        id: 'cs102-fin-38',
+        type: 'fill_blank',
+        prompt: 'To compute the two’s complement negation of an N-bit value, invert all bits and add ____.',
+        correctAnswer: '1',
+        explanation: 'Two’s complement negation is bitwise NOT plus 1 within the fixed width.'
+      },
+      {
+        id: 'cs102-fin-39',
+        type: 'multiple_choice',
+        prompt: 'A pipeline hazard caused by a branch where the next instruction address is unknown is a:',
+        options: ['Data hazard', 'Structural hazard', 'Control hazard', 'Memory hazard'],
+        correctAnswer: 2,
+        explanation: 'Branches change control flow; until the branch is resolved, the pipeline may not know what to fetch next.'
+      },
+      {
+        id: 'cs102-fin-40',
+        type: 'code_output',
+        prompt: 'What is the result in hex?',
+        codeSnippet: '0x2B XOR 0x0F',
+        correctAnswer: '0x24',
+        explanation: '0x2B = 0010 1011, 0x0F = 0000 1111, XOR = 0010 0100 = 0x24.'
+      },
+      {
+        id: 'cs102-fin-41',
+        type: 'written',
+        prompt: 'In 8-bit two’s complement, why is -128 a special case when you try to negate it?',
+        correctAnswer: '',
+        explanation: '8-bit two’s complement ranges from -128 to 127, so +128 is not representable. The bit pattern for -128 is 10000000; inverting gives 01111111 and adding 1 returns 10000000 again. Negating overflows and wraps back to itself.',
+        modelAnswer: '8-bit two’s complement ranges from -128 to 127, so +128 is not representable. The bit pattern for -128 is 10000000; inverting gives 01111111 and adding 1 returns 10000000 again. Negating overflows and wraps back to itself.'
+      },
+      {
+        id: 'cs102-fin-42',
+        type: 'multiple_choice',
+        prompt: 'DMA (Direct Memory Access) primarily improves performance by:',
+        options: ['Making the CPU clock faster', 'Allowing devices to transfer blocks to/from RAM without per-byte CPU involvement', 'Eliminating the need for caches', 'Storing all programs in ROM'],
+        correctAnswer: 1,
+        explanation: 'DMA moves data between I/O devices and RAM with minimal CPU overhead; the CPU sets up the transfer and is notified when it completes.'
       }
     ]
   }

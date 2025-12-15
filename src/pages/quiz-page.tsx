@@ -149,7 +149,7 @@ function startQuizAttempt(container: HTMLElement, subjectId: string, quiz: Quiz)
   };
 
   render(
-    <QuizComponent quiz={quiz} onComplete={handleComplete} />,
+    <QuizComponent key={quiz.id} quiz={quiz} onComplete={handleComplete} />,
     quizContainer
   );
 }

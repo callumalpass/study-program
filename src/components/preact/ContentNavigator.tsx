@@ -1,4 +1,4 @@
-import { h, Fragment } from 'preact';
+import { h, Fragment, ComponentChildren } from 'preact';
 import { useState, useCallback, useMemo, useEffect } from 'preact/hooks';
 import type { Subject, Topic, SubjectProgress, Quiz, Exercise, Exam, Project } from '@/core/types';
 import { Icons } from '@/components/icons';
@@ -23,6 +23,10 @@ interface ContentNavigatorProps {
   exams: Exam[];
   projects: Project[];
   onSubtopicView: (subtopicId: string) => void;
+  /** Optional children to render in the content area instead of default content */
+  children?: ComponentChildren;
+  /** Optional ID to highlight in the practice sidebar (e.g., current exerciseId or quizId) */
+  currentPracticeId?: string;
 }
 
 const INITIAL_EXERCISE_COUNT = 5;
@@ -45,6 +49,8 @@ export function ContentNavigator({
   exams,
   projects,
   onSubtopicView,
+  children,
+  currentPracticeId,
 }: ContentNavigatorProps) {
   const [showAllExercises, setShowAllExercises] = useState(false);
   const [showAllQuizzes, setShowAllQuizzes] = useState(false);
@@ -439,10 +445,11 @@ export function ContentNavigator({
               </div>
               {practiceQuizzes.slice(0, showAllQuizzes ? undefined : INITIAL_QUIZ_COUNT).map((quiz, index) => {
                 const attempted = isQuizAttempted(quiz.id);
+                const isActive = currentPracticeId === quiz.id;
                 return (
                   <button
                     key={quiz.id}
-                    class={`practice-item ${attempted ? 'completed' : ''}`}
+                    class={`practice-item ${attempted ? 'completed' : ''} ${isActive ? 'active' : ''}`}
                     onClick={(e) => handleQuizClick(e, quiz.id)}
                   >
                     <span class="practice-title">Quiz {index + 1}</span>
@@ -471,10 +478,11 @@ export function ContentNavigator({
               </div>
               {practiceExercises.slice(0, showAllExercises ? undefined : INITIAL_EXERCISE_COUNT).map((exercise, index) => {
                 const completed = isExerciseComplete(exercise.id);
+                const isActive = currentPracticeId === exercise.id;
                 return (
                   <button
                     key={exercise.id}
-                    class={`practice-item ${completed ? 'completed' : ''}`}
+                    class={`practice-item ${completed ? 'completed' : ''} ${isActive ? 'active' : ''}`}
                     onClick={(e) => handleExerciseClick(e, exercise.id)}
                   >
                     <span class="practice-title">Exercise {index + 1}</span>
@@ -500,10 +508,11 @@ export function ContentNavigator({
               </div>
               {subjectExams.map((exam) => {
                 const attempted = isExamAttempted(exam.id);
+                const isActive = currentPracticeId === exam.id;
                 return (
                   <button
                     key={exam.id}
-                    class={`practice-item exam-item ${attempted ? 'completed' : ''}`}
+                    class={`practice-item exam-item ${attempted ? 'completed' : ''} ${isActive ? 'active' : ''}`}
                     onClick={(e) => handleExamClick(e, exam.id)}
                   >
                     <span class="practice-title">{exam.title}</span>
@@ -544,39 +553,46 @@ export function ContentNavigator({
 
       {/* Main content area with header */}
       <main class="content-area">
-        {/* Breadcrumb */}
-        <nav class="breadcrumb">
-          <a href="#/curriculum">Curriculum</a>
-          <span class="separator" dangerouslySetInnerHTML={{ __html: Icons.ChevronRight }} />
-          {currentTopic ? (
-            <>
-              <a href={`#/subject/${subject.id}`}>{subject.code}</a>
+        {children ? (
+          // Custom content (e.g., exercise, quiz, exam pages)
+          children
+        ) : (
+          <>
+            {/* Breadcrumb */}
+            <nav class="breadcrumb">
+              <a href="#/curriculum">Curriculum</a>
               <span class="separator" dangerouslySetInnerHTML={{ __html: Icons.ChevronRight }} />
-              <span class="current">{currentTopic.title}</span>
-            </>
-          ) : (
-            <span class="current">{subject.title}</span>
-          )}
-        </nav>
+              {currentTopic ? (
+                <>
+                  <a href={`#/subject/${subject.id}`}>{subject.code}</a>
+                  <span class="separator" dangerouslySetInnerHTML={{ __html: Icons.ChevronRight }} />
+                  <span class="current">{currentTopic.title}</span>
+                </>
+              ) : (
+                <span class="current">{subject.title}</span>
+              )}
+            </nav>
 
-        {/* Header */}
-        <header class="content-header">
-          <div class="content-title-row">
-            <div>
-              <span class="subject-code">{subject.code}</span>
-              <h1>{currentTopic ? currentTopic.title : subject.title}</h1>
-            </div>
-            {currentTopic ? (
-              <span class="topic-counter">Topic {topicIndex + 1} of {subject.topics.length}</span>
-            ) : (
-              <div class={`subject-status-badge status-${progressStatus.replace('_', '-')}`}>
-                {formatStatus(progressStatus)}
+            {/* Header */}
+            <header class="content-header">
+              <div class="content-title-row">
+                <div>
+                  <span class="subject-code">{subject.code}</span>
+                  <h1>{currentTopic ? currentTopic.title : subject.title}</h1>
+                </div>
+                {currentTopic ? (
+                  <span class="topic-counter">Topic {topicIndex + 1} of {subject.topics.length}</span>
+                ) : (
+                  <div class={`subject-status-badge status-${progressStatus.replace('_', '-')}`}>
+                    {formatStatus(progressStatus)}
+                  </div>
+                )}
               </div>
-            )}
-          </div>
-        </header>
+            </header>
 
-        {renderContent()}
+            {renderContent()}
+          </>
+        )}
       </main>
     </div>
   );
