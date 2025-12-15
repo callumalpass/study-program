@@ -12,6 +12,10 @@ export const topic5Exercises: CodingExercise[] = [
     starterCode: 'def gcd(a, b):\n    """Calculate GCD using Euclidean algorithm.\n    \n    Args:\n        a: First integer\n        b: Second integer\n        \n    Returns:\n        Greatest common divisor of a and b\n    """\n    # Your code here\n    pass\n\ndef extended_gcd(a, b):\n    """Extended Euclidean algorithm.\n    \n    Args:\n        a: First integer\n        b: Second integer\n        \n    Returns:\n        Tuple (gcd, x, y) where ax + by = gcd\n    """\n    # Your code here\n    pass',
     solution: 'def gcd(a, b):\n    """Calculate GCD using Euclidean algorithm.\n    \n    Args:\n        a: First integer\n        b: Second integer\n        \n    Returns:\n        Greatest common divisor of a and b\n    """\n    while b != 0:\n        a, b = b, a % b\n    return abs(a)\n\ndef extended_gcd(a, b):\n    """Extended Euclidean algorithm.\n    \n    Args:\n        a: First integer\n        b: Second integer\n        \n    Returns:\n        Tuple (gcd, x, y) where ax + by = gcd\n    """\n    if b == 0:\n        return abs(a), 1 if a >= 0 else -1, 0\n    \n    x1, y1 = 1, 0\n    x2, y2 = 0, 1\n    \n    while b != 0:\n        q = a // b\n        a, b = b, a % b\n        x1, x2 = x2, x1 - q * x2\n        y1, y2 = y2, y1 - q * y2\n    \n    return abs(a), x1 if a >= 0 else -x1, y1 if a >= 0 else -y1',
     testCases: [
+      { input: '48, 18', isHidden: false, description: 'gcd(48, 18) = 6' },
+      { input: '100, 35', isHidden: false, description: 'gcd(100, 35) = 5' },
+      { input: '17, 13', isHidden: true, description: 'gcd of coprime numbers = 1' },
+      { input: '0, 5', isHidden: true, description: 'gcd with zero' }
     ],
     hints: [
       'For the basic GCD, repeatedly replace (a,b) with (b, a mod b) until b is 0',
@@ -31,6 +35,10 @@ export const topic5Exercises: CodingExercise[] = [
     starterCode: 'def lcm(a, b):\n    """Calculate LCM of two integers\n    \n    Args:\n        a, b: Integers\n    Returns:\n        Least common multiple\n    """\n    pass\n\nprint(lcm(12, 18))',
     solution: 'def gcd(a, b):\n    while b:\n        a, b = b, a % b\n    return abs(a)\n\ndef lcm(a, b):\n    """Calculate LCM of two integers\n    \n    Args:\n        a, b: Integers\n    Returns:\n        Least common multiple\n    """\n    if a == 0 or b == 0:\n        return 0\n    return abs(a * b) // gcd(a, b)\n\nprint(lcm(12, 18))',
     testCases: [
+      { input: '12, 18', isHidden: false, description: 'lcm(12, 18) = 36' },
+      { input: '4, 6', isHidden: false, description: 'lcm(4, 6) = 12' },
+      { input: '7, 11', isHidden: true, description: 'lcm of coprime = 77' },
+      { input: '0, 5', isHidden: true, description: 'lcm with zero = 0' }
     ],
     hints: ['lcm(a, b) = |a × b| / gcd(a, b)', 'Handle zero case'],
     language: 'python'
@@ -45,6 +53,10 @@ export const topic5Exercises: CodingExercise[] = [
     starterCode: 'def is_prime(n):\n    """Check if n is prime\n    \n    Args:\n        n: Integer\n    Returns:\n        True if prime\n    """\n    pass\n\nprint(is_prime(17))',
     solution: 'def is_prime(n):\n    """Check if n is prime\n    \n    Args:\n        n: Integer\n    Returns:\n        True if prime\n    """\n    if n < 2:\n        return False\n    if n < 4:\n        return True\n    if n % 2 == 0 or n % 3 == 0:\n        return False\n    i = 5\n    while i * i <= n:\n        if n % i == 0 or n % (i + 2) == 0:\n            return False\n        i += 6\n    return True\n\nprint(is_prime(17))',
     testCases: [
+      { input: '17', isHidden: false, description: '17 is prime' },
+      { input: '15', isHidden: false, description: '15 is not prime' },
+      { input: '2', isHidden: true, description: '2 is prime' },
+      { input: '1', isHidden: true, description: '1 is not prime' }
     ],
     hints: ['Only check up to √n', 'After 2 and 3, primes are 6k±1'],
     language: 'python'
@@ -59,6 +71,10 @@ export const topic5Exercises: CodingExercise[] = [
     starterCode: 'def sieve(n):\n    """Generate all primes up to n\n    \n    Args:\n        n: Upper limit\n    Returns:\n        List of primes\n    """\n    pass\n\nprint(sieve(30))',
     solution: 'def sieve(n):\n    """Generate all primes up to n\n    \n    Args:\n        n: Upper limit\n    Returns:\n        List of primes\n    """\n    if n < 2:\n        return []\n    \n    is_prime = [True] * (n + 1)\n    is_prime[0] = is_prime[1] = False\n    \n    for i in range(2, int(n**0.5) + 1):\n        if is_prime[i]:\n            for j in range(i*i, n + 1, i):\n                is_prime[j] = False\n    \n    return [i for i in range(2, n + 1) if is_prime[i]]\n\nprint(sieve(30))',
     testCases: [
+      { input: '30', isHidden: false, description: 'Primes up to 30' },
+      { input: '10', isHidden: false, description: 'Primes up to 10: [2,3,5,7]' },
+      { input: '100', isHidden: true, description: 'Primes up to 100' },
+      { input: '1', isHidden: true, description: 'No primes ≤ 1' }
     ],
     hints: ['Start from i² (smaller multiples already crossed)', 'O(n log log n) complexity'],
     language: 'python'
@@ -73,6 +89,10 @@ export const topic5Exercises: CodingExercise[] = [
     starterCode: 'def mod_pow(a, b, m):\n    """Calculate a^b mod m\n    \n    Args:\n        a: Base\n        b: Exponent\n        m: Modulus\n    Returns:\n        a^b mod m\n    """\n    pass\n\nprint(mod_pow(2, 10, 1000))',
     solution: 'def mod_pow(a, b, m):\n    """Calculate a^b mod m\n    \n    Args:\n        a: Base\n        b: Exponent\n        m: Modulus\n    Returns:\n        a^b mod m\n    """\n    result = 1\n    a = a % m\n    while b > 0:\n        if b & 1:\n            result = (result * a) % m\n        b >>= 1\n        a = (a * a) % m\n    return result\n\nprint(mod_pow(2, 10, 1000))',
     testCases: [
+      { input: '2, 10, 1000', isHidden: false, description: '2^10 mod 1000 = 24' },
+      { input: '3, 5, 7', isHidden: false, description: '3^5 mod 7 = 5' },
+      { input: '7, 100, 13', isHidden: true, description: 'Large exponent' },
+      { input: '5, 0, 3', isHidden: true, description: 'Zero exponent' }
     ],
     hints: ['Square and multiply', 'Take mod at each step'],
     language: 'python'
@@ -87,6 +107,10 @@ export const topic5Exercises: CodingExercise[] = [
     starterCode: 'def mod_inverse(a, m):\n    """Find a^(-1) mod m\n    \n    Args:\n        a: Number\n        m: Modulus\n    Returns:\n        Modular inverse, or None if doesn\'t exist\n    """\n    pass\n\nprint(mod_inverse(3, 7))',
     solution: 'def mod_inverse(a, m):\n    """Find a^(-1) mod m\n    \n    Args:\n        a: Number\n        m: Modulus\n    Returns:\n        Modular inverse, or None if doesn\'t exist\n    """\n    def extended_gcd(a, b):\n        if b == 0:\n            return a, 1, 0\n        g, x, y = extended_gcd(b, a % b)\n        return g, y, x - (a // b) * y\n    \n    g, x, _ = extended_gcd(a % m, m)\n    if g != 1:\n        return None\n    return x % m\n\nprint(mod_inverse(3, 7))',
     testCases: [
+      { input: '3, 7', isHidden: false, description: '3^(-1) mod 7 = 5' },
+      { input: '2, 5', isHidden: false, description: '2^(-1) mod 5 = 3' },
+      { input: '7, 11', isHidden: true, description: '7^(-1) mod 11' },
+      { input: '6, 9', isHidden: true, description: 'No inverse (gcd > 1)' }
     ],
     hints: ['Use extended GCD', 'Inverse exists iff gcd(a,m) = 1'],
     language: 'python'
@@ -101,6 +125,10 @@ export const topic5Exercises: CodingExercise[] = [
     starterCode: 'def prime_factors(n):\n    """Find prime factorization\n    \n    Args:\n        n: Integer > 1\n    Returns:\n        Dictionary {prime: exponent}\n    """\n    pass\n\nprint(prime_factors(360))',
     solution: 'def prime_factors(n):\n    """Find prime factorization\n    \n    Args:\n        n: Integer > 1\n    Returns:\n        Dictionary {prime: exponent}\n    """\n    factors = {}\n    d = 2\n    while d * d <= n:\n        while n % d == 0:\n            factors[d] = factors.get(d, 0) + 1\n            n //= d\n        d += 1\n    if n > 1:\n        factors[n] = 1\n    return factors\n\nprint(prime_factors(360))',
     testCases: [
+      { input: '360', isHidden: false, description: '360 = 2³×3²×5' },
+      { input: '84', isHidden: false, description: '84 = 2²×3×7' },
+      { input: '17', isHidden: true, description: 'Prime: {17: 1}' },
+      { input: '1024', isHidden: true, description: '1024 = 2¹⁰' }
     ],
     hints: ['Divide by smallest factor repeatedly', 'Remaining n > 1 is prime'],
     language: 'python'
@@ -115,8 +143,156 @@ export const topic5Exercises: CodingExercise[] = [
     starterCode: 'def chinese_remainder(remainders, moduli):\n    """Solve x ≡ r_i (mod m_i) for pairwise coprime moduli\n    \n    Args:\n        remainders: List of remainders [r_1, r_2, ...]\n        moduli: List of moduli [m_1, m_2, ...]\n    Returns:\n        x such that x ≡ r_i (mod m_i) for all i\n    """\n    pass\n\nprint(chinese_remainder([2, 3, 2], [3, 5, 7]))',
     solution: 'def chinese_remainder(remainders, moduli):\n    """Solve x ≡ r_i (mod m_i) for pairwise coprime moduli\n    \n    Args:\n        remainders: List of remainders [r_1, r_2, ...]\n        moduli: List of moduli [m_1, m_2, ...]\n    Returns:\n        x such that x ≡ r_i (mod m_i) for all i\n    """\n    def extended_gcd(a, b):\n        if b == 0:\n            return a, 1, 0\n        g, x, y = extended_gcd(b, a % b)\n        return g, y, x - (a // b) * y\n    \n    def mod_inverse(a, m):\n        g, x, _ = extended_gcd(a, m)\n        return x % m\n    \n    M = 1\n    for m in moduli:\n        M *= m\n    \n    x = 0\n    for r, m in zip(remainders, moduli):\n        Mi = M // m\n        yi = mod_inverse(Mi, m)\n        x += r * Mi * yi\n    \n    return x % M\n\nprint(chinese_remainder([2, 3, 2], [3, 5, 7]))',
     testCases: [
+      { input: '[2, 3, 2], [3, 5, 7]', isHidden: false, description: 'x ≡ 2,3,2 mod 3,5,7' },
+      { input: '[1, 2], [3, 5]', isHidden: false, description: 'x ≡ 1,2 mod 3,5 → x=7' },
+      { input: '[0, 0, 0], [3, 5, 7]', isHidden: true, description: 'All zeros' },
+      { input: '[1], [7]', isHidden: true, description: 'Single congruence' }
     ],
     hints: ['M = product of all moduli', 'For each i: Mi = M/mi, find Mi^(-1) mod mi'],
+    language: 'python'
+  },
+  {
+    id: 'math102-t5-ex09',
+    subjectId: 'math102',
+    topicId: 'math102-5',
+    title: 'Miller-Rabin Primality Test',
+    difficulty: 5,
+    description: 'Implement the Miller-Rabin probabilistic primality test. Write n-1 = 2^r * d, then test with witnesses to check if n is probably prime.',
+    starterCode: 'import random\n\ndef miller_rabin(n, k=5):\n    """Miller-Rabin primality test\n    \n    Args:\n        n: Number to test\n        k: Number of rounds (higher = more accurate)\n    Returns:\n        True if probably prime, False if composite\n    """\n    pass\n\nprint(miller_rabin(561))  # Carmichael number\nprint(miller_rabin(997))',
+    solution: 'import random\n\ndef miller_rabin(n, k=5):\n    """Miller-Rabin primality test\n    \n    Args:\n        n: Number to test\n        k: Number of rounds (higher = more accurate)\n    Returns:\n        True if probably prime, False if composite\n    """\n    if n < 2:\n        return False\n    if n == 2 or n == 3:\n        return True\n    if n % 2 == 0:\n        return False\n    \n    # Write n-1 as 2^r * d\n    r, d = 0, n - 1\n    while d % 2 == 0:\n        r += 1\n        d //= 2\n    \n    # Witness loop\n    for _ in range(k):\n        a = random.randrange(2, n - 1)\n        x = pow(a, d, n)\n        \n        if x == 1 or x == n - 1:\n            continue\n        \n        for _ in range(r - 1):\n            x = pow(x, 2, n)\n            if x == n - 1:\n                break\n        else:\n            return False\n    \n    return True\n\nprint(miller_rabin(561))  # Carmichael number\nprint(miller_rabin(997))',
+    testCases: [
+      { input: '561', isHidden: false, description: '561 (Carmichael): composite' },
+      { input: '997', isHidden: false, description: '997: prime' },
+      { input: '104729', isHidden: true, description: 'Large prime' },
+      { input: '1000001', isHidden: true, description: 'Composite' }
+    ],
+    hints: ['Write n-1 = 2^r * d', 'Test with random witnesses', 'Check if a^d ≡ 1 or a^(2^i*d) ≡ -1 (mod n)'],
+    language: 'python'
+  },
+  {
+    id: 'math102-t5-ex10',
+    subjectId: 'math102',
+    topicId: 'math102-5',
+    title: 'Euler\'s Totient Function',
+    difficulty: 3,
+    description: 'Calculate φ(n) - the count of numbers ≤ n that are coprime to n. Use the formula with prime factorization.',
+    starterCode: 'def euler_totient(n):\n    """Calculate Euler\'s totient function φ(n)\n    \n    Args:\n        n: Positive integer\n    Returns:\n        φ(n) = count of numbers ≤ n coprime to n\n    """\n    pass\n\nprint(euler_totient(36))',
+    solution: 'def euler_totient(n):\n    """Calculate Euler\'s totient function φ(n)\n    \n    Args:\n        n: Positive integer\n    Returns:\n        φ(n) = count of numbers ≤ n coprime to n\n    """\n    result = n\n    p = 2\n    \n    # For each prime factor p: φ(n) = n * ∏(1 - 1/p)\n    while p * p <= n:\n        if n % p == 0:\n            # Remove all factors of p\n            while n % p == 0:\n                n //= p\n            # Multiply result by (1 - 1/p) = (p-1)/p\n            result -= result // p\n        p += 1\n    \n    # If n > 1, then it\'s a prime factor\n    if n > 1:\n        result -= result // n\n    \n    return result\n\nprint(euler_totient(36))',
+    testCases: [
+      { input: '36', isHidden: false, description: 'φ(36) = 12' },
+      { input: '10', isHidden: false, description: 'φ(10) = 4' },
+      { input: '13', isHidden: true, description: 'φ(prime) = prime - 1' },
+      { input: '100', isHidden: true, description: 'φ(100) = 40' }
+    ],
+    hints: ['φ(n) = n * ∏(1 - 1/p) for prime factors p', 'Process each prime factor once'],
+    language: 'python'
+  },
+  {
+    id: 'math102-t5-ex11',
+    subjectId: 'math102',
+    topicId: 'math102-5',
+    title: 'Fermat\'s Little Theorem',
+    difficulty: 3,
+    description: 'Use Fermat\'s Little Theorem (a^(p-1) ≡ 1 mod p for prime p) to compute modular inverse when modulus is prime.',
+    starterCode: 'def fermat_inverse(a, p):\n    """Find modular inverse using Fermat\'s Little Theorem\n    \n    Args:\n        a: Number\n        p: Prime modulus\n    Returns:\n        a^(-1) mod p\n    """\n    pass\n\nprint(fermat_inverse(3, 11))',
+    solution: 'def fermat_inverse(a, p):\n    """Find modular inverse using Fermat\'s Little Theorem\n    \n    Args:\n        a: Number\n        p: Prime modulus\n    Returns:\n        a^(-1) mod p\n    """\n    # By Fermat: a^(p-1) ≡ 1 (mod p)\n    # So: a^(-1) ≡ a^(p-2) (mod p)\n    return pow(a, p - 2, p)\n\nprint(fermat_inverse(3, 11))',
+    testCases: [
+      { input: '3, 11', isHidden: false, description: '3^(-1) mod 11 = 4' },
+      { input: '2, 7', isHidden: false, description: '2^(-1) mod 7 = 4' },
+      { input: '5, 13', isHidden: true, description: '5^(-1) mod 13' },
+      { input: '6, 17', isHidden: true, description: '6^(-1) mod 17' }
+    ],
+    hints: ['a^(p-1) ≡ 1 (mod p)', 'Therefore a^(-1) ≡ a^(p-2) (mod p)'],
+    language: 'python'
+  },
+  {
+    id: 'math102-t5-ex12',
+    subjectId: 'math102',
+    topicId: 'math102-5',
+    title: 'Discrete Logarithm (Baby-step Giant-step)',
+    difficulty: 5,
+    description: 'Solve a^x ≡ b (mod p) for x using the baby-step giant-step algorithm.',
+    starterCode: 'import math\n\ndef discrete_log(a, b, p):\n    """Find x such that a^x ≡ b (mod p)\n    \n    Args:\n        a: Base\n        b: Target\n        p: Modulus (prime)\n    Returns:\n        x or None if no solution\n    """\n    pass\n\nprint(discrete_log(2, 8, 11))',
+    solution: 'import math\n\ndef discrete_log(a, b, p):\n    """Find x such that a^x ≡ b (mod p)\n    \n    Args:\n        a: Base\n        b: Target\n        p: Modulus (prime)\n    Returns:\n        x or None if no solution\n    """\n    m = math.ceil(math.sqrt(p))\n    \n    # Baby step: build table of a^j mod p\n    table = {}\n    power = 1\n    for j in range(m):\n        table[power] = j\n        power = (power * a) % p\n    \n    # Giant step: compute a^(-m)\n    a_inv_m = pow(a, p - 1 - m, p)  # a^(-m) = a^(p-1-m) by Fermat\n    \n    # Check b * (a^(-m))^i\n    gamma = b\n    for i in range(m):\n        if gamma in table:\n            return i * m + table[gamma]\n        gamma = (gamma * a_inv_m) % p\n    \n    return None\n\nprint(discrete_log(2, 8, 11))',
+    testCases: [
+      { input: '2, 8, 11', isHidden: false, description: '2^x ≡ 8 mod 11, x=3' },
+      { input: '3, 27, 31', isHidden: false, description: '3^x ≡ 27 mod 31' },
+      { input: '5, 25, 97', isHidden: true, description: '5^x ≡ 25 mod 97' },
+      { input: '2, 1, 7', isHidden: true, description: '2^x ≡ 1 mod 7, x=0 or order' }
+    ],
+    hints: ['Split into baby steps and giant steps of size √p', 'Build table for a^j', 'Check b*(a^(-m))^i'],
+    language: 'python'
+  },
+  {
+    id: 'math102-t5-ex13',
+    subjectId: 'math102',
+    topicId: 'math102-5',
+    title: 'Pollard\'s Rho Factorization',
+    difficulty: 5,
+    description: 'Implement Pollard\'s rho algorithm for integer factorization using cycle detection.',
+    starterCode: 'def pollard_rho(n):\n    """Find a non-trivial factor of n using Pollard\'s rho\n    \n    Args:\n        n: Composite number to factor\n    Returns:\n        A factor of n (not necessarily prime)\n    """\n    pass\n\nprint(pollard_rho(8051))',
+    solution: 'import math\n\ndef pollard_rho(n):\n    """Find a non-trivial factor of n using Pollard\'s rho\n    \n    Args:\n        n: Composite number to factor\n    Returns:\n        A factor of n (not necessarily prime)\n    """\n    if n % 2 == 0:\n        return 2\n    \n    x = 2\n    y = 2\n    d = 1\n    \n    # Polynomial function f(x) = x^2 + 1\n    def f(x):\n        return (x * x + 1) % n\n    \n    while d == 1:\n        x = f(x)\n        y = f(f(y))\n        d = math.gcd(abs(x - y), n)\n    \n    if d == n:\n        return None  # Failed, try different starting point\n    return d\n\nprint(pollard_rho(8051))',
+    testCases: [
+      { input: '8051', isHidden: false, description: '8051 = 83 × 97' },
+      { input: '1000003', isHidden: false, description: 'Large semiprime' },
+      { input: '91', isHidden: true, description: '91 = 7 × 13' },
+      { input: '323', isHidden: true, description: '323 = 17 × 19' }
+    ],
+    hints: ['Use f(x) = x^2 + 1 mod n', 'Floyd\'s cycle detection: tortoise and hare', 'gcd(|x-y|, n) finds factor'],
+    language: 'python'
+  },
+  {
+    id: 'math102-t5-ex14',
+    subjectId: 'math102',
+    topicId: 'math102-5',
+    title: 'Quadratic Residue',
+    difficulty: 4,
+    description: 'Check if a is a quadratic residue modulo p (i.e., does there exist x such that x^2 ≡ a (mod p)). Use Euler\'s criterion.',
+    starterCode: 'def is_quadratic_residue(a, p):\n    """Check if a is quadratic residue mod p\n    \n    Args:\n        a: Number to check\n        p: Prime modulus\n    Returns:\n        True if a is QR mod p\n    """\n    pass\n\nprint(is_quadratic_residue(2, 7))\nprint(is_quadratic_residue(4, 7))',
+    solution: 'def is_quadratic_residue(a, p):\n    """Check if a is quadratic residue mod p\n    \n    Args:\n        a: Number to check\n        p: Prime modulus\n    Returns:\n        True if a is QR mod p\n    """\n    # Euler\'s criterion: a^((p-1)/2) ≡ 1 (mod p) iff a is QR\n    a = a % p\n    if a == 0:\n        return True\n    return pow(a, (p - 1) // 2, p) == 1\n\nprint(is_quadratic_residue(2, 7))\nprint(is_quadratic_residue(4, 7))',
+    testCases: [
+      { input: '2, 7', isHidden: false, description: '2 is QR mod 7' },
+      { input: '4, 7', isHidden: false, description: '4 is QR mod 7 (2²=4)' },
+      { input: '3, 7', isHidden: true, description: '3 is non-QR mod 7' },
+      { input: '1, 11', isHidden: true, description: '1 is always QR' }
+    ],
+    hints: ['Euler\'s criterion: a^((p-1)/2) ≡ ±1 (mod p)', 'QR if result is 1, non-QR if -1'],
+    language: 'python'
+  },
+  {
+    id: 'math102-t5-ex15',
+    subjectId: 'math102',
+    topicId: 'math102-5',
+    title: 'Legendre Symbol',
+    difficulty: 4,
+    description: 'Calculate the Legendre symbol (a/p) which is 1 if a is QR, -1 if non-QR, 0 if a ≡ 0 (mod p).',
+    starterCode: 'def legendre_symbol(a, p):\n    """Calculate Legendre symbol (a/p)\n    \n    Args:\n        a: Number\n        p: Odd prime\n    Returns:\n        1, -1, or 0\n    """\n    pass\n\nprint(legendre_symbol(5, 11))',
+    solution: 'def legendre_symbol(a, p):\n    """Calculate Legendre symbol (a/p)\n    \n    Args:\n        a: Number\n        p: Odd prime\n    Returns:\n        1, -1, or 0\n    """\n    a = a % p\n    if a == 0:\n        return 0\n    \n    result = pow(a, (p - 1) // 2, p)\n    return -1 if result == p - 1 else result\n\nprint(legendre_symbol(5, 11))',
+    testCases: [
+      { input: '5, 11', isHidden: false, description: '(5/11) = 1 (QR)' },
+      { input: '2, 11', isHidden: false, description: '(2/11) = -1 (non-QR)' },
+      { input: '11, 13', isHidden: true, description: '(11/13)' },
+      { input: '0, 7', isHidden: true, description: '(0/7) = 0' }
+    ],
+    hints: ['(a/p) = a^((p-1)/2) mod p', 'Convert p-1 to -1'],
+    language: 'python'
+  },
+  {
+    id: 'math102-t5-ex16',
+    subjectId: 'math102',
+    topicId: 'math102-5',
+    title: 'Carmichael Numbers',
+    difficulty: 4,
+    description: 'Check if a number is a Carmichael number (composite number n where a^(n-1) ≡ 1 (mod n) for all a coprime to n).',
+    starterCode: 'def is_carmichael(n):\n    """Check if n is a Carmichael number\n    \n    Args:\n        n: Number to test\n    Returns:\n        True if Carmichael number\n    """\n    pass\n\nprint(is_carmichael(561))\nprint(is_carmichael(1105))',
+    solution: 'import math\n\ndef is_carmichael(n):\n    """Check if n is a Carmichael number\n    \n    Args:\n        n: Number to test\n    Returns:\n        True if Carmichael number\n    """\n    # Must be composite\n    def is_prime(n):\n        if n < 2:\n            return False\n        if n < 4:\n            return True\n        if n % 2 == 0:\n            return False\n        for i in range(3, int(n**0.5) + 1, 2):\n            if n % i == 0:\n                return False\n        return True\n    \n    if is_prime(n) or n < 2:\n        return False\n    \n    # Check Korselt\'s criterion:\n    # 1. n is square-free\n    # 2. For all prime divisors p of n: (p-1) divides (n-1)\n    \n    # Get prime factors\n    factors = []\n    temp = n\n    d = 2\n    while d * d <= temp:\n        if temp % d == 0:\n            factors.append(d)\n            temp //= d\n            if temp % d == 0:  # Not square-free\n                return False\n        d += 1\n    if temp > 1:\n        factors.append(temp)\n    \n    # Check (p-1) | (n-1) for all prime factors\n    for p in factors:\n        if (n - 1) % (p - 1) != 0:\n            return False\n    \n    return True\n\nprint(is_carmichael(561))\nprint(is_carmichael(1105))',
+    testCases: [
+      { input: '561', isHidden: false, description: '561 is Carmichael' },
+      { input: '1105', isHidden: false, description: '1105 is Carmichael' },
+      { input: '1729', isHidden: true, description: '1729 (taxicab) is Carmichael' },
+      { input: '341', isHidden: true, description: '341 is not Carmichael' }
+    ],
+    hints: ['Must be composite and square-free', 'Korselt: (p-1) divides (n-1) for all prime divisors p'],
     language: 'python'
   }
 ];

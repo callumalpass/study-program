@@ -4,6 +4,8 @@ import { topic2Exercises } from './topic-2-stacks-queues';
 import { topic3Exercises } from './topic-3-trees';
 import { topic4Exercises } from './topic-4-hash-tables';
 import { topic5Exercises } from './topic-5-graphs';
+import { topic6Exercises } from './topic-6-sorting';
+import { topic7Exercises } from './topic-7-heaps';
 
 export const cs104Exercises: CodingExercise[] = [
   ...topic1Exercises,
@@ -11,6 +13,8 @@ export const cs104Exercises: CodingExercise[] = [
   ...topic3Exercises,
   ...topic4Exercises,
   ...topic5Exercises,
+  ...topic6Exercises,
+  ...topic7Exercises,
 ];
 
 export {
@@ -19,4 +23,6 @@ export {
   topic3Exercises,
   topic4Exercises,
   topic5Exercises,
+  topic6Exercises,
+  topic7Exercises,
 };

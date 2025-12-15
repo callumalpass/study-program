@@ -1,0 +1,282 @@
+import { CodingExercise } from '../../../../core/types';
+
+export const topic7Exercises: CodingExercise[] = [
+  {
+    id: 'math102-t7-ex01',
+    subjectId: 'math102',
+    topicId: 'math102-7',
+    title: 'Sample Space Generation',
+    difficulty: 1,
+    description: 'Generate the sample space for rolling two dice.',
+    starterCode: 'def dice_sample_space():\n    """Generate all outcomes of rolling two dice\n    \n    Returns:\n        List of tuples (die1, die2)\n    """\n    pass\n\nprint(len(dice_sample_space()))',
+    solution: 'def dice_sample_space():\n    """Generate all outcomes of rolling two dice\n    \n    Returns:\n        List of tuples (die1, die2)\n    """\n    sample_space = []\n    for die1 in range(1, 7):\n        for die2 in range(1, 7):\n            sample_space.append((die1, die2))\n    return sample_space\n\nprint(len(dice_sample_space()))',
+    testCases: [
+      { input: '', isHidden: false, description: 'Sample space has 36 outcomes' },
+      { input: '', isHidden: true, description: 'All pairs (1,1) to (6,6)' }
+    ],
+    hints: ['Two nested loops from 1 to 6', 'Total outcomes = 6 × 6 = 36'],
+    language: 'python'
+  },
+  {
+    id: 'math102-t7-ex02',
+    subjectId: 'math102',
+    topicId: 'math102-7',
+    title: 'Basic Probability',
+    difficulty: 1,
+    description: 'Calculate the probability of rolling a sum of 7 with two dice.',
+    starterCode: 'def prob_sum_seven():\n    """Calculate P(sum = 7) for two dice\n    \n    Returns:\n        Probability as a fraction\n    """\n    pass\n\nprint(prob_sum_seven())',
+    solution: 'def prob_sum_seven():\n    """Calculate P(sum = 7) for two dice\n    \n    Returns:\n        Probability as a fraction\n    """\n    favorable = 0\n    total = 0\n    \n    for die1 in range(1, 7):\n        for die2 in range(1, 7):\n            total += 1\n            if die1 + die2 == 7:\n                favorable += 1\n    \n    return favorable / total\n\nprint(prob_sum_seven())',
+    testCases: [
+      { input: '', isHidden: false, description: 'P(sum=7) = 6/36 = 1/6' },
+      { input: '', isHidden: true, description: 'Approx 0.1667' }
+    ],
+    hints: ['Count favorable outcomes: (1,6), (2,5), (3,4), etc.', '6 favorable out of 36 total'],
+    language: 'python'
+  },
+  {
+    id: 'math102-t7-ex03',
+    subjectId: 'math102',
+    topicId: 'math102-7',
+    title: 'Conditional Probability',
+    difficulty: 2,
+    description: 'Calculate P(A|B) where A is "sum > 7" and B is "first die is 4" for two dice.',
+    starterCode: 'def conditional_prob():\n    """Calculate P(sum > 7 | first die = 4)\n    \n    Returns:\n        Conditional probability\n    """\n    pass\n\nprint(conditional_prob())',
+    solution: 'def conditional_prob():\n    """Calculate P(sum > 7 | first die = 4)\n    \n    Returns:\n        Conditional probability\n    """\n    # Count outcomes where first die = 4\n    b_outcomes = 0\n    # Count outcomes where first die = 4 AND sum > 7\n    a_and_b = 0\n    \n    for die2 in range(1, 7):\n        b_outcomes += 1\n        if 4 + die2 > 7:\n            a_and_b += 1\n    \n    return a_and_b / b_outcomes\n\nprint(conditional_prob())',
+    testCases: [
+      { input: '', isHidden: false, description: 'P(sum>7|die1=4) = 3/6 = 0.5' },
+      { input: '', isHidden: true, description: 'die2 must be 4, 5, or 6' }
+    ],
+    hints: ['P(A|B) = P(A ∩ B) / P(B)', 'When die1=4, sum>7 requires die2>3'],
+    language: 'python'
+  },
+  {
+    id: 'math102-t7-ex04',
+    subjectId: 'math102',
+    topicId: 'math102-7',
+    title: 'Bayes\' Theorem',
+    difficulty: 3,
+    description: 'Given P(Disease)=0.01, P(+|Disease)=0.95, P(+|No Disease)=0.05, calculate P(Disease|+).',
+    starterCode: 'def bayes_disease(p_disease, p_pos_given_disease, p_pos_given_no_disease):\n    """Calculate P(Disease | positive test)\n    \n    Args:\n        p_disease: Prior probability of disease\n        p_pos_given_disease: P(+ | Disease)\n        p_pos_given_no_disease: P(+ | No Disease)\n    Returns:\n        P(Disease | +)\n    """\n    pass\n\nprint(bayes_disease(0.01, 0.95, 0.05))',
+    solution: 'def bayes_disease(p_disease, p_pos_given_disease, p_pos_given_no_disease):\n    """Calculate P(Disease | positive test)\n    \n    Args:\n        p_disease: Prior probability of disease\n        p_pos_given_disease: P(+ | Disease)\n        p_pos_given_no_disease: P(+ | No Disease)\n    Returns:\n        P(Disease | +)\n    """\n    # P(+) = P(+ | D) × P(D) + P(+ | ¬D) × P(¬D)\n    p_pos = (p_pos_given_disease * p_disease + \n             p_pos_given_no_disease * (1 - p_disease))\n    \n    # Bayes: P(D | +) = P(+ | D) × P(D) / P(+)\n    return (p_pos_given_disease * p_disease) / p_pos\n\nprint(bayes_disease(0.01, 0.95, 0.05))',
+    testCases: [
+      { input: '0.01, 0.95, 0.05', isHidden: false, description: 'P(Disease|+) ≈ 0.161' },
+      { input: '0.1, 0.99, 0.01', isHidden: false, description: 'Higher base rate' },
+      { input: '0.001, 0.99, 0.01', isHidden: true, description: 'Rare disease' },
+      { input: '0.5, 0.9, 0.1', isHidden: true, description: 'High base rate' }
+    ],
+    hints: ['Use law of total probability for P(+)', 'Bayes: P(A|B) = P(B|A)×P(A) / P(B)'],
+    language: 'python'
+  },
+  {
+    id: 'math102-t7-ex05',
+    subjectId: 'math102',
+    topicId: 'math102-7',
+    title: 'Expected Value of Dice',
+    difficulty: 2,
+    description: 'Calculate the expected value of rolling a fair six-sided die.',
+    starterCode: 'def expected_die():\n    """Calculate E[X] for a fair die\n    \n    Returns:\n        Expected value\n    """\n    pass\n\nprint(expected_die())',
+    solution: 'def expected_die():\n    """Calculate E[X] for a fair die\n    \n    Returns:\n        Expected value\n    """\n    total = 0\n    for outcome in range(1, 7):\n        probability = 1/6\n        total += outcome * probability\n    return total\n\nprint(expected_die())',
+    testCases: [
+      { input: '', isHidden: false, description: 'E[X] = 3.5' },
+      { input: '', isHidden: true, description: '(1+2+3+4+5+6)/6 = 21/6' }
+    ],
+    hints: ['E[X] = sum of x × P(X=x)', 'For fair die: (1+2+3+4+5+6)/6 = 3.5'],
+    language: 'python'
+  },
+  {
+    id: 'math102-t7-ex06',
+    subjectId: 'math102',
+    topicId: 'math102-7',
+    title: 'Variance of Random Variable',
+    difficulty: 2,
+    description: 'Calculate the variance of a fair six-sided die roll.',
+    starterCode: 'def variance_die():\n    """Calculate Var(X) for a fair die\n    \n    Returns:\n        Variance\n    """\n    pass\n\nprint(variance_die())',
+    solution: 'def variance_die():\n    """Calculate Var(X) for a fair die\n    \n    Returns:\n        Variance\n    """\n    # E[X]\n    expected = sum(range(1, 7)) / 6\n    \n    # E[X^2]\n    expected_sq = sum(x**2 for x in range(1, 7)) / 6\n    \n    # Var(X) = E[X^2] - (E[X])^2\n    return expected_sq - expected**2\n\nprint(variance_die())',
+    testCases: [
+      { input: '', isHidden: false, description: 'Var(X) ≈ 2.917' },
+      { input: '', isHidden: true, description: 'E[X²]=15.167, E[X]=3.5' }
+    ],
+    hints: ['Var(X) = E[X²] - (E[X])²', 'Calculate both E[X] and E[X²]'],
+    language: 'python'
+  },
+  {
+    id: 'math102-t7-ex07',
+    subjectId: 'math102',
+    topicId: 'math102-7',
+    title: 'Binomial Distribution',
+    difficulty: 3,
+    description: 'Calculate P(X = k) for a binomial distribution with n trials and probability p.',
+    starterCode: 'from math import comb\n\ndef binomial_prob(n, k, p):\n    """Calculate P(X = k) for Binomial(n, p)\n    \n    Args:\n        n: Number of trials\n        k: Number of successes\n        p: Probability of success\n    Returns:\n        P(X = k)\n    """\n    pass\n\nprint(binomial_prob(10, 3, 0.5))',
+    solution: 'from math import comb\n\ndef binomial_prob(n, k, p):\n    """Calculate P(X = k) for Binomial(n, p)\n    \n    Args:\n        n: Number of trials\n        k: Number of successes\n        p: Probability of success\n    Returns:\n        P(X = k)\n    """\n    if k < 0 or k > n:\n        return 0\n    \n    # P(X = k) = C(n,k) × p^k × (1-p)^(n-k)\n    return comb(n, k) * (p ** k) * ((1 - p) ** (n - k))\n\nprint(binomial_prob(10, 3, 0.5))',
+    testCases: [
+      { input: '10, 3, 0.5', isHidden: false, description: 'P(X=3) with n=10, p=0.5' },
+      { input: '5, 2, 0.3', isHidden: false, description: 'P(X=2) with n=5, p=0.3' },
+      { input: '20, 10, 0.5', isHidden: true, description: 'Middle value' },
+      { input: '10, 0, 0.1', isHidden: true, description: 'P(X=0)' }
+    ],
+    hints: ['P(X=k) = C(n,k) × p^k × (1-p)^(n-k)', 'Use binomial coefficient'],
+    language: 'python'
+  },
+  {
+    id: 'math102-t7-ex08',
+    subjectId: 'math102',
+    topicId: 'math102-7',
+    title: 'Expected Value of Binomial',
+    difficulty: 2,
+    description: 'Calculate the expected value of a binomial distribution.',
+    starterCode: 'def expected_binomial(n, p):\n    """Calculate E[X] for Binomial(n, p)\n    \n    Args:\n        n: Number of trials\n        p: Probability of success\n    Returns:\n        Expected value\n    """\n    pass\n\nprint(expected_binomial(100, 0.3))',
+    solution: 'def expected_binomial(n, p):\n    """Calculate E[X] for Binomial(n, p)\n    \n    Args:\n        n: Number of trials\n        p: Probability of success\n    Returns:\n        Expected value\n    """\n    # For binomial: E[X] = n × p\n    return n * p\n\nprint(expected_binomial(100, 0.3))',
+    testCases: [
+      { input: '100, 0.3', isHidden: false, description: 'E[X] = 30' },
+      { input: '50, 0.5', isHidden: false, description: 'E[X] = 25' },
+      { input: '1000, 0.01', isHidden: true, description: 'E[X] = 10' },
+      { input: '20, 0.9', isHidden: true, description: 'E[X] = 18' }
+    ],
+    hints: ['E[X] = n × p for binomial distribution', 'This is a well-known formula'],
+    language: 'python'
+  },
+  {
+    id: 'math102-t7-ex09',
+    subjectId: 'math102',
+    topicId: 'math102-7',
+    title: 'Geometric Distribution',
+    difficulty: 3,
+    description: 'Calculate P(X = k) for geometric distribution (number of trials until first success).',
+    starterCode: 'def geometric_prob(k, p):\n    """Calculate P(X = k) for Geometric(p)\n    \n    Args:\n        k: Trial number of first success\n        p: Probability of success\n    Returns:\n        P(X = k)\n    """\n    pass\n\nprint(geometric_prob(3, 0.5))',
+    solution: 'def geometric_prob(k, p):\n    """Calculate P(X = k) for Geometric(p)\n    \n    Args:\n        k: Trial number of first success\n        p: Probability of success\n    Returns:\n        P(X = k)\n    """\n    if k < 1:\n        return 0\n    \n    # P(X = k) = (1-p)^(k-1) × p\n    return ((1 - p) ** (k - 1)) * p\n\nprint(geometric_prob(3, 0.5))',
+    testCases: [
+      { input: '3, 0.5', isHidden: false, description: 'P(X=3) = 0.25 × 0.5 = 0.125' },
+      { input: '1, 0.5', isHidden: false, description: 'P(X=1) = 0.5' },
+      { input: '5, 0.2', isHidden: true, description: 'P(X=5) with p=0.2' },
+      { input: '1, 1.0', isHidden: true, description: 'Certain success: P(X=1)=1' }
+    ],
+    hints: ['P(X=k) = (1-p)^(k-1) × p', 'k-1 failures then 1 success'],
+    language: 'python'
+  },
+  {
+    id: 'math102-t7-ex10',
+    subjectId: 'math102',
+    topicId: 'math102-7',
+    title: 'Expected Value of Geometric',
+    difficulty: 2,
+    description: 'Calculate the expected number of trials until first success in geometric distribution.',
+    starterCode: 'def expected_geometric(p):\n    """Calculate E[X] for Geometric(p)\n    \n    Args:\n        p: Probability of success\n    Returns:\n        Expected value\n    """\n    pass\n\nprint(expected_geometric(0.2))',
+    solution: 'def expected_geometric(p):\n    """Calculate E[X] for Geometric(p)\n    \n    Args:\n        p: Probability of success\n    Returns:\n        Expected value\n    """\n    # For geometric: E[X] = 1/p\n    return 1 / p\n\nprint(expected_geometric(0.2))',
+    testCases: [
+      { input: '0.2', isHidden: false, description: 'E[X] = 5' },
+      { input: '0.5', isHidden: false, description: 'E[X] = 2' },
+      { input: '0.1', isHidden: true, description: 'E[X] = 10' },
+      { input: '1.0', isHidden: true, description: 'E[X] = 1' }
+    ],
+    hints: ['E[X] = 1/p for geometric distribution', 'Intuitive: if p=0.5, expect 2 trials'],
+    language: 'python'
+  },
+  {
+    id: 'math102-t7-ex11',
+    subjectId: 'math102',
+    topicId: 'math102-7',
+    title: 'Independence Test',
+    difficulty: 2,
+    description: 'Check if two events A and B are independent given their probabilities.',
+    starterCode: 'def are_independent(p_a, p_b, p_a_and_b):\n    """Check if P(A ∩ B) = P(A) × P(B)\n    \n    Args:\n        p_a: P(A)\n        p_b: P(B)\n        p_a_and_b: P(A ∩ B)\n    Returns:\n        True if independent\n    """\n    pass\n\nprint(are_independent(0.5, 0.5, 0.25))',
+    solution: 'def are_independent(p_a, p_b, p_a_and_b):\n    """Check if P(A ∩ B) = P(A) × P(B)\n    \n    Args:\n        p_a: P(A)\n        p_b: P(B)\n        p_a_and_b: P(A ∩ B)\n    Returns:\n        True if independent\n    """\n    # Use small epsilon for floating point comparison\n    epsilon = 1e-10\n    return abs(p_a_and_b - (p_a * p_b)) < epsilon\n\nprint(are_independent(0.5, 0.5, 0.25))',
+    testCases: [
+      { input: '0.5, 0.5, 0.25', isHidden: false, description: 'Independent (0.25 = 0.5×0.5)' },
+      { input: '0.3, 0.4, 0.12', isHidden: false, description: 'Independent' },
+      { input: '0.5, 0.5, 0.3', isHidden: true, description: 'Not independent' },
+      { input: '0.2, 0.3, 0.0', isHidden: true, description: 'Mutually exclusive, not independent' }
+    ],
+    hints: ['Events are independent iff P(A∩B) = P(A)×P(B)', 'Use epsilon for float comparison'],
+    language: 'python'
+  },
+  {
+    id: 'math102-t7-ex12',
+    subjectId: 'math102',
+    topicId: 'math102-7',
+    title: 'Hypergeometric Distribution',
+    difficulty: 4,
+    description: 'Calculate probability of k successes in n draws without replacement from population of N items with K successes.',
+    starterCode: 'from math import comb\n\ndef hypergeometric_prob(N, K, n, k):\n    """Calculate P(X = k) for hypergeometric distribution\n    \n    Args:\n        N: Population size\n        K: Number of success states in population\n        n: Number of draws\n        k: Number of observed successes\n    Returns:\n        P(X = k)\n    """\n    pass\n\nprint(hypergeometric_prob(52, 13, 5, 2))',
+    solution: 'from math import comb\n\ndef hypergeometric_prob(N, K, n, k):\n    """Calculate P(X = k) for hypergeometric distribution\n    \n    Args:\n        N: Population size\n        K: Number of success states in population\n        n: Number of draws\n        k: Number of observed successes\n    Returns:\n        P(X = k)\n    """\n    if k > K or k > n or n - k > N - K:\n        return 0\n    \n    # P(X = k) = C(K,k) × C(N-K, n-k) / C(N,n)\n    numerator = comb(K, k) * comb(N - K, n - k)\n    denominator = comb(N, n)\n    \n    return numerator / denominator\n\nprint(hypergeometric_prob(52, 13, 5, 2))',
+    testCases: [
+      { input: '52, 13, 5, 2', isHidden: false, description: 'Drawing 2 hearts from 5 cards' },
+      { input: '20, 7, 5, 3', isHidden: false, description: '3 successes from 5 draws' },
+      { input: '50, 10, 10, 5', isHidden: true, description: 'Larger population' },
+      { input: '10, 5, 3, 2', isHidden: true, description: 'Small population' }
+    ],
+    hints: ['P(X=k) = C(K,k)×C(N-K,n-k) / C(N,n)', 'Sampling without replacement'],
+    language: 'python'
+  },
+  {
+    id: 'math102-t7-ex13',
+    subjectId: 'math102',
+    topicId: 'math102-7',
+    title: 'Poisson Distribution',
+    difficulty: 3,
+    description: 'Calculate P(X = k) for Poisson distribution with rate parameter λ.',
+    starterCode: 'from math import factorial, exp\n\ndef poisson_prob(lam, k):\n    """Calculate P(X = k) for Poisson(λ)\n    \n    Args:\n        lam: Rate parameter λ\n        k: Number of events\n    Returns:\n        P(X = k)\n    """\n    pass\n\nprint(poisson_prob(3.5, 2))',
+    solution: 'from math import factorial, exp\n\ndef poisson_prob(lam, k):\n    """Calculate P(X = k) for Poisson(λ)\n    \n    Args:\n        lam: Rate parameter λ\n        k: Number of events\n    Returns:\n        P(X = k)\n    """\n    if k < 0:\n        return 0\n    \n    # P(X = k) = (λ^k × e^(-λ)) / k!\n    return (lam ** k) * exp(-lam) / factorial(k)\n\nprint(poisson_prob(3.5, 2))',
+    testCases: [
+      { input: '3.5, 2', isHidden: false, description: 'P(X=2) with λ=3.5' },
+      { input: '5, 5', isHidden: false, description: 'P(X=5) with λ=5' },
+      { input: '1, 0', isHidden: true, description: 'P(X=0) = e^(-1)' },
+      { input: '10, 10', isHidden: true, description: 'Mean = mode for λ=10' }
+    ],
+    hints: ['P(X=k) = (λ^k × e^(-λ)) / k!', 'Models rare events'],
+    language: 'python'
+  },
+  {
+    id: 'math102-t7-ex14',
+    subjectId: 'math102',
+    topicId: 'math102-7',
+    title: 'Markov Inequality',
+    difficulty: 4,
+    description: 'Use Markov\'s inequality to bound P(X ≥ a) for a non-negative random variable.',
+    starterCode: 'def markov_bound(expected_value, a):\n    """Calculate upper bound on P(X ≥ a) using Markov inequality\n    \n    Args:\n        expected_value: E[X]\n        a: Threshold (a > 0)\n    Returns:\n        Upper bound on P(X ≥ a)\n    """\n    pass\n\nprint(markov_bound(10, 50))',
+    solution: 'def markov_bound(expected_value, a):\n    """Calculate upper bound on P(X ≥ a) using Markov inequality\n    \n    Args:\n        expected_value: E[X]\n        a: Threshold (a > 0)\n    Returns:\n        Upper bound on P(X ≥ a)\n    """\n    if a <= 0:\n        return 1  # Trivial bound\n    \n    # Markov: P(X ≥ a) ≤ E[X] / a\n    return min(1, expected_value / a)\n\nprint(markov_bound(10, 50))',
+    testCases: [
+      { input: '10, 50', isHidden: false, description: 'P(X≥50) ≤ 10/50 = 0.2' },
+      { input: '20, 100', isHidden: false, description: 'P(X≥100) ≤ 0.2' },
+      { input: '100, 50', isHidden: true, description: 'Bound > 1, return 1' },
+      { input: '5, 25', isHidden: true, description: 'P(X≥25) ≤ 0.2' }
+    ],
+    hints: ['Markov: P(X ≥ a) ≤ E[X]/a', 'Only valid for non-negative X', 'Bound cannot exceed 1'],
+    language: 'python'
+  },
+  {
+    id: 'math102-t7-ex15',
+    subjectId: 'math102',
+    topicId: 'math102-7',
+    title: 'Chebyshev Inequality',
+    difficulty: 4,
+    description: 'Use Chebyshev\'s inequality to bound P(|X - μ| ≥ kσ).',
+    starterCode: 'def chebyshev_bound(k):\n    """Calculate upper bound on P(|X - μ| ≥ kσ)\n    \n    Args:\n        k: Number of standard deviations\n    Returns:\n        Upper bound\n    """\n    pass\n\nprint(chebyshev_bound(2))',
+    solution: 'def chebyshev_bound(k):\n    """Calculate upper bound on P(|X - μ| ≥ kσ)\n    \n    Args:\n        k: Number of standard deviations\n    Returns:\n        Upper bound\n    """\n    if k <= 0:\n        return 1\n    \n    # Chebyshev: P(|X - μ| ≥ kσ) ≤ 1/k²\n    return min(1, 1 / (k ** 2))\n\nprint(chebyshev_bound(2))',
+    testCases: [
+      { input: '2', isHidden: false, description: 'P(|X-μ|≥2σ) ≤ 0.25' },
+      { input: '3', isHidden: false, description: 'P(|X-μ|≥3σ) ≤ 0.111' },
+      { input: '1', isHidden: true, description: 'P(|X-μ|≥1σ) ≤ 1' },
+      { input: '5', isHidden: true, description: 'P(|X-μ|≥5σ) ≤ 0.04' }
+    ],
+    hints: ['Chebyshev: P(|X-μ| ≥ kσ) ≤ 1/k²', 'At k=2: at most 25% outside 2σ'],
+    language: 'python'
+  },
+  {
+    id: 'math102-t7-ex16',
+    subjectId: 'math102',
+    topicId: 'math102-7',
+    title: 'Monte Carlo Simulation',
+    difficulty: 5,
+    description: 'Estimate π using Monte Carlo simulation by randomly sampling points in a unit square.',
+    starterCode: 'import random\n\ndef estimate_pi(num_samples):\n    """Estimate π using Monte Carlo method\n    \n    Args:\n        num_samples: Number of random points\n    Returns:\n        Estimated value of π\n    """\n    pass\n\nrandom.seed(42)\nprint(estimate_pi(100000))',
+    solution: 'import random\n\ndef estimate_pi(num_samples):\n    """Estimate π using Monte Carlo method\n    \n    Args:\n        num_samples: Number of random points\n    Returns:\n        Estimated value of π\n    """\n    inside_circle = 0\n    \n    for _ in range(num_samples):\n        x = random.uniform(-1, 1)\n        y = random.uniform(-1, 1)\n        \n        # Check if point is inside unit circle\n        if x**2 + y**2 <= 1:\n            inside_circle += 1\n    \n    # Ratio of areas: π/4 = inside_circle / num_samples\n    return 4 * inside_circle / num_samples\n\nrandom.seed(42)\nprint(estimate_pi(100000))',
+    testCases: [
+      { input: '100000', isHidden: false, description: 'Estimate close to 3.14159' },
+      { input: '10000', isHidden: false, description: 'Less accurate estimate' },
+      { input: '1000000', isHidden: true, description: 'More accurate estimate' },
+      { input: '1000', isHidden: true, description: 'Rough estimate' }
+    ],
+    hints: ['Sample random points in [-1,1] × [-1,1]', 'Check if x²+y² ≤ 1', 'π ≈ 4 × (points in circle) / (total points)'],
+    language: 'python'
+  }
+];
