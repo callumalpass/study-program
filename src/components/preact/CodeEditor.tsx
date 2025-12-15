@@ -2,10 +2,25 @@ import { h, Fragment } from 'preact';
 import { useState, useEffect, useRef, useCallback } from 'preact/hooks';
 import * as monaco from 'monaco-editor';
 import { initVimMode, VimMode } from 'monaco-vim';
-import { runPython, runTests, type TestResult } from '@/components/code-runner';
-import type { TestCase } from '@/core/types';
+import { runPython, runTests, runC, runCTests, type TestResult } from '@/components/code-runner';
+import type { TestCase, ProgrammingLanguage } from '@/core/types';
 import { Icons } from '@/components/icons';
 import { escapeHtml } from '@/utils/html';
+
+/** Languages that support in-browser execution */
+const RUNNABLE_LANGUAGES: ProgrammingLanguage[] = ['python', 'c', 'cpp'];
+
+/** Check if a language can be run in the browser */
+function isRunnableLanguage(lang: string): lang is ProgrammingLanguage {
+  return RUNNABLE_LANGUAGES.includes(lang as ProgrammingLanguage);
+}
+
+/** Get the appropriate Monaco language ID */
+function getMonacoLanguage(lang: string): string {
+  if (lang === 'c') return 'c';
+  if (lang === 'cpp') return 'cpp';
+  return lang;
+}
 
 export interface CodeEditorProps {
   language?: string;
@@ -242,7 +257,15 @@ export function CodeEditor({
     const startTime = performance.now();
 
     try {
-      const result = await runPython(code);
+      let result: string;
+
+      // Use appropriate runner based on language
+      if (language === 'c' || language === 'cpp') {
+        result = await runC(code, '', 10000);
+      } else {
+        result = await runPython(code);
+      }
+
       const endTime = performance.now();
       setExecutionTime(Math.round(endTime - startTime));
       setOutput(result || '(No output)');
@@ -255,7 +278,7 @@ export function CodeEditor({
       setOutput(`Error: ${errorMessage}`);
       highlightErrorLine(errorMessage);
     }
-  }, [onRun, highlightErrorLine, clearErrorDecorations]);
+  }, [language, onRun, highlightErrorLine, clearErrorDecorations]);
 
   // Run tests
   const handleRunTests = useCallback(async () => {
@@ -272,7 +295,15 @@ export function CodeEditor({
     const startTime = performance.now();
 
     try {
-      const results = await runTests(code, testCases, solution);
+      let results: TestResult[];
+
+      // Use appropriate test runner based on language
+      if (language === 'c' || language === 'cpp') {
+        results = await runCTests(code, testCases, solution);
+      } else {
+        results = await runTests(code, testCases, solution);
+      }
+
       const endTime = performance.now();
       setExecutionTime(Math.round(endTime - startTime));
 
@@ -297,7 +328,7 @@ export function CodeEditor({
       highlightErrorLine(errorMessage);
       return [];
     }
-  }, [testCases, solution, onTestResults, highlightErrorLine, clearErrorDecorations]);
+  }, [language, testCases, solution, onTestResults, highlightErrorLine, clearErrorDecorations]);
 
   // Reset to starter code
   const handleReset = useCallback(() => {
@@ -347,7 +378,15 @@ export function CodeEditor({
     if (!editor) return;
 
     const code = editor.getValue();
-    const ext = language === 'python' ? 'py' : language || 'txt';
+    // Map language to file extension
+    const extMap: Record<string, string> = {
+      python: 'py',
+      c: 'c',
+      cpp: 'cpp',
+      javascript: 'js',
+      typescript: 'ts',
+    };
+    const ext = extMap[language] || language || 'txt';
     const blob = new Blob([code], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -649,7 +688,13 @@ export function CompactCodeEditor({
     setIsError(false);
 
     try {
-      const result = await runPython(code);
+      let result: string;
+      // Use appropriate runner based on language
+      if (language === 'c' || language === 'cpp') {
+        result = await runC(code, '', 10000);
+      } else {
+        result = await runPython(code);
+      }
       setOutput(result || '(No output)');
     } catch (error) {
       setIsError(true);
@@ -668,7 +713,13 @@ export function CompactCodeEditor({
     setShowTestResults(true);
 
     try {
-      const results = await runTests(code, testCases, solution);
+      let results: TestResult[];
+      // Use appropriate test runner based on language
+      if (language === 'c' || language === 'cpp') {
+        results = await runCTests(code, testCases, solution);
+      } else {
+        results = await runTests(code, testCases, solution);
+      }
       const passed = results.filter(r => r.passed).length;
       const allPassed = passed === results.length;
 
