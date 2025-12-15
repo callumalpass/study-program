@@ -61,7 +61,7 @@ CS101 (Intro to Programming) has:
       - Core concept explanation with examples
       - Code examples (where applicable)
       - Key takeaways or summary points
-      - Roughly 300-800 words per subtopic (focused, not exhaustive)
+      - Roughly 1000 words per subtopic 
 
       **Example subtopic breakdown** (CS101 Topic 1: Variables and Data Types):
       1. Introduction (what are variables, why they matter)
@@ -72,7 +72,7 @@ CS101 (Intro to Programming) has:
       6. Type Conversion (casting between types)
       7. Patterns & Best Practices (common idioms, mistakes)
 
-   b. **Exercises** (at least 16 per topic):
+   b. **Exercises** (at **least** 16 per topic):
       - Difficulties 1-2: at least 4-5 exercises (fundamentals)
       - Difficulties 3: at least 5-6 exercises (intermediate)
       - Difficulties 4-5: 5-6 exercises (challenging)

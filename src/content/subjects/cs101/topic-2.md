@@ -74,6 +74,78 @@ if not has_license:
     print("You need a license first.")
 ```
 
+### Truthiness (What Counts as True/False?)
+
+In `if` and `while` conditions, Python converts values to a boolean automatically.
+
+**Falsy values** (treated as `False`):
+- `False`
+- `None`
+- `0`, `0.0`
+- `""` (empty string)
+- `[]`, `{}`, `set()` (empty containers)
+
+Everything else is truthy:
+
+```python
+if "hello":
+    print("Non-empty strings are truthy")
+
+items = []
+if not items:
+    print("Empty lists are falsy")
+```
+
+### Short-Circuit Evaluation (and/or)
+
+Python evaluates conditions left-to-right and stops as soon as it knows the answer.
+
+```python
+# If the left side of "and" is False, Python doesn't evaluate the right side.
+user = None
+if user is not None and user.get("name") == "Alice":
+    print("Alice")
+
+# If the left side of "or" is True, Python doesn't evaluate the right side.
+is_admin = True
+if is_admin or expensive_check():
+    print("Access granted")
+```
+
+### Operator Precedence and Chained Comparisons
+
+Conditions can get hard to read if you rely on precedence rules. Use parentheses for clarity:
+
+```python
+score = 72
+passed = (score >= 50) and (score <= 100)
+```
+
+Python also supports chained comparisons:
+
+```python
+age = 20
+if 18 <= age < 65:
+    print("Working age")
+```
+
+### Nested Conditionals and Guard Clauses
+
+Deep nesting makes code harder to follow. Prefer “guard clauses” that return/continue early:
+
+```python
+def print_discount_price(price, has_coupon):
+    if price <= 0:
+        print("Invalid price")
+        return
+
+    if not has_coupon:
+        print(price)
+        return
+
+    print(price * 0.9)
+```
+
 ### For Loops
 
 For loops iterate over a sequence (list, string, range, etc.):
@@ -120,6 +192,45 @@ while count < 5:
     print(count)
     count += 1  # Don't forget to update the condition!
 # Output: 0, 1, 2, 3, 4
+```
+
+### Sentinel Loops and Input Validation
+
+`while` loops are great when you don’t know how many times you’ll repeat. A common pattern is “keep asking until valid”:
+
+```python
+while True:
+    text = input("Enter an integer: ")
+    if text.isdigit():
+        number = int(text)
+        break
+    print("Please enter digits only.")
+
+print(f"You entered {number}")
+```
+
+### Loop `else` (Often Overlooked)
+
+In Python, `for` and `while` can have an `else` block. It runs only if the loop finishes normally (not via `break`):
+
+```python
+numbers = [2, 4, 6, 9, 10]
+
+for n in numbers:
+    if n % 2 == 1:
+        print(f"Found odd number: {n}")
+        break
+else:
+    print("No odd numbers found")
+```
+
+### The `pass` Statement
+
+`pass` is a placeholder statement that does nothing. It’s useful while sketching structure:
+
+```python
+if some_condition:
+    pass  # TODO: implement later
 ```
 
 ### Break and Continue
@@ -175,6 +286,49 @@ for i in range(3):
 # (2, 0) (2, 1) (2, 2)
 ```
 
+### Accumulator Patterns (Counting, Summing, Building)
+
+Many loops “accumulate” a result:
+
+```python
+# Sum
+numbers = [3, 1, 4]
+total = 0
+for n in numbers:
+    total += n
+
+# Count items matching a condition
+words = ["apple", "a", "banana", "hi"]
+short_count = 0
+for w in words:
+    if len(w) <= 2:
+        short_count += 1
+
+# Build a new list
+squares = []
+for i in range(5):
+    squares.append(i * i)
+```
+
+### Searching Patterns (Find First / Find All)
+
+```python
+numbers = [10, 13, 15, 20]
+
+# Find first multiple of 5
+first = None
+for n in numbers:
+    if n % 5 == 0:
+        first = n
+        break
+
+# Find all multiples of 5
+all_multiples = []
+for n in numbers:
+    if n % 5 == 0:
+        all_multiples.append(n)
+```
+
 ---
 
 ## Common Mistakes and Debugging
@@ -207,6 +361,33 @@ for i in range(1, 6):
     print(i)  # Prints 1, 2, 3, 4, 5
 ```
 
+### Mistake 3: Comparing to True/False Explicitly
+
+```python
+items = []
+
+# Not ideal
+if items == []:
+    print("Empty")
+
+# Better (uses truthiness)
+if not items:
+    print("Empty")
+```
+
+### Mistake 4: Overly Complex Conditions
+
+```python
+# Hard to read
+if (age >= 18 and has_license and (not is_suspended) and (score > 50 or is_admin)):
+    ...
+
+# Better: name intermediate conditions
+is_eligible_age = age >= 18
+has_access = is_admin or score > 50
+can_drive = is_eligible_age and has_license and (not is_suspended) and has_access
+```
+
 ---
 
 ## Best Practices
@@ -229,3 +410,24 @@ You've learned how to control the flow of your programs:
 - **for loops** iterate over sequences with a known length
 - **while loops** repeat while a condition is True
 - **break** exits a loop early; **continue** skips to the next iteration
+
+**Key takeaways:**
+- Use truthiness (`if items:` / `if not items:`) to write clean conditions
+- Prefer guard clauses and named intermediate variables for readability
+- Use `for ... else` when “not found” is meaningful and you’re using `break` to exit early
+
+---
+
+## Practice Exercises
+
+1. **FizzBuzz**: Print numbers 1–100, but print `"Fizz"` for multiples of 3, `"Buzz"` for multiples of 5, and `"FizzBuzz"` for both.
+2. **Number guessing**: Randomly choose a number 1–100 and loop until the user guesses it.
+3. **Menu loop**: Repeatedly show options (view/add/quit) until the user quits.
+4. **Find-first / find-all**: Given a list of integers, find the first negative number, and also build a list of all negative numbers.
+
+---
+
+## Further Exploration
+
+- Learn about `any()` and `all()` for compact condition checks over lists.
+- Explore `match/case` (Python 3.10+) as an alternative to long `if/elif` chains.

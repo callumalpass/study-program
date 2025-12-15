@@ -56,6 +56,45 @@ result = add(3, 5)
 print(result)  # Output: 8
 ```
 
+### Returning `None` (Implicit vs Explicit)
+
+If a function reaches the end without a `return`, it returns `None` automatically:
+
+```python
+def say_hi(name):
+    print(f"Hi, {name}!")
+
+value = say_hi("Alice")
+print(value)  # None
+```
+
+Use `return` when you want to produce a value, and `print()` only when you want to display something.
+
+### Returning Multiple Values (Tuple Packing/Unpacking)
+
+Python functions can “return multiple values” by returning a tuple:
+
+```python
+def min_max(numbers):
+    return min(numbers), max(numbers)
+
+low, high = min_max([3, 1, 4, 1, 5])
+print(low, high)  # 1 5
+```
+
+### Early Returns and Guard Clauses
+
+Returning early often makes code clearer than deeply nested `if` blocks:
+
+```python
+def withdraw(balance, amount):
+    if amount <= 0:
+        return "Amount must be positive"
+    if amount > balance:
+        return "Insufficient funds"
+    return balance - amount
+```
+
 ### Default Arguments
 
 Provide default values for optional parameters:
@@ -66,6 +105,48 @@ def greet(name, greeting="Hello"):
 
 greet("Alice")                # Output: Hello, Alice!
 greet("Bob", "Good morning")  # Output: Good morning, Bob!
+```
+
+### Positional vs Keyword Arguments
+
+Arguments can be passed by position or by name:
+
+```python
+def describe_pet(animal, name, age):
+    return f"{name} is a {age}-year-old {animal}"
+
+describe_pet("dog", "Rex", 5)                       # Positional
+describe_pet(animal="dog", name="Rex", age=5)       # Keyword
+describe_pet("dog", age=5, name="Rex")              # Mix (positional first)
+```
+
+Keyword arguments improve readability, especially when there are many parameters.
+
+### `*args` and `**kwargs` (Flexible Signatures)
+
+Use `*args` to accept any number of positional arguments, and `**kwargs` to accept any number of keyword arguments:
+
+```python
+def average(*numbers):
+    return sum(numbers) / len(numbers)
+
+print(average(10, 20, 30))  # 20.0
+
+def print_profile(**info):
+    for key, value in info.items():
+        print(f"{key}: {value}")
+
+print_profile(name="Alice", city="NYC", enrolled=True)
+```
+
+You can also unpack a tuple/list or dict into a function call:
+
+```python
+values = (3, 5)
+print(add(*values))  # same as add(3, 5)
+
+data = {"name": "Rex", "animal": "dog", "age": 5}
+print(describe_pet(**data))
 ```
 
 ### Variable Scope
@@ -83,6 +164,39 @@ def greet():
 
 greet()           # Output: Hello, Alice!
 # print(name)     # NameError! name is not defined here
+```
+
+### The LEGB Rule (Where Python Looks for Names)
+
+When you use a variable name, Python searches in this order:
+
+1. **L**ocal (inside the current function)
+2. **E**nclosing (inside any outer function, if nested)
+3. **G**lobal (module-level)
+4. **B**uilt-in (like `len`, `sum`, `print`)
+
+### `global` and `nonlocal` (Use Sparingly)
+
+You usually want functions that take inputs and return outputs, but sometimes you need to modify an outer variable.
+
+```python
+count = 0
+
+def increment_global():
+    global count
+    count += 1
+
+def make_counter():
+    n = 0
+    def increment():
+        nonlocal n
+        n += 1
+        return n
+    return increment
+
+counter = make_counter()
+print(counter())  # 1
+print(counter())  # 2
 ```
 
 ---
@@ -106,6 +220,32 @@ def calculate_bmi(weight_kg, height_m):
         BMI value as a float
     """
     return weight_kg / (height_m ** 2)
+```
+
+### Type Hints (Optional, but Great for Clarity)
+
+Type hints document intent and help tooling:
+
+```python
+def full_name(first: str, last: str) -> str:
+    return f"{first} {last}"
+
+def mean(values: list[float]) -> float:
+    return sum(values) / len(values)
+```
+
+### Functions Are Values (Passing Functions Around)
+
+You can pass a function into another function:
+
+```python
+def apply_twice(func, x):
+    return func(func(x))
+
+def double(n):
+    return 2 * n
+
+print(apply_twice(double, 3))  # 12
 ```
 
 ### Lambda Functions
@@ -164,6 +304,31 @@ def add_item(item, items=None):
     return items
 ```
 
+### Mistake 3: Shadowing Built-ins
+
+```python
+# Wrong - "list" is the name of a built-in type
+list = [1, 2, 3]
+
+# Later...
+# list("abc") would crash because list is no longer the type
+```
+
+Prefer names like `items`, `values`, `numbers`, `names`.
+
+### Mistake 4: Mixing Printing and Returning
+
+```python
+# Confusing - caller can't use the result
+def total_price(prices):
+    total = sum(prices)
+    print(total)
+
+# Better - return the value, caller prints if needed
+def total_price(prices):
+    return sum(prices)
+```
+
 ---
 
 ## Best Practices
@@ -186,3 +351,24 @@ You've learned the fundamentals of Python functions:
 - **Keyword arguments** improve readability
 - **Scope** determines where variables are visible
 - **Lambda** creates small anonymous functions
+
+**Key takeaways:**
+- Prefer returning values over printing inside “library-style” functions
+- Use keyword arguments and type hints to make calls self-documenting
+- Avoid `global` unless you have a strong reason
+
+---
+
+## Practice Exercises
+
+1. **Validation function**: Write `is_valid_password(password)` with rules (length, contains digit, etc.) and return `True/False`.
+2. **Refactor to functions**: Take a small script you wrote earlier and split it into 3–5 functions with clear names.
+3. **`*args` practice**: Write `sum_all(*numbers)` that sums any amount of inputs.
+4. **Pure vs impure**: Write one function that returns a computed value, and another that prints a formatted report of that value.
+
+---
+
+## Further Exploration
+
+- Learn about `help(your_function)` and how docstrings show up in interactive tools.
+- Explore `functools.lru_cache` for caching (pairs nicely with recursion later).
