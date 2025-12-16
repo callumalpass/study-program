@@ -16,6 +16,7 @@ import { renderProgressPage } from './pages/progress';
 import { renderSettingsPage } from './pages/settings';
 import { renderQuizPage, renderExercisePage, renderProjectPage, renderExamPage } from './pages/assessment';
 import { renderExportPage } from './pages/export';
+import { renderTimelinePage } from './pages/timeline';
 
 // Import all subject content for assessments
 import { cs101Quizzes, cs101Exercises, cs101Projects, cs101Exams } from './data/subjects/cs101';
@@ -271,6 +272,8 @@ function initApp(): void {
         renderSettingsPage(mainEl);
       } else if (path === '/export') {
         renderExportPage(mainEl, curriculum, allQuizzes, allExercises, allProjects);
+      } else if (path === '/timeline') {
+        renderTimelinePage(mainEl, curriculum);
       } else if (path.startsWith('/subject/')) {
         const subjectId = params.id;
 

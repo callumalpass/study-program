@@ -3492,3 +3492,416 @@ img {
     }
   }
 }
+
+/* ==========================================================================
+   Timeline Page
+   ========================================================================== */
+
+.timeline-page {
+  max-width: var(--content-wide-max-width);
+  margin: 0 auto;
+  padding: var(--space-lg);
+}
+
+/* Timeline Setup View */
+.timeline-setup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--space-2xl) 0;
+}
+
+.setup-welcome {
+  text-align: center;
+  margin-bottom: var(--space-2xl);
+  max-width: 500px;
+}
+
+.setup-welcome h1 {
+  margin-bottom: var(--space-md);
+}
+
+/* Timeline Planner Component */
+.timeline-planner {
+  width: 100%;
+  max-width: 500px;
+}
+
+.planner-card {
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+}
+
+.planner-header {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+  margin-bottom: var(--space-xl);
+}
+
+.planner-icon {
+  color: var(--color-accent-primary);
+  flex-shrink: 0;
+}
+
+.planner-icon svg {
+  width: 32px;
+  height: 32px;
+}
+
+.planner-header h2 {
+  margin: 0 0 var(--space-xs);
+  font-size: var(--font-size-lg);
+}
+
+.planner-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.planner-form .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.planner-form label {
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.planner-form input[type="date"] {
+  padding: var(--space-sm) var(--space-md);
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-base);
+}
+
+.planner-form input[type="date"]:focus {
+  outline: none;
+  border-color: var(--color-accent-primary);
+}
+
+.pace-options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.pace-option {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+  padding: var(--space-md);
+  background: var(--color-bg-elevated);
+  border: 2px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: border-color var(--transition-fast), background var(--transition-fast);
+}
+
+.pace-option:hover {
+  border-color: var(--color-border-strong);
+}
+
+.pace-option.selected {
+  border-color: var(--color-accent-primary);
+  background: rgba(88, 166, 255, 0.1);
+}
+
+.pace-option input[type="radio"] {
+  margin-top: 3px;
+  accent-color: var(--color-accent-primary);
+}
+
+.pace-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+}
+
+.pace-label {
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.pace-description {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+/* Timeline Header */
+.timeline-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-lg);
+  margin-bottom: var(--space-xl);
+  flex-wrap: wrap;
+}
+
+.timeline-title h1 {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin: 0 0 var(--space-xs);
+}
+
+.timeline-title h1 svg {
+  width: 28px;
+  height: 28px;
+  color: var(--color-accent-primary);
+}
+
+/* Timeline Stats */
+.timeline-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: var(--space-md);
+  margin-bottom: var(--space-xl);
+}
+
+.timeline-stats .stat-card {
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  text-align: center;
+}
+
+.timeline-stats .stat-value {
+  display: block;
+  font-size: var(--font-size-2xl);
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.timeline-stats .stat-value.stat-completed {
+  color: var(--color-success);
+}
+
+.timeline-stats .stat-value.stat-in-progress {
+  color: var(--color-accent-primary);
+}
+
+.timeline-stats .stat-value.stat-scheduled {
+  color: var(--color-text-muted);
+}
+
+.timeline-stats .stat-label {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+/* Timeline Legend */
+.timeline-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-lg);
+  margin-bottom: var(--space-lg);
+  padding: var(--space-md);
+  background: var(--color-bg-surface);
+  border-radius: var(--radius-md);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.legend-color {
+  width: 16px;
+  height: 16px;
+  border-radius: var(--radius-sm);
+}
+
+.legend-completed {
+  background: var(--color-success);
+}
+
+.legend-in-progress {
+  background: var(--color-accent-primary);
+}
+
+.legend-scheduled {
+  background: var(--color-text-muted);
+  background: repeating-linear-gradient(
+    45deg,
+    var(--color-text-muted),
+    var(--color-text-muted) 2px,
+    transparent 2px,
+    transparent 4px
+  );
+}
+
+.legend-blocked {
+  background: var(--color-border-default);
+  opacity: 0.5;
+}
+
+/* Gantt Chart Container */
+.timeline-gantt-wrapper {
+  overflow-x: auto;
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+  background: var(--color-bg-surface);
+}
+
+.timeline-gantt-container {
+  position: relative;
+  min-height: 400px;
+}
+
+/* Gantt Tooltip */
+.timeline-tooltip {
+  position: absolute;
+  z-index: 1000;
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  box-shadow: var(--shadow-lg);
+  pointer-events: none;
+  max-width: 280px;
+}
+
+.tooltip-title {
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-xs);
+}
+
+.tooltip-dates {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-sm);
+}
+
+.tooltip-status {
+  font-size: var(--font-size-sm);
+  padding: var(--space-2xs) var(--space-sm);
+  border-radius: var(--radius-sm);
+  display: inline-block;
+}
+
+.tooltip-status.status-completed {
+  background: rgba(86, 211, 100, 0.2);
+  color: var(--color-success);
+}
+
+.tooltip-status.status-in-progress {
+  background: rgba(88, 166, 255, 0.2);
+  color: var(--color-accent-primary);
+}
+
+.tooltip-status.status-scheduled {
+  background: rgba(110, 118, 129, 0.2);
+  color: var(--color-text-muted);
+}
+
+.tooltip-status.status-blocked {
+  background: rgba(248, 81, 73, 0.2);
+  color: var(--color-error);
+}
+
+.tooltip-progress {
+  font-size: var(--font-size-sm);
+  color: var(--color-success);
+  margin-top: var(--space-sm);
+}
+
+/* Modal for Edit Plan */
+.timeline-page .modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.timeline-page .modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.timeline-page .modal-content {
+  position: relative;
+  background: var(--color-bg-deep);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.timeline-page .modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-lg);
+  border-bottom: 1px solid var(--color-border-default);
+}
+
+.timeline-page .modal-header h2 {
+  margin: 0;
+  font-size: var(--font-size-lg);
+}
+
+.timeline-page .modal-close {
+  background: none;
+  border: none;
+  font-size: var(--font-size-2xl);
+  color: var(--color-text-muted);
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+}
+
+.timeline-page .modal-close:hover {
+  color: var(--color-text-primary);
+}
+
+.timeline-page #modal-planner {
+  padding: var(--space-lg);
+}
+
+.timeline-page #modal-planner .planner-card {
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+.timeline-page #modal-planner .planner-header {
+  display: none;
+}
+
+/* Responsive Timeline */
+@media (max-width: 768px) {
+  .timeline-page {
+    padding: var(--space-md);
+  }
+
+  .timeline-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .timeline-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .timeline-legend {
+    gap: var(--space-md);
+  }
+}

@@ -15,6 +15,7 @@ const navLinks: NavLink[] = [
   { route: '/dashboard', icon: Icons.Dashboard, label: 'Dashboard' },
   { route: '/curriculum', icon: Icons.Curriculum, label: 'Curriculum' },
   { route: '/progress', icon: Icons.Progress, label: 'Progress' },
+  { route: '/timeline', icon: Icons.Calendar, label: 'Timeline' },
   { route: '/export', icon: Icons.Export, label: 'Export PDF' },
   { route: '/settings', icon: Icons.Settings, label: 'Settings' },
 ];

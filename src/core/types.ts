@@ -20,6 +20,7 @@ export interface Subject {
   topics: Topic[];
   estimatedHours: number;
   examIds?: string[];
+  projectIds?: string[];
 }
 
 export interface Subtopic {
@@ -245,6 +246,14 @@ export interface ProjectSubmission {
   aiEvaluation?: ProjectAiEvaluation;
 }
 
+// Study Plan Types
+export type StudyPace = 'standard' | 'accelerated' | 'intensive';
+
+export interface StudyPlanSettings {
+  startDate: string;  // ISO date string
+  pace: StudyPace;
+}
+
 // Settings Types
 export interface UserSettings {
   theme: Theme;
@@ -253,6 +262,7 @@ export interface UserSettings {
   githubToken?: string;
   gistId?: string;
   geminiApiKey?: string;
+  studyPlan?: StudyPlanSettings;
 }
 
 // Route Types

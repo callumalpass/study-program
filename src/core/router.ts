@@ -76,6 +76,11 @@ export class Router {
       paramNames: [],
       template: '/export',
     },
+    timeline: {
+      pattern: /^#?\/timeline$/,
+      paramNames: [],
+      template: '/timeline',
+    },
   };
 
   constructor() {
@@ -237,6 +242,7 @@ export const navigateToProject = (subjectId: string, projId: string) =>
 export const navigateToProgress = () => navigate('/progress');
 export const navigateToSettings = () => navigate('/settings');
 export const navigateToExport = () => navigate('/export');
+export const navigateToTimeline = () => navigate('/timeline');
 
 // Export route matching utilities
 export const onRouteChange = (handler: RouteHandler) => router.onRouteChange(handler);
