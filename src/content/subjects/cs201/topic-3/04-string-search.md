@@ -1,6 +1,10 @@
 # String Searching Algorithms
 
-String searching finds occurrences of a pattern within a text. These algorithms are fundamental to text editors, search engines, and bioinformatics.
+String searching—finding all occurrences of a pattern within a larger text—is one of the most frequently performed operations in computing. Every text editor, word processor, and IDE performs string searches. Search engines match query terms against documents. Bioinformatics tools find gene sequences within genomes containing billions of base pairs. The efficiency of these operations directly impacts user experience and computational feasibility.
+
+The naive approach—sliding the pattern across the text and checking for matches at each position—requires O(nm) time in the worst case, where n is the text length and m is the pattern length. For long texts and patterns, this is unacceptably slow. The algorithms in this section achieve O(n + m) time by preprocessing the pattern to avoid redundant comparisons.
+
+The key insight underlying efficient string search is that mismatches provide information. When a mismatch occurs after partially matching the pattern, we've learned something about the text that can help us skip ahead rather than starting over from the next position. Different algorithms exploit this insight in different ways: KMP uses the pattern's self-similarity, Rabin-Karp uses rolling hashes, and Boyer-Moore uses mismatch information to make large jumps.
 
 ## Problem Definition
 
@@ -10,9 +14,11 @@ String searching finds occurrences of a pattern within a text. These algorithms 
 
 **Naive approach**: O(nm) - check each position
 
+The naive algorithm's worst case occurs with patterns like "AAAA" in texts like "AAAAAAAB"—the pattern almost matches at each position, requiring many comparisons before the mismatch at 'B'. Real-world data is often less pathological, but adversarial inputs (common in security contexts) can trigger worst-case behavior.
+
 ## Knuth-Morris-Pratt (KMP)
 
-KMP avoids re-examining characters by using information about the pattern structure.
+KMP (Knuth-Morris-Pratt, 1977) was the first linear-time string matching algorithm. It avoids re-examining characters by using information about the pattern's internal structure—specifically, how prefixes and suffixes of the pattern overlap.
 
 ### Failure Function
 
@@ -83,12 +89,20 @@ def kmp_search(text, pattern):
 
 ### Why KMP Works
 
+The genius of KMP lies in the observation that when a mismatch occurs, we've already gathered information about the text. If we matched j characters before failing, we know exactly what those j text characters are—they match the first j characters of the pattern. The failure function tells us how to exploit this knowledge.
+
 When a mismatch occurs at position j in the pattern, we know:
 - `pattern[0..j-1]` matched `text[i-j..i-1]`
 - The longest prefix of pattern that's also a suffix of `pattern[0..j-1]` could still match
 - Jump to that position without re-examining text characters
 
+The failure function encodes the pattern's self-similarity: if a prefix reappears as a suffix within the pattern, we can "reuse" that matched portion when aligning after a mismatch. This preprocessing takes O(m) time but enables O(n) matching regardless of the text or pattern content.
+
+KMP's guaranteed linear time makes it essential for streaming applications where we process text character by character without ability to backtrack. It's also the foundation for more advanced algorithms like Aho-Corasick for multiple pattern matching.
+
 ## Rabin-Karp Algorithm
+
+Rabin-Karp takes a fundamentally different approach: instead of comparing characters, it compares hash values. A hash collision requires verification, but with a good hash function, collisions are rare enough that expected time is O(n + m).
 
 Uses hashing for expected O(n + m) time.
 
@@ -149,7 +163,13 @@ def rabin_karp(text, pattern):
 **Worst Case**: O(nm) with many hash collisions
 **Advantage**: Easy to extend to multiple patterns
 
+The rolling hash technique is the key efficiency gain: recomputing the hash from scratch at each position would cost O(m) per position, but the rolling update costs O(1). The mathematical trick is polynomial hashing where each character contributes to the hash weighted by its position, allowing incremental updates as the window slides.
+
+Rabin-Karp's strength is its extensibility. Searching for multiple patterns simultaneously is trivial—hash all patterns and store in a set, then check if each text window's hash matches any pattern. This makes Rabin-Karp popular for plagiarism detection and fingerprinting applications.
+
 ## Boyer-Moore Algorithm
+
+Boyer-Moore often outperforms other algorithms in practice, particularly for long patterns and large alphabets. Its key innovation is matching from right to left, which enables larger skips when mismatches occur.
 
 Searches from right to left, enabling larger jumps.
 
@@ -218,6 +238,10 @@ def boyer_moore_simple(text, pattern):
 **Worst Case**: O(nm)
 **Average**: Very fast in practice for natural language
 
+The sub-linear best case O(n/m) means Boyer-Moore can be faster than reading the entire text! This happens when the pattern contains characters that rarely appear in the text—each mismatch allows skipping the entire pattern length. For searching English text with patterns containing rare characters like 'q' or 'z', Boyer-Moore is dramatically faster than alternatives.
+
+The full Boyer-Moore algorithm combines the bad character rule with the good suffix rule (skipping based on matched suffixes), achieving O(n + m) worst case. In practice, the simpler bad-character-only version works well for most applications.
+
 ## Comparison
 
 | Algorithm | Preprocess | Search | Best For |
@@ -231,7 +255,11 @@ def boyer_moore_simple(text, pattern):
 
 ## Multiple Pattern Search
 
+When searching for many patterns simultaneously—as in virus scanners checking against thousands of signatures, or text analytics extracting all mentions of known entities—running separate searches for each pattern is inefficient. Multiple pattern algorithms process the text once while matching all patterns.
+
 ### Aho-Corasick Algorithm
+
+Aho-Corasick (1975) extends KMP to multiple patterns using a trie (prefix tree) with failure links. It searches for any number of patterns in a single pass through the text, making it ideal for intrusion detection, spam filtering, and dictionary-based text processing.
 
 Searches for multiple patterns simultaneously using an automaton.
 
@@ -301,9 +329,11 @@ class AhoCorasick:
 
 ## Suffix Arrays and Trees
 
-For repeated searches in the same text.
+When the same text will be searched many times with different patterns—as in full-text search engines or genome databases—preprocessing the text (rather than the pattern) becomes worthwhile. Suffix structures index all possible substrings, enabling O(m log n) or even O(m) pattern searches regardless of text length.
 
 ### Suffix Array
+
+A suffix array is a sorted array of all suffix starting positions, providing a compact index for substring search. Unlike suffix trees, suffix arrays are cache-friendly and require only O(n) space for the positions themselves.
 
 Array of starting positions of all suffixes, sorted lexicographically.
 
@@ -334,6 +364,8 @@ Suffix Array: [6, 5, 3, 1, 0, 4, 2]
 
 ## Practical Considerations
 
+Choosing the right string search algorithm depends on several factors: pattern length, alphabet size, number of patterns, whether searches are one-time or repeated, and whether exact or approximate matching is needed.
+
 ### When to Use What
 
 1. **Single search**: Boyer-Moore (fast average case)
@@ -344,8 +376,13 @@ Suffix Array: [6, 5, 3, 1, 0, 4, 2]
 
 ### Real-World Implementations
 
-Most libraries use hybrid approaches:
-- Short patterns: Simple algorithms
-- Long patterns: Boyer-Moore variants
-- Very long texts: Suffix structures
+Most libraries use hybrid approaches, selecting algorithms based on pattern and text characteristics:
+- Short patterns: Simple algorithms with low overhead
+- Long patterns: Boyer-Moore variants exploiting skip distances
+- Very long texts: Suffix structures amortizing preprocessing cost
+- Unknown patterns: Adaptive approaches that measure and switch
+
+The Unix grep utility, for example, uses Boyer-Moore for single patterns but switches to Aho-Corasick for multiple patterns (the -F flag). Modern regex engines combine multiple techniques with sophisticated heuristics.
+
+String search algorithms exemplify how preprocessing enables efficiency. The investment in analyzing pattern structure or indexing text pays off when that analysis enables faster searches. This trade-off between preprocessing and query time appears throughout algorithm design and is particularly important in database and search engine contexts where queries vastly outnumber updates.
 

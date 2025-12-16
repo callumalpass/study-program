@@ -1,6 +1,10 @@
 # Minimum Spanning Tree Algorithms
 
-Finding minimum spanning trees is a fundamental graph problem with applications in network design, clustering, and approximation algorithms.
+The minimum spanning tree problem asks for the cheapest way to connect all vertices in a weighted graph. This elegantly simple problem has profound practical applications: designing networks (communication, transportation, electrical), clustering data points by similarity, and serving as a subroutine in approximation algorithms for harder problems like the traveling salesman problem.
+
+What makes MST algorithms remarkable is that a greedy approach works perfectly. Unlike many optimization problems where local decisions lead to globally suboptimal solutions, MST algorithms can make locally optimal edge choices and still achieve the global optimum. This is not coincidence but follows from the cut property—a beautiful theoretical result that explains why greedy works for spanning trees.
+
+The two classic MST algorithms, Kruskal's and Prim's, take different approaches but both achieve O(E log V) time complexity. Understanding both reveals different perspectives on the same problem: Kruskal's sorts edges globally and uses union-find, while Prim's grows a tree locally using a priority queue. Each has scenarios where it performs better.
 
 ## Problem Definition
 
@@ -11,17 +15,19 @@ Find: Tree T ⊆ E that:
 2. Minimizes total edge weight Σₑ∈ₜ w(e)
 
 **Properties**:
-- MST has exactly |V| - 1 edges
+- MST has exactly |V| - 1 edges (one less than vertices, as any tree has)
 - MST is unique if all edge weights are distinct
-- Multiple MSTs may exist with equal weights
+- Multiple MSTs may exist with equal weights (each with the same total cost)
 
 ## Cut Property
+
+The cut property is the theoretical foundation that explains why greedy MST algorithms work. Understanding it provides insight into why we can make irrevocable local decisions and still achieve global optimality.
 
 **Cut**: Partition of vertices into two non-empty sets (S, V-S).
 
 **Crossing edge**: Edge with one endpoint in S, one in V-S.
 
-**Cut Property**: The minimum-weight crossing edge of any cut is in some MST.
+**Cut Property**: The minimum-weight crossing edge of any cut is in some MST. This powerful result states that if we identify any partition of vertices, the lightest edge spanning that partition must be in some minimum spanning tree.
 
 ```
    S        V-S
@@ -36,7 +42,11 @@ Find: Tree T ⊆ E that:
 Minimum crossing edge (weight 1) is in MST
 ```
 
+Both Kruskal's and Prim's algorithms can be understood as repeatedly applying the cut property. Each iteration identifies a cut, finds the minimum crossing edge, and adds it to the MST. The algorithms differ in how they choose cuts and maintain connectivity information.
+
 ## Kruskal's Algorithm
+
+Kruskal's algorithm takes a global view: sort all edges by weight and process them in order, adding each edge that doesn't create a cycle. The key data structure is union-find, which efficiently tracks which vertices are already connected. Two vertices in the same component would form a cycle if connected; two vertices in different components can be safely joined.
 
 **Strategy**: Add edges in order of weight, skip if creates cycle.
 
@@ -85,6 +95,8 @@ def kruskal(vertices, edges):
 - **Total**: O(E log E) = O(E log V)
 
 ## Prim's Algorithm
+
+Prim's algorithm takes a local view: start from any vertex and repeatedly add the minimum-weight edge connecting the current tree to a new vertex. Unlike Kruskal's global edge processing, Prim's maintains a growing tree and considers only edges adjacent to it. This approach resembles Dijkstra's algorithm and uses similar priority queue techniques.
 
 **Strategy**: Grow MST from a starting vertex, always adding minimum-weight edge to a new vertex.
 
@@ -182,12 +194,16 @@ def boruvka(vertices, edges):
 
 ## Applications
 
+MST algorithms solve problems far beyond their original network design motivation. The key insight is that any problem involving connecting elements at minimum cost can potentially use MST techniques.
+
 ### Network Design
 
 Minimum-cost network connecting all nodes:
-- Communication networks
-- Road/rail networks
-- Electrical grids
+- Communication networks (minimizing cable installation)
+- Road/rail networks (minimizing construction costs)
+- Electrical grids (minimizing transmission line costs)
+
+The MST directly models these problems when the goal is to connect all nodes with minimum total cost and no redundancy. Real network design often adds constraints like reliability (requiring multiple paths), which leads to more complex formulations.
 
 ### Clustering
 
@@ -216,6 +232,8 @@ def mst_clustering(points, k):
 
 ### Approximation Algorithms
 
+The MST provides a lower bound for the traveling salesman problem (TSP): any tour visits all vertices and thus contains a spanning tree (remove one edge from the tour). This observation enables a clever 2-approximation for metric TSP.
+
 **TSP Approximation**: MST-based 2-approximation
 
 1. Build MST
@@ -223,7 +241,7 @@ def mst_clustering(points, k):
 3. Find Eulerian tour
 4. Shortcut to skip repeated vertices
 
-Result: Tour ≤ 2 × optimal (for metric TSP).
+Result: Tour ≤ 2 × optimal (for metric TSP). The triangle inequality (required for metric TSP) ensures that shortcuts don't increase total distance.
 
 ## Variants
 

@@ -12,6 +12,11 @@ import { math203Topics } from './subjects/math203/topics';
 import { cs201Topics } from './subjects/cs201/topics';
 import { cs202Topics } from './subjects/cs202/topics';
 import { cs203Topics } from './subjects/cs203/topics';
+import { cs204Topics } from './subjects/cs204/topics';
+import { cs205Topics } from './subjects/cs205/topics';
+import { math201Topics } from './subjects/math201/topics';
+import { math202Topics } from './subjects/math202/topics';
+import { math204Topics } from './subjects/math204/topics';
 
 /**
  * Complete Computer Science Degree Curriculum
@@ -292,16 +297,8 @@ export const curriculum: Subject[] = [
       'Perform code reviews and refactoring for code quality'
     ],
     estimatedHours: 120,
-    topics: [
-      { id: 'cs204-1', title: 'Software Development Lifecycle', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs204-2', title: 'Requirements Engineering', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs204-3', title: 'Software Design and UML', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs204-4', title: 'Design Patterns', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs204-5', title: 'Testing Strategies', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs204-6', title: 'Version Control with Git', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs204-7', title: 'Agile Methodologies', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs204-8', title: 'Code Quality and Refactoring', content: '', quizIds: [], exerciseIds: [] }
-    ]
+    topics: cs204Topics,
+    examIds: ['cs204-midterm', 'cs204-final']
   },
 
   // ============================================================================
@@ -326,15 +323,8 @@ export const curriculum: Subject[] = [
       'Analyze query execution plans and optimize database performance'
     ],
     estimatedHours: 110,
-    topics: [
-      { id: 'cs205-1', title: 'Relational Model and ER Diagrams', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs205-2', title: 'SQL Fundamentals', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs205-3', title: 'Advanced SQL Queries', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs205-4', title: 'Normalization Theory', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs205-5', title: 'Transactions and ACID', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs205-6', title: 'Indexing and B-Trees', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs205-7', title: 'Query Optimization', content: '', quizIds: [], exerciseIds: [] }
-    ]
+    topics: cs205Topics,
+    examIds: ['cs205-midterm', 'cs205-final']
   },
 
   {
@@ -355,15 +345,8 @@ export const curriculum: Subject[] = [
       'Apply linear algebra to computer science problems including graphics and data analysis'
     ],
     estimatedHours: 100,
-    topics: [
-      { id: 'math201-1', title: 'Systems of Linear Equations', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math201-2', title: 'Matrix Operations', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math201-3', title: 'Vector Spaces', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math201-4', title: 'Linear Independence and Basis', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math201-5', title: 'Determinants', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math201-6', title: 'Eigenvalues and Eigenvectors', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math201-7', title: 'Linear Transformations', content: '', quizIds: [], exerciseIds: [] }
-    ]
+    topics: math201Topics,
+    examIds: ['math201-exam-midterm', 'math201-exam-final']
   },
 
   {
@@ -384,15 +367,8 @@ export const curriculum: Subject[] = [
       'Use statistical software to analyze real-world datasets'
     ],
     estimatedHours: 100,
-    topics: [
-      { id: 'math202-1', title: 'Probability Fundamentals', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math202-2', title: 'Random Variables', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math202-3', title: 'Probability Distributions', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math202-4', title: 'Statistical Inference', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math202-5', title: 'Hypothesis Testing', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math202-6', title: 'Regression Analysis', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math202-7', title: 'Bayesian Inference', content: '', quizIds: [], exerciseIds: [] }
-    ]
+    topics: math202Topics,
+    examIds: ['math202-exam-midterm', 'math202-exam-final']
   },
 
   {
@@ -413,15 +389,8 @@ export const curriculum: Subject[] = [
       'Construct and manipulate Taylor and Maclaurin series representations'
     ],
     estimatedHours: 120,
-    topics: [
-      { id: 'math204-1', title: 'Antiderivatives and Indefinite Integrals', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math204-2', title: 'Definite Integrals and Fundamental Theorem', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math204-3', title: 'Integration Techniques', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math204-4', title: 'Applications of Integration', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math204-5', title: 'Improper Integrals', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math204-6', title: 'Sequences and Series', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math204-7', title: 'Taylor and Maclaurin Series', content: '', quizIds: [], exerciseIds: [] }
-    ]
+    topics: math204Topics,
+    examIds: ['math204-exam-midterm', 'math204-exam-final']
   },
 
   // ============================================================================

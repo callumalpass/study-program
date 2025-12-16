@@ -9,6 +9,40 @@
  *   node scripts/analyze-quality.mjs --json   # JSON output
  *   npm run quality                           # Formatted terminal output
  *   npm run quality:json                      # JSON output
+ *
+ * ═══════════════════════════════════════════════════════════════════════════════
+ * REQUIREMENTS (from SUBJECT_UPGRADE_PROMPT.md)
+ * ═══════════════════════════════════════════════════════════════════════════════
+ *
+ * MINIMUM UNIVERSAL REQUIREMENTS (all subjects):
+ *   - 7 topics with 5-7 subtopics each (~1000 words per subtopic)
+ *   - 3 quizzes per topic (21 total), 5 questions each
+ *   - 16 exercises per topic (112 total), difficulty 1-5
+ *   - Midterm exam: ~26 questions, 75 min
+ *   - Final exam: ~42 questions, 120 min
+ *
+ * SUBJECT-SPECIFIC REQUIREMENTS:
+ *
+ *   EXAM-ONLY (no projects):
+ *     - Math101 (Discrete Math I)    - proofs, written exercises
+ *     - Math102 (Discrete Math II)   - combinatorics, graph theory
+ *     - Math203 (Calculus I)         - traditional math exams
+ *     - CS102   (Computer Org)       - number systems, Boolean algebra
+ *
+ *   EXAMS + PROJECTS:
+ *     - CS103 (OOP)             - 1-2 projects (design patterns, class hierarchies)
+ *     - CS104 (Data Structures) - 1 project (complete data structure implementation)
+ *     - CS105 (Systems/C)       - 1-2 projects (memory management, file I/O)
+ *     - CS201 (Algorithms)      - 1 project (algorithm implementation & analysis)
+ *     - CS202 (Databases)       - 1-2 projects (database design, query optimization)
+ *     - CS203 (Theory of Comp)  - 1 project (automata/grammar implementation)
+ *     - CS204 (Software Eng)    - 2-3 projects (SDLC, testing, team practices)
+ *
+ *   READINGS (recommended for intermediate/advanced):
+ *     - CS201, CS202, CS203, CS204 - foundational papers, RFCs, documentation
+ *     - NOT needed for: CS101, Math101, Math102, Math203
+ *
+ * ═══════════════════════════════════════════════════════════════════════════════
  */
 
 import { readdir, readFile, stat } from 'fs/promises';
@@ -501,6 +535,30 @@ function progressBar(current, target, width = 20) {
   return `${bar} ${pct}%`;
 }
 
+// Print requirements summary
+function printRequirements() {
+  console.log(`${'═'.repeat(90)}`);
+  console.log('  REQUIREMENTS (from SUBJECT_UPGRADE_PROMPT.md)');
+  console.log(`${'═'.repeat(90)}`);
+
+  console.log('\n  UNIVERSAL REQUIREMENTS (all subjects):');
+  console.log(`     - 7 topics with 5-7 subtopics each (~${TARGETS.wordsPerSubtopic} words per subtopic)`);
+  console.log(`     - ${TARGETS.quizzesPerTopic} quizzes per topic (21 total), 5 questions each`);
+  console.log(`     - ${TARGETS.exercisesPerTopic} exercises per topic (112 total), difficulty 1-5`);
+  console.log(`     - Midterm exam: ~${TARGETS.midtermQuestions} questions`);
+  console.log(`     - Final exam: ~${TARGETS.finalQuestions} questions`);
+
+  console.log('\n  EXAM-ONLY SUBJECTS (no projects):');
+  console.log('     Math101, Math102, Math203, CS102');
+
+  console.log('\n  SUBJECTS REQUIRING PROJECTS:');
+  console.log('     CS103 (1-2)  CS104 (1)    CS105 (1-2)  CS201 (1)');
+  console.log('     CS202 (1-2)  CS203 (1)    CS204 (2-3)');
+
+  console.log('\n  READINGS RECOMMENDED: CS201, CS202, CS203, CS204');
+  console.log('');
+}
+
 // Print report for a single subject
 function printSubjectReport(quality) {
   const { id, topics, totalTopics, totalSubtopics, avgSubtopicsPerTopic,
@@ -519,66 +577,66 @@ function printSubjectReport(quality) {
   console.log(`${'═'.repeat(70)}`);
 
   // Topics & Subtopics
-  console.log(`\n  📚 TOPICS & SUBTOPICS`);
+  console.log(`\n  TOPICS & SUBTOPICS`);
   console.log(`     Topics:    ${totalTopics}/${TARGETS.topicsPerSubject}  ${progressBar(totalTopics, TARGETS.topicsPerSubject, 15)}`);
   console.log(`     Subtopics: ${totalSubtopics}/${totalTopics * TARGETS.subtopicsPerTopic}  ${progressBar(totalSubtopics, totalTopics * TARGETS.subtopicsPerTopic, 15)}`);
   console.log(`     Avg/Topic: ${avgSubtopicsPerTopic.toFixed(1)}/${TARGETS.subtopicsPerTopic}`);
 
   // Word counts per topic
-  console.log(`\n  📝 CONTENT WORD COUNTS (target: ~${TARGETS.wordsPerSubtopic}/subtopic)`);
+  console.log(`\n  CONTENT (target: ~${TARGETS.wordsPerSubtopic} words/subtopic)`);
   console.log(`     Total: ${totalContentWords.toLocaleString()} words | Avg/subtopic: ${Math.round(avgWordsPerSubtopic)}`);
 
   for (const topic of topics) {
     if (topic.subtopicCount > 0) {
       const avgWords = topic.totalWords / topic.subtopicCount;
-      const status = avgWords >= TARGETS.wordsPerSubtopic * 0.8 ? '✓' : avgWords >= TARGETS.wordsPerSubtopic * 0.5 ? '~' : '✗';
-      console.log(`     T${topics.indexOf(topic) + 1}: ${topic.totalWords.toLocaleString()} words (${topic.subtopicCount} subtopics, avg ${Math.round(avgWords)}) ${status}`);
+      const status = avgWords >= TARGETS.wordsPerSubtopic * 0.8 ? '[ok]' : avgWords >= TARGETS.wordsPerSubtopic * 0.5 ? '[~]' : '[X]';
+      console.log(`     T${topics.indexOf(topic) + 1}: ${topic.totalWords.toLocaleString().padStart(6)} words (${topic.subtopicCount} subtopics, avg ${Math.round(avgWords).toString().padStart(4)}) ${status}`);
     } else {
       console.log(`     T${topics.indexOf(topic) + 1}: No subtopics`);
     }
   }
 
   // Quizzes
-  console.log(`\n  ❓ QUIZZES (target: ${TARGETS.quizzesPerTopic}/topic, ${TARGETS.questionsPerQuiz} questions each)`);
+  console.log(`\n  QUIZZES (target: ${TARGETS.quizzesPerTopic}/topic, ${TARGETS.questionsPerQuiz} questions each)`);
   console.log(`     Total:     ${totalQuizzes}/${totalTopics * TARGETS.quizzesPerTopic}  ${progressBar(totalQuizzes, totalTopics * TARGETS.quizzesPerTopic, 15)}`);
   console.log(`     Questions: ${totalQuizQuestions}/${totalTopics * TARGETS.quizzesPerTopic * TARGETS.questionsPerQuiz}`);
   console.log(`     Avg/Topic: ${avgQuizzesPerTopic.toFixed(1)}/${TARGETS.quizzesPerTopic}`);
 
   // Exercises
-  console.log(`\n  💻 EXERCISES (target: ${TARGETS.exercisesPerTopic}/topic)`);
+  console.log(`\n  EXERCISES (target: ${TARGETS.exercisesPerTopic}/topic)`);
   console.log(`     Total:     ${totalExercises}/${totalTopics * TARGETS.exercisesPerTopic}  ${progressBar(totalExercises, totalTopics * TARGETS.exercisesPerTopic, 15)}`);
   console.log(`     Avg/Topic: ${avgExercisesPerTopic.toFixed(1)}/${TARGETS.exercisesPerTopic}`);
 
   // Per-topic breakdown
-  console.log(`\n  📊 PER-TOPIC BREAKDOWN`);
+  console.log(`\n  PER-TOPIC BREAKDOWN`);
   for (const topic of topics) {
-    const quizStatus = topic.quizCount >= TARGETS.quizzesPerTopic ? '✓' : topic.quizCount > 0 ? '~' : '✗';
-    const exStatus = topic.exerciseCount >= TARGETS.exercisesPerTopic ? '✓' : topic.exerciseCount >= 8 ? '~' : '✗';
-    const subStatus = topic.subtopicCount >= 5 ? '✓' : topic.subtopicCount > 0 ? '~' : '✗';
-    console.log(`     T${topics.indexOf(topic) + 1}: Q:${topic.quizCount}${quizStatus} E:${topic.exerciseCount}${exStatus} S:${topic.subtopicCount}${subStatus} | ${topic.title.substring(0, 30)}`);
+    const quizStatus = topic.quizCount >= TARGETS.quizzesPerTopic ? '+' : topic.quizCount > 0 ? '~' : '-';
+    const exStatus = topic.exerciseCount >= TARGETS.exercisesPerTopic ? '+' : topic.exerciseCount >= 8 ? '~' : '-';
+    const subStatus = topic.subtopicCount >= 5 ? '+' : topic.subtopicCount > 0 ? '~' : '-';
+    console.log(`     T${topics.indexOf(topic) + 1}: Q:${String(topic.quizCount).padStart(2)}${quizStatus} E:${String(topic.exerciseCount).padStart(3)}${exStatus} S:${topic.subtopicCount}${subStatus}  ${topic.title.substring(0, 35)}`);
   }
 
   // Exams
-  console.log(`\n  📝 EXAMS (target: midterm ~${TARGETS.midtermQuestions}q, final ~${TARGETS.finalQuestions}q)`);
-  console.log(`     Midterm: ${hasMidterm ? `✓ (${midtermQuestions} questions)` : '✗ Missing'}`);
-  console.log(`     Final:   ${hasFinal ? `✓ (${finalQuestions} questions)` : '✗ Missing'}`);
+  console.log(`\n  EXAMS (target: midterm ~${TARGETS.midtermQuestions}q, final ~${TARGETS.finalQuestions}q)`);
+  console.log(`     Midterm: ${hasMidterm ? `[ok] ${midtermQuestions} questions` : '[X] Missing'}`);
+  console.log(`     Final:   ${hasFinal ? `[ok] ${finalQuestions} questions` : '[X] Missing'}`);
 
   // Projects
-  console.log(`\n  🏗️  PROJECTS`);
+  console.log(`\n  PROJECTS`);
   if (projectsNeeded) {
-    console.log(`     Count: ${projectCount} (projects ${projectCount > 0 ? 'present' : 'needed'})`);
+    console.log(`     Count: ${projectCount} ${projectCount > 0 ? '[ok]' : '[X] needed'}`);
   } else {
-    console.log(`     Not required for this subject type (exam-only)`);
+    console.log(`     N/A (exam-only subject)`);
   }
 
   // Readings
   if (readingsApplicable) {
-    console.log(`\n  📖 READINGS`);
+    console.log(`\n  READINGS`);
     console.log(`     Topics with readings: ${totalReadings}/${totalTopics}`);
   }
 
   // Gaps summary
-  console.log(`\n  🎯 PRIORITY GAPS`);
+  console.log(`\n  GAPS`);
   const gaps = [];
 
   if (totalTopics < TARGETS.topicsPerSubject) gaps.push(`Need ${TARGETS.topicsPerSubject - totalTopics} more topics`);
@@ -593,9 +651,9 @@ function printSubjectReport(quality) {
   if (avgWordsPerSubtopic < TARGETS.wordsPerSubtopic * 0.7) gaps.push(`Content too thin (avg ${Math.round(avgWordsPerSubtopic)} words/subtopic)`);
 
   if (gaps.length === 0) {
-    console.log('     ✓ No major gaps - meets gold standard!');
+    console.log('     None - meets gold standard!');
   } else {
-    gaps.forEach(g => console.log(`     • ${g}`));
+    gaps.forEach(g => console.log(`     - ${g}`));
   }
 }
 
@@ -639,19 +697,16 @@ function printSummaryTable(subjects) {
   const totalExercises = subjects.reduce((sum, s) => sum + s.totalExercises, 0);
   const totalWords = subjects.reduce((sum, s) => sum + s.totalContentWords, 0);
 
-  console.log(`\n  📈 OVERALL STATISTICS`);
+  console.log(`\n  TOTALS`);
   console.log(`     Average Score: ${avgScore}%`);
-  console.log(`     Total Topics: ${totalTopics}`);
-  console.log(`     Total Subtopics: ${totalSubtopics}`);
-  console.log(`     Total Quizzes: ${totalQuizzes}`);
-  console.log(`     Total Exercises: ${totalExercises}`);
-  console.log(`     Total Content: ${totalWords.toLocaleString()} words`);
+  console.log(`     Topics: ${totalTopics}  |  Subtopics: ${totalSubtopics}  |  Quizzes: ${totalQuizzes}  |  Exercises: ${totalExercises}`);
+  console.log(`     Content: ${totalWords.toLocaleString()} words`);
 
   // Subjects meeting standard
   const meetingStandard = subjects.filter(s => s.overallScore >= 80);
-  console.log(`\n  ✓ Subjects meeting gold standard (≥80%): ${meetingStandard.length}/${subjects.length}`);
+  console.log(`\n  Subjects meeting gold standard (>=80%): ${meetingStandard.length}/${subjects.length}`);
   if (meetingStandard.length > 0) {
-    console.log(`    ${meetingStandard.map(s => s.id).join(', ')}`);
+    console.log(`     ${meetingStandard.map(s => s.id).join(', ')}`);
   }
 }
 
@@ -704,7 +759,8 @@ async function main() {
   const contentDir = join(projectRoot, 'src', 'content', 'subjects');
 
   if (!jsonOutput) {
-    console.log('\n🔍 Analyzing Subject Quality...\n');
+    console.log('');
+    printRequirements();
   }
 
   // Get all subjects
@@ -735,12 +791,43 @@ async function main() {
     // Print formatted output
     printSummaryTable(subjects);
 
-    console.log('\n\n📋 DETAILED SUBJECT REPORTS');
+    console.log(`\n\n${'═'.repeat(90)}`);
+    console.log('  DETAILED SUBJECT REPORTS');
+    console.log(`${'═'.repeat(90)}`);
     for (const subject of subjects.sort((a, b) => a.id.localeCompare(b.id))) {
       printSubjectReport(subject);
     }
 
     console.log('\n');
+  }
+
+  // Check for priority gaps across all subjects
+  const allGaps = [];
+  for (const subject of subjects.sort((a, b) => a.id.localeCompare(b.id))) {
+    const gaps = computeGaps(subject);
+    if (gaps.length > 0) {
+      allGaps.push({ subject: subject.id, gaps });
+    }
+  }
+
+  if (allGaps.length > 0) {
+    if (!jsonOutput) {
+      console.error(`\n${'═'.repeat(90)}`);
+      console.error('  QUALITY CHECK FAILED');
+      console.error(`${'═'.repeat(90)}\n`);
+      for (const { subject, gaps } of allGaps) {
+        console.error(`  ${subject.toUpperCase()}:`);
+        gaps.forEach(g => console.error(`     - ${g.message}`));
+      }
+      console.error('');
+    }
+    process.exit(1);
+  }
+
+  if (!jsonOutput) {
+    console.log(`\n${'═'.repeat(90)}`);
+    console.log('  QUALITY CHECK PASSED');
+    console.log(`${'═'.repeat(90)}\n`);
   }
 }
 

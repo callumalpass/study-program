@@ -196,6 +196,78 @@ export const cs201Exams: Exam[] = [
         options: ['O(n)', 'O(n log n)', 'O(n^2)', 'O(2^n)'],
         correctAnswer: 1,
         explanation: 'T(n) = 2T(n/2) + O(n), which by Master Theorem gives O(n log n).'
+      },
+
+      // ========== Additional Questions ==========
+      {
+        id: 'mid-q18',
+        type: 'multiple_choice',
+        prompt: 'Which of the following best describes amortized analysis?',
+        options: [
+          'Analyzing the worst-case of a single operation',
+          'Analyzing the average cost per operation over a sequence',
+          'Analyzing space complexity only',
+          'Analyzing parallel algorithm performance'
+        ],
+        correctAnswer: 1,
+        explanation: 'Amortized analysis considers the average cost per operation over a sequence of operations, even when individual operations may vary greatly.'
+      },
+      {
+        id: 'mid-q19',
+        type: 'true_false',
+        prompt: 'Counting Sort is a comparison-based sorting algorithm.',
+        correctAnswer: false,
+        explanation: 'Counting Sort does not compare elements directly. It counts occurrences and uses arithmetic to place elements, achieving O(n+k) time.'
+      },
+      {
+        id: 'mid-q20',
+        type: 'multiple_choice',
+        prompt: 'What is the worst-case time complexity of Merge Sort?',
+        options: ['O(n)', 'O(n log n)', 'O(n^2)', 'O(log n)'],
+        correctAnswer: 1,
+        explanation: 'Merge Sort always divides in half and merges in O(n) time, giving O(n log n) in all cases.'
+      },
+      {
+        id: 'mid-q21',
+        type: 'code_output',
+        prompt: 'What is the time complexity of this code?',
+        codeSnippet: `def foo(n):
+    if n <= 1:
+        return 1
+    return foo(n-1) + foo(n-1)`,
+        options: ['O(n)', 'O(n log n)', 'O(n^2)', 'O(2^n)'],
+        correctAnswer: 3,
+        explanation: 'Each call branches into two calls, creating a tree with 2^n nodes. This is exponential time O(2^n).'
+      },
+      {
+        id: 'mid-q22',
+        type: 'fill_blank',
+        prompt: 'The lower bound for comparison-based sorting is ______ comparisons.',
+        correctAnswer: 'n log n',
+        explanation: 'Any comparison sort must make at least Ω(n log n) comparisons to distinguish between n! possible orderings.'
+      },
+      {
+        id: 'mid-q23',
+        type: 'multiple_choice',
+        prompt: 'Which data structure is typically used to implement Binary Search Tree operations efficiently?',
+        options: ['Array', 'Linked List', 'Tree nodes with left/right pointers', 'Hash Table'],
+        correctAnswer: 2,
+        explanation: 'BSTs use nodes with left and right child pointers to maintain the binary search property.'
+      },
+      {
+        id: 'mid-q24',
+        type: 'true_false',
+        prompt: 'Interpolation Search has O(log log n) average time complexity on uniformly distributed data.',
+        correctAnswer: true,
+        explanation: 'On uniformly distributed data, interpolation search estimates position accurately, achieving O(log log n) average case.'
+      },
+      {
+        id: 'mid-q25',
+        type: 'written',
+        prompt: 'Explain why Quick Sort has O(n^2) worst-case complexity and describe one technique to mitigate this.',
+        correctAnswer: 'pivot unbalanced partition random median',
+        explanation: 'Quick Sort degrades when partitions are unbalanced. Mitigation techniques include random pivot selection or median-of-three.',
+        modelAnswer: 'Quick Sort has O(n^2) worst-case when the pivot selection consistently creates unbalanced partitions. For example, if the first element is always chosen as pivot on already-sorted data, each partition has sizes 0 and n-1, requiring n levels of recursion with O(n) work each. To mitigate: (1) Random pivot selection makes worst-case unlikely, (2) Median-of-three selects median of first, middle, and last elements, (3) Introsort switches to Heapsort when recursion depth exceeds a threshold.'
       }
     ]
   },
@@ -510,6 +582,185 @@ export const cs201Exams: Exam[] = [
         correctAnswer: 'hardest NP verify polynomial reduce approximation heuristic',
         explanation: 'NP-Complete problems are the hardest in NP. Practical approaches include approximation algorithms and heuristics.',
         modelAnswer: 'A problem is NP-Complete if: 1) It is in NP (solutions can be verified in polynomial time), and 2) Every problem in NP can be reduced to it in polynomial time. This means NP-Complete problems are the "hardest" problems in NP - if any NP-Complete problem could be solved in polynomial time, then P = NP. Practical approaches when facing NP-Complete problems: 1) Use approximation algorithms that find near-optimal solutions with guaranteed bounds. 2) Use heuristics (like genetic algorithms, simulated annealing) that work well in practice but have no guarantees. 3) Exploit special structure in your specific instance. 4) Use exponential algorithms if the input is small enough. 5) Use constraint solvers or SAT solvers that are highly optimized for many real-world instances.'
+      },
+
+      // ========== Additional Questions ==========
+      {
+        id: 'fin-q26',
+        type: 'multiple_choice',
+        prompt: 'Which algorithm finds Strongly Connected Components in O(V + E) time?',
+        options: ['Floyd-Warshall', 'Kosaraju\'s Algorithm', 'Dijkstra\'s Algorithm', 'Prim\'s Algorithm'],
+        correctAnswer: 1,
+        explanation: 'Kosaraju\'s algorithm uses two DFS passes to find all SCCs in linear time O(V + E).'
+      },
+      {
+        id: 'fin-q27',
+        type: 'true_false',
+        prompt: 'The Ford-Fulkerson algorithm for maximum flow always terminates when edge capacities are irrational numbers.',
+        correctAnswer: false,
+        explanation: 'With irrational capacities, Ford-Fulkerson may not terminate. Edmonds-Karp (using BFS) guarantees termination.'
+      },
+      {
+        id: 'fin-q28',
+        type: 'multiple_choice',
+        prompt: 'What is the time complexity of Floyd-Warshall algorithm for all-pairs shortest paths?',
+        options: ['O(V + E)', 'O(V^2)', 'O(V^3)', 'O(V^2 log V)'],
+        correctAnswer: 2,
+        explanation: 'Floyd-Warshall has three nested loops over vertices, giving O(V^3) time complexity.'
+      },
+      {
+        id: 'fin-q29',
+        type: 'code_output',
+        prompt: 'What is the time complexity of this code?',
+        codeSnippet: `def mystery(arr, k):
+    n = len(arr)
+    result = 0
+    for i in range(n):
+        for j in range(min(i + k, n)):
+            result += arr[j]
+    return result`,
+        options: ['O(n)', 'O(nk)', 'O(n^2)', 'O(n log n)'],
+        correctAnswer: 1,
+        explanation: 'The inner loop runs at most k iterations for each of n outer iterations, giving O(nk).'
+      },
+      {
+        id: 'fin-q30',
+        type: 'multiple_choice',
+        prompt: 'Which data structure is used to efficiently implement Huffman coding?',
+        options: ['Stack', 'Queue', 'Min-Heap (Priority Queue)', 'Hash Table'],
+        correctAnswer: 2,
+        explanation: 'Huffman coding repeatedly extracts the two minimum-frequency nodes, which is efficient with a min-heap.'
+      },
+      {
+        id: 'fin-q31',
+        type: 'fill_blank',
+        prompt: 'Kruskal\'s algorithm uses a ______ data structure to efficiently detect cycles when building an MST.',
+        correctAnswer: 'union-find',
+        explanation: 'Union-Find (Disjoint Set Union) allows near-constant time cycle detection when adding edges.'
+      },
+      {
+        id: 'fin-q32',
+        type: 'multiple_choice',
+        prompt: 'What is the approximation ratio of the greedy 2-approximation algorithm for Vertex Cover?',
+        options: ['Within 1.5x optimal', 'Within 2x optimal', 'Within log(n)x optimal', 'Exactly optimal'],
+        correctAnswer: 1,
+        explanation: 'The greedy algorithm for Vertex Cover guarantees a solution at most twice the optimal size.'
+      },
+      {
+        id: 'fin-q33',
+        type: 'coding',
+        prompt: 'Implement a function to detect if a directed graph has a cycle using DFS.',
+        starterCode: 'def has_cycle(graph):\n    # graph is adjacency list {node: [neighbors]}\n    # Return True if cycle exists, False otherwise\n    pass',
+        language: 'python',
+        solution: `def has_cycle(graph):
+    WHITE, GRAY, BLACK = 0, 1, 2
+    color = {node: WHITE for node in graph}
+
+    def dfs(node):
+        color[node] = GRAY
+        for neighbor in graph.get(node, []):
+            if neighbor not in color:
+                color[neighbor] = WHITE
+            if color[neighbor] == GRAY:
+                return True
+            if color[neighbor] == WHITE and dfs(neighbor):
+                return True
+        color[node] = BLACK
+        return False
+
+    for node in graph:
+        if color[node] == WHITE:
+            if dfs(node):
+                return True
+    return False`,
+        testCases: [
+          { input: "has_cycle({'A': ['B'], 'B': ['C'], 'C': ['A']})", expectedOutput: 'True', isHidden: false, description: 'Simple cycle' },
+          { input: "has_cycle({'A': ['B'], 'B': ['C'], 'C': []})", expectedOutput: 'False', isHidden: false, description: 'No cycle' },
+          { input: "has_cycle({'A': ['A']})", expectedOutput: 'True', isHidden: true, description: 'Self loop' }
+        ],
+        correctAnswer: true,
+        explanation: 'Use three-color DFS: white=unvisited, gray=in progress, black=done. A gray node visited again indicates a cycle.'
+      },
+      {
+        id: 'fin-q34',
+        type: 'multiple_choice',
+        prompt: 'Which of the following is NOT a valid approach for the Longest Common Subsequence problem?',
+        options: ['Dynamic Programming with O(mn) table', 'Greedy selection of matching characters', 'Memoized recursion', 'Space-optimized DP with O(min(m,n)) space'],
+        correctAnswer: 1,
+        explanation: 'Greedy does not work for LCS because choosing matching characters greedily may miss the optimal solution.'
+      },
+      {
+        id: 'fin-q35',
+        type: 'true_false',
+        prompt: 'Strassen\'s algorithm for matrix multiplication has a better asymptotic complexity than the naive O(n^3) algorithm.',
+        correctAnswer: true,
+        explanation: 'Strassen\'s algorithm achieves O(n^2.807) by reducing 8 recursive multiplications to 7.'
+      },
+      {
+        id: 'fin-q36',
+        type: 'multiple_choice',
+        prompt: 'What problem does the Bellman-Ford algorithm solve that Dijkstra cannot?',
+        options: [
+          'Finding shortest paths in unweighted graphs',
+          'Finding shortest paths with negative edge weights',
+          'Finding all-pairs shortest paths',
+          'Finding minimum spanning trees'
+        ],
+        correctAnswer: 1,
+        explanation: 'Bellman-Ford handles negative edge weights and can detect negative cycles, unlike Dijkstra.'
+      },
+      {
+        id: 'fin-q37',
+        type: 'written',
+        prompt: 'Explain the difference between Prim\'s and Kruskal\'s algorithms for finding Minimum Spanning Trees.',
+        correctAnswer: 'grow tree edges vertices greedy union-find priority queue',
+        explanation: 'Both are greedy but Prim grows one tree while Kruskal merges forests.',
+        modelAnswer: 'Both Prim\'s and Kruskal\'s are greedy algorithms for MST, but they differ in approach: PRIM\'S ALGORITHM: Grows a single tree from a starting vertex. At each step, add the minimum-weight edge connecting a tree vertex to a non-tree vertex. Uses a priority queue. Time: O(E log V) with binary heap. Best for dense graphs. KRUSKAL\'S ALGORITHM: Processes all edges globally. Sort edges by weight, then add each edge if it doesn\'t create a cycle (checked via Union-Find). Time: O(E log E) for sorting. Best for sparse graphs. Key difference: Prim is vertex-centric (grows one tree), Kruskal is edge-centric (merges forest components).'
+      },
+      {
+        id: 'fin-q38',
+        type: 'multiple_choice',
+        prompt: 'In the context of approximation algorithms, what does PTAS stand for?',
+        options: [
+          'Polynomial Time Approximation Scheme',
+          'Probabilistic Time Algorithm Solution',
+          'Parallel Task Assignment System',
+          'Parameterized Tree Analysis Structure'
+        ],
+        correctAnswer: 0,
+        explanation: 'PTAS (Polynomial Time Approximation Scheme) achieves (1+ε)-approximation in time polynomial in n for any fixed ε > 0.'
+      },
+      {
+        id: 'fin-q39',
+        type: 'code_output',
+        prompt: 'What does this algorithm compute?',
+        codeSnippet: `def algo(graph, s):
+    dist = {v: float('inf') for v in graph}
+    dist[s] = 0
+    for _ in range(len(graph) - 1):
+        for u in graph:
+            for v, w in graph[u]:
+                if dist[u] + w < dist[v]:
+                    dist[v] = dist[u] + w
+    return dist`,
+        options: ['BFS distances', 'DFS traversal order', 'Single-source shortest paths (Bellman-Ford)', 'Topological sort'],
+        correctAnswer: 2,
+        explanation: 'This is Bellman-Ford: relaxing all edges V-1 times finds shortest paths even with negative weights.'
+      },
+      {
+        id: 'fin-q40',
+        type: 'multiple_choice',
+        prompt: 'What is the space complexity of the standard recursive Fibonacci implementation without memoization?',
+        options: ['O(1)', 'O(log n)', 'O(n)', 'O(2^n)'],
+        correctAnswer: 2,
+        explanation: 'The recursion depth is O(n), so the call stack uses O(n) space, even though time is O(2^n).'
+      },
+      {
+        id: 'fin-q41',
+        type: 'fill_blank',
+        prompt: 'The ______ algorithm solves the maximum flow problem by finding augmenting paths using BFS, guaranteeing polynomial time.',
+        correctAnswer: 'Edmonds-Karp',
+        explanation: 'Edmonds-Karp uses BFS to find shortest augmenting paths, giving O(VE^2) time complexity.'
       }
     ]
   }

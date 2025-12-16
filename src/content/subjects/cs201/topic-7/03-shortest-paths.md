@@ -1,22 +1,26 @@
 # Shortest Path Algorithms
 
-Finding shortest paths is one of the most fundamental graph problems with applications in navigation, networking, and optimization.
+Shortest path computation is perhaps the most practically important graph algorithm. Every time you use a navigation app, your device computes shortest paths through road networks. Every packet on the internet follows paths determined by routing algorithms. Every game AI that moves toward a goal uses pathfinding. Understanding shortest path algorithms—their capabilities, limitations, and appropriate use cases—is essential for any software engineer.
+
+The richness of shortest path problems comes from the interplay between problem variants (single-source vs all-pairs, weighted vs unweighted) and graph properties (non-negative weights vs arbitrary weights, presence of cycles). Each combination calls for a different algorithm. Choosing correctly means the difference between millisecond responses and timeouts, between scalable solutions and ones that fail on larger inputs.
+
+This diversity of algorithms reflects a fundamental principle: exploit structure when it exists. Unweighted graphs have the simplest structure and the fastest algorithms. Non-negative weights enable Dijkstra's elegant greedy approach. Negative weights require more sophisticated techniques. Understanding why each algorithm works—and fails—provides insight into algorithm design more broadly.
 
 ## Problem Variants
 
 ### Single-Source Shortest Path (SSSP)
 
-Find shortest paths from one source to all other vertices.
+Find shortest paths from one source to all other vertices. This is the most common variant: given a starting point, compute distances to all reachable destinations. Navigation systems, network routing, and game AI typically solve SSSP.
 
 ### All-Pairs Shortest Path (APSP)
 
-Find shortest paths between all pairs of vertices.
+Find shortest paths between all pairs of vertices. This is necessary when many different source-destination queries will be made, making it worthwhile to precompute all answers. APSP algorithms either run SSSP from each vertex or use dynamic programming approaches like Floyd-Warshall.
 
 ### Considerations
 
-- **Edge weights**: Unweighted, non-negative, arbitrary
-- **Graph type**: Directed vs undirected
-- **Negative cycles**: If present, shortest path may not exist
+- **Edge weights**: Unweighted, non-negative, arbitrary (including negative)
+- **Graph type**: Directed vs undirected (undirected can be modeled as directed with edges in both directions)
+- **Negative cycles**: If present, shortest path may not exist (can decrease indefinitely by repeating the cycle)
 
 ## BFS for Unweighted Graphs
 
