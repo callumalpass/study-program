@@ -33,6 +33,56 @@ const TARGETS = {
 // Subject categories for assessment strategy
 const EXAM_ONLY_SUBJECTS = ['math101', 'math102', 'math203', 'cs102'];
 
+// Find the matching closing brace, respecting string literals
+// This prevents braces inside strings from throwing off the count
+function findMatchingBrace(content, startIndex) {
+  let braceCount = 0;
+  let inString = false;
+  let stringChar = '';
+  let escaped = false;
+
+  for (let i = startIndex; i < content.length; i++) {
+    const char = content[i];
+    const prevChar = i > 0 ? content[i - 1] : '';
+
+    // Handle escape sequences
+    if (escaped) {
+      escaped = false;
+      continue;
+    }
+    if (char === '\\') {
+      escaped = true;
+      continue;
+    }
+
+    // Handle string boundaries
+    if (!inString && (char === '"' || char === "'" || char === '`')) {
+      inString = true;
+      stringChar = char;
+      continue;
+    }
+    if (inString && char === stringChar) {
+      inString = false;
+      stringChar = '';
+      continue;
+    }
+
+    // Only count braces when not inside a string
+    if (!inString) {
+      if (char === '{') {
+        braceCount++;
+      } else if (char === '}') {
+        braceCount--;
+        if (braceCount === 0) {
+          return i + 1;
+        }
+      }
+    }
+  }
+
+  return content.length; // Fallback if no match found
+}
+
 // Count words in markdown content (excluding code blocks)
 function countWords(content) {
   // Remove code blocks
@@ -67,24 +117,8 @@ async function parseTopicsFile(filePath) {
     const topicTitle = topicMatch[2];
 
     // Find the block for this topic to get quizIds and exerciseIds
-    const blockStart = topicMatch.index;
-    let braceCount = 0;
-    let blockEnd = blockStart;
-    let inBlock = false;
-
-    for (let i = blockStart; i < content.length; i++) {
-      if (content[i] === '{') {
-        braceCount++;
-        inBlock = true;
-      } else if (content[i] === '}') {
-        braceCount--;
-        if (inBlock && braceCount === 0) {
-          blockEnd = i + 1;
-          break;
-        }
-      }
-    }
-
+    const blockStart = content.indexOf('{', topicMatch.index);
+    const blockEnd = findMatchingBrace(content, blockStart);
     const block = content.slice(blockStart, blockEnd);
 
     // Extract quizIds
@@ -126,25 +160,9 @@ async function parseQuizzesFile(filePath) {
       const quizId = match[1];
       const topicId = match[2];
 
-      // Find the questions array for this quiz
-      const blockStart = match.index;
-      let braceCount = 0;
-      let blockEnd = blockStart;
-      let inBlock = false;
-
-      for (let i = blockStart; i < content.length; i++) {
-        if (content[i] === '{') {
-          braceCount++;
-          inBlock = true;
-        } else if (content[i] === '}') {
-          braceCount--;
-          if (inBlock && braceCount === 0) {
-            blockEnd = i + 1;
-            break;
-          }
-        }
-      }
-
+      // Find the questions array for this quiz (use helper to handle braces in strings)
+      const blockStart = content.indexOf('{', match.index);
+      const blockEnd = findMatchingBrace(content, blockStart);
       const block = content.slice(blockStart, blockEnd);
 
       // Count questions by counting "id:" patterns within questions array
@@ -180,21 +198,9 @@ async function parseExamsFile(filePath) {
       const midtermMatch = content.match(/id:\s*['"][^'"]*midterm[^'"]*['"]/i);
       if (midtermMatch) {
         const startIdx = midtermMatch.index || 0;
-        // Find the exam block
-        let braceCount = 0;
-        let blockStart = content.lastIndexOf('{', startIdx);
-        let blockEnd = startIdx;
-
-        for (let i = blockStart; i < content.length; i++) {
-          if (content[i] === '{') braceCount++;
-          else if (content[i] === '}') {
-            braceCount--;
-            if (braceCount === 0) {
-              blockEnd = i + 1;
-              break;
-            }
-          }
-        }
+        // Find the exam block (use helper to handle braces in strings)
+        const blockStart = content.lastIndexOf('{', startIdx);
+        const blockEnd = findMatchingBrace(content, blockStart);
 
         const block = content.slice(blockStart, blockEnd);
         const questionMatches = block.match(/{\s*id:\s*['"]/g);
@@ -209,20 +215,9 @@ async function parseExamsFile(filePath) {
       const finalMatch = content.match(/id:\s*['"][^'"]*final[^'"]*['"]/i);
       if (finalMatch) {
         const startIdx = finalMatch.index || 0;
-        let braceCount = 0;
-        let blockStart = content.lastIndexOf('{', startIdx);
-        let blockEnd = startIdx;
-
-        for (let i = blockStart; i < content.length; i++) {
-          if (content[i] === '{') braceCount++;
-          else if (content[i] === '}') {
-            braceCount--;
-            if (braceCount === 0) {
-              blockEnd = i + 1;
-              break;
-            }
-          }
-        }
+        // Find the exam block (use helper to handle braces in strings)
+        const blockStart = content.lastIndexOf('{', startIdx);
+        const blockEnd = findMatchingBrace(content, blockStart);
 
         const block = content.slice(blockStart, blockEnd);
         const questionMatches = block.match(/{\s*id:\s*['"]/g);
