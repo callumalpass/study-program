@@ -19,73 +19,8 @@ import { renderQuizPage, renderExercisePage, renderProjectPage, renderExamPage }
 import { renderExportPage } from './pages/export';
 import { renderTimelinePage } from './pages/timeline';
 
-// Import all subject content for assessments
-import { cs101Quizzes, cs101Exercises, cs101Projects, cs101Exams } from './data/subjects/cs101';
-import { math101Quizzes, math101Exercises, math101Exams } from './data/subjects/math101';
-import { cs102Quizzes, cs102Exercises, cs102Projects } from './data/subjects/cs102';
-import { cs103Quizzes, cs103Exercises, cs103Projects, cs103Exams } from './data/subjects/cs103';
-import { math102Quizzes, math102Exercises, math102Projects } from './data/subjects/math102';
-import { cs104Quizzes, cs104Exercises, cs104Projects } from './data/subjects/cs104';
-import { cs105Quizzes, cs105Exercises, cs105Projects } from './data/subjects/cs105';
-import { cs201Quizzes, cs201Exercises, cs201Projects, cs201Exams } from './data/subjects/cs201';
-import { cs202Quizzes, cs202Exercises, cs202Projects, cs202Exams } from './data/subjects/cs202';
-import { cs203Quizzes, cs203Exercises, cs203Exams, cs203Projects } from './data/subjects/cs203';
-import { math203Quizzes, math203Exercises, math203Projects, math203Exams } from './data/subjects/math203';
-
-import type { Quiz, Exercise, Project, Exam } from './core/types';
-
-// Aggregate all content
-const allQuizzes: Quiz[] = [
-  ...cs101Quizzes,
-  ...math101Quizzes,
-  ...cs102Quizzes,
-  ...cs103Quizzes,
-  ...math102Quizzes,
-  ...cs104Quizzes,
-  ...cs105Quizzes,
-  ...cs201Quizzes,
-  ...cs202Quizzes,
-  ...cs203Quizzes,
-  ...math203Quizzes,
-];
-
-const allExams: Exam[] = [
-  ...cs101Exams,
-  ...math101Exams,
-  ...cs103Exams,
-  ...cs201Exams,
-  ...cs202Exams,
-  ...cs203Exams,
-  ...math203Exams,
-];
-
-const allExercises: Exercise[] = [
-  ...cs101Exercises,
-  ...math101Exercises,
-  ...cs102Exercises,
-  ...cs103Exercises,
-  ...math102Exercises,
-  ...cs104Exercises,
-  ...cs105Exercises,
-  ...cs201Exercises,
-  ...cs202Exercises,
-  ...cs203Exercises,
-  ...math203Exercises,
-];
-
-const allProjects: Project[] = [
-  ...cs101Projects,
-  // math101 projects retired - uses exams instead
-  ...cs102Projects,
-  ...cs103Projects,
-  ...math102Projects,
-  ...cs104Projects,
-  ...cs105Projects,
-  ...cs201Projects,
-  ...cs202Projects,
-  ...cs203Projects,
-  ...math203Projects,
-];
+// Import all subject content from central registry
+import { allQuizzes, allExercises, allProjects, allExams } from './data/subjects';
 
 /**
  * Apply the theme to the document

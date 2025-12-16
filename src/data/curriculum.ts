@@ -18,6 +18,10 @@ import { math201Topics } from './subjects/math201/topics';
 import { math202Topics } from './subjects/math202/topics';
 import { math204Topics } from './subjects/math204/topics';
 import { cs302Topics } from './subjects/cs302/topics';
+import { cs303Topics } from './subjects/cs303/topics';
+import { cs304Topics } from './subjects/cs304/topics';
+import { cs305Topics } from './subjects/cs305/topics';
+import { cs306Topics } from './subjects/cs306/topics';
 
 /**
  * Complete Computer Science Degree Curriculum
@@ -480,15 +484,9 @@ export const curriculum: Subject[] = [
       'Evaluate language design tradeoffs for different application domains'
     ],
     estimatedHours: 110,
-    topics: [
-      { id: 'cs303-1', title: 'Programming Paradigms', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs303-2', title: 'Type Systems', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs303-3', title: 'Functional Programming', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs303-4', title: 'Formal Semantics', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs303-5', title: 'Interpreters', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs303-6', title: 'Memory Management', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs303-7', title: 'Advanced Language Features', content: '', quizIds: [], exerciseIds: [] }
-    ]
+    topics: cs303Topics,
+    examIds: ['cs303-exam-midterm', 'cs303-exam-final'],
+    projectIds: ['cs303-project-1', 'cs303-project-2', 'cs303-project-3']
   },
 
   {
@@ -509,15 +507,9 @@ export const curriculum: Subject[] = [
       'Design and implement a complete compiler for a small language'
     ],
     estimatedHours: 120,
-    topics: [
-      { id: 'cs304-1', title: 'Lexical Analysis', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs304-2', title: 'Parsing: Top-Down', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs304-3', title: 'Parsing: Bottom-Up', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs304-4', title: 'Semantic Analysis', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs304-5', title: 'Intermediate Code Generation', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs304-6', title: 'Code Optimization', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs304-7', title: 'Target Code Generation', content: '', quizIds: [], exerciseIds: [] }
-    ]
+    topics: cs304Topics,
+    examIds: ['cs304-exam-midterm', 'cs304-exam-final'],
+    projectIds: ['cs304-project-1', 'cs304-project-2', 'cs304-project-3']
   },
 
   {
@@ -600,16 +592,9 @@ export const curriculum: Subject[] = [
       'Deploy web applications to cloud platforms'
     ],
     estimatedHours: 130,
-    topics: [
-      { id: 'cs305-1', title: 'HTML and CSS Fundamentals', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs305-2', title: 'JavaScript and DOM Manipulation', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs305-3', title: 'Frontend Frameworks (React/Vue)', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs305-4', title: 'Server-Side Development', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs305-5', title: 'RESTful APIs', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs305-6', title: 'Database Integration', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs305-7', title: 'Authentication and Security', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs305-8', title: 'Deployment and DevOps', content: '', quizIds: [], exerciseIds: [] }
-    ]
+    topics: cs305Topics,
+    examIds: ['cs305-exam-midterm', 'cs305-exam-final'],
+    projectIds: ['cs305-project-1', 'cs305-project-2', 'cs305-project-3']
   },
 
   {
@@ -630,15 +615,9 @@ export const curriculum: Subject[] = [
       'Create interactive graphics applications using OpenGL or WebGL'
     ],
     estimatedHours: 110,
-    topics: [
-      { id: 'cs306-1', title: 'Graphics Pipeline Overview', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs306-2', title: '2D and 3D Transformations', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs306-3', title: 'Rasterization', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs306-4', title: 'Viewing and Projection', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs306-5', title: 'Lighting and Shading', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs306-6', title: 'Texture Mapping', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs306-7', title: 'Ray Tracing Basics', content: '', quizIds: [], exerciseIds: [] }
-    ]
+    topics: cs306Topics,
+    examIds: ['cs306-exam-midterm', 'cs306-exam-final'],
+    projectIds: ['cs306-project-1', 'cs306-project-2', 'cs306-project-3']
   },
 
   {
