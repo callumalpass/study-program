@@ -1,4 +1,71 @@
-import { Topic } from '../../../core/types';
+import { Topic, Subtopic } from '../../../core/types';
+
+// Topic content imports
+import topic6Content from '../../../content/subjects/cs104/topic-6.md?raw';
+import topic7Content from '../../../content/subjects/cs104/topic-7.md?raw';
+
+// Topic 1 Subtopics - Arrays and Linked Lists
+import t1ArrayFundamentals from '../../../content/subjects/cs104/topic-1/01-array-fundamentals.md?raw';
+import t1DynamicArrays from '../../../content/subjects/cs104/topic-1/02-dynamic-arrays.md?raw';
+import t1SinglyLinkedLists from '../../../content/subjects/cs104/topic-1/03-singly-linked-lists.md?raw';
+import t1DoublyLinkedLists from '../../../content/subjects/cs104/topic-1/04-doubly-linked-lists.md?raw';
+import t1CircularLists from '../../../content/subjects/cs104/topic-1/05-circular-lists.md?raw';
+import t1ArraysVsLists from '../../../content/subjects/cs104/topic-1/06-arrays-vs-lists.md?raw';
+import t1PracticalApplications from '../../../content/subjects/cs104/topic-1/07-practical-applications.md?raw';
+
+// Topic 2 Subtopics - Stacks and Queues
+import t2StackConcept from '../../../content/subjects/cs104/topic-2/01-stack-concept.md?raw';
+import t2StackImplementations from '../../../content/subjects/cs104/topic-2/02-stack-implementations.md?raw';
+import t2StackApplications from '../../../content/subjects/cs104/topic-2/03-stack-applications.md?raw';
+import t2QueueConcept from '../../../content/subjects/cs104/topic-2/04-queue-concept.md?raw';
+import t2QueueImplementations from '../../../content/subjects/cs104/topic-2/05-queue-implementations.md?raw';
+import t2Deques from '../../../content/subjects/cs104/topic-2/06-deques.md?raw';
+import t2QueueApplications from '../../../content/subjects/cs104/topic-2/07-queue-applications.md?raw';
+
+// Topic 3 Subtopics - Trees
+import t3TreeFundamentals from '../../../content/subjects/cs104/topic-3/01-tree-fundamentals.md?raw';
+import t3TreeTraversals from '../../../content/subjects/cs104/topic-3/02-tree-traversals.md?raw';
+import t3BinarySearchTrees from '../../../content/subjects/cs104/topic-3/03-binary-search-trees.md?raw';
+import t3BstOperations from '../../../content/subjects/cs104/topic-3/04-bst-operations.md?raw';
+import t3BalancedTrees from '../../../content/subjects/cs104/topic-3/05-balanced-trees.md?raw';
+import t3TreeApplications from '../../../content/subjects/cs104/topic-3/06-tree-applications.md?raw';
+import t3TreeProblems from '../../../content/subjects/cs104/topic-3/07-tree-problems.md?raw';
+
+// Topic 4 Subtopics - Hash Tables
+import t4HashFundamentals from '../../../content/subjects/cs104/topic-4/01-hash-fundamentals.md?raw';
+import t4HashFunctions from '../../../content/subjects/cs104/topic-4/02-hash-functions.md?raw';
+import t4CollisionChaining from '../../../content/subjects/cs104/topic-4/03-collision-chaining.md?raw';
+import t4CollisionOpenAddressing from '../../../content/subjects/cs104/topic-4/04-collision-open-addressing.md?raw';
+import t4LoadFactorResizing from '../../../content/subjects/cs104/topic-4/05-load-factor-resizing.md?raw';
+import t4HashApplications from '../../../content/subjects/cs104/topic-4/06-hash-applications.md?raw';
+import t4HashProblems from '../../../content/subjects/cs104/topic-4/07-hash-problems.md?raw';
+
+// Topic 5 Subtopics - Graphs
+import t5GraphFundamentals from '../../../content/subjects/cs104/topic-5/01-graph-fundamentals.md?raw';
+import t5GraphRepresentations from '../../../content/subjects/cs104/topic-5/02-graph-representations.md?raw';
+import t5GraphTraversals from '../../../content/subjects/cs104/topic-5/03-graph-traversals.md?raw';
+import t5ShortestPaths from '../../../content/subjects/cs104/topic-5/04-shortest-paths.md?raw';
+import t5TopologicalSort from '../../../content/subjects/cs104/topic-5/05-topological-sort.md?raw';
+import t5MinimumSpanningTree from '../../../content/subjects/cs104/topic-5/06-minimum-spanning-tree.md?raw';
+import t5GraphProblems from '../../../content/subjects/cs104/topic-5/07-graph-problems.md?raw';
+
+// Topic 6 Subtopics - Sorting Algorithms
+import t6SortingFundamentals from '../../../content/subjects/cs104/topic-6/01-sorting-fundamentals.md?raw';
+import t6QuadraticSorts from '../../../content/subjects/cs104/topic-6/02-quadratic-sorts.md?raw';
+import t6MergeSort from '../../../content/subjects/cs104/topic-6/03-merge-sort.md?raw';
+import t6QuickSort from '../../../content/subjects/cs104/topic-6/04-quick-sort.md?raw';
+import t6HeapSort from '../../../content/subjects/cs104/topic-6/05-heap-sort.md?raw';
+import t6LinearTimeSorts from '../../../content/subjects/cs104/topic-6/06-linear-time-sorts.md?raw';
+import t6SortingApplications from '../../../content/subjects/cs104/topic-6/07-sorting-applications.md?raw';
+
+// Topic 7 Subtopics - Heaps and Priority Queues
+import t7HeapFundamentals from '../../../content/subjects/cs104/topic-7/01-heap-fundamentals.md?raw';
+import t7HeapOperations from '../../../content/subjects/cs104/topic-7/02-heap-operations.md?raw';
+import t7PriorityQueues from '../../../content/subjects/cs104/topic-7/03-priority-queues.md?raw';
+import t7HeapApplications from '../../../content/subjects/cs104/topic-7/04-heap-applications.md?raw';
+import t7HeapVariants from '../../../content/subjects/cs104/topic-7/05-heap-variants.md?raw';
+import t7HeapAdvanced from '../../../content/subjects/cs104/topic-7/06-heap-advanced.md?raw';
+import t7HeapProblems from '../../../content/subjects/cs104/topic-7/07-heap-problems.md?raw';
 
 const topic1Content = `# Arrays and Linked Lists
 
@@ -479,11 +546,82 @@ def bfs(graph, start):
 Graphs model relationships and are fundamental to many algorithms. DFS and BFS are the building blocks for most graph algorithms. Choose the right representation (list vs matrix) based on graph density and operations needed.
 `;
 
+const topic1Subtopics: Subtopic[] = [
+  { id: 'cs104-t1-arrays', slug: 'array-fundamentals', title: 'Array Fundamentals', content: t1ArrayFundamentals, order: 1 },
+  { id: 'cs104-t1-dynamic', slug: 'dynamic-arrays', title: 'Dynamic Arrays', content: t1DynamicArrays, order: 2 },
+  { id: 'cs104-t1-singly', slug: 'singly-linked-lists', title: 'Singly Linked Lists', content: t1SinglyLinkedLists, order: 3 },
+  { id: 'cs104-t1-doubly', slug: 'doubly-linked-lists', title: 'Doubly Linked Lists', content: t1DoublyLinkedLists, order: 4 },
+  { id: 'cs104-t1-circular', slug: 'circular-lists', title: 'Circular Lists', content: t1CircularLists, order: 5 },
+  { id: 'cs104-t1-comparison', slug: 'arrays-vs-lists', title: 'Arrays vs Linked Lists', content: t1ArraysVsLists, order: 6 },
+  { id: 'cs104-t1-applications', slug: 'practical-applications', title: 'Practical Applications', content: t1PracticalApplications, order: 7 },
+];
+
+const topic2Subtopics: Subtopic[] = [
+  { id: 'cs104-t2-stack-concept', slug: 'stack-concept', title: 'Stack Concept', content: t2StackConcept, order: 1 },
+  { id: 'cs104-t2-stack-impl', slug: 'stack-implementations', title: 'Stack Implementations', content: t2StackImplementations, order: 2 },
+  { id: 'cs104-t2-stack-apps', slug: 'stack-applications', title: 'Stack Applications', content: t2StackApplications, order: 3 },
+  { id: 'cs104-t2-queue-concept', slug: 'queue-concept', title: 'Queue Concept', content: t2QueueConcept, order: 4 },
+  { id: 'cs104-t2-queue-impl', slug: 'queue-implementations', title: 'Queue Implementations', content: t2QueueImplementations, order: 5 },
+  { id: 'cs104-t2-deques', slug: 'deques', title: 'Deques', content: t2Deques, order: 6 },
+  { id: 'cs104-t2-queue-apps', slug: 'queue-applications', title: 'Queue Applications', content: t2QueueApplications, order: 7 },
+];
+
+const topic3Subtopics: Subtopic[] = [
+  { id: 'cs104-t3-fundamentals', slug: 'tree-fundamentals', title: 'Tree Fundamentals', content: t3TreeFundamentals, order: 1 },
+  { id: 'cs104-t3-traversals', slug: 'tree-traversals', title: 'Tree Traversals', content: t3TreeTraversals, order: 2 },
+  { id: 'cs104-t3-bst', slug: 'binary-search-trees', title: 'Binary Search Trees', content: t3BinarySearchTrees, order: 3 },
+  { id: 'cs104-t3-bst-ops', slug: 'bst-operations', title: 'BST Operations', content: t3BstOperations, order: 4 },
+  { id: 'cs104-t3-balanced', slug: 'balanced-trees', title: 'Balanced Trees', content: t3BalancedTrees, order: 5 },
+  { id: 'cs104-t3-applications', slug: 'tree-applications', title: 'Tree Applications', content: t3TreeApplications, order: 6 },
+  { id: 'cs104-t3-problems', slug: 'tree-problems', title: 'Tree Problems', content: t3TreeProblems, order: 7 },
+];
+
+const topic4Subtopics: Subtopic[] = [
+  { id: 'cs104-t4-fundamentals', slug: 'hash-fundamentals', title: 'Hash Fundamentals', content: t4HashFundamentals, order: 1 },
+  { id: 'cs104-t4-functions', slug: 'hash-functions', title: 'Hash Functions', content: t4HashFunctions, order: 2 },
+  { id: 'cs104-t4-chaining', slug: 'collision-chaining', title: 'Collision Resolution: Chaining', content: t4CollisionChaining, order: 3 },
+  { id: 'cs104-t4-open-addr', slug: 'collision-open-addressing', title: 'Collision Resolution: Open Addressing', content: t4CollisionOpenAddressing, order: 4 },
+  { id: 'cs104-t4-load-factor', slug: 'load-factor-resizing', title: 'Load Factor and Resizing', content: t4LoadFactorResizing, order: 5 },
+  { id: 'cs104-t4-applications', slug: 'hash-applications', title: 'Hash Table Applications', content: t4HashApplications, order: 6 },
+  { id: 'cs104-t4-problems', slug: 'hash-problems', title: 'Hash Table Problems', content: t4HashProblems, order: 7 },
+];
+
+const topic5Subtopics: Subtopic[] = [
+  { id: 'cs104-t5-fundamentals', slug: 'graph-fundamentals', title: 'Graph Fundamentals', content: t5GraphFundamentals, order: 1 },
+  { id: 'cs104-t5-representations', slug: 'graph-representations', title: 'Graph Representations', content: t5GraphRepresentations, order: 2 },
+  { id: 'cs104-t5-traversals', slug: 'graph-traversals', title: 'Graph Traversals', content: t5GraphTraversals, order: 3 },
+  { id: 'cs104-t5-shortest', slug: 'shortest-paths', title: 'Shortest Paths', content: t5ShortestPaths, order: 4 },
+  { id: 'cs104-t5-topological', slug: 'topological-sort', title: 'Topological Sort', content: t5TopologicalSort, order: 5 },
+  { id: 'cs104-t5-mst', slug: 'minimum-spanning-tree', title: 'Minimum Spanning Tree', content: t5MinimumSpanningTree, order: 6 },
+  { id: 'cs104-t5-problems', slug: 'graph-problems', title: 'Graph Problems', content: t5GraphProblems, order: 7 },
+];
+
+const topic6Subtopics: Subtopic[] = [
+  { id: 'cs104-t6-fundamentals', slug: 'sorting-fundamentals', title: 'Sorting Fundamentals', content: t6SortingFundamentals, order: 1 },
+  { id: 'cs104-t6-quadratic', slug: 'quadratic-sorts', title: 'Quadratic Sorts', content: t6QuadraticSorts, order: 2 },
+  { id: 'cs104-t6-merge', slug: 'merge-sort', title: 'Merge Sort', content: t6MergeSort, order: 3 },
+  { id: 'cs104-t6-quick', slug: 'quick-sort', title: 'Quick Sort', content: t6QuickSort, order: 4 },
+  { id: 'cs104-t6-heap', slug: 'heap-sort', title: 'Heap Sort', content: t6HeapSort, order: 5 },
+  { id: 'cs104-t6-linear', slug: 'linear-time-sorts', title: 'Linear Time Sorts', content: t6LinearTimeSorts, order: 6 },
+  { id: 'cs104-t6-applications', slug: 'sorting-applications', title: 'Sorting Applications', content: t6SortingApplications, order: 7 },
+];
+
+const topic7Subtopics: Subtopic[] = [
+  { id: 'cs104-t7-fundamentals', slug: 'heap-fundamentals', title: 'Heap Fundamentals', content: t7HeapFundamentals, order: 1 },
+  { id: 'cs104-t7-operations', slug: 'heap-operations', title: 'Heap Operations', content: t7HeapOperations, order: 2 },
+  { id: 'cs104-t7-priority', slug: 'priority-queues', title: 'Priority Queues', content: t7PriorityQueues, order: 3 },
+  { id: 'cs104-t7-applications', slug: 'heap-applications', title: 'Heap Applications', content: t7HeapApplications, order: 4 },
+  { id: 'cs104-t7-variants', slug: 'heap-variants', title: 'Heap Variants', content: t7HeapVariants, order: 5 },
+  { id: 'cs104-t7-advanced', slug: 'heap-advanced', title: 'Advanced Heap Techniques', content: t7HeapAdvanced, order: 6 },
+  { id: 'cs104-t7-problems', slug: 'heap-problems', title: 'Heap Problems', content: t7HeapProblems, order: 7 },
+];
+
 export const cs104Topics: Topic[] = [
   {
     id: 'cs104-topic-1',
     title: 'Arrays and Linked Lists',
     content: topic1Content,
+    subtopics: topic1Subtopics,
     quizIds: ['cs104-quiz-1a', 'cs104-quiz-1b', 'cs104-quiz-1c'],
     exerciseIds: ['cs104-exercise-1', 'cs104-t1-ex02', 'cs104-t1-ex03', 'cs104-t1-ex04', 'cs104-t1-ex05', 'cs104-t1-ex06', 'cs104-t1-ex07', 'cs104-t1-ex08', 'cs104-t1-ex09', 'cs104-t1-ex10', 'cs104-t1-ex11', 'cs104-t1-ex12', 'cs104-t1-ex13', 'cs104-t1-ex14', 'cs104-t1-ex15', 'cs104-t1-ex16']
   },
@@ -491,6 +629,7 @@ export const cs104Topics: Topic[] = [
     id: 'cs104-topic-2',
     title: 'Stacks and Queues',
     content: topic2Content,
+    subtopics: topic2Subtopics,
     quizIds: ['cs104-quiz-2a', 'cs104-quiz-2b', 'cs104-quiz-2c'],
     exerciseIds: ['cs104-exercise-2', 'cs104-t2-ex02', 'cs104-t2-ex03', 'cs104-t2-ex04', 'cs104-t2-ex05', 'cs104-t2-ex06', 'cs104-t2-ex07', 'cs104-t2-ex08', 'cs104-t2-ex09', 'cs104-t2-ex10', 'cs104-t2-ex11', 'cs104-t2-ex12', 'cs104-t2-ex13', 'cs104-t2-ex14', 'cs104-t2-ex15', 'cs104-t2-ex16']
   },
@@ -498,6 +637,7 @@ export const cs104Topics: Topic[] = [
     id: 'cs104-topic-3',
     title: 'Trees',
     content: topic3Content,
+    subtopics: topic3Subtopics,
     quizIds: ['cs104-quiz-3a', 'cs104-quiz-3b', 'cs104-quiz-3c'],
     exerciseIds: ['cs104-exercise-3', 'cs104-t3-ex02', 'cs104-t3-ex03', 'cs104-t3-ex04', 'cs104-t3-ex05', 'cs104-t3-ex06', 'cs104-t3-ex07', 'cs104-t3-ex08', 'cs104-t3-ex09', 'cs104-t3-ex10', 'cs104-t3-ex11', 'cs104-t3-ex12', 'cs104-t3-ex13', 'cs104-t3-ex14', 'cs104-t3-ex15', 'cs104-t3-ex16']
   },
@@ -505,6 +645,7 @@ export const cs104Topics: Topic[] = [
     id: 'cs104-topic-4',
     title: 'Hash Tables',
     content: topic4Content,
+    subtopics: topic4Subtopics,
     quizIds: ['cs104-quiz-4a', 'cs104-quiz-4b', 'cs104-quiz-4c'],
     exerciseIds: ['cs104-exercise-4', 'cs104-t4-ex02', 'cs104-t4-ex03', 'cs104-t4-ex04', 'cs104-t4-ex05', 'cs104-t4-ex06', 'cs104-t4-ex07', 'cs104-t4-ex08', 'cs104-t4-ex09', 'cs104-t4-ex10', 'cs104-t4-ex11', 'cs104-t4-ex12', 'cs104-t4-ex13', 'cs104-t4-ex14', 'cs104-t4-ex15', 'cs104-t4-ex16']
   },
@@ -512,20 +653,23 @@ export const cs104Topics: Topic[] = [
     id: 'cs104-topic-5',
     title: 'Graphs',
     content: topic5Content,
+    subtopics: topic5Subtopics,
     quizIds: ['cs104-quiz-5a', 'cs104-quiz-5b', 'cs104-quiz-5c'],
     exerciseIds: ['cs104-exercise-5', 'cs104-t5-ex02', 'cs104-t5-ex03', 'cs104-t5-ex04', 'cs104-t5-ex05', 'cs104-t5-ex06', 'cs104-t5-ex07', 'cs104-t5-ex08', 'cs104-t5-ex09', 'cs104-t5-ex10', 'cs104-t5-ex11', 'cs104-t5-ex12', 'cs104-t5-ex13', 'cs104-t5-ex14', 'cs104-t5-ex15', 'cs104-t5-ex16']
   },
   {
     id: 'cs104-topic-6',
     title: 'Sorting Algorithms',
-    content: '',
+    content: topic6Content,
+    subtopics: topic6Subtopics,
     quizIds: ['cs104-quiz-6a', 'cs104-quiz-6b', 'cs104-quiz-6c'],
     exerciseIds: ['cs104-t6-ex01', 'cs104-t6-ex02', 'cs104-t6-ex03', 'cs104-t6-ex04', 'cs104-t6-ex05', 'cs104-t6-ex06', 'cs104-t6-ex07', 'cs104-t6-ex08', 'cs104-t6-ex09', 'cs104-t6-ex10', 'cs104-t6-ex11', 'cs104-t6-ex12', 'cs104-t6-ex13', 'cs104-t6-ex14', 'cs104-t6-ex15', 'cs104-t6-ex16']
   },
   {
     id: 'cs104-topic-7',
     title: 'Heaps and Priority Queues',
-    content: '',
+    content: topic7Content,
+    subtopics: topic7Subtopics,
     quizIds: ['cs104-quiz-7a', 'cs104-quiz-7b', 'cs104-quiz-7c'],
     exerciseIds: ['cs104-t7-ex01', 'cs104-t7-ex02', 'cs104-t7-ex03', 'cs104-t7-ex04', 'cs104-t7-ex05', 'cs104-t7-ex06', 'cs104-t7-ex07', 'cs104-t7-ex08', 'cs104-t7-ex09', 'cs104-t7-ex10', 'cs104-t7-ex11', 'cs104-t7-ex12', 'cs104-t7-ex13', 'cs104-t7-ex14', 'cs104-t7-ex15', 'cs104-t7-ex16']
   }
