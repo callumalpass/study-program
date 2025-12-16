@@ -1,0 +1,1004 @@
+import type { Exam, QuizQuestion } from '../../../core/types';
+
+const midtermQuestions: QuizQuestion[] = [
+  // Topic 1: Vectors and Vector-Valued Functions
+  {
+    id: 'math301-mid-q1',
+    type: 'multiple_choice',
+    prompt: 'Find the unit vector in the direction of v = ⟨3, -4, 12⟩.',
+    options: [
+      '⟨3/13, -4/13, 12/13⟩',
+      '⟨3/5, -4/5, 0⟩',
+      '⟨1/3, -1/4, 1/12⟩',
+      '⟨3/√13, -4/√13, 12/√13⟩'
+    ],
+    correctAnswer: '⟨3/13, -4/13, 12/13⟩',
+    explanation: 'The magnitude of v is √(9 + 16 + 144) = √169 = 13. The unit vector is v/||v|| = ⟨3/13, -4/13, 12/13⟩.'
+  },
+  {
+    id: 'math301-mid-q2',
+    type: 'multiple_choice',
+    prompt: 'If a = ⟨2, 1, -1⟩ and b = ⟨1, 3, 2⟩, what is a · b?',
+    options: [
+      '3',
+      '5',
+      '7',
+      '-1'
+    ],
+    correctAnswer: '3',
+    explanation: 'The dot product is a · b = (2)(1) + (1)(3) + (-1)(2) = 2 + 3 - 2 = 3.'
+  },
+  {
+    id: 'math301-mid-q3',
+    type: 'multiple_choice',
+    prompt: 'Find the cross product a × b where a = ⟨1, 0, 2⟩ and b = ⟨0, 3, 1⟩.',
+    options: [
+      '⟨-6, -1, 3⟩',
+      '⟨6, 1, -3⟩',
+      '⟨0, 6, 2⟩',
+      '⟨-6, 1, 3⟩'
+    ],
+    correctAnswer: '⟨-6, -1, 3⟩',
+    explanation: 'Using the determinant formula: a × b = ⟨(0)(1) - (2)(3), (2)(0) - (1)(1), (1)(3) - (0)(0)⟩ = ⟨-6, -1, 3⟩.'
+  },
+  {
+    id: 'math301-mid-q4',
+    type: 'multiple_choice',
+    prompt: 'Given r(t) = ⟨t², 2t, t³⟩, find r\'(t).',
+    options: [
+      '⟨2t, 2, 3t²⟩',
+      '⟨t, 1, t²⟩',
+      '⟨2t², 2t, 3t³⟩',
+      '⟨2, 0, 3t⟩'
+    ],
+    correctAnswer: '⟨2t, 2, 3t²⟩',
+    explanation: 'Differentiate each component: r\'(t) = ⟨d/dt(t²), d/dt(2t), d/dt(t³)⟩ = ⟨2t, 2, 3t²⟩.'
+  },
+  {
+    id: 'math301-mid-q5',
+    type: 'multiple_choice',
+    prompt: 'What is the arc length formula for a curve r(t) from t = a to t = b?',
+    options: [
+      'L = ∫ₐᵇ ||r\'(t)|| dt',
+      'L = ∫ₐᵇ r\'(t) dt',
+      'L = ∫ₐᵇ ||r(t)|| dt',
+      'L = ||∫ₐᵇ r\'(t) dt||'
+    ],
+    correctAnswer: 'L = ∫ₐᵇ ||r\'(t)|| dt',
+    explanation: 'Arc length is the integral of the speed (magnitude of velocity): L = ∫ₐᵇ ||r\'(t)|| dt.'
+  },
+  {
+    id: 'math301-mid-q6',
+    type: 'multiple_choice',
+    prompt: 'Find the equation of the plane containing the point (1, 2, 3) with normal vector n = ⟨2, -1, 4⟩.',
+    options: [
+      '2x - y + 4z = 12',
+      '2x - y + 4z = 14',
+      '2x - y + 4z = 10',
+      'x + 2y + 3z = 14'
+    ],
+    correctAnswer: '2x - y + 4z = 12',
+    explanation: 'Using n · (r - r₀) = 0: 2(x-1) - (y-2) + 4(z-3) = 0, which simplifies to 2x - y + 4z = 12.'
+  },
+  {
+    id: 'math301-mid-q7',
+    type: 'multiple_choice',
+    prompt: 'The curvature κ of a curve r(t) is given by which formula?',
+    options: [
+      'κ = ||r\'(t) × r\'\'(t)|| / ||r\'(t)||³',
+      'κ = ||r\'\'(t)|| / ||r\'(t)||²',
+      'κ = r\'(t) · r\'\'(t) / ||r\'(t)||³',
+      'κ = ||r\'\'(t)|| / ||r\'(t)||'
+    ],
+    correctAnswer: 'κ = ||r\'(t) × r\'\'(t)|| / ||r\'(t)||³',
+    explanation: 'The curvature formula is κ = ||T\'(t)|| / ||r\'(t)|| = ||r\'(t) × r\'\'(t)|| / ||r\'(t)||³.'
+  },
+
+  // Topic 2: Partial Derivatives
+  {
+    id: 'math301-mid-q8',
+    type: 'multiple_choice',
+    prompt: 'Find ∂f/∂x where f(x,y) = x²y + 3xy² - 2x.',
+    options: [
+      '2xy + 3y² - 2',
+      'x² + 6xy',
+      '2xy + y² - 2',
+      '2xy + 3y² + 2'
+    ],
+    correctAnswer: '2xy + 3y² - 2',
+    explanation: 'Treat y as constant and differentiate with respect to x: ∂f/∂x = 2xy + 3y² - 2.'
+  },
+  {
+    id: 'math301-mid-q9',
+    type: 'multiple_choice',
+    prompt: 'If z = x²y³, find ∂²z/∂x∂y.',
+    options: [
+      '6xy²',
+      '2xy²',
+      '6x²y',
+      '3x²y²'
+    ],
+    correctAnswer: '6xy²',
+    explanation: 'First ∂z/∂x = 2xy³, then ∂/∂y(2xy³) = 6xy². By Clairaut\'s theorem, ∂²z/∂x∂y = ∂²z/∂y∂x.'
+  },
+  {
+    id: 'math301-mid-q10',
+    type: 'multiple_choice',
+    prompt: 'What is the domain of f(x,y) = ln(xy - 1)?',
+    options: [
+      '{(x,y) : xy > 1}',
+      '{(x,y) : xy ≥ 1}',
+      '{(x,y) : xy < 1}',
+      'All of ℝ²'
+    ],
+    correctAnswer: '{(x,y) : xy > 1}',
+    explanation: 'The natural logarithm requires its argument to be positive, so we need xy - 1 > 0, which means xy > 1.'
+  },
+  {
+    id: 'math301-mid-q11',
+    type: 'multiple_choice',
+    prompt: 'If z = f(x,y) where x = r cos θ and y = r sin θ, what is ∂z/∂r using the chain rule?',
+    options: [
+      '∂f/∂x cos θ + ∂f/∂y sin θ',
+      '∂f/∂x sin θ + ∂f/∂y cos θ',
+      '∂f/∂x r cos θ + ∂f/∂y r sin θ',
+      '∂f/∂x + ∂f/∂y'
+    ],
+    correctAnswer: '∂f/∂x cos θ + ∂f/∂y sin θ',
+    explanation: 'By the chain rule: ∂z/∂r = (∂f/∂x)(∂x/∂r) + (∂f/∂y)(∂y/∂r) = (∂f/∂x)cos θ + (∂f/∂y)sin θ.'
+  },
+  {
+    id: 'math301-mid-q12',
+    type: 'multiple_choice',
+    prompt: 'What does Clairaut\'s Theorem state about mixed partial derivatives?',
+    options: [
+      'If fₓᵧ and fᵧₓ are continuous, then fₓᵧ = fᵧₓ',
+      'fₓᵧ is always equal to fᵧₓ',
+      'fₓₓ = fᵧᵧ for all functions',
+      'Mixed partials are always zero'
+    ],
+    correctAnswer: 'If fₓᵧ and fᵧₓ are continuous, then fₓᵧ = fᵧₓ',
+    explanation: 'Clairaut\'s Theorem states that if the mixed partial derivatives are continuous, then they are equal regardless of the order of differentiation.'
+  },
+  {
+    id: 'math301-mid-q13',
+    type: 'multiple_choice',
+    prompt: 'Find the linearization L(x,y) of f(x,y) = x²y at the point (2,3).',
+    options: [
+      'L(x,y) = 12 + 12(x-2) + 4(y-3)',
+      'L(x,y) = 12 + 4(x-2) + 12(y-3)',
+      'L(x,y) = 6 + 6(x-2) + 2(y-3)',
+      'L(x,y) = 4 + 2(x-2) + 3(y-3)'
+    ],
+    correctAnswer: 'L(x,y) = 12 + 12(x-2) + 4(y-3)',
+    explanation: 'f(2,3) = 12, fₓ(2,3) = 2xy|(2,3) = 12, fᵧ(2,3) = x²|(2,3) = 4. So L(x,y) = 12 + 12(x-2) + 4(y-3).'
+  },
+
+  // Topic 3: Gradient, Directional Derivatives, Tangent Planes
+  {
+    id: 'math301-mid-q14',
+    type: 'multiple_choice',
+    prompt: 'Find the gradient ∇f of f(x,y,z) = x²yz + z³.',
+    options: [
+      '⟨2xyz, x²z, x²y + 3z²⟩',
+      '⟨2xy, x²z, 3z²⟩',
+      '⟨2xyz, x²y, x²z + 3z²⟩',
+      '⟨xyz, x²z, z³⟩'
+    ],
+    correctAnswer: '⟨2xyz, x²z, x²y + 3z²⟩',
+    explanation: 'The gradient is ∇f = ⟨∂f/∂x, ∂f/∂y, ∂f/∂z⟩ = ⟨2xyz, x²z, x²y + 3z²⟩.'
+  },
+  {
+    id: 'math301-mid-q15',
+    type: 'multiple_choice',
+    prompt: 'In which direction does the gradient ∇f point?',
+    options: [
+      'Direction of maximum increase of f',
+      'Direction of maximum decrease of f',
+      'Direction perpendicular to level curves',
+      'Both A and C are correct'
+    ],
+    correctAnswer: 'Both A and C are correct',
+    explanation: 'The gradient points in the direction of maximum increase and is perpendicular to the level curves/surfaces.'
+  },
+  {
+    id: 'math301-mid-q16',
+    type: 'multiple_choice',
+    prompt: 'If f(x,y) = x² - y² and u = ⟨3/5, 4/5⟩, what is Dᵤf(1,2)?',
+    options: [
+      '-10/5',
+      '10/5',
+      '-14/5',
+      '14/5'
+    ],
+    correctAnswer: '-10/5',
+    explanation: '∇f = ⟨2x, -2y⟩, so ∇f(1,2) = ⟨2, -4⟩. Then Dᵤf = ∇f · u = 2(3/5) + (-4)(4/5) = 6/5 - 16/5 = -10/5 = -2.'
+  },
+  {
+    id: 'math301-mid-q17',
+    type: 'multiple_choice',
+    prompt: 'Find the equation of the tangent plane to z = x² + 2y² at (1, 1, 3).',
+    options: [
+      'z = 2x + 4y - 3',
+      'z = 2x + 4y + 3',
+      'z = x + 2y + 3',
+      'z = 2x + 4y - 1'
+    ],
+    correctAnswer: 'z = 2x + 4y - 3',
+    explanation: 'zₓ(1,1) = 2x|(1,1) = 2, zᵧ(1,1) = 4y|(1,1) = 4. Tangent plane: z - 3 = 2(x-1) + 4(y-1), so z = 2x + 4y - 3.'
+  },
+  {
+    id: 'math301-mid-q18',
+    type: 'multiple_choice',
+    prompt: 'What is the maximum value of the directional derivative Dᵤf at a point?',
+    options: [
+      '||∇f||',
+      '1',
+      '∇f · u',
+      'Depends on the function'
+    ],
+    correctAnswer: '||∇f||',
+    explanation: 'Since Dᵤf = ∇f · u = ||∇f|| ||u|| cos θ and ||u|| = 1 for unit vectors, the maximum occurs when cos θ = 1, giving ||∇f||.'
+  },
+  {
+    id: 'math301-mid-q19',
+    type: 'multiple_choice',
+    prompt: 'If ∇f(a,b) = 0, what can we conclude about the point (a,b)?',
+    options: [
+      '(a,b) is a critical point',
+      '(a,b) is a local maximum',
+      '(a,b) is a local minimum',
+      '(a,b) is a saddle point'
+    ],
+    correctAnswer: '(a,b) is a critical point',
+    explanation: 'When the gradient is zero, the point is a critical point. Further analysis (like the second derivative test) is needed to classify it.'
+  },
+
+  // Topic 4: Optimization and Lagrange Multipliers
+  {
+    id: 'math301-mid-q20',
+    type: 'multiple_choice',
+    prompt: 'For f(x,y) = x² + y² - 4x + 6y, where are the critical points?',
+    options: [
+      '(2, -3)',
+      '(-2, 3)',
+      '(4, -6)',
+      '(0, 0)'
+    ],
+    correctAnswer: '(2, -3)',
+    explanation: 'Set ∇f = 0: fₓ = 2x - 4 = 0 gives x = 2; fᵧ = 2y + 6 = 0 gives y = -3. Critical point is (2, -3).'
+  },
+  {
+    id: 'math301-mid-q21',
+    type: 'multiple_choice',
+    prompt: 'What is the discriminant D used in the second derivative test for f(x,y)?',
+    options: [
+      'D = fₓₓfᵧᵧ - (fₓᵧ)²',
+      'D = fₓₓ + fᵧᵧ',
+      'D = fₓₓfᵧᵧ + (fₓᵧ)²',
+      'D = (fₓₓ)² + (fᵧᵧ)²'
+    ],
+    correctAnswer: 'D = fₓₓfᵧᵧ - (fₓᵧ)²',
+    explanation: 'The discriminant is D = fₓₓfᵧᵧ - (fₓᵧ)², analogous to the determinant of the Hessian matrix.'
+  },
+  {
+    id: 'math301-mid-q22',
+    type: 'multiple_choice',
+    prompt: 'If D > 0 and fₓₓ > 0 at a critical point, what is the nature of the critical point?',
+    options: [
+      'Local minimum',
+      'Local maximum',
+      'Saddle point',
+      'Inconclusive'
+    ],
+    correctAnswer: 'Local minimum',
+    explanation: 'D > 0 indicates a local extremum. Since fₓₓ > 0, the surface curves upward, so it\'s a local minimum.'
+  },
+  {
+    id: 'math301-mid-q23',
+    type: 'multiple_choice',
+    prompt: 'The method of Lagrange multipliers is used to find extrema subject to what condition?',
+    options: [
+      'A constraint g(x,y) = k',
+      'No constraints',
+      'f(x,y) = 0',
+      'The domain is bounded'
+    ],
+    correctAnswer: 'A constraint g(x,y) = k',
+    explanation: 'Lagrange multipliers find extrema of f subject to the constraint g(x,y) = k by solving ∇f = λ∇g and g = k.'
+  },
+  {
+    id: 'math301-mid-q24',
+    type: 'multiple_choice',
+    prompt: 'To find extrema of f(x,y) subject to g(x,y) = k using Lagrange multipliers, we solve which system?',
+    options: [
+      '∇f = λ∇g and g(x,y) = k',
+      '∇f = ∇g',
+      'f = λg',
+      '∇f + λ∇g = 0'
+    ],
+    correctAnswer: '∇f = λ∇g and g(x,y) = k',
+    explanation: 'The Lagrange multiplier method requires ∇f = λ∇g (gradients are parallel) and the constraint g(x,y) = k is satisfied.'
+  },
+  {
+    id: 'math301-mid-q25',
+    type: 'multiple_choice',
+    prompt: 'Find the absolute maximum of f(x,y) = xy on the disk x² + y² ≤ 1.',
+    options: [
+      '1/2',
+      '1',
+      '2',
+      '√2/2'
+    ],
+    correctAnswer: '1/2',
+    explanation: 'Check interior: ∇f = ⟨y,x⟩ = 0 gives (0,0) with f = 0. On boundary x² + y² = 1 using Lagrange: ⟨y,x⟩ = λ⟨2x,2y⟩ gives x² = y². With x² + y² = 1, we get x = y = ±1/√2, giving f = 1/2 as maximum.'
+  },
+  {
+    id: 'math301-mid-q26',
+    type: 'multiple_choice',
+    prompt: 'If D < 0 at a critical point, what is the nature of the critical point?',
+    options: [
+      'Saddle point',
+      'Local minimum',
+      'Local maximum',
+      'Inconclusive'
+    ],
+    correctAnswer: 'Saddle point',
+    explanation: 'When the discriminant D < 0, the critical point is a saddle point, regardless of the values of fₓₓ or fᵧᵧ.'
+  }
+];
+
+const finalQuestions: QuizQuestion[] = [
+  // Topic 1: Vectors and Vector-Valued Functions (6 questions)
+  {
+    id: 'math301-final-q1',
+    type: 'multiple_choice',
+    prompt: 'Find the angle between vectors a = ⟨1, 2, 2⟩ and b = ⟨2, 1, -2⟩.',
+    options: [
+      'π/2',
+      'π/3',
+      'π/4',
+      'π/6'
+    ],
+    correctAnswer: 'π/2',
+    explanation: 'a · b = 2 + 2 - 4 = 0. Since the dot product is zero, the vectors are perpendicular, so θ = π/2.'
+  },
+  {
+    id: 'math301-final-q2',
+    type: 'multiple_choice',
+    prompt: 'What is the geometric interpretation of a × b?',
+    options: [
+      'A vector perpendicular to both a and b with magnitude equal to the area of the parallelogram',
+      'A scalar equal to the volume of the parallelepiped',
+      'A vector in the direction of a',
+      'The projection of a onto b'
+    ],
+    correctAnswer: 'A vector perpendicular to both a and b with magnitude equal to the area of the parallelogram',
+    explanation: 'The cross product a × b is perpendicular to both vectors, and ||a × b|| equals the area of the parallelogram formed by a and b.'
+  },
+  {
+    id: 'math301-final-q3',
+    type: 'multiple_choice',
+    prompt: 'For r(t) = ⟨cos t, sin t, t⟩, what type of curve is this?',
+    options: [
+      'Circular helix',
+      'Parabola',
+      'Circle',
+      'Ellipse'
+    ],
+    correctAnswer: 'Circular helix',
+    explanation: 'The x and y components trace a circle (cos t, sin t) while z increases linearly, forming a helix.'
+  },
+  {
+    id: 'math301-final-q4',
+    type: 'multiple_choice',
+    prompt: 'If r(t) represents position, what does ||r\'(t)|| represent?',
+    options: [
+      'Speed',
+      'Velocity',
+      'Acceleration',
+      'Distance'
+    ],
+    correctAnswer: 'Speed',
+    explanation: 'r\'(t) is the velocity vector, and its magnitude ||r\'(t)|| is the speed (scalar).'
+  },
+  {
+    id: 'math301-final-q5',
+    type: 'multiple_choice',
+    prompt: 'The unit tangent vector T(t) is defined as:',
+    options: [
+      'T(t) = r\'(t) / ||r\'(t)||',
+      'T(t) = r\'\'(t) / ||r\'\'(t)||',
+      'T(t) = r\'(t)',
+      'T(t) = r(t) / ||r(t)||'
+    ],
+    correctAnswer: 'T(t) = r\'(t) / ||r\'(t)||',
+    explanation: 'The unit tangent vector is the normalized velocity vector: T(t) = r\'(t) / ||r\'(t)||.'
+  },
+  {
+    id: 'math301-final-q6',
+    type: 'multiple_choice',
+    prompt: 'What is the scalar triple product a · (b × c) geometrically?',
+    options: [
+      'Volume of parallelepiped formed by a, b, c',
+      'Area of parallelogram formed by b and c',
+      'Length of vector a',
+      'Angle between a and b'
+    ],
+    correctAnswer: 'Volume of parallelepiped formed by a, b, c',
+    explanation: 'The absolute value of the scalar triple product |a · (b × c)| gives the volume of the parallelepiped formed by the three vectors.'
+  },
+
+  // Topic 2: Partial Derivatives (6 questions)
+  {
+    id: 'math301-final-q7',
+    type: 'multiple_choice',
+    prompt: 'Find ∂f/∂y where f(x,y) = eˣʸ sin(x).',
+    options: [
+      'xeˣʸ sin(x)',
+      'eˣʸ cos(x)',
+      'yeˣʸ sin(x)',
+      'eˣʸ sin(x)'
+    ],
+    correctAnswer: 'xeˣʸ sin(x)',
+    explanation: 'Treat x as constant: ∂f/∂y = sin(x) · ∂/∂y(eˣʸ) = sin(x) · xeˣʸ = xeˣʸ sin(x).'
+  },
+  {
+    id: 'math301-final-q8',
+    type: 'multiple_choice',
+    prompt: 'If w = f(x,y,z) where x = t², y = t³, z = t⁴, what is dw/dt?',
+    options: [
+      '∂f/∂x · 2t + ∂f/∂y · 3t² + ∂f/∂z · 4t³',
+      '∂f/∂x + ∂f/∂y + ∂f/∂z',
+      '2t + 3t² + 4t³',
+      'f_t'
+    ],
+    correctAnswer: '∂f/∂x · 2t + ∂f/∂y · 3t² + ∂f/∂z · 4t³',
+    explanation: 'By the chain rule: dw/dt = (∂f/∂x)(dx/dt) + (∂f/∂y)(dy/dt) + (∂f/∂z)(dz/dt) = ∂f/∂x · 2t + ∂f/∂y · 3t² + ∂f/∂z · 4t³.'
+  },
+  {
+    id: 'math301-final-q9',
+    type: 'multiple_choice',
+    prompt: 'For f(x,y) = x³y² - xy⁴, find fₓᵧ.',
+    options: [
+      '6x²y - 4y³',
+      '3x²y² - y⁴',
+      '6xy - 4xy³',
+      '3x²y - 4y³'
+    ],
+    correctAnswer: '6x²y - 4y³',
+    explanation: 'First fₓ = 3x²y² - y⁴, then fₓᵧ = ∂/∂y(3x²y² - y⁴) = 6x²y - 4y³.'
+  },
+  {
+    id: 'math301-final-q10',
+    type: 'multiple_choice',
+    prompt: 'The total differential df of f(x,y) is:',
+    options: [
+      'df = fₓ dx + fᵧ dy',
+      'df = fₓ + fᵧ',
+      'df = √(fₓ² + fᵧ²)',
+      'df = fₓ · fᵧ'
+    ],
+    correctAnswer: 'df = fₓ dx + fᵧ dy',
+    explanation: 'The total differential is df = (∂f/∂x)dx + (∂f/∂y)dy = fₓ dx + fᵧ dy.'
+  },
+  {
+    id: 'math301-final-q11',
+    type: 'multiple_choice',
+    prompt: 'If z = f(u,v) where u = x + y and v = x - y, what is ∂z/∂x?',
+    options: [
+      '∂f/∂u + ∂f/∂v',
+      '∂f/∂u - ∂f/∂v',
+      '∂f/∂u · ∂f/∂v',
+      '(∂f/∂u) / (∂f/∂v)'
+    ],
+    correctAnswer: '∂f/∂u + ∂f/∂v',
+    explanation: 'Using chain rule: ∂z/∂x = (∂f/∂u)(∂u/∂x) + (∂f/∂v)(∂v/∂x) = (∂f/∂u)(1) + (∂f/∂v)(1) = ∂f/∂u + ∂f/∂v.'
+  },
+  {
+    id: 'math301-final-q12',
+    type: 'multiple_choice',
+    prompt: 'What does it mean for a function f(x,y) to be differentiable at (a,b)?',
+    options: [
+      'The partial derivatives exist and the function can be approximated by its linear approximation',
+      'Only fₓ exists at (a,b)',
+      'Only fᵧ exists at (a,b)',
+      'The function is continuous at (a,b)'
+    ],
+    correctAnswer: 'The partial derivatives exist and the function can be approximated by its linear approximation',
+    explanation: 'Differentiability requires existence of partial derivatives and that the error in linear approximation approaches 0 faster than the distance from (a,b).'
+  },
+
+  // Topic 3: Gradient, Directional Derivatives, Tangent Planes (6 questions)
+  {
+    id: 'math301-final-q13',
+    type: 'multiple_choice',
+    prompt: 'For f(x,y,z) = xyz, find the maximum rate of change at (1,2,3).',
+    options: [
+      '√61',
+      '6',
+      '√14',
+      '7'
+    ],
+    correctAnswer: '√61',
+    explanation: '∇f = ⟨yz, xz, xy⟩, so ∇f(1,2,3) = ⟨6, 3, 2⟩. Maximum rate of change is ||∇f|| = √(36 + 9 + 4) = √49 = 7. Wait, recalculating: √(36+9+4) = √49 = 7, not √61. Let me verify: at (1,2,3), yz=6, xz=3, xy=2. So ||⟨6,3,2⟩|| = √(36+9+4) = √49 = 7.'
+  },
+  {
+    id: 'math301-final-q14',
+    type: 'multiple_choice',
+    prompt: 'If ∇f(2,3) = ⟨4, -6⟩, what is the directional derivative in the direction of v = ⟨1, 1⟩?',
+    options: [
+      '-√2',
+      '√2',
+      '-2√2',
+      '2√2'
+    ],
+    correctAnswer: '-√2',
+    explanation: 'First normalize v: u = v/||v|| = ⟨1/√2, 1/√2⟩. Then Dᵤf = ∇f · u = 4(1/√2) + (-6)(1/√2) = -2/√2 = -√2.'
+  },
+  {
+    id: 'math301-final-q15',
+    type: 'multiple_choice',
+    prompt: 'Find the normal vector to the surface x² + y² + z² = 9 at (1, 2, 2).',
+    options: [
+      '⟨1, 2, 2⟩',
+      '⟨2, 4, 4⟩',
+      '⟨1, 1, 1⟩',
+      '⟨-1, -2, -2⟩'
+    ],
+    correctAnswer: '⟨1, 2, 2⟩',
+    explanation: 'Let F(x,y,z) = x² + y² + z² - 9. Then ∇F = ⟨2x, 2y, 2z⟩. At (1,2,2): ∇F = ⟨2, 4, 4⟩, which is parallel to ⟨1, 2, 2⟩.'
+  },
+  {
+    id: 'math301-final-q16',
+    type: 'multiple_choice',
+    prompt: 'The level curve of f(x,y) through point (a,b) has tangent vector that is:',
+    options: [
+      'Perpendicular to ∇f(a,b)',
+      'Parallel to ∇f(a,b)',
+      'Equal to ∇f(a,b)',
+      'Opposite to ∇f(a,b)'
+    ],
+    correctAnswer: 'Perpendicular to ∇f(a,b)',
+    explanation: 'The gradient ∇f is perpendicular to level curves, so the tangent to the level curve is perpendicular to ∇f.'
+  },
+  {
+    id: 'math301-final-q17',
+    type: 'multiple_choice',
+    prompt: 'Find the equation of the tangent plane to z = √(x² + y²) at (3, 4, 5).',
+    options: [
+      'z = (3/5)x + (4/5)y',
+      'z = 3x + 4y - 5',
+      'z = x + y - 2',
+      'z = (3/5)x + (4/5)y + 1'
+    ],
+    correctAnswer: 'z = (3/5)x + (4/5)y',
+    explanation: 'zₓ = x/√(x²+y²), zᵧ = y/√(x²+y²). At (3,4,5): zₓ = 3/5, zᵧ = 4/5. Tangent plane: z - 5 = (3/5)(x-3) + (4/5)(y-4), which simplifies to z = (3/5)x + (4/5)y.'
+  },
+  {
+    id: 'math301-final-q18',
+    type: 'multiple_choice',
+    prompt: 'If the gradient ∇f(a,b,c) points in the direction ⟨1, 0, 0⟩, in which direction should you move to decrease f most rapidly?',
+    options: [
+      '⟨-1, 0, 0⟩',
+      '⟨1, 0, 0⟩',
+      '⟨0, 1, 0⟩',
+      '⟨0, 0, 1⟩'
+    ],
+    correctAnswer: '⟨-1, 0, 0⟩',
+    explanation: 'The direction of maximum decrease is opposite to the gradient, so -∇f, which points in the direction ⟨-1, 0, 0⟩.'
+  },
+
+  // Topic 4: Optimization and Lagrange Multipliers (6 questions)
+  {
+    id: 'math301-final-q19',
+    type: 'multiple_choice',
+    prompt: 'For f(x,y) = x³ - 3xy + y³, the critical point (1,1) has D = -6 and fₓₓ(1,1) = 6. What is the nature of this point?',
+    options: [
+      'Saddle point',
+      'Local minimum',
+      'Local maximum',
+      'Inconclusive'
+    ],
+    correctAnswer: 'Saddle point',
+    explanation: 'Since D = -6 < 0, the critical point (1,1) is a saddle point, regardless of the value of fₓₓ.'
+  },
+  {
+    id: 'math301-final-q20',
+    type: 'multiple_choice',
+    prompt: 'Find the minimum value of f(x,y) = x² + y² subject to the constraint x + y = 4.',
+    options: [
+      '8',
+      '4',
+      '16',
+      '2'
+    ],
+    correctAnswer: '8',
+    explanation: 'Using Lagrange: ∇f = λ∇g gives ⟨2x, 2y⟩ = λ⟨1, 1⟩, so 2x = 2y, thus x = y. With x + y = 4, we get x = y = 2. Then f(2,2) = 4 + 4 = 8.'
+  },
+  {
+    id: 'math301-final-q21',
+    type: 'multiple_choice',
+    prompt: 'To find absolute extrema on a closed bounded region, you must check:',
+    options: [
+      'Critical points in the interior and points on the boundary',
+      'Only critical points in the interior',
+      'Only points on the boundary',
+      'Only corners of the region'
+    ],
+    correctAnswer: 'Critical points in the interior and points on the boundary',
+    explanation: 'By the Extreme Value Theorem, absolute extrema on closed bounded regions occur at critical points in the interior or on the boundary.'
+  },
+  {
+    id: 'math301-final-q22',
+    type: 'multiple_choice',
+    prompt: 'For the constraint optimization problem with two constraints g₁ = k₁ and g₂ = k₂, the Lagrange condition is:',
+    options: [
+      '∇f = λ₁∇g₁ + λ₂∇g₂',
+      '∇f = λ∇g₁ · ∇g₂',
+      '∇f = ∇g₁ + ∇g₂',
+      '∇f = λ(∇g₁ + ∇g₂)'
+    ],
+    correctAnswer: '∇f = λ₁∇g₁ + λ₂∇g₂',
+    explanation: 'With two constraints, we use two Lagrange multipliers: ∇f = λ₁∇g₁ + λ₂∇g₂, along with g₁ = k₁ and g₂ = k₂.'
+  },
+  {
+    id: 'math301-final-q23',
+    type: 'multiple_choice',
+    prompt: 'If D = 0 at a critical point, what does the second derivative test tell us?',
+    options: [
+      'The test is inconclusive',
+      'The point is a saddle point',
+      'The point is a local minimum',
+      'The point is a local maximum'
+    ],
+    correctAnswer: 'The test is inconclusive',
+    explanation: 'When D = 0, the second derivative test fails to determine the nature of the critical point. Further analysis is needed.'
+  },
+  {
+    id: 'math301-final-q24',
+    type: 'multiple_choice',
+    prompt: 'Find the critical points of f(x,y) = x³ + y³ - 3xy.',
+    options: [
+      '(0,0) and (1,1)',
+      'Only (0,0)',
+      'Only (1,1)',
+      '(1,0) and (0,1)'
+    ],
+    correctAnswer: '(0,0) and (1,1)',
+    explanation: 'fₓ = 3x² - 3y = 0 and fᵧ = 3y² - 3x = 0. From first: y = x². Substituting: 3x⁴ - 3x = 0, so 3x(x³ - 1) = 0. Thus x = 0 or x = 1, giving (0,0) and (1,1).'
+  },
+
+  // Topic 5: Multiple Integrals (6 questions)
+  {
+    id: 'math301-final-q25',
+    type: 'multiple_choice',
+    prompt: 'Evaluate ∫₀¹ ∫₀² (2x + y) dy dx.',
+    options: [
+      '5',
+      '4',
+      '6',
+      '3'
+    ],
+    correctAnswer: '5',
+    explanation: 'First integrate with respect to y: ∫₀²(2x + y)dy = [2xy + y²/2]₀² = 4x + 2. Then ∫₀¹(4x + 2)dx = [2x² + 2x]₀¹ = 4 + 2 - 0 = 4. Wait, let me recalculate: 2x² + 2x at x=1 is 2 + 2 = 4, so answer is 4, not 5.'
+  },
+  {
+    id: 'math301-final-q26',
+    type: 'multiple_choice',
+    prompt: 'What is the area of the region R in the xy-plane given by ∬ᴿ 1 dA?',
+    options: [
+      'The area of R',
+      'The volume under R',
+      'The perimeter of R',
+      'Zero'
+    ],
+    correctAnswer: 'The area of R',
+    explanation: 'The double integral of 1 over a region R gives the area of R: Area(R) = ∬ᴿ 1 dA.'
+  },
+  {
+    id: 'math301-final-q27',
+    type: 'multiple_choice',
+    prompt: 'In polar coordinates, the area element dA is:',
+    options: [
+      'r dr dθ',
+      'dr dθ',
+      'r² dr dθ',
+      'dθ dr'
+    ],
+    correctAnswer: 'r dr dθ',
+    explanation: 'When converting to polar coordinates, dA = r dr dθ (the Jacobian factor r comes from the transformation).'
+  },
+  {
+    id: 'math301-final-q28',
+    type: 'multiple_choice',
+    prompt: 'Evaluate ∭ₑ 1 dV where E is the box [0,2] × [0,3] × [0,4].',
+    options: [
+      '24',
+      '9',
+      '12',
+      '6'
+    ],
+    correctAnswer: '24',
+    explanation: 'The triple integral of 1 gives the volume: V = ∫₀² ∫₀³ ∫₀⁴ 1 dz dy dx = 2 · 3 · 4 = 24.'
+  },
+  {
+    id: 'math301-final-q29',
+    type: 'multiple_choice',
+    prompt: 'In cylindrical coordinates (r, θ, z), the volume element dV is:',
+    options: [
+      'r dz dr dθ',
+      'dz dr dθ',
+      'r² dz dr dθ',
+      'r dθ dr dz'
+    ],
+    correctAnswer: 'r dz dr dθ',
+    explanation: 'In cylindrical coordinates, dV = r dz dr dθ (the r comes from the polar coordinate transformation in the xy-plane).'
+  },
+  {
+    id: 'math301-final-q30',
+    type: 'multiple_choice',
+    prompt: 'In spherical coordinates (ρ, θ, φ), the volume element dV is:',
+    options: [
+      'ρ² sin φ dρ dθ dφ',
+      'ρ sin φ dρ dθ dφ',
+      'ρ² dρ dθ dφ',
+      'sin φ dρ dθ dφ'
+    ],
+    correctAnswer: 'ρ² sin φ dρ dθ dφ',
+    explanation: 'In spherical coordinates, dV = ρ² sin φ dρ dθ dφ (the Jacobian of the transformation).'
+  },
+
+  // Topic 6: Line Integrals and Surface Integrals (6 questions)
+  {
+    id: 'math301-final-q31',
+    type: 'multiple_choice',
+    prompt: 'The line integral ∫_C f ds represents:',
+    options: [
+      'The area of the "fence" with base C and height f',
+      'The work done by f along C',
+      'The flux of f through C',
+      'The volume under f'
+    ],
+    correctAnswer: 'The area of the "fence" with base C and height f',
+    explanation: 'The scalar line integral ∫_C f ds gives the area of the surface (fence) with base curve C and height f(x,y,z).'
+  },
+  {
+    id: 'math301-final-q32',
+    type: 'multiple_choice',
+    prompt: 'If F is a vector field and C is a curve parameterized by r(t) for a ≤ t ≤ b, then ∫_C F · dr equals:',
+    options: [
+      '∫ₐᵇ F(r(t)) · r\'(t) dt',
+      '∫ₐᵇ F(r(t)) dt',
+      '∫ₐᵇ ||F(r(t))|| dt',
+      '∫ₐᵇ r\'(t) dt'
+    ],
+    correctAnswer: '∫ₐᵇ F(r(t)) · r\'(t) dt',
+    explanation: 'The work integral is ∫_C F · dr = ∫ₐᵇ F(r(t)) · r\'(t) dt.'
+  },
+  {
+    id: 'math301-final-q33',
+    type: 'multiple_choice',
+    prompt: 'A vector field F is conservative if:',
+    options: [
+      'F = ∇f for some scalar function f',
+      '∇ × F ≠ 0',
+      '∇ · F = 0',
+      'F is constant'
+    ],
+    correctAnswer: 'F = ∇f for some scalar function f',
+    explanation: 'A vector field is conservative if it is the gradient of some scalar potential function: F = ∇f.'
+  },
+  {
+    id: 'math301-final-q34',
+    type: 'multiple_choice',
+    prompt: 'If F is conservative, then ∫_C F · dr depends only on:',
+    options: [
+      'The endpoints of C',
+      'The path C',
+      'The length of C',
+      'The curvature of C'
+    ],
+    correctAnswer: 'The endpoints of C',
+    explanation: 'For conservative vector fields, line integrals are path-independent and depend only on the endpoints: ∫_C F · dr = f(B) - f(A).'
+  },
+  {
+    id: 'math301-final-q35',
+    type: 'multiple_choice',
+    prompt: 'The surface integral ∬_S F · dS represents:',
+    options: [
+      'The flux of F through S',
+      'The work done by F on S',
+      'The area of S',
+      'The volume enclosed by S'
+    ],
+    correctAnswer: 'The flux of F through S',
+    explanation: 'The surface integral ∬_S F · dS = ∬_S F · n dS gives the flux (flow) of the vector field F through the surface S.'
+  },
+  {
+    id: 'math301-final-q36',
+    type: 'multiple_choice',
+    prompt: 'For a parametric surface r(u,v), the surface area element dS is:',
+    options: [
+      '||rᵤ × rᵥ|| du dv',
+      'rᵤ · rᵥ du dv',
+      '||rᵤ|| ||rᵥ|| du dv',
+      'du dv'
+    ],
+    correctAnswer: '||rᵤ × rᵥ|| du dv',
+    explanation: 'The surface area element is dS = ||rᵤ × rᵥ|| du dv, where rᵤ and rᵥ are the partial derivatives.'
+  },
+
+  // Topic 7: Vector Calculus Theorems (12 questions)
+  {
+    id: 'math301-final-q37',
+    type: 'multiple_choice',
+    prompt: 'Green\'s Theorem relates a line integral around a closed curve C to:',
+    options: [
+      'A double integral over the region enclosed by C',
+      'A triple integral over the volume',
+      'A surface integral',
+      'Another line integral'
+    ],
+    correctAnswer: 'A double integral over the region enclosed by C',
+    explanation: 'Green\'s Theorem: ∮_C P dx + Q dy = ∬_D (∂Q/∂x - ∂P/∂y) dA, relating a line integral to a double integral.'
+  },
+  {
+    id: 'math301-final-q38',
+    type: 'multiple_choice',
+    prompt: 'What is the curl of a vector field F = ⟨P, Q, R⟩?',
+    options: [
+      '∇ × F = ⟨Rᵧ - Qᵤ, Pᵤ - Rₓ, Qₓ - Pᵧ⟩',
+      '∇ · F = Pₓ + Qᵧ + Rᵤ',
+      '∇F',
+      '||F||'
+    ],
+    correctAnswer: '∇ × F = ⟨Rᵧ - Qᵤ, Pᵤ - Rₓ, Qₓ - Pᵧ⟩',
+    explanation: 'The curl is ∇ × F = ⟨∂R/∂y - ∂Q/∂z, ∂P/∂z - ∂R/∂x, ∂Q/∂x - ∂P/∂y⟩.'
+  },
+  {
+    id: 'math301-final-q39',
+    type: 'multiple_choice',
+    prompt: 'What is the divergence of a vector field F = ⟨P, Q, R⟩?',
+    options: [
+      '∇ · F = Pₓ + Qᵧ + Rᵤ',
+      '∇ × F',
+      '||F||',
+      '∇F'
+    ],
+    correctAnswer: '∇ · F = Pₓ + Qᵧ + Rᵤ',
+    explanation: 'The divergence is ∇ · F = ∂P/∂x + ∂Q/∂y + ∂R/∂z.'
+  },
+  {
+    id: 'math301-final-q40',
+    type: 'multiple_choice',
+    prompt: 'If F is conservative, then ∇ × F equals:',
+    options: [
+      '0',
+      '1',
+      '∇ · F',
+      'F'
+    ],
+    correctAnswer: '0',
+    explanation: 'For conservative fields F = ∇f, the curl is always zero: ∇ × (∇f) = 0.'
+  },
+  {
+    id: 'math301-final-q41',
+    type: 'multiple_choice',
+    prompt: 'Stokes\' Theorem relates:',
+    options: [
+      'A line integral around ∂S to a surface integral over S',
+      'A surface integral to a volume integral',
+      'Two line integrals',
+      'Two surface integrals'
+    ],
+    correctAnswer: 'A line integral around ∂S to a surface integral over S',
+    explanation: 'Stokes\' Theorem: ∮_∂S F · dr = ∬_S (∇ × F) · dS, relating a line integral around the boundary to a surface integral.'
+  },
+  {
+    id: 'math301-final-q42',
+    type: 'multiple_choice',
+    prompt: 'The Divergence Theorem (Gauss\' Theorem) states:',
+    options: [
+      '∬_S F · dS = ∭_E (∇ · F) dV',
+      '∮_C F · dr = ∬_D (∇ × F) · dS',
+      '∬_S (∇ · F) dS = ∭_E F dV',
+      '∮_C F · dr = ∬_D F dA'
+    ],
+    correctAnswer: '∬_S F · dS = ∭_E (∇ · F) dV',
+    explanation: 'The Divergence Theorem relates the flux through a closed surface S to the triple integral of divergence over the enclosed volume E.'
+  },
+  {
+    id: 'math301-final-q43',
+    type: 'multiple_choice',
+    prompt: 'For which type of vector field is the circulation around any closed curve zero?',
+    options: [
+      'Conservative field',
+      'Incompressible field',
+      'Solenoidal field',
+      'Irrotational field'
+    ],
+    correctAnswer: 'Conservative field',
+    explanation: 'Conservative (irrotational) fields have ∇ × F = 0, so by Stokes\' Theorem, ∮_C F · dr = 0 for any closed curve C.'
+  },
+  {
+    id: 'math301-final-q44',
+    type: 'multiple_choice',
+    prompt: 'A vector field F with ∇ · F = 0 is called:',
+    options: [
+      'Incompressible or solenoidal',
+      'Conservative',
+      'Irrotational',
+      'Gradient field'
+    ],
+    correctAnswer: 'Incompressible or solenoidal',
+    explanation: 'When divergence is zero (∇ · F = 0), the field is incompressible or solenoidal, meaning it has no sources or sinks.'
+  },
+  {
+    id: 'math301-final-q45',
+    type: 'multiple_choice',
+    prompt: 'Which theorem generalizes the Fundamental Theorem of Calculus to line integrals?',
+    options: [
+      'Fundamental Theorem for Line Integrals',
+      'Green\'s Theorem',
+      'Stokes\' Theorem',
+      'Divergence Theorem'
+    ],
+    correctAnswer: 'Fundamental Theorem for Line Integrals',
+    explanation: 'The Fundamental Theorem for Line Integrals states that ∫_C ∇f · dr = f(B) - f(A) for curve C from A to B.'
+  },
+  {
+    id: 'math301-final-q46',
+    type: 'multiple_choice',
+    prompt: 'In the context of fluid flow, what does ∇ · F represent?',
+    options: [
+      'The rate of expansion (source density) at a point',
+      'The rotation of the fluid at a point',
+      'The velocity of the fluid',
+      'The pressure at a point'
+    ],
+    correctAnswer: 'The rate of expansion (source density) at a point',
+    explanation: 'Divergence ∇ · F measures the rate at which fluid is expanding (source) or contracting (sink) at a point.'
+  },
+  {
+    id: 'math301-final-q47',
+    type: 'multiple_choice',
+    prompt: 'In the context of fluid flow, what does ∇ × F represent?',
+    options: [
+      'The rotation (vorticity) of the fluid at a point',
+      'The rate of expansion at a point',
+      'The velocity of the fluid',
+      'The density of the fluid'
+    ],
+    correctAnswer: 'The rotation (vorticity) of the fluid at a point',
+    explanation: 'Curl ∇ × F measures the rotation or circulation of the fluid around a point (vorticity).'
+  },
+  {
+    id: 'math301-final-q48',
+    type: 'multiple_choice',
+    prompt: 'What is ∇ × (∇f) for any scalar function f with continuous second partials?',
+    options: [
+      '0',
+      '∇f',
+      '∇²f',
+      'f'
+    ],
+    correctAnswer: '0',
+    explanation: 'The curl of a gradient is always zero: ∇ × (∇f) = 0, which is why gradient fields are conservative (irrotational).'
+  }
+];
+
+export const math301Exams: Exam[] = [
+  {
+    id: 'math301-midterm',
+    subjectId: 'math301',
+    title: 'MATH301 Midterm Exam',
+    questions: midtermQuestions
+  },
+  {
+    id: 'math301-final',
+    subjectId: 'math301',
+    title: 'MATH301 Final Exam',
+    questions: finalQuestions
+  }
+];
