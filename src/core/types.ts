@@ -249,9 +249,15 @@ export interface ProjectSubmission {
 // Study Plan Types
 export type StudyPace = 'standard' | 'accelerated' | 'intensive';
 
+export interface SubjectScheduleOverride {
+  customStartDate?: string;      // ISO date string, overrides calculated start
+  customDurationWeeks?: number;  // Override pace-based duration
+}
+
 export interface StudyPlanSettings {
   startDate: string;  // ISO date string
   pace: StudyPace;
+  subjectOverrides?: Record<string, SubjectScheduleOverride>;
 }
 
 // Settings Types

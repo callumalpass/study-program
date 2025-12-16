@@ -1,4 +1,4 @@
-import type { Subject, StudyPlanSettings } from '@/core/types';
+import type { Subject, StudyPlanSettings, SubjectScheduleOverride } from '@/core/types';
 import { progressStorage } from '@/core/storage';
 import { TimelineGantt } from '@/components/timeline/TimelineGantt';
 import { createTimelinePlanner } from '@/components/timeline/TimelinePlanner';
@@ -63,7 +63,13 @@ function renderTimeline(
 ): void {
   const userProgress = progressStorage.getProgress();
   const startDate = new Date(studyPlan.startDate);
-  const schedule = calculateSchedule(subjects, userProgress, startDate, studyPlan.pace);
+  const schedule = calculateSchedule(
+    subjects,
+    userProgress,
+    startDate,
+    studyPlan.pace,
+    studyPlan.subjectOverrides
+  );
   const estimatedEnd = getEstimatedCompletionDate(schedule);
 
   // Calculate stats
@@ -141,7 +147,14 @@ function renderTimeline(
 
   // Render Gantt chart
   const ganttContainer = container.querySelector('#gantt-container') as HTMLElement;
-  const gantt = new TimelineGantt(subjects, userProgress, startDate, studyPlan.pace);
+  const gantt = new TimelineGantt(subjects, userProgress, startDate, studyPlan.pace, {
+    subjectOverrides: studyPlan.subjectOverrides,
+    onSubjectMoved: (subjectId: string, newStartDate: Date) => {
+      saveSubjectOverride(subjectId, newStartDate, studyPlan);
+      // Re-render the timeline with the new overrides
+      renderTimelinePage(container, subjects);
+    },
+  });
   ganttContainer.appendChild(gantt.render());
 
   // Edit plan button
@@ -182,6 +195,33 @@ function saveStudyPlan(settings: StudyPlanSettings): void {
     ...currentSettings,
     studyPlan: settings,
   });
+}
+
+/**
+ * Save a subject schedule override (when dragged)
+ */
+function saveSubjectOverride(
+  subjectId: string,
+  newStartDate: Date,
+  currentPlan: StudyPlanSettings
+): void {
+  const existingOverrides = currentPlan.subjectOverrides || {};
+  const existingOverride = existingOverrides[subjectId] || {};
+
+  const updatedOverrides: Record<string, SubjectScheduleOverride> = {
+    ...existingOverrides,
+    [subjectId]: {
+      ...existingOverride,
+      customStartDate: newStartDate.toISOString(),
+    },
+  };
+
+  const updatedPlan: StudyPlanSettings = {
+    ...currentPlan,
+    subjectOverrides: updatedOverrides,
+  };
+
+  saveStudyPlan(updatedPlan);
 }
 
 /**

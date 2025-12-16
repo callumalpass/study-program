@@ -1,10 +1,11 @@
-import type { Subject, UserProgress, StudyPace } from '@/core/types';
+import type { Subject, UserProgress, StudyPace, SubjectScheduleOverride } from '@/core/types';
 import { navigateToSubject } from '@/core/router';
 import {
   calculateSchedule,
   getTimelineBounds,
   formatMonthYear,
   daysBetween,
+  xPositionToDate,
   type ScheduledSubject,
 } from './timeline-utils';
 
@@ -26,6 +27,20 @@ function getThemeColors() {
   };
 }
 
+export interface TimelineGanttOptions {
+  onSubjectMoved?: (subjectId: string, newStartDate: Date) => void;
+  subjectOverrides?: Record<string, SubjectScheduleOverride>;
+}
+
+interface DragState {
+  subjectId: string;
+  startX: number;
+  originalDate: Date;
+  barElement: SVGGElement;
+  ghostBar: SVGRectElement | null;
+  constraintLine: SVGLineElement | null;
+}
+
 export class TimelineGantt {
   private container: HTMLElement;
   private subjects: Subject[];
@@ -33,9 +48,15 @@ export class TimelineGantt {
   private startDate: Date;
   private pace: StudyPace;
   private schedule: Map<string, ScheduledSubject>;
+  private bounds: { start: Date; end: Date } = { start: new Date(), end: new Date() };
   private colors: ReturnType<typeof getThemeColors> | null = null;
   private svg: SVGSVGElement | null = null;
   private tooltip: HTMLElement | null = null;
+  private options: TimelineGanttOptions;
+
+  // Drag state
+  private dragState: DragState | null = null;
+  private isDragging = false;
 
   // Configuration
   private readonly ROW_HEIGHT = 36;
@@ -50,24 +71,36 @@ export class TimelineGantt {
     subjects: Subject[],
     userProgress: UserProgress,
     startDate: Date,
-    pace: StudyPace
+    pace: StudyPace,
+    options: TimelineGanttOptions = {}
   ) {
     this.subjects = subjects;
     this.userProgress = userProgress;
     this.startDate = startDate;
     this.pace = pace;
-    this.schedule = calculateSchedule(subjects, userProgress, startDate, pace);
+    this.options = options;
+    this.schedule = calculateSchedule(
+      subjects,
+      userProgress,
+      startDate,
+      pace,
+      options.subjectOverrides
+    );
 
     this.container = document.createElement('div');
     this.container.className = 'timeline-gantt-container';
+
+    // Bind event handlers
+    this.handleMouseMove = this.handleMouseMove.bind(this);
+    this.handleMouseUp = this.handleMouseUp.bind(this);
   }
 
   public render(): HTMLElement {
     this.container.innerHTML = '';
     this.colors = getThemeColors();
 
-    const bounds = getTimelineBounds(this.schedule);
-    const totalDays = daysBetween(bounds.start, bounds.end) + 30; // Add buffer
+    this.bounds = getTimelineBounds(this.schedule);
+    const totalDays = daysBetween(this.bounds.start, this.bounds.end) + 30; // Add buffer
     const subjectCount = this.subjects.length;
 
     const svgWidth = this.LABEL_WIDTH + totalDays * this.DAY_WIDTH + this.PADDING * 2;
@@ -81,16 +114,25 @@ export class TimelineGantt {
 
     // Draw components
     this.drawBackground(svgWidth, svgHeight);
-    this.drawTimeAxis(bounds, totalDays);
-    this.drawSubjectRows(bounds);
-    this.drawTodayMarker(bounds, svgHeight);
+    this.drawTimeAxis(totalDays);
+    this.drawSubjectRows();
+    this.drawTodayMarker(svgHeight);
 
     this.container.appendChild(this.svg);
 
     // Create tooltip element
     this.createTooltip();
 
+    // Add global mouse event listeners for dragging
+    document.addEventListener('mousemove', this.handleMouseMove);
+    document.addEventListener('mouseup', this.handleMouseUp);
+
     return this.container;
+  }
+
+  public destroy(): void {
+    document.removeEventListener('mousemove', this.handleMouseMove);
+    document.removeEventListener('mouseup', this.handleMouseUp);
   }
 
   private drawBackground(width: number, height: number): void {
@@ -122,15 +164,15 @@ export class TimelineGantt {
     this.svg.appendChild(labelBg);
   }
 
-  private drawTimeAxis(bounds: { start: Date; end: Date }, totalDays: number): void {
+  private drawTimeAxis(totalDays: number): void {
     if (!this.svg || !this.colors) return;
 
     const startX = this.LABEL_WIDTH;
-    let currentDate = new Date(bounds.start);
+    let currentDate = new Date(this.bounds.start);
     currentDate.setDate(1); // Start from first of month
 
-    while (currentDate <= bounds.end) {
-      const daysFromStart = daysBetween(bounds.start, currentDate);
+    while (currentDate <= this.bounds.end) {
+      const daysFromStart = daysBetween(this.bounds.start, currentDate);
       const x = startX + Math.max(0, daysFromStart) * this.DAY_WIDTH;
 
       // Month label
@@ -159,7 +201,7 @@ export class TimelineGantt {
     }
   }
 
-  private drawSubjectRows(bounds: { start: Date; end: Date }): void {
+  private drawSubjectRows(): void {
     if (!this.svg || !this.colors) return;
 
     // Capture for use in forEach (TypeScript narrowing)
@@ -198,19 +240,19 @@ export class TimelineGantt {
       svg.appendChild(label);
 
       // Draw the bar
-      this.drawSubjectBar(scheduled, bounds, y);
+      this.drawSubjectBar(scheduled, y, index);
     });
   }
 
   private drawSubjectBar(
     scheduled: ScheduledSubject,
-    bounds: { start: Date; end: Date },
-    y: number
+    y: number,
+    rowIndex: number
   ): void {
     if (!this.svg || !this.colors) return;
 
     const startX = this.LABEL_WIDTH;
-    const daysFromStart = daysBetween(bounds.start, scheduled.startDate);
+    const daysFromStart = daysBetween(this.bounds.start, scheduled.startDate);
     const duration = daysBetween(scheduled.startDate, scheduled.endDate);
 
     const barX = startX + daysFromStart * this.DAY_WIDTH;
@@ -222,7 +264,9 @@ export class TimelineGantt {
 
     // Create bar group
     const group = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-    group.style.cursor = 'pointer';
+    group.style.cursor = this.options.onSubjectMoved ? 'grab' : 'pointer';
+    group.setAttribute('data-subject-id', scheduled.subject.id);
+    group.setAttribute('data-row-index', `${rowIndex}`);
 
     // Main bar
     const bar = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
@@ -233,7 +277,18 @@ export class TimelineGantt {
     bar.setAttribute('rx', `${this.BAR_RADIUS}`);
     bar.setAttribute('fill', barColor);
     bar.setAttribute('opacity', scheduled.status === 'blocked' ? '0.4' : '0.8');
+    bar.classList.add('timeline-bar-main');
     group.appendChild(bar);
+
+    // Override indicator (small dot)
+    if (scheduled.hasOverride) {
+      const indicator = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      indicator.setAttribute('cx', `${barX + 8}`);
+      indicator.setAttribute('cy', `${barY + 8}`);
+      indicator.setAttribute('r', '4');
+      indicator.setAttribute('fill', this.colors.warning);
+      group.appendChild(indicator);
+    }
 
     // Progress overlay for in-progress subjects
     if (scheduled.status === 'in-progress' && scheduled.completionPercentage > 0) {
@@ -269,11 +324,167 @@ export class TimelineGantt {
     }
 
     // Event handlers
-    group.addEventListener('click', () => navigateToSubject(scheduled.subject.id));
-    group.addEventListener('mouseenter', (e) => this.showTooltip(e, scheduled));
-    group.addEventListener('mouseleave', () => this.hideTooltip());
+    group.addEventListener('mousedown', (e) => this.handleMouseDown(e, scheduled, group, barY));
+    group.addEventListener('mouseenter', (e) => {
+      if (!this.isDragging) this.showTooltip(e, scheduled);
+    });
+    group.addEventListener('mouseleave', () => {
+      if (!this.isDragging) this.hideTooltip();
+    });
 
     this.svg.appendChild(group);
+  }
+
+  private handleMouseDown(
+    e: MouseEvent,
+    scheduled: ScheduledSubject,
+    group: SVGGElement,
+    barY: number
+  ): void {
+    // Only enable dragging if callback is provided
+    if (!this.options.onSubjectMoved) {
+      navigateToSubject(scheduled.subject.id);
+      return;
+    }
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    this.isDragging = true;
+    this.hideTooltip();
+
+    // Create ghost bar for dragging
+    const ghostBar = this.createGhostBar(scheduled, barY);
+
+    // Create constraint line (earliest valid date)
+    const constraintLine = this.createConstraintLine(scheduled, barY);
+
+    this.dragState = {
+      subjectId: scheduled.subject.id,
+      startX: e.clientX,
+      originalDate: new Date(scheduled.startDate),
+      barElement: group,
+      ghostBar,
+      constraintLine,
+    };
+
+    group.style.cursor = 'grabbing';
+    group.style.opacity = '0.5';
+  }
+
+  private createGhostBar(scheduled: ScheduledSubject, barY: number): SVGRectElement | null {
+    if (!this.svg || !this.colors) return null;
+
+    const daysFromStart = daysBetween(this.bounds.start, scheduled.startDate);
+    const duration = daysBetween(scheduled.startDate, scheduled.endDate);
+    const barX = this.LABEL_WIDTH + daysFromStart * this.DAY_WIDTH;
+    const barWidth = Math.max(duration * this.DAY_WIDTH, 10);
+
+    const ghostBar = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+    ghostBar.setAttribute('x', `${barX}`);
+    ghostBar.setAttribute('y', `${barY}`);
+    ghostBar.setAttribute('width', `${barWidth}`);
+    ghostBar.setAttribute('height', `${this.BAR_HEIGHT}`);
+    ghostBar.setAttribute('rx', `${this.BAR_RADIUS}`);
+    ghostBar.setAttribute('fill', this.colors.accentPrimary);
+    ghostBar.setAttribute('opacity', '0.6');
+    ghostBar.setAttribute('stroke', this.colors.accentPrimary);
+    ghostBar.setAttribute('stroke-width', '2');
+    ghostBar.style.pointerEvents = 'none';
+
+    this.svg.appendChild(ghostBar);
+    return ghostBar;
+  }
+
+  private createConstraintLine(scheduled: ScheduledSubject, barY: number): SVGLineElement | null {
+    if (!this.svg || !this.colors) return null;
+
+    const earliestDays = daysBetween(this.bounds.start, scheduled.earliestValidStart);
+    const x = this.LABEL_WIDTH + earliestDays * this.DAY_WIDTH;
+
+    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    line.setAttribute('x1', `${x}`);
+    line.setAttribute('y1', `${barY - 4}`);
+    line.setAttribute('x2', `${x}`);
+    line.setAttribute('y2', `${barY + this.BAR_HEIGHT + 4}`);
+    line.setAttribute('stroke', this.colors.warning);
+    line.setAttribute('stroke-width', '2');
+    line.setAttribute('stroke-dasharray', '4,2');
+    line.style.pointerEvents = 'none';
+
+    this.svg.appendChild(line);
+    return line;
+  }
+
+  private handleMouseMove(e: MouseEvent): void {
+    if (!this.isDragging || !this.dragState || !this.dragState.ghostBar) return;
+
+    const deltaX = e.clientX - this.dragState.startX;
+    const deltaDays = Math.round(deltaX / this.DAY_WIDTH);
+
+    // Calculate new date
+    const newDate = new Date(this.dragState.originalDate);
+    newDate.setDate(newDate.getDate() + deltaDays);
+
+    // Get scheduled subject for constraint checking
+    const scheduled = this.schedule.get(this.dragState.subjectId);
+    if (!scheduled) return;
+
+    // Calculate new bar position
+    const daysFromStart = daysBetween(this.bounds.start, newDate);
+    const duration = daysBetween(scheduled.startDate, scheduled.endDate);
+    const newBarX = this.LABEL_WIDTH + daysFromStart * this.DAY_WIDTH;
+
+    // Update ghost bar position
+    this.dragState.ghostBar.setAttribute('x', `${newBarX}`);
+
+    // Update ghost bar color based on constraint
+    if (newDate < scheduled.earliestValidStart && this.colors) {
+      this.dragState.ghostBar.setAttribute('stroke', this.colors.error);
+      this.dragState.ghostBar.setAttribute('fill', this.colors.error);
+    } else if (this.colors) {
+      this.dragState.ghostBar.setAttribute('stroke', this.colors.accentPrimary);
+      this.dragState.ghostBar.setAttribute('fill', this.colors.accentPrimary);
+    }
+  }
+
+  private handleMouseUp(e: MouseEvent): void {
+    if (!this.isDragging || !this.dragState) return;
+
+    const deltaX = e.clientX - this.dragState.startX;
+    const deltaDays = Math.round(deltaX / this.DAY_WIDTH);
+
+    // Calculate new date
+    let newDate = new Date(this.dragState.originalDate);
+    newDate.setDate(newDate.getDate() + deltaDays);
+
+    // Get scheduled subject for constraint checking
+    const scheduled = this.schedule.get(this.dragState.subjectId);
+
+    // Snap to earliest valid date if before constraint
+    if (scheduled && newDate < scheduled.earliestValidStart) {
+      newDate = new Date(scheduled.earliestValidStart);
+    }
+
+    // Clean up ghost elements
+    if (this.dragState.ghostBar) {
+      this.dragState.ghostBar.remove();
+    }
+    if (this.dragState.constraintLine) {
+      this.dragState.constraintLine.remove();
+    }
+
+    // Restore bar appearance
+    this.dragState.barElement.style.cursor = 'grab';
+    this.dragState.barElement.style.opacity = '1';
+
+    // Only fire callback if date actually changed (more than a few pixels)
+    if (Math.abs(deltaDays) > 0 && this.options.onSubjectMoved) {
+      this.options.onSubjectMoved(this.dragState.subjectId, newDate);
+    }
+
+    this.isDragging = false;
+    this.dragState = null;
   }
 
   private addStripePattern(id: string): void {
@@ -329,13 +540,13 @@ export class TimelineGantt {
     }
   }
 
-  private drawTodayMarker(bounds: { start: Date; end: Date }, height: number): void {
+  private drawTodayMarker(height: number): void {
     if (!this.svg || !this.colors) return;
 
     const today = new Date();
-    if (today < bounds.start || today > bounds.end) return;
+    if (today < this.bounds.start || today > this.bounds.end) return;
 
-    const daysFromStart = daysBetween(bounds.start, today);
+    const daysFromStart = daysBetween(this.bounds.start, today);
     const x = this.LABEL_WIDTH + daysFromStart * this.DAY_WIDTH;
 
     // Vertical line
@@ -389,11 +600,16 @@ export class TimelineGantt {
       blocked: 'Blocked (prerequisites needed)',
     };
 
+    const dragHint = this.options.onSubjectMoved ? '<div class="tooltip-hint">Drag to reschedule</div>' : '';
+    const overrideNote = scheduled.hasOverride ? '<div class="tooltip-override">Custom schedule</div>' : '';
+
     this.tooltip.innerHTML = `
       <div class="tooltip-title">${scheduled.subject.code}: ${scheduled.subject.title}</div>
       <div class="tooltip-dates">${startStr} - ${endStr}</div>
       <div class="tooltip-status status-${scheduled.status}">${statusLabels[scheduled.status]}</div>
       ${scheduled.status === 'in-progress' ? `<div class="tooltip-progress">${scheduled.completionPercentage}% complete</div>` : ''}
+      ${overrideNote}
+      ${dragHint}
     `;
 
     this.tooltip.style.display = 'block';

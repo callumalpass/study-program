@@ -1,4 +1,4 @@
-import type { Subject, UserProgress, StudyPace, SubjectStatus } from '@/core/types';
+import type { Subject, UserProgress, StudyPace, SubjectScheduleOverride } from '@/core/types';
 
 // Weeks per topic based on pace
 export const PACE_WEEKS_PER_TOPIC: Record<StudyPace, number> = {
@@ -26,6 +26,8 @@ export interface ScheduledSubject {
   status: 'completed' | 'in-progress' | 'scheduled' | 'blocked';
   completionPercentage: number;
   row: number;
+  hasOverride: boolean;
+  earliestValidStart: Date;  // Earliest date respecting prerequisites
 }
 
 /**
@@ -164,28 +166,49 @@ export function calculateSchedule(
   subjects: Subject[],
   userProgress: UserProgress,
   startDate: Date,
-  pace: StudyPace
+  pace: StudyPace,
+  subjectOverrides?: Record<string, SubjectScheduleOverride>
 ): Map<string, ScheduledSubject> {
   const schedule = new Map<string, ScheduledSubject>();
   const sortedSubjects = topologicalSort(subjects);
   const weeksPerTopic = PACE_WEEKS_PER_TOPIC[pace];
 
   for (const subject of sortedSubjects) {
+    const override = subjectOverrides?.[subject.id];
+
     // Calculate earliest possible start (after all prerequisites end)
-    let earliestStart = new Date(startDate);
+    let earliestValidStart = new Date(startDate);
 
     for (const prereqId of subject.prerequisites) {
       const prereq = schedule.get(prereqId);
-      if (prereq && prereq.endDate > earliestStart) {
-        earliestStart = new Date(prereq.endDate);
+      if (prereq && prereq.endDate > earliestValidStart) {
+        earliestValidStart = new Date(prereq.endDate);
       }
     }
 
-    // Calculate duration based on topic count
-    const topicCount = subject.topics.length || 7;
-    const durationDays = Math.ceil(topicCount * weeksPerTopic * 7);
+    // Use override start date if provided, otherwise use earliest valid
+    let actualStart: Date;
+    let hasOverride = false;
 
-    const endDate = new Date(earliestStart);
+    if (override?.customStartDate) {
+      actualStart = new Date(override.customStartDate);
+      hasOverride = true;
+    } else {
+      actualStart = new Date(earliestValidStart);
+    }
+
+    // Calculate duration based on topic count (or override)
+    const topicCount = subject.topics.length || 7;
+    let durationDays: number;
+
+    if (override?.customDurationWeeks) {
+      durationDays = Math.ceil(override.customDurationWeeks * 7);
+      hasOverride = true;
+    } else {
+      durationDays = Math.ceil(topicCount * weeksPerTopic * 7);
+    }
+
+    const endDate = new Date(actualStart);
     endDate.setDate(endDate.getDate() + durationDays);
 
     // Determine status and completion
@@ -194,20 +217,37 @@ export function calculateSchedule(
 
     // Simple row allocation: count overlapping subjects
     const row = Array.from(schedule.values()).filter(
-      s => s.startDate < endDate && s.endDate > earliestStart
+      s => s.startDate < endDate && s.endDate > actualStart
     ).length;
 
     schedule.set(subject.id, {
       subject,
-      startDate: earliestStart,
+      startDate: actualStart,
       endDate,
       status,
       completionPercentage,
       row,
+      hasOverride,
+      earliestValidStart,
     });
   }
 
   return schedule;
+}
+
+/**
+ * Calculate what date corresponds to an x-position on the timeline
+ */
+export function xPositionToDate(
+  x: number,
+  bounds: { start: Date; end: Date },
+  labelWidth: number,
+  dayWidth: number
+): Date {
+  const daysFromStart = Math.round((x - labelWidth) / dayWidth);
+  const date = new Date(bounds.start);
+  date.setDate(date.getDate() + daysFromStart);
+  return date;
 }
 
 /**
