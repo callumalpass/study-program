@@ -6,13 +6,15 @@ import {
   arePrerequisitesMet,
   startSubject,
   getSubjectProgressDetails,
+  getDependentSubjects,
+  getPrerequisiteSubjects,
 } from '@/core/progress';
 import {
   navigateToCurriculum,
   navigateToSubtopic,
 } from '@/core/router';
-import { Icons } from '../components/icons';
 import { ContentNavigator } from '../components/preact/ContentNavigator';
+import { renderSubjectDependencyGraph } from '../components/subject-dependency-graph';
 
 /**
  * Render the subject detail page
@@ -65,35 +67,22 @@ export function renderSubjectPage(
   }
 
   const subjectProgress = userProgress.subjects[subjectId];
-  const prerequisiteSubjects = subject.prerequisites.map(prereqId =>
-    subjects.find(s => s.id === prereqId)
-  ).filter(Boolean) as Subject[];
+  const prerequisiteSubjects = getPrerequisiteSubjects(subject, subjects);
+  const dependentSubjects = getDependentSubjects(subjectId, subjects);
 
   // Minimal page shell - header moved into ContentNavigator
+  const hasDependencies = prerequisiteSubjects.length > 0 || dependentSubjects.length > 0;
+
   container.innerHTML = `
     <div class="subject-page">
-      ${!prerequisitesMet ? `
-        <section class="prerequisites-warning">
-          <h3>Prerequisites Required</h3>
-          <p>Complete these subjects first:</p>
-          <ul class="prerequisite-list">
-            ${prerequisiteSubjects.map(prereq => {
-              const prereqProgress = userProgress.subjects[prereq.id];
-              const isCompleted = prereqProgress?.status === 'completed';
-              return `
-                <li class="${isCompleted ? 'completed' : ''}">
-                  <span class="checkbox">${isCompleted ? Icons.Check : Icons.StatusNotStarted}</span>
-                  ${prereq.title} (${prereq.code})
-                </li>
-              `;
-            }).join('')}
-          </ul>
-        </section>
-      ` : ''}
-
       <div id="content-navigator-root"></div>
     </div>
   `;
+
+  // Create dependency graph if there are dependencies
+  const dependencyGraph = hasDependencies
+    ? renderSubjectDependencyGraph(prerequisiteSubjects, subject, dependentSubjects, userProgress)
+    : null;
 
   // Mount ContentNavigator Preact component
   const navigatorRoot = container.querySelector('#content-navigator-root');
@@ -111,7 +100,10 @@ export function renderSubjectPage(
         projects: projects || [],
         onSubtopicView: (subtopicId: string) => {
           progressStorage.recordSubtopicView(subjectId, subtopicId);
-        }
+        },
+        dependencyGraph,
+        prerequisiteSubjects,
+        prerequisitesMet,
       }),
       navigatorRoot
     );

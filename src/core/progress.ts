@@ -406,6 +406,28 @@ export function isExerciseCompleted(
   return completion?.passed ?? false;
 }
 
+/**
+ * Get subjects that directly depend on this subject (immediate dependents only)
+ */
+export function getDependentSubjects(
+  subjectId: string,
+  subjects: Subject[]
+): Subject[] {
+  return subjects.filter(s => s.prerequisites.includes(subjectId));
+}
+
+/**
+ * Get the prerequisite subjects for a given subject (immediate only)
+ */
+export function getPrerequisiteSubjects(
+  subject: Subject,
+  subjects: Subject[]
+): Subject[] {
+  return subject.prerequisites
+    .map(prereqId => subjects.find(s => s.id === prereqId))
+    .filter((s): s is Subject => s !== undefined);
+}
+
 // Export convenience functions that use the singleton storage
 export const getProgress = () => progressStorage.getProgress();
 export const getSubjectProgress = (id: string) => progressStorage.getSubjectProgress(id);

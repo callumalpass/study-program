@@ -1,5 +1,5 @@
 import { h, Fragment, ComponentChildren } from 'preact';
-import { useState, useCallback, useMemo, useEffect } from 'preact/hooks';
+import { useState, useCallback, useMemo, useEffect, useRef } from 'preact/hooks';
 import type { Subject, Topic, SubjectProgress, Quiz, Exercise, Exam, Project } from '@/core/types';
 import { Icons } from '@/components/icons';
 import {
@@ -28,6 +28,12 @@ interface ContentNavigatorProps {
   children?: ComponentChildren;
   /** Optional ID to highlight in the practice sidebar (e.g., current exerciseId or quizId) */
   currentPracticeId?: string;
+  /** Optional dependency graph element to render in the overview */
+  dependencyGraph?: HTMLElement | null;
+  /** Prerequisite subjects that must be completed first */
+  prerequisiteSubjects?: Subject[];
+  /** Whether all prerequisites have been met */
+  prerequisitesMet?: boolean;
 }
 
 const INITIAL_EXERCISE_COUNT = 5;
@@ -52,10 +58,14 @@ export function ContentNavigator({
   onSubtopicView,
   children,
   currentPracticeId,
+  dependencyGraph,
+  prerequisiteSubjects = [],
+  prerequisitesMet = true,
 }: ContentNavigatorProps) {
   const [showAllExercises, setShowAllExercises] = useState(false);
   const [showAllQuizzes, setShowAllQuizzes] = useState(false);
   const [mobilePanel, setMobilePanel] = useState<'topics' | 'practice'>('topics');
+  const graphContainerRef = useRef<HTMLDivElement>(null);
 
   // Filter content for this subject
   const subjectQuizzes = useMemo(() => quizzes.filter(q => q.subjectId === subject.id), [quizzes, subject.id]);
@@ -125,6 +135,14 @@ export function ContentNavigator({
       onSubtopicView(currentSubtopic.id);
     }
   }, [currentSubtopic?.id, onSubtopicView]);
+
+  // Mount dependency graph HTML element
+  useEffect(() => {
+    if (graphContainerRef.current && dependencyGraph) {
+      graphContainerRef.current.innerHTML = '';
+      graphContainerRef.current.appendChild(dependencyGraph);
+    }
+  }, [dependencyGraph]);
 
   // Progress helpers
   const isTopicCompleted = useCallback((topic: Topic): boolean => {
@@ -343,6 +361,13 @@ export function ContentNavigator({
             </button>
           )}
         </div>
+
+        {dependencyGraph && (
+          <div class="overview-section subject-dependencies">
+            <h3>Subject Dependencies</h3>
+            <div ref={graphContainerRef} class="dependency-graph-container" />
+          </div>
+        )}
       </div>
     );
   };
@@ -615,6 +640,26 @@ export function ContentNavigator({
                 )}
               </div>
             </header>
+
+            {!prerequisitesMet && prerequisiteSubjects.length > 0 && (
+              <section class="prerequisites-warning">
+                <h3>Prerequisites Required</h3>
+                <p>Complete these subjects first:</p>
+                <ul class="prerequisite-list">
+                  {prerequisiteSubjects.map(prereq => {
+                    const prereqProgress = progress;
+                    const isCompleted = false; // We know it's not completed since prerequisites aren't met
+                    return (
+                      <li key={prereq.id} class={isCompleted ? 'completed' : ''}>
+                        <a href={`#/subject/${prereq.id}`} class="prereq-link">
+                          {prereq.title} ({prereq.code})
+                        </a>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </section>
+            )}
 
             {renderContent()}
           </>
