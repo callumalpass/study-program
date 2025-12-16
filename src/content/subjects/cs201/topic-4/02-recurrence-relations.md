@@ -1,0 +1,165 @@
+# Recurrence Relations for Algorithm Analysis
+
+Recurrence relations express running time in terms of smaller inputs. Solving recurrences reveals algorithm complexity.
+
+## Setting Up Recurrences
+
+Analyze the algorithm structure:
+1. **Base case**: Time for trivial inputs
+2. **Recursive case**: Time for subproblems + overhead
+
+### Example: Merge Sort
+
+```python
+def merge_sort(arr):
+    if len(arr) <= 1:           # Base case: O(1)
+        return arr
+    mid = len(arr) // 2
+    left = merge_sort(arr[:mid])    # T(n/2)
+    right = merge_sort(arr[mid:])   # T(n/2)
+    return merge(left, right)       # O(n)
+```
+
+**Recurrence**: T(n) = 2T(n/2) + O(n), T(1) = O(1)
+
+## Solution Methods
+
+### Substitution Method
+
+Guess solution, prove by induction.
+
+**Example**: T(n) = 2T(n/2) + n
+
+**Guess**: T(n) = O(n log n)
+
+**Prove**: Assume T(k) ≤ c·k·log(k) for k < n.
+
+```
+T(n) = 2T(n/2) + n
+     ≤ 2·c·(n/2)·log(n/2) + n
+     = c·n·log(n/2) + n
+     = c·n·log(n) - c·n·log(2) + n
+     = c·n·log(n) - c·n + n
+     ≤ c·n·log(n)  [for c ≥ 1]
+```
+
+### Recursion Tree Method
+
+Visualize the recursive calls as a tree.
+
+**Example**: T(n) = 2T(n/2) + n
+
+```
+Level 0:           n                    Total: n
+                 /   \
+Level 1:      n/2     n/2               Total: n
+             / \     / \
+Level 2:   n/4 n/4 n/4 n/4              Total: n
+           ...  ...  ...  ...
+
+Height: log₂(n) levels
+Total work: n × log(n) = O(n log n)
+```
+
+**Example**: T(n) = 3T(n/4) + n²
+
+```
+Level 0:           n²                   Total: n²
+                 / | \
+Level 1:     (n/4)² ...                 Total: 3(n/4)² = (3/16)n²
+               ...
+
+Geometric series with ratio 3/16 < 1
+Total dominated by root: O(n²)
+```
+
+### Master Theorem
+
+For T(n) = aT(n/b) + f(n):
+
+**Case 1**: If f(n) = O(n^(log_b(a) - ε)) for some ε > 0:
+T(n) = Θ(n^(log_b(a)))
+
+**Case 2**: If f(n) = Θ(n^(log_b(a)) · log^k(n)):
+T(n) = Θ(n^(log_b(a)) · log^(k+1)(n))
+
+**Case 3**: If f(n) = Ω(n^(log_b(a) + ε)) and af(n/b) ≤ cf(n) for c < 1:
+T(n) = Θ(f(n))
+
+## Common Recurrences
+
+| Recurrence | Solution | Example |
+|------------|----------|---------|
+| T(n) = T(n-1) + 1 | O(n) | Linear scan |
+| T(n) = T(n-1) + n | O(n²) | Selection sort |
+| T(n) = T(n/2) + 1 | O(log n) | Binary search |
+| T(n) = T(n/2) + n | O(n) | Weighted search |
+| T(n) = 2T(n/2) + 1 | O(n) | Tree traversal |
+| T(n) = 2T(n/2) + n | O(n log n) | Merge sort |
+| T(n) = 2T(n-1) + 1 | O(2ⁿ) | Towers of Hanoi |
+| T(n) = T(n-1) + T(n-2) | O(φⁿ) | Naive Fibonacci |
+
+## Non-Standard Recurrences
+
+### Unequal Subproblems
+
+**Quick sort worst case**: T(n) = T(n-1) + O(n)
+
+By telescoping:
+T(n) = T(n-1) + n
+     = T(n-2) + (n-1) + n
+     = T(1) + 2 + 3 + ... + n
+     = O(n²)
+
+### Variable Number of Subproblems
+
+**Karatsuba multiplication**: T(n) = 3T(n/2) + O(n)
+
+Master theorem: a = 3, b = 2, f(n) = n
+n^(log_2(3)) ≈ n^1.585
+
+Since n = O(n^(1.585 - ε)), Case 1 applies.
+T(n) = O(n^(log_2(3))) ≈ O(n^1.585)
+
+### Floor/Ceiling Issues
+
+T(n) = T(⌊n/2⌋) + T(⌈n/2⌉) + O(n)
+
+Floors and ceilings don't affect asymptotic bounds.
+Same as T(n) = 2T(n/2) + O(n) = O(n log n)
+
+## Change of Variables
+
+For T(n) = T(√n) + 1:
+
+Let n = 2^m, so √n = 2^(m/2)
+T(2^m) = T(2^(m/2)) + 1
+
+Let S(m) = T(2^m)
+S(m) = S(m/2) + 1 = O(log m)
+
+Since m = log n:
+T(n) = O(log log n)
+
+## Amortized Recurrences
+
+Some operations have varying costs but good amortized bounds.
+
+**Dynamic array doubling**:
+```python
+def append(arr, item):
+    if len(arr) == capacity:
+        resize(2 * capacity)  # O(n) occasionally
+    arr.append(item)          # O(1) usually
+```
+
+Total cost for n appends: O(n)
+Amortized: O(1) per operation
+
+## Solving Tips
+
+1. **Identify the pattern**: Linear, divide-and-conquer, branching
+2. **Try Master Theorem first**: Works for most divide-and-conquer
+3. **Use recursion tree for intuition**: Visualize work distribution
+4. **Verify with substitution**: Rigorous proof when needed
+5. **Check base cases**: They can affect lower-order terms
