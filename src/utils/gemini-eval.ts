@@ -1,6 +1,6 @@
-// Gemini AI evaluation service for written exercises
+// Gemini AI evaluation service for written exercises and projects
 
-import type { QuizQuestion } from '@/core/types';
+import type { QuizQuestion, Project, ProjectAiEvaluation } from '@/core/types';
 
 export interface EvaluationResult {
   passed: boolean;
@@ -306,4 +306,153 @@ function getTypeSpecificFields(type: string): string {
     default:
       return '';
   }
+}
+
+/**
+ * Represents a file uploaded for project evaluation
+ */
+export interface ProjectFile {
+  name: string;
+  content: string;
+}
+
+/**
+ * Evaluate a project submission using Gemini AI
+ */
+export async function evaluateProject(
+  apiKey: string,
+  project: Project,
+  files: ProjectFile[]
+): Promise<ProjectAiEvaluation> {
+  const prompt = buildProjectEvaluationPrompt(project, files);
+
+  const response = await fetch(GEMINI_API_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-goog-api-key': apiKey,
+    },
+    body: JSON.stringify({
+      contents: [{ parts: [{ text: prompt }] }],
+      generationConfig: {
+        thinkingConfig: { thinkingLevel: 'high' },
+        responseMimeType: 'application/json',
+      },
+    }),
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Gemini API error: ${response.status} - ${errorText}`);
+  }
+
+  const data = await response.json();
+
+  const textContent = data.candidates?.[0]?.content?.parts?.find(
+    (part: { text?: string }) => part.text
+  )?.text;
+
+  if (!textContent) {
+    throw new Error('No text content in Gemini response');
+  }
+
+  try {
+    const result = JSON.parse(textContent);
+
+    // Calculate weighted overall score from rubric scores
+    let weightedScore = 0;
+    const rubricScores: ProjectAiEvaluation['rubricScores'] = {};
+
+    for (const criterion of project.rubric) {
+      const criterionResult = result.rubricScores?.[criterion.name];
+      if (criterionResult) {
+        rubricScores[criterion.name] = {
+          score: criterionResult.score ?? 0,
+          level: criterionResult.level ?? 'Unknown',
+          justification: criterionResult.justification ?? '',
+        };
+        weightedScore += (criterionResult.score ?? 0) * (criterion.weight / 100);
+      }
+    }
+
+    return {
+      score: Math.round(weightedScore),
+      feedback: result.feedback ?? 'Unable to generate feedback.',
+      rubricScores,
+      strengths: result.strengths ?? [],
+      improvements: result.improvements ?? [],
+    };
+  } catch {
+    throw new Error('Failed to parse project evaluation response');
+  }
+}
+
+/**
+ * Build the prompt for project evaluation
+ */
+function buildProjectEvaluationPrompt(project: Project, files: ProjectFile[]): string {
+  const rubricSection = project.rubric.map(criterion => {
+    const levelsDescription = criterion.levels
+      .map(level => `  - ${level.label} (${level.score}): ${level.description}`)
+      .join('\n');
+    return `**${criterion.name}** (Weight: ${criterion.weight}%)\n${levelsDescription}`;
+  }).join('\n\n');
+
+  const filesSection = files.map(file =>
+    `=== FILE: ${file.name} ===\n${file.content}`
+  ).join('\n\n');
+
+  const rubricScoresFormat = project.rubric.map(criterion =>
+    `    "${criterion.name}": { "score": <0-100>, "level": "<level label>", "justification": "<specific feedback>" }`
+  ).join(',\n');
+
+  return `You are evaluating a student programming project. Assess the submitted code against the provided rubric.
+
+## Project: ${project.title}
+
+### Description
+${project.description}
+
+### Requirements
+${project.requirements.map((req, i) => `${i + 1}. ${req}`).join('\n')}
+
+### Rubric
+${rubricSection}
+
+## Submitted Files
+
+${filesSection}
+
+## Instructions
+
+Evaluate the project against each rubric criterion. For each criterion:
+1. Review the code and determine which rubric level best describes the submission
+2. Assign a score (0-100) based on the rubric levels
+3. Provide specific justification referencing the actual code
+
+Be fair but thorough. Look for:
+- Code correctness and functionality
+- Code quality, organization, and style
+- Completeness relative to requirements
+- Best practices and documentation
+
+## Response Format
+
+Return your evaluation as JSON in this exact format:
+{
+  "rubricScores": {
+${rubricScoresFormat}
+  },
+  "feedback": "Overall assessment in 2-3 sentences summarizing the submission quality",
+  "strengths": ["specific strength 1", "specific strength 2"],
+  "improvements": ["specific suggestion 1", "specific suggestion 2"]
+}
+
+## Scoring Guidelines
+- 90-100: Excellent - exceeds expectations, professional quality
+- 70-89: Good - meets requirements with minor issues
+- 50-69: Satisfactory - partially meets requirements, notable gaps
+- Below 50: Needs improvement - significant issues or missing requirements
+
+Return ONLY the JSON object, no other text.`;
 }

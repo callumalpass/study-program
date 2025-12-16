@@ -226,6 +226,14 @@ export interface ExerciseCompletion {
   type?: 'coding' | 'written'; // Type of exercise
 }
 
+export interface ProjectAiEvaluation {
+  score: number; // 0-100 weighted score
+  feedback: string;
+  rubricScores: Record<string, { score: number; level: string; justification: string }>;
+  strengths: string[];
+  improvements: string[];
+}
+
 export interface ProjectSubmission {
   submissionId: string;
   timestamp: string; // ISO date string
@@ -234,6 +242,7 @@ export interface ProjectSubmission {
   demoUrl?: string;
   selfAssessment: Record<string, number>; // Criterion name -> score
   notes: string;
+  aiEvaluation?: ProjectAiEvaluation;
 }
 
 // Settings Types
