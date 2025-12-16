@@ -1,6 +1,10 @@
 # Minimum Spanning Trees
 
-Finding minimum spanning trees showcases multiple greedy strategies—Kruskal's and Prim's algorithms—each optimal through different approaches.
+Minimum spanning trees exemplify greedy algorithm design: three different greedy strategies—Kruskal's, Prim's, and Borůvka's—all produce optimal results. The problem is fundamental to network design: connect all nodes at minimum total cost. Telephone networks, power grids, computer networks, and pipeline systems all reduce to MST when connection costs are known.
+
+The mathematical foundation is the cut property: for any partition of vertices, the minimum-weight edge crossing the partition belongs to some MST. This property guarantees that greedy choices—always adding safe minimum-weight edges—lead to global optima. Different algorithms exploit this property differently: Kruskal's processes edges globally by weight, Prim's grows a tree locally from one vertex, Borůvka's grows multiple components simultaneously.
+
+Understanding MST algorithms illuminates the relationship between greedy correctness and mathematical structure. The cut property isn't accidental—graphs have matroid structure that guarantees greedy optimality. This theoretical foundation connects MST to other problems where greedy algorithms succeed, providing a unified view of when local optimality implies global optimality.
 
 ## The Problem
 

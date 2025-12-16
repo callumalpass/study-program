@@ -1,6 +1,10 @@
 # Greedy Algorithm Design
 
-Greedy algorithms make locally optimal choices at each step, hoping to find a global optimum. When applicable, they're efficient and elegant.
+Greedy algorithms embody a seductively simple strategy: at each decision point, make the choice that looks best right now, and never look back. This myopic approach seems almost too simple to work—surely optimal solutions require global reasoning about all possibilities? Yet for many important problems, greedy algorithms produce optimal results with remarkable efficiency.
+
+The appeal of greedy algorithms lies in their simplicity and speed. Where dynamic programming systematically explores all subproblems, and backtracking exhaustively searches solution spaces, greedy algorithms make one pass through the data, making irrevocable decisions. The challenge is recognizing when this boldness works and when it leads astray. Greedy produces optimal results for activity selection, Huffman coding, and minimum spanning trees, but fails spectacularly for 0/1 knapsack and many coin change variants.
+
+Understanding greedy algorithms means understanding both when they work and why. The key properties are the greedy choice property (a locally optimal choice leads to a globally optimal solution) and optimal substructure (optimal solutions contain optimal solutions to subproblems). When these properties hold, greedy algorithms transform potentially exponential searches into efficient polynomial-time solutions.
 
 ## The Greedy Strategy
 

@@ -1,6 +1,10 @@
 # Greedy Scheduling Algorithms
 
-Scheduling problems are fundamental in operating systems, project management, and resource allocation. Many have elegant greedy solutions.
+Scheduling is among the most practically important algorithmic domains. Operating systems schedule processes, project managers schedule tasks, airlines schedule crews, and factories schedule production. Many scheduling problems have elegant greedy solutions: shortest job first minimizes average completion time, earliest deadline first minimizes maximum lateness, and earliest finish time maximizes throughput. Understanding which greedy rule applies to which objective is essential algorithmic knowledge.
+
+The beauty of greedy scheduling lies in its simplicity. Sort jobs by the right criterion, then process them in order. The challenge is identifying the right criterion—sorting by start time, duration, deadline, or value/weight ratio each solves different objectives. Choosing wrong produces suboptimal schedules. Choosing right often produces optimal schedules with clean proofs via exchange arguments.
+
+Not all scheduling problems yield to greedy approaches. Weighted interval scheduling requires dynamic programming. Job shop scheduling with precedence constraints is NP-hard. Load balancing across machines admits only approximation algorithms. Recognizing which problems are "greedy-able" and which require more sophisticated techniques is a crucial skill.
 
 ## Job Scheduling Framework
 

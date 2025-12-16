@@ -1,6 +1,10 @@
 # Huffman Coding
 
-Huffman coding is an optimal prefix-free coding algorithm for lossless data compression, demonstrating the power of greedy algorithms.
+Huffman coding is perhaps the most elegant application of greedy algorithms, producing provably optimal prefix-free codes for data compression. The algorithm is simple: repeatedly merge the two lowest-frequency symbols until one tree remains. This greedy approach produces codes where frequent symbols get short codewords and rare symbols get longer ones—exactly what minimizes expected encoding length.
+
+The brilliance of Huffman coding lies in its optimality proof. Any optimal code can be transformed into Huffman's code without increasing expected length. The greedy choice—always merging the two lowest-frequency nodes—is always safe because low-frequency symbols should have long codes, and siblings in the code tree have equal-length codes differing only in the last bit. This structural insight makes the greedy strategy provably optimal.
+
+Huffman coding appears throughout computing: JPEG image compression, DEFLATE/GZIP file compression, HTTP/2 header compression. Understanding both the algorithm and its optimality proof demonstrates how theoretical elegance translates to practical impact. The algorithm is fast (O(n log n)), simple to implement, and produces codes that approach the theoretical entropy limit.
 
 ## The Problem
 

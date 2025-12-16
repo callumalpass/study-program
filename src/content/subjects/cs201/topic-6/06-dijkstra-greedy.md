@@ -1,6 +1,10 @@
 # Dijkstra's Algorithm
 
-Dijkstra's algorithm finds shortest paths from a source to all vertices in graphs with non-negative edge weights—a quintessential greedy algorithm.
+Dijkstra's algorithm is perhaps the most famous greedy graph algorithm, finding shortest paths from a source to all other vertices. Every GPS navigation system, every network routing protocol, every game pathfinding system uses variations of Dijkstra. The algorithm's greedy strategy—always process the unvisited vertex with smallest known distance—produces correct results when all edge weights are non-negative.
+
+The algorithm's correctness rests on a beautiful invariant: vertices are finalized in order of increasing distance from the source. When we extract a vertex with minimum tentative distance, no alternative path could be shorter because any such path would traverse another unvisited vertex with even smaller distance (which would have been extracted first). This greedy choice property, combined with optimal substructure (shortest paths contain shortest subpaths), guarantees optimality.
+
+Understanding why Dijkstra fails with negative weights deepens understanding of greedy algorithms. Negative edges break the distance-ordering invariant: a path through a far vertex might become shorter after traversing negative edges. This limitation motivates Bellman-Ford (handles negative edges) and Floyd-Warshall (all pairs shortest paths). Knowing when Dijkstra applies—and when it doesn't—is essential algorithmic knowledge.
 
 ## The Problem
 

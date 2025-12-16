@@ -1,6 +1,10 @@
 # Proving Greedy Correctness
 
-Greedy algorithms seem simple, but proving they work requires careful reasoning. Two main proof techniques—exchange arguments and "greedy stays ahead"—handle most cases.
+The simplicity of greedy algorithms is deceptive. Because they make locally optimal choices without considering global consequences, they can fail in subtle ways. Coin change with denominations [1, 3, 4] choosing greedily for amount 6 gives three coins (4+1+1) when two suffice (3+3). Without rigorous proof, you risk deploying broken algorithms that seem reasonable but produce suboptimal results.
+
+Two proof techniques dominate greedy correctness arguments. Exchange arguments show that any optimal solution can be transformed into the greedy solution without losing optimality—if you can always "exchange" an optimal solution's choices for greedy's choices, greedy must be optimal. "Greedy stays ahead" arguments show that at every step, greedy has made at least as much progress as any alternative—if greedy is never behind, it finishes first (or tied for first).
+
+Mastering these proof techniques builds confidence in greedy algorithm design. When you can prove a greedy approach correct, you gain efficiency without sacrificing optimality. When you cannot find a proof, that difficulty often signals genuine failure—prompting you to seek counterexamples or alternative approaches like dynamic programming.
 
 ## Why Proofs Matter
 

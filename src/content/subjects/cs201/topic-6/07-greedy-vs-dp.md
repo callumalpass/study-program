@@ -1,6 +1,10 @@
 # Greedy vs Dynamic Programming
 
-Understanding when to use greedy versus dynamic programming is crucial for algorithm design. This comparison illuminates their relationship and trade-offs.
+Greedy and dynamic programming represent two fundamental approaches to optimization problems. Greedy algorithms make locally optimal choices without reconsidering, hoping local optimality yields global optimality. Dynamic programming systematically considers all options, building optimal solutions from optimal subproblems. Knowing when each approach applies—and why—is essential for algorithm design.
+
+The crucial difference is the greedy choice property. Both approaches require optimal substructure, but greedy additionally requires that a locally optimal choice be part of some globally optimal solution. When this property holds (activity selection, MST, Huffman coding), greedy algorithms are simpler and faster. When it fails (0/1 knapsack, coin change with arbitrary denominations), greedy produces suboptimal results and DP is necessary.
+
+The comparison illuminates a fundamental trade-off in algorithm design. Greedy algorithms are typically O(n log n) or better, with simple implementations and proofs that require careful reasoning. DP algorithms are typically O(n²) or O(n × S), with more complex implementations but automatic correctness when the recurrence is correct. Mastering both approaches—and recognizing which applies to a given problem—is a core competency in algorithm design.
 
 ## Core Philosophies
 
