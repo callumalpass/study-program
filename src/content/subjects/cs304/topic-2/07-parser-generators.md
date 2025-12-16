@@ -1,0 +1,404 @@
+# Parser Generators
+
+Parser generators automate the construction of parsers from formal grammar specifications. Rather than hand-coding parsing logic, developers write a grammar file that the parser generator processes to produce executable parser code. This approach increases productivity, reduces errors, and ensures the parser correctly implements the specified grammar. The most influential parser generators include Yacc (Yet Another Compiler-Compiler), Bison (GNU's Yacc replacement), and modern alternatives like ANTLR.
+
+## The Parser Generator Workflow
+
+The typical workflow for using a parser generator involves several stages:
+
+1. **Grammar specification**: Write a grammar file describing the language syntax, including production rules, token definitions, and semantic actions.
+
+2. **Generator invocation**: Run the parser generator on the grammar file to produce parser source code.
+
+3. **Compilation**: Compile the generated parser along with other compiler components (lexer, semantic analyzer, code generator).
+
+4. **Integration**: Connect the parser to the lexical analyzer for token input and to semantic routines for processing the parse tree.
+
+This workflow separates the grammar specification (what to parse) from the implementation details (how to parse), improving maintainability and enabling rapid iteration during language design.
+
+## Yacc and Bison
+
+Yacc, developed in the 1970s, pioneered practical parser generation for programming languages. Bison is a modern, compatible reimplementation that generates LALR(1) parsers. Both use similar input syntax and workflow.
+
+### Grammar File Structure
+
+A Yacc/Bison grammar file has three sections separated by `%%`:
+
+```yacc
+%{
+/* C declarations: headers, types, globals */
+#include <stdio.h>
+%}
+
+/* Yacc declarations: tokens, types, precedence */
+%token NUMBER PLUS MINUS TIMES DIVIDE LPAREN RPAREN
+
+%%
+/* Grammar rules with semantic actions */
+
+expression:
+    expression PLUS term    { $$ = $1 + $3; }
+  | expression MINUS term   { $$ = $1 - $3; }
+  | term                    { $$ = $1; }
+  ;
+
+term:
+    term TIMES factor       { $$ = $1 * $3; }
+  | term DIVIDE factor      { $$ = $1 / $3; }
+  | factor                  { $$ = $1; }
+  ;
+
+factor:
+    LPAREN expression RPAREN { $$ = $2; }
+  | NUMBER                   { $$ = $1; }
+  ;
+
+%%
+/* Additional C code: main(), yyerror(), etc. */
+```
+
+### Token Declarations
+
+Tokens are declared with `%token`:
+
+```yacc
+%token IF WHILE FOR ID NUMBER
+%token PLUS MINUS TIMES DIVIDE
+%token LPAREN RPAREN LBRACE RBRACE SEMICOLON
+```
+
+The parser generator assigns numeric codes to each token. The lexical analyzer must return these codes when identifying tokens.
+
+### Semantic Actions
+
+Semantic actions appear in braces after each production. They execute when the parser reduces by that production:
+
+```yacc
+statement:
+    ID ASSIGN expression SEMICOLON
+    {
+        symbol_table_set($1, $3);
+        $$ = create_assignment_node($1, $3);
+    }
+  ;
+```
+
+Special variables access values:
+- `$$`: The semantic value of the left-hand side being constructed
+- `$1, $2, $3, ...`: Semantic values of right-hand side symbols
+- `@1, @2, @3, ...`: Location information (line, column) for each symbol
+
+### Precedence and Associativity
+
+Yacc provides directives to specify operator precedence and associativity:
+
+```yacc
+%left PLUS MINUS
+%left TIMES DIVIDE
+%right POWER
+%nonassoc UMINUS
+```
+
+These declarations resolve shift-reduce conflicts in expression grammars:
+- `%left`: Left-associative operators
+- `%right`: Right-associative operators
+- `%nonassoc`: Non-associative operators (error if used consecutively)
+
+Declarations later in the file have higher precedence. This allows concise expression grammars:
+
+```yacc
+expression:
+    expression PLUS expression
+  | expression MINUS expression
+  | expression TIMES expression
+  | expression DIVIDE expression
+  | MINUS expression %prec UMINUS
+  | LPAREN expression RPAREN
+  | NUMBER
+  ;
+```
+
+Without precedence declarations, this grammar would have shift-reduce conflicts. The declarations resolve them according to standard mathematical conventions.
+
+## Building a Calculator with Yacc/Bison
+
+Here's a complete calculator example:
+
+```yacc
+%{
+#include <stdio.h>
+#include <stdlib.h>
+
+void yyerror(const char *s);
+int yylex(void);
+%}
+
+%token NUMBER
+%left PLUS MINUS
+%left TIMES DIVIDE
+%right UMINUS
+
+%%
+
+program:
+    /* empty */
+  | program line
+  ;
+
+line:
+    expression '\n'  { printf("Result: %d\n", $1); }
+  ;
+
+expression:
+    expression PLUS expression    { $$ = $1 + $3; }
+  | expression MINUS expression   { $$ = $1 - $3; }
+  | expression TIMES expression   { $$ = $1 * $3; }
+  | expression DIVIDE expression  { $$ = $1 / $3; }
+  | MINUS expression %prec UMINUS { $$ = -$2; }
+  | LPAREN expression RPAREN      { $$ = $2; }
+  | NUMBER                        { $$ = $1; }
+  ;
+
+%%
+
+void yyerror(const char *s) {
+    fprintf(stderr, "Error: %s\n", s);
+}
+
+int main(void) {
+    return yyparse();
+}
+```
+
+The lexer (typically generated by Lex/Flex) provides tokens:
+
+```lex
+%{
+#include "y.tab.h"  /* Generated by Yacc */
+%}
+
+%%
+
+[0-9]+      { yylval = atoi(yytext); return NUMBER; }
+"+"         { return PLUS; }
+"-"         { return MINUS; }
+"*"         { return TIMES; }
+"/"         { return DIVIDE; }
+"("         { return LPAREN; }
+")"         { return RPAREN; }
+\n          { return '\n'; }
+[ \t]       { /* skip whitespace */ }
+.           { yyerror("Invalid character"); }
+
+%%
+```
+
+## Typed Semantic Values
+
+For complex languages, semantic values have different types. Yacc supports typed values:
+
+```yacc
+%union {
+    int intval;
+    double doubleval;
+    char *strval;
+    struct ast_node *nodeval;
+}
+
+%token <intval> NUMBER
+%token <strval> IDENTIFIER STRING
+%type <nodeval> expression statement statement_list
+%type <doubleval> floating_expression
+
+%%
+
+expression:
+    expression PLUS expression
+    {
+        $$ = create_binop_node(OP_ADD, $1, $3);
+    }
+  | IDENTIFIER
+    {
+        $$ = create_identifier_node($1);
+    }
+  ;
+```
+
+The `%union` declares a C union for semantic values. Token and rule type declarations specify which union member each symbol uses.
+
+## Error Recovery
+
+Yacc provides the special `error` token for error recovery:
+
+```yacc
+statement_list:
+    statement
+  | statement_list statement
+  | statement_list error SEMICOLON
+    {
+        yyerrok;  /* Resume normal parsing */
+        yyclearin; /* Discard lookahead token */
+    }
+  ;
+```
+
+When the parser encounters an error, it:
+1. Pops states from the stack until finding one that can shift `error`
+2. Discards input tokens until finding a synchronizing token (like SEMICOLON)
+3. Shifts the error token and continues parsing
+
+This panic-mode recovery allows the parser to report multiple errors in one run.
+
+## Conflict Resolution
+
+Yacc reports shift-reduce and reduce-reduce conflicts. Understanding and resolving them is crucial:
+
+### Shift-Reduce Conflicts
+
+The classic dangling-else problem:
+
+```yacc
+statement:
+    IF expression THEN statement
+  | IF expression THEN statement ELSE statement
+  | other_statement
+  ;
+```
+
+This creates a shift-reduce conflict. Yacc's default (shift) associates else with the nearest if, which is usually desired. Alternatively, rewrite the grammar:
+
+```yacc
+statement:
+    matched_statement
+  | unmatched_statement
+  ;
+
+matched_statement:
+    IF expression THEN matched_statement ELSE matched_statement
+  | other_statement
+  ;
+
+unmatched_statement:
+    IF expression THEN statement
+  | IF expression THEN matched_statement ELSE unmatched_statement
+  ;
+```
+
+### Reduce-Reduce Conflicts
+
+These indicate genuine ambiguity requiring grammar redesign:
+
+```yacc
+declaration:
+    type identifier
+  ;
+
+type:
+    NAME
+  | NAME NAME  /* qualified type */
+  ;
+
+identifier:
+    NAME
+  ;
+```
+
+When parsing `NAME NAME`, should the first NAME be part of `type` or constitute the entire type? The grammar must be restructured to eliminate this ambiguity.
+
+## Modern Parser Generators
+
+While Yacc/Bison remain widely used, modern alternatives offer additional features:
+
+### ANTLR
+
+ANTLR (ANother Tool for Language Recognition) generates LL parsers with several advantages:
+
+```antlr
+grammar Calculator;
+
+program: expression EOF ;
+
+expression:
+    expression ('*' | '/') expression
+  | expression ('+' | '-') expression
+  | '(' expression ')'
+  | NUMBER
+  ;
+
+NUMBER: [0-9]+ ;
+WS: [ \t\r\n]+ -> skip ;
+```
+
+ANTLR features:
+- Generates parsers in multiple languages (Java, C#, Python, JavaScript)
+- Produces parse trees automatically
+- Supports tree visitors and listeners for AST traversal
+- Better error messages and recovery
+
+### Other Generators
+
+**JavaCC**: Generates LL(k) parsers in Java with integrated lexing.
+
+**Lemon**: Uses a different algorithm than Yacc, producing thread-safe parsers.
+
+**Tree-sitter**: Generates incremental parsers for editors and IDEs.
+
+## Best Practices
+
+When using parser generators:
+
+**Start simple**: Begin with a minimal grammar and incrementally add features.
+
+**Test incrementally**: Verify each grammar addition works before proceeding.
+
+**Understand conflicts**: Don't ignore shift-reduce conflicts; understand why they occur.
+
+**Use precedence wisely**: Precedence declarations simplify expression grammars but can obscure intent.
+
+**Document semantic actions**: Complex semantic actions deserve comments explaining their purpose.
+
+**Separate concerns**: Keep the grammar focused on syntax; perform complex semantic analysis separately.
+
+## Integration with Compiler Phases
+
+The generated parser integrates with other compiler components:
+
+```c
+/* Lexical analyzer */
+extern int yylex(void);
+
+/* Parser entry point */
+extern int yyparse(void);
+
+/* Abstract syntax tree root */
+extern struct ast_node *program_ast;
+
+int main(int argc, char **argv) {
+    FILE *input = fopen(argv[1], "r");
+    yyin = input;
+
+    if (yyparse() == 0) {
+        // Parsing succeeded
+        semantic_analysis(program_ast);
+        generate_code(program_ast);
+    }
+
+    fclose(input);
+    return 0;
+}
+```
+
+The parser calls `yylex()` for tokens and builds an AST that subsequent phases process.
+
+## Key Takeaways
+
+- Parser generators automate parser construction from grammar specifications
+- Yacc and Bison generate LALR(1) parsers from declarative grammar files
+- Grammar files contain declarations, production rules, and semantic actions
+- Semantic actions execute during reductions, building ASTs or performing computations
+- Precedence and associativity declarations resolve shift-reduce conflicts in expression grammars
+- The `error` token enables panic-mode error recovery
+- Shift-reduce conflicts often resolve naturally; reduce-reduce conflicts require grammar changes
+- Modern generators like ANTLR offer additional features and multiple target languages
+- Typed semantic values support complex data structures in parse tree construction
+- Parser generators increase productivity and ensure correct grammar implementation
