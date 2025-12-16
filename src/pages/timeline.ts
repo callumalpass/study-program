@@ -73,9 +73,15 @@ function renderTimeline(
   const estimatedEnd = getEstimatedCompletionDate(schedule);
 
   // Calculate stats
+  const today = new Date();
   const completed = Array.from(schedule.values()).filter(s => s.status === 'completed').length;
   const inProgress = Array.from(schedule.values()).filter(s => s.status === 'in-progress').length;
   const scheduled = Array.from(schedule.values()).filter(s => s.status === 'scheduled').length;
+
+  // Behind schedule: should have started (start date passed) but not completed
+  const behindSchedule = Array.from(schedule.values()).filter(s =>
+    s.status !== 'completed' && s.startDate < today
+  ).length;
 
   container.innerHTML = `
     <div class="timeline-page">
@@ -105,6 +111,12 @@ function renderTimeline(
           <span class="stat-value stat-scheduled">${scheduled}</span>
           <span class="stat-label">Scheduled</span>
         </div>
+        ${behindSchedule > 0 ? `
+        <div class="stat-card stat-card-warning">
+          <span class="stat-value stat-behind">${behindSchedule}</span>
+          <span class="stat-label">Behind Schedule</span>
+        </div>
+        ` : ''}
         <div class="stat-card">
           <span class="stat-value">${subjects.length}</span>
           <span class="stat-label">Total Subjects</span>
@@ -127,6 +139,10 @@ function renderTimeline(
         <div class="legend-item">
           <span class="legend-color legend-blocked"></span>
           <span>Blocked</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-color legend-overdue"></span>
+          <span>Overdue</span>
         </div>
       </div>
 

@@ -3693,6 +3693,15 @@ img {
   color: var(--color-text-muted);
 }
 
+.timeline-stats .stat-value.stat-behind {
+  color: var(--color-error);
+}
+
+.timeline-stats .stat-card-warning {
+  border-color: var(--color-error);
+  background: rgba(248, 81, 73, 0.1);
+}
+
 .timeline-stats .stat-label {
   font-size: var(--font-size-sm);
   color: var(--color-text-muted);
@@ -3745,6 +3754,11 @@ img {
 .legend-blocked {
   background: var(--color-border-default);
   opacity: 0.5;
+}
+
+.legend-overdue {
+  background: var(--color-error);
+  box-shadow: 0 0 0 2px var(--color-error);
 }
 
 /* Gantt Chart Container */
@@ -3829,6 +3843,13 @@ img {
   font-size: var(--font-size-xs);
   color: var(--color-warning);
   margin-top: var(--space-xs);
+}
+
+.tooltip-overdue {
+  font-size: var(--font-size-sm);
+  color: var(--color-error);
+  font-weight: 600;
+  margin-top: var(--space-sm);
 }
 
 /* Modal for Edit Plan */

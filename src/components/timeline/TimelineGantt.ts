@@ -262,6 +262,10 @@ export class TimelineGantt {
     // Get bar color based on status
     const barColor = this.getStatusColor(scheduled.status);
 
+    // Check if subject is overdue (should have started but not completed)
+    const today = new Date();
+    const isOverdue = scheduled.status !== 'completed' && scheduled.startDate < today;
+
     // Create bar group
     const group = document.createElementNS('http://www.w3.org/2000/svg', 'g');
     group.style.cursor = this.options.onSubjectMoved ? 'grab' : 'pointer';
@@ -278,6 +282,13 @@ export class TimelineGantt {
     bar.setAttribute('fill', barColor);
     bar.setAttribute('opacity', scheduled.status === 'blocked' ? '0.4' : '0.8');
     bar.classList.add('timeline-bar-main');
+
+    // Add red border for overdue subjects
+    if (isOverdue) {
+      bar.setAttribute('stroke', this.colors.error);
+      bar.setAttribute('stroke-width', '2');
+    }
+
     group.appendChild(bar);
 
     // Override indicator (small dot)
@@ -600,14 +611,20 @@ export class TimelineGantt {
       blocked: 'Blocked (prerequisites needed)',
     };
 
+    // Check if overdue
+    const today = new Date();
+    const isOverdue = scheduled.status !== 'completed' && scheduled.startDate < today;
+
     const dragHint = this.options.onSubjectMoved ? '<div class="tooltip-hint">Drag to reschedule</div>' : '';
     const overrideNote = scheduled.hasOverride ? '<div class="tooltip-override">Custom schedule</div>' : '';
+    const overdueNote = isOverdue ? '<div class="tooltip-overdue">⚠ Overdue</div>' : '';
 
     this.tooltip.innerHTML = `
       <div class="tooltip-title">${scheduled.subject.code}: ${scheduled.subject.title}</div>
       <div class="tooltip-dates">${startStr} - ${endStr}</div>
       <div class="tooltip-status status-${scheduled.status}">${statusLabels[scheduled.status]}</div>
       ${scheduled.status === 'in-progress' ? `<div class="tooltip-progress">${scheduled.completionPercentage}% complete</div>` : ''}
+      ${overdueNote}
       ${overrideNote}
       ${dragHint}
     `;
