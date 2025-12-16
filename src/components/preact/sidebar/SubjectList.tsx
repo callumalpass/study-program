@@ -3,8 +3,6 @@ import { useState, useMemo, useCallback } from 'preact/hooks';
 import type { Subject, SubjectProgress, Quiz, Exercise } from '@/core/types';
 import { SubjectItem } from './SubjectItem';
 
-type FilterType = 'all' | 'in_progress' | 'completed';
-
 interface SubjectListProps {
   subjects: Subject[];
   userProgress: Record<string, SubjectProgress>;
@@ -24,46 +22,10 @@ export function SubjectList({
   quizzes,
   exercises,
 }: SubjectListProps) {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [filter, setFilter] = useState<FilterType>('all');
   const [collapsedYears, setCollapsedYears] = useState<Set<string>>(new Set());
 
-  const filteredSubjects = useMemo(() => {
-    let result = subjects;
-
-    // Filter by search query
-    if (searchQuery.trim()) {
-      const query = searchQuery.toLowerCase();
-      result = result.filter((subject) => {
-        const matchesTitle = subject.title.toLowerCase().includes(query);
-        const matchesCode = subject.code.toLowerCase().includes(query);
-        const matchesTopic = subject.topics.some((topic) =>
-          topic.title.toLowerCase().includes(query)
-        );
-        return matchesTitle || matchesCode || matchesTopic;
-      });
-    }
-
-    // Filter by status
-    if (filter !== 'all') {
-      result = result.filter((subject) => {
-        const progress = userProgress[subject.id];
-        const status = progress?.status || 'not_started';
-        if (filter === 'in_progress') {
-          return status === 'in_progress';
-        }
-        if (filter === 'completed') {
-          return status === 'completed';
-        }
-        return true;
-      });
-    }
-
-    return result;
-  }, [subjects, searchQuery, filter, userProgress]);
-
   const groupedSubjects = useMemo((): GroupedSubjects => {
-    return filteredSubjects.reduce((acc, subject) => {
+    return subjects.reduce((acc, subject) => {
       const key = `Year ${subject.year} - Semester ${subject.semester}`;
       if (!acc[key]) {
         acc[key] = [];
@@ -71,16 +33,7 @@ export function SubjectList({
       acc[key].push(subject);
       return acc;
     }, {} as GroupedSubjects);
-  }, [filteredSubjects]);
-
-  const handleSearchChange = useCallback((e: Event) => {
-    const target = e.target as HTMLInputElement;
-    setSearchQuery(target.value);
-  }, []);
-
-  const handleFilterChange = useCallback((newFilter: FilterType) => {
-    setFilter(newFilter);
-  }, []);
+  }, [subjects]);
 
   const toggleYearCollapse = useCallback((yearKey: string) => {
     setCollapsedYears((prev) => {
@@ -98,59 +51,13 @@ export function SubjectList({
     return currentPath.includes(`/subject/${subjectId}`);
   };
 
-  const filterCounts = useMemo(() => {
-    const all = subjects.length;
-    const inProgress = subjects.filter(
-      (s) => userProgress[s.id]?.status === 'in_progress'
-    ).length;
-    const completed = subjects.filter(
-      (s) => userProgress[s.id]?.status === 'completed'
-    ).length;
-    return { all, inProgress, completed };
-  }, [subjects, userProgress]);
-
   return (
     <div class="subject-list-container">
-      {/* Search */}
-      <div class="sidebar-search-container">
-        <input
-          type="search"
-          placeholder="Search subjects..."
-          class="sidebar-search"
-          value={searchQuery}
-          onInput={handleSearchChange}
-        />
-      </div>
-
-      {/* Filters */}
-      <div class="sidebar-filters">
-        <button
-          class={`filter-btn ${filter === 'all' ? 'active' : ''}`}
-          onClick={() => handleFilterChange('all')}
-        >
-          All ({filterCounts.all})
-        </button>
-        <button
-          class={`filter-btn ${filter === 'in_progress' ? 'active' : ''}`}
-          onClick={() => handleFilterChange('in_progress')}
-        >
-          In Progress ({filterCounts.inProgress})
-        </button>
-        <button
-          class={`filter-btn ${filter === 'completed' ? 'active' : ''}`}
-          onClick={() => handleFilterChange('completed')}
-        >
-          Complete ({filterCounts.completed})
-        </button>
-      </div>
-
       {/* Subject Groups */}
       <div class="subjects-list-new">
         {Object.entries(groupedSubjects).length === 0 ? (
           <div class="no-subjects-message">
-            {searchQuery || filter !== 'all'
-              ? 'No subjects match your search or filter.'
-              : 'No subjects available.'}
+            No subjects available.
           </div>
         ) : (
           Object.entries(groupedSubjects).map(([groupName, groupSubjects]) => {

@@ -417,13 +417,6 @@ export function ContentNavigator({
                     class={`topic-item ${isActive ? 'active' : ''} ${isCompleted ? 'completed' : ''}`}
                     onClick={(e) => handleTopicClick(e, topic.id)}
                   >
-                    <span class="topic-indicator">
-                      {isCompleted ? (
-                        <span class="indicator-check" dangerouslySetInnerHTML={{ __html: Icons.Check }} />
-                      ) : (
-                        <span class="indicator-number">{index + 1}</span>
-                      )}
-                    </span>
                     <span class="topic-title">{topic.title}</span>
                     {topicProgress.total > 0 && !isCompleted && (
                       <span class="topic-progress">{topicProgress.completed}/{topicProgress.total}</span>

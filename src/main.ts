@@ -161,6 +161,28 @@ function safeRender(
 }
 
 /**
+ * Initialize sidebar toggle (desktop)
+ */
+function initSidebarToggle(): void {
+  const toggleBtn = document.getElementById('sidebar-toggle');
+  const appContainer = document.getElementById('app');
+
+  if (!toggleBtn || !appContainer) return;
+
+  // Check for saved state
+  const isCollapsed = localStorage.getItem('sidebar-collapsed') === 'true';
+  if (isCollapsed) {
+    appContainer.classList.add('sidebar-collapsed');
+  }
+
+  toggleBtn.addEventListener('click', () => {
+    appContainer.classList.toggle('sidebar-collapsed');
+    const collapsed = appContainer.classList.contains('sidebar-collapsed');
+    localStorage.setItem('sidebar-collapsed', String(collapsed));
+  });
+}
+
+/**
  * Initialize mobile navigation
  */
 function initMobileNav(): void {
@@ -237,7 +259,8 @@ function initApp(): void {
   // Initialize theme first to prevent flash of wrong theme
   initTheme();
 
-  // Initialize mobile navigation
+  // Initialize navigation
+  initSidebarToggle();
   initMobileNav();
 
   const sidebarEl = document.getElementById('sidebar');

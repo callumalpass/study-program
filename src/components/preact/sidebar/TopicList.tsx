@@ -126,7 +126,6 @@ export function TopicList({
                   class={`topic-item ${completed ? 'completed' : ''} ${isCurrent ? 'current' : ''}`}
                   onClick={(e) => handleTopicClick(e, topic.id)}
                 >
-                  <span class="topic-number">{index + 1}</span>
                   <span class="topic-title">{topic.title}</span>
                   {completed && (
                     <span class="topic-check" dangerouslySetInnerHTML={{ __html: Icons.Check }} />
