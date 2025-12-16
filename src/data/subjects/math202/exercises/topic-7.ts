@@ -14,5 +14,230 @@ export const math202Topic7Exercises: WrittenExercise[] = [
       'Think about the role of prior knowledge'
     ],
     solution: 'Frequentist approach:\n- Parameters are fixed but unknown constants\n- Probability is long-run frequency\n- Inference based solely on data (likelihood)\n- No prior knowledge incorporated\n- Example: "95% CI means in repeated sampling, 95% of intervals contain θ"\n\nBayesian approach:\n- Parameters are random variables with probability distributions\n- Probability represents degree of belief/uncertainty\n- Combines prior knowledge with data (posterior ∝ likelihood × prior)\n- Updates beliefs as evidence accumulates\n- Example: "95% credible interval means θ has 95% probability of being in the interval"\n\nKey difference: Bayesian treats unknown parameter as uncertain (has distribution), frequentist treats it as fixed (only data varies).'
+  },
+  {
+    id: 'math202-t7-ex02',
+    subjectId: 'math202',
+    topicId: 'math202-7',
+    type: 'written',
+    title: 'Beta-Binomial Conjugacy',
+    description: 'A coin is flipped 10 times and shows 7 heads. Using a Beta(2, 2) prior for the probability of heads θ, find the posterior distribution and the posterior mean estimate of θ.',
+    difficulty: 3,
+    hints: [
+      'Beta is conjugate to Binomial',
+      'If prior is Beta(α, β) and we observe x successes in n trials, posterior is Beta(α + x, β + n - x)',
+      'The mean of Beta(a, b) is a/(a+b)'
+    ],
+    solution: 'Prior: θ ~ Beta(2, 2)\nData: x = 7 heads, n = 10 flips\n\nPosterior (using conjugacy):\nθ | data ~ Beta(α + x, β + n - x)\n= Beta(2 + 7, 2 + 10 - 7)\n= Beta(9, 5)\n\nPosterior mean:\nE[θ | data] = α\'/(α\' + β\')\n= 9/(9 + 5)\n= 9/14 ≈ 0.643\n\nCompare to MLE: 7/10 = 0.7\nThe posterior mean is pulled toward the prior mean of 0.5, demonstrating shrinkage.'
+  },
+  {
+    id: 'math202-t7-ex03',
+    subjectId: 'math202',
+    topicId: 'math202-7',
+    type: 'written',
+    title: 'Informative vs Non-informative Priors',
+    description: 'For estimating a population proportion θ ∈ [0, 1], compare and contrast using (a) Beta(1, 1), (b) Beta(0.5, 0.5), and (c) Beta(10, 10) as prior distributions. Which would you consider informative vs non-informative?',
+    difficulty: 3,
+    hints: [
+      'Calculate the mean and variance for each prior',
+      'Consider how concentrated each distribution is',
+      'Think about what prior beliefs each represents'
+    ],
+    solution: 'Beta(1, 1): Uniform prior\n- Mean = 0.5, Variance = 1/12 ≈ 0.083\n- Flat distribution, assigns equal probability to all θ values\n- Non-informative: represents "no preference" about θ\n\nBeta(0.5, 0.5): Jeffreys prior\n- Mean = 0.5, Variance = 0.125\n- U-shaped, concentrates mass near 0 and 1\n- Non-informative: derived from Fisher information, invariant under reparameterization\n\nBeta(10, 10): Informative prior\n- Mean = 0.5, Variance ≈ 0.012 (much smaller)\n- Bell-shaped, concentrated around 0.5\n- Informative: equivalent to having seen 20 prior observations with 10 successes\n- Represents strong belief that θ is near 0.5\n\nKey distinction: Informative priors encode specific prior beliefs; non-informative priors aim to "let the data speak."'
+  },
+  {
+    id: 'math202-t7-ex04',
+    subjectId: 'math202',
+    topicId: 'math202-7',
+    type: 'written',
+    title: 'Posterior Credible Interval',
+    description: 'Given a posterior distribution θ | data ~ Beta(12, 8), compute the 95% equal-tailed credible interval and the posterior probability that θ > 0.5.',
+    difficulty: 4,
+    hints: [
+      'Use quantile function for credible interval',
+      'For Beta(12, 8), can use statistical tables or software',
+      'P(θ > 0.5) = 1 - F(0.5) where F is the Beta CDF'
+    ],
+    solution: 'Posterior: θ | data ~ Beta(12, 8)\n\n95% Equal-tailed Credible Interval:\nFind q_0.025 and q_0.975 of Beta(12, 8)\n\nUsing Beta distribution quantiles:\n- q_0.025 ≈ 0.400 (2.5th percentile)\n- q_0.975 ≈ 0.781 (97.5th percentile)\n\n95% CI: (0.400, 0.781)\n\nP(θ > 0.5 | data):\nUsing Beta CDF, P(θ ≤ 0.5 | data) ≈ 0.180\nTherefore, P(θ > 0.5 | data) = 1 - 0.180 = 0.820\n\nInterpretation: There is 82% posterior probability that θ exceeds 0.5.\n\nNote: These calculations require statistical software or tables. The Beta(12, 8) has mean 12/20 = 0.6.'
+  },
+  {
+    id: 'math202-t7-ex05',
+    subjectId: 'math202',
+    topicId: 'math202-7',
+    type: 'written',
+    title: 'Normal-Normal Conjugacy',
+    description: 'Suppose we observe a single data point x = 12 from a Normal(μ, σ² = 4) distribution. Using a Normal(10, τ² = 9) prior for μ, derive the posterior distribution for μ.',
+    difficulty: 4,
+    hints: [
+      'Normal prior is conjugate to Normal likelihood with known variance',
+      'Posterior precision = prior precision + data precision',
+      'Posterior mean is precision-weighted average'
+    ],
+    solution: 'Prior: μ ~ Normal(μ₀ = 10, τ² = 9)\nLikelihood: x | μ ~ Normal(μ, σ² = 4)\nData: x = 12\n\nUsing precision (inverse variance):\n- Prior precision: 1/τ² = 1/9\n- Data precision: 1/σ² = 1/4\n\nPosterior precision:\n1/τ²_post = 1/τ² + 1/σ² = 1/9 + 1/4 = 13/36\nτ²_post = 36/13 ≈ 2.77\n\nPosterior mean:\nμ_post = [(1/τ²)μ₀ + (1/σ²)x] / (1/τ² + 1/σ²)\n= [(1/9)(10) + (1/4)(12)] / (13/36)\n= [10/9 + 3] / (13/36)\n= [10/9 + 27/9] / (13/36)\n= (37/9) × (36/13)\n= 37×4/13 ≈ 11.38\n\nPosterior: μ | x ~ Normal(11.38, 2.77)\n\nThe posterior mean is a weighted average of prior mean (10) and data (12), weighted by precisions.'
+  },
+  {
+    id: 'math202-t7-ex06',
+    subjectId: 'math202',
+    topicId: 'math202-7',
+    type: 'written',
+    title: 'Bayes Factor Calculation',
+    description: 'For a coin flip experiment with 8 heads in 10 flips, calculate the Bayes factor comparing H₀: θ = 0.5 (fair coin) versus H₁: θ ~ Uniform(0, 1).',
+    difficulty: 5,
+    hints: [
+      'Bayes factor BF₀₁ = P(data | H₀) / P(data | H₁)',
+      'Under H₀, directly calculate binomial probability',
+      'Under H₁, integrate likelihood over the prior (marginal likelihood)'
+    ],
+    solution: 'Data: x = 8, n = 10\n\nP(data | H₀): Direct calculation under θ = 0.5\n= C(10,8) × 0.5⁸ × 0.5² = 45 × (0.5)¹⁰ = 45/1024 ≈ 0.0439\n\nP(data | H₁): Marginal likelihood under Uniform(0,1) prior\n= ∫₀¹ P(x=8|θ) × p(θ) dθ\n= ∫₀¹ C(10,8) × θ⁸ × (1-θ)² × 1 dθ\n= 45 × B(9, 3) where B is Beta function\n= 45 × Γ(9)Γ(3)/Γ(12)\n= 45 × 8! × 2! / 11!\n= 45 × (40320 × 2) / 39916800\n= 45 / 495 = 1/11 ≈ 0.0909\n\nBayes Factor:\nBF₀₁ = P(data|H₀) / P(data|H₁)\n= 0.0439 / 0.0909 ≈ 0.483\n\nBF₁₀ = 1/BF₀₁ ≈ 2.07\n\nInterpretation: The data provide weak evidence (about 2:1) in favor of H₁ over H₀.'
+  },
+  {
+    id: 'math202-t7-ex07',
+    subjectId: 'math202',
+    topicId: 'math202-7',
+    type: 'written',
+    title: 'Posterior Predictive Distribution',
+    description: 'After observing n coin flips with x heads and using a Beta(α, β) prior, the posterior is Beta(α + x, β + n - x). Derive the posterior predictive probability of observing heads on the next flip.',
+    difficulty: 4,
+    hints: [
+      'Posterior predictive = ∫ P(new data | θ) × p(θ | old data) dθ',
+      'The integral of θ × Beta(a, b) is the mean of Beta(a, b)',
+      'Mean of Beta(a, b) = a/(a+b)'
+    ],
+    solution: 'Let Y = 1 if next flip is heads, 0 otherwise.\n\nPosterior predictive:\nP(Y = 1 | data) = ∫ P(Y=1|θ) × p(θ|data) dθ\n= ∫₀¹ θ × Beta(θ | α+x, β+n-x) dθ\n= E[θ | data]\n= (α + x) / (α + x + β + n - x)\n= (α + x) / (α + β + n)\n\nThis is the posterior mean of θ!\n\nExample: With Beta(1, 1) prior (uniform) and x = 7, n = 10:\nP(next heads) = (1 + 7) / (1 + 1 + 10) = 8/12 = 2/3\n\nWith Beta(2, 2) prior:\nP(next heads) = (2 + 7) / (2 + 2 + 10) = 9/14 ≈ 0.643\n\nThis differs from both the MLE (7/10) and the prior mean (0.5), representing a compromise.'
+  },
+  {
+    id: 'math202-t7-ex08',
+    subjectId: 'math202',
+    topicId: 'math202-7',
+    type: 'written',
+    title: 'MAP vs Posterior Mean',
+    description: 'For a Beta(3, 2) posterior distribution, calculate both the Maximum A Posteriori (MAP) estimate and the posterior mean. Explain when each might be preferred.',
+    difficulty: 3,
+    hints: [
+      'MAP is the mode of the posterior',
+      'Mode of Beta(a, b) = (a-1)/(a+b-2) for a, b > 1',
+      'Mean of Beta(a, b) = a/(a+b)'
+    ],
+    solution: 'Posterior: θ | data ~ Beta(3, 2)\n\nMAP (Mode):\nFor Beta(a, b) with a, b > 1:\nMode = (a - 1)/(a + b - 2)\n= (3 - 1)/(3 + 2 - 2)\n= 2/3 ≈ 0.667\n\nPosterior Mean:\nMean = a/(a + b)\n= 3/(3 + 2)\n= 3/5 = 0.6\n\nDifference: MAP (0.667) > Mean (0.6)\n\nWhen to use each:\n\nMAP preferred when:\n- Want a single "most likely" point estimate\n- Loss function is 0-1 (correct vs incorrect)\n- Distribution is highly skewed\n- Computational simplicity needed (no integration)\n\nPosterior mean preferred when:\n- Loss function is squared error\n- Want to minimize expected squared loss\n- Need a "balanced" estimate accounting for all of posterior\n- Distribution is symmetric (where MAP = mean anyway)'
+  },
+  {
+    id: 'math202-t7-ex09',
+    subjectId: 'math202',
+    topicId: 'math202-7',
+    type: 'written',
+    title: 'Sequential Bayesian Updating',
+    description: 'Starting with a Beta(1, 1) prior, sequentially update your belief about a coin\'s probability of heads after observing: first flip = H, second flip = H, third flip = T. Show the posterior after each observation.',
+    difficulty: 3,
+    hints: [
+      'Each observation updates prior → posterior',
+      'Previous posterior becomes next prior',
+      'For Beta prior with Binomial data: Beta(α, β) → Beta(α+1, β) for heads, Beta(α, β+1) for tails'
+    ],
+    solution: 'Initial prior: θ ~ Beta(1, 1) = Uniform(0, 1)\n\nAfter first flip (H):\nPosterior = Beta(1 + 1, 1 + 0) = Beta(2, 1)\nPosterior mean = 2/3 ≈ 0.667\n\nAfter second flip (H):\nPrior = Beta(2, 1)\nPosterior = Beta(2 + 1, 1 + 0) = Beta(3, 1)\nPosterior mean = 3/4 = 0.75\n\nAfter third flip (T):\nPrior = Beta(3, 1)\nPosterior = Beta(3 + 0, 1 + 1) = Beta(3, 2)\nPosterior mean = 3/5 = 0.6\n\nSummary:\n| Observation | Posterior | Mean |\n|-------------|-----------|------|\n| (none)      | Beta(1,1) | 0.50 |\n| H           | Beta(2,1) | 0.67 |\n| HH          | Beta(3,1) | 0.75 |\n| HHT         | Beta(3,2) | 0.60 |\n\nNote: Final posterior Beta(3, 2) is the same as if we had updated all at once with 2 heads, 1 tail.'
+  },
+  {
+    id: 'math202-t7-ex10',
+    subjectId: 'math202',
+    topicId: 'math202-7',
+    type: 'written',
+    title: 'Gamma-Poisson Conjugacy',
+    description: 'Suppose the number of customer arrivals per hour follows Poisson(λ). Using a Gamma(α = 3, β = 1) prior for λ, if we observe 5 arrivals in 2 hours, find the posterior distribution for λ.',
+    difficulty: 4,
+    hints: [
+      'Gamma is conjugate to Poisson',
+      'With Gamma(α, β) prior and observing total count x over time t, posterior is Gamma(α + x, β + t)',
+      'Mean of Gamma(α, β) = α/β'
+    ],
+    solution: 'Prior: λ ~ Gamma(α = 3, β = 1)\nData: x = 5 arrivals, t = 2 hours\n\nPosterior (using conjugacy):\nλ | data ~ Gamma(α + x, β + t)\n= Gamma(3 + 5, 1 + 2)\n= Gamma(8, 3)\n\nPosterior characteristics:\n- Mean: α\'/β\' = 8/3 ≈ 2.67 arrivals/hour\n- Variance: α\'/β\'² = 8/9 ≈ 0.89\n- Mode: (α\' - 1)/β\' = 7/3 ≈ 2.33 (for α\' > 1)\n\nPrior mean was 3/1 = 3 arrivals/hour\nMLE would be 5/2 = 2.5 arrivals/hour\nPosterior mean (2.67) is between prior and MLE\n\nInterpretation: After observing 5 arrivals in 2 hours, our estimate of the arrival rate is pulled from the prior mean of 3 toward the observed rate of 2.5.'
+  },
+  {
+    id: 'math202-t7-ex11',
+    subjectId: 'math202',
+    topicId: 'math202-7',
+    type: 'written',
+    title: 'Bayesian Hypothesis Testing',
+    description: 'Test whether a coin is fair using Bayesian methods. Prior: P(fair) = 0.8, P(biased) = 0.2. If biased, θ ~ Uniform(0.6, 1). After 10 flips showing 9 heads, calculate the posterior probability the coin is fair.',
+    difficulty: 5,
+    hints: [
+      'Use Bayes theorem: P(fair|data) ∝ P(data|fair) × P(fair)',
+      'Calculate P(data|fair) directly',
+      'Calculate P(data|biased) by integrating over the conditional prior'
+    ],
+    solution: 'Let F = fair (θ = 0.5), B = biased (θ ~ Uniform(0.6, 1))\nData: 9 heads in 10 flips\n\nPrior probabilities: P(F) = 0.8, P(B) = 0.2\n\nP(data | F): θ = 0.5\n= C(10,9) × 0.5⁹ × 0.5¹ = 10 × (0.5)¹⁰ = 10/1024 ≈ 0.00977\n\nP(data | B): Integrate over θ ~ Uniform(0.6, 1)\n= ∫₀.₆¹ C(10,9) × θ⁹ × (1-θ)¹ × (1/0.4) dθ\n= (10/0.4) ∫₀.₆¹ θ⁹(1-θ) dθ\n= 25 × [θ¹⁰/10 - θ¹¹/11]₀.₆¹\n= 25 × [(1/10 - 1/11) - (0.6¹⁰/10 - 0.6¹¹/11)]\n= 25 × [1/110 - (0.00605/10 - 0.00363/11)]\n= 25 × [0.00909 - 0.000274]\n≈ 0.220\n\nPosterior:\nP(F|data) = P(data|F)P(F) / [P(data|F)P(F) + P(data|B)P(B)]\n= (0.00977)(0.8) / [(0.00977)(0.8) + (0.220)(0.2)]\n= 0.00782 / (0.00782 + 0.044)\n= 0.00782 / 0.0518\n≈ 0.151\n\nP(fair | data) ≈ 15.1%\n\nDespite strong prior belief in fairness (80%), the data strongly suggest bias.'
+  },
+  {
+    id: 'math202-t7-ex12',
+    subjectId: 'math202',
+    topicId: 'math202-7',
+    type: 'written',
+    title: 'Metropolis-Hastings Algorithm',
+    description: 'Describe the Metropolis-Hastings algorithm for sampling from a posterior distribution. Include the acceptance probability formula and explain why this algorithm works.',
+    difficulty: 4,
+    hints: [
+      'MH generates a Markov chain whose stationary distribution is the target posterior',
+      'Key components: proposal distribution, acceptance probability',
+      'The algorithm ensures detailed balance'
+    ],
+    solution: 'Metropolis-Hastings Algorithm:\n\n1. Initialize: Choose starting value θ₀\n\n2. For iteration i = 1, 2, ..., N:\n   a. Propose: Generate θ* from proposal distribution q(θ*|θᵢ₋₁)\n   \n   b. Calculate acceptance probability:\n      α = min(1, [p(θ*|data) × q(θᵢ₋₁|θ*)] / [p(θᵢ₋₁|data) × q(θ*|θᵢ₋₁)])\n   \n   c. Accept/Reject:\n      - Generate u ~ Uniform(0, 1)\n      - If u < α: set θᵢ = θ* (accept)\n      - Else: set θᵢ = θᵢ₋₁ (reject, stay at current value)\n\n3. After burn-in period, samples {θᵢ} approximate draws from posterior\n\nWhy it works:\n- Detailed balance: π(θ)T(θ→θ*) = π(θ*)T(θ*→θ)\n  where π is target distribution, T is transition kernel\n- This ensures the Markov chain has π as its stationary distribution\n- The acceptance ratio cancels normalizing constants, so we only need posterior up to proportionality\n\nSpecial case - Metropolis: When q is symmetric, q(θ*|θ) = q(θ|θ*), the ratio simplifies to:\nα = min(1, p(θ*|data)/p(θᵢ₋₁|data))'
+  },
+  {
+    id: 'math202-t7-ex13',
+    subjectId: 'math202',
+    topicId: 'math202-7',
+    type: 'written',
+    title: 'Gibbs Sampling',
+    description: 'Explain how Gibbs sampling works for a model with two parameters θ₁ and θ₂. What are its advantages over general Metropolis-Hastings?',
+    difficulty: 4,
+    hints: [
+      'Gibbs samples from full conditional distributions',
+      'Alternates between updating each parameter given the others',
+      'Special case of MH with acceptance probability = 1'
+    ],
+    solution: 'Gibbs Sampling for two parameters:\n\n1. Initialize: θ₁⁽⁰⁾, θ₂⁽⁰⁾\n\n2. For iteration i = 1, 2, ..., N:\n   a. Sample θ₁⁽ⁱ⁾ ~ p(θ₁ | θ₂⁽ⁱ⁻¹⁾, data)\n   b. Sample θ₂⁽ⁱ⁾ ~ p(θ₂ | θ₁⁽ⁱ⁾, data)\n\n3. After burn-in, {(θ₁⁽ⁱ⁾, θ₂⁽ⁱ⁾)} are draws from joint posterior\n\nKey insight: Each step samples from a full conditional distribution (one parameter given all others and data).\n\nAdvantages over general MH:\n1. No proposal distribution to tune\n2. All proposals are accepted (acceptance rate = 100%)\n3. Often easier when full conditionals have known forms (e.g., conjugate priors)\n4. No need to calculate acceptance ratios\n5. Can exploit conjugate relationships within hierarchical models\n\nDisadvantages:\n- Requires knowing full conditionals in closed form\n- Can mix slowly with highly correlated parameters\n- May not be applicable when conditionals are intractable\n\nGibbs as special case of MH:\nThe Gibbs update is MH with proposal q(θ₁*|θ₁, θ₂) = p(θ₁|θ₂, data), giving acceptance ratio = 1.'
+  },
+  {
+    id: 'math202-t7-ex14',
+    subjectId: 'math202',
+    topicId: 'math202-7',
+    type: 'written',
+    title: 'Empirical Bayes',
+    description: 'Explain the empirical Bayes approach and contrast it with fully Bayesian inference. What are its advantages and limitations?',
+    difficulty: 3,
+    hints: [
+      'Empirical Bayes estimates hyperparameters from data',
+      'Consider the distinction between unknown parameters and hyperparameters',
+      'Think about computational and philosophical trade-offs'
+    ],
+    solution: 'Empirical Bayes Approach:\n\nHierarchical model: Data ~ p(x|θ), Prior: θ ~ p(θ|η)\n\nEmpirical Bayes (EB):\n1. Estimate hyperparameters η from marginal likelihood:\n   η̂ = argmax p(data | η) = argmax ∫ p(data|θ)p(θ|η) dθ\n2. Use p(θ|η̂) as "estimated prior"\n3. Compute posterior p(θ|data, η̂)\n\nFully Bayesian:\n1. Place hyperprior on η: p(η)\n2. Compute full posterior p(θ, η|data)\n3. Marginalize: p(θ|data) = ∫ p(θ|data, η)p(η|data) dη\n\nAdvantages of Empirical Bayes:\n- Computationally simpler (avoid hyperprior integration)\n- Data-driven prior specification\n- Good practical performance, especially with large datasets\n- No need to specify subjective hyperprior\n\nLimitations:\n- Underestimates uncertainty (ignores variability in η)\n- "Double-dipping": uses data twice (to set prior and for inference)\n- Not coherently Bayesian (philosophical objection)\n- Can overfit with small samples\n\nWhen EB works well:\n- Large sample sizes (η well-estimated)\n- Many related parameters (borrowing strength)\n- Computational constraints prevent full Bayes'
+  },
+  {
+    id: 'math202-t7-ex15',
+    subjectId: 'math202',
+    topicId: 'math202-7',
+    type: 'written',
+    title: 'Bayesian Linear Regression',
+    description: 'In Bayesian linear regression with y = Xβ + ε where ε ~ N(0, σ²I), suppose we use prior β ~ N(0, τ²I). Describe how this relates to ridge regression and explain the posterior distribution of β.',
+    difficulty: 5,
+    hints: [
+      'Ridge regression adds L2 penalty λ||β||²',
+      'The connection involves the ratio σ²/τ²',
+      'Posterior is also Normal (conjugacy)'
+    ],
+    solution: 'Setup:\n- Likelihood: y | β, σ² ~ N(Xβ, σ²I)\n- Prior: β ~ N(0, τ²I)\n\nPosterior of β | y, σ², τ²:\n\nBy conjugacy, posterior is Normal:\nβ | y ~ N(μ_post, Σ_post)\n\nwhere:\nΣ_post = (X\'X/σ² + I/τ²)⁻¹\nμ_post = Σ_post × (X\'y/σ²)\n\nAlternatively:\nμ_post = (X\'X + λI)⁻¹X\'y where λ = σ²/τ²\n\nConnection to Ridge Regression:\n- Ridge estimate: β̂_ridge = (X\'X + λI)⁻¹X\'y\n- This equals the Bayesian posterior mean!\n- λ = σ²/τ² is the regularization parameter\n- Larger prior variance τ² → smaller λ → less shrinkage\n- Smaller prior variance τ² → larger λ → more shrinkage toward 0\n\nInterpretation:\n- Ridge regression is MAP estimation under Normal prior\n- τ² controls strength of prior belief that β is near 0\n- Bayesian approach additionally quantifies uncertainty via Σ_post\n- Can obtain credible intervals, prediction intervals, etc.\n\nBayesian advantage: Full posterior distribution, not just point estimate.'
+  },
+  {
+    id: 'math202-t7-ex16',
+    subjectId: 'math202',
+    topicId: 'math202-7',
+    type: 'written',
+    title: 'Model Comparison with BIC',
+    description: 'The Bayesian Information Criterion (BIC) approximates -2 log(marginal likelihood). For comparing two models M₁ (2 parameters) and M₂ (5 parameters), if their maximized log-likelihoods are ℓ₁ = -150 and ℓ₂ = -145 with n = 100 observations, which model is preferred?',
+    difficulty: 4,
+    hints: [
+      'BIC = -2ℓ + k×log(n) where k is number of parameters',
+      'Lower BIC is better',
+      'BIC approximates -2 log(Bayes factor) + constant'
+    ],
+    solution: 'BIC formula: BIC = -2ℓ + k×log(n)\n\nwhere ℓ = maximized log-likelihood, k = number of parameters, n = sample size\n\nFor M₁ (k₁ = 2, ℓ₁ = -150):\nBIC₁ = -2(-150) + 2×log(100)\n= 300 + 2×4.605\n= 300 + 9.21\n= 309.21\n\nFor M₂ (k₂ = 5, ℓ₂ = -145):\nBIC₂ = -2(-145) + 5×log(100)\n= 290 + 5×4.605\n= 290 + 23.03\n= 313.03\n\nComparison:\nBIC₁ = 309.21 < BIC₂ = 313.03\n\nΔBIC = BIC₂ - BIC₁ = 3.82\n\nDecision: M₁ (simpler model) is preferred\n\nInterpretation:\n- Although M₂ fits better (higher likelihood), the 3 extra parameters are not justified\n- ΔBIC ≈ 3.82 corresponds to "positive evidence" for M₁ (Kass & Raftery scale)\n- exp(-ΔBIC/2) ≈ 0.15 is approximate Bayes factor, suggesting M₁ is ~7× more probable\n\nNote: BIC penalizes complexity more heavily than AIC, favoring simpler models.'
   }
 ];
