@@ -1,8 +1,14 @@
 # Advanced Shortest Path Algorithms
 
-Beyond Dijkstra, several algorithms handle negative edges, all-pairs queries, and specialized graph structures.
+While Dijkstra's algorithm efficiently handles graphs with non-negative edge weights, many real-world problems involve negative weights or require shortest paths between all pairs of vertices. Financial modeling may involve negative costs (rebates, arbitrage). Differential constraints in scheduling naturally produce negative weights. All-pairs queries arise when building distance matrices or precomputing routing tables.
+
+This section explores algorithms that extend beyond Dijkstra's capabilities: Bellman-Ford for negative weights, Floyd-Warshall for all-pairs shortest paths, Johnson's algorithm combining both techniques efficiently, and specialized algorithms like 0-1 BFS for binary weights. Understanding when to apply each algorithm—based on graph structure, weight properties, and query patterns—is essential for choosing efficient solutions.
+
+The unifying theme is exploiting structure: DAGs allow linear-time shortest paths, 0-1 weights enable deque-based BFS, and sparse graphs favor Johnson's algorithm over Floyd-Warshall. Each specialized algorithm trades generality for efficiency in its domain.
 
 ## Bellman-Ford Algorithm
+
+Bellman-Ford is the workhorse algorithm for shortest paths with negative edges. Unlike Dijkstra, which greedily finalizes vertices, Bellman-Ford relaxes all edges V-1 times, guaranteeing correct distances even when negative edges create non-monotonic distance updates.
 
 Handles negative edge weights; detects negative cycles.
 

@@ -1,13 +1,17 @@
 # Comparison-Based Sorting Algorithms
 
-Comparison sorts determine element order by comparing pairs. Understanding their mechanics reveals fundamental algorithmic paradigms.
+Sorting is one of the most fundamental operations in computer science. Databases sort records for efficient queries, search engines sort results by relevance, graphics systems sort objects by depth for rendering, and operating systems sort processes by priority for scheduling. The ubiquity of sorting has driven decades of algorithm development, producing a rich landscape of techniques with different trade-offs.
+
+Comparison-based sorting algorithms determine element order by comparing pairs of elements, asking "is A less than B?" This simple interface applies to any ordered data type—numbers, strings, custom objects with comparison operators—making comparison sorts universally applicable. The trade-off is a fundamental limit: any comparison sort requires at least Ω(n log n) comparisons in the worst case.
+
+Understanding comparison sorts means understanding the major algorithmic paradigms: divide-and-conquer (merge sort, quick sort), incremental construction (insertion sort), and heap-based selection (heap sort). Each paradigm offers different trade-offs between time complexity, space usage, stability, and practical performance. Choosing the right algorithm for a specific context—data size, memory constraints, distribution properties—is a key skill in algorithm design.
 
 ## The Sorting Problem
 
 **Input**: Array of n comparable elements
 **Output**: Array with elements in non-decreasing order
 
-**Stability**: A sort is stable if equal elements maintain their relative order.
+**Stability**: A sort is stable if equal elements maintain their relative order. Stability matters when sorting by multiple keys (first by city, then by name within each city) or when the original order carries meaning.
 
 ## Selection Sort
 
