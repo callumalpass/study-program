@@ -210,6 +210,25 @@ function calculateSubjectCompletion(subject: Subject, progress: any): number {
     }
   });
 
+  const projectIds = subject.projectIds || [];
+  projectIds.forEach(projectId => {
+    totalItems++;
+    const submissions = progress.projectSubmissions?.[projectId];
+    if (submissions && submissions.length > 0) {
+      const bestSubmission = submissions.reduce((best: any, sub: any) => {
+        const score = sub.aiEvaluation?.score ?? 0;
+        const bestScore = best.aiEvaluation?.score ?? 0;
+        return score > bestScore ? sub : best;
+      });
+
+      if (bestSubmission.aiEvaluation) {
+        if (bestSubmission.aiEvaluation.score >= 70) completedItems++;
+      } else {
+        completedItems++;
+      }
+    }
+  });
+
   return totalItems === 0 ? 0 : Math.round((completedItems / totalItems) * 100);
 }
 

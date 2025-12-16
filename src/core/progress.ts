@@ -61,6 +61,31 @@ export function calculateSubjectCompletion(
     }
   });
 
+  // Count projects if present
+  const projectIds = subject.projectIds || [];
+  projectIds.forEach(projectId => {
+    totalItems++;
+    const submissions = progress.projectSubmissions?.[projectId];
+    if (submissions && submissions.length > 0) {
+      // Find best submission by AI score (or any submission if no AI eval)
+      const bestSubmission = submissions.reduce((best, sub) => {
+        const score = sub.aiEvaluation?.score ?? 0;
+        const bestScore = best.aiEvaluation?.score ?? 0;
+        return score > bestScore ? sub : best;
+      });
+
+      if (bestSubmission.aiEvaluation) {
+        // Has AI evaluation - require >= 70%
+        if (bestSubmission.aiEvaluation.score >= 70) {
+          completedItems++;
+        }
+      } else {
+        // No AI evaluation - count submission as complete
+        completedItems++;
+      }
+    }
+  });
+
   // If no items, return 0
   if (totalItems === 0) {
     return 0;
@@ -302,6 +327,8 @@ export function getSubjectProgressDetails(subject: Subject): {
   totalExams: number;
   exercisesCompleted: number;
   totalExercises: number;
+  projectsCompleted: number;
+  totalProjects: number;
   startedAt?: string;
   completedAt?: string;
 } {
@@ -313,6 +340,8 @@ export function getSubjectProgressDetails(subject: Subject): {
   let examsCompleted = 0;
   let totalExercises = 0;
   let exercisesCompleted = 0;
+  let totalProjects = subject.projectIds?.length ?? 0;
+  let projectsCompleted = 0;
 
   subject.topics.forEach(topic => {
     totalQuizzes += topic.quizIds.length;
@@ -353,6 +382,29 @@ export function getSubjectProgressDetails(subject: Subject): {
     });
   }
 
+  // Count projects
+  if (progress && subject.projectIds) {
+    subject.projectIds.forEach(projectId => {
+      const submissions = progress.projectSubmissions?.[projectId];
+      if (submissions && submissions.length > 0) {
+        const bestSubmission = submissions.reduce((best, sub) => {
+          const score = sub.aiEvaluation?.score ?? 0;
+          const bestScore = best.aiEvaluation?.score ?? 0;
+          return score > bestScore ? sub : best;
+        });
+
+        if (bestSubmission.aiEvaluation) {
+          if (bestSubmission.aiEvaluation.score >= 70) {
+            projectsCompleted++;
+          }
+        } else {
+          // No AI evaluation - count submission as complete
+          projectsCompleted++;
+        }
+      }
+    });
+  }
+
   return {
     status: progress?.status || 'not_started',
     completionPercentage: calculateSubjectCompletion(subject, progress),
@@ -362,6 +414,8 @@ export function getSubjectProgressDetails(subject: Subject): {
     totalExams,
     exercisesCompleted,
     totalExercises,
+    projectsCompleted,
+    totalProjects,
     startedAt: progress?.startedAt,
     completedAt: progress?.completedAt,
   };

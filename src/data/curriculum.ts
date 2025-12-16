@@ -48,7 +48,8 @@ export const curriculum: Subject[] = [
     ],
     estimatedHours: 120,
     topics: cs101Topics,
-    examIds: ['cs101-exam-midterm', 'cs101-exam-final']
+    examIds: ['cs101-exam-midterm', 'cs101-exam-final'],
+    projectIds: ['cs101-project-1', 'cs101-project-3', 'cs101-project-4']
   },
 
   {
@@ -93,7 +94,8 @@ export const curriculum: Subject[] = [
     ],
     estimatedHours: 90,
     topics: cs102Topics,
-    examIds: ['cs102-midterm', 'cs102-final']
+    examIds: ['cs102-midterm', 'cs102-final'],
+    projectIds: ['cs102-project-1', 'cs102-project-2', 'cs102-project-3', 'cs102-project-4']
   },
 
   {
@@ -115,7 +117,8 @@ export const curriculum: Subject[] = [
     ],
     estimatedHours: 110,
     topics: cs103Topics,
-    examIds: ['cs103-exam-midterm', 'cs103-exam-final']
+    examIds: ['cs103-exam-midterm', 'cs103-exam-final'],
+    projectIds: ['cs103-project-1', 'cs103-project-2']
   },
 
   // ============================================================================
@@ -140,7 +143,8 @@ export const curriculum: Subject[] = [
       'Prove properties of mathematical structures using formal methods'
     ],
     estimatedHours: 100,
-    topics: math102Topics
+    topics: math102Topics,
+    projectIds: ['math102-p1']
   },
 
   {
@@ -162,7 +166,8 @@ export const curriculum: Subject[] = [
     ],
     estimatedHours: 120,
     topics: cs104Topics,
-    examIds: ['cs104-exam-midterm', 'cs104-exam-final']
+    examIds: ['cs104-exam-midterm', 'cs104-exam-final'],
+    projectIds: ['cs104-project-1']
   },
 
   {
@@ -184,7 +189,8 @@ export const curriculum: Subject[] = [
     ],
     estimatedHours: 110,
     topics: cs105Topics,
-    examIds: ['cs105-exam-midterm', 'cs105-exam-final']
+    examIds: ['cs105-exam-midterm', 'cs105-exam-final'],
+    projectIds: ['cs105-project-1', 'cs105-project-2', 'cs105-project-3']
   },
 
   // ============================================================================
@@ -210,7 +216,8 @@ export const curriculum: Subject[] = [
     ],
     estimatedHours: 130,
     topics: cs201Topics,
-    examIds: ['cs201-exam-midterm', 'cs201-exam-final']
+    examIds: ['cs201-exam-midterm', 'cs201-exam-final'],
+    projectIds: ['cs201-project-maze']
   },
 
   {
@@ -232,7 +239,8 @@ export const curriculum: Subject[] = [
     ],
     estimatedHours: 110,
     topics: cs202Topics,
-    examIds: ['cs202-midterm', 'cs202-final']
+    examIds: ['cs202-midterm', 'cs202-final'],
+    projectIds: ['cs202-project-1', 'cs202-project-2', 'cs202-project-3']
   },
 
   {
@@ -254,7 +262,8 @@ export const curriculum: Subject[] = [
     ],
     estimatedHours: 100,
     topics: cs203Topics,
-    examIds: ['cs203-midterm', 'cs203-final']
+    examIds: ['cs203-midterm', 'cs203-final'],
+    projectIds: ['cs203-project-1', 'cs203-project-2', 'cs203-project-3']
   },
 
   {
@@ -298,7 +307,8 @@ export const curriculum: Subject[] = [
     ],
     estimatedHours: 120,
     topics: cs204Topics,
-    examIds: ['cs204-midterm', 'cs204-final']
+    examIds: ['cs204-midterm', 'cs204-final'],
+    projectIds: ['cs204-project-1', 'cs204-project-2', 'cs204-project-3']
   },
 
   // ============================================================================
@@ -324,7 +334,8 @@ export const curriculum: Subject[] = [
     ],
     estimatedHours: 110,
     topics: cs205Topics,
-    examIds: ['cs205-midterm', 'cs205-final']
+    examIds: ['cs205-midterm', 'cs205-final'],
+    projectIds: ['cs205-project-1', 'cs205-project-2', 'cs205-project-3']
   },
 
   {
