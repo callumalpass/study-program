@@ -110,6 +110,7 @@ async function parseTopicsFile(filePath) {
   }
 
   // Extract topic definitions - look for objects with id, title, quizIds
+  // Only match top-level topics (which have quizIds), not nested subtopics
   const topicBlockRegex = /\{\s*id:\s*['"]([^'"]+)['"]\s*,\s*title:\s*['"]([^'"]+)['"]/g;
   let topicMatch;
   while ((topicMatch = topicBlockRegex.exec(content)) !== null) {
@@ -121,11 +122,15 @@ async function parseTopicsFile(filePath) {
     const blockEnd = findMatchingBrace(content, blockStart);
     const block = content.slice(blockStart, blockEnd);
 
-    // Extract quizIds
+    // Extract quizIds - only top-level topics have this field
     const quizIdsMatch = block.match(/quizIds:\s*\[([^\]]*)\]/);
-    const quizIds = quizIdsMatch
-      ? quizIdsMatch[1].match(/['"]([^'"]+)['"]/g)?.map(s => s.replace(/['"]/g, '')) || []
-      : [];
+
+    // Skip this block if it doesn't have quizIds (it's a subtopic, not a topic)
+    if (!quizIdsMatch) {
+      continue;
+    }
+
+    const quizIds = quizIdsMatch[1].match(/['"]([^'"]+)['"]/g)?.map(s => s.replace(/['"]/g, '')) || [];
 
     // Extract exerciseIds
     const exerciseIdsMatch = block.match(/exerciseIds:\s*\[([^\]]*)\]/);
