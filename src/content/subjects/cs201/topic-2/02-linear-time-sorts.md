@@ -1,8 +1,16 @@
 # Linear-Time Sorting Algorithms
 
-Non-comparison sorts exploit structure in the data to achieve O(n) time, breaking the Ω(n log n) comparison-based lower bound.
+The Ω(n log n) lower bound for comparison-based sorting might seem like an insurmountable barrier, but it applies only when the algorithm learns about element order exclusively through pairwise comparisons. By exploiting additional information about the data—its range, digit structure, or distribution—we can achieve linear time sorting. These non-comparison sorts represent a fundamental insight: more information enables faster algorithms.
+
+Linear-time sorting algorithms trade generality for speed. Where comparison sorts work on any totally ordered type, non-comparison sorts require specific assumptions about the data. Counting sort assumes integer keys in a bounded range. Radix sort assumes fixed-length representations. Bucket sort assumes approximately known distributions. When these assumptions hold, the algorithms dramatically outperform comparison sorts; when they don't, comparison sorts remain the only option.
+
+Understanding when linear-time sorts apply requires understanding their assumptions. A naive application of counting sort to 64-bit integers would require astronomically more space than the data itself. Radix sort on variable-length strings requires careful handling. Bucket sort on pathologically distributed data degenerates to quadratic time. The art lies in recognizing when data characteristics enable linear-time approaches.
 
 ## Counting Sort
+
+Counting sort is conceptually the simplest linear-time sort: count how many times each value appears, then reconstruct the sorted array from these counts. The key insight is that knowing the count of each value tells us exactly where each element belongs in the output. If we have three 1s, two 2s, and one 3, then 1s occupy positions 0-2, 2s occupy positions 3-4, and the 3 occupies position 5.
+
+The algorithm works in three phases. First, we count occurrences of each value, building a histogram of the input. Second, we convert counts to cumulative counts, which tell us the ending position for elements of each value. Third, we iterate through the input backwards, placing each element at its correct position and decrementing the count. The backward iteration ensures stability—equal elements maintain their original relative order.
 
 **Idea**: Count occurrences of each value, then place elements accordingly.
 

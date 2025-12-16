@@ -1,6 +1,10 @@
 # Recurrence Relations for Algorithm Analysis
 
-Recurrence relations express running time in terms of smaller inputs. Solving recurrences reveals algorithm complexity.
+When analyzing recursive algorithms, running time depends on running time for smaller inputs—a mathematical relationship called a recurrence relation. The recurrence T(n) = 2T(n/2) + O(n) says: "to solve a size-n problem, solve two size-n/2 problems and do O(n) additional work." Solving such recurrences—finding closed-form expressions for T(n)—reveals the algorithm's complexity class.
+
+Recurrences capture the mathematical essence of divide and conquer. The terms in a recurrence correspond directly to algorithm structure: the number of recursive calls, how much the problem shrinks, and the work done outside recursion. Changing any of these components changes the recurrence and potentially the complexity class. Reducing eight recursive matrix multiplications to seven (Strassen's insight) changes O(n³) to O(n^2.807)—the recurrence captures why.
+
+Multiple techniques exist for solving recurrences: substitution (guess and verify by induction), recursion trees (visualize work distribution), and the Master Theorem (formulaic solution for standard forms). Each technique illuminates different aspects of the recurrence. Recursion trees provide visual intuition about where work concentrates. The Master Theorem provides quick answers for common patterns. Substitution provides rigorous proofs when needed.
 
 ## Setting Up Recurrences
 

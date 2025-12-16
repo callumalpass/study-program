@@ -1,6 +1,10 @@
 # External Sorting
 
-When data exceeds available memory, we need external sorting algorithms that minimize expensive disk I/O operations.
+The algorithms we've studied assume data fits in memory, but real-world datasets routinely exceed available RAM. Sorting a terabyte of log files, processing satellite imagery, or building database indexes all require external sorting—algorithms designed for data that lives primarily on disk. The fundamental challenge shifts from minimizing comparisons to minimizing I/O operations, since disk access is roughly 100,000 times slower than memory access.
+
+External sorting algorithms exploit a key insight: sequential disk access is vastly faster than random access. A hard drive that requires 10 milliseconds to seek to a random location can transfer megabytes per second once positioned. External merge sort capitalizes on this by organizing work into sequential passes over the data. First, we sort chunks that fit in memory and write them as "runs" to disk. Then we merge runs together, reading and writing sequentially. The total I/O is proportional to the data size times the logarithm of the number of runs—often just two or three full passes through the data.
+
+Understanding external sorting illuminates the broader principle of algorithm design for memory hierarchies. The same principles apply to cache-efficient algorithms that minimize cache misses, to out-of-core algorithms for GPU programming, and to distributed sorting across clusters. The I/O model of computation, which counts block transfers rather than individual operations, provides theoretical foundation for analyzing these algorithms.
 
 ## The Memory Hierarchy Problem
 

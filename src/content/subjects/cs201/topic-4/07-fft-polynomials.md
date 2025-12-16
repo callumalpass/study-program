@@ -1,6 +1,10 @@
 # Fast Fourier Transform and Polynomial Multiplication
 
-The Fast Fourier Transform (FFT) enables O(n log n) polynomial multiplication—one of the most important algorithms in computer science.
+The Fast Fourier Transform (FFT) is arguably the most important algorithm of the twentieth century. Its applications span signal processing, image compression, cryptography, scientific computing, and telecommunications. At its core, FFT solves polynomial multiplication in O(n log n) time instead of O(n²)—an asymptotic improvement that enables real-time audio processing, efficient multiplication of large integers, and countless other applications.
+
+The key insight is representation change. In coefficient form, polynomial multiplication requires O(n²) work—computing each coefficient of the product requires summing O(n) terms. In point-value form (the polynomial evaluated at n points), multiplication is O(n)—just multiply corresponding values. The FFT provides O(n log n) conversion between representations, making the detour through point-value form faster than direct multiplication.
+
+The mathematical elegance lies in choosing evaluation points wisely. Arbitrary points would require O(n²) evaluation. But the roots of unity—complex numbers evenly spaced on the unit circle—have recursive structure that enables divide and conquer. The n-th roots of unity squared give the (n/2)-th roots, reducing evaluation at n points to two evaluations at n/2 points. This recursive structure is the heart of FFT's efficiency.
 
 ## The Problem
 

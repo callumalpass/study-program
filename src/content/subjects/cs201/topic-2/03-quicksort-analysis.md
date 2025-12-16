@@ -1,6 +1,10 @@
 # QuickSort Deep Dive
 
-QuickSort is the most widely used sorting algorithm in practice. Understanding its mechanics, variations, and analysis is essential for algorithm design.
+QuickSort is arguably the most influential sorting algorithm ever invented. Despite its O(n²) worst case, it dominates practical sorting applications because its average-case behavior combines excellent theoretical performance with outstanding cache efficiency. The algorithm's elegance lies in its simplicity: choose a pivot element, partition the array so smaller elements precede larger ones, then recursively sort the partitions.
+
+What makes QuickSort fascinating is the tension between its simplicity and the depth of its analysis. The basic algorithm is easy to understand—partition and recurse—but achieving optimal performance requires understanding partitioning schemes, pivot selection strategies, and the subtle ways implementation choices affect cache behavior. Tony Hoare invented the algorithm in 1959 when he was just 25, and it remains the algorithm of choice for general-purpose sorting more than six decades later.
+
+The practical dominance of QuickSort stems from several factors. Unlike merge sort, it operates in-place, requiring only O(log n) stack space for recursion. Its partitioning phase exhibits excellent cache locality, accessing elements sequentially rather than jumping around memory. And while pathological inputs can cause O(n²) behavior, randomized pivot selection or median-of-three strategies make such cases astronomically unlikely for random data.
 
 ## The Algorithm
 

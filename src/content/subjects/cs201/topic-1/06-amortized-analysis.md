@@ -1,6 +1,10 @@
 # Amortized Analysis
 
-Amortized analysis provides a more accurate picture of algorithm performance by averaging the cost of operations over a sequence, rather than analyzing worst-case cost of individual operations.
+Some operations are occasionally expensive but rarely so. Python's list append usually takes O(1) time, but occasionally triggers an O(n) resize when the underlying array fills. Analyzing each operation independently—claiming append is O(n)—paints a misleading picture. Over many operations, the occasional expensive ones are rare enough that the average cost remains O(1). Amortized analysis formalizes this intuition.
+
+The key insight is that expensive operations create "room" for many cheap operations. When a dynamic array doubles, it gains n slots; the next n-1 appends are guaranteed cheap. The expensive operation "pays for itself" over subsequent operations. Amortized analysis captures this payoff structure, assigning costs that reflect long-run behavior rather than worst-case individual operations.
+
+Amortized bounds are stronger than average-case bounds because they require no assumptions about input distribution. No matter what sequence of operations you perform—even adversarially chosen—the total cost is bounded by the amortized cost times the number of operations. This makes amortized analysis essential for data structure design, where we can't predict or control usage patterns.
 
 ## Motivation
 

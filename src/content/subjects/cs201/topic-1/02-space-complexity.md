@@ -1,6 +1,10 @@
 # Space Complexity
 
-Space complexity measures the memory an algorithm uses as a function of input size. Efficient memory usage is crucial for processing large datasets and running on resource-constrained devices.
+While time complexity captures how long algorithms take, space complexity captures how much memory they consume. In an era of vast RAM and cheap storage, space might seem less critical than time—but this view misses crucial realities. Memory hierarchies mean that algorithms fitting in cache run orders of magnitude faster than those that spill to disk. Embedded systems have hard memory limits. Cloud computing charges by memory usage. And sometimes the data simply won't fit, no matter how much hardware you throw at it.
+
+Space and time often trade off against each other. Memoization speeds up dynamic programming by storing intermediate results—trading O(n) space for exponential time savings. Hash tables enable O(1) lookups by using O(n) space for the table. In-place algorithms like heapsort and quicksort minimize memory at the cost of implementation complexity. Understanding these tradeoffs enables informed choices based on actual constraints rather than default assumptions.
+
+Space analysis requires careful accounting. Input space (the data itself) is usually not counted—we want to know what additional memory the algorithm requires. Recursive algorithms consume stack space proportional to maximum recursion depth. Hidden allocations in string concatenation or list slicing can turn an apparently O(n) algorithm into O(n²) space. Mastering space complexity means seeing these hidden costs and knowing when they matter.
 
 ## What Counts as Space?
 

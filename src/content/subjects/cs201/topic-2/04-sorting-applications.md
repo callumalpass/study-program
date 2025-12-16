@@ -1,6 +1,10 @@
 # Sorting Applications and Selection
 
-Sorting enables efficient solutions to many problems. Understanding sorting applications and related algorithms like selection expands your algorithmic toolkit.
+Sorting is not just an end in itself—it is a powerful algorithmic primitive that enables efficient solutions to a vast array of problems. When data is sorted, questions that would require exhaustive search become answerable through binary search or simple scans. Duplicates cluster together for easy detection. Closest pairs become adjacent. The median sits conveniently in the middle. This preprocessing paradigm—sort first, then exploit order—is one of the most widely applicable techniques in algorithm design.
+
+The selection problem, closely related to sorting, asks for the kth smallest element without fully sorting. At first glance, selection seems to require sorting (O(n log n)), but clever algorithms achieve O(n) expected time by observing that we only need to find one element, not order them all. QuickSelect adapts QuickSort's partitioning, recursing into only one partition. The median-of-medians algorithm guarantees O(n) worst case through clever pivot selection, though its constant factors make it slower in practice than randomized QuickSelect.
+
+Understanding when sorting helps—and when it's overkill—is crucial for algorithm design. For one-time queries, direct approaches may be faster. But when the same data supports multiple queries, the O(n log n) sorting cost amortizes across queries, making subsequent O(log n) searches a bargain. Database indexing, search engine ranking, and many data analysis pipelines rely on this principle.
 
 ## Sorting as a Preprocessing Step
 

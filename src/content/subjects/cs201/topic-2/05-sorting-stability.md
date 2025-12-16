@@ -1,6 +1,10 @@
 # Sorting Stability and Practical Considerations
 
-Understanding stability and real-world trade-offs is essential for choosing the right sorting algorithm.
+The theoretical analysis of sorting algorithms—comparing asymptotic complexities and proving lower bounds—provides essential foundation, but practical sorting requires understanding subtle properties that theory alone doesn't capture. Stability, adaptiveness, cache behavior, and memory usage all influence algorithm choice in ways that big-O notation cannot express. A theoretically optimal O(n log n) algorithm may perform worse than a theoretically inferior O(n²) algorithm on small inputs or nearly-sorted data.
+
+Stability is perhaps the most important of these practical properties. A stable sort preserves the relative order of equal elements, which seems trivial until you need to sort by multiple keys. Sorting employees first by name, then stably by department, produces employees alphabetized within each department—a result that unstable sorting cannot guarantee. Database systems, spreadsheet applications, and many data processing pipelines depend on stability for correct behavior.
+
+Adaptive algorithms exploit existing order in the input, running faster on nearly-sorted data. Insertion sort is the classic adaptive algorithm: O(n) on sorted input, O(n²) on reverse-sorted. Timsort, Python's standard sort, is a sophisticated adaptive algorithm that detects and exploits "runs" of already-sorted elements. Real-world data is rarely random—log files are chronological, user lists are often alphabetical, sensor data trends smoothly—so adaptiveness provides substantial practical speedup.
 
 ## What is Stability?
 

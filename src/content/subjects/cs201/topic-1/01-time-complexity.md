@@ -1,6 +1,10 @@
 # Time Complexity Fundamentals
 
-Time complexity measures how an algorithm's running time grows with input size. It's the primary metric for comparing algorithm efficiency.
+Time complexity is the language we use to describe how algorithms scale. When someone asks whether an algorithm is "fast" or "slow," they're really asking about time complexity—how does running time grow as input size increases? An algorithm that processes a million records quickly might become unusable on a billion records, while another algorithm that seems slower initially might scale gracefully to any size.
+
+The genius of complexity analysis is its abstraction. Rather than measuring wall-clock time (which depends on hardware, programming language, and system load), we count fundamental operations as a function of input size. This provides machine-independent comparison: an O(n²) algorithm will always lose to an O(n log n) algorithm for sufficiently large inputs, regardless of whether one runs on a supercomputer and the other on a phone.
+
+Understanding time complexity transforms how you think about algorithms. Instead of hoping code is "fast enough," you can predict performance mathematically. Instead of benchmarking every variation, you can identify bottlenecks analytically. This predictive power is essential for designing systems that scale—the difference between a startup that crashes under success and one that handles growth gracefully often comes down to algorithmic complexity.
 
 ## Why Measure Complexity?
 

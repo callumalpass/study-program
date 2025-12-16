@@ -1,6 +1,10 @@
 # Closest Pair Problem
 
-Finding the closest pair of points is a fundamental computational geometry problem with an elegant divide-and-conquer solution.
+The closest pair problem asks: given n points in the plane, which two are nearest to each other? The brute force solution checks all O(n²) pairs, but a beautiful divide-and-conquer algorithm achieves O(n log n). This algorithm exemplifies how geometric insight enables efficient combination of subproblem solutions.
+
+The key challenge is the combine step. After recursively finding closest pairs in left and right halves, we must check for a closer pair spanning the dividing line. Naively, this requires O(n²) comparisons—eliminating all savings from recursion. The geometric insight that saves us: in a strip of width 2δ around the dividing line, any point has at most 7 neighbors within distance δ. This constant bound makes strip checking O(n), enabling the O(n log n) total time.
+
+Understanding the closest pair algorithm builds intuition for computational geometry more broadly. The interplay between algorithmic structure (divide and conquer) and geometric properties (bounded neighbors in sparse regions) recurs in convex hull, Voronoi diagram, and many other geometric algorithms. The technique of maintaining multiple sorted orderings (by x and by y) to avoid re-sorting also appears throughout computational geometry.
 
 ## Problem Statement
 

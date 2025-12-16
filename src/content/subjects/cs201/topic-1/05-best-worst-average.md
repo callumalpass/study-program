@@ -1,6 +1,10 @@
 # Best, Worst, and Average Case Analysis
 
-Algorithm performance varies with input. Understanding these cases helps choose algorithms and predict real-world behavior.
+A single complexity number rarely tells the whole story. Linear search might find its target immediately or scan the entire array—same algorithm, vastly different performance. Quick sort runs in O(n log n) on most inputs but degrades to O(n²) on already-sorted data with poor pivot choice. Understanding best, worst, and average case analysis lets you reason about algorithm behavior across the spectrum of possible inputs.
+
+The three cases serve different purposes. Worst case provides guarantees: "no matter what input you give me, this algorithm finishes in O(f(n)) time." Average case predicts typical behavior under assumptions about input distribution. Best case reveals theoretical limits and helps identify when an algorithm's natural advantages emerge. Choosing which case to optimize—and which to report—depends entirely on context.
+
+Different applications demand different analyses. Real-time systems that must meet deadlines need worst-case guarantees; occasional slow responses are unacceptable. Batch processing systems care more about throughput, making average case the relevant metric. Adversarial environments (security, games) must assume worst case since attackers will find pathological inputs. Understanding your application's needs determines which analysis matters.
 
 ## The Three Cases
 

@@ -1,6 +1,10 @@
 # Hybrid Sorting Algorithms
 
-Real-world sorting implementations combine multiple algorithms to achieve optimal performance across different input sizes and characteristics.
+Production-quality sorting implementations never use a single algorithm. Instead, they combine multiple algorithms, each chosen for the situations where it excels. Introsort, used in C++ standard libraries, switches from QuickSort to HeapSort when recursion depth suggests pathological behavior, preventing O(n²) worst case. Timsort, Python's standard sort, combines natural run detection with insertion sort and merge sort to achieve O(n) on already-sorted data. These hybrid approaches represent the evolution from theoretical algorithms to engineering solutions.
+
+The motivation for hybrid sorting is simple: different algorithms have different strengths. QuickSort's partitioning has excellent cache locality but risks O(n²) on adversarial inputs. HeapSort guarantees O(n log n) but has poor cache behavior. Insertion sort is O(n²) but has minimal overhead, making it fastest for small arrays. By dynamically choosing algorithms based on input characteristics, hybrids achieve better performance than any single algorithm across diverse workloads.
+
+Understanding hybrid sorts requires understanding the engineering trade-offs that theory abstracts away. Constant factors matter: an O(n log n) algorithm with a large constant loses to O(n²) for small n. Cache behavior matters: sequential access patterns run circles around random access on modern hardware. Branch prediction matters: unpredictable branches can devastate performance. Production sorts optimize for these realities while maintaining theoretical guarantees as fallback.
 
 ## Why Hybrid Approaches?
 

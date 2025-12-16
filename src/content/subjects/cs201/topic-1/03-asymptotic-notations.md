@@ -1,6 +1,10 @@
 # Asymptotic Notations
 
-Beyond Big-O, several notations precisely describe algorithm behavior. Understanding all asymptotic notations enables precise complexity analysis.
+Asymptotic notation is the formal language of algorithm analysis. While "O(n²)" has entered everyday programmer vocabulary, the full family of notations—Big-O, Big-Ω, Big-Θ, little-o, and little-ω—enables precise statements about algorithm behavior. Using the wrong notation leads to imprecise or incorrect claims; using the right notation communicates exactly what you mean.
+
+Big-O describes upper bounds: "this algorithm takes at most O(n²) time." Big-Ω describes lower bounds: "this algorithm takes at least Ω(n log n) time." Big-Θ describes tight bounds: "this algorithm takes exactly Θ(n) time." The distinction matters when making claims about algorithms. Saying "quicksort is O(n²)" is true but misleading—it suggests worst-case behavior while hiding the O(n log n) average case. Saying "comparison sorting requires Ω(n log n) comparisons" establishes a fundamental limit that no comparison sort can beat.
+
+The mathematical definitions behind these notations—involving limits, constants, and threshold values—enable rigorous proofs about algorithm behavior. You can prove that one algorithm is asymptotically faster than another, that a problem has an inherent lower bound, or that a proposed algorithm achieves optimal complexity. This rigor elevates algorithm analysis from handwaving ("it seems fast") to mathematical certainty.
 
 ## Big-O: Upper Bound
 

@@ -1,6 +1,10 @@
 # Analyzing Code Complexity
 
-Translating code into complexity expressions requires systematic analysis of loops, recursion, and data structure operations. This skill is essential for predicting algorithm performance.
+Theory means nothing if you can't apply it. Analyzing real code—with nested loops, recursive calls, hidden data structure costs, and subtle control flow—requires systematic techniques and practiced intuition. A single loop is easy: O(n). But what about a loop where the iteration count depends on an outer variable? A recursion that branches multiple ways? An innocent-looking library call that hides O(n) complexity?
+
+The key insight is decomposition. Complex code breaks into simpler pieces whose complexities combine according to mathematical rules. Sequential steps add (or rather, the maximum dominates). Nested loops multiply. Recursion creates recurrence relations solvable by established techniques. By systematically applying these rules, any code can be analyzed, no matter how convoluted.
+
+Practice reveals common patterns. A loop that halves its variable each iteration runs O(log n) times. Nested loops where both bounds are n yield O(n²). A recursion that halves the problem and does O(n) work gives O(n log n) via the Master Theorem. Recognizing these patterns accelerates analysis and builds intuition about where complexity comes from—which loops matter, which are red herrings, and where optimization effort should focus.
 
 ## Analyzing Iterative Code
 

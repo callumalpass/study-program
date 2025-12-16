@@ -1,6 +1,10 @@
 # The Master Theorem
 
-The Master Theorem provides a direct formula for solving divide-and-conquer recurrences of a specific form, eliminating the need for detailed analysis in common cases.
+The Master Theorem is a powerful tool that instantly solves most divide-and-conquer recurrences. Instead of drawing recursion trees or grinding through substitution proofs, you compare the recurrence's parameters to determine which of three cases applies, then read off the solution. For the vast majority of divide-and-conquer algorithms, the Master Theorem provides the answer in seconds.
+
+The theorem's genius lies in its characterization of where work concentrates. In some algorithms, most work happens at the leaves of the recursion tree—the base cases dominate. In others, work is evenly distributed across all levels. In still others, the root dominates—the combine step overshadows recursion. The Master Theorem identifies which pattern applies by comparing the combine step's cost to the number and size of subproblems.
+
+Understanding the Master Theorem means understanding the three cases intuitively, not just memorizing formulas. Case 1 applies when recursion creates more work than combination eliminates—work grows toward the leaves. Case 3 applies when combination dominates—work shrinks toward the leaves. Case 2, the balanced case, applies when work is roughly equal at each level, giving an extra logarithmic factor. This intuition helps recognize which case applies and why.
 
 ## Standard Form
 

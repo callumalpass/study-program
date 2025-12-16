@@ -1,6 +1,10 @@
 # Matrix Multiplication Algorithms
 
-Matrix multiplication is fundamental to computer graphics, machine learning, and scientific computing. The quest for faster algorithms reveals deep algorithmic insights.
+Matrix multiplication lies at the heart of modern computing. Every neural network forward pass, every 3D graphics transformation, every scientific simulation involves multiplying matrices. The naive O(n³) algorithm—three nested loops—is simple but slow for large matrices. The quest to improve this bound reveals fascinating algorithmic territory where theory and practice diverge dramatically.
+
+Strassen's 1969 breakthrough proved that O(n³) is not optimal: clever arithmetic reduces the exponent to about 2.807. This was revolutionary—not because it's practically faster (the constants are large), but because it proved improvement is possible. Subsequent theoretical work pushed the exponent toward 2.37, though these algorithms remain impractical. The true lower bound—can we do better than O(n²)?—remains one of computer science's great open problems.
+
+In practice, cache-optimized O(n³) algorithms outperform Strassen for most matrix sizes. Modern libraries like BLAS and cuBLAS achieve near-theoretical peak performance through blocking, vectorization, and parallelism. Understanding both theoretical algorithms (Strassen) and practical optimizations (cache blocking) provides complete perspective on this fundamental computational problem.
 
 ## The Standard Algorithm
 

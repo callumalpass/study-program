@@ -1,6 +1,10 @@
 # Classic Divide and Conquer Algorithms
 
-Beyond sorting, divide and conquer enables efficient solutions to diverse computational problems.
+Divide and conquer's applicability extends far beyond sorting. The same recursive decomposition that makes merge sort elegant enables efficient solutions for computational geometry (closest pair of points), numerical algorithms (matrix and integer multiplication), and data analysis (counting inversions). Each application reveals new aspects of the paradigm: how to split problems, what makes combination efficient, and where the mathematical insight lies.
+
+These classic algorithms demonstrate that divide and conquer is more than a technique—it's a way of thinking. When faced with an O(n²) or O(n³) brute force solution, ask: can I split this problem in half? Can I solve halves independently? Can I combine solutions efficiently? Often the answer is yes, but the combination step requires clever insight. For closest pair, the insight is geometric: only a bounded number of points near the dividing line need checking. For Strassen's algorithm, the insight is algebraic: clever arithmetic reduces eight multiplications to seven.
+
+Mastering these algorithms builds intuition for when divide and conquer applies and how to design the crucial combination step. The patterns recur: maintain sorted orders, exploit geometric constraints, use algebraic identities. Once internalized, these patterns guide the design of new divide and conquer algorithms for novel problems.
 
 ## Closest Pair of Points
 

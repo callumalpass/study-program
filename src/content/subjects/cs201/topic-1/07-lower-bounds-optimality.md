@@ -1,6 +1,10 @@
 # Lower Bounds and Optimality
 
-Understanding lower bounds helps prove that an algorithm is optimal—no faster algorithm exists for the problem class.
+Algorithm design is a game against nature: we try to solve problems as efficiently as possible while mathematics constrains what's achievable. Lower bounds establish these fundamental limits—they prove that no algorithm, no matter how clever, can beat a certain complexity for a given problem. When an algorithm's complexity matches a lower bound, we've achieved optimality: further improvement is mathematically impossible.
+
+The most famous lower bound proves that comparison-based sorting requires Ω(n log n) comparisons. The argument is elegant: sorting must distinguish between n! possible orderings; each comparison provides one bit of information; log₂(n!) = Θ(n log n) bits are needed. This bound explains why merge sort, heap sort, and optimized quick sort all land at O(n log n)—they're all optimal. It also explains why counting sort and radix sort achieve O(n): they're not comparison-based, so the bound doesn't apply.
+
+Lower bounds provide intellectual closure and practical guidance. Once you know a problem requires Ω(f(n)) time, you can stop searching for faster algorithms. You can also make informed design choices: if linear time is a lower bound, any algorithm in that class is effectively optimal, so choose based on other factors like constant factors, cache behavior, or implementation simplicity. Lower bounds transform algorithm design from open-ended exploration into targeted optimization.
 
 ## What Are Lower Bounds?
 
