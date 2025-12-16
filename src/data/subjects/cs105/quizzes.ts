@@ -712,5 +712,291 @@ export const cs105Quizzes: Quiz[] = [
         explanation: 'ftell() returns the current position in the file (offset from the beginning).'
       }
     ]
+  },
+
+  // ========== TOPIC 6: Preprocessor and Build System (3 quizzes) ==========
+  {
+    id: 'cs105-quiz-6',
+    subjectId: 'cs105',
+    topicId: 'cs105-topic-6',
+    title: 'Preprocessor Quiz 1: Macros',
+    questions: [
+      {
+        id: 'cs105-q6-1',
+        type: 'multiple_choice',
+        prompt: 'What character begins a preprocessor directive?',
+        options: ['@', '#', '!', '$'],
+        correctAnswer: 1,
+        explanation: 'Preprocessor directives in C begin with the # character, like #include and #define.'
+      },
+      {
+        id: 'cs105-q6-2',
+        type: 'code_output',
+        prompt: 'What does this code print?',
+        codeSnippet: '#define SQUARE(x) ((x) * (x))\nint a = 3;\nprintf("%d", SQUARE(a + 1));',
+        correctAnswer: '16',
+        explanation: 'The macro expands to ((a + 1) * (a + 1)) = ((3 + 1) * (3 + 1)) = 16. Parentheses prevent operator precedence issues.'
+      },
+      {
+        id: 'cs105-q6-3',
+        type: 'multiple_choice',
+        prompt: 'What is the difference between #include <file.h> and #include "file.h"?',
+        options: ['No difference', 'Angle brackets search system directories first', '"" is for C++ only', '<> is newer syntax'],
+        correctAnswer: 1,
+        explanation: 'Angle brackets <> search system include directories first. Double quotes "" search the current directory first, then system directories.'
+      },
+      {
+        id: 'cs105-q6-4',
+        type: 'true_false',
+        prompt: 'Macros are type-safe like inline functions.',
+        correctAnswer: false,
+        explanation: 'Macros are text substitution and have no type checking. They can operate on any type but with potential unexpected behavior.'
+      },
+      {
+        id: 'cs105-q6-5',
+        type: 'multiple_choice',
+        prompt: 'What does the ## operator do in macros?',
+        options: ['Logical AND', 'String comparison', 'Token concatenation', 'Double comment'],
+        correctAnswer: 2,
+        explanation: 'The ## operator concatenates two tokens. For example, #define CONCAT(a, b) a##b makes CONCAT(var, 1) become var1.'
+      }
+    ]
+  },
+  {
+    id: 'cs105-quiz-6b',
+    subjectId: 'cs105',
+    topicId: 'cs105-topic-6',
+    title: 'Preprocessor Quiz 2: Conditional Compilation',
+    questions: [
+      {
+        id: 'cs105-q6b-1',
+        type: 'multiple_choice',
+        prompt: 'Which directive tests if a macro is defined?',
+        options: ['#if', '#ifdef', '#define', '#check'],
+        correctAnswer: 1,
+        explanation: '#ifdef checks if a macro is defined. #if can also check with #if defined(MACRO).'
+      },
+      {
+        id: 'cs105-q6b-2',
+        type: 'multiple_choice',
+        prompt: 'What is an include guard used for?',
+        options: ['Security', 'Preventing multiple inclusions', 'Speeding up compilation', 'Encryption'],
+        correctAnswer: 1,
+        explanation: 'Include guards (#ifndef, #define, #endif pattern) prevent a header file from being included multiple times in the same translation unit.'
+      },
+      {
+        id: 'cs105-q6b-3',
+        type: 'code_output',
+        prompt: 'What does this print when DEBUG is defined?',
+        codeSnippet: '#define DEBUG\n#ifdef DEBUG\nprintf("Debug mode");\n#else\nprintf("Release mode");\n#endif',
+        correctAnswer: 'Debug mode',
+        explanation: 'Since DEBUG is defined, the #ifdef DEBUG block is included and "Debug mode" is printed.'
+      },
+      {
+        id: 'cs105-q6b-4',
+        type: 'true_false',
+        prompt: '#pragma once is a standard C feature.',
+        correctAnswer: false,
+        explanation: '#pragma once is a widely supported compiler extension but not part of the C standard. Include guards are the portable solution.'
+      },
+      {
+        id: 'cs105-q6b-5',
+        type: 'multiple_choice',
+        prompt: 'What does #undef do?',
+        options: ['Undefines a macro', 'Causes undefined behavior', 'Declares undefined variable', 'Undoes last include'],
+        correctAnswer: 0,
+        explanation: '#undef removes a previously defined macro, allowing it to be redefined or left undefined.'
+      }
+    ]
+  },
+  {
+    id: 'cs105-quiz-6c',
+    subjectId: 'cs105',
+    topicId: 'cs105-topic-6',
+    title: 'Preprocessor Quiz 3: Build Systems',
+    questions: [
+      {
+        id: 'cs105-q6c-1',
+        type: 'multiple_choice',
+        prompt: 'What is a translation unit in C?',
+        options: ['A function', 'A source file after preprocessing', 'A library', 'A header file'],
+        correctAnswer: 1,
+        explanation: 'A translation unit is a source file after all #include directives are resolved and preprocessing is complete.'
+      },
+      {
+        id: 'cs105-q6c-2',
+        type: 'multiple_choice',
+        prompt: 'What does the linker do?',
+        options: ['Preprocesses code', 'Compiles to assembly', 'Combines object files into executable', 'Checks syntax'],
+        correctAnswer: 2,
+        explanation: 'The linker combines object files (.o) and resolves external symbols to create the final executable.'
+      },
+      {
+        id: 'cs105-q6c-3',
+        type: 'true_false',
+        prompt: 'Header files should contain function implementations.',
+        correctAnswer: false,
+        explanation: 'Header files should contain declarations, not definitions. Definitions in headers can cause multiple definition errors.'
+      },
+      {
+        id: 'cs105-q6c-4',
+        type: 'multiple_choice',
+        prompt: 'What file extension is typically used for object files?',
+        options: ['.obj or .o', '.exe', '.lib', '.src'],
+        correctAnswer: 0,
+        explanation: 'Object files use .o on Unix/Linux and .obj on Windows. They contain compiled but not linked code.'
+      },
+      {
+        id: 'cs105-q6c-5',
+        type: 'multiple_choice',
+        prompt: 'In a Makefile, what does a target depend on?',
+        options: ['Nothing', 'Prerequisites listed after the colon', 'All source files', 'The compiler'],
+        correctAnswer: 1,
+        explanation: 'In a Makefile rule "target: prerequisites", the target depends on the files listed after the colon.'
+      }
+    ]
+  },
+
+  // ========== TOPIC 7: Advanced C Topics (3 quizzes) ==========
+  {
+    id: 'cs105-quiz-7',
+    subjectId: 'cs105',
+    topicId: 'cs105-topic-7',
+    title: 'Advanced C Quiz 1: Bitwise Operations',
+    questions: [
+      {
+        id: 'cs105-q7-1',
+        type: 'code_output',
+        prompt: 'What does this code print?',
+        codeSnippet: 'unsigned int x = 5;  // 0101 in binary\nprintf("%u", x << 1);',
+        correctAnswer: '10',
+        explanation: 'Left shift by 1 multiplies by 2. 5 (0101) becomes 10 (1010).'
+      },
+      {
+        id: 'cs105-q7-2',
+        type: 'code_output',
+        prompt: 'What does this code print?',
+        codeSnippet: 'int a = 12;  // 1100\nint b = 10;  // 1010\nprintf("%d", a & b);',
+        correctAnswer: '8',
+        explanation: 'Bitwise AND: 1100 & 1010 = 1000 = 8. Only bits set in both values remain.'
+      },
+      {
+        id: 'cs105-q7-3',
+        type: 'multiple_choice',
+        prompt: 'Which operation is commonly used to check if a bit is set?',
+        options: ['OR', 'AND', 'XOR', 'NOT'],
+        correctAnswer: 1,
+        explanation: 'AND with a mask checks if specific bits are set: if (value & (1 << bit)) tests if bit is set.'
+      },
+      {
+        id: 'cs105-q7-4',
+        type: 'code_output',
+        prompt: 'What does this code print?',
+        codeSnippet: 'int x = 5;  // 0101\nx ^= 3;      // 0011\nprintf("%d", x);',
+        correctAnswer: '6',
+        explanation: 'XOR: 0101 ^ 0011 = 0110 = 6. XOR flips bits where the mask has 1s.'
+      },
+      {
+        id: 'cs105-q7-5',
+        type: 'true_false',
+        prompt: 'Right shifting a signed negative integer is implementation-defined.',
+        correctAnswer: true,
+        explanation: 'Right shifting signed negative values may fill with 0s or 1s depending on the compiler (logical vs arithmetic shift).'
+      }
+    ]
+  },
+  {
+    id: 'cs105-quiz-7b',
+    subjectId: 'cs105',
+    topicId: 'cs105-topic-7',
+    title: 'Advanced C Quiz 2: Unions and Enums',
+    questions: [
+      {
+        id: 'cs105-q7b-1',
+        type: 'multiple_choice',
+        prompt: 'What is the size of a union?',
+        options: ['Sum of all members', 'Size of largest member', 'Always 4 bytes', 'Size of first member'],
+        correctAnswer: 1,
+        explanation: 'A union is large enough to hold its largest member, since all members share the same memory.'
+      },
+      {
+        id: 'cs105-q7b-2',
+        type: 'code_output',
+        prompt: 'What does this code print?',
+        codeSnippet: 'enum Color { RED, GREEN = 5, BLUE };\nprintf("%d", BLUE);',
+        correctAnswer: '6',
+        explanation: 'Enum values continue from the last specified value. GREEN = 5, so BLUE = 6.'
+      },
+      {
+        id: 'cs105-q7b-3',
+        type: 'true_false',
+        prompt: 'Reading a different union member than was last written is undefined behavior.',
+        correctAnswer: false,
+        explanation: 'Type punning through unions is allowed in C (unlike C++). It\'s commonly used to reinterpret bit patterns.'
+      },
+      {
+        id: 'cs105-q7b-4',
+        type: 'multiple_choice',
+        prompt: 'What are unions commonly used for?',
+        options: ['Inheritance', 'Memory saving/type punning', 'Function overloading', 'Encryption'],
+        correctAnswer: 1,
+        explanation: 'Unions save memory when only one of several types is needed at a time, and enable type punning.'
+      },
+      {
+        id: 'cs105-q7b-5',
+        type: 'multiple_choice',
+        prompt: 'What is a tagged union?',
+        options: ['A union with a label', 'A union paired with an enum indicating active member', 'A union of strings', 'A union in a struct'],
+        correctAnswer: 1,
+        explanation: 'A tagged union combines a union with an enum or integer that tracks which member is currently valid.'
+      }
+    ]
+  },
+  {
+    id: 'cs105-quiz-7c',
+    subjectId: 'cs105',
+    topicId: 'cs105-topic-7',
+    title: 'Advanced C Quiz 3: Type Qualifiers and Variadic Functions',
+    questions: [
+      {
+        id: 'cs105-q7c-1',
+        type: 'multiple_choice',
+        prompt: 'What does the volatile keyword indicate?',
+        options: ['Variable is temporary', 'Variable may change unexpectedly', 'Variable is thread-safe', 'Variable is fast'],
+        correctAnswer: 1,
+        explanation: 'volatile tells the compiler the variable may be changed by external factors, preventing certain optimizations.'
+      },
+      {
+        id: 'cs105-q7c-2',
+        type: 'multiple_choice',
+        prompt: 'What does restrict mean for a pointer?',
+        options: ['Pointer is read-only', 'Pointer is the only way to access that memory', 'Pointer cannot be NULL', 'Pointer is aligned'],
+        correctAnswer: 1,
+        explanation: 'restrict promises the compiler that the pointer is the only way to access its memory, enabling optimizations.'
+      },
+      {
+        id: 'cs105-q7c-3',
+        type: 'multiple_choice',
+        prompt: 'Which header is needed for variadic functions?',
+        options: ['stdio.h', 'stdarg.h', 'stdlib.h', 'varargs.h'],
+        correctAnswer: 1,
+        explanation: 'stdarg.h provides va_list, va_start, va_arg, and va_end for implementing variadic functions.'
+      },
+      {
+        id: 'cs105-q7c-4',
+        type: 'true_false',
+        prompt: 'A variadic function must have at least one fixed parameter.',
+        correctAnswer: true,
+        explanation: 'The C standard requires at least one named parameter before the ellipsis (...) in a variadic function.'
+      },
+      {
+        id: 'cs105-q7c-5',
+        type: 'multiple_choice',
+        prompt: 'What does va_arg do?',
+        options: ['Starts argument processing', 'Retrieves next argument of specified type', 'Counts arguments', 'Ends argument processing'],
+        correctAnswer: 1,
+        explanation: 'va_arg(ap, type) retrieves the next argument from the va_list, interpreting it as the specified type.'
+      }
+    ]
   }
 ];

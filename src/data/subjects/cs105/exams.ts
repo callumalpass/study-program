@@ -302,6 +302,19 @@ int main() {
         modelAnswer:
           'Stack memory is automatically managed - local variables are pushed when functions are called and popped when they return. It has limited size but fast allocation. Use stack for local variables with known size.\n\nHeap memory is manually managed with malloc/free. It has larger capacity and persists until freed. Use heap when: (1) the size is unknown at compile time, (2) data must outlive the function, or (3) large allocations that would overflow the stack.',
       },
+      {
+        id: 'mid-q26',
+        type: 'multiple_choice',
+        prompt: 'What does the realloc function do if called with a size of 0?',
+        options: [
+          'Returns NULL without freeing the original memory',
+          'Implementation-defined, may free the memory and return NULL',
+          'Allocates 0 bytes and returns a valid pointer',
+          'Causes undefined behavior',
+        ],
+        correctAnswer: 1,
+        explanation: 'The behavior of realloc(ptr, 0) is implementation-defined. It may act like free(ptr) and return NULL, or return a valid minimal allocation.',
+      },
     ],
   },
   {
@@ -783,6 +796,33 @@ int main() {
         explanation: 'These are the core file I/O functions in C.',
         modelAnswer:
           '- fopen(filename, mode): Opens a file and returns a FILE pointer. Returns NULL on failure.\n\n- fclose(fp): Closes a file, flushes buffers, and releases resources. Always close files when done.\n\n- fprintf(fp, format, ...): Formatted output to a file (like printf but to a file).\n\n- fscanf(fp, format, ...): Formatted input from a file (like scanf but from a file).\n\n- fread(ptr, size, count, fp): Reads binary data. Reads up to count elements of given size into ptr. Returns number of elements read.\n\n- fwrite(ptr, size, count, fp): Writes binary data. Writes count elements of given size from ptr. Returns number of elements written.',
+      },
+      {
+        id: 'final-q41',
+        type: 'multiple_choice',
+        prompt: 'What is the purpose of the #define preprocessor directive?',
+        options: [
+          'To declare a variable',
+          'To define a macro or symbolic constant',
+          'To include a header file',
+          'To define a function',
+        ],
+        correctAnswer: 1,
+        explanation: '#define creates macros (text substitution) or symbolic constants. The preprocessor replaces occurrences before compilation.',
+      },
+      {
+        id: 'final-q42',
+        type: 'code_output',
+        prompt: 'What is printed by this code?',
+        codeSnippet: `#include <stdio.h>
+#define DOUBLE(x) ((x) * 2)
+int main() {
+    int a = 5;
+    printf("%d\\n", DOUBLE(a + 1));
+    return 0;
+}`,
+        correctAnswer: '12',
+        explanation: 'The macro expands to ((a + 1) * 2) = ((5 + 1) * 2) = 12. Parentheses around x prevent operator precedence issues.',
       },
     ],
   },
