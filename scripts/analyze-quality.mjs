@@ -69,14 +69,11 @@ const TARGETS = {
 // Subject categories for assessment strategy
 const EXAM_ONLY_SUBJECTS = ['math101', 'math102', 'math203', 'cs102'];
 
-// Count words in markdown content (excluding code blocks)
+// Count words in markdown content (including code blocks)
 function countWords(content) {
   if (!content || typeof content !== 'string') return 0;
-  // Remove code blocks
-  let text = content.replace(/```[\s\S]*?```/g, '');
-  text = text.replace(/`[^`]+`/g, '');
   // Remove markdown syntax
-  text = text.replace(/[#*_\[\]()>-]/g, ' ');
+  let text = content.replace(/[#*_\[\]()>-]/g, ' ');
   // Count words
   const words = text.split(/\s+/).filter(w => w.length > 0);
   return words.length;
