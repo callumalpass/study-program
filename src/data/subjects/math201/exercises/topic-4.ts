@@ -1,0 +1,180 @@
+import type { WrittenExercise } from '../../../../core/types';
+
+export const topic4Exercises: WrittenExercise[] = [
+  {
+    id: 'math201-t4-ex01',
+    subjectId: 'math201',
+    topicId: 'math201-4',
+    type: 'written',
+    difficulty: 2,
+    title: 'Linear Independence in ℝ³',
+    description: 'Determine if $\\{\\begin{bmatrix} 1 \\\\ 0 \\\\ 1 \\end{bmatrix}, \\begin{bmatrix} 0 \\\\ 1 \\\\ 1 \\end{bmatrix}, \\begin{bmatrix} 1 \\\\ 1 \\\\ 2 \\end{bmatrix}\\}$ is linearly independent.',
+    hints: ['Form matrix and check if Ax = 0 has only trivial solution.'],
+    solution: 'Matrix $\\begin{bmatrix} 1 & 0 & 1 \\\\ 0 & 1 & 1 \\\\ 1 & 1 & 2 \\end{bmatrix}$ reduces to $\\begin{bmatrix} 1 & 0 & 1 \\\\ 0 & 1 & 1 \\\\ 0 & 0 & 0 \\end{bmatrix}$. Free variable in column 3, so vectors are DEPENDENT.'
+  },
+  {
+    id: 'math201-t4-ex02',
+    subjectId: 'math201',
+    topicId: 'math201-4',
+    type: 'written',
+    difficulty: 3,
+    title: 'Coordinate Vector',
+    description: 'Find $[x]_\\mathcal{B}$ where $x = \\begin{bmatrix} 7 \\\\ 5 \\end{bmatrix}$ and $\\mathcal{B} = \\{\\begin{bmatrix} 1 \\\\ 2 \\end{bmatrix}, \\begin{bmatrix} 2 \\\\ 3 \\end{bmatrix}\\}$.',
+    hints: ['Solve c₁b₁ + c₂b₂ = x.'],
+    solution: '$c_1\\begin{bmatrix} 1 \\\\ 2 \\end{bmatrix} + c_2\\begin{bmatrix} 2 \\\\ 3 \\end{bmatrix} = \\begin{bmatrix} 7 \\\\ 5 \\end{bmatrix}$. System: $c_1 + 2c_2 = 7$, $2c_1 + 3c_2 = 5$. Solution: $c_1 = -11, c_2 = 9$. Thus $[x]_\\mathcal{B} = \\begin{bmatrix} -11 \\\\ 9 \\end{bmatrix}$.'
+  },
+  {
+    id: 'math201-t4-ex03',
+    subjectId: 'math201',
+    topicId: 'math201-4',
+    type: 'written',
+    difficulty: 3,
+    title: 'Rank-Nullity Application',
+    description: 'If $A$ is $5 \\times 8$ with rank 3, find dim(Nul$(A)$).',
+    hints: ['Use rank + nullity = number of columns.'],
+    solution: 'Rank-Nullity: $3 + \\text{nullity}(A) = 8$, so dim(Nul$(A)$) = nullity$(A) = 5$.'
+  },
+  {
+    id: 'math201-t4-ex04',
+    subjectId: 'math201',
+    topicId: 'math201-4',
+    type: 'written',
+    difficulty: 4,
+    title: 'Change of Basis Matrix',
+    description: 'Find $P_{\\mathcal{C} \\leftarrow \\mathcal{B}}$ where $\\mathcal{B} = \\{\\begin{bmatrix} 1 \\\\ 1 \\end{bmatrix}, \\begin{bmatrix} 1 \\\\ 2 \\end{bmatrix}\\}$ and $\\mathcal{C} = \\{\\begin{bmatrix} 1 \\\\ 0 \\end{bmatrix}, \\begin{bmatrix} 0 \\\\ 1 \\end{bmatrix}\\}$ (standard basis).',
+    hints: ['P has columns [b₁]_C and [b₂]_C.', 'Since C is standard, these are just b₁ and b₂.'],
+    solution: '$P_{\\mathcal{C} \\leftarrow \\mathcal{B}} = [b_1 \\; b_2] = \\begin{bmatrix} 1 & 1 \\\\ 1 & 2 \\end{bmatrix}$. This converts B-coordinates to C-coordinates.'
+  },
+  {
+    id: 'math201-t4-ex05',
+    subjectId: 'math201',
+    topicId: 'math201-4',
+    type: 'written',
+    difficulty: 4,
+    title: 'Dimension of Intersection',
+    description: 'If $U$ and $W$ are subspaces of $\\mathbb{R}^5$ with dim$(U) = 3$ and dim$(W) = 4$, what are the possible dimensions of $U \\cap W$?',
+    hints: ['Use the dimension formula: dim(U + W) = dim(U) + dim(W) - dim(U ∩ W).', 'Note dim(U + W) ≤ 5.'],
+    solution: 'dim$(U + W) \\leq 5$, so $3 + 4 - \\text{dim}(U \\cap W) \\leq 5$, giving dim$(U \\cap W) \\geq 2$. Also dim$(U \\cap W) \\leq \\min(3,4) = 3$. Possible: dim$(U \\cap W) \\in \\{2, 3\\}$.'
+  },
+  {
+    id: 'math201-t4-ex06',
+    subjectId: 'math201',
+    topicId: 'math201-4',
+    type: 'written',
+    difficulty: 3,
+    title: 'Row Space Dimension',
+    description: 'Find dim(Row$(A)$) for $A = \\begin{bmatrix} 1 & 2 & 3 \\\\ 2 & 4 & 6 \\\\ 3 & 6 & 9 \\end{bmatrix}$.',
+    hints: ['Row space dimension equals rank.', 'RREF shows number of nonzero rows.'],
+    solution: 'RREF: $\\begin{bmatrix} 1 & 2 & 3 \\\\ 0 & 0 & 0 \\\\ 0 & 0 & 0 \\end{bmatrix}$. One nonzero row, so dim(Row$(A)$) = 1.'
+  },
+  {
+    id: 'math201-t4-ex07',
+    subjectId: 'math201',
+    topicId: 'math201-4',
+    type: 'written',
+    difficulty: 5,
+    title: 'Uniqueness of Coordinates',
+    description: 'Prove that if $\\mathcal{B}$ is a basis for vector space $V$, then every $v \\in V$ has a unique representation as a linear combination of basis vectors.',
+    hints: ['Assume two representations exist.', 'Show they must be equal using linear independence.'],
+    solution: 'Suppose $v = c_1b_1 + \\cdots + c_nb_n$ and $v = d_1b_1 + \\cdots + d_nb_n$. Subtracting: $(c_1-d_1)b_1 + \\cdots + (c_n-d_n)b_n = 0$. Since $\\mathcal{B}$ is linearly independent, $c_i - d_i = 0$ for all $i$. Thus $c_i = d_i$ and representation is unique.'
+  },
+  {
+    id: 'math201-t4-ex08',
+    subjectId: 'math201',
+    topicId: 'math201-4',
+    type: 'written',
+    difficulty: 4,
+    title: 'Maximal Independence',
+    description: 'Show that in $\\mathbb{R}^n$, any set of $n+1$ or more vectors must be linearly dependent.',
+    hints: ['Use the fact that the coefficient matrix has more columns than rows.'],
+    solution: 'If we have $m > n$ vectors in $\\mathbb{R}^n$, the matrix $A = [v_1 \\cdots v_m]$ is $n \\times m$ with $m > n$. The system $Ax = 0$ has more variables than equations, so there exists a nontrivial solution. Thus the vectors are linearly dependent.'
+  },
+  {
+    id: 'math201-t4-ex09',
+    subjectId: 'math201',
+    topicId: 'math201-4',
+    type: 'written',
+    difficulty: 5,
+    title: 'Basis for Polynomial Space',
+    description: 'Prove that $\\{1, t-1, (t-1)^2\\}$ is a basis for $P_2$.',
+    hints: ['Show spanning and linear independence.', 'Any degree-2 polynomial can be expressed uniquely.'],
+    solution: 'Linear independence: If $c_1 + c_2(t-1) + c_3(t-1)^2 = 0$ for all $t$, expand: $c_1 + c_2t - c_2 + c_3t^2 - 2c_3t + c_3 = 0$. Equating coefficients: $c_3 = 0$, $c_2 - 2c_3 = 0 \\Rightarrow c_2 = 0$, $c_1 - c_2 + c_3 = 0 \\Rightarrow c_1 = 0$. Independent. Since dim$(P_2) = 3$ and we have 3 independent vectors, it is a basis.'
+  },
+  {
+    id: 'math201-t4-ex10',
+    subjectId: 'math201',
+    topicId: 'math201-4',
+    type: 'written',
+    difficulty: 3,
+    title: 'Finding Rank',
+    description: 'Find the rank of $A = \\begin{bmatrix} 1 & 2 & 0 & 1 \\\\ 0 & 1 & 1 & 0 \\\\ 1 & 3 & 1 & 1 \\end{bmatrix}$.',
+    hints: ['Row reduce and count pivots.'],
+    solution: 'RREF: $\\begin{bmatrix} 1 & 0 & -2 & 1 \\\\ 0 & 1 & 1 & 0 \\\\ 0 & 0 & 0 & 0 \\end{bmatrix}$. Two pivots, so rank$(A) = 2$.'
+  },
+  {
+    id: 'math201-t4-ex11',
+    subjectId: 'math201',
+    topicId: 'math201-4',
+    type: 'written',
+    difficulty: 4,
+    title: 'Full Rank Matrices',
+    description: 'If $A$ is $m \\times n$ with rank $n$, show that the columns are linearly independent.',
+    hints: ['Rank n means n pivots.', 'No free variables in Ax = 0.'],
+    solution: 'If rank$(A) = n$, there are $n$ pivot columns. Since $A$ has $n$ columns total, every column is a pivot column. Thus $Ax = 0$ has no free variables, only the trivial solution. Therefore columns are linearly independent.'
+  },
+  {
+    id: 'math201-t4-ex12',
+    subjectId: 'math201',
+    topicId: 'math201-4',
+    type: 'written',
+    difficulty: 5,
+    title: 'Coordinate Transformation',
+    description: 'If $[x]_\\mathcal{B} = \\begin{bmatrix} 2 \\\\ -1 \\end{bmatrix}$ where $\\mathcal{B} = \\{\\begin{bmatrix} 3 \\\\ 1 \\end{bmatrix}, \\begin{bmatrix} -1 \\\\ 2 \\end{bmatrix}\\}$, find $x$ in standard coordinates.',
+    hints: ['x = 2b₁ - b₂.'],
+    solution: '$x = 2\\begin{bmatrix} 3 \\\\ 1 \\end{bmatrix} - 1\\begin{bmatrix} -1 \\\\ 2 \\end{bmatrix} = \\begin{bmatrix} 6 \\\\ 2 \\end{bmatrix} + \\begin{bmatrix} 1 \\\\ -2 \\end{bmatrix} = \\begin{bmatrix} 7 \\\\ 0 \\end{bmatrix}$.'
+  },
+  {
+    id: 'math201-t4-ex13',
+    subjectId: 'math201',
+    topicId: 'math201-4',
+    type: 'written',
+    difficulty: 4,
+    title: 'Orthogonal Complement Dimension',
+    description: 'If $W$ is a 3-dimensional subspace of $\\mathbb{R}^7$, what is dim$(W^\\perp)$?',
+    hints: ['Use the fact that dim(W) + dim(W⊥) = n for subspaces of ℝⁿ.'],
+    solution: 'For subspaces of $\\mathbb{R}^n$: dim$(W) + \\text{dim}(W^\\perp) = n$. So $3 + \\text{dim}(W^\\perp) = 7$, giving dim$(W^\\perp) = 4$.'
+  },
+  {
+    id: 'math201-t4-ex14',
+    subjectId: 'math201',
+    topicId: 'math201-4',
+    type: 'written',
+    difficulty: 5,
+    title: 'Linear Dependence Relations',
+    description: 'If $\\{v_1, v_2, v_3\\}$ is linearly dependent in $\\mathbb{R}^4$, must one vector be a multiple of another?',
+    hints: ['Consider a counterexample with three vectors.'],
+    solution: 'No. Example: $v_1 = \\begin{bmatrix} 1 \\\\ 0 \\\\ 0 \\\\ 0 \\end{bmatrix}$, $v_2 = \\begin{bmatrix} 0 \\\\ 1 \\\\ 0 \\\\ 0 \\end{bmatrix}$, $v_3 = \\begin{bmatrix} 1 \\\\ 1 \\\\ 0 \\\\ 0 \\end{bmatrix}$. Dependent ($v_3 = v_1 + v_2$) but no vector is a scalar multiple of another.'
+  },
+  {
+    id: 'math201-t4-ex15',
+    subjectId: 'math201',
+    topicId: 'math201-4',
+    type: 'written',
+    difficulty: 5,
+    title: 'Basis Theorem',
+    description: 'Prove that any two bases for a finite-dimensional vector space have the same number of vectors.',
+    hints: ['Use exchange lemma or showing both ways of inequality.'],
+    solution: 'Let $\\mathcal{B} = \\{b_1, \\ldots, b_n\\}$ and $\\mathcal{C} = \\{c_1, \\ldots, c_m\\}$ be bases. Since $\\mathcal{B}$ is independent and $\\mathcal{C}$ spans, $n \\leq m$. Since $\\mathcal{C}$ is independent and $\\mathcal{B}$ spans, $m \\leq n$. Therefore $m = n$.'
+  },
+  {
+    id: 'math201-t4-ex16',
+    subjectId: 'math201',
+    topicId: 'math201-4',
+    type: 'written',
+    difficulty: 5,
+    title: 'Invertibility via Rank',
+    description: 'Prove that an $n \\times n$ matrix $A$ is invertible if and only if rank$(A) = n$.',
+    hints: ['Show both directions using properties of rank and invertibility.'],
+    solution: '($\\Rightarrow$) If $A$ is invertible, then $Ax = 0$ has only trivial solution, so columns are independent. Thus rank$(A) = n$.\n\n($\\Leftarrow$) If rank$(A) = n$, then $A$ has $n$ pivots, so it row reduces to $I_n$. Thus $A$ is invertible.'
+  }
+];

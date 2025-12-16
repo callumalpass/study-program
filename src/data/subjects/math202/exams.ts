@@ -1,0 +1,577 @@
+import type { Exam } from '@/core/types';
+
+export const math202Exams: Exam[] = [
+  {
+    id: 'math202-exam-midterm',
+    subjectId: 'math202',
+    title: 'MATH202 Midterm - Probability & Statistics',
+    durationMinutes: 90,
+    instructions: [
+      'This exam covers Topics 1-4: Probability Fundamentals, Random Variables, Probability Distributions, and Statistical Inference.',
+      'Show all work for full credit on written questions.',
+      'Calculators are permitted for numerical calculations.',
+      'Fill-in-blank answers should be simplified and use standard notation.',
+      'Passing score is 70% or higher.',
+    ],
+    questions: [
+      // === TOPIC 1: Probability Fundamentals (7 questions) ===
+      {
+        id: 'math202-mid-q1',
+        type: 'multiple_choice',
+        prompt: 'Two events A and B have P(A) = 0.4, P(B) = 0.5, and P(A ∩ B) = 0.2. What is P(A ∪ B)?',
+        options: ['0.3', '0.5', '0.7', '0.9'],
+        correctAnswer: 2,
+        explanation: 'P(A ∪ B) = P(A) + P(B) - P(A ∩ B) = 0.4 + 0.5 - 0.2 = 0.7'
+      },
+      {
+        id: 'math202-mid-q2',
+        type: 'true_false',
+        prompt: 'If events A and B are mutually exclusive and P(A) > 0, P(B) > 0, then they cannot be independent.',
+        correctAnswer: true,
+        explanation: 'Mutually exclusive means P(A ∩ B) = 0, but independence requires P(A ∩ B) = P(A)P(B) > 0. These contradict, so they cannot be independent.'
+      },
+      {
+        id: 'math202-mid-q3',
+        type: 'multiple_choice',
+        prompt: 'If P(A) = 0.6, P(B) = 0.3, and P(A ∩ B) = 0.18, are A and B independent?',
+        options: ['Yes', 'No', 'Cannot determine', 'Only if mutually exclusive'],
+        correctAnswer: 0,
+        explanation: 'Check: P(A)P(B) = 0.6 × 0.3 = 0.18 = P(A ∩ B). Yes, they are independent.'
+      },
+      {
+        id: 'math202-mid-q4',
+        type: 'fill_blank',
+        prompt: 'If P(A) = 0.7 and P(A ∩ B) = 0.35, what is P(B|A)? Answer: ____',
+        correctAnswer: '0.5',
+        explanation: 'P(B|A) = P(A ∩ B) / P(A) = 0.35 / 0.7 = 0.5'
+      },
+      {
+        id: 'math202-mid-q5',
+        type: 'multiple_choice',
+        prompt: 'How many ways can 3 people be selected from a group of 10?',
+        options: ['30', '120', '720', '1000'],
+        correctAnswer: 1,
+        explanation: 'C(10,3) = 10!/(3!7!) = (10×9×8)/(3×2×1) = 720/6 = 120'
+      },
+      {
+        id: 'math202-mid-q6',
+        type: 'written',
+        prompt: 'A test for a disease is 95% sensitive (detects disease when present) and 90% specific (negative when disease absent). If 2% of the population has the disease, what is the probability someone who tests positive actually has the disease?',
+        correctAnswer: 'Approximately 0.162 or 16.2%',
+        modelAnswer: 'Let D = disease, T+ = test positive.\nP(D) = 0.02, P(T+|D) = 0.95, P(T-|not D) = 0.90, so P(T+|not D) = 0.10\n\nP(T+) = P(T+|D)P(D) + P(T+|not D)P(not D)\n= 0.95(0.02) + 0.10(0.98)\n= 0.019 + 0.098 = 0.117\n\nP(D|T+) = P(T+|D)P(D) / P(T+) = 0.019 / 0.117 ≈ 0.162 or 16.2%',
+        explanation: 'Use Bayes\' theorem to find P(D|T+). Despite high accuracy, low disease prevalence means most positives are false positives.'
+      },
+      {
+        id: 'math202-mid-q7',
+        type: 'multiple_choice',
+        prompt: 'The number of permutations of the letters in STATISTICS is:',
+        options: ['10!', '10!/(3!×3!×2!)', '10!/3!', '50,400'],
+        correctAnswer: 3,
+        explanation: '10 letters with S appearing 3 times, T appearing 3 times, I appearing 2 times. Permutations = 10!/(3!×3!×2!) = 50,400'
+      },
+
+      // === TOPIC 2: Random Variables (6 questions) ===
+      {
+        id: 'math202-mid-q8',
+        type: 'multiple_choice',
+        prompt: 'A discrete random variable X has P(X=1)=0.3, P(X=2)=0.4, P(X=3)=0.3. What is E[X]?',
+        options: ['1.5', '2.0', '2.3', '3.0'],
+        correctAnswer: 1,
+        explanation: 'E[X] = 1(0.3) + 2(0.4) + 3(0.3) = 0.3 + 0.8 + 0.9 = 2.0'
+      },
+      {
+        id: 'math202-mid-q9',
+        type: 'fill_blank',
+        prompt: 'If E[X] = 5 and E[X²] = 30, then Var(X) = ____',
+        correctAnswer: '5',
+        explanation: 'Var(X) = E[X²] - (E[X])² = 30 - 25 = 5'
+      },
+      {
+        id: 'math202-mid-q10',
+        type: 'true_false',
+        prompt: 'For a continuous random variable, the probability P(X = a) equals zero for any specific value a.',
+        correctAnswer: true,
+        explanation: 'For continuous distributions, probability is defined over intervals. The probability at any single point is zero.'
+      },
+      {
+        id: 'math202-mid-q11',
+        type: 'multiple_choice',
+        prompt: 'If Y = 3X + 5 and E[X] = 10, Var(X) = 4, what is Var(Y)?',
+        options: ['9', '12', '36', '47'],
+        correctAnswer: 2,
+        explanation: 'Var(aX + b) = a²Var(X) = 3² × 4 = 9 × 4 = 36'
+      },
+      {
+        id: 'math202-mid-q12',
+        type: 'multiple_choice',
+        prompt: 'A PDF f(x) = 2x for 0 ≤ x ≤ 1. What is P(X ≤ 0.5)?',
+        options: ['0.125', '0.25', '0.5', '0.75'],
+        correctAnswer: 1,
+        explanation: 'P(X ≤ 0.5) = ∫₀^0.5 2x dx = [x²]₀^0.5 = 0.25'
+      },
+      {
+        id: 'math202-mid-q13',
+        type: 'written',
+        prompt: 'For a random variable with PDF f(x) = 3x² for 0 ≤ x ≤ 1, find: (a) the CDF F(x), and (b) E[X].',
+        correctAnswer: 'F(x) = x³ for 0≤x≤1; E[X] = 3/4',
+        modelAnswer: '(a) CDF: F(x) = ∫₀ˣ 3t² dt = [t³]₀ˣ = x³ for 0 ≤ x ≤ 1\n\n(b) E[X] = ∫₀¹ x·3x² dx = ∫₀¹ 3x³ dx = [3x⁴/4]₀¹ = 3/4',
+        explanation: 'Integrate the PDF to get CDF. Expected value is integral of x·f(x).'
+      },
+
+      // === TOPIC 3: Probability Distributions (7 questions) ===
+      {
+        id: 'math202-mid-q14',
+        type: 'multiple_choice',
+        prompt: 'For a Binomial(n=10, p=0.3) distribution, what is E[X]?',
+        options: ['0.3', '2.1', '3', '7'],
+        correctAnswer: 2,
+        explanation: 'E[X] = np = 10 × 0.3 = 3'
+      },
+      {
+        id: 'math202-mid-q15',
+        type: 'multiple_choice',
+        prompt: 'For a Poisson distribution with λ = 5, both E[X] and Var(X) equal:',
+        options: ['2.236', '5', '10', '25'],
+        correctAnswer: 1,
+        explanation: 'A key property of Poisson: E[X] = Var(X) = λ = 5'
+      },
+      {
+        id: 'math202-mid-q16',
+        type: 'fill_blank',
+        prompt: 'For a standard normal distribution N(0,1), approximately ____ % of data falls within one standard deviation of the mean.',
+        correctAnswer: '68',
+        explanation: 'The empirical rule: approximately 68% within 1σ, 95% within 2σ, 99.7% within 3σ'
+      },
+      {
+        id: 'math202-mid-q17',
+        type: 'true_false',
+        prompt: 'If X ~ N(100, 25), the standard deviation is 25.',
+        correctAnswer: false,
+        explanation: 'False. The notation N(μ, σ²) uses variance. σ² = 25 means σ = 5.'
+      },
+      {
+        id: 'math202-mid-q18',
+        type: 'multiple_choice',
+        prompt: 'To standardize X ~ N(50, 16) to get Z ~ N(0,1), we use:',
+        options: ['Z = X - 50', 'Z = (X - 50)/4', 'Z = (X - 50)/16', 'Z = X/4'],
+        correctAnswer: 1,
+        explanation: 'Z = (X - μ)/σ = (X - 50)/4 since σ = √16 = 4'
+      },
+      {
+        id: 'math202-mid-q19',
+        type: 'multiple_choice',
+        prompt: 'The exponential distribution is often used to model:',
+        options: ['Number of events in an interval', 'Time between events', 'Binary outcomes', 'Categorical data'],
+        correctAnswer: 1,
+        explanation: 'Exponential models waiting times between events in a Poisson process.'
+      },
+      {
+        id: 'math202-mid-q20',
+        type: 'written',
+        prompt: 'A manufacturing process produces 2% defective items. In a batch of 100 items: (a) What distribution models the number of defectives? (b) What is the expected number of defectives? (c) Using the Poisson approximation, what is P(X = 0)?',
+        correctAnswer: 'Binomial(100, 0.02); E[X]=2; P(X=0)≈0.135',
+        modelAnswer: '(a) Binomial(n=100, p=0.02)\n\n(b) E[X] = np = 100(0.02) = 2\n\n(c) Poisson approximation with λ = 2:\nP(X = 0) = e^(-2) × 2^0 / 0! = e^(-2) ≈ 0.135',
+        explanation: 'Binomial models fixed trials with constant success probability. Poisson approximates when n is large and p is small.'
+      },
+
+      // === TOPIC 4: Statistical Inference (6 questions) ===
+      {
+        id: 'math202-mid-q21',
+        type: 'multiple_choice',
+        prompt: 'An estimator θ̂ is unbiased if:',
+        options: ['θ̂ = θ always', 'E[θ̂] = θ', 'Var(θ̂) = 0', 'θ̂ is close to θ'],
+        correctAnswer: 1,
+        explanation: 'Unbiased means the expected value of the estimator equals the true parameter: E[θ̂] = θ'
+      },
+      {
+        id: 'math202-mid-q22',
+        type: 'fill_blank',
+        prompt: 'For a sample of size n from a population with variance σ², the variance of the sample mean is ____.',
+        correctAnswer: 'σ²/n',
+        explanation: 'Var(x̄) = σ²/n, and the standard error is σ/√n'
+      },
+      {
+        id: 'math202-mid-q23',
+        type: 'true_false',
+        prompt: 'A 95% confidence interval means there is a 95% probability that the true parameter is in the interval.',
+        correctAnswer: false,
+        explanation: 'False. It means that 95% of such intervals constructed from repeated sampling would contain the true parameter. The parameter is fixed.'
+      },
+      {
+        id: 'math202-mid-q24',
+        type: 'multiple_choice',
+        prompt: 'A sample of n=36 has x̄=50, s=12. The 95% confidence interval for μ uses:',
+        options: ['z-distribution', 't-distribution with df=35', 't-distribution with df=36', 'Normal approximation only'],
+        correctAnswer: 1,
+        explanation: 't-distribution with df = n-1 = 35 is appropriate when using sample standard deviation.'
+      },
+      {
+        id: 'math202-mid-q25',
+        type: 'multiple_choice',
+        prompt: 'The Central Limit Theorem states that as sample size increases, the sampling distribution of x̄:',
+        options: ['Becomes uniform', 'Approaches the population distribution', 'Approaches a normal distribution', 'Becomes bimodal'],
+        correctAnswer: 2,
+        explanation: 'CLT: For large n, x̄ is approximately normally distributed regardless of the population distribution.'
+      },
+      {
+        id: 'math202-mid-q26',
+        type: 'written',
+        prompt: 'In a survey of 400 voters, 220 support a candidate. (a) Calculate the sample proportion p̂. (b) Construct a 95% confidence interval for the true proportion (use z=1.96). (c) Interpret the interval.',
+        correctAnswer: 'p̂=0.55; CI: (0.501, 0.599); interpretation provided',
+        modelAnswer: '(a) p̂ = 220/400 = 0.55\n\n(b) SE = √[p̂(1-p̂)/n] = √[0.55(0.45)/400] = √0.00061875 ≈ 0.0249\nME = 1.96 × 0.0249 ≈ 0.049\n95% CI: 0.55 ± 0.049 = (0.501, 0.599)\n\n(c) We are 95% confident that the true proportion of voters supporting the candidate is between 50.1% and 59.9%.',
+        explanation: 'Use normal approximation for proportion CI when np̂ and n(1-p̂) are both ≥ 10.'
+      }
+    ]
+  },
+
+  {
+    id: 'math202-exam-final',
+    subjectId: 'math202',
+    title: 'MATH202 Final Exam - Probability & Statistics (Comprehensive)',
+    durationMinutes: 120,
+    instructions: [
+      'This is a comprehensive exam covering all 7 topics.',
+      'Show all work for full credit on written questions.',
+      'Calculators are permitted.',
+      'Budget your time wisely: approximately 2.5-3 minutes per question.',
+      'Passing score is 70% or higher.',
+    ],
+    questions: [
+      // === TOPIC 1: Probability Fundamentals (6 questions) ===
+      {
+        id: 'math202-final-q1',
+        type: 'multiple_choice',
+        prompt: 'Events A and B are independent with P(A) = 0.4 and P(B) = 0.6. What is P(A ∪ B)?',
+        options: ['0.24', '0.76', '1.0', '0.6'],
+        correctAnswer: 1,
+        explanation: 'For independent events: P(A ∩ B) = P(A)P(B) = 0.24. P(A ∪ B) = 0.4 + 0.6 - 0.24 = 0.76'
+      },
+      {
+        id: 'math202-final-q2',
+        type: 'true_false',
+        prompt: 'The complement rule states that P(A) + P(A^c) = 1.',
+        correctAnswer: true,
+        explanation: 'True. The probability of an event plus the probability of its complement always equals 1.'
+      },
+      {
+        id: 'math202-final-q3',
+        type: 'fill_blank',
+        prompt: 'If 5 students are selected from 12 for a committee where order matters, the number of arrangements is ____.',
+        correctAnswer: '95040',
+        explanation: 'Permutation: P(12,5) = 12!/(12-5)! = 12!/7! = 12×11×10×9×8 = 95,040'
+      },
+      {
+        id: 'math202-final-q4',
+        type: 'multiple_choice',
+        prompt: 'Three machines produce 30%, 45%, and 25% of output with defect rates of 1%, 2%, and 3%. What is P(defective)?',
+        options: ['0.015', '0.019', '0.020', '0.060'],
+        correctAnswer: 1,
+        explanation: 'Law of total probability: P(D) = 0.01(0.30) + 0.02(0.45) + 0.03(0.25) = 0.003 + 0.009 + 0.0075 = 0.0195 ≈ 0.019'
+      },
+      {
+        id: 'math202-final-q5',
+        type: 'multiple_choice',
+        prompt: 'Using Bayes\' theorem from q4, if an item is defective, what is the probability it came from machine 2?',
+        options: ['0.45', '0.47', '0.50', '0.60'],
+        correctAnswer: 1,
+        explanation: 'P(M2|D) = P(D|M2)P(M2)/P(D) = 0.02(0.45)/0.019 = 0.009/0.019 ≈ 0.474'
+      },
+      {
+        id: 'math202-final-q6',
+        type: 'multiple_choice',
+        prompt: 'A fair coin is flipped 5 times. What is P(at least 3 heads)?',
+        options: ['0.3125', '0.5', '0.6875', '0.8125'],
+        correctAnswer: 1,
+        explanation: 'P(X≥3) = P(3) + P(4) + P(5) = C(5,3)(0.5)^5 + C(5,4)(0.5)^5 + C(5,5)(0.5)^5 = (10+5+1)/32 = 16/32 = 0.5'
+      },
+
+      // === TOPIC 2: Random Variables (6 questions) ===
+      {
+        id: 'math202-final-q7',
+        type: 'multiple_choice',
+        prompt: 'If X and Y are independent with E[X]=3, E[Y]=5, Var(X)=2, Var(Y)=4, find Var(X+Y).',
+        options: ['2', '4', '6', '8'],
+        correctAnswer: 2,
+        explanation: 'For independent variables: Var(X+Y) = Var(X) + Var(Y) = 2 + 4 = 6'
+      },
+      {
+        id: 'math202-final-q8',
+        type: 'fill_blank',
+        prompt: 'The moment generating function M(t) = E[____]',
+        correctAnswer: 'e^(tX)',
+        explanation: 'MGF is defined as M(t) = E[e^(tX)]'
+      },
+      {
+        id: 'math202-final-q9',
+        type: 'true_false',
+        prompt: 'The second central moment E[(X-μ)²] is the variance.',
+        correctAnswer: true,
+        explanation: 'True. Variance is the second moment about the mean.'
+      },
+      {
+        id: 'math202-final-q10',
+        type: 'multiple_choice',
+        prompt: 'For CDF F(x) = x² on [0,1], the median m satisfies:',
+        options: ['m = 0.5', 'm = √0.5 ≈ 0.707', 'm = 0.25', 'm = 0.75'],
+        correctAnswer: 1,
+        explanation: 'Median satisfies F(m) = 0.5, so m² = 0.5, giving m = √0.5 ≈ 0.707'
+      },
+      {
+        id: 'math202-final-q11',
+        type: 'multiple_choice',
+        prompt: 'Chebyshev\'s inequality with μ=50, σ=5 gives P(40 < X < 60) ≥ ?',
+        options: ['0.5', '0.68', '0.75', '0.89'],
+        correctAnswer: 2,
+        explanation: 'P(|X-μ| < kσ) ≥ 1-1/k². Here kσ=10, so k=2. P ≥ 1-1/4 = 0.75'
+      },
+      {
+        id: 'math202-final-q12',
+        type: 'multiple_choice',
+        prompt: 'For PDF f(x) = λe^(-λx), x≥0 (exponential), E[X] = ?',
+        options: ['λ', '1/λ', 'λ²', '1/λ²'],
+        correctAnswer: 1,
+        explanation: 'For exponential distribution with rate λ, E[X] = 1/λ'
+      },
+
+      // === TOPIC 3: Probability Distributions (6 questions) ===
+      {
+        id: 'math202-final-q13',
+        type: 'multiple_choice',
+        prompt: 'For Binomial(n=20, p=0.5), what is the variance?',
+        options: ['5', '10', '10', '20'],
+        correctAnswer: 0,
+        explanation: 'Var(X) = np(1-p) = 20(0.5)(0.5) = 5'
+      },
+      {
+        id: 'math202-final-q14',
+        type: 'fill_blank',
+        prompt: 'The geometric distribution models the number of trials until the first ____.',
+        correctAnswer: 'success',
+        explanation: 'Geometric distribution counts trials until first success occurs.'
+      },
+      {
+        id: 'math202-final-q15',
+        type: 'true_false',
+        prompt: 'The normal distribution is symmetric about its mean.',
+        correctAnswer: true,
+        explanation: 'True. The normal distribution is perfectly symmetric around μ.'
+      },
+      {
+        id: 'math202-final-q16',
+        type: 'multiple_choice',
+        prompt: 'If X ~ N(0,1) and Y = 2X + 3, then Y ~ N(μ,σ²) with:',
+        options: ['μ=0, σ²=1', 'μ=3, σ²=2', 'μ=3, σ²=4', 'μ=2, σ²=3'],
+        correctAnswer: 2,
+        explanation: 'E[Y] = 2E[X] + 3 = 3, Var(Y) = 4Var(X) = 4. So Y ~ N(3,4)'
+      },
+      {
+        id: 'math202-final-q17',
+        type: 'multiple_choice',
+        prompt: 'The chi-square distribution with k degrees of freedom has mean:',
+        options: ['k/2', 'k', '2k', 'k²'],
+        correctAnswer: 1,
+        explanation: 'For χ²(k), E[X] = k and Var(X) = 2k'
+      },
+      {
+        id: 'math202-final-q18',
+        type: 'multiple_choice',
+        prompt: 'Events occur at rate 3 per hour (Poisson). P(exactly 2 in one hour) = ?',
+        options: ['e^(-3)×3²/2!', '3²/2', '0.2', '0.5'],
+        correctAnswer: 0,
+        explanation: 'P(X=2) = e^(-λ)λ^k/k! = e^(-3)×3²/2! ≈ 0.224'
+      },
+
+      // === TOPIC 4: Statistical Inference (6 questions) ===
+      {
+        id: 'math202-final-q19',
+        type: 'multiple_choice',
+        prompt: 'Sample mean x̄ is an unbiased estimator of μ because:',
+        options: ['x̄ = μ always', 'E[x̄] = μ', 'Var(x̄) = 0', 'x̄ > μ'],
+        correctAnswer: 1,
+        explanation: 'Unbiased means E[x̄] = μ. The sample mean is unbiased for population mean.'
+      },
+      {
+        id: 'math202-final-q20',
+        type: 'fill_blank',
+        prompt: 'The standard deviation of the sampling distribution is called the standard ____.',
+        correctAnswer: 'error',
+        explanation: 'Standard error (SE) is the standard deviation of a sampling distribution.'
+      },
+      {
+        id: 'math202-final-q21',
+        type: 'true_false',
+        prompt: 'Increasing sample size from 100 to 400 cuts the standard error in half.',
+        correctAnswer: true,
+        explanation: 'True. SE = σ/√n. Quadrupling n halves SE: σ/√400 = σ/(2√100) = (σ/√100)/2'
+      },
+      {
+        id: 'math202-final-q22',
+        type: 'multiple_choice',
+        prompt: 'For MLE of Poisson(λ), the estimator λ̂ is:',
+        options: ['Sample median', 'Sample mean', 'Sample variance', 'Sample mode'],
+        correctAnswer: 1,
+        explanation: 'The MLE for Poisson parameter λ is the sample mean x̄.'
+      },
+      {
+        id: 'math202-final-q23',
+        type: 'multiple_choice',
+        prompt: 'A 99% CI is wider than a 95% CI because:',
+        options: ['Larger z-value', 'Smaller z-value', 'More data', 'Less variance'],
+        correctAnswer: 0,
+        explanation: '99% requires z=2.576 vs 95% with z=1.96. Larger critical value → wider interval.'
+      },
+      {
+        id: 'math202-final-q24',
+        type: 'multiple_choice',
+        prompt: 'MSE = Bias² + Variance. An estimator with Bias=1, Var=2 has MSE:',
+        options: ['1', '2', '3', '4'],
+        correctAnswer: 2,
+        explanation: 'MSE = 1² + 2 = 1 + 2 = 3'
+      },
+
+      // === TOPIC 5: Hypothesis Testing (6 questions) ===
+      {
+        id: 'math202-final-q25',
+        type: 'multiple_choice',
+        prompt: 'Type I error is:',
+        options: ['Reject true H₀', 'Fail to reject false H₀', 'Accept true H₀', 'Reject false H₀'],
+        correctAnswer: 0,
+        explanation: 'Type I error is rejecting H₀ when it is actually true. Its probability is α.'
+      },
+      {
+        id: 'math202-final-q26',
+        type: 'fill_blank',
+        prompt: 'Statistical power = 1 - ____',
+        correctAnswer: 'β',
+        explanation: 'Power = 1 - β where β is the probability of Type II error.'
+      },
+      {
+        id: 'math202-final-q27',
+        type: 'true_false',
+        prompt: 'A p-value of 0.03 means there is a 3% probability that H₀ is true.',
+        correctAnswer: false,
+        explanation: 'False. p-value is P(data as extreme | H₀ true), not P(H₀ true | data).'
+      },
+      {
+        id: 'math202-final-q28',
+        type: 'multiple_choice',
+        prompt: 'For testing H₀: μ=50 vs Hₐ: μ≠50 with x̄=52, s=10, n=25, the test statistic is:',
+        options: ['t = 0.2', 't = 1', 't = 2', 't = 5'],
+        correctAnswer: 1,
+        explanation: 't = (52-50)/(10/√25) = 2/2 = 1'
+      },
+      {
+        id: 'math202-final-q29',
+        type: 'multiple_choice',
+        prompt: 'ANOVA tests the hypothesis that:',
+        options: ['All means are different', 'All means are equal', 'Variances are equal', 'Data is normal'],
+        correctAnswer: 1,
+        explanation: 'H₀ in ANOVA: μ₁ = μ₂ = ... = μₖ (all population means are equal)'
+      },
+      {
+        id: 'math202-final-q30',
+        type: 'multiple_choice',
+        prompt: 'A chi-square test of independence uses contingency tables to test:',
+        options: ['Normality', 'Independence of two categorical variables', 'Variance equality', 'Mean differences'],
+        correctAnswer: 1,
+        explanation: 'Chi-square test of independence examines relationship between two categorical variables.'
+      },
+
+      // === TOPIC 6: Regression Analysis (6 questions) ===
+      {
+        id: 'math202-final-q31',
+        type: 'multiple_choice',
+        prompt: 'R² = 0.64 means:',
+        options: ['Correlation is 0.64', '64% of Y variance explained by X', 'Model is 64% accurate', 'Slope is 0.64'],
+        correctAnswer: 1,
+        explanation: 'R² is coefficient of determination: proportion of variance in Y explained by the model.'
+      },
+      {
+        id: 'math202-final-q32',
+        type: 'fill_blank',
+        prompt: 'In simple linear regression, the slope β₁ = r × (____/sx)',
+        correctAnswer: 'sy',
+        explanation: 'The relationship is β₁ = r(sy/sx) where r is correlation.'
+      },
+      {
+        id: 'math202-final-q33',
+        type: 'true_false',
+        prompt: 'A residual plot showing a funnel shape suggests heteroscedasticity.',
+        correctAnswer: true,
+        explanation: 'True. Funnel/fan shape indicates non-constant variance (heteroscedasticity).'
+      },
+      {
+        id: 'math202-final-q34',
+        type: 'multiple_choice',
+        prompt: 'In multiple regression ŷ = 10 + 2x₁ + 3x₂, the coefficient 2 means:',
+        options: ['Y increases 2 per unit x₁', 'Y increases 2 per unit x₁, holding x₂ constant', 'x₁ increases 2', 'R² = 2'],
+        correctAnswer: 1,
+        explanation: 'In multiple regression, coefficients are interpreted holding other variables constant.'
+      },
+      {
+        id: 'math202-final-q35',
+        type: 'multiple_choice',
+        prompt: 'VIF = 12 for predictor x₁ suggests:',
+        options: ['No multicollinearity', 'Moderate multicollinearity', 'Severe multicollinearity', 'Perfect fit'],
+        correctAnswer: 2,
+        explanation: 'VIF > 10 indicates severe multicollinearity. VIF=12 is concerning.'
+      },
+      {
+        id: 'math202-final-q36',
+        type: 'multiple_choice',
+        prompt: 'Adjusted R² is preferred over R² because it:',
+        options: ['Is always larger', 'Penalizes adding predictors', 'Is easier to compute', 'Measures correlation'],
+        correctAnswer: 1,
+        explanation: 'Adjusted R² penalizes for number of predictors, preventing overfitting.'
+      },
+
+      // === TOPIC 7: Bayesian Inference (6 questions) ===
+      {
+        id: 'math202-final-q37',
+        type: 'multiple_choice',
+        prompt: 'In Bayesian inference, the posterior is proportional to:',
+        options: ['Prior × Data', 'Likelihood × Prior', 'Prior / Likelihood', 'Data / Prior'],
+        correctAnswer: 1,
+        explanation: 'Bayes: Posterior ∝ Likelihood × Prior'
+      },
+      {
+        id: 'math202-final-q38',
+        type: 'fill_blank',
+        prompt: 'If prior is Beta(2,3) and we observe 5 successes in 8 trials, posterior is Beta(____, ____).',
+        correctAnswer: '7, 6',
+        explanation: 'Beta(α+successes, β+failures) = Beta(2+5, 3+3) = Beta(7,6)'
+      },
+      {
+        id: 'math202-final-q39',
+        type: 'true_false',
+        prompt: 'A Bayesian credible interval allows us to say "there is a 95% probability the parameter is in this interval".',
+        correctAnswer: true,
+        explanation: 'True. Unlike frequentist CIs, Bayesian credible intervals make direct probability statements about parameters.'
+      },
+      {
+        id: 'math202-final-q40',
+        type: 'multiple_choice',
+        prompt: 'Bayes factor BF₁₀ = 20 provides:',
+        options: ['Weak evidence for H₁', 'Moderate evidence for H₁', 'Strong evidence for H₁', 'Evidence for H₀'],
+        correctAnswer: 2,
+        explanation: 'BF₁₀ = 10-30 is considered strong evidence for H₁. BF=20 falls in this range.'
+      },
+      {
+        id: 'math202-final-q41',
+        type: 'multiple_choice',
+        prompt: 'MCMC methods are used in Bayesian inference to:',
+        options: ['Compute exact posteriors', 'Sample from complex posteriors', 'Find MLEs', 'Test hypotheses'],
+        correctAnswer: 1,
+        explanation: 'MCMC generates samples from posterior distributions when analytical solutions are intractable.'
+      },
+      {
+        id: 'math202-final-q42',
+        type: 'multiple_choice',
+        prompt: 'The key difference between Bayesian and frequentist inference is:',
+        options: ['Bayesians use computers', 'Bayesians treat parameters as random', 'Frequentists use priors', 'Bayesians reject hypotheses'],
+        correctAnswer: 1,
+        explanation: 'Fundamental difference: Bayesians treat parameters as random variables with distributions; frequentists treat them as fixed but unknown.'
+      }
+    ]
+  }
+];

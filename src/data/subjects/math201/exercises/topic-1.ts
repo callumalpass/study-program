@@ -1,0 +1,241 @@
+import type { WrittenExercise } from '../../../../core/types';
+
+export const topic1Exercises: WrittenExercise[] = [
+  {
+    id: 'math201-t1-ex01',
+    subjectId: 'math201',
+    topicId: 'math201-1',
+    type: 'written',
+    difficulty: 1,
+    title: 'Solving a 2x2 System',
+    description: 'Solve the system of equations:\n\n$x + 2y = 5$\n\n$3x - y = 4$',
+    hints: [
+      'Use elimination or substitution method.',
+      'Multiply the second equation by 2 and add to eliminate y.'
+    ],
+    solution: 'From the second equation: $y = 3x - 4$. Substitute into first: $x + 2(3x - 4) = 5$, so $x + 6x - 8 = 5$, giving $7x = 13$, thus $x = \\frac{13}{7}$. Then $y = 3(\\frac{13}{7}) - 4 = \\frac{39}{7} - \\frac{28}{7} = \\frac{11}{7}$. Solution: $(\\frac{13}{7}, \\frac{11}{7})$.'
+  },
+  {
+    id: 'math201-t1-ex02',
+    subjectId: 'math201',
+    topicId: 'math201-1',
+    type: 'written',
+    difficulty: 2,
+    title: 'Row Reduction to Echelon Form',
+    description: 'Reduce the augmented matrix to row echelon form:\n\n$\\begin{bmatrix} 1 & 2 & -1 & | & 3 \\\\ 2 & 1 & 3 & | & 8 \\\\ -1 & 1 & 2 & | & -1 \\end{bmatrix}$',
+    hints: [
+      'Use elementary row operations.',
+      'Start by eliminating entries below the first pivot.',
+      'Continue with the second column.'
+    ],
+    solution: '$R_2 \\leftarrow R_2 - 2R_1$: $\\begin{bmatrix} 1 & 2 & -1 & | & 3 \\\\ 0 & -3 & 5 & | & 2 \\\\ -1 & 1 & 2 & | & -1 \\end{bmatrix}$\n\n$R_3 \\leftarrow R_3 + R_1$: $\\begin{bmatrix} 1 & 2 & -1 & | & 3 \\\\ 0 & -3 & 5 & | & 2 \\\\ 0 & 3 & 1 & | & 2 \\end{bmatrix}$\n\n$R_3 \\leftarrow R_3 + R_2$: $\\begin{bmatrix} 1 & 2 & -1 & | & 3 \\\\ 0 & -3 & 5 & | & 2 \\\\ 0 & 0 & 6 & | & 4 \\end{bmatrix}$ (REF)'
+  },
+  {
+    id: 'math201-t1-ex03',
+    subjectId: 'math201',
+    topicId: 'math201-1',
+    type: 'written',
+    difficulty: 2,
+    title: 'Consistent or Inconsistent?',
+    description: 'Determine if the system is consistent. If so, find the solution:\n\n$x - 2y + z = 1$\n\n$2x - y - z = 3$\n\n$x + y - 2z = 4$',
+    hints: [
+      'Write as an augmented matrix and row reduce.',
+      'Look for a row of the form [0 0 0 | c] where c ≠ 0.'
+    ],
+    solution: 'Augmented matrix: $\\begin{bmatrix} 1 & -2 & 1 & | & 1 \\\\ 2 & -1 & -1 & | & 3 \\\\ 1 & 1 & -2 & | & 4 \\end{bmatrix}$\n\nAfter row reduction to RREF: $\\begin{bmatrix} 1 & 0 & -1 & | & 2 \\\\ 0 & 1 & -1 & | & 1 \\\\ 0 & 0 & 0 & | & 1 \\end{bmatrix}$\n\nThe last row represents $0 = 1$, which is impossible. The system is inconsistent (no solution).'
+  },
+  {
+    id: 'math201-t1-ex04',
+    subjectId: 'math201',
+    topicId: 'math201-1',
+    type: 'written',
+    difficulty: 2,
+    title: 'System with Infinitely Many Solutions',
+    description: 'Solve the system and express the solution set in parametric form:\n\n$x + 2y - z = 3$\n\n$2x + 4y - 2z = 6$',
+    hints: [
+      'Notice the second equation is a multiple of the first.',
+      'Identify free variables after row reduction.',
+      'Express basic variables in terms of free variables.'
+    ],
+    solution: 'Row reduction gives: $\\begin{bmatrix} 1 & 2 & -1 & | & 3 \\\\ 0 & 0 & 0 & | & 0 \\end{bmatrix}$\n\nFrom $x + 2y - z = 3$: $x = 3 - 2y + z$\n\n$y$ and $z$ are free variables. Solution: $\\begin{bmatrix} x \\\\ y \\\\ z \\end{bmatrix} = \\begin{bmatrix} 3 \\\\ 0 \\\\ 0 \\end{bmatrix} + y\\begin{bmatrix} -2 \\\\ 1 \\\\ 0 \\end{bmatrix} + z\\begin{bmatrix} 1 \\\\ 0 \\\\ 1 \\end{bmatrix}$'
+  },
+  {
+    id: 'math201-t1-ex05',
+    subjectId: 'math201',
+    topicId: 'math201-1',
+    type: 'written',
+    difficulty: 3,
+    title: 'Homogeneous System Analysis',
+    description: 'Find all solutions to the homogeneous system:\n\n$x_1 + 2x_2 + x_3 = 0$\n\n$2x_1 + 4x_2 + 3x_3 = 0$\n\n$x_1 + 2x_2 + 2x_3 = 0$',
+    hints: [
+      'Row reduce the coefficient matrix.',
+      'Identify pivot and free variables.',
+      'Express the solution as a span of vectors.'
+    ],
+    solution: 'RREF: $\\begin{bmatrix} 1 & 2 & 0 \\\\ 0 & 0 & 1 \\\\ 0 & 0 & 0 \\end{bmatrix}$\n\nFrom the RREF: $x_1 = -2x_2$ and $x_3 = 0$, with $x_2$ free.\n\nSolution: $\\begin{bmatrix} x_1 \\\\ x_2 \\\\ x_3 \\end{bmatrix} = x_2\\begin{bmatrix} -2 \\\\ 1 \\\\ 0 \\end{bmatrix}$ for any scalar $x_2$.'
+  },
+  {
+    id: 'math201-t1-ex06',
+    subjectId: 'math201',
+    topicId: 'math201-1',
+    type: 'written',
+    difficulty: 2,
+    title: 'Matrix Equation Form',
+    description: 'Write the system as a matrix equation $Ax = b$ and solve:\n\n$3x_1 - x_2 = 5$\n\n$x_1 + 2x_2 = 7$',
+    hints: [
+      'Identify the coefficient matrix A, variable vector x, and constant vector b.',
+      'Solve using row reduction on [A | b].'
+    ],
+    solution: 'Matrix form: $\\begin{bmatrix} 3 & -1 \\\\ 1 & 2 \\end{bmatrix}\\begin{bmatrix} x_1 \\\\ x_2 \\end{bmatrix} = \\begin{bmatrix} 5 \\\\ 7 \\end{bmatrix}$\n\nAugmented matrix: $\\begin{bmatrix} 3 & -1 & | & 5 \\\\ 1 & 2 & | & 7 \\end{bmatrix}$\n\nRREF: $\\begin{bmatrix} 1 & 0 & | & 3 \\\\ 0 & 1 & | & 2 \\end{bmatrix}$\n\nSolution: $x_1 = 3, x_2 = 2$'
+  },
+  {
+    id: 'math201-t1-ex07',
+    subjectId: 'math201',
+    topicId: 'math201-1',
+    type: 'written',
+    difficulty: 3,
+    title: 'Geometric Interpretation',
+    description: 'Describe geometrically the solution set of:\n\n$x + y + z = 1$\n\n$2x + 2y + 2z = 3$',
+    hints: [
+      'Notice the relationship between the two equations.',
+      'What geometric object does each equation represent?',
+      'Consider if the planes intersect.'
+    ],
+    solution: 'The first equation represents a plane in $\\mathbb{R}^3$. The second equation $2x + 2y + 2z = 3$ simplifies to $x + y + z = \\frac{3}{2}$, which is a parallel plane.\n\nSince $1 \\neq \\frac{3}{2}$, the planes are distinct and parallel, so they never intersect. The system is inconsistent with no solution.\n\nGeometrically: two parallel planes with no points in common.'
+  },
+  {
+    id: 'math201-t1-ex08',
+    subjectId: 'math201',
+    topicId: 'math201-1',
+    type: 'written',
+    difficulty: 3,
+    title: 'Reduced Row Echelon Form',
+    description: 'Find the RREF of:\n\n$\\begin{bmatrix} 2 & 4 & -2 & 6 \\\\ 1 & 2 & 1 & 5 \\\\ 3 & 6 & -3 & 9 \\end{bmatrix}$',
+    hints: [
+      'Start with row operations to get leading 1s.',
+      'Eliminate all entries above and below each pivot.',
+      'Continue until in RREF.'
+    ],
+    solution: '$R_1 \\leftrightarrow R_2$, then $R_1 \\leftarrow \\frac{1}{2}R_1$ and continue:\n\nRREF: $\\begin{bmatrix} 1 & 2 & 0 & 4 \\\\ 0 & 0 & 1 & 2 \\\\ 0 & 0 & 0 & 0 \\end{bmatrix}$\n\nPivot columns: 1 and 3. Free variable: column 2.'
+  },
+  {
+    id: 'math201-t1-ex09',
+    subjectId: 'math201',
+    topicId: 'math201-1',
+    type: 'written',
+    difficulty: 4,
+    title: 'System with Parameters',
+    description: 'For what value(s) of $k$ does the system have: (a) no solution, (b) exactly one solution, (c) infinitely many solutions?\n\n$x + 2y = 3$\n\n$2x + ky = 6$',
+    hints: [
+      'Row reduce the augmented matrix in terms of k.',
+      'Consider what happens when k = 4.',
+      'Analyze the cases based on the value of k.'
+    ],
+    solution: 'Augmented matrix: $\\begin{bmatrix} 1 & 2 & | & 3 \\\\ 2 & k & | & 6 \\end{bmatrix}$\n\n$R_2 \\leftarrow R_2 - 2R_1$: $\\begin{bmatrix} 1 & 2 & | & 3 \\\\ 0 & k-4 & | & 0 \\end{bmatrix}$\n\n(a) No solution: Never (second column constant is 0)\n(b) Exactly one solution: $k \\neq 4$ (unique solution)\n(c) Infinitely many solutions: $k = 4$ (free variable in y)'
+  },
+  {
+    id: 'math201-t1-ex10',
+    subjectId: 'math201',
+    topicId: 'math201-1',
+    type: 'written',
+    difficulty: 3,
+    title: 'Back Substitution',
+    description: 'Use back substitution to solve the system in row echelon form:\n\n$\\begin{bmatrix} 2 & -1 & 3 & | & 7 \\\\ 0 & 3 & -2 & | & 4 \\\\ 0 & 0 & 4 & | & 8 \\end{bmatrix}$',
+    hints: [
+      'Start from the bottom row.',
+      'Work upward, substituting known values.',
+      'Solve for each variable sequentially.'
+    ],
+    solution: 'From row 3: $4x_3 = 8 \\Rightarrow x_3 = 2$\n\nFrom row 2: $3x_2 - 2(2) = 4 \\Rightarrow 3x_2 = 8 \\Rightarrow x_2 = \\frac{8}{3}$\n\nFrom row 1: $2x_1 - \\frac{8}{3} + 3(2) = 7 \\Rightarrow 2x_1 = 7 + \\frac{8}{3} - 6 = 1 + \\frac{8}{3} = \\frac{11}{3} \\Rightarrow x_1 = \\frac{11}{6}$\n\nSolution: $(\\frac{11}{6}, \\frac{8}{3}, 2)$'
+  },
+  {
+    id: 'math201-t1-ex11',
+    subjectId: 'math201',
+    topicId: 'math201-1',
+    type: 'written',
+    difficulty: 4,
+    title: 'Application: Network Flow',
+    description: 'At a junction in a network, flow in equals flow out. Given flows $f_1, f_2, f_3, f_4$ with equations:\n\nJunction A: $f_1 + f_2 = f_3$\n\nJunction B: $f_3 = f_4 + 30$\n\nJunction C: $f_4 = f_1 + 20$\n\nIf $f_2 = 50$, find all flows.',
+    hints: [
+      'Substitute f₂ = 50.',
+      'Express the system in standard form.',
+      'Solve for the remaining variables.'
+    ],
+    solution: 'Given $f_2 = 50$:\n\nFrom A: $f_1 + 50 = f_3$\n\nFrom B: $f_3 = f_4 + 30$\n\nFrom C: $f_4 = f_1 + 20$\n\nSubstitute C into B: $f_3 = (f_1 + 20) + 30 = f_1 + 50$\n\nCompare with A: $f_1 + 50 = f_1 + 50$ ✓ (consistent)\n\nFrom C: $f_4 = f_1 + 20$\n\nWe need another constraint. If system is underdetermined, express in terms of $f_1$:\n\n$f_1 = f_1$ (free), $f_2 = 50$, $f_3 = f_1 + 50$, $f_4 = f_1 + 20$'
+  },
+  {
+    id: 'math201-t1-ex12',
+    subjectId: 'math201',
+    topicId: 'math201-1',
+    type: 'written',
+    difficulty: 3,
+    title: 'Pivot Positions',
+    description: 'Find the pivot positions and pivot columns of:\n\n$A = \\begin{bmatrix} 1 & 3 & 2 & 0 \\\\ 0 & 0 & 1 & 2 \\\\ 0 & 0 & 0 & 1 \\end{bmatrix}$',
+    hints: [
+      'The matrix is already in row echelon form.',
+      'Pivot positions are the leading entries.',
+      'Pivot columns correspond to pivot positions.'
+    ],
+    solution: 'The matrix is in REF. Pivot positions (marked with ●):\n\n$\\begin{bmatrix} ●1 & 3 & 2 & 0 \\\\ 0 & 0 & ●1 & 2 \\\\ 0 & 0 & 0 & ●1 \\end{bmatrix}$\n\nPivot positions: (1,1), (2,3), (3,4)\n\nPivot columns: columns 1, 3, and 4 of the original matrix A.'
+  },
+  {
+    id: 'math201-t1-ex13',
+    subjectId: 'math201',
+    topicId: 'math201-1',
+    type: 'written',
+    difficulty: 4,
+    title: 'Existence and Uniqueness',
+    description: 'For the matrix $A = \\begin{bmatrix} 1 & 2 & 3 \\\\ 0 & 1 & 4 \\\\ 0 & 0 & 0 \\end{bmatrix}$, determine:\n\n(a) For which vectors $b$ is $Ax = b$ consistent?\n\n(b) When consistent, is the solution unique?',
+    hints: [
+      'The matrix is in REF.',
+      'Consistency depends on the augmented matrix.',
+      'Count pivot positions versus number of columns.'
+    ],
+    solution: '(a) For consistency, when we form $[A|b]$ and row reduce, we cannot get $[0 \\; 0 \\; 0 | c]$ with $c \\neq 0$.\n\nIf $b = \\begin{bmatrix} b_1 \\\\ b_2 \\\\ b_3 \\end{bmatrix}$, the last row gives $0 = b_3$.\n\nSo $Ax = b$ is consistent if and only if $b_3 = 0$.\n\n(b) When consistent, there are 2 pivots but 3 variables, so $x_3$ is free. The solution is NOT unique; there are infinitely many solutions.'
+  },
+  {
+    id: 'math201-t1-ex14',
+    subjectId: 'math201',
+    topicId: 'math201-1',
+    type: 'written',
+    difficulty: 4,
+    title: 'Solution Set Structure',
+    description: 'Find the general solution to $Ax = b$ where:\n\n$A = \\begin{bmatrix} 1 & -2 & 1 \\\\ 2 & -4 & 3 \\end{bmatrix}$, $b = \\begin{bmatrix} 3 \\\\ 7 \\end{bmatrix}$\n\nExpress as $x = p + v_h$ where $p$ is a particular solution and $v_h$ is from the homogeneous solution.',
+    hints: [
+      'First find a particular solution to Ax = b.',
+      'Then find the general solution to Ax = 0.',
+      'Combine them using the principle of superposition.'
+    ],
+    solution: 'RREF of $[A|b]$: $\\begin{bmatrix} 1 & -2 & 0 & | & 2 \\\\ 0 & 0 & 1 & | & 1 \\end{bmatrix}$\n\nParticular solution (set free variable $x_2 = 0$): $p = \\begin{bmatrix} 2 \\\\ 0 \\\\ 1 \\end{bmatrix}$\n\nHomogeneous solution ($Ax = 0$): $x_2$ is free, $x_1 = 2x_2$, $x_3 = 0$\n\n$v_h = x_2\\begin{bmatrix} 2 \\\\ 1 \\\\ 0 \\end{bmatrix}$\n\nGeneral solution: $x = \\begin{bmatrix} 2 \\\\ 0 \\\\ 1 \\end{bmatrix} + x_2\\begin{bmatrix} 2 \\\\ 1 \\\\ 0 \\end{bmatrix}$'
+  },
+  {
+    id: 'math201-t1-ex15',
+    subjectId: 'math201',
+    topicId: 'math201-1',
+    type: 'written',
+    difficulty: 5,
+    title: 'Polynomial Interpolation',
+    description: 'Find the quadratic polynomial $p(t) = a_0 + a_1t + a_2t^2$ that passes through the points $(1, 1)$, $(2, 3)$, and $(3, 7)$.',
+    hints: [
+      'Substitute each point into the polynomial.',
+      'This creates a system of 3 equations in 3 unknowns.',
+      'Solve for a₀, a₁, a₂.'
+    ],
+    solution: 'Substituting points:\n\n$p(1) = a_0 + a_1 + a_2 = 1$\n\n$p(2) = a_0 + 2a_1 + 4a_2 = 3$\n\n$p(3) = a_0 + 3a_1 + 9a_2 = 7$\n\nAugmented matrix: $\\begin{bmatrix} 1 & 1 & 1 & | & 1 \\\\ 1 & 2 & 4 & | & 3 \\\\ 1 & 3 & 9 & | & 7 \\end{bmatrix}$\n\nRREF: $\\begin{bmatrix} 1 & 0 & 0 & | & 1 \\\\ 0 & 1 & 0 & | & -1 \\\\ 0 & 0 & 1 & | & 1 \\end{bmatrix}$\n\nSolution: $p(t) = 1 - t + t^2$'
+  },
+  {
+    id: 'math201-t1-ex16',
+    subjectId: 'math201',
+    topicId: 'math201-1',
+    type: 'written',
+    difficulty: 5,
+    title: 'Balancing Chemical Equations',
+    description: 'Balance the chemical equation: $x_1\\text{C}_3\\text{H}_8 + x_2\\text{O}_2 \\rightarrow x_3\\text{CO}_2 + x_4\\text{H}_2\\text{O}$\n\nFind the smallest positive integer solution.',
+    hints: [
+      'Count atoms of each element on both sides.',
+      'Set up equations: C: 3x₁ = x₃, H: 8x₁ = 2x₄, O: 2x₂ = 2x₃ + x₄',
+      'Solve the homogeneous system and scale to integers.'
+    ],
+    solution: 'Element balance:\n\nC: $3x_1 = x_3$\n\nH: $8x_1 = 2x_4 \\Rightarrow 4x_1 = x_4$\n\nO: $2x_2 = 2x_3 + x_4$\n\nFrom C and H: $x_3 = 3x_1$, $x_4 = 4x_1$\n\nSubstitute into O: $2x_2 = 2(3x_1) + 4x_1 = 10x_1 \\Rightarrow x_2 = 5x_1$\n\nChoose $x_1 = 1$: $(x_1, x_2, x_3, x_4) = (1, 5, 3, 4)$\n\nBalanced equation: $\\text{C}_3\\text{H}_8 + 5\\text{O}_2 \\rightarrow 3\\text{CO}_2 + 4\\text{H}_2\\text{O}$'
+  }
+];

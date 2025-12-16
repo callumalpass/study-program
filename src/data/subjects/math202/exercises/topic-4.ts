@@ -1,0 +1,235 @@
+import { WrittenExercise } from '../../../../core/types';
+
+export const math202Topic4Exercises: WrittenExercise[] = [
+  {
+    id: 'math202-t4-ex01',
+    subjectId: 'math202',
+    topicId: 'math202-4',
+    type: 'written',
+    title: 'Point Estimation Basics',
+    description: 'A sample of 5 values is drawn: {2, 4, 6, 8, 10}. Calculate the sample mean and sample variance as point estimates of the population parameters.',
+    difficulty: 1,
+    hints: [
+      'Sample mean x̄ = Σxᵢ/n',
+      'Sample variance s² = Σ(xᵢ - x̄)²/(n-1)'
+    ],
+    solution: 'Sample mean: x̄ = (2+4+6+8+10)/5 = 30/5 = 6\n\nSample variance:\ns² = [(2-6)² + (4-6)² + (6-6)² + (8-6)² + (10-6)²]/(5-1)\n= [16 + 4 + 0 + 4 + 16]/4\n= 40/4 = 10'
+  },
+  {
+    id: 'math202-t4-ex02',
+    subjectId: 'math202',
+    topicId: 'math202-4',
+    type: 'written',
+    title: 'Unbiased Estimators',
+    description: 'Explain why we divide by (n-1) instead of n when calculating sample variance. What property does this give the estimator?',
+    difficulty: 2,
+    hints: [
+      'Consider E[s²] when dividing by n vs. (n-1)',
+      'Think about bias'
+    ],
+    solution: 'When we divide by (n-1) instead of n, the sample variance s² becomes an unbiased estimator of the population variance σ².\n\nDividing by n would give E[s²] < σ² (biased downward) because we use the sample mean instead of the true population mean.\n\nDividing by (n-1) corrects this bias, giving E[s²] = σ². The (n-1) is called Bessel\'s correction or degrees of freedom correction.'
+  },
+  {
+    id: 'math202-t4-ex03',
+    subjectId: 'math202',
+    topicId: 'math202-4',
+    type: 'written',
+    title: 'Confidence Interval for Mean',
+    description: 'A sample of n=25 has mean x̄=50 and standard deviation s=10. Construct a 95% confidence interval for the population mean (use t-distribution with t₀.₀₂₅,₂₄ ≈ 2.064).',
+    difficulty: 2,
+    hints: [
+      'CI = x̄ ± t × (s/√n)',
+      'Standard error = s/√n'
+    ],
+    solution: 'Standard error: SE = s/√n = 10/√25 = 10/5 = 2\n\nMargin of error: ME = t × SE = 2.064 × 2 = 4.128\n\n95% CI: 50 ± 4.128 = (45.872, 54.128)\n\nWe are 95% confident the true population mean is between 45.87 and 54.13.'
+  },
+  {
+    id: 'math202-t4-ex04',
+    subjectId: 'math202',
+    topicId: 'math202-4',
+    type: 'written',
+    title: 'Confidence Interval for Proportion',
+    description: 'In a survey of 400 people, 240 support a policy. Construct a 95% confidence interval for the true proportion (use z=1.96).',
+    difficulty: 2,
+    hints: [
+      'Sample proportion p̂ = x/n',
+      'SE = √[p̂(1-p̂)/n]',
+      'CI = p̂ ± z × SE'
+    ],
+    solution: 'Sample proportion: p̂ = 240/400 = 0.6\n\nStandard error: SE = √[0.6(0.4)/400] = √[0.24/400] = √0.0006 ≈ 0.0245\n\nMargin of error: ME = 1.96 × 0.0245 ≈ 0.048\n\n95% CI: 0.6 ± 0.048 = (0.552, 0.648)\n\nWe are 95% confident the true proportion is between 55.2% and 64.8%.'
+  },
+  {
+    id: 'math202-t4-ex05',
+    subjectId: 'math202',
+    topicId: 'math202-4',
+    type: 'written',
+    title: 'Maximum Likelihood Estimation',
+    description: 'Given n independent observations from a Poisson(λ) distribution, find the MLE of λ.',
+    difficulty: 3,
+    hints: [
+      'Likelihood: L(λ) = ∏ (λ^xᵢ e^(-λ))/xᵢ!',
+      'Use log-likelihood and take derivative',
+      'Set derivative equal to zero and solve'
+    ],
+    solution: 'Log-likelihood:\nℓ(λ) = Σ[xᵢ ln(λ) - λ - ln(xᵢ!)]\n= ln(λ)Σxᵢ - nλ - Σln(xᵢ!)\n\nDerivative:\ndℓ/dλ = Σxᵢ/λ - n\n\nSet to zero:\nΣxᵢ/λ - n = 0\nλ̂ = Σxᵢ/n = x̄\n\nThe MLE of λ is the sample mean.'
+  },
+  {
+    id: 'math202-t4-ex06',
+    subjectId: 'math202',
+    topicId: 'math202-4',
+    type: 'written',
+    title: 'MLE for Normal Distribution',
+    description: 'For n independent observations from N(μ, σ²), find the MLEs of μ and σ².',
+    difficulty: 4,
+    hints: [
+      'Log-likelihood: ℓ = -n/2 ln(2πσ²) - Σ(xᵢ-μ)²/(2σ²)',
+      'Take partial derivatives with respect to μ and σ²'
+    ],
+    solution: 'Log-likelihood:\nℓ(μ,σ²) = -n/2 ln(2πσ²) - Σ(xᵢ-μ)²/(2σ²)\n\nPartial derivative wrt μ:\n∂ℓ/∂μ = Σ(xᵢ-μ)/σ² = 0\n⟹ μ̂ = Σxᵢ/n = x̄\n\nPartial derivative wrt σ²:\n∂ℓ/∂σ² = -n/(2σ²) + Σ(xᵢ-μ)²/(2σ⁴) = 0\n⟹ σ̂² = Σ(xᵢ-x̄)²/n\n\nNote: σ̂² divides by n, not (n-1), so it\'s biased.'
+  },
+  {
+    id: 'math202-t4-ex07',
+    subjectId: 'math202',
+    topicId: 'math202-4',
+    type: 'written',
+    title: 'Method of Moments',
+    description: 'For a Uniform(0, θ) distribution, find the method of moments estimator of θ.',
+    difficulty: 3,
+    hints: [
+      'For U(0,θ), E[X] = θ/2',
+      'Set sample mean equal to population mean',
+      'Solve for θ'
+    ],
+    solution: 'For X ~ U(0,θ), E[X] = θ/2\n\nMethod of moments: set E[X] = x̄\nθ/2 = x̄\nθ̂ = 2x̄\n\nThe method of moments estimator is θ̂ = 2x̄'
+  },
+  {
+    id: 'math202-t4-ex08',
+    subjectId: 'math202',
+    topicId: 'math202-4',
+    type: 'written',
+    title: 'Sampling Distribution of Mean',
+    description: 'If a population has mean μ=100 and variance σ²=400, what are the mean and standard deviation of the sampling distribution of x̄ based on n=25 observations?',
+    difficulty: 1,
+    hints: [
+      'E[x̄] = μ',
+      'Var(x̄) = σ²/n',
+      'SD(x̄) = σ/√n'
+    ],
+    solution: 'Mean of sampling distribution: E[x̄] = μ = 100\n\nVariance of sampling distribution: Var(x̄) = σ²/n = 400/25 = 16\n\nStandard deviation (standard error): SD(x̄) = σ/√n = 20/5 = 4'
+  },
+  {
+    id: 'math202-t4-ex09',
+    subjectId: 'math202',
+    topicId: 'math202-4',
+    type: 'written',
+    title: 'Central Limit Theorem Application',
+    description: 'A population has mean 50 and standard deviation 12. If we take samples of size 36, what is the probability that the sample mean exceeds 53?',
+    difficulty: 2,
+    hints: [
+      'By CLT, x̄ is approximately normal with mean μ and SD σ/√n',
+      'Standardize and use normal table'
+    ],
+    solution: 'By CLT, x̄ ~ N(50, 12²/36) approximately\n\nMean: μ_x̄ = 50\nSD: σ_x̄ = 12/√36 = 12/6 = 2\n\nStandardize: Z = (53-50)/2 = 1.5\n\nP(x̄ > 53) = P(Z > 1.5) ≈ 0.0668 or 6.68%'
+  },
+  {
+    id: 'math202-t4-ex10',
+    subjectId: 'math202',
+    topicId: 'math202-4',
+    type: 'written',
+    title: 'Sample Size Determination',
+    description: 'How large a sample is needed to estimate a population mean with 95% confidence and margin of error ±3, if σ=15?',
+    difficulty: 2,
+    hints: [
+      'ME = z × σ/√n',
+      'Solve for n: n = (z×σ/ME)²',
+      'Use z=1.96 for 95% confidence'
+    ],
+    solution: 'Given: ME = 3, σ = 15, z = 1.96\n\nFrom ME = z×σ/√n:\n3 = 1.96×15/√n\n√n = 1.96×15/3 = 9.8\nn = (9.8)² = 96.04\n\nRound up: n = 97 observations needed'
+  },
+  {
+    id: 'math202-t4-ex11',
+    subjectId: 'math202',
+    topicId: 'math202-4',
+    type: 'written',
+    title: 'Bias and Variance Tradeoff',
+    description: 'Define bias and variance of an estimator. Explain the bias-variance tradeoff.',
+    difficulty: 2,
+    hints: [
+      'Bias = E[θ̂] - θ',
+      'Variance = E[(θ̂ - E[θ̂])²]',
+      'Mean Squared Error relates to both'
+    ],
+    solution: 'Bias of estimator θ̂:\nBias(θ̂) = E[θ̂] - θ\nAn unbiased estimator has E[θ̂] = θ\n\nVariance of estimator:\nVar(θ̂) = E[(θ̂ - E[θ̂])²]\nMeasures spread of estimates around their mean\n\nMean Squared Error:\nMSE(θ̂) = E[(θ̂ - θ)²] = Bias²(θ̂) + Var(θ̂)\n\nBias-Variance Tradeoff: Sometimes accepting a small bias allows much lower variance, reducing overall MSE. This is why we sometimes prefer biased but consistent estimators with lower variance.'
+  },
+  {
+    id: 'math202-t4-ex12',
+    subjectId: 'math202',
+    topicId: 'math202-4',
+    type: 'written',
+    title: 'Confidence Level Interpretation',
+    description: 'A 95% confidence interval for μ is (47, 53). Explain what this means and what it does NOT mean.',
+    difficulty: 2,
+    hints: [
+      'Think about repeated sampling',
+      'Consider the probability statement'
+    ],
+    solution: 'CORRECT interpretation:\nIf we repeated this sampling process many times, 95% of the confidence intervals constructed would contain the true parameter μ.\n\nINCORRECT interpretations:\n❌ There is a 95% probability that μ is in (47, 53)\n❌ 95% of the data falls in (47, 53)\n❌ The probability that μ = 50 is 95%\n\nThe interval (47, 53) either contains μ or it doesn\'t (it\'s not random). The 95% refers to our confidence in the method, not this particular interval.'
+  },
+  {
+    id: 'math202-t4-ex13',
+    subjectId: 'math202',
+    topicId: 'math202-4',
+    type: 'written',
+    title: 'Comparing Estimators',
+    description: 'Two estimators of θ have E[θ̂₁] = θ, Var(θ̂₁) = 10 and E[θ̂₂] = θ + 0.5, Var(θ̂₂) = 2. Which is better in terms of MSE?',
+    difficulty: 3,
+    hints: [
+      'Calculate MSE for each',
+      'MSE = Bias² + Variance'
+    ],
+    solution: 'For θ̂₁:\nBias = E[θ̂₁] - θ = 0\nMSE(θ̂₁) = 0² + 10 = 10\n\nFor θ̂₂:\nBias = E[θ̂₂] - θ = 0.5\nMSE(θ̂₂) = (0.5)² + 2 = 0.25 + 2 = 2.25\n\nθ̂₂ has lower MSE (2.25 < 10), so it\'s better despite being biased. The small bias is outweighed by much lower variance.'
+  },
+  {
+    id: 'math202-t4-ex14',
+    subjectId: 'math202',
+    topicId: 'math202-4',
+    type: 'written',
+    title: 'Standard Error',
+    description: 'Explain the difference between standard deviation and standard error. How does sample size affect each?',
+    difficulty: 2,
+    hints: [
+      'SD measures spread of data',
+      'SE measures precision of estimate'
+    ],
+    solution: 'Standard Deviation (SD):\n- Measures variability in the population or sample\n- SD = σ or s\n- Does not change with sample size (population SD is fixed)\n\nStandard Error (SE):\n- Measures precision of a sample statistic (like x̄)\n- SE = σ/√n\n- Decreases as sample size increases\n- SE → 0 as n → ∞\n\nExample: If σ = 20 and n = 100:\nSD = 20 (unchanged)\nSE = 20/√100 = 2\n\nLarger samples give more precise estimates (smaller SE) but don\'t change population variability (SD).'
+  },
+  {
+    id: 'math202-t4-ex15',
+    subjectId: 'math202',
+    topicId: 'math202-4',
+    type: 'written',
+    title: 'Bootstrapping Concept',
+    description: 'Explain the basic idea of bootstrap resampling and when it might be useful.',
+    difficulty: 3,
+    hints: [
+      'Think about resampling from the sample itself',
+      'Consider when parametric assumptions are questionable'
+    ],
+    solution: 'Bootstrap resampling:\n1. Take a sample of size n from population\n2. Repeatedly resample (with replacement) from this sample\n3. Calculate the statistic of interest for each resample\n4. Use the distribution of these statistics to estimate properties\n\nWhen useful:\n- Unknown or complex sampling distribution\n- Small samples where CLT may not apply\n- Non-standard statistics (median, trimmed mean, etc.)\n- Estimating confidence intervals without parametric assumptions\n\nExample: From original sample {2,5,7,9}, we might create bootstrap samples like {2,2,7,9}, {5,7,7,9}, {2,5,5,9}, etc., calculate x̄ for each, and use these to estimate SE(x̄) and construct CIs.'
+  },
+  {
+    id: 'math202-t4-ex16',
+    subjectId: 'math202',
+    topicId: 'math202-4',
+    type: 'written',
+    title: 'Fisher Information',
+    description: 'For a Bernoulli(p) distribution, the Fisher information is I(p) = 1/(p(1-p)). What does this tell us about the precision of estimation for different values of p?',
+    difficulty: 4,
+    hints: [
+      'Higher Fisher information means more information about the parameter',
+      'Variance of MLE is approximately 1/(n×I(p))',
+      'Consider p = 0.5 vs p = 0.1'
+    ],
+    solution: 'Fisher information I(p) = 1/(p(1-p))\n\nThe Cramér-Rao lower bound states that Var(p̂) ≥ 1/(n×I(p)) = p(1-p)/n\n\nAt p = 0.5:\nI(0.5) = 1/(0.5×0.5) = 4\nMinimum variance = 0.25/n\n\nAt p = 0.1:\nI(0.1) = 1/(0.1×0.9) = 11.11\nMinimum variance = 0.09/n\n\nCounter-intuitively, estimation is most difficult (lowest information) when p = 0.5, and easier when p is near 0 or 1. This is because extreme probabilities provide more information per observation about which category you\'re in.'
+  }
+];

@@ -1,0 +1,997 @@
+import { Quiz } from '@/core/types';
+
+export const math202Quizzes: Quiz[] = [
+  // ============================================================================
+  // TOPIC 1: Probability Fundamentals
+  // ============================================================================
+  {
+    id: 'math202-quiz-1a',
+    subjectId: 'math202',
+    topicId: 'math202-1',
+    title: 'Sample Spaces and Basic Probability',
+    questions: [
+      {
+        id: 'q1',
+        type: 'multiple_choice',
+        prompt: 'A fair six-sided die is rolled. What is the probability of rolling a number greater than 4?',
+        options: ['1/6', '1/3', '1/2', '2/3'],
+        correctAnswer: 1,
+        explanation: 'Numbers greater than 4 are {5, 6}. There are 2 favorable outcomes out of 6 possible, so P = 2/6 = 1/3.'
+      },
+      {
+        id: 'q2',
+        type: 'multiple_choice',
+        prompt: 'Two coins are flipped. What is the probability of getting exactly one head?',
+        options: ['1/4', '1/3', '1/2', '2/3'],
+        correctAnswer: 2,
+        explanation: 'Sample space: {HH, HT, TH, TT}. Exactly one head: {HT, TH}. P = 2/4 = 1/2.'
+      },
+      {
+        id: 'q3',
+        type: 'true_false',
+        prompt: 'The sum of all probabilities in a sample space must equal 1.',
+        correctAnswer: true,
+        explanation: 'This is one of the fundamental axioms of probability (Kolmogorov axioms).'
+      },
+      {
+        id: 'q4',
+        type: 'multiple_choice',
+        prompt: 'Which of the following is NOT a valid probability value?',
+        options: ['0', '0.5', '1', '1.2'],
+        correctAnswer: 3,
+        explanation: 'Probabilities must be between 0 and 1 inclusive. 1.2 > 1, so it cannot be a valid probability.'
+      },
+      {
+        id: 'q5',
+        type: 'fill_blank',
+        prompt: 'The set of all possible outcomes of a random experiment is called the ______ space.',
+        correctAnswer: 'sample',
+        explanation: 'The sample space is the fundamental concept in probability theory representing all possible outcomes.'
+      }
+    ]
+  },
+  {
+    id: 'math202-quiz-1b',
+    subjectId: 'math202',
+    topicId: 'math202-1',
+    title: 'Conditional Probability and Independence',
+    questions: [
+      {
+        id: 'q1',
+        type: 'multiple_choice',
+        prompt: 'If P(A) = 0.4, P(B) = 0.5, and P(A ∩ B) = 0.2, what is P(A|B)?',
+        options: ['0.2', '0.4', '0.5', '0.8'],
+        correctAnswer: 1,
+        explanation: 'P(A|B) = P(A ∩ B) / P(B) = 0.2 / 0.5 = 0.4.'
+      },
+      {
+        id: 'q2',
+        type: 'true_false',
+        prompt: 'If events A and B are independent, then P(A ∩ B) = P(A) × P(B).',
+        correctAnswer: true,
+        explanation: 'This is the definition of independence: two events are independent if and only if P(A ∩ B) = P(A) × P(B).'
+      },
+      {
+        id: 'q3',
+        type: 'multiple_choice',
+        prompt: 'If P(A) = 0.6 and P(B|A) = 0.3, what is P(A ∩ B)?',
+        options: ['0.18', '0.3', '0.6', '0.9'],
+        correctAnswer: 0,
+        explanation: 'Using the definition of conditional probability: P(A ∩ B) = P(B|A) × P(A) = 0.3 × 0.6 = 0.18.'
+      },
+      {
+        id: 'q4',
+        type: 'multiple_choice',
+        prompt: 'Two events A and B are mutually exclusive with P(A) = 0.3 and P(B) = 0.4. Are they independent?',
+        options: ['Yes', 'No', 'Cannot determine', 'Only if P(A ∪ B) = 0.7'],
+        correctAnswer: 1,
+        explanation: 'Mutually exclusive events (except those with probability 0) cannot be independent. If P(A ∩ B) = 0 but P(A) × P(B) = 0.12 ≠ 0, they are not independent.'
+      },
+      {
+        id: 'q5',
+        type: 'fill_blank',
+        prompt: 'The probability of event A given that event B has occurred is denoted P(A|B) and is called ______ probability.',
+        correctAnswer: 'conditional',
+        explanation: 'Conditional probability measures the probability of an event given that another event has occurred.'
+      }
+    ]
+  },
+  {
+    id: 'math202-quiz-1c',
+    subjectId: 'math202',
+    topicId: 'math202-1',
+    title: 'Bayes\' Theorem and Counting',
+    questions: [
+      {
+        id: 'q1',
+        type: 'multiple_choice',
+        prompt: 'How many different 3-letter arrangements can be made from the letters A, B, C, D, E (without repetition)?',
+        options: ['15', '60', '125', '243'],
+        correctAnswer: 1,
+        explanation: 'This is a permutation: P(5,3) = 5!/(5-3)! = 5 × 4 × 3 = 60.'
+      },
+      {
+        id: 'q2',
+        type: 'multiple_choice',
+        prompt: 'How many ways can you choose 2 items from a set of 5 items (order doesn\'t matter)?',
+        options: ['5', '10', '20', '25'],
+        correctAnswer: 1,
+        explanation: 'This is a combination: C(5,2) = 5!/(2!×3!) = (5×4)/(2×1) = 10.'
+      },
+      {
+        id: 'q3',
+        type: 'multiple_choice',
+        prompt: 'A disease affects 1% of the population. A test is 95% accurate for sick people and 90% accurate for healthy people. If someone tests positive, approximately what is the probability they have the disease?',
+        options: ['About 9%', 'About 50%', 'About 95%', 'About 99%'],
+        correctAnswer: 0,
+        explanation: 'Using Bayes\' theorem: P(Disease|Positive) = P(Positive|Disease)×P(Disease) / P(Positive). P(Positive) = 0.95×0.01 + 0.10×0.99 = 0.1085. So P(Disease|Positive) = 0.0095/0.1085 ≈ 0.088 or about 9%.'
+      },
+      {
+        id: 'q4',
+        type: 'true_false',
+        prompt: 'The number of permutations of n distinct objects is n!.',
+        correctAnswer: true,
+        explanation: 'The factorial n! counts all possible orderings of n distinct objects.'
+      },
+      {
+        id: 'q5',
+        type: 'fill_blank',
+        prompt: 'Bayes\' theorem allows us to update our beliefs about a hypothesis based on new ______.',
+        correctAnswer: 'evidence',
+        explanation: 'Bayes\' theorem is fundamental for updating probabilities when new evidence or information becomes available.'
+      }
+    ]
+  },
+
+  // ============================================================================
+  // TOPIC 2: Random Variables
+  // ============================================================================
+  {
+    id: 'math202-quiz-2a',
+    subjectId: 'math202',
+    topicId: 'math202-2',
+    title: 'Discrete and Continuous Random Variables',
+    questions: [
+      {
+        id: 'q1',
+        type: 'multiple_choice',
+        prompt: 'Which of the following is a discrete random variable?',
+        options: ['Height of students in a class', 'Number of heads in 10 coin flips', 'Time until a light bulb fails', 'Temperature at noon'],
+        correctAnswer: 1,
+        explanation: 'The number of heads is countable (0, 1, 2, ..., 10), making it discrete. The others are continuous.'
+      },
+      {
+        id: 'q2',
+        type: 'true_false',
+        prompt: 'For a continuous random variable, P(X = a) = 0 for any specific value a.',
+        correctAnswer: true,
+        explanation: 'For continuous distributions, probability is defined over intervals, not at specific points. The probability at any single point is zero.'
+      },
+      {
+        id: 'q3',
+        type: 'multiple_choice',
+        prompt: 'For a discrete random variable X, what must be true about its probability mass function (PMF)?',
+        options: ['All probabilities must be equal', 'Sum of all probabilities equals 1', 'All probabilities must be > 0.5', 'It must be symmetric'],
+        correctAnswer: 1,
+        explanation: 'The fundamental property of a PMF is that the sum of all probabilities must equal 1.'
+      },
+      {
+        id: 'q4',
+        type: 'multiple_choice',
+        prompt: 'The probability density function (PDF) f(x) for a continuous random variable must satisfy which condition?',
+        options: ['f(x) ≤ 1 for all x', '∫f(x)dx = 1 over the domain', 'f(x) must be constant', 'f(x) = 0 at all points'],
+        correctAnswer: 1,
+        explanation: 'The PDF must integrate to 1 over its entire domain. Note that f(x) can exceed 1 at some points.'
+      },
+      {
+        id: 'q5',
+        type: 'fill_blank',
+        prompt: 'A function that gives the probability that a discrete random variable equals a specific value is called a probability ______ function.',
+        correctAnswer: 'mass',
+        explanation: 'The probability mass function (PMF) assigns probabilities to discrete outcomes.'
+      }
+    ]
+  },
+  {
+    id: 'math202-quiz-2b',
+    subjectId: 'math202',
+    topicId: 'math202-2',
+    title: 'Expected Value and Variance',
+    questions: [
+      {
+        id: 'q1',
+        type: 'multiple_choice',
+        prompt: 'A random variable X has the distribution: P(X=1)=0.2, P(X=2)=0.3, P(X=3)=0.5. What is E[X]?',
+        options: ['1.5', '2.0', '2.3', '2.5'],
+        correctAnswer: 2,
+        explanation: 'E[X] = 1(0.2) + 2(0.3) + 3(0.5) = 0.2 + 0.6 + 1.5 = 2.3.'
+      },
+      {
+        id: 'q2',
+        type: 'true_false',
+        prompt: 'The variance of a random variable is always non-negative.',
+        correctAnswer: true,
+        explanation: 'Variance is defined as E[(X - μ)²], which is an expected value of squared terms, so it must be ≥ 0.'
+      },
+      {
+        id: 'q3',
+        type: 'multiple_choice',
+        prompt: 'If E[X] = 5 and Var(X) = 4, what is the standard deviation of X?',
+        options: ['2', '4', '9', '16'],
+        correctAnswer: 0,
+        explanation: 'Standard deviation σ = √Var(X) = √4 = 2.'
+      },
+      {
+        id: 'q4',
+        type: 'multiple_choice',
+        prompt: 'For constants a and b, what is E[aX + b]?',
+        options: ['aE[X]', 'aE[X] + b', 'E[X] + b', 'a + bE[X]'],
+        correctAnswer: 1,
+        explanation: 'Expected value is linear: E[aX + b] = aE[X] + b.'
+      },
+      {
+        id: 'q5',
+        type: 'fill_blank',
+        prompt: 'The expected value is also called the ______ or average.',
+        correctAnswer: 'mean',
+        explanation: 'Expected value, mean, and average all refer to the same central tendency measure.'
+      }
+    ]
+  },
+  {
+    id: 'math202-quiz-2c',
+    subjectId: 'math202',
+    topicId: 'math202-2',
+    title: 'Moment Generating Functions',
+    questions: [
+      {
+        id: 'q1',
+        type: 'multiple_choice',
+        prompt: 'The moment generating function (MGF) M(t) is defined as:',
+        options: ['E[X^t]', 'E[e^(tX)]', 'E[t^X]', 'E[X/t]'],
+        correctAnswer: 1,
+        explanation: 'The MGF is defined as M(t) = E[e^(tX)].'
+      },
+      {
+        id: 'q2',
+        type: 'true_false',
+        prompt: 'The nth moment E[X^n] can be found by taking the nth derivative of the MGF at t=0.',
+        correctAnswer: true,
+        explanation: 'This is a key property of MGFs: E[X^n] = M^(n)(0), the nth derivative evaluated at t=0.'
+      },
+      {
+        id: 'q3',
+        type: 'multiple_choice',
+        prompt: 'What is the first moment (n=1) of a random variable?',
+        options: ['The variance', 'The mean', 'The standard deviation', 'The median'],
+        correctAnswer: 1,
+        explanation: 'The first moment E[X] is the mean of the distribution.'
+      },
+      {
+        id: 'q4',
+        type: 'multiple_choice',
+        prompt: 'If X and Y are independent random variables, what is the MGF of X + Y?',
+        options: ['M_X(t) + M_Y(t)', 'M_X(t) × M_Y(t)', 'M_X(t) - M_Y(t)', 'M_X(t) / M_Y(t)'],
+        correctAnswer: 1,
+        explanation: 'For independent variables, M_{X+Y}(t) = M_X(t) × M_Y(t).'
+      },
+      {
+        id: 'q5',
+        type: 'fill_blank',
+        prompt: 'The second central moment E[(X - μ)²] is called the ______.',
+        correctAnswer: 'variance',
+        explanation: 'Variance is the second moment about the mean.'
+      }
+    ]
+  },
+
+  // ============================================================================
+  // TOPIC 3: Probability Distributions
+  // ============================================================================
+  {
+    id: 'math202-quiz-3a',
+    subjectId: 'math202',
+    topicId: 'math202-3',
+    title: 'Binomial and Poisson Distributions',
+    questions: [
+      {
+        id: 'q1',
+        type: 'multiple_choice',
+        prompt: 'A binomial distribution requires which of the following?',
+        options: ['Continuous outcomes', 'Fixed number of trials with constant success probability', 'Infinite trials', 'Normally distributed data'],
+        correctAnswer: 1,
+        explanation: 'Binomial distributions model a fixed number of independent trials, each with the same probability of success.'
+      },
+      {
+        id: 'q2',
+        type: 'multiple_choice',
+        prompt: 'If X ~ Binomial(n=10, p=0.3), what is E[X]?',
+        options: ['0.3', '3', '7', '10'],
+        correctAnswer: 1,
+        explanation: 'For a binomial distribution, E[X] = np = 10 × 0.3 = 3.'
+      },
+      {
+        id: 'q3',
+        type: 'true_false',
+        prompt: 'The Poisson distribution is often used to model the number of events occurring in a fixed interval of time or space.',
+        correctAnswer: true,
+        explanation: 'Poisson distributions model rare events occurring at a constant average rate over time/space.'
+      },
+      {
+        id: 'q4',
+        type: 'multiple_choice',
+        prompt: 'For a Poisson distribution with λ = 4, what is both E[X] and Var(X)?',
+        options: ['E[X]=2, Var(X)=4', 'E[X]=4, Var(X)=2', 'E[X]=4, Var(X)=4', 'E[X]=4, Var(X)=16'],
+        correctAnswer: 2,
+        explanation: 'A unique property of Poisson: both the mean and variance equal λ. So E[X] = Var(X) = 4.'
+      },
+      {
+        id: 'q5',
+        type: 'fill_blank',
+        prompt: 'The binomial coefficient "n choose k" is written as C(n,k) or using ______ notation.',
+        correctAnswer: 'binomial',
+        explanation: 'The binomial coefficient is denoted C(n,k) or (n choose k), used in binomial probability calculations.'
+      }
+    ]
+  },
+  {
+    id: 'math202-quiz-3b',
+    subjectId: 'math202',
+    topicId: 'math202-3',
+    title: 'Normal Distribution',
+    questions: [
+      {
+        id: 'q1',
+        type: 'multiple_choice',
+        prompt: 'A standard normal distribution has which parameters?',
+        options: ['μ=0, σ=0', 'μ=1, σ=1', 'μ=0, σ=1', 'μ=1, σ=0'],
+        correctAnswer: 2,
+        explanation: 'The standard normal distribution has mean μ=0 and standard deviation σ=1.'
+      },
+      {
+        id: 'q2',
+        type: 'multiple_choice',
+        prompt: 'If X ~ N(100, 25), what is the standard deviation?',
+        options: ['5', '25', '100', '625'],
+        correctAnswer: 0,
+        explanation: 'N(μ, σ²) notation uses variance σ². So σ² = 25 means σ = 5.'
+      },
+      {
+        id: 'q3',
+        type: 'true_false',
+        prompt: 'Approximately 68% of data in a normal distribution falls within one standard deviation of the mean.',
+        correctAnswer: true,
+        explanation: 'The empirical rule: about 68% within 1σ, 95% within 2σ, and 99.7% within 3σ of the mean.'
+      },
+      {
+        id: 'q4',
+        type: 'multiple_choice',
+        prompt: 'To standardize a normal random variable X with mean μ and standard deviation σ, we use:',
+        options: ['Z = X - μ', 'Z = (X - μ)/σ', 'Z = X/σ', 'Z = σ(X - μ)'],
+        correctAnswer: 1,
+        explanation: 'The z-score formula Z = (X - μ)/σ converts any normal distribution to standard normal.'
+      },
+      {
+        id: 'q5',
+        type: 'fill_blank',
+        prompt: 'The normal distribution is also called the ______ distribution due to its shape.',
+        correctAnswer: 'bell',
+        explanation: 'The normal distribution is bell-shaped, hence the name "bell curve."'
+      }
+    ]
+  },
+  {
+    id: 'math202-quiz-3c',
+    subjectId: 'math202',
+    topicId: 'math202-3',
+    title: 'Other Important Distributions',
+    questions: [
+      {
+        id: 'q1',
+        type: 'multiple_choice',
+        prompt: 'The exponential distribution is often used to model:',
+        options: ['Heights of people', 'Time between events in a Poisson process', 'Number of successes', 'Discrete outcomes'],
+        correctAnswer: 1,
+        explanation: 'Exponential distributions model waiting times between events in a Poisson process.'
+      },
+      {
+        id: 'q2',
+        type: 'true_false',
+        prompt: 'The exponential distribution has the memoryless property.',
+        correctAnswer: true,
+        explanation: 'The memoryless property P(X > s+t | X > s) = P(X > t) is unique to the exponential distribution among continuous distributions.'
+      },
+      {
+        id: 'q3',
+        type: 'multiple_choice',
+        prompt: 'A uniform distribution U(a,b) has mean equal to:',
+        options: ['a', 'b', '(a+b)/2', 'b-a'],
+        correctAnswer: 2,
+        explanation: 'For a uniform distribution on [a,b], the mean is the midpoint: (a+b)/2.'
+      },
+      {
+        id: 'q4',
+        type: 'multiple_choice',
+        prompt: 'The chi-square distribution is commonly used in:',
+        options: ['Testing independence in contingency tables', 'Calculating means', 'Determining medians', 'Computing permutations'],
+        correctAnswer: 0,
+        explanation: 'Chi-square tests are used for testing independence and goodness of fit.'
+      },
+      {
+        id: 'q5',
+        type: 'fill_blank',
+        prompt: 'The geometric distribution models the number of trials until the first ______.',
+        correctAnswer: 'success',
+        explanation: 'The geometric distribution counts trials until the first success occurs.'
+      }
+    ]
+  },
+
+  // ============================================================================
+  // TOPIC 4: Statistical Inference
+  // ============================================================================
+  {
+    id: 'math202-quiz-4a',
+    subjectId: 'math202',
+    topicId: 'math202-4',
+    title: 'Estimation Fundamentals',
+    questions: [
+      {
+        id: 'q1',
+        type: 'multiple_choice',
+        prompt: 'A point estimate is:',
+        options: ['A range of plausible values', 'A single value estimate of a parameter', 'The true population value', 'Always equal to the mean'],
+        correctAnswer: 1,
+        explanation: 'A point estimate provides a single value as an estimate of the population parameter.'
+      },
+      {
+        id: 'q2',
+        type: 'multiple_choice',
+        prompt: 'The sample mean X̄ is an unbiased estimator of the population mean μ because:',
+        options: ['E[X̄] = μ', 'Var(X̄) = 0', 'X̄ = μ always', 'X̄ > μ'],
+        correctAnswer: 0,
+        explanation: 'An estimator is unbiased if its expected value equals the parameter: E[X̄] = μ.'
+      },
+      {
+        id: 'q3',
+        type: 'true_false',
+        prompt: 'A confidence interval provides a range of plausible values for a population parameter.',
+        correctAnswer: true,
+        explanation: 'Confidence intervals give a range of values that likely contain the true parameter with a specified confidence level.'
+      },
+      {
+        id: 'q4',
+        type: 'multiple_choice',
+        prompt: 'A 95% confidence interval means:',
+        options: ['The parameter is in the interval 95% of the time', '95% of sample intervals will contain the true parameter', 'The probability the parameter is in the interval is 95%', 'We are 95% sure of our sample'],
+        correctAnswer: 1,
+        explanation: 'If we repeated sampling many times, 95% of the constructed intervals would contain the true parameter.'
+      },
+      {
+        id: 'q5',
+        type: 'fill_blank',
+        prompt: 'The difference between an estimator and the true parameter value is called ______.',
+        correctAnswer: 'bias',
+        explanation: 'Bias is the systematic difference between the expected value of an estimator and the true parameter.'
+      }
+    ]
+  },
+  {
+    id: 'math202-quiz-4b',
+    subjectId: 'math202',
+    topicId: 'math202-4',
+    title: 'Maximum Likelihood Estimation',
+    questions: [
+      {
+        id: 'q1',
+        type: 'multiple_choice',
+        prompt: 'Maximum Likelihood Estimation (MLE) finds the parameter value that:',
+        options: ['Minimizes variance', 'Maximizes the likelihood of observing the data', 'Equals the sample mean', 'Minimizes bias'],
+        correctAnswer: 1,
+        explanation: 'MLE chooses the parameter value that makes the observed data most probable.'
+      },
+      {
+        id: 'q2',
+        type: 'true_false',
+        prompt: 'The likelihood function is the same as the probability distribution.',
+        correctAnswer: false,
+        explanation: 'The likelihood function views the probability as a function of the parameters given the data, not the data given the parameters.'
+      },
+      {
+        id: 'q3',
+        type: 'multiple_choice',
+        prompt: 'For computational convenience, we often maximize the ______ instead of the likelihood:',
+        options: ['Mean', 'Variance', 'Log-likelihood', 'Standard deviation'],
+        correctAnswer: 2,
+        explanation: 'The log-likelihood is easier to work with mathematically (turns products into sums) and has the same maximum as the likelihood.'
+      },
+      {
+        id: 'q4',
+        type: 'multiple_choice',
+        prompt: 'The MLE for the mean of a normal distribution is:',
+        options: ['The sample median', 'The sample mean', 'The sample variance', 'The sample mode'],
+        correctAnswer: 1,
+        explanation: 'For normal distributions, the MLE of μ is the sample mean X̄.'
+      },
+      {
+        id: 'q5',
+        type: 'fill_blank',
+        prompt: 'The method of ______ estimates parameters by equating sample moments to population moments.',
+        correctAnswer: 'moments',
+        explanation: 'The method of moments matches sample moments (like mean, variance) to their population counterparts.'
+      }
+    ]
+  },
+  {
+    id: 'math202-quiz-4c',
+    subjectId: 'math202',
+    topicId: 'math202-4',
+    title: 'Sampling Distributions',
+    questions: [
+      {
+        id: 'q1',
+        type: 'multiple_choice',
+        prompt: 'The Central Limit Theorem states that the sampling distribution of the mean approaches what distribution as n increases?',
+        options: ['Uniform', 'Exponential', 'Normal', 'Poisson'],
+        correctAnswer: 2,
+        explanation: 'The CLT states that sample means approach a normal distribution regardless of the population distribution (for large n).'
+      },
+      {
+        id: 'q2',
+        type: 'multiple_choice',
+        prompt: 'If a population has mean μ and variance σ², what is the variance of the sample mean X̄ based on n observations?',
+        options: ['σ²', 'σ²/n', 'σ/√n', 'nσ²'],
+        correctAnswer: 1,
+        explanation: 'The variance of the sample mean is Var(X̄) = σ²/n.'
+      },
+      {
+        id: 'q3',
+        type: 'true_false',
+        prompt: 'The standard error is the standard deviation of a sampling distribution.',
+        correctAnswer: true,
+        explanation: 'Standard error specifically refers to the standard deviation of a statistic\'s sampling distribution.'
+      },
+      {
+        id: 'q4',
+        type: 'multiple_choice',
+        prompt: 'For the CLT to apply reasonably well, the sample size n should typically be at least:',
+        options: ['5', '10', '30', '100'],
+        correctAnswer: 2,
+        explanation: 'A common rule of thumb is n ≥ 30 for the CLT to provide good approximation, though this depends on the population distribution.'
+      },
+      {
+        id: 'q5',
+        type: 'fill_blank',
+        prompt: 'The distribution of a statistic across all possible samples is called its ______ distribution.',
+        correctAnswer: 'sampling',
+        explanation: 'A sampling distribution shows how a statistic varies across different samples from the same population.'
+      }
+    ]
+  },
+
+  // ============================================================================
+  // TOPIC 5: Hypothesis Testing
+  // ============================================================================
+  {
+    id: 'math202-quiz-5a',
+    subjectId: 'math202',
+    topicId: 'math202-5',
+    title: 'Hypothesis Testing Basics',
+    questions: [
+      {
+        id: 'q1',
+        type: 'multiple_choice',
+        prompt: 'The null hypothesis (H₀) typically represents:',
+        options: ['The research hypothesis', 'No effect or status quo', 'The alternative we want to prove', 'The most interesting outcome'],
+        correctAnswer: 1,
+        explanation: 'H₀ represents the null state, no effect, or status quo that we test against.'
+      },
+      {
+        id: 'q2',
+        type: 'multiple_choice',
+        prompt: 'A Type I error occurs when we:',
+        options: ['Reject H₀ when it is true', 'Fail to reject H₀ when it is false', 'Correctly reject H₀', 'Correctly fail to reject H₀'],
+        correctAnswer: 0,
+        explanation: 'Type I error (false positive) is rejecting a true null hypothesis. Its probability is α.'
+      },
+      {
+        id: 'q3',
+        type: 'multiple_choice',
+        prompt: 'A Type II error occurs when we:',
+        options: ['Reject H₀ when it is true', 'Fail to reject H₀ when it is false', 'Correctly reject H₀', 'Correctly fail to reject H₀'],
+        correctAnswer: 1,
+        explanation: 'Type II error (false negative) is failing to reject a false null hypothesis. Its probability is β.'
+      },
+      {
+        id: 'q4',
+        type: 'true_false',
+        prompt: 'The p-value is the probability that the null hypothesis is true.',
+        correctAnswer: false,
+        explanation: 'The p-value is the probability of observing data as extreme as ours, assuming H₀ is true. It is NOT the probability that H₀ is true.'
+      },
+      {
+        id: 'q5',
+        type: 'fill_blank',
+        prompt: 'The significance level α is the probability of making a Type ______ error.',
+        correctAnswer: 'I',
+        explanation: 'α (alpha) is the probability of Type I error, typically set at 0.05 or 0.01.'
+      }
+    ]
+  },
+  {
+    id: 'math202-quiz-5b',
+    subjectId: 'math202',
+    topicId: 'math202-5',
+    title: 'Z-Tests and t-Tests',
+    questions: [
+      {
+        id: 'q1',
+        type: 'multiple_choice',
+        prompt: 'A z-test is appropriate when:',
+        options: ['Sample size is small and σ is unknown', 'Sample size is large or σ is known', 'Testing proportions only', 'Data is categorical'],
+        correctAnswer: 1,
+        explanation: 'Z-tests are used when the population standard deviation σ is known, or when n is large enough for CLT.'
+      },
+      {
+        id: 'q2',
+        type: 'multiple_choice',
+        prompt: 'When should you use a t-test instead of a z-test?',
+        options: ['When n > 30', 'When σ is known', 'When n is small and σ is unknown', 'When testing proportions'],
+        correctAnswer: 2,
+        explanation: 'Use a t-test when the population standard deviation is unknown and sample size is small.'
+      },
+      {
+        id: 'q3',
+        type: 'true_false',
+        prompt: 'As degrees of freedom increase, the t-distribution approaches the standard normal distribution.',
+        correctAnswer: true,
+        explanation: 'The t-distribution converges to N(0,1) as df → ∞.'
+      },
+      {
+        id: 'q4',
+        type: 'multiple_choice',
+        prompt: 'For a two-sample t-test, we assume:',
+        options: ['The populations are identical', 'Both populations are approximately normal', 'The samples have equal size', 'The means are equal'],
+        correctAnswer: 1,
+        explanation: 'Two-sample t-tests assume both populations are approximately normally distributed (or large samples).'
+      },
+      {
+        id: 'q5',
+        type: 'fill_blank',
+        prompt: 'The number of degrees of freedom for a one-sample t-test with n observations is ______.',
+        correctAnswer: 'n-1',
+        explanation: 'Degrees of freedom for a one-sample t-test equals n - 1.'
+      }
+    ]
+  },
+  {
+    id: 'math202-quiz-5c',
+    subjectId: 'math202',
+    topicId: 'math202-5',
+    title: 'Chi-Square and ANOVA',
+    questions: [
+      {
+        id: 'q1',
+        type: 'multiple_choice',
+        prompt: 'A chi-square test of independence is used to:',
+        options: ['Compare means', 'Test relationships between categorical variables', 'Test normality', 'Calculate correlation'],
+        correctAnswer: 1,
+        explanation: 'Chi-square tests of independence examine whether two categorical variables are related.'
+      },
+      {
+        id: 'q2',
+        type: 'true_false',
+        prompt: 'ANOVA (Analysis of Variance) is used to compare means across three or more groups.',
+        correctAnswer: true,
+        explanation: 'ANOVA tests whether means differ across multiple groups simultaneously.'
+      },
+      {
+        id: 'q3',
+        type: 'multiple_choice',
+        prompt: 'In ANOVA, if the null hypothesis is true, all population means are:',
+        options: ['Different', 'Equal', 'Zero', 'Positive'],
+        correctAnswer: 1,
+        explanation: 'H₀ in ANOVA states that all population means are equal: μ₁ = μ₂ = ... = μₖ.'
+      },
+      {
+        id: 'q4',
+        type: 'multiple_choice',
+        prompt: 'The F-statistic in ANOVA compares:',
+        options: ['Between-group variance to within-group variance', 'Sample means to population means', 'Two proportions', 'Categorical frequencies'],
+        correctAnswer: 0,
+        explanation: 'F = (between-group variance)/(within-group variance). Large F suggests group means differ.'
+      },
+      {
+        id: 'q5',
+        type: 'fill_blank',
+        prompt: 'The chi-square goodness of fit test compares observed frequencies to ______ frequencies.',
+        correctAnswer: 'expected',
+        explanation: 'Chi-square tests compare observed data to expected frequencies under the null hypothesis.'
+      }
+    ]
+  },
+
+  // ============================================================================
+  // TOPIC 6: Regression Analysis
+  // ============================================================================
+  {
+    id: 'math202-quiz-6a',
+    subjectId: 'math202',
+    topicId: 'math202-6',
+    title: 'Simple Linear Regression',
+    questions: [
+      {
+        id: 'q1',
+        type: 'multiple_choice',
+        prompt: 'In the regression equation Y = β₀ + β₁X + ε, what does β₁ represent?',
+        options: ['The intercept', 'The slope', 'The error term', 'The correlation'],
+        correctAnswer: 1,
+        explanation: 'β₁ is the slope coefficient, representing the change in Y for a one-unit change in X.'
+      },
+      {
+        id: 'q2',
+        type: 'multiple_choice',
+        prompt: 'The least squares method minimizes:',
+        options: ['Sum of errors', 'Sum of absolute errors', 'Sum of squared errors', 'Maximum error'],
+        correctAnswer: 2,
+        explanation: 'Least squares minimizes the sum of squared residuals: Σ(yᵢ - ŷᵢ)².'
+      },
+      {
+        id: 'q3',
+        type: 'true_false',
+        prompt: 'The correlation coefficient r is always between -1 and 1.',
+        correctAnswer: true,
+        explanation: 'The correlation coefficient r ranges from -1 (perfect negative) to +1 (perfect positive).'
+      },
+      {
+        id: 'q4',
+        type: 'multiple_choice',
+        prompt: 'R² (coefficient of determination) represents:',
+        options: ['The correlation', 'The slope', 'The proportion of variance explained', 'The residual variance'],
+        correctAnswer: 2,
+        explanation: 'R² indicates the proportion of variance in Y explained by X. R² = 0.8 means 80% of variance is explained.'
+      },
+      {
+        id: 'q5',
+        type: 'fill_blank',
+        prompt: 'The difference between an observed value and the predicted value is called a ______.',
+        correctAnswer: 'residual',
+        explanation: 'Residuals (errors) are the differences between observed and fitted values: eᵢ = yᵢ - ŷᵢ.'
+      }
+    ]
+  },
+  {
+    id: 'math202-quiz-6b',
+    subjectId: 'math202',
+    topicId: 'math202-6',
+    title: 'Regression Inference and Diagnostics',
+    questions: [
+      {
+        id: 'q1',
+        type: 'multiple_choice',
+        prompt: 'Which assumption is NOT required for linear regression?',
+        options: ['Linearity', 'Independence of errors', 'X and Y are normally distributed', 'Homoscedasticity'],
+        correctAnswer: 2,
+        explanation: 'We assume errors are normally distributed, not necessarily X and Y themselves.'
+      },
+      {
+        id: 'q2',
+        type: 'true_false',
+        prompt: 'Homoscedasticity means the variance of errors is constant across all values of X.',
+        correctAnswer: true,
+        explanation: 'Homoscedasticity (constant variance) is one of the key assumptions of linear regression.'
+      },
+      {
+        id: 'q3',
+        type: 'multiple_choice',
+        prompt: 'A residual plot showing a clear pattern suggests:',
+        options: ['Good model fit', 'Violation of assumptions', 'High R²', 'Strong correlation'],
+        correctAnswer: 1,
+        explanation: 'Patterns in residual plots indicate violations of regression assumptions (non-linearity, heteroscedasticity, etc.).'
+      },
+      {
+        id: 'q4',
+        type: 'multiple_choice',
+        prompt: 'To test if the slope β₁ is significantly different from zero, we use:',
+        options: ['Chi-square test', 't-test', 'F-test', 'Z-test'],
+        correctAnswer: 1,
+        explanation: 'We use a t-test to test H₀: β₁ = 0 vs. H₁: β₁ ≠ 0.'
+      },
+      {
+        id: 'q5',
+        type: 'fill_blank',
+        prompt: 'An influential point that doesn\'t follow the pattern of other data is called an ______.',
+        correctAnswer: 'outlier',
+        explanation: 'Outliers are observations that are far from the regression line and can heavily influence the fit.'
+      }
+    ]
+  },
+  {
+    id: 'math202-quiz-6c',
+    subjectId: 'math202',
+    topicId: 'math202-6',
+    title: 'Multiple Regression',
+    questions: [
+      {
+        id: 'q1',
+        type: 'multiple_choice',
+        prompt: 'In multiple regression with k predictors, the model is:',
+        options: ['Y = β₀ + β₁X + ε', 'Y = β₀ + β₁X₁ + β₂X₂ + ... + βₖXₖ + ε', 'Y = β₁X₁ + ε', 'Y = ΣXᵢ + ε'],
+        correctAnswer: 1,
+        explanation: 'Multiple regression includes multiple predictor variables X₁, X₂, ..., Xₖ.'
+      },
+      {
+        id: 'q2',
+        type: 'true_false',
+        prompt: 'Multicollinearity occurs when predictor variables are highly correlated with each other.',
+        correctAnswer: true,
+        explanation: 'Multicollinearity makes it difficult to determine the individual effect of each predictor.'
+      },
+      {
+        id: 'q3',
+        type: 'multiple_choice',
+        prompt: 'Adjusted R² is preferred over R² in multiple regression because:',
+        options: ['It is always larger', 'It accounts for the number of predictors', 'It is easier to calculate', 'It doesn\'t require assumptions'],
+        correctAnswer: 1,
+        explanation: 'Adjusted R² penalizes models for including unnecessary predictors, preventing overfitting.'
+      },
+      {
+        id: 'q4',
+        type: 'multiple_choice',
+        prompt: 'The F-test in multiple regression tests:',
+        options: ['Individual coefficients', 'Overall model significance', 'Normality', 'Homoscedasticity'],
+        correctAnswer: 1,
+        explanation: 'The F-test tests H₀: β₁ = β₂ = ... = βₖ = 0 (whether the model as a whole is significant).'
+      },
+      {
+        id: 'q5',
+        type: 'fill_blank',
+        prompt: 'The Variance Inflation Factor (VIF) is used to detect ______.',
+        correctAnswer: 'multicollinearity',
+        explanation: 'VIF measures how much the variance of a coefficient is inflated due to multicollinearity.'
+      }
+    ]
+  },
+
+  // ============================================================================
+  // TOPIC 7: Bayesian Inference
+  // ============================================================================
+  {
+    id: 'math202-quiz-7a',
+    subjectId: 'math202',
+    topicId: 'math202-7',
+    title: 'Bayesian Fundamentals',
+    questions: [
+      {
+        id: 'q1',
+        type: 'multiple_choice',
+        prompt: 'The main philosophical difference between Bayesian and frequentist statistics is:',
+        options: ['Bayesians use more data', 'Bayesians treat parameters as random variables', 'Frequentists always use priors', 'They use different distributions'],
+        correctAnswer: 1,
+        explanation: 'Bayesian statistics treats parameters as random variables with probability distributions, while frequentists treat them as fixed but unknown.'
+      },
+      {
+        id: 'q2',
+        type: 'multiple_choice',
+        prompt: 'In Bayesian inference, the prior distribution represents:',
+        options: ['The data', 'Our beliefs about parameters before seeing data', 'The likelihood', 'The final answer'],
+        correctAnswer: 1,
+        explanation: 'The prior distribution encodes our beliefs or knowledge about parameters before observing data.'
+      },
+      {
+        id: 'q3',
+        type: 'true_false',
+        prompt: 'The posterior distribution combines the prior distribution and the likelihood of the data.',
+        correctAnswer: true,
+        explanation: 'Bayes\' theorem: posterior ∝ likelihood × prior. The posterior updates our beliefs given the data.'
+      },
+      {
+        id: 'q4',
+        type: 'multiple_choice',
+        prompt: 'Bayes\' theorem in the context of parameter estimation can be written as:',
+        options: ['P(θ|data) ∝ P(data|θ) × P(θ)', 'P(data|θ) = P(θ|data)', 'P(θ) = P(data)', 'P(θ|data) = P(data)'],
+        correctAnswer: 0,
+        explanation: 'Posterior P(θ|data) is proportional to likelihood P(data|θ) times prior P(θ).'
+      },
+      {
+        id: 'q5',
+        type: 'fill_blank',
+        prompt: 'The distribution of the parameter after observing data is called the ______ distribution.',
+        correctAnswer: 'posterior',
+        explanation: 'The posterior distribution represents our updated beliefs about the parameter after seeing the data.'
+      }
+    ]
+  },
+  {
+    id: 'math202-quiz-7b',
+    subjectId: 'math202',
+    topicId: 'math202-7',
+    title: 'Bayesian Estimation',
+    questions: [
+      {
+        id: 'q1',
+        type: 'multiple_choice',
+        prompt: 'A conjugate prior is one that:',
+        options: ['Always equals the likelihood', 'Produces a posterior in the same family as the prior', 'Is always uniform', 'Requires MCMC'],
+        correctAnswer: 1,
+        explanation: 'Conjugate priors result in posterior distributions from the same family, simplifying calculations.'
+      },
+      {
+        id: 'q2',
+        type: 'true_false',
+        prompt: 'The Beta distribution is a conjugate prior for the Binomial likelihood.',
+        correctAnswer: true,
+        explanation: 'Beta-Binomial is a classic conjugate pair: Beta prior + Binomial likelihood = Beta posterior.'
+      },
+      {
+        id: 'q3',
+        type: 'multiple_choice',
+        prompt: 'A credible interval in Bayesian statistics is analogous to what in frequentist statistics?',
+        options: ['Hypothesis test', 'Confidence interval', 'P-value', 'Standard error'],
+        correctAnswer: 1,
+        explanation: 'A credible interval is the Bayesian analog of a confidence interval, but with different interpretation.'
+      },
+      {
+        id: 'q4',
+        type: 'multiple_choice',
+        prompt: 'A 95% credible interval means:',
+        options: ['95% of samples fall in the interval', 'The parameter is in the interval with 95% probability', 'The interval contains 95% of the data', 'We used 95% of the data'],
+        correctAnswer: 1,
+        explanation: 'Unlike confidence intervals, we can say the parameter has 95% probability of being in a credible interval.'
+      },
+      {
+        id: 'q5',
+        type: 'fill_blank',
+        prompt: 'An uninformative or ______ prior expresses minimal prior knowledge.',
+        correctAnswer: 'noninformative',
+        explanation: 'Noninformative (or flat) priors express little prior knowledge, letting the data dominate the posterior.'
+      }
+    ]
+  },
+  {
+    id: 'math202-quiz-7c',
+    subjectId: 'math202',
+    topicId: 'math202-7',
+    title: 'Advanced Bayesian Methods',
+    questions: [
+      {
+        id: 'q1',
+        type: 'multiple_choice',
+        prompt: 'MCMC (Markov Chain Monte Carlo) methods are used to:',
+        options: ['Calculate exact posteriors', 'Approximate complex posterior distributions', 'Find conjugate priors', 'Test hypotheses'],
+        correctAnswer: 1,
+        explanation: 'MCMC methods generate samples from posterior distributions when analytical solutions are intractable.'
+      },
+      {
+        id: 'q2',
+        type: 'true_false',
+        prompt: 'The Metropolis-Hastings algorithm is an MCMC method.',
+        correctAnswer: true,
+        explanation: 'Metropolis-Hastings is a popular MCMC algorithm for sampling from complex distributions.'
+      },
+      {
+        id: 'q3',
+        type: 'multiple_choice',
+        prompt: 'Bayes factors are used to:',
+        options: ['Estimate parameters', 'Compare models', 'Calculate credible intervals', 'Find priors'],
+        correctAnswer: 1,
+        explanation: 'Bayes factors compare the evidence for one model versus another.'
+      },
+      {
+        id: 'q4',
+        type: 'multiple_choice',
+        prompt: 'A Bayes factor BF₁₀ = 10 means:',
+        options: ['Model 1 is 10 times more likely than Model 0', 'The data are 10 times more likely under Model 1', 'Model 0 is preferred', 'The prior is 10'],
+        correctAnswer: 1,
+        explanation: 'BF₁₀ = P(data|M₁)/P(data|M₀). BF = 10 means data are 10 times more probable under Model 1.'
+      },
+      {
+        id: 'q5',
+        type: 'fill_blank',
+        prompt: 'Gibbs sampling is a special case of ______ where proposals are always accepted.',
+        correctAnswer: 'MCMC',
+        explanation: 'Gibbs sampling is an MCMC method that samples from conditional distributions and always accepts proposals.'
+      }
+    ]
+  }
+];

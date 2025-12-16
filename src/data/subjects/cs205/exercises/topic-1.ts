@@ -1,0 +1,244 @@
+import { CodingExercise } from '../../../../core/types';
+
+export const cs205Topic1Exercises: CodingExercise[] = [
+  {
+    id: 'cs205-ex-1-1',
+    subjectId: 'cs205',
+    topicId: 'cs205-1',
+    title: 'Create Basic Table',
+    description: 'Write a SQL statement to create a table called `Students` with columns: StudentID (integer, primary key), Name (varchar 100), and Email (varchar 255).',
+    difficulty: 1,
+    language: 'sql',
+    starterCode: '-- Create the Students table\n',
+    solution: 'CREATE TABLE Students (\n    StudentID INTEGER PRIMARY KEY,\n    Name VARCHAR(100),\n    Email VARCHAR(255)\n);',
+    testCases: [
+      { input: 'table structure', expectedOutput: 'Students table with 3 columns', isHidden: false, description: 'Basic table creation' }
+    ],
+    hints: ['Use CREATE TABLE syntax.', 'PRIMARY KEY goes after the column type.']
+  },
+  {
+    id: 'cs205-ex-1-2',
+    subjectId: 'cs205',
+    topicId: 'cs205-1',
+    title: 'Identify Primary Key',
+    description: 'Given a table Employee(EmpID, Name, SSN, DeptID), which attributes could serve as candidate keys? Write a comment listing them and explain why.',
+    difficulty: 1,
+    language: 'sql',
+    starterCode: '-- List candidate keys and explanation:\n-- ',
+    solution: '-- Candidate keys: {EmpID}, {SSN}\n-- EmpID uniquely identifies each employee\n-- SSN (Social Security Number) is unique per person\n-- Name is not a key (duplicates possible)\n-- DeptID is not a key (many employees per department)',
+    testCases: [
+      { input: 'analysis', expectedOutput: 'EmpID and SSN identified', isHidden: false, description: 'Key identification' }
+    ],
+    hints: ['A candidate key uniquely identifies each row.', 'Can Name have duplicates?']
+  },
+  {
+    id: 'cs205-ex-1-3',
+    subjectId: 'cs205',
+    topicId: 'cs205-1',
+    title: 'Foreign Key Constraint',
+    description: 'Create an Orders table with OrderID (PK), CustomerID (FK to Customers), and OrderDate. Include the foreign key constraint.',
+    difficulty: 2,
+    language: 'sql',
+    starterCode: '-- Create Orders table with foreign key\n',
+    solution: 'CREATE TABLE Orders (\n    OrderID INTEGER PRIMARY KEY,\n    CustomerID INTEGER NOT NULL,\n    OrderDate DATE,\n    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)\n);',
+    testCases: [
+      { input: 'table structure', expectedOutput: 'Orders table with FK constraint', isHidden: false, description: 'FK creation' }
+    ],
+    hints: ['Use FOREIGN KEY ... REFERENCES syntax.', 'The referenced table must exist.']
+  },
+  {
+    id: 'cs205-ex-1-4',
+    subjectId: 'cs205',
+    topicId: 'cs205-1',
+    title: 'ER to Table Mapping',
+    description: 'Given entities Student(StudentID, Name) and Course(CourseID, Title) with a many-to-many Enrollment relationship, create all three tables.',
+    difficulty: 2,
+    language: 'sql',
+    starterCode: '-- Create Student, Course, and Enrollment tables\n',
+    solution: 'CREATE TABLE Student (\n    StudentID INTEGER PRIMARY KEY,\n    Name VARCHAR(100)\n);\n\nCREATE TABLE Course (\n    CourseID VARCHAR(10) PRIMARY KEY,\n    Title VARCHAR(200)\n);\n\nCREATE TABLE Enrollment (\n    StudentID INTEGER,\n    CourseID VARCHAR(10),\n    PRIMARY KEY (StudentID, CourseID),\n    FOREIGN KEY (StudentID) REFERENCES Student(StudentID),\n    FOREIGN KEY (CourseID) REFERENCES Course(CourseID)\n);',
+    testCases: [
+      { input: 'tables', expectedOutput: '3 tables with proper relationships', isHidden: false, description: 'M:N relationship' }
+    ],
+    hints: ['Many-to-many requires a junction table.', 'Junction table has composite primary key.']
+  },
+  {
+    id: 'cs205-ex-1-5',
+    subjectId: 'cs205',
+    topicId: 'cs205-1',
+    title: 'Selection Operation',
+    description: 'Express in relational algebra: "Find all employees in department 10". Use σ notation.',
+    difficulty: 1,
+    language: 'sql',
+    starterCode: '-- Relational algebra expression:\n-- ',
+    solution: '-- σ_DeptID=10(Employee)\n-- Selection on Employee where DeptID equals 10',
+    testCases: [
+      { input: 'expression', expectedOutput: 'Correct selection notation', isHidden: false, description: 'Selection operator' }
+    ],
+    hints: ['σ is the selection operator.', 'Condition goes as subscript.']
+  },
+  {
+    id: 'cs205-ex-1-6',
+    subjectId: 'cs205',
+    topicId: 'cs205-1',
+    title: 'Projection Operation',
+    description: 'Express in relational algebra: "Get only Name and Salary from Employee table". Use π notation.',
+    difficulty: 1,
+    language: 'sql',
+    starterCode: '-- Relational algebra expression:\n-- ',
+    solution: '-- π_Name,Salary(Employee)\n-- Projection selecting only Name and Salary columns',
+    testCases: [
+      { input: 'expression', expectedOutput: 'Correct projection notation', isHidden: false, description: 'Projection operator' }
+    ],
+    hints: ['π is the projection operator.', 'List column names as subscript.']
+  },
+  {
+    id: 'cs205-ex-1-7',
+    subjectId: 'cs205',
+    topicId: 'cs205-1',
+    title: 'Natural Join Expression',
+    description: 'Express: "Join Employee and Department on DeptID" in relational algebra.',
+    difficulty: 2,
+    language: 'sql',
+    starterCode: '-- Relational algebra expression:\n-- ',
+    solution: '-- Employee ⋈ Department\n-- Or: Employee ⋈_DeptID Department\n-- Natural join matches DeptID columns automatically',
+    testCases: [
+      { input: 'expression', expectedOutput: 'Correct join notation', isHidden: false, description: 'Join operator' }
+    ],
+    hints: ['⋈ is the natural join symbol.', 'Natural join matches columns with same name.']
+  },
+  {
+    id: 'cs205-ex-1-8',
+    subjectId: 'cs205',
+    topicId: 'cs205-1',
+    title: 'Weak Entity Table',
+    description: 'Create a weak entity table Dependent that depends on Employee. Dependent has Name and Relationship attributes.',
+    difficulty: 2,
+    language: 'sql',
+    starterCode: '-- Create weak entity table\n',
+    solution: 'CREATE TABLE Dependent (\n    EmpID INTEGER,\n    DependentName VARCHAR(100),\n    Relationship VARCHAR(50),\n    PRIMARY KEY (EmpID, DependentName),\n    FOREIGN KEY (EmpID) REFERENCES Employee(EmpID)\n        ON DELETE CASCADE\n);',
+    testCases: [
+      { input: 'table', expectedOutput: 'Weak entity with partial key', isHidden: false, description: 'Weak entity mapping' }
+    ],
+    hints: ['Weak entity key includes owner\'s key.', 'Consider CASCADE on delete.']
+  },
+  {
+    id: 'cs205-ex-1-9',
+    subjectId: 'cs205',
+    topicId: 'cs205-1',
+    title: 'Combined RA Expression',
+    description: 'Express: "Names of employees in the Sales department" combining selection, projection, and join.',
+    difficulty: 3,
+    language: 'sql',
+    starterCode: '-- Relational algebra expression:\n-- ',
+    solution: '-- π_Name(σ_DeptName=\'Sales\'(Employee ⋈ Department))\n-- Join Employee and Department, filter for Sales, project Name',
+    testCases: [
+      { input: 'expression', expectedOutput: 'Combined RA expression', isHidden: false, description: 'Complex RA' }
+    ],
+    hints: ['First join, then select, then project.', 'Operations read from inside out.']
+  },
+  {
+    id: 'cs205-ex-1-10',
+    subjectId: 'cs205',
+    topicId: 'cs205-1',
+    title: 'Cardinality Constraint',
+    description: 'A Manager manages exactly one Department, and a Department has exactly one Manager. What cardinality is this? Create the tables.',
+    difficulty: 2,
+    language: 'sql',
+    starterCode: '-- This is a ____ relationship\n-- Create tables:\n',
+    solution: '-- This is a 1:1 relationship\nCREATE TABLE Department (\n    DeptID INTEGER PRIMARY KEY,\n    DeptName VARCHAR(100),\n    ManagerID INTEGER UNIQUE  -- 1:1 enforced by UNIQUE\n);\n\nCREATE TABLE Manager (\n    ManagerID INTEGER PRIMARY KEY,\n    Name VARCHAR(100)\n);\n\nALTER TABLE Department\nADD FOREIGN KEY (ManagerID) REFERENCES Manager(ManagerID);',
+    testCases: [
+      { input: 'tables', expectedOutput: '1:1 relationship tables', isHidden: false, description: '1:1 mapping' }
+    ],
+    hints: ['1:1 means one-to-one.', 'UNIQUE constraint enforces single reference.']
+  },
+  {
+    id: 'cs205-ex-1-11',
+    subjectId: 'cs205',
+    topicId: 'cs205-1',
+    title: 'Set Difference',
+    description: 'Express: "Products that have never been ordered" using set difference in relational algebra.',
+    difficulty: 3,
+    language: 'sql',
+    starterCode: '-- Relational algebra expression:\n-- ',
+    solution: '-- π_ProductID(Product) - π_ProductID(OrderItem)\n-- All product IDs minus those that appear in orders',
+    testCases: [
+      { input: 'expression', expectedOutput: 'Set difference expression', isHidden: false, description: 'Set difference' }
+    ],
+    hints: ['First project ProductID from both tables.', 'Use - for set difference.']
+  },
+  {
+    id: 'cs205-ex-1-12',
+    subjectId: 'cs205',
+    topicId: 'cs205-1',
+    title: 'Composite Attribute',
+    description: 'Address is a composite attribute with Street, City, State, Zip. Create a Person table handling this properly.',
+    difficulty: 2,
+    language: 'sql',
+    starterCode: '-- Create Person table with address components\n',
+    solution: 'CREATE TABLE Person (\n    PersonID INTEGER PRIMARY KEY,\n    Name VARCHAR(100),\n    Street VARCHAR(200),\n    City VARCHAR(100),\n    State CHAR(2),\n    ZipCode VARCHAR(10)\n);',
+    testCases: [
+      { input: 'table', expectedOutput: 'Person with address components', isHidden: false, description: 'Composite attribute' }
+    ],
+    hints: ['Break composite into atomic parts.', 'Each component becomes a column.']
+  },
+  {
+    id: 'cs205-ex-1-13',
+    subjectId: 'cs205',
+    topicId: 'cs205-1',
+    title: 'Multivalued Attribute',
+    description: 'Employee can have multiple phone numbers. Create tables to handle this multivalued attribute properly.',
+    difficulty: 2,
+    language: 'sql',
+    starterCode: '-- Handle multivalued attribute\n',
+    solution: 'CREATE TABLE Employee (\n    EmpID INTEGER PRIMARY KEY,\n    Name VARCHAR(100)\n);\n\nCREATE TABLE EmployeePhone (\n    EmpID INTEGER,\n    PhoneNumber VARCHAR(20),\n    PhoneType VARCHAR(20),\n    PRIMARY KEY (EmpID, PhoneNumber),\n    FOREIGN KEY (EmpID) REFERENCES Employee(EmpID)\n);',
+    testCases: [
+      { input: 'tables', expectedOutput: 'Separate table for phones', isHidden: false, description: 'Multivalued attribute' }
+    ],
+    hints: ['Multivalued attributes need separate table.', 'Use composite key including owner\'s PK.']
+  },
+  {
+    id: 'cs205-ex-1-14',
+    subjectId: 'cs205',
+    topicId: 'cs205-1',
+    title: 'Division Operation',
+    description: 'Given Student(SID, CID) and Course(CID), express "Students who took ALL courses" using division.',
+    difficulty: 3,
+    language: 'sql',
+    starterCode: '-- Relational algebra division:\n-- ',
+    solution: '-- Student ÷ π_CID(Course)\n-- Division finds students whose course set contains all courses',
+    testCases: [
+      { input: 'expression', expectedOutput: 'Division expression', isHidden: false, description: 'Division operator' }
+    ],
+    hints: ['Division answers "for all" queries.', '÷ is the division symbol.']
+  },
+  {
+    id: 'cs205-ex-1-15',
+    subjectId: 'cs205',
+    topicId: 'cs205-1',
+    title: 'Specialization Hierarchy',
+    description: 'Model Employee with specializations Manager and Engineer. Create tables for this ISA hierarchy.',
+    difficulty: 3,
+    language: 'sql',
+    starterCode: '-- Create ISA hierarchy tables\n',
+    solution: 'CREATE TABLE Employee (\n    EmpID INTEGER PRIMARY KEY,\n    Name VARCHAR(100),\n    Salary DECIMAL(10,2)\n);\n\nCREATE TABLE Manager (\n    EmpID INTEGER PRIMARY KEY,\n    Budget DECIMAL(12,2),\n    FOREIGN KEY (EmpID) REFERENCES Employee(EmpID)\n);\n\nCREATE TABLE Engineer (\n    EmpID INTEGER PRIMARY KEY,\n    Specialty VARCHAR(50),\n    FOREIGN KEY (EmpID) REFERENCES Employee(EmpID)\n);',
+    testCases: [
+      { input: 'tables', expectedOutput: 'ISA hierarchy tables', isHidden: false, description: 'Specialization mapping' }
+    ],
+    hints: ['Subclass tables reference superclass PK.', 'Common attributes go in superclass.']
+  },
+  {
+    id: 'cs205-ex-1-16',
+    subjectId: 'cs205',
+    topicId: 'cs205-1',
+    title: 'Complete ER Mapping',
+    description: 'Map this ER: Company(CID, Name) --employs-- Employee(EID, Name, Salary) with 1:N cardinality and total participation of Employee.',
+    difficulty: 3,
+    language: 'sql',
+    starterCode: '-- Complete ER mapping\n',
+    solution: 'CREATE TABLE Company (\n    CID INTEGER PRIMARY KEY,\n    CompanyName VARCHAR(100) NOT NULL\n);\n\nCREATE TABLE Employee (\n    EID INTEGER PRIMARY KEY,\n    Name VARCHAR(100) NOT NULL,\n    Salary DECIMAL(10,2),\n    CID INTEGER NOT NULL,  -- NOT NULL enforces total participation\n    FOREIGN KEY (CID) REFERENCES Company(CID)\n);',
+    testCases: [
+      { input: 'tables', expectedOutput: 'Proper 1:N with total participation', isHidden: false, description: 'Complete mapping' }
+    ],
+    hints: ['1:N puts FK on N side.', 'Total participation = NOT NULL on FK.']
+  }
+];
