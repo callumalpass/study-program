@@ -176,7 +176,8 @@ export const curriculum: Subject[] = [
       'Debug memory-related errors using tools like valgrind'
     ],
     estimatedHours: 110,
-    topics: cs105Topics
+    topics: cs105Topics,
+    examIds: ['cs105-exam-midterm', 'cs105-exam-final']
   },
 
   // ============================================================================

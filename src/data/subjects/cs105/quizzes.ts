@@ -1,11 +1,12 @@
 import { Quiz } from '../../../core/types';
 
 export const cs105Quizzes: Quiz[] = [
+  // ========== TOPIC 1: C Basics and Syntax (3 quizzes) ==========
   {
     id: 'cs105-quiz-1',
     subjectId: 'cs105',
     topicId: 'cs105-topic-1',
-    title: 'C Basics and Syntax Quiz',
+    title: 'C Basics Quiz 1: Syntax and Variables',
     questions: [
       {
         id: 'cs105-q1-1',
@@ -30,14 +31,125 @@ export const cs105Quizzes: Quiz[] = [
         codeSnippet: 'int x = 5;\nint y = 2;\nprintf("%d", x / y);',
         correctAnswer: '2',
         explanation: 'Integer division in C truncates the decimal part, so 5/2 equals 2, not 2.5.'
+      },
+      {
+        id: 'cs105-q1-4',
+        type: 'multiple_choice',
+        prompt: 'What is the size of char data type in C?',
+        options: ['1 byte', '2 bytes', '4 bytes', 'Depends on system'],
+        correctAnswer: 0,
+        explanation: 'The char type is always exactly 1 byte in C, which is guaranteed by the standard.'
+      },
+      {
+        id: 'cs105-q1-5',
+        type: 'true_false',
+        prompt: 'In C, variable names can start with a number.',
+        correctAnswer: false,
+        explanation: 'C variable names must start with a letter or underscore. They cannot start with a number.'
       }
     ]
   },
   {
+    id: 'cs105-quiz-1b',
+    subjectId: 'cs105',
+    topicId: 'cs105-topic-1',
+    title: 'C Basics Quiz 2: Operators and Expressions',
+    questions: [
+      {
+        id: 'cs105-q1b-1',
+        type: 'code_output',
+        prompt: 'What does this code print?',
+        codeSnippet: 'int a = 10, b = 3;\nprintf("%d", a % b);',
+        correctAnswer: '1',
+        explanation: 'The modulo operator % returns the remainder. 10 divided by 3 is 3 with remainder 1.'
+      },
+      {
+        id: 'cs105-q1b-2',
+        type: 'multiple_choice',
+        prompt: 'What is the value of x after: int x = 5; x += 3;',
+        options: ['5', '3', '8', '15'],
+        correctAnswer: 2,
+        explanation: 'The += operator adds the right operand to the left operand. x += 3 is equivalent to x = x + 3.'
+      },
+      {
+        id: 'cs105-q1b-3',
+        type: 'code_output',
+        prompt: 'What does this code print?',
+        codeSnippet: 'int x = 5;\nprintf("%d %d", x++, ++x);',
+        correctAnswer: '5 7',
+        explanation: 'x++ returns 5 then increments to 6. ++x increments to 7 then returns 7. (Note: behavior may vary due to sequence points)'
+      },
+      {
+        id: 'cs105-q1b-4',
+        type: 'multiple_choice',
+        prompt: 'Which operator has the highest precedence?',
+        options: ['+', '*', '==', '()'],
+        correctAnswer: 3,
+        explanation: 'Parentheses have the highest precedence and are used to override default operator precedence.'
+      },
+      {
+        id: 'cs105-q1b-5',
+        type: 'true_false',
+        prompt: 'The expression 5 == 5 evaluates to 1 in C.',
+        correctAnswer: true,
+        explanation: 'C uses 1 for true and 0 for false. The equality operator returns 1 if operands are equal.'
+      }
+    ]
+  },
+  {
+    id: 'cs105-quiz-1c',
+    subjectId: 'cs105',
+    topicId: 'cs105-topic-1',
+    title: 'C Basics Quiz 3: Control Flow and Functions',
+    questions: [
+      {
+        id: 'cs105-q1c-1',
+        type: 'code_output',
+        prompt: 'What does this code print?',
+        codeSnippet: 'for (int i = 0; i < 3; i++) {\n    printf("%d ", i);\n}',
+        correctAnswer: '0 1 2 ',
+        explanation: 'The loop iterates while i < 3, printing 0, 1, 2 with spaces after each.'
+      },
+      {
+        id: 'cs105-q1c-2',
+        type: 'multiple_choice',
+        prompt: 'Which statement is used to exit a loop immediately?',
+        options: ['return', 'break', 'continue', 'exit'],
+        correctAnswer: 1,
+        explanation: 'The break statement exits the innermost loop immediately.'
+      },
+      {
+        id: 'cs105-q1c-3',
+        type: 'multiple_choice',
+        prompt: 'What happens if a function with return type int does not return a value?',
+        options: ['Compilation error', 'Returns 0', 'Undefined behavior', 'Returns -1'],
+        correctAnswer: 2,
+        explanation: 'Not returning a value from a non-void function is undefined behavior. The compiler may warn but typically allows it.'
+      },
+      {
+        id: 'cs105-q1c-4',
+        type: 'code_output',
+        prompt: 'What does this code print?',
+        codeSnippet: 'int i = 0;\nwhile (i < 5) {\n    if (i == 3) break;\n    printf("%d ", i++);\n}',
+        correctAnswer: '0 1 2 ',
+        explanation: 'The loop prints 0, 1, 2, then when i becomes 3, break exits the loop before printing 3.'
+      },
+      {
+        id: 'cs105-q1c-5',
+        type: 'true_false',
+        prompt: 'A function in C can return multiple values directly.',
+        correctAnswer: false,
+        explanation: 'C functions can only return a single value. To return multiple values, use pointers or structures.'
+      }
+    ]
+  },
+
+  // ========== TOPIC 2: Pointers (3 quizzes) ==========
+  {
     id: 'cs105-quiz-2',
     subjectId: 'cs105',
     topicId: 'cs105-topic-2',
-    title: 'Pointers Quiz',
+    title: 'Pointers Quiz 1: Basics',
     questions: [
       {
         id: 'cs105-q2-1',
@@ -62,14 +174,125 @@ export const cs105Quizzes: Quiz[] = [
         codeSnippet: 'int x = 10;\nint *ptr = &x;\n*ptr = 20;\nprintf("%d", x);',
         correctAnswer: '20',
         explanation: 'The pointer ptr points to x, so *ptr = 20 modifies x directly. Therefore x becomes 20.'
+      },
+      {
+        id: 'cs105-q2-4',
+        type: 'multiple_choice',
+        prompt: 'What is a NULL pointer?',
+        options: ['A pointer to zero', 'A pointer that points to nothing', 'An uninitialized pointer', 'A pointer to an empty string'],
+        correctAnswer: 1,
+        explanation: 'A NULL pointer is a special pointer value that indicates the pointer points to nothing (no valid memory location).'
+      },
+      {
+        id: 'cs105-q2-5',
+        type: 'true_false',
+        prompt: 'The size of a pointer is always the same regardless of the data type it points to.',
+        correctAnswer: true,
+        explanation: 'On a given system, all pointers have the same size (e.g., 8 bytes on 64-bit systems) regardless of data type.'
       }
     ]
   },
   {
+    id: 'cs105-quiz-2b',
+    subjectId: 'cs105',
+    topicId: 'cs105-topic-2',
+    title: 'Pointers Quiz 2: Arithmetic and Arrays',
+    questions: [
+      {
+        id: 'cs105-q2b-1',
+        type: 'code_output',
+        prompt: 'What does this code print?',
+        codeSnippet: 'int arr[] = {10, 20, 30};\nint *p = arr;\nprintf("%d", *(p + 1));',
+        correctAnswer: '20',
+        explanation: 'p + 1 points to the second element (index 1), and *(p + 1) dereferences it to get 20.'
+      },
+      {
+        id: 'cs105-q2b-2',
+        type: 'multiple_choice',
+        prompt: 'If int *p = arr; what is the relationship between p[i] and *(p + i)?',
+        options: ['They are different', 'They are equivalent', 'p[i] is faster', '*(p+i) is faster'],
+        correctAnswer: 1,
+        explanation: 'Array indexing and pointer arithmetic are equivalent: arr[i] is exactly the same as *(arr + i).'
+      },
+      {
+        id: 'cs105-q2b-3',
+        type: 'code_output',
+        prompt: 'What does this code print?',
+        codeSnippet: 'int a[] = {1, 2, 3, 4, 5};\nint *p = a + 2;\nprintf("%d", p[-1]);',
+        correctAnswer: '2',
+        explanation: 'p points to a[2] (value 3). p[-1] is equivalent to *(p-1), which is a[1] (value 2).'
+      },
+      {
+        id: 'cs105-q2b-4',
+        type: 'multiple_choice',
+        prompt: 'What happens when you increment an int pointer by 1?',
+        options: ['Address increases by 1 byte', 'Address increases by sizeof(int) bytes', 'Value at pointer increases by 1', 'Nothing'],
+        correctAnswer: 1,
+        explanation: 'Pointer arithmetic scales by the size of the pointed-to type. For int*, p+1 moves by sizeof(int) bytes.'
+      },
+      {
+        id: 'cs105-q2b-5',
+        type: 'true_false',
+        prompt: 'You can subtract two pointers of the same type to find the number of elements between them.',
+        correctAnswer: true,
+        explanation: 'Subtracting pointers gives the number of elements between them, not the byte difference.'
+      }
+    ]
+  },
+  {
+    id: 'cs105-quiz-2c',
+    subjectId: 'cs105',
+    topicId: 'cs105-topic-2',
+    title: 'Pointers Quiz 3: Advanced Pointers',
+    questions: [
+      {
+        id: 'cs105-q2c-1',
+        type: 'multiple_choice',
+        prompt: 'What is a double pointer (int **)?',
+        options: ['A pointer to two integers', 'A pointer to a pointer', 'A 2D array', 'A pointer with double precision'],
+        correctAnswer: 1,
+        explanation: 'A double pointer (int **) is a pointer that stores the address of another pointer.'
+      },
+      {
+        id: 'cs105-q2c-2',
+        type: 'code_output',
+        prompt: 'What does this code print?',
+        codeSnippet: 'int x = 5;\nint *p = &x;\nint **pp = &p;\nprintf("%d", **pp);',
+        correctAnswer: '5',
+        explanation: '**pp first dereferences pp to get p, then dereferences p to get x, which is 5.'
+      },
+      {
+        id: 'cs105-q2c-3',
+        type: 'multiple_choice',
+        prompt: 'What is the syntax for a function pointer that takes two ints and returns an int?',
+        options: ['int (*fp)(int, int)', 'int *fp(int, int)', 'int fp*(int, int)', 'func<int(int,int)> fp'],
+        correctAnswer: 0,
+        explanation: 'Function pointer syntax: return_type (*pointer_name)(parameter_types). The parentheses around *fp are crucial.'
+      },
+      {
+        id: 'cs105-q2c-4',
+        type: 'multiple_choice',
+        prompt: 'What does "const int *p" mean?',
+        options: ['p is a constant pointer', 'The value pointed to cannot be changed through p', 'Both p and *p are constant', 'p points to constant memory'],
+        correctAnswer: 1,
+        explanation: 'const int *p means p points to a const int - you cannot modify *p, but you can change what p points to.'
+      },
+      {
+        id: 'cs105-q2c-5',
+        type: 'true_false',
+        prompt: 'A void pointer (void *) can be directly dereferenced.',
+        correctAnswer: false,
+        explanation: 'void * must be cast to a specific type before dereferencing because the compiler needs to know the data size.'
+      }
+    ]
+  },
+
+  // ========== TOPIC 3: Memory Management (3 quizzes) ==========
+  {
     id: 'cs105-quiz-3',
     subjectId: 'cs105',
     topicId: 'cs105-topic-3',
-    title: 'Memory Management Quiz',
+    title: 'Memory Quiz 1: Allocation Basics',
     questions: [
       {
         id: 'cs105-q3-1',
@@ -93,14 +316,125 @@ export const cs105Quizzes: Quiz[] = [
         prompt: 'The calloc() function initializes allocated memory to zero.',
         correctAnswer: true,
         explanation: 'Unlike malloc, calloc initializes all bytes in the allocated memory to zero.'
+      },
+      {
+        id: 'cs105-q3-4',
+        type: 'multiple_choice',
+        prompt: 'What does malloc return if allocation fails?',
+        options: ['0', 'NULL', '-1', 'Throws an exception'],
+        correctAnswer: 1,
+        explanation: 'malloc returns NULL if it cannot allocate the requested memory. Always check for NULL after malloc.'
+      },
+      {
+        id: 'cs105-q3-5',
+        type: 'multiple_choice',
+        prompt: 'What is the difference between malloc(10) and calloc(10, 1)?',
+        options: ['No difference', 'calloc initializes to zero', 'malloc is faster', 'calloc allocates more memory'],
+        correctAnswer: 1,
+        explanation: 'Both allocate 10 bytes, but calloc also initializes all bytes to zero while malloc leaves them uninitialized.'
       }
     ]
   },
   {
+    id: 'cs105-quiz-3b',
+    subjectId: 'cs105',
+    topicId: 'cs105-topic-3',
+    title: 'Memory Quiz 2: Stack vs Heap',
+    questions: [
+      {
+        id: 'cs105-q3b-1',
+        type: 'multiple_choice',
+        prompt: 'Where are local variables stored?',
+        options: ['Heap', 'Stack', 'Global memory', 'CPU registers'],
+        correctAnswer: 1,
+        explanation: 'Local variables are stored on the stack and are automatically deallocated when the function returns.'
+      },
+      {
+        id: 'cs105-q3b-2',
+        type: 'true_false',
+        prompt: 'Memory allocated with malloc() is automatically freed when a function returns.',
+        correctAnswer: false,
+        explanation: 'Heap memory persists until explicitly freed with free(). It is not automatically deallocated.'
+      },
+      {
+        id: 'cs105-q3b-3',
+        type: 'multiple_choice',
+        prompt: 'What is a stack overflow?',
+        options: ['Allocating too much heap memory', 'Using too many recursive calls or large local arrays', 'Accessing freed memory', 'Integer overflow'],
+        correctAnswer: 1,
+        explanation: 'Stack overflow occurs when the stack runs out of space, often due to deep recursion or large local arrays.'
+      },
+      {
+        id: 'cs105-q3b-4',
+        type: 'multiple_choice',
+        prompt: 'Which memory region grows toward lower addresses?',
+        options: ['Stack', 'Heap', 'Data segment', 'Code segment'],
+        correctAnswer: 0,
+        explanation: 'On most systems, the stack grows downward (toward lower addresses) while the heap grows upward.'
+      },
+      {
+        id: 'cs105-q3b-5',
+        type: 'true_false',
+        prompt: 'Static local variables are stored on the stack.',
+        correctAnswer: false,
+        explanation: 'Static variables are stored in the data segment, not the stack. They persist for the program lifetime.'
+      }
+    ]
+  },
+  {
+    id: 'cs105-quiz-3c',
+    subjectId: 'cs105',
+    topicId: 'cs105-topic-3',
+    title: 'Memory Quiz 3: Common Errors',
+    questions: [
+      {
+        id: 'cs105-q3c-1',
+        type: 'multiple_choice',
+        prompt: 'What is a "dangling pointer"?',
+        options: ['A NULL pointer', 'A pointer to freed memory', 'An uninitialized pointer', 'A pointer to stack memory'],
+        correctAnswer: 1,
+        explanation: 'A dangling pointer points to memory that has been freed. Using it causes undefined behavior.'
+      },
+      {
+        id: 'cs105-q3c-2',
+        type: 'multiple_choice',
+        prompt: 'What is a "double free" error?',
+        options: ['Freeing twice the allocated size', 'Calling free() twice on the same pointer', 'Freeing a double pointer', 'Freeing static memory'],
+        correctAnswer: 1,
+        explanation: 'Double free means calling free() twice on the same memory address, which corrupts the heap.'
+      },
+      {
+        id: 'cs105-q3c-3',
+        type: 'true_false',
+        prompt: 'It is safe to call free(NULL).',
+        correctAnswer: true,
+        explanation: 'free(NULL) is defined to do nothing. This is safe and a common pattern for cleanup code.'
+      },
+      {
+        id: 'cs105-q3c-4',
+        type: 'multiple_choice',
+        prompt: 'Which tool is commonly used to detect memory errors in C programs?',
+        options: ['GDB', 'Valgrind', 'GCC', 'Make'],
+        correctAnswer: 1,
+        explanation: 'Valgrind is a tool that detects memory leaks, invalid accesses, and other memory errors.'
+      },
+      {
+        id: 'cs105-q3c-5',
+        type: 'multiple_choice',
+        prompt: 'What is "use after free"?',
+        options: ['Using malloc after free', 'Accessing memory after it has been freed', 'Using free without malloc', 'Freeing uninitialized memory'],
+        correctAnswer: 1,
+        explanation: 'Use after free means accessing memory through a pointer after that memory has been freed.'
+      }
+    ]
+  },
+
+  // ========== TOPIC 4: Structures (3 quizzes) ==========
+  {
     id: 'cs105-quiz-4',
     subjectId: 'cs105',
     topicId: 'cs105-topic-4',
-    title: 'Structures Quiz',
+    title: 'Structures Quiz 1: Basics',
     questions: [
       {
         id: 'cs105-q4-1',
@@ -124,14 +458,125 @@ export const cs105Quizzes: Quiz[] = [
         prompt: 'A structure can contain members of different data types.',
         correctAnswer: true,
         explanation: 'Structures can group variables of different types, unlike arrays which must contain elements of the same type.'
+      },
+      {
+        id: 'cs105-q4-4',
+        type: 'multiple_choice',
+        prompt: 'What does typedef do when used with structures?',
+        options: ['Creates a new structure type', 'Defines an alias for the structure type', 'Makes the structure private', 'Initializes the structure'],
+        correctAnswer: 1,
+        explanation: 'typedef creates an alias, so you can use the alias name instead of "struct StructName" everywhere.'
+      },
+      {
+        id: 'cs105-q4-5',
+        type: 'code_output',
+        prompt: 'What does this code print?',
+        codeSnippet: 'struct Point { int x, y; };\nstruct Point p = {3, 4};\nprintf("%d", p.x + p.y);',
+        correctAnswer: '7',
+        explanation: 'p.x is 3 and p.y is 4, so p.x + p.y equals 7.'
       }
     ]
   },
   {
+    id: 'cs105-quiz-4b',
+    subjectId: 'cs105',
+    topicId: 'cs105-topic-4',
+    title: 'Structures Quiz 2: Memory Layout',
+    questions: [
+      {
+        id: 'cs105-q4b-1',
+        type: 'multiple_choice',
+        prompt: 'Why might sizeof(struct) be larger than the sum of its members?',
+        options: ['Compiler bug', 'Structure padding for alignment', 'Extra memory for methods', 'Virtual table pointer'],
+        correctAnswer: 1,
+        explanation: 'Compilers add padding bytes between members to ensure proper memory alignment for efficiency.'
+      },
+      {
+        id: 'cs105-q4b-2',
+        type: 'true_false',
+        prompt: 'The order of members in a structure can affect its total size.',
+        correctAnswer: true,
+        explanation: 'Different member ordering can result in different amounts of padding and thus different total sizes.'
+      },
+      {
+        id: 'cs105-q4b-3',
+        type: 'multiple_choice',
+        prompt: 'What is the purpose of the offsetof macro?',
+        options: ['Get structure size', 'Get member offset from structure start', 'Offset array indices', 'Calculate padding'],
+        correctAnswer: 1,
+        explanation: 'offsetof(struct_type, member) returns the byte offset of a member within the structure.'
+      },
+      {
+        id: 'cs105-q4b-4',
+        type: 'multiple_choice',
+        prompt: 'What does __attribute__((packed)) do in GCC?',
+        options: ['Compresses data', 'Removes structure padding', 'Encrypts structure', 'Aligns to 64-bit boundary'],
+        correctAnswer: 1,
+        explanation: 'The packed attribute tells GCC to use minimal storage without padding, at potential cost to access speed.'
+      },
+      {
+        id: 'cs105-q4b-5',
+        type: 'true_false',
+        prompt: 'A structure containing only chars never has padding.',
+        correctAnswer: false,
+        explanation: 'While chars don\'t need alignment, the structure itself may need end padding for array alignment.'
+      }
+    ]
+  },
+  {
+    id: 'cs105-quiz-4c',
+    subjectId: 'cs105',
+    topicId: 'cs105-topic-4',
+    title: 'Structures Quiz 3: Advanced',
+    questions: [
+      {
+        id: 'cs105-q4c-1',
+        type: 'multiple_choice',
+        prompt: 'What is a self-referential structure?',
+        options: ['A structure that calls itself', 'A structure containing a pointer to its own type', 'A recursive function structure', 'A structure with a name member'],
+        correctAnswer: 1,
+        explanation: 'A self-referential structure contains a pointer to another instance of the same structure type (e.g., linked list nodes).'
+      },
+      {
+        id: 'cs105-q4c-2',
+        type: 'multiple_choice',
+        prompt: 'What is the difference between a struct and a union?',
+        options: ['No difference', 'Struct members share memory, union members don\'t', 'Union members share memory, struct members don\'t', 'Unions can only have two members'],
+        correctAnswer: 2,
+        explanation: 'In a union, all members share the same memory location. Only one member can be used at a time.'
+      },
+      {
+        id: 'cs105-q4c-3',
+        type: 'code_output',
+        prompt: 'What does this code print?',
+        codeSnippet: 'union Data { int i; char c; };\nunion Data d;\nd.i = 65;\nprintf("%c", d.c);',
+        correctAnswer: 'A',
+        explanation: 'Since union members share memory, d.c reads the first byte of d.i, which is 65 (ASCII for \'A\').'
+      },
+      {
+        id: 'cs105-q4c-4',
+        type: 'multiple_choice',
+        prompt: 'What are bit fields in structures used for?',
+        options: ['Storing floating point bits', 'Packing multiple values into fewer bytes', 'Defining bit-level functions', 'Binary file I/O'],
+        correctAnswer: 1,
+        explanation: 'Bit fields allow specifying exact bit widths for members, useful for flags or protocol fields.'
+      },
+      {
+        id: 'cs105-q4c-5',
+        type: 'true_false',
+        prompt: 'Structures can be passed to functions by value in C.',
+        correctAnswer: true,
+        explanation: 'Structures can be passed by value (copied) or by pointer. Passing by value copies the entire structure.'
+      }
+    ]
+  },
+
+  // ========== TOPIC 5: File I/O (3 quizzes) ==========
+  {
     id: 'cs105-quiz-5',
     subjectId: 'cs105',
     topicId: 'cs105-topic-5',
-    title: 'File I/O Quiz',
+    title: 'File I/O Quiz 1: Basics',
     questions: [
       {
         id: 'cs105-q5-1',
@@ -145,7 +590,7 @@ export const cs105Quizzes: Quiz[] = [
         id: 'cs105-q5-2',
         type: 'multiple_choice',
         prompt: 'What does the file mode "w" do when opening a file?',
-        options: ['Opens for reading', 'Opens for writing, creates if not exists', 'Opens for appending', 'Opens for writing only if exists'],
+        options: ['Opens for reading', 'Opens for writing (creates/truncates)', 'Opens for appending', 'Opens for writing only if exists'],
         correctAnswer: 1,
         explanation: 'Mode "w" opens a file for writing, creating it if it doesn\'t exist and truncating it if it does.'
       },
@@ -155,6 +600,116 @@ export const cs105Quizzes: Quiz[] = [
         prompt: 'You must always call fclose() after opening a file with fopen().',
         correctAnswer: true,
         explanation: 'fclose() should always be called to flush buffers, release resources, and ensure data is written properly.'
+      },
+      {
+        id: 'cs105-q5-4',
+        type: 'multiple_choice',
+        prompt: 'What does fopen() return if the file cannot be opened?',
+        options: ['0', 'NULL', '-1', 'An error code'],
+        correctAnswer: 1,
+        explanation: 'fopen() returns NULL if it cannot open the file. Always check for NULL after fopen().'
+      },
+      {
+        id: 'cs105-q5-5',
+        type: 'multiple_choice',
+        prompt: 'What is the difference between "r" and "r+" modes?',
+        options: ['No difference', 'r+ allows writing too', 'r is faster', 'r+ creates file if missing'],
+        correctAnswer: 1,
+        explanation: '"r" is read-only, while "r+" opens for both reading and writing. Both require the file to exist.'
+      }
+    ]
+  },
+  {
+    id: 'cs105-quiz-5b',
+    subjectId: 'cs105',
+    topicId: 'cs105-topic-5',
+    title: 'File I/O Quiz 2: Reading and Writing',
+    questions: [
+      {
+        id: 'cs105-q5b-1',
+        type: 'multiple_choice',
+        prompt: 'Which function reads a line of text from a file?',
+        options: ['fscanf()', 'fgets()', 'fread()', 'getline()'],
+        correctAnswer: 1,
+        explanation: 'fgets() reads a line (up to newline or buffer size) from a file. It\'s the safest way to read lines.'
+      },
+      {
+        id: 'cs105-q5b-2',
+        type: 'true_false',
+        prompt: 'fgets() includes the newline character in the string it reads.',
+        correctAnswer: true,
+        explanation: 'fgets() includes the newline (if there\'s room in the buffer) and always null-terminates the string.'
+      },
+      {
+        id: 'cs105-q5b-3',
+        type: 'multiple_choice',
+        prompt: 'What is the return value of fgetc() when end of file is reached?',
+        options: ['0', 'NULL', 'EOF', '-1'],
+        correctAnswer: 2,
+        explanation: 'fgetc() returns EOF (typically -1) when end of file is reached or an error occurs.'
+      },
+      {
+        id: 'cs105-q5b-4',
+        type: 'multiple_choice',
+        prompt: 'Why does fgetc() return int instead of char?',
+        options: ['To return larger values', 'To distinguish EOF from valid characters', 'To be compatible with Unicode', 'Historical reasons only'],
+        correctAnswer: 1,
+        explanation: 'fgetc() returns int to distinguish EOF (-1) from the valid character 0xFF (255 as unsigned char).'
+      },
+      {
+        id: 'cs105-q5b-5',
+        type: 'multiple_choice',
+        prompt: 'Which function writes formatted data to a file?',
+        options: ['printf()', 'fprintf()', 'fwrite()', 'fputs()'],
+        correctAnswer: 1,
+        explanation: 'fprintf() writes formatted data to a file, similar to printf() but with a file stream argument.'
+      }
+    ]
+  },
+  {
+    id: 'cs105-quiz-5c',
+    subjectId: 'cs105',
+    topicId: 'cs105-topic-5',
+    title: 'File I/O Quiz 3: Binary and Positioning',
+    questions: [
+      {
+        id: 'cs105-q5c-1',
+        type: 'multiple_choice',
+        prompt: 'What does the "b" in "rb" mode indicate?',
+        options: ['Buffered mode', 'Binary mode', 'Blocked mode', 'Both read and write'],
+        correctAnswer: 1,
+        explanation: '"b" indicates binary mode, which disables newline translation. Required for non-text files.'
+      },
+      {
+        id: 'cs105-q5c-2',
+        type: 'multiple_choice',
+        prompt: 'What function is used to move the file position indicator?',
+        options: ['fmove()', 'fseek()', 'fposition()', 'fset()'],
+        correctAnswer: 1,
+        explanation: 'fseek() moves the file position indicator to a specified location in the file.'
+      },
+      {
+        id: 'cs105-q5c-3',
+        type: 'multiple_choice',
+        prompt: 'What does SEEK_END mean in fseek()?',
+        options: ['Seek to end and stop', 'Position relative to end of file', 'End seeking mode', 'Close file after seek'],
+        correctAnswer: 1,
+        explanation: 'SEEK_END means the offset is relative to the end of the file. Often used with offset 0 to go to EOF.'
+      },
+      {
+        id: 'cs105-q5c-4',
+        type: 'true_false',
+        prompt: 'fread() and fwrite() work with binary data.',
+        correctAnswer: true,
+        explanation: 'fread() and fwrite() transfer raw bytes without interpretation, making them ideal for binary I/O.'
+      },
+      {
+        id: 'cs105-q5c-5',
+        type: 'multiple_choice',
+        prompt: 'What does ftell() return?',
+        options: ['Number of bytes written', 'Current file position', 'File size', 'Error code'],
+        correctAnswer: 1,
+        explanation: 'ftell() returns the current position in the file (offset from the beginning).'
       }
     ]
   }
