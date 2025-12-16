@@ -1,17 +1,21 @@
 # Strongly Connected Components
 
-Decomposing directed graphs into strongly connected components (SCCs) reveals structure and enables efficient algorithms.
+Strongly connected components (SCCs) reveal the fundamental structure of directed graphs. Within each SCC, every vertex can reach every other vertex—they form tightly connected clusters of mutual reachability. Between SCCs, edges go only one direction, creating a DAG structure that simplifies analysis. This decomposition is a powerful tool for understanding complex directed graphs.
+
+SCC algorithms discover this hidden structure in linear time, transforming an arbitrary directed graph into a DAG of components. Many problems that seem intractable on general directed graphs become solvable once we recognize the SCC structure: reachability queries, 2-SAT satisfiability, and analysis of web graphs and social networks.
+
+The two classic SCC algorithms—Kosaraju's and Tarjan's—represent different algorithmic philosophies. Kosaraju's runs two DFS passes (forward and reverse), while Tarjan's achieves the same result in a single pass using low-link values. Both are O(V + E), but understanding both provides insight into how the same problem can be solved through different algorithmic lenses.
 
 ## Definitions
 
-**Strongly Connected**: Vertices u and v are strongly connected if there's a path from u to v AND from v to u.
+**Strongly Connected**: Vertices u and v are strongly connected if there's a path from u to v AND from v to u. This is an equivalence relation: reflexive, symmetric, and transitive.
 
-**Strongly Connected Component (SCC)**: A maximal set of vertices where every pair is strongly connected.
+**Strongly Connected Component (SCC)**: A maximal set of vertices where every pair is strongly connected. "Maximal" means we can't add any more vertices while maintaining strong connectivity.
 
 **Properties**:
-- Every vertex belongs to exactly one SCC
-- SCCs partition the vertex set
-- Condensation (DAG of SCCs) is acyclic
+- Every vertex belongs to exactly one SCC (the equivalence relation partitions vertices)
+- SCCs partition the vertex set (together they cover all vertices, with no overlap)
+- Condensation (DAG of SCCs) is acyclic (if two SCCs had a cycle between them, they'd be one SCC)
 
 ## Why SCCs Matter
 

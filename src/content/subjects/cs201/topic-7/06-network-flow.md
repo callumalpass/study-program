@@ -1,6 +1,10 @@
 # Network Flow Algorithms
 
-Network flow models the maximum amount of "stuff" that can flow through a network from source to sink, with applications from transportation to matching.
+Network flow is one of the most powerful modeling tools in combinatorial optimization. The elegant abstraction—pushing flow from source to sink through a network of capacitated edges—captures an astonishing variety of problems: maximum bipartite matching, edge-disjoint paths, project selection, image segmentation, airline scheduling, and baseball elimination. Learning to recognize when a problem can be modeled as network flow unlocks polynomial-time solutions to problems that might otherwise seem intractable.
+
+The fundamental theorem connecting maximum flow and minimum cut (the max-flow min-cut theorem) is a cornerstone of combinatorial optimization. It states that the maximum flow through a network equals the minimum capacity of edges whose removal disconnects source from sink. This duality provides both algorithms (find one to compute the other) and certificates (the min-cut proves the max-flow is optimal).
+
+Flow algorithms range from the elegant but potentially slow Ford-Fulkerson to the more sophisticated Dinic's algorithm and push-relabel methods. Understanding the evolution of these algorithms—from simple augmenting path ideas to blocking flows and preflow techniques—illustrates how algorithmic innovation improves efficiency while maintaining correctness.
 
 ## The Maximum Flow Problem
 
@@ -9,8 +13,8 @@ Network flow models the maximum amount of "stuff" that can flow through a networ
 **Output**: Maximum total flow from s to t respecting capacities
 
 **Constraints**:
-- Flow on edge ≤ capacity
-- Flow conservation: inflow = outflow (except s and t)
+- Flow on edge ≤ capacity (respect edge limitations)
+- Flow conservation: inflow = outflow (except s and t) (what goes in must come out)
 
 ## Ford-Fulkerson Method
 
