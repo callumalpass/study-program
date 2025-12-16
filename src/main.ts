@@ -8,6 +8,7 @@ import { onRouteChange } from './core/router';
 import { progressStorage } from './core/storage';
 import { curriculum } from './data/curriculum';
 import type { Theme } from './core/types';
+import { showToast } from './components/toast';
 import { renderSidebar } from './components/preact/sidebar';
 import { renderHomePage } from './pages/home';
 import { renderCurriculumPage } from './pages/curriculum';
@@ -255,9 +256,18 @@ function initMobileNav(): void {
 }
 
 // Initialize the application
-function initApp(): void {
+async function initApp(): Promise<void> {
   // Initialize theme first to prevent flash of wrong theme
   initTheme();
+
+  // Sync progress from GitHub Gist on startup (non-blocking for UI)
+  progressStorage.syncFromGist().then((result) => {
+    if (result.updated) {
+      showToast('Progress synced from cloud', 'success');
+      // Trigger a re-render by navigating to the current route
+      window.dispatchEvent(new HashChangeEvent('hashchange'));
+    }
+  });
 
   // Initialize navigation
   initSidebarToggle();

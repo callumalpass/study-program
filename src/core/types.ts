@@ -172,6 +172,7 @@ export interface StarterResource {
 export interface UserProgress {
   version: number;
   startedAt: string; // ISO date string
+  lastUpdated?: string; // ISO date string - for sync conflict resolution
   subjects: Record<string, SubjectProgress>;
   settings: UserSettings;
 }

@@ -54,6 +54,7 @@ export class ProgressStorage {
    */
   save(): void {
     try {
+      this.progress.lastUpdated = new Date().toISOString();
       localStorage.setItem(STORAGE_KEY, JSON.stringify(this.progress));
       this.triggerSync();
     } catch (error) {
@@ -87,6 +88,58 @@ export class ProgressStorage {
         console.error('Failed to sync to GitHub Gist:', error);
       }
     }, SYNC_DEBOUNCE_MS);
+  }
+
+  /**
+   * Sync progress from GitHub Gist (pull remote changes)
+   * Returns { synced: true/false, updated: true/false }
+   */
+  async syncFromGist(): Promise<{ synced: boolean; updated: boolean }> {
+    const { githubToken, gistId } = this.progress.settings;
+
+    // No credentials configured
+    if (!githubToken || !gistId) {
+      return { synced: false, updated: false };
+    }
+
+    try {
+      const remoteProgress = await githubService.loadGist(githubToken, gistId);
+
+      if (!remoteProgress) {
+        console.log('No remote progress found or failed to load');
+        return { synced: false, updated: false };
+      }
+
+      // Compare timestamps - remote wins if newer
+      const localTimestamp = this.progress.lastUpdated ? new Date(this.progress.lastUpdated).getTime() : 0;
+      const remoteTimestamp = remoteProgress.lastUpdated ? new Date(remoteProgress.lastUpdated).getTime() : 0;
+
+      if (remoteTimestamp > localTimestamp) {
+        // Remote is newer - import it but preserve local settings (token, gistId)
+        const currentSettings = this.progress.settings;
+        this.progress = remoteProgress.version !== CURRENT_VERSION
+          ? this.migrate(remoteProgress)
+          : remoteProgress;
+
+        // Preserve GitHub credentials from local settings
+        this.progress.settings = {
+          ...this.progress.settings,
+          githubToken: currentSettings.githubToken,
+          gistId: currentSettings.gistId,
+        };
+
+        // Save to localStorage without triggering sync back to Gist
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(this.progress));
+        console.log('Progress updated from GitHub Gist');
+        return { synced: true, updated: true };
+      }
+
+      console.log('Local progress is up to date');
+      return { synced: true, updated: false };
+    } catch (error) {
+      console.error('Failed to sync from GitHub Gist:', error);
+      return { synced: false, updated: false };
+    }
   }
 
   /**

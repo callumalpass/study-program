@@ -143,10 +143,16 @@ export function renderSettingsPage(container: HTMLElement): void {
                   </button>
                </div>
                <div id="github-status" class="status-message ${settings.gistId ? 'success' : ''}" style="font-size: 0.9em; color: var(--text-secondary);">
-                 ${settings.gistId 
-                   ? `${Icons.Check} Connected to Gist ID: ${settings.gistId.substring(0, 8)}...` 
+                 ${settings.gistId
+                   ? `${Icons.Check} Connected to Gist ID: ${settings.gistId.substring(0, 8)}...`
                    : `${Icons.StatusNotStarted} Not connected`}
                </div>
+               ${settings.gistId ? `
+               <button id="sync-now-btn" class="btn btn-secondary" style="margin-top: 0.5rem;">
+                 Sync Now
+               </button>
+               <div id="sync-status" style="font-size: 0.85em; color: var(--text-secondary); margin-top: 0.25rem;"></div>
+               ` : ''}
             </div>
           </div>
         </div>
@@ -448,6 +454,44 @@ function attachEventListeners(container: HTMLElement): void {
       } finally {
         connectGithubBtn.disabled = false;
         connectGithubBtn.textContent = originalBtnText === 'Connect' ? 'Update' : originalBtnText;
+      }
+    });
+  }
+
+  // Sync Now Handler
+  const syncNowBtn = container.querySelector('#sync-now-btn') as HTMLButtonElement;
+  const syncStatus = container.querySelector('#sync-status') as HTMLElement;
+
+  if (syncNowBtn && syncStatus) {
+    syncNowBtn.addEventListener('click', async () => {
+      syncNowBtn.disabled = true;
+      const originalText = syncNowBtn.textContent;
+      syncNowBtn.textContent = 'Syncing...';
+      syncStatus.textContent = 'Checking for updates...';
+      syncStatus.style.color = 'var(--text-secondary)';
+
+      try {
+        const result = await progressStorage.syncFromGist();
+
+        if (!result.synced) {
+          syncStatus.innerHTML = `${Icons.Cross} Sync failed`;
+          syncStatus.style.color = 'var(--color-error)';
+        } else if (result.updated) {
+          syncStatus.innerHTML = `${Icons.Check} Synced! Data updated from cloud.`;
+          syncStatus.style.color = 'var(--color-success)';
+          // Refresh page to show updated data
+          setTimeout(() => renderSettingsPage(container), 1000);
+        } else {
+          syncStatus.innerHTML = `${Icons.Check} Synced! Already up to date.`;
+          syncStatus.style.color = 'var(--color-success)';
+        }
+      } catch (error) {
+        console.error(error);
+        syncStatus.innerHTML = `${Icons.Cross} Error: ` + (error instanceof Error ? error.message : 'Unknown error');
+        syncStatus.style.color = 'var(--color-error)';
+      } finally {
+        syncNowBtn.disabled = false;
+        syncNowBtn.textContent = originalText;
       }
     });
   }
