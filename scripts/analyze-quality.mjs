@@ -3,6 +3,7 @@
  * Subject Quality Analysis Script
  *
  * Analyzes each subject against the CS101 gold standard defined in SUBJECT_UPGRADE_PROMPT.md
+ * Uses Vite's SSR module loading to import actual TypeScript modules.
  *
  * Usage:
  *   node scripts/analyze-quality.mjs          # Formatted terminal output
@@ -45,7 +46,8 @@
  * ═══════════════════════════════════════════════════════════════════════════════
  */
 
-import { readdir, readFile, stat } from 'fs/promises';
+import { createServer } from 'vite';
+import { readdir, stat } from 'fs/promises';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -67,58 +69,9 @@ const TARGETS = {
 // Subject categories for assessment strategy
 const EXAM_ONLY_SUBJECTS = ['math101', 'math102', 'math203', 'cs102'];
 
-// Find the matching closing brace, respecting string literals
-// This prevents braces inside strings from throwing off the count
-function findMatchingBrace(content, startIndex) {
-  let braceCount = 0;
-  let inString = false;
-  let stringChar = '';
-  let escaped = false;
-
-  for (let i = startIndex; i < content.length; i++) {
-    const char = content[i];
-    const prevChar = i > 0 ? content[i - 1] : '';
-
-    // Handle escape sequences
-    if (escaped) {
-      escaped = false;
-      continue;
-    }
-    if (char === '\\') {
-      escaped = true;
-      continue;
-    }
-
-    // Handle string boundaries
-    if (!inString && (char === '"' || char === "'" || char === '`')) {
-      inString = true;
-      stringChar = char;
-      continue;
-    }
-    if (inString && char === stringChar) {
-      inString = false;
-      stringChar = '';
-      continue;
-    }
-
-    // Only count braces when not inside a string
-    if (!inString) {
-      if (char === '{') {
-        braceCount++;
-      } else if (char === '}') {
-        braceCount--;
-        if (braceCount === 0) {
-          return i + 1;
-        }
-      }
-    }
-  }
-
-  return content.length; // Fallback if no match found
-}
-
 // Count words in markdown content (excluding code blocks)
 function countWords(content) {
+  if (!content || typeof content !== 'string') return 0;
   // Remove code blocks
   let text = content.replace(/```[\s\S]*?```/g, '');
   text = text.replace(/`[^`]+`/g, '');
@@ -129,223 +82,123 @@ function countWords(content) {
   return words.length;
 }
 
-// Parse topics.ts to extract topic info
-async function parseTopicsFile(filePath) {
-  const content = await readFile(filePath, 'utf-8');
-
-  const topics = [];
-  const subtopicImports = new Map();
-
-  // Extract imports for subtopic content
-  const importRegex = /import\s+(\w+)\s+from\s+['"]([^'"]+\.md)\?raw['"]/g;
-  let importMatch;
-  while ((importMatch = importRegex.exec(content)) !== null) {
-    subtopicImports.set(importMatch[1], importMatch[2]);
-  }
-
-  // Extract topic definitions - look for objects with id, title, quizIds
-  // Only match top-level topics (which have quizIds), not nested subtopics
-  const topicBlockRegex = /\{\s*id:\s*['"]([^'"]+)['"]\s*,\s*title:\s*['"]([^'"]+)['"]/g;
-  let topicMatch;
-  while ((topicMatch = topicBlockRegex.exec(content)) !== null) {
-    const topicId = topicMatch[1];
-    const topicTitle = topicMatch[2];
-
-    // Find the block for this topic to get quizIds and exerciseIds
-    const blockStart = content.indexOf('{', topicMatch.index);
-    const blockEnd = findMatchingBrace(content, blockStart);
-    const block = content.slice(blockStart, blockEnd);
-
-    // Extract quizIds - only top-level topics have this field
-    const quizIdsMatch = block.match(/quizIds:\s*\[([^\]]*)\]/);
-
-    // Skip this block if it doesn't have quizIds (it's a subtopic, not a topic)
-    if (!quizIdsMatch) {
-      continue;
-    }
-
-    const quizIds = quizIdsMatch[1].match(/['"]([^'"]+)['"]/g)?.map(s => s.replace(/['"]/g, '')) || [];
-
-    // Extract exerciseIds
-    const exerciseIdsMatch = block.match(/exerciseIds:\s*\[([^\]]*)\]/);
-    const exerciseIds = exerciseIdsMatch
-      ? exerciseIdsMatch[1].match(/['"]([^'"]+)['"]/g)?.map(s => s.replace(/['"]/g, '')) || []
-      : [];
-
-    // Check for subtopics
-    const hasSubtopics = block.includes('subtopics:') && !block.includes('subtopics: []');
-
-    // Check for readings
-    const hasReadings = block.includes('readings:') && !block.includes('readings: []');
-
-    topics.push({ id: topicId, title: topicTitle, quizIds, exerciseIds, hasSubtopics, hasReadings });
-  }
-
-  return { topics, subtopicImports };
+// Create Vite server for SSR module loading
+async function createViteServer(projectRoot) {
+  const server = await createServer({
+    root: projectRoot,
+    configFile: join(projectRoot, 'vite.config.ts'),
+    server: { middlewareMode: true },
+    logLevel: 'silent',
+    optimizeDeps: { disabled: true },
+  });
+  return server;
 }
 
-// Parse quizzes.ts to count quizzes and questions
-async function parseQuizzesFile(filePath) {
+// Load a subject's data using Vite SSR
+async function loadSubjectData(vite, subjectId, projectRoot) {
+  const modulePath = `/src/data/subjects/${subjectId}/index.ts`;
+
   try {
-    const content = await readFile(filePath, 'utf-8');
+    const module = await vite.ssrLoadModule(modulePath);
 
-    const quizzes = [];
+    // Extract exports - they follow pattern: {subjectId}Topics, {subjectId}Quizzes, etc.
+    const prefix = subjectId;
+    const topics = module[`${prefix}Topics`] || [];
+    const quizzes = module[`${prefix}Quizzes`] || [];
+    const exercises = module[`${prefix}Exercises`] || [];
+    const projects = module[`${prefix}Projects`] || [];
+    const exams = module[`${prefix}Exams`] || [];
 
-    // Find quiz blocks
-    const quizRegex = /\{\s*id:\s*['"]([^'"]+)['"]\s*,\s*subjectId:\s*['"][^'"]+['"]\s*,\s*topicId:\s*['"]([^'"]+)['"]/g;
-    let match;
+    return { topics, quizzes, exercises, projects, exams, importError: null };
+  } catch (error) {
+    return {
+      topics: [],
+      quizzes: [],
+      exercises: [],
+      projects: [],
+      exams: [],
+      importError: error.message
+    };
+  }
+}
 
-    while ((match = quizRegex.exec(content)) !== null) {
-      const quizId = match[1];
-      const topicId = match[2];
+// Analyze a single subject from loaded data
+function analyzeSubject(subjectId, data) {
+  const { topics, quizzes, exercises, projects, exams, importError } = data;
 
-      // Find the questions array for this quiz (use helper to handle braces in strings)
-      const blockStart = content.indexOf('{', match.index);
-      const blockEnd = findMatchingBrace(content, blockStart);
-      const block = content.slice(blockStart, blockEnd);
+  // Build topic quality data
+  const topicData = topics.map((topic, idx) => {
+    const subtopics = topic.subtopics || [];
+    const readings = topic.readings || [];
 
-      // Count questions by counting "id:" patterns within questions array
-      const questionsMatch = block.match(/questions:\s*\[/);
-      if (questionsMatch) {
-        const questionIdMatches = block.match(/{\s*id:\s*['"]q\d+['"]/g);
-        const questionCount = questionIdMatches?.length || 0;
-        quizzes.push({ id: quizId, topicId, questionCount });
-      }
-    }
+    // Calculate word counts from actual content
+    const subtopicWordCounts = subtopics.map(st => ({
+      id: st.id,
+      title: st.title,
+      wordCount: countWords(st.content),
+    }));
+
+    const totalWords = subtopicWordCounts.reduce((sum, s) => sum + s.wordCount, 0);
+
+    // Count quizzes for this topic
+    const topicQuizzes = quizzes.filter(q => q.topicId === topic.id);
+
+    // Count exercises for this topic
+    const topicExercises = exercises.filter(e => e.topicId === topic.id);
 
     return {
-      quizCount: quizzes.length,
-      totalQuestions: quizzes.reduce((sum, q) => sum + q.questionCount, 0),
-      quizzes
+      id: topic.id,
+      title: topic.title,
+      subtopicCount: subtopics.length,
+      subtopics: subtopicWordCounts,
+      totalWords,
+      quizCount: topicQuizzes.length,
+      quizQuestions: topicQuizzes.reduce((sum, q) => sum + (q.questions?.length || 0), 0),
+      exerciseCount: topicExercises.length,
+      hasReadings: readings.length > 0,
+      readingCount: readings.length,
     };
-  } catch {
-    return { quizCount: 0, totalQuestions: 0, quizzes: [] };
-  }
-}
+  });
 
-// Parse exams.ts to get exam info
-async function parseExamsFile(filePath) {
-  try {
-    const content = await readFile(filePath, 'utf-8');
+  const totalSubtopics = topicData.reduce((sum, t) => sum + t.subtopicCount, 0);
+  const totalContentWords = topicData.reduce((sum, t) => sum + t.totalWords, 0);
+  const totalReadings = topicData.reduce((sum, t) => sum + t.readingCount, 0);
 
-    const result = { hasMidterm: false, hasFinal: false, midtermQuestions: 0, finalQuestions: 0 };
+  // Exam analysis
+  const midterm = exams.find(e => e.id.includes('midterm'));
+  const final = exams.find(e => e.id.includes('final'));
 
-    // Check for midterm
-    if (content.includes('midterm') || content.includes('Midterm')) {
-      result.hasMidterm = true;
-      // Count questions in midterm
-      const midtermMatch = content.match(/id:\s*['"][^'"]*midterm[^'"]*['"]/i);
-      if (midtermMatch) {
-        const startIdx = midtermMatch.index || 0;
-        // Find the exam block (use helper to handle braces in strings)
-        const blockStart = content.lastIndexOf('{', startIdx);
-        const blockEnd = findMatchingBrace(content, blockStart);
+  const projectsNeeded = !EXAM_ONLY_SUBJECTS.includes(subjectId);
+  const readingsApplicable = !['cs101', 'math101', 'math102', 'math203'].includes(subjectId);
 
-        const block = content.slice(blockStart, blockEnd);
-        const questionMatches = block.match(/{\s*id:\s*['"]/g);
-        result.midtermQuestions = questionMatches?.length || 0;
-      }
-    }
+  const quality = {
+    id: subjectId,
+    topics: topicData,
+    totalTopics: topics.length,
+    totalSubtopics,
+    avgSubtopicsPerTopic: topics.length > 0 ? totalSubtopics / topics.length : 0,
+    totalQuizzes: quizzes.length,
+    totalQuizQuestions: quizzes.reduce((sum, q) => sum + (q.questions?.length || 0), 0),
+    avgQuizzesPerTopic: topics.length > 0 ? quizzes.length / topics.length : 0,
+    totalExercises: exercises.length,
+    avgExercisesPerTopic: topics.length > 0 ? exercises.length / topics.length : 0,
+    hasMidterm: !!midterm,
+    hasFinal: !!final,
+    midtermQuestions: midterm?.questions?.length || 0,
+    finalQuestions: final?.questions?.length || 0,
+    projectCount: projects.length,
+    projectsNeeded,
+    totalContentWords,
+    avgWordsPerSubtopic: totalSubtopics > 0 ? totalContentWords / totalSubtopics : 0,
+    overallScore: 0,
+    readingsApplicable,
+    totalReadings,
+    importError,
+  };
 
-    // Check for final
-    if (content.includes('final') || content.includes('Final')) {
-      result.hasFinal = true;
-      // Count questions in final
-      const finalMatch = content.match(/id:\s*['"][^'"]*final[^'"]*['"]/i);
-      if (finalMatch) {
-        const startIdx = finalMatch.index || 0;
-        // Find the exam block (use helper to handle braces in strings)
-        const blockStart = content.lastIndexOf('{', startIdx);
-        const blockEnd = findMatchingBrace(content, blockStart);
+  quality.overallScore = calculateScore(quality);
 
-        const block = content.slice(blockStart, blockEnd);
-        const questionMatches = block.match(/{\s*id:\s*['"]/g);
-        result.finalQuestions = questionMatches?.length || 0;
-      }
-    }
-
-    return result;
-  } catch {
-    return { hasMidterm: false, hasFinal: false, midtermQuestions: 0, finalQuestions: 0 };
-  }
-}
-
-// Parse projects.ts to count projects
-async function parseProjectsFile(filePath) {
-  try {
-    const content = await readFile(filePath, 'utf-8');
-    const projectMatches = content.match(/id:\s*['"][^'"]*project[^'"]*['"]/gi);
-    return projectMatches?.length || 0;
-  } catch {
-    return 0;
-  }
-}
-
-// Count exercises by parsing exercises/index.ts
-async function countExercises(exercisesDir) {
-  const byTopic = new Map();
-  let total = 0;
-
-  try {
-    const files = await readdir(exercisesDir);
-
-    for (const file of files) {
-      if (file.endsWith('.ts') && file !== 'index.ts') {
-        const content = await readFile(join(exercisesDir, file), 'utf-8');
-        // Count exercise definitions
-        const exerciseMatches = content.match(/id:\s*['"]([^'"]+)['"]\s*,\s*subjectId/g);
-        const count = exerciseMatches?.length || 0;
-        total += count;
-
-        // Try to extract topic from file name
-        const topicMatch = file.match(/topic-(\d+)/);
-        if (topicMatch) {
-          const topicNum = topicMatch[1];
-          byTopic.set(topicNum, (byTopic.get(topicNum) || 0) + count);
-        }
-      }
-    }
-  } catch {
-    // exercises directory may not exist
-  }
-
-  return { total, byTopic };
-}
-
-// Get subtopic word counts from content directory
-async function getSubtopicWordCounts(contentDir, subjectId) {
-  const topicWordCounts = new Map();
-
-  try {
-    const items = await readdir(contentDir);
-
-    for (const item of items) {
-      const itemPath = join(contentDir, item);
-      const itemStat = await stat(itemPath);
-
-      if (itemStat.isDirectory() && item.startsWith('topic-')) {
-        const topicNum = item.replace('topic-', '');
-        const subtopics = [];
-        let totalWords = 0;
-
-        const subtopicFiles = await readdir(itemPath);
-        for (const file of subtopicFiles) {
-          if (file.endsWith('.md')) {
-            const content = await readFile(join(itemPath, file), 'utf-8');
-            const words = countWords(content);
-            subtopics.push({ file, words });
-            totalWords += words;
-          }
-        }
-
-        topicWordCounts.set(topicNum, { subtopics, totalWords });
-      }
-    }
-  } catch {
-    // content directory may not exist
-  }
-
-  return topicWordCounts;
+  return quality;
 }
 
 // Calculate overall quality score (0-100)
@@ -400,97 +253,13 @@ function calculateScore(quality) {
   return Math.round(score);
 }
 
-// Analyze a single subject
-async function analyzeSubject(subjectId, dataDir, contentDir) {
-  const subjectDataDir = join(dataDir, subjectId);
-  const subjectContentDir = join(contentDir, subjectId);
-
-  // Parse topics
-  const topicsPath = join(subjectDataDir, 'topics.ts');
-  const { topics: parsedTopics } = await parseTopicsFile(topicsPath);
-
-  // Parse quizzes
-  const quizzesPath = join(subjectDataDir, 'quizzes.ts');
-  const quizData = await parseQuizzesFile(quizzesPath);
-
-  // Parse exams
-  const examsPath = join(subjectDataDir, 'exams.ts');
-  const examData = await parseExamsFile(examsPath);
-
-  // Parse projects
-  const projectsPath = join(subjectDataDir, 'projects.ts');
-  const projectCount = await parseProjectsFile(projectsPath);
-
-  // Count exercises
-  const exercisesDir = join(subjectDataDir, 'exercises');
-  const exerciseData = await countExercises(exercisesDir);
-
-  // Get word counts
-  const wordCounts = await getSubtopicWordCounts(subjectContentDir, subjectId);
-
-  // Build topic quality data
-  const topics = parsedTopics.map((t, idx) => {
-    const topicNum = String(idx + 1);
-    const wordData = wordCounts.get(topicNum);
-    const quizzesForTopic = quizData.quizzes.filter(q => q.topicId === t.id);
-
-    return {
-      id: t.id,
-      title: t.title,
-      subtopicCount: wordData?.subtopics.length || 0,
-      subtopics: wordData?.subtopics.map(s => ({
-        id: s.file.replace('.md', ''),
-        title: s.file.replace('.md', '').replace(/^\d+-/, '').replace(/-/g, ' '),
-        wordCount: s.words
-      })) || [],
-      totalWords: wordData?.totalWords || 0,
-      quizCount: quizzesForTopic.length,
-      exerciseCount: t.exerciseIds.length,
-      hasReadings: t.hasReadings,
-      readingCount: 0,
-    };
-  });
-
-  const totalSubtopics = topics.reduce((sum, t) => sum + t.subtopicCount, 0);
-  const totalContentWords = topics.reduce((sum, t) => sum + t.totalWords, 0);
-  const totalReadings = topics.filter(t => t.hasReadings).length;
-
-  const projectsNeeded = !EXAM_ONLY_SUBJECTS.includes(subjectId);
-  const readingsApplicable = !['cs101', 'math101', 'math102', 'math203'].includes(subjectId);
-
-  const quality = {
-    id: subjectId,
-    topics,
-    totalTopics: topics.length,
-    totalSubtopics,
-    avgSubtopicsPerTopic: topics.length > 0 ? totalSubtopics / topics.length : 0,
-    totalQuizzes: quizData.quizCount,
-    totalQuizQuestions: quizData.totalQuestions,
-    avgQuizzesPerTopic: topics.length > 0 ? quizData.quizCount / topics.length : 0,
-    totalExercises: exerciseData.total,
-    avgExercisesPerTopic: topics.length > 0 ? exerciseData.total / topics.length : 0,
-    hasMidterm: examData.hasMidterm,
-    hasFinal: examData.hasFinal,
-    midtermQuestions: examData.midtermQuestions,
-    finalQuestions: examData.finalQuestions,
-    projectCount,
-    projectsNeeded,
-    totalContentWords,
-    avgWordsPerSubtopic: totalSubtopics > 0 ? totalContentWords / totalSubtopics : 0,
-    overallScore: 0,
-    readingsApplicable,
-    totalReadings,
-  };
-
-  quality.overallScore = calculateScore(quality);
-
-  return quality;
-}
-
 // Compute gaps for a subject
 function computeGaps(quality) {
   const gaps = [];
 
+  if (quality.importError) {
+    gaps.push({ type: 'import', message: `Import error: ${quality.importError}` });
+  }
   if (quality.totalTopics < TARGETS.topicsPerSubject) {
     gaps.push({ type: 'topics', message: `Need ${TARGETS.topicsPerSubject - quality.totalTopics} more topics` });
   }
@@ -567,7 +336,7 @@ function printSubjectReport(quality) {
     hasMidterm, hasFinal, midtermQuestions, finalQuestions,
     projectCount, projectsNeeded,
     totalContentWords, avgWordsPerSubtopic,
-    overallScore, readingsApplicable, totalReadings } = quality;
+    overallScore, readingsApplicable, totalReadings, importError } = quality;
 
   const scoreColor = overallScore >= 80 ? '\x1b[32m' : overallScore >= 50 ? '\x1b[33m' : '\x1b[31m';
   const reset = '\x1b[0m';
@@ -575,6 +344,11 @@ function printSubjectReport(quality) {
   console.log(`\n${'═'.repeat(70)}`);
   console.log(`  ${id.toUpperCase()}  ${scoreColor}[Score: ${overallScore}/100]${reset}`);
   console.log(`${'═'.repeat(70)}`);
+
+  // Import error warning
+  if (importError) {
+    console.log(`\n  \x1b[31mIMPORT ERROR: ${importError}\x1b[0m`);
+  }
 
   // Topics & Subtopics
   console.log(`\n  TOPICS & SUBTOPICS`);
@@ -637,23 +411,12 @@ function printSubjectReport(quality) {
 
   // Gaps summary
   console.log(`\n  GAPS`);
-  const gaps = [];
-
-  if (totalTopics < TARGETS.topicsPerSubject) gaps.push(`Need ${TARGETS.topicsPerSubject - totalTopics} more topics`);
-  if (avgSubtopicsPerTopic < 5) gaps.push(`Subtopics needed (avg ${avgSubtopicsPerTopic.toFixed(1)}, need 5-7)`);
-  if (avgQuizzesPerTopic < TARGETS.quizzesPerTopic) gaps.push(`Quizzes needed (${totalQuizzes}/${totalTopics * TARGETS.quizzesPerTopic})`);
-  if (avgExercisesPerTopic < TARGETS.exercisesPerTopic) gaps.push(`Exercises needed (${totalExercises}/${totalTopics * TARGETS.exercisesPerTopic})`);
-  if (!hasMidterm) gaps.push('Midterm exam missing');
-  if (!hasFinal) gaps.push('Final exam missing');
-  if (hasMidterm && midtermQuestions < TARGETS.midtermQuestions) gaps.push(`Midterm needs ${TARGETS.midtermQuestions - midtermQuestions} more questions`);
-  if (hasFinal && finalQuestions < TARGETS.finalQuestions) gaps.push(`Final needs ${TARGETS.finalQuestions - finalQuestions} more questions`);
-  if (projectsNeeded && projectCount === 0) gaps.push('Projects needed');
-  if (avgWordsPerSubtopic < TARGETS.wordsPerSubtopic * 0.7) gaps.push(`Content too thin (avg ${Math.round(avgWordsPerSubtopic)} words/subtopic)`);
+  const gaps = computeGaps(quality);
 
   if (gaps.length === 0) {
     console.log('     None - meets gold standard!');
   } else {
-    gaps.forEach(g => console.log(`     - ${g}`));
+    gaps.forEach(g => console.log(`     - ${g.message}`));
   }
 }
 
@@ -674,9 +437,10 @@ function printSummaryTable(subjects) {
     const reset = '\x1b[0m';
     const examStr = `${s.hasMidterm ? 'M' : '-'}${s.hasFinal ? 'F' : '-'}`;
     const projStr = s.projectsNeeded ? String(s.projectCount) : 'N/A';
+    const errorFlag = s.importError ? ' !' : '';
 
     console.log(
-      `  ${s.id.padEnd(9)} ${scoreColor}${String(s.overallScore).padStart(3)}${reset}%` +
+      `  ${(s.id + errorFlag).padEnd(9)} ${scoreColor}${String(s.overallScore).padStart(3)}${reset}%` +
       `   ${String(s.totalTopics).padStart(2)}/${TARGETS.topicsPerSubject}` +
       `      ${String(s.totalSubtopics).padStart(2)}/${s.totalTopics * TARGETS.subtopicsPerTopic}` +
       `      ${String(s.totalQuizzes).padStart(2)}/${s.totalTopics * TARGETS.quizzesPerTopic}` +
@@ -688,6 +452,12 @@ function printSummaryTable(subjects) {
   }
 
   console.log('  ' + '─'.repeat(86));
+
+  // Import errors summary
+  const withErrors = subjects.filter(s => s.importError);
+  if (withErrors.length > 0) {
+    console.log(`\n  \x1b[31mIMPORT ERRORS (!) in: ${withErrors.map(s => s.id).join(', ')}\x1b[0m`);
+  }
 
   // Overall stats
   const avgScore = Math.round(subjects.reduce((sum, s) => sum + s.overallScore, 0) / subjects.length);
@@ -740,6 +510,7 @@ function buildJsonOutput(subjects) {
     subjectsMeetingStandard: subjects.filter(s => s.overallScore >= 80).map(s => s.id),
     subjectsInProgress: subjects.filter(s => s.overallScore >= 50 && s.overallScore < 80).map(s => s.id),
     subjectsNeedingWork: subjects.filter(s => s.overallScore < 50).map(s => s.id),
+    subjectsWithImportErrors: subjects.filter(s => s.importError).map(s => ({ id: s.id, error: s.importError })),
   };
 
   return {
@@ -756,10 +527,22 @@ async function main() {
 
   const projectRoot = join(__dirname, '..');
   const dataDir = join(projectRoot, 'src', 'data', 'subjects');
-  const contentDir = join(projectRoot, 'src', 'content', 'subjects');
 
   if (!jsonOutput) {
-    console.log('');
+    console.log('\n  Starting Vite server for SSR module loading...');
+  }
+
+  // Create Vite server
+  let vite;
+  try {
+    vite = await createViteServer(projectRoot);
+  } catch (error) {
+    console.error('Failed to create Vite server:', error);
+    process.exit(1);
+  }
+
+  if (!jsonOutput) {
+    console.log('  Vite server ready. Analyzing subjects...\n');
     printRequirements();
   }
 
@@ -773,15 +556,41 @@ async function main() {
 
     if (subjectStat.isDirectory() && !subjectId.startsWith('.')) {
       try {
-        const quality = await analyzeSubject(subjectId, dataDir, contentDir);
+        const data = await loadSubjectData(vite, subjectId, projectRoot);
+        const quality = analyzeSubject(subjectId, data);
         subjects.push(quality);
       } catch (err) {
-        if (!jsonOutput) {
-          console.error(`Error analyzing ${subjectId}:`, err);
-        }
+        // Create a minimal quality object for subjects that fail completely
+        subjects.push({
+          id: subjectId,
+          topics: [],
+          totalTopics: 0,
+          totalSubtopics: 0,
+          avgSubtopicsPerTopic: 0,
+          totalQuizzes: 0,
+          totalQuizQuestions: 0,
+          avgQuizzesPerTopic: 0,
+          totalExercises: 0,
+          avgExercisesPerTopic: 0,
+          hasMidterm: false,
+          hasFinal: false,
+          midtermQuestions: 0,
+          finalQuestions: 0,
+          projectCount: 0,
+          projectsNeeded: !EXAM_ONLY_SUBJECTS.includes(subjectId),
+          totalContentWords: 0,
+          avgWordsPerSubtopic: 0,
+          overallScore: 0,
+          readingsApplicable: !['cs101', 'math101', 'math102', 'math203'].includes(subjectId),
+          totalReadings: 0,
+          importError: err.message,
+        });
       }
     }
   }
+
+  // Close Vite server
+  await vite.close();
 
   if (jsonOutput) {
     // Output JSON
