@@ -1,0 +1,455 @@
+import { Project } from '../../../core/types';
+
+export const cs205Projects: Project[] = [
+  {
+    id: 'cs205-project-1',
+    subjectId: 'cs205',
+    title: 'E-Commerce Database Design',
+    description: 'Design and implement a complete relational database for an e-commerce platform. This project covers the full database development lifecycle from requirements analysis through ER modeling to physical implementation. You will create schemas, implement constraints, and write queries to demonstrate the database functionality.',
+    requirements: [
+      'Create an ER diagram with at least 8 entities including: Users, Products, Categories, Orders, OrderItems, Reviews, Addresses, and PaymentMethods',
+      'Identify all relationship types (1:1, 1:N, M:N) with appropriate cardinality constraints',
+      'Convert the ER diagram to a normalized relational schema in 3NF',
+      'Implement the database using SQL DDL with proper PRIMARY KEY constraints',
+      'Add FOREIGN KEY constraints with appropriate ON DELETE/UPDATE actions',
+      'Include CHECK constraints for data validation (e.g., prices > 0, ratings 1-5)',
+      'Create at least 3 indexes for query optimization',
+      'Write INSERT statements to populate the database with realistic sample data',
+      'Implement 10 complex queries covering JOINs, subqueries, aggregation, and window functions',
+      'Document all design decisions and trade-offs made'
+    ],
+    rubric: [
+      {
+        name: 'ER Diagram Quality',
+        weight: 25,
+        levels: [
+          {
+            score: 100,
+            label: 'Excellent',
+            description: 'Complete ER diagram with all entities, relationships, cardinalities, and attributes properly documented'
+          },
+          {
+            score: 75,
+            label: 'Good',
+            description: 'ER diagram covers most requirements with minor omissions'
+          },
+          {
+            score: 50,
+            label: 'Satisfactory',
+            description: 'Basic ER diagram but missing key relationships or attributes'
+          },
+          {
+            score: 25,
+            label: 'Needs Improvement',
+            description: 'Incomplete or incorrect ER diagram'
+          }
+        ]
+      },
+      {
+        name: 'Schema Design & Normalization',
+        weight: 25,
+        levels: [
+          {
+            score: 100,
+            label: 'Excellent',
+            description: 'Schema in 3NF, proper data types, all constraints correctly implemented'
+          },
+          {
+            score: 75,
+            label: 'Good',
+            description: 'Good normalization with minor issues in constraints or types'
+          },
+          {
+            score: 50,
+            label: 'Satisfactory',
+            description: 'Functional schema but normalization issues or missing constraints'
+          },
+          {
+            score: 25,
+            label: 'Needs Improvement',
+            description: 'Poor normalization, significant design flaws'
+          }
+        ]
+      },
+      {
+        name: 'SQL Implementation',
+        weight: 30,
+        levels: [
+          {
+            score: 100,
+            label: 'Excellent',
+            description: 'All DDL correct, sample data realistic, complex queries work correctly and efficiently'
+          },
+          {
+            score: 75,
+            label: 'Good',
+            description: 'Most SQL correct with minor errors, queries demonstrate understanding'
+          },
+          {
+            score: 50,
+            label: 'Satisfactory',
+            description: 'Basic SQL works but queries are simplistic or have errors'
+          },
+          {
+            score: 25,
+            label: 'Needs Improvement',
+            description: 'Many SQL errors, queries don\'t execute properly'
+          }
+        ]
+      },
+      {
+        name: 'Documentation',
+        weight: 20,
+        levels: [
+          {
+            score: 100,
+            label: 'Excellent',
+            description: 'Thorough documentation explaining all design decisions, trade-offs, and query purposes'
+          },
+          {
+            score: 75,
+            label: 'Good',
+            description: 'Good documentation with most decisions explained'
+          },
+          {
+            score: 50,
+            label: 'Satisfactory',
+            description: 'Basic documentation but lacks depth or clarity'
+          },
+          {
+            score: 25,
+            label: 'Needs Improvement',
+            description: 'Minimal or missing documentation'
+          }
+        ]
+      }
+    ],
+    estimatedHours: 20,
+    scaffolding: {
+      overview: 'This project takes you through the complete database development lifecycle. Start by analyzing requirements and creating an ER diagram, then convert it to a normalized relational schema, and finally implement it in SQL with proper constraints and sample queries.',
+      gettingStarted: [
+        'Begin with the ER diagram before writing any SQL - design first, implement second',
+        'Create a Users table with user_id, email, and other relevant fields',
+        'Create a Categories table with self-referencing parent_category_id for hierarchical categories',
+        'Create Products, Orders, OrderItems tables with proper relationships',
+        'Add Reviews, Addresses, and PaymentMethods tables to complete the schema'
+      ],
+      milestones: [
+        'Complete ER diagram with all 8 entities and relationships documented',
+        'Convert ER diagram to normalized 3NF relational schema',
+        'Implement DDL statements with all PRIMARY KEY and FOREIGN KEY constraints',
+        'Add CHECK constraints and indexes for data validation and optimization',
+        'Write and test 10 complex queries demonstrating various SQL features'
+      ],
+      tips: [
+        'Consider what happens when a user deletes their account - cascade or restrict?',
+        'OrderItems is the junction table for the M:N relationship between Orders and Products',
+        'Use DECIMAL for prices, not FLOAT - precision matters for money',
+        'Window functions like ROW_NUMBER() and RANK() are useful for "top N" queries',
+        'Test your constraints by trying to insert invalid data'
+      ]
+    }
+  },
+  {
+    id: 'cs205-project-2',
+    subjectId: 'cs205',
+    title: 'Database Query Optimization Lab',
+    description: 'Analyze and optimize the performance of database queries on a provided dataset. You will use EXPLAIN to understand query execution plans, create appropriate indexes, and rewrite queries for better performance. This project develops practical skills in database performance tuning.',
+    requirements: [
+      'Set up the provided database with 1 million+ records across multiple tables',
+      'Write 10 queries that demonstrate different query patterns (scans, seeks, joins, aggregations)',
+      'For each query, capture and analyze the EXPLAIN output before optimization',
+      'Create appropriate indexes based on query patterns and workload analysis',
+      'Rewrite queries where possible to use more efficient patterns',
+      'Document the performance improvement (execution time, rows scanned) for each optimization',
+      'Identify and explain at least 3 anti-patterns in the original queries',
+      'Compare clustered vs. non-clustered index performance',
+      'Analyze the trade-off between read performance and write overhead from indexes',
+      'Create a summary report with performance benchmarks before and after optimization'
+    ],
+    rubric: [
+      {
+        name: 'Query Analysis',
+        weight: 30,
+        levels: [
+          {
+            score: 100,
+            label: 'Excellent',
+            description: 'Thorough EXPLAIN analysis, correctly interprets all execution plan components'
+          },
+          {
+            score: 75,
+            label: 'Good',
+            description: 'Good analysis with minor gaps in interpretation'
+          },
+          {
+            score: 50,
+            label: 'Satisfactory',
+            description: 'Basic analysis but misses important details'
+          },
+          {
+            score: 25,
+            label: 'Needs Improvement',
+            description: 'Superficial analysis, doesn\'t understand execution plans'
+          }
+        ]
+      },
+      {
+        name: 'Index Design',
+        weight: 30,
+        levels: [
+          {
+            score: 100,
+            label: 'Excellent',
+            description: 'Optimal indexes chosen, covers all query patterns, considers write impact'
+          },
+          {
+            score: 75,
+            label: 'Good',
+            description: 'Good index choices with minor inefficiencies'
+          },
+          {
+            score: 50,
+            label: 'Satisfactory',
+            description: 'Some useful indexes but misses optimization opportunities'
+          },
+          {
+            score: 25,
+            label: 'Needs Improvement',
+            description: 'Poor index choices, doesn\'t improve performance'
+          }
+        ]
+      },
+      {
+        name: 'Query Rewriting',
+        weight: 25,
+        levels: [
+          {
+            score: 100,
+            label: 'Excellent',
+            description: 'Queries rewritten using optimal patterns, significant performance gains'
+          },
+          {
+            score: 75,
+            label: 'Good',
+            description: 'Good rewrites with measurable improvements'
+          },
+          {
+            score: 50,
+            label: 'Satisfactory',
+            description: 'Some rewrites but limited performance improvement'
+          },
+          {
+            score: 25,
+            label: 'Needs Improvement',
+            description: 'Rewrites don\'t improve or worsen performance'
+          }
+        ]
+      },
+      {
+        name: 'Documentation & Benchmarks',
+        weight: 15,
+        levels: [
+          {
+            score: 100,
+            label: 'Excellent',
+            description: 'Clear benchmarks with before/after metrics, excellent explanation of trade-offs'
+          },
+          {
+            score: 75,
+            label: 'Good',
+            description: 'Good documentation with most metrics captured'
+          },
+          {
+            score: 50,
+            label: 'Satisfactory',
+            description: 'Basic documentation, incomplete metrics'
+          },
+          {
+            score: 25,
+            label: 'Needs Improvement',
+            description: 'Poor documentation, no meaningful benchmarks'
+          }
+        ]
+      }
+    ],
+    estimatedHours: 15,
+    scaffolding: {
+      overview: 'This lab focuses on practical database performance tuning. You will analyze slow queries using EXPLAIN, create appropriate indexes, and rewrite queries for better performance. Document all optimizations with before/after benchmarks.',
+      gettingStarted: [
+        'Set up the provided sales database with sample data',
+        'Start with simple SELECT queries and analyze their EXPLAIN output',
+        'Identify queries that perform full table scans (type = ALL)',
+        'Create indexes on commonly filtered and joined columns',
+        'Rewrite correlated subqueries as JOINs for better performance'
+      ],
+      milestones: [
+        'Database setup complete with 1M+ records',
+        'Initial EXPLAIN analysis captured for all 10 queries',
+        'Index strategy designed based on workload analysis',
+        'Queries rewritten and optimized',
+        'Final performance report with benchmarks complete'
+      ],
+      tips: [
+        'Always check the "type" column in EXPLAIN - "ALL" means full table scan (bad)',
+        'Covering indexes (including all columns in a query) avoid table lookups',
+        'The leftmost prefix rule: composite indexes can only use leftmost columns for seeks',
+        'Converting correlated subqueries to JOINs often improves performance dramatically',
+        'Use EXISTS instead of IN for subqueries that don\'t need the values',
+        'ORDER BY with LIMIT can use an index to avoid sorting if the index matches'
+      ]
+    }
+  },
+  {
+    id: 'cs205-project-3',
+    subjectId: 'cs205',
+    title: 'Transaction Processing System',
+    description: 'Implement a bank transaction processing system that demonstrates ACID properties, concurrency control, and recovery mechanisms. You will handle concurrent transfers, detect deadlocks, and implement proper isolation levels to prevent anomalies.',
+    requirements: [
+      'Design a bank database with Accounts, Transactions, and AuditLog tables',
+      'Implement a transfer stored procedure that moves money between accounts atomically',
+      'Handle concurrent transfers correctly using appropriate locking',
+      'Demonstrate dirty read, non-repeatable read, and phantom read anomalies',
+      'Show how different isolation levels (READ UNCOMMITTED, READ COMMITTED, REPEATABLE READ, SERIALIZABLE) prevent these anomalies',
+      'Create a deadlock scenario and implement detection/resolution',
+      'Implement optimistic concurrency control using version numbers',
+      'Create a transaction log for point-in-time recovery',
+      'Write test cases that verify ACID properties under concurrent access',
+      'Document the trade-offs between isolation levels and performance'
+    ],
+    rubric: [
+      {
+        name: 'ACID Implementation',
+        weight: 35,
+        levels: [
+          {
+            score: 100,
+            label: 'Excellent',
+            description: 'All ACID properties correctly implemented and demonstrated with test cases'
+          },
+          {
+            score: 75,
+            label: 'Good',
+            description: 'ACID properties mostly correct with minor issues in edge cases'
+          },
+          {
+            score: 50,
+            label: 'Satisfactory',
+            description: 'Basic transaction handling but doesn\'t fully guarantee ACID'
+          },
+          {
+            score: 25,
+            label: 'Needs Improvement',
+            description: 'Transactions don\'t properly maintain ACID properties'
+          }
+        ]
+      },
+      {
+        name: 'Concurrency Control',
+        weight: 30,
+        levels: [
+          {
+            score: 100,
+            label: 'Excellent',
+            description: 'Demonstrates all anomalies and their prevention, deadlock handling works correctly'
+          },
+          {
+            score: 75,
+            label: 'Good',
+            description: 'Good concurrency handling with some anomalies demonstrated'
+          },
+          {
+            score: 50,
+            label: 'Satisfactory',
+            description: 'Basic locking but incomplete anomaly prevention'
+          },
+          {
+            score: 25,
+            label: 'Needs Improvement',
+            description: 'Poor concurrency control, race conditions present'
+          }
+        ]
+      },
+      {
+        name: 'Recovery & Logging',
+        weight: 20,
+        levels: [
+          {
+            score: 100,
+            label: 'Excellent',
+            description: 'Complete audit logging, point-in-time recovery demonstrated'
+          },
+          {
+            score: 75,
+            label: 'Good',
+            description: 'Good logging with basic recovery capability'
+          },
+          {
+            score: 50,
+            label: 'Satisfactory',
+            description: 'Basic logging but limited recovery functionality'
+          },
+          {
+            score: 25,
+            label: 'Needs Improvement',
+            description: 'Insufficient logging, no recovery mechanism'
+          }
+        ]
+      },
+      {
+        name: 'Testing & Documentation',
+        weight: 15,
+        levels: [
+          {
+            score: 100,
+            label: 'Excellent',
+            description: 'Comprehensive tests for all scenarios, clear documentation of trade-offs'
+          },
+          {
+            score: 75,
+            label: 'Good',
+            description: 'Good test coverage with adequate documentation'
+          },
+          {
+            score: 50,
+            label: 'Satisfactory',
+            description: 'Basic tests, documentation needs improvement'
+          },
+          {
+            score: 25,
+            label: 'Needs Improvement',
+            description: 'Minimal tests, poor documentation'
+          }
+        ]
+      }
+    ],
+    estimatedHours: 25,
+    scaffolding: {
+      overview: 'This project explores transaction processing concepts through a bank transfer system. You will implement ACID-compliant transfers, demonstrate concurrency anomalies, and show how isolation levels prevent them. The project also covers deadlock detection and recovery mechanisms.',
+      gettingStarted: [
+        'Create the Accounts table with account_id, customer_name, balance, and version columns',
+        'Create the Transactions table to log all transfers with status tracking',
+        'Create the AuditLog table for point-in-time recovery support',
+        'Implement a basic transfer procedure using START TRANSACTION/COMMIT/ROLLBACK',
+        'Add proper locking with SELECT ... FOR UPDATE'
+      ],
+      milestones: [
+        'Bank database schema complete with all three tables',
+        'Atomic transfer procedure implemented and tested',
+        'Concurrency anomalies demonstrated (dirty read, non-repeatable read, phantom read)',
+        'Isolation levels tested showing anomaly prevention',
+        'Deadlock scenario created and resolution implemented',
+        'Optimistic locking with version numbers working',
+        'Complete test suite and documentation'
+      ],
+      tips: [
+        'Always acquire locks in a consistent order (e.g., by account_id) to prevent deadlocks',
+        'Use SELECT ... FOR UPDATE to lock rows before modifying them',
+        'The version column enables optimistic locking: check version before update, increment on success',
+        'SET TRANSACTION ISOLATION LEVEL before starting a transaction to change behavior',
+        'Use SAVEPOINT for partial rollbacks within a transaction',
+        'Deadlock detection: most DBMS will automatically detect and abort one transaction'
+      ]
+    }
+  }
+];
