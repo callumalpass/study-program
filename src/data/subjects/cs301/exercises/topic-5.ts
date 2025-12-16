@@ -1,0 +1,464 @@
+import { CodingExercise } from '../../../../core/types';
+
+export const cs301Topic5Exercises: CodingExercise[] = [
+  // 1. Deadlock Condition Check
+  {
+    id: 'cs301-ex-5-1',
+    subjectId: 'cs301',
+    topicId: 'cs301-t5',
+    title: 'Deadlock Conditions',
+    description: 'Check if all four necessary conditions for deadlock are present.',
+    difficulty: 2,
+    language: 'python',
+    starterCode: 'def check_deadlock_conditions(mutual_exclusion, hold_and_wait, no_preemption, circular_wait):\n    # Return True if deadlock is possible\n    pass',
+    solution: `def check_deadlock_conditions(mutual_exclusion, hold_and_wait, no_preemption, circular_wait):
+    return mutual_exclusion and hold_and_wait and no_preemption and circular_wait`,
+    testCases: [
+      { input: 'True, True, True, True', expectedOutput: 'True', isHidden: false, description: 'All conditions met' },
+      { input: 'True, True, False, True', expectedOutput: 'False', isHidden: false, description: 'Missing no preemption' }
+    ],
+    hints: ['All four conditions must be true', 'Use logical AND']
+  },
+  // 2. Resource Allocation Graph
+  {
+    id: 'cs301-ex-5-2',
+    subjectId: 'cs301',
+    topicId: 'cs301-t5',
+    title: 'RAG Cycle Detection',
+    description: 'Detect cycles in a resource allocation graph (single instance resources).',
+    difficulty: 4,
+    language: 'python',
+    starterCode: 'def has_cycle_rag(allocation, request):\n    # allocation[p][r] = 1 if process p holds resource r\n    # request[p][r] = 1 if process p requests resource r\n    # Return True if cycle exists\n    pass',
+    solution: `def has_cycle_rag(allocation, request):
+    n_proc = len(allocation)
+    n_res = len(allocation[0]) if allocation else 0
+
+    # Build adjacency for wait-for graph
+    # p1 waits for p2 if p1 requests r and p2 holds r
+    waits_for = {i: [] for i in range(n_proc)}
+    for p1 in range(n_proc):
+        for r in range(n_res):
+            if request[p1][r]:
+                for p2 in range(n_proc):
+                    if allocation[p2][r] and p1 != p2:
+                        waits_for[p1].append(p2)
+
+    # DFS for cycle
+    def dfs(node, visited, rec_stack):
+        visited.add(node)
+        rec_stack.add(node)
+        for neighbor in waits_for[node]:
+            if neighbor not in visited:
+                if dfs(neighbor, visited, rec_stack):
+                    return True
+            elif neighbor in rec_stack:
+                return True
+        rec_stack.remove(node)
+        return False
+
+    visited = set()
+    for p in range(n_proc):
+        if p not in visited:
+            if dfs(p, visited, set()):
+                return True
+    return False`,
+    testCases: [
+      { input: '[[1, 0], [0, 1]], [[0, 1], [1, 0]]', expectedOutput: 'True', isHidden: false, description: 'Cycle: P0->R1->P1->R0->P0' },
+      { input: '[[1, 0], [0, 0]], [[0, 1], [0, 0]]', expectedOutput: 'False', isHidden: false, description: 'No cycle' }
+    ],
+    hints: ['Build wait-for graph', 'Use DFS for cycle detection']
+  },
+  // 3. Banker's Algorithm - Safety Check
+  {
+    id: 'cs301-ex-5-3',
+    subjectId: 'cs301',
+    topicId: 'cs301-t5',
+    title: 'Banker\'s Safety Check',
+    description: 'Implement the safety algorithm of Banker\'s algorithm.',
+    difficulty: 4,
+    language: 'python',
+    starterCode: 'def is_safe(available, max_need, allocation):\n    # Return (is_safe, safe_sequence) or (False, [])\n    pass',
+    solution: `def is_safe(available, max_need, allocation):
+    n = len(allocation)
+    m = len(available)
+    work = available[:]
+    finish = [False] * n
+    need = [[max_need[i][j] - allocation[i][j] for j in range(m)] for i in range(n)]
+    sequence = []
+
+    while len(sequence) < n:
+        found = False
+        for i in range(n):
+            if not finish[i]:
+                if all(need[i][j] <= work[j] for j in range(m)):
+                    for j in range(m):
+                        work[j] += allocation[i][j]
+                    finish[i] = True
+                    sequence.append(i)
+                    found = True
+                    break
+        if not found:
+            return (False, [])
+    return (True, sequence)`,
+    testCases: [
+      { input: '[3, 3, 2], [[7, 5, 3], [3, 2, 2], [9, 0, 2]], [[0, 1, 0], [2, 0, 0], [3, 0, 2]]', expectedOutput: '(True, [1, 0, 2])', isHidden: false, description: 'Safe state' },
+      { input: '[0, 0, 0], [[7, 5, 3], [3, 2, 2]], [[0, 1, 0], [2, 0, 0]]', expectedOutput: '(False, [])', isHidden: false, description: 'Unsafe state' }
+    ],
+    hints: ['Find process that can finish', 'Release its resources to work']
+  },
+  // 4. Resource Request
+  {
+    id: 'cs301-ex-5-4',
+    subjectId: 'cs301',
+    topicId: 'cs301-t5',
+    title: 'Resource Request Algorithm',
+    description: 'Check if a resource request can be granted safely.',
+    difficulty: 4,
+    language: 'python',
+    starterCode: 'def can_grant_request(process_id, request, available, max_need, allocation):\n    # Return True if request can be granted safely\n    pass',
+    solution: `def can_grant_request(process_id, request, available, max_need, allocation):
+    n = len(allocation)
+    m = len(available)
+    need = [[max_need[i][j] - allocation[i][j] for j in range(m)] for i in range(n)]
+
+    # Check request <= need
+    for j in range(m):
+        if request[j] > need[process_id][j]:
+            return False
+
+    # Check request <= available
+    for j in range(m):
+        if request[j] > available[j]:
+            return False
+
+    # Try allocation
+    new_available = [available[j] - request[j] for j in range(m)]
+    new_allocation = [row[:] for row in allocation]
+    for j in range(m):
+        new_allocation[process_id][j] += request[j]
+
+    # Check if resulting state is safe
+    result, _ = is_safe_helper(new_available, max_need, new_allocation)
+    return result
+
+def is_safe_helper(available, max_need, allocation):
+    n = len(allocation)
+    m = len(available)
+    work = available[:]
+    finish = [False] * n
+    need = [[max_need[i][j] - allocation[i][j] for j in range(m)] for i in range(n)]
+    sequence = []
+    while len(sequence) < n:
+        found = False
+        for i in range(n):
+            if not finish[i] and all(need[i][j] <= work[j] for j in range(m)):
+                for j in range(m):
+                    work[j] += allocation[i][j]
+                finish[i] = True
+                sequence.append(i)
+                found = True
+                break
+        if not found:
+            return (False, [])
+    return (True, sequence)`,
+    testCases: [
+      { input: '1, [1, 0, 2], [3, 3, 2], [[7, 5, 3], [3, 2, 2]], [[0, 1, 0], [2, 0, 0]]', expectedOutput: 'True', isHidden: false, description: 'Safe to grant' },
+      { input: '0, [3, 3, 3], [3, 3, 2], [[7, 5, 3], [3, 2, 2]], [[0, 1, 0], [2, 0, 0]]', expectedOutput: 'False', isHidden: false, description: 'Exceeds available' }
+    ],
+    hints: ['Check request is valid', 'Try allocation and check safety']
+  },
+  // 5. Hold and Wait Prevention
+  {
+    id: 'cs301-ex-5-5',
+    subjectId: 'cs301',
+    topicId: 'cs301-t5',
+    title: 'Hold-and-Wait Prevention',
+    description: 'Check if a request violates hold-and-wait prevention (must request all at once).',
+    difficulty: 2,
+    language: 'python',
+    starterCode: 'def violates_hold_wait(current_allocation, new_request):\n    # Return True if process holds resources and requests more\n    pass',
+    solution: `def violates_hold_wait(current_allocation, new_request):
+    holds_resources = any(r > 0 for r in current_allocation)
+    requests_resources = any(r > 0 for r in new_request)
+    return holds_resources and requests_resources`,
+    testCases: [
+      { input: '[1, 0, 0], [0, 1, 0]', expectedOutput: 'True', isHidden: false, description: 'Holds and requests' },
+      { input: '[0, 0, 0], [1, 1, 0]', expectedOutput: 'False', isHidden: false, description: 'No hold, just request' }
+    ],
+    hints: ['Check if holding any resources', 'Check if requesting any resources']
+  },
+  // 6. Resource Ordering
+  {
+    id: 'cs301-ex-5-6',
+    subjectId: 'cs301',
+    topicId: 'cs301-t5',
+    title: 'Resource Ordering Validation',
+    description: 'Check if resource requests follow a total ordering (for circular wait prevention).',
+    difficulty: 3,
+    language: 'python',
+    starterCode: 'def follows_ordering(held_resources, requested_resource):\n    # Return True if requested > all held (using resource IDs as order)\n    pass',
+    solution: `def follows_ordering(held_resources, requested_resource):
+    if not held_resources:
+        return True
+    max_held = max(held_resources)
+    return requested_resource > max_held`,
+    testCases: [
+      { input: '[1, 2, 3], 5', expectedOutput: 'True', isHidden: false, description: 'Follows order' },
+      { input: '[1, 5, 3], 4', expectedOutput: 'False', isHidden: false, description: 'Violates order' }
+    ],
+    hints: ['Resource IDs define order', 'New request must be greater than all held']
+  },
+  // 7. Deadlock Detection
+  {
+    id: 'cs301-ex-5-7',
+    subjectId: 'cs301',
+    topicId: 'cs301-t5',
+    title: 'Deadlock Detection Algorithm',
+    description: 'Detect deadlock using available resources and requests.',
+    difficulty: 4,
+    language: 'python',
+    starterCode: 'def detect_deadlock(available, allocation, request):\n    # Return list of deadlocked processes\n    pass',
+    solution: `def detect_deadlock(available, allocation, request):
+    n = len(allocation)
+    m = len(available)
+    work = available[:]
+    finish = [allocation[i] == [0]*m for i in range(n)]
+
+    changed = True
+    while changed:
+        changed = False
+        for i in range(n):
+            if not finish[i]:
+                if all(request[i][j] <= work[j] for j in range(m)):
+                    for j in range(m):
+                        work[j] += allocation[i][j]
+                    finish[i] = True
+                    changed = True
+
+    deadlocked = [i for i in range(n) if not finish[i]]
+    return deadlocked`,
+    testCases: [
+      { input: '[0, 0, 0], [[0, 1, 0], [2, 0, 0]], [[0, 0, 0], [0, 0, 2]]', expectedOutput: '[1]', isHidden: false, description: 'Process 1 deadlocked' },
+      { input: '[1, 1, 1], [[0, 0, 0], [0, 0, 0]], [[0, 0, 0], [0, 0, 0]]', expectedOutput: '[]', isHidden: false, description: 'No deadlock' }
+    ],
+    hints: ['Similar to safety algorithm', 'Return processes that cannot finish']
+  },
+  // 8. Deadlock Recovery - Process Termination
+  {
+    id: 'cs301-ex-5-8',
+    subjectId: 'cs301',
+    topicId: 'cs301-t5',
+    title: 'Victim Selection',
+    description: 'Select best victim process to terminate based on cost factors.',
+    difficulty: 3,
+    language: 'python',
+    starterCode: 'def select_victim(processes):\n    # processes: list of (pid, priority, time_running, resources_held)\n    # Return pid of best victim (lowest cost to terminate)\n    pass',
+    solution: `def select_victim(processes):
+    # Cost = priority + time_running + resources_held
+    # Lower cost = better victim
+    def cost(p):
+        pid, priority, time, resources = p
+        return priority + time + resources
+
+    best = min(processes, key=cost)
+    return best[0]`,
+    testCases: [
+      { input: '[(1, 5, 10, 3), (2, 1, 2, 1)]', expectedOutput: '2', isHidden: false, description: 'Lower cost process' },
+      { input: '[(1, 10, 10, 10), (2, 1, 1, 1)]', expectedOutput: '2', isHidden: false, description: 'Clear winner' }
+    ],
+    hints: ['Calculate cost for each process', 'Select minimum cost']
+  },
+  // 9. Resource Preemption
+  {
+    id: 'cs301-ex-5-9',
+    subjectId: 'cs301',
+    topicId: 'cs301-t5',
+    title: 'Resource Preemption',
+    description: 'Preempt resources from a process and update allocation.',
+    difficulty: 2,
+    language: 'python',
+    starterCode: 'def preempt_resources(allocation, available, process_id, resources_to_preempt):\n    # Return (new_allocation, new_available)\n    pass',
+    solution: `def preempt_resources(allocation, available, process_id, resources_to_preempt):
+    new_allocation = [row[:] for row in allocation]
+    new_available = available[:]
+
+    for j in range(len(resources_to_preempt)):
+        amount = min(resources_to_preempt[j], new_allocation[process_id][j])
+        new_allocation[process_id][j] -= amount
+        new_available[j] += amount
+
+    return (new_allocation, new_available)`,
+    testCases: [
+      { input: '[[2, 1], [0, 1]], [1, 0], 0, [1, 1]', expectedOutput: '([[1, 0], [0, 1]], [2, 1])', isHidden: false, description: 'Preempt from P0' },
+      { input: '[[1, 1]], [0, 0], 0, [2, 2]', expectedOutput: '([[0, 0]], [1, 1])', isHidden: false, description: 'Preempt all' }
+    ],
+    hints: ['Can only preempt what process has', 'Update both allocation and available']
+  },
+  // 10. Wait-For Graph
+  {
+    id: 'cs301-ex-5-10',
+    subjectId: 'cs301',
+    topicId: 'cs301-t5',
+    title: 'Build Wait-For Graph',
+    description: 'Build a wait-for graph from allocation and request matrices.',
+    difficulty: 3,
+    language: 'python',
+    starterCode: 'def build_wait_for_graph(allocation, request):\n    # Return adjacency list: {process: [processes it waits for]}\n    pass',
+    solution: `def build_wait_for_graph(allocation, request):
+    n = len(allocation)
+    m = len(allocation[0]) if allocation else 0
+    graph = {i: [] for i in range(n)}
+
+    for p1 in range(n):
+        for r in range(m):
+            if request[p1][r] > 0:
+                for p2 in range(n):
+                    if allocation[p2][r] > 0 and p1 != p2:
+                        if p2 not in graph[p1]:
+                            graph[p1].append(p2)
+    return graph`,
+    testCases: [
+      { input: '[[1, 0], [0, 1]], [[0, 1], [1, 0]]', expectedOutput: '{0: [1], 1: [0]}', isHidden: false, description: 'Circular wait' },
+      { input: '[[1, 0], [0, 0]], [[0, 0], [1, 0]]', expectedOutput: '{0: [], 1: [0]}', isHidden: false, description: 'Linear wait' }
+    ],
+    hints: ['P1 waits for P2 if P1 requests resource held by P2', 'Check each resource']
+  },
+  // 11. Rollback Simulation
+  {
+    id: 'cs301-ex-5-11',
+    subjectId: 'cs301',
+    topicId: 'cs301-t5',
+    title: 'Process Rollback',
+    description: 'Simulate rolling back a process to a checkpoint.',
+    difficulty: 2,
+    language: 'python',
+    starterCode: 'def rollback(current_state, checkpoint, allocation, checkpoint_allocation):\n    # Return (new_state, freed_resources)\n    pass',
+    solution: `def rollback(current_state, checkpoint, allocation, checkpoint_allocation):
+    freed = [allocation[i] - checkpoint_allocation[i] for i in range(len(allocation))]
+    return (checkpoint, freed)`,
+    testCases: [
+      { input: '{"pc": 100}, {"pc": 50}, [5, 3], [3, 2]', expectedOutput: '({"pc": 50}, [2, 1])', isHidden: false, description: 'Rollback releases resources' },
+      { input: '{"pc": 50}, {"pc": 50}, [3, 2], [3, 2]', expectedOutput: '({"pc": 50}, [0, 0])', isHidden: false, description: 'No change' }
+    ],
+    hints: ['Restore checkpoint state', 'Calculate freed resources']
+  },
+  // 12. Deadlock Avoidance Overhead
+  {
+    id: 'cs301-ex-5-12',
+    subjectId: 'cs301',
+    topicId: 'cs301-t5',
+    title: 'Avoidance Overhead',
+    description: 'Calculate the overhead of running Banker\'s algorithm.',
+    difficulty: 2,
+    language: 'python',
+    starterCode: 'def bankers_overhead(num_processes, num_resources):\n    # Return approximate number of operations for one safety check\n    pass',
+    solution: `def bankers_overhead(num_processes, num_resources):
+    # Worst case: check all processes for each position in sequence
+    # O(n^2 * m) for n processes, m resources
+    return num_processes * num_processes * num_resources`,
+    testCases: [
+      { input: '5, 3', expectedOutput: '75', isHidden: false, description: '5 processes, 3 resources' },
+      { input: '10, 4', expectedOutput: '400', isHidden: false, description: '10 processes, 4 resources' }
+    ],
+    hints: ['Safety check is O(n^2 * m)', 'n = processes, m = resources']
+  },
+  // 13. Multiple Instance Deadlock
+  {
+    id: 'cs301-ex-5-13',
+    subjectId: 'cs301',
+    topicId: 'cs301-t5',
+    title: 'Multiple Instance Available',
+    description: 'Check if enough resources are available to satisfy a request.',
+    difficulty: 1,
+    language: 'python',
+    starterCode: 'def can_satisfy_request(available, request):\n    # Return True if available >= request for all resources\n    pass',
+    solution: `def can_satisfy_request(available, request):
+    return all(available[i] >= request[i] for i in range(len(available)))`,
+    testCases: [
+      { input: '[3, 2, 2], [1, 1, 2]', expectedOutput: 'True', isHidden: false, description: 'Can satisfy' },
+      { input: '[3, 2, 2], [1, 3, 2]', expectedOutput: 'False', isHidden: false, description: 'Not enough of R1' }
+    ],
+    hints: ['Compare each resource type', 'All must be satisfied']
+  },
+  // 14. Resource Release
+  {
+    id: 'cs301-ex-5-14',
+    subjectId: 'cs301',
+    topicId: 'cs301-t5',
+    title: 'Safe Resource Release',
+    description: 'Release resources and update system state.',
+    difficulty: 2,
+    language: 'python',
+    starterCode: 'def release_resources(allocation, available, process_id):\n    # Release all resources held by process\n    # Return (new_allocation, new_available)\n    pass',
+    solution: `def release_resources(allocation, available, process_id):
+    new_allocation = [row[:] for row in allocation]
+    new_available = available[:]
+
+    for j in range(len(available)):
+        new_available[j] += new_allocation[process_id][j]
+        new_allocation[process_id][j] = 0
+
+    return (new_allocation, new_available)`,
+    testCases: [
+      { input: '[[2, 1], [1, 2]], [1, 1], 0', expectedOutput: '([[0, 0], [1, 2]], [3, 2])', isHidden: false, description: 'Release P0 resources' },
+      { input: '[[0, 0]], [5, 5], 0', expectedOutput: '([[0, 0]], [5, 5])', isHidden: false, description: 'Nothing to release' }
+    ],
+    hints: ['Add allocation to available', 'Zero out allocation']
+  },
+  // 15. Deadlock Probability
+  {
+    id: 'cs301-ex-5-15',
+    subjectId: 'cs301',
+    topicId: 'cs301-t5',
+    title: 'Deadlock Risk Assessment',
+    description: 'Estimate deadlock risk based on resource utilization.',
+    difficulty: 3,
+    language: 'python',
+    starterCode: 'def deadlock_risk(total_resources, allocated, max_needed):\n    # Return risk level: "low", "medium", "high"\n    pass',
+    solution: `def deadlock_risk(total_resources, allocated, max_needed):
+    total = sum(total_resources)
+    used = sum(allocated)
+    max_need = sum(max_needed)
+
+    utilization = used / total if total > 0 else 0
+    remaining_need = max_need - used
+
+    if remaining_need > (total - used):
+        return "high"  # Not enough to satisfy max
+    elif utilization > 0.8:
+        return "medium"
+    else:
+        return "low"`,
+    testCases: [
+      { input: '[10, 10], [9, 9], [15, 15]', expectedOutput: '"high"', isHidden: false, description: 'High utilization' },
+      { input: '[10, 10], [2, 2], [5, 5]', expectedOutput: '"low"', isHidden: false, description: 'Low utilization' }
+    ],
+    hints: ['Consider utilization ratio', 'Check if max needs can be met']
+  },
+  // 16. Ostrich Algorithm
+  {
+    id: 'cs301-ex-5-16',
+    subjectId: 'cs301',
+    topicId: 'cs301-t5',
+    title: 'Deadlock Strategy Decision',
+    description: 'Recommend deadlock handling strategy based on system characteristics.',
+    difficulty: 2,
+    language: 'python',
+    starterCode: 'def recommend_strategy(is_critical_system, deadlock_frequency, recovery_cost):\n    # Return "prevention", "avoidance", "detection", or "ignore"\n    pass',
+    solution: `def recommend_strategy(is_critical_system, deadlock_frequency, recovery_cost):
+    if is_critical_system:
+        if recovery_cost < 0.3:
+            return "avoidance"
+        return "prevention"
+    if deadlock_frequency < 0.01:  # Very rare
+        return "ignore"
+    if recovery_cost < 0.5:
+        return "detection"
+    return "avoidance"`,
+    testCases: [
+      { input: 'True, 0.05, 0.8', expectedOutput: '"prevention"', isHidden: false, description: 'Critical, high recovery cost' },
+      { input: 'False, 0.001, 0.2', expectedOutput: '"ignore"', isHidden: false, description: 'Non-critical, rare deadlocks' }
+    ],
+    hints: ['Critical systems need guarantees', 'Balance overhead vs risk']
+  }
+];

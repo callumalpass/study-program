@@ -1,0 +1,290 @@
+import type { Quiz } from '../../../core/types';
+
+export const cs301Quizzes: Quiz[] = [
+  // Topic 1: Process Management Quizzes
+  {
+    id: 'cs301-q1-1',
+    subjectId: 'cs301',
+    topicId: 'cs301-t1',
+    title: 'Process Concepts',
+    questions: [
+      { id: 'q1', type: 'multiple_choice', prompt: 'What is the difference between a program and a process?', options: ['A program is executing code, a process is stored on disk', 'A process is an executing program instance, a program is passive code', 'They are the same thing', 'A process is compiled, a program is interpreted'], correctAnswer: 1, explanation: 'A program is passive code stored on disk, while a process is an active executing instance of a program with its own memory and state.' },
+      { id: 'q2', type: 'multiple_choice', prompt: 'Which process state indicates the process is waiting for I/O?', options: ['Running', 'Ready', 'Waiting/Blocked', 'Terminated'], correctAnswer: 2, explanation: 'A process in the waiting or blocked state is waiting for an event such as I/O completion.' },
+      { id: 'q3', type: 'multiple_choice', prompt: 'What does the Process Control Block (PCB) contain?', options: ['Only the process ID', 'Only CPU registers', 'Process state, registers, memory info, and scheduling info', 'Only file descriptors'], correctAnswer: 2, explanation: 'The PCB contains all information about a process including state, registers, memory management info, and scheduling information.' },
+      { id: 'q4', type: 'multiple_choice', prompt: 'What happens during a context switch?', options: ['The CPU is turned off', 'State is saved and another process state is loaded', 'Memory is cleared', 'The process terminates'], correctAnswer: 1, explanation: 'During a context switch, the current process state is saved to its PCB and another process state is loaded from its PCB.' },
+      { id: 'q5', type: 'multiple_choice', prompt: 'Which system call creates a new process in Unix?', options: ['exec()', 'spawn()', 'fork()', 'create()'], correctAnswer: 2, explanation: 'The fork() system call creates a new child process that is a copy of the parent process.' },
+    ],
+  },
+  {
+    id: 'cs301-q1-2',
+    subjectId: 'cs301',
+    topicId: 'cs301-t1',
+    title: 'Inter-Process Communication',
+    questions: [
+      { id: 'q1', type: 'multiple_choice', prompt: 'What is the main advantage of shared memory IPC?', options: ['Security', 'Speed', 'Simplicity', 'Portability'], correctAnswer: 1, explanation: 'Shared memory is the fastest IPC method because processes can read/write directly without kernel involvement after setup.' },
+      { id: 'q2', type: 'multiple_choice', prompt: 'What synchronization issue arises with shared memory?', options: ['Message ordering', 'Buffer size limits', 'Race conditions', 'Network latency'], correctAnswer: 2, explanation: 'Race conditions occur when multiple processes access shared memory without proper synchronization.' },
+      { id: 'q3', type: 'multiple_choice', prompt: 'In message passing, what is a synchronous send?', options: ['Send that returns immediately', 'Send that blocks until message is received', 'Send that uses shared memory', 'Send that is encrypted'], correctAnswer: 1, explanation: 'A synchronous send blocks the sender until the receiver has received the message.' },
+      { id: 'q4', type: 'multiple_choice', prompt: 'What is a named pipe (FIFO)?', options: ['Anonymous pipe', 'Pipe with filesystem presence', 'Network socket', 'Shared memory segment'], correctAnswer: 1, explanation: 'A named pipe or FIFO has a name in the filesystem, allowing unrelated processes to communicate.' },
+      { id: 'q5', type: 'multiple_choice', prompt: 'What does the producer-consumer problem illustrate?', options: ['CPU scheduling', 'Memory allocation', 'Process synchronization with shared buffer', 'File system design'], correctAnswer: 2, explanation: 'The producer-consumer problem demonstrates synchronization between processes sharing a bounded buffer.' },
+    ],
+  },
+  {
+    id: 'cs301-q1-3',
+    subjectId: 'cs301',
+    topicId: 'cs301-t1',
+    title: 'Process States and Scheduling',
+    questions: [
+      { id: 'q1', type: 'multiple_choice', prompt: 'Which transition is NOT valid in a process state diagram?', options: ['Running → Ready', 'Ready → Running', 'Running → Waiting', 'Waiting → Running'], correctAnswer: 3, explanation: 'A process cannot go directly from Waiting to Running; it must go through Ready first when the event it was waiting for occurs.' },
+      { id: 'q2', type: 'multiple_choice', prompt: 'What is a zombie process?', options: ['A process using too much CPU', 'A terminated process whose parent hasn\'t called wait()', 'An orphaned process', 'A process in infinite loop'], correctAnswer: 1, explanation: 'A zombie process has terminated but remains in the process table because its parent hasn\'t read its exit status.' },
+      { id: 'q3', type: 'multiple_choice', prompt: 'What queue holds processes ready to execute?', options: ['Job queue', 'Ready queue', 'Device queue', 'Wait queue'], correctAnswer: 1, explanation: 'The ready queue holds processes that are in memory and ready to execute when the CPU becomes available.' },
+      { id: 'q4', type: 'multiple_choice', prompt: 'What is the role of the dispatcher?', options: ['Creates new processes', 'Gives control of CPU to selected process', 'Manages memory allocation', 'Handles I/O requests'], correctAnswer: 1, explanation: 'The dispatcher gives control of the CPU to the process selected by the scheduler, handling context switching.' },
+      { id: 'q5', type: 'multiple_choice', prompt: 'What does wait() return in the parent process?', options: ['Child\'s exit status', 'Parent\'s PID', 'Number of children', 'CPU time used'], correctAnswer: 0, explanation: 'The wait() system call returns information about the terminated child, including its exit status.' },
+    ],
+  },
+
+  // Topic 2: Threads and Concurrency Quizzes
+  {
+    id: 'cs301-q2-1',
+    subjectId: 'cs301',
+    topicId: 'cs301-t2',
+    title: 'Thread Fundamentals',
+    questions: [
+      { id: 'q1', type: 'multiple_choice', prompt: 'What resource is shared between threads of the same process?', options: ['Stack', 'Program counter', 'Registers', 'Code and data sections'], correctAnswer: 3, explanation: 'Threads share code, data, and heap sections. Each thread has its own stack, registers, and program counter.' },
+      { id: 'q2', type: 'multiple_choice', prompt: 'What is the main advantage of threads over processes?', options: ['Better isolation', 'Faster creation and context switching', 'Simpler programming model', 'More security'], correctAnswer: 1, explanation: 'Threads have lower overhead because they share address space and resources, making creation and switching faster.' },
+      { id: 'q3', type: 'true_false', prompt: 'User-level threads can take advantage of multiple CPUs without kernel support.', correctAnswer: false, explanation: 'User-level threads are invisible to the kernel, so the kernel cannot schedule them on different CPUs.' },
+      { id: 'q4', type: 'multiple_choice', prompt: 'In the one-to-one threading model, what happens when one thread blocks?', options: ['All threads block', 'Only that thread blocks', 'The process terminates', 'The kernel crashes'], correctAnswer: 1, explanation: 'In one-to-one, each user thread maps to a kernel thread, so blocking one doesn\'t affect others.' },
+      { id: 'q5', type: 'multiple_choice', prompt: 'What is thread-local storage (TLS)?', options: ['Shared global variables', 'Per-thread private data', 'Heap memory', 'Stack memory'], correctAnswer: 1, explanation: 'TLS provides each thread with its own instance of a variable, avoiding synchronization issues.' },
+    ],
+  },
+  {
+    id: 'cs301-q2-2',
+    subjectId: 'cs301',
+    topicId: 'cs301-t2',
+    title: 'Thread Libraries',
+    questions: [
+      { id: 'q1', type: 'multiple_choice', prompt: 'Which pthread function creates a new thread?', options: ['pthread_init()', 'pthread_create()', 'pthread_new()', 'pthread_spawn()'], correctAnswer: 1, explanation: 'pthread_create() creates a new thread with specified attributes and start routine.' },
+      { id: 'q2', type: 'multiple_choice', prompt: 'What does pthread_join() do?', options: ['Creates a thread', 'Waits for a thread to terminate', 'Detaches a thread', 'Kills a thread'], correctAnswer: 1, explanation: 'pthread_join() blocks until the specified thread terminates and optionally retrieves its return value.' },
+      { id: 'q3', type: 'multiple_choice', prompt: 'What is implicit threading?', options: ['Manually creating threads', 'Compiler/runtime manages thread creation', 'Single-threaded execution', 'Hardware threading'], correctAnswer: 1, explanation: 'Implicit threading shifts thread management from programmers to compilers and runtime libraries.' },
+      { id: 'q4', type: 'true_false', prompt: 'OpenMP uses compiler directives to parallelize code.', correctAnswer: true, explanation: 'OpenMP uses #pragma directives that the compiler interprets to generate parallel code.' },
+      { id: 'q5', type: 'multiple_choice', prompt: 'What is the purpose of a thread pool?', options: ['Store thread information', 'Pre-create threads for handling requests', 'Synchronize threads', 'Debug threads'], correctAnswer: 1, explanation: 'A thread pool maintains pre-created threads that can handle tasks, avoiding creation overhead.' },
+    ],
+  },
+  {
+    id: 'cs301-q2-3',
+    subjectId: 'cs301',
+    topicId: 'cs301-t2',
+    title: 'Concurrency Issues',
+    questions: [
+      { id: 'q1', type: 'multiple_choice', prompt: 'What makes a function thread-safe?', options: ['It runs fast', 'It can be safely called by multiple threads', 'It uses global variables', 'It is recursive'], correctAnswer: 1, explanation: 'A thread-safe function can be called concurrently without causing race conditions or data corruption.' },
+      { id: 'q2', type: 'multiple_choice', prompt: 'What is a reentrant function?', options: ['A function that can be interrupted and safely called again', 'A function that loops', 'A function that returns', 'A function that recurses'], correctAnswer: 0, explanation: 'A reentrant function can be interrupted mid-execution and safely called again before completion.' },
+      { id: 'q3', type: 'true_false', prompt: 'All thread-safe functions are reentrant.', correctAnswer: false, explanation: 'Thread-safe functions may use locks, making them not reentrant if interrupted while holding a lock.' },
+      { id: 'q4', type: 'multiple_choice', prompt: 'What is Amdahl\'s Law used for?', options: ['Memory allocation', 'Calculating parallel speedup limits', 'Thread synchronization', 'CPU scheduling'], correctAnswer: 1, explanation: 'Amdahl\'s Law calculates the theoretical speedup of a program based on its parallelizable fraction.' },
+      { id: 'q5', type: 'multiple_choice', prompt: 'According to Amdahl\'s Law, if 75% of code is parallelizable, what is the maximum speedup with infinite processors?', options: ['2x', '4x', '75x', 'Infinite'], correctAnswer: 1, explanation: 'Maximum speedup = 1/(1-P) = 1/0.25 = 4x, limited by the serial 25% portion.' },
+    ],
+  },
+
+  // Topic 3: CPU Scheduling Quizzes
+  {
+    id: 'cs301-q3-1',
+    subjectId: 'cs301',
+    topicId: 'cs301-t3',
+    title: 'Scheduling Basics',
+    questions: [
+      { id: 'q1', type: 'multiple_choice', prompt: 'What does CPU scheduling decide?', options: ['Memory allocation', 'Which process runs next', 'File access', 'Network priority'], correctAnswer: 1, explanation: 'CPU scheduling determines which ready process should be allocated the CPU next.' },
+      { id: 'q2', type: 'multiple_choice', prompt: 'What is turnaround time?', options: ['Time in ready queue', 'Time from submission to completion', 'Time executing', 'Time waiting for I/O'], correctAnswer: 1, explanation: 'Turnaround time is the total time from process submission until completion.' },
+      { id: 'q3', type: 'multiple_choice', prompt: 'What is response time?', options: ['Time to first response', 'Total execution time', 'Context switch time', 'I/O time'], correctAnswer: 0, explanation: 'Response time is the time from submission until the first output/response is produced.' },
+      { id: 'q4', type: 'true_false', prompt: 'Non-preemptive scheduling allows the OS to forcibly remove a running process.', correctAnswer: false, explanation: 'Non-preemptive scheduling lets processes run until they voluntarily yield or terminate.' },
+      { id: 'q5', type: 'multiple_choice', prompt: 'What is the convoy effect in FCFS?', options: ['Processes move fast', 'Short processes wait behind long ones', 'CPU idles often', 'Memory is wasted'], correctAnswer: 1, explanation: 'The convoy effect occurs when short processes are stuck waiting behind a long CPU-bound process.' },
+    ],
+  },
+  {
+    id: 'cs301-q3-2',
+    subjectId: 'cs301',
+    topicId: 'cs301-t3',
+    title: 'Scheduling Algorithms',
+    questions: [
+      { id: 'q1', type: 'multiple_choice', prompt: 'Which algorithm is optimal for minimizing average waiting time?', options: ['FCFS', 'SJF', 'Round Robin', 'Priority'], correctAnswer: 1, explanation: 'Shortest Job First minimizes average waiting time by executing shorter jobs first.' },
+      { id: 'q2', type: 'multiple_choice', prompt: 'What is the main issue with SJF?', options: ['Too complex', 'Requires knowing burst time in advance', 'Too much overhead', 'Poor response time'], correctAnswer: 1, explanation: 'SJF requires predicting CPU burst time, which is difficult in practice.' },
+      { id: 'q3', type: 'multiple_choice', prompt: 'In Round Robin, what happens when time quantum expires?', options: ['Process terminates', 'Process moves to end of ready queue', 'Process priority increases', 'Process blocks'], correctAnswer: 1, explanation: 'When the time quantum expires, the process is preempted and moved to the end of the ready queue.' },
+      { id: 'q4', type: 'multiple_choice', prompt: 'What is the effect of a very small time quantum in RR?', options: ['High throughput', 'High context switch overhead', 'Low response time', 'Simple implementation'], correctAnswer: 1, explanation: 'A very small quantum causes frequent context switches, increasing overhead and reducing throughput.' },
+      { id: 'q5', type: 'multiple_choice', prompt: 'What is starvation in scheduling?', options: ['CPU is idle', 'A process never gets CPU time', 'Memory runs out', 'Deadlock occurs'], correctAnswer: 1, explanation: 'Starvation occurs when a process waits indefinitely because higher-priority processes keep arriving.' },
+    ],
+  },
+  {
+    id: 'cs301-q3-3',
+    subjectId: 'cs301',
+    topicId: 'cs301-t3',
+    title: 'Advanced Scheduling',
+    questions: [
+      { id: 'q1', type: 'multiple_choice', prompt: 'How does aging prevent starvation?', options: ['Kills old processes', 'Gradually increases waiting process priority', 'Reduces time quantum', 'Adds more CPUs'], correctAnswer: 1, explanation: 'Aging gradually increases the priority of waiting processes so they eventually get scheduled.' },
+      { id: 'q2', type: 'multiple_choice', prompt: 'What is multilevel feedback queue scheduling?', options: ['Fixed queue assignment', 'Processes can move between priority queues', 'Single queue system', 'Hardware queue'], correctAnswer: 1, explanation: 'Multilevel feedback allows processes to move between queues based on their behavior.' },
+      { id: 'q3', type: 'true_false', prompt: 'In multiprocessor scheduling, cache affinity favors keeping processes on the same CPU.', correctAnswer: true, explanation: 'Cache affinity improves performance by keeping processes on CPUs where their data is cached.' },
+      { id: 'q4', type: 'multiple_choice', prompt: 'What is the goal of Rate Monotonic scheduling?', options: ['Maximize throughput', 'Meet periodic task deadlines', 'Minimize context switches', 'Balance load'], correctAnswer: 1, explanation: 'Rate Monotonic is a real-time scheduling algorithm that assigns priorities based on period.' },
+      { id: 'q5', type: 'multiple_choice', prompt: 'In EDF scheduling, which process gets highest priority?', options: ['Shortest job', 'Longest job', 'Earliest deadline', 'Most recent arrival'], correctAnswer: 2, explanation: 'Earliest Deadline First schedules the process with the nearest deadline.' },
+    ],
+  },
+
+  // Topic 4: Synchronization Quizzes
+  {
+    id: 'cs301-q4-1',
+    subjectId: 'cs301',
+    topicId: 'cs301-t4',
+    title: 'Critical Section Problem',
+    questions: [
+      { id: 'q1', type: 'multiple_choice', prompt: 'What is a race condition?', options: ['Fast process execution', 'Outcome depends on execution order', 'CPU competition', 'Memory allocation'], correctAnswer: 1, explanation: 'A race condition occurs when the result depends on the timing/order of concurrent operations.' },
+      { id: 'q2', type: 'multiple_choice', prompt: 'What is mutual exclusion?', options: ['Only one process in critical section at a time', 'Processes exclude each other from system', 'Memory isolation', 'Process termination'], correctAnswer: 0, explanation: 'Mutual exclusion ensures only one process can execute in its critical section at any time.' },
+      { id: 'q3', type: 'multiple_choice', prompt: 'What is the progress requirement for critical section?', options: ['Processes must finish quickly', 'Selection cannot be postponed indefinitely', 'All processes must participate', 'CPU must be fast'], correctAnswer: 1, explanation: 'Progress requires that if no process is in CS, selection of next process cannot be delayed indefinitely.' },
+      { id: 'q4', type: 'multiple_choice', prompt: 'What is bounded waiting?', options: ['Time limit on execution', 'Limit on times a process can be bypassed', 'Memory bounds', 'Queue length limit'], correctAnswer: 1, explanation: 'Bounded waiting ensures no process waits forever; there\'s a limit on how often others can enter first.' },
+      { id: 'q5', type: 'true_false', prompt: 'Disabling interrupts is a good solution for multiprocessor critical sections.', correctAnswer: false, explanation: 'Disabling interrupts only works on uniprocessors; other CPUs can still access shared data.' },
+    ],
+  },
+  {
+    id: 'cs301-q4-2',
+    subjectId: 'cs301',
+    topicId: 'cs301-t4',
+    title: 'Synchronization Primitives',
+    questions: [
+      { id: 'q1', type: 'multiple_choice', prompt: 'What is a mutex?', options: ['A type of process', 'A lock for mutual exclusion', 'A memory region', 'A scheduling algorithm'], correctAnswer: 1, explanation: 'A mutex is a synchronization primitive that provides mutual exclusion through lock/unlock.' },
+      { id: 'q2', type: 'multiple_choice', prompt: 'What is a counting semaphore?', options: ['Semaphore limited to 0 and 1', 'Semaphore with integer value >= 0', 'Hardware counter', 'Process counter'], correctAnswer: 1, explanation: 'A counting semaphore can have any non-negative integer value, controlling access to multiple resources.' },
+      { id: 'q3', type: 'multiple_choice', prompt: 'What does wait() (P operation) do to a semaphore?', options: ['Increments value', 'Decrements value or blocks', 'Destroys semaphore', 'Creates semaphore'], correctAnswer: 1, explanation: 'Wait decrements the semaphore; if it would become negative, the process blocks.' },
+      { id: 'q4', type: 'multiple_choice', prompt: 'What does signal() (V operation) do to a semaphore?', options: ['Increments value', 'Decrements value', 'Blocks process', 'Terminates process'], correctAnswer: 0, explanation: 'Signal increments the semaphore value and may wake a blocked process.' },
+      { id: 'q5', type: 'true_false', prompt: 'A binary semaphore is equivalent to a mutex in functionality.', correctAnswer: true, explanation: 'A binary semaphore restricted to 0 and 1 provides the same mutual exclusion as a mutex.' },
+    ],
+  },
+  {
+    id: 'cs301-q4-3',
+    subjectId: 'cs301',
+    topicId: 'cs301-t4',
+    title: 'Classic Synchronization Problems',
+    questions: [
+      { id: 'q1', type: 'multiple_choice', prompt: 'In producer-consumer, what semaphore tracks empty buffer slots?', options: ['mutex', 'full', 'empty', 'count'], correctAnswer: 2, explanation: 'The empty semaphore counts available empty slots for the producer to use.' },
+      { id: 'q2', type: 'multiple_choice', prompt: 'In readers-writers, when can a writer write?', options: ['Anytime', 'When no readers or writers are active', 'When at least one reader is active', 'Never'], correctAnswer: 1, explanation: 'A writer needs exclusive access: no other readers or writers can be in the critical section.' },
+      { id: 'q3', type: 'multiple_choice', prompt: 'What causes deadlock in naive dining philosophers?', options: ['Eating too fast', 'All pick up left fork simultaneously', 'Too many philosophers', 'Forks are broken'], correctAnswer: 1, explanation: 'If all philosophers pick up their left fork, no one can get their right fork, causing circular wait.' },
+      { id: 'q4', type: 'multiple_choice', prompt: 'What is a monitor?', options: ['Display device', 'High-level synchronization construct', 'Low-level hardware', 'Operating system'], correctAnswer: 1, explanation: 'A monitor is a high-level construct that encapsulates shared data with synchronized access methods.' },
+      { id: 'q5', type: 'multiple_choice', prompt: 'What do condition variables provide in monitors?', options: ['Mutual exclusion', 'Way to wait for conditions', 'Resource counting', 'Priority scheduling'], correctAnswer: 1, explanation: 'Condition variables let threads wait for specific conditions and be signaled when conditions change.' },
+    ],
+  },
+
+  // Topic 5: Deadlock Quizzes
+  {
+    id: 'cs301-q5-1',
+    subjectId: 'cs301',
+    topicId: 'cs301-t5',
+    title: 'Deadlock Concepts',
+    questions: [
+      { id: 'q1', type: 'multiple_choice', prompt: 'How many conditions are necessary for deadlock?', options: ['1', '2', '3', '4'], correctAnswer: 3, explanation: 'Four conditions must hold: mutual exclusion, hold and wait, no preemption, and circular wait.' },
+      { id: 'q2', type: 'multiple_choice', prompt: 'What is circular wait?', options: ['Processes wait in a line', 'Each process waits for resource held by next in cycle', 'CPU cycles infinitely', 'Queue wraps around'], correctAnswer: 1, explanation: 'Circular wait is when P0 waits for P1, P1 waits for P2, ..., Pn waits for P0.' },
+      { id: 'q3', type: 'true_false', prompt: 'Deadlock can occur with a single resource type if there are multiple instances.', correctAnswer: false, explanation: 'With single resource type and multiple instances, deadlock requires cycle AND all instances held.' },
+      { id: 'q4', type: 'multiple_choice', prompt: 'What does a Resource Allocation Graph represent?', options: ['CPU usage', 'Process and resource relationships', 'Memory layout', 'File system'], correctAnswer: 1, explanation: 'RAG shows processes, resources, request edges, and assignment edges to detect potential deadlock.' },
+      { id: 'q5', type: 'multiple_choice', prompt: 'In RAG with single instances, what indicates deadlock?', options: ['Any edge', 'Cycle', 'No edges', 'Many nodes'], correctAnswer: 1, explanation: 'With single instance resources, a cycle in the RAG indicates deadlock.' },
+    ],
+  },
+  {
+    id: 'cs301-q5-2',
+    subjectId: 'cs301',
+    topicId: 'cs301-t5',
+    title: 'Deadlock Handling',
+    questions: [
+      { id: 'q1', type: 'multiple_choice', prompt: 'What does deadlock prevention do?', options: ['Ignores deadlock', 'Ensures at least one condition cannot hold', 'Detects and recovers', 'Uses more resources'], correctAnswer: 1, explanation: 'Prevention eliminates deadlock by ensuring at least one necessary condition cannot occur.' },
+      { id: 'q2', type: 'multiple_choice', prompt: 'How can hold-and-wait be prevented?', options: ['Allow preemption', 'Request all resources at once', 'Use timeouts', 'Add more resources'], correctAnswer: 1, explanation: 'Requiring processes to request all needed resources before execution prevents hold-and-wait.' },
+      { id: 'q3', type: 'multiple_choice', prompt: 'What is the Banker\'s Algorithm used for?', options: ['Financial calculations', 'Deadlock avoidance', 'Memory allocation', 'CPU scheduling'], correctAnswer: 1, explanation: 'Banker\'s Algorithm avoids deadlock by checking if granting a request leads to a safe state.' },
+      { id: 'q4', type: 'multiple_choice', prompt: 'What is a safe state?', options: ['No processes running', 'A sequence exists where all processes can finish', 'Maximum security', 'Minimum memory usage'], correctAnswer: 1, explanation: 'A safe state means there exists a safe sequence where all processes can complete.' },
+      { id: 'q5', type: 'true_false', prompt: 'If a system is in an unsafe state, deadlock will definitely occur.', correctAnswer: false, explanation: 'Unsafe state means deadlock might occur, not that it will definitely occur.' },
+    ],
+  },
+  {
+    id: 'cs301-q5-3',
+    subjectId: 'cs301',
+    topicId: 'cs301-t5',
+    title: 'Deadlock Detection and Recovery',
+    questions: [
+      { id: 'q1', type: 'multiple_choice', prompt: 'How is deadlock detected with single instance resources?', options: ['Timer expiry', 'Cycle detection in wait-for graph', 'Memory analysis', 'User report'], correctAnswer: 1, explanation: 'With single instances, a cycle in the wait-for graph indicates deadlock.' },
+      { id: 'q2', type: 'multiple_choice', prompt: 'What is deadlock recovery by termination?', options: ['Ignore the problem', 'Kill deadlocked processes', 'Add resources', 'Preempt memory'], correctAnswer: 1, explanation: 'One recovery method is to terminate some or all deadlocked processes.' },
+      { id: 'q3', type: 'multiple_choice', prompt: 'What is resource preemption in deadlock recovery?', options: ['Adding resources', 'Taking resources from processes to break deadlock', 'Deleting resources', 'Sharing resources'], correctAnswer: 1, explanation: 'Resource preemption takes resources from some processes to give to others, breaking deadlock.' },
+      { id: 'q4', type: 'multiple_choice', prompt: 'What is the ostrich algorithm?', options: ['Running from deadlock', 'Ignoring deadlock', 'Complex deadlock solution', 'Parallel deadlock handling'], correctAnswer: 1, explanation: 'The ostrich algorithm ignores deadlock, assuming it\'s rare enough to not warrant overhead.' },
+      { id: 'q5', type: 'true_false', prompt: 'Most general-purpose operating systems use deadlock prevention.', correctAnswer: false, explanation: 'Most general-purpose OSes use the ostrich algorithm, ignoring deadlock due to overhead concerns.' },
+    ],
+  },
+
+  // Topic 6: Memory Management Quizzes
+  {
+    id: 'cs301-q6-1',
+    subjectId: 'cs301',
+    topicId: 'cs301-t6',
+    title: 'Memory Management Basics',
+    questions: [
+      { id: 'q1', type: 'multiple_choice', prompt: 'What is the difference between logical and physical addresses?', options: ['No difference', 'Logical is virtual, physical is actual RAM location', 'Logical is faster', 'Physical is larger'], correctAnswer: 1, explanation: 'Logical addresses are generated by CPU; physical addresses are actual memory locations.' },
+      { id: 'q2', type: 'multiple_choice', prompt: 'When does address binding at load time occur?', options: ['During compilation', 'When program is loaded into memory', 'During execution', 'Never'], correctAnswer: 1, explanation: 'Load-time binding generates absolute addresses when the program is loaded.' },
+      { id: 'q3', type: 'multiple_choice', prompt: 'What hardware performs address translation?', options: ['CPU', 'Memory Management Unit (MMU)', 'Hard disk', 'Network card'], correctAnswer: 1, explanation: 'The MMU translates logical addresses to physical addresses at runtime.' },
+      { id: 'q4', type: 'true_false', prompt: 'Dynamic loading loads all routines into memory at program start.', correctAnswer: false, explanation: 'Dynamic loading loads routines only when they are called, saving memory.' },
+      { id: 'q5', type: 'multiple_choice', prompt: 'What is swapping?', options: ['Exchanging data between processes', 'Moving processes between memory and disk', 'CPU scheduling', 'File operations'], correctAnswer: 1, explanation: 'Swapping moves entire processes between main memory and backing store.' },
+    ],
+  },
+  {
+    id: 'cs301-q6-2',
+    subjectId: 'cs301',
+    topicId: 'cs301-t6',
+    title: 'Memory Allocation',
+    questions: [
+      { id: 'q1', type: 'multiple_choice', prompt: 'What is external fragmentation?', options: ['Wasted space inside allocated blocks', 'Free memory scattered in small blocks', 'Disk fragmentation', 'Network fragmentation'], correctAnswer: 1, explanation: 'External fragmentation is total free memory being fragmented into small non-contiguous blocks.' },
+      { id: 'q2', type: 'multiple_choice', prompt: 'Which allocation strategy finds the smallest adequate hole?', options: ['First fit', 'Best fit', 'Worst fit', 'Next fit'], correctAnswer: 1, explanation: 'Best fit searches for the smallest hole that is large enough.' },
+      { id: 'q3', type: 'multiple_choice', prompt: 'What is compaction?', options: ['Compressing files', 'Moving processes to create contiguous free space', 'Reducing memory', 'Deleting processes'], correctAnswer: 1, explanation: 'Compaction shuffles memory contents to place all free memory together.' },
+      { id: 'q4', type: 'true_false', prompt: 'Compaction is always possible with any address binding.', correctAnswer: false, explanation: 'Compaction requires execution-time binding to relocate processes during execution.' },
+      { id: 'q5', type: 'multiple_choice', prompt: 'What is internal fragmentation?', options: ['Free memory between processes', 'Wasted space within allocated blocks', 'Fragmented files', 'CPU waste'], correctAnswer: 1, explanation: 'Internal fragmentation is unused space within an allocated memory block.' },
+    ],
+  },
+  {
+    id: 'cs301-q6-3',
+    subjectId: 'cs301',
+    topicId: 'cs301-t6',
+    title: 'Paging and Segmentation',
+    questions: [
+      { id: 'q1', type: 'multiple_choice', prompt: 'How does paging divide physical memory?', options: ['Variable-size segments', 'Fixed-size frames', 'Contiguous blocks', 'Randomly'], correctAnswer: 1, explanation: 'Paging divides physical memory into fixed-size blocks called frames.' },
+      { id: 'q2', type: 'multiple_choice', prompt: 'What does a page table contain?', options: ['Page content', 'Frame numbers for each page', 'File data', 'Process list'], correctAnswer: 1, explanation: 'The page table maps logical page numbers to physical frame numbers.' },
+      { id: 'q3', type: 'multiple_choice', prompt: 'What is the TLB?', options: ['Table lookup buffer', 'Translation lookaside buffer for fast address translation', 'Thread lock buffer', 'Transfer link buffer'], correctAnswer: 1, explanation: 'TLB is a hardware cache that stores recent page table entries for fast translation.' },
+      { id: 'q4', type: 'multiple_choice', prompt: 'What is the benefit of segmentation over paging?', options: ['Simpler', 'Reflects logical program structure', 'No external fragmentation', 'Faster'], correctAnswer: 1, explanation: 'Segmentation divides memory by logical units (code, data, stack), matching program structure.' },
+      { id: 'q5', type: 'true_false', prompt: 'Paging eliminates external fragmentation.', correctAnswer: true, explanation: 'Since frames are fixed-size and any frame can hold any page, external fragmentation is eliminated.' },
+    ],
+  },
+
+  // Topic 7: Virtual Memory and File Systems Quizzes
+  {
+    id: 'cs301-q7-1',
+    subjectId: 'cs301',
+    topicId: 'cs301-t7',
+    title: 'Virtual Memory',
+    questions: [
+      { id: 'q1', type: 'multiple_choice', prompt: 'What is demand paging?', options: ['Loading all pages at once', 'Loading pages only when needed', 'Deleting pages', 'Caching pages'], correctAnswer: 1, explanation: 'Demand paging loads pages into memory only when they are accessed (on demand).' },
+      { id: 'q2', type: 'multiple_choice', prompt: 'What happens during a page fault?', options: ['CPU crashes', 'Requested page is loaded from disk', 'Memory is cleared', 'Process terminates'], correctAnswer: 1, explanation: 'A page fault triggers loading the requested page from secondary storage.' },
+      { id: 'q3', type: 'multiple_choice', prompt: 'What is the optimal page replacement algorithm?', options: ['Replace random page', 'Replace page that won\'t be used longest', 'Replace newest page', 'Replace smallest page'], correctAnswer: 1, explanation: 'Optimal replaces the page that won\'t be used for the longest time in the future.' },
+      { id: 'q4', type: 'multiple_choice', prompt: 'Why is optimal replacement impractical?', options: ['Too slow', 'Requires knowing future references', 'Too complex', 'Hardware limitation'], correctAnswer: 1, explanation: 'Optimal requires knowing future page references, which is impossible in practice.' },
+      { id: 'q5', type: 'true_false', prompt: 'FIFO page replacement can suffer from Belady\'s anomaly.', correctAnswer: true, explanation: 'FIFO can have more page faults with more frames in certain cases (Belady\'s anomaly).' },
+    ],
+  },
+  {
+    id: 'cs301-q7-2',
+    subjectId: 'cs301',
+    topicId: 'cs301-t7',
+    title: 'Page Replacement Algorithms',
+    questions: [
+      { id: 'q1', type: 'multiple_choice', prompt: 'How does LRU determine which page to replace?', options: ['Randomly', 'The page least recently used', 'The smallest page', 'The first loaded page'], correctAnswer: 1, explanation: 'LRU replaces the page that has not been used for the longest time.' },
+      { id: 'q2', type: 'multiple_choice', prompt: 'What is the clock algorithm?', options: ['Time-based scheduling', 'Second-chance FIFO with reference bit', 'Hardware clock', 'Real-time algorithm'], correctAnswer: 1, explanation: 'Clock algorithm is a circular queue with reference bits giving pages a second chance.' },
+      { id: 'q3', type: 'multiple_choice', prompt: 'What is thrashing?', options: ['Fast paging', 'Excessive paging reducing performance', 'Memory overflow', 'CPU overload'], correctAnswer: 1, explanation: 'Thrashing occurs when the system spends more time paging than executing.' },
+      { id: 'q4', type: 'multiple_choice', prompt: 'What is the working set?', options: ['All memory', 'Pages a process is actively using', 'Disk pages', 'CPU registers'], correctAnswer: 1, explanation: 'The working set is the set of pages a process needs during a time window.' },
+      { id: 'q5', type: 'true_false', prompt: 'Adding more memory always reduces thrashing.', correctAnswer: true, explanation: 'More memory allows more working sets to fit, reducing page faults and thrashing.' },
+    ],
+  },
+  {
+    id: 'cs301-q7-3',
+    subjectId: 'cs301',
+    topicId: 'cs301-t7',
+    title: 'File Systems',
+    questions: [
+      { id: 'q1', type: 'multiple_choice', prompt: 'What is an inode in Unix?', options: ['File name', 'Data structure containing file metadata', 'Directory', 'Disk sector'], correctAnswer: 1, explanation: 'An inode stores file metadata and pointers to data blocks, but not the file name.' },
+      { id: 'q2', type: 'multiple_choice', prompt: 'What does journaling provide?', options: ['Faster access', 'Crash recovery by logging changes', 'Larger capacity', 'Better security'], correctAnswer: 1, explanation: 'Journaling records operations before committing, enabling recovery after crashes.' },
+      { id: 'q3', type: 'multiple_choice', prompt: 'What is the difference between hard and symbolic links?', options: ['No difference', 'Hard links share inode, symbolic links store path', 'Hard links are faster', 'Symbolic links use more space'], correctAnswer: 1, explanation: 'Hard links point to the same inode; symbolic links store the path to another file.' },
+      { id: 'q4', type: 'multiple_choice', prompt: 'What file allocation method does ext4 primarily use?', options: ['Contiguous', 'Linked', 'Indexed with extents', 'FAT'], correctAnswer: 2, explanation: 'ext4 uses extents, which are contiguous block ranges, for efficient allocation.' },
+      { id: 'q5', type: 'true_false', prompt: 'Copy-on-write file systems like ZFS modify data in place.', correctAnswer: false, explanation: 'COW systems write to new locations, never modifying existing data, enabling snapshots.' },
+    ],
+  },
+];
