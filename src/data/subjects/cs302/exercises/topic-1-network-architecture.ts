@@ -1,0 +1,349 @@
+import { CodingExercise } from '../../../../core/types';
+
+export const topic1Exercises: CodingExercise[] = [
+  {
+    id: 'cs302-t1-ex01',
+    subjectId: 'cs302',
+    topicId: 'cs302-topic-1',
+    title: 'OSI Layer Identifier',
+    difficulty: 1,
+    description: 'Write a function that takes a protocol name and returns which OSI layer it belongs to. Supported protocols: HTTP, TCP, IP, Ethernet, FTP, UDP, ARP.',
+    starterCode: '# Return the OSI layer number (1-7) for a protocol\ndef get_osi_layer(protocol):\n    # Your code here\n    pass\n\n# Test your function\nprint(get_osi_layer("HTTP"))\nprint(get_osi_layer("TCP"))\nprint(get_osi_layer("IP"))',
+    solution: 'def get_osi_layer(protocol):\n    layers = {\n        "HTTP": 7, "FTP": 7, "SMTP": 7, "DNS": 7,\n        "TCP": 4, "UDP": 4,\n        "IP": 3, "ICMP": 3, "ARP": 3,\n        "Ethernet": 2, "PPP": 2,\n        "Physical": 1\n    }\n    return layers.get(protocol.upper(), -1)\n\nprint(get_osi_layer("HTTP"))\nprint(get_osi_layer("TCP"))\nprint(get_osi_layer("IP"))',
+    testCases: [
+      { input: '"HTTP"', isHidden: false, description: 'Application layer protocol' },
+      { input: '"TCP"', isHidden: false, description: 'Transport layer protocol' },
+      { input: '"IP"', isHidden: true, description: 'Network layer protocol' }
+    ],
+    hints: [
+      'Use a dictionary to map protocols to layer numbers',
+      'HTTP, FTP are layer 7 (Application)',
+      'TCP, UDP are layer 4 (Transport)',
+      'IP is layer 3 (Network)'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs302-t1-ex02',
+    subjectId: 'cs302',
+    topicId: 'cs302-topic-1',
+    title: 'PDU Name Mapper',
+    difficulty: 1,
+    description: 'Write a function that takes an OSI layer number (1-7) and returns the name of the Protocol Data Unit (PDU) at that layer.',
+    starterCode: '# Return the PDU name for a given OSI layer\ndef get_pdu_name(layer):\n    # Your code here\n    pass\n\n# Test your function\nprint(get_pdu_name(7))\nprint(get_pdu_name(4))\nprint(get_pdu_name(2))',
+    solution: 'def get_pdu_name(layer):\n    pdus = {\n        7: "Data", 6: "Data", 5: "Data",\n        4: "Segment",\n        3: "Packet",\n        2: "Frame",\n        1: "Bits"\n    }\n    return pdus.get(layer, "Unknown")\n\nprint(get_pdu_name(7))\nprint(get_pdu_name(4))\nprint(get_pdu_name(2))',
+    testCases: [
+      { input: '7', isHidden: false, description: 'Application layer PDU' },
+      { input: '4', isHidden: false, description: 'Transport layer PDU' },
+      { input: '2', isHidden: true, description: 'Data link layer PDU' }
+    ],
+    hints: [
+      'Layers 5-7 use "Data" as their PDU',
+      'Layer 4 uses "Segment"',
+      'Layer 3 uses "Packet"',
+      'Layer 2 uses "Frame"'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs302-t1-ex03',
+    subjectId: 'cs302',
+    topicId: 'cs302-topic-1',
+    title: 'Encapsulation Simulator',
+    difficulty: 2,
+    description: 'Simulate the encapsulation process. Write a function that takes application data and headers for each layer, and returns a list showing the data at each layer from application to physical.',
+    starterCode: '# Simulate encapsulation from layer 7 to layer 1\ndef encapsulate(data, transport_header, network_header, frame_header, frame_trailer):\n    # Your code here\n    pass\n\n# Test your function\nresult = encapsulate("Hello", "TCP:", "IP:", "ETH:", ":FCS")\nfor layer, pdu in enumerate(result, 1):\n    print(f"Layer {8-layer}: {pdu}")',
+    solution: 'def encapsulate(data, transport_header, network_header, frame_header, frame_trailer):\n    layers = []\n    # Application data (Layer 7)\n    layers.append(data)\n    # Transport segment (Layer 4)\n    segment = transport_header + data\n    layers.append(segment)\n    # Network packet (Layer 3)\n    packet = network_header + segment\n    layers.append(packet)\n    # Data link frame (Layer 2)\n    frame = frame_header + packet + frame_trailer\n    layers.append(frame)\n    return layers\n\nresult = encapsulate("Hello", "TCP:", "IP:", "ETH:", ":FCS")\nfor layer, pdu in enumerate(result, 1):\n    print(f"Layer {8-layer}: {pdu}")',
+    testCases: [
+      { input: '"Hi", "T:", "N:", "F:", ":C"', isHidden: false, description: 'Simple encapsulation' },
+      { input: '"Data", "TCP:", "IP:", "ETH:", ":FCS"', isHidden: true, description: 'Standard headers' }
+    ],
+    hints: [
+      'Start with the raw application data',
+      'Each layer adds its header in front',
+      'The data link layer also adds a trailer at the end',
+      'Return a list of the PDU at each step'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs302-t1-ex04',
+    subjectId: 'cs302',
+    topicId: 'cs302-topic-1',
+    title: 'TCP/IP to OSI Mapper',
+    difficulty: 2,
+    description: 'Write a function that maps TCP/IP model layer names to their corresponding OSI layer numbers. TCP/IP layers are: Application, Transport, Internet, Network Access.',
+    starterCode: '# Map TCP/IP layer name to OSI layer number(s)\ndef tcpip_to_osi(tcpip_layer):\n    # Your code here\n    pass\n\n# Test your function\nprint(tcpip_to_osi("Application"))\nprint(tcpip_to_osi("Transport"))\nprint(tcpip_to_osi("Internet"))',
+    solution: 'def tcpip_to_osi(tcpip_layer):\n    mapping = {\n        "Application": [5, 6, 7],\n        "Transport": [4],\n        "Internet": [3],\n        "Network Access": [1, 2]\n    }\n    return mapping.get(tcpip_layer, [])\n\nprint(tcpip_to_osi("Application"))\nprint(tcpip_to_osi("Transport"))\nprint(tcpip_to_osi("Internet"))',
+    testCases: [
+      { input: '"Application"', isHidden: false, description: 'Application layer mapping' },
+      { input: '"Transport"', isHidden: false, description: 'Transport layer mapping' },
+      { input: '"Network Access"', isHidden: true, description: 'Network access layer mapping' }
+    ],
+    hints: [
+      'TCP/IP Application maps to OSI layers 5, 6, 7',
+      'TCP/IP Transport maps to OSI layer 4',
+      'TCP/IP Internet maps to OSI layer 3',
+      'TCP/IP Network Access maps to OSI layers 1, 2'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs302-t1-ex05',
+    subjectId: 'cs302',
+    topicId: 'cs302-topic-1',
+    title: 'Network Device Classifier',
+    difficulty: 2,
+    description: 'Write a function that takes a network device name and returns the OSI layer(s) it operates at. Devices: hub, switch, router, gateway, repeater.',
+    starterCode: '# Return the OSI layer(s) a device operates at\ndef device_layer(device):\n    # Your code here\n    pass\n\n# Test your function\nprint(device_layer("hub"))\nprint(device_layer("switch"))\nprint(device_layer("router"))',
+    solution: 'def device_layer(device):\n    devices = {\n        "hub": [1],\n        "repeater": [1],\n        "switch": [2],\n        "bridge": [2],\n        "router": [3],\n        "gateway": [7],\n        "firewall": [3, 4, 7]\n    }\n    return devices.get(device.lower(), [])\n\nprint(device_layer("hub"))\nprint(device_layer("switch"))\nprint(device_layer("router"))',
+    testCases: [
+      { input: '"hub"', isHidden: false, description: 'Layer 1 device' },
+      { input: '"switch"', isHidden: false, description: 'Layer 2 device' },
+      { input: '"router"', isHidden: true, description: 'Layer 3 device' }
+    ],
+    hints: [
+      'Hubs and repeaters work at Layer 1 (Physical)',
+      'Switches and bridges work at Layer 2 (Data Link)',
+      'Routers work at Layer 3 (Network)',
+      'Gateways can work at Layer 7 (Application)'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs302-t1-ex06',
+    subjectId: 'cs302',
+    topicId: 'cs302-topic-1',
+    title: 'Bandwidth Calculator',
+    difficulty: 2,
+    description: 'Write a function that calculates the time to transfer a file given the file size (in MB) and bandwidth (in Mbps). Return time in seconds.',
+    starterCode: '# Calculate transfer time in seconds\ndef transfer_time(file_size_mb, bandwidth_mbps):\n    # Your code here\n    pass\n\n# Test your function\nprint(transfer_time(100, 10))  # 100 MB at 10 Mbps\nprint(transfer_time(1000, 100))  # 1 GB at 100 Mbps',
+    solution: 'def transfer_time(file_size_mb, bandwidth_mbps):\n    # Convert MB to Megabits (1 byte = 8 bits)\n    file_size_mbits = file_size_mb * 8\n    # Time = size / bandwidth\n    time_seconds = file_size_mbits / bandwidth_mbps\n    return time_seconds\n\nprint(transfer_time(100, 10))  # 100 MB at 10 Mbps\nprint(transfer_time(1000, 100))  # 1 GB at 100 Mbps',
+    testCases: [
+      { input: '100, 10', isHidden: false, description: '100 MB at 10 Mbps' },
+      { input: '1000, 100', isHidden: false, description: '1 GB at 100 Mbps' },
+      { input: '50, 25', isHidden: true, description: '50 MB at 25 Mbps' }
+    ],
+    hints: [
+      'Remember: 1 byte = 8 bits',
+      'Convert file size from MB to Megabits first',
+      'Time = Size / Bandwidth',
+      'Mbps means Megabits per second, not Megabytes'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs302-t1-ex07',
+    subjectId: 'cs302',
+    topicId: 'cs302-topic-1',
+    title: 'Latency Components',
+    difficulty: 3,
+    description: 'Calculate total network latency given transmission delay, propagation delay, processing delay, and queuing delay. All values in milliseconds.',
+    starterCode: '# Calculate total latency from its components\ndef total_latency(transmission, propagation, processing, queuing):\n    # Your code here\n    pass\n\n# Test your function\nprint(total_latency(10, 5, 2, 3))  # Should be 20 ms',
+    solution: 'def total_latency(transmission, propagation, processing, queuing):\n    return transmission + propagation + processing + queuing\n\nprint(total_latency(10, 5, 2, 3))  # Should be 20 ms',
+    testCases: [
+      { input: '10, 5, 2, 3', isHidden: false, description: 'Basic latency calculation' },
+      { input: '100, 50, 10, 25', isHidden: true, description: 'Larger values' }
+    ],
+    hints: [
+      'Total latency is the sum of all delay components',
+      'Transmission delay = packet size / link bandwidth',
+      'Propagation delay = distance / signal speed',
+      'All components add up to the total'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs302-t1-ex08',
+    subjectId: 'cs302',
+    topicId: 'cs302-topic-1',
+    title: 'Throughput Calculator',
+    difficulty: 3,
+    description: 'Calculate effective throughput given bandwidth and efficiency percentage. Also calculate how long it takes to transfer a given amount of data.',
+    starterCode: '# Calculate effective throughput and transfer time\ndef calculate_throughput(bandwidth_mbps, efficiency_percent, data_mb):\n    # Return tuple: (effective_throughput_mbps, transfer_time_seconds)\n    pass\n\n# Test your function\nprint(calculate_throughput(100, 80, 500))',
+    solution: 'def calculate_throughput(bandwidth_mbps, efficiency_percent, data_mb):\n    effective_throughput = bandwidth_mbps * (efficiency_percent / 100)\n    # Convert MB to Mbits for calculation\n    data_mbits = data_mb * 8\n    transfer_time = data_mbits / effective_throughput\n    return (effective_throughput, transfer_time)\n\nprint(calculate_throughput(100, 80, 500))',
+    testCases: [
+      { input: '100, 80, 500', isHidden: false, description: '100 Mbps at 80% efficiency' },
+      { input: '1000, 90, 1000', isHidden: true, description: 'Gigabit with high efficiency' }
+    ],
+    hints: [
+      'Effective throughput = bandwidth * (efficiency / 100)',
+      'Convert MB to Megabits (multiply by 8)',
+      'Transfer time = data size / effective throughput',
+      'Return as a tuple of two values'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs302-t1-ex09',
+    subjectId: 'cs302',
+    topicId: 'cs302-topic-1',
+    title: 'Protocol Stack Builder',
+    difficulty: 3,
+    description: 'Build a protocol stack representation. Given a list of protocols at different layers, return a formatted string showing the stack from top to bottom.',
+    starterCode: '# Build a visual protocol stack\ndef build_stack(protocols):\n    # protocols is a dict like {7: "HTTP", 4: "TCP", 3: "IP", 2: "Ethernet"}\n    # Return a formatted string representation\n    pass\n\n# Test your function\nstack = {7: "HTTP", 4: "TCP", 3: "IP", 2: "Ethernet"}\nprint(build_stack(stack))',
+    solution: 'def build_stack(protocols):\n    layer_names = {\n        7: "Application",\n        6: "Presentation",\n        5: "Session",\n        4: "Transport",\n        3: "Network",\n        2: "Data Link",\n        1: "Physical"\n    }\n    result = []\n    for layer in sorted(protocols.keys(), reverse=True):\n        proto = protocols[layer]\n        name = layer_names.get(layer, "Unknown")\n        result.append(f"Layer {layer} ({name}): {proto}")\n    return "\\n".join(result)\n\nstack = {7: "HTTP", 4: "TCP", 3: "IP", 2: "Ethernet"}\nprint(build_stack(stack))',
+    testCases: [
+      { input: '{7: "HTTP", 4: "TCP", 3: "IP", 2: "Ethernet"}', isHidden: false, description: 'Web browsing stack' },
+      { input: '{7: "DNS", 4: "UDP", 3: "IP", 2: "WiFi"}', isHidden: true, description: 'DNS query stack' }
+    ],
+    hints: [
+      'Sort the layers in descending order (7 to 1)',
+      'Create a layer name mapping for context',
+      'Format each layer as "Layer N (Name): Protocol"',
+      'Join lines with newline characters'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs302-t1-ex10',
+    subjectId: 'cs302',
+    topicId: 'cs302-topic-1',
+    title: 'Network Topology Analyzer',
+    difficulty: 3,
+    description: 'Given a network topology type (bus, star, ring, mesh), return its characteristics including advantages and disadvantages.',
+    starterCode: '# Analyze network topology characteristics\ndef analyze_topology(topology_type):\n    # Return a dict with: connections_formula, fault_tolerance, cost\n    pass\n\n# Test your function\nprint(analyze_topology("star"))\nprint(analyze_topology("mesh"))',
+    solution: 'def analyze_topology(topology_type):\n    topologies = {\n        "bus": {\n            "connections_formula": "n-1 (single cable)",\n            "fault_tolerance": "low",\n            "cost": "low"\n        },\n        "star": {\n            "connections_formula": "n (each node to hub)",\n            "fault_tolerance": "medium",\n            "cost": "medium"\n        },\n        "ring": {\n            "connections_formula": "n (circular)",\n            "fault_tolerance": "low",\n            "cost": "medium"\n        },\n        "mesh": {\n            "connections_formula": "n(n-1)/2 (full mesh)",\n            "fault_tolerance": "high",\n            "cost": "high"\n        }\n    }\n    return topologies.get(topology_type.lower(), {})\n\nprint(analyze_topology("star"))\nprint(analyze_topology("mesh"))',
+    testCases: [
+      { input: '"star"', isHidden: false, description: 'Star topology' },
+      { input: '"mesh"', isHidden: false, description: 'Mesh topology' },
+      { input: '"bus"', isHidden: true, description: 'Bus topology' }
+    ],
+    hints: [
+      'Full mesh has n(n-1)/2 connections',
+      'Star topology depends on the central hub',
+      'Bus topology has a single point of failure',
+      'Mesh has highest redundancy but also highest cost'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs302-t1-ex11',
+    subjectId: 'cs302',
+    topicId: 'cs302-topic-1',
+    title: 'Mesh Connection Calculator',
+    difficulty: 3,
+    description: 'Calculate the number of connections needed for a full mesh network with n nodes. Also calculate the number of ports needed per node.',
+    starterCode: '# Calculate mesh network connections\ndef mesh_connections(num_nodes):\n    # Return tuple: (total_connections, ports_per_node)\n    pass\n\n# Test your function\nprint(mesh_connections(4))  # 4 nodes\nprint(mesh_connections(10))  # 10 nodes',
+    solution: 'def mesh_connections(num_nodes):\n    # Full mesh: each node connects to every other node\n    # Total connections = n(n-1)/2\n    total_connections = num_nodes * (num_nodes - 1) // 2\n    # Each node needs n-1 ports\n    ports_per_node = num_nodes - 1\n    return (total_connections, ports_per_node)\n\nprint(mesh_connections(4))  # 4 nodes\nprint(mesh_connections(10))  # 10 nodes',
+    testCases: [
+      { input: '4', isHidden: false, description: '4 nodes' },
+      { input: '10', isHidden: false, description: '10 nodes' },
+      { input: '20', isHidden: true, description: '20 nodes' }
+    ],
+    hints: [
+      'Full mesh formula: n(n-1)/2',
+      'Each node connects to every other node',
+      'Ports per node = n-1',
+      'Use integer division (//) for whole numbers'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs302-t1-ex12',
+    subjectId: 'cs302',
+    topicId: 'cs302-topic-1',
+    title: 'Packet Loss Simulator',
+    difficulty: 4,
+    description: 'Simulate packet transmission with a given loss probability. Given a number of packets and loss rate (0-1), return how many packets arrived successfully.',
+    starterCode: 'import random\n\n# Simulate packet transmission with loss\ndef simulate_transmission(num_packets, loss_rate, seed=42):\n    random.seed(seed)\n    # Your code here\n    pass\n\n# Test your function\nprint(simulate_transmission(100, 0.1))  # 10% loss rate',
+    solution: 'import random\n\ndef simulate_transmission(num_packets, loss_rate, seed=42):\n    random.seed(seed)\n    successful = 0\n    for _ in range(num_packets):\n        if random.random() >= loss_rate:\n            successful += 1\n    return successful\n\nprint(simulate_transmission(100, 0.1))  # 10% loss rate',
+    testCases: [
+      { input: '100, 0.1, 42', isHidden: false, description: '100 packets, 10% loss' },
+      { input: '1000, 0.05, 42', isHidden: true, description: '1000 packets, 5% loss' }
+    ],
+    hints: [
+      'Use random.random() to get a value between 0 and 1',
+      'If random value >= loss_rate, packet is successful',
+      'Count and return the number of successful packets',
+      'The seed ensures reproducible results'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs302-t1-ex13',
+    subjectId: 'cs302',
+    topicId: 'cs302-topic-1',
+    title: 'RTT Calculator',
+    difficulty: 3,
+    description: 'Calculate Round-Trip Time (RTT) given the distance between two points and the signal propagation speed. Distance in km, speed as fraction of light speed.',
+    starterCode: '# Calculate RTT in milliseconds\ndef calculate_rtt(distance_km, speed_fraction=0.7):\n    # Speed of light = 300,000 km/s\n    # Your code here\n    pass\n\n# Test your function\nprint(calculate_rtt(1000))  # 1000 km\nprint(calculate_rtt(5000, 0.6))  # 5000 km, 60% light speed',
+    solution: 'def calculate_rtt(distance_km, speed_fraction=0.7):\n    # Speed of light = 300,000 km/s\n    speed_of_light = 300000  # km/s\n    actual_speed = speed_of_light * speed_fraction\n    # One-way time in seconds\n    one_way_time = distance_km / actual_speed\n    # RTT is round trip (2x one way)\n    rtt_seconds = 2 * one_way_time\n    # Convert to milliseconds\n    rtt_ms = rtt_seconds * 1000\n    return rtt_ms\n\nprint(calculate_rtt(1000))  # 1000 km\nprint(calculate_rtt(5000, 0.6))  # 5000 km, 60% light speed',
+    testCases: [
+      { input: '1000', isHidden: false, description: '1000 km at default speed' },
+      { input: '5000, 0.6', isHidden: false, description: '5000 km at 60% light speed' },
+      { input: '20000, 0.7', isHidden: true, description: 'Intercontinental distance' }
+    ],
+    hints: [
+      'Speed of light is approximately 300,000 km/s',
+      'Actual speed = light speed * speed_fraction',
+      'RTT = 2 * (distance / speed)',
+      'Convert seconds to milliseconds (multiply by 1000)'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs302-t1-ex14',
+    subjectId: 'cs302',
+    topicId: 'cs302-topic-1',
+    title: 'Multiplexing Bandwidth Calculator',
+    difficulty: 4,
+    description: 'Calculate how many channels can fit in a given bandwidth using frequency division multiplexing (FDM). Consider guard bands between channels.',
+    starterCode: '# Calculate number of FDM channels\ndef fdm_channels(total_bandwidth, channel_width, guard_band):\n    # All values in kHz\n    # Your code here\n    pass\n\n# Test your function\nprint(fdm_channels(1000, 100, 10))  # 1000 kHz total, 100 kHz channels, 10 kHz guard',
+    solution: 'def fdm_channels(total_bandwidth, channel_width, guard_band):\n    # Each channel needs its width plus a guard band\n    # (except the last channel which doesn\'t need trailing guard)\n    # channels * channel_width + (channels - 1) * guard_band <= total\n    # Solving: channels <= (total + guard) / (channel + guard)\n    effective_channel = channel_width + guard_band\n    num_channels = (total_bandwidth + guard_band) // effective_channel\n    return int(num_channels)\n\nprint(fdm_channels(1000, 100, 10))  # 1000 kHz total, 100 kHz channels, 10 kHz guard',
+    testCases: [
+      { input: '1000, 100, 10', isHidden: false, description: 'Basic FDM calculation' },
+      { input: '5000, 200, 25', isHidden: true, description: 'Larger bandwidth' }
+    ],
+    hints: [
+      'Each channel needs space for itself plus a guard band',
+      'The last channel doesn\'t need a trailing guard band',
+      'Formula: channels = (total + guard) / (channel + guard)',
+      'Use integer division for whole channels'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs302-t1-ex15',
+    subjectId: 'cs302',
+    topicId: 'cs302-topic-1',
+    title: 'Network Standards Lookup',
+    difficulty: 2,
+    description: 'Create a function that looks up IEEE network standards and returns their details. Support 802.3 (Ethernet), 802.11 (WiFi), 802.15 (Bluetooth).',
+    starterCode: '# Look up IEEE network standards\ndef lookup_standard(standard):\n    # Return dict with: name, max_speed, typical_use\n    pass\n\n# Test your function\nprint(lookup_standard("802.3"))\nprint(lookup_standard("802.11"))',
+    solution: 'def lookup_standard(standard):\n    standards = {\n        "802.3": {\n            "name": "Ethernet",\n            "max_speed": "100 Gbps",\n            "typical_use": "Wired LAN"\n        },\n        "802.11": {\n            "name": "WiFi",\n            "max_speed": "9.6 Gbps (WiFi 6)",\n            "typical_use": "Wireless LAN"\n        },\n        "802.15": {\n            "name": "Bluetooth/WPAN",\n            "max_speed": "2 Mbps",\n            "typical_use": "Personal Area Network"\n        },\n        "802.1Q": {\n            "name": "VLAN Tagging",\n            "max_speed": "N/A",\n            "typical_use": "Network Segmentation"\n        }\n    }\n    return standards.get(standard, {"error": "Standard not found"})\n\nprint(lookup_standard("802.3"))\nprint(lookup_standard("802.11"))',
+    testCases: [
+      { input: '"802.3"', isHidden: false, description: 'Ethernet standard' },
+      { input: '"802.11"', isHidden: false, description: 'WiFi standard' },
+      { input: '"802.15"', isHidden: true, description: 'Bluetooth standard' }
+    ],
+    hints: [
+      'IEEE 802.3 is the Ethernet standard',
+      'IEEE 802.11 covers WiFi standards',
+      'IEEE 802.15 covers Bluetooth and WPANs',
+      'Return a dictionary with the standard details'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs302-t1-ex16',
+    subjectId: 'cs302',
+    topicId: 'cs302-topic-1',
+    title: 'Decapsulation Parser',
+    difficulty: 4,
+    description: 'Parse a simulated network frame and extract data at each layer. Given a frame string with delimiters, extract the application data.',
+    starterCode: '# Parse a simulated frame and extract layer data\ndef decapsulate(frame, delimiters):\n    # delimiters dict: {"frame": ("F[", "]F"), "packet": ("P[", "]P"), etc.}\n    # Return dict with data at each layer\n    pass\n\n# Test with simulated frame\nframe = "F[P[S[DATA]S]P]F"\ndelims = {\n    "frame": ("F[", "]F"),\n    "packet": ("P[", "]P"),\n    "segment": ("S[", "]S")\n}\nprint(decapsulate(frame, delims))',
+    solution: 'def decapsulate(frame, delimiters):\n    result = {"original": frame}\n    current = frame\n    \n    # Process each layer from outside in\n    for layer, (start, end) in delimiters.items():\n        if current.startswith(start) and current.endswith(end):\n            # Remove the delimiters\n            current = current[len(start):-len(end)]\n            result[layer] = current\n    \n    result["data"] = current\n    return result\n\nframe = "F[P[S[DATA]S]P]F"\ndelims = {\n    "frame": ("F[", "]F"),\n    "packet": ("P[", "]P"),\n    "segment": ("S[", "]S")\n}\nprint(decapsulate(frame, delims))',
+    testCases: [
+      { input: '"F[P[S[DATA]S]P]F", {...}', isHidden: false, description: 'Basic decapsulation' },
+      { input: '"F[P[S[Hello World]S]P]F", {...}', isHidden: true, description: 'With text data' }
+    ],
+    hints: [
+      'Process layers from outside to inside',
+      'Use string slicing to remove delimiters',
+      'Check if current string starts/ends with delimiters',
+      'Store the result at each layer'
+    ],
+    language: 'python'
+  }
+];

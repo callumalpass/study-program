@@ -17,6 +17,7 @@ import { cs205Topics } from './subjects/cs205/topics';
 import { math201Topics } from './subjects/math201/topics';
 import { math202Topics } from './subjects/math202/topics';
 import { math204Topics } from './subjects/math204/topics';
+import { cs302Topics } from './subjects/cs302/topics';
 
 /**
  * Complete Computer Science Degree Curriculum
@@ -456,16 +457,9 @@ export const curriculum: Subject[] = [
       'Apply basic network security principles'
     ],
     estimatedHours: 110,
-    topics: [
-      { id: 'cs302-1', title: 'Network Architecture and OSI Model', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs302-2', title: 'Physical and Data Link Layers', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs302-3', title: 'Network Layer and IP', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs302-4', title: 'Routing Algorithms', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs302-5', title: 'Transport Layer: TCP and UDP', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs302-6', title: 'Socket Programming', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs302-7', title: 'Application Layer Protocols', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs302-8', title: 'Network Security Basics', content: '', quizIds: [], exerciseIds: [] }
-    ]
+    topics: cs302Topics,
+    examIds: ['cs302-exam-midterm', 'cs302-exam-final'],
+    projectIds: ['cs302-project-1', 'cs302-project-2', 'cs302-project-3', 'cs302-project-4']
   },
 
   {

@@ -1,0 +1,353 @@
+import { CodingExercise } from '../../../../core/types';
+
+export const topic3Exercises: CodingExercise[] = [
+  {
+    id: 'cs302-t3-ex01',
+    subjectId: 'cs302',
+    topicId: 'cs302-topic-3',
+    title: 'IP Address Validator',
+    difficulty: 1,
+    description: 'Write a function that validates if a string is a valid IPv4 address. Each octet must be 0-255.',
+    starterCode: '# Validate IPv4 address\ndef is_valid_ipv4(ip):\n    # Your code here\n    pass\n\n# Test your function\nprint(is_valid_ipv4("192.168.1.1"))\nprint(is_valid_ipv4("256.1.1.1"))\nprint(is_valid_ipv4("10.0.0"))',
+    solution: 'def is_valid_ipv4(ip):\n    parts = ip.split(".")\n    if len(parts) != 4:\n        return False\n    for part in parts:\n        try:\n            num = int(part)\n            if num < 0 or num > 255:\n                return False\n        except ValueError:\n            return False\n    return True\n\nprint(is_valid_ipv4("192.168.1.1"))\nprint(is_valid_ipv4("256.1.1.1"))\nprint(is_valid_ipv4("10.0.0"))',
+    testCases: [
+      { input: '"192.168.1.1"', isHidden: false, description: 'Valid private IP' },
+      { input: '"256.1.1.1"', isHidden: false, description: 'Invalid octet value' },
+      { input: '"10.0.0"', isHidden: true, description: 'Missing octet' }
+    ],
+    hints: [
+      'Split the IP by dots',
+      'Must have exactly 4 parts',
+      'Each part must be a number 0-255',
+      'Handle non-numeric input'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs302-t3-ex02',
+    subjectId: 'cs302',
+    topicId: 'cs302-topic-3',
+    title: 'IP to Binary Converter',
+    difficulty: 2,
+    description: 'Convert an IPv4 address to its 32-bit binary representation.',
+    starterCode: '# Convert IPv4 to binary string\ndef ip_to_binary(ip):\n    # Your code here\n    pass\n\n# Test your function\nprint(ip_to_binary("192.168.1.1"))\nprint(ip_to_binary("255.255.255.0"))',
+    solution: 'def ip_to_binary(ip):\n    parts = ip.split(".")\n    binary_parts = []\n    for part in parts:\n        binary = bin(int(part))[2:].zfill(8)\n        binary_parts.append(binary)\n    return ".".join(binary_parts)\n\nprint(ip_to_binary("192.168.1.1"))\nprint(ip_to_binary("255.255.255.0"))',
+    testCases: [
+      { input: '"192.168.1.1"', isHidden: false, description: 'Private IP' },
+      { input: '"255.255.255.0"', isHidden: false, description: 'Subnet mask' },
+      { input: '"0.0.0.0"', isHidden: true, description: 'All zeros' }
+    ],
+    hints: [
+      'Split IP into octets',
+      'Convert each octet to binary using bin()',
+      'Pad each binary to 8 bits with zfill(8)',
+      'bin() returns "0b..." prefix, remove it with [2:]'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs302-t3-ex03',
+    subjectId: 'cs302',
+    topicId: 'cs302-topic-3',
+    title: 'IP Class Identifier',
+    difficulty: 2,
+    description: 'Determine the class (A, B, C, D, or E) of an IPv4 address based on its first octet.',
+    starterCode: '# Determine IP address class\ndef get_ip_class(ip):\n    # Your code here\n    pass\n\n# Test your function\nprint(get_ip_class("10.0.0.1"))     # Class A\nprint(get_ip_class("172.16.0.1"))   # Class B\nprint(get_ip_class("192.168.1.1"))  # Class C',
+    solution: 'def get_ip_class(ip):\n    first_octet = int(ip.split(".")[0])\n    if first_octet < 128:\n        return "A"\n    elif first_octet < 192:\n        return "B"\n    elif first_octet < 224:\n        return "C"\n    elif first_octet < 240:\n        return "D"\n    else:\n        return "E"\n\nprint(get_ip_class("10.0.0.1"))\nprint(get_ip_class("172.16.0.1"))\nprint(get_ip_class("192.168.1.1"))',
+    testCases: [
+      { input: '"10.0.0.1"', isHidden: false, description: 'Class A' },
+      { input: '"172.16.0.1"', isHidden: false, description: 'Class B' },
+      { input: '"224.0.0.1"', isHidden: true, description: 'Class D (multicast)' }
+    ],
+    hints: [
+      'Class A: 0-127',
+      'Class B: 128-191',
+      'Class C: 192-223',
+      'Class D: 224-239 (multicast)',
+      'Class E: 240-255 (reserved)'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs302-t3-ex04',
+    subjectId: 'cs302',
+    topicId: 'cs302-topic-3',
+    title: 'Subnet Mask Calculator',
+    difficulty: 2,
+    description: 'Convert a CIDR prefix length to a dotted-decimal subnet mask.',
+    starterCode: '# Convert CIDR prefix to subnet mask\ndef cidr_to_mask(prefix_length):\n    # Your code here\n    pass\n\n# Test your function\nprint(cidr_to_mask(24))  # 255.255.255.0\nprint(cidr_to_mask(16))  # 255.255.0.0\nprint(cidr_to_mask(27))  # 255.255.255.224',
+    solution: 'def cidr_to_mask(prefix_length):\n    # Create 32-bit mask with prefix_length 1s followed by 0s\n    mask = (0xFFFFFFFF << (32 - prefix_length)) & 0xFFFFFFFF\n    # Convert to dotted decimal\n    octets = [\n        (mask >> 24) & 0xFF,\n        (mask >> 16) & 0xFF,\n        (mask >> 8) & 0xFF,\n        mask & 0xFF\n    ]\n    return ".".join(str(o) for o in octets)\n\nprint(cidr_to_mask(24))\nprint(cidr_to_mask(16))\nprint(cidr_to_mask(27))',
+    testCases: [
+      { input: '24', isHidden: false, description: '/24 network' },
+      { input: '16', isHidden: false, description: '/16 network' },
+      { input: '27', isHidden: true, description: '/27 network' }
+    ],
+    hints: [
+      'Create a 32-bit number with prefix_length 1s',
+      'Left shift 1s and mask to 32 bits',
+      'Extract each octet using bit shifting',
+      '/24 = 255.255.255.0 (24 ones, 8 zeros)'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs302-t3-ex05',
+    subjectId: 'cs302',
+    topicId: 'cs302-topic-3',
+    title: 'Network Address Calculator',
+    difficulty: 3,
+    description: 'Calculate the network address from an IP address and subnet mask using bitwise AND.',
+    starterCode: '# Calculate network address\ndef get_network_address(ip, mask):\n    # Your code here\n    pass\n\n# Test your function\nprint(get_network_address("192.168.1.100", "255.255.255.0"))\nprint(get_network_address("10.45.67.89", "255.255.0.0"))',
+    solution: 'def get_network_address(ip, mask):\n    ip_parts = [int(x) for x in ip.split(".")]\n    mask_parts = [int(x) for x in mask.split(".")]\n    \n    network = []\n    for ip_octet, mask_octet in zip(ip_parts, mask_parts):\n        network.append(ip_octet & mask_octet)\n    \n    return ".".join(str(o) for o in network)\n\nprint(get_network_address("192.168.1.100", "255.255.255.0"))\nprint(get_network_address("10.45.67.89", "255.255.0.0"))',
+    testCases: [
+      { input: '"192.168.1.100", "255.255.255.0"', isHidden: false, description: '/24 network' },
+      { input: '"10.45.67.89", "255.255.0.0"', isHidden: false, description: '/16 network' },
+      { input: '"172.16.50.25", "255.255.255.224"', isHidden: true, description: '/27 network' }
+    ],
+    hints: [
+      'Split both IP and mask into octets',
+      'AND each IP octet with corresponding mask octet',
+      'This zeros out the host bits',
+      'Join the result back with dots'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs302-t3-ex06',
+    subjectId: 'cs302',
+    topicId: 'cs302-topic-3',
+    title: 'Broadcast Address Calculator',
+    difficulty: 3,
+    description: 'Calculate the broadcast address from an IP address and subnet mask. Broadcast is network address with all host bits set to 1.',
+    starterCode: '# Calculate broadcast address\ndef get_broadcast_address(ip, mask):\n    # Your code here\n    pass\n\n# Test your function\nprint(get_broadcast_address("192.168.1.100", "255.255.255.0"))\nprint(get_broadcast_address("10.45.67.89", "255.255.0.0"))',
+    solution: 'def get_broadcast_address(ip, mask):\n    ip_parts = [int(x) for x in ip.split(".")]\n    mask_parts = [int(x) for x in mask.split(".")]\n    \n    broadcast = []\n    for ip_octet, mask_octet in zip(ip_parts, mask_parts):\n        # Invert mask and OR with IP\n        inverted_mask = 255 - mask_octet\n        broadcast.append(ip_octet | inverted_mask)\n    \n    return ".".join(str(o) for o in broadcast)\n\nprint(get_broadcast_address("192.168.1.100", "255.255.255.0"))\nprint(get_broadcast_address("10.45.67.89", "255.255.0.0"))',
+    testCases: [
+      { input: '"192.168.1.100", "255.255.255.0"', isHidden: false, description: '/24 broadcast' },
+      { input: '"10.45.67.89", "255.255.0.0"', isHidden: false, description: '/16 broadcast' },
+      { input: '"172.16.50.25", "255.255.255.224"', isHidden: true, description: '/27 broadcast' }
+    ],
+    hints: [
+      'Invert the mask (255 - mask_octet)',
+      'OR each IP octet with inverted mask',
+      'This sets all host bits to 1',
+      '/24: broadcast ends in .255'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs302-t3-ex07',
+    subjectId: 'cs302',
+    topicId: 'cs302-topic-3',
+    title: 'Usable Hosts Calculator',
+    difficulty: 2,
+    description: 'Calculate the number of usable host addresses in a subnet given the CIDR prefix length.',
+    starterCode: '# Calculate usable hosts in a subnet\ndef usable_hosts(prefix_length):\n    # Your code here\n    pass\n\n# Test your function\nprint(usable_hosts(24))  # 254\nprint(usable_hosts(30))  # 2\nprint(usable_hosts(16))  # 65534',
+    solution: 'def usable_hosts(prefix_length):\n    # Total addresses = 2^(32-prefix)\n    # Usable = total - 2 (network and broadcast)\n    host_bits = 32 - prefix_length\n    total = 2 ** host_bits\n    # Minimum is 0 usable hosts for /31 and /32\n    usable = max(0, total - 2)\n    return usable\n\nprint(usable_hosts(24))\nprint(usable_hosts(30))\nprint(usable_hosts(16))',
+    testCases: [
+      { input: '24', isHidden: false, description: '/24 has 254 hosts' },
+      { input: '30', isHidden: false, description: '/30 has 2 hosts' },
+      { input: '32', isHidden: true, description: '/32 has 0 usable hosts' }
+    ],
+    hints: [
+      'Host bits = 32 - prefix_length',
+      'Total addresses = 2^host_bits',
+      'Subtract 2 for network and broadcast',
+      '/30 is commonly used for point-to-point links'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs302-t3-ex08',
+    subjectId: 'cs302',
+    topicId: 'cs302-topic-3',
+    title: 'CIDR Notation Parser',
+    difficulty: 2,
+    description: 'Parse CIDR notation (e.g., "192.168.1.0/24") and return the IP and prefix length separately.',
+    starterCode: '# Parse CIDR notation\ndef parse_cidr(cidr):\n    # Return tuple: (ip, prefix_length)\n    pass\n\n# Test your function\nprint(parse_cidr("192.168.1.0/24"))\nprint(parse_cidr("10.0.0.0/8"))',
+    solution: 'def parse_cidr(cidr):\n    parts = cidr.split("/")\n    ip = parts[0]\n    prefix_length = int(parts[1])\n    return (ip, prefix_length)\n\nprint(parse_cidr("192.168.1.0/24"))\nprint(parse_cidr("10.0.0.0/8"))',
+    testCases: [
+      { input: '"192.168.1.0/24"', isHidden: false, description: 'Class C sized' },
+      { input: '"10.0.0.0/8"', isHidden: false, description: 'Class A sized' },
+      { input: '"172.16.128.0/17"', isHidden: true, description: 'Non-classful' }
+    ],
+    hints: [
+      'Split by "/" character',
+      'First part is the IP address',
+      'Second part is the prefix length',
+      'Convert prefix to integer'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs302-t3-ex09',
+    subjectId: 'cs302',
+    topicId: 'cs302-topic-3',
+    title: 'Same Subnet Checker',
+    difficulty: 3,
+    description: 'Determine if two IP addresses are in the same subnet given a common subnet mask.',
+    starterCode: '# Check if two IPs are in the same subnet\ndef same_subnet(ip1, ip2, mask):\n    # Your code here\n    pass\n\n# Test your function\nprint(same_subnet("192.168.1.10", "192.168.1.200", "255.255.255.0"))\nprint(same_subnet("192.168.1.10", "192.168.2.10", "255.255.255.0"))',
+    solution: 'def same_subnet(ip1, ip2, mask):\n    def get_network(ip, mask):\n        ip_parts = [int(x) for x in ip.split(".")]\n        mask_parts = [int(x) for x in mask.split(".")]\n        return tuple(i & m for i, m in zip(ip_parts, mask_parts))\n    \n    return get_network(ip1, mask) == get_network(ip2, mask)\n\nprint(same_subnet("192.168.1.10", "192.168.1.200", "255.255.255.0"))\nprint(same_subnet("192.168.1.10", "192.168.2.10", "255.255.255.0"))',
+    testCases: [
+      { input: '"192.168.1.10", "192.168.1.200", "255.255.255.0"', isHidden: false, description: 'Same subnet' },
+      { input: '"192.168.1.10", "192.168.2.10", "255.255.255.0"', isHidden: false, description: 'Different subnets' },
+      { input: '"10.1.1.1", "10.1.2.1", "255.255.0.0"', isHidden: true, description: 'Same /16 subnet' }
+    ],
+    hints: [
+      'Calculate network address for each IP',
+      'If network addresses match, same subnet',
+      'Use bitwise AND with mask',
+      'Compare resulting network addresses'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs302-t3-ex10',
+    subjectId: 'cs302',
+    topicId: 'cs302-topic-3',
+    title: 'Private IP Checker',
+    difficulty: 2,
+    description: 'Check if an IP address is in a private range (10.x.x.x, 172.16-31.x.x, 192.168.x.x).',
+    starterCode: '# Check if IP is private\ndef is_private_ip(ip):\n    # Your code here\n    pass\n\n# Test your function\nprint(is_private_ip("192.168.1.1"))\nprint(is_private_ip("8.8.8.8"))\nprint(is_private_ip("172.20.0.1"))',
+    solution: 'def is_private_ip(ip):\n    parts = [int(x) for x in ip.split(".")]\n    \n    # 10.0.0.0 - 10.255.255.255\n    if parts[0] == 10:\n        return True\n    \n    # 172.16.0.0 - 172.31.255.255\n    if parts[0] == 172 and 16 <= parts[1] <= 31:\n        return True\n    \n    # 192.168.0.0 - 192.168.255.255\n    if parts[0] == 192 and parts[1] == 168:\n        return True\n    \n    return False\n\nprint(is_private_ip("192.168.1.1"))\nprint(is_private_ip("8.8.8.8"))\nprint(is_private_ip("172.20.0.1"))',
+    testCases: [
+      { input: '"192.168.1.1"', isHidden: false, description: 'Private 192.168' },
+      { input: '"8.8.8.8"', isHidden: false, description: 'Public IP' },
+      { input: '"172.32.0.1"', isHidden: true, description: 'Not private (172.32)' }
+    ],
+    hints: [
+      '10.0.0.0/8 is private',
+      '172.16.0.0/12 (172.16-31.x.x) is private',
+      '192.168.0.0/16 is private',
+      'Check first and second octets'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs302-t3-ex11',
+    subjectId: 'cs302',
+    topicId: 'cs302-topic-3',
+    title: 'Subnet Divider',
+    difficulty: 4,
+    description: 'Divide a network into n equal subnets. Given a CIDR block and number of subnets, return the CIDR blocks for each subnet.',
+    starterCode: '# Divide network into subnets\ndef divide_subnet(cidr, num_subnets):\n    # Return list of CIDR blocks for subnets\n    pass\n\n# Test your function\nprint(divide_subnet("192.168.1.0/24", 4))\nprint(divide_subnet("10.0.0.0/16", 8))',
+    solution: 'def divide_subnet(cidr, num_subnets):\n    import math\n    \n    ip, prefix = cidr.split("/")\n    prefix = int(prefix)\n    \n    # Calculate new prefix (bits needed for subnets)\n    bits_needed = math.ceil(math.log2(num_subnets))\n    new_prefix = prefix + bits_needed\n    \n    if new_prefix > 32:\n        return []\n    \n    # Convert IP to integer\n    parts = [int(x) for x in ip.split(".")]\n    ip_int = (parts[0] << 24) + (parts[1] << 16) + (parts[2] << 8) + parts[3]\n    \n    # Calculate subnet size\n    subnet_size = 2 ** (32 - new_prefix)\n    \n    subnets = []\n    for i in range(num_subnets):\n        subnet_ip = ip_int + (i * subnet_size)\n        octets = [\n            (subnet_ip >> 24) & 0xFF,\n            (subnet_ip >> 16) & 0xFF,\n            (subnet_ip >> 8) & 0xFF,\n            subnet_ip & 0xFF\n        ]\n        subnets.append(f"{octets[0]}.{octets[1]}.{octets[2]}.{octets[3]}/{new_prefix}")\n    \n    return subnets\n\nprint(divide_subnet("192.168.1.0/24", 4))\nprint(divide_subnet("10.0.0.0/16", 8))',
+    testCases: [
+      { input: '"192.168.1.0/24", 4', isHidden: false, description: 'Divide /24 into 4' },
+      { input: '"10.0.0.0/16", 8', isHidden: true, description: 'Divide /16 into 8' }
+    ],
+    hints: [
+      'Calculate bits needed: ceil(log2(num_subnets))',
+      'New prefix = original prefix + bits needed',
+      'Calculate subnet size = 2^(32 - new_prefix)',
+      'Iterate through subnets incrementing by subnet_size'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs302-t3-ex12',
+    subjectId: 'cs302',
+    topicId: 'cs302-topic-3',
+    title: 'Simple Routing Table',
+    difficulty: 4,
+    description: 'Implement a simple routing table with longest prefix match. Support adding routes and looking up next hop.',
+    starterCode: 'class RoutingTable:\n    def __init__(self):\n        self.routes = []  # (network, prefix, next_hop)\n    \n    def add_route(self, network_cidr, next_hop):\n        # Add a route entry\n        pass\n    \n    def lookup(self, dest_ip):\n        # Find best matching route using longest prefix match\n        # Return next_hop or None\n        pass\n\n# Test your class\nrt = RoutingTable()\nrt.add_route("192.168.1.0/24", "10.0.0.1")\nrt.add_route("192.168.0.0/16", "10.0.0.2")\nprint(rt.lookup("192.168.1.100"))  # Should match /24',
+    solution: 'class RoutingTable:\n    def __init__(self):\n        self.routes = []\n    \n    def add_route(self, network_cidr, next_hop):\n        network, prefix = network_cidr.split("/")\n        prefix = int(prefix)\n        # Convert to integer for matching\n        parts = [int(x) for x in network.split(".")]\n        network_int = (parts[0] << 24) + (parts[1] << 16) + (parts[2] << 8) + parts[3]\n        self.routes.append((network_int, prefix, next_hop))\n    \n    def lookup(self, dest_ip):\n        parts = [int(x) for x in dest_ip.split(".")]\n        dest_int = (parts[0] << 24) + (parts[1] << 16) + (parts[2] << 8) + parts[3]\n        \n        best_match = None\n        best_prefix = -1\n        \n        for network, prefix, next_hop in self.routes:\n            mask = (0xFFFFFFFF << (32 - prefix)) & 0xFFFFFFFF\n            if (dest_int & mask) == network:\n                if prefix > best_prefix:\n                    best_prefix = prefix\n                    best_match = next_hop\n        \n        return best_match\n\nrt = RoutingTable()\nrt.add_route("192.168.1.0/24", "10.0.0.1")\nrt.add_route("192.168.0.0/16", "10.0.0.2")\nprint(rt.lookup("192.168.1.100"))',
+    testCases: [
+      { input: 'lookup matching /24', isHidden: false, description: 'Longest prefix match' },
+      { input: 'lookup matching /16 only', isHidden: true, description: 'Less specific match' }
+    ],
+    hints: [
+      'Store routes as (network_int, prefix, next_hop)',
+      'For lookup, check each route with its mask',
+      'Keep track of the longest (most specific) match',
+      'Longer prefix = more specific route'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs302-t3-ex13',
+    subjectId: 'cs302',
+    topicId: 'cs302-topic-3',
+    title: 'TTL Processor',
+    difficulty: 2,
+    description: 'Simulate IP packet TTL (Time To Live) processing. Decrement TTL and check if packet should be forwarded or discarded.',
+    starterCode: '# Process IP packet TTL\ndef process_ttl(ttl):\n    # Return tuple: (new_ttl, should_forward)\n    pass\n\n# Test your function\nprint(process_ttl(64))   # (63, True)\nprint(process_ttl(1))    # (0, False)\nprint(process_ttl(0))    # (0, False)',
+    solution: 'def process_ttl(ttl):\n    if ttl <= 1:\n        return (0, False)\n    return (ttl - 1, True)\n\nprint(process_ttl(64))\nprint(process_ttl(1))\nprint(process_ttl(0))',
+    testCases: [
+      { input: '64', isHidden: false, description: 'Normal TTL' },
+      { input: '1', isHidden: false, description: 'TTL expires' },
+      { input: '0', isHidden: true, description: 'Already expired' }
+    ],
+    hints: [
+      'Decrement TTL by 1 at each hop',
+      'If TTL reaches 0, discard packet',
+      'Return both new TTL and forward decision',
+      'TTL=1 becomes 0 and should not forward'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs302-t3-ex14',
+    subjectId: 'cs302',
+    topicId: 'cs302-topic-3',
+    title: 'IPv4 Header Parser',
+    difficulty: 4,
+    description: 'Parse a simplified IPv4 header. Extract version, IHL, TTL, protocol, source IP, and destination IP from header bytes.',
+    starterCode: '# Parse IPv4 header\ndef parse_ipv4_header(header_hex):\n    # header_hex is a hex string representing the header\n    # Return dict with: version, ihl, ttl, protocol, src_ip, dst_ip\n    pass\n\n# Test with sample header\nheader = "45000028000040004006"\nheader += "0000"  # checksum placeholder\nheader += "c0a80101"  # source: 192.168.1.1\nheader += "c0a80102"  # dest: 192.168.1.2\nprint(parse_ipv4_header(header))',
+    solution: 'def parse_ipv4_header(header_hex):\n    # Convert hex to bytes\n    def hex_to_ip(hex_str):\n        return ".".join(str(int(hex_str[i:i+2], 16)) for i in range(0, 8, 2))\n    \n    version = int(header_hex[0], 16)\n    ihl = int(header_hex[1], 16)  # in 32-bit words\n    ttl = int(header_hex[16:18], 16)\n    protocol = int(header_hex[18:20], 16)\n    src_ip = hex_to_ip(header_hex[24:32])\n    dst_ip = hex_to_ip(header_hex[32:40])\n    \n    protocols = {6: "TCP", 17: "UDP", 1: "ICMP"}\n    \n    return {\n        "version": version,\n        "ihl": ihl,\n        "ttl": ttl,\n        "protocol": protocols.get(protocol, str(protocol)),\n        "src_ip": src_ip,\n        "dst_ip": dst_ip\n    }\n\nheader = "45000028000040004006"\nheader += "0000"\nheader += "c0a80101"\nheader += "c0a80102"\nprint(parse_ipv4_header(header))',
+    testCases: [
+      { input: 'sample TCP header', isHidden: false, description: 'Parse TCP packet' },
+      { input: 'UDP header', isHidden: true, description: 'Parse UDP packet' }
+    ],
+    hints: [
+      'IPv4 header: version(4b), IHL(4b), TOS(8b), length(16b)...',
+      'TTL is at byte 8, Protocol at byte 9',
+      'Source IP at bytes 12-15, Dest IP at bytes 16-19',
+      'Each hex digit = 4 bits'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs302-t3-ex15',
+    subjectId: 'cs302',
+    topicId: 'cs302-topic-3',
+    title: 'Supernet Calculator',
+    difficulty: 4,
+    description: 'Calculate the supernet (CIDR aggregate) of multiple contiguous subnets. Given a list of networks, return the smallest containing supernet.',
+    starterCode: '# Calculate supernet of contiguous networks\ndef calculate_supernet(networks):\n    # networks is a list of CIDR strings\n    # Return the supernet CIDR\n    pass\n\n# Test your function\nprint(calculate_supernet(["192.168.0.0/24", "192.168.1.0/24"]))\nprint(calculate_supernet(["10.0.0.0/24", "10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]))',
+    solution: 'def calculate_supernet(networks):\n    def ip_to_int(ip):\n        parts = [int(x) for x in ip.split(".")]\n        return (parts[0] << 24) + (parts[1] << 16) + (parts[2] << 8) + parts[3]\n    \n    def int_to_ip(num):\n        return f"{(num >> 24) & 0xFF}.{(num >> 16) & 0xFF}.{(num >> 8) & 0xFF}.{num & 0xFF}"\n    \n    # Parse all networks\n    ips = []\n    min_prefix = 32\n    for net in networks:\n        ip, prefix = net.split("/")\n        ips.append(ip_to_int(ip))\n        min_prefix = min(min_prefix, int(prefix))\n    \n    # Find common prefix length\n    min_ip = min(ips)\n    max_ip = max(ips)\n    \n    # XOR to find differing bits\n    diff = min_ip ^ max_ip\n    \n    # Find position of highest set bit in diff\n    new_prefix = 32\n    if diff > 0:\n        new_prefix = 32 - diff.bit_length()\n    \n    # Calculate supernet address\n    mask = (0xFFFFFFFF << (32 - new_prefix)) & 0xFFFFFFFF\n    supernet_ip = min_ip & mask\n    \n    return f"{int_to_ip(supernet_ip)}/{new_prefix}"\n\nprint(calculate_supernet(["192.168.0.0/24", "192.168.1.0/24"]))\nprint(calculate_supernet(["10.0.0.0/24", "10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]))',
+    testCases: [
+      { input: '["192.168.0.0/24", "192.168.1.0/24"]', isHidden: false, description: 'Two /24s to /23' },
+      { input: 'four /24s', isHidden: true, description: 'Four networks to /22' }
+    ],
+    hints: [
+      'XOR min and max IPs to find differing bits',
+      'Count leading zeros to find common prefix',
+      'New prefix covers all networks',
+      'Use bit_length() to find highest set bit'
+    ],
+    language: 'python'
+  },
+  {
+    id: 'cs302-t3-ex16',
+    subjectId: 'cs302',
+    topicId: 'cs302-topic-3',
+    title: 'ICMP Type Identifier',
+    difficulty: 2,
+    description: 'Identify ICMP message types. Given a type number, return the message name and whether it\'s an error or informational message.',
+    starterCode: '# Identify ICMP message type\ndef identify_icmp(type_num):\n    # Return dict with: name, category ("error" or "informational")\n    pass\n\n# Test your function\nprint(identify_icmp(0))   # Echo Reply\nprint(identify_icmp(8))   # Echo Request\nprint(identify_icmp(3))   # Destination Unreachable',
+    solution: 'def identify_icmp(type_num):\n    icmp_types = {\n        0: ("Echo Reply", "informational"),\n        3: ("Destination Unreachable", "error"),\n        4: ("Source Quench", "error"),\n        5: ("Redirect", "error"),\n        8: ("Echo Request", "informational"),\n        9: ("Router Advertisement", "informational"),\n        10: ("Router Solicitation", "informational"),\n        11: ("Time Exceeded", "error"),\n        12: ("Parameter Problem", "error"),\n        13: ("Timestamp Request", "informational"),\n        14: ("Timestamp Reply", "informational")\n    }\n    \n    if type_num in icmp_types:\n        name, category = icmp_types[type_num]\n        return {"name": name, "category": category}\n    return {"name": "Unknown", "category": "unknown"}\n\nprint(identify_icmp(0))\nprint(identify_icmp(8))\nprint(identify_icmp(3))',
+    testCases: [
+      { input: '0', isHidden: false, description: 'Echo Reply' },
+      { input: '8', isHidden: false, description: 'Echo Request' },
+      { input: '11', isHidden: true, description: 'Time Exceeded' }
+    ],
+    hints: [
+      'Type 0 = Echo Reply, Type 8 = Echo Request (ping)',
+      'Type 3 = Destination Unreachable (error)',
+      'Type 11 = Time Exceeded (TTL expired)',
+      'Error types typically < 100, informational vary'
+    ],
+    language: 'python'
+  }
+];

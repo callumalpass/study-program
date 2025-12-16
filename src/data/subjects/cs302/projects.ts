@@ -1,0 +1,505 @@
+import { Project } from '../../../core/types';
+
+export const cs302Projects: Project[] = [
+  {
+    id: 'cs302-project-1',
+    subjectId: 'cs302',
+    title: 'Network Protocol Analyzer',
+    description: 'Build a packet analyzer that captures and dissects network traffic. Parse Ethernet frames, IP packets, and TCP/UDP segments. Display protocol hierarchy and field values in a readable format.',
+    estimatedHours: 15,
+    requirements: [
+      'Capture network packets from a file (pcap format) or use pre-recorded samples',
+      'Parse Ethernet frame headers: source/dest MAC, EtherType',
+      'Parse IPv4 packet headers: version, IHL, ToS, length, TTL, protocol, addresses',
+      'Parse TCP segment headers: ports, sequence/ack numbers, flags, window size',
+      'Parse UDP datagram headers: ports, length, checksum',
+      'Display packet summary (one line per packet) and detailed view',
+      'Filter packets by protocol (TCP, UDP, ICMP), IP address, or port',
+      'Calculate statistics: packet count, bytes transferred, protocol distribution',
+      'Handle malformed packets gracefully without crashing',
+      'Export analysis results to JSON format'
+    ],
+    rubric: [
+      {
+        name: 'Protocol Parsing',
+        weight: 40,
+        levels: [
+          {
+            score: 100,
+            label: 'Excellent',
+            description: 'Correctly parses all required protocols with accurate field extraction and handles edge cases'
+          },
+          {
+            score: 75,
+            label: 'Good',
+            description: 'Parses most protocols correctly with minor issues in some fields'
+          },
+          {
+            score: 50,
+            label: 'Satisfactory',
+            description: 'Basic parsing works but misses some protocol fields or has bugs'
+          },
+          {
+            score: 25,
+            label: 'Needs Improvement',
+            description: 'Limited parsing capability, many protocols not supported'
+          }
+        ]
+      },
+      {
+        name: 'Filtering and Analysis',
+        weight: 25,
+        levels: [
+          {
+            score: 100,
+            label: 'Excellent',
+            description: 'Comprehensive filtering with multiple criteria and accurate statistics'
+          },
+          {
+            score: 75,
+            label: 'Good',
+            description: 'Basic filtering works well, statistics mostly accurate'
+          },
+          {
+            score: 50,
+            label: 'Satisfactory',
+            description: 'Some filtering capability but limited criteria or inaccurate stats'
+          },
+          {
+            score: 25,
+            label: 'Needs Improvement',
+            description: 'Minimal filtering, statistics unreliable'
+          }
+        ]
+      },
+      {
+        name: 'Code Quality',
+        weight: 20,
+        levels: [
+          {
+            score: 100,
+            label: 'Excellent',
+            description: 'Clean, modular code with clear separation of protocol parsers'
+          },
+          {
+            score: 75,
+            label: 'Good',
+            description: 'Well-organized code with some room for improvement'
+          },
+          {
+            score: 50,
+            label: 'Satisfactory',
+            description: 'Working code but poorly organized or hard to extend'
+          },
+          {
+            score: 25,
+            label: 'Needs Improvement',
+            description: 'Disorganized code, difficult to understand'
+          }
+        ]
+      },
+      {
+        name: 'Error Handling',
+        weight: 15,
+        levels: [
+          {
+            score: 100,
+            label: 'Excellent',
+            description: 'Robust handling of malformed packets, invalid input, and edge cases'
+          },
+          {
+            score: 75,
+            label: 'Good',
+            description: 'Handles most errors gracefully'
+          },
+          {
+            score: 50,
+            label: 'Satisfactory',
+            description: 'Basic error handling but crashes on some invalid input'
+          },
+          {
+            score: 25,
+            label: 'Needs Improvement',
+            description: 'Poor error handling, crashes frequently'
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'cs302-project-2',
+    subjectId: 'cs302',
+    title: 'TCP Chat Application',
+    description: 'Develop a multi-client chat application using TCP sockets. Implement a server that handles multiple clients and supports private messaging, chat rooms, and user management.',
+    estimatedHours: 20,
+    requirements: [
+      'Create a TCP server that accepts multiple client connections simultaneously',
+      'Implement user registration with username and optional password',
+      'Support public messages visible to all connected users',
+      'Implement private messaging between specific users',
+      'Create chat rooms that users can join and leave',
+      'Display list of online users and available rooms',
+      'Handle client disconnection gracefully (timeout, explicit quit)',
+      'Use proper message framing (length-prefix or delimiter)',
+      'Implement a simple text-based protocol for commands (/join, /msg, /list, /quit)',
+      'Create a command-line client that connects to the server'
+    ],
+    rubric: [
+      {
+        name: 'Server Functionality',
+        weight: 35,
+        levels: [
+          {
+            score: 100,
+            label: 'Excellent',
+            description: 'Handles all features: multi-client, rooms, private messages, graceful disconnect'
+          },
+          {
+            score: 75,
+            label: 'Good',
+            description: 'Core features work well with minor issues in some areas'
+          },
+          {
+            score: 50,
+            label: 'Satisfactory',
+            description: 'Basic multi-client chat works but missing some features'
+          },
+          {
+            score: 25,
+            label: 'Needs Improvement',
+            description: 'Limited functionality, significant features missing'
+          }
+        ]
+      },
+      {
+        name: 'Protocol Design',
+        weight: 25,
+        levels: [
+          {
+            score: 100,
+            label: 'Excellent',
+            description: 'Clean, well-documented protocol with proper framing and extensibility'
+          },
+          {
+            score: 75,
+            label: 'Good',
+            description: 'Functional protocol with good message handling'
+          },
+          {
+            score: 50,
+            label: 'Satisfactory',
+            description: 'Basic protocol works but has design issues'
+          },
+          {
+            score: 25,
+            label: 'Needs Improvement',
+            description: 'Ad-hoc protocol with framing issues'
+          }
+        ]
+      },
+      {
+        name: 'Concurrency',
+        weight: 25,
+        levels: [
+          {
+            score: 100,
+            label: 'Excellent',
+            description: 'Proper multi-client handling with no race conditions or deadlocks'
+          },
+          {
+            score: 75,
+            label: 'Good',
+            description: 'Handles multiple clients well with minor concurrency issues'
+          },
+          {
+            score: 50,
+            label: 'Satisfactory',
+            description: 'Multi-client works but has occasional synchronization issues'
+          },
+          {
+            score: 25,
+            label: 'Needs Improvement',
+            description: 'Poor concurrency handling, frequent issues'
+          }
+        ]
+      },
+      {
+        name: 'User Experience',
+        weight: 15,
+        levels: [
+          {
+            score: 100,
+            label: 'Excellent',
+            description: 'Intuitive commands, helpful error messages, smooth interaction'
+          },
+          {
+            score: 75,
+            label: 'Good',
+            description: 'Clear commands with reasonable feedback'
+          },
+          {
+            score: 50,
+            label: 'Satisfactory',
+            description: 'Functional but confusing interface'
+          },
+          {
+            score: 25,
+            label: 'Needs Improvement',
+            description: 'Difficult to use, poor feedback'
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'cs302-project-3',
+    subjectId: 'cs302',
+    title: 'Simple HTTP Server',
+    description: 'Implement a basic HTTP/1.1 server that serves static files and supports essential HTTP features. The server should handle concurrent requests and implement proper HTTP response codes.',
+    estimatedHours: 18,
+    requirements: [
+      'Accept HTTP/1.1 GET and HEAD requests',
+      'Parse HTTP request headers correctly',
+      'Serve static files from a configurable document root directory',
+      'Generate proper HTTP responses with status line and headers',
+      'Support Content-Type detection based on file extension (HTML, CSS, JS, images)',
+      'Handle 404 Not Found for missing files',
+      'Handle 403 Forbidden for directory traversal attempts',
+      'Implement 400 Bad Request for malformed requests',
+      'Support persistent connections (Connection: keep-alive)',
+      'Log requests with timestamp, method, path, status code',
+      'Handle multiple concurrent clients using threads or async I/O'
+    ],
+    rubric: [
+      {
+        name: 'HTTP Compliance',
+        weight: 35,
+        levels: [
+          {
+            score: 100,
+            label: 'Excellent',
+            description: 'Fully compliant HTTP/1.1 with correct headers, status codes, and keep-alive'
+          },
+          {
+            score: 75,
+            label: 'Good',
+            description: 'Good HTTP compliance with minor deviations'
+          },
+          {
+            score: 50,
+            label: 'Satisfactory',
+            description: 'Basic HTTP works but missing some headers or features'
+          },
+          {
+            score: 25,
+            label: 'Needs Improvement',
+            description: 'Significant HTTP protocol issues'
+          }
+        ]
+      },
+      {
+        name: 'File Serving',
+        weight: 25,
+        levels: [
+          {
+            score: 100,
+            label: 'Excellent',
+            description: 'Serves files correctly with proper MIME types and security checks'
+          },
+          {
+            score: 75,
+            label: 'Good',
+            description: 'File serving works well with most types'
+          },
+          {
+            score: 50,
+            label: 'Satisfactory',
+            description: 'Basic file serving but MIME type or security issues'
+          },
+          {
+            score: 25,
+            label: 'Needs Improvement',
+            description: 'File serving unreliable or insecure'
+          }
+        ]
+      },
+      {
+        name: 'Concurrency',
+        weight: 25,
+        levels: [
+          {
+            score: 100,
+            label: 'Excellent',
+            description: 'Handles many concurrent clients efficiently'
+          },
+          {
+            score: 75,
+            label: 'Good',
+            description: 'Good concurrent handling with minor limitations'
+          },
+          {
+            score: 50,
+            label: 'Satisfactory',
+            description: 'Can handle some concurrent requests'
+          },
+          {
+            score: 25,
+            label: 'Needs Improvement',
+            description: 'Single-client or very limited concurrency'
+          }
+        ]
+      },
+      {
+        name: 'Error Handling & Logging',
+        weight: 15,
+        levels: [
+          {
+            score: 100,
+            label: 'Excellent',
+            description: 'Comprehensive error handling and detailed logging'
+          },
+          {
+            score: 75,
+            label: 'Good',
+            description: 'Good error handling with basic logging'
+          },
+          {
+            score: 50,
+            label: 'Satisfactory',
+            description: 'Some error handling, minimal logging'
+          },
+          {
+            score: 25,
+            label: 'Needs Improvement',
+            description: 'Poor error handling, no logging'
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'cs302-project-4',
+    subjectId: 'cs302',
+    title: 'Network Simulation Tool',
+    description: 'Build a network simulation tool that models packet transmission through a virtual network topology. Simulate routing, latency, packet loss, and congestion.',
+    estimatedHours: 22,
+    requirements: [
+      'Define network topology with nodes (hosts, routers) and links',
+      'Configure link properties: bandwidth, latency, packet loss rate',
+      'Implement shortest path routing (Dijkstra algorithm)',
+      'Simulate packet transmission with queuing delays',
+      'Model packet loss based on configured probability',
+      'Implement basic congestion simulation (queue overflow)',
+      'Generate traffic patterns between source and destination nodes',
+      'Calculate network statistics: throughput, average latency, packet loss rate',
+      'Visualize topology as text or simple graphics',
+      'Support simulation of different scenarios (link failure, traffic burst)'
+    ],
+    rubric: [
+      {
+        name: 'Simulation Accuracy',
+        weight: 40,
+        levels: [
+          {
+            score: 100,
+            label: 'Excellent',
+            description: 'Realistic simulation of routing, delays, loss with proper queuing models'
+          },
+          {
+            score: 75,
+            label: 'Good',
+            description: 'Good simulation with mostly accurate behavior'
+          },
+          {
+            score: 50,
+            label: 'Satisfactory',
+            description: 'Basic simulation works but simplified models'
+          },
+          {
+            score: 25,
+            label: 'Needs Improvement',
+            description: 'Unrealistic or buggy simulation'
+          }
+        ]
+      },
+      {
+        name: 'Topology & Routing',
+        weight: 25,
+        levels: [
+          {
+            score: 100,
+            label: 'Excellent',
+            description: 'Flexible topology definition with correct shortest-path routing'
+          },
+          {
+            score: 75,
+            label: 'Good',
+            description: 'Good topology support with working routing'
+          },
+          {
+            score: 50,
+            label: 'Satisfactory',
+            description: 'Limited topology options or routing issues'
+          },
+          {
+            score: 25,
+            label: 'Needs Improvement',
+            description: 'Fixed topology or broken routing'
+          }
+        ]
+      },
+      {
+        name: 'Statistics & Analysis',
+        weight: 20,
+        levels: [
+          {
+            score: 100,
+            label: 'Excellent',
+            description: 'Comprehensive statistics with clear presentation'
+          },
+          {
+            score: 75,
+            label: 'Good',
+            description: 'Good statistics coverage'
+          },
+          {
+            score: 50,
+            label: 'Satisfactory',
+            description: 'Basic statistics provided'
+          },
+          {
+            score: 25,
+            label: 'Needs Improvement',
+            description: 'Minimal or inaccurate statistics'
+          }
+        ]
+      },
+      {
+        name: 'Code Quality',
+        weight: 15,
+        levels: [
+          {
+            score: 100,
+            label: 'Excellent',
+            description: 'Well-structured, modular design with clear abstractions'
+          },
+          {
+            score: 75,
+            label: 'Good',
+            description: 'Good organization with reasonable structure'
+          },
+          {
+            score: 50,
+            label: 'Satisfactory',
+            description: 'Working code but poorly organized'
+          },
+          {
+            score: 25,
+            label: 'Needs Improvement',
+            description: 'Disorganized, hard to understand'
+          }
+        ]
+      }
+    ]
+  }
+];
