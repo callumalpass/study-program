@@ -262,9 +262,15 @@ export class TimelineGantt {
     // Get bar color based on status
     const barColor = this.getStatusColor(scheduled.status);
 
-    // Check if subject is overdue (should have started but not completed)
+    // Check if subject is behind schedule (actual progress < expected progress)
     const today = new Date();
-    const isOverdue = scheduled.status !== 'completed' && scheduled.startDate < today;
+    let isOverdue = false;
+    if (scheduled.status !== 'completed' && today >= scheduled.startDate) {
+      const totalDuration = scheduled.endDate.getTime() - scheduled.startDate.getTime();
+      const elapsed = Math.min(today.getTime() - scheduled.startDate.getTime(), totalDuration);
+      const expectedProgress = (elapsed / totalDuration) * 100;
+      isOverdue = scheduled.completionPercentage < expectedProgress;
+    }
 
     // Create bar group
     const group = document.createElementNS('http://www.w3.org/2000/svg', 'g');
@@ -611,9 +617,15 @@ export class TimelineGantt {
       blocked: 'Blocked (prerequisites needed)',
     };
 
-    // Check if overdue
+    // Check if behind schedule (actual progress < expected progress)
     const today = new Date();
-    const isOverdue = scheduled.status !== 'completed' && scheduled.startDate < today;
+    let isOverdue = false;
+    if (scheduled.status !== 'completed' && today >= scheduled.startDate) {
+      const totalDuration = scheduled.endDate.getTime() - scheduled.startDate.getTime();
+      const elapsed = Math.min(today.getTime() - scheduled.startDate.getTime(), totalDuration);
+      const expectedProgress = (elapsed / totalDuration) * 100;
+      isOverdue = scheduled.completionPercentage < expectedProgress;
+    }
 
     const dragHint = this.options.onSubjectMoved ? '<div class="tooltip-hint">Drag to reschedule</div>' : '';
     const overrideNote = scheduled.hasOverride ? '<div class="tooltip-override">Custom schedule</div>' : '';

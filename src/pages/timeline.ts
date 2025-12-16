@@ -78,10 +78,18 @@ function renderTimeline(
   const inProgress = Array.from(schedule.values()).filter(s => s.status === 'in-progress').length;
   const scheduled = Array.from(schedule.values()).filter(s => s.status === 'scheduled').length;
 
-  // Behind schedule: should have started (start date passed) but not completed
-  const behindSchedule = Array.from(schedule.values()).filter(s =>
-    s.status !== 'completed' && s.startDate < today
-  ).length;
+  // Behind schedule: actual progress is less than expected progress based on schedule
+  const behindSchedule = Array.from(schedule.values()).filter(s => {
+    if (s.status === 'completed') return false;
+    if (today < s.startDate) return false; // Not started yet, can't be behind
+
+    // Calculate expected progress percentage based on where today falls in the schedule
+    const totalDuration = s.endDate.getTime() - s.startDate.getTime();
+    const elapsed = Math.min(today.getTime() - s.startDate.getTime(), totalDuration);
+    const expectedProgress = (elapsed / totalDuration) * 100;
+
+    return s.completionPercentage < expectedProgress;
+  }).length;
 
   container.innerHTML = `
     <div class="timeline-page">
