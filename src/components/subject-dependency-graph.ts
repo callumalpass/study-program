@@ -3,6 +3,20 @@ import type { Subject, UserProgress } from '@/core/types';
 import { arePrerequisitesMet } from '@/core/progress';
 import { navigateToSubject } from '@/core/router';
 
+// Get theme-aware colors from CSS variables
+function getThemeColors() {
+  const style = getComputedStyle(document.documentElement);
+  return {
+    bgSurface: style.getPropertyValue('--color-bg-surface').trim() || '#161b22',
+    bgElevated: style.getPropertyValue('--color-bg-elevated').trim() || '#21262d',
+    textPrimary: style.getPropertyValue('--color-text-primary').trim() || '#f0f3f6',
+    textMuted: style.getPropertyValue('--color-text-muted').trim() || '#6e7681',
+    borderDefault: style.getPropertyValue('--color-border-default').trim() || '#30363d',
+    success: style.getPropertyValue('--color-success').trim() || '#56d364',
+    accentPrimary: style.getPropertyValue('--color-accent-primary').trim() || '#58a6ff',
+  };
+}
+
 interface NodeData {
   subject: Subject;
   x: number;
@@ -65,6 +79,9 @@ export function renderSubjectDependencyGraph(
     });
   });
 
+  // Get theme colors
+  const colors = getThemeColors();
+
   // Create SVG
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   svg.setAttribute('width', `${width}`);
@@ -72,14 +89,14 @@ export function renderSubjectDependencyGraph(
   svg.style.display = 'block';
   svg.style.margin = '0 auto';
 
-  // Add arrow marker definitions
+  // Add arrow marker definitions (theme-aware)
   const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
   defs.innerHTML = `
     <marker id="dep-arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-      <polygon points="0 0, 10 3.5, 0 7" fill="#94a3b8" />
+      <polygon points="0 0, 10 3.5, 0 7" fill="${colors.textMuted}" />
     </marker>
     <marker id="dep-arrow-met" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-      <polygon points="0 0, 10 3.5, 0 7" fill="#10b981" />
+      <polygon points="0 0, 10 3.5, 0 7" fill="${colors.success}" />
     </marker>
   `;
   svg.appendChild(defs);
@@ -91,19 +108,19 @@ export function renderSubjectDependencyGraph(
   prerequisites.forEach((prereq, index) => {
     const prereqNode = nodes[index];
     const isMet = userProgress.subjects[prereq.id]?.status === 'completed';
-    drawEdge(svg, prereqNode, currentNode, isMet);
+    drawEdge(svg, prereqNode, currentNode, isMet, colors);
   });
 
   // Edges from current to dependents
   dependents.forEach((dep, index) => {
     const depNode = nodes[prerequisites.length + 1 + index];
     const currentCompleted = userProgress.subjects[current.id]?.status === 'completed';
-    drawEdge(svg, currentNode, depNode, currentCompleted);
+    drawEdge(svg, currentNode, depNode, currentCompleted, colors);
   });
 
   // Draw nodes
   nodes.forEach(node => {
-    drawNode(svg, node);
+    drawNode(svg, node, colors);
   });
 
   container.appendChild(svg);
@@ -119,7 +136,7 @@ function getNodeStatus(subject: Subject, userProgress: UserProgress): NodeData['
   return 'locked';
 }
 
-function drawEdge(svg: SVGSVGElement, from: NodeData, to: NodeData, isMet: boolean): void {
+function drawEdge(svg: SVGSVGElement, from: NodeData, to: NodeData, isMet: boolean, colors: ReturnType<typeof getThemeColors>): void {
   const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
 
   const startX = from.x + NODE_WIDTH;
@@ -133,42 +150,43 @@ function drawEdge(svg: SVGSVGElement, from: NodeData, to: NodeData, isMet: boole
 
   path.setAttribute('d', d);
   path.setAttribute('fill', 'none');
-  path.setAttribute('stroke', isMet ? '#10b981' : '#cbd5e1');
+  path.setAttribute('stroke', isMet ? colors.success : colors.borderDefault);
   path.setAttribute('stroke-width', '2');
   path.setAttribute('marker-end', isMet ? 'url(#dep-arrow-met)' : 'url(#dep-arrow)');
 
   svg.appendChild(path);
 }
 
-function drawNode(svg: SVGSVGElement, node: NodeData): void {
+function drawNode(svg: SVGSVGElement, node: NodeData, colors: ReturnType<typeof getThemeColors>): void {
   const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
   g.style.cursor = node.status !== 'current' ? 'pointer' : 'default';
 
-  // Determine colors based on status
-  let strokeColor = '#cbd5e1';
-  let fillColor = '#ffffff';
-  let textColor = '#1e293b';
+  // Determine colors based on status (theme-aware)
+  let strokeColor = colors.borderDefault;
+  let fillColor = colors.bgSurface;
+  let textColor = colors.textPrimary;
 
   switch (node.status) {
     case 'current':
-      strokeColor = '#6366f1'; // Indigo for current
-      fillColor = '#eef2ff';
+      strokeColor = '#8b5cf6'; // Purple for current
+      fillColor = colors.bgElevated;
       break;
     case 'completed':
-      strokeColor = '#10b981';
-      fillColor = '#ecfdf5';
+      strokeColor = colors.success;
+      fillColor = colors.bgElevated;
       break;
     case 'in-progress':
-      strokeColor = '#3b82f6';
-      fillColor = '#eff6ff';
+      strokeColor = colors.accentPrimary;
+      fillColor = colors.bgElevated;
       break;
     case 'locked':
-      strokeColor = '#e2e8f0';
-      fillColor = '#f8fafc';
-      textColor = '#94a3b8';
+      strokeColor = colors.borderDefault;
+      fillColor = colors.bgSurface;
+      textColor = colors.textMuted;
       break;
     case 'not-started':
-      strokeColor = '#94a3b8';
+      strokeColor = colors.textMuted;
+      fillColor = colors.bgSurface;
       break;
   }
 
