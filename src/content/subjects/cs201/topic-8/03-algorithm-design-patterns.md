@@ -1,6 +1,10 @@
 # Algorithm Design Patterns and Strategies
 
-Beyond specific paradigms, several meta-strategies help approach new problems systematically.
+Algorithm design is pattern recognition. Experienced algorithm designers don't invent solutions from scratch—they recognize problem structures that match known patterns and apply appropriate techniques. Two pointers for array problems, binary search the answer for optimization, meet in the middle for exponential search spaces, reduce to sorting when order matters. Building this pattern library accelerates problem solving dramatically.
+
+Reduction is perhaps the most powerful meta-technique. When facing an unfamiliar problem, ask: can I transform it into a problem I already know how to solve? Element distinctness reduces to sorting. Convex hull has a sorting lower bound because sorting reduces to it. Understanding reductions reveals problem relationships and transfers algorithmic knowledge across domains.
+
+These meta-strategies complement the major paradigms (divide and conquer, dynamic programming, greedy algorithms). While paradigms provide high-level structure, techniques like two pointers, sliding windows, and meet in the middle provide tactical tools for specific subproblems. A skilled algorithm designer combines strategic paradigm selection with tactical technique application to construct efficient solutions.
 
 ## Reduction
 

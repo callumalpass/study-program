@@ -1,6 +1,10 @@
 # Approximation Algorithms
 
-When optimal solutions are intractable, approximation algorithms provide provably good solutions in polynomial time.
+When NP-hardness blocks the path to exact solutions, approximation algorithms offer a practical compromise: guaranteed bounds on solution quality in polynomial time. A 2-approximation for vertex cover means your solution is at most twice optimal size—not perfect, but far better than arbitrary. A PTAS for knapsack means you can get arbitrarily close to optimal by spending more computation time. These guarantees transform intractable problems into tractable ones.
+
+The theory of approximation is surprisingly rich. Some problems admit constant-factor approximations (vertex cover at ratio 2), others allow logarithmic factors (set cover), others permit arbitrarily good approximations given enough time (FPTAS for knapsack), and some resist all approximation (clique). This landscape, shaped by hardness results like the PCP theorem, reveals which problems bend under algorithmic pressure and which break.
+
+Approximation algorithms combine algorithmic creativity with proof techniques. Greedy analysis shows set cover achieves O(log n). LP relaxation and rounding provides systematic approaches to many problems. Probabilistic arguments yield randomized approximations. Each technique has its sweet spot, and matching technique to problem structure is the art of approximation algorithm design.
 
 ## Approximation Ratios
 

@@ -1,6 +1,10 @@
 # Algorithm Correctness
 
-Proving an algorithm is correct ensures it produces the right answer for all valid inputs. Correctness proofs are essential for critical systems and algorithm design.
+Testing can show the presence of bugs, but only proofs can show their absence. In critical systems—medical devices, aviation software, financial trading systems—correctness matters enormously. Even in everyday programming, understanding how to reason about algorithm correctness improves code quality and debugging ability. Correctness proofs transform algorithm design from hopeful coding into mathematical reasoning.
+
+The distinction between partial and total correctness is fundamental. Partial correctness means "if the algorithm terminates, it gives the right answer." Total correctness adds "and it always terminates." Both matter: an algorithm that loops forever is useless, but so is one that terminates with wrong answers. Complete analysis requires proving both properties separately, then combining them.
+
+Loop invariants are the key tool for proving iterative algorithm correctness. An invariant is a property that holds before and after each iteration—a mathematical handle on what the loop accomplishes. Finding the right invariant requires understanding what the loop is really doing: maintaining sorted prefixes, narrowing search bounds, accumulating partial results. Once found, the invariant makes correctness almost obvious.
 
 ## What is Correctness?
 

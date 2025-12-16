@@ -1,6 +1,10 @@
 # Computational Hardness
 
-When exact solutions are intractable, understanding hardness helps identify what's achievable and guides algorithm design.
+Understanding hardness is about knowing what you cannot do as much as what you can. When a problem is proven NP-hard, you stop looking for polynomial-time exact algorithms and start exploring alternatives: approximation, parameterized algorithms, heuristics, or special cases. This reframing—from seeking optimality to seeking tractability—is essential practical wisdom.
+
+Hardness comes in degrees. NP-hardness says no polynomial-time algorithm exists (unless P = NP). Inapproximability results say you cannot even get close to optimal efficiently. Strong NP-hardness rules out pseudo-polynomial algorithms. Understanding these distinctions helps calibrate expectations: for some problems, 2-approximation is achievable; for others, any constant approximation is as hard as exact solution.
+
+The tools for proving hardness—polynomial-time reductions—also illuminate problem structure. Showing that problem A reduces to problem B reveals that B contains all the difficulty of A, plus possibly more. The web of reductions connecting NP-complete problems provides a taxonomy of computational hardness, showing how problems relate and which techniques might transfer.
 
 ## Proving Hardness
 

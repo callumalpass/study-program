@@ -1,6 +1,10 @@
 # Complexity Theory Fundamentals
 
-Complexity theory classifies problems by inherent computational difficulty, revealing fundamental limits of efficient computation.
+Complexity theory asks one of computer science's deepest questions: what makes problems hard? Not hard because we haven't found a good algorithm yet, but fundamentally hard—requiring exponential time no matter how clever we are. The answer, encapsulated in complexity classes like P and NP, provides a map of computational difficulty that guides algorithm design and reveals fundamental limits.
+
+The P versus NP problem is the most famous open question in theoretical computer science: are problems whose solutions can be verified quickly also solvable quickly? Most computer scientists believe P ≠ NP, meaning some problems are fundamentally harder to solve than to verify. This belief underlies modern cryptography (encryption is easy, decryption is hard) and shapes practical algorithm design (NP-hard problems need approximation or heuristics).
+
+Understanding complexity classes provides practical guidance. When you recognize a problem as NP-complete, you know not to spend months searching for a polynomial-time algorithm. When you identify a problem as being in P, you know an efficient solution exists. This classification scheme transforms algorithm design from blind exploration into informed strategy.
 
 ## Complexity Classes
 

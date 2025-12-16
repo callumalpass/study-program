@@ -1,6 +1,10 @@
 # Loop Invariants in Practice
 
-Loop invariants are assertions that remain true before and after each iteration. They're the key to proving iterative algorithm correctness.
+Loop invariants transform the challenge of proving loop correctness into three simpler tasks: proving the invariant holds initially, proving each iteration preserves it, and proving that when the loop terminates, the invariant implies correctness. This decomposition mirrors mathematical induction and provides a systematic framework for reasoning about iterative algorithms.
+
+Finding the right invariant is an art. Too weak an invariant fails to imply correctness at termination. Too strong an invariant may not be maintainable through iterations. The sweet spot captures exactly what progress the loop makes: sorted prefixes in insertion sort, narrowing bounds in binary search, accumulated sums in array summation. The invariant should describe what's been accomplished, not how—that's the loop body's job.
+
+Practicing loop invariants builds general reasoning skills. When debugging, asking "what invariant should hold here?" often reveals bugs—places where the intended invariant breaks. When designing algorithms, thinking about invariants guides loop construction toward provably correct code. The technique applies beyond proving correctness: it clarifies thinking and improves code quality even when formal proofs aren't written down.
 
 ## Anatomy of a Loop Invariant Proof
 

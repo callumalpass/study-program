@@ -1,6 +1,10 @@
 # Termination Proofs
 
-Proving an algorithm terminates is as important as proving it's correct. A loop that never ends is no algorithm at all.
+An algorithm that runs forever is not an algorithm at all—it's just a program that happens to not crash. Termination is a fundamental property that, combined with partial correctness, yields total correctness. While the halting problem tells us that termination is undecidable in general, practical algorithms can often be proven to terminate using straightforward techniques.
+
+The key technique is the ranking function (or variant): a quantity that decreases with each iteration or recursive call and is bounded below. If you can find such a function, termination is guaranteed. For simple loops that count down, the ranking function is obvious. For complex algorithms with nested loops, multiple recursive calls, or subtle termination conditions, finding the right ranking function requires careful analysis.
+
+Termination proofs complement correctness proofs. A loop invariant tells you what the loop accomplishes; a ranking function tells you that it will eventually stop accomplishing it. Together, they provide complete assurance: the algorithm terminates, and when it does, it has computed the right answer. This combination of techniques is the foundation of rigorous algorithm analysis.
 
 ## The Termination Problem
 
