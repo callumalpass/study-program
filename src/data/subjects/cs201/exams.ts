@@ -268,6 +268,14 @@ export const cs201Exams: Exam[] = [
         correctAnswer: 'pivot unbalanced partition random median',
         explanation: 'Quick Sort degrades when partitions are unbalanced. Mitigation techniques include random pivot selection or median-of-three.',
         modelAnswer: 'Quick Sort has O(n^2) worst-case when the pivot selection consistently creates unbalanced partitions. For example, if the first element is always chosen as pivot on already-sorted data, each partition has sizes 0 and n-1, requiring n levels of recursion with O(n) work each. To mitigate: (1) Random pivot selection makes worst-case unlikely, (2) Median-of-three selects median of first, middle, and last elements, (3) Introsort switches to Heapsort when recursion depth exceeds a threshold.'
+      },
+      {
+        id: 'mid-q26',
+        type: 'multiple_choice',
+        prompt: 'What is the time complexity of finding the minimum element in an unsorted array of n elements?',
+        options: ['O(1)', 'O(log n)', 'O(n)', 'O(n log n)'],
+        correctAnswer: 2,
+        explanation: 'Finding the minimum requires examining every element at least once, giving O(n) time. No comparison-based algorithm can do better.'
       }
     ]
   },
@@ -761,6 +769,14 @@ export const cs201Exams: Exam[] = [
         prompt: 'The ______ algorithm solves the maximum flow problem by finding augmenting paths using BFS, guaranteeing polynomial time.',
         correctAnswer: 'Edmonds-Karp',
         explanation: 'Edmonds-Karp uses BFS to find shortest augmenting paths, giving O(VE^2) time complexity.'
+      },
+      {
+        id: 'fin-q42',
+        type: 'multiple_choice',
+        prompt: 'Which of the following problems is NOT known to be NP-Complete?',
+        options: ['3-SAT', 'Hamiltonian Path', 'Shortest Path in a weighted graph', 'Graph Coloring with k ≥ 3 colors'],
+        correctAnswer: 2,
+        explanation: 'Shortest path can be solved in polynomial time using Dijkstra or Bellman-Ford. The others are classic NP-Complete problems.'
       }
     ]
   }
