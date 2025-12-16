@@ -1,0 +1,256 @@
+import { Project } from '../../../core/types';
+
+export const cs203Projects: Project[] = [
+  {
+    id: 'cs203-project-1',
+    subjectId: 'cs203',
+    title: 'Finite Automata Simulator',
+    description: 'Build an interactive simulator for finite automata (DFA and NFA) that allows users to define automata, visualize their structure, and trace execution on input strings. This project reinforces understanding of automata theory and provides hands-on experience with state-based computation.',
+    requirements: [
+      'Allow users to define DFAs by specifying states, alphabet, transitions, start state, and accept states',
+      'Support NFA definition including epsilon transitions',
+      'Visualize the automaton as a state diagram (text-based or graphical)',
+      'Implement step-by-step execution tracing showing current state and remaining input',
+      'For NFAs, show all possible states at each step (simulate nondeterminism)',
+      'Implement subset construction to convert NFA to equivalent DFA',
+      'Display the resulting DFA with state labels showing original NFA state sets',
+      'Test string acceptance/rejection with clear YES/NO output and trace',
+      'Include at least 5 example automata demonstrating different language patterns',
+      'Write unit tests for the conversion and simulation algorithms'
+    ],
+    rubric: [
+      {
+        name: 'Functionality',
+        weight: 40,
+        levels: [
+          { score: 100, label: 'Excellent', description: 'All features work correctly, NFA-to-DFA conversion produces minimal DFA, handles edge cases' },
+          { score: 75, label: 'Good', description: 'DFA and NFA simulation work, conversion mostly correct with minor issues' },
+          { score: 50, label: 'Satisfactory', description: 'Basic simulation works but conversion has bugs or missing features' },
+          { score: 25, label: 'Needs Improvement', description: 'Only partial functionality, major bugs in core features' }
+        ]
+      },
+      {
+        name: 'Algorithm Implementation',
+        weight: 30,
+        levels: [
+          { score: 100, label: 'Excellent', description: 'Correct implementation of subset construction, efficient data structures, clean code' },
+          { score: 75, label: 'Good', description: 'Algorithms work correctly but could be more efficient or cleaner' },
+          { score: 50, label: 'Satisfactory', description: 'Basic algorithms work but inefficient or hard to follow' },
+          { score: 25, label: 'Needs Improvement', description: 'Algorithms incorrect or incomplete' }
+        ]
+      },
+      {
+        name: 'User Interface',
+        weight: 15,
+        levels: [
+          { score: 100, label: 'Excellent', description: 'Clear visualization, intuitive input format, helpful trace output' },
+          { score: 75, label: 'Good', description: 'Usable interface with adequate feedback' },
+          { score: 50, label: 'Satisfactory', description: 'Functional but confusing or hard to use' },
+          { score: 25, label: 'Needs Improvement', description: 'Poor interface that impedes understanding' }
+        ]
+      },
+      {
+        name: 'Testing and Examples',
+        weight: 15,
+        levels: [
+          { score: 100, label: 'Excellent', description: 'Comprehensive tests, diverse example automata, edge cases covered' },
+          { score: 75, label: 'Good', description: 'Good test coverage with several useful examples' },
+          { score: 50, label: 'Satisfactory', description: 'Basic tests, few examples' },
+          { score: 25, label: 'Needs Improvement', description: 'Minimal or no testing' }
+        ]
+      }
+    ],
+    estimatedHours: 15,
+    scaffolding: {
+      overview: 'This project involves implementing core automata theory algorithms in code. Start with DFA representation and simulation, then extend to NFAs with epsilon closures, and finally implement the subset construction algorithm.',
+      gettingStarted: [
+        'Define data structures for states, transitions, and automata',
+        'Implement DFA string acceptance using a simple state-tracking loop',
+        'Add NFA support by tracking sets of states instead of single states',
+        'Implement epsilon-closure computation for NFA states',
+        'Build the subset construction algorithm incrementally'
+      ],
+      milestones: [
+        'DFA definition and simulation working',
+        'NFA simulation with epsilon transitions',
+        'Subset construction converting NFA to DFA',
+        'Visualization and user interface complete',
+        'Tests and examples added'
+      ],
+      tips: [
+        'Use a dictionary/map for transition functions',
+        'For epsilon closure, use BFS or DFS to find all reachable states',
+        'In subset construction, use frozensets or sorted tuples as dictionary keys',
+        'Test with classic examples: strings ending in "ab", binary strings divisible by 3'
+      ]
+    }
+  },
+  {
+    id: 'cs203-project-2',
+    subjectId: 'cs203',
+    title: 'Context-Free Grammar Parser',
+    description: 'Implement a parser for context-free grammars that can check if strings belong to a language, generate derivations, and convert grammars to normal forms. This project connects formal language theory to practical parsing techniques.',
+    requirements: [
+      'Parse grammar definitions in a simple text format (production rules)',
+      'Implement the CYK algorithm for CNF grammars to check string membership',
+      'Display the CYK table showing which nonterminals derive which substrings',
+      'Convert arbitrary CFGs to Chomsky Normal Form automatically',
+      'Handle unit productions and epsilon productions during CNF conversion',
+      'Generate leftmost and rightmost derivations for accepted strings',
+      'Build and display parse trees for successful parses',
+      'Detect and report ambiguous grammars (multiple parse trees for same string)',
+      'Include example grammars: arithmetic expressions, balanced parentheses, {aⁿbⁿ}',
+      'Compare parsing time for different grammar sizes and string lengths'
+    ],
+    rubric: [
+      {
+        name: 'CYK Implementation',
+        weight: 35,
+        levels: [
+          { score: 100, label: 'Excellent', description: 'Correct CYK algorithm, efficient implementation, proper table display' },
+          { score: 75, label: 'Good', description: 'CYK works correctly but could be more efficient' },
+          { score: 50, label: 'Satisfactory', description: 'Basic CYK works but has edge case issues' },
+          { score: 25, label: 'Needs Improvement', description: 'CYK implementation incorrect or incomplete' }
+        ]
+      },
+      {
+        name: 'CNF Conversion',
+        weight: 30,
+        levels: [
+          { score: 100, label: 'Excellent', description: 'Handles all cases correctly: epsilon, units, long productions' },
+          { score: 75, label: 'Good', description: 'Conversion works for most grammars with minor issues' },
+          { score: 50, label: 'Satisfactory', description: 'Basic conversion works but misses some cases' },
+          { score: 25, label: 'Needs Improvement', description: 'Conversion produces incorrect grammars' }
+        ]
+      },
+      {
+        name: 'Parse Tree Generation',
+        weight: 20,
+        levels: [
+          { score: 100, label: 'Excellent', description: 'Correct parse trees, handles ambiguity, clear display' },
+          { score: 75, label: 'Good', description: 'Parse trees correct but display could improve' },
+          { score: 50, label: 'Satisfactory', description: 'Basic tree generation with some issues' },
+          { score: 25, label: 'Needs Improvement', description: 'Trees incorrect or not generated' }
+        ]
+      },
+      {
+        name: 'Code Quality and Testing',
+        weight: 15,
+        levels: [
+          { score: 100, label: 'Excellent', description: 'Clean, well-documented code with comprehensive tests' },
+          { score: 75, label: 'Good', description: 'Good code quality with adequate tests' },
+          { score: 50, label: 'Satisfactory', description: 'Functional code but hard to read or test' },
+          { score: 25, label: 'Needs Improvement', description: 'Poor code quality, minimal testing' }
+        ]
+      }
+    ],
+    estimatedHours: 18,
+    scaffolding: {
+      overview: 'Build a grammar processing system step by step. First implement grammar representation and CNF conversion, then implement the CYK parsing algorithm, and finally add derivation and tree generation.',
+      gettingStarted: [
+        'Define data structures for grammars, productions, and parse trees',
+        'Implement grammar parsing from text format',
+        'Start CNF conversion with the simplest case (long productions)',
+        'Add epsilon and unit production elimination',
+        'Implement CYK using a 2D array indexed by substring positions'
+      ],
+      milestones: [
+        'Grammar input and representation working',
+        'CNF conversion complete and tested',
+        'CYK membership testing functional',
+        'Parse tree generation from CYK table',
+        'Ambiguity detection and multiple tree output'
+      ],
+      tips: [
+        'Use a bottom-up approach for CYK: fill table for length-1 substrings first',
+        'Store backpointers in CYK table for tree reconstruction',
+        'Test CNF conversion by checking that languages are preserved',
+        'The grammar S → aSb | ε is a good test case for {aⁿbⁿ}'
+      ]
+    }
+  },
+  {
+    id: 'cs203-project-3',
+    subjectId: 'cs203',
+    title: 'Turing Machine Simulator',
+    description: 'Create a simulator for Turing machines that supports multiple variants (single-tape, multi-tape, nondeterministic) and can visualize computation. This project demonstrates the fundamental model of computation and explores the limits of what can be computed.',
+    requirements: [
+      'Define TMs with states, tape alphabet, transitions, start/accept/reject states',
+      'Implement single-tape TM simulation with step-by-step execution',
+      'Visualize tape contents, head position, and current state at each step',
+      'Support multi-tape TMs with synchronized heads',
+      'Implement nondeterministic TM simulation (explore all computation paths)',
+      'Detect infinite loops using configuration history (optional: use step limits)',
+      'Implement a Universal Turing Machine that simulates encoded TMs',
+      'Include example TMs: palindrome checker, binary increment, {0ⁿ1ⁿ} recognizer',
+      'Compare computation steps between single-tape and multi-tape variants',
+      'Allow export of computation traces for analysis'
+    ],
+    rubric: [
+      {
+        name: 'Core TM Simulation',
+        weight: 35,
+        levels: [
+          { score: 100, label: 'Excellent', description: 'All TM variants work correctly, handles edge cases, clear tape visualization' },
+          { score: 75, label: 'Good', description: 'Single and multi-tape work, minor issues with edge cases' },
+          { score: 50, label: 'Satisfactory', description: 'Basic single-tape works but variants have problems' },
+          { score: 25, label: 'Needs Improvement', description: 'Core simulation broken or incomplete' }
+        ]
+      },
+      {
+        name: 'Universal TM',
+        weight: 25,
+        levels: [
+          { score: 100, label: 'Excellent', description: 'UTM correctly simulates arbitrary TMs with proper encoding' },
+          { score: 75, label: 'Good', description: 'UTM works for most TMs but encoding could be cleaner' },
+          { score: 50, label: 'Satisfactory', description: 'Partial UTM implementation or significant limitations' },
+          { score: 25, label: 'Needs Improvement', description: 'UTM not functional' }
+        ]
+      },
+      {
+        name: 'Visualization and Interface',
+        weight: 20,
+        levels: [
+          { score: 100, label: 'Excellent', description: 'Clear step-by-step visualization, intuitive controls, informative output' },
+          { score: 75, label: 'Good', description: 'Good visualization with room for improvement' },
+          { score: 50, label: 'Satisfactory', description: 'Basic visualization but hard to follow' },
+          { score: 25, label: 'Needs Improvement', description: 'Poor or missing visualization' }
+        ]
+      },
+      {
+        name: 'Examples and Documentation',
+        weight: 20,
+        levels: [
+          { score: 100, label: 'Excellent', description: 'Diverse, well-documented examples demonstrating TM capabilities' },
+          { score: 75, label: 'Good', description: 'Good examples with adequate documentation' },
+          { score: 50, label: 'Satisfactory', description: 'Few examples or lacking documentation' },
+          { score: 25, label: 'Needs Improvement', description: 'Minimal examples or documentation' }
+        ]
+      }
+    ],
+    estimatedHours: 20,
+    scaffolding: {
+      overview: 'Build progressively from single-tape TM simulation to multi-tape and nondeterministic variants. The Universal TM is the capstone demonstrating that one TM can simulate any other.',
+      gettingStarted: [
+        'Design tape representation (infinite in both directions or just right)',
+        'Implement transition function lookup and state updates',
+        'Create tape visualization showing head position clearly',
+        'Extend to multi-tape by managing multiple tape/head pairs',
+        'For NTM, use breadth-first search over configuration tree'
+      ],
+      milestones: [
+        'Single-tape TM accepting simple languages',
+        'Visualization and step-through debugging',
+        'Multi-tape TM implementation',
+        'Nondeterministic TM with path exploration',
+        'Universal TM encoding and simulation'
+      ],
+      tips: [
+        'Use a dictionary for tape with default blank symbol for uninitialized cells',
+        'For multi-tape, transitions specify actions for all tapes simultaneously',
+        'In NTM simulation, avoid infinite branches by setting step limits',
+        'For UTM, design a clear encoding scheme and document it well'
+      ]
+    }
+  }
+];

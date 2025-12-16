@@ -10,6 +10,8 @@ import { cs104Topics } from './subjects/cs104/topics';
 import { cs105Topics } from './subjects/cs105/topics';
 import { math203Topics } from './subjects/math203/topics';
 import { cs201Topics } from './subjects/cs201/topics';
+import { cs202Topics } from './subjects/cs202/topics';
+import { cs203Topics } from './subjects/cs203/topics';
 
 /**
  * Complete Computer Science Degree Curriculum
@@ -224,15 +226,8 @@ export const curriculum: Subject[] = [
       'Evaluate architectural tradeoffs in processor design'
     ],
     estimatedHours: 110,
-    topics: [
-      { id: 'cs202-1', title: 'Instruction Set Architecture', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs202-2', title: 'Assembly Language Programming', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs202-3', title: 'CPU Datapath and Control', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs202-4', title: 'Pipelining', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs202-5', title: 'Cache Memory Design', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs202-6', title: 'Memory Hierarchy', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs202-7', title: 'Instruction-Level Parallelism', content: '', quizIds: [], exerciseIds: [] }
-    ]
+    topics: cs202Topics,
+    examIds: ['cs202-midterm', 'cs202-final']
   },
 
   {
@@ -253,15 +248,8 @@ export const curriculum: Subject[] = [
       'Classify problems by computational complexity'
     ],
     estimatedHours: 100,
-    topics: [
-      { id: 'cs203-1', title: 'Finite Automata', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs203-2', title: 'Regular Languages and Expressions', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs203-3', title: 'Context-Free Grammars', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs203-4', title: 'Pushdown Automata', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs203-5', title: 'Turing Machines', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs203-6', title: 'Decidability', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs203-7', title: 'Computational Complexity', content: '', quizIds: [], exerciseIds: [] }
-    ]
+    topics: cs203Topics,
+    examIds: ['cs203-midterm', 'cs203-final']
   },
 
   {
