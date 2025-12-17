@@ -2177,15 +2177,17 @@
 
 .content-navigator {
   display: grid;
-  grid-template-columns: 280px 1fr;
+  grid-template-columns: 1fr 280px;
   gap: var(--space-xl);
   min-height: calc(100vh - 200px);
   max-width: 1200px;  /* 280px sidebar + gap + ~880px content */
+  margin: 0 auto;
   align-items: start; /* Align grid items to start for sticky to work */
 }
 
 /* Sidebar */
 .content-navigator .content-sidebar {
+  order: 2;
   position: sticky;
   top: var(--space-lg);
   align-self: start; /* Critical for sticky within grid */
@@ -2540,6 +2542,7 @@
 
 /* Main Content Area */
 .content-navigator .content-area {
+  order: 1;
   min-width: 0;
 }
 
@@ -2683,6 +2686,7 @@
   }
 
   .content-navigator .content-sidebar {
+    order: unset;
     position: static;
     max-height: none;
     padding-right: 0;
