@@ -1,0 +1,579 @@
+import { CodingExercise } from '../../../../core/types';
+
+export const topic6Exercises: CodingExercise[] = [
+  {
+    id: 'math303-t6-ex01',
+    subjectId: 'math303',
+    topicId: 'math303-topic-6',
+    title: 'Riemann Sum - Left Endpoint',
+    difficulty: 1,
+    description: 'Compute left endpoint Riemann sum for f(x) = x on [0,1] with n = 4 subintervals.',
+    starterCode: `def left_riemann_sum(n):
+    """
+    Compute left Riemann sum for f(x) = x on [0,1]
+    Args:
+        n: number of subintervals
+    Returns:
+        float: Riemann sum
+    """
+    pass`,
+    solution: `def left_riemann_sum(n):
+    """
+    Compute left Riemann sum for f(x) = x on [0,1]
+    Args:
+        n: number of subintervals
+    Returns:
+        float: Riemann sum
+    """
+    dx = 1.0 / n
+    total = 0
+    for i in range(n):
+        x_i = i * dx  # left endpoint
+        total += x_i * dx
+    return total`,
+    testCases: [
+      { input: '4', expectedOutput: '0.375', isHidden: false, description: 'n=4 subintervals' },
+      { input: '10', expectedOutput: '0.45', isHidden: false, description: 'n=10 subintervals' },
+      { input: '100', expectedOutput: '0.495', isHidden: true, description: 'n=100 subintervals' }
+    ],
+    hints: ['Left endpoint: x_i = a + i·Δx for i = 0,1,...,n-1', 'Sum = Σf(x_i)·Δx'],
+    language: 'python'
+  },
+  {
+    id: 'math303-t6-ex02',
+    subjectId: 'math303',
+    topicId: 'math303-topic-6',
+    title: 'Riemann Sum - Right Endpoint',
+    difficulty: 1,
+    description: 'Compute right endpoint Riemann sum for f(x) = x on [0,1] with n subintervals.',
+    starterCode: `def right_riemann_sum(n):
+    """
+    Compute right Riemann sum for f(x) = x on [0,1]
+    Args:
+        n: number of subintervals
+    Returns:
+        float: Riemann sum
+    """
+    pass`,
+    solution: `def right_riemann_sum(n):
+    """
+    Compute right Riemann sum for f(x) = x on [0,1]
+    Args:
+        n: number of subintervals
+    Returns:
+        float: Riemann sum
+    """
+    dx = 1.0 / n
+    total = 0
+    for i in range(1, n+1):
+        x_i = i * dx  # right endpoint
+        total += x_i * dx
+    return total`,
+    testCases: [
+      { input: '4', expectedOutput: '0.625', isHidden: false, description: 'n=4 subintervals' },
+      { input: '10', expectedOutput: '0.55', isHidden: false, description: 'n=10 subintervals' },
+      { input: '100', expectedOutput: '0.505', isHidden: true, description: 'n=100 subintervals' }
+    ],
+    hints: ['Right endpoint: x_i = a + i·Δx for i = 1,2,...,n', 'Sum = Σf(x_i)·Δx'],
+    language: 'python'
+  },
+  {
+    id: 'math303-t6-ex03',
+    subjectId: 'math303',
+    topicId: 'math303-topic-6',
+    title: 'Riemann Sum - Midpoint',
+    difficulty: 2,
+    description: 'Compute midpoint Riemann sum for f(x) = x² on [0,2] with n subintervals.',
+    starterCode: `def midpoint_riemann_sum(n):
+    """
+    Compute midpoint Riemann sum for f(x) = x² on [0,2]
+    Args:
+        n: number of subintervals
+    Returns:
+        float: Riemann sum
+    """
+    pass`,
+    solution: `def midpoint_riemann_sum(n):
+    """
+    Compute midpoint Riemann sum for f(x) = x² on [0,2]
+    Args:
+        n: number of subintervals
+    Returns:
+        float: Riemann sum
+    """
+    dx = 2.0 / n
+    total = 0
+    for i in range(n):
+        x_mid = (i + 0.5) * dx  # midpoint
+        total += x_mid**2 * dx
+    return total`,
+    testCases: [
+      { input: '4', expectedOutput: '2.625', isHidden: false, description: 'n=4 subintervals' },
+      { input: '10', expectedOutput: '2.66', isHidden: false, description: 'n=10 subintervals' },
+      { input: '100', expectedOutput: '2.6666', isHidden: true, description: 'n=100 subintervals' }
+    ],
+    hints: ['Midpoint: x_i = a + (i+0.5)·Δx for i = 0,1,...,n-1', 'Often more accurate than left/right'],
+    language: 'python'
+  },
+  {
+    id: 'math303-t6-ex04',
+    subjectId: 'math303',
+    topicId: 'math303-topic-6',
+    title: 'Definite Integral Computation',
+    difficulty: 2,
+    description: 'Compute ∫₀¹ x² dx using the fundamental theorem of calculus.',
+    starterCode: `def definite_integral_x_squared():
+    """
+    Compute ∫₀¹ x² dx
+    Returns:
+        float: value of integral
+    """
+    pass`,
+    solution: `def definite_integral_x_squared():
+    """
+    Compute ∫₀¹ x² dx
+    Returns:
+        float: value of integral
+    """
+    # ∫x² dx = x³/3
+    # [x³/3]₀¹ = 1/3 - 0 = 1/3
+    return 1.0 / 3.0`,
+    testCases: [
+      { input: '', expectedOutput: '0.3333333333333333', isHidden: false, description: 'Integral equals 1/3' },
+      { input: '', expectedOutput: '0.3333333333333333', isHidden: false, description: 'FTC application' },
+      { input: '', expectedOutput: '0.3333333333333333', isHidden: true, description: 'Exact value' }
+    ],
+    hints: ['Find antiderivative F(x) = x³/3', 'Evaluate F(1) - F(0)'],
+    language: 'python'
+  },
+  {
+    id: 'math303-t6-ex05',
+    subjectId: 'math303',
+    topicId: 'math303-topic-6',
+    title: 'Fundamental Theorem Part 1',
+    difficulty: 2,
+    description: 'If F(x) = ∫₀ˣ t² dt, find F\'(x).',
+    starterCode: `def ftc_part1_derivative(x):
+    """
+    Find F'(x) where F(x) = ∫₀ˣ t² dt
+    Args:
+        x: point to evaluate
+    Returns:
+        float: F'(x)
+    """
+    pass`,
+    solution: `def ftc_part1_derivative(x):
+    """
+    Find F'(x) where F(x) = ∫₀ˣ t² dt
+    Args:
+        x: point to evaluate
+    Returns:
+        float: F'(x)
+    """
+    # By FTC Part 1: d/dx ∫ₐˣ f(t) dt = f(x)
+    # F'(x) = x²
+    return x**2`,
+    testCases: [
+      { input: '2', expectedOutput: '4', isHidden: false, description: 'Derivative at x=2' },
+      { input: '3', expectedOutput: '9', isHidden: false, description: 'Derivative at x=3' },
+      { input: '0', expectedOutput: '0', isHidden: true, description: 'Derivative at x=0' }
+    ],
+    hints: ['FTC Part 1: d/dx ∫ₐˣ f(t) dt = f(x)'],
+    language: 'python'
+  },
+  {
+    id: 'math303-t6-ex06',
+    subjectId: 'math303',
+    topicId: 'math303-topic-6',
+    title: 'Upper and Lower Sums',
+    difficulty: 3,
+    description: 'Compute upper sum for f(x) = x on [0,1] with n = 4 (use max on each subinterval).',
+    starterCode: `def upper_sum(n):
+    """
+    Compute upper sum for f(x) = x on [0,1]
+    Args:
+        n: number of subintervals
+    Returns:
+        float: upper sum
+    """
+    pass`,
+    solution: `def upper_sum(n):
+    """
+    Compute upper sum for f(x) = x on [0,1]
+    Args:
+        n: number of subintervals
+    Returns:
+        float: upper sum
+    """
+    # f(x) = x is increasing, so max on [x_i, x_{i+1}] is at right endpoint
+    dx = 1.0 / n
+    total = 0
+    for i in range(1, n+1):
+        x_right = i * dx
+        total += x_right * dx
+    return total`,
+    testCases: [
+      { input: '4', expectedOutput: '0.625', isHidden: false, description: 'Upper sum n=4' },
+      { input: '10', expectedOutput: '0.55', isHidden: false, description: 'Upper sum n=10' },
+      { input: '100', expectedOutput: '0.505', isHidden: true, description: 'Upper sum n=100' }
+    ],
+    hints: ['For increasing function, max is at right endpoint', 'Upper sum ≥ integral'],
+    language: 'python'
+  },
+  {
+    id: 'math303-t6-ex07',
+    subjectId: 'math303',
+    topicId: 'math303-topic-6',
+    title: 'Integrability Criterion',
+    difficulty: 3,
+    description: 'Check if f is integrable: upper and lower sums must converge to same value.',
+    starterCode: `def is_integrable(upper_limit, lower_limit, tolerance=0.001):
+    """
+    Check if function is integrable based on upper/lower sums
+    Args:
+        upper_limit: limit of upper sums
+        lower_limit: limit of lower sums
+        tolerance: acceptable difference
+    Returns:
+        bool: True if integrable
+    """
+    pass`,
+    solution: `def is_integrable(upper_limit, lower_limit, tolerance=0.001):
+    """
+    Check if function is integrable based on upper/lower sums
+    Args:
+        upper_limit: limit of upper sums
+        lower_limit: limit of lower sums
+        tolerance: acceptable difference
+    Returns:
+        bool: True if integrable
+    """
+    # Integrable if upper and lower limits are equal
+    return abs(upper_limit - lower_limit) < tolerance`,
+    testCases: [
+      { input: '0.5, 0.5, 0.001', expectedOutput: 'True', isHidden: false, description: 'Same limits' },
+      { input: '0.5, 0.49, 0.001', expectedOutput: 'False', isHidden: false, description: 'Different limits' },
+      { input: '1.0, 0.9999, 0.001', expectedOutput: 'True', isHidden: true, description: 'Within tolerance' }
+    ],
+    hints: ['f is Riemann integrable iff sup(lower sums) = inf(upper sums)'],
+    language: 'python'
+  },
+  {
+    id: 'math303-t6-ex08',
+    subjectId: 'math303',
+    topicId: 'math303-topic-6',
+    title: 'Properties of Integrals - Linearity',
+    difficulty: 3,
+    description: 'Verify ∫[af(x) + bg(x)]dx = a∫f(x)dx + b∫g(x)dx.',
+    starterCode: `def integral_linearity(a, b, int_f, int_g):
+    """
+    Compute ∫[af(x) + bg(x)]dx given ∫f and ∫g
+    Args:
+        a: coefficient of f
+        b: coefficient of g
+        int_f: value of ∫f(x)dx
+        int_g: value of ∫g(x)dx
+    Returns:
+        float: value of combined integral
+    """
+    pass`,
+    solution: `def integral_linearity(a, b, int_f, int_g):
+    """
+    Compute ∫[af(x) + bg(x)]dx given ∫f and ∫g
+    Args:
+        a: coefficient of f
+        b: coefficient of g
+        int_f: value of ∫f(x)dx
+        int_g: value of ∫g(x)dx
+    Returns:
+        float: value of combined integral
+    """
+    # Linearity property
+    return a * int_f + b * int_g`,
+    testCases: [
+      { input: '2, 3, 5, 7', expectedOutput: '31', isHidden: false, description: 'Linear combination' },
+      { input: '1, -1, 10, 4', expectedOutput: '6', isHidden: false, description: 'Difference of integrals' },
+      { input: '0.5, 0.5, 6, 8', expectedOutput: '7.0', isHidden: true, description: 'Average' }
+    ],
+    hints: ['Integral is linear operator'],
+    language: 'python'
+  },
+  {
+    id: 'math303-t6-ex09',
+    subjectId: 'math303',
+    topicId: 'math303-topic-6',
+    title: 'Properties of Integrals - Additivity',
+    difficulty: 3,
+    description: 'Verify ∫ₐᶜ f(x)dx = ∫ₐᵇ f(x)dx + ∫ᵇᶜ f(x)dx.',
+    starterCode: `def integral_additivity(int_a_to_b, int_b_to_c):
+    """
+    Compute ∫ₐᶜ f(x)dx given ∫ₐᵇ and ∫ᵇᶜ
+    Args:
+        int_a_to_b: ∫ₐᵇ f(x)dx
+        int_b_to_c: ∫ᵇᶜ f(x)dx
+    Returns:
+        float: ∫ₐᶜ f(x)dx
+    """
+    pass`,
+    solution: `def integral_additivity(int_a_to_b, int_b_to_c):
+    """
+    Compute ∫ₐᶜ f(x)dx given ∫ₐᵇ and ∫ᵇᶜ
+    Args:
+        int_a_to_b: ∫ₐᵇ f(x)dx
+        int_b_to_c: ∫ᵇᶜ f(x)dx
+    Returns:
+        float: ∫ₐᶜ f(x)dx
+    """
+    # Additivity over intervals
+    return int_a_to_b + int_b_to_c`,
+    testCases: [
+      { input: '3, 5', expectedOutput: '8', isHidden: false, description: 'Sum of adjacent intervals' },
+      { input: '2.5, 1.5', expectedOutput: '4.0', isHidden: false, description: 'Decimal values' },
+      { input: '-1, 3', expectedOutput: '2', isHidden: true, description: 'Mixed signs' }
+    ],
+    hints: ['Integral is additive over adjacent intervals'],
+    language: 'python'
+  },
+  {
+    id: 'math303-t6-ex10',
+    subjectId: 'math303',
+    topicId: 'math303-topic-6',
+    title: 'Mean Value Theorem for Integrals',
+    difficulty: 4,
+    description: 'Find c where f(c) = (1/(b-a))∫ₐᵇ f(x)dx for continuous f.',
+    starterCode: `def mvt_integrals(a, b, integral_value):
+    """
+    Find average value of f on [a,b]
+    Args:
+        a: left endpoint
+        b: right endpoint
+        integral_value: ∫ₐᵇ f(x)dx
+    Returns:
+        float: f_avg = (1/(b-a))∫ₐᵇ f(x)dx
+    """
+    pass`,
+    solution: `def mvt_integrals(a, b, integral_value):
+    """
+    Find average value of f on [a,b]
+    Args:
+        a: left endpoint
+        b: right endpoint
+        integral_value: ∫ₐᵇ f(x)dx
+    Returns:
+        float: f_avg = (1/(b-a))∫ₐᵇ f(x)dx
+    """
+    # Average value = 1/(b-a) · ∫ₐᵇ f(x)dx
+    return integral_value / (b - a)`,
+    testCases: [
+      { input: '0, 2, 4', expectedOutput: '2.0', isHidden: false, description: 'Average value' },
+      { input: '1, 5, 12', expectedOutput: '3.0', isHidden: false, description: 'MVT for integrals' },
+      { input: '0, 1, 0.5', expectedOutput: '0.5', isHidden: true, description: 'Unit interval' }
+    ],
+    hints: ['Average value = (1/(b-a))∫ₐᵇ f(x)dx', 'MVT guarantees ∃c: f(c) = average value'],
+    language: 'python'
+  },
+  {
+    id: 'math303-t6-ex11',
+    subjectId: 'math303',
+    topicId: 'math303-topic-6',
+    title: 'Comparison Property',
+    difficulty: 4,
+    description: 'If f(x) ≤ g(x) on [a,b], then ∫ₐᵇ f(x)dx ≤ ∫ₐᵇ g(x)dx.',
+    starterCode: `def integral_comparison(int_f, int_g, f_le_g):
+    """
+    Verify comparison property
+    Args:
+        int_f: ∫f(x)dx
+        int_g: ∫g(x)dx
+        f_le_g: whether f(x) ≤ g(x) on interval
+    Returns:
+        bool: True if comparison holds
+    """
+    pass`,
+    solution: `def integral_comparison(int_f, int_g, f_le_g):
+    """
+    Verify comparison property
+    Args:
+        int_f: ∫f(x)dx
+        int_g: ∫g(x)dx
+        f_le_g: whether f(x) ≤ g(x) on interval
+    Returns:
+        bool: True if comparison holds
+    """
+    # If f ≤ g, then ∫f ≤ ∫g
+    if f_le_g:
+        return int_f <= int_g
+    return True  # No constraint if f not ≤ g`,
+    testCases: [
+      { input: '3, 5, True', expectedOutput: 'True', isHidden: false, description: 'f ≤ g, ∫f ≤ ∫g' },
+      { input: '5, 3, True', expectedOutput: 'False', isHidden: false, description: 'Violates comparison' },
+      { input: '7, 2, False', expectedOutput: 'True', isHidden: true, description: 'No constraint' }
+    ],
+    hints: ['If f(x) ≤ g(x), then ∫f ≤ ∫g'],
+    language: 'python'
+  },
+  {
+    id: 'math303-t6-ex12',
+    subjectId: 'math303',
+    topicId: 'math303-topic-6',
+    title: 'Improper Integral Convergence',
+    difficulty: 4,
+    description: 'Determine if ∫₁^∞ (1/x²)dx converges.',
+    starterCode: `def improper_integral_converges():
+    """
+    Check if ∫₁^∞ (1/x²)dx converges
+    Returns:
+        tuple: (converges: bool, value: float or None)
+    """
+    pass`,
+    solution: `def improper_integral_converges():
+    """
+    Check if ∫₁^∞ (1/x²)dx converges
+    Returns:
+        tuple: (converges: bool, value: float or None)
+    """
+    # ∫₁^∞ (1/x²)dx = lim_{t→∞} [-1/x]₁ᵗ = lim_{t→∞} (-1/t + 1) = 1
+    return (True, 1.0)`,
+    testCases: [
+      { input: '', expectedOutput: '(True, 1.0)', isHidden: false, description: 'Converges to 1' },
+      { input: '', expectedOutput: '(True, 1.0)', isHidden: false, description: 'p-integral p=2' },
+      { input: '', expectedOutput: '(True, 1.0)', isHidden: true, description: 'Integral equals 1' }
+    ],
+    hints: ['Evaluate lim_{t→∞} ∫₁ᵗ (1/x²)dx', 'Antiderivative is -1/x'],
+    language: 'python'
+  },
+  {
+    id: 'math303-t6-ex13',
+    subjectId: 'math303',
+    topicId: 'math303-topic-6',
+    title: 'Improper Integral Divergence',
+    difficulty: 4,
+    description: 'Determine if ∫₁^∞ (1/x)dx converges.',
+    starterCode: `def improper_integral_harmonic():
+    """
+    Check if ∫₁^∞ (1/x)dx converges
+    Returns:
+        bool: True if converges, False if diverges
+    """
+    pass`,
+    solution: `def improper_integral_harmonic():
+    """
+    Check if ∫₁^∞ (1/x)dx converges
+    Returns:
+        bool: True if converges, False if diverges
+    """
+    # ∫₁^∞ (1/x)dx = lim_{t→∞} [ln x]₁ᵗ = lim_{t→∞} ln(t) = ∞
+    # Diverges
+    return False`,
+    testCases: [
+      { input: '', expectedOutput: 'False', isHidden: false, description: 'Integral diverges' },
+      { input: '', expectedOutput: 'False', isHidden: false, description: 'p-integral p=1' },
+      { input: '', expectedOutput: 'False', isHidden: true, description: 'Goes to infinity' }
+    ],
+    hints: ['Evaluate lim_{t→∞} ∫₁ᵗ (1/x)dx', 'ln(t) → ∞ as t → ∞'],
+    language: 'python'
+  },
+  {
+    id: 'math303-t6-ex14',
+    subjectId: 'math303',
+    topicId: 'math303-topic-6',
+    title: 'Integration by Parts Setup',
+    difficulty: 5,
+    description: 'Use ∫u dv = uv - ∫v du to integrate ∫x·e^x dx.',
+    starterCode: `import math
+
+def integrate_by_parts(x):
+    """
+    Compute ∫x·e^x dx (indefinite integral evaluated at x)
+    Args:
+        x: point to evaluate antiderivative
+    Returns:
+        float: (x-1)e^x (plus constant)
+    """
+    pass`,
+    solution: `import math
+
+def integrate_by_parts(x):
+    """
+    Compute ∫x·e^x dx (indefinite integral evaluated at x)
+    Args:
+        x: point to evaluate antiderivative
+    Returns:
+        float: (x-1)e^x (plus constant)
+    """
+    # u = x, dv = e^x dx
+    # du = dx, v = e^x
+    # ∫x·e^x dx = x·e^x - ∫e^x dx = x·e^x - e^x = (x-1)e^x + C
+    return (x - 1) * math.exp(x)`,
+    testCases: [
+      { input: '0', expectedOutput: '-1.0', isHidden: false, description: 'At x=0' },
+      { input: '1', expectedOutput: '0.0', isHidden: false, description: 'At x=1' },
+      { input: '2', expectedOutput: 'math.exp(2)', isHidden: true, description: 'At x=2' }
+    ],
+    hints: ['Choose u = x, dv = e^x dx', 'Apply ∫u dv = uv - ∫v du'],
+    language: 'python'
+  },
+  {
+    id: 'math303-t6-ex15',
+    subjectId: 'math303',
+    topicId: 'math303-topic-6',
+    title: 'Substitution Method',
+    difficulty: 5,
+    description: 'Use substitution to evaluate ∫₀¹ 2x(x²+1)³ dx.',
+    starterCode: `def integrate_by_substitution():
+    """
+    Compute ∫₀¹ 2x(x²+1)³ dx using u = x²+1
+    Returns:
+        float: value of integral
+    """
+    pass`,
+    solution: `def integrate_by_substitution():
+    """
+    Compute ∫₀¹ 2x(x²+1)³ dx using u = x²+1
+    Returns:
+        float: value of integral
+    """
+    # u = x²+1, du = 2x dx
+    # x=0: u=1, x=1: u=2
+    # ∫₁² u³ du = [u⁴/4]₁² = 16/4 - 1/4 = 15/4
+    return 15.0 / 4.0`,
+    testCases: [
+      { input: '', expectedOutput: '3.75', isHidden: false, description: 'Integral equals 15/4' },
+      { input: '', expectedOutput: '3.75', isHidden: false, description: 'u-substitution result' },
+      { input: '', expectedOutput: '3.75', isHidden: true, description: 'Exact value' }
+    ],
+    hints: ['Let u = x²+1, then du = 2x dx', 'Change limits: x=0→u=1, x=1→u=2'],
+    language: 'python'
+  },
+  {
+    id: 'math303-t6-ex16',
+    subjectId: 'math303',
+    topicId: 'math303-topic-6',
+    title: 'Absolute Integrability',
+    difficulty: 5,
+    description: 'Check if ∫₋₁¹ x³ dx equals zero (odd function over symmetric interval).',
+    starterCode: `def integral_odd_function():
+    """
+    Compute ∫₋₁¹ x³ dx
+    Returns:
+        float: value of integral
+    """
+    pass`,
+    solution: `def integral_odd_function():
+    """
+    Compute ∫₋₁¹ x³ dx
+    Returns:
+        float: value of integral
+    """
+    # f(x) = x³ is odd: f(-x) = -f(x)
+    # ∫₋ₐᵃ f(x)dx = 0 for odd functions
+    return 0.0`,
+    testCases: [
+      { input: '', expectedOutput: '0.0', isHidden: false, description: 'Odd function integral' },
+      { input: '', expectedOutput: '0.0', isHidden: false, description: 'Symmetric interval' },
+      { input: '', expectedOutput: '0.0', isHidden: true, description: 'Cancels to zero' }
+    ],
+    hints: ['x³ is an odd function', 'Integral of odd function over symmetric interval is 0'],
+    language: 'python'
+  }
+];

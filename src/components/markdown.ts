@@ -1,8 +1,16 @@
 import { marked } from 'marked';
 import Prism from 'prismjs';
 import katex from 'katex';
+import mermaid from 'mermaid';
 import 'katex/dist/katex.min.css';
 import { escapeHtml } from '@/utils/html';
+
+// Initialize mermaid with default config
+mermaid.initialize({
+  startOnLoad: false,
+  theme: 'dark',
+  securityLevel: 'loose',
+});
 
 // Import core Prism languages
 import 'prismjs/components/prism-python';
@@ -28,6 +36,11 @@ marked.setOptions({
 const renderer = new marked.Renderer();
 
 renderer.code = function(code: string, language: string | undefined): string {
+  // Handle Mermaid diagrams - output as <pre class="mermaid"> for client-side rendering
+  if (language === 'mermaid') {
+    return `<pre class="mermaid">${escapeHtml(code)}</pre>`;
+  }
+
   const validLanguage = language && Prism.languages[language] ? language : 'plaintext';
 
   let highlighted: string;
@@ -100,6 +113,18 @@ export function renderMarkdown(content: string): string {
   } catch (error) {
     console.error('Markdown rendering error:', error);
     return `<pre>${escapeHtml(content)}</pre>`;
+  }
+}
+
+/**
+ * Render any Mermaid diagrams in the document.
+ * Call this after content has been injected into the DOM.
+ */
+export async function renderMermaidDiagrams(): Promise<void> {
+  try {
+    await mermaid.run();
+  } catch (error) {
+    console.error('Mermaid rendering error:', error);
   }
 }
 

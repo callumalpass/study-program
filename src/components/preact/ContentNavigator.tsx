@@ -10,7 +10,7 @@ import {
   navigateToExam,
   navigateToProject,
 } from '@/core/router';
-import { renderMarkdown } from '@/components/markdown';
+import { renderMarkdown, renderMermaidDiagrams } from '@/components/markdown';
 import { ReadingList } from './ReadingList';
 
 interface ContentNavigatorProps {
@@ -143,6 +143,11 @@ export function ContentNavigator({
       graphContainerRef.current.appendChild(dependencyGraph);
     }
   }, [dependencyGraph]);
+
+  // Render Mermaid diagrams after content updates
+  useEffect(() => {
+    renderMermaidDiagrams();
+  }, [currentSubtopic?.id, currentTopic?.id]);
 
   // Progress helpers
   const isTopicCompleted = useCallback((topic: Topic): boolean => {

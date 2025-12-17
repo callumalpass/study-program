@@ -3,7 +3,7 @@ import { useCallback, useMemo, useEffect } from 'preact/hooks';
 import type { Topic, Subtopic, SubjectProgress, Quiz, Exercise } from '@/core/types';
 import { Icons } from '@/components/icons';
 import { navigateToSubtopic, navigateToQuiz, navigateToExercise } from '@/core/router';
-import { renderMarkdown } from '@/components/markdown';
+import { renderMarkdown, renderMermaidDiagrams } from '@/components/markdown';
 
 interface SubtopicNavigatorProps {
   subjectId: string;
@@ -50,6 +50,11 @@ export function SubtopicNavigator({
     if (currentSubtopic) {
       onSubtopicView(currentSubtopic.id);
     }
+  }, [currentSubtopic?.id]);
+
+  // Render Mermaid diagrams after content updates
+  useEffect(() => {
+    renderMermaidDiagrams();
   }, [currentSubtopic?.id]);
 
   const isSubtopicViewed = useCallback((subtopicId: string): boolean => {
