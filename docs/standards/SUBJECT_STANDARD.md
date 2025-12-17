@@ -166,7 +166,7 @@ Each test case must have:
 
 | Component | Required | Specification |
 |-----------|----------|---------------|
-| id | Yes | Format: `q1`, `q2`, etc. (within quiz) |
+| id | Yes | Unique question ID (either `q1`, `q2`, etc. within a quiz, or globally unique within the subject like `{subject}-q{N}`) |
 | type | Yes | One of the valid question types |
 | prompt | Yes | Clear, unambiguous question |
 | options | For MC | 4 options, one clearly correct |
@@ -176,9 +176,9 @@ Each test case must have:
 
 ### Answer Format by Type
 
-| Type | correctAnswer Format |
-|------|---------------------|
-| `multiple_choice` | 0-based index of correct option |
+| Type | `correctAnswer` Format |
+|------|------------------------|
+| `multiple_choice` | Either a 0-based index (`number`) of the correct option, or the exact correct option string (`string`) |
 | `true_false` | `true` or `false` |
 | `fill_blank` | String (case-insensitive matching) |
 | `code_output` | Exact string output including newlines |
@@ -362,7 +362,11 @@ wc -w src/content/subjects/{subject}/topic-*/*.md
 grep -c "id: '{subject}-t" src/data/subjects/{subject}/exercises/*.ts
 
 # Count quiz questions
-grep -c "id: 'q" src/data/subjects/{subject}/quizzes.ts
+# Count quiz questions (globally unique IDs like '{subject}-q1', or per-quiz IDs like 'q1')
+# If your question IDs are globally unique:
+rg -c "id:\\s*'{subject}-q\\d+'" src/data/subjects/{subject}/quizzes.ts
+# If your question IDs are only unique within each quiz:
+rg -c "id:\\s*'q\\d+'" src/data/subjects/{subject}/quizzes.ts
 # Expected: 105 (21 quizzes × 5 questions)
 ```
 

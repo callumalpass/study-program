@@ -32,21 +32,21 @@ import topic4_5 from '../../../content/subjects/cs403/topic-4/05-load-balancing.
 import topic4_6 from '../../../content/subjects/cs403/topic-4/06-bin-packing.md?raw';
 import topic4_7 from '../../../content/subjects/cs403/topic-4/07-secretary-problem.md?raw';
 
-import topic5_1 from '../../../content/subjects/cs403/topic-5/01-max-flow-intro.md?raw';
-import topic5_2 from '../../../content/subjects/cs403/topic-5/02-push-relabel.md?raw';
-import topic5_3 from '../../../content/subjects/cs403/topic-5/03-bipartite-matching.md?raw';
-import topic5_4 from '../../../content/subjects/cs403/topic-5/04-min-cost-flow.md?raw';
-import topic5_5 from '../../../content/subjects/cs403/topic-5/05-circulation.md?raw';
-import topic5_6 from '../../../content/subjects/cs403/topic-5/06-multi-commodity-flow.md?raw';
-import topic5_7 from '../../../content/subjects/cs403/topic-5/07-flow-applications.md?raw';
+import topic5_1 from '../../../content/subjects/cs403/topic-6/01-matrix-chain.md?raw';
+import topic5_2 from '../../../content/subjects/cs403/topic-6/02-optimal-bst.md?raw';
+import topic5_3 from '../../../content/subjects/cs403/topic-6/03-edit-distance.md?raw';
+import topic5_4 from '../../../content/subjects/cs403/topic-6/04-longest-common-subsequence.md?raw';
+import topic5_5 from '../../../content/subjects/cs403/topic-6/05-traveling-salesman-dp.md?raw';
+import topic5_6 from '../../../content/subjects/cs403/topic-6/06-knapsack-variants.md?raw';
+import topic5_7 from '../../../content/subjects/cs403/topic-6/07-dp-optimization.md?raw';
 
-import topic6_1 from '../../../content/subjects/cs403/topic-6/01-matrix-chain.md?raw';
-import topic6_2 from '../../../content/subjects/cs403/topic-6/02-optimal-bst.md?raw';
-import topic6_3 from '../../../content/subjects/cs403/topic-6/03-edit-distance.md?raw';
-import topic6_4 from '../../../content/subjects/cs403/topic-6/04-longest-common-subsequence.md?raw';
-import topic6_5 from '../../../content/subjects/cs403/topic-6/05-traveling-salesman-dp.md?raw';
-import topic6_6 from '../../../content/subjects/cs403/topic-6/06-knapsack-variants.md?raw';
-import topic6_7 from '../../../content/subjects/cs403/topic-6/07-dp-optimization.md?raw';
+import topic6_1 from '../../../content/subjects/cs403/topic-5/01-max-flow-intro.md?raw';
+import topic6_2 from '../../../content/subjects/cs403/topic-5/02-push-relabel.md?raw';
+import topic6_3 from '../../../content/subjects/cs403/topic-5/03-bipartite-matching.md?raw';
+import topic6_4 from '../../../content/subjects/cs403/topic-5/04-min-cost-flow.md?raw';
+import topic6_5 from '../../../content/subjects/cs403/topic-5/05-circulation.md?raw';
+import topic6_6 from '../../../content/subjects/cs403/topic-5/06-multi-commodity-flow.md?raw';
+import topic6_7 from '../../../content/subjects/cs403/topic-5/07-flow-applications.md?raw';
 
 import topic7_1 from '../../../content/subjects/cs403/topic-7/01-convex-hull.md?raw';
 import topic7_2 from '../../../content/subjects/cs403/topic-7/02-line-segment-intersection.md?raw';

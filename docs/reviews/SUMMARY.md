@@ -57,14 +57,14 @@
 ### Incomplete/Critical (0-3/10)
 - CS203: Theory of Computation (0/10) - subtopic word count below minimum
 - CS303: Programming Languages (3/10) - word count deficiencies
-- CS403: Advanced Algorithms (4/10) - only 2 exercises total
+- CS403: Advanced Algorithms (4/10) - 14/112 exercises; 38/49 subtopics <800 words (quizzes/exams now complete)
 - MATH304: Abstract Algebra (0/10) - word count deficiencies
 
 ## Common Issues
 
 ### 1. Exercise Shortages
 Many Year 4 subjects and some Year 3 subjects don't have 16 exercises per topic:
-- CS403: Only 2 exercises total (needs 112)
+- CS403: Only 14 exercises total (needs 112); quizzes/exams are now complete
 - CS404: Only 11 exercises (needs 112)
 - CS402: Missing exercises for Topics 1-4
 - MATH404: Only 4-6 exercises per topic (needs 16)
@@ -85,7 +85,7 @@ Some subjects have subtopics below the 800-word minimum:
 ### Immediate (Blocking Production)
 1. **CS203**: Expand all subtopics to 800+ words
 2. **CS303**: Expand subtopics to meet word count
-3. **CS403**: Add 110 exercises
+3. **CS403**: Add 98 exercises (to reach 112) and expand subtopics to 800+ words
 4. **MATH304**: Expand subtopics to 800+ words
 
 ### High Priority
@@ -129,7 +129,7 @@ Some subjects have subtopics below the 800-word minimum:
 |---------|-----------------|
 | CS203 | 20-30 |
 | CS303 | 15-20 |
-| CS403 | 50-70 |
+| CS403 | 45-65 |
 | CS404 | 40-60 |
 | MATH304 | 20-30 |
 | CS402 | 30-40 |

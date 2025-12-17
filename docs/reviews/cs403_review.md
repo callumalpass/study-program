@@ -1,6 +1,6 @@
 # CS403: Advanced Algorithms - Review Report
 
-**Review Date:** 2025-12-17
+**Review Date:** 2025-12-17 (updated)
 **Reviewer:** Automated Quality Review
 
 ## Overall Status: INCOMPLETE
@@ -9,17 +9,17 @@
 
 | Category | Score | Notes |
 |----------|-------|-------|
-| Content Thoroughness | 5/10 | Major word count deficiencies; some topics severely lacking content |
-| Exercise Quality | 2/10 | Only 2 exercises per topic (need 16 per topic) |
-| Quiz Quality | 3/10 | 15 total questions across all topics (need 15 per topic = 105 total) |
-| Exam Quality | 1/10 | Minimal exam questions present |
-| Project Quality | 9/10 | Excellent project definitions with detailed rubrics |
+| Content Thoroughness | 5/10 | Many subtopics below 800-word minimum (38/49) |
+| Exercise Quality | 2/10 | Only 14 exercises total (need 112) |
+| Quiz Quality | 8/10 | Quiz structure complete: 21 quizzes × 5 questions (105 total) |
+| Exam Quality | 8/10 | Midterm (28) + Final (42) questions; durations/instructions present |
+| Project Quality | 10/10 | 3 projects meet spec (500+ word descriptions, 8–12 requirements, rubrics) |
 | Technical Correctness | 8/10 | Code examples and explanations appear correct where present |
-| **Overall** | 4/10 | Significant work needed on exercises, quizzes, and content depth |
+| **Overall** | 4/10 | Critical remaining gaps in exercises and subtopic depth |
 
 ## Executive Summary
 
-CS403 has a solid foundation with well-structured topics covering advanced algorithms comprehensively, and excellent project definitions with detailed rubrics. However, the subject is severely incomplete in terms of exercises (only 2 per topic instead of 16), quizzes (only 15 total instead of 105), and content depth (many subtopics well below the 800-word requirement). The topics that do have content show good technical quality, but significant expansion is needed across all areas.
+CS403 has a solid foundation with well-structured topics covering advanced algorithms comprehensively. Quizzes (21 quizzes / 105 questions) and exams (midterm + final) are now present in production shape, and the projects meet the subject project specification. However, the subject remains **incomplete** due to a severe exercise shortfall (14/112) and widespread subtopic word count deficits (38/49 below 800 words). The existing content that is complete is technically strong, but major expansion is still required before production readiness.
 
 ## Strengths
 
@@ -31,23 +31,13 @@ CS403 has a solid foundation with well-structured topics covering advanced algor
 
 ## Critical Issues (Must Fix)
 
-1. **SEVERE EXERCISE DEFICIT**: Only 2 exercises per topic (14 total) vs required 16 per topic (112 total)
+1. **SEVERE EXERCISE DEFICIT**: Only 14 exercises total vs required 112 total
    - **Missing: 98 exercises** across all 7 topics
-   - Each topic needs 14 additional exercises
+   - Each topic needs 14 additional exercises (currently 2/16 each)
 
-2. **SEVERE QUIZ DEFICIT**: Only 15 quiz questions total vs required 105 (15 per topic × 7 topics)
-   - **Missing: 90 quiz questions**
-   - Current distribution is uneven (3 questions for Topic 1, 2 for Topic 2, etc.)
-
-3. **MINIMAL EXAM CONTENT**:
-   - Midterm has only 2 questions (need ~20)
-   - Final has only 1 question (need ~25)
-   - **Missing: 42+ exam questions**
-
-4. **WORD COUNT DEFICIENCIES**: Many subtopics severely below 800-word requirement
-   - Topic 5 subtopics: ~77 words (should be 800+)
-   - Topic 7 subtopics: ~20 words (should be 800+)
-   - Topics 4-7 particularly affected
+2. **WORD COUNT DEFICIENCIES**: 38 of 49 subtopics are below the 800-word requirement
+   - Minimum subtopic is extremely short (~30 words)
+   - Topics 4–7 are entirely below 800 words in their current form
 
 ## Improvements Needed
 
@@ -79,33 +69,10 @@ Need to create **98 additional exercises** (14 per topic × 7 topics):
 - Clear descriptions and hints
 - Mix of implementation and analysis problems
 
-### Priority 3: Quiz Creation (Critical)
+### Quizzes and Exams (Now Complete)
 
-Need to create **90 additional quiz questions**:
-- Topic 1: +12 questions (has 3, needs 15)
-- Topic 2: +13 questions (has 2, needs 15)
-- Topic 3: +13 questions (has 2, needs 15)
-- Topic 4: +13 questions (has 2, needs 15)
-- Topic 5: +14 questions (has 1, needs 15)
-- Topic 6: +14 questions (has 1, needs 15)
-- Topic 7: +14 questions (has 1, needs 15)
-
-**Quiz requirements:**
-- 3 quizzes per topic × 5 questions each = 15 per topic
-- Mix of multiple_choice, true_false, code_output, fill_blank
-- Detailed explanations for all answers
-
-### Priority 4: Exam Expansion (High)
-
-**Midterm exam:**
-- Currently: 2 questions
-- Target: 20 questions covering Topics 1-4
-- Need: +18 questions
-
-**Final exam:**
-- Currently: 1 question
-- Target: 25 questions covering all 7 topics
-- Need: +24 questions
+- **Quizzes:** 21 quizzes × 5 questions each (105 total)
+- **Exams:** Midterm (28 questions, 75 minutes) + Final (42 questions, 120 minutes)
 
 ## Detailed Topic-by-Topic Assessment
 
@@ -121,8 +88,8 @@ Need to create **90 additional quiz questions**:
   - Subset Sum: ~950 words ✓
   - Coping with NP: ~900 words ✓
 - **Exercises:** 2/16 present (CRITICAL: need +14)
-- **Quizzes:** 3/15 questions present (need +12)
-- **Issues:** Content excellent but severely lacking exercises and quizzes
+- **Quizzes:** 15/15 questions present ✓
+- **Issues:** Content excellent but severely lacking exercises
 
 ### Topic 2: Approximation Algorithms
 - **Content Status:** Complete
@@ -136,8 +103,8 @@ Need to create **90 additional quiz questions**:
   - Scheduling: ~1200 words ✓
   - Facility Location: ~1100 words ✓
 - **Exercises:** 2/16 present (CRITICAL: need +14)
-- **Quizzes:** 2/15 questions present (need +13)
-- **Issues:** Content excellent but severely lacking exercises and quizzes
+- **Quizzes:** 15/15 questions present ✓
+- **Issues:** Content good but severely lacking exercises
 
 ### Topic 3: Randomized Algorithms
 - **Content Status:** Complete
@@ -151,8 +118,8 @@ Need to create **90 additional quiz questions**:
   - Primality Testing: ~1400 words ✓
   - Streaming Algorithms: ~1100 words ✓
 - **Exercises:** 2/16 present (CRITICAL: need +14)
-- **Quizzes:** 2/15 questions present (need +13)
-- **Issues:** Hashing subtopic too short; severely lacking exercises and quizzes
+- **Quizzes:** 15/15 questions present ✓
+- **Issues:** Hashing subtopic too short; severely lacking exercises
 
 ### Topic 4: Online Algorithms
 - **Content Status:** Partial
@@ -166,37 +133,37 @@ Need to create **90 additional quiz questions**:
   - Bin Packing: ~500 words ✗ (need +300 words)
   - Secretary Problem: ~450 words ✗ (need +350 words)
 - **Exercises:** 2/16 present (CRITICAL: need +14)
-- **Quizzes:** 2/15 questions present (need +13)
+- **Quizzes:** 15/15 questions present ✓
 - **Issues:** All subtopics below 800-word requirement; need substantial expansion
 
 ### Topic 5: Advanced Dynamic Programming
 - **Content Status:** Empty/Minimal
 - **Subtopics:** 7 subtopics
-- **Word Counts:** All subtopics estimated at ~77 words each
-  - Max Flow Intro: ~77 words ✗ (need +723 words)
-  - Push-Relabel: ~77 words ✗ (need +723 words)
-  - Bipartite Matching: ~77 words ✗ (need +723 words)
-  - Min-Cost Flow: ~77 words ✗ (need +723 words)
-  - Circulation: ~77 words ✗ (need +723 words)
-  - Multi-Commodity Flow: ~77 words ✗ (need +723 words)
-  - Flow Applications: ~77 words ✗ (need +723 words)
+- **Word Counts:** All 7 subtopics are far below 800 words (roughly ~50-70 words each)
+  - Matrix Chain Multiplication: ~53 words ✗
+  - Optimal BST: ~62 words ✗
+  - Edit Distance: ~70 words ✗
+  - Longest Common Subsequence: ~55 words ✗
+  - TSP with DP (Held–Karp): ~56 words ✗
+  - Knapsack Variants: ~55 words ✗
+  - DP Optimization: ~65 words ✗
 - **Exercises:** 2/16 present (CRITICAL: need +14)
-- **Quizzes:** 1/15 questions present (need +14)
+- **Quizzes:** 15/15 questions present ✓
 - **Issues:** CRITICAL - all content needs to be written from scratch
 
 ### Topic 6: Network Flow Algorithms
 - **Content Status:** Empty/Minimal
 - **Subtopics:** 7 subtopics
-- **Word Counts:** All subtopics estimated at ~77 words each
-  - Matrix Chain: ~77 words ✗ (need +723 words)
-  - Optimal BST: ~77 words ✗ (need +723 words)
-  - Edit Distance: ~77 words ✗ (need +723 words)
-  - LCS: ~77 words ✗ (need +723 words)
-  - TSP with DP: ~77 words ✗ (need +723 words)
-  - Knapsack Variants: ~77 words ✗ (need +723 words)
-  - DP Optimization: ~77 words ✗ (need +723 words)
+- **Word Counts:** All 7 subtopics are below 800 words (roughly ~50-340 words each)
+  - Maximum Flow: ~339 words ✗
+  - Push–Relabel: ~313 words ✗
+  - Bipartite Matching: ~107 words ✗
+  - Min-Cost Flow: ~68 words ✗
+  - Circulation: ~53 words ✗
+  - Multi-Commodity Flow: ~58 words ✗
+  - Flow Applications: ~73 words ✗
 - **Exercises:** 2/16 present (CRITICAL: need +14)
-- **Quizzes:** 1/15 questions present (need +14)
+- **Quizzes:** 15/15 questions present ✓
 - **Issues:** CRITICAL - all content needs to be written from scratch
 
 ### Topic 7: Computational Geometry
@@ -211,7 +178,7 @@ Need to create **90 additional quiz questions**:
   - Range Searching: ~20 words ✗ (need +780 words)
   - Geometric Algorithms: ~20 words ✗ (need +780 words)
 - **Exercises:** 2/16 present (CRITICAL: need +14)
-- **Quizzes:** 1/15 questions present (need +14)
+- **Quizzes:** 15/15 questions present ✓
 - **Issues:** CRITICAL - essentially no content; complete rewrite needed for all subtopics
 
 ## Missing Content Checklist
@@ -228,15 +195,7 @@ Need to create **90 additional quiz questions**:
 **Total: 98 exercises needed**
 
 ### Quiz Questions Needed
-- [ ] Topic 1: Need 12 more questions (currently 3/15)
-- [ ] Topic 2: Need 13 more questions (currently 2/15)
-- [ ] Topic 3: Need 13 more questions (currently 2/15)
-- [ ] Topic 4: Need 13 more questions (currently 2/15)
-- [ ] Topic 5: Need 14 more questions (currently 1/15)
-- [ ] Topic 6: Need 14 more questions (currently 1/15)
-- [ ] Topic 7: Need 14 more questions (currently 1/15)
-
-**Total: 90 quiz questions needed**
+- [x] Quiz structure completed (21 quizzes / 105 questions)
 
 ### Content Gaps
 - [ ] Topic 3: Expand "Hashing" subtopic (+550 words)
@@ -248,17 +207,13 @@ Need to create **90 additional quiz questions**:
 **Total: ~17,582 words of content needed**
 
 ### Exam Questions Needed
-- [ ] Midterm: Need 18 more questions (currently 2/20)
-- [ ] Final: Need 24 more questions (currently 1/25)
-
-**Total: 42 exam questions needed**
+- [x] Exams completed (Midterm 28 questions, Final 42 questions)
 
 ## Technical Issues Found
 
-**Minor issues:**
-1. Topic naming mismatch: topics.ts lists Topic 5 as "Advanced Dynamic Programming" but content folder structure suggests it's "Network Flow" (folder topic-5 contains max-flow files)
-2. Topic naming mismatch: topics.ts lists Topic 6 as "Network Flow Algorithms" but content suggests it's "Advanced Dynamic Programming" (folder topic-6 contains matrix-chain, edit-distance files)
-3. Quiz distribution is completely uneven - should reorganize to have exactly 3 quizzes × 5 questions per topic
+**Resolved issues:**
+1. Topic 5/6 content wiring mismatch has been corrected so that Topic 5 is DP content and Topic 6 is Flow content.
+2. Quiz IDs in `topics.ts` now match the quizzes defined in `quizzes.ts` (21 quizzes).
 
 **Content quality where present:**
 - Code examples are syntactically correct and well-commented
@@ -270,25 +225,23 @@ Need to create **90 additional quiz questions**:
 ## Recommendations
 
 ### Immediate Actions (Week 1-2)
-1. **Fix topic naming confusion** in topics.ts - swap Topic 5 and Topic 6 definitions to match content
-2. **Create exercise templates** for all 7 topics to establish patterns
-3. **Expand Topic 4 content** as it's partially complete and easier to finish
+1. **Create exercise templates** for all 7 topics to establish patterns
+2. **Expand Topic 4 content** first (all 7 subtopics below 800 words, but already scaffolded)
+3. **Expand Topic 7 content** next (currently extremely short per subtopic)
 
 ### Short-term (Weeks 3-6)
-4. **Complete Topics 5-7 content** - these need full writing from scratch
-   - Start with Topic 5 (Network Flow) as it has foundational importance
-   - Then Topic 6 (Dynamic Programming)
-   - Finally Topic 7 (Computational Geometry)
-5. **Create quiz question bank** - write 90 new quiz questions with proper distribution
-6. **Expand exam questions** - write 42 additional exam questions
+4. **Complete Topics 5-7 content** - these need full expansion to 800+ words per subtopic
+   - Start with Topic 6 (Network Flow) to build on max-flow foundations
+   - Then Topic 5 (Advanced DP)
+   - Finish with Topic 7 (Computational Geometry)
 
 ### Medium-term (Weeks 7-10)
-7. **Create remaining exercises** - 98 exercises across all topics
+5. **Create remaining exercises** - 98 exercises across all topics
    - Prioritize Topics 1-3 as content is complete
    - Ensure difficulty progression (easy → hard)
    - Include both implementation and analysis exercises
-8. **Add more code examples** to expanded content
-9. **Create practice problem sets** linking to exercises
+6. **Add more code examples** to expanded content
+7. **Create practice problem sets** linking to exercises
 
 ### Quality Assurance
 10. **Technical review** of all new content for correctness
@@ -300,22 +253,18 @@ Need to create **90 additional quiz questions**:
 ## Estimated Completion Time
 
 Based on the gaps identified:
-- **Content writing:** ~80 hours (17,582 words @ 220 words/hour)
-- **Exercise creation:** ~98 hours (98 exercises @ 1 hour each)
-- **Quiz creation:** ~30 hours (90 questions @ 20 min each)
-- **Exam creation:** ~14 hours (42 questions @ 20 min each)
-- **Review and quality assurance:** ~20 hours
+- **Content writing:** ~70-90 hours (bring 38 subtopics up to 800+ words)
+- **Exercise creation:** ~98 hours (98 exercises @ ~1 hour each)
+- **Review and quality assurance:** ~15-25 hours
 
-**Total estimated time: ~242 hours** (approximately 6 weeks full-time or 12 weeks half-time)
+**Total estimated time: ~183-213 hours** (approximately 5-6 weeks full-time or 10-12 weeks half-time)
 
 ## Conclusion
 
-CS403 has an excellent curriculum structure and outstanding project definitions, demonstrating strong pedagogical design. However, it is significantly incomplete in terms of exercises, quizzes, exams, and substantial content for Topics 4-7. The existing content for Topics 1-3 is of high quality, providing a good template for the remaining work.
+CS403 has an excellent curriculum structure and strong assessment coverage (quizzes and exams), and the projects now meet the formal project spec. However, it remains incomplete due to the severe exercise deficit and substantial content depth gaps (especially Topics 4–7).
 
 The subject requires substantial effort to complete, but the foundation is solid. Priority should be given to:
-1. Expanding content for Topics 5-7 (completely empty)
+1. Expanding subtopics to 800+ words (especially Topics 4–7)
 2. Creating the missing 98 exercises
-3. Writing the missing 90 quiz questions
-4. Expanding exam content
 
 Once completed, this will be an excellent advanced algorithms course suitable for Year 4 CS students.
