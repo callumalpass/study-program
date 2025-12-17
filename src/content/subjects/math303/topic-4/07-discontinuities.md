@@ -28,6 +28,42 @@ So $f$ is discontinuous at $c$ if any of the following fail:
 
 We classify discontinuities based on the behavior of one-sided limits.
 
+### Discontinuity Classification Tree
+
+```mermaid
+graph TD
+    A[f discontinuous at c] --> B{Does lim<sub>x→c</sub> f·x·<br/>exist?}
+
+    B -->|Yes| C{Does lim<sub>x→c</sub> f·x· = f·c·?}
+    C -->|No| D[REMOVABLE<br/>Discontinuity]
+    C -->|Yes| E[Not discontinuous!<br/>Error in classification]
+
+    B -->|No| F{Do both one-sided<br/>limits exist?}
+
+    F -->|Yes| G{Are they equal?}
+    G -->|No| H[JUMP<br/>Discontinuity]
+    G -->|Yes| I[Should have full limit!<br/>Contradiction]
+
+    F -->|No| J{Does at least one<br/>one-sided limit fail<br/>to exist?}
+    J -->|Yes| K[ESSENTIAL/INFINITE<br/>Discontinuity]
+
+    D -.->|Can fix| L[Redefine f·c· = lim<sub>x→c</sub> f·x·]
+    H -.->|Cannot fix| M[Requires changing f<br/>on an interval]
+    K -.->|Cannot fix| N[Fundamental break<br/>in function]
+
+    style D fill:#FFE4B5
+    style H fill:#FFB6C1
+    style K fill:#FFB6B6
+    style L fill:#90EE90
+    style M fill:#FFE4B5
+    style N fill:#FFB6B6
+```
+
+**Summary:**
+- **Removable**: $\lim_{x \to c} f(x)$ exists, but $\lim_{x \to c} f(x) \neq f(c)$ (or $f(c)$ undefined)
+- **Jump**: Both $\lim_{x \to c^-} f(x)$ and $\lim_{x \to c^+} f(x)$ exist, but are unequal
+- **Essential/Infinite**: At least one one-sided limit fails to exist (oscillates or goes to $\pm\infty$)
+
 ### Removable Discontinuity
 
 **Definition 7.2 (Removable Discontinuity):** A function $f$ has a **removable discontinuity** at $c$ if:

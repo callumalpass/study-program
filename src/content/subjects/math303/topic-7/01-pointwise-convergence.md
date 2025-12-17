@@ -175,6 +175,25 @@ $\square$
 
 The following examples illustrate fundamental limitations of pointwise convergence.
 
+### Properties Lost Under Pointwise Convergence
+
+```mermaid
+graph LR
+    A[Sequence ·fₙ·<br/>Each fₙ has property P] -->|Pointwise<br/>Convergence| B[Limit f]
+
+    C[Continuity] -.->|May be lost| D[f may be discontinuous<br/>Example: xⁿ on [0,1]]
+    E[Differentiability] -.->|May be lost| F[f may not be differentiable<br/>or f' ≠ lim fₙ']
+    G[Boundedness] -.->|May be lost| H[f may be unbounded<br/>or not converge everywhere]
+    I[Integrability] -.->|May be lost| J[∫f ≠ lim ∫fₙ in general<br/>Moving bump example]
+
+    style A fill:#87CEEB
+    style B fill:#FFE4B5
+    style D fill:#FFB6B6
+    style F fill:#FFB6B6
+    style H fill:#FFB6B6
+    style J fill:#FFB6B6
+```
+
 **Failure to Preserve Continuity:** Example 1.3 showed that a sequence of continuous functions can converge pointwise to a discontinuous function.
 
 **Failure to Preserve Differentiability:** Consider $f_n(x) = \frac{\sin(nx)}{n}$ on $\mathbb{R}$.

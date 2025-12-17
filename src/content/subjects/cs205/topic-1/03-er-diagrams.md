@@ -325,3 +325,141 @@ Student ──Has── Enrollment ──For── Course
 - Relationship names: Verbs or verb phrases (Enrolls, Works_For)
 - Attribute names: Descriptive nouns (BirthDate, not BD)
 
+## Complete ER Diagram Example
+
+Here's a comprehensive example using Mermaid to visualize a university database:
+
+```mermaid
+erDiagram
+    STUDENT ||--o{ ENROLLMENT : "enrolls in"
+    COURSE ||--o{ ENROLLMENT : "has"
+    COURSE }o--|| DEPARTMENT : "offered by"
+    STUDENT }o--|| DEPARTMENT : "majors in"
+    INSTRUCTOR ||--o{ COURSE : teaches
+    INSTRUCTOR }o--|| DEPARTMENT : "works in"
+
+    STUDENT {
+        int StudentID PK
+        string Name
+        date BirthDate
+        string Email
+        float GPA
+        int DeptID FK
+    }
+
+    COURSE {
+        string CourseID PK
+        string Title
+        int Credits
+        int DeptID FK
+        int InstructorID FK
+    }
+
+    ENROLLMENT {
+        int StudentID FK
+        string CourseID FK
+        string Semester
+        string Grade
+    }
+
+    DEPARTMENT {
+        int DeptID PK
+        string DeptName
+        string Building
+        int Budget
+    }
+
+    INSTRUCTOR {
+        int InstructorID PK
+        string Name
+        string Rank
+        int DeptID FK
+    }
+```
+
+### Cardinality Notation in Mermaid
+
+The diagram above uses crow's foot notation:
+- `||` : Exactly one
+- `|o` : Zero or one
+- `}{` : One or many
+- `}o` : Zero or many
+
+Examples from the diagram:
+- `STUDENT ||--o{ ENROLLMENT` : One student can have zero or many enrollments
+- `COURSE }o--|| DEPARTMENT` : Many courses belong to exactly one department
+
+### Relationship Attributes Example
+
+For many-to-many relationships with attributes, create an associative entity:
+
+```mermaid
+erDiagram
+    STUDENT ||--o{ ENROLLMENT : through
+    COURSE ||--o{ ENROLLMENT : through
+    ENROLLMENT ||--|| GRADE_HISTORY : has
+
+    STUDENT {
+        int StudentID PK
+        string Name
+    }
+
+    COURSE {
+        string CourseID PK
+        string Title
+    }
+
+    ENROLLMENT {
+        int EnrollmentID PK
+        int StudentID FK
+        string CourseID FK
+        date EnrollDate
+        string Semester
+    }
+
+    GRADE_HISTORY {
+        int GradeID PK
+        int EnrollmentID FK
+        string Grade
+        date GradeDate
+    }
+```
+
+### Specialization Hierarchy Example
+
+For IS-A relationships (inheritance), we model with shared keys:
+
+```mermaid
+erDiagram
+    PERSON ||--o{ STUDENT : "is a"
+    PERSON ||--o{ EMPLOYEE : "is a"
+    EMPLOYEE ||--o{ INSTRUCTOR : "is a"
+
+    PERSON {
+        int PersonID PK
+        string Name
+        date BirthDate
+        string Email
+        string PersonType
+    }
+
+    STUDENT {
+        int PersonID PK_FK
+        float GPA
+        date EnrollmentDate
+        int DeptID FK
+    }
+
+    EMPLOYEE {
+        int PersonID PK_FK
+        date HireDate
+        decimal Salary
+    }
+
+    INSTRUCTOR {
+        int PersonID PK_FK
+        string Rank
+        string Office
+    }
+```
+

@@ -196,6 +196,76 @@ The convergence of $\sum_{n=1}^\infty \frac{1}{n^p}$ is equivalent to the conver
 
 Both converge iff $p > 1$.
 
+## Improper Integral Convergence Strategy
+
+Use this flowchart to systematically determine convergence of improper integrals:
+
+```mermaid
+graph TD
+    Start([Given Improper Integral]) --> Type{Type of<br/>improper integral?}
+
+    Type -->|Infinite limit<br/>∫ₐ^∞ f x dx| Type1[Type 1:<br/>Infinite limit]
+    Type -->|Discontinuity<br/>at finite point| Type2[Type 2:<br/>Discontinuity]
+
+    Type1 --> T1Behavior{What's the<br/>behavior as<br/>x → ∞?}
+    T1Behavior -->|Like 1/xᵖ| T1P{Compare<br/>with p-integral}
+    T1P -->|p > 1| T1Conv[Converges<br/> p-integral test ]
+    T1P -->|p ≤ 1| T1Div[Diverges<br/> p-integral test ]
+
+    T1Behavior -->|Exponential e⁻ᵃˣ| T1Exp{Is a > 0?}
+    T1Exp -->|Yes| T1ExpConv[Likely converges<br/>exponential decay]
+    T1Exp -->|No| T1ExpDiv[Likely diverges]
+
+    T1Behavior -->|Oscillating| T1Osc[Check absolute<br/>convergence<br/>∫ f x  dx]
+
+    T1Behavior -->|Other| T1Comp{Can you compare<br/>with known integral?}
+
+    Type2 --> T2Loc{Where is<br/>discontinuity?}
+    T2Loc --> T2Behavior{Behavior near<br/>discontinuity?}
+    T2Behavior -->|Like 1/xᵖ near 0| T2P{Compare with<br/>p-integral at 0}
+    T2P -->|p < 1| T2Conv[Converges<br/> p-integral test ]
+    T2P -->|p ≥ 1| T2Div[Diverges<br/> p-integral test ]
+
+    T2Behavior -->|Other singularity| T2Comp{Can you compare<br/>with known integral?}
+
+    T1Comp -->|Yes, inequality| Direct1[Direct<br/>Comparison Test]
+    T1Comp -->|Similar behavior| Limit1[Limit<br/>Comparison Test]
+
+    T2Comp -->|Yes, inequality| Direct2[Direct<br/>Comparison Test]
+    T2Comp -->|Similar behavior| Limit2[Limit<br/>Comparison Test]
+
+    T1Osc --> AbsTest{Does ∫ f x <br/>converge?}
+    AbsTest -->|Yes| AbsConv[Converges<br/>absolutely]
+    AbsTest -->|No but oscillates| CondConv[May converge<br/>conditionally<br/> advanced methods ]
+
+    Direct1 --> Verify
+    Limit1 --> Verify
+    Direct2 --> Verify
+    Limit2 --> Verify
+    T1Conv --> Done
+    T1Div --> Done
+    T1ExpConv --> Verify
+    T2Conv --> Done
+    T2Div --> Done
+    AbsConv --> Done
+
+    Verify[Verify:<br/>• Assumptions hold<br/>• Inequalities correct<br/>• Limits computed properly]
+    Verify --> Done([Conclusion])
+
+    style Start fill:#e1f5ff
+    style Done fill:#d4edda
+    style T1Conv fill:#d4edda
+    style T2Conv fill:#d4edda
+    style AbsConv fill:#d4edda
+    style T1Div fill:#f8d7da
+    style T2Div fill:#f8d7da
+    style T1ExpConv fill:#d4edda
+    style Direct1 fill:#fff3cd
+    style Direct2 fill:#fff3cd
+    style Limit1 fill:#fff3cd
+    style Limit2 fill:#fff3cd
+```
+
 ## Practical Guidelines
 
 **Step 1: Identify the type**

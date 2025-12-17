@@ -27,7 +27,7 @@ This only works when the sets don't overlap (disjoint). If sets overlap, we need
 
 ## The Multiplication Principle (Rule of Product)
 
-If task A can be done in m ways and task B can be done in n ways, then doing both A and B can be done in m × n ways.
+If task A can be done in $m$ ways and task B can be done in $n$ ways, then doing both A and B can be done in $m \times n$ ways.
 
 **Key insight**: The multiplication principle applies when we're making a sequence of independent choices—doing one thing AND another.
 
@@ -38,20 +38,66 @@ You have:
 - 4 pants
 - 3 pairs of shoes
 
-Total outfit combinations: 5 × 4 × 3 = 60
+Total outfit combinations: $5 \times 4 \times 3 = 60$
+
+```mermaid
+graph TD
+    Start[Start] --> S1[Shirt 1]
+    Start --> S2[Shirt 2]
+    Start --> S3[Shirt 3]
+    Start --> S4[Shirt 4]
+    Start --> S5[Shirt 5]
+
+    S1 --> P1_1[Pants 1]
+    S1 --> P1_2[Pants 2]
+    S1 --> P1_3[Pants 3]
+    S1 --> P1_4[Pants 4]
+
+    P1_1 --> Sh1_1[Shoes 1: 1 outfit]
+    P1_1 --> Sh1_2[Shoes 2: 1 outfit]
+    P1_1 --> Sh1_3[Shoes 3: 1 outfit]
+
+    S2 --> P2[4 pants...]
+    S3 --> P3[4 pants...]
+    S4 --> P4[4 pants...]
+    S5 --> P5[4 pants...]
+
+    P2 --> Result2[Each → 3 shoes]
+    P3 --> Result3[Each → 3 shoes]
+    P4 --> Result4[Each → 3 shoes]
+    P5 --> Result5[Each → 3 shoes]
+
+    style Start fill:#e1f5ff
+    style Sh1_1 fill:#d4edda
+    style Sh1_2 fill:#d4edda
+    style Sh1_3 fill:#d4edda
+```
 
 ### Sequential Decisions
 
 The multiplication principle extends naturally to any sequence of decisions:
 
-```
-Total outcomes = (choices₁) × (choices₂) × ... × (choicesₙ)
-```
+$$\text{Total outcomes} = (\text{choices}_1) \times (\text{choices}_2) \times \cdots \times (\text{choices}_n)$$
 
 **License plate example**: 3 letters followed by 4 digits
-- Letters: 26 × 26 × 26 = 17,576
-- Digits: 10 × 10 × 10 × 10 = 10,000
-- Total: 17,576 × 10,000 = 175,760,000 plates
+- Letters: $26 \times 26 \times 26 = 17,576$
+- Digits: $10 \times 10 \times 10 \times 10 = 10,000$
+- Total: $17,576 \times 10,000 = 175,760,000$ plates
+
+```mermaid
+graph LR
+    Start[License Plate] --> L1[Letter 1<br/>26 choices]
+    L1 --> L2[Letter 2<br/>26 choices]
+    L2 --> L3[Letter 3<br/>26 choices]
+    L3 --> D1[Digit 1<br/>10 choices]
+    D1 --> D2[Digit 2<br/>10 choices]
+    D2 --> D3[Digit 3<br/>10 choices]
+    D3 --> D4[Digit 4<br/>10 choices]
+    D4 --> Result[Total: 175,760,000]
+
+    style Start fill:#e1f5ff
+    style Result fill:#d4edda
+```
 
 ## Combining the Principles
 
@@ -64,20 +110,20 @@ A password must be either:
 - 4 digits followed by 2 uppercase letters
 
 **Case 1**: 6 lowercase letters
-26⁶ = 308,915,776
+$$26^6 = 308,915,776$$
 
 **Case 2**: 4 digits + 2 uppercase
-10⁴ × 26² = 6,760,000
+$$10^4 \times 26^2 = 6,760,000$$
 
-**Total** (addition principle): 308,915,776 + 6,760,000 = 315,675,776
+**Total** (addition principle): $308,915,776 + 6,760,000 = 315,675,776$
 
 ## The Subtraction Principle
 
 Sometimes it's easier to count what we don't want and subtract from the total.
 
-|A| = |U| - |Ā|
+$$|A| = |U| - |\overline{A}|$$
 
-Where U is the universal set and Ā is the complement of A.
+Where $U$ is the universal set and $\overline{A}$ is the complement of $A$.
 
 ### Example: Non-zero Digits
 
@@ -86,9 +132,9 @@ How many 4-digit numbers have at least one zero?
 **Direct counting**: Complex (zero in position 1, 2, 3, or 4 with overlaps)
 
 **Subtraction approach**:
-- Total 4-digit numbers: 9 × 10 × 10 × 10 = 9,000 (first digit can't be 0)
-- Numbers with no zeros: 9 × 9 × 9 × 9 = 6,561
-- At least one zero: 9,000 - 6,561 = 2,439
+- Total 4-digit numbers: $9 \times 10 \times 10 \times 10 = 9,000$ (first digit can't be 0)
+- Numbers with no zeros: $9 \times 9 \times 9 \times 9 = 6,561$
+- At least one zero: $9,000 - 6,561 = 2,439$
 
 ## The Division Principle
 

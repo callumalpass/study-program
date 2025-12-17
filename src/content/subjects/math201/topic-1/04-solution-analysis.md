@@ -15,6 +15,44 @@ Understanding the nature of solutions to linear systems is fundamental to linear
 
 **Important:** A linear system can never have exactly 2, 3, or any other finite number of solutions greater than one.
 
+### Solution Classification Decision Tree
+
+The following diagram shows how to systematically classify the solution set of any linear system:
+
+```mermaid
+flowchart TD
+    Start([Linear System A·x = b]) --> Reduce[Perform Gaussian Elimination<br/>to get RREF]
+    Reduce --> CheckConsist{Does RREF have row<br/>of form [0 0 ... 0 | b]<br/>where b ≠ 0?}
+
+    CheckConsist -->|Yes| Inconsist[INCONSISTENT<br/>No Solution]
+    CheckConsist -->|No| Consist[CONSISTENT<br/>At least one solution]
+
+    Consist --> CountFree{Count free variables<br/>Non-pivot columns in<br/>coefficient matrix}
+
+    CountFree -->|Zero free variables<br/>All n columns are pivots| Unique[UNIQUE SOLUTION<br/>Exactly one solution<br/>x₁ = c₁, x₂ = c₂, ..., xₙ = cₙ]
+
+    CountFree -->|k > 0 free variables<br/>Some columns non-pivot| Infinite[INFINITELY MANY<br/>SOLUTIONS<br/>k-parameter family]
+
+    Infinite --> Param[Write in parametric form:<br/>x = p + t₁v₁ + t₂v₂ + ... + tₖvₖ]
+
+    style Start fill:#e1f5e1
+    style Inconsist fill:#ffe1e1
+    style Unique fill:#e1f5ff
+    style Infinite fill:#fff4e1
+    style Param fill:#fff4e1
+```
+
+**Key Decision Points:**
+
+1. **Consistency Check:** Look at rightmost column of RREF
+   - If it's a pivot column → Inconsistent (equation $0 = b$ where $b \neq 0$)
+   - If it's NOT a pivot column → Consistent
+
+2. **Uniqueness Check (only for consistent systems):** Count free variables
+   - Number of free variables $= n -$ (number of pivots)
+   - If $0$ free variables → Unique solution
+   - If $k > 0$ free variables → Infinitely many solutions (k-dimensional solution space)
+
 ## Consistency Analysis
 
 ### Consistency Criterion
@@ -164,9 +202,13 @@ x_4 = t
 \end{cases}$$
 
 **Parametric vector form:**
-$$\begin{pmatrix} x_1 \\ x_2 \\ x_3 \\ x_4 \end{pmatrix} = \begin{pmatrix} 3 \\ 0 \\ -1 \\ 0 \end{pmatrix} + s\begin{pmatrix} -2 \\ 1 \\ 0 \\ 0 \end{pmatrix} + t\begin{pmatrix} -1 \\ 0 \\ 2 \\ 1 \end{pmatrix}$$
+$$\begin{pmatrix} x_1 \\ x_2 \\ x_3 \\ x_4 \end{pmatrix} = \begin{pmatrix} 3 \\ 0 \\ -1 \\ 0 \end{pmatrix} + s\begin{pmatrix} -2 \\ 1 \\ 0 \\ 0 \end{pmatrix} + t\begin{pmatrix} -1 \\ 0 \\ 2 \\ 1 \end{pmatrix}, \quad s, t \in \mathbb{R}$$
 
-**Geometric interpretation:** The solution set is a 2-dimensional plane in $\mathbb{R}^4$.
+**Geometric interpretation:** The solution set is a 2-dimensional plane in $\mathbb{R}^4$. We can express this as:
+
+$$\text{Solution set} = \left\{\mathbf{p} + s\mathbf{v}_1 + t\mathbf{v}_2 : s, t \in \mathbb{R}\right\}$$
+
+where $\mathbf{p} = \begin{pmatrix} 3 \\ 0 \\ -1 \\ 0 \end{pmatrix}$ is a **particular solution** and $\mathbf{v}_1, \mathbf{v}_2$ span the null space of the coefficient matrix.
 
 ## Parametric Descriptions of Solution Sets
 

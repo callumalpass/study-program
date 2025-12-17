@@ -4,9 +4,14 @@ A grammar is **ambiguous** if some string has multiple parse trees. Ambiguity ca
 
 ## Definition
 
-A CFG G is **ambiguous** if there exists a string w ∈ L(G) with two or more distinct parse trees.
+A CFG $G$ is **ambiguous** if there exists a string $w \in L(G)$ with two or more distinct parse trees.
 
-Equivalently, w has two distinct leftmost derivations (or two distinct rightmost derivations).
+Equivalently, $w$ has two distinct leftmost derivations (or two distinct rightmost derivations).
+
+Formally:
+$$
+G \text{ is ambiguous} \iff \exists w \in L(G) : w \text{ has multiple parse trees}
+$$
 
 ## Classic Example: Dangling Else
 
@@ -23,13 +28,53 @@ This **dangling else** ambiguity appears in many programming languages.
 
 ## Arithmetic Expression Ambiguity
 
-Ambiguous grammar: E → E + E | E * E | id
+Ambiguous grammar: $E \to E + E \mid E * E \mid \text{id}$
 
 For "id + id * id":
-- Tree 1: (id + id) * id
-- Tree 2: id + (id * id)
 
-These give different evaluation results!
+### Parse Tree 1: $(id + id) * id$
+
+```mermaid
+graph TD
+    E1[E] --> E2[E]
+    E1 --> mult[*]
+    E1 --> E3[E]
+    E2 --> E4[E]
+    E2 --> plus[+]
+    E2 --> E5[E]
+    E4 --> id1[id]
+    E5 --> id2[id]
+    E3 --> id3[id]
+
+    style E1 fill:#ffe1e1
+    style E2 fill:#ffe1e1
+    style id1 fill:#f0f0f0
+    style id2 fill:#f0f0f0
+    style id3 fill:#f0f0f0
+```
+
+### Parse Tree 2: $id + (id * id)$
+
+```mermaid
+graph TD
+    E1[E] --> E2[E]
+    E1 --> plus[+]
+    E1 --> E3[E]
+    E2 --> id1[id]
+    E3 --> E4[E]
+    E3 --> mult[*]
+    E3 --> E5[E]
+    E4 --> id2[id]
+    E5 --> id3[id]
+
+    style E1 fill:#e1ffe1
+    style E3 fill:#e1ffe1
+    style id1 fill:#f0f0f0
+    style id2 fill:#f0f0f0
+    style id3 fill:#f0f0f0
+```
+
+These give different evaluation results! Tree 1 evaluates to $(id_1 + id_2) \times id_3$, while Tree 2 evaluates to $id_1 + (id_2 \times id_3)$.
 
 ## Detecting Ambiguity
 
@@ -63,9 +108,11 @@ Add rules outside grammar to resolve ambiguity:
 
 Some CFLs are **inherently ambiguous**: every grammar for them is ambiguous.
 
-Example: L = {aⁿbⁿcᵐdᵐ} ∪ {aⁿbᵐcᵐdⁿ}
+**Example**: $L = \{a^n b^n c^m d^m \mid n, m \geq 1\} \cup \{a^n b^m c^m d^n \mid n, m \geq 1\}$
 
-Any grammar for L must be ambiguous because strings like aⁿbⁿcⁿdⁿ can be parsed in two ways.
+Any grammar for $L$ must be ambiguous because strings like $a^n b^n c^n d^n$ belong to both sub-languages and can be parsed in two fundamentally different ways:
+- Matching $n$ $a$'s with $n$ $b$'s and $n$ $c$'s with $n$ $d$'s
+- Matching $n$ $a$'s with $n$ $d$'s and $n$ $b$'s with $n$ $c$'s
 
 ## Ambiguity in Practice
 

@@ -87,17 +87,64 @@ def dijkstra(adj, source):
     return dist
 ```
 
+### Dijkstra's Algorithm Visualization
+
+```mermaid
+graph TD
+    subgraph "Step 1: Initialize"
+        A1[A: 0<br/>visited]
+        B1[B: ∞]
+        C1[C: ∞]
+        D1[D: ∞]
+    end
+
+    subgraph "Step 2: Process A"
+        A2[A: 0<br/>visited]
+        B2[B: 4]
+        C2[C: 2]
+        D2[D: ∞]
+    end
+
+    subgraph "Step 3: Process C (min)"
+        A3[A: 0<br/>visited]
+        B3[B: 3<br/>updated!]
+        C3[C: 2<br/>visited]
+        D3[D: 7]
+    end
+
+    subgraph "Step 4: Process B"
+        A4[A: 0<br/>visited]
+        B4[B: 3<br/>visited]
+        C4[C: 2<br/>visited]
+        D4[D: 6<br/>updated!]
+    end
+
+    A1 --> A2
+    A2 --> A3
+    A3 --> A4
+
+    style A1 fill:#4caf50
+    style A2 fill:#4caf50
+    style A3 fill:#4caf50
+    style A4 fill:#4caf50
+    style C3 fill:#81c784
+    style B3 fill:#ffeb3b
+    style B4 fill:#81c784
+```
+
+**Greedy choice**: Always process the unvisited vertex with smallest tentative distance.
+
 ### Complexity
 
-- **Binary heap**: O((V + E) log V)
-- **Fibonacci heap**: O(E + V log V)
-- **Dense graphs**: O(V²) with array instead of heap
+- **Binary heap**: $O((V + E) \log V)$
+- **Fibonacci heap**: $O(E + V \log V)$
+- **Dense graphs**: $O(V^2)$ with array instead of heap
 
 ### Correctness
 
-**Invariant**: When vertex u is extracted, dist[u] is the true shortest distance.
+**Invariant**: When vertex $u$ is extracted, $\text{dist}[u]$ is the true shortest distance.
 
-**Proof**: By contradiction. If a shorter path exists, it must go through an unvisited vertex v with dist[v] < dist[u], but then v would be extracted first.
+**Proof**: By contradiction. If a shorter path exists, it must go through an unvisited vertex $v$ with $\text{dist}[v] < \text{dist}[u]$, but then $v$ would be extracted first.
 
 ### Path Reconstruction
 

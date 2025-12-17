@@ -27,7 +27,26 @@ The determinant function $\det: GL_n(\mathbb{R}) \to \mathbb{R}^*$ is one of the
 
 $$\det(AB) = \det(A) \cdot \det(B)$$
 
-This maps the general linear group (invertible $n \times n$ matrices under multiplication) to the multiplicative group of nonzero real numbers. The kernel of this homomorphism is the special linear group $SL_n(\mathbb{R})$, consisting of matrices with determinant 1.
+```mermaid
+graph LR
+    subgraph "Domain: GLₙ(ℝ)"
+        A["Invertible<br/>matrices"]
+        SL["ker(det) = SLₙ(ℝ)<br/>(det = 1)"]
+    end
+
+    subgraph "Codomain: ℝ*"
+        R["Nonzero<br/>reals"]
+        One["1<br/>(identity)"]
+    end
+
+    A -->|det| R
+    SL -->|det| One
+
+    style SL fill:#ffccbc
+    style One fill:#c8e6c9
+```
+
+This maps the general linear group (invertible $n \times n$ matrices under multiplication) to the multiplicative group of nonzero real numbers. The kernel of this homomorphism is the special linear group $SL_n(\mathbb{R})$, consisting of matrices with determinant $1$.
 
 ### Example 2: Sign Homomorphism
 
@@ -165,6 +184,29 @@ $$\text{Im}(\phi) = \phi(G) = \{\phi(g) : g \in G\} \subseteq H$$
 
 **Kernel**:
 $$\ker(\phi) = \{g \in G : \phi(g) = e_H\} = \phi^{-1}(\{e_H\})$$
+
+```mermaid
+graph LR
+    subgraph "Group G"
+        K["ker(φ)<br/>{g : φ(g) = eₕ}"]
+        G1["Other<br/>elements"]
+    end
+
+    subgraph "Group H"
+        I["Im(φ) = φ(G)<br/>image"]
+        eH["eₕ<br/>identity"]
+    end
+
+    K -->|φ| eH
+    G1 -->|φ| I
+
+    style K fill:#ffccbc
+    style eH fill:#c8e6c9
+    style I fill:#bbdefb
+
+    note["ker(φ) ⊴ G (normal)<br/>Im(φ) ≤ H (subgroup)"]
+    style note fill:#fff9c4
+```
 
 **Theorem 4**:
 1. $\text{Im}(\phi) \leq H$ (the image is a subgroup)

@@ -43,6 +43,43 @@ Consider flipping a fair coin where heads is success. Here $p = 0.5$, and the ra
 
 When we perform $n$ independent Bernoulli trials, each with success probability $p$, and count the total number of successes, we obtain a **binomial distribution**.
 
+### From Bernoulli to Binomial
+
+```mermaid
+graph TB
+    subgraph Single["Single Trial"]
+        B1["Bernoulli Trial<br/>X ~ Bernoulli&#40;p&#41;<br/>Outcome: 0 or 1"]
+    end
+
+    subgraph Multiple["n Independent Trials"]
+        T1["Trial 1<br/>X₁ ~ Bern&#40;p&#41;"]
+        T2["Trial 2<br/>X₂ ~ Bern&#40;p&#41;"]
+        T3["Trial 3<br/>X₃ ~ Bern&#40;p&#41;"]
+        Tdots["..."]
+        Tn["Trial n<br/>Xₙ ~ Bern&#40;p&#41;"]
+    end
+
+    subgraph Count["Count Successes"]
+        Sum["Y = X₁ + X₂ + ... + Xₙ"]
+    end
+
+    subgraph Result["Binomial Distribution"]
+        Binom["Y ~ Binomial&#40;n, p&#41;<br/>P&#40;Y = k&#41; = &#40;n choose k&#41;p^k&#40;1-p&#41;^&#40;n-k&#41;<br/>E[Y] = np<br/>Var&#40;Y&#41; = np&#40;1-p&#41;"]
+    end
+
+    B1 -.Repeat n times.-> T1
+    T1 --> Sum
+    T2 --> Sum
+    T3 --> Sum
+    Tdots --> Sum
+    Tn --> Sum
+    Sum --> Binom
+
+    style B1 fill:#e1f5ff
+    style Sum fill:#fff3e0
+    style Binom fill:#e8f5e9
+```
+
 ### Probability Mass Function
 
 If $X$ represents the number of successes in $n$ Bernoulli trials, then:
@@ -53,7 +90,7 @@ where $\binom{n}{k} = \frac{n!}{k!(n-k)!}$ is the binomial coefficient.
 
 We write $X \sim \text{Binomial}(n, p)$ or $X \sim B(n, p)$.
 
-**Interpretation:** The binomial coefficient counts the number of ways to arrange $k$ successes among $n$ trials, while $p^k$ is the probability of $k$ successes and $(1-p)^{n-k}$ is the probability of $n-k$ failures.
+**Interpretation:** The binomial coefficient $\binom{n}{k}$ counts the number of ways to arrange $k$ successes among $n$ trials, while $p^k$ is the probability of $k$ successes and $(1-p)^{n-k}$ is the probability of $n-k$ failures.
 
 ### Properties of the Binomial Distribution
 

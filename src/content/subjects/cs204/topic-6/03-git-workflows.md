@@ -138,6 +138,40 @@ Examples:
 
 Gitflow is a strict branching model designed around project releases. It uses multiple long-lived branches with specific purposes.
 
+```mermaid
+gitGraph
+    commit id: "Initial"
+    branch develop
+    checkout develop
+    commit id: "Setup"
+
+    branch feature/login
+    checkout feature/login
+    commit id: "Add login UI"
+    commit id: "Add auth logic"
+    checkout develop
+    merge feature/login
+
+    branch release/1.0
+    checkout release/1.0
+    commit id: "Version bump"
+    commit id: "Fix bugs"
+
+    checkout main
+    merge release/1.0 tag: "v1.0.0"
+
+    checkout develop
+    merge release/1.0
+
+    checkout main
+    branch hotfix/1.0.1
+    commit id: "Fix critical bug"
+    checkout main
+    merge hotfix/1.0.1 tag: "v1.0.1"
+    checkout develop
+    merge hotfix/1.0.1
+```
+
 ### Branch Structure
 
 **Main Branches** (permanent):

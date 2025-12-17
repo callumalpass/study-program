@@ -17,6 +17,28 @@ Structural patterns focus on how classes and objects are composed to form larger
 
 The Adapter pattern converts the interface of a class into another interface that clients expect. It lets classes work together that couldn't otherwise because of incompatible interfaces.
 
+```mermaid
+classDiagram
+    class Target {
+        <<interface>>
+        +request()
+    }
+    class Adapter {
+        -adaptee: Adaptee
+        +request()
+    }
+    class Adaptee {
+        +specificRequest()
+    }
+    class Client
+
+    Client --> Target
+    Target <|.. Adapter
+    Adapter --> Adaptee : adaptee.specificRequest()
+
+    note for Adapter "Translates Target interface\nto Adaptee interface"
+```
+
 ### When to Use
 
 - Want to use an existing class with an incompatible interface
@@ -184,6 +206,35 @@ circle1.draw()  # API1: Circle at (5,10) with radius 40
 
 The Composite pattern composes objects into tree structures to represent part-whole hierarchies. It lets clients treat individual objects and compositions uniformly.
 
+```mermaid
+classDiagram
+    class Component {
+        <<interface>>
+        +operation()
+        +add(Component)
+        +remove(Component)
+        +getChild(int)
+    }
+    class Leaf {
+        +operation()
+    }
+    class Composite {
+        -children: List~Component~
+        +operation()
+        +add(Component)
+        +remove(Component)
+        +getChild(int)
+    }
+    class Client
+
+    Client --> Component
+    Component <|.. Leaf
+    Component <|.. Composite
+    Composite o-- Component : children
+
+    note for Composite "Implements operations by\ndelegating to children"
+```
+
 ### When to Use
 
 - Want to represent part-whole hierarchies of objects
@@ -271,6 +322,38 @@ print(f"\nTotal size: {root.get_size()} bytes")
 ## Decorator Pattern
 
 The Decorator pattern attaches additional responsibilities to an object dynamically. Decorators provide a flexible alternative to subclassing for extending functionality.
+
+```mermaid
+classDiagram
+    class Component {
+        <<interface>>
+        +operation()
+    }
+    class ConcreteComponent {
+        +operation()
+    }
+    class Decorator {
+        <<abstract>>
+        -component: Component
+        +operation()
+    }
+    class ConcreteDecoratorA {
+        +operation()
+        +addedBehavior()
+    }
+    class ConcreteDecoratorB {
+        +operation()
+        -addedState
+    }
+
+    Component <|.. ConcreteComponent
+    Component <|.. Decorator
+    Decorator <|-- ConcreteDecoratorA
+    Decorator <|-- ConcreteDecoratorB
+    Decorator o-- Component : wraps
+
+    note for Decorator "Forwards requests to\ncomponent and adds\nown behavior"
+```
 
 ### When to Use
 

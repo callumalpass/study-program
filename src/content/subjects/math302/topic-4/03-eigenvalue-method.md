@@ -187,6 +187,54 @@ For $\mathbf{x}' = A\mathbf{x}$ with distinct real eigenvalues:
 
 4. **Apply initial conditions** (if given): Solve $\mathbf{x}(0) = \sum c_i\mathbf{v}_i$ for $c_i$
 
+### Eigenvalue Method Algorithm
+
+The following flowchart provides a systematic procedure for solving linear systems:
+
+```mermaid
+graph TD
+    A[Given: x' = Ax] --> B[Step 1: Form characteristic<br/>polynomial det-A - λI- = 0]
+
+    B --> C[Step 2: Solve for eigenvalues<br/>λ₁, λ₂, ..., λn]
+
+    C --> D{Are eigenvalues<br/>distinct?}
+
+    D -->|Yes| E{Are all eigenvalues<br/>real?}
+    D -->|No| F[Repeated eigenvalues:<br/>Use generalized<br/>eigenvectors]
+
+    E -->|Yes| G[Step 3: For each λᵢ,<br/>solve -A - λᵢI-vᵢ = 0<br/>to find eigenvector vᵢ]
+    E -->|No| H[Complex eigenvalues:<br/>Use Euler's formula<br/>for real solutions]
+
+    G --> I[Step 4: Write general solution<br/>x-t- = Σcᵢe^-λᵢt-vᵢ]
+
+    I --> J{Initial conditions<br/>given?}
+
+    J -->|Yes| K[Step 5: Solve x-0- = Σcᵢvᵢ<br/>for constants cᵢ]
+    J -->|No| L[General solution complete]
+
+    K --> M[Particular solution:<br/>x-t- with specific cᵢ]
+
+    M --> N[Step 6: Analyze stability<br/>using Re-λᵢ-]
+
+    N --> O{All Re-λᵢ- < 0?}
+
+    O -->|Yes| P[Stable: x-t- → 0<br/>as t → ∞]
+    O -->|No| Q{Any Re-λᵢ- > 0?}
+
+    Q -->|Yes| R[Unstable: x-t- → ∞<br/>as t → ∞]
+    Q -->|No| S[Neutrally stable or<br/>requires further analysis]
+
+    style A fill:#e7f1ff,stroke:#084298
+    style G fill:#fff3cd,stroke:#997404
+    style I fill:#d1e7dd,stroke:#0f5132
+    style M fill:#d1e7dd,stroke:#0f5132
+    style P fill:#d1e7dd,stroke:#0f5132
+    style R fill:#f8d7da,stroke:#842029
+    style S fill:#fff3cd,stroke:#997404
+    style F fill:#ffe5cc,stroke:#cc5500
+    style H fill:#ffe5cc,stroke:#cc5500
+```
+
 ## Advantages of Eigenvalue Method
 
 1. **Systematic**: Clear algorithmic procedure

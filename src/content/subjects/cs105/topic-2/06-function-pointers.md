@@ -220,6 +220,32 @@ int main() {
 }
 ```
 
+### State Machine Diagram
+
+```mermaid
+stateDiagram-v2
+    [*] --> Idle
+    Idle --> Running: Start processing
+    Running --> Idle: Complete
+    Running --> Error: Failure
+    Idle --> Error: Invalid input
+    Error --> Idle: Reset
+
+    note right of Idle
+        currentState = stateIdle
+        Function pointer points
+        to idle handler
+    end note
+
+    note right of Running
+        currentState = stateRunning
+        Function pointer points
+        to running handler
+    end note
+```
+
+Each state is a function. The `currentState` function pointer determines which state function executes. State transitions are simply pointer reassignments.
+
 ## Returning Function Pointers
 
 Functions can return function pointers:

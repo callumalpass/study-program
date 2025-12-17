@@ -34,6 +34,48 @@ $$\frac{dy}{g(y)} = f(x)dx$$
 **After integration**:
 $$\int \frac{dy}{g(y)} = \int f(x)dx + C$$
 
+### Solution Flowchart
+
+```mermaid
+graph TD
+    A[Given: dy/dx = F-x,y-] --> B{Can F-x,y- be written<br/>as f-x-·g-y-?}
+
+    B -->|No| C[Not separable:<br/>Try other methods<br/>-linear, exact, etc.-]
+    B -->|Yes| D[Write dy/dx = f-x-g-y-]
+
+    D --> E[Separate variables:<br/>dy/g-y- = f-x-dx]
+
+    E --> F{g-y- = 0<br/>for some y?}
+
+    F -->|Yes| G[Note: y where g-y-=0<br/>are singular solutions<br/>-check separately-]
+    F -->|No| H[Continue]
+
+    G --> H
+
+    H --> I[Integrate both sides:<br/>∫dy/g-y- = ∫f-x-dx + C]
+
+    I --> J{Can solve<br/>explicitly for y?}
+
+    J -->|Yes| K[Explicit solution:<br/>y = h-x, C-]
+    J -->|No| L[Implicit solution:<br/>G-x,y,C- = 0]
+
+    K --> M{Initial condition<br/>y-x₀- = y₀ given?}
+    L --> M
+
+    M -->|Yes| N[Substitute x₀, y₀<br/>to find C]
+    M -->|No| O[General solution<br/>-family of curves-]
+
+    N --> P[Particular solution<br/>satisfies IVP]
+
+    style B fill:#ffc107,stroke:#997404,stroke-width:2px
+    style F fill:#ffc107,stroke:#997404,stroke-width:2px
+    style J fill:#ffc107,stroke:#997404,stroke-width:2px
+    style C fill:#f8d7da,stroke:#842029
+    style G fill:#fff3cd,stroke:#997404
+    style K fill:#d1e7dd,stroke:#0f5132
+    style P fill:#d1e7dd,stroke:#0f5132
+```
+
 ## Basic Examples
 
 ### Example 1: Simple Exponential Growth

@@ -42,9 +42,7 @@ A probability function P assigns to each event A a number P(A) satisfying:
 
 When all outcomes are equally likely:
 
-```
-P(A) = |A| / |S|
-```
+$$P(A) = \frac{|A|}{|S|}$$
 
 This connects probability to combinatorics.
 
@@ -52,66 +50,84 @@ This connects probability to combinatorics.
 
 What's the probability of being dealt a flush (5 cards same suit)?
 
-- Total hands: C(52,5) = 2,598,960
-- Flush hands: 4 × C(13,5) = 4 × 1287 = 5,148
+- Total hands: $\binom{52}{5} = 2,598,960$
+- Flush hands: $4 \times \binom{13}{5} = 4 \times 1287 = 5,148$
 
-P(flush) = 5,148/2,598,960 ≈ 0.00198
+$$P(\text{flush}) = \frac{5,148}{2,598,960} \approx 0.00198$$
+
+**Calculation breakdown:**
+```mermaid
+graph TD
+    Start[52 cards, choose 5] --> Total["Total hands:<br/>C 52,5 = 2,598,960"]
+    Start --> Flush[Flush hands]
+
+    Flush --> Step1[Choose suit:<br/>4 choices]
+    Step1 --> Step2[Choose 5 from 13<br/>in that suit:<br/>C 13,5 = 1,287]
+    Step2 --> FlushTotal[Total flushes:<br/>4 × 1,287 = 5,148]
+
+    Total --> Prob[P flush = 5,148 / 2,598,960]
+    FlushTotal --> Prob
+
+    Prob --> Result[≈ 0.198%]
+
+    style Start fill:#e1f5ff
+    style Result fill:#d4edda
+```
 
 ## Conditional Probability
 
-**P(A|B)**: Probability of A given that B occurred.
+**$P(A|B)$**: Probability of $A$ given that $B$ occurred.
 
-```
-P(A|B) = P(A ∩ B) / P(B)  when P(B) > 0
-```
+$$P(A|B) = \frac{P(A \cap B)}{P(B)} \quad \text{when } P(B) > 0$$
 
 ### Example: Card Drawing
 
-Draw 2 cards. P(second is ace | first is ace)?
+Draw 2 cards. $P(\text{second is ace} | \text{first is ace})$?
 
-P(A₂|A₁) = P(both aces) / P(first ace)
-        = (4/52 × 3/51) / (4/52)
-        = 3/51 ≈ 0.059
+$$P(A_2|A_1) = \frac{P(\text{both aces})}{P(\text{first ace})} = \frac{\frac{4}{52} \times \frac{3}{51}}{\frac{4}{52}} = \frac{3}{51} \approx 0.059$$
 
 ### Chain Rule
 
-```
-P(A₁ ∩ A₂ ∩ ... ∩ Aₙ) = P(A₁) × P(A₂|A₁) × P(A₃|A₁∩A₂) × ...
-```
+$$P(A_1 \cap A_2 \cap \cdots \cap A_n) = P(A_1) \cdot P(A_2|A_1) \cdot P(A_3|A_1 \cap A_2) \cdots$$
 
 ## Independence
 
-Events A and B are **independent** if:
+Events $A$ and $B$ are **independent** if:
 
-```
-P(A ∩ B) = P(A) × P(B)
-```
+$$P(A \cap B) = P(A) \cdot P(B)$$
 
-Equivalently: P(A|B) = P(A) and P(B|A) = P(B).
+Equivalently: $P(A|B) = P(A)$ and $P(B|A) = P(B)$.
+
+**Visual intuition:**
+```mermaid
+graph LR
+    Independent["Independent Events"] --> Meaning["B occurring doesn't<br/>change probability of A"]
+    Meaning --> Math["P A|B = P A"]
+
+    Dependent["Dependent Events"] --> DepMeaning["B occurring<br/>affects probability of A"]
+    DepMeaning --> DepMath["P A|B ≠ P A"]
+
+    style Independent fill:#d4edda
+    style Dependent fill:#f8d7da
+```
 
 ### Mutual Independence
 
-Events A₁, ..., Aₙ are mutually independent if for every subset:
+Events $A_1, \ldots, A_n$ are mutually independent if for every subset:
 
-```
-P(Aᵢ₁ ∩ ... ∩ Aᵢₖ) = P(Aᵢ₁) × ... × P(Aᵢₖ)
-```
+$$P\left(\bigcap_{i \in S} A_i\right) = \prod_{i \in S} P(A_i)$$
 
-**Warning**: Pairwise independence ≠ mutual independence.
+**Warning**: Pairwise independence $\not\Rightarrow$ mutual independence.
 
 ## Bayes' Theorem
 
-```
-P(A|B) = P(B|A) × P(A) / P(B)
-```
+$$P(A|B) = \frac{P(B|A) \cdot P(A)}{P(B)}$$
 
 ### Extended Form
 
-If B₁, ..., Bₙ partition S:
+If $B_1, \ldots, B_n$ partition $S$:
 
-```
-P(Bᵢ|A) = P(A|Bᵢ) × P(Bᵢ) / Σⱼ P(A|Bⱼ) × P(Bⱼ)
-```
+$$P(B_i|A) = \frac{P(A|B_i) \cdot P(B_i)}{\sum_{j=1}^{n} P(A|B_j) \cdot P(B_j)}$$
 
 ### Example: Medical Testing
 

@@ -39,6 +39,47 @@ $$\arg\max_\theta L(\theta) = \arg\max_\theta \ell(\theta)$$
 
 ## Finding the MLE
 
+### MLE Algorithm Steps
+
+The process of finding maximum likelihood estimators follows a systematic procedure:
+
+```mermaid
+flowchart TD
+    Start([Start with data x₁, x₂, ..., xₙ<br/>and parameter θ]) --> Step1[<b>Step 1: Write Likelihood Function</b><br/>L&#40;θ&#41; = ∏ᵢ f&#40;xᵢ; θ&#41;]
+
+    Step1 --> Step2[<b>Step 2: Take Log-Likelihood</b><br/>ℓ&#40;θ&#41; = ln L&#40;θ&#41; = Σᵢ ln f&#40;xᵢ; θ&#41;]
+
+    Step2 --> Step3[<b>Step 3: Compute Derivative</b><br/>Find dℓ/dθ or ∂ℓ/∂θⱼ]
+
+    Step3 --> Step4[<b>Step 4: Solve Score Equation</b><br/>Set dℓ/dθ = 0 and solve for θ]
+
+    Step4 --> Check{Solution<br/>exists?}
+
+    Check -->|Yes| Step5[<b>Step 5: Verify Maximum</b><br/>Check d²ℓ/dθ² < 0<br/>or compare endpoints]
+    Check -->|No| Numerical[Use numerical optimization<br/>Newton-Raphson, gradient ascent]
+
+    Step5 --> Verify{Is it a<br/>maximum?}
+
+    Verify -->|Yes| MLE[θ̂_MLE found!]
+    Verify -->|No| Boundary[Check boundary values]
+
+    Boundary --> MLE
+    Numerical --> MLE
+
+    MLE --> Properties[<b>Estimator has properties:</b><br/>• Consistent<br/>• Asymptotically normal<br/>• Asymptotically efficient<br/>• Invariant]
+
+    Properties --> End([Use θ̂_MLE for inference])
+
+    style Start fill:#e1f5ff
+    style Step1 fill:#fff3e0
+    style Step2 fill:#f3e5f5
+    style Step3 fill:#e8f5e9
+    style Step4 fill:#fff9c4
+    style Step5 fill:#fce4ec
+    style MLE fill:#c8e6c9
+    style End fill:#d4edda
+```
+
 ### Calculus Method (Interior Maximum)
 
 For most continuous distributions:

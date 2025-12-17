@@ -50,6 +50,38 @@ $$\Delta = 4\gamma^2 - 4\omega_0^2 = 4(\gamma^2 - \omega_0^2)$$
 
 The behavior depends on the sign of $\gamma^2 - \omega_0^2$, leading to three cases.
 
+### Damping Classification Flowchart
+
+The following diagram shows how to classify damping behavior:
+
+```mermaid
+graph TD
+    A[Mass-Spring System:<br/>mx'' + cx' + kx = 0] --> B{Compare γ² to ω₀²<br/>where γ = c/2m<br/>ω₀ = √-k/m-}
+
+    B -->|"γ² < ω₀²<br/>(c² < 4mk)"| C[Underdamped<br/>γ < ω₀]
+    B -->|"γ² = ω₀²<br/>(c² = 4mk)"| D[Critically Damped<br/>γ = ω₀]
+    B -->|"γ² > ω₀²<br/>(c² > 4mk)"| E[Overdamped<br/>γ > ω₀]
+
+    C --> C1[Complex roots:<br/>r = -γ ± iωd<br/>ωd = √-ω₀² - γ²-]
+    D --> D1[Repeated real root:<br/>r = -γ]
+    E --> E1[Distinct real roots:<br/>r = -γ ± √-γ² - ω₀²-]
+
+    C1 --> C2[Solution:<br/>x-t- = Ae^-γt-cos-ωdt - φ-]
+    D1 --> D2[Solution:<br/>x-t- = -c₁ + c₂t-e^-γt-]
+    E1 --> E2[Solution:<br/>x-t- = c₁e^r₁t + c₂e^r₂t]
+
+    C2 --> C3[Behavior:<br/>Oscillations with<br/>exponentially decaying<br/>amplitude]
+    D2 --> D3[Behavior:<br/>Fastest return to<br/>equilibrium without<br/>oscillating]
+    E2 --> E3[Behavior:<br/>Exponential decay<br/>without oscillations<br/>-slower than critical-]
+
+    style C fill:#cfe2ff,stroke:#084298,stroke-width:2px
+    style D fill:#d1e7dd,stroke:#0f5132,stroke-width:2px
+    style E fill:#f8d7da,stroke:#842029,stroke-width:2px
+    style C3 fill:#e7f1ff
+    style D3 fill:#d1f3dd
+    style E3 fill:#ffe3e5
+```
+
 ## Case 1: Underdamped ($\gamma < \omega_0$ or $c^2 < 4mk$)
 
 **Condition**: Damping is weak.

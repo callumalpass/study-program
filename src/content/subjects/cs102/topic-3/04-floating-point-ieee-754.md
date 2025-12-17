@@ -41,6 +41,23 @@ A 32-bit float divides its bits into three fields:
 | 1 |     8 bits          |       23 bits        |
 ```
 
+```mermaid
+graph LR
+    subgraph Float32["32-bit Float Layout"]
+        S[Sign<br/>1 bit]
+        E[Exponent<br/>8 bits<br/>bias=127]
+        F[Fraction<br/>23 bits<br/>implicit 1.]
+    end
+
+    S -.->|0=+, 1=-| Sign[Sign of number]
+    E -.->|E-127| Exp[Actual exponent]
+    F -.->|1.F| Mantissa[Mantissa/Significand]
+
+    style S fill:#ff6b6b
+    style E fill:#ffa500
+    style F fill:#87ceeb
+```
+
 **Sign (S)**: 1 bit
 - 0 = positive
 - 1 = negative
@@ -58,49 +75,50 @@ A 32-bit float divides its bits into three fields:
 
 For most values (called "normalized" numbers):
 
-```
-Value = (-1)^S × 1.F × 2^(E-127)
-```
+$$\text{Value} = (-1)^S \times 1.F \times 2^{(E-127)}$$
+
+Where:
+- $S$ = sign bit
+- $F$ = fraction (23 bits representing the fractional part)
+- $E$ = stored exponent (8 bits)
 
 The "1." is **implicit**—it's not stored but assumed to exist. This is called the "hidden bit" and gives us an extra bit of precision for free.
 
 ### Example: Representing 1.0
 
-```
-1.0 in binary = 1.0 × 2⁰
-Sign = 0 (positive)
-Exponent = 0, stored as 0 + 127 = 127 = 01111111₂
-Fraction = .000...0 (23 zeros—no fractional part)
+$$1.0 = 1.0 \times 2^0$$
 
-Bit pattern: 0 01111111 00000000000000000000000
-Hex: 0x3F800000
-```
+- Sign = 0 (positive)
+- Exponent = 0, stored as $0 + 127 = 127 = 01111111_2$
+- Fraction = $.000...0$ (23 zeros—no fractional part)
+
+Bit pattern: `0 01111111 00000000000000000000000`
+
+Hex: `0x3F800000`
 
 ### Example: Representing -6.25
 
-```
-6.25 in decimal = 6 + 0.25 = 110.01₂
-Normalize: 1.1001 × 2²
+$$6.25_{10} = 6 + 0.25 = 110.01_2$$
 
-Sign = 1 (negative)
-Exponent = 2, stored as 2 + 127 = 129 = 10000001₂
-Fraction = 10010000000000000000000₂ (the .1001 part, padded)
+Normalize: $1.1001 \times 2^2$
 
-Bit pattern: 1 10000001 10010000000000000000000
-Hex: 0xC0C80000
-```
+- Sign = 1 (negative)
+- Exponent = 2, stored as $2 + 127 = 129 = 10000001_2$
+- Fraction = $10010000000000000000000_2$ (the $.1001$ part, padded)
+
+Bit pattern: `1 10000001 10010000000000000000000`
+
+Hex: `0xC0C80000`
 
 ### Example: Representing 0.1 (Important!)
 
-```
-0.1 in binary is repeating: 0.0001100110011001100...
-This cannot be represented exactly!
-```
+$$0.1_{10} = 0.0\overline{0011}_2 = 0.0001100110011001100...$$
+
+This is a **repeating binary fraction** that cannot be represented exactly!
 
 The closest 32-bit float to 0.1 is approximately:
-```
-0.100000001490116119384765625
-```
+
+$$0.100000001490116119384765625$$
 
 This is why `0.1 + 0.2 != 0.3` in floating-point arithmetic.
 

@@ -14,17 +14,31 @@ $$\frac{dz}{dt} = \frac{\partial f}{\partial x}\frac{dx}{dt} + \frac{\partial f}
 
 ### Tree Diagram
 
-A useful visualization is a tree diagram:
+A useful visualization is a dependency tree diagram showing how variables relate:
 
-```
-        z
-       / \
-      x   y
-      |   |
-      t   t
+```mermaid
+graph TD
+    z["z = f(x,y)"]
+    x["x = x(t)"]
+    y["y = y(t)"]
+    t1["t"]
+    t2["t"]
+
+    z -->|"∂f/∂x"| x
+    z -->|"∂f/∂y"| y
+    x -->|"dx/dt"| t1
+    y -->|"dy/dt"| t2
+
+    style z fill:#e1f5ff
+    style x fill:#fff4e1
+    style y fill:#fff4e1
+    style t1 fill:#e8f5e9
+    style t2 fill:#e8f5e9
 ```
 
-For each path from $z$ to $t$, multiply the derivatives along the path and sum all contributions.
+For each path from $z$ to $t$, multiply the derivatives along the path and sum all contributions:
+
+$$\frac{dz}{dt} = \frac{\partial f}{\partial x} \cdot \frac{dx}{dt} + \frac{\partial f}{\partial y} \cdot \frac{dy}{dt}$$
 
 ### Example 1
 
@@ -72,12 +86,32 @@ $$\frac{\partial z}{\partial t} = \frac{\partial f}{\partial x}\frac{\partial x}
 
 ### Tree Diagram
 
-```
-        z
-       / \
-      x   y
-     / \ / \
-    s  t s  t
+The dependency structure is more complex with two independent variables:
+
+```mermaid
+graph TD
+    z["z = f(x,y)"]
+    x["x = x(s,t)"]
+    y["y = y(s,t)"]
+    s1["s"]
+    t1["t"]
+    s2["s"]
+    t2["t"]
+
+    z -->|"∂f/∂x"| x
+    z -->|"∂f/∂y"| y
+    x -->|"∂x/∂s"| s1
+    x -->|"∂x/∂t"| t1
+    y -->|"∂y/∂s"| s2
+    y -->|"∂y/∂t"| t2
+
+    style z fill:#e1f5ff
+    style x fill:#fff4e1
+    style y fill:#fff4e1
+    style s1 fill:#e8f5e9
+    style t1 fill:#ffe8e8
+    style s2 fill:#e8f5e9
+    style t2 fill:#ffe8e8
 ```
 
 ### Example 3
@@ -178,7 +212,39 @@ $$\frac{\partial z}{\partial y} = -\frac{2y}{2z} = -\frac{y}{z}$$
 
 ### Polar Coordinates
 
-For $x = r\cos\theta$ and $y = r\sin\theta$, if $z = f(x, y)$, we can express:
+For the coordinate transformation $x = r\cos\theta$ and $y = r\sin\theta$, we can use the chain rule to express derivatives in polar coordinates:
+
+```mermaid
+graph LR
+    subgraph Cartesian
+        z["z = f(x,y)"]
+    end
+
+    subgraph Transform
+        x["x = r cos θ"]
+        y["y = r sin θ"]
+    end
+
+    subgraph Polar
+        r["r"]
+        theta["θ"]
+    end
+
+    z --> x
+    z --> y
+    x --> r
+    x --> theta
+    y --> r
+    y --> theta
+
+    style z fill:#e1f5ff
+    style x fill:#fff4e1
+    style y fill:#fff4e1
+    style r fill:#e8f5e9
+    style theta fill:#e8f5e9
+```
+
+Using the chain rule:
 
 $$\frac{\partial z}{\partial r} = \frac{\partial z}{\partial x}\frac{\partial x}{\partial r} + \frac{\partial z}{\partial y}\frac{\partial y}{\partial r} = \frac{\partial z}{\partial x}\cos\theta + \frac{\partial z}{\partial y}\sin\theta$$
 

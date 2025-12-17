@@ -229,6 +229,45 @@ $$
 
 Choosing $c_n = n$ gives Raabe's test. Choosing $c_n = 1$ gives the ratio test.
 
+## Convergence Test Selection Flowchart
+
+When faced with testing a series $\sum a_n$ for convergence, use this decision tree to select the most appropriate test:
+
+```mermaid
+graph TD
+    A[Start: Test series Σaₙ] --> B{Are terms<br/>alternating signs?}
+    B -->|Yes| C{Is aₙ ↓ 0?}
+    C -->|Yes| D[✓ Alternating Series Test<br/>Series converges]
+    C -->|No| E[Check absolute convergence<br/>or try other tests]
+
+    B -->|No| F{Does series contain<br/>factorials or<br/>exponentials?}
+    F -->|Yes| G[Try Ratio Test<br/>L = lim aₙ₊₁/aₙ]
+    G --> H{Result?}
+    H -->|L < 1| I[✓ Converges]
+    H -->|L > 1| J[✓ Diverges]
+    H -->|L = 1| K[Inconclusive<br/>Try Raabe's Test]
+
+    F -->|No| L{Does series contain<br/>nth powers?}
+    L -->|Yes| M[Try Root Test<br/>L = limsup ⁿ√aₙ]
+    M --> N{Result?}
+    N -->|L < 1| O[✓ Converges]
+    N -->|L > 1| P[✓ Diverges]
+    N -->|L = 1| Q[Inconclusive<br/>Try other tests]
+
+    L -->|No| R{Is series of form<br/>Σ aₙbₙ where<br/>Σaₙ bounded<br/>and bₙ ↓ 0?}
+    R -->|Yes| S[✓ Dirichlet's Test<br/>Series converges]
+    R -->|No| T[Try comparison,<br/>integral test, or<br/>Raabe's test]
+
+    style D fill:#90EE90
+    style I fill:#90EE90
+    style O fill:#90EE90
+    style S fill:#90EE90
+    style J fill:#FFB6B6
+    style P fill:#FFB6B6
+    style K fill:#FFE4B5
+    style Q fill:#FFE4B5
+```
+
 ## Summary Table
 
 | Test | Condition | Convergence | Divergence |

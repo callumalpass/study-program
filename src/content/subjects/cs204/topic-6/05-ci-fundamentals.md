@@ -166,6 +166,33 @@ The deployment process should be automated, making it possible to deploy to any 
 
 Here's a typical CI workflow for a web application:
 
+```mermaid
+flowchart LR
+    A[Developer<br/>Commits Code] --> B[Git Push]
+    B --> C{CI Server<br/>Detects Change}
+    C --> D[Checkout Code]
+    D --> E[Install<br/>Dependencies]
+    E --> F[Run Linter]
+    F --> G{Lint<br/>Pass?}
+    G -->|No| H[Notify Failure]
+    G -->|Yes| I[Run Unit Tests]
+    I --> J{Tests<br/>Pass?}
+    J -->|No| H
+    J -->|Yes| K[Build Application]
+    K --> L{Build<br/>Success?}
+    L -->|No| H
+    L -->|Yes| M[Upload Artifacts]
+    M --> N[Notify Success]
+    H --> O[Fix Issues]
+    O --> A
+
+    style H fill:#ffcccc
+    style N fill:#ccffcc
+    style G fill:#fff4cc
+    style J fill:#fff4cc
+    style L fill:#fff4cc
+```
+
 1. **Developer Makes Changes**:
 ```bash
 git checkout -b feature/add-search
@@ -359,9 +386,9 @@ Track CI metrics to measure and improve your process:
 
 Percentage of builds that pass. Should be >90%.
 
-```
-Build Success Rate = (Successful Builds / Total Builds) × 100
-```
+$$
+\text{Build Success Rate} = \frac{\text{Successful Builds}}{\text{Total Builds}} \times 100\%
+$$
 
 Low success rate indicates:
 - Flaky tests

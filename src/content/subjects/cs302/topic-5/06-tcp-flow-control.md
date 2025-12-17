@@ -13,9 +13,8 @@ TCP implements flow control using a **sliding window** protocol. The receiver ad
 **Receive Window (rwnd)**: Number of bytes the receiver is willing to accept.
 
 The sender limits outstanding unacknowledged data to at most rwnd bytes:
-```
-LastByteSent - LastByteAcked ≤ rwnd
-```
+
+$$\text{LastByteSent} - \text{LastByteAcked} \leq \text{rwnd}$$
 
 ## Sliding Window Operation
 
@@ -27,9 +26,8 @@ LastByteSent - LastByteAcked ≤ rwnd
 ```
 
 The receiver advertises:
-```
-rwnd = BufferSize - (LastByteRcvd - LastByteRead)
-```
+
+$$\text{rwnd} = \text{BufferSize} - (\text{LastByteRcvd} - \text{LastByteRead})$$
 
 As application reads data, rwnd grows. As data arrives, rwnd shrinks.
 
@@ -107,10 +105,12 @@ The Window field is 16 bits, maximum 65,535 bytes. Insufficient for high-bandwid
 **Window scale option** (RFC 7323):
 - Negotiated during handshake
 - Scale factor from 0-14
-- Window = WindowField × 2^scale
 
-Example: Window field = 65535, scale = 4
-- Actual window = 65535 × 16 = 1,048,560 bytes
+$$\text{Window} = \text{WindowField} \times 2^{\text{scale}}$$
+
+**Example**: Window field = 65535, scale = 4
+
+$$\text{Actual window} = 65535 \times 2^4 = 65535 \times 16 = 1{,}048{,}560 \text{ bytes}$$
 
 Window scaling is essential for modern high-speed networks.
 
@@ -118,18 +118,15 @@ Window scaling is essential for modern high-speed networks.
 
 For maximum throughput, the window must be at least as large as the **bandwidth-delay product (BDP)**:
 
-```
-BDP = Bandwidth × Round-Trip Time
-```
+$$\text{BDP} = \text{Bandwidth} \times \text{RTT}$$
 
-**Example**:
-- 1 Gbps link, 100ms RTT
-- BDP = 1,000,000,000 × 0.100 / 8 = 12,500,000 bytes
+**Example**: 1 Gbps link, 100ms RTT
+
+$$\text{BDP} = \frac{1{,}000{,}000{,}000 \text{ bits/s} \times 0.100 \text{ s}}{8 \text{ bits/byte}} = 12{,}500{,}000 \text{ bytes}$$
 
 Without window scaling, maximum throughput on this link would be limited to:
-```
-65,535 bytes / 0.100 seconds = 5.2 Mbps
-```
+
+$$\text{Max Throughput} = \frac{65{,}535 \text{ bytes}}{0.100 \text{ s}} = 655{,}350 \text{ bytes/s} \approx 5.2 \text{ Mbps}$$
 
 Far below the link's capacity. Window scaling enables full utilization.
 
@@ -144,8 +141,7 @@ Far below the link's capacity. Window scaling enables full utilization.
 - Sender-controlled
 
 Sender transmits at minimum of rwnd and cwnd:
-```
-EffectiveWindow = min(rwnd, cwnd)
-```
+
+$$\text{EffectiveWindow} = \min(\text{rwnd}, \text{cwnd})$$
 
 Both mechanisms work together to achieve reliable, efficient transfer.

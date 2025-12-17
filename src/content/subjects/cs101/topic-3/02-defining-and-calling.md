@@ -193,6 +193,25 @@ The execution flow:
 5. "Got back: 8" prints
 6. "Program done" prints
 
+```mermaid
+sequenceDiagram
+    participant Main as Main Code
+    participant Func as add(3, 5)
+
+    Main->>Main: print("Starting program")
+    Main->>Func: Call add(3, 5)
+    activate Func
+    Func->>Func: a=3, b=5
+    Func->>Func: print("Adding 3 + 5")
+    Func->>Func: result = 8
+    Func->>Func: print("Result is 8")
+    Func-->>Main: return 8
+    deactivate Func
+    Main->>Main: total = 8
+    Main->>Main: print("Got back: 8")
+    Main->>Main: print("Program done")
+```
+
 ### Return Exits the Function
 
 Once `return` executes, the function immediately stops:

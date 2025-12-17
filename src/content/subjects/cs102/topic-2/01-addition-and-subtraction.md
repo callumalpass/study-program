@@ -27,7 +27,7 @@ There are only four cases for adding two single bits:
 | 1 | 0 |  1  |     0     |
 | 1 | 1 |  0  |     1     |
 
-The key insight: `1 + 1 = 10₂` (which is 2 in decimal). We write 0 in the sum column and carry 1 to the next position.
+The key insight: $1 + 1 = 10_2$ (which is 2 in decimal). We write 0 in the sum column and carry 1 to the next position.
 
 When there's a carry-in from a previous column, we're actually adding three bits:
 
@@ -46,7 +46,7 @@ This three-input addition is exactly what a **full adder** circuit computes in h
 
 ### Step-by-Step Addition Example
 
-Let's add `101101₂` (45) and `011011₂` (27):
+Let's add $101101_2$ (45) and $011011_2$ (27):
 
 ```
       1 11 1      ← Carries
@@ -57,15 +57,15 @@ Let's add `101101₂` (45) and `011011₂` (27):
 ```
 
 Working right-to-left:
-- Position 0: 1+1 = 10₂ → write 0, carry 1
-- Position 1: 0+1+1(carry) = 10₂ → write 0, carry 1
-- Position 2: 1+0+1(carry) = 10₂ → write 0, carry 1
-- Position 3: 1+1+1(carry) = 11₂ → write 1, carry 1
-- Position 4: 0+1+1(carry) = 10₂ → write 0, carry 1
-- Position 5: 1+0+1(carry) = 10₂ → write 0, carry 1
-- Position 6: 0+0+1(carry) = 1 → write 1, no carry
+- Position 0: $1+1 = 10_2$ → write 0, carry 1
+- Position 1: $0+1+1_{\text{carry}} = 10_2$ → write 0, carry 1
+- Position 2: $1+0+1_{\text{carry}} = 10_2$ → write 0, carry 1
+- Position 3: $1+1+1_{\text{carry}} = 11_2$ → write 1, carry 1
+- Position 4: $0+1+1_{\text{carry}} = 10_2$ → write 0, carry 1
+- Position 5: $1+0+1_{\text{carry}} = 10_2$ → write 0, carry 1
+- Position 6: $0+0+1_{\text{carry}} = 1$ → write 1, no carry
 
-Result: `1001000₂` = 64 + 8 = 72 ✓
+Result: $1001000_2 = 64 + 8 = 72$ ✓
 
 ### Another Example: Maximum 8-Bit Values
 

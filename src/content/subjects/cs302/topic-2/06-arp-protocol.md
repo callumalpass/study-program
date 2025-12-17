@@ -22,51 +22,51 @@ IP addresses are logical and configured; MAC addresses are physical and fixed. A
 
 ## ARP Operation
 
+```mermaid
+sequenceDiagram
+    participant HostA as Host A<br/>192.168.1.10<br/>MAC: AA:AA:AA:AA:AA:AA
+    participant Network as Local Network<br/>(Broadcast Domain)
+    participant HostB as Host B<br/>192.168.1.20<br/>MAC: BB:BB:BB:BB:BB:BB
+
+    Note over HostA: Needs MAC for 192.168.1.20
+    Note over HostA: Checks ARP cache: MISS
+
+    HostA->>Network: ARP Request (Broadcast)<br/>Dest: FF:FF:FF:FF:FF:FF<br/>"Who has 192.168.1.20?<br/>Tell 192.168.1.10"
+    Note over Network: All hosts receive broadcast
+
+    Network->>HostB: ARP Request forwarded
+    Note over HostB: IP matches! Update cache<br/>192.168.1.10 → AA:AA:AA:AA:AA:AA
+
+    HostB->>HostA: ARP Reply (Unicast)<br/>Dest: AA:AA:AA:AA:AA:AA<br/>"192.168.1.20 is at<br/>BB:BB:BB:BB:BB:BB"
+
+    Note over HostA: Update ARP cache<br/>192.168.1.20 → BB:BB:BB:BB:BB:BB
+    Note over HostA: Can now send IP packets!
+```
+
 ### ARP Request (Broadcast)
 
-```
-Step 1: Host A broadcasts ARP Request
+**Step 1**: Host A broadcasts ARP Request asking "Who has 192.168.1.20? Tell 192.168.1.10"
 
-"Who has 192.168.1.20? Tell 192.168.1.10"
+**Packet Details**:
+- Ethernet Dest MAC: `FF:FF:FF:FF:FF:FF` (broadcast)
+- Ethernet Src MAC: `AA:AA:AA:AA:AA:AA` (Host A)
+- ARP Operation: 1 (Request)
+- Sender IP: `192.168.1.10`
+- Target IP: `192.168.1.20`
+- Target MAC: `00:00:00:00:00:00` (unknown)
 
-+------------------------------------------+
-| Ethernet Header                          |
-|   Dest MAC: FF:FF:FF:FF:FF:FF (broadcast)|
-|   Src MAC:  AA:AA:AA:AA:AA:AA (Host A)   |
-|   Type:     0x0806 (ARP)                 |
-+------------------------------------------+
-| ARP Payload                              |
-|   Operation: 1 (Request)                 |
-|   Sender MAC: AA:AA:AA:AA:AA:AA          |
-|   Sender IP:  192.168.1.10               |
-|   Target MAC: 00:00:00:00:00:00 (unknown)|
-|   Target IP:  192.168.1.20               |
-+------------------------------------------+
-
-All hosts on segment receive this broadcast
-```
+All hosts on the segment receive this broadcast.
 
 ### ARP Reply (Unicast)
 
-```
-Step 2: Host B sends ARP Reply
+**Step 2**: Host B sends unicast ARP Reply stating "192.168.1.20 is at BB:BB:BB:BB:BB:BB"
 
-"192.168.1.20 is at BB:BB:BB:BB:BB:BB"
-
-+------------------------------------------+
-| Ethernet Header                          |
-|   Dest MAC: AA:AA:AA:AA:AA:AA (Host A)   |
-|   Src MAC:  BB:BB:BB:BB:BB:BB (Host B)   |
-|   Type:     0x0806 (ARP)                 |
-+------------------------------------------+
-| ARP Payload                              |
-|   Operation: 2 (Reply)                   |
-|   Sender MAC: BB:BB:BB:BB:BB:BB          |
-|   Sender IP:  192.168.1.20               |
-|   Target MAC: AA:AA:AA:AA:AA:AA          |
-|   Target IP:  192.168.1.10               |
-+------------------------------------------+
-```
+**Packet Details**:
+- Ethernet Dest MAC: `AA:AA:AA:AA:AA:AA` (Host A)
+- Ethernet Src MAC: `BB:BB:BB:BB:BB:BB` (Host B)
+- ARP Operation: 2 (Reply)
+- Sender IP: `192.168.1.20`
+- Sender MAC: `BB:BB:BB:BB:BB:BB`
 
 ## ARP Packet Format
 

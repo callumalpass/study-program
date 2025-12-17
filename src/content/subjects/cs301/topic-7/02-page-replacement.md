@@ -6,15 +6,39 @@ When memory is full, page replacement algorithms decide which page to evict. Thi
 
 When a page fault occurs and no free frames:
 
-```
-1. Select victim page to evict
-2. If dirty, write to disk
-3. Load new page into frame
-4. Update page tables
-5. Restart faulting instruction
+```mermaid
+flowchart TD
+    Start[Page Fault Occurs] --> Check{Free frames<br/>available?}
+    Check -->|Yes| Load[Load page into<br/>free frame]
+    Check -->|No| Select[Select victim page<br/>using replacement algorithm]
+    Select --> Dirty{Victim page<br/>dirty?}
+    Dirty -->|Yes| Write[Write page to disk]
+    Dirty -->|No| Evict[Evict page]
+    Write --> Evict
+    Evict --> Load
+    Load --> Update[Update page tables]
+    Update --> Restart[Restart instruction]
+    Restart --> End([Continue execution])
 
-Goal: Minimize page faults
+    style Start fill:#e1f5ff
+    style End fill:#d4edda
+    style Select fill:#fff3cd
+    style Write fill:#f8d7da
 ```
+
+**Goal:** Minimize page faults to reduce disk I/O
+
+**Page fault rate:**
+
+$$p = \frac{\text{number of page faults}}{\text{total memory references}}$$
+
+**Effective access time (EAT):**
+
+$$\text{EAT} = (1-p) \times t_{mem} + p \times t_{page\_fault}$$
+
+Where:
+- $t_{mem}$ = memory access time (e.g., 100 ns)
+- $t_{page\_fault}$ = page fault service time (e.g., 8 ms)
 
 ## Reference String
 
@@ -247,29 +271,42 @@ int clock_replace(ClockEntry* frames, int num_frames) {
 }
 ```
 
-### Clock Visualization
+### Clock Algorithm Visualization
 
-```
-        ┌───┐
-   ┌────│ 0 │←───── Clock pointer
-   │    └───┘
-   │      │
-┌──┴──┐ ┌─┴─┐
-│  5  │ │ 1 │
-└──┬──┘ └─┬─┘
-   │      │
-┌──┴──┐ ┌─┴─┐
-│  4  │ │ 2 │
-└──┬──┘ └─┬─┘
-   │      │
-   └──┬───┘
-    ┌─┴─┐
-    │ 3 │
-    └───┘
+The clock hand sweeps through pages, giving second chances:
 
-R=1: Page referenced, give second chance
-R=0: Select as victim
+```mermaid
+graph TD
+    P0["Frame 0<br/>R=1"] --> P1["Frame 1<br/>R=0"]
+    P1 --> P2["Frame 2<br/>R=1"]
+    P2 --> P3["Frame 3<br/>R=0"]
+    P3 --> P4["Frame 4<br/>R=1"]
+    P4 --> P5["Frame 5<br/>R=1"]
+    P5 --> P0
+
+    Clock["🕐 Clock Hand<br/>(currently at Frame 1)"] -.-> P1
+
+    style P1 fill:#f8d7da
+    style P3 fill:#fff3cd
+    style P0 fill:#d4edda
+    style P2 fill:#d4edda
+    style P4 fill:#d4edda
+    style P5 fill:#d4edda
+    style Clock fill:#e1f5ff
 ```
+
+**Algorithm steps:**
+
+1. Check current frame's reference bit
+2. If $R = 0$: Select as victim
+3. If $R = 1$: Set $R = 0$ (give second chance), advance clock
+4. Repeat until victim found
+
+**Worst case:** All reference bits are 1
+- Makes full circle clearing all bits
+- Returns to starting point
+- Selects that page (now $R = 0$)
+- Time: $O(n)$ where $n$ = number of frames
 
 ### Enhanced Clock (NRU)
 
@@ -334,16 +371,35 @@ Replace page with highest count (just brought in).
 
 ## Algorithm Comparison
 
-```
-Algorithm    | Faults | Implementation | Belady?
--------------|--------|----------------|--------
-FIFO         | High   | Simple         | Yes
-Optimal      | Lowest | Impossible     | No
-LRU          | Good   | Complex/costly | No
-Clock        | Good   | Simple         | No
-Enhanced     | Better | Simple         | No
-LFU          | Varies | Medium         | Yes
-```
+| Algorithm | Page Faults | Time Complexity | Space | Implementation | Belady's Anomaly |
+|-----------|-------------|-----------------|-------|----------------|------------------|
+| FIFO | High | $O(1)$ per access | $O(n)$ | Simple queue | **Yes** |
+| Optimal (OPT) | **Minimum** | $O(n \cdot m)$ | $O(n)$ | Impossible (needs future) | No |
+| LRU | Good | $O(n)$ or $O(\log n)$* | $O(n)$ | Complex (counter/stack) | No |
+| Clock | Good | $O(n)$ worst | $O(n)$ | Simple (circular) | No |
+| Enhanced Clock | Better | $O(n)$ worst | $O(n)$ | Simple (2 bits) | No |
+| LFU | Varies | $O(\log n)$* | $O(n)$ | Medium (heap) | Can occur |
+
+*With appropriate data structures (heap for LFU, special list for LRU)
+
+**Key formulas:**
+
+For reference string of length $m$ with $n$ frames:
+
+**FIFO:** Each access is $O(1)$
+$$T_{total} = O(m)$$
+
+**Optimal:** For each fault, scan future references
+$$T_{total} = O(m \times n \times m) = O(m^2 n)$$
+
+**LRU with counter:** Update timestamp each access, find min on fault
+$$T_{total} = O(m + f \times n)$$
+where $f$ = number of faults
+
+**Page fault rate bounds:**
+
+$$f_{min} \leq f_{LRU} \leq f_{FIFO}$$
+$$f_{min} = f_{OPT}$$
 
 ## Page Buffering
 

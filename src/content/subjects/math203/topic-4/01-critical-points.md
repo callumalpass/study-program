@@ -62,6 +62,40 @@ To classify a critical point at $x = c$:
 | $+$ | $+$ | Neither (increasing through) |
 | $-$ | $-$ | Neither (decreasing through) |
 
+```mermaid
+flowchart TD
+    Start[Critical point at x = c<br/>f'c = 0 or undefined] --> Test[Test sign of f'<br/>on both sides of c]
+
+    Test --> Left[Pick x₁ slightly left of c<br/>Calculate f'x₁]
+    Test --> Right[Pick x₂ slightly right of c<br/>Calculate f'x₂]
+
+    Left --> L1{Sign of f'x₁?}
+    Right --> R1{Sign of f'x₂?}
+
+    L1 --> |Positive +| LP[Left: Increasing ↗]
+    L1 --> |Negative -| LN[Left: Decreasing ↘]
+
+    R1 --> |Positive +| RP[Right: Increasing ↗]
+    R1 --> |Negative -| RN[Right: Decreasing ↘]
+
+    LP --> R1
+    LN --> R1
+
+    LP --> Pattern1{Pattern?}
+    LN --> Pattern2{Pattern?}
+
+    Pattern1 --> |+ then -<br/>↗ then ↘| Max1[Local Maximum<br/>Peak at c]
+    Pattern1 --> |+ then +<br/>↗ then ↗| Neither1[Neither<br/>Increasing through c]
+
+    Pattern2 --> |− then +<br/>↘ then ↗| Min1[Local Minimum<br/>Valley at c]
+    Pattern2 --> |− then −<br/>↘ then ↘| Neither2[Neither<br/>Decreasing through c]
+
+    style Max1 fill:#ffe6e6
+    style Min1 fill:#e6f7ff
+    style Neither1 fill:#fff3cd
+    style Neither2 fill:#fff3cd
+```
+
 **Example:** For $f(x) = x^3 - 3x^2 - 9x + 5$ with $f'(x) = 3(x-3)(x+1)$:
 
 | Interval | Sign of $f'(x)$ | $f$ behavior |

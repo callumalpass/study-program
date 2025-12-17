@@ -129,6 +129,30 @@ $h = \frac{1000}{\pi r^2} = \frac{1000}{\pi \cdot (500/\pi)^{2/3}} \approx 10.84
 
 ## Summary of Common Results
 
+```mermaid
+graph TD
+    A[Geometric Optimization<br/>Problem Type] --> B[Rectangle Problems]
+    A --> C[Box/Container Problems]
+    A --> D[Cylinder Problems]
+
+    B --> B1["Max area, fixed perimeter<br/>Result: Square"]
+    B --> B2["Max area in circle<br/>Result: Square"]
+    B --> B3["Min perimeter, fixed area<br/>Result: Square"]
+    B --> B4["Max area against wall<br/>Result: Width = ½ Length"]
+
+    C --> C1["Open-top box from sheet<br/>Result: Cut x = side/6"]
+    C --> C2["Max volume box<br/>Solve V'x = 0"]
+
+    D --> D1["Min surface, fixed volume<br/>Result: h = 2r diameter"]
+    D --> D2["Max volume, fixed surface<br/>Result: h = 2r diameter"]
+
+    style B1 fill:#d4edda
+    style B2 fill:#d4edda
+    style B3 fill:#d4edda
+    style D1 fill:#fff3cd
+    style D2 fill:#fff3cd
+```
+
 | Problem | Optimal Shape |
 |---------|---------------|
 | Max area rectangle, fixed perimeter | Square |

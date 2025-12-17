@@ -4,23 +4,32 @@
 
 TCP establishes connections using a three-way handshake that synchronizes sequence numbers between both parties and ensures both are ready to communicate.
 
+```mermaid
+sequenceDiagram
+    participant Client
+    participant Server
+
+    Note over Client: CLOSED
+    Note over Server: LISTEN
+
+    Client->>Server: SYN (seq=x)
+    Note over Client: SYN_SENT
+
+    Server->>Client: SYN-ACK (seq=y, ack=x+1)
+    Note over Server: SYN_RECEIVED
+
+    Client->>Server: ACK (seq=x+1, ack=y+1)
+    Note over Client: ESTABLISHED
+    Note over Server: ESTABLISHED
+
+    Note over Client,Server: Connection Ready for Data Transfer
 ```
-Client                              Server
-  |                                    |
-  |-------- SYN (seq=x) ------------->|
-  |                                    |
-  |<------ SYN-ACK (seq=y, ack=x+1) ---|
-  |                                    |
-  |-------- ACK (seq=x+1, ack=y+1) -->|
-  |                                    |
-  |         Connection Established     |
-```
 
-**Step 1 - SYN**: Client sends segment with SYN flag, chooses initial sequence number (ISN).
+**Step 1 - SYN**: Client sends segment with SYN flag, chooses initial sequence number (ISN = x).
 
-**Step 2 - SYN-ACK**: Server responds with SYN and ACK flags, chooses its own ISN, acknowledges client's ISN.
+**Step 2 - SYN-ACK**: Server responds with SYN and ACK flags, chooses its own ISN (y), acknowledges client's ISN (x+1).
 
-**Step 3 - ACK**: Client acknowledges server's ISN. Connection is established.
+**Step 3 - ACK**: Client acknowledges server's ISN (y+1). Connection is established.
 
 After the handshake, both sides know:
 - The other's initial sequence number
@@ -60,24 +69,37 @@ CLOSED → LISTEN → SYN_RECEIVED → ESTABLISHED
 
 TCP uses a four-way handshake to close connections gracefully:
 
-```
-Client                              Server
-  |                                    |
-  |-------- FIN (seq=u) ------------->|
-  |                                    |
-  |<-------- ACK (ack=u+1) -----------|
-  |                                    |
-  |<-------- FIN (seq=v) -------------|
-  |                                    |
-  |-------- ACK (ack=v+1) ----------->|
-  |                                    |
-  |         Connection Closed          |
+```mermaid
+sequenceDiagram
+    participant Client
+    participant Server
+
+    Note over Client,Server: ESTABLISHED Connection
+
+    Client->>Server: FIN (seq=u)
+    Note over Client: FIN_WAIT_1
+
+    Server->>Client: ACK (ack=u+1)
+    Note over Client: FIN_WAIT_2
+    Note over Server: CLOSE_WAIT
+
+    Note over Client,Server: Half-closed: Server can still send data
+
+    Server->>Client: FIN (seq=v)
+    Note over Server: LAST_ACK
+
+    Client->>Server: ACK (ack=v+1)
+    Note over Client: TIME_WAIT
+
+    Note over Client: Wait 2×MSL (2 minutes)
+    Note over Client: CLOSED
+    Note over Server: CLOSED
 ```
 
-**Step 1**: One side sends FIN, indicating no more data to send.
-**Step 2**: Other side acknowledges the FIN.
-**Step 3**: Other side sends its FIN when done.
-**Step 4**: First side acknowledges.
+**Step 1**: One side sends FIN (u), indicating no more data to send.
+**Step 2**: Other side acknowledges the FIN (u+1).
+**Step 3**: Other side sends its FIN (v) when done.
+**Step 4**: First side acknowledges (v+1).
 
 The connection is **half-closed** between steps 2 and 3—one side can still send data.
 

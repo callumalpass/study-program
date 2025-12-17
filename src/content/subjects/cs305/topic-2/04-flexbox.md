@@ -72,15 +72,33 @@ Defines the main axis (direction items are laid out):
 
 **Cross Axis**: Perpendicular to the main axis.
 
-```
-flex-direction: row
-Main axis: →
-Cross axis: ↓
+### Flexbox Axes Visualization
 
-flex-direction: column
-Main axis: ↓
-Cross axis: →
+```mermaid
+graph LR
+    subgraph "flex-direction: row"
+        A1[Item 1] --> A2[Item 2]
+        A2 --> A3[Item 3]
+    end
+
+    subgraph "flex-direction: column"
+        B1[Item 1]
+        B2[Item 2]
+        B3[Item 3]
+        B1 -.-> B2
+        B2 -.-> B3
+    end
+
+    style A1 fill:#e3f2fd
+    style A2 fill:#e3f2fd
+    style A3 fill:#e3f2fd
+    style B1 fill:#fff3e0
+    style B2 fill:#fff3e0
+    style B3 fill:#fff3e0
 ```
+
+With `flex-direction: row`, the main axis is horizontal (→) and cross axis is vertical (↓).
+With `flex-direction: column`, the main axis is vertical (↓) and cross axis is horizontal (→).
 
 ### Flex Wrap
 
@@ -287,6 +305,21 @@ Example:
 .item-2 { flex-grow: 2; }  /* Takes 2/4 of available space */
 .item-3 { flex-grow: 1; }  /* Takes 1/4 of available space */
 ```
+
+#### Flex-Grow Distribution Formula
+
+The space allocated to each item is calculated as:
+
+$$\text{Item Width} = \text{Base Width} + \left(\frac{\text{flex-grow}}{\sum \text{flex-grow}}\right) \times \text{Free Space}$$
+
+For example, with 3 items in a 600px container where each item has a base width of 100px:
+- Free space: $600 - (3 \times 100) = 300\text{px}$
+- Sum of flex-grow values: $1 + 2 + 1 = 4$
+
+Item widths:
+- Item 1: $100 + \frac{1}{4} \times 300 = 175\text{px}$
+- Item 2: $100 + \frac{2}{4} \times 300 = 250\text{px}$
+- Item 3: $100 + \frac{1}{4} \times 300 = 175\text{px}$
 
 ### Flex Shrink
 

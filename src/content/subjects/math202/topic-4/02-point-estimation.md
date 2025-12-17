@@ -99,6 +99,37 @@ $$= \text{Var}(\hat{\theta}) + 0 + [\text{Bias}(\hat{\theta})]^2$$
 
 **For unbiased estimators:** MSE = Variance (since bias = 0).
 
+#### Bias-Variance Tradeoff
+
+```mermaid
+graph TD
+    subgraph MSE["Mean Squared Error"]
+        Total["MSE&#40;θ̂&#41; = E[&#40;θ̂ - θ&#41;²]"]
+    end
+
+    Total --> Decomp{Decompose}
+
+    Decomp --> Var["<b>Variance Component</b><br/>Var&#40;θ̂&#41; = E[&#40;θ̂ - E[θ̂]&#41;²]<br/><br/>Measures precision<br/>How spread out are estimates?"]
+
+    Decomp --> Bias["<b>Bias² Component</b><br/>[Bias&#40;θ̂&#41;]² = &#40;E[θ̂] - θ&#41;²<br/><br/>Measures accuracy<br/>Is estimator centered on true value?"]
+
+    Var --> Unbiased["<b>Unbiased Estimator</b><br/>Bias = 0<br/>MSE = Var&#40;θ̂&#41;<br/><br/>Example: X̄ for μ"]
+
+    Bias --> Biased["<b>Biased Estimator</b><br/>Bias ≠ 0<br/>MSE = Var&#40;θ̂&#41; + Bias²<br/><br/>Example: Sₙ² for σ²"]
+
+    Unbiased --> Choose{Which to prefer?}
+    Biased --> Choose
+
+    Choose --> Better["Choose estimator with<br/><b>lower MSE</b><br/><br/>Sometimes a slightly biased<br/>estimator with low variance<br/>beats an unbiased one<br/>with high variance"]
+
+    style Total fill:#e1f5ff
+    style Var fill:#fff3e0
+    style Bias fill:#ffebee
+    style Unbiased fill:#e8f5e9
+    style Biased fill:#fff9c4
+    style Better fill:#d4edda
+```
+
 **Bias-Variance Tradeoff:** Sometimes a slightly biased estimator with much lower variance can have smaller MSE than an unbiased estimator. However, unbiasedness is still generally preferred for interpretability.
 
 ### 4. Consistency

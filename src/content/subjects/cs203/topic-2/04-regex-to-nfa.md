@@ -11,65 +11,92 @@ The algorithm builds NFAs inductively, following the structure of the regex. Eac
 
 ## Base Cases
 
-### Empty String: ε
-```
-start ----ε----> accept
-```
-Single transition on ε.
+### Empty String: $\varepsilon$
 
-### Single Symbol: a
+```mermaid
+stateDiagram-v2
+    [*] --> start
+    start --> accept: ε
+    accept --> [*]
 ```
-start ----a----> accept
-```
-Single transition labeled with symbol a.
 
-### Empty Language: ∅
+Single transition on $\varepsilon$.
+
+### Single Symbol: $a$
+
+```mermaid
+stateDiagram-v2
+    [*] --> start
+    start --> accept: a
+    accept --> [*]
 ```
-start          accept
+
+Single transition labeled with symbol $a$.
+
+### Empty Language: $\emptyset$
+
+```mermaid
+stateDiagram-v2
+    [*] --> start
+    accept
 ```
-No transition (nothing accepted).
+
+No transition connecting start to accept (nothing accepted).
 
 ## Recursive Cases
 
-### Union: R | S
+### Union: $R \mid S$
 
-Given NFAs for R and S:
+Given NFAs for $R$ and $S$:
 
-```
-           ε
-      /--------->[NFA for R]----\
-start                             >---ε---> accept
-      \--------->[NFA for S]----/
-           ε
-```
+```mermaid
+stateDiagram-v2
+    [*] --> newstart
+    newstart --> R: ε
+    newstart --> S: ε
+    R --> newaccept: ε
+    S --> newaccept: ε
+    newaccept --> [*]
 
-New start state with ε-transitions to both sub-NFAs.
-Both sub-NFAs' accept states connect via ε to new accept.
-
-### Concatenation: RS
-
-```
-start --->[NFA for R]---ε--->[NFA for S]---> accept
+    note right of R: NFA for R
+    note right of S: NFA for S
 ```
 
-Connect R's accept state to S's start state with ε-transition.
-Overall start is R's start, overall accept is S's accept.
+New start state with $\varepsilon$-transitions to both sub-NFAs. Both sub-NFAs' accept states connect via $\varepsilon$ to new accept.
 
-### Kleene Star: R*
+### Concatenation: $RS$
 
+```mermaid
+stateDiagram-v2
+    [*] --> R
+    R --> S: ε
+    S --> [*]
+
+    note right of R: NFA for R
+    note right of S: NFA for S
 ```
-          ε
-        /----\
-       v      \
-start--ε-->[NFA for R]--ε--accept
-  |                         ^
-  \-----------ε-------------/
+
+Connect $R$'s accept state to $S$'s start state with $\varepsilon$-transition. Overall start is $R$'s start, overall accept is $S$'s accept.
+
+### Kleene Star: $R^*$
+
+```mermaid
+stateDiagram-v2
+    [*] --> newstart
+    newstart --> R: ε
+    newstart --> newaccept: ε
+    R --> R: ε (loop)
+    R --> newaccept: ε
+    newaccept --> [*]
+
+    note right of R: NFA for R
 ```
 
-- ε from new start to R's start (enter loop)
-- ε from R's accept to R's start (repeat)
-- ε from new start to new accept (skip entirely)
-- ε from R's accept to new accept (exit loop)
+Structure allows:
+- $\varepsilon$ from new start to $R$'s start (enter loop)
+- $\varepsilon$ from $R$'s accept back to $R$'s start (repeat)
+- $\varepsilon$ from new start to new accept (accept empty, skip entirely)
+- $\varepsilon$ from $R$'s accept to new accept (exit loop)
 
 ## Properties of Thompson Construction
 

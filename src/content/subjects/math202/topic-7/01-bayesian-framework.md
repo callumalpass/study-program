@@ -112,27 +112,45 @@ The Bayesian interpretation is what most people think a confidence interval mean
 
 ## The Bayesian Learning Process
 
-Bayesian inference can be viewed as a learning algorithm:
+Bayesian inference can be viewed as a learning algorithm that iteratively updates our beliefs as we gather evidence. This cycle forms the foundation of Bayesian methodology:
+
+```mermaid
+graph TD
+    A[Prior Distribution<br/>P&#40;θ&#41;] --> B[Collect Data<br/>x]
+    B --> C[Compute Likelihood<br/>P&#40;x|θ&#41;]
+    C --> D[Apply Bayes' Theorem<br/>P&#40;θ|x&#41; ∝ P&#40;x|θ&#41;P&#40;θ&#41;]
+    D --> E[Posterior Distribution<br/>P&#40;θ|x&#41;]
+    E --> F[Make Inference<br/>Estimates, Intervals, Predictions]
+    F --> G{More<br/>Data?}
+    G -->|Yes| H[Posterior becomes<br/>New Prior]
+    H --> B
+    G -->|No| I[Final Conclusion]
+
+    style A fill:#e1f5ff
+    style E fill:#fff4e1
+    style I fill:#d4edda
+```
 
 **Step 1: Prior specification**
-- Encode initial beliefs as a probability distribution
+- Encode initial beliefs as a probability distribution $P(\theta)$
 - Can be informative (strong prior knowledge) or diffuse (weak prior knowledge)
 
 **Step 2: Data collection**
-- Observe data according to some probability model
+- Observe data $x$ according to some probability model
 
 **Step 3: Posterior computation**
-- Apply Bayes' theorem: multiply prior by likelihood, then normalize
+- Apply Bayes' theorem: $P(\theta \mid x) = \frac{P(x \mid \theta) P(\theta)}{P(x)}$
+- Multiply prior by likelihood, then normalize
 - Result is a probability distribution representing updated beliefs
 
 **Step 4: Inference**
-- Extract point estimates (mean, median, mode)
+- Extract point estimates (posterior mean, median, or mode)
 - Construct credible intervals
 - Make predictions for future observations
 - Compare models or hypotheses
 
 **Step 5: Iteration (optional)**
-- Today's posterior becomes tomorrow's prior
+- Today's posterior becomes tomorrow's prior: $P_{\text{new}}(\theta) = P(\theta \mid x_{\text{old}})$
 - Collect more data and update again
 - This sequential learning is natural in the Bayesian framework
 

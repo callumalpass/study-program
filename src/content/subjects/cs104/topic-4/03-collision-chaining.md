@@ -6,13 +6,37 @@ Collisions occur when two different keys hash to the same bucket index. **Chaini
 
 Instead of storing a single value at each bucket, we store a linked list (or other collection) of all key-value pairs that hash to that index:
 
+```mermaid
+graph LR
+    subgraph Hash Table with Chaining
+    A["Bucket 0"] --> B["('apple', 3)"]
+    B --> C["('melon', 7)"]
+    C --> D1[null]
+
+    E["Bucket 1"] --> F1[null]
+
+    G["Bucket 2"] --> H["('banana', 5)"]
+    H --> I1[null]
+
+    J["Bucket 3"] --> K["('cherry', 2)"]
+    K --> L["('date', 9)"]
+    L --> M["('fig', 1)"]
+    M --> N1[null]
+    end
+
+    style A fill:#FFE4B5
+    style E fill:#FFE4B5
+    style G fill:#FFE4B5
+    style J fill:#FFE4B5
+    style B fill:#90EE90
+    style C fill:#90EE90
+    style H fill:#90EE90
+    style K fill:#90EE90
+    style L fill:#90EE90
+    style M fill:#90EE90
 ```
-Bucket 0: -> ("apple", 3) -> ("melon", 7) -> None
-Bucket 1: -> None
-Bucket 2: -> ("banana", 5) -> None
-Bucket 3: -> ("cherry", 2) -> ("date", 9) -> ("fig", 1) -> None
-...
-```
+
+**Visualization**: Each bucket (orange) points to a chain of entries (green). Colliding keys share the same bucket but are stored in a linked list.
 
 ## Implementation
 
@@ -124,19 +148,24 @@ class HashTableWithTreeChains:
 
 ## Load Factor and Performance
 
-The **load factor** (λ) is the average number of entries per bucket:
+The **load factor** ($\lambda$) is the average number of entries per bucket:
 
-```
-λ = n / m
-where n = number of entries, m = number of buckets
-```
+$$\lambda = \frac{n}{m}$$
+
+where $n$ = number of entries, $m$ = number of buckets
 
 With chaining:
-- Average chain length = λ
-- Average search time = O(1 + λ)
-- If λ is constant, operations are O(1)
+- Average chain length = $\lambda$
+- Average search time = $O(1 + \lambda)$
+- If $\lambda$ is constant, operations are $O(1)$
 
-**Rule of thumb**: Resize when λ > 0.75
+**Rule of thumb**: Resize when $\lambda > 0.75$
+
+**Analysis**: With uniform hashing, the expected number of elements in each bucket is $\lambda$. Searching requires:
+1. $O(1)$ to compute hash and find bucket
+2. $O(\lambda)$ to search the chain
+
+Total: $O(1 + \lambda) = O(1)$ when $\lambda$ is kept constant through resizing
 
 ```python
 class HashTableWithResize:
@@ -181,23 +210,27 @@ Assuming uniform hashing (keys distributed evenly):
 
 | Operation | Average | Worst Case |
 |-----------|---------|------------|
-| Insert    | O(1)    | O(n)       |
-| Search    | O(1 + λ)| O(n)       |
-| Delete    | O(1 + λ)| O(n)       |
-| Resize    | O(n)    | O(n)       |
+| Insert    | $O(1)$    | $O(n)$       |
+| Search    | $O(1 + \lambda)$| $O(n)$       |
+| Delete    | $O(1 + \lambda)$| $O(n)$       |
+| Resize    | $O(n)$    | $O(n)$       |
 
-Worst case: All n keys hash to the same bucket (degenerate case).
+**Worst case**: All $n$ keys hash to the same bucket (degenerate case) - the hash table becomes a linked list.
+
+**Average case**: With good hash function and $\lambda \leq 1$, operations are effectively $O(1)$.
 
 ## Space Analysis
 
-Space = O(m + n) where:
-- m = number of buckets
-- n = number of entries
+Space = $O(m + n)$ where:
+- $m$ = number of buckets
+- $n$ = number of entries
 
 Each entry requires:
 - Key storage
 - Value storage
 - Pointer to next element (for linked list)
+
+Total overhead: $O(m)$ for bucket array + $O(n)$ for entries and pointers
 
 ## Advantages of Chaining
 

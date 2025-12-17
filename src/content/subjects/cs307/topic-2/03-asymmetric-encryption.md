@@ -82,42 +82,57 @@ print(f"Decrypted: {decrypted}")
 
 RSA (Rivest-Shamir-Adleman) is the most widely used asymmetric algorithm, invented in 1977.
 
-### RSA Mathematics (Simplified)
+### RSA Mathematics
 
-```python
-class RSAMathematics:
-    """Simplified RSA mathematics explanation"""
+RSA security relies on the mathematical difficulty of factoring large numbers. Here's how the mathematics work:
 
-    def rsa_explanation(self):
-        """How RSA works (conceptually)"""
+#### Key Generation
 
-        return {
-            'key_generation': {
-                '1': 'Choose two large prime numbers p and q',
-                '2': 'Calculate n = p × q (modulus)',
-                '3': 'Calculate φ(n) = (p-1)(q-1)',
-                '4': 'Choose public exponent e (usually 65537)',
-                '5': 'Calculate private exponent d where d × e ≡ 1 (mod φ(n))',
-                'public_key': '(e, n)',
-                'private_key': '(d, n)'
-            },
+1. **Choose two large prime numbers** $p$ and $q$
+2. **Calculate the modulus**: $n = p \times q$
+3. **Calculate Euler's totient**: $\phi(n) = (p-1)(q-1)$
+4. **Choose public exponent** $e$ such that $1 < e < \phi(n)$ and $\gcd(e, \phi(n)) = 1$
+   - Typically $e = 65537$ (0x10001 in hex)
+5. **Calculate private exponent** $d$ such that:
+   $$d \equiv e^{-1} \pmod{\phi(n)}$$
+   Or equivalently: $d \times e \equiv 1 \pmod{\phi(n)}$
 
-            'encryption': {
-                'formula': 'ciphertext = plaintext^e mod n',
-                'uses': 'Public key (e, n)'
-            },
+**Keys:**
+- **Public key**: $(e, n)$ — can be shared openly
+- **Private key**: $(d, n)$ — must remain secret
 
-            'decryption': {
-                'formula': 'plaintext = ciphertext^d mod n',
-                'uses': 'Private key (d, n)'
-            },
+#### Encryption and Decryption
 
-            'security': {
-                'based_on': 'Difficulty of factoring large numbers',
-                'if_n_factored': 'Can calculate φ(n) and derive private key',
-                'protection': 'Use large enough keys (2048+ bits)'
-            }
-        }
+**Encryption** (using public key):
+$$c \equiv m^e \pmod{n}$$
+
+Where:
+- $m$ = plaintext message (as a number)
+- $c$ = ciphertext
+- $e$ = public exponent
+- $n$ = modulus
+
+**Decryption** (using private key):
+$$m \equiv c^d \pmod{n}$$
+
+Where:
+- $c$ = ciphertext
+- $m$ = recovered plaintext
+- $d$ = private exponent
+- $n$ = modulus
+
+**Why it works:**
+$$c^d \equiv (m^e)^d \equiv m^{ed} \equiv m^{1} \equiv m \pmod{n}$$
+
+This works because $ed \equiv 1 \pmod{\phi(n)}$ by Euler's theorem.
+
+#### Security Foundation
+
+**RSA security relies on:**
+- **Factoring problem**: Given $n = p \times q$, it's computationally infeasible to find $p$ and $q$ when they're large enough
+- If an attacker factors $n$ → they can compute $\phi(n)$ → they can compute $d$ from $e$ → they break the encryption
+- With 2048-bit keys, $n$ has about 617 decimal digits
+- Best known factoring algorithms require roughly $2^{100}$ operations for 2048-bit keys
 
     def key_size_recommendations(self):
         """RSA key size guidelines"""

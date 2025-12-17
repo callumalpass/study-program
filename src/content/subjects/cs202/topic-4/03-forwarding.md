@@ -145,6 +145,58 @@ Forward the result from two instructions back:
 
 ## Forwarding Unit Logic
 
+```mermaid
+graph TB
+    subgraph Inputs
+        A[ID/EX.Rs]
+        B[ID/EX.Rt]
+        C[EX/MEM.Rd]
+        D[EX/MEM.RegWrite]
+        E[MEM/WB.Rd]
+        F[MEM/WB.RegWrite]
+    end
+
+    subgraph "Forwarding Unit"
+        G[Compare Rs with<br/>EX/MEM.Rd]
+        H[Compare Rs with<br/>MEM/WB.Rd]
+        I[Compare Rt with<br/>EX/MEM.Rd]
+        J[Compare Rt with<br/>MEM/WB.Rd]
+        K[Priority Logic]
+    end
+
+    subgraph Outputs
+        L[ForwardA<br/>00: No forward<br/>01: MEM/WB<br/>10: EX/MEM]
+        M[ForwardB<br/>00: No forward<br/>01: MEM/WB<br/>10: EX/MEM]
+    end
+
+    A --> G
+    A --> H
+    B --> I
+    B --> J
+    C --> G
+    C --> I
+    D --> K
+    E --> H
+    E --> J
+    F --> K
+
+    G --> K
+    H --> K
+    I --> K
+    J --> K
+
+    K --> L
+    K --> M
+
+    style G fill:#ffcccc
+    style H fill:#ffcccc
+    style I fill:#ccffcc
+    style J fill:#ccffcc
+    style K fill:#ccccff
+    style L fill:#ffffcc
+    style M fill:#ffffcc
+```
+
 ### Input Signals
 
 | Signal | Description |

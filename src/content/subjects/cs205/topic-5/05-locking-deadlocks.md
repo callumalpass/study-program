@@ -33,13 +33,37 @@ Only T1 can access A until lock released
 
 ### Lock Compatibility Matrix
 
-```
-        | Requested |
-Held    |  S  |  X  |
---------|-----|-----|
-None    | Yes | Yes |
-S       | Yes | No  |
-X       | No  | No  |
+Lock compatibility determines whether two transactions can hold locks simultaneously:
+
+| **Held** ↓ / **Requested** → | **None** | **Shared (S)** | **Exclusive (X)** |
+|------------------------------|----------|----------------|-------------------|
+| **None** | ✓ | ✓ | ✓ |
+| **Shared (S)** | ✓ | ✓ | ✗ |
+| **Exclusive (X)** | ✓ | ✗ | ✗ |
+
+**Key rules**:
+- Multiple **Shared** locks are compatible (multiple readers)
+- **Exclusive** locks are incompatible with everything (single writer)
+- No lock held: any lock can be granted
+
+```mermaid
+graph TD
+    Free[Resource: Free] -->|"Request S"| S1[Shared Lock]
+    Free -->|"Request X"| X1[Exclusive Lock]
+
+    S1 -->|"Request S"| S2[Multiple Shared Locks ✓]
+    S1 -->|"Request X"| Wait1[Wait - Incompatible ✗]
+
+    X1 -->|"Request S"| Wait2[Wait - Incompatible ✗]
+    X1 -->|"Request X"| Wait3[Wait - Incompatible ✗]
+
+    style Free fill:#e8f5e9
+    style S1 fill:#e1f5ff
+    style S2 fill:#e1f5ff
+    style X1 fill:#ffe8e8
+    style Wait1 fill:#ffdddd
+    style Wait2 fill:#ffdddd
+    style Wait3 fill:#ffdddd
 ```
 
 ### Update Locks (U)
@@ -196,33 +220,87 @@ Both blocked → Deadlock
 
 ### Definition and Example
 
-```
-Circular wait: T1 waits for T2, T2 waits for T1
+**Circular wait**: T1 waits for T2, T2 waits for T1
 
-T1                    T2
-X-lock(A) ✓           X-lock(B) ✓
-Request X-lock(B)     Request X-lock(A)
-↓ Wait                ↓ Wait
-   ↘                ↙
-      Deadlock!
+```mermaid
+sequenceDiagram
+    participant T1 as Transaction 1
+    participant A as Resource A
+    participant B as Resource B
+    participant T2 as Transaction 2
+
+    T1->>A: X-lock(A) ✓
+    T2->>B: X-lock(B) ✓
+
+    Note over T1,B: Both transactions now request second resource
+
+    T1->>B: Request X-lock(B)
+    T2->>A: Request X-lock(A)
+
+    Note over T1,T2: DEADLOCK!<br/>T1 waits for T2 to release B<br/>T2 waits for T1 to release A
+
+    rect rgb(255, 200, 200)
+        Note over T1,T2: Circular dependency detected
+    end
 ```
+
+**Timeline**:
+1. T1 acquires lock on A ✓
+2. T2 acquires lock on B ✓
+3. T1 requests lock on B (waits for T2)
+4. T2 requests lock on A (waits for T1)
+5. **Deadlock**: circular wait detected
 
 ### Detection: Wait-For Graph
 
-```
-Build graph:
-- Node for each transaction
-- Edge T1 → T2 if T1 waits for T2
+**Wait-for graph** is used to detect deadlocks:
+- **Node** for each transaction
+- **Edge** T1 → T2 if T1 waits for T2
+- **Cycle** in graph = deadlock
 
-      ┌─→ T2 ─┐
-      │       ↓
-      T1 ←── T3
-           ↑   │
-           └───┘
+**Example 1**: Simple deadlock (cycle detected)
 
-Cycle detected: T1 → T2 → T3 → T1
-Deadlock exists!
+```mermaid
+graph LR
+    T1((T1)) -->|waits for| T2((T2))
+    T2 -->|waits for| T1
+
+    style T1 fill:#ffe8e8
+    style T2 fill:#ffe8e8
 ```
+
+$$\text{Cycle: } T1 \rightarrow T2 \rightarrow T1 \text{ (DEADLOCK!)}$$
+
+**Example 2**: Complex deadlock (3 transactions)
+
+```mermaid
+graph LR
+    T1((T1)) -->|waits for| T2((T2))
+    T2 -->|waits for| T3((T3))
+    T3 -->|waits for| T1
+
+    style T1 fill:#ffe8e8
+    style T2 fill:#ffe8e8
+    style T3 fill:#ffe8e8
+```
+
+$$\text{Cycle: } T1 \rightarrow T2 \rightarrow T3 \rightarrow T1 \text{ (DEADLOCK!)}$$
+
+**Example 3**: No deadlock (no cycle)
+
+```mermaid
+graph LR
+    T1((T1)) -->|waits for| T2((T2))
+    T3((T3)) -->|waits for| T2
+    T4((T4)) -->|waits for| T3
+
+    style T1 fill:#e8f5e9
+    style T2 fill:#e8f5e9
+    style T3 fill:#e8f5e9
+    style T4 fill:#e8f5e9
+```
+
+No cycle detected - transactions will eventually complete
 
 ### Resolution: Victim Selection
 
@@ -242,31 +320,60 @@ SET DEADLOCK_PRIORITY HIGH; -- Protect this session
 
 ### Prevention Strategies
 
+**1. Lock ordering**: Always acquire locks in same order
+
+**Bad** (deadlock possible):
+```mermaid
+graph TD
+    subgraph T1[Transaction 1]
+        T1A[Lock A] --> T1B[Lock B]
+    end
+
+    subgraph T2[Transaction 2]
+        T2B[Lock B] --> T2A[Lock A]
+    end
+
+    style T1A fill:#ffe8e8
+    style T1B fill:#ffe8e8
+    style T2B fill:#ffe8e8
+    style T2A fill:#ffe8e8
 ```
-1. Lock ordering: Always acquire locks in same order
 
-   Bad:
-   T1: Lock(A), Lock(B)
-   T2: Lock(B), Lock(A)  -- Deadlock possible
+**Good** (no deadlock):
+```mermaid
+graph TD
+    subgraph T1G[Transaction 1]
+        T1GA[Lock A] --> T1GB[Lock B]
+    end
 
-   Good:
-   T1: Lock(A), Lock(B)
-   T2: Lock(A), Lock(B)  -- Always alphabetical
+    subgraph T2G[Transaction 2]
+        T2GA[Lock A] --> T2GB[Lock B]
+    end
 
-2. Lock timeout: Give up waiting after timeout
+    style T1GA fill:#e8f5e9
+    style T1GB fill:#e8f5e9
+    style T2GA fill:#e8f5e9
+    style T2GB fill:#e8f5e9
+```
 
-   SET LOCK_TIMEOUT 5000;  -- 5 seconds
+Both transactions follow the same order (alphabetical): A then B
 
-3. Nowait: Fail immediately if lock unavailable
+**2. Lock timeout**: Give up waiting after timeout
+```sql
+SET LOCK_TIMEOUT 5000;  -- 5 seconds
+```
 
-   SELECT * FROM Orders FOR UPDATE NOWAIT;
+**3. Nowait**: Fail immediately if lock unavailable
+```sql
+SELECT * FROM Orders FOR UPDATE NOWAIT;
+```
 
-4. Try-lock pattern:
-
-   IF TRY_LOCK(resource)
-     -- Got lock, proceed
-   ELSE
-     -- Retry later or different approach
+**4. Try-lock pattern**:
+```sql
+IF TRY_LOCK(resource)
+  -- Got lock, proceed
+ELSE
+  -- Retry later or different approach
 ```
 
 ### Deadlock in Practice

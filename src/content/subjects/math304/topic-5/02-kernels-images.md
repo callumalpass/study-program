@@ -145,6 +145,33 @@ One of the most important insights is that the kernel organizes the domain into 
 **Definition**: The **fiber** over $h \in H$ is:
 $$\phi^{-1}(h) = \{g \in G : \phi(g) = h\}$$
 
+```mermaid
+graph LR
+    subgraph "Group G (Domain)"
+        F1["Fiber φ⁻¹(h₁)<br/>= coset g₁·ker(φ)"]
+        F2["Fiber φ⁻¹(h₂)<br/>= coset g₂·ker(φ)"]
+        F3["Fiber φ⁻¹(eₕ)<br/>= ker(φ)"]
+        Fdots["..."]
+    end
+
+    subgraph "Group H (Codomain)"
+        h1["h₁"]
+        h2["h₂"]
+        eH["eₕ"]
+        hdots["..."]
+    end
+
+    F1 -->|φ| h1
+    F2 -->|φ| h2
+    F3 -->|φ| eH
+    Fdots -->|φ| hdots
+
+    style F3 fill:#ffccbc
+    style eH fill:#c8e6c9
+    style F1 fill:#e3f2fd
+    style F2 fill:#fff3e0
+```
+
 **Theorem 4 (Fiber-Coset Correspondence)**: Let $\phi: G \to H$ be a homomorphism with kernel $N = \ker(\phi)$. Then two elements $a, b \in G$ map to the same element in $H$ if and only if they belong to the same left coset of $N$:
 
 $$\phi(a) = \phi(b) \Leftrightarrow aN = bN$$

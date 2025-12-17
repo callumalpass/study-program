@@ -67,6 +67,47 @@ cart.set_payment_strategy(PayPalPayment("user@example.com"))
 print(cart.checkout())  # Paid $34.98 via PayPal (user@example.com)
 ```
 
+### Strategy Pattern Class Diagram
+
+```mermaid
+classDiagram
+    ShoppingCart o-- PaymentStrategy : uses
+    PaymentStrategy <|-- CreditCardPayment
+    PaymentStrategy <|-- PayPalPayment
+    PaymentStrategy <|-- CryptoPayment
+
+    class ShoppingCart {
+        -List items
+        -PaymentStrategy payment_strategy
+        +add_item(name, price)
+        +set_payment_strategy(strategy)
+        +checkout()
+    }
+
+    class PaymentStrategy {
+        <<abstract>>
+        +pay(amount)*
+    }
+
+    class CreditCardPayment {
+        -String card_number
+        -String cvv
+        +pay(amount)
+    }
+
+    class PayPalPayment {
+        -String email
+        +pay(amount)
+    }
+
+    class CryptoPayment {
+        -String wallet_address
+        +pay(amount)
+    }
+
+    note for PaymentStrategy "Strategy pattern allows\nswapping algorithms at runtime.\nClient depends on abstraction,\nnot concrete implementations."
+```
+
 ---
 
 ## Pythonic Strategy: Functions

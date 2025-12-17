@@ -71,6 +71,47 @@ Imagine rolling a die:
 
 The original uniform distribution transforms into a normal distribution through averaging!
 
+```mermaid
+graph LR
+    subgraph Original["Original Distribution<br/>&#40;Any Shape&#41;"]
+        Pop["Population<br/>X ~ any distribution<br/>E[X] = μ<br/>Var&#40;X&#41; = σ²"]
+    end
+
+    subgraph Sampling["Take Samples"]
+        S1["Sample 1: X₁, X₂, ..., Xₙ<br/>Calculate X̄₁"]
+        S2["Sample 2: X₁, X₂, ..., Xₙ<br/>Calculate X̄₂"]
+        S3["Sample 3: X₁, X₂, ..., Xₙ<br/>Calculate X̄₃"]
+        Sdots["..."]
+        Sk["Sample k: X₁, X₂, ..., Xₙ<br/>Calculate X̄ₖ"]
+    end
+
+    subgraph CLT["Central Limit Theorem"]
+        Magic["<b>As n → ∞</b><br/><br/>The distribution of X̄<br/>becomes approximately<br/>Normal"]
+    end
+
+    subgraph Result["Sampling Distribution<br/>of the Mean"]
+        Normal["X̄ ~ N&#40;μ, σ²/n&#41;<br/><br/>• Mean: μ<br/>• Variance: σ²/n<br/>• Std Dev: σ/√n<br/><br/><b>Bell-shaped!</b>"]
+    end
+
+    Pop --> S1
+    Pop --> S2
+    Pop --> S3
+    Pop --> Sdots
+    Pop --> Sk
+
+    S1 --> Magic
+    S2 --> Magic
+    S3 --> Magic
+    Sdots --> Magic
+    Sk --> Magic
+
+    Magic --> Normal
+
+    style Pop fill:#fff3e0
+    style Magic fill:#e1f5ff,stroke:#0277bd,stroke-width:3px
+    style Normal fill:#e8f5e9,stroke:#2e7d32,stroke-width:3px
+```
+
 ## Worked Example 1: Dice Rolling
 
 Roll a fair die 36 times and compute the average. What is the probability the average is between 3 and 4?

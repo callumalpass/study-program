@@ -8,27 +8,20 @@ Translation and scaling are two of the most fundamental transformations in compu
 
 ### Translation in 2D
 
-A 2D translation by vector **t = (tx, ty)** transforms point **P = (x, y)** to **P' = (x', y')**:
+A 2D translation by vector $\mathbf{t} = (t_x, t_y)$ transforms point $\mathbf{P} = (x, y)$ to $\mathbf{P}' = (x', y')$:
 
-```
-x' = x + tx
-y' = y + ty
+$$x' = x + t_x$$
+$$y' = y + t_y$$
 
-Or in vector form:
-P' = P + t
-```
+Or in vector form: $\mathbf{P}' = \mathbf{P} + \mathbf{t}$
 
 **Matrix Representation**:
-```
-⎡ 1  0  tx ⎤   ⎡ x ⎤   ⎡ x + tx ⎤
-⎢ 0  1  ty ⎥ × ⎢ y ⎥ = ⎢ y + ty ⎥
-⎣ 0  0  1  ⎦   ⎣ 1 ⎦   ⎣ 1      ⎦
 
-Translation matrix T:
-⎡ 1  0  tx ⎤
-⎢ 0  1  ty ⎥
-⎣ 0  0  1  ⎦
-```
+$$\begin{bmatrix} 1 & 0 & t_x \\ 0 & 1 & t_y \\ 0 & 0 & 1 \end{bmatrix} \begin{bmatrix} x \\ y \\ 1 \end{bmatrix} = \begin{bmatrix} x + t_x \\ y + t_y \\ 1 \end{bmatrix}$$
+
+**Translation matrix** $\mathbf{T}$:
+
+$$\mathbf{T} = \begin{bmatrix} 1 & 0 & t_x \\ 0 & 1 & t_y \\ 0 & 0 & 1 \end{bmatrix}$$
 
 **Example**: Translate by (3, 2)
 ```cpp
@@ -46,23 +39,17 @@ glm::vec3 P_prime = T * P;         // Result: (4, 6, 1)
 
 3D translation extends naturally to three dimensions:
 
-```
-x' = x + tx
-y' = y + ty
-z' = z + tz
+$$x' = x + t_x$$
+$$y' = y + t_y$$
+$$z' = z + t_z$$
 
-Matrix form:
-⎡ 1  0  0  tx ⎤   ⎡ x ⎤   ⎡ x + tx ⎤
-⎢ 0  1  0  ty ⎥ × ⎢ y ⎥ = ⎢ y + ty ⎥
-⎢ 0  0  1  tz ⎥   ⎢ z ⎥   ⎢ z + tz ⎥
-⎣ 0  0  0  1  ⎦   ⎣ 1 ⎦   ⎣ 1      ⎦
+**Matrix form**:
 
-Translation matrix T:
-⎡ 1  0  0  tx ⎤
-⎢ 0  1  0  ty ⎥
-⎢ 0  0  1  tz ⎥
-⎣ 0  0  0  1  ⎦
-```
+$$\begin{bmatrix} 1 & 0 & 0 & t_x \\ 0 & 1 & 0 & t_y \\ 0 & 0 & 1 & t_z \\ 0 & 0 & 0 & 1 \end{bmatrix} \begin{bmatrix} x \\ y \\ z \\ 1 \end{bmatrix} = \begin{bmatrix} x + t_x \\ y + t_y \\ z + t_z \\ 1 \end{bmatrix}$$
+
+**Translation matrix** $\mathbf{T}$:
+
+$$\mathbf{T} = \begin{bmatrix} 1 & 0 & 0 & t_x \\ 0 & 1 & 0 & t_y \\ 0 & 0 & 1 & t_z \\ 0 & 0 & 0 & 1 \end{bmatrix}$$
 
 **GLM Implementation**:
 ```cpp

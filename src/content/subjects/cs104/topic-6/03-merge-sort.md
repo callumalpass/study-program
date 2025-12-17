@@ -8,17 +8,42 @@ Merge sort is a divide-and-conquer algorithm that guarantees O(n log n) time com
 2. **Conquer**: Recursively sort each half
 3. **Combine**: Merge the sorted halves
 
-```
-Original:  [38, 27, 43, 3, 9, 82, 10]
+```mermaid
+graph TD
+    A["[38, 27, 43, 3, 9, 82, 10]"] --> B["[38, 27, 43, 3]"]
+    A --> C["[9, 82, 10]"]
+    B --> D["[38, 27]"]
+    B --> E["[43, 3]"]
+    C --> F["[9, 82]"]
+    C --> G["[10]"]
+    D --> H["[38]"]
+    D --> I["[27]"]
+    E --> J["[43]"]
+    E --> K["[3]"]
+    F --> L["[9]"]
+    F --> M["[82]"]
 
-Divide:    [38, 27, 43, 3]  |  [9, 82, 10]
-Divide:    [38, 27] [43, 3] |  [9, 82] [10]
-Divide:    [38][27] [43][3] |  [9][82] [10]
+    H --> N["[27, 38]"]
+    I --> N
+    J --> O["[3, 43]"]
+    K --> O
+    L --> P["[9, 82]"]
+    M --> P
 
-Merge:     [27, 38] [3, 43] |  [9, 82] [10]
-Merge:     [3, 27, 38, 43]  |  [9, 10, 82]
-Merge:     [3, 9, 10, 27, 38, 43, 82]
+    N --> Q["[3, 27, 38, 43]"]
+    O --> Q
+    P --> R["[9, 10, 82]"]
+    G --> R
+
+    Q --> S["[3, 9, 10, 27, 38, 43, 82]"]
+    R --> S
+
+    style A fill:#FFE4B5
+    style S fill:#90EE90
 ```
+
+**Divide phase** (top-down): Split until single elements
+**Merge phase** (bottom-up): Combine sorted subarrays
 
 ## Implementation
 
@@ -124,22 +149,29 @@ def merge_sort_iterative(arr):
 
 ## Complexity Analysis
 
-**Time Complexity**: O(n log n) in all cases
+**Time Complexity**: $O(n \log n)$ in all cases
 
+The recursion tree has $\log n$ levels, and each level does $O(n)$ work:
+
+$$T(n) = 2T(n/2) + O(n)$$
+
+By the Master Theorem (Case 2): $T(n) = O(n \log n)$
+
+**Detailed breakdown**:
 ```
 Level 0: 1 merge of size n         → O(n) work
-Level 1: 2 merges of size n/2      → O(n) work
-Level 2: 4 merges of size n/4      → O(n) work
+Level 1: 2 merges of size n/2      → 2(n/2) = O(n) work
+Level 2: 4 merges of size n/4      → 4(n/4) = O(n) work
 ...
-Level log n: n merges of size 1    → O(n) work
+Level log n: n merges of size 1    → n(1) = O(n) work
 
-Total: O(n log n)
+Total levels: log₂(n)
+Total work: O(n) × log(n) = O(n log n)
 ```
 
-**Space Complexity**: O(n) for the auxiliary array
+**Space Complexity**: $O(n)$ for the auxiliary array
 
-**Recurrence Relation**: T(n) = 2T(n/2) + O(n)
-Solved by Master Theorem: O(n log n)
+**Key insight**: Unlike quicksort, merge sort has the same time complexity for all inputs (best, average, worst) because it always divides the array in half.
 
 ## Properties
 

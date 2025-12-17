@@ -83,6 +83,35 @@ which is not open.
 
 **Remark:** Some sets are neither open nor closed (like $[0, 1)$), while $\mathbb{R}$ and $\emptyset$ are both open and closed.
 
+## Set Classification Decision Tree
+
+The following diagram helps determine whether a set is open, closed, both, or neither:
+
+```mermaid
+graph TD
+    A[Given set S ⊆ ℝ] --> B{Is S = ℝ or S = ∅?}
+    B -->|Yes| C[Both open AND closed]
+    B -->|No| D{Does S contain<br/>all its limit points?}
+    D -->|Yes| E{Is every point<br/>an interior point?}
+    D -->|No| F{Is every point<br/>an interior point?}
+    E -->|Yes| G[Both open AND closed<br/>Rare: contradicts S ≠ ℝ, ∅]
+    E -->|No| H[CLOSED only]
+    F -->|Yes| I[OPEN only]
+    F -->|No| J[Neither open nor closed]
+
+    style C fill:#90EE90
+    style H fill:#87CEEB
+    style I fill:#FFB6C1
+    style J fill:#FFE4B5
+    style G fill:#DDA0DD
+```
+
+**Examples classified:**
+- **Both**: $\mathbb{R}$, $\emptyset$
+- **Closed only**: $[a,b]$, $\{0\}$, $\mathbb{N}$, $\mathbb{Z}$
+- **Open only**: $(a,b)$, $(a,\infty)$, $(0,1) \cup (2,3)$
+- **Neither**: $[0,1)$, $\mathbb{Q}$, $(0,1] \cup \{2\}$
+
 **Theorem 7.3 (Properties of Closed Sets):**
 
 1. $\mathbb{R}$ and $\emptyset$ are closed
@@ -183,6 +212,32 @@ $$
 $$
 
 Equivalently, $x \in \partial S$ if every neighborhood of $x$ intersects both $S$ and $S^c$.
+
+### Set Operations and Relationships
+
+```mermaid
+graph TD
+    A[Set S ⊆ ℝ] --> B[Interior: int·S· or S°<br/>All interior points]
+    A --> C[Closure: S̄ = S ∪ S'<br/>S plus limit points]
+    A --> D[Boundary: ∂S<br/>S̄ ∩ S̄ᶜ]
+    A --> E[Limit Points: S'<br/>Accumulation points]
+
+    B -.->|Relationship| F[int·S· ⊆ S ⊆ S̄]
+    C -.->|Relationship| F
+    D -.->|Formula| G[∂S = S̄ \ int·S·]
+
+    H[Key Properties:] --> I[S open ⟺ S = int·S·]
+    H --> J[S closed ⟺ S = S̄ ⟺ S' ⊆ S]
+    H --> K[∂S ⊆ S ⟺ S closed]
+    H --> L[∂S ∩ S = ∅ ⟺ S open]
+
+    style B fill:#FFB6C1
+    style C fill:#87CEEB
+    style D fill:#DDA0DD
+    style E fill:#FFE4B5
+    style F fill:#90EE90
+    style G fill:#90EE90
+```
 
 **Theorem 7.8:** $\partial S = \overline{S} \setminus \text{int}(S)$.
 

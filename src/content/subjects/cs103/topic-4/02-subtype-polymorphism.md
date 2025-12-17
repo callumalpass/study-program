@@ -37,6 +37,39 @@ class Triangle(Shape):
         return 0.5 * self.base * self.height
 ```
 
+### Polymorphism Class Hierarchy
+
+```mermaid
+classDiagram
+    Shape <|-- Rectangle
+    Shape <|-- Circle
+    Shape <|-- Triangle
+
+    class Shape {
+        <<abstract>>
+        +area()*
+    }
+
+    class Rectangle {
+        +width
+        +height
+        +area() w × h
+    }
+
+    class Circle {
+        +radius
+        +area() π × r²
+    }
+
+    class Triangle {
+        +base
+        +height
+        +area() ½ × b × h
+    }
+
+    note for Shape "All shapes implement area(),\nbut each calculates it differently"
+```
+
 ---
 
 ## Polymorphic Functions
@@ -52,6 +85,37 @@ def print_area(shape):
 print_area(Rectangle(4, 5))  # Area: 20
 print_area(Circle(3))        # Area: 28.27431
 print_area(Triangle(4, 6))   # Area: 12.0
+```
+
+### Method Dispatch Flow
+
+```mermaid
+sequenceDiagram
+    participant Client
+    participant print_area
+    participant Rectangle
+    participant Circle
+    participant Triangle
+
+    Client->>print_area: print_area(Rectangle(4, 5))
+    activate print_area
+    print_area->>Rectangle: area()
+    activate Rectangle
+    Rectangle-->>print_area: 20
+    deactivate Rectangle
+    print_area-->>Client: "Area: 20"
+    deactivate print_area
+
+    Client->>print_area: print_area(Circle(3))
+    activate print_area
+    print_area->>Circle: area()
+    activate Circle
+    Circle-->>print_area: 28.27431
+    deactivate Circle
+    print_area-->>Client: "Area: 28.27431"
+    deactivate print_area
+
+    Note over print_area: Same function,\ndifferent implementations\ncalled at runtime!
 ```
 
 ---

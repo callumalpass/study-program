@@ -35,6 +35,20 @@ A **classic 5-stage RISC pipeline** divides instruction execution:
 | 4 | MEM | Memory Access |
 | 5 | WB | Write Back |
 
+```mermaid
+graph LR
+    A[IF<br/>Instruction<br/>Fetch] --> B[ID<br/>Instruction<br/>Decode]
+    B --> C[EX<br/>Execute]
+    C --> D[MEM<br/>Memory<br/>Access]
+    D --> E[WB<br/>Write<br/>Back]
+
+    style A fill:#e1f5ff
+    style B fill:#fff4e1
+    style C fill:#ffe1f5
+    style D fill:#e1ffe1
+    style E fill:#f5e1ff
+```
+
 ### Pipeline Execution
 
 ```
@@ -55,34 +69,33 @@ After the pipeline is full:
 
 ### Theoretical Speedup
 
-For a pipeline with k stages:
-```
-Speedup_max = k
-```
+For a pipeline with $k$ stages:
+
+$$\text{Speedup}_{\text{max}} = k$$
 
 A 5-stage pipeline can potentially execute 5× faster than single-cycle.
 
 ### Actual Speedup
 
-For n instructions on a k-stage pipeline:
-```
-Time_unpipelined = n × k cycles
-Time_pipelined = k + (n - 1) cycles
+For $n$ instructions on a $k$-stage pipeline:
 
-Speedup = (n × k) / (k + n - 1)
-```
+$$\text{Time}_{\text{unpipelined}} = n \times k \text{ cycles}$$
 
-As n → ∞:
-```
-Speedup → k
-```
+$$\text{Time}_{\text{pipelined}} = k + (n - 1) \text{ cycles}$$
+
+$$\text{Speedup} = \frac{n \times k}{k + (n - 1)}$$
+
+As $n \to \infty$:
+
+$$\text{Speedup} \to k$$
 
 **Example**: 100 instructions, 5 stages
-```
-Unpipelined: 100 × 5 = 500 cycles
-Pipelined: 5 + 99 = 104 cycles
-Speedup = 500 / 104 ≈ 4.8×
-```
+
+$$\text{Time}_{\text{unpipelined}} = 100 \times 5 = 500 \text{ cycles}$$
+
+$$\text{Time}_{\text{pipelined}} = 5 + 99 = 104 \text{ cycles}$$
+
+$$\text{Speedup} = \frac{500}{104} \approx 4.8\times$$
 
 ## Pipeline Registers
 
@@ -163,9 +176,7 @@ Result → Register File
 
 The clock period is determined by the **slowest stage**:
 
-```
-T_clock = max(T_IF, T_ID, T_EX, T_MEM, T_WB) + T_register
-```
+$$T_{\text{clock}} = \max(T_{\text{IF}}, T_{\text{ID}}, T_{\text{EX}}, T_{\text{MEM}}, T_{\text{WB}}) + T_{\text{register}}$$
 
 **Example stage times**:
 | Stage | Time |
@@ -224,11 +235,10 @@ One instruction completes per cycle once the pipeline is full.
 ### Real-World CPI
 
 With hazards and stalls:
-```
-CPI = 1 + stall_cycles_per_instruction
-```
 
-Modern processors achieve CPI close to 1 (or even < 1 with superscalar designs) through sophisticated hazard handling.
+$$\text{CPI} = 1 + \text{stall}_{\text{cycles per instruction}}$$
+
+Modern processors achieve CPI close to 1 (or even $< 1$ with superscalar designs) through sophisticated hazard handling.
 
 ## Why Pipelining Works
 

@@ -14,11 +14,27 @@ The model was influenced by manufacturing and construction processes where:
 
 ## The Sequential Phases
 
-```
-Requirements → Design → Implementation → Testing → Deployment → Maintenance
-      ↓           ↓           ↓            ↓           ↓            ↓
-  Document    Document    Code         Test      Deploy      Support
-  Signoff     Signoff     Review       Reports   Plan        Tickets
+```mermaid
+flowchart TD
+    A[Requirements Analysis] -->|Document Signoff| B[System Design]
+    B -->|Design Signoff| C[Implementation]
+    C -->|Code Review| D[Testing]
+    D -->|Test Reports| E[Deployment]
+    E -->|Deploy Plan| F[Maintenance]
+
+    A1[Activities:<br/>- Stakeholder interviews<br/>- Requirements spec] -.-> A
+    B1[Deliverables:<br/>- Architecture diagrams<br/>- Design docs] -.-> B
+    C1[Output:<br/>- Source code<br/>- Unit tests] -.-> C
+    D1[Verification:<br/>- Integration tests<br/>- UAT] -.-> D
+    E1[Release:<br/>- Production deploy<br/>- User training] -.-> E
+    F1[Support:<br/>- Bug fixes<br/>- Enhancements] -.-> F
+
+    style A fill:#e3f2fd
+    style B fill:#e1f5fe
+    style C fill:#fff3e0
+    style D fill:#ffe0b2
+    style E fill:#e8f5e9
+    style F fill:#f3e5f5
 ```
 
 ### Phase 1: Requirements Analysis

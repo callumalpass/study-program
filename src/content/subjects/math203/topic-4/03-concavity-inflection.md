@@ -27,6 +27,32 @@ An **inflection point** is a point where the concavity changes (from up to down,
 
 **Important:** $f''(c) = 0$ does NOT guarantee an inflection point. Concavity must actually change.
 
+```mermaid
+flowchart TD
+    Start[Finding Inflection Points] --> Step1[Find f''x]
+
+    Step1 --> Step2[Solve f''x = 0<br/>Find where f'' undefined]
+
+    Step2 --> Candidates[Candidate points: x = c₁, c₂, ...]
+
+    Candidates --> Test[Test sign of f''<br/>on both sides of each candidate]
+
+    Test --> Q{Does f''<br/>change sign<br/>at x = c?}
+
+    Q -->|Yes<br/>Changes sign| Inflection[✓ Inflection Point at c, fc<br/>Concavity changes]
+    Q -->|No<br/>Same sign| NotInflection[✗ NOT an Inflection Point<br/>No concavity change]
+
+    Inflection --> Type{Type of<br/>change?}
+
+    Type -->|f'' goes from + to -<br/>∪ to ∩| T1[Concave up → Concave down<br/>f' has local maximum at c]
+    Type -->|f'' goes from - to +<br/>∩ to ∪| T2[Concave down → Concave up<br/>f' has local minimum at c]
+
+    style Inflection fill:#d4edda
+    style NotInflection fill:#f8d7da
+    style T1 fill:#fff3cd
+    style T2 fill:#e1f5ff
+```
+
 ## Example: Complete Concavity Analysis
 
 **Analyze:** $f(x) = x^3 - 6x^2 + 9x + 1$

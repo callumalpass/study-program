@@ -10,35 +10,44 @@ Both NFAs and DFAs recognize exactly the class of regular languages—the same l
 
 ## Deterministic Finite Automata (DFA)
 
-A deterministic finite automaton is defined by five components:
-- A finite set of states Q
-- A finite alphabet Σ (input symbols)
-- A transition function δ: Q × Σ → Q
-- A start state q0 ∈ Q
-- A set of accepting (final) states F ⊆ Q
+A deterministic finite automaton is defined by a 5-tuple $M = (Q, \Sigma, \delta, q_0, F)$ where:
+- $Q$ is a finite set of states
+- $\Sigma$ is a finite alphabet (input symbols)
+- $\delta: Q \times \Sigma \rightarrow Q$ is the transition function
+- $q_0 \in Q$ is the start state
+- $F \subseteq Q$ is the set of accepting (final) states
 
-The key characteristic of a DFA is determinism: for each state and input symbol, there is exactly one next state. This makes DFAs straightforward to implement and efficient to execute.
+The key characteristic of a DFA is determinism: for each state and input symbol, there is exactly one next state. Formally, $\delta(q, a)$ yields exactly one state for any $q \in Q$ and $a \in \Sigma$. This makes DFAs straightforward to implement and efficient to execute.
 
 ### DFA Example: Recognizing Identifiers
 
 Consider a DFA that recognizes identifiers (letter followed by letters or digits):
 
-```
-States: {start, identifier, error}
-Alphabet: {letters, digits, other}
-Start state: start
-Accepting states: {identifier}
+$$M = (\{q_0, q_1, q_2\}, \{\text{letter}, \text{digit}, \text{other}\}, \delta, q_0, \{q_1\})$$
 
-Transitions:
-start + letter → identifier
-start + digit → error
-start + other → error
-identifier + letter → identifier
-identifier + digit → identifier
-identifier + other → error
+```mermaid
+stateDiagram-v2
+    [*] --> q0
+    q0 --> q1: letter
+    q0 --> q2: digit, other
+    q1 --> q1: letter, digit
+    q1 --> q2: other
+    q2 --> q2: letter, digit, other
+    q1 --> [*]
+
+    note right of q0
+        Start state
+    end note
+    note right of q1
+        Accepting state
+        (identifier)
+    end note
+    note right of q2
+        Error state
+    end note
 ```
 
-Graphically, this can be represented as a state diagram with circles for states and labeled arrows for transitions. The accepting state is marked with a double circle.
+The DFA accepts strings that begin with a letter followed by any sequence of letters or digits. The accepting state $q_1$ is marked with a double circle in traditional notation.
 
 ### DFA Execution
 
@@ -56,14 +65,16 @@ def dfa_execute(dfa, input_string):
     return current_state in dfa.accepting_states
 ```
 
-Time complexity is O(n) where n is the input length, and space complexity is O(1) (just tracking the current state). This efficiency makes DFAs ideal for lexical analysis.
+Time complexity is $O(n)$ where $n$ is the input length, and space complexity is $O(1)$ (just tracking the current state). This efficiency makes DFAs ideal for lexical analysis.
 
 ## Nondeterministic Finite Automata (NFA)
 
-A nondeterministic finite automaton relaxes the determinism requirement: from a given state on a given input symbol, there can be zero, one, or multiple possible next states. Additionally, NFAs support ε-transitions—transitions that occur without consuming any input symbol.
+A nondeterministic finite automaton relaxes the determinism requirement: from a given state on a given input symbol, there can be zero, one, or multiple possible next states. Additionally, NFAs support $\varepsilon$-transitions—transitions that occur without consuming any input symbol.
 
 An NFA is defined similarly to a DFA but with a nondeterministic transition function:
-- δ: Q × (Σ ∪ {ε}) → P(Q) (returns a set of states)
+$$\delta: Q \times (\Sigma \cup \{\varepsilon\}) \rightarrow \mathcal{P}(Q)$$
+
+where $\mathcal{P}(Q)$ is the power set of $Q$ (the set of all subsets of $Q$), meaning $\delta$ returns a set of states rather than a single state.
 
 ### Why NFAs?
 
@@ -73,22 +84,26 @@ NFAs are generally easier to construct from regular expressions than DFAs. They 
 
 Consider an NFA for the regular expression `(a|b)*abb`:
 
+```mermaid
+stateDiagram-v2
+    [*] --> q0
+    q0 --> q0: a, b
+    q0 --> q1: a
+    q1 --> q2: b
+    q2 --> q3: b
+    q3 --> [*]
+
+    note right of q0
+        Start state
+        Stays in q0 on any input
+    end note
+    note right of q3
+        Accepting state
+        Reached after "abb"
+    end note
 ```
-State 0 (start):
-  - on 'a': go to state 0 or state 1
-  - on 'b': go to state 0
 
-State 1:
-  - on 'b': go to state 2
-
-State 2:
-  - on 'b': go to state 3 (accepting)
-
-State 3 (accepting):
-  - no transitions
-```
-
-This NFA can be in multiple states simultaneously. After reading 'a', it's in both state 0 and state 1.
+This NFA can be in multiple states simultaneously. After reading 'a', it's in both state $q_0$ (via the self-loop) and state $q_1$ (via the transition to match the pattern). The nondeterminism allows the automaton to "guess" when the final "abb" sequence begins.
 
 ### NFA Execution
 
@@ -121,7 +136,7 @@ def epsilon_closure(states):
     return closure
 ```
 
-NFA execution is less efficient than DFA execution, requiring O(|Q|) space to track current states and potentially O(|Q|) time per input symbol.
+NFA execution is less efficient than DFA execution, requiring $O(|Q|)$ space to track current states and potentially $O(|Q|)$ time per input symbol, where $|Q|$ is the number of states.
 
 ## Converting Regular Expressions to NFAs
 
@@ -140,7 +155,39 @@ Thompson's construction is a systematic algorithm for converting any regular exp
 
 - For r*: Create an NFA for r, add a new start state with an ε-transition to r's start, add ε-transitions from r's accepting states back to r's start, and add an ε-transition from the new start directly to a new accepting state
 
-Thompson's construction produces an NFA with at most 2|r| states, where |r| is the length of the regular expression.
+Thompson's construction produces an NFA with at most $2|r|$ states, where $|r|$ is the length of the regular expression.
+
+```mermaid
+graph LR
+    subgraph "Base: symbol 'a'"
+        A1((start)) -->|a| A2(((accept)))
+    end
+
+    subgraph "Concatenation: rs"
+        B1((start_r)) --> B2((accept_r))
+        B2 -.ε.-> B3((start_s))
+        B3 --> B4(((accept_s)))
+    end
+
+    subgraph "Alternation: r|s"
+        C0((new_start)) -.ε.-> C1((start_r))
+        C0 -.ε.-> C3((start_s))
+        C1 --> C2((accept_r))
+        C3 --> C4((accept_s))
+        C2 -.ε.-> C5(((new_accept)))
+        C4 -.ε.-> C5
+    end
+
+    subgraph "Kleene Star: r*"
+        D0((new_start)) -.ε.-> D1((start_r))
+        D0 -.ε.-> D3(((new_accept)))
+        D1 --> D2((accept_r))
+        D2 -.ε.-> D1
+        D2 -.ε.-> D3
+    end
+```
+
+The diagram shows Thompson's construction templates for basic regular expression operations. Dashed arrows represent $\varepsilon$-transitions.
 
 ## Converting NFAs to DFAs
 
@@ -183,7 +230,7 @@ def nfa_to_dfa(nfa):
     return DFA(dfa_states, dfa_transitions, dfa_start, dfa_accepting)
 ```
 
-The resulting DFA may have up to 2^|Q| states in the worst case, though practical NFAs from regular expressions typically produce much smaller DFAs.
+The resulting DFA may have up to $2^{|Q|}$ states in the worst case (exponential blowup), though practical NFAs from regular expressions typically produce much smaller DFAs. Each DFA state corresponds to a subset of NFA states, hence the name "subset construction."
 
 ## DFA Minimization
 

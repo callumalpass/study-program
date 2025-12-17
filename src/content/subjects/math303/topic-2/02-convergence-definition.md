@@ -21,6 +21,29 @@ We say $(a_n)$ **converges** if it converges to some limit, and **diverges** oth
 
 **Geometric interpretation:** For any $\epsilon > 0$, all but finitely many terms lie in the interval $(L - \epsilon, L + \epsilon)$.
 
+### The Epsilon-N Relationship
+
+```mermaid
+graph TD
+    A[Given: ε > 0<br/>tolerance level] --> B[Find: N ∈ ℕ<br/>threshold index]
+    B --> C[Guarantee: For all n ≥ N<br/>|aₙ - L| < ε]
+
+    D[Smaller ε] -.->|requires| E[Larger N]
+    F[ε controls precision] -.->|determines| G[N controls how far<br/>out in sequence]
+
+    H[Examples:] --> I[ε = 0.1 might need N = 10]
+    H --> J[ε = 0.01 might need N = 100]
+    H --> K[ε = 0.001 might need N = 1000]
+
+    style A fill:#FFE4B5
+    style B fill:#87CEEB
+    style C fill:#90EE90
+    style D fill:#FFB6C1
+    style E fill:#DDA0DD
+```
+
+**Key insight:** The definition says we can make $|a_n - L|$ as small as we want (any $\epsilon > 0$) by going far enough out in the sequence (choosing $N$ large enough).
+
 ## Epsilon-N Proofs
 
 The $\epsilon$-$N$ definition is the foundation of rigorous analysis. Let's see how to use it in proofs.

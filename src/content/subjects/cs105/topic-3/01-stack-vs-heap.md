@@ -26,6 +26,30 @@ High Addresses
 Low Addresses
 ```
 
+### Memory Layout Diagram
+
+```mermaid
+graph TD
+    subgraph "Process Memory Space"
+        Stack["<b>Stack</b><br/>Local variables<br/>Function parameters<br/>Return addresses<br/>↓ Grows downward"]
+        Free["<b>Free Space</b><br/>Available memory"]
+        Heap["<b>Heap</b><br/>malloc/calloc/realloc<br/>Dynamic allocations<br/>↑ Grows upward"]
+        BSS["<b>BSS Segment</b><br/>Uninitialized globals<br/>static int x;"]
+        Data["<b>Data Segment</b><br/>Initialized globals<br/>static int y = 5;"]
+        Text["<b>Text Segment</b><br/>Program code<br/>(Read-only)"]
+    end
+
+    Stack -.->|"grows toward"| Free
+    Heap -.->|"grows toward"| Free
+
+    style Stack fill:#e1f5ff
+    style Heap fill:#e8f5e9
+    style BSS fill:#fff4e1
+    style Data fill:#ffe4e1
+    style Text fill:#f0f0f0
+    style Free fill:#ffffff
+```
+
 ## The Stack
 
 The stack is used for:
@@ -155,6 +179,26 @@ void example() {
 
     free(heapPtr);
 }
+```
+
+### Variable Placement Diagram
+
+```mermaid
+graph TD
+    subgraph "Memory Segments"
+        direction TB
+        S["<b>Stack</b><br/>stackVar = 50<br/>heapPtr (variable itself)"]
+        H["<b>Heap</b><br/>*heapPtr → 75<br/>(allocated data)"]
+        D["<b>Data</b><br/>globalVar = 100<br/>staticVar = 25"]
+        T["<b>Text</b><br/>example() function code"]
+    end
+
+    S -.->|"heapPtr points to"| H
+
+    style S fill:#e1f5ff
+    style H fill:#e8f5e9
+    style D fill:#ffe4e1
+    style T fill:#f0f0f0
 ```
 
 ## Lifetime Comparison

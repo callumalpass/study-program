@@ -18,12 +18,20 @@ x > 0 ? y : z
 ```
 
 Despite different concrete syntax, they all map to the same abstract syntax tree:
-```
-Conditional(
-    condition: Greater(Var("x"), Num(0)),
-    then_branch: Var("y"),
-    else_branch: Var("z")
-)
+
+```mermaid
+graph TD
+    A["Conditional"] --> B["Greater"]
+    A --> C["Var('y')"]
+    A --> D["Var('z')"]
+
+    B --> E["Var('x')"]
+    B --> F["Num(0)"]
+
+    style A fill:#e1f5ff
+    style B fill:#ffe1e1
+    style C fill:#e1ffe1
+    style D fill:#e1ffe1
 ```
 
 This abstraction simplifies the interpreter: it operates on a canonical representation regardless of syntactic variations.
@@ -171,17 +179,18 @@ def parse_primary():
         return expr
 ```
 
-This produces the correctly structured AST:
-```
-BinOp(
-    left: Num(2),
-    op: PLUS,
-    right: BinOp(
-        left: Num(3),
-        op: MULT,
-        right: Num(4)
-    )
-)
+This produces the correctly structured AST respecting operator precedence:
+
+```mermaid
+graph TD
+    A["BinOp(+)"] --> B["Num(2)"]
+    A --> C["BinOp(*)"]
+
+    C --> D["Num(3)"]
+    C --> E["Num(4)"]
+
+    style A fill:#e1f5ff
+    style C fill:#ffe1e1
 ```
 
 The grammar's structure directly determines the AST shape. Multiplication binds tighter than addition, so `3 * 4` becomes a subtree that's the right operand of addition.

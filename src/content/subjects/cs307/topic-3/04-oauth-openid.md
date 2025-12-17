@@ -27,14 +27,35 @@ OAuth 2.0 defines several grant types (flows) for different scenarios. The most 
 
 ### Authorization Code Flow
 
-This is the most secure flow for web applications and mobile apps. It involves:
+This is the most secure flow for web applications and mobile apps. The authorization code flow separates the user-facing authorization step from the token exchange, providing better security:
 
-1. User clicks "Login with X"
-2. Client redirects to authorization server
-3. User authenticates and grants permission
-4. Authorization server redirects back with authorization code
-5. Client exchanges code for access token (server-side)
-6. Client uses access token to access resources
+```mermaid
+sequenceDiagram
+    participant User
+    participant Client as Client Application
+    participant AuthServer as Authorization Server
+    participant ResourceServer as Resource Server
+
+    User->>Client: 1. Click "Login with X"
+    Client->>AuthServer: 2. Redirect to /authorize?<br/>client_id, redirect_uri, scope, state
+    AuthServer->>User: 3. Show login page
+    User->>AuthServer: 4. Authenticate & grant permission
+    AuthServer->>Client: 5. Redirect with authorization code<br/>redirect_uri?code=ABC&state=XYZ
+
+    Note over Client,AuthServer: Back-channel (server-to-server)
+    Client->>AuthServer: 6. POST /token<br/>code, client_id, client_secret
+    AuthServer->>Client: 7. Return access_token, refresh_token
+
+    Client->>ResourceServer: 8. API request with<br/>Authorization: Bearer access_token
+    ResourceServer->>Client: 9. Protected resource data
+    Client->>User: 10. Display data
+```
+
+**Key Security Features:**
+- Authorization code is single-use and short-lived (typically 10 minutes)
+- Token exchange happens server-side, not exposed to browser
+- PKCE extension protects against authorization code interception
+- State parameter prevents CSRF attacks
 
 ```python
 import secrets

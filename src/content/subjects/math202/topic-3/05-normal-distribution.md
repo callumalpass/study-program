@@ -59,7 +59,7 @@ The CDF $\Phi(z)$ cannot be expressed in closed form but is extensively tabulate
 
 ### The 68-95-99.7 Rule (Empirical Rule)
 
-For any normal distribution:
+For any normal distribution $X \sim N(\mu, \sigma^2)$:
 
 - Approximately **68%** of values fall within $\mu \pm \sigma$ (one standard deviation)
 - Approximately **95%** of values fall within $\mu \pm 2\sigma$ (two standard deviations)
@@ -71,6 +71,29 @@ More precisely:
 - $P(\mu - 3\sigma \leq X \leq \mu + 3\sigma) = 0.9973$
 
 This rule provides a quick way to understand the spread of normally distributed data.
+
+```mermaid
+graph TD
+    subgraph Bell["Normal Distribution N&#40;μ, σ²&#41;"]
+        Center["<b>Center: μ</b><br/>Mean = Median = Mode"]
+    end
+
+    Center --> SD1["<b>μ ± 1σ</b><br/>68.27% of data"]
+    Center --> SD2["<b>μ ± 2σ</b><br/>95.45% of data"]
+    Center --> SD3["<b>μ ± 3σ</b><br/>99.73% of data"]
+
+    SD1 --> Range1["Contains approximately<br/>2/3 of all observations"]
+    SD2 --> Range2["Contains approximately<br/>19/20 of all observations"]
+    SD3 --> Range3["Contains nearly<br/>all observations"]
+
+    style Center fill:#e1f5ff,stroke:#0277bd,stroke-width:3px
+    style SD1 fill:#fff9c4,stroke:#f57f17,stroke-width:2px
+    style SD2 fill:#fff3e0,stroke:#e65100,stroke-width:2px
+    style SD3 fill:#ffebee,stroke:#c62828,stroke-width:2px
+    style Range1 fill:#f1f8e9
+    style Range2 fill:#f1f8e9
+    style Range3 fill:#f1f8e9
+```
 
 ## Standardization and Z-Scores
 

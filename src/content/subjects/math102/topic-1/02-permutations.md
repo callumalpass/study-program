@@ -4,19 +4,29 @@ A permutation is an arrangement of objects where order matters. Permutations ans
 
 ## Permutations of n Distinct Objects
 
-The number of ways to arrange n distinct objects in a line is n! (n factorial).
+The number of ways to arrange $n$ distinct objects in a line is $n!$ (n factorial).
 
-```
-n! = n × (n-1) × (n-2) × ... × 2 × 1
-```
+$$n! = n \times (n-1) \times (n-2) \times \cdots \times 2 \times 1$$
 
-**Why?** For the first position, we have n choices. For the second, n-1 remain. And so on.
+**Why?** For the first position, we have $n$ choices. For the second, $n-1$ remain. And so on.
+
+```mermaid
+graph LR
+    Pos1[Position 1:<br/>n choices] --> Pos2[Position 2:<br/>n-1 choices]
+    Pos2 --> Pos3[Position 3:<br/>n-2 choices]
+    Pos3 --> Dots[...]
+    Dots --> PosN[Position n:<br/>1 choice]
+    PosN --> Result[Total: n!]
+
+    style Pos1 fill:#e1f5ff
+    style Result fill:#d4edda
+```
 
 ### Example: Book Arrangement
 
 How many ways to arrange 5 different books on a shelf?
 
-5! = 5 × 4 × 3 × 2 × 1 = 120 arrangements
+$$5! = 5 \times 4 \times 3 \times 2 \times 1 = 120 \text{ arrangements}$$
 
 ### Important Factorial Values
 
@@ -32,11 +42,9 @@ Note: 0! = 1 by convention (there's exactly one way to arrange nothing).
 
 ## k-Permutations: Arranging k Objects from n
 
-When selecting and arranging k objects from n distinct objects, we use P(n,k) or ₙPₖ:
+When selecting and arranging $k$ objects from $n$ distinct objects, we use $P(n,k)$ or $_nP_k$:
 
-```
-P(n,k) = n!/(n-k)! = n × (n-1) × ... × (n-k+1)
-```
+$$P(n,k) = \frac{n!}{(n-k)!} = n \times (n-1) \times \cdots \times (n-k+1)$$
 
 This is "n falling factorial to k terms."
 
@@ -44,18 +52,30 @@ This is "n falling factorial to k terms."
 
 10 runners compete. How many ways to award gold, silver, bronze?
 
-P(10,3) = 10 × 9 × 8 = 720
+$$P(10,3) = 10 \times 9 \times 8 = 720$$
 
 We're choosing 3 from 10 AND the order (1st, 2nd, 3rd) matters.
 
+```mermaid
+graph LR
+    Gold[Gold Medal:<br/>10 choices] --> Silver[Silver Medal:<br/>9 choices]
+    Silver --> Bronze[Bronze Medal:<br/>8 choices]
+    Bronze --> Total[Total:<br/>10 × 9 × 8 = 720]
+
+    style Gold fill:#ffd700
+    style Silver fill:#c0c0c0
+    style Bronze fill:#cd7f32
+    style Total fill:#d4edda
+```
+
 ### Derivation
 
-- Position 1: n choices
-- Position 2: n-1 choices
+- Position 1: $n$ choices
+- Position 2: $n-1$ choices
 - ...
-- Position k: n-k+1 choices
+- Position $k$: $n-k+1$ choices
 
-Total: n × (n-1) × ... × (n-k+1) = n!/(n-k)!
+Total: $n \times (n-1) \times \cdots \times (n-k+1) = \frac{n!}{(n-k)!}$
 
 ## Permutations with Repetition
 
@@ -81,11 +101,9 @@ A DNA strand of length 8 using bases {A, T, G, C}:
 
 When some objects are identical, we divide to avoid overcounting.
 
-For n objects where there are n₁ of type 1, n₂ of type 2, etc.:
+For $n$ objects where there are $n_1$ of type 1, $n_2$ of type 2, etc.:
 
-```
-n! / (n₁! × n₂! × ... × nₖ!)
-```
+$$\frac{n!}{n_1! \times n_2! \times \cdots \times n_k!}$$
 
 This is called a **multinomial coefficient**.
 
@@ -96,37 +114,46 @@ How many distinct arrangements of MISSISSIPPI?
 Letters: M(1), I(4), S(4), P(2)
 Total: 11 letters
 
-Arrangements: 11!/(1! × 4! × 4! × 2!) = 39,916,800/1,152 = 34,650
+$$\text{Arrangements} = \frac{11!}{1! \times 4! \times 4! \times 2!} = \frac{39,916,800}{1,152} = 34,650$$
 
 ### Why Divide?
 
-If all S's were distinct (S₁, S₂, S₃, S₄), we'd have 4! = 24 arrangements that look identical when S's are indistinguishable. Same logic for I's (4!) and P's (2!).
+If all S's were distinct ($S_1, S_2, S_3, S_4$), we'd have $4! = 24$ arrangements that look identical when S's are indistinguishable. Same logic for I's ($4!$) and P's ($2!$).
 
 ## Circular Permutations
 
 Arrangements around a circle where only relative positions matter.
 
-For n distinct objects in a circle:
+For $n$ distinct objects in a circle:
 
-```
-(n-1)!
+$$(n-1)!$$
+
+```mermaid
+graph TD
+    Linear[Linear n!<br/>arrangements] --> Fix[Fix one person<br/>as reference point]
+    Fix --> Remaining[Arrange remaining<br/>n-1 people]
+    Remaining --> Circular[Circular:<br/>n-1! arrangements]
+
+    Example["Example: 6 people<br/>Linear: 6! = 720<br/>Circular: 5! = 120"]
+
+    style Linear fill:#e1f5ff
+    style Circular fill:#d4edda
+    style Example fill:#fff3cd
 ```
 
 ### Example: Round Table
 
 Seating 6 people around a circular table:
 
-(6-1)! = 5! = 120 arrangements
+$$(6-1)! = 5! = 120 \text{ arrangements}$$
 
-**Why n-1?** We can "fix" one person's position as a reference point. The remaining n-1 people can be arranged in (n-1)! ways.
+**Why $n-1$?** We can "fix" one person's position as a reference point. The remaining $n-1$ people can be arranged in $(n-1)!$ ways.
 
 ### Circular with Reflections
 
 If the table can be flipped (like a bracelet vs. a necklace), arrangements that are mirror images count as one:
 
-```
-(n-1)!/2
-```
+$$\frac{(n-1)!}{2}$$
 
 ## Restricted Permutations
 

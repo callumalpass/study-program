@@ -106,6 +106,34 @@ def trace_ray(ray, scene, depth, max_depth):
 
 ## The Ray Tracing Algorithm
 
+### Algorithm Flow
+
+```mermaid
+flowchart TD
+    A[Start: For each pixel] --> B[Generate primary ray<br/>from camera through pixel]
+    B --> C[Trace ray into scene]
+    C --> D{Find closest<br/>intersection?}
+    D -->|No hit| E[Return background color]
+    D -->|Hit found| F[Calculate hit point<br/>and surface normal]
+    F --> G[Calculate direct lighting<br/>from light sources]
+    G --> H{Material<br/>reflective?}
+    H -->|No| I[Return color]
+    H -->|Yes| J{Depth < max?}
+    J -->|No| I
+    J -->|Yes| K[Generate reflection ray]
+    K --> L[Recursively trace<br/>reflection ray]
+    L --> M[Blend direct + reflection]
+    M --> I
+    I --> N[Set pixel color]
+    N --> O{More pixels?}
+    O -->|Yes| A
+    O -->|No| P[Done: Return image]
+
+    style E fill:#ffd700
+    style I fill:#90EE90
+    style P fill:#87CEEB
+```
+
 ### Core Algorithm
 
 ```python
@@ -351,6 +379,15 @@ def render_with_antialiasing(scene, camera, width, height, samples=4):
 
 ### Reflection Vector
 
+The reflection vector formula:
+
+$$\mathbf{R} = \mathbf{I} - 2(\mathbf{N} \cdot \mathbf{I})\mathbf{N}$$
+
+where:
+- $\mathbf{R}$ = reflection direction
+- $\mathbf{I}$ = incident ray direction
+- $\mathbf{N}$ = surface normal
+
 ```python
 def reflect(incident, normal):
     """
@@ -368,6 +405,21 @@ def reflect(incident, normal):
 ```
 
 ### Refraction Vector
+
+Snell's law for refraction:
+
+$$\eta_1 \sin(\theta_1) = \eta_2 \sin(\theta_2)$$
+
+where:
+- $\eta_1$, $\eta_2$ = indices of refraction for the two media
+- $\theta_1$ = angle of incidence
+- $\theta_2$ = angle of refraction
+
+The refraction vector can be computed as:
+
+$$\mathbf{T} = \eta \mathbf{I} + (\eta \cos(\theta_1) - \cos(\theta_2))\mathbf{N}$$
+
+where $\eta = \frac{\eta_1}{\eta_2}$
 
 ```python
 def refract(incident, normal, eta):

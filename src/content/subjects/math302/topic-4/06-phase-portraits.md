@@ -28,6 +28,42 @@ For nonlinear systems, equilibria are found by solving $\mathbf{f}(\mathbf{x}) =
 
 For $\mathbf{x}' = A\mathbf{x}$ (2×2 system), the behavior near the origin depends on the eigenvalues $\lambda_1, \lambda_2$ of $A$.
 
+### Equilibrium Classification Flowchart
+
+The following diagram shows how eigenvalues determine equilibrium type:
+
+```mermaid
+graph TD
+    A[System: x' = Ax<br/>Find eigenvalues λ₁, λ₂] --> B{Eigenvalues<br/>real or complex?}
+
+    B -->|Real| C{Sign pattern?}
+    B -->|Complex: α ± iβ| D{Sign of Re-λ- = α?}
+
+    C -->|λ₁ < 0, λ₂ < 0| E[Stable Node<br/>All trajectories → origin<br/>STABLE]
+    C -->|λ₁ > 0, λ₂ > 0| F[Unstable Node<br/>All trajectories diverge<br/>UNSTABLE]
+    C -->|λ₁ < 0 < λ₂ or<br/>λ₂ < 0 < λ₁| G[Saddle Point<br/>Hyperbolic<br/>UNSTABLE]
+    C -->|λ₁ = 0 or λ₂ = 0| H[Degenerate<br/>Non-isolated equilibria]
+
+    D -->|α < 0| I[Spiral Sink<br/>Inward spirals<br/>STABLE]
+    D -->|α = 0| J[Center<br/>Closed elliptical orbits<br/>NEUTRALLY STABLE]
+    D -->|α > 0| K[Spiral Source<br/>Outward spirals<br/>UNSTABLE]
+
+    E --> E1[Trajectories:<br/>Straight-line approach<br/>along eigendirections]
+    F --> F1[Trajectories:<br/>Straight-line divergence<br/>along eigendirections]
+    G --> G1[Stable manifold: λ₁ < 0<br/>Unstable manifold: λ₂ > 0]
+    I --> I1[Angular frequency: β<br/>Decay rate: |α|]
+    J --> J1[Period: 2π/β<br/>No decay or growth]
+    K --> K1[Angular frequency: β<br/>Growth rate: α]
+
+    style E fill:#d1e7dd,stroke:#0f5132,stroke-width:3px
+    style F fill:#f8d7da,stroke:#842029,stroke-width:3px
+    style G fill:#ffe5cc,stroke:#cc5500,stroke-width:3px
+    style I fill:#d1e7dd,stroke:#0f5132,stroke-width:3px
+    style J fill:#fff3cd,stroke:#997404,stroke-width:3px
+    style K fill:#f8d7da,stroke:#842029,stroke-width:3px
+    style H fill:#e0e0e0,stroke:#666
+```
+
 ### Case 1: Real, Distinct Eigenvalues
 
 **Both negative** ($\lambda_1, \lambda_2 < 0$):

@@ -17,6 +17,63 @@ Behavioral patterns focus on communication between objects, how they interact an
 
 The Observer pattern defines a one-to-many dependency between objects so that when one object changes state, all its dependents are notified and updated automatically.
 
+```mermaid
+classDiagram
+    class Subject {
+        -observers: List~Observer~
+        +attach(Observer)
+        +detach(Observer)
+        +notify()
+        +getState()
+        +setState()
+    }
+    class Observer {
+        <<interface>>
+        +update(Subject)
+    }
+    class ConcreteObserverA {
+        -observerState
+        +update(Subject)
+    }
+    class ConcreteObserverB {
+        -observerState
+        +update(Subject)
+    }
+
+    Subject o-- Observer : observers
+    Observer <|.. ConcreteObserverA
+    Observer <|.. ConcreteObserverB
+```
+
+**Interaction Sequence:**
+
+```mermaid
+sequenceDiagram
+    participant Client
+    participant Subject
+    participant ObserverA
+    participant ObserverB
+
+    Client->>Subject: attach(ObserverA)
+    Client->>Subject: attach(ObserverB)
+    Client->>Subject: setState(newState)
+    activate Subject
+    Subject->>Subject: notify()
+    Subject->>ObserverA: update(this)
+    activate ObserverA
+    ObserverA->>Subject: getState()
+    Subject-->>ObserverA: state
+    ObserverA->>ObserverA: process state
+    deactivate ObserverA
+    Subject->>ObserverB: update(this)
+    activate ObserverB
+    ObserverB->>Subject: getState()
+    Subject-->>ObserverB: state
+    ObserverB->>ObserverB: process state
+    deactivate ObserverB
+    deactivate Subject
+```
+
 ### When to Use
 
 - An abstraction has two aspects, one dependent on the other
@@ -412,6 +469,27 @@ remote.undo();                              // Light is ON
 ## State Pattern
 
 The State pattern allows an object to alter its behavior when its internal state changes. The object will appear to change its class.
+
+```mermaid
+stateDiagram-v2
+    [*] --> NoCoin
+    NoCoin --> HasCoin: insertCoin()
+    HasCoin --> NoCoin: ejectCoin()
+    HasCoin --> Sold: dispense()
+    Sold --> NoCoin: dispenseComplete()
+    Sold --> SoldOut: dispenseComplete()\n[count == 0]
+    SoldOut --> [*]
+
+    note right of NoCoin
+        Waiting for coin
+    end note
+    note right of HasCoin
+        Ready to dispense
+    end note
+    note right of Sold
+        Dispensing product
+    end note
+```
 
 ### When to Use
 

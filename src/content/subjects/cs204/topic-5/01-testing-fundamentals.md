@@ -267,6 +267,22 @@ def test_boundary_values():
 
 Tests with knowledge of internal structure and implementation.
 
+**Coverage Metrics:**
+
+Code coverage measures what percentage of code is executed by tests:
+
+$$
+\text{Statement Coverage} = \frac{\text{Statements Executed}}{\text{Total Statements}} \times 100\%
+$$
+
+$$
+\text{Branch Coverage} = \frac{\text{Branches Taken}}{\text{Total Branches}} \times 100\%
+$$
+
+$$
+\text{Path Coverage} = \frac{\text{Paths Tested}}{\text{Total Possible Paths}} \times 100\%
+$$
+
 **Statement Coverage:**
 ```python
 def absolute_value(x):

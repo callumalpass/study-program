@@ -59,18 +59,56 @@ print(D.__mro__)
 
 Python searches in MRO order: D → B → C → A → object.
 
+### MRO Search Path Visualization
+
+```mermaid
+flowchart LR
+    D[D.greet?] -->|Not found| B[B.greet?]
+    B -->|Found! Return 'B'| Result[Result: 'B']
+    B -.->|If not found| C[C.greet?]
+    C -.->|If not found| A[A.greet?]
+    A -.->|If not found| obj[object]
+
+    style Result fill:#90EE90
+    style B fill:#FFD700
+```
+
+The MRO ensures a consistent, predictable method lookup using the **C3 linearization algorithm**. This guarantees that:
+- Subclasses are checked before superclasses
+- Parent order is preserved (B before C in this example)
+- Each class appears only once in the MRO
+
 ---
 
 ## The Diamond Problem
 
 Multiple inheritance can create a "diamond" when two parents share a common ancestor:
 
-```
-       A
-      / \
-     B   C
-      \ /
-       D
+```mermaid
+classDiagram
+    A <|-- B
+    A <|-- C
+    B <|-- D
+    C <|-- D
+
+    class A {
+        +__init__()
+        +value
+    }
+
+    class B {
+        +__init__()
+    }
+
+    class C {
+        +__init__()
+    }
+
+    class D {
+        +__init__()
+    }
+
+    note for D "The Diamond Problem:\nD inherits from both B and C,\nwhich both inherit from A.\nWithout MRO, A.__init__\ncould run twice!"
 ```
 
 ```python

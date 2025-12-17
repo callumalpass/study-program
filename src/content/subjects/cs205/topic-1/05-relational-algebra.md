@@ -10,14 +10,12 @@ Relational algebra has six fundamental operations. All other operations can be d
 
 Filters rows based on a condition (horizontal partitioning):
 
-```
-σ_condition(R)
+$$\sigma_{\text{condition}}(R)$$
 
 Example:
-Students = {(101, Alice, 3.5), (102, Bob, 2.8), (103, Carol, 3.9)}
+$$\text{Students} = \{(101, \text{Alice}, 3.5), (102, \text{Bob}, 2.8), (103, \text{Carol}, 3.9)\}$$
 
-σ_GPA>3.0(Students) = {(101, Alice, 3.5), (103, Carol, 3.9)}
-```
+$$\sigma_{\text{GPA}>3.0}(\text{Students}) = \{(101, \text{Alice}, 3.5), (103, \text{Carol}, 3.9)\}$$
 
 **SQL equivalent**:
 ```sql
@@ -25,25 +23,21 @@ SELECT * FROM Students WHERE GPA > 3.0;
 ```
 
 Conditions can use:
-- Comparison: =, ≠, <, >, ≤, ≥
-- Logical operators: AND (∧), OR (∨), NOT (¬)
+- Comparison: $=$, $\neq$, $<$, $>$, $\leq$, $\geq$
+- Logical operators: AND ($\land$), OR ($\lor$), NOT ($\neg$)
 
-```
-σ_(GPA>3.0 ∧ Major='CS')(Students)
-```
+$$\sigma_{\text{GPA}>3.0 \land \text{Major}='\text{CS}'}(\text{Students})$$
 
 ### Projection (π)
 
 Selects specific columns (vertical partitioning):
 
-```
-π_attributes(R)
+$$\pi_{\text{attributes}}(R)$$
 
 Example:
-Students = {(101, Alice, 3.5), (102, Bob, 2.8)}
+$$\text{Students} = \{(101, \text{Alice}, 3.5), (102, \text{Bob}, 2.8)\}$$
 
-π_Name,GPA(Students) = {(Alice, 3.5), (Bob, 2.8)}
-```
+$$\pi_{\text{Name},\text{GPA}}(\text{Students}) = \{(\text{Alice}, 3.5), (\text{Bob}, 2.8)\}$$
 
 **SQL equivalent**:
 ```sql
@@ -51,25 +45,22 @@ SELECT Name, GPA FROM Students;
 ```
 
 **Important**: Projection eliminates duplicates (relations are sets):
-```
-π_Major(Students) -- Returns distinct majors only
-```
+
+$$\pi_{\text{Major}}(\text{Students}) \text{ -- Returns distinct majors only}$$
 
 ### Union (∪)
 
 Combines tuples from two union-compatible relations:
 
-```
-R ∪ S
+$$R \cup S$$
 
-Union compatibility: Same number of attributes with compatible domains
+**Union compatibility**: Same number of attributes with compatible domains
 
 Example:
-CSStudents = {(101, Alice), (102, Bob)}
-MathStudents = {(102, Bob), (103, Carol)}
+$$\text{CSStudents} = \{(101, \text{Alice}), (102, \text{Bob})\}$$
+$$\text{MathStudents} = \{(102, \text{Bob}), (103, \text{Carol})\}$$
 
-CSStudents ∪ MathStudents = {(101, Alice), (102, Bob), (103, Carol)}
-```
+$$\text{CSStudents} \cup \text{MathStudents} = \{(101, \text{Alice}), (102, \text{Bob}), (103, \text{Carol})\}$$
 
 **SQL equivalent**:
 ```sql
@@ -80,13 +71,12 @@ SELECT * FROM CSStudents UNION SELECT * FROM MathStudents;
 
 Tuples in first relation but not in second:
 
-```
-R − S
+$$R - S$$
 
 Example:
-CSStudents − MathStudents = {(101, Alice)}
--- Students in CS but not in Math
-```
+$$\text{CSStudents} - \text{MathStudents} = \{(101, \text{Alice})\}$$
+
+Students in CS but not in Math
 
 **SQL equivalent**:
 ```sql
@@ -97,22 +87,19 @@ SELECT * FROM CSStudents EXCEPT SELECT * FROM MathStudents;
 
 All combinations of tuples from two relations:
 
-```
-R × S
+$$R \times S$$
 
 Example:
-Students = {(1, Alice), (2, Bob)}
-Courses = {(CS101, Intro), (CS201, Algo)}
+$$\text{Students} = \{(1, \text{Alice}), (2, \text{Bob})\}$$
+$$\text{Courses} = \{(\text{CS101}, \text{Intro}), (\text{CS201}, \text{Algo})\}$$
 
-Students × Courses = {
-    (1, Alice, CS101, Intro),
-    (1, Alice, CS201, Algo),
-    (2, Bob, CS101, Intro),
-    (2, Bob, CS201, Algo)
-}
-```
+$$\text{Students} \times \text{Courses} = \{$$
+$$(1, \text{Alice}, \text{CS101}, \text{Intro}),$$
+$$(1, \text{Alice}, \text{CS201}, \text{Algo}),$$
+$$(2, \text{Bob}, \text{CS101}, \text{Intro}),$$
+$$(2, \text{Bob}, \text{CS201}, \text{Algo})\}$$
 
-If R has n tuples and S has m tuples, R × S has n × m tuples.
+If R has $n$ tuples and S has $m$ tuples, then $R \times S$ has $n \times m$ tuples.
 
 **SQL equivalent**:
 ```sql
@@ -124,17 +111,14 @@ SELECT * FROM Students CROSS JOIN Courses;
 
 Changes relation or attribute names:
 
-```
-ρ_NewName(R)           -- Rename relation
-ρ_(A1,A2,...)(R)       -- Rename attributes
-ρ_NewName(A1,A2,...)(R) -- Rename both
+$$\rho_{\text{NewName}}(R) \text{ -- Rename relation}$$
+$$\rho_{(A_1,A_2,...)}(R) \text{ -- Rename attributes}$$
+$$\rho_{\text{NewName}(A_1,A_2,...)}(R) \text{ -- Rename both}$$
 
 Example:
-ρ_S(ID,StudentName)(Students)
--- Rename to S with attributes ID and StudentName
-```
+$$\rho_{S(\text{ID},\text{StudentName})}(\text{Students})$$
 
-Useful for self-joins and resolving ambiguity.
+Rename to S with attributes ID and StudentName. Useful for self-joins and resolving ambiguity.
 
 ## Derived Operations
 
@@ -142,12 +126,12 @@ Useful for self-joins and resolving ambiguity.
 
 Tuples in both relations:
 
-```
-R ∩ S = R − (R − S)
+$$R \cap S = R - (R - S)$$
 
-CSStudents ∩ MathStudents = {(102, Bob)}
--- Students in both CS and Math
-```
+Example:
+$$\text{CSStudents} \cap \text{MathStudents} = \{(102, \text{Bob})\}$$
+
+Students in both CS and Math
 
 **SQL equivalent**:
 ```sql
@@ -158,18 +142,16 @@ SELECT * FROM CSStudents INTERSECT SELECT * FROM MathStudents;
 
 Combines relations on common attributes, eliminating duplicate columns:
 
-```
-R ⋈ S
+$$R \bowtie S$$
 
 Example:
-Students(StudentID, Name, DeptID)
-Departments(DeptID, DeptName)
+$$\text{Students}(\text{StudentID}, \text{Name}, \text{DeptID})$$
+$$\text{Departments}(\text{DeptID}, \text{DeptName})$$
 
-Students ⋈ Departments -- Join on DeptID
-```
+$$\text{Students} \bowtie \text{Departments} \text{ -- Join on DeptID}$$
 
 Natural join steps:
-1. Cartesian product
+1. Cartesian product: $R \times S$
 2. Select rows where common attributes are equal
 3. Project to eliminate duplicate columns
 
@@ -182,20 +164,16 @@ SELECT * FROM Students NATURAL JOIN Departments;
 
 Join with arbitrary condition:
 
-```
-R ⋈_θ S = σ_θ(R × S)
+$$R \bowtie_\theta S = \sigma_\theta(R \times S)$$
 
 Example:
-Employees ⋈_(Salary>ManagerSalary) Managers
-```
+$$\text{Employees} \bowtie_{\text{Salary}>\text{ManagerSalary}} \text{Managers}$$
 
 ### Equijoin
 
 Theta join with equality condition (most common):
 
-```
-Students ⋈_(Students.DeptID=Departments.DeptID) Departments
-```
+$$\text{Students} \bowtie_{\text{Students.DeptID}=\text{Departments.DeptID}} \text{Departments}$$
 
 **SQL equivalent**:
 ```sql
@@ -206,11 +184,9 @@ SELECT * FROM Students s JOIN Departments d ON s.DeptID = d.DeptID;
 
 Include non-matching tuples with NULLs:
 
-```
-Students ⟕ Departments  -- Left outer join
-Students ⟖ Departments  -- Right outer join
-Students ⟗ Departments  -- Full outer join
-```
+$$\text{Students} \; ⟕ \; \text{Departments} \text{ -- Left outer join}$$
+$$\text{Students} \; ⟖ \; \text{Departments} \text{ -- Right outer join}$$
+$$\text{Students} \; ⟗ \; \text{Departments} \text{ -- Full outer join}$$
 
 ```sql
 SELECT * FROM Students s LEFT JOIN Departments d ON s.DeptID = d.DeptID;
@@ -220,21 +196,18 @@ SELECT * FROM Students s LEFT JOIN Departments d ON s.DeptID = d.DeptID;
 
 "For all" queries—tuples in R that are associated with all tuples in S:
 
-```
-R ÷ S
+$$R \div S$$
 
 Example:
-Enrollment(StudentID, CourseID)
-RequiredCourses(CourseID)
+$$\text{Enrollment}(\text{StudentID}, \text{CourseID})$$
+$$\text{RequiredCourses}(\text{CourseID})$$
 
-Enrollment ÷ RequiredCourses
--- Students enrolled in ALL required courses
-```
+$$\text{Enrollment} \div \text{RequiredCourses}$$
+
+Returns students enrolled in ALL required courses.
 
 Division definition:
-```
-R(A, B) ÷ S(B) = π_A(R) − π_A((π_A(R) × S) − R)
-```
+$$R(A, B) \div S(B) = \pi_A(R) - \pi_A((\pi_A(R) \times S) - R)$$
 
 **SQL equivalent**:
 ```sql
@@ -252,9 +225,7 @@ WHERE NOT EXISTS (
 
 Find names of students with GPA above 3.5:
 
-```
-π_Name(σ_GPA>3.5(Students))
-```
+$$\pi_{\text{Name}}(\sigma_{\text{GPA}>3.5}(\text{Students}))$$
 
 ```sql
 SELECT Name FROM Students WHERE GPA > 3.5;
@@ -264,9 +235,7 @@ SELECT Name FROM Students WHERE GPA > 3.5;
 
 Find names of students and their department names:
 
-```
-π_Name,DeptName(Students ⋈ Departments)
-```
+$$\pi_{\text{Name},\text{DeptName}}(\text{Students} \bowtie \text{Departments})$$
 
 ```sql
 SELECT s.Name, d.DeptName
@@ -277,9 +246,7 @@ FROM Students s JOIN Departments d ON s.DeptID = d.DeptID;
 
 Find students taking CS101 or CS201:
 
-```
-π_StudentID(σ_CourseID='CS101'(Enrollment)) ∪ π_StudentID(σ_CourseID='CS201'(Enrollment))
-```
+$$\pi_{\text{StudentID}}(\sigma_{\text{CourseID}='\text{CS101}'}(\text{Enrollment})) \cup \pi_{\text{StudentID}}(\sigma_{\text{CourseID}='\text{CS201}'}(\text{Enrollment}))$$
 
 ```sql
 SELECT StudentID FROM Enrollment WHERE CourseID = 'CS101'
@@ -291,9 +258,7 @@ SELECT StudentID FROM Enrollment WHERE CourseID = 'CS201';
 
 Find pairs of students in the same department:
 
-```
-ρ_S1(Students) ⋈_(S1.DeptID = S2.DeptID ∧ S1.ID < S2.ID) ρ_S2(Students)
-```
+$$\rho_{S1}(\text{Students}) \bowtie_{S1.\text{DeptID} = S2.\text{DeptID} \land S1.\text{ID} < S2.\text{ID}} \rho_{S2}(\text{Students})$$
 
 ```sql
 SELECT S1.Name, S2.Name
@@ -305,31 +270,50 @@ WHERE S1.DeptID = S2.DeptID AND S1.StudentID < S2.StudentID;
 
 Find students enrolled in all courses offered by the CS department:
 
-```
-(π_StudentID,CourseID(Enrollment)) ÷ (π_CourseID(σ_Dept='CS'(Courses)))
-```
+$$(\pi_{\text{StudentID},\text{CourseID}}(\text{Enrollment})) \div (\pi_{\text{CourseID}}(\sigma_{\text{Dept}='\text{CS}'}(\text{Courses})))$$
 
 ## Query Trees
 
-Relational algebra expressions can be represented as trees:
+Relational algebra expressions can be represented as trees to visualize query execution:
 
+```mermaid
+graph TD
+    A["π<sub>Name</sub>"] --> B["σ<sub>GPA>3.0</sub>"]
+    B --> C["σ<sub>Major='CS'</sub>"]
+    C --> D["Students"]
+
+    style A fill:#e1f5ff
+    style B fill:#fff4e1
+    style C fill:#fff4e1
+    style D fill:#e8f5e9
 ```
-Query: Find names of CS students with GPA > 3.0
 
-        π_Name
-           │
-        σ_GPA>3.0
-           │
-        σ_Major='CS'
-           │
-        Students
+**Query**: Find names of CS students with GPA > 3.0
 
-Or optimized:
-        π_Name
-           │
-     σ_GPA>3.0 ∧ Major='CS'
-           │
-        Students
+**Optimized version** (combining selections):
+
+```mermaid
+graph TD
+    A["π<sub>Name</sub>"] --> B["σ<sub>GPA>3.0 ∧ Major='CS'</sub>"]
+    B --> C["Students"]
+
+    style A fill:#e1f5ff
+    style B fill:#fff4e1
+    style C fill:#e8f5e9
+```
+
+**Join tree example**:
+
+```mermaid
+graph TD
+    A["π<sub>Name,DeptName</sub>"] --> B["⋈<sub>DeptID</sub>"]
+    B --> C["Students"]
+    B --> D["Departments"]
+
+    style A fill:#e1f5ff
+    style B fill:#ffe1f5
+    style C fill:#e8f5e9
+    style D fill:#e8f5e9
 ```
 
 Query optimizers transform these trees to find efficient execution plans.
@@ -338,37 +322,46 @@ Query optimizers transform these trees to find efficient execution plans.
 
 ### Selection Laws
 
-**Cascade**: σ_c1 ∧ c2(R) = σ_c1(σ_c2(R))
-**Commutative**: σ_c1(σ_c2(R)) = σ_c2(σ_c1(R))
+**Cascade**:
+$$\sigma_{c_1 \land c_2}(R) = \sigma_{c_1}(\sigma_{c_2}(R))$$
+
+**Commutative**:
+$$\sigma_{c_1}(\sigma_{c_2}(R)) = \sigma_{c_2}(\sigma_{c_1}(R))$$
 
 ### Projection Laws
 
-**Cascade**: π_L1(π_L2(R)) = π_L1(R) if L1 ⊆ L2
-**Selection-Projection**: π_L(σ_c(R)) = σ_c(π_L(R)) if c uses only L attributes
+**Cascade**:
+$$\pi_{L_1}(\pi_{L_2}(R)) = \pi_{L_1}(R) \text{ if } L_1 \subseteq L_2$$
+
+**Selection-Projection**:
+$$\pi_L(\sigma_c(R)) = \sigma_c(\pi_L(R)) \text{ if } c \text{ uses only } L \text{ attributes}$$
 
 ### Join Laws
 
-**Commutative**: R ⋈ S = S ⋈ R
-**Associative**: (R ⋈ S) ⋈ T = R ⋈ (S ⋈ T)
+**Commutative**:
+$$R \bowtie S = S \bowtie R$$
+
+**Associative**:
+$$(R \bowtie S) \bowtie T = R \bowtie (S \bowtie T)$$
 
 ### Pushing Selection Down
 
-σ_c(R ⋈ S) = (σ_c(R)) ⋈ S  (if c involves only R's attributes)
+$$\sigma_c(R \bowtie S) = (\sigma_c(R)) \bowtie S \text{ (if } c \text{ involves only } R\text{'s attributes)}$$
 
-This optimization reduces the size of intermediate results.
+This optimization reduces the size of intermediate results by filtering early.
 
 ## Relational Algebra vs SQL
 
 | Relational Algebra | SQL |
 |--------------------|-----|
-| σ_condition(R) | WHERE condition |
-| π_attributes(R) | SELECT attributes |
-| R × S | FROM R, S or CROSS JOIN |
-| R ⋈ S | JOIN or NATURAL JOIN |
-| R ∪ S | UNION |
-| R − S | EXCEPT |
-| R ∩ S | INTERSECT |
-| ρ_NewName(R) | AS NewName |
+| $\sigma_{\text{condition}}(R)$ | WHERE condition |
+| $\pi_{\text{attributes}}(R)$ | SELECT attributes |
+| $R \times S$ | FROM R, S or CROSS JOIN |
+| $R \bowtie S$ | JOIN or NATURAL JOIN |
+| $R \cup S$ | UNION |
+| $R - S$ | EXCEPT |
+| $R \cap S$ | INTERSECT |
+| $\rho_{\text{NewName}}(R)$ | AS NewName |
 
 Understanding relational algebra helps you:
 1. Write correct SQL queries

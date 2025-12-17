@@ -219,6 +219,39 @@ Here's how these components work together for `ADD R3, R1, R2`:
 4. **Result Bus**: ALU output travels on bus to register file
 5. **Register Write**: Result stored in R3
 
+```mermaid
+graph TB
+    subgraph Datapath["CPU Datapath"]
+        PC[Program Counter]
+        RegFile[Register File<br/>R0-R31]
+        ALU[ALU<br/>Add, Sub, AND, OR, etc.]
+        Flags[Flags<br/>Z, S, C, O]
+        MAR[MAR]
+        MDR[MDR]
+    end
+
+    Memory[Main Memory]
+
+    PC -->|Address| MAR
+    RegFile -->|Operand A| ALU
+    RegFile -->|Operand B| ALU
+    ALU -->|Result| RegFile
+    ALU -->|Condition Codes| Flags
+    MAR <-->|Address Bus| Memory
+    MDR <-->|Data Bus| Memory
+    MDR <--> RegFile
+
+    Control[Control Unit] -.->|Select Signals| RegFile
+    Control -.->|Operation Code| ALU
+    Control -.->|Read/Write| Memory
+
+    style Datapath fill:#e1f5ff
+    style ALU fill:#ffe1f5
+    style RegFile fill:#fff4e1
+    style Memory fill:#e1ffe1
+    style Control fill:#ffe1e1
+```
+
 For a load instruction like `LOAD R1, [R2 + 100]`:
 
 1. **Address Calculation**: R2 read from register file, sent to ALU with immediate 100; ALU adds

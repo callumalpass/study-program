@@ -57,6 +57,32 @@ $$= 2\pi \cdot \frac{3 \cdot 8^{7/3}}{7} = 2\pi \cdot \frac{3 \cdot 128}{7} = \f
 
 The choice between methods depends on the geometry and which setup is simpler.
 
+### Method Comparison Diagram
+
+```mermaid
+graph LR
+    subgraph Disk/Washer Method
+        D1[Slice PERPENDICULAR<br/>to axis]
+        D2[Cross-sections are<br/>circles/annuli]
+        D3[Formula: V = ∫π R²-r² ]
+        D1 --> D2 --> D3
+    end
+
+    subgraph Shell Method
+        S1[Slice PARALLEL<br/>to axis]
+        S2[Cross-sections are<br/>cylindrical shells]
+        S3[Formula: V = ∫2πrh]
+        S1 --> S2 --> S3
+    end
+
+    style D1 fill:#d4edda
+    style D2 fill:#d4edda
+    style D3 fill:#d4edda
+    style S1 fill:#ffd7e5
+    style S2 fill:#ffd7e5
+    style S3 fill:#ffd7e5
+```
+
 ### Use Shells When:
 
 1. **Rotating about an axis parallel to the rectangles**
@@ -76,6 +102,12 @@ The choice between methods depends on the geometry and which setup is simpler.
 
 2. **The function is already in the convenient form**
    - If already expressed as $x = g(y)$ and rotating about y-axis, disks work well
+
+**Pro Tip:** For a given problem, try setting up both methods mentally. Choose whichever:
+- Avoids inverse functions
+- Uses the variable already in the function
+- Requires fewer separate integrals
+- Produces simpler algebra
 
 ### Example Comparison
 

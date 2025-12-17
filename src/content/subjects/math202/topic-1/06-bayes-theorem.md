@@ -126,6 +126,37 @@ $$P(C|D) = \frac{P(D|C) \cdot P(C)}{P(D)} = \frac{0.05 \times 0.25}{0.031} = \fr
 
 Bayes' theorem allows us to update probabilities as we receive new information. The posterior from one observation becomes the prior for the next.
 
+```mermaid
+graph LR
+    subgraph Initial["Initial State"]
+        Prior["Prior Belief<br/>P&#40;A&#41;"]
+    end
+
+    subgraph Evidence["New Evidence"]
+        B["Observe B<br/>Event occurs"]
+        Likelihood["Likelihood<br/>P&#40;B|A&#41;"]
+    end
+
+    subgraph Update["Bayesian Update"]
+        Bayes["Apply Bayes' Theorem<br/>P&#40;A|B&#41; = P&#40;B|A&#41;·P&#40;A&#41;/P&#40;B&#41;"]
+    end
+
+    subgraph Result["Updated State"]
+        Posterior["Posterior Belief<br/>P&#40;A|B&#41;"]
+    end
+
+    Prior --> Bayes
+    Likelihood --> Bayes
+    B --> Bayes
+    Bayes --> Posterior
+    Posterior -.Next round.-> Prior
+
+    style Prior fill:#e1f5ff
+    style Likelihood fill:#fff3e0
+    style Bayes fill:#f3e5f5
+    style Posterior fill:#e8f5e9
+```
+
 ### Example 4: Sequential Testing
 
 **Problem**: Using the disease test from Example 1:

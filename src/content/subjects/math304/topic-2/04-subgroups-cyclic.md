@@ -59,47 +59,72 @@ In $\mathbb{Z}_{24}$:
 
 ## Subgroup Lattices
 
-The subgroup lattice visualizes all subgroups and their inclusion relationships.
+The subgroup lattice visualizes all subgroups and their inclusion relationships. Each subgroup $\langle d \rangle$ has order $n/d$ where $d$ divides $n$.
 
 ### Example: Lattice of $\mathbb{Z}_{12}$
 
-```
-           Z₁₂ = ⟨1⟩
-          / | \
-         /  |  \
-       ⟨2⟩ ⟨3⟩ ⟨4⟩
-         \ | /
-          ⟨6⟩
-           |
-          {0}
+```mermaid
+graph TD
+    Z12["⟨1⟩ = ℤ₁₂<br/>order 12"]
+    Z6["⟨2⟩<br/>order 6"]
+    Z4["⟨3⟩<br/>order 4"]
+    Z3["⟨4⟩<br/>order 3"]
+    Z2["⟨6⟩<br/>order 2"]
+    Z0["{0}<br/>order 1"]
+
+    Z12 --> Z6
+    Z12 --> Z4
+    Z12 --> Z3
+    Z6 --> Z2
+    Z4 --> Z2
+    Z3 --> Z0
+    Z2 --> Z0
+
+    style Z12 fill:#e1f5ff
+    style Z6 fill:#e8f5e9
+    style Z4 fill:#e8f5e9
+    style Z3 fill:#e8f5e9
+    style Z2 fill:#fff3e0
+    style Z0 fill:#ffebee
 ```
 
-Relations:
-- $\langle 6 \rangle \subseteq \langle 2 \rangle, \langle 3 \rangle$
-- $\langle 2 \rangle, \langle 3 \rangle, \langle 4 \rangle \subseteq \langle 1 \rangle$
+**Relations**:
+- $\langle 6 \rangle \subseteq \langle 2 \rangle, \langle 3 \rangle$ (since $2|6$ and $3|6$)
+- $\langle 2 \rangle, \langle 3 \rangle, \langle 4 \rangle \subseteq \langle 1 \rangle = \mathbb{Z}_{12}$
 
 ### Example: Lattice of $\mathbb{Z}_{30}$
 
-$30 = 2 \cdot 3 \cdot 5$ has divisors: 1, 2, 3, 5, 6, 10, 15, 30
+$30 = 2 \cdot 3 \cdot 5$ has divisors: $1, 2, 3, 5, 6, 10, 15, 30$
 
-```
-                Z₃₀ = ⟨1⟩
-               /  |  \
-              /   |   \
-           ⟨2⟩  ⟨3⟩  ⟨5⟩
-            / \ / \ /  \
-           /   X   X    \
-          /   / \ / \    \
-        ⟨6⟩ ⟨10⟩ ⟨15⟩
-          \   \ | /   /
-           \   \|/   /
-            \  ⟨30⟩ /
-             \  |  /
-              \ | /
-               {0}
+```mermaid
+graph TD
+    Z30["⟨1⟩ = ℤ₃₀<br/>order 30"]
+    Z15["⟨2⟩<br/>order 15"]
+    Z10["⟨3⟩<br/>order 10"]
+    Z6["⟨5⟩<br/>order 6"]
+    Z5["⟨6⟩<br/>order 5"]
+    Z3["⟨10⟩<br/>order 3"]
+    Z2["⟨15⟩<br/>order 2"]
+    Z1["{0}<br/>order 1"]
+
+    Z30 --> Z15
+    Z30 --> Z10
+    Z30 --> Z6
+    Z15 --> Z5
+    Z15 --> Z3
+    Z10 --> Z5
+    Z10 --> Z2
+    Z6 --> Z3
+    Z6 --> Z2
+    Z5 --> Z1
+    Z3 --> Z1
+    Z2 --> Z1
+
+    style Z30 fill:#e1f5ff
+    style Z1 fill:#ffebee
 ```
 
-This lattice reflects the divisibility structure of 30.
+**Key insight**: This lattice reflects the divisibility structure of $30$. A path from $\langle a \rangle$ to $\langle b \rangle$ exists if and only if $a | b$.
 
 ## Intersection and Join of Subgroups
 

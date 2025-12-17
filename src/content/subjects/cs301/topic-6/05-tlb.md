@@ -4,16 +4,33 @@ The TLB is a hardware cache for page table entries. This subtopic covers TLB ope
 
 ## The Memory Access Problem
 
-Without caching, every memory access requires two accesses:
+Without caching, every memory access requires multiple memory accesses:
 
-```
-Access variable x:
-1. Access page table to get frame number
-2. Access actual memory location
+**Single-level page table:**
 
-Two memory accesses per operation!
-With multi-level page tables: 4-5 accesses per operation!
+```mermaid
+flowchart LR
+    A[CPU wants address] --> B[1. Read page table]
+    B --> C[2. Read actual data]
+    C --> D[Return to CPU]
+
+    style A fill:#e1f5ff
+    style D fill:#d4edda
+    style B fill:#fff3cd
+    style C fill:#fff3cd
 ```
+
+Time per access: $t_{access} = 2 \times t_{memory}$
+
+**Multi-level page table (4 levels):**
+
+Time per access: $t_{access} = 5 \times t_{memory}$ (4 page table levels + 1 data)
+
+With $t_{memory} = 100$ ns:
+- Single-level: $200$ ns per access
+- 4-level: $500$ ns per access
+
+This overhead is unacceptable!
 
 ## TLB Concept
 
@@ -110,23 +127,54 @@ Virtual Address: VPN | Offset
 
 ### Calculating Effective Access Time
 
-```
-TLB lookup time: ε (e.g., 1 ns)
-Memory access time: m (e.g., 100 ns)
-TLB hit ratio: α
+Let:
+- $\epsilon$ = TLB lookup time (e.g., 1 ns)
+- $m$ = memory access time (e.g., 100 ns)
+- $\alpha$ = TLB hit ratio (e.g., 0.99)
 
-Without TLB:
-  Time = m (page table) + m (data) = 2m = 200 ns
+**Without TLB:**
 
-With TLB:
-  Time = ε + m (hit) or ε + m + m (miss)
-  Effective Access Time (EAT) = α(ε + m) + (1-α)(ε + 2m)
-                              = ε + m + (1-α)m
+$$t_{no\_TLB} = m + m = 2m$$
 
-Example with α = 99%:
-  EAT = 1 + 100 + 0.01 × 100 = 102 ns
-  Speedup: 200/102 ≈ 2×
-```
+Each access requires: page table lookup + data access
+
+**With TLB:**
+
+TLB hit: $\epsilon + m$ (TLB lookup + data access)
+
+TLB miss: $\epsilon + m + m$ (TLB lookup + page table + data)
+
+**Effective Access Time (EAT):**
+
+$$\text{EAT} = \alpha(\epsilon + m) + (1-\alpha)(\epsilon + 2m)$$
+
+Simplifying:
+
+$$\text{EAT} = \epsilon + m + (1-\alpha)m = \epsilon + m(2-\alpha)$$
+
+**Example calculation:**
+
+Given: $\epsilon = 1$ ns, $m = 100$ ns, $\alpha = 0.99$
+
+$$\text{EAT} = 1 + 100(2 - 0.99) = 1 + 100(1.01) = 102 \text{ ns}$$
+
+**Speedup:**
+
+$$\text{Speedup} = \frac{2m}{\text{EAT}} = \frac{200}{102} \approx 1.96\times$$
+
+**Hit ratio impact:**
+
+| Hit Ratio ($\alpha$) | EAT (ns) | Speedup |
+|---------------------|----------|---------|
+| 0% | 201 | 1.00× |
+| 50% | 151 | 1.32× |
+| 80% | 121 | 1.65× |
+| 90% | 111 | 1.80× |
+| 95% | 106 | 1.89× |
+| 99% | 102 | 1.96× |
+| 99.9% | 101.1 | 1.98× |
+
+Even small improvements in $\alpha$ significantly reduce EAT!
 
 ### Why High Hit Ratio?
 

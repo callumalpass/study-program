@@ -34,6 +34,18 @@ except ZeroDivisionError:
 # The except block never runs
 ```
 
+```mermaid
+flowchart TD
+    Start([Start]) --> Try[Execute try block]
+    Try --> Exception{Exception<br/>raised?}
+    Exception -->|No| Success([Continue normally])
+    Exception -->|Yes| Match{Matches except<br/>clause?}
+    Match -->|Yes| Handle[Execute except block]
+    Handle --> Continue([Continue after try/except])
+    Match -->|No| Propagate([Exception propagates up])
+    Success --> Continue
+```
+
 ---
 
 ## Catching Multiple Exception Types
@@ -257,6 +269,19 @@ finally:
 ```
 
 The order must be: `try`, then `except` (zero or more), then `else` (optional), then `finally` (optional).
+
+```mermaid
+flowchart TD
+    Start([Start]) --> Try[Execute try block]
+    Try --> Exception{Exception?}
+    Exception -->|Yes| Except[Execute matching<br/>except block]
+    Exception -->|No| Else[Execute else block<br/>if present]
+    Except --> Finally[Execute finally block<br/>if present]
+    Else --> Finally
+    Finally --> End([End])
+```
+
+This diagram shows the complete execution flow with all four clauses.
 
 ---
 

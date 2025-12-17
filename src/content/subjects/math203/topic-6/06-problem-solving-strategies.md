@@ -174,6 +174,33 @@ $$\frac{dL}{dt} = \frac{x\frac{dx}{dt}}{L} = \frac{150 \times 8}{179.5} \approx 
 
 ## Quick Reference: Rate Formulas
 
+```mermaid
+graph TD
+    subgraph "Common Geometry Formulas"
+        A1["Circle<br/>A = πr²<br/>dA/dt = 2πr · dr/dt"]
+        A2["Sphere<br/>V = 4πr³/3<br/>dV/dt = 4πr² · dr/dt"]
+        A3["Cone<br/>V = πr²h/3<br/>Use similar triangles<br/>to relate r and h"]
+        A4["Cylinder<br/>V = πr²h<br/>dV/dt = 2πrh·dr/dt + πr²·dh/dt"]
+    end
+
+    subgraph "Common Relationships"
+        B1["Pythagorean<br/>x² + y² = D²<br/>x·dx/dt + y·dy/dt = D·dD/dt"]
+        B2["Similar Triangles<br/>a/b = c/d constant<br/>Eliminate variable"]
+        B3["Angle Relations<br/>tan θ = y/x<br/>sec² θ · dθ/dt = ..."]
+    end
+
+    subgraph "Problem Types"
+        C1["Ladder against wall<br/>Use Pythagorean"]
+        C2["Filling tank<br/>Use volume formula"]
+        C3["Shadow problems<br/>Use similar triangles"]
+        C4["Distance between<br/>moving objects<br/>Use Pythagorean"]
+    end
+
+    style A1 fill:#e1f5ff
+    style B1 fill:#fff3cd
+    style C1 fill:#ffe6e6
+```
+
 | Situation | Key Formula |
 |-----------|-------------|
 | Circle area | $\frac{dA}{dt} = 2\pi r \frac{dr}{dt}$ |

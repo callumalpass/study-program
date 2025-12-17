@@ -13,6 +13,23 @@ Just as polar coordinates simplify double integrals over regions with circular s
 
 ### Conversion Formulas
 
+```mermaid
+graph LR
+    subgraph Cartesian["Cartesian (x, y, z)"]
+        C1["x<br/>y<br/>z"]
+    end
+
+    subgraph Cylindrical["Cylindrical (r, θ, z)"]
+        Cyl1["r<br/>θ<br/>z"]
+    end
+
+    C1 -->|"r = √(x²+y²)<br/>θ = arctan(y/x)<br/>z = z"| Cyl1
+    Cyl1 -->|"x = r cos θ<br/>y = r sin θ<br/>z = z"| C1
+
+    style C1 fill:#e1f5ff
+    style Cyl1 fill:#c8e6c9
+```
+
 **From cylindrical to Cartesian:**
 $$x = r\cos\theta, \quad y = r\sin\theta, \quad z = z$$
 
@@ -98,6 +115,29 @@ $$= \int_0^{2\pi} \frac{kha^3}{3} \, d\theta = \frac{2\pi kha^3}{3}$$
 Note: Some texts use $\phi$ for the azimuthal angle and $\theta$ for the polar angle. Always check conventions.
 
 ### Conversion Formulas
+
+```mermaid
+graph TD
+    subgraph Cartesian["Cartesian (x, y, z)"]
+        C2["x<br/>y<br/>z"]
+    end
+
+    subgraph Spherical["Spherical (ρ, θ, φ)"]
+        Sph["ρ<br/>θ<br/>φ"]
+    end
+
+    subgraph Cylindrical2["Cylindrical (r, θ, z)"]
+        Cyl2["r<br/>θ<br/>z"]
+    end
+
+    C2 <-->|"ρ = √(x²+y²+z²)<br/>θ = arctan(y/x)<br/>φ = arccos(z/ρ)"| Sph
+    Sph <-->|"r = ρ sin φ<br/>z = ρ cos φ"| Cyl2
+    C2 <--> Cyl2
+
+    style C2 fill:#e1f5ff
+    style Sph fill:#ffccbc
+    style Cyl2 fill:#c8e6c9
+```
 
 **From spherical to Cartesian:**
 $$x = \rho\sin\phi\cos\theta, \quad y = \rho\sin\phi\sin\theta, \quad z = \rho\cos\phi$$
@@ -185,6 +225,28 @@ $$= \left[\int_0^{2\pi} d\theta\right]\left[\int_0^\pi \sin\phi \, d\phi\right]\
 $$= (2\pi) \cdot (2) \cdot \left[-\frac{1}{3}e^{-\rho^3}\right]_0^1 = 4\pi \cdot \frac{1 - e^{-1}}{3} = \frac{4\pi(1 - e^{-1})}{3}$$
 
 ## When to Use Each Coordinate System
+
+The choice of coordinate system dramatically affects computational difficulty. Use this decision guide:
+
+```mermaid
+flowchart TD
+    Start["Evaluate Triple Integral"] --> CheckSymmetry{"What symmetry<br/>does region have?"}
+
+    CheckSymmetry -->|"Spherical<br/>(ball, sphere, cone)"| CheckSphere{"Does integrand<br/>involve x²+y²+z²?"}
+    CheckSymmetry -->|"Cylindrical<br/>(cylinder, vertical)"| UseCyl["Use Cylindrical<br/>dV = r dr dθ dz"]
+    CheckSymmetry -->|"Rectangular<br/>(box, planes)"| UseCart["Use Cartesian<br/>dV = dx dy dz"]
+
+    CheckSphere -->|"Yes"| UseSph["Use Spherical<br/>dV = ρ² sin φ dρ dθ dφ"]
+    CheckSphere -->|"No"| Consider["Consider cylindrical<br/>or Cartesian"]
+
+    style Start fill:#e1f5ff
+    style CheckSymmetry fill:#ffe8e8
+    style CheckSphere fill:#ffe8e8
+    style UseCart fill:#f0f0f0
+    style UseCyl fill:#c8e6c9
+    style UseSph fill:#ffccbc
+    style Consider fill:#fff4e1
+```
 
 ### Use Cartesian Coordinates When:
 - The region has flat boundaries parallel to coordinate planes

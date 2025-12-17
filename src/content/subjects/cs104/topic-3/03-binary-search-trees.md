@@ -16,21 +16,45 @@ class BSTNode:
 
 The BST property must hold for the **entire subtree**, not just immediate children. This is a common source of confusion:
 
-```
-        8              # Valid BST
-       / \
-      3   10
-     / \    \
-    1   6    14
-       / \   /
-      4   7 13
+```mermaid
+graph TD
+    subgraph Valid BST
+    A[8] --> B[3]
+    A --> C[10]
+    B --> D[1]
+    B --> E[6]
+    E --> F[4]
+    E --> G[7]
+    C --> H[14]
+    H --> I[13]
+    end
 
-        8              # INVALID - 9 is in left subtree but > 8
-       / \
-      3   10
-       \
-        9
+    style A fill:#90EE90
+    style B fill:#90EE90
+    style C fill:#90EE90
+    style D fill:#90EE90
+    style E fill:#90EE90
+    style F fill:#90EE90
+    style G fill:#90EE90
+    style H fill:#90EE90
+    style I fill:#90EE90
 ```
+
+```mermaid
+graph TD
+    subgraph Invalid BST
+    J[8] --> K[3]
+    J --> L[10]
+    K --> M[9]
+    end
+
+    style J fill:#FFB6C6
+    style K fill:#FFB6C6
+    style L fill:#FFB6C6
+    style M fill:#FF6B6B
+```
+
+**Invalid**: Node 9 is in the left subtree of 8, but 9 > 8 violates the BST property!
 
 ## Searching in a BST
 
@@ -60,9 +84,17 @@ def search_iterative(root, target):
     return None
 ```
 
-**Time Complexity**: O(h) where h is the height of the tree.
-- Best case (balanced): O(log n)
-- Worst case (skewed): O(n)
+**Time Complexity**: $O(h)$ where $h$ is the height of the tree.
+- Best case (balanced): $O(\log n)$
+- Worst case (skewed): $O(n)$
+
+The search eliminates half the search space at each step in a balanced tree:
+
+$$T(n) = T(n/2) + O(1) = O(\log n)$$
+
+However, in a skewed tree, we examine all nodes:
+
+$$T(n) = T(n-1) + O(1) = O(n)$$
 
 ## Insertion in a BST
 
@@ -105,7 +137,7 @@ def insert_iterative(root, value):
     return root
 ```
 
-**Time Complexity**: O(h) - same as search
+**Time Complexity**: $O(h)$ - same as search
 
 ## Deletion in a BST
 
@@ -156,7 +188,42 @@ def delete(root, value):
     return root
 ```
 
-**Time Complexity**: O(h) - we may need to traverse to a leaf
+**Time Complexity**: $O(h)$ - we may need to traverse to a leaf
+
+### Deletion Cases Visualization
+
+```mermaid
+graph TD
+    subgraph Case 1: Leaf Node
+    A1[50] --> B1[30]
+    A1 --> C1[70]
+    B1 --> D1[20]
+    B1 --> E1[40]
+    end
+
+    subgraph Case 2: One Child
+    A2[50] --> B2[30]
+    A2 --> C2[70]
+    B2 --> D2[20]
+    end
+
+    subgraph Case 3: Two Children
+    A3[50] --> B3[30]
+    A3 --> C3[70]
+    B3 --> D3[20]
+    B3 --> E3[40]
+    C3 --> F3[60]
+    C3 --> G3[80]
+    end
+
+    style D1 fill:#FF6B6B
+    style B2 fill:#FF6B6B
+    style A3 fill:#FF6B6B
+```
+
+**Case 1**: Delete node 20 - simply remove it
+**Case 2**: Delete node 30 - replace with child 20
+**Case 3**: Delete node 50 - replace with in-order successor 60
 
 ## Building a BST
 

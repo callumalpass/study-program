@@ -6,74 +6,113 @@ The Master Theorem provides quick solutions to divide-and-conquer recurrences wi
 
 The Master Theorem applies to recurrences of the form:
 
-```
-T(n) = aT(n/b) + f(n)
-```
+$$T(n) = aT(n/b) + f(n)$$
 
 Where:
-- **a ≥ 1**: Number of subproblems
-- **b > 1**: Factor by which input size shrinks
-- **f(n)**: Cost of dividing and combining (work outside recursive calls)
+- **$a \geq 1$**: Number of subproblems
+- **$b > 1$**: Factor by which input size shrinks
+- **$f(n)$**: Cost of dividing and combining (work outside recursive calls)
+
+The critical comparison value is:
+$$n^{\log_b a}$$
+
+This represents the number of leaves in the recursion tree.
 
 ## The Three Cases
 
-Compare f(n) with n^(log_b(a)):
+Compare $f(n)$ with $n^{\log_b a}$:
+
+```mermaid
+graph TD
+    Start[T n = aT n/b + f n] --> Compare{Compare f n<br/>with n^log_b a}
+
+    Compare -->|Polynomially<br/>Smaller| Case1[Case 1:<br/>f n = O n^log_b a - ε<br/>for some ε > 0]
+    Compare -->|Same Order| Case2[Case 2:<br/>f n = Θ n^log_b a · log^k n<br/>for k ≥ 0]
+    Compare -->|Polynomially<br/>Larger| Case3Check{Check<br/>Regularity<br/>Condition}
+
+    Case1 --> Result1[T n = Θ n^log_b a<br/>Recursion dominates]
+    Case2 --> Result2[T n = Θ n^log_b a · log^k+1 n<br/>Work evenly distributed]
+
+    Case3Check -->|af n/b ≤ cf n<br/>for c < 1| Case3[Case 3:<br/>f n = Ω n^log_b a + ε]
+    Case3Check -->|Fails| NoCase[Master Theorem<br/>does not apply]
+
+    Case3 --> Result3[T n = Θ f n<br/>Combine step dominates]
+
+    style Start fill:#e1f5ff
+    style Result1 fill:#d4edda
+    style Result2 fill:#d4edda
+    style Result3 fill:#d4edda
+    style NoCase fill:#f8d7da
+```
 
 ### Case 1: f(n) is Polynomially Smaller
 
-If f(n) = O(n^(log_b(a) - ε)) for some ε > 0:
+If $f(n) = O(n^{\log_b a - \varepsilon})$ for some $\varepsilon > 0$:
 
-```
-T(n) = Θ(n^(log_b(a)))
-```
+$$T(n) = \Theta(n^{\log_b a})$$
 
 The recursion dominates. Work is concentrated in leaves.
 
 ### Case 2: f(n) Matches
 
-If f(n) = Θ(n^(log_b(a)) · log^k(n)) for k ≥ 0:
+If $f(n) = \Theta(n^{\log_b a} \cdot \log^k n)$ for $k \geq 0$:
 
-```
-T(n) = Θ(n^(log_b(a)) · log^(k+1)(n))
-```
+$$T(n) = \Theta(n^{\log_b a} \cdot \log^{k+1} n)$$
 
 Work is evenly distributed across all levels.
 
 ### Case 3: f(n) is Polynomially Larger
 
-If f(n) = Ω(n^(log_b(a) + ε)) for some ε > 0, and af(n/b) ≤ cf(n) for c < 1:
+If $f(n) = \Omega(n^{\log_b a + \varepsilon})$ for some $\varepsilon > 0$, and $af(n/b) \leq cf(n)$ for $c < 1$:
 
-```
-T(n) = Θ(f(n))
-```
+$$T(n) = \Theta(f(n))$$
 
 The combine step dominates. Work is concentrated at root.
 
-## Key Value: n^(log_b(a))
+## Key Value: $n^{\log_b a}$
 
 This represents the number of leaves in the recursion tree.
 
-- **a** subproblems per level
-- **log_b(n)** levels (since size n → n/b → n/b² → ... → 1)
-- Total leaves: a^(log_b(n)) = n^(log_b(a))
+- **$a$** subproblems per level
+- **$\log_b n$** levels (since size $n \to n/b \to n/b^2 \to \cdots \to 1$)
+- Total leaves: $a^{\log_b n} = n^{\log_b a}$
+
+```mermaid
+graph TD
+    L0[Level 0: 1 node, work f n]
+    L1[Level 1: a nodes, total work a · f n/b]
+    L2[Level 2: a² nodes, total work a² · f n/b²]
+    L3[Level 3: a³ nodes]
+    Ldots[...]
+    Lleaf[Level log_b n: n^log_b a leaves<br/>each doing O 1 work]
+
+    L0 --> L1
+    L1 --> L2
+    L2 --> L3
+    L3 --> Ldots
+    Ldots --> Lleaf
+
+    style L0 fill:#e1f5ff
+    style Lleaf fill:#d4edda
+```
 
 ## Examples
 
-### Binary Search: T(n) = T(n/2) + O(1)
+### Binary Search: $T(n) = T(n/2) + O(1)$
 
-- a = 1, b = 2, f(n) = O(1)
-- n^(log_2(1)) = n⁰ = 1
-- f(n) = Θ(1) matches n^(log_b(a)) with k = 0
+- $a = 1, b = 2, f(n) = O(1)$
+- $n^{\log_2 1} = n^0 = 1$
+- $f(n) = \Theta(1)$ matches $n^{\log_b a}$ with $k = 0$
 
-**Case 2**: T(n) = Θ(log n)
+**Case 2**: $T(n) = \Theta(\log n)$
 
-### Merge Sort: T(n) = 2T(n/2) + O(n)
+### Merge Sort: $T(n) = 2T(n/2) + O(n)$
 
-- a = 2, b = 2, f(n) = O(n)
-- n^(log_2(2)) = n¹ = n
-- f(n) = Θ(n) matches with k = 0
+- $a = 2, b = 2, f(n) = O(n)$
+- $n^{\log_2 2} = n^1 = n$
+- $f(n) = \Theta(n)$ matches with $k = 0$
 
-**Case 2**: T(n) = Θ(n log n)
+**Case 2**: $T(n) = \Theta(n \log n)$
 
 ### Matrix Multiplication (Naive): T(n) = 8T(n/2) + O(n²)
 

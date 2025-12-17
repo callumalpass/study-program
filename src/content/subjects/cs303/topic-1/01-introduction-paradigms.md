@@ -12,6 +12,34 @@ Understanding programming paradigms is crucial for several reasons. First, it ex
 
 The landscape of programming paradigms can be broadly categorized into several major families, each with distinct characteristics and philosophical foundations.
 
+```mermaid
+graph TD
+    A[Programming Paradigms] --> B[Imperative]
+    A --> C[Declarative]
+
+    B --> D[Procedural]
+    B --> E[Object-Oriented]
+
+    C --> F[Functional]
+    C --> G[Logic]
+
+    D --> H[C, Pascal, Fortran]
+    E --> I[Java, Python, C++]
+    F --> J[Haskell, Lisp, ML]
+    G --> K[Prolog, Datalog]
+
+    A --> L[Concurrent]
+    L --> M[Actor Model]
+    L --> N[CSP]
+    M --> O[Erlang, Elixir]
+    N --> P[Go, Occam]
+
+    style A fill:#e1f5ff
+    style B fill:#ffe1e1
+    style C fill:#e1ffe1
+    style L fill:#fff4e1
+```
+
 **Imperative Programming** represents one of the oldest and most intuitive paradigms, closely mirroring how computers actually execute instructions at the hardware level. In imperative programming, programs consist of sequences of commands that explicitly change program state. The programmer specifies not only what should be computed but also precisely how the computation should proceed, step by step. Languages like C, Pascal, and Fortran exemplify this paradigm. Imperative programming aligns naturally with the von Neumann architecture, where programs sequentially modify memory locations.
 
 **Declarative Programming** stands in contrast to imperative approaches by emphasizing what should be computed rather than how to compute it. In declarative paradigms, programmers describe the desired result or relationship, and the underlying system determines the execution strategy. This abstraction often leads to more concise and maintainable code, as implementation details are hidden behind high-level specifications. SQL for database queries and HTML for document structure represent declarative approaches, though neither is a general-purpose programming language.

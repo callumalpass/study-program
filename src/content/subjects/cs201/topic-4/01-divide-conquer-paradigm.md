@@ -12,16 +12,21 @@ Understanding divide and conquer means understanding recursion deeply—not just
 2. **Conquer**: Solve subproblems recursively (base case for small inputs)
 3. **Combine**: Merge subproblem solutions into final solution
 
-```
-        Problem
-         /   \
-        /     \
-   Subproblem  Subproblem
-      |          |
-   Solution    Solution
-        \       /
-         \     /
-      Combined Solution
+```mermaid
+graph TD
+    A[Problem size n] --> B[Divide]
+    B --> C[Subproblem 1<br/>size n/b]
+    B --> D[Subproblem 2<br/>size n/b]
+    C --> E[Conquer<br/>Recursively solve]
+    D --> F[Conquer<br/>Recursively solve]
+    E --> G[Combine]
+    F --> G
+    G --> H[Solution to<br/>original problem]
+
+    style A fill:#e1f5ff
+    style H fill:#d4edda
+    style B fill:#fff3cd
+    style G fill:#fff3cd
 ```
 
 ## Classic Example: Merge Sort
@@ -55,28 +60,61 @@ def merge_sort(arr):
 
 The running time follows a recurrence:
 
-```
-T(n) = aT(n/b) + f(n)
-```
+$$T(n) = aT(n/b) + f(n)$$
 
 Where:
-- a = number of subproblems
-- n/b = size of each subproblem
-- f(n) = cost of divide and combine steps
+- $a$ = number of subproblems
+- $n/b$ = size of each subproblem
+- $f(n)$ = cost of divide and combine steps
+
+### Recursion Tree for Merge Sort
+
+```mermaid
+graph TD
+    A["T(n)<br/>Cost: cn"] --> B["T(n/2)<br/>Cost: cn/2"]
+    A --> C["T(n/2)<br/>Cost: cn/2"]
+    B --> D["T(n/4)<br/>Cost: cn/4"]
+    B --> E["T(n/4)<br/>Cost: cn/4"]
+    C --> F["T(n/4)<br/>Cost: cn/4"]
+    C --> G["T(n/4)<br/>Cost: cn/4"]
+    D --> H["..."]
+    E --> I["..."]
+    F --> J["..."]
+    G --> K["..."]
+
+    L["Level 0: cn"] -.->|Total work| A
+    M["Level 1: cn"] -.->|Total work| B
+    M -.-> C
+    N["Level 2: cn"] -.->|Total work| D
+    N -.-> E
+    N -.-> F
+    N -.-> G
+    O["⋮<br/>log n levels<br/>Total: cn log n"] -.-> H
+
+    style A fill:#ffebee
+    style B fill:#fff3e0
+    style C fill:#fff3e0
+    style D fill:#e8f5e9
+    style E fill:#e8f5e9
+    style F fill:#e8f5e9
+    style G fill:#e8f5e9
+```
+
+Each level does $cn$ work, with $\log_2 n$ levels total, giving $T(n) = \Theta(n \log n)$.
 
 ### Master Theorem Application
 
-**Merge Sort**: T(n) = 2T(n/2) + O(n)
-- a = 2, b = 2, f(n) = n
-- n^(log₂2) = n
-- f(n) = Θ(n^(log_b(a))) → Case 2
-- **T(n) = Θ(n log n)**
+**Merge Sort**: $T(n) = 2T(n/2) + \Theta(n)$
+- $a = 2, b = 2, f(n) = n$
+- $n^{\log_b a} = n^{\log_2 2} = n$
+- $f(n) = \Theta(n^{\log_b a})$ → Case 2
+- **$T(n) = \Theta(n \log n)$**
 
-**Binary Search**: T(n) = T(n/2) + O(1)
-- a = 1, b = 2, f(n) = 1
-- n^(log₂1) = 1
-- f(n) = Θ(1) → Case 2
-- **T(n) = Θ(log n)**
+**Binary Search**: $T(n) = T(n/2) + \Theta(1)$
+- $a = 1, b = 2, f(n) = 1$
+- $n^{\log_b a} = n^{\log_2 1} = n^0 = 1$
+- $f(n) = \Theta(1)$ → Case 2
+- **$T(n) = \Theta(\log n)$**
 
 ## Maximum Subarray Problem
 
@@ -120,9 +158,9 @@ def max_crossing_subarray(arr, low, mid, high):
     return left_sum + right_sum
 ```
 
-**Recurrence**: T(n) = 2T(n/2) + O(n) → O(n log n)
+**Recurrence**: $T(n) = 2T(n/2) + \Theta(n) \Rightarrow T(n) = \Theta(n \log n)$
 
-Note: Kadane's algorithm solves this in O(n), but the D&C approach illustrates the paradigm.
+Note: Kadane's algorithm solves this in $O(n)$, but the D&C approach illustrates the paradigm.
 
 ## Closest Pair of Points
 
@@ -174,9 +212,9 @@ def closest_pair_recursive(px, py):
     return min(d, d_strip)
 ```
 
-**Key insight**: Strip check is O(n) because each point needs only compare with a constant number of neighbors.
+**Key insight**: Strip check is $O(n)$ because each point needs only compare with a constant number of neighbors.
 
-**Recurrence**: T(n) = 2T(n/2) + O(n) → O(n log n)
+**Recurrence**: $T(n) = 2T(n/2) + \Theta(n) \Rightarrow T(n) = \Theta(n \log n)$
 
 ## Matrix Multiplication
 
@@ -193,11 +231,15 @@ def matrix_multiply(A, B):
     return C
 ```
 
-### Strassen's Algorithm: O(n^2.807)
+### Strassen's Algorithm: $O(n^{2.807})$
 
 Reduces 8 multiplications to 7 using clever combinations.
 
-**Recurrence**: T(n) = 7T(n/2) + O(n²) → O(n^(log₂7)) ≈ O(n^2.807)
+**Recurrence**: $T(n) = 7T(n/2) + \Theta(n^2)$
+
+By Master Theorem: $n^{\log_b a} = n^{\log_2 7} \approx n^{2.807}$ dominates $n^2$
+
+Therefore: $T(n) = \Theta(n^{\log_2 7}) \approx \Theta(n^{2.807})$
 
 ## When to Use Divide and Conquer
 

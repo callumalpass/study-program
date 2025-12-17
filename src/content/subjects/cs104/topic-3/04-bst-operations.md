@@ -26,7 +26,25 @@ def find_max(root):
     return current.value
 ```
 
-**Time Complexity**: O(h) where h is the height
+**Time Complexity**: $O(h)$ where $h$ is the height
+
+```mermaid
+graph TD
+    A[50] --> B[30]
+    A --> C[70]
+    B --> D[20]
+    B --> E[40]
+    C --> F[60]
+    C --> G[80]
+
+    style D fill:#90EE90
+    style G fill:#FFB6C6
+
+    classDef min fill:#90EE90
+    classDef max fill:#FFB6C6
+```
+
+In this BST: min = 20 (leftmost), max = 80 (rightmost)
 
 ## Finding Predecessor and Successor
 
@@ -148,7 +166,7 @@ def lowest_common_ancestor(root, p, q):
     return None
 ```
 
-**Time Complexity**: O(h)
+**Time Complexity**: $O(h)$
 
 ## Range Queries
 

@@ -4,15 +4,33 @@ The **Pumping Lemma** is a necessary condition for regularity. It provides a pow
 
 ## Statement of the Lemma
 
-**Pumping Lemma**: If L is a regular language, then there exists a positive integer p (the pumping length) such that for any string s ∈ L with |s| ≥ p, we can write s = xyz where:
+**Pumping Lemma**: If $L$ is a regular language, then there exists a positive integer $p$ (the pumping length) such that for any string $s \in L$ with $|s| \geq p$, we can write $s = xyz$ where:
 
-1. |y| > 0 (y is non-empty)
-2. |xy| ≤ p (y occurs early in s)
-3. For all i ≥ 0, xy^i z ∈ L (y can be "pumped")
+1. $|y| > 0$ ($y$ is non-empty)
+2. $|xy| \leq p$ ($y$ occurs early in $s$)
+3. For all $i \geq 0$, $xy^i z \in L$ ($y$ can be "pumped")
+
+Formally:
+$$
+L \text{ regular} \implies \exists p > 0 : \forall s \in L \left(|s| \geq p \implies \exists x,y,z : s = xyz \land |y| > 0 \land |xy| \leq p \land \forall i \geq 0 : xy^iz \in L\right)
+$$
 
 ## Intuition
 
-If L is regular, some DFA M with p states recognizes it. For any string s with |s| ≥ p, reading s must revisit some state (pigeonhole principle). This creates a cycle that can be traversed any number of times.
+If $L$ is regular, some DFA $M$ with $p$ states recognizes it. For any string $s$ with $|s| \geq p$, reading $s$ must revisit some state (pigeonhole principle). This creates a cycle that can be traversed any number of times.
+
+### Visualization
+
+```mermaid
+stateDiagram-v2
+    [*] --> q0
+    q0 --> qi: x
+    qi --> qi: y (cycle)
+    qi --> qf: z
+    qf --> [*]
+
+    note right of qi: This cycle can be<br/>repeated 0, 1, 2,... times
+```
 
 ## Proof of the Lemma
 
@@ -42,18 +60,20 @@ To prove L is not regular:
 
 **Key**: The adversary chooses p and the decomposition; you choose s and i.
 
-## Example: L = {aⁿbⁿ | n ≥ 0}
+## Example: $L = \{a^n b^n \mid n \geq 0\}$
 
-**Claim**: L is not regular.
+**Claim**: $L$ is not regular.
 
 **Proof**:
-1. Assume L is regular with pumping length p
-2. Choose s = aᵖbᵖ ∈ L
-3. For any decomposition xyz with |xy| ≤ p and |y| > 0:
-   - y = aᵏ for some k > 0 (since |xy| ≤ p, y is within the a's)
-4. Consider xy²z = aᵖ⁺ᵏbᵖ
-5. Since k > 0, this has more a's than b's, so xy²z ∉ L
-6. Contradiction! L is not regular.
+1. Assume $L$ is regular with pumping length $p$
+2. Choose $s = a^p b^p \in L$ (note: $|s| = 2p \geq p$)
+3. For any decomposition $s = xyz$ with $|xy| \leq p$ and $|y| > 0$:
+   - Since $|xy| \leq p$, both $x$ and $y$ consist only of $a$'s
+   - Thus $y = a^k$ for some $k > 0$
+4. Consider $xy^2z = a^p a^k b^p = a^{p+k} b^p$
+5. Since $k > 0$, we have $p + k > p$, so $xy^2z \notin L$
+6. This contradicts the pumping lemma!
+7. Therefore, $L$ is not regular. $\square$
 
 ## Example: L = {ww | w ∈ {a,b}*}
 

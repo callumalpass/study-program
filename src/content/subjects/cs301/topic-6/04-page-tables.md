@@ -6,17 +6,21 @@ Page tables can become very large. This subtopic covers hierarchical page tables
 
 ### Calculation
 
-```
-32-bit address space, 4KB pages:
-  Pages = 2^32 / 2^12 = 2^20 = 1M pages
-  Entry size = 4 bytes
-  Page table size = 4MB per process!
+**32-bit address space with 4KB pages:**
 
-64-bit address space, 4KB pages:
-  Pages = 2^64 / 2^12 = 2^52 pages
-  Entry size = 8 bytes
-  Page table size = 32 PETABYTES!
-```
+$$\text{Number of pages} = \frac{2^{32}}{2^{12}} = 2^{20} = 1,048,576 \text{ pages}$$
+
+$$\text{Page table size} = 2^{20} \times 4 \text{ bytes} = 4 \text{ MB per process}$$
+
+With 100 processes: $100 \times 4 = 400$ MB just for page tables!
+
+**64-bit address space with 4KB pages:**
+
+$$\text{Number of pages} = \frac{2^{64}}{2^{12}} = 2^{52} \text{ pages}$$
+
+$$\text{Page table size} = 2^{52} \times 8 \text{ bytes} = 2^{55} \text{ bytes} = 32 \text{ PB (petabytes)!}$$
+
+This is clearly impractical, hence the need for hierarchical structures.
 
 ### The Problem
 
@@ -127,22 +131,39 @@ uint32_t translate_two_level(uint32_t logical,
 
 ### Space Savings
 
+**Without hierarchy:**
+
+$$\text{Space} = 2^{20} \times 4 = 4 \text{ MB always (even if mostly unused)}$$
+
+**With two-level:**
+
+Outer table: $2^{10} \times 4 = 4$ KB (always needed)
+
+Inner tables: Only for used regions
+
+**Example:** Process using 8MB (sparse address space):
+
+```mermaid
+graph TD
+    Outer["Outer Page Table<br/>1024 entries<br/>4 KB"] --> Inner1["Inner Table 0<br/>Code region<br/>4 KB"]
+    Outer --> Inner2["Inner Table 1<br/>Data region<br/>4 KB"]
+    Outer --> Inner3["Inner Table 2<br/>Stack region<br/>4 KB"]
+    Outer -.unused.-> Null["1021 NULL pointers<br/>(no inner tables)"]
+
+    style Outer fill:#e1f5ff
+    style Inner1 fill:#d4edda
+    style Inner2 fill:#d4edda
+    style Inner3 fill:#d4edda
+    style Null fill:#f8f9fa
 ```
-Without hierarchy:
-  1M entries × 4 bytes = 4MB always
 
-With two-level:
-  Outer table: 1024 entries × 4 bytes = 4KB
-  Inner tables: Only for used regions
+**Space calculation:**
 
-Example process using 8MB:
-  Code: 1MB → 1 inner table
-  Data: 2MB → 1 inner table
-  Stack: 1MB → 1 inner table
+$$\text{Total} = 4 \text{ KB (outer)} + 3 \times 4 \text{ KB (inner)} = 16 \text{ KB}$$
 
-  Total: 4KB (outer) + 3 × 4KB (inner) = 16KB
-  Savings: 4MB → 16KB (250× reduction)
-```
+$$\text{Savings ratio} = \frac{4 \text{ MB}}{16 \text{ KB}} = 250\times$$
+
+Only allocate inner tables for used portions of address space!
 
 ## Three-Level and Four-Level Page Tables
 

@@ -17,6 +17,17 @@ Creational patterns address the question: "How do we create objects?" While the 
 
 The Singleton pattern ensures a class has only one instance and provides a global access point to it.
 
+```mermaid
+classDiagram
+    class Singleton {
+        -Singleton instance$
+        -Singleton()
+        +getInstance()$ Singleton
+        +businessMethod()
+    }
+    note for Singleton "Private constructor prevents\ndirect instantiation.\nStatic method controls access."
+```
+
 ### When to Use
 
 - Exactly one instance of a class is needed
@@ -108,6 +119,38 @@ console.log(config1 === config2);  // true
 ## Factory Method Pattern
 
 The Factory Method defines an interface for creating an object but lets subclasses decide which class to instantiate. It lets a class defer instantiation to subclasses.
+
+```mermaid
+classDiagram
+    class Creator {
+        <<abstract>>
+        +factoryMethod()* Product
+        +operation()
+    }
+    class ConcreteCreatorA {
+        +factoryMethod() ProductA
+    }
+    class ConcreteCreatorB {
+        +factoryMethod() ProductB
+    }
+    class Product {
+        <<interface>>
+    }
+    class ProductA {
+        +operation()
+    }
+    class ProductB {
+        +operation()
+    }
+
+    Creator <|-- ConcreteCreatorA
+    Creator <|-- ConcreteCreatorB
+    Product <|.. ProductA
+    Product <|.. ProductB
+    Creator ..> Product : creates
+    ConcreteCreatorA ..> ProductA : creates
+    ConcreteCreatorB ..> ProductB : creates
+```
 
 ### When to Use
 

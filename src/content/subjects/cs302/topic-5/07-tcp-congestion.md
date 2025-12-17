@@ -10,14 +10,11 @@ Congestion control prevents this by having senders detect and respond to network
 
 TCP maintains a **congestion window (cwnd)** separate from the receive window:
 
-```
-EffectiveWindow = min(cwnd, rwnd)
-```
+$$\text{EffectiveWindow} = \min(\text{cwnd}, \text{rwnd})$$
 
 The sender limits outstanding data to the effective window:
-```
-LastByteSent - LastByteAcked ≤ min(cwnd, rwnd)
-```
+
+$$\text{LastByteSent} - \text{LastByteAcked} \leq \min(\text{cwnd}, \text{rwnd})$$
 
 cwnd is adjusted based on perceived network conditions.
 
@@ -36,14 +33,12 @@ TCP infers congestion from:
 TCP's fundamental approach is **AIMD**:
 
 **Additive Increase**: When no congestion detected, increase cwnd by 1 MSS per RTT.
-```
-cwnd = cwnd + MSS × (MSS / cwnd)  // per ACK
-```
+
+$$\text{cwnd} = \text{cwnd} + \text{MSS} \times \frac{\text{MSS}}{\text{cwnd}} \quad \text{(per ACK)}$$
 
 **Multiplicative Decrease**: When loss detected, cut cwnd in half.
-```
-cwnd = cwnd / 2
-```
+
+$$\text{cwnd} = \frac{\text{cwnd}}{2}$$
 
 AIMD provides:
 - **Efficiency**: Probes for available bandwidth
@@ -78,21 +73,39 @@ When cwnd ≥ ssthresh, TCP enters **congestion avoidance**:
 - More conservative than slow start
 - Probes for available capacity carefully
 
+## TCP Congestion Control State Machine
+
+```mermaid
+stateDiagram-v2
+    [*] --> SlowStart: Connection starts<br/>cwnd = 1 MSS
+
+    SlowStart --> CongestionAvoidance: cwnd >= ssthresh
+    SlowStart --> SlowStart: New ACK<br/>cwnd = cwnd + MSS
+    SlowStart --> SlowStart: cwnd < ssthresh<br/>(exponential growth)
+    SlowStart --> FastRecovery: 3 duplicate ACKs<br/>ssthresh = cwnd/2<br/>cwnd = ssthresh + 3
+
+    CongestionAvoidance --> CongestionAvoidance: New ACK<br/>cwnd += MSS²/cwnd
+    CongestionAvoidance --> FastRecovery: 3 duplicate ACKs<br/>ssthresh = cwnd/2<br/>cwnd = ssthresh + 3
+    CongestionAvoidance --> SlowStart: Timeout<br/>ssthresh = cwnd/2<br/>cwnd = 1 MSS
+
+    FastRecovery --> CongestionAvoidance: New ACK<br/>cwnd = ssthresh
+    FastRecovery --> FastRecovery: Duplicate ACK<br/>cwnd = cwnd + MSS
+    FastRecovery --> SlowStart: Timeout<br/>ssthresh = cwnd/2<br/>cwnd = 1 MSS
+```
+
 ## Responding to Loss
 
 **Timeout** (severe congestion):
-```
-ssthresh = cwnd / 2
-cwnd = 1 MSS
+
+$$\text{ssthresh} = \frac{\text{cwnd}}{2}, \quad \text{cwnd} = 1 \text{ MSS}$$
+
 Enter slow start
-```
 
 **Triple duplicate ACK** (mild congestion):
-```
-ssthresh = cwnd / 2
-cwnd = ssthresh + 3 MSS
+
+$$\text{ssthresh} = \frac{\text{cwnd}}{2}, \quad \text{cwnd} = \text{ssthresh} + 3 \text{ MSS}$$
+
 Enter fast recovery
-```
 
 Timeout is treated as severe because no ACKs are arriving. Triple dup ACK is milder because ACKs are still flowing.
 
@@ -134,15 +147,13 @@ Modern default in Linux and many systems:
 
 **Key idea**: Use cubic function of time since last congestion event.
 
-```
-cwnd = C × (t - K)³ + W_max
-```
+$$\text{cwnd} = C \times (t - K)^3 + W_{\text{max}}$$
 
 Where:
-- C = scaling constant
-- t = time since last reduction
-- K = time to reach W_max
-- W_max = window size at last congestion
+- $C$ = scaling constant
+- $t$ = time since last reduction
+- $K$ = time to reach $W_{\text{max}}$
+- $W_{\text{max}}$ = window size at last congestion
 
 **Characteristics**:
 - Rapid growth far from W_max
@@ -179,14 +190,12 @@ ECN allows routers to signal congestion without dropping packets:
 ## Bandwidth-Delay Product
 
 For full utilization:
-```
-cwnd ≥ Bandwidth × RTT
-```
 
-Example: 100 Mbps link, 100ms RTT
-```
-BDP = 100,000,000 × 0.100 / 8 = 1,250,000 bytes
-```
+$$\text{cwnd} \geq \text{Bandwidth} \times \text{RTT}$$
+
+**Example**: 100 Mbps link, 100ms RTT
+
+$$\text{BDP} = \frac{100{,}000{,}000 \text{ bits/s} \times 0.100 \text{ s}}{8 \text{ bits/byte}} = 1{,}250{,}000 \text{ bytes}$$
 
 cwnd must reach 1.25 MB for full utilization.
 

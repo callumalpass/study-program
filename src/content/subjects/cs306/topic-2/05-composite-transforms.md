@@ -6,14 +6,12 @@ In computer graphics, objects rarely need just a single transformation. Typicall
 
 Transformations compose through matrix multiplication:
 
-```
-T3 × T2 × T1
+$$\mathbf{M} = \mathbf{T}_3 \times \mathbf{T}_2 \times \mathbf{T}_1$$
 
 Apply transformations right-to-left:
-1. Transform by T1
-2. Transform result by T2
-3. Transform result by T3
-```
+1. Transform by $\mathbf{T}_1$
+2. Transform result by $\mathbf{T}_2$
+3. Transform result by $\mathbf{T}_3$
 
 **Example**:
 ```cpp
@@ -37,29 +35,40 @@ glm::vec4 p_transformed = T * (R * (S * p));
 
 Column-major matrix notation (OpenGL, GLM) applies transformations from right to left:
 
-```
-v' = M × v
+$$\mathbf{v}' = \mathbf{M} \times \mathbf{v}$$
 
-where M = T3 × T2 × T1
+where $\mathbf{M} = \mathbf{T}_3 \times \mathbf{T}_2 \times \mathbf{T}_1$
 
 Expands to:
-v' = T3 × (T2 × (T1 × v))
 
-Read execution order right-to-left: T1, then T2, then T3
-```
+$$\mathbf{v}' = \mathbf{T}_3 \times (\mathbf{T}_2 \times (\mathbf{T}_1 \times \mathbf{v}))$$
+
+Read execution order right-to-left: $\mathbf{T}_1$, then $\mathbf{T}_2$, then $\mathbf{T}_3$
 
 **Row-major** systems (DirectX default) reverse this:
-```
-v' = v × M
 
-where M = T1 × T2 × T3
+$$\mathbf{v}' = \mathbf{v} \times \mathbf{M}$$
 
-Now reads left-to-right: T1, then T2, then T3
-```
+where $\mathbf{M} = \mathbf{T}_1 \times \mathbf{T}_2 \times \mathbf{T}_3$
+
+Now reads left-to-right: $\mathbf{T}_1$, then $\mathbf{T}_2$, then $\mathbf{T}_3$
 
 ## Transformation Order Matters
 
-Matrix multiplication is **not commutative**: A × B ≠ B × A
+Matrix multiplication is **not commutative**: $\mathbf{A} \times \mathbf{B} \neq \mathbf{B} \times \mathbf{A}$
+
+```mermaid
+flowchart LR
+    subgraph "Rotate then Translate (T × R)"
+        A1[Object at origin] -->|Rotate 90°| B1[Rotated object at origin]
+        B1 -->|Translate +5,0| C1[Rotated object at 5,1]
+    end
+
+    subgraph "Translate then Rotate (R × T)"
+        A2[Object at origin] -->|Translate +5,0| B2[Object at 6,0]
+        B2 -->|Rotate 90°| C2[Object at 0,6]
+    end
+```
 
 ### Example: Rotate vs Translate Order
 
@@ -305,11 +314,9 @@ struct Transform {
 
 ### Inverting Composite Matrices
 
-```
-(A × B × C)^(-1) = C^(-1) × B^(-1) × A^(-1)
+$$(\mathbf{A} \times \mathbf{B} \times \mathbf{C})^{-1} = \mathbf{C}^{-1} \times \mathbf{B}^{-1} \times \mathbf{A}^{-1}$$
 
 Order reverses!
-```
 
 **Code**:
 ```cpp

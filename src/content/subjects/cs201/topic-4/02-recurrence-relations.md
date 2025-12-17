@@ -24,7 +24,7 @@ def merge_sort(arr):
     return merge(left, right)       # O(n)
 ```
 
-**Recurrence**: T(n) = 2T(n/2) + O(n), T(1) = O(1)
+**Recurrence**: $T(n) = 2T(n/2) + O(n)$, $T(1) = O(1)$
 
 ## Solution Methods
 
@@ -32,50 +32,89 @@ def merge_sort(arr):
 
 Guess solution, prove by induction.
 
-**Example**: T(n) = 2T(n/2) + n
+**Example**: $T(n) = 2T(n/2) + n$
 
-**Guess**: T(n) = O(n log n)
+**Guess**: $T(n) = O(n \log n)$
 
-**Prove**: Assume T(k) ≤ c·k·log(k) for k < n.
+**Prove**: Assume $T(k) \leq c \cdot k \cdot \log k$ for $k < n$.
 
-```
-T(n) = 2T(n/2) + n
-     ≤ 2·c·(n/2)·log(n/2) + n
-     = c·n·log(n/2) + n
-     = c·n·log(n) - c·n·log(2) + n
-     = c·n·log(n) - c·n + n
-     ≤ c·n·log(n)  [for c ≥ 1]
-```
+$$\begin{align*}
+T(n) &= 2T(n/2) + n \\
+     &\leq 2 \cdot c \cdot (n/2) \cdot \log(n/2) + n \\
+     &= c \cdot n \cdot \log(n/2) + n \\
+     &= c \cdot n \cdot \log n - c \cdot n \cdot \log 2 + n \\
+     &= c \cdot n \cdot \log n - c \cdot n + n \\
+     &\leq c \cdot n \cdot \log n \quad \text{[for } c \geq 1\text{]}
+\end{align*}$$
 
 ### Recursion Tree Method
 
 Visualize the recursive calls as a tree.
 
-**Example**: T(n) = 2T(n/2) + n
+**Example**: $T(n) = 2T(n/2) + n$
 
+```mermaid
+graph TD
+    A["Level 0: n<br/>(cost: n)"] --> B["Level 1: n/2"]
+    A --> C["Level 1: n/2"]
+    B --> D["Level 2: n/4"]
+    B --> E["Level 2: n/4"]
+    C --> F["Level 2: n/4"]
+    C --> G["Level 2: n/4"]
+    D --> H["..."]
+    E --> I["..."]
+    F --> J["..."]
+    G --> K["..."]
+
+    L1["Total per level: n"] -.-> A
+    L2["Total per level: n"] -.-> B
+    L2 -.-> C
+    L3["Total per level: n"] -.-> D
+    L3 -.-> E
+    L3 -.-> F
+    L3 -.-> G
+
+    style A fill:#ffcdd2
+    style B fill:#fff9c4
+    style C fill:#fff9c4
+    style D fill:#c8e6c9
+    style E fill:#c8e6c9
+    style F fill:#c8e6c9
+    style G fill:#c8e6c9
 ```
-Level 0:           n                    Total: n
-                 /   \
-Level 1:      n/2     n/2               Total: n
-             / \     / \
-Level 2:   n/4 n/4 n/4 n/4              Total: n
-           ...  ...  ...  ...
 
-Height: log₂(n) levels
-Total work: n × log(n) = O(n log n)
+Height: $\log_2 n$ levels, each doing $n$ work.
+
+Total work: $n \times \log n = O(n \log n)$
+
+**Example**: $T(n) = 3T(n/4) + n^2$
+
+```mermaid
+graph TD
+    A["Level 0<br/>n²"] --> B["Level 1<br/>(n/4)²"]
+    A --> C["Level 1<br/>(n/4)²"]
+    A --> D["Level 1<br/>(n/4)²"]
+
+    B --> E["Level 2<br/>(n/16)²"]
+    B --> F["..."]
+    B --> G["..."]
+
+    L0["Total: n²"] -.-> A
+    L1["Total: 3·(n/4)² = (3/16)n²"] -.-> B
+    L1 -.-> C
+    L1 -.-> D
+
+    style A fill:#ffebee
+    style B fill:#fff3e0
+    style C fill:#fff3e0
+    style D fill:#fff3e0
 ```
 
-**Example**: T(n) = 3T(n/4) + n²
+Geometric series with ratio $r = 3/16 < 1$:
 
-```
-Level 0:           n²                   Total: n²
-                 / | \
-Level 1:     (n/4)² ...                 Total: 3(n/4)² = (3/16)n²
-               ...
+$$T(n) = n^2 \sum_{i=0}^{\log_4 n} \left(\frac{3}{16}\right)^i = n^2 \cdot \frac{1 - (3/16)^{\log_4 n + 1}}{1 - 3/16} = \Theta(n^2)$$
 
-Geometric series with ratio 3/16 < 1
-Total dominated by root: O(n²)
-```
+Total dominated by root: $O(n^2)$
 
 ### Master Theorem
 

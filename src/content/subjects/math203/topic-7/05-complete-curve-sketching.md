@@ -221,6 +221,38 @@ f''    (+)  |  (−)  | (+)
 6. **Connect with correct shape** — respect increasing/decreasing and concavity
 7. **Verify with reasoning** — does the sketch make sense?
 
+## Visual Summary: Curve Behavior Chart
+
+```mermaid
+graph LR
+    subgraph "First Derivative f'x"
+        A1["f' > 0<br/>Increasing ↗"]
+        A2["f' < 0<br/>Decreasing ↘"]
+        A3["f' = 0<br/>Critical Point<br/>Horizontal Tangent"]
+        A4["f' undefined<br/>Critical Point<br/>Vertical Tangent or Corner"]
+    end
+
+    subgraph "Second Derivative f''x"
+        B1["f'' > 0<br/>Concave Up ∪<br/>Smile"]
+        B2["f'' < 0<br/>Concave Down ∩<br/>Frown"]
+        B3["f'' = 0 and changes sign<br/>Inflection Point"]
+    end
+
+    subgraph "Combined Analysis"
+        C1["f' = 0 and f'' > 0<br/>Local Minimum"]
+        C2["f' = 0 and f'' < 0<br/>Local Maximum"]
+        C3["f' changes + to -<br/>Local Maximum"]
+        C4["f' changes - to +<br/>Local Minimum"]
+    end
+
+    style A1 fill:#d4edda
+    style A2 fill:#fff3cd
+    style C1 fill:#e1f5ff
+    style C2 fill:#e1f5ff
+    style B1 fill:#ffeaa0
+    style B2 fill:#ffeaa0
+```
+
 ## Summary
 
 - Complete curve sketching combines domain, intercepts, symmetry, asymptotes, and derivative analysis

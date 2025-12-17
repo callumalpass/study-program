@@ -32,13 +32,38 @@ $$c\mathbf{u} + d\mathbf{v} \in H$$
 
 This is called closure under linear combinations.
 
+### Visual Guide: Subspace Verification Flowchart
+
+```mermaid
+flowchart TD
+    Start([Given: Subset H ⊆ V]) --> CheckZero{Does H contain<br/>the zero vector?<br/>0 ∈ H?}
+
+    CheckZero -->|No| NotSub1[NOT A SUBSPACE<br/>Fails condition 1]
+    CheckZero -->|Yes| CheckAdd{Is H closed under addition?<br/>For all u, v ∈ H:<br/>u + v ∈ H?}
+
+    CheckAdd -->|No| NotSub2[NOT A SUBSPACE<br/>Fails condition 2]
+    CheckAdd -->|Yes| CheckScalar{Is H closed under<br/>scalar multiplication?<br/>For all v ∈ H, c ∈ ℝ:<br/>cv ∈ H?}
+
+    CheckScalar -->|No| NotSub3[NOT A SUBSPACE<br/>Fails condition 3]
+    CheckScalar -->|Yes| IsSub[IS A SUBSPACE<br/>H is a vector space]
+
+    IsSub --> Properties[Inherits all properties:<br/>• Associativity<br/>• Commutativity<br/>• Distributivity<br/>• Identity elements<br/>• Inverses]
+
+    style Start fill:#e1f5e1
+    style NotSub1 fill:#ffe1e1
+    style NotSub2 fill:#ffe1e1
+    style NotSub3 fill:#ffe1e1
+    style IsSub fill:#e1ffe1
+    style Properties fill:#e1f5ff
+```
+
 ## Examples in $\mathbb{R}^2$
 
 ### Example 1: Lines Through the Origin
 
 Let $H$ be the line $y = 2x$ in $\mathbb{R}^2$:
 
-$$H = \left\{\begin{bmatrix} x \\ 2x \end{bmatrix} : x \in \mathbb{R}\right\} = \left\{x\begin{bmatrix} 1 \\ 2 \end{bmatrix} : x \in \mathbb{R}\right\}$$
+$$H = \left\{\begin{bmatrix} x \\ 2x \end{bmatrix} : x \in \mathbb{R}\right\} = \left\{x\begin{bmatrix} 1 \\ 2 \end{bmatrix} : x \in \mathbb{R}\right\} = \text{span}\left\{\begin{bmatrix} 1 \\ 2 \end{bmatrix}\right\}$$
 
 **Verification:**
 
@@ -89,7 +114,9 @@ Every vector space $V$ is a subspace of itself. This is called the **improper su
 
 Let $H$ be the $xy$-plane in $\mathbb{R}^3$:
 
-$$H = \left\{\begin{bmatrix} x \\ y \\ 0 \end{bmatrix} : x, y \in \mathbb{R}\right\}$$
+$$H = \left\{\begin{bmatrix} x \\ y \\ 0 \end{bmatrix} : x, y \in \mathbb{R}\right\} = \text{span}\left\{\begin{bmatrix} 1 \\ 0 \\ 0 \end{bmatrix}, \begin{bmatrix} 0 \\ 1 \\ 0 \end{bmatrix}\right\}$$
+
+Equivalently, $H = \{\mathbf{v} \in \mathbb{R}^3 : \mathbf{v} \cdot \mathbf{e}_3 = 0\}$ where $\mathbf{e}_3 = \begin{bmatrix} 0 \\ 0 \\ 1 \end{bmatrix}$ is the normal vector to the plane.
 
 **Verification:**
 
@@ -215,6 +242,49 @@ Also, if $p(1) = 1$ and $q(1) = 1$, then $(p + q)(1) = 2 \neq 1$. Not closed und
 **Example:** In $\mathbb{R}^3$, the intersection of two planes through the origin is a line through the origin (or the zero vector if the planes coincide). Both are subspaces.
 
 **Important:** The **union** $H_1 \cup H_2$ is generally NOT a subspace. For example, the union of the $x$-axis and $y$-axis in $\mathbb{R}^2$ is not closed under addition: $(1, 0) + (0, 1) = (1, 1)$ is not on either axis.
+
+### Hierarchy of Subspaces in $\mathbb{R}^3$
+
+The following diagram illustrates the relationships between different types of subspaces and their dimensions:
+
+```mermaid
+graph TB
+    R3["ℝ³<br/>(Entire space)<br/>dim = 3<br/>All vectors in 3D space"]
+
+    Plane1["Planes through origin<br/>dim = 2<br/>Examples:<br/>• xy-plane: z = 0<br/>• Any plane ax + by + cz = 0"]
+
+    Line1["Lines through origin<br/>dim = 1<br/>Examples:<br/>• x-axis, y-axis, z-axis<br/>• span{v} for any v ≠ 0"]
+
+    Zero["{0}<br/>(Zero subspace)<br/>dim = 0<br/>Only the zero vector"]
+
+    R3 -->|Proper subspace| Plane1
+    Plane1 -->|Proper subspace| Line1
+    Line1 -->|Proper subspace| Zero
+
+    R3 -.->|Intersection of<br/>two distinct planes| Line1
+    Plane1 -.->|Intersection with<br/>non-parallel line| Zero
+
+    style R3 fill:#e1f5ff
+    style Plane1 fill:#e1ffe1
+    style Line1 fill:#fff4e1
+    style Zero fill:#ffe1e1
+
+    Note1["Key Properties:<br/>• Each level properly contains the next<br/>• dim(H₁ ∩ H₂) ≤ min(dim H₁, dim H₂)<br/>• Union is generally NOT a subspace"]
+
+    style Note1 fill:#f0f0f0,stroke:#666,stroke-dasharray: 5 5
+```
+
+**Dimensional Hierarchy:**
+- **Dimension 3**: The entire space $\mathbb{R}^3$ (improper subspace)
+- **Dimension 2**: Planes through the origin (e.g., $ax + by + cz = 0$)
+- **Dimension 1**: Lines through the origin (e.g., $\text{span}\{\mathbf{v}\}$ for $\mathbf{v} \neq \mathbf{0}$)
+- **Dimension 0**: The zero subspace $\{\mathbf{0}\}$ (trivial subspace)
+
+**Key Relationships:**
+1. Every subspace contains $\{\mathbf{0}\}$
+2. Intersection of subspaces yields a lower-dimensional (or equal) subspace
+3. Two distinct planes intersect in a line (or just $\{\mathbf{0}\}$ if parallel through origin)
+4. A plane and a non-parallel line intersect at $\{\mathbf{0}\}$ (if the line isn't in the plane)
 
 ## Subspace Criterion in Practice
 

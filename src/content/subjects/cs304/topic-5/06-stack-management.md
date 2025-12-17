@@ -10,22 +10,34 @@ The stack is a contiguous region of memory that grows and shrinks as functions a
 
 On most architectures, the stack grows **downward** toward lower memory addresses:
 
-```
-High Address
-+------------------+
-|   ... unused ... |
-+------------------+
-|   caller frame   | ← Previous stack frame
-+------------------+
-|   callee frame   | ← Current stack frame
-+------------------+ ← SP (Stack Pointer)
-|   ... unused ... |
-+------------------+
-Low Address
+```mermaid
+graph TB
+    subgraph "Memory Layout (High to Low)"
+        HighMem["High Address<br/>0xFFFF..."]
+        Unused1["...unused..."]
+        CallerFrame["Caller Frame<br/>(Previous)"]
+        CalleeFrame["Callee Frame<br/>(Current)"]
+        SP["← SP (Stack Pointer)"]
+        Unused2["...unused..."]
+        LowMem["Low Address<br/>0x0000..."]
+
+        HighMem --> Unused1
+        Unused1 --> CallerFrame
+        CallerFrame --> CalleeFrame
+        CalleeFrame --> SP
+        SP --> Unused2
+        Unused2 --> LowMem
+    end
+
+    style CallerFrame fill:#e1f5ff
+    style CalleeFrame fill:#ffe1e1
+    style SP fill:#FFD700
 ```
 
 **Stack Pointer (SP)**: Points to the top of the stack (lowest address in use)
 **Frame Pointer (FP/BP)**: Points to the base of the current stack frame (optional)
+
+The stack grows downward (toward decreasing addresses) as functions are called and shrinks upward as they return.
 
 ### Basic Stack Operations
 
@@ -65,26 +77,46 @@ A typical stack frame includes:
 
 ### x86-64 Stack Frame Layout
 
+```mermaid
+graph TB
+    subgraph "Stack Frame Layout (x86-64)"
+        HighAddr["Higher Address"]
+        Args["Argument 7+<br/>(passed on stack)"]
+        RetAddr["Return Address<br/>(pushed by CALL)"]
+        RBP["← RBP"]
+        SavedRBP["Saved RBP"]
+        SavedRegs["Saved callee-saved<br/>registers (rbx, r12, ...)"]
+        Locals["Local variables"]
+        Temps["Temporaries"]
+        OutArgs["Outgoing arguments<br/>(for called functions)"]
+        RSP["← RSP"]
+        LowAddr["Lower Address"]
+
+        HighAddr --> Args
+        Args --> RetAddr
+        RetAddr --> RBP
+        RBP --> SavedRBP
+        SavedRBP --> SavedRegs
+        SavedRegs --> Locals
+        Locals --> Temps
+        Temps --> OutArgs
+        OutArgs --> RSP
+        RSP --> LowAddr
+    end
+
+    style RetAddr fill:#FFD700
+    style RBP fill:#90EE90
+    style SavedRBP fill:#e1f5ff
+    style SavedRegs fill:#e1f5ff
+    style Locals fill:#ffe1e1
+    style Temps fill:#ffe1e1
+    style OutArgs fill:#DDA0DD
+    style RSP fill:#90EE90
 ```
-Higher Address
-+------------------+
-| Argument 7+      | ← Passed on stack (if needed)
-+------------------+
-| Return address   | ← Pushed by CALL instruction
-+------------------+ ← RBP points here (optional)
-| Saved RBP        |
-+------------------+
-| Saved callee-    |
-| saved registers  |
-+------------------+
-| Local variables  |
-+------------------+
-| Temporaries      |
-+------------------+
-| Outgoing args    | ← For calls to other functions
-+------------------+ ← RSP points here
-Lower Address
-```
+
+**Key pointers:**
+- **RBP** (frame pointer): Points to saved RBP, providing fixed reference for locals
+- **RSP** (stack pointer): Points to top of stack, moves as values pushed/popped
 
 ### Frame Setup and Teardown
 
@@ -282,13 +314,20 @@ main:
 
 The System V ABI defines a 128-byte **red zone** below the stack pointer:
 
-```
-+------------------+ ← RSP
-| Red Zone         |
-| (128 bytes)      | ← RSP - 128
-| Available for    |
-| leaf functions   |
-+------------------+
+```mermaid
+graph TB
+    subgraph "Red Zone (x86-64 System V)"
+        RSP["← RSP (Stack Pointer)"]
+        RedZone["Red Zone<br/>(128 bytes)<br/>Available for<br/>leaf functions"]
+        Below["... memory below ..."]
+
+        RSP --> RedZone
+        RedZone --> Below
+    end
+
+    style RSP fill:#90EE90
+    style RedZone fill:#FFD700
+    style Below fill:#e1f5ff
 ```
 
 Leaf functions (functions that don't call other functions) can use this area without adjusting RSP:

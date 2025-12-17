@@ -142,27 +142,60 @@ A directed graph representing resource allocation state:
 - **Request edge**: Pi → Rj (Pi requesting Rj)
 - **Assignment edge**: Rj → Pi (instance of Rj assigned to Pi)
 
-### Example Graph
+### Example Graph: Deadlock Scenario
 
-```
-     P1 ←──┐
-     │     │
-     ↓     │
-    [R1]   │
-     │     │
-     ↓     │
-     P2 ───┘
-     │
-     ↓
-    [R2]
-     │
-     ↓
-     P3
+```mermaid
+graph LR
+    P1((P1))
+    P2((P2))
+    P3((P3))
+    R1[R1]
+    R2[R2]
 
-P1 holds R1, requests R2
-P2 holds R2, requests R1
-CYCLE: P1 → R2 → P2 → R1 → P1
+    R1 -->|assigned| P1
+    P1 -->|requests| R2
+    R2 -->|assigned| P2
+    P2 -->|requests| R1
+
+    style P1 fill:#ffcccc
+    style P2 fill:#ffcccc
+    style P3 fill:#ccffcc
+    style R1 fill:#cce5ff
+    style R2 fill:#cce5ff
 ```
+
+**Analysis:**
+- P1 holds R1, requests R2
+- P2 holds R2, requests R1
+- **CYCLE EXISTS**: $P_1 \to R_2 \to P_2 \to R_1 \to P_1$
+- With single-instance resources: Cycle $\Rightarrow$ Deadlock
+
+### No Deadlock Example
+
+```mermaid
+graph LR
+    P1((P1))
+    P2((P2))
+    P3((P3))
+    R1[R1•]
+    R2[R2••]
+
+    R1 -->|assigned| P1
+    P1 -->|requests| R2
+    R2 -->|assigned| P2
+    R2 -->|assigned| P3
+
+    style P1 fill:#ccffcc
+    style P2 fill:#ccffcc
+    style P3 fill:#ccffcc
+    style R1 fill:#cce5ff
+    style R2 fill:#cce5ff
+```
+
+**Analysis:**
+- R2 has 2 instances (shown as R2••)
+- P1 can get R2 from available instance
+- No circular wait $\Rightarrow$ No deadlock
 
 ### Graph Representation
 

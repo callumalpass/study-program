@@ -2,48 +2,48 @@
 
 ## Definition
 
-A **partial order** (or **partial ordering**) on a set A is a relation that is:
-- **Reflexive**: a ≤ a for all a ∈ A
-- **Antisymmetric**: a ≤ b and b ≤ a implies a = b
-- **Transitive**: a ≤ b and b ≤ c implies a ≤ c
+A **partial order** (or **partial ordering**) on a set $A$ is a relation that is:
+- **Reflexive**: $a \leq a$ for all $a \in A$
+- **Antisymmetric**: $a \leq b$ and $b \leq a$ implies $a = b$
+- **Transitive**: $a \leq b$ and $b \leq c$ implies $a \leq c$
 
-A set with a partial order is called a **partially ordered set** or **poset**, written (A, ≤).
+A set with a partial order is called a **partially ordered set** or **poset**, written $(A, \leq)$.
 
 ## Partial vs. Total Orders
 
-In a **partial order**, some elements may be **incomparable**—neither a ≤ b nor b ≤ a holds.
+In a **partial order**, some elements may be **incomparable**—neither $a \leq b$ nor $b \leq a$ holds.
 
 A **total order** (or linear order) is a partial order where every pair is comparable:
 $$\forall a, b \in A: a \leq b \text{ or } b \leq a$$
 
 ## Examples
 
-### Example 1: ≤ on Numbers (Total Order)
+### Example 1: $\leq$ on Numbers (Total Order)
 
-The usual ≤ on ℝ (or ℤ, ℚ):
-- Reflexive: 5 ≤ 5 ✓
-- Antisymmetric: 3 ≤ 5 and 5 ≤ 3 is false, so no violation ✓
-- Transitive: 2 ≤ 4 and 4 ≤ 7 implies 2 ≤ 7 ✓
+The usual $\leq$ on $\mathbb{R}$ (or $\mathbb{Z}$, $\mathbb{Q}$):
+- Reflexive: $5 \leq 5$ $\checkmark$
+- Antisymmetric: $3 \leq 5$ and $5 \leq 3$ is false, so no violation $\checkmark$
+- Transitive: $2 \leq 4$ and $4 \leq 7$ implies $2 \leq 7$ $\checkmark$
 
 This is a **total order**—any two numbers are comparable.
 
-### Example 2: ⊆ on Sets (Partial Order)
+### Example 2: $\subseteq$ on Sets (Partial Order)
 
-Subset relation on P(S) for some set S:
-- Reflexive: A ⊆ A ✓
-- Antisymmetric: A ⊆ B and B ⊆ A implies A = B ✓
-- Transitive: A ⊆ B and B ⊆ C implies A ⊆ C ✓
+Subset relation on $\mathcal{P}(S)$ for some set $S$:
+- Reflexive: $A \subseteq A$ $\checkmark$
+- Antisymmetric: $A \subseteq B$ and $B \subseteq A$ implies $A = B$ $\checkmark$
+- Transitive: $A \subseteq B$ and $B \subseteq C$ implies $A \subseteq C$ $\checkmark$
 
-This is **not** a total order: {1, 2} and {2, 3} are incomparable.
+This is **not** a total order: $\{1, 2\}$ and $\{2, 3\}$ are incomparable.
 
-### Example 3: Divisibility on ℤ⁺ (Partial Order)
+### Example 3: Divisibility on $\mathbb{Z}^+$ (Partial Order)
 
-a | b means a divides b:
-- Reflexive: a | a ✓
-- Antisymmetric: a | b and b | a implies a = b (for positive integers) ✓
-- Transitive: a | b and b | c implies a | c ✓
+$a \mid b$ means $a$ divides $b$:
+- Reflexive: $a \mid a$ $\checkmark$
+- Antisymmetric: $a \mid b$ and $b \mid a$ implies $a = b$ (for positive integers) $\checkmark$
+- Transitive: $a \mid b$ and $b \mid c$ implies $a \mid c$ $\checkmark$
 
-Incomparable pairs: 2 and 3 (neither divides the other)
+Incomparable pairs: $2$ and $3$ (neither divides the other)
 
 ### Example 4: Lexicographic Order (Total Order)
 
@@ -110,38 +110,61 @@ Divisibility on {2, 3, 4, 6, 8, 12, 24}:
 
 A **Hasse diagram** visualizes a finite poset:
 1. Draw elements as points
-2. Draw a line upward from a to b if b covers a
+2. Draw a line upward from $a$ to $b$ if $b$ covers $a$
 3. Omit reflexive loops and transitive edges
 
-### Example: Divisibility on {1, 2, 3, 4, 6, 12}
+### Example: Divisibility on $\{1, 2, 3, 4, 6, 12\}$
 
-```
-         12
-        / \
-       6   4
-      /|   |
-     3 |   2
-      \|  /
-       1
-```
+```mermaid
+graph BT
+    1 --> 2
+    1 --> 3
+    2 --> 4
+    2 --> 6
+    3 --> 6
+    4 --> 12
+    6 --> 12
 
-Read: 2 covers 1, 6 covers 2 and 3, 12 covers 4 and 6, etc.
-
-Transitivity is implied: 1 → 2 → 4 shows 1 ≤ 4 without a direct line.
-
-### Example: Power Set P({a, b, c})
-
-```
-       {a,b,c}
-      /   |   \
-   {a,b} {a,c} {b,c}
-     |  \  X  /  |
-     |   {a} {b} {c}
-      \   |   |  /
-         ∅
+    style 1 fill:#e1f5ff
+    style 2 fill:#e1f5ff
+    style 3 fill:#e1f5ff
+    style 4 fill:#e1f5ff
+    style 6 fill:#e1f5ff
+    style 12 fill:#e1f5ff
 ```
 
-Eight elements, ordered by ⊆.
+Read: $2$ covers $1$, $6$ covers $2$ and $3$, $12$ covers $4$ and $6$, etc.
+
+Transitivity is implied: $1 \to 2 \to 4$ shows $1 \leq 4$ without a direct line.
+
+### Example: Power Set $\mathcal{P}(\{a, b, c\})$
+
+```mermaid
+graph BT
+    empty["∅"] --> a["{a}"]
+    empty --> b["{b}"]
+    empty --> c["{c}"]
+    a --> ab["{a,b}"]
+    a --> ac["{a,c}"]
+    b --> ab
+    b --> bc["{b,c}"]
+    c --> ac
+    c --> bc
+    ab --> abc["{a,b,c}"]
+    ac --> abc
+    bc --> abc
+
+    style empty fill:#f1f8e9
+    style a fill:#e3f2fd
+    style b fill:#e3f2fd
+    style c fill:#e3f2fd
+    style ab fill:#fff3cd
+    style ac fill:#fff3cd
+    style bc fill:#fff3cd
+    style abc fill:#ffebee
+```
+
+Eight elements, ordered by $\subseteq$.
 
 ## Chains and Antichains
 
@@ -151,26 +174,26 @@ Eight elements, ordered by ⊆.
 
 ### Example
 
-In P({a, b, c}):
-- Chain: {∅, {a}, {a, b}, {a, b, c}} (⊆-ordered)
-- Antichain: {{a}, {b}, {c}} (none is subset of another)
+In $\mathcal{P}(\{a, b, c\})$:
+- Chain: $\{\emptyset, \{a\}, \{a, b\}, \{a, b, c\}\}$ ($\subseteq$-ordered)
+- Antichain: $\{\{a\}, \{b\}, \{c\}\}$ (none is subset of another)
 
 ## Lattices
 
 A poset is a **lattice** if every pair of elements has:
-- A **least upper bound** (join, ∨)
-- A **greatest lower bound** (meet, ∧)
+- A **least upper bound** (join, $\lor$)
+- A **greatest lower bound** (meet, $\land$)
 
-### Example: P(S) is a Lattice
+### Example: $\mathcal{P}(S)$ is a Lattice
 
-For any sets A, B ⊆ S:
-- A ∨ B = A ∪ B (least upper bound)
-- A ∧ B = A ∩ B (greatest lower bound)
+For any sets $A, B \subseteq S$:
+- $A \lor B = A \cup B$ (least upper bound)
+- $A \land B = A \cap B$ (greatest lower bound)
 
-### Example: Divisibility Lattice on {1, 2, 3, 6}
+### Example: Divisibility Lattice on $\{1, 2, 3, 6\}$
 
-- lcm(2, 3) = 6 (join)
-- gcd(2, 3) = 1 (meet)
+- $\text{lcm}(2, 3) = 6$ (join)
+- $\gcd(2, 3) = 1$ (meet)
 
 ## Summary
 
@@ -185,8 +208,8 @@ For any sets A, B ⊆ S:
 - Chains and antichains
 
 **Examples:**
-- ≤ on numbers (total order)
-- ⊆ on sets (partial order)
-- Divisibility (partial order)
+- $\leq$ on numbers (total order)
+- $\subseteq$ on sets (partial order)
+- Divisibility $\mid$ (partial order)
 
 Partial orders formalize hierarchical relationships and are essential in many areas of computer science (scheduling, dependencies) and mathematics.

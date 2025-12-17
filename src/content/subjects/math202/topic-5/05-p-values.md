@@ -75,6 +75,30 @@ The p-value provides an alternative to the critical value approach for making de
 
 where $\alpha$ is the predetermined significance level (typically 0.05).
 
+```mermaid
+graph TD
+    Start[Conduct hypothesis test<br/>Observe test statistic] --> Calculate[Calculate p-value<br/>P&#40;data as extreme | H₀ true&#41;]
+
+    Calculate --> Compare{Compare<br/>p-value to α}
+
+    Compare -->|p < α| Small["<b>Small p-value</b><br/>&#40;p < 0.05&#41;<br/><br/>Data are unlikely<br/>under H₀"]
+
+    Compare -->|p ≥ α| Large["<b>Large p-value</b><br/>&#40;p ≥ 0.05&#41;<br/><br/>Data are consistent<br/>with H₀"]
+
+    Small --> Reject["<b>REJECT H₀</b><br/><br/>Result is<br/>statistically significant<br/><br/>Evidence against H₀"]
+
+    Large --> Fail["<b>FAIL TO REJECT H₀</b><br/><br/>Result is not<br/>statistically significant<br/><br/>Insufficient evidence<br/>against H₀"]
+
+    Reject --> Report1["Report p-value<br/>Interpret in context<br/>Consider practical significance"]
+    Fail --> Report2["Report p-value<br/>Interpret in context<br/>Absence of evidence ≠<br/>Evidence of absence"]
+
+    style Compare fill:#e1f5ff
+    style Small fill:#ffebee,stroke:#c62828,stroke-width:2px
+    style Large fill:#fff9c4
+    style Reject fill:#ffcdd2
+    style Fail fill:#e8f5e9
+```
+
 ### Why This Works
 
 The p-value and critical value approaches are mathematically equivalent:

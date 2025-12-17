@@ -6,22 +6,68 @@
 
 ### Single-Issue vs. Superscalar
 
+```mermaid
+gantt
+    title Single-Issue Pipeline (IPC = 1)
+    dateFormat X
+    axisFormat %s
+
+    section Instr 1
+    IF  :0, 1
+    ID  :1, 1
+    EX  :2, 1
+    MEM :3, 1
+    WB  :4, 1
+
+    section Instr 2
+    IF  :1, 1
+    ID  :2, 1
+    EX  :3, 1
+    MEM :4, 1
+    WB  :5, 1
+
+    section Instr 3
+    IF  :2, 1
+    ID  :3, 1
+    EX  :4, 1
+    MEM :5, 1
+    WB  :6, 1
 ```
-Single-Issue (Scalar):
-Cycle 1: IF  ID  EX  MEM WB  → Instruction 1
-Cycle 2:     IF  ID  EX  MEM WB  → Instruction 2
-Cycle 3:         IF  ID  EX  MEM WB  → Instruction 3
 
-IPC = 1 (maximum)
+**Single-Issue**: IPC = 1 (maximum)
 
-Superscalar (2-wide):
-Cycle 1: IF  ID  EX  MEM WB  → Instruction 1
-         IF  ID  EX  MEM WB  → Instruction 2
-Cycle 2: IF  ID  EX  MEM WB  → Instruction 3
-         IF  ID  EX  MEM WB  → Instruction 4
+```mermaid
+gantt
+    title Superscalar 2-Wide Pipeline (IPC = 2)
+    dateFormat X
+    axisFormat %s
 
-IPC = 2 (maximum)
+    section Pipe 0
+    I1-IF  :0, 1
+    I1-ID  :1, 1
+    I1-EX  :2, 1
+    I1-MEM :3, 1
+    I1-WB  :4, 1
+    I3-IF  :1, 1
+    I3-ID  :2, 1
+    I3-EX  :3, 1
+    I3-MEM :4, 1
+    I3-WB  :5, 1
+
+    section Pipe 1
+    I2-IF  :0, 1
+    I2-ID  :1, 1
+    I2-EX  :2, 1
+    I2-MEM :3, 1
+    I2-WB  :4, 1
+    I4-IF  :1, 1
+    I4-ID  :2, 1
+    I4-EX  :3, 1
+    I4-MEM :4, 1
+    I4-WB  :5, 1
 ```
+
+**Superscalar (2-wide)**: IPC = 2 (maximum)
 
 ### Issue Width
 
@@ -119,17 +165,37 @@ Cycle 2: Issue 2, 4 (after 1, 3 complete)
 
 ### Dependency Check
 
-For N-wide issue, need N×N comparisons:
+For N-wide issue, need $\frac{N(N-1)}{2}$ comparisons:
 
+```mermaid
+graph TB
+    subgraph "4-Wide Dependency Checking"
+        I0[Instruction 0]
+        I1[Instruction 1]
+        I2[Instruction 2]
+        I3[Instruction 3]
+
+        I0 -.->|Check| I1
+        I0 -.->|Check| I2
+        I0 -.->|Check| I3
+        I1 -.->|Check| I2
+        I1 -.->|Check| I3
+        I2 -.->|Check| I3
+    end
+
+    style I0 fill:#ffcccc
+    style I1 fill:#ccffcc
+    style I2 fill:#ccccff
+    style I3 fill:#ffffcc
 ```
+
 4-wide superscalar:
-Instruction 0: check against 1, 2, 3
-Instruction 1: check against 2, 3
-Instruction 2: check against 3
-Instruction 3: no check needed
+- Instruction 0: check against 1, 2, 3
+- Instruction 1: check against 2, 3
+- Instruction 2: check against 3
+- Instruction 3: no check needed
 
-Total: 6 comparisons per cycle
-```
+$$\text{Total comparisons} = \frac{4 \times 3}{2} = 6 \text{ per cycle}$$
 
 ### Limitations of In-Order
 
@@ -194,26 +260,47 @@ After initial 3-cycle fill, one result per cycle.
 
 Superscalar needs many simultaneous reads/writes:
 
-```
 4-wide superscalar:
-- 4 instructions × 2 source operands = 8 read ports
-- 4 instructions × 1 destination = 4 write ports
+$$4 \text{ instructions} \times 2 \text{ source operands} = 8 \text{ read ports}$$
+$$4 \text{ instructions} \times 1 \text{ destination} = 4 \text{ write ports}$$
 
-Total: 8 read, 4 write (expensive!)
+**Total: 8 read, 4 write (expensive!)**
 
-            ┌───────────────────────────────────────┐
-            │         Register File                  │
-            │                                        │
-Read Ports: │ R1  R2  R3  R4  R5  R6  R7  R8       │
-            │  │   │   │   │   │   │   │   │        │
-            │  ▼   ▼   ▼   ▼   ▼   ▼   ▼   ▼        │
-            │ ┌───────────────────────────────────┐ │
-            │ │            32 Registers           │ │
-            │ └───────────────────────────────────┘ │
-            │  ▲   ▲   ▲   ▲                        │
-            │  │   │   │   │                        │
-Write Ports:│ W1  W2  W3  W4                       │
-            └───────────────────────────────────────┘
+```mermaid
+graph TB
+    subgraph "Multi-Port Register File"
+        R1[Read Port 1]
+        R2[Read Port 2]
+        R3[Read Port 3]
+        R4[Read Port 4]
+        R5[Read Port 5]
+        R6[Read Port 6]
+        R7[Read Port 7]
+        R8[Read Port 8]
+
+        RF[Register File<br/>32 Registers]
+
+        W1[Write Port 1]
+        W2[Write Port 2]
+        W3[Write Port 3]
+        W4[Write Port 4]
+
+        R1 --> RF
+        R2 --> RF
+        R3 --> RF
+        R4 --> RF
+        R5 --> RF
+        R6 --> RF
+        R7 --> RF
+        R8 --> RF
+
+        RF --> W1
+        RF --> W2
+        RF --> W3
+        RF --> W4
+    end
+
+    style RF fill:#ffffcc
 ```
 
 ### Register Port Reduction

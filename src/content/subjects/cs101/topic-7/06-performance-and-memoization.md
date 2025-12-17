@@ -46,7 +46,9 @@ Notice that `fib(2)` is calculated 3 times, and `fib(3)` is calculated 2 times. 
 | 30 | 2,692,537 |
 | 40 | 331,160,281 |
 
-The time complexity is O(2^n) - exponential growth. `fib_slow(50)` would take years to compute.
+The time complexity is $O(2^n)$ - exponential growth. `fib_slow(50)` would take years to compute.
+
+Without memoization, computing $\text{fib}(n)$ requires approximately $2^n$ function calls because each call branches into two more calls (except base cases).
 
 ---
 
@@ -75,7 +77,7 @@ def fib_memo(n, cache=None):
 print(fib_memo(50))  # Instant! Returns 12586269025
 ```
 
-Now each value is computed only once. The time complexity drops to O(n).
+Now each value is computed only once. The time complexity drops to $O(n)$ - linear time instead of exponential.
 
 ### How It Works
 
@@ -255,7 +257,7 @@ def fib_space_optimized(n):
 print(fib_space_optimized(100))
 ```
 
-This uses O(1) space instead of O(n) for storing all previous values.
+This uses $O(1)$ space (constant) instead of $O(n)$ (linear) for storing all previous values. For Fibonacci, we only need to remember the last two values: $F_{n-1}$ and $F_{n-2}$ to compute $F_n = F_{n-1} + F_{n-2}$.
 
 ---
 
@@ -325,7 +327,7 @@ def sum_list(items):  # items is a list - not hashable
 - **Overlapping subproblems** cause exponential slowdown in naive recursion
 - **Memoization** caches results to avoid redundant computation
 - Use `@lru_cache` for easy automatic memoization
-- Memoization can turn O(2^n) into O(n)
+- Memoization can turn $O(2^n)$ into $O(n)$
 - **Bottom-up iteration** avoids recursion limits and can be more efficient
 - **Space optimization** reduces memory by keeping only what's needed
 - Memoization works best for **pure functions** with **hashable arguments**

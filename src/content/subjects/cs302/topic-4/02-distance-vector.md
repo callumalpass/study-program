@@ -20,24 +20,31 @@ Each router maintains a distance table:
 4. When receiving neighbor's vector, update own table if better path found
 
 **Update rule** (Bellman-Ford):
-```
-D(x,y) = min { c(x,v) + D(v,y) } for all neighbors v
+
+$$D(x,y) = \min_{v \in \text{neighbors}} \{ c(x,v) + D(v,y) \}$$
 
 Where:
-D(x,y) = distance from x to y
-c(x,v) = cost of link from x to neighbor v
-D(v,y) = neighbor v's advertised distance to y
-```
+- $D(x,y)$ = distance from x to y
+- $c(x,v)$ = cost of link from x to neighbor v
+- $D(v,y)$ = neighbor v's advertised distance to y
 
 ## Example: Distance Vector Operation
 
 Consider network:
-```
-    A ---1--- B ---2--- C
-    |                   |
-    3                   1
-    |                   |
-    D --------4-------- E
+
+```mermaid
+graph LR
+    A((A)) ---|1| B((B))
+    B ---|2| C((C))
+    A ---|3| D((D))
+    C ---|1| E((E))
+    D ---|4| E((E))
+
+    style A fill:#90caf9
+    style B fill:#fff9c4
+    style C fill:#fff9c4
+    style D fill:#fff9c4
+    style E fill:#fff9c4
 ```
 
 Initial state (Router A's view):
@@ -74,6 +81,28 @@ Convergence continues until all routers have optimal paths.
 Distance vector has a fundamental problem with handling link failures:
 
 **Scenario**: A—B—C where A reaches C via B (distance 2)
+
+```mermaid
+sequenceDiagram
+    participant A as Router A
+    participant B as Router B
+    participant C as Router C
+
+    Note over A,C: Normal state: A→B→C (cost 2)
+    Note over B,C: Link B-C FAILS ❌
+
+    B->>B: Sets distance to C = ∞
+    A->>B: Distance vector: "C at cost 2"
+    Note over B: Thinks: A can reach C!<br/>My cost = 2+1 = 3
+
+    B->>A: "C at cost 3"
+    Note over A: Updates: C at cost 4 via B
+
+    A->>B: "C at cost 4"
+    Note over B: Updates: C at cost 5 via A
+
+    Note over A,B: Continues incrementing...<br/>until reaching infinity (16 in RIP)
+```
 
 If B—C link fails:
 1. B sets distance to C as infinity

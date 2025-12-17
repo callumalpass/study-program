@@ -4,15 +4,15 @@ A **Nondeterministic Finite Automaton (NFA)** extends the DFA model by allowing 
 
 ## Formal Definition
 
-An NFA is a 5-tuple N = (Q, Σ, δ, q₀, F) where:
+An NFA is a 5-tuple $N = (Q, \Sigma, \delta, q_0, F)$ where:
 
 - **Q** is a finite set of states
 - **Σ** is a finite input alphabet
-- **δ: Q × (Σ ∪ {ε}) → P(Q)** is the transition function
-- **q₀ ∈ Q** is the start state
-- **F ⊆ Q** is the set of accepting states
+- $\delta: Q \times (\Sigma \cup \{\varepsilon\}) \to \mathcal{P}(Q)$ is the transition function
+- $q_0 \in Q$ is the start state
+- $F \subseteq Q$ is the set of accepting states
 
-The key difference from DFA: δ returns a **set** of states, and transitions can occur on ε (the empty string).
+The key difference from DFA: $\delta$ returns a **set** of states (the powerset $\mathcal{P}(Q)$), and transitions can occur on $\varepsilon$ (the empty string).
 
 ## Nondeterminism Explained
 
@@ -30,37 +30,61 @@ An **ε-transition** allows the automaton to change state without consuming any 
 - Simplifying constructions
 - Expressing optional patterns
 
-The **ε-closure** of state q, denoted ε-closure(q), is the set of all states reachable from q using only ε-transitions (including q itself).
+The **ε-closure** of state $q$, denoted $\text{ECLOSE}(q)$, is the set of all states reachable from $q$ using only $\varepsilon$-transitions (including $q$ itself):
+
+$$
+\text{ECLOSE}(q) = \{p \in Q \mid q \xrightarrow{\varepsilon^*} p\}
+$$
 
 ## Extended Transition Function
 
-For NFAs, the extended transition function δ* is defined:
+For NFAs, the extended transition function $\delta^*: Q \times \Sigma^* \to \mathcal{P}(Q)$ is defined:
 
-1. δ*(q, ε) = ε-closure({q})
-2. δ*(q, wa) = ε-closure(⋃{δ(p, a) | p ∈ δ*(q, w)})
+$$
+\delta^*(q, \varepsilon) = \text{ECLOSE}(\{q\})
+$$
 
-For a set of states S: δ*(S, w) = ⋃{δ*(q, w) | q ∈ S}
+$$
+\delta^*(q, wa) = \text{ECLOSE}\left(\bigcup_{p \in \delta^*(q, w)} \delta(p, a)\right)
+$$
+
+For a set of states $S \subseteq Q$: $\delta^*(S, w) = \bigcup_{q \in S} \delta^*(q, w)$
 
 ## Language Recognition
 
-An NFA N accepts string w if some state in δ*(q₀, w) is an accepting state:
+An NFA $N$ accepts string $w$ if some state in $\delta^*(q_0, w)$ is an accepting state:
 
-L(N) = {w ∈ Σ* | δ*(q₀, w) ∩ F ≠ ∅}
+$$
+L(N) = \{w \in \Sigma^* \mid \delta^*(q_0, w) \cap F \neq \emptyset\}
+$$
 
 ## Example NFA
 
 An NFA accepting strings ending in "01":
 
-- Q = {q₀, q₁, q₂}
-- Σ = {0, 1}
+- $Q = \{q_0, q_1, q_2\}$
+- $\Sigma = \{0, 1\}$
 - Transitions:
-  - δ(q₀, 0) = {q₀, q₁}
-  - δ(q₀, 1) = {q₀}
-  - δ(q₁, 1) = {q₂}
-- q₀ is the start state
-- F = {q₂}
+  - $\delta(q_0, 0) = \{q_0, q_1\}$
+  - $\delta(q_0, 1) = \{q_0\}$
+  - $\delta(q_1, 1) = \{q_2\}$
+- $q_0$ is the start state
+- $F = \{q_2\}$
 
 The nondeterminism "guesses" when the final "01" begins.
+
+### State Diagram
+
+```mermaid
+stateDiagram-v2
+    [*] --> q0
+    q0 --> q0: 0,1
+    q0 --> q1: 0
+    q1 --> q2: 1
+    q2 --> [*]
+```
+
+Note: The diagram shows $q_0$ has a self-loop for both 0 and 1, plus an additional transition on 0 to $q_1$ (nondeterministic choice).
 
 ## Why Use NFAs?
 

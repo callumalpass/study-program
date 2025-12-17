@@ -88,16 +88,36 @@ def postorder_iterative(root):
 
 ## Visualization
 
-```
-       1
-      / \
-     2   3
-    / \
-   4   5
+Let's visualize all three traversal orders on the same tree:
 
-Preorder:  1, 2, 4, 5, 3  (Root first)
-Inorder:   4, 2, 5, 1, 3  (Left, Root, Right)
-Postorder: 4, 5, 2, 3, 1  (Root last)
+```mermaid
+graph TD
+    A[1] --> B[2]
+    A --> C[3]
+    B --> D[4]
+    B --> E[5]
+
+    style A fill:#ffcccc
+    style B fill:#ccffcc
+    style C fill:#ccccff
+    style D fill:#ffffcc
+    style E fill:#ffccff
+```
+
+**Traversal results:**
+- **Preorder**: 1, 2, 4, 5, 3 (visit root first)
+- **Inorder**: 4, 2, 5, 1, 3 (left → root → right)
+- **Postorder**: 4, 5, 2, 3, 1 (visit root last)
+
+```mermaid
+sequenceDiagram
+    participant P as Preorder
+    participant I as Inorder
+    participant O as Postorder
+
+    Note over P: 1 → 2 → 4 → 5 → 3
+    Note over I: 4 → 2 → 5 → 1 → 3
+    Note over O: 4 → 5 → 2 → 3 → 1
 ```
 
 ## Breadth-First Traversal (Level Order)
@@ -188,13 +208,19 @@ def morris_inorder(root):
 
 | Traversal | Time | Space (recursive) | Space (iterative) |
 |-----------|------|-------------------|-------------------|
-| Preorder | O(n) | O(h) | O(h) |
-| Inorder | O(n) | O(h) | O(h) |
-| Postorder | O(n) | O(h) | O(h) |
-| Level order | O(n) | N/A | O(w) |
-| Morris | O(n) | N/A | O(1) |
+| Preorder | $O(n)$ | $O(h)$ | $O(h)$ |
+| Inorder | $O(n)$ | $O(h)$ | $O(h)$ |
+| Postorder | $O(n)$ | $O(h)$ | $O(h)$ |
+| Level order | $O(n)$ | N/A | $O(w)$ |
+| Morris | $O(n)$ | N/A | $O(1)$ |
 
-Where h = height, w = max width, n = number of nodes.
+Where $h$ = height, $w$ = max width, $n$ = number of nodes.
+
+**Analysis**: Each node is visited exactly once, giving $O(n)$ time. Space complexity for recursive traversals is $O(h)$ due to the call stack, where:
+- Best case (balanced tree): $h = O(\log n)$
+- Worst case (skewed tree): $h = O(n)$
+
+Level-order traversal uses a queue that can hold up to $O(w)$ nodes, where $w$ is the maximum width of the tree (at most $\lceil n/2 \rceil$ for a complete binary tree).
 
 ## Reconstructing Trees
 

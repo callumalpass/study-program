@@ -16,6 +16,36 @@ If $f$ has an extremum at $(x_0, y_0)$ subject to the constraint $g(x, y) = k$, 
 
 $$\nabla f(x_0, y_0) = \lambda \nabla g(x_0, y_0)$$
 
+### Method Flowchart
+
+The following diagram outlines the step-by-step process for using Lagrange multipliers:
+
+```mermaid
+flowchart TD
+    Start["Problem: Optimize f(x,y)<br/>subject to g(x,y) = k"] --> Step1["Compute gradients<br/>∇f = ⟨f_x, f_y⟩<br/>∇g = ⟨g_x, g_y⟩"]
+
+    Step1 --> Step2["Set up system:<br/>∇f = λ∇g<br/>g(x,y) = k"]
+
+    Step2 --> Step3["Write equations:<br/>f_x = λg_x<br/>f_y = λg_y<br/>g(x,y) = k"]
+
+    Step3 --> Step4["Solve system for<br/>(x, y, λ)"]
+
+    Step4 --> Step5["Evaluate f at each<br/>candidate point"]
+
+    Step5 --> Step6["Compare values to<br/>identify max/min"]
+
+    Step6 --> End["Optimal solution"]
+
+    style Start fill:#e1f5ff
+    style Step1 fill:#fff4e1
+    style Step2 fill:#fff4e1
+    style Step3 fill:#fff4e1
+    style Step4 fill:#ffe8e8
+    style Step5 fill:#fff4e1
+    style Step6 fill:#fff4e1
+    style End fill:#c8e6c9
+```
+
 ### System of Equations
 
 This gives three equations in three unknowns $(x, y, \lambda)$:

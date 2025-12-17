@@ -202,34 +202,57 @@ $$= 2e^u(u - 1) + C = 2e^{\sqrt{x}}(\sqrt{x} - 1) + C$$
 
 ## Decision Flowchart
 
-Here's a mental checklist:
+Here's a systematic approach to choosing the right integration technique:
 
-1. **Can I simplify algebraically?** (expand, factor, use identities)
-   - If yes, simplify first
+```mermaid
+graph TD
+    Start([Given Integral]) --> Simplify{Can you simplify<br/>algebraically?}
+    Simplify -->|Yes| DoSimplify[Expand, factor,<br/>use identities]
+    DoSimplify --> Recognize
+    Simplify -->|No| Recognize{Is it a basic<br/>form?}
 
-2. **Is it a basic form I recognize?** (power, exponential, trig, inverse trig)
-   - If yes, apply formula directly
+    Recognize -->|Power, exp, trig| Direct[Apply formula<br/>directly]
+    Direct --> Done([Evaluate])
 
-3. **Does it look like a composition $f(g(x))g'(x)$?**
-   - If yes, try $u$-substitution
+    Recognize -->|No| Composition{Does it have<br/>f g x g' x <br/>structure?}
+    Composition -->|Yes| USub[Use<br/>u-substitution]
+    USub --> Done
 
-4. **Is it a product of different function types?**
-   - If yes, try integration by parts (use LIATE)
+    Composition -->|No| Product{Is it a product of<br/>different types?}
+    Product -->|Yes| ByParts[Integration<br/>by Parts<br/>use LIATE]
+    ByParts --> Done
 
-5. **Does it contain only trig functions?**
-   - If yes, use trig integral techniques
+    Product -->|No| TrigOnly{Only trig<br/>functions?}
+    TrigOnly -->|Yes| TrigTech[Use trig<br/>identities &<br/>techniques]
+    TrigTech --> Done
 
-6. **Does it contain a radical of form $\sqrt{a^2 \pm x^2}$ or $\sqrt{x^2 - a^2}$?**
-   - If yes, try trig substitution
+    TrigOnly -->|No| Radical{Contains<br/>√ a²±x² or<br/>√ x²-a² ?}
+    Radical -->|Yes| TrigSub[Trigonometric<br/>substitution]
+    TrigSub --> Done
 
-7. **Is it a rational function?**
-   - If yes, check proper/improper, factor, use partial fractions
+    Radical -->|No| Rational{Rational<br/>function<br/>P x /Q x ?}
+    Rational -->|Yes| PartFrac[Long division<br/>if improper then<br/>partial fractions]
+    PartFrac --> Done
 
-8. **Am I stuck?**
-   - Try a different substitution
-   - Look for a clever algebraic manipulation
-   - Check integration tables
-   - Consider that it might not have an elementary antiderivative
+    Rational -->|No| Stuck{Still stuck?}
+    Stuck --> TryAgain[• Try different substitution<br/>• Algebraic manipulation<br/>• Integration tables<br/>• May not have<br/>elementary form]
+    TryAgain --> Done
+
+    style Start fill:#e1f5ff
+    style Done fill:#d4edda
+    style ByParts fill:#fff3cd
+    style TrigSub fill:#fff3cd
+    style PartFrac fill:#fff3cd
+    style Direct fill:#d4edda
+```
+
+**How to use this flowchart:**
+
+1. **Start at the top** with your given integral
+2. **Work through each decision node** systematically
+3. **Answer each question** based on the structure of your integrand
+4. **Follow the path** to the recommended technique
+5. **Apply the technique** and evaluate
 
 ## Common Strategic Mistakes
 

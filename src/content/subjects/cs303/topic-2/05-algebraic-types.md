@@ -6,15 +6,31 @@ Algebraic Data Types (ADTs) are composite types formed by combining other types 
 
 Types can be viewed through an algebraic lens where type constructors correspond to arithmetic operations:
 
-| Algebra | Types | Example |
-|---------|-------|---------|
-| 0 | Void/Never | Uninhabited type |
-| 1 | Unit/() | Single value |
-| a + b | Sum/Either | Choice between types |
-| a × b | Product/Tuple | Combination of types |
-| b^a | Function | a → b |
+| Algebra | Types | Example | Cardinality |
+|---------|-------|---------|-------------|
+| $0$ | Void/Never | Uninhabited type | $0$ values |
+| $1$ | Unit/() | Single value | $1$ value |
+| $a + b$ | Sum/Either | Choice between types | $\|a\| + \|b\|$ |
+| $a \times b$ | Product/Tuple | Combination of types | $\|a\| \times \|b\|$ |
+| $b^a$ | Function | $a \rightarrow b$ | $\|b\|^{\|a\|}$ |
 
 This correspondence is not merely an analogy—algebraic laws hold for types just as for numbers.
+
+```mermaid
+graph TD
+    A[Type Constructors] --> B["Sum Types (a + b)"]
+    A --> C["Product Types (a × b)"]
+    A --> D["Function Types (b^a)"]
+
+    B --> E["Either, Enums, Variants"]
+    C --> F["Tuples, Records, Structs"]
+    D --> G["a → b"]
+
+    style A fill:#e1f5ff
+    style B fill:#ffe1e1
+    style C fill:#e1ffe1
+    style D fill:#fff4e1
+```
 
 ## Product Types
 
@@ -61,13 +77,14 @@ println!("{} is {} years old", alice.name, alice.age);
 
 ### Product Type Cardinality
 
-If type A has n values and type B has m values, then (A, B) has n × m values:
+The cardinality of a product type is the product of cardinalities:
 
-```haskell
--- Bool has 2 values: True, False
--- (Bool, Bool) has 2 × 2 = 4 values:
--- (False, False), (False, True), (True, False), (True, True)
-```
+If $|A| = n$ and $|B| = m$, then $|(A, B)| = n \times m$
+
+Example: Bool has 2 values: $\{\text{True}, \text{False}\}$
+
+$(\text{Bool}, \text{Bool})$ has $2 \times 2 = 4$ values:
+$$\{(\text{False}, \text{False}), (\text{False}, \text{True}), (\text{True}, \text{False}), (\text{True}, \text{True})\}$$
 
 ## Sum Types
 

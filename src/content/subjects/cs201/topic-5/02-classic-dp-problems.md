@@ -12,7 +12,15 @@ The 0/1 Knapsack problem is perhaps the most famous optimization problem in comp
 
 The key insight is that for each item, we face a binary choice: include it or exclude it. The optimal solution to the full problem depends on optimal solutions to subproblems considering fewer items or smaller capacity. This optimal substructure, combined with overlapping subproblems (many different combinations require knowing the best value for the same remaining capacity), makes DP the natural approach.
 
-The state captures what we need to make the next decision: which items remain available and how much capacity remains. We define dp[i][w] as the maximum value achievable using items 0 through i-1 with capacity w.
+The state captures what we need to make the next decision: which items remain available and how much capacity remains. We define $\text{dp}[i][w]$ as the maximum value achievable using items $0$ through $i-1$ with capacity $w$.
+
+**Recurrence relation**:
+
+$$\text{dp}[i][w] = \begin{cases}
+0 & \text{if } i = 0 \text{ or } w = 0 \\
+\text{dp}[i-1][w] & \text{if } \text{weight}[i-1] > w \\
+\max(\text{dp}[i-1][w], \text{dp}[i-1][w - \text{weight}[i-1]] + \text{value}[i-1]) & \text{otherwise}
+\end{cases}$$
 
 ```python
 def knapsack_01(weights, values, capacity):
@@ -32,7 +40,25 @@ def knapsack_01(weights, values, capacity):
     return dp[n][capacity]
 ```
 
-**Time**: O(n × W), **Space**: O(n × W) or O(W) with optimization
+**Time**: $O(n \times W)$, **Space**: $O(n \times W)$ or $O(W)$ with optimization
+
+**DP Table Example** (weights=[2,3,4], values=[3,4,5], capacity=5):
+
+```mermaid
+graph TD
+    subgraph "DP Table (i=items, w=capacity)"
+        A["i=0: [0,0,0,0,0,0]"]
+        B["i=1: [0,0,3,3,3,3]"]
+        C["i=2: [0,0,3,4,4,7]"]
+        D["i=3: [0,0,3,4,5,7]"]
+    end
+
+    A --> B
+    B --> C
+    C --> D
+
+    style D fill:#4caf50
+```
 
 The pseudo-polynomial time complexity deserves attention. While O(n × W) looks polynomial, W is a number, not a count. If W is represented in binary, the algorithm is actually exponential in the input size. This is why 0/1 Knapsack is NP-complete despite having this "efficient" algorithm for practical values of W.
 
@@ -60,7 +86,15 @@ The Longest Common Subsequence problem appears in DNA sequence alignment, file d
 
 **Problem**: Find longest subsequence common to two strings.
 
-The state represents positions in both strings: dp[i][j] is the length of the LCS of the first i characters of s1 and the first j characters of s2. The recurrence captures two cases: if the current characters match, we extend the LCS; if not, we take the better of skipping a character from either string.
+The state represents positions in both strings: $\text{dp}[i][j]$ is the length of the LCS of the first $i$ characters of s1 and the first $j$ characters of s2. The recurrence captures two cases: if the current characters match, we extend the LCS; if not, we take the better of skipping a character from either string.
+
+**Recurrence relation**:
+
+$$\text{dp}[i][j] = \begin{cases}
+0 & \text{if } i = 0 \text{ or } j = 0 \\
+\text{dp}[i-1][j-1] + 1 & \text{if } s1[i-1] = s2[j-1] \\
+\max(\text{dp}[i-1][j], \text{dp}[i][j-1]) & \text{otherwise}
+\end{cases}$$
 
 ```python
 def lcs(s1, s2):
@@ -76,6 +110,18 @@ def lcs(s1, s2):
 
     return dp[m][n]
 ```
+
+**DP Table Visualization** for LCS("ABCD", "ACBD"):
+
+|   | ε | A | C | B | D |
+|---|---|---|---|---|---|
+| **ε** | 0 | 0 | 0 | 0 | 0 |
+| **A** | 0 | **1** | 1 | 1 | 1 |
+| **B** | 0 | 1 | 1 | **2** | 2 |
+| **C** | 0 | 1 | **2** | 2 | 2 |
+| **D** | 0 | 1 | 2 | 2 | **3** |
+
+The bold diagonal shows where characters match. LCS = "ABD" or "ACD" (length 3).
 
 Understanding the recurrence geometrically helps: we're finding a path through an m×n grid where diagonal moves (matching characters) are preferred because they extend the LCS. Horizontal or vertical moves skip characters from one string.
 

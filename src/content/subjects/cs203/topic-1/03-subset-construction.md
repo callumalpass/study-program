@@ -10,13 +10,13 @@ If the NFA has n states, the DFA might have up to 2ⁿ states (all possible subs
 
 ## The Algorithm
 
-Given NFA N = (Q, Σ, δ_N, q₀, F_N), construct DFA D = (Q', Σ, δ_D, q₀', F'):
+Given NFA $N = (Q, \Sigma, \delta_N, q_0, F_N)$, construct DFA $D = (Q', \Sigma, \delta_D, q_0', F')$:
 
-1. **States**: Q' ⊆ P(Q), the power set of Q
-2. **Start state**: q₀' = ε-closure({q₀})
-3. **Transition function**: For state S ⊆ Q and symbol a:
-   δ_D(S, a) = ε-closure(⋃{δ_N(q, a) | q ∈ S})
-4. **Accepting states**: F' = {S ∈ Q' | S ∩ F_N ≠ ∅}
+1. **States**: $Q' \subseteq \mathcal{P}(Q)$, the power set of $Q$
+2. **Start state**: $q_0' = \text{ECLOSE}(\{q_0\})$
+3. **Transition function**: For state $S \subseteq Q$ and symbol $a \in \Sigma$:
+   $$\delta_D(S, a) = \text{ECLOSE}\left(\bigcup_{q \in S} \delta_N(q, a)\right)$$
+4. **Accepting states**: $F' = \{S \in Q' \mid S \cap F_N \neq \emptyset\}$
 
 ## Computing ε-Closure
 
@@ -58,26 +58,50 @@ subset_construction(N):
     return DFA(Q', Σ, δ_D, q₀', F')
 ```
 
-## Example
+## Example: Subset Construction
 
-Consider an NFA with states {q₀, q₁, q₂}, accepting strings ending in "ab":
+Consider an NFA accepting strings ending in "ab":
+
+**NFA Transition Table:**
 
 | State | a | b | ε |
 |-------|---|---|---|
-| q₀ | {q₀, q₁} | {q₀} | ∅ |
-| q₁ | ∅ | {q₂} | ∅ |
-| q₂ | ∅ | ∅ | ∅ |
+| $q_0$ | $\{q_0, q_1\}$ | $\{q_0\}$ | $\emptyset$ |
+| $q_1$ | $\emptyset$ | $\{q_2\}$ | $\emptyset$ |
+| $q_2$ | $\emptyset$ | $\emptyset$ | $\emptyset$ |
 
-Subset construction produces:
-- Start: {q₀}
-- {q₀} --a--> {q₀, q₁}
-- {q₀} --b--> {q₀}
-- {q₀, q₁} --a--> {q₀, q₁}
-- {q₀, q₁} --b--> {q₀, q₂}
-- {q₀, q₂} --a--> {q₀, q₁}
-- {q₀, q₂} --b--> {q₀}
+Accepting state: $F_N = \{q_2\}$
 
-Accepting states: any containing q₂, so {{q₀, q₂}}
+**Subset Construction:**
+
+Starting from $\{q_0\}$, we compute transitions:
+
+- $\delta_D(\{q_0\}, a) = \{q_0, q_1\}$
+- $\delta_D(\{q_0\}, b) = \{q_0\}$
+- $\delta_D(\{q_0, q_1\}, a) = \{q_0, q_1\}$
+- $\delta_D(\{q_0, q_1\}, b) = \{q_0, q_2\}$
+- $\delta_D(\{q_0, q_2\}, a) = \{q_0, q_1\}$
+- $\delta_D(\{q_0, q_2\}, b) = \{q_0\}$
+
+**Resulting DFA:**
+
+```mermaid
+stateDiagram-v2
+    [*] --> S0: {q₀}
+    S0 --> S0: b
+    S0 --> S1: a
+    S1 --> S1: a
+    S1 --> S2: b
+    S2 --> S1: a
+    S2 --> S0: b
+    S2 --> [*]
+
+    note right of S0: {q₀}
+    note right of S1: {q₀,q₁}
+    note right of S2: {q₀,q₂} ✓
+```
+
+Accepting states: Any containing $q_2$, so $F' = \{\{q_0, q_2\}\}$
 
 ## Worst-Case Exponential Blowup
 
@@ -87,9 +111,21 @@ This shows that NFAs can be exponentially more succinct than DFAs for some langu
 
 ## Correctness Proof
 
-**Theorem**: L(D) = L(N)
+**Theorem**: $L(D) = L(N)$
 
-**Proof**: By induction on string length, we show that after reading w, the DFA is in state S where S is exactly the set of states the NFA could be in after reading w. Since the DFA accepts iff S contains an accepting state, and the NFA accepts iff some computation reaches an accepting state, their languages are equal.
+**Proof sketch**: By induction on $|w|$, we show that:
+
+$$
+\delta_D^*(q_0', w) = \delta_N^*(q_0, w)
+$$
+
+That is, after reading $w$, the DFA is in state $S$ where $S$ is exactly the set of states the NFA could be in.
+
+**Base case** ($w = \varepsilon$): $\delta_D^*(q_0', \varepsilon) = \text{ECLOSE}(\{q_0\}) = \delta_N^*(q_0, \varepsilon)$
+
+**Inductive step**: Assume true for $w$, prove for $wa$. By construction of $\delta_D$, the claim holds.
+
+Since the DFA accepts iff the final state contains an NFA accepting state, and the NFA accepts iff some computation reaches an accepting state, $L(D) = L(N)$. $\square$
 
 ## Practical Considerations
 

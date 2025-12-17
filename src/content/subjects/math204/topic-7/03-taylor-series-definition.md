@@ -46,6 +46,61 @@ To find the Taylor series of $f$ centered at $a$:
 4. Simplify and look for a pattern
 5. Find the interval of convergence
 
+### Taylor Series Computation Flowchart
+
+```mermaid
+graph TD
+    Start([Given function f x <br/>and center a]) --> Step1[Step 1: Compute derivatives<br/>f' x , f'' x , f''' x , ...]
+
+    Step1 --> Pattern{Do derivatives<br/>follow a<br/>pattern?}
+    Pattern -->|Yes| PatYes[Identify pattern<br/>f⁽ⁿ⁾ x  = ?]
+    Pattern -->|No| PatNo[Compute first<br/>several terms<br/> n = 0,1,2,3,... ]
+
+    PatYes --> Step2
+    PatNo --> Step2[Step 2: Evaluate at x = a<br/>f a , f' a , f'' a , ...]
+
+    Step2 --> Values{Values follow<br/>a pattern?}
+    Values -->|Yes| ValPattern[Express f⁽ⁿ⁾ a <br/>as formula in n]
+    Values -->|No| ValList[List values:<br/>c₀, c₁, c₂, ...]
+
+    ValPattern --> Step3
+    ValList --> Step3[Step 3: Write series<br/>∑ f⁽ⁿ⁾ a /n! · x-a ⁿ]
+
+    Step3 --> Step4[Step 4: Simplify<br/>Look for summation formula]
+
+    Step4 --> Step5[Step 5: Find radius<br/>of convergence<br/>Use Ratio/Root Test]
+
+    Step5 --> RatioTest{Apply<br/>Ratio Test}
+    RatioTest --> Compute[Compute L = lim  aₙ₊₁/aₙ ]
+
+    Compute --> Result{Value<br/>of L?}
+    Result -->|L < 1| Conv[Series converges<br/>for  x-a  < R<br/>where R = 1/L]
+    Result -->|L = 0| AllConv[Series converges<br/>for all x<br/>R = ∞]
+    Result -->|L = ∞| NoConv[Series only converges<br/>at x = a<br/>R = 0]
+
+    Conv --> CheckEnds[Check endpoints<br/>x = a±R separately]
+    AllConv --> Done
+    NoConv --> Done
+    CheckEnds --> Done([Complete Taylor Series<br/>with interval of convergence])
+
+    style Start fill:#e1f5ff
+    style Done fill:#d4edda
+    style Step1 fill:#fff3cd
+    style Step2 fill:#fff3cd
+    style Step3 fill:#fff3cd
+    style Step4 fill:#fff3cd
+    style Step5 fill:#ffd7e5
+    style AllConv fill:#d4edda
+```
+
+**Key Steps Explained:**
+
+1. **Differentiation:** Find $f'(x), f''(x), f'''(x), \ldots$ until a pattern emerges
+2. **Evaluation:** Substitute $x = a$ into each derivative
+3. **Series Construction:** Build $\sum_{n=0}^{\infty} \frac{f^{(n)}(a)}{n!}(x-a)^n$
+4. **Pattern Recognition:** Express in closed form if possible
+5. **Convergence:** Use Ratio Test to find where the series converges
+
 ### Example 1: Maclaurin Series for $e^x$
 
 **Step 1:** Compute derivatives:

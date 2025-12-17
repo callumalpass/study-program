@@ -19,6 +19,20 @@ Key ideas:
 - `else` is optional and catches "everything else"
 - Each branch is a block defined by indentation
 
+Here's how the decision flow works visually:
+
+```mermaid
+flowchart TD
+    Start([Start]) --> Check1{temperature > 85?}
+    Check1 -->|True| Hot[Print 'Hot']
+    Check1 -->|False| Check2{temperature > 65?}
+    Check2 -->|True| Nice[Print 'Nice']
+    Check2 -->|False| Cold[Print 'Cold']
+    Hot --> End([End])
+    Nice --> End
+    Cold --> End
+```
+
 ---
 
 ## The Basic `if` Statement
@@ -52,6 +66,15 @@ else:
 ```
 
 The `else` block runs when the `if` condition is `False`. You never need a condition after `else` - it catches everything that didn't match.
+
+```mermaid
+flowchart TD
+    Start([Start]) --> Check{withdrawal <= balance?}
+    Check -->|True| Withdraw[balance -= withdrawal<br/>Print success]
+    Check -->|False| Deny[Print 'Insufficient funds']
+    Withdraw --> End([End])
+    Deny --> End
+```
 
 ---
 

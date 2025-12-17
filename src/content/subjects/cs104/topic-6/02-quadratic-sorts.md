@@ -27,33 +27,35 @@ def bubble_sort(arr):
 
 ### Visualization
 
+```mermaid
+flowchart TD
+    A["Initial: [5, 1, 4, 2, 8]"] --> B["Pass 1: Compare adjacent pairs"]
+    B --> C["[1, 4, 2, 5, 8] (8 bubbled to end)"]
+    C --> D["Pass 2: Compare first n-1 pairs"]
+    D --> E["[1, 2, 4, 5, 8] (5 in place)"]
+    E --> F["Pass 3: No swaps, terminate early"]
+    F --> G["Sorted: [1, 2, 4, 5, 8]"]
+
+    style A fill:#FFE4B5
+    style G fill:#90EE90
 ```
-Initial: [5, 1, 4, 2, 8]
 
-Pass 1:
-[5, 1, 4, 2, 8] → [1, 5, 4, 2, 8]  # 5 > 1, swap
-[1, 5, 4, 2, 8] → [1, 4, 5, 2, 8]  # 5 > 4, swap
-[1, 4, 5, 2, 8] → [1, 4, 2, 5, 8]  # 5 > 2, swap
-[1, 4, 2, 5, 8] → [1, 4, 2, 5, 8]  # 5 < 8, no swap
-# 8 is now in correct position
-
-Pass 2:
-[1, 4, 2, 5, 8] → [1, 4, 2, 5, 8]  # 1 < 4
-[1, 4, 2, 5, 8] → [1, 2, 4, 5, 8]  # 4 > 2, swap
-[1, 2, 4, 5, 8] → [1, 2, 4, 5, 8]  # 4 < 5
-# 5 is now in correct position
-
-Pass 3:
-[1, 2, 4, 5, 8] → no swaps needed
-# Early termination!
-```
+**Step-by-step example**:
+- Initial: `[5, 1, 4, 2, 8]`
+- After Pass 1: `[1, 4, 2, 5, 8]` - largest element (8) bubbled to end
+- After Pass 2: `[1, 2, 4, 5, 8]` - second largest (5) in place
+- Pass 3: No swaps needed, early termination
 
 ### Properties
 
-- **Time**: O(n²) average/worst, O(n) best (already sorted)
-- **Space**: O(1)
+- **Time**: $O(n^2)$ average/worst, $O(n)$ best (already sorted)
+- **Space**: $O(1)$
 - **Stable**: Yes
 - **Adaptive**: Yes (with early termination)
+
+**Complexity Analysis**:
+- Worst case: $(n-1) + (n-2) + \ldots + 1 = \frac{n(n-1)}{2} = O(n^2)$ comparisons
+- Best case: Array already sorted, one pass with $n-1$ comparisons = $O(n)$
 
 ## Selection Sort
 
@@ -99,12 +101,15 @@ Done!
 
 ### Properties
 
-- **Time**: O(n²) in all cases (always scans entire unsorted portion)
-- **Space**: O(1)
+- **Time**: $O(n^2)$ in all cases (always scans entire unsorted portion)
+- **Space**: $O(1)$
 - **Stable**: No (swapping can change order of equal elements)
 - **Adaptive**: No
 
-**Key advantage**: Minimizes the number of swaps (at most n-1 swaps). Useful when writes are expensive (e.g., flash memory).
+**Key advantage**: Minimizes the number of swaps (at most $n-1$ swaps). Useful when writes are expensive (e.g., flash memory).
+
+**Complexity**: Always performs $\frac{n(n-1)}{2}$ comparisons regardless of input:
+$$T(n) = (n-1) + (n-2) + \ldots + 1 = \sum_{i=1}^{n-1} i = O(n^2)$$
 
 ## Insertion Sort
 
@@ -143,17 +148,24 @@ i=5, key=3: [1, 2, 4, 5, 6, 6] → [1, 2, 4, 5, 5, 6] → [1, 2, 4, 4, 5, 6]
 
 ### Properties
 
-- **Time**: O(n²) average/worst, O(n) best (already sorted)
-- **Space**: O(1)
+- **Time**: $O(n^2)$ average/worst, $O(n)$ best (already sorted)
+- **Space**: $O(1)$
 - **Stable**: Yes
 - **Adaptive**: Yes (fast on nearly sorted data)
+
+**Complexity Analysis**:
+- Best case (sorted): Each element already in place, $n-1$ comparisons = $O(n)$
+- Worst case (reverse sorted): $1 + 2 + \ldots + (n-1) = \frac{n(n-1)}{2} = O(n^2)$ comparisons
+- Average case: About $n^2/4$ comparisons = $O(n^2)$
 
 ## Comparison
 
 | Aspect | Bubble | Selection | Insertion |
 |--------|--------|-----------|-----------|
-| Best Case | O(n) | O(n²) | O(n) |
-| Swaps | Many | O(n) | Many |
+| Best Case | $O(n)$ | $O(n^2)$ | $O(n)$ |
+| Average | $O(n^2)$ | $O(n^2)$ | $O(n^2)$ |
+| Worst | $O(n^2)$ | $O(n^2)$ | $O(n^2)$ |
+| Swaps | Many | $O(n)$ | Many |
 | Adaptive | Yes | No | Yes |
 | Stable | Yes | No | Yes |
 | Online | No | No | Yes |
@@ -194,7 +206,7 @@ def binary_insertion_sort(arr):
     return arr
 ```
 
-Comparisons: O(n log n), but shifts still O(n²).
+Comparisons: $O(n \log n)$, but shifts still $O(n^2)$.
 
 ## Summary
 

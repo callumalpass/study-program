@@ -19,19 +19,50 @@ For any cache mapping strategy, the memory address is divided into fields:
 |-------- Tag --------|--- Index ---|-- Offset --|
 ```
 
-- **Offset**: Which byte within the cache line (determined by line size). For a 64-byte line, the offset is 6 bits (2^6 = 64).
+- **Offset**: Which byte within the cache line (determined by line size). For a 64-byte line, the offset is 6 bits ($2^6 = 64$).
 - **Index**: Which cache location(s) to check (depends on mapping strategy)
 - **Tag**: Remaining bits, used to verify which specific block is stored
 
 The total address bits = tag bits + index bits + offset bits.
 
+For a cache with $C$ lines and block size $B$ bytes:
+- **Offset bits**: $\log_2(B)$
+- **Index bits**: $\log_2(C)$ for direct-mapped, $\log_2(S)$ for set-associative (where $S$ is the number of sets)
+- **Tag bits**: Remaining address bits
+
 ## Direct-Mapped Cache
 
 In a **direct-mapped cache**, each memory block maps to exactly one cache location. The index portion of the address determines which cache line the block can occupy.
 
+```mermaid
+graph LR
+    subgraph Address["Memory Address"]
+        Tag[Tag<br/>19 bits]
+        Index[Index<br/>7 bits]
+        Offset[Offset<br/>6 bits]
+    end
+
+    subgraph Cache["Direct-Mapped Cache (128 lines)"]
+        Line0[Line 0: Valid | Tag | Data 64B]
+        Line1[Line 1: Valid | Tag | Data 64B]
+        LineDots[...]
+        Line127[Line 127: Valid | Tag | Data 64B]
+    end
+
+    Index -->|Select Line| Line0
+    Index -->|Select Line| Line1
+    Tag -->|Compare| Line0
+    Tag -->|Compare| Line1
+    Offset -->|Select Byte| Line0
+
+    style Tag fill:#ffa500
+    style Index fill:#87ceeb
+    style Offset fill:#90ee90
+```
+
 ### How It Works
 
-For a cache with 256 lines (2^8), the index is 8 bits. Memory addresses are assigned to cache lines based on their index bits:
+For a cache with 256 lines ($2^8$), the index is 8 bits. Memory addresses are assigned to cache lines based on their index bits:
 
 ```
 Address 0x000 → Line 0
@@ -82,10 +113,45 @@ A **set-associative cache** divides the cache into sets, each containing multipl
 ### N-Way Set Associative
 
 In an N-way set-associative cache:
-- The cache has S sets
-- Each set has N lines (N "ways")
-- Total cache lines = S × N
-- A memory block maps to one set but can occupy any of the N ways
+- The cache has $S$ sets
+- Each set has $N$ lines ($N$ "ways")
+- Total cache lines = $S \times N$
+- A memory block maps to one set but can occupy any of the $N$ ways
+
+```mermaid
+graph TB
+    subgraph Address["Memory Address"]
+        Tag2[Tag]
+        Index2[Index]
+        Offset2[Offset]
+    end
+
+    subgraph Cache["4-Way Set-Associative Cache"]
+        subgraph Set0["Set 0"]
+            Way0_0[Way 0<br/>V|Tag|Data]
+            Way0_1[Way 1<br/>V|Tag|Data]
+            Way0_2[Way 2<br/>V|Tag|Data]
+            Way0_3[Way 3<br/>V|Tag|Data]
+        end
+        subgraph Set1["Set 1"]
+            Way1_0[Way 0<br/>V|Tag|Data]
+            Way1_1[Way 1<br/>V|Tag|Data]
+            Way1_2[Way 2<br/>V|Tag|Data]
+            Way1_3[Way 3<br/>V|Tag|Data]
+        end
+    end
+
+    Index2 -->|Select Set| Set0
+    Index2 -->|Select Set| Set1
+    Tag2 -->|Compare All Ways| Way0_0
+    Tag2 -->|Compare All Ways| Way0_1
+
+    style Tag2 fill:#ffa500
+    style Index2 fill:#87ceeb
+    style Offset2 fill:#90ee90
+    style Set0 fill:#e1f5ff
+    style Set1 fill:#e1f5ff
+```
 
 Common configurations:
 - **2-way**: Each set has 2 lines
@@ -241,19 +307,43 @@ Consider a cache with:
 
 Calculate the address field sizes:
 
-1. **Offset bits**: log2(64) = 6 bits
-2. **Number of lines**: 32 KB / 64 B = 512 lines
-3. **Number of sets**: 512 lines / 4 ways = 128 sets
-4. **Index bits**: log2(128) = 7 bits
-5. **Tag bits**: 32 - 7 - 6 = 19 bits
+1. **Offset bits**: $\log_2(64) = 6$ bits
+2. **Number of lines**: $\frac{32 \text{ KB}}{64 \text{ B}} = \frac{32768}{64} = 512$ lines
+3. **Number of sets**: $\frac{512 \text{ lines}}{4 \text{ ways}} = 128$ sets
+4. **Index bits**: $\log_2(128) = 7$ bits
+5. **Tag bits**: $32 - 7 - 6 = 19$ bits
 
-Address 0x12345678:
-- Binary: 0001 0010 0011 0100 0101 0110 0111 1000
-- Tag (bits 31-13): 0x091A2 (19 bits)
-- Index (bits 12-6): 0x59 = 89 (7 bits)
-- Offset (bits 5-0): 0x38 = 56 (6 bits)
+Address `0x12345678`:
+- Binary: `0001 0010 0011 0100 0101 0110 0111 1000`
+- **Tag** (bits 31-13): `0x091A2` (19 bits)
+- **Index** (bits 12-6): `0x59 = 89` (7 bits)
+- **Offset** (bits 5-0): `0x38 = 56` (6 bits)
 
-This address maps to set 89, and the tag 0x091A2 is compared against the 4 ways in that set.
+```mermaid
+graph LR
+    subgraph Addr["Address 0x12345678"]
+        T["Tag<br/>0x091A2<br/>(19 bits)"]
+        I["Index<br/>89<br/>(7 bits)"]
+        O["Offset<br/>56<br/>(6 bits)"]
+    end
+
+    T --> Set89[Set 89]
+    I --> Set89
+    O --> Byte[Byte 56 in line]
+
+    subgraph Set89["Set 89 (4 ways)"]
+        W0[Way 0]
+        W1[Way 1]
+        W2[Way 2]
+        W3[Way 3]
+    end
+
+    style T fill:#ffa500
+    style I fill:#87ceeb
+    style O fill:#90ee90
+```
+
+This address maps to set 89, and the tag `0x091A2` is compared against the 4 ways in that set.
 
 ## Key Takeaways
 

@@ -12,6 +12,31 @@ The input to a compiler is called the source program, written in a source langua
 
 Compilation is traditionally divided into several distinct phases, each transforming the program representation from one form to another. These phases can be grouped into two major components: the front-end and the back-end.
 
+```mermaid
+graph TD
+    A[Source Code] --> B[Lexical Analysis]
+    B --> C[Tokens]
+    C --> D[Syntax Analysis]
+    D --> E[Parse Tree/AST]
+    E --> F[Semantic Analysis]
+    F --> G[Annotated AST]
+    G --> H[IR Generation]
+    H --> I[Intermediate Representation]
+    I --> J[Optimization]
+    J --> K[Optimized IR]
+    K --> L[Code Generation]
+    L --> M[Target Code]
+
+    style B fill:#e1f5ff
+    style D fill:#e1f5ff
+    style F fill:#e1f5ff
+    style H fill:#ffe1e1
+    style J fill:#ffe1e1
+    style L fill:#ffe1e1
+```
+
+The diagram above illustrates the complete compilation pipeline, with front-end phases (lexical, syntax, semantic analysis) shown in blue and back-end phases (optimization, code generation) shown in pink.
+
 ### Lexical Analysis (Scanning)
 
 The first phase reads the source code as a stream of characters and groups them into meaningful sequences called tokens. A token is the smallest unit of meaning, such as keywords, identifiers, operators, and literals. For example, the statement `int count = 42;` would be broken into tokens: `int` (keyword), `count` (identifier), `=` (operator), `42` (literal), and `;` (delimiter).
@@ -48,7 +73,36 @@ The front-end is language-dependent and machine-independent. It encompasses lexi
 
 The back-end is language-independent and machine-dependent. It takes the intermediate representation and performs optimizations and code generation for a specific target architecture. By separating the back-end, compiler writers can target multiple architectures by developing different back-ends that all consume the same IR format.
 
-This separation enables a modular design: with M source languages and N target machines, you need only M front-ends and N back-ends rather than M×N complete compilers. This is the architectural principle behind frameworks like LLVM, where multiple languages (C, C++, Rust, Swift) use different front-ends but share the same back-end infrastructure.
+This separation enables a modular design: with $M$ source languages and $N$ target machines, you need only $M$ front-ends and $N$ back-ends rather than $M \times N$ complete compilers. This is the architectural principle behind frameworks like LLVM, where multiple languages (C, C++, Rust, Swift) use different front-ends but share the same back-end infrastructure.
+
+```mermaid
+graph LR
+    subgraph "Front-Ends"
+        C[C/C++]
+        Rust[Rust]
+        Swift[Swift]
+    end
+
+    subgraph "Intermediate Representation"
+        IR[LLVM IR]
+    end
+
+    subgraph "Back-Ends"
+        x86[x86-64]
+        ARM[ARM64]
+        RISC[RISC-V]
+    end
+
+    C --> IR
+    Rust --> IR
+    Swift --> IR
+
+    IR --> x86
+    IR --> ARM
+    IR --> RISC
+```
+
+The modular architecture allows $M + N$ components instead of $M \times N$ complete compilers, significantly reducing development and maintenance costs.
 
 ## Compilation vs Interpretation
 

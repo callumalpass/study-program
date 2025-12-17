@@ -74,6 +74,20 @@ class Environment:
 
 Lookup proceeds outward through the scope chain until the name is found or we reach the outermost scope. This implements lexical scoping where variable resolution follows the static structure of the program.
 
+```mermaid
+graph LR
+    A["Inner Env\n{z: 30}"] --> B["Middle Env\n{y: 20}"]
+    B --> C["Global Env\n{x: 10}"]
+    C --> D["None"]
+
+    style A fill:#ffe1e1
+    style B fill:#e1f5ff
+    style C fill:#e1ffe1
+    style D fill:#f0f0f0
+```
+
+When looking up a variable in the inner environment, the interpreter follows the parent chain until it finds the binding or reaches the end.
+
 Creating nested scopes:
 
 ```python
@@ -211,6 +225,22 @@ def eval_call(func, args):
 ```
 
 The key insight: when creating a function, we capture the current environment. When calling the function, we use that captured environment as the parent, not the caller's environment.
+
+```mermaid
+graph TD
+    A["Closure"] --> B["Parameters:\n['x']"]
+    A --> C["Body:\nreturn count + x"]
+    A --> D["Captured Env"]
+
+    D --> E["{count: 0}"]
+    E --> F["Global Env"]
+
+    style A fill:#e1f5ff
+    style D fill:#ffe1e1
+    style E fill:#e1ffe1
+```
+
+Each closure packages together code (parameters + body) with the environment where it was defined.
 
 ## Closure Examples and Patterns
 

@@ -432,25 +432,39 @@ h1, h2, h3 {
 
 When multiple rules target the same element, specificity determines which styles apply. Specificity is calculated as a four-part value: (inline, IDs, classes/attributes/pseudo-classes, elements/pseudo-elements).
 
+### Specificity Formula
+
+Specificity is calculated using the formula:
+
+$$S = (a, b, c, d)$$
+
+Where:
+- $a$ = inline styles (1 if present, 0 otherwise)
+- $b$ = number of ID selectors
+- $c$ = number of class selectors, attribute selectors, and pseudo-classes
+- $d$ = number of type selectors and pseudo-elements
+
+The specificity value is compared left-to-right: $(1,0,0,0) > (0,5,0,0) > (0,0,10,0)$
+
 ### Specificity Values
 
 ```css
-/* Specificity: 0,0,0,1 */
+/* Specificity: (0,0,0,1) */
 p {
     color: blue;
 }
 
-/* Specificity: 0,0,1,0 */
+/* Specificity: (0,0,1,0) */
 .text {
     color: red;
 }
 
-/* Specificity: 0,1,0,0 */
+/* Specificity: (0,1,0,0) */
 #main {
     color: green;
 }
 
-/* Inline style: 1,0,0,0 */
+/* Inline style: (1,0,0,0) */
 <p style="color: purple;">
 ```
 
@@ -542,14 +556,28 @@ Count each type of selector:
 /* Elements: div, nav, li, a = 4 */
 /* Classes: .container, .menu, .active = 3 */
 /* Pseudo-classes: :hover = 1 (counts as class) */
-/* Total: 0,0,4,4 (0 IDs, 0+3+1=4 classes/pseudo-classes, 4 elements) */
+/* Total: (0,0,4,4) - 0 IDs, 0+3+1=4 classes/pseudo-classes, 4 elements */
 ```
 
+#### Specificity Calculation Example
+
+For selector `div#header.main nav ul.menu li.active:hover`:
+
+$$S = (a, b, c, d)$$
+
+Counting each component:
+- $a = 0$ (no inline styles)
+- $b = 1$ (one ID: `#header`)
+- $c = 1 + 1 + 1 + 1 = 4$ (classes: `.main`, `.menu`, `.active`, pseudo-class: `:hover`)
+- $d = 4$ (elements: `div`, `nav`, `ul`, `li`)
+
+$$S = (0, 1, 4, 4)$$
+
 Correct calculation:
-- Inline styles: 1,0,0,0
-- IDs: 0,1,0,0
-- Classes, attributes, pseudo-classes: 0,0,1,0
-- Elements, pseudo-elements: 0,0,0,1
+- Inline styles: $(1,0,0,0)$
+- IDs: $(0,1,0,0)$
+- Classes, attributes, pseudo-classes: $(0,0,1,0)$
+- Elements, pseudo-elements: $(0,0,0,1)$
 
 ### Specificity Calculator Example
 

@@ -306,44 +306,71 @@ Class diagrams effectively illustrate design patterns.
 
 ### Singleton Pattern
 
-```
-┌─────────────────────────┐
-│    DatabaseConnection   │
-├─────────────────────────┤
-│ - instance: DatabaseConnection {static}
-├─────────────────────────┤
-│ - DatabaseConnection()  │ (private constructor)
-│ + getInstance(): DatabaseConnection {static}
-└─────────────────────────┘
+```mermaid
+classDiagram
+    class DatabaseConnection {
+        -DatabaseConnection instance$
+        -DatabaseConnection()
+        +getInstance()$ DatabaseConnection
+        +connect()
+        +disconnect()
+    }
+    note for DatabaseConnection "Private constructor ensures\nonly one instance exists.\nStatic getInstance() provides\nglobal access point."
 ```
 
 ### Observer Pattern
 
-```
-       Subject
-          △
-          │ notifies
-          │
-      Observer ◇───── ConcreteObserver
-         △
-         ┆
-   ConcreteSubject
+```mermaid
+classDiagram
+    class Subject {
+        -observers: List~Observer~
+        +attach(Observer)
+        +detach(Observer)
+        +notify()
+    }
+    class Observer {
+        <<interface>>
+        +update()
+    }
+    class ConcreteSubject {
+        -state
+        +getState()
+        +setState()
+    }
+    class ConcreteObserver {
+        -observerState
+        +update()
+    }
+
+    Subject o-- Observer
+    Subject <|-- ConcreteSubject
+    Observer <|.. ConcreteObserver
+    ConcreteObserver --> ConcreteSubject
 ```
 
 ### Strategy Pattern
 
-```
-    Context
-      │
-      │ uses
-      ▽
-  «interface»
-   Strategy
-      △
-      ┆
-  ┌───┴───┐
-  │       │
-StrategyA StrategyB
+```mermaid
+classDiagram
+    class Context {
+        -strategy: Strategy
+        +setStrategy(Strategy)
+        +executeStrategy()
+    }
+    class Strategy {
+        <<interface>>
+        +execute()
+    }
+    class ConcreteStrategyA {
+        +execute()
+    }
+    class ConcreteStrategyB {
+        +execute()
+    }
+
+    Context --> Strategy
+    Strategy <|.. ConcreteStrategyA
+    Strategy <|.. ConcreteStrategyB
 ```
 
 ## Best Practices

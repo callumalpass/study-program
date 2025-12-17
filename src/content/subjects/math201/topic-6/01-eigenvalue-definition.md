@@ -102,7 +102,12 @@ Zero can be an eigenvalue! If $\lambda = 0$ is an eigenvalue with eigenvector $\
 
 $$A\mathbf{v} = 0\mathbf{v} = \mathbf{0}$$
 
-This means $\mathbf{v}$ is in the null space of $A$, so $A$ is singular (non-invertible). Conversely, if $A$ is invertible, zero cannot be an eigenvalue.
+This means $\mathbf{v} \in \text{Null}(A)$, so $A$ is singular (non-invertible).
+
+**Theorem:** For an $n \times n$ matrix $A$:
+$$\lambda = 0 \text{ is an eigenvalue of } A \iff A \text{ is singular} \iff \det(A) = 0$$
+
+Conversely, if $A$ is invertible (i.e., $\det(A) \neq 0$), then zero cannot be an eigenvalue.
 
 ---
 
@@ -121,6 +126,41 @@ This is a homogeneous system! For a non-trivial solution (non-zero $\mathbf{v}$)
 $$\det(A - \lambda I) = 0$$
 
 This equation, called the **characteristic equation**, is the key to finding eigenvalues. We'll explore this in the next section.
+
+### Complete Workflow for Finding Eigenvalues and Eigenvectors
+
+```mermaid
+flowchart TD
+    Start([Given: n×n Matrix A]) --> CharEq[Form characteristic equation:<br/>det(A - λI) = 0]
+    CharEq --> Expand[Expand determinant to get<br/>characteristic polynomial<br/>p(λ) = det(A - λI)]
+    Expand --> Solve[Solve polynomial equation<br/>p(λ) = 0]
+    Solve --> Eigenvals[Eigenvalues: λ₁, λ₂, ..., λₖ]
+
+    Eigenvals --> ForEach[For each eigenvalue λᵢ:]
+    ForEach --> FormSystem[Form homogeneous system:<br/>(A - λᵢI)v = 0]
+    FormSystem --> RowReduce[Row reduce augmented matrix<br/>[A - λᵢI | 0] to RREF]
+    RowReduce --> FindNull[Find null space:<br/>Identify free variables<br/>and basic variables]
+    FindNull --> Eigenvec[Extract eigenvectors:<br/>Basis for Null(A - λᵢI)]
+    Eigenvec --> Eigenspace[Eigenspace Eλᵢ =<br/>span of eigenvectors]
+
+    Eigenspace --> MoreEigen{More<br/>eigenvalues?}
+    MoreEigen -->|Yes| ForEach
+    MoreEigen -->|No| Complete[Complete eigenvalue-eigenvector pairs:<br/>(λ₁, v₁), (λ₂, v₂), ..., (λₖ, vₖ)]
+
+    Complete --> Verify[Verify: Avᵢ = λᵢvᵢ for each i]
+    Verify --> Done([Ready for applications:<br/>diagonalization, powers, etc.])
+
+    style Start fill:#e1f5e1
+    style Eigenvals fill:#fff4e1
+    style Eigenspace fill:#e1f5ff
+    style Complete fill:#e1ffe1
+    style Done fill:#e1f5e1
+```
+
+**Key Steps:**
+1. **Find eigenvalues**: Solve $\det(A - \lambda I) = 0$
+2. **Find eigenvectors**: For each $\lambda_i$, solve $(A - \lambda_i I)\mathbf{v} = \mathbf{0}$
+3. **Verify**: Check that $A\mathbf{v}_i = \lambda_i\mathbf{v}_i$
 
 ---
 

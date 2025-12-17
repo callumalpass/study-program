@@ -114,6 +114,43 @@ $$= \pi\left(\frac{16}{3} + 8 - \frac{32}{5}\right) = \pi\left(\frac{80 + 120 - 
 - **Use the washer method** when there's a hole—rotating a region between two curves
 - The washer method generalizes the disk method (set inner radius to zero for a disk)
 
+### Visual Comparison: Disk vs Washer vs Shell Methods
+
+```mermaid
+graph TD
+    Start([Volume of<br/>Solid of Revolution]) --> Axis{Which axis<br/>of rotation?}
+
+    Axis --> Horiz[Horizontal axis<br/> e.g., x-axis or y=k ]
+    Axis --> Vert[Vertical axis<br/> e.g., y-axis or x=h ]
+
+    Horiz --> HMethod{Integration<br/>variable?}
+    HMethod -->|Integrate dx<br/> perpendicular| HDisk{One curve or<br/>two curves?}
+    HMethod -->|Integrate dy<br/> parallel| HShell[Shell Method<br/>V = ∫2πy·h y ·dy]
+
+    HDisk -->|One curve| HDiskF[Disk Method<br/>V = ∫π R x ² dx<br/>R = f x ]
+    HDisk -->|Two curves| HWasher[Washer Method<br/>V = ∫π R²-r² dx<br/>R = outer, r = inner]
+
+    Vert --> VMethod{Integration<br/>variable?}
+    VMethod -->|Integrate dy<br/> perpendicular| VDisk{One curve or<br/>two curves?}
+    VMethod -->|Integrate dx<br/> parallel| VShell[Shell Method<br/>V = ∫2πx·h x ·dx]
+
+    VDisk -->|One curve| VDiskF[Disk Method<br/>V = ∫π R y ² dy<br/>R = g y ]
+    VDisk -->|Two curves| VWasher[Washer Method<br/>V = ∫π R²-r² dy<br/>R = outer, r = inner]
+
+    style Start fill:#e1f5ff
+    style HDiskF fill:#d4edda
+    style HWasher fill:#fff3cd
+    style HShell fill:#ffd7e5
+    style VDiskF fill:#d4edda
+    style VWasher fill:#fff3cd
+    style VShell fill:#ffd7e5
+```
+
+**Key Insight:** The choice between disk/washer and shell methods depends on:
+1. **Axis of rotation** (horizontal vs vertical)
+2. **Which integration variable** makes the setup simpler
+3. **Whether you slice perpendicular or parallel** to the axis
+
 ## Strategy for Setting Up Volume Integrals
 
 1. **Sketch the region** and identify the axis of revolution

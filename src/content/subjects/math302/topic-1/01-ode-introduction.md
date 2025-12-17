@@ -67,6 +67,49 @@ $$\frac{dy}{dx} = \sin y \quad \text{(transcendental function of y)}$$
 
 Linear ODEs have particularly nice properties, including the superposition principle, which makes them significantly easier to solve than nonlinear equations.
 
+### ODE Classification Decision Tree
+
+The following diagram helps systematically classify any ordinary differential equation:
+
+```mermaid
+graph TD
+    A[Differential Equation] --> B{One or multiple<br/>independent variables?}
+    B -->|One| C[Ordinary DE - ODE]
+    B -->|Multiple| D[Partial DE - PDE]
+
+    C --> E{Highest derivative<br/>order?}
+    E -->|1st derivative| F[First-Order ODE]
+    E -->|2nd derivative| G[Second-Order ODE]
+    E -->|nth derivative| H[nth-Order ODE]
+
+    F --> I{Linear in y<br/>and y'?}
+    G --> J{Linear in y,<br/>y', y''?}
+    H --> K{Linear in y and<br/>all derivatives?}
+
+    I -->|Yes| L[Linear 1st-Order]
+    I -->|No| M[Nonlinear 1st-Order]
+
+    J -->|Yes| N{f-x- = 0?}
+    J -->|No| O[Nonlinear 2nd-Order]
+
+    K -->|Yes| P{f-x- = 0?}
+    K -->|No| Q[Nonlinear nth-Order]
+
+    N -->|Yes| R[Homogeneous Linear]
+    N -->|No| S[Nonhomogeneous Linear]
+
+    P -->|Yes| T[Homogeneous Linear]
+    P -->|No| U[Nonhomogeneous Linear]
+
+    style C fill:#e1f5e1
+    style F fill:#fff3cd
+    style G fill:#fff3cd
+    style H fill:#fff3cd
+    style L fill:#cfe2ff
+    style R fill:#d1e7dd
+    style S fill:#f8d7da
+```
+
 ## Homogeneous vs Nonhomogeneous
 
 A linear ODE is **homogeneous** if $f(x) = 0$; otherwise, it is **nonhomogeneous** (or **inhomogeneous**).

@@ -20,6 +20,31 @@ This abstraction allows programmers to write code without knowing circuit detail
 
 At the highest level, a computer system consists of several major components connected together:
 
+```mermaid
+graph TB
+    subgraph CPU["CPU (Central Processing Unit)"]
+        CU[Control Unit]
+        ALU[ALU]
+        Registers[Registers<br/>PC, SP, GPRs]
+    end
+
+    Memory[Memory<br/>RAM]
+    Storage[Storage<br/>SSD/HDD]
+    IO[I/O Devices<br/>Keyboard, Display, Network]
+
+    CPU <-->|Address & Data Bus| Memory
+    CPU <-->|I/O Bus| Storage
+    CPU <-->|I/O Bus| IO
+
+    CU -.->|Control Signals| ALU
+    CU -.->|Control Signals| Registers
+
+    style CPU fill:#e1f5ff
+    style Memory fill:#ffe1f5
+    style Storage fill:#fff4e1
+    style IO fill:#e1ffe1
+```
+
 ### CPU (Central Processing Unit)
 
 The CPU is the "brain" of the computer—it executes instructions. The CPU contains:
@@ -158,6 +183,34 @@ L3 Cache       ~40 cycles   ~4-32 MB
 RAM            ~100 cycles  ~8-64 GB
 SSD            ~10,000 cycles   ~256 GB - 4 TB
 HDD            ~10,000,000 cycles  ~1-16 TB
+```
+
+```mermaid
+graph TD
+    CPU[CPU Core]
+    Reg[Registers<br/>~1 cycle<br/>Bytes]
+    L1[L1 Cache<br/>~4 cycles<br/>32-64 KB]
+    L2[L2 Cache<br/>~12 cycles<br/>256 KB - 1 MB]
+    L3[L3 Cache<br/>~40 cycles<br/>4-32 MB]
+    RAM[Main Memory RAM<br/>~200 cycles<br/>8-64 GB]
+    SSD[SSD Storage<br/>~10K cycles<br/>256 GB - 4 TB]
+    HDD[HDD Storage<br/>~10M cycles<br/>1-16 TB]
+
+    CPU --> Reg
+    Reg --> L1
+    L1 --> L2
+    L2 --> L3
+    L3 --> RAM
+    RAM --> SSD
+    SSD --> HDD
+
+    style Reg fill:#ff6b6b
+    style L1 fill:#ffa500
+    style L2 fill:#ffd700
+    style L3 fill:#90ee90
+    style RAM fill:#87ceeb
+    style SSD fill:#dda0dd
+    style HDD fill:#d3d3d3
 ```
 
 The goal: make the common case fast. Programs tend to access the same data repeatedly (temporal locality) and nearby data sequentially (spatial locality). Caches exploit these patterns.

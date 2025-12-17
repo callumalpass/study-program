@@ -4,69 +4,79 @@ A combination is a selection of objects where order does not matter. While permu
 
 ## Basic Combinations
 
-The number of ways to choose k objects from n distinct objects (order doesn't matter) is:
+The number of ways to choose $k$ objects from $n$ distinct objects (order doesn't matter) is:
 
-```
-C(n,k) = (n choose k) = n! / (k!(n-k)!)
-```
+$$\binom{n}{k} = C(n,k) = \frac{n!}{k!(n-k)!}$$
 
-Also written as ₙCₖ or "n choose k."
+Also written as $_nC_k$ or "n choose k."
 
 ### Derivation from Permutations
 
-P(n,k) counts ordered selections: pick k from n AND arrange them.
-C(n,k) counts unordered selections: just pick k from n.
+$P(n,k)$ counts ordered selections: pick $k$ from $n$ AND arrange them.
+$C(n,k)$ counts unordered selections: just pick $k$ from $n$.
 
-Since k objects can be arranged in k! ways:
+Since $k$ objects can be arranged in $k!$ ways:
 
-```
-P(n,k) = C(n,k) × k!
-C(n,k) = P(n,k) / k! = n! / (k!(n-k)!)
-```
+$$P(n,k) = C(n,k) \times k!$$
+$$C(n,k) = \frac{P(n,k)}{k!} = \frac{n!}{k!(n-k)!}$$
 
 ### Example: Committee Selection
 
 Choose a 3-person committee from 10 candidates.
 
-C(10,3) = 10!/(3!×7!) = (10×9×8)/(3×2×1) = 720/6 = 120 committees
+$$C(10,3) = \frac{10!}{3! \times 7!} = \frac{10 \times 9 \times 8}{3 \times 2 \times 1} = \frac{720}{6} = 120 \text{ committees}$$
 
-Order doesn't matter: {Alice, Bob, Carol} is the same committee as {Carol, Alice, Bob}.
+Order doesn't matter: $\{\text{Alice, Bob, Carol}\}$ is the same committee as $\{\text{Carol, Alice, Bob}\}$.
 
 ## Properties of Binomial Coefficients
 
 ### Symmetry
 
-```
-C(n,k) = C(n, n-k)
-```
+$$\binom{n}{k} = \binom{n}{n-k}$$
 
-Choosing k items to include is equivalent to choosing n-k items to exclude.
+Choosing $k$ items to include is equivalent to choosing $n-k$ items to exclude.
 
-Example: C(10,3) = C(10,7) = 120
+Example: $\binom{10}{3} = \binom{10}{7} = 120$
 
 ### Pascal's Identity
 
-```
-C(n,k) = C(n-1,k-1) + C(n-1,k)
-```
+$$\binom{n}{k} = \binom{n-1}{k-1} + \binom{n-1}{k}$$
 
 **Interpretation**: Consider a specific element. Either:
-- Include it: choose remaining k-1 from n-1 others → C(n-1,k-1)
-- Exclude it: choose all k from n-1 others → C(n-1,k)
+- Include it: choose remaining $k-1$ from $n-1$ others → $\binom{n-1}{k-1}$
+- Exclude it: choose all $k$ from $n-1$ others → $\binom{n-1}{k}$
+
+**Pascal's Triangle visualization:**
+```mermaid
+graph TD
+    R0["Row 0: 1"]
+    R1["Row 1: 1  1"]
+    R2["Row 2: 1  2  1"]
+    R3["Row 3: 1  3  3  1"]
+    R4["Row 4: 1  4  6  4  1"]
+    R5["Row 5: 1  5  10  10  5  1"]
+
+    R0 --> R1
+    R1 --> R2
+    R2 --> R3
+    R3 --> R4
+    R4 --> R5
+
+    Note["Each entry = sum of<br/>two entries above it"]
+
+    style R0 fill:#e1f5ff
+    style Note fill:#fff3cd
+```
 
 ### Sum of Row
 
-```
-C(n,0) + C(n,1) + ... + C(n,n) = 2ⁿ
-```
+$$\sum_{k=0}^{n} \binom{n}{k} = 2^n$$
 
-The total number of subsets of an n-element set is 2ⁿ.
+The total number of subsets of an $n$-element set is $2^n$.
 
 ### Hockey Stick Identity
 
-```
-C(r,r) + C(r+1,r) + ... + C(n,r) = C(n+1,r+1)
-```
+$$\sum_{i=r}^{n} \binom{i}{r} = \binom{n+1}{r+1}$$
 
 Useful for summing diagonals in Pascal's triangle.
 
@@ -87,11 +97,9 @@ Each entry is the sum of the two entries above it (Pascal's identity).
 
 ## Combinations with Repetition
 
-When choosing k items from n types where repetition is allowed (multisets):
+When choosing $k$ items from $n$ types where repetition is allowed (multisets):
 
-```
-C(n+k-1, k) = C(n+k-1, n-1)
-```
+$$\binom{n+k-1}{k} = \binom{n+k-1}{n-1}$$
 
 Also called "stars and bars" or "multichoose."
 
@@ -99,15 +107,25 @@ Also called "stars and bars" or "multichoose."
 
 Choose 5 donuts from 3 flavors (chocolate, vanilla, strawberry).
 
-This is choosing with repetition: C(3+5-1, 5) = C(7,5) = 21 ways.
+This is choosing with repetition: $\binom{3+5-1}{5} = \binom{7}{5} = 21$ ways.
 
 ### Stars and Bars Visualization
 
-Represent k items as stars (*) and use n-1 bars (|) to separate types.
+Represent $k$ items as stars ($\star$) and use $n-1$ bars ($|$) to separate types.
 
-5 donuts from 3 flavors: **|*|** means 2 chocolate, 1 vanilla, 2 strawberry.
+**Example:** 5 donuts from 3 flavors
 
-Total arrangements of 5 stars and 2 bars: C(7,2) = C(7,5) = 21.
+```mermaid
+graph LR
+    Ex["★★|★|★★"] --> Meaning["2 chocolate | 1 vanilla | 2 strawberry"]
+
+    Pattern["Pattern: k stars + n-1 bars"] --> Total["Total arrangements:<br/>Choose k positions for stars<br/>from n+k-1 positions"]
+
+    style Ex fill:#e1f5ff
+    style Total fill:#d4edda
+```
+
+Total arrangements of 5 stars and 2 bars: $\binom{7}{2} = \binom{7}{5} = 21$.
 
 ## Restricted Combinations
 
@@ -138,26 +156,27 @@ Total: 3,360 + 2,520 + 700 + 56 = 6,636
 
 The binomial coefficients appear in polynomial expansion:
 
-```
-(x + y)ⁿ = Σ C(n,k) × x^(n-k) × y^k  for k = 0 to n
-```
+$$(x + y)^n = \sum_{k=0}^{n} \binom{n}{k} x^{n-k} y^k$$
 
-### Example: (x + y)⁴
+### Example: $(x + y)^4$
 
-= C(4,0)x⁴ + C(4,1)x³y + C(4,2)x²y² + C(4,3)xy³ + C(4,4)y⁴
-= x⁴ + 4x³y + 6x²y² + 4xy³ + y⁴
+$$= \binom{4}{0}x^4 + \binom{4}{1}x^3y + \binom{4}{2}x^2y^2 + \binom{4}{3}xy^3 + \binom{4}{4}y^4$$
+
+$$= x^4 + 4x^3y + 6x^2y^2 + 4xy^3 + y^4$$
 
 ### Applications
 
-**Counting**: Set x = y = 1:
-(1+1)ⁿ = C(n,0) + C(n,1) + ... + C(n,n) = 2ⁿ
+**Counting**: Set $x = y = 1$:
 
-**Alternating sum**: Set x = 1, y = -1:
-(1-1)ⁿ = 0 = C(n,0) - C(n,1) + C(n,2) - ...
+$$(1+1)^n = \sum_{k=0}^{n} \binom{n}{k} = 2^n$$
 
-So: C(n,0) + C(n,2) + C(n,4) + ... = C(n,1) + C(n,3) + ...
+**Alternating sum**: Set $x = 1, y = -1$:
 
-Even subsets equal odd subsets: each = 2^(n-1).
+$$(1-1)^n = 0 = \sum_{k=0}^{n} (-1)^k \binom{n}{k}$$
+
+So: $\binom{n}{0} + \binom{n}{2} + \binom{n}{4} + \cdots = \binom{n}{1} + \binom{n}{3} + \binom{n}{5} + \cdots$
+
+Even subsets equal odd subsets: each $= 2^{n-1}$.
 
 ## Multinomial Coefficients
 

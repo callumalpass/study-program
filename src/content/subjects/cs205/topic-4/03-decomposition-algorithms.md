@@ -8,41 +8,104 @@ Decomposition transforms a relation into multiple smaller relations to achieve d
 
 A decomposition is **lossless** (or lossless-join) if the original relation can be perfectly reconstructed by joining the decomposed relations.
 
-```
-R decomposed into R1 and R2 is lossless iff:
-R = R1 ⋈ R2 (natural join)
+$$R \text{ decomposed into } R_1 \text{ and } R_2 \text{ is lossless iff:}$$
+$$R = R_1 \bowtie R_2 \text{ (natural join)}$$
+
+```mermaid
+graph LR
+    R["Original Relation R"] -->|Decompose| R1["R₁"]
+    R -->|Decompose| R2["R₂"]
+    R1 -->|Join| J["R₁ ⋈ R₂"]
+    R2 -->|Join| J
+
+    J -.->|"Must equal"| R
+
+    style R fill:#e1f5ff
+    style R1 fill:#e8f5e9
+    style R2 fill:#e8f5e9
+    style J fill:#fff4e1
 ```
 
 ### Testing for Lossless Join
 
-For decomposition into two relations R1 and R2:
+For decomposition into two relations $R_1$ and $R_2$:
 
-```
-Lossless if and only if:
-(R1 ∩ R2) → R1  OR  (R1 ∩ R2) → R2
+**Lossless if and only if**:
+$$(R_1 \cap R_2) \rightarrow R_1 \text{ OR } (R_1 \cap R_2) \rightarrow R_2$$
 
-The common attributes must be a superkey of at least one relation.
+**The common attributes must be a superkey of at least one relation.**
+
+```mermaid
+graph TD
+    Start{Decompose R<br/>into R₁ and R₂}
+    Start --> Common["Find common attributes:<br/>R₁ ∩ R₂"]
+    Common --> Check{"Is (R₁ ∩ R₂)<br/>a superkey of<br/>R₁ or R₂?"}
+    Check -->|Yes| Lossless["✓ LOSSLESS<br/>Safe to decompose"]
+    Check -->|No| Lossy["✗ LOSSY<br/>Data will be lost"]
+
+    style Start fill:#e1f5ff
+    style Common fill:#fff4e1
+    style Lossless fill:#e8f5e9
+    style Lossy fill:#ffe8e8
 ```
 
 ### Example Analysis
 
+Relation: $R(A, B, C, D)$ with FDs: $A \rightarrow B$, $C \rightarrow D$
+
+**Decomposition 1**: $R_1(A, B)$, $R_2(C, D)$
+
+```mermaid
+graph LR
+    R1["R₁(A, B)"]
+    R2["R₂(C, D)"]
+    Common["R₁ ∩ R₂ = ∅"]
+
+    R1 -.-> Common
+    R2 -.-> Common
+
+    style R1 fill:#ffe8e8
+    style R2 fill:#ffe8e8
+    style Common fill:#ffe8e8
 ```
-R(A, B, C, D) with FDs: A → B, C → D
 
-Decomposition 1: R1(A, B), R2(C, D)
-Common: R1 ∩ R2 = ∅
-Result: LOSSY (no common attributes)
+Common: $R_1 \cap R_2 = \emptyset$
 
-Decomposition 2: R1(A, B, C), R2(C, D)
-Common: R1 ∩ R2 = {C}
-Check: C → D means C is key in R2
-Result: LOSSLESS
+**Result**: ✗ **LOSSY** (no common attributes)
 
-Decomposition 3: R1(A, B), R2(A, C, D)
-Common: R1 ∩ R2 = {A}
-Check: A → B means A is key in R1
-Result: LOSSLESS
+---
+
+**Decomposition 2**: $R_1(A, B, C)$, $R_2(C, D)$
+
+```mermaid
+graph LR
+    R1["R₁(A, B, C)"]
+    R2["R₂(C, D)"]
+    Common["R₁ ∩ R₂ = {C}"]
+
+    R1 --> Common
+    R2 --> Common
+
+    style R1 fill:#e8f5e9
+    style R2 fill:#e8f5e9
+    style Common fill:#e1f5ff
 ```
+
+Common: $R_1 \cap R_2 = \{C\}$
+
+Check: $C \rightarrow D$ means $C$ is key in $R_2$ ✓
+
+**Result**: ✓ **LOSSLESS**
+
+---
+
+**Decomposition 3**: $R_1(A, B)$, $R_2(A, C, D)$
+
+Common: $R_1 \cap R_2 = \{A\}$
+
+Check: $A \rightarrow B$ means $A$ is key in $R_1$ ✓
+
+**Result**: ✓ **LOSSLESS**
 
 ### Why Losslessness Matters
 
@@ -127,19 +190,27 @@ Options:
 
 Produces lossless, dependency-preserving 3NF decomposition:
 
-```
-Algorithm: 3NF Synthesis
-Input: Relation R, set of FDs F
+**Algorithm**: 3NF Synthesis
 
-1. Compute minimal cover Fc of F
-2. For each FD X → A in Fc:
-   Create relation Ri(X, A)
-3. If no relation contains a candidate key:
-   Add a relation with any candidate key
-4. Remove redundant relations (subset of another)
+**Input**: Relation $R$, set of FDs $F$
 
-Output: Set of relations in 3NF
+```mermaid
+graph TD
+    Start["Input: R, F"] --> Step1["Step 1:<br/>Compute minimal cover Fc"]
+    Step1 --> Step2["Step 2:<br/>For each FD X → A in Fc,<br/>create relation Ri(X, A)"]
+    Step2 --> Step3["Step 3:<br/>If no relation contains<br/>a candidate key,<br/>add relation with key"]
+    Step3 --> Step4["Step 4:<br/>Remove redundant relations<br/>(subset of another)"]
+    Step4 --> Output["Output:<br/>Set of 3NF relations"]
+
+    style Start fill:#e1f5ff
+    style Step1 fill:#fff4e1
+    style Step2 fill:#fff4e1
+    style Step3 fill:#fff4e1
+    style Step4 fill:#fff4e1
+    style Output fill:#e8f5e9
 ```
+
+**Output**: Set of relations in 3NF
 
 ### Step-by-Step Example
 
@@ -197,20 +268,36 @@ Same determinant = same relation
 
 ### Decomposition Algorithm
 
-```
-Algorithm: BCNF Decomposition
-Input: Relation R, set of FDs F
+**Algorithm**: BCNF Decomposition
 
-1. Result = {R}
-2. While some Ri in Result is not in BCNF:
-   a. Find FD X → Y in Ri violating BCNF
-      (X is not a superkey)
-   b. Compute X⁺ in Ri
-   c. Replace Ri with:
-      - Ri1 = X⁺ (attributes determined by X)
-      - Ri2 = X ∪ (Ri - X⁺) (remaining + X)
-3. Return Result
+**Input**: Relation $R$, set of FDs $F$
+
+```mermaid
+graph TD
+    Start["Input: R, F<br/>Result = {R}"] --> Check{"Is some Ri<br/>not in BCNF?"}
+    Check -->|No| Done["Return Result<br/>(All relations in BCNF)"]
+    Check -->|Yes| Find["Find FD X → Y in Ri<br/>violating BCNF<br/>(X is not superkey)"]
+    Find --> Compute["Compute X⁺ in Ri"]
+    Compute --> Replace["Replace Ri with:<br/>Ri₁ = X⁺<br/>Ri₂ = X ∪ (Ri - X⁺)"]
+    Replace --> Check
+
+    style Start fill:#e1f5ff
+    style Check fill:#fff4e1
+    style Find fill:#ffe8e8
+    style Compute fill:#fff4e1
+    style Replace fill:#fff4e1
+    style Done fill:#e8f5e9
 ```
+
+**Steps**:
+1. Result = {R}
+2. While some $R_i$ in Result is not in BCNF:
+   - a. Find FD $X \rightarrow Y$ in $R_i$ violating BCNF ($X$ is not a superkey)
+   - b. Compute $X^+$ in $R_i$
+   - c. Replace $R_i$ with:
+     - $R_{i1} = X^+$ (attributes determined by X)
+     - $R_{i2} = X \cup (R_i - X^+)$ (remaining + X)
+3. Return Result
 
 ### Example Decomposition
 
@@ -272,22 +359,33 @@ Composition of lossless splits = lossless
 
 ### Decision Framework
 
-```
-Requirement Analysis:
+**Requirement Analysis**:
 1. Is data integrity critical? → Must be lossless
 2. Must all FDs be locally enforceable? → Need dependency preservation
 3. How important is eliminating redundancy? → Affects NF choice
 
-Decision Tree:
-        Start
-          ↓
-    Need dependency
-    preservation?
-      /       \
-    Yes        No
-     ↓          ↓
-   3NF        BCNF
-(synthesis)  (decomposition)
+**Decision Tree**:
+
+```mermaid
+graph TD
+    Start([Start:<br/>Choose Normalization<br/>Strategy]) --> Q1{Need dependency<br/>preservation?}
+
+    Q1 -->|Yes| NF3["Use 3NF Synthesis<br/>Algorithm"]
+    Q1 -->|No| Q2{Need to eliminate<br/>all redundancy?}
+
+    Q2 -->|Yes| BCNF["Use BCNF Decomposition<br/>Algorithm"]
+    Q2 -->|No| NF3
+
+    NF3 --> Props3["Properties:<br/>✓ Lossless<br/>✓ Dependency preserving<br/>⚠ Some redundancy possible"]
+    BCNF --> PropsB["Properties:<br/>✓ Lossless<br/>✓ No redundancy<br/>⚠ May lose dependencies"]
+
+    style Start fill:#e1f5ff
+    style Q1 fill:#fff4e1
+    style Q2 fill:#fff4e1
+    style NF3 fill:#e8f5e9
+    style BCNF fill:#ffe8e8
+    style Props3 fill:#f0f0f0
+    style PropsB fill:#f0f0f0
 ```
 
 ### Practical Comparison

@@ -46,6 +46,24 @@ When Python looks up a variable name, it searches in a specific order called **L
 
 Python searches in this order and uses the first match it finds.
 
+```mermaid
+flowchart TD
+    Start([Variable lookup]) --> Local{Found in<br/>Local scope?}
+    Local -->|Yes| Use1[Use Local value]
+    Local -->|No| Enclosing{Found in<br/>Enclosing scope?}
+    Enclosing -->|Yes| Use2[Use Enclosing value]
+    Enclosing -->|No| Global{Found in<br/>Global scope?}
+    Global -->|Yes| Use3[Use Global value]
+    Global -->|No| Builtin{Found in<br/>Built-in scope?}
+    Builtin -->|Yes| Use4[Use Built-in value]
+    Builtin -->|No| Error[NameError]
+
+    Use1 --> End([End])
+    Use2 --> End
+    Use3 --> End
+    Use4 --> End
+```
+
 ### LEGB Example
 
 ```python

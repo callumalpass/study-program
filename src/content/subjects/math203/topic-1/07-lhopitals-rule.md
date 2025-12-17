@@ -134,6 +134,41 @@ Therefore: $\lim_{x \to \infty} \left(1 + \frac{1}{x}\right)^x = e^1 = e$
 4. **Getting stuck in a loop:**
    Some limits cycle back to the original form; try a different technique
 
+## Decision Tree for L'Hôpital's Rule
+
+The following flowchart helps you decide when and how to apply L'Hôpital's rule:
+
+```mermaid
+flowchart TD
+    A[Start: Evaluate limit] --> B{Direct<br/>substitution<br/>works?}
+    B -->|Yes| C[Done! Use that value]
+    B -->|No| D{What form<br/>do you get?}
+
+    D -->|0/0 or ∞/∞| E[Apply L'Hôpital:<br/>differentiate top and bottom]
+    D -->|0·∞| F[Rewrite as<br/>fraction: f/(1/g) or g/(1/f)]
+    D -->|∞-∞| G[Combine into<br/>single fraction]
+    D -->|0⁰, 1^∞, ∞⁰| H[Take ln: let y = f^g,<br/>find lim ln y = lim g·ln f]
+    D -->|Other<br/>5/0, 3/∞, etc.| I[Not indeterminate<br/>Evaluate directly:<br/>±∞ or 0]
+
+    F --> E
+    G --> E
+    H --> J[Apply L'Hôpital<br/>to ln y]
+
+    E --> K{Result is<br/>determinate?}
+    K -->|Yes| L[Done!]
+    K -->|Still 0/0<br/>or ∞/∞| M{Getting<br/>simpler?}
+    M -->|Yes| E
+    M -->|No, stuck<br/>in loop| N[Try different<br/>technique:<br/>series, algebra]
+
+    J --> O[Exponentiate:<br/>lim y = e^lim ln y]
+    O --> L
+
+    style E fill:#e1f5ff
+    style L fill:#d4edda
+    style I fill:#d4edda
+    style N fill:#fff3cd
+```
+
 ## When NOT to Use L'Hôpital
 
 - When direct substitution works

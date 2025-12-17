@@ -34,19 +34,42 @@ Grid consists of two main components:
 
 **Grid Area**: Rectangular space surrounded by four grid lines, can span multiple cells.
 
-```
-Grid Lines (numbered)
-1   2   3   4
-├───┼───┼───┤ 1
-│   │   │   │
-├───┼───┼───┤ 2
-│   │   │   │
-├───┼───┼───┤ 3
+### CSS Grid Structure Visualization
 
-Grid Tracks: rows and columns
-Grid Cells: individual boxes
-Grid Areas: groups of cells
+```mermaid
+graph TD
+    subgraph "3x3 Grid Layout"
+        A[Cell 1,1]
+        B[Cell 1,2]
+        C[Cell 1,3]
+        D[Cell 2,1]
+        E[Cell 2,2]
+        F[Cell 2,3]
+        G[Cell 3,1]
+        H[Cell 3,2]
+        I[Cell 3,3]
+    end
+
+    subgraph "Grid Lines"
+        J["Column Lines: 1, 2, 3, 4<br/>Row Lines: 1, 2, 3, 4"]
+    end
+
+    subgraph "Grid Tracks"
+        K["3 Column Tracks<br/>3 Row Tracks"]
+    end
+
+    style A fill:#e3f2fd
+    style B fill:#fff3e0
+    style C fill:#e3f2fd
+    style D fill:#fff3e0
+    style E fill:#e3f2fd
+    style F fill:#fff3e0
+    style G fill:#e3f2fd
+    style H fill:#fff3e0
+    style I fill:#e3f2fd
 ```
+
+Grid lines are numbered starting from 1. A cell at `grid-column: 2 / 4` spans from column line 2 to column line 4 (2 columns wide).
 
 ## Grid Container Properties
 

@@ -197,6 +197,28 @@ print(buddy.nurse())    # From Mammal
 print(buddy.bark())     # From Dog
 ```
 
+### Inheritance Hierarchy Visualization
+
+```mermaid
+classDiagram
+    Animal <|-- Mammal
+    Mammal <|-- Dog
+
+    class Animal {
+        +breathe()
+    }
+
+    class Mammal {
+        +nurse()
+    }
+
+    class Dog {
+        +bark()
+    }
+
+    note for Dog "Dog inherits:\n• breathe() from Animal\n• nurse() from Mammal\n• bark() is its own"
+```
+
 ---
 
 ## Practical Example: User Hierarchy
@@ -232,6 +254,34 @@ guest = GuestUser()
 
 print(admin.has_permission('delete'))  # True
 print(guest.has_permission('delete'))  # False
+```
+
+### User Hierarchy Diagram
+
+```mermaid
+classDiagram
+    User <|-- AdminUser
+    User <|-- ModeratorUser
+    User <|-- GuestUser
+
+    class User {
+        +String username
+        +String email
+        +Set~String~ permissions
+        +has_permission(perm)
+    }
+
+    class AdminUser {
+        +permissions: {read, write, delete, admin}
+    }
+
+    class ModeratorUser {
+        +permissions: {read, write, moderate}
+    }
+
+    class GuestUser {
+        +permissions: {read}
+    }
 ```
 
 ---

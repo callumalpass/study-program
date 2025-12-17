@@ -14,6 +14,26 @@ Equivalently, for a vector field $\mathbf{F} = \langle P, Q \rangle$:
 
 $$\oint_C \mathbf{F} \cdot d\mathbf{r} = \iint_D \left(\frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y}\right) dA$$
 
+### Visual Relationship
+
+Green's Theorem connects a line integral around a boundary to a double integral over the interior:
+
+```mermaid
+graph LR
+    subgraph "Boundary (1D)"
+        Line["Line Integral<br/>∮_C F·dr<br/>∮_C P dx + Q dy"]
+    end
+
+    subgraph "Interior (2D)"
+        Area["Double Integral<br/>∬_D (∂Q/∂x - ∂P/∂y) dA<br/>(2D curl)"]
+    end
+
+    Line <==>|"Green's<br/>Theorem"| Area
+
+    style Line fill:#e1f5ff
+    style Area fill:#c8e6c9
+```
+
 ### Key Features
 
 - **Left side**: Line integral around the boundary (circulation)

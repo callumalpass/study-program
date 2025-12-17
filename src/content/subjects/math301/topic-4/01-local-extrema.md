@@ -34,6 +34,23 @@ A **global** (or **absolute**) maximum/minimum satisfies the inequality for **al
 
 A **saddle point** is a critical point that is neither a local maximum nor minimum. The surface curves upward in some directions and downward in others, resembling a horse saddle.
 
+### Types of Critical Points
+
+```mermaid
+graph TD
+    CP["Critical Point<br/>∇f = 0"] --> Types{"Type?"}
+
+    Types --> LocalMax["Local Maximum<br/>🏔️ Peak<br/>f(a,b) ≥ f(x,y) nearby"]
+    Types --> LocalMin["Local Minimum<br/>🏞️ Valley<br/>f(a,b) ≤ f(x,y) nearby"]
+    Types --> Saddle["Saddle Point<br/>🏇 Pass<br/>Neither max nor min"]
+
+    style CP fill:#e1f5ff
+    style Types fill:#ffe8e8
+    style LocalMax fill:#c8e6c9
+    style LocalMin fill:#c8e6c9
+    style Saddle fill:#ffccbc
+```
+
 ## Critical Points
 
 ### Definition

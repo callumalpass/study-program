@@ -12,6 +12,34 @@ A Promise is an object that represents the eventual completion or failure of an 
 
 Once a Promise is fulfilled or rejected, it becomes immutable and cannot change states again.
 
+### Promise State Machine
+
+```mermaid
+stateDiagram-v2
+    [*] --> Pending: Promise created
+    Pending --> Fulfilled: resolve() called
+    Pending --> Rejected: reject() called
+    Fulfilled --> [*]
+    Rejected --> [*]
+
+    note right of Pending
+        Initial state
+        Operation in progress
+    end note
+
+    note right of Fulfilled
+        Success state
+        Value available via .then()
+    end note
+
+    note right of Rejected
+        Error state
+        Error available via .catch()
+    end note
+```
+
+A Promise can only transition from Pending to either Fulfilled or Rejected, never backwards or between Fulfilled and Rejected.
+
 ```javascript
 // Creating a simple Promise
 const promise = new Promise((resolve, reject) => {

@@ -8,6 +8,37 @@ title: "Properties of Laplace Transforms"
 
 The power of the Laplace transform lies not only in its ability to transform functions but also in its operational properties. These properties allow us to find transforms of complex functions using known transforms of simpler functions, and they provide the algebraic framework for solving differential equations efficiently.
 
+### Key Properties Overview
+
+The following diagram summarizes the main operational properties:
+
+```mermaid
+graph TB
+    A[Laplace Transform Properties] --> B[Algebraic Properties]
+    A --> C[Derivative Properties]
+    A --> D[Shift/Translation Properties]
+    A --> E[Integration Properties]
+
+    B --> B1[Linearity:<br/>ℒ{af + bg} = aF + bG]
+    B --> B2[Scaling:<br/>ℒ{f-at-} = 1/a F-s/a-]
+
+    C --> C1[First Derivative:<br/>ℒ{f'} = sF-s- - f-0-]
+    C --> C2[Second Derivative:<br/>ℒ{f''} = s²F-s- - sf-0- - f'-0-]
+    C --> C3[nth Derivative:<br/>ℒ{f⁽ⁿ⁾} = sⁿF-s- - terms]
+
+    D --> D1[First Translation -s-shift-:<br/>ℒ{e^-at-f-t-} = F-s-a-]
+    D --> D2[Second Translation -t-shift-:<br/>ℒ{f-t-a-u-t-a-} = e^-as-F-s-]
+
+    E --> E1[Transform of Integral:<br/>ℒ{∫₀ᵗf-τ-dτ} = F-s-/s]
+    E --> E2[Convolution:<br/>ℒ{f★g} = F-s-G-s-]
+
+    style B1 fill:#e7f1ff,stroke:#084298
+    style C1 fill:#d1e7dd,stroke:#0f5132
+    style C2 fill:#d1e7dd,stroke:#0f5132
+    style D1 fill:#fff3cd,stroke:#997404
+    style E1 fill:#ffe5cc,stroke:#cc5500
+```
+
 ## Linearity Property
 
 The Laplace transform is a linear operator, meaning it satisfies the superposition principle.

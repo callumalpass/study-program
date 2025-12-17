@@ -39,6 +39,48 @@ $$
 U(f,P) - L(f,P) < \epsilon
 $$
 
+### Riemann Integrability Decision Tree
+
+When determining whether a function $f:[a,b] \to \mathbb{R}$ is Riemann integrable, use this flowchart:
+
+```mermaid
+graph TD
+    A[Is f bounded on [a,b]?] --> B{Is f bounded?}
+    B -->|No| C[NOT Riemann integrable<br/>Unbounded functions fail]
+
+    B -->|Yes| D{What type of function?}
+
+    D -->|Continuous| E[✓ INTEGRABLE<br/>Continuous ⟹ Integrable<br/>Theorem 6.2.6]
+
+    D -->|Monotone| F[✓ INTEGRABLE<br/>Monotone ⟹ Integrable<br/>Theorem 6.2.8]
+
+    D -->|Piecewise continuous| G{Finitely many<br/>discontinuities?}
+    G -->|Yes| H[✓ INTEGRABLE<br/>Theorem 6.2.10]
+    G -->|No| I[Check discontinuity set]
+
+    D -->|Other| I
+
+    I --> J{Set of discontinuities<br/>has measure zero?}
+    J -->|Yes| K[✓ INTEGRABLE<br/>Riemann's Criterion]
+    J -->|No| L[Use Darboux Criterion]
+
+    L --> M{Can you find partition P<br/>with U·f,P· - L·f,P· < ε<br/>for all ε > 0?}
+    M -->|Yes| N[✓ INTEGRABLE]
+    M -->|No| O[Likely NOT integrable]
+
+    style C fill:#FFB6B6
+    style E fill:#90EE90
+    style F fill:#90EE90
+    style H fill:#90EE90
+    style K fill:#90EE90
+    style N fill:#90EE90
+    style O fill:#FFB6B6
+```
+
+**Common Examples:**
+- **Integrable**: Continuous functions, monotone functions, step functions, functions with finitely many jump discontinuities
+- **Not Integrable**: Dirichlet function $f(x) = \begin{cases} 1 & x \in \mathbb{Q} \\\\ 0 & x \notin \mathbb{Q} \end{cases}$, unbounded functions
+
 **Proof:**
 ($\Rightarrow$) Suppose $f$ is Riemann integrable with $\int_a^b f = I$. Given $\epsilon > 0$, there exists $\delta > 0$ such that for any partition $P$ with $\|P\| < \delta$ and any choice of sample points $\{t_i\}$:
 $$
@@ -204,6 +246,40 @@ is actually integrable on $[0,1]$ with integral 0, despite being discontinuous a
 **Remark:** A set has measure zero if it can be covered by countably many intervals whose total length is arbitrarily small. This includes finite sets, countable sets like $\mathbb{Q}$, and the Cantor set.
 
 This theorem completely characterizes Riemann integrable functions but requires measure theory for a rigorous proof.
+
+### Integrability Theorems Hierarchy
+
+The following diagram shows how the various integrability theorems relate to each other:
+
+```mermaid
+graph TD
+    A[Darboux Criterion<br/>Most General] --> B[Riemann's Criterion<br/>Discontinuities have<br/>measure zero]
+
+    B --> C[Continuous Functions<br/>Integrable<br/>Theorem 6.2.6]
+    B --> D[Monotone Functions<br/>Integrable<br/>Theorem 6.2.8]
+    B --> E[Finitely Many<br/>Discontinuities<br/>Theorem 6.2.10]
+
+    C -.->|Special case| F[Polynomials, sin, cos,<br/>eˣ, continuous everywhere]
+    D -.->|Special case| G[Step functions,<br/>⌊x⌋, increasing/decreasing]
+    E -.->|Special case| H[Piecewise continuous<br/>with jumps]
+
+    I[Modified Dirichlet Function<br/>Integrable but discontinuous<br/>on dense set] -.->|Shows| J[Riemann's Criterion<br/>is sharp]
+
+    style A fill:#DDA0DD
+    style B fill:#87CEEB
+    style C fill:#90EE90
+    style D fill:#90EE90
+    style E fill:#90EE90
+    style F fill:#FFE4B5
+    style G fill:#FFE4B5
+    style H fill:#FFE4B5
+    style I fill:#FFB6C1
+```
+
+**Hierarchy summary:**
+$$
+\text{Continuous} \subset \text{Monotone} \subset \text{Finitely many disc.} \subset \text{Measure zero disc.} \subset \text{Riemann integrable}
+$$
 
 ## Properties of Upper and Lower Integrals
 

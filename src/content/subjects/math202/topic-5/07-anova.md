@@ -36,6 +36,40 @@ $$F = \frac{\text{Between-group variability}}{\text{Within-group variability}} =
 
 Large F-values suggest group means differ significantly.
 
+### Variance Decomposition
+
+ANOVA partitions the total variance in the data into distinct components:
+
+```mermaid
+graph TD
+    Total["<b>Total Variance</b><br/>SST = Σᵢ Σⱼ &#40;xᵢⱼ - x̄&#41;²<br/>df = n - 1"] --> Split{Decompose}
+
+    Split --> Between["<b>Between-Group Variance</b><br/>SSB = Σᵢ nᵢ&#40;x̄ᵢ - x̄&#41;²<br/>df = k - 1<br/><br/>Variability of group means<br/>around grand mean"]
+
+    Split --> Within["<b>Within-Group Variance</b><br/>SSW = Σᵢ Σⱼ &#40;xᵢⱼ - x̄ᵢ&#41;²<br/>df = n - k<br/><br/>Variability of observations<br/>within each group"]
+
+    Between --> MSB["<b>Mean Square Between</b><br/>MSB = SSB / &#40;k-1&#41;"]
+    Within --> MSW["<b>Mean Square Within</b><br/>MSW = SSW / &#40;n-k&#41;"]
+
+    MSB --> F["<b>F-Statistic</b><br/>F = MSB / MSW"]
+    MSW --> F
+
+    F --> Decision{F > F_critical?}
+    Decision -->|Yes| Reject["Reject H₀<br/>Group means differ"]
+    Decision -->|No| Fail["Fail to reject H₀<br/>No significant difference"]
+
+    style Total fill:#e3f2fd
+    style Between fill:#fff3e0
+    style Within fill:#f3e5f5
+    style F fill:#e1f5ff
+    style Reject fill:#ffebee
+    style Fail fill:#e8f5e9
+```
+
+**Key relationship:** $\text{SST} = \text{SSB} + \text{SSW}$
+
+This decomposition allows us to quantify how much of the total variability is explained by group membership versus random variation within groups.
+
 ## One-Way ANOVA
 
 The most common form of ANOVA compares means across groups defined by a single factor (independent variable).

@@ -12,6 +12,21 @@ At its simplest, the instruction cycle has three main phases:
 
 Real processors may subdivide these phases further (5-stage pipelines are common), but the conceptual model captures the essential flow.
 
+```mermaid
+graph LR
+    A[Fetch] --> B[Decode]
+    B --> C[Execute]
+    C --> D[Write-Back]
+    D --> A
+
+    style A fill:#e1f5ff
+    style B fill:#fff4e1
+    style C fill:#ffe1f5
+    style D fill:#e1ffe1
+```
+
+The cycle repeats endlessly: after completing one instruction, the CPU immediately fetches the next.
+
 ## Key Registers in the Instruction Cycle
 
 Several special-purpose registers coordinate the instruction cycle:
@@ -52,6 +67,21 @@ The fetch phase retrieves the next instruction from memory:
 1. MAR ← PC           // Copy PC to Memory Address Register
 2. IR ← Memory[MAR]   // Read instruction from memory into IR
 3. PC ← PC + size     // Increment PC past this instruction
+```
+
+```mermaid
+sequenceDiagram
+    participant PC as Program Counter
+    participant MAR as MAR
+    participant Mem as Memory
+    participant IR as Instruction Register
+
+    PC->>MAR: Copy address
+    MAR->>Mem: Request instruction
+    Mem->>IR: Return instruction bytes
+    PC->>PC: Increment (PC + 4)
+
+    Note over PC,IR: Fetch completes in ~4-200 cycles
 ```
 
 ### Step-by-Step Fetch
@@ -203,6 +233,30 @@ EXECUTE:
 
 WRITE-BACK:
 9. R3 ← ALU result
+```
+
+Here's a complete flowchart showing the execution of an ADD instruction:
+
+```mermaid
+flowchart TD
+    Start([Start: PC points to ADD instruction]) --> Fetch
+
+    Fetch[FETCH<br/>MAR ← PC<br/>IR ← Memory[MAR]<br/>PC ← PC + 4] --> Decode
+
+    Decode[DECODE<br/>Opcode = ADD<br/>Read register fields<br/>Dest=R3, Src1=R1, Src2=R2] --> ReadRegs
+
+    ReadRegs[Read R1 and R2<br/>from register file] --> Execute
+
+    Execute[EXECUTE<br/>ALU: R1 + R2<br/>Update flags Z,S,C,O] --> WriteBack
+
+    WriteBack[WRITE-BACK<br/>R3 ← ALU result] --> Next
+
+    Next([Repeat for next instruction])
+
+    style Fetch fill:#e1f5ff
+    style Decode fill:#fff4e1
+    style Execute fill:#ffe1f5
+    style WriteBack fill:#e1ffe1
 ```
 
 Then the cycle repeats for the next instruction.

@@ -16,6 +16,20 @@ Think of it like a house and its address:
 - `&x` is the street address (memory location)
 - `ptr` is a piece of paper with the address written on it
 
+### Memory Visualization
+
+```mermaid
+graph LR
+    subgraph Memory
+        A["Address: 0x1000<br/>Variable: x<br/>Value: 42"]
+        B["Address: 0x2000<br/>Variable: ptr<br/>Value: 0x1000"]
+    end
+    B -->|"points to"| A
+
+    style A fill:#e1f5ff
+    style B fill:#fff4e1
+```
+
 ## Declaring Pointers
 
 The `*` in a declaration indicates a pointer type:
@@ -105,6 +119,8 @@ printf("Size of double*: %zu\n", sizeof(double*)); // 8
 ```
 
 The type of pointer doesn't affect its size—it affects how the pointed-to data is interpreted.
+
+On a 64-bit system, pointers are 8 bytes: $2^{64}$ possible addresses, ranging from $0$ to $2^{64} - 1$ (approximately $1.8 \times 10^{19}$ addresses).
 
 ## Why Pointers?
 

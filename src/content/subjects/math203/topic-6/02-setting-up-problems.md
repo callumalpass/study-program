@@ -4,6 +4,36 @@ The most challenging part of related rates is translating a word problem into ma
 
 ## The Setup Framework
 
+```mermaid
+flowchart TD
+    Start([Related Rates Problem]) --> Step1[Step 1: Draw and Label<br/>• Sketch the situation<br/>• Label ALL changing quantities<br/>• Use variables not numbers<br/>• Mark given and asked]
+
+    Step1 --> Step2[Step 2: List What's Known<br/>• Changing quantities<br/>• Given rates with signs<br/>• Asked rate<br/>• Specific instant values]
+
+    Step2 --> Step3[Step 3: Find Relationship<br/>• Geometry: A = πr², V = πr²h<br/>• Pythagorean: x² + y² = D²<br/>• Similar triangles<br/>• Trigonometry]
+
+    Step3 --> Q1{Too many<br/>variables?}
+
+    Q1 -->|Yes| Eliminate[Step 4: Eliminate Extras<br/>• Use similar triangles<br/>• Use constraints<br/>• Substitute relationships]
+    Q1 -->|No| Step5
+
+    Eliminate --> Step5[Step 5: Differentiate w.r.t. t<br/>• Chain rule: d/dt fx = f'x · dx/dt<br/>• Product rule if needed<br/>• Don't substitute yet!]
+
+    Step5 --> Step6[Step 6: Substitute Values<br/>• Plug in specific instant<br/>• Include both variables and rates<br/>• Solve for unknown rate]
+
+    Step6 --> Step7{Check:<br/>• Correct sign?<br/>• Correct units?<br/>• Makes sense?}
+
+    Step7 -->|Yes| Answer([Interpret and Answer<br/>• State with units<br/>• Explain sign meaning])
+    Step7 -->|No| Review[Review:<br/>• Sign errors?<br/>• Wrong equation?<br/>• Calculation error?]
+
+    Review --> Step3
+
+    style Step1 fill:#e1f5ff
+    style Step3 fill:#fff3cd
+    style Step5 fill:#ffe6e6
+    style Answer fill:#d4edda
+```
+
 ### Step 1: Draw and Label
 
 - Sketch the situation

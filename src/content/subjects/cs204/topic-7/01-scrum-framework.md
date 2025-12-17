@@ -56,6 +56,53 @@ Optimal Development Team size is small enough to remain nimble but large enough 
 
 Scrum prescribes five events that create regularity and minimize the need for undefined meetings. All events are time-boxed, meaning they have a maximum duration that cannot be exceeded.
 
+```mermaid
+flowchart TD
+    A[Product Backlog] --> B[Sprint Planning]
+    B --> C[Sprint Backlog]
+    C --> D[Sprint Execution<br/>2-4 weeks]
+
+    D --> E[Daily Scrum<br/>15 min daily]
+    E --> D
+
+    D --> F[Sprint Review]
+    F --> G[Potentially<br/>Shippable Increment]
+
+    F --> H[Sprint Retrospective]
+    H --> I[Process<br/>Improvements]
+
+    G --> A
+    I --> A
+
+    A --> B
+
+    style B fill:#e3f2fd
+    style C fill:#fff3e0
+    style D fill:#e8f5e9
+    style E fill:#fce4ec
+    style F fill:#f3e5f5
+    style H fill:#fff9c4
+    style G fill:#c8e6c9
+```
+
+**Scrum Sprint Cycle:**
+
+```mermaid
+graph LR
+    A((Sprint<br/>Planning)) --> B[Day 1-N:<br/>Development]
+    B --> C[Daily<br/>Scrum]
+    C --> B
+    B --> D((Sprint<br/>Review))
+    D --> E((Sprint<br/>Retro))
+    E --> F[Next Sprint]
+    F --> A
+
+    style A fill:#81d4fa
+    style C fill:#ffab91
+    style D fill:#ce93d8
+    style E fill:#fff59d
+```
+
 ### Sprint
 
 The Sprint is a time-boxed period, usually 2-4 weeks, during which a "done", useable, and potentially releasable product increment is created. Sprints have consistent durations throughout a development effort. A new Sprint starts immediately after the conclusion of the previous Sprint.

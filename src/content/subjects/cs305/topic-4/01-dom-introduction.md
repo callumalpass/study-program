@@ -30,20 +30,26 @@ Every HTML document is represented as a tree of nodes. The document itself is th
 </html>
 ```
 
-This HTML creates a tree structure:
+This HTML creates a tree structure that can be visualized as:
 
+```mermaid
+graph TD
+    A[Document] --> B[html]
+    B --> C[head]
+    B --> D[body]
+    C --> E[title]
+    E --> F["#text: My Page"]
+    D --> G[h1]
+    D --> H[p]
+    G --> I["#text: Welcome"]
+    H --> J["#text: This is a paragraph."]
+
+    style F fill:#e1f5ff
+    style I fill:#e1f5ff
+    style J fill:#e1f5ff
 ```
-Document
-└── html
-    ├── head
-    │   └── title
-    │       └── "My Page"
-    └── body
-        ├── h1
-        │   └── "Welcome"
-        └── p
-            └── "This is a paragraph."
-```
+
+Text nodes are shown in light blue to distinguish them from element nodes.
 
 ## Node Types
 

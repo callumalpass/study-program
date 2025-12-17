@@ -24,21 +24,25 @@ Consider this simple code:
 ```
 
 The corresponding CFG:
-```
-         [Entry]
-            |
-        [B1: 1-2]
-         /     \
-        /       \
-    [B2: 3]   [B3: 5]
-        \       /
-         \     /
-         [B4: 7]
-            |
-         [Exit]
+
+```mermaid
+graph TD
+    Entry([Entry]) --> B1[B1: x = input<br/>if x > 0]
+    B1 -->|true| B2[B2: y = x * 2]
+    B1 -->|false| B3[B3: y = -x]
+    B2 --> B4[B4: print y]
+    B3 --> B4
+    B4 --> Exit([Exit])
+
+    style Entry fill:#90EE90
+    style Exit fill:#FFB6C1
+    style B1 fill:#e1f5ff
+    style B2 fill:#e1f5ff
+    style B3 fill:#e1f5ff
+    style B4 fill:#e1f5ff
 ```
 
-Edges represent possible control flow: from B1, execution can proceed to either B2 (if x > 0) or B3 (otherwise), and both B2 and B3 lead to B4.
+Edges represent possible control flow: from B1, execution can proceed to either B2 (if $x > 0$) or B3 (otherwise), and both B2 and B3 lead to B4.
 
 ## Basic Blocks
 
@@ -127,29 +131,34 @@ L3: return sum
 ```
 
 **Basic Blocks:**
-- B1 (Entry): [L1: t1 = i < n, ifFalse t1 goto L3]
-- B2 (Loop Body): [t2 = i * 4, ..., goto L1]
+- B1 (Header): [L1: t1 = i < n, ifFalse t1 goto L3]
+- B2 (Loop Body): [t2 = i * 4, ..., i = i + 1, goto L1]
 - B3 (Exit): [L3: return sum]
 
-**Edges:**
-- Entry → B1 (program start)
-- B1 → B2 (fall-through when condition true)
-- B1 → B3 (jump when condition false)
-- B2 → B1 (back edge from goto)
-- B3 → Exit (return)
+```mermaid
+graph TD
+    Entry([Entry]) --> B1
+    B1[B1: t1 = i < n<br/>ifFalse t1 goto L3]
+    B1 -->|true| B2[B2: t2 = i * 4<br/>t3 = a + t2<br/>t4 = *t3<br/>sum = sum + t4<br/>i = i + 1<br/>goto L1]
+    B1 -->|false| B3[B3: return sum]
+    B2 --> B1
+    B3 --> Exit([Exit])
 
+    style Entry fill:#90EE90
+    style Exit fill:#FFB6C1
+    style B1 fill:#e1f5ff
+    style B2 fill:#e1f5ff
+    style B3 fill:#e1f5ff
 ```
-    [Entry]
-       |
-      [B1] <----+
-      / \       |
-     /   \      |
-   [B2]  [B3]  |
-     |     |    |
-     +-----+    |
-            \   |
-           [Exit]
-```
+
+**Edges:**
+- Entry $\rightarrow$ B1 (program start)
+- B1 $\rightarrow$ B2 (fall-through when condition true)
+- B1 $\rightarrow$ B3 (jump when condition false)
+- B2 $\rightarrow$ B1 (back edge from goto, forms loop)
+- B3 $\rightarrow$ Exit (return)
+
+The back edge from B2 to B1 identifies a loop structure.
 
 ### Special Cases
 
@@ -161,7 +170,11 @@ L3: return sum
 
 ## Dominators
 
-A node D **dominates** node N if every path from the entry to N must pass through D. Dominance is a fundamental relation for understanding control flow structure and enabling optimizations.
+A node $D$ **dominates** node $N$ (written $D \text{ dom } N$) if every path from the entry to $N$ must pass through $D$. Formally:
+
+$$D \text{ dom } N \iff \forall \text{ paths } p : \text{Entry} \leadsto N, D \in p$$
+
+Dominance is a fundamental relation for understanding control flow structure and enabling optimizations.
 
 ### Dominance Properties
 
@@ -175,10 +188,8 @@ The **entry node** dominates all nodes reachable from it.
 
 The standard algorithm iteratively computes the dominator set for each node:
 
-```
-Dom(entry) = {entry}
-Dom(n) = {n} ∪ (∩ Dom(p) for all predecessors p of n)
-```
+$$\text{Dom}(\text{entry}) = \{\text{entry}\}$$
+$$\text{Dom}(n) = \{n\} \cup \left(\bigcap_{p \in \text{pred}(n)} \text{Dom}(p)\right)$$
 
 **Algorithm:**
 ```
@@ -199,52 +210,68 @@ while changed:
             changed = true
 ```
 
+The algorithm computes a fixed point where each node's dominator set is the intersection of its predecessors' dominator sets, plus the node itself.
+
 **Example:**
 
-```
-      [B1]
-      / \
-    [B2] [B3]
-      \ /
-      [B4]
-       |
-      [B5]
+```mermaid
+graph TD
+    B1 --> B2
+    B1 --> B3
+    B2 --> B4
+    B3 --> B4
+    B4 --> B5
+
+    style B1 fill:#e1f5ff
+    style B2 fill:#e1f5ff
+    style B3 fill:#e1f5ff
+    style B4 fill:#e1f5ff
+    style B5 fill:#e1f5ff
 ```
 
 Computation:
-- Dom(B1) = {B1}
-- Dom(B2) = {B1, B2}
-- Dom(B3) = {B1, B3}
-- Dom(B4) = {B1, B4} (intersection of {B1,B2} and {B1,B3})
-- Dom(B5) = {B1, B4, B5}
+- $\text{Dom}(B_1) = \{B_1\}$
+- $\text{Dom}(B_2) = \{B_1, B_2\}$
+- $\text{Dom}(B_3) = \{B_1, B_3\}$
+- $\text{Dom}(B_4) = \{B_1, B_4\}$ (intersection of $\{B_1, B_2\}$ and $\{B_1, B_3\}$)
+- $\text{Dom}(B_5) = \{B_1, B_4, B_5\}$
 
 ### Immediate Dominators
 
-Node D is the **immediate dominator** (idom) of node N if:
-1. D dominates N
-2. D ≠ N
-3. D does not dominate any other dominator of N (D is the "closest" dominator)
+Node $D$ is the **immediate dominator** (idom) of node $N$ if:
+1. $D$ dominates $N$
+2. $D \neq N$
+3. $D$ does not dominate any other dominator of $N$ ($D$ is the "closest" dominator)
 
 Each node (except entry) has exactly one immediate dominator, forming a **dominator tree**.
 
 **Dominator Tree for Above Example:**
+
+```mermaid
+graph TD
+    B1 --> B2
+    B1 --> B3
+    B1 --> B4
+    B4 --> B5
+
+    style B1 fill:#90EE90
+    style B2 fill:#e1f5ff
+    style B3 fill:#e1f5ff
+    style B4 fill:#e1f5ff
+    style B5 fill:#e1f5ff
 ```
-      B1
-     /  \
-    B2  B3
-     \  /
-      B4
-       |
-      B5
-```
+
+In the dominator tree, each node's parent is its immediate dominator. $B_1$ is the root (entry), and $B_4$ is the immediate dominator of $B_5$.
 
 ### Dominance Frontiers
 
-The **dominance frontier** DF(n) of node n is the set of nodes where n's dominance "stops":
+The **dominance frontier** $\text{DF}(n)$ of node $n$ is the set of nodes where $n$'s dominance "stops":
 
-DF(n) = {y | (∃ predecessor x of y such that n dominates x) ∧ (n does not strictly dominate y)}
+$$\text{DF}(n) = \{y \mid (\exists x \in \text{pred}(y) : n \text{ dom } x) \land (n \not\text{ sdom } y)\}$$
 
-Intuitively, DF(n) contains nodes where control flow from n-dominated regions merges with control flow from non-n-dominated regions.
+where "sdom" means "strictly dominates" (dominates but is not equal to).
+
+Intuitively, $\text{DF}(n)$ contains nodes where control flow from $n$-dominated regions merges with control flow from non-$n$-dominated regions.
 
 **Example:**
 ```

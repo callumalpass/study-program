@@ -8,13 +8,25 @@ Quick sort is the most widely used sorting algorithm in practice. It's a divide-
 2. **Partition**: Rearrange so elements < pivot are left, elements > pivot are right
 3. **Recurse**: Sort left and right partitions
 
-```
-[3, 7, 8, 5, 2, 1, 9, 5, 4]  pivot = 4
+```mermaid
+graph TD
+    A["[3, 7, 8, 5, 2, 1, 9, 5, 4]<br/>pivot = 4"] --> B["[3, 2, 1] < 4"]
+    A --> C["[4]"]
+    A --> D["[7, 8, 5, 9, 5] > 4"]
 
-Partition: [3, 2, 1] [4] [7, 8, 5, 9, 5]
+    B --> E["[1] [2] [3]"]
+    D --> F["[5, 5] [7, 8, 9]"]
 
-Recurse on [3, 2, 1] and [7, 8, 5, 9, 5]
+    E --> G["Sorted: [1, 2, 3, 4, 5, 5, 7, 8, 9]"]
+    C --> G
+    F --> G
+
+    style A fill:#FFE4B5
+    style C fill:#FFFACD
+    style G fill:#90EE90
 ```
+
+**Key idea**: Partition divides array into two parts around pivot, then recursively sort each part
 
 ## Basic Implementation
 
@@ -121,14 +133,27 @@ Final: swap arr[3] with pivot → [3, 2, 1, 4, 7, 8, 9, 5, 5]
 
 ## Complexity Analysis
 
-**Best/Average Case**: O(n log n)
-- Balanced partitions: T(n) = 2T(n/2) + O(n)
+**Best/Average Case**: $O(n \log n)$
 
-**Worst Case**: O(n²)
-- Highly unbalanced partitions (already sorted with bad pivot choice)
-- T(n) = T(n-1) + O(n)
+When pivot divides array roughly in half:
 
-**Space**: O(log n) average, O(n) worst (recursion stack)
+$$T(n) = 2T(n/2) + O(n) = O(n \log n)$$
+
+**Worst Case**: $O(n^2)$
+
+When pivot is always minimum/maximum (e.g., sorted array with first element as pivot):
+
+$$T(n) = T(n-1) + O(n) = O(n) + O(n-1) + \ldots + O(1) = \sum_{i=1}^{n} O(i) = O(n^2)$$
+
+**Average Case Analysis**:
+
+Expected partition splits are balanced enough to achieve $O(n \log n)$ even with random pivots:
+
+$$E[T(n)] = O(n \log n)$$
+
+**Space Complexity**:
+- Best/Average: $O(\log n)$ (recursion stack for balanced partitions)
+- Worst: $O(n)$ (skewed partitions create deep recursion)
 
 ## Pivot Selection
 
@@ -138,6 +163,8 @@ Poor pivot choice causes worst-case behavior:
 ```python
 pivot = arr[low]  # O(n²) for sorted arrays!
 ```
+
+This creates worst-case $O(n^2)$ behavior on already-sorted input.
 
 ### 2. Random Pivot
 ```python
@@ -229,7 +256,12 @@ def quicksort_tail(arr, low, high):
 
 ## Quickselect: Find Kth Element
 
-Quicksort's partition can find the kth smallest element in O(n) average:
+Quicksort's partition can find the kth smallest element in $O(n)$ average time:
+
+**Time Complexity**: Average $O(n)$, worst $O(n^2)$
+
+The expected recurrence is:
+$$T(n) = T(n/2) + O(n) = O(n)$$
 
 ```python
 def quickselect(arr, k):

@@ -11,6 +11,43 @@ description: "Introduction to fields and their fundamental properties"
 
 Equivalently: commutative ring where $(F \setminus \{0\}, \cdot)$ is a group.
 
+## Ring/Field Classification Hierarchy
+
+Understanding how rings, integral domains, and fields relate:
+
+```mermaid
+graph TD
+    Ring["Ring<br/>(R, +, ·)<br/>• (R,+) is abelian group<br/>• Associative multiplication<br/>• Distributivity"]
+
+    CommRing["Commutative Ring<br/>• ab = ba"]
+
+    Unity["Ring with Unity<br/>• Has identity 1"]
+
+    IntDom["Integral Domain<br/>• Commutative<br/>• Has unity<br/>• No zero divisors"]
+
+    Field["Field<br/>• Every nonzero element<br/>has multiplicative inverse"]
+
+    Ring --> CommRing
+    Ring --> Unity
+    CommRing --> IntDom
+    Unity --> IntDom
+    IntDom --> Field
+
+    ExRing["Examples:<br/>ℤ, ℤₙ, M₂(ℝ), ℝ[x]"]
+    ExInt["Examples:<br/>ℤ, ℤ[x], ℤ[i]"]
+    ExField["Examples:<br/>ℚ, ℝ, ℂ, ℤₚ (p prime)"]
+
+    Ring -.-> ExRing
+    IntDom -.-> ExInt
+    Field -.-> ExField
+
+    style Ring fill:#ffebee
+    style CommRing fill:#fff3e0
+    style Unity fill:#fff3e0
+    style IntDom fill:#e8f5e9
+    style Field fill:#e1f5ff
+```
+
 ## Examples
 
 - $\mathbb{Q}, \mathbb{R}, \mathbb{C}$ (familiar number fields)
@@ -20,9 +57,9 @@ Equivalently: commutative ring where $(F \setminus \{0\}, \cdot)$ is a group.
 
 ## Non-Examples
 
-- $\mathbb{Z}$ (2 has no multiplicative inverse)
-- $\mathbb{Z}_6$ (2 has no inverse)
-- $\mathbb{R}[x]$ (polynomial $x$ has no inverse)
+- $\mathbb{Z}$ (integral domain but not field: $2$ has no multiplicative inverse)
+- $\mathbb{Z}_6$ (not integral domain: $2 \cdot 3 = 0$, so $2$ has no inverse)
+- $\mathbb{R}[x]$ (integral domain but not field: polynomial $x$ has no inverse)
 
 ## Properties
 

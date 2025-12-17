@@ -32,6 +32,45 @@ where:
 
 **Intuition:** Large differences between observed and expected frequencies produce large $\chi^2$ values, providing evidence against $H_0$.
 
+```mermaid
+graph TD
+    subgraph Data["Categorical Data"]
+        Obs["<b>Observed Frequencies</b><br/>O₁, O₂, ..., Oₖ<br/><br/>Actual counts in each category"]
+    end
+
+    subgraph Null["Under H₀"]
+        Exp["<b>Expected Frequencies</b><br/>E₁, E₂, ..., Eₖ<br/><br/>What we'd expect if H₀ is true"]
+    end
+
+    subgraph Calculate["Compute Chi-Squared"]
+        Formula["χ² = Σ &#40;Oᵢ - Eᵢ&#41;² / Eᵢ<br/><br/>Sum over all k categories"]
+    end
+
+    subgraph Interpret["Interpretation"]
+        Small["<b>Small χ²</b><br/>O ≈ E<br/>Observed matches expected<br/>Consistent with H₀"]
+        Large["<b>Large χ²</b><br/>O ≠ E<br/>Observed differs from expected<br/>Evidence against H₀"]
+    end
+
+    Obs --> Formula
+    Exp --> Formula
+
+    Formula --> Check{χ² value?}
+
+    Check -->|Close to 0| Small
+    Check -->|Far from 0| Large
+
+    Small --> Fail["Fail to reject H₀<br/>p-value large"]
+    Large --> Reject["Reject H₀<br/>p-value small"]
+
+    style Obs fill:#e1f5ff
+    style Exp fill:#fff3e0
+    style Formula fill:#f3e5f5
+    style Small fill:#e8f5e9
+    style Large fill:#ffebee
+    style Reject fill:#ffcdd2
+    style Fail fill:#c8e6c9
+```
+
 **Rule of thumb for validity:** Each expected frequency should be at least 5 ($E_i \geq 5$). If not, combine categories or use exact tests (Fisher's exact test for 2×2 tables).
 
 ## Chi-Squared Goodness of Fit Test

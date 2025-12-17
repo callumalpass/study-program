@@ -61,6 +61,16 @@ range(start, stop)    # start to stop-1
 range(start, stop, step)  # start to stop-1, stepping by step
 ```
 
+```mermaid
+flowchart TD
+    Start([range start, stop, step]) --> Init[i = start]
+    Init --> Check{i < stop<br/>if step > 0?<br/>or<br/>i > stop<br/>if step < 0?}
+    Check -->|Yes| Yield[Yield i]
+    Yield --> Increment[i += step]
+    Increment --> Check
+    Check -->|No| End([End])
+```
+
 ### Examples
 
 ```python
@@ -269,8 +279,8 @@ for i in range(1, 6):
 ### Caution: Nested Loops Multiply Work
 
 Be careful with nested loops - they multiply the work:
-- 2 loops of 1000 = 1,000,000 iterations
-- 3 loops of 100 = 1,000,000 iterations
+- 2 loops of 1000 iterations each = 1,000,000 total iterations
+- 3 loops of 100 iterations each = 1,000,000 total iterations
 
 ```python
 # O(n²) - can be slow for large n
@@ -279,6 +289,8 @@ for i in range(n):
         # This runs n * n times
         pass
 ```
+
+The time complexity is $O(n^2)$ - for an outer loop of size $n$ and an inner loop of size $n$, the total iterations are $n \times n = n^2$.
 
 ---
 

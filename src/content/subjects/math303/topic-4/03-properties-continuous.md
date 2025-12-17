@@ -84,6 +84,48 @@ $$
 
 **Proof:** By Corollary 3.1 and Theorem 3.1(5).
 
+### Building Continuous Functions
+
+The following diagram shows how we can construct complex continuous functions from basic building blocks:
+
+```mermaid
+graph TD
+    A[Basic Continuous Functions] --> B[Constants: f·x· = c]
+    A --> C[Identity: f·x· = x]
+    A --> D[sin·x·, cos·x·]
+    A --> E[eˣ, ln·x·]
+
+    B --> F[Polynomials<br/>Σ aₖxᵏ]
+    C --> F
+
+    F --> G[Rational Functions<br/>p·x·/q·x·]
+    F --> G
+
+    G --> H[Algebraic Combinations<br/>f ± g, f·g, f/g]
+    D --> H
+    E --> H
+
+    H --> I[Compositions<br/>f∘g]
+
+    I --> J[All Elementary Functions<br/>Built from operations]
+
+    K[Operations Preserving Continuity:] --> L[+ Sum]
+    K --> M[- Difference]
+    K --> N[· Scalar Multiple]
+    K --> O[× Product]
+    K --> P[÷ Quotient ·g ≠ 0·]
+    K --> Q[∘ Composition]
+
+    style A fill:#90EE90
+    style F fill:#87CEEB
+    style G fill:#FFE4B5
+    style H fill:#FFB6C1
+    style I fill:#DDA0DD
+    style J fill:#90EE90
+```
+
+**Key principle**: Start with basic continuous functions, then use algebraic operations and composition to build more complex continuous functions. Each step preserves continuity!
+
 ## Worked Examples
 
 **Example 3.1:** Determine where $f(x) = \frac{x^2 + 3x - 4}{x^2 - 1}$ is continuous.

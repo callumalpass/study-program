@@ -17,6 +17,26 @@ Constraints:
 3. Only one process accesses buffer at a time
 ```
 
+```mermaid
+sequenceDiagram
+    participant P as Producer
+    participant B as Buffer
+    participant C as Consumer
+
+    Note over P,C: Buffer has N slots
+    P->>B: wait(empty) - check for space
+    P->>B: wait(mutex) - lock buffer
+    P->>B: Insert item
+    P->>B: post(mutex) - unlock buffer
+    P->>B: post(full) - signal item available
+
+    C->>B: wait(full) - wait for item
+    C->>B: wait(mutex) - lock buffer
+    C->>B: Remove item
+    C->>B: post(mutex) - unlock buffer
+    C->>B: post(empty) - signal space available
+```
+
 ### Solution with Semaphores
 
 ```c
@@ -228,18 +248,46 @@ void* writer(void* arg) {
 
 Five philosophers sit at a round table. Each needs two forks to eat. Illustrates resource allocation and deadlock.
 
-```
-          P0
-       F0    F4
-     P1        P4
-       F1    F3
-         P2-P3
-          F2
+```mermaid
+graph TD
+    P0((P0))
+    P1((P1))
+    P2((P2))
+    P3((P3))
+    P4((P4))
+    F0[Fork 0]
+    F1[Fork 1]
+    F2[Fork 2]
+    F3[Fork 3]
+    F4[Fork 4]
 
-Philosophers: P0, P1, P2, P3, P4
-Forks: F0, F1, F2, F3, F4
-Pi needs forks Fi and F(i+1)%5
+    P0 -.needs.-> F0
+    P0 -.needs.-> F4
+    P1 -.needs.-> F0
+    P1 -.needs.-> F1
+    P2 -.needs.-> F1
+    P2 -.needs.-> F2
+    P3 -.needs.-> F2
+    P3 -.needs.-> F3
+    P4 -.needs.-> F3
+    P4 -.needs.-> F4
+
+    style P0 fill:#e1f5ff
+    style P1 fill:#e1f5ff
+    style P2 fill:#e1f5ff
+    style P3 fill:#e1f5ff
+    style P4 fill:#e1f5ff
+    style F0 fill:#ffe1e1
+    style F1 fill:#ffe1e1
+    style F2 fill:#ffe1e1
+    style F3 fill:#ffe1e1
+    style F4 fill:#ffe1e1
 ```
+
+**Rules:**
+- Philosopher $P_i$ needs forks $F_i$ and $F_{(i+1) \mod 5}$
+- Each fork can be held by at most one philosopher
+- A philosopher must hold both forks to eat
 
 ### Naive Solution (Deadlock!)
 

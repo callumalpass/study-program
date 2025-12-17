@@ -18,7 +18,7 @@ Two's complement won because it makes hardware simpler—a critical consideratio
 
 For an N-bit two's complement number:
 - The leftmost bit is the **sign bit**: 0 means positive (or zero), 1 means negative.
-- The representable range is **-2^(N-1)** to **2^(N-1) - 1**.
+- The representable range is $-2^{N-1}$ to $2^{N-1} - 1$.
 
 | Bits | Range | Example |
 |------|-------|---------|
@@ -34,15 +34,13 @@ Notice the asymmetry: there's one more negative value than positive. This is bec
 The mathematical definition: in N-bit two's complement, a bit pattern B represents the value:
 
 - If the sign bit is 0: the value is simply B (as unsigned)
-- If the sign bit is 1: the value is B - 2^N
+- If the sign bit is 1: the value is $B - 2^N$
 
 More practically, we can think of the sign bit as having **negative weight**:
 
-For an 8-bit number `b₇b₆b₅b₄b₃b₂b₁b₀`:
+For an 8-bit number $b_7b_6b_5b_4b_3b_2b_1b_0$:
 
-```
-Value = -b₇×128 + b₆×64 + b₅×32 + b₄×16 + b₃×8 + b₂×4 + b₁×2 + b₀×1
-```
+$$\text{Value} = -b_7 \times 128 + b_6 \times 64 + b_5 \times 32 + b_4 \times 16 + b_3 \times 8 + b_2 \times 4 + b_1 \times 2 + b_0 \times 1$$
 
 The sign bit contributes -128 (not +128). All other bits contribute their normal positive weights.
 
@@ -101,19 +99,17 @@ Add 1:  00000101 = 5 ✓
 
 ## Why Invert-and-Add-One Works
 
-This isn't magic—there's a mathematical reason. For any N-bit value x:
+This isn't magic—there's a mathematical reason. For any N-bit value $x$:
 
-```
-x + ~x = 111...1 (all ones) = 2^N - 1
-```
+$$x + \sim x = 111...1_2 = 2^N - 1$$
 
 Therefore:
-```
-~x = 2^N - 1 - x
-~x + 1 = 2^N - x
-```
 
-In modular arithmetic (mod 2^N), adding 2^N is the same as adding 0. So `~x + 1` is equivalent to `-x`.
+$$\sim x = 2^N - 1 - x$$
+
+$$\sim x + 1 = 2^N - x$$
+
+In modular arithmetic (mod $2^N$), adding $2^N$ is the same as adding 0. So $\sim x + 1$ is equivalent to $-x$.
 
 ## Adding Signed Numbers
 

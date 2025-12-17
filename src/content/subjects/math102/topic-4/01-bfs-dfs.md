@@ -30,20 +30,33 @@ def bfs(graph, start):
 
 ### Example Trace
 
-```
-Graph:          Start: A
-  A --- B
-  |     |       Queue: [A]
-  |     |       Visit A, add B,C
-  C --- D       Queue: [B,C]
-                Visit B, add D
-                Queue: [C,D]
-                Visit C (D already queued)
-                Queue: [D]
-                Visit D
+**Graph structure:**
+```mermaid
+graph LR
+    A --- B
+    A --- C
+    B --- D
+    C --- D
 
-Order: A, B, C, D
+    style A fill:#e1f5ff
 ```
+
+**BFS traversal from A:**
+```mermaid
+graph TD
+    Start[Start: Queue = A] --> Step1[Visit A<br/>Enqueue: B, C<br/>Queue = B, C]
+    Step1 --> Step2[Visit B<br/>Enqueue: D<br/>Queue = C, D]
+    Step2 --> Step3[Visit C<br/>D already queued<br/>Queue = D]
+    Step3 --> Step4[Visit D<br/>Queue = empty]
+    Step4 --> Result[BFS Order: A, B, C, D]
+
+    style Start fill:#e1f5ff
+    style Result fill:#d4edda
+```
+
+**Traversal order**: $A \to B \to C \to D$
+
+**Time complexity**: $O(V + E)$ where $V$ is vertices and $E$ is edges
 
 ### Properties
 
@@ -123,20 +136,26 @@ def dfs_iterative(graph, start):
 
 ### Example Trace
 
-```
-Graph:          Start: A
-  A --- B
-  |     |       Stack: [A]
-  |     |       Pop A, push C,B
-  C --- D       Stack: [C,B]
-                Pop B, push D
-                Stack: [C,D]
-                Pop D, push C (already visited skip)
-                Stack: [C]
-                Pop C
+**DFS traversal from A (recursive):**
+```mermaid
+graph TD
+    Start[Start: Visit A] --> B[Explore neighbor B]
+    B --> D[From B, explore D]
+    D --> BackB[D has no unvisited<br/>backtrack to B]
+    BackB --> BackA[B done<br/>backtrack to A]
+    BackA --> C[Explore neighbor C]
+    C --> CheckD[C's neighbor D<br/>already visited]
+    CheckD --> Done[Complete]
 
-Order: A, B, D, C (may vary with neighbor order)
+    Result[DFS Order: A, B, D, C]
+
+    style Start fill:#e1f5ff
+    style Result fill:#d4edda
 ```
+
+**Traversal order**: $A \to B \to D \to C$ (may vary with neighbor ordering)
+
+**Key difference from BFS**: Explores depth-first before breadth
 
 ### Properties
 

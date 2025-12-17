@@ -14,6 +14,26 @@ or equivalently:
 
 $$\iiint_E \nabla \cdot \mathbf{F} \, dV = \iint_S \mathbf{F} \cdot \mathbf{n} \, dS$$
 
+### Visual Relationship
+
+The Divergence Theorem connects a surface integral over a closed boundary to a volume integral over the enclosed region:
+
+```mermaid
+graph LR
+    subgraph "Boundary Surface (2D)"
+        Surface["Surface Integral<br/>∬_S F·dS<br/>(Flux out)"]
+    end
+
+    subgraph "Interior Volume (3D)"
+        Volume["Triple Integral<br/>∭_E (∇·F) dV<br/>(Total divergence)"]
+    end
+
+    Surface <==>|"Divergence<br/>Theorem"| Volume
+
+    style Surface fill:#e1f5ff
+    style Volume fill:#c8e6c9
+```
+
 ### Key Components
 
 - **Left side**: Triple integral of the divergence over the solid region $E$

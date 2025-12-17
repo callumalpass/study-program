@@ -246,21 +246,41 @@ Full-Duplex:    Both directions simultaneously
 
 ## Bandwidth and Data Rate
 
-```
-Bandwidth: Range of frequencies a channel can carry
-           Measured in Hertz (Hz)
+**Bandwidth**: Range of frequencies a channel can carry, measured in Hertz (Hz)
 
-Data Rate (Throughput): Actual bits transmitted per second
-           Measured in bps (bits per second)
+**Data Rate (Throughput)**: Actual bits transmitted per second, measured in bps (bits per second)
 
-Relationship (Nyquist for noiseless channel):
-  Max Data Rate = 2 × Bandwidth × log₂(L)
-  Where L = number of signal levels
+### Nyquist Theorem (Noiseless Channel)
 
-Shannon Capacity (with noise):
-  Max Data Rate = Bandwidth × log₂(1 + SNR)
-  Where SNR = Signal-to-Noise Ratio
-```
+Maximum data rate for a noiseless channel:
+
+$$R_{\text{max}} = 2 \times B \times \log_2(L)$$
+
+Where:
+- $R_{\text{max}}$ = maximum data rate (bps)
+- $B$ = bandwidth (Hz)
+- $L$ = number of signal levels
+
+**Example**: 3000 Hz channel with 4 signal levels:
+
+$$R_{\text{max}} = 2 \times 3000 \times \log_2(4) = 2 \times 3000 \times 2 = 12{,}000 \text{ bps}$$
+
+### Shannon-Hartley Theorem (Noisy Channel)
+
+Maximum data rate for a noisy channel:
+
+$$C = B \times \log_2(1 + \text{SNR})$$
+
+Where:
+- $C$ = channel capacity (bps)
+- $B$ = bandwidth (Hz)
+- $\text{SNR}$ = Signal-to-Noise Ratio (linear)
+
+**Example**: 3000 Hz channel with 30 dB SNR:
+
+$$\text{SNR}_{\text{linear}} = 10^{30/10} = 1000$$
+
+$$C = 3000 \times \log_2(1 + 1000) \approx 3000 \times 9.97 = 29{,}910 \text{ bps}$$
 
 ```python
 import math

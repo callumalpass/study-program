@@ -15,6 +15,20 @@ At each step:
 
 **Key question**: Does local optimality lead to global optimality?
 
+```mermaid
+flowchart TD
+    Start[Problem] --> Choose{Make greedy<br/>choice}
+    Choose --> Best[Select locally<br/>optimal option]
+    Best --> Reduce[Reduce to<br/>subproblem]
+    Reduce --> Done{Problem<br/>solved?}
+    Done -->|No| Choose
+    Done -->|Yes| Solution[Optimal<br/>solution]
+
+    style Start fill:#e1f5ff
+    style Best fill:#fff3cd
+    style Solution fill:#d4edda
+```
+
 ## Activity Selection Problem
 
 **Problem**: Given activities with start/end times, select maximum non-overlapping activities.
@@ -148,6 +162,27 @@ A locally optimal choice is part of some globally optimal solution.
 ### Optimal Substructure
 
 After making a greedy choice, the remaining problem has the same structure.
+
+### Decision Flow: Will Greedy Work?
+
+```mermaid
+flowchart TD
+    Start[Optimization<br/>Problem] --> Q1{Greedy choice<br/>property?}
+    Q1 -->|Yes| Q2{Optimal<br/>substructure?}
+    Q1 -->|No| DP[Try DP or<br/>other approach]
+
+    Q2 -->|Yes| Proof{Can you<br/>prove<br/>correctness?}
+    Q2 -->|No| DP
+
+    Proof -->|Yes| Greedy[Use greedy<br/>algorithm!]
+    Proof -->|Unsure| Test[Test on<br/>counterexamples]
+
+    Test -->|Works| Greedy
+    Test -->|Fails| DP
+
+    style Greedy fill:#4caf50
+    style DP fill:#2196f3
+```
 
 ### Matroid Theory
 

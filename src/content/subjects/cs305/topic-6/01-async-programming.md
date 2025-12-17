@@ -43,6 +43,37 @@ console.log('Third');
 
 The event loop is the mechanism that enables JavaScript to perform non-blocking operations despite being single-threaded. It continuously checks the call stack and callback queue, executing callbacks when the stack is empty.
 
+### Event Loop Architecture
+
+```mermaid
+graph TD
+    A[Call Stack] --> B{Stack Empty?}
+    B -->|Yes| C[Check Microtask Queue]
+    B -->|No| A
+    C --> D{Microtasks Available?}
+    D -->|Yes| E[Execute Microtask]
+    E --> C
+    D -->|No| F[Check Macrotask Queue]
+    F --> G{Macrotasks Available?}
+    G -->|Yes| H[Execute One Macrotask]
+    H --> A
+    G -->|No| I[Wait for Tasks]
+    I --> B
+
+    subgraph "Task Queues"
+        J[Microtask Queue<br/>Promises, queueMicrotask]
+        K[Macrotask Queue<br/>setTimeout, setInterval, I/O]
+    end
+
+    style A fill:#ffeb3b
+    style C fill:#4caf50
+    style F fill:#2196f3
+    style J fill:#81c784
+    style K fill:#64b5f6
+```
+
+Priority order: Call Stack → Microtasks → Macrotasks. This is why Promises execute before setTimeout callbacks.
+
 ```javascript
 // Understanding execution order
 console.log('1: Start');

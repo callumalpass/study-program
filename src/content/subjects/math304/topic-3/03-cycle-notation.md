@@ -19,12 +19,27 @@ Two-row notation for permutations is cumbersome. Cycle notation provides a compa
 
 ### Example 1
 
-$(1\,3\,5)$ means:
+The cycle $(1\,3\,5)$ means:
 - $1 \to 3$
 - $3 \to 5$
 - $5 \to 1$
 - $2 \to 2$ (fixed)
 - $4 \to 4$ (fixed)
+
+```mermaid
+graph LR
+    1((1)) -->|cycle| 3((3))
+    3 -->|cycle| 5((5))
+    5 -->|cycle| 1
+    2((2)) -.->|fixed| 2
+    4((4)) -.->|fixed| 4
+
+    style 1 fill:#bbdefb
+    style 3 fill:#bbdefb
+    style 5 fill:#bbdefb
+    style 2 fill:#ffccbc
+    style 4 fill:#ffccbc
+```
 
 In two-row notation (in $S_5$):
 $$(1\,3\,5) = \begin{pmatrix} 1 & 2 & 3 & 4 & 5 \\ 3 & 2 & 5 & 4 & 1 \end{pmatrix}$$
@@ -97,15 +112,30 @@ For non-disjoint cycles, apply right-to-left.
 
 ### Example 5
 
-Compute $(1\,2\,3)(2\,3\,4)$:
+Compute $(1\,2\,3)(2\,3\,4)$ by applying right-to-left:
 
-Apply $(2\,3\,4)$ first, then $(1\,2\,3)$:
+```mermaid
+graph TD
+    subgraph "Element Tracing"
+        A1["1"] --> B1["(2,3,4): 1→1"] --> C1["(1,2,3): 1→2"] --> D1["Result: 1→2"]
+        A2["2"] --> B2["(2,3,4): 2→3"] --> C2["(1,2,3): 3→1"] --> D2["Result: 2→1"]
+        A3["3"] --> B3["(2,3,4): 3→4"] --> C3["(1,2,3): 4→4"] --> D3["Result: 3→4"]
+        A4["4"] --> B4["(2,3,4): 4→2"] --> C4["(1,2,3): 2→3"] --> D4["Result: 4→3"]
+    end
+
+    style D1 fill:#c8e6c9
+    style D2 fill:#c8e6c9
+    style D3 fill:#c8e6c9
+    style D4 fill:#c8e6c9
+```
+
+Tracing each element:
 - $1 \xrightarrow{(2\,3\,4)} 1 \xrightarrow{(1\,2\,3)} 2$
 - $2 \xrightarrow{(2\,3\,4)} 3 \xrightarrow{(1\,2\,3)} 1$
 - $3 \xrightarrow{(2\,3\,4)} 4 \xrightarrow{(1\,2\,3)} 4$
 - $4 \xrightarrow{(2\,3\,4)} 2 \xrightarrow{(1\,2\,3)} 3$
 
-Result: $(1\,2\,3)(2\,3\,4) = (1\,2)(3\,4)$
+**Result**: $(1\,2\,3)(2\,3\,4) = (1\,2)(3\,4)$
 
 Alternatively in two-row form:
 $$(2\,3\,4) = \begin{pmatrix} 1 & 2 & 3 & 4 \\ 1 & 3 & 4 & 2 \end{pmatrix}$$

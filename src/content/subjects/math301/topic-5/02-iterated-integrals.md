@@ -34,7 +34,27 @@ The fundamental theorem connecting double integrals and iterated integrals is Fu
 
 $$\iint_R f(x, y) \, dA = \int_a^b \int_c^d f(x, y) \, dy \, dx = \int_c^d \int_a^b f(x, y) \, dx \, dy$$
 
-This remarkable theorem tells us three things:
+### Fubini's Theorem Visualization
+
+This remarkable theorem connects three equivalent formulations:
+
+```mermaid
+graph TD
+    DoubleInt["Double Integral<br/>∬_R f(x,y) dA<br/>(Riemann sum limit)"]
+
+    Iter1["Iterated Integral (y first)<br/>∫_a^b [∫_c^d f(x,y) dy] dx"]
+    Iter2["Iterated Integral (x first)<br/>∫_c^d [∫_a^b f(x,y) dx] dy"]
+
+    DoubleInt <==>|"Fubini's<br/>Theorem"| Iter1
+    DoubleInt <==>|"Fubini's<br/>Theorem"| Iter2
+    Iter1 <-.->|"Order doesn't<br/>matter"| Iter2
+
+    style DoubleInt fill:#e1f5ff
+    style Iter1 fill:#c8e6c9
+    style Iter2 fill:#ffccbc
+```
+
+**Key Insights:**
 1. The double integral can be evaluated as an iterated integral
 2. Both orders of integration give the same result
 3. We can choose whichever order is more convenient for computation

@@ -24,6 +24,39 @@ A complete analysis includes:
 7. **Key points** — Plot critical points, inflection points, intercepts
 8. **Sketch** — Connect the dots respecting all the analysis
 
+```mermaid
+flowchart TD
+    Start([Curve Sketching:<br/>Graph fx]) --> Domain[1. Domain<br/>Where is fx defined?<br/>• Polynomials: all ℝ<br/>• Rational: denom ≠ 0<br/>• √: argument ≥ 0<br/>• ln: argument > 0]
+
+    Domain --> Intercepts[2. Intercepts<br/>• y-int: set x = 0<br/>• x-int: solve fx = 0]
+
+    Intercepts --> Symmetry[3. Symmetry<br/>• Even: f-x = fx<br/>• Odd: f-x = -fx<br/>• Periodic: fx+T = fx]
+
+    Symmetry --> Asymptotes[4. Asymptotes<br/>• Vertical: lim x→a fx = ±∞<br/>• Horizontal: lim x→±∞ fx = L<br/>• Oblique: lim fx/x = m ≠ 0]
+
+    Asymptotes --> FirstDeriv[5. First Derivative f'x<br/>• Find critical points: f'x = 0<br/>• Sign analysis of f'<br/>• Determine increasing/decreasing]
+
+    FirstDeriv --> SecondDeriv[6. Second Derivative f''x<br/>• Find where f''x = 0<br/>• Sign analysis of f''<br/>• Determine concavity<br/>• Find inflection points]
+
+    SecondDeriv --> Classify[7. Classify Critical Points<br/>• Use 2nd deriv test or<br/>• Use 1st deriv test<br/>• Identify max/min]
+
+    Classify --> KeyPoints[8. Plot Key Points<br/>• Critical points<br/>• Inflection points<br/>• Intercepts<br/>• Points near asymptotes]
+
+    KeyPoints --> Sketch[9. Sketch the Curve<br/>• Connect points smoothly<br/>• Respect inc/dec intervals<br/>• Respect concavity<br/>• Approach asymptotes correctly]
+
+    Sketch --> Verify{10. Verify<br/>• All features shown?<br/>• Behavior at infinity?<br/>• Smooth transitions?}
+
+    Verify -->|Yes| Done([Complete Graph])
+    Verify -->|No| Review[Review missed features]
+    Review --> FirstDeriv
+
+    style Domain fill:#e1f5ff
+    style FirstDeriv fill:#fff3cd
+    style SecondDeriv fill:#ffe6e6
+    style Sketch fill:#d4f4dd
+    style Done fill:#d4edda
+```
+
 ## Domain
 
 **Find where the function is defined:**

@@ -220,6 +220,68 @@ print(create_ui(WindowsFactory()))  # [Windows Button] [X] Windows Checkbox
 print(create_ui(MacFactory()))       # (Mac Button) ☑ Mac Checkbox
 ```
 
+### Abstract Factory Pattern Diagram
+
+```mermaid
+classDiagram
+    GUIFactory <|-- WindowsFactory
+    GUIFactory <|-- MacFactory
+
+    Button <|-- WindowsButton
+    Button <|-- MacButton
+    Checkbox <|-- WindowsCheckbox
+    Checkbox <|-- MacCheckbox
+
+    WindowsFactory ..> WindowsButton : creates
+    WindowsFactory ..> WindowsCheckbox : creates
+    MacFactory ..> MacButton : creates
+    MacFactory ..> MacCheckbox : creates
+
+    class GUIFactory {
+        <<abstract>>
+        +create_button()* Button
+        +create_checkbox()* Checkbox
+    }
+
+    class WindowsFactory {
+        +create_button() WindowsButton
+        +create_checkbox() WindowsCheckbox
+    }
+
+    class MacFactory {
+        +create_button() MacButton
+        +create_checkbox() MacCheckbox
+    }
+
+    class Button {
+        <<abstract>>
+        +render()*
+    }
+
+    class Checkbox {
+        <<abstract>>
+        +render()*
+    }
+
+    class WindowsButton {
+        +render()
+    }
+
+    class MacButton {
+        +render()
+    }
+
+    class WindowsCheckbox {
+        +render()
+    }
+
+    class MacCheckbox {
+        +render()
+    }
+
+    note for GUIFactory "Abstract Factory creates\nfamilies of related objects\nwithout specifying concrete classes"
+```
+
 ---
 
 ## Real-World Example: Database Connections

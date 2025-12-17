@@ -4,7 +4,35 @@ Polymorphism enables code to work with values of multiple types, providing both 
 
 ## What is Type Polymorphism?
 
-The word polymorphism comes from Greek, meaning "many forms." In programming, it refers to the ability of code to operate on values of different types. Without polymorphism, we would need to write separate functions for every type combination:
+The word polymorphism comes from Greek, meaning "many forms." In programming, it refers to the ability of code to operate on values of different types.
+
+```mermaid
+graph TD
+    A[Polymorphism] --> B[Parametric]
+    A --> C[Ad-Hoc]
+    A --> D[Subtype]
+
+    B --> E[Universal Quantification]
+    B --> F["Type Variables (∀α)"]
+
+    C --> G[Function Overloading]
+    C --> H[Type Classes/Traits]
+
+    D --> I[Inheritance]
+    D --> J[Structural Subtyping]
+
+    B --> K[Higher-Kinded]
+    B --> L[Rank-N]
+
+    C --> M[Bounded Polymorphism]
+
+    style A fill:#e1f5ff
+    style B fill:#e1ffe1
+    style C fill:#ffe1e1
+    style D fill:#fff4e1
+```
+
+Without polymorphism, we would need to write separate functions for every type combination:
 
 ```c
 // Without polymorphism - repetitive code
@@ -27,7 +55,7 @@ Parametric polymorphism allows functions and data structures to be written gener
 
 ### Universal Quantification
 
-Parametrically polymorphic types are universally quantified over type variables:
+Parametrically polymorphic types are universally quantified over type variables. The type $\forall \alpha. \alpha \rightarrow \alpha$ means "for all types $\alpha$, this function takes an $\alpha$ and returns an $\alpha$":
 
 ```haskell
 -- The identity function works for ANY type
@@ -42,7 +70,7 @@ id [1,2,3]   -- id @[Int] : [Int] -> [Int]
 
 ### Parametricity and Free Theorems
 
-Parametric polymorphism provides strong guarantees through parametricity. A function with type `forall a. [a] -> [a]` cannot inspect the elements—it can only rearrange them:
+Parametric polymorphism provides strong guarantees through parametricity. A function with type $\forall \alpha. [\alpha] \rightarrow [\alpha]$ cannot inspect the elements—it can only rearrange them. This is because the function must work for any type $\alpha$, so it cannot make assumptions about the values:
 
 ```haskell
 -- What can a function of type [a] -> [a] do?

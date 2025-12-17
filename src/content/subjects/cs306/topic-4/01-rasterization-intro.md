@@ -10,6 +10,24 @@ The term "raster" comes from the Latin word "rastrum," meaning rake, referring t
 
 Rasterization sits at the heart of the graphics pipeline, transforming geometric data into pixels:
 
+```mermaid
+flowchart TD
+    A[Vertices<br/>Object Space] --> B[Vertex Processing<br/>Transform to Screen Space]
+    B --> C[Primitive Assembly<br/>Group into Triangles/Lines]
+    C --> D[Rasterization<br/>Find Covered Pixels]
+    D --> E[Fragment Processing<br/>Calculate Color & Depth]
+    E --> F{Depth Test}
+    F -->|Behind| G[Discard Fragment]
+    F -->|In Front| H[Output Merging<br/>Blend with Framebuffer]
+    H --> I[Final Framebuffer]
+
+    style A fill:#e1f5ff
+    style D fill:#ffe1e1
+    style E fill:#fff4e1
+    style I fill:#e1ffe1
+    style G fill:#ff6b6b
+```
+
 1. **Vertex Processing**: Transform vertices from object space to screen space
 2. **Primitive Assembly**: Group vertices into geometric primitives (triangles, lines)
 3. **Rasterization**: Determine which pixels are covered by each primitive

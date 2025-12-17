@@ -35,15 +35,15 @@ Rays converge → Far objects projected to smaller area
 
 ### Pinhole Camera Model
 
-Point P = (X, Y, Z) in camera space projects to point p = (x, y) on image plane:
+Point $\mathbf{P} = (X, Y, Z)$ in camera space projects to point $\mathbf{p} = (x, y)$ on image plane:
 
-```
 By similar triangles:
-x / f = X / Z  →  x = f × (X / Z)
-y / f = Y / Z  →  y = f × (Y / Z)
 
-where f = focal length (distance to image plane)
-```
+$$\frac{x}{f} = \frac{X}{Z} \quad \Rightarrow \quad x = f \times \frac{X}{Z}$$
+
+$$\frac{y}{f} = \frac{Y}{Z} \quad \Rightarrow \quad y = f \times \frac{Y}{Z}$$
+
+where $f$ = focal length (distance to image plane)
 
 **Division by Z** creates perspective effect.
 
@@ -51,18 +51,13 @@ where f = focal length (distance to image plane)
 
 Cannot divide by Z directly in matrix multiplication. Solution: **homogeneous coordinates**.
 
-**Perspective matrix** sets w = Z, then GPU divides by w:
+**Perspective matrix** sets $w = Z$, then GPU divides by $w$:
 
-```
-⎡ f  0  0   0 ⎤   ⎡ X ⎤   ⎡ fX ⎤
-⎢ 0  f  0   0 ⎥ × ⎢ Y ⎥ = ⎢ fY ⎥
-⎢ 0  0  ?   ? ⎥   ⎢ Z ⎥   ⎢ ?  ⎥
-⎣ 0  0  1   0 ⎦   ⎣ 1 ⎦   ⎣ Z  ⎦
+$$\begin{bmatrix} f & 0 & 0 & 0 \\ 0 & f & 0 & 0 \\ 0 & 0 & ? & ? \\ 0 & 0 & 1 & 0 \end{bmatrix} \begin{bmatrix} X \\ Y \\ Z \\ 1 \end{bmatrix} = \begin{bmatrix} fX \\ fY \\ ? \\ Z \end{bmatrix}$$
 
-After perspective division (÷ Z):
-x' = fX / Z
-y' = fY / Z
-```
+After perspective division ($\div Z$):
+
+$$x' = \frac{fX}{Z}, \quad y' = \frac{fY}{Z}$$
 
 ## Perspective Projection Matrix
 
@@ -99,41 +94,43 @@ Perspective frustum (truncated pyramid):
 Map frustum to NDC cube [-1, 1]³.
 
 **X and Y scaling** (based on FOV):
-```
-tan(FOV/2) = (width/2) / near
 
-Scale factor: 1 / tan(FOV/2)
+$$\tan\left(\frac{\text{FOV}}{2}\right) = \frac{\text{width}/2}{\text{near}}$$
+
+Scale factor: $\frac{1}{\tan(\text{FOV}/2)}$
 
 For aspect ratio correction:
-  sx = 1 / (aspect × tan(FOV/2))
-  sy = 1 / tan(FOV/2)
-```
+
+$$s_x = \frac{1}{\text{aspect} \times \tan(\text{FOV}/2)}$$
+
+$$s_y = \frac{1}{\tan(\text{FOV}/2)}$$
 
 **Z mapping** (near/far to [-1, 1] or [0, 1]):
-```
-Map [near, far] to [-1, 1] (OpenGL)
+
+Map $[\text{near}, \text{far}]$ to $[-1, 1]$ (OpenGL)
 
 After perspective division:
-  z' = (A×Z + B) / Z = A + B/Z
+
+$$z' = \frac{A \cdot Z + B}{Z} = A + \frac{B}{Z}$$
 
 Constraints:
-  Z = near → z' = -1
-  Z = far → z' = 1
+- $Z = \text{near} \Rightarrow z' = -1$
+- $Z = \text{far} \Rightarrow z' = 1$
 
 Solving:
-  A = -(far + near) / (far - near)
-  B = -2×far×near / (far - near)
-```
+
+$$A = -\frac{\text{far} + \text{near}}{\text{far} - \text{near}}$$
+
+$$B = -\frac{2 \cdot \text{far} \cdot \text{near}}{\text{far} - \text{near}}$$
 
 **Complete matrix** (OpenGL):
-```
-⎡ 1/(aspect×tan(FOV/2))    0              0                    0          ⎤
-⎢ 0                    1/tan(FOV/2)       0                    0          ⎥
-⎢ 0                         0        -(far+near)/(far-near)  -2far×near  ⎥
-⎢                                                              -----------⎥
-⎢                                                              (far-near) ⎥
-⎣ 0                         0              -1                   0          ⎦
-```
+
+$$\mathbf{P} = \begin{bmatrix}
+\frac{1}{\text{aspect} \cdot \tan(\text{FOV}/2)} & 0 & 0 & 0 \\
+0 & \frac{1}{\tan(\text{FOV}/2)} & 0 & 0 \\
+0 & 0 & -\frac{\text{far}+\text{near}}{\text{far}-\text{near}} & -\frac{2 \cdot \text{far} \cdot \text{near}}{\text{far}-\text{near}} \\
+0 & 0 & -1 & 0
+\end{bmatrix}$$
 
 ### GLM Implementation
 

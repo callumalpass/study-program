@@ -30,6 +30,27 @@ When both properties exist, DP transforms exponential solutions into polynomial 
 
 Understanding how DP differs from divide and conquer clarifies when to use each approach and why the distinction matters for algorithm design.
 
+```mermaid
+graph LR
+    subgraph "Divide & Conquer (Independent)"
+        A1[Problem] --> B1[Sub 1]
+        A1 --> C1[Sub 2]
+        B1 --> D1[Solve]
+        C1 --> E1[Solve]
+    end
+
+    subgraph "Dynamic Programming (Overlapping)"
+        A2[Problem] --> B2[Sub 1]
+        A2 --> C2[Sub 2]
+        B2 --> D2[Sub 3]
+        C2 --> D2
+        D2 --> E2[Reused!]
+    end
+
+    style D2 fill:#ffeb3b
+    style E2 fill:#4caf50
+```
+
 | Aspect | Divide & Conquer | Dynamic Programming |
 |--------|-----------------|---------------------|
 | Subproblems | Independent | Overlapping |
@@ -45,7 +66,7 @@ In contrast, DP problems have substantial overlap. Computing the 10th Fibonacci 
 
 The Fibonacci sequence provides the clearest illustration of how DP transforms algorithmic efficiency. Each Fibonacci number is the sum of the two preceding ones: 0, 1, 1, 2, 3, 5, 8, 13, 21, and so on. This simple recurrence conceals surprisingly rich computational challenges.
 
-### Naive Recursion: O(2ⁿ)
+### Naive Recursion: $O(2^n)$
 
 ```python
 def fib_naive(n):
@@ -54,11 +75,34 @@ def fib_naive(n):
     return fib_naive(n-1) + fib_naive(n-2)
 ```
 
-The naive recursive implementation directly translates the mathematical definition, but creates a catastrophic performance problem. The call tree branches at every step, creating approximately 2ⁿ total calls. Computing fib(40) requires billions of function calls; fib(50) would take years.
+The naive recursive implementation directly translates the mathematical definition, but creates a catastrophic performance problem. The call tree branches at every step, creating approximately $2^n$ total calls. Computing fib(40) requires billions of function calls; fib(50) would take years.
 
-The fundamental issue is that fib(5) computes fib(3) twice, fib(2) three times, and fib(1) five times. These redundant calculations compound exponentially as n grows. This is precisely the symptom that indicates DP can help.
+```mermaid
+graph TD
+    F5["fib(5)"] --> F4a["fib(4)"]
+    F5 --> F3a["fib(3)"]
+    F4a --> F3b["fib(3)"]
+    F4a --> F2a["fib(2)"]
+    F3a --> F2b["fib(2)"]
+    F3a --> F1a["fib(1)"]
+    F3b --> F2c["fib(2)"]
+    F3b --> F1b["fib(1)"]
+    F2a --> F1c["fib(1)"]
+    F2a --> F0a["fib(0)"]
+    F2b --> F1d["fib(1)"]
+    F2b --> F0b["fib(0)"]
+    F2c --> F1e["fib(1)"]
+    F2c --> F0c["fib(0)"]
 
-### Top-Down with Memoization: O(n)
+    style F3b fill:#ffcdd2
+    style F2a fill:#ffe0b2
+    style F2b fill:#ffe0b2
+    style F2c fill:#ffe0b2
+```
+
+The fundamental issue is that fib(5) computes fib(3) **twice**, fib(2) **three times**, and fib(1) **five times**. These redundant calculations compound exponentially as $n$ grows. This is precisely the symptom that indicates DP can help.
+
+### Top-Down with Memoization: $O(n)$
 
 ```python
 def fib_memo(n, memo={}):
@@ -70,9 +114,35 @@ def fib_memo(n, memo={}):
     return memo[n]
 ```
 
-Memoization adds a cache that stores each computed result. Before recursing, we check if the answer is already known. This simple modification reduces time complexity from O(2ⁿ) to O(n) because each of the n subproblems is computed exactly once. The trade-off is O(n) space for the cache plus O(n) space for the recursion stack.
+Memoization adds a cache that stores each computed result. Before recursing, we check if the answer is already known. This simple modification reduces time complexity from $O(2^n)$ to $O(n)$ because each of the $n$ subproblems is computed exactly once. The trade-off is $O(n)$ space for the cache plus $O(n)$ space for the recursion stack.
 
-### Bottom-Up Tabulation: O(n)
+```mermaid
+graph LR
+    subgraph "Memoization Cache"
+        M0["memo[0] = 0"]
+        M1["memo[1] = 1"]
+        M2["memo[2] = 1"]
+        M3["memo[3] = 2"]
+        M4["memo[4] = 3"]
+        M5["memo[5] = 5"]
+    end
+
+    F5["fib(5)"] --> Check5{"5 in memo?"}
+    Check5 -->|No| Compute5["Compute:<br/>fib(4) + fib(3)"]
+    Compute5 --> F4["fib(4)"]
+    Compute5 --> F3["fib(3)"]
+    F4 --> Check4{"4 in memo?"}
+    F3 --> Check3{"3 in memo?"}
+    Check3 -->|Yes| M3
+    Check4 -->|No| Compute4["Compute"]
+    Compute5 --> Store5["Store in memo[5]"]
+
+    style M3 fill:#4caf50
+    style M4 fill:#4caf50
+    style M5 fill:#4caf50
+```
+
+### Bottom-Up Tabulation: $O(n)$
 
 ```python
 def fib_table(n):
@@ -85,9 +155,18 @@ def fib_table(n):
     return dp[n]
 ```
 
-Bottom-up tabulation eliminates recursion entirely by computing values in order from smallest to largest. This approach has the same O(n) time complexity but avoids recursion overhead and stack overflow risks. For large n, tabulation is often faster in practice despite the same theoretical complexity.
+Bottom-up tabulation eliminates recursion entirely by computing values in order from smallest to largest. This approach has the same $O(n)$ time complexity but avoids recursion overhead and stack overflow risks. For large $n$, tabulation is often faster in practice despite the same theoretical complexity.
 
-### Space-Optimized: O(1)
+**DP Table Visualization for fib(6)**:
+
+| i | 0 | 1 | 2 | 3 | 4 | 5 | 6 |
+|---|---|---|---|---|---|---|---|
+| dp[i] | 0 | 1 | 1 | 2 | 3 | 5 | **8** |
+| | ← | ← | ← | ← | ← | ← | ← |
+
+Each cell depends only on the two preceding cells: $\text{dp}[i] = \text{dp}[i-1] + \text{dp}[i-2]$
+
+### Space-Optimized: $O(1)$
 
 ```python
 def fib_optimized(n):
@@ -99,7 +178,7 @@ def fib_optimized(n):
     return curr
 ```
 
-Since each Fibonacci number depends only on the two preceding values, we can discard earlier results. This optimization reduces space from O(n) to O(1) while maintaining O(n) time. Not all DP problems allow such aggressive space optimization, but recognizing when it's possible is an important skill.
+Since each Fibonacci number depends only on the two preceding values, we can discard earlier results. This optimization reduces space from $O(n)$ to $O(1)$ while maintaining $O(n)$ time. Not all DP problems allow such aggressive space optimization, but recognizing when it's possible is an important skill.
 
 ## DP Design Process
 

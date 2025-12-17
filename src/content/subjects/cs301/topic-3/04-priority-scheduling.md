@@ -82,13 +82,21 @@ void priority_nonpreemptive(Process* processes, int n) {
 
 Non-preemptive (lower number = higher priority):
 
-```
-Gantt Chart:
-|P2|-- P5 --|---- P1 ----|P3|P4|
-0  1        6           16  18 19
+```mermaid
+gantt
+    title Priority Scheduling (Non-preemptive)
+    dateFormat X
+    axisFormat %s
 
-Execution order: P2 → P5 → P1 → P3 → P4
+    section CPU
+    P2 (pri=1) :0, 1
+    P5 (pri=2) :1, 6
+    P1 (pri=3) :6, 16
+    P3 (pri=4) :16, 18
+    P4 (pri=5) :18, 19
 ```
+
+Execution order: $P_2 \to P_5 \to P_1 \to P_3 \to P_4$ (sorted by priority)
 
 Results:
 | Process | Waiting | Turnaround |
@@ -99,7 +107,7 @@ Results:
 | P4 | 18 | 19 |
 | P5 | 1 | 6 |
 
-Average Waiting = 8.2
+$$\bar{W} = \frac{0 + 6 + 16 + 18 + 1}{5} = \frac{41}{5} = 8.2 \text{ ms}$$
 
 ## Preemptive Priority Scheduling
 
@@ -167,7 +175,24 @@ Result: P_low never runs - STARVATION
 
 ## Aging Solution
 
-Aging gradually increases priority of waiting processes:
+Aging gradually increases priority of waiting processes to prevent starvation:
+
+**Aging formula:**
+
+$$P_{eff}(t) = P_{base} - \left\lfloor \frac{W(t)}{\Delta t} \right\rfloor \times \beta$$
+
+Where:
+- $P_{eff}(t)$ = effective priority at time $t$ (lower = higher priority)
+- $P_{base}$ = base/original priority
+- $W(t)$ = waiting time
+- $\Delta t$ = aging threshold (time units)
+- $\beta$ = priority boost per threshold
+
+**Example:** Process with $P_{base} = 10$, waiting for $W = 50$ time units, $\Delta t = 10$, $\beta = 1$
+
+$$P_{eff} = 10 - \left\lfloor \frac{50}{10} \right\rfloor \times 1 = 10 - 5 = 5$$
+
+Priority improves from 10 to 5 after waiting.
 
 ```c
 typedef struct {

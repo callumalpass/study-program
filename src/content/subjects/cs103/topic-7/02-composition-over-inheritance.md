@@ -46,6 +46,32 @@ car = Car(Engine())
 car.start()
 ```
 
+### Inheritance vs Composition Visualization
+
+```mermaid
+flowchart TB
+    subgraph Inheritance["❌ Inheritance (Is-A)"]
+        direction TB
+        Engine1[Engine]
+        Car1[Car extends Engine]
+        Engine1 --> Car1
+    end
+
+    subgraph Composition["✅ Composition (Has-A)"]
+        direction TB
+        Engine2[Engine]
+        Car2[Car]
+        Car2 -.->|has-a| Engine2
+    end
+
+    style Inheritance fill:#FFE4E1
+    style Composition fill:#E1FFE4
+```
+
+**Inheritance** (Is-A): Car **is an** Engine - Doesn't make sense!
+
+**Composition** (Has-A): Car **has an** Engine - Makes perfect sense!
+
 ---
 
 ## Why Prefer Composition?
@@ -97,6 +123,22 @@ class Dog(Mammal): ...
 # What if you need a RobotDog that has Dog behavior but isn't living?
 ```
 
+```mermaid
+classDiagram
+    Entity <|-- LivingEntity
+    LivingEntity <|-- Animal
+    Animal <|-- Mammal
+    Mammal <|-- Dog
+
+    class Entity
+    class LivingEntity
+    class Animal
+    class Mammal
+    class Dog
+
+    note for Dog "Deep inheritance hierarchy:\n5 levels deep!\nHard to add RobotDog\nwithout breaking the hierarchy"
+```
+
 Composition keeps things flat:
 
 ```python
@@ -129,6 +171,38 @@ class RobotDog:
 
     def move(self):
         self._movement.move()
+```
+
+```mermaid
+classDiagram
+    Dog o-- BarkBehavior : has-a
+    Dog o-- MovementBehavior : has-a
+    RobotDog o-- BarkBehavior : has-a
+    RobotDog o-- MovementBehavior : has-a
+
+    class Dog {
+        -BarkBehavior _bark
+        -MovementBehavior _movement
+        +bark()
+        +move()
+    }
+
+    class RobotDog {
+        -BarkBehavior _bark
+        -MovementBehavior _movement
+        +bark()
+        +move()
+    }
+
+    class BarkBehavior {
+        +bark()
+    }
+
+    class MovementBehavior {
+        +move()
+    }
+
+    note for Dog "Flat composition:\nBehaviors are shared,\nnot inherited.\nEasy to mix and match!"
 ```
 
 ### 3. Easier Testing

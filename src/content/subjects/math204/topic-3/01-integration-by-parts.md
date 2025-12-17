@@ -43,6 +43,48 @@ Choosing which part of the integrand should be $u$ and which should be $dv$ is c
 4. **T**rigonometric functions: $\sin x$, $\cos x$, $\tan x$, $\sec x$
 5. **E**xponential functions: $e^x$, $2^x$, $a^x$
 
+### LIATE Priority Decision Tree
+
+```mermaid
+graph TD
+    Start([Product of two functions]) --> Identify[Identify function types<br/>in the product]
+
+    Identify --> HasL{Contains<br/>Logarithmic?}
+    HasL -->|Yes| ChooseL[Choose u = ln x <br/>or logₐ x ]
+    HasL -->|No| HasI{Contains<br/>Inverse Trig?}
+
+    HasI -->|Yes| ChooseI[Choose u = arcsin x ,<br/>arctan x , etc.]
+    HasI -->|No| HasA{Contains<br/>Algebraic?}
+
+    HasA -->|Yes| ChooseA[Choose u = xⁿ<br/> polynomial ]
+    HasA -->|No| HasT{Contains<br/>Trigonometric?}
+
+    HasT -->|Yes| ChooseT[Choose u = sin x ,<br/>cos x , etc.]
+    HasT -->|No| ChooseE[Choose u = eˣ,<br/>aˣ]
+
+    ChooseL --> SetDV[Let dv = everything else · dx]
+    ChooseI --> SetDV
+    ChooseA --> SetDV
+    ChooseT --> SetDV
+    ChooseE --> SetDV
+
+    SetDV --> Compute[Compute:<br/>du = derivative of u<br/>v = antiderivative of dv]
+
+    Compute --> Apply[Apply formula:<br/>∫u dv = uv - ∫v du]
+
+    Apply --> Check{Is ∫v du<br/>simpler?}
+    Check -->|Yes| Done([Evaluate ∫v du])
+    Check -->|No| Retry[Try:<br/>• Swap u and dv<br/>• Different technique<br/>• Parts again]
+
+    style Start fill:#e1f5ff
+    style Done fill:#d4edda
+    style ChooseL fill:#fff3cd
+    style ChooseI fill:#fff3cd
+    style ChooseA fill:#fff3cd
+    style ChooseT fill:#fff3cd
+    style ChooseE fill:#fff3cd
+```
+
 **How to use LIATE:**
 - Identify the types of functions in your integrand
 - Choose $u$ from the category that appears earliest in LIATE

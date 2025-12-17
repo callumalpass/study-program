@@ -50,6 +50,33 @@ Kruskal's algorithm takes a global view: sort all edges by weight and process th
 
 **Strategy**: Add edges in order of weight, skip if creates cycle.
 
+```mermaid
+graph LR
+    subgraph "Step 1: Sort edges"
+        E1["Edge list:<br/>(1,A-B)<br/>(2,B-C)<br/>(3,A-C)<br/>(4,C-D)"]
+    end
+
+    subgraph "Step 2: Process edges"
+        S1["Add A-B (1)"] --> S2["Add B-C (2)"]
+        S2 --> S3["Skip A-C (3)<br/>creates cycle!"]
+        S3 --> S4["Add C-D (4)"]
+    end
+
+    subgraph "Result: MST"
+        A[A] --- B[B]
+        B --- C[C]
+        C --- D[D]
+
+        L1["Total weight: 7"] -.-> D
+    end
+
+    E1 --> S1
+    S4 --> A
+
+    style S3 fill:#ffcdd2
+    style A fill:#4caf50
+```
+
 ```python
 def kruskal(vertices, edges):
     """
@@ -90,15 +117,52 @@ def kruskal(vertices, edges):
 **Correctness**: Each edge added is minimum-weight crossing some cut (the cut separating the two components being joined).
 
 **Complexity**:
-- Sorting: O(E log E)
-- Union-Find operations: O(E × α(V)) ≈ O(E)
-- **Total**: O(E log E) = O(E log V)
+- Sorting: $O(E \log E)$
+- Union-Find operations: $O(E \times \alpha(V)) \approx O(E)$
+- **Total**: $O(E \log E) = O(E \log V)$
 
 ## Prim's Algorithm
 
 Prim's algorithm takes a local view: start from any vertex and repeatedly add the minimum-weight edge connecting the current tree to a new vertex. Unlike Kruskal's global edge processing, Prim's maintains a growing tree and considers only edges adjacent to it. This approach resembles Dijkstra's algorithm and uses similar priority queue techniques.
 
 **Strategy**: Grow MST from a starting vertex, always adding minimum-weight edge to a new vertex.
+
+```mermaid
+graph TD
+    subgraph "Step 1: Start at A"
+        A1[A]
+    end
+
+    subgraph "Step 2: Add min edge (A-C: 2)"
+        A2[A] --- C2[C]
+    end
+
+    subgraph "Step 3: Add min edge (C-B: 1)"
+        A3[A] --- C3[C]
+        C3 --- B3[B]
+    end
+
+    subgraph "Step 4: Add min edge (C-D: 4)"
+        A4[A] --- C4[C]
+        C4 --- B4[B]
+        C4 --- D4[D]
+    end
+
+    A1 --> A2
+    A2 --> A3
+    A3 --> A4
+
+    style A1 fill:#e3f2fd
+    style A2 fill:#90caf9
+    style C2 fill:#90caf9
+    style A3 fill:#64b5f6
+    style C3 fill:#64b5f6
+    style B3 fill:#64b5f6
+    style A4 fill:#4caf50
+    style C4 fill:#4caf50
+    style B4 fill:#4caf50
+    style D4 fill:#4caf50
+```
 
 ```python
 import heapq
@@ -133,8 +197,8 @@ def prim(graph, start):
 **Correctness**: Each added edge is minimum crossing the cut (visited, unvisited).
 
 **Complexity**:
-- With binary heap: O(E log V)
-- With Fibonacci heap: O(E + V log V)
+- With binary heap: $O(E \log V)$
+- With Fibonacci heap: $O(E + V \log V)$
 
 ## Comparison
 

@@ -35,16 +35,29 @@ Each subnet has 64 addresses (62 usable for hosts).
 
 ## Subnet Calculations
 
-**Number of subnets** = 2^(borrowed bits)
-**Hosts per subnet** = 2^(remaining host bits) - 2
+**Number of subnets**:
 
-The -2 accounts for network and broadcast addresses.
+$$\text{Number of subnets} = 2^n$$
 
-**Block size** (increment): 256 - last octet of subnet mask
+where $n$ = number of borrowed bits
 
-Example: Mask 255.255.255.192 (/26)
-Block size = 256 - 192 = 64
-Subnets: 0, 64, 128, 192
+**Hosts per subnet**:
+
+$$\text{Usable hosts} = 2^h - 2$$
+
+where $h$ = number of remaining host bits
+
+The $-2$ accounts for network and broadcast addresses.
+
+**Block size** (increment):
+
+$$\text{Block size} = 256 - \text{last octet of subnet mask}$$
+
+**Example**: Mask 255.255.255.192 (/26)
+
+$$\text{Block size} = 256 - 192 = 64$$
+
+Subnets start at: 0, 64, 128, 192
 
 ## Variable Length Subnet Masks (VLSM)
 

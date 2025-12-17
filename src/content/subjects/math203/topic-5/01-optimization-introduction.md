@@ -14,6 +14,39 @@ An **optimization problem** asks us to find the maximum or minimum value of some
 
 ## The Optimization Process
 
+```mermaid
+flowchart TD
+    Start([Optimization Problem]) --> Step1[Step 1: Understand<br/>• What to maximize/minimize?<br/>• What constraints exist?<br/>• Draw diagram]
+
+    Step1 --> Step2[Step 2: Introduce Variables<br/>• Assign variables to unknowns<br/>• Express objective function]
+
+    Step2 --> Step3[Step 3: Eliminate Variables<br/>• Use constraints<br/>• Reduce to single variable<br/>fx = objective function]
+
+    Step3 --> Step4[Step 4: Find Domain<br/>• Physical constraints<br/>• Usually: a ≤ x ≤ b]
+
+    Step4 --> Step5[Step 5: Find Critical Points<br/>• Compute f'x<br/>• Solve f'x = 0<br/>• Find where f' undefined]
+
+    Step5 --> Q1{Domain<br/>type?}
+
+    Q1 -->|Closed interval<br/>a, b| Closed[Evaluate f at:<br/>• All critical points<br/>• Both endpoints a and b]
+    Q1 -->|Open/unbounded| Open[Evaluate f at:<br/>• Critical points<br/>• Check behavior at<br/>boundaries via limits]
+
+    Closed --> Compare[Compare all values<br/>Largest = max<br/>Smallest = min]
+    Open --> Compare
+
+    Compare --> Verify{Verify:<br/>• Reasonable?<br/>• Correct units?<br/>• Satisfies constraints?}
+
+    Verify -->|Yes| Answer([Answer with units])
+    Verify -->|No| Error[Check work<br/>Review setup]
+    Error --> Step1
+
+    style Step1 fill:#e1f5ff
+    style Step3 fill:#e1f5ff
+    style Step5 fill:#fff3cd
+    style Answer fill:#d4edda
+    style Error fill:#f8d7da
+```
+
 **Step 1: Understand the problem**
 - What quantity do we want to maximize or minimize? (objective)
 - What constraints or relationships exist?

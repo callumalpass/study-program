@@ -184,6 +184,44 @@ Determine whether the result is statistically significant.
 **Step 6: State conclusion**
 Reject or fail to reject $H_0$ and interpret in context.
 
+### Decision Flowchart
+
+The following flowchart guides you through the hypothesis testing decision process:
+
+```mermaid
+flowchart TD
+    Start([Start: Research Question]) --> H[Formulate H₀ and Hₐ]
+    H --> Alpha[Choose significance level α]
+    Alpha --> Select{Select Test}
+
+    Select -->|Mean, σ known| Z[Z-test]
+    Select -->|Mean, σ unknown| T[t-test]
+    Select -->|Proportion| ZP[Z-test for proportion]
+    Select -->|Variance| Chi[χ² test]
+    Select -->|Multiple means| F[F-test/ANOVA]
+
+    Z --> Calc[Calculate test statistic]
+    T --> Calc
+    ZP --> Calc
+    Chi --> Calc
+    F --> Calc
+
+    Calc --> PVal{P-value < α?}
+
+    PVal -->|Yes| Reject[Reject H₀<br/>Result is statistically significant]
+    PVal -->|No| Fail[Fail to Reject H₀<br/>Insufficient evidence against H₀]
+
+    Reject --> Context[Interpret in context<br/>State practical significance]
+    Fail --> Context
+
+    Context --> End([Conclusion])
+
+    style Start fill:#e1f5ff
+    style Reject fill:#ffebee
+    style Fail fill:#fff4e1
+    style End fill:#d4edda
+```
+
 ## Worked Example: Complete Hypothesis Test
 
 **Problem:** A coffee shop claims their new espresso machine produces shots with an average volume of 30 mL. A barista suspects it's less. She measures 20 shots and finds $\bar{x} = 28.5$ mL with $s = 2.4$ mL. Test at $\alpha = 0.05$.

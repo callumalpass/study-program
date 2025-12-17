@@ -4,6 +4,20 @@
 
 The **curl** and **divergence** are two fundamental differential operators that act on vector fields. While the gradient operates on scalar fields to produce vector fields, curl and divergence operate on vector fields. The curl measures the rotation or circulation of a field, while the divergence measures the expansion or compression. These operators are central to the major theorems of vector calculus and have profound physical interpretations in fluid dynamics, electromagnetism, and other areas of physics.
 
+### Vector Calculus Operators Overview
+
+```mermaid
+graph TD
+    Scalar["Scalar Field f(x,y,z)"] -->|"Gradient ∇f"| VectorField["Vector Field F(x,y,z)"]
+    VectorField -->|"Divergence ∇·F"| ScalarOut["Scalar Field<br/>(source/sink strength)"]
+    VectorField -->|"Curl ∇×F"| VectorOut["Vector Field<br/>(rotation axis)"]
+
+    style Scalar fill:#e1f5ff
+    style VectorField fill:#c8e6c9
+    style ScalarOut fill:#fff4e1
+    style VectorOut fill:#ffccbc
+```
+
 ## Divergence
 
 ### Definition
@@ -155,6 +169,26 @@ $$= \mathbf{i}(x - x) - \mathbf{j}(y - y) + \mathbf{k}(z - z) = \langle 0, 0, 0 
 Since the curl is zero, $\mathbf{F}$ is conservative. Indeed, $\mathbf{F} = \nabla(xyz)$.
 
 ## Important Identities
+
+### Fundamental Vector Calculus Identities
+
+These two identities are cornerstones of vector calculus:
+
+```mermaid
+graph TD
+    Scalar["Scalar Function f"] -->|"∇f<br/>(gradient)"| Grad["Vector Field ∇f"]
+    Grad -->|"∇×(∇f)<br/>(curl)"| Zero1["𝟎<br/>(zero vector)"]
+
+    Vector["Vector Field F"] -->|"∇×F<br/>(curl)"| Curl["Vector Field ∇×F"]
+    Curl -->|"∇·(∇×F)<br/>(divergence)"| Zero2["0<br/>(zero scalar)"]
+
+    style Scalar fill:#e1f5ff
+    style Grad fill:#c8e6c9
+    style Zero1 fill:#ffccbc
+    style Vector fill:#c8e6c9
+    style Curl fill:#ffccbc
+    style Zero2 fill:#ffe8e8
+```
 
 ### Curl of a Gradient
 

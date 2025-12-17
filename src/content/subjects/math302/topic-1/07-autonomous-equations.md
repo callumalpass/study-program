@@ -69,7 +69,26 @@ Test intervals:
 - $0 < y < 1$: $f(y) = y(1-y) = (+)(\text{positive}) > 0$ → arrows point up
 - $y > 1$: $f(y) = y(1-y) = (+)(\text{negative}) < 0$ → arrows point down
 
-Phase line:
+Phase line diagram:
+
+```mermaid
+graph TB
+    subgraph "Phase Line for dy/dt = y(1-y)"
+    A[" "] -.->|"y → ∞"| B
+    B["• y = 1<br/>(stable)"]
+    C[" "] -->|"↑"| B
+    D["• y = 0<br/>(unstable)"]
+    C -->|"0 < y < 1"| C
+    D -.-> C
+    E[" "] -.->|"↓"| D
+    E -.->|"y → -∞"| F[" "]
+
+    style B fill:#d1e7dd,stroke:#0f5132,stroke-width:3px
+    style D fill:#f8d7da,stroke:#842029,stroke-width:3px
+    end
+```
+
+Text representation:
 ```
   ↓  y > 1
   • y = 1  (stable)
@@ -92,6 +111,37 @@ The stability of an equilibrium $y^*$ describes what happens to nearby solutions
 
 **Semi-stable**: Solutions on one side approach $y^*$, while those on the other side move away
 - Arrows point toward the equilibrium on one side and away on the other
+
+The following diagram illustrates all three stability types:
+
+```mermaid
+graph LR
+    subgraph "Stability Types"
+        direction TB
+
+        subgraph S1["Stable Equilibrium"]
+            direction TB
+            A1[" "] -->|"↓"| A2["• y*"]
+            A3[" "] -->|"↑"| A2
+            style A2 fill:#d1e7dd,stroke:#0f5132,stroke-width:3px
+        end
+
+        subgraph S2["Unstable Equilibrium"]
+            direction TB
+            B2["• y*"]
+            B2 -->|"↑"| B1[" "]
+            B2 -->|"↓"| B3[" "]
+            style B2 fill:#f8d7da,stroke:#842029,stroke-width:3px
+        end
+
+        subgraph S3["Semi-stable Equilibrium"]
+            direction TB
+            C1[" "] -->|"↓"| C2["• y*"]
+            C2 -->|"↓"| C3[" "]
+            style C2 fill:#fff3cd,stroke:#997404,stroke-width:3px
+        end
+    end
+```
 
 ### Stability Criterion
 
@@ -257,6 +307,44 @@ At $r = 0$: only $y = 0$ is an equilibrium.
 For $r > 0$: three equilibria exist. The central equilibrium at $y = 0$ becomes unstable, and two stable equilibria appear at $y = \pm\sqrt{r}$.
 
 This is a **supercritical pitchfork bifurcation**, common in symmetric systems.
+
+```mermaid
+graph TB
+    subgraph "Pitchfork Bifurcation: dy/dt = ry - y³"
+        direction LR
+
+        subgraph P1["r < 0"]
+            direction TB
+            R1A[" "] -->|"↓"| R1B["• y = 0<br/>(stable)"]
+            R1C[" "] -->|"↑"| R1B
+        end
+
+        subgraph P2["r = 0"]
+            direction TB
+            R2A[" "] -.->|"↓"| R2B["• y = 0<br/>(semi-stable)"]
+            R2C[" "] -.->|"↑"| R2B
+        end
+
+        subgraph P3["r > 0"]
+            direction TB
+            R3A["• y = +√r<br/>(stable)"]
+            R3B[" "] -->|"↑"| R3A
+            R3C["• y = 0<br/>(unstable)"]
+            R3B -->|"flow"| R3B
+            R3C -->|"↑"| R3D[" "]
+            R3C -->|"↓"| R3E[" "]
+            R3F["• y = -√r<br/>(stable)"]
+            R3E -->|"↓"| R3F
+            R3G[" "] -->|"↑"| R3F
+        end
+    end
+
+    style R1B fill:#d1e7dd,stroke:#0f5132
+    style R2B fill:#fff3cd,stroke:#997404
+    style R3A fill:#d1e7dd,stroke:#0f5132
+    style R3C fill:#f8d7da,stroke:#842029
+    style R3F fill:#d1e7dd,stroke:#0f5132
+```
 
 ## Time-Independent Solutions and Phase Portraits
 

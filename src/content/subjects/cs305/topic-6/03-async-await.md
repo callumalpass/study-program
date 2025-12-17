@@ -46,6 +46,37 @@ calculateSum(5, 3).then((result) => {
 
 The `await` keyword can only be used inside async functions. It pauses execution until the Promise resolves, then returns the resolved value.
 
+### Async/Await Execution Flow
+
+```mermaid
+sequenceDiagram
+    participant Main as Main Thread
+    participant Async as Async Function
+    participant API as API Call
+
+    Main->>Async: Call async function
+    activate Async
+    Async->>Async: Execute synchronous code
+    Async->>API: await fetch() - pause execution
+    activate API
+    Note over Async: Function paused,<br/>Main thread continues
+    Async-->>Main: Return Promise (pending)
+    deactivate Async
+
+    Note over Main: Main thread continues<br/>executing other code
+
+    API-->>Async: Response received
+    deactivate API
+    activate Async
+    Note over Async: Resume execution<br/>after await
+    Async->>Async: Process response
+    Async->>Async: Return result
+    Async-->>Main: Promise resolved
+    deactivate Async
+```
+
+The `await` keyword pauses the async function execution but doesn't block the main thread, allowing other code to run.
+
 ```javascript
 // Basic await usage
 async function fetchUser(id) {

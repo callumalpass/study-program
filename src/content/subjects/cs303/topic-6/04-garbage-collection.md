@@ -14,18 +14,33 @@ Garbage collection is based on a simple insight: if an object cannot be reached 
 
 An object is **reachable** if there exists a path of references from any root to that object. All other objects are garbage.
 
+```mermaid
+graph TD
+    R1[Root A] --> A[Object A]
+    R2[Root B] --> B[Object B]
+
+    A --> C[Object C]
+    C --> D[Object D]
+    B --> E[Object E]
+
+    F[Object F] --> G[Object G]
+    G --> F
+    H[Object H]
+
+    style R1 fill:#e1f5ff
+    style R2 fill:#e1f5ff
+    style A fill:#e1ffe1
+    style B fill:#e1ffe1
+    style C fill:#e1ffe1
+    style D fill:#e1ffe1
+    style E fill:#e1ffe1
+    style F fill:#ffe1e1
+    style G fill:#ffe1e1
+    style H fill:#ffe1e1
 ```
-Roots: {A, B}
 
-A -> C -> D
-B -> E
-
-F -> G  (unreachable cycle)
-H       (unreachable single object)
-
-Reachable: {A, B, C, D, E}
-Garbage: {F, G, H}
-```
+Reachable objects (green): {A, B, C, D, E}
+Garbage (red): {F, G, H}
 
 Tracing garbage collectors traverse the object graph starting from roots, identifying all reachable objects. Anything not marked as reachable is garbage.
 
@@ -288,25 +303,34 @@ void write_barrier(Object* obj, Object* new_reference) {
 
 ## Tri-Color Marking
 
-Incremental GC often uses tri-color abstraction:
+Incremental GC often uses tri-color abstraction to track marking progress:
 
-- **White**: Unprocessed (potentially garbage)
-- **Gray**: Marked but children not yet scanned
-- **Black**: Marked and children scanned
+```mermaid
+graph TD
+    A["Tri-Color States"]
 
-Initially:
-- Roots are gray
-- Everything else is white
+    B["⚪ White\nUnprocessed\n(potentially garbage)"]
+    C["⚫ Gray\nMarked but\nchildren not scanned"]
+    D["⬛ Black\nMarked and\nchildren scanned"]
 
-Invariant: No black object points to white object (ensures we don't miss reachable objects).
+    A --> B
+    A --> C
+    A --> D
 
-During marking:
-1. Pick gray object
-2. Scan its children
-3. Make white children gray
-4. Make object black
+    style B fill:#ffffff,stroke:#000000
+    style C fill:#808080,color:#ffffff
+    style D fill:#000000,color:#ffffff
+```
 
-When no gray objects remain, white objects are garbage.
+**Invariant**: No black object points to white object (ensures we don't miss reachable objects).
+
+Marking process:
+1. Initially: roots are gray, everything else is white
+2. Pick a gray object
+3. Scan its children, make white children gray
+4. Make the object black
+5. Repeat until no gray objects remain
+6. White objects are garbage
 
 Write barrier maintains invariant:
 ```c

@@ -60,6 +60,31 @@ High addresses
 Low addresses
 ```
 
+```mermaid
+graph TD
+    subgraph Stack["Stack Memory (grows downward)"]
+        Base[Stack Base<br/>High Address 0xFFFF000]
+        Used[Used Stack Space]
+        SP[Current SP ← 0x7FFE000]
+        Free[Free Space]
+        Limit[Stack Limit<br/>Low Address 0x7000000]
+    end
+
+    Base --> Used
+    Used --> SP
+    SP --> Free
+    Free --> Limit
+
+    Push[Push Operation] -.->|Decrements SP| SP
+    Pop[Pop Operation] -.->|Increments SP| SP
+
+    style Base fill:#90ee90
+    style Used fill:#ffa500
+    style SP fill:#ff6b6b
+    style Free fill:#e0e0e0
+    style Limit fill:#d3d3d3
+```
+
 ## Function Calls and Returns
 
 When a function is called, the CPU needs to:
@@ -142,6 +167,39 @@ High addresses
 |     ...          |
 +------------------+  ← SP (top of frame)
 Low addresses
+```
+
+```mermaid
+graph TD
+    subgraph Frame["Stack Frame Layout"]
+        direction TB
+        CallerFrame["Caller's Stack Frame"]
+        Args["Function Arguments<br/>arg2, arg1"]
+        RetAddr["Return Address"]
+        SavedFP["Saved FP"]
+        Local1["Local Variable 1<br/>FP - 4"]
+        Local2["Local Variable 2<br/>FP - 8"]
+        SavedRegs["Saved Registers<br/>rbx, r12, etc."]
+        SPMarker["← SP points here"]
+    end
+
+    CallerFrame --> Args
+    Args --> RetAddr
+    RetAddr --> SavedFP
+    SavedFP --> Local1
+    Local1 --> Local2
+    Local2 --> SavedRegs
+    SavedRegs --> SPMarker
+
+    FP[Frame Pointer FP] -.->|Points to| SavedFP
+    SP[Stack Pointer SP] -.->|Points to| SPMarker
+
+    style RetAddr fill:#ff6b6b
+    style SavedFP fill:#ffa500
+    style Local1 fill:#87ceeb
+    style Local2 fill:#87ceeb
+    style SavedRegs fill:#90ee90
+    style SPMarker fill:#ff6b6b
 ```
 
 Local variables can be accessed at fixed offsets from FP regardless of what's been pushed onto the stack since.

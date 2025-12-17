@@ -6,6 +6,26 @@ Symmetric encryption uses the same secret key for both encryption and decryption
 
 ## How Symmetric Encryption Works
 
+Symmetric encryption uses a single secret key $K$ for both encryption and decryption:
+
+**Encryption:**
+$$C = E_K(P)$$
+
+**Decryption:**
+$$P = D_K(C)$$
+
+Where:
+- $P$ = plaintext (original message)
+- $C$ = ciphertext (encrypted message)
+- $K$ = secret key (must be kept confidential)
+- $E_K$ = encryption function with key $K$
+- $D_K$ = decryption function with key $K$
+
+**Essential property:**
+$$D_K(E_K(P)) = P$$
+
+The same key must be securely shared between sender and receiver.
+
 ```python
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.backends import default_backend
@@ -184,6 +204,23 @@ class ECBMode:
 
 ### CBC (Cipher Block Chaining) - Common
 
+CBC mode chains blocks together using XOR with the previous ciphertext block:
+
+**CBC Encryption:**
+$$C_0 = \text{IV}$$
+$$C_i = E_K(P_i \oplus C_{i-1})$$
+
+**CBC Decryption:**
+$$P_i = D_K(C_i) \oplus C_{i-1}$$
+
+Where:
+- $\text{IV}$ = Initialization Vector (random, unique for each message)
+- $P_i$ = plaintext block $i$
+- $C_i$ = ciphertext block $i$
+- $\oplus$ = XOR operation
+
+The IV ensures that encrypting the same plaintext twice produces different ciphertext.
+
 ```python
 class CBCMode:
     """CBC mode - chains blocks together"""
@@ -319,6 +356,23 @@ print(f"Plaintext: {decrypted['plaintext']}")
 - Modern, widely supported
 
 ### CTR (Counter Mode)
+
+CTR mode turns a block cipher into a stream cipher by encrypting incrementing counter values:
+
+**CTR Encryption/Decryption (same operation):**
+$$C_i = P_i \oplus E_K(\text{nonce} \,||\, \text{counter}_i)$$
+$$P_i = C_i \oplus E_K(\text{nonce} \,||\, \text{counter}_i)$$
+
+Where:
+- $\text{nonce}$ = Number used once (unique per message)
+- $\text{counter}_i$ = counter value for block $i$ (usually $i$ itself)
+- $||$ = concatenation
+
+**Key property:** Encryption and decryption use the same operation (XOR with keystream).
+
+**Critical requirement:** Never reuse the same (nonce, counter) pair with the same key:
+$$\text{If } C_1 = P_1 \oplus K_s \text{ and } C_2 = P_2 \oplus K_s$$
+$$\text{Then } C_1 \oplus C_2 = P_1 \oplus P_2 \text{ (key cancels out!)}$$
 
 ```python
 class CTRMode:

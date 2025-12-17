@@ -16,22 +16,27 @@ Think of layering like the postal system: you write a letter (application layer)
 
 ## The Seven OSI Layers
 
-```
-+-------------------+
-|   Application     |  Layer 7 - User interface, network services
-+-------------------+
-|   Presentation    |  Layer 6 - Data format, encryption, compression
-+-------------------+
-|   Session         |  Layer 5 - Connection management
-+-------------------+
-|   Transport       |  Layer 4 - End-to-end delivery, reliability
-+-------------------+
-|   Network         |  Layer 3 - Routing, logical addressing
-+-------------------+
-|   Data Link       |  Layer 2 - Framing, physical addressing, error detection
-+-------------------+
-|   Physical        |  Layer 1 - Bits on the wire, electrical/optical signals
-+-------------------+
+```mermaid
+graph TB
+    subgraph "OSI Model Layers"
+    L7["Layer 7: Application<br/>User interface, network services<br/>HTTP, FTP, SMTP, DNS"]
+    L6["Layer 6: Presentation<br/>Data format, encryption, compression<br/>SSL/TLS, JPEG, MPEG"]
+    L5["Layer 5: Session<br/>Connection management<br/>NetBIOS, RPC"]
+    L4["Layer 4: Transport<br/>End-to-end delivery, reliability<br/>TCP, UDP"]
+    L3["Layer 3: Network<br/>Routing, logical addressing<br/>IP, ICMP, OSPF"]
+    L2["Layer 2: Data Link<br/>Framing, physical addressing<br/>Ethernet, Wi-Fi"]
+    L1["Layer 1: Physical<br/>Bits on the wire<br/>Cables, signals"]
+    end
+
+    L7 --> L6 --> L5 --> L4 --> L3 --> L2 --> L1
+
+    style L7 fill:#e1f5ff
+    style L6 fill:#e8f5e9
+    style L5 fill:#fff3e0
+    style L4 fill:#fce4ec
+    style L3 fill:#f3e5f5
+    style L2 fill:#e0f2f1
+    style L1 fill:#fff9c4
 ```
 
 ### Layer 7: Application Layer
@@ -160,35 +165,32 @@ The **Physical layer** deals with the actual transmission of raw bits over a com
 
 As data travels down the layers, each layer adds its own header (and sometimes trailer) information—a process called **encapsulation**:
 
-```
-Application Data
-      |
-      v
-+--+--------------------+
-|H7|    Application Data |  <-- Application adds header
-+--+--------------------+
-      |
-      v (Presentation, Session add their headers)
-      |
-+--+--+--------------------+
-|H4|H |       Segment       |  <-- Transport adds header
-+--+--+--------------------+
-      |
-      v
-+--+--+--+--------------------+
-|H3|H4|H |       Packet        |  <-- Network adds header
-+--+--+--+--------------------+
-      |
-      v
-+--+--+--+--+--------------------+--+
-|H2|H3|H4|H |        Frame        |T2|  <-- Data Link adds header+trailer
-+--+--+--+--+--------------------+--+
-      |
-      v
-    10110100110101...  <-- Physical transmits as bits
+```mermaid
+graph TB
+    subgraph "Data Encapsulation Process"
+    A["Application Data"]
+    B["Application Header | Data"]
+    C["Transport Header | Data<br/>(Segment)"]
+    D["Network Header | Transport Header | Data<br/>(Packet)"]
+    E["Data Link Header | Network Header | Transport Header | Data | Trailer<br/>(Frame)"]
+    F["101101001101...<br/>(Bits on wire)"]
+    end
+
+    A -->|"Layer 7-6-5<br/>Add headers"| B
+    B -->|"Layer 4<br/>Add TCP/UDP header"| C
+    C -->|"Layer 3<br/>Add IP header"| D
+    D -->|"Layer 2<br/>Add frame header + trailer"| E
+    E -->|"Layer 1<br/>Convert to bits"| F
+
+    style A fill:#e1f5ff
+    style B fill:#e8f5e9
+    style C fill:#fce4ec
+    style D fill:#f3e5f5
+    style E fill:#e0f2f1
+    style F fill:#fff9c4
 ```
 
-At the receiving end, each layer removes its corresponding header (**decapsulation**) and passes the data up.
+At the receiving end, each layer removes its corresponding header (**decapsulation**) and passes the data up in the reverse process.
 
 ## Layer Terminology
 

@@ -4,6 +4,27 @@
 
 ## Types of Hazards
 
+```mermaid
+graph TD
+    A[Pipeline Hazards] --> B[Structural Hazards]
+    A --> C[Data Hazards]
+    A --> D[Control Hazards]
+
+    B --> B1[Resource Conflicts]
+
+    C --> C1[RAW - Read After Write]
+    C --> C2[WAR - Write After Read]
+    C --> C3[WAW - Write After Write]
+
+    D --> D1[Branch Instructions]
+    D --> D2[Jump Instructions]
+
+    style A fill:#ff9999
+    style B fill:#99ccff
+    style C fill:#99ff99
+    style D fill:#ffcc99
+```
+
 ### 1. Structural Hazards
 
 A **structural hazard** occurs when two instructions need the same hardware resource simultaneously.
@@ -251,11 +272,9 @@ Cache recent branch targets and predictions:
 
 For a simple 5-stage pipeline:
 
-```
-CPI = 1 + stalls_per_instruction
+$$\text{CPI} = 1 + \text{stalls}_{\text{per instruction}}$$
 
-stalls = data_hazard_stalls + control_hazard_stalls + structural_hazard_stalls
-```
+$$\text{stalls} = \text{data}_{\text{stalls}} + \text{control}_{\text{stalls}} + \text{structural}_{\text{stalls}}$$
 
 **Typical values**:
 - With forwarding: ~0.1 data hazard stalls per instruction

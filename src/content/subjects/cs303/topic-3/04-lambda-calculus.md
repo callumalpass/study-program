@@ -6,11 +6,13 @@ Lambda calculus is the theoretical foundation of functional programming. Develop
 
 Lambda calculus has just three constructs:
 
-```
-e ::= x           -- Variable
-    | λx.e        -- Abstraction (function definition)
-    | e e         -- Application (function call)
-```
+$$
+\begin{align}
+e ::= \quad & x & \text{(Variable)} \\
+    | \quad & \lambda x.e & \text{(Abstraction)} \\
+    | \quad & e \, e & \text{(Application)}
+\end{align}
+$$
 
 That's it. No numbers, no conditionals, no loops—just variables, functions, and function application. Yet this minimal language is Turing-complete.
 
@@ -32,47 +34,44 @@ That's it. No numbers, no conditionals, no loops—just variables, functions, an
 
 ## Bound and Free Variables
 
-A variable is **bound** if it appears within the scope of a lambda that binds it:
+A variable is **bound** if it appears within the scope of a lambda that binds it. A variable is **free** if it's not bound.
 
-```
-λx. x y
-    ^ ^
-    | |
-    | free (y is not bound by any λ)
-    bound (x is bound by λx)
-```
+The set of free variables $FV(e)$ is defined inductively:
 
-A variable is **free** if it's not bound:
+$$
+\begin{align}
+FV(x) &= \{x\} \\
+FV(\lambda x.e) &= FV(e) \setminus \{x\} \\
+FV(e_1 \, e_2) &= FV(e_1) \cup FV(e_2)
+\end{align}
+$$
 
-```
-FV(x) = {x}
-FV(λx.e) = FV(e) - {x}
-FV(e₁ e₂) = FV(e₁) ∪ FV(e₂)
-```
+For example, in $\lambda x. x \, y$, the variable $x$ is bound by $\lambda x$ while $y$ is free.
 
 ### Alpha Equivalence
 
-Terms that differ only in the names of bound variables are considered equivalent:
+Terms that differ only in the names of bound variables are considered equivalent ($\equiv_\alpha$):
 
-```
-λx.x ≡α λy.y ≡α λz.z    -- All represent identity
+$$\lambda x.x \equiv_\alpha \lambda y.y \equiv_\alpha \lambda z.z$$
 
--- But be careful:
-λx.λy.x ≢α λy.λy.y      -- Different behavior!
-```
+All of these represent the identity function. However, $\lambda x.\lambda y.x \not\equiv_\alpha \lambda y.\lambda y.y$ because they have different behavior.
 
 ## Beta Reduction
 
 The fundamental computation rule: applying a function substitutes the argument for the parameter:
 
-```
-(λx.e₁) e₂ →β e₁[x := e₂]
+$$(\lambda x.e_1) \, e_2 \rightarrow_\beta e_1[x := e_2]$$
 
--- Example:
-(λx.x x) y →β y y
+This is read as: "the application of $\lambda x.e_1$ to $e_2$ beta-reduces to $e_1$ with $x$ substituted by $e_2$".
 
-(λx.λy.x) a b →β (λy.a) b →β a
-```
+Examples of beta reduction:
+
+$$
+\begin{align}
+(\lambda x.x \, x) \, y &\rightarrow_\beta y \, y \\
+(\lambda x.\lambda y.x) \, a \, b &\rightarrow_\beta (\lambda y.a) \, b \rightarrow_\beta a
+\end{align}
+$$
 
 ### Capture-Avoiding Substitution
 
@@ -90,24 +89,24 @@ We must be careful not to capture free variables:
 
 Multiple redexes (reducible expressions) may exist. Strategy determines which to reduce:
 
-```
--- Expression with multiple redexes
-(λx.x) ((λy.y) z)
-    ↓          ↓
-  outer      inner
-  redex      redex
+```mermaid
+graph LR
+    A["(λx.x) ((λy.y) z)"] --> B["Normal Order: reduce outer"]
+    A --> C["Applicative Order: reduce inner"]
+    B --> D["(λy.y) z"]
+    C --> E["(λx.x) z"]
+    D --> F["z"]
+    E --> F
+
+    style A fill:#e1f5ff
+    style F fill:#e1ffe1
 ```
 
 **Normal Order**: Reduce leftmost outermost redex first (lazy evaluation)
+
 **Applicative Order**: Reduce leftmost innermost redex first (eager evaluation)
 
-```
--- Normal order
-(λx.x) ((λy.y) z) →β (λy.y) z →β z
-
--- Applicative order
-(λx.x) ((λy.y) z) →β (λx.x) z →β z
-```
+Both strategies reach the same normal form (if one exists), but may differ in efficiency and termination.
 
 ## Church Encoding
 
@@ -115,16 +114,26 @@ Despite having only functions, we can encode any data.
 
 ### Booleans
 
-```
-TRUE  = λt.λf.t    -- Returns first argument
-FALSE = λt.λf.f    -- Returns second argument
+Church booleans encode true and false as functions that select between two arguments:
 
--- If-then-else is just function application
-IF = λb.λt.λe.b t e
+$$
+\begin{align}
+\text{TRUE} &= \lambda t.\lambda f.t \\
+\text{FALSE} &= \lambda t.\lambda f.f
+\end{align}
+$$
 
-IF TRUE a b →β a
-IF FALSE a b →β b
-```
+If-then-else is simply function application:
+
+$$\text{IF} = \lambda b.\lambda t.\lambda e.b \, t \, e$$
+
+Examples:
+$$
+\begin{align}
+\text{IF} \, \text{TRUE} \, a \, b &\rightarrow_\beta a \\
+\text{IF} \, \text{FALSE} \, a \, b &\rightarrow_\beta b
+\end{align}
+$$
 
 ### Boolean Operations
 
@@ -140,29 +149,31 @@ AND TRUE FALSE →β TRUE FALSE FALSE →β FALSE
 
 ### Church Numerals
 
-Natural numbers as higher-order functions:
+Natural numbers as higher-order functions that apply a function $n$ times:
 
-```
-0 = λf.λx.x           -- Apply f zero times
-1 = λf.λx.f x         -- Apply f once
-2 = λf.λx.f (f x)     -- Apply f twice
-3 = λf.λx.f (f (f x)) -- Apply f three times
-n = λf.λx.fⁿ x        -- Apply f n times
-```
+$$
+\begin{align}
+\mathbf{0} &= \lambda f.\lambda x.x \\
+\mathbf{1} &= \lambda f.\lambda x.f \, x \\
+\mathbf{2} &= \lambda f.\lambda x.f \, (f \, x) \\
+\mathbf{3} &= \lambda f.\lambda x.f \, (f \, (f \, x)) \\
+\mathbf{n} &= \lambda f.\lambda x.f^n \, x
+\end{align}
+$$
 
 ### Arithmetic
 
-```
-SUCC = λn.λf.λx.f (n f x)    -- Add one more application
+Arithmetic operations on Church numerals:
 
-ADD = λm.λn.λf.λx.m f (n f x)  -- m applications then n applications
--- or equivalently:
-ADD = λm.λn.m SUCC n            -- Apply SUCC m times to n
+$$
+\begin{align}
+\text{SUCC} &= \lambda n.\lambda f.\lambda x.f \, (n \, f \, x) \\
+\text{ADD} &= \lambda m.\lambda n.\lambda f.\lambda x.m \, f \, (n \, f \, x) \\
+\text{MULT} &= \lambda m.\lambda n.\lambda f.m \, (n \, f)
+\end{align}
+$$
 
-MULT = λm.λn.λf.m (n f)        -- Apply (n f) m times
--- or:
-MULT = λm.λn.m (ADD n) 0       -- Add n, m times
-```
+Alternatively, we can express addition as: $\text{ADD} = \lambda m.\lambda n.m \, \text{SUCC} \, n$ (apply SUCC $m$ times to $n$).
 
 ### Pairs
 

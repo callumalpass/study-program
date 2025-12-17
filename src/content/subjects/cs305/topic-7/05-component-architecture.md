@@ -154,6 +154,61 @@ function DataFetcher({ url, render }) {
 />
 ```
 
+## Component Lifecycle
+
+Components go through distinct phases from creation to removal. Understanding this lifecycle is crucial for managing side effects and resource cleanup.
+
+```mermaid
+stateDiagram-v2
+    [*] --> Mounting: Component Created
+
+    state Mounting {
+        [*] --> Constructor
+        Constructor --> getDerivedStateFromProps
+        getDerivedStateFromProps --> render
+        render --> componentDidMount
+        componentDidMount --> [*]
+    }
+
+    Mounting --> Updating: Props/State Change
+
+    state Updating {
+        [*] --> getDerivedStateFromProps2: getDerivedStateFromProps
+        getDerivedStateFromProps2 --> shouldComponentUpdate
+        shouldComponentUpdate --> render2: render
+        render2 --> componentDidUpdate
+        componentDidUpdate --> [*]
+    }
+
+    Updating --> Updating: More Updates
+    Updating --> Unmounting: Component Removed
+
+    state Unmounting {
+        [*] --> componentWillUnmount
+        componentWillUnmount --> [*]
+    }
+
+    Unmounting --> [*]: Cleanup Complete
+
+    note right of Mounting
+        Initialize state
+        Fetch data
+        Set up subscriptions
+    end note
+
+    note right of Updating
+        Respond to changes
+        Re-render UI
+        Update DOM
+    end note
+
+    note right of Unmounting
+        Clean up timers
+        Cancel requests
+        Remove listeners
+    end note
+```
+
 ## State Management
 
 State represents data that changes over time within a component.
@@ -619,6 +674,58 @@ function SearchComponent() {
 ## Component Communication
 
 Different patterns for components to communicate.
+
+### Component Data Flow
+
+```mermaid
+graph TD
+    A[Parent Component] -->|Props| B[Child Component 1]
+    A -->|Props| C[Child Component 2]
+    B -->|Callback| A
+    C -->|Callback| A
+
+    D[Context Provider] -.->|Context| E[Deep Child 1]
+    D -.->|Context| F[Deep Child 2]
+    D -.->|Context| G[Deep Child 3]
+
+    H[Global Store] <-->|State| I[Component A]
+    H <-->|State| J[Component B]
+    H <-->|State| K[Component C]
+
+    style A fill:#4caf50
+    style B fill:#81c784
+    style C fill:#81c784
+    style D fill:#2196f3
+    style E fill:#64b5f6
+    style F fill:#64b5f6
+    style G fill:#64b5f6
+    style H fill:#ff9800
+    style I fill:#ffb74d
+    style J fill:#ffb74d
+    style K fill:#ffb74d
+
+    subgraph "Props & Callbacks"
+        A
+        B
+        C
+    end
+
+    subgraph "Context API"
+        D
+        E
+        F
+        G
+    end
+
+    subgraph "Global State"
+        H
+        I
+        J
+        K
+    end
+```
+
+Different communication patterns serve different needs: props for parent-child, context for deep trees, global state for app-wide data.
 
 ```javascript
 // 1. Parent to Child - Props

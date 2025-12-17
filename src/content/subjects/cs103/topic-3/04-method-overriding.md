@@ -139,6 +139,46 @@ class InventoryReport(Report):
         return f"Items in stock: {len(self.items)}"
 ```
 
+### Template Method Pattern Diagram
+
+```mermaid
+classDiagram
+    Report <|-- SalesReport
+    Report <|-- InventoryReport
+
+    class Report {
+        <<abstract>>
+        +generate() Template Method
+        +header() Hook
+        +body()* Abstract
+        +footer() Hook
+    }
+
+    class SalesReport {
+        +header() Override
+        +body() Implement
+    }
+
+    class InventoryReport {
+        +header() Override
+        +body() Implement
+    }
+
+    note for Report "Template method defines\nthe algorithm structure.\nSubclasses fill in steps."
+```
+
+The template method flow:
+```mermaid
+flowchart TD
+    A[generate called] --> B[Call header]
+    B --> C[Call body]
+    C --> D[Call footer]
+    D --> E[Return formatted report]
+
+    style A fill:#FFE4B5
+    style E fill:#90EE90
+```
+
 ---
 
 ## Overriding `__init__`

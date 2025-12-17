@@ -6,26 +6,19 @@ Operational semantics defines the meaning of programs by specifying how they exe
 
 Small-step semantics, also called structural operational semantics or transition semantics, describes computation as a sequence of individual reduction steps. Each step represents the smallest atomic computation, and the overall program execution is the transitive closure of these steps.
 
-Consider a simple expression language with arithmetic and variables. A small-step semantics defines transitions of the form `⟨e, σ⟩ → ⟨e', σ'⟩`, meaning that expression `e` in state `σ` reduces in one step to expression `e'` in state `σ'`.
+Consider a simple expression language with arithmetic and variables. A small-step semantics defines transitions of the form $\langle e, \sigma \rangle \rightarrow \langle e', \sigma' \rangle$, meaning that expression $e$ in state $\sigma$ reduces in one step to expression $e'$ in state $\sigma'$.
 
 For example, evaluation rules might include:
 
-```
-⟨n, σ⟩ → ⟨n, σ⟩  (numbers are values)
+$$\langle n, \sigma \rangle \rightarrow \langle n, \sigma \rangle \quad \text{(numbers are values)}$$
 
-⟨x, σ⟩ → ⟨σ(x), σ⟩  (variable lookup)
+$$\langle x, \sigma \rangle \rightarrow \langle \sigma(x), \sigma \rangle \quad \text{(variable lookup)}$$
 
-⟨e1, σ⟩ → ⟨e1', σ'⟩
-─────────────────────────  (left operand reduces)
-⟨e1 + e2, σ⟩ → ⟨e1' + e2, σ'⟩
+$$\frac{\langle e_1, \sigma \rangle \rightarrow \langle e_1', \sigma' \rangle}{\langle e_1 + e_2, \sigma \rangle \rightarrow \langle e_1' + e_2, \sigma' \rangle} \quad \text{(left operand reduces)}$$
 
-⟨e2, σ⟩ → ⟨e2', σ'⟩
-─────────────────────────  (right operand reduces when left is value)
-⟨v1 + e2, σ⟩ → ⟨v1 + e2', σ'⟩
+$$\frac{\langle e_2, \sigma \rangle \rightarrow \langle e_2', \sigma' \rangle}{\langle v_1 + e_2, \sigma \rangle \rightarrow \langle v_1 + e_2', \sigma' \rangle} \quad \text{(right operand reduces)}$$
 
-─────────────────────────  (addition of values)
-⟨n1 + n2, σ⟩ → ⟨n1+n2, σ⟩
-```
+$$\langle n_1 + n_2, \sigma \rangle \rightarrow \langle n_1+n_2, \sigma \rangle \quad \text{(addition of values)}$$
 
 These rules specify left-to-right evaluation order. To evaluate `(2 + 3) + 4`, we would perform the following sequence:
 
@@ -61,21 +54,15 @@ The key advantage of small-step semantics is its flexibility and precision. We c
 
 Big-step semantics, also called natural semantics or evaluation semantics, describes the overall result of evaluating an expression or executing a statement in a single step. Rather than showing intermediate computation steps, big-step semantics directly relates inputs to outputs.
 
-The judgment form for big-step semantics is typically `⟨e, σ⟩ ⇓ ⟨v, σ'⟩`, meaning that expression `e` evaluated in state `σ` produces value `v` and final state `σ'`.
+The judgment form for big-step semantics is typically $\langle e, \sigma \rangle \Downarrow \langle v, \sigma' \rangle$, meaning that expression $e$ evaluated in state $\sigma$ produces value $v$ and final state $\sigma'$.
 
 Rules for our arithmetic language would look like:
 
-```
-─────────────────  (number evaluates to itself)
-⟨n, σ⟩ ⇓ ⟨n, σ⟩
+$$\langle n, \sigma \rangle \Downarrow \langle n, \sigma \rangle \quad \text{(number evaluates to itself)}$$
 
-─────────────────  (variable lookup)
-⟨x, σ⟩ ⇓ ⟨σ(x), σ⟩
+$$\langle x, \sigma \rangle \Downarrow \langle \sigma(x), \sigma \rangle \quad \text{(variable lookup)}$$
 
-⟨e1, σ⟩ ⇓ ⟨n1, σ1⟩   ⟨e2, σ1⟩ ⇓ ⟨n2, σ2⟩
-──────────────────────────────────  (addition)
-⟨e1 + e2, σ⟩ ⇓ ⟨n1+n2, σ2⟩
-```
+$$\frac{\langle e_1, \sigma \rangle \Downarrow \langle n_1, \sigma_1 \rangle \quad \langle e_2, \sigma_1 \rangle \Downarrow \langle n_2, \sigma_2 \rangle}{\langle e_1 + e_2, \sigma \rangle \Downarrow \langle n_1+n_2, \sigma_2 \rangle} \quad \text{(addition)}$$
 
 Notice how the addition rule directly specifies the complete evaluation: first evaluate `e1`, then evaluate `e2` in the resulting state, then add the values. The intermediate steps are implicit.
 

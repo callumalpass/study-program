@@ -47,17 +47,34 @@ void fcfs_schedule(Process* processes, int n) {
 | P2 | 1 | 3 |
 | P3 | 2 | 3 |
 
-Gantt Chart:
-```
-|-------- P1 --------|-- P2 --|-- P3 --|
-0                   24       27       30
+```mermaid
+gantt
+    title FCFS Scheduling
+    dateFormat X
+    axisFormat %s
+
+    section CPU
+    P1 :0, 24
+    P2 :24, 27
+    P3 :27, 30
 ```
 
+**Calculation Formulas:**
+
+For each process $i$:
+- Waiting Time: $W_i = T_{start} - T_{arrival}$
+- Turnaround Time: $TAT_i = T_{completion} - T_{arrival}$
+
 Results:
-- P1: Wait = 0, Turnaround = 24
-- P2: Wait = 23, Turnaround = 26
-- P3: Wait = 25, Turnaround = 28
-- Average Wait = 16, Average Turnaround = 26
+- P1: $W = 0 - 0 = 0$, $TAT = 24 - 0 = 24$
+- P2: $W = 24 - 1 = 23$, $TAT = 27 - 1 = 26$
+- P3: $W = 27 - 2 = 25$, $TAT = 30 - 2 = 28$
+
+Average Metrics:
+
+$$\bar{W} = \frac{0 + 23 + 25}{3} = 16 \text{ ms}$$
+
+$$\overline{TAT} = \frac{24 + 26 + 28}{3} = 26 \text{ ms}$$
 
 ### FCFS Characteristics
 
@@ -126,18 +143,32 @@ void sjf_nonpreemptive(Process* processes, int n) {
 | P3 | 4 | 1 |
 | P4 | 5 | 4 |
 
-Gantt Chart:
-```
-|---- P1 ----|-- P3 --|---- P2 ----|---- P4 ----|
-0            7        8           12           16
+```mermaid
+gantt
+    title Non-preemptive SJF Scheduling
+    dateFormat X
+    axisFormat %s
+
+    section CPU
+    P1 :0, 7
+    P3 :7, 8
+    P2 :8, 12
+    P4 :12, 16
 ```
 
+At $t=7$: P1 completes. Available: P2 (burst 4), P3 (burst 1) → Select P3 (shortest)
+
+At $t=8$: P3 completes. Available: P2 (burst 4), P4 (burst 4) → Select P2 (arrived first)
+
 Results:
-- P1: Wait = 0, Turnaround = 7
-- P2: Wait = 6, Turnaround = 10
-- P3: Wait = 3, Turnaround = 4
-- P4: Wait = 7, Turnaround = 11
-- Average Wait = 4, Average Turnaround = 8
+- P1: $W = 0$, $TAT = 7$
+- P2: $W = 8 - 2 = 6$, $TAT = 12 - 2 = 10$
+- P3: $W = 7 - 4 = 3$, $TAT = 8 - 4 = 4$
+- P4: $W = 12 - 5 = 7$, $TAT = 16 - 5 = 11$
+
+$$\bar{W} = \frac{0 + 6 + 3 + 7}{4} = 4 \text{ ms}$$
+
+$$\overline{TAT} = \frac{7 + 10 + 4 + 11}{4} = 8 \text{ ms}$$
 
 ### Shortest Remaining Time First (SRTF)
 
@@ -216,21 +247,37 @@ Results:
 
 ## Burst Time Estimation
 
-SJF requires knowing burst time in advance. Use exponential averaging:
+SJF requires knowing burst time in advance. Use **exponential averaging** to predict the next CPU burst:
+
+$$\tau_{n+1} = \alpha \cdot t_n + (1 - \alpha) \cdot \tau_n$$
+
+Where:
+- $\tau_{n+1}$ = predicted next burst
+- $t_n$ = actual length of $n$th CPU burst
+- $\tau_n$ = predicted value for $n$th burst
+- $\alpha$ = weighting factor ($0 \leq \alpha \leq 1$), typically $\alpha = 0.5$
+
+**Expanding the formula:**
+
+$$\tau_{n+1} = \alpha \cdot t_n + (1-\alpha) \alpha \cdot t_{n-1} + (1-\alpha)^2 \alpha \cdot t_{n-2} + \ldots + (1-\alpha)^n \alpha \cdot t_0 + (1-\alpha)^{n+1} \tau_0$$
 
 ```c
 double estimate_next_burst(double actual_burst, double previous_estimate, double alpha) {
-    // τ_{n+1} = α * t_n + (1 - α) * τ_n
-    // α = weight for recent history (typically 0.5)
     return alpha * actual_burst + (1 - alpha) * previous_estimate;
 }
 
-// Example
+// Example with α = 0.5
 double alpha = 0.5;
-double estimate = 10;  // Initial guess
+double estimate = 10;  // Initial guess τ₀
 
 // After bursts: 6, 4, 6, 4, 13, 13, 13
-// Estimates: 10, 8, 6, 6, 5, 9, 11, 12
+// τ₁ = 0.5×6  + 0.5×10 = 8
+// τ₂ = 0.5×4  + 0.5×8  = 6
+// τ₃ = 0.5×6  + 0.5×6  = 6
+// τ₄ = 0.5×4  + 0.5×6  = 5
+// τ₅ = 0.5×13 + 0.5×5  = 9
+// τ₆ = 0.5×13 + 0.5×9  = 11
+// τ₇ = 0.5×13 + 0.5×11 = 12
 ```
 
 ## Comparison

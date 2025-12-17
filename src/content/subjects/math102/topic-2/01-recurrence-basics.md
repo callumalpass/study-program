@@ -5,26 +5,59 @@ A recurrence relation defines a sequence where each term is expressed in terms o
 ## What is a Recurrence Relation?
 
 A recurrence relation consists of:
-1. **A rule** expressing aₙ in terms of earlier terms a₀, a₁, ..., aₙ₋₁
+1. **A rule** expressing $a_n$ in terms of earlier terms $a_0, a_1, \ldots, a_{n-1}$
 2. **Initial conditions** specifying enough early terms to start the sequence
 
 ### Example: Factorial
 
-```
-n! = n × (n-1)!
-0! = 1
-```
+$$n! = n \times (n-1)!$$
+$$0! = 1$$
 
-This defines: 1, 1, 2, 6, 24, 120, ...
+This defines: $1, 1, 2, 6, 24, 120, \ldots$
 
 ### Example: Fibonacci
 
-```
-Fₙ = Fₙ₋₁ + Fₙ₋₂
-F₀ = 0, F₁ = 1
+$$F_n = F_{n-1} + F_{n-2}$$
+$$F_0 = 0, F_1 = 1$$
+
+This defines: $0, 1, 1, 2, 3, 5, 8, 13, 21, \ldots$
+
+**Dependency tree for $F_5$:**
+```mermaid
+graph TD
+    F5[F_5] --> F4[F_4]
+    F5 --> F3_1[F_3]
+
+    F4 --> F3_2[F_3]
+    F4 --> F2_1[F_2]
+
+    F3_1 --> F2_2[F_2]
+    F3_1 --> F1_1[F_1 = 1]
+
+    F3_2 --> F2_3[F_2]
+    F3_2 --> F1_2[F_1 = 1]
+
+    F2_1 --> F1_3[F_1 = 1]
+    F2_1 --> F0_1[F_0 = 0]
+
+    F2_2 --> F1_4[F_1 = 1]
+    F2_2 --> F0_2[F_0 = 0]
+
+    F2_3 --> F1_5[F_1 = 1]
+    F2_3 --> F0_3[F_0 = 0]
+
+    style F5 fill:#e1f5ff
+    style F1_1 fill:#d4edda
+    style F1_2 fill:#d4edda
+    style F1_3 fill:#d4edda
+    style F1_4 fill:#d4edda
+    style F1_5 fill:#d4edda
+    style F0_1 fill:#d4edda
+    style F0_2 fill:#d4edda
+    style F0_3 fill:#d4edda
 ```
 
-This defines: 0, 1, 1, 2, 3, 5, 8, 13, 21, ...
+Notice the exponential growth - this is why naive recursive Fibonacci is $O(2^n)$!
 
 ## Terminology
 
@@ -72,27 +105,55 @@ aₙ = 1 + 2 + ... + n = n(n+1)/2
 
 ### Merge Sort
 
-T(n) = 2T(n/2) + n, T(1) = 1
+$$T(n) = 2T(n/2) + n, \quad T(1) = 1$$
 
-This counts comparisons: split into two halves (2T(n/2)), merge results (n).
+This counts comparisons: split into two halves ($2T(n/2)$), merge results ($n$).
 
-Solution: T(n) = O(n log n)
+**Recursion tree:**
+```mermaid
+graph TD
+    N[n work at root] --> N2_1[n/2 left subtree]
+    N --> N2_2[n/2 right subtree]
+    N2_1 --> N4_1[n/4]
+    N2_1 --> N4_2[n/4]
+    N2_2 --> N4_3[n/4]
+    N2_2 --> N4_4[n/4]
+    N4_1 --> L1[...]
+    N4_2 --> L2[...]
+    N4_3 --> L3[...]
+    N4_4 --> L4[...]
+
+    Level0[Level 0: n work]
+    Level1[Level 1: n work total]
+    Level2[Level 2: n work total]
+    Levelk[Level log n: n work total]
+
+    style N fill:#e1f5ff
+    style Level0 fill:#fff3cd
+    style Level1 fill:#fff3cd
+    style Level2 fill:#fff3cd
+    style Levelk fill:#d4edda
+```
+
+Each level does $n$ work, with $\log n$ levels.
+
+**Solution**: $T(n) = O(n \log n)$
 
 ### Binary Search
 
-T(n) = T(n/2) + 1, T(1) = 1
+$$T(n) = T(n/2) + 1, \quad T(1) = 1$$
 
 Each step halves the search space with one comparison.
 
-Solution: T(n) = O(log n)
+**Solution**: $T(n) = O(\log n)$
 
 ### Tower of Hanoi
 
-Hₙ = 2Hₙ₋₁ + 1, H₁ = 1
+$$H_n = 2H_{n-1} + 1, \quad H_1 = 1$$
 
-Move n disks: move n-1 disks, move largest, move n-1 disks again.
+Move $n$ disks: move $n-1$ disks, move largest, move $n-1$ disks again.
 
-Solution: Hₙ = 2ⁿ - 1
+**Solution**: $H_n = 2^n - 1$
 
 ## Setting Up Recurrences
 

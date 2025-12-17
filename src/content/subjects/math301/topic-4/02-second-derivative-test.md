@@ -34,7 +34,37 @@ This quantity determines the classification.
 
 ## Second Derivative Test
 
-Let $(a, b)$ be a critical point of $f$ (so $f_x(a, b) = f_y(a, b) = 0$). Compute $D = f_{xx}f_{yy} - (f_{xy})^2$ at $(a, b)$.
+Let $(a, b)$ be a critical point of $f$ (so $f_x(a, b) = f_y(a, b) = 0$). Compute the discriminant:
+
+$$D = f_{xx}f_{yy} - (f_{xy})^2$$
+
+evaluated at $(a, b)$.
+
+### Classification Flowchart
+
+The following flowchart shows how to classify critical points using the second derivative test:
+
+```mermaid
+flowchart TD
+    Start["Critical point (a,b)<br/>f_x = f_y = 0"] --> CalcD["Calculate discriminant<br/>D = f_xx·f_yy - (f_xy)²"]
+    CalcD --> CheckD{"Check D"}
+
+    CheckD -->|"D > 0"| CheckFxx{"Check f_xx"}
+    CheckD -->|"D < 0"| Saddle["Saddle Point<br/>⚠️"]
+    CheckD -->|"D = 0"| Inconclusive["Test Inconclusive<br/>Need further analysis"]
+
+    CheckFxx -->|"f_xx > 0"| LocalMin["Local Minimum<br/>✓ (bowl up)"]
+    CheckFxx -->|"f_xx < 0"| LocalMax["Local Maximum<br/>✓ (bowl down)"]
+
+    style Start fill:#e1f5ff
+    style CalcD fill:#fff4e1
+    style CheckD fill:#ffe8e8
+    style CheckFxx fill:#ffe8e8
+    style LocalMin fill:#c8e6c9
+    style LocalMax fill:#c8e6c9
+    style Saddle fill:#ffccbc
+    style Inconclusive fill:#f0f0f0
+```
 
 ### Case 1: $D > 0$ and $f_{xx} > 0$
 

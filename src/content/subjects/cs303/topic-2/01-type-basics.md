@@ -16,6 +16,30 @@ Type systems vary dramatically across languages. Some languages have simple type
 
 Type safety refers to a programming language's ability to prevent type errors—operations that violate type constraints. A type error occurs when an operation is applied to a value of an inappropriate type, such as attempting to call a function with arguments of the wrong type or accessing a field that doesn't exist on an object.
 
+```mermaid
+graph TD
+    A[Type Systems] --> B[Static Typing]
+    A --> C[Dynamic Typing]
+    A --> D[Gradual Typing]
+
+    B --> E[Strong Static]
+    B --> F[Weak Static]
+
+    C --> G[Strong Dynamic]
+    C --> H[Weak Dynamic]
+
+    E --> I[Haskell, ML, Rust]
+    F --> J[C, C++]
+    G --> K[Python, Ruby]
+    H --> L[JavaScript, Perl]
+    D --> M[TypeScript, Typed Racket]
+
+    style A fill:#e1f5ff
+    style B fill:#e1ffe1
+    style C fill:#ffe1e1
+    style D fill:#fff4e1
+```
+
 **Strongly Typed vs Weakly Typed** languages differ in how rigorously they enforce type constraints. Strong typing means the language prevents type errors through compile-time checking, runtime checking, or both. Weakly typed languages allow operations that mix types, performing implicit conversions or simply allowing potentially unsafe operations.
 
 Consider integer-string concatenation:
@@ -37,6 +61,12 @@ let z = x + y;  // "5hello" - number converted to string
 Python raises an error because adding a number to a string doesn't make sense without explicit conversion. JavaScript silently converts the number to a string and concatenates. Neither approach is universally better—strong typing catches errors but requires explicitness, while weak typing provides convenience at the cost of potential confusion.
 
 **Type Soundness** is a formal property guaranteeing that well-typed programs won't encounter type errors at runtime. A sound type system ensures that if a program type-checks (compiles without type errors), runtime execution won't produce type violations. This "well-typed programs don't go wrong" principle provides strong safety guarantees.
+
+Formally, type soundness consists of two key properties:
+
+**Progress**: If $\vdash e : T$, then either $e$ is a value or $\exists e'$ such that $e \rightarrow e'$.
+
+**Preservation**: If $\vdash e : T$ and $e \rightarrow e'$, then $\vdash e' : T$.
 
 Not all practical languages are sound. C's type system is unsound—pointer casts and array bounds violations can cause type errors at runtime despite passing type checking. Java is mostly sound but has loopholes (null pointer exceptions, unchecked casts). Languages like ML, Haskell, and Rust aim for soundness, providing stronger guarantees.
 
@@ -289,7 +319,14 @@ fun add(a: Int, b: Int) = a + b  // Return type inferred as Int
 
 Type inference combines convenience of dynamic typing with safety of static typing. Programmers write less boilerplate while compilers ensure type safety.
 
-**Hindley-Milner Type Inference**, used in ML, Haskell, and similar languages, can infer types for entire programs without any annotations:
+**Hindley-Milner Type Inference**, used in ML, Haskell, and similar languages, can infer types for entire programs without any annotations.
+
+The algorithm works by:
+1. Assigning type variables: $\alpha, \beta, \gamma, \ldots$
+2. Generating constraints from usage
+3. Solving via unification: finding substitutions that satisfy all constraints
+
+For example, the identity function $\lambda x. x$ gets type $\forall \alpha. \alpha \rightarrow \alpha$.
 
 ```haskell
 -- No type annotations needed

@@ -22,11 +22,9 @@ Type soundness is typically proven by establishing two properties: progress and 
 
 Progress states that a well-typed expression is either a value or can take an evaluation step:
 
-```
-If ⊢ e : T, then either:
-  1. e is a value, or
-  2. there exists e' such that e → e'
-```
+$$\text{If } \vdash e : T, \text{ then either:}$$
+$$\text{1. } e \text{ is a value, or}$$
+$$\text{2. } \exists e' \text{ such that } e \rightarrow e'$$
 
 This ensures well-typed programs never get "stuck" in a non-value state with no way to proceed.
 
@@ -34,9 +32,7 @@ This ensures well-typed programs never get "stuck" in a non-value state with no 
 
 Preservation states that evaluation preserves types:
 
-```
-If ⊢ e : T and e → e', then ⊢ e' : T
-```
+$$\text{If } \vdash e : T \text{ and } e \rightarrow e', \text{ then } \vdash e' : T$$
 
 This ensures that type information remains valid throughout execution.
 
@@ -44,13 +40,21 @@ This ensures that type information remains valid throughout execution.
 
 Progress and preservation together imply soundness:
 
+```mermaid
+graph TD
+    A["⊢ e : T"] --> B{"Progress"}
+    B -->|"e is value"| C["Done: v : T"]
+    B -->|"e → e'"| D["⊢ e' : T"]
+    D --> E{"Preservation"}
+    E --> F["e' : T is well-typed"]
+    F --> B
+
+    style A fill:#e1f5ff
+    style C fill:#e1ffe1
+    style D fill:#fff4e1
 ```
-Starting from a well-typed program e : T:
-  - By progress, either e is a value or e → e'
-  - By preservation, if e → e', then e' : T
-  - Repeat: e' : T is well-typed, so progress applies again
-  - Eventually reach a value of type T (or diverge)
-```
+
+Starting from a well-typed program, we either reach a value of the correct type or diverge (loop forever), but never get stuck with a type error.
 
 ## The Simply Typed Lambda Calculus
 
@@ -58,19 +62,20 @@ Let's see soundness in a concrete setting: the simply typed lambda calculus (STL
 
 ### Syntax and Typing Rules
 
-```
-Types:      T ::= Int | Bool | T → T
-Expressions: e ::= x | n | b | λx:T.e | e e | if e then e else e
+$$
+\begin{align}
+\text{Types: } T ::= \quad & \text{Int} \mid \text{Bool} \mid T \rightarrow T \\
+\text{Expressions: } e ::= \quad & x \mid n \mid b \mid \lambda x:T.e \mid e \, e \mid \text{if } e \text{ then } e \text{ else } e
+\end{align}
+$$
 
 Typing rules:
-                           x : T ∈ Γ
-  ─────────────── (T-Int)  ─────────── (T-Var)
-    Γ ⊢ n : Int             Γ ⊢ x : T
 
-    Γ, x:T₁ ⊢ e : T₂                 Γ ⊢ e₁ : T₁→T₂   Γ ⊢ e₂ : T₁
-  ──────────────────────── (T-Abs)   ─────────────────────────────── (T-App)
-    Γ ⊢ λx:T₁.e : T₁→T₂                      Γ ⊢ e₁ e₂ : T₂
-```
+$$\frac{}{\Gamma \vdash n : \text{Int}} \text{(T-Int)} \qquad \frac{x : T \in \Gamma}{\Gamma \vdash x : T} \text{(T-Var)}$$
+
+$$\frac{\Gamma, x:T_1 \vdash e : T_2}{\Gamma \vdash \lambda x:T_1.e : T_1 \rightarrow T_2} \text{(T-Abs)}$$
+
+$$\frac{\Gamma \vdash e_1 : T_1 \rightarrow T_2 \quad \Gamma \vdash e_2 : T_1}{\Gamma \vdash e_1 \, e_2 : T_2} \text{(T-App)}$$
 
 ### Proving Progress
 
@@ -116,12 +121,11 @@ Case e₁ e₂ → e₁' e₂ (stepping the function):
 
 A crucial helper: what can values of each type look like?
 
-```
-If v is a value and ⊢ v : T, then:
-  - If T = Int, then v = n for some integer n
-  - If T = Bool, then v = true or v = false
-  - If T = T₁→T₂, then v = λx:T₁.e for some x, e
-```
+**Canonical Forms Lemma**: If $v$ is a value and $\vdash v : T$, then:
+
+- If $T = \text{Int}$, then $v = n$ for some integer $n$
+- If $T = \text{Bool}$, then $v = \text{true}$ or $v = \text{false}$
+- If $T = T_1 \rightarrow T_2$, then $v = \lambda x:T_1.e$ for some $x, e$
 
 This lemma bridges the gap between types and runtime values.
 

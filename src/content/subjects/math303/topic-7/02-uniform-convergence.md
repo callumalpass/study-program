@@ -28,6 +28,41 @@ We write $f_n \rightrightarrows f$ on $D$ or $f_n \xrightarrow{u} f$ on $D$.
 
 **Key Difference from Pointwise Convergence:** The crucial distinction is that $N$ depends only on $\epsilon$, not on $x$. Once we have chosen $N$ large enough, the inequality $|f_n(x) - f(x)| < \epsilon$ holds for **all** $x \in D$ simultaneously.
 
+### Pointwise vs Uniform Convergence: Visual Hierarchy
+
+```mermaid
+graph TD
+    A[Uniform Convergence<br/>fₙ ⇒ f on D] --> B[Pointwise Convergence<br/>fₙ → f on D]
+    A --> C[Preserves Continuity<br/>If each fₙ continuous,<br/>then f continuous]
+    A --> D[Allows interchange<br/>of limits and integrals]
+    A --> E[Cauchy criterion:<br/>sup|fₙ - fₘ| → 0]
+
+    B --> F[May NOT preserve<br/>continuity]
+    B --> G[May NOT allow<br/>limit interchange]
+
+    H[Examples where they differ] --> I[fₙ·x· = xⁿ on [0,1]]
+    H --> J[fₙ·x· = nx/·1+nx· on [0,∞·]
+
+    style A fill:#90EE90
+    style B fill:#FFE4B5
+    style C fill:#87CEEB
+    style D fill:#87CEEB
+    style E fill:#87CEEB
+    style F fill:#FFB6B6
+    style G fill:#FFB6B6
+```
+
+### Comparison Chart
+
+| Property | Pointwise Convergence | Uniform Convergence |
+|----------|----------------------|---------------------|
+| **Definition** | $\forall x, \forall \epsilon > 0, \exists N(x,\epsilon): n \geq N \Rightarrow \|f_n(x) - f(x)\| < \epsilon$ | $\forall \epsilon > 0, \exists N(\epsilon): \forall x, n \geq N \Rightarrow \|f_n(x) - f(x)\| < \epsilon$ |
+| **$N$ depends on** | Both $x$ and $\epsilon$ | Only $\epsilon$ |
+| **Notation** | $f_n \to f$ or $f_n \xrightarrow{p} f$ | $f_n \rightrightarrows f$ or $f_n \xrightarrow{u} f$ |
+| **Preserves continuity** | No | Yes |
+| **Allows $\lim \int = \int \lim$** | No (in general) | Yes (under conditions) |
+| **Characterization** | Pointwise limit exists | $\lim_{n\to\infty} \\|f_n - f\\|_\infty = 0$ |
+
 **Alternative Characterization:** $(f_n)$ converges uniformly to $f$ on $D$ if and only if:
 $$
 \lim_{n \to \infty} \sup_{x \in D} |f_n(x) - f(x)| = 0

@@ -54,9 +54,9 @@ The classic approach to register allocation models the problem as graph coloring
 
 ### Interference Graph
 
-Construct a graph where:
-- Nodes represent variables (or virtual registers)
-- Edges connect variables with overlapping live ranges (interfering variables)
+Construct a graph $G = (V, E)$ where:
+- Nodes $V$ represent variables (or virtual registers)
+- Edges $E$ connect variables with overlapping live ranges (interfering variables)
 
 ```c
 // Example program
@@ -68,41 +68,59 @@ e = d + b
 return e
 ```
 
-```
-Live ranges:
-a: [1, 3]
-b: [2, 5]
-c: [3, 4]
-d: [4, 5]
-e: [5, 6]
+Live ranges and interferences:
+- $a$: [1, 3], $b$: [2, 5], $c$: [3, 4], $d$: [4, 5], $e$: [5, 6]
 
-Interference graph:
-    a --- b
-    |     |
-    c     d
-          |
-          e
+```mermaid
+graph LR
+    a((a)) --- b((b))
+    a --- c((c))
+    b --- d((d))
+    d --- e((e))
 
-Interferences:
-- a and b (overlap at [2,3])
-- a and c (overlap at [3])
-- b and d (overlap at [4,5])
-- d and e (overlap at [5])
+    style a fill:#e1f5ff
+    style b fill:#ffe1e1
+    style c fill:#90EE90
+    style d fill:#FFD700
+    style e fill:#DDA0DD
 ```
+
+**Interferences:**
+- $a$ and $b$ (overlap at [2,3])
+- $a$ and $c$ (overlap at [3])
+- $b$ and $d$ (overlap at [4,5])
+- $d$ and $e$ (overlap at [5])
+
+Node colors in the diagram represent potential register assignments (different colors = different registers).
 
 ### K-Coloring
 
-Register allocation becomes graph k-coloring where k is the number of available registers. Assign colors (registers) such that no two adjacent nodes share the same color.
+Register allocation becomes graph $k$-coloring where $k$ is the number of available registers. Assign colors (registers) such that no two adjacent nodes share the same color.
 
-For k=3 registers:
+For $k = 3$ registers:
+
+```mermaid
+graph LR
+    a((a<br/>R1)) --- b((b<br/>R2))
+    a --- c((c<br/>R3))
+    b --- d((d<br/>R1))
+    d --- e((e<br/>R3))
+
+    style a fill:#e1f5ff
+    style d fill:#e1f5ff
+    style b fill:#ffe1e1
+    style c fill:#90EE90
+    style e fill:#90EE90
 ```
-Color assignment:
-a → R1
-b → R2
-c → R3  (doesn't interfere with R1, R2)
-d → R1  (doesn't interfere with R1, reuse a's register)
-e → R3  (doesn't interfere with R3, reuse c's register)
-```
+
+**Color assignment (3 registers):**
+- $a \rightarrow R_1$ (blue)
+- $b \rightarrow R_2$ (red)
+- $c \rightarrow R_3$ (green, doesn't interfere with $R_1$ or $R_2$)
+- $d \rightarrow R_1$ (blue, reuses $a$'s register since $a$ is dead)
+- $e \rightarrow R_3$ (green, reuses $c$'s register since $c$ is dead)
+
+This is a valid $3$-coloring: no adjacent nodes share the same color (register).
 
 ### Chaitin's Algorithm
 
@@ -144,7 +162,35 @@ def chaitin_allocate(interference_graph, k):
     return coloring
 ```
 
-**Key insight**: A node with degree < k can always be colored after its neighbors are colored (at least one color remains available). Removing such nodes simplifies the graph.
+**Key insight**: A node with degree $< k$ can always be colored after its neighbors are colored (at least one color remains available). Removing such nodes simplifies the graph.
+
+The algorithm works by iteratively simplifying the graph:
+
+```mermaid
+graph LR
+    subgraph "Step 1: Original Graph (k=3)"
+        A1((a)) --- B1((b))
+        A1 --- C1((c))
+        B1 --- D1((d))
+        D1 --- E1((e))
+    end
+
+    subgraph "Step 2: Remove low-degree nodes"
+        A2((a)) --- B2((b))
+        A2 --- C2((c))
+        B2 --- D2((d))
+    end
+
+    subgraph "Step 3: Color nodes from stack"
+        A3((a<br/>R1)) --- B3((b<br/>R2))
+        A3 --- C3((c<br/>R3))
+        B3 --- D3((d<br/>R1))
+    end
+
+    style A1 fill:#e1f5ff
+    style A2 fill:#e1f5ff
+    style A3 fill:#e1f5ff
+```
 
 ### Spilling
 

@@ -51,6 +51,20 @@ Equilibria: $r + x^2 = 0 \implies x^* = \pm\sqrt{-r}$
 
 #### Bifurcation Diagram
 
+Visual representation showing equilibrium values versus parameter:
+
+```mermaid
+graph LR
+    subgraph "Saddle-Node Bifurcation: dx/dt = r + x²"
+        A[r < 0:<br/>Two equilibria] --> B[r = 0:<br/>Bifurcation point]
+        B --> C[r > 0:<br/>No equilibria]
+    end
+
+    style B fill:#ffc107,stroke:#997404,stroke-width:3px
+```
+
+Classical bifurcation diagram (x vs r):
+
 ```
 x
 │   /  (unstable)
@@ -93,6 +107,41 @@ Equilibria: $x(r - x) = 0 \implies x^* = 0$ or $x^* = r$
   - $r > 0$: stable
 
 #### Bifurcation Diagram
+
+Visual representation of stability exchange:
+
+```mermaid
+graph TB
+    subgraph "Transcritical Bifurcation: dx/dt = rx - x²"
+        direction LR
+
+        subgraph T1["r < 0"]
+            direction TB
+            T1A["x = r (unstable)"]
+            T1B[" "]
+            T1C["x = 0 (stable)"]
+            style T1A fill:#f8d7da,stroke:#842029
+            style T1C fill:#d1e7dd,stroke:#0f5132
+        end
+
+        subgraph T2["r = 0"]
+            direction TB
+            T2A["x = 0<br/>(bifurcation)"]
+            style T2A fill:#ffc107,stroke:#997404,stroke-width:3px
+        end
+
+        subgraph T3["r > 0"]
+            direction TB
+            T3A["x = r (stable)"]
+            T3B[" "]
+            T3C["x = 0 (unstable)"]
+            style T3A fill:#d1e7dd,stroke:#0f5132
+            style T3C fill:#f8d7da,stroke:#842029
+        end
+    end
+```
+
+Classical bifurcation diagram (x vs r):
 
 ```
 x
@@ -137,6 +186,39 @@ $$\frac{dx}{dt} = rx - x^3$$
 - At $x = \pm\sqrt{r}$ (when $r > 0$): $f'(\pm\sqrt{r}) = r - 3r = -2r < 0$ → stable
 
 #### Bifurcation Diagram
+
+Visual representation of pitchfork structure:
+
+```mermaid
+graph TB
+    subgraph "Supercritical Pitchfork: dx/dt = rx - x³"
+        direction LR
+
+        subgraph P1["r < 0"]
+            direction TB
+            P1A["x = 0<br/>(stable)"]
+            style P1A fill:#d1e7dd,stroke:#0f5132,stroke-width:2px
+        end
+
+        subgraph P2["r = 0"]
+            direction TB
+            P2A["x = 0<br/>(bifurcation)"]
+            style P2A fill:#ffc107,stroke:#997404,stroke-width:3px
+        end
+
+        subgraph P3["r > 0"]
+            direction TB
+            P3A["x = +√r<br/>(stable)"]
+            P3B["x = 0<br/>(unstable)"]
+            P3C["x = -√r<br/>(stable)"]
+            style P3A fill:#d1e7dd,stroke:#0f5132,stroke-width:2px
+            style P3B fill:#f8d7da,stroke:#842029,stroke-width:2px
+            style P3C fill:#d1e7dd,stroke:#0f5132,stroke-width:2px
+        end
+    end
+```
+
+Classical bifurcation diagram (x vs r):
 
 ```
 x
@@ -305,6 +387,36 @@ These are early warning signals in climate, ecosystems, and financial systems.
 | Transcritical | 1 | Equilibria exchange stability | Logistic growth |
 | Pitchfork | 1 | One equilibrium splits into three | Buckling beam |
 | Hopf | 1 | Limit cycle emerges from equilibrium | Oscillatory chemical reaction |
+
+### Bifurcation Type Comparison
+
+```mermaid
+graph TD
+    A[One-Dimensional Bifurcations] --> B{Bifurcation Type}
+
+    B --> C[Saddle-Node<br/>dx/dt = r + x²]
+    B --> D[Transcritical<br/>dx/dt = rx - x²]
+    B --> E[Pitchfork<br/>dx/dt = rx - x³]
+
+    C --> C1["Mechanism:<br/>Equilibria appear/disappear"]
+    D --> D1["Mechanism:<br/>Equilibria exchange stability"]
+    E --> E1["Mechanism:<br/>Symmetry breaking"]
+
+    C1 --> C2["Result:<br/>r < 0: 2 equilibria<br/>r = 0: 1 equilibrium<br/>r > 0: 0 equilibria"]
+    D1 --> D2["Result:<br/>Stability swap at r = 0<br/>Always 2 equilibria"]
+    E1 --> E2["Result:<br/>r < 0: 1 equilibrium<br/>r = 0: 1 equilibrium<br/>r > 0: 3 equilibria"]
+
+    C2 --> C3[Applications:<br/>Population collapse<br/>Tipping points]
+    D2 --> D3[Applications:<br/>Phase transitions<br/>Growth models]
+    E2 --> E3[Applications:<br/>Structural buckling<br/>Pattern formation]
+
+    style C fill:#ffe5cc,stroke:#cc5500,stroke-width:2px
+    style D fill:#cfe2ff,stroke:#084298,stroke-width:2px
+    style E fill:#d1e7dd,stroke:#0f5132,stroke-width:2px
+    style C3 fill:#fff3cd
+    style D3 fill:#e7f1ff
+    style E3 fill:#d1f3dd
+```
 
 ## Practical Importance
 

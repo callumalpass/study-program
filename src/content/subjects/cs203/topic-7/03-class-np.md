@@ -4,21 +4,27 @@
 
 ## Definition via Verifiers
 
-A **verifier** for language L is algorithm V where:
+A **verifier** for language $L$ is algorithm $V$ where:
 
-L = {w | ∃c : V accepts (w, c)}
+$$
+L = \{w \mid \exists c : V \text{ accepts } (w, c)\}
+$$
 
-Here c is a **certificate** (proof/witness) for membership.
+Here $c$ is a **certificate** (proof/witness) for membership.
 
-V is a **polynomial-time verifier** if V runs in polynomial time in |w|.
+$V$ is a **polynomial-time verifier** if $V$ runs in polynomial time in $|w|$.
 
 ## Formal Definition
 
-**NP** = {L | L has a polynomial-time verifier}
+$$
+\mathbf{NP} = \{L \mid L \text{ has a polynomial-time verifier}\}
+$$
 
-Equivalently: L ∈ NP if ∃ polynomial p, polynomial-time V such that:
+Equivalently: $L \in \mathbf{NP}$ if $\exists$ polynomial $p$, polynomial-time $V$ such that:
 
-w ∈ L ⟺ ∃c (|c| ≤ p(|w|) and V(w,c) accepts)
+$$
+w \in L \iff \exists c \left(|c| \leq p(|w|) \land V(w,c) \text{ accepts}\right)
+$$
 
 ## Alternative Definition
 
@@ -60,10 +66,16 @@ Verification: Check d divides n
 
 ## P ⊆ NP
 
-Every problem in P is also in NP:
-- If L ∈ P, decide membership directly
+Every problem in $\mathbf{P}$ is also in $\mathbf{NP}$:
+- If $L \in \mathbf{P}$, decide membership directly
 - Verifier can ignore certificate and just decide
 - Trivially verifiable in polynomial time
+
+$$
+\mathbf{P} \subseteq \mathbf{NP}
+$$
+
+Whether $\mathbf{P} = \mathbf{NP}$ or $\mathbf{P} \subsetneq \mathbf{NP}$ is the most famous open problem in computer science.
 
 ## NP and Certificates
 
@@ -74,22 +86,28 @@ Key insight: NP captures problems where:
 
 ## coNP
 
-**coNP** = {L | L̄ ∈ NP}
+$$
+\mathbf{coNP} = \{L \mid \overline{L} \in \mathbf{NP}\}
+$$
 
 Languages whose complement has polynomial verifiers.
 
 Examples:
-- TAUTOLOGY = {φ | φ is always true}
-- UNSAT = {φ | φ is unsatisfiable}
-- PRIMES (also in P, but instructive)
+- **TAUTOLOGY** $= \{\varphi \mid \varphi \text{ is always true}\}$
+- **UNSAT** $= \{\varphi \mid \varphi \text{ is unsatisfiable}\}$
+- **PRIMES** (also in $\mathbf{P}$, but instructive)
 
 ## NP ∩ coNP
 
-Problems in both NP and coNP:
+Problems in both $\mathbf{NP}$ and $\mathbf{coNP}$:
 - Have polynomial verifiers for YES and NO instances
-- May or may not be in P
+- May or may not be in $\mathbf{P}$
 
-Example: FACTORING (believed in NP ∩ coNP but not P)
+$$
+\mathbf{P} \subseteq \mathbf{NP} \cap \mathbf{coNP} \subseteq \mathbf{NP} \cup \mathbf{coNP}
+$$
+
+Example: **FACTORING** (believed in $\mathbf{NP} \cap \mathbf{coNP}$ but not $\mathbf{P}$)
 
 ## Why NP Matters
 

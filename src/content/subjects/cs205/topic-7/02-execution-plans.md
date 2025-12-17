@@ -151,67 +151,134 @@ Hash Join  (cost=14.00..2500.00 rows=100000 width=50)
           (actual time=0.005..0.200 rows=400 loops=1)
 ```
 
+**Visualized as a tree**:
+
+```mermaid
+graph TD
+    Root["Hash Join<br/>cost=14..2500<br/>rows=100000"]
+
+    Root --> Orders["Seq Scan on orders<br/>cost=0..2000<br/>rows=100000"]
+
+    Root --> Hash["Hash<br/>cost=10..10<br/>rows=400"]
+
+    Hash --> Customers["Seq Scan on customers<br/>cost=0..10<br/>rows=400"]
+
+    style Root fill:#ffe8e8
+    style Hash fill:#fff4e1
+    style Orders fill:#e1f5ff
+    style Customers fill:#e1f5ff
+```
+
+**Reading the tree**:
+1. Start at bottom: Scan customers (400 rows) and orders (100,000 rows)
+2. Build hash table from customers (smaller table)
+3. Probe hash table with orders
+4. Result: 100,000 matched rows
+
 ## Common Plan Patterns
 
 ### Good Patterns
 
-```sql
--- Index Seek + Key Lookup
-Index Scan using idx_customer on orders
-  Index Cond: (customerid = 123)
+**Index Seek + Key Lookup**:
 
--- Index Only Scan (covering)
-Index Only Scan using idx_covering on orders
-  Index Cond: (status = 'Pending')
+```mermaid
+graph TD
+    Result["Return rows"] --> IndexScan["Index Scan using idx_customer<br/>Index Cond: customerid = 123"]
 
--- Efficient Hash Join
-Hash Join
-  -> Index Scan (small table builds hash)
-  -> Seq Scan (large table probes)
+    style Result fill:#e8f5e9
+    style IndexScan fill:#e1f5ff
+```
+
+**Index Only Scan (covering index)**:
+
+```mermaid
+graph TD
+    Result["Return rows"] --> IndexOnly["Index Only Scan<br/>using idx_covering<br/>Index Cond: status = 'Pending'<br/>✓ No table access needed"]
+
+    style Result fill:#e8f5e9
+    style IndexOnly fill:#e1f5ff
+```
+
+**Efficient Hash Join**:
+
+```mermaid
+graph TD
+    Join["Hash Join"] --> Small["Index Scan<br/>(small table builds hash)"]
+    Join --> Large["Seq Scan<br/>(large table probes)"]
+
+    style Join fill:#e8f5e9
+    style Small fill:#e1f5ff
+    style Large fill:#fff4e1
 ```
 
 ### Warning Patterns
 
-```sql
--- Filter after Seq Scan (missing index?)
-Seq Scan on large_table  (rows=1000000)
-  Filter: (status = 'Active')
-  Rows Removed by Filter: 999000
+**Filter after Seq Scan** (missing index?):
 
--- Nested Loop with large inner
-Nested Loop  (rows=1000000)
-  -> Seq Scan on outer_table (rows=10000)
-  -> Seq Scan on inner_table (rows=100)  -- 100 × 10000 iterations!
+```mermaid
+graph TD
+    Result["Return 1000 rows"] --> Filter["Filter: status = 'Active'<br/>⚠ Rows Removed: 999000"]
+    Filter --> Scan["Seq Scan on large_table<br/>⚠ 1000000 rows scanned"]
 
--- Sort on large dataset (memory spill?)
-Sort  (cost=150000.00..)
-  Sort Key: order_date
-  Sort Method: external merge  Disk: 50000kB
+    style Result fill:#e8f5e9
+    style Filter fill:#ffe8e8
+    style Scan fill:#ffe8e8
+```
+
+**Nested Loop with large inner** (inefficient):
+
+```mermaid
+graph TD
+    Loop["Nested Loop<br/>⚠ rows=1000000"] --> Outer["Seq Scan on outer_table<br/>rows=10000"]
+    Loop --> Inner["Seq Scan on inner_table<br/>⚠ rows=100<br/>⚠ Executed 10000 times!"]
+
+    style Loop fill:#ffe8e8
+    style Outer fill:#fff4e1
+    style Inner fill:#ffe8e8
+```
+
+**Sort on large dataset** (memory spill):
+
+```mermaid
+graph TD
+    Result["Return sorted rows"] --> Sort["Sort<br/>⚠ external merge<br/>⚠ Disk: 50000kB<br/>⚠ Spilled to disk!"]
+    Sort --> Scan["Seq Scan"]
+
+    style Result fill:#e8f5e9
+    style Sort fill:#ffe8e8
+    style Scan fill:#fff4e1
 ```
 
 ### Performance Red Flags
 
+**Watch for these warning signs**:
+
+```mermaid
+graph TD
+    subgraph "Red Flags"
+        RF1["1. Large estimate mismatch<br/>estimated=100, actual=50000<br/>→ Update statistics!"]
+        RF2["2. Unexpected Seq Scans<br/>→ Missing index?"]
+        RF3["3. High loops count<br/>→ Change join algorithm"]
+        RF4["4. Disk sorts<br/>→ Increase work_mem"]
+        RF5["5. Many bitmap rechecks<br/>→ Index not selective"]
+    end
+
+    style RF1 fill:#ffe8e8
+    style RF2 fill:#ffe8e8
+    style RF3 fill:#ffe8e8
+    style RF4 fill:#ffe8e8
+    style RF5 fill:#ffe8e8
 ```
-Watch for:
-1. Large row estimate mismatches
-   - estimated rows=100, actual rows=50000
-   - Update statistics!
 
-2. Unexpected Seq Scans
-   - Should be using index?
-   - Index not usable for query?
+**Common issues and solutions**:
 
-3. High loops count
-   - Nested loop executed many times
-   - Consider different join type
-
-4. Disk sorts
-   - Increase work_mem
-   - Add index for ORDER BY
-
-5. Bitmap Heap Scan with many recheck
-   - Index not selective enough
-```
+| **Issue** | **Symptom** | **Solution** |
+|-----------|-------------|--------------|
+| Stale statistics | Estimate mismatch | Run `ANALYZE` |
+| Missing index | Seq Scan on large table | Create appropriate index |
+| Wrong join type | Nested loop with large inner | Force hash/merge join |
+| Memory pressure | External sort | Increase `work_mem` |
+| Non-selective index | Bitmap recheck | Consider composite index |
 
 ## EXPLAIN Options
 
@@ -314,25 +381,33 @@ OPTION (OPTIMIZE FOR (@id = 1));
 
 ### Step-by-Step Analysis
 
-```
+**How to read execution plan trees**:
 1. Start from bottom (data sources)
 2. Move up through transformations
 3. Note row count changes at each step
 4. Check estimated vs actual
 
-Example analysis:
-                                rows
-Limit (10)                      10
-  └─ Sort                       4823
-      └─ Hash Join              4823  <- Many rows joined
-          ├─ Seq Scan customers 1000  <- Full scan
-          └─ Index Scan orders  4823  <- Index used
+**Example analysis**:
 
-Questions:
-- Why seq scan on customers? (probably OK, small table)
-- Is 4823 orders expected? (check estimate vs actual)
-- Sort on 4823 rows: in memory or spilled?
+```mermaid
+graph TD
+    L["Limit<br/>rows=10<br/>✓ Final result"] --> S["Sort<br/>rows=4823<br/>? In memory?"]
+    S --> J["Hash Join<br/>rows=4823<br/>Many rows joined"]
+    J --> C["Seq Scan customers<br/>rows=1000<br/>? OK for small table"]
+    J --> O["Index Scan orders<br/>rows=4823<br/>✓ Index used"]
+
+    style L fill:#e8f5e9
+    style S fill:#fff4e1
+    style J fill:#fff4e1
+    style C fill:#ffe8e8
+    style O fill:#e1f5ff
 ```
+
+**Questions to ask**:
+- Why seq scan on customers? → Probably OK, small table (1000 rows)
+- Is 4823 orders expected? → Check estimate vs actual
+- Sort on 4823 rows → In memory or spilled to disk?
+- Could we add `ORDER BY` to index to avoid sort?
 
 ### Documentation Template
 

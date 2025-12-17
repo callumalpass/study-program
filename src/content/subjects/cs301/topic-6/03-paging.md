@@ -30,17 +30,59 @@ Logical Memory:          Physical Memory:
 
 ### Logical Address Structure
 
+For a 32-bit address space with 4KB pages:
+
+$$\text{Logical Address} = \underbrace{\text{Page Number}}_{20 \text{ bits}} \; || \; \underbrace{\text{Offset}}_{12 \text{ bits}}$$
+
+**Bit breakdown:**
+
 ```
-For 32-bit address with 4KB pages:
 ┌──────────────────────┬──────────────┐
 │  Page Number (20)    │ Offset (12)  │
 └──────────────────────┴──────────────┘
+ 31                 12  11            0
 
-Page number: Which page (0 to 2^20 - 1)
-Offset: Position within page (0 to 4095)
+Page number: p = 0 to 2^20 - 1 = 1,048,575
+Offset: d = 0 to 2^12 - 1 = 4,095
 ```
 
+**Address space calculations:**
+
+$$\text{Page size} = 2^{12} = 4096 \text{ bytes} = 4 \text{ KB}$$
+
+$$\text{Number of pages} = \frac{2^{32}}{2^{12}} = 2^{20} = 1,048,576 \text{ pages}$$
+
+$$\text{Address space} = 2^{32} = 4 \text{ GB}$$
+
 ### Translation Process
+
+```mermaid
+flowchart TD
+    Start[Logical Address] --> Split[Split into p and d]
+    Split --> Extract["p = addr >> 12<br/>d = addr & 0xFFF"]
+    Extract --> Lookup[Look up page table p]
+    Lookup --> Check{Present bit<br/>set?}
+    Check -->|No| Fault[Page Fault]
+    Check -->|Yes| GetFrame[f = page_table p .frame]
+    GetFrame --> Combine["Physical = f << 12 | d"]
+    Combine --> Result[Physical Address]
+
+    style Start fill:#e1f5ff
+    style Result fill:#d4edda
+    style Fault fill:#f8d7da
+    style Lookup fill:#fff3cd
+```
+
+**Translation formula:**
+
+$$\text{Physical Address} = f \times \text{page\_size} + d$$
+
+Where:
+- $f$ = frame number from page table[$p$]
+- $d$ = offset from logical address
+- $p$ = page number from logical address
+
+**Example:**
 
 ```c
 // Logical address translation
@@ -64,12 +106,13 @@ PhysicalAddress translate(LogicalAddress logical, PageTable* pt) {
     return physical;
 }
 
-// Example:
-// Logical: Page 2, Offset 100
-// Page table: Page 2 → Frame 5
-// Physical: Frame 5, Offset 100
-// If frame size = 4KB:
-// Physical address = 5 * 4096 + 100 = 20580
+// Concrete example:
+// Logical address: 8292 (decimal)
+// Binary: 0000 0000 0000 0000 0010 0000 0110 0100
+// p = 8292 >> 12 = 2 (page 2)
+// d = 8292 & 0xFFF = 100 (offset 100)
+// Page table: page_table[2].frame = 5
+// Physical address = (5 << 12) | 100 = 20480 + 100 = 20580
 ```
 
 ## Page Table
@@ -336,15 +379,29 @@ void check_access(PageTableEntry pte, AccessType type) {
 
 ## Internal Fragmentation
 
-Pages may have unused space:
+Pages may have unused space at the end of the last page:
 
-```
-Process needs 4100 bytes:
-  Allocated: 2 pages = 8192 bytes
-  Wasted: 8192 - 4100 = 4092 bytes
+**Example:**
 
-Average internal fragmentation = page_size / 2
-```
+Process needs $4100$ bytes with page size $s = 4096$ bytes:
+
+$$\text{Pages needed} = \left\lceil \frac{4100}{4096} \right\rceil = \left\lceil 1.00098 \right\rceil = 2 \text{ pages}$$
+
+$$\text{Allocated} = 2 \times 4096 = 8192 \text{ bytes}$$
+
+$$\text{Wasted (internal fragmentation)} = 8192 - 4100 = 4092 \text{ bytes}$$
+
+**Average internal fragmentation:**
+
+Assuming process sizes are uniformly distributed, the last page is on average half full:
+
+$$\text{Average internal fragmentation} = \frac{s}{2}$$
+
+For 4KB pages: Average waste $= \frac{4096}{2} = 2048$ bytes per process
+
+**Total fragmentation for $n$ processes:**
+
+$$\text{Total waste} \approx n \times \frac{s}{2}$$
 
 ### Page Size Trade-offs
 

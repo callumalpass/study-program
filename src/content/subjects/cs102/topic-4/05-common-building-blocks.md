@@ -25,10 +25,20 @@ When S=0: Y = D₀
 When S=1: Y = D₁
 ```
 
+```mermaid
+graph LR
+    D0[D₀] --> MUX{MUX}
+    D1[D₁] --> MUX
+    S[Select S] --> MUX
+    MUX --> Y[Output Y]
+
+    style MUX fill:#87ceeb
+    style S fill:#ffa500
+```
+
 **Boolean expression**:
-```
-Y = (NOT S AND D₀) OR (S AND D₁)
-```
+
+$$Y = (\overline{S} \cdot D_0) + (S \cdot D_1)$$
 
 **Truth table**:
 
@@ -178,11 +188,23 @@ Outputs: Sum, Carry
 | 1 | 0 |  1  |   0   |
 | 1 | 1 |  0  |   1   |
 
+```mermaid
+graph LR
+    A[A] --> XOR[XOR Gate]
+    B[B] --> XOR
+    A --> AND[AND Gate]
+    B --> AND
+    XOR --> Sum[Sum]
+    AND --> Carry[Carry]
+
+    style XOR fill:#ffe1f5
+    style AND fill:#e1f5ff
+```
+
 **Boolean expressions**:
-```
-Sum = A XOR B
-Carry = A AND B
-```
+
+$$\text{Sum} = A \oplus B$$
+$$\text{Carry} = A \cdot B$$
 
 The half adder is called "half" because it doesn't handle a carry-in from a previous stage.
 
@@ -202,16 +224,16 @@ The **full adder** adds three 1-bit inputs (A, B, and carry-in Cin) and produces
 | 1 | 1 |  1  |  1  |  1   |
 
 **Boolean expressions**:
-```
-Sum = A XOR B XOR Cin
-Cout = (A AND B) OR ((A XOR B) AND Cin)
-```
 
-Alternatively:
-```
-Cout = (A AND B) OR (A AND Cin) OR (B AND Cin)
-```
-This is the **majority function**—Cout is 1 when at least 2 of the 3 inputs are 1.
+$$\text{Sum} = A \oplus B \oplus C_{in}$$
+
+$$C_{out} = (A \cdot B) + ((A \oplus B) \cdot C_{in})$$
+
+Alternatively (majority function):
+
+$$C_{out} = (A \cdot B) + (A \cdot C_{in}) + (B \cdot C_{in})$$
+
+This is the **majority function**—$C_{out}$ is 1 when at least 2 of the 3 inputs are 1.
 
 ## Ripple Carry Adder
 
@@ -223,6 +245,41 @@ FA₀: A₀, B₀, Cin=0  → S₀, C₁
 FA₁: A₁, B₁, C₁     → S₁, C₂
 FA₂: A₂, B₂, C₂     → S₂, C₃
 FA₃: A₃, B₃, C₃     → S₃, Cout
+```
+
+```mermaid
+graph LR
+    A0[A₀] --> FA0[Full Adder 0]
+    B0[B₀] --> FA0
+    Cin0[Cin=0] --> FA0
+    FA0 --> S0[S₀]
+    FA0 --> C1[C₁]
+
+    A1[A₁] --> FA1[Full Adder 1]
+    B1[B₁] --> FA1
+    C1 --> FA1
+    FA1 --> S1[S₁]
+    FA1 --> C2[C₂]
+
+    A2[A₂] --> FA2[Full Adder 2]
+    B2[B₂] --> FA2
+    C2 --> FA2
+    FA2 --> S2[S₂]
+    FA2 --> C3[C₃]
+
+    A3[A₃] --> FA3[Full Adder 3]
+    B3[B₃] --> FA3
+    C3 --> FA3
+    FA3 --> S3[S₃]
+    FA3 --> Cout[Cout]
+
+    style FA0 fill:#e1f5ff
+    style FA1 fill:#e1f5ff
+    style FA2 fill:#e1f5ff
+    style FA3 fill:#e1f5ff
+    style C1 fill:#ffa500
+    style C2 fill:#ffa500
+    style C3 fill:#ffa500
 ```
 
 **Limitation**: The carry must "ripple" through all stages. For an N-bit adder, the worst-case delay is proportional to N. This motivates faster adder designs like carry-lookahead adders.

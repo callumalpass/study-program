@@ -9,6 +9,32 @@ description: "Formal definition of groups and detailed examination of the four f
 
 **Definition**: A **group** is an ordered pair $(G, \ast)$ where $G$ is a set and $\ast$ is a binary operation on $G$ satisfying the following four axioms:
 
+```mermaid
+graph TD
+    Group["Group (G, *)<br/>A set with an operation"]
+
+    A1["Axiom 1: Closure<br/>∀ a,b ∈ G: a * b ∈ G"]
+    A2["Axiom 2: Associativity<br/>∀ a,b,c ∈ G: (a * b) * c = a * (b * c)"]
+    A3["Axiom 3: Identity<br/>∃ e ∈ G: ∀ a ∈ G, e * a = a * e = a"]
+    A4["Axiom 4: Inverses<br/>∀ a ∈ G, ∃ a⁻¹ ∈ G: a * a⁻¹ = a⁻¹ * a = e"]
+
+    Group --> A1
+    Group --> A2
+    Group --> A3
+    Group --> A4
+
+    All["ALL four axioms<br/>must be satisfied"]
+
+    A1 & A2 & A3 & A4 --> All
+
+    style Group fill:#e1f5ff
+    style A1 fill:#c8e6c9
+    style A2 fill:#c8e6c9
+    style A3 fill:#c8e6c9
+    style A4 fill:#c8e6c9
+    style All fill:#fff9c4
+```
+
 ### Axiom 1: Closure
 For all $a, b \in G$, we have $a \ast b \in G$.
 

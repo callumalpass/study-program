@@ -93,31 +93,30 @@ Mispredict on entry AND exit.
 
 Use 2 bits per branch with four states:
 
-```
-        ┌──────────────────────────────────────┐
-        │                                      │
-        ▼                                      │
-    ┌───────┐    Taken    ┌───────┐    Taken  │
-    │  00   │────────────►│  01   │───────────┘
-    │Strong │             │ Weak  │
-    │Not Tkn│◄────────────│Not Tkn│
-    └───────┘  Not Taken  └───────┘
-        ▲                      │
-        │                      │ Taken
-        │ Not Taken            ▼
-        │                 ┌───────┐
-        │                 │  10   │
-        │                 │ Weak  │
-        │                 │ Taken │
-        │                 └───────┘
-        │                      │
-        │ Not Taken            │ Taken
-        │                      ▼
-        │                 ┌───────┐
-        └─────────────────│  11   │
-                          │Strong │
-                          │ Taken │
-                          └───────┘
+```mermaid
+stateDiagram-v2
+    [*] --> StrongNotTaken
+    StrongNotTaken: 00 Strong Not Taken
+    WeakNotTaken: 01 Weak Not Taken
+    WeakTaken: 10 Weak Taken
+    StrongTaken: 11 Strong Taken
+
+    StrongNotTaken --> WeakNotTaken: Taken
+    StrongNotTaken --> StrongNotTaken: Not Taken
+
+    WeakNotTaken --> StrongNotTaken: Not Taken
+    WeakNotTaken --> WeakTaken: Taken
+
+    WeakTaken --> WeakNotTaken: Not Taken
+    WeakTaken --> StrongTaken: Taken
+
+    StrongTaken --> WeakTaken: Not Taken
+    StrongTaken --> StrongTaken: Taken
+
+    note right of StrongNotTaken: Predict NOT TAKEN
+    note right of WeakNotTaken: Predict NOT TAKEN
+    note right of WeakTaken: Predict TAKEN
+    note right of StrongTaken: Predict TAKEN
 ```
 
 **Prediction rule**:
@@ -141,18 +140,24 @@ Still mispredicts at entry, but counter stays high after loop exits.
 
 Store 2-bit predictors indexed by branch address:
 
-```
-                PC (branch address)
-                      │
-                      ▼
-              ┌───────────────┐
-              │               │
-              │  2-bit        │
-  Index ─────►│  Predictor    │──► Prediction
-  (PC bits)   │  Table        │
-              │               │
-              │  1024 entries │
-              └───────────────┘
+```mermaid
+graph LR
+    A[PC<br/>Branch Address] --> B[Extract Index Bits]
+    B --> C[Branch History Table]
+
+    subgraph "Branch History Table"
+        C
+        D[Index 0: 2-bit counter]
+        E[Index 1: 2-bit counter]
+        F[Index 2: 2-bit counter]
+        G[...]
+        H[Index 1023: 2-bit counter]
+    end
+
+    C --> I[Prediction:<br/>Taken/Not Taken]
+
+    style C fill:#e6f3ff
+    style I fill:#ffe6e6
 ```
 
 Index using lower bits of PC. Different branches may alias to same entry.
@@ -192,19 +197,21 @@ This creates separate predictions based on the path taken to reach this branch.
 
 Popular correlated predictor:
 
-```
-                PC          GHR
-                │           │
-                └─────┬─────┘
-                      │
-                     XOR
-                      │
-                      ▼
-              ┌───────────────┐
-              │  2-bit        │
-              │  Counter      │──► Prediction
-              │  Table        │
-              └───────────────┘
+```mermaid
+graph TB
+    A[PC<br/>Program Counter] --> C[XOR]
+    B[GHR<br/>Global History<br/>Register] --> C
+
+    C --> D[Index]
+    D --> E[Pattern History Table<br/>2-bit Counters]
+
+    E --> F[Prediction:<br/>Taken/Not Taken]
+
+    style A fill:#ffcccc
+    style B fill:#ccffcc
+    style C fill:#ccccff
+    style E fill:#ffffcc
+    style F fill:#ffccff
 ```
 
 **Typical accuracy**: 90-95%
@@ -274,17 +281,15 @@ When prediction is wrong:
 
 ### Misprediction Cost
 
-```
-CPI_branch = Accuracy × 0 + (1 - Accuracy) × Penalty
+$$\text{CPI}_{\text{branch}} = \text{Accuracy} \times 0 + (1 - \text{Accuracy}) \times \text{Penalty}$$
 
-Example: 95% accuracy, 15-cycle penalty
-CPI_branch = 0.05 × 15 = 0.75 cycles per branch
-```
+**Example**: 95% accuracy, 15-cycle penalty
+
+$$\text{CPI}_{\text{branch}} = 0.05 \times 15 = 0.75 \text{ cycles per branch}$$
 
 With 15% of instructions being branches:
-```
-CPI_impact = 0.15 × 0.75 = 0.11 additional CPI
-```
+
+$$\text{CPI}_{\text{impact}} = 0.15 \times 0.75 = 0.11 \text{ additional CPI}$$
 
 ## Modern Branch Predictors
 

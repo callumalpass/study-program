@@ -8,6 +8,27 @@ Key property: Easy to compute hash from input, practically impossible to reverse
 
 ## Hash Function Properties
 
+A cryptographic hash function $H$ takes an input message $m$ of arbitrary length and produces a fixed-size output (digest) $h$:
+
+$$h = H(m)$$
+
+**Essential Properties:**
+
+1. **Deterministic**: Same input always produces same output
+   $$H(m_1) = H(m_2) \text{ if and only if } m_1 = m_2$$
+
+2. **Fixed output size**: For SHA-256, $|H(m)| = 256$ bits regardless of $|m|$
+
+3. **Avalanche effect**: Small change in input causes large change in output
+   $$m_1 \approx m_2 \implies H(m_1) \not\approx H(m_2)$$
+
+4. **One-way (preimage resistance)**: Given $h$, computationally infeasible to find $m$ such that $H(m) = h$
+
+5. **Collision resistance**: Computationally infeasible to find $m_1 \neq m_2$ such that:
+   $$H(m_1) = H(m_2)$$
+
+6. **Second preimage resistance**: Given $m_1$, infeasible to find $m_2 \neq m_1$ where $H(m_1) = H(m_2)$
+
 ```python
 import hashlib
 
@@ -242,6 +263,33 @@ class InsecurePasswordStorage:
 
 ## Use Case 3: Message Authentication Codes (MAC)
 
+HMAC (Hash-based Message Authentication Code) combines a cryptographic hash function with a secret key to provide both authenticity and integrity.
+
+### HMAC Construction
+
+HMAC is defined as:
+
+$$\text{HMAC}(K, m) = H\left((K' \oplus \text{opad}) \,||\, H\left((K' \oplus \text{ipad}) \,||\, m\right)\right)$$
+
+Where:
+- $K$ = secret key
+- $m$ = message
+- $H$ = hash function (e.g., SHA-256)
+- $K'$ = key padded to block size
+- $\text{opad}$ = outer padding (0x5c repeated)
+- $\text{ipad}$ = inner padding (0x36 repeated)
+- $||$ = concatenation
+- $\oplus$ = XOR operation
+
+**Simplified:**
+1. Compute inner hash: $h_{\text{inner}} = H((K' \oplus \text{ipad}) \,||\, m)$
+2. Compute outer hash: $\text{HMAC} = H((K' \oplus \text{opad}) \,||\, h_{\text{inner}})$
+
+**Why HMAC is secure:**
+- Even if attacker knows $H(m)$, they cannot compute $\text{HMAC}(K, m)$ without $K$
+- Resistant to length extension attacks (unlike simple $H(K \,||\, m)$)
+- Security proven if underlying hash function is secure
+
 ```python
 import hmac
 
@@ -363,6 +411,30 @@ class DigitalSignatureWithHash:
 
 ## Collision Attacks
 
+A collision occurs when two different inputs produce the same hash output:
+
+$$H(m_1) = H(m_2) \text{ where } m_1 \neq m_2$$
+
+### Birthday Attack Probability
+
+The birthday paradox applies to hash functions. For a hash function with $n$-bit output (i.e., $2^n$ possible hash values), the probability of finding a collision after computing $k$ hashes is approximately:
+
+$$P(\text{collision}) \approx 1 - e^{-\frac{k^2}{2 \cdot 2^n}}$$
+
+For a 50% probability of collision:
+$$k \approx \sqrt{2^n} = 2^{n/2}$$
+
+**Practical implications:**
+
+| Hash Function | Output Size | Values Needed for 50% Collision | Security |
+|--------------|-------------|----------------------------------|----------|
+| MD5 | 128 bits | $2^{64} \approx 1.8 \times 10^{19}$ | **Broken** |
+| SHA-1 | 160 bits | $2^{80} \approx 1.2 \times 10^{24}$ | **Broken** (2017) |
+| SHA-256 | 256 bits | $2^{128} \approx 3.4 \times 10^{38}$ | **Secure** |
+| SHA-512 | 512 bits | $2^{256} \approx 1.2 \times 10^{77}$ | **Secure** |
+
+**Why this matters:** An attacker needs far fewer operations than brute force ($2^n$) to find a collision—only $2^{n/2}$ operations.
+
 ```python
 class CollisionAttacks:
     """Understanding collision attacks"""
@@ -383,18 +455,27 @@ class CollisionAttacks:
     def birthday_attack(self):
         """Birthday paradox and collision probability"""
 
+        # Birthday attack probability for hash functions:
+        # For a hash function with n-bit output (2^n possible values),
+        # the probability of finding a collision after k hash computations is:
+        #
+        # P(collision) ≈ 1 - e^(-k²/(2·2^n))
+        #
+        # For 50% probability, k ≈ 1.177·√(2^n) ≈ 2^(n/2)
+
         return {
             'paradox': 'With 23 people, 50% chance two share birthday',
             'hash_equivalent': 'With 2^(n/2) hashes, 50% chance of collision',
+            'formula': 'P(collision) ≈ 1 - e^(-k²/(2·2^n))',
             'sha256': {
                 'output_bits': 256,
-                'hashes_for_50%_collision': '2^128',
+                'hashes_for_50%_collision': '2^128 ≈ 3.4×10^38',
                 'practical': 'Computationally infeasible'
             },
             'md5': {
                 'output_bits': 128,
-                'hashes_for_50%_collision': '2^64',
-                'practical': 'Feasible with modern hardware'
+                'hashes_for_50%_collision': '2^64 ≈ 1.8×10^19',
+                'practical': 'Feasible with modern hardware (broken)'
             }
         }
 

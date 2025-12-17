@@ -46,6 +46,44 @@ class Observer:
         raise NotImplementedError
 ```
 
+### Observer Pattern Class Diagram
+
+```mermaid
+classDiagram
+    Subject o-- Observer : observers
+    Observer <|-- EmailNotifier
+    Observer <|-- Logger
+    Observer <|-- Dashboard
+
+    class Subject {
+        -List~Observer~ _observers
+        -state
+        +attach(observer)
+        +detach(observer)
+        +notify()
+        +state setter/getter
+    }
+
+    class Observer {
+        <<abstract>>
+        +update(state)*
+    }
+
+    class EmailNotifier {
+        +update(state)
+    }
+
+    class Logger {
+        +update(state)
+    }
+
+    class Dashboard {
+        +update(state)
+    }
+
+    note for Subject "When state changes,\nnotify() is called,\nwhich updates all observers"
+```
+
 ---
 
 ## Concrete Observers
@@ -78,6 +116,40 @@ stock.state = "AAPL: $150"
 # Sending email: State changed to AAPL: $150
 # [LOG] State changed to AAPL: $150
 # Dashboard updated: AAPL: $150
+```
+
+### Observer Pattern Sequence Diagram
+
+```mermaid
+sequenceDiagram
+    participant Client
+    participant Subject
+    participant EmailNotifier
+    participant Logger
+    participant Dashboard
+
+    Client->>Subject: attach(EmailNotifier)
+    Client->>Subject: attach(Logger)
+    Client->>Subject: attach(Dashboard)
+
+    Note over Subject: Observers registered
+
+    Client->>Subject: state = "AAPL: $150"
+    activate Subject
+    Subject->>Subject: notify()
+    Subject->>EmailNotifier: update("AAPL: $150")
+    activate EmailNotifier
+    EmailNotifier-->>Subject: Email sent
+    deactivate EmailNotifier
+    Subject->>Logger: update("AAPL: $150")
+    activate Logger
+    Logger-->>Subject: Logged
+    deactivate Logger
+    Subject->>Dashboard: update("AAPL: $150")
+    activate Dashboard
+    Dashboard-->>Subject: Dashboard updated
+    deactivate Dashboard
+    deactivate Subject
 ```
 
 ---

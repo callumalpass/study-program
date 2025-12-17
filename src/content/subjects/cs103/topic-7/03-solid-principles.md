@@ -33,6 +33,17 @@ class UserManager:
 
 This class changes if validation rules change, database schema changes, OR email logic changes.
 
+```mermaid
+classDiagram
+    class UserManager {
+        ❌ Too many responsibilities
+        +create_user()
+        -_send_welcome_email()
+    }
+
+    note for UserManager "Violations:\n✗ Validation logic\n✗ Database logic\n✗ Email logic\n\n3 reasons to change!"
+```
+
 ### Good: Separated Responsibilities
 
 ```python
@@ -62,6 +73,35 @@ class UserService:
         self._repository.save(user)
         self._emailer.send(user)
         return user
+```
+
+```mermaid
+classDiagram
+    UserService o-- UserValidator
+    UserService o-- UserRepository
+    UserService o-- WelcomeEmailer
+
+    class UserService {
+        ✅ Orchestrates workflow
+        +create_user()
+    }
+
+    class UserValidator {
+        ✅ Validation only
+        +validate()
+    }
+
+    class UserRepository {
+        ✅ Persistence only
+        +save()
+    }
+
+    class WelcomeEmailer {
+        ✅ Email only
+        +send()
+    }
+
+    note for UserService "Each class has\none responsibility,\none reason to change"
 ```
 
 ---
@@ -162,6 +202,32 @@ square = Square(3, 3)
 print(double_width(square))  # 36, not 18! (6 * 6, not 6 * 3)
 ```
 
+```mermaid
+classDiagram
+    Rectangle <|-- Square
+
+    class Rectangle {
+        ❌ LSP Violation
+        -width
+        -height
+        +set_width(w)
+        +set_height(h)
+        +area()
+    }
+
+    class Square {
+        +set_width(w) overrides both!
+        +set_height(h) overrides both!
+    }
+
+    note for Square "Square is NOT substitutable\nfor Rectangle!\n\nExpected: area = 6 × 3 = 18\nActual: area = 6 × 6 = 36"
+```
+
+The mathematical relationship: a square **is-a** special rectangle, doesn't translate to code inheritance!
+
+$$\text{Expected: } A = w \times h = 6 \times 3 = 18$$
+$$\text{Actual: } A = w \times h = 6 \times 6 = 36$$
+
 ### Good: Proper Hierarchy
 
 ```python
@@ -185,6 +251,31 @@ class Square(Shape):
 
     def area(self) -> float:
         return self.side ** 2
+```
+
+```mermaid
+classDiagram
+    Shape <|-- Rectangle
+    Shape <|-- Square
+
+    class Shape {
+        <<abstract>>
+        ✅ Common abstraction
+        +area()*
+    }
+
+    class Rectangle {
+        +width
+        +height
+        +area()
+    }
+
+    class Square {
+        +side
+        +area()
+    }
+
+    note for Shape "Both are shapes,\nbut neither is\na subtype of the other"
 ```
 
 ---

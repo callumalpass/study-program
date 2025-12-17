@@ -76,6 +76,70 @@ print(order.description())  # Coffee, Milk, Sugar, Sugar, Whip
 print(f"${order.cost():.2f}")  # $3.75
 ```
 
+### Decorator Pattern Structure
+
+```mermaid
+classDiagram
+    Coffee <|-- CoffeeDecorator
+    CoffeeDecorator <|-- MilkDecorator
+    CoffeeDecorator <|-- SugarDecorator
+    CoffeeDecorator <|-- WhipDecorator
+    CoffeeDecorator o-- Coffee : wraps
+
+    class Coffee {
+        +cost() float
+        +description() string
+    }
+
+    class CoffeeDecorator {
+        -Coffee _coffee
+        +cost() float
+        +description() string
+    }
+
+    class MilkDecorator {
+        +cost() float
+        +description() string
+    }
+
+    class SugarDecorator {
+        +cost() float
+        +description() string
+    }
+
+    class WhipDecorator {
+        +cost() float
+        +description() string
+    }
+
+    note for CoffeeDecorator "Decorators wrap the base object,\nadding functionality while\nmaintaining the same interface"
+```
+
+### Decorator Wrapping Visualization
+
+```mermaid
+flowchart TB
+    WhipDec["WhipDecorator<br/>+$0.75"]
+    SugarDec2["SugarDecorator<br/>+$0.25"]
+    SugarDec1["SugarDecorator<br/>+$0.25"]
+    MilkDec["MilkDecorator<br/>+$0.50"]
+    BaseCoffee["Coffee<br/>$2.00"]
+
+    WhipDec --> SugarDec2
+    SugarDec2 --> SugarDec1
+    SugarDec1 --> MilkDec
+    MilkDec --> BaseCoffee
+
+    style BaseCoffee fill:#FFE4B5
+    style WhipDec fill:#ADD8E6
+    style SugarDec2 fill:#ADD8E6
+    style SugarDec1 fill:#ADD8E6
+    style MilkDec fill:#ADD8E6
+```
+
+Each decorator wraps the previous object, adding its own behavior. When `cost()` is called:
+$$\text{Total Cost} = 2.00 + 0.50 + 0.25 + 0.25 + 0.75 = \$3.75$$
+
 ---
 
 ## Decorator Pattern vs Python Decorators

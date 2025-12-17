@@ -16,6 +16,27 @@ where $[G:H]$ is the number of distinct left (or right) cosets of $H$ in $G$.
 
 The left cosets of $H$ partition $G$ into disjoint sets, each of size $|H|$.
 
+```mermaid
+graph TD
+    subgraph "Group G partitioned by cosets of H"
+        C1["g₁H<br/>|H| elements"]
+        C2["g₂H<br/>|H| elements"]
+        C3["g₃H<br/>|H| elements"]
+        dots["..."]
+        Ck["gₖH<br/>|H| elements"]
+    end
+
+    formula["|G| = k × |H| = [G:H] × |H|<br/><br/>Therefore |H| divides |G|"]
+
+    C1 & C2 & C3 & dots & Ck -.->|"k cosets,<br/>each size |H|"| formula
+
+    style C1 fill:#e3f2fd
+    style C2 fill:#fff3e0
+    style C3 fill:#f3e5f5
+    style Ck fill:#e8f5e9
+    style formula fill:#fff9c4
+```
+
 If there are $k$ distinct cosets, then:
 $$|G| = k \cdot |H| = [G:H] \cdot |H|$$
 

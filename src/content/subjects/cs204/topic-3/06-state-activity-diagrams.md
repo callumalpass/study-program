@@ -87,17 +87,13 @@ A state can transition to itself, useful for handling events without changing st
 
 Here's a state machine for a door:
 
-```
-        ●
-        │
-        ▼
-   ┌────────┐  open    ┌────────┐
-   │ Closed │─────────>│  Open  │
-   └────────┘          └────────┘
-        ▲                   │
-        │                   │
-        └───────────────────┘
-              close
+```mermaid
+stateDiagram-v2
+    [*] --> Closed
+    Closed --> Open: open
+    Open --> Closed: close
+    Open --> Open: already open
+    Closed --> Closed: already closed
 ```
 
 The door starts closed, opens in response to "open" event, and closes in response to "close" event.
@@ -106,34 +102,31 @@ The door starts closed, opens in response to "open" event, and closes in respons
 
 A more realistic example for an order processing system:
 
-```
-         ●
-         │
-         ▼
-    ┌─────────┐ submit[valid] ┌───────────┐
-    │  Draft  │───────────────>│  Pending  │
-    └─────────┘                └───────────┘
-         │                           │
-         │ cancel                    │ approve
-         │                           ▼
-         │                     ┌───────────┐
-         │                     │ Approved  │
-         │                     └───────────┘
-         │                           │
-         │                           │ ship
-         │                           ▼
-         │                     ┌───────────┐
-         │                     │  Shipped  │──┐
-         │                     └───────────┘  │ deliver
-         │                           │        │
-         │                           ▼        │
-         │                     ┌───────────┐◄─┘
-         │                     │ Delivered │
-         │                     └───────────┘
-         │                           │
-         │                           │ complete
-         │                           ▼
-         └──────────────────────────>◉
+```mermaid
+stateDiagram-v2
+    [*] --> Draft
+    Draft --> Pending: submit[valid]
+    Draft --> Cancelled: cancel
+    Pending --> Approved: approve
+    Pending --> Cancelled: cancel
+    Approved --> Shipped: ship
+    Shipped --> Delivered: deliver
+    Delivered --> Completed: complete
+    Cancelled --> [*]
+    Completed --> [*]
+
+    state Approved {
+        [*] --> AwaitingShipment
+        AwaitingShipment --> PackingInProgress: startPacking
+        PackingInProgress --> ReadyToShip: packingComplete
+    }
+
+    note right of Draft
+        Customer creating order
+    end note
+    note right of Shipped
+        Order in transit
+    end note
 ```
 
 This shows how an order progresses through various states with different events and transitions.
@@ -331,44 +324,32 @@ All incoming flows must complete before proceeding from a join.
 
 Online shopping checkout process:
 
-```
-    ●
-    │
-    ▼
-┌──────────────┐
-│  Add to Cart │
-└──────────────┘
-    │
-    ▼
-┌──────────────┐
-│   Checkout   │
-└──────────────┘
-    │
-    ▼
-    ◇  [logged in?]
-   ╱ ╲
-  ╱   ╲ [no]
- ╱     ╲────────> Login
-╱                   │
-│[yes]              │
-│◄──────────────────┘
-▼
-┌──────────────────┐
-│ Enter Shipping   │
-└──────────────────┘
-    │
-    ▼
-┌──────────────────┐
-│ Select Payment   │
-└──────────────────┘
-    │
-    ▼
-┌──────────────────┐
-│ Confirm Order    │
-└──────────────────┘
-    │
-    ▼
-    ◉
+```mermaid
+flowchart TD
+    Start([Start]) --> AddToCart[Add to Cart]
+    AddToCart --> Checkout[Checkout]
+    Checkout --> LoggedIn{Logged in?}
+    LoggedIn -->|No| Login[Login]
+    Login --> LoggedIn
+    LoggedIn -->|Yes| EnterShipping[Enter Shipping Info]
+    EnterShipping --> SelectPayment[Select Payment Method]
+    SelectPayment --> ConfirmOrder[Confirm Order]
+    ConfirmOrder --> ValidOrder{Order Valid?}
+    ValidOrder -->|No| SelectPayment
+    ValidOrder -->|Yes| ProcessPayment[Process Payment]
+    ProcessPayment --> PaymentSuccess{Payment<br/>Success?}
+    PaymentSuccess -->|No| PaymentFailed[Show Error]
+    PaymentFailed --> SelectPayment
+    PaymentSuccess -->|Yes| OrderComplete[Order Confirmed]
+    OrderComplete --> End([End])
+
+    style Start fill:#90caf9
+    style End fill:#a5d6a7
+    style LoggedIn fill:#fff59d
+    style ValidOrder fill:#fff59d
+    style PaymentSuccess fill:#fff59d
+    style PaymentFailed fill:#ffcdd2
+    style OrderComplete fill:#c8e6c9
 ```
 
 ### Activity Partitions (Swimlanes)

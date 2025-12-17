@@ -14,9 +14,55 @@ RSA (Rivest-Shamir-Adleman, 1977) is a public-key cryptosystem enabling:
 
 **Security**: Based on difficulty of factoring large composites.
 
+## RSA Algorithm Flowchart
+
+```mermaid
+flowchart TD
+    Start([RSA Cryptosystem])
+
+    subgraph KeyGen["Key Generation"]
+        KG1["Choose large primes<br/>p, q (1024+ bits)"]
+        KG2["Compute n = pq<br/>(modulus)"]
+        KG3["Compute φ(n) = (p-1)(q-1)<br/>(Euler's totient)"]
+        KG4["Choose e with<br/>gcd(e, φ(n)) = 1<br/>(often e = 65537)"]
+        KG5["Compute d ≡ e⁻¹ (mod φ(n))<br/>(using Extended Euclidean Algorithm)"]
+        KG6["Public key: (n, e)<br/>Private key: d"]
+    end
+
+    subgraph Encrypt["Encryption"]
+        E1["Message m<br/>(0 ≤ m < n)"]
+        E2["Compute<br/>c ≡ mᵉ (mod n)"]
+        E3["Ciphertext c"]
+    end
+
+    subgraph Decrypt["Decryption"]
+        D1["Ciphertext c"]
+        D2["Compute<br/>m ≡ cᵈ (mod n)"]
+        D3["Original message m"]
+    end
+
+    Start --> KeyGen
+    KG1 --> KG2 --> KG3 --> KG4 --> KG5 --> KG6
+
+    KG6 --> E1
+    E1 --> E2 --> E3
+
+    E3 --> D1
+    D1 --> D2 --> D3
+
+    Verify["Verification:<br/>cᵈ ≡ (mᵉ)ᵈ ≡ m^(ed)<br/>≡ m^(1+kφ(n))<br/>≡ m (mod n)<br/>(by Euler's Theorem)"]
+
+    D3 -.-> Verify
+
+    style KeyGen fill:#e3f2fd
+    style Encrypt fill:#c8e6c9
+    style Decrypt fill:#fff3e0
+    style Verify fill:#ffebee
+```
+
 ## Key Generation
 
-1. **Choose primes**: Select large primes $p, q$ (typically 1024+ bits each)
+1. **Choose primes**: Select large primes $p, q$ (typically $1024+$ bits each)
 2. **Compute modulus**: $n = pq$
 3. **Compute totient**: $\phi(n) = (p-1)(q-1)$
 4. **Choose public exponent**: $e$ with $\gcd(e, \phi(n)) = 1$ (often $e = 65537$)

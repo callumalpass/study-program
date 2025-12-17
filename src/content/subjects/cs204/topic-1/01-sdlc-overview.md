@@ -20,6 +20,25 @@ The recognition of these problems led to the development of systematic approache
 
 Every SDLC model includes some variation of these fundamental phases:
 
+```mermaid
+flowchart TD
+    A[Planning & Analysis] --> B[Requirements]
+    B --> C[Design]
+    C --> D[Implementation]
+    D --> E[Testing]
+    E --> F[Deployment]
+    F --> G[Maintenance]
+    G -.Feedback.-> A
+
+    style A fill:#e1f5ff
+    style B fill:#e1f5ff
+    style C fill:#fff4e1
+    style D fill:#fff4e1
+    style E fill:#ffe1e1
+    style F fill:#e1ffe1
+    style G fill:#f0e1ff
+```
+
 ### 1. Planning and Analysis
 
 This initial phase determines project feasibility and scope:

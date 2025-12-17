@@ -4,134 +4,155 @@ Functional dependencies (FDs) are constraints that describe relationships betwee
 
 ## Definition
 
-A functional dependency X → Y means: if two tuples have the same values for attributes X, they must have the same values for attributes Y.
+A functional dependency $X \rightarrow Y$ means: if two tuples have the same values for attributes X, they must have the same values for attributes Y.
 
-```
-X → Y
-"X determines Y" or "Y is functionally dependent on X"
-```
+$$X \rightarrow Y$$
+
+"$X$ determines $Y$" or "$Y$ is functionally dependent on $X$"
+
+**Formal notation**: For relation $R$ with attributes $X$ and $Y$:
+
+$$X \rightarrow Y \text{ holds in } R \iff \forall t_1, t_2 \in R: t_1[X] = t_2[X] \Rightarrow t_1[Y] = t_2[Y]$$
 
 ### Examples
 
+$$\text{StudentID} \rightarrow \text{StudentName}$$
+Same StudentID always has same StudentName
+
+$$\{\text{CourseID}, \text{Semester}\} \rightarrow \text{InstructorID}$$
+Same course in same semester has same instructor
+
+$$\text{EmployeeID} \rightarrow \{\text{Name}, \text{DeptID}, \text{Salary}\}$$
+Employee ID determines all employee attributes
+
+### Visualization
+
+Functional dependencies can be visualized as dependency diagrams:
+
+```mermaid
+graph LR
+    A[StudentID] -->|determines| B[Name]
+    A -->|determines| C[Email]
+    A -->|determines| D[DeptID]
+    D -->|determines| E[DeptName]
+    D -->|determines| F[Building]
+
+    style A fill:#e1f5ff
+    style D fill:#e1f5ff
+    style B fill:#e8f5e9
+    style C fill:#e8f5e9
+    style E fill:#ffe8e8
+    style F fill:#ffe8e8
 ```
-StudentID → StudentName
--- Same StudentID always has same StudentName
 
-{CourseID, Semester} → InstructorID
--- Same course in same semester has same instructor
+In this diagram:
+- Blue nodes are determinants (left side of FDs)
+- Green nodes depend on StudentID
+- Red nodes depend on DeptID (transitive dependency)
 
-EmployeeID → {Name, DeptID, Salary}
--- Employee ID determines all employee attributes
-```
-
-### Formal Definition
-
-For relation R with attributes X and Y:
-
-X → Y holds in R if and only if:
-For all tuples t₁, t₂ in R: if t₁[X] = t₂[X] then t₁[Y] = t₂[Y]
 
 ## Identifying Functional Dependencies
 
 ### From Business Rules
 
-```
 Business Rule: "Each order is placed by exactly one customer"
-FD: OrderID → CustomerID
+$$\text{OrderID} \rightarrow \text{CustomerID}$$
 
 Business Rule: "An employee can only belong to one department"
-FD: EmployeeID → DeptID
+$$\text{EmployeeID} \rightarrow \text{DeptID}$$
 
 Business Rule: "Product prices are determined by product, not by order"
-FD: ProductID → Price
-```
+$$\text{ProductID} \rightarrow \text{Price}$$
 
 ### From Data Analysis
 
-```
-StudentCourse(StudentID, CourseID, Semester, Grade, InstructorID)
+Relation: $\text{StudentCourse}(\text{StudentID}, \text{CourseID}, \text{Semester}, \text{Grade}, \text{InstructorID})$
 
 Analyze: Can the same (StudentID, CourseID, Semester) have different grades?
-If no: {StudentID, CourseID, Semester} → Grade
+
+If no: $\{\text{StudentID}, \text{CourseID}, \text{Semester}\} \rightarrow \text{Grade}$
 
 Analyze: Does InstructorID depend on StudentID?
-If no: StudentID ↛ InstructorID (not a dependency)
-```
+
+If no: $\text{StudentID} \not\rightarrow \text{InstructorID}$ (not a dependency)
 
 ### Common Patterns
 
-```
--- Primary key determines all attributes
-PK → all other attributes
+Primary key determines all attributes:
+$$\text{PK} \rightarrow \text{all other attributes}$$
 
--- Foreign key determines attributes of referenced table
-FK → referenced attributes (via join)
+Foreign key determines attributes of referenced table (via join):
+$$\text{FK} \rightarrow \text{referenced attributes}$$
 
--- Derived attributes
-{BirthDate} → Age (computed)
+Derived attributes:
+$$\text{BirthDate} \rightarrow \text{Age (computed)}$$
 
--- Natural dependencies
-ZipCode → {City, State}
-ISBN → {Title, Author, Publisher}
-```
+Natural dependencies:
+$$\text{ZipCode} \rightarrow \{\text{City}, \text{State}\}$$
+$$\text{ISBN} \rightarrow \{\text{Title}, \text{Author}, \text{Publisher}\}$$
 
 ## Trivial Dependencies
 
-A dependency X → Y is **trivial** if Y ⊆ X:
+A dependency $X \rightarrow Y$ is **trivial** if $Y \subseteq X$:
 
-```
-{StudentID, Name} → StudentID     -- Trivial
-{A, B, C} → {A, B}                -- Trivial
-StudentID → StudentID             -- Trivial
-```
+$$\{\text{StudentID}, \text{Name}\} \rightarrow \text{StudentID} \text{ -- Trivial}$$
+$$\{A, B, C\} \rightarrow \{A, B\} \text{ -- Trivial}$$
+$$\text{StudentID} \rightarrow \text{StudentID} \text{ -- Trivial}$$
 
 Trivial dependencies always hold and aren't interesting for normalization.
 
 ## Closure of Attributes
 
-The **closure** X⁺ is the set of all attributes functionally determined by X.
+The **closure** $X^+$ is the set of all attributes functionally determined by $X$.
 
 ### Computing Closure
 
-```
-Algorithm:
-1. Start with X⁺ = X
-2. For each FD: A → B where A ⊆ X⁺
-   Add B to X⁺
+**Algorithm**:
+1. Start with $X^+ = X$
+2. For each FD: $A \rightarrow B$ where $A \subseteq X^+$
+   Add $B$ to $X^+$
 3. Repeat until no change
+
+```mermaid
+graph TD
+    Start["Start with X<sup>+</sup> = X"] --> Check{Any FD<br/>A → B where<br/>A ⊆ X<sup>+</sup>?}
+    Check -->|Yes| Add["Add B to X<sup>+</sup>"]
+    Add --> Check
+    Check -->|No| Done["Return X<sup>+</sup>"]
+
+    style Start fill:#e1f5ff
+    style Add fill:#e8f5e9
+    style Done fill:#ffe8e8
 ```
 
 ### Example
 
-```
-Relation: R(A, B, C, D, E)
-FDs: A → B, B → C, CD → E, E → A
+Relation: $R(A, B, C, D, E)$
 
-Find {A}⁺:
-1. Start: {A}⁺ = {A}
-2. A → B applies: {A}⁺ = {A, B}
-3. B → C applies: {A}⁺ = {A, B, C}
-4. No more FDs apply with just {A, B, C}
-5. {A}⁺ = {A, B, C}
+FDs: $A \rightarrow B$, $B \rightarrow C$, $CD \rightarrow E$, $E \rightarrow A$
 
-Find {A, D}⁺:
-1. Start: {A, D}⁺ = {A, D}
-2. A → B: {A, D}⁺ = {A, B, D}
-3. B → C: {A, D}⁺ = {A, B, C, D}
-4. CD → E: {A, D}⁺ = {A, B, C, D, E}
-5. E → A: already have A
-6. {A, D}⁺ = {A, B, C, D, E} = all attributes
-```
+**Find** $\{A\}^+$:
+1. Start: $\{A\}^+ = \{A\}$
+2. $A \rightarrow B$ applies: $\{A\}^+ = \{A, B\}$
+3. $B \rightarrow C$ applies: $\{A\}^+ = \{A, B, C\}$
+4. No more FDs apply with just $\{A, B, C\}$
+5. Result: $\{A\}^+ = \{A, B, C\}$
+
+**Find** $\{A, D\}^+$:
+1. Start: $\{A, D\}^+ = \{A, D\}$
+2. $A \rightarrow B$: $\{A, D\}^+ = \{A, B, D\}$
+3. $B \rightarrow C$: $\{A, D\}^+ = \{A, B, C, D\}$
+4. $CD \rightarrow E$: $\{A, D\}^+ = \{A, B, C, D, E\}$
+5. $E \rightarrow A$: already have A
+6. Result: $\{A, D\}^+ = \{A, B, C, D, E\}$ = all attributes
 
 ### Using Closure
 
-**Key identification**: X is a superkey if X⁺ = all attributes
+**Key identification**: $X$ is a superkey if $X^+$ = all attributes
 
-```
 From example above:
-{A}⁺ = {A, B, C} ≠ all → A is not a key
-{A, D}⁺ = {A, B, C, D, E} = all → {A, D} is a superkey
-```
+- $\{A\}^+ = \{A, B, C\} \neq \text{all} \Rightarrow A$ is not a key
+- $\{A, D\}^+ = \{A, B, C, D, E\} = \text{all} \Rightarrow \{A, D\}$ is a superkey
 
 ## Armstrong's Axioms
 
@@ -139,38 +160,47 @@ Three inference rules for deriving all implied FDs:
 
 ### Reflexivity (Trivial)
 
-If Y ⊆ X, then X → Y
+If $Y \subseteq X$, then $X \rightarrow Y$
 
-```
-{A, B, C} → {A, B}
-{A, B} → A
-```
+$$\{A, B, C\} \rightarrow \{A, B\}$$
+$$\{A, B\} \rightarrow A$$
 
 ### Augmentation
 
-If X → Y, then XZ → YZ
+If $X \rightarrow Y$, then $XZ \rightarrow YZ$
 
-```
-Given: A → B
-Then: AC → BC, AD → BD, ABC → BC, etc.
-```
+Given: $A \rightarrow B$
+
+Then: $AC \rightarrow BC$, $AD \rightarrow BD$, $ABC \rightarrow BC$, etc.
 
 ### Transitivity
 
-If X → Y and Y → Z, then X → Z
+If $X \rightarrow Y$ and $Y \rightarrow Z$, then $X \rightarrow Z$
 
-```
-Given: A → B and B → C
-Then: A → C
+Given: $A \rightarrow B$ and $B \rightarrow C$
+
+Then: $A \rightarrow C$
+
+```mermaid
+graph LR
+    A[A] -->|"A → B"| B[B]
+    B -->|"B → C"| C[C]
+    A -.->|"A → C<br/>(by transitivity)"| C
+
+    style A fill:#e1f5ff
+    style B fill:#fff4e1
+    style C fill:#e8f5e9
 ```
 
 ### Derived Rules
 
 From the axioms, we can derive:
 
-**Union**: If X → Y and X → Z, then X → YZ
-**Decomposition**: If X → YZ, then X → Y and X → Z
-**Pseudotransitivity**: If X → Y and WY → Z, then WX → Z
+**Union**: If $X \rightarrow Y$ and $X \rightarrow Z$, then $X \rightarrow YZ$
+
+**Decomposition**: If $X \rightarrow YZ$, then $X \rightarrow Y$ and $X \rightarrow Z$
+
+**Pseudotransitivity**: If $X \rightarrow Y$ and $WY \rightarrow Z$, then $WX \rightarrow Z$
 
 ## Minimal Cover (Canonical Cover)
 
@@ -184,76 +214,90 @@ A minimal set of FDs equivalent to the original set:
 
 ### Algorithm
 
-```
-1. Decompose: Split RHS to single attributes
-   A → BC becomes A → B, A → C
+**Step 1**: Decompose - Split RHS to single attributes
+$$A \rightarrow BC \text{ becomes } A \rightarrow B, A \rightarrow C$$
 
-2. Remove redundant FDs:
-   For each FD X → A:
-   - Remove it temporarily
-   - If A ∈ X⁺ using remaining FDs, it's redundant
+**Step 2**: Remove redundant FDs
 
-3. Remove redundant LHS attributes:
-   For each FD XY → A:
-   - If A ∈ X⁺, then Y is redundant (keep X → A)
-```
+For each FD $X \rightarrow A$:
+- Remove it temporarily
+- If $A \in X^+$ using remaining FDs, it's redundant
+
+**Step 3**: Remove redundant LHS attributes
+
+For each FD $XY \rightarrow A$:
+- If $A \in X^+$, then $Y$ is redundant (keep $X \rightarrow A$)
 
 ### Example
 
-```
-Given: A → BC, B → C, AB → C, AC → D
+**Given**: $A \rightarrow BC$, $B \rightarrow C$, $AB \rightarrow C$, $AC \rightarrow D$
 
-Step 1 - Decompose:
-A → B, A → C, B → C, AB → C, AC → D
+**Step 1** - Decompose:
+$$A \rightarrow B, A \rightarrow C, B \rightarrow C, AB \rightarrow C, AC \rightarrow D$$
 
-Step 2 - Remove redundant FDs:
-- A → C: Remove, check if C ∈ {A}⁺
-  {A}⁺ = {A, B} using A → B
-  {A}⁺ = {A, B, C} using B → C
-  Yes, C is in closure, so A → C is redundant
+**Step 2** - Remove redundant FDs:
+- $A \rightarrow C$: Remove, check if $C \in \{A\}^+$
+  - $\{A\}^+ = \{A, B\}$ using $A \rightarrow B$
+  - $\{A\}^+ = \{A, B, C\}$ using $B \rightarrow C$
+  - Yes, $C$ is in closure, so $A \rightarrow C$ is redundant
 
-- AB → C: Remove, check if C ∈ {A,B}⁺
-  Already know B → C, so yes, redundant
+- $AB \rightarrow C$: Remove, check if $C \in \{A,B\}^+$
+  - Already know $B \rightarrow C$, so yes, redundant
 
-Remaining: A → B, B → C, AC → D
+Remaining: $A \rightarrow B$, $B \rightarrow C$, $AC \rightarrow D$
 
-Step 3 - Remove redundant LHS attributes:
-- AC → D: Check if C is redundant
-  Is D ∈ {A}⁺? {A}⁺ = {A, B, C}, no D
-  C is not redundant
+**Step 3** - Remove redundant LHS attributes:
+- $AC \rightarrow D$: Check if $C$ is redundant
+  - Is $D \in \{A\}^+$? $\{A\}^+ = \{A, B, C\}$, no $D$
+  - $C$ is not redundant
 
-Minimal cover: {A → B, B → C, AC → D}
-```
+**Minimal cover**: $\{A \rightarrow B, B \rightarrow C, AC \rightarrow D\}$
 
 ## Dependency Preservation
 
 When decomposing a relation, we want to preserve all FDs:
 
-```
-R(A, B, C) with FDs: A → B, B → C
+**Example**: $R(A, B, C)$ with FDs: $A \rightarrow B$, $B \rightarrow C$
 
-Decompose to: R1(A, B) and R2(B, C)
+Decompose to: $R_1(A, B)$ and $R_2(B, C)$
 
 Check: Can we enforce both FDs?
-- A → B: Yes, within R1
-- B → C: Yes, within R2
+- $A \rightarrow B$: Yes, within $R_1$ ✓
+- $B \rightarrow C$: Yes, within $R_2$ ✓
 
 FDs are preserved!
+
+```mermaid
+graph TD
+    R["R(A, B, C)<br/>A → B, B → C"] --> R1["R₁(A, B)<br/>A → B ✓"]
+    R --> R2["R₂(B, C)<br/>B → C ✓"]
+
+    style R fill:#e1f5ff
+    style R1 fill:#e8f5e9
+    style R2 fill:#e8f5e9
 ```
 
 ### Non-Preserved Example
 
-```
-R(A, B, C) with FDs: A → B, AC → B
+$R(A, B, C)$ with FDs: $A \rightarrow B$, $AC \rightarrow B$
 
-Decompose to: R1(A, B) and R2(A, C)
+Decompose to: $R_1(A, B)$ and $R_2(A, C)$
 
 Check:
-- A → B: Yes, within R1
-- AC → B: No! A and C are in R2, B is in R1
+- $A \rightarrow B$: Yes, within $R_1$ ✓
+- $AC \rightarrow B$: No! $A$ and $C$ are in $R_2$, $B$ is in $R_1$ ✗
   Must join to check this constraint
 
 FD not preserved (requires join to enforce)
+
+```mermaid
+graph TD
+    R["R(A, B, C)<br/>A → B, AC → B"] --> R1["R₁(A, B)<br/>A → B ✓"]
+    R --> R2["R₂(A, C)<br/>No FD with B ✗"]
+
+    style R fill:#e1f5ff
+    style R1 fill:#e8f5e9
+    style R2 fill:#ffe8e8
 ```
 
 ## Practical Applications

@@ -6,18 +6,16 @@ Illumination in computer graphics simulates how light interacts with surfaces to
 
 At the heart of illumination lies the **rendering equation**, introduced by James Kajiya in 1986. While we'll explore simplified models first, this equation describes how light energy is transferred in a scene:
 
-```
-L_o(p, ω_o) = L_e(p, ω_o) + ∫_Ω f_r(p, ω_i, ω_o) L_i(p, ω_i) (n · ω_i) dω_i
-```
+$$L_o(\mathbf{p}, \omega_o) = L_e(\mathbf{p}, \omega_o) + \int_{\Omega} f_r(\mathbf{p}, \omega_i, \omega_o) L_i(\mathbf{p}, \omega_i) (\mathbf{n} \cdot \omega_i) d\omega_i$$
 
 Where:
-- `L_o(p, ω_o)` = outgoing light from point p in direction ω_o
-- `L_e(p, ω_o)` = emitted light (if surface is a light source)
-- `f_r(p, ω_i, ω_o)` = BRDF (Bidirectional Reflectance Distribution Function)
-- `L_i(p, ω_i)` = incoming light from direction ω_i
-- `n · ω_i` = cosine term (Lambert's law)
+- $L_o(\mathbf{p}, \omega_o)$ = outgoing light from point $\mathbf{p}$ in direction $\omega_o$
+- $L_e(\mathbf{p}, \omega_o)$ = emitted light (if surface is a light source)
+- $f_r(\mathbf{p}, \omega_i, \omega_o)$ = BRDF (Bidirectional Reflectance Distribution Function)
+- $L_i(\mathbf{p}, \omega_i)$ = incoming light from direction $\omega_i$
+- $\mathbf{n} \cdot \omega_i$ = cosine term (Lambert's law)
 
-This integral sums contributions from all incoming light directions over the hemisphere Ω above point p. Most real-time rendering uses approximations of this equation.
+This integral sums contributions from all incoming light directions over the hemisphere $\Omega$ above point $\mathbf{p}$. Most real-time rendering uses approximations of this equation.
 
 ## Local vs. Global Illumination
 
@@ -53,13 +51,11 @@ Most illumination models decompose surface reflection into three components:
 
 Represents indirect light scattered throughout the environment. This is a crude approximation of global illumination, providing a constant base illumination to prevent completely black shadows.
 
-```
-I_ambient = k_a × I_a
-```
+$$I_{\text{ambient}} = k_a \times I_a$$
 
 Where:
-- `k_a` = ambient reflection coefficient (material property)
-- `I_a` = ambient light intensity
+- $k_a$ = ambient reflection coefficient (material property)
+- $I_a$ = ambient light intensity
 
 Ambient light is independent of:
 - Light source position
@@ -70,14 +66,12 @@ Ambient light is independent of:
 
 Light scattered equally in all directions after hitting a rough, matte surface. Follows **Lambert's cosine law**: brightness depends on the angle between surface normal and light direction.
 
-```
-I_diffuse = k_d × I_l × max(0, n · l)
-```
+$$I_{\text{diffuse}} = k_d \times I_l \times \max(0, \mathbf{n} \cdot \mathbf{l})$$
 
 Where:
-- `k_d` = diffuse reflection coefficient
-- `I_l` = light source intensity
-- `n` = surface normal (unit vector)
+- $k_d$ = diffuse reflection coefficient
+- $I_l$ = light source intensity
+- $\mathbf{n}$ = surface normal (unit vector)
 - `l` = light direction (unit vector)
 
 Key properties:

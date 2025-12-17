@@ -11,15 +11,25 @@ A recursive function calls itself to solve subproblems:
 factorial :: Integer -> Integer
 factorial 0 = 1                    -- Base case
 factorial n = n * factorial (n - 1) -- Recursive case
+```
 
--- How it evaluates:
--- factorial 4
--- = 4 * factorial 3
--- = 4 * (3 * factorial 2)
--- = 4 * (3 * (2 * factorial 1))
--- = 4 * (3 * (2 * (1 * factorial 0)))
--- = 4 * (3 * (2 * (1 * 1)))
--- = 24
+The call tree for `factorial 4` shows how recursion builds up a computation:
+
+```mermaid
+graph TD
+    A["factorial 4"] --> B["4 * factorial 3"]
+    B --> C["4 * (3 * factorial 2)"]
+    C --> D["4 * (3 * (2 * factorial 1))"]
+    D --> E["4 * (3 * (2 * (1 * factorial 0)))"]
+    E --> F["4 * (3 * (2 * (1 * 1)))"]
+    F --> G["4 * (3 * (2 * 1))"]
+    G --> H["4 * (3 * 2)"]
+    H --> I["4 * 6"]
+    I --> J["24"]
+
+    style A fill:#e1f5ff
+    style E fill:#ffe1e1
+    style J fill:#e1ffe1
 ```
 
 Every recursive function needs:
@@ -64,6 +74,38 @@ size (Node left _ right) = 1 + size left + size right
 sumTree :: Num a => Tree a -> a
 sumTree Empty = 0
 sumTree (Node left x right) = sumTree left + x + sumTree right
+```
+
+Tree recursion naturally follows the tree structure:
+
+```mermaid
+graph TD
+    A["sumTree (Node 5)"] --> B["sumTree (Node 3)"]
+    A --> C["5"]
+    A --> D["sumTree (Node 7)"]
+
+    B --> E["sumTree (Node 1)"]
+    B --> F["3"]
+    B --> G["sumTree Empty"]
+
+    D --> H["sumTree Empty"]
+    D --> I["7"]
+    D --> J["sumTree (Node 9)"]
+
+    E --> K["sumTree Empty"]
+    E --> L["1"]
+    E --> M["sumTree Empty"]
+
+    J --> N["sumTree Empty"]
+    J --> O["9"]
+    J --> P["sumTree Empty"]
+
+    style A fill:#e1f5ff
+    style C fill:#ffe1e1
+    style F fill:#ffe1e1
+    style I fill:#ffe1e1
+    style L fill:#ffe1e1
+    style O fill:#ffe1e1
 ```
 
 ## Tail Recursion

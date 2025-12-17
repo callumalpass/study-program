@@ -42,6 +42,35 @@ Address: [Tag | Index | Offset]
 
 ### Lookup Process
 
+```mermaid
+graph TB
+    A[Memory Address] --> B[Parse Address]
+
+    B --> C[Offset Bits]
+    B --> D[Index Bits]
+    B --> E[Tag Bits]
+
+    D --> F[Select Cache Line]
+    F --> G[Read Valid Bit]
+    F --> H[Read Stored Tag]
+
+    E --> I{Tag Match?}
+    H --> I
+    G --> J{Valid Bit = 1?}
+
+    I -->|Yes| J
+    I -->|No| K[Cache Miss]
+    J -->|Yes| L[Cache Hit]
+    J -->|No| K
+
+    L --> M[Return Data at Offset]
+    C --> M
+
+    style L fill:#90ee90
+    style K fill:#ffcccb
+    style M fill:#add8e6
+```
+
 1. Extract index bits from address
 2. Access the cache line at that index
 3. Compare tag bits with stored tag
@@ -187,17 +216,15 @@ Address: [Tag | Index | Offset]
 
 ### Example: 256KB, 8-way, 64-byte blocks
 
-```
-Cache size = 256 KB = 262,144 bytes
-Block size = 64 bytes
-Total blocks = 262,144 / 64 = 4,096 blocks
-Sets = 4,096 / 8 = 512 sets
+$$\text{Cache size} = 256 \text{ KB} = 262{,}144 \text{ bytes}$$
+$$\text{Block size} = 64 \text{ bytes}$$
+$$\text{Total blocks} = \frac{262{,}144}{64} = 4{,}096 \text{ blocks}$$
+$$\text{Sets} = \frac{4{,}096}{8} = 512 \text{ sets}$$
 
 Address bits (32-bit):
-Block offset: log₂(64) = 6 bits
-Index: log₂(512) = 9 bits
-Tag: 32 - 9 - 6 = 17 bits
-```
+$$\text{Block offset} = \log_2(64) = 6 \text{ bits}$$
+$$\text{Index} = \log_2(512) = 9 \text{ bits}$$
+$$\text{Tag} = 32 - 9 - 6 = 17 \text{ bits}$$
 
 ## Comparison
 

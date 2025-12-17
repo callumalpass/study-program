@@ -4,26 +4,26 @@ The viewing pipeline transforms 3D world coordinates into 2D screen coordinates 
 
 ## Pipeline Overview
 
-```
-World Coordinates
-    ↓
-[View Transform - Camera positioning]
-    ↓
-Camera/Eye Coordinates
-    ↓
-[Projection Transform - 3D to 2D mapping]
-    ↓
-Clip Coordinates (4D homogeneous)
-    ↓
-[Clipping - Remove geometry outside view]
-    ↓
-[Perspective Division - Homogeneous to Cartesian]
-    ↓
-Normalized Device Coordinates (NDC)
-    ↓
-[Viewport Transform - Map to window]
-    ↓
-Screen/Window Coordinates
+```mermaid
+flowchart TD
+    A[World Coordinates] --> B[View Transform<br/>Camera Positioning]
+    B --> C[Camera/Eye Coordinates]
+    C --> D[Projection Transform<br/>3D to 2D Mapping]
+    D --> E[Clip Coordinates<br/>4D Homogeneous]
+    E --> F[Clipping<br/>Remove Outside Geometry]
+    F --> G[Perspective Division<br/>÷ w component]
+    G --> H[Normalized Device Coordinates<br/>NDC]
+    H --> I[Viewport Transform<br/>Map to Window]
+    I --> J[Screen/Window Coordinates]
+
+    style A fill:#e1f5ff
+    style C fill:#ffe1e1
+    style E fill:#fff4e1
+    style H fill:#e1ffe1
+    style J fill:#f3e1ff
+
+    classDef transform fill:#ffd700,stroke:#333,stroke-width:2px
+    class B,D,F,G,I transform
 ```
 
 Each transformation serves a specific purpose and operates in a coordinate system optimized for its task.
@@ -81,11 +81,9 @@ Camera space (view space, eye space):
 
 The view matrix is the **inverse of the camera's model matrix**:
 
-```
-V = C^(-1)
+$$\mathbf{V} = \mathbf{C}^{-1}$$
 
-where C is the camera's world transform
-```
+where $\mathbf{C}$ is the camera's world transform
 
 **lookAt matrix** constructs view matrix from camera parameters:
 
@@ -227,11 +225,11 @@ Before clipping:           After clipping:
 
 **Perspective division** converts 4D homogeneous clip coordinates to 3D Cartesian NDC:
 
-```
-NDC.x = clip.x / clip.w
-NDC.y = clip.y / clip.w
-NDC.z = clip.z / clip.w
-```
+$$\text{NDC}_x = \frac{\text{clip}_x}{\text{clip}_w}$$
+
+$$\text{NDC}_y = \frac{\text{clip}_y}{\text{clip}_w}$$
+
+$$\text{NDC}_z = \frac{\text{clip}_z}{\text{clip}_w}$$
 
 ### Effect of Division
 
@@ -264,11 +262,11 @@ NDC is a **platform-independent** intermediate representation.
 
 The **viewport transform** maps NDC to window pixel coordinates:
 
-```
-screenX = (ndc.x + 1) × (width / 2) + x_offset
-screenY = (ndc.y + 1) × (height / 2) + y_offset
-screenZ = (ndc.z + 1) / 2  (OpenGL: maps [-1,1] to [0,1])
-```
+$$\text{screen}_x = (\text{NDC}_x + 1) \times \frac{\text{width}}{2} + x_{\text{offset}}$$
+
+$$\text{screen}_y = (\text{NDC}_y + 1) \times \frac{\text{height}}{2} + y_{\text{offset}}$$
+
+$$\text{screen}_z = \frac{\text{NDC}_z + 1}{2} \quad \text{(OpenGL: maps [-1,1] to [0,1])}$$
 
 **OpenGL viewport**:
 ```cpp

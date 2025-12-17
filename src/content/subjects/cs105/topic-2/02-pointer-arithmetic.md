@@ -37,6 +37,34 @@ int *ip;    // ip + 1 advances by 4 bytes (typically)
 double *dp; // dp + 1 advances by 8 bytes
 ```
 
+### Pointer Arithmetic Formula
+
+When you perform pointer arithmetic, the actual byte offset is calculated as:
+
+$$\text{New Address} = \text{Current Address} + (n \times \text{sizeof(type)})$$
+
+For example, if `p` is an `int*` at address 1000:
+- `p + 1` = $1000 + (1 \times 4) = 1004$
+- `p + 3` = $1000 + (3 \times 4) = 1012$
+
+### Memory Layout Visualization
+
+```mermaid
+graph TD
+    subgraph "Memory (int array)"
+        A["Address: 1000<br/>arr[0] = 100<br/>p points here"]
+        B["Address: 1004<br/>arr[1] = 200<br/>p+1 points here"]
+        C["Address: 1008<br/>arr[2] = 300<br/>p+2 points here"]
+    end
+
+    A -->|"+1 (adds 4 bytes)"| B
+    B -->|"+1 (adds 4 bytes)"| C
+
+    style A fill:#e1f5ff
+    style B fill:#e8f5e9
+    style C fill:#fff4e1
+```
+
 ## Valid Pointer Operations
 
 **Addition/Subtraction with integers:**
@@ -59,7 +87,11 @@ int *end = &arr[7];
 ptrdiff_t diff = end - start;  // 7 (number of elements between)
 ```
 
-This gives the number of elements, not bytes.
+This gives the number of elements, not bytes. The formula is:
+
+$$\text{diff} = \frac{\text{end address} - \text{start address}}{\text{sizeof(type)}}$$
+
+For example: $\frac{1028 - 1000}{4} = \frac{28}{4} = 7$ elements
 
 **Comparison of pointers:**
 ```c
@@ -108,6 +140,14 @@ ptr[2]       // Pointer with subscript
 // Even this works (though confusing):
 2[arr]       // Same as arr[2]!
 ```
+
+### Array Indexing is Syntactic Sugar
+
+The expression `arr[i]` is actually defined as `*(arr + i)`. This means:
+
+$$\text{arr}[i] \equiv *(\text{arr} + i)$$
+
+Since addition is commutative, `i[arr]` also works (but don't use it)!
 
 ## Iterating with Pointers
 

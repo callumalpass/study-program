@@ -36,30 +36,16 @@ A process in memory consists of multiple sections:
 
 During its lifetime, a process transitions through several states:
 
-```
-        ┌────────────────────────────────────────┐
-        │                                        │
-        ↓                                        │
-     ┌─────┐    admit    ┌───────┐              │
-     │ New │ ──────────→ │ Ready │ ←────────────┤
-     └─────┘             └───┬───┘              │
-                             │                   │
-                   scheduler │                   │
-                   dispatch  │                   │
-                             ↓                   │
-                        ┌─────────┐              │
-              ┌──────── │ Running │ ─────┐       │
-              │         └────┬────┘      │       │
-              │              │           │       │
-     I/O or   │         exit │       interrupt   │
-     event    │              │           │       │
-     wait     │              ↓           │       │
-              │        ┌────────────┐    │       │
-              │        │ Terminated │    │       │
-              ↓        └────────────┘    │       │
-        ┌─────────┐                      │       │
-        │ Waiting │ ─────────────────────┴───────┘
-        └─────────┘    I/O or event completion
+```mermaid
+stateDiagram-v2
+    [*] --> New: create
+    New --> Ready: admit
+    Ready --> Running: scheduler dispatch
+    Running --> Ready: interrupt/timer
+    Running --> Waiting: I/O or event wait
+    Waiting --> Ready: I/O or event completion
+    Running --> Terminated: exit
+    Terminated --> [*]
 ```
 
 ### State Descriptions

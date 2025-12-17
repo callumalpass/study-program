@@ -189,6 +189,38 @@ Both are p-series with $p > 1$, so both converge. Therefore, the original series
 
 ## Choosing the Right Test
 
+```mermaid
+graph TD
+    Start([Analyze Series ∑aₙ]) --> Step1{Calculate<br/>lim aₙ}
+
+    Step1 -->|≠ 0 or DNE| UseDivTest[DIVERGENCE TEST<br/>Series DIVERGES]
+    Step1 -->|= 0| Step2{Is it a<br/>p-series<br/>∑1/nᵖ?}
+
+    Step2 -->|Yes| CheckP{Is p > 1?}
+    CheckP -->|Yes| PConv[Series CONVERGES<br/> p-series test ]
+    CheckP -->|No| PDiv[Series DIVERGES<br/> p-series test ]
+
+    Step2 -->|No| Step3{Can you define<br/>f x  where<br/>f n  = aₙ?}
+
+    Step3 -->|Yes| CheckProps{Is f x :<br/>• Continuous?<br/>• Positive?<br/>• Decreasing?}
+    CheckProps -->|Yes| UseInt[INTEGRAL TEST<br/>Evaluate ∫f x dx]
+    CheckProps -->|No| OtherTest[Use other tests:<br/>• Comparison<br/>• Ratio/Root<br/>• Alternating]
+
+    UseInt --> IntResult{Does integral<br/>converge?}
+    IntResult -->|Yes| IntConv[Series CONVERGES]
+    IntResult -->|No| IntDiv[Series DIVERGES]
+
+    Step3 -->|No| OtherTest
+
+    style Start fill:#e1f5ff
+    style UseDivTest fill:#f8d7da
+    style PConv fill:#d4edda
+    style PDiv fill:#f8d7da
+    style IntConv fill:#d4edda
+    style IntDiv fill:#f8d7da
+    style UseInt fill:#fff3cd
+```
+
 **Use the Divergence Test first**: Always check if $\lim_{n \to \infty} a_n \neq 0$. If so, the series diverges immediately.
 
 **Use the p-Series Test**: If the series is (or can be transformed into) a p-series, apply the simple criterion $p > 1$ for convergence.

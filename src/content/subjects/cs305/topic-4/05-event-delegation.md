@@ -14,19 +14,30 @@ When an event occurs, it goes through three phases:
 2. **Target Phase**: Event reaches the target element
 3. **Bubbling Phase**: Event bubbles up from the target back to the window
 
+```mermaid
+graph TD
+    subgraph "Event Propagation Phases"
+        A[Window] -->|1. Capture| B[Document]
+        B -->|2. Capture| C[html]
+        C -->|3. Capture| D[body]
+        D -->|4. Capture| E[div]
+        E -->|5. Target| F[button CLICKED]
+        F -->|6. Bubble| E
+        E -->|7. Bubble| D
+        D -->|8. Bubble| C
+        C -->|9. Bubble| B
+        B -->|10. Bubble| A
+    end
+
+    style F fill:#ffeb3b,stroke:#f57c00,stroke-width:3px
+    style A fill:#e3f2fd
+    style B fill:#e3f2fd
+    style C fill:#e8f5e9
+    style D fill:#e8f5e9
+    style E fill:#fff3e0
 ```
-Window
-  ↓ Capture          ↑ Bubble
-Document
-  ↓                  ↑
-<html>
-  ↓                  ↑
-<body>
-  ↓                  ↑
-<div>
-  ↓                  ↑
-<button> ← Target
-```
+
+The event flows from the Window down to the target (capture phase), hits the target, then bubbles back up to the Window.
 
 ```html
 <div id="outer">
@@ -196,6 +207,33 @@ Understanding the difference is crucial for event delegation.
 
 - `event.target`: The element that triggered the event (the actual clicked element)
 - `event.currentTarget`: The element that has the event listener attached
+
+### Target vs CurrentTarget Visualization
+
+```mermaid
+graph TD
+    A[ul#list - currentTarget<br/>Event listener attached here] --> B[li.item]
+    A --> C[li.item]
+    A --> D[li.item - CLICKED]
+
+    B --> E[span]
+    B --> F[button.delete]
+
+    C --> G[span]
+    C --> H[button.delete]
+
+    D --> I[span]
+    D --> J[button.delete - target<br/>User clicked here]
+
+    style A fill:#4caf50,stroke:#2e7d32,stroke-width:3px
+    style J fill:#f44336,stroke:#c62828,stroke-width:3px
+    style D fill:#ffeb3b
+
+    Note1[event.currentTarget = ul#list]
+    Note2[event.target = button.delete]
+```
+
+When a delete button is clicked, `event.target` points to the button, but `event.currentTarget` points to the `<ul>` where the listener is attached.
 
 ```html
 <ul id="list">

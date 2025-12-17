@@ -6,62 +6,77 @@ Derivations show how strings are generated from a grammar's start symbol. Unders
 
 A **derivation step** applies one production rule:
 
-αAβ ⇒ αγβ
+$$
+\alpha A \beta \Rightarrow \alpha \gamma \beta
+$$
 
-where A → γ is a production in the grammar, and α, β are arbitrary strings of variables and terminals.
+where $A \to \gamma$ is a production in the grammar, and $\alpha, \beta \in (V \cup \Sigma)^*$ are arbitrary strings of variables and terminals.
 
 ## Derivation Sequences
 
 A **derivation** is a sequence of steps:
 
-S ⇒ α₁ ⇒ α₂ ⇒ ... ⇒ αₙ = w
+$$
+S \Rightarrow \alpha_1 \Rightarrow \alpha_2 \Rightarrow \cdots \Rightarrow \alpha_n = w
+$$
 
-We write S ⇒* w to mean "S derives w in zero or more steps."
+We write $S \Rightarrow^* w$ to mean "$S$ derives $w$ in zero or more steps."
 
 ## Example Derivation
 
-Grammar: S → AB, A → aA | a, B → bB | b
+Grammar: $S \to AB$, $A \to aA \mid a$, $B \to bB \mid b$
 
 Derive "aabb":
-```
-S ⇒ AB
-  ⇒ aAB
-  ⇒ aaB
-  ⇒ aabB
-  ⇒ aabb
-```
+
+$$
+\begin{align*}
+S &\Rightarrow AB \\
+  &\Rightarrow aAB \\
+  &\Rightarrow aaB \\
+  &\Rightarrow aabB \\
+  &\Rightarrow aabb
+\end{align*}
+$$
 
 ## Leftmost Derivations
 
 In a **leftmost derivation**, we always expand the leftmost variable.
 
-Notation: ⇒_lm
+Notation: $\Rightarrow_{\text{lm}}$
 
-Example (E → E+T | T, T → T*F | F, F → id):
-```
-E ⇒_lm E + T
-  ⇒_lm T + T
-  ⇒_lm F + T
-  ⇒_lm id + T
-  ⇒_lm id + F
-  ⇒_lm id + id
-```
+Example grammar: $E \to E+T \mid T$, $T \to T*F \mid F$, $F \to \text{id}$
+
+Leftmost derivation of "id + id":
+
+$$
+\begin{align*}
+E &\Rightarrow_{\text{lm}} E + T \\
+  &\Rightarrow_{\text{lm}} T + T \\
+  &\Rightarrow_{\text{lm}} F + T \\
+  &\Rightarrow_{\text{lm}} \text{id} + T \\
+  &\Rightarrow_{\text{lm}} \text{id} + F \\
+  &\Rightarrow_{\text{lm}} \text{id} + \text{id}
+\end{align*}
+$$
 
 ## Rightmost Derivations
 
 In a **rightmost derivation**, we always expand the rightmost variable.
 
-Notation: ⇒_rm
+Notation: $\Rightarrow_{\text{rm}}$
 
-Same grammar:
-```
-E ⇒_rm E + T
-  ⇒_rm E + F
-  ⇒_rm E + id
-  ⇒_rm T + id
-  ⇒_rm F + id
-  ⇒_rm id + id
-```
+Rightmost derivation of "id + id":
+
+$$
+\begin{align*}
+E &\Rightarrow_{\text{rm}} E + T \\
+  &\Rightarrow_{\text{rm}} E + F \\
+  &\Rightarrow_{\text{rm}} E + \text{id} \\
+  &\Rightarrow_{\text{rm}} T + \text{id} \\
+  &\Rightarrow_{\text{rm}} F + \text{id} \\
+  &\Rightarrow_{\text{rm}} \text{id} + \text{id}
+\end{align*}
+$$
 
 ## Derivation Trees
 

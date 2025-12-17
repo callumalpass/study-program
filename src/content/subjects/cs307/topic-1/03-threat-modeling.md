@@ -549,28 +549,53 @@ Attack trees are a structured way to model how attackers might compromise a syst
 
 ### Creating an Attack Tree
 
+Attack trees visualize all possible attack vectors and help prioritize defenses:
+
+```mermaid
+graph TD
+    Root[Goal: Steal Customer Credit Card Data]
+
+    Root --> Path1[Compromise Database]
+    Root --> Path2[Intercept Network Traffic]
+    Root --> Path3[Physical Access]
+
+    Path1 --> SQL[SQL Injection]
+    Path1 --> Creds[Stolen Credentials]
+    Path1 --> Vuln[Exploit Unpatched Vulnerability]
+
+    SQL --> FindVuln[Find vulnerable input field]
+    SQL --> Extract[Extract data with UNION query]
+
+    Creds --> Phish[Phish database admin]
+    Creds --> Brute[Brute force weak password]
+
+    Path2 --> MITM[Man-in-the-Middle Attack]
+    Path2 --> Unenc[Unencrypted Transmission]
+
+    MITM --> ARP[ARP spoofing]
+    MITM --> DNS[DNS poisoning]
+
+    Path3 --> Tapes[Steal backup tapes]
+    Path3 --> ServerRoom[Access unlocked server room]
+
+    style Root fill:#ff6b6b,stroke:#c92a2a,color:#fff
+    style Path1 fill:#ffd43b,stroke:#f59f00
+    style Path2 fill:#ffd43b,stroke:#f59f00
+    style Path3 fill:#ffd43b,stroke:#f59f00
+    style SQL fill:#74c0fc,stroke:#1c7ed6
+    style Creds fill:#74c0fc,stroke:#1c7ed6
+    style Vuln fill:#74c0fc,stroke:#1c7ed6
+    style MITM fill:#74c0fc,stroke:#1c7ed6
+    style Unenc fill:#74c0fc,stroke:#1c7ed6
+    style Tapes fill:#74c0fc,stroke:#1c7ed6
+    style ServerRoom fill:#74c0fc,stroke:#1c7ed6
 ```
-Goal: Steal Customer Credit Card Data
-│
-├── Attack Path 1: Compromise Database
-│   ├── SQL Injection
-│   │   ├── Find vulnerable input field
-│   │   └── Extract data with UNION query
-│   ├── Stolen Credentials
-│   │   ├── Phish database admin
-│   │   └── Brute force weak password
-│   └── Exploit Unpatched Vulnerability
-│
-├── Attack Path 2: Intercept Network Traffic
-│   ├── Man-in-the-Middle Attack
-│   │   ├── ARP spoofing
-│   │   └── DNS poisoning
-│   └── Unencrypted Transmission
-│
-└── Attack Path 3: Physical Access
-    ├── Steal backup tapes
-    └── Access unlocked server room
-```
+
+**Using Attack Trees for Risk Analysis:**
+- Each node can be assigned a probability and cost
+- AND nodes require all sub-attacks to succeed
+- OR nodes require only one sub-attack to succeed
+- Helps identify the most cost-effective defenses
 
 ### Analyzing Attack Trees
 

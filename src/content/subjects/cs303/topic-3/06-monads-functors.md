@@ -6,16 +6,34 @@ Monads and functors are abstract patterns from category theory that have proven 
 
 A functor is any type that supports a mapping operation. If you have a container of values and a function, a functor lets you apply that function to the values inside.
 
+```mermaid
+graph TD
+    A[Functor] --> B[Applicative]
+    B --> C[Monad]
+
+    A --> D["fmap :: (a → b) → f a → f b"]
+    B --> E["pure :: a → f a"]
+    B --> F["(<*>) :: f (a → b) → f a → f b"]
+    C --> G["return :: a → m a"]
+    C --> H["(>>=) :: m a → (a → m b) → m b"]
+
+    style A fill:#e1ffe1
+    style B fill:#e1f5ff
+    style C fill:#ffe1e1
+```
+
 ### The Functor Type Class
 
 ```haskell
 class Functor f where
     fmap :: (a -> b) -> f a -> f b
-
--- fmap must satisfy:
--- 1. fmap id = id                     (identity law)
--- 2. fmap (g . h) = fmap g . fmap h   (composition law)
 ```
+
+Functor laws ensure predictable behavior:
+
+**Identity**: $\text{fmap} \, \text{id} = \text{id}$
+
+**Composition**: $\text{fmap} \, (g \circ h) = \text{fmap} \, g \circ \text{fmap} \, h$
 
 ### Common Functor Instances
 
@@ -129,12 +147,15 @@ Monads extend applicative functors with the ability to sequence computations whe
 class Applicative m => Monad m where
     return :: a -> m a
     (>>=)  :: m a -> (a -> m b) -> m b
-
--- Laws:
--- Left identity:  return a >>= f  =  f a
--- Right identity: m >>= return  =  m
--- Associativity:  (m >>= f) >>= g  =  m >>= (\x -> f x >>= g)
 ```
+
+Monad laws ensure composability and predictability:
+
+**Left identity**: $\text{return} \, a \gg\!\!= f \equiv f \, a$
+
+**Right identity**: $m \gg\!\!= \text{return} \equiv m$
+
+**Associativity**: $(m \gg\!\!= f) \gg\!\!= g \equiv m \gg\!\!= (\lambda x. f \, x \gg\!\!= g)$
 
 ### The Key Insight
 

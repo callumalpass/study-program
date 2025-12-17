@@ -56,15 +56,31 @@ When insertion or deletion violates the balance property, we perform rotations t
 
 When the left subtree of the left child is too tall:
 
+```mermaid
+graph TD
+    subgraph Before Right Rotation
+    Z[z] --> Y[y]
+    Z --> T4[T4]
+    Y --> X[x]
+    Y --> T3[T3]
+    X --> T1[T1]
+    X --> T2[T2]
+    end
+
+    subgraph After Right Rotation
+    Y2[y] --> X2[x]
+    Y2 --> Z2[z]
+    X2 --> T1_2[T1]
+    X2 --> T2_2[T2]
+    Z2 --> T3_2[T3]
+    Z2 --> T4_2[T4]
+    end
+
+    style Z fill:#FFB6C6
+    style Y2 fill:#90EE90
 ```
-        z                           y
-       / \                        /   \
-      y   T4    Right Rotate     x     z
-     / \        ----------->    / \   / \
-    x   T3                     T1 T2 T3 T4
-   / \
-  T1  T2
-```
+
+**Operation**: $y$ becomes new root, $z$ becomes right child of $y$, $T3$ moves to left child of $z$
 
 ```python
 def right_rotate(z):
@@ -86,15 +102,31 @@ def right_rotate(z):
 
 When the right subtree of the right child is too tall:
 
+```mermaid
+graph TD
+    subgraph Before Left Rotation
+    Z1[z] --> T1[T1]
+    Z1 --> Y1[y]
+    Y1 --> T2[T2]
+    Y1 --> X1[x]
+    X1 --> T3[T3]
+    X1 --> T4[T4]
+    end
+
+    subgraph After Left Rotation
+    Y3[y] --> Z3[z]
+    Y3 --> X3[x]
+    Z3 --> T1_3[T1]
+    Z3 --> T2_3[T2]
+    X3 --> T3_3[T3]
+    X3 --> T4_3[T4]
+    end
+
+    style Z1 fill:#FFB6C6
+    style Y3 fill:#90EE90
 ```
-    z                              y
-   / \                           /   \
-  T1  y       Left Rotate       z     x
-     / \      ----------->     / \   / \
-    T2  x                     T1 T2 T3 T4
-       / \
-      T3  T4
-```
+
+**Operation**: Mirror of right rotation - $y$ becomes root, $z$ becomes left child, $T2$ moves to right child of $z$
 
 ```python
 def left_rotate(z):
@@ -114,9 +146,33 @@ def left_rotate(z):
 
 Left child is right-heavy: first left rotate the left child, then right rotate.
 
+```mermaid
+graph LR
+    A["z<br/>(unbalanced)"] -->|1. Left rotate y| B["z<br/>(still unbalanced)"]
+    B -->|2. Right rotate z| C["x<br/>(balanced)"]
+
+    style A fill:#FFB6C6
+    style B fill:#FFB6C6
+    style C fill:#90EE90
+```
+
+**Two rotations needed**: Convert to Left-Left case, then apply right rotation
+
 ### Right-Left Case
 
 Right child is left-heavy: first right rotate the right child, then left rotate.
+
+```mermaid
+graph LR
+    D["z<br/>(unbalanced)"] -->|1. Right rotate y| E["z<br/>(still unbalanced)"]
+    E -->|2. Left rotate z| F["x<br/>(balanced)"]
+
+    style D fill:#FFB6C6
+    style E fill:#FFB6C6
+    style F fill:#90EE90
+```
+
+**Two rotations needed**: Convert to Right-Right case, then apply left rotation
 
 ## AVL Insertion
 
@@ -187,11 +243,18 @@ Red-Black trees guarantee that the longest path is at most twice the shortest pa
 
 | Aspect | AVL | Red-Black |
 |--------|-----|-----------|
-| Balance | Stricter (height diff ≤ 1) | Looser (longest ≤ 2× shortest) |
+| Balance | Stricter (height diff $\leq 1$) | Looser (longest $\leq 2 \times$ shortest) |
+| Height Guarantee | $h \leq 1.44 \log n$ | $h \leq 2 \log n$ |
 | Search | Slightly faster (lower height) | Slightly slower |
 | Insert/Delete | More rotations | Fewer rotations |
 | Use Cases | Read-heavy workloads | Write-heavy workloads |
 | Implementation | Simpler | More complex |
+
+**Height bounds**:
+- AVL: Maximum height is $1.44 \log_2(n+2)$
+- Red-Black: Maximum height is $2 \log_2(n+1)$
+
+Both guarantee $O(\log n)$ operations, but AVL is more strictly balanced.
 
 **Real-world usage:**
 - AVL: Database indexing where reads dominate
@@ -215,14 +278,16 @@ Properties:
 ## Practical Considerations
 
 **When to use balanced trees:**
-- Need guaranteed O(log n) operations
+- Need guaranteed $O(\log n)$ operations
 - Data is accessed in sorted order frequently
 - Need efficient range queries
+- Require predecessor/successor operations
 
 **When to use hash tables instead:**
 - Only need exact key lookup
 - Don't need ordering
-- Can tolerate worst-case O(n) (rare with good hash functions)
+- Can tolerate worst-case $O(n)$ (rare with good hash functions)
+- Want expected $O(1)$ operations
 
 ## Summary
 

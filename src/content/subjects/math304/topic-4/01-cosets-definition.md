@@ -16,14 +16,28 @@ $$gH = \{gh : h \in H\}$$
 
 ### Example 1: $\mathbb{Z}$ and $3\mathbb{Z}$
 
-$H = 3\mathbb{Z} = \{\ldots, -6, -3, 0, 3, 6, \ldots\}$
+Let $H = 3\mathbb{Z} = \{\ldots, -6, -3, 0, 3, 6, \ldots\}$. The left cosets partition $\mathbb{Z}$:
+
+```mermaid
+graph TD
+    subgraph "Coset Partition of ℤ by 3ℤ"
+        direction LR
+        C0["0 + 3ℤ<br/>{..., -6, -3, 0, 3, 6, ...}"]
+        C1["1 + 3ℤ<br/>{..., -5, -2, 1, 4, 7, ...}"]
+        C2["2 + 3ℤ<br/>{..., -4, -1, 2, 5, 8, ...}"]
+    end
+
+    style C0 fill:#e3f2fd
+    style C1 fill:#fff3e0
+    style C2 fill:#f3e5f5
+```
 
 Left cosets:
 - $0 + 3\mathbb{Z} = 3\mathbb{Z} = \{\ldots, -6, -3, 0, 3, 6, \ldots\}$
 - $1 + 3\mathbb{Z} = \{\ldots, -5, -2, 1, 4, 7, \ldots\}$
 - $2 + 3\mathbb{Z} = \{\ldots, -4, -1, 2, 5, 8, \ldots\}$
 
-These are the residue classes modulo 3!
+These are exactly the residue classes modulo $3$! Each integer belongs to exactly one coset.
 
 ### Example 2: $S_3$ and $H = \{e, (1\,2)\}$
 
@@ -74,6 +88,32 @@ Therefore $|aH| = |H|$. $\square$
 **Theorem 2**: The left cosets of $H$ in $G$ partition $G$ into disjoint subsets of equal size.
 
 **Proof**: Every $g \in G$ belongs to $gH$. If $gH \cap g'H \neq \emptyset$, then some element $x \in gH \cap g'H$, so $x = gh_1 = g'h_2$, giving $g^{-1}g' \in H$, hence $gH = g'H$ by Theorem 1. $\square$
+
+**Visualization**: The cosets form a partition (disjoint covering) of the group:
+
+```mermaid
+graph TD
+    subgraph "Group G"
+        C1["Coset g₁H"]
+        C2["Coset g₂H"]
+        C3["Coset g₃H"]
+        dots["..."]
+        Cn["Coset gₙH"]
+    end
+
+    note["Each element of G<br/>appears in exactly<br/>one coset"]
+
+    C1 -.->|disjoint| C2
+    C2 -.->|disjoint| C3
+    C3 -.->|disjoint| dots
+    dots -.->|disjoint| Cn
+
+    style C1 fill:#e3f2fd
+    style C2 fill:#fff3e0
+    style C3 fill:#f3e5f5
+    style Cn fill:#e8f5e9
+    style note fill:#ffebee
+```
 
 **Example**: $\mathbb{Z}/3\mathbb{Z}$ partitions into $\{0+3\mathbb{Z}, 1+3\mathbb{Z}, 2+3\mathbb{Z}\}$.
 

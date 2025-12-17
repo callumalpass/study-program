@@ -11,8 +11,31 @@ description: "Rings without zero divisors and their properties"
 
 Requirements:
 1. Commutative: $ab = ba$
-2. Has unity 1
+2. Has unity $1$
 3. No zero divisors: $ab = 0 \Rightarrow a = 0$ or $b = 0$
+
+## Understanding Integral Domains in Ring Hierarchy
+
+```mermaid
+graph TD
+    Ring["Ring"]
+    CommRing["Commutative<br/>Ring"]
+    Unity["Ring with<br/>Unity"]
+    IntDom["Integral Domain<br/>(commutative + unity<br/>+ no zero divisors)"]
+    Field["Field<br/>(all nonzero elements<br/>are units)"]
+
+    Ring --> CommRing
+    Ring --> Unity
+    CommRing --> IntDom
+    Unity --> IntDom
+    IntDom --> Field
+
+    style Ring fill:#ffebee
+    style IntDom fill:#e8f5e9
+    style Field fill:#e1f5ff
+```
+
+**Key insight**: Integral domains are the "middle ground" between general rings and fields. They have enough structure to support cancellation but don't require all elements to be invertible.
 
 ## Examples
 

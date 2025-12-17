@@ -46,6 +46,37 @@ Thus, $\sum a_n$ satisfies the Cauchy criterion and converges.
 
 **Example 4:** $\sum \frac{(-1)^n}{\sqrt{n}}$ converges conditionally (alternating series test, but $\sum \frac{1}{\sqrt{n}}$ diverges).
 
+### Convergence Classification Diagram
+
+```mermaid
+graph TD
+    A[Series Σ aₙ] --> B{Does Σ|aₙ|<br/>converge?}
+
+    B -->|Yes| C[Absolutely Convergent<br/>⟹ Convergent]
+    B -->|No| D{Does Σ aₙ<br/>converge?}
+
+    D -->|Yes| E[Conditionally Convergent<br/>Converges but not absolutely]
+    D -->|No| F[Divergent]
+
+    C -.->|Examples| G[Σ ·-1·ⁿ/n²<br/>Σ sin·n·/n²]
+    E -.->|Examples| H[Σ ·-1·ⁿ/n<br/>Σ ·-1·ⁿ/√n]
+    F -.->|Examples| I[Σ ·-1·ⁿn<br/>Σ ·-1·ⁿ]
+
+    C --> J[Key Property:<br/>Can rearrange terms<br/>without changing sum]
+    E --> K[Warning:<br/>Rearrangements can<br/>change sum!]
+
+    style C fill:#90EE90
+    style E fill:#FFE4B5
+    style F fill:#FFB6B6
+    style J fill:#87CEEB
+    style K fill:#FFB6C1
+```
+
+**Key Hierarchy:**
+$$
+\text{Absolutely Convergent} \subsetneq \text{Convergent} \subsetneq \text{All Series}
+$$
+
 ## Tests for Absolute Convergence
 
 All the tests for positive series (comparison, ratio, root, integral) can be applied to $\sum |a_n|$ to test for absolute convergence.

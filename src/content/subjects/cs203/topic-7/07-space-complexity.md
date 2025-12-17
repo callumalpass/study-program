@@ -4,63 +4,81 @@
 
 ## Definition
 
-For TM M on input w, **space used** is the number of distinct tape cells visited.
+For TM $M$ on input $w$, **space used** is the number of distinct tape cells visited.
 
-The **space complexity** of M is function s: ℕ → ℕ:
-s(n) = max{cells M uses on input w : |w| = n}
+The **space complexity** of $M$ is function $s: \mathbb{N} \to \mathbb{N}$:
+
+$$
+s(n) = \max\{\text{cells } M \text{ uses on input } w : |w| = n\}
+$$
 
 ## Space Complexity Classes
 
-**SPACE(f(n))** = languages decidable using O(f(n)) space.
+$$
+\mathbf{SPACE}(f(n)) = \{L \mid L \text{ decidable using } O(f(n)) \text{ space}\}
+$$
 
-**NSPACE(f(n))** = languages decidable by NTM using O(f(n)) space.
+$$
+\mathbf{NSPACE}(f(n)) = \{L \mid L \text{ decidable by NTM using } O(f(n)) \text{ space}\}
+$$
 
 ## Important Classes
 
 ### L (Logarithmic Space)
-**L** = SPACE(log n)
+$$
+\mathbf{L} = \mathbf{SPACE}(\log n)
+$$
 
-Very restrictive: can't even write down the input!
-Uses separate read-only input tape.
+Very restrictive: can't even write down the input! Uses separate read-only input tape.
 
 ### NL (Nondeterministic Log Space)
-**NL** = NSPACE(log n)
+$$
+\mathbf{NL} = \mathbf{NSPACE}(\log n)
+$$
 
 ### PSPACE
-**PSPACE** = ⋃_k SPACE(n^k)
+$$
+\mathbf{PSPACE} = \bigcup_{k} \mathbf{SPACE}(n^k)
+$$
 
 All polynomial-space problems.
 
 ### NPSPACE
-**NPSPACE** = ⋃_k NSPACE(n^k)
+$$
+\mathbf{NPSPACE} = \bigcup_{k} \mathbf{NSPACE}(n^k)
+$$
 
 ## Savitch's Theorem
 
-**Theorem**: NSPACE(f(n)) ⊆ SPACE(f(n)²) for f(n) ≥ log n
+**Theorem**: $\mathbf{NSPACE}(f(n)) \subseteq \mathbf{SPACE}(f(n)^2)$ for $f(n) \geq \log n$
 
-**Corollary**: NPSPACE = PSPACE
+**Corollary**: $\mathbf{NPSPACE} = \mathbf{PSPACE}$
 
-Nondeterminism doesn't help much for space!
+Nondeterminism doesn't help much for space! (Unlike time, where $\mathbf{P}$ vs $\mathbf{NP}$ is open)
 
 ## Space Hierarchy
 
-**Theorem**: For space-constructible f(n):
-SPACE(f(n)) ⊊ SPACE(f(n) · log f(n))
+**Theorem**: For space-constructible $f(n)$:
+$$
+\mathbf{SPACE}(f(n)) \subsetneq \mathbf{SPACE}(f(n) \cdot \log f(n))
+$$
 
 More space means strictly more power.
 
 ## Relationships
 
-L ⊆ NL ⊆ P ⊆ NP ⊆ PSPACE ⊆ EXPTIME
+$$
+\mathbf{L} \subseteq \mathbf{NL} \subseteq \mathbf{P} \subseteq \mathbf{NP} \subseteq \mathbf{PSPACE} \subseteq \mathbf{EXPTIME}
+$$
 
-Known separations:
-- L ⊊ PSPACE (space hierarchy)
-- P ⊊ EXPTIME (time hierarchy)
+**Known separations:**
+- $\mathbf{L} \subsetneq \mathbf{PSPACE}$ (space hierarchy)
+- $\mathbf{P} \subsetneq \mathbf{EXPTIME}$ (time hierarchy)
 
-Unknown:
-- L vs NL
-- P vs NP
-- NP vs PSPACE
+**Unknown:**
+- $\mathbf{L}$ vs $\mathbf{NL}$
+- $\mathbf{P}$ vs $\mathbf{NP}$
+- $\mathbf{NP}$ vs $\mathbf{PSPACE}$
 
 ## PSPACE-Complete Problems
 
@@ -125,18 +143,32 @@ Space-efficient algorithms are valuable.
 
 ## Summary: Complexity Landscape
 
-```
-EXPTIME
-   |
-PSPACE = NPSPACE
-   |
-  NP
-   |
-   P
-   |
-  NL = coNL
-   |
-   L
+```mermaid
+graph BT
+    L[L<br/>Log Space]
+    NL[NL = coNL<br/>Nondeterministic Log Space]
+    P[P<br/>Polynomial Time]
+    NP[NP<br/>Nondeterministic Poly Time]
+    PSPACE[PSPACE = NPSPACE<br/>Polynomial Space]
+    EXPTIME[EXPTIME<br/>Exponential Time]
+
+    L --> NL
+    NL --> P
+    P --> NP
+    NP --> PSPACE
+    PSPACE --> EXPTIME
+
+    style L fill:#90ee90
+    style NL fill:#98d8c8
+    style P fill:#ffd700
+    style NP fill:#ffa500
+    style PSPACE fill:#ff6b6b
+    style EXPTIME fill:#8b0000,color:#fff
 ```
 
-Many containments known; equalities unknown.
+**Containment relationships:**
+$$
+\mathbf{L} \subseteq \mathbf{NL} \subseteq \mathbf{P} \subseteq \mathbf{NP} \subseteq \mathbf{PSPACE} = \mathbf{NPSPACE} \subseteq \mathbf{EXPTIME}
+$$
+
+Many containments known; most equalities unknown.

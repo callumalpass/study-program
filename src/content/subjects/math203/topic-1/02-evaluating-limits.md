@@ -41,6 +41,37 @@ These laws let us break complex limits into simpler pieces.
 
 When direct substitution gives $\frac{0}{0}$, the limit may still exist! This is called an **indeterminate form** because it doesn't immediately tell us the answer. We need algebraic techniques to resolve it.
 
+```mermaid
+flowchart TD
+    Start[Evaluate lim x→a fx] --> Try[Try direct substitution:<br/>plug in x = a]
+
+    Try --> Q1{What do<br/>you get?}
+
+    Q1 -->|A number| Done1[✓ That's the limit!]
+    Q1 -->|0/0| Indet[Indeterminate Form<br/>Use algebra]
+    Q1 -->|k/0 k≠0| Inf[Limit = ±∞<br/>or DNE]
+    Q1 -->|∞/∞| IndetInf[Indeterminate<br/>Try L'Hôpital later]
+
+    Indet --> Method{Choose<br/>method:}
+
+    Method -->|Factor| M1[Factor and cancel<br/>common factors]
+    Method -->|Rationalize| M2[Multiply by conjugate<br/>if √ present]
+    Method -->|Simplify| M3[Combine fractions<br/>or simplify]
+
+    M1 --> Retry[Try substitution again]
+    M2 --> Retry
+    M3 --> Retry
+
+    Retry --> Q2{Result?}
+    Q2 -->|Number| Done2[✓ That's the limit!]
+    Q2 -->|Still 0/0| Advanced[Try more advanced<br/>techniques or L'Hôpital]
+
+    style Done1 fill:#d4edda
+    style Done2 fill:#d4edda
+    style Indet fill:#fff3cd
+    style Inf fill:#ffe6e6
+```
+
 ### Factoring and Cancellation
 
 The most common technique for rational functions.

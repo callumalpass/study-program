@@ -31,6 +31,40 @@ More precisely: "If we repeated this sampling procedure many times and computed 
 
 **Key Insight:** The confidence level describes the long-run success rate of the procedure, not the probability for one specific interval.
 
+### Visualizing Confidence Intervals
+
+```mermaid
+graph TD
+    subgraph Population["Population"]
+        Param["<b>True Parameter θ</b><br/>&#40;Unknown, Fixed&#41;"]
+    end
+
+    Param --> Sample1[Sample 1]
+    Param --> Sample2[Sample 2]
+    Param --> Sample3[Sample 3]
+    Param --> SampleDots[...]
+    Param --> Sample100[Sample 100]
+
+    Sample1 --> CI1["CI₁: [L₁, U₁]<br/>✓ Contains θ"]
+    Sample2 --> CI2["CI₂: [L₂, U₂]<br/>✓ Contains θ"]
+    Sample3 --> CI3["CI₃: [L₃, U₃]<br/>✗ Misses θ"]
+    SampleDots --> CIDots["..."]
+    Sample100 --> CI100["CI₁₀₀: [L₁₀₀, U₁₀₀]<br/>✓ Contains θ"]
+
+    CI1 --> Result["<b>Confidence Level 95%</b><br/><br/>About 95 out of 100 intervals<br/>will contain the true θ<br/><br/>About 5 out of 100 will miss it"]
+    CI2 --> Result
+    CI3 --> Result
+    CIDots --> Result
+    CI100 --> Result
+
+    style Param fill:#e1f5ff,stroke:#0277bd,stroke-width:3px
+    style CI1 fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px
+    style CI2 fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px
+    style CI3 fill:#ffebee,stroke:#c62828,stroke-width:2px
+    style CI100 fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px
+    style Result fill:#fff9c4
+```
+
 ## Confidence Interval for Population Mean (σ Known)
 
 When the population standard deviation $\sigma$ is known (rare in practice), we use the normal distribution.

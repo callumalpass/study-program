@@ -16,6 +16,28 @@ $$|G \cdot x| = [G : G_x] = \frac{|G|}{|G_x|}$$
 
 This fundamental result connects the size of an orbit with the size of the corresponding stabilizer.
 
+```mermaid
+graph TD
+    subgraph "Orbit-Stabilizer Relationship"
+        G["|G| = Order of group"]
+        Orbit["|G·x| = Orbit size<br/>(elements reachable from x)"]
+        Stab["|Gₓ| = Stabilizer size<br/>(elements fixing x)"]
+    end
+
+    G -->|divides into| Orbit
+    G -->|divides into| Stab
+
+    formula["|G·x| × |Gₓ| = |G|<br/><br/>Orbit size × Stabilizer size<br/>= Group size"]
+
+    Orbit -.->|multiply| formula
+    Stab -.->|multiply| formula
+
+    style G fill:#e1f5ff
+    style Orbit fill:#c8e6c9
+    style Stab fill:#ffccbc
+    style formula fill:#fff9c4
+```
+
 ## Proof
 
 Define $\phi: G \to G \cdot x$ by $\phi(g) = g \cdot x$.
@@ -45,6 +67,30 @@ $\square$
 Pick $x = 1$. Then:
 - Orbit: $G \cdot 1 = \{1, 2, 3, 4\}$ (any element can be moved to any other), so $|G \cdot 1| = 4$
 - Stabilizer: $G_1 = \{\sigma \in S_4 : \sigma(1) = 1\} \cong S_3$ (permutations fixing 1), so $|G_1| = 6$
+
+```mermaid
+graph LR
+    subgraph "Group S₄"
+        size["|S₄| = 24"]
+    end
+
+    subgraph "Orbit of 1"
+        o1["1"] & o2["2"] & o3["3"] & o4["4"]
+        orbitsize["|G·1| = 4"]
+    end
+
+    subgraph "Stabilizer of 1"
+        stab["Permutations<br/>fixing 1 ≅ S₃"]
+        stabsize["|G₁| = 6"]
+    end
+
+    size -.->|"4 × 6 = 24"| orbitsize
+    size -.->|"4 × 6 = 24"| stabsize
+
+    style size fill:#e1f5ff
+    style orbitsize fill:#c8e6c9
+    style stabsize fill:#ffccbc
+```
 
 **Verify**: $|S_4| = 24 = 4 \times 6 = |G \cdot 1| \times |G_1|$. ✓
 

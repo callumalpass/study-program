@@ -195,19 +195,57 @@ def heapify(arr, n, i):
 
 ## Comparison Summary
 
+```mermaid
+graph TD
+    subgraph "Simple Sorts O(n²)"
+        S1[Selection Sort<br/>Always Θ(n²)]
+        S2[Insertion Sort<br/>Best: O(n)]
+        S3[Bubble Sort<br/>Best: O(n)]
+    end
+
+    subgraph "Efficient Sorts O(n log n)"
+        E1[Merge Sort<br/>Always Θ(n log n)<br/>Space: O(n)]
+        E2[Quick Sort<br/>Average: Θ(n log n)<br/>Worst: O(n²)]
+        E3[Heap Sort<br/>Always Θ(n log n)<br/>Space: O(1)]
+    end
+
+    Decision{Array size &<br/>characteristics?}
+    Decision -->|Small/Nearly sorted| S2
+    Decision -->|Need guaranteed<br/>O(n log n)| E1
+    Decision -->|Average case,<br/>in-place| E2
+    Decision -->|Guaranteed O(n log n)<br/>& O(1) space| E3
+
+    style E1 fill:#4caf50
+    style E2 fill:#81c784
+    style E3 fill:#a5d6a7
+```
+
 | Algorithm | Best | Average | Worst | Space | Stable |
 |-----------|------|---------|-------|-------|--------|
-| Selection | Θ(n²) | Θ(n²) | Θ(n²) | O(1) | No |
-| Insertion | Θ(n) | Θ(n²) | Θ(n²) | O(1) | Yes |
-| Bubble | Θ(n) | Θ(n²) | Θ(n²) | O(1) | Yes |
-| Merge | Θ(n log n) | Θ(n log n) | Θ(n log n) | O(n) | Yes |
-| Quick | Θ(n log n) | Θ(n log n) | Θ(n²) | O(log n) | No |
-| Heap | Θ(n log n) | Θ(n log n) | Θ(n log n) | O(1) | No |
+| Selection | $\Theta(n^2)$ | $\Theta(n^2)$ | $\Theta(n^2)$ | $O(1)$ | No |
+| Insertion | $\Theta(n)$ | $\Theta(n^2)$ | $\Theta(n^2)$ | $O(1)$ | Yes |
+| Bubble | $\Theta(n)$ | $\Theta(n^2)$ | $\Theta(n^2)$ | $O(1)$ | Yes |
+| Merge | $\Theta(n \log n)$ | $\Theta(n \log n)$ | $\Theta(n \log n)$ | $O(n)$ | Yes |
+| Quick | $\Theta(n \log n)$ | $\Theta(n \log n)$ | $\Theta(n^2)$ | $O(\log n)$ | No |
+| Heap | $\Theta(n \log n)$ | $\Theta(n \log n)$ | $\Theta(n \log n)$ | $O(1)$ | No |
 
 ## Lower Bound for Comparison Sorts
 
-**Theorem**: Any comparison-based sort requires Ω(n log n) comparisons in worst case.
+**Theorem**: Any comparison-based sort requires $\Omega(n \log n)$ comparisons in worst case.
 
-**Proof sketch**: Decision tree with n! leaves (permutations) has height ≥ log₂(n!) = Θ(n log n).
+**Proof sketch**:
 
-This means merge sort, heap sort, and well-implemented quick sort are optimal.
+Consider the decision tree model where each internal node represents a comparison and each leaf represents a permutation (sorted output).
+
+1. The tree must have at least $n!$ leaves (one for each possible permutation)
+2. A binary tree of height $h$ has at most $2^h$ leaves
+3. Therefore: $2^h \geq n!$
+4. Taking logarithms: $h \geq \log_2(n!)$
+
+Using Stirling's approximation:
+
+$$\log_2(n!) = \log_2\left(\sqrt{2\pi n}\left(\frac{n}{e}\right)^n\right) = \Theta(n \log n)$$
+
+Therefore, the minimum height is $h = \Omega(n \log n)$.
+
+**Conclusion**: Merge sort, heap sort, and well-implemented quick sort are asymptotically optimal for comparison-based sorting.

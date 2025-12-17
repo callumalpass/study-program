@@ -61,17 +61,40 @@ The boxed entries are pivots. Notice each pivot is to the right of the one above
 
 ## The Gaussian Elimination Algorithm
 
+The algorithm systematically transforms an augmented matrix into row echelon form through a series of elementary row operations. Here's the complete workflow:
+
+```mermaid
+flowchart TD
+    Start([Start with Augmented Matrix]) --> FindPivot[Find leftmost nonzero column]
+    FindPivot --> CheckPivot{Is top entry<br/>nonzero?}
+    CheckPivot -->|No| Swap[Swap with row below<br/>that has nonzero entry]
+    CheckPivot -->|Yes| UsePivot[Use top entry as pivot]
+    Swap --> UsePivot
+    UsePivot --> Eliminate[Eliminate all entries below pivot<br/>using row operations:<br/>R_i → R_i - c·R_pivot]
+    Eliminate --> CoverRow[Move to submatrix below<br/>current pivot row]
+    CoverRow --> MoreRows{More rows<br/>to process?}
+    MoreRows -->|Yes| FindPivot
+    MoreRows -->|No| REF[Matrix in Row Echelon Form]
+    REF --> BackSub[Apply Back Substitution]
+    BackSub --> Solution([Solution Found])
+
+    style Start fill:#e1f5e1
+    style Solution fill:#e1f5e1
+    style REF fill:#fff4e1
+    style BackSub fill:#fff4e1
+```
+
 **Forward Elimination Phase:**
 
 **Step 1:** Identify the leftmost nonzero column (the **pivot column**)
 
-**Step 2:** Select a nonzero entry in the pivot column as the **pivot**. If necessary, interchange rows to move this entry to the top position.
+**Step 2:** Select a nonzero entry in the pivot column as the **pivot**. If necessary, interchange rows to move this entry to the top position using $R_i \leftrightarrow R_j$
 
-**Step 3:** Use row replacement operations to create zeros in all positions below the pivot.
+**Step 3:** Use row replacement operations to create zeros in all positions below the pivot: $R_i \rightarrow R_i - \frac{a_{ij}}{a_{pivot}}R_{pivot}$
 
-**Step 4:** Cover (ignore) the row containing the pivot and repeat steps 1-3 for the remaining submatrix.
+**Step 4:** Cover (ignore) the row containing the pivot and repeat steps 1-3 for the remaining submatrix
 
-**Step 5:** Continue until the matrix is in row echelon form.
+**Step 5:** Continue until the matrix is in row echelon form
 
 ### Example 1: Complete Gaussian Elimination
 
@@ -214,11 +237,20 @@ A **pivot position** in a matrix is a location that corresponds to a leading ent
 
 ## Computational Considerations
 
-**Theorem 2.2 (Existence and Uniqueness):** A linear system is consistent if and only if the rightmost column of the augmented matrix is not a pivot column.
+**Theorem 2.2 (Existence and Uniqueness):** A linear system $A\mathbf{x} = \mathbf{b}$ is consistent if and only if the rightmost column of the augmented matrix $[A \mid \mathbf{b}]$ is not a pivot column.
 
 If the system is consistent, then:
-- The solution is **unique** if there are no free variables (every column of the coefficient matrix is a pivot column)
+- The solution is **unique** if there are no free variables (every column of the coefficient matrix $A$ is a pivot column)
+  - In this case: $\text{rank}(A) = n$ where $n$ is the number of unknowns
 - There are **infinitely many solutions** if there is at least one free variable (at least one column of the coefficient matrix is not a pivot column)
+  - In this case: $\text{rank}(A) < n$, with $(n - \text{rank}(A))$ free parameters
+
+**Mathematical formulation:**
+
+For a system with $m$ equations and $n$ unknowns:
+- **Consistent and unique**: $\text{rank}([A \mid \mathbf{b}]) = \text{rank}(A) = n$
+- **Consistent and infinite**: $\text{rank}([A \mid \mathbf{b}]) = \text{rank}(A) < n$
+- **Inconsistent**: $\text{rank}([A \mid \mathbf{b}]) = \text{rank}(A) + 1$
 
 ## Practice Problems
 

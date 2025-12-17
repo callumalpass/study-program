@@ -2,6 +2,54 @@
 
 Transaction control statements allow explicit management of transaction boundaries and behavior. Mastering these commands is essential for database programming.
 
+## Transaction State Diagram
+
+A transaction progresses through several states during its lifecycle:
+
+```mermaid
+stateDiagram-v2
+    [*] --> Active: BEGIN
+    Active --> PartiallyCommitted: Last statement executed
+    Active --> Failed: Error occurs
+    PartiallyCommitted --> Committed: COMMIT completes
+    PartiallyCommitted --> Failed: Cannot commit
+    Failed --> Aborted: ROLLBACK
+    Aborted --> [*]: Transaction ends
+    Committed --> [*]: Transaction ends
+
+    note right of Active
+        Transaction is executing
+        Statements are running
+    end note
+
+    note right of PartiallyCommitted
+        Execution complete
+        Waiting for commit
+    end note
+
+    note right of Committed
+        Changes made permanent
+        Cannot rollback
+    end note
+
+    note right of Failed
+        Error detected
+        Must rollback
+    end note
+
+    note right of Aborted
+        Changes undone
+        Transaction terminated
+    end note
+```
+
+**States explained**:
+- **Active**: Transaction is executing statements
+- **Partially Committed**: Last statement executed, awaiting final commit
+- **Committed**: Changes permanently written to database
+- **Failed**: Error occurred, transaction cannot proceed
+- **Aborted**: Transaction rolled back, changes undone
+
 ## Basic Transaction Commands
 
 ### BEGIN/START TRANSACTION
@@ -317,17 +365,39 @@ COMMIT;  -- @@TRANCOUNT = 0, actually commits
 
 ### Two-Phase Commit (2PC)
 
-```
-Phase 1: Prepare
-  Coordinator → All participants: "Prepare to commit"
-  Each participant: Log changes, respond "Ready" or "Abort"
+Two-phase commit ensures atomic commits across multiple databases:
 
-Phase 2: Commit/Abort
-  If all Ready:
-    Coordinator → All: "Commit"
-  Else:
-    Coordinator → All: "Abort"
+```mermaid
+sequenceDiagram
+    participant C as Coordinator
+    participant P1 as Participant 1
+    participant P2 as Participant 2
+
+    Note over C,P2: Phase 1: Prepare
+    C->>P1: Prepare to commit
+    C->>P2: Prepare to commit
+    P1->>P1: Log changes
+    P2->>P2: Log changes
+    P1-->>C: Ready
+    P2-->>C: Ready
+
+    Note over C,P2: Phase 2: Commit
+    C->>C: All ready?
+    C->>P1: Commit
+    C->>P2: Commit
+    P1->>P1: Make permanent
+    P2->>P2: Make permanent
+    P1-->>C: Done
+    P2-->>C: Done
 ```
+
+**Phase 1 (Prepare)**:
+- Coordinator asks all participants to prepare
+- Each participant logs changes and responds "Ready" or "Abort"
+
+**Phase 2 (Commit/Abort)**:
+- If all participants ready: Coordinator tells all to commit
+- If any participant aborts: Coordinator tells all to abort
 
 ### XA Transactions
 

@@ -14,6 +14,43 @@ If there's only one critical point and it's a local extremum, it must be the glo
 
 Check limits as $x \to 0^+$, $x \to \infty$, etc. If the function approaches infinity in both directions and has a local minimum in between, that minimum is global.
 
+```mermaid
+flowchart TD
+    Start[Optimization Problem] --> Q1{Domain<br/>type?}
+
+    Q1 -->|Closed a,b| Closed[Closed Interval Strategy]
+    Q1 -->|Open or<br/>Unbounded| Open[Open/Unbounded Strategy]
+
+    Closed --> C1[Find all critical points<br/>where f' = 0]
+    C1 --> C2[Evaluate f at:<br/>• Critical points<br/>• Endpoints a and b]
+    C2 --> C3[Compare all values<br/>Largest = max<br/>Smallest = min]
+    C3 --> Done1[✓ Global extrema found]
+
+    Open --> O1[Find critical points<br/>where f' = 0]
+    O1 --> O2{How many<br/>critical<br/>points?}
+
+    O2 -->|One critical point| O3[Use 2nd derivative test<br/>or 1st derivative test]
+    O2 -->|Multiple| O4[Evaluate at all<br/>critical points]
+
+    O3 --> O5[Check endpoint behavior<br/>lim x→boundaries fx]
+    O4 --> O5
+
+    O5 --> Q2{Does f → ∞<br/>at both ends?}
+
+    Q2 -->|Yes| O6[Local min is<br/>global min]
+    Q2 -->|No, f → -∞| O7[Local max is<br/>global max]
+    Q2 -->|Mixed| O8[Compare values +<br/>endpoint limits]
+
+    O6 --> Done2[✓ Global extremum found]
+    O7 --> Done2
+    O8 --> Done2
+
+    style Done1 fill:#d4edda
+    style Done2 fill:#d4edda
+    style Closed fill:#e1f5ff
+    style Open fill:#fff3cd
+```
+
 **Example:** Minimize $f(x) = x + \frac{4}{x}$ for $x > 0$.
 
 $f'(x) = 1 - \frac{4}{x^2} = 0$

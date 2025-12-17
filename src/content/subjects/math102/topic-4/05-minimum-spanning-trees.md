@@ -31,6 +31,59 @@ The **MST** is a spanning tree with minimum total edge weight.
 
 Build MST by growing from one vertex, always adding the minimum weight edge that connects to a new vertex.
 
+### Visual Example
+
+```mermaid
+graph TD
+    subgraph Step1[Step 1: Start at A]
+        A1((A)) ---|1| B1((B))
+        A1 ---|4| C1((C))
+        B1 ---|2| D1((D))
+        C1 ---|3| D1
+    end
+
+    subgraph Step2[Step 2: Add edge A-B weight 1]
+        A2((A)) ===|1| B2((B))
+        A2 ---|4| C2((C))
+        B2 ---|2| D2((D))
+        C2 ---|3| D2
+    end
+
+    subgraph Step3[Step 3: Add edge B-D weight 2]
+        A3((A)) ===|1| B3((B))
+        A3 ---|4| C3((C))
+        B3 ===|2| D3((D))
+        C3 ---|3| D3
+    end
+
+    subgraph Step4[Step 4: Add edge D-C weight 3]
+        A4((A)) ===|1| B4((B))
+        B4 ===|2| D4((D))
+        D4 ===|3| C4((C))
+    end
+
+    Step1 --> Step2
+    Step2 --> Step3
+    Step3 --> Step4
+
+    Result[MST weight: 1 + 2 + 3 = 6]
+    Step4 --> Result
+
+    style A1 fill:#e1f5ff
+    style A2 fill:#d4edda
+    style B2 fill:#d4edda
+    style A3 fill:#d4edda
+    style B3 fill:#d4edda
+    style D3 fill:#d4edda
+    style A4 fill:#d4edda
+    style B4 fill:#d4edda
+    style D4 fill:#d4edda
+    style C4 fill:#d4edda
+    style Result fill:#fff3cd
+```
+
+### Algorithm Implementation
+
 ```python
 def prim(graph, start):
     """
@@ -65,13 +118,44 @@ def prim(graph, start):
     return mst_edges
 ```
 
-**Complexity:** O((V + E) log V) with binary heap
+**Complexity:** $O((V + E) \log V)$ with binary heap
 
 **Correctness:** Each added edge is minimum crossing the cut between visited and unvisited vertices.
+
+**Space complexity:** $O(V)$ for visited set and priority queue
 
 ## Kruskal's Algorithm
 
 Build MST by considering edges in order of increasing weight, adding those that don't create cycles.
+
+### Visual Process
+
+```mermaid
+graph LR
+    subgraph Process[Kruskal's Process]
+        E1[Sort edges by weight] --> E2[Edge 1: weight 1]
+        E2 --> Check1{Creates<br/>cycle?}
+        Check1 -->|No| Add1[Add to MST]
+        Check1 -->|Yes| Skip1[Skip]
+        Add1 --> E3[Edge 2: weight 2]
+        Skip1 --> E3
+        E3 --> Check2{Creates<br/>cycle?}
+        Check2 -->|No| Add2[Add to MST]
+        Check2 -->|Yes| Skip2[Skip]
+        Add2 --> Continue[Continue...]
+        Skip2 --> Continue
+    end
+
+    style E1 fill:#e1f5ff
+    style Add1 fill:#d4edda
+    style Add2 fill:#d4edda
+    style Skip1 fill:#f8d7da
+    style Skip2 fill:#f8d7da
+```
+
+**Union-Find** data structure efficiently detects cycles in $O(\alpha(n))$ amortized time.
+
+### Algorithm Implementation
 
 ```python
 def kruskal(n, edges):
@@ -114,9 +198,11 @@ def kruskal(n, edges):
     return mst_edges
 ```
 
-**Complexity:** O(E log E) for sorting
+**Complexity:** $O(E \log E)$ for sorting, which dominates the Union-Find operations
 
 **Correctness:** By cut property, minimum edge crossing any cut is safe to add.
+
+**Space complexity:** $O(V)$ for Union-Find structure
 
 ## Comparison of Algorithms
 

@@ -81,6 +81,37 @@ Every group $G$ has at least two subgroups:
 
 These are called the **trivial subgroups** of $G$. All other subgroups are called **nontrivial** or **proper** subgroups.
 
+## Subgroup Lattice Visualization
+
+A **subgroup lattice** is a diagram showing all subgroups of a group and their inclusion relationships. Lines connect subgroups where one is contained in the other.
+
+### Example: Subgroups of $\mathbb{Z}_{12}$
+
+The divisors of $12$ are $\{1, 2, 3, 4, 6, 12\}$, giving us six subgroups:
+
+```mermaid
+graph TD
+    Z12["⟨1⟩ = ℤ₁₂<br/>order 12"]
+    Z6["⟨2⟩<br/>order 6"]
+    Z4["⟨3⟩<br/>order 4"]
+    Z3["⟨4⟩<br/>order 3"]
+    Z2["⟨6⟩<br/>order 2"]
+    Z0["{0}<br/>order 1"]
+
+    Z12 --> Z6
+    Z12 --> Z4
+    Z12 --> Z3
+    Z6 --> Z2
+    Z4 --> Z2
+    Z3 --> Z0
+    Z2 --> Z0
+
+    style Z12 fill:#e1f5ff
+    style Z0 fill:#ffe1e1
+```
+
+**Note**: The subgroup $\langle 6 \rangle$ is contained in both $\langle 2 \rangle$ and $\langle 3 \rangle$ because $6 = \text{lcm}(2,3)$.
+
 ## Intersection of Subgroups
 
 **Theorem 2**: If $H$ and $K$ are subgroups of $G$, then $H \cap K$ is also a subgroup of $G$.

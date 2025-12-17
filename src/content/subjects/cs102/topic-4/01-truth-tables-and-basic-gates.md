@@ -35,6 +35,41 @@ The simplest gate is NOT, also called an inverter. It has one input and one outp
 
 **Use cases**: Inverters are used to complement signals, create feedback loops, and convert between active-high and active-low logic.
 
+## Basic Gate Summary
+
+Here are the fundamental logic gates visualized:
+
+```mermaid
+graph TB
+    subgraph NOT["NOT Gate (Inverter)"]
+        A1[A] --> NOT1[NOT]
+        NOT1 --> Out1[NOT A]
+    end
+
+    subgraph AND["AND Gate"]
+        A2[A] --> AND1[AND]
+        B2[B] --> AND1
+        AND1 --> Out2[A AND B]
+    end
+
+    subgraph OR["OR Gate"]
+        A3[A] --> OR1[OR]
+        B3[B] --> OR1
+        OR1 --> Out3[A OR B]
+    end
+
+    subgraph XOR["XOR Gate"]
+        A4[A] --> XOR1[XOR]
+        B4[B] --> XOR1
+        XOR1 --> Out4[A XOR B]
+    end
+
+    style NOT1 fill:#ff6b6b
+    style AND1 fill:#87ceeb
+    style OR1 fill:#90ee90
+    style XOR1 fill:#ffa500
+```
+
 ## The AND Gate
 
 AND outputs 1 only when ALL inputs are 1. For two inputs:
@@ -46,9 +81,9 @@ AND outputs 1 only when ALL inputs are 1. For two inputs:
 | 1 | 0 |    0    |
 | 1 | 1 |    1    |
 
-**Notation**: A AND B is written as A·B, A∧B, or simply AB. In programming: `A && B` or `A & B`.
+**Notation**: A AND B is written as $A \cdot B$, $A \land B$, or simply $AB$. In programming: `A && B` or `A & B`.
 
-**Symbol**: AND is drawn as a flat-backed shape with a rounded front (like a "D" shape).
+**Boolean expression**: $Y = A \cdot B$
 
 **Intuition**: AND is like a series circuit—both switches must be closed for current to flow. It answers "Are ALL conditions true?"
 
@@ -65,13 +100,13 @@ OR outputs 1 when AT LEAST ONE input is 1:
 | 1 | 0 |   1    |
 | 1 | 1 |   1    |
 
-**Notation**: A OR B is written as A+B or A∨B. In programming: `A || B` or `A | B`.
+**Notation**: A OR B is written as $A + B$ or $A \lor B$. In programming: `A || B` or `A | B`.
 
-**Symbol**: OR is drawn with a curved back and pointed front (like an arrowhead).
+**Boolean expression**: $Y = A + B$
 
 **Intuition**: OR is like a parallel circuit—if either switch is closed, current flows. It answers "Is ANY condition true?"
 
-**Important**: Boolean OR is inclusive—(1 OR 1) = 1, not 2. There's no "addition" happening; it's purely logical.
+**Important**: Boolean OR is inclusive—$(1 \lor 1) = 1$, not 2. There's no "addition" happening; it's purely logical.
 
 ## The XOR Gate (Exclusive OR)
 
@@ -84,7 +119,9 @@ XOR outputs 1 when the inputs are DIFFERENT:
 | 1 | 0 |    1    |
 | 1 | 1 |    0    |
 
-**Notation**: A XOR B is written as A⊕B. In programming: `A ^ B`.
+**Notation**: A XOR B is written as $A \oplus B$. In programming: `A ^ B`.
+
+**Boolean expression**: $Y = A \oplus B$
 
 **Symbol**: XOR looks like OR with an extra curved line at the back.
 

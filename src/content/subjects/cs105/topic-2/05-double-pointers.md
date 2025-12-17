@@ -16,11 +16,28 @@ printf("*ptr = %d\n", *ptr);     // 42
 printf("**dptr = %d\n", **dptr); // 42
 ```
 
-Memory layout:
+### Double Pointer Indirection Diagram
+
+```mermaid
+graph LR
+    subgraph Memory
+        A["Address: 0x1000<br/>Variable: x<br/>Value: 42"]
+        B["Address: 0x2000<br/>Variable: ptr<br/>Value: 0x1000"]
+        C["Address: 0x3000<br/>Variable: dptr<br/>Value: 0x2000"]
+    end
+
+    C -->|"*dptr points to"| B
+    B -->|"*ptr points to"| A
+
+    style A fill:#e1f5ff
+    style B fill:#e8f5e9
+    style C fill:#fff4e1
 ```
-dptr  ──────>  ptr  ──────>  x
-[address]     [address]     [42]
-```
+
+Each level of indirection requires one dereference operation:
+- `dptr` holds address 0x3000
+- `*dptr` = value at 0x3000 = 0x2000 (the value in `ptr`)
+- `**dptr` = value at 0x2000 = 0x1000, then value at 0x1000 = 42
 
 ## When Do You Need Double Pointers?
 
@@ -135,15 +152,39 @@ for (int i = 0; i < rows; i++) {
 free(matrix);
 ```
 
-Memory layout:
+### 2D Array Memory Layout
+
+```mermaid
+graph TD
+    subgraph "Heap Memory"
+        M["matrix (int**)<br/>pointer to array of pointers"]
+        P0["Row 0 pointer"]
+        P1["Row 1 pointer"]
+        P2["Row 2 pointer"]
+
+        R0["[0][1][2][3]<br/>Row 0 data"]
+        R1["[0][1][2][3]<br/>Row 1 data"]
+        R2["[0][1][2][3]<br/>Row 2 data"]
+    end
+
+    M --> P0
+    M --> P1
+    M --> P2
+
+    P0 --> R0
+    P1 --> R1
+    P2 --> R2
+
+    style M fill:#fff4e1
+    style P0 fill:#e8f5e9
+    style P1 fill:#e8f5e9
+    style P2 fill:#e8f5e9
+    style R0 fill:#e1f5ff
+    style R1 fill:#e1f5ff
+    style R2 fill:#e1f5ff
 ```
-matrix  -->  [ ptr0 ][ ptr1 ][ ptr2 ]
-                |       |       |
-                v       v       v
-            [0][1][2][3]
-            [0][1][2][3]
-            [0][1][2][3]
-```
+
+Memory allocation requires $n + 1$ `malloc` calls for an $n$-row matrix: one for the array of row pointers, plus one for each row.
 
 ## Arrays of Strings
 

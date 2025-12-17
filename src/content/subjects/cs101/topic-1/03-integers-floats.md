@@ -47,7 +47,7 @@ print(a // b)  # Floor division: 3 (rounds down to integer)
 print(a % b)   # Modulo (remainder): 3
 
 # Exponentiation
-print(a ** b)  # Power: 50625 (15^4)
+print(a ** b)  # Power: 50625 (15⁴)
 
 # Compound assignment operators
 x = 10
@@ -80,6 +80,14 @@ if number % 2 == 0:
 else:
     print("Odd")
 ```
+
+These operations are related by the division algorithm: for any integers $a$ and $b$ (with $b \neq 0$):
+
+$$a = b \times (a \mathbin{//} b) + (a \bmod b)$$
+
+For example, with $a = 17$ and $b = 5$:
+
+$$17 = 5 \times 3 + 2$$
 
 ### Integer Bases
 
@@ -131,9 +139,9 @@ x = 5.0         # Explicitly a float
 y = float(5)    # Convert integer to float
 
 # Scientific notation: e means "times 10 to the power of"
-speed_of_light = 3e8       # 3 × 10^8 = 300,000,000
-planck_constant = 6.626e-34  # 6.626 × 10^-34
-avogadro = 6.022e23        # Avogadro's number
+speed_of_light = 3e8       # 3 × 10⁸ = 300,000,000
+planck_constant = 6.626e-34  # 6.626 × 10⁻³⁴
+avogadro = 6.022e23        # 6.022 × 10²³ (Avogadro's number)
 
 print(speed_of_light)     # 300000000.0
 print(planck_constant)    # 6.626e-34

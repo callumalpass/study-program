@@ -27,34 +27,40 @@ def _sift_up(self, index):
             break
 ```
 
-### Visualization
+### Visualization: Sift-Up Process
 
+```mermaid
+graph TD
+    subgraph Step 1: Add 85 at end
+    A1[90] --> B1[80]
+    A1 --> C1[70]
+    B1 --> D1[50]
+    B1 --> E1[60]
+    C1 --> F1[85]
+    end
+
+    subgraph Step 2: 85 > 70 swap
+    A2[90] --> B2[80]
+    A2 --> C2[85]
+    B2 --> D2[50]
+    B2 --> E2[60]
+    C2 --> F2[70]
+    end
+
+    subgraph Step 3: 85 < 90 done
+    A3[90] --> B3[80]
+    A3 --> C3[85]
+    B3 --> D3[50]
+    B3 --> E3[60]
+    C3 --> F3[70]
+    end
+
+    style F1 fill:#FFB6C6
+    style C2 fill:#FFB6C6
+    style C3 fill:#90EE90
 ```
-Insert 85 into max-heap [90, 80, 70, 50, 60]:
 
-Step 1: Add at end
-       90
-      /  \
-    80    70
-   / \   /
-  50 60 85
-
-Step 2: 85 > 70, swap
-       90
-      /  \
-    80    85
-   / \   /
-  50 60 70
-
-Step 3: 85 < 90, done
-       90
-      /  \
-    80    85
-   / \   /
-  50 60 70
-
-Array: [90, 80, 85, 50, 60, 70]
-```
+**Sift-up complexity**: $O(\log n)$ - at most $\log_2 n$ swaps (height of tree)
 
 ## Extract Maximum/Minimum
 
@@ -103,35 +109,39 @@ def _sift_down(self, index):
             break
 ```
 
-### Visualization
+### Visualization: Sift-Down Process
 
+```mermaid
+graph TD
+    subgraph Step 1: Move 70 to root
+    A1[70] --> B1[80]
+    A1 --> C1[85]
+    B1 --> D1[50]
+    B1 --> E1[60]
+    end
+
+    subgraph Step 2: 70 < max 80 85  swap with 85
+    A2[85] --> B2[80]
+    A2 --> C2[70]
+    B2 --> D2[50]
+    B2 --> E2[60]
+    end
+
+    subgraph Step 3: 70 no larger children done
+    A3[85] --> B3[80]
+    A3 --> C3[70]
+    B3 --> D3[50]
+    B3 --> E3[60]
+    end
+
+    style A1 fill:#FFB6C6
+    style C2 fill:#FFB6C6
+    style C3 fill:#90EE90
 ```
-Extract max from [90, 80, 85, 50, 60, 70]:
 
-Step 1: Save 90, move 70 to root
-       70
-      /  \
-    80    85
-   / \
-  50 60
+**Result**: Extracted 90, heap property restored
 
-Step 2: 70 < max(80, 85) = 85, swap with 85
-       85
-      /  \
-    80    70
-   / \
-  50 60
-
-Step 3: 70 has no children > 70, done
-       85
-      /  \
-    80    70
-   / \
-  50 60
-
-Array: [85, 80, 70, 50, 60]
-Return: 90
-```
+**Sift-down complexity**: $O(\log n)$ - at most $\log_2 n$ swaps (height of tree)
 
 ## Peek
 
@@ -172,11 +182,17 @@ def heapify(self, arr):
         self._sift_down(i)
 ```
 
-**Why O(n)?** Most nodes are near the bottom and require few swaps:
-- n/2 nodes at bottom: 0 swaps each
-- n/4 nodes one level up: 1 swap max each
-- n/8 nodes two levels up: 2 swaps max each
-- Total: n/2×0 + n/4×1 + n/8×2 + ... = O(n)
+**Why $O(n)$?** Most nodes are near the bottom and require few swaps:
+- $n/2$ nodes at bottom (leaves): 0 swaps each
+- $n/4$ nodes one level up: at most 1 swap each
+- $n/8$ nodes two levels up: at most 2 swaps each
+- ...
+- 1 node at root: at most $\log n$ swaps
+
+Total work:
+$$\sum_{h=0}^{\log n} \frac{n}{2^{h+1}} \cdot h = O(n)$$
+
+This is tighter than the naive bound of $O(n \log n)$ from $n$ insertions!
 
 ## Replace (Update Priority)
 
@@ -293,12 +309,14 @@ class MaxHeap:
 
 | Operation | Time Complexity |
 |-----------|-----------------|
-| Insert | O(log n) |
-| Extract max/min | O(log n) |
-| Peek | O(1) |
-| Build heap | O(n) |
-| Increase/Decrease key | O(log n) |
-| Delete arbitrary | O(log n) |
+| Insert | $O(\log n)$ |
+| Extract max/min | $O(\log n)$ |
+| Peek | $O(1)$ |
+| Build heap | $O(n)$ |
+| Increase/Decrease key | $O(\log n)$ |
+| Delete arbitrary | $O(\log n)$ |
+
+**Key insight**: Heap height is $\lfloor \log_2 n \rfloor$, so operations that traverse from leaf to root (or vice versa) take $O(\log n)$ time.
 
 ## Summary
 

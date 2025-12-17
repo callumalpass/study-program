@@ -56,6 +56,20 @@ The most commonly used media query condition.
 
 Start with mobile styles, then add styles for larger screens.
 
+```mermaid
+graph LR
+    A[Mobile<br/>Base Styles<br/>0-767px] -->|min-width: 768px| B[Tablet<br/>768-1023px]
+    B -->|min-width: 1024px| C[Desktop<br/>1024-1199px]
+    C -->|min-width: 1200px| D[Large Desktop<br/>1200px+]
+
+    style A fill:#ffeb3b
+    style B fill:#4caf50
+    style C fill:#2196f3
+    style D fill:#9c27b0
+```
+
+Progressive enhancement: styles cascade from mobile to larger screens.
+
 ```css
 /* Base styles (mobile) */
 .container {

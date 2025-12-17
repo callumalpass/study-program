@@ -110,6 +110,41 @@ When the CPU requests an address, the cache:
 
 Modern systems have multiple cache levels, forming a hierarchy:
 
+```mermaid
+graph TB
+    subgraph Core1["CPU Core 1"]
+        L1I1[L1i Cache<br/>32 KB<br/>~4 cycles]
+        L1D1[L1d Cache<br/>32 KB<br/>~4 cycles]
+        L2_1[L2 Cache<br/>256 KB<br/>~12 cycles]
+    end
+
+    subgraph Core2["CPU Core 2"]
+        L1I2[L1i Cache<br/>32 KB<br/>~4 cycles]
+        L1D2[L1d Cache<br/>32 KB<br/>~4 cycles]
+        L2_2[L2 Cache<br/>256 KB<br/>~12 cycles]
+    end
+
+    L3[L3 Cache Shared<br/>8 MB<br/>~40 cycles]
+    RAM[Main Memory RAM<br/>8-64 GB<br/>~200 cycles]
+
+    L1I1 --> L2_1
+    L1D1 --> L2_1
+    L1I2 --> L2_2
+    L1D2 --> L2_2
+    L2_1 --> L3
+    L2_2 --> L3
+    L3 --> RAM
+
+    style L1I1 fill:#ff6b6b
+    style L1D1 fill:#ff6b6b
+    style L1I2 fill:#ff6b6b
+    style L1D2 fill:#ff6b6b
+    style L2_1 fill:#ffa500
+    style L2_2 fill:#ffa500
+    style L3 fill:#ffd700
+    style RAM fill:#87ceeb
+```
+
 ### L1 Cache
 
 The **L1 cache** is closest to the CPU core and is the fastest cache. It's also the smallest, typically 32-64 KB split between data and instructions:
@@ -178,14 +213,16 @@ A 99% hit rate sounds excellent, but if the 1% misses cost 100x more than hits, 
 
 ### Average Memory Access Time (AMAT)
 
-AMAT = Hit Time + (Miss Rate × Miss Penalty)
+The average memory access time combines the cost of hits and misses:
+
+$$\text{AMAT} = \text{Hit Time} + (\text{Miss Rate} \times \text{Miss Penalty})$$
 
 Example:
 - Hit time: 4 cycles
 - Miss rate: 5%
 - Miss penalty: 100 cycles
 
-AMAT = 4 + (0.05 × 100) = 4 + 5 = 9 cycles
+$$\text{AMAT} = 4 + (0.05 \times 100) = 4 + 5 = 9 \text{ cycles}$$
 
 The misses double the average access time despite being only 5% of accesses.
 

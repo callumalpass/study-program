@@ -35,14 +35,23 @@ The algorithm works by iteratively selecting the unvisited node with the smalles
 
 Consider this network (edge labels are costs):
 
+```mermaid
+graph LR
+    A((A)) ---|2| B((B))
+    A ---|1| C((C))
+    B ---|3| D((D))
+    B ---|4| E((E))
+    C ---|2| D((D))
+    D ---|1| E((E))
+
+    style A fill:#90caf9
+    style B fill:#fff9c4
+    style C fill:#fff9c4
+    style D fill:#fff9c4
+    style E fill:#fff9c4
 ```
-        2
-    A-------B
-    |       |\
-   1|       |3\ 4
-    |       |  \
-    C---2---D---1---E
-```
+
+**Network topology**: Nodes A-E with weighted edges representing link costs.
 
 Finding shortest paths from A:
 

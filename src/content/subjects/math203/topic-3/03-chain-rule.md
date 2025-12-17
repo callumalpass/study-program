@@ -26,6 +26,58 @@ This looks like fractions canceling! (They don't really cancel, but the notation
 2. **Identify the inner function** (what's "inside"?)
 3. **Differentiate outer function** (leaving inner alone, then multiply by derivative of inner)
 
+```mermaid
+flowchart TD
+    Start[Differentiate composite<br/>function fg x] --> ID[Identify composition:<br/>Outer function: fx<br/>Inner function: gx]
+
+    ID --> Pattern{Pattern?}
+
+    Pattern -->|Single nesting<br/>fgx| Single[Chain Rule:<br/>d/dx fgx = f'gx · g'x]
+    Pattern -->|Multiple nesting<br/>fghx| Multi[Extended Chain:<br/>f'ghx · g'hx · h'x]
+
+    Single --> Steps1[Step 1: Differentiate outer<br/>Leave inner unchanged]
+    Steps1 --> Steps2[Step 2: Multiply by<br/>derivative of inner]
+    Steps2 --> Result1[Result: f'gx · g'x]
+
+    Multi --> MSteps1[Work outside-in:<br/>Differentiate outermost]
+    MSteps1 --> MSteps2[Multiply by derivative<br/>of next layer]
+    MSteps2 --> MSteps3[Continue until reaching<br/>derivative of x]
+    MSteps3 --> Result2[Multiply all derivatives<br/>together]
+
+    Result1 --> Done[✓ Answer]
+    Result2 --> Done
+
+    style Single fill:#e1f5ff
+    style Multi fill:#fff3cd
+    style Done fill:#d4edda
+```
+
+### Visual Summary: Common Chain Rule Patterns
+
+```mermaid
+graph TD
+    subgraph "Power Functions"
+        P1["ugx^n<br/>→ n·ugx^n-1 · g'x"]
+        P2["√gx<br/>→ g'x / 2√gx"]
+    end
+
+    subgraph "Exponential & Logarithmic"
+        E1["e^gx<br/>→ e^gx · g'x"]
+        E2["ln gx<br/>→ g'x / gx"]
+        E3["a^gx<br/>→ a^gx · ln a · g'x"]
+    end
+
+    subgraph "Trigonometric"
+        T1["sin gx<br/>→ cos gx · g'x"]
+        T2["cos gx<br/>→ -sin gx · g'x"]
+        T3["tan gx<br/>→ sec² gx · g'x"]
+    end
+
+    style P1 fill:#e1f5ff
+    style E1 fill:#fff3cd
+    style T1 fill:#ffe6e6
+```
+
 ## Basic Examples
 
 **Example 1:** Find $\frac{d}{dx}[(x^2 + 1)^3]$

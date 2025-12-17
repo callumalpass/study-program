@@ -10,6 +10,32 @@ HTTP is:
 - **Stateless**: Each request independent
 - **Extensible**: Headers allow new functionality
 
+## HTTP Request-Response Cycle
+
+```mermaid
+sequenceDiagram
+    participant Client as Web Client
+    participant Server as Web Server
+
+    Note over Client,Server: Connection Established (TCP/TLS)
+
+    Client->>Server: HTTP GET /index.html HTTP/1.1<br/>Host: www.example.com<br/>User-Agent: Mozilla/5.0<br/>Accept: text/html
+
+    Note over Server: Process request<br/>Locate resource<br/>Generate response
+
+    Server->>Client: HTTP/1.1 200 OK<br/>Content-Type: text/html<br/>Content-Length: 1234<br/><br/><!DOCTYPE html>...
+
+    Note over Client: Render HTML
+
+    Client->>Server: HTTP GET /style.css HTTP/1.1
+
+    Server->>Client: HTTP/1.1 200 OK<br/>Content-Type: text/css<br/><br/>body { color: blue; }
+
+    Client->>Server: HTTP GET /missing.jpg HTTP/1.1
+
+    Server->>Client: HTTP/1.1 404 Not Found<br/>Content-Type: text/html<br/><br/><h1>Not Found</h1>
+```
+
 ## HTTP Request Format
 
 ```

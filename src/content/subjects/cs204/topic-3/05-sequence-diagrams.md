@@ -75,26 +75,22 @@ Thin rectangles on lifelines represent when an object is active (processing a me
 
 Here's a basic login sequence:
 
-```
-┌──────┐          ┌────────────┐      ┌──────────┐
-│ User │          │LoginService│      │ Database │
-└──┬───┘          └─────┬──────┘      └────┬─────┘
-   │                    │                  │
-   │ login(user, pass)  │                  │
-   │───────────────────>│                  │
-   │                ┌───┴───┐              │
-   │                │validate              │
-   │                │       │  query(user) │
-   │                │       │─────────────>│
-   │                │       │              │
-   │                │       │<─────────────│
-   │                │       │ user record  │
-   │                │check  │              │
-   │                │password              │
-   │                └───┬───┘              │
-   │<───────────────────│                  │
-   │    auth token      │                  │
-   │                    │                  │
+```mermaid
+sequenceDiagram
+    participant User
+    participant LoginService
+    participant Database
+
+    User->>LoginService: login(username, password)
+    activate LoginService
+    LoginService->>LoginService: validate credentials
+    LoginService->>Database: query(username)
+    activate Database
+    Database-->>LoginService: user record
+    deactivate Database
+    LoginService->>LoginService: check password hash
+    LoginService-->>User: auth token
+    deactivate LoginService
 ```
 
 This diagram shows:
@@ -244,39 +240,39 @@ Points to a separate diagram showing authentication details.
 
 ### E-commerce Purchase Flow
 
-```
-┌──────┐  ┌──────┐  ┌─────────┐  ┌─────────┐  ┌──────────┐
-│Client│  │WebApp│  │ OrderSvc│  │PaymentSvc│ │Inventory│
-└──┬───┘  └──┬───┘  └────┬────┘  └────┬────┘  └────┬─────┘
-   │          │           │            │            │
-   │checkout()│           │            │            │
-   │─────────>│           │            │            │
-   │      ┌───┴───┐       │            │            │
-   │      │validate       │            │            │
-   │      │  cart │       │            │            │
-   │      └───┬───┘       │            │            │
-   │          │createOrder()           │            │
-   │          │──────────>│            │            │
-   │          │       ┌───┴───┐        │            │
-   │          │       │       │ checkStock(items)   │
-   │          │       │       │───────────────────>│
-   │          │       │       │                    │
-   │          │       │       │<────────────────────│
-   │          │       │       │  available: true   │
-   │          │       │       │        │            │
-   │          │       │       │ processPayment()   │
-   │          │       │       │───────>│            │
-   │          │       │       │        │            │
-   │          │       │       │<───────│            │
-   │          │       │       │  success           │
-   │          │       │       │        │            │
-   │          │       │       │ reserve(items)     │
-   │          │       │       │───────────────────>│
-   │          │       └───┬───┘                    │
-   │          │<──────────│                        │
-   │          │  orderId  │                        │
-   │<─────────│           │                        │
-   │confirmation          │                        │
+```mermaid
+sequenceDiagram
+    participant Client
+    participant WebApp
+    participant OrderSvc
+    participant PaymentSvc
+    participant Inventory
+
+    Client->>WebApp: checkout()
+    activate WebApp
+    WebApp->>WebApp: validate cart
+    WebApp->>OrderSvc: createOrder(cart)
+    activate OrderSvc
+
+    OrderSvc->>Inventory: checkStock(items)
+    activate Inventory
+    Inventory-->>OrderSvc: available: true
+    deactivate Inventory
+
+    OrderSvc->>PaymentSvc: processPayment(amount)
+    activate PaymentSvc
+    PaymentSvc-->>OrderSvc: success
+    deactivate PaymentSvc
+
+    OrderSvc->>Inventory: reserve(items)
+    activate Inventory
+    Inventory-->>OrderSvc: reserved
+    deactivate Inventory
+
+    OrderSvc-->>WebApp: orderId
+    deactivate OrderSvc
+    WebApp-->>Client: confirmation
+    deactivate WebApp
 ```
 
 This diagram shows the complex interaction involving cart validation, order creation, inventory checks, payment processing, and stock reservation.

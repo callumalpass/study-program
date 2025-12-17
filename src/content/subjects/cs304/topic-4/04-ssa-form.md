@@ -24,7 +24,32 @@ x₂ = 7
 z₁ = x₂ + 3
 ```
 
-Each assignment creates a new variable version (x₁, x₂), and uses reference the appropriate version. This makes def-use chains (relationships between definitions and uses) explicit in variable names.
+```mermaid
+graph LR
+    subgraph "Original (Non-SSA)"
+        A1[x = 5] --> A2[y = x + 2]
+        A2 --> A3[x = 7]
+        A3 --> A4[z = x + 3]
+    end
+
+    subgraph "SSA Form"
+        B1[x₁ = 5] --> B2[y₁ = x₁ + 2]
+        B2 --> B3[x₂ = 7]
+        B3 --> B4[z₁ = x₂ + 3]
+
+        B1 -.defines.-> x1def[x₁]
+        B3 -.defines.-> x2def[x₂]
+        x1def -.used by.-> B2
+        x2def -.used by.-> B4
+    end
+
+    style B1 fill:#e1f5ff
+    style B2 fill:#e1f5ff
+    style B3 fill:#e1f5ff
+    style B4 fill:#e1f5ff
+```
+
+Each assignment creates a new variable version ($x_1, x_2$), and uses reference the appropriate version. This makes def-use chains (relationships between definitions and uses) explicit in variable names.
 
 ### Why SSA?
 
@@ -68,47 +93,59 @@ y₁ = ???     ; x₁ or x₂?
 
 ### Phi Functions: The Solution
 
-SSA introduces **φ (phi) functions** at merge points to select the appropriate variable version based on which control flow path was taken:
+SSA introduces $\varphi$ **(phi) functions** at merge points to select the appropriate variable version based on which control flow path was taken:
 
-```
-if (condition) {
-    x₁ = 1
-} else {
-    x₂ = 2
-}
-x₃ = φ(x₁, x₂)   ; x₃ = x₁ if came from true branch, x₂ otherwise
-y₁ = x₃
+```mermaid
+graph TD
+    Entry([Entry]) --> Cond{condition}
+    Cond -->|true| B1[x₁ = 1]
+    Cond -->|false| B2[x₂ = 2]
+    B1 --> Merge[x₃ = φ x₁, x₂]
+    B2 --> Merge
+    Merge --> Use[y₁ = x₃]
+
+    style Entry fill:#90EE90
+    style Cond fill:#ffe1e1
+    style B1 fill:#e1f5ff
+    style B2 fill:#e1f5ff
+    style Merge fill:#FFD700
+    style Use fill:#e1f5ff
 ```
 
-The φ function is a pseudo-operation that "merges" variable versions from different control flow paths. It conceptually executes on the control flow edge, selecting the version from the predecessor block that was executed.
+The $\varphi$ function is a pseudo-operation that "merges" variable versions from different control flow paths:
+
+$$x_3 = \varphi(x_1, x_2) = \begin{cases} x_1 & \text{if came from true branch} \\ x_2 & \text{if came from false branch} \end{cases}$$
+
+It conceptually executes on the control flow edge, selecting the version from the predecessor block that was executed.
 
 ### Phi Function Semantics
 
-A φ function at the start of block B with n predecessors has the form:
+A $\varphi$ function at the start of block $B$ with $n$ predecessors has the form:
 
-```
-x = φ(x₁, x₂, ..., xₙ)
-```
+$$x = \varphi(x_1, x_2, \ldots, x_n)$$
 
-The value of x is xᵢ if control reaches B from the i-th predecessor.
+The value of $x$ is $x_i$ if control reaches $B$ from the $i$-th predecessor.
 
 **Multi-Predecessor Example:**
 
-```
-      [B1: x₁ = 1]
-           |
-      [B2: x₂ = x₁ + 1]
-         /   \
-        /     \
-[B3: x₃ = 3] [B4: x₄ = 4]
-        \     /
-         \   /
-      [B5: x₅ = φ(x₃, x₄)]
-           |
-      [B6: y₁ = x₅ + 1]
+```mermaid
+graph TD
+    B1[B1: x₁ = 1] --> B2[B2: x₂ = x₁ + 1]
+    B2 --> B3[B3: x₃ = 3]
+    B2 --> B4[B4: x₄ = 4]
+    B3 --> B5[B5: x₅ = φ x₃, x₄]
+    B4 --> B5
+    B5 --> B6[B6: y₁ = x₅ + 1]
+
+    style B1 fill:#e1f5ff
+    style B2 fill:#e1f5ff
+    style B3 fill:#e1f5ff
+    style B4 fill:#e1f5ff
+    style B5 fill:#FFD700
+    style B6 fill:#e1f5ff
 ```
 
-At B5, x₅ receives x₃ if coming from B3, or x₄ if coming from B4.
+At B5, $x_5$ receives $x_3$ if coming from B3, or $x_4$ if coming from B4. The $\varphi$ function (shown in gold) merges the two possible values.
 
 ### Phi Functions and Loops
 
@@ -139,7 +176,21 @@ exit:
     ; ...
 ```
 
-The φ function at the loop header merges the initial value (i₁) with the updated value from the loop body (i₃), creating the cyclic data dependency characteristic of loops.
+```mermaid
+graph TD
+    Entry([i₁ = 0]) --> Header
+    Header[Loop Header<br/>i₂ = φ i₁, i₃<br/>if i₂ < n]
+    Header -->|true| Body[Loop Body<br/>i₃ = i₂ + 1]
+    Header -->|false| Exit([Exit])
+    Body --> Header
+
+    style Entry fill:#90EE90
+    style Header fill:#FFD700
+    style Body fill:#e1f5ff
+    style Exit fill:#FFB6C1
+```
+
+The $\varphi$ function at the loop header merges the initial value ($i_1$) with the updated value from the loop body ($i_3$), creating the cyclic data dependency characteristic of loops. The back edge from the loop body creates this cycle.
 
 ## Converting to SSA Form
 

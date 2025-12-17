@@ -38,6 +38,38 @@ Most organizations practice Continuous Delivery, reserving Continuous Deployment
 
 A deployment pipeline is an automated manifestation of your process for getting software from version control into production. It provides visibility, feedback, and control.
 
+```mermaid
+flowchart TD
+    A[Code Commit] --> B[Commit Stage]
+    B --> C{Quick Tests<br/>Pass?}
+    C -->|No| X[Fail Fast]
+    C -->|Yes| D[Acceptance Tests]
+    D --> E{Integration<br/>Tests Pass?}
+    E -->|No| X
+    E -->|Yes| F[Performance Tests]
+    F --> G{Performance<br/>Acceptable?}
+    G -->|No| X
+    G -->|Yes| H[Deploy to Staging]
+    H --> I[Smoke Tests]
+    I --> J{Staging<br/>Healthy?}
+    J -->|No| X
+    J -->|Yes| K{Manual<br/>Approval}
+    K -->|Reject| X
+    K -->|Approve| L[Deploy to Production]
+    L --> M[Production<br/>Smoke Tests]
+    M --> N{Production<br/>Healthy?}
+    N -->|No| O[Rollback]
+    N -->|Yes| P[Success]
+
+    style B fill:#e3f2fd
+    style D fill:#e1f5fe
+    style F fill:#fff3e0
+    style H fill:#e8f5e9
+    style L fill:#c8e6c9
+    style X fill:#ffcdd2
+    style P fill:#a5d6a7
+```
+
 ### Pipeline Stages
 
 #### 1. Commit Stage
@@ -185,6 +217,33 @@ deploy-production:
 ### Blue-Green Deployment
 
 Maintain two identical production environments: Blue (current) and Green (new). Deploy to Green, test, then switch traffic.
+
+```mermaid
+flowchart TD
+    subgraph Before["Before Deployment"]
+        LB1[Load Balancer] --> BLUE1[Blue Environment<br/>v1.0 LIVE]
+        LB1 -.->|Idle| GREEN1[Green Environment<br/>v1.0]
+    end
+
+    subgraph During["During Deployment"]
+        LB2[Load Balancer] --> BLUE2[Blue Environment<br/>v1.0 LIVE]
+        LB2 -.->|Deploying| GREEN2[Green Environment<br/>v2.0 Testing]
+    end
+
+    subgraph After["After Switch"]
+        LB3[Load Balancer] -.->|Idle| BLUE3[Blue Environment<br/>v1.0 Standby]
+        LB3 --> GREEN3[Green Environment<br/>v2.0 LIVE]
+    end
+
+    Before --> During --> After
+
+    style BLUE1 fill:#90caf9
+    style GREEN1 fill:#a5d6a7,stroke-dasharray: 5 5
+    style BLUE2 fill:#90caf9
+    style GREEN2 fill:#fff59d
+    style BLUE3 fill:#90caf9,stroke-dasharray: 5 5
+    style GREEN3 fill:#a5d6a7
+```
 
 ```bash
 # Deploy to green environment

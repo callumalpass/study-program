@@ -26,6 +26,67 @@ Preprocessed Source (.i)
   Executable
 ```
 
+### Compilation Pipeline Diagram
+
+```mermaid
+graph TD
+    Start["Source Files<br/>main.c, util.c<br/>+ headers"]
+
+    Pre1["Preprocessor<br/>gcc -E"]
+    I1["Preprocessed<br/>main.i"]
+
+    Pre2["Preprocessor<br/>gcc -E"]
+    I2["Preprocessed<br/>util.i"]
+
+    Comp1["Compiler<br/>gcc -S"]
+    S1["Assembly<br/>main.s"]
+
+    Comp2["Compiler<br/>gcc -S"]
+    S2["Assembly<br/>util.s"]
+
+    Asm1["Assembler<br/>gcc -c"]
+    O1["Object File<br/>main.o"]
+
+    Asm2["Assembler<br/>gcc -c"]
+    O2["Object File<br/>util.o"]
+
+    Link["Linker<br/>ld"]
+    Exec["Executable<br/>program"]
+
+    Start -->|"main.c"| Pre1
+    Start -->|"util.c"| Pre2
+
+    Pre1 --> I1
+    Pre2 --> I2
+
+    I1 --> Comp1
+    I2 --> Comp2
+
+    Comp1 --> S1
+    Comp2 --> S2
+
+    S1 --> Asm1
+    S2 --> Asm2
+
+    Asm1 --> O1
+    Asm2 --> O2
+
+    O1 --> Link
+    O2 --> Link
+
+    Link --> Exec
+
+    style Start fill:#e8f5e9
+    style Pre1 fill:#fff4e1
+    style Pre2 fill:#fff4e1
+    style Comp1 fill:#e1f5ff
+    style Comp2 fill:#e1f5ff
+    style Asm1 fill:#f3e5f5
+    style Asm2 fill:#f3e5f5
+    style Link fill:#ffebee
+    style Exec fill:#c8e6c9
+```
+
 ### Stage 1: Preprocessing
 
 The preprocessor handles directives:

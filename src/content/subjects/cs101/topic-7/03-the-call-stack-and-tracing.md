@@ -60,6 +60,32 @@ Here's what the stack looks like at maximum depth:
 
 When `factorial(1)` returns 1, its frame is popped. Then `factorial(2)` can compute `2 * 1 = 2` and return, and so on.
 
+```mermaid
+sequenceDiagram
+    participant Main
+    participant F4 as factorial(4)
+    participant F3 as factorial(3)
+    participant F2 as factorial(2)
+    participant F1 as factorial(1)
+
+    Main->>F4: Call factorial(4)
+    activate F4
+    F4->>F3: Call factorial(3)
+    activate F3
+    F3->>F2: Call factorial(2)
+    activate F2
+    F2->>F1: Call factorial(1)
+    activate F1
+    F1-->>F2: return 1
+    deactivate F1
+    F2-->>F3: return 2 (2*1)
+    deactivate F2
+    F3-->>F4: return 6 (3*2)
+    deactivate F3
+    F4-->>Main: return 24 (4*6)
+    deactivate F4
+```
+
 ---
 
 ## Tracing Recursive Execution
@@ -149,6 +175,23 @@ fib(1)  fib(0)
 ```
 
 Notice that `fibonacci(2)` is computed twice! This is why naive Fibonacci is slow (more on this in the memoization subtopic).
+
+```mermaid
+graph TD
+    F4["fibonacci(4)"] --> F3["fibonacci(3)"]
+    F4 --> F2a["fibonacci(2)"]
+    F3 --> F2b["fibonacci(2)"]
+    F3 --> F1a["fibonacci(1)<br/>returns 1"]
+    F2a --> F1b["fibonacci(1)<br/>returns 1"]
+    F2a --> F0a["fibonacci(0)<br/>returns 0"]
+    F2b --> F1c["fibonacci(1)<br/>returns 1"]
+    F2b --> F0b["fibonacci(0)<br/>returns 0"]
+
+    style F2a fill:#ffcccc
+    style F2b fill:#ffcccc
+```
+
+The highlighted nodes show the redundant computation of `fibonacci(2)`.
 
 ---
 

@@ -30,6 +30,18 @@ print(v1 + v2)  # Vector(4, 6)
 print(v2 - v1)  # Vector(2, 2)
 ```
 
+### Mathematical Interpretation
+
+Vector addition is defined component-wise:
+
+$$\vec{v_1} + \vec{v_2} = \begin{bmatrix} x_1 \\ y_1 \end{bmatrix} + \begin{bmatrix} x_2 \\ y_2 \end{bmatrix} = \begin{bmatrix} x_1 + x_2 \\ y_1 + y_2 \end{bmatrix}$$
+
+For our example:
+$$\begin{bmatrix} 1 \\ 2 \end{bmatrix} + \begin{bmatrix} 3 \\ 4 \end{bmatrix} = \begin{bmatrix} 4 \\ 6 \end{bmatrix}$$
+
+Similarly for subtraction:
+$$\vec{v_2} - \vec{v_1} = \begin{bmatrix} 3 \\ 4 \end{bmatrix} - \begin{bmatrix} 1 \\ 2 \end{bmatrix} = \begin{bmatrix} 2 \\ 2 \end{bmatrix}$$
+
 ---
 
 ## Arithmetic Operators
@@ -93,6 +105,17 @@ v = Vector(1, 2)
 print(v * 3)   # Vector(3, 6) - uses __mul__
 print(3 * v)   # Vector(3, 6) - uses __rmul__
 ```
+
+### Scalar Multiplication
+
+Multiplying a vector by a scalar scales each component:
+
+$$k \cdot \vec{v} = k \cdot \begin{bmatrix} x \\ y \end{bmatrix} = \begin{bmatrix} k \cdot x \\ k \cdot y \end{bmatrix}$$
+
+For our example:
+$$3 \cdot \begin{bmatrix} 1 \\ 2 \end{bmatrix} = \begin{bmatrix} 3 \\ 6 \end{bmatrix}$$
+
+Note that scalar multiplication is **commutative**: $k \cdot \vec{v} = \vec{v} \cdot k$, which is why both `v * 3` and `3 * v` work.
 
 ---
 
@@ -167,6 +190,18 @@ print(v1 < v2)   # True
 print(v2 <= v3)  # True (auto-generated)
 print(v3 > v1)   # True (auto-generated)
 ```
+
+### Comparison Relations
+
+The `@total_ordering` decorator automatically generates missing comparison methods based on `__eq__` and `__lt__`:
+
+Given $a < b$, we can derive:
+- $a \leq b \equiv (a < b) \lor (a = b)$
+- $a > b \equiv \neg(a \leq b)$
+- $a \geq b \equiv \neg(a < b)$
+- $a \neq b \equiv \neg(a = b)$
+
+For versions: $v_1 = 1.2.3 < v_2 = 1.2.4$ because $(1, 2, 3) < (1, 2, 4)$ lexicographically.
 
 ---
 

@@ -14,6 +14,26 @@ or equivalently:
 
 $$\oint_C \mathbf{F} \cdot d\mathbf{r} = \iint_S (\nabla \times \mathbf{F}) \cdot \mathbf{n} \, dS$$
 
+### Visual Relationship
+
+Stokes' Theorem connects a line integral around a boundary curve to a surface integral over the enclosed surface:
+
+```mermaid
+graph LR
+    subgraph "Boundary Curve (1D)"
+        Line["Line Integral<br/>∮_C F·dr<br/>(Circulation)"]
+    end
+
+    subgraph "Surface (2D)"
+        Surface["Surface Integral<br/>∬_S (∇×F)·dS<br/>(Flux of Curl)"]
+    end
+
+    Line <==>|"Stokes'<br/>Theorem"| Surface
+
+    style Line fill:#e1f5ff
+    style Surface fill:#c8e6c9
+```
+
 ### Key Components
 
 - **Left side**: Line integral of $\mathbf{F}$ around the boundary curve $C$ (circulation)
@@ -190,15 +210,34 @@ The detailed proof is quite technical and beyond our scope, but the idea mirrors
 
 ## Relation to Other Theorems
 
-Stokes' Theorem is part of a family of fundamental theorems:
+Stokes' Theorem is part of a family of fundamental theorems that all share a common theme: relating an integral over a region to an integral over its boundary.
 
-- **Fundamental Theorem of Calculus**: $\int_a^b f'(x) \, dx = f(b) - f(a)$
-- **Fundamental Theorem for Line Integrals**: $\int_C \nabla f \cdot d\mathbf{r} = f(B) - f(A)$
-- **Green's Theorem**: $\oint_C \mathbf{F} \cdot d\mathbf{r} = \iint_D (\nabla \times \mathbf{F}) \cdot \mathbf{k} \, dA$
-- **Stokes' Theorem**: $\oint_C \mathbf{F} \cdot d\mathbf{r} = \iint_S (\nabla \times \mathbf{F}) \cdot d\mathbf{S}$
-- **Divergence Theorem**: $\iiint_E \nabla \cdot \mathbf{F} \, dV = \iint_S \mathbf{F} \cdot d\mathbf{S}$
+```mermaid
+graph TD
+    FTC["Fundamental Theorem of Calculus<br/>∫_a^b f'(x)dx = f(b) - f(a)<br/>(1D: interior ↔ boundary points)"]
 
-All relate an integral over a region to an integral over its boundary.
+    FTLI["Fundamental Theorem for Line Integrals<br/>∫_C ∇f·dr = f(B) - f(A)<br/>(1D: path ↔ endpoints)"]
+
+    Green["Green's Theorem<br/>∮_C F·dr = ∬_D (∇×F)·k dA<br/>(2D: region ↔ boundary curve)"]
+
+    Stokes["Stokes' Theorem<br/>∮_C F·dr = ∬_S (∇×F)·dS<br/>(3D: surface ↔ boundary curve)"]
+
+    Divergence["Divergence Theorem<br/>∭_E ∇·F dV = ∬_S F·dS<br/>(3D: solid ↔ boundary surface)"]
+
+    FTC --> FTLI
+    FTC --> Green
+    Green --> Stokes
+    Stokes -.->|"Special case"| Green
+    FTLI -.->|"∇×(∇f) = 0"| Stokes
+
+    style FTC fill:#e1f5ff
+    style FTLI fill:#fff4e1
+    style Green fill:#c8e6c9
+    style Stokes fill:#ffccbc
+    style Divergence fill:#f0f0f0
+```
+
+**Key Insight**: All these theorems relate an integral over a region to an integral over its boundary. The dimension of the boundary is always one less than the dimension of the region.
 
 ## Conclusion
 

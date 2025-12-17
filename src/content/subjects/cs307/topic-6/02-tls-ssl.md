@@ -31,39 +31,61 @@ TLS Security Properties:
 
 ## TLS 1.3 Handshake
 
-TLS 1.3 improved security and performance over previous versions.
+TLS 1.3 improved security and performance over previous versions. The most significant improvement is the reduction from 2 round trips (RTT) to 1 RTT for the initial handshake.
 
-### TLS 1.3 vs 1.2
+### TLS 1.3 Handshake Flow
 
+```mermaid
+sequenceDiagram
+    participant Client
+    participant Server
+
+    Note over Client,Server: TLS 1.3 Handshake (1-RTT)
+
+    Client->>Server: ClientHello<br/>+ Supported Ciphers<br/>+ Key Share (client public key)<br/>+ Supported Versions
+
+    Server->>Client: ServerHello<br/>+ Selected Cipher<br/>+ Key Share (server public key)<br/>+ Certificate<br/>+ Certificate Verify<br/>[Encrypted from here]<br/>+ Finished
+
+    Note over Client,Server: Both compute shared secret<br/>from exchanged key shares
+
+    Client->>Server: [Encrypted] Finished
+
+    Note over Client,Server: Handshake complete!<br/>Application data now flows
+
+    Client->>Server: [Encrypted] Application Data
+    Server->>Client: [Encrypted] Application Data
 ```
-TLS 1.2 Handshake (2 RTT):        TLS 1.3 Handshake (1 RTT):
 
-Client                Server      Client                Server
-  │                     │           │                     │
-  ├─ ClientHello ──────→│           ├─ ClientHello ──────→│
-  │                     │           │   + Key Share       │
-  │                     │           │   + Supported Vers  │
-  │                     │           │                     │
-  │←───── ServerHello ──┤           │←───── ServerHello ──┤
-  │       Certificate   │           │       Certificate   │
-  │       ServerKeyExch │           │       Key Share     │
-  │       ServerDone    │           │    [Encrypted]      │
-  │                     │           │   + Application Data│
-  ├─ ClientKeyExchange →│           │                     │
-  │   ChangeCipherSpec  │           ├─ [Encrypted] ──────→│
-  │   Finished          │           │   + Application Data│
-  │                     │           │                     │
-  │←─── ChangeCipherSpec│           │                     │
-  │      Finished       │           │                     │
-  │                     │           │                     │
-  ├─ Application Data ─→│           └─ Communication      │
-  │                     │
-  └─ Communication      │
+### TLS 1.2 vs TLS 1.3 Comparison
 
-2 round trips              1 round trip
-Older cipher suites        Modern cipher suites only
-Vulnerable options         No vulnerable fallbacks
+```mermaid
+graph LR
+    subgraph TLS_12["TLS 1.2 (2-RTT)"]
+        C1[Client]
+        S1[Server]
+        C1 -->|1. ClientHello| S1
+        S1 -->|2. ServerHello + Cert| C1
+        C1 -->|3. Key Exchange| S1
+        S1 -->|4. Finished| C1
+    end
+
+    subgraph TLS_13["TLS 1.3 (1-RTT)"]
+        C2[Client]
+        S2[Server]
+        C2 -->|1. ClientHello + KeyShare| S2
+        S2 -->|2. ServerHello + KeyShare<br/>[Encrypted] Finished| C2
+    end
+
+    style TLS_12 fill:#ffe066
+    style TLS_13 fill:#51cf66
 ```
+
+**TLS 1.3 Improvements:**
+- **Faster**: 1 RTT instead of 2 (reduces latency by ~100ms)
+- **More secure**: Removed weak cipher suites and algorithms
+- **Always encrypted**: Certificate and most handshake messages encrypted
+- **Forward secrecy**: Required for all cipher suites (no RSA key exchange)
+- **Simpler**: Removed unnecessary features and vulnerable options
 
 ### TLS 1.3 Implementation
 
@@ -310,43 +332,71 @@ class CertificateValidator:
 
 ## Certificate Chains
 
-Certificates form a chain of trust from end-entity to root CA.
+Certificates form a chain of trust from end-entity to root CA. The chain establishes trust without requiring every certificate to be pre-installed.
 
 ### Chain of Trust
 
-```
-Certificate Chain:
+```mermaid
+graph TD
+    subgraph Browser["Client's Trusted Root Store"]
+        Root[Root CA Certificate<br/>CN=GlobalSign Root CA<br/>Self-signed<br/>Valid: 20 years<br/>✓ Pre-installed in OS/Browser]
+    end
 
-┌─────────────────────────────────────┐
-│ Root CA Certificate                 │  ← Trusted (in browser/OS)
-│ CN=GlobalSign Root CA               │
-│ Self-signed                         │
-│ Valid: 20 years                     │
-└─────────────────────────────────────┘
-            │ Signs
-            ↓
-┌─────────────────────────────────────┐
-│ Intermediate CA Certificate         │  ← Provided by server
-│ CN=GlobalSign Organization CA       │
-│ Issued by: Root CA                  │
-│ Valid: 10 years                     │
-└─────────────────────────────────────┘
-            │ Signs
-            ↓
-┌─────────────────────────────────────┐
-│ End-Entity Certificate              │  ← Server certificate
-│ CN=example.com                      │
-│ Issued by: Intermediate CA          │
-│ Valid: 90 days                      │
-└─────────────────────────────────────┘
+    subgraph Server["Server Provides"]
+        Intermediate[Intermediate CA Certificate<br/>CN=GlobalSign Organization CA<br/>Issued by: Root CA<br/>Valid: 10 years]
 
-Client verifies:
-1. End-entity cert signed by intermediate
-2. Intermediate cert signed by root
-3. Root cert in trusted store
-4. All certs valid (not expired, not revoked)
-5. Hostname matches
+        EndEntity[End-Entity Certificate<br/>CN=example.com<br/>Issued by: Intermediate CA<br/>Valid: 90 days]
+    end
+
+    Root -->|Signs| Intermediate
+    Intermediate -->|Signs| EndEntity
+
+    style Root fill:#51cf66,stroke:#2f9e44,color:#000
+    style Intermediate fill:#74c0fc,stroke:#1c7ed6,color:#000
+    style EndEntity fill:#ffd43b,stroke:#f59f00,color:#000
 ```
+
+### Certificate Validation Process
+
+```mermaid
+sequenceDiagram
+    participant Client
+    participant Server
+    participant CA as Certificate Authority
+
+    Client->>Server: 1. Connect (TLS Handshake)
+    Server->>Client: 2. Certificate Chain<br/>(End-entity + Intermediate)
+
+    Note over Client: 3. Verify end-entity cert
+    Note over Client: - Check signature from intermediate
+    Note over Client: - Check expiration date
+    Note over Client: - Check hostname matches
+
+    Note over Client: 4. Verify intermediate cert
+    Note over Client: - Check signature from root
+    Note over Client: - Check expiration date
+
+    Note over Client: 5. Verify root cert
+    Note over Client: - Check if in trusted store
+
+    alt Certificate Valid
+        Client->>Server: 6. ✓ Trust established
+    else Certificate Invalid
+        Client->>Client: 6. ✗ Connection rejected
+    end
+
+    opt Check Revocation
+        Client->>CA: 7. OCSP request (cert status?)
+        CA->>Client: 8. OCSP response (good/revoked)
+    end
+```
+
+**Verification Steps:**
+1. End-entity cert signed by intermediate CA
+2. Intermediate cert signed by root CA
+3. Root cert exists in trusted store
+4. All certificates are currently valid (not expired, not revoked)
+5. Hostname in end-entity cert matches requested domain
 
 ### Chain Verification
 

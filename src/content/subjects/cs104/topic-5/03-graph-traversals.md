@@ -62,8 +62,8 @@ def dfs_iterative(graph, start):
 
 ### DFS Properties
 
-- **Time Complexity**: O(V + E) for adjacency list
-- **Space Complexity**: O(V) for visited set + O(V) for recursion stack
+- **Time Complexity**: $O(V + E)$ for adjacency list
+- **Space Complexity**: $O(V)$ for visited set + $O(V)$ for recursion stack
 - **Order**: Explores deeply before widely
 - **Path**: Does NOT guarantee shortest path
 
@@ -121,21 +121,61 @@ def bfs_with_levels(graph, start):
 
 ### BFS Properties
 
-- **Time Complexity**: O(V + E) for adjacency list
-- **Space Complexity**: O(V) for visited set + O(V) for queue
+- **Time Complexity**: $O(V + E)$ for adjacency list
+- **Space Complexity**: $O(V)$ for visited set + $O(V)$ for queue
 - **Order**: Explores level by level
 - **Path**: Guarantees shortest path in unweighted graphs
+
+**Why BFS finds shortest paths**: BFS explores nodes in order of increasing distance from the source. When a node is first discovered, we've found the shortest path to it.
 
 ## Comparison
 
 | Aspect | DFS | BFS |
 |--------|-----|-----|
 | Data Structure | Stack (recursion) | Queue |
-| Space (worst) | O(V) | O(V) |
-| Space (typical) | O(height) | O(width) |
+| Space (worst) | $O(V)$ | $O(V)$ |
+| Space (typical) | $O(h)$ | $O(w)$ |
 | Shortest Path | No | Yes (unweighted) |
 | Complete | Yes | Yes |
 | Good For | Cycle detection, topological sort, maze solving | Shortest path, level-order, web crawling |
+
+Where $h$ is the height/depth of the graph and $w$ is the maximum width.
+
+### Visual Comparison
+
+```mermaid
+graph TD
+    A[A] --> B[B]
+    A --> C[C]
+    B --> D[D]
+    B --> E[E]
+    C --> F[F]
+    E --> F
+
+    style A fill:#FFE4B5
+    style B fill:#FFE4B5
+    style C fill:#E0FFFF
+    style D fill:#FFE4B5
+    style E fill:#FFE4B5
+    style F fill:#E0FFFF
+```
+
+**DFS Order** (orange): A → B → D → E → F → C (go deep first)
+**BFS Order** (cyan): A → B → C → D → E → F (go wide first)
+
+### Complexity Analysis
+
+Both algorithms visit each vertex once and examine each edge once:
+
+$$\text{Time Complexity} = O(V + E)$$
+
+Where:
+- $V$ = number of vertices
+- $E$ = number of edges
+
+**Space Complexity**:
+- DFS: $O(V)$ for visited set + $O(h)$ for recursion stack, where $h$ is graph depth
+- BFS: $O(V)$ for visited set + $O(w)$ for queue, where $w$ is maximum breadth
 
 ## Traversing All Components
 

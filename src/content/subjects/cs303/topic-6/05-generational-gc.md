@@ -32,14 +32,21 @@ The simplest generational system uses two generations:
 
 **Old Generation** (tenured): Where long-lived objects are promoted. Collected rarely.
 
-```
-┌─────────────────┐
-│ Young Generation│  Fast allocation, frequent collection
-├─────────────────┤
-│                 │
-│ Old Generation  │  Slow allocation, rare collection
-│                 │
-└─────────────────┘
+```mermaid
+graph TD
+    A[Heap Memory] --> B[Young Generation]
+    A --> C[Old Generation]
+
+    B --> D[Eden Space]
+    B --> E[Survivor 0]
+    B --> F[Survivor 1]
+
+    style A fill:#e1f5ff
+    style B fill:#ffe1e1
+    style C fill:#e1ffe1
+    style D fill:#fff4e1
+    style E fill:#f0f0f0
+    style F fill:#f0f0f0
 ```
 
 ### Allocation and Collection
@@ -161,15 +168,24 @@ This **write barrier** adds overhead to every pointer write but makes minor coll
 
 Young generation is typically collected using copying collection:
 
-The young generation is divided into two spaces:
-- **Eden**: Where new objects are allocated
-- **Survivor spaces** (From and To): Hold objects that survived one collection
+The young generation is divided into spaces to enable efficient copying collection:
 
-```
-Young Generation:
-┌──────┬──────────┬──────────┐
-│ Eden │ From     │ To       │
-└──────┴──────────┴──────────┘
+```mermaid
+graph LR
+    A[Before Collection] --> B["Eden (full)"]
+    A --> C["Survivor From (objects)"]
+    A --> D["Survivor To (empty)"]
+
+    E[After Collection] --> F["Eden (empty)"]
+    E --> G["Survivor From (empty)"]
+    E --> H["Survivor To (live objects)"]
+
+    style B fill:#ffe1e1
+    style C fill:#fff4e1
+    style D fill:#f0f0f0
+    style F fill:#f0f0f0
+    style G fill:#f0f0f0
+    style H fill:#e1ffe1
 ```
 
 Collection process:
@@ -177,8 +193,8 @@ Collection process:
 2. Copy live objects from Eden and From to To
 3. Increment age of survivors
 4. Promote objects that are old enough to old generation
-5. Swap From and To
-6. Clear Eden
+5. Swap From and To pointers
+6. Clear Eden (by resetting allocation pointer)
 
 ```c
 void copy_collection() {

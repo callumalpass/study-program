@@ -27,43 +27,67 @@ mul  $t8, $t9, $t10   ; Independent! But stalls in in-order
 
 ### Core Components
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    Tomasulo Architecture                     │
-│                                                              │
-│  ┌──────────────┐                                           │
-│  │ Instruction  │                                           │
-│  │    Queue     │                                           │
-│  └──────┬───────┘                                           │
-│         │ Issue                                              │
-│         ▼                                                    │
-│  ┌───────────────────────────────────────────────────────┐  │
-│  │              Reservation Stations                      │  │
-│  │  ┌────┐ ┌────┐ ┌────┐    ┌────┐ ┌────┐ ┌────┐       │  │
-│  │  │RS1 │ │RS2 │ │RS3 │    │RS4 │ │RS5 │ │RS6 │       │  │
-│  │  └──┬─┘ └──┬─┘ └──┬─┘    └──┬─┘ └──┬─┘ └──┬─┘       │  │
-│  └─────┼──────┼──────┼────────┼──────┼──────┼──────────┘  │
-│        │      │      │        │      │      │              │
-│        ▼      ▼      ▼        ▼      ▼      ▼              │
-│     ┌─────────────┐      ┌─────────────────────┐           │
-│     │  ADD Unit   │      │     MUL Unit        │           │
-│     └──────┬──────┘      └──────────┬──────────┘           │
-│            │                        │                       │
-│            └────────────┬───────────┘                       │
-│                         │                                   │
-│                         ▼                                   │
-│              ┌─────────────────────┐                       │
-│              │   Common Data Bus   │ (CDB)                 │
-│              └──────────┬──────────┘                       │
-│                         │                                   │
-│              ┌──────────┴──────────┐                       │
-│              ▼                     ▼                        │
-│         ┌─────────┐         ┌───────────┐                  │
-│         │Register │         │Reservation│                  │
-│         │  File   │         │ Stations  │                  │
-│         └─────────┘         │(broadcast)│                  │
-│                             └───────────┘                  │
-└─────────────────────────────────────────────────────────────┘
+```mermaid
+graph TB
+    IQ[Instruction Queue]
+
+    subgraph "Reservation Stations"
+        RS1[RS Add1]
+        RS2[RS Add2]
+        RS3[RS Add3]
+        RS4[RS Mul1]
+        RS5[RS Mul2]
+        RS6[RS Load1]
+    end
+
+    subgraph "Functional Units"
+        ADD[ADD Unit]
+        MUL[MUL Unit]
+        LOAD[LOAD Unit]
+    end
+
+    CDB[Common Data Bus<br/>CDB]
+
+    RF[Register File]
+    RAT[Register Status<br/>Alias Table]
+
+    IQ -->|Issue| RS1
+    IQ -->|Issue| RS2
+    IQ -->|Issue| RS3
+    IQ -->|Issue| RS4
+    IQ -->|Issue| RS5
+    IQ -->|Issue| RS6
+
+    RS1 -->|Execute| ADD
+    RS2 -->|Execute| ADD
+    RS3 -->|Execute| ADD
+    RS4 -->|Execute| MUL
+    RS5 -->|Execute| MUL
+    RS6 -->|Execute| LOAD
+
+    ADD -->|Write Result| CDB
+    MUL -->|Write Result| CDB
+    LOAD -->|Write Result| CDB
+
+    CDB -->|Update| RF
+    CDB -->|Broadcast| RS1
+    CDB -->|Broadcast| RS2
+    CDB -->|Broadcast| RS3
+    CDB -->|Broadcast| RS4
+    CDB -->|Broadcast| RS5
+    CDB -->|Broadcast| RS6
+    CDB -->|Update| RAT
+
+    RF -.->|Read Operands| RS1
+    RF -.->|Read Operands| RS2
+    RF -.->|Read Operands| RS3
+    RF -.->|Read Operands| RS4
+    RF -.->|Read Operands| RS5
+    RF -.->|Read Operands| RS6
+
+    style CDB fill:#ffcccc
+    style RF fill:#ccffcc
+    style RAT fill:#ccccff
 ```
 
 ### Reservation Station Entry
@@ -225,32 +249,34 @@ Sub still reads from RS1 (original F6).
 
 ### Broadcast Mechanism
 
-```
-                    CDB (tag + data)
-         ┌──────────────┴────────────────┐
-         │                               │
-         │  Tag: RS2    Data: 42         │
-         │                               │
-         └───┬────────┬────────┬─────────┘
-             │        │        │
-             ▼        ▼        ▼
-    RS waiting   RS waiting   Register
-    for RS2      for RS3      File
-        │            │            │
-     Updates      No match     Updates
-     Qj=0,Vj=42   (ignores)    if match
+```mermaid
+graph LR
+    CDB[Common Data Bus<br/>Tag: RS2<br/>Data: 42]
+
+    CDB --> RS_A[RS waiting<br/>for RS2]
+    CDB --> RS_B[RS waiting<br/>for RS3]
+    CDB --> RF[Register File]
+
+    RS_A --> U1[Update:<br/>Qj=0, Vj=42]
+    RS_B --> U2[No match<br/>Ignore]
+    RF --> U3[Update if<br/>tag matches]
+
+    style CDB fill:#ffcccc
+    style U1 fill:#90ee90
+    style U2 fill:#ffff99
+    style U3 fill:#add8e6
 ```
 
 ### CDB Scaling Issues
 
-```
-N reservation stations + M registers = N+M comparators
+For $N$ reservation stations and $M$ registers:
 
-4-wide machine:
+$$\text{Comparators needed} = N + M$$
+
+**4-wide machine**:
 - 4 CDBs (one per FU result)
 - Each CDB: Compare with ~50 RS + ~100 registers
 - Expensive! Limits width.
-```
 
 ## Modern Extensions
 

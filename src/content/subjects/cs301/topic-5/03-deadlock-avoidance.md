@@ -30,19 +30,36 @@ where each Pi can get resources it needs from:
 ```
 Resources: 12 instances total
 
-Process | Max Need | Currently Holds
---------|----------|----------------
-   P0   |    10    |       5
-   P1   |     4    |       2
-   P2   |     9    |       2
+Process | Max Need | Currently Holds | Need
+--------|----------|-----------------|------
+   P0   |    10    |       5         |  5
+   P1   |     4    |       2         |  2
+   P2   |     9    |       2         |  7
 
 Available = 12 - (5 + 2 + 2) = 3
-
-Safe sequence: <P1, P0, P2>
-1. P1 can finish (needs 4-2=2, have 3) → Available = 3+2 = 5
-2. P0 can finish (needs 10-5=5, have 5) → Available = 5+5 = 10
-3. P2 can finish (needs 9-2=7, have 10) → Done
 ```
+
+**Finding safe sequence:**
+
+```mermaid
+flowchart TD
+    Start([Start: Available = 3]) --> Check1{Can P0 finish?<br/>Need 5, Have 3}
+    Check1 -->|No| Check2{Can P1 finish?<br/>Need 2, Have 3}
+    Check2 -->|Yes| Exec1[Execute P1<br/>Available = 3+2 = 5]
+    Exec1 --> Check3{Can P0 finish?<br/>Need 5, Have 5}
+    Check3 -->|Yes| Exec2[Execute P0<br/>Available = 5+5 = 10]
+    Exec2 --> Check4{Can P2 finish?<br/>Need 7, Have 10}
+    Check4 -->|Yes| Exec3[Execute P2<br/>Available = 10+2 = 12]
+    Exec3 --> Safe([Safe Sequence: P1, P0, P2])
+
+    style Start fill:#e1f5ff
+    style Safe fill:#d4edda
+    style Exec1 fill:#fff3cd
+    style Exec2 fill:#fff3cd
+    style Exec3 fill:#fff3cd
+```
+
+**Result:** Safe sequence $\langle P_1, P_0, P_2 \rangle$ exists
 
 ### Unsafe State Example
 
@@ -209,6 +226,31 @@ int need[N][M];          // Remaining need (max - allocation)
 ```
 
 ### Resource Request Algorithm
+
+The Banker's Algorithm evaluates each resource request:
+
+```mermaid
+flowchart TD
+    Start([Process Pi requests<br/>resources]) --> Check1{Request ≤ Need?}
+    Check1 -->|No| Error[Error: Exceeded<br/>maximum claim]
+    Check1 -->|Yes| Check2{Request ≤ Available?}
+    Check2 -->|No| Wait[Process must wait]
+    Check2 -->|Yes| Pretend[Pretend allocation:<br/>Available -= Request<br/>Allocation += Request<br/>Need -= Request]
+    Pretend --> Safe{Run safety<br/>algorithm:<br/>Is state safe?}
+    Safe -->|Yes| Grant[Grant request]
+    Safe -->|No| Rollback[Rollback changes:<br/>Available += Request<br/>Allocation -= Request<br/>Need += Request]
+    Rollback --> Deny[Deny request<br/>Process waits]
+
+    style Start fill:#e1f5ff
+    style Grant fill:#d4edda
+    style Error fill:#f8d7da
+    style Deny fill:#fff3cd
+    style Wait fill:#fff3cd
+    style Pretend fill:#d1ecf1
+    style Safe fill:#cfe2ff
+```
+
+**Implementation:**
 
 ```c
 bool request_resources(BankerState* s, int process_id, int request[]) {

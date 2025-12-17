@@ -18,38 +18,99 @@ A B-tree of order m (minimum degree t) has these properties:
 
 ### Example Structure
 
-```
-B-tree of order 4 (max 4 children, 3 keys per node)
+B-tree of order 4 (max 4 children, 3 keys per node):
 
-                    [30|60|90]
-                   /    |    \    \
-          [10|20]  [40|50]  [70|80]  [100|110|120]
-          /  |  \   /  |  \   / |  \    /   |   \   \
-        [...] [...] [...] [...][...][...][...][...][...][...]
+```mermaid
+graph TD
+    Root["30 | 60 | 90"]
 
-Each leaf node contains data pointers
-Internal nodes contain keys and child pointers
+    L1A["10 | 20"]
+    L1B["40 | 50"]
+    L1C["70 | 80"]
+    L1D["100 | 110 | 120"]
+
+    Leaf1["5 | 8"]
+    Leaf2["12 | 15"]
+    Leaf3["25 | 28"]
+    Leaf4["35 | 38"]
+    Leaf5["45 | 48"]
+    Leaf6["55 | 58"]
+    Leaf7["65 | 68"]
+    Leaf8["75 | 78"]
+    Leaf9["85 | 88"]
+    Leaf10["95 | 98"]
+    Leaf11["105 | 108"]
+    Leaf12["115 | 118"]
+    Leaf13["125 | 128"]
+
+    Root -->|"< 30"| L1A
+    Root -->|"30-60"| L1B
+    Root -->|"60-90"| L1C
+    Root -->|"> 90"| L1D
+
+    L1A -->|"< 10"| Leaf1
+    L1A -->|"10-20"| Leaf2
+    L1A -->|"> 20"| Leaf3
+
+    L1B -->|"< 40"| Leaf4
+    L1B -->|"40-50"| Leaf5
+    L1B -->|"> 50"| Leaf6
+
+    L1C -->|"< 70"| Leaf7
+    L1C -->|"70-80"| Leaf8
+    L1C -->|"> 80"| Leaf9
+
+    L1D -->|"< 100"| Leaf10
+    L1D -->|"100-110"| Leaf11
+    L1D -->|"110-120"| Leaf12
+    L1D -->|"> 120"| Leaf13
+
+    style Root fill:#e1f5ff
+    style L1A fill:#fff4e1
+    style L1B fill:#fff4e1
+    style L1C fill:#fff4e1
+    style L1D fill:#fff4e1
+    style Leaf1 fill:#e8f5e9
+    style Leaf2 fill:#e8f5e9
+    style Leaf3 fill:#e8f5e9
+    style Leaf4 fill:#e8f5e9
+    style Leaf5 fill:#e8f5e9
+    style Leaf6 fill:#e8f5e9
+    style Leaf7 fill:#e8f5e9
+    style Leaf8 fill:#e8f5e9
+    style Leaf9 fill:#e8f5e9
+    style Leaf10 fill:#e8f5e9
+    style Leaf11 fill:#e8f5e9
+    style Leaf12 fill:#e8f5e9
+    style Leaf13 fill:#e8f5e9
 ```
+
+Key properties:
+- **Blue node**: Root (internal node with keys and pointers)
+- **Orange nodes**: Internal nodes (guide searches, contain keys)
+- **Green nodes**: Leaf nodes (contain actual data pointers)
+- All leaves appear at the same level (balanced)
 
 ### Why B-Trees for Databases
 
-```
 Disk-optimized structure:
 - Node size matches disk page (4KB, 8KB, 16KB)
 - Minimizes disk I/O
 - High fanout reduces tree height
 
-Example:
-Page size: 8KB
-Key size: 8 bytes
-Pointer size: 8 bytes
-Keys per node: ~500
+**Example calculation**:
+- Page size: 8KB
+- Key size: 8 bytes
+- Pointer size: 8 bytes
+- Keys per node: ~500
 
 For 1 billion rows:
-Height = log₅₀₀(1,000,000,000) ≈ 4
+$$\text{Height} = \log_{500}(1,000,000,000) \approx 4$$
 
-Only 4 disk reads to find any row!
-```
+**Only 4 disk reads to find any row!**
+
+Comparison with binary tree:
+$$\text{Binary tree height} = \log_2(1,000,000,000) \approx 30 \text{ disk reads}$$
 
 ## B-Tree Operations
 
@@ -106,24 +167,47 @@ This maintains balance—tree grows from root
 
 ### Insert Example
 
-```
 Insert 25 into B-tree (order 3, max 2 keys per node):
 
-Before:
-       [30]
-      /    \
-  [10|20]  [40|50]
+**Before insertion**:
+```mermaid
+graph TD
+    Root1["30"]
+    L1["10 | 20"]
+    L2["40 | 50"]
 
-Step 1: Find leaf → [10|20]
-Step 2: Insert 25 → [10|20|25] OVERFLOW!
+    Root1 --> L1
+    Root1 --> L2
 
-Step 3: Split and promote median (20):
-       [20|30]
-      /   |   \
-   [10] [25] [40|50]
-
-Tree maintains balance
+    style Root1 fill:#e1f5ff
+    style L1 fill:#e8f5e9
+    style L2 fill:#e8f5e9
 ```
+
+**Step 1**: Find leaf for 25 → goes to [10|20]
+
+**Step 2**: Insert 25 → [10|20|25] **OVERFLOW!** (max 2 keys)
+
+**Step 3**: Split and promote median (20):
+
+```mermaid
+graph TD
+    Root2["20 | 30"]
+    L3["10"]
+    L4["25"]
+    L5["40 | 50"]
+
+    Root2 --> L3
+    Root2 --> L4
+    Root2 --> L5
+
+    style Root2 fill:#e1f5ff
+    style L3 fill:#e8f5e9
+    style L4 fill:#e8f5e9
+    style L5 fill:#e8f5e9
+```
+
+Tree maintains balance - all leaves at same level
 
 ### Delete
 
@@ -167,7 +251,6 @@ Step 4: Handle underflow by merging or redistribution
 
 ### Structure
 
-```
 B+ tree: Variant used by most databases
 
 Key differences from B-tree:
@@ -176,11 +259,38 @@ Key differences from B-tree:
 3. Leaves linked in sorted order
 4. Keys may be duplicated in internal nodes
 
-         [30|60]              ← Internal: keys only
-        /   |   \
-    [10|20] [30|40|50] [60|70|80]  ← Leaves: keys + data
-       ↔        ↔         ↔        ← Leaf links
+```mermaid
+graph TD
+    Root["30 | 60"]
+
+    L1["10 | 20 | 30"]
+    L2["40 | 50 | 60"]
+    L3["70 | 80 | 90"]
+
+    Root -->|"< 30"| L1
+    Root -->|"30-60"| L2
+    Root -->|"> 60"| L3
+
+    L1 -.->|next| L2
+    L2 -.->|next| L3
+
+    L1 -->|data| D1[("Data<br/>Records")]
+    L2 -->|data| D2[("Data<br/>Records")]
+    L3 -->|data| D3[("Data<br/>Records")]
+
+    style Root fill:#e1f5ff
+    style L1 fill:#e8f5e9
+    style L2 fill:#e8f5e9
+    style L3 fill:#e8f5e9
+    style D1 fill:#ffe8e8
+    style D2 fill:#ffe8e8
+    style D3 fill:#ffe8e8
 ```
+
+- **Blue**: Internal nodes (keys only, no data)
+- **Green**: Leaf nodes (keys + data pointers)
+- **Red**: Actual data records
+- **Dashed arrows**: Linked list for range scans
 
 ### B+ Tree Advantages
 
@@ -323,19 +433,17 @@ Latch crabbing:
 
 ### Complexity Analysis
 
-```
-Operation    | Time Complexity | Disk I/O
--------------|-----------------|------------------
-Search       | O(log n)        | O(log_m n)
-Insert       | O(log n)        | O(log_m n)
-Delete       | O(log n)        | O(log_m n)
-Range(k)     | O(log n + k)    | O(log_m n + k/m)
+| Operation | Time Complexity | Disk I/O |
+|-----------|----------------|----------|
+| Search | $O(\log n)$ | $O(\log_m n)$ |
+| Insert | $O(\log n)$ | $O(\log_m n)$ |
+| Delete | $O(\log n)$ | $O(\log_m n)$ |
+| Range($k$) | $O(\log n + k)$ | $O(\log_m n + k/m)$ |
 
 Where:
-n = number of records
-m = branching factor (keys per node)
-k = number of results in range
-```
+- $n$ = number of records
+- $m$ = branching factor (keys per node)
+- $k$ = number of results in range
 
 ### Typical Heights
 
@@ -352,23 +460,22 @@ Most database queries: 2-4 disk reads for index lookup
 
 ### Space Requirements
 
-```
-Index overhead calculation:
+**Index overhead calculation**:
 
-Key size: 8 bytes (INT64)
-Pointer size: 8 bytes
-Node overhead: 24 bytes
-Page size: 8192 bytes
+Given:
+- Key size: 8 bytes (INT64)
+- Pointer size: 8 bytes
+- Node overhead: 24 bytes
+- Page size: 8192 bytes
 
-Usable space: 8192 - 24 = 8168 bytes
-Entries per leaf: 8168 / (8 + 8) = ~510
-Entries per internal: similar
+Calculations:
+$$\text{Usable space} = 8192 - 24 = 8168 \text{ bytes}$$
+$$\text{Entries per leaf} = \frac{8168}{8 + 8} \approx 510$$
 
 For 1M rows:
-Leaves: 1,000,000 / 510 ≈ 2000 pages
-Internal: 2000 / 510 ≈ 4 pages + 1 root
-Total: ~2005 pages ≈ 16 MB
+$$\text{Leaf pages} = \frac{1,000,000}{510} \approx 2000 \text{ pages}$$
+$$\text{Internal pages} = \frac{2000}{510} \approx 4 \text{ pages} + 1 \text{ root}$$
+$$\text{Total} \approx 2005 \text{ pages} \approx 16 \text{ MB}$$
 
-Index size ≈ 2% of data size (for this example)
-```
+**Index size** $\approx$ 2% of data size (for this example)
 

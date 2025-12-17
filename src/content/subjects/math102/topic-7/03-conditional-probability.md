@@ -60,15 +60,34 @@ $$P(A|B) = \frac{P(B|A) \cdot P(A)}{P(B|A) \cdot P(A) + P(B|A^c) \cdot P(A^c)}$$
 ### Medical Testing Example
 
 **Scenario:**
-- Disease prevalence: P(D) = 0.01
-- Test sensitivity: P(+|D) = 0.99 (true positive rate)
-- Test specificity: P(-|D^c) = 0.95 (true negative rate)
+- Disease prevalence: $P(D) = 0.01$
+- Test sensitivity: $P(+|D) = 0.99$ (true positive rate)
+- Test specificity: $P(-|D^c) = 0.95$ (true negative rate)
 
-**Question:** If test is positive, what's P(D|+)?
+**Probability tree:**
+```mermaid
+graph LR
+    Start[Population] -->|P D = 0.01| D[Has Disease]
+    Start -->|P D^c = 0.99| ND[No Disease]
+
+    D -->|P +|D = 0.99| TP[Test +<br/>P = 0.01 × 0.99<br/>= 0.0099]
+    D -->|P -|D = 0.01| FN[Test -<br/>P = 0.01 × 0.01<br/>= 0.0001]
+
+    ND -->|P +|D^c = 0.05| FP[Test +<br/>P = 0.99 × 0.05<br/>= 0.0495]
+    ND -->|P -|D^c = 0.95| TN[Test -<br/>P = 0.99 × 0.95<br/>= 0.9405]
+
+    style Start fill:#e1f5ff
+    style TP fill:#d4edda
+    style FP fill:#f8d7da
+    style TN fill:#d4edda
+    style FN fill:#f8d7da
+```
+
+**Question:** If test is positive, what's $P(D|+)$?
 
 $$P(D|+) = \frac{P(+|D) \cdot P(D)}{P(+|D) \cdot P(D) + P(+|D^c) \cdot P(D^c)}$$
 
-$$= \frac{0.99 \times 0.01}{0.99 \times 0.01 + 0.05 \times 0.99} = \frac{0.0099}{0.0099 + 0.0495} ≈ 0.167$$
+$$= \frac{0.99 \times 0.01}{0.99 \times 0.01 + 0.05 \times 0.99} = \frac{0.0099}{0.0099 + 0.0495} \approx 0.167$$
 
 Even with positive test, probability of disease is only about 17%!
 
@@ -86,8 +105,28 @@ Urn 2: 1 red, 4 blue balls
 
 Choose an urn uniformly at random, then draw a ball.
 
-P(Red) = P(Red|Urn1)·P(Urn1) + P(Red|Urn2)·P(Urn2)
-       = (3/5)(1/2) + (1/5)(1/2) = 2/5
+**Probability tree:**
+```mermaid
+graph LR
+    Start[Choose Urn] -->|P Urn1 = 1/2| U1[Urn 1]
+    Start -->|P Urn2 = 1/2| U2[Urn 2]
+
+    U1 -->|P R|U1 = 3/5| R1[Red<br/>P = 1/2 × 3/5 = 3/10]
+    U1 -->|P B|U1 = 2/5| B1[Blue<br/>P = 1/2 × 2/5 = 2/10]
+
+    U2 -->|P R|U2 = 1/5| R2[Red<br/>P = 1/2 × 1/5 = 1/10]
+    U2 -->|P B|U2 = 4/5| B2[Blue<br/>P = 1/2 × 4/5 = 4/10]
+
+    style Start fill:#e1f5ff
+    style R1 fill:#ffcccc
+    style R2 fill:#ffcccc
+    style B1 fill:#cce5ff
+    style B2 fill:#cce5ff
+```
+
+$$P(\text{Red}) = P(\text{Red}|\text{Urn1}) \cdot P(\text{Urn1}) + P(\text{Red}|\text{Urn2}) \cdot P(\text{Urn2})$$
+
+$$= \frac{3}{5} \cdot \frac{1}{2} + \frac{1}{5} \cdot \frac{1}{2} = \frac{3}{10} + \frac{1}{10} = \frac{2}{5}$$
 
 ## Independence
 
@@ -129,7 +168,7 @@ Conditional independence is central to:
 
 ## The Birthday Problem
 
-**Problem:** In a room of n people, what's the probability that at least two share a birthday?
+**Problem:** In a room of $n$ people, what's the probability that at least two share a birthday?
 
 **Approach:** Compute complement (all different birthdays).
 
@@ -137,9 +176,24 @@ $$P(\text{all different}) = \frac{365}{365} \cdot \frac{364}{365} \cdot \frac{36
 
 $$= \prod_{k=0}^{n-1} \left(1 - \frac{k}{365}\right)$$
 
+**Sequential calculation:**
+```mermaid
+graph LR
+    P1[Person 1:<br/>Any birthday<br/>365/365] --> P2[Person 2:<br/>Different from P1<br/>364/365]
+    P2 --> P3[Person 3:<br/>Different from P1,P2<br/>363/365]
+    P3 --> Dots[...]
+    Dots --> Pn[Person n:<br/>Different from all<br/>365-n+1/365]
+
+    Pn --> Product[Multiply all:<br/>P all different]
+    Product --> Complement[P match = 1 - P all different]
+
+    style P1 fill:#e1f5ff
+    style Complement fill:#d4edda
+```
+
 **Results:**
-- n = 23: P(match) ≈ 0.507
-- n = 50: P(match) ≈ 0.970
+- $n = 23$: $P(\text{match}) \approx 0.507$ (just over 50%!)
+- $n = 50$: $P(\text{match}) \approx 0.970$
 
 ## Simpson's Paradox
 

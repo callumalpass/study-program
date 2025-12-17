@@ -224,6 +224,72 @@ $$L = \lim_{n \to \infty} \frac{1}{2} \cdot \frac{n+1}{n} = \frac{1}{2} < 1$$
 
 The series of absolute values converges, so the original series is **absolutely convergent**.
 
+## Series Convergence Test Decision Tree
+
+Use this flowchart to systematically select the best convergence test for any series:
+
+```mermaid
+graph TD
+    Start([Given Series ∑aₙ]) --> DivTest{Does<br/>lim aₙ = 0?}
+    DivTest -->|No or DNE| Div1[Series DIVERGES<br/>by Divergence Test]
+
+    DivTest -->|Yes| Special{Special<br/>form?}
+
+    Special -->|∑arⁿ| Geo{Is<br/> r  < 1?}
+    Geo -->|Yes| GeoConv[Converges<br/>Sum = a/ 1-r ]
+    Geo -->|No| GeoDiv[Diverges]
+
+    Special -->|∑1/nᵖ| PSeries{Is<br/>p > 1?}
+    PSeries -->|Yes| PConv[Converges<br/> p-series ]
+    PSeries -->|No| PDiv[Diverges<br/> p-series ]
+
+    Special -->|No special form| Signs{Alternating<br/>signs?}
+
+    Signs -->|Yes| AltTest{Is aₙ decreasing<br/>to zero?}
+    AltTest -->|Yes| AltConv[Converges<br/>possibly conditionally]
+    AltTest -->|Check absolute| AbsConv
+    AltTest -->|No| Div2[Diverges]
+
+    Signs -->|No, all positive| Structure{What's the<br/>structure?}
+
+    Structure -->|Factorials<br/>or exponentials| RatioTest[Apply<br/>Ratio Test]
+    RatioTest --> RatioCalc{L = lim aₙ₊₁/aₙ }
+    RatioCalc -->|L < 1| RConv[Converges<br/>absolutely]
+    RatioCalc -->|L > 1| RDiv[Diverges]
+    RatioCalc -->|L = 1| RInconc[Inconclusive<br/>try another test]
+
+    Structure -->|Terms with<br/>nth powers| RootTest[Apply<br/>Root Test]
+    RootTest --> RootCalc{L = lim ⁿ√aₙ }
+    RootCalc -->|L < 1| RtConv[Converges<br/>absolutely]
+    RootCalc -->|L > 1| RtDiv[Diverges]
+    RootCalc -->|L = 1| RtInconc[Inconclusive<br/>try another test]
+
+    Structure -->|Similar to<br/>known series| Comparison{Can you find<br/>inequality?}
+    Comparison -->|Yes| DirectComp[Direct<br/>Comparison Test]
+    Comparison -->|No, but similar| LimitComp[Limit<br/>Comparison Test]
+
+    Structure -->|Continuous<br/>decreasing f n | IntTest[Integral Test<br/>∫f x dx]
+
+    RInconc --> Comparison
+    RtInconc --> Comparison
+    AbsConv --> RatioTest
+
+    style Start fill:#e1f5ff
+    style Div1 fill:#f8d7da
+    style Div2 fill:#f8d7da
+    style GeoDiv fill:#f8d7da
+    style PDiv fill:#f8d7da
+    style RDiv fill:#f8d7da
+    style RtDiv fill:#f8d7da
+    style GeoConv fill:#d4edda
+    style PConv fill:#d4edda
+    style RConv fill:#d4edda
+    style RtConv fill:#d4edda
+    style AltConv fill:#d4edda
+    style RatioTest fill:#fff3cd
+    style RootTest fill:#fff3cd
+```
+
 ## Summary of Convergence Tests
 
 Here's a quick reference for choosing the right test:
@@ -231,8 +297,8 @@ Here's a quick reference for choosing the right test:
 | Test | Best Used For | Conclusion |
 |------|---------------|------------|
 | Divergence Test | All series (first check) | Can only prove divergence |
-| Geometric Series | $ar^n$ form | Converges if $\|r\| < 1$ |
-| p-Series | $\frac{1}{n^p}$ form | Converges if $p > 1$ |
+| Geometric Series | $\sum ar^n$ form | Converges if $\|r\| < 1$ |
+| p-Series | $\sum \frac{1}{n^p}$ form | Converges if $p > 1$ |
 | Integral Test | Continuous, decreasing $f(n)$ | Same as $\int f(x)\,dx$ |
 | Direct Comparison | Can bound by known series | Inequality determines result |
 | Limit Comparison | Similar behavior to known series | Same convergence as comparison |

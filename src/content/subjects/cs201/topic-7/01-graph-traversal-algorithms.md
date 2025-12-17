@@ -41,7 +41,7 @@ The choice between representations has significant algorithmic implications. Mos
 
 ## Breadth-First Search (BFS)
 
-Breadth-first search explores vertices in order of their distance from the starting vertex, processing all vertices at distance k before any vertex at distance k+1. This level-by-level exploration uses a queue data structure: when we visit a vertex, we add its unvisited neighbors to the back of the queue. The queue ensures first-in-first-out processing, which maintains the distance ordering.
+Breadth-first search explores vertices in order of their distance from the starting vertex, processing all vertices at distance $k$ before any vertex at distance $k+1$. This level-by-level exploration uses a queue data structure: when we visit a vertex, we add its unvisited neighbors to the back of the queue. The queue ensures first-in-first-out processing, which maintains the distance ordering.
 
 Explores vertices level by level using a queue.
 
@@ -65,11 +65,47 @@ def bfs(graph, start):
     return order
 ```
 
-**Time**: O(V + E)
-**Space**: O(V)
+**Time**: $O(V + E)$
+**Space**: $O(V)$
 **Applications**: Shortest path (unweighted), level-order, bipartiteness check
 
-The O(V + E) complexity reflects that we visit each vertex once and examine each edge once (twice for undirected graphs). The visited set prevents revisiting vertices, ensuring termination and linear time. BFS naturally computes shortest paths in unweighted graphs because it processes vertices in distance order—when we first reach a vertex, we've taken the minimum number of edges.
+**BFS Visualization**:
+
+```mermaid
+graph TD
+    subgraph "Level 0"
+        A[A - Start]
+    end
+    subgraph "Level 1"
+        B[B]
+        C[C]
+    end
+    subgraph "Level 2"
+        D[D]
+        E[E]
+        F[F]
+    end
+
+    A --> B
+    A --> C
+    B --> D
+    B --> E
+    C --> F
+
+    Q0["Queue: [A]"] -.-> A
+    Q1["Queue: [B,C]"] -.-> B
+    Q2["Queue: [C,D,E]"] -.-> C
+    Q3["Queue: [D,E,F]"] -.-> D
+
+    style A fill:#4caf50
+    style B fill:#81c784
+    style C fill:#81c784
+    style D fill:#a5d6a7
+    style E fill:#a5d6a7
+    style F fill:#a5d6a7
+```
+
+The $O(V + E)$ complexity reflects that we visit each vertex once and examine each edge once (twice for undirected graphs). The visited set prevents revisiting vertices, ensuring termination and linear time. BFS naturally computes shortest paths in unweighted graphs because it processes vertices in distance order—when we first reach a vertex, we've taken the minimum number of edges.
 
 ## Depth-First Search (DFS)
 
@@ -92,9 +128,33 @@ def dfs(graph, start, visited=None):
     return result
 ```
 
-**Time**: O(V + E)
-**Space**: O(V) for recursion stack
+**Time**: $O(V + E)$
+**Space**: $O(V)$ for recursion stack
 **Applications**: Cycle detection, topological sort, connected components
+
+**DFS Visualization**:
+
+```mermaid
+graph TD
+    A[A - Start] --> B[B - Explore deep]
+    B --> D[D - Continue deep]
+    D --> E[E - Dead end, backtrack]
+    A --> C[C - After backtracking]
+    C --> F[F - Explore]
+
+    S1["Stack: [A]"] -.-> A
+    S2["Stack: [A,B]"] -.-> B
+    S3["Stack: [A,B,D]"] -.-> D
+    S4["Stack: [A,B,D,E]"] -.-> E
+    S5["Backtrack to A<br/>Stack: [A,C]"] -.-> C
+
+    style A fill:#e3f2fd
+    style B fill:#bbdefb
+    style D fill:#90caf9
+    style E fill:#64b5f6
+    style C fill:#bbdefb
+    style F fill:#90caf9
+```
 
 DFS reveals more structural information than BFS. The recursive nature creates a natural tree structure (the DFS tree) where we can classify edges as tree edges, back edges (to ancestors), forward edges (to descendants), and cross edges (to neither). Back edges indicate cycles; their absence indicates the graph is acyclic. This classification is fundamental to algorithms for topological sorting, finding strongly connected components, and detecting articulation points.
 

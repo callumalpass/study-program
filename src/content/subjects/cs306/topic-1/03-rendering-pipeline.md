@@ -6,24 +6,23 @@ The rendering pipeline is the sequence of stages that transforms a 3D scene desc
 
 The modern graphics pipeline consists of several stages, some fixed-function (hardware-controlled) and others programmable (shader-controlled):
 
-```
-Application (CPU)
-    ↓
-[Vertex Specification]
-    ↓
-[Vertex Shader] ← Programmable
-    ↓
-[Tessellation] ← Optional, Programmable
-    ↓
-[Geometry Shader] ← Optional, Programmable
-    ↓
-[Rasterization] ← Fixed-function
-    ↓
-[Fragment Shader] ← Programmable
-    ↓
-[Per-Fragment Operations] ← Configurable
-    ↓
-Framebuffer
+```mermaid
+flowchart TD
+    A[Application CPU] --> B[Vertex Specification]
+    B --> C[Vertex Shader<br/>Programmable]
+    C --> D[Tessellation<br/>Optional, Programmable]
+    D --> E[Geometry Shader<br/>Optional, Programmable]
+    E --> F[Rasterization<br/>Fixed-Function]
+    F --> G[Fragment Shader<br/>Programmable]
+    G --> H[Per-Fragment Operations<br/>Configurable]
+    H --> I[Framebuffer]
+
+    style C fill:#90EE90
+    style D fill:#FFE4B5
+    style E fill:#FFE4B5
+    style F fill:#FFB6C1
+    style G fill:#90EE90
+    style H fill:#87CEEB
 ```
 
 Each stage takes input from the previous stage, processes it, and passes results to the next. Let's examine each in detail.
@@ -497,18 +496,19 @@ Multiplicative:     Src * Dst
 
 ### Pipeline Flow
 
-```
-Fragment In
-    ↓
-[Scissor Test] → Discard if outside scissor
-    ↓
-[Stencil Test] → Compare with stencil buffer
-    ↓
-[Depth Test] → Compare with depth buffer
-    ↓
-[Blending] → Combine with framebuffer
-    ↓
-Write to Framebuffer
+```mermaid
+flowchart TD
+    A[Fragment In] --> B{Scissor Test}
+    B -->|Outside| Z[Discard]
+    B -->|Inside| C{Stencil Test}
+    C -->|Fail| Z
+    C -->|Pass| D{Depth Test}
+    D -->|Behind| Z
+    D -->|In Front| E[Blending]
+    E --> F[Write to Framebuffer]
+
+    style Z fill:#ff6b6b
+    style F fill:#51cf66
 ```
 
 ## Framebuffer

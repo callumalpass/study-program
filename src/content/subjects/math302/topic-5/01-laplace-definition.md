@@ -98,6 +98,67 @@ $$\mathcal{L}\{\cosh(at)\} = \frac{s}{s^2 - a^2}, \quad s > |a|$$
 
 The region of convergence (ROC) is crucial in Laplace transform theory. For each transform $F(s)$, there is a region in the complex $s$-plane where the integral converges. For functions of exponential order $\alpha$, the ROC is typically $\text{Re}(s) > \alpha$.
 
+### Laplace Transform Domain Mapping
+
+The Laplace transform maps functions between two domains:
+
+```mermaid
+graph LR
+    subgraph "Time Domain (t-domain)"
+        A[Function f-t-<br/>defined for t ≥ 0]
+        A1["Operations:<br/>• Differentiation: f'-t-<br/>• Integration: ∫f-τ-dτ<br/>• Initial conditions"]
+    end
+
+    subgraph "Transform Process"
+        B["ℒ{f-t-} = ∫₀^∞ e^-st f-t- dt"]
+        C["ℒ⁻¹{F-s-} = inverse transform<br/>-complex integral-"]
+    end
+
+    subgraph "Frequency Domain (s-domain)"
+        D[Function F-s-<br/>complex variable s]
+        D1["Operations:<br/>• Algebra: polynomials<br/>• Partial fractions<br/>• Multiplication"]
+    end
+
+    A -->|"Laplace Transform ℒ"| B
+    B --> D
+    D -->|"Inverse ℒ⁻¹"| C
+    C --> A
+
+    style A fill:#e7f1ff,stroke:#084298,stroke-width:2px
+    style D fill:#d1e7dd,stroke:#0f5132,stroke-width:2px
+    style B fill:#fff3cd,stroke:#997404
+    style C fill:#fff3cd,stroke:#997404
+```
+
+### Transform Benefits
+
+The key advantage is that **differential equations in the time domain become algebraic equations in the frequency domain**:
+
+```mermaid
+graph TD
+    subgraph "Time Domain"
+        T1[Differential Equation<br/>ay'' + by' + cy = f-t-<br/>with initial conditions]
+    end
+
+    subgraph "Frequency Domain"
+        F1[Algebraic Equation<br/>-as² + bs + c-Y-s- = F-s- + ICs<br/>polynomial in s]
+    end
+
+    subgraph "Solution Process"
+        F2[Solve for Y-s-:<br/>Y-s- = F-s- + ICs / -as² + bs + c-]
+        F3[Apply partial fractions<br/>and inverse transform]
+    end
+
+    T1 -->|"ℒ"| F1
+    F1 --> F2
+    F2 --> F3
+    F3 -->|"ℒ⁻¹"| T2[Solution y-t-<br/>in time domain]
+
+    style T1 fill:#f8d7da,stroke:#842029
+    style F1 fill:#d1e7dd,stroke:#0f5132
+    style T2 fill:#d1e7dd,stroke:#0f5132
+```
+
 ## One-to-One Correspondence
 
 An important property of the Laplace transform is that if $\mathcal{L}\{f(t)\} = \mathcal{L}\{g(t)\}$ for all $s$ in some region, and both $f$ and $g$ are continuous, then $f(t) = g(t)$ for all $t \geq 0$. This uniqueness property is essential when finding inverse transforms.

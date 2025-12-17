@@ -11,6 +11,16 @@ The accumulator pattern involves:
 2. Update it inside the loop
 3. Use the result after the loop
 
+```mermaid
+flowchart TD
+    Start([Start]) --> Init[Initialize accumulator<br/>e.g., total = 0]
+    Init --> Loop{More items?}
+    Loop -->|Yes| Update[Update accumulator<br/>e.g., total += item]
+    Update --> Loop
+    Loop -->|No| Use[Use result<br/>e.g., print total]
+    Use --> End([End])
+```
+
 ### Summing
 
 ```python
@@ -25,6 +35,8 @@ print(total)  # 23
 # Python built-in (preferred when applicable)
 print(sum(numbers))  # 23
 ```
+
+Mathematically, this computes: $\sum_{i=0}^{n-1} \text{numbers}[i]$ where $n$ is the length of the list.
 
 ### Counting
 
@@ -119,6 +131,20 @@ if first_multiple_of_5 is not None:
     print(f"Found: {first_multiple_of_5}")  # Found: 10
 else:
     print("No multiple of 5 found")
+```
+
+```mermaid
+flowchart TD
+    Start([Start]) --> Init[result = None]
+    Init --> Loop{More items?}
+    Loop -->|Yes| Check{Match found?}
+    Check -->|Yes| Save[result = item]
+    Save --> Break[break]
+    Break --> Found([Return/use result])
+    Check -->|No| Loop
+    Loop -->|No| NotFound{result is None?}
+    NotFound -->|Yes| NoMatch[Handle not found]
+    NotFound -->|No| Found
 ```
 
 ### Find First with `else` Clause
@@ -265,7 +291,20 @@ while True:
 
 ## State Tracking Pattern (Remember What Happened)
 
-Track information as you iterate:
+Track information as you iterate.
+
+```mermaid
+flowchart TD
+    Start([Start]) --> Init[Initialize state<br/>e.g., max_val, previous]
+    Init --> Loop{More items?}
+    Loop -->|Yes| Compare{Check condition?}
+    Compare -->|Yes| Update[Update state]
+    Compare -->|No| Keep[Keep current state]
+    Update --> Loop
+    Keep --> Loop
+    Loop -->|No| Result[Use final state]
+    Result --> End([End])
+```
 
 ### Finding Maximum/Minimum
 
@@ -330,6 +369,8 @@ for n in numbers:
 
 print(running_total)  # [1, 3, 6, 10, 15]
 ```
+
+This creates the cumulative sum sequence where element $i$ contains: $\sum_{j=0}^{i} \text{numbers}[j]$
 
 ---
 

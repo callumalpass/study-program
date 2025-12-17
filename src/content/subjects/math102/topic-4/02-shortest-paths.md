@@ -43,23 +43,66 @@ def dijkstra(graph, start):
 
 ### Example
 
-```
-Graph:              Start: A
-A --1-- B
-|       |           Initial: dist = {A:0, B:∞, C:∞, D:∞}
-4       2
-|       |           Process A: update B(1), C(4)
-C --3-- D           Process B: update D(3)
-                    Process D: (no updates)
-                    Process C: D already optimal
+**Dijkstra's execution:**
+```mermaid
+graph TD
+    subgraph Initial[Initial State]
+        A1((A<br/>dist=0))
+        B1((B<br/>dist=∞))
+        C1((C<br/>dist=∞))
+        D1((D<br/>dist=∞))
+    end
 
-Result: {A:0, B:1, C:4, D:3}
+    subgraph Step1[Process A]
+        A2((A<br/>✓))
+        B2((B<br/>dist=1))
+        C2((C<br/>dist=4))
+        D2((D<br/>dist=∞))
+    end
+
+    subgraph Step2[Process B dist=1]
+        A3((A<br/>✓))
+        B3((B<br/>✓))
+        C3((C<br/>dist=4))
+        D3((D<br/>dist=3))
+    end
+
+    subgraph Step3[Process D dist=3]
+        A4((A<br/>✓))
+        B4((B<br/>✓))
+        C4((C<br/>dist=4))
+        D4((D<br/>✓))
+    end
+
+    subgraph Final[Process C dist=4]
+        A5((A<br/>✓))
+        B5((B<br/>✓))
+        C5((C<br/>✓))
+        D5((D<br/>✓))
+    end
+
+    Initial --> Step1
+    Step1 --> Step2
+    Step2 --> Step3
+    Step3 --> Final
+
+    Result[Final distances:<br/>A:0, B:1, C:4, D:3]
+    Final --> Result
+
+    style A1 fill:#e1f5ff
+    style A2 fill:#d4edda
+    style B3 fill:#d4edda
+    style D4 fill:#d4edda
+    style C5 fill:#d4edda
+    style Result fill:#fff3cd
 ```
+
+**Result**: $\{A:0, B:1, C:4, D:3\}$
 
 ### Complexity
 
-- **With binary heap**: O((V + E) log V)
-- **With Fibonacci heap**: O(E + V log V)
+- **With binary heap**: $O((V + E) \log V)$
+- **With Fibonacci heap**: $O(E + V \log V)$
 - **Limitation**: Cannot handle negative edge weights
 
 ### Why No Negative Weights?
@@ -67,16 +110,20 @@ Result: {A:0, B:1, C:4, D:3}
 Dijkstra assumes: once a vertex is processed, its distance is final.
 
 Negative weights can violate this:
-```
-A --1-- B
- \     /
-  -5  3
-   \ /
-    C
 
-Processing A→B gives dist[B]=1
-But A→C→B = -5+3 = -2 < 1
+```mermaid
+graph LR
+    A -->|1| B
+    A -->|-5| C
+    C -->|3| B
+
+    Problem["Issue: Dijkstra processes B with dist=1<br/>But path A→C→B has length -5+3=-2"]
+
+    style A fill:#e1f5ff
+    style Problem fill:#f8d7da
 ```
+
+Processing $A \to B$ gives $\text{dist}[B]=1$, but $A \to C \to B = -5+3 = -2 < 1$
 
 ## Bellman-Ford Algorithm
 
@@ -109,12 +156,24 @@ def bellman_ford(graph, vertices, start):
 
 ### Why V-1 Iterations?
 
-Any shortest path has at most V-1 edges. Each iteration "extends" paths by one edge. After V-1 iterations, all shortest paths are found.
+Any shortest path has at most $V-1$ edges. Each iteration "extends" paths by one edge. After $V-1$ iterations, all shortest paths are found.
+
+**Intuition:**
+```mermaid
+graph LR
+    Iter0[Iteration 0:<br/>Paths of length 0<br/>source only] --> Iter1[Iteration 1:<br/>Paths of length ≤ 1]
+    Iter1 --> Iter2[Iteration 2:<br/>Paths of length ≤ 2]
+    Iter2 --> Dots[...]
+    Dots --> IterV[Iteration V-1:<br/>Paths of length ≤ V-1<br/>all shortest paths found]
+
+    style Iter0 fill:#e1f5ff
+    style IterV fill:#d4edda
+```
 
 ### Complexity
 
-- **Time**: O(VE)
-- **Space**: O(V)
+- **Time**: $O(VE)$
+- **Space**: $O(V)$
 
 ### Negative Cycle Detection
 

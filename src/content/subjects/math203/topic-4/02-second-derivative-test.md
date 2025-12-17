@@ -98,6 +98,64 @@ First derivative test: $f' > 0$ on both sides of 0 → neither max nor min (infl
    - If $f''(c) < 0$: local max
    - If $f''(c) = 0$: use first derivative test
 
+## Flowchart: Choosing Between First and Second Derivative Tests
+
+```mermaid
+flowchart TD
+    A[Found critical point c<br/>where f'c = 0] --> B{Is f''<br/>easy to<br/>compute?}
+
+    B -->|No, too complex| C[Use First Derivative Test]
+    B -->|Yes| D[Compute f''c]
+
+    D --> E{Value of<br/>f''c?}
+
+    E -->|f''c > 0| F[Local Minimum<br/>Concave up ∪]
+    E -->|f''c < 0| G[Local Maximum<br/>Concave down ∩]
+    E -->|f''c = 0| H[Test Inconclusive]
+
+    H --> C
+
+    C --> I[Check sign of f'<br/>on both sides of c]
+    I --> J{Sign change<br/>pattern?}
+
+    J -->|+ to -| G
+    J -->|- to +| F
+    J -->|No change| K[Neither max nor min<br/>Inflection point or<br/>constant on interval]
+
+    style F fill:#d4edda
+    style G fill:#d4edda
+    style K fill:#fff3cd
+    style C fill:#e1f5ff
+```
+
+## Combined Decision Process
+
+When you have a critical point at $x = c$ where $f'(c) = 0$, use this decision tree:
+
+```mermaid
+flowchart TD
+    Start[Critical point at x = c<br/>f'c = 0] --> Q1{Can easily<br/>compute f''?}
+
+    Q1 -->|Yes| Calc[Calculate f''c]
+    Q1 -->|No| FDT[First Derivative Test]
+
+    Calc --> Q2{f''c ≠ 0?}
+    Q2 -->|Yes, f''c > 0| Min[✓ Local Minimum]
+    Q2 -->|Yes, f''c < 0| Max[✓ Local Maximum]
+    Q2 -->|No, f''c = 0| FDT
+
+    FDT --> Signs[Test sign of f' at:<br/>• x = c - ε left of c<br/>• x = c + ε right of c]
+    Signs --> Pattern{Pattern?}
+
+    Pattern -->|f' > 0 then f' < 0<br/>Pos → Neg| Max
+    Pattern -->|f' < 0 then f' > 0<br/>Neg → Pos| Min
+    Pattern -->|f' same sign<br/>No change| Neither[Neither<br/>Possibly inflection point]
+
+    style Min fill:#c3f0c3
+    style Max fill:#c3f0c3
+    style Neither fill:#ffe6a0
+```
+
 ## Finding Both Types of Information
 
 **Example:** Full analysis of $f(x) = x^4 - 4x^3 + 4x^2$

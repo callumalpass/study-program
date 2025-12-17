@@ -255,6 +255,61 @@ $$y = c_1e^{0 \cdot x} + c_2e^{3x} = c_1 + c_2e^{3x}$$
 | $ar^2 + br + c = 0$ | $r$ (repeated) | $(c_1 + c_2x)e^{rx}$ |
 | $ar^2 + br + c = 0$ | $\alpha \pm i\beta$ | $e^{\alpha x}(c_1\cos\beta x + c_2\sin\beta x)$ |
 
+### Complete Solution Method Flowchart
+
+```mermaid
+graph TD
+    A[Given: ay'' + by' + cy = 0] --> B[Form characteristic equation:<br/>ar² + br + c = 0]
+
+    B --> C[Calculate discriminant:<br/>Δ = b² - 4ac]
+
+    C --> D{Sign of Δ?}
+
+    D -->|Δ > 0| E[Two distinct real roots]
+    D -->|Δ = 0| F[One repeated real root]
+    D -->|Δ < 0| G[Complex conjugate roots]
+
+    E --> E1[Solve using quadratic formula<br/>or factoring:<br/>r₁, r₂ = -b ± √Δ / 2a]
+    F --> F1[Single root:<br/>r = -b/2a]
+    G --> G1[Complex roots:<br/>r = α ± iβ<br/>α = -b/2a, β = √-Δ-/2a]
+
+    E1 --> E2[General solution:<br/>y = c₁e^-r₁x- + c₂e^-r₂x-]
+    F1 --> F2[General solution:<br/>y = -c₁ + c₂x-e^-rx-]
+    G1 --> G2[General solution:<br/>y = e^-αx--c₁cos-βx- + c₂sin-βx--]
+
+    E2 --> H{Initial conditions<br/>given?}
+    F2 --> H
+    G2 --> H
+
+    H -->|Yes| I[Use y-x₀- = y₀<br/>and y'-x₀- = y₁]
+    H -->|No| J[General solution complete]
+
+    I --> K[Solve system for c₁, c₂]
+    K --> L[Particular solution]
+
+    E2 --> M[Behavior Analysis]
+    F2 --> M
+    G2 --> M
+
+    M --> M1{Root properties?}
+
+    M1 -->|All r < 0| N1[Stable:<br/>y → 0 as x → ∞]
+    M1 -->|Any r > 0| N2[Unstable:<br/>y → ±∞ as x → ∞]
+    M1 -->|Complex with α < 0| N3[Damped oscillations]
+    M1 -->|Complex with α = 0| N4[Sustained oscillations]
+    M1 -->|Complex with α > 0| N5[Growing oscillations]
+
+    style D fill:#ffc107,stroke:#997404,stroke-width:3px
+    style E fill:#cfe2ff,stroke:#084298,stroke-width:2px
+    style F fill:#fff3cd,stroke:#997404,stroke-width:2px
+    style G fill:#d1e7dd,stroke:#0f5132,stroke-width:2px
+    style N1 fill:#d1e7dd,stroke:#0f5132
+    style N2 fill:#f8d7da,stroke:#842029
+    style N3 fill:#e7f1ff
+    style N4 fill:#fff9e6
+    style N5 fill:#ffe5e5
+```
+
 ## Applications
 
 **Spring-mass system**: $m\frac{d^2x}{dt^2} + c\frac{dx}{dt} + kx = 0$

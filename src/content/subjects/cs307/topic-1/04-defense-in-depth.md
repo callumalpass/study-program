@@ -28,6 +28,34 @@ No single security control is perfect:
 
 ## The Layers of Defense
 
+Defense in Depth implements multiple concentric layers of security controls, each providing protection and detection capabilities:
+
+```mermaid
+graph TD
+    A[Attackers] -->|Layer 1| B[Physical Security]
+    B -->|Layer 2| C[Network Security]
+    C -->|Layer 3| D[Perimeter Defense]
+    D -->|Layer 4| E[Endpoint Security]
+    E -->|Layer 5| F[Application Security]
+    F -->|Layer 6| G[Data Security]
+    G -->|Layer 7| H[Identity & Access Management]
+    H -->|Layer 8| I[Monitoring & Response]
+    I --> J[Protected Assets]
+
+    style A fill:#ff6b6b
+    style J fill:#51cf66
+    style B fill:#ffd43b
+    style C fill:#ffd43b
+    style D fill:#ffd43b
+    style E fill:#ffd43b
+    style F fill:#ffd43b
+    style G fill:#ffd43b
+    style H fill:#ffd43b
+    style I fill:#74c0fc
+```
+
+Each layer provides overlapping protection—if an attacker breaches one layer, subsequent layers continue to defend the system and increase detection likelihood.
+
 ### 1. Physical Security
 
 The foundation of all security is controlling physical access to systems.

@@ -13,6 +13,36 @@ When we perform a hypothesis test, there are four possible outcomes based on our
 
 We never know with certainty whether we've made the right decision because we don't know the true state of nature. However, we can control and calculate the probabilities of each outcome.
 
+### Visual Representation of Errors
+
+The following diagram illustrates the relationship between reality, our decision, and the types of errors:
+
+```mermaid
+graph TB
+    subgraph Reality["<b>REALITY (Unknown)</b>"]
+        H0T["H₀ is True"]
+        H0F["H₀ is False"]
+    end
+
+    subgraph Decision["<b>OUR DECISION (Based on Data)</b>"]
+        Reject["Reject H₀"]
+        FailReject["Fail to Reject H₀"]
+    end
+
+    H0T -->|We Reject| TypeI["<b>TYPE I ERROR</b><br/>False Positive<br/>Probability = α"]
+    H0T -->|We Fail to Reject| Correct1["<b>CORRECT</b><br/>True Negative<br/>Probability = 1-α"]
+
+    H0F -->|We Reject| Correct2["<b>CORRECT</b><br/>True Positive<br/>Probability = 1-β<br/><b>POWER</b>"]
+    H0F -->|We Fail to Reject| TypeII["<b>TYPE II ERROR</b><br/>False Negative<br/>Probability = β"]
+
+    style TypeI fill:#ffebee,stroke:#c62828,stroke-width:3px
+    style TypeII fill:#fff3e0,stroke:#ef6c00,stroke-width:3px
+    style Correct1 fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px
+    style Correct2 fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px
+    style H0T fill:#e3f2fd
+    style H0F fill:#f3e5f5
+```
+
 ## Type I Error (False Positive)
 
 A **Type I error** occurs when we reject a true null hypothesis. We conclude there's an effect when there actually isn't one.

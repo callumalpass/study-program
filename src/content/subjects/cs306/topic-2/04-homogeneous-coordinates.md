@@ -49,30 +49,23 @@ The w component serves multiple purposes:
 
 With homogeneous coordinates, translation becomes matrix multiplication:
 
-```
-⎡ 1  0  tx ⎤   ⎡ x ⎤   ⎡ x + tx ⎤
-⎢ 0  1  ty ⎥ × ⎢ y ⎥ = ⎢ y + ty ⎥
-⎣ 0  0  1  ⎦   ⎣ 1 ⎦   ⎣   1    ⎦
+$$\begin{bmatrix} 1 & 0 & t_x \\ 0 & 1 & t_y \\ 0 & 0 & 1 \end{bmatrix} \begin{bmatrix} x \\ y \\ 1 \end{bmatrix} = \begin{bmatrix} x + t_x \\ y + t_y \\ 1 \end{bmatrix}$$
 
-Result (x + tx, y + ty, 1) represents point (x + tx, y + ty)
-```
+Result $(x + t_x, y + t_y, 1)$ represents point $(x + t_x, y + t_y)$
 
 ### 2. Distinguishing Points from Vectors
 
-**Points** (locations): w = 1
-**Vectors** (directions): w = 0
+**Points** (locations): $w = 1$
+**Vectors** (directions): $w = 0$
 
-```
-Point:  (3, 4, 1) → affected by translation
-Vector: (3, 4, 0) → NOT affected by translation
+Point: $(3, 4, 1)$ → affected by translation
+Vector: $(3, 4, 0)$ → NOT affected by translation
 
-Translation matrix:
-⎡ 1  0  tx ⎤   ⎡ vx ⎤   ⎡ vx ⎤
-⎢ 0  1  ty ⎥ × ⎢ vy ⎥ = ⎢ vy ⎥
-⎣ 0  0  1  ⎦   ⎣ 0  ⎦   ⎣ 0  ⎦
+Translation matrix applied to a vector:
 
-Vector unchanged! (tx × 0 = 0, ty × 0 = 0)
-```
+$$\begin{bmatrix} 1 & 0 & t_x \\ 0 & 1 & t_y \\ 0 & 0 & 1 \end{bmatrix} \begin{bmatrix} v_x \\ v_y \\ 0 \end{bmatrix} = \begin{bmatrix} v_x \\ v_y \\ 0 \end{bmatrix}$$
+
+Vector unchanged! ($t_x \times 0 = 0$, $t_y \times 0 = 0$)
 
 ### 3. Representing Points at Infinity
 
@@ -105,46 +98,30 @@ Points further away have larger w → smaller NDC coordinates → perspective
 All affine transformations in homogeneous coordinates:
 
 ### Translation (2D)
-```
-⎡ 1  0  tx ⎤
-⎢ 0  1  ty ⎥
-⎣ 0  0  1  ⎦
-```
+
+$$\mathbf{T} = \begin{bmatrix} 1 & 0 & t_x \\ 0 & 1 & t_y \\ 0 & 0 & 1 \end{bmatrix}$$
 
 ### Scaling (2D)
-```
-⎡ sx  0   0 ⎤
-⎢ 0   sy  0 ⎥
-⎣ 0   0   1 ⎦
-```
 
-### Rotation (2D, angle θ)
-```
-⎡ cos θ  -sin θ  0 ⎤
-⎢ sin θ   cos θ  0 ⎥
-⎣  0       0     1 ⎦
-```
+$$\mathbf{S} = \begin{bmatrix} s_x & 0 & 0 \\ 0 & s_y & 0 \\ 0 & 0 & 1 \end{bmatrix}$$
+
+### Rotation (2D, angle $\theta$)
+
+$$\mathbf{R}(\theta) = \begin{bmatrix} \cos\theta & -\sin\theta & 0 \\ \sin\theta & \cos\theta & 0 \\ 0 & 0 & 1 \end{bmatrix}$$
 
 ### General 2D Affine Transform
-```
-⎡ a  b  tx ⎤
-⎢ c  d  ty ⎥
-⎣ 0  0  1  ⎦
 
-where [a b; c d] is the linear part
-and [tx, ty] is the translation
-```
+$$\mathbf{M} = \begin{bmatrix} a & b & t_x \\ c & d & t_y \\ 0 & 0 & 1 \end{bmatrix}$$
+
+where $\begin{bmatrix} a & b \\ c & d \end{bmatrix}$ is the linear part and $(t_x, t_y)$ is the translation
 
 ### 3D Transformations
-```
-General 3D affine:
-⎡ a  b  c  tx ⎤
-⎢ d  e  f  ty ⎥
-⎢ g  h  i  tz ⎥
-⎣ 0  0  0  1  ⎦
 
-3×3 linear transform + translation vector
-```
+General 3D affine:
+
+$$\mathbf{M} = \begin{bmatrix} a & b & c & t_x \\ d & e & f & t_y \\ g & h & i & t_z \\ 0 & 0 & 0 & 1 \end{bmatrix}$$
+
+$3 \times 3$ linear transform + translation vector
 
 ## Equivalence of Homogeneous Points
 
@@ -312,15 +289,13 @@ in vec2 vTexCoord;  // GPU automatically divided by interpolated w
 
 Homogeneous coordinates enable affine combinations:
 
-```
-Point P = w0*P0 + w1*P1 + w2*P2
+$$\mathbf{P} = w_0 \mathbf{P}_0 + w_1 \mathbf{P}_1 + w_2 \mathbf{P}_2$$
 
-where w0 + w1 + w2 = 1
+where $w_0 + w_1 + w_2 = 1$
 
 Examples:
-- Midpoint: 0.5*P0 + 0.5*P1
-- Barycentric: w0*V0 + w1*V1 + w2*V2 (w0+w1+w2=1)
-```
+- Midpoint: $0.5\mathbf{P}_0 + 0.5\mathbf{P}_1$
+- Barycentric: $w_0\mathbf{V}_0 + w_1\mathbf{V}_1 + w_2\mathbf{V}_2$ (where $w_0+w_1+w_2=1$)
 
 **Implementation**:
 ```cpp
@@ -344,18 +319,14 @@ glm::vec4 barycentricInterpolation(
 
 Homogeneous coordinates enable **projective transformations** (more general than affine):
 
-```
-General projective transformation (3D → 2D):
-⎡ a  b  c  d ⎤
-⎢ e  f  g  h ⎥
-⎢ i  j  k  l ⎥
-⎣ m  n  o  p ⎦
+General projective transformation (3D):
 
-Bottom row [m n o p] can be non-zero (unlike affine)
+$$\mathbf{M} = \begin{bmatrix} a & b & c & d \\ e & f & g & h \\ i & j & k & l \\ m & n & o & p \end{bmatrix}$$
+
+Bottom row $[m\ n\ o\ p]$ can be non-zero (unlike affine)
 Enables perspective projection
-```
 
-**Affine** (bottom row is [0 0 0 1]):
+**Affine** (bottom row is $[0\ 0\ 0\ 1]$):
 - Parallel lines remain parallel
 - Used for model/view transforms
 

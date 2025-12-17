@@ -151,26 +151,42 @@ void round_robin(Process* processes, int n, int quantum) {
 | P4 | 3 | 2 |
 | P5 | 4 | 3 |
 
-With time quantum = 2:
+With time quantum $q = 2$:
 
+```mermaid
+gantt
+    title Round Robin Scheduling (q=2)
+    dateFormat X
+    axisFormat %s
+
+    section CPU
+    P1 :0, 2
+    P2 :2, 4
+    P3 :4, 5
+    P4 :5, 7
+    P1 :7, 9
+    P2 :9, 10
+    P5 :10, 12
+    P1 :12, 13
+    P5 :13, 14
 ```
-Gantt Chart:
-|P1|P2|P3|P4|P1|P2|P5|P1|P5|
-0  2  4  5  7  9 10 12 13 14
 
-Execution trace:
-t=0-2:  P1 runs (remaining: 3)
-t=2-4:  P2 runs (remaining: 1)
-t=4-5:  P3 runs (completes)
-t=5-7:  P4 runs (completes)
-t=7-9:  P1 runs (remaining: 1)
-t=9-10: P2 runs (completes)
-t=10-12: P5 runs (remaining: 1)
-t=12-13: P1 runs (completes)
-t=13-14: P5 runs (completes)
-```
+**Execution trace:**
 
-Results:
+| Time | Process | Remaining After | Event |
+|------|---------|-----------------|-------|
+| 0-2 | P1 | 3 | Time quantum expired |
+| 2-4 | P2 | 1 | Time quantum expired |
+| 4-5 | P3 | 0 | Process completes |
+| 5-7 | P4 | 0 | Process completes |
+| 7-9 | P1 | 1 | Time quantum expired |
+| 9-10 | P2 | 0 | Process completes |
+| 10-12 | P5 | 1 | Time quantum expired |
+| 12-13 | P1 | 0 | Process completes |
+| 13-14 | P5 | 0 | Process completes |
+
+**Results:**
+
 | Process | Completion | Turnaround | Waiting |
 |---------|------------|------------|---------|
 | P1 | 13 | 13 | 8 |
@@ -179,7 +195,9 @@ Results:
 | P4 | 7 | 4 | 2 |
 | P5 | 14 | 10 | 7 |
 
-Average Turnaround = 7.8, Average Waiting = 5.0
+$$\overline{TAT} = \frac{13 + 9 + 3 + 4 + 10}{5} = 7.8 \text{ ms}$$
+
+$$\bar{W} = \frac{8 + 6 + 2 + 2 + 7}{5} = 5.0 \text{ ms}$$
 
 ## Time Quantum Selection
 
@@ -234,22 +252,40 @@ void analyze_quantum(Process* processes, int n, int* results, int num_quantums) 
 
 ## Context Switch Overhead
 
-```
-Total time = CPU time + (context switches × switch overhead)
+The total execution time includes context switch overhead:
 
-Example:
-- 4 processes, each with burst time 10
-- Time quantum = 4
-- Context switch time = 0.5
+$$T_{total} = T_{CPU} + (n_{switches} \times t_{switch})$$
 
-Without overhead:
-  RR completes in 40 time units
+Where:
+- $T_{total}$ = total time including overhead
+- $T_{CPU}$ = pure CPU execution time
+- $n_{switches}$ = number of context switches
+- $t_{switch}$ = time for one context switch
+
+**Example calculation:**
+
+Given:
+- 4 processes, each with burst time $b = 10$
+- Time quantum $q = 4$
+- Context switch time $t_{switch} = 0.5$
+
+Without overhead: $T_{CPU} = 4 \times 10 = 40$ time units
+
+Number of switches: Each process needs $\lceil \frac{10}{4} \rceil = 3$ time slices
+
+Total switches: $n_{switches} \approx 10$
 
 With overhead:
-  Switches = ~10 (approximately)
-  Total time = 40 + 10 × 0.5 = 45 time units
-  Overhead = 12.5%
-```
+
+$$T_{total} = 40 + (10 \times 0.5) = 45 \text{ time units}$$
+
+$$\text{Overhead \%} = \frac{5}{45} \times 100\% = 11.1\%$$
+
+**Quantum vs Overhead trade-off:**
+
+$$\text{Overhead \%} \approx \frac{t_{switch}}{q} \times 100\%$$
+
+Smaller $q$ → more responsive but higher overhead
 
 ## Round Robin Variations
 

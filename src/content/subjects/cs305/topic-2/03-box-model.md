@@ -305,6 +305,22 @@ div {
 /* Content width = 300 - (20*2) - (5*2) = 250px */
 ```
 
+#### Box Model Calculation
+
+With `box-sizing: border-box`, the total width calculation is:
+
+$$\text{Total Width} = \text{Specified Width}$$
+
+$$\text{Content Width} = \text{Width} - (2 \times \text{Padding}) - (2 \times \text{Border Width})$$
+
+With `box-sizing: content-box` (default):
+
+$$\text{Total Width} = \text{Content Width} + (2 \times \text{Padding}) + (2 \times \text{Border Width})$$
+
+For example, with `width: 300px`, `padding: 20px`, and `border: 5px`:
+- **border-box**: Total = $300\text{px}$, Content = $300 - 40 - 10 = 250\text{px}$
+- **content-box**: Total = $300 + 40 + 10 = 350\text{px}$, Content = $300\text{px}$
+
 ### Global Border-Box
 
 Apply border-box to all elements (common best practice):

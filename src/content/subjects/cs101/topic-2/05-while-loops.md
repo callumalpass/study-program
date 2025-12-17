@@ -16,6 +16,14 @@ The `while` loop:
 3. Returns to step 1
 4. If `False`, exits and continues with the next statement
 
+```mermaid
+flowchart TD
+    Start([Start<br/>count = 0]) --> Check{count < 3?}
+    Check -->|True| Body[Print count<br/>count += 1]
+    Body --> Check
+    Check -->|False| End([End])
+```
+
 ---
 
 ## When to Use `while` vs `for`
@@ -188,6 +196,16 @@ for i in range(3):
             break  # Only exits the inner loop
         print(f"({i},{j})")
 # Output: (0,0), (1,0), (2,0)
+```
+
+```mermaid
+flowchart TD
+    Start([Start loop]) --> Check{Condition?}
+    Check -->|True| Break[break statement]
+    Break --> Exit([Exit loop])
+    Check -->|False| Continue[Continue loop body]
+    Continue --> Next[Next iteration]
+    Next --> Check
 ```
 
 ### `continue` - Skip to Next Iteration

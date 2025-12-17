@@ -6,23 +6,44 @@ While the OSI model provides a conceptual framework, the **TCP/IP model** (also 
 
 The TCP/IP model predates the OSI model and takes a more pragmatic approach with fewer layers:
 
-```
-        OSI Model                    TCP/IP Model
-    +----------------+           +----------------+
-    |  Application   |           |                |
-    +----------------+           |  Application   |
-    | Presentation   |           |                |
-    +----------------+           +----------------+
-    |    Session     |           |   Transport    |
-    +----------------+           +----------------+
-    |   Transport    |           |    Internet    |
-    +----------------+           +----------------+
-    |    Network     |           | Network Access |
-    +----------------+           | (Link Layer)   |
-    |   Data Link    |           +----------------+
-    +----------------+
-    |   Physical     |
-    +----------------+
+```mermaid
+graph LR
+    subgraph "OSI Model (7 Layers)"
+    O7["Application"]
+    O6["Presentation"]
+    O5["Session"]
+    O4["Transport"]
+    O3["Network"]
+    O2["Data Link"]
+    O1["Physical"]
+    end
+
+    subgraph "TCP/IP Model (4 Layers)"
+    T4["Application<br/>(HTTP, FTP, DNS)"]
+    T3["Transport<br/>(TCP, UDP)"]
+    T2["Internet<br/>(IP, ICMP)"]
+    T1["Network Access<br/>(Ethernet, Wi-Fi)"]
+    end
+
+    O7 -.->|"Combined"| T4
+    O6 -.-> T4
+    O5 -.-> T4
+    O4 -.-> T3
+    O3 -.-> T2
+    O2 -.-> T1
+    O1 -.-> T1
+
+    style O7 fill:#e1f5ff
+    style O6 fill:#e8f5e9
+    style O5 fill:#fff3e0
+    style O4 fill:#fce4ec
+    style O3 fill:#f3e5f5
+    style O2 fill:#e0f2f1
+    style O1 fill:#fff9c4
+    style T4 fill:#bbdefb
+    style T3 fill:#f8bbd0
+    style T2 fill:#e1bee7
+    style T1 fill:#c8e6c9
 ```
 
 Key differences:

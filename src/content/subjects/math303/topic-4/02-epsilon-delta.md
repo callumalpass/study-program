@@ -43,6 +43,54 @@ The standard approach follows these steps:
 
 The key insight is that the scratch work proceeds backward (from desired conclusion to hypothesis), but the formal proof proceeds forward (from hypothesis to conclusion).
 
+### Epsilon-Delta Proof Construction Workflow
+
+```mermaid
+flowchart TD
+    A[Start: Prove f continuous at c] --> B[SCRATCH WORK<br/>Work backwards]
+    B --> C[Start with goal:<br/>|f·x· - f·c·| < ε]
+    C --> D[Manipulate algebraically<br/>to involve |x - c|]
+    D --> E{Can you express<br/>|f·x· - f·c·| ≤ K|x - c|<br/>for some K?}
+
+    E -->|Yes - Simple case| F[Set δ = ε/K]
+    E -->|No - Complex case| G[Need additional restrictions]
+
+    G --> H[Restrict |x - c| < r<br/>for some r > 0]
+    H --> I[Under this restriction,<br/>bound other terms]
+    I --> J[Now express<br/>|f·x· - f·c·| ≤ K|x - c|]
+    J --> K[Set δ = min{r, ε/K}]
+
+    F --> L[FORMAL PROOF<br/>Work forwards]
+    K --> L
+
+    L --> M[Let ε > 0 be given]
+    M --> N[Choose δ from scratch work]
+    N --> O[Suppose |x - c| < δ]
+    O --> P[Verify restrictions hold]
+    P --> Q[Show |f·x· - f·c·| < ε<br/>using forward logic]
+    Q --> R[Conclude: f continuous at c]
+
+    style B fill:#FFE4B5
+    style C fill:#FFE4B5
+    style D fill:#FFE4B5
+    style E fill:#FFE4B5
+    style F fill:#FFE4B5
+    style G fill:#FFE4B5
+    style H fill:#FFE4B5
+    style I fill:#FFE4B5
+    style J fill:#FFE4B5
+    style K fill:#FFE4B5
+    style L fill:#90EE90
+    style M fill:#90EE90
+    style N fill:#90EE90
+    style O fill:#90EE90
+    style P fill:#90EE90
+    style Q fill:#90EE90
+    style R fill:#87CEEB
+```
+
+**Key principle**: Scratch work (yellow) goes **backwards** from goal to hypothesis. Formal proof (green) goes **forwards** from hypothesis to goal.
+
 ## Linear Functions
 
 **Theorem 2.1:** Every linear function $f(x) = mx + b$ is continuous on $\mathbb{R}$.

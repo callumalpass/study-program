@@ -233,6 +233,32 @@ Include JavaScript using the `<script>` element:
 
 The `defer` attribute loads the script in parallel but executes it after the DOM is parsed, improving page load performance.
 
+## HTML Document Tree Structure
+
+Understanding the hierarchical structure of HTML documents is crucial. Here's a visual representation of how the browser constructs the DOM:
+
+```mermaid
+graph TD
+    A[Document] --> B[html]
+    B --> C[head]
+    B --> D[body]
+    C --> E[meta charset]
+    C --> F[meta viewport]
+    C --> G[title]
+    C --> H[link stylesheet]
+    C --> I[script]
+    D --> J[header]
+    D --> K[main]
+    D --> L[footer]
+    J --> M[h1]
+    J --> N[nav]
+    N --> O[ul]
+    O --> P[li > a]
+    K --> Q[article]
+    Q --> R[h2]
+    Q --> S[p]
+```
+
 ## Complete Document Structure Example
 
 ```html

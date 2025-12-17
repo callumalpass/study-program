@@ -8,43 +8,74 @@ Effective incident response minimizes damage and recovery time while preserving 
 
 ### Incident Response Lifecycle
 
-```
-NIST Incident Response Lifecycle:
+The NIST incident response lifecycle is a continuous process for handling security incidents:
 
-┌────────────────────────────────────────────┐
-│ 1. Preparation                             │
-│    - IR plan                               │
-│    - IR team                               │
-│    - Tools and resources                   │
-│    - Training                              │
-└──────────────┬─────────────────────────────┘
-               │
-               ↓
-┌────────────────────────────────────────────┐
-│ 2. Detection & Analysis                    │
-│    - Monitor for incidents                 │
-│    - Analyze alerts                        │
-│    - Determine scope                       │
-│    - Classify severity                     │
-└──────────────┬─────────────────────────────┘
-               │
-               ↓
-┌────────────────────────────────────────────┐
-│ 3. Containment, Eradication, Recovery     │
-│    - Contain threat                        │
-│    - Remove malicious artifacts            │
-│    - Restore systems                       │
-│    - Verify clean state                    │
-└──────────────┬─────────────────────────────┘
-               │
-               ↓
-┌────────────────────────────────────────────┐
-│ 4. Post-Incident Activity                 │
-│    - Lessons learned meeting               │
-│    - Update IR plan                        │
-│    - Improve defenses                      │
-│    - Report findings                       │
-└────────────────────────────────────────────┘
+```mermaid
+graph TD
+    Start([Security Incident Occurs]) --> Detect[2. Detection & Analysis]
+
+    Prep[1. Preparation] -.->|Enables| Detect
+    Prep -.->|Enables| Contain
+
+    Detect --> Contain[3. Containment, Eradication & Recovery]
+
+    Contain --> Post[4. Post-Incident Activity]
+
+    Post -.->|Improves| Prep
+
+    subgraph Phase1["Phase 1: Preparation"]
+        Prep
+        PrepItems[- IR plan & procedures<br/>- IR team & roles<br/>- Tools & resources<br/>- Training & exercises]
+    end
+
+    subgraph Phase2["Phase 2: Detection & Analysis"]
+        Detect
+        DetectItems[- Monitor for incidents<br/>- Analyze alerts & logs<br/>- Determine scope & severity<br/>- Document initial findings]
+    end
+
+    subgraph Phase3["Phase 3: Containment, Eradication, Recovery"]
+        Contain
+        ContainItems[- Contain the threat<br/>- Eradicate malicious artifacts<br/>- Restore systems from backups<br/>- Verify clean state]
+    end
+
+    subgraph Phase4["Phase 4: Post-Incident Activity"]
+        Post
+        PostItems[- Lessons learned meeting<br/>- Update IR plan & procedures<br/>- Implement improvements<br/>- Report findings to stakeholders]
+    end
+
+    Post --> Start
+
+    style Start fill:#ff6b6b,stroke:#c92a2a,color:#fff
+    style Prep fill:#51cf66,stroke:#2f9e44
+    style Detect fill:#ffd43b,stroke:#f59f00
+    style Contain fill:#ff8787,stroke:#fa5252
+    style Post fill:#74c0fc,stroke:#1c7ed6
+```
+
+### Incident Severity Timeline
+
+Time is critical in incident response. Different severity levels require different response times:
+
+```mermaid
+gantt
+    title Incident Response Timeline by Severity
+    dateFormat X
+    axisFormat %M min
+
+    section P1 Critical
+    Detection          :0, 15m
+    Response Started   :15m, 30m
+    Containment        :45m, 2h
+
+    section P2 High
+    Detection          :0, 30m
+    Response Started   :30m, 1h
+    Containment        :90m, 3h
+
+    section P3 Medium
+    Detection          :0, 2h
+    Response Started   :2h, 4h
+    Containment        :6h, 8h
 ```
 
 ## Preparation
