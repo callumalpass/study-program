@@ -1,0 +1,115 @@
+import type { Exam } from '../../../core/types';
+
+export const exams: Exam[] = [
+  {
+    id: 'math404-midterm',
+    subjectId: 'math404',
+    title: 'Midterm Exam',
+    durationMinutes: 120,
+    instructions: ['Answer all questions', 'Show all work', 'Partial credit is available'],
+    questions: [
+      {
+        id: 'math404-mid-q1',
+        type: 'written',
+        prompt: 'Formulate the following as an optimization problem: A company produces two products A and B. Product A yields $40 profit and requires 2 hours labor. Product B yields $30 profit and requires 1 hour labor. There are 100 hours of labor available. Maximize profit.',
+        correctAnswer: 'Decision variables: x₁ = units of A, x₂ = units of B. Objective: max 40x₁ + 30x₂. Constraints: 2x₁ + x₂ ≤ 100, x₁, x₂ ≥ 0.',
+        explanation: 'A complete optimization formulation requires decision variables, objective function, and constraints.'
+      },
+      {
+        id: 'math404-mid-q2',
+        type: 'written',
+        prompt: 'Solve graphically: max 3x + 2y s.t. x + y ≤ 4, 2x + y ≤ 6, x, y ≥ 0',
+        correctAnswer: 'Vertices: (0,0), (3,0), (2,2), (0,4). Optimal: (2,2) with value 10.',
+        explanation: 'The optimal solution lies at a vertex of the feasible region.'
+      },
+      {
+        id: 'math404-mid-q3',
+        type: 'written',
+        prompt: 'Write the dual of: max 3x₁ + 2x₂ s.t. x₁ + 2x₂ ≤ 4, 2x₁ + x₂ ≤ 3, x₁, x₂ ≥ 0',
+        correctAnswer: 'Dual: min 4y₁ + 3y₂ s.t. y₁ + 2y₂ ≥ 3, 2y₁ + y₂ ≥ 2, y₁, y₂ ≥ 0',
+        explanation: 'Primal max becomes dual min, constraints become variables, and coefficient matrix transposes.'
+      },
+      {
+        id: 'math404-mid-q4',
+        type: 'multiple_choice',
+        prompt: 'Which statement about convex functions is TRUE?',
+        options: [
+          'A convex function can have multiple local minima',
+          'Every local minimum of a convex function is a global minimum',
+          'The sum of two convex functions is concave',
+          'All polynomial functions are convex'
+        ],
+        correctAnswer: 1,
+        explanation: 'Convexity guarantees that any local minimum is also global.'
+      },
+      {
+        id: 'math404-mid-q5',
+        type: 'written',
+        prompt: 'Prove that f(x) = ||x||² is convex by showing f(λx + (1-λ)y) ≤ λf(x) + (1-λ)f(y).',
+        correctAnswer: 'Using ||λx + (1-λ)y||² = λ²||x||² + 2λ(1-λ)x·y + (1-λ)²||y||² and noting that x·y ≤ ||x||||y||, we can show the inequality holds.',
+        explanation: 'This follows from the convexity definition and properties of norms.'
+      }
+    ]
+  },
+  {
+    id: 'math404-final',
+    subjectId: 'math404',
+    title: 'Final Exam',
+    durationMinutes: 180,
+    instructions: ['Answer all questions', 'Show all work', 'You may use one page of notes'],
+    questions: [
+      {
+        id: 'math404-fin-q1',
+        type: 'written',
+        prompt: 'Solve the LP using simplex: max 5x₁ + 4x₂ s.t. x₁ + x₂ ≤ 5, 10x₁ + 6x₂ ≤ 45, x₁, x₂ ≥ 0',
+        correctAnswer: 'Optimal: x₁ = 3.75, x₂ = 1.25, objective = 23.75',
+        explanation: 'Apply simplex algorithm with slack variables and pivot operations.'
+      },
+      {
+        id: 'math404-fin-q2',
+        type: 'written',
+        prompt: 'Write the KKT conditions for: min f(x) s.t. g(x) ≤ 0, h(x) = 0',
+        correctAnswer: '∇f + λ∇g + μ∇h = 0, g(x) ≤ 0, h(x) = 0, λ ≥ 0, λg(x) = 0',
+        explanation: 'KKT conditions combine stationarity, primal feasibility, dual feasibility, and complementary slackness.'
+      },
+      {
+        id: 'math404-fin-q3',
+        type: 'written',
+        prompt: 'Analyze the convergence rate of gradient descent on f(x) = (1/2)xᵀQx where Q has eigenvalues 1 and 10.',
+        correctAnswer: 'Condition number κ = 10. Rate = (κ-1)/(κ+1) = 9/11 ≈ 0.818. Linear convergence.',
+        explanation: 'The convergence rate depends on the condition number of the Hessian.'
+      },
+      {
+        id: 'math404-fin-q4',
+        type: 'written',
+        prompt: 'Solve using KKT: min x² + y² s.t. x + y = 1',
+        correctAnswer: 'L = x² + y² + λ(x + y - 1). KKT: 2x + λ = 0, 2y + λ = 0, x + y = 1. Solution: x = y = 1/2, λ = -1.',
+        explanation: 'Set up Lagrangian and solve the system of KKT equations.'
+      },
+      {
+        id: 'math404-fin-q5',
+        type: 'multiple_choice',
+        prompt: 'What is the duality gap at optimality for a convex problem satisfying Slater\'s condition?',
+        options: ['Always positive', 'Zero', 'Depends on the problem', 'Undefined'],
+        correctAnswer: 1,
+        explanation: 'Strong duality holds under Slater\'s condition, meaning zero duality gap.'
+      },
+      {
+        id: 'math404-fin-q6',
+        type: 'written',
+        prompt: 'Describe the barrier method for constrained optimization. What is the central path?',
+        correctAnswer: 'Barrier method adds -t·Σlog(-gᵢ(x)) to objective. Central path is the set of solutions x*(t) as t → ∞, converging to the constrained optimum.',
+        explanation: 'Interior point methods follow the central path to the optimal solution.'
+      },
+      {
+        id: 'math404-fin-q7',
+        type: 'written',
+        prompt: 'Perform one Newton iteration on f(x) = x³ - 2x - 5 starting from x₀ = 2.',
+        correctAnswer: 'f(2) = 8 - 4 - 5 = -1, f\'(2) = 12 - 2 = 10. x₁ = 2 - (-1)/10 = 2.1',
+        explanation: 'Newton update: x_{k+1} = x_k - f(x_k)/f\'(x_k)'
+      }
+    ]
+  }
+];
+
+export default exams;

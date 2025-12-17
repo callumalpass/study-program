@@ -2,7 +2,7 @@
 
 export type SubjectStatus = 'not_started' | 'in_progress' | 'completed';
 export type QuestionType = 'multiple_choice' | 'fill_blank' | 'true_false' | 'code_output' | 'coding' | 'written';
-export type ProgrammingLanguage = 'javascript' | 'typescript' | 'python' | 'java' | 'cpp' | 'c' | 'rust' | 'go' | 'sql';
+export type ProgrammingLanguage = 'javascript' | 'typescript' | 'python' | 'java' | 'cpp' | 'c' | 'rust' | 'go' | 'sql' | 'bash' | 'yaml' | 'dockerfile';
 export type Theme = 'light' | 'dark' | 'auto';
 export type ExerciseDifficulty = 1 | 2 | 3 | 4 | 5; // 1=easiest, 5=hardest (internal use)
 export type AssessmentType = 'quiz' | 'exam';

@@ -1,0 +1,241 @@
+import { WrittenExercise } from '../../../../core/types';
+
+export const topic1Exercises: WrittenExercise[] = [
+  {
+    id: 'math403-t1-ex01',
+    subjectId: 'math403',
+    topicId: 'math403-topic-1',
+    type: 'written',
+    title: 'Union of Open Sets',
+    description: 'Prove that the union of any collection of open sets is open.',
+    difficulty: 2,
+    hints: [
+      'Use the definition of open set',
+      'Consider an arbitrary point in the union',
+      'Show there exists a neighborhood contained in the union'
+    ],
+    solution: 'Let U = ⋃ᵢ Uᵢ where each Uᵢ is open. Take any x ∈ U. Then x ∈ Uₖ for some k. Since Uₖ is open, there exists ε > 0 such that B(x, ε) ⊆ Uₖ ⊆ U. Thus x is an interior point of U, so U is open.'
+  },
+  {
+    id: 'math403-t1-ex02',
+    subjectId: 'math403',
+    topicId: 'math403-topic-1',
+    type: 'written',
+    title: 'Finite Intersection of Open Sets',
+    description: 'Prove that the intersection of finitely many open sets is open.',
+    difficulty: 2,
+    hints: [
+      'Use induction on the number of sets',
+      'Consider the minimum of the radii',
+      'The key word is "finitely many"'
+    ],
+    solution: 'Let U₁, U₂, ..., Uₙ be open sets. Take x ∈ ⋂ᵢ Uᵢ. Then x ∈ Uᵢ for all i. For each i, there exists εᵢ > 0 such that B(x, εᵢ) ⊆ Uᵢ. Let ε = min{ε₁, ..., εₙ}. Then ε > 0 and B(x, ε) ⊆ ⋂ᵢ Uᵢ, so the intersection is open.'
+  },
+  {
+    id: 'math403-t1-ex03',
+    subjectId: 'math403',
+    topicId: 'math403-topic-1',
+    type: 'written',
+    title: 'Complement of Closed Sets',
+    description: 'Prove that a set is closed if and only if its complement is open.',
+    difficulty: 2,
+    hints: [
+      'Prove both directions separately',
+      'Use De Morgan\'s laws',
+      'Consider the definitions of open and closed'
+    ],
+    solution: '(⇒) Let A be closed. By definition, X \\ A is open. (⇐) Suppose X \\ A is open. Then A = X \\ (X \\ A) is the complement of an open set, so A is closed.'
+  },
+  {
+    id: 'math403-t1-ex04',
+    subjectId: 'math403',
+    topicId: 'math403-topic-1',
+    type: 'written',
+    title: 'Closure Properties',
+    description: 'Prove that cl(A) is the smallest closed set containing A.',
+    difficulty: 3,
+    hints: [
+      'Show that cl(A) is closed',
+      'Show that A ⊆ cl(A)',
+      'Show that if F is closed and A ⊆ F, then cl(A) ⊆ F'
+    ],
+    solution: 'First, cl(A) is closed by definition. Second, A ⊆ cl(A) since every point of A is a limit point or interior point. Third, let F be closed with A ⊆ F. Take x ∈ cl(A). Every neighborhood of x intersects A, hence intersects F. Since F is closed, x ∈ F. Thus cl(A) ⊆ F.'
+  },
+  {
+    id: 'math403-t1-ex05',
+    subjectId: 'math403',
+    topicId: 'math403-topic-1',
+    type: 'written',
+    title: 'Interior of a Set',
+    description: 'Prove that int(A) equals the union of all open sets contained in A.',
+    difficulty: 3,
+    hints: [
+      'Let U be the union of all open sets in A',
+      'Show int(A) ⊆ U',
+      'Show U ⊆ int(A)'
+    ],
+    solution: 'Let U = ⋃{V : V is open and V ⊆ A}. Then U is open and U ⊆ A. If x ∈ int(A), then there exists an open set V with x ∈ V ⊆ A, so x ∈ U. Conversely, if x ∈ U, then x is in some open set V ⊆ A, so x ∈ int(A). Thus int(A) = U.'
+  },
+  {
+    id: 'math403-t1-ex06',
+    subjectId: 'math403',
+    topicId: 'math403-topic-1',
+    type: 'written',
+    title: 'Neighborhoods in R',
+    description: 'Show that the open interval (a, b) is a neighborhood of every point in it, using the standard topology on ℝ.',
+    difficulty: 1,
+    hints: [
+      'Take an arbitrary point x ∈ (a, b)',
+      'Find an ε such that (x - ε, x + ε) ⊆ (a, b)',
+      'Consider the distance to the endpoints'
+    ],
+    solution: 'Take any x ∈ (a, b). Let ε = min{x - a, b - x}. Then ε > 0 and (x - ε, x + ε) ⊆ (a, b). Since (x - ε, x + ε) is an open interval containing x and contained in (a, b), we have x ∈ int((a, b)), making (a, b) a neighborhood of x.'
+  },
+  {
+    id: 'math403-t1-ex07',
+    subjectId: 'math403',
+    topicId: 'math403-topic-1',
+    type: 'written',
+    title: 'Discrete Topology',
+    description: 'In the discrete topology on a set X, show that every subset is both open and closed.',
+    difficulty: 1,
+    hints: [
+      'Recall the definition of discrete topology',
+      'Every subset is open by definition',
+      'Use the complement property for closed sets'
+    ],
+    solution: 'In the discrete topology, every subset of X is open by definition. For any subset A ⊆ X, its complement X \\ A is also a subset of X, hence open. Since the complement of A is open, A is closed. Therefore, every subset is both open and closed (clopen).'
+  },
+  {
+    id: 'math403-t1-ex08',
+    subjectId: 'math403',
+    topicId: 'math403-topic-1',
+    type: 'written',
+    title: 'Limit Points',
+    description: 'Let A = {1/n : n ∈ ℕ} in ℝ. Find all limit points of A.',
+    difficulty: 2,
+    hints: [
+      'Consider what happens as n → ∞',
+      'Check if 0 is a limit point',
+      'Check if any 1/n is a limit point'
+    ],
+    solution: 'The only limit point of A is 0. For any ε > 0, choose n large enough so that 1/n < ε. Then (0, ε) contains 1/n ∈ A with 1/n ≠ 0. Thus every neighborhood of 0 contains a point of A distinct from 0, making 0 a limit point. No point 1/m ∈ A is a limit point because we can find a neighborhood containing no other points of A.'
+  },
+  {
+    id: 'math403-t1-ex09',
+    subjectId: 'math403',
+    topicId: 'math403-topic-1',
+    type: 'written',
+    title: 'Boundary of a Set',
+    description: 'Find the boundary of the set A = (0, 1] ∪ {2} in ℝ with the standard topology.',
+    difficulty: 2,
+    hints: [
+      'The boundary is cl(A) \\ int(A)',
+      'Find the interior of A',
+      'Find the closure of A'
+    ],
+    solution: 'int(A) = (0, 1) since 1 and 2 are not interior points. cl(A) = [0, 1] ∪ {2} since 0 is a limit point. Therefore, ∂A = cl(A) \\ int(A) = {0, 1, 2}.'
+  },
+  {
+    id: 'math403-t1-ex10',
+    subjectId: 'math403',
+    topicId: 'math403-topic-1',
+    type: 'written',
+    title: 'Closure of Union',
+    description: 'Prove that cl(A ∪ B) = cl(A) ∪ cl(B) for any sets A, B in a topological space.',
+    difficulty: 3,
+    hints: [
+      'Show cl(A ∪ B) ⊆ cl(A) ∪ cl(B)',
+      'Show cl(A) ∪ cl(B) ⊆ cl(A ∪ B)',
+      'Use the fact that closure is the smallest closed set containing the set'
+    ],
+    solution: '(⊆) Take x ∈ cl(A ∪ B). Every neighborhood of x meets A ∪ B, so it meets A or B. Thus x ∈ cl(A) or x ∈ cl(B), so x ∈ cl(A) ∪ cl(B). (⊇) Since A ⊆ A ∪ B, we have cl(A) ⊆ cl(A ∪ B). Similarly, cl(B) ⊆ cl(A ∪ B). Thus cl(A) ∪ cl(B) ⊆ cl(A ∪ B).'
+  },
+  {
+    id: 'math403-t1-ex11',
+    subjectId: 'math403',
+    topicId: 'math403-topic-1',
+    type: 'written',
+    title: 'Interior of Intersection',
+    description: 'Prove that int(A ∩ B) = int(A) ∩ int(B) for any sets A, B.',
+    difficulty: 3,
+    hints: [
+      'Use the fact that interior is the largest open set contained in the set',
+      'Show both inclusions separately'
+    ],
+    solution: '(⊆) int(A ∩ B) is open and contained in both A and B, so int(A ∩ B) ⊆ int(A) and int(A ∩ B) ⊆ int(B). Thus int(A ∩ B) ⊆ int(A) ∩ int(B). (⊇) int(A) ∩ int(B) is open (finite intersection) and contained in A ∩ B. Since int(A ∩ B) is the largest open set in A ∩ B, we have int(A) ∩ int(B) ⊆ int(A ∩ B).'
+  },
+  {
+    id: 'math403-t1-ex12',
+    subjectId: 'math403',
+    topicId: 'math403-topic-1',
+    type: 'written',
+    title: 'Dense Sets',
+    description: 'Prove that ℚ is dense in ℝ with the standard topology.',
+    difficulty: 2,
+    hints: [
+      'A set is dense if its closure is the whole space',
+      'Show that every open interval contains a rational number',
+      'Use the Archimedean property'
+    ],
+    solution: 'We need to show cl(ℚ) = ℝ. Take any x ∈ ℝ and any ε > 0. The interval (x - ε, x + ε) contains a rational number q (by density of rationals). Thus every neighborhood of x meets ℚ, so x ∈ cl(ℚ). Since x was arbitrary, cl(ℚ) = ℝ.'
+  },
+  {
+    id: 'math403-t1-ex13',
+    subjectId: 'math403',
+    topicId: 'math403-topic-1',
+    type: 'written',
+    title: 'Derived Set',
+    description: 'Let A\' denote the set of all limit points of A (the derived set). Prove that A is closed if and only if A\' ⊆ A.',
+    difficulty: 3,
+    hints: [
+      'Recall that cl(A) = A ∪ A\'',
+      'Use the fact that A is closed iff A = cl(A)'
+    ],
+    solution: '(⇒) If A is closed, then A = cl(A) = A ∪ A\', so A\' ⊆ A. (⇐) If A\' ⊆ A, then cl(A) = A ∪ A\' = A, so A is closed.'
+  },
+  {
+    id: 'math403-t1-ex14',
+    subjectId: 'math403',
+    topicId: 'math403-topic-1',
+    type: 'written',
+    title: 'Indiscrete Topology',
+    description: 'In the indiscrete topology on X = {a, b, c}, list all open sets and all closed sets.',
+    difficulty: 1,
+    hints: [
+      'The indiscrete topology contains only ∅ and X',
+      'Closed sets are complements of open sets'
+    ],
+    solution: 'Open sets: {∅, X}. Closed sets are complements of open sets, so: X \\ ∅ = X and X \\ X = ∅. Therefore, closed sets: {∅, X}. Note that ∅ and X are both open and closed (clopen).'
+  },
+  {
+    id: 'math403-t1-ex15',
+    subjectId: 'math403',
+    topicId: 'math403-topic-1',
+    type: 'written',
+    title: 'Cofinite Topology',
+    description: 'In the cofinite topology on an infinite set X, prove that every nonempty open set is dense.',
+    difficulty: 3,
+    hints: [
+      'A set U is open in the cofinite topology iff X \\ U is finite',
+      'Show that cl(U) = X',
+      'Every nonempty open set must intersect U'
+    ],
+    solution: 'Let U be a nonempty open set in the cofinite topology. Then X \\ U is finite. Take any nonempty open set V. Then X \\ V is also finite. Since X is infinite and X \\ U and X \\ V are finite, we have X ≠ (X \\ U) ∪ (X \\ V), so U ∩ V ≠ ∅. Thus every nonempty open set meets U, so cl(U) = X, making U dense.'
+  },
+  {
+    id: 'math403-t1-ex16',
+    subjectId: 'math403',
+    topicId: 'math403-topic-1',
+    type: 'written',
+    title: 'Kuratowski Closure Axioms',
+    description: 'Verify the Kuratowski closure axioms: (1) cl(∅) = ∅, (2) A ⊆ cl(A), (3) cl(cl(A)) = cl(A), (4) cl(A ∪ B) = cl(A) ∪ cl(B).',
+    difficulty: 3,
+    hints: [
+      'Use the definition of closure',
+      'For (3), show that cl(A) is closed',
+      'For (4), you already proved this in a previous exercise'
+    ],
+    solution: '(1) cl(∅) = ∅ because ∅ is closed. (2) A ⊆ cl(A) by definition since cl(A) is the smallest closed set containing A. (3) cl(A) is closed, so cl(cl(A)) = cl(A). (4) Already proven: cl(A ∪ B) = cl(A) ∪ cl(B) using the fact that closure preserves unions of two sets.'
+  }
+];
