@@ -155,6 +155,7 @@ export class Router {
     if (!route) return;
 
     this.currentRoute = route;
+    window.scrollTo({ top: 0, behavior: 'smooth' }); // Scroll to top on route change
 
     // Notify all handlers
     this.handlers.forEach(handler => handler(route));
