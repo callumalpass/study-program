@@ -33,7 +33,7 @@ export function Sidebar({
       <div class="sidebar-header">
         <a href="#/" class="sidebar-logo">
           <span class="logo-icon" dangerouslySetInnerHTML={{ __html: Icons.Logo }} />
-          <span class="logo-text">CS Degree</span>
+          <span class="logo-text">Groundwork</span>
         </a>
       </div>
 

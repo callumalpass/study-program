@@ -33,7 +33,7 @@ export function renderCurriculumPage(container: HTMLElement, subjects: Subject[]
     <div class="curriculum-page">
       <header class="curriculum-header">
         <div>
-          <h1>CS Degree Curriculum</h1>
+          <h1>Curriculum</h1>
           <p class="subtitle">4-Year Computer Science Program</p>
         </div>
         <div class="curriculum-filters">

@@ -38,7 +38,7 @@ export function renderProgressPage(container: HTMLElement, subjects: Subject[]):
     <div class="progress-page">
       <header class="progress-header">
         <h1>Your Progress</h1>
-        <p class="subtitle">Track your journey through the CS degree program</p>
+        <p class="subtitle">Track your journey through the curriculum</p>
       </header>
 
       <section class="overall-progress">

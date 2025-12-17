@@ -1,12 +1,20 @@
-# CS Degree
+# Groundwork
 
 A browser-based self-study platform for a 4-year undergraduate computer science curriculum.
+
+## Why
+
+A CS degree provides structure: a curriculum with prerequisites, exercises that build on each other, exams that force you to actually learn the material. This project attempts to provide that structure for self-study. It's a static site—your progress stays in your browser or syncs to your own GitHub Gist.
+
+It's meant to be difficult in the way university courses are difficult. There are prerequisites, timed exams, and projects with rubrics. Unlike most difficult material online, this actually checks your work.
+
+The content is written by AI. The prompts and quality standards used to generate it are in `docs/`. You can also use AI (via your own Gemini API key) to get feedback on written exercises and projects.
 
 ## What This Is
 
 This is a structured learning environment covering 28 subjects across computer science and mathematics, organized by year and semester. Each subject contains reading material, exercises, quizzes, and exams. The platform tracks your progress locally and optionally syncs it to a GitHub Gist.
 
-The curriculum follows a traditional CS degree structure with prerequisite chains. You can study subjects in any order, but the platform indicates when prerequisites are incomplete.
+The curriculum follows a traditional undergraduate CS structure with prerequisite chains. You can study subjects in any order, but the platform indicates when prerequisites are incomplete.
 
 ## Content Structure
 
