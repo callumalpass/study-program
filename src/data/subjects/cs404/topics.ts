@@ -2,59 +2,59 @@ import type { Topic } from '../../../core/types';
 
 import topic1_1 from '../../../content/subjects/cs404/topic-1/01-project-selection.md?raw';
 import topic1_2 from '../../../content/subjects/cs404/topic-1/02-requirements-gathering.md?raw';
-import topic1_3 from '../../../content/subjects/cs404/topic-1/03-project-scope.md?raw';
-import topic1_4 from '../../../content/subjects/cs404/topic-1/04-timeline-milestones.md?raw';
+import topic1_3 from '../../../content/subjects/cs404/topic-1/03-scope-definition.md?raw';
+import topic1_4 from '../../../content/subjects/cs404/topic-1/04-timeline-planning.md?raw';
 import topic1_5 from '../../../content/subjects/cs404/topic-1/05-risk-assessment.md?raw';
 import topic1_6 from '../../../content/subjects/cs404/topic-1/06-resource-planning.md?raw';
-import topic1_7 from '../../../content/subjects/cs404/topic-1/07-proposal-documentation.md?raw';
+import topic1_7 from '../../../content/subjects/cs404/topic-1/07-proposal-writing.md?raw';
 
 import topic2_1 from '../../../content/subjects/cs404/topic-2/01-system-architecture.md?raw';
 import topic2_2 from '../../../content/subjects/cs404/topic-2/02-design-patterns.md?raw';
 import topic2_3 from '../../../content/subjects/cs404/topic-2/03-database-design.md?raw';
 import topic2_4 from '../../../content/subjects/cs404/topic-2/04-api-design.md?raw';
-import topic2_5 from '../../../content/subjects/cs404/topic-2/05-ui-ux-design.md?raw';
-import topic2_6 from '../../../content/subjects/cs404/topic-2/06-security-design.md?raw';
-import topic2_7 from '../../../content/subjects/cs404/topic-2/07-scalability-planning.md?raw';
+import topic2_5 from '../../../content/subjects/cs404/topic-2/05-security-design.md?raw';
+import topic2_6 from '../../../content/subjects/cs404/topic-2/06-scalability.md?raw';
+import topic2_7 from '../../../content/subjects/cs404/topic-2/07-tech-stack.md?raw';
 
-import topic3_1 from '../../../content/subjects/cs404/topic-3/01-development-setup.md?raw';
-import topic3_2 from '../../../content/subjects/cs404/topic-3/02-core-features.md?raw';
-import topic3_3 from '../../../content/subjects/cs404/topic-3/03-backend-development.md?raw';
-import topic3_4 from '../../../content/subjects/cs404/topic-3/04-frontend-development.md?raw';
-import topic3_5 from '../../../content/subjects/cs404/topic-3/05-integration.md?raw';
-import topic3_6 from '../../../content/subjects/cs404/topic-3/06-code-review.md?raw';
-import topic3_7 from '../../../content/subjects/cs404/topic-3/07-sprint1-demo.md?raw';
+import topic3_1 from '../../../content/subjects/cs404/topic-3/01-dev-environment.md?raw';
+import topic3_2 from '../../../content/subjects/cs404/topic-3/02-version-control.md?raw';
+import topic3_3 from '../../../content/subjects/cs404/topic-3/03-core-features.md?raw';
+import topic3_4 from '../../../content/subjects/cs404/topic-3/04-backend-dev.md?raw';
+import topic3_5 from '../../../content/subjects/cs404/topic-3/05-frontend-dev.md?raw';
+import topic3_6 from '../../../content/subjects/cs404/topic-3/06-integration.md?raw';
+import topic3_7 from '../../../content/subjects/cs404/topic-3/07-code-review.md?raw';
 
 import topic4_1 from '../../../content/subjects/cs404/topic-4/01-advanced-features.md?raw';
 import topic4_2 from '../../../content/subjects/cs404/topic-4/02-optimization.md?raw';
 import topic4_3 from '../../../content/subjects/cs404/topic-4/03-error-handling.md?raw';
-import topic4_4 from '../../../content/subjects/cs404/topic-4/04-user-feedback.md?raw';
-import topic4_5 from '../../../content/subjects/cs404/topic-4/05-polish-refinement.md?raw';
-import topic4_6 from '../../../content/subjects/cs404/topic-4/06-performance-tuning.md?raw';
-import topic4_7 from '../../../content/subjects/cs404/topic-4/07-sprint2-demo.md?raw';
+import topic4_4 from '../../../content/subjects/cs404/topic-4/04-performance.md?raw';
+import topic4_5 from '../../../content/subjects/cs404/topic-4/05-accessibility.md?raw';
+import topic4_6 from '../../../content/subjects/cs404/topic-4/06-internationalization.md?raw';
+import topic4_7 from '../../../content/subjects/cs404/topic-4/07-refactoring.md?raw';
 
 import topic5_1 from '../../../content/subjects/cs404/topic-5/01-testing-strategy.md?raw';
 import topic5_2 from '../../../content/subjects/cs404/topic-5/02-unit-testing.md?raw';
 import topic5_3 from '../../../content/subjects/cs404/topic-5/03-integration-testing.md?raw';
 import topic5_4 from '../../../content/subjects/cs404/topic-5/04-e2e-testing.md?raw';
-import topic5_5 from '../../../content/subjects/cs404/topic-5/05-bug-fixing.md?raw';
-import topic5_6 from '../../../content/subjects/cs404/topic-5/06-qa-validation.md?raw';
-import topic5_7 from '../../../content/subjects/cs404/topic-5/07-test-coverage.md?raw';
+import topic5_5 from '../../../content/subjects/cs404/topic-5/05-bug-tracking.md?raw';
+import topic5_6 from '../../../content/subjects/cs404/topic-5/06-test-coverage.md?raw';
+import topic5_7 from '../../../content/subjects/cs404/topic-5/07-qa-process.md?raw';
 
-import topic6_1 from '../../../content/subjects/cs404/topic-6/01-deployment-preparation.md?raw';
-import topic6_2 from '../../../content/subjects/cs404/topic-6/02-ci-cd-pipeline.md?raw';
-import topic6_3 from '../../../content/subjects/cs404/topic-6/03-containerization.md?raw';
-import topic6_4 from '../../../content/subjects/cs404/topic-6/04-cloud-deployment.md?raw';
-import topic6_5 from '../../../content/subjects/cs404/topic-6/05-monitoring-logging.md?raw';
-import topic6_6 from '../../../content/subjects/cs404/topic-6/06-backup-recovery.md?raw';
-import topic6_7 from '../../../content/subjects/cs404/topic-6/07-production-launch.md?raw';
+import topic6_1 from '../../../content/subjects/cs404/topic-6/01-ci-cd.md?raw';
+import topic6_2 from '../../../content/subjects/cs404/topic-6/02-containerization.md?raw';
+import topic6_3 from '../../../content/subjects/cs404/topic-6/03-cloud-deployment.md?raw';
+import topic6_4 from '../../../content/subjects/cs404/topic-6/04-monitoring.md?raw';
+import topic6_5 from '../../../content/subjects/cs404/topic-6/05-logging.md?raw';
+import topic6_6 from '../../../content/subjects/cs404/topic-6/06-infrastructure.md?raw';
+import topic6_7 from '../../../content/subjects/cs404/topic-6/07-rollback.md?raw';
 
 import topic7_1 from '../../../content/subjects/cs404/topic-7/01-user-documentation.md?raw';
-import topic7_2 from '../../../content/subjects/cs404/topic-7/02-technical-documentation.md?raw';
+import topic7_2 from '../../../content/subjects/cs404/topic-7/02-technical-docs.md?raw';
 import topic7_3 from '../../../content/subjects/cs404/topic-7/03-api-documentation.md?raw';
-import topic7_4 from '../../../content/subjects/cs404/topic-7/04-presentation-prep.md?raw';
-import topic7_5 from '../../../content/subjects/cs404/topic-7/05-demo-video.md?raw';
-import topic7_6 from '../../../content/subjects/cs404/topic-7/06-final-presentation.md?raw';
-import topic7_7 from '../../../content/subjects/cs404/topic-7/07-project-reflection.md?raw';
+import topic7_4 from '../../../content/subjects/cs404/topic-7/04-readme-writing.md?raw';
+import topic7_5 from '../../../content/subjects/cs404/topic-7/05-presentation-skills.md?raw';
+import topic7_6 from '../../../content/subjects/cs404/topic-7/06-demo-preparation.md?raw';
+import topic7_7 from '../../../content/subjects/cs404/topic-7/07-reflection.md?raw';
 
 export const cs404Topics: Topic[] = [
   {

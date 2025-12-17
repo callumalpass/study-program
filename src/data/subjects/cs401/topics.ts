@@ -44,7 +44,7 @@ import topic6_1 from '../../../content/subjects/cs401/topic-6/01-mapreduce-model
 import topic6_2 from '../../../content/subjects/cs401/topic-6/02-hadoop-ecosystem.md?raw';
 import topic6_3 from '../../../content/subjects/cs401/topic-6/03-spark.md?raw';
 import topic6_4 from '../../../content/subjects/cs401/topic-6/04-distributed-storage.md?raw';
-import topic6_5 from '../../../content/subjects/cs401/topic-5/05-stream-processing.md?raw';
+import topic6_5 from '../../../content/subjects/cs401/topic-6/05-stream-processing.md?raw';
 import topic6_6 from '../../../content/subjects/cs401/topic-6/06-batch-vs-stream.md?raw';
 import topic6_7 from '../../../content/subjects/cs401/topic-6/07-data-pipelines.md?raw';
 

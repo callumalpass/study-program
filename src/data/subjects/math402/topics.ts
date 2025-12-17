@@ -1,60 +1,60 @@
 import type { Topic } from '../../../core/types';
 
-import topic1_1 from '../../../content/subjects/math402/topic-1/01-numerical-errors.md?raw';
-import topic1_2 from '../../../content/subjects/math402/topic-1/02-floating-point.md?raw';
-import topic1_3 from '../../../content/subjects/math402/topic-1/03-error-propagation.md?raw';
-import topic1_4 from '../../../content/subjects/math402/topic-1/04-stability-conditioning.md?raw';
-import topic1_5 from '../../../content/subjects/math402/topic-1/05-backward-analysis.md?raw';
-import topic1_6 from '../../../content/subjects/math402/topic-1/06-significant-digits.md?raw';
-import topic1_7 from '../../../content/subjects/math402/topic-1/07-interval-arithmetic.md?raw';
+import topic1_1 from '../../../content/subjects/math402/topic-1/01-floating-point.md?raw';
+import topic1_2 from '../../../content/subjects/math402/topic-1/02-rounding-errors.md?raw';
+import topic1_3 from '../../../content/subjects/math402/topic-1/03-truncation-errors.md?raw';
+import topic1_4 from '../../../content/subjects/math402/topic-1/04-error-propagation.md?raw';
+import topic1_5 from '../../../content/subjects/math402/topic-1/05-stability.md?raw';
+import topic1_6 from '../../../content/subjects/math402/topic-1/06-conditioning.md?raw';
+import topic1_7 from '../../../content/subjects/math402/topic-1/07-error-bounds.md?raw';
 
-import topic2_1 from '../../../content/subjects/math402/topic-2/01-bisection-method.md?raw';
-import topic2_2 from '../../../content/subjects/math402/topic-2/02-fixed-point-iteration.md?raw';
-import topic2_3 from '../../../content/subjects/math402/topic-2/03-newton-method.md?raw';
-import topic2_4 from '../../../content/subjects/math402/topic-2/04-secant-method.md?raw';
-import topic2_5 from '../../../content/subjects/math402/topic-2/05-convergence-orders.md?raw';
-import topic2_6 from '../../../content/subjects/math402/topic-2/06-systems-nonlinear.md?raw';
+import topic2_1 from '../../../content/subjects/math402/topic-2/01-bisection.md?raw';
+import topic2_2 from '../../../content/subjects/math402/topic-2/02-newton-method.md?raw';
+import topic2_3 from '../../../content/subjects/math402/topic-2/03-secant-method.md?raw';
+import topic2_4 from '../../../content/subjects/math402/topic-2/04-fixed-point.md?raw';
+import topic2_5 from '../../../content/subjects/math402/topic-2/05-convergence-rates.md?raw';
+import topic2_6 from '../../../content/subjects/math402/topic-2/06-multiple-roots.md?raw';
 import topic2_7 from '../../../content/subjects/math402/topic-2/07-polynomial-roots.md?raw';
 
-import topic3_1 from '../../../content/subjects/math402/topic-3/01-polynomial-interpolation.md?raw';
-import topic3_2 from '../../../content/subjects/math402/topic-3/02-lagrange-interpolation.md?raw';
-import topic3_3 from '../../../content/subjects/math402/topic-3/03-newton-divided.md?raw';
-import topic3_4 from '../../../content/subjects/math402/topic-3/04-interpolation-error.md?raw';
-import topic3_5 from '../../../content/subjects/math402/topic-3/05-chebyshev-nodes.md?raw';
-import topic3_6 from '../../../content/subjects/math402/topic-3/06-spline-interpolation.md?raw';
-import topic3_7 from '../../../content/subjects/math402/topic-3/07-least-squares.md?raw';
+import topic3_1 from '../../../content/subjects/math402/topic-3/01-lagrange.md?raw';
+import topic3_2 from '../../../content/subjects/math402/topic-3/02-newton-interpolation.md?raw';
+import topic3_3 from '../../../content/subjects/math402/topic-3/03-hermite.md?raw';
+import topic3_4 from '../../../content/subjects/math402/topic-3/04-splines.md?raw';
+import topic3_5 from '../../../content/subjects/math402/topic-3/05-chebyshev.md?raw';
+import topic3_6 from '../../../content/subjects/math402/topic-3/06-least-squares.md?raw';
+import topic3_7 from '../../../content/subjects/math402/topic-3/07-trigonometric.md?raw';
 
-import topic4_1 from '../../../content/subjects/math402/topic-4/01-numerical-differentiation.md?raw';
-import topic4_2 from '../../../content/subjects/math402/topic-4/02-finite-differences.md?raw';
-import topic4_3 from '../../../content/subjects/math402/topic-4/03-richardson-extrapolation.md?raw';
-import topic4_4 from '../../../content/subjects/math402/topic-4/04-newton-cotes.md?raw';
-import topic4_5 from '../../../content/subjects/math402/topic-4/05-gaussian-quadrature.md?raw';
-import topic4_6 from '../../../content/subjects/math402/topic-4/06-adaptive-integration.md?raw';
-import topic4_7 from '../../../content/subjects/math402/topic-4/07-multiple-integrals.md?raw';
+import topic4_1 from '../../../content/subjects/math402/topic-4/01-finite-differences.md?raw';
+import topic4_2 from '../../../content/subjects/math402/topic-4/02-richardson.md?raw';
+import topic4_3 from '../../../content/subjects/math402/topic-4/03-newton-cotes.md?raw';
+import topic4_4 from '../../../content/subjects/math402/topic-4/04-gaussian-quadrature.md?raw';
+import topic4_5 from '../../../content/subjects/math402/topic-4/05-adaptive-integration.md?raw';
+import topic4_6 from '../../../content/subjects/math402/topic-4/06-improper-integrals.md?raw';
+import topic4_7 from '../../../content/subjects/math402/topic-4/07-multidimensional.md?raw';
 
 import topic5_1 from '../../../content/subjects/math402/topic-5/01-gaussian-elimination.md?raw';
 import topic5_2 from '../../../content/subjects/math402/topic-5/02-lu-decomposition.md?raw';
-import topic5_3 from '../../../content/subjects/math402/topic-5/03-pivoting-strategies.md?raw';
-import topic5_4 from '../../../content/subjects/math402/topic-5/04-cholesky-decomposition.md?raw';
-import topic5_5 from '../../../content/subjects/math402/topic-5/05-qr-decomposition.md?raw';
-import topic5_6 from '../../../content/subjects/math402/topic-5/06-matrix-norms.md?raw';
-import topic5_7 from '../../../content/subjects/math402/topic-5/07-condition-number.md?raw';
+import topic5_3 from '../../../content/subjects/math402/topic-5/03-pivoting.md?raw';
+import topic5_4 from '../../../content/subjects/math402/topic-5/04-cholesky.md?raw';
+import topic5_5 from '../../../content/subjects/math402/topic-5/05-qr-factorization.md?raw';
+import topic5_6 from '../../../content/subjects/math402/topic-5/06-svd.md?raw';
+import topic5_7 from '../../../content/subjects/math402/topic-5/07-condition-numbers.md?raw';
 
-import topic6_1 from '../../../content/subjects/math402/topic-6/01-jacobi-method.md?raw';
+import topic6_1 from '../../../content/subjects/math402/topic-6/01-jacobi.md?raw';
 import topic6_2 from '../../../content/subjects/math402/topic-6/02-gauss-seidel.md?raw';
-import topic6_3 from '../../../content/subjects/math402/topic-6/03-sor-method.md?raw';
-import topic6_4 from '../../../content/subjects/math402/topic-6/04-convergence-criteria.md?raw';
-import topic6_5 from '../../../content/subjects/math402/topic-6/05-conjugate-gradient.md?raw';
-import topic6_6 from '../../../content/subjects/math402/topic-6/06-gmres-method.md?raw';
-import topic6_7 from '../../../content/subjects/math402/topic-6/07-preconditioning.md?raw';
+import topic6_3 from '../../../content/subjects/math402/topic-6/03-sor.md?raw';
+import topic6_4 from '../../../content/subjects/math402/topic-6/04-conjugate-gradient.md?raw';
+import topic6_5 from '../../../content/subjects/math402/topic-6/05-gmres.md?raw';
+import topic6_6 from '../../../content/subjects/math402/topic-6/06-preconditioning.md?raw';
+import topic6_7 from '../../../content/subjects/math402/topic-6/07-convergence-analysis.md?raw';
 
 import topic7_1 from '../../../content/subjects/math402/topic-7/01-euler-method.md?raw';
 import topic7_2 from '../../../content/subjects/math402/topic-7/02-runge-kutta.md?raw';
 import topic7_3 from '../../../content/subjects/math402/topic-7/03-multistep-methods.md?raw';
-import topic7_4 from '../../../content/subjects/math402/topic-7/04-stability-analysis.md?raw';
-import topic7_5 from '../../../content/subjects/math402/topic-7/05-adaptive-stepsize.md?raw';
-import topic7_6 from '../../../content/subjects/math402/topic-7/06-stiff-equations.md?raw';
-import topic7_7 from '../../../content/subjects/math402/topic-7/07-boundary-value.md?raw';
+import topic7_4 from '../../../content/subjects/math402/topic-7/04-stiffness.md?raw';
+import topic7_5 from '../../../content/subjects/math402/topic-7/05-boundary-value.md?raw';
+import topic7_6 from '../../../content/subjects/math402/topic-7/06-shooting-method.md?raw';
+import topic7_7 from '../../../content/subjects/math402/topic-7/07-finite-differences-ode.md?raw';
 
 export const math402Topics: Topic[] = [
   {

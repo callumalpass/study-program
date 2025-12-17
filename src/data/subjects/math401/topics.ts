@@ -1,60 +1,60 @@
 import type { Topic } from '../../../core/types';
 
 import topic1_1 from '../../../content/subjects/math401/topic-1/01-complex-numbers-intro.md?raw';
-import topic1_2 from '../../../content/subjects/math401/topic-1/02-arithmetic-operations.md?raw';
+import topic1_2 from '../../../content/subjects/math401/topic-1/02-complex-plane.md?raw';
 import topic1_3 from '../../../content/subjects/math401/topic-1/03-polar-form.md?raw';
-import topic1_4 from '../../../content/subjects/math401/topic-1/04-exponential-form.md?raw';
-import topic1_5 from '../../../content/subjects/math401/topic-1/05-roots-unity.md?raw';
+import topic1_4 from '../../../content/subjects/math401/topic-1/04-euler-formula.md?raw';
+import topic1_5 from '../../../content/subjects/math401/topic-1/05-de-moivre.md?raw';
 import topic1_6 from '../../../content/subjects/math401/topic-1/06-complex-topology.md?raw';
-import topic1_7 from '../../../content/subjects/math401/topic-1/07-stereographic-projection.md?raw';
+import topic1_7 from '../../../content/subjects/math401/topic-1/07-extended-plane.md?raw';
 
 import topic2_1 from '../../../content/subjects/math401/topic-2/01-complex-functions.md?raw';
 import topic2_2 from '../../../content/subjects/math401/topic-2/02-limits-continuity.md?raw';
 import topic2_3 from '../../../content/subjects/math401/topic-2/03-complex-derivative.md?raw';
 import topic2_4 from '../../../content/subjects/math401/topic-2/04-cauchy-riemann.md?raw';
-import topic2_5 from '../../../content/subjects/math401/topic-2/05-harmonic-functions.md?raw';
-import topic2_6 from '../../../content/subjects/math401/topic-2/06-elementary-functions.md?raw';
-import topic2_7 from '../../../content/subjects/math401/topic-2/07-branches-logs.md?raw';
+import topic2_5 from '../../../content/subjects/math401/topic-2/05-analytic-functions.md?raw';
+import topic2_6 from '../../../content/subjects/math401/topic-2/06-harmonic-functions.md?raw';
+import topic2_7 from '../../../content/subjects/math401/topic-2/07-elementary-functions.md?raw';
 
-import topic3_1 from '../../../content/subjects/math401/topic-3/01-complex-paths.md?raw';
-import topic3_2 from '../../../content/subjects/math401/topic-3/02-contour-integrals.md?raw';
-import topic3_3 from '../../../content/subjects/math401/topic-3/03-fundamental-theorem.md?raw';
-import topic3_4 from '../../../content/subjects/math401/topic-3/04-cauchy-goursat.md?raw';
-import topic3_5 from '../../../content/subjects/math401/topic-3/05-independence-path.md?raw';
-import topic3_6 from '../../../content/subjects/math401/topic-3/06-antiderivatives.md?raw';
-import topic3_7 from '../../../content/subjects/math401/topic-3/07-deformation-contours.md?raw';
+import topic3_1 from '../../../content/subjects/math401/topic-3/01-contour-integrals.md?raw';
+import topic3_2 from '../../../content/subjects/math401/topic-3/02-path-independence.md?raw';
+import topic3_3 from '../../../content/subjects/math401/topic-3/03-ml-inequality.md?raw';
+import topic3_4 from '../../../content/subjects/math401/topic-3/04-antiderivatives.md?raw';
+import topic3_5 from '../../../content/subjects/math401/topic-3/05-cauchy-goursat.md?raw';
+import topic3_6 from '../../../content/subjects/math401/topic-3/06-deformation.md?raw';
+import topic3_7 from '../../../content/subjects/math401/topic-3/07-integral-examples.md?raw';
 
 import topic4_1 from '../../../content/subjects/math401/topic-4/01-cauchy-integral-formula.md?raw';
 import topic4_2 from '../../../content/subjects/math401/topic-4/02-derivatives-formula.md?raw';
-import topic4_3 from '../../../content/subjects/math401/topic-4/03-liouville-theorem.md?raw';
-import topic4_4 from '../../../content/subjects/math401/topic-4/04-fundamental-algebra.md?raw';
-import topic4_5 from '../../../content/subjects/math401/topic-4/05-maximum-principle.md?raw';
-import topic4_6 from '../../../content/subjects/math401/topic-4/06-mean-value-property.md?raw';
-import topic4_7 from '../../../content/subjects/math401/topic-4/07-morera-theorem.md?raw';
+import topic4_3 from '../../../content/subjects/math401/topic-4/03-morera-theorem.md?raw';
+import topic4_4 from '../../../content/subjects/math401/topic-4/04-liouville-theorem.md?raw';
+import topic4_5 from '../../../content/subjects/math401/topic-4/05-fundamental-theorem-algebra.md?raw';
+import topic4_6 from '../../../content/subjects/math401/topic-4/06-maximum-modulus.md?raw';
+import topic4_7 from '../../../content/subjects/math401/topic-4/07-applications.md?raw';
 
-import topic5_1 from '../../../content/subjects/math401/topic-5/01-power-series-basics.md?raw';
-import topic5_2 from '../../../content/subjects/math401/topic-5/02-convergence-radius.md?raw';
-import topic5_3 from '../../../content/subjects/math401/topic-5/03-taylor-series.md?raw';
-import topic5_4 from '../../../content/subjects/math401/topic-5/04-analytic-continuation.md?raw';
-import topic5_5 from '../../../content/subjects/math401/topic-5/05-uniqueness-theorem.md?raw';
-import topic5_6 from '../../../content/subjects/math401/topic-5/06-zeros-analytic.md?raw';
-import topic5_7 from '../../../content/subjects/math401/topic-5/07-identity-theorem.md?raw';
+import topic5_1 from '../../../content/subjects/math401/topic-5/01-convergence.md?raw';
+import topic5_2 from '../../../content/subjects/math401/topic-5/02-taylor-series.md?raw';
+import topic5_3 from '../../../content/subjects/math401/topic-5/03-laurent-series.md?raw';
+import topic5_4 from '../../../content/subjects/math401/topic-5/04-singularities.md?raw';
+import topic5_5 from '../../../content/subjects/math401/topic-5/05-residues-singularities.md?raw';
+import topic5_6 from '../../../content/subjects/math401/topic-5/06-zeros-poles.md?raw';
+import topic5_7 from '../../../content/subjects/math401/topic-5/07-analytic-continuation.md?raw';
 
-import topic6_1 from '../../../content/subjects/math401/topic-6/01-laurent-series-intro.md?raw';
-import topic6_2 from '../../../content/subjects/math401/topic-6/02-singularities.md?raw';
-import topic6_3 from '../../../content/subjects/math401/topic-6/03-residue-definition.md?raw';
-import topic6_4 from '../../../content/subjects/math401/topic-6/04-residue-theorem.md?raw';
-import topic6_5 from '../../../content/subjects/math401/topic-6/05-computing-residues.md?raw';
-import topic6_6 from '../../../content/subjects/math401/topic-6/06-real-integrals.md?raw';
-import topic6_7 from '../../../content/subjects/math401/topic-6/07-argument-principle.md?raw';
+import topic6_1 from '../../../content/subjects/math401/topic-6/01-residue-theorem.md?raw';
+import topic6_2 from '../../../content/subjects/math401/topic-6/02-calculating-residues.md?raw';
+import topic6_3 from '../../../content/subjects/math401/topic-6/03-real-integrals.md?raw';
+import topic6_4 from '../../../content/subjects/math401/topic-6/04-improper-integrals.md?raw';
+import topic6_5 from '../../../content/subjects/math401/topic-6/05-trigonometric-integrals.md?raw';
+import topic6_6 from '../../../content/subjects/math401/topic-6/06-jordans-lemma.md?raw';
+import topic6_7 from '../../../content/subjects/math401/topic-6/07-applications-residues.md?raw';
 
-import topic7_1 from '../../../content/subjects/math401/topic-7/01-conformal-intro.md?raw';
-import topic7_2 from '../../../content/subjects/math401/topic-7/02-linear-transformations.md?raw';
-import topic7_3 from '../../../content/subjects/math401/topic-7/03-mobius-transformations.md?raw';
-import topic7_4 from '../../../content/subjects/math401/topic-7/04-exponential-mapping.md?raw';
+import topic7_1 from '../../../content/subjects/math401/topic-7/01-conformal-mappings.md?raw';
+import topic7_2 from '../../../content/subjects/math401/topic-7/02-mobius-transformations.md?raw';
+import topic7_3 from '../../../content/subjects/math401/topic-7/03-elementary-mappings.md?raw';
+import topic7_4 from '../../../content/subjects/math401/topic-7/04-schwarz-christoffel.md?raw';
 import topic7_5 from '../../../content/subjects/math401/topic-7/05-riemann-mapping.md?raw';
-import topic7_6 from '../../../content/subjects/math401/topic-7/06-schwarz-christoffel.md?raw';
-import topic7_7 from '../../../content/subjects/math401/topic-7/07-applications-physics.md?raw';
+import topic7_6 from '../../../content/subjects/math401/topic-7/06-applications-physics.md?raw';
+import topic7_7 from '../../../content/subjects/math401/topic-7/07-boundary-problems.md?raw';
 
 export const math401Topics: Topic[] = [
   {

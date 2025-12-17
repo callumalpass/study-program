@@ -1,60 +1,60 @@
 import type { Topic } from '../../../core/types';
 
-import topic1_1 from '../../../content/subjects/cs407/topic-1/01-data-collection-intro.md?raw';
-import topic1_2 from '../../../content/subjects/cs407/topic-1/02-web-apis.md?raw';
-import topic1_3 from '../../../content/subjects/cs407/topic-1/03-web-scraping.md?raw';
-import topic1_4 from '../../../content/subjects/cs407/topic-1/04-data-formats.md?raw';
-import topic1_5 from '../../../content/subjects/cs407/topic-1/05-databases-data-sources.md?raw';
-import topic1_6 from '../../../content/subjects/cs407/topic-1/06-streaming-data.md?raw';
-import topic1_7 from '../../../content/subjects/cs407/topic-1/07-data-quality.md?raw';
+import topic1_1 from '../../../content/subjects/cs407/topic-1/01-data-sources.md?raw';
+import topic1_2 from '../../../content/subjects/cs407/topic-1/02-web-scraping.md?raw';
+import topic1_3 from '../../../content/subjects/cs407/topic-1/03-apis.md?raw';
+import topic1_4 from '../../../content/subjects/cs407/topic-1/04-databases.md?raw';
+import topic1_5 from '../../../content/subjects/cs407/topic-1/05-data-formats.md?raw';
+import topic1_6 from '../../../content/subjects/cs407/topic-1/06-data-quality.md?raw';
+import topic1_7 from '../../../content/subjects/cs407/topic-1/07-data-governance.md?raw';
 
-import topic2_1 from '../../../content/subjects/cs407/topic-2/01-data-cleaning-intro.md?raw';
-import topic2_2 from '../../../content/subjects/cs407/topic-2/02-missing-data.md?raw';
-import topic2_3 from '../../../content/subjects/cs407/topic-2/03-outlier-detection.md?raw';
-import topic2_4 from '../../../content/subjects/cs407/topic-2/04-data-transformation.md?raw';
-import topic2_5 from '../../../content/subjects/cs407/topic-2/05-data-normalization.md?raw';
+import topic2_1 from '../../../content/subjects/cs407/topic-2/01-missing-data.md?raw';
+import topic2_2 from '../../../content/subjects/cs407/topic-2/02-outliers.md?raw';
+import topic2_3 from '../../../content/subjects/cs407/topic-2/03-data-transformation.md?raw';
+import topic2_4 from '../../../content/subjects/cs407/topic-2/04-normalization.md?raw';
+import topic2_5 from '../../../content/subjects/cs407/topic-2/05-encoding.md?raw';
 import topic2_6 from '../../../content/subjects/cs407/topic-2/06-data-validation.md?raw';
-import topic2_7 from '../../../content/subjects/cs407/topic-2/07-pandas-cleaning.md?raw';
+import topic2_7 from '../../../content/subjects/cs407/topic-2/07-data-pipelines.md?raw';
 
-import topic3_1 from '../../../content/subjects/cs407/topic-3/01-eda-intro.md?raw';
-import topic3_2 from '../../../content/subjects/cs407/topic-3/02-descriptive-statistics.md?raw';
-import topic3_3 from '../../../content/subjects/cs407/topic-3/03-data-distributions.md?raw';
-import topic3_4 from '../../../content/subjects/cs407/topic-3/04-correlation-analysis.md?raw';
-import topic3_5 from '../../../content/subjects/cs407/topic-3/05-dimensionality-reduction.md?raw';
-import topic3_6 from '../../../content/subjects/cs407/topic-3/06-pattern-discovery.md?raw';
-import topic3_7 from '../../../content/subjects/cs407/topic-3/07-hypothesis-testing.md?raw';
+import topic3_1 from '../../../content/subjects/cs407/topic-3/01-descriptive-statistics.md?raw';
+import topic3_2 from '../../../content/subjects/cs407/topic-3/02-distributions.md?raw';
+import topic3_3 from '../../../content/subjects/cs407/topic-3/03-correlation.md?raw';
+import topic3_4 from '../../../content/subjects/cs407/topic-3/04-hypothesis-testing.md?raw';
+import topic3_5 from '../../../content/subjects/cs407/topic-3/05-statistical-inference.md?raw';
+import topic3_6 from '../../../content/subjects/cs407/topic-3/06-eda-process.md?raw';
+import topic3_7 from '../../../content/subjects/cs407/topic-3/07-eda-tools.md?raw';
 
-import topic4_1 from '../../../content/subjects/cs407/topic-4/01-feature-engineering-intro.md?raw';
-import topic4_2 from '../../../content/subjects/cs407/topic-4/02-feature-creation.md?raw';
-import topic4_3 from '../../../content/subjects/cs407/topic-4/03-feature-selection.md?raw';
-import topic4_4 from '../../../content/subjects/cs407/topic-4/04-feature-extraction.md?raw';
-import topic4_5 from '../../../content/subjects/cs407/topic-4/05-encoding-categorical.md?raw';
-import topic4_6 from '../../../content/subjects/cs407/topic-4/06-time-series-features.md?raw';
-import topic4_7 from '../../../content/subjects/cs407/topic-4/07-feature-scaling.md?raw';
+import topic4_1 from '../../../content/subjects/cs407/topic-4/01-feature-creation.md?raw';
+import topic4_2 from '../../../content/subjects/cs407/topic-4/02-feature-selection.md?raw';
+import topic4_3 from '../../../content/subjects/cs407/topic-4/03-feature-extraction.md?raw';
+import topic4_4 from '../../../content/subjects/cs407/topic-4/04-dimensionality-reduction.md?raw';
+import topic4_5 from '../../../content/subjects/cs407/topic-4/05-feature-scaling.md?raw';
+import topic4_6 from '../../../content/subjects/cs407/topic-4/06-encoding-features.md?raw';
+import topic4_7 from '../../../content/subjects/cs407/topic-4/07-automated-fe.md?raw';
 
-import topic5_1 from '../../../content/subjects/cs407/topic-5/01-data-visualization-intro.md?raw';
+import topic5_1 from '../../../content/subjects/cs407/topic-5/01-visualization-principles.md?raw';
 import topic5_2 from '../../../content/subjects/cs407/topic-5/02-matplotlib-seaborn.md?raw';
-import topic5_3 from '../../../content/subjects/cs407/topic-5/03-chart-types.md?raw';
-import topic5_4 from '../../../content/subjects/cs407/topic-5/04-interactive-visualization.md?raw';
-import topic5_5 from '../../../content/subjects/cs407/topic-5/05-dashboards.md?raw';
-import topic5_6 from '../../../content/subjects/cs407/topic-5/06-geospatial-visualization.md?raw';
-import topic5_7 from '../../../content/subjects/cs407/topic-5/07-storytelling-data.md?raw';
+import topic5_3 from '../../../content/subjects/cs407/topic-5/03-interactive-viz.md?raw';
+import topic5_4 from '../../../content/subjects/cs407/topic-5/04-dashboards.md?raw';
+import topic5_5 from '../../../content/subjects/cs407/topic-5/05-storytelling.md?raw';
+import topic5_6 from '../../../content/subjects/cs407/topic-5/06-geospatial-viz.md?raw';
+import topic5_7 from '../../../content/subjects/cs407/topic-5/07-advanced-viz.md?raw';
 
 import topic6_1 from '../../../content/subjects/cs407/topic-6/01-big-data-intro.md?raw';
-import topic6_2 from '../../../content/subjects/cs407/topic-6/02-hadoop-ecosystem.md?raw';
-import topic6_3 from '../../../content/subjects/cs407/topic-6/03-apache-spark.md?raw';
-import topic6_4 from '../../../content/subjects/cs407/topic-6/04-distributed-computing.md?raw';
-import topic6_5 from '../../../content/subjects/cs407/topic-6/05-data-lakes.md?raw';
-import topic6_6 from '../../../content/subjects/cs407/topic-6/06-stream-processing.md?raw';
-import topic6_7 from '../../../content/subjects/cs407/topic-6/07-cloud-big-data.md?raw';
+import topic6_2 from '../../../content/subjects/cs407/topic-6/02-hadoop.md?raw';
+import topic6_3 from '../../../content/subjects/cs407/topic-6/03-spark-data.md?raw';
+import topic6_4 from '../../../content/subjects/cs407/topic-6/04-data-lakes.md?raw';
+import topic6_5 from '../../../content/subjects/cs407/topic-6/05-data-warehouses.md?raw';
+import topic6_6 from '../../../content/subjects/cs407/topic-6/06-etl.md?raw';
+import topic6_7 from '../../../content/subjects/cs407/topic-6/07-real-time-analytics.md?raw';
 
-import topic7_1 from '../../../content/subjects/cs407/topic-7/01-data-ethics-intro.md?raw';
-import topic7_2 from '../../../content/subjects/cs407/topic-7/02-privacy-protection.md?raw';
+import topic7_1 from '../../../content/subjects/cs407/topic-7/01-data-ethics.md?raw';
+import topic7_2 from '../../../content/subjects/cs407/topic-7/02-privacy.md?raw';
 import topic7_3 from '../../../content/subjects/cs407/topic-7/03-bias-fairness.md?raw';
-import topic7_4 from '../../../content/subjects/cs407/topic-7/04-data-governance.md?raw';
-import topic7_5 from '../../../content/subjects/cs407/topic-7/05-gdpr-compliance.md?raw';
+import topic7_4 from '../../../content/subjects/cs407/topic-7/04-transparency.md?raw';
+import topic7_5 from '../../../content/subjects/cs407/topic-7/05-regulations.md?raw';
 import topic7_6 from '../../../content/subjects/cs407/topic-7/06-responsible-ai.md?raw';
-import topic7_7 from '../../../content/subjects/cs407/topic-7/07-ethical-frameworks.md?raw';
+import topic7_7 from '../../../content/subjects/cs407/topic-7/07-case-studies.md?raw';
 
 export const cs407Topics: Topic[] = [
   {

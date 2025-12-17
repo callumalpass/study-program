@@ -1,60 +1,60 @@
 import type { Topic } from '../../../core/types';
 
-import topic1_1 from '../../../content/subjects/cs403/topic-1/01-np-completeness-review.md?raw';
-import topic1_2 from '../../../content/subjects/cs403/topic-1/02-reduction-techniques.md?raw';
-import topic1_3 from '../../../content/subjects/cs403/topic-1/03-np-hard-problems.md?raw';
-import topic1_4 from '../../../content/subjects/cs403/topic-1/04-sat-problem.md?raw';
-import topic1_5 from '../../../content/subjects/cs403/topic-1/05-traveling-salesman.md?raw';
-import topic1_6 from '../../../content/subjects/cs403/topic-1/06-graph-coloring.md?raw';
-import topic1_7 from '../../../content/subjects/cs403/topic-1/07-complexity-classes.md?raw';
+import topic1_1 from '../../../content/subjects/cs403/topic-1/01-complexity-classes.md?raw';
+import topic1_2 from '../../../content/subjects/cs403/topic-1/02-polynomial-reductions.md?raw';
+import topic1_3 from '../../../content/subjects/cs403/topic-1/03-sat.md?raw';
+import topic1_4 from '../../../content/subjects/cs403/topic-1/04-classic-problems.md?raw';
+import topic1_5 from '../../../content/subjects/cs403/topic-1/05-tsp.md?raw';
+import topic1_6 from '../../../content/subjects/cs403/topic-1/06-subset-sum.md?raw';
+import topic1_7 from '../../../content/subjects/cs403/topic-1/07-coping-with-np.md?raw';
 
 import topic2_1 from '../../../content/subjects/cs403/topic-2/01-approximation-intro.md?raw';
 import topic2_2 from '../../../content/subjects/cs403/topic-2/02-vertex-cover.md?raw';
 import topic2_3 from '../../../content/subjects/cs403/topic-2/03-set-cover.md?raw';
 import topic2_4 from '../../../content/subjects/cs403/topic-2/04-tsp-approximation.md?raw';
-import topic2_5 from '../../../content/subjects/cs403/topic-2/05-knapsack-approximation.md?raw';
-import topic2_6 from '../../../content/subjects/cs403/topic-2/06-ptas-fptas.md?raw';
-import topic2_7 from '../../../content/subjects/cs403/topic-2/07-approximation-ratios.md?raw';
+import topic2_5 from '../../../content/subjects/cs403/topic-2/05-knapsack-fptas.md?raw';
+import topic2_6 from '../../../content/subjects/cs403/topic-2/06-scheduling.md?raw';
+import topic2_7 from '../../../content/subjects/cs403/topic-2/07-facility-location.md?raw';
 
-import topic3_1 from '../../../content/subjects/cs403/topic-3/01-randomized-intro.md?raw';
-import topic3_2 from '../../../content/subjects/cs403/topic-3/02-quicksort-randomized.md?raw';
-import topic3_3 from '../../../content/subjects/cs403/topic-3/03-randomized-min-cut.md?raw';
-import topic3_4 from '../../../content/subjects/cs403/topic-3/04-monte-carlo.md?raw';
-import topic3_5 from '../../../content/subjects/cs403/topic-3/05-las-vegas.md?raw';
-import topic3_6 from '../../../content/subjects/cs403/topic-3/06-probabilistic-analysis.md?raw';
-import topic3_7 from '../../../content/subjects/cs403/topic-3/07-hashing-algorithms.md?raw';
+import topic3_1 from '../../../content/subjects/cs403/topic-3/01-randomization-intro.md?raw';
+import topic3_2 from '../../../content/subjects/cs403/topic-3/02-randomized-quicksort.md?raw';
+import topic3_3 from '../../../content/subjects/cs403/topic-3/03-kargers-mincut.md?raw';
+import topic3_4 from '../../../content/subjects/cs403/topic-3/04-hashing.md?raw';
+import topic3_5 from '../../../content/subjects/cs403/topic-3/05-randomized-selection.md?raw';
+import topic3_6 from '../../../content/subjects/cs403/topic-3/06-primality-testing.md?raw';
+import topic3_7 from '../../../content/subjects/cs403/topic-3/07-streaming-algorithms.md?raw';
 
-import topic4_1 from '../../../content/subjects/cs403/topic-4/01-online-algorithms-intro.md?raw';
-import topic4_2 from '../../../content/subjects/cs403/topic-4/02-competitive-analysis.md?raw';
-import topic4_3 from '../../../content/subjects/cs403/topic-4/03-paging-algorithms.md?raw';
-import topic4_4 from '../../../content/subjects/cs403/topic-4/04-k-server-problem.md?raw';
-import topic4_5 from '../../../content/subjects/cs403/topic-4/05-ski-rental.md?raw';
-import topic4_6 from '../../../content/subjects/cs403/topic-4/06-online-matching.md?raw';
-import topic4_7 from '../../../content/subjects/cs403/topic-4/07-streaming-algorithms.md?raw';
+import topic4_1 from '../../../content/subjects/cs403/topic-4/01-online-intro.md?raw';
+import topic4_2 from '../../../content/subjects/cs403/topic-4/02-paging.md?raw';
+import topic4_3 from '../../../content/subjects/cs403/topic-4/03-k-server.md?raw';
+import topic4_4 from '../../../content/subjects/cs403/topic-4/04-ski-rental.md?raw';
+import topic4_5 from '../../../content/subjects/cs403/topic-4/05-load-balancing.md?raw';
+import topic4_6 from '../../../content/subjects/cs403/topic-4/06-bin-packing.md?raw';
+import topic4_7 from '../../../content/subjects/cs403/topic-4/07-secretary-problem.md?raw';
 
-import topic5_1 from '../../../content/subjects/cs403/topic-5/01-advanced-dp-techniques.md?raw';
-import topic5_2 from '../../../content/subjects/cs403/topic-5/02-matrix-chain.md?raw';
-import topic5_3 from '../../../content/subjects/cs403/topic-5/03-optimal-bst.md?raw';
-import topic5_4 from '../../../content/subjects/cs403/topic-5/04-edit-distance.md?raw';
-import topic5_5 from '../../../content/subjects/cs403/topic-5/05-longest-common-subsequence.md?raw';
-import topic5_6 from '../../../content/subjects/cs403/topic-5/06-dp-on-trees.md?raw';
-import topic5_7 from '../../../content/subjects/cs403/topic-5/07-state-space-reduction.md?raw';
+import topic5_1 from '../../../content/subjects/cs403/topic-5/01-max-flow-intro.md?raw';
+import topic5_2 from '../../../content/subjects/cs403/topic-5/02-push-relabel.md?raw';
+import topic5_3 from '../../../content/subjects/cs403/topic-5/03-bipartite-matching.md?raw';
+import topic5_4 from '../../../content/subjects/cs403/topic-5/04-min-cost-flow.md?raw';
+import topic5_5 from '../../../content/subjects/cs403/topic-5/05-circulation.md?raw';
+import topic5_6 from '../../../content/subjects/cs403/topic-5/06-multi-commodity-flow.md?raw';
+import topic5_7 from '../../../content/subjects/cs403/topic-5/07-flow-applications.md?raw';
 
-import topic6_1 from '../../../content/subjects/cs403/topic-6/01-flow-networks.md?raw';
-import topic6_2 from '../../../content/subjects/cs403/topic-6/02-ford-fulkerson.md?raw';
-import topic6_3 from '../../../content/subjects/cs403/topic-6/03-edmonds-karp.md?raw';
-import topic6_4 from '../../../content/subjects/cs403/topic-6/04-max-flow-min-cut.md?raw';
-import topic6_5 from '../../../content/subjects/cs403/topic-6/05-bipartite-matching.md?raw';
-import topic6_6 from '../../../content/subjects/cs403/topic-6/06-min-cost-flow.md?raw';
-import topic6_7 from '../../../content/subjects/cs403/topic-6/07-network-flow-applications.md?raw';
+import topic6_1 from '../../../content/subjects/cs403/topic-6/01-matrix-chain.md?raw';
+import topic6_2 from '../../../content/subjects/cs403/topic-6/02-optimal-bst.md?raw';
+import topic6_3 from '../../../content/subjects/cs403/topic-6/03-edit-distance.md?raw';
+import topic6_4 from '../../../content/subjects/cs403/topic-6/04-longest-common-subsequence.md?raw';
+import topic6_5 from '../../../content/subjects/cs403/topic-6/05-traveling-salesman-dp.md?raw';
+import topic6_6 from '../../../content/subjects/cs403/topic-6/06-knapsack-variants.md?raw';
+import topic6_7 from '../../../content/subjects/cs403/topic-6/07-dp-optimization.md?raw';
 
-import topic7_1 from '../../../content/subjects/cs403/topic-7/01-geometric-primitives.md?raw';
-import topic7_2 from '../../../content/subjects/cs403/topic-7/02-convex-hull.md?raw';
-import topic7_3 from '../../../content/subjects/cs403/topic-7/03-line-intersection.md?raw';
-import topic7_4 from '../../../content/subjects/cs403/topic-7/04-closest-pair.md?raw';
-import topic7_5 from '../../../content/subjects/cs403/topic-7/05-voronoi-diagrams.md?raw';
+import topic7_1 from '../../../content/subjects/cs403/topic-7/01-convex-hull.md?raw';
+import topic7_2 from '../../../content/subjects/cs403/topic-7/02-line-segment-intersection.md?raw';
+import topic7_3 from '../../../content/subjects/cs403/topic-7/03-closest-pair.md?raw';
+import topic7_4 from '../../../content/subjects/cs403/topic-7/04-voronoi-diagrams.md?raw';
+import topic7_5 from '../../../content/subjects/cs403/topic-7/05-polygon-triangulation.md?raw';
 import topic7_6 from '../../../content/subjects/cs403/topic-7/06-range-searching.md?raw';
-import topic7_7 from '../../../content/subjects/cs403/topic-7/07-sweep-line-algorithms.md?raw';
+import topic7_7 from '../../../content/subjects/cs403/topic-7/07-geometric-algorithms.md?raw';
 
 export const cs403Topics: Topic[] = [
   {

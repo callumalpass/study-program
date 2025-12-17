@@ -1,60 +1,60 @@
 import type { Topic } from '../../../core/types';
 
-import topic1_1 from '../../../content/subjects/cs405/topic-1/01-cloud-intro.md?raw';
-import topic1_2 from '../../../content/subjects/cs405/topic-1/02-cloud-service-models.md?raw';
-import topic1_3 from '../../../content/subjects/cs405/topic-1/03-cloud-deployment-models.md?raw';
+import topic1_1 from '../../../content/subjects/cs405/topic-1/01-cloud-introduction.md?raw';
+import topic1_2 from '../../../content/subjects/cs405/topic-1/02-service-models.md?raw';
+import topic1_3 from '../../../content/subjects/cs405/topic-1/03-deployment-models.md?raw';
 import topic1_4 from '../../../content/subjects/cs405/topic-1/04-cloud-providers.md?raw';
-import topic1_5 from '../../../content/subjects/cs405/topic-1/05-cloud-economics.md?raw';
-import topic1_6 from '../../../content/subjects/cs405/topic-1/06-cloud-security.md?raw';
-import topic1_7 from '../../../content/subjects/cs405/topic-1/07-cloud-migration.md?raw';
+import topic1_5 from '../../../content/subjects/cs405/topic-1/05-economics.md?raw';
+import topic1_6 from '../../../content/subjects/cs405/topic-1/06-sla.md?raw';
+import topic1_7 from '../../../content/subjects/cs405/topic-1/07-cloud-security.md?raw';
 
 import topic2_1 from '../../../content/subjects/cs405/topic-2/01-virtualization-intro.md?raw';
 import topic2_2 from '../../../content/subjects/cs405/topic-2/02-hypervisors.md?raw';
 import topic2_3 from '../../../content/subjects/cs405/topic-2/03-virtual-machines.md?raw';
-import topic2_4 from '../../../content/subjects/cs405/topic-2/04-virtual-networks.md?raw';
-import topic2_5 from '../../../content/subjects/cs405/topic-2/05-storage-virtualization.md?raw';
-import topic2_6 from '../../../content/subjects/cs405/topic-2/06-resource-management.md?raw';
-import topic2_7 from '../../../content/subjects/cs405/topic-2/07-performance-optimization.md?raw';
+import topic2_4 from '../../../content/subjects/cs405/topic-2/04-vm-networking.md?raw';
+import topic2_5 from '../../../content/subjects/cs405/topic-2/05-vm-storage.md?raw';
+import topic2_6 from '../../../content/subjects/cs405/topic-2/06-performance.md?raw';
+import topic2_7 from '../../../content/subjects/cs405/topic-2/07-vm-management.md?raw';
 
-import topic3_1 from '../../../content/subjects/cs405/topic-3/01-containers-intro.md?raw';
-import topic3_2 from '../../../content/subjects/cs405/topic-3/02-docker-fundamentals.md?raw';
-import topic3_3 from '../../../content/subjects/cs405/topic-3/03-docker-images.md?raw';
+import topic3_1 from '../../../content/subjects/cs405/topic-3/01-container-introduction.md?raw';
+import topic3_2 from '../../../content/subjects/cs405/topic-3/02-docker-basics.md?raw';
+import topic3_3 from '../../../content/subjects/cs405/topic-3/03-dockerfile.md?raw';
 import topic3_4 from '../../../content/subjects/cs405/topic-3/04-docker-networking.md?raw';
-import topic3_5 from '../../../content/subjects/cs405/topic-3/05-docker-volumes.md?raw';
+import topic3_5 from '../../../content/subjects/cs405/topic-3/05-docker-storage.md?raw';
 import topic3_6 from '../../../content/subjects/cs405/topic-3/06-docker-compose.md?raw';
 import topic3_7 from '../../../content/subjects/cs405/topic-3/07-container-security.md?raw';
 
 import topic4_1 from '../../../content/subjects/cs405/topic-4/01-kubernetes-intro.md?raw';
-import topic4_2 from '../../../content/subjects/cs405/topic-4/02-kubernetes-architecture.md?raw';
-import topic4_3 from '../../../content/subjects/cs405/topic-4/03-pods-deployments.md?raw';
-import topic4_4 from '../../../content/subjects/cs405/topic-4/04-services-networking.md?raw';
-import topic4_5 from '../../../content/subjects/cs405/topic-4/05-configmaps-secrets.md?raw';
-import topic4_6 from '../../../content/subjects/cs405/topic-4/06-scaling-autoscaling.md?raw';
-import topic4_7 from '../../../content/subjects/cs405/topic-4/07-helm-package-management.md?raw';
+import topic4_2 from '../../../content/subjects/cs405/topic-4/02-workloads.md?raw';
+import topic4_3 from '../../../content/subjects/cs405/topic-4/03-services-networking.md?raw';
+import topic4_4 from '../../../content/subjects/cs405/topic-4/04-storage.md?raw';
+import topic4_5 from '../../../content/subjects/cs405/topic-4/05-configuration.md?raw';
+import topic4_6 from '../../../content/subjects/cs405/topic-4/06-helm.md?raw';
+import topic4_7 from '../../../content/subjects/cs405/topic-4/07-production-best-practices.md?raw';
 
 import topic5_1 from '../../../content/subjects/cs405/topic-5/01-serverless-intro.md?raw';
-import topic5_2 from '../../../content/subjects/cs405/topic-5/02-faas-functions.md?raw';
-import topic5_3 from '../../../content/subjects/cs405/topic-5/03-aws-lambda.md?raw';
-import topic5_4 from '../../../content/subjects/cs405/topic-5/04-event-driven-serverless.md?raw';
-import topic5_5 from '../../../content/subjects/cs405/topic-5/05-serverless-patterns.md?raw';
-import topic5_6 from '../../../content/subjects/cs405/topic-5/06-serverless-scaling.md?raw';
-import topic5_7 from '../../../content/subjects/cs405/topic-5/07-serverless-monitoring.md?raw';
+import topic5_2 from '../../../content/subjects/cs405/topic-5/02-aws-lambda.md?raw';
+import topic5_3 from '../../../content/subjects/cs405/topic-5/03-serverless-architectures.md?raw';
+import topic5_4 from '../../../content/subjects/cs405/topic-5/04-api-gateway.md?raw';
+import topic5_5 from '../../../content/subjects/cs405/topic-5/05-event-driven.md?raw';
+import topic5_6 from '../../../content/subjects/cs405/topic-5/06-serverless-databases.md?raw';
+import topic5_7 from '../../../content/subjects/cs405/topic-5/07-best-practices.md?raw';
 
-import topic6_1 from '../../../content/subjects/cs405/topic-6/01-cloud-storage-types.md?raw';
-import topic6_2 from '../../../content/subjects/cs405/topic-6/02-object-storage.md?raw';
-import topic6_3 from '../../../content/subjects/cs405/topic-6/03-block-file-storage.md?raw';
-import topic6_4 from '../../../content/subjects/cs405/topic-6/04-cloud-databases.md?raw';
-import topic6_5 from '../../../content/subjects/cs405/topic-6/05-nosql-databases.md?raw';
-import topic6_6 from '../../../content/subjects/cs405/topic-6/06-data-warehousing.md?raw';
-import topic6_7 from '../../../content/subjects/cs405/topic-6/07-database-migration.md?raw';
+import topic6_1 from '../../../content/subjects/cs405/topic-6/01-storage-types.md?raw';
+import topic6_2 from '../../../content/subjects/cs405/topic-6/02-object-storage--s3-.md?raw';
+import topic6_3 from '../../../content/subjects/cs405/topic-6/03-block-storage--ebs-.md?raw';
+import topic6_4 from '../../../content/subjects/cs405/topic-6/04-file-storage--efs-.md?raw';
+import topic6_5 from '../../../content/subjects/cs405/topic-6/05-database-storage.md?raw';
+import topic6_6 from '../../../content/subjects/cs405/topic-6/06-storage-optimization.md?raw';
+import topic6_7 from '../../../content/subjects/cs405/topic-6/07-data-transfer-and-migration.md?raw';
 
-import topic7_1 from '../../../content/subjects/cs405/topic-7/01-cloud-native-intro.md?raw';
-import topic7_2 from '../../../content/subjects/cs405/topic-7/02-twelve-factor-app.md?raw';
-import topic7_3 from '../../../content/subjects/cs405/topic-7/03-microservices-cloud.md?raw';
-import topic7_4 from '../../../content/subjects/cs405/topic-7/04-api-design.md?raw';
-import topic7_5 from '../../../content/subjects/cs405/topic-7/05-observability.md?raw';
-import topic7_6 from '../../../content/subjects/cs405/topic-7/06-cicd-cloud.md?raw';
-import topic7_7 from '../../../content/subjects/cs405/topic-7/07-cloud-resilience.md?raw';
+import topic7_1 from '../../../content/subjects/cs405/topic-7/01-cloud-native-principles.md?raw';
+import topic7_2 from '../../../content/subjects/cs405/topic-7/02-microservices-architecture.md?raw';
+import topic7_3 from '../../../content/subjects/cs405/topic-7/03-service-mesh.md?raw';
+import topic7_4 from '../../../content/subjects/cs405/topic-7/04-observability.md?raw';
+import topic7_5 from '../../../content/subjects/cs405/topic-7/05-ci-cd-for-cloud-native.md?raw';
+import topic7_6 from '../../../content/subjects/cs405/topic-7/06-cloud-native-security.md?raw';
+import topic7_7 from '../../../content/subjects/cs405/topic-7/07-cloud-native-patterns.md?raw';
 
 export const cs405Topics: Topic[] = [
   {

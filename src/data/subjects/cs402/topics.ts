@@ -1,57 +1,57 @@
 import type { Topic } from '../../../core/types';
 
-import topic1_1 from '../../../content/subjects/cs402/topic-1/01-ml-overview.md?raw';
+import topic1_1 from '../../../content/subjects/cs402/topic-1/01-ml-introduction.md?raw';
 import topic1_2 from '../../../content/subjects/cs402/topic-1/02-ml-workflow.md?raw';
-import topic1_3 from '../../../content/subjects/cs402/topic-1/03-supervised-unsupervised.md?raw';
-import topic1_4 from '../../../content/subjects/cs402/topic-1/04-feature-engineering.md?raw';
-import topic1_5 from '../../../content/subjects/cs402/topic-1/05-data-preprocessing.md?raw';
+import topic1_3 from '../../../content/subjects/cs402/topic-1/03-supervised-learning.md?raw';
+import topic1_4 from '../../../content/subjects/cs402/topic-1/04-unsupervised-learning.md?raw';
+import topic1_5 from '../../../content/subjects/cs402/topic-1/05-reinforcement-learning.md?raw';
 import topic1_6 from '../../../content/subjects/cs402/topic-1/06-bias-variance.md?raw';
-import topic1_7 from '../../../content/subjects/cs402/topic-1/07-ml-frameworks.md?raw';
+import topic1_7 from '../../../content/subjects/cs402/topic-1/07-ml-applications.md?raw';
 
 import topic2_1 from '../../../content/subjects/cs402/topic-2/01-linear-regression.md?raw';
 import topic2_2 from '../../../content/subjects/cs402/topic-2/02-gradient-descent.md?raw';
 import topic2_3 from '../../../content/subjects/cs402/topic-2/03-regularization.md?raw';
 import topic2_4 from '../../../content/subjects/cs402/topic-2/04-logistic-regression.md?raw';
 import topic2_5 from '../../../content/subjects/cs402/topic-2/05-multiclass-classification.md?raw';
-import topic2_6 from '../../../content/subjects/cs402/topic-2/06-cost-functions.md?raw';
-import topic2_7 from '../../../content/subjects/cs402/topic-2/07-optimization-techniques.md?raw';
+import topic2_6 from '../../../content/subjects/cs402/topic-2/06-feature-scaling.md?raw';
+import topic2_7 from '../../../content/subjects/cs402/topic-2/07-polynomial-features.md?raw';
 
 import topic3_1 from '../../../content/subjects/cs402/topic-3/01-decision-trees.md?raw';
 import topic3_2 from '../../../content/subjects/cs402/topic-3/02-random-forests.md?raw';
-import topic3_3 from '../../../content/subjects/cs402/topic-3/03-svm.md?raw';
-import topic3_4 from '../../../content/subjects/cs402/topic-3/04-knn.md?raw';
-import topic3_5 from '../../../content/subjects/cs402/topic-3/05-naive-bayes.md?raw';
-import topic3_6 from '../../../content/subjects/cs402/topic-3/06-ensemble-methods.md?raw';
-import topic3_7 from '../../../content/subjects/cs402/topic-3/07-boosting-algorithms.md?raw';
+import topic3_3 from '../../../content/subjects/cs402/topic-3/03-gradient-boosting.md?raw';
+import topic3_4 from '../../../content/subjects/cs402/topic-3/04-svm.md?raw';
+import topic3_5 from '../../../content/subjects/cs402/topic-3/05-knn.md?raw';
+import topic3_6 from '../../../content/subjects/cs402/topic-3/06-naive-bayes.md?raw';
+import topic3_7 from '../../../content/subjects/cs402/topic-3/07-ensemble-methods.md?raw';
 
 import topic4_1 from '../../../content/subjects/cs402/topic-4/01-perceptron.md?raw';
-import topic4_2 from '../../../content/subjects/cs402/topic-4/02-activation-functions.md?raw';
+import topic4_2 from '../../../content/subjects/cs402/topic-4/02-multilayer-perceptron.md?raw';
 import topic4_3 from '../../../content/subjects/cs402/topic-4/03-backpropagation.md?raw';
-import topic4_4 from '../../../content/subjects/cs402/topic-4/04-feedforward-networks.md?raw';
-import topic4_5 from '../../../content/subjects/cs402/topic-4/05-network-architecture.md?raw';
-import topic4_6 from '../../../content/subjects/cs402/topic-4/06-weight-initialization.md?raw';
-import topic4_7 from '../../../content/subjects/cs402/topic-4/07-neural-network-training.md?raw';
+import topic4_4 from '../../../content/subjects/cs402/topic-4/04-activation-functions.md?raw';
+import topic4_5 from '../../../content/subjects/cs402/topic-4/05-optimization.md?raw';
+import topic4_6 from '../../../content/subjects/cs402/topic-4/06-regularization-nn.md?raw';
+import topic4_7 from '../../../content/subjects/cs402/topic-4/07-practical-training.md?raw';
 
 import topic5_1 from '../../../content/subjects/cs402/topic-5/01-deep-learning-intro.md?raw';
-import topic5_2 from '../../../content/subjects/cs402/topic-5/02-convolutional-networks.md?raw';
-import topic5_3 from '../../../content/subjects/cs402/topic-5/03-recurrent-networks.md?raw';
+import topic5_2 from '../../../content/subjects/cs402/topic-5/02-cnns.md?raw';
+import topic5_3 from '../../../content/subjects/cs402/topic-5/03-rnns.md?raw';
 import topic5_4 from '../../../content/subjects/cs402/topic-5/04-lstm-gru.md?raw';
-import topic5_5 from '../../../content/subjects/cs402/topic-5/05-transfer-learning.md?raw';
-import topic5_6 from '../../../content/subjects/cs402/topic-5/06-attention-transformers.md?raw';
+import topic5_5 from '../../../content/subjects/cs402/topic-5/05-transformers.md?raw';
+import topic5_6 from '../../../content/subjects/cs402/topic-5/06-transfer-learning.md?raw';
 import topic5_7 from '../../../content/subjects/cs402/topic-5/07-generative-models.md?raw';
 
-import topic6_1 from '../../../content/subjects/cs402/topic-6/01-kmeans-clustering.md?raw';
+import topic6_1 from '../../../content/subjects/cs402/topic-6/01-kmeans.md?raw';
 import topic6_2 from '../../../content/subjects/cs402/topic-6/02-hierarchical-clustering.md?raw';
 import topic6_3 from '../../../content/subjects/cs402/topic-6/03-dbscan.md?raw';
-import topic6_4 from '../../../content/subjects/cs402/topic-6/04-dimensionality-reduction.md?raw';
-import topic6_5 from '../../../content/subjects/cs402/topic-6/05-pca.md?raw';
+import topic6_4 from '../../../content/subjects/cs402/topic-6/04-pca.md?raw';
+import topic6_5 from '../../../content/subjects/cs402/topic-6/05-dimensionality-reduction.md?raw';
 import topic6_6 from '../../../content/subjects/cs402/topic-6/06-anomaly-detection.md?raw';
 import topic6_7 from '../../../content/subjects/cs402/topic-6/07-association-rules.md?raw';
 
 import topic7_1 from '../../../content/subjects/cs402/topic-7/01-train-test-split.md?raw';
 import topic7_2 from '../../../content/subjects/cs402/topic-7/02-cross-validation.md?raw';
-import topic7_3 from '../../../content/subjects/cs402/topic-7/03-performance-metrics.md?raw';
-import topic7_4 from '../../../content/subjects/cs402/topic-7/04-confusion-matrix.md?raw';
+import topic7_3 from '../../../content/subjects/cs402/topic-7/03-classification-metrics.md?raw';
+import topic7_4 from '../../../content/subjects/cs402/topic-7/04-regression-metrics.md?raw';
 import topic7_5 from '../../../content/subjects/cs402/topic-7/05-roc-auc.md?raw';
 import topic7_6 from '../../../content/subjects/cs402/topic-7/06-hyperparameter-tuning.md?raw';
 import topic7_7 from '../../../content/subjects/cs402/topic-7/07-model-selection.md?raw';

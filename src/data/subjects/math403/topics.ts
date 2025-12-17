@@ -1,36 +1,36 @@
 import type { Topic } from '../../../core/types';
 
-import topic1_1 from '../../../content/subjects/math403/topic-1/01-topology-intro.md?raw';
-import topic1_2 from '../../../content/subjects/math403/topic-1/02-open-sets.md?raw';
-import topic1_3 from '../../../content/subjects/math403/topic-1/03-closed-sets.md?raw';
-import topic1_4 from '../../../content/subjects/math403/topic-1/04-neighborhoods.md?raw';
-import topic1_5 from '../../../content/subjects/math403/topic-1/05-interior-closure.md?raw';
+import topic1_1 from '../../../content/subjects/math403/topic-1/01-topology-definition.md?raw';
+import topic1_2 from '../../../content/subjects/math403/topic-1/02-examples.md?raw';
+import topic1_3 from '../../../content/subjects/math403/topic-1/03-open-closed.md?raw';
+import topic1_4 from '../../../content/subjects/math403/topic-1/04-interior-closure.md?raw';
+import topic1_5 from '../../../content/subjects/math403/topic-1/05-boundary.md?raw';
 import topic1_6 from '../../../content/subjects/math403/topic-1/06-limit-points.md?raw';
-import topic1_7 from '../../../content/subjects/math403/topic-1/07-boundary-points.md?raw';
+import topic1_7 from '../../../content/subjects/math403/topic-1/07-subspace-topology.md?raw';
 
 import topic2_1 from '../../../content/subjects/math403/topic-2/01-basis-definition.md?raw';
-import topic2_2 from '../../../content/subjects/math403/topic-2/02-generated-topology.md?raw';
-import topic2_3 from '../../../content/subjects/math403/topic-2/03-subbases.md?raw';
-import topic2_4 from '../../../content/subjects/math403/topic-2/04-second-countable.md?raw';
-import topic2_5 from '../../../content/subjects/math403/topic-2/05-dense-subsets.md?raw';
-import topic2_6 from '../../../content/subjects/math403/topic-2/06-separable-spaces.md?raw';
-import topic2_7 from '../../../content/subjects/math403/topic-2/07-subspace-topology.md?raw';
+import topic2_2 from '../../../content/subjects/math403/topic-2/02-basis-theorem.md?raw';
+import topic2_3 from '../../../content/subjects/math403/topic-2/03-subbasis.md?raw';
+import topic2_4 from '../../../content/subjects/math403/topic-2/04-product-topology.md?raw';
+import topic2_5 from '../../../content/subjects/math403/topic-2/05-box-topology.md?raw';
+import topic2_6 from '../../../content/subjects/math403/topic-2/06-order-topology.md?raw';
+import topic2_7 from '../../../content/subjects/math403/topic-2/07-generating-topologies.md?raw';
 
-import topic3_1 from '../../../content/subjects/math403/topic-3/01-continuous-functions.md?raw';
-import topic3_2 from '../../../content/subjects/math403/topic-3/02-open-maps.md?raw';
-import topic3_3 from '../../../content/subjects/math403/topic-3/03-closed-maps.md?raw';
-import topic3_4 from '../../../content/subjects/math403/topic-3/04-homeomorphisms.md?raw';
-import topic3_5 from '../../../content/subjects/math403/topic-3/05-topological-properties.md?raw';
-import topic3_6 from '../../../content/subjects/math403/topic-3/06-product-topology.md?raw';
-import topic3_7 from '../../../content/subjects/math403/topic-3/07-quotient-topology.md?raw';
+import topic3_1 from '../../../content/subjects/math403/topic-3/01-continuous-maps.md?raw';
+import topic3_2 from '../../../content/subjects/math403/topic-3/02-homeomorphisms.md?raw';
+import topic3_3 from '../../../content/subjects/math403/topic-3/03-topological-properties.md?raw';
+import topic3_4 from '../../../content/subjects/math403/topic-3/04-embedding.md?raw';
+import topic3_5 from '../../../content/subjects/math403/topic-3/05-quotient-maps.md?raw';
+import topic3_6 from '../../../content/subjects/math403/topic-3/06-open-closed-maps.md?raw';
+import topic3_7 from '../../../content/subjects/math403/topic-3/07-continuous-examples.md?raw';
 
-import topic4_1 from '../../../content/subjects/math403/topic-4/01-connectedness-intro.md?raw';
-import topic4_2 from '../../../content/subjects/math403/topic-4/02-connected-sets.md?raw';
-import topic4_3 from '../../../content/subjects/math403/topic-4/03-components.md?raw';
-import topic4_4 from '../../../content/subjects/math403/topic-4/04-path-connectedness.md?raw';
-import topic4_5 from '../../../content/subjects/math403/topic-4/05-locally-connected.md?raw';
-import topic4_6 from '../../../content/subjects/math403/topic-4/06-intermediate-value.md?raw';
-import topic4_7 from '../../../content/subjects/math403/topic-4/07-totally-disconnected.md?raw';
+import topic4_1 from '../../../content/subjects/math403/topic-4/01-connected-spaces.md?raw';
+import topic4_2 from '../../../content/subjects/math403/topic-4/02-connected-subsets.md?raw';
+import topic4_3 from '../../../content/subjects/math403/topic-4/03-path-connectedness.md?raw';
+import topic4_4 from '../../../content/subjects/math403/topic-4/04-components.md?raw';
+import topic4_5 from '../../../content/subjects/math403/topic-4/05-local-connectedness.md?raw';
+import topic4_6 from '../../../content/subjects/math403/topic-4/06-totally-disconnected.md?raw';
+import topic4_7 from '../../../content/subjects/math403/topic-4/07-connectedness-applications.md?raw';
 
 import topic5_1 from '../../../content/subjects/math403/topic-5/01-compactness-intro.md?raw';
 import topic5_2 from '../../../content/subjects/math403/topic-5/02-open-covers.md?raw';
