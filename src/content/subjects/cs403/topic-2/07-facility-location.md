@@ -183,6 +183,55 @@ Harder to approximate.
 **Network design**: Where to place servers/routers?
 **Clustering**: Choose cluster centers to minimize distance to points
 
+## Local Search Methods
+
+Local search provides practical alternatives to LP-based approaches:
+
+**Swap-based Local Search**:
+1. Start with any feasible solution
+2. Consider swapping: close one facility, open another
+3. Accept swap if it improves total cost
+4. Repeat until no improving swap exists
+
+```typescript
+function localSearchFacilityLocation(F: Facility[], C: Client[]): Solution {
+    // Start with all facilities open
+    let open = new Set(F);
+    let cost = computeTotalCost(open, C);
+
+    let improved = true;
+    while (improved) {
+        improved = false;
+
+        for (const closeCandidate of open) {
+            for (const openCandidate of F) {
+                if (open.has(openCandidate)) continue;
+
+                // Try swap
+                const newOpen = new Set(open);
+                newOpen.delete(closeCandidate);
+                newOpen.add(openCandidate);
+
+                const newCost = computeTotalCost(newOpen, C);
+                if (newCost < cost) {
+                    open = newOpen;
+                    cost = newCost;
+                    improved = true;
+                    break;
+                }
+            }
+            if (improved) break;
+        }
+    }
+
+    return {open, cost};
+}
+```
+
+**Theorem**: Single-swap local search achieves 5-approximation for uncapacitated facility location.
+
+Multi-swap variants with $p$ simultaneous swaps achieve $(3 + 2/p)$-approximation.
+
 ## Conclusion
 
 Facility Location showcases multiple approximation techniques:
@@ -190,4 +239,4 @@ Facility Location showcases multiple approximation techniques:
 2. Primal-dual for dual-guided construction
 3. Greedy and local search heuristics
 
-The gap between best approximation (1.488) and hardness (1.463) remains narrow - a testament to decades of research refinement.
+The gap between best approximation (1.488) and hardness (1.463) remains narrow—a testament to decades of research refinement. The variety of successful approaches makes facility location an excellent case study for algorithm designers.

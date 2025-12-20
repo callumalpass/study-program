@@ -169,6 +169,38 @@ function kargerStein(G: Graph): number {
 
 **Community detection**: Find natural partitions in social networks
 
+## Why Randomization Helps
+
+The power of Karger's algorithm comes from a key insight: while any single run has low success probability ($\Omega(1/n^2)$), we can boost confidence through repetition.
+
+**Observation**: Each run is independent. If we run the algorithm $t$ times:
+$$\Pr[\text{all runs fail}] = (1 - 1/n^2)^t \leq e^{-t/n^2}$$
+
+Setting $t = n^2 \ln n$ makes failure probability $\leq 1/n$.
+
+**Key tradeoff**: Simple algorithm with many runs vs complex algorithm with single run.
+
+## Counting Minimum Cuts
+
+An interesting consequence: a graph has at most $\binom{n}{2}$ minimum cuts.
+
+**Proof**: Each minimum cut has probability $\geq 2/n(n-1)$ of being found by one run. Since probabilities of finding distinct cuts are disjoint events:
+$$\text{(number of min cuts)} \cdot \frac{2}{n(n-1)} \leq 1$$
+
+Therefore at most $\frac{n(n-1)}{2} = \binom{n}{2}$ minimum cuts exist.
+
+This bound is tight: a cycle graph has exactly $\binom{n}{2}$ minimum cuts (each pair of edges).
+
+## Parallel Implementation
+
+Karger's algorithm parallelizes well:
+
+- Run many independent copies simultaneously
+- Each processor needs only a copy of the graph
+- No synchronization needed until final comparison
+
+This makes it attractive for distributed computing environments where simple, parallelizable algorithms are preferred over complex sequential ones.
+
 ## Conclusion
 
 Karger's algorithm showcases randomization at its best:
@@ -177,4 +209,4 @@ Karger's algorithm showcases randomization at its best:
 - Amplification gives high-probability guarantee
 - Competitive with complex deterministic algorithms
 
-The analysis techniques (probability over random choices, product of survival probabilities) appear throughout randomized algorithms.
+The analysis techniques (probability over random choices, product of survival probabilities) appear throughout randomized algorithms. The algorithm also demonstrates how randomization can yield structural insights—like the bound on number of minimum cuts.

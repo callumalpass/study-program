@@ -1,76 +1,202 @@
-# Maximum Flow: Ford-Fulkerson, Edmonds-Karp
+# Maximum Flow: Ford-Fulkerson and Edmonds-Karp
 
 ## Introduction
 
-Network flow problems model transportation, communication, and assignment problems. Maximum flow finds the maximum amount that can flow from source to sink in a network, respecting capacity constraints.
+Network flow problems are among the most versatile and practically important optimization problems in computer science. The maximum flow problem asks: given a network of pipes with varying capacities, what is the maximum rate at which material can flow from a source to a sink?
 
-## Flow Network
+This seemingly simple question connects to a remarkable variety of applications—transportation logistics, communication networks, bipartite matching, project selection, and image segmentation. The max-flow min-cut theorem, one of the deepest results in combinatorial optimization, establishes a beautiful duality between flows and cuts.
 
-**Directed graph** $G = (V, E)$ with:
-- Source $s \in V$
-- Sink $t \in V$  
-- Capacity $c(u,v) \geq 0$ for each edge $(u,v)$
+The algorithms we study—Ford-Fulkerson and Edmonds-Karp—introduced fundamental techniques that remain central to network optimization today.
 
-**Flow** $f: E \to \mathbb{R}$ satisfies:
-1. **Capacity**: $0 \leq f(u,v) \leq c(u,v)$
-2. **Conservation**: $\sum_{v} f(v,u) = \sum_{v} f(u,v)$ for all $u \neq s,t$
+## Flow Network Definition
 
-**Value**: $|f| = \sum_{v} f(s,v) - \sum_{v} f(v,s)$
+A **flow network** is a directed graph $G = (V, E)$ with:
+
+**Source and sink**: Distinguished vertices $s$ (source) and $t$ (sink).
+
+**Capacities**: A function $c: E \to \mathbb{R}_{\geq 0}$ assigning non-negative capacity to each edge.
+
+**Convention**: If $(u, v) \notin E$, then $c(u, v) = 0$.
+
+A **flow** in $G$ is a function $f: V \times V \to \mathbb{R}$ satisfying:
+
+**Capacity constraint**: $0 \leq f(u, v) \leq c(u, v)$ for all $u, v \in V$
+
+**Flow conservation**: For all $u \in V \setminus \{s, t\}$:
+$$\sum_{v \in V} f(v, u) = \sum_{v \in V} f(u, v)$$
+
+The **value of a flow** is:
+$$|f| = \sum_{v \in V} f(s, v) - \sum_{v \in V} f(v, s)$$
+
+This represents the net flow leaving the source, which equals the net flow entering the sink.
+
+## Residual Network
+
+The **residual network** $G_f$ captures remaining capacity after flow $f$ is established.
+
+**Residual capacity**:
+$$c_f(u, v) = \begin{cases}
+c(u, v) - f(u, v) & \text{if } (u, v) \in E \\
+f(v, u) & \text{if } (v, u) \in E \\
+0 & \text{otherwise}
+\end{cases}$$
+
+The first case represents unused forward capacity. The second case represents the ability to "cancel" existing flow by sending flow in the opposite direction.
+
+**Residual edges**: $E_f = \{(u, v) : c_f(u, v) > 0\}$
+
+An **augmenting path** is a simple path from $s$ to $t$ in $G_f$ using only residual edges.
 
 ## Ford-Fulkerson Method
 
-**Idea**: Repeatedly find augmenting paths, increase flow.
-
-**Residual network**: $G_f$ has residual capacity $c_f(u,v) = c(u,v) - f(u,v)$ for forward edges and $c_f(v,u) = f(u,v)$ for backward edges.
-
-**Augmenting path**: Path $s \leadsto t$ in $G_f$ with positive residual capacity.
+The Ford-Fulkerson method repeatedly finds augmenting paths and pushes flow along them.
 
 ```typescript
-function fordFulkerson(G: Network, s: Node, t: Node): number {
-    let flow = 0;
+function fordFulkerson(G: FlowNetwork, s: number, t: number): number {
+    // Initialize flow to zero
+    const flow: number[][] = G.vertices.map(() =>
+        G.vertices.map(() => 0)
+    );
+
+    let maxFlow = 0;
+
+    // While there exists an augmenting path
     while (true) {
-        const path = findAugmentingPath(G, s, t); // BFS/DFS
-        if (!path) break;
-        
-        const bottleneck = Math.min(...path.map(e => G.residual(e)));
-        for (const edge of path) {
-            G.addFlow(edge, bottleneck);
+        // Find path from s to t in residual network
+        const { path, bottleneck } = findAugmentingPath(G, flow, s, t);
+
+        if (path === null) break;
+
+        // Augment flow along path
+        for (let i = 0; i < path.length - 1; i++) {
+            const u = path[i];
+            const v = path[i + 1];
+
+            if (G.hasEdge(u, v)) {
+                flow[u][v] += bottleneck;
+            } else {
+                flow[v][u] -= bottleneck;  // Cancel flow
+            }
         }
-        flow += bottleneck;
+
+        maxFlow += bottleneck;
     }
-    return flow;
+
+    return maxFlow;
+}
+
+function findAugmentingPath(
+    G: FlowNetwork,
+    flow: number[][],
+    s: number,
+    t: number
+): { path: number[] | null; bottleneck: number } {
+    // BFS to find path with minimum edges (Edmonds-Karp)
+    const parent: number[] = new Array(G.n).fill(-1);
+    const visited: boolean[] = new Array(G.n).fill(false);
+    const queue: number[] = [s];
+    visited[s] = true;
+
+    while (queue.length > 0) {
+        const u = queue.shift()!;
+
+        for (const v of G.allVertices()) {
+            const residual = G.capacity(u, v) - flow[u][v] + flow[v][u];
+
+            if (!visited[v] && residual > 0) {
+                visited[v] = true;
+                parent[v] = u;
+                queue.push(v);
+            }
+        }
+    }
+
+    if (!visited[t]) return { path: null, bottleneck: 0 };
+
+    // Reconstruct path and find bottleneck
+    const path: number[] = [];
+    let v = t;
+    let bottleneck = Infinity;
+
+    while (v !== s) {
+        path.unshift(v);
+        const u = parent[v];
+        const residual = G.capacity(u, v) - flow[u][v] + flow[v][u];
+        bottleneck = Math.min(bottleneck, residual);
+        v = u;
+    }
+    path.unshift(s);
+
+    return { path, bottleneck };
 }
 ```
 
-**Time**: $O(E \cdot |f^*|)$ where $|f^*|$ is max flow value (pseudo-polynomial!)
+**Correctness**: When no augmenting path exists, the flow is maximum. This follows from the max-flow min-cut theorem.
+
+**Time complexity**: $O(E \cdot |f^*|)$ where $|f^*|$ is the maximum flow value. This is pseudo-polynomial—it depends on the magnitude of capacities, not just input size.
+
+**Potential issue**: With irrational capacities, Ford-Fulkerson may not terminate. With poor path choices, it can be extremely slow even with integer capacities.
 
 ## Edmonds-Karp Algorithm
 
-**Improvement**: Use BFS to find shortest augmenting path.
+Edmonds-Karp improves Ford-Fulkerson by always choosing the shortest augmenting path (fewest edges) using BFS.
 
-**Time**: $O(VE^2)$ - polynomial!
+**Theorem**: Edmonds-Karp runs in $O(VE^2)$ time.
 
-**Key insight**: Each edge becomes saturated at most $O(V)$ times.
+**Proof sketch**:
+1. For any vertex $v$, $\text{dist}_{G_f}(s, v)$ never decreases during the algorithm
+2. An edge $(u, v)$ can become saturated at most $O(V)$ times
+3. Each iteration saturates at least one edge
+4. Total iterations: $O(VE)$
+5. Each BFS takes $O(E)$ time
+
+**Key insight**: Using shortest paths ensures systematic progress toward termination.
 
 ## Max-Flow Min-Cut Theorem
 
-**Cut**: Partition $(S, T)$ with $s \in S, t \in T$
+An **$s$-$t$ cut** is a partition $(S, T)$ of $V$ with $s \in S$ and $t \in T$.
 
-**Capacity**: $c(S,T) = \sum_{u \in S, v \in T} c(u,v)$
+**Cut capacity**: $c(S, T) = \sum_{u \in S, v \in T} c(u, v)$
 
-**Theorem**: Max flow = Min cut capacity
+**Flow across cut**: $f(S, T) = \sum_{u \in S, v \in T} f(u, v) - \sum_{u \in S, v \in T} f(v, u)$
 
-**Proof**: 
-1. Flow $\leq$ any cut capacity (obvious)
-2. When no augmenting path exists, cut defined by reachable vertices from $s$ in $G_f$ equals flow (equality!)
+**Lemma**: For any flow $f$ and cut $(S, T)$: $|f| = f(S, T) \leq c(S, T)$
+
+**Max-Flow Min-Cut Theorem**: The maximum value of any flow equals the minimum capacity of any cut.
+$$\max_f |f| = \min_{(S,T)} c(S, T)$$
+
+**Proof**:
+- $\leq$: Any flow is bounded by any cut capacity (lemma)
+- $\geq$: When Ford-Fulkerson terminates, let $S$ = vertices reachable from $s$ in $G_f$. This cut has capacity exactly equal to the flow value.
 
 ## Applications
 
-**Transportation**: Maximize goods from factories to markets
-**Communication**: Maximize data transfer in networks
-**Matching**: Bipartite matching via flow network
-**Project selection**: Maximize profit subject to constraints
+**Transportation networks**: Maximize goods flow from factories to distribution centers.
 
-## Conclusion
+**Communication networks**: Maximum data rate between nodes, considering link capacities.
 
-Ford-Fulkerson with BFS (Edmonds-Karp) solves max flow in $O(VE^2)$ time. The max-flow min-cut theorem connects flow and cut problems, enabling powerful algorithms and applications.
+**Bipartite matching**: Maximum matching reduces to max flow (covered in detail separately).
+
+**Project selection**: Given projects with profits and dependencies, select subset maximizing profit.
+
+**Baseball elimination**: Determine if a team can still win the league.
+
+**Image segmentation**: Partition image into foreground/background minimizing cut cost.
+
+## Comparison of Algorithms
+
+| Algorithm | Time Complexity | When to Use |
+|-----------|-----------------|-------------|
+| Ford-Fulkerson (DFS) | $O(E \cdot |f^*|)$ | Small integer capacities |
+| Edmonds-Karp (BFS) | $O(VE^2)$ | General purpose |
+| Dinic's | $O(V^2 E)$ | Unit capacity networks |
+| Push-Relabel | $O(V^2 E)$ or $O(V^3)$ | Dense graphs |
+
+## Key Takeaways
+
+- Maximum flow finds the maximum rate of transmission through a capacitated network
+- Ford-Fulkerson iteratively augments flow along paths in the residual network
+- Edmonds-Karp uses BFS for $O(VE^2)$ polynomial time complexity
+- The max-flow min-cut theorem establishes duality between flows and cuts
+- Applications span transportation, networking, matching, and optimization
+- The residual network captures both unused capacity and cancellation potential

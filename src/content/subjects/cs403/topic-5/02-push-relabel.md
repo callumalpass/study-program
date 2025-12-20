@@ -2,87 +2,245 @@
 
 ## Introduction
 
-Push-relabel algorithms represent a different paradigm for max flow. Instead of augmenting paths, they maintain a preflow (flow that can violate conservation) and use local operations to push flow and relabel vertices.
+The push-relabel algorithm represents a fundamentally different approach to maximum flow than augmenting path methods. Instead of finding paths from source to sink, it works locally—pushing excess flow from vertices and relabeling to enable more pushes.
 
-## Preflow
+Invented by Goldberg and Tarjan in 1988, push-relabel algorithms achieve the same worst-case complexity as Edmonds-Karp but often perform better in practice, especially on dense graphs. They also parallelize naturally, making them attractive for high-performance computing.
 
-**Preflow**: Relaxes conservation - flow in $\geq$ flow out for all $v \neq s,t$
+The key insight is maintaining a "preflow" (where flow conservation can be violated) and systematically converting it to a valid flow through local operations.
 
-**Excess**: $e(v) = \sum_{u} f(u,v) - \sum_{w} f(v,w)$ 
+## Preflow Concept
 
-**Active vertex**: $e(v) > 0$ and $v \neq s,t$
+A **preflow** relaxes the conservation constraint, allowing vertices to accumulate excess flow.
+
+**Definition**: A preflow $f$ satisfies:
+- Capacity constraint: $0 \leq f(u, v) \leq c(u, v)$ for all $(u, v)$
+- Relaxed conservation: $\sum_v f(v, u) \geq \sum_v f(u, v)$ for all $u \neq s$
+
+**Excess**: The excess at vertex $u$ is:
+$$e(u) = \sum_v f(v, u) - \sum_v f(u, v)$$
+
+For a preflow: $e(u) \geq 0$ for all $u \neq s$.
+
+**Active vertex**: A vertex $u \neq s, t$ with $e(u) > 0$.
+
+**Goal**: Start with a preflow and eliminate all excesses, yielding a valid maximum flow.
 
 ## Height Function
 
-**Height** $h: V \to \mathbb{N}$ satisfies:
-- $h(s) = n$, $h(t) = 0$
-- $h(u) \leq h(v) + 1$ for all $(u,v) \in E_f$ (residual)
+The algorithm uses a height function to guide flow toward the sink.
 
-**Intuition**: Flow goes "downhill" in height
+**Definition**: A height function $h: V \to \mathbb{N}$ satisfies:
+- $h(s) = n$ (source at highest level)
+- $h(t) = 0$ (sink at lowest level)
+- $h(u) \leq h(v) + 1$ for all residual edges $(u, v) \in E_f$
 
-## Operations
+**Intuition**: Flow can only be pushed "downhill"—from higher vertices to lower adjacent vertices. Heights represent a lower bound on distance to sink in the residual network.
 
-**Push**: If $e(u) > 0$ and $c_f(u,v) > 0$ and $h(u) = h(v) + 1$:
-- Send $\delta = \min(e(u), c_f(u,v))$ from $u$ to $v$
+**Valid labeling**: A height function satisfying all constraints.
 
-**Relabel**: If $e(u) > 0$ and no valid push:
-- $h(u) = 1 + \min_{(u,v) \in E_f} h(v)$
+## Push and Relabel Operations
+
+The algorithm uses two operations to move flow and adjust heights.
+
+**Push operation**: If vertex $u$ is active, $(u, v) \in E_f$, and $h(u) = h(v) + 1$:
+1. Compute push amount: $\delta = \min(e(u), c_f(u, v))$
+2. Send $\delta$ flow from $u$ to $v$
 
 ```typescript
-function pushRelabel(G: Network, s: Node, t: Node): number {
-    const h = Array(G.n).fill(0);
-    h[s] = G.n;
-    const e = Array(G.n).fill(0);
-    
-    // Saturate edges from source
-    for (const v of G.neighbors(s)) {
-        const cap = G.capacity(s, v);
-        G.flow[s][v] = cap;
-        e[v] = cap;
-        e[s] -= cap;
+function push(u: number, v: number): void {
+    const delta = Math.min(excess[u], residual(u, v));
+
+    if (hasForwardEdge(u, v)) {
+        flow[u][v] += delta;
+    } else {
+        flow[v][u] -= delta;
     }
-    
-    // Process active vertices
-    while (hasActive()) {
-        const u = getActive();
-        if (canPush(u)) {
-            push(u);
-        } else {
-            relabel(u);
-        }
-    }
-    
-    return e[t];
+
+    excess[u] -= delta;
+    excess[v] += delta;
 }
 ```
 
-**Time**: $O(V^2 E)$ basic version
+**Saturating push**: When $\delta = c_f(u, v)$, the residual edge becomes saturated.
 
-**Optimized**: $O(V^3)$ with proper data structures
+**Non-saturating push**: When $\delta = e(u) < c_f(u, v)$, all excess at $u$ is pushed.
+
+**Relabel operation**: If vertex $u$ is active and has no valid push target (no neighbor $v$ with $h(u) = h(v) + 1$ and $c_f(u, v) > 0$):
+$$h(u) \leftarrow 1 + \min\{h(v) : (u, v) \in E_f\}$$
+
+```typescript
+function relabel(u: number): void {
+    let minHeight = Infinity;
+
+    for (const v of vertices) {
+        if (residual(u, v) > 0) {
+            minHeight = Math.min(minHeight, height[v]);
+        }
+    }
+
+    height[u] = minHeight + 1;
+}
+```
+
+## Generic Push-Relabel Algorithm
+
+```typescript
+function pushRelabel(G: FlowNetwork, s: number, t: number): number {
+    const n = G.vertexCount();
+    const height: number[] = new Array(n).fill(0);
+    const excess: number[] = new Array(n).fill(0);
+    const flow: number[][] = G.vertices.map(() => G.vertices.map(() => 0));
+
+    // Initialize: source at height n
+    height[s] = n;
+
+    // Saturate all edges from source
+    for (const v of G.neighbors(s)) {
+        const cap = G.capacity(s, v);
+        flow[s][v] = cap;
+        excess[v] = cap;
+        excess[s] -= cap;
+    }
+
+    // Get active vertices (exclude s and t)
+    function getActiveVertex(): number | null {
+        for (let u = 0; u < n; u++) {
+            if (u !== s && u !== t && excess[u] > 0) {
+                return u;
+            }
+        }
+        return null;
+    }
+
+    // Main loop
+    while (true) {
+        const u = getActiveVertex();
+        if (u === null) break;
+
+        // Try to push
+        let pushed = false;
+        for (const v of G.allVertices()) {
+            const res = G.capacity(u, v) - flow[u][v] + flow[v][u];
+            if (res > 0 && height[u] === height[v] + 1) {
+                push(u, v);
+                pushed = true;
+                if (excess[u] === 0) break;
+            }
+        }
+
+        // Relabel if no push possible
+        if (!pushed && excess[u] > 0) {
+            relabel(u);
+        }
+    }
+
+    return excess[t];
+}
+```
+
+## Complexity Analysis
+
+**Lemma 1**: Heights never decrease, and $h(u) \leq 2n - 1$ for all $u$.
+
+**Proof**: Relabeling only increases heights. Since there must always be a path from any active vertex to $s$ in the residual network, $h(u)$ is bounded.
+
+**Lemma 2**: Number of relabel operations is $O(V^2)$.
+
+**Proof**: Each vertex's height can increase at most $2n - 1$ times.
+
+**Lemma 3**: Number of saturating pushes is $O(VE)$.
+
+**Proof**: After saturating $(u, v)$, heights must change before it can be saturated again.
+
+**Lemma 4**: Number of non-saturating pushes is $O(V^2 E)$.
+
+**Proof**: Use potential function $\Phi = \sum_{u \text{ active}} h(u)$.
+
+**Theorem**: Generic push-relabel runs in $O(V^2 E)$ time.
 
 ## FIFO Push-Relabel
 
-**Order**: Process active vertices in FIFO order
+Improved vertex selection yields better performance.
 
-**Time**: $O(V^3)$ 
+**FIFO ordering**: Maintain queue of active vertices. Process front of queue.
 
-**Best known**: $O(VE \log(V^2/E))$ with dynamic trees
+```typescript
+function fifooPushRelabel(G: FlowNetwork, s: number, t: number): number {
+    // ... initialization ...
 
-## Advantages
+    const queue: number[] = [];
+    for (let v = 0; v < n; v++) {
+        if (v !== s && v !== t && excess[v] > 0) {
+            queue.push(v);
+        }
+    }
 
-**Local operations**: No global path search
+    while (queue.length > 0) {
+        const u = queue.shift()!;
 
-**Parallelizable**: Multiple pushes can happen simultaneously
+        while (excess[u] > 0) {
+            // Try to push to any eligible neighbor
+            let pushed = false;
+            for (const v of neighbors(u)) {
+                if (residual(u, v) > 0 && height[u] === height[v] + 1) {
+                    const wasPreviouslyInactive = (v !== s && v !== t && excess[v] === 0);
+                    push(u, v);
+                    if (wasPreviouslyInactive && excess[v] > 0) {
+                        queue.push(v);
+                    }
+                    pushed = true;
+                    if (excess[u] === 0) break;
+                }
+            }
 
-**Practical**: Often faster than Edmonds-Karp despite same worst-case
+            if (!pushed && excess[u] > 0) {
+                relabel(u);
+            }
+        }
+    }
+
+    return excess[t];
+}
+```
+
+**Theorem**: FIFO push-relabel runs in $O(V^3)$ time.
+
+## Highest-Label Push-Relabel
+
+**Strategy**: Always process the active vertex with highest label.
+
+**Implementation**: Use bucket data structure—array of lists indexed by height.
+
+**Time**: $O(V^2 \sqrt{E})$ with careful implementation.
+
+## Comparison with Augmenting Path Methods
+
+| Aspect | Ford-Fulkerson/Edmonds-Karp | Push-Relabel |
+|--------|----------------------------|--------------|
+| Approach | Global path finding | Local operations |
+| Data structure | BFS queue | Active vertex set |
+| Parallelism | Difficult | Natural |
+| Cache behavior | Many cache misses | Better locality |
+| Dense graphs | OK | Better |
+| Sparse graphs | Better | OK |
 
 ## Applications
 
-Same as max flow, but better for:
-- Dense graphs
-- Parallel computing
-- Real-time flow updates
+Push-relabel is preferred when:
 
-## Conclusion
+**Dense graphs**: More edges mean BFS is expensive but local pushes remain cheap.
 
-Push-relabel provides alternative max-flow paradigm. Local operations and height-based routing enable efficient implementations and parallelization.
+**Parallel computing**: Multiple active vertices can be processed simultaneously with appropriate synchronization.
+
+**Incremental updates**: Adding flow or modifying capacities requires less recomputation.
+
+**Real-time systems**: Bounded per-operation cost suits latency-sensitive applications.
+
+## Key Takeaways
+
+- Push-relabel uses local operations instead of global path finding
+- Preflow allows temporary violation of conservation, fixed through pushes
+- Height function ensures flow moves toward sink
+- Generic algorithm: $O(V^2 E)$; FIFO: $O(V^3)$; highest-label: $O(V^2\sqrt{E})$
+- Better suited for dense graphs and parallel implementations
+- Practical performance often beats augmenting path methods

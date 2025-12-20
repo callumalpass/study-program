@@ -136,8 +136,67 @@ Harder - $(1+\epsilon)$-approximation exists.
 **Manufacturing**: Schedule tasks on production lines
 **Cloud computing**: Allocate resources to minimize response time
 
+## Analysis of LPT
+
+The LPT algorithm's improvement over basic list scheduling comes from a key structural observation:
+
+**Lemma**: If LPT schedules job $j^*$ last with $p_{j^*} > \frac{1}{3}OPT$, then OPT must also have a machine with only one job.
+
+**Proof**: If $p_{j^*} > \frac{1}{3}OPT$, then at most 2 such large jobs can share a machine in OPT. Since LPT processes jobs in decreasing order, large jobs are placed first. The analysis proceeds by case analysis on the number of large jobs.
+
+**Tight Example**:
+Consider $m = 3$ machines with jobs: $2, 2, 2, 2, 2, 2, 3, 3, 3$.
+- OPT makespan: 7 (machines get {3,2,2}, {3,2,2}, {3,2,2})
+- LPT makespan: 8 (first three 3's on separate machines, then 2's fill in)
+- Ratio: $8/7 = 4/3 - 1/21$
+
+This shows the $4/3$ bound is essentially tight.
+
+## Local Search Heuristics
+
+While greedy provides worst-case guarantees, local search often performs better in practice:
+
+```typescript
+function localSearchScheduling(jobs: number[], m: number): number {
+    // Start with LPT solution
+    let assignment = LPTAssignment(jobs, m);
+    let makespan = computeMakespan(assignment);
+
+    let improved = true;
+    while (improved) {
+        improved = false;
+
+        // Try moving jobs from busiest to least loaded machine
+        const [maxMachine, minMachine] = findMaxMinMachines(assignment);
+
+        for (const job of assignment[maxMachine]) {
+            // Check if moving job reduces makespan
+            const newMakespan = computeMakespanAfterMove(assignment, job, maxMachine, minMachine);
+            if (newMakespan < makespan) {
+                moveJob(assignment, job, maxMachine, minMachine);
+                makespan = newMakespan;
+                improved = true;
+                break;
+            }
+        }
+    }
+
+    return makespan;
+}
+```
+
+Local search can achieve arbitrarily good approximations with sufficient iterations.
+
+## Online Scheduling
+
+When jobs arrive one-by-one without knowledge of future:
+
+**Theorem**: No deterministic online algorithm can achieve better than $\frac{3}{2}$-competitive ratio for online makespan minimization.
+
+**Graham's List Scheduling** achieves 2-competitive online, which is optimal for this problem class.
+
 ## Conclusion
 
-List Scheduling demonstrates that simple greedy strategies can provide provable approximations. The improvement from 2-approximation (unsorted) to 4/3-approximation (LPT) shows how preprocessing can help.
+List Scheduling demonstrates that simple greedy strategies can provide provable approximations. The improvement from 2-approximation (unsorted) to 4/3-approximation (LPT) shows how preprocessing can help. Local search heuristics often find near-optimal solutions in practice.
 
-For fixed machines, PTAS exists, but variable machines remains strongly NP-complete - showing the boundary between tractable and intractable approximation.
+For fixed machines, PTAS exists, but variable machines remains strongly NP-complete—showing the boundary between tractable and intractable approximation. Online variants add another dimension of complexity where competitive analysis replaces approximation ratios.

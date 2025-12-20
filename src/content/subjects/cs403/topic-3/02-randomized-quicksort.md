@@ -178,6 +178,27 @@ function threeWayPartition(arr: number[], left: number, right: number, pivot: nu
 
 **Numerical computing**: Partial sorting, selecting top-k
 
+## High Probability Bounds
+
+Beyond expected time, we can show concentration:
+
+**Theorem**: Randomized quicksort runs in $O(n \log n)$ time with probability at least $1 - 1/n^c$ for any constant $c$.
+
+**Proof sketch**: The number of comparisons is a sum of indicator random variables. Using Chernoff bounds on this sum shows tight concentration around the mean.
+
+This "high probability" guarantee is often more useful than expected time alone—it tells us that bad outcomes are exponentially unlikely, not just rare on average.
+
+## Tail Bound Analysis
+
+Let $T$ be the actual number of comparisons. We showed $\mathbb{E}[T] = O(n \log n)$.
+
+By careful analysis:
+$$\Pr[T > c \cdot n \log n] \leq 1/n$$
+
+for appropriate constant $c$. This means:
+- With probability 99.99%, running time is within 2× of expected
+- Worst-case $O(n^2)$ is so unlikely it's effectively impossible
+
 ## Conclusion
 
 Randomized quicksort demonstrates the power of randomization:
@@ -186,4 +207,4 @@ Randomized quicksort demonstrates the power of randomization:
 - No worst-case input (for randomized version)
 - Practical and widely used
 
-The analysis showcases fundamental techniques in randomized algorithms that apply broadly across computer science.
+The analysis showcases fundamental techniques in randomized algorithms that apply broadly across computer science. The indicator variable method and linearity of expectation are among the most powerful tools in probabilistic analysis.

@@ -199,6 +199,17 @@ function minWeightPerfectMatching(vertices: number[], dist: number[][]): Edge[] 
 - LKH: Heuristic achieving near-optimal solutions
 - Hybrid: Christofides for initial solution, then local search
 
+## Complexity Analysis
+
+**Time Complexity**:
+- MST: $O(n^2)$ with Prim's algorithm
+- Finding odd-degree vertices: $O(n)$
+- Minimum-weight perfect matching: $O(n^3)$ using Blossom algorithm
+- Eulerian tour: $O(n)$
+- Shortcutting: $O(n)$
+
+**Total**: $O(n^3)$, dominated by the matching step.
+
 ## Conclusion
 
 Christofides algorithm demonstrates sophisticated approximation algorithm design:
@@ -207,4 +218,4 @@ Christofides algorithm demonstrates sophisticated approximation algorithm design
 3. Eulerian tour construction
 4. Shortcutting via triangle inequality
 
-The 1.5 ratio stood for 40+ years, highlighting the difficulty of TSP approximation. Even small improvements require groundbreaking techniques.
+The 1.5 ratio stood for 40+ years, highlighting the difficulty of TSP approximation. Even small improvements require groundbreaking techniques. The algorithm remains practically important as a subroutine in modern TSP solvers.

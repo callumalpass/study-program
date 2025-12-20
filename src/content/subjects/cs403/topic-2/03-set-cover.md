@@ -108,6 +108,73 @@ Greedy achieves same approximation ratio.
 Given budget $B$, maximize covered elements.
 Greedy achieves $(1 - 1/e)$-approximation.
 
+## Dual Fitting Analysis
+
+The approximation ratio can be proven elegantly using **dual fitting**. The key insight is to assign prices to elements as the algorithm proceeds.
+
+**Price Assignment**: When set $S$ is chosen with ratio $r = c(S)/|S \cap \text{uncovered}|$, each newly covered element $e$ is assigned price $\text{price}(e) = r$.
+
+**Key Lemma**: For each element $e$, $\text{price}(e) \leq H_{|S^*|} \cdot \text{cost of } e$ in OPT, where $S^*$ is the optimal set containing $e$.
+
+**Proof sketch**:
+Consider element $e$ in optimal set $S^*$. At step $i$ when the $i$-th element of $S^*$ is covered:
+- At least $|S^*| - i + 1$ elements of $S^*$ remain uncovered
+- The greedy ratio is at most $\frac{c(S^*)}{|S^*| - i + 1}$
+
+Element $e$ pays at most $\frac{c(S^*)}{k}$ where $k$ is the number of uncovered elements when $e$ is covered.
+
+Summing over all $k$ from $|S^*|$ down to 1 yields the harmonic bound.
+
+## Information-Theoretic Connection
+
+The $\ln n$ bound has a deep connection to **entropy**:
+
+**Shannon Entropy**: $H(X) = -\sum_i p_i \log p_i$
+
+The greedy algorithm for Set Cover resembles **Huffman coding** in information theory—both make locally optimal choices that yield globally near-optimal results.
+
+The approximation ratio $H_n = \Theta(\ln n)$ is essentially the information-theoretic minimum bits needed to identify one of $n$ elements. This connection is not coincidental—Set Cover reductions often involve information-hiding arguments.
+
+## Practical Implementations
+
+For real-world efficiency:
+
+```typescript
+// Optimized greedy using priority queue
+function efficientGreedySetCover(U: Set<Element>, S: Subset[], cost: Map<Subset, number>): Set<Subset> {
+    const cover: Set<Subset> = new Set();
+    const uncovered = new Set(U);
+
+    // Priority queue by cost-effectiveness
+    const pq = new PriorityQueue<Subset>((a, b) =>
+        (cost.get(a) / a.size) - (cost.get(b) / b.size)
+    );
+
+    for (const set of S) {
+        pq.insert(set);
+    }
+
+    while (uncovered.size > 0) {
+        const bestSet = pq.extractMin();
+        const newlyCovered = [...bestSet].filter(e => uncovered.has(e));
+
+        if (newlyCovered.length > 0) {
+            cover.add(bestSet);
+            for (const elem of newlyCovered) {
+                uncovered.delete(elem);
+            }
+        }
+
+        // Re-insert if still has uncovered elements (lazy deletion)
+        // In practice, use lazy update for efficiency
+    }
+
+    return cover;
+}
+```
+
+**Time complexity**: With careful implementation using lazy updates and efficient data structures: $O((|S| + |U|) \log |S|)$.
+
 ## Conclusion
 
-Greedy Set Cover exemplifies optimal approximation algorithms - simple, efficient, and provably best possible. The $\ln n$ bound connects approximation algorithms to information theory and demonstrates the power of greedy analysis.
+Greedy Set Cover exemplifies optimal approximation algorithms—simple, efficient, and provably best possible. The $\ln n$ bound connects approximation algorithms to information theory and demonstrates the power of greedy analysis. The dual fitting technique provides an elegant proof framework applicable to many other problems.
