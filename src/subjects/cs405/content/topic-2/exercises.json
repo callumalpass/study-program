@@ -73,5 +73,550 @@
       }
     ],
     "language": "bash"
+  },
+  {
+    "id": "cs405-t2-ex03",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-2",
+    "title": "List and Inspect Virtual Machines",
+    "difficulty": 1,
+    "description": "Create a simple bash script that lists all VMs, shows their current state (running, powered off, saved), and displays basic resource allocations (RAM, CPUs).",
+    "starterCode": "#!/bin/bash\n# VM List and Inspection Script\n\n# Function to list all VMs\nlist_vms() {\n    # TODO: List all VMs with VBoxManage\n    echo \"Listing VMs...\"\n}\n\n# Function to show VM state\nshow_vm_state() {\n    local vm_name=$1\n    # TODO: Show if VM is running, powered off, etc.\n    echo \"Checking state of $vm_name...\"\n}\n\n# Function to show VM resources\nshow_vm_resources() {\n    local vm_name=$1\n    # TODO: Display RAM and CPU allocation\n    echo \"Showing resources for $vm_name...\"\n}\n\n# Main\nlist_vms",
+    "solution": "#!/bin/bash\n# Complete VM List and Inspection Script\n\n# Function to list all VMs\nlist_vms() {\n    echo \"=== All Virtual Machines ===\"\n    VBoxManage list vms\n}\n\n# Function to show VM state\nshow_vm_state() {\n    local vm_name=$1\n    \n    echo \"\\n=== VM State: $vm_name ===\"\n    \n    # Check if running\n    if VBoxManage list runningvms | grep -q \"$vm_name\"; then\n        echo \"Status: RUNNING\"\n    else\n        # Get detailed state\n        state=$(VBoxManage showvminfo \"$vm_name\" --machinereadable | grep \"VMState=\" | cut -d'\"' -f2)\n        echo \"Status: $state\"\n    fi\n}\n\n# Function to show VM resources\nshow_vm_resources() {\n    local vm_name=$1\n    \n    echo \"\\n=== Resources: $vm_name ===\"\n    \n    # Get RAM allocation\n    ram=$(VBoxManage showvminfo \"$vm_name\" --machinereadable | grep \"memory=\" | cut -d'=' -f2)\n    echo \"RAM: ${ram}MB\"\n    \n    # Get CPU count\n    cpus=$(VBoxManage showvminfo \"$vm_name\" --machinereadable | grep \"cpus=\" | cut -d'=' -f2)\n    echo \"CPUs: $cpus\"\n    \n    # Get video memory\n    vram=$(VBoxManage showvminfo \"$vm_name\" --machinereadable | grep \"vram=\" | cut -d'=' -f2)\n    echo \"Video RAM: ${vram}MB\"\n}\n\n# Main execution\nlist_vms\n\necho \"\\n=== Running VMs ===\"\nVBoxManage list runningvms\n\n# Example: Show details for first VM if any exist\nfirst_vm=$(VBoxManage list vms | head -n1 | cut -d'\"' -f2)\n\nif [ -n \"$first_vm\" ]; then\n    show_vm_state \"$first_vm\"\n    show_vm_resources \"$first_vm\"\nfi",
+    "hints": [
+      "Use VBoxManage list vms to list all VMs",
+      "Use VBoxManage list runningvms to see which are running",
+      "Use VBoxManage showvminfo with --machinereadable for parsing",
+      "grep and cut can extract specific values from output"
+    ],
+    "testCases": [
+      {
+        "input": "list_vms",
+        "expectedOutput": "List of all registered VMs",
+        "isHidden": false,
+        "description": "List all virtual machines"
+      },
+      {
+        "input": "show_vm_state vm_name",
+        "expectedOutput": "VM state (running, poweroff, saved)",
+        "isHidden": false,
+        "description": "Show current VM state"
+      },
+      {
+        "input": "show_vm_resources vm_name",
+        "expectedOutput": "RAM and CPU allocation displayed",
+        "isHidden": true,
+        "description": "Display VM resource allocation"
+      }
+    ],
+    "language": "bash"
+  },
+  {
+    "id": "cs405-t2-ex04",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-2",
+    "title": "VM Power Management",
+    "difficulty": 1,
+    "description": "Write a script that starts, stops, pauses, and resumes VMs. Include graceful shutdown (ACPI) vs force power off options.",
+    "starterCode": "#!/bin/bash\n# VM Power Management Script\n\nVM_NAME=\"test-vm\"\n\nstart_vm() {\n    # TODO: Start VM in headless mode\n    echo \"Starting VM...\"\n}\n\nstop_vm() {\n    # TODO: Send ACPI shutdown signal\n    echo \"Stopping VM gracefully...\"\n}\n\nforce_stop_vm() {\n    # TODO: Force power off\n    echo \"Force stopping VM...\"\n}\n\npause_vm() {\n    # TODO: Pause VM\n    echo \"Pausing VM...\"\n}\n\nresume_vm() {\n    # TODO: Resume paused VM\n    echo \"Resuming VM...\"\n}\n\n# Main\nstart_vm",
+    "solution": "#!/bin/bash\n# Complete VM Power Management Script\n\nVM_NAME=\"${1:-test-vm}\"\n\nstart_vm() {\n    echo \"Starting VM: $VM_NAME\"\n    \n    # Check if already running\n    if VBoxManage list runningvms | grep -q \"$VM_NAME\"; then\n        echo \"VM is already running\"\n        return 1\n    fi\n    \n    # Start in headless mode (no GUI)\n    VBoxManage startvm \"$VM_NAME\" --type headless\n    echo \"VM started successfully\"\n}\n\nstop_vm() {\n    echo \"Stopping VM gracefully: $VM_NAME\"\n    \n    # Send ACPI shutdown signal (like pressing power button)\n    VBoxManage controlvm \"$VM_NAME\" acpipowerbutton\n    \n    echo \"ACPI shutdown signal sent. VM will shut down gracefully.\"\n    echo \"This may take a few seconds...\"\n    \n    # Wait for shutdown\n    sleep 5\n}\n\nforce_stop_vm() {\n    echo \"Force stopping VM: $VM_NAME\"\n    \n    # Immediate power off (like pulling the plug)\n    VBoxManage controlvm \"$VM_NAME\" poweroff\n    \n    echo \"VM forcefully powered off\"\n}\n\npause_vm() {\n    echo \"Pausing VM: $VM_NAME\"\n    \n    VBoxManage controlvm \"$VM_NAME\" pause\n    \n    echo \"VM paused (state saved to RAM)\"\n}\n\nresume_vm() {\n    echo \"Resuming VM: $VM_NAME\"\n    \n    VBoxManage controlvm \"$VM_NAME\" resume\n    \n    echo \"VM resumed from pause\"\n}\n\nsave_state() {\n    echo \"Saving VM state: $VM_NAME\"\n    \n    # Save state to disk (can be resumed later)\n    VBoxManage controlvm \"$VM_NAME\" savestate\n    \n    echo \"VM state saved to disk\"\n}\n\n# Show menu\nshow_menu() {\n    echo \"\\n=== VM Power Management ===\"\n    echo \"VM: $VM_NAME\"\n    echo \"1. Start VM\"\n    echo \"2. Stop VM (graceful)\"\n    echo \"3. Force Stop VM\"\n    echo \"4. Pause VM\"\n    echo \"5. Resume VM\"\n    echo \"6. Save State\"\n    echo \"7. Check Status\"\n}\n\ncheck_status() {\n    if VBoxManage list runningvms | grep -q \"$VM_NAME\"; then\n        echo \"Status: RUNNING\"\n    else\n        state=$(VBoxManage showvminfo \"$VM_NAME\" --machinereadable | grep \"VMState=\" | cut -d'\"' -f2)\n        echo \"Status: $state\"\n    fi\n}\n\n# If run with argument, execute that command\ncase \"${2:-}\" in\n    start)\n        start_vm\n        ;;\n    stop)\n        stop_vm\n        ;;\n    force-stop)\n        force_stop_vm\n        ;;\n    pause)\n        pause_vm\n        ;;\n    resume)\n        resume_vm\n        ;;\n    save)\n        save_state\n        ;;\n    status)\n        check_status\n        ;;\n    *)\n        show_menu\n        echo \"\\nUsage: $0 <vm_name> {start|stop|force-stop|pause|resume|save|status}\"\n        ;;\nesac",
+    "hints": [
+      "Use VBoxManage startvm with --type headless for no GUI",
+      "acpipowerbutton sends graceful shutdown signal",
+      "poweroff immediately stops the VM",
+      "pause and resume save/restore VM state from RAM"
+    ],
+    "testCases": [
+      {
+        "input": "start_vm",
+        "expectedOutput": "VM starts in headless mode",
+        "isHidden": false,
+        "description": "Start virtual machine"
+      },
+      {
+        "input": "stop_vm",
+        "expectedOutput": "ACPI shutdown signal sent",
+        "isHidden": false,
+        "description": "Graceful shutdown"
+      },
+      {
+        "input": "force_stop_vm",
+        "expectedOutput": "VM immediately powered off",
+        "isHidden": true,
+        "description": "Force power off"
+      },
+      {
+        "input": "pause_vm && resume_vm",
+        "expectedOutput": "VM paused and resumed",
+        "isHidden": true,
+        "description": "Pause and resume VM"
+      }
+    ],
+    "language": "bash"
+  },
+  {
+    "id": "cs405-t2-ex05",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-2",
+    "title": "Basic VM Resource Modification",
+    "difficulty": 1,
+    "description": "Create a script that modifies VM resources: change RAM allocation, CPU count, and video memory. Verify changes were applied correctly.",
+    "starterCode": "#!/bin/bash\n# VM Resource Modification Script\n\nVM_NAME=\"test-vm\"\n\nset_ram() {\n    local ram_mb=$1\n    # TODO: Set RAM allocation\n    echo \"Setting RAM to ${ram_mb}MB...\"\n}\n\nset_cpus() {\n    local cpu_count=$1\n    # TODO: Set CPU count\n    echo \"Setting CPUs to $cpu_count...\"\n}\n\nset_video_memory() {\n    local vram_mb=$1\n    # TODO: Set video memory\n    echo \"Setting video RAM to ${vram_mb}MB...\"\n}\n\nverify_resources() {\n    # TODO: Display current resource allocation\n    echo \"Verifying resources...\"\n}\n\n# Main\nset_ram 2048\nset_cpus 2\nverify_resources",
+    "solution": "#!/bin/bash\n# Complete VM Resource Modification Script\n\nVM_NAME=\"${1:-test-vm}\"\n\n# Check if VM is powered off\ncheck_vm_powered_off() {\n    if VBoxManage list runningvms | grep -q \"$VM_NAME\"; then\n        echo \"Error: VM must be powered off to modify resources\"\n        return 1\n    fi\n    return 0\n}\n\nset_ram() {\n    local ram_mb=$1\n    \n    if ! check_vm_powered_off; then\n        return 1\n    fi\n    \n    echo \"Setting RAM to ${ram_mb}MB for $VM_NAME...\"\n    VBoxManage modifyvm \"$VM_NAME\" --memory $ram_mb\n    \n    echo \"RAM updated successfully\"\n}\n\nset_cpus() {\n    local cpu_count=$1\n    \n    if ! check_vm_powered_off; then\n        return 1\n    fi\n    \n    echo \"Setting CPU count to $cpu_count for $VM_NAME...\"\n    VBoxManage modifyvm \"$VM_NAME\" --cpus $cpu_count\n    \n    echo \"CPU count updated successfully\"\n}\n\nset_video_memory() {\n    local vram_mb=$1\n    \n    if ! check_vm_powered_off; then\n        return 1\n    fi\n    \n    echo \"Setting video RAM to ${vram_mb}MB for $VM_NAME...\"\n    VBoxManage modifyvm \"$VM_NAME\" --vram $vram_mb\n    \n    echo \"Video RAM updated successfully\"\n}\n\nverify_resources() {\n    echo \"\\n=== Current Resource Allocation: $VM_NAME ===\"\n    \n    # Get and display current settings\n    ram=$(VBoxManage showvminfo \"$VM_NAME\" --machinereadable | grep \"^memory=\" | cut -d'=' -f2)\n    cpus=$(VBoxManage showvminfo \"$VM_NAME\" --machinereadable | grep \"^cpus=\" | cut -d'=' -f2)\n    vram=$(VBoxManage showvminfo \"$VM_NAME\" --machinereadable | grep \"^vram=\" | cut -d'=' -f2)\n    \n    echo \"RAM: ${ram}MB\"\n    echo \"CPUs: $cpus\"\n    echo \"Video RAM: ${vram}MB\"\n}\n\n# Preset configurations\napply_light_config() {\n    echo \"Applying 'Light' configuration...\"\n    set_ram 1024\n    set_cpus 1\n    set_video_memory 16\n}\n\napply_standard_config() {\n    echo \"Applying 'Standard' configuration...\"\n    set_ram 2048\n    set_cpus 2\n    set_video_memory 128\n}\n\napply_performance_config() {\n    echo \"Applying 'Performance' configuration...\"\n    set_ram 4096\n    set_cpus 4\n    set_video_memory 256\n}\n\n# Main execution based on arguments\ncase \"${2:-}\" in\n    light)\n        apply_light_config\n        verify_resources\n        ;;\n    standard)\n        apply_standard_config\n        verify_resources\n        ;;\n    performance)\n        apply_performance_config\n        verify_resources\n        ;;\n    custom)\n        if [ $# -ge 5 ]; then\n            set_ram $3\n            set_cpus $4\n            set_video_memory $5\n            verify_resources\n        else\n            echo \"Usage: $0 <vm_name> custom <ram_mb> <cpu_count> <vram_mb>\"\n        fi\n        ;;\n    verify)\n        verify_resources\n        ;;\n    *)\n        echo \"Usage: $0 <vm_name> {light|standard|performance|custom|verify}\"\n        echo \"\\nPreset Configurations:\"\n        echo \"  light       - 1GB RAM, 1 CPU,  16MB VRAM\"\n        echo \"  standard    - 2GB RAM, 2 CPUs, 128MB VRAM\"\n        echo \"  performance - 4GB RAM, 4 CPUs, 256MB VRAM\"\n        echo \"  custom      - Specify RAM, CPU, and VRAM manually\"\n        echo \"  verify      - Show current resource allocation\"\n        ;;\nesac",
+    "hints": [
+      "VM must be powered off to modify resources",
+      "Use VBoxManage modifyvm --memory for RAM",
+      "Use --cpus for CPU count, --vram for video memory",
+      "Verify with VBoxManage showvminfo --machinereadable"
+    ],
+    "testCases": [
+      {
+        "input": "set_ram 2048",
+        "expectedOutput": "RAM set to 2048MB",
+        "isHidden": false,
+        "description": "Set VM RAM allocation"
+      },
+      {
+        "input": "set_cpus 4",
+        "expectedOutput": "CPU count set to 4",
+        "isHidden": false,
+        "description": "Set VM CPU count"
+      },
+      {
+        "input": "verify_resources",
+        "expectedOutput": "Display current RAM, CPU, and VRAM",
+        "isHidden": true,
+        "description": "Verify resource allocation"
+      }
+    ],
+    "language": "bash"
+  },
+  {
+    "id": "cs405-t2-ex06",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-2",
+    "title": "VM Network Configuration Manager",
+    "difficulty": 2,
+    "description": "Build a script to configure VM network adapters with different modes: NAT, bridged, host-only, and internal network. Show how to set up multiple network adapters.",
+    "starterCode": "#!/bin/bash\n# VM Network Configuration Manager\n\nVM_NAME=\"test-vm\"\n\nconfigure_nat() {\n    local adapter_num=$1\n    # TODO: Configure NAT adapter\n    echo \"Configuring NAT on adapter $adapter_num...\"\n}\n\nconfigure_bridged() {\n    local adapter_num=$1\n    local host_interface=$2\n    # TODO: Configure bridged adapter\n    echo \"Configuring bridged mode...\"\n}\n\nconfigure_host_only() {\n    local adapter_num=$1\n    # TODO: Configure host-only adapter\n    echo \"Configuring host-only network...\"\n}\n\nshow_network_config() {\n    # TODO: Display current network configuration\n    echo \"Showing network config...\"\n}",
+    "solution": "#!/bin/bash\n# Complete VM Network Configuration Manager\n\nVM_NAME=\"${1:-test-vm}\"\n\n# Check if VM is powered off\ncheck_vm_powered_off() {\n    if VBoxManage list runningvms | grep -q \"$VM_NAME\"; then\n        echo \"Warning: Some network changes require VM to be powered off\"\n        echo \"Proceeding anyway...\"\n    fi\n}\n\nconfigure_nat() {\n    local adapter_num=$1\n    \n    echo \"Configuring NAT on adapter $adapter_num for $VM_NAME...\"\n    \n    VBoxManage modifyvm \"$VM_NAME\" \\\n        --nic${adapter_num} nat \\\n        --nictype${adapter_num} 82540EM \\\n        --cableconnected${adapter_num} on\n    \n    echo \"NAT configured on adapter $adapter_num\"\n}\n\nconfigure_bridged() {\n    local adapter_num=$1\n    local host_interface=${2:-eth0}\n    \n    echo \"Configuring bridged mode on adapter $adapter_num...\"\n    echo \"Bridging to host interface: $host_interface\"\n    \n    VBoxManage modifyvm \"$VM_NAME\" \\\n        --nic${adapter_num} bridged \\\n        --bridgeadapter${adapter_num} \"$host_interface\" \\\n        --nictype${adapter_num} 82540EM \\\n        --cableconnected${adapter_num} on\n    \n    echo \"Bridged adapter configured\"\n}\n\nconfigure_host_only() {\n    local adapter_num=$1\n    local hostonlyif=${2:-vboxnet0}\n    \n    echo \"Configuring host-only network on adapter $adapter_num...\"\n    echo \"Using host-only interface: $hostonlyif\"\n    \n    VBoxManage modifyvm \"$VM_NAME\" \\\n        --nic${adapter_num} hostonly \\\n        --hostonlyadapter${adapter_num} \"$hostonlyif\" \\\n        --nictype${adapter_num} 82540EM \\\n        --cableconnected${adapter_num} on\n    \n    echo \"Host-only adapter configured\"\n}\n\nconfigure_internal() {\n    local adapter_num=$1\n    local network_name=$2\n    \n    echo \"Configuring internal network on adapter $adapter_num...\"\n    echo \"Internal network name: $network_name\"\n    \n    VBoxManage modifyvm \"$VM_NAME\" \\\n        --nic${adapter_num} intnet \\\n        --intnet${adapter_num} \"$network_name\" \\\n        --nictype${adapter_num} 82540EM \\\n        --cableconnected${adapter_num} on\n    \n    echo \"Internal network configured\"\n}\n\ndisable_adapter() {\n    local adapter_num=$1\n    \n    echo \"Disabling adapter $adapter_num...\"\n    \n    VBoxManage modifyvm \"$VM_NAME\" --nic${adapter_num} none\n    \n    echo \"Adapter $adapter_num disabled\"\n}\n\nshow_network_config() {\n    echo \"\\n=== Network Configuration: $VM_NAME ===\"\n    \n    for i in {1..4}; do\n        nic=$(VBoxManage showvminfo \"$VM_NAME\" --machinereadable | grep \"^nic${i}=\" | cut -d'\"' -f2)\n        \n        if [ \"$nic\" != \"none\" ]; then\n            echo \"\\nAdapter $i:\"\n            echo \"  Type: $nic\"\n            \n            # Get MAC address\n            mac=$(VBoxManage showvminfo \"$VM_NAME\" --machinereadable | grep \"^macaddress${i}=\" | cut -d'\"' -f2)\n            echo \"  MAC: $mac\"\n            \n            # Get connection status\n            cable=$(VBoxManage showvminfo \"$VM_NAME\" --machinereadable | grep \"^cableconnected${i}=\" | cut -d'\"' -f2)\n            echo \"  Cable connected: $cable\"\n            \n            # Additional info based on type\n            if [ \"$nic\" = \"bridged\" ]; then\n                bridge=$(VBoxManage showvminfo \"$VM_NAME\" --machinereadable | grep \"^bridgeadapter${i}=\" | cut -d'\"' -f2)\n                echo \"  Bridged to: $bridge\"\n            elif [ \"$nic\" = \"hostonly\" ]; then\n                hostonly=$(VBoxManage showvminfo \"$VM_NAME\" --machinereadable | grep \"^hostonlyadapter${i}=\" | cut -d'\"' -f2)\n                echo \"  Host-only adapter: $hostonly\"\n            elif [ \"$nic\" = \"intnet\" ]; then\n                intnet=$(VBoxManage showvminfo \"$VM_NAME\" --machinereadable | grep \"^intnet${i}=\" | cut -d'\"' -f2)\n                echo \"  Internal network: $intnet\"\n            fi\n        fi\n    done\n}\n\n# Preset configurations\napply_standard_network() {\n    echo \"Applying standard network configuration...\"\n    echo \"Adapter 1: NAT (internet access)\"\n    configure_nat 1\n    disable_adapter 2\n    disable_adapter 3\n    disable_adapter 4\n}\n\napply_dual_network() {\n    echo \"Applying dual network configuration...\"\n    echo \"Adapter 1: NAT (internet access)\"\n    echo \"Adapter 2: Host-only (VM <-> host communication)\"\n    configure_nat 1\n    configure_host_only 2\n    disable_adapter 3\n    disable_adapter 4\n}\n\n# Main execution\ncase \"${2:-}\" in\n    nat)\n        configure_nat ${3:-1}\n        show_network_config\n        ;;\n    bridged)\n        configure_bridged ${3:-1} ${4:-eth0}\n        show_network_config\n        ;;\n    hostonly)\n        configure_host_only ${3:-1} ${4:-vboxnet0}\n        show_network_config\n        ;;\n    internal)\n        if [ -z \"$4\" ]; then\n            echo \"Error: Internal network name required\"\n            echo \"Usage: $0 <vm_name> internal <adapter_num> <network_name>\"\n            exit 1\n        fi\n        configure_internal $3 $4\n        show_network_config\n        ;;\n    disable)\n        disable_adapter ${3:-1}\n        show_network_config\n        ;;\n    standard)\n        apply_standard_network\n        show_network_config\n        ;;\n    dual)\n        apply_dual_network\n        show_network_config\n        ;;\n    show)\n        show_network_config\n        ;;\n    *)\n        echo \"Usage: $0 <vm_name> {nat|bridged|hostonly|internal|disable|standard|dual|show} [adapter_num] [options]\"\n        echo \"\\nExamples:\"\n        echo \"  $0 myvm nat 1                    - Configure NAT on adapter 1\"\n        echo \"  $0 myvm bridged 2 eth0           - Bridge adapter 2 to eth0\"\n        echo \"  $0 myvm hostonly 2 vboxnet0      - Configure host-only on adapter 2\"\n        echo \"  $0 myvm internal 3 my_net        - Configure internal network\"\n        echo \"  $0 myvm standard                 - Apply standard config (NAT only)\"\n        echo \"  $0 myvm dual                     - Apply dual network (NAT + host-only)\"\n        echo \"  $0 myvm show                     - Show current network config\"\n        ;;\nesac",
+    "hints": [
+      "Use --nic# to set network mode for adapter number #",
+      "NAT provides internet but VMs can't see each other",
+      "Bridged makes VM appear on physical network",
+      "Host-only allows VM-to-host communication without internet",
+      "Internal network allows VM-to-VM communication only"
+    ],
+    "testCases": [
+      {
+        "input": "configure_nat 1",
+        "expectedOutput": "Adapter 1 configured for NAT",
+        "isHidden": false,
+        "description": "Configure NAT networking"
+      },
+      {
+        "input": "configure_bridged 2 eth0",
+        "expectedOutput": "Adapter 2 bridged to eth0",
+        "isHidden": false,
+        "description": "Configure bridged networking"
+      },
+      {
+        "input": "configure_host_only 2",
+        "expectedOutput": "Host-only network configured",
+        "isHidden": true,
+        "description": "Configure host-only networking"
+      },
+      {
+        "input": "show_network_config",
+        "expectedOutput": "Display all adapter configurations",
+        "isHidden": true,
+        "description": "Show network configuration"
+      }
+    ],
+    "language": "bash"
+  },
+  {
+    "id": "cs405-t2-ex07",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-2",
+    "title": "Automated VM Backup System",
+    "difficulty": 3,
+    "description": "Create an automated backup system that exports VMs to OVA format, compresses backups, manages retention (keep last N backups), and verifies backup integrity.",
+    "starterCode": "#!/bin/bash\n# Automated VM Backup System\n\nBACKUP_DIR=\"/backup/vms\"\nRETENTION_COUNT=5\n\nbackup_vm() {\n    local vm_name=$1\n    # TODO: Export VM to OVA format\n    # TODO: Compress if needed\n    # TODO: Add timestamp to filename\n    echo \"Backing up $vm_name...\"\n}\n\ncleanup_old_backups() {\n    local vm_name=$1\n    # TODO: Keep only last N backups\n    # TODO: Delete older backups\n    echo \"Cleaning up old backups...\"\n}\n\nverify_backup() {\n    local backup_file=$1\n    # TODO: Verify backup integrity\n    echo \"Verifying backup...\"\n}\n\nlist_backups() {\n    # TODO: List all backups with sizes and dates\n    echo \"Listing backups...\"\n}",
+    "solution": "#!/bin/bash\n# Complete Automated VM Backup System\n\nBACKUP_DIR=\"${BACKUP_DIR:-/backup/vms}\"\nRETENTION_COUNT=${RETENTION_COUNT:-5}\n\n# Ensure backup directory exists\nmkdir -p \"$BACKUP_DIR\"\n\nbackup_vm() {\n    local vm_name=$1\n    local timestamp=$(date +%Y%m%d_%H%M%S)\n    local backup_file=\"${BACKUP_DIR}/${vm_name}_${timestamp}.ova\"\n    \n    echo \"=== Backing up VM: $vm_name ===\"\n    echo \"Timestamp: $timestamp\"\n    echo \"Backup file: $backup_file\"\n    \n    # Check if VM exists\n    if ! VBoxManage list vms | grep -q \"$vm_name\"; then\n        echo \"Error: VM '$vm_name' not found\"\n        return 1\n    fi\n    \n    # Check if VM is running (optional: auto-shutdown)\n    if VBoxManage list runningvms | grep -q \"$vm_name\"; then\n        echo \"Warning: VM is running. For best results, VM should be powered off.\"\n        read -p \"Power off VM before backup? (y/n): \" -n 1 -r\n        echo\n        if [[ $REPLY =~ ^[Yy]$ ]]; then\n            echo \"Powering off VM...\"\n            VBoxManage controlvm \"$vm_name\" poweroff\n            sleep 5\n        fi\n    fi\n    \n    # Export to OVA\n    echo \"Exporting VM to OVA format...\"\n    VBoxManage export \"$vm_name\" \\\n        --output \"$backup_file\" \\\n        --options manifest,iso \\\n        --vsys 0 \\\n        --description \"Backup created on $timestamp\"\n    \n    if [ $? -eq 0 ]; then\n        echo \"Backup completed successfully\"\n        \n        # Get backup size\n        backup_size=$(du -h \"$backup_file\" | cut -f1)\n        echo \"Backup size: $backup_size\"\n        \n        # Verify backup\n        verify_backup \"$backup_file\"\n        \n        # Cleanup old backups\n        cleanup_old_backups \"$vm_name\"\n        \n        return 0\n    else\n        echo \"Backup failed\"\n        return 1\n    fi\n}\n\ncleanup_old_backups() {\n    local vm_name=$1\n    \n    echo \"\\n=== Cleaning up old backups for $vm_name ===\"\n    \n    # Count existing backups\n    backup_count=$(ls -1 \"${BACKUP_DIR}/${vm_name}_\"*.ova 2>/dev/null | wc -l)\n    \n    echo \"Current backups: $backup_count\"\n    echo \"Retention policy: keep last $RETENTION_COUNT\"\n    \n    if [ $backup_count -gt $RETENTION_COUNT ]; then\n        # Calculate how many to delete\n        delete_count=$((backup_count - RETENTION_COUNT))\n        echo \"Deleting $delete_count old backup(s)...\"\n        \n        # Delete oldest backups\n        ls -1t \"${BACKUP_DIR}/${vm_name}_\"*.ova | tail -n $delete_count | while read old_backup; do\n            echo \"  Deleting: $(basename \"$old_backup\")\"\n            rm \"$old_backup\"\n        done\n        \n        echo \"Cleanup completed\"\n    else\n        echo \"No cleanup needed (within retention limit)\"\n    fi\n}\n\nverify_backup() {\n    local backup_file=$1\n    \n    echo \"\\n=== Verifying backup integrity ===\"\n    \n    # Check if file exists\n    if [ ! -f \"$backup_file\" ]; then\n        echo \"Error: Backup file not found\"\n        return 1\n    fi\n    \n    # Check file size (should be > 0)\n    file_size=$(stat -f%z \"$backup_file\" 2>/dev/null || stat -c%s \"$backup_file\" 2>/dev/null)\n    \n    if [ $file_size -eq 0 ]; then\n        echo \"Error: Backup file is empty\"\n        return 1\n    fi\n    \n    echo \"File size check: OK ($file_size bytes)\"\n    \n    # Verify OVA integrity (basic check)\n    if file \"$backup_file\" | grep -q \"tar archive\"; then\n        echo \"File format check: OK (valid OVA/tar archive)\"\n    else\n        echo \"Warning: File may not be a valid OVA archive\"\n        return 1\n    fi\n    \n    echo \"Backup verification: PASSED\"\n    return 0\n}\n\nlist_backups() {\n    local vm_name=${1:-*}\n    \n    echo \"=== Available Backups ===\"\n    echo \"Location: $BACKUP_DIR\"\n    echo \"\"\n    \n    # List backups with details\n    if [ \"$vm_name\" = \"*\" ]; then\n        pattern=\"${BACKUP_DIR}/*.ova\"\n    else\n        pattern=\"${BACKUP_DIR}/${vm_name}_*.ova\"\n    fi\n    \n    ls -lht $pattern 2>/dev/null | while read -r line; do\n        if [ -n \"$line\" ]; then\n            size=$(echo $line | awk '{print $5}')\n            date=$(echo $line | awk '{print $6, $7, $8}')\n            file=$(echo $line | awk '{print $9}')\n            filename=$(basename \"$file\")\n            \n            echo \"$filename\"\n            echo \"  Size: $size\"\n            echo \"  Date: $date\"\n            echo \"\"\n        fi\n    done\n    \n    # Count total backups\n    total=$(ls -1 $pattern 2>/dev/null | wc -l)\n    echo \"Total backups: $total\"\n}\n\nrestore_backup() {\n    local backup_file=$1\n    local new_vm_name=${2:-restored_vm}\n    \n    echo \"=== Restoring VM from backup ===\"\n    echo \"Backup file: $backup_file\"\n    echo \"New VM name: $new_vm_name\"\n    \n    if [ ! -f \"$backup_file\" ]; then\n        echo \"Error: Backup file not found\"\n        return 1\n    fi\n    \n    # Import OVA\n    VBoxManage import \"$backup_file\" --vsys 0 --vmname \"$new_vm_name\"\n    \n    if [ $? -eq 0 ]; then\n        echo \"VM restored successfully as: $new_vm_name\"\n        return 0\n    else\n        echo \"Restore failed\"\n        return 1\n    fi\n}\n\n# Main execution\ncase \"${1:-}\" in\n    backup)\n        if [ -z \"$2\" ]; then\n            echo \"Error: VM name required\"\n            echo \"Usage: $0 backup <vm_name>\"\n            exit 1\n        fi\n        backup_vm \"$2\"\n        ;;\n    list)\n        list_backups \"$2\"\n        ;;\n    verify)\n        if [ -z \"$2\" ]; then\n            echo \"Error: Backup file required\"\n            echo \"Usage: $0 verify <backup_file>\"\n            exit 1\n        fi\n        verify_backup \"$2\"\n        ;;\n    cleanup)\n        if [ -z \"$2\" ]; then\n            echo \"Error: VM name required\"\n            echo \"Usage: $0 cleanup <vm_name>\"\n            exit 1\n        fi\n        cleanup_old_backups \"$2\"\n        ;;\n    restore)\n        if [ -z \"$2\" ]; then\n            echo \"Error: Backup file required\"\n            echo \"Usage: $0 restore <backup_file> [new_vm_name]\"\n            exit 1\n        fi\n        restore_backup \"$2\" \"${3:-restored_vm}\"\n        ;;\n    *)\n        echo \"VM Backup System\"\n        echo \"\"\n        echo \"Usage: $0 {backup|list|verify|cleanup|restore} [options]\"\n        echo \"\"\n        echo \"Commands:\"\n        echo \"  backup <vm_name>              - Backup a VM to OVA format\"\n        echo \"  list [vm_name]                - List available backups\"\n        echo \"  verify <backup_file>          - Verify backup integrity\"\n        echo \"  cleanup <vm_name>             - Remove old backups\"\n        echo \"  restore <backup_file> [name]  - Restore VM from backup\"\n        echo \"\"\n        echo \"Environment variables:\"\n        echo \"  BACKUP_DIR       - Backup directory (default: /backup/vms)\"\n        echo \"  RETENTION_COUNT  - Number of backups to keep (default: 5)\"\n        ;;\nesac",
+    "hints": [
+      "Use VBoxManage export to create OVA files",
+      "Add timestamp to backup filenames for versioning",
+      "Use ls -t to sort by modification time",
+      "Verify OVA integrity with file command",
+      "Consider powering off VM before backup for consistency"
+    ],
+    "testCases": [
+      {
+        "input": "backup_vm test-vm",
+        "expectedOutput": "VM exported to OVA with timestamp",
+        "isHidden": false,
+        "description": "Backup VM to OVA format"
+      },
+      {
+        "input": "cleanup_old_backups test-vm",
+        "expectedOutput": "Old backups deleted, keeping last 5",
+        "isHidden": false,
+        "description": "Cleanup old backups"
+      },
+      {
+        "input": "verify_backup backup.ova",
+        "expectedOutput": "Backup integrity verified",
+        "isHidden": true,
+        "description": "Verify backup file"
+      },
+      {
+        "input": "list_backups",
+        "expectedOutput": "All backups listed with sizes and dates",
+        "isHidden": true,
+        "description": "List all backups"
+      }
+    ],
+    "language": "bash"
+  },
+  {
+    "id": "cs405-t2-ex08",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-2",
+    "title": "VM Performance Monitoring Dashboard",
+    "difficulty": 3,
+    "description": "Build a monitoring script that tracks VM performance metrics: CPU usage, memory usage, disk I/O, network I/O. Display real-time stats and historical trends.",
+    "starterCode": "#!/bin/bash\n# VM Performance Monitoring Dashboard\n\nVM_NAME=\"test-vm\"\n\nget_cpu_usage() {\n    # TODO: Get current CPU usage\n    echo \"Getting CPU usage...\"\n}\n\nget_memory_usage() {\n    # TODO: Get memory stats\n    echo \"Getting memory usage...\"\n}\n\nget_network_stats() {\n    # TODO: Get network I/O\n    echo \"Getting network stats...\"\n}\n\nget_disk_stats() {\n    # TODO: Get disk I/O\n    echo \"Getting disk stats...\"\n}\n\ndisplay_dashboard() {\n    # TODO: Display all metrics\n    echo \"Displaying dashboard...\"\n}",
+    "solution": "#!/bin/bash\n# Complete VM Performance Monitoring Dashboard\n\nVM_NAME=\"${1:-test-vm}\"\nREFRESH_INTERVAL=2\nLOG_FILE=\"/tmp/vm_metrics_${VM_NAME}.log\"\n\n# Colors for output\nRED='\\033[0;31m'\nGREEN='\\033[0;32m'\nYELLOW='\\033[1;33m'\nNC='\\033[0m' # No Color\n\nget_vm_info() {\n    # Check if VM is running\n    if ! VBoxManage list runningvms | grep -q \"$VM_NAME\"; then\n        echo \"Error: VM '$VM_NAME' is not running\"\n        exit 1\n    fi\n}\n\nget_cpu_usage() {\n    # Get CPU usage from VBoxManage metrics\n    local cpu_load=$(VBoxManage metrics query \"$VM_NAME\" \"Guest/CPU/Load/User\" | \n        grep \"Guest/CPU/Load/User\" | awk '{print $NF}')\n    \n    if [ -z \"$cpu_load\" ]; then\n        cpu_load=\"0\"\n    fi\n    \n    echo \"${cpu_load%.*}\" # Remove decimal part\n}\n\nget_memory_usage() {\n    # Get memory allocation and usage\n    local mem_alloc=$(VBoxManage showvminfo \"$VM_NAME\" --machinereadable | \n        grep \"^memory=\" | cut -d'=' -f2)\n    \n    local mem_free=$(VBoxManage metrics query \"$VM_NAME\" \"Guest/RAM/Usage/Free\" | \n        grep \"Guest/RAM/Usage/Free\" | awk '{print $NF}')\n    \n    if [ -z \"$mem_free\" ]; then\n        mem_free=\"0\"\n    fi\n    \n    local mem_used=$((mem_alloc - mem_free))\n    local mem_percent=$((mem_used * 100 / mem_alloc))\n    \n    echo \"${mem_used}|${mem_alloc}|${mem_percent}\"\n}\n\nget_network_stats() {\n    # Get network bytes transferred\n    local net_rx=$(VBoxManage metrics query \"$VM_NAME\" \"Net/Rate/Rx\" 2>/dev/null | \n        grep \"Net/Rate/Rx\" | awk '{print $NF}' || echo \"0\")\n    \n    local net_tx=$(VBoxManage metrics query \"$VM_NAME\" \"Net/Rate/Tx\" 2>/dev/null | \n        grep \"Net/Rate/Tx\" | awk '{print $NF}' || echo \"0\")\n    \n    echo \"${net_rx:-0}|${net_tx:-0}\"\n}\n\nget_disk_stats() {\n    # Get disk I/O stats\n    local disk_read=$(VBoxManage metrics query \"$VM_NAME\" \"Disk/Usage/Read\" 2>/dev/null | \n        grep \"Disk/Usage/Read\" | awk '{print $NF}' || echo \"0\")\n    \n    local disk_write=$(VBoxManage metrics query \"$VM_NAME\" \"Disk/Usage/Write\" 2>/dev/null | \n        grep \"Disk/Usage/Write\" | awk '{print $NF}' || echo \"0\")\n    \n    echo \"${disk_read:-0}|${disk_write:-0}\"\n}\n\nformat_bytes() {\n    local bytes=$1\n    \n    if [ $bytes -ge 1073741824 ]; then\n        echo \"$((bytes / 1073741824)) GB\"\n    elif [ $bytes -ge 1048576 ]; then\n        echo \"$((bytes / 1048576)) MB\"\n    elif [ $bytes -ge 1024 ]; then\n        echo \"$((bytes / 1024)) KB\"\n    else\n        echo \"${bytes} B\"\n    fi\n}\n\nget_status_color() {\n    local value=$1\n    local threshold_warn=$2\n    local threshold_crit=$3\n    \n    if [ $value -ge $threshold_crit ]; then\n        echo \"$RED\"\n    elif [ $value -ge $threshold_warn ]; then\n        echo \"$YELLOW\"\n    else\n        echo \"$GREEN\"\n    fi\n}\n\ndisplay_progress_bar() {\n    local percentage=$1\n    local width=40\n    local filled=$((percentage * width / 100))\n    \n    printf \"[\"\n    for ((i=0; i<width; i++)); do\n        if [ $i -lt $filled ]; then\n            printf \"=\"\n        else\n            printf \" \"\n        fi\n    done\n    printf \"] %3d%%\" $percentage\n}\n\ndisplay_dashboard() {\n    # Clear screen\n    clear\n    \n    # Header\n    echo \"=====================================================\"\n    echo \"  VM Performance Monitoring Dashboard\"\n    echo \"  VM: $VM_NAME\"\n    echo \"  Time: $(date '+%Y-%m-%d %H:%M:%S')\"\n    echo \"=====================================================\"\n    echo \"\"\n    \n    # CPU Usage\n    local cpu=$(get_cpu_usage)\n    local cpu_color=$(get_status_color $cpu 70 90)\n    echo -n \"CPU Usage:    \"\n    echo -n \"${cpu_color}\"\n    display_progress_bar $cpu\n    echo \"${NC}\"\n    \n    # Memory Usage\n    IFS='|' read -r mem_used mem_total mem_percent <<< $(get_memory_usage)\n    local mem_color=$(get_status_color $mem_percent 75 90)\n    echo -n \"Memory Usage: \"\n    echo -n \"${mem_color}\"\n    display_progress_bar $mem_percent\n    echo \" (${mem_used}MB / ${mem_total}MB)${NC}\"\n    \n    # Network Stats\n    echo \"\"\n    echo \"Network I/O:\"\n    IFS='|' read -r net_rx net_tx <<< $(get_network_stats)\n    echo \"  RX: $(format_bytes ${net_rx%.*})/s\"\n    echo \"  TX: $(format_bytes ${net_tx%.*})/s\"\n    \n    # Disk Stats\n    echo \"\"\n    echo \"Disk I/O:\"\n    IFS='|' read -r disk_read disk_write <<< $(get_disk_stats)\n    echo \"  Read:  $(format_bytes ${disk_read%.*})/s\"\n    echo \"  Write: $(format_bytes ${disk_write%.*})/s\"\n    \n    # System Info\n    echo \"\"\n    echo \"=====================================================\"\n    local uptime=$(VBoxManage showvminfo \"$VM_NAME\" --machinereadable | \n        grep \"^VMState=\" | cut -d'\"' -f2)\n    echo \"VM State: $uptime\"\n    \n    echo \"\"\n    echo \"Press Ctrl+C to exit | Refresh: ${REFRESH_INTERVAL}s\"\n}\n\nlog_metrics() {\n    local timestamp=$(date '+%Y-%m-%d %H:%M:%S')\n    local cpu=$(get_cpu_usage)\n    IFS='|' read -r mem_used mem_total mem_percent <<< $(get_memory_usage)\n    IFS='|' read -r net_rx net_tx <<< $(get_network_stats)\n    \n    echo \"$timestamp,$cpu,$mem_percent,$net_rx,$net_tx\" >> \"$LOG_FILE\"\n}\n\nshow_historical_data() {\n    echo \"=== Historical Performance Data ===\"\n    echo \"Log file: $LOG_FILE\"\n    echo \"\"\n    \n    if [ -f \"$LOG_FILE\" ]; then\n        echo \"Timestamp,CPU%,Memory%,NetRX,NetTX\"\n        tail -n 20 \"$LOG_FILE\"\n    else\n        echo \"No historical data available\"\n    fi\n}\n\n# Setup metrics collection\nsetup_metrics() {\n    echo \"Setting up metrics collection for $VM_NAME...\"\n    VBoxManage metrics setup --period 1 --samples 100 \"$VM_NAME\" \"*\" 2>/dev/null\n    sleep 2\n}\n\n# Main execution\ncase \"${2:-monitor}\" in\n    monitor)\n        get_vm_info\n        setup_metrics\n        \n        # Continuous monitoring loop\n        while true; do\n            display_dashboard\n            log_metrics\n            sleep $REFRESH_INTERVAL\n        done\n        ;;\n    once)\n        get_vm_info\n        setup_metrics\n        display_dashboard\n        ;;\n    history)\n        show_historical_data\n        ;;\n    *)\n        echo \"Usage: $0 <vm_name> {monitor|once|history}\"\n        echo \"\"\n        echo \"Commands:\"\n        echo \"  monitor  - Continuous monitoring (default)\"\n        echo \"  once     - Single snapshot of metrics\"\n        echo \"  history  - Show historical data\"\n        ;;\nesac",
+    "hints": [
+      "Use VBoxManage metrics query to get performance data",
+      "Enable metrics collection with VBoxManage metrics setup",
+      "Use --machinereadable flag for easier parsing",
+      "Log metrics to file for historical tracking",
+      "Consider using watch or sleep for continuous monitoring"
+    ],
+    "testCases": [
+      {
+        "input": "get_cpu_usage",
+        "expectedOutput": "Current CPU usage percentage",
+        "isHidden": false,
+        "description": "Get VM CPU usage"
+      },
+      {
+        "input": "get_memory_usage",
+        "expectedOutput": "Memory used and total allocation",
+        "isHidden": false,
+        "description": "Get memory statistics"
+      },
+      {
+        "input": "display_dashboard",
+        "expectedOutput": "Dashboard with all metrics displayed",
+        "isHidden": true,
+        "description": "Display performance dashboard"
+      }
+    ],
+    "language": "bash"
+  },
+  {
+    "id": "cs405-t2-ex09",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-2",
+    "title": "VM Template Creator",
+    "difficulty": 2,
+    "description": "Build a script that creates VM templates with predefined configurations. Support creating templates for different OS types (Linux server, Windows desktop, etc.) with appropriate resources and settings.",
+    "starterCode": "#!/bin/bash\n# VM Template Creator\n\ncreate_linux_server_template() {\n    local vm_name=$1\n    # TODO: Create Linux server template\n    # - Appropriate RAM/CPU\n    # - Network configuration\n    # - No GUI needed\n    echo \"Creating Linux server template...\"\n}\n\ncreate_windows_desktop_template() {\n    local vm_name=$1\n    # TODO: Create Windows desktop template\n    # - More RAM/CPU\n    # - Video memory for GUI\n    # - USB support\n    echo \"Creating Windows desktop template...\n}\n\ncreate_dev_environment_template() {\n    local vm_name=$1\n    # TODO: Create development environment template\n    echo \"Creating development template...\"\n}",
+    "solution": "#!/bin/bash\n# Complete VM Template Creator\n\nVMDIR=\"${HOME}/VirtualBox VMs\"\n\ncreate_base_vm() {\n    local vm_name=$1\n    local os_type=$2\n    \n    echo \"Creating base VM: $vm_name\"\n    echo \"OS Type: $os_type\"\n    \n    # Create VM\n    VBoxManage createvm \\\n        --name \"$vm_name\" \\\n        --ostype \"$os_type\" \\\n        --register\n    \n    echo \"Base VM created\"\n}\n\ncreate_linux_server_template() {\n    local vm_name=$1\n    local disk_size=${2:-20480}  # 20GB default\n    \n    echo \"=== Creating Linux Server Template ===\"\n    \n    # Create base VM\n    create_base_vm \"$vm_name\" \"Ubuntu_64\"\n    \n    # Configure resources (moderate for server)\n    VBoxManage modifyvm \"$vm_name\" \\\n        --memory 2048 \\\n        --cpus 2 \\\n        --vram 16 \\\n        --boot1 dvd \\\n        --boot2 disk \\\n        --boot3 none \\\n        --boot4 none\n    \n    # Network: NAT + Host-only for management\n    VBoxManage modifyvm \"$vm_name\" \\\n        --nic1 nat \\\n        --nictype1 82540EM \\\n        --nic2 hostonly \\\n        --hostonlyadapter2 vboxnet0 \\\n        --nictype2 82540EM\n    \n    # Create storage controller\n    VBoxManage storagectl \"$vm_name\" \\\n        --name \"SATA Controller\" \\\n        --add sata \\\n        --controller IntelAhci\n    \n    # Create virtual disk\n    local disk_path=\"${VMDIR}/${vm_name}/${vm_name}.vdi\"\n    VBoxManage createhd \\\n        --filename \"$disk_path\" \\\n        --size $disk_size \\\n        --format VDI\n    \n    # Attach disk\n    VBoxManage storageattach \"$vm_name\" \\\n        --storagectl \"SATA Controller\" \\\n        --port 0 \\\n        --device 0 \\\n        --type hdd \\\n        --medium \"$disk_path\"\n    \n    # IDE controller for DVD\n    VBoxManage storagectl \"$vm_name\" \\\n        --name \"IDE Controller\" \\\n        --add ide\n    \n    echo \"Linux Server template created successfully\"\n    echo \"Configuration:\"\n    echo \"  - 2GB RAM, 2 vCPUs\"\n    echo \"  - ${disk_size}MB disk\"\n    echo \"  - NAT + Host-only networking\"\n    echo \"  - Minimal video RAM (no GUI needed)\"\n}\n\ncreate_windows_desktop_template() {\n    local vm_name=$1\n    local disk_size=${2:-40960}  # 40GB default\n    \n    echo \"=== Creating Windows Desktop Template ===\"\n    \n    # Create base VM\n    create_base_vm \"$vm_name\" \"Windows10_64\"\n    \n    # Configure resources (higher for desktop)\n    VBoxManage modifyvm \"$vm_name\" \\\n        --memory 4096 \\\n        --cpus 2 \\\n        --vram 128 \\\n        --boot1 dvd \\\n        --boot2 disk \\\n        --boot3 none \\\n        --boot4 none \\\n        --graphicscontroller vmsvga \\\n        --accelerate3d on\n    \n    # Enable USB\n    VBoxManage modifyvm \"$vm_name\" \\\n        --usb on \\\n        --usbehci on\n    \n    # Network: NAT\n    VBoxManage modifyvm \"$vm_name\" \\\n        --nic1 nat \\\n        --nictype1 82540EM\n    \n    # Clipboard and drag-and-drop\n    VBoxManage modifyvm \"$vm_name\" \\\n        --clipboard bidirectional \\\n        --draganddrop bidirectional\n    \n    # Create storage controller\n    VBoxManage storagectl \"$vm_name\" \\\n        --name \"SATA Controller\" \\\n        --add sata \\\n        --controller IntelAhci\n    \n    # Create virtual disk\n    local disk_path=\"${VMDIR}/${vm_name}/${vm_name}.vdi\"\n    VBoxManage createhd \\\n        --filename \"$disk_path\" \\\n        --size $disk_size \\\n        --format VDI\n    \n    # Attach disk\n    VBoxManage storageattach \"$vm_name\" \\\n        --storagectl \"SATA Controller\" \\\n        --port 0 \\\n        --device 0 \\\n        --type hdd \\\n        --medium \"$disk_path\"\n    \n    # IDE controller for DVD\n    VBoxManage storagectl \"$vm_name\" \\\n        --name \"IDE Controller\" \\\n        --add ide\n    \n    echo \"Windows Desktop template created successfully\"\n    echo \"Configuration:\"\n    echo \"  - 4GB RAM, 2 vCPUs\"\n    echo \"  - ${disk_size}MB disk\"\n    echo \"  - 128MB video RAM with 3D acceleration\"\n    echo \"  - USB, bidirectional clipboard/drag-drop\"\n}\n\ncreate_dev_environment_template() {\n    local vm_name=$1\n    local disk_size=${2:-30720}  # 30GB default\n    \n    echo \"=== Creating Development Environment Template ===\"\n    \n    # Create base VM\n    create_base_vm \"$vm_name\" \"Ubuntu_64\"\n    \n    # Configure resources (high for compilation, VMs, etc.)\n    VBoxManage modifyvm \"$vm_name\" \\\n        --memory 8192 \\\n        --cpus 4 \\\n        --vram 128 \\\n        --boot1 dvd \\\n        --boot2 disk \\\n        --boot3 none \\\n        --boot4 none\n    \n    # Enable nested virtualization\n    VBoxManage modifyvm \"$vm_name\" \\\n        --nested-hw-virt on\n    \n    # Network: NAT with port forwarding + Host-only\n    VBoxManage modifyvm \"$vm_name\" \\\n        --nic1 nat \\\n        --nictype1 82540EM \\\n        --nic2 hostonly \\\n        --hostonlyadapter2 vboxnet0 \\\n        --nictype2 82540EM\n    \n    # Port forwarding for common dev ports\n    VBoxManage modifyvm \"$vm_name\" \\\n        --natpf1 \"ssh,tcp,,2222,,22\" \\\n        --natpf1 \"http,tcp,,8080,,80\" \\\n        --natpf1 \"https,tcp,,8443,,443\"\n    \n    # Shared folders and clipboard\n    VBoxManage modifyvm \"$vm_name\" \\\n        --clipboard bidirectional \\\n        --draganddrop bidirectional\n    \n    # Create storage controller\n    VBoxManage storagectl \"$vm_name\" \\\n        --name \"SATA Controller\" \\\n        --add sata \\\n        --controller IntelAhci \\\n        --portcount 2\n    \n    # Create virtual disk\n    local disk_path=\"${VMDIR}/${vm_name}/${vm_name}.vdi\"\n    VBoxManage createhd \\\n        --filename \"$disk_path\" \\\n        --size $disk_size \\\n        --format VDI\n    \n    # Attach disk\n    VBoxManage storageattach \"$vm_name\" \\\n        --storagectl \"SATA Controller\" \\\n        --port 0 \\\n        --device 0 \\\n        --type hdd \\\n        --medium \"$disk_path\"\n    \n    # IDE controller for DVD\n    VBoxManage storagectl \"$vm_name\" \\\n        --name \"IDE Controller\" \\\n        --add ide\n    \n    echo \"Development Environment template created successfully\"\n    echo \"Configuration:\"\n    echo \"  - 8GB RAM, 4 vCPUs\"\n    echo \"  - ${disk_size}MB disk\"\n    echo \"  - Nested virtualization enabled\"\n    echo \"  - Port forwarding: SSH(2222), HTTP(8080), HTTPS(8443)\"\n    echo \"  - Dual network: NAT + Host-only\"\n}\n\ncreate_minimal_template() {\n    local vm_name=$1\n    \n    echo \"=== Creating Minimal Template ===\"\n    \n    create_base_vm \"$vm_name\" \"Linux_64\"\n    \n    # Minimal resources\n    VBoxManage modifyvm \"$vm_name\" \\\n        --memory 512 \\\n        --cpus 1 \\\n        --vram 8\n    \n    # Simple NAT network\n    VBoxManage modifyvm \"$vm_name\" \\\n        --nic1 nat\n    \n    # Small disk\n    VBoxManage storagectl \"$vm_name\" \\\n        --name \"SATA Controller\" \\\n        --add sata\n    \n    local disk_path=\"${VMDIR}/${vm_name}/${vm_name}.vdi\"\n    VBoxManage createhd \\\n        --filename \"$disk_path\" \\\n        --size 10240 \\\n        --format VDI\n    \n    VBoxManage storageattach \"$vm_name\" \\\n        --storagectl \"SATA Controller\" \\\n        --port 0 \\\n        --device 0 \\\n        --type hdd \\\n        --medium \"$disk_path\"\n    \n    echo \"Minimal template created (512MB RAM, 10GB disk)\"\n}\n\nlist_templates() {\n    echo \"=== Available VM Templates ===\"\n    echo \"1. linux-server    - Linux server (2GB RAM, minimal GUI)\"\n    echo \"2. windows-desktop - Windows desktop (4GB RAM, full GUI)\"\n    echo \"3. dev-environment - Development VM (8GB RAM, nested virt)\"\n    echo \"4. minimal         - Minimal VM (512MB RAM, 10GB disk)\"\n}\n\n# Main execution\ncase \"${1:-}\" in\n    linux-server)\n        if [ -z \"$2\" ]; then\n            echo \"Error: VM name required\"\n            echo \"Usage: $0 linux-server <vm_name> [disk_size_mb]\"\n            exit 1\n        fi\n        create_linux_server_template \"$2\" \"${3:-20480}\"\n        ;;\n    windows-desktop)\n        if [ -z \"$2\" ]; then\n            echo \"Error: VM name required\"\n            echo \"Usage: $0 windows-desktop <vm_name> [disk_size_mb]\"\n            exit 1\n        fi\n        create_windows_desktop_template \"$2\" \"${3:-40960}\"\n        ;;\n    dev-environment)\n        if [ -z \"$2\" ]; then\n            echo \"Error: VM name required\"\n            echo \"Usage: $0 dev-environment <vm_name> [disk_size_mb]\"\n            exit 1\n        fi\n        create_dev_environment_template \"$2\" \"${3:-30720}\"\n        ;;\n    minimal)\n        if [ -z \"$2\" ]; then\n            echo \"Error: VM name required\"\n            echo \"Usage: $0 minimal <vm_name>\"\n            exit 1\n        fi\n        create_minimal_template \"$2\"\n        ;;\n    list)\n        list_templates\n        ;;\n    *)\n        echo \"VM Template Creator\"\n        echo \"\"\n        echo \"Usage: $0 {linux-server|windows-desktop|dev-environment|minimal|list} <vm_name> [disk_size]\"\n        echo \"\"\n        list_templates\n        ;;\nesac",
+    "hints": [
+      "Different OS types need different resource allocations",
+      "Servers typically don't need high video RAM",
+      "Development environments benefit from nested virtualization",
+      "Use appropriate OS type identifiers for VBoxManage",
+      "Consider port forwarding for development VMs"
+    ],
+    "testCases": [
+      {
+        "input": "create_linux_server_template my-server",
+        "expectedOutput": "Linux server VM with 2GB RAM, minimal VRAM",
+        "isHidden": false,
+        "description": "Create Linux server template"
+      },
+      {
+        "input": "create_windows_desktop_template my-desktop",
+        "expectedOutput": "Windows desktop with 4GB RAM, 128MB VRAM, USB",
+        "isHidden": false,
+        "description": "Create Windows desktop template"
+      },
+      {
+        "input": "create_dev_environment_template my-dev",
+        "expectedOutput": "Dev VM with 8GB RAM, nested virt, port forwarding",
+        "isHidden": true,
+        "description": "Create development environment template"
+      }
+    ],
+    "language": "bash"
+  },
+  {
+    "id": "cs405-t2-ex10",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-2",
+    "title": "VM Resource Optimization Analyzer",
+    "difficulty": 4,
+    "description": "Create an analyzer that monitors VM resource usage over time and recommends optimization: identify overprovisioned VMs, suggest rightsizing, detect idle VMs, and calculate resource efficiency.",
+    "starterCode": "#!/bin/bash\n# VM Resource Optimization Analyzer\n\nanalyze_vm_resources() {\n    local vm_name=$1\n    # TODO: Collect resource usage data\n    # TODO: Analyze allocation vs actual usage\n    # TODO: Generate recommendations\n    echo \"Analyzing $vm_name...\"\n}\n\ngenerate_recommendations() {\n    # TODO: Based on usage patterns, recommend:\n    # - Downsizing overprovisioned VMs\n    # - Removing idle VMs\n    # - Consolidation opportunities\n    echo \"Generating recommendations...\"\n}\n\ncalculate_efficiency() {\n    # TODO: Calculate resource efficiency score\n    echo \"Calculating efficiency...\"\n}",
+    "solution": "#!/bin/bash\n# Complete VM Resource Optimization Analyzer\n\nMETRICS_DIR=\"/tmp/vm_metrics\"\nmkdir -p \"$METRICS_DIR\"\n\n# Thresholds for recommendations\nCPU_OVERPROVISIONED_THRESHOLD=30  # Avg CPU < 30% = overprov\nMEM_OVERPROVISIONED_THRESHOLD=40  # Avg Memory < 40% = overprov\nIDLE_THRESHOLD=10                  # Avg CPU < 10% = idle\nSAMPLE_COUNT=20                    # Number of samples to collect\n\ncollect_metrics() {\n    local vm_name=$1\n    local sample_count=${2:-$SAMPLE_COUNT}\n    \n    echo \"Collecting metrics for $vm_name ($sample_count samples)...\"\n    \n    # Check if VM is running\n    if ! VBoxManage list runningvms | grep -q \"$vm_name\"; then\n        echo \"Error: VM is not running. Start the VM to collect metrics.\"\n        return 1\n    fi\n    \n    # Setup metrics\n    VBoxManage metrics setup --period 2 \"$vm_name\" \"*\" 2>/dev/null\n    sleep 2\n    \n    local metrics_file=\"${METRICS_DIR}/${vm_name}_metrics.csv\"\n    echo \"timestamp,cpu_load,mem_used_mb,mem_total_mb,mem_percent\" > \"$metrics_file\"\n    \n    for i in $(seq 1 $sample_count); do\n        local timestamp=$(date '+%Y-%m-%d %H:%M:%S')\n        \n        # Get CPU load\n        local cpu=$(VBoxManage metrics query \"$vm_name\" \"Guest/CPU/Load/User\" 2>/dev/null | \n            grep \"Guest/CPU/Load/User\" | awk '{print $NF}' | cut -d'.' -f1)\n        cpu=${cpu:-0}\n        \n        # Get memory info\n        local mem_total=$(VBoxManage showvminfo \"$vm_name\" --machinereadable | \n            grep \"^memory=\" | cut -d'=' -f2)\n        \n        local mem_free=$(VBoxManage metrics query \"$vm_name\" \"Guest/RAM/Usage/Free\" 2>/dev/null | \n            grep \"Guest/RAM/Usage/Free\" | awk '{print $NF}' | cut -d'.' -f1)\n        mem_free=${mem_free:-0}\n        \n        local mem_used=$((mem_total - mem_free))\n        local mem_percent=$((mem_used * 100 / mem_total))\n        \n        echo \"$timestamp,$cpu,$mem_used,$mem_total,$mem_percent\" >> \"$metrics_file\"\n        \n        echo -ne \"\\rProgress: $i/$sample_count samples collected...\"\n        sleep 2\n    done\n    \n    echo -e \"\\nMetrics collection complete: $metrics_file\"\n    return 0\n}\n\nanalyze_vm_resources() {\n    local vm_name=$1\n    local metrics_file=\"${METRICS_DIR}/${vm_name}_metrics.csv\"\n    \n    if [ ! -f \"$metrics_file\" ]; then\n        echo \"No metrics found for $vm_name. Run collection first.\"\n        return 1\n    fi\n    \n    echo \"=== Analyzing VM Resources: $vm_name ===\"\n    echo \"\"\n    \n    # Calculate averages (skip header)\n    local avg_cpu=$(awk -F',' 'NR>1 {sum+=$2; count++} END {if(count>0) print int(sum/count); else print 0}' \"$metrics_file\")\n    local avg_mem_percent=$(awk -F',' 'NR>1 {sum+=$5; count++} END {if(count>0) print int(sum/count); else print 0}' \"$metrics_file\")\n    local max_cpu=$(awk -F',' 'NR>1 {if($2>max) max=$2} END {print int(max)}' \"$metrics_file\")\n    local max_mem_percent=$(awk -F',' 'NR>1 {if($5>max) max=$5} END {print int(max)}' \"$metrics_file\")\n    \n    # Get allocated resources\n    local mem_allocated=$(VBoxManage showvminfo \"$vm_name\" --machinereadable | \n        grep \"^memory=\" | cut -d'=' -f2)\n    local cpu_allocated=$(VBoxManage showvminfo \"$vm_name\" --machinereadable | \n        grep \"^cpus=\" | cut -d'=' -f2)\n    \n    echo \"Allocated Resources:\"\n    echo \"  CPU:    $cpu_allocated vCPUs\"\n    echo \"  Memory: ${mem_allocated}MB\"\n    echo \"\"\n    echo \"Average Usage:\"\n    echo \"  CPU:    ${avg_cpu}%\"\n    echo \"  Memory: ${avg_mem_percent}%\"\n    echo \"\"\n    echo \"Peak Usage:\"\n    echo \"  CPU:    ${max_cpu}%\"\n    echo \"  Memory: ${max_mem_percent}%\"\n    echo \"\"\n    \n    # Generate recommendations\n    generate_recommendations \"$vm_name\" $avg_cpu $avg_mem_percent $max_cpu $max_mem_percent $cpu_allocated $mem_allocated\n    \n    # Calculate efficiency\n    calculate_efficiency $avg_cpu $avg_mem_percent\n}\n\ngenerate_recommendations() {\n    local vm_name=$1\n    local avg_cpu=$2\n    local avg_mem=$3\n    local max_cpu=$4\n    local max_mem=$5\n    local cpu_alloc=$6\n    local mem_alloc=$7\n    \n    echo \"=== Optimization Recommendations ===\"\n    echo \"\"\n    \n    local has_recommendations=false\n    \n    # Check if VM is idle\n    if [ $avg_cpu -lt $IDLE_THRESHOLD ] && [ $avg_mem -lt 20 ]; then\n        echo \"⚠️  IDLE VM DETECTED\"\n        echo \"   Average CPU: ${avg_cpu}% | Average Memory: ${avg_mem}%\"\n        echo \"   Recommendation: Consider shutting down or removing this VM\"\n        echo \"   Potential savings: $cpu_alloc vCPUs, ${mem_alloc}MB RAM\"\n        echo \"\"\n        has_recommendations=true\n    fi\n    \n    # Check CPU overprovisioning\n    if [ $avg_cpu -lt $CPU_OVERPROVISIONED_THRESHOLD ] && [ $cpu_alloc -gt 1 ]; then\n        echo \"💡 CPU OVERPROVISIONED\"\n        echo \"   Allocated: $cpu_alloc vCPUs | Average usage: ${avg_cpu}%\"\n        local recommended_cpus=$((cpu_alloc / 2))\n        [ $recommended_cpus -lt 1 ] && recommended_cpus=1\n        echo \"   Recommendation: Reduce to $recommended_cpus vCPU(s)\"\n        echo \"   Freed resources: $((cpu_alloc - recommended_cpus)) vCPU(s)\"\n        echo \"\"\n        has_recommendations=true\n    fi\n    \n    # Check memory overprovisioning\n    if [ $avg_mem -lt $MEM_OVERPROVISIONED_THRESHOLD ]; then\n        echo \"💡 MEMORY OVERPROVISIONED\"\n        echo \"   Allocated: ${mem_alloc}MB | Average usage: ${avg_mem}%\"\n        local recommended_mem=$((mem_alloc * 60 / 100))  # 60% of current\n        # Round to nearest 512MB\n        recommended_mem=$(((recommended_mem + 256) / 512 * 512))\n        echo \"   Recommendation: Reduce to ${recommended_mem}MB\"\n        echo \"   Freed resources: $((mem_alloc - recommended_mem))MB RAM\"\n        echo \"\"\n        has_recommendations=true\n    fi\n    \n    # Check if resources are too tight\n    if [ $max_cpu -gt 90 ] || [ $max_mem -gt 90 ]; then\n        echo \"⚠️  RESOURCE CONSTRAINT DETECTED\"\n        echo \"   Peak CPU: ${max_cpu}% | Peak Memory: ${max_mem}%\"\n        \n        if [ $max_cpu -gt 90 ] && [ $max_mem -le 90 ]; then\n            echo \"   Recommendation: Add 1-2 more vCPUs for better performance\"\n        elif [ $max_mem -gt 90 ] && [ $max_cpu -le 90 ]; then\n            local add_mem=$((mem_alloc * 25 / 100))\n            echo \"   Recommendation: Add ${add_mem}MB more RAM\"\n        else\n            echo \"   Recommendation: Both CPU and Memory are constrained\"\n            echo \"   Consider adding resources or optimizing workload\"\n        fi\n        echo \"\"\n        has_recommendations=true\n    fi\n    \n    if [ \"$has_recommendations\" = \"false\" ]; then\n        echo \"✅ VM is optimally configured\"\n        echo \"   Resources are appropriately sized for current workload\"\n        echo \"\"\n    fi\n}\n\ncalculate_efficiency() {\n    local avg_cpu=$1\n    local avg_mem=$2\n    \n    # Efficiency score: how well allocated resources are used\n    # Ideal: 60-80% utilization\n    # Score components: CPU efficiency + Memory efficiency\n    \n    local cpu_efficiency=0\n    local mem_efficiency=0\n    \n    # CPU efficiency (0-100)\n    if [ $avg_cpu -ge 60 ] && [ $avg_cpu -le 80 ]; then\n        cpu_efficiency=100\n    elif [ $avg_cpu -lt 60 ]; then\n        cpu_efficiency=$((avg_cpu * 100 / 60))\n    else\n        # Over 80% - penalize slightly\n        cpu_efficiency=$((100 - (avg_cpu - 80)))\n    fi\n    \n    # Memory efficiency (0-100)\n    if [ $avg_mem -ge 60 ] && [ $avg_mem -le 80 ]; then\n        mem_efficiency=100\n    elif [ $avg_mem -lt 60 ]; then\n        mem_efficiency=$((avg_mem * 100 / 60))\n    else\n        mem_efficiency=$((100 - (avg_mem - 80)))\n    fi\n    \n    # Overall efficiency (average of both)\n    local overall_efficiency=$(((cpu_efficiency + mem_efficiency) / 2))\n    \n    echo \"=== Resource Efficiency Score ===\"\n    echo \"  CPU Efficiency:     ${cpu_efficiency}/100\"\n    echo \"  Memory Efficiency:  ${mem_efficiency}/100\"\n    echo \"  Overall Score:      ${overall_efficiency}/100\"\n    echo \"\"\n    \n    if [ $overall_efficiency -ge 80 ]; then\n        echo \"  Rating: ⭐⭐⭐ Excellent\"\n    elif [ $overall_efficiency -ge 60 ]; then\n        echo \"  Rating: ⭐⭐ Good\"\n    elif [ $overall_efficiency -ge 40 ]; then\n        echo \"  Rating: ⭐ Fair - Consider optimization\"\n    else\n        echo \"  Rating: Poor - Optimization needed\"\n    fi\n}\n\nanalyze_all_vms() {\n    echo \"=== Analyzing All Running VMs ===\"\n    echo \"\"\n    \n    local running_vms=$(VBoxManage list runningvms | cut -d'\"' -f2)\n    \n    if [ -z \"$running_vms\" ]; then\n        echo \"No running VMs found\"\n        return 0\n    fi\n    \n    while IFS= read -r vm; do\n        echo \"\\n========================================\"\n        collect_metrics \"$vm\" 10  # Fewer samples for quick scan\n        analyze_vm_resources \"$vm\"\n    done <<< \"$running_vms\"\n}\n\n# Main execution\ncase \"${1:-}\" in\n    collect)\n        if [ -z \"$2\" ]; then\n            echo \"Error: VM name required\"\n            echo \"Usage: $0 collect <vm_name> [sample_count]\"\n            exit 1\n        fi\n        collect_metrics \"$2\" \"${3:-$SAMPLE_COUNT}\"\n        ;;\n    analyze)\n        if [ -z \"$2\" ]; then\n            echo \"Error: VM name required\"\n            echo \"Usage: $0 analyze <vm_name>\"\n            exit 1\n        fi\n        analyze_vm_resources \"$2\"\n        ;;\n    full)\n        if [ -z \"$2\" ]; then\n            echo \"Error: VM name required\"\n            echo \"Usage: $0 full <vm_name> [sample_count]\"\n            exit 1\n        fi\n        collect_metrics \"$2\" \"${3:-$SAMPLE_COUNT}\"\n        analyze_vm_resources \"$2\"\n        ;;\n    all)\n        analyze_all_vms\n        ;;\n    *)\n        echo \"VM Resource Optimization Analyzer\"\n        echo \"\"\n        echo \"Usage: $0 {collect|analyze|full|all} <vm_name> [sample_count]\"\n        echo \"\"\n        echo \"Commands:\"\n        echo \"  collect <vm>      - Collect resource usage metrics\"\n        echo \"  analyze <vm>      - Analyze collected metrics and recommend\"\n        echo \"  full <vm>         - Collect and analyze in one step\"\n        echo \"  all               - Quick analysis of all running VMs\"\n        echo \"\"\n        echo \"Metrics stored in: $METRICS_DIR\"\n        ;;\nesac",
+    "hints": [
+      "Collect metrics over time for accurate analysis",
+      "Use VBoxManage metrics query for CPU and memory data",
+      "Compare allocated vs actual average usage",
+      "Recommend downsizing if avg usage < 40% of allocation",
+      "Flag VMs with very low usage as idle candidates"
+    ],
+    "testCases": [
+      {
+        "input": "analyze_vm_resources test-vm",
+        "expectedOutput": "Usage statistics and optimization recommendations",
+        "isHidden": false,
+        "description": "Analyze VM resource usage"
+      },
+      {
+        "input": "generate_recommendations vm_name 25 35 40 50",
+        "expectedOutput": "Recommendations for overprovisioned VM",
+        "isHidden": false,
+        "description": "Generate optimization recommendations"
+      },
+      {
+        "input": "calculate_efficiency 70 75",
+        "expectedOutput": "High efficiency score (optimal usage)",
+        "isHidden": true,
+        "description": "Calculate resource efficiency"
+      }
+    ],
+    "language": "bash"
+  }
+  ,
+  {
+    "id": "cs405-t2-ex11",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-2",
+    "title": "Docker Multi-Stage Build Optimizer",
+    "difficulty": 3,
+    "description": "Create a Dockerfile using multi-stage builds to optimize image size for a web application. Implement separate stages for building, testing, and production. Compare final image sizes and demonstrate layer caching benefits.",
+    "starterCode": "# Multi-Stage Dockerfile Template\n# TODO: Create builder stage\nFROM node:18 AS builder\nWORKDIR /app\n# TODO: Copy and build application\n\n# TODO: Create test stage\n# FROM builder AS test\n# TODO: Run tests\n\n# TODO: Create production stage\n# FROM node:18-alpine AS production\n# TODO: Copy only necessary files from builder\n# TODO: Set up production environment",
+    "solution": "# Complete Multi-Stage Dockerfile\n# Stage 1: Builder - compile and build the application\nFROM node:18 AS builder\nWORKDIR /app\n\n# Copy package files\nCOPY package*.json ./\n\n# Install all dependencies (including dev dependencies)\nRUN npm ci\n\n# Copy source code\nCOPY src/ ./src/\nCOPY tsconfig.json ./\n\n# Build the application\nRUN npm run build\n\n# Stage 2: Test - run tests in isolated environment\nFROM builder AS test\nWORKDIR /app\n\n# Copy test files\nCOPY tests/ ./tests/\n\n# Run tests\nRUN npm test\n\n# Stage 3: Production - minimal final image\nFROM node:18-alpine AS production\n\n# Create non-root user\nRUN addgroup -g 1001 -S nodejs && adduser -S nodejs -u 1001\n\nWORKDIR /app\n\n# Copy production dependencies and built app from builder stage\nCOPY --from=builder /app/node_modules ./node_modules\nCOPY --from=builder /app/dist ./dist\nCOPY --from=builder /app/package.json ./\n\n# Set ownership\nRUN chown -R nodejs:nodejs /app\n\n# Switch to non-root user\nUSER nodejs\n\n# Expose port\nEXPOSE 3000\n\n# Start application\nCMD [\"node\", \"dist/index.js\"]",
+    "hints": [
+      "Use AS keyword to name build stages",
+      "Copy artifacts from previous stages with COPY --from=stage_name",
+      "Use alpine base images for smaller production images",
+      "Install only production dependencies in final stage",
+      "Place frequently changing instructions last for better caching"
+    ],
+    "testCases": [
+      {
+        "input": "docker build --target production -t myapp:prod .",
+        "expectedOutput": "Production image with minimal size",
+        "isHidden": false,
+        "description": "Build optimized production image"
+      },
+      {
+        "input": "docker build --target test -t myapp:test .",
+        "expectedOutput": "Tests pass in isolated stage",
+        "isHidden": false,
+        "description": "Run tests in test stage"
+      },
+      {
+        "input": "docker images myapp",
+        "expectedOutput": "Production image significantly smaller than builder",
+        "isHidden": true,
+        "description": "Compare image sizes"
+      }
+    ],
+    "language": "dockerfile"
+  },
+  {
+    "id": "cs405-t2-ex12",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-2",
+    "title": "Docker Network Architecture Manager",
+    "difficulty": 4,
+    "description": "Implement a comprehensive Docker networking solution that creates and manages custom bridge networks, overlay networks for multi-host communication, and demonstrates network isolation, DNS resolution, and inter-container communication patterns.",
+    "starterCode": "#!/bin/bash\n# Docker Network Manager\n\ncreate_custom_bridge() {\n    # TODO: Create custom bridge network\n    # TODO: Configure subnet and gateway\n    echo \"Creating custom bridge network...\"\n}\n\ncreate_overlay_network() {\n    # TODO: Create overlay network for swarm\n    echo \"Creating overlay network...\"\n}\n\ntest_network_isolation() {\n    # TODO: Demonstrate network isolation\n    echo \"Testing isolation...\"\n}",
+    "solution": "#!/bin/bash\n# Complete Docker Network Architecture Manager\n\nset -e\n\nGREEN='\\033[0;32m'\nNC='\\033[0m'\n\nlog_info() { echo -e \"${GREEN}[INFO]${NC} $1\"; }\n\n# Create custom bridge network\ncreate_custom_bridge() {\n    local network_name=$1\n    local subnet=${2:-172.20.0.0/16}\n    local gateway=${3:-172.20.0.1}\n    \n    log_info \"Creating custom bridge network: $network_name\"\n    \n    docker network create \\\n        --driver bridge \\\n        --subnet=\"$subnet\" \\\n        --gateway=\"$gateway\" \\\n        --opt \"com.docker.network.bridge.name\"=\"br-${network_name}\" \\\n        --label \"type=custom-bridge\" \\\n        \"$network_name\"\n}\n\n# Create overlay network\ncreate_overlay_network() {\n    local network_name=$1\n    \n    log_info \"Creating overlay network: $network_name\"\n    \n    if ! docker info --format '{{.Swarm.LocalNodeState}}' | grep -q \"active\"; then\n        log_info \"Initializing Docker Swarm...\"\n        docker swarm init\n    fi\n    \n    docker network create \\\n        --driver overlay \\\n        --attachable \\\n        --opt encrypted=true \\\n        \"$network_name\"\n}\n\n# Test network isolation\ntest_network_isolation() {\n    log_info \"Testing network isolation...\"\n    \n    # Create two isolated networks\n    create_custom_bridge \"network-a\" \"172.21.0.0/16\" \"172.21.0.1\"\n    create_custom_bridge \"network-b\" \"172.22.0.0/16\" \"172.22.0.1\"\n    \n    # Start containers in different networks\n    docker run -d --name container-a --network network-a alpine sleep 3600\n    docker run -d --name container-b --network network-b alpine sleep 3600\n    \n    # Test connectivity\n    if docker exec container-a ping -c 2 container-b > /dev/null 2>&1; then\n        log_info \"ERROR: Networks are not isolated!\"\n    else\n        log_info \"SUCCESS: Networks are properly isolated\"\n    fi\n    \n    # Cleanup\n    docker rm -f container-a container-b\n    docker network rm network-a network-b\n}\n\n# Main execution\ncase \"${1:-}\" in\n    create-bridge)\n        create_custom_bridge \"${2:-custom-bridge}\" \"${3:-172.20.0.0/16}\" \"${4:-172.20.0.1}\"\n        ;;\n    create-overlay)\n        create_overlay_network \"${2:-custom-overlay}\"\n        ;;\n    test-isolation)\n        test_network_isolation\n        ;;\n    *)\n        echo \"Docker Network Architecture Manager\"\n        echo \"\"\n        echo \"Usage: $0 {create-bridge|create-overlay|test-isolation} [options]\"\n        ;;\nesac",
+    "hints": [
+      "Use docker network create with --driver flag",
+      "Bridge networks provide automatic DNS resolution",
+      "Overlay networks require Docker Swarm mode",
+      "Use --attachable for overlay networks with standalone containers",
+      "Containers can be connected to multiple networks"
+    ],
+    "testCases": [
+      {
+        "input": "create_custom_bridge mynet 172.20.0.0/16",
+        "expectedOutput": "Custom bridge network with specified subnet",
+        "isHidden": false,
+        "description": "Create custom bridge network"
+      },
+      {
+        "input": "test_network_isolation",
+        "expectedOutput": "Containers in different networks cannot communicate",
+        "isHidden": false,
+        "description": "Test network isolation"
+      },
+      {
+        "input": "create_overlay_network prod-overlay",
+        "expectedOutput": "Encrypted overlay network for multi-host",
+        "isHidden": true,
+        "description": "Create overlay network"
+      }
+    ],
+    "language": "bash"
+  },
+  {
+    "id": "cs405-t2-ex13",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-2",
+    "title": "Container Security Hardening Framework",
+    "difficulty": 5,
+    "description": "Develop a comprehensive container security framework that implements security best practices: run as non-root user, use read-only filesystems, implement resource limits, scan for vulnerabilities, use secrets management, and apply security profiles (AppArmor/SELinux). Create security audit tools and compliance checks.",
+    "starterCode": "#!/bin/bash\n# Container Security Framework\n\ncreate_secure_container() {\n    # TODO: Run container with security best practices\n    # TODO: Non-root user, read-only filesystem\n    # TODO: Resource limits, no new privileges\n    echo \"Creating secure container...\"\n}\n\naudit_container_security() {\n    # TODO: Audit running containers for security issues\n    echo \"Auditing security...\"\n}",
+    "solution": "#!/bin/bash\n# Complete Container Security Hardening Framework\n\nset -e\n\nGREEN='\\033[0;32m'\nYELLOW='\\033[1;33m'\nRED='\\033[0;31m'\nNC='\\033[0m'\n\nlog_info() { echo -e \"${GREEN}[INFO]${NC} $1\"; }\nlog_warn() { echo -e \"${YELLOW}[WARN]${NC} $1\"; }\nlog_error() { echo -e \"${RED}[ERROR]${NC} $1\"; }\n\n# Run container with security best practices\ncreate_secure_container() {\n    local image=$1\n    local container_name=${2:-secure-app}\n    \n    log_info \"Creating hardened container: $container_name\"\n    \n    docker run -d \\\n        --name \"$container_name\" \\\n        --user 1001:1001 \\\n        --security-opt=no-new-privileges:true \\\n        --read-only \\\n        --tmpfs /tmp:rw,noexec,nosuid,size=64m \\\n        --memory=512m \\\n        --cpus=0.5 \\\n        --pids-limit=100 \\\n        --cap-drop=ALL \\\n        --cap-add=NET_BIND_SERVICE \\\n        \"$image\"\n    \n    log_info \"Secure container created with:\"\n    echo \"  ✓ Non-root user (UID 1001)\"\n    echo \"  ✓ Read-only root filesystem\"\n    echo \"  ✓ No new privileges\"\n    echo \"  ✓ Memory limit: 512MB\"\n    echo \"  ✓ All capabilities dropped\"\n}\n\n# Audit container security\naudit_container_security() {\n    local container=$1\n    local issues=0\n    \n    log_info \"Auditing container security: $container\"\n    \n    # Check if running as root\n    user=$(docker inspect \"$container\" --format='{{.Config.User}}')\n    if [ -z \"$user\" ] || [ \"$user\" = \"0\" ] || [ \"$user\" = \"root\" ]; then\n        log_error \"✗ Container running as root\"\n        ((issues++))\n    else\n        log_info \"✓ Running as non-root user: $user\"\n    fi\n    \n    # Check read-only filesystem\n    readonly=$(docker inspect \"$container\" --format='{{.HostConfig.ReadonlyRootfs}}')\n    if [ \"$readonly\" = \"true\" ]; then\n        log_info \"✓ Root filesystem is read-only\"\n    else\n        log_warn \"✗ Root filesystem is writable\"\n        ((issues++))\n    fi\n    \n    # Check privileged mode\n    privileged=$(docker inspect \"$container\" --format='{{.HostConfig.Privileged}}')\n    if [ \"$privileged\" = \"false\" ]; then\n        log_info \"✓ Not running in privileged mode\"\n    else\n        log_error \"✗ Running in PRIVILEGED mode!\"\n        ((issues++))\n    fi\n    \n    # Check memory limits\n    memory=$(docker inspect \"$container\" --format='{{.HostConfig.Memory}}')\n    if [ \"$memory\" != \"0\" ]; then\n        memory_mb=$((memory / 1024 / 1024))\n        log_info \"✓ Memory limit set: ${memory_mb}MB\"\n    else\n        log_warn \"✗ No memory limit set\"\n        ((issues++))\n    fi\n    \n    if [ $issues -eq 0 ]; then\n        log_info \"=== Audit PASSED ===\"\n        return 0\n    else\n        log_error \"=== Audit FAILED - Found $issues security issues ===\"\n        return 1\n    fi\n}\n\n# Main execution\ncase \"${1:-}\" in\n    create-container)\n        create_secure_container \"$2\" \"${3:-secure-app}\"\n        ;;\n    audit)\n        audit_container_security \"$2\"\n        ;;\n    *)\n        echo \"Container Security Hardening Framework\"\n        echo \"\"\n        echo \"Usage: $0 {create-container|audit} <image/container>\"\n        ;;\nesac",
+    "hints": [
+      "Always run containers as non-root user",
+      "Use --read-only flag for immutable root filesystem",
+      "Drop all capabilities with --cap-drop=ALL",
+      "Set memory and CPU limits to prevent DoS",
+      "Use --security-opt=no-new-privileges",
+      "Apply seccomp and AppArmor profiles"
+    ],
+    "testCases": [
+      {
+        "input": "create_secure_container nginx:alpine secure-nginx",
+        "expectedOutput": "Container with all security hardening applied",
+        "isHidden": false,
+        "description": "Create hardened container"
+      },
+      {
+        "input": "audit_container_security test-container",
+        "expectedOutput": "Security audit report with pass/fail checks",
+        "isHidden": false,
+        "description": "Audit container security"
+      }
+    ],
+    "language": "bash"
+  },
+  {
+    "id": "cs405-t2-ex14",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-2",
+    "title": "Docker Compose Multi-Service Orchestration",
+    "difficulty": 4,
+    "description": "Build a complete multi-service application using Docker Compose with service dependencies, health checks, custom networks, volumes, environment configuration, and scaling capabilities. Implement a full-stack application with database, backend API, frontend, and reverse proxy.",
+    "starterCode": "# docker-compose.yml starter\nversion: '3.8'\n\nservices:\n  # TODO: Define database service\n  database:\n    # TODO: Configure PostgreSQL with health checks\n    \n  # TODO: Define backend API service\n  backend:\n    # TODO: Add depends_on and health checks\n    \n  # TODO: Define reverse proxy\n  nginx:\n    # TODO: Configure Nginx\n\n# TODO: Define networks and volumes",
+    "solution": "# Complete docker-compose.yml\nversion: '3.8'\n\nnetworks:\n  frontend-network:\n    driver: bridge\n  backend-network:\n    driver: bridge\n\nvolumes:\n  postgres-data:\n    driver: local\n\nservices:\n  database:\n    image: postgres:15-alpine\n    container_name: app-database\n    restart: unless-stopped\n    environment:\n      POSTGRES_DB: appdb\n      POSTGRES_USER: appuser\n      POSTGRES_PASSWORD: secret\n      PGDATA: /var/lib/postgresql/data/pgdata\n    volumes:\n      - postgres-data:/var/lib/postgresql/data\n    networks:\n      - backend-network\n    healthcheck:\n      test: [\"CMD-SHELL\", \"pg_isready -U appuser -d appdb\"]\n      interval: 10s\n      timeout: 5s\n      retries: 5\n    deploy:\n      resources:\n        limits:\n          cpus: '1.0'\n          memory: 512M\n\n  backend:\n    build:\n      context: ./backend\n      dockerfile: Dockerfile\n    container_name: app-backend\n    restart: unless-stopped\n    depends_on:\n      database:\n        condition: service_healthy\n    environment:\n      NODE_ENV: production\n      PORT: 3000\n      DATABASE_URL: postgresql://appuser:secret@database:5432/appdb\n    networks:\n      - backend-network\n      - frontend-network\n    healthcheck:\n      test: [\"CMD\", \"wget\", \"--no-verbose\", \"--tries=1\", \"--spider\", \"http://localhost:3000/health\"]\n      interval: 30s\n      timeout: 10s\n      retries: 3\n    deploy:\n      resources:\n        limits:\n          cpus: '1.0'\n          memory: 1G\n      replicas: 2\n\n  nginx:\n    image: nginx:alpine\n    container_name: app-nginx\n    restart: unless-stopped\n    depends_on:\n      backend:\n        condition: service_healthy\n    ports:\n      - \"80:80\"\n    volumes:\n      - ./nginx.conf:/etc/nginx/nginx.conf:ro\n    networks:\n      - frontend-network\n    healthcheck:\n      test: [\"CMD\", \"wget\", \"--no-verbose\", \"--tries=1\", \"--spider\", \"http://localhost:80/health\"]\n      interval: 30s\n      timeout: 10s\n      retries: 3",
+    "hints": [
+      "Use depends_on with condition: service_healthy",
+      "Define custom networks for service isolation",
+      "Use named volumes for persistent data",
+      "Implement health checks for all services",
+      "Set resource limits to prevent resource exhaustion",
+      "Use environment variables for configuration"
+    ],
+    "testCases": [
+      {
+        "input": "docker-compose up -d",
+        "expectedOutput": "All services start with proper dependencies",
+        "isHidden": false,
+        "description": "Start multi-service application"
+      },
+      {
+        "input": "docker-compose ps",
+        "expectedOutput": "All services healthy and running",
+        "isHidden": false,
+        "description": "Check service status"
+      },
+      {
+        "input": "docker-compose up -d --scale backend=3",
+        "expectedOutput": "Backend service scaled to 3 replicas",
+        "isHidden": false,
+        "description": "Scale backend service"
+      }
+    ],
+    "language": "yaml"
+  },
+  {
+    "id": "cs405-t2-ex15",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-2",
+    "title": "Container Orchestration with Docker Swarm",
+    "difficulty": 5,
+    "description": "Implement a complete Docker Swarm cluster with multi-node deployment, service discovery, load balancing, rolling updates, secrets management, and monitoring. Deploy a distributed application across multiple nodes with high availability and fault tolerance.",
+    "starterCode": "#!/bin/bash\n# Docker Swarm Orchestration\n\ninit_swarm() {\n    # TODO: Initialize swarm cluster\n    echo \"Initializing swarm...\"\n}\n\ndeploy_stack() {\n    # TODO: Deploy application stack\n    echo \"Deploying stack...\"\n}\n\nscale_service() {\n    # TODO: Scale service replicas\n    echo \"Scaling service...\"\n}",
+    "solution": "#!/bin/bash\n# Complete Docker Swarm Orchestration System\n\nset -e\n\nGREEN='\\033[0;32m'\nNC='\\033[0m'\n\nlog_info() { echo -e \"${GREEN}[INFO]${NC} $1\"; }\n\nSTACK_NAME=\"prod-app\"\n\n# Initialize Docker Swarm\ninit_swarm() {\n    local advertise_addr=${1:-$(hostname -I | awk '{print $1}')}\n    \n    log_info \"Initializing Docker Swarm...\"\n    \n    if docker info --format '{{.Swarm.LocalNodeState}}' | grep -q \"active\"; then\n        log_info \"Swarm already initialized\"\n        return 0\n    fi\n    \n    docker swarm init --advertise-addr \"$advertise_addr\"\n    \n    log_info \"Swarm initialized successfully\"\n}\n\n# Create overlay networks\ncreate_networks() {\n    log_info \"Creating overlay networks...\"\n    \n    docker network create --driver overlay --attachable frontend-overlay || true\n    docker network create --driver overlay --attachable --opt encrypted=true backend-overlay || true\n}\n\n# Create secrets\ncreate_secrets() {\n    log_info \"Creating Docker secrets...\"\n    \n    echo \"mysecretdbpassword\" | docker secret create db_password - 2>/dev/null || true\n    echo \"myjwtsecret\" | docker secret create jwt_secret - 2>/dev/null || true\n}\n\n# Deploy stack\ndeploy_stack() {\n    log_info \"Deploying application stack: $STACK_NAME\"\n    \n    cat > docker-stack.yml <<'EOF'\nversion: '3.8'\n\nservices:\n  database:\n    image: postgres:15-alpine\n    environment:\n      POSTGRES_PASSWORD_FILE: /run/secrets/db_password\n      POSTGRES_DB: appdb\n    secrets:\n      - db_password\n    networks:\n      - backend-overlay\n    volumes:\n      - db-data:/var/lib/postgresql/data\n    deploy:\n      replicas: 1\n      placement:\n        constraints:\n          - node.role == manager\n\n  backend:\n    image: myapp/backend:latest\n    secrets:\n      - db_password\n      - jwt_secret\n    networks:\n      - backend-overlay\n      - frontend-overlay\n    deploy:\n      replicas: 3\n      update_config:\n        parallelism: 1\n        delay: 10s\n        failure_action: rollback\n\n  nginx:\n    image: nginx:alpine\n    networks:\n      - frontend-overlay\n    ports:\n      - \"80:80\"\n    deploy:\n      replicas: 2\n\nnetworks:\n  frontend-overlay:\n    external: true\n  backend-overlay:\n    external: true\n\nvolumes:\n  db-data:\n\nsecrets:\n  db_password:\n    external: true\n  jwt_secret:\n    external: true\nEOF\n\n    docker stack deploy -c docker-stack.yml \"$STACK_NAME\"\n    \n    log_info \"Stack deployed successfully\"\n}\n\n# Scale service\nscale_service() {\n    local service=$1\n    local replicas=$2\n    \n    log_info \"Scaling ${STACK_NAME}_${service} to $replicas replicas...\"\n    \n    docker service scale \"${STACK_NAME}_${service}=$replicas\"\n}\n\n# Main execution\ncase \"${1:-}\" in\n    init)\n        init_swarm\n        create_networks\n        create_secrets\n        ;;\n    deploy)\n        deploy_stack\n        ;;\n    scale)\n        scale_service \"$2\" \"$3\"\n        ;;\n    *)\n        echo \"Docker Swarm Orchestration System\"\n        echo \"\"\n        echo \"Usage: $0 {init|deploy|scale} [options]\"\n        ;;\nesac",
+    "hints": [
+      "Initialize swarm with docker swarm init",
+      "Use overlay networks for multi-host networking",
+      "Store sensitive data in Docker secrets",
+      "Configure rolling updates with update_config",
+      "Use placement constraints for service distribution",
+      "Monitor service replicas with docker service ps"
+    ],
+    "testCases": [
+      {
+        "input": "init_swarm",
+        "expectedOutput": "Swarm initialized with manager node",
+        "isHidden": false,
+        "description": "Initialize Docker Swarm"
+      },
+      {
+        "input": "deploy_stack",
+        "expectedOutput": "Application stack deployed across cluster",
+        "isHidden": false,
+        "description": "Deploy multi-service stack"
+      },
+      {
+        "input": "scale_service backend 5",
+        "expectedOutput": "Backend service scaled to 5 replicas",
+        "isHidden": false,
+        "description": "Scale service replicas"
+      }
+    ],
+    "language": "bash"
+  },
+  {
+    "id": "cs405-t2-ex16",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-2",
+    "title": "Container Performance Analysis and Optimization",
+    "difficulty": 5,
+    "description": "Build a comprehensive container performance analysis toolkit that monitors resource usage, analyzes bottlenecks, optimizes container configurations, and provides recommendations. Include metrics collection, visualization, and automated optimization.",
+    "starterCode": "#!/bin/bash\n# Container Performance Analyzer\n\ncollect_metrics() {\n    # TODO: Collect container metrics\n    echo \"Collecting metrics...\"\n}\n\nanalyze_bottlenecks() {\n    # TODO: Identify performance bottlenecks\n    echo \"Analyzing bottlenecks...\"\n}\n\ngenerate_report() {\n    # TODO: Generate performance report\n    echo \"Generating report...\"\n}",
+    "solution": "#!/bin/bash\n# Complete Container Performance Analysis Toolkit\n\nset -e\n\nGREEN='\\033[0;32m'\nYELLOW='\\033[1;33m'\nNC='\\033[0m'\n\nlog_info() { echo -e \"${GREEN}[INFO]${NC} $1\"; }\nlog_warn() { echo -e \"${YELLOW}[WARN]${NC} $1\"; }\n\nMETRICS_DIR=\"/tmp/container-metrics\"\nmkdir -p \"$METRICS_DIR\"\n\n# Collect container metrics\ncollect_metrics() {\n    local container=$1\n    local duration=${2:-60}\n    \n    log_info \"Collecting metrics for container: $container\"\n    \n    local metrics_file=\"${METRICS_DIR}/${container}_$(date +%Y%m%d_%H%M%S).csv\"\n    \n    echo \"timestamp,cpu_percent,mem_usage_mb,mem_percent\" > \"$metrics_file\"\n    \n    for i in $(seq 1 $duration); do\n        stats=$(docker stats --no-stream --format \"{{.CPUPerc}},{{.MemUsage}},{{.MemPerc}}\" \"$container\" 2>/dev/null)\n        \n        if [ -n \"$stats\" ]; then\n            timestamp=$(date +%s)\n            echo \"$timestamp,$stats\" >> \"$metrics_file\"\n            echo -ne \"\\rProgress: $i/$duration samples collected...\"\n        fi\n        \n        sleep 1\n    done\n    \n    echo \"\"\n    log_info \"Metrics collected: $metrics_file\"\n    echo \"$metrics_file\"\n}\n\n# Analyze performance bottlenecks\nanalyze_bottlenecks() {\n    local metrics_file=$1\n    \n    log_info \"Analyzing performance bottlenecks...\"\n    \n    local avg_cpu=$(awk -F',' 'NR>1 {sum+=$2; count++} END {if(count>0) printf \"%.2f\", sum/count}' \"$metrics_file\")\n    local max_cpu=$(awk -F',' 'NR>1 {if($2>max) max=$2} END {printf \"%.2f\", max}' \"$metrics_file\")\n    \n    echo \"\"\n    log_info \"=== Performance Analysis ===\"\n    echo \"CPU Usage: Average ${avg_cpu}%, Peak ${max_cpu}%\"\n    \n    if (( $(echo \"$avg_cpu > 80\" | bc -l) )); then\n        log_warn \"CPU BOTTLENECK: Average CPU usage is ${avg_cpu}%\"\n        echo \"  Recommendation: Increase CPU allocation\"\n    else\n        log_info \"CPU usage is healthy\"\n    fi\n}\n\n# Generate performance report\ngenerate_report() {\n    local container=$1\n    local metrics_file=$2\n    \n    log_info \"Generating performance report...\"\n    \n    local avg_cpu=$(awk -F',' 'NR>1 {sum+=$2; count++} END {if(count>0) printf \"%.2f\", sum/count}' \"$metrics_file\")\n    \n    echo \"\"\n    echo \"=== Performance Report: $container ===\"\n    echo \"Average CPU: ${avg_cpu}%\"\n    echo \"Report generated\"\n}\n\n# Run full analysis\nfull_analysis() {\n    local container=$1\n    local duration=${2:-60}\n    \n    log_info \"Starting comprehensive performance analysis...\"\n    \n    local metrics_file=$(collect_metrics \"$container\" \"$duration\")\n    analyze_bottlenecks \"$metrics_file\"\n    generate_report \"$container\" \"$metrics_file\"\n}\n\n# Main execution\ncase \"${1:-}\" in\n    collect)\n        collect_metrics \"$2\" \"${3:-60}\"\n        ;;\n    analyze)\n        analyze_bottlenecks \"$2\"\n        ;;\n    report)\n        generate_report \"$2\" \"$3\"\n        ;;\n    full)\n        full_analysis \"$2\" \"${3:-60}\"\n        ;;\n    *)\n        echo \"Container Performance Analysis Toolkit\"\n        echo \"\"\n        echo \"Usage: $0 {collect|analyze|report|full} <container> [duration]\"\n        ;;\nesac",
+    "hints": [
+      "Use docker stats to collect real-time metrics",
+      "Analyze metrics over time to identify patterns",
+      "Compare resource allocation vs actual usage",
+      "Look for CPU throttling and memory pressure",
+      "Generate visualizations for better insights"
+    ],
+    "testCases": [
+      {
+        "input": "collect_metrics myapp 60",
+        "expectedOutput": "60 seconds of metrics collected",
+        "isHidden": false,
+        "description": "Collect container metrics"
+      },
+      {
+        "input": "analyze_bottlenecks metrics.csv",
+        "expectedOutput": "Bottleneck analysis with recommendations",
+        "isHidden": false,
+        "description": "Analyze performance bottlenecks"
+      },
+      {
+        "input": "full_analysis myapp 60",
+        "expectedOutput": "Complete analysis with metrics and report",
+        "isHidden": false,
+        "description": "Run full performance analysis"
+      }
+    ],
+    "language": "bash"
   }
 ]

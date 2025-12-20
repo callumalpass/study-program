@@ -30,5 +30,547 @@
       }
     ],
     "language": "python"
+  },
+  {
+    "id": "cs405-t7-ex02",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-7",
+    "title": "Basic Health Check Endpoint",
+    "difficulty": 1,
+    "description": "Create a simple HTTP health check endpoint that returns JSON indicating the service status.\n\nRequirements:\n- Return HTTP 200 with `{\"status\": \"healthy\"}` on GET /health\n- Include a timestamp in the response\n- Use Flask or FastAPI",
+    "starterCode": "from flask import Flask, jsonify\nfrom datetime import datetime\n\napp = Flask(__name__)\n\n@app.route('/health')\ndef health():\n    # TODO: Implement health check\n    pass\n\nif __name__ == '__main__':\n    app.run(host='0.0.0.0', port=8080)",
+    "solution": "from flask import Flask, jsonify\nfrom datetime import datetime\n\napp = Flask(__name__)\n\n@app.route('/health')\ndef health():\n    \"\"\"Basic health check endpoint\"\"\"\n    return jsonify({\n        'status': 'healthy',\n        'timestamp': datetime.utcnow().isoformat()\n    }), 200\n\nif __name__ == '__main__':\n    app.run(host='0.0.0.0', port=8080)",
+    "hints": [
+      "Use Flask's jsonify() to create JSON responses",
+      "datetime.utcnow().isoformat() provides ISO-8601 timestamps",
+      "Return a tuple (response, status_code) from your route"
+    ],
+    "testCases": [
+      {
+        "input": "GET /health",
+        "expectedOutput": "{\"status\": \"healthy\", \"timestamp\": \"...\"}",
+        "isHidden": false,
+        "description": "Health endpoint returns 200 with status"
+      },
+      {
+        "input": "GET /health (verify status code)",
+        "expectedOutput": "200",
+        "isHidden": false,
+        "description": "Returns HTTP 200 status code"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs405-t7-ex03",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-7",
+    "title": "Environment-Based Configuration",
+    "difficulty": 1,
+    "description": "Modify an application to read configuration from environment variables instead of hardcoded values.\n\nRequirements:\n- Read PORT, DATABASE_URL, and LOG_LEVEL from environment\n- Provide sensible defaults if variables are not set\n- Print configuration on startup (excluding sensitive data)",
+    "starterCode": "import os\n\n# TODO: Read from environment with defaults\nPORT = 8080\nDATABASE_URL = 'postgresql://localhost/mydb'\nLOG_LEVEL = 'INFO'\n\ndef print_config():\n    # TODO: Print configuration (mask sensitive parts)\n    pass\n\nif __name__ == '__main__':\n    print_config()",
+    "solution": "import os\n\n# Read configuration from environment with defaults\nPORT = int(os.environ.get('PORT', 8080))\nDATABASE_URL = os.environ.get('DATABASE_URL', 'postgresql://localhost/mydb')\nLOG_LEVEL = os.environ.get('LOG_LEVEL', 'INFO')\n\ndef mask_url(url):\n    \"\"\"Mask sensitive parts of database URL\"\"\"\n    if '@' in url:\n        parts = url.split('@')\n        return f\"***@{parts[1]}\"\n    return url\n\ndef print_config():\n    \"\"\"Print configuration (masking sensitive data)\"\"\"\n    print(f\"Configuration:\")\n    print(f\"  PORT: {PORT}\")\n    print(f\"  DATABASE_URL: {mask_url(DATABASE_URL)}\")\n    print(f\"  LOG_LEVEL: {LOG_LEVEL}\")\n\nif __name__ == '__main__':\n    print_config()",
+    "hints": [
+      "Use os.environ.get(key, default) to provide fallback values",
+      "Convert PORT to int since environment variables are strings",
+      "Mask credentials in URLs before printing"
+    ],
+    "testCases": [
+      {
+        "input": "No environment variables set",
+        "expectedOutput": "Uses default values",
+        "isHidden": false,
+        "description": "Defaults work when no env vars set"
+      },
+      {
+        "input": "PORT=3000 LOG_LEVEL=DEBUG",
+        "expectedOutput": "PORT: 3000, LOG_LEVEL: DEBUG",
+        "isHidden": false,
+        "description": "Reads from environment when set"
+      },
+      {
+        "input": "DATABASE_URL with credentials",
+        "expectedOutput": "Masked output",
+        "isHidden": true,
+        "description": "Sensitive data is masked"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs405-t7-ex04",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-7",
+    "title": "Basic Dockerfile for Python App",
+    "difficulty": 1,
+    "description": "Create a Dockerfile for a simple Python Flask application.\n\nRequirements:\n- Use official Python 3.11 slim image\n- Copy requirements.txt and install dependencies\n- Copy application code\n- Expose port 8080\n- Run the application",
+    "starterCode": "# Dockerfile\n# TODO: Create Dockerfile for Flask app\n\n# requirements.txt contains:\n# Flask==2.3.2",
+    "solution": "# Dockerfile\nFROM python:3.11-slim\n\nWORKDIR /app\n\n# Copy and install dependencies\nCOPY requirements.txt .\nRUN pip install --no-cache-dir -r requirements.txt\n\n# Copy application code\nCOPY app.py .\n\n# Expose application port\nEXPOSE 8080\n\n# Run application\nCMD [\"python\", \"app.py\"]",
+    "hints": [
+      "Set WORKDIR to organize files in the container",
+      "Install dependencies before copying code for better caching",
+      "Use --no-cache-dir to reduce image size",
+      "CMD should be in exec form (JSON array)"
+    ],
+    "testCases": [
+      {
+        "input": "docker build .",
+        "expectedOutput": "Successfully built image",
+        "isHidden": false,
+        "description": "Dockerfile builds without errors"
+      },
+      {
+        "input": "docker run -p 8080:8080",
+        "expectedOutput": "Application starts on port 8080",
+        "isHidden": false,
+        "description": "Container runs and exposes port"
+      }
+    ],
+    "language": "dockerfile"
+  },
+  {
+    "id": "cs405-t7-ex05",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-7",
+    "title": "Implement Circuit Breaker Pattern",
+    "difficulty": 2,
+    "description": "Implement a simple circuit breaker that protects against cascading failures.\n\nRequirements:\n- Track failure count for external service calls\n- Open circuit after 5 consecutive failures\n- Return fallback response when circuit is open\n- Reset after 60 seconds",
+    "starterCode": "import time\nfrom enum import Enum\n\nclass CircuitState(Enum):\n    CLOSED = \"closed\"\n    OPEN = \"open\"\n\nclass CircuitBreaker:\n    def __init__(self, failure_threshold=5, timeout=60):\n        # TODO: Initialize circuit breaker\n        pass\n    \n    def call(self, func, *args, **kwargs):\n        # TODO: Implement circuit breaker logic\n        pass",
+    "solution": "import time\nfrom enum import Enum\n\nclass CircuitState(Enum):\n    CLOSED = \"closed\"\n    OPEN = \"open\"\n\nclass CircuitBreaker:\n    def __init__(self, failure_threshold=5, timeout=60):\n        self.failure_threshold = failure_threshold\n        self.timeout = timeout\n        self.failure_count = 0\n        self.state = CircuitState.CLOSED\n        self.last_failure_time = None\n    \n    def call(self, func, *args, **kwargs):\n        \"\"\"Execute function with circuit breaker protection\"\"\"\n        # Check if we should reset\n        if (self.state == CircuitState.OPEN and \n            self.last_failure_time and \n            time.time() - self.last_failure_time > self.timeout):\n            self.state = CircuitState.CLOSED\n            self.failure_count = 0\n        \n        # Circuit is open, return fallback\n        if self.state == CircuitState.OPEN:\n            raise Exception(\"Circuit breaker is OPEN\")\n        \n        try:\n            result = func(*args, **kwargs)\n            # Success - reset failure count\n            self.failure_count = 0\n            return result\n        except Exception as e:\n            # Failure - increment count\n            self.failure_count += 1\n            self.last_failure_time = time.time()\n            \n            # Open circuit if threshold exceeded\n            if self.failure_count >= self.failure_threshold:\n                self.state = CircuitState.OPEN\n            \n            raise e\n\n# Usage example\ndef unreliable_service():\n    \"\"\"Simulated unreliable external service\"\"\"\n    import random\n    if random.random() < 0.3:\n        raise Exception(\"Service unavailable\")\n    return \"Success\"\n\ncb = CircuitBreaker(failure_threshold=3, timeout=30)\n\ntry:\n    result = cb.call(unreliable_service)\n    print(f\"Result: {result}\")\nexcept Exception as e:\n    print(f\"Error: {e}\")",
+    "hints": [
+      "Track both failure count and the time of last failure",
+      "Compare current time with last_failure_time to decide if timeout elapsed",
+      "Reset failure count on successful calls",
+      "Raise an exception immediately when circuit is open"
+    ],
+    "testCases": [
+      {
+        "input": "5 consecutive failures",
+        "expectedOutput": "Circuit opens",
+        "isHidden": false,
+        "description": "Circuit opens after threshold"
+      },
+      {
+        "input": "Call when circuit is open",
+        "expectedOutput": "Exception raised immediately",
+        "isHidden": false,
+        "description": "Open circuit rejects calls"
+      },
+      {
+        "input": "Wait timeout period",
+        "expectedOutput": "Circuit resets to closed",
+        "isHidden": true,
+        "description": "Circuit resets after timeout"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs405-t7-ex06",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-7",
+    "title": "ConfigMap for Application Settings",
+    "difficulty": 2,
+    "description": "Create a Kubernetes ConfigMap to store application configuration and mount it in a deployment.\n\nRequirements:\n- ConfigMap with database settings and feature flags\n- Mount ConfigMap as environment variables\n- Include at least 4 configuration values",
+    "starterCode": "# configmap.yaml\n# TODO: Create ConfigMap\n\n# deployment.yaml\n# TODO: Reference ConfigMap in deployment",
+    "solution": "# configmap.yaml\napiVersion: v1\nkind: ConfigMap\nmetadata:\n  name: app-config\n  namespace: default\ndata:\n  DATABASE_HOST: postgres.default.svc.cluster.local\n  DATABASE_PORT: \"5432\"\n  CACHE_ENABLED: \"true\"\n  LOG_LEVEL: INFO\n  MAX_CONNECTIONS: \"100\"\n  FEATURE_NEW_UI: \"true\"\n\n---\n# deployment.yaml\napiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: myapp\nspec:\n  replicas: 2\n  selector:\n    matchLabels:\n      app: myapp\n  template:\n    metadata:\n      labels:\n        app: myapp\n    spec:\n      containers:\n      - name: app\n        image: myapp:1.0\n        envFrom:\n        - configMapRef:\n            name: app-config\n        # Alternative: individual env vars\n        # env:\n        # - name: DATABASE_HOST\n        #   valueFrom:\n        #     configMapKeyRef:\n        #       name: app-config\n        #       key: DATABASE_HOST",
+    "hints": [
+      "ConfigMap data values must be strings",
+      "Use envFrom to load all ConfigMap keys as environment variables",
+      "ConfigMapRef allows referencing by name",
+      "Pods must be in same namespace as ConfigMap"
+    ],
+    "testCases": [
+      {
+        "input": "kubectl apply -f configmap.yaml",
+        "expectedOutput": "ConfigMap created",
+        "isHidden": false,
+        "description": "ConfigMap applies successfully"
+      },
+      {
+        "input": "kubectl get configmap app-config",
+        "expectedOutput": "Shows 6 data keys",
+        "isHidden": false,
+        "description": "ConfigMap contains all settings"
+      },
+      {
+        "input": "Pod environment check",
+        "expectedOutput": "All config values available as env vars",
+        "isHidden": true,
+        "description": "ConfigMap mounted correctly"
+      }
+    ],
+    "language": "yaml"
+  },
+  {
+    "id": "cs405-t7-ex07",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-7",
+    "title": "Readiness and Liveness Probes",
+    "difficulty": 2,
+    "description": "Add health probes to a Kubernetes deployment to ensure proper traffic routing and pod health.\n\nRequirements:\n- Liveness probe checks /health endpoint\n- Readiness probe checks /ready endpoint  \n- Configure appropriate delays and timeouts\n- Use HTTP GET probes",
+    "starterCode": "apiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: webapp\nspec:\n  replicas: 3\n  selector:\n    matchLabels:\n      app: webapp\n  template:\n    metadata:\n      labels:\n        app: webapp\n    spec:\n      containers:\n      - name: webapp\n        image: webapp:1.0\n        ports:\n        - containerPort: 8080\n        # TODO: Add liveness probe\n        # TODO: Add readiness probe",
+    "solution": "apiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: webapp\nspec:\n  replicas: 3\n  selector:\n    matchLabels:\n      app: webapp\n  template:\n    metadata:\n      labels:\n        app: webapp\n    spec:\n      containers:\n      - name: webapp\n        image: webapp:1.0\n        ports:\n        - containerPort: 8080\n        \n        # Liveness probe - restart if unhealthy\n        livenessProbe:\n          httpGet:\n            path: /health\n            port: 8080\n            scheme: HTTP\n          initialDelaySeconds: 15\n          periodSeconds: 10\n          timeoutSeconds: 3\n          successThreshold: 1\n          failureThreshold: 3\n        \n        # Readiness probe - remove from service if not ready\n        readinessProbe:\n          httpGet:\n            path: /ready\n            port: 8080\n            scheme: HTTP\n          initialDelaySeconds: 5\n          periodSeconds: 5\n          timeoutSeconds: 2\n          successThreshold: 1\n          failureThreshold: 2",
+    "hints": [
+      "Liveness probe restarts unhealthy pods",
+      "Readiness probe controls service traffic routing",
+      "initialDelaySeconds should account for startup time",
+      "failureThreshold determines how many failures before action"
+    ],
+    "testCases": [
+      {
+        "input": "kubectl apply deployment",
+        "expectedOutput": "Deployment created with probes",
+        "isHidden": false,
+        "description": "Deployment with probes applies"
+      },
+      {
+        "input": "Pod fails liveness check",
+        "expectedOutput": "Pod is restarted",
+        "isHidden": false,
+        "description": "Liveness probe triggers restart"
+      },
+      {
+        "input": "Pod fails readiness check",
+        "expectedOutput": "Pod removed from service endpoints",
+        "isHidden": true,
+        "description": "Readiness probe stops traffic"
+      }
+    ],
+    "language": "yaml"
+  },
+  {
+    "id": "cs405-t7-ex08",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-7",
+    "title": "Multi-Stage Docker Build",
+    "difficulty": 3,
+    "description": "Create a multi-stage Dockerfile that reduces image size by separating build and runtime dependencies.\n\nRequirements:\n- Build stage with development dependencies\n- Runtime stage with only production dependencies\n- Non-root user for security\n- Minimal final image size",
+    "starterCode": "# Dockerfile\n# TODO: Create multi-stage build\n# Stage 1: Build\n# Stage 2: Runtime",
+    "solution": "# Dockerfile\n# Build stage\nFROM python:3.11-slim as builder\n\nWORKDIR /build\n\n# Install build dependencies\nRUN apt-get update && \\\n    apt-get install -y --no-install-recommends gcc && \\\n    rm -rf /var/lib/apt/lists/*\n\n# Copy requirements and install\nCOPY requirements.txt .\nRUN pip install --user --no-cache-dir -r requirements.txt\n\n# Runtime stage\nFROM python:3.11-slim\n\n# Create non-root user\nRUN useradd -m -u 1000 appuser && \\\n    mkdir -p /app && \\\n    chown -R appuser:appuser /app\n\nWORKDIR /app\n\n# Copy only runtime dependencies from builder\nCOPY --from=builder /root/.local /home/appuser/.local\n\n# Copy application code\nCOPY --chown=appuser:appuser . .\n\n# Switch to non-root user\nUSER appuser\n\n# Update PATH to include user-installed packages\nENV PATH=/home/appuser/.local/bin:$PATH\n\nEXPOSE 8080\n\nCMD [\"python\", \"app.py\"]",
+    "hints": [
+      "Use 'as builder' to name the first stage",
+      "COPY --from=builder copies from previous stage",
+      "Remove build tools in final stage to reduce size",
+      "Create user before copying files for proper ownership"
+    ],
+    "testCases": [
+      {
+        "input": "docker build .",
+        "expectedOutput": "Multi-stage build completes",
+        "isHidden": false,
+        "description": "Build succeeds with both stages"
+      },
+      {
+        "input": "docker images | grep myapp",
+        "expectedOutput": "Final image significantly smaller",
+        "isHidden": false,
+        "description": "Image size is optimized"
+      },
+      {
+        "input": "docker run --user check",
+        "expectedOutput": "Runs as non-root user",
+        "isHidden": true,
+        "description": "Security: non-root user"
+      }
+    ],
+    "language": "dockerfile"
+  },
+  {
+    "id": "cs405-t7-ex09",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-7",
+    "title": "Service Mesh Sidecar Configuration",
+    "difficulty": 3,
+    "description": "Configure Istio sidecar injection for a microservice to enable service mesh features.\n\nRequirements:\n- Enable automatic sidecar injection via namespace label\n- Configure resource limits for sidecar\n- Add custom Istio annotations\n- Create VirtualService for traffic routing",
+    "starterCode": "# namespace.yaml\n# TODO: Label namespace for sidecar injection\n\n# deployment.yaml  \n# TODO: Add Istio annotations\n\n# virtualservice.yaml\n# TODO: Create VirtualService",
+    "solution": "# namespace.yaml\napiVersion: v1\nkind: Namespace\nmetadata:\n  name: microservices\n  labels:\n    istio-injection: enabled\n\n---\n# deployment.yaml\napiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: product-service\n  namespace: microservices\nspec:\n  replicas: 3\n  selector:\n    matchLabels:\n      app: product-service\n  template:\n    metadata:\n      labels:\n        app: product-service\n        version: v1\n      annotations:\n        sidecar.istio.io/proxyCPU: \"100m\"\n        sidecar.istio.io/proxyMemory: \"128Mi\"\n        sidecar.istio.io/logLevel: \"info\"\n    spec:\n      containers:\n      - name: product-service\n        image: product-service:1.0\n        ports:\n        - containerPort: 8080\n          name: http\n\n---\n# virtualservice.yaml\napiVersion: networking.istio.io/v1beta1\nkind: VirtualService\nmetadata:\n  name: product-service\n  namespace: microservices\nspec:\n  hosts:\n  - product-service\n  http:\n  - match:\n    - headers:\n        x-version:\n          exact: v2\n    route:\n    - destination:\n        host: product-service\n        subset: v2\n  - route:\n    - destination:\n        host: product-service\n        subset: v1\n      weight: 90\n    - destination:\n        host: product-service\n        subset: v2\n      weight: 10\n\n---\n# destinationrule.yaml\napiVersion: networking.istio.io/v1beta1\nkind: DestinationRule\nmetadata:\n  name: product-service\n  namespace: microservices\nspec:\n  host: product-service\n  subsets:\n  - name: v1\n    labels:\n      version: v1\n  - name: v2\n    labels:\n      version: v2",
+    "hints": [
+      "Namespace label 'istio-injection: enabled' triggers automatic injection",
+      "Use sidecar.istio.io/* annotations for sidecar configuration",
+      "VirtualService defines traffic routing rules",
+      "DestinationRule defines service subsets for routing"
+    ],
+    "testCases": [
+      {
+        "input": "kubectl apply namespace",
+        "expectedOutput": "Namespace labeled for injection",
+        "isHidden": false,
+        "description": "Namespace enables sidecar injection"
+      },
+      {
+        "input": "kubectl get pods -n microservices",
+        "expectedOutput": "2 containers per pod (app + sidecar)",
+        "isHidden": false,
+        "description": "Sidecar automatically injected"
+      },
+      {
+        "input": "Traffic with x-version: v2 header",
+        "expectedOutput": "Routed to v2 subset",
+        "isHidden": true,
+        "description": "VirtualService routes by header"
+      }
+    ],
+    "language": "yaml"
+  },
+  {
+    "id": "cs405-t7-ex10",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-7",
+    "title": "Blue-Green Deployment Strategy",
+    "difficulty": 4,
+    "description": "Implement a blue-green deployment using Kubernetes Services to enable zero-downtime deployments.\n\nRequirements:\n- Deploy blue and green versions simultaneously\n- Use Service selector to switch traffic\n- Include rollback capability\n- Verify both environments before switching",
+    "starterCode": "# deployment-blue.yaml\n# TODO: Create blue deployment\n\n# deployment-green.yaml\n# TODO: Create green deployment\n\n# service.yaml\n# TODO: Service that can switch between blue/green",
+    "solution": "# deployment-blue.yaml\napiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: myapp-blue\n  labels:\n    app: myapp\n    version: blue\nspec:\n  replicas: 3\n  selector:\n    matchLabels:\n      app: myapp\n      version: blue\n  template:\n    metadata:\n      labels:\n        app: myapp\n        version: blue\n    spec:\n      containers:\n      - name: myapp\n        image: myapp:1.0\n        ports:\n        - containerPort: 8080\n        env:\n        - name: VERSION\n          value: \"blue\"\n\n---\n# deployment-green.yaml\napiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: myapp-green\n  labels:\n    app: myapp\n    version: green\nspec:\n  replicas: 3\n  selector:\n    matchLabels:\n      app: myapp\n      version: green\n  template:\n    metadata:\n      labels:\n        app: myapp\n        version: green\n    spec:\n      containers:\n      - name: myapp\n        image: myapp:2.0\n        ports:\n        - containerPort: 8080\n        env:\n        - name: VERSION\n          value: \"green\"\n\n---\n# service-production.yaml\napiVersion: v1\nkind: Service\nmetadata:\n  name: myapp-production\nspec:\n  selector:\n    app: myapp\n    version: blue  # Switch to 'green' to cutover\n  ports:\n  - protocol: TCP\n    port: 80\n    targetPort: 8080\n  type: LoadBalancer\n\n---\n# service-preview.yaml (for testing green before cutover)\napiVersion: v1\nkind: Service\nmetadata:\n  name: myapp-preview\nspec:\n  selector:\n    app: myapp\n    version: green\n  ports:\n  - protocol: TCP\n    port: 80\n    targetPort: 8080\n  type: LoadBalancer\n\n---\n# switch-to-green.sh\n#!/bin/bash\necho \"Switching production traffic to green...\"\nkubectl patch service myapp-production -p '{\"spec\":{\"selector\":{\"version\":\"green\"}}}'\necho \"Production now points to green deployment\"\n\n# rollback.sh\n#!/bin/bash\necho \"Rolling back to blue...\"\nkubectl patch service myapp-production -p '{\"spec\":{\"selector\":{\"version\":\"blue\"}}}'\necho \"Production rolled back to blue deployment\"",
+    "hints": [
+      "Both deployments run simultaneously with different version labels",
+      "Service selector determines which deployment receives traffic",
+      "kubectl patch can update the service selector without downtime",
+      "Preview service allows testing green before production cutover"
+    ],
+    "testCases": [
+      {
+        "input": "Deploy both blue and green",
+        "expectedOutput": "Both deployments running",
+        "isHidden": false,
+        "description": "Blue and green coexist"
+      },
+      {
+        "input": "Switch production service to green",
+        "expectedOutput": "Traffic immediately routes to green",
+        "isHidden": false,
+        "description": "Zero-downtime cutover"
+      },
+      {
+        "input": "Rollback to blue",
+        "expectedOutput": "Traffic returns to blue instantly",
+        "isHidden": true,
+        "description": "Quick rollback capability"
+      }
+    ],
+    "language": "yaml"
+  },
+  {
+    "id": "cs405-t7-ex11",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-7",
+    "title": "Distributed Tracing with OpenTelemetry",
+    "difficulty": 4,
+    "description": "Implement distributed tracing using OpenTelemetry to track requests across microservices.\n\nRequirements:\n- Configure OpenTelemetry SDK in Python service\n- Create custom spans for important operations\n- Propagate trace context between services\n- Export traces to OTLP collector",
+    "starterCode": "# service.py\nfrom flask import Flask\nimport requests\n\napp = Flask(__name__)\n\n@app.route('/order')\ndef create_order():\n    # TODO: Add tracing\n    # Call inventory service\n    # Call payment service\n    pass",
+    "solution": "# service.py\nfrom flask import Flask, request\nimport requests\nfrom opentelemetry import trace\nfrom opentelemetry.sdk.trace import TracerProvider\nfrom opentelemetry.sdk.trace.export import BatchSpanProcessor\nfrom opentelemetry.exporter.otlp.proto.grpc.trace_exporter import OTLPSpanExporter\nfrom opentelemetry.instrumentation.flask import FlaskInstrumentor\nfrom opentelemetry.instrumentation.requests import RequestsInstrumentor\nfrom opentelemetry.sdk.resources import Resource\nimport os\n\napp = Flask(__name__)\n\n# Configure OpenTelemetry\nresource = Resource(attributes={\n    \"service.name\": \"order-service\",\n    \"service.version\": \"1.0.0\"\n})\n\nprovider = TracerProvider(resource=resource)\ntrace.set_tracer_provider(provider)\n\n# Configure OTLP exporter\notlp_exporter = OTLPSpanExporter(\n    endpoint=os.environ.get('OTEL_EXPORTER_OTLP_ENDPOINT', 'localhost:4317'),\n    insecure=True\n)\n\nprocessor = BatchSpanProcessor(otlp_exporter)\nprovider.add_span_processor(processor)\n\n# Auto-instrument Flask and requests\nFlaskInstrumentor().instrument_app(app)\nRequestsInstrumentor().instrument()\n\n# Get tracer\ntracer = trace.get_tracer(__name__)\n\n@app.route('/order', methods=['POST'])\ndef create_order():\n    \"\"\"Create order with distributed tracing\"\"\"\n    \n    # Get current span from Flask instrumentation\n    current_span = trace.get_current_span()\n    current_span.set_attribute(\"order.id\", \"12345\")\n    current_span.set_attribute(\"customer.id\", \"user-1\")\n    \n    # Create custom span for inventory check\n    with tracer.start_as_current_span(\"check_inventory\") as span:\n        span.set_attribute(\"product.id\", \"prod-1\")\n        span.set_attribute(\"quantity\", 2)\n        \n        inventory_response = requests.get(\n            'http://inventory-service/check',\n            params={'product': 'prod-1', 'quantity': 2}\n        )\n        \n        span.set_attribute(\"inventory.available\", inventory_response.json()['available'])\n    \n    # Create custom span for payment processing\n    with tracer.start_as_current_span(\"process_payment\") as span:\n        span.set_attribute(\"payment.amount\", 99.99)\n        span.set_attribute(\"payment.currency\", \"USD\")\n        \n        payment_response = requests.post(\n            'http://payment-service/charge',\n            json={'amount': 99.99, 'currency': 'USD'}\n        )\n        \n        span.set_attribute(\"payment.status\", payment_response.json()['status'])\n        \n        if payment_response.json()['status'] != 'success':\n            span.set_status(trace.Status(trace.StatusCode.ERROR, \"Payment failed\"))\n            return {'error': 'Payment failed'}, 402\n    \n    return {'order_id': '12345', 'status': 'confirmed'}, 201\n\nif __name__ == '__main__':\n    app.run(host='0.0.0.0', port=8080)\n\n# deployment.yaml\napiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: order-service\nspec:\n  replicas: 2\n  selector:\n    matchLabels:\n      app: order-service\n  template:\n    metadata:\n      labels:\n        app: order-service\n    spec:\n      containers:\n      - name: order-service\n        image: order-service:1.0\n        env:\n        - name: OTEL_EXPORTER_OTLP_ENDPOINT\n          value: \"otel-collector:4317\"\n        - name: OTEL_SERVICE_NAME\n          value: \"order-service\"\n        ports:\n        - containerPort: 8080",
+    "hints": [
+      "Use TracerProvider to configure the tracing backend",
+      "FlaskInstrumentor automatically traces HTTP requests",
+      "start_as_current_span creates child spans",
+      "set_attribute adds metadata to spans for filtering"
+    ],
+    "testCases": [
+      {
+        "input": "POST /order request",
+        "expectedOutput": "Trace with multiple spans created",
+        "isHidden": false,
+        "description": "Request generates trace with spans"
+      },
+      {
+        "input": "Check trace in collector",
+        "expectedOutput": "Spans show parent-child relationship",
+        "isHidden": false,
+        "description": "Trace context propagated"
+      },
+      {
+        "input": "Payment fails",
+        "expectedOutput": "Span marked with error status",
+        "isHidden": true,
+        "description": "Errors recorded in traces"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs405-t7-ex12",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-7",
+    "title": "Canary Deployment with Traffic Splitting",
+    "difficulty": 4,
+    "description": "Implement a canary deployment that gradually shifts traffic from stable to canary version.\n\nRequirements:\n- Deploy stable (v1) and canary (v2) versions\n- Use Istio VirtualService for traffic splitting\n- Start with 10% canary traffic\n- Include monitoring and rollback plan",
+    "starterCode": "# deployment-v1.yaml\n# TODO: Create stable deployment\n\n# deployment-v2.yaml\n# TODO: Create canary deployment\n\n# virtualservice.yaml\n# TODO: Traffic splitting configuration",
+    "solution": "# deployment-v1.yaml\napiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: myapp-v1\nspec:\n  replicas: 9  # 90% of total capacity\n  selector:\n    matchLabels:\n      app: myapp\n      version: v1\n  template:\n    metadata:\n      labels:\n        app: myapp\n        version: v1\n    spec:\n      containers:\n      - name: myapp\n        image: myapp:1.0\n        ports:\n        - containerPort: 8080\n\n---\n# deployment-v2.yaml (canary)\napiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: myapp-v2\nspec:\n  replicas: 1  # 10% of total capacity\n  selector:\n    matchLabels:\n      app: myapp\n      version: v2\n  template:\n    metadata:\n      labels:\n        app: myapp\n        version: v2\n      annotations:\n        prometheus.io/scrape: \"true\"\n        prometheus.io/path: \"/metrics\"\n    spec:\n      containers:\n      - name: myapp\n        image: myapp:2.0\n        ports:\n        - containerPort: 8080\n\n---\n# virtualservice.yaml\napiVersion: networking.istio.io/v1beta1\nkind: VirtualService\nmetadata:\n  name: myapp\nspec:\n  hosts:\n  - myapp\n  http:\n  - match:\n    - headers:\n        x-canary-test:\n          exact: \"true\"\n    route:\n    - destination:\n        host: myapp\n        subset: v2\n  - route:\n    - destination:\n        host: myapp\n        subset: v1\n      weight: 90\n    - destination:\n        host: myapp\n        subset: v2\n      weight: 10\n\n---\n# destinationrule.yaml\napiVersion: networking.istio.io/v1beta1\nkind: DestinationRule\nmetadata:\n  name: myapp\nspec:\n  host: myapp\n  subsets:\n  - name: v1\n    labels:\n      version: v1\n  - name: v2\n    labels:\n      version: v2\n\n---\n# servicemonitor.yaml (for Prometheus)\napiVersion: monitoring.coreos.com/v1\nkind: ServiceMonitor\nmetadata:\n  name: myapp-canary\nspec:\n  selector:\n    matchLabels:\n      app: myapp\n      version: v2\n  endpoints:\n  - port: http\n    path: /metrics\n\n---\n# canary-promotion.sh\n#!/bin/bash\n\n# Stage 1: 10% canary\nkubectl apply -f virtualservice-10pct.yaml\necho \"Canary at 10%, monitoring for 15 minutes...\"\nsleep 900\n\n# Check error rate\nERROR_RATE=$(curl -s 'http://prometheus:9090/api/v1/query?query=rate(http_requests_total{version=\"v2\",status=~\"5..\"}[5m])' | jq -r '.data.result[0].value[1]')\n\nif (( $(echo \"$ERROR_RATE > 0.01\" | bc -l) )); then\n    echo \"Error rate too high, rolling back\"\n    kubectl patch virtualservice myapp --type merge -p '{\"spec\":{\"http\":[{\"route\":[{\"destination\":{\"host\":\"myapp\",\"subset\":\"v1\"},\"weight\":100}]}]}}'\n    exit 1\nfi\n\n# Stage 2: 50% canary\nkubectl patch virtualservice myapp --type merge -p '{\"spec\":{\"http\":[{\"route\":[{\"destination\":{\"host\":\"myapp\",\"subset\":\"v1\"},\"weight\":50},{\"destination\":{\"host\":\"myapp\",\"subset\":\"v2\"},\"weight\":50}]}]}}'\necho \"Canary at 50%, monitoring...\"\nsleep 900\n\n# Stage 3: 100% canary\nkubectl patch virtualservice myapp --type merge -p '{\"spec\":{\"http\":[{\"route\":[{\"destination\":{\"host\":\"myapp\",\"subset\":\"v2\"},\"weight\":100}]}]}}'\necho \"Canary promoted to 100%\"",
+    "hints": [
+      "VirtualService weight controls traffic percentage",
+      "Use header matching to test canary with specific requests",
+      "Monitor error rates and latency during rollout",
+      "Automate promotion stages with health checks"
+    ],
+    "testCases": [
+      {
+        "input": "Deploy v1 and v2",
+        "expectedOutput": "90/10 traffic split",
+        "isHidden": false,
+        "description": "Initial canary receives 10% traffic"
+      },
+      {
+        "input": "Request with x-canary-test header",
+        "expectedOutput": "Always routed to v2",
+        "isHidden": false,
+        "description": "Header routing for testing"
+      },
+      {
+        "input": "High error rate detected",
+        "expectedOutput": "Automatic rollback to v1",
+        "isHidden": true,
+        "description": "Rollback on failure"
+      }
+    ],
+    "language": "yaml"
+  },
+  {
+    "id": "cs405-t7-ex13",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-7",
+    "title": "GitOps with ArgoCD Application",
+    "difficulty": 5,
+    "description": "Set up GitOps workflow using ArgoCD to automatically deploy Kubernetes manifests from Git repository.\n\nRequirements:\n- Create ArgoCD Application resource\n- Configure auto-sync with self-healing\n- Implement sync waves for ordered deployment\n- Add health checks and sync hooks",
+    "starterCode": "# argocd-application.yaml\n# TODO: Create ArgoCD Application\n\n# app-manifests/\n# TODO: Structure manifests with sync waves",
+    "solution": "# argocd-application.yaml\napiVersion: argoproj.io/v1alpha1\nkind: Application\nmetadata:\n  name: myapp\n  namespace: argocd\n  finalizers:\n  - resources-finalizer.argocd.argoproj.io\nspec:\n  project: default\n  \n  source:\n    repoURL: https://github.com/myorg/myapp-config\n    targetRevision: main\n    path: k8s/overlays/production\n    \n    # Kustomize configuration\n    kustomize:\n      images:\n      - myapp=myapp:v1.2.3\n  \n  destination:\n    server: https://kubernetes.default.svc\n    namespace: production\n  \n  syncPolicy:\n    automated:\n      prune: true      # Delete resources not in Git\n      selfHeal: true   # Sync when cluster state deviates\n      allowEmpty: false\n    \n    syncOptions:\n    - CreateNamespace=true\n    - PrunePropagationPolicy=foreground\n    - PruneLast=true\n    \n    retry:\n      limit: 5\n      backoff:\n        duration: 5s\n        factor: 2\n        maxDuration: 3m\n  \n  # Health assessment\n  ignoreDifferences:\n  - group: apps\n    kind: Deployment\n    jsonPointers:\n    - /spec/replicas  # Ignore HPA-managed replicas\n\n---\n# k8s/base/database.yaml (sync wave 0 - first)\napiVersion: apps/v1\nkind: StatefulSet\nmetadata:\n  name: postgres\n  annotations:\n    argocd.argoproj.io/sync-wave: \"0\"\nspec:\n  serviceName: postgres\n  replicas: 1\n  selector:\n    matchLabels:\n      app: postgres\n  template:\n    metadata:\n      labels:\n        app: postgres\n    spec:\n      containers:\n      - name: postgres\n        image: postgres:15\n        ports:\n        - containerPort: 5432\n\n---\n# k8s/base/migration-job.yaml (sync wave 1 - second)\napiVersion: batch/v1\nkind: Job\nmetadata:\n  name: db-migration\n  annotations:\n    argocd.argoproj.io/sync-wave: \"1\"\n    argocd.argoproj.io/hook: Sync\n    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation\nspec:\n  template:\n    spec:\n      containers:\n      - name: migrate\n        image: myapp:v1.2.3\n        command: [\"python\", \"migrate.py\"]\n        env:\n        - name: DATABASE_URL\n          valueFrom:\n            secretKeyRef:\n              name: db-credentials\n              key: url\n      restartPolicy: OnFailure\n\n---\n# k8s/base/deployment.yaml (sync wave 2 - third)\napiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: myapp\n  annotations:\n    argocd.argoproj.io/sync-wave: \"2\"\nspec:\n  replicas: 3\n  selector:\n    matchLabels:\n      app: myapp\n  template:\n    metadata:\n      labels:\n        app: myapp\n    spec:\n      containers:\n      - name: myapp\n        image: myapp:v1.2.3\n        ports:\n        - containerPort: 8080\n\n---\n# k8s/base/smoke-test.yaml (sync wave 3 - last)\napiVersion: batch/v1\nkind: Job\nmetadata:\n  name: smoke-test\n  annotations:\n    argocd.argoproj.io/sync-wave: \"3\"\n    argocd.argoproj.io/hook: PostSync\n    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation\nspec:\n  template:\n    spec:\n      containers:\n      - name: test\n        image: curlimages/curl\n        command:\n        - sh\n        - -c\n        - |\n          for i in {1..10}; do\n            if curl -f http://myapp/health; then\n              echo \"Health check passed\"\n              exit 0\n            fi\n            sleep 5\n          done\n          echo \"Health check failed\"\n          exit 1\n      restartPolicy: Never\n\n---\n# k8s/overlays/production/kustomization.yaml\napiVersion: kustomize.config.k8s.io/v1beta1\nkind: Kustomization\n\nnamespace: production\n\nresources:\n- ../../base\n\nimages:\n- name: myapp\n  newTag: v1.2.3\n\nreplicas:\n- name: myapp\n  count: 5\n\nconfigMapGenerator:\n- name: app-config\n  literals:\n  - ENVIRONMENT=production\n  - LOG_LEVEL=INFO",
+    "hints": [
+      "Sync waves control deployment order (lower numbers first)",
+      "Hooks (PreSync, Sync, PostSync) run at specific lifecycle points",
+      "selfHeal automatically reverts manual kubectl changes",
+      "ignoreDifferences prevents sync on specific fields"
+    ],
+    "testCases": [
+      {
+        "input": "Push to Git repository",
+        "expectedOutput": "ArgoCD automatically syncs changes",
+        "isHidden": false,
+        "description": "GitOps automation works"
+      },
+      {
+        "input": "Manual kubectl edit deployment",
+        "expectedOutput": "ArgoCD reverts to Git state",
+        "isHidden": false,
+        "description": "Self-healing prevents drift"
+      },
+      {
+        "input": "Database deploys before app",
+        "expectedOutput": "Sync waves enforce order",
+        "isHidden": true,
+        "description": "Ordered deployment with waves"
+      }
+    ],
+    "language": "yaml"
+  },
+  {
+    "id": "cs405-t7-ex14",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-7",
+    "title": "Observability Stack with Prometheus",
+    "difficulty": 5,
+    "description": "Deploy a complete observability stack with Prometheus, Grafana, and custom metrics.\n\nRequirements:\n- Deploy Prometheus with ServiceMonitor\n- Configure Grafana dashboards\n- Instrument application with custom metrics\n- Create alerting rules for SLO violations",
+    "starterCode": "# prometheus-stack.yaml\n# TODO: Deploy Prometheus operator\n\n# app-metrics.py\n# TODO: Add Prometheus client instrumentation\n\n# alerting-rules.yaml\n# TODO: Define SLO-based alerts",
+    "solution": "# prometheus-stack.yaml\napiVersion: v1\nkind: Namespace\nmetadata:\n  name: monitoring\n\n---\n# ServiceMonitor for application\napiVersion: monitoring.coreos.com/v1\nkind: ServiceMonitor\nmetadata:\n  name: myapp\n  namespace: monitoring\nspec:\n  selector:\n    matchLabels:\n      app: myapp\n  endpoints:\n  - port: metrics\n    interval: 15s\n    path: /metrics\n\n---\n# PrometheusRule for alerts\napiVersion: monitoring.coreos.com/v1\nkind: PrometheusRule\nmetadata:\n  name: myapp-slo\n  namespace: monitoring\nspec:\n  groups:\n  - name: myapp.slo\n    interval: 30s\n    rules:\n    # SLO: 99.9% availability\n    - alert: SLOAvailabilityViolation\n      expr: |\n        (\n          sum(rate(http_requests_total{job=\"myapp\",code!~\"5..\"}[5m]))\n          /\n          sum(rate(http_requests_total{job=\"myapp\"}[5m]))\n        ) < 0.999\n      for: 5m\n      labels:\n        severity: critical\n        slo: availability\n      annotations:\n        summary: \"Availability SLO violated\"\n        description: \"Success rate {{ $value | humanizePercentage }} below 99.9% SLO\"\n    \n    # SLO: p95 latency < 200ms\n    - alert: SLOLatencyViolation\n      expr: |\n        histogram_quantile(0.95,\n          sum(rate(http_request_duration_seconds_bucket{job=\"myapp\"}[5m])) by (le)\n        ) > 0.2\n      for: 5m\n      labels:\n        severity: warning\n        slo: latency\n      annotations:\n        summary: \"Latency SLO violated\"\n        description: \"p95 latency {{ $value }}s exceeds 200ms SLO\"\n    \n    # Error budget burn rate\n    - alert: ErrorBudgetBurnRateHigh\n      expr: |\n        (\n          sum(rate(http_requests_total{job=\"myapp\",code=~\"5..\"}[1h]))\n          /\n          sum(rate(http_requests_total{job=\"myapp\"}[1h]))\n        ) > 0.001 * 14.4  # Burning 30d budget in 2d\n      labels:\n        severity: critical\n      annotations:\n        summary: \"Error budget burning too fast\"\n        description: \"Current error rate will exhaust monthly budget in 2 days\"\n\n---\n# app-metrics.py\nfrom flask import Flask, request\nfrom prometheus_client import Counter, Histogram, Gauge, generate_latest, CONTENT_TYPE_LATEST\nimport time\nimport functools\n\napp = Flask(__name__)\n\n# Define metrics\nhttp_requests_total = Counter(\n    'http_requests_total',\n    'Total HTTP requests',\n    ['method', 'endpoint', 'code']\n)\n\nhttp_request_duration_seconds = Histogram(\n    'http_request_duration_seconds',\n    'HTTP request latency',\n    ['method', 'endpoint'],\n    buckets=[0.01, 0.05, 0.1, 0.2, 0.5, 1.0, 2.0, 5.0]\n)\n\nactive_connections = Gauge(\n    'active_connections',\n    'Number of active connections'\n)\n\nbusiness_events_total = Counter(\n    'business_events_total',\n    'Business events',\n    ['event_type']\n)\n\ndb_connection_pool_size = Gauge(\n    'db_connection_pool_size',\n    'Database connection pool size'\n)\n\ndef track_metrics(f):\n    \"\"\"Decorator to track request metrics\"\"\"\n    @functools.wraps(f)\n    def wrapper(*args, **kwargs):\n        start_time = time.time()\n        active_connections.inc()\n        \n        try:\n            response = f(*args, **kwargs)\n            status_code = response[1] if isinstance(response, tuple) else 200\n        except Exception as e:\n            status_code = 500\n            raise e\n        finally:\n            # Record metrics\n            duration = time.time() - start_time\n            \n            http_requests_total.labels(\n                method=request.method,\n                endpoint=request.endpoint,\n                code=status_code\n            ).inc()\n            \n            http_request_duration_seconds.labels(\n                method=request.method,\n                endpoint=request.endpoint\n            ).observe(duration)\n            \n            active_connections.dec()\n        \n        return response\n    \n    return wrapper\n\n@app.route('/api/order', methods=['POST'])\n@track_metrics\ndef create_order():\n    \"\"\"Create order with business metrics\"\"\"\n    # Business logic here\n    business_events_total.labels(event_type='order_created').inc()\n    return {'order_id': '123'}, 201\n\n@app.route('/metrics')\ndef metrics():\n    \"\"\"Prometheus metrics endpoint\"\"\"\n    return generate_latest(), 200, {'Content-Type': CONTENT_TYPE_LATEST}\n\nif __name__ == '__main__':\n    app.run(host='0.0.0.0', port=8080)\n\n---\n# grafana-dashboard.json\n{\n  \"dashboard\": {\n    \"title\": \"MyApp SLO Dashboard\",\n    \"panels\": [\n      {\n        \"title\": \"Availability (SLO: 99.9%)\",\n        \"targets\": [\n          {\n            \"expr\": \"sum(rate(http_requests_total{code!~\\\"5..\\\"}[5m])) / sum(rate(http_requests_total[5m]))\"\n          }\n        ],\n        \"thresholds\": [0.999],\n        \"type\": \"gauge\"\n      },\n      {\n        \"title\": \"p95 Latency (SLO: 200ms)\",\n        \"targets\": [\n          {\n            \"expr\": \"histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket[5m])) by (le))\"\n          }\n        ],\n        \"thresholds\": [0.2],\n        \"type\": \"graph\"\n      },\n      {\n        \"title\": \"Error Budget Remaining\",\n        \"targets\": [\n          {\n            \"expr\": \"1 - (sum(increase(http_requests_total{code=~\\\"5..\\\"}[30d])) / sum(increase(http_requests_total[30d]))) / 0.001\"\n          }\n        ],\n        \"type\": \"gauge\"\n      }\n    ]\n  }\n}",
+    "hints": [
+      "Use Prometheus client libraries to instrument code",
+      "ServiceMonitor tells Prometheus what to scrape",
+      "PrometheusRule defines alerts using PromQL",
+      "Track both technical metrics (latency) and business metrics (orders)"
+    ],
+    "testCases": [
+      {
+        "input": "curl /metrics",
+        "expectedOutput": "Prometheus format metrics",
+        "isHidden": false,
+        "description": "Metrics endpoint works"
+      },
+      {
+        "input": "Simulate 5xx errors",
+        "expectedOutput": "SLO violation alert fires",
+        "isHidden": false,
+        "description": "Alerting based on SLO"
+      },
+      {
+        "input": "Check Grafana dashboard",
+        "expectedOutput": "Real-time SLO metrics displayed",
+        "isHidden": true,
+        "description": "Dashboard shows SLO status"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs405-t7-ex15",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-7",
+    "title": "Microservices Decomposition Strategy",
+    "difficulty": 5,
+    "description": "Design and implement a microservices decomposition plan for a monolithic e-commerce application.\n\nRequirements:\n- Identify bounded contexts\n- Define service boundaries\n- Plan data decomposition\n- Design inter-service communication\n- Include migration strategy",
+    "starterCode": "# decomposition-plan.md\n# TODO: Document decomposition strategy\n\n# service-definitions/\n# TODO: Define each microservice API",
+    "solution": "# decomposition-plan.md\n\n## Monolith Analysis\n\n### Current Monolith Components\n- User Management (auth, profiles)\n- Product Catalog (products, categories, search)\n- Shopping Cart (cart management)\n- Order Processing (orders, fulfillment)\n- Payment Processing (payments, refunds)\n- Inventory Management (stock levels)\n- Notification System (email, SMS)\n\n### Problems with Monolith\n- Single deployment unit - all changes require full deployment\n- Technology lock-in - entire app uses same stack\n- Scaling challenges - can't scale components independently\n- Team bottlenecks - multiple teams editing same codebase\n- Database contention - single database for all operations\n\n## Microservices Decomposition\n\n### Bounded Contexts (Domain-Driven Design)\n\n1. **Identity & Access Context**\n   - User Service\n   - Authentication Service\n\n2. **Product Context**\n   - Catalog Service\n   - Search Service\n\n3. **Shopping Context**\n   - Cart Service\n   - Recommendation Service\n\n4. **Order Context**\n   - Order Service\n   - Fulfillment Service\n\n5. **Payment Context**\n   - Payment Service\n\n6. **Inventory Context**\n   - Inventory Service\n\n7. **Notification Context**\n   - Notification Service\n\n### Service Boundaries\n\n#### User Service\n**Responsibilities:**\n- User registration and profiles\n- User preferences\n- Address management\n\n**Data Ownership:**\n- users table\n- addresses table\n- preferences table\n\n**API:**\n- POST /users (register)\n- GET /users/{id}\n- PUT /users/{id}\n- GET /users/{id}/addresses\n\n**Technology:** Node.js, PostgreSQL\n\n---\n\n#### Authentication Service\n**Responsibilities:**\n- Login/logout\n- Token generation and validation\n- Password reset\n\n**Data Ownership:**\n- credentials table\n- sessions table\n- tokens table\n\n**API:**\n- POST /auth/login\n- POST /auth/logout\n- POST /auth/refresh\n- POST /auth/validate\n\n**Technology:** Go, Redis, PostgreSQL\n\n---\n\n#### Catalog Service\n**Responsibilities:**\n- Product CRUD\n- Category management\n- Product variants\n\n**Data Ownership:**\n- products table\n- categories table\n- product_variants table\n\n**API:**\n- GET /products\n- GET /products/{id}\n- POST /products (admin)\n- GET /categories\n\n**Technology:** Python, PostgreSQL, Elasticsearch\n\n---\n\n#### Order Service\n**Responsibilities:**\n- Order creation\n- Order status tracking\n- Order history\n\n**Data Ownership:**\n- orders table\n- order_items table\n- order_events table\n\n**API:**\n- POST /orders\n- GET /orders/{id}\n- GET /users/{id}/orders\n- PUT /orders/{id}/status\n\n**Technology:** Java Spring Boot, PostgreSQL\n\n**Events Published:**\n- OrderCreated\n- OrderCancelled\n- OrderShipped\n\n---\n\n#### Payment Service\n**Responsibilities:**\n- Payment processing\n- Refunds\n- Payment method management\n\n**Data Ownership:**\n- payments table\n- payment_methods table\n- transactions table\n\n**API:**\n- POST /payments\n- POST /refunds\n- GET /payments/{id}/status\n\n**Technology:** Python, PostgreSQL, Stripe API\n\n**Events Consumed:**\n- OrderCreated (initiate payment)\n\n**Events Published:**\n- PaymentSucceeded\n- PaymentFailed\n\n---\n\n### Inter-Service Communication\n\n#### Synchronous (REST/gRPC)\nUse for:\n- User queries (GET /users/{id})\n- Product lookups (GET /products/{id})\n- Auth validation (POST /auth/validate)\n\n#### Asynchronous (Event-Driven)\nUse for:\n- Order processing workflow\n- Inventory updates\n- Notifications\n\n**Event Bus:** Apache Kafka\n\n**Event Schema:**\n```json\n{\n  \"eventType\": \"OrderCreated\",\n  \"eventId\": \"uuid\",\n  \"timestamp\": \"2025-01-15T10:30:00Z\",\n  \"data\": {\n    \"orderId\": \"ord-123\",\n    \"userId\": \"usr-456\",\n    \"items\": [...],\n    \"totalAmount\": 99.99\n  }\n}\n```\n\n---\n\n### Data Decomposition Strategy\n\n#### Phase 1: Database per Service (Logical)\n- Create separate schemas in same PostgreSQL instance\n- Enforce access boundaries via credentials\n- Low risk, easy rollback\n\n#### Phase 2: Separate Database Instances\n- Move each service to dedicated database\n- Allows technology diversity\n- Independent scaling\n\n#### Phase 3: Handle Data Consistency\n\n**Saga Pattern for Distributed Transactions:**\n\n```\nOrder Creation Saga:\n1. Order Service: Create order (pending)\n2. Payment Service: Charge payment\n   - Success: continue\n   - Failure: cancel order (compensating transaction)\n3. Inventory Service: Reserve items\n   - Success: continue  \n   - Failure: refund payment, cancel order\n4. Order Service: Confirm order\n5. Notification Service: Send confirmation\n```\n\n**Implementation:**\n```python\n# order_service/sagas.py\nfrom temporal import workflow\n\n@workflow.defn\nclass OrderCreationSaga:\n    @workflow.run\n    async def run(self, order_data):\n        # Step 1: Create order\n        order_id = await workflow.execute_activity(\n            create_order,\n            order_data,\n            start_to_close_timeout=timedelta(seconds=30)\n        )\n        \n        try:\n            # Step 2: Process payment\n            payment_id = await workflow.execute_activity(\n                process_payment,\n                {'order_id': order_id, 'amount': order_data['total']},\n                start_to_close_timeout=timedelta(seconds=60)\n            )\n            \n            # Step 3: Reserve inventory\n            await workflow.execute_activity(\n                reserve_inventory,\n                {'order_id': order_id, 'items': order_data['items']},\n                start_to_close_timeout=timedelta(seconds=30)\n            )\n            \n            # Step 4: Confirm order\n            await workflow.execute_activity(\n                confirm_order,\n                {'order_id': order_id},\n                start_to_close_timeout=timedelta(seconds=10)\n            )\n            \n            return {'success': True, 'order_id': order_id}\n            \n        except Exception as e:\n            # Compensating transactions\n            await workflow.execute_activity(\n                refund_payment,\n                {'payment_id': payment_id}\n            )\n            await workflow.execute_activity(\n                cancel_order,\n                {'order_id': order_id}\n            )\n            raise\n```\n\n---\n\n### Migration Strategy\n\n#### Strangler Fig Pattern\n\n**Phase 1: Extract User Service**\n1. Deploy new User microservice alongside monolith\n2. Dual-write: Update both monolith and microservice\n3. Verify data consistency\n4. Switch reads to microservice\n5. Remove user code from monolith\n\n**Phase 2: Extract Catalog Service**\n(Repeat pattern)\n\n**Phase 3: Extract Order Service**\n(Repeat pattern)\n\n**API Gateway Configuration:**\n```yaml\n# kong-config.yaml\nservices:\n- name: user-service\n  url: http://user-service:8080\n  routes:\n  - paths:\n    - /api/users\n  \n- name: monolith\n  url: http://monolith:8080\n  routes:\n  - paths:\n    - /api/*  # Catch-all for remaining endpoints\n```\n\n---\n\n### Service Communication Patterns\n\n#### API Gateway (Kong)\n```yaml\n# kong.yaml\n_format_version: \"2.1\"\n\nservices:\n- name: user-service\n  url: http://user-service:8080\n  plugins:\n  - name: rate-limiting\n    config:\n      minute: 100\n  - name: jwt\n  routes:\n  - name: user-routes\n    paths:\n    - /api/v1/users\n\n- name: order-service\n  url: http://order-service:8080\n  routes:\n  - name: order-routes\n    paths:\n    - /api/v1/orders\n```\n\n#### Service Mesh (Istio)\n```yaml\n# virtualservice.yaml\napiVersion: networking.istio.io/v1beta1\nkind: VirtualService\nmetadata:\n  name: order-service\nspec:\n  hosts:\n  - order-service\n  http:\n  - timeout: 10s\n    retries:\n      attempts: 3\n      perTryTimeout: 3s\n    route:\n    - destination:\n        host: order-service\n```\n\n---\n\n### Observability\n\n**Distributed Tracing:**\n- OpenTelemetry instrumentation in all services\n- Jaeger for trace visualization\n\n**Centralized Logging:**\n- Fluentd collectors\n- Elasticsearch storage\n- Kibana dashboards\n\n**Metrics:**\n- Prometheus scraping\n- Grafana dashboards\n- SLO tracking per service\n\n---\n\n### Testing Strategy\n\n**Contract Testing:**\n```python\n# user_service/tests/test_contract.py\nimport pact\n\ndef test_order_service_contract():\n    pact_mock = pact.Pact(\n        consumer='order-service',\n        provider='user-service'\n    )\n    \n    expected = {\n        'id': '123',\n        'email': 'user@example.com',\n        'name': 'John Doe'\n    }\n    \n    (pact_mock\n     .given('user 123 exists')\n     .upon_receiving('a request for user 123')\n     .with_request('get', '/users/123')\n     .will_respond_with(200, body=expected))\n    \n    with pact_mock:\n        result = order_service.get_user('123')\n        assert result == expected\n```\n\n**Chaos Engineering:**\n- Use Chaos Mesh to inject failures\n- Test circuit breakers\n- Verify resilience\n\n---\n\n## Summary\n\nThis decomposition plan provides:\n- Clear service boundaries based on domain\n- Independent deployability\n- Technology diversity where beneficial\n- Resilient communication patterns\n- Incremental migration path\n- Comprehensive observability",
+    "hints": [
+      "Use Domain-Driven Design to identify bounded contexts",
+      "Each microservice should own its data",
+      "Use sagas for distributed transactions",
+      "Strangler fig pattern enables incremental migration",
+      "API gateway provides single entry point"
+    ],
+    "testCases": [
+      {
+        "input": "Identify bounded contexts",
+        "expectedOutput": "7-10 clear service boundaries",
+        "isHidden": false,
+        "description": "Proper domain decomposition"
+      },
+      {
+        "input": "Service creates order",
+        "expectedOutput": "Saga coordinates payment, inventory, notification",
+        "isHidden": false,
+        "description": "Distributed transaction handling"
+      },
+      {
+        "input": "Payment service fails",
+        "expectedOutput": "Compensating transactions rollback order",
+        "isHidden": true,
+        "description": "Saga handles failures"
+      }
+    ],
+    "language": "markdown"
+  },
+  {
+    "id": "cs405-t7-ex16",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-7",
+    "title": "API Gateway with Rate Limiting",
+    "difficulty": 2,
+    "description": "Configure an API gateway (Kong or NGINX) with rate limiting to protect backend services.\n\nRequirements:\n- Set up API gateway routing\n- Implement rate limiting (100 requests/minute per IP)\n- Add authentication validation\n- Configure health checks for backends",
+    "starterCode": "# kong.yaml\n# TODO: Configure Kong gateway with rate limiting",
+    "solution": "# kong.yaml\n_format_version: \"2.1\"\n\n# Upstream services\nupstreams:\n- name: user-service-upstream\n  targets:\n  - target: user-service:8080\n    weight: 100\n  healthchecks:\n    active:\n      healthy:\n        interval: 5\n        successes: 2\n      unhealthy:\n        interval: 5\n        http_failures: 3\n      http_path: /health\n\n- name: order-service-upstream\n  targets:\n  - target: order-service:8080\n    weight: 100\n  healthchecks:\n    active:\n      healthy:\n        interval: 5\n        successes: 2\n      unhealthy:\n        interval: 5\n        http_failures: 3\n      http_path: /health\n\n# Services\nservices:\n- name: user-service\n  url: http://user-service-upstream\n  connect_timeout: 5000\n  read_timeout: 30000\n  write_timeout: 30000\n  retries: 3\n  \n  routes:\n  - name: user-routes\n    paths:\n    - /api/v1/users\n    - /api/v1/auth\n    methods:\n    - GET\n    - POST\n    - PUT\n    - DELETE\n    strip_path: false\n  \n  plugins:\n  - name: rate-limiting\n    config:\n      minute: 100\n      hour: 5000\n      policy: local\n      fault_tolerant: true\n      hide_client_headers: false\n  \n  - name: jwt\n    config:\n      uri_param_names:\n      - jwt\n      claims_to_verify:\n      - exp\n  \n  - name: cors\n    config:\n      origins:\n      - \"*\"\n      methods:\n      - GET\n      - POST\n      - PUT\n      - DELETE\n      headers:\n      - Authorization\n      - Content-Type\n      exposed_headers:\n      - X-Auth-Token\n      credentials: true\n      max_age: 3600\n\n- name: order-service\n  url: http://order-service-upstream\n  connect_timeout: 5000\n  read_timeout: 60000\n  write_timeout: 60000\n  retries: 2\n  \n  routes:\n  - name: order-routes\n    paths:\n    - /api/v1/orders\n    methods:\n    - GET\n    - POST\n    strip_path: false\n  \n  plugins:\n  - name: rate-limiting\n    config:\n      minute: 50  # Lower limit for expensive operations\n      hour: 2000\n      policy: local\n  \n  - name: jwt\n    config:\n      claims_to_verify:\n      - exp\n  \n  - name: request-size-limiting\n    config:\n      allowed_payload_size: 10  # 10 MB max\n  \n  - name: response-transformer\n    config:\n      add:\n        headers:\n        - \"X-Service:order-service\"\n\n# Global plugins\nplugins:\n- name: prometheus\n  config:\n    per_consumer: true\n\n- name: request-termination\n  enabled: false\n  config:\n    status_code: 503\n    message: Service temporarily unavailable\n\n---\n# Custom rate limiting plugin (advanced)\n# kong-custom-rate-limit.lua\nlocal kong = kong\nlocal ngx = ngx\n\nlocal CustomRateLimitHandler = {\n  PRIORITY = 900,\n  VERSION = \"1.0.0\"\n}\n\nfunction CustomRateLimitHandler:access(conf)\n  local identifier = kong.client.get_forwarded_ip()\n  local current_time = ngx.now()\n  \n  -- Check Redis for rate limit state\n  local redis = require \"resty.redis\"\n  local red = redis:new()\n  \n  red:set_timeout(1000)\n  local ok, err = red:connect(\"redis\", 6379)\n  \n  if not ok then\n    kong.log.err(\"Failed to connect to Redis: \", err)\n    return\n  end\n  \n  local key = \"rate_limit:\" .. identifier\n  local count, err = red:incr(key)\n  \n  if count == 1 then\n    red:expire(key, 60)  -- 60 second window\n  end\n  \n  if count > conf.limit then\n    return kong.response.exit(429, {\n      message = \"Rate limit exceeded\",\n      retry_after = 60\n    })\n  end\n  \n  -- Set rate limit headers\n  kong.response.set_header(\"X-RateLimit-Limit\", conf.limit)\n  kong.response.set_header(\"X-RateLimit-Remaining\", conf.limit - count)\nend\n\nreturn CustomRateLimitHandler\n\n---\n# Nginx alternative configuration\n# nginx.conf\nhttp {\n  # Rate limiting zones\n  limit_req_zone $binary_remote_addr zone=api_limit:10m rate=100r/m;\n  limit_req_zone $binary_remote_addr zone=login_limit:10m rate=10r/m;\n  \n  # Connection limiting\n  limit_conn_zone $binary_remote_addr zone=addr:10m;\n  \n  upstream user_service {\n    server user-service:8080 max_fails=3 fail_timeout=30s;\n    server user-service-2:8080 max_fails=3 fail_timeout=30s;\n  }\n  \n  upstream order_service {\n    server order-service:8080 max_fails=3 fail_timeout=30s;\n  }\n  \n  server {\n    listen 80;\n    server_name api.example.com;\n    \n    # Security headers\n    add_header X-Frame-Options \"SAMEORIGIN\" always;\n    add_header X-Content-Type-Options \"nosniff\" always;\n    add_header X-XSS-Protection \"1; mode=block\" always;\n    \n    # Rate limiting\n    limit_req zone=api_limit burst=20 nodelay;\n    limit_req_status 429;\n    limit_conn addr 10;\n    \n    # User service proxy\n    location /api/v1/users {\n      proxy_pass http://user_service;\n      proxy_set_header Host $host;\n      proxy_set_header X-Real-IP $remote_addr;\n      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n      \n      # Timeouts\n      proxy_connect_timeout 5s;\n      proxy_send_timeout 30s;\n      proxy_read_timeout 30s;\n      \n      # Health check\n      health_check interval=5s fails=3 passes=2 uri=/health;\n    }\n    \n    # Login endpoint with stricter limits\n    location /api/v1/auth/login {\n      limit_req zone=login_limit burst=5;\n      \n      proxy_pass http://user_service;\n      proxy_set_header Host $host;\n      proxy_set_header X-Real-IP $remote_addr;\n    }\n    \n    # Order service proxy\n    location /api/v1/orders {\n      proxy_pass http://order_service;\n      proxy_set_header Host $host;\n      proxy_set_header X-Real-IP $remote_addr;\n      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n      \n      # Larger body size for order creation\n      client_max_body_size 10M;\n      \n      proxy_connect_timeout 5s;\n      proxy_send_timeout 60s;\n      proxy_read_timeout 60s;\n    }\n  }\n}",
+    "hints": [
+      "Kong uses declarative configuration via YAML",
+      "Rate limiting can be per-consumer or per-IP",
+      "Health checks ensure traffic only goes to healthy backends",
+      "Plugins chain together for layered functionality"
+    ],
+    "testCases": [
+      {
+        "input": "101 requests in 1 minute",
+        "expectedOutput": "HTTP 429 on 101st request",
+        "isHidden": false,
+        "description": "Rate limiting enforced"
+      },
+      {
+        "input": "Request without JWT",
+        "expectedOutput": "HTTP 401 Unauthorized",
+        "isHidden": false,
+        "description": "Authentication required"
+      },
+      {
+        "input": "Backend health check fails",
+        "expectedOutput": "Traffic routed to healthy instances only",
+        "isHidden": true,
+        "description": "Health checks protect clients"
+      }
+    ],
+    "language": "yaml"
   }
 ]

@@ -1,0 +1,279 @@
+# CS405: Cloud Computing - Subject Specification
+# This spec guides content creation for an advanced cloud computing course.
+
+# ==============================================================================
+# SUBJECT IDENTITY
+# ==============================================================================
+
+id: cs405
+title: Cloud Computing
+category: cs
+
+role:
+  level: advanced
+  transformation: >
+    From "I can deploy to a server" to "I can architect, deploy, and operate
+    scalable cloud-native applications using containers, orchestration, serverless,
+    and infrastructure as code."
+
+# ==============================================================================
+# CURRICULUM
+# ==============================================================================
+
+curriculum:
+  subtopic_word_target: 800
+
+  prerequisite_knowledge:
+    - Operating systems concepts (processes, memory, filesystems)
+    - Networking fundamentals (TCP/IP, HTTP, DNS)
+    - Command-line proficiency (bash, scripting)
+    - Basic programming skills (Python preferred)
+    - Version control with Git
+
+  essential_concepts:
+    - Cloud service models (IaaS, PaaS, SaaS, FaaS)
+    - Cloud deployment models (public, private, hybrid, multi-cloud)
+    - Virtualization and hypervisors
+    - Containers and Docker
+    - Container orchestration with Kubernetes
+    - Serverless computing and FaaS
+    - Cloud storage types (object, block, file)
+    - Cloud-native architecture and the 12-factor app
+    - Infrastructure as Code
+    - Cloud security and the shared responsibility model
+
+  out_of_scope:
+    - Specific cloud provider certifications (AWS Solutions Architect, etc.)
+    - Advanced networking (BGP, MPLS)
+    - Machine learning platforms (covered in CS402)
+    - Database administration deep dives (covered in CS205)
+
+# ==============================================================================
+# PEDAGOGICAL APPROACH
+# ==============================================================================
+
+pedagogy:
+  knowledge_type: applied
+
+  mastery_indicators:
+    - Designs cloud architectures for given requirements
+    - Containerizes applications with Docker best practices
+    - Deploys and manages applications on Kubernetes
+    - Implements serverless functions with proper event handling
+    - Chooses appropriate storage solutions for different use cases
+    - Applies cloud-native patterns (circuit breaker, service mesh)
+    - Calculates cloud costs and optimizes spending
+
+  common_struggles:
+    - Confusion between service models (IaaS vs PaaS vs SaaS)
+    - Docker networking and volume management
+    - Kubernetes YAML complexity and debugging
+    - Serverless cold starts and timeout limitations
+    - Understanding the shared responsibility model
+    - Cost management and unexpected cloud bills
+
+# ==============================================================================
+# CONTENT STANDARDS
+# ==============================================================================
+
+content:
+  subtopic_requirements:
+    - Include architecture diagrams for complex concepts
+    - Show real CLI commands and YAML configurations
+    - Provide cost comparisons where relevant
+    - Include security considerations for each topic
+    - Reference actual cloud provider services (AWS, Azure, GCP)
+
+  conventions:
+    - Use YAML for Kubernetes manifests
+    - Use Dockerfile syntax for container builds
+    - Python for Lambda/Cloud Functions examples
+    - Bash for CLI scripts
+    - Terraform/CloudFormation for IaC examples
+
+# ==============================================================================
+# ASSESSMENT PHILOSOPHY
+# ==============================================================================
+
+assessment:
+  philosophy: >
+    Cloud computing is hands-on by nature. Students learn by building and
+    deploying. Exercises should use real tools (Docker, kubectl, AWS CLI)
+    wherever possible. Assessment should test both conceptual understanding
+    and practical ability to configure and troubleshoot.
+
+  measures:
+    - Ability to write correct Docker and Kubernetes configurations
+    - Understanding of when to use different cloud services
+    - Practical troubleshooting of deployment issues
+    - Cost optimization awareness
+    - Security best practices application
+
+  anti_patterns:
+    - Memorization of specific cloud provider console clicks
+    - Questions about outdated pricing or service names
+    - Exercises requiring paid cloud resources without alternatives
+    - Testing trivia rather than architectural understanding
+
+# ==============================================================================
+# GRADING THRESHOLDS
+# ==============================================================================
+
+grading:
+  passing_score: 70
+
+  thresholds:
+    exercises: 70
+    quizzes: 65
+    exams: 65
+
+  rationale: >
+    Standard passing thresholds. Cloud computing concepts build on each other,
+    so strong foundations are important. Exercises may have some variation
+    in approaches, so slightly lower quiz/exam thresholds allow for this.
+
+# ==============================================================================
+# EXERCISE SPECIFICATIONS
+# ==============================================================================
+
+exercises:
+  rationale: >
+    Exercises focus on practical skills: writing Dockerfiles, Kubernetes YAML,
+    serverless functions, and cloud CLI commands. Each exercise should be
+    completable using local tools (Docker, minikube) or free cloud tiers.
+
+  types:
+    coding_with_tests: "70%"
+    coding_ai_evaluated: "30%"
+    written: "0%"
+    justification: >
+      Most exercises are configuration files (Dockerfile, YAML) validated
+      by structure/syntax tests. Some exercises involve design decisions
+      evaluated by AI (architecture, cost optimization).
+
+  per_topic:
+    minimum: 14
+    target: 16
+    maximum: 18
+    justification: >
+      Full base standard count. Cloud computing covers many tools and patterns;
+      students benefit from practice with each. Exercises cover Docker, K8s,
+      serverless, storage, and cloud-native patterns.
+
+  difficulty_distribution:
+    1: 3
+    2: 3
+    3: 4
+    4: 3
+    5: 3
+    justification: >
+      Standard distribution. Cloud computing has a learning curve, but students
+      at this level should handle medium-hard exercises. Difficulty 5 exercises
+      involve multi-service architectures.
+
+# ==============================================================================
+# QUIZ SPECIFICATIONS
+# ==============================================================================
+
+quizzes:
+  rationale: >
+    Quizzes test conceptual understanding of cloud models, architecture patterns,
+    and best practices. Code output questions verify understanding of CLI
+    behavior and configuration effects.
+
+  per_topic:
+    count: 3
+    questions_each: 5
+    justification: >
+      Standard base count. Three quizzes per topic cover fundamentals,
+      practical application, and advanced concepts.
+
+  question_types:
+    multiple_choice: "50%"
+    true_false: "20%"
+    fill_blank: "10%"
+    code_output: "20%"
+    coding: "0%"
+    written: "0%"
+    justification: >
+      Heavy on multiple choice for architecture decisions. Code output
+      for CLI commands and configuration effects. True/false for common
+      misconceptions (security, pricing).
+
+# ==============================================================================
+# EXAM SPECIFICATIONS
+# ==============================================================================
+
+exams:
+  rationale: >
+    Exams test architectural thinking and practical knowledge. Mix of
+    conceptual questions and configuration problems. Students should
+    be able to design solutions without access to documentation.
+
+  midterm:
+    questions:
+      minimum: 25
+      target: 30
+      maximum: 35
+    duration_minutes: 75
+    format: >
+      Mix of multiple choice (cloud models, service selection), short
+      configuration problems (write a Dockerfile, K8s manifest), and
+      architecture questions.
+    coverage: "Topics 1-4: Cloud fundamentals, virtualization, containers, Kubernetes"
+
+  final:
+    questions:
+      minimum: 35
+      target: 42
+      maximum: 45
+    duration_minutes: 120
+    format: >
+      Comprehensive exam covering all topics. Includes scenario-based
+      questions (design a cloud architecture for X), debugging problems,
+      and cost optimization questions.
+    coverage: "All 7 topics with emphasis on serverless, storage, and cloud-native"
+    cumulative: true
+
+# ==============================================================================
+# PROJECT SPECIFICATIONS
+# ==============================================================================
+
+projects:
+  required: true
+  count: 4
+  rationale: >
+    Projects are essential for cloud computing. Students build real
+    deployable applications using containers, orchestration, serverless,
+    and cloud-native patterns. Projects demonstrate practical skills.
+
+  goals:
+    - Deploy a containerized application to Kubernetes
+    - Build a serverless API with database integration
+    - Implement a cloud-native microservices architecture
+    - Practice infrastructure as code
+
+  estimated_hours: "10-15"
+
+# ==============================================================================
+# SUBJECT-SPECIFIC RED FLAGS
+# ==============================================================================
+
+red_flags:
+  - Exercise requires paid cloud resources without free tier alternative
+  - YAML/Dockerfile with syntax errors in starter code
+  - Questions about deprecated cloud services
+  - Exercises assuming specific cloud provider account setup
+  - Missing security considerations (running as root, exposed secrets)
+  - Outdated Kubernetes API versions
+
+# ==============================================================================
+# NOTES
+# ==============================================================================
+
+notes: >
+  Cloud computing evolves rapidly. Content should focus on timeless concepts
+  (virtualization, containerization, orchestration patterns) while providing
+  current examples. Exercises should work with local tools (Docker Desktop,
+  minikube, LocalStack) so students don't need cloud accounts. Warn about
+  cost implications when discussing real cloud services.

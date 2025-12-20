@@ -1,6 +1,6 @@
 [
   {
-    "id": "cs405-ex-4-1",
+    "id": "cs405-t4-ex01",
     "subjectId": "cs405",
     "topicId": "cs405-topic-4",
     "title": "Deploy Application on Kubernetes",
@@ -33,6 +33,645 @@
         "expectedOutput": "LoadBalancer service with external IP",
         "isHidden": false,
         "description": "Verify service configuration"
+      }
+    ],
+    "language": "yaml"
+  },
+  {
+    "id": "cs405-t4-ex02",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-4",
+    "title": "Create a Simple Pod",
+    "difficulty": 1,
+    "description": "Create a basic Pod manifest that runs an nginx container.\n\nRequirements:\n1. Pod name: 'nginx-pod'\n2. Container name: 'nginx'\n3. Image: 'nginx:1.25'\n4. Container port: 80",
+    "starterCode": "apiVersion: v1\nkind: Pod\nmetadata:\n  name: # TODO: Add pod name\nspec:\n  containers:\n  - name: # TODO: Add container name\n    image: # TODO: Add image\n    ports:\n    - containerPort: # TODO: Add port",
+    "solution": "apiVersion: v1\nkind: Pod\nmetadata:\n  name: nginx-pod\n  labels:\n    app: nginx\nspec:\n  containers:\n  - name: nginx\n    image: nginx:1.25\n    ports:\n    - containerPort: 80\n      protocol: TCP",
+    "hints": [
+      "A Pod is the smallest deployable unit in Kubernetes",
+      "The metadata.name field identifies the pod",
+      "Container image should include the tag version",
+      "Use standard HTTP port 80 for nginx"
+    ],
+    "testCases": [
+      {
+        "input": "kubectl apply -f pod.yaml",
+        "expectedOutput": "pod/nginx-pod created",
+        "isHidden": false,
+        "description": "Pod creation succeeds"
+      },
+      {
+        "input": "kubectl get pod nginx-pod",
+        "expectedOutput": "nginx-pod   1/1     Running",
+        "isHidden": false,
+        "description": "Pod is running"
+      },
+      {
+        "input": "kubectl describe pod nginx-pod | grep Image:",
+        "expectedOutput": "Image:          nginx:1.25",
+        "isHidden": false,
+        "description": "Correct image is used"
+      },
+      {
+        "input": "kubectl get pod nginx-pod -o jsonpath='{.spec.containers[0].ports[0].containerPort}'",
+        "expectedOutput": "80",
+        "isHidden": true,
+        "description": "Port is correctly configured"
+      }
+    ],
+    "language": "yaml"
+  },
+  {
+    "id": "cs405-t4-ex03",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-4",
+    "title": "Create a ClusterIP Service",
+    "difficulty": 1,
+    "description": "Create a ClusterIP Service to expose an nginx deployment internally within the cluster.\n\nRequirements:\n1. Service name: 'nginx-service'\n2. Service type: ClusterIP\n3. Selector: app=nginx\n4. Port: 80, targetPort: 8080",
+    "starterCode": "apiVersion: v1\nkind: Service\nmetadata:\n  name: # TODO: Add service name\nspec:\n  type: # TODO: Add service type\n  selector:\n    # TODO: Add selector\n  ports:\n  - protocol: TCP\n    port: # TODO: Add service port\n    targetPort: # TODO: Add target port",
+    "solution": "apiVersion: v1\nkind: Service\nmetadata:\n  name: nginx-service\n  labels:\n    app: nginx\nspec:\n  type: ClusterIP\n  selector:\n    app: nginx\n  ports:\n  - name: http\n    protocol: TCP\n    port: 80\n    targetPort: 8080",
+    "hints": [
+      "ClusterIP is the default service type for internal access",
+      "The selector matches pods with the specified labels",
+      "Port is the service port, targetPort is the container port",
+      "Services enable pod-to-pod communication"
+    ],
+    "testCases": [
+      {
+        "input": "kubectl apply -f service.yaml",
+        "expectedOutput": "service/nginx-service created",
+        "isHidden": false,
+        "description": "Service creation succeeds"
+      },
+      {
+        "input": "kubectl get svc nginx-service -o jsonpath='{.spec.type}'",
+        "expectedOutput": "ClusterIP",
+        "isHidden": false,
+        "description": "Service type is ClusterIP"
+      },
+      {
+        "input": "kubectl get svc nginx-service -o jsonpath='{.spec.ports[0].port}'",
+        "expectedOutput": "80",
+        "isHidden": false,
+        "description": "Service port is 80"
+      },
+      {
+        "input": "kubectl get svc nginx-service -o jsonpath='{.spec.selector.app}'",
+        "expectedOutput": "nginx",
+        "isHidden": true,
+        "description": "Selector matches nginx pods"
+      }
+    ],
+    "language": "yaml"
+  },
+  {
+    "id": "cs405-t4-ex04",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-4",
+    "title": "Create a Basic ConfigMap",
+    "difficulty": 1,
+    "description": "Create a ConfigMap to store application configuration data.\n\nRequirements:\n1. ConfigMap name: 'app-config'\n2. Data key 'database.host' with value 'postgres.default.svc.cluster.local'\n3. Data key 'database.port' with value '5432'\n4. Data key 'log.level' with value 'INFO'",
+    "starterCode": "apiVersion: v1\nkind: ConfigMap\nmetadata:\n  name: # TODO: Add ConfigMap name\ndata:\n  # TODO: Add configuration key-value pairs",
+    "solution": "apiVersion: v1\nkind: ConfigMap\nmetadata:\n  name: app-config\n  labels:\n    app: myapp\ndata:\n  database.host: \"postgres.default.svc.cluster.local\"\n  database.port: \"5432\"\n  log.level: \"INFO\"",
+    "hints": [
+      "ConfigMaps store non-sensitive configuration data",
+      "Data is stored as key-value pairs",
+      "Values in ConfigMaps are always strings",
+      "ConfigMaps can be consumed as environment variables or volume mounts"
+    ],
+    "testCases": [
+      {
+        "input": "kubectl apply -f configmap.yaml",
+        "expectedOutput": "configmap/app-config created",
+        "isHidden": false,
+        "description": "ConfigMap creation succeeds"
+      },
+      {
+        "input": "kubectl get configmap app-config -o jsonpath='{.data.database\\.host}'",
+        "expectedOutput": "postgres.default.svc.cluster.local",
+        "isHidden": false,
+        "description": "Database host is correct"
+      },
+      {
+        "input": "kubectl get configmap app-config -o jsonpath='{.data.database\\.port}'",
+        "expectedOutput": "5432",
+        "isHidden": false,
+        "description": "Database port is correct"
+      },
+      {
+        "input": "kubectl get configmap app-config -o jsonpath='{.data.log\\.level}'",
+        "expectedOutput": "INFO",
+        "isHidden": true,
+        "description": "Log level is correct"
+      }
+    ],
+    "language": "yaml"
+  },
+  {
+    "id": "cs405-t4-ex05",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-4",
+    "title": "Create a Deployment with Replicas",
+    "difficulty": 2,
+    "description": "Create a Deployment that runs multiple replicas of a container.\n\nRequirements:\n1. Deployment name: 'web-deployment'\n2. Replicas: 4\n3. Selector matchLabels: app=web\n4. Container image: 'nginx:1.25'\n5. Container port: 80",
+    "starterCode": "apiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: # TODO: Add deployment name\nspec:\n  replicas: # TODO: Add replica count\n  selector:\n    matchLabels:\n      # TODO: Add labels\n  template:\n    metadata:\n      labels:\n        # TODO: Add pod labels\n    spec:\n      containers:\n      - name: web\n        image: # TODO: Add image\n        ports:\n        - containerPort: # TODO: Add port",
+    "solution": "apiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: web-deployment\n  labels:\n    app: web\nspec:\n  replicas: 4\n  selector:\n    matchLabels:\n      app: web\n  template:\n    metadata:\n      labels:\n        app: web\n    spec:\n      containers:\n      - name: web\n        image: nginx:1.25\n        ports:\n        - name: http\n          containerPort: 80\n          protocol: TCP",
+    "hints": [
+      "Deployments manage ReplicaSets which manage Pods",
+      "The selector must match the pod template labels",
+      "Replicas define how many pod copies should run",
+      "Deployments enable declarative updates and rollbacks"
+    ],
+    "testCases": [
+      {
+        "input": "kubectl apply -f deployment.yaml",
+        "expectedOutput": "deployment.apps/web-deployment created",
+        "isHidden": false,
+        "description": "Deployment creation succeeds"
+      },
+      {
+        "input": "kubectl get deployment web-deployment -o jsonpath='{.spec.replicas}'",
+        "expectedOutput": "4",
+        "isHidden": false,
+        "description": "Replica count is 4"
+      },
+      {
+        "input": "kubectl get pods -l app=web --no-headers | wc -l",
+        "expectedOutput": "4",
+        "isHidden": false,
+        "description": "Four pods are running"
+      },
+      {
+        "input": "kubectl get deployment web-deployment -o jsonpath='{.spec.template.spec.containers[0].image}'",
+        "expectedOutput": "nginx:1.25",
+        "isHidden": true,
+        "description": "Container image is correct"
+      }
+    ],
+    "language": "yaml"
+  },
+  {
+    "id": "cs405-t4-ex06",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-4",
+    "title": "Add Environment Variables from ConfigMap",
+    "difficulty": 2,
+    "description": "Create a Pod that consumes environment variables from a ConfigMap.\n\nRequirements:\n1. Pod name: 'env-pod'\n2. Use ConfigMap 'app-config' (already exists)\n3. Set environment variable DB_HOST from configMapKeyRef 'database.host'\n4. Set environment variable DB_PORT from configMapKeyRef 'database.port'",
+    "starterCode": "apiVersion: v1\nkind: Pod\nmetadata:\n  name: # TODO: Add pod name\nspec:\n  containers:\n  - name: app\n    image: busybox:1.36\n    command: ['sh', '-c', 'echo DB_HOST=$DB_HOST DB_PORT=$DB_PORT && sleep 3600']\n    env:\n    # TODO: Add environment variables from ConfigMap",
+    "solution": "apiVersion: v1\nkind: Pod\nmetadata:\n  name: env-pod\n  labels:\n    app: env-test\nspec:\n  containers:\n  - name: app\n    image: busybox:1.36\n    command: ['sh', '-c', 'echo DB_HOST=$DB_HOST DB_PORT=$DB_PORT && sleep 3600']\n    env:\n    - name: DB_HOST\n      valueFrom:\n        configMapKeyRef:\n          name: app-config\n          key: database.host\n    - name: DB_PORT\n      valueFrom:\n        configMapKeyRef:\n          name: app-config\n          key: database.port",
+    "hints": [
+      "Use valueFrom with configMapKeyRef to reference ConfigMap values",
+      "The env field is an array of environment variable definitions",
+      "Each env entry needs a name and a valueFrom",
+      "The key must exactly match the ConfigMap key"
+    ],
+    "testCases": [
+      {
+        "input": "kubectl apply -f pod.yaml",
+        "expectedOutput": "pod/env-pod created",
+        "isHidden": false,
+        "description": "Pod creation succeeds"
+      },
+      {
+        "input": "kubectl logs env-pod",
+        "expectedOutput": "DB_HOST=postgres.default.svc.cluster.local DB_PORT=5432",
+        "isHidden": false,
+        "description": "Environment variables are set correctly"
+      },
+      {
+        "input": "kubectl get pod env-pod -o jsonpath='{.spec.containers[0].env[0].valueFrom.configMapKeyRef.name}'",
+        "expectedOutput": "app-config",
+        "isHidden": true,
+        "description": "References correct ConfigMap"
+      }
+    ],
+    "language": "yaml"
+  },
+  {
+    "id": "cs405-t4-ex07",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-4",
+    "title": "Create a Secret and Use It",
+    "difficulty": 2,
+    "description": "Create a Secret for sensitive data and mount it as environment variables in a Pod.\n\nRequirements:\n1. Secret name: 'db-credentials'\n2. Type: Opaque\n3. Data: username=admin, password=secretpass123 (use stringData)\n4. Pod name: 'app-with-secret'\n5. Use the secret values as environment variables",
+    "starterCode": "apiVersion: v1\nkind: Secret\nmetadata:\n  name: # TODO: Add secret name\ntype: # TODO: Add type\nstringData:\n  # TODO: Add secret data\n---\napiVersion: v1\nkind: Pod\nmetadata:\n  name: # TODO: Add pod name\nspec:\n  containers:\n  - name: app\n    image: busybox:1.36\n    command: ['sh', '-c', 'echo \"User: $DB_USER\" && sleep 3600']\n    env:\n    # TODO: Add environment variables from Secret",
+    "solution": "apiVersion: v1\nkind: Secret\nmetadata:\n  name: db-credentials\n  labels:\n    app: myapp\ntype: Opaque\nstringData:\n  username: \"admin\"\n  password: \"secretpass123\"\n---\napiVersion: v1\nkind: Pod\nmetadata:\n  name: app-with-secret\n  labels:\n    app: myapp\nspec:\n  containers:\n  - name: app\n    image: busybox:1.36\n    command: ['sh', '-c', 'echo \"User: $DB_USER\" && sleep 3600']\n    env:\n    - name: DB_USER\n      valueFrom:\n        secretKeyRef:\n          name: db-credentials\n          key: username\n    - name: DB_PASS\n      valueFrom:\n        secretKeyRef:\n          name: db-credentials\n          key: password",
+    "hints": [
+      "Secrets are base64-encoded by default, but stringData accepts plain text",
+      "Use secretKeyRef similar to configMapKeyRef",
+      "Never commit secrets to version control in real applications",
+      "Secrets should be used for passwords, tokens, and keys"
+    ],
+    "testCases": [
+      {
+        "input": "kubectl apply -f secret.yaml",
+        "expectedOutput": "secret/db-credentials created",
+        "isHidden": false,
+        "description": "Secret and pod created successfully"
+      },
+      {
+        "input": "kubectl get secret db-credentials -o jsonpath='{.type}'",
+        "expectedOutput": "Opaque",
+        "isHidden": false,
+        "description": "Secret type is Opaque"
+      },
+      {
+        "input": "kubectl logs app-with-secret",
+        "expectedOutput": "User: admin",
+        "isHidden": false,
+        "description": "Secret value accessible as environment variable"
+      },
+      {
+        "input": "kubectl get pod app-with-secret -o jsonpath='{.spec.containers[0].env[0].valueFrom.secretKeyRef.key}'",
+        "expectedOutput": "username",
+        "isHidden": true,
+        "description": "References correct secret key"
+      }
+    ],
+    "language": "yaml"
+  },
+  {
+    "id": "cs405-t4-ex08",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-4",
+    "title": "Create a Persistent Volume Claim",
+    "difficulty": 3,
+    "description": "Create a PersistentVolumeClaim and use it in a Pod to store data persistently.\n\nRequirements:\n1. PVC name: 'data-pvc'\n2. Access mode: ReadWriteOnce\n3. Storage request: 2Gi\n4. Pod name: 'data-pod'\n5. Mount PVC at /data in the container",
+    "starterCode": "apiVersion: v1\nkind: PersistentVolumeClaim\nmetadata:\n  name: # TODO: Add PVC name\nspec:\n  accessModes:\n  - # TODO: Add access mode\n  resources:\n    requests:\n      storage: # TODO: Add storage size\n---\napiVersion: v1\nkind: Pod\nmetadata:\n  name: # TODO: Add pod name\nspec:\n  containers:\n  - name: app\n    image: busybox:1.36\n    command: ['sh', '-c', 'echo \"Data stored\" > /data/file.txt && sleep 3600']\n    volumeMounts:\n    # TODO: Add volume mount\n  volumes:\n  # TODO: Add volume from PVC",
+    "solution": "apiVersion: v1\nkind: PersistentVolumeClaim\nmetadata:\n  name: data-pvc\n  labels:\n    app: data-app\nspec:\n  accessModes:\n  - ReadWriteOnce\n  resources:\n    requests:\n      storage: 2Gi\n---\napiVersion: v1\nkind: Pod\nmetadata:\n  name: data-pod\n  labels:\n    app: data-app\nspec:\n  containers:\n  - name: app\n    image: busybox:1.36\n    command: ['sh', '-c', 'echo \"Data stored\" > /data/file.txt && cat /data/file.txt && sleep 3600']\n    volumeMounts:\n    - name: data-volume\n      mountPath: /data\n  volumes:\n  - name: data-volume\n    persistentVolumeClaim:\n      claimName: data-pvc",
+    "hints": [
+      "PersistentVolumeClaims request storage from PersistentVolumes",
+      "ReadWriteOnce means the volume can be mounted by a single node",
+      "volumeMounts specify where to mount in the container filesystem",
+      "The volume name must match between volumes and volumeMounts"
+    ],
+    "testCases": [
+      {
+        "input": "kubectl apply -f pvc.yaml",
+        "expectedOutput": "persistentvolumeclaim/data-pvc created",
+        "isHidden": false,
+        "description": "PVC and pod created successfully"
+      },
+      {
+        "input": "kubectl get pvc data-pvc -o jsonpath='{.spec.resources.requests.storage}'",
+        "expectedOutput": "2Gi",
+        "isHidden": false,
+        "description": "Storage request is 2Gi"
+      },
+      {
+        "input": "kubectl logs data-pod",
+        "expectedOutput": "Data stored",
+        "isHidden": false,
+        "description": "Data written to persistent volume"
+      },
+      {
+        "input": "kubectl get pod data-pod -o jsonpath='{.spec.volumes[0].persistentVolumeClaim.claimName}'",
+        "expectedOutput": "data-pvc",
+        "isHidden": true,
+        "description": "Pod uses the correct PVC"
+      }
+    ],
+    "language": "yaml"
+  },
+  {
+    "id": "cs405-t4-ex09",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-4",
+    "title": "Add Liveness and Readiness Probes",
+    "difficulty": 3,
+    "description": "Create a Deployment with health probes for reliability.\n\nRequirements:\n1. Deployment name: 'api-deployment'\n2. Image: 'nginx:1.25'\n3. Liveness probe: HTTP GET on /health, port 80, initial delay 15s, period 10s\n4. Readiness probe: HTTP GET on /ready, port 80, initial delay 5s, period 5s",
+    "starterCode": "apiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: # TODO: Add deployment name\nspec:\n  replicas: 2\n  selector:\n    matchLabels:\n      app: api\n  template:\n    metadata:\n      labels:\n        app: api\n    spec:\n      containers:\n      - name: api\n        image: # TODO: Add image\n        ports:\n        - containerPort: 80\n        livenessProbe:\n          # TODO: Add liveness probe\n        readinessProbe:\n          # TODO: Add readiness probe",
+    "solution": "apiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: api-deployment\n  labels:\n    app: api\nspec:\n  replicas: 2\n  selector:\n    matchLabels:\n      app: api\n  template:\n    metadata:\n      labels:\n        app: api\n    spec:\n      containers:\n      - name: api\n        image: nginx:1.25\n        ports:\n        - name: http\n          containerPort: 80\n          protocol: TCP\n        livenessProbe:\n          httpGet:\n            path: /health\n            port: 80\n            scheme: HTTP\n          initialDelaySeconds: 15\n          periodSeconds: 10\n          timeoutSeconds: 5\n          failureThreshold: 3\n        readinessProbe:\n          httpGet:\n            path: /ready\n            port: 80\n            scheme: HTTP\n          initialDelaySeconds: 5\n          periodSeconds: 5\n          timeoutSeconds: 3\n          failureThreshold: 3",
+    "hints": [
+      "Liveness probes determine if a container needs to be restarted",
+      "Readiness probes determine if a pod should receive traffic",
+      "initialDelaySeconds gives the app time to start before probing",
+      "periodSeconds defines how often to perform the probe"
+    ],
+    "testCases": [
+      {
+        "input": "kubectl apply -f deployment.yaml",
+        "expectedOutput": "deployment.apps/api-deployment created",
+        "isHidden": false,
+        "description": "Deployment created successfully"
+      },
+      {
+        "input": "kubectl get deployment api-deployment -o jsonpath='{.spec.template.spec.containers[0].livenessProbe.httpGet.path}'",
+        "expectedOutput": "/health",
+        "isHidden": false,
+        "description": "Liveness probe path is correct"
+      },
+      {
+        "input": "kubectl get deployment api-deployment -o jsonpath='{.spec.template.spec.containers[0].readinessProbe.initialDelaySeconds}'",
+        "expectedOutput": "5",
+        "isHidden": false,
+        "description": "Readiness probe initial delay is correct"
+      },
+      {
+        "input": "kubectl get deployment api-deployment -o jsonpath='{.spec.template.spec.containers[0].livenessProbe.periodSeconds}'",
+        "expectedOutput": "10",
+        "isHidden": true,
+        "description": "Liveness probe period is correct"
+      }
+    ],
+    "language": "yaml"
+  },
+  {
+    "id": "cs405-t4-ex10",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-4",
+    "title": "Create an Ingress Resource",
+    "difficulty": 4,
+    "description": "Create an Ingress resource to route external HTTP traffic to services.\n\nRequirements:\n1. Ingress name: 'web-ingress'\n2. Host: 'myapp.example.com'\n3. Path: / (prefix match)\n4. Backend service: 'web-service' on port 80\n5. Use networking.k8s.io/v1 API version",
+    "starterCode": "apiVersion: networking.k8s.io/v1\nkind: Ingress\nmetadata:\n  name: # TODO: Add ingress name\nspec:\n  rules:\n  - host: # TODO: Add host\n    http:\n      paths:\n      - path: # TODO: Add path\n        pathType: # TODO: Add pathType\n        backend:\n          service:\n            # TODO: Add service details",
+    "solution": "apiVersion: networking.k8s.io/v1\nkind: Ingress\nmetadata:\n  name: web-ingress\n  labels:\n    app: web\n  annotations:\n    nginx.ingress.kubernetes.io/rewrite-target: /\nspec:\n  ingressClassName: nginx\n  rules:\n  - host: myapp.example.com\n    http:\n      paths:\n      - path: /\n        pathType: Prefix\n        backend:\n          service:\n            name: web-service\n            port:\n              number: 80",
+    "hints": [
+      "Ingress provides HTTP/HTTPS routing to services",
+      "The host field specifies the domain name",
+      "pathType Prefix matches the path and all subpaths",
+      "An Ingress controller must be installed in the cluster"
+    ],
+    "testCases": [
+      {
+        "input": "kubectl apply -f ingress.yaml",
+        "expectedOutput": "ingress.networking.k8s.io/web-ingress created",
+        "isHidden": false,
+        "description": "Ingress created successfully"
+      },
+      {
+        "input": "kubectl get ingress web-ingress -o jsonpath='{.spec.rules[0].host}'",
+        "expectedOutput": "myapp.example.com",
+        "isHidden": false,
+        "description": "Host is configured correctly"
+      },
+      {
+        "input": "kubectl get ingress web-ingress -o jsonpath='{.spec.rules[0].http.paths[0].backend.service.name}'",
+        "expectedOutput": "web-service",
+        "isHidden": false,
+        "description": "Backend service is correct"
+      },
+      {
+        "input": "kubectl get ingress web-ingress -o jsonpath='{.spec.rules[0].http.paths[0].pathType}'",
+        "expectedOutput": "Prefix",
+        "isHidden": true,
+        "description": "Path type is Prefix"
+      }
+    ],
+    "language": "yaml"
+  },
+  {
+    "id": "cs405-t4-ex11",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-4",
+    "title": "Create a Horizontal Pod Autoscaler",
+    "difficulty": 4,
+    "description": "Create an HPA to automatically scale a deployment based on CPU utilization.\n\nRequirements:\n1. HPA name: 'app-hpa'\n2. Target: Deployment 'web-deployment'\n3. Min replicas: 2, Max replicas: 10\n4. Target CPU utilization: 70%\n5. Use autoscaling/v2 API",
+    "starterCode": "apiVersion: autoscaling/v2\nkind: HorizontalPodAutoscaler\nmetadata:\n  name: # TODO: Add HPA name\nspec:\n  scaleTargetRef:\n    apiVersion: apps/v1\n    kind: # TODO: Add kind\n    name: # TODO: Add deployment name\n  minReplicas: # TODO: Add min replicas\n  maxReplicas: # TODO: Add max replicas\n  metrics:\n  # TODO: Add CPU metric",
+    "solution": "apiVersion: autoscaling/v2\nkind: HorizontalPodAutoscaler\nmetadata:\n  name: app-hpa\n  labels:\n    app: web\nspec:\n  scaleTargetRef:\n    apiVersion: apps/v1\n    kind: Deployment\n    name: web-deployment\n  minReplicas: 2\n  maxReplicas: 10\n  metrics:\n  - type: Resource\n    resource:\n      name: cpu\n      target:\n        type: Utilization\n        averageUtilization: 70\n  behavior:\n    scaleDown:\n      stabilizationWindowSeconds: 300\n    scaleUp:\n      stabilizationWindowSeconds: 0",
+    "hints": [
+      "HPA requires metrics-server to be installed",
+      "The scaleTargetRef points to the resource to scale",
+      "Metrics define what triggers scaling decisions",
+      "Behavior controls scaling speed and stability"
+    ],
+    "testCases": [
+      {
+        "input": "kubectl apply -f hpa.yaml",
+        "expectedOutput": "horizontalpodautoscaler.autoscaling/app-hpa created",
+        "isHidden": false,
+        "description": "HPA created successfully"
+      },
+      {
+        "input": "kubectl get hpa app-hpa -o jsonpath='{.spec.minReplicas}'",
+        "expectedOutput": "2",
+        "isHidden": false,
+        "description": "Min replicas is 2"
+      },
+      {
+        "input": "kubectl get hpa app-hpa -o jsonpath='{.spec.maxReplicas}'",
+        "expectedOutput": "10",
+        "isHidden": false,
+        "description": "Max replicas is 10"
+      },
+      {
+        "input": "kubectl get hpa app-hpa -o jsonpath='{.spec.metrics[0].resource.target.averageUtilization}'",
+        "expectedOutput": "70",
+        "isHidden": true,
+        "description": "Target CPU utilization is 70%"
+      }
+    ],
+    "language": "yaml"
+  },
+  {
+    "id": "cs405-t4-ex12",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-4",
+    "title": "Create a StatefulSet with Persistent Storage",
+    "difficulty": 4,
+    "description": "Create a StatefulSet for a stateful application that requires persistent storage.\n\nRequirements:\n1. StatefulSet name: 'mongodb'\n2. Service name: 'mongodb-service' (headless)\n3. Replicas: 3\n4. volumeClaimTemplate: 1Gi storage, ReadWriteOnce\n5. Mount volume at /data/db",
+    "starterCode": "apiVersion: v1\nkind: Service\nmetadata:\n  name: # TODO: Add service name\nspec:\n  clusterIP: # TODO: Make headless\n  selector:\n    app: mongodb\n  ports:\n  - port: 27017\n---\napiVersion: apps/v1\nkind: StatefulSet\nmetadata:\n  name: # TODO: Add StatefulSet name\nspec:\n  serviceName: # TODO: Add service name\n  replicas: # TODO: Add replicas\n  selector:\n    matchLabels:\n      app: mongodb\n  template:\n    metadata:\n      labels:\n        app: mongodb\n    spec:\n      containers:\n      - name: mongodb\n        image: mongo:7.0\n        ports:\n        - containerPort: 27017\n        volumeMounts:\n        # TODO: Add volume mount\n  volumeClaimTemplates:\n  # TODO: Add volume claim template",
+    "solution": "apiVersion: v1\nkind: Service\nmetadata:\n  name: mongodb-service\n  labels:\n    app: mongodb\nspec:\n  clusterIP: None\n  selector:\n    app: mongodb\n  ports:\n  - name: mongodb\n    port: 27017\n    targetPort: 27017\n---\napiVersion: apps/v1\nkind: StatefulSet\nmetadata:\n  name: mongodb\n  labels:\n    app: mongodb\nspec:\n  serviceName: mongodb-service\n  replicas: 3\n  selector:\n    matchLabels:\n      app: mongodb\n  template:\n    metadata:\n      labels:\n        app: mongodb\n    spec:\n      containers:\n      - name: mongodb\n        image: mongo:7.0\n        ports:\n        - name: mongodb\n          containerPort: 27017\n        volumeMounts:\n        - name: data\n          mountPath: /data/db\n        resources:\n          requests:\n            memory: \"256Mi\"\n            cpu: \"250m\"\n          limits:\n            memory: \"512Mi\"\n            cpu: \"500m\"\n  volumeClaimTemplates:\n  - metadata:\n      name: data\n    spec:\n      accessModes:\n      - ReadWriteOnce\n      resources:\n        requests:\n          storage: 1Gi",
+    "hints": [
+      "StatefulSets provide stable network identities and persistent storage",
+      "Headless services have clusterIP: None",
+      "volumeClaimTemplates create PVCs for each pod replica",
+      "Each pod gets a unique PVC that persists across rescheduling"
+    ],
+    "testCases": [
+      {
+        "input": "kubectl apply -f statefulset.yaml",
+        "expectedOutput": "service/mongodb-service created",
+        "isHidden": false,
+        "description": "StatefulSet and service created"
+      },
+      {
+        "input": "kubectl get statefulset mongodb -o jsonpath='{.spec.replicas}'",
+        "expectedOutput": "3",
+        "isHidden": false,
+        "description": "StatefulSet has 3 replicas"
+      },
+      {
+        "input": "kubectl get svc mongodb-service -o jsonpath='{.spec.clusterIP}'",
+        "expectedOutput": "None",
+        "isHidden": false,
+        "description": "Service is headless"
+      },
+      {
+        "input": "kubectl get statefulset mongodb -o jsonpath='{.spec.volumeClaimTemplates[0].spec.resources.requests.storage}'",
+        "expectedOutput": "1Gi",
+        "isHidden": true,
+        "description": "Volume claim template requests 1Gi"
+      }
+    ],
+    "language": "yaml"
+  },
+  {
+    "id": "cs405-t4-ex13",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-4",
+    "title": "Create RBAC ServiceAccount and RoleBinding",
+    "difficulty": 5,
+    "description": "Create RBAC resources to grant permissions to a ServiceAccount.\n\nRequirements:\n1. ServiceAccount name: 'app-sa'\n2. Role name: 'pod-reader'\n3. Grant permissions: get, list, watch on pods\n4. RoleBinding name: 'read-pods'\n5. Bind the role to the ServiceAccount in default namespace",
+    "starterCode": "apiVersion: v1\nkind: ServiceAccount\nmetadata:\n  name: # TODO: Add ServiceAccount name\n---\napiVersion: rbac.authorization.k8s.io/v1\nkind: Role\nmetadata:\n  name: # TODO: Add Role name\nrules:\n# TODO: Add rules\n---\napiVersion: rbac.authorization.k8s.io/v1\nkind: RoleBinding\nmetadata:\n  name: # TODO: Add RoleBinding name\nsubjects:\n# TODO: Add subjects\nroleRef:\n  # TODO: Add roleRef",
+    "solution": "apiVersion: v1\nkind: ServiceAccount\nmetadata:\n  name: app-sa\n  namespace: default\n  labels:\n    app: myapp\n---\napiVersion: rbac.authorization.k8s.io/v1\nkind: Role\nmetadata:\n  name: pod-reader\n  namespace: default\nrules:\n- apiGroups: [\"\"]\n  resources: [\"pods\"]\n  verbs: [\"get\", \"list\", \"watch\"]\n---\napiVersion: rbac.authorization.k8s.io/v1\nkind: RoleBinding\nmetadata:\n  name: read-pods\n  namespace: default\nroleRef:\n  apiGroup: rbac.authorization.k8s.io\n  kind: Role\n  name: pod-reader\nsubjects:\n- kind: ServiceAccount\n  name: app-sa\n  namespace: default",
+    "hints": [
+      "ServiceAccounts provide identity for processes running in pods",
+      "Roles define permissions within a namespace",
+      "RoleBindings grant Role permissions to subjects",
+      "Use ClusterRole and ClusterRoleBinding for cluster-wide permissions"
+    ],
+    "testCases": [
+      {
+        "input": "kubectl apply -f rbac.yaml",
+        "expectedOutput": "serviceaccount/app-sa created",
+        "isHidden": false,
+        "description": "RBAC resources created successfully"
+      },
+      {
+        "input": "kubectl get role pod-reader -o jsonpath='{.rules[0].verbs}'",
+        "expectedOutput": "[\"get\",\"list\",\"watch\"]",
+        "isHidden": false,
+        "description": "Role has correct verbs"
+      },
+      {
+        "input": "kubectl get rolebinding read-pods -o jsonpath='{.subjects[0].name}'",
+        "expectedOutput": "app-sa",
+        "isHidden": false,
+        "description": "RoleBinding references ServiceAccount"
+      },
+      {
+        "input": "kubectl get role pod-reader -o jsonpath='{.rules[0].resources}'",
+        "expectedOutput": "[\"pods\"]",
+        "isHidden": true,
+        "description": "Role grants access to pods resource"
+      }
+    ],
+    "language": "yaml"
+  },
+  {
+    "id": "cs405-t4-ex14",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-4",
+    "title": "Create a Network Policy",
+    "difficulty": 5,
+    "description": "Create a NetworkPolicy to restrict pod-to-pod communication.\n\nRequirements:\n1. NetworkPolicy name: 'backend-netpol'\n2. Apply to pods with label: app=backend\n3. Allow ingress from pods with label: app=frontend on port 8080\n4. Allow egress to pods with label: app=database on port 5432\n5. Deny all other traffic",
+    "starterCode": "apiVersion: networking.k8s.io/v1\nkind: NetworkPolicy\nmetadata:\n  name: # TODO: Add NetworkPolicy name\nspec:\n  podSelector:\n    # TODO: Add pod selector\n  policyTypes:\n  # TODO: Add policy types\n  ingress:\n  # TODO: Add ingress rules\n  egress:\n  # TODO: Add egress rules",
+    "solution": "apiVersion: networking.k8s.io/v1\nkind: NetworkPolicy\nmetadata:\n  name: backend-netpol\n  namespace: default\nspec:\n  podSelector:\n    matchLabels:\n      app: backend\n  policyTypes:\n  - Ingress\n  - Egress\n  ingress:\n  - from:\n    - podSelector:\n        matchLabels:\n          app: frontend\n    ports:\n    - protocol: TCP\n      port: 8080\n  egress:\n  - to:\n    - podSelector:\n        matchLabels:\n          app: database\n    ports:\n    - protocol: TCP\n      port: 5432\n  - to:\n    - namespaceSelector: {}\n      podSelector:\n        matchLabels:\n          k8s-app: kube-dns\n    ports:\n    - protocol: UDP\n      port: 53",
+    "hints": [
+      "NetworkPolicies require a CNI plugin that supports them (Calico, Cilium, etc.)",
+      "podSelector determines which pods the policy applies to",
+      "Empty podSelector {} selects all pods in namespace",
+      "Always allow DNS egress for name resolution"
+    ],
+    "testCases": [
+      {
+        "input": "kubectl apply -f networkpolicy.yaml",
+        "expectedOutput": "networkpolicy.networking.k8s.io/backend-netpol created",
+        "isHidden": false,
+        "description": "NetworkPolicy created successfully"
+      },
+      {
+        "input": "kubectl get networkpolicy backend-netpol -o jsonpath='{.spec.podSelector.matchLabels.app}'",
+        "expectedOutput": "backend",
+        "isHidden": false,
+        "description": "Policy applies to backend pods"
+      },
+      {
+        "input": "kubectl get networkpolicy backend-netpol -o jsonpath='{.spec.ingress[0].from[0].podSelector.matchLabels.app}'",
+        "expectedOutput": "frontend",
+        "isHidden": false,
+        "description": "Ingress allowed from frontend pods"
+      },
+      {
+        "input": "kubectl get networkpolicy backend-netpol -o jsonpath='{.spec.egress[0].ports[0].port}'",
+        "expectedOutput": "5432",
+        "isHidden": true,
+        "description": "Egress allowed to database on port 5432"
+      }
+    ],
+    "language": "yaml"
+  },
+  {
+    "id": "cs405-t4-ex15",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-4",
+    "title": "Create a Multi-Container Pod",
+    "difficulty": 3,
+    "description": "Create a Pod with multiple containers demonstrating the sidecar pattern.\n\nRequirements:\n1. Pod name: 'web-with-logging'\n2. Main container: nginx:1.25, port 80\n3. Sidecar container: busybox running log collector\n4. Shared volume: emptyDir mounted at /var/log/nginx (main) and /logs (sidecar)\n5. Sidecar command: tail -f /logs/access.log",
+    "starterCode": "apiVersion: v1\nkind: Pod\nmetadata:\n  name: # TODO: Add pod name\nspec:\n  containers:\n  - name: nginx\n    image: # TODO: Add main container image\n    ports:\n    - containerPort: # TODO: Add port\n    volumeMounts:\n    # TODO: Add volume mount for main container\n  - name: log-collector\n    image: # TODO: Add sidecar image\n    command: # TODO: Add command\n    volumeMounts:\n    # TODO: Add volume mount for sidecar\n  volumes:\n  # TODO: Add shared volume",
+    "solution": "apiVersion: v1\nkind: Pod\nmetadata:\n  name: web-with-logging\n  labels:\n    app: web\n    pattern: sidecar\nspec:\n  containers:\n  - name: nginx\n    image: nginx:1.25\n    ports:\n    - name: http\n      containerPort: 80\n      protocol: TCP\n    volumeMounts:\n    - name: logs\n      mountPath: /var/log/nginx\n  - name: log-collector\n    image: busybox:1.36\n    command: ['sh', '-c', 'touch /logs/access.log && tail -f /logs/access.log']\n    volumeMounts:\n    - name: logs\n      mountPath: /logs\n  volumes:\n  - name: logs\n    emptyDir: {}",
+    "hints": [
+      "Sidecar containers extend the main container's functionality",
+      "emptyDir volumes are shared between containers in the same pod",
+      "All containers in a pod share the same network namespace",
+      "Common sidecar use cases: logging, monitoring, proxying"
+    ],
+    "testCases": [
+      {
+        "input": "kubectl apply -f pod.yaml",
+        "expectedOutput": "pod/web-with-logging created",
+        "isHidden": false,
+        "description": "Multi-container pod created"
+      },
+      {
+        "input": "kubectl get pod web-with-logging -o jsonpath='{.spec.containers[*].name}'",
+        "expectedOutput": "nginx log-collector",
+        "isHidden": false,
+        "description": "Pod has both containers"
+      },
+      {
+        "input": "kubectl get pod web-with-logging -o jsonpath='{.status.containerStatuses[*].ready}' | grep -o 'true' | wc -l",
+        "expectedOutput": "2",
+        "isHidden": false,
+        "description": "Both containers are ready"
+      },
+      {
+        "input": "kubectl get pod web-with-logging -o jsonpath='{.spec.volumes[0].emptyDir}'",
+        "expectedOutput": "{}",
+        "isHidden": true,
+        "description": "Shared volume is emptyDir"
+      }
+    ],
+    "language": "yaml"
+  },
+  {
+    "id": "cs405-t4-ex16",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-4",
+    "title": "Create a DaemonSet for Node Monitoring",
+    "difficulty": 5,
+    "description": "Create a DaemonSet to run a monitoring agent on every node in the cluster.\n\nRequirements:\n1. DaemonSet name: 'node-monitor'\n2. Image: 'prom/node-exporter:latest'\n3. hostNetwork: true, hostPID: true\n4. Mount host /proc to /host/proc (read-only)\n5. Mount host /sys to /host/sys (read-only)\n6. Run as privileged container",
+    "starterCode": "apiVersion: apps/v1\nkind: DaemonSet\nmetadata:\n  name: # TODO: Add DaemonSet name\nspec:\n  selector:\n    matchLabels:\n      app: node-monitor\n  template:\n    metadata:\n      labels:\n        app: node-monitor\n    spec:\n      hostNetwork: # TODO: Enable host network\n      hostPID: # TODO: Enable host PID\n      containers:\n      - name: node-exporter\n        image: # TODO: Add image\n        # TODO: Add security context\n        volumeMounts:\n        # TODO: Add volume mounts\n      volumes:\n      # TODO: Add host path volumes",
+    "solution": "apiVersion: apps/v1\nkind: DaemonSet\nmetadata:\n  name: node-monitor\n  labels:\n    app: node-monitor\nspec:\n  selector:\n    matchLabels:\n      app: node-monitor\n  template:\n    metadata:\n      labels:\n        app: node-monitor\n    spec:\n      hostNetwork: true\n      hostPID: true\n      containers:\n      - name: node-exporter\n        image: prom/node-exporter:latest\n        args:\n        - '--path.procfs=/host/proc'\n        - '--path.sysfs=/host/sys'\n        ports:\n        - name: metrics\n          containerPort: 9100\n          hostPort: 9100\n        securityContext:\n          privileged: true\n          runAsUser: 0\n        volumeMounts:\n        - name: proc\n          mountPath: /host/proc\n          readOnly: true\n        - name: sys\n          mountPath: /host/sys\n          readOnly: true\n        resources:\n          requests:\n            memory: \"64Mi\"\n            cpu: \"50m\"\n          limits:\n            memory: \"128Mi\"\n            cpu: \"200m\"\n      volumes:\n      - name: proc\n        hostPath:\n          path: /proc\n          type: Directory\n      - name: sys\n        hostPath:\n          path: /sys\n          type: Directory\n      tolerations:\n      - effect: NoSchedule\n        key: node-role.kubernetes.io/control-plane\n        operator: Exists",
+    "hints": [
+      "DaemonSets ensure a copy runs on each node",
+      "hostNetwork allows the pod to use the node's network",
+      "hostPath volumes mount directories from the node filesystem",
+      "Add tolerations to run on control plane nodes if needed"
+    ],
+    "testCases": [
+      {
+        "input": "kubectl apply -f daemonset.yaml",
+        "expectedOutput": "daemonset.apps/node-monitor created",
+        "isHidden": false,
+        "description": "DaemonSet created successfully"
+      },
+      {
+        "input": "kubectl get daemonset node-monitor -o jsonpath='{.spec.template.spec.hostNetwork}'",
+        "expectedOutput": "true",
+        "isHidden": false,
+        "description": "Host network is enabled"
+      },
+      {
+        "input": "kubectl get daemonset node-monitor -o jsonpath='{.spec.template.spec.hostPID}'",
+        "expectedOutput": "true",
+        "isHidden": false,
+        "description": "Host PID is enabled"
+      },
+      {
+        "input": "kubectl get daemonset node-monitor -o jsonpath='{.spec.template.spec.containers[0].securityContext.privileged}'",
+        "expectedOutput": "true",
+        "isHidden": true,
+        "description": "Container runs as privileged"
       }
     ],
     "language": "yaml"

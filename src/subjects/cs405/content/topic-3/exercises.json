@@ -74,5 +74,523 @@
       }
     ],
     "language": "yaml"
+  },
+  {
+    "id": "cs405-t3-ex03",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-3",
+    "title": "Basic Dockerfile for Python App",
+    "difficulty": 1,
+    "description": "Create a simple Dockerfile for a Python Flask application that:\n\n1. Uses Python 3.11 base image\n2. Sets a working directory\n3. Copies requirements.txt and installs dependencies\n4. Copies the application code\n5. Exposes port 5000\n6. Runs the Flask application",
+    "starterCode": "# Dockerfile\n# TODO: Add Python base image\n\n# TODO: Set working directory\n\n# TODO: Copy and install dependencies\n\n# TODO: Copy application code\n\n# TODO: Expose port\n\n# TODO: Run application",
+    "solution": "# Dockerfile\nFROM python:3.11-slim\n\n# Set working directory\nWORKDIR /app\n\n# Copy requirements file\nCOPY requirements.txt .\n\n# Install dependencies\nRUN pip install --no-cache-dir -r requirements.txt\n\n# Copy application code\nCOPY . .\n\n# Expose port 5000\nEXPOSE 5000\n\n# Run the application\nCMD [\"python\", \"app.py\"]",
+    "hints": [
+      "Start with FROM to specify the base image",
+      "WORKDIR creates and sets the working directory",
+      "Install dependencies before copying code for better caching",
+      "Use CMD to specify the command to run when container starts"
+    ],
+    "testCases": [
+      {
+        "input": "docker build -t flask-app .",
+        "expectedOutput": "Image builds successfully",
+        "isHidden": false,
+        "description": "Build basic Flask Docker image"
+      },
+      {
+        "input": "docker run -p 5000:5000 flask-app",
+        "expectedOutput": "Container runs and exposes port 5000",
+        "isHidden": false,
+        "description": "Run Flask container"
+      },
+      {
+        "input": "docker inspect flask-app",
+        "expectedOutput": "Port 5000 is exposed in image config",
+        "isHidden": true,
+        "description": "Verify port configuration"
+      }
+    ],
+    "language": "dockerfile"
+  },
+  {
+    "id": "cs405-t3-ex04",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-3",
+    "title": "Docker Volume Basics",
+    "difficulty": 1,
+    "description": "Write Docker CLI commands to:\n\n1. Create a named volume called 'mydata'\n2. Run a container with the volume mounted to /data\n3. List all volumes\n4. Inspect the volume details\n5. Remove the volume\n\nUse the official nginx:alpine image for the container.",
+    "starterCode": "# Create volume\n# TODO: docker volume create command\n\n# Run container with volume\n# TODO: docker run command with volume mount\n\n# List volumes\n# TODO: docker volume ls command\n\n# Inspect volume\n# TODO: docker volume inspect command\n\n# Remove volume\n# TODO: docker volume rm command",
+    "solution": "# Create named volume\ndocker volume create mydata\n\n# Run container with volume mounted\ndocker run -d --name web -v mydata:/data nginx:alpine\n\n# List all volumes\ndocker volume ls\n\n# Inspect volume details\ndocker volume inspect mydata\n\n# Stop and remove container first\ndocker stop web\ndocker rm web\n\n# Remove the volume\ndocker volume rm mydata",
+    "hints": [
+      "Use 'docker volume create' to create named volumes",
+      "The -v flag mounts volumes: -v volume_name:/container/path",
+      "Must remove containers using a volume before removing it",
+      "docker volume inspect shows detailed volume information"
+    ],
+    "testCases": [
+      {
+        "input": "docker volume create mydata",
+        "expectedOutput": "mydata",
+        "isHidden": false,
+        "description": "Create named volume"
+      },
+      {
+        "input": "docker volume ls",
+        "expectedOutput": "mydata volume appears in list",
+        "isHidden": false,
+        "description": "List volumes"
+      },
+      {
+        "input": "docker volume inspect mydata",
+        "expectedOutput": "Volume details with mountpoint",
+        "isHidden": true,
+        "description": "Inspect volume configuration"
+      }
+    ],
+    "language": "bash"
+  },
+  {
+    "id": "cs405-t3-ex05",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-3",
+    "title": "Basic Container Networking",
+    "difficulty": 1,
+    "description": "Create Docker commands to:\n\n1. Create a custom bridge network called 'app-network'\n2. Run two containers (nginx and redis) on this network\n3. Verify they can communicate by name\n4. List network details\n\nContainers on the same network can communicate using container names as hostnames.",
+    "starterCode": "# Create custom network\n# TODO: docker network create command\n\n# Run nginx container on network\n# TODO: docker run with network\n\n# Run redis container on network\n# TODO: docker run with network\n\n# Test connectivity\n# TODO: exec command to test connection",
+    "solution": "# Create custom bridge network\ndocker network create app-network\n\n# Run nginx container on the network\ndocker run -d --name web --network app-network nginx:alpine\n\n# Run redis container on the network\ndocker run -d --name cache --network app-network redis:alpine\n\n# Test connectivity - ping redis from nginx container\ndocker exec web ping -c 3 cache\n\n# Inspect network to see connected containers\ndocker network inspect app-network\n\n# Cleanup\ndocker stop web cache\ndocker rm web cache\ndocker network rm app-network",
+    "hints": [
+      "docker network create creates a custom bridge network",
+      "Use --network flag when running containers",
+      "Containers can reach each other using container names",
+      "docker exec allows running commands inside containers"
+    ],
+    "testCases": [
+      {
+        "input": "docker network create app-network",
+        "expectedOutput": "Network created successfully",
+        "isHidden": false,
+        "description": "Create custom bridge network"
+      },
+      {
+        "input": "docker network inspect app-network",
+        "expectedOutput": "Shows both containers connected",
+        "isHidden": false,
+        "description": "Verify containers on network"
+      },
+      {
+        "input": "docker exec web ping -c 1 cache",
+        "expectedOutput": "Successful ping response",
+        "isHidden": true,
+        "description": "Test container communication"
+      }
+    ],
+    "language": "bash"
+  },
+  {
+    "id": "cs405-t3-ex06",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-3",
+    "title": "Dockerfile with Environment Variables",
+    "difficulty": 2,
+    "description": "Create a Dockerfile for a Node.js application that:\n\n1. Uses node:18-alpine base image\n2. Accepts build arguments for NODE_ENV\n3. Sets environment variables\n4. Installs dependencies based on NODE_ENV\n5. Uses ARG and ENV appropriately\n\nDemonstrate understanding of the difference between ARG and ENV.",
+    "starterCode": "# Dockerfile\n# TODO: Add base image\n\n# TODO: Add build argument\n\n# TODO: Set environment variables\n\n# TODO: Install dependencies conditionally\n\n# TODO: Copy app and set command",
+    "solution": "# Dockerfile\nFROM node:18-alpine\n\n# Build argument (available only during build)\nARG NODE_ENV=production\n\n# Set working directory\nWORKDIR /app\n\n# Copy package files\nCOPY package*.json ./\n\n# Install dependencies based on environment\nRUN if [ \"$NODE_ENV\" = \"production\" ] ; then \\\n      npm ci --only=production ; \\\n    else \\\n      npm ci ; \\\n    fi\n\n# Set environment variable (available at runtime)\nENV NODE_ENV=${NODE_ENV} \\\n    PORT=3000\n\n# Copy application code\nCOPY . .\n\n# Expose port\nEXPOSE 3000\n\n# Run application\nCMD [\"node\", \"server.js\"]\n\n# Build examples:\n# Production: docker build --build-arg NODE_ENV=production -t myapp:prod .\n# Development: docker build --build-arg NODE_ENV=development -t myapp:dev .",
+    "hints": [
+      "ARG is for build-time variables, ENV is for runtime",
+      "Use ${ARG_NAME} to reference build arguments",
+      "ENV can be set from ARG values",
+      "Conditional RUN commands use shell syntax"
+    ],
+    "testCases": [
+      {
+        "input": "docker build --build-arg NODE_ENV=production -t app:prod .",
+        "expectedOutput": "Production build with only production dependencies",
+        "isHidden": false,
+        "description": "Build production image"
+      },
+      {
+        "input": "docker build --build-arg NODE_ENV=development -t app:dev .",
+        "expectedOutput": "Development build with all dependencies",
+        "isHidden": false,
+        "description": "Build development image"
+      },
+      {
+        "input": "docker inspect app:prod",
+        "expectedOutput": "ENV contains NODE_ENV=production",
+        "isHidden": true,
+        "description": "Verify environment variables"
+      }
+    ],
+    "language": "dockerfile"
+  },
+  {
+    "id": "cs405-t3-ex07",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-3",
+    "title": "Docker Bind Mounts for Development",
+    "difficulty": 2,
+    "description": "Write a Docker run command that sets up a development environment:\n\n1. Uses the official node:18 image\n2. Mounts the current directory to /app in the container\n3. Runs in interactive mode with a TTY\n4. Sets the working directory\n5. Runs npm run dev when started\n\nBind mounts allow live code updates without rebuilding.",
+    "starterCode": "# Docker run command for development environment\n# TODO: Add proper flags for bind mount and interactive mode\n\ndocker run TODO",
+    "solution": "# Docker run command with bind mount for development\ndocker run -it \\\n  --name dev-container \\\n  -v $(pwd):/app \\\n  -w /app \\\n  -p 3000:3000 \\\n  node:18 \\\n  npm run dev\n\n# Alternative with --mount syntax (more explicit)\ndocker run -it \\\n  --name dev-container \\\n  --mount type=bind,source=$(pwd),target=/app \\\n  -w /app \\\n  -p 3000:3000 \\\n  node:18 \\\n  npm run dev\n\n# For detached mode (background)\ndocker run -d \\\n  --name dev-container \\\n  -v $(pwd):/app \\\n  -w /app \\\n  -p 3000:3000 \\\n  node:18 \\\n  npm run dev",
+    "hints": [
+      "-v $(pwd):/app creates a bind mount from current directory",
+      "-it combines -i (interactive) and -t (TTY)",
+      "-w sets the working directory inside container",
+      "-p maps ports from container to host"
+    ],
+    "testCases": [
+      {
+        "input": "docker run -it -v $(pwd):/app -w /app node:18 npm run dev",
+        "expectedOutput": "Container starts with live code sync",
+        "isHidden": false,
+        "description": "Run development container with bind mount"
+      },
+      {
+        "input": "echo 'test' >> app.js",
+        "expectedOutput": "Changes reflect immediately in container",
+        "isHidden": false,
+        "description": "Test live code updates"
+      },
+      {
+        "input": "docker inspect dev-container",
+        "expectedOutput": "Bind mount configuration visible",
+        "isHidden": true,
+        "description": "Verify bind mount setup"
+      }
+    ],
+    "language": "bash"
+  },
+  {
+    "id": "cs405-t3-ex08",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-3",
+    "title": "Container Logging and Debugging",
+    "difficulty": 2,
+    "description": "Write Docker commands to troubleshoot and debug a containerized application:\n\n1. View container logs (last 50 lines)\n2. Follow logs in real-time\n3. Check container resource usage\n4. Execute a shell inside a running container\n5. Copy files from container to host\n\nDebugging containers is essential for development and production.",
+    "starterCode": "# View last 50 log lines\n# TODO: docker logs command\n\n# Follow logs in real-time\n# TODO: docker logs with follow\n\n# Check resource usage\n# TODO: docker stats command\n\n# Execute shell in container\n# TODO: docker exec command\n\n# Copy file from container\n# TODO: docker cp command",
+    "solution": "# View last 50 lines of logs\ndocker logs --tail 50 myapp\n\n# Follow logs in real-time\ndocker logs -f myapp\n\n# Follow with timestamp\ndocker logs -f --timestamps myapp\n\n# Check resource usage (CPU, memory, network)\ndocker stats myapp\n\n# Check resource usage for all containers (no streaming)\ndocker stats --no-stream\n\n# Execute interactive shell in running container\ndocker exec -it myapp /bin/sh\n\n# Execute single command\ndocker exec myapp ls -la /app\n\n# Copy file from container to host\ndocker cp myapp:/app/logs/error.log ./local-error.log\n\n# Copy file from host to container\ndocker cp ./config.json myapp:/app/config/\n\n# View container processes\ndocker top myapp\n\n# Inspect container details\ndocker inspect myapp | grep -i status",
+    "hints": [
+      "Use --tail to limit log output",
+      "-f flag follows logs like 'tail -f'",
+      "docker stats shows live resource metrics",
+      "docker exec needs -it for interactive shell"
+    ],
+    "testCases": [
+      {
+        "input": "docker logs --tail 50 myapp",
+        "expectedOutput": "Last 50 log entries displayed",
+        "isHidden": false,
+        "description": "View recent logs"
+      },
+      {
+        "input": "docker stats --no-stream myapp",
+        "expectedOutput": "Resource usage statistics",
+        "isHidden": false,
+        "description": "Check container resource usage"
+      },
+      {
+        "input": "docker exec -it myapp /bin/sh",
+        "expectedOutput": "Interactive shell inside container",
+        "isHidden": true,
+        "description": "Access container shell"
+      }
+    ],
+    "language": "bash"
+  },
+  {
+    "id": "cs405-t3-ex09",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-3",
+    "title": "Optimized Multi-Layer Dockerfile",
+    "difficulty": 3,
+    "description": "Create an optimized Dockerfile for a Java Spring Boot application that:\n\n1. Minimizes image size using appropriate base images\n2. Optimizes layer caching for dependencies\n3. Uses .dockerignore to exclude unnecessary files\n4. Implements proper layer ordering\n5. Includes metadata labels\n\nDemonstrate understanding of Docker layer caching and optimization.",
+    "starterCode": "# Dockerfile\n# TODO: Choose optimal base image\n\n# TODO: Optimize layer caching\n\n# TODO: Add metadata\n\n# .dockerignore\n# TODO: Exclude unnecessary files",
+    "solution": "# Dockerfile\n# Use official OpenJDK slim image\nFROM eclipse-temurin:17-jdk-alpine AS build\n\n# Add metadata\nLABEL maintainer=\"dev@example.com\" \\\n      version=\"1.0\" \\\n      description=\"Spring Boot application\"\n\n# Install Maven\nRUN apk add --no-cache maven\n\n# Set working directory\nWORKDIR /app\n\n# Copy only pom.xml first (for dependency caching)\nCOPY pom.xml .\n\n# Download dependencies (cached if pom.xml unchanged)\nRUN mvn dependency:go-offline\n\n# Copy source code\nCOPY src ./src\n\n# Build application\nRUN mvn package -DskipTests\n\n# Production stage with minimal runtime\nFROM eclipse-temurin:17-jre-alpine\n\n# Create non-root user\nRUN addgroup -g 1000 appuser && \\\n    adduser -D -u 1000 -G appuser appuser\n\nWORKDIR /app\n\n# Copy only the built JAR from build stage\nCOPY --from=build --chown=appuser:appuser /app/target/*.jar app.jar\n\n# Switch to non-root user\nUSER appuser\n\n# Expose port\nEXPOSE 8080\n\n# Run application\nENTRYPOINT [\"java\", \"-jar\", \"app.jar\"]\n\n# .dockerignore file:\n# target/\n# .git/\n# .gitignore\n# *.md\n# .mvn/\n# .idea/\n# .vscode/\n# *.iml\n# .DS_Store\n# Dockerfile\n# docker-compose.yml",
+    "hints": [
+      "Separate dependencies and code into different layers",
+      "Copy pom.xml before source code for better caching",
+      "Use multi-stage builds to reduce final image size",
+      "Alpine images are smaller than debian-based images"
+    ],
+    "testCases": [
+      {
+        "input": "docker build -t spring-app .",
+        "expectedOutput": "Image builds with optimized layers",
+        "isHidden": false,
+        "description": "Build optimized Spring Boot image"
+      },
+      {
+        "input": "docker history spring-app",
+        "expectedOutput": "Small image size with minimal layers",
+        "isHidden": false,
+        "description": "Verify layer optimization"
+      },
+      {
+        "input": "docker inspect spring-app",
+        "expectedOutput": "Labels present, runs as non-root",
+        "isHidden": true,
+        "description": "Check metadata and security"
+      }
+    ],
+    "language": "dockerfile"
+  },
+  {
+    "id": "cs405-t3-ex10",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-3",
+    "title": "Docker Compose Service Dependencies",
+    "difficulty": 3,
+    "description": "Create a docker-compose.yml for a web application with proper service dependencies:\n\n1. PostgreSQL database (starts first)\n2. Redis cache (starts after database)\n3. Backend API (depends on both)\n4. Use health checks for proper startup order\n5. Configure restart policies\n\nEnsure services start in the correct order and wait for dependencies to be ready.",
+    "starterCode": "version: '3.8'\n\nservices:\n  # TODO: Define database service\n  \n  # TODO: Define cache service\n  \n  # TODO: Define backend service with dependencies\n\nnetworks:\n  # TODO: Define network",
+    "solution": "version: '3.8'\n\nservices:\n  # PostgreSQL Database\n  database:\n    image: postgres:15-alpine\n    container_name: app-db\n    restart: unless-stopped\n    environment:\n      POSTGRES_DB: appdb\n      POSTGRES_USER: appuser\n      POSTGRES_PASSWORD: secret\n    volumes:\n      - db-data:/var/lib/postgresql/data\n    networks:\n      - backend\n    healthcheck:\n      test: [\"CMD-SHELL\", \"pg_isready -U appuser\"]\n      interval: 5s\n      timeout: 3s\n      retries: 5\n\n  # Redis Cache\n  cache:\n    image: redis:7-alpine\n    container_name: app-cache\n    restart: unless-stopped\n    depends_on:\n      database:\n        condition: service_healthy\n    volumes:\n      - cache-data:/data\n    networks:\n      - backend\n    healthcheck:\n      test: [\"CMD\", \"redis-cli\", \"ping\"]\n      interval: 5s\n      timeout: 3s\n      retries: 5\n\n  # Backend API\n  backend:\n    build: .\n    container_name: app-backend\n    restart: unless-stopped\n    depends_on:\n      database:\n        condition: service_healthy\n      cache:\n        condition: service_healthy\n    environment:\n      DB_HOST: database\n      DB_PORT: 5432\n      DB_NAME: appdb\n      DB_USER: appuser\n      DB_PASSWORD: secret\n      REDIS_HOST: cache\n      REDIS_PORT: 6379\n    ports:\n      - \"3000:3000\"\n    networks:\n      - backend\n    healthcheck:\n      test: [\"CMD\", \"curl\", \"-f\", \"http://localhost:3000/health\"]\n      interval: 10s\n      timeout: 5s\n      retries: 3\n      start_period: 10s\n\nnetworks:\n  backend:\n    driver: bridge\n\nvolumes:\n  db-data:\n  cache-data:",
+    "hints": [
+      "Use depends_on with condition: service_healthy",
+      "Health checks determine when a service is ready",
+      "restart: unless-stopped ensures services stay running",
+      "Named volumes persist data across restarts"
+    ],
+    "testCases": [
+      {
+        "input": "docker compose up",
+        "expectedOutput": "Services start in correct order: db, cache, backend",
+        "isHidden": false,
+        "description": "Start services with dependency order"
+      },
+      {
+        "input": "docker compose ps",
+        "expectedOutput": "All services healthy",
+        "isHidden": false,
+        "description": "Verify all services running"
+      },
+      {
+        "input": "docker compose logs backend",
+        "expectedOutput": "Backend starts after dependencies ready",
+        "isHidden": true,
+        "description": "Check startup sequence"
+      }
+    ],
+    "language": "yaml"
+  },
+  {
+    "id": "cs405-t3-ex11",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-3",
+    "title": "Container Registry and Image Tagging",
+    "difficulty": 3,
+    "description": "Write commands to properly tag and push Docker images to a container registry:\n\n1. Build an image with multiple tags\n2. Tag image for different registries (Docker Hub, private registry)\n3. Push to Docker Hub\n4. Pull from registry\n5. Use semantic versioning for tags\n\nProper tagging is crucial for version management and deployments.",
+    "starterCode": "# Build with tags\n# TODO: docker build with tags\n\n# Tag for different registries\n# TODO: docker tag commands\n\n# Push to registry\n# TODO: docker push commands\n\n# Pull from registry\n# TODO: docker pull commands",
+    "solution": "# Build image with primary tag\ndocker build -t myapp:1.2.3 .\n\n# Tag with additional semantic version tags\ndocker tag myapp:1.2.3 myapp:1.2\ndocker tag myapp:1.2.3 myapp:1\ndocker tag myapp:1.2.3 myapp:latest\n\n# Tag for Docker Hub (username/image:tag)\ndocker tag myapp:1.2.3 myusername/myapp:1.2.3\ndocker tag myapp:1.2.3 myusername/myapp:latest\n\n# Tag for private registry\ndocker tag myapp:1.2.3 registry.company.com/myapp:1.2.3\ndocker tag myapp:1.2.3 registry.company.com/myapp:latest\n\n# Login to Docker Hub\ndocker login -u myusername\n\n# Push all tags to Docker Hub\ndocker push myusername/myapp:1.2.3\ndocker push myusername/myapp:latest\n\n# Login to private registry\ndocker login registry.company.com\n\n# Push to private registry\ndocker push registry.company.com/myapp:1.2.3\ndocker push registry.company.com/myapp:latest\n\n# Pull from registry (by different users/servers)\ndocker pull myusername/myapp:1.2.3\ndocker pull myusername/myapp:latest\n\n# Pull specific version\ndocker pull registry.company.com/myapp:1.2.3\n\n# List all tags for an image\ndocker images myapp",
+    "hints": [
+      "Use semantic versioning: major.minor.patch",
+      "Tag same image multiple times for flexibility",
+      "Include registry URL for private registries",
+      "Always tag with specific version AND latest"
+    ],
+    "testCases": [
+      {
+        "input": "docker tag myapp:1.2.3 myusername/myapp:1.2.3",
+        "expectedOutput": "Image tagged for Docker Hub",
+        "isHidden": false,
+        "description": "Tag image for registry"
+      },
+      {
+        "input": "docker images myapp",
+        "expectedOutput": "Multiple tags shown for same image ID",
+        "isHidden": false,
+        "description": "Verify multiple tags"
+      },
+      {
+        "input": "docker push myusername/myapp:1.2.3",
+        "expectedOutput": "Image pushed to registry",
+        "isHidden": true,
+        "description": "Push to Docker Hub"
+      }
+    ],
+    "language": "bash"
+  },
+  {
+    "id": "cs405-t3-ex12",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-3",
+    "title": "Advanced Docker Networking",
+    "difficulty": 4,
+    "description": "Design and implement a multi-tier application network architecture:\n\n1. Create three networks: frontend, backend, database\n2. Place nginx reverse proxy on frontend network\n3. Place application server on both frontend and backend\n4. Place database on backend network only\n5. Configure network isolation and security\n\nDemonstrate network segmentation for security and isolation.",
+    "starterCode": "# Create networks\n# TODO: Create frontend, backend, database networks\n\n# Run containers on appropriate networks\n# TODO: nginx, app, database containers\n\n# Test network isolation\n# TODO: Verify connectivity and isolation",
+    "solution": "# Create three isolated networks\ndocker network create frontend\ndocker network create backend\ndocker network create database --internal  # No external access\n\n# Run database on isolated database network\ndocker run -d \\\n  --name postgres \\\n  --network database \\\n  -e POSTGRES_PASSWORD=secret \\\n  postgres:15-alpine\n\n# Run application server on backend and database networks\ndocker run -d \\\n  --name app \\\n  --network backend \\\n  -e DB_HOST=postgres \\\n  myapp:latest\n\n# Connect app to database network\ndocker network connect database app\n\n# Run nginx reverse proxy on frontend and backend networks\ndocker run -d \\\n  --name nginx \\\n  --network frontend \\\n  -p 80:80 \\\n  -v $(pwd)/nginx.conf:/etc/nginx/nginx.conf:ro \\\n  nginx:alpine\n\n# Connect nginx to backend to reach app\ndocker network connect backend nginx\n\n# Network topology:\n# Internet -> nginx (frontend + backend) -> app (backend + database) -> postgres (database)\n\n# Test connectivity\n# nginx can reach app\ndocker exec nginx ping -c 1 app  # Success\n\n# nginx CANNOT reach database (security isolation)\ndocker exec nginx ping -c 1 postgres  # Fails\n\n# app CAN reach database\ndocker exec app ping -c 1 postgres  # Success\n\n# Inspect networks\ndocker network inspect frontend\ndocker network inspect backend\ndocker network inspect database\n\n# nginx.conf for reference:\n# events {}\n# http {\n#   upstream backend {\n#     server app:3000;\n#   }\n#   server {\n#     listen 80;\n#     location / {\n#       proxy_pass http://backend;\n#     }\n#   }\n# }",
+    "hints": [
+      "Use --internal flag for networks with no external access",
+      "Connect containers to multiple networks with docker network connect",
+      "Test isolation by attempting connections between containers",
+      "Network segmentation provides defense in depth"
+    ],
+    "testCases": [
+      {
+        "input": "docker network ls",
+        "expectedOutput": "Three networks: frontend, backend, database",
+        "isHidden": false,
+        "description": "Verify all networks created"
+      },
+      {
+        "input": "docker network inspect backend",
+        "expectedOutput": "Shows nginx and app connected",
+        "isHidden": false,
+        "description": "Check backend network connectivity"
+      },
+      {
+        "input": "docker exec nginx ping -c 1 postgres",
+        "expectedOutput": "Fails - nginx cannot reach database",
+        "isHidden": true,
+        "description": "Verify network isolation"
+      }
+    ],
+    "language": "bash"
+  },
+  {
+    "id": "cs405-t3-ex13",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-3",
+    "title": "Docker Security Best Practices",
+    "difficulty": 4,
+    "description": "Create a security-hardened Dockerfile that implements best practices:\n\n1. Runs as non-root user\n2. Uses minimal base image\n3. Scans for vulnerabilities\n4. Implements read-only root filesystem\n5. Drops unnecessary capabilities\n6. Includes security scanning in build process\n\nSecurity should be built into images, not added later.",
+    "starterCode": "# Dockerfile\n# TODO: Implement security hardening\n\n# docker-compose.yml with security options\n# TODO: Add security constraints",
+    "solution": "# Dockerfile with security hardening\nFROM node:18-alpine AS builder\n\n# Install dependencies for building\nWORKDIR /build\nCOPY package*.json ./\nRUN npm ci --only=production\n\n# Production stage with minimal image\nFROM node:18-alpine\n\n# Install dumb-init for proper signal handling\nRUN apk add --no-cache dumb-init\n\n# Create non-root user with specific UID/GID\nRUN addgroup -g 1001 -S nodejs && \\\n    adduser -S nodejs -u 1001 -G nodejs\n\n# Set working directory\nWORKDIR /app\n\n# Copy dependencies and code with correct ownership\nCOPY --from=builder --chown=nodejs:nodejs /build/node_modules ./node_modules\nCOPY --chown=nodejs:nodejs . .\n\n# Remove unnecessary packages and files\nRUN apk del apk-tools && \\\n    rm -rf /var/cache/apk/* && \\\n    rm -rf /tmp/*\n\n# Switch to non-root user\nUSER nodejs\n\n# Expose port (non-privileged)\nEXPOSE 3000\n\n# Health check\nHEALTHCHECK --interval=30s --timeout=3s \\\n  CMD node -e \"require('http').get('http://localhost:3000/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1))\"\n\n# Use dumb-init for proper signal handling\nENTRYPOINT [\"dumb-init\", \"--\"]\nCMD [\"node\", \"server.js\"]\n\n# docker-compose.yml with security options\n# version: '3.8'\n# services:\n#   app:\n#     build: .\n#     security_opt:\n#       - no-new-privileges:true\n#     cap_drop:\n#       - ALL\n#     cap_add:\n#       - NET_BIND_SERVICE\n#     read_only: true\n#     tmpfs:\n#       - /tmp\n#       - /app/logs\n#     user: \"1001:1001\"\n#     restart: unless-stopped\n\n# Security scanning commands:\n# docker scan myapp:latest\n# trivy image myapp:latest\n# docker scout cves myapp:latest",
+    "hints": [
+      "Never run containers as root in production",
+      "Alpine images have smaller attack surface",
+      "Use read-only root filesystem where possible",
+      "Drop all capabilities and add only what's needed"
+    ],
+    "testCases": [
+      {
+        "input": "docker build -t secure-app .",
+        "expectedOutput": "Image builds with security hardening",
+        "isHidden": false,
+        "description": "Build secure Docker image"
+      },
+      {
+        "input": "docker inspect secure-app",
+        "expectedOutput": "User is 'nodejs' (non-root)",
+        "isHidden": false,
+        "description": "Verify non-root user"
+      },
+      {
+        "input": "docker run --read-only --tmpfs /tmp secure-app",
+        "expectedOutput": "Container runs with read-only filesystem",
+        "isHidden": true,
+        "description": "Test read-only filesystem"
+      }
+    ],
+    "language": "dockerfile"
+  },
+  {
+    "id": "cs405-t3-ex14",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-3",
+    "title": "Advanced Multi-Stage Build Pipeline",
+    "difficulty": 5,
+    "description": "Create a sophisticated multi-stage Dockerfile for a full-stack application:\n\n1. Stage 1: Build frontend (React/Vue)\n2. Stage 2: Build backend (Go/Rust)\n3. Stage 3: Run tests\n4. Stage 4: Minimal production image\n5. Implement build caching optimization\n6. Support multiple target environments\n\nDemonstrate advanced Docker build techniques and optimization.",
+    "starterCode": "# Dockerfile for full-stack app\n# TODO: Frontend build stage\n\n# TODO: Backend build stage\n\n# TODO: Test stage\n\n# TODO: Production stage\n\n# Build targets for different environments",
+    "solution": "# Multi-stage Dockerfile for full-stack application\n\n# ============================================\n# Stage 1: Frontend Build (React)\n# ============================================\nFROM node:18-alpine AS frontend-builder\n\nWORKDIR /frontend\n\n# Copy frontend dependencies\nCOPY frontend/package*.json ./\n\n# Install dependencies with caching\nRUN --mount=type=cache,target=/root/.npm \\\n    npm ci\n\n# Copy frontend source\nCOPY frontend/ .\n\n# Build production frontend\nARG REACT_APP_API_URL=/api\nRUN npm run build\n\n# ============================================\n# Stage 2: Backend Build (Go)\n# ============================================\nFROM golang:1.21-alpine AS backend-builder\n\nWORKDIR /backend\n\n# Install build dependencies\nRUN apk add --no-cache git gcc musl-dev\n\n# Copy go mod files for dependency caching\nCOPY backend/go.mod backend/go.sum ./\n\n# Download dependencies (cached layer)\nRUN --mount=type=cache,target=/go/pkg/mod \\\n    go mod download\n\n# Copy backend source\nCOPY backend/ .\n\n# Build statically linked binary\nRUN --mount=type=cache,target=/go/pkg/mod \\\n    --mount=type=cache,target=/root/.cache/go-build \\\n    CGO_ENABLED=0 GOOS=linux go build \\\n    -ldflags='-w -s -extldflags \"-static\"' \\\n    -o app ./cmd/server\n\n# ============================================\n# Stage 3: Testing (optional target)\n# ============================================\nFROM backend-builder AS tester\n\nWORKDIR /backend\n\n# Run backend tests\nRUN go test -v ./...\n\n# Run frontend tests\nCOPY --from=frontend-builder /frontend /frontend\nWORKDIR /frontend\nRUN npm test -- --watchAll=false\n\n# ============================================\n# Stage 4: Production Runtime\n# ============================================\nFROM alpine:3.18 AS production\n\n# Install runtime dependencies\nRUN apk add --no-cache ca-certificates tzdata\n\n# Create non-root user\nRUN addgroup -g 1001 -S appgroup && \\\n    adduser -S appuser -u 1001 -G appgroup\n\n# Create necessary directories\nRUN mkdir -p /app/static && \\\n    chown -R appuser:appgroup /app\n\nWORKDIR /app\n\n# Copy backend binary\nCOPY --from=backend-builder --chown=appuser:appgroup \\\n    /backend/app ./\n\n# Copy frontend static files\nCOPY --from=frontend-builder --chown=appuser:appgroup \\\n    /frontend/build ./static\n\n# Switch to non-root user\nUSER appuser\n\n# Expose port\nEXPOSE 8080\n\n# Health check\nHEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \\\n    CMD [\"./app\", \"health\"]\n\n# Run application\nENTRYPOINT [\"./app\"]\n\n# ============================================\n# Stage 5: Development (optional target)\n# ============================================\nFROM golang:1.21-alpine AS development\n\nWORKDIR /app\n\n# Install development tools\nRUN apk add --no-cache git gcc musl-dev nodejs npm\nRUN go install github.com/cosmtrek/air@latest\n\n# Development runs with air for live reload\nCMD [\"air\"]\n\n# Build commands:\n# Production: docker build --target production -t myapp:prod .\n# With tests: docker build --target tester -t myapp:test .\n# Development: docker build --target development -t myapp:dev .\n\n# Optimization features:\n# - BuildKit cache mounts for npm and go modules\n# - Separate dependency and source layers\n# - Statically linked Go binary\n# - Minimal Alpine runtime (< 20MB)\n# - Multiple build targets\n# - Non-root user execution",
+    "hints": [
+      "Use --mount=type=cache for build cache optimization",
+      "Build frontend and backend in parallel stages",
+      "Copy only necessary artifacts to production stage",
+      "Support multiple targets with FROM ... AS name"
+    ],
+    "testCases": [
+      {
+        "input": "DOCKER_BUILDKIT=1 docker build --target production -t app:prod .",
+        "expectedOutput": "Optimized production image < 30MB",
+        "isHidden": false,
+        "description": "Build optimized production image"
+      },
+      {
+        "input": "docker build --target tester -t app:test .",
+        "expectedOutput": "All tests pass",
+        "isHidden": false,
+        "description": "Run test stage"
+      },
+      {
+        "input": "docker history app:prod",
+        "expectedOutput": "Minimal layers, small image size",
+        "isHidden": true,
+        "description": "Verify image optimization"
+      }
+    ],
+    "language": "dockerfile"
+  },
+  {
+    "id": "cs405-t3-ex15",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-3",
+    "title": "Docker Compose Production Deployment",
+    "difficulty": 5,
+    "description": "Create a production-ready docker-compose.yml with:\n\n1. Multiple environments (dev, staging, prod)\n2. Secrets management\n3. Resource limits and reservations\n4. Logging configuration\n5. Auto-scaling and load balancing\n6. Health checks and restart policies\n7. Backup and monitoring services\n\nDemonstrate enterprise-grade Docker Compose configuration.",
+    "starterCode": "# docker-compose.yml\nversion: '3.8'\n\n# TODO: Complete production configuration\n\n# docker-compose.override.yml for development\n# TODO: Development overrides\n\n# docker-compose.prod.yml for production\n# TODO: Production-specific configuration",
+    "solution": "# docker-compose.yml (base configuration)\nversion: '3.8'\n\nservices:\n  # Load Balancer\n  nginx:\n    image: nginx:alpine\n    ports:\n      - \"80:80\"\n      - \"443:443\"\n    volumes:\n      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro\n      - ./nginx/ssl:/etc/nginx/ssl:ro\n      - nginx-cache:/var/cache/nginx\n    networks:\n      - frontend\n    deploy:\n      replicas: 2\n      resources:\n        limits:\n          cpus: '0.5'\n          memory: 512M\n        reservations:\n          cpus: '0.25'\n          memory: 256M\n      restart_policy:\n        condition: on-failure\n        delay: 5s\n        max_attempts: 3\n    logging:\n      driver: \"json-file\"\n      options:\n        max-size: \"10m\"\n        max-file: \"3\"\n    healthcheck:\n      test: [\"CMD\", \"wget\", \"--quiet\", \"--tries=1\", \"--spider\", \"http://localhost/health\"]\n      interval: 30s\n      timeout: 10s\n      retries: 3\n      start_period: 40s\n\n  # Application Server (scalable)\n  app:\n    build:\n      context: .\n      target: production\n      cache_from:\n        - myapp:latest\n    image: myapp:${VERSION:-latest}\n    secrets:\n      - db_password\n      - api_key\n    environment:\n      NODE_ENV: ${NODE_ENV:-production}\n      DB_HOST: postgres\n      DB_USER: ${DB_USER}\n      REDIS_HOST: redis\n    depends_on:\n      postgres:\n        condition: service_healthy\n      redis:\n        condition: service_healthy\n    networks:\n      - frontend\n      - backend\n    deploy:\n      replicas: 3\n      update_config:\n        parallelism: 1\n        delay: 10s\n        order: start-first\n      rollback_config:\n        parallelism: 1\n        delay: 5s\n      resources:\n        limits:\n          cpus: '1'\n          memory: 1G\n        reservations:\n          cpus: '0.5'\n          memory: 512M\n      restart_policy:\n        condition: any\n        delay: 5s\n        max_attempts: 5\n        window: 120s\n    logging:\n      driver: \"json-file\"\n      options:\n        max-size: \"50m\"\n        max-file: \"5\"\n        labels: \"service=app,environment=${NODE_ENV}\"\n    healthcheck:\n      test: [\"CMD\", \"node\", \"healthcheck.js\"]\n      interval: 30s\n      timeout: 10s\n      retries: 3\n      start_period: 60s\n\n  # PostgreSQL Database\n  postgres:\n    image: postgres:15-alpine\n    secrets:\n      - db_password\n    environment:\n      POSTGRES_DB: ${DB_NAME:-appdb}\n      POSTGRES_USER: ${DB_USER:-appuser}\n      POSTGRES_PASSWORD_FILE: /run/secrets/db_password\n      PGDATA: /var/lib/postgresql/data/pgdata\n    volumes:\n      - postgres-data:/var/lib/postgresql/data\n      - ./postgres/init:/docker-entrypoint-initdb.d:ro\n      - postgres-backups:/backups\n    networks:\n      - backend\n    deploy:\n      resources:\n        limits:\n          cpus: '2'\n          memory: 2G\n        reservations:\n          cpus: '1'\n          memory: 1G\n      placement:\n        constraints:\n          - node.role == manager\n    logging:\n      driver: \"json-file\"\n      options:\n        max-size: \"100m\"\n        max-file: \"5\"\n    healthcheck:\n      test: [\"CMD-SHELL\", \"pg_isready -U ${DB_USER:-appuser}\"]\n      interval: 10s\n      timeout: 5s\n      retries: 5\n\n  # Redis Cache\n  redis:\n    image: redis:7-alpine\n    command: redis-server --appendonly yes --requirepass \"$REDIS_PASSWORD\"\n    volumes:\n      - redis-data:/data\n    networks:\n      - backend\n    deploy:\n      resources:\n        limits:\n          cpus: '0.5'\n          memory: 512M\n    logging:\n      driver: \"json-file\"\n      options:\n        max-size: \"10m\"\n        max-file: \"3\"\n    healthcheck:\n      test: [\"CMD\", \"redis-cli\", \"ping\"]\n      interval: 5s\n      timeout: 3s\n      retries: 5\n\n  # Backup Service\n  backup:\n    image: postgres:15-alpine\n    depends_on:\n      - postgres\n    volumes:\n      - postgres-backups:/backups\n      - ./scripts/backup.sh:/backup.sh:ro\n    networks:\n      - backend\n    environment:\n      PGHOST: postgres\n      PGUSER: ${DB_USER}\n      PGPASSWORD_FILE: /run/secrets/db_password\n    secrets:\n      - db_password\n    command: |\n      sh -c '\n        while true; do\n          sleep 86400  # Daily backups\n          pg_dump -Fc appdb > /backups/backup_$$(date +%Y%m%d_%H%M%S).dump\n          find /backups -name \"*.dump\" -mtime +7 -delete  # Keep 7 days\n        done\n      '\n    deploy:\n      replicas: 1\n      placement:\n        constraints:\n          - node.role == manager\n\n  # Monitoring (Prometheus)\n  prometheus:\n    image: prom/prometheus:latest\n    volumes:\n      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro\n      - prometheus-data:/prometheus\n    networks:\n      - backend\n      - monitoring\n    ports:\n      - \"9090:9090\"\n    command:\n      - '--config.file=/etc/prometheus/prometheus.yml'\n      - '--storage.tsdb.path=/prometheus'\n      - '--storage.tsdb.retention.time=30d'\n    deploy:\n      resources:\n        limits:\n          cpus: '1'\n          memory: 1G\n\n  # Metrics Exporter\n  node-exporter:\n    image: prom/node-exporter:latest\n    networks:\n      - monitoring\n    deploy:\n      mode: global  # One per node\n\nnetworks:\n  frontend:\n    driver: overlay\n    attachable: true\n  backend:\n    driver: overlay\n    internal: true\n  monitoring:\n    driver: overlay\n\nvolumes:\n  postgres-data:\n    driver: local\n  postgres-backups:\n    driver: local\n  redis-data:\n    driver: local\n  nginx-cache:\n    driver: local\n  prometheus-data:\n    driver: local\n\nsecrets:\n  db_password:\n    file: ./secrets/db_password.txt\n  api_key:\n    file: ./secrets/api_key.txt\n\n# docker-compose.override.yml (development)\n# version: '3.8'\n# services:\n#   app:\n#     build:\n#       target: development\n#     volumes:\n#       - .:/app\n#     environment:\n#       NODE_ENV: development\n#     command: npm run dev\n\n# docker-compose.prod.yml (production overrides)\n# version: '3.8'\n# services:\n#   app:\n#     deploy:\n#       replicas: 5\n#   postgres:\n#     deploy:\n#       replicas: 1\n#       placement:\n#         constraints:\n#           - node.labels.postgres == true\n\n# Deploy commands:\n# Development: docker-compose up\n# Production: docker stack deploy -c docker-compose.yml -c docker-compose.prod.yml myapp",
+    "hints": [
+      "Use secrets for sensitive data, not environment variables",
+      "Set resource limits to prevent one service consuming all resources",
+      "Configure logging to prevent disk space issues",
+      "Use health checks with restart policies for resilience"
+    ],
+    "testCases": [
+      {
+        "input": "docker-compose config",
+        "expectedOutput": "Valid compose file with all services",
+        "isHidden": false,
+        "description": "Validate compose configuration"
+      },
+      {
+        "input": "docker stack deploy -c docker-compose.yml myapp",
+        "expectedOutput": "Stack deployed with all services",
+        "isHidden": false,
+        "description": "Deploy to Docker Swarm"
+      },
+      {
+        "input": "docker service ls",
+        "expectedOutput": "All services running with replicas",
+        "isHidden": true,
+        "description": "Verify service deployment"
+      }
+    ],
+    "language": "yaml"
+  },
+  {
+    "id": "cs405-t3-ex16",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-3",
+    "title": "Container Orchestration Strategy",
+    "difficulty": 5,
+    "description": "Design a comprehensive container deployment strategy document that addresses:\n\n1. Image build and optimization pipeline\n2. Registry management and security\n3. Network architecture and segmentation\n4. Storage and data persistence strategy\n5. Monitoring and logging infrastructure\n6. Disaster recovery and backup procedures\n7. Security scanning and compliance\n8. CI/CD integration\n\nThis is a written exercise evaluated by AI. Provide a detailed architectural document.",
+    "starterCode": "# Container Deployment Strategy\n\n## 1. Image Build Pipeline\nTODO: Describe build process\n\n## 2. Registry Management\nTODO: Describe registry strategy\n\n## 3. Network Architecture\nTODO: Describe network design\n\n## 4. Storage Strategy\nTODO: Describe storage approach\n\n## 5. Monitoring & Logging\nTODO: Describe observability\n\n## 6. Disaster Recovery\nTODO: Describe backup and recovery\n\n## 7. Security & Compliance\nTODO: Describe security measures\n\n## 8. CI/CD Integration\nTODO: Describe deployment pipeline",
+    "solution": "# Container Deployment Strategy for Production Environment\n\n## Executive Summary\nThis document outlines a comprehensive container deployment strategy for a production microservices application, focusing on reliability, security, scalability, and operational excellence.\n\n## 1. Image Build and Optimization Pipeline\n\n### Build Process\n- **Multi-stage builds**: Separate build, test, and production stages to minimize final image size\n- **Layer caching**: Structure Dockerfiles to maximize cache hit rates by copying dependencies before source code\n- **BuildKit optimizations**: Use cache mounts for package managers (npm, go mod, pip)\n- **Base image strategy**: Use official Alpine images for minimal size; use specific version tags (not 'latest')\n- **Static analysis**: Integrate Hadolint for Dockerfile linting in CI pipeline\n\n### Image Tagging Convention\n- Semantic versioning: `registry/app:1.2.3`\n- Git commit SHA: `registry/app:1.2.3-abc1234`\n- Environment tags: `registry/app:1.2.3-production`\n- Branch tags for development: `registry/app:develop-abc1234`\n\n### Size Optimization\n- Target < 100MB for application images\n- Remove build tools from production images\n- Use .dockerignore to exclude unnecessary files\n- Compress layers with `--squash` when appropriate\n\n## 2. Registry Management and Security\n\n### Registry Architecture\n- **Primary**: Private Docker Registry (Harbor or AWS ECR) for production images\n- **Staging**: Separate registry namespace for pre-production testing\n- **Development**: Docker Hub or internal registry for development images\n- **Backup**: Mirror critical images to secondary registry for disaster recovery\n\n### Security Controls\n- **Image signing**: Use Docker Content Trust (DCT) or Notary for image verification\n- **Vulnerability scanning**: Automated scanning with Trivy or Clair on push\n- **Access control**: RBAC with service accounts for CI/CD, read-only for most users\n- **Retention policies**: Keep last 10 versions of each image, purge older versions monthly\n- **Encryption**: TLS for registry communication, encryption at rest for stored images\n\n### Image Promotion Pipeline\n1. Build and push to dev registry with commit SHA\n2. Automated tests run against dev image\n3. Security scan passes threshold (no critical vulnerabilities)\n4. Promote to staging registry\n5. Integration tests in staging environment\n6. Manual approval for production promotion\n7. Tag and push to production registry\n\n## 3. Network Architecture and Segmentation\n\n### Network Topology\n- **Frontend Network**: Load balancers and reverse proxies only\n- **Application Network**: Application services, can communicate with frontend and backend\n- **Backend Network**: Databases, caches, internal services (isolated from internet)\n- **Monitoring Network**: Prometheus, Grafana, log collectors\n- **Management Network**: Administrative tools, backup services\n\n### Security Segmentation\n- Use overlay networks for multi-host communication\n- Mark backend networks as internal (no external routing)\n- Implement network policies to restrict cross-network communication\n- All external traffic routed through API gateway/load balancer\n\n### DNS and Service Discovery\n- Internal DNS for service-to-service communication\n- Container names as hostnames within networks\n- Health checks before adding to DNS pool\n- TTL of 30 seconds for quick failover\n\n## 4. Storage and Data Persistence Strategy\n\n### Volume Types\n- **Named volumes**: For database data, persistent across container restarts\n- **Bind mounts**: For configuration files (read-only), development environments\n- **tmpfs mounts**: For temporary data, secrets in memory\n- **Network storage**: NFS or cloud storage for shared data across hosts\n\n### Database Storage\n- Dedicated volumes for each database instance\n- Regular snapshots (daily minimum)\n- Backup volumes to separate physical storage\n- Use volume drivers for cloud integration (AWS EBS, Azure Disk)\n\n### Stateless Application Design\n- Application containers are ephemeral and stateless\n- Session state in Redis/Memcached\n- Uploaded files in object storage (S3, MinIO)\n- Configuration via environment variables or config services\n\n### Backup Strategy\n- Automated daily backups of all named volumes\n- Incremental backups every 6 hours for critical databases\n- Retention: Daily for 7 days, weekly for 4 weeks, monthly for 12 months\n- Test restore procedures quarterly\n\n## 5. Monitoring and Logging Infrastructure\n\n### Metrics Collection\n- **Container metrics**: CPU, memory, network, disk I/O via cAdvisor\n- **Application metrics**: Custom metrics exposed via /metrics endpoint (Prometheus format)\n- **Infrastructure metrics**: Node exporter on each host\n- **Business metrics**: Transaction counts, error rates, response times\n\n### Monitoring Stack\n- Prometheus for metrics collection and alerting\n- Grafana for visualization and dashboards\n- Alert Manager for notification routing\n- PagerDuty integration for critical alerts\n\n### Logging Architecture\n- **Collection**: Fluentd or Filebeat on each host\n- **Aggregation**: Elasticsearch cluster for log storage\n- **Visualization**: Kibana for log analysis\n- **Retention**: 30 days in hot storage, 90 days in warm storage\n\n### Alerting Rules\n- Container restarts > 3 in 5 minutes: Critical\n- Memory usage > 90%: Warning, > 95%: Critical\n- CPU usage > 80% sustained: Warning\n- Health check failures: Critical\n- Disk space < 10%: Critical\n\n## 6. Disaster Recovery and Backup Procedures\n\n### Recovery Objectives\n- **RTO (Recovery Time Objective)**: 4 hours for full service restoration\n- **RPO (Recovery Point Objective)**: 1 hour maximum data loss\n\n### Backup Components\n- Docker images stored in multiple registries (geo-redundant)\n- Volume snapshots to cloud storage (S3, GCS)\n- Database dumps with point-in-time recovery\n- Configuration files in version control (GitOps)\n- Infrastructure as Code (Terraform) in version control\n\n### Disaster Recovery Procedures\n1. Maintain hot standby in secondary region\n2. Automated failover for critical services\n3. Regular DR drills (quarterly minimum)\n4. Documented runbooks for manual recovery\n5. Restore from backup tested monthly\n\n### High Availability\n- Minimum 3 replicas for critical services\n- Distribute replicas across availability zones\n- Use health checks and automatic restart\n- Load balancing across all healthy instances\n\n## 7. Security and Compliance\n\n### Container Security\n- **Run as non-root**: All containers use unprivileged users (UID > 1000)\n- **Read-only root filesystem**: Enable where possible, use tmpfs for temp files\n- **Drop capabilities**: Remove all capabilities, add only required ones\n- **No privileged containers**: Prohibit --privileged flag\n- **Seccomp profiles**: Apply restrictive seccomp profiles\n- **AppArmor/SELinux**: Enforce mandatory access control\n\n### Secrets Management\n- Never commit secrets to version control\n- Use Docker secrets or Kubernetes secrets\n- Rotate secrets quarterly minimum\n- Integrate with HashiCorp Vault for secret storage\n- Secrets mounted as files, not environment variables\n\n### Vulnerability Management\n- Automated scanning on every image build\n- Block deployment of images with critical vulnerabilities\n- Monthly patching cycle for base images\n- Subscribe to security advisories for base images\n\n### Compliance\n- Regular security audits (quarterly)\n- Penetration testing (annually)\n- Access logs retained for 1 year\n- Compliance with SOC 2, PCI-DSS, or HIPAA as required\n\n### Network Security\n- TLS for all inter-service communication\n- mTLS for highly sensitive services\n- Web Application Firewall (WAF) for public endpoints\n- DDoS protection at load balancer level\n\n## 8. CI/CD Integration\n\n### Build Pipeline\n1. **Source**: Code pushed to Git repository\n2. **Lint**: Dockerfile linting with Hadolint\n3. **Build**: Multi-stage Docker build with BuildKit\n4. **Test**: Run unit tests in test stage\n5. **Scan**: Security scanning with Trivy\n6. **Push**: Push to development registry\n7. **Integration Test**: Deploy to test environment, run integration tests\n8. **Promote**: Tag and push to staging/production registry\n\n### Deployment Pipeline\n1. **Trigger**: Manual approval or automated on merge to main\n2. **Pull**: Pull latest image from registry\n3. **Health Check**: Verify current deployment is healthy\n4. **Rolling Update**: Deploy new version with zero downtime\n5. **Verification**: Run smoke tests against new deployment\n6. **Rollback**: Automatic rollback if health checks fail\n\n### GitOps Workflow\n- Infrastructure and deployment configs in Git\n- Pull requests for all changes\n- Automated deployment on merge to main\n- ArgoCD or Flux for continuous reconciliation\n- Separate repositories for code and configuration\n\n### Quality Gates\n- All tests must pass (unit, integration, e2e)\n- Code coverage > 80%\n- No critical security vulnerabilities\n- Dockerfile best practices compliance\n- Performance regression tests pass\n\n## Conclusion\n\nThis container deployment strategy provides a robust, secure, and scalable foundation for production workloads. Key principles:\n\n- **Security by default**: Non-root users, minimal images, vulnerability scanning\n- **Reliability**: Health checks, auto-restart, multi-replica deployment\n- **Observability**: Comprehensive monitoring and logging\n- **Automation**: CI/CD pipeline for consistent, repeatable deployments\n- **Disaster recovery**: Regular backups, tested recovery procedures\n\nRegular review and updates to this strategy ensure it evolves with changing requirements and best practices.",
+    "hints": [
+      "Cover the entire container lifecycle from build to production",
+      "Address security at every layer: image, network, runtime",
+      "Include specific tools and technologies, not just concepts",
+      "Provide concrete metrics and thresholds for monitoring"
+    ],
+    "testCases": [
+      {
+        "input": "Review of deployment strategy document",
+        "expectedOutput": "Comprehensive coverage of all 8 areas with specific implementation details",
+        "isHidden": false,
+        "description": "Evaluate completeness of strategy"
+      },
+      {
+        "input": "Security assessment",
+        "expectedOutput": "Security measures at image, network, and runtime levels",
+        "isHidden": false,
+        "description": "Verify security coverage"
+      },
+      {
+        "input": "Operational readiness review",
+        "expectedOutput": "Monitoring, logging, backup, and DR procedures documented",
+        "isHidden": true,
+        "description": "Check operational preparedness"
+      }
+    ],
+    "language": "markdown"
   }
 ]

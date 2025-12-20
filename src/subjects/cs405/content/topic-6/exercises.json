@@ -29,5 +29,488 @@
       }
     ],
     "language": "bash"
+  },
+  {
+    "id": "cs405-t6-ex02",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-6",
+    "title": "S3 Bucket CRUD Operations",
+    "difficulty": 1,
+    "description": "Implement basic S3 operations using boto3:\n\n1. Create a bucket\n2. Upload a file\n3. List all files\n4. Download a file\n5. Delete a file and bucket",
+    "starterCode": "import boto3\n\ndef create_bucket(bucket_name, region='us-east-1'):\n    # TODO: Create S3 bucket\n    pass\n\ndef upload_file(bucket_name, file_path, object_name):\n    # TODO: Upload file to S3\n    pass\n\ndef list_objects(bucket_name):\n    # TODO: List all objects in bucket\n    pass\n\ndef download_file(bucket_name, object_name, file_path):\n    # TODO: Download file from S3\n    pass\n\ndef delete_object(bucket_name, object_name):\n    # TODO: Delete object from S3\n    pass",
+    "solution": "import boto3\nfrom botocore.exceptions import ClientError\n\ndef create_bucket(bucket_name, region='us-east-1'):\n    s3_client = boto3.client('s3', region_name=region)\n    try:\n        if region == 'us-east-1':\n            s3_client.create_bucket(Bucket=bucket_name)\n        else:\n            s3_client.create_bucket(\n                Bucket=bucket_name,\n                CreateBucketConfiguration={'LocationConstraint': region}\n            )\n        return True\n    except ClientError as e:\n        print(f\"Error: {e}\")\n        return False\n\ndef upload_file(bucket_name, file_path, object_name):\n    s3_client = boto3.client('s3')\n    try:\n        s3_client.upload_file(file_path, bucket_name, object_name)\n        return True\n    except ClientError as e:\n        print(f\"Error: {e}\")\n        return False\n\ndef list_objects(bucket_name):\n    s3_client = boto3.client('s3')\n    try:\n        response = s3_client.list_objects_v2(Bucket=bucket_name)\n        if 'Contents' in response:\n            return [obj['Key'] for obj in response['Contents']]\n        return []\n    except ClientError as e:\n        print(f\"Error: {e}\")\n        return []\n\ndef download_file(bucket_name, object_name, file_path):\n    s3_client = boto3.client('s3')\n    try:\n        s3_client.download_file(bucket_name, object_name, file_path)\n        return True\n    except ClientError as e:\n        print(f\"Error: {e}\")\n        return False\n\ndef delete_object(bucket_name, object_name):\n    s3_client = boto3.client('s3')\n    try:\n        s3_client.delete_object(Bucket=bucket_name, Key=object_name)\n        return True\n    except ClientError as e:\n        print(f\"Error: {e}\")\n        return False",
+    "hints": [
+      "Use boto3.client('s3') to create an S3 client",
+      "Handle different region configurations for bucket creation",
+      "Use list_objects_v2 instead of deprecated list_objects",
+      "Always handle ClientError exceptions"
+    ],
+    "testCases": [
+      {
+        "input": "create_bucket('test-bucket')",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Create bucket successfully"
+      },
+      {
+        "input": "upload_file('test-bucket', 'file.txt', 'file.txt')",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Upload file to bucket"
+      },
+      {
+        "input": "list_objects('test-bucket')",
+        "expectedOutput": "['file.txt']",
+        "isHidden": false,
+        "description": "List objects in bucket"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs405-t6-ex03",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-6",
+    "title": "DynamoDB Table Operations",
+    "difficulty": 1,
+    "description": "Create a DynamoDB table and perform basic CRUD operations:\n\n1. Create a table with partition key\n2. Put an item\n3. Get an item\n4. Update an item\n5. Delete an item",
+    "starterCode": "import boto3\n\ndef create_table(table_name):\n    # TODO: Create DynamoDB table\n    pass\n\ndef put_item(table_name, item):\n    # TODO: Put item in table\n    pass\n\ndef get_item(table_name, key):\n    # TODO: Get item from table\n    pass\n\ndef update_item(table_name, key, updates):\n    # TODO: Update item\n    pass\n\ndef delete_item(table_name, key):\n    # TODO: Delete item\n    pass",
+    "solution": "import boto3\nfrom botocore.exceptions import ClientError\n\ndef create_table(table_name):\n    dynamodb = boto3.resource('dynamodb')\n    try:\n        table = dynamodb.create_table(\n            TableName=table_name,\n            KeySchema=[\n                {'AttributeName': 'id', 'KeyType': 'HASH'}\n            ],\n            AttributeDefinitions=[\n                {'AttributeName': 'id', 'AttributeType': 'S'}\n            ],\n            BillingMode='PAY_PER_REQUEST'\n        )\n        table.wait_until_exists()\n        return True\n    except ClientError as e:\n        print(f\"Error: {e}\")\n        return False\n\ndef put_item(table_name, item):\n    dynamodb = boto3.resource('dynamodb')\n    table = dynamodb.Table(table_name)\n    try:\n        table.put_item(Item=item)\n        return True\n    except ClientError as e:\n        print(f\"Error: {e}\")\n        return False\n\ndef get_item(table_name, key):\n    dynamodb = boto3.resource('dynamodb')\n    table = dynamodb.Table(table_name)\n    try:\n        response = table.get_item(Key=key)\n        return response.get('Item', None)\n    except ClientError as e:\n        print(f\"Error: {e}\")\n        return None\n\ndef update_item(table_name, key, updates):\n    dynamodb = boto3.resource('dynamodb')\n    table = dynamodb.Table(table_name)\n    try:\n        update_expr = 'SET ' + ', '.join([f\"{k} = :{k}\" for k in updates.keys()])\n        expr_values = {f\":{k}\": v for k, v in updates.items()}\n        table.update_item(\n            Key=key,\n            UpdateExpression=update_expr,\n            ExpressionAttributeValues=expr_values\n        )\n        return True\n    except ClientError as e:\n        print(f\"Error: {e}\")\n        return False\n\ndef delete_item(table_name, key):\n    dynamodb = boto3.resource('dynamodb')\n    table = dynamodb.Table(table_name)\n    try:\n        table.delete_item(Key=key)\n        return True\n    except ClientError as e:\n        print(f\"Error: {e}\")\n        return False",
+    "hints": [
+      "Use boto3.resource('dynamodb') for higher-level operations",
+      "Set BillingMode to PAY_PER_REQUEST for flexibility",
+      "Wait for table creation with wait_until_exists()",
+      "Use UpdateExpression for partial updates"
+    ],
+    "testCases": [
+      {
+        "input": "create_table('users')",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Create DynamoDB table"
+      },
+      {
+        "input": "put_item('users', {'id': '1', 'name': 'Alice'})",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Put item in table"
+      },
+      {
+        "input": "get_item('users', {'id': '1'})",
+        "expectedOutput": "{'id': '1', 'name': 'Alice'}",
+        "isHidden": false,
+        "description": "Get item from table"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs405-t6-ex04",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-6",
+    "title": "Redis Cache Implementation",
+    "difficulty": 1,
+    "description": "Implement a simple caching layer using Redis:\n\n1. Connect to Redis\n2. Set key-value pairs with TTL\n3. Get cached values\n4. Implement cache-aside pattern\n5. Handle cache misses",
+    "starterCode": "import redis\n\nclass CacheManager:\n    def __init__(self, host='localhost', port=6379):\n        # TODO: Initialize Redis connection\n        pass\n    \n    def set_cache(self, key, value, ttl=300):\n        # TODO: Set value with TTL\n        pass\n    \n    def get_cache(self, key):\n        # TODO: Get cached value\n        pass\n    \n    def get_or_fetch(self, key, fetch_func, ttl=300):\n        # TODO: Implement cache-aside pattern\n        pass",
+    "solution": "import redis\nimport json\n\nclass CacheManager:\n    def __init__(self, host='localhost', port=6379):\n        self.redis_client = redis.Redis(\n            host=host,\n            port=port,\n            decode_responses=True\n        )\n    \n    def set_cache(self, key, value, ttl=300):\n        try:\n            serialized = json.dumps(value)\n            self.redis_client.setex(key, ttl, serialized)\n            return True\n        except Exception as e:\n            print(f\"Error setting cache: {e}\")\n            return False\n    \n    def get_cache(self, key):\n        try:\n            value = self.redis_client.get(key)\n            if value:\n                return json.loads(value)\n            return None\n        except Exception as e:\n            print(f\"Error getting cache: {e}\")\n            return None\n    \n    def get_or_fetch(self, key, fetch_func, ttl=300):\n        # Try to get from cache\n        cached = self.get_cache(key)\n        if cached is not None:\n            return cached\n        \n        # Cache miss - fetch from source\n        value = fetch_func()\n        if value is not None:\n            self.set_cache(key, value, ttl)\n        return value\n    \n    def delete_cache(self, key):\n        try:\n            self.redis_client.delete(key)\n            return True\n        except Exception as e:\n            print(f\"Error deleting cache: {e}\")\n            return False\n    \n    def clear_all(self):\n        try:\n            self.redis_client.flushdb()\n            return True\n        except Exception as e:\n            print(f\"Error clearing cache: {e}\")\n            return False",
+    "hints": [
+      "Use redis.Redis() with decode_responses=True for string handling",
+      "Use setex() to set value with expiration in one operation",
+      "Serialize complex objects with json.dumps/loads",
+      "Cache-aside pattern: check cache first, fetch on miss, then cache"
+    ],
+    "testCases": [
+      {
+        "input": "cache.set_cache('user:1', {'name': 'Alice'}, 60)",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Set cache with TTL"
+      },
+      {
+        "input": "cache.get_cache('user:1')",
+        "expectedOutput": "{'name': 'Alice'}",
+        "isHidden": false,
+        "description": "Get cached value"
+      },
+      {
+        "input": "cache.get_or_fetch('user:2', lambda: {'name': 'Bob'})",
+        "expectedOutput": "{'name': 'Bob'}",
+        "isHidden": false,
+        "description": "Cache-aside pattern"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs405-t6-ex05",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-6",
+    "title": "S3 Multipart Upload Handler",
+    "difficulty": 2,
+    "description": "Implement a multipart upload handler for large files to S3:\n\n1. Initiate multipart upload\n2. Upload parts in chunks\n3. Complete multipart upload\n4. Handle failures and cleanup\n5. Track upload progress",
+    "starterCode": "import boto3\nimport os\n\nclass MultipartUploader:\n    def __init__(self, bucket_name, chunk_size=5*1024*1024):\n        # TODO: Initialize uploader\n        pass\n    \n    def upload_file(self, file_path, object_name):\n        # TODO: Implement multipart upload\n        pass",
+    "solution": "import boto3\nimport os\nfrom botocore.exceptions import ClientError\n\nclass MultipartUploader:\n    def __init__(self, bucket_name, chunk_size=5*1024*1024):\n        self.s3_client = boto3.client('s3')\n        self.bucket_name = bucket_name\n        self.chunk_size = chunk_size\n    \n    def upload_file(self, file_path, object_name):\n        file_size = os.path.getsize(file_path)\n        \n        # Initiate multipart upload\n        try:\n            response = self.s3_client.create_multipart_upload(\n                Bucket=self.bucket_name,\n                Key=object_name\n            )\n            upload_id = response['UploadId']\n        except ClientError as e:\n            print(f\"Error initiating upload: {e}\")\n            return False\n        \n        parts = []\n        part_number = 1\n        \n        try:\n            with open(file_path, 'rb') as f:\n                while True:\n                    data = f.read(self.chunk_size)\n                    if not data:\n                        break\n                    \n                    # Upload part\n                    response = self.s3_client.upload_part(\n                        Bucket=self.bucket_name,\n                        Key=object_name,\n                        PartNumber=part_number,\n                        UploadId=upload_id,\n                        Body=data\n                    )\n                    \n                    parts.append({\n                        'PartNumber': part_number,\n                        'ETag': response['ETag']\n                    })\n                    \n                    progress = (part_number * self.chunk_size) / file_size * 100\n                    print(f\"Progress: {min(progress, 100):.1f}%\")\n                    part_number += 1\n            \n            # Complete multipart upload\n            self.s3_client.complete_multipart_upload(\n                Bucket=self.bucket_name,\n                Key=object_name,\n                UploadId=upload_id,\n                MultipartUpload={'Parts': parts}\n            )\n            return True\n            \n        except Exception as e:\n            print(f\"Error during upload: {e}\")\n            # Abort multipart upload on failure\n            try:\n                self.s3_client.abort_multipart_upload(\n                    Bucket=self.bucket_name,\n                    Key=object_name,\n                    UploadId=upload_id\n                )\n            except:\n                pass\n            return False",
+    "hints": [
+      "Use create_multipart_upload to get upload_id",
+      "Upload parts must be at least 5MB except the last part",
+      "Store ETag for each part to complete upload",
+      "Always abort_multipart_upload on failure to avoid charges"
+    ],
+    "testCases": [
+      {
+        "input": "uploader.upload_file('large_file.bin', 'large_file.bin')",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Upload large file successfully"
+      },
+      {
+        "input": "Upload 100MB file in 5MB chunks",
+        "expectedOutput": "20 parts uploaded",
+        "isHidden": false,
+        "description": "Verify chunking works correctly"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs405-t6-ex06",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-6",
+    "title": "DynamoDB Query and Scan Operations",
+    "difficulty": 2,
+    "description": "Implement efficient query and scan operations with DynamoDB:\n\n1. Query items by partition key\n2. Query with sort key conditions\n3. Scan with filters\n4. Paginate through large result sets\n5. Use projection expressions",
+    "starterCode": "import boto3\n\nclass DynamoDBQueryManager:\n    def __init__(self, table_name):\n        # TODO: Initialize\n        pass\n    \n    def query_by_partition_key(self, partition_value):\n        # TODO: Query by partition key\n        pass\n    \n    def scan_with_filter(self, filter_expr):\n        # TODO: Scan with filter\n        pass",
+    "solution": "import boto3\nfrom boto3.dynamodb.conditions import Key, Attr\nfrom botocore.exceptions import ClientError\n\nclass DynamoDBQueryManager:\n    def __init__(self, table_name):\n        self.dynamodb = boto3.resource('dynamodb')\n        self.table = self.dynamodb.Table(table_name)\n    \n    def query_by_partition_key(self, partition_key, partition_value, sort_key=None, sort_condition=None):\n        try:\n            key_condition = Key(partition_key).eq(partition_value)\n            \n            if sort_key and sort_condition:\n                key_condition = key_condition & sort_condition\n            \n            response = self.table.query(\n                KeyConditionExpression=key_condition\n            )\n            return response.get('Items', [])\n        except ClientError as e:\n            print(f\"Error querying: {e}\")\n            return []\n    \n    def scan_with_filter(self, filter_expression, attributes=None):\n        try:\n            params = {'FilterExpression': filter_expression}\n            if attributes:\n                params['ProjectionExpression'] = ', '.join(attributes)\n            \n            items = []\n            response = self.table.scan(**params)\n            items.extend(response.get('Items', []))\n            \n            # Handle pagination\n            while 'LastEvaluatedKey' in response:\n                params['ExclusiveStartKey'] = response['LastEvaluatedKey']\n                response = self.table.scan(**params)\n                items.extend(response.get('Items', []))\n            \n            return items\n        except ClientError as e:\n            print(f\"Error scanning: {e}\")\n            return []\n    \n    def query_with_pagination(self, key_condition, limit=10):\n        try:\n            items = []\n            params = {\n                'KeyConditionExpression': key_condition,\n                'Limit': limit\n            }\n            \n            response = self.table.query(**params)\n            items.extend(response.get('Items', []))\n            \n            return items, response.get('LastEvaluatedKey')\n        except ClientError as e:\n            print(f\"Error: {e}\")\n            return [], None",
+    "hints": [
+      "Use boto3.dynamodb.conditions for Key and Attr",
+      "Query is more efficient than Scan when possible",
+      "Always handle pagination with LastEvaluatedKey",
+      "Use ProjectionExpression to limit returned attributes"
+    ],
+    "testCases": [
+      {
+        "input": "query_by_partition_key('userId', 'user123')",
+        "expectedOutput": "[{'userId': 'user123', 'name': 'Alice'}]",
+        "isHidden": false,
+        "description": "Query by partition key"
+      },
+      {
+        "input": "scan_with_filter(Attr('age').gt(25))",
+        "expectedOutput": "All items where age > 25",
+        "isHidden": false,
+        "description": "Scan with filter"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs405-t6-ex07",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-6",
+    "title": "RDS Backup and Restore Script",
+    "difficulty": 2,
+    "description": "Create scripts to manage RDS backups and restore operations:\n\n1. Create manual snapshot\n2. List all snapshots\n3. Restore from snapshot\n4. Configure automated backups\n5. Copy snapshot to another region",
+    "starterCode": "import boto3\n\nclass RDSBackupManager:\n    def __init__(self, db_instance_id):\n        # TODO: Initialize\n        pass\n    \n    def create_snapshot(self, snapshot_id):\n        # TODO: Create manual snapshot\n        pass\n    \n    def restore_snapshot(self, snapshot_id, new_instance_id):\n        # TODO: Restore from snapshot\n        pass",
+    "solution": "import boto3\nfrom datetime import datetime\nfrom botocore.exceptions import ClientError\n\nclass RDSBackupManager:\n    def __init__(self, db_instance_id, region='us-east-1'):\n        self.rds_client = boto3.client('rds', region_name=region)\n        self.db_instance_id = db_instance_id\n        self.region = region\n    \n    def create_snapshot(self, snapshot_id=None):\n        if not snapshot_id:\n            timestamp = datetime.now().strftime('%Y%m%d-%H%M%S')\n            snapshot_id = f\"{self.db_instance_id}-{timestamp}\"\n        \n        try:\n            response = self.rds_client.create_db_snapshot(\n                DBSnapshotIdentifier=snapshot_id,\n                DBInstanceIdentifier=self.db_instance_id\n            )\n            return response['DBSnapshot']['DBSnapshotIdentifier']\n        except ClientError as e:\n            print(f\"Error creating snapshot: {e}\")\n            return None\n    \n    def list_snapshots(self):\n        try:\n            response = self.rds_client.describe_db_snapshots(\n                DBInstanceIdentifier=self.db_instance_id\n            )\n            return [{\n                'id': snap['DBSnapshotIdentifier'],\n                'created': snap['SnapshotCreateTime'],\n                'status': snap['Status']\n            } for snap in response['DBSnapshots']]\n        except ClientError as e:\n            print(f\"Error listing snapshots: {e}\")\n            return []\n    \n    def restore_snapshot(self, snapshot_id, new_instance_id):\n        try:\n            response = self.rds_client.restore_db_instance_from_db_snapshot(\n                DBInstanceIdentifier=new_instance_id,\n                DBSnapshotIdentifier=snapshot_id\n            )\n            return response['DBInstance']['DBInstanceIdentifier']\n        except ClientError as e:\n            print(f\"Error restoring snapshot: {e}\")\n            return None\n    \n    def copy_snapshot_to_region(self, snapshot_id, target_region):\n        try:\n            source_arn = f\"arn:aws:rds:{self.region}:123456789012:snapshot:{snapshot_id}\"\n            target_client = boto3.client('rds', region_name=target_region)\n            \n            response = target_client.copy_db_snapshot(\n                SourceDBSnapshotIdentifier=source_arn,\n                TargetDBSnapshotIdentifier=f\"{snapshot_id}-copy\"\n            )\n            return response['DBSnapshot']['DBSnapshotIdentifier']\n        except ClientError as e:\n            print(f\"Error copying snapshot: {e}\")\n            return None",
+    "hints": [
+      "Use timestamp-based snapshot IDs for uniqueness",
+      "Wait for snapshot to complete before restoring",
+      "Use ARN format for cross-region snapshot copying",
+      "Monitor snapshot status with describe_db_snapshots"
+    ],
+    "testCases": [
+      {
+        "input": "create_snapshot()",
+        "expectedOutput": "mydb-20250101-120000",
+        "isHidden": false,
+        "description": "Create snapshot with auto-generated ID"
+      },
+      {
+        "input": "list_snapshots()",
+        "expectedOutput": "List of all snapshots",
+        "isHidden": false,
+        "description": "List all snapshots for instance"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs405-t6-ex08",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-6",
+    "title": "DynamoDB Global Secondary Index",
+    "difficulty": 3,
+    "description": "Design and implement Global Secondary Indexes (GSI) for efficient querying:\n\n1. Create table with GSI\n2. Query using GSI\n3. Update GSI dynamically\n4. Handle sparse indexes\n5. Optimize projection expressions",
+    "starterCode": "import boto3\n\nclass DynamoDBGSIManager:\n    def __init__(self):\n        # TODO: Initialize\n        pass\n    \n    def create_table_with_gsi(self, table_name):\n        # TODO: Create table with GSI\n        pass\n    \n    def query_gsi(self, index_name, key_value):\n        # TODO: Query using GSI\n        pass",
+    "solution": "import boto3\nfrom boto3.dynamodb.conditions import Key\nfrom botocore.exceptions import ClientError\n\nclass DynamoDBGSIManager:\n    def __init__(self):\n        self.dynamodb = boto3.resource('dynamodb')\n        self.client = boto3.client('dynamodb')\n    \n    def create_table_with_gsi(self, table_name):\n        try:\n            table = self.dynamodb.create_table(\n                TableName=table_name,\n                KeySchema=[\n                    {'AttributeName': 'userId', 'KeyType': 'HASH'},\n                    {'AttributeName': 'timestamp', 'KeyType': 'RANGE'}\n                ],\n                AttributeDefinitions=[\n                    {'AttributeName': 'userId', 'AttributeType': 'S'},\n                    {'AttributeName': 'timestamp', 'AttributeType': 'N'},\n                    {'AttributeName': 'email', 'AttributeType': 'S'},\n                    {'AttributeName': 'status', 'AttributeType': 'S'}\n                ],\n                GlobalSecondaryIndexes=[\n                    {\n                        'IndexName': 'EmailIndex',\n                        'KeySchema': [\n                            {'AttributeName': 'email', 'KeyType': 'HASH'}\n                        ],\n                        'Projection': {'ProjectionType': 'ALL'},\n                        'BillingMode': 'PAY_PER_REQUEST'\n                    },\n                    {\n                        'IndexName': 'StatusIndex',\n                        'KeySchema': [\n                            {'AttributeName': 'status', 'KeyType': 'HASH'},\n                            {'AttributeName': 'timestamp', 'KeyType': 'RANGE'}\n                        ],\n                        'Projection': {\n                            'ProjectionType': 'INCLUDE',\n                            'NonKeyAttributes': ['userId', 'email']\n                        },\n                        'BillingMode': 'PAY_PER_REQUEST'\n                    }\n                ],\n                BillingMode='PAY_PER_REQUEST'\n            )\n            table.wait_until_exists()\n            return True\n        except ClientError as e:\n            print(f\"Error: {e}\")\n            return False\n    \n    def query_gsi(self, table_name, index_name, key_name, key_value):\n        table = self.dynamodb.Table(table_name)\n        try:\n            response = table.query(\n                IndexName=index_name,\n                KeyConditionExpression=Key(key_name).eq(key_value)\n            )\n            return response.get('Items', [])\n        except ClientError as e:\n            print(f\"Error: {e}\")\n            return []\n    \n    def add_gsi_to_existing_table(self, table_name, index_definition):\n        try:\n            self.client.update_table(\n                TableName=table_name,\n                AttributeDefinitions=index_definition['AttributeDefinitions'],\n                GlobalSecondaryIndexUpdates=[{\n                    'Create': index_definition['GlobalSecondaryIndex']\n                }]\n            )\n            return True\n        except ClientError as e:\n            print(f\"Error: {e}\")\n            return False",
+    "hints": [
+      "GSI allows querying on non-primary key attributes",
+      "Use INCLUDE projection to minimize storage costs",
+      "GSI supports eventual consistency only",
+      "Sparse indexes only include items with index attributes"
+    ],
+    "testCases": [
+      {
+        "input": "create_table_with_gsi('users')",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Create table with GSI"
+      },
+      {
+        "input": "query_gsi('users', 'EmailIndex', 'email', 'test@example.com')",
+        "expectedOutput": "[{'userId': '1', 'email': 'test@example.com'}]",
+        "isHidden": false,
+        "description": "Query using email GSI"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs405-t6-ex09",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-6",
+    "title": "S3 Cross-Region Replication",
+    "difficulty": 3,
+    "description": "Set up and manage S3 cross-region replication for disaster recovery:\n\n1. Enable versioning on source and destination buckets\n2. Create IAM role for replication\n3. Configure replication rules\n4. Monitor replication status\n5. Handle replication failures",
+    "starterCode": "import boto3\nimport json\n\nclass S3ReplicationManager:\n    def __init__(self, source_bucket, dest_bucket, dest_region):\n        # TODO: Initialize\n        pass\n    \n    def setup_replication(self):\n        # TODO: Set up cross-region replication\n        pass",
+    "solution": "import boto3\nimport json\nfrom botocore.exceptions import ClientError\n\nclass S3ReplicationManager:\n    def __init__(self, source_bucket, dest_bucket, source_region='us-east-1', dest_region='us-west-2'):\n        self.source_bucket = source_bucket\n        self.dest_bucket = dest_bucket\n        self.source_region = source_region\n        self.dest_region = dest_region\n        self.s3_source = boto3.client('s3', region_name=source_region)\n        self.s3_dest = boto3.client('s3', region_name=dest_region)\n        self.iam = boto3.client('iam')\n    \n    def enable_versioning(self):\n        try:\n            # Enable on source\n            self.s3_source.put_bucket_versioning(\n                Bucket=self.source_bucket,\n                VersioningConfiguration={'Status': 'Enabled'}\n            )\n            # Enable on destination\n            self.s3_dest.put_bucket_versioning(\n                Bucket=self.dest_bucket,\n                VersioningConfiguration={'Status': 'Enabled'}\n            )\n            return True\n        except ClientError as e:\n            print(f\"Error enabling versioning: {e}\")\n            return False\n    \n    def create_replication_role(self):\n        role_name = 's3-replication-role'\n        trust_policy = {\n            \"Version\": \"2012-10-17\",\n            \"Statement\": [{\n                \"Effect\": \"Allow\",\n                \"Principal\": {\"Service\": \"s3.amazonaws.com\"},\n                \"Action\": \"sts:AssumeRole\"\n            }]\n        }\n        \n        try:\n            response = self.iam.create_role(\n                RoleName=role_name,\n                AssumeRolePolicyDocument=json.dumps(trust_policy)\n            )\n            role_arn = response['Role']['Arn']\n            \n            # Attach policy\n            policy = {\n                \"Version\": \"2012-10-17\",\n                \"Statement\": [\n                    {\n                        \"Effect\": \"Allow\",\n                        \"Action\": [\"s3:GetReplicationConfiguration\", \"s3:ListBucket\"],\n                        \"Resource\": f\"arn:aws:s3:::{self.source_bucket}\"\n                    },\n                    {\n                        \"Effect\": \"Allow\",\n                        \"Action\": [\"s3:GetObjectVersionForReplication\", \"s3:GetObjectVersionAcl\"],\n                        \"Resource\": f\"arn:aws:s3:::{self.source_bucket}/*\"\n                    },\n                    {\n                        \"Effect\": \"Allow\",\n                        \"Action\": [\"s3:ReplicateObject\", \"s3:ReplicateDelete\"],\n                        \"Resource\": f\"arn:aws:s3:::{self.dest_bucket}/*\"\n                    }\n                ]\n            }\n            \n            self.iam.put_role_policy(\n                RoleName=role_name,\n                PolicyName='ReplicationPolicy',\n                PolicyDocument=json.dumps(policy)\n            )\n            return role_arn\n        except ClientError as e:\n            print(f\"Error creating role: {e}\")\n            return None\n    \n    def setup_replication(self, role_arn):\n        replication_config = {\n            \"Role\": role_arn,\n            \"Rules\": [{\n                \"Status\": \"Enabled\",\n                \"Priority\": 1,\n                \"DeleteMarkerReplication\": {\"Status\": \"Enabled\"},\n                \"Filter\": {},\n                \"Destination\": {\n                    \"Bucket\": f\"arn:aws:s3:::{self.dest_bucket}\",\n                    \"ReplicationTime\": {\n                        \"Status\": \"Enabled\",\n                        \"Time\": {\"Minutes\": 15}\n                    },\n                    \"Metrics\": {\n                        \"Status\": \"Enabled\",\n                        \"EventThreshold\": {\"Minutes\": 15}\n                    }\n                }\n            }]\n        }\n        \n        try:\n            self.s3_source.put_bucket_replication(\n                Bucket=self.source_bucket,\n                ReplicationConfiguration=replication_config\n            )\n            return True\n        except ClientError as e:\n            print(f\"Error setting up replication: {e}\")\n            return False",
+    "hints": [
+      "Versioning must be enabled on both buckets",
+      "IAM role needs permissions for both source and destination",
+      "Use ReplicationTime for predictable replication",
+      "Monitor with CloudWatch metrics"
+    ],
+    "testCases": [
+      {
+        "input": "enable_versioning()",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Enable versioning on both buckets"
+      },
+      {
+        "input": "setup_replication(role_arn)",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Configure replication rules"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs405-t6-ex10",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-6",
+    "title": "Redis Pub/Sub Message Queue",
+    "difficulty": 3,
+    "description": "Implement a message queue system using Redis Pub/Sub:\n\n1. Create publisher and subscriber\n2. Handle multiple channels\n3. Implement pattern-based subscriptions\n4. Message serialization/deserialization\n5. Error handling and reconnection",
+    "starterCode": "import redis\nimport json\n\nclass RedisMessageQueue:\n    def __init__(self, host='localhost'):\n        # TODO: Initialize\n        pass\n    \n    def publish(self, channel, message):\n        # TODO: Publish message\n        pass\n    \n    def subscribe(self, channels, callback):\n        # TODO: Subscribe to channels\n        pass",
+    "solution": "import redis\nimport json\nimport time\nfrom threading import Thread\n\nclass RedisMessageQueue:\n    def __init__(self, host='localhost', port=6379):\n        self.redis_client = redis.Redis(\n            host=host,\n            port=port,\n            decode_responses=True\n        )\n        self.pubsub = self.redis_client.pubsub()\n        self.subscriptions = {}\n    \n    def publish(self, channel, message):\n        try:\n            if not isinstance(message, str):\n                message = json.dumps(message)\n            self.redis_client.publish(channel, message)\n            return True\n        except Exception as e:\n            print(f\"Error publishing: {e}\")\n            return False\n    \n    def subscribe(self, channels, callback):\n        if isinstance(channels, str):\n            channels = [channels]\n        \n        for channel in channels:\n            self.subscriptions[channel] = callback\n        \n        self.pubsub.subscribe(**{ch: callback for ch in channels})\n    \n    def psubscribe(self, patterns, callback):\n        if isinstance(patterns, str):\n            patterns = [patterns]\n        \n        self.pubsub.psubscribe(**{pat: callback for pat in patterns})\n    \n    def listen(self):\n        try:\n            for message in self.pubsub.listen():\n                if message['type'] in ['message', 'pmessage']:\n                    channel = message['channel']\n                    data = message['data']\n                    \n                    # Try to deserialize JSON\n                    try:\n                        data = json.loads(data)\n                    except:\n                        pass\n                    \n                    # Call callback if exists\n                    if channel in self.subscriptions:\n                        self.subscriptions[channel](channel, data)\n        except Exception as e:\n            print(f\"Error listening: {e}\")\n            self.reconnect()\n    \n    def start_listening(self):\n        listener_thread = Thread(target=self.listen, daemon=True)\n        listener_thread.start()\n        return listener_thread\n    \n    def reconnect(self):\n        max_retries = 5\n        retry_delay = 1\n        \n        for i in range(max_retries):\n            try:\n                self.pubsub.close()\n                self.pubsub = self.redis_client.pubsub()\n                # Resubscribe to channels\n                if self.subscriptions:\n                    self.pubsub.subscribe(**self.subscriptions)\n                return True\n            except Exception as e:\n                print(f\"Reconnect attempt {i+1} failed: {e}\")\n                time.sleep(retry_delay * (i + 1))\n        return False\n    \n    def unsubscribe(self, channels=None):\n        if channels:\n            self.pubsub.unsubscribe(channels)\n            for ch in channels:\n                self.subscriptions.pop(ch, None)\n        else:\n            self.pubsub.unsubscribe()\n            self.subscriptions.clear()",
+    "hints": [
+      "Use pubsub() to create a pub/sub connection",
+      "Run listen() in a separate thread",
+      "Pattern subscriptions use psubscribe with wildcards",
+      "Serialize complex objects with JSON"
+    ],
+    "testCases": [
+      {
+        "input": "publish('events', {'type': 'user_login', 'userId': 123})",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Publish message to channel"
+      },
+      {
+        "input": "subscribe(['events'], lambda ch, msg: print(msg))",
+        "expectedOutput": "Subscribed to events",
+        "isHidden": false,
+        "description": "Subscribe to channel"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs405-t6-ex11",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-6",
+    "title": "DynamoDB Stream Processor",
+    "difficulty": 4,
+    "description": "Build a DynamoDB Stream processor for real-time data processing:\n\n1. Enable DynamoDB Streams\n2. Process stream records\n3. Handle INSERT, MODIFY, REMOVE events\n4. Implement checkpointing\n5. Error handling and retry logic",
+    "starterCode": "import boto3\n\nclass DynamoDBStreamProcessor:\n    def __init__(self, table_name):\n        # TODO: Initialize\n        pass\n    \n    def process_stream(self):\n        # TODO: Process stream records\n        pass",
+    "solution": "import boto3\nimport time\nfrom botocore.exceptions import ClientError\n\nclass DynamoDBStreamProcessor:\n    def __init__(self, table_name):\n        self.dynamodb = boto3.resource('dynamodb')\n        self.streams_client = boto3.client('dynamodbstreams')\n        self.table_name = table_name\n        self.table = self.dynamodb.Table(table_name)\n        self.checkpoints = {}\n    \n    def enable_stream(self):\n        try:\n            self.table.update(\n                StreamSpecification={\n                    'StreamEnabled': True,\n                    'StreamViewType': 'NEW_AND_OLD_IMAGES'\n                }\n            )\n            return True\n        except ClientError as e:\n            print(f\"Error enabling stream: {e}\")\n            return False\n    \n    def get_stream_arn(self):\n        try:\n            response = self.table.meta.client.describe_table(\n                TableName=self.table_name\n            )\n            return response['Table'].get('LatestStreamArn')\n        except ClientError as e:\n            print(f\"Error getting stream ARN: {e}\")\n            return None\n    \n    def process_record(self, record):\n        event_name = record['eventName']\n        \n        if event_name == 'INSERT':\n            new_image = record['dynamodb']['NewImage']\n            self.handle_insert(new_image)\n        elif event_name == 'MODIFY':\n            old_image = record['dynamodb']['OldImage']\n            new_image = record['dynamodb']['NewImage']\n            self.handle_modify(old_image, new_image)\n        elif event_name == 'REMOVE':\n            old_image = record['dynamodb']['OldImage']\n            self.handle_remove(old_image)\n    \n    def handle_insert(self, new_image):\n        print(f\"INSERT: {new_image}\")\n    \n    def handle_modify(self, old_image, new_image):\n        print(f\"MODIFY: {old_image} -> {new_image}\")\n    \n    def handle_remove(self, old_image):\n        print(f\"REMOVE: {old_image}\")\n    \n    def process_shard(self, shard_id, stream_arn):\n        try:\n            # Get shard iterator\n            iterator_response = self.streams_client.get_shard_iterator(\n                StreamArn=stream_arn,\n                ShardId=shard_id,\n                ShardIteratorType='LATEST'\n            )\n            shard_iterator = iterator_response['ShardIterator']\n            \n            while shard_iterator:\n                # Get records\n                records_response = self.streams_client.get_records(\n                    ShardIterator=shard_iterator,\n                    Limit=100\n                )\n                \n                records = records_response.get('Records', [])\n                \n                # Process each record\n                for record in records:\n                    try:\n                        self.process_record(record)\n                        # Update checkpoint\n                        self.checkpoints[shard_id] = record['dynamodb']['SequenceNumber']\n                    except Exception as e:\n                        print(f\"Error processing record: {e}\")\n                        # Implement retry logic\n                        self.retry_record(record)\n                \n                # Get next iterator\n                shard_iterator = records_response.get('NextShardIterator')\n                \n                # Sleep to avoid throttling\n                if not records:\n                    time.sleep(1)\n        except ClientError as e:\n            print(f\"Error processing shard: {e}\")\n    \n    def retry_record(self, record, max_retries=3):\n        for attempt in range(max_retries):\n            try:\n                time.sleep(2 ** attempt)\n                self.process_record(record)\n                return True\n            except Exception as e:\n                print(f\"Retry {attempt + 1} failed: {e}\")\n        return False\n    \n    def process_stream(self):\n        stream_arn = self.get_stream_arn()\n        if not stream_arn:\n            print(\"No stream enabled\")\n            return\n        \n        # Get shards\n        stream_desc = self.streams_client.describe_stream(\n            StreamArn=stream_arn\n        )\n        \n        shards = stream_desc['StreamDescription']['Shards']\n        \n        # Process each shard\n        for shard in shards:\n            self.process_shard(shard['ShardId'], stream_arn)",
+    "hints": [
+      "Enable streams with NEW_AND_OLD_IMAGES for full data",
+      "Use GetShardIterator to start reading from a shard",
+      "Process records in batches for efficiency",
+      "Store checkpoints to resume after failures"
+    ],
+    "testCases": [
+      {
+        "input": "enable_stream()",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Enable DynamoDB Stream"
+      },
+      {
+        "input": "Insert item into table",
+        "expectedOutput": "INSERT event processed",
+        "isHidden": false,
+        "description": "Process INSERT event"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs405-t6-ex12",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-6",
+    "title": "S3 Event-Driven Processing Pipeline",
+    "difficulty": 4,
+    "description": "Build an event-driven pipeline that processes S3 uploads:\n\n1. Configure S3 event notifications\n2. Trigger Lambda on upload\n3. Process files (resize images, parse CSV, etc.)\n4. Store results in DynamoDB\n5. Handle failures with DLQ",
+    "starterCode": "import boto3\nimport json\n\nclass S3EventProcessor:\n    def __init__(self, bucket_name):\n        # TODO: Initialize\n        pass\n    \n    def setup_event_notification(self):\n        # TODO: Configure S3 events\n        pass\n    \n    def process_event(self, event):\n        # TODO: Process S3 event\n        pass",
+    "solution": "import boto3\nimport json\nimport io\nfrom PIL import Image\nfrom botocore.exceptions import ClientError\n\nclass S3EventProcessor:\n    def __init__(self, bucket_name, queue_url=None, dlq_url=None):\n        self.s3 = boto3.client('s3')\n        self.sqs = boto3.client('sqs')\n        self.dynamodb = boto3.resource('dynamodb')\n        self.bucket_name = bucket_name\n        self.queue_url = queue_url\n        self.dlq_url = dlq_url\n    \n    def setup_event_notification(self, queue_arn):\n        notification_config = {\n            'QueueConfigurations': [\n                {\n                    'QueueArn': queue_arn,\n                    'Events': ['s3:ObjectCreated:*'],\n                    'Filter': {\n                        'Key': {\n                            'FilterRules': [\n                                {'Name': 'suffix', 'Value': '.jpg'},\n                                {'Name': 'suffix', 'Value': '.png'}\n                            ]\n                        }\n                    }\n                }\n            ]\n        }\n        \n        try:\n            self.s3.put_bucket_notification_configuration(\n                Bucket=self.bucket_name,\n                NotificationConfiguration=notification_config\n            )\n            return True\n        except ClientError as e:\n            print(f\"Error setting up notifications: {e}\")\n            return False\n    \n    def process_image(self, bucket, key):\n        try:\n            # Download image\n            response = self.s3.get_object(Bucket=bucket, Key=key)\n            image_data = response['Body'].read()\n            \n            # Resize image\n            image = Image.open(io.BytesIO(image_data))\n            image.thumbnail((300, 300))\n            \n            # Upload thumbnail\n            buffer = io.BytesIO()\n            image.save(buffer, format=image.format)\n            buffer.seek(0)\n            \n            thumbnail_key = f\"thumbnails/{key}\"\n            self.s3.put_object(\n                Bucket=bucket,\n                Key=thumbnail_key,\n                Body=buffer,\n                ContentType=response['ContentType']\n            )\n            \n            return thumbnail_key\n        except Exception as e:\n            print(f\"Error processing image: {e}\")\n            raise\n    \n    def store_metadata(self, table_name, metadata):\n        table = self.dynamodb.Table(table_name)\n        try:\n            table.put_item(Item=metadata)\n            return True\n        except ClientError as e:\n            print(f\"Error storing metadata: {e}\")\n            return False\n    \n    def process_event(self, event_message):\n        try:\n            event = json.loads(event_message)\n            \n            # Parse S3 event\n            for record in event['Records']:\n                bucket = record['s3']['bucket']['name']\n                key = record['s3']['object']['key']\n                size = record['s3']['object']['size']\n                \n                print(f\"Processing: {key}\")\n                \n                # Process based on file type\n                if key.endswith(('.jpg', '.png')):\n                    thumbnail_key = self.process_image(bucket, key)\n                    \n                    # Store metadata\n                    metadata = {\n                        'id': key,\n                        'bucket': bucket,\n                        'original_key': key,\n                        'thumbnail_key': thumbnail_key,\n                        'size': size,\n                        'processed': True\n                    }\n                    self.store_metadata('image_metadata', metadata)\n            \n            return True\n        except Exception as e:\n            print(f\"Error processing event: {e}\")\n            raise\n    \n    def poll_and_process(self, max_messages=10):\n        if not self.queue_url:\n            print(\"No queue URL configured\")\n            return\n        \n        while True:\n            try:\n                # Receive messages\n                response = self.sqs.receive_message(\n                    QueueUrl=self.queue_url,\n                    MaxNumberOfMessages=max_messages,\n                    WaitTimeSeconds=20\n                )\n                \n                messages = response.get('Messages', [])\n                \n                for message in messages:\n                    receipt_handle = message['ReceiptHandle']\n                    \n                    try:\n                        # Process event\n                        self.process_event(message['Body'])\n                        \n                        # Delete message on success\n                        self.sqs.delete_message(\n                            QueueUrl=self.queue_url,\n                            ReceiptHandle=receipt_handle\n                        )\n                    except Exception as e:\n                        print(f\"Failed to process message: {e}\")\n                        # Message will return to queue or go to DLQ\n                        \n            except Exception as e:\n                print(f\"Error polling queue: {e}\")\n                time.sleep(5)",
+    "hints": [
+      "Use SQS queue for S3 event notifications",
+      "Configure DLQ for failed processing attempts",
+      "Use Pillow for image processing",
+      "Store metadata in DynamoDB for querying"
+    ],
+    "testCases": [
+      {
+        "input": "Upload image.jpg to S3",
+        "expectedOutput": "Thumbnail created and metadata stored",
+        "isHidden": false,
+        "description": "Process image upload event"
+      },
+      {
+        "input": "Process event with invalid image",
+        "expectedOutput": "Message moved to DLQ",
+        "isHidden": false,
+        "description": "Handle processing failure"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs405-t6-ex13",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-6",
+    "title": "Multi-Region Database Failover System",
+    "difficulty": 4,
+    "description": "Implement automated failover for multi-region RDS deployment:\n\n1. Set up read replicas in multiple regions\n2. Monitor primary database health\n3. Automatic failover on failure detection\n4. Update application endpoints\n5. Implement rollback mechanism",
+    "starterCode": "import boto3\n\nclass MultiRegionFailover:\n    def __init__(self, primary_db, regions):\n        # TODO: Initialize\n        pass\n    \n    def setup_read_replicas(self):\n        # TODO: Create read replicas\n        pass\n    \n    def failover(self, target_region):\n        # TODO: Perform failover\n        pass",
+    "solution": "import boto3\nimport time\nfrom botocore.exceptions import ClientError\n\nclass MultiRegionFailover:\n    def __init__(self, primary_db_id, primary_region, replica_regions):\n        self.primary_db_id = primary_db_id\n        self.primary_region = primary_region\n        self.replica_regions = replica_regions\n        self.rds_clients = {\n            region: boto3.client('rds', region_name=region)\n            for region in [primary_region] + replica_regions\n        }\n        self.route53 = boto3.client('route53')\n    \n    def create_read_replica(self, target_region, replica_id):\n        try:\n            primary_arn = f\"arn:aws:rds:{self.primary_region}:123456789012:db:{self.primary_db_id}\"\n            \n            response = self.rds_clients[target_region].create_db_instance_read_replica(\n                DBInstanceIdentifier=replica_id,\n                SourceDBInstanceIdentifier=primary_arn,\n                DBInstanceClass='db.t3.medium',\n                PubliclyAccessible=False,\n                AutoMinorVersionUpgrade=True\n            )\n            \n            return response['DBInstance']['DBInstanceIdentifier']\n        except ClientError as e:\n            print(f\"Error creating replica in {target_region}: {e}\")\n            return None\n    \n    def setup_read_replicas(self):\n        replicas = {}\n        for region in self.replica_regions:\n            replica_id = f\"{self.primary_db_id}-replica-{region}\"\n            result = self.create_read_replica(region, replica_id)\n            if result:\n                replicas[region] = replica_id\n        return replicas\n    \n    def check_db_health(self, db_id, region):\n        try:\n            response = self.rds_clients[region].describe_db_instances(\n                DBInstanceIdentifier=db_id\n            )\n            \n            instance = response['DBInstances'][0]\n            status = instance['DBInstanceStatus']\n            \n            return status == 'available'\n        except ClientError as e:\n            print(f\"Error checking health: {e}\")\n            return False\n    \n    def promote_replica(self, replica_id, region):\n        try:\n            response = self.rds_clients[region].promote_read_replica(\n                DBInstanceIdentifier=replica_id,\n                BackupRetentionPeriod=7\n            )\n            \n            # Wait for promotion to complete\n            waiter = self.rds_clients[region].get_waiter('db_instance_available')\n            waiter.wait(DBInstanceIdentifier=replica_id)\n            \n            return True\n        except ClientError as e:\n            print(f\"Error promoting replica: {e}\")\n            return False\n    \n    def update_dns_endpoint(self, hosted_zone_id, domain_name, new_endpoint):\n        try:\n            response = self.route53.change_resource_record_sets(\n                HostedZoneId=hosted_zone_id,\n                ChangeBatch={\n                    'Changes': [{\n                        'Action': 'UPSERT',\n                        'ResourceRecordSet': {\n                            'Name': domain_name,\n                            'Type': 'CNAME',\n                            'TTL': 60,\n                            'ResourceRecords': [{'Value': new_endpoint}]\n                        }\n                    }]\n                }\n            )\n            return True\n        except ClientError as e:\n            print(f\"Error updating DNS: {e}\")\n            return False\n    \n    def failover(self, target_region, replica_id, hosted_zone_id=None, domain_name=None):\n        print(f\"Initiating failover to {target_region}...\")\n        \n        # Check if replica is healthy\n        if not self.check_db_health(replica_id, target_region):\n            print(\"Target replica is not healthy\")\n            return False\n        \n        # Promote replica\n        if not self.promote_replica(replica_id, target_region):\n            print(\"Failed to promote replica\")\n            return False\n        \n        # Get new endpoint\n        response = self.rds_clients[target_region].describe_db_instances(\n            DBInstanceIdentifier=replica_id\n        )\n        new_endpoint = response['DBInstances'][0]['Endpoint']['Address']\n        \n        # Update DNS if configured\n        if hosted_zone_id and domain_name:\n            if not self.update_dns_endpoint(hosted_zone_id, domain_name, new_endpoint):\n                print(\"Warning: DNS update failed\")\n        \n        print(f\"Failover complete. New endpoint: {new_endpoint}\")\n        return True\n    \n    def monitor_and_auto_failover(self, replicas, check_interval=60):\n        while True:\n            if not self.check_db_health(self.primary_db_id, self.primary_region):\n                print(\"Primary database is unhealthy, initiating failover...\")\n                \n                # Try failover to first available replica\n                for region, replica_id in replicas.items():\n                    if self.check_db_health(replica_id, region):\n                        if self.failover(region, replica_id):\n                            return region\n                        break\n            \n            time.sleep(check_interval)",
+    "hints": [
+      "Use promote_read_replica to convert replica to standalone",
+      "Update Route53 DNS for automatic application failover",
+      "Monitor with CloudWatch alarms for automatic detection",
+      "Test failover regularly in non-production environments"
+    ],
+    "testCases": [
+      {
+        "input": "setup_read_replicas()",
+        "expectedOutput": "Replicas created in us-west-2, eu-west-1",
+        "isHidden": false,
+        "description": "Create read replicas"
+      },
+      {
+        "input": "Simulate primary failure",
+        "expectedOutput": "Automatic failover to us-west-2",
+        "isHidden": false,
+        "description": "Test automatic failover"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs405-t6-ex14",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-6",
+    "title": "Advanced Redis Cluster Management",
+    "difficulty": 5,
+    "description": "Build a Redis cluster management system with:\n\n1. Cluster setup and configuration\n2. Automatic sharding and rebalancing\n3. Failover handling\n4. Data migration between nodes\n5. Monitoring and health checks",
+    "starterCode": "from rediscluster import RedisCluster\n\nclass RedisClusterManager:\n    def __init__(self, nodes):\n        # TODO: Initialize cluster\n        pass\n    \n    def setup_cluster(self):\n        # TODO: Set up cluster\n        pass",
+    "solution": "from rediscluster import RedisCluster\nimport redis\nimport time\n\nclass RedisClusterManager:\n    def __init__(self, startup_nodes):\n        self.startup_nodes = startup_nodes\n        self.cluster = None\n        self.nodes = {}\n    \n    def connect_cluster(self):\n        try:\n            self.cluster = RedisCluster(\n                startup_nodes=self.startup_nodes,\n                decode_responses=True,\n                skip_full_coverage_check=True,\n                max_connections_per_node=50\n            )\n            return True\n        except Exception as e:\n            print(f\"Error connecting to cluster: {e}\")\n            return False\n    \n    def get_cluster_info(self):\n        try:\n            info = self.cluster.cluster_info()\n            nodes = self.cluster.cluster_nodes()\n            return {'info': info, 'nodes': nodes}\n        except Exception as e:\n            print(f\"Error getting cluster info: {e}\")\n            return None\n    \n    def get_slot_distribution(self):\n        try:\n            slots = self.cluster.cluster_slots()\n            distribution = {}\n            \n            for slot_range in slots:\n                start_slot, end_slot = slot_range[0], slot_range[1]\n                master_node = slot_range[2]\n                node_id = f\"{master_node[0]}:{master_node[1]}\"\n                \n                if node_id not in distribution:\n                    distribution[node_id] = []\n                distribution[node_id].append((start_slot, end_slot))\n            \n            return distribution\n        except Exception as e:\n            print(f\"Error getting slot distribution: {e}\")\n            return None\n    \n    def add_node(self, new_node_host, new_node_port, master_host=None, master_port=None):\n        try:\n            new_node = redis.Redis(host=new_node_host, port=new_node_port)\n            \n            if master_host and master_port:\n                # Add as replica\n                # Get master node ID\n                master = redis.Redis(host=master_host, port=master_port)\n                master_id = master.cluster_myid()\n                \n                # Join cluster as replica\n                new_node.cluster_replicate(master_id)\n            else:\n                # Add as master\n                # Meet with existing node\n                existing_node = self.startup_nodes[0]\n                new_node.cluster_meet(existing_node['host'], existing_node['port'])\n            \n            return True\n        except Exception as e:\n            print(f\"Error adding node: {e}\")\n            return False\n    \n    def rebalance_slots(self):\n        try:\n            # Get current distribution\n            distribution = self.get_slot_distribution()\n            if not distribution:\n                return False\n            \n            total_slots = 16384\n            num_masters = len(distribution)\n            slots_per_node = total_slots // num_masters\n            \n            # Calculate moves needed\n            moves = []\n            for node_id, slot_ranges in distribution.items():\n                total = sum(end - start + 1 for start, end in slot_ranges)\n                if total > slots_per_node:\n                    # Node has too many slots\n                    excess = total - slots_per_node\n                    moves.append((node_id, -excess))\n                elif total < slots_per_node:\n                    # Node needs more slots\n                    deficit = slots_per_node - total\n                    moves.append((node_id, deficit))\n            \n            # Execute slot migrations\n            # This is simplified - real implementation would use CLUSTER SETSLOT\n            print(f\"Rebalancing: {moves}\")\n            return True\n            \n        except Exception as e:\n            print(f\"Error rebalancing: {e}\")\n            return False\n    \n    def migrate_slot(self, slot, source_node, target_node):\n        try:\n            # Set slot to MIGRATING on source\n            source = redis.Redis(host=source_node['host'], port=source_node['port'])\n            target = redis.Redis(host=target_node['host'], port=target_node['port'])\n            \n            target_id = target.cluster_myid()\n            source_id = source.cluster_myid()\n            \n            source.execute_command('CLUSTER', 'SETSLOT', slot, 'MIGRATING', target_id)\n            target.execute_command('CLUSTER', 'SETSLOT', slot, 'IMPORTING', source_id)\n            \n            # Get keys in slot\n            keys = source.cluster_getkeysinslot(slot, 100)\n            \n            # Migrate keys\n            for key in keys:\n                source.migrate(\n                    target_node['host'],\n                    target_node['port'],\n                    key,\n                    0,  # destination db\n                    5000  # timeout\n                )\n            \n            # Update slot ownership\n            source.execute_command('CLUSTER', 'SETSLOT', slot, 'NODE', target_id)\n            target.execute_command('CLUSTER', 'SETSLOT', slot, 'NODE', target_id)\n            \n            return True\n        except Exception as e:\n            print(f\"Error migrating slot: {e}\")\n            return False\n    \n    def monitor_health(self, interval=10):\n        while True:\n            try:\n                info = self.get_cluster_info()\n                if info:\n                    cluster_state = info['info'].get('cluster_state')\n                    print(f\"Cluster state: {cluster_state}\")\n                    \n                    if cluster_state != 'ok':\n                        print(\"Warning: Cluster is not in OK state\")\n                        # Trigger recovery procedures\n                        self.handle_cluster_failure()\n                \n                time.sleep(interval)\n            except Exception as e:\n                print(f\"Error monitoring: {e}\")\n                time.sleep(interval)\n    \n    def handle_cluster_failure(self):\n        print(\"Handling cluster failure...\")\n        # Check for failed nodes\n        # Promote replicas if needed\n        # Rebalance slots\n        pass\n    \n    def get_node_metrics(self, node_host, node_port):\n        try:\n            node = redis.Redis(host=node_host, port=node_port)\n            info = node.info()\n            \n            metrics = {\n                'used_memory': info.get('used_memory'),\n                'connected_clients': info.get('connected_clients'),\n                'total_commands_processed': info.get('total_commands_processed'),\n                'keyspace_hits': info.get('keyspace_hits'),\n                'keyspace_misses': info.get('keyspace_misses')\n            }\n            return metrics\n        except Exception as e:\n            print(f\"Error getting metrics: {e}\")\n            return None",
+    "hints": [
+      "Use redis-py-cluster for cluster operations",
+      "Slots 0-16383 must be distributed among master nodes",
+      "Use CLUSTER SETSLOT for atomic slot migrations",
+      "Monitor cluster_state and handle 'fail' state"
+    ],
+    "testCases": [
+      {
+        "input": "connect_cluster()",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Connect to Redis cluster"
+      },
+      {
+        "input": "get_slot_distribution()",
+        "expectedOutput": "Slot distribution across nodes",
+        "isHidden": false,
+        "description": "Get current slot distribution"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs405-t6-ex15",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-6",
+    "title": "DynamoDB Global Tables with Conflict Resolution",
+    "difficulty": 5,
+    "description": "Implement DynamoDB Global Tables with custom conflict resolution:\n\n1. Create global tables across regions\n2. Implement custom conflict resolution logic\n3. Handle concurrent writes\n4. Monitor replication lag\n5. Implement causal consistency",
+    "starterCode": "import boto3\n\nclass GlobalTableManager:\n    def __init__(self, table_name, regions):\n        # TODO: Initialize\n        pass\n    \n    def create_global_table(self):\n        # TODO: Create global table\n        pass",
+    "solution": "import boto3\nimport time\nfrom datetime import datetime\nfrom botocore.exceptions import ClientError\n\nclass GlobalTableManager:\n    def __init__(self, table_name, regions):\n        self.table_name = table_name\n        self.regions = regions\n        self.dynamodb_clients = {\n            region: boto3.client('dynamodb', region_name=region)\n            for region in regions\n        }\n        self.dynamodb_resources = {\n            region: boto3.resource('dynamodb', region_name=region)\n            for region in regions\n        }\n    \n    def create_table_in_region(self, region):\n        try:\n            client = self.dynamodb_clients[region]\n            client.create_table(\n                TableName=self.table_name,\n                KeySchema=[\n                    {'AttributeName': 'id', 'KeyType': 'HASH'},\n                    {'AttributeName': 'timestamp', 'KeyType': 'RANGE'}\n                ],\n                AttributeDefinitions=[\n                    {'AttributeName': 'id', 'AttributeType': 'S'},\n                    {'AttributeName': 'timestamp', 'AttributeType': 'N'}\n                ],\n                BillingMode='PAY_PER_REQUEST',\n                StreamSpecification={\n                    'StreamEnabled': True,\n                    'StreamViewType': 'NEW_AND_OLD_IMAGES'\n                }\n            )\n            \n            # Wait for table to be active\n            waiter = client.get_waiter('table_exists')\n            waiter.wait(TableName=self.table_name)\n            return True\n        except ClientError as e:\n            print(f\"Error creating table in {region}: {e}\")\n            return False\n    \n    def create_global_table(self):\n        # Create tables in all regions first\n        for region in self.regions:\n            if not self.create_table_in_region(region):\n                return False\n        \n        # Create global table\n        try:\n            primary_region = self.regions[0]\n            replica_updates = [\n                {'Create': {'RegionName': region}}\n                for region in self.regions[1:]\n            ]\n            \n            self.dynamodb_clients[primary_region].update_table(\n                TableName=self.table_name,\n                ReplicaUpdates=replica_updates\n            )\n            \n            return True\n        except ClientError as e:\n            print(f\"Error creating global table: {e}\")\n            return False\n    \n    def put_item_with_timestamp(self, region, item):\n        try:\n            table = self.dynamodb_resources[region].Table(self.table_name)\n            \n            # Add version vector for conflict resolution\n            item['write_timestamp'] = int(time.time() * 1000)\n            item['write_region'] = region\n            \n            table.put_item(Item=item)\n            return True\n        except ClientError as e:\n            print(f\"Error putting item: {e}\")\n            return False\n    \n    def resolve_conflict(self, local_item, remote_item):\n        # Last-write-wins based on timestamp\n        local_ts = local_item.get('write_timestamp', 0)\n        remote_ts = remote_item.get('write_timestamp', 0)\n        \n        if remote_ts > local_ts:\n            return remote_item\n        elif local_ts > remote_ts:\n            return local_item\n        else:\n            # Same timestamp - use region as tiebreaker\n            local_region = local_item.get('write_region', '')\n            remote_region = remote_item.get('write_region', '')\n            return local_item if local_region < remote_region else remote_item\n    \n    def custom_merge_strategy(self, local_item, remote_item, merge_fields):\n        # Custom merge for specific fields\n        merged = local_item.copy()\n        \n        for field in merge_fields:\n            if field in remote_item:\n                local_val = local_item.get(field)\n                remote_val = remote_item.get(field)\n                \n                # Example: merge numeric fields by taking maximum\n                if isinstance(local_val, (int, float)) and isinstance(remote_val, (int, float)):\n                    merged[field] = max(local_val, remote_val)\n                # Example: merge lists by union\n                elif isinstance(local_val, list) and isinstance(remote_val, list):\n                    merged[field] = list(set(local_val + remote_val))\n        \n        return merged\n    \n    def get_replication_lag(self):\n        try:\n            lags = {}\n            \n            for region in self.regions:\n                client = self.dynamodb_clients[region]\n                response = client.describe_table(TableName=self.table_name)\n                \n                if 'Replicas' in response['Table']:\n                    for replica in response['Table']['Replicas']:\n                        replica_region = replica['RegionName']\n                        status = replica.get('ReplicaStatus', 'UNKNOWN')\n                        lags[replica_region] = status\n            \n            return lags\n        except ClientError as e:\n            print(f\"Error getting replication lag: {e}\")\n            return None\n    \n    def implement_causal_consistency(self, operation_chain):\n        # Track operation dependencies\n        version_vector = {region: 0 for region in self.regions}\n        \n        for operation in operation_chain:\n            region = operation['region']\n            item = operation['item']\n            \n            # Increment version for this region\n            version_vector[region] += 1\n            \n            # Add version vector to item\n            item['version_vector'] = version_vector.copy()\n            \n            # Put item\n            self.put_item_with_timestamp(region, item)\n            \n            # Wait for replication before next operation\n            time.sleep(0.1)\n    \n    def conditional_write_with_conflict_check(self, region, item, expected_version):\n        try:\n            table = self.dynamodb_resources[region].Table(self.table_name)\n            \n            # Use conditional expression\n            table.put_item(\n                Item=item,\n                ConditionExpression='attribute_not_exists(id) OR write_timestamp < :new_ts',\n                ExpressionAttributeValues={\n                    ':new_ts': item['write_timestamp']\n                }\n            )\n            return True\n        except ClientError as e:\n            if e.response['Error']['Code'] == 'ConditionalCheckFailedException':\n                print(\"Conflict detected - item was modified\")\n                return False\n            print(f\"Error: {e}\")\n            return False\n    \n    def monitor_conflicts(self, region):\n        # Monitor CloudWatch metrics for conflict resolution\n        cloudwatch = boto3.client('cloudwatch', region_name=region)\n        \n        try:\n            response = cloudwatch.get_metric_statistics(\n                Namespace='AWS/DynamoDB',\n                MetricName='UserErrors',\n                Dimensions=[\n                    {'Name': 'TableName', 'Value': self.table_name}\n                ],\n                StartTime=datetime.utcnow() - timedelta(hours=1),\n                EndTime=datetime.utcnow(),\n                Period=300,\n                Statistics=['Sum']\n            )\n            return response['Datapoints']\n        except ClientError as e:\n            print(f\"Error monitoring: {e}\")\n            return None",
+    "hints": [
+      "Use StreamSpecification for global table replication",
+      "Implement version vectors for causal consistency",
+      "Last-write-wins is default conflict resolution",
+      "Monitor ReplicationLatency metric in CloudWatch"
+    ],
+    "testCases": [
+      {
+        "input": "create_global_table()",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Create global table across regions"
+      },
+      {
+        "input": "Concurrent writes to same item in different regions",
+        "expectedOutput": "Conflict resolved using timestamp",
+        "isHidden": false,
+        "description": "Test conflict resolution"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs405-t6-ex16",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-6",
+    "title": "Enterprise Backup Orchestration System",
+    "difficulty": 5,
+    "description": "Build a comprehensive backup orchestration system for multi-cloud:\n\n1. Coordinate backups across S3, RDS, DynamoDB, and EBS\n2. Implement incremental and full backup strategies\n3. Cross-region and cross-account backup copying\n4. Automated retention policy enforcement\n5. Disaster recovery automation with RTO/RPO tracking",
+    "starterCode": "import boto3\nfrom datetime import datetime, timedelta\n\nclass BackupOrchestrator:\n    def __init__(self, config):\n        # TODO: Initialize\n        pass\n    \n    def create_backup_plan(self):\n        # TODO: Create backup plan\n        pass",
+    "solution": "import boto3\nimport json\nfrom datetime import datetime, timedelta\nfrom botocore.exceptions import ClientError\n\nclass BackupOrchestrator:\n    def __init__(self, config):\n        self.config = config\n        self.backup_client = boto3.client('backup')\n        self.s3 = boto3.client('s3')\n        self.rds = boto3.client('rds')\n        self.dynamodb = boto3.client('dynamodb')\n        self.ec2 = boto3.client('ec2')\n        self.backup_vault = config.get('backup_vault', 'default-vault')\n    \n    def create_backup_vault(self, vault_name=None):\n        if not vault_name:\n            vault_name = self.backup_vault\n        \n        try:\n            self.backup_client.create_backup_vault(\n                BackupVaultName=vault_name,\n                EncryptionKeyArn=self.config.get('kms_key_arn')\n            )\n            return vault_name\n        except ClientError as e:\n            if e.response['Error']['Code'] == 'AlreadyExistsException':\n                return vault_name\n            print(f\"Error creating vault: {e}\")\n            return None\n    \n    def create_backup_plan(self, plan_name, rules):\n        try:\n            backup_plan = {\n                'BackupPlanName': plan_name,\n                'Rules': rules\n            }\n            \n            response = self.backup_client.create_backup_plan(\n                BackupPlan=backup_plan\n            )\n            return response['BackupPlanId']\n        except ClientError as e:\n            print(f\"Error creating backup plan: {e}\")\n            return None\n    \n    def create_comprehensive_backup_plan(self):\n        # Define backup rules\n        rules = [\n            {\n                'RuleName': 'DailyBackups',\n                'TargetBackupVaultName': self.backup_vault,\n                'ScheduleExpression': 'cron(0 2 * * ? *)',  # 2 AM daily\n                'StartWindowMinutes': 60,\n                'CompletionWindowMinutes': 120,\n                'Lifecycle': {\n                    'DeleteAfterDays': 30,\n                    'MoveToColdStorageAfterDays': 7\n                },\n                'RecoveryPointTags': {\n                    'BackupType': 'Daily',\n                    'Automated': 'True'\n                }\n            },\n            {\n                'RuleName': 'WeeklyBackups',\n                'TargetBackupVaultName': self.backup_vault,\n                'ScheduleExpression': 'cron(0 3 ? * SUN *)',  # 3 AM Sunday\n                'StartWindowMinutes': 60,\n                'CompletionWindowMinutes': 180,\n                'Lifecycle': {\n                    'DeleteAfterDays': 90\n                },\n                'RecoveryPointTags': {\n                    'BackupType': 'Weekly',\n                    'Automated': 'True'\n                }\n            },\n            {\n                'RuleName': 'MonthlyBackups',\n                'TargetBackupVaultName': self.backup_vault,\n                'ScheduleExpression': 'cron(0 4 1 * ? *)',  # 4 AM 1st of month\n                'StartWindowMinutes': 60,\n                'CompletionWindowMinutes': 240,\n                'Lifecycle': {\n                    'DeleteAfterDays': 365\n                },\n                'RecoveryPointTags': {\n                    'BackupType': 'Monthly',\n                    'Automated': 'True'\n                }\n            }\n        ]\n        \n        return self.create_backup_plan('ComprehensiveBackupPlan', rules)\n    \n    def assign_resources_to_plan(self, plan_id, resource_arns):\n        try:\n            response = self.backup_client.create_backup_selection(\n                BackupPlanId=plan_id,\n                BackupSelection={\n                    'SelectionName': 'AllResources',\n                    'IamRoleArn': self.config.get('backup_role_arn'),\n                    'Resources': resource_arns\n                }\n            )\n            return response['SelectionId']\n        except ClientError as e:\n            print(f\"Error assigning resources: {e}\")\n            return None\n    \n    def create_s3_backup(self, bucket_name, backup_bucket):\n        try:\n            # Sync bucket to backup location\n            timestamp = datetime.now().strftime('%Y%m%d-%H%M%S')\n            backup_prefix = f\"s3-backup/{bucket_name}/{timestamp}/\"\n            \n            # List and copy objects\n            paginator = self.s3.get_paginator('list_objects_v2')\n            for page in paginator.paginate(Bucket=bucket_name):\n                if 'Contents' in page:\n                    for obj in page['Contents']:\n                        copy_source = {'Bucket': bucket_name, 'Key': obj['Key']}\n                        self.s3.copy_object(\n                            CopySource=copy_source,\n                            Bucket=backup_bucket,\n                            Key=backup_prefix + obj['Key']\n                        )\n            \n            return backup_prefix\n        except ClientError as e:\n            print(f\"Error backing up S3: {e}\")\n            return None\n    \n    def create_rds_snapshot(self, db_instance_id):\n        try:\n            timestamp = datetime.now().strftime('%Y%m%d-%H%M%S')\n            snapshot_id = f\"{db_instance_id}-{timestamp}\"\n            \n            self.rds.create_db_snapshot(\n                DBSnapshotIdentifier=snapshot_id,\n                DBInstanceIdentifier=db_instance_id,\n                Tags=[{'Key': 'Automated', 'Value': 'True'}]\n            )\n            return snapshot_id\n        except ClientError as e:\n            print(f\"Error creating RDS snapshot: {e}\")\n            return None\n    \n    def create_dynamodb_backup(self, table_name):\n        try:\n            timestamp = datetime.now().strftime('%Y%m%d-%H%M%S')\n            backup_name = f\"{table_name}-{timestamp}\"\n            \n            response = self.dynamodb.create_backup(\n                TableName=table_name,\n                BackupName=backup_name\n            )\n            return response['BackupDetails']['BackupArn']\n        except ClientError as e:\n            print(f\"Error creating DynamoDB backup: {e}\")\n            return None\n    \n    def create_ebs_snapshot(self, volume_id):\n        try:\n            timestamp = datetime.now().strftime('%Y%m%d-%H%M%S')\n            \n            response = self.ec2.create_snapshot(\n                VolumeId=volume_id,\n                Description=f\"Automated backup - {timestamp}\",\n                TagSpecifications=[{\n                    'ResourceType': 'snapshot',\n                    'Tags': [{'Key': 'Automated', 'Value': 'True'}]\n                }]\n            )\n            return response['SnapshotId']\n        except ClientError as e:\n            print(f\"Error creating EBS snapshot: {e}\")\n            return None\n    \n    def copy_snapshot_cross_region(self, snapshot_id, source_region, target_region):\n        try:\n            source_rds = boto3.client('rds', region_name=source_region)\n            target_rds = boto3.client('rds', region_name=target_region)\n            \n            source_arn = f\"arn:aws:rds:{source_region}:123456789012:snapshot:{snapshot_id}\"\n            \n            response = target_rds.copy_db_snapshot(\n                SourceDBSnapshotIdentifier=source_arn,\n                TargetDBSnapshotIdentifier=f\"{snapshot_id}-{target_region}\",\n                CopyTags=True\n            )\n            return response['DBSnapshot']['DBSnapshotIdentifier']\n        except ClientError as e:\n            print(f\"Error copying snapshot: {e}\")\n            return None\n    \n    def enforce_retention_policy(self, resource_type, retention_days):\n        cutoff_date = datetime.now() - timedelta(days=retention_days)\n        \n        if resource_type == 'rds':\n            self._cleanup_rds_snapshots(cutoff_date)\n        elif resource_type == 'dynamodb':\n            self._cleanup_dynamodb_backups(cutoff_date)\n        elif resource_type == 'ebs':\n            self._cleanup_ebs_snapshots(cutoff_date)\n    \n    def _cleanup_rds_snapshots(self, cutoff_date):\n        try:\n            response = self.rds.describe_db_snapshots()\n            for snapshot in response['DBSnapshots']:\n                if snapshot.get('SnapshotCreateTime') < cutoff_date:\n                    if snapshot.get('SnapshotType') == 'manual':\n                        self.rds.delete_db_snapshot(\n                            DBSnapshotIdentifier=snapshot['DBSnapshotIdentifier']\n                        )\n        except ClientError as e:\n            print(f\"Error cleaning up RDS snapshots: {e}\")\n    \n    def orchestrate_full_backup(self, resources):\n        backup_results = {\n            'timestamp': datetime.now().isoformat(),\n            'backups': []\n        }\n        \n        for resource in resources:\n            resource_type = resource['type']\n            resource_id = resource['id']\n            \n            result = None\n            if resource_type == 's3':\n                result = self.create_s3_backup(resource_id, resource.get('backup_bucket'))\n            elif resource_type == 'rds':\n                result = self.create_rds_snapshot(resource_id)\n            elif resource_type == 'dynamodb':\n                result = self.create_dynamodb_backup(resource_id)\n            elif resource_type == 'ebs':\n                result = self.create_ebs_snapshot(resource_id)\n            \n            backup_results['backups'].append({\n                'resource': resource_id,\n                'type': resource_type,\n                'backup_id': result,\n                'status': 'success' if result else 'failed'\n            })\n        \n        return backup_results\n    \n    def calculate_rto_rpo(self, backup_frequency_hours, restore_time_minutes):\n        return {\n            'RPO': f\"{backup_frequency_hours} hours\",\n            'RTO': f\"{restore_time_minutes} minutes\"\n        }",
+    "hints": [
+      "Use AWS Backup service for centralized management",
+      "Implement lifecycle policies for cost optimization",
+      "Copy critical backups to different region/account",
+      "Monitor backup job status with CloudWatch Events"
+    ],
+    "testCases": [
+      {
+        "input": "create_comprehensive_backup_plan()",
+        "expectedOutput": "Backup plan ID",
+        "isHidden": false,
+        "description": "Create backup plan with daily/weekly/monthly rules"
+      },
+      {
+        "input": "orchestrate_full_backup([s3, rds, dynamodb, ebs resources])",
+        "expectedOutput": "All backups completed successfully",
+        "isHidden": false,
+        "description": "Execute coordinated backup"
+      }
+    ],
+    "language": "python"
   }
 ]

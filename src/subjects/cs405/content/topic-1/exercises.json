@@ -208,5 +208,387 @@
       "Public: default for standard workloads"
     ],
     "language": "python"
+  },
+  {
+    "id": "cs405-t1-ex07",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-1",
+    "title": "Cloud Provider Feature Matrix",
+    "difficulty": 1,
+    "description": "Create a simple Python program that compares cloud provider features. Given a feature name, return which providers (AWS, Azure, GCP) support it.",
+    "starterCode": "# Cloud Provider Feature Matrix\ndef check_feature_support(feature):\n    \"\"\"\n    Check which cloud providers support a given feature\n    \n    Args:\n        feature: string (e.g., 'kubernetes', 'serverless', 'object_storage')\n    \n    Returns:\n        list: providers that support the feature\n    \"\"\"\n    # Feature support matrix\n    features = {\n        'kubernetes': ['AWS', 'Azure', 'GCP'],\n        'serverless': ['AWS', 'Azure', 'GCP'],\n        'object_storage': ['AWS', 'Azure', 'GCP'],\n        'edge_computing': ['AWS', 'Azure'],\n        'quantum_computing': ['AWS', 'Azure', 'GCP']\n    }\n    \n    # TODO: Return list of providers supporting the feature\n    pass\n\nprint(check_feature_support('kubernetes'))\nprint(check_feature_support('edge_computing'))",
+    "solution": "def check_feature_support(feature):\n    \"\"\"Check which cloud providers support a given feature\"\"\"\n    \n    features = {\n        'kubernetes': ['AWS', 'Azure', 'GCP'],\n        'serverless': ['AWS', 'Azure', 'GCP'],\n        'object_storage': ['AWS', 'Azure', 'GCP'],\n        'edge_computing': ['AWS', 'Azure'],\n        'quantum_computing': ['AWS', 'Azure', 'GCP']\n    }\n    \n    return features.get(feature, [])\n\nprint(check_feature_support('kubernetes'))  # ['AWS', 'Azure', 'GCP']\nprint(check_feature_support('edge_computing'))  # ['AWS', 'Azure']\nprint(check_feature_support('unknown'))  # []",
+    "testCases": [
+      {
+        "input": "check_feature_support('kubernetes')",
+        "expectedOutput": "['AWS', 'Azure', 'GCP']",
+        "isHidden": false,
+        "description": "Universal feature support"
+      },
+      {
+        "input": "check_feature_support('edge_computing')",
+        "expectedOutput": "['AWS', 'Azure']",
+        "isHidden": false,
+        "description": "Partial feature support"
+      },
+      {
+        "input": "check_feature_support('unknown_feature')",
+        "expectedOutput": "[]",
+        "isHidden": true,
+        "description": "Unknown feature returns empty list"
+      }
+    ],
+    "hints": [
+      "Use a dictionary to map features to provider lists",
+      "Use .get() method with default value of []",
+      "Return the list directly from the dictionary",
+      "Handle unknown features gracefully"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs405-t1-ex08",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-1",
+    "title": "Cloud Region Latency Estimator",
+    "difficulty": 1,
+    "description": "Build a simple tool that estimates network latency between user location and cloud regions based on geographic distance.",
+    "starterCode": "# Cloud Region Latency Estimator\ndef estimate_latency(user_region, cloud_region):\n    \"\"\"\n    Estimate latency between user and cloud region\n    \n    Args:\n        user_region: string ('us-east', 'us-west', 'eu', 'asia')\n        cloud_region: string (same format)\n    \n    Returns:\n        int: estimated latency in milliseconds\n    \"\"\"\n    # Simple latency matrix (ms)\n    # Same region: 5ms\n    # Same continent: 20ms\n    # Cross continent: 150ms\n    \n    # TODO: Calculate latency\n    pass\n\nprint(estimate_latency('us-east', 'us-east'))  # 5\nprint(estimate_latency('us-east', 'us-west'))  # 20\nprint(estimate_latency('us-east', 'asia'))     # 150",
+    "solution": "def estimate_latency(user_region, cloud_region):\n    \"\"\"Estimate latency between user and cloud region\"\"\"\n    \n    # Define region groups\n    region_groups = {\n        'us-east': 'north_america',\n        'us-west': 'north_america',\n        'eu': 'europe',\n        'asia': 'asia'\n    }\n    \n    # Same region\n    if user_region == cloud_region:\n        return 5\n    \n    # Same continent\n    if region_groups.get(user_region) == region_groups.get(cloud_region):\n        return 20\n    \n    # Cross continent\n    return 150\n\nprint(estimate_latency('us-east', 'us-east'))  # 5\nprint(estimate_latency('us-east', 'us-west'))  # 20  \nprint(estimate_latency('us-east', 'asia'))     # 150\nprint(estimate_latency('eu', 'asia'))          # 150",
+    "testCases": [
+      {
+        "input": "estimate_latency('us-east', 'us-east')",
+        "expectedOutput": "5",
+        "isHidden": false,
+        "description": "Same region latency"
+      },
+      {
+        "input": "estimate_latency('us-east', 'us-west')",
+        "expectedOutput": "20",
+        "isHidden": false,
+        "description": "Same continent latency"
+      },
+      {
+        "input": "estimate_latency('us-east', 'asia')",
+        "expectedOutput": "150",
+        "isHidden": true,
+        "description": "Cross continent latency"
+      },
+      {
+        "input": "estimate_latency('eu', 'asia')",
+        "expectedOutput": "150",
+        "isHidden": true,
+        "description": "Different cross continent latency"
+      }
+    ],
+    "hints": [
+      "Group regions by continent",
+      "Check if regions are identical first",
+      "Check if regions are on same continent",
+      "Default to cross-continent latency"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs405-t1-ex09",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-1",
+    "title": "Cloud Billing Alert System",
+    "difficulty": 3,
+    "description": "Implement a billing alert system that tracks daily cloud spending and sends alerts when approaching budget thresholds. Track costs over multiple days and warn at 50%, 75%, and 90% of budget.",
+    "starterCode": "# Cloud Billing Alert System\nclass BillingAlertSystem:\n    def __init__(self, monthly_budget):\n        \"\"\"\n        Initialize billing alert system\n        \n        Args:\n            monthly_budget: float, monthly budget in dollars\n        \"\"\"\n        self.monthly_budget = monthly_budget\n        self.daily_costs = []\n        \n    def add_daily_cost(self, cost):\n        \"\"\"Add a day's cost to tracking\"\"\"\n        # TODO: Implement\n        pass\n    \n    def get_total_spent(self):\n        \"\"\"Get total spent so far\"\"\"\n        # TODO: Implement\n        pass\n    \n    def check_alerts(self):\n        \"\"\"Check if any budget thresholds are crossed\"\"\"\n        # TODO: Return alert level and message\n        pass\n\n# Test\nbs = BillingAlertSystem(1000)\nbs.add_daily_cost(30)\nbs.add_daily_cost(40)\nprint(bs.get_total_spent())\nprint(bs.check_alerts())",
+    "solution": "class BillingAlertSystem:\n    def __init__(self, monthly_budget):\n        \"\"\"Initialize billing alert system\"\"\"\n        self.monthly_budget = monthly_budget\n        self.daily_costs = []\n        self.alert_thresholds = [0.50, 0.75, 0.90]\n        \n    def add_daily_cost(self, cost):\n        \"\"\"Add a day's cost to tracking\"\"\"\n        self.daily_costs.append(cost)\n        \n    def get_total_spent(self):\n        \"\"\"Get total spent so far\"\"\"\n        return sum(self.daily_costs)\n    \n    def get_budget_percentage(self):\n        \"\"\"Get percentage of budget spent\"\"\"\n        total = self.get_total_spent()\n        return (total / self.monthly_budget) * 100\n    \n    def check_alerts(self):\n        \"\"\"Check if any budget thresholds are crossed\"\"\"\n        total_spent = self.get_total_spent()\n        percentage = self.get_budget_percentage()\n        \n        if percentage >= 90:\n            return {\n                'level': 'CRITICAL',\n                'message': f'90% of budget used. Spent ${total_spent:.2f} of ${self.monthly_budget:.2f}',\n                'percentage': round(percentage, 2)\n            }\n        elif percentage >= 75:\n            return {\n                'level': 'WARNING',\n                'message': f'75% of budget used. Spent ${total_spent:.2f} of ${self.monthly_budget:.2f}',\n                'percentage': round(percentage, 2)\n            }\n        elif percentage >= 50:\n            return {\n                'level': 'INFO',\n                'message': f'50% of budget used. Spent ${total_spent:.2f} of ${self.monthly_budget:.2f}',\n                'percentage': round(percentage, 2)\n            }\n        else:\n            return {\n                'level': 'OK',\n                'message': f'Budget on track. Spent ${total_spent:.2f} of ${self.monthly_budget:.2f}',\n                'percentage': round(percentage, 2)\n            }\n\n# Test\nbs = BillingAlertSystem(1000)\nbs.add_daily_cost(30)\nbs.add_daily_cost(40)\nprint(f\"Total spent: ${bs.get_total_spent():.2f}\")\nprint(f\"Alert: {bs.check_alerts()}\")\n\n# Test thresholds\nbs.add_daily_cost(500)  # Total: 570 (57%)\nprint(f\"\\nAfter large charge:\")\nprint(bs.check_alerts())\n\nbs.add_daily_cost(300)  # Total: 870 (87%)\nprint(f\"\\nNearing budget:\")\nprint(bs.check_alerts())\n\nbs.add_daily_cost(60)   # Total: 930 (93%)\nprint(f\"\\nCritical:\")\nprint(bs.check_alerts())",
+    "testCases": [
+      {
+        "input": "bs = BillingAlertSystem(1000); bs.add_daily_cost(600); bs.check_alerts()['level']",
+        "expectedOutput": "'INFO'",
+        "isHidden": false,
+        "description": "50% threshold alert"
+      },
+      {
+        "input": "bs = BillingAlertSystem(1000); bs.add_daily_cost(800); bs.check_alerts()['level']",
+        "expectedOutput": "'WARNING'",
+        "isHidden": false,
+        "description": "75% threshold alert"
+      },
+      {
+        "input": "bs = BillingAlertSystem(1000); bs.add_daily_cost(950); bs.check_alerts()['level']",
+        "expectedOutput": "'CRITICAL'",
+        "isHidden": true,
+        "description": "90% threshold alert"
+      }
+    ],
+    "hints": [
+      "Store daily costs in a list",
+      "Use sum() to calculate total spent",
+      "Calculate percentage: (spent / budget) * 100",
+      "Check thresholds from highest to lowest"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs405-t1-ex10",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-1",
+    "title": "FinOps Budget Optimizer",
+    "difficulty": 4,
+    "description": "Create an advanced budget optimization tool that analyzes spending patterns and recommends cost-saving actions like rightsizing instances, using spot instances, or purchasing reserved capacity.",
+    "starterCode": "# FinOps Budget Optimizer\ndef analyze_spending_and_recommend(resources):\n    \"\"\"\n    Analyze resource usage and recommend optimizations\n    \n    Args:\n        resources: list of dicts with:\n            - type: 'compute', 'storage', 'transfer'\n            - current_cost: float\n            - utilization: float (0-100)\n            - uptime_hours: int (hours per month)\n    \n    Returns:\n        dict: recommendations with potential savings\n    \"\"\"\n    # Optimization rules:\n    # - Compute < 30% utilization: downsize (save 50%)\n    # - Compute 30-70% utilization: OK\n    # - Compute > 70% utilization AND uptime > 500h: use reserved (save 40%)\n    # - Storage utilization < 20%: archive cold data (save 80%)\n    \n    # TODO: Implement optimization analysis\n    pass\n\n# Test\nresources = [\n    {'type': 'compute', 'current_cost': 100, 'utilization': 15, 'uptime_hours': 730},\n    {'type': 'compute', 'current_cost': 200, 'utilization': 80, 'uptime_hours': 730},\n    {'type': 'storage', 'current_cost': 50, 'utilization': 10, 'uptime_hours': 730}\n]\nprint(analyze_spending_and_recommend(resources))",
+    "solution": "def analyze_spending_and_recommend(resources):\n    \"\"\"Analyze resource usage and recommend optimizations\"\"\"\n    \n    recommendations = []\n    total_current_cost = sum(r['current_cost'] for r in resources)\n    total_potential_savings = 0\n    \n    for resource in resources:\n        res_type = resource['type']\n        cost = resource['current_cost']\n        util = resource['utilization']\n        uptime = resource['uptime_hours']\n        \n        if res_type == 'compute':\n            # Low utilization: downsize\n            if util < 30:\n                savings = cost * 0.50\n                recommendations.append({\n                    'resource': resource,\n                    'action': 'Downsize instance',\n                    'reason': f'Only {util}% utilized',\n                    'current_cost': cost,\n                    'estimated_savings': round(savings, 2)\n                })\n                total_potential_savings += savings\n            \n            # High utilization + long uptime: use reserved\n            elif util > 70 and uptime > 500:\n                savings = cost * 0.40\n                recommendations.append({\n                    'resource': resource,\n                    'action': 'Purchase Reserved Instance',\n                    'reason': f'{util}% utilized, {uptime}h uptime/month',\n                    'current_cost': cost,\n                    'estimated_savings': round(savings, 2)\n                })\n                total_potential_savings += savings\n            \n            # Good utilization\n            else:\n                recommendations.append({\n                    'resource': resource,\n                    'action': 'No action needed',\n                    'reason': f'Utilization ({util}%) is optimal',\n                    'current_cost': cost,\n                    'estimated_savings': 0\n                })\n        \n        elif res_type == 'storage':\n            # Low storage utilization: archive\n            if util < 20:\n                savings = cost * 0.80\n                recommendations.append({\n                    'resource': resource,\n                    'action': 'Archive cold data',\n                    'reason': f'Only {util}% actively used',\n                    'current_cost': cost,\n                    'estimated_savings': round(savings, 2)\n                })\n                total_potential_savings += savings\n            else:\n                recommendations.append({\n                    'resource': resource,\n                    'action': 'No action needed',\n                    'reason': 'Storage utilization is acceptable',\n                    'current_cost': cost,\n                    'estimated_savings': 0\n                })\n    \n    return {\n        'total_current_cost': round(total_current_cost, 2),\n        'total_potential_savings': round(total_potential_savings, 2),\n        'savings_percentage': round((total_potential_savings / total_current_cost) * 100, 2),\n        'recommendations': recommendations\n    }\n\n# Test\nresources = [\n    {'type': 'compute', 'current_cost': 100, 'utilization': 15, 'uptime_hours': 730},\n    {'type': 'compute', 'current_cost': 200, 'utilization': 80, 'uptime_hours': 730},\n    {'type': 'storage', 'current_cost': 50, 'utilization': 10, 'uptime_hours': 730}\n]\n\nresult = analyze_spending_and_recommend(resources)\nprint(f\"Current monthly cost: ${result['total_current_cost']:.2f}\")\nprint(f\"Potential savings: ${result['total_potential_savings']:.2f} ({result['savings_percentage']:.1f}%)\")\nprint(\"\\nRecommendations:\")\nfor rec in result['recommendations']:\n    print(f\"  - {rec['action']}: ${rec['estimated_savings']:.2f} savings\")\n    print(f\"    Reason: {rec['reason']}\")",
+    "testCases": [
+      {
+        "input": "analyze_spending_and_recommend([{'type': 'compute', 'current_cost': 100, 'utilization': 15, 'uptime_hours': 730}])['recommendations'][0]['action']",
+        "expectedOutput": "'Downsize instance'",
+        "isHidden": false,
+        "description": "Low utilization compute recommendation"
+      },
+      {
+        "input": "analyze_spending_and_recommend([{'type': 'compute', 'current_cost': 200, 'utilization': 80, 'uptime_hours': 730}])['recommendations'][0]['action']",
+        "expectedOutput": "'Purchase Reserved Instance'",
+        "isHidden": false,
+        "description": "High utilization reserved instance recommendation"
+      },
+      {
+        "input": "analyze_spending_and_recommend([{'type': 'storage', 'current_cost': 50, 'utilization': 10, 'uptime_hours': 730}])['total_potential_savings']",
+        "expectedOutput": "40.0",
+        "isHidden": true,
+        "description": "Storage archival savings calculation"
+      }
+    ],
+    "hints": [
+      "Iterate through each resource and check conditions",
+      "Apply different rules for compute vs storage",
+      "Track total savings across all recommendations",
+      "Return detailed breakdown for each resource"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs405-t1-ex11",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-1",
+    "title": "Elasticity Auto-Scaling Simulator",
+    "difficulty": 4,
+    "description": "Simulate cloud auto-scaling behavior. Given traffic patterns, simulate when instances scale up/down based on CPU thresholds. Calculate cost implications of different scaling policies.",
+    "starterCode": "# Elasticity Auto-Scaling Simulator\ndef simulate_autoscaling(traffic_pattern, scale_up_threshold=70, scale_down_threshold=30):\n    \"\"\"\n    Simulate auto-scaling behavior\n    \n    Args:\n        traffic_pattern: list of CPU utilization percentages over time\n        scale_up_threshold: CPU % to trigger scale up\n        scale_down_threshold: CPU % to trigger scale down\n    \n    Returns:\n        dict: instance counts over time, total cost\n    \"\"\"\n    # Rules:\n    # - Start with 1 instance\n    # - If CPU > scale_up_threshold: add 1 instance (up to 10 max)\n    # - If CPU < scale_down_threshold: remove 1 instance (min 1)\n    # - Cost: $0.10 per instance per time unit\n    # - New instances take effect next time period\n    \n    # TODO: Implement simulation\n    pass\n\ntraffic = [20, 40, 60, 80, 90, 85, 70, 50, 30, 20]\nresult = simulate_autoscaling(traffic)\nprint(result)",
+    "solution": "def simulate_autoscaling(traffic_pattern, scale_up_threshold=70, scale_down_threshold=30):\n    \"\"\"Simulate auto-scaling behavior\"\"\"\n    \n    MIN_INSTANCES = 1\n    MAX_INSTANCES = 10\n    COST_PER_INSTANCE = 0.10\n    \n    current_instances = 1\n    instance_history = []\n    total_cost = 0\n    \n    for period, cpu_util in enumerate(traffic_pattern):\n        # Record current state\n        instance_history.append({\n            'period': period,\n            'instances': current_instances,\n            'cpu_utilization': cpu_util,\n            'cost': current_instances * COST_PER_INSTANCE\n        })\n        \n        # Add to total cost\n        total_cost += current_instances * COST_PER_INSTANCE\n        \n        # Determine scaling action for next period\n        if cpu_util > scale_up_threshold and current_instances < MAX_INSTANCES:\n            current_instances += 1\n        elif cpu_util < scale_down_threshold and current_instances > MIN_INSTANCES:\n            current_instances -= 1\n    \n    return {\n        'instance_history': instance_history,\n        'total_cost': round(total_cost, 2),\n        'max_instances': max(h['instances'] for h in instance_history),\n        'avg_instances': round(sum(h['instances'] for h in instance_history) / len(instance_history), 2)\n    }\n\n# Test with traffic pattern\ntraffic = [20, 40, 60, 80, 90, 85, 70, 50, 30, 20]\nresult = simulate_autoscaling(traffic)\n\nprint(f\"Total cost: ${result['total_cost']:.2f}\")\nprint(f\"Max instances: {result['max_instances']}\")\nprint(f\"Avg instances: {result['avg_instances']}\")\nprint(\"\\nScaling timeline:\")\nfor h in result['instance_history']:\n    print(f\"  Period {h['period']}: {h['instances']} instances @ {h['cpu_utilization']}% CPU\")\n\n# Compare aggressive vs conservative scaling\nprint(\"\\n=== Scaling Policy Comparison ===\")\naggressive = simulate_autoscaling(traffic, scale_up_threshold=60, scale_down_threshold=40)\nconservative = simulate_autoscaling(traffic, scale_up_threshold=80, scale_down_threshold=20)\n\nprint(f\"Aggressive policy: ${aggressive['total_cost']:.2f}, max {aggressive['max_instances']} instances\")\nprint(f\"Conservative policy: ${conservative['total_cost']:.2f}, max {conservative['max_instances']} instances\")",
+    "testCases": [
+      {
+        "input": "simulate_autoscaling([20, 40, 60, 80, 90, 85, 70, 50, 30, 20])['total_cost']",
+        "expectedOutput": "Cost based on scaling behavior",
+        "isHidden": false,
+        "description": "Calculate total cost of auto-scaling"
+      },
+      {
+        "input": "simulate_autoscaling([90, 90, 90, 90, 90])['max_instances']",
+        "expectedOutput": "Scales up to handle high load",
+        "isHidden": false,
+        "description": "Scale up behavior"
+      },
+      {
+        "input": "simulate_autoscaling([20, 20, 20, 20, 20])['max_instances']",
+        "expectedOutput": "1",
+        "isHidden": true,
+        "description": "No scaling needed for low load"
+      }
+    ],
+    "hints": [
+      "Track current instance count throughout simulation",
+      "Compare CPU to thresholds each period",
+      "Apply scaling changes in next period",
+      "Respect min/max instance limits"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs405-t1-ex12",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-1",
+    "title": "Cloud Shared Responsibility Model Validator",
+    "difficulty": 3,
+    "description": "Create a tool that validates security configurations against the shared responsibility model. Given a service model (IaaS/PaaS/SaaS) and security tasks, determine who is responsible: customer, provider, or shared.",
+    "starterCode": "# Shared Responsibility Model Validator\ndef validate_responsibility(service_model, security_task):\n    \"\"\"\n    Determine responsibility for security task\n    \n    Args:\n        service_model: 'IaaS', 'PaaS', or 'SaaS'\n        security_task: string describing the task\n    \n    Returns:\n        dict: responsibility assignment and explanation\n    \"\"\"\n    # Security task categories:\n    # - Physical security\n    # - Network infrastructure\n    # - Hypervisor\n    # - Operating system\n    # - Application\n    # - Data\n    # - Identity and access\n    \n    # TODO: Implement responsibility logic\n    pass\n\nprint(validate_responsibility('IaaS', 'OS patching'))\nprint(validate_responsibility('PaaS', 'OS patching'))\nprint(validate_responsibility('SaaS', 'Data encryption'))",
+    "solution": "def validate_responsibility(service_model, security_task):\n    \"\"\"Determine responsibility for security task\"\"\"\n    \n    # Responsibility matrix\n    # Format: task -> {service_model: responsibility}\n    responsibility_matrix = {\n        'physical_security': {\n            'IaaS': 'Provider',\n            'PaaS': 'Provider',\n            'SaaS': 'Provider'\n        },\n        'network_infrastructure': {\n            'IaaS': 'Provider',\n            'PaaS': 'Provider',\n            'SaaS': 'Provider'\n        },\n        'hypervisor': {\n            'IaaS': 'Provider',\n            'PaaS': 'Provider',\n            'SaaS': 'Provider'\n        },\n        'os_patching': {\n            'IaaS': 'Customer',\n            'PaaS': 'Provider',\n            'SaaS': 'Provider'\n        },\n        'application_security': {\n            'IaaS': 'Customer',\n            'PaaS': 'Customer',\n            'SaaS': 'Provider'\n        },\n        'data_encryption': {\n            'IaaS': 'Customer',\n            'PaaS': 'Customer',\n            'SaaS': 'Shared'\n        },\n        'identity_management': {\n            'IaaS': 'Customer',\n            'PaaS': 'Customer',\n            'SaaS': 'Shared'\n        },\n        'network_controls': {\n            'IaaS': 'Customer',\n            'PaaS': 'Shared',\n            'SaaS': 'Provider'\n        }\n    }\n    \n    # Normalize task name\n    task_key = security_task.lower().replace(' ', '_')\n    \n    if task_key not in responsibility_matrix:\n        return {\n            'task': security_task,\n            'service_model': service_model,\n            'responsible_party': 'Unknown',\n            'explanation': 'Task not found in responsibility matrix'\n        }\n    \n    responsible = responsibility_matrix[task_key].get(service_model, 'Unknown')\n    \n    # Generate explanation\n    explanations = {\n        ('IaaS', 'Customer'): 'In IaaS, customer manages everything above the hypervisor',\n        ('PaaS', 'Provider'): 'In PaaS, provider manages infrastructure and platform layers',\n        ('PaaS', 'Customer'): 'In PaaS, customer manages application and data layers',\n        ('SaaS', 'Provider'): 'In SaaS, provider manages entire stack',\n        ('SaaS', 'Shared'): 'In SaaS, provider and customer share this responsibility',\n        ('IaaS', 'Provider'): 'Provider always manages physical infrastructure',\n        ('PaaS', 'Shared'): 'Both parties have responsibilities at this layer',\n        ('IaaS', 'Shared'): 'Both parties have responsibilities at this layer'\n    }\n    \n    explanation = explanations.get((service_model, responsible), \n                                   f'{responsible} is responsible for {security_task} in {service_model}')\n    \n    return {\n        'task': security_task,\n        'service_model': service_model,\n        'responsible_party': responsible,\n        'explanation': explanation\n    }\n\n# Test cases\ntest_cases = [\n    ('IaaS', 'OS patching'),\n    ('PaaS', 'OS patching'),\n    ('SaaS', 'data encryption'),\n    ('IaaS', 'physical security'),\n    ('PaaS', 'application security')\n]\n\nprint(\"=== Shared Responsibility Model Validator ===\")\nfor service, task in test_cases:\n    result = validate_responsibility(service, task)\n    print(f\"\\n{service} - {task}:\")\n    print(f\"  Responsible: {result['responsible_party']}\")\n    print(f\"  {result['explanation']}\")",
+    "testCases": [
+      {
+        "input": "validate_responsibility('IaaS', 'OS patching')['responsible_party']",
+        "expectedOutput": "'Customer'",
+        "isHidden": false,
+        "description": "IaaS OS patching responsibility"
+      },
+      {
+        "input": "validate_responsibility('PaaS', 'OS patching')['responsible_party']",
+        "expectedOutput": "'Provider'",
+        "isHidden": false,
+        "description": "PaaS OS patching responsibility"
+      },
+      {
+        "input": "validate_responsibility('SaaS', 'data encryption')['responsible_party']",
+        "expectedOutput": "'Shared'",
+        "isHidden": true,
+        "description": "SaaS data encryption is shared"
+      },
+      {
+        "input": "validate_responsibility('IaaS', 'physical security')['responsible_party']",
+        "expectedOutput": "'Provider'",
+        "isHidden": true,
+        "description": "Physical security always provider"
+      }
+    ],
+    "hints": [
+      "Create a matrix mapping tasks to responsibilities",
+      "Provider always handles physical infrastructure",
+      "Customer responsibility increases from SaaS to IaaS",
+      "Some tasks are shared responsibilities"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs405-t1-ex13",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-1",
+    "title": "Cloud TCO Calculator",
+    "difficulty": 4,
+    "description": "Build a Total Cost of Ownership (TCO) calculator that compares on-premises vs cloud costs over multiple years. Include hardware, maintenance, power, cooling, staff, and cloud service costs.",
+    "starterCode": "# Cloud TCO Calculator\ndef calculate_tco(scenario, years=3):\n    \"\"\"\n    Calculate Total Cost of Ownership\n    \n    Args:\n        scenario: dict with:\n            - deployment: 'on_premises' or 'cloud'\n            - servers: number of servers\n            - staff_hours_per_month: IT staff hours needed\n            \n    Returns:\n        dict: yearly costs breakdown and total\n    \"\"\"\n    # On-premises costs:\n    # - Server hardware: $5000 per server (upfront)\n    # - Maintenance: 15% of hardware cost per year\n    # - Power: $100 per server per month\n    # - Cooling: $50 per server per month\n    # - Staff: $100 per hour\n    \n    # Cloud costs:\n    # - Compute: $150 per instance per month\n    # - Staff: $50 per hour (less management needed)\n    \n    # TODO: Calculate TCO\n    pass\n\nprint(calculate_tco({'deployment': 'on_premises', 'servers': 10, 'staff_hours_per_month': 160}, 3))\nprint(calculate_tco({'deployment': 'cloud', 'servers': 10, 'staff_hours_per_month': 80}, 3))",
+    "solution": "def calculate_tco(scenario, years=3):\n    \"\"\"Calculate Total Cost of Ownership over multiple years\"\"\"\n    \n    deployment = scenario['deployment']\n    servers = scenario['servers']\n    staff_hours = scenario['staff_hours_per_month']\n    \n    yearly_breakdown = []\n    total_cost = 0\n    \n    if deployment == 'on_premises':\n        # Upfront costs\n        SERVER_COST = 5000\n        hardware_cost = servers * SERVER_COST\n        \n        # Recurring costs\n        MAINTENANCE_PCT = 0.15\n        POWER_PER_SERVER = 100\n        COOLING_PER_SERVER = 50\n        STAFF_HOURLY = 100\n        \n        for year in range(1, years + 1):\n            # Year 1 includes hardware\n            if year == 1:\n                year_cost = hardware_cost\n            else:\n                year_cost = 0\n            \n            # Annual maintenance\n            year_cost += hardware_cost * MAINTENANCE_PCT\n            \n            # Monthly recurring costs * 12\n            monthly_power = servers * POWER_PER_SERVER\n            monthly_cooling = servers * COOLING_PER_SERVER\n            monthly_staff = staff_hours * STAFF_HOURLY\n            \n            year_cost += (monthly_power + monthly_cooling + monthly_staff) * 12\n            \n            yearly_breakdown.append({\n                'year': year,\n                'hardware': hardware_cost if year == 1 else 0,\n                'maintenance': hardware_cost * MAINTENANCE_PCT,\n                'power': monthly_power * 12,\n                'cooling': monthly_cooling * 12,\n                'staff': monthly_staff * 12,\n                'total': round(year_cost, 2)\n            })\n            \n            total_cost += year_cost\n    \n    else:  # cloud\n        COMPUTE_PER_INSTANCE = 150\n        STAFF_HOURLY = 50  # Less management overhead\n        \n        for year in range(1, years + 1):\n            monthly_compute = servers * COMPUTE_PER_INSTANCE\n            monthly_staff = staff_hours * STAFF_HOURLY\n            \n            year_cost = (monthly_compute + monthly_staff) * 12\n            \n            yearly_breakdown.append({\n                'year': year,\n                'compute': monthly_compute * 12,\n                'staff': monthly_staff * 12,\n                'total': round(year_cost, 2)\n            })\n            \n            total_cost += year_cost\n    \n    return {\n        'deployment': deployment,\n        'years': years,\n        'yearly_breakdown': yearly_breakdown,\n        'total_cost': round(total_cost, 2),\n        'average_yearly_cost': round(total_cost / years, 2)\n    }\n\n# Compare scenarios\nprint(\"=== TCO Comparison: On-Premises vs Cloud ===\")\n\non_prem = calculate_tco({\n    'deployment': 'on_premises',\n    'servers': 10,\n    'staff_hours_per_month': 160\n}, 3)\n\ncloud = calculate_tco({\n    'deployment': 'cloud',\n    'servers': 10,\n    'staff_hours_per_month': 80\n}, 3)\n\nprint(f\"\\nOn-Premises 3-Year TCO: ${on_prem['total_cost']:,.2f}\")\nprint(f\"  Average per year: ${on_prem['average_yearly_cost']:,.2f}\")\n\nprint(f\"\\nCloud 3-Year TCO: ${cloud['total_cost']:,.2f}\")\nprint(f\"  Average per year: ${cloud['average_yearly_cost']:,.2f}\")\n\nprint(f\"\\nDifference: ${abs(on_prem['total_cost'] - cloud['total_cost']):,.2f}\")\nif cloud['total_cost'] < on_prem['total_cost']:\n    savings_pct = ((on_prem['total_cost'] - cloud['total_cost']) / on_prem['total_cost']) * 100\n    print(f\"Cloud saves {savings_pct:.1f}% over on-premises\")\nelse:\n    print(\"On-premises is more cost-effective for this scenario\")",
+    "testCases": [
+      {
+        "input": "calculate_tco({'deployment': 'on_premises', 'servers': 10, 'staff_hours_per_month': 160}, 3)['total_cost']",
+        "expectedOutput": "On-premises TCO for 3 years",
+        "isHidden": false,
+        "description": "Calculate on-premises TCO"
+      },
+      {
+        "input": "calculate_tco({'deployment': 'cloud', 'servers': 10, 'staff_hours_per_month': 80}, 3)['total_cost']",
+        "expectedOutput": "Cloud TCO for 3 years",
+        "isHidden": false,
+        "description": "Calculate cloud TCO"
+      },
+      {
+        "input": "calculate_tco({'deployment': 'cloud', 'servers': 5, 'staff_hours_per_month': 40}, 1)['total_cost']",
+        "expectedOutput": "Lower cost for smaller deployment",
+        "isHidden": true,
+        "description": "Calculate 1-year cloud TCO"
+      }
+    ],
+    "hints": [
+      "On-premises has high upfront costs in year 1",
+      "Cloud costs are more predictable across years",
+      "Include all cost categories: hardware, power, cooling, staff",
+      "Cloud requires less staff time for management"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs405-t1-ex14",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-1",
+    "title": "Spot Instance Bid Optimizer",
+    "difficulty": 5,
+    "description": "Create an advanced spot instance bidding strategy optimizer. Analyze historical spot prices, predict optimal bid prices, and calculate cost savings vs on-demand with interruption risk assessment.",
+    "starterCode": "# Spot Instance Bid Optimizer\ndef optimize_spot_bidding(historical_prices, workload_interruptible=True):\n    \"\"\"\n    Optimize spot instance bidding strategy\n    \n    Args:\n        historical_prices: list of hourly spot prices\n        workload_interruptible: bool, can workload handle interruptions\n    \n    Returns:\n        dict: optimal bid price, expected savings, interruption risk\n    \"\"\"\n    # Strategy:\n    # - Calculate price statistics (mean, median, percentiles)\n    # - Recommend bid at 75th percentile for low interruption risk\n    # - Calculate savings vs on-demand ($0.10/hr)\n    # - Estimate interruption probability\n    \n    # TODO: Implement optimization\n    pass\n\nprices = [0.02, 0.03, 0.025, 0.04, 0.06, 0.035, 0.03, 0.045, 0.05, 0.028]\nprint(optimize_spot_bidding(prices, True))",
+    "solution": "import statistics\n\ndef optimize_spot_bidding(historical_prices, workload_interruptible=True):\n    \"\"\"Optimize spot instance bidding strategy\"\"\"\n    \n    if not historical_prices:\n        return {'error': 'No historical price data provided'}\n    \n    ON_DEMAND_PRICE = 0.10\n    \n    # Calculate price statistics\n    prices_sorted = sorted(historical_prices)\n    mean_price = statistics.mean(historical_prices)\n    median_price = statistics.median(historical_prices)\n    min_price = min(historical_prices)\n    max_price = max(historical_prices)\n    \n    # Calculate percentiles\n    def percentile(data, p):\n        n = len(data)\n        idx = (n - 1) * p / 100\n        lower = int(idx)\n        upper = min(lower + 1, n - 1)\n        weight = idx - lower\n        return data[lower] * (1 - weight) + data[upper] * weight\n    \n    p50 = percentile(prices_sorted, 50)\n    p75 = percentile(prices_sorted, 75)\n    p90 = percentile(prices_sorted, 90)\n    p95 = percentile(prices_sorted, 95)\n    \n    # Determine optimal bid based on interruption tolerance\n    if workload_interruptible:\n        # Aggressive bidding for interruptible workloads\n        recommended_bid = p75\n        risk_level = 'Medium'\n        interruption_prob = 25  # ~25% of time price will be higher\n    else:\n        # Conservative bidding for critical workloads\n        recommended_bid = p90\n        risk_level = 'Low'\n        interruption_prob = 10  # ~10% of time price will be higher\n    \n    # Calculate savings\n    expected_savings = ON_DEMAND_PRICE - recommended_bid\n    savings_percentage = (expected_savings / ON_DEMAND_PRICE) * 100\n    \n    # Monthly cost projection (730 hours)\n    monthly_on_demand = ON_DEMAND_PRICE * 730\n    monthly_spot = recommended_bid * 730\n    monthly_savings = monthly_on_demand - monthly_spot\n    \n    return {\n        'price_analysis': {\n            'min': round(min_price, 4),\n            'max': round(max_price, 4),\n            'mean': round(mean_price, 4),\n            'median': round(median_price, 4),\n            'p75': round(p75, 4),\n            'p90': round(p90, 4),\n            'p95': round(p95, 4)\n        },\n        'recommendation': {\n            'bid_price': round(recommended_bid, 4),\n            'on_demand_price': ON_DEMAND_PRICE,\n            'hourly_savings': round(expected_savings, 4),\n            'savings_percentage': round(savings_percentage, 2)\n        },\n        'risk_assessment': {\n            'interruption_probability': interruption_prob,\n            'risk_level': risk_level,\n            'workload_type': 'Interruptible' if workload_interruptible else 'Critical'\n        },\n        'monthly_projection': {\n            'on_demand_cost': round(monthly_on_demand, 2),\n            'spot_cost': round(monthly_spot, 2),\n            'monthly_savings': round(monthly_savings, 2)\n        }\n    }\n\n# Test with realistic price data\nprices = [0.02, 0.03, 0.025, 0.04, 0.06, 0.035, 0.03, 0.045, 0.05, 0.028, \n          0.032, 0.038, 0.029, 0.055, 0.042, 0.031, 0.036, 0.048, 0.027, 0.033]\n\nprint(\"=== Spot Instance Bid Optimizer ===\")\n\n# Interruptible workload\nprint(\"\\n--- Interruptible Workload Strategy ---\")\nresult_interruptible = optimize_spot_bidding(prices, workload_interruptible=True)\nprint(f\"Recommended bid: ${result_interruptible['recommendation']['bid_price']:.4f}/hr\")\nprint(f\"Expected savings: {result_interruptible['recommendation']['savings_percentage']:.1f}%\")\nprint(f\"Interruption risk: {result_interruptible['risk_assessment']['risk_level']} ({result_interruptible['risk_assessment']['interruption_probability']}%)\")\nprint(f\"Monthly savings: ${result_interruptible['monthly_projection']['monthly_savings']:.2f}\")\n\n# Critical workload\nprint(\"\\n--- Critical Workload Strategy ---\")\nresult_critical = optimize_spot_bidding(prices, workload_interruptible=False)\nprint(f\"Recommended bid: ${result_critical['recommendation']['bid_price']:.4f}/hr\")\nprint(f\"Expected savings: {result_critical['recommendation']['savings_percentage']:.1f}%\")\nprint(f\"Interruption risk: {result_critical['risk_assessment']['risk_level']} ({result_critical['risk_assessment']['interruption_probability']}%)\")\nprint(f\"Monthly savings: ${result_critical['monthly_projection']['monthly_savings']:.2f}\")\n\nprint(\"\\n--- Price Statistics ---\")\nfor key, value in result_interruptible['price_analysis'].items():\n    print(f\"{key.upper()}: ${value:.4f}\")",
+    "testCases": [
+      {
+        "input": "optimize_spot_bidding([0.02, 0.03, 0.04, 0.05, 0.06], True)['recommendation']['savings_percentage']",
+        "expectedOutput": "Significant savings percentage",
+        "isHidden": false,
+        "description": "Calculate savings for interruptible workload"
+      },
+      {
+        "input": "optimize_spot_bidding([0.02, 0.03, 0.04, 0.05, 0.06], False)['risk_assessment']['risk_level']",
+        "expectedOutput": "'Low'",
+        "isHidden": false,
+        "description": "Conservative strategy for critical workload"
+      },
+      {
+        "input": "optimize_spot_bidding([0.02, 0.03, 0.04, 0.05, 0.06], True)['risk_assessment']['interruption_probability']",
+        "expectedOutput": "25",
+        "isHidden": true,
+        "description": "Interruption probability for aggressive bidding"
+      }
+    ],
+    "hints": [
+      "Calculate percentiles to understand price distribution",
+      "Bid at 75th percentile for interruptible workloads",
+      "Bid at 90th percentile for critical workloads",
+      "Compare spot price to on-demand ($0.10/hr) for savings"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs405-t1-ex15",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-1",
+    "title": "Multi-Region Disaster Recovery Planner",
+    "difficulty": 5,
+    "description": "Design a disaster recovery (DR) strategy planner that calculates RTO/RPO, costs, and complexity for different DR approaches: backup/restore, pilot light, warm standby, and hot standby.",
+    "starterCode": "# Multi-Region DR Planner\ndef plan_disaster_recovery(requirements):\n    \"\"\"\n    Plan disaster recovery strategy\n    \n    Args:\n        requirements: dict with:\n            - rto_hours: Recovery Time Objective (hours)\n            - rpo_hours: Recovery Point Objective (hours)\n            - data_gb: amount of data to replicate\n            - monthly_budget: budget in dollars\n    \n    Returns:\n        dict: recommended DR strategy with costs and tradeoffs\n    \"\"\"\n    # DR Strategies:\n    # 1. Backup/Restore: Low cost, high RTO (24h+), high RPO (24h)\n    # 2. Pilot Light: Medium cost, medium RTO (4-8h), medium RPO (1-4h)\n    # 3. Warm Standby: High cost, low RTO (1-4h), low RPO (<1h)\n    # 4. Hot Standby: Very high cost, minimal RTO (<1h), minimal RPO (near-zero)\n    \n    # TODO: Implement DR planning logic\n    pass\n\nreqs = {'rto_hours': 2, 'rpo_hours': 1, 'data_gb': 500, 'monthly_budget': 2000}\nprint(plan_disaster_recovery(reqs))",
+    "solution": "def plan_disaster_recovery(requirements):\n    \"\"\"Plan disaster recovery strategy based on requirements\"\"\"\n    \n    rto_hours = requirements['rto_hours']\n    rpo_hours = requirements['rpo_hours']\n    data_gb = requirements['data_gb']\n    budget = requirements['monthly_budget']\n    \n    # DR Strategy definitions\n    strategies = {\n        'backup_restore': {\n            'name': 'Backup and Restore',\n            'rto_range': (24, 72),\n            'rpo_range': (12, 24),\n            'description': 'Regular backups to secondary region, restore when needed',\n            'base_cost': 50,\n            'cost_per_gb': 0.05,\n            'complexity': 'Low',\n            'advantages': ['Lowest cost', 'Simple to implement'],\n            'disadvantages': ['Longest recovery time', 'Most data loss risk']\n        },\n        'pilot_light': {\n            'name': 'Pilot Light',\n            'rto_range': (4, 8),\n            'rpo_range': (1, 4),\n            'description': 'Minimal resources running in secondary region, scale up on disaster',\n            'base_cost': 300,\n            'cost_per_gb': 0.10,\n            'complexity': 'Medium',\n            'advantages': ['Faster recovery than backup', 'Moderate cost'],\n            'disadvantages': ['Requires scaling during disaster', 'Some data loss possible']\n        },\n        'warm_standby': {\n            'name': 'Warm Standby',\n            'rto_range': (1, 4),\n            'rpo_range': (0.25, 1),\n            'description': 'Scaled-down version always running, can scale up quickly',\n            'base_cost': 800,\n            'cost_per_gb': 0.15,\n            'complexity': 'High',\n            'advantages': ['Fast recovery', 'Minimal data loss'],\n            'disadvantages': ['Higher ongoing cost', 'Complex to maintain']\n        },\n        'hot_standby': {\n            'name': 'Hot Standby (Active-Active)',\n            'rto_range': (0, 1),\n            'rpo_range': (0, 0.1),\n            'description': 'Full production environment running in parallel, instant failover',\n            'base_cost': 2000,\n            'cost_per_gb': 0.20,\n            'complexity': 'Very High',\n            'advantages': ['Near-zero downtime', 'No data loss', 'Can load balance'],\n            'disadvantages': ['Highest cost', 'Most complex to maintain']\n        }\n    }\n    \n    # Evaluate each strategy\n    recommendations = []\n    \n    for key, strategy in strategies.items():\n        # Calculate costs\n        monthly_cost = strategy['base_cost'] + (data_gb * strategy['cost_per_gb'])\n        \n        # Check if meets RTO/RPO requirements\n        meets_rto = rto_hours >= strategy['rto_range'][0]\n        meets_rpo = rpo_hours >= strategy['rpo_range'][0]\n        meets_budget = monthly_cost <= budget\n        \n        feasible = meets_rto and meets_rpo and meets_budget\n        \n        recommendations.append({\n            'strategy': strategy['name'],\n            'key': key,\n            'monthly_cost': round(monthly_cost, 2),\n            'rto_range_hours': strategy['rto_range'],\n            'rpo_range_hours': strategy['rpo_range'],\n            'complexity': strategy['complexity'],\n            'description': strategy['description'],\n            'advantages': strategy['advantages'],\n            'disadvantages': strategy['disadvantages'],\n            'meets_rto': meets_rto,\n            'meets_rpo': meets_rpo,\n            'meets_budget': meets_budget,\n            'feasible': feasible\n        })\n    \n    # Find best feasible option (cheapest that meets requirements)\n    feasible_options = [r for r in recommendations if r['feasible']]\n    \n    if feasible_options:\n        best_option = min(feasible_options, key=lambda x: x['monthly_cost'])\n    else:\n        best_option = None\n    \n    return {\n        'requirements': {\n            'rto_hours': rto_hours,\n            'rpo_hours': rpo_hours,\n            'data_gb': data_gb,\n            'budget': budget\n        },\n        'all_strategies': recommendations,\n        'recommended_strategy': best_option,\n        'feasible_count': len(feasible_options)\n    }\n\n# Test scenarios\nprint(\"=== Disaster Recovery Strategy Planner ===\")\n\n# Scenario 1: Strict requirements\nprint(\"\\n--- Scenario 1: Mission-Critical Application ---\")\nreqs1 = {'rto_hours': 2, 'rpo_hours': 1, 'data_gb': 500, 'monthly_budget': 2000}\nresult1 = plan_disaster_recovery(reqs1)\n\nif result1['recommended_strategy']:\n    rec = result1['recommended_strategy']\n    print(f\"Recommended: {rec['strategy']}\")\n    print(f\"Monthly cost: ${rec['monthly_cost']:.2f}\")\n    print(f\"RTO range: {rec['rto_range_hours']} hours\")\n    print(f\"RPO range: {rec['rpo_range_hours']} hours\")\n    print(f\"Complexity: {rec['complexity']}\")\n    print(f\"Advantages: {', '.join(rec['advantages'])}\")\nelse:\n    print(\"No strategy meets all requirements within budget\")\n\n# Scenario 2: Cost-conscious\nprint(\"\\n--- Scenario 2: Cost-Conscious Application ---\")\nreqs2 = {'rto_hours': 48, 'rpo_hours': 24, 'data_gb': 200, 'monthly_budget': 200}\nresult2 = plan_disaster_recovery(reqs2)\n\nif result2['recommended_strategy']:\n    rec = result2['recommended_strategy']\n    print(f\"Recommended: {rec['strategy']}\")\n    print(f\"Monthly cost: ${rec['monthly_cost']:.2f}\")\n    print(f\"Description: {rec['description']}\")\n\n# Scenario 3: Compare all options\nprint(\"\\n--- Scenario 3: Strategy Comparison ---\")\nreqs3 = {'rto_hours': 4, 'rpo_hours': 2, 'data_gb': 300, 'monthly_budget': 1500}\nresult3 = plan_disaster_recovery(reqs3)\n\nprint(f\"\\nFeasible strategies: {result3['feasible_count']}\")\nfor strategy in result3['all_strategies']:\n    status = \"✓ FEASIBLE\" if strategy['feasible'] else \"✗ Not feasible\"\n    print(f\"\\n{strategy['strategy']}: ${strategy['monthly_cost']:.2f}/mo - {status}\")\n    print(f\"  RTO: {strategy['rto_range_hours']} hrs, RPO: {strategy['rpo_range_hours']} hrs\")\n    if not strategy['meets_budget']:\n        print(f\"  (Exceeds budget by ${strategy['monthly_cost'] - budget:.2f})\")",
+    "testCases": [
+      {
+        "input": "plan_disaster_recovery({'rto_hours': 48, 'rpo_hours': 24, 'data_gb': 200, 'monthly_budget': 200})['recommended_strategy']['key']",
+        "expectedOutput": "'backup_restore'",
+        "isHidden": false,
+        "description": "Low requirements recommend backup/restore"
+      },
+      {
+        "input": "plan_disaster_recovery({'rto_hours': 0.5, 'rpo_hours': 0, 'data_gb': 500, 'monthly_budget': 5000})['recommended_strategy']['key']",
+        "expectedOutput": "'hot_standby'",
+        "isHidden": false,
+        "description": "Strict requirements need hot standby"
+      },
+      {
+        "input": "plan_disaster_recovery({'rto_hours': 4, 'rpo_hours': 2, 'data_gb': 300, 'monthly_budget': 1000})['feasible_count']",
+        "expectedOutput": "At least 2 feasible strategies",
+        "isHidden": true,
+        "description": "Moderate requirements have multiple options"
+      }
+    ],
+    "hints": [
+      "Match RTO/RPO requirements to strategy capabilities",
+      "Calculate total cost: base + (data_gb * cost_per_gb)",
+      "Recommend cheapest strategy that meets all requirements",
+      "Consider complexity and tradeoffs in recommendations"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs405-t1-ex16",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-1",
+    "title": "Cloud Carbon Footprint Calculator",
+    "difficulty": 5,
+    "description": "Build a sustainability-focused tool that calculates the carbon footprint of cloud infrastructure. Compare emissions across regions (based on energy grid), instance types, and recommend greener alternatives.",
+    "starterCode": "# Cloud Carbon Footprint Calculator\ndef calculate_carbon_footprint(infrastructure):\n    \"\"\"\n    Calculate carbon emissions from cloud infrastructure\n    \n    Args:\n        infrastructure: list of resources with:\n            - type: 'compute', 'storage'\n            - region: cloud region\n            - hours: hours running per month\n            - size: instance size or GB of storage\n    \n    Returns:\n        dict: total emissions, per-resource breakdown, green alternatives\n    \"\"\"\n    # Carbon intensity by region (gCO2/kWh)\n    # Regions with renewable energy have lower intensity\n    \n    # Power consumption:\n    # - Compute instances: varies by size\n    # - Storage: ~0.5W per GB\n    \n    # TODO: Implement carbon calculation\n    pass\n\ninfra = [\n    {'type': 'compute', 'region': 'us-east-1', 'hours': 730, 'size': 'medium'},\n    {'type': 'storage', 'region': 'us-east-1', 'hours': 730, 'size': 1000}\n]\nprint(calculate_carbon_footprint(infra))",
+    "solution": "def calculate_carbon_footprint(infrastructure):\n    \"\"\"Calculate carbon emissions from cloud infrastructure\"\"\"\n    \n    # Carbon intensity by region (gCO2/kWh)\n    # Based on regional electricity grid mix\n    carbon_intensity = {\n        'us-east-1': 415,      # Virginia (mixed)\n        'us-west-2': 250,      # Oregon (hydro-heavy)\n        'eu-north-1': 50,      # Stockholm (renewable)\n        'eu-central-1': 350,   # Frankfurt (mixed)\n        'ap-southeast-1': 500, # Singapore (fossil-heavy)\n        'ca-central-1': 30     # Canada (hydro)\n    }\n    \n    # Power consumption (watts)\n    compute_power = {\n        'small': 50,\n        'medium': 100,\n        'large': 200,\n        'xlarge': 400\n    }\n    \n    STORAGE_POWER_PER_GB = 0.5  # watts per GB\n    \n    emissions_breakdown = []\n    total_emissions_kg = 0\n    total_kwh = 0\n    \n    for resource in infrastructure:\n        res_type = resource['type']\n        region = resource['region']\n        hours = resource['hours']\n        size = resource['size']\n        \n        # Calculate power consumption\n        if res_type == 'compute':\n            power_watts = compute_power.get(size, 100)\n        elif res_type == 'storage':\n            power_watts = size * STORAGE_POWER_PER_GB\n        else:\n            power_watts = 0\n        \n        # Calculate energy consumption (kWh)\n        kwh = (power_watts * hours) / 1000\n        \n        # Calculate emissions (kg CO2)\n        intensity = carbon_intensity.get(region, 350)  # default to mixed grid\n        emissions_g = kwh * intensity\n        emissions_kg = emissions_g / 1000\n        \n        total_kwh += kwh\n        total_emissions_kg += emissions_kg\n        \n        emissions_breakdown.append({\n            'resource': resource,\n            'power_watts': power_watts,\n            'energy_kwh': round(kwh, 2),\n            'carbon_intensity_region': intensity,\n            'emissions_kg_co2': round(emissions_kg, 2)\n        })\n    \n    # Find greener alternatives\n    green_regions = ['eu-north-1', 'ca-central-1', 'us-west-2']\n    recommendations = []\n    \n    for item in emissions_breakdown:\n        current_region = item['resource']['region']\n        current_intensity = item['carbon_intensity_region']\n        \n        if current_region not in green_regions:\n            # Calculate savings by moving to greenest region\n            best_region = 'eu-north-1'  # Stockholm, lowest intensity\n            best_intensity = carbon_intensity[best_region]\n            \n            current_emissions = item['emissions_kg_co2']\n            green_emissions = (item['energy_kwh'] * best_intensity) / 1000\n            savings_kg = current_emissions - green_emissions\n            savings_pct = (savings_kg / current_emissions) * 100\n            \n            if savings_pct > 10:  # Only recommend if >10% savings\n                recommendations.append({\n                    'current_region': current_region,\n                    'recommended_region': best_region,\n                    'current_emissions_kg': round(current_emissions, 2),\n                    'potential_emissions_kg': round(green_emissions, 2),\n                    'savings_kg_co2': round(savings_kg, 2),\n                    'savings_percentage': round(savings_pct, 1),\n                    'resource': item['resource']\n                })\n    \n    # Calculate carbon offset cost (assume $15 per ton CO2)\n    CARBON_OFFSET_COST_PER_TON = 15\n    offset_cost = (total_emissions_kg / 1000) * CARBON_OFFSET_COST_PER_TON\n    \n    return {\n        'summary': {\n            'total_energy_kwh': round(total_kwh, 2),\n            'total_emissions_kg_co2': round(total_emissions_kg, 2),\n            'carbon_offset_cost_usd': round(offset_cost, 2)\n        },\n        'breakdown': emissions_breakdown,\n        'green_alternatives': recommendations,\n        'sustainability_score': calculate_sustainability_score(infrastructure, carbon_intensity)\n    }\n\ndef calculate_sustainability_score(infrastructure, carbon_intensity):\n    \"\"\"Calculate sustainability score (0-100)\"\"\"\n    green_regions = ['eu-north-1', 'ca-central-1', 'us-west-2']\n    \n    if not infrastructure:\n        return 0\n    \n    green_count = sum(1 for r in infrastructure if r['region'] in green_regions)\n    green_ratio = green_count / len(infrastructure)\n    \n    # Score based on percentage in green regions\n    score = green_ratio * 100\n    \n    return round(score, 1)\n\n# Test\nprint(\"=== Cloud Carbon Footprint Calculator ===\")\n\ninfra = [\n    {'type': 'compute', 'region': 'us-east-1', 'hours': 730, 'size': 'medium'},\n    {'type': 'compute', 'region': 'ap-southeast-1', 'hours': 730, 'size': 'large'},\n    {'type': 'storage', 'region': 'us-east-1', 'hours': 730, 'size': 1000}\n]\n\nresult = calculate_carbon_footprint(infra)\n\nprint(f\"\\nTotal Energy Consumption: {result['summary']['total_energy_kwh']:.2f} kWh/month\")\nprint(f\"Total Carbon Emissions: {result['summary']['total_emissions_kg_co2']:.2f} kg CO2/month\")\nprint(f\"Carbon Offset Cost: ${result['summary']['carbon_offset_cost_usd']:.2f}/month\")\nprint(f\"Sustainability Score: {result['sustainability_score']}/100\")\n\nprint(\"\\nEmissions Breakdown:\")\nfor item in result['breakdown']:\n    print(f\"  {item['resource']['type']} in {item['resource']['region']}: \" \n          f\"{item['emissions_kg_co2']:.2f} kg CO2 ({item['energy_kwh']:.2f} kWh)\")\n\nif result['green_alternatives']:\n    print(\"\\nGreen Alternatives:\")\n    for rec in result['green_alternatives']:\n        print(f\"  Move from {rec['current_region']} to {rec['recommended_region']}\")\n        print(f\"    Savings: {rec['savings_kg_co2']:.2f} kg CO2/month ({rec['savings_percentage']:.1f}%)\")\nelse:\n    print(\"\\nNo greener alternatives available (already using green regions)\")\n\n# Compare green vs non-green regions\nprint(\"\\n=== Green Infrastructure Example ===\")\ngreen_infra = [\n    {'type': 'compute', 'region': 'eu-north-1', 'hours': 730, 'size': 'medium'},\n    {'type': 'compute', 'region': 'ca-central-1', 'hours': 730, 'size': 'large'},\n    {'type': 'storage', 'region': 'eu-north-1', 'hours': 730, 'size': 1000}\n]\n\ngreen_result = calculate_carbon_footprint(green_infra)\nprint(f\"Green Infrastructure Emissions: {green_result['summary']['total_emissions_kg_co2']:.2f} kg CO2/month\")\nprint(f\"Sustainability Score: {green_result['sustainability_score']}/100\")\n\nemissions_reduction = result['summary']['total_emissions_kg_co2'] - green_result['summary']['total_emissions_kg_co2']\nreduction_pct = (emissions_reduction / result['summary']['total_emissions_kg_co2']) * 100\nprint(f\"\\nEmissions reduction by using green regions: {emissions_reduction:.2f} kg CO2 ({reduction_pct:.1f}%)\")",
+    "testCases": [
+      {
+        "input": "calculate_carbon_footprint([{'type': 'compute', 'region': 'eu-north-1', 'hours': 730, 'size': 'medium'}])['sustainability_score']",
+        "expectedOutput": "100.0",
+        "isHidden": false,
+        "description": "Green region gets high sustainability score"
+      },
+      {
+        "input": "calculate_carbon_footprint([{'type': 'compute', 'region': 'ap-southeast-1', 'hours': 730, 'size': 'large'}])['green_alternatives']",
+        "expectedOutput": "Recommendations to move to greener region",
+        "isHidden": false,
+        "description": "High-carbon region gets green alternatives"
+      },
+      {
+        "input": "calculate_carbon_footprint([{'type': 'storage', 'region': 'us-east-1', 'hours': 730, 'size': 1000}])['summary']['total_emissions_kg_co2']",
+        "expectedOutput": "Storage carbon footprint calculated",
+        "isHidden": true,
+        "description": "Calculate storage emissions"
+      }
+    ],
+    "hints": [
+      "Carbon intensity varies by region's electricity grid",
+      "Calculate energy: (power_watts * hours) / 1000 for kWh",
+      "Emissions: kWh * carbon_intensity_gCO2_per_kWh / 1000",
+      "Recommend regions with renewable energy sources"
+    ],
+    "language": "python"
   }
 ]

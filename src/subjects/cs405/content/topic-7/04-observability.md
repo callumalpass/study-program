@@ -1,110 +1,193 @@
+---
+id: cs405-t7-observability
+title: "Observability"
+order: 4
+---
+
 # Observability
 
-## Overview
+Observability is the ability to understand the internal state of a system by examining its external outputs. In cloud-native environments with numerous distributed services, observability becomes essential for understanding system behavior, diagnosing issues, and maintaining reliability. Unlike traditional monitoring which focuses on known failure modes, observability enables exploration of unknown-unknowns through rich telemetry data.
 
-Cloud-native applications are built specifically for cloud environments, leveraging containers, microservices, dynamic orchestration, and DevOps practices.
+## The Three Pillars of Observability
 
-## Key Principles
+Observability is built on three complementary pillars: logs, metrics, and traces. Each provides a different perspective on system behavior, and together they enable comprehensive system understanding.
 
-**12-Factor App**:
-1. Codebase: One codebase tracked in version control
-2. Dependencies: Explicitly declare dependencies
-3. Config: Store config in environment
-4. Backing Services: Treat as attached resources
-5. Build, Release, Run: Strictly separate stages
-6. Processes: Execute as stateless processes
-7. Port Binding: Export services via port binding
-8. Concurrency: Scale out via process model
-9. Disposability: Fast startup and graceful shutdown
-10. Dev/Prod Parity: Keep environments similar
-11. Logs: Treat logs as event streams
-12. Admin Processes: Run as one-off processes
+**Logs** are discrete, timestamped records of events. They capture what happened at a specific moment—errors, state changes, and significant events. Structured logging using JSON format makes logs searchable and analyzable.
 
-## Cloud-Native Characteristics
+**Metrics** are numeric measurements aggregated over time. They show trends, patterns, and thresholds—request rates, error percentages, latencies, and resource utilization. Metrics are efficient to store and query.
 
-- **Microservices**: Loosely coupled services
-- **Containers**: Lightweight, portable packaging
-- **Dynamic Orchestration**: Kubernetes automation
-- **API-First**: Communication via APIs
-- **DevOps**: Automation and collaboration
-- **Continuous Delivery**: Frequent, automated deployments
-- **Infrastructure as Code**: Version-controlled infrastructure
+**Traces** follow individual requests as they flow through distributed systems. They show the complete path of a request, including time spent in each service and the relationships between calls.
 
-## Architecture Patterns
+## Structured Logging
 
-**Microservices**: Independent, deployable services
-**Event-Driven**: Asynchronous communication
-**API Gateway**: Single entry point
-**Service Discovery**: Dynamic service location
-**Circuit Breaker**: Fault tolerance
-**CQRS**: Separate read/write models
-**Event Sourcing**: Event-based state
+Effective cloud-native logging requires structured formats that can be parsed, filtered, and analyzed at scale.
 
-## Technologies
+```python
+import logging
+import json
+from datetime import datetime
 
-- **Containers**: Docker, containerd
-- **Orchestration**: Kubernetes, Docker Swarm
-- **Service Mesh**: Istio, Linkerd, Consul
-- **CI/CD**: GitLab CI, Jenkins X, ArgoCD
-- **Observability**: Prometheus, Grafana, Jaeger
-- **Configuration**: ConfigMaps, etcd, Consul
+class JSONFormatter(logging.Formatter):
+    def format(self, record):
+        log_record = {
+            'timestamp': datetime.utcnow().isoformat(),
+            'level': record.levelname,
+            'logger': record.name,
+            'message': record.getMessage(),
+            'module': record.module,
+            'function': record.funcName,
+            'line': record.lineno
+        }
+        if hasattr(record, 'request_id'):
+            log_record['request_id'] = record.request_id
+        if hasattr(record, 'user_id'):
+            log_record['user_id'] = record.user_id
+        if record.exc_info:
+            log_record['exception'] = self.formatException(record.exc_info)
+        return json.dumps(log_record)
 
-## Best Practices
+# Configure logger
+handler = logging.StreamHandler()
+handler.setFormatter(JSONFormatter())
+logger = logging.getLogger('order-service')
+logger.addHandler(handler)
+logger.setLevel(logging.INFO)
 
-1. Design for failure
-2. Implement health checks
-3. Use distributed tracing
-4. Automate everything
-5. Monitor continuously
-6. Secure by default
-7. Scale horizontally
-8. Version APIs
-9. Implement circuit breakers
-10. Use immutable infrastructure
-
-## Observability
-
-**Metrics**: Prometheus, CloudWatch
-**Logging**: ELK, Loki, Fluentd
-**Tracing**: Jaeger, Zipkin, X-Ray
-**Dashboards**: Grafana, Kibana
-
-## CI/CD Pipeline
-
-```yaml
-stages:
-  - build
-  - test
-  - security-scan
-  - deploy-staging
-  - integration-test
-  - deploy-production
-
-build:
-  stage: build
-  script:
-    - docker build -t app:latest .
-    - docker push registry/app:latest
-
-security-scan:
-  stage: security-scan
-  script:
-    - trivy image app:latest
-
-deploy-production:
-  stage: deploy-production
-  script:
-    - kubectl apply -f k8s/
-    - kubectl rollout status deployment/app
+# Usage with context
+logger.info("Order created", extra={
+    'request_id': 'abc-123',
+    'user_id': 'user-456',
+    'order_id': 'order-789'
+})
 ```
 
-## Service Mesh Benefits
+Log aggregation platforms like Elasticsearch (ELK Stack), Loki, or cloud services (CloudWatch Logs, Stackdriver) collect logs from all services for centralized querying.
 
-- **Traffic Management**: A/B testing, canary deployments
-- **Security**: mTLS, authorization
-- **Observability**: Metrics, traces, logs
-- **Resilience**: Retries, circuit breakers, timeouts
+## Metrics with Prometheus
 
-## Summary
+Prometheus is the standard metrics solution for cloud-native environments. It uses a pull-based model where the Prometheus server scrapes metrics endpoints exposed by applications.
 
-Cloud-native architecture enables scalable, resilient applications through microservices, containers, dynamic orchestration, and DevOps practices, fully leveraging cloud capabilities.
+```python
+from prometheus_client import Counter, Histogram, Gauge, start_http_server
+import time
+
+# Define metrics
+REQUEST_COUNT = Counter(
+    'http_requests_total',
+    'Total HTTP requests',
+    ['method', 'endpoint', 'status']
+)
+
+REQUEST_LATENCY = Histogram(
+    'http_request_duration_seconds',
+    'HTTP request latency',
+    ['method', 'endpoint'],
+    buckets=[0.01, 0.05, 0.1, 0.25, 0.5, 1.0, 2.5, 5.0, 10.0]
+)
+
+ACTIVE_CONNECTIONS = Gauge(
+    'active_connections',
+    'Number of active connections'
+)
+
+# Instrument application
+def handle_request(method, endpoint):
+    ACTIVE_CONNECTIONS.inc()
+    start_time = time.time()
+    try:
+        # Process request...
+        status = 200
+    except Exception:
+        status = 500
+    finally:
+        duration = time.time() - start_time
+        REQUEST_COUNT.labels(method=method, endpoint=endpoint, status=status).inc()
+        REQUEST_LATENCY.labels(method=method, endpoint=endpoint).observe(duration)
+        ACTIVE_CONNECTIONS.dec()
+
+# Start metrics server
+start_http_server(8000)  # Prometheus scrapes localhost:8000/metrics
+```
+
+**Prometheus Alert Rules:**
+
+```yaml
+groups:
+  - name: service-alerts
+    rules:
+      - alert: HighErrorRate
+        expr: rate(http_requests_total{status=~"5.."}[5m]) / rate(http_requests_total[5m]) > 0.05
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "High error rate on {{ $labels.service }}"
+          description: "Error rate is {{ $value | humanizePercentage }}"
+```
+
+## Distributed Tracing
+
+Distributed tracing tracks requests across service boundaries. Each service adds its span to the trace, creating a complete picture of request flow.
+
+```python
+from opentelemetry import trace
+from opentelemetry.sdk.trace import TracerProvider
+from opentelemetry.sdk.trace.export import BatchSpanProcessor
+from opentelemetry.exporter.jaeger.thrift import JaegerExporter
+from opentelemetry.instrumentation.requests import RequestsInstrumentor
+
+# Configure tracing
+trace.set_tracer_provider(TracerProvider())
+jaeger_exporter = JaegerExporter(
+    agent_host_name="jaeger",
+    agent_port=6831,
+)
+trace.get_tracer_provider().add_span_processor(
+    BatchSpanProcessor(jaeger_exporter)
+)
+
+# Auto-instrument HTTP client
+RequestsInstrumentor().instrument()
+
+tracer = trace.get_tracer(__name__)
+
+def process_order(order_id):
+    with tracer.start_as_current_span("process_order") as span:
+        span.set_attribute("order.id", order_id)
+
+        # Call inventory service
+        with tracer.start_as_current_span("check_inventory"):
+            inventory_status = check_inventory(order_id)
+
+        # Call payment service
+        with tracer.start_as_current_span("process_payment"):
+            payment_result = process_payment(order_id)
+
+        return {"inventory": inventory_status, "payment": payment_result}
+```
+
+Trace context (trace ID, span ID) propagates through HTTP headers, allowing Jaeger or Zipkin to reassemble the complete trace across all services.
+
+## Dashboards and Visualization
+
+Grafana provides dashboards for visualizing metrics and correlating data across pillars. Standard dashboards include:
+
+- **RED metrics**: Rate, Errors, Duration for each service
+- **USE metrics**: Utilization, Saturation, Errors for resources
+- **Golden signals**: Latency, Traffic, Errors, Saturation
+
+## Key Takeaways
+
+- Observability enables understanding system behavior through logs, metrics, and traces
+- Structured JSON logging enables efficient search and analysis at scale
+- Prometheus metrics with alerting provide proactive issue detection
+- Distributed tracing reveals request flow and latency across services
+- Dashboards correlate data from all three pillars for comprehensive visibility
+
+## Common Mistakes
+
+- Logging sensitive data (passwords, PII) that shouldn't be captured
+- Creating too many high-cardinality metric labels, causing storage explosion
+- Not propagating trace context headers, breaking distributed traces
+- Setting alert thresholds too sensitively, causing alert fatigue
+- Only implementing observability after problems occur rather than proactively

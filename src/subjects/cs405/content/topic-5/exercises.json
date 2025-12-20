@@ -36,5 +36,571 @@
       }
     ],
     "language": "python"
+  },
+  {
+    "id": "cs405-t5-ex02",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-5",
+    "title": "Simple Lambda Function Handler",
+    "difficulty": 1,
+    "description": "Create a basic AWS Lambda function that processes an event and returns a response.\n\nRequirements:\n1. Accept an event with a 'name' field\n2. Return a greeting message\n3. Handle missing name field gracefully\n4. Return proper JSON response",
+    "starterCode": "def lambda_handler(event, context):\n    # TODO: Extract name from event\n    # TODO: Return greeting message\n    pass",
+    "solution": "import json\n\ndef lambda_handler(event, context):\n    # Extract name from event, default to 'Guest'\n    name = event.get('name', 'Guest')\n    \n    # Create greeting message\n    message = f\"Hello, {name}! Welcome to serverless computing.\"\n    \n    # Return response\n    return {\n        'statusCode': 200,\n        'body': json.dumps({\n            'message': message,\n            'input_name': name\n        }),\n        'headers': {\n            'Content-Type': 'application/json'\n        }\n    }\n\n# Test the function\nif __name__ == '__main__':\n    # Test with name\n    event1 = {'name': 'Alice'}\n    print(lambda_handler(event1, None))\n    \n    # Test without name\n    event2 = {}\n    print(lambda_handler(event2, None))",
+    "hints": [
+      "Use event.get() to safely access fields",
+      "Return a dictionary with statusCode, body, and headers",
+      "Convert response body to JSON string",
+      "Provide default values for missing fields"
+    ],
+    "testCases": [
+      {
+        "input": "{\"name\": \"Alice\"}",
+        "expectedOutput": "Hello, Alice! Welcome to serverless computing.",
+        "isHidden": false,
+        "description": "Process event with name"
+      },
+      {
+        "input": "{}",
+        "expectedOutput": "Hello, Guest! Welcome to serverless computing.",
+        "isHidden": false,
+        "description": "Handle missing name field"
+      },
+      {
+        "input": "{\"name\": \"Bob\"}",
+        "expectedOutput": "Hello, Bob! Welcome to serverless computing.",
+        "isHidden": true,
+        "description": "Additional name test"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs405-t5-ex03",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-5",
+    "title": "Environment Variable Configuration",
+    "difficulty": 1,
+    "description": "Create a Lambda function that uses environment variables for configuration.\n\nRequirements:\n1. Read environment variables (APP_NAME, VERSION, DEBUG)\n2. Return configuration information\n3. Handle missing environment variables with defaults\n4. Format response as JSON",
+    "starterCode": "import os\nimport json\n\ndef lambda_handler(event, context):\n    # TODO: Read environment variables\n    # TODO: Return configuration\n    pass",
+    "solution": "import os\nimport json\n\ndef lambda_handler(event, context):\n    # Read environment variables with defaults\n    config = {\n        'app_name': os.environ.get('APP_NAME', 'MyServerlessApp'),\n        'version': os.environ.get('VERSION', '1.0.0'),\n        'debug': os.environ.get('DEBUG', 'false').lower() == 'true',\n        'function_name': context.function_name if context else 'unknown',\n        'memory_limit': context.memory_limit_in_mb if context else 128\n    }\n    \n    return {\n        'statusCode': 200,\n        'body': json.dumps(config),\n        'headers': {\n            'Content-Type': 'application/json'\n        }\n    }\n\n# Test locally\nif __name__ == '__main__':\n    # Set test environment variables\n    os.environ['APP_NAME'] = 'TestApp'\n    os.environ['VERSION'] = '2.0.0'\n    os.environ['DEBUG'] = 'true'\n    \n    print(lambda_handler({}, None))",
+    "hints": [
+      "Use os.environ.get() for safe access",
+      "Provide sensible defaults for all variables",
+      "Convert string 'true'/'false' to boolean",
+      "Access context object for function metadata"
+    ],
+    "testCases": [
+      {
+        "input": "ENV: APP_NAME=MyApp, VERSION=1.0, DEBUG=true",
+        "expectedOutput": "Configuration with app_name: MyApp, version: 1.0, debug: true",
+        "isHidden": false,
+        "description": "Read environment variables"
+      },
+      {
+        "input": "ENV: (empty)",
+        "expectedOutput": "Default configuration values",
+        "isHidden": false,
+        "description": "Use default values when env vars missing"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs405-t5-ex04",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-5",
+    "title": "S3 Event Trigger Handler",
+    "difficulty": 1,
+    "description": "Create a Lambda function that processes S3 bucket events.\n\nRequirements:\n1. Parse S3 event structure\n2. Extract bucket name and object key\n3. Log event details\n4. Return summary of processed files",
+    "starterCode": "import json\n\ndef lambda_handler(event, context):\n    # TODO: Parse S3 event records\n    # TODO: Extract bucket and key information\n    pass",
+    "solution": "import json\n\ndef lambda_handler(event, context):\n    processed_files = []\n    \n    # Process each S3 record\n    for record in event.get('Records', []):\n        # Check if it's an S3 event\n        if record.get('eventSource') == 'aws:s3':\n            # Extract S3 information\n            s3_info = record['s3']\n            bucket_name = s3_info['bucket']['name']\n            object_key = s3_info['object']['key']\n            event_name = record['eventName']\n            \n            # Log processing\n            file_info = {\n                'bucket': bucket_name,\n                'key': object_key,\n                'event': event_name,\n                'size': s3_info['object'].get('size', 0)\n            }\n            \n            processed_files.append(file_info)\n            print(f\"Processed: {event_name} - {bucket_name}/{object_key}\")\n    \n    return {\n        'statusCode': 200,\n        'body': json.dumps({\n            'processed_count': len(processed_files),\n            'files': processed_files\n        })\n    }\n\n# Example S3 event structure for testing\nif __name__ == '__main__':\n    test_event = {\n        'Records': [{\n            'eventSource': 'aws:s3',\n            'eventName': 'ObjectCreated:Put',\n            's3': {\n                'bucket': {'name': 'my-bucket'},\n                'object': {'key': 'uploads/file.txt', 'size': 1024}\n            }\n        }]\n    }\n    print(lambda_handler(test_event, None))",
+    "hints": [
+      "S3 events contain a 'Records' array",
+      "Each record has 's3' field with bucket and object info",
+      "Check eventSource to verify it's an S3 event",
+      "Object key may be URL-encoded for special characters"
+    ],
+    "testCases": [
+      {
+        "input": "S3 event: ObjectCreated:Put in bucket 'my-bucket', key 'file.txt'",
+        "expectedOutput": "Processed 1 file from my-bucket",
+        "isHidden": false,
+        "description": "Process single S3 upload event"
+      },
+      {
+        "input": "S3 event: Multiple files uploaded",
+        "expectedOutput": "Processed multiple files with correct count",
+        "isHidden": true,
+        "description": "Handle multiple S3 records"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs405-t5-ex05",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-5",
+    "title": "API Gateway Request Parser",
+    "difficulty": 2,
+    "description": "Create a Lambda function that properly parses API Gateway proxy integration requests.\n\nRequirements:\n1. Parse query string parameters\n2. Parse request body (JSON)\n3. Extract headers\n4. Handle both GET and POST requests\n5. Return formatted response",
+    "starterCode": "import json\n\ndef lambda_handler(event, context):\n    # TODO: Parse API Gateway event\n    # TODO: Extract query params, body, headers\n    pass",
+    "solution": "import json\n\ndef lambda_handler(event, context):\n    # Extract HTTP method\n    http_method = event.get('httpMethod', 'UNKNOWN')\n    \n    # Parse query string parameters\n    query_params = event.get('queryStringParameters') or {}\n    \n    # Parse request body\n    body = None\n    if event.get('body'):\n        try:\n            body = json.loads(event['body'])\n        except json.JSONDecodeError:\n            return {\n                'statusCode': 400,\n                'body': json.dumps({'error': 'Invalid JSON in request body'})\n            }\n    \n    # Extract specific headers\n    headers = event.get('headers') or {}\n    content_type = headers.get('Content-Type', 'unknown')\n    user_agent = headers.get('User-Agent', 'unknown')\n    \n    # Build response\n    response_data = {\n        'method': http_method,\n        'query_parameters': query_params,\n        'body_received': body,\n        'content_type': content_type,\n        'user_agent': user_agent,\n        'path': event.get('path', '/')\n    }\n    \n    return {\n        'statusCode': 200,\n        'headers': {\n            'Content-Type': 'application/json',\n            'Access-Control-Allow-Origin': '*'\n        },\n        'body': json.dumps(response_data)\n    }\n\n# Test examples\nif __name__ == '__main__':\n    # Test GET request\n    get_event = {\n        'httpMethod': 'GET',\n        'queryStringParameters': {'page': '1', 'limit': '10'},\n        'headers': {'Content-Type': 'application/json'},\n        'path': '/api/users'\n    }\n    print(\"GET:\", lambda_handler(get_event, None))\n    \n    # Test POST request\n    post_event = {\n        'httpMethod': 'POST',\n        'body': json.dumps({'name': 'Alice', 'email': 'alice@example.com'}),\n        'headers': {'Content-Type': 'application/json'},\n        'path': '/api/users'\n    }\n    print(\"POST:\", lambda_handler(post_event, None))",
+    "hints": [
+      "queryStringParameters can be null, use 'or {}' pattern",
+      "Body is a string and needs JSON parsing",
+      "Headers are case-insensitive in HTTP but case-sensitive in the event",
+      "Always validate JSON before parsing to avoid errors"
+    ],
+    "testCases": [
+      {
+        "input": "GET /api/users?page=1&limit=10",
+        "expectedOutput": "Parsed query params: page=1, limit=10",
+        "isHidden": false,
+        "description": "Parse GET request with query parameters"
+      },
+      {
+        "input": "POST /api/users with JSON body",
+        "expectedOutput": "Parsed body as JSON object",
+        "isHidden": false,
+        "description": "Parse POST request with JSON body"
+      },
+      {
+        "input": "POST with invalid JSON",
+        "expectedOutput": "400 Bad Request error",
+        "isHidden": true,
+        "description": "Handle malformed JSON"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs405-t5-ex06",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-5",
+    "title": "Cold Start Optimization",
+    "difficulty": 2,
+    "description": "Optimize a Lambda function to minimize cold start impact.\n\nRequirements:\n1. Move imports outside handler\n2. Reuse database connections\n3. Initialize resources once\n4. Implement connection pooling\n5. Measure and log execution times",
+    "starterCode": "def lambda_handler(event, context):\n    import boto3\n    import json\n    # TODO: Optimize cold start\n    pass",
+    "solution": "import json\nimport time\nimport os\nfrom datetime import datetime\n\n# Initialize outside handler (happens once per container)\nimport boto3\nfrom boto3.dynamodb.conditions import Key\n\n# Global variables for connection reuse\ndynamodb = None\ntable = None\ninitialization_time = None\n\ndef initialize():\n    \"\"\"Initialize resources once per container\"\"\"\n    global dynamodb, table, initialization_time\n    \n    if dynamodb is None:\n        start = time.time()\n        dynamodb = boto3.resource('dynamodb')\n        table = dynamodb.Table(os.environ.get('TABLE_NAME', 'default-table'))\n        initialization_time = time.time() - start\n        print(f\"Initialized in {initialization_time:.3f}s\")\n    \n    return table\n\ndef lambda_handler(event, context):\n    start_time = time.time()\n    \n    # Initialize resources (reused on warm starts)\n    table = initialize()\n    \n    # Check if this is a cold or warm start\n    is_cold_start = initialization_time is not None and time.time() - start_time < initialization_time + 0.1\n    \n    # Process request\n    user_id = event.get('user_id')\n    \n    if not user_id:\n        return {\n            'statusCode': 400,\n            'body': json.dumps({'error': 'user_id required'})\n        }\n    \n    try:\n        # Query DynamoDB (connection is reused)\n        response = table.get_item(Key={'user_id': user_id})\n        \n        execution_time = time.time() - start_time\n        \n        result = {\n            'user': response.get('Item', {}),\n            'metadata': {\n                'cold_start': is_cold_start,\n                'execution_time_ms': round(execution_time * 1000, 2),\n                'initialization_time_ms': round((initialization_time or 0) * 1000, 2) if is_cold_start else 0,\n                'timestamp': datetime.utcnow().isoformat()\n            }\n        }\n        \n        return {\n            'statusCode': 200,\n            'body': json.dumps(result)\n        }\n        \n    except Exception as e:\n        print(f\"Error: {str(e)}\")\n        return {\n            'statusCode': 500,\n            'body': json.dumps({'error': 'Internal server error'})\n        }\n\n# For testing\nif __name__ == '__main__':\n    os.environ['TABLE_NAME'] = 'users'\n    \n    # Simulate cold start\n    print(\"Cold start:\")\n    print(lambda_handler({'user_id': '123'}, None))\n    \n    # Simulate warm start\n    print(\"\\nWarm start:\")\n    print(lambda_handler({'user_id': '456'}, None))",
+    "hints": [
+      "Import modules at global scope, not inside handler",
+      "Initialize AWS clients outside handler function",
+      "Use global variables for connection reuse",
+      "Track initialization vs execution time separately",
+      "Consider using connection pooling for databases"
+    ],
+    "testCases": [
+      {
+        "input": "First invocation (cold start)",
+        "expectedOutput": "Initialization time recorded, resources created",
+        "isHidden": false,
+        "description": "Handle cold start with initialization"
+      },
+      {
+        "input": "Subsequent invocation (warm start)",
+        "expectedOutput": "Faster execution, resources reused",
+        "isHidden": false,
+        "description": "Reuse initialized resources"
+      },
+      {
+        "input": "Multiple warm invocations",
+        "expectedOutput": "Consistent fast performance",
+        "isHidden": true,
+        "description": "Verify connection reuse"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs405-t5-ex07",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-5",
+    "title": "Event-Driven Image Processing",
+    "difficulty": 2,
+    "description": "Create a Lambda function triggered by S3 uploads that processes images.\n\nRequirements:\n1. Trigger on S3 image upload\n2. Generate thumbnail (simulated)\n3. Store metadata in DynamoDB\n4. Handle multiple image formats\n5. Error handling for invalid files",
+    "starterCode": "import json\nimport boto3\n\ndef lambda_handler(event, context):\n    # TODO: Process S3 image upload event\n    # TODO: Generate thumbnail\n    # TODO: Store metadata\n    pass",
+    "solution": "import json\nimport os\nfrom datetime import datetime\nfrom urllib.parse import unquote_plus\n\nimport boto3\n\ns3_client = boto3.client('s3')\ndynamodb = boto3.resource('dynamodb')\ntable = dynamodb.Table(os.environ.get('METADATA_TABLE', 'image-metadata'))\n\n# Supported image formats\nSUPPORTED_FORMATS = {'.jpg', '.jpeg', '.png', '.gif', '.webp'}\n\ndef is_image_file(filename):\n    \"\"\"Check if file is a supported image format\"\"\"\n    ext = os.path.splitext(filename.lower())[1]\n    return ext in SUPPORTED_FORMATS\n\ndef get_image_info(bucket, key):\n    \"\"\"Get image metadata from S3\"\"\"\n    response = s3_client.head_object(Bucket=bucket, Key=key)\n    return {\n        'size': response['ContentLength'],\n        'content_type': response.get('ContentType', 'unknown'),\n        'last_modified': response['LastModified'].isoformat()\n    }\n\ndef process_image(bucket, key):\n    \"\"\"Process image: generate thumbnail and store metadata\"\"\"\n    # In real scenario, would download, resize, and upload thumbnail\n    # Here we simulate the process\n    \n    image_info = get_image_info(bucket, key)\n    \n    # Simulate thumbnail generation\n    thumbnail_key = f\"thumbnails/{os.path.splitext(key)[0]}_thumb.jpg\"\n    \n    # Store metadata in DynamoDB\n    metadata = {\n        'image_id': key,\n        'bucket': bucket,\n        'original_key': key,\n        'thumbnail_key': thumbnail_key,\n        'size_bytes': image_info['size'],\n        'content_type': image_info['content_type'],\n        'processed_at': datetime.utcnow().isoformat(),\n        'status': 'processed'\n    }\n    \n    table.put_item(Item=metadata)\n    \n    return metadata\n\ndef lambda_handler(event, context):\n    results = []\n    \n    for record in event.get('Records', []):\n        try:\n            # Extract S3 information\n            bucket = record['s3']['bucket']['name']\n            key = unquote_plus(record['s3']['object']['key'])\n            \n            # Validate image format\n            if not is_image_file(key):\n                print(f\"Skipping non-image file: {key}\")\n                results.append({\n                    'key': key,\n                    'status': 'skipped',\n                    'reason': 'unsupported format'\n                })\n                continue\n            \n            # Process image\n            metadata = process_image(bucket, key)\n            results.append({\n                'key': key,\n                'status': 'success',\n                'metadata': metadata\n            })\n            \n            print(f\"Successfully processed: {key}\")\n            \n        except Exception as e:\n            print(f\"Error processing {key}: {str(e)}\")\n            results.append({\n                'key': key,\n                'status': 'error',\n                'error': str(e)\n            })\n    \n    return {\n        'statusCode': 200,\n        'body': json.dumps({\n            'processed': len([r for r in results if r['status'] == 'success']),\n            'results': results\n        })\n    }",
+    "hints": [
+      "Use unquote_plus to decode S3 object keys",
+      "Check file extension to validate image format",
+      "Use s3_client.head_object to get metadata without downloading",
+      "Store processing results in DynamoDB for tracking",
+      "Handle errors per-record to process batch completely"
+    ],
+    "testCases": [
+      {
+        "input": "S3 upload: image.jpg",
+        "expectedOutput": "Image processed, thumbnail created, metadata stored",
+        "isHidden": false,
+        "description": "Process valid image upload"
+      },
+      {
+        "input": "S3 upload: document.pdf",
+        "expectedOutput": "File skipped, unsupported format",
+        "isHidden": false,
+        "description": "Skip non-image files"
+      },
+      {
+        "input": "S3 upload: multiple images",
+        "expectedOutput": "All images processed successfully",
+        "isHidden": true,
+        "description": "Batch process multiple images"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs405-t5-ex08",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-5",
+    "title": "Serverless Authentication Middleware",
+    "difficulty": 3,
+    "description": "Create a Lambda authorizer for API Gateway that validates JWT tokens.\n\nRequirements:\n1. Parse and validate JWT tokens\n2. Check token expiration\n3. Verify token signature\n4. Return IAM policy for API Gateway\n5. Handle unauthorized requests",
+    "starterCode": "import json\n\ndef lambda_handler(event, context):\n    # TODO: Extract token from Authorization header\n    # TODO: Validate JWT\n    # TODO: Generate IAM policy\n    pass",
+    "solution": "import json\nimport time\nimport base64\nimport hmac\nimport hashlib\nfrom typing import Dict, Any\n\n# In production, load from environment or secrets manager\nSECRET_KEY = 'your-secret-key-here'\n\ndef decode_base64url(data: str) -> bytes:\n    \"\"\"Decode base64url encoded data\"\"\"\n    padding = '=' * (4 - len(data) % 4)\n    return base64.urlsafe_b64decode(data + padding)\n\ndef verify_signature(token_parts: list, secret: str) -> bool:\n    \"\"\"Verify JWT signature\"\"\"\n    header_payload = f\"{token_parts[0]}.{token_parts[1]}\"\n    signature = token_parts[2]\n    \n    # Compute expected signature\n    expected_sig = base64.urlsafe_b64encode(\n        hmac.new(\n            secret.encode(),\n            header_payload.encode(),\n            hashlib.sha256\n        ).digest()\n    ).decode().rstrip('=')\n    \n    return hmac.compare_digest(signature, expected_sig)\n\ndef validate_jwt(token: str) -> Dict[str, Any]:\n    \"\"\"Validate JWT token and return payload\"\"\"\n    try:\n        parts = token.split('.')\n        if len(parts) != 3:\n            raise ValueError(\"Invalid token format\")\n        \n        # Verify signature\n        if not verify_signature(parts, SECRET_KEY):\n            raise ValueError(\"Invalid signature\")\n        \n        # Decode payload\n        payload = json.loads(decode_base64url(parts[1]))\n        \n        # Check expiration\n        if 'exp' in payload and payload['exp'] < time.time():\n            raise ValueError(\"Token expired\")\n        \n        return payload\n        \n    except Exception as e:\n        raise ValueError(f\"Token validation failed: {str(e)}\")\n\ndef generate_policy(principal_id: str, effect: str, resource: str, context: dict = None) -> dict:\n    \"\"\"Generate IAM policy for API Gateway\"\"\"\n    policy = {\n        'principalId': principal_id,\n        'policyDocument': {\n            'Version': '2012-10-17',\n            'Statement': [{\n                'Action': 'execute-api:Invoke',\n                'Effect': effect,\n                'Resource': resource\n            }]\n        }\n    }\n    \n    if context:\n        policy['context'] = context\n    \n    return policy\n\ndef lambda_handler(event, context):\n    \"\"\"Lambda authorizer for API Gateway\"\"\"\n    try:\n        # Extract token from Authorization header\n        token = event.get('authorizationToken', '')\n        \n        if not token:\n            raise ValueError(\"No authorization token provided\")\n        \n        # Remove 'Bearer ' prefix if present\n        if token.startswith('Bearer '):\n            token = token[7:]\n        \n        # Validate JWT\n        payload = validate_jwt(token)\n        \n        # Extract user information\n        user_id = payload.get('sub', 'unknown')\n        username = payload.get('username', 'unknown')\n        roles = payload.get('roles', [])\n        \n        # Generate Allow policy\n        policy = generate_policy(\n            principal_id=user_id,\n            effect='Allow',\n            resource=event['methodArn'],\n            context={\n                'userId': user_id,\n                'username': username,\n                'roles': ','.join(roles)\n            }\n        )\n        \n        return policy\n        \n    except ValueError as e:\n        print(f\"Authorization failed: {str(e)}\")\n        # Return Deny policy\n        return generate_policy(\n            principal_id='unauthorized',\n            effect='Deny',\n            resource=event.get('methodArn', '*')\n        )\n    except Exception as e:\n        print(f\"Unexpected error: {str(e)}\")\n        raise Exception('Unauthorized')\n\n# Test function\nif __name__ == '__main__':\n    # Create test JWT (simplified)\n    import jwt\n    test_token = jwt.encode(\n        {'sub': 'user123', 'username': 'testuser', 'roles': ['admin'], 'exp': time.time() + 3600},\n        SECRET_KEY,\n        algorithm='HS256'\n    )\n    \n    test_event = {\n        'authorizationToken': f'Bearer {test_token}',\n        'methodArn': 'arn:aws:execute-api:us-east-1:123456789012:api-id/stage/GET/resource'\n    }\n    \n    print(json.dumps(lambda_handler(test_event, None), indent=2))",
+    "hints": [
+      "Parse JWT format: header.payload.signature",
+      "Use base64url decoding for JWT parts",
+      "Verify signature using HMAC-SHA256",
+      "Check token expiration timestamp",
+      "Return proper IAM policy structure for API Gateway"
+    ],
+    "testCases": [
+      {
+        "input": "Valid JWT token with user claims",
+        "expectedOutput": "Allow policy with user context",
+        "isHidden": false,
+        "description": "Authorize valid token"
+      },
+      {
+        "input": "Expired JWT token",
+        "expectedOutput": "Deny policy",
+        "isHidden": false,
+        "description": "Reject expired token"
+      },
+      {
+        "input": "Invalid signature",
+        "expectedOutput": "Deny policy",
+        "isHidden": true,
+        "description": "Reject tampered token"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs405-t5-ex09",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-5",
+    "title": "Async Event Processing with SQS",
+    "difficulty": 3,
+    "description": "Create a Lambda function that processes messages from SQS queue with proper error handling.\n\nRequirements:\n1. Process SQS messages in batch\n2. Implement partial batch failure handling\n3. Parse message body and attributes\n4. Retry logic for failed messages\n5. Dead letter queue integration",
+    "starterCode": "import json\nimport boto3\n\ndef lambda_handler(event, context):\n    # TODO: Process SQS messages\n    # TODO: Handle failures\n    pass",
+    "solution": "import json\nimport os\nimport boto3\nfrom datetime import datetime\n\ndynamodb = boto3.resource('dynamodb')\nsqs = boto3.client('sqs')\ntable = dynamodb.Table(os.environ.get('ORDERS_TABLE', 'orders'))\n\ndef process_order(order_data: dict) -> dict:\n    \"\"\"Process a single order\"\"\"\n    required_fields = ['order_id', 'customer_id', 'items']\n    \n    # Validate order data\n    for field in required_fields:\n        if field not in order_data:\n            raise ValueError(f\"Missing required field: {field}\")\n    \n    # Calculate total\n    total = sum(item.get('price', 0) * item.get('quantity', 1) \n                for item in order_data['items'])\n    \n    # Prepare order record\n    order = {\n        'order_id': order_data['order_id'],\n        'customer_id': order_data['customer_id'],\n        'items': order_data['items'],\n        'total': total,\n        'status': 'processing',\n        'created_at': datetime.utcnow().isoformat(),\n        'processed_at': datetime.utcnow().isoformat()\n    }\n    \n    # Save to DynamoDB\n    table.put_item(Item=order)\n    \n    return order\n\ndef lambda_handler(event, context):\n    \"\"\"Process SQS messages with partial batch failure handling\"\"\"\n    failed_messages = []\n    successful_count = 0\n    \n    for record in event.get('Records', []):\n        try:\n            # Parse message body\n            message_body = json.loads(record['body'])\n            message_id = record['messageId']\n            receipt_handle = record['receiptHandle']\n            \n            # Get message attributes\n            attributes = record.get('messageAttributes', {})\n            retry_count = int(attributes.get('RetryCount', {}).get('stringValue', '0'))\n            \n            print(f\"Processing message {message_id}, retry: {retry_count}\")\n            \n            # Process the order\n            order = process_order(message_body)\n            \n            successful_count += 1\n            print(f\"Successfully processed order {order['order_id']}\")\n            \n        except ValueError as e:\n            # Validation error - don't retry, send to DLQ\n            print(f\"Validation error for message {message_id}: {str(e)}\")\n            failed_messages.append({\n                'itemIdentifier': record['messageId']\n            })\n            \n        except Exception as e:\n            # Other errors - allow retry\n            print(f\"Error processing message {message_id}: {str(e)}\")\n            \n            # Check retry limit\n            if retry_count >= 3:\n                print(f\"Max retries reached for message {message_id}\")\n                failed_messages.append({\n                    'itemIdentifier': record['messageId']\n                })\n            else:\n                # Mark for retry by reporting failure\n                failed_messages.append({\n                    'itemIdentifier': record['messageId']\n                })\n    \n    # Return partial batch failure response\n    response = {\n        'batchItemFailures': failed_messages\n    }\n    \n    print(f\"Processed {successful_count} successfully, {len(failed_messages)} failed\")\n    \n    return response\n\n# Test locally\nif __name__ == '__main__':\n    test_event = {\n        'Records': [\n            {\n                'messageId': 'msg-1',\n                'receiptHandle': 'handle-1',\n                'body': json.dumps({\n                    'order_id': 'ORD-001',\n                    'customer_id': 'CUST-123',\n                    'items': [\n                        {'name': 'Product A', 'price': 29.99, 'quantity': 2}\n                    ]\n                }),\n                'messageAttributes': {}\n            },\n            {\n                'messageId': 'msg-2',\n                'receiptHandle': 'handle-2',\n                'body': json.dumps({\n                    'order_id': 'ORD-002'\n                    # Missing required fields\n                }),\n                'messageAttributes': {}\n            }\n        ]\n    }\n    \n    print(json.dumps(lambda_handler(test_event, None), indent=2))",
+    "hints": [
+      "Return batchItemFailures array for partial batch failure",
+      "Parse message body as JSON string",
+      "Track retry count in message attributes",
+      "Distinguish between retryable and non-retryable errors",
+      "Use itemIdentifier field for failed message IDs"
+    ],
+    "testCases": [
+      {
+        "input": "SQS batch with valid orders",
+        "expectedOutput": "All orders processed successfully",
+        "isHidden": false,
+        "description": "Process valid order batch"
+      },
+      {
+        "input": "SQS batch with one invalid order",
+        "expectedOutput": "Partial success with failed message reported",
+        "isHidden": false,
+        "description": "Handle partial batch failure"
+      },
+      {
+        "input": "Message exceeding retry limit",
+        "expectedOutput": "Message sent to DLQ",
+        "isHidden": true,
+        "description": "Handle max retries"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs405-t5-ex10",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-5",
+    "title": "Serverless Scheduled Task",
+    "difficulty": 4,
+    "description": "Create a Lambda function triggered by CloudWatch Events (EventBridge) for scheduled data cleanup.\n\nRequirements:\n1. Run on schedule (cron expression)\n2. Query and delete old records from DynamoDB\n3. Batch processing with pagination\n4. Send summary notification via SNS\n5. Handle errors and partial failures",
+    "starterCode": "import json\nimport boto3\nfrom datetime import datetime, timedelta\n\ndef lambda_handler(event, context):\n    # TODO: Query old records\n    # TODO: Delete in batches\n    # TODO: Send notification\n    pass",
+    "solution": "import json\nimport os\nimport boto3\nfrom datetime import datetime, timedelta\nfrom boto3.dynamodb.conditions import Key, Attr\n\ndynamodb = boto3.resource('dynamodb')\nsns = boto3.client('sns')\n\nTABLE_NAME = os.environ.get('TABLE_NAME', 'sessions')\nSNS_TOPIC_ARN = os.environ.get('SNS_TOPIC_ARN')\nRETENTION_DAYS = int(os.environ.get('RETENTION_DAYS', '30'))\n\ndef get_cutoff_date():\n    \"\"\"Calculate cutoff date for old records\"\"\"\n    return (datetime.utcnow() - timedelta(days=RETENTION_DAYS)).isoformat()\n\ndef scan_old_records(table, cutoff_date):\n    \"\"\"Scan for records older than cutoff date\"\"\"\n    all_items = []\n    scan_kwargs = {\n        'FilterExpression': Attr('created_at').lt(cutoff_date)\n    }\n    \n    # Handle pagination\n    while True:\n        response = table.scan(**scan_kwargs)\n        all_items.extend(response.get('Items', []))\n        \n        # Check if more pages exist\n        if 'LastEvaluatedKey' not in response:\n            break\n        scan_kwargs['ExclusiveStartKey'] = response['LastEvaluatedKey']\n    \n    return all_items\n\ndef delete_items_batch(table, items):\n    \"\"\"Delete items in batches of 25 (DynamoDB limit)\"\"\"\n    deleted_count = 0\n    failed_items = []\n    \n    # Process in batches of 25\n    batch_size = 25\n    for i in range(0, len(items), batch_size):\n        batch = items[i:i + batch_size]\n        \n        try:\n            with table.batch_writer() as writer:\n                for item in batch:\n                    writer.delete_item(\n                        Key={'session_id': item['session_id']}\n                    )\n                    deleted_count += 1\n        except Exception as e:\n            print(f\"Error deleting batch: {str(e)}\")\n            failed_items.extend(batch)\n    \n    return deleted_count, failed_items\n\ndef send_notification(stats):\n    \"\"\"Send summary notification via SNS\"\"\"\n    if not SNS_TOPIC_ARN:\n        print(\"No SNS topic configured, skipping notification\")\n        return\n    \n    message = f\"\"\"\nData Cleanup Summary\n====================\nTimestamp: {datetime.utcnow().isoformat()}\nRetention Period: {RETENTION_DAYS} days\nRecords Found: {stats['found']}\nRecords Deleted: {stats['deleted']}\nFailed Deletions: {stats['failed']}\nExecution Time: {stats['execution_time']:.2f}s\n\"\"\"\n    \n    sns.publish(\n        TopicArn=SNS_TOPIC_ARN,\n        Subject=f\"Data Cleanup Complete - {stats['deleted']} records deleted\",\n        Message=message\n    )\n\ndef lambda_handler(event, context):\n    \"\"\"Scheduled cleanup task\"\"\"\n    start_time = datetime.utcnow()\n    \n    try:\n        table = dynamodb.Table(TABLE_NAME)\n        cutoff_date = get_cutoff_date()\n        \n        print(f\"Scanning for records older than {cutoff_date}\")\n        \n        # Find old records\n        old_items = scan_old_records(table, cutoff_date)\n        \n        print(f\"Found {len(old_items)} old records\")\n        \n        # Delete in batches\n        deleted_count, failed_items = delete_items_batch(table, old_items)\n        \n        # Calculate stats\n        execution_time = (datetime.utcnow() - start_time).total_seconds()\n        stats = {\n            'found': len(old_items),\n            'deleted': deleted_count,\n            'failed': len(failed_items),\n            'execution_time': execution_time,\n            'cutoff_date': cutoff_date\n        }\n        \n        # Send notification\n        send_notification(stats)\n        \n        print(f\"Cleanup complete: {stats}\")\n        \n        return {\n            'statusCode': 200,\n            'body': json.dumps({\n                'status': 'success',\n                'stats': stats\n            })\n        }\n        \n    except Exception as e:\n        error_msg = f\"Cleanup failed: {str(e)}\"\n        print(error_msg)\n        \n        # Send error notification\n        if SNS_TOPIC_ARN:\n            sns.publish(\n                TopicArn=SNS_TOPIC_ARN,\n                Subject=\"Data Cleanup Failed\",\n                Message=error_msg\n            )\n        \n        return {\n            'statusCode': 500,\n            'body': json.dumps({'status': 'error', 'message': str(e)})\n        }\n\n# Test locally\nif __name__ == '__main__':\n    os.environ['TABLE_NAME'] = 'sessions'\n    os.environ['RETENTION_DAYS'] = '30'\n    \n    # Simulate CloudWatch Events trigger\n    test_event = {\n        'id': 'cdc73f9d-aea9-11e3-9d5a-835b769c0d9c',\n        'detail-type': 'Scheduled Event',\n        'source': 'aws.events',\n        'time': datetime.utcnow().isoformat()\n    }\n    \n    print(json.dumps(lambda_handler(test_event, None), indent=2))",
+    "hints": [
+      "Use FilterExpression for conditional scans",
+      "Handle pagination with LastEvaluatedKey",
+      "Batch write operations limited to 25 items",
+      "Use batch_writer() context manager for efficiency",
+      "Send notifications for both success and failure"
+    ],
+    "testCases": [
+      {
+        "input": "Scheduled event with old records in database",
+        "expectedOutput": "Old records deleted, notification sent",
+        "isHidden": false,
+        "description": "Execute scheduled cleanup"
+      },
+      {
+        "input": "Large dataset requiring pagination",
+        "expectedOutput": "All pages processed, all old records deleted",
+        "isHidden": false,
+        "description": "Handle pagination correctly"
+      },
+      {
+        "input": "Error during deletion",
+        "expectedOutput": "Error notification sent via SNS",
+        "isHidden": true,
+        "description": "Handle and report errors"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs405-t5-ex11",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-5",
+    "title": "Multi-Stage Deployment Pipeline",
+    "difficulty": 4,
+    "description": "Create a serverless deployment configuration with multiple stages (dev, staging, prod).\n\nRequirements:\n1. Define stage-specific configurations\n2. Environment-specific resource naming\n3. Different IAM permissions per stage\n4. Stage-specific environment variables\n5. Deployment validation",
+    "starterCode": "# serverless.yml\nservice: multi-stage-app\n\n# TODO: Define provider configuration\n# TODO: Add stage-specific settings\n# TODO: Define functions and resources",
+    "solution": "# serverless.yml\nservice: multi-stage-app\n\ncustom:\n  stages:\n    dev:\n      memorySize: 256\n      timeout: 10\n      logRetention: 7\n      dynamoCapacity:\n        read: 1\n        write: 1\n    staging:\n      memorySize: 512\n      timeout: 30\n      logRetention: 14\n      dynamoCapacity:\n        read: 5\n        write: 5\n    prod:\n      memorySize: 1024\n      timeout: 60\n      logRetention: 30\n      dynamoCapacity:\n        read: 10\n        write: 10\n\nprovider:\n  name: aws\n  runtime: python3.9\n  region: ${opt:region, 'us-east-1'}\n  stage: ${opt:stage, 'dev'}\n  \n  # Stage-specific function configuration\n  memorySize: ${self:custom.stages.${self:provider.stage}.memorySize}\n  timeout: ${self:custom.stages.${self:provider.stage}.timeout}\n  \n  # Environment variables\n  environment:\n    STAGE: ${self:provider.stage}\n    TABLE_NAME: ${self:service}-${self:provider.stage}-data\n    API_ENDPOINT: ${self:custom.apiEndpoint.${self:provider.stage}}\n    LOG_LEVEL: ${self:custom.logLevel.${self:provider.stage}}\n  \n  # Stage-specific IAM permissions\n  iam:\n    role:\n      statements:\n        - Effect: Allow\n          Action:\n            - dynamodb:Query\n            - dynamodb:Scan\n            - dynamodb:GetItem\n            - dynamodb:PutItem\n          Resource:\n            - !GetAtt DataTable.Arn\n        # Production gets additional permissions\n        - Effect: Allow\n          Action:\n            - s3:GetObject\n          Resource:\n            - arn:aws:s3:::${self:service}-${self:provider.stage}-backup/*\n          Condition:\n            StringEquals:\n              aws:RequestedRegion: ${self:provider.region}\n  \n  # CloudWatch Logs retention\n  logRetentionInDays: ${self:custom.stages.${self:provider.stage}.logRetention}\n\ncustom:\n  # Stage-specific API endpoints\n  apiEndpoint:\n    dev: https://dev-api.example.com\n    staging: https://staging-api.example.com\n    prod: https://api.example.com\n  \n  # Stage-specific log levels\n  logLevel:\n    dev: DEBUG\n    staging: INFO\n    prod: WARNING\n\nfunctions:\n  api:\n    handler: handler.api_handler\n    description: API handler for ${self:provider.stage} stage\n    events:\n      - http:\n          path: /api/{proxy+}\n          method: any\n          cors: true\n    # Production-specific settings\n    reservedConcurrency: ${self:custom.reservedConcurrency.${self:provider.stage}, null}\n    provisionedConcurrency: ${self:custom.provisionedConcurrency.${self:provider.stage}, null}\n  \n  worker:\n    handler: handler.worker_handler\n    description: Background worker for ${self:provider.stage} stage\n    events:\n      - sqs:\n          arn: !GetAtt WorkQueue.Arn\n          batchSize: ${self:custom.sqsBatchSize.${self:provider.stage}}\n\ncustom:\n  # Production gets reserved/provisioned concurrency\n  reservedConcurrency:\n    prod: 10\n  provisionedConcurrency:\n    prod: 5\n  sqsBatchSize:\n    dev: 1\n    staging: 5\n    prod: 10\n\nresources:\n  Resources:\n    # DynamoDB table with stage-specific capacity\n    DataTable:\n      Type: AWS::DynamoDB::Table\n      Properties:\n        TableName: ${self:provider.environment.TABLE_NAME}\n        AttributeDefinitions:\n          - AttributeName: id\n            AttributeType: S\n        KeySchema:\n          - AttributeName: id\n            KeyType: HASH\n        BillingMode: PROVISIONED\n        ProvisionedThroughput:\n          ReadCapacityUnits: ${self:custom.stages.${self:provider.stage}.dynamoCapacity.read}\n          WriteCapacityUnits: ${self:custom.stages.${self:provider.stage}.dynamoCapacity.write}\n        # Production gets point-in-time recovery\n        PointInTimeRecoverySpecification:\n          PointInTimeRecoveryEnabled: ${self:custom.pitrEnabled.${self:provider.stage}, false}\n    \n    # SQS Queue\n    WorkQueue:\n      Type: AWS::SQS::Queue\n      Properties:\n        QueueName: ${self:service}-${self:provider.stage}-work-queue\n        VisibilityTimeout: ${self:custom.stages.${self:provider.stage}.timeout}\n        MessageRetentionPeriod: 1209600  # 14 days\n        # Production gets dead letter queue\n        RedrivePolicy: ${self:custom.redrivePolicy.${self:provider.stage}, null}\n    \n    # Dead Letter Queue (production only)\n    DeadLetterQueue:\n      Type: AWS::SQS::Queue\n      Condition: IsProd\n      Properties:\n        QueueName: ${self:service}-${self:provider.stage}-dlq\n        MessageRetentionPeriod: 1209600\n    \n    # CloudWatch Alarm (production only)\n    ErrorAlarm:\n      Type: AWS::CloudWatch::Alarm\n      Condition: IsProd\n      Properties:\n        AlarmName: ${self:service}-${self:provider.stage}-errors\n        MetricName: Errors\n        Namespace: AWS/Lambda\n        Statistic: Sum\n        Period: 300\n        EvaluationPeriods: 1\n        Threshold: 10\n        ComparisonOperator: GreaterThanThreshold\n  \n  # Conditions\n  Conditions:\n    IsProd: !Equals [${self:provider.stage}, 'prod']\n\ncustom:\n  pitrEnabled:\n    prod: true\n  redrivePolicy:\n    prod:\n      deadLetterTargetArn: !GetAtt DeadLetterQueue.Arn\n      maxReceiveCount: 3\n\n# handler.py\nimport json\nimport os\nimport logging\n\n# Configure logging based on stage\nlog_level = os.environ.get('LOG_LEVEL', 'INFO')\nlogger = logging.getLogger()\nlogger.setLevel(getattr(logging, log_level))\n\ndef api_handler(event, context):\n    \"\"\"API handler with stage-aware configuration\"\"\"\n    stage = os.environ.get('STAGE', 'unknown')\n    \n    logger.debug(f\"Processing request in {stage} stage\")\n    \n    return {\n        'statusCode': 200,\n        'body': json.dumps({\n            'message': 'Success',\n            'stage': stage,\n            'environment': {\n                'table': os.environ.get('TABLE_NAME'),\n                'api_endpoint': os.environ.get('API_ENDPOINT'),\n                'log_level': log_level\n            }\n        })\n    }\n\ndef worker_handler(event, context):\n    \"\"\"Worker handler with stage-aware processing\"\"\"\n    stage = os.environ.get('STAGE', 'unknown')\n    \n    for record in event.get('Records', []):\n        logger.info(f\"Processing message in {stage} stage\")\n        # Process message\n    \n    return {'statusCode': 200}",
+    "hints": [
+      "Use ${opt:stage, 'dev'} for stage parameter",
+      "Define stage-specific settings in custom section",
+      "Use CloudFormation conditions for stage-specific resources",
+      "Environment variables can reference stage-specific values",
+      "Production should have stricter monitoring and backups"
+    ],
+    "testCases": [
+      {
+        "input": "Deploy to dev stage",
+        "expectedOutput": "Minimal resources, debug logging enabled",
+        "isHidden": false,
+        "description": "Deploy development configuration"
+      },
+      {
+        "input": "Deploy to prod stage",
+        "expectedOutput": "Full resources, DLQ, alarms, PITR enabled",
+        "isHidden": false,
+        "description": "Deploy production configuration"
+      },
+      {
+        "input": "Validate stage isolation",
+        "expectedOutput": "Resources properly namespaced per stage",
+        "isHidden": true,
+        "description": "Ensure stage isolation"
+      }
+    ],
+    "language": "yaml"
+  },
+  {
+    "id": "cs405-t5-ex12",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-5",
+    "title": "Serverless WebSocket API",
+    "difficulty": 4,
+    "description": "Create a real-time WebSocket API using API Gateway and Lambda.\n\nRequirements:\n1. Handle connection lifecycle (connect, disconnect)\n2. Broadcast messages to connected clients\n3. Store connection IDs in DynamoDB\n4. Route messages based on action\n5. Handle connection errors",
+    "starterCode": "import json\nimport boto3\n\ndef connect_handler(event, context):\n    # TODO: Handle new WebSocket connection\n    pass\n\ndef disconnect_handler(event, context):\n    # TODO: Handle connection close\n    pass\n\ndef message_handler(event, context):\n    # TODO: Route and broadcast messages\n    pass",
+    "solution": "import json\nimport os\nimport boto3\nfrom datetime import datetime\n\ndynamodb = boto3.resource('dynamodb')\napigateway = boto3.client('apigatewaymanagementapi')\n\nCONNECTIONS_TABLE = os.environ.get('CONNECTIONS_TABLE', 'websocket-connections')\ntable = dynamodb.Table(CONNECTIONS_TABLE)\n\ndef connect_handler(event, context):\n    \"\"\"Handle new WebSocket connection\"\"\"\n    connection_id = event['requestContext']['connectionId']\n    \n    try:\n        # Store connection in DynamoDB\n        table.put_item(\n            Item={\n                'connectionId': connection_id,\n                'connectedAt': datetime.utcnow().isoformat(),\n                'lastActivity': datetime.utcnow().isoformat()\n            }\n        )\n        \n        print(f\"Connection established: {connection_id}\")\n        \n        return {'statusCode': 200, 'body': 'Connected'}\n        \n    except Exception as e:\n        print(f\"Error connecting: {str(e)}\")\n        return {'statusCode': 500, 'body': 'Failed to connect'}\n\ndef disconnect_handler(event, context):\n    \"\"\"Handle WebSocket disconnection\"\"\"\n    connection_id = event['requestContext']['connectionId']\n    \n    try:\n        # Remove connection from DynamoDB\n        table.delete_item(Key={'connectionId': connection_id})\n        \n        print(f\"Connection closed: {connection_id}\")\n        \n        return {'statusCode': 200, 'body': 'Disconnected'}\n        \n    except Exception as e:\n        print(f\"Error disconnecting: {str(e)}\")\n        return {'statusCode': 500, 'body': 'Failed to disconnect'}\n\ndef get_all_connections():\n    \"\"\"Get all active connection IDs\"\"\"\n    try:\n        response = table.scan(ProjectionExpression='connectionId')\n        return [item['connectionId'] for item in response.get('Items', [])]\n    except Exception as e:\n        print(f\"Error getting connections: {str(e)}\")\n        return []\n\ndef send_to_connection(connection_id, data, endpoint_url):\n    \"\"\"Send data to a specific connection\"\"\"\n    try:\n        apigw_client = boto3.client(\n            'apigatewaymanagementapi',\n            endpoint_url=endpoint_url\n        )\n        \n        apigw_client.post_to_connection(\n            ConnectionId=connection_id,\n            Data=json.dumps(data).encode('utf-8')\n        )\n        return True\n        \n    except apigw_client.exceptions.GoneException:\n        # Connection no longer exists, remove from table\n        print(f\"Connection gone: {connection_id}\")\n        table.delete_item(Key={'connectionId': connection_id})\n        return False\n        \n    except Exception as e:\n        print(f\"Error sending to {connection_id}: {str(e)}\")\n        return False\n\ndef broadcast_message(message, endpoint_url, exclude_connection=None):\n    \"\"\"Broadcast message to all connections\"\"\"\n    connections = get_all_connections()\n    success_count = 0\n    \n    for connection_id in connections:\n        if connection_id == exclude_connection:\n            continue\n        \n        if send_to_connection(connection_id, message, endpoint_url):\n            success_count += 1\n    \n    return success_count\n\ndef message_handler(event, context):\n    \"\"\"Handle incoming WebSocket messages\"\"\"\n    connection_id = event['requestContext']['connectionId']\n    domain_name = event['requestContext']['domainName']\n    stage = event['requestContext']['stage']\n    endpoint_url = f\"https://{domain_name}/{stage}\"\n    \n    try:\n        # Parse message body\n        body = json.loads(event.get('body', '{}'))\n        action = body.get('action', 'unknown')\n        \n        # Update last activity\n        table.update_item(\n            Key={'connectionId': connection_id},\n            UpdateExpression='SET lastActivity = :timestamp',\n            ExpressionAttributeValues={\n                ':timestamp': datetime.utcnow().isoformat()\n            }\n        )\n        \n        # Route based on action\n        if action == 'sendMessage':\n            # Broadcast message to all connections\n            message_data = {\n                'type': 'message',\n                'sender': connection_id[:8],  # Shortened ID\n                'message': body.get('message', ''),\n                'timestamp': datetime.utcnow().isoformat()\n            }\n            \n            success_count = broadcast_message(\n                message_data,\n                endpoint_url,\n                exclude_connection=connection_id\n            )\n            \n            # Send confirmation to sender\n            send_to_connection(\n                connection_id,\n                {'type': 'confirmation', 'sent_to': success_count},\n                endpoint_url\n            )\n            \n        elif action == 'getConnections':\n            # Return list of active connections\n            connections = get_all_connections()\n            send_to_connection(\n                connection_id,\n                {'type': 'connections', 'count': len(connections)},\n                endpoint_url\n            )\n            \n        else:\n            # Unknown action\n            send_to_connection(\n                connection_id,\n                {'type': 'error', 'message': f'Unknown action: {action}'},\n                endpoint_url\n            )\n        \n        return {'statusCode': 200, 'body': 'Message processed'}\n        \n    except json.JSONDecodeError:\n        return {'statusCode': 400, 'body': 'Invalid JSON'}\n        \n    except Exception as e:\n        print(f\"Error processing message: {str(e)}\")\n        return {'statusCode': 500, 'body': 'Error processing message'}\n\n# serverless.yml snippet for WebSocket API\n\"\"\"\nfunctions:\n  connect:\n    handler: websocket.connect_handler\n    events:\n      - websocket:\n          route: $connect\n  \n  disconnect:\n    handler: websocket.disconnect_handler\n    events:\n      - websocket:\n          route: $disconnect\n  \n  message:\n    handler: websocket.message_handler\n    events:\n      - websocket:\n          route: $default\n\nresources:\n  Resources:\n    ConnectionsTable:\n      Type: AWS::DynamoDB::Table\n      Properties:\n        TableName: ${self:provider.environment.CONNECTIONS_TABLE}\n        AttributeDefinitions:\n          - AttributeName: connectionId\n            AttributeType: S\n        KeySchema:\n          - AttributeName: connectionId\n            KeyType: HASH\n        BillingMode: PAY_PER_REQUEST\n\"\"\"",
+    "hints": [
+      "Store connection IDs in DynamoDB on connect",
+      "Use API Gateway Management API to send messages",
+      "Handle GoneException for stale connections",
+      "Build endpoint URL from event context",
+      "Route messages based on action field"
+    ],
+    "testCases": [
+      {
+        "input": "WebSocket connect event",
+        "expectedOutput": "Connection stored in DynamoDB",
+        "isHidden": false,
+        "description": "Handle new connection"
+      },
+      {
+        "input": "Message with action: sendMessage",
+        "expectedOutput": "Message broadcast to all connections",
+        "isHidden": false,
+        "description": "Broadcast message"
+      },
+      {
+        "input": "Stale connection (GoneException)",
+        "expectedOutput": "Connection removed from database",
+        "isHidden": true,
+        "description": "Clean up stale connections"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs405-t5-ex13",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-5",
+    "title": "Azure Functions HTTP Trigger",
+    "difficulty": 5,
+    "description": "Create an Azure Function with HTTP trigger implementing a complete API endpoint.\n\nRequirements:\n1. HTTP trigger with multiple methods\n2. Input validation and binding\n3. Azure Table Storage integration\n4. Durable Functions for orchestration\n5. Application Insights logging",
+    "starterCode": "import logging\nimport azure.functions as func\n\ndef main(req: func.HttpRequest) -> func.HttpResponse:\n    # TODO: Implement HTTP trigger\n    # TODO: Add storage binding\n    pass",
+    "solution": "import logging\nimport json\nimport uuid\nfrom datetime import datetime\nfrom typing import Dict, Any\n\nimport azure.functions as func\nfrom azure.data.tables import TableServiceClient, TableEntity\nfrom azure.core.exceptions import ResourceNotFoundError\n\n# Initialize Table Storage client\nconnection_string = \"DefaultEndpointsProtocol=https;AccountName=...\"\ntable_service = TableServiceClient.from_connection_string(connection_string)\ntable_name = \"tasks\"\ntable_client = table_service.get_table_client(table_name)\n\ndef validate_task_data(data: Dict[str, Any]) -> tuple[bool, str]:\n    \"\"\"Validate task data\"\"\"\n    required_fields = ['title', 'description']\n    \n    for field in required_fields:\n        if field not in data or not data[field]:\n            return False, f\"Missing required field: {field}\"\n    \n    if len(data['title']) > 100:\n        return False, \"Title too long (max 100 characters)\"\n    \n    return True, \"\"\n\ndef create_task(data: Dict[str, Any]) -> Dict[str, Any]:\n    \"\"\"Create a new task in Table Storage\"\"\"\n    task_id = str(uuid.uuid4())\n    timestamp = datetime.utcnow().isoformat()\n    \n    entity = TableEntity(\n        PartitionKey=\"tasks\",\n        RowKey=task_id,\n        title=data['title'],\n        description=data['description'],\n        status=data.get('status', 'pending'),\n        priority=data.get('priority', 'medium'),\n        created_at=timestamp,\n        updated_at=timestamp\n    )\n    \n    table_client.create_entity(entity)\n    \n    return {\n        'task_id': task_id,\n        'title': entity['title'],\n        'description': entity['description'],\n        'status': entity['status'],\n        'priority': entity['priority'],\n        'created_at': entity['created_at']\n    }\n\ndef get_task(task_id: str) -> Dict[str, Any]:\n    \"\"\"Retrieve a task by ID\"\"\"\n    try:\n        entity = table_client.get_entity(\n            partition_key=\"tasks\",\n            row_key=task_id\n        )\n        \n        return {\n            'task_id': entity['RowKey'],\n            'title': entity['title'],\n            'description': entity['description'],\n            'status': entity['status'],\n            'priority': entity['priority'],\n            'created_at': entity['created_at'],\n            'updated_at': entity['updated_at']\n        }\n        \n    except ResourceNotFoundError:\n        return None\n\ndef update_task(task_id: str, data: Dict[str, Any]) -> Dict[str, Any]:\n    \"\"\"Update an existing task\"\"\"\n    try:\n        entity = table_client.get_entity(\n            partition_key=\"tasks\",\n            row_key=task_id\n        )\n        \n        # Update fields\n        if 'title' in data:\n            entity['title'] = data['title']\n        if 'description' in data:\n            entity['description'] = data['description']\n        if 'status' in data:\n            entity['status'] = data['status']\n        if 'priority' in data:\n            entity['priority'] = data['priority']\n        \n        entity['updated_at'] = datetime.utcnow().isoformat()\n        \n        table_client.update_entity(entity, mode='replace')\n        \n        return get_task(task_id)\n        \n    except ResourceNotFoundError:\n        return None\n\ndef delete_task(task_id: str) -> bool:\n    \"\"\"Delete a task\"\"\"\n    try:\n        table_client.delete_entity(\n            partition_key=\"tasks\",\n            row_key=task_id\n        )\n        return True\n    except ResourceNotFoundError:\n        return False\n\ndef list_tasks(status: str = None, limit: int = 10) -> list:\n    \"\"\"List tasks with optional filtering\"\"\"\n    query_filter = None\n    if status:\n        query_filter = f\"status eq '{status}'\"\n    \n    entities = table_client.query_entities(\n        query_filter=query_filter,\n        select=['RowKey', 'title', 'status', 'priority', 'created_at']\n    )\n    \n    tasks = []\n    for entity in entities:\n        tasks.append({\n            'task_id': entity['RowKey'],\n            'title': entity['title'],\n            'status': entity['status'],\n            'priority': entity['priority'],\n            'created_at': entity['created_at']\n        })\n        if len(tasks) >= limit:\n            break\n    \n    return tasks\n\ndef main(req: func.HttpRequest) -> func.HttpResponse:\n    \"\"\"\n    Azure Function HTTP trigger for task management API\n    \n    Routes:\n    - GET /api/tasks - List tasks\n    - GET /api/tasks/{id} - Get task by ID\n    - POST /api/tasks - Create task\n    - PUT /api/tasks/{id} - Update task\n    - DELETE /api/tasks/{id} - Delete task\n    \"\"\"\n    logging.info('Processing task API request')\n    \n    method = req.method\n    route_params = req.route_params\n    task_id = route_params.get('id')\n    \n    try:\n        # GET requests\n        if method == 'GET':\n            if task_id:\n                # Get specific task\n                task = get_task(task_id)\n                if task:\n                    return func.HttpResponse(\n                        json.dumps(task),\n                        status_code=200,\n                        mimetype='application/json'\n                    )\n                else:\n                    return func.HttpResponse(\n                        json.dumps({'error': 'Task not found'}),\n                        status_code=404,\n                        mimetype='application/json'\n                    )\n            else:\n                # List tasks\n                status_filter = req.params.get('status')\n                limit = int(req.params.get('limit', 10))\n                tasks = list_tasks(status_filter, limit)\n                \n                return func.HttpResponse(\n                    json.dumps({\n                        'tasks': tasks,\n                        'count': len(tasks)\n                    }),\n                    status_code=200,\n                    mimetype='application/json'\n                )\n        \n        # POST - Create task\n        elif method == 'POST':\n            try:\n                data = req.get_json()\n            except ValueError:\n                return func.HttpResponse(\n                    json.dumps({'error': 'Invalid JSON'}),\n                    status_code=400,\n                    mimetype='application/json'\n                )\n            \n            # Validate input\n            is_valid, error_msg = validate_task_data(data)\n            if not is_valid:\n                return func.HttpResponse(\n                    json.dumps({'error': error_msg}),\n                    status_code=400,\n                    mimetype='application/json'\n                )\n            \n            # Create task\n            task = create_task(data)\n            logging.info(f\"Created task: {task['task_id']}\")\n            \n            return func.HttpResponse(\n                json.dumps(task),\n                status_code=201,\n                mimetype='application/json'\n            )\n        \n        # PUT - Update task\n        elif method == 'PUT':\n            if not task_id:\n                return func.HttpResponse(\n                    json.dumps({'error': 'Task ID required'}),\n                    status_code=400,\n                    mimetype='application/json'\n                )\n            \n            try:\n                data = req.get_json()\n            except ValueError:\n                return func.HttpResponse(\n                    json.dumps({'error': 'Invalid JSON'}),\n                    status_code=400,\n                    mimetype='application/json'\n                )\n            \n            task = update_task(task_id, data)\n            if task:\n                logging.info(f\"Updated task: {task_id}\")\n                return func.HttpResponse(\n                    json.dumps(task),\n                    status_code=200,\n                    mimetype='application/json'\n                )\n            else:\n                return func.HttpResponse(\n                    json.dumps({'error': 'Task not found'}),\n                    status_code=404,\n                    mimetype='application/json'\n                )\n        \n        # DELETE - Delete task\n        elif method == 'DELETE':\n            if not task_id:\n                return func.HttpResponse(\n                    json.dumps({'error': 'Task ID required'}),\n                    status_code=400,\n                    mimetype='application/json'\n                )\n            \n            if delete_task(task_id):\n                logging.info(f\"Deleted task: {task_id}\")\n                return func.HttpResponse(\n                    status_code=204\n                )\n            else:\n                return func.HttpResponse(\n                    json.dumps({'error': 'Task not found'}),\n                    status_code=404,\n                    mimetype='application/json'\n                )\n        \n        else:\n            return func.HttpResponse(\n                json.dumps({'error': 'Method not allowed'}),\n                status_code=405,\n                mimetype='application/json'\n            )\n    \n    except Exception as e:\n        logging.error(f\"Error processing request: {str(e)}\")\n        return func.HttpResponse(\n            json.dumps({'error': 'Internal server error'}),\n            status_code=500,\n            mimetype='application/json'\n        )\n\n# function.json configuration\n\"\"\"\n{\n  \"scriptFile\": \"__init__.py\",\n  \"bindings\": [\n    {\n      \"authLevel\": \"function\",\n      \"type\": \"httpTrigger\",\n      \"direction\": \"in\",\n      \"name\": \"req\",\n      \"methods\": [\"get\", \"post\", \"put\", \"delete\"],\n      \"route\": \"tasks/{id?}\"\n    },\n    {\n      \"type\": \"http\",\n      \"direction\": \"out\",\n      \"name\": \"$return\"\n    }\n  ]\n}\n\"\"\"",
+    "hints": [
+      "Use route parameters for RESTful routing",
+      "Azure Table Storage uses PartitionKey and RowKey",
+      "Return proper HTTP status codes (200, 201, 404, etc.)",
+      "Use logging.info() for Application Insights",
+      "Handle JSON parsing errors gracefully"
+    ],
+    "testCases": [
+      {
+        "input": "POST /api/tasks with valid data",
+        "expectedOutput": "201 Created with task object",
+        "isHidden": false,
+        "description": "Create new task"
+      },
+      {
+        "input": "GET /api/tasks/{id}",
+        "expectedOutput": "200 OK with task details",
+        "isHidden": false,
+        "description": "Retrieve task by ID"
+      },
+      {
+        "input": "PUT /api/tasks/{id} with updates",
+        "expectedOutput": "200 OK with updated task",
+        "isHidden": false,
+        "description": "Update existing task"
+      },
+      {
+        "input": "DELETE /api/tasks/{id}",
+        "expectedOutput": "204 No Content",
+        "isHidden": true,
+        "description": "Delete task"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs405-t5-ex14",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-5",
+    "title": "Serverless Event Sourcing Pattern",
+    "difficulty": 5,
+    "description": "Implement event sourcing pattern using serverless architecture.\n\nRequirements:\n1. Store all state changes as events\n2. Event stream processing with Kinesis/EventBridge\n3. Rebuild state from event log\n4. Event replay and projection\n5. Eventual consistency handling",
+    "starterCode": "import json\nimport boto3\n\ndef command_handler(event, context):\n    # TODO: Accept command and generate event\n    pass\n\ndef event_processor(event, context):\n    # TODO: Process events and update projections\n    pass",
+    "solution": "import json\nimport os\nimport uuid\nfrom datetime import datetime\nfrom typing import Dict, Any, List\n\nimport boto3\nfrom boto3.dynamodb.conditions import Key\n\ndynamodb = boto3.resource('dynamodb')\nkinesis = boto3.client('kinesis')\n\nEVENTS_TABLE = os.environ.get('EVENTS_TABLE', 'account-events')\nPROJECTIONS_TABLE = os.environ.get('PROJECTIONS_TABLE', 'account-projections')\nEVENT_STREAM = os.environ.get('EVENT_STREAM', 'account-events-stream')\n\nevents_table = dynamodb.Table(EVENTS_TABLE)\nprojections_table = dynamodb.Table(PROJECTIONS_TABLE)\n\nclass Event:\n    \"\"\"Base event class\"\"\"\n    def __init__(self, aggregate_id: str, event_type: str, data: Dict[str, Any]):\n        self.event_id = str(uuid.uuid4())\n        self.aggregate_id = aggregate_id\n        self.event_type = event_type\n        self.data = data\n        self.timestamp = datetime.utcnow().isoformat()\n        self.version = 1\n    \n    def to_dict(self) -> Dict[str, Any]:\n        return {\n            'event_id': self.event_id,\n            'aggregate_id': self.aggregate_id,\n            'event_type': self.event_type,\n            'data': self.data,\n            'timestamp': self.timestamp,\n            'version': self.version\n        }\n\ndef store_event(event: Event) -> None:\n    \"\"\"Store event in event store (DynamoDB)\"\"\"\n    events_table.put_item(\n        Item={\n            'aggregate_id': event.aggregate_id,\n            'event_id': event.event_id,\n            'event_type': event.event_type,\n            'data': json.dumps(event.data),\n            'timestamp': event.timestamp,\n            'version': event.version\n        }\n    )\n\ndef publish_event(event: Event) -> None:\n    \"\"\"Publish event to Kinesis stream\"\"\"\n    kinesis.put_record(\n        StreamName=EVENT_STREAM,\n        Data=json.dumps(event.to_dict()),\n        PartitionKey=event.aggregate_id\n    )\n\ndef get_events_for_aggregate(aggregate_id: str) -> List[Dict[str, Any]]:\n    \"\"\"Retrieve all events for an aggregate\"\"\"\n    response = events_table.query(\n        KeyConditionExpression=Key('aggregate_id').eq(aggregate_id),\n        ScanIndexForward=True  # Sort by timestamp ascending\n    )\n    \n    events = []\n    for item in response.get('Items', []):\n        events.append({\n            'event_id': item['event_id'],\n            'event_type': item['event_type'],\n            'data': json.loads(item['data']),\n            'timestamp': item['timestamp'],\n            'version': item['version']\n        })\n    \n    return events\n\ndef rebuild_aggregate_state(aggregate_id: str) -> Dict[str, Any]:\n    \"\"\"Rebuild current state from event history\"\"\"\n    events = get_events_for_aggregate(aggregate_id)\n    \n    # Initial state\n    state = {\n        'account_id': aggregate_id,\n        'balance': 0,\n        'status': 'inactive',\n        'transactions': []\n    }\n    \n    # Apply each event to rebuild state\n    for event in events:\n        state = apply_event(state, event)\n    \n    return state\n\ndef apply_event(state: Dict[str, Any], event: Dict[str, Any]) -> Dict[str, Any]:\n    \"\"\"Apply an event to the current state\"\"\"\n    event_type = event['event_type']\n    data = event['data']\n    \n    if event_type == 'AccountCreated':\n        state['status'] = 'active'\n        state['owner'] = data['owner']\n        state['created_at'] = event['timestamp']\n    \n    elif event_type == 'MoneyDeposited':\n        state['balance'] += data['amount']\n        state['transactions'].append({\n            'type': 'deposit',\n            'amount': data['amount'],\n            'timestamp': event['timestamp']\n        })\n    \n    elif event_type == 'MoneyWithdrawn':\n        state['balance'] -= data['amount']\n        state['transactions'].append({\n            'type': 'withdrawal',\n            'amount': data['amount'],\n            'timestamp': event['timestamp']\n        })\n    \n    elif event_type == 'AccountClosed':\n        state['status'] = 'closed'\n        state['closed_at'] = event['timestamp']\n    \n    return state\n\ndef command_handler(event, context):\n    \"\"\"Handle commands and generate events\"\"\"\n    try:\n        body = json.loads(event.get('body', '{}'))\n        command_type = body.get('command')\n        aggregate_id = body.get('account_id', str(uuid.uuid4()))\n        \n        # Validate command based on current state\n        current_state = rebuild_aggregate_state(aggregate_id)\n        \n        # Process command and generate event\n        if command_type == 'CreateAccount':\n            if current_state['status'] != 'inactive':\n                return {\n                    'statusCode': 400,\n                    'body': json.dumps({'error': 'Account already exists'})\n                }\n            \n            event_obj = Event(\n                aggregate_id=aggregate_id,\n                event_type='AccountCreated',\n                data={'owner': body['owner']}\n            )\n        \n        elif command_type == 'DepositMoney':\n            if current_state['status'] != 'active':\n                return {\n                    'statusCode': 400,\n                    'body': json.dumps({'error': 'Account not active'})\n                }\n            \n            event_obj = Event(\n                aggregate_id=aggregate_id,\n                event_type='MoneyDeposited',\n                data={'amount': body['amount']}\n            )\n        \n        elif command_type == 'WithdrawMoney':\n            if current_state['status'] != 'active':\n                return {\n                    'statusCode': 400,\n                    'body': json.dumps({'error': 'Account not active'})\n                }\n            \n            if current_state['balance'] < body['amount']:\n                return {\n                    'statusCode': 400,\n                    'body': json.dumps({'error': 'Insufficient funds'})\n                }\n            \n            event_obj = Event(\n                aggregate_id=aggregate_id,\n                event_type='MoneyWithdrawn',\n                data={'amount': body['amount']}\n            )\n        \n        elif command_type == 'CloseAccount':\n            if current_state['status'] != 'active':\n                return {\n                    'statusCode': 400,\n                    'body': json.dumps({'error': 'Account not active'})\n                }\n            \n            event_obj = Event(\n                aggregate_id=aggregate_id,\n                event_type='AccountClosed',\n                data={}\n            )\n        \n        else:\n            return {\n                'statusCode': 400,\n                'body': json.dumps({'error': 'Unknown command'})\n            }\n        \n        # Store and publish event\n        store_event(event_obj)\n        publish_event(event_obj)\n        \n        return {\n            'statusCode': 202,\n            'body': json.dumps({\n                'event_id': event_obj.event_id,\n                'account_id': aggregate_id\n            })\n        }\n    \n    except Exception as e:\n        print(f\"Error processing command: {str(e)}\")\n        return {\n            'statusCode': 500,\n            'body': json.dumps({'error': 'Internal server error'})\n        }\n\ndef event_processor(event, context):\n    \"\"\"Process events from Kinesis and update projections\"\"\"\n    for record in event.get('Records', []):\n        try:\n            # Decode Kinesis record\n            data = json.loads(record['kinesis']['data'])\n            \n            aggregate_id = data['aggregate_id']\n            \n            # Rebuild current state\n            current_state = rebuild_aggregate_state(aggregate_id)\n            \n            # Update projection (read model)\n            projections_table.put_item(\n                Item={\n                    'account_id': aggregate_id,\n                    'balance': current_state['balance'],\n                    'status': current_state['status'],\n                    'transaction_count': len(current_state['transactions']),\n                    'last_updated': datetime.utcnow().isoformat()\n                }\n            )\n            \n            print(f\"Updated projection for account {aggregate_id}\")\n        \n        except Exception as e:\n            print(f\"Error processing event: {str(e)}\")\n            # In production, would send to DLQ\n    \n    return {'statusCode': 200}\n\ndef query_handler(event, context):\n    \"\"\"Query current state from projection\"\"\"\n    account_id = event['pathParameters']['account_id']\n    \n    try:\n        # Query read model (fast)\n        response = projections_table.get_item(\n            Key={'account_id': account_id}\n        )\n        \n        if 'Item' in response:\n            return {\n                'statusCode': 200,\n                'body': json.dumps(response['Item'])\n            }\n        else:\n            # Fallback: rebuild from events\n            state = rebuild_aggregate_state(account_id)\n            return {\n                'statusCode': 200,\n                'body': json.dumps(state)\n            }\n    \n    except Exception as e:\n        print(f\"Error querying state: {str(e)}\")\n        return {\n            'statusCode': 500,\n            'body': json.dumps({'error': 'Internal server error'})\n        }",
+    "hints": [
+      "Store events as immutable records",
+      "Use partition key for aggregate ID in DynamoDB",
+      "Publish events to stream for async processing",
+      "Rebuild state by replaying all events in order",
+      "Maintain separate read models (projections) for queries"
+    ],
+    "testCases": [
+      {
+        "input": "Command: CreateAccount",
+        "expectedOutput": "AccountCreated event stored and published",
+        "isHidden": false,
+        "description": "Process create account command"
+      },
+      {
+        "input": "Command: DepositMoney with amount 100",
+        "expectedOutput": "MoneyDeposited event, balance updated in projection",
+        "isHidden": false,
+        "description": "Process deposit command"
+      },
+      {
+        "input": "Rebuild state from event history",
+        "expectedOutput": "Current state accurately reconstructed from events",
+        "isHidden": true,
+        "description": "Event replay functionality"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs405-t5-ex15",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-5",
+    "title": "Serverless Step Functions Workflow",
+    "difficulty": 5,
+    "description": "Create a complex workflow using AWS Step Functions with Lambda integrations.\n\nRequirements:\n1. Multi-step state machine definition\n2. Parallel execution branches\n3. Error handling and retry logic\n4. Human approval step (wait state)\n5. Choice states for conditional logic",
+    "starterCode": "# Define Step Functions state machine\n# TODO: Create state machine definition (ASL)\n# TODO: Implement Lambda functions for each step",
+    "solution": "# State Machine Definition (Amazon States Language)\nstate_machine_definition = \"\"\"\n{\n  \"Comment\": \"Order Processing Workflow\",\n  \"StartAt\": \"ValidateOrder\",\n  \"States\": {\n    \"ValidateOrder\": {\n      \"Type\": \"Task\",\n      \"Resource\": \"arn:aws:lambda:REGION:ACCOUNT:function:ValidateOrder\",\n      \"Retry\": [\n        {\n          \"ErrorEquals\": [\"States.TaskFailed\"],\n          \"IntervalSeconds\": 2,\n          \"MaxAttempts\": 3,\n          \"BackoffRate\": 2.0\n        }\n      ],\n      \"Catch\": [\n        {\n          \"ErrorEquals\": [\"ValidationError\"],\n          \"Next\": \"OrderRejected\",\n          \"ResultPath\": \"$.error\"\n        }\n      ],\n      \"Next\": \"CheckInventory\"\n    },\n    \n    \"CheckInventory\": {\n      \"Type\": \"Task\",\n      \"Resource\": \"arn:aws:lambda:REGION:ACCOUNT:function:CheckInventory\",\n      \"ResultPath\": \"$.inventory\",\n      \"Next\": \"IsInStock\"\n    },\n    \n    \"IsInStock\": {\n      \"Type\": \"Choice\",\n      \"Choices\": [\n        {\n          \"Variable\": \"$.inventory.in_stock\",\n          \"BooleanEquals\": true,\n          \"Next\": \"ProcessPaymentAndShipping\"\n        }\n      ],\n      \"Default\": \"OutOfStock\"\n    },\n    \n    \"ProcessPaymentAndShipping\": {\n      \"Type\": \"Parallel\",\n      \"Branches\": [\n        {\n          \"StartAt\": \"ProcessPayment\",\n          \"States\": {\n            \"ProcessPayment\": {\n              \"Type\": \"Task\",\n              \"Resource\": \"arn:aws:lambda:REGION:ACCOUNT:function:ProcessPayment\",\n              \"Retry\": [\n                {\n                  \"ErrorEquals\": [\"PaymentGatewayError\"],\n                  \"IntervalSeconds\": 5,\n                  \"MaxAttempts\": 2,\n                  \"BackoffRate\": 2.0\n                }\n              ],\n              \"End\": true\n            }\n          }\n        },\n        {\n          \"StartAt\": \"ReserveShipping\",\n          \"States\": {\n            \"ReserveShipping\": {\n              \"Type\": \"Task\",\n              \"Resource\": \"arn:aws:lambda:REGION:ACCOUNT:function:ReserveShipping\",\n              \"End\": true\n            }\n          }\n        }\n      ],\n      \"ResultPath\": \"$.processing\",\n      \"Next\": \"CheckOrderAmount\"\n    },\n    \n    \"CheckOrderAmount\": {\n      \"Type\": \"Choice\",\n      \"Choices\": [\n        {\n          \"Variable\": \"$.order.total\",\n          \"NumericGreaterThan\": 1000,\n          \"Next\": \"RequireApproval\"\n        }\n      ],\n      \"Default\": \"FulfillOrder\"\n    },\n    \n    \"RequireApproval\": {\n      \"Type\": \"Task\",\n      \"Resource\": \"arn:aws:states:::lambda:invoke.waitForTaskToken\",\n      \"Parameters\": {\n        \"FunctionName\": \"RequestApproval\",\n        \"Payload\": {\n          \"order.$\": \"$.order\",\n          \"taskToken.$\": \"$$.Task.Token\"\n        }\n      },\n      \"TimeoutSeconds\": 3600,\n      \"ResultPath\": \"$.approval\",\n      \"Next\": \"IsApproved\"\n    },\n    \n    \"IsApproved\": {\n      \"Type\": \"Choice\",\n      \"Choices\": [\n        {\n          \"Variable\": \"$.approval.approved\",\n          \"BooleanEquals\": true,\n          \"Next\": \"FulfillOrder\"\n        }\n      ],\n      \"Default\": \"OrderRejected\"\n    },\n    \n    \"FulfillOrder\": {\n      \"Type\": \"Task\",\n      \"Resource\": \"arn:aws:lambda:REGION:ACCOUNT:function:FulfillOrder\",\n      \"ResultPath\": \"$.fulfillment\",\n      \"Next\": \"SendConfirmation\"\n    },\n    \n    \"SendConfirmation\": {\n      \"Type\": \"Task\",\n      \"Resource\": \"arn:aws:lambda:REGION:ACCOUNT:function:SendConfirmation\",\n      \"ResultPath\": \"$.notification\",\n      \"Next\": \"OrderCompleted\"\n    },\n    \n    \"OrderCompleted\": {\n      \"Type\": \"Succeed\"\n    },\n    \n    \"OutOfStock\": {\n      \"Type\": \"Task\",\n      \"Resource\": \"arn:aws:lambda:REGION:ACCOUNT:function:NotifyOutOfStock\",\n      \"ResultPath\": \"$.notification\",\n      \"Next\": \"OrderPending\"\n    },\n    \n    \"OrderPending\": {\n      \"Type\": \"Wait\",\n      \"Seconds\": 86400,\n      \"Next\": \"CheckInventory\"\n    },\n    \n    \"OrderRejected\": {\n      \"Type\": \"Fail\",\n      \"Cause\": \"Order validation failed or was rejected\"\n    }\n  }\n}\n\"\"\"\n\n# Lambda Functions Implementation\n\nimport json\nimport boto3\nfrom datetime import datetime\n\nclass ValidationError(Exception):\n    pass\n\ndef validate_order(event, context):\n    \"\"\"Validate order data\"\"\"\n    order = event.get('order', {})\n    \n    required_fields = ['order_id', 'customer_id', 'items', 'total']\n    for field in required_fields:\n        if field not in order:\n            raise ValidationError(f\"Missing field: {field}\")\n    \n    if order['total'] <= 0:\n        raise ValidationError(\"Invalid order total\")\n    \n    if not order['items']:\n        raise ValidationError(\"No items in order\")\n    \n    return {\n        **event,\n        'validation': {\n            'status': 'valid',\n            'timestamp': datetime.utcnow().isoformat()\n        }\n    }\n\ndef check_inventory(event, context):\n    \"\"\"Check if items are in stock\"\"\"\n    order = event['order']\n    \n    # Simulate inventory check\n    # In production, would query inventory database\n    in_stock = True\n    available_items = []\n    \n    for item in order['items']:\n        # Simulate check\n        item_in_stock = item.get('quantity', 0) <= 100  # Arbitrary limit\n        available_items.append({\n            'product_id': item['product_id'],\n            'requested': item['quantity'],\n            'available': 100 if item_in_stock else 0,\n            'in_stock': item_in_stock\n        })\n        \n        if not item_in_stock:\n            in_stock = False\n    \n    return {\n        'in_stock': in_stock,\n        'items': available_items,\n        'checked_at': datetime.utcnow().isoformat()\n    }\n\ndef process_payment(event, context):\n    \"\"\"Process payment for order\"\"\"\n    order = event['order']\n    \n    # Simulate payment processing\n    # In production, would integrate with payment gateway\n    \n    payment_result = {\n        'transaction_id': f\"TXN-{order['order_id']}\",\n        'amount': order['total'],\n        'status': 'completed',\n        'timestamp': datetime.utcnow().isoformat()\n    }\n    \n    return payment_result\n\ndef reserve_shipping(event, context):\n    \"\"\"Reserve shipping for order\"\"\"\n    order = event['order']\n    \n    # Simulate shipping reservation\n    shipping_result = {\n        'tracking_number': f\"SHIP-{order['order_id']}\",\n        'carrier': 'FedEx',\n        'estimated_delivery': '2024-01-15',\n        'status': 'reserved'\n    }\n    \n    return shipping_result\n\ndef request_approval(event, context):\n    \"\"\"Request human approval for high-value orders\"\"\"\n    order = event['order']\n    task_token = event['taskToken']\n    \n    # Send approval request (SNS, email, etc.)\n    sns = boto3.client('sns')\n    \n    message = f\"\"\"\n    Order Approval Required\n    \n    Order ID: {order['order_id']}\n    Customer: {order['customer_id']}\n    Total: ${order['total']}\n    \n    Task Token: {task_token}\n    \n    To approve: aws stepfunctions send-task-success --task-token {task_token} --task-output '{\"approved\":true}'\n    To reject: aws stepfunctions send-task-failure --task-token {task_token}\n    \"\"\"\n    \n    sns.publish(\n        TopicArn=os.environ.get('APPROVAL_TOPIC_ARN'),\n        Subject='Order Approval Required',\n        Message=message\n    )\n    \n    return {'status': 'approval_requested'}\n\ndef fulfill_order(event, context):\n    \"\"\"Fulfill the order\"\"\"\n    order = event['order']\n    \n    fulfillment_result = {\n        'fulfillment_id': f\"FUL-{order['order_id']}\",\n        'status': 'fulfilled',\n        'timestamp': datetime.utcnow().isoformat()\n    }\n    \n    return fulfillment_result\n\ndef send_confirmation(event, context):\n    \"\"\"Send order confirmation to customer\"\"\"\n    order = event['order']\n    \n    # Send confirmation email/SMS\n    notification_result = {\n        'notification_id': f\"NOT-{order['order_id']}\",\n        'sent_at': datetime.utcnow().isoformat(),\n        'status': 'sent'\n    }\n    \n    return notification_result\n\ndef notify_out_of_stock(event, context):\n    \"\"\"Notify customer about out of stock items\"\"\"\n    order = event['order']\n    \n    notification_result = {\n        'notification_id': f\"OOS-{order['order_id']}\",\n        'message': 'Some items are out of stock',\n        'status': 'pending',\n        'sent_at': datetime.utcnow().isoformat()\n    }\n    \n    return notification_result\n\n# Start execution\nimport boto3\nimport json\n\ndef start_order_workflow(order_data):\n    \"\"\"Start Step Functions execution\"\"\"\n    stepfunctions = boto3.client('stepfunctions')\n    \n    response = stepfunctions.start_execution(\n        stateMachineArn='arn:aws:states:REGION:ACCOUNT:stateMachine:OrderProcessing',\n        name=f\"order-{order_data['order_id']}\",\n        input=json.dumps({'order': order_data})\n    )\n    \n    return response['executionArn']",
+    "hints": [
+      "Use Amazon States Language (ASL) for state machine definition",
+      "Implement retry logic with exponential backoff",
+      "Use Choice states for conditional branching",
+      "Parallel states execute branches concurrently",
+      "Wait for task token enables human approval workflows"
+    ],
+    "testCases": [
+      {
+        "input": "Order with total < $1000, items in stock",
+        "expectedOutput": "Order processed without approval, completed successfully",
+        "isHidden": false,
+        "description": "Standard order flow"
+      },
+      {
+        "input": "Order with total > $1000",
+        "expectedOutput": "Approval step triggered, workflow waits for approval",
+        "isHidden": false,
+        "description": "High-value order requiring approval"
+      },
+      {
+        "input": "Order with out-of-stock items",
+        "expectedOutput": "Wait state triggered, retry after delay",
+        "isHidden": true,
+        "description": "Handle inventory constraints"
+      },
+      {
+        "input": "Payment processing failure",
+        "expectedOutput": "Retry with exponential backoff, then fail",
+        "isHidden": true,
+        "description": "Error handling and retries"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs405-t5-ex16",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-5",
+    "title": "Serverless Observability and Monitoring",
+    "difficulty": 5,
+    "description": "Implement comprehensive observability for serverless applications.\n\nRequirements:\n1. Structured logging with context\n2. Custom CloudWatch metrics\n3. Distributed tracing with X-Ray\n4. Performance monitoring\n5. Error tracking and alerting",
+    "starterCode": "import json\nfrom aws_xray_sdk.core import xray_recorder\n\ndef lambda_handler(event, context):\n    # TODO: Add logging, metrics, tracing\n    pass",
+    "solution": "import json\nimport os\nimport time\nimport logging\nfrom datetime import datetime\nfrom functools import wraps\nfrom typing import Any, Callable\n\nimport boto3\nfrom aws_xray_sdk.core import xray_recorder\nfrom aws_xray_sdk.core import patch_all\n\n# Patch AWS SDK for X-Ray tracing\npatch_all()\n\ncloudwatch = boto3.client('cloudwatch')\nlogs_client = boto3.client('logs')\n\n# Configure structured logging\nlogger = logging.getLogger()\nlogger.setLevel(logging.INFO)\n\nclass StructuredLogger:\n    \"\"\"Structured logging with context\"\"\"\n    \n    def __init__(self, context=None):\n        self.context = context or {}\n        self.base_fields = {\n            'service': os.environ.get('SERVICE_NAME', 'unknown'),\n            'environment': os.environ.get('STAGE', 'dev'),\n            'version': os.environ.get('VERSION', '1.0.0')\n        }\n    \n    def _log(self, level: str, message: str, **kwargs):\n        \"\"\"Log structured message\"\"\"\n        log_entry = {\n            'timestamp': datetime.utcnow().isoformat(),\n            'level': level,\n            'message': message,\n            **self.base_fields,\n            **self.context,\n            **kwargs\n        }\n        \n        # Use standard logger\n        getattr(logger, level.lower())(json.dumps(log_entry))\n    \n    def info(self, message: str, **kwargs):\n        self._log('INFO', message, **kwargs)\n    \n    def error(self, message: str, **kwargs):\n        self._log('ERROR', message, **kwargs)\n    \n    def warning(self, message: str, **kwargs):\n        self._log('WARNING', message, **kwargs)\n    \n    def debug(self, message: str, **kwargs):\n        self._log('DEBUG', message, **kwargs)\n\nclass MetricsCollector:\n    \"\"\"Collect and publish custom CloudWatch metrics\"\"\"\n    \n    def __init__(self, namespace: str):\n        self.namespace = namespace\n        self.metrics = []\n    \n    def record_metric(self, name: str, value: float, unit: str = 'None', dimensions: dict = None):\n        \"\"\"Record a metric\"\"\"\n        metric = {\n            'MetricName': name,\n            'Value': value,\n            'Unit': unit,\n            'Timestamp': datetime.utcnow()\n        }\n        \n        if dimensions:\n            metric['Dimensions'] = [\n                {'Name': k, 'Value': v}\n                for k, v in dimensions.items()\n            ]\n        \n        self.metrics.append(metric)\n    \n    def publish(self):\n        \"\"\"Publish all collected metrics\"\"\"\n        if not self.metrics:\n            return\n        \n        try:\n            cloudwatch.put_metric_data(\n                Namespace=self.namespace,\n                MetricData=self.metrics\n            )\n            logger.info(f\"Published {len(self.metrics)} metrics\")\n            self.metrics = []\n        except Exception as e:\n            logger.error(f\"Failed to publish metrics: {str(e)}\")\n\ndef trace_function(func: Callable) -> Callable:\n    \"\"\"Decorator to add X-Ray tracing to functions\"\"\"\n    @wraps(func)\n    def wrapper(*args, **kwargs):\n        subsegment_name = f\"{func.__module__}.{func.__name__}\"\n        \n        with xray_recorder.capture(subsegment_name) as subsegment:\n            # Add metadata\n            subsegment.put_metadata('function', func.__name__)\n            \n            # Add annotations (searchable)\n            if kwargs:\n                for key, value in kwargs.items():\n                    if isinstance(value, (str, int, float, bool)):\n                        subsegment.put_annotation(key, value)\n            \n            try:\n                result = func(*args, **kwargs)\n                subsegment.put_metadata('result', 'success')\n                return result\n            except Exception as e:\n                subsegment.put_metadata('error', str(e))\n                raise\n    \n    return wrapper\n\ndef monitor_performance(func: Callable) -> Callable:\n    \"\"\"Decorator to monitor function performance\"\"\"\n    @wraps(func)\n    def wrapper(*args, **kwargs):\n        start_time = time.time()\n        \n        try:\n            result = func(*args, **kwargs)\n            success = True\n            return result\n        except Exception as e:\n            success = False\n            raise\n        finally:\n            duration = (time.time() - start_time) * 1000  # Convert to ms\n            \n            # Record performance metrics\n            metrics = MetricsCollector('ServerlessApp')\n            \n            metrics.record_metric(\n                name='FunctionDuration',\n                value=duration,\n                unit='Milliseconds',\n                dimensions={\n                    'FunctionName': func.__name__,\n                    'Status': 'Success' if success else 'Error'\n                }\n            )\n            \n            metrics.record_metric(\n                name='FunctionInvocations',\n                value=1,\n                unit='Count',\n                dimensions={'FunctionName': func.__name__}\n            )\n            \n            if success:\n                metrics.record_metric(\n                    name='FunctionSuccess',\n                    value=1,\n                    unit='Count',\n                    dimensions={'FunctionName': func.__name__}\n                )\n            else:\n                metrics.record_metric(\n                    name='FunctionErrors',\n                    value=1,\n                    unit='Count',\n                    dimensions={'FunctionName': func.__name__}\n                )\n            \n            metrics.publish()\n    \n    return wrapper\n\n@xray_recorder.capture('process_order')\n@trace_function\n@monitor_performance\ndef process_order(order_data: dict, log: StructuredLogger) -> dict:\n    \"\"\"Process order with full observability\"\"\"\n    \n    log.info('Processing order', order_id=order_data['order_id'])\n    \n    # Add X-Ray annotations\n    xray_recorder.current_subsegment().put_annotation('order_id', order_data['order_id'])\n    xray_recorder.current_subsegment().put_annotation('customer_id', order_data['customer_id'])\n    \n    # Simulate processing steps\n    with xray_recorder.capture('validate_order'):\n        time.sleep(0.1)  # Simulate work\n        log.debug('Order validated', order_id=order_data['order_id'])\n    \n    with xray_recorder.capture('check_inventory'):\n        time.sleep(0.05)  # Simulate work\n        log.debug('Inventory checked', order_id=order_data['order_id'])\n    \n    with xray_recorder.capture('process_payment'):\n        time.sleep(0.15)  # Simulate work\n        log.info('Payment processed', \n                order_id=order_data['order_id'],\n                amount=order_data['total'])\n    \n    return {\n        'order_id': order_data['order_id'],\n        'status': 'completed',\n        'timestamp': datetime.utcnow().isoformat()\n    }\n\ndef lambda_handler(event, context):\n    \"\"\"Lambda handler with comprehensive observability\"\"\"\n    \n    # Initialize structured logger with context\n    log = StructuredLogger({\n        'request_id': context.request_id,\n        'function_name': context.function_name,\n        'function_version': context.function_version\n    })\n    \n    # Start X-Ray segment\n    segment = xray_recorder.begin_segment('lambda_handler')\n    \n    try:\n        # Parse request\n        body = json.loads(event.get('body', '{}'))\n        \n        log.info('Request received', \n                 http_method=event.get('httpMethod'),\n                 path=event.get('path'))\n        \n        # Add request metadata to X-Ray\n        segment.put_metadata('request', {\n            'method': event.get('httpMethod'),\n            'path': event.get('path'),\n            'body': body\n        })\n        \n        # Process order\n        result = process_order(body, log)\n        \n        # Record custom metrics\n        metrics = MetricsCollector('OrderProcessing')\n        metrics.record_metric(\n            name='OrderValue',\n            value=body.get('total', 0),\n            unit='None',\n            dimensions={'Status': 'Completed'}\n        )\n        metrics.publish()\n        \n        log.info('Request completed successfully', \n                 order_id=result['order_id'],\n                 duration_ms=context.get_remaining_time_in_millis())\n        \n        return {\n            'statusCode': 200,\n            'headers': {\n                'Content-Type': 'application/json',\n                'X-Request-Id': context.request_id\n            },\n            'body': json.dumps(result)\n        }\n    \n    except json.JSONDecodeError as e:\n        log.error('Invalid JSON in request', error=str(e))\n        segment.put_metadata('error', 'Invalid JSON')\n        \n        return {\n            'statusCode': 400,\n            'body': json.dumps({'error': 'Invalid JSON'})\n        }\n    \n    except Exception as e:\n        log.error('Error processing request', \n                 error=str(e),\n                 error_type=type(e).__name__)\n        \n        segment.put_metadata('error', {\n            'message': str(e),\n            'type': type(e).__name__\n        })\n        \n        # Record error metric\n        metrics = MetricsCollector('OrderProcessing')\n        metrics.record_metric(\n            name='ProcessingErrors',\n            value=1,\n            unit='Count',\n            dimensions={'ErrorType': type(e).__name__}\n        )\n        metrics.publish()\n        \n        return {\n            'statusCode': 500,\n            'body': json.dumps({'error': 'Internal server error'})\n        }\n    \n    finally:\n        xray_recorder.end_segment()\n\n# CloudWatch Alarm configuration (infrastructure as code)\nalarm_config = \"\"\"\nResources:\n  HighErrorRateAlarm:\n    Type: AWS::CloudWatch::Alarm\n    Properties:\n      AlarmName: !Sub '${AWS::StackName}-HighErrorRate'\n      AlarmDescription: Alert when error rate exceeds threshold\n      MetricName: FunctionErrors\n      Namespace: ServerlessApp\n      Statistic: Sum\n      Period: 300\n      EvaluationPeriods: 1\n      Threshold: 10\n      ComparisonOperator: GreaterThanThreshold\n      TreatMissingData: notBreaching\n  \n  HighDurationAlarm:\n    Type: AWS::CloudWatch::Alarm\n    Properties:\n      AlarmName: !Sub '${AWS::StackName}-HighDuration'\n      AlarmDescription: Alert when function duration is high\n      MetricName: FunctionDuration\n      Namespace: ServerlessApp\n      Statistic: Average\n      Period: 300\n      EvaluationPeriods: 2\n      Threshold: 3000\n      ComparisonOperator: GreaterThanThreshold\n      TreatMissingData: notBreaching\n\"\"\"",
+    "hints": [
+      "Use structured JSON logging for better parsing",
+      "Add context fields to all log messages",
+      "Publish custom metrics asynchronously to avoid delays",
+      "Use X-Ray annotations for searchable fields",
+      "Create CloudWatch alarms for critical metrics"
+    ],
+    "testCases": [
+      {
+        "input": "Valid order request",
+        "expectedOutput": "Structured logs, metrics published, X-Ray trace created",
+        "isHidden": false,
+        "description": "Complete observability instrumentation"
+      },
+      {
+        "input": "Request causing error",
+        "expectedOutput": "Error logged with context, error metrics recorded, X-Ray shows error",
+        "isHidden": false,
+        "description": "Error tracking and reporting"
+      },
+      {
+        "input": "High-latency operation",
+        "expectedOutput": "Performance metrics show high duration, X-Ray identifies bottleneck",
+        "isHidden": true,
+        "description": "Performance monitoring"
+      }
+    ],
+    "language": "python"
   }
 ]
