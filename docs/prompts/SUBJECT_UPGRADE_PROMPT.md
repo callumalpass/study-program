@@ -18,12 +18,12 @@ You are upgrading the subject **[SUBJECT_ID]** to meet the production-ready qual
 
 Audit the current state of [SUBJECT_ID]:
 
-1. **Topics**: Count topics in `src/data/subjects/[subject]/topics.ts`
-2. **Subtopics**: Check each topic for subtopics array; count markdown files in `src/content/subjects/[subject]/topic-N/`
-3. **Exercises**: Count exercises in `src/data/subjects/[subject]/exercises/`
-4. **Quizzes**: Count quizzes and questions in `src/data/subjects/[subject]/quizzes.ts`
-5. **Exams**: Check if `src/data/subjects/[subject]/exams.ts` exists with Midterm and Final
-6. **Projects**: Review `src/data/subjects/[subject]/projects.ts` (CS subjects only)
+1. **Topics**: Count topics in `src/subjects/[subject]/topics.ts`
+2. **Subtopics**: Check each topic for subtopics array; count markdown files in `src/subjects/[subject]/content/topic-N/`
+3. **Exercises**: Count exercises in `src/subjects/[subject]/exercises.json`
+4. **Quizzes**: Count quizzes and questions in `src/subjects/[subject]/quizzes.json`
+5. **Exams**: Check if `src/subjects/[subject]/exams.json` exists with Midterm and Final
+6. **Projects**: Review `src/subjects/[subject]/projects.json` (CS subjects only)
 
 ---
 
@@ -87,25 +87,24 @@ Update the review to reflect the current state, noting:
 
 ## File Structure Reference
 
+All subject content is colocated in a single directory:
+
 ```
-src/data/subjects/[subject]/
+src/subjects/[subject]/
+├── content/           # Markdown lesson content
+│   ├── topic-1/       # Subtopics for topic 1
+│   │   ├── 01-introduction.md
+│   │   ├── 02-concept-name.md
+│   │   └── ...07-*.md
+│   ├── topic-2/
+│   │   └── ...
+│   └── topic-N.md     # Legacy fallback content (optional)
 ├── index.ts           # Re-exports all subject content
 ├── topics.ts          # Topic definitions with subtopics
-├── quizzes.ts         # All quizzes for the subject
-├── exams.ts           # Midterm and Final exams
-├── projects.ts        # Projects (CS subjects only)
-└── exercises/
-    ├── index.ts       # Aggregates and re-exports all exercises
-    └── topic-N-*.ts   # Exercises for each topic
-
-src/content/subjects/[subject]/
-├── topic-1/           # Subtopics for topic 1
-│   ├── 01-introduction.md
-│   ├── 02-concept-name.md
-│   └── ...07-*.md
-├── topic-2/
-│   └── ...
-└── topic-N.md         # Legacy fallback content (optional)
+├── quizzes.json       # All quizzes for the subject
+├── exams.json         # Midterm and Final exams
+├── exercises.json     # All exercises for the subject
+└── projects.json      # Projects (CS subjects only)
 ```
 
 ---
@@ -314,29 +313,33 @@ interface StarterResource {
 ### Subject index.ts
 
 ```typescript
-// src/data/subjects/[subject]/index.ts
-import { Topic, Quiz, CodingExercise, Project, Exam } from '../../../core/types';
-import { [subject]Topics } from './topics';
-import { [subject]Quizzes } from './quizzes';
-import { [subject]Exercises } from './exercises';
-import { [subject]Projects } from './projects';
-import { [subject]Exams } from './exams';
+// src/subjects/[subject]/index.ts
+import type { Quiz, Exam, Exercise } from '../../core/types';
 
-export { [subject]Topics, [subject]Quizzes, [subject]Exercises, [subject]Projects, [subject]Exams };
+import quizzesData from './quizzes.json';
+import examsData from './exams.json';
+import exercisesData from './exercises.json';
+import projectsData from './projects.json';
+
+export const [subject]Quizzes = quizzesData as Quiz[];
+export const [subject]Exams = examsData as Exam[];
+export const [subject]Exercises = exercisesData as Exercise[];
+export const [subject]Projects = projectsData as Project[];
+export { [subject]Topics } from './topics';
 ```
 
 ### Topics with Subtopics
 
 ```typescript
-// src/data/subjects/[subject]/topics.ts
-import { Topic, Subtopic } from '../../../core/types';
+// src/subjects/[subject]/topics.ts
+import { Topic, Subtopic } from '../../core/types';
 
 // Import legacy content (fallback)
-import topic1Content from '../../../content/subjects/[subject]/topic-1.md?raw';
+import topic1Content from './content/topic-1.md?raw';
 
 // Import subtopic content
-import t1Introduction from '../../../content/subjects/[subject]/topic-1/01-introduction.md?raw';
-import t1Concept from '../../../content/subjects/[subject]/topic-1/02-concept-name.md?raw';
+import t1Introduction from './content/topic-1/01-introduction.md?raw';
+import t1Concept from './content/topic-1/02-concept-name.md?raw';
 // ... more imports
 
 const topic1Subtopics: Subtopic[] = [
@@ -358,160 +361,97 @@ export const [subject]Topics: Topic[] = [
 ];
 ```
 
-### Exercises
+### JSON Data Files
 
-```typescript
-// src/data/subjects/[subject]/exercises/index.ts
-import { CodingExercise } from '../../../../core/types';
-import { topic1Exercises } from './topic-1-name';
-import { topic2Exercises } from './topic-2-name';
-// ... all 7 topics
+Assessment data is stored in JSON files for easier editing:
 
-export const [subject]Exercises: CodingExercise[] = [
-  ...topic1Exercises,
-  ...topic2Exercises,
-  // ... all topics
-];
-
-export { topic1Exercises, topic2Exercises, /* ... */ };
+```json
+// src/subjects/[subject]/exercises.json
+[
+  {
+    "id": "[subject]-t1-ex01",
+    "subjectId": "[subject]",
+    "topicId": "[subject]-topic-1",
+    "title": "Exercise Title",
+    "difficulty": 1,
+    "description": "Problem description...",
+    "starterCode": "# Your code here\n",
+    "solution": "# Complete solution\n",
+    "testCases": [
+      { "input": "...", "isHidden": false, "description": "Basic case" },
+      { "input": "...", "isHidden": true, "description": "Edge case" }
+    ],
+    "hints": [
+      "First hint (general direction)",
+      "Second hint (specific approach)",
+      "Third hint (near-solution)"
+    ],
+    "language": "python"
+  }
+]
 ```
 
-```typescript
-// src/data/subjects/[subject]/exercises/topic-1-name.ts
-import { CodingExercise } from '../../../../core/types';
-
-export const topic1Exercises: CodingExercise[] = [
+```json
+// src/subjects/[subject]/quizzes.json
+[
   {
-    id: '[subject]-t1-ex01',
-    subjectId: '[subject]',
-    topicId: '[subject]-topic-1',
-    title: 'Exercise Title',
-    difficulty: 1,
-    description: 'Problem description...',
-    starterCode: '# Your code here\n',
-    solution: '# Complete solution\n',
-    testCases: [
-      { input: '...', isHidden: false, description: 'Basic case' },
-      { input: '...', isHidden: true, description: 'Edge case' },
-    ],
-    hints: [
-      'First hint (general direction)',
-      'Second hint (specific approach)',
-      'Third hint (near-solution)',
-    ],
-    language: 'python',
-  },
-  // ... 16 exercises total
-];
-```
-
-### Quizzes
-
-```typescript
-// src/data/subjects/[subject]/quizzes.ts
-import { Quiz } from '../../../core/types';
-
-export const [subject]Quizzes: Quiz[] = [
-  // Topic 1 - Quiz A (Fundamentals)
-  {
-    id: '[subject]-quiz-1a',
-    subjectId: '[subject]',
-    topicId: '[subject]-topic-1',
-    title: 'Topic 1 - Fundamentals',
-    questions: [
+    "id": "[subject]-quiz-1a",
+    "subjectId": "[subject]",
+    "topicId": "[subject]-topic-1",
+    "title": "Topic 1 - Fundamentals",
+    "questions": [
       {
-        id: 'q1',
-        type: 'multiple_choice',
-        prompt: 'Question text?',
-        options: ['A', 'B', 'C', 'D'],
-        correctAnswer: 0,  // 0-based index
-        explanation: 'Explanation of why A is correct.',
-      },
-      // ... 5 questions total
-    ],
-  },
-  // Topic 1 - Quiz B (Application)
-  // Topic 1 - Quiz C (Mastery)
-  // ... 3 quizzes × 7 topics = 21 quizzes
-];
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "Question text?",
+        "options": ["A", "B", "C", "D"],
+        "correctAnswer": 0,
+        "explanation": "Explanation of why A is correct."
+      }
+    ]
+  }
+]
 ```
 
-### Exams
-
-```typescript
-// src/data/subjects/[subject]/exams.ts
-import { Exam } from '../../../core/types';
-
-export const [subject]Exams: Exam[] = [
+```json
+// src/subjects/[subject]/exams.json
+[
   {
-    id: '[subject]-exam-midterm',
-    subjectId: '[subject]',
-    title: '[SUBJECT] Midterm Examination',
-    durationMinutes: 75,
-    instructions: [
-      'This exam covers Topics 1-4.',
-      'Answer all questions. Passing score is 70%.',
-      'For code output questions, include exact output.',
+    "id": "[subject]-exam-midterm",
+    "subjectId": "[subject]",
+    "title": "[SUBJECT] Midterm Examination",
+    "durationMinutes": 75,
+    "instructions": [
+      "This exam covers Topics 1-4.",
+      "Answer all questions. Passing score is 70%."
     ],
-    questions: [
-      // 25-30 questions covering topics 1-4
-    ],
-  },
-  {
-    id: '[subject]-exam-final',
-    subjectId: '[subject]',
-    title: '[SUBJECT] Final Examination',
-    durationMinutes: 120,
-    instructions: [
-      'This exam is comprehensive, covering all topics.',
-      'Answer all questions. Passing score is 70%.',
-    ],
-    questions: [
-      // 40-45 questions covering all topics
-    ],
-  },
-];
+    "questions": []
+  }
+]
 ```
 
-### Projects (CS subjects only)
-
-```typescript
-// src/data/subjects/[subject]/projects.ts
-import { Project } from '../../../core/types';
-
-export const [subject]Projects: Project[] = [
+```json
+// src/subjects/[subject]/projects.json (CS subjects only)
+[
   {
-    id: '[subject]-project-1',
-    subjectId: '[subject]',
-    title: 'Project Title',
-    description: 'Full project description (500+ words)...',
-    requirements: [
-      'Requirement 1',
-      'Requirement 2',
-      // ... 8-12 requirements
-    ],
-    rubric: [
+    "id": "[subject]-project-1",
+    "subjectId": "[subject]",
+    "title": "Project Title",
+    "description": "Full project description (500+ words)...",
+    "requirements": ["Requirement 1", "Requirement 2"],
+    "rubric": [
       {
-        name: 'Functionality',
-        weight: 40,
-        levels: [
-          { score: 4, label: 'Excellent', description: 'All features work correctly' },
-          { score: 3, label: 'Good', description: 'Most features work' },
-          { score: 2, label: 'Satisfactory', description: 'Core features work' },
-          { score: 1, label: 'Needs Improvement', description: 'Major issues' },
-        ],
-      },
-      // ... 4-5 criteria (weights must sum to 100%)
+        "name": "Functionality",
+        "weight": 40,
+        "levels": [
+          { "score": 4, "label": "Excellent", "description": "All features work correctly" },
+          { "score": 3, "label": "Good", "description": "Most features work" }
+        ]
+      }
     ],
-    estimatedHours: 10,
-    scaffolding: {
-      overview: 'Project overview...',
-      gettingStarted: ['Step 1', 'Step 2'],
-      milestones: ['Milestone 1', 'Milestone 2'],
-      tips: ['Tip 1', 'Tip 2'],
-    },
-  },
-];
+    "estimatedHours": 10
+  }
+]
 ```
 
 ---
@@ -536,7 +476,7 @@ export const [subject]Projects: Project[] = [
 ## Subtopic File Naming
 
 ```
-src/content/subjects/[subject]/topic-N/
+src/subjects/[subject]/content/topic-N/
 ├── 01-introduction.md
 ├── 02-{concept-slug}.md
 ├── 03-{concept-slug}.md
@@ -557,14 +497,14 @@ src/content/subjects/[subject]/topic-N/
 Before marking upgrade complete:
 
 - [ ] 7 topics with 7 subtopics each (49 total, 800+ words each)
-- [ ] 112 exercises (16 per topic, difficulty 1-5 distribution)
-- [ ] 21 quizzes (3 per topic, 5 questions each)
-- [ ] 2 exams (Midterm: 25-30q, Final: 40-45q)
-- [ ] 2-3 projects with rubrics (CS only)
+- [ ] 112 exercises in exercises.json (16 per topic, difficulty 1-5 distribution)
+- [ ] 21 quizzes in quizzes.json (3 per topic, 5 questions each)
+- [ ] 2 exams in exams.json (Midterm: 25-30q, Final: 40-45q)
+- [ ] 2-3 projects in projects.json with rubrics (CS only)
 - [ ] All IDs follow naming conventions
-- [ ] All imports/exports correctly wired
-- [ ] Subject index.ts exports all content
-- [ ] TypeScript compiles without errors
+- [ ] topics.ts imports from ./content/ correctly
+- [ ] index.ts imports JSON files and exports with types
+- [ ] Build passes without errors (`npm run build`)
 - [ ] Subject review updated (Phase 4)
 
 ---

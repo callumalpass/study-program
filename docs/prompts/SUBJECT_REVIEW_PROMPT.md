@@ -8,16 +8,17 @@ Perform a thorough quality review of this subject's content and **write your rep
 **IMPORTANT: Write your final report to:** `/home/calluma/projects/comp_sci_degree/reviews/{SUBJECT_ID}_review.md`
 
 ## Subject Location
-- Subject data: `/home/calluma/projects/comp_sci_degree/src/data/subjects/{SUBJECT_ID}/`
-- Content markdown: `/home/calluma/projects/comp_sci_degree/src/content/subjects/{SUBJECT_ID}/`
+
+All subject content is colocated in a single directory:
+- Subject directory: `/home/calluma/projects/comp_sci_degree/src/subjects/{SUBJECT_ID}/`
 
 ## Files to Review
 1. **topics.ts** - Topic definitions and subtopic structure
-2. **quizzes.ts** - Quiz questions for each topic
-3. **exams.ts** - Midterm and final exam questions
-4. **exercises/** - Coding or written exercises for each topic
-5. **projects.ts** - Project definitions (CS subjects only)
-6. **Content markdown files** - The actual educational content in topic-*.md files and subtopic folders
+2. **quizzes.json** - Quiz questions for each topic
+3. **exams.json** - Midterm and final exam questions
+4. **exercises.json** - Coding or written exercises for each topic
+5. **projects.json** - Project definitions (CS subjects only)
+6. **content/** - Markdown lesson files (content/topic-N/*.md)
 
 ## Required Quantities
 - **16 exercises per topic** (minimum)
@@ -140,11 +141,11 @@ Write a markdown file with this exact structure:
 2. Read topics.ts to get the list of topics and subtopics
 3. For each topic:
    - Count and list subtopics
-   - Estimate word count for each subtopic content
-   - Count exercises in the exercises/ folder
-   - Count quiz questions in quizzes.ts
-4. Check exams.ts for midterm and final
-5. Check projects.ts if it exists
+   - Estimate word count for each subtopic content in content/topic-N/*.md
+   - Count exercises in exercises.json
+   - Count quiz questions in quizzes.json
+4. Check exams.json for midterm and final
+5. Check projects.json if it exists
 6. Compile findings into the report format above
 7. **Write the report to the specified file path**
 
