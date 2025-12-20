@@ -1,0 +1,1489 @@
+[
+  {
+    "id": "math204-t1-drill-1",
+    "subjectId": "math204",
+    "topicId": "math204-1",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Basic Power Rule",
+    "description": "Evaluate: $\\int 4x^3 \\, dx$",
+    "hints": [
+      "Use the power rule: $\\int x^n \\, dx = \\frac{x^{n+1}}{n+1} + C$."
+    ],
+    "solution": "$\\int 4x^3 \\, dx = 4 \\cdot \\frac{x^4}{4} + C = x^4 + C$"
+  },
+  {
+    "id": "math204-t1-drill-2",
+    "subjectId": "math204",
+    "topicId": "math204-1",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Exponential Integration",
+    "description": "Evaluate: $\\int 3e^x \\, dx$",
+    "hints": [
+      "The antiderivative of $e^x$ is itself."
+    ],
+    "solution": "$\\int 3e^x \\, dx = 3e^x + C$"
+  },
+  {
+    "id": "math204-t1-drill-3",
+    "subjectId": "math204",
+    "topicId": "math204-1",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Trigonometric Integration",
+    "description": "Evaluate: $\\int \\cos x \\, dx$",
+    "hints": [
+      "What function has derivative $\\cos x$?"
+    ],
+    "solution": "$\\int \\cos x \\, dx = \\sin x + C$"
+  },
+  {
+    "id": "math204-t1-drill-4",
+    "subjectId": "math204",
+    "topicId": "math204-1",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Simple U-Substitution",
+    "description": "Evaluate: $\\int 2x(x^2 + 1)^3 \\, dx$",
+    "hints": [
+      "Let $u = x^2 + 1$. What is $du$?"
+    ],
+    "solution": "Let $u = x^2 + 1$, then $du = 2x \\, dx$. So $\\int 2x(x^2 + 1)^3 \\, dx = \\int u^3 \\, du = \\frac{u^4}{4} + C = \\frac{(x^2 + 1)^4}{4} + C$"
+  },
+  {
+    "id": "math204-t1-ex01",
+    "subjectId": "math204",
+    "topicId": "math204-1",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Polynomial Integration",
+    "description": "Evaluate the following integrals:\n\n(a) $\\int (3x^2 - 2x + 5) \\, dx$\n\n(b) $\\int (x^3 - 4x^2 + x - 7) \\, dx$\n\n(c) $\\int \\frac{x^4 + 2x^2 - 1}{x} \\, dx$",
+    "hints": [
+      "Integrate each term separately using the power rule.",
+      "For (c), simplify by dividing each term by x first.",
+      "Don't forget the constant of integration!"
+    ],
+    "solution": "(a) $\\int (3x^2 - 2x + 5) \\, dx = 3 \\cdot \\frac{x^3}{3} - 2 \\cdot \\frac{x^2}{2} + 5x + C = x^3 - x^2 + 5x + C$\n\n(b) $\\int (x^3 - 4x^2 + x - 7) \\, dx = \\frac{x^4}{4} - \\frac{4x^3}{3} + \\frac{x^2}{2} - 7x + C$\n\n(c) $\\int \\frac{x^4 + 2x^2 - 1}{x} \\, dx = \\int (x^3 + 2x - x^{-1}) \\, dx = \\frac{x^4}{4} + x^2 - \\ln|x| + C$"
+  },
+  {
+    "id": "math204-t1-ex02",
+    "subjectId": "math204",
+    "topicId": "math204-1",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Basic U-Substitution",
+    "description": "Evaluate the following using u-substitution:\n\n(a) $\\int x\\sqrt{x^2 + 1} \\, dx$\n\n(b) $\\int \\frac{x}{x^2 + 1} \\, dx$\n\n(c) $\\int x^2(x^3 - 5)^{10} \\, dx$",
+    "hints": [
+      "For (a), let $u = x^2 + 1$.",
+      "For (b), note that the numerator is related to the derivative of the denominator.",
+      "For (c), let $u = x^3 - 5$."
+    ],
+    "solution": "(a) Let $u = x^2 + 1$, then $du = 2x \\, dx$, so $x \\, dx = \\frac{1}{2}du$.\n$\\int x\\sqrt{x^2 + 1} \\, dx = \\int \\sqrt{u} \\cdot \\frac{1}{2} \\, du = \\frac{1}{2} \\cdot \\frac{2u^{3/2}}{3} + C = \\frac{(x^2 + 1)^{3/2}}{3} + C$\n\n(b) Let $u = x^2 + 1$, then $du = 2x \\, dx$, so $x \\, dx = \\frac{1}{2}du$.\n$\\int \\frac{x}{x^2 + 1} \\, dx = \\int \\frac{1}{u} \\cdot \\frac{1}{2} \\, du = \\frac{1}{2}\\ln|u| + C = \\frac{1}{2}\\ln(x^2 + 1) + C$\n\n(c) Let $u = x^3 - 5$, then $du = 3x^2 \\, dx$, so $x^2 \\, dx = \\frac{1}{3}du$.\n$\\int x^2(x^3 - 5)^{10} \\, dx = \\int u^{10} \\cdot \\frac{1}{3} \\, du = \\frac{1}{3} \\cdot \\frac{u^{11}}{11} + C = \\frac{(x^3 - 5)^{11}}{33} + C$"
+  },
+  {
+    "id": "math204-t1-ex03",
+    "subjectId": "math204",
+    "topicId": "math204-1",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Trigonometric Integrals",
+    "description": "Evaluate:\n\n(a) $\\int \\sin(3x) \\, dx$\n\n(b) $\\int \\sec^2(2x) \\, dx$\n\n(c) $\\int x \\cos(x^2) \\, dx$",
+    "hints": [
+      "For (a) and (b), use substitution with $u$ as the argument of the trig function.",
+      "For (c), let $u = x^2$.",
+      "Remember basic trig antiderivatives: $\\int \\sin u \\, du = -\\cos u + C$, $\\int \\sec^2 u \\, du = \\tan u + C$."
+    ],
+    "solution": "(a) Let $u = 3x$, then $du = 3 \\, dx$, so $dx = \\frac{1}{3}du$.\n$\\int \\sin(3x) \\, dx = \\int \\sin u \\cdot \\frac{1}{3} \\, du = -\\frac{1}{3}\\cos u + C = -\\frac{1}{3}\\cos(3x) + C$\n\n(b) Let $u = 2x$, then $du = 2 \\, dx$, so $dx = \\frac{1}{2}du$.\n$\\int \\sec^2(2x) \\, dx = \\int \\sec^2 u \\cdot \\frac{1}{2} \\, du = \\frac{1}{2}\\tan u + C = \\frac{1}{2}\\tan(2x) + C$\n\n(c) Let $u = x^2$, then $du = 2x \\, dx$, so $x \\, dx = \\frac{1}{2}du$.\n$\\int x \\cos(x^2) \\, dx = \\int \\cos u \\cdot \\frac{1}{2} \\, du = \\frac{1}{2}\\sin u + C = \\frac{1}{2}\\sin(x^2) + C$"
+  },
+  {
+    "id": "math204-t1-ex04",
+    "subjectId": "math204",
+    "topicId": "math204-1",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Exponential and Logarithmic",
+    "description": "Evaluate:\n\n(a) $\\int 2^x \\, dx$\n\n(b) $\\int \\frac{1}{x \\ln x} \\, dx$\n\n(c) $\\int e^{3x+2} \\, dx$",
+    "hints": [
+      "For (a), use the formula $\\int a^x \\, dx = \\frac{a^x}{\\ln a} + C$.",
+      "For (b), let $u = \\ln x$.",
+      "For (c), let $u = 3x + 2$."
+    ],
+    "solution": "(a) $\\int 2^x \\, dx = \\frac{2^x}{\\ln 2} + C$\n\n(b) Let $u = \\ln x$, then $du = \\frac{1}{x} \\, dx$.\n$\\int \\frac{1}{x \\ln x} \\, dx = \\int \\frac{1}{u} \\, du = \\ln|u| + C = \\ln|\\ln x| + C$\n\n(c) Let $u = 3x + 2$, then $du = 3 \\, dx$, so $dx = \\frac{1}{3}du$.\n$\\int e^{3x+2} \\, dx = \\int e^u \\cdot \\frac{1}{3} \\, du = \\frac{1}{3}e^u + C = \\frac{1}{3}e^{3x+2} + C$"
+  },
+  {
+    "id": "math204-t1-ex05",
+    "subjectId": "math204",
+    "topicId": "math204-1",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Mixed Practice",
+    "description": "Evaluate:\n\n(a) $\\int (5x^4 - 3\\sqrt{x} + \\frac{2}{x^2}) \\, dx$\n\n(b) $\\int (e^x + \\sin x) \\, dx$\n\n(c) $\\int \\frac{x^3 + x}{x^2} \\, dx$",
+    "hints": [
+      "Rewrite radicals and fractions as powers of x.",
+      "Integrate term by term.",
+      "For (c), simplify first by dividing."
+    ],
+    "solution": "(a) $\\int (5x^4 - 3x^{1/2} + 2x^{-2}) \\, dx = 5 \\cdot \\frac{x^5}{5} - 3 \\cdot \\frac{x^{3/2}}{3/2} + 2 \\cdot \\frac{x^{-1}}{-1} + C$\n$= x^5 - 2x^{3/2} - \\frac{2}{x} + C$\n\n(b) $\\int (e^x + \\sin x) \\, dx = e^x - \\cos x + C$\n\n(c) $\\int \\frac{x^3 + x}{x^2} \\, dx = \\int (x + x^{-1}) \\, dx = \\frac{x^2}{2} + \\ln|x| + C$"
+  },
+  {
+    "id": "math204-t1-ex06",
+    "subjectId": "math204",
+    "topicId": "math204-1",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Chain Rule Reversals",
+    "description": "Evaluate:\n\n(a) $\\int \\frac{e^{\\sqrt{x}}}{\\sqrt{x}} \\, dx$\n\n(b) $\\int \\tan x \\, dx$ (Hint: $\\tan x = \\frac{\\sin x}{\\cos x}$)\n\n(c) $\\int \\frac{\\sec^2 x}{\\tan x} \\, dx$",
+    "hints": [
+      "For (a), let $u = \\sqrt{x}$.",
+      "For (b), rewrite and use substitution $u = \\cos x$.",
+      "For (c), let $u = \\tan x$."
+    ],
+    "solution": "(a) Let $u = \\sqrt{x} = x^{1/2}$, then $du = \\frac{1}{2\\sqrt{x}} \\, dx$, so $\\frac{1}{\\sqrt{x}} \\, dx = 2 \\, du$.\n$\\int \\frac{e^{\\sqrt{x}}}{\\sqrt{x}} \\, dx = \\int e^u \\cdot 2 \\, du = 2e^u + C = 2e^{\\sqrt{x}} + C$\n\n(b) $\\int \\tan x \\, dx = \\int \\frac{\\sin x}{\\cos x} \\, dx$. Let $u = \\cos x$, then $du = -\\sin x \\, dx$.\n$\\int \\frac{\\sin x}{\\cos x} \\, dx = \\int \\frac{-1}{u} \\, du = -\\ln|u| + C = -\\ln|\\cos x| + C = \\ln|\\sec x| + C$\n\n(c) Let $u = \\tan x$, then $du = \\sec^2 x \\, dx$.\n$\\int \\frac{\\sec^2 x}{\\tan x} \\, dx = \\int \\frac{1}{u} \\, du = \\ln|u| + C = \\ln|\\tan x| + C$"
+  },
+  {
+    "id": "math204-t1-ex07",
+    "subjectId": "math204",
+    "topicId": "math204-1",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Initial Value Problems",
+    "description": "Solve the following initial value problems:\n\n(a) $f'(x) = 3x^2 - 2x$, $f(1) = 5$\n\n(b) $\\frac{dy}{dx} = e^x + \\sin x$, $y(0) = 3$\n\n(c) $g'(t) = \\frac{1}{t}$, $g(1) = 2$",
+    "hints": [
+      "First find the general antiderivative.",
+      "Then use the initial condition to find the constant C.",
+      "Substitute the given point into your antiderivative."
+    ],
+    "solution": "(a) $f(x) = \\int (3x^2 - 2x) \\, dx = x^3 - x^2 + C$\nUse $f(1) = 5$: $1^3 - 1^2 + C = 5$, so $C = 5$.\nTherefore, $f(x) = x^3 - x^2 + 5$\n\n(b) $y = \\int (e^x + \\sin x) \\, dx = e^x - \\cos x + C$\nUse $y(0) = 3$: $e^0 - \\cos 0 + C = 3$, so $1 - 1 + C = 3$, thus $C = 3$.\nTherefore, $y = e^x - \\cos x + 3$\n\n(c) $g(t) = \\int \\frac{1}{t} \\, dt = \\ln|t| + C$\nUse $g(1) = 2$: $\\ln 1 + C = 2$, so $C = 2$.\nTherefore, $g(t) = \\ln|t| + 2$"
+  },
+  {
+    "id": "math204-t1-ex08",
+    "subjectId": "math204",
+    "topicId": "math204-1",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Advanced Substitution",
+    "description": "Evaluate:\n\n(a) $\\int \\frac{\\ln x}{x} \\, dx$\n\n(b) $\\int x e^{x^2} \\, dx$\n\n(c) $\\int \\frac{\\sin(\\ln x)}{x} \\, dx$",
+    "hints": [
+      "For (a), let $u = \\ln x$.",
+      "For (b), let $u = x^2$.",
+      "For (c), let $u = \\ln x$."
+    ],
+    "solution": "(a) Let $u = \\ln x$, then $du = \\frac{1}{x} \\, dx$.\n$\\int \\frac{\\ln x}{x} \\, dx = \\int u \\, du = \\frac{u^2}{2} + C = \\frac{(\\ln x)^2}{2} + C$\n\n(b) Let $u = x^2$, then $du = 2x \\, dx$, so $x \\, dx = \\frac{1}{2}du$.\n$\\int x e^{x^2} \\, dx = \\int e^u \\cdot \\frac{1}{2} \\, du = \\frac{1}{2}e^u + C = \\frac{1}{2}e^{x^2} + C$\n\n(c) Let $u = \\ln x$, then $du = \\frac{1}{x} \\, dx$.\n$\\int \\frac{\\sin(\\ln x)}{x} \\, dx = \\int \\sin u \\, du = -\\cos u + C = -\\cos(\\ln x) + C$"
+  },
+  {
+    "id": "math204-t1-ex09",
+    "subjectId": "math204",
+    "topicId": "math204-1",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Completing the Square",
+    "description": "Evaluate $\\int \\frac{1}{x^2 + 6x + 13} \\, dx$",
+    "hints": [
+      "Complete the square in the denominator: $x^2 + 6x + 13 = (x+3)^2 + 4$.",
+      "Use substitution $u = x + 3$.",
+      "Recall that $\\int \\frac{1}{u^2 + a^2} \\, du = \\frac{1}{a}\\arctan(\\frac{u}{a}) + C$."
+    ],
+    "solution": "Complete the square: $x^2 + 6x + 13 = (x^2 + 6x + 9) + 4 = (x+3)^2 + 4$\n\nLet $u = x + 3$, then $du = dx$.\n\n$\\int \\frac{1}{x^2 + 6x + 13} \\, dx = \\int \\frac{1}{u^2 + 4} \\, du = \\int \\frac{1}{u^2 + 2^2} \\, du$\n\nUsing the formula with $a = 2$:\n$= \\frac{1}{2}\\arctan\\left(\\frac{u}{2}\\right) + C = \\frac{1}{2}\\arctan\\left(\\frac{x+3}{2}\\right) + C$"
+  },
+  {
+    "id": "math204-t1-ex10",
+    "subjectId": "math204",
+    "topicId": "math204-1",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Antiderivatives with Absolute Values",
+    "description": "Find the antiderivative: $\\int \\frac{2x + 3}{x^2 + 3x + 1} \\, dx$",
+    "hints": [
+      "Notice that the numerator is related to the derivative of the denominator.",
+      "The derivative of $x^2 + 3x + 1$ is $2x + 3$.",
+      "Use substitution $u =$ denominator."
+    ],
+    "solution": "Notice that if $u = x^2 + 3x + 1$, then $du = (2x + 3) \\, dx$.\n\nThe numerator is exactly the derivative of the denominator!\n\n$\\int \\frac{2x + 3}{x^2 + 3x + 1} \\, dx = \\int \\frac{1}{u} \\, du = \\ln|u| + C = \\ln|x^2 + 3x + 1| + C$"
+  },
+  {
+    "id": "math204-t1-ex11",
+    "subjectId": "math204",
+    "topicId": "math204-1",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Algebraic Manipulation",
+    "description": "Evaluate $\\int \\frac{x + 1}{\\sqrt{x}} \\, dx$",
+    "hints": [
+      "Rewrite by splitting the fraction and converting to powers.",
+      "Write $\\sqrt{x} = x^{1/2}$.",
+      "Split: $\\frac{x + 1}{\\sqrt{x}} = \\frac{x}{\\sqrt{x}} + \\frac{1}{\\sqrt{x}}$."
+    ],
+    "solution": "Rewrite the integrand:\n$\\frac{x + 1}{\\sqrt{x}} = \\frac{x}{\\sqrt{x}} + \\frac{1}{\\sqrt{x}} = \\frac{x}{x^{1/2}} + \\frac{1}{x^{1/2}} = x^{1/2} + x^{-1/2}$\n\nNow integrate:\n$\\int (x^{1/2} + x^{-1/2}) \\, dx = \\frac{x^{3/2}}{3/2} + \\frac{x^{1/2}}{1/2} + C = \\frac{2x^{3/2}}{3} + 2x^{1/2} + C$\n\nOr: $= \\frac{2\\sqrt{x^3}}{3} + 2\\sqrt{x} + C$"
+  },
+  {
+    "id": "math204-t1-ex12",
+    "subjectId": "math204",
+    "topicId": "math204-1",
+    "type": "written",
+    "difficulty": 5,
+    "title": "Challenge: Multiple Techniques",
+    "description": "Evaluate $\\int \\frac{e^{2x}}{e^{2x} + 1} \\, dx$",
+    "hints": [
+      "Let $u = e^{2x} + 1$.",
+      "Find $du$ in terms of $dx$.",
+      "Note that $e^{2x} = u - 1$."
+    ],
+    "solution": "Let $u = e^{2x} + 1$, then $du = 2e^{2x} \\, dx$, so $e^{2x} \\, dx = \\frac{1}{2}du$.\n\nAlso note that $e^{2x} = u - 1$.\n\n$\\int \\frac{e^{2x}}{e^{2x} + 1} \\, dx = \\int \\frac{1}{u} \\cdot \\frac{1}{2} \\, du = \\frac{1}{2}\\ln|u| + C$\n\n$= \\frac{1}{2}\\ln|e^{2x} + 1| + C = \\frac{1}{2}\\ln(e^{2x} + 1) + C$ (absolute value not needed since $e^{2x} + 1 > 0$)"
+  },
+  {
+    "id": "math204-t2-drill-1",
+    "subjectId": "math204",
+    "topicId": "math204-2",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Basic Definite Integral",
+    "description": "Evaluate: $\\int_0^2 x \\, dx$",
+    "hints": [
+      "Use the Fundamental Theorem: find the antiderivative and evaluate at the limits."
+    ],
+    "solution": "$\\int_0^2 x \\, dx = \\left[\\frac{x^2}{2}\\right]_0^2 = \\frac{4}{2} - 0 = 2$"
+  },
+  {
+    "id": "math204-t2-drill-2",
+    "subjectId": "math204",
+    "topicId": "math204-2",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: FTC Part 1",
+    "description": "If $F(x) = \\int_0^x t^2 \\, dt$, find $F'(x)$.",
+    "hints": [
+      "By FTC Part 1, the derivative of an integral is the integrand."
+    ],
+    "solution": "By the Fundamental Theorem of Calculus Part 1: $F'(x) = x^2$"
+  },
+  {
+    "id": "math204-t2-drill-3",
+    "subjectId": "math204",
+    "topicId": "math204-2",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Constant Integration",
+    "description": "Evaluate: $\\int_1^4 5 \\, dx$",
+    "hints": [
+      "The integral of a constant c is cx."
+    ],
+    "solution": "$\\int_1^4 5 \\, dx = [5x]_1^4 = 20 - 5 = 15$"
+  },
+  {
+    "id": "math204-t2-drill-4",
+    "subjectId": "math204",
+    "topicId": "math204-2",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Negative Area",
+    "description": "What is $\\int_2^0 x \\, dx$?",
+    "hints": [
+      "Reversing the limits changes the sign."
+    ],
+    "solution": "$\\int_2^0 x \\, dx = -\\int_0^2 x \\, dx = -\\left[\\frac{x^2}{2}\\right]_0^2 = -2$"
+  },
+  {
+    "id": "math204-t2-ex01",
+    "subjectId": "math204",
+    "topicId": "math204-2",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Definite Integrals with FTC",
+    "description": "Evaluate:\n\n(a) $\\int_1^3 (2x - 1) \\, dx$\n\n(b) $\\int_0^{\\pi/2} \\sin x \\, dx$\n\n(c) $\\int_1^e \\frac{1}{x} \\, dx$",
+    "hints": [
+      "Find the antiderivative, then evaluate at the bounds.",
+      "Remember: $\\int_a^b f(x) \\, dx = F(b) - F(a)$."
+    ],
+    "solution": "(a) $\\int_1^3 (2x - 1) \\, dx = [x^2 - x]_1^3 = (9 - 3) - (1 - 1) = 6$\n\n(b) $\\int_0^{\\pi/2} \\sin x \\, dx = [-\\cos x]_0^{\\pi/2} = -\\cos(\\pi/2) - (-\\cos 0) = 0 + 1 = 1$\n\n(c) $\\int_1^e \\frac{1}{x} \\, dx = [\\ln x]_1^e = \\ln e - \\ln 1 = 1 - 0 = 1$"
+  },
+  {
+    "id": "math204-t2-ex02",
+    "subjectId": "math204",
+    "topicId": "math204-2",
+    "type": "written",
+    "difficulty": 3,
+    "title": "FTC Part 1 Applications",
+    "description": "Find the derivative:\n\n(a) $\\frac{d}{dx}\\int_0^x (t^2 + 1) \\, dt$\n\n(b) $\\frac{d}{dx}\\int_1^{x^2} \\sin t \\, dt$\n\n(c) $\\frac{d}{dx}\\int_x^2 e^t \\, dt$",
+    "hints": [
+      "For (b), use chain rule with FTC Part 1.",
+      "For (c), use the property that $\\int_x^a = -\\int_a^x$."
+    ],
+    "solution": "(a) By FTC Part 1: $\\frac{d}{dx}\\int_0^x (t^2 + 1) \\, dt = x^2 + 1$\n\n(b) Let $u = x^2$. By FTC and chain rule: $\\frac{d}{dx}\\int_1^{x^2} \\sin t \\, dt = \\sin(x^2) \\cdot 2x$\n\n(c) $\\int_x^2 e^t \\, dt = -\\int_2^x e^t \\, dt$, so $\\frac{d}{dx}\\int_x^2 e^t \\, dt = -e^x$"
+  },
+  {
+    "id": "math204-t2-ex03",
+    "subjectId": "math204",
+    "topicId": "math204-2",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Substitution in Definite Integrals",
+    "description": "Evaluate $\\int_0^1 2x(x^2 + 1)^2 \\, dx$",
+    "hints": [
+      "Use u-substitution with $u = x^2 + 1$.",
+      "Don't forget to change the limits of integration!"
+    ],
+    "solution": "Let $u = x^2 + 1$, then $du = 2x \\, dx$.\nWhen $x = 0$: $u = 1$\nWhen $x = 1$: $u = 2$\n\n$\\int_0^1 2x(x^2 + 1)^2 \\, dx = \\int_1^2 u^2 \\, du = \\left[\\frac{u^3}{3}\\right]_1^2 = \\frac{8}{3} - \\frac{1}{3} = \\frac{7}{3}$"
+  },
+  {
+    "id": "math204-t2-ex04",
+    "subjectId": "math204",
+    "topicId": "math204-2",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Average Value",
+    "description": "Find the average value of $f(x) = x^2$ on the interval $[0, 3]$.",
+    "hints": [
+      "Average value = $\\frac{1}{b-a}\\int_a^b f(x) \\, dx$."
+    ],
+    "solution": "Average value $= \\frac{1}{3-0}\\int_0^3 x^2 \\, dx = \\frac{1}{3}\\left[\\frac{x^3}{3}\\right]_0^3$\n$= \\frac{1}{3} \\cdot \\frac{27}{3} = \\frac{1}{3} \\cdot 9 = 3$"
+  },
+  {
+    "id": "math204-t2-ex05",
+    "subjectId": "math204",
+    "topicId": "math204-2",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Properties of Integrals",
+    "description": "If $\\int_0^4 f(x) \\, dx = 10$ and $\\int_0^4 g(x) \\, dx = 6$, find:\n\n(a) $\\int_0^4 [2f(x) + 3g(x)] \\, dx$\n\n(b) $\\int_0^4 [f(x) - g(x)] \\, dx$",
+    "hints": [
+      "Use linearity: $\\int [af(x) + bg(x)] \\, dx = a\\int f(x) \\, dx + b\\int g(x) \\, dx$."
+    ],
+    "solution": "(a) $\\int_0^4 [2f(x) + 3g(x)] \\, dx = 2\\int_0^4 f(x) \\, dx + 3\\int_0^4 g(x) \\, dx = 2(10) + 3(6) = 20 + 18 = 38$\n\n(b) $\\int_0^4 [f(x) - g(x)] \\, dx = \\int_0^4 f(x) \\, dx - \\int_0^4 g(x) \\, dx = 10 - 6 = 4$"
+  },
+  {
+    "id": "math204-t2-ex06",
+    "subjectId": "math204",
+    "topicId": "math204-2",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Symmetric Functions",
+    "description": "Evaluate:\n\n(a) $\\int_{-2}^2 x^3 \\, dx$\n\n(b) $\\int_{-\\pi}^{\\pi} \\cos x \\, dx$",
+    "hints": [
+      "Odd functions integrate to 0 over symmetric intervals.",
+      "Even functions: $\\int_{-a}^a f(x) \\, dx = 2\\int_0^a f(x) \\, dx$."
+    ],
+    "solution": "(a) $x^3$ is an odd function, so $\\int_{-2}^2 x^3 \\, dx = 0$\n\n(b) $\\cos x$ is an even function, so $\\int_{-\\pi}^{\\pi} \\cos x \\, dx = 2\\int_0^{\\pi} \\cos x \\, dx = 2[\\sin x]_0^{\\pi} = 2(0 - 0) = 0$"
+  },
+  {
+    "id": "math204-t2-ex07",
+    "subjectId": "math204",
+    "topicId": "math204-2",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Area and Sign",
+    "description": "Compute $\\int_{-1}^1 x \\, dx$ and explain its geometric meaning.",
+    "hints": [
+      "Graph $y = x$ from -1 to 1.",
+      "Consider the signed area."
+    ],
+    "solution": "$\\int_{-1}^1 x \\, dx = \\left[\\frac{x^2}{2}\\right]_{-1}^1 = \\frac{1}{2} - \\frac{1}{2} = 0$\n\nGeometrically: the line $y = x$ creates a triangle below the x-axis from -1 to 0 (area = -1/2) and above from 0 to 1 (area = +1/2). The signed areas cancel, giving 0."
+  },
+  {
+    "id": "math204-t2-ex08",
+    "subjectId": "math204",
+    "topicId": "math204-2",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Exponential Definite Integrals",
+    "description": "Evaluate $\\int_0^{\\ln 2} e^x \\, dx$",
+    "hints": [
+      "The antiderivative of $e^x$ is $e^x$."
+    ],
+    "solution": "$\\int_0^{\\ln 2} e^x \\, dx = [e^x]_0^{\\ln 2} = e^{\\ln 2} - e^0 = 2 - 1 = 1$"
+  },
+  {
+    "id": "math204-t2-ex09",
+    "subjectId": "math204",
+    "topicId": "math204-2",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Substitution with Trig",
+    "description": "Evaluate $\\int_0^{\\pi/4} \\tan x \\sec^2 x \\, dx$",
+    "hints": [
+      "Let $u = \\tan x$, then $du = \\sec^2 x \\, dx$."
+    ],
+    "solution": "Let $u = \\tan x$, then $du = \\sec^2 x \\, dx$.\nWhen $x = 0$: $u = 0$\nWhen $x = \\pi/4$: $u = 1$\n\n$\\int_0^{\\pi/4} \\tan x \\sec^2 x \\, dx = \\int_0^1 u \\, du = \\left[\\frac{u^2}{2}\\right]_0^1 = \\frac{1}{2}$"
+  },
+  {
+    "id": "math204-t2-ex10",
+    "subjectId": "math204",
+    "topicId": "math204-2",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Splitting Intervals",
+    "description": "If $\\int_0^5 f(x) \\, dx = 12$ and $\\int_5^8 f(x) \\, dx = 7$, find $\\int_0^8 f(x) \\, dx$.",
+    "hints": [
+      "Use additivity: $\\int_a^c f = \\int_a^b f + \\int_b^c f$."
+    ],
+    "solution": "By the additivity property:\n$\\int_0^8 f(x) \\, dx = \\int_0^5 f(x) \\, dx + \\int_5^8 f(x) \\, dx = 12 + 7 = 19$"
+  },
+  {
+    "id": "math204-t2-ex11",
+    "subjectId": "math204",
+    "topicId": "math204-2",
+    "type": "written",
+    "difficulty": 5,
+    "title": "Area Under Curve",
+    "description": "Find the exact area under the curve $y = \\sin x$ from $x = 0$ to $x = \\pi$.",
+    "hints": [
+      "Area = $\\int_0^{\\pi} \\sin x \\, dx$."
+    ],
+    "solution": "Area $= \\int_0^{\\pi} \\sin x \\, dx = [-\\cos x]_0^{\\pi} = -\\cos(\\pi) - (-\\cos 0) = -(-1) + 1 = 1 + 1 = 2$"
+  },
+  {
+    "id": "math204-t2-ex12",
+    "subjectId": "math204",
+    "topicId": "math204-2",
+    "type": "written",
+    "difficulty": 5,
+    "title": "Challenge: Complex Substitution",
+    "description": "Evaluate $\\int_1^4 \\frac{1}{2\\sqrt{x}} \\, dx$ using substitution.",
+    "hints": [
+      "Let $u = \\sqrt{x}$, so $x = u^2$ and $dx = 2u \\, du$."
+    ],
+    "solution": "Let $u = \\sqrt{x}$, so $x = u^2$ and $dx = 2u \\, du$.\nWhen $x = 1$: $u = 1$\nWhen $x = 4$: $u = 2$\n\n$\\int_1^4 \\frac{1}{2\\sqrt{x}} \\, dx = \\int_1^2 \\frac{1}{2u} \\cdot 2u \\, du = \\int_1^2 1 \\, du = [u]_1^2 = 2 - 1 = 1$\n\nAlternative: $\\int_1^4 \\frac{1}{2\\sqrt{x}} \\, dx = \\int_1^4 \\frac{1}{2}x^{-1/2} \\, dx = \\frac{1}{2}\\left[\\frac{x^{1/2}}{1/2}\\right]_1^4 = [\\sqrt{x}]_1^4 = 2 - 1 = 1$"
+  },
+  {
+    "id": "math204-t3-drill-1",
+    "subjectId": "math204",
+    "topicId": "math204-3",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Integration by Parts Formula",
+    "description": "State the integration by parts formula.",
+    "hints": [
+      "It comes from the product rule."
+    ],
+    "solution": "$\\int u \\, dv = uv - \\int v \\, du$"
+  },
+  {
+    "id": "math204-t3-drill-2",
+    "subjectId": "math204",
+    "topicId": "math204-3",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Basic Integration by Parts",
+    "description": "Evaluate: $\\int x e^x \\, dx$",
+    "hints": [
+      "Let $u = x$, $dv = e^x \\, dx$."
+    ],
+    "solution": "Let $u = x$, $dv = e^x \\, dx$. Then $du = dx$, $v = e^x$.\\n\\n$\\int x e^x \\, dx = xe^x - \\int e^x \\, dx = xe^x - e^x + C = e^x(x - 1) + C$"
+  },
+  {
+    "id": "math204-t3-drill-3",
+    "subjectId": "math204",
+    "topicId": "math204-3",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Trig Substitution Pattern",
+    "description": "For $\\sqrt{a^2 - x^2}$, which substitution should you use?",
+    "hints": [
+      "Think about the Pythagorean identity with sine."
+    ],
+    "solution": "Use $x = a \\sin \\theta$, which gives $\\sqrt{a^2 - x^2} = a \\cos \\theta$."
+  },
+  {
+    "id": "math204-t3-drill-4",
+    "subjectId": "math204",
+    "topicId": "math204-3",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Partial Fractions Setup",
+    "description": "Write the partial fraction decomposition form for $\\frac{1}{(x-1)(x+2)}$.",
+    "hints": [
+      "Each distinct linear factor gets its own term."
+    ],
+    "solution": "$\\frac{1}{(x-1)(x+2)} = \\frac{A}{x-1} + \\frac{B}{x+2}$"
+  },
+  {
+    "id": "math204-t3-ex01",
+    "subjectId": "math204",
+    "topicId": "math204-3",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Integration by Parts Practice",
+    "description": "Evaluate:\n\n(a) $\\int x \\sin x \\, dx$\n\n(b) $\\int x^2 e^x \\, dx$",
+    "hints": [
+      "For (a), let $u = x$, $dv = \\sin x \\, dx$.",
+      "For (b), you may need to use by parts twice."
+    ],
+    "solution": "(a) Let $u = x$, $dv = \\sin x \\, dx$. Then $du = dx$, $v = -\\cos x$.\n$\\int x \\sin x \\, dx = -x\\cos x - \\int (-\\cos x) \\, dx = -x\\cos x + \\sin x + C$\n\n(b) First: Let $u = x^2$, $dv = e^x \\, dx$. Then $du = 2x \\, dx$, $v = e^x$.\n$\\int x^2 e^x \\, dx = x^2 e^x - 2\\int x e^x \\, dx$\n\nSecond: For $\\int x e^x \\, dx$, let $u = x$, $dv = e^x \\, dx$. Then $du = dx$, $v = e^x$.\n$\\int x e^x \\, dx = xe^x - e^x + C$\n\nCombining: $\\int x^2 e^x \\, dx = x^2 e^x - 2(xe^x - e^x) + C = e^x(x^2 - 2x + 2) + C$"
+  },
+  {
+    "id": "math204-t3-ex02",
+    "subjectId": "math204",
+    "topicId": "math204-3",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Logarithmic Integration",
+    "description": "Evaluate $\\int \\ln x \\, dx$",
+    "hints": [
+      "Use integration by parts with $u = \\ln x$, $dv = dx$."
+    ],
+    "solution": "Let $u = \\ln x$, $dv = dx$. Then $du = \\frac{1}{x} \\, dx$, $v = x$.\\n\\n$\\int \\ln x \\, dx = x \\ln x - \\int x \\cdot \\frac{1}{x} \\, dx = x \\ln x - \\int 1 \\, dx = x \\ln x - x + C$"
+  },
+  {
+    "id": "math204-t3-ex03",
+    "subjectId": "math204",
+    "topicId": "math204-3",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Trigonometric Substitution",
+    "description": "Evaluate $\\int \\frac{1}{\\sqrt{1-x^2}} \\, dx$",
+    "hints": [
+      "Use $x = \\sin \\theta$."
+    ],
+    "solution": "Let $x = \\sin \\theta$, then $dx = \\cos \\theta \\, d\\theta$ and $\\sqrt{1-x^2} = \\cos \\theta$.\\n\\n$\\int \\frac{1}{\\sqrt{1-x^2}} \\, dx = \\int \\frac{\\cos \\theta}{\\cos \\theta} \\, d\\theta = \\int 1 \\, d\\theta = \\theta + C = \\arcsin x + C$"
+  },
+  {
+    "id": "math204-t3-ex04",
+    "subjectId": "math204",
+    "topicId": "math204-3",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Partial Fractions",
+    "description": "Evaluate $\\int \\frac{1}{x^2-1} \\, dx$",
+    "hints": [
+      "Factor the denominator and use partial fractions."
+    ],
+    "solution": "$\\frac{1}{x^2-1} = \\frac{1}{(x-1)(x+1)} = \\frac{A}{x-1} + \\frac{B}{x+1}$\\n\\nMultiply by $(x-1)(x+1)$: $1 = A(x+1) + B(x-1)$\\n\\nLet $x = 1$: $1 = 2A$, so $A = 1/2$\\nLet $x = -1$: $1 = -2B$, so $B = -1/2$\\n\\n$\\int \\frac{1}{x^2-1} \\, dx = \\frac{1}{2}\\int \\frac{1}{x-1} \\, dx - \\frac{1}{2}\\int \\frac{1}{x+1} \\, dx = \\frac{1}{2}\\ln|x-1| - \\frac{1}{2}\\ln|x+1| + C$\\n\\n$= \\frac{1}{2}\\ln\\left|\\frac{x-1}{x+1}\\right| + C$"
+  },
+  {
+    "id": "math204-t3-ex05",
+    "subjectId": "math204",
+    "topicId": "math204-3",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Powers of Trig Functions",
+    "description": "Evaluate $\\int \\sin^2 x \\, dx$",
+    "hints": [
+      "Use the identity $\\sin^2 x = \\frac{1 - \\cos 2x}{2}$."
+    ],
+    "solution": "Using $\\sin^2 x = \\frac{1 - \\cos 2x}{2}$:\\n\\n$\\int \\sin^2 x \\, dx = \\int \\frac{1 - \\cos 2x}{2} \\, dx = \\frac{1}{2}\\int (1 - \\cos 2x) \\, dx$\\n\\n$= \\frac{1}{2}\\left(x - \\frac{\\sin 2x}{2}\\right) + C = \\frac{x}{2} - \\frac{\\sin 2x}{4} + C$"
+  },
+  {
+    "id": "math204-t3-ex06",
+    "subjectId": "math204",
+    "topicId": "math204-3",
+    "type": "written",
+    "difficulty": 5,
+    "title": "Advanced Trig Substitution",
+    "description": "Evaluate $\\int \\frac{1}{x^2\\sqrt{x^2+4}} \\, dx$",
+    "hints": [
+      "Use $x = 2\\tan\\theta$."
+    ],
+    "solution": "Let $x = 2\\tan\\theta$, then $dx = 2\\sec^2\\theta \\, d\\theta$ and $\\sqrt{x^2+4} = 2\\sec\\theta$.\\n\\n$\\int \\frac{1}{x^2\\sqrt{x^2+4}} \\, dx = \\int \\frac{1}{4\\tan^2\\theta \\cdot 2\\sec\\theta} \\cdot 2\\sec^2\\theta \\, d\\theta$\\n\\n$= \\int \\frac{\\sec\\theta}{4\\tan^2\\theta} \\, d\\theta = \\frac{1}{4}\\int \\frac{\\cos\\theta}{\\sin^2\\theta} \\, d\\theta$\\n\\nLet $u = \\sin\\theta$: $= \\frac{1}{4}\\int u^{-2} \\, du = -\\frac{1}{4u} + C = -\\frac{1}{4\\sin\\theta} + C$\\n\\nBack-substitute: $\\sin\\theta = \\frac{x}{\\sqrt{x^2+4}}$, so answer is $-\\frac{\\sqrt{x^2+4}}{4x} + C$"
+  },
+  {
+    "id": "math204-t3-ex07",
+    "subjectId": "math204",
+    "topicId": "math204-3",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Repeated Integration by Parts",
+    "description": "Evaluate $\\int e^x \\sin x \\, dx$",
+    "hints": [
+      "Use by parts twice, then solve for the integral algebraically."
+    ],
+    "solution": "Let $I = \\int e^x \\sin x \\, dx$\\n\\nFirst: $u = \\sin x$, $dv = e^x \\, dx$. Then $du = \\cos x \\, dx$, $v = e^x$.\\n$I = e^x \\sin x - \\int e^x \\cos x \\, dx$\\n\\nSecond: For $\\int e^x \\cos x \\, dx$, let $u = \\cos x$, $dv = e^x \\, dx$. Then $du = -\\sin x \\, dx$, $v = e^x$.\\n$\\int e^x \\cos x \\, dx = e^x \\cos x + \\int e^x \\sin x \\, dx = e^x \\cos x + I$\\n\\nSubstitute back:\\n$I = e^x \\sin x - (e^x \\cos x + I)$\\n$I = e^x \\sin x - e^x \\cos x - I$\\n$2I = e^x(\\sin x - \\cos x)$\\n$I = \\frac{e^x(\\sin x - \\cos x)}{2} + C$"
+  },
+  {
+    "id": "math204-t3-ex08",
+    "subjectId": "math204",
+    "topicId": "math204-3",
+    "type": "written",
+    "difficulty": 5,
+    "title": "Complex Partial Fractions",
+    "description": "Evaluate $\\int \\frac{x+1}{x^2(x-1)} \\, dx$",
+    "hints": [
+      "The form is $\\frac{A}{x} + \\frac{B}{x^2} + \\frac{C}{x-1}$."
+    ],
+    "solution": "$\\frac{x+1}{x^2(x-1)} = \\frac{A}{x} + \\frac{B}{x^2} + \\frac{C}{x-1}$\\n\\nMultiply by $x^2(x-1)$: $x+1 = Ax(x-1) + B(x-1) + Cx^2$\\n\\nLet $x = 0$: $1 = -B$, so $B = -1$\\nLet $x = 1$: $2 = C$, so $C = 2$\\nLet $x = 2$: $3 = 2A + B + 4C = 2A - 1 + 8$, so $2A = -4$, thus $A = -2$\\n\\n$\\int \\frac{x+1}{x^2(x-1)} \\, dx = -2\\ln|x| + \\frac{1}{x} + 2\\ln|x-1| + C = \\ln\\left|\\frac{(x-1)^2}{x^2}\\right| + \\frac{1}{x} + C$"
+  },
+  {
+    "id": "math204-t3-ex09",
+    "subjectId": "math204",
+    "topicId": "math204-3",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Completing the Square",
+    "description": "Evaluate $\\int \\frac{1}{x^2+4x+8} \\, dx$",
+    "hints": [
+      "Complete the square in the denominator."
+    ],
+    "solution": "$x^2+4x+8 = (x^2+4x+4) + 4 = (x+2)^2 + 4$\\n\\nLet $u = x+2$, then $du = dx$:\\n\\n$\\int \\frac{1}{x^2+4x+8} \\, dx = \\int \\frac{1}{u^2+4} \\, du = \\frac{1}{2}\\arctan\\left(\\frac{u}{2}\\right) + C = \\frac{1}{2}\\arctan\\left(\\frac{x+2}{2}\\right) + C$"
+  },
+  {
+    "id": "math204-t3-ex10",
+    "subjectId": "math204",
+    "topicId": "math204-3",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Trig Powers Product",
+    "description": "Evaluate $\\int \\sin^3 x \\cos^2 x \\, dx$",
+    "hints": [
+      "Use $\\sin^2 x = 1 - \\cos^2 x$ to convert to powers of $\\cos x$, then substitute $u = \\cos x$."
+    ],
+    "solution": "$\\int \\sin^3 x \\cos^2 x \\, dx = \\int \\sin^2 x \\cos^2 x \\sin x \\, dx = \\int (1-\\cos^2 x)\\cos^2 x \\sin x \\, dx$\\n\\nLet $u = \\cos x$, then $du = -\\sin x \\, dx$:\\n\\n$= -\\int (1-u^2)u^2 \\, du = -\\int (u^2 - u^4) \\, du = -\\left(\\frac{u^3}{3} - \\frac{u^5}{5}\\right) + C$\\n\\n$= -\\frac{\\cos^3 x}{3} + \\frac{\\cos^5 x}{5} + C$"
+  },
+  {
+    "id": "math204-t3-ex11",
+    "subjectId": "math204",
+    "topicId": "math204-3",
+    "type": "written",
+    "difficulty": 5,
+    "title": "Secant Powers",
+    "description": "Evaluate $\\int \\sec^3 x \\, dx$",
+    "hints": [
+      "Use integration by parts with $u = \\sec x$, $dv = \\sec^2 x \\, dx$."
+    ],
+    "solution": "Let $u = \\sec x$, $dv = \\sec^2 x \\, dx$. Then $du = \\sec x \\tan x \\, dx$, $v = \\tan x$.\\n\\n$I = \\int \\sec^3 x \\, dx = \\sec x \\tan x - \\int \\tan x \\cdot \\sec x \\tan x \\, dx$\\n$= \\sec x \\tan x - \\int \\sec x \\tan^2 x \\, dx$\\n$= \\sec x \\tan x - \\int \\sec x(\\sec^2 x - 1) \\, dx$\\n$= \\sec x \\tan x - \\int \\sec^3 x \\, dx + \\int \\sec x \\, dx$\\n$I = \\sec x \\tan x - I + \\ln|\\sec x + \\tan x|$\\n$2I = \\sec x \\tan x + \\ln|\\sec x + \\tan x|$\\n$I = \\frac{1}{2}[\\sec x \\tan x + \\ln|\\sec x + \\tan x|] + C$"
+  },
+  {
+    "id": "math204-t3-ex12",
+    "subjectId": "math204",
+    "topicId": "math204-3",
+    "type": "written",
+    "difficulty": 5,
+    "title": "Challenge: Strategy Selection",
+    "description": "Evaluate $\\int \\frac{x^3}{\\sqrt{x^2+1}} \\, dx$",
+    "hints": [
+      "Try $u = x^2+1$ or use trig substitution."
+    ],
+    "solution": "Method 1 - Substitution: Let $u = x^2+1$, then $du = 2x \\, dx$ and $x^2 = u-1$.\\n\\n$\\int \\frac{x^3}{\\sqrt{x^2+1}} \\, dx = \\int \\frac{x^2 \\cdot x}{\\sqrt{x^2+1}} \\, dx = \\int \\frac{(u-1)}{\\sqrt{u}} \\cdot \\frac{1}{2} \\, du$\\n\\n$= \\frac{1}{2}\\int (u^{1/2} - u^{-1/2}) \\, du = \\frac{1}{2}\\left(\\frac{2u^{3/2}}{3} - 2u^{1/2}\\right) + C$\\n\\n$= \\frac{u^{3/2}}{3} - u^{1/2} + C = \\frac{(x^2+1)^{3/2}}{3} - \\sqrt{x^2+1} + C$\\n\\n$= \\frac{(x^2+1)^{3/2} - 3\\sqrt{x^2+1}}{3} + C = \\frac{\\sqrt{x^2+1}(x^2+1-3)}{3} + C = \\frac{(x^2-2)\\sqrt{x^2+1}}{3} + C$"
+  },
+  {
+    "id": "math204-t4-drill-1",
+    "subjectId": "math204",
+    "topicId": "math204-4",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Area Between Curves Formula",
+    "description": "State the formula for the area between curves $y = f(x)$ and $y = g(x)$ from $a$ to $b$ where $f(x) \\geq g(x)$.",
+    "hints": [
+      "Integrate the difference of the functions."
+    ],
+    "solution": "Area $= \\int_a^b [f(x) - g(x)] \\, dx$"
+  },
+  {
+    "id": "math204-t4-drill-2",
+    "subjectId": "math204",
+    "topicId": "math204-4",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Disk Method",
+    "description": "State the disk method formula for volume when rotating $y = f(x)$ about the x-axis from $a$ to $b$.",
+    "hints": [
+      "Volume uses $\\pi r^2$ for circular cross-sections."
+    ],
+    "solution": "$V = \\int_a^b \\pi [f(x)]^2 \\, dx$"
+  },
+  {
+    "id": "math204-t4-drill-3",
+    "subjectId": "math204",
+    "topicId": "math204-4",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Arc Length",
+    "description": "State the arc length formula for $y = f(x)$ from $a$ to $b$.",
+    "hints": [
+      "Use the Pythagorean theorem on infinitesimal segments."
+    ],
+    "solution": "$L = \\int_a^b \\sqrt{1 + [f'(x)]^2} \\, dx$"
+  },
+  {
+    "id": "math204-t4-drill-4",
+    "subjectId": "math204",
+    "topicId": "math204-4",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Shell Method",
+    "description": "State the shell method formula for rotating about the y-axis.",
+    "hints": [
+      "Shells have circumference $2\\pi r$ and height $h$."
+    ],
+    "solution": "$V = \\int_a^b 2\\pi x f(x) \\, dx$ where $x$ is the radius and $f(x)$ is the height"
+  },
+  {
+    "id": "math204-t4-ex01",
+    "subjectId": "math204",
+    "topicId": "math204-4",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Area Between Curves",
+    "description": "Find the area between $y = x^2$ and $y = x$ from $x = 0$ to $x = 1$.",
+    "hints": [
+      "Determine which function is on top.",
+      "$x \\geq x^2$ on $[0,1]$."
+    ],
+    "solution": "On $[0,1]$, $x \\geq x^2$, so:\\n\\nArea $= \\int_0^1 (x - x^2) \\, dx = \\left[\\frac{x^2}{2} - \\frac{x^3}{3}\\right]_0^1 = \\frac{1}{2} - \\frac{1}{3} = \\frac{1}{6}$"
+  },
+  {
+    "id": "math204-t4-ex02",
+    "subjectId": "math204",
+    "topicId": "math204-4",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Volume by Disks",
+    "description": "Find the volume when the region under $y = \\sqrt{x}$ from $x = 0$ to $x = 4$ is rotated about the x-axis.",
+    "hints": [
+      "Use the disk method with $r = \\sqrt{x}$."
+    ],
+    "solution": "$V = \\int_0^4 \\pi (\\sqrt{x})^2 \\, dx = \\pi \\int_0^4 x \\, dx = \\pi \\left[\\frac{x^2}{2}\\right]_0^4 = \\pi \\cdot 8 = 8\\pi$"
+  },
+  {
+    "id": "math204-t4-ex03",
+    "subjectId": "math204",
+    "topicId": "math204-4",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Volume by Washers",
+    "description": "Find the volume when the region between $y = x$ and $y = x^2$ from $x = 0$ to $x = 1$ is rotated about the x-axis.",
+    "hints": [
+      "Outer radius = $x$, inner radius = $x^2$."
+    ],
+    "solution": "$V = \\int_0^1 \\pi[(x)^2 - (x^2)^2] \\, dx = \\pi \\int_0^1 (x^2 - x^4) \\, dx$\\n\\n$= \\pi \\left[\\frac{x^3}{3} - \\frac{x^5}{5}\\right]_0^1 = \\pi\\left(\\frac{1}{3} - \\frac{1}{5}\\right) = \\frac{2\\pi}{15}$"
+  },
+  {
+    "id": "math204-t4-ex04",
+    "subjectId": "math204",
+    "topicId": "math204-4",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Volume by Shells",
+    "description": "Find the volume when the region under $y = x^2$ from $x = 0$ to $x = 2$ is rotated about the y-axis using shells.",
+    "hints": [
+      "Shell radius = $x$, height = $x^2$."
+    ],
+    "solution": "$V = \\int_0^2 2\\pi x \\cdot x^2 \\, dx = 2\\pi \\int_0^2 x^3 \\, dx = 2\\pi \\left[\\frac{x^4}{4}\\right]_0^2$\\n\\n$= 2\\pi \\cdot 4 = 8\\pi$"
+  },
+  {
+    "id": "math204-t4-ex05",
+    "subjectId": "math204",
+    "topicId": "math204-4",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Arc Length of Line",
+    "description": "Find the arc length of $y = 2x + 1$ from $x = 0$ to $x = 3$.",
+    "hints": [
+      "$f'(x) = 2$."
+    ],
+    "solution": "$L = \\int_0^3 \\sqrt{1 + (2)^2} \\, dx = \\int_0^3 \\sqrt{5} \\, dx = \\sqrt{5} [x]_0^3 = 3\\sqrt{5}$"
+  },
+  {
+    "id": "math204-t4-ex06",
+    "subjectId": "math204",
+    "topicId": "math204-4",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Arc Length of Parabola",
+    "description": "Set up (but do not evaluate) the integral for the arc length of $y = x^2$ from $x = 0$ to $x = 1$.",
+    "hints": [
+      "Find $f'(x)$ first."
+    ],
+    "solution": "$f'(x) = 2x$, so:\\n\\n$L = \\int_0^1 \\sqrt{1 + (2x)^2} \\, dx = \\int_0^1 \\sqrt{1 + 4x^2} \\, dx$"
+  },
+  {
+    "id": "math204-t4-ex07",
+    "subjectId": "math204",
+    "topicId": "math204-4",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Surface Area",
+    "description": "Find the surface area when $y = \\sqrt{x}$ from $x = 1$ to $x = 4$ is rotated about the x-axis.",
+    "hints": [
+      "Surface area: $S = \\int 2\\pi y \\sqrt{1 + (y')^2} \\, dx$."
+    ],
+    "solution": "$y = \\sqrt{x}$, so $y' = \\frac{1}{2\\sqrt{x}}$\\n\\n$S = \\int_1^4 2\\pi \\sqrt{x} \\sqrt{1 + \\frac{1}{4x}} \\, dx = 2\\pi \\int_1^4 \\sqrt{x + \\frac{1}{4}} \\, dx$\\n\\n$= 2\\pi \\int_1^4 \\frac{\\sqrt{4x+1}}{2} \\, dx = \\pi \\int_1^4 \\sqrt{4x+1} \\, dx$\\n\\nLet $u = 4x+1$: $= \\pi \\cdot \\frac{1}{4} \\cdot \\frac{2}{3}[u^{3/2}]_5^{17} = \\frac{\\pi}{6}(17^{3/2} - 5^{3/2})$"
+  },
+  {
+    "id": "math204-t4-ex08",
+    "subjectId": "math204",
+    "topicId": "math204-4",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Work - Spring Problem",
+    "description": "A spring with spring constant $k = 20$ N/m is stretched from its natural length to 0.5 m beyond. Find the work done.",
+    "hints": [
+      "Work = $\\int_0^{0.5} 20x \\, dx$."
+    ],
+    "solution": "$W = \\int_0^{0.5} 20x \\, dx = 20 \\left[\\frac{x^2}{2}\\right]_0^{0.5} = 10(0.25) = 2.5$ J"
+  },
+  {
+    "id": "math204-t4-ex09",
+    "subjectId": "math204",
+    "topicId": "math204-4",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Work - Pumping Water",
+    "description": "A cylindrical tank with radius 2 m and height 5 m is filled with water (density 1000 kg/m³). Set up the integral to find the work required to pump all water to the top.",
+    "hints": [
+      "Slice horizontally at height $y$. Each slice has volume $\\pi(2)^2 dy$ and must be lifted $(5-y)$ meters."
+    ],
+    "solution": "Weight of slice at height $y$: $dW = \\rho g \\cdot \\pi r^2 \\, dy = 1000 \\cdot 9.8 \\cdot 4\\pi \\, dy = 39200\\pi \\, dy$\\n\\nDistance to lift: $5 - y$\\n\\nWork: $W = \\int_0^5 39200\\pi (5-y) \\, dy = 39200\\pi \\int_0^5 (5-y) \\, dy$\\n\\n$= 39200\\pi \\left[5y - \\frac{y^2}{2}\\right]_0^5 = 39200\\pi(25 - 12.5) = 490000\\pi$ J"
+  },
+  {
+    "id": "math204-t4-ex10",
+    "subjectId": "math204",
+    "topicId": "math204-4",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Area Between Multiple Curves",
+    "description": "Find the area enclosed by $y = x^2 - 4$ and $y = 4 - x^2$.",
+    "hints": [
+      "First find intersection points."
+    ],
+    "solution": "Set equal: $x^2 - 4 = 4 - x^2$, so $2x^2 = 8$, thus $x = \\pm 2$\\n\\nOn $[-2, 2]$, $4 - x^2 \\geq x^2 - 4$\\n\\nArea $= \\int_{-2}^2 [(4-x^2) - (x^2-4)] \\, dx = \\int_{-2}^2 (8 - 2x^2) \\, dx$\\n\\n$= \\left[8x - \\frac{2x^3}{3}\\right]_{-2}^2 = \\left(16 - \\frac{16}{3}\\right) - \\left(-16 + \\frac{16}{3}\\right) = 32 - \\frac{32}{3} = \\frac{64}{3}$"
+  },
+  {
+    "id": "math204-t4-ex11",
+    "subjectId": "math204",
+    "topicId": "math204-4",
+    "type": "written",
+    "difficulty": 5,
+    "title": "Volume with Variable Axis",
+    "description": "Find the volume when the region between $y = x$ and $y = x^2$ is rotated about the line $y = 2$.",
+    "hints": [
+      "Washer method: outer radius = $2 - x^2$, inner radius = $2 - x$."
+    ],
+    "solution": "For $x \\in [0,1]$:\\n\\nOuter radius: $R = 2 - x^2$\\nInner radius: $r = 2 - x$\\n\\n$V = \\int_0^1 \\pi[(2-x^2)^2 - (2-x)^2] \\, dx$\\n\\n$= \\pi \\int_0^1 [(4 - 4x^2 + x^4) - (4 - 4x + x^2)] \\, dx$\\n\\n$= \\pi \\int_0^1 (x^4 - 5x^2 + 4x) \\, dx = \\pi \\left[\\frac{x^5}{5} - \\frac{5x^3}{3} + 2x^2\\right]_0^1$\\n\\n$= \\pi\\left(\\frac{1}{5} - \\frac{5}{3} + 2\\right) = \\pi\\left(\\frac{3 - 25 + 30}{15}\\right) = \\frac{8\\pi}{15}$"
+  },
+  {
+    "id": "math204-t4-ex12",
+    "subjectId": "math204",
+    "topicId": "math204-4",
+    "type": "written",
+    "difficulty": 5,
+    "title": "Challenge: Shells vs Disks",
+    "description": "Find the volume when the region bounded by $y = e^x$, $y = 0$, $x = 0$, and $x = 1$ is rotated about the y-axis using both methods.",
+    "hints": [
+      "Shells: easier. Disks: requires solving for $x$ in terms of $y$."
+    ],
+    "solution": "Shell Method: radius = $x$, height = $e^x$\\n\\n$V = \\int_0^1 2\\pi x e^x \\, dx$\\n\\nBy parts ($u=x, dv=e^x dx$):\\n$= 2\\pi[xe^x - e^x]_0^1 = 2\\pi[(e - e) - (0 - 1)] = 2\\pi$\\n\\nDisk Method: $x = \\ln y$, so $y \\in [1, e]$\\n\\n$V = \\int_1^e \\pi(\\ln y)^2 \\, dy$\\n\\nBy parts twice (omitted): this gives the same answer $2\\pi$"
+  },
+  {
+    "id": "math204-t5-drill-1",
+    "subjectId": "math204",
+    "topicId": "math204-5",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Improper Integral Definition",
+    "description": "What makes an integral \"improper\"?",
+    "hints": [
+      "Two main reasons."
+    ],
+    "solution": "An integral is improper if: (1) one or both limits of integration are infinite, or (2) the integrand has an infinite discontinuity in the interval."
+  },
+  {
+    "id": "math204-t5-drill-2",
+    "subjectId": "math204",
+    "topicId": "math204-5",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: p-Test",
+    "description": "For what values of $p$ does $\\int_1^\\infty \\frac{1}{x^p} \\, dx$ converge?",
+    "hints": [
+      "The p-test."
+    ],
+    "solution": "Converges if and only if $p > 1$."
+  },
+  {
+    "id": "math204-t5-drill-3",
+    "subjectId": "math204",
+    "topicId": "math204-5",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Basic Convergence",
+    "description": "Does $\\int_1^\\infty \\frac{1}{x} \\, dx$ converge or diverge?",
+    "hints": [
+      "Use the p-test with $p = 1$."
+    ],
+    "solution": "Diverges (by p-test with $p = 1$)."
+  },
+  {
+    "id": "math204-t5-drill-4",
+    "subjectId": "math204",
+    "topicId": "math204-5",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Evaluating Improper Integrals",
+    "description": "To evaluate $\\int_1^\\infty f(x) \\, dx$, we compute the limit of what?",
+    "hints": [
+      "Replace infinity with a variable."
+    ],
+    "solution": "$\\lim_{t \\to \\infty} \\int_1^t f(x) \\, dx$"
+  },
+  {
+    "id": "math204-t5-ex01",
+    "subjectId": "math204",
+    "topicId": "math204-5",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Evaluating Improper Integrals",
+    "description": "Evaluate: $\\int_1^\\infty \\frac{1}{x^2} \\, dx$",
+    "hints": [
+      "Take the limit as upper bound approaches infinity."
+    ],
+    "solution": "$\\int_1^\\infty \\frac{1}{x^2} \\, dx = \\lim_{t \\to \\infty} \\int_1^t x^{-2} \\, dx = \\lim_{t \\to \\infty} \\left[-\\frac{1}{x}\\right]_1^t$\\n\\n$= \\lim_{t \\to \\infty} \\left(-\\frac{1}{t} + 1\\right) = 0 + 1 = 1$"
+  },
+  {
+    "id": "math204-t5-ex02",
+    "subjectId": "math204",
+    "topicId": "math204-5",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Exponential Improper Integral",
+    "description": "Evaluate: $\\int_0^\\infty e^{-x} \\, dx$",
+    "hints": [
+      "Exponential decay converges."
+    ],
+    "solution": "$\\int_0^\\infty e^{-x} \\, dx = \\lim_{t \\to \\infty} \\int_0^t e^{-x} \\, dx = \\lim_{t \\to \\infty} [-e^{-x}]_0^t$\\n\\n$= \\lim_{t \\to \\infty} (-e^{-t} + 1) = 0 + 1 = 1$"
+  },
+  {
+    "id": "math204-t5-ex03",
+    "subjectId": "math204",
+    "topicId": "math204-5",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Discontinuity at Endpoint",
+    "description": "Evaluate: $\\int_0^1 \\frac{1}{\\sqrt{x}} \\, dx$",
+    "hints": [
+      "Infinite discontinuity at $x = 0$."
+    ],
+    "solution": "$\\int_0^1 \\frac{1}{\\sqrt{x}} \\, dx = \\lim_{t \\to 0^+} \\int_t^1 x^{-1/2} \\, dx = \\lim_{t \\to 0^+} [2\\sqrt{x}]_t^1$\\n\\n$= \\lim_{t \\to 0^+} (2 - 2\\sqrt{t}) = 2 - 0 = 2$"
+  },
+  {
+    "id": "math204-t5-ex04",
+    "subjectId": "math204",
+    "topicId": "math204-5",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Direct Comparison Test",
+    "description": "Show that $\\int_1^\\infty \\frac{1}{x^2+1} \\, dx$ converges using comparison.",
+    "hints": [
+      "Compare to $\\frac{1}{x^2}$."
+    ],
+    "solution": "For $x \\geq 1$: $x^2 + 1 > x^2$, so $\\frac{1}{x^2+1} < \\frac{1}{x^2}$\\n\\nSince $\\int_1^\\infty \\frac{1}{x^2} \\, dx$ converges (p-test with $p=2>1$), and $0 \\leq \\frac{1}{x^2+1} \\leq \\frac{1}{x^2}$, by Direct Comparison Test, $\\int_1^\\infty \\frac{1}{x^2+1} \\, dx$ converges."
+  },
+  {
+    "id": "math204-t5-ex05",
+    "subjectId": "math204",
+    "topicId": "math204-5",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Limit Comparison Test",
+    "description": "Determine if $\\int_1^\\infty \\frac{\\sqrt{x}}{x^2+1} \\, dx$ converges using limit comparison.",
+    "hints": [
+      "Compare to $\\frac{1}{x^{3/2}}$."
+    ],
+    "solution": "For large $x$, $\\frac{\\sqrt{x}}{x^2+1} \\approx \\frac{\\sqrt{x}}{x^2} = \\frac{1}{x^{3/2}}$\\n\\nLet $f(x) = \\frac{\\sqrt{x}}{x^2+1}$ and $g(x) = \\frac{1}{x^{3/2}}$\\n\\n$L = \\lim_{x \\to \\infty} \\frac{f(x)}{g(x)} = \\lim_{x \\to \\infty} \\frac{\\sqrt{x} \\cdot x^{3/2}}{x^2+1} = \\lim_{x \\to \\infty} \\frac{x^2}{x^2+1} = 1$\\n\\nSince $\\int_1^\\infty \\frac{1}{x^{3/2}} \\, dx$ converges ($p = 3/2 > 1$) and $L = 1 > 0$, by Limit Comparison Test, $\\int_1^\\infty \\frac{\\sqrt{x}}{x^2+1} \\, dx$ converges."
+  },
+  {
+    "id": "math204-t5-ex06",
+    "subjectId": "math204",
+    "topicId": "math204-5",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Both Limits Infinite",
+    "description": "Evaluate: $\\int_{-\\infty}^\\infty \\frac{1}{1+x^2} \\, dx$",
+    "hints": [
+      "Split at 0: $\\int_{-\\infty}^0 + \\int_0^\\infty$."
+    ],
+    "solution": "By symmetry: $\\int_{-\\infty}^\\infty \\frac{1}{1+x^2} \\, dx = 2\\int_0^\\infty \\frac{1}{1+x^2} \\, dx$\\n\\n$= 2\\lim_{t \\to \\infty} [\\arctan x]_0^t = 2\\lim_{t \\to \\infty} (\\arctan t - 0) = 2 \\cdot \\frac{\\pi}{2} = \\pi$"
+  },
+  {
+    "id": "math204-t5-ex07",
+    "subjectId": "math204",
+    "topicId": "math204-5",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Interior Discontinuity",
+    "description": "Evaluate: $\\int_0^3 \\frac{1}{x-1} \\, dx$",
+    "hints": [
+      "Discontinuity at $x = 1$. Must split there."
+    ],
+    "solution": "Discontinuity at $x = 1$, so:\\n\\n$\\int_0^3 \\frac{1}{x-1} \\, dx = \\lim_{t \\to 1^-} \\int_0^t \\frac{1}{x-1} \\, dx + \\lim_{s \\to 1^+} \\int_s^3 \\frac{1}{x-1} \\, dx$\\n\\n$= \\lim_{t \\to 1^-} [\\ln|x-1|]_0^t + \\lim_{s \\to 1^+} [\\ln|x-1|]_s^3$\\n\\n$= \\lim_{t \\to 1^-} (\\ln|t-1| - \\ln 1) + \\lim_{s \\to 1^+} (\\ln 2 - \\ln|s-1|)$\\n\\nBoth limits are $-\\infty$, so the integral **diverges**."
+  },
+  {
+    "id": "math204-t5-ex08",
+    "subjectId": "math204",
+    "topicId": "math204-5",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Comparison with Polynomial",
+    "description": "Determine if $\\int_2^\\infty \\frac{x+1}{x^3-1} \\, dx$ converges.",
+    "hints": [
+      "For large $x$, behaves like $\\frac{x}{x^3} = \\frac{1}{x^2}$."
+    ],
+    "solution": "For large $x$: $\\frac{x+1}{x^3-1} \\approx \\frac{x}{x^3} = \\frac{1}{x^2}$\\n\\nSince $\\int_2^\\infty \\frac{1}{x^2} \\, dx$ converges ($p=2>1$), and the behavior at infinity matches, by Limit Comparison Test, $\\int_2^\\infty \\frac{x+1}{x^3-1} \\, dx$ **converges**."
+  },
+  {
+    "id": "math204-t5-ex09",
+    "subjectId": "math204",
+    "topicId": "math204-5",
+    "type": "written",
+    "difficulty": 5,
+    "title": "Gamma Function",
+    "description": "Evaluate: $\\int_0^\\infty x e^{-x} \\, dx$",
+    "hints": [
+      "Use integration by parts."
+    ],
+    "solution": "Let $u = x$, $dv = e^{-x} \\, dx$. Then $du = dx$, $v = -e^{-x}$.\\n\\n$\\int_0^\\infty x e^{-x} \\, dx = \\lim_{t \\to \\infty} \\left[-xe^{-x}\\right]_0^t + \\int_0^\\infty e^{-x} \\, dx$\\n\\n$= \\lim_{t \\to \\infty} (-te^{-t} + 0) + [-e^{-x}]_0^\\infty$\\n\\n$= 0 + (0 - (-1)) = 1$"
+  },
+  {
+    "id": "math204-t5-ex10",
+    "subjectId": "math204",
+    "topicId": "math204-5",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Recognizing Divergence",
+    "description": "Does $\\int_1^\\infty \\frac{\\ln x}{x} \\, dx$ converge?",
+    "hints": [
+      "Substitute $u = \\ln x$."
+    ],
+    "solution": "Let $u = \\ln x$, then $du = \\frac{1}{x} \\, dx$. When $x = 1$, $u = 0$; as $x \\to \\infty$, $u \\to \\infty$.\\n\\n$\\int_1^\\infty \\frac{\\ln x}{x} \\, dx = \\int_0^\\infty u \\, du = \\lim_{t \\to \\infty} \\left[\\frac{u^2}{2}\\right]_0^t = \\lim_{t \\to \\infty} \\frac{t^2}{2} = \\infty$\\n\\nThe integral **diverges**."
+  },
+  {
+    "id": "math204-t5-ex11",
+    "subjectId": "math204",
+    "topicId": "math204-5",
+    "type": "written",
+    "difficulty": 5,
+    "title": "Laplace Transform",
+    "description": "Evaluate: $\\int_0^\\infty e^{-2x} \\sin x \\, dx$",
+    "hints": [
+      "Use integration by parts twice."
+    ],
+    "solution": "Let $I = \\int e^{-2x} \\sin x \\, dx$\\n\\nFirst by parts: $u = \\sin x$, $dv = e^{-2x} \\, dx$\\n$I = -\\frac{1}{2}e^{-2x}\\sin x + \\frac{1}{2}\\int e^{-2x}\\cos x \\, dx$\\n\\nSecond by parts on $\\int e^{-2x}\\cos x \\, dx$: $u = \\cos x$, $dv = e^{-2x} \\, dx$\\n$\\int e^{-2x}\\cos x \\, dx = -\\frac{1}{2}e^{-2x}\\cos x - \\frac{1}{2}I$\\n\\nSubstitute back:\\n$I = -\\frac{1}{2}e^{-2x}\\sin x + \\frac{1}{2}\\left(-\\frac{1}{2}e^{-2x}\\cos x - \\frac{1}{2}I\\right)$\\n$I = -\\frac{1}{2}e^{-2x}\\sin x - \\frac{1}{4}e^{-2x}\\cos x - \\frac{1}{4}I$\\n$\\frac{5}{4}I = -\\frac{e^{-2x}}{4}(2\\sin x + \\cos x)$\\n$I = -\\frac{e^{-2x}(2\\sin x + \\cos x)}{5}$\\n\\nEvaluate from 0 to $\\infty$:\\n$\\int_0^\\infty e^{-2x} \\sin x \\, dx = \\left[-\\frac{e^{-2x}(2\\sin x + \\cos x)}{5}\\right]_0^\\infty = 0 - \\left(-\\frac{1}{5}\\right) = \\frac{1}{5}$"
+  },
+  {
+    "id": "math204-t5-ex12",
+    "subjectId": "math204",
+    "topicId": "math204-5",
+    "type": "written",
+    "difficulty": 5,
+    "title": "Challenge: Parameter Dependency",
+    "description": "For what values of $a$ does $\\int_0^1 \\frac{1}{x^a} \\, dx$ converge?",
+    "hints": [
+      "Discontinuity at $x = 0$. Evaluate the limit."
+    ],
+    "solution": "$\\int_0^1 \\frac{1}{x^a} \\, dx = \\lim_{t \\to 0^+} \\int_t^1 x^{-a} \\, dx$\\n\\nIf $a \\neq 1$:\\n$= \\lim_{t \\to 0^+} \\left[\\frac{x^{1-a}}{1-a}\\right]_t^1 = \\lim_{t \\to 0^+} \\frac{1 - t^{1-a}}{1-a}$\\n\\nThis converges if $1-a > 0$, i.e., $a < 1$.\\n\\nIf $a = 1$: $\\int_0^1 \\frac{1}{x} \\, dx = \\lim_{t \\to 0^+} [\\ln x]_t^1 = \\lim_{t \\to 0^+} (0 - \\ln t) = \\infty$, diverges.\\n\\n**Answer**: Converges for $a < 1$."
+  },
+  {
+    "id": "math204-t6-drill-1",
+    "subjectId": "math204",
+    "topicId": "math204-6",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Sequence Limit",
+    "description": "Find $\\lim_{n \\to \\infty} \\frac{1}{n}$.",
+    "hints": [
+      "As n grows, what happens to 1/n?"
+    ],
+    "solution": "$\\lim_{n \\to \\infty} \\frac{1}{n} = 0$"
+  },
+  {
+    "id": "math204-t6-drill-2",
+    "subjectId": "math204",
+    "topicId": "math204-6",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Geometric Series",
+    "description": "What is the sum of $\\sum_{n=0}^\\infty r^n$ when $|r| < 1$?",
+    "hints": [
+      "Geometric series formula."
+    ],
+    "solution": "$\\frac{1}{1-r}$"
+  },
+  {
+    "id": "math204-t6-drill-3",
+    "subjectId": "math204",
+    "topicId": "math204-6",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Divergence Test",
+    "description": "If $\\lim_{n \\to \\infty} a_n \\neq 0$, what can we conclude about $\\sum a_n$?",
+    "hints": [
+      "The nth term test."
+    ],
+    "solution": "The series $\\sum a_n$ diverges."
+  },
+  {
+    "id": "math204-t6-drill-4",
+    "subjectId": "math204",
+    "topicId": "math204-6",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Ratio Test",
+    "description": "In the Ratio Test, if $L < 1$, what do we conclude?",
+    "hints": [
+      "Ratio test conclusion."
+    ],
+    "solution": "The series converges absolutely."
+  },
+  {
+    "id": "math204-t6-ex01",
+    "subjectId": "math204",
+    "topicId": "math204-6",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Sequence Limits",
+    "description": "Find the following limits:\n\n(a) $\\lim_{n \\to \\infty} \\frac{n}{n+1}$\n\n(b) $\\lim_{n \\to \\infty} \\frac{n^2}{2n^2+1}$",
+    "hints": [
+      "Divide numerator and denominator by highest power of n."
+    ],
+    "solution": "(a) $\\lim_{n \\to \\infty} \\frac{n}{n+1} = \\lim_{n \\to \\infty} \\frac{1}{1+1/n} = \\frac{1}{1+0} = 1$\\n\\n(b) $\\lim_{n \\to \\infty} \\frac{n^2}{2n^2+1} = \\lim_{n \\to \\infty} \\frac{1}{2+1/n^2} = \\frac{1}{2}$"
+  },
+  {
+    "id": "math204-t6-ex02",
+    "subjectId": "math204",
+    "topicId": "math204-6",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Geometric Series Sum",
+    "description": "Find the sum: $\\sum_{n=0}^\\infty \\left(\\frac{1}{3}\\right)^n$",
+    "hints": [
+      "Use the geometric series formula with $r = 1/3$."
+    ],
+    "solution": "This is a geometric series with $a = 1$ and $r = 1/3$.\\n\\nSince $|r| = 1/3 < 1$, it converges to:\\n\\n$S = \\frac{a}{1-r} = \\frac{1}{1-1/3} = \\frac{1}{2/3} = \\frac{3}{2}$"
+  },
+  {
+    "id": "math204-t6-ex03",
+    "subjectId": "math204",
+    "topicId": "math204-6",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Divergence Test",
+    "description": "Determine if $\\sum_{n=1}^\\infty \\frac{n}{n+1}$ converges or diverges.",
+    "hints": [
+      "Check if the terms approach 0."
+    ],
+    "solution": "$\\lim_{n \\to \\infty} \\frac{n}{n+1} = 1 \\neq 0$\\n\\nBy the Divergence Test (nth Term Test), the series **diverges**."
+  },
+  {
+    "id": "math204-t6-ex04",
+    "subjectId": "math204",
+    "topicId": "math204-6",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Integral Test",
+    "description": "Use the Integral Test to determine if $\\sum_{n=1}^\\infty \\frac{1}{n^2}$ converges.",
+    "hints": [
+      "Compare to $\\int_1^\\infty \\frac{1}{x^2} \\, dx$."
+    ],
+    "solution": "Let $f(x) = \\frac{1}{x^2}$, which is positive, continuous, and decreasing for $x \\geq 1$.\\n\\n$\\int_1^\\infty \\frac{1}{x^2} \\, dx = \\lim_{t \\to \\infty} [-\\frac{1}{x}]_1^t = \\lim_{t \\to \\infty} (-\\frac{1}{t} + 1) = 1$\\n\\nSince the integral converges, by the Integral Test, $\\sum_{n=1}^\\infty \\frac{1}{n^2}$ **converges**."
+  },
+  {
+    "id": "math204-t6-ex05",
+    "subjectId": "math204",
+    "topicId": "math204-6",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Comparison Test",
+    "description": "Determine if $\\sum_{n=1}^\\infty \\frac{1}{2^n + n}$ converges.",
+    "hints": [
+      "Compare to $\\sum \\frac{1}{2^n}$."
+    ],
+    "solution": "For $n \\geq 1$: $2^n + n \\geq 2^n$, so $\\frac{1}{2^n+n} \\leq \\frac{1}{2^n}$\\n\\n$\\sum_{n=1}^\\infty \\frac{1}{2^n}$ is a geometric series with $r = 1/2 < 1$, so it converges.\\n\\nBy the Direct Comparison Test, $\\sum_{n=1}^\\infty \\frac{1}{2^n+n}$ **converges**."
+  },
+  {
+    "id": "math204-t6-ex06",
+    "subjectId": "math204",
+    "topicId": "math204-6",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Alternating Series Test",
+    "description": "Determine if $\\sum_{n=1}^\\infty \\frac{(-1)^n}{n}$ converges.",
+    "hints": [
+      "Use the Alternating Series Test."
+    ],
+    "solution": "The series alternates. Check: (1) $a_n = \\frac{1}{n} > 0$, (2) $a_n$ is decreasing, (3) $\\lim_{n \\to \\infty} a_n = 0$.\\n\\nAll conditions satisfied, so by the Alternating Series Test, the series **converges**.\\n\\n(This is the alternating harmonic series.)"
+  },
+  {
+    "id": "math204-t6-ex07",
+    "subjectId": "math204",
+    "topicId": "math204-6",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Ratio Test",
+    "description": "Use the Ratio Test to determine if $\\sum_{n=1}^\\infty \\frac{n!}{n^n}$ converges.",
+    "hints": [
+      "Compute $\\lim |a_{n+1}/a_n|$."
+    ],
+    "solution": "$a_n = \\frac{n!}{n^n}$, so:\\n\\n$\\frac{a_{n+1}}{a_n} = \\frac{(n+1)!}{(n+1)^{n+1}} \\cdot \\frac{n^n}{n!} = \\frac{(n+1)n^n}{(n+1)^{n+1}} = \\frac{n^n}{(n+1)^n} = \\left(\\frac{n}{n+1}\\right)^n = \\left(\\frac{1}{1+1/n}\\right)^n$\\n\\n$L = \\lim_{n \\to \\infty} \\left(\\frac{1}{1+1/n}\\right)^n = \\frac{1}{e} < 1$\\n\\nBy the Ratio Test, the series **converges**."
+  },
+  {
+    "id": "math204-t6-ex08",
+    "subjectId": "math204",
+    "topicId": "math204-6",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Root Test",
+    "description": "Use the Root Test on $\\sum_{n=1}^\\infty \\left(\\frac{2n+1}{3n+2}\\right)^n$.",
+    "hints": [
+      "Compute $\\lim \\sqrt[n]{|a_n|}$."
+    ],
+    "solution": "$a_n = \\left(\\frac{2n+1}{3n+2}\\right)^n$\\n\\n$\\sqrt[n]{|a_n|} = \\frac{2n+1}{3n+2}$\\n\\n$L = \\lim_{n \\to \\infty} \\frac{2n+1}{3n+2} = \\lim_{n \\to \\infty} \\frac{2+1/n}{3+2/n} = \\frac{2}{3} < 1$\\n\\nBy the Root Test, the series **converges**."
+  },
+  {
+    "id": "math204-t6-ex09",
+    "subjectId": "math204",
+    "topicId": "math204-6",
+    "type": "written",
+    "difficulty": 5,
+    "title": "Absolute vs Conditional Convergence",
+    "description": "Determine if $\\sum_{n=1}^\\infty \\frac{(-1)^n}{n}$ converges absolutely or conditionally.",
+    "hints": [
+      "Check if $\\sum |a_n|$ converges."
+    ],
+    "solution": "We know $\\sum_{n=1}^\\infty \\frac{(-1)^n}{n}$ converges (alternating harmonic series).\\n\\nCheck absolute convergence: $\\sum_{n=1}^\\infty \\left|\\frac{(-1)^n}{n}\\right| = \\sum_{n=1}^\\infty \\frac{1}{n}$\\n\\nThis is the harmonic series, which **diverges**.\\n\\nSince the original series converges but the absolute series diverges, the series is **conditionally convergent**."
+  },
+  {
+    "id": "math204-t6-ex10",
+    "subjectId": "math204",
+    "topicId": "math204-6",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Limit Comparison Test",
+    "description": "Use Limit Comparison to test $\\sum_{n=1}^\\infty \\frac{n+1}{n^3+2}$.",
+    "hints": [
+      "Compare to $\\sum \\frac{1}{n^2}$."
+    ],
+    "solution": "For large $n$, $\\frac{n+1}{n^3+2} \\approx \\frac{n}{n^3} = \\frac{1}{n^2}$\\n\\nLet $a_n = \\frac{n+1}{n^3+2}$ and $b_n = \\frac{1}{n^2}$:\\n\\n$L = \\lim_{n \\to \\infty} \\frac{a_n}{b_n} = \\lim_{n \\to \\infty} \\frac{(n+1)n^2}{n^3+2} = \\lim_{n \\to \\infty} \\frac{n^3+n^2}{n^3+2} = 1$\\n\\nSince $\\sum \\frac{1}{n^2}$ converges (p-series, $p=2>1$) and $L = 1$ (finite and positive), by Limit Comparison Test, $\\sum_{n=1}^\\infty \\frac{n+1}{n^3+2}$ **converges**."
+  },
+  {
+    "id": "math204-t6-ex11",
+    "subjectId": "math204",
+    "topicId": "math204-6",
+    "type": "written",
+    "difficulty": 5,
+    "title": "Telescoping Series",
+    "description": "Find the sum: $\\sum_{n=1}^\\infty \\left(\\frac{1}{n} - \\frac{1}{n+1}\\right)$",
+    "hints": [
+      "Write out the first few partial sums."
+    ],
+    "solution": "Partial sums:\\n$S_1 = \\frac{1}{1} - \\frac{1}{2}$\\n$S_2 = \\left(\\frac{1}{1} - \\frac{1}{2}\\right) + \\left(\\frac{1}{2} - \\frac{1}{3}\\right) = 1 - \\frac{1}{3}$\\n$S_3 = 1 - \\frac{1}{4}$\\n\\nGeneral: $S_n = 1 - \\frac{1}{n+1}$\\n\\n$\\sum_{n=1}^\\infty \\left(\\frac{1}{n} - \\frac{1}{n+1}\\right) = \\lim_{n \\to \\infty} S_n = \\lim_{n \\to \\infty} \\left(1 - \\frac{1}{n+1}\\right) = 1$"
+  },
+  {
+    "id": "math204-t6-ex12",
+    "subjectId": "math204",
+    "topicId": "math204-6",
+    "type": "written",
+    "difficulty": 5,
+    "title": "Challenge: Multiple Tests",
+    "description": "Determine if $\\sum_{n=2}^\\infty \\frac{1}{n(\\ln n)^2}$ converges.",
+    "hints": [
+      "Use the Integral Test with $u = \\ln x$."
+    ],
+    "solution": "Let $f(x) = \\frac{1}{x(\\ln x)^2}$ for $x \\geq 2$. This is positive, continuous, and decreasing.\\n\\n$\\int_2^\\infty \\frac{1}{x(\\ln x)^2} \\, dx$\\n\\nLet $u = \\ln x$, then $du = \\frac{1}{x} \\, dx$. When $x = 2$, $u = \\ln 2$; as $x \\to \\infty$, $u \\to \\infty$.\\n\\n$= \\int_{\\ln 2}^\\infty \\frac{1}{u^2} \\, du = \\lim_{t \\to \\infty} \\left[-\\frac{1}{u}\\right]_{\\ln 2}^t = \\lim_{t \\to \\infty} \\left(-\\frac{1}{t} + \\frac{1}{\\ln 2}\\right) = \\frac{1}{\\ln 2}$\\n\\nSince the integral converges, by the Integral Test, $\\sum_{n=2}^\\infty \\frac{1}{n(\\ln n)^2}$ **converges**."
+  },
+  {
+    "id": "math204-t7-drill-1",
+    "subjectId": "math204",
+    "topicId": "math204-7",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Power Series Form",
+    "description": "Write the general form of a power series centered at $c$.",
+    "hints": [
+      "Include the summation notation."
+    ],
+    "solution": "$\\sum_{n=0}^\\infty a_n(x-c)^n$"
+  },
+  {
+    "id": "math204-t7-drill-2",
+    "subjectId": "math204",
+    "topicId": "math204-7",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Maclaurin vs Taylor",
+    "description": "What is the difference between a Maclaurin series and a Taylor series?",
+    "hints": [
+      "Consider the center point."
+    ],
+    "solution": "A Maclaurin series is a Taylor series centered at $a = 0$."
+  },
+  {
+    "id": "math204-t7-drill-3",
+    "subjectId": "math204",
+    "topicId": "math204-7",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Taylor Series Formula",
+    "description": "Write the formula for the Taylor series of $f(x)$ centered at $a$.",
+    "hints": [
+      "Include derivatives."
+    ],
+    "solution": "$\\sum_{n=0}^\\infty \\frac{f^{(n)}(a)}{n!}(x-a)^n$"
+  },
+  {
+    "id": "math204-t7-drill-4",
+    "subjectId": "math204",
+    "topicId": "math204-7",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Radius of Convergence",
+    "description": "What does the radius of convergence tell us?",
+    "hints": [
+      "Where does the series converge?"
+    ],
+    "solution": "The radius $R$ gives the interval $(c-R, c+R)$ where the power series converges."
+  },
+  {
+    "id": "math204-t7-ex01",
+    "subjectId": "math204",
+    "topicId": "math204-7",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Radius of Convergence",
+    "description": "Find the radius of convergence for $\\sum_{n=0}^\\infty \\frac{x^n}{n!}$.",
+    "hints": [
+      "Use the Ratio Test."
+    ],
+    "solution": "$a_n = \\frac{1}{n!}$\\n\\n$\\lim_{n \\to \\infty} \\left|\\frac{a_{n+1}}{a_n}\\right| = \\lim_{n \\to \\infty} \\frac{n!}{(n+1)!} = \\lim_{n \\to \\infty} \\frac{1}{n+1} = 0$\\n\\n$L|x| = 0 < 1$ for all $x$, so the radius of convergence is $R = \\infty$."
+  },
+  {
+    "id": "math204-t7-ex02",
+    "subjectId": "math204",
+    "topicId": "math204-7",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Interval of Convergence",
+    "description": "Find the interval of convergence for $\\sum_{n=1}^\\infty \\frac{x^n}{n}$.",
+    "hints": [
+      "Use Ratio Test, then check endpoints."
+    ],
+    "solution": "Ratio Test:\\n$L = \\lim_{n \\to \\infty} \\left|\\frac{a_{n+1}x^{n+1}}{a_n x^n}\\right| = \\lim_{n \\to \\infty} \\frac{n}{n+1}|x| = |x|$\\n\\nConverges when $|x| < 1$, so $R = 1$.\\n\\nCheck endpoints:\\nAt $x = 1$: $\\sum \\frac{1}{n}$ diverges (harmonic series).\\nAt $x = -1$: $\\sum \\frac{(-1)^n}{n}$ converges (alternating harmonic).\\n\\n**Interval of convergence**: $[-1, 1)$"
+  },
+  {
+    "id": "math204-t7-ex03",
+    "subjectId": "math204",
+    "topicId": "math204-7",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Geometric Series as Power Series",
+    "description": "Express $\\frac{1}{1-x}$ as a power series and state its radius of convergence.",
+    "hints": [
+      "Use the geometric series formula."
+    ],
+    "solution": "$\\frac{1}{1-x} = \\sum_{n=0}^\\infty x^n$ for $|x| < 1$\\n\\n**Radius of convergence**: $R = 1$"
+  },
+  {
+    "id": "math204-t7-ex04",
+    "subjectId": "math204",
+    "topicId": "math204-7",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Maclaurin Series for e^x",
+    "description": "Derive the first 4 terms of the Maclaurin series for $f(x) = e^x$.",
+    "hints": [
+      "Compute $f(0), f'(0), f''(0), f'''(0)$."
+    ],
+    "solution": "$f(x) = e^x, f(0) = 1$\\n$f'(x) = e^x, f'(0) = 1$\\n$f''(x) = e^x, f''(0) = 1$\\n$f'''(x) = e^x, f'''(0) = 1$\\n\\n$e^x = 1 + \\frac{x}{1!} + \\frac{x^2}{2!} + \\frac{x^3}{3!} + \\cdots = \\sum_{n=0}^\\infty \\frac{x^n}{n!}$\\n\\nFirst 4 terms: $1 + x + \\frac{x^2}{2} + \\frac{x^3}{6}$"
+  },
+  {
+    "id": "math204-t7-ex05",
+    "subjectId": "math204",
+    "topicId": "math204-7",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Maclaurin Series for sin(x)",
+    "description": "Write the Maclaurin series for $\\sin x$.",
+    "hints": [
+      "Derivatives of sine cycle through sine and cosine."
+    ],
+    "solution": "$f(x) = \\sin x, f(0) = 0$\\n$f'(x) = \\cos x, f'(0) = 1$\\n$f''(x) = -\\sin x, f''(0) = 0$\\n$f'''(x) = -\\cos x, f'''(0) = -1$\\n$f^{(4)}(x) = \\sin x, f^{(4)}(0) = 0$\\n\\nPattern: only odd powers, alternating signs\\n\\n$\\sin x = \\sum_{n=0}^\\infty \\frac{(-1)^n x^{2n+1}}{(2n+1)!} = x - \\frac{x^3}{3!} + \\frac{x^5}{5!} - \\frac{x^7}{7!} + \\cdots$"
+  },
+  {
+    "id": "math204-t7-ex06",
+    "subjectId": "math204",
+    "topicId": "math204-7",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Maclaurin Series for cos(x)",
+    "description": "Write the Maclaurin series for $\\cos x$.",
+    "hints": [
+      "Similar to sine, but starts differently."
+    ],
+    "solution": "$f(x) = \\cos x, f(0) = 1$\\n$f'(x) = -\\sin x, f'(0) = 0$\\n$f''(x) = -\\cos x, f''(0) = -1$\\n$f'''(x) = \\sin x, f'''(0) = 0$\\n\\nPattern: only even powers, alternating signs\\n\\n$\\cos x = \\sum_{n=0}^\\infty \\frac{(-1)^n x^{2n}}{(2n)!} = 1 - \\frac{x^2}{2!} + \\frac{x^4}{4!} - \\frac{x^6}{6!} + \\cdots$"
+  },
+  {
+    "id": "math204-t7-ex07",
+    "subjectId": "math204",
+    "topicId": "math204-7",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Taylor Polynomial Approximation",
+    "description": "Find the 3rd degree Taylor polynomial for $f(x) = \\ln x$ centered at $a = 1$.",
+    "hints": [
+      "Compute derivatives at $x = 1$."
+    ],
+    "solution": "$f(x) = \\ln x, f(1) = 0$\\n$f'(x) = \\frac{1}{x}, f'(1) = 1$\\n$f''(x) = -\\frac{1}{x^2}, f''(1) = -1$\\n$f'''(x) = \\frac{2}{x^3}, f'''(1) = 2$\\n\\n$P_3(x) = 0 + 1(x-1) + \\frac{-1}{2!}(x-1)^2 + \\frac{2}{3!}(x-1)^3$\\n\\n$= (x-1) - \\frac{(x-1)^2}{2} + \\frac{(x-1)^3}{3}$"
+  },
+  {
+    "id": "math204-t7-ex08",
+    "subjectId": "math204",
+    "topicId": "math204-7",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Operations on Power Series",
+    "description": "Find the power series for $f(x) = \\frac{1}{1+x^2}$ by modifying the geometric series.",
+    "hints": [
+      "Use $\\frac{1}{1-u} = \\sum u^n$ with $u = -x^2$."
+    ],
+    "solution": "$\\frac{1}{1+x^2} = \\frac{1}{1-(-x^2)} = \\sum_{n=0}^\\infty (-x^2)^n = \\sum_{n=0}^\\infty (-1)^n x^{2n}$\\n\\n$= 1 - x^2 + x^4 - x^6 + \\cdots$ for $|x| < 1$"
+  },
+  {
+    "id": "math204-t7-ex09",
+    "subjectId": "math204",
+    "topicId": "math204-7",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Integration of Power Series",
+    "description": "Find the power series for $\\arctan x$ by integrating the series for $\\frac{1}{1+x^2}$.",
+    "hints": [
+      "$\\arctan x = \\int \\frac{1}{1+x^2} \\, dx$."
+    ],
+    "solution": "From previous: $\\frac{1}{1+x^2} = \\sum_{n=0}^\\infty (-1)^n x^{2n}$\\n\\nIntegrate term by term:\\n$\\arctan x = \\int \\sum_{n=0}^\\infty (-1)^n x^{2n} \\, dx = \\sum_{n=0}^\\infty \\frac{(-1)^n x^{2n+1}}{2n+1} + C$\\n\\nUsing $\\arctan(0) = 0$, we have $C = 0$.\\n\\n$\\arctan x = \\sum_{n=0}^\\infty \\frac{(-1)^n x^{2n+1}}{2n+1} = x - \\frac{x^3}{3} + \\frac{x^5}{5} - \\frac{x^7}{7} + \\cdots$"
+  },
+  {
+    "id": "math204-t7-ex10",
+    "subjectId": "math204",
+    "topicId": "math204-7",
+    "type": "written",
+    "difficulty": 5,
+    "title": "Differentiation of Power Series",
+    "description": "Find the power series for $\\cos x$ by differentiating the series for $\\sin x$.",
+    "hints": [
+      "Differentiate $\\sin x = \\sum \\frac{(-1)^n x^{2n+1}}{(2n+1)!}$ term by term."
+    ],
+    "solution": "$\\sin x = \\sum_{n=0}^\\infty \\frac{(-1)^n x^{2n+1}}{(2n+1)!}$\\n\\nDifferentiate:\\n$\\cos x = \\frac{d}{dx}[\\sin x] = \\sum_{n=0}^\\infty \\frac{(-1)^n (2n+1)x^{2n}}{(2n+1)!} = \\sum_{n=0}^\\infty \\frac{(-1)^n x^{2n}}{(2n)!}$\\n\\n$= 1 - \\frac{x^2}{2!} + \\frac{x^4}{4!} - \\cdots$"
+  },
+  {
+    "id": "math204-t7-ex11",
+    "subjectId": "math204",
+    "topicId": "math204-7",
+    "type": "written",
+    "difficulty": 5,
+    "title": "Error Estimation",
+    "description": "Estimate $e^{0.5}$ using the 3rd degree Taylor polynomial and bound the error.",
+    "hints": [
+      "Use $P_3(x) = 1 + x + \\frac{x^2}{2} + \\frac{x^3}{6}$ and Lagrange remainder."
+    ],
+    "solution": "$P_3(0.5) = 1 + 0.5 + \\frac{(0.5)^2}{2} + \\frac{(0.5)^3}{6}$\\n$= 1 + 0.5 + 0.125 + 0.020833... \\approx 1.6458$\\n\\nError bound: $|R_3(x)| \\leq \\frac{M|x|^{n+1}}{(n+1)!}$ where $M = \\max|f^{(4)}(c)|$ for $c$ between 0 and 0.5.\\n\\nSince $f^{(4)}(x) = e^x$ and $e^x < e^{0.5} < 2$ on $[0, 0.5]$, we have $M = 2$.\\n\\n$|R_3(0.5)| \\leq \\frac{2(0.5)^4}{4!} = \\frac{2 \\cdot 0.0625}{24} = \\frac{0.125}{24} \\approx 0.0052$\\n\\nSo $e^{0.5} \\approx 1.6458 \\pm 0.0052$ (actual: $e^{0.5} \\approx 1.6487$)"
+  },
+  {
+    "id": "math204-t7-ex12",
+    "subjectId": "math204",
+    "topicId": "math204-7",
+    "type": "written",
+    "difficulty": 5,
+    "title": "Challenge: Binomial Series",
+    "description": "Find the first 4 terms of the Maclaurin series for $f(x) = \\sqrt{1+x}$.",
+    "hints": [
+      "Use the binomial series $(1+x)^{1/2}$ or compute derivatives."
+    ],
+    "solution": "Method 1 - Derivatives:\\n$f(x) = (1+x)^{1/2}, f(0) = 1$\\n$f'(x) = \\frac{1}{2}(1+x)^{-1/2}, f'(0) = \\frac{1}{2}$\\n$f''(x) = -\\frac{1}{4}(1+x)^{-3/2}, f''(0) = -\\frac{1}{4}$\\n$f'''(x) = \\frac{3}{8}(1+x)^{-5/2}, f'''(0) = \\frac{3}{8}$\\n\\n$\\sqrt{1+x} = 1 + \\frac{1}{2}x + \\frac{-1/4}{2!}x^2 + \\frac{3/8}{3!}x^3 + \\cdots$\\n\\n$= 1 + \\frac{x}{2} - \\frac{x^2}{8} + \\frac{x^3}{16} - \\cdots$\\n\\nMethod 2 - Binomial Series:\\n$(1+x)^{1/2} = \\sum_{n=0}^\\infty \\binom{1/2}{n}x^n = 1 + \\frac{1}{2}x + \\frac{(1/2)(-1/2)}{2!}x^2 + \\frac{(1/2)(-1/2)(-3/2)}{3!}x^3 + \\cdots$"
+  }
+]

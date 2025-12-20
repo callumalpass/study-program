@@ -1,0 +1,1535 @@
+[
+  {
+    "id": "cs203-topic-1-quiz-1",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-1",
+    "title": "DFA Fundamentals",
+    "questions": [
+      {
+        "id": "cs203-t1-q1-1",
+        "type": "multiple_choice",
+        "prompt": "Which of the following is NOT a component of a DFA?",
+        "options": [
+          "Set of states Q",
+          "Input alphabet Σ",
+          "Stack alphabet Γ",
+          "Transition function δ"
+        ],
+        "correctAnswer": 2,
+        "explanation": "A DFA consists of (Q, Σ, δ, q₀, F). Stack alphabet Γ is a component of pushdown automata, not DFAs."
+      },
+      {
+        "id": "cs203-t1-q1-2",
+        "type": "multiple_choice",
+        "prompt": "In a DFA, the transition function δ maps to:",
+        "options": [
+          "A set of states",
+          "Exactly one state",
+          "Zero or more states",
+          "The empty set"
+        ],
+        "correctAnswer": 1,
+        "explanation": "In a DFA, δ: Q × Σ → Q maps each (state, symbol) pair to exactly one state, making it deterministic."
+      },
+      {
+        "id": "cs203-t1-q1-3",
+        "type": "multiple_choice",
+        "prompt": "A string is accepted by a DFA if:",
+        "options": [
+          "It visits at least one accepting state",
+          "The computation ends in an accepting state",
+          "All states visited are accepting states",
+          "The string length equals the number of states"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A DFA accepts a string if and only if the final state after processing the entire string is in F (the set of accepting states)."
+      },
+      {
+        "id": "cs203-t1-q1-4",
+        "type": "multiple_choice",
+        "prompt": "What distinguishes an NFA from a DFA?",
+        "options": [
+          "NFAs can have multiple start states",
+          "NFAs can have ε-transitions and multiple transitions on the same symbol",
+          "NFAs have infinite states",
+          "NFAs cannot accept the empty string"
+        ],
+        "correctAnswer": 1,
+        "explanation": "NFAs allow ε-transitions (transitions without consuming input) and multiple transitions from a state on the same input symbol."
+      },
+      {
+        "id": "cs203-t1-q1-5",
+        "type": "multiple_choice",
+        "prompt": "The subset construction algorithm converts:",
+        "options": [
+          "DFA to NFA",
+          "NFA to DFA",
+          "NFA to regular expression",
+          "DFA to PDA"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Subset construction (powerset construction) converts an NFA to an equivalent DFA by tracking sets of NFA states."
+      }
+    ]
+  },
+  {
+    "id": "cs203-topic-1-quiz-2",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-1",
+    "title": "DFA Minimization and State Elimination",
+    "questions": [
+      {
+        "id": "cs203-t1-q2-1",
+        "type": "multiple_choice",
+        "prompt": "Two states p and q are distinguishable if:",
+        "options": [
+          "They have different incoming transitions",
+          "There exists a string w where exactly one of δ*(p,w) and δ*(q,w) is accepting",
+          "They have the same outgoing transitions",
+          "One is the start state"
+        ],
+        "correctAnswer": 1,
+        "explanation": "States are distinguishable if some string w leads from one to an accepting state and from the other to a rejecting state."
+      },
+      {
+        "id": "cs203-t1-q2-2",
+        "type": "multiple_choice",
+        "prompt": "The minimal DFA for a regular language is:",
+        "options": [
+          "Always exponentially smaller than any NFA",
+          "Unique up to isomorphism",
+          "Always has exactly n states for n-symbol alphabet",
+          "Not guaranteed to exist"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The Myhill-Nerode theorem guarantees a unique minimal DFA (up to state renaming) for each regular language."
+      },
+      {
+        "id": "cs203-t1-q2-3",
+        "type": "multiple_choice",
+        "prompt": "State elimination is used to:",
+        "options": [
+          "Minimize a DFA",
+          "Convert a DFA to a regular expression",
+          "Convert an NFA to a DFA",
+          "Remove unreachable states"
+        ],
+        "correctAnswer": 1,
+        "explanation": "State elimination systematically removes states from a GNFA while preserving the language, eventually yielding a regular expression."
+      },
+      {
+        "id": "cs203-t1-q2-4",
+        "type": "multiple_choice",
+        "prompt": "What is the worst-case blowup when converting an NFA with n states to a DFA?",
+        "options": [
+          "O(n)",
+          "O(n²)",
+          "O(2ⁿ)",
+          "O(n!)"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Subset construction can produce up to 2ⁿ states since each DFA state corresponds to a subset of the n NFA states."
+      },
+      {
+        "id": "cs203-t1-q2-5",
+        "type": "multiple_choice",
+        "prompt": "The table-filling algorithm for DFA minimization has time complexity:",
+        "options": [
+          "O(n)",
+          "O(n log n)",
+          "O(n²)",
+          "O(2ⁿ)"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The table-filling algorithm examines all pairs of states, giving O(n²) complexity where n is the number of states."
+      }
+    ]
+  },
+  {
+    "id": "cs203-topic-1-quiz-3",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-1",
+    "title": "Closure Properties and Pumping Lemma",
+    "questions": [
+      {
+        "id": "cs203-t1-q3-1",
+        "type": "multiple_choice",
+        "prompt": "Regular languages are closed under:",
+        "options": [
+          "Union only",
+          "Intersection only",
+          "Union, intersection, and complement",
+          "None of the above"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Regular languages are closed under all Boolean operations including union, intersection, complement, as well as concatenation and Kleene star."
+      },
+      {
+        "id": "cs203-t1-q3-2",
+        "type": "multiple_choice",
+        "prompt": "The pumping lemma is used to:",
+        "options": [
+          "Prove a language is regular",
+          "Prove a language is not regular",
+          "Minimize DFAs",
+          "Convert NFAs to DFAs"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The pumping lemma provides a necessary condition for regularity. By showing a language violates it, we prove non-regularity."
+      },
+      {
+        "id": "cs203-t1-q3-3",
+        "type": "multiple_choice",
+        "prompt": "In the pumping lemma, if L is regular with pumping length p, then for s ∈ L with |s| ≥ p:",
+        "options": [
+          "s can be written as xyz where xy^i z ∈ L for i ≥ 0",
+          "s must contain exactly p symbols",
+          "s can only be pumped once",
+          "The y portion can be anywhere in s"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The pumping lemma states s = xyz where |y| > 0, |xy| ≤ p, and xy^i z ∈ L for all i ≥ 0."
+      },
+      {
+        "id": "cs203-t1-q3-4",
+        "type": "multiple_choice",
+        "prompt": "Which language is NOT regular?",
+        "options": [
+          "All strings over {a,b}",
+          "Strings with even length",
+          "{aⁿbⁿ | n ≥ 0}",
+          "Strings containing \"ab\""
+        ],
+        "correctAnswer": 2,
+        "explanation": "{aⁿbⁿ | n ≥ 0} requires counting and matching, which finite automata cannot do. The pumping lemma proves this."
+      },
+      {
+        "id": "cs203-t1-q3-5",
+        "type": "multiple_choice",
+        "prompt": "To prove closure under intersection, we use:",
+        "options": [
+          "State elimination",
+          "Product construction",
+          "Subset construction",
+          "Pumping lemma"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Product construction builds a DFA whose states are pairs from two DFAs, accepting when both components accept."
+      }
+    ]
+  },
+  {
+    "id": "cs203-topic-2-quiz-1",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-2",
+    "title": "Regular Expression Syntax and Semantics",
+    "questions": [
+      {
+        "id": "cs203-t2-q1-1",
+        "type": "multiple_choice",
+        "prompt": "The regular expression (a|b)*abb represents:",
+        "options": [
+          "All strings ending in abb",
+          "All strings over {a,b} ending in abb",
+          "Only the string abb",
+          "All strings containing abb"
+        ],
+        "correctAnswer": 1,
+        "explanation": "(a|b)* matches any string over {a,b}, followed by the literal \"abb\", so the language is all strings over {a,b} ending in abb."
+      },
+      {
+        "id": "cs203-t2-q1-2",
+        "type": "multiple_choice",
+        "prompt": "The base cases in regular expression definition are:",
+        "options": [
+          "∅, ε, and single symbols",
+          "Only single symbols",
+          "∅ and ε only",
+          "Any finite set of strings"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Regular expressions are built from ∅ (empty language), ε (empty string), and single symbols a ∈ Σ using union, concatenation, and Kleene star."
+      },
+      {
+        "id": "cs203-t2-q1-3",
+        "type": "multiple_choice",
+        "prompt": "What does (ab)* represent?",
+        "options": [
+          "Zero or more a's followed by zero or more b's",
+          "Zero or more repetitions of \"ab\"",
+          "The string \"ab\" only",
+          "Any string of a's and b's"
+        ],
+        "correctAnswer": 1,
+        "explanation": "(ab)* means zero or more concatenations of \"ab\", producing {ε, ab, abab, ababab, ...}."
+      },
+      {
+        "id": "cs203-t2-q1-4",
+        "type": "multiple_choice",
+        "prompt": "Which is equivalent to a+ (one or more a's)?",
+        "options": [
+          "a*",
+          "aa*",
+          "(aa)*",
+          "a|a*"
+        ],
+        "correctAnswer": 1,
+        "explanation": "a+ = aa* because a+ requires at least one \"a\" followed by zero or more additional \"a\"s."
+      },
+      {
+        "id": "cs203-t2-q1-5",
+        "type": "multiple_choice",
+        "prompt": "L(∅) equals:",
+        "options": [
+          "{ε}",
+          "{}",
+          "Σ*",
+          "undefined"
+        ],
+        "correctAnswer": 1,
+        "explanation": "∅ represents the empty language containing no strings at all, denoted {} or ∅."
+      }
+    ]
+  },
+  {
+    "id": "cs203-topic-2-quiz-2",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-2",
+    "title": "Conversions and Equivalence",
+    "questions": [
+      {
+        "id": "cs203-t2-q2-1",
+        "type": "multiple_choice",
+        "prompt": "Thompson's construction converts:",
+        "options": [
+          "DFA to regex",
+          "Regex to NFA",
+          "NFA to DFA",
+          "CFG to PDA"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Thompson's construction builds an NFA from a regular expression using recursive structural composition."
+      },
+      {
+        "id": "cs203-t2-q2-2",
+        "type": "multiple_choice",
+        "prompt": "The state elimination method for FA to regex works by:",
+        "options": [
+          "Adding states until a pattern emerges",
+          "Removing states while updating edge labels with regex",
+          "Converting to DFA first",
+          "Using the pumping lemma"
+        ],
+        "correctAnswer": 1,
+        "explanation": "State elimination removes intermediate states one by one, combining their transitions into regular expression labels."
+      },
+      {
+        "id": "cs203-t2-q2-3",
+        "type": "multiple_choice",
+        "prompt": "Kleene's theorem states:",
+        "options": [
+          "Every DFA has a minimum number of states",
+          "Regular expressions and finite automata describe the same languages",
+          "The pumping lemma holds for regular languages",
+          "DFAs are more powerful than NFAs"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Kleene's theorem establishes equivalence: a language is regular iff it can be described by a regular expression iff it is recognized by a finite automaton."
+      },
+      {
+        "id": "cs203-t2-q2-4",
+        "type": "multiple_choice",
+        "prompt": "In Thompson's construction, for regex r₁|r₂:",
+        "options": [
+          "Build NFAs in sequence",
+          "Create new start state with ε-transitions to both NFA start states",
+          "Use product construction",
+          "Combine accepting states"
+        ],
+        "correctAnswer": 1,
+        "explanation": "For union, Thompson's construction creates a new start state with ε-transitions to both sub-NFAs, and a new accept state reached by ε from both sub-NFA accept states."
+      },
+      {
+        "id": "cs203-t2-q2-5",
+        "type": "multiple_choice",
+        "prompt": "Converting an n-state NFA to a regex can produce an expression of size:",
+        "options": [
+          "O(n)",
+          "O(n²)",
+          "O(4ⁿ)",
+          "O(n!)"
+        ],
+        "correctAnswer": 2,
+        "explanation": "State elimination can produce exponentially large regular expressions, with worst-case O(4ⁿ) size."
+      }
+    ]
+  },
+  {
+    "id": "cs203-topic-2-quiz-3",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-2",
+    "title": "Properties and Decision Problems",
+    "questions": [
+      {
+        "id": "cs203-t2-q3-1",
+        "type": "multiple_choice",
+        "prompt": "Which algebraic identity is correct for regular expressions?",
+        "options": [
+          "r|r = ε",
+          "r·∅ = r",
+          "r|∅ = r",
+          "r* = r"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The empty language ∅ is the identity for union: r|∅ = r because adding no strings leaves the language unchanged."
+      },
+      {
+        "id": "cs203-t2-q3-2",
+        "type": "multiple_choice",
+        "prompt": "Testing if L(M) = ∅ for DFA M is:",
+        "options": [
+          "Undecidable",
+          "Decidable in O(n²)",
+          "Decidable in O(n)",
+          "NP-complete"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Emptiness is decidable in O(n) by checking if any accepting state is reachable from the start state (simple graph traversal)."
+      },
+      {
+        "id": "cs203-t2-q3-3",
+        "type": "multiple_choice",
+        "prompt": "Testing equivalence of two DFAs M₁ and M₂ involves:",
+        "options": [
+          "Checking if they have the same number of states",
+          "Testing if L(M₁) △ L(M₂) = ∅",
+          "Running both on all possible inputs",
+          "Converting both to regular expressions and comparing"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Equivalence is tested by checking if the symmetric difference is empty: L(M₁) = L(M₂) iff (L(M₁)∩L̄(M₂)) ∪ (L̄(M₁)∩L(M₂)) = ∅."
+      },
+      {
+        "id": "cs203-t2-q3-4",
+        "type": "multiple_choice",
+        "prompt": "Which property does NOT hold for regular languages?",
+        "options": [
+          "Closure under reversal",
+          "Closure under homomorphism",
+          "Closure under arbitrary intersection",
+          "Closure under complement"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Regular languages are closed under finite intersection, but infinite intersection of regular languages can produce non-regular languages."
+      },
+      {
+        "id": "cs203-t2-q3-5",
+        "type": "multiple_choice",
+        "prompt": "The membership problem for regular languages is:",
+        "options": [
+          "Undecidable",
+          "O(n) where n is string length",
+          "O(2ⁿ)",
+          "NP-complete"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Given a DFA and string w, membership is O(|w|) - just simulate the DFA on w and check if it ends in an accepting state."
+      }
+    ]
+  },
+  {
+    "id": "cs203-topic-3-quiz-1",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-3",
+    "title": "Grammar Fundamentals",
+    "questions": [
+      {
+        "id": "cs203-t3-q1-1",
+        "type": "multiple_choice",
+        "prompt": "A context-free grammar consists of:",
+        "options": [
+          "States, transitions, and accepting states",
+          "Variables, terminals, productions, and start symbol",
+          "Stack, input tape, and control unit",
+          "Regular expressions only"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A CFG G = (V, Σ, R, S) has variables (non-terminals), terminals, production rules, and a start symbol."
+      },
+      {
+        "id": "cs203-t3-q1-2",
+        "type": "multiple_choice",
+        "prompt": "In the production A → aAb | ε, what language does A generate?",
+        "options": [
+          "{aⁿbⁿ | n ≥ 0}",
+          "{aⁿbᵐ | n,m ≥ 0}",
+          "All strings over {a,b}",
+          "{ab}*"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Each application of A → aAb adds one \"a\" to the left and one \"b\" to the right. A → ε terminates, giving equal counts."
+      },
+      {
+        "id": "cs203-t3-q1-3",
+        "type": "multiple_choice",
+        "prompt": "A leftmost derivation:",
+        "options": [
+          "Always replaces the rightmost variable",
+          "Always replaces the leftmost variable",
+          "Can replace any variable",
+          "Only works for regular languages"
+        ],
+        "correctAnswer": 1,
+        "explanation": "In a leftmost derivation, we always expand the leftmost variable at each step. This gives a canonical derivation order."
+      },
+      {
+        "id": "cs203-t3-q1-4",
+        "type": "multiple_choice",
+        "prompt": "The yield of a parse tree is:",
+        "options": [
+          "The root symbol",
+          "The sequence of leaves read left to right",
+          "The depth of the tree",
+          "The number of internal nodes"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The yield (or frontier) of a parse tree is the string of terminal symbols at the leaves, read from left to right."
+      },
+      {
+        "id": "cs203-t3-q1-5",
+        "type": "multiple_choice",
+        "prompt": "Which language is context-free but not regular?",
+        "options": [
+          "a*b*",
+          "{w | w has equal a's and b's}",
+          "{w | |w| is even}",
+          "All of the above"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Equal counts of a's and b's requires counting/matching that FAs cannot do, but CFGs can (S → aSb | bSa | SS | ε)."
+      }
+    ]
+  },
+  {
+    "id": "cs203-topic-3-quiz-2",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-3",
+    "title": "Ambiguity and Normal Forms",
+    "questions": [
+      {
+        "id": "cs203-t3-q2-1",
+        "type": "multiple_choice",
+        "prompt": "A grammar is ambiguous if:",
+        "options": [
+          "It has more than one production",
+          "Some string has more than one parse tree",
+          "It generates an infinite language",
+          "It has ε-productions"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Ambiguity means at least one string in the language has multiple distinct parse trees (equivalently, multiple leftmost derivations)."
+      },
+      {
+        "id": "cs203-t3-q2-2",
+        "type": "multiple_choice",
+        "prompt": "In Chomsky Normal Form, productions have the form:",
+        "options": [
+          "A → BC or A → a",
+          "A → aB or A → a",
+          "A → α where |α| ≤ 2",
+          "A → BCD or A → ab"
+        ],
+        "correctAnswer": 0,
+        "explanation": "CNF requires all productions to be A → BC (two variables) or A → a (single terminal), plus S → ε if needed."
+      },
+      {
+        "id": "cs203-t3-q2-3",
+        "type": "multiple_choice",
+        "prompt": "Converting to CNF requires eliminating:",
+        "options": [
+          "Only ε-productions",
+          "ε-productions, unit productions, and useless symbols",
+          "Only long productions",
+          "All recursive rules"
+        ],
+        "correctAnswer": 1,
+        "explanation": "CNF conversion eliminates: ε-productions (except S→ε), unit productions (A→B), useless symbols, and long/mixed productions."
+      },
+      {
+        "id": "cs203-t3-q2-4",
+        "type": "multiple_choice",
+        "prompt": "Greibach Normal Form requires:",
+        "options": [
+          "All productions A → BC",
+          "All productions A → aα where a is terminal",
+          "No recursive productions",
+          "Binary branching only"
+        ],
+        "correctAnswer": 1,
+        "explanation": "GNF requires every production to start with a terminal: A → aα where a ∈ Σ and α ∈ V*."
+      },
+      {
+        "id": "cs203-t3-q2-5",
+        "type": "multiple_choice",
+        "prompt": "The CYK parsing algorithm requires the grammar to be in:",
+        "options": [
+          "Any form",
+          "Chomsky Normal Form",
+          "Greibach Normal Form",
+          "Backus-Naur Form"
+        ],
+        "correctAnswer": 1,
+        "explanation": "CYK uses dynamic programming based on substring lengths, which relies on the binary branching structure of CNF."
+      }
+    ]
+  },
+  {
+    "id": "cs203-topic-3-quiz-3",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-3",
+    "title": "CFL Pumping Lemma and Closure",
+    "questions": [
+      {
+        "id": "cs203-t3-q3-1",
+        "type": "multiple_choice",
+        "prompt": "The pumping lemma for CFLs states that long strings can be written as:",
+        "options": [
+          "xyz with y pumpable",
+          "uvxyz with vy pumpable",
+          "uvwxy with vx pumpable",
+          "abcde with bd pumpable"
+        ],
+        "correctAnswer": 1,
+        "explanation": "CFL pumping: s = uvxyz where |vy| > 0, |vxy| ≤ p, and uvⁱxyⁱz ∈ L for all i ≥ 0."
+      },
+      {
+        "id": "cs203-t3-q3-2",
+        "type": "multiple_choice",
+        "prompt": "Context-free languages are NOT closed under:",
+        "options": [
+          "Union",
+          "Concatenation",
+          "Intersection",
+          "Kleene star"
+        ],
+        "correctAnswer": 2,
+        "explanation": "CFLs are closed under union, concatenation, and Kleene star, but NOT under intersection or complement."
+      },
+      {
+        "id": "cs203-t3-q3-3",
+        "type": "multiple_choice",
+        "prompt": "{aⁿbⁿcⁿ | n ≥ 0} is:",
+        "options": [
+          "Regular",
+          "Context-free",
+          "Not context-free",
+          "Undecidable"
+        ],
+        "correctAnswer": 2,
+        "explanation": "This language requires matching three counts simultaneously, which CFGs cannot do. The CFL pumping lemma proves this."
+      },
+      {
+        "id": "cs203-t3-q3-4",
+        "type": "multiple_choice",
+        "prompt": "CFLs are closed under intersection with:",
+        "options": [
+          "Other CFLs",
+          "Regular languages",
+          "Neither",
+          "Both"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Intersection of a CFL with a regular language is always context-free (proven by product construction with PDA and DFA)."
+      },
+      {
+        "id": "cs203-t3-q3-5",
+        "type": "multiple_choice",
+        "prompt": "An inherently ambiguous language is:",
+        "options": [
+          "One with no grammar",
+          "One where every grammar is ambiguous",
+          "One that is not context-free",
+          "One with only one string"
+        ],
+        "correctAnswer": 1,
+        "explanation": "An inherently ambiguous CFL has no unambiguous grammar - every CFG for it is ambiguous."
+      }
+    ]
+  },
+  {
+    "id": "cs203-topic-4-quiz-1",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-4",
+    "title": "PDA Definition and Computation",
+    "questions": [
+      {
+        "id": "cs203-t4-q1-1",
+        "type": "multiple_choice",
+        "prompt": "A PDA differs from an NFA by having:",
+        "options": [
+          "Multiple tapes",
+          "A stack",
+          "Deterministic transitions",
+          "Two-way input head"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A PDA extends an NFA with a stack for auxiliary memory, enabling recognition of context-free languages."
+      },
+      {
+        "id": "cs203-t4-q1-2",
+        "type": "multiple_choice",
+        "prompt": "In a PDA transition (q, a, X) → (p, γ):",
+        "options": [
+          "a must be a stack symbol",
+          "X is pushed onto the stack",
+          "X is popped and γ is pushed",
+          "The stack is cleared"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The transition reads a from input, pops X from stack top, pushes string γ onto the stack, and moves to state p."
+      },
+      {
+        "id": "cs203-t4-q1-3",
+        "type": "multiple_choice",
+        "prompt": "ε-transitions in a PDA:",
+        "options": [
+          "Clear the stack",
+          "Can occur without reading input",
+          "Are not allowed",
+          "Must push to the stack"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A PDA can take an ε-transition (not reading input) while still potentially modifying the stack."
+      },
+      {
+        "id": "cs203-t4-q1-4",
+        "type": "multiple_choice",
+        "prompt": "A configuration of a PDA is described by:",
+        "options": [
+          "Current state only",
+          "(current state, remaining input, stack contents)",
+          "Stack contents only",
+          "Number of steps taken"
+        ],
+        "correctAnswer": 1,
+        "explanation": "An instantaneous description (ID) captures the complete PDA state: (q, w, γ) for state, unread input, and stack."
+      },
+      {
+        "id": "cs203-t4-q1-5",
+        "type": "multiple_choice",
+        "prompt": "PDAs are nondeterministic because:",
+        "options": [
+          "They can choose which transition to take",
+          "They have infinite states",
+          "The stack is unbounded",
+          "They can read multiple symbols at once"
+        ],
+        "correctAnswer": 0,
+        "explanation": "PDAs can have multiple applicable transitions from a configuration, allowing nondeterministic choice."
+      }
+    ]
+  },
+  {
+    "id": "cs203-topic-4-quiz-2",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-4",
+    "title": "Acceptance Modes and Design",
+    "questions": [
+      {
+        "id": "cs203-t4-q2-1",
+        "type": "multiple_choice",
+        "prompt": "Acceptance by final state requires:",
+        "options": [
+          "Empty stack and accepting state",
+          "Input consumed and in accepting state",
+          "Stack has exactly one symbol",
+          "All paths accept"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Final state acceptance: input is consumed AND PDA is in an accepting state (stack contents don't matter)."
+      },
+      {
+        "id": "cs203-t4-q2-2",
+        "type": "multiple_choice",
+        "prompt": "Acceptance by empty stack requires:",
+        "options": [
+          "Stack is empty after consuming input",
+          "Being in an accepting state",
+          "Both empty stack and accepting state",
+          "Stack contains only the initial symbol"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Empty stack acceptance: input is consumed AND stack is empty (no accepting states needed)."
+      },
+      {
+        "id": "cs203-t4-q2-3",
+        "type": "multiple_choice",
+        "prompt": "Final state acceptance and empty stack acceptance:",
+        "options": [
+          "Accept different classes of languages",
+          "Are equivalent in power",
+          "Final state is strictly more powerful",
+          "Empty stack is strictly more powerful"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Both acceptance modes define exactly the context-free languages. Any PDA can be converted between modes."
+      },
+      {
+        "id": "cs203-t4-q2-4",
+        "type": "multiple_choice",
+        "prompt": "To recognize {aⁿbⁿ}, a PDA should:",
+        "options": [
+          "Count a's in the state",
+          "Push a's, then pop for each b",
+          "Use two stacks",
+          "Ignore the stack"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Push each \"a\" onto the stack, then pop one symbol for each \"b\". Accept if stack empties exactly when input ends."
+      },
+      {
+        "id": "cs203-t4-q2-5",
+        "type": "multiple_choice",
+        "prompt": "A PDA for balanced parentheses uses the stack to:",
+        "options": [
+          "Count total symbols",
+          "Track unmatched open parentheses",
+          "Store the entire input",
+          "Nothing - the stack is unused"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Push for \"(\", pop for \")\". The string is balanced iff the stack empties exactly when input is consumed."
+      }
+    ]
+  },
+  {
+    "id": "cs203-topic-4-quiz-3",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-4",
+    "title": "PDA-CFG Equivalence and DPDAs",
+    "questions": [
+      {
+        "id": "cs203-t4-q3-1",
+        "type": "multiple_choice",
+        "prompt": "The equivalence of PDAs and CFGs means:",
+        "options": [
+          "Every PDA can be simulated by a DFA",
+          "PDAs recognize exactly the context-free languages",
+          "CFGs are more powerful than PDAs",
+          "PDAs cannot recognize regular languages"
+        ],
+        "correctAnswer": 1,
+        "explanation": "PDAs and CFGs are equivalent: L is context-free iff some PDA accepts L iff some CFG generates L."
+      },
+      {
+        "id": "cs203-t4-q3-2",
+        "type": "multiple_choice",
+        "prompt": "Converting a CFG to a PDA uses:",
+        "options": [
+          "One state per variable",
+          "Simulate leftmost derivations via the stack",
+          "Subset construction",
+          "Thompson's construction"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The standard construction uses the stack to track the sentential form, expanding variables and matching terminals."
+      },
+      {
+        "id": "cs203-t4-q3-3",
+        "type": "multiple_choice",
+        "prompt": "A DPDA (deterministic PDA):",
+        "options": [
+          "Accepts exactly the regular languages",
+          "Accepts a proper subset of CFLs",
+          "Is equivalent to nondeterministic PDAs",
+          "Cannot use ε-transitions"
+        ],
+        "correctAnswer": 1,
+        "explanation": "DPDAs are strictly weaker than NPDAs. Some CFLs (like palindromes over {a,b}) are not recognizable by any DPDA."
+      },
+      {
+        "id": "cs203-t4-q3-4",
+        "type": "multiple_choice",
+        "prompt": "Which language is NOT recognizable by a DPDA?",
+        "options": [
+          "{aⁿbⁿ}",
+          "{ww^R | w ∈ {a,b}*}",
+          "{aⁿbⁿcⁿ}",
+          "Balanced parentheses"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Palindromes require \"guessing\" the middle, which needs nondeterminism. DPDAs cannot recognize them."
+      },
+      {
+        "id": "cs203-t4-q3-5",
+        "type": "multiple_choice",
+        "prompt": "Deterministic context-free languages are:",
+        "options": [
+          "Not closed under complement",
+          "Closed under complement",
+          "The same as all CFLs",
+          "A superset of CFLs"
+        ],
+        "correctAnswer": 1,
+        "explanation": "DCFLs (languages recognized by DPDAs) are closed under complement, unlike general CFLs."
+      }
+    ]
+  },
+  {
+    "id": "cs203-topic-5-quiz-1",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-5",
+    "title": "TM Definition and Computation",
+    "questions": [
+      {
+        "id": "cs203-t5-q1-1",
+        "type": "multiple_choice",
+        "prompt": "A Turing machine differs from a PDA by:",
+        "options": [
+          "Having a finite tape",
+          "Having a read/write tape head that moves both directions",
+          "Being deterministic only",
+          "Not having states"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A TM has an infinite read/write tape with a head that can move left or right, unlike a PDA's one-way input and LIFO stack."
+      },
+      {
+        "id": "cs203-t5-q1-2",
+        "type": "multiple_choice",
+        "prompt": "A TM transition δ(q, a) = (r, b, L) means:",
+        "options": [
+          "Read b, write a, move right",
+          "In state q reading a, write b, move left, go to state r",
+          "Move to state a from state q",
+          "Loop in state q"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The transition reads a in state q, writes b, moves head left (L), and transitions to state r."
+      },
+      {
+        "id": "cs203-t5-q1-3",
+        "type": "multiple_choice",
+        "prompt": "A TM accepts an input if:",
+        "options": [
+          "It ever visits an accept state",
+          "It halts in an accept state",
+          "It processes all symbols",
+          "The tape becomes empty"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A TM accepts by entering the accept state q_accept. It rejects by entering q_reject or may loop forever."
+      },
+      {
+        "id": "cs203-t5-q1-4",
+        "type": "multiple_choice",
+        "prompt": "A language is Turing-recognizable if:",
+        "options": [
+          "Some TM decides it",
+          "Some TM accepts exactly its strings (may not halt on non-members)",
+          "It is finite",
+          "It has a regular expression"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Turing-recognizable (r.e.) languages have TMs that accept all members. The TM may loop forever on non-members."
+      },
+      {
+        "id": "cs203-t5-q1-5",
+        "type": "multiple_choice",
+        "prompt": "A language is decidable if:",
+        "options": [
+          "Some TM recognizes it",
+          "Some TM accepts members and rejects non-members (always halts)",
+          "It is context-free",
+          "It is finite"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Decidable (recursive) languages have TMs that halt on all inputs, accepting members and rejecting non-members."
+      }
+    ]
+  },
+  {
+    "id": "cs203-topic-5-quiz-2",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-5",
+    "title": "TM Variants and Design",
+    "questions": [
+      {
+        "id": "cs203-t5-q2-1",
+        "type": "multiple_choice",
+        "prompt": "Multi-tape Turing machines:",
+        "options": [
+          "Are more powerful than single-tape TMs",
+          "Are equivalent in power to single-tape TMs",
+          "Can only recognize regular languages",
+          "Require exponentially more time"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Multi-tape TMs can be simulated by single-tape TMs (with polynomial slowdown). They recognize the same languages."
+      },
+      {
+        "id": "cs203-t5-q2-2",
+        "type": "multiple_choice",
+        "prompt": "Nondeterministic Turing machines:",
+        "options": [
+          "Are strictly more powerful than deterministic TMs",
+          "Recognize the same languages as deterministic TMs",
+          "Cannot simulate deterministic TMs",
+          "Always halt"
+        ],
+        "correctAnswer": 1,
+        "explanation": "NTMs and DTMs are equivalent in computational power - they recognize the same languages (though DTM simulation may be slower)."
+      },
+      {
+        "id": "cs203-t5-q2-3",
+        "type": "multiple_choice",
+        "prompt": "The Universal Turing Machine:",
+        "options": [
+          "Can simulate any other TM given its encoding",
+          "Is faster than all other TMs",
+          "Has unlimited states",
+          "Only recognizes decidable languages"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The UTM takes ⟨M, w⟩ as input and simulates M on w. It can run any TM, making it a \"programmable computer.\""
+      },
+      {
+        "id": "cs203-t5-q2-4",
+        "type": "multiple_choice",
+        "prompt": "To design a TM for {ww | w ∈ {a,b}*}:",
+        "options": [
+          "Use a single-tape TM with one pass",
+          "Mark symbols and compare halves",
+          "It is impossible - language not recognizable",
+          "Use a PDA instead"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A TM can mark/cross off symbols while zigzagging to compare the two halves. This requires read/write and bidirectional movement."
+      },
+      {
+        "id": "cs203-t5-q2-5",
+        "type": "multiple_choice",
+        "prompt": "Encoding a TM as a string allows:",
+        "options": [
+          "Faster execution",
+          "TMs to take other TMs as input",
+          "Infinite computation",
+          "Smaller state space"
+        ],
+        "correctAnswer": 1,
+        "explanation": "String encoding enables TMs to operate on descriptions of other TMs, essential for the UTM and undecidability proofs."
+      }
+    ]
+  },
+  {
+    "id": "cs203-topic-5-quiz-3",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-5",
+    "title": "Church-Turing Thesis",
+    "questions": [
+      {
+        "id": "cs203-t5-q3-1",
+        "type": "multiple_choice",
+        "prompt": "The Church-Turing thesis states:",
+        "options": [
+          "Turing machines are the fastest model of computation",
+          "Any effectively computable function can be computed by a TM",
+          "All languages are decidable",
+          "P = NP"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The thesis asserts TMs capture the intuitive notion of \"algorithm\" - anything we'd consider computable can be TM-computed."
+      },
+      {
+        "id": "cs203-t5-q3-2",
+        "type": "multiple_choice",
+        "prompt": "The Church-Turing thesis is:",
+        "options": [
+          "A proven mathematical theorem",
+          "A falsified conjecture",
+          "An unprovable philosophical claim",
+          "Only applicable to finite computations"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The thesis cannot be mathematically proven because \"effectively computable\" is an informal notion. It is strongly supported by evidence."
+      },
+      {
+        "id": "cs203-t5-q3-3",
+        "type": "multiple_choice",
+        "prompt": "Which model is NOT equivalent to Turing machines?",
+        "options": [
+          "Lambda calculus",
+          "Recursive functions",
+          "Finite automata",
+          "Post systems"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Finite automata are strictly weaker than TMs - they can only recognize regular languages, not all decidable languages."
+      },
+      {
+        "id": "cs203-t5-q3-4",
+        "type": "multiple_choice",
+        "prompt": "Evidence for the Church-Turing thesis includes:",
+        "options": [
+          "TMs are the simplest model",
+          "All proposed computation models are equivalent to TMs",
+          "TMs can solve any problem",
+          "TMs are always efficient"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Every reasonable computation model proposed (lambda calculus, recursive functions, etc.) has been proven equivalent to TMs."
+      },
+      {
+        "id": "cs203-t5-q3-5",
+        "type": "multiple_choice",
+        "prompt": "Modern computers compared to Turing machines:",
+        "options": [
+          "Are strictly more powerful",
+          "Have the same computational power (with unlimited memory)",
+          "Cannot simulate TMs",
+          "Are strictly less powerful even with unlimited memory"
+        ],
+        "correctAnswer": 1,
+        "explanation": "With unlimited memory, a computer has exactly TM power. Real computers are limited by finite memory but theoretically equivalent."
+      }
+    ]
+  },
+  {
+    "id": "cs203-topic-6-quiz-1",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-6",
+    "title": "Decidable and Recognizable Languages",
+    "questions": [
+      {
+        "id": "cs203-t6-q1-1",
+        "type": "multiple_choice",
+        "prompt": "Every decidable language is:",
+        "options": [
+          "Finite",
+          "Context-free",
+          "Turing-recognizable",
+          "Regular"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Decidable ⊂ Turing-recognizable. A decider is a recognizer that always halts, so all decidable languages are recognizable."
+      },
+      {
+        "id": "cs203-t6-q1-2",
+        "type": "multiple_choice",
+        "prompt": "A language L is co-Turing-recognizable if:",
+        "options": [
+          "L is finite",
+          "L̄ (complement of L) is Turing-recognizable",
+          "L is decidable",
+          "L is regular"
+        ],
+        "correctAnswer": 1,
+        "explanation": "L is co-Turing-recognizable (co-r.e.) if its complement L̄ is Turing-recognizable."
+      },
+      {
+        "id": "cs203-t6-q1-3",
+        "type": "multiple_choice",
+        "prompt": "L is decidable if and only if:",
+        "options": [
+          "L is Turing-recognizable",
+          "L is finite",
+          "Both L and L̄ are Turing-recognizable",
+          "L is context-free"
+        ],
+        "correctAnswer": 2,
+        "explanation": "A language is decidable iff both it and its complement are recognizable. We can dovetail two recognizers to decide."
+      },
+      {
+        "id": "cs203-t6-q1-4",
+        "type": "multiple_choice",
+        "prompt": "The hierarchy from most to least restrictive is:",
+        "options": [
+          "Decidable ⊂ Recognizable ⊂ All languages",
+          "Recognizable ⊂ Decidable ⊂ All languages",
+          "All languages ⊂ Recognizable ⊂ Decidable",
+          "They are all equal"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Decidable ⊊ Recognizable ⊊ All languages. Each containment is strict - there exist non-decidable recognizable languages and non-recognizable languages."
+      },
+      {
+        "id": "cs203-t6-q1-5",
+        "type": "multiple_choice",
+        "prompt": "Which problem is decidable?",
+        "options": [
+          "Does TM M halt on input w?",
+          "Is CFG G ambiguous?",
+          "Does DFA M accept string w?",
+          "Does TM M accept any string?"
+        ],
+        "correctAnswer": 2,
+        "explanation": "DFA membership is decidable - just simulate the DFA. The others are undecidable problems."
+      }
+    ]
+  },
+  {
+    "id": "cs203-topic-6-quiz-2",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-6",
+    "title": "The Halting Problem and Diagonalization",
+    "questions": [
+      {
+        "id": "cs203-t6-q2-1",
+        "type": "multiple_choice",
+        "prompt": "The halting problem asks:",
+        "options": [
+          "How long does TM M run on input w?",
+          "Does TM M halt on input w?",
+          "What does TM M output on input w?",
+          "How many states does TM M use?"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The halting problem: given ⟨M, w⟩, determine whether TM M halts (accepts or rejects) when run on input w."
+      },
+      {
+        "id": "cs203-t6-q2-2",
+        "type": "multiple_choice",
+        "prompt": "The halting problem is:",
+        "options": [
+          "Decidable",
+          "Undecidable but recognizable",
+          "Not recognizable",
+          "Context-free"
+        ],
+        "correctAnswer": 1,
+        "explanation": "HALT is undecidable (no TM can decide it) but Turing-recognizable (we can simulate and accept if M halts)."
+      },
+      {
+        "id": "cs203-t6-q2-3",
+        "type": "multiple_choice",
+        "prompt": "Diagonalization proves undecidability by:",
+        "options": [
+          "Showing too many TMs exist",
+          "Constructing a machine that differs from each TM on some input",
+          "Counting states",
+          "Simulating all possible computations"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Diagonalization constructs a machine D that on input ⟨M⟩ does the opposite of M on ⟨M⟩, creating a contradiction."
+      },
+      {
+        "id": "cs203-t6-q2-4",
+        "type": "multiple_choice",
+        "prompt": "The key to the halting problem proof is:",
+        "options": [
+          "Running M forever",
+          "Assuming a halting decider exists, then deriving a contradiction",
+          "Using finite automata",
+          "Encoding in binary"
+        ],
+        "correctAnswer": 1,
+        "explanation": "We assume a decider H exists, build a machine D using H, and show D on ⟨D⟩ creates a paradox: it halts iff it doesn't."
+      },
+      {
+        "id": "cs203-t6-q2-5",
+        "type": "multiple_choice",
+        "prompt": "ATM = {⟨M,w⟩ | M accepts w} is:",
+        "options": [
+          "Decidable",
+          "Undecidable but recognizable",
+          "Not recognizable",
+          "Regular"
+        ],
+        "correctAnswer": 1,
+        "explanation": "ATM is Turing-recognizable (simulate M on w, accept if M accepts) but undecidable (reduces from HALT)."
+      }
+    ]
+  },
+  {
+    "id": "cs203-topic-6-quiz-3",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-6",
+    "title": "Reductions and Rice's Theorem",
+    "questions": [
+      {
+        "id": "cs203-t6-q3-1",
+        "type": "multiple_choice",
+        "prompt": "A reduction from A to B shows:",
+        "options": [
+          "A is decidable",
+          "If B is decidable, then A is decidable",
+          "B is undecidable",
+          "A and B are equal"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A ≤ B means A is \"no harder than\" B. If we can solve B, we can solve A. Equivalently, if A is undecidable, so is B."
+      },
+      {
+        "id": "cs203-t6-q3-2",
+        "type": "multiple_choice",
+        "prompt": "To prove problem B is undecidable using reduction:",
+        "options": [
+          "Reduce B to a known undecidable problem",
+          "Reduce a known undecidable problem to B",
+          "Show B has infinitely many instances",
+          "Show B is in NP"
+        ],
+        "correctAnswer": 1,
+        "explanation": "We reduce a known undecidable problem A to B. If B were decidable, so would A be - contradiction. Hence B is undecidable."
+      },
+      {
+        "id": "cs203-t6-q3-3",
+        "type": "multiple_choice",
+        "prompt": "Rice's theorem states that every non-trivial property of:",
+        "options": [
+          "Turing machines is undecidable",
+          "The language of a TM is undecidable",
+          "Context-free grammars is undecidable",
+          "Regular expressions is undecidable"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Rice's theorem: Any non-trivial semantic property of TM languages (not TMs themselves) is undecidable."
+      },
+      {
+        "id": "cs203-t6-q3-4",
+        "type": "multiple_choice",
+        "prompt": "A property is \"trivial\" in Rice's theorem sense if:",
+        "options": [
+          "It's easy to check",
+          "Either all TMs have it or no TM has it",
+          "It involves finite languages",
+          "It's syntactic"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Trivial means the property holds for all TMs (all languages) or no TMs (no languages). Non-trivial means some but not all."
+      },
+      {
+        "id": "cs203-t6-q3-5",
+        "type": "multiple_choice",
+        "prompt": "Which is decidable (NOT covered by Rice's theorem)?",
+        "options": [
+          "Does TM M accept the empty string?",
+          "Is L(M) empty?",
+          "Does M have at least 5 states?",
+          "Is L(M) = Σ*?"
+        ],
+        "correctAnswer": 2,
+        "explanation": "\"M has at least 5 states\" is a syntactic property of the TM, not a semantic property of its language. We can count states."
+      }
+    ]
+  },
+  {
+    "id": "cs203-topic-7-quiz-1",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-7",
+    "title": "Time Complexity and Class P",
+    "questions": [
+      {
+        "id": "cs203-t7-q1-1",
+        "type": "multiple_choice",
+        "prompt": "The time complexity of a TM is:",
+        "options": [
+          "The number of states",
+          "The maximum steps on any input of length n",
+          "The tape length used",
+          "The number of transitions defined"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Time complexity f(n) = max steps M uses on any input of length n. We measure worst-case running time."
+      },
+      {
+        "id": "cs203-t7-q1-2",
+        "type": "multiple_choice",
+        "prompt": "Class P is defined as:",
+        "options": [
+          "Problems solvable in linear time",
+          "Problems solvable in polynomial time",
+          "Problems solvable in exponential time",
+          "Problems with polynomial-size witnesses"
+        ],
+        "correctAnswer": 1,
+        "explanation": "P = ∪_k TIME(n^k) - languages decidable by a deterministic TM in polynomial time O(n^k) for some k."
+      },
+      {
+        "id": "cs203-t7-q1-3",
+        "type": "multiple_choice",
+        "prompt": "Which problem is in P?",
+        "options": [
+          "Boolean satisfiability (SAT)",
+          "Traveling salesman optimization",
+          "Sorting n numbers",
+          "Hamiltonian path"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Sorting is O(n log n), polynomial time. SAT, TSP optimization, and Hamiltonian path have no known polynomial algorithms."
+      },
+      {
+        "id": "cs203-t7-q1-4",
+        "type": "multiple_choice",
+        "prompt": "P is often considered the class of:",
+        "options": [
+          "All possible problems",
+          "\"Efficiently solvable\" problems",
+          "Undecidable problems",
+          "Problems requiring exponential space"
+        ],
+        "correctAnswer": 1,
+        "explanation": "P represents problems with efficient (polynomial-time) algorithms - the \"tractable\" problems in complexity theory."
+      },
+      {
+        "id": "cs203-t7-q1-5",
+        "type": "multiple_choice",
+        "prompt": "Why do we use O-notation for time complexity?",
+        "options": [
+          "Exact step counts depend on encoding/model details",
+          "It makes all problems tractable",
+          "TMs cannot count steps",
+          "It simplifies proofs of undecidability"
+        ],
+        "correctAnswer": 0,
+        "explanation": "O-notation abstracts away constant factors and lower-order terms that depend on machine model and encoding choices."
+      }
+    ]
+  },
+  {
+    "id": "cs203-topic-7-quiz-2",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-7",
+    "title": "Class NP and P vs NP",
+    "questions": [
+      {
+        "id": "cs203-t7-q2-1",
+        "type": "multiple_choice",
+        "prompt": "NP stands for:",
+        "options": [
+          "Not Polynomial",
+          "Nondeterministic Polynomial time",
+          "Non-Computable Problems",
+          "Nearly Polynomial"
+        ],
+        "correctAnswer": 1,
+        "explanation": "NP = Nondeterministic Polynomial time - languages accepted by a nondeterministic TM in polynomial time."
+      },
+      {
+        "id": "cs203-t7-q2-2",
+        "type": "multiple_choice",
+        "prompt": "An equivalent definition of NP uses:",
+        "options": [
+          "Exponential time algorithms",
+          "Polynomial-time verifiers with polynomial-size certificates",
+          "Space-bounded computation",
+          "Logarithmic time"
+        ],
+        "correctAnswer": 1,
+        "explanation": "L ∈ NP iff there exists a polynomial-time verifier V and polynomial p such that w ∈ L ⟺ ∃c, |c| ≤ p(|w|), V(w,c) accepts."
+      },
+      {
+        "id": "cs203-t7-q2-3",
+        "type": "multiple_choice",
+        "prompt": "If P = NP, then:",
+        "options": [
+          "Cryptography would become more secure",
+          "Every efficiently verifiable problem would be efficiently solvable",
+          "No polynomial algorithms would exist",
+          "TMs would become more powerful"
+        ],
+        "correctAnswer": 1,
+        "explanation": "P = NP means problems with easy-to-verify solutions also have easy-to-find solutions. Many \"hard\" problems become tractable."
+      },
+      {
+        "id": "cs203-t7-q2-4",
+        "type": "multiple_choice",
+        "prompt": "Most complexity theorists believe:",
+        "options": [
+          "P = NP",
+          "P ≠ NP",
+          "The question is meaningless",
+          "P and NP are incomparable"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Despite lack of proof, decades of failed attempts to find polynomial algorithms for NP-complete problems suggests P ≠ NP."
+      },
+      {
+        "id": "cs203-t7-q2-5",
+        "type": "multiple_choice",
+        "prompt": "The relationship P ⊆ NP holds because:",
+        "options": [
+          "Every NP problem is also in P",
+          "A polynomial-time algorithm is also a polynomial-time verifier",
+          "NP problems are a subset of P problems",
+          "It has been proven that P = NP"
+        ],
+        "correctAnswer": 1,
+        "explanation": "If L ∈ P, we can verify membership by just deciding it (ignoring any certificate). So P ⊆ NP."
+      }
+    ]
+  },
+  {
+    "id": "cs203-topic-7-quiz-3",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-7",
+    "title": "NP-Completeness and Space Complexity",
+    "questions": [
+      {
+        "id": "cs203-t7-q3-1",
+        "type": "multiple_choice",
+        "prompt": "A problem is NP-complete if:",
+        "options": [
+          "It is in NP",
+          "It is NP-hard",
+          "It is in NP and NP-hard",
+          "It is not in P"
+        ],
+        "correctAnswer": 2,
+        "explanation": "NP-complete = in NP (has polynomial verifier) AND NP-hard (all NP problems reduce to it in polynomial time)."
+      },
+      {
+        "id": "cs203-t7-q3-2",
+        "type": "multiple_choice",
+        "prompt": "The first problem proven NP-complete was:",
+        "options": [
+          "CLIQUE",
+          "SAT (by Cook-Levin theorem)",
+          "HAMILTONIAN-PATH",
+          "VERTEX-COVER"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Cook (1971) and Levin proved SAT is NP-complete, establishing the first NP-complete problem and enabling reductions."
+      },
+      {
+        "id": "cs203-t7-q3-3",
+        "type": "multiple_choice",
+        "prompt": "To prove problem B is NP-complete:",
+        "options": [
+          "Reduce B to SAT",
+          "Show B ∈ NP and reduce a known NP-complete problem to B",
+          "Show B is undecidable",
+          "Prove P = NP"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Prove B ∈ NP (give verifier), then reduce a known NP-complete problem A to B (A ≤_p B). This shows B is NP-hard."
+      },
+      {
+        "id": "cs203-t7-q3-4",
+        "type": "multiple_choice",
+        "prompt": "PSPACE is the class of problems solvable in:",
+        "options": [
+          "Polynomial time",
+          "Polynomial space",
+          "Exponential time and space",
+          "Logarithmic space"
+        ],
+        "correctAnswer": 1,
+        "explanation": "PSPACE = ∪_k SPACE(n^k) - languages decidable using polynomial space, regardless of time."
+      },
+      {
+        "id": "cs203-t7-q3-5",
+        "type": "multiple_choice",
+        "prompt": "Savitch's theorem shows:",
+        "options": [
+          "P = NP",
+          "NSPACE(f(n)) ⊆ SPACE(f(n)²)",
+          "Space and time are equivalent",
+          "All problems are in PSPACE"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Savitch's theorem: nondeterministic space can be simulated deterministically with only a square blowup. Thus NPSPACE = PSPACE."
+      }
+    ]
+  }
+]

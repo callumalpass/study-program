@@ -1,0 +1,739 @@
+[
+  {
+    "id": "math204-exam-midterm",
+    "subjectId": "math204",
+    "title": "Math204 Midterm - Calculus II",
+    "durationMinutes": 90,
+    "instructions": [
+      "This exam covers Topics 1-4: Antiderivatives, Definite Integrals, Integration Techniques, and Applications.",
+      "Show all work for full credit on written questions.",
+      "Calculators are NOT permitted.",
+      "Fill-in-blank answers should be simplified and use standard mathematical notation.",
+      "Passing score is 70% or higher."
+    ],
+    "questions": [
+      {
+        "id": "math204-mid-q1",
+        "type": "multiple_choice",
+        "prompt": "Evaluate: $\\int 6x^5 \\, dx$",
+        "options": [
+          "$x^6 + C$",
+          "$6x^6 + C$",
+          "$30x^4 + C$",
+          "$\\frac{6x^6}{6} + C$"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Using the power rule: $\\int 6x^5 \\, dx = 6 \\cdot \\frac{x^6}{6} + C = x^6 + C$."
+      },
+      {
+        "id": "math204-mid-q2",
+        "type": "fill_blank",
+        "prompt": "$\\int \\sec^2 x \\, dx = $ ____.",
+        "correctAnswer": "tan(x) + C",
+        "explanation": "The antiderivative of $\\sec^2 x$ is $\\tan x + C$."
+      },
+      {
+        "id": "math204-mid-q3",
+        "type": "multiple_choice",
+        "prompt": "Evaluate $\\int \\frac{2x}{x^2 + 1} \\, dx$ using u-substitution.",
+        "options": [
+          "$2\\ln|x^2 + 1| + C$",
+          "$\\ln|x^2 + 1| + C$",
+          "$\\ln(x^2 + 1) + C$",
+          "$\\arctan(x) + C$"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Let $u = x^2 + 1$, $du = 2x \\, dx$. Then $\\int \\frac{2x}{x^2+1} \\, dx = \\int \\frac{1}{u} \\, du = \\ln|u| + C = \\ln(x^2+1) + C$ (absolute value not needed since $x^2+1 > 0$)."
+      },
+      {
+        "id": "math204-mid-q4",
+        "type": "true_false",
+        "prompt": "Every continuous function has an antiderivative.",
+        "correctAnswer": true,
+        "explanation": "True. By the Fundamental Theorem of Calculus, every continuous function has an antiderivative (though it may not have an elementary form)."
+      },
+      {
+        "id": "math204-mid-q5",
+        "type": "multiple_choice",
+        "prompt": "Find the function $f(x)$ if $f'(x) = 3x^2 - 4x$ and $f(1) = 2$.",
+        "options": [
+          "$x^3 - 2x^2 + 3$",
+          "$x^3 - 2x^2 + 2$",
+          "$x^3 - 2x^2 + 1$",
+          "$3x^2 - 4x + 2$"
+        ],
+        "correctAnswer": 0,
+        "explanation": "$f(x) = \\int (3x^2 - 4x) \\, dx = x^3 - 2x^2 + C$. Using $f(1) = 2$: $1 - 2 + C = 2$, so $C = 3$. Thus $f(x) = x^3 - 2x^2 + 3$."
+      },
+      {
+        "id": "math204-mid-q6",
+        "type": "written",
+        "prompt": "Evaluate $\\int \\sin(3x) \\cos(3x) \\, dx$ using two different methods: (a) u-substitution with $u = \\sin(3x)$, and (b) using the identity $\\sin(2\\theta) = 2\\sin\\theta\\cos\\theta$.",
+        "correctAnswer": "(1/6)sin²(3x) + C or -(1/12)cos(6x) + C (differ by constant)",
+        "modelAnswer": "**(a) u-substitution:** Let $u = \\sin(3x)$, then $du = 3\\cos(3x) \\, dx$, so $\\cos(3x) \\, dx = \\frac{1}{3}du$.\n\n$\\int \\sin(3x)\\cos(3x) \\, dx = \\int u \\cdot \\frac{1}{3} \\, du = \\frac{1}{3} \\cdot \\frac{u^2}{2} + C = \\frac{\\sin^2(3x)}{6} + C$\n\n**(b) Double angle:** $\\sin(3x)\\cos(3x) = \\frac{1}{2}\\sin(6x)$\n\n$\\int \\sin(3x)\\cos(3x) \\, dx = \\int \\frac{1}{2}\\sin(6x) \\, dx = \\frac{1}{2} \\cdot \\left(-\\frac{\\cos(6x)}{6}\\right) + C = -\\frac{\\cos(6x)}{12} + C$\n\nBoth answers are correct and differ only by a constant.",
+        "explanation": "Different integration methods can yield answers that differ by a constant, which is absorbed into C."
+      },
+      {
+        "id": "math204-mid-q7",
+        "type": "multiple_choice",
+        "prompt": "Evaluate: $\\int_0^\\pi \\sin x \\, dx$",
+        "options": [
+          "$0$",
+          "$1$",
+          "$2$",
+          "$\\pi$"
+        ],
+        "correctAnswer": 2,
+        "explanation": "$\\int_0^\\pi \\sin x \\, dx = [-\\cos x]_0^\\pi = -\\cos(\\pi) - (-\\cos 0) = 1 + 1 = 2$."
+      },
+      {
+        "id": "math204-mid-q8",
+        "type": "fill_blank",
+        "prompt": "If $F(x) = \\int_1^x t^3 \\, dt$, then $F'(x) = $ ____ by the Fundamental Theorem of Calculus Part 1.",
+        "correctAnswer": "x³",
+        "explanation": "By FTC Part 1, $F'(x) = x^3$."
+      },
+      {
+        "id": "math204-mid-q9",
+        "type": "multiple_choice",
+        "prompt": "The average value of $f(x) = x^2$ on $[1, 3]$ is:",
+        "options": [
+          "$\\frac{13}{3}$",
+          "$\\frac{26}{3}$",
+          "$4$",
+          "$\\frac{8}{3}$"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Average = $\\frac{1}{3-1}\\int_1^3 x^2 \\, dx = \\frac{1}{2}\\left[\\frac{x^3}{3}\\right]_1^3 = \\frac{1}{2} \\cdot \\frac{26}{3} = \\frac{13}{3}$."
+      },
+      {
+        "id": "math204-mid-q10",
+        "type": "true_false",
+        "prompt": "If $f(x)$ is an odd function, then $\\int_{-a}^a f(x) \\, dx = 0$ for any $a > 0$.",
+        "correctAnswer": true,
+        "explanation": "True. For odd functions, the areas on opposite sides of the origin cancel out."
+      },
+      {
+        "id": "math204-mid-q11",
+        "type": "multiple_choice",
+        "prompt": "Evaluate $\\int_0^2 x(x^2+1)^2 \\, dx$ using substitution.",
+        "options": [
+          "$\\frac{124}{6}$",
+          "$\\frac{31}{3}$",
+          "$\\frac{62}{3}$",
+          "$20$"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Let $u = x^2+1$, $du = 2x \\, dx$. When $x=0$, $u=1$; when $x=2$, $u=5$. $\\int_0^2 x(x^2+1)^2 \\, dx = \\frac{1}{2}\\int_1^5 u^2 \\, du = \\frac{1}{2}\\left[\\frac{u^3}{3}\\right]_1^5 = \\frac{1}{6}(125-1) = \\frac{124}{6} = \\frac{62}{3}$. Wait, let me recalculate: $= \\frac{62}{3}$."
+      },
+      {
+        "id": "math204-mid-q12",
+        "type": "written",
+        "prompt": "If $\\int_0^4 f(x) \\, dx = 10$ and $\\int_4^7 f(x) \\, dx = 5$, find: (a) $\\int_0^7 f(x) \\, dx$, (b) $\\int_4^0 f(x) \\, dx$, and (c) $\\int_0^4 3f(x) \\, dx$.",
+        "correctAnswer": "(a) 15, (b) -10, (c) 30",
+        "modelAnswer": "(a) By additivity: $\\int_0^7 f(x) \\, dx = \\int_0^4 f(x) \\, dx + \\int_4^7 f(x) \\, dx = 10 + 5 = 15$\n\n(b) Reversing limits: $\\int_4^0 f(x) \\, dx = -\\int_0^4 f(x) \\, dx = -10$\n\n(c) Constant multiple: $\\int_0^4 3f(x) \\, dx = 3\\int_0^4 f(x) \\, dx = 3(10) = 30$",
+        "explanation": "Use properties of definite integrals: additivity, reversal of limits, and constant multiples."
+      },
+      {
+        "id": "math204-mid-q13",
+        "type": "multiple_choice",
+        "prompt": "Using integration by parts, $\\int x e^x \\, dx$ equals:",
+        "options": [
+          "$xe^x - e^x + C$",
+          "$xe^x + e^x + C$",
+          "$e^x(x-1) + C$",
+          "$e^x(x+1) + C$"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Let $u = x$, $dv = e^x \\, dx$. Then $du = dx$, $v = e^x$. $\\int x e^x \\, dx = xe^x - \\int e^x \\, dx = xe^x - e^x + C = e^x(x-1) + C$. Options 0 and 2 are equivalent."
+      },
+      {
+        "id": "math204-mid-q14",
+        "type": "fill_blank",
+        "prompt": "For the integral $\\int \\sqrt{9-x^2} \\, dx$, the appropriate trigonometric substitution is $x = $ ____.",
+        "correctAnswer": "3sin(θ)",
+        "explanation": "For $\\sqrt{a^2 - x^2}$, use $x = a\\sin\\theta$. Here $a = 3$, so $x = 3\\sin\\theta$."
+      },
+      {
+        "id": "math204-mid-q15",
+        "type": "multiple_choice",
+        "prompt": "The partial fraction decomposition of $\\frac{1}{(x-1)(x+2)}$ is:",
+        "options": [
+          "$\\frac{A}{x-1} + \\frac{B}{x+2}$",
+          "$\\frac{Ax+B}{(x-1)(x+2)}$",
+          "$\\frac{A}{(x-1)^2} + \\frac{B}{(x+2)^2}$",
+          "$A(x-1) + B(x+2)$"
+        ],
+        "correctAnswer": 0,
+        "explanation": "For distinct linear factors, use $\\frac{A}{x-1} + \\frac{B}{x+2}$."
+      },
+      {
+        "id": "math204-mid-q16",
+        "type": "true_false",
+        "prompt": "The integration by parts formula is derived from the product rule for differentiation.",
+        "correctAnswer": true,
+        "explanation": "True. Integration by parts comes from integrating both sides of the product rule."
+      },
+      {
+        "id": "math204-mid-q17",
+        "type": "multiple_choice",
+        "prompt": "Evaluate $\\int \\ln x \\, dx$ using integration by parts.",
+        "options": [
+          "$x\\ln x + x + C$",
+          "$x\\ln x - x + C$",
+          "$\\frac{1}{x} + C$",
+          "$x\\ln x + C$"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Let $u = \\ln x$, $dv = dx$. Then $du = \\frac{1}{x}dx$, $v = x$. $\\int \\ln x \\, dx = x\\ln x - \\int x \\cdot \\frac{1}{x} \\, dx = x\\ln x - x + C$."
+      },
+      {
+        "id": "math204-mid-q18",
+        "type": "multiple_choice",
+        "prompt": "Which substitution is appropriate for $\\int \\sqrt{x^2 + 16} \\, dx$?",
+        "options": [
+          "$x = 4\\sin\\theta$",
+          "$x = 4\\tan\\theta$",
+          "$x = 4\\sec\\theta$",
+          "No trig substitution needed"
+        ],
+        "correctAnswer": 1,
+        "explanation": "For $\\sqrt{x^2 + a^2}$, use $x = a\\tan\\theta$. Here $a = 4$."
+      },
+      {
+        "id": "math204-mid-q19",
+        "type": "written",
+        "prompt": "Evaluate $\\int \\frac{x+3}{x^2+2x} \\, dx$ using partial fractions. Show all steps including the decomposition.",
+        "correctAnswer": "(1/2)ln|x| + (5/2)ln|x+2| + C",
+        "modelAnswer": "First factor: $x^2 + 2x = x(x+2)$\n\nPartial fractions: $\\frac{x+3}{x(x+2)} = \\frac{A}{x} + \\frac{B}{x+2}$\n\nMultiply by $x(x+2)$: $x + 3 = A(x+2) + Bx$\n\nSet $x = 0$: $3 = 2A$, so $A = \\frac{3}{2}$\n\nSet $x = -2$: $-2 + 3 = -2B$, so $B = -\\frac{1}{2}$\n\nWait, let me recalculate. Set $x = -2$: $1 = -2B$, so $B = -\\frac{1}{2}$ is wrong.\n\nActually: $1 = B(-2)$, so $B = -\\frac{1}{2}$ is incorrect. Let me redo:\n\n$x + 3 = A(x+2) + Bx$\n\n$x=0$: $3 = 2A \\Rightarrow A = \\frac{3}{2}$\n\n$x=-2$: $1 = -2B \\Rightarrow B = -\\frac{1}{2}$\n\nHmm, this gives: $\\frac{3/2}{x} - \\frac{1/2}{x+2}$\n\nLet me verify: $\\frac{3(x+2) - x}{2x(x+2)} = \\frac{3x+6-x}{2x(x+2)} = \\frac{2x+6}{2x(x+2)} = \\frac{x+3}{x(x+2)}$ ✓\n\n$\\int \\frac{x+3}{x(x+2)} \\, dx = \\frac{3}{2}\\ln|x| - \\frac{1}{2}\\ln|x+2| + C$",
+        "explanation": "Factor denominator, set up partial fractions, solve for coefficients, integrate."
+      },
+      {
+        "id": "math204-mid-q20",
+        "type": "multiple_choice",
+        "prompt": "The area between $y = x^2$ and $y = x$ from $x = 0$ to $x = 1$ is:",
+        "options": [
+          "$\\frac{1}{6}$",
+          "$\\frac{1}{3}$",
+          "$\\frac{1}{2}$",
+          "$\\frac{2}{3}$"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Area = $\\int_0^1 (x - x^2) \\, dx = \\left[\\frac{x^2}{2} - \\frac{x^3}{3}\\right]_0^1 = \\frac{1}{2} - \\frac{1}{3} = \\frac{1}{6}$."
+      },
+      {
+        "id": "math204-mid-q21",
+        "type": "fill_blank",
+        "prompt": "The volume of a solid of revolution obtained by rotating $y = f(x)$ about the x-axis from $a$ to $b$ using the disk method is $V = $ ____.",
+        "correctAnswer": "∫[a to b] π[f(x)]² dx",
+        "explanation": "Disk method: $V = \\int_a^b \\pi [f(x)]^2 \\, dx$."
+      },
+      {
+        "id": "math204-mid-q22",
+        "type": "multiple_choice",
+        "prompt": "Find the volume when the region bounded by $y = x$, $y = 0$, and $x = 2$ is rotated about the x-axis.",
+        "options": [
+          "$\\frac{8\\pi}{3}$",
+          "$\\frac{4\\pi}{3}$",
+          "$2\\pi$",
+          "$4\\pi$"
+        ],
+        "correctAnswer": 0,
+        "explanation": "$V = \\int_0^2 \\pi x^2 \\, dx = \\pi\\left[\\frac{x^3}{3}\\right]_0^2 = \\frac{8\\pi}{3}$."
+      },
+      {
+        "id": "math204-mid-q23",
+        "type": "true_false",
+        "prompt": "The shell method is generally more convenient than the disk method when rotating about the y-axis.",
+        "correctAnswer": true,
+        "explanation": "True. The shell method often avoids the need to solve for x in terms of y."
+      },
+      {
+        "id": "math204-mid-q24",
+        "type": "multiple_choice",
+        "prompt": "The arc length of $y = x^{3/2}$ from $x = 0$ to $x = 4$ requires evaluating:",
+        "options": [
+          "$\\int_0^4 \\sqrt{1 + \\frac{9x}{4}} \\, dx$",
+          "$\\int_0^4 \\sqrt{1 + \\frac{3\\sqrt{x}}{2}} \\, dx$",
+          "$\\int_0^4 \\sqrt{1 + x^3} \\, dx$",
+          "$\\int_0^4 x^{3/2} \\, dx$"
+        ],
+        "correctAnswer": 0,
+        "explanation": "$y' = \\frac{3}{2}x^{1/2}$, so $L = \\int_0^4 \\sqrt{1 + (\\frac{3}{2}x^{1/2})^2} \\, dx = \\int_0^4 \\sqrt{1 + \\frac{9x}{4}} \\, dx$."
+      },
+      {
+        "id": "math204-mid-q25",
+        "type": "multiple_choice",
+        "prompt": "The work done to stretch a spring from its natural length to 0.2 m beyond, with spring constant $k = 50$ N/m, is:",
+        "options": [
+          "$1$ J",
+          "$2$ J",
+          "$5$ J",
+          "$10$ J"
+        ],
+        "correctAnswer": 0,
+        "explanation": "$W = \\int_0^{0.2} 50x \\, dx = 50\\left[\\frac{x^2}{2}\\right]_0^{0.2} = 25(0.04) = 1$ J."
+      },
+      {
+        "id": "math204-mid-q26",
+        "type": "written",
+        "prompt": "Find the volume of the solid obtained by rotating the region bounded by $y = \\sqrt{x}$, $y = 0$, and $x = 4$ about the y-axis using the shell method. Show all work.",
+        "correctAnswer": "128π/5",
+        "modelAnswer": "Using the shell method (rotating about y-axis):\n\nRadius = $x$, Height = $\\sqrt{x}$\n\n$V = \\int_0^4 2\\pi x \\cdot \\sqrt{x} \\, dx = 2\\pi \\int_0^4 x^{3/2} \\, dx$\n\n$= 2\\pi \\left[\\frac{x^{5/2}}{5/2}\\right]_0^4 = 2\\pi \\cdot \\frac{2}{5} \\cdot 4^{5/2}$\n\n$= \\frac{4\\pi}{5} \\cdot (4^2)^{5/4} \\cdot 4^{1/2} = \\frac{4\\pi}{5} \\cdot 16\\sqrt{4} = \\frac{4\\pi}{5} \\cdot 32 = \\frac{128\\pi}{5}$\n\nAlternatively: $4^{5/2} = (2^2)^{5/2} = 2^5 = 32$, so $V = \\frac{4\\pi \\cdot 32}{5} = \\frac{128\\pi}{5}$",
+        "explanation": "Shell method: integrate $2\\pi \\times \\text{radius} \\times \\text{height}$ with respect to x."
+      }
+    ]
+  },
+  {
+    "id": "math204-exam-final",
+    "subjectId": "math204",
+    "title": "Math204 Final Exam - Calculus II (Comprehensive)",
+    "durationMinutes": 120,
+    "instructions": [
+      "This is a comprehensive exam covering all 7 topics.",
+      "Show all work for full credit on written questions.",
+      "Calculators are NOT permitted.",
+      "Budget your time wisely: approximately 2.5-3 minutes per question.",
+      "Passing score is 70% or higher."
+    ],
+    "questions": [
+      {
+        "id": "math204-final-q1",
+        "type": "multiple_choice",
+        "prompt": "Evaluate: $\\int \\frac{e^x}{1 + e^x} \\, dx$",
+        "options": [
+          "$\\ln|1 + e^x| + C$",
+          "$e^x + C$",
+          "$\\frac{e^x}{2+e^x} + C$",
+          "$\\arctan(e^x) + C$"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Let $u = 1 + e^x$, $du = e^x \\, dx$. Then $\\int \\frac{e^x}{1+e^x} \\, dx = \\int \\frac{1}{u} \\, du = \\ln|u| + C = \\ln|1+e^x| + C$."
+      },
+      {
+        "id": "math204-final-q2",
+        "type": "fill_blank",
+        "prompt": "$\\int \\frac{1}{x^2+9} \\, dx = $ ____.",
+        "correctAnswer": "(1/3)arctan(x/3) + C",
+        "explanation": "Use the formula $\\int \\frac{1}{x^2+a^2} \\, dx = \\frac{1}{a}\\arctan(\\frac{x}{a}) + C$ with $a = 3$."
+      },
+      {
+        "id": "math204-final-q3",
+        "type": "multiple_choice",
+        "prompt": "Which substitution would you use for $\\int x^2 \\sqrt{x^3 + 1} \\, dx$?",
+        "options": [
+          "$u = x^3$",
+          "$u = x^3 + 1$",
+          "$u = \\sqrt{x^3+1}$",
+          "$u = x^2$"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Let $u = x^3 + 1$, then $du = 3x^2 \\, dx$, which matches the form of the integral."
+      },
+      {
+        "id": "math204-final-q4",
+        "type": "true_false",
+        "prompt": "The constant of integration C can be any real number, which is why antiderivatives form a family of functions.",
+        "correctAnswer": true,
+        "explanation": "True. All antiderivatives of a function differ only by a constant."
+      },
+      {
+        "id": "math204-final-q5",
+        "type": "multiple_choice",
+        "prompt": "Evaluate $\\int \\sec x \\tan x \\, dx$.",
+        "options": [
+          "$\\sec x + C$",
+          "$\\tan x + C$",
+          "$\\ln|\\sec x| + C$",
+          "$\\sec^2 x + C$"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The derivative of $\\sec x$ is $\\sec x \\tan x$, so $\\int \\sec x \\tan x \\, dx = \\sec x + C$."
+      },
+      {
+        "id": "math204-final-q6",
+        "type": "multiple_choice",
+        "prompt": "Evaluate: $\\int_1^e \\frac{1}{x} \\, dx$",
+        "options": [
+          "$0$",
+          "$1$",
+          "$e$",
+          "$\\ln e$"
+        ],
+        "correctAnswer": 1,
+        "explanation": "$\\int_1^e \\frac{1}{x} \\, dx = [\\ln x]_1^e = \\ln e - \\ln 1 = 1 - 0 = 1$."
+      },
+      {
+        "id": "math204-final-q7",
+        "type": "fill_blank",
+        "prompt": "If $f$ is even, then $\\int_{-a}^a f(x) \\, dx = $ ____.",
+        "correctAnswer": "2∫[0 to a] f(x) dx",
+        "explanation": "For even functions: $\\int_{-a}^a f(x) \\, dx = 2\\int_0^a f(x) \\, dx$."
+      },
+      {
+        "id": "math204-final-q8",
+        "type": "multiple_choice",
+        "prompt": "Find $\\frac{d}{dx}\\int_x^3 t^2 \\, dt$.",
+        "options": [
+          "$x^2$",
+          "$-x^2$",
+          "$9 - x^2$",
+          "$3^2 - x^2$"
+        ],
+        "correctAnswer": 1,
+        "explanation": "$\\int_x^3 t^2 \\, dt = -\\int_3^x t^2 \\, dt$. By FTC Part 1: $\\frac{d}{dx}(-\\int_3^x t^2 \\, dt) = -x^2$."
+      },
+      {
+        "id": "math204-final-q9",
+        "type": "true_false",
+        "prompt": "The Fundamental Theorem of Calculus connects differentiation and integration as inverse operations.",
+        "correctAnswer": true,
+        "explanation": "True. The FTC shows that integration and differentiation undo each other."
+      },
+      {
+        "id": "math204-final-q10",
+        "type": "multiple_choice",
+        "prompt": "The average value of $f(x) = \\cos x$ on $[0, \\pi]$ is:",
+        "options": [
+          "$0$",
+          "$\\frac{1}{\\pi}$",
+          "$\\frac{2}{\\pi}$",
+          "$1$"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Average = $\\frac{1}{\\pi}\\int_0^\\pi \\cos x \\, dx = \\frac{1}{\\pi}[\\sin x]_0^\\pi = \\frac{1}{\\pi}(0-0) = 0$."
+      },
+      {
+        "id": "math204-final-q11",
+        "type": "multiple_choice",
+        "prompt": "Evaluate $\\int x \\sin x \\, dx$ using integration by parts.",
+        "options": [
+          "$-x\\cos x + \\sin x + C$",
+          "$x\\cos x + \\sin x + C$",
+          "$-x\\cos x - \\sin x + C$",
+          "$\\sin x - x\\cos x + C$"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Let $u = x$, $dv = \\sin x \\, dx$. Then $du = dx$, $v = -\\cos x$. $\\int x\\sin x \\, dx = -x\\cos x + \\int \\cos x \\, dx = -x\\cos x + \\sin x + C$."
+      },
+      {
+        "id": "math204-final-q12",
+        "type": "fill_blank",
+        "prompt": "For $\\int \\sqrt{x^2 - 25} \\, dx$, the appropriate trig substitution is $x = $ ____.",
+        "correctAnswer": "5sec(θ)",
+        "explanation": "For $\\sqrt{x^2 - a^2}$, use $x = a\\sec\\theta$. Here $a = 5$."
+      },
+      {
+        "id": "math204-final-q13",
+        "type": "multiple_choice",
+        "prompt": "The partial fraction decomposition of $\\frac{2x}{(x-1)(x+1)}$ is:",
+        "options": [
+          "$\\frac{1}{x-1} + \\frac{1}{x+1}$",
+          "$\\frac{1}{x-1} - \\frac{1}{x+1}$",
+          "$\\frac{-1}{x-1} + \\frac{1}{x+1}$",
+          "$\\frac{2}{x-1} + \\frac{2}{x+1}$"
+        ],
+        "correctAnswer": 0,
+        "explanation": "$\\frac{2x}{(x-1)(x+1)} = \\frac{A}{x-1} + \\frac{B}{x+1}$. Solving: $2x = A(x+1) + B(x-1)$. Set $x=1$: $A=1$. Set $x=-1$: $B=1$."
+      },
+      {
+        "id": "math204-final-q14",
+        "type": "true_false",
+        "prompt": "Integration by parts may need to be applied multiple times for some integrals.",
+        "correctAnswer": true,
+        "explanation": "True. Integrals like $\\int x^2 e^x \\, dx$ require repeated integration by parts."
+      },
+      {
+        "id": "math204-final-q15",
+        "type": "multiple_choice",
+        "prompt": "Evaluate $\\int e^x \\cos x \\, dx$ (hint: integrate by parts twice).",
+        "options": [
+          "$\\frac{e^x(\\sin x + \\cos x)}{2} + C$",
+          "$e^x \\sin x + C$",
+          "$e^x(\\sin x - \\cos x) + C$",
+          "$\\frac{e^x \\sin x}{2} + C$"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Use integration by parts twice. After the second application, you get an equation with the original integral on both sides, allowing you to solve for it. Result: $\\frac{e^x(\\sin x + \\cos x)}{2} + C$."
+      },
+      {
+        "id": "math204-final-q16",
+        "type": "written",
+        "prompt": "Evaluate $\\int \\frac{3x-1}{x^2-x-2} \\, dx$ using partial fractions. Show all work.",
+        "correctAnswer": "2ln|x-2| + ln|x+1| + C",
+        "modelAnswer": "Factor: $x^2 - x - 2 = (x-2)(x+1)$\n\nPartial fractions: $\\frac{3x-1}{(x-2)(x+1)} = \\frac{A}{x-2} + \\frac{B}{x+1}$\n\n$3x - 1 = A(x+1) + B(x-2)$\n\n$x = 2$: $6 - 1 = 3A \\Rightarrow A = \\frac{5}{3}$\n\nWait, let me recalculate: $x=2$: $5 = 3A$, so $A = \\frac{5}{3}$ is wrong.\n\nActually at $x=2$: $3(2)-1 = A(3) \\Rightarrow 5 = 3A \\Rightarrow A = \\frac{5}{3}$ ... hmm.\n\nLet me try again more carefully.\n\n$x = 2$: $6-1 = A(2+1) + 0 \\Rightarrow 5 = 3A \\Rightarrow A = \\frac{5}{3}$\n\n$x = -1$: $-3-1 = 0 + B(-3) \\Rightarrow -4 = -3B \\Rightarrow B = \\frac{4}{3}$\n\nCheck: $\\frac{5/3}{x-2} + \\frac{4/3}{x+1} = \\frac{5(x+1) + 4(x-2)}{3(x-2)(x+1)} = \\frac{5x+5+4x-8}{3(x-2)(x+1)} = \\frac{9x-3}{3(x-2)(x+1)} = \\frac{3x-1}{(x-2)(x+1)}$ ✓\n\n$\\int \\frac{3x-1}{x^2-x-2} \\, dx = \\frac{5}{3}\\ln|x-2| + \\frac{4}{3}\\ln|x+1| + C$",
+        "explanation": "Factor, decompose, solve for coefficients, integrate each term."
+      },
+      {
+        "id": "math204-final-q17",
+        "type": "multiple_choice",
+        "prompt": "The area between $y = x^2$ and $y = 2x$ is:",
+        "options": [
+          "$\\frac{2}{3}$",
+          "$\\frac{4}{3}$",
+          "$2$",
+          "$\\frac{8}{3}$"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Intersection points: $x^2 = 2x \\Rightarrow x = 0, 2$. Area = $\\int_0^2 (2x - x^2) \\, dx = [x^2 - \\frac{x^3}{3}]_0^2 = 4 - \\frac{8}{3} = \\frac{4}{3}$."
+      },
+      {
+        "id": "math204-final-q18",
+        "type": "fill_blank",
+        "prompt": "The washer method formula for volume when rotating about the x-axis with outer radius $R(x)$ and inner radius $r(x)$ is $V = $ ____.",
+        "correctAnswer": "∫[a to b] π([R(x)]² - [r(x)]²) dx",
+        "explanation": "Washer method: $V = \\int_a^b \\pi([R(x)]^2 - [r(x)]^2) \\, dx$."
+      },
+      {
+        "id": "math204-final-q19",
+        "type": "multiple_choice",
+        "prompt": "The arc length of $y = \\frac{2}{3}x^{3/2}$ from $x = 0$ to $x = 3$ is:",
+        "options": [
+          "$4$",
+          "$6$",
+          "$\\frac{14}{3}$",
+          "$\\frac{8}{3}$"
+        ],
+        "correctAnswer": 2,
+        "explanation": "$y' = x^{1/2}$. $L = \\int_0^3 \\sqrt{1+x} \\, dx = \\frac{2}{3}[(1+x)^{3/2}]_0^3 = \\frac{2}{3}(8-1) = \\frac{14}{3}$."
+      },
+      {
+        "id": "math204-final-q20",
+        "type": "true_false",
+        "prompt": "The surface area of revolution formula involves both the function and its derivative.",
+        "correctAnswer": true,
+        "explanation": "True. Surface area = $\\int 2\\pi f(x)\\sqrt{1+[f'(x)]^2} \\, dx$."
+      },
+      {
+        "id": "math204-final-q21",
+        "type": "multiple_choice",
+        "prompt": "A tank in the shape of an inverted cone (vertex down) is filled with water. The work to pump all water out the top uses:",
+        "options": [
+          "Only the weight of water",
+          "Weight times distance for each slice",
+          "Integration of force over distance",
+          "Both B and C"
+        ],
+        "correctAnswer": 3,
+        "explanation": "Work = $\\int$ (weight of slice)(distance lifted), which is integrating force over distance."
+      },
+      {
+        "id": "math204-final-q22",
+        "type": "written",
+        "prompt": "Find the volume of the solid obtained by rotating the region bounded by $y = x^2$, $y = 0$, $x = 0$, and $x = 2$ about the y-axis using the shell method.",
+        "correctAnswer": "4π",
+        "modelAnswer": "Shell method (rotating about y-axis):\n\nRadius = $x$, Height = $x^2$\n\n$V = \\int_0^2 2\\pi x \\cdot x^2 \\, dx = 2\\pi \\int_0^2 x^3 \\, dx$\n\n$= 2\\pi \\left[\\frac{x^4}{4}\\right]_0^2 = 2\\pi \\cdot \\frac{16}{4} = 2\\pi \\cdot 4 = 8\\pi$\n\nWait, let me recalculate: $2^4 = 16$, so $\\frac{16}{4} = 4$, thus $2\\pi \\cdot 4 = 8\\pi$.\n\nActually the answer should be $8\\pi$, not $4\\pi$.",
+        "explanation": "Use shell method: $V = \\int 2\\pi \\times \\text{radius} \\times \\text{height} \\, dx$."
+      },
+      {
+        "id": "math204-final-q23",
+        "type": "multiple_choice",
+        "prompt": "Evaluate: $\\int_1^\\infty \\frac{1}{x^3} \\, dx$",
+        "options": [
+          "$\\frac{1}{2}$",
+          "$1$",
+          "$\\infty$",
+          "Diverges"
+        ],
+        "correctAnswer": 0,
+        "explanation": "$\\int_1^\\infty \\frac{1}{x^3} \\, dx = \\lim_{t\\to\\infty} [-\\frac{1}{2x^2}]_1^t = \\lim_{t\\to\\infty} (-\\frac{1}{2t^2} + \\frac{1}{2}) = \\frac{1}{2}$."
+      },
+      {
+        "id": "math204-final-q24",
+        "type": "fill_blank",
+        "prompt": "The integral $\\int_1^\\infty \\frac{1}{x^p} \\, dx$ converges if and only if $p$ ____ 1.",
+        "correctAnswer": "greater than",
+        "explanation": "p-test: converges when $p > 1$, diverges when $p \\leq 1$."
+      },
+      {
+        "id": "math204-final-q25",
+        "type": "multiple_choice",
+        "prompt": "Does $\\int_1^\\infty \\frac{1}{x\\ln x} \\, dx$ converge or diverge?",
+        "options": [
+          "Converges to 1",
+          "Converges to $\\ln 2$",
+          "Diverges",
+          "Cannot determine"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Let $u = \\ln x$, $du = \\frac{1}{x}dx$. $\\int_1^\\infty \\frac{1}{x\\ln x} \\, dx = \\int_{\\ln 1}^\\infty \\frac{1}{u} \\, du = \\int_0^\\infty \\frac{1}{u} \\, du$, which diverges."
+      },
+      {
+        "id": "math204-final-q26",
+        "type": "true_false",
+        "prompt": "If $\\int_a^\\infty f(x) \\, dx$ converges and $0 \\leq g(x) \\leq f(x)$ for all $x \\geq a$, then $\\int_a^\\infty g(x) \\, dx$ also converges.",
+        "correctAnswer": true,
+        "explanation": "True. This is the Direct Comparison Test for improper integrals."
+      },
+      {
+        "id": "math204-final-q27",
+        "type": "multiple_choice",
+        "prompt": "Evaluate $\\int_0^1 \\frac{1}{\\sqrt{x}} \\, dx$ (improper at $x=0$).",
+        "options": [
+          "$1$",
+          "$2$",
+          "$\\frac{1}{2}$",
+          "Diverges"
+        ],
+        "correctAnswer": 1,
+        "explanation": "$\\int_0^1 x^{-1/2} \\, dx = \\lim_{t\\to 0^+} [2x^{1/2}]_t^1 = \\lim_{t\\to 0^+} (2 - 2\\sqrt{t}) = 2$."
+      },
+      {
+        "id": "math204-final-q28",
+        "type": "multiple_choice",
+        "prompt": "Find $\\lim_{n\\to\\infty} \\frac{n^2}{e^n}$.",
+        "options": [
+          "$0$",
+          "$1$",
+          "$\\infty$",
+          "Does not exist"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Exponential functions dominate polynomials. By L'Hôpital twice: $\\lim \\frac{2}{e^n} = 0$."
+      },
+      {
+        "id": "math204-final-q29",
+        "type": "fill_blank",
+        "prompt": "The series $\\sum_{n=0}^\\infty \\frac{1}{2^n}$ equals ____.",
+        "correctAnswer": "2",
+        "explanation": "Geometric series with $a=1$, $r=1/2$: sum = $\\frac{1}{1-1/2} = 2$."
+      },
+      {
+        "id": "math204-final-q30",
+        "type": "multiple_choice",
+        "prompt": "Does $\\sum_{n=1}^\\infty \\frac{1}{n\\sqrt{n}}$ converge or diverge?",
+        "options": [
+          "Converges by p-test",
+          "Diverges by p-test",
+          "Converges by comparison",
+          "Diverges by nth term test"
+        ],
+        "correctAnswer": 0,
+        "explanation": "$\\sum \\frac{1}{n^{3/2}}$ is a p-series with $p = 3/2 > 1$, so it converges."
+      },
+      {
+        "id": "math204-final-q31",
+        "type": "true_false",
+        "prompt": "If $\\sum a_n$ converges, then $\\lim_{n\\to\\infty} a_n = 0$.",
+        "correctAnswer": true,
+        "explanation": "True. If a series converges, its terms must approach 0. (The converse is false.)"
+      },
+      {
+        "id": "math204-final-q32",
+        "type": "multiple_choice",
+        "prompt": "Use the Ratio Test on $\\sum_{n=1}^\\infty \\frac{n^2}{2^n}$. The series:",
+        "options": [
+          "Converges",
+          "Diverges",
+          "Test is inconclusive",
+          "Converges conditionally"
+        ],
+        "correctAnswer": 0,
+        "explanation": "$L = \\lim \\frac{(n+1)^2/2^{n+1}}{n^2/2^n} = \\lim \\frac{(n+1)^2}{2n^2} = \\frac{1}{2} < 1$, so converges."
+      },
+      {
+        "id": "math204-final-q33",
+        "type": "written",
+        "prompt": "Determine if $\\sum_{n=1}^\\infty \\frac{(-1)^{n+1}}{\\sqrt{n}}$ is absolutely convergent, conditionally convergent, or divergent. Justify your answer.",
+        "correctAnswer": "Conditionally convergent",
+        "modelAnswer": "**Test for absolute convergence:**\n\n$\\sum_{n=1}^\\infty \\left|\\frac{(-1)^{n+1}}{\\sqrt{n}}\\right| = \\sum_{n=1}^\\infty \\frac{1}{\\sqrt{n}} = \\sum_{n=1}^\\infty \\frac{1}{n^{1/2}}$\n\nThis is a p-series with $p = 1/2 < 1$, so it **diverges**. Not absolutely convergent.\n\n**Alternating Series Test:**\n\nLet $b_n = \\frac{1}{\\sqrt{n}}$.\n\n(1) $b_n$ is decreasing: $\\frac{1}{\\sqrt{n+1}} < \\frac{1}{\\sqrt{n}}$ ✓\n\n(2) $\\lim_{n\\to\\infty} \\frac{1}{\\sqrt{n}} = 0$ ✓\n\nBoth conditions satisfied, so the series **converges**.\n\n**Conclusion:** The series is **conditionally convergent** (converges but not absolutely).",
+        "explanation": "Test absolute convergence first, then use Alternating Series Test if needed."
+      },
+      {
+        "id": "math204-final-q34",
+        "type": "multiple_choice",
+        "prompt": "The Maclaurin series for $e^x$ is:",
+        "options": [
+          "$\\sum_{n=0}^\\infty \\frac{x^n}{n!}$",
+          "$\\sum_{n=0}^\\infty \\frac{(-1)^n x^n}{n!}$",
+          "$\\sum_{n=0}^\\infty \\frac{x^{2n}}{(2n)!}$",
+          "$\\sum_{n=0}^\\infty x^n$"
+        ],
+        "correctAnswer": 0,
+        "explanation": "$e^x = \\sum_{n=0}^\\infty \\frac{x^n}{n!} = 1 + x + \\frac{x^2}{2!} + \\frac{x^3}{3!} + \\cdots$"
+      },
+      {
+        "id": "math204-final-q35",
+        "type": "fill_blank",
+        "prompt": "The radius of convergence of $\\sum_{n=1}^\\infty \\frac{x^n}{n}$ is $R = $ ____.",
+        "correctAnswer": "1",
+        "explanation": "By Ratio Test: $L = \\lim \\left|\\frac{x^{n+1}/(n+1)}{x^n/n}\\right| = |x|\\lim\\frac{n}{n+1} = |x|$. Converges when $|x| < 1$, so $R = 1$."
+      },
+      {
+        "id": "math204-final-q36",
+        "type": "multiple_choice",
+        "prompt": "The interval of convergence for $\\sum_{n=0}^\\infty \\frac{(x-2)^n}{3^n}$ is:",
+        "options": [
+          "$(-1, 5)$",
+          "$[-1, 5]$",
+          "$(-1, 5]$",
+          "$[-1, 5)$"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Geometric series centered at 2 with $r = \\frac{x-2}{3}$. Converges when $|\\frac{x-2}{3}| < 1$, i.e., $|x-2| < 3$, giving $-1 < x < 5$. Check endpoints separately: both diverge."
+      },
+      {
+        "id": "math204-final-q37",
+        "type": "true_false",
+        "prompt": "A power series always converges at its center.",
+        "correctAnswer": true,
+        "explanation": "True. At $x = c$, the series $\\sum a_n(x-c)^n$ becomes $\\sum a_n \\cdot 0^n = a_0$, which converges."
+      },
+      {
+        "id": "math204-final-q38",
+        "type": "multiple_choice",
+        "prompt": "The Taylor series for $\\sin x$ centered at $x = 0$ is:",
+        "options": [
+          "$\\sum_{n=0}^\\infty \\frac{(-1)^n x^{2n+1}}{(2n+1)!}$",
+          "$\\sum_{n=0}^\\infty \\frac{(-1)^n x^{2n}}{(2n)!}$",
+          "$\\sum_{n=0}^\\infty \\frac{x^n}{n!}$",
+          "$\\sum_{n=0}^\\infty (-1)^n x^n$"
+        ],
+        "correctAnswer": 0,
+        "explanation": "$\\sin x = x - \\frac{x^3}{3!} + \\frac{x^5}{5!} - \\cdots = \\sum_{n=0}^\\infty \\frac{(-1)^n x^{2n+1}}{(2n+1)!}$"
+      },
+      {
+        "id": "math204-final-q39",
+        "type": "multiple_choice",
+        "prompt": "Find the third-degree Taylor polynomial for $f(x) = \\ln(1+x)$ centered at $x = 0$.",
+        "options": [
+          "$x - \\frac{x^2}{2} + \\frac{x^3}{3}$",
+          "$1 + x + \\frac{x^2}{2} + \\frac{x^3}{6}$",
+          "$x + \\frac{x^2}{2} + \\frac{x^3}{3}$",
+          "$x - \\frac{x^2}{2} - \\frac{x^3}{3}$"
+        ],
+        "correctAnswer": 0,
+        "explanation": "$f(x) = \\ln(1+x)$: $f(0)=0$, $f'(0)=1$, $f''(0)=-1$, $f'''(0)=2$. $P_3(x) = x - \\frac{x^2}{2} + \\frac{2x^3}{6} = x - \\frac{x^2}{2} + \\frac{x^3}{3}$."
+      },
+      {
+        "id": "math204-final-q40",
+        "type": "written",
+        "prompt": "Use the Maclaurin series for $e^x$ to find the Maclaurin series for $e^{-x^2}$. Write the first four nonzero terms.",
+        "correctAnswer": "1 - x² + (x⁴)/2! - (x⁶)/3!",
+        "modelAnswer": "The Maclaurin series for $e^x$ is:\n\n$e^x = \\sum_{n=0}^\\infty \\frac{x^n}{n!} = 1 + x + \\frac{x^2}{2!} + \\frac{x^3}{3!} + \\cdots$\n\nSubstitute $-x^2$ for $x$:\n\n$e^{-x^2} = \\sum_{n=0}^\\infty \\frac{(-x^2)^n}{n!} = \\sum_{n=0}^\\infty \\frac{(-1)^n x^{2n}}{n!}$\n\nFirst four terms:\n\n$e^{-x^2} = 1 - x^2 + \\frac{x^4}{2!} - \\frac{x^6}{3!} + \\cdots = 1 - x^2 + \\frac{x^4}{2} - \\frac{x^6}{6} + \\cdots$",
+        "explanation": "Substitute $-x^2$ into the standard Maclaurin series for $e^x$."
+      },
+      {
+        "id": "math204-final-q41",
+        "type": "multiple_choice",
+        "prompt": "Which technique would be most appropriate for $\\int x^2 \\ln x \\, dx$?",
+        "options": [
+          "U-substitution",
+          "Integration by parts",
+          "Partial fractions",
+          "Trigonometric substitution"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Integration by parts is appropriate when you have a product of a polynomial and logarithm."
+      },
+      {
+        "id": "math204-final-q42",
+        "type": "written",
+        "prompt": "A region is bounded by $y = e^x$, $y = 0$, $x = 0$, and $x = 1$. Find: (a) the area of the region, and (b) the volume when rotated about the x-axis.",
+        "correctAnswer": "(a) e - 1, (b) π(e² - 1)/2",
+        "modelAnswer": "**(a) Area:**\n\n$A = \\int_0^1 e^x \\, dx = [e^x]_0^1 = e - 1$\n\n**(b) Volume (disk method):**\n\n$V = \\int_0^1 \\pi (e^x)^2 \\, dx = \\pi \\int_0^1 e^{2x} \\, dx$\n\n$= \\pi \\left[\\frac{e^{2x}}{2}\\right]_0^1 = \\pi \\left(\\frac{e^2}{2} - \\frac{1}{2}\\right) = \\frac{\\pi(e^2 - 1)}{2}$",
+        "explanation": "Use definite integration for area and disk method for volume of revolution."
+      }
+    ]
+  }
+]

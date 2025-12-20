@@ -1,0 +1,2578 @@
+[
+  {
+    "id": "cs205-ex-1-1",
+    "subjectId": "cs205",
+    "topicId": "cs205-1",
+    "title": "Create Basic Table",
+    "description": "Write a SQL statement to create a table called `Students` with columns: StudentID (integer, primary key), Name (varchar 100), and Email (varchar 255).",
+    "difficulty": 1,
+    "language": "sql",
+    "starterCode": "-- Create the Students table\n",
+    "solution": "CREATE TABLE Students (\n    StudentID INTEGER PRIMARY KEY,\n    Name VARCHAR(100),\n    Email VARCHAR(255)\n);",
+    "testCases": [
+      {
+        "input": "table structure",
+        "expectedOutput": "Students table with 3 columns",
+        "isHidden": false,
+        "description": "Basic table creation"
+      }
+    ],
+    "hints": [
+      "Use CREATE TABLE syntax.",
+      "PRIMARY KEY goes after the column type."
+    ]
+  },
+  {
+    "id": "cs205-ex-1-2",
+    "subjectId": "cs205",
+    "topicId": "cs205-1",
+    "title": "Identify Primary Key",
+    "description": "Given a table Employee(EmpID, Name, SSN, DeptID), which attributes could serve as candidate keys? Write a comment listing them and explain why.",
+    "difficulty": 1,
+    "language": "sql",
+    "starterCode": "-- List candidate keys and explanation:\n-- ",
+    "solution": "-- Candidate keys: {EmpID}, {SSN}\n-- EmpID uniquely identifies each employee\n-- SSN (Social Security Number) is unique per person\n-- Name is not a key (duplicates possible)\n-- DeptID is not a key (many employees per department)",
+    "testCases": [
+      {
+        "input": "analysis",
+        "expectedOutput": "EmpID and SSN identified",
+        "isHidden": false,
+        "description": "Key identification"
+      }
+    ],
+    "hints": [
+      "A candidate key uniquely identifies each row.",
+      "Can Name have duplicates?"
+    ]
+  },
+  {
+    "id": "cs205-ex-1-3",
+    "subjectId": "cs205",
+    "topicId": "cs205-1",
+    "title": "Foreign Key Constraint",
+    "description": "Create an Orders table with OrderID (PK), CustomerID (FK to Customers), and OrderDate. Include the foreign key constraint.",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- Create Orders table with foreign key\n",
+    "solution": "CREATE TABLE Orders (\n    OrderID INTEGER PRIMARY KEY,\n    CustomerID INTEGER NOT NULL,\n    OrderDate DATE,\n    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)\n);",
+    "testCases": [
+      {
+        "input": "table structure",
+        "expectedOutput": "Orders table with FK constraint",
+        "isHidden": false,
+        "description": "FK creation"
+      }
+    ],
+    "hints": [
+      "Use FOREIGN KEY ... REFERENCES syntax.",
+      "The referenced table must exist."
+    ]
+  },
+  {
+    "id": "cs205-ex-1-4",
+    "subjectId": "cs205",
+    "topicId": "cs205-1",
+    "title": "ER to Table Mapping",
+    "description": "Given entities Student(StudentID, Name) and Course(CourseID, Title) with a many-to-many Enrollment relationship, create all three tables.",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- Create Student, Course, and Enrollment tables\n",
+    "solution": "CREATE TABLE Student (\n    StudentID INTEGER PRIMARY KEY,\n    Name VARCHAR(100)\n);\n\nCREATE TABLE Course (\n    CourseID VARCHAR(10) PRIMARY KEY,\n    Title VARCHAR(200)\n);\n\nCREATE TABLE Enrollment (\n    StudentID INTEGER,\n    CourseID VARCHAR(10),\n    PRIMARY KEY (StudentID, CourseID),\n    FOREIGN KEY (StudentID) REFERENCES Student(StudentID),\n    FOREIGN KEY (CourseID) REFERENCES Course(CourseID)\n);",
+    "testCases": [
+      {
+        "input": "tables",
+        "expectedOutput": "3 tables with proper relationships",
+        "isHidden": false,
+        "description": "M:N relationship"
+      }
+    ],
+    "hints": [
+      "Many-to-many requires a junction table.",
+      "Junction table has composite primary key."
+    ]
+  },
+  {
+    "id": "cs205-ex-1-5",
+    "subjectId": "cs205",
+    "topicId": "cs205-1",
+    "title": "Selection Operation",
+    "description": "Express in relational algebra: \"Find all employees in department 10\". Use σ notation.",
+    "difficulty": 1,
+    "language": "sql",
+    "starterCode": "-- Relational algebra expression:\n-- ",
+    "solution": "-- σ_DeptID=10(Employee)\n-- Selection on Employee where DeptID equals 10",
+    "testCases": [
+      {
+        "input": "expression",
+        "expectedOutput": "Correct selection notation",
+        "isHidden": false,
+        "description": "Selection operator"
+      }
+    ],
+    "hints": [
+      "σ is the selection operator.",
+      "Condition goes as subscript."
+    ]
+  },
+  {
+    "id": "cs205-ex-1-6",
+    "subjectId": "cs205",
+    "topicId": "cs205-1",
+    "title": "Projection Operation",
+    "description": "Express in relational algebra: \"Get only Name and Salary from Employee table\". Use π notation.",
+    "difficulty": 1,
+    "language": "sql",
+    "starterCode": "-- Relational algebra expression:\n-- ",
+    "solution": "-- π_Name,Salary(Employee)\n-- Projection selecting only Name and Salary columns",
+    "testCases": [
+      {
+        "input": "expression",
+        "expectedOutput": "Correct projection notation",
+        "isHidden": false,
+        "description": "Projection operator"
+      }
+    ],
+    "hints": [
+      "π is the projection operator.",
+      "List column names as subscript."
+    ]
+  },
+  {
+    "id": "cs205-ex-1-7",
+    "subjectId": "cs205",
+    "topicId": "cs205-1",
+    "title": "Natural Join Expression",
+    "description": "Express: \"Join Employee and Department on DeptID\" in relational algebra.",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- Relational algebra expression:\n-- ",
+    "solution": "-- Employee ⋈ Department\n-- Or: Employee ⋈_DeptID Department\n-- Natural join matches DeptID columns automatically",
+    "testCases": [
+      {
+        "input": "expression",
+        "expectedOutput": "Correct join notation",
+        "isHidden": false,
+        "description": "Join operator"
+      }
+    ],
+    "hints": [
+      "⋈ is the natural join symbol.",
+      "Natural join matches columns with same name."
+    ]
+  },
+  {
+    "id": "cs205-ex-1-8",
+    "subjectId": "cs205",
+    "topicId": "cs205-1",
+    "title": "Weak Entity Table",
+    "description": "Create a weak entity table Dependent that depends on Employee. Dependent has Name and Relationship attributes.",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- Create weak entity table\n",
+    "solution": "CREATE TABLE Dependent (\n    EmpID INTEGER,\n    DependentName VARCHAR(100),\n    Relationship VARCHAR(50),\n    PRIMARY KEY (EmpID, DependentName),\n    FOREIGN KEY (EmpID) REFERENCES Employee(EmpID)\n        ON DELETE CASCADE\n);",
+    "testCases": [
+      {
+        "input": "table",
+        "expectedOutput": "Weak entity with partial key",
+        "isHidden": false,
+        "description": "Weak entity mapping"
+      }
+    ],
+    "hints": [
+      "Weak entity key includes owner's key.",
+      "Consider CASCADE on delete."
+    ]
+  },
+  {
+    "id": "cs205-ex-1-9",
+    "subjectId": "cs205",
+    "topicId": "cs205-1",
+    "title": "Combined RA Expression",
+    "description": "Express: \"Names of employees in the Sales department\" combining selection, projection, and join.",
+    "difficulty": 3,
+    "language": "sql",
+    "starterCode": "-- Relational algebra expression:\n-- ",
+    "solution": "-- π_Name(σ_DeptName='Sales'(Employee ⋈ Department))\n-- Join Employee and Department, filter for Sales, project Name",
+    "testCases": [
+      {
+        "input": "expression",
+        "expectedOutput": "Combined RA expression",
+        "isHidden": false,
+        "description": "Complex RA"
+      }
+    ],
+    "hints": [
+      "First join, then select, then project.",
+      "Operations read from inside out."
+    ]
+  },
+  {
+    "id": "cs205-ex-1-10",
+    "subjectId": "cs205",
+    "topicId": "cs205-1",
+    "title": "Cardinality Constraint",
+    "description": "A Manager manages exactly one Department, and a Department has exactly one Manager. What cardinality is this? Create the tables.",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- This is a ____ relationship\n-- Create tables:\n",
+    "solution": "-- This is a 1:1 relationship\nCREATE TABLE Department (\n    DeptID INTEGER PRIMARY KEY,\n    DeptName VARCHAR(100),\n    ManagerID INTEGER UNIQUE  -- 1:1 enforced by UNIQUE\n);\n\nCREATE TABLE Manager (\n    ManagerID INTEGER PRIMARY KEY,\n    Name VARCHAR(100)\n);\n\nALTER TABLE Department\nADD FOREIGN KEY (ManagerID) REFERENCES Manager(ManagerID);",
+    "testCases": [
+      {
+        "input": "tables",
+        "expectedOutput": "1:1 relationship tables",
+        "isHidden": false,
+        "description": "1:1 mapping"
+      }
+    ],
+    "hints": [
+      "1:1 means one-to-one.",
+      "UNIQUE constraint enforces single reference."
+    ]
+  },
+  {
+    "id": "cs205-ex-1-11",
+    "subjectId": "cs205",
+    "topicId": "cs205-1",
+    "title": "Set Difference",
+    "description": "Express: \"Products that have never been ordered\" using set difference in relational algebra.",
+    "difficulty": 3,
+    "language": "sql",
+    "starterCode": "-- Relational algebra expression:\n-- ",
+    "solution": "-- π_ProductID(Product) - π_ProductID(OrderItem)\n-- All product IDs minus those that appear in orders",
+    "testCases": [
+      {
+        "input": "expression",
+        "expectedOutput": "Set difference expression",
+        "isHidden": false,
+        "description": "Set difference"
+      }
+    ],
+    "hints": [
+      "First project ProductID from both tables.",
+      "Use - for set difference."
+    ]
+  },
+  {
+    "id": "cs205-ex-1-12",
+    "subjectId": "cs205",
+    "topicId": "cs205-1",
+    "title": "Composite Attribute",
+    "description": "Address is a composite attribute with Street, City, State, Zip. Create a Person table handling this properly.",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- Create Person table with address components\n",
+    "solution": "CREATE TABLE Person (\n    PersonID INTEGER PRIMARY KEY,\n    Name VARCHAR(100),\n    Street VARCHAR(200),\n    City VARCHAR(100),\n    State CHAR(2),\n    ZipCode VARCHAR(10)\n);",
+    "testCases": [
+      {
+        "input": "table",
+        "expectedOutput": "Person with address components",
+        "isHidden": false,
+        "description": "Composite attribute"
+      }
+    ],
+    "hints": [
+      "Break composite into atomic parts.",
+      "Each component becomes a column."
+    ]
+  },
+  {
+    "id": "cs205-ex-1-13",
+    "subjectId": "cs205",
+    "topicId": "cs205-1",
+    "title": "Multivalued Attribute",
+    "description": "Employee can have multiple phone numbers. Create tables to handle this multivalued attribute properly.",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- Handle multivalued attribute\n",
+    "solution": "CREATE TABLE Employee (\n    EmpID INTEGER PRIMARY KEY,\n    Name VARCHAR(100)\n);\n\nCREATE TABLE EmployeePhone (\n    EmpID INTEGER,\n    PhoneNumber VARCHAR(20),\n    PhoneType VARCHAR(20),\n    PRIMARY KEY (EmpID, PhoneNumber),\n    FOREIGN KEY (EmpID) REFERENCES Employee(EmpID)\n);",
+    "testCases": [
+      {
+        "input": "tables",
+        "expectedOutput": "Separate table for phones",
+        "isHidden": false,
+        "description": "Multivalued attribute"
+      }
+    ],
+    "hints": [
+      "Multivalued attributes need separate table.",
+      "Use composite key including owner's PK."
+    ]
+  },
+  {
+    "id": "cs205-ex-1-14",
+    "subjectId": "cs205",
+    "topicId": "cs205-1",
+    "title": "Division Operation",
+    "description": "Given Student(SID, CID) and Course(CID), express \"Students who took ALL courses\" using division.",
+    "difficulty": 3,
+    "language": "sql",
+    "starterCode": "-- Relational algebra division:\n-- ",
+    "solution": "-- Student ÷ π_CID(Course)\n-- Division finds students whose course set contains all courses",
+    "testCases": [
+      {
+        "input": "expression",
+        "expectedOutput": "Division expression",
+        "isHidden": false,
+        "description": "Division operator"
+      }
+    ],
+    "hints": [
+      "Division answers \"for all\" queries.",
+      "÷ is the division symbol."
+    ]
+  },
+  {
+    "id": "cs205-ex-1-15",
+    "subjectId": "cs205",
+    "topicId": "cs205-1",
+    "title": "Specialization Hierarchy",
+    "description": "Model Employee with specializations Manager and Engineer. Create tables for this ISA hierarchy.",
+    "difficulty": 3,
+    "language": "sql",
+    "starterCode": "-- Create ISA hierarchy tables\n",
+    "solution": "CREATE TABLE Employee (\n    EmpID INTEGER PRIMARY KEY,\n    Name VARCHAR(100),\n    Salary DECIMAL(10,2)\n);\n\nCREATE TABLE Manager (\n    EmpID INTEGER PRIMARY KEY,\n    Budget DECIMAL(12,2),\n    FOREIGN KEY (EmpID) REFERENCES Employee(EmpID)\n);\n\nCREATE TABLE Engineer (\n    EmpID INTEGER PRIMARY KEY,\n    Specialty VARCHAR(50),\n    FOREIGN KEY (EmpID) REFERENCES Employee(EmpID)\n);",
+    "testCases": [
+      {
+        "input": "tables",
+        "expectedOutput": "ISA hierarchy tables",
+        "isHidden": false,
+        "description": "Specialization mapping"
+      }
+    ],
+    "hints": [
+      "Subclass tables reference superclass PK.",
+      "Common attributes go in superclass."
+    ]
+  },
+  {
+    "id": "cs205-ex-1-16",
+    "subjectId": "cs205",
+    "topicId": "cs205-1",
+    "title": "Complete ER Mapping",
+    "description": "Map this ER: Company(CID, Name) --employs-- Employee(EID, Name, Salary) with 1:N cardinality and total participation of Employee.",
+    "difficulty": 3,
+    "language": "sql",
+    "starterCode": "-- Complete ER mapping\n",
+    "solution": "CREATE TABLE Company (\n    CID INTEGER PRIMARY KEY,\n    CompanyName VARCHAR(100) NOT NULL\n);\n\nCREATE TABLE Employee (\n    EID INTEGER PRIMARY KEY,\n    Name VARCHAR(100) NOT NULL,\n    Salary DECIMAL(10,2),\n    CID INTEGER NOT NULL,  -- NOT NULL enforces total participation\n    FOREIGN KEY (CID) REFERENCES Company(CID)\n);",
+    "testCases": [
+      {
+        "input": "tables",
+        "expectedOutput": "Proper 1:N with total participation",
+        "isHidden": false,
+        "description": "Complete mapping"
+      }
+    ],
+    "hints": [
+      "1:N puts FK on N side.",
+      "Total participation = NOT NULL on FK."
+    ]
+  },
+  {
+    "id": "cs205-ex-2-1",
+    "subjectId": "cs205",
+    "topicId": "cs205-2",
+    "title": "Basic SELECT",
+    "description": "Write a query to select all columns from the Employees table.",
+    "difficulty": 1,
+    "language": "sql",
+    "starterCode": "-- Select all from Employees\n",
+    "solution": "SELECT * FROM Employees;",
+    "testCases": [
+      {
+        "input": "query",
+        "expectedOutput": "All employee rows",
+        "isHidden": false,
+        "description": "Select all"
+      }
+    ],
+    "hints": [
+      "Use * to select all columns.",
+      "Don't forget the semicolon."
+    ]
+  },
+  {
+    "id": "cs205-ex-2-2",
+    "subjectId": "cs205",
+    "topicId": "cs205-2",
+    "title": "SELECT with WHERE",
+    "description": "Select Name and Salary from Employees where Salary is greater than 50000.",
+    "difficulty": 1,
+    "language": "sql",
+    "starterCode": "-- High earners query\n",
+    "solution": "SELECT Name, Salary\nFROM Employees\nWHERE Salary > 50000;",
+    "testCases": [
+      {
+        "input": "query",
+        "expectedOutput": "Employees earning >50000",
+        "isHidden": false,
+        "description": "Filtered select"
+      }
+    ],
+    "hints": [
+      "List columns after SELECT.",
+      "WHERE filters rows."
+    ]
+  },
+  {
+    "id": "cs205-ex-2-3",
+    "subjectId": "cs205",
+    "topicId": "cs205-2",
+    "title": "INSERT Statement",
+    "description": "Insert a new customer: ID=101, Name=\"John Smith\", Email=\"john@example.com\".",
+    "difficulty": 1,
+    "language": "sql",
+    "starterCode": "-- Insert new customer\n",
+    "solution": "INSERT INTO Customers (CustomerID, Name, Email)\nVALUES (101, 'John Smith', 'john@example.com');",
+    "testCases": [
+      {
+        "input": "insert",
+        "expectedOutput": "1 row inserted",
+        "isHidden": false,
+        "description": "Basic insert"
+      }
+    ],
+    "hints": [
+      "Specify columns in parentheses.",
+      "String values need quotes."
+    ]
+  },
+  {
+    "id": "cs205-ex-2-4",
+    "subjectId": "cs205",
+    "topicId": "cs205-2",
+    "title": "UPDATE Statement",
+    "description": "Update the price of product with ID=5 to 29.99.",
+    "difficulty": 1,
+    "language": "sql",
+    "starterCode": "-- Update product price\n",
+    "solution": "UPDATE Products\nSET Price = 29.99\nWHERE ProductID = 5;",
+    "testCases": [
+      {
+        "input": "update",
+        "expectedOutput": "1 row updated",
+        "isHidden": false,
+        "description": "Basic update"
+      }
+    ],
+    "hints": [
+      "SET specifies new value.",
+      "Always include WHERE to avoid updating all rows!"
+    ]
+  },
+  {
+    "id": "cs205-ex-2-5",
+    "subjectId": "cs205",
+    "topicId": "cs205-2",
+    "title": "DELETE Statement",
+    "description": "Delete all orders from before January 1, 2020.",
+    "difficulty": 1,
+    "language": "sql",
+    "starterCode": "-- Delete old orders\n",
+    "solution": "DELETE FROM Orders\nWHERE OrderDate < '2020-01-01';",
+    "testCases": [
+      {
+        "input": "delete",
+        "expectedOutput": "Old orders deleted",
+        "isHidden": false,
+        "description": "Filtered delete"
+      }
+    ],
+    "hints": [
+      "Date comparison with string in ISO format.",
+      "WHERE is crucial to avoid deleting all rows."
+    ]
+  },
+  {
+    "id": "cs205-ex-2-6",
+    "subjectId": "cs205",
+    "topicId": "cs205-2",
+    "title": "ORDER BY",
+    "description": "Select all products sorted by price descending, then by name ascending.",
+    "difficulty": 1,
+    "language": "sql",
+    "starterCode": "-- Sorted products\n",
+    "solution": "SELECT *\nFROM Products\nORDER BY Price DESC, Name ASC;",
+    "testCases": [
+      {
+        "input": "query",
+        "expectedOutput": "Products sorted by price desc, name asc",
+        "isHidden": false,
+        "description": "Multi-column sort"
+      }
+    ],
+    "hints": [
+      "DESC for descending.",
+      "Multiple columns separated by comma."
+    ]
+  },
+  {
+    "id": "cs205-ex-2-7",
+    "subjectId": "cs205",
+    "topicId": "cs205-2",
+    "title": "DISTINCT Values",
+    "description": "Find all unique cities from the Customers table.",
+    "difficulty": 1,
+    "language": "sql",
+    "starterCode": "-- Unique cities\n",
+    "solution": "SELECT DISTINCT City\nFROM Customers;",
+    "testCases": [
+      {
+        "input": "query",
+        "expectedOutput": "Unique city names",
+        "isHidden": false,
+        "description": "Distinct values"
+      }
+    ],
+    "hints": [
+      "DISTINCT removes duplicates.",
+      "Place it after SELECT."
+    ]
+  },
+  {
+    "id": "cs205-ex-2-8",
+    "subjectId": "cs205",
+    "topicId": "cs205-2",
+    "title": "LIKE Pattern",
+    "description": "Find all customers whose name starts with \"A\" and ends with \"n\".",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- Pattern matching query\n",
+    "solution": "SELECT *\nFROM Customers\nWHERE Name LIKE 'A%n';",
+    "testCases": [
+      {
+        "input": "query",
+        "expectedOutput": "Names matching pattern",
+        "isHidden": false,
+        "description": "LIKE pattern"
+      }
+    ],
+    "hints": [
+      "% matches any characters.",
+      "_ matches exactly one character."
+    ]
+  },
+  {
+    "id": "cs205-ex-2-9",
+    "subjectId": "cs205",
+    "topicId": "cs205-2",
+    "title": "COUNT Aggregate",
+    "description": "Count the total number of orders in the Orders table.",
+    "difficulty": 1,
+    "language": "sql",
+    "starterCode": "-- Count orders\n",
+    "solution": "SELECT COUNT(*) AS TotalOrders\nFROM Orders;",
+    "testCases": [
+      {
+        "input": "query",
+        "expectedOutput": "Total order count",
+        "isHidden": false,
+        "description": "Count aggregate"
+      }
+    ],
+    "hints": [
+      "COUNT(*) counts all rows.",
+      "AS creates an alias for the result column."
+    ]
+  },
+  {
+    "id": "cs205-ex-2-10",
+    "subjectId": "cs205",
+    "topicId": "cs205-2",
+    "title": "GROUP BY",
+    "description": "Find the number of employees in each department.",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- Employees per department\n",
+    "solution": "SELECT DeptID, COUNT(*) AS EmployeeCount\nFROM Employees\nGROUP BY DeptID;",
+    "testCases": [
+      {
+        "input": "query",
+        "expectedOutput": "Count per department",
+        "isHidden": false,
+        "description": "Grouping"
+      }
+    ],
+    "hints": [
+      "Non-aggregated columns must be in GROUP BY.",
+      "COUNT counts rows per group."
+    ]
+  },
+  {
+    "id": "cs205-ex-2-11",
+    "subjectId": "cs205",
+    "topicId": "cs205-2",
+    "title": "HAVING Clause",
+    "description": "Find departments with more than 5 employees.",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- Large departments\n",
+    "solution": "SELECT DeptID, COUNT(*) AS EmployeeCount\nFROM Employees\nGROUP BY DeptID\nHAVING COUNT(*) > 5;",
+    "testCases": [
+      {
+        "input": "query",
+        "expectedOutput": "Departments with >5 employees",
+        "isHidden": false,
+        "description": "Having filter"
+      }
+    ],
+    "hints": [
+      "HAVING filters groups, WHERE filters rows.",
+      "HAVING comes after GROUP BY."
+    ]
+  },
+  {
+    "id": "cs205-ex-2-12",
+    "subjectId": "cs205",
+    "topicId": "cs205-2",
+    "title": "Multiple Aggregates",
+    "description": "For each department, find the minimum, maximum, and average salary.",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- Salary statistics by department\n",
+    "solution": "SELECT DeptID,\n       MIN(Salary) AS MinSalary,\n       MAX(Salary) AS MaxSalary,\n       AVG(Salary) AS AvgSalary\nFROM Employees\nGROUP BY DeptID;",
+    "testCases": [
+      {
+        "input": "query",
+        "expectedOutput": "Salary stats per department",
+        "isHidden": false,
+        "description": "Multiple aggregates"
+      }
+    ],
+    "hints": [
+      "Multiple aggregates in same SELECT.",
+      "Use aliases for clarity."
+    ]
+  },
+  {
+    "id": "cs205-ex-2-13",
+    "subjectId": "cs205",
+    "topicId": "cs205-2",
+    "title": "Create View",
+    "description": "Create a view called HighValueOrders showing orders with total over 1000.",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- Create view\n",
+    "solution": "CREATE VIEW HighValueOrders AS\nSELECT *\nFROM Orders\nWHERE Total > 1000;",
+    "testCases": [
+      {
+        "input": "view",
+        "expectedOutput": "View created",
+        "isHidden": false,
+        "description": "View creation"
+      }
+    ],
+    "hints": [
+      "CREATE VIEW ... AS SELECT ...",
+      "Views are virtual tables."
+    ]
+  },
+  {
+    "id": "cs205-ex-2-14",
+    "subjectId": "cs205",
+    "topicId": "cs205-2",
+    "title": "NULL Handling",
+    "description": "Find all employees who do not have a manager assigned (ManagerID is NULL).",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- Employees without manager\n",
+    "solution": "SELECT *\nFROM Employees\nWHERE ManagerID IS NULL;",
+    "testCases": [
+      {
+        "input": "query",
+        "expectedOutput": "Employees with NULL manager",
+        "isHidden": false,
+        "description": "NULL check"
+      }
+    ],
+    "hints": [
+      "Use IS NULL, not = NULL.",
+      "NULL comparisons with = return NULL, not true/false."
+    ]
+  },
+  {
+    "id": "cs205-ex-2-15",
+    "subjectId": "cs205",
+    "topicId": "cs205-2",
+    "title": "BETWEEN and IN",
+    "description": "Find products with price between 10 and 50, in categories \"Electronics\" or \"Books\".",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- Filtered products\n",
+    "solution": "SELECT *\nFROM Products\nWHERE Price BETWEEN 10 AND 50\n  AND Category IN ('Electronics', 'Books');",
+    "testCases": [
+      {
+        "input": "query",
+        "expectedOutput": "Filtered products",
+        "isHidden": false,
+        "description": "BETWEEN and IN"
+      }
+    ],
+    "hints": [
+      "BETWEEN is inclusive.",
+      "IN checks membership in a list."
+    ]
+  },
+  {
+    "id": "cs205-ex-2-16",
+    "subjectId": "cs205",
+    "topicId": "cs205-2",
+    "title": "Stored Procedure",
+    "description": "Create a stored procedure GetEmployeesByDept that takes DeptID and returns employees in that department.",
+    "difficulty": 3,
+    "language": "sql",
+    "starterCode": "-- Create stored procedure\n",
+    "solution": "CREATE PROCEDURE GetEmployeesByDept(IN dept_id INT)\nBEGIN\n    SELECT *\n    FROM Employees\n    WHERE DeptID = dept_id;\nEND;",
+    "testCases": [
+      {
+        "input": "procedure",
+        "expectedOutput": "Procedure created",
+        "isHidden": false,
+        "description": "Stored procedure"
+      }
+    ],
+    "hints": [
+      "IN parameter for input.",
+      "Syntax varies by database system."
+    ]
+  },
+  {
+    "id": "cs205-ex-3-1",
+    "subjectId": "cs205",
+    "topicId": "cs205-3",
+    "title": "INNER JOIN",
+    "description": "Write a query joining Orders and Customers to show OrderID, OrderDate, and CustomerName.",
+    "difficulty": 1,
+    "language": "sql",
+    "starterCode": "-- Join Orders and Customers\n",
+    "solution": "SELECT o.OrderID, o.OrderDate, c.Name AS CustomerName\nFROM Orders o\nINNER JOIN Customers c ON o.CustomerID = c.CustomerID;",
+    "testCases": [
+      {
+        "input": "query",
+        "expectedOutput": "Joined order and customer data",
+        "isHidden": false,
+        "description": "Inner join"
+      }
+    ],
+    "hints": [
+      "Use table aliases for clarity.",
+      "ON specifies the join condition."
+    ]
+  },
+  {
+    "id": "cs205-ex-3-2",
+    "subjectId": "cs205",
+    "topicId": "cs205-3",
+    "title": "LEFT JOIN",
+    "description": "Find all customers and their orders, including customers with no orders.",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- All customers with orders\n",
+    "solution": "SELECT c.CustomerID, c.Name, o.OrderID, o.OrderDate\nFROM Customers c\nLEFT JOIN Orders o ON c.CustomerID = o.CustomerID;",
+    "testCases": [
+      {
+        "input": "query",
+        "expectedOutput": "All customers, orders may be NULL",
+        "isHidden": false,
+        "description": "Left join"
+      }
+    ],
+    "hints": [
+      "LEFT JOIN keeps all left table rows.",
+      "No match = NULL for right columns."
+    ]
+  },
+  {
+    "id": "cs205-ex-3-3",
+    "subjectId": "cs205",
+    "topicId": "cs205-3",
+    "title": "Self Join",
+    "description": "Find pairs of employees in the same department (don't pair employee with themselves).",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- Employee pairs in same department\n",
+    "solution": "SELECT e1.Name AS Employee1, e2.Name AS Employee2, e1.DeptID\nFROM Employees e1\nJOIN Employees e2 ON e1.DeptID = e2.DeptID\nWHERE e1.EmpID < e2.EmpID;",
+    "testCases": [
+      {
+        "input": "query",
+        "expectedOutput": "Employee pairs",
+        "isHidden": false,
+        "description": "Self join"
+      }
+    ],
+    "hints": [
+      "Join table with itself using aliases.",
+      "Use < to avoid duplicates and self-pairs."
+    ]
+  },
+  {
+    "id": "cs205-ex-3-4",
+    "subjectId": "cs205",
+    "topicId": "cs205-3",
+    "title": "Three Table Join",
+    "description": "Join Orders, OrderItems, and Products to show OrderID, ProductName, and Quantity.",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- Three table join\n",
+    "solution": "SELECT o.OrderID, p.ProductName, oi.Quantity\nFROM Orders o\nJOIN OrderItems oi ON o.OrderID = oi.OrderID\nJOIN Products p ON oi.ProductID = p.ProductID;",
+    "testCases": [
+      {
+        "input": "query",
+        "expectedOutput": "Order details with product names",
+        "isHidden": false,
+        "description": "Multi-table join"
+      }
+    ],
+    "hints": [
+      "Chain JOINs one after another.",
+      "Each join needs its own ON condition."
+    ]
+  },
+  {
+    "id": "cs205-ex-3-5",
+    "subjectId": "cs205",
+    "topicId": "cs205-3",
+    "title": "Scalar Subquery",
+    "description": "Find employees who earn more than the company-wide average salary.",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- Above average earners\n",
+    "solution": "SELECT Name, Salary\nFROM Employees\nWHERE Salary > (SELECT AVG(Salary) FROM Employees);",
+    "testCases": [
+      {
+        "input": "query",
+        "expectedOutput": "Employees above average",
+        "isHidden": false,
+        "description": "Scalar subquery"
+      }
+    ],
+    "hints": [
+      "Subquery returns single value.",
+      "Compare Salary to that value."
+    ]
+  },
+  {
+    "id": "cs205-ex-3-6",
+    "subjectId": "cs205",
+    "topicId": "cs205-3",
+    "title": "IN Subquery",
+    "description": "Find customers who have placed at least one order.",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- Customers with orders\n",
+    "solution": "SELECT *\nFROM Customers\nWHERE CustomerID IN (\n    SELECT DISTINCT CustomerID FROM Orders\n);",
+    "testCases": [
+      {
+        "input": "query",
+        "expectedOutput": "Customers with orders",
+        "isHidden": false,
+        "description": "IN subquery"
+      }
+    ],
+    "hints": [
+      "Subquery returns list of CustomerIDs.",
+      "IN checks if value is in that list."
+    ]
+  },
+  {
+    "id": "cs205-ex-3-7",
+    "subjectId": "cs205",
+    "topicId": "cs205-3",
+    "title": "NOT EXISTS",
+    "description": "Find products that have never been ordered.",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- Never ordered products\n",
+    "solution": "SELECT *\nFROM Products p\nWHERE NOT EXISTS (\n    SELECT 1 FROM OrderItems oi\n    WHERE oi.ProductID = p.ProductID\n);",
+    "testCases": [
+      {
+        "input": "query",
+        "expectedOutput": "Unordered products",
+        "isHidden": false,
+        "description": "NOT EXISTS"
+      }
+    ],
+    "hints": [
+      "EXISTS returns true if subquery has rows.",
+      "NOT EXISTS is the negation."
+    ]
+  },
+  {
+    "id": "cs205-ex-3-8",
+    "subjectId": "cs205",
+    "topicId": "cs205-3",
+    "title": "Correlated Subquery",
+    "description": "For each employee, find their salary compared to their department average.",
+    "difficulty": 3,
+    "language": "sql",
+    "starterCode": "-- Salary vs department average\n",
+    "solution": "SELECT e.Name, e.Salary, e.DeptID,\n       (SELECT AVG(Salary) FROM Employees\n        WHERE DeptID = e.DeptID) AS DeptAvgSalary\nFROM Employees e;",
+    "testCases": [
+      {
+        "input": "query",
+        "expectedOutput": "Salary with dept average",
+        "isHidden": false,
+        "description": "Correlated subquery"
+      }
+    ],
+    "hints": [
+      "Subquery references outer query's DeptID.",
+      "Executes once per outer row."
+    ]
+  },
+  {
+    "id": "cs205-ex-3-9",
+    "subjectId": "cs205",
+    "topicId": "cs205-3",
+    "title": "UNION",
+    "description": "Combine active customers and active suppliers into one list (Name, Type).",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- Combined list\n",
+    "solution": "SELECT Name, 'Customer' AS Type\nFROM Customers\nWHERE Status = 'Active'\nUNION\nSELECT CompanyName, 'Supplier'\nFROM Suppliers\nWHERE Status = 'Active';",
+    "testCases": [
+      {
+        "input": "query",
+        "expectedOutput": "Combined customers and suppliers",
+        "isHidden": false,
+        "description": "UNION"
+      }
+    ],
+    "hints": [
+      "UNION removes duplicates.",
+      "Column count and types must match."
+    ]
+  },
+  {
+    "id": "cs205-ex-3-10",
+    "subjectId": "cs205",
+    "topicId": "cs205-3",
+    "title": "INTERSECT",
+    "description": "Find products that are in both category \"Electronics\" AND on sale.",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- Products in both sets\n",
+    "solution": "SELECT ProductID, Name\nFROM Products\nWHERE Category = 'Electronics'\nINTERSECT\nSELECT ProductID, Name\nFROM Products\nWHERE OnSale = true;",
+    "testCases": [
+      {
+        "input": "query",
+        "expectedOutput": "Electronics on sale",
+        "isHidden": false,
+        "description": "INTERSECT"
+      }
+    ],
+    "hints": [
+      "INTERSECT returns rows in both queries.",
+      "Same as AND for single table."
+    ]
+  },
+  {
+    "id": "cs205-ex-3-11",
+    "subjectId": "cs205",
+    "topicId": "cs205-3",
+    "title": "ROW_NUMBER",
+    "description": "Rank employees by salary within each department (highest = 1).",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- Rank by salary per department\n",
+    "solution": "SELECT Name, DeptID, Salary,\n       ROW_NUMBER() OVER (\n           PARTITION BY DeptID\n           ORDER BY Salary DESC\n       ) AS SalaryRank\nFROM Employees;",
+    "testCases": [
+      {
+        "input": "query",
+        "expectedOutput": "Employees with rank",
+        "isHidden": false,
+        "description": "ROW_NUMBER window"
+      }
+    ],
+    "hints": [
+      "PARTITION BY groups the ranking.",
+      "ORDER BY determines rank order."
+    ]
+  },
+  {
+    "id": "cs205-ex-3-12",
+    "subjectId": "cs205",
+    "topicId": "cs205-3",
+    "title": "Running Total",
+    "description": "Calculate a running total of order amounts by date.",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- Running total query\n",
+    "solution": "SELECT OrderDate, Amount,\n       SUM(Amount) OVER (\n           ORDER BY OrderDate\n           ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n       ) AS RunningTotal\nFROM Orders;",
+    "testCases": [
+      {
+        "input": "query",
+        "expectedOutput": "Orders with running total",
+        "isHidden": false,
+        "description": "Running total"
+      }
+    ],
+    "hints": [
+      "SUM as window function.",
+      "ROWS BETWEEN defines the frame."
+    ]
+  },
+  {
+    "id": "cs205-ex-3-13",
+    "subjectId": "cs205",
+    "topicId": "cs205-3",
+    "title": "LAG Function",
+    "description": "Show each order with the previous order's amount for comparison.",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- Current and previous amounts\n",
+    "solution": "SELECT OrderID, OrderDate, Amount,\n       LAG(Amount, 1) OVER (ORDER BY OrderDate) AS PreviousAmount\nFROM Orders;",
+    "testCases": [
+      {
+        "input": "query",
+        "expectedOutput": "Orders with previous amount",
+        "isHidden": false,
+        "description": "LAG function"
+      }
+    ],
+    "hints": [
+      "LAG gets previous row value.",
+      "First row will have NULL."
+    ]
+  },
+  {
+    "id": "cs205-ex-3-14",
+    "subjectId": "cs205",
+    "topicId": "cs205-3",
+    "title": "Top N Per Group",
+    "description": "Find the top 3 highest paid employees in each department.",
+    "difficulty": 3,
+    "language": "sql",
+    "starterCode": "-- Top 3 per department\n",
+    "solution": "WITH RankedEmployees AS (\n    SELECT Name, DeptID, Salary,\n           ROW_NUMBER() OVER (\n               PARTITION BY DeptID\n               ORDER BY Salary DESC\n           ) AS Rank\n    FROM Employees\n)\nSELECT * FROM RankedEmployees WHERE Rank <= 3;",
+    "testCases": [
+      {
+        "input": "query",
+        "expectedOutput": "Top 3 per department",
+        "isHidden": false,
+        "description": "Top N per group"
+      }
+    ],
+    "hints": [
+      "Use CTE with ROW_NUMBER.",
+      "Filter on Rank in outer query."
+    ]
+  },
+  {
+    "id": "cs205-ex-3-15",
+    "subjectId": "cs205",
+    "topicId": "cs205-3",
+    "title": "Recursive CTE",
+    "description": "Display an employee hierarchy showing each employee and their management level.",
+    "difficulty": 3,
+    "language": "sql",
+    "starterCode": "-- Employee hierarchy\n",
+    "solution": "WITH RECURSIVE EmpHierarchy AS (\n    SELECT EmpID, Name, ManagerID, 1 AS Level\n    FROM Employees\n    WHERE ManagerID IS NULL\n    UNION ALL\n    SELECT e.EmpID, e.Name, e.ManagerID, h.Level + 1\n    FROM Employees e\n    JOIN EmpHierarchy h ON e.ManagerID = h.EmpID\n)\nSELECT * FROM EmpHierarchy ORDER BY Level, Name;",
+    "testCases": [
+      {
+        "input": "query",
+        "expectedOutput": "Employee hierarchy",
+        "isHidden": false,
+        "description": "Recursive CTE"
+      }
+    ],
+    "hints": [
+      "Anchor: employees without manager.",
+      "Recursive: join employees to their managers."
+    ]
+  },
+  {
+    "id": "cs205-ex-3-16",
+    "subjectId": "cs205",
+    "topicId": "cs205-3",
+    "title": "Complex Analytics",
+    "description": "Show each product's sales, category total, and percentage of category sales.",
+    "difficulty": 3,
+    "language": "sql",
+    "starterCode": "-- Product sales analysis\n",
+    "solution": "SELECT p.ProductName, p.Category,\n       SUM(oi.Quantity * oi.Price) AS ProductSales,\n       SUM(SUM(oi.Quantity * oi.Price)) OVER (PARTITION BY p.Category) AS CategoryTotal,\n       ROUND(100.0 * SUM(oi.Quantity * oi.Price) /\n             SUM(SUM(oi.Quantity * oi.Price)) OVER (PARTITION BY p.Category), 2) AS PctOfCategory\nFROM Products p\nJOIN OrderItems oi ON p.ProductID = oi.ProductID\nGROUP BY p.ProductID, p.ProductName, p.Category;",
+    "testCases": [
+      {
+        "input": "query",
+        "expectedOutput": "Product sales with percentages",
+        "isHidden": false,
+        "description": "Complex analytics"
+      }
+    ],
+    "hints": [
+      "Window function over aggregate.",
+      "SUM(SUM(...)) for category totals."
+    ]
+  },
+  {
+    "id": "cs205-ex-4-1",
+    "subjectId": "cs205",
+    "topicId": "cs205-4",
+    "title": "Identify FDs",
+    "description": "Given Employee(EmpID, Name, DeptID, DeptName, Salary), identify all functional dependencies.",
+    "difficulty": 1,
+    "language": "sql",
+    "starterCode": "-- List functional dependencies:\n-- ",
+    "solution": "-- Functional Dependencies:\n-- EmpID → Name, DeptID, Salary (employee determines these)\n-- DeptID → DeptName (department determines its name)\n-- Note: EmpID → DeptName is transitive (EmpID → DeptID → DeptName)",
+    "testCases": [
+      {
+        "input": "analysis",
+        "expectedOutput": "FDs identified",
+        "isHidden": false,
+        "description": "FD identification"
+      }
+    ],
+    "hints": [
+      "What does EmpID determine?",
+      "What does DeptID determine?"
+    ]
+  },
+  {
+    "id": "cs205-ex-4-2",
+    "subjectId": "cs205",
+    "topicId": "cs205-4",
+    "title": "Compute Closure",
+    "description": "Given FDs: A→B, B→C, CD→E. Compute {A,D}+.",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- Compute closure of {A,D}:\n-- ",
+    "solution": "-- {A,D}+ computation:\n-- Start: {A,D}\n-- A→B applies: {A,D,B}\n-- B→C applies: {A,D,B,C}\n-- CD→E applies (C,D in closure): {A,D,B,C,E}\n-- No more FDs apply\n-- {A,D}+ = {A,B,C,D,E}",
+    "testCases": [
+      {
+        "input": "closure",
+        "expectedOutput": "{A,B,C,D,E}",
+        "isHidden": false,
+        "description": "Closure computation"
+      }
+    ],
+    "hints": [
+      "Start with the given attributes.",
+      "Apply FDs iteratively until no change."
+    ]
+  },
+  {
+    "id": "cs205-ex-4-3",
+    "subjectId": "cs205",
+    "topicId": "cs205-4",
+    "title": "Find Candidate Keys",
+    "description": "R(A,B,C,D) with FDs: A→B, C→D. Find all candidate keys.",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- Find candidate keys:\n-- ",
+    "solution": "-- Analysis:\n-- A+ = {A,B} (not all attributes)\n-- C+ = {C,D} (not all attributes)\n-- {A,C}+ = {A,B,C,D} (all attributes!)\n-- Check if minimal: Neither A nor C alone works.\n-- Candidate Key: {A,C}",
+    "testCases": [
+      {
+        "input": "keys",
+        "expectedOutput": "{A,C}",
+        "isHidden": false,
+        "description": "Key finding"
+      }
+    ],
+    "hints": [
+      "Find which attributes aren't determined.",
+      "Those must be in every key."
+    ]
+  },
+  {
+    "id": "cs205-ex-4-4",
+    "subjectId": "cs205",
+    "topicId": "cs205-4",
+    "title": "1NF Violation",
+    "description": "Identify the 1NF violation and fix: Employee(ID, Name, PhoneNumbers) where PhoneNumbers=\"555-0100,555-0101\".",
+    "difficulty": 1,
+    "language": "sql",
+    "starterCode": "-- 1NF violation and fix:\n",
+    "solution": "-- Violation: PhoneNumbers is not atomic (contains multiple values)\n\n-- Fix:\nCREATE TABLE Employee (\n    ID INTEGER PRIMARY KEY,\n    Name VARCHAR(100)\n);\n\nCREATE TABLE EmployeePhone (\n    ID INTEGER,\n    PhoneNumber VARCHAR(20),\n    PRIMARY KEY (ID, PhoneNumber),\n    FOREIGN KEY (ID) REFERENCES Employee(ID)\n);",
+    "testCases": [
+      {
+        "input": "fix",
+        "expectedOutput": "Atomic values only",
+        "isHidden": false,
+        "description": "1NF fix"
+      }
+    ],
+    "hints": [
+      "1NF requires atomic values.",
+      "Create separate table for multivalued attribute."
+    ]
+  },
+  {
+    "id": "cs205-ex-4-5",
+    "subjectId": "cs205",
+    "topicId": "cs205-4",
+    "title": "2NF Decomposition",
+    "description": "Decompose to 2NF: OrderItem(OrderID, ProductID, ProductName, Quantity). Key: {OrderID, ProductID}.",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- Identify partial dependency and decompose:\n",
+    "solution": "-- Partial dependency: ProductID → ProductName\n-- ProductName depends on part of the key (ProductID only)\n\n-- 2NF Decomposition:\nCREATE TABLE OrderItem (\n    OrderID INTEGER,\n    ProductID INTEGER,\n    Quantity INTEGER,\n    PRIMARY KEY (OrderID, ProductID)\n);\n\nCREATE TABLE Product (\n    ProductID INTEGER PRIMARY KEY,\n    ProductName VARCHAR(100)\n);",
+    "testCases": [
+      {
+        "input": "decomposition",
+        "expectedOutput": "2NF tables",
+        "isHidden": false,
+        "description": "2NF decomposition"
+      }
+    ],
+    "hints": [
+      "Look for attributes depending on part of composite key.",
+      "Split those into separate table."
+    ]
+  },
+  {
+    "id": "cs205-ex-4-6",
+    "subjectId": "cs205",
+    "topicId": "cs205-4",
+    "title": "3NF Decomposition",
+    "description": "Decompose to 3NF: Employee(EmpID, DeptID, DeptLocation). FDs: EmpID→DeptID, DeptID→DeptLocation.",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- Identify transitive dependency and decompose:\n",
+    "solution": "-- Transitive dependency: EmpID → DeptID → DeptLocation\n-- DeptLocation depends transitively on EmpID through DeptID\n\n-- 3NF Decomposition:\nCREATE TABLE Employee (\n    EmpID INTEGER PRIMARY KEY,\n    DeptID INTEGER,\n    FOREIGN KEY (DeptID) REFERENCES Department(DeptID)\n);\n\nCREATE TABLE Department (\n    DeptID INTEGER PRIMARY KEY,\n    DeptLocation VARCHAR(100)\n);",
+    "testCases": [
+      {
+        "input": "decomposition",
+        "expectedOutput": "3NF tables",
+        "isHidden": false,
+        "description": "3NF decomposition"
+      }
+    ],
+    "hints": [
+      "Find X→Y→Z where Y is not a key.",
+      "Create separate table for Y→Z."
+    ]
+  },
+  {
+    "id": "cs205-ex-4-7",
+    "subjectId": "cs205",
+    "topicId": "cs205-4",
+    "title": "Check BCNF",
+    "description": "Is R(A,B,C) with FDs: AB→C, C→B in BCNF? If not, decompose.",
+    "difficulty": 3,
+    "language": "sql",
+    "starterCode": "-- BCNF analysis:\n-- ",
+    "solution": "-- Keys: AB+ = {A,B,C}, AC+ = {A,B,C}\n-- Candidate keys: {AB}, {AC}\n\n-- Check BCNF (every determinant must be superkey):\n-- AB→C: AB is a key ✓\n-- C→B: C is not a superkey ✗ VIOLATION!\n\n-- BCNF Decomposition on C→B:\n-- R1(C,B) with key C\n-- R2(A,C) with key AC\n\n-- Note: AB→C is NOT preserved (must join to check)",
+    "testCases": [
+      {
+        "input": "analysis",
+        "expectedOutput": "BCNF violated, decomposition shown",
+        "isHidden": false,
+        "description": "BCNF check"
+      }
+    ],
+    "hints": [
+      "For BCNF: all determinants must be superkeys.",
+      "Decompose on violating FD."
+    ]
+  },
+  {
+    "id": "cs205-ex-4-8",
+    "subjectId": "cs205",
+    "topicId": "cs205-4",
+    "title": "Minimal Cover",
+    "description": "Find the minimal cover for: A→BC, B→C, AB→C, AC→D.",
+    "difficulty": 3,
+    "language": "sql",
+    "starterCode": "-- Compute minimal cover:\n-- ",
+    "solution": "-- Step 1: Decompose RHS\n-- A→B, A→C, B→C, AB→C, AC→D\n\n-- Step 2: Remove redundant FDs\n-- A→C: Remove, check A+ = {A,B} (using A→B)\n--       Then B→C gives A+ = {A,B,C}\n--       C is reachable, so A→C is redundant ✓\n-- AB→C: Remove, check {A,B}+ = {A,B,C} (B→C)\n--        Redundant ✓\n\n-- Step 3: Remove redundant LHS\n-- AC→D: Check A+ = {A,B,C}, no D\n--        C not redundant\n\n-- Minimal cover: {A→B, B→C, AC→D}",
+    "testCases": [
+      {
+        "input": "minimal cover",
+        "expectedOutput": "{A→B, B→C, AC→D}",
+        "isHidden": false,
+        "description": "Minimal cover"
+      }
+    ],
+    "hints": [
+      "First split RHS to single attributes.",
+      "Remove FDs derivable from others."
+    ]
+  },
+  {
+    "id": "cs205-ex-4-9",
+    "subjectId": "cs205",
+    "topicId": "cs205-4",
+    "title": "Lossless Test",
+    "description": "Is decomposition {R1(A,B), R2(B,C)} lossless for R(A,B,C) with FD B→C?",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- Lossless join test:\n-- ",
+    "solution": "-- Test: Common attributes must be key in at least one relation\n-- Common: R1 ∩ R2 = {B}\n-- B→C means B is key in R2(B,C) ✓\n\n-- Result: LOSSLESS\n-- The common attribute B determines all of R2",
+    "testCases": [
+      {
+        "input": "test",
+        "expectedOutput": "Lossless",
+        "isHidden": false,
+        "description": "Lossless test"
+      }
+    ],
+    "hints": [
+      "Find common attributes.",
+      "Check if common is key in either relation."
+    ]
+  },
+  {
+    "id": "cs205-ex-4-10",
+    "subjectId": "cs205",
+    "topicId": "cs205-4",
+    "title": "Dependency Preservation",
+    "description": "For R(A,B,C) with FDs: A→B, B→C, check if decomposition {R1(A,B), R2(A,C)} preserves dependencies.",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- Dependency preservation check:\n-- ",
+    "solution": "-- FDs in R1(A,B): A→B ✓ (both A and B in R1)\n-- FDs in R2(A,C): None directly\n-- FD B→C: B in R1, C in R2 - requires join!\n\n-- But: A→B and B→C implies A→C\n-- A→C can be checked in R2\n\n-- Result: A→B preserved in R1\n-- B→C NOT preserved (needs join)\n-- But transitively: A→C in R2",
+    "testCases": [
+      {
+        "input": "check",
+        "expectedOutput": "B→C not directly preserved",
+        "isHidden": false,
+        "description": "Dependency preservation"
+      }
+    ],
+    "hints": [
+      "Can each FD be checked in one table?",
+      "Check if both sides are in same table."
+    ]
+  },
+  {
+    "id": "cs205-ex-4-11",
+    "subjectId": "cs205",
+    "topicId": "cs205-4",
+    "title": "3NF Synthesis",
+    "description": "Use 3NF synthesis on R(A,B,C,D) with minimal cover: A→B, B→C, AC→D.",
+    "difficulty": 3,
+    "language": "sql",
+    "starterCode": "-- 3NF synthesis algorithm:\n-- ",
+    "solution": "-- Step 1: Create table for each FD:\n-- R1(A,B) from A→B\n-- R2(B,C) from B→C\n-- R3(A,C,D) from AC→D\n\n-- Step 2: Check if any contains candidate key\n-- Candidate key? A+ = {A,B,C}, need D\n-- {A,C}+ = {A,B,C,D} ✓ Key = {A,C}\n-- R3 contains {A,C} ✓\n\n-- Step 3: Remove subsets\n-- R1, R2, R3 - no subset relationships\n\n-- Final: R1(A,B), R2(B,C), R3(A,C,D)",
+    "testCases": [
+      {
+        "input": "synthesis",
+        "expectedOutput": "Three 3NF tables",
+        "isHidden": false,
+        "description": "3NF synthesis"
+      }
+    ],
+    "hints": [
+      "One table per FD.",
+      "Ensure candidate key in some table."
+    ]
+  },
+  {
+    "id": "cs205-ex-4-12",
+    "subjectId": "cs205",
+    "topicId": "cs205-4",
+    "title": "4NF MVD",
+    "description": "Identify MVD violation: Employee(EmpID, Skill, Language) where skills and languages are independent.",
+    "difficulty": 3,
+    "language": "sql",
+    "starterCode": "-- MVD analysis and 4NF decomposition:\n-- ",
+    "solution": "-- MVDs:\n-- EmpID →→ Skill (skills independent of languages)\n-- EmpID →→ Language (languages independent of skills)\n\n-- Current data causes redundancy:\n-- (1, Java, English), (1, Java, French)\n-- (1, Python, English), (1, Python, French)\n-- Every skill repeated with every language!\n\n-- 4NF Decomposition:\nCREATE TABLE EmployeeSkills (\n    EmpID INTEGER,\n    Skill VARCHAR(50),\n    PRIMARY KEY (EmpID, Skill)\n);\n\nCREATE TABLE EmployeeLanguages (\n    EmpID INTEGER,\n    Language VARCHAR(50),\n    PRIMARY KEY (EmpID, Language)\n);",
+    "testCases": [
+      {
+        "input": "decomposition",
+        "expectedOutput": "4NF tables",
+        "isHidden": false,
+        "description": "4NF decomposition"
+      }
+    ],
+    "hints": [
+      "Independent attributes cause redundancy.",
+      "Separate into different tables."
+    ]
+  },
+  {
+    "id": "cs205-ex-4-13",
+    "subjectId": "cs205",
+    "topicId": "cs205-4",
+    "title": "Denormalization Decision",
+    "description": "Given normalized Orders and Customers tables joined 1000x/day for reporting, propose and justify a denormalization.",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- Denormalization proposal:\n",
+    "solution": "-- Scenario: Reports always need customer name with orders\n-- Current: JOIN Orders and Customers each time\n\n-- Denormalization:\nALTER TABLE Orders ADD CustomerName VARCHAR(100);\n\n-- Maintenance trigger:\nCREATE TRIGGER sync_customer_name\nAFTER UPDATE ON Customers\nFOR EACH ROW\nBEGIN\n    UPDATE Orders\n    SET CustomerName = NEW.Name\n    WHERE CustomerID = NEW.CustomerID;\nEND;\n\n-- Trade-off:\n-- + Eliminates 1000 joins/day\n-- - Extra storage, update overhead\n-- - Must maintain consistency via trigger",
+    "testCases": [
+      {
+        "input": "proposal",
+        "expectedOutput": "Justified denormalization",
+        "isHidden": false,
+        "description": "Denormalization"
+      }
+    ],
+    "hints": [
+      "Consider read vs write frequency.",
+      "Plan for consistency maintenance."
+    ]
+  },
+  {
+    "id": "cs205-ex-4-14",
+    "subjectId": "cs205",
+    "topicId": "cs205-4",
+    "title": "Normalization Analysis",
+    "description": "Analyze: Invoice(InvNum, Date, CustID, CustName, ItemID, ItemDesc, Qty, Price).",
+    "difficulty": 3,
+    "language": "sql",
+    "starterCode": "-- Full normalization analysis:\n-- ",
+    "solution": "-- FDs:\n-- InvNum → Date, CustID\n-- CustID → CustName\n-- ItemID → ItemDesc, Price\n-- {InvNum, ItemID} → Qty\n\n-- Key: {InvNum, ItemID}\n\n-- 2NF violations (partial deps):\n-- InvNum → Date, CustID\n-- ItemID → ItemDesc, Price\n\n-- 3NF violation (transitive):\n-- InvNum → CustID → CustName\n\n-- Final decomposition:\n-- Invoice(InvNum, Date, CustID)\n-- Customer(CustID, CustName)\n-- Item(ItemID, ItemDesc, Price)\n-- InvoiceItem(InvNum, ItemID, Qty)",
+    "testCases": [
+      {
+        "input": "analysis",
+        "expectedOutput": "Full normalization to 3NF",
+        "isHidden": false,
+        "description": "Complete analysis"
+      }
+    ],
+    "hints": [
+      "First identify all FDs.",
+      "Find key, then check each normal form."
+    ]
+  },
+  {
+    "id": "cs205-ex-4-15",
+    "subjectId": "cs205",
+    "topicId": "cs205-4",
+    "title": "Armstrong Axioms",
+    "description": "Using Armstrong's axioms, prove A→C from A→B and B→C.",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- Proof using Armstrong's axioms:\n-- ",
+    "solution": "-- Given: A→B, B→C\n-- Goal: Prove A→C\n\n-- By Transitivity axiom:\n-- If X→Y and Y→Z, then X→Z\n\n-- Applying with X=A, Y=B, Z=C:\n-- A→B (given)\n-- B→C (given)\n-- Therefore: A→C ✓\n\n-- This is direct application of transitivity.",
+    "testCases": [
+      {
+        "input": "proof",
+        "expectedOutput": "A→C proven",
+        "isHidden": false,
+        "description": "Armstrong proof"
+      }
+    ],
+    "hints": [
+      "Transitivity: If X→Y and Y→Z then X→Z.",
+      "Match given FDs to the pattern."
+    ]
+  },
+  {
+    "id": "cs205-ex-4-16",
+    "subjectId": "cs205",
+    "topicId": "cs205-4",
+    "title": "Real-World Schema Design",
+    "description": "Design a normalized schema for a library: Books, Authors (many-to-many), Borrowers, Loans.",
+    "difficulty": 3,
+    "language": "sql",
+    "starterCode": "-- Library database design:\n",
+    "solution": "CREATE TABLE Author (\n    AuthorID INTEGER PRIMARY KEY,\n    Name VARCHAR(100) NOT NULL\n);\n\nCREATE TABLE Book (\n    ISBN VARCHAR(13) PRIMARY KEY,\n    Title VARCHAR(200) NOT NULL,\n    PublishYear INTEGER\n);\n\nCREATE TABLE BookAuthor (\n    ISBN VARCHAR(13),\n    AuthorID INTEGER,\n    PRIMARY KEY (ISBN, AuthorID),\n    FOREIGN KEY (ISBN) REFERENCES Book(ISBN),\n    FOREIGN KEY (AuthorID) REFERENCES Author(AuthorID)\n);\n\nCREATE TABLE Borrower (\n    BorrowerID INTEGER PRIMARY KEY,\n    Name VARCHAR(100) NOT NULL,\n    Email VARCHAR(255)\n);\n\nCREATE TABLE Loan (\n    LoanID INTEGER PRIMARY KEY,\n    ISBN VARCHAR(13) NOT NULL,\n    BorrowerID INTEGER NOT NULL,\n    LoanDate DATE NOT NULL,\n    DueDate DATE NOT NULL,\n    ReturnDate DATE,\n    FOREIGN KEY (ISBN) REFERENCES Book(ISBN),\n    FOREIGN KEY (BorrowerID) REFERENCES Borrower(BorrowerID)\n);",
+    "testCases": [
+      {
+        "input": "design",
+        "expectedOutput": "Normalized library schema",
+        "isHidden": false,
+        "description": "Real-world design"
+      }
+    ],
+    "hints": [
+      "Many-to-many needs junction table.",
+      "Consider what attributes belong where."
+    ]
+  },
+  {
+    "id": "cs205-ex-5-1",
+    "subjectId": "cs205",
+    "topicId": "cs205-5",
+    "title": "Basic Transaction",
+    "description": "Write a transaction that transfers $100 from account 1 to account 2.",
+    "difficulty": 1,
+    "language": "sql",
+    "starterCode": "-- Money transfer transaction\n",
+    "solution": "BEGIN TRANSACTION;\n\nUPDATE Accounts SET Balance = Balance - 100 WHERE AccountID = 1;\nUPDATE Accounts SET Balance = Balance + 100 WHERE AccountID = 2;\n\nCOMMIT;",
+    "testCases": [
+      {
+        "input": "transaction",
+        "expectedOutput": "Both updates or neither",
+        "isHidden": false,
+        "description": "Atomic transfer"
+      }
+    ],
+    "hints": [
+      "Use BEGIN and COMMIT.",
+      "Both updates should be in same transaction."
+    ]
+  },
+  {
+    "id": "cs205-ex-5-2",
+    "subjectId": "cs205",
+    "topicId": "cs205-5",
+    "title": "Conditional Rollback",
+    "description": "Transfer money only if source account has sufficient balance, otherwise rollback.",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- Transfer with balance check\n",
+    "solution": "BEGIN TRANSACTION;\n\nDECLARE @balance DECIMAL(10,2);\nSELECT @balance = Balance FROM Accounts WHERE AccountID = 1;\n\nIF @balance >= 100\nBEGIN\n    UPDATE Accounts SET Balance = Balance - 100 WHERE AccountID = 1;\n    UPDATE Accounts SET Balance = Balance + 100 WHERE AccountID = 2;\n    COMMIT;\nEND\nELSE\nBEGIN\n    ROLLBACK;\n    RAISERROR('Insufficient funds', 16, 1);\nEND",
+    "testCases": [
+      {
+        "input": "transaction",
+        "expectedOutput": "Rollback if insufficient",
+        "isHidden": false,
+        "description": "Conditional transaction"
+      }
+    ],
+    "hints": [
+      "Check balance before transfer.",
+      "ROLLBACK undoes all changes."
+    ]
+  },
+  {
+    "id": "cs205-ex-5-3",
+    "subjectId": "cs205",
+    "topicId": "cs205-5",
+    "title": "Savepoint Usage",
+    "description": "Create a transaction with savepoints to handle partial failures in order processing.",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- Order processing with savepoints\n",
+    "solution": "BEGIN TRANSACTION;\n\nINSERT INTO Orders (CustomerID, OrderDate) VALUES (1, CURRENT_DATE);\nSAVEPOINT order_created;\n\nBEGIN TRY\n    INSERT INTO OrderItems (OrderID, ProductID, Qty) VALUES (SCOPE_IDENTITY(), 1, 5);\n    INSERT INTO OrderItems (OrderID, ProductID, Qty) VALUES (SCOPE_IDENTITY(), 2, 3);\nEND TRY\nBEGIN CATCH\n    ROLLBACK TO SAVEPOINT order_created;\n    -- Log error, order still exists but no items\nEND CATCH\n\nCOMMIT;",
+    "testCases": [
+      {
+        "input": "transaction",
+        "expectedOutput": "Partial rollback on error",
+        "isHidden": false,
+        "description": "Savepoint handling"
+      }
+    ],
+    "hints": [
+      "SAVEPOINT marks a point to return to.",
+      "ROLLBACK TO undoes to that point."
+    ]
+  },
+  {
+    "id": "cs205-ex-5-4",
+    "subjectId": "cs205",
+    "topicId": "cs205-5",
+    "title": "Identify Dirty Read",
+    "description": "Given this schedule, identify which read is dirty:\nT1: Write(X=100); T2: Read(X); T1: Rollback;",
+    "difficulty": 1,
+    "language": "sql",
+    "starterCode": "-- Dirty read analysis:\n-- ",
+    "solution": "-- Schedule:\n-- T1: Write(X=100)\n-- T2: Read(X) ← DIRTY READ!\n-- T1: Rollback\n\n-- T2 read X=100 which was never committed.\n-- After T1 rollback, X returns to original value.\n-- T2 used a value that \"never existed\" in consistent state.\n\n-- Prevention: Use READ COMMITTED or higher isolation level.",
+    "testCases": [
+      {
+        "input": "analysis",
+        "expectedOutput": "T2 Read identified as dirty",
+        "isHidden": false,
+        "description": "Dirty read identification"
+      }
+    ],
+    "hints": [
+      "Dirty read = reading uncommitted data.",
+      "What happens when T1 rolls back?"
+    ]
+  },
+  {
+    "id": "cs205-ex-5-5",
+    "subjectId": "cs205",
+    "topicId": "cs205-5",
+    "title": "Lost Update Scenario",
+    "description": "Show how two concurrent transactions updating the same balance can lose an update.",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- Lost update demonstration:\n-- ",
+    "solution": "-- Initial: Balance = 1000\n\n-- Time  T1 (Withdraw 200)     T2 (Withdraw 300)\n-- t1    Read Balance → 1000\n-- t2                           Read Balance → 1000\n-- t3    Balance = 1000-200\n-- t4    Write Balance = 800\n-- t5                           Balance = 1000-300\n-- t6                           Write Balance = 700\n\n-- Final: Balance = 700\n-- Expected: 1000 - 200 - 300 = 500\n-- T1's update is LOST!\n\n-- Fix: Use SELECT FOR UPDATE or atomic UPDATE",
+    "testCases": [
+      {
+        "input": "analysis",
+        "expectedOutput": "Lost update shown",
+        "isHidden": false,
+        "description": "Lost update"
+      }
+    ],
+    "hints": [
+      "Both read before either writes.",
+      "Second write overwrites first."
+    ]
+  },
+  {
+    "id": "cs205-ex-5-6",
+    "subjectId": "cs205",
+    "topicId": "cs205-5",
+    "title": "Set Isolation Level",
+    "description": "Write SQL to set SERIALIZABLE isolation level and explain when to use it.",
+    "difficulty": 1,
+    "language": "sql",
+    "starterCode": "-- Set isolation level:\n",
+    "solution": "SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;\n\n-- Or for specific transaction:\nBEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;\n\n-- Use SERIALIZABLE when:\n-- 1. Complete correctness is required\n-- 2. Financial transactions with constraints\n-- 3. Preventing all anomalies is critical\n-- 4. Can accept higher abort rate/lower concurrency\n\n-- Trade-off: Highest consistency, lowest concurrency",
+    "testCases": [
+      {
+        "input": "command",
+        "expectedOutput": "Isolation level set",
+        "isHidden": false,
+        "description": "Isolation level setting"
+      }
+    ],
+    "hints": [
+      "SERIALIZABLE is the strictest level.",
+      "Consider the consistency vs performance trade-off."
+    ]
+  },
+  {
+    "id": "cs205-ex-5-7",
+    "subjectId": "cs205",
+    "topicId": "cs205-5",
+    "title": "Shared Lock Query",
+    "description": "Write a SELECT with explicit shared lock to prevent updates during read.",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- SELECT with shared lock:\n",
+    "solution": "-- PostgreSQL:\nSELECT * FROM Accounts WHERE AccountID = 1 FOR SHARE;\n\n-- SQL Server:\nSELECT * FROM Accounts WITH (HOLDLOCK) WHERE AccountID = 1;\n\n-- This prevents other transactions from:\n-- - Acquiring exclusive lock\n-- - Updating or deleting the row\n\n-- But allows other shared locks (concurrent reads)",
+    "testCases": [
+      {
+        "input": "query",
+        "expectedOutput": "Shared lock acquired",
+        "isHidden": false,
+        "description": "Shared lock"
+      }
+    ],
+    "hints": [
+      "FOR SHARE in PostgreSQL.",
+      "Shared locks allow concurrent reads."
+    ]
+  },
+  {
+    "id": "cs205-ex-5-8",
+    "subjectId": "cs205",
+    "topicId": "cs205-5",
+    "title": "Exclusive Lock Query",
+    "description": "Write a SELECT with exclusive lock for updating balance (lock then update pattern).",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- Lock then update:\n",
+    "solution": "BEGIN TRANSACTION;\n\n-- Acquire exclusive lock\nSELECT Balance FROM Accounts WHERE AccountID = 1 FOR UPDATE;\n\n-- Now safely update\nUPDATE Accounts\nSET Balance = Balance - 100\nWHERE AccountID = 1;\n\nCOMMIT;\n\n-- FOR UPDATE prevents other transactions from reading\n-- or modifying until we commit/rollback",
+    "testCases": [
+      {
+        "input": "query",
+        "expectedOutput": "Exclusive lock pattern",
+        "isHidden": false,
+        "description": "Exclusive lock"
+      }
+    ],
+    "hints": [
+      "FOR UPDATE gets exclusive lock.",
+      "Other transactions must wait."
+    ]
+  },
+  {
+    "id": "cs205-ex-5-9",
+    "subjectId": "cs205",
+    "topicId": "cs205-5",
+    "title": "Deadlock Detection",
+    "description": "Identify the deadlock in this schedule and propose a solution.",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- T1: Lock(A), T2: Lock(B), T1: Request Lock(B), T2: Request Lock(A)\n-- ",
+    "solution": "-- Deadlock Analysis:\n-- T1 holds Lock(A), waiting for Lock(B)\n-- T2 holds Lock(B), waiting for Lock(A)\n-- Circular wait = DEADLOCK!\n\n-- Solutions:\n\n-- 1. Lock ordering (always lock in same order):\n-- Both T1 and T2 should: Lock(A) then Lock(B)\n\n-- 2. Lock timeout:\nSET LOCK_TIMEOUT 5000; -- 5 seconds\n\n-- 3. Deadlock detection by DBMS:\n-- DBMS detects cycle, aborts one transaction (victim)\n-- Application should retry the aborted transaction",
+    "testCases": [
+      {
+        "input": "analysis",
+        "expectedOutput": "Deadlock identified and solved",
+        "isHidden": false,
+        "description": "Deadlock handling"
+      }
+    ],
+    "hints": [
+      "Look for circular wait.",
+      "Consistent lock ordering prevents deadlocks."
+    ]
+  },
+  {
+    "id": "cs205-ex-5-10",
+    "subjectId": "cs205",
+    "topicId": "cs205-5",
+    "title": "Phantom Read Scenario",
+    "description": "Describe a phantom read scenario in an order system.",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- Phantom read scenario:\n-- ",
+    "solution": "-- Scenario: Count pending orders\n\n-- T1: SELECT COUNT(*) FROM Orders WHERE Status='Pending';\n--     Returns: 10\n\n-- T2: INSERT INTO Orders (Status) VALUES ('Pending');\n-- T2: COMMIT;\n\n-- T1: SELECT COUNT(*) FROM Orders WHERE Status='Pending';\n--     Returns: 11  ← PHANTOM!\n\n-- T1 sees a \"phantom\" row that appeared between queries.\n\n-- Prevention:\n-- 1. Use SERIALIZABLE isolation\n-- 2. Use gap locking (MySQL InnoDB)\n-- 3. Predicate locking",
+    "testCases": [
+      {
+        "input": "scenario",
+        "expectedOutput": "Phantom read demonstrated",
+        "isHidden": false,
+        "description": "Phantom read"
+      }
+    ],
+    "hints": [
+      "Phantom = new rows appearing.",
+      "Affects range queries."
+    ]
+  },
+  {
+    "id": "cs205-ex-5-11",
+    "subjectId": "cs205",
+    "topicId": "cs205-5",
+    "title": "Optimistic Locking",
+    "description": "Implement optimistic locking using a version column.",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- Optimistic locking implementation:\n",
+    "solution": "-- Table setup:\nALTER TABLE Products ADD Version INT DEFAULT 1;\n\n-- Read (no locks):\nSELECT ProductID, Name, Price, Version\nFROM Products WHERE ProductID = 1;\n-- Returns: (1, 'Widget', 10.00, 5)\n\n-- Application makes changes...\n\n-- Update with version check:\nUPDATE Products\nSET Price = 12.00, Version = Version + 1\nWHERE ProductID = 1 AND Version = 5;\n\n-- Check result:\n-- IF @@ROWCOUNT = 0 THEN\n--   Conflict! Another transaction modified the row.\n--   Retry with fresh data.",
+    "testCases": [
+      {
+        "input": "implementation",
+        "expectedOutput": "Optimistic locking pattern",
+        "isHidden": false,
+        "description": "Optimistic locking"
+      }
+    ],
+    "hints": [
+      "Version column tracks modifications.",
+      "Check version on update."
+    ]
+  },
+  {
+    "id": "cs205-ex-5-12",
+    "subjectId": "cs205",
+    "topicId": "cs205-5",
+    "title": "Two-Phase Locking",
+    "description": "Show a 2PL schedule for two transactions accessing items A and B.",
+    "difficulty": 3,
+    "language": "sql",
+    "starterCode": "-- 2PL schedule:\n-- ",
+    "solution": "-- 2PL: Growing phase (acquire), then Shrinking phase (release)\n\n-- T1: Transfer A→B\n-- T2: Read A and B\n\n-- 2PL Schedule:\n-- T1: Lock-X(A)     -- Growing\n-- T1: Read(A)\n-- T1: Write(A)\n-- T1: Lock-X(B)     -- Still growing\n-- T1: Read(B)\n-- T1: Write(B)\n-- T1: Unlock(A)     -- Shrinking begins\n-- T1: Unlock(B)\n\n-- T2: Lock-S(A)     -- Waits until T1 unlocks\n-- T2: Lock-S(B)\n-- T2: Read(A)\n-- T2: Read(B)\n-- T2: Unlock(A)\n-- T2: Unlock(B)\n\n-- Key: Once unlocking starts, no more locks acquired",
+    "testCases": [
+      {
+        "input": "schedule",
+        "expectedOutput": "Valid 2PL schedule",
+        "isHidden": false,
+        "description": "2PL schedule"
+      }
+    ],
+    "hints": [
+      "Growing: only acquire locks.",
+      "Shrinking: only release locks."
+    ]
+  },
+  {
+    "id": "cs205-ex-5-13",
+    "subjectId": "cs205",
+    "topicId": "cs205-5",
+    "title": "Write Skew",
+    "description": "Demonstrate write skew with a doctor on-call constraint (at least 1 must be on-call).",
+    "difficulty": 3,
+    "language": "sql",
+    "starterCode": "-- Write skew demonstration:\n-- ",
+    "solution": "-- Constraint: At least one doctor must be on-call\n-- Initial: Alice=OnCall, Bob=OnCall\n\n-- T1 (Alice going off):\n-- SELECT COUNT(*) FROM Doctors WHERE OnCall=true;\n-- Returns 2, OK to go off\n-- UPDATE Doctors SET OnCall=false WHERE Name='Alice';\n\n-- T2 (Bob going off, concurrent):\n-- SELECT COUNT(*) FROM Doctors WHERE OnCall=true;\n-- Returns 2, OK to go off\n-- UPDATE Doctors SET OnCall=false WHERE Name='Bob';\n\n-- Both commit: BOTH off-call!\n-- Constraint violated!\n\n-- Fix: SERIALIZABLE isolation or:\nSELECT * FROM Doctors WHERE OnCall=true FOR UPDATE;\n-- Lock all on-call doctors before deciding",
+    "testCases": [
+      {
+        "input": "analysis",
+        "expectedOutput": "Write skew demonstrated",
+        "isHidden": false,
+        "description": "Write skew"
+      }
+    ],
+    "hints": [
+      "Each transaction passes check individually.",
+      "Combined result violates constraint."
+    ]
+  },
+  {
+    "id": "cs205-ex-5-14",
+    "subjectId": "cs205",
+    "topicId": "cs205-5",
+    "title": "ACID Verification",
+    "description": "For each ACID property, show how it's ensured in a bank transfer.",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- ACID in bank transfer:\n-- ",
+    "solution": "-- Transfer $100 from A to B\n\nBEGIN TRANSACTION;\nUPDATE Accounts SET Balance = Balance - 100 WHERE ID = 'A';\nUPDATE Accounts SET Balance = Balance + 100 WHERE ID = 'B';\nCOMMIT;\n\n-- ATOMICITY: Both updates commit or both rollback.\n-- If second UPDATE fails, first is undone.\n\n-- CONSISTENCY: Balance constraints maintained.\n-- CHECK (Balance >= 0) prevents negative balance.\n-- Total money conserved.\n\n-- ISOLATION: Other transactions see either\n-- pre-transfer or post-transfer state, not partial.\n\n-- DURABILITY: After COMMIT, changes survive\n-- even if system crashes immediately after.",
+    "testCases": [
+      {
+        "input": "analysis",
+        "expectedOutput": "All ACID properties explained",
+        "isHidden": false,
+        "description": "ACID verification"
+      }
+    ],
+    "hints": [
+      "Consider what each property guarantees.",
+      "What happens in failure scenarios?"
+    ]
+  },
+  {
+    "id": "cs205-ex-5-15",
+    "subjectId": "cs205",
+    "topicId": "cs205-5",
+    "title": "Recovery Scenario",
+    "description": "Given a log, determine which transactions need REDO and UNDO after crash.",
+    "difficulty": 3,
+    "language": "sql",
+    "starterCode": "-- Log: [T1,Start] [T1,A,10→20] [T2,Start] [T2,B,50→30] [T1,Commit] [Crash]\n-- ",
+    "solution": "-- Log Analysis:\n-- [T1, Start]\n-- [T1, A, 10→20]\n-- [T2, Start]\n-- [T2, B, 50→30]\n-- [T1, Commit]\n-- [CRASH]\n\n-- T1: Started and Committed before crash\n--     → REDO (ensure committed changes on disk)\n\n-- T2: Started but NOT committed before crash\n--     → UNDO (rollback uncommitted changes)\n\n-- Recovery Process:\n-- 1. REDO T1: Set A = 20 (if not already)\n-- 2. UNDO T2: Set B = 50 (restore original)\n\n-- After recovery:\n-- A = 20 (T1 committed)\n-- B = 50 (T2 rolled back)",
+    "testCases": [
+      {
+        "input": "analysis",
+        "expectedOutput": "REDO/UNDO identified",
+        "isHidden": false,
+        "description": "Recovery analysis"
+      }
+    ],
+    "hints": [
+      "Committed = REDO.",
+      "Uncommitted = UNDO."
+    ]
+  },
+  {
+    "id": "cs205-ex-5-16",
+    "subjectId": "cs205",
+    "topicId": "cs205-5",
+    "title": "Isolation Level Selection",
+    "description": "For each scenario, recommend the appropriate isolation level.",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- Isolation level recommendations:\n-- ",
+    "solution": "-- Scenarios:\n\n-- 1. Reading product catalog for display\n-- Recommendation: READ COMMITTED\n-- Reason: Dirty reads prevented, okay if data changes\n\n-- 2. Bank transfer between accounts\n-- Recommendation: SERIALIZABLE\n-- Reason: Must prevent all anomalies for financial integrity\n\n-- 3. Generating end-of-day report\n-- Recommendation: REPEATABLE READ\n-- Reason: Need consistent snapshot during report generation\n\n-- 4. Quick count of pending orders\n-- Recommendation: READ UNCOMMITTED\n-- Reason: Approximate count acceptable, maximum performance\n\n-- 5. Booking system (prevent double-booking)\n-- Recommendation: SERIALIZABLE\n-- Reason: Must prevent write skew/phantoms",
+    "testCases": [
+      {
+        "input": "analysis",
+        "expectedOutput": "Appropriate levels selected",
+        "isHidden": false,
+        "description": "Level selection"
+      }
+    ],
+    "hints": [
+      "Higher isolation = more overhead.",
+      "Match level to consistency requirements."
+    ]
+  },
+  {
+    "id": "cs205-ex-6-1",
+    "subjectId": "cs205",
+    "topicId": "cs205-6",
+    "title": "Create Basic Index",
+    "description": "Create an index on the Email column of the Users table to speed up email lookups.",
+    "difficulty": 1,
+    "language": "sql",
+    "starterCode": "-- Create index on Email\n",
+    "solution": "CREATE INDEX idx_users_email\nON Users (Email);",
+    "testCases": [
+      {
+        "input": "index creation",
+        "expectedOutput": "Index created on Email",
+        "isHidden": false,
+        "description": "Basic index"
+      }
+    ],
+    "hints": [
+      "Use CREATE INDEX syntax.",
+      "Name should indicate table and column."
+    ]
+  },
+  {
+    "id": "cs205-ex-6-2",
+    "subjectId": "cs205",
+    "topicId": "cs205-6",
+    "title": "Unique Index",
+    "description": "Create a unique index on the ProductSKU column of the Products table.",
+    "difficulty": 1,
+    "language": "sql",
+    "starterCode": "-- Create unique index\n",
+    "solution": "CREATE UNIQUE INDEX idx_products_sku\nON Products (ProductSKU);",
+    "testCases": [
+      {
+        "input": "index creation",
+        "expectedOutput": "Unique index created",
+        "isHidden": false,
+        "description": "Unique index"
+      }
+    ],
+    "hints": [
+      "UNIQUE prevents duplicate values.",
+      "Unique indexes enforce uniqueness constraint."
+    ]
+  },
+  {
+    "id": "cs205-ex-6-3",
+    "subjectId": "cs205",
+    "topicId": "cs205-6",
+    "title": "Composite Index",
+    "description": "Create a composite index on (CustomerID, OrderDate) for the Orders table to optimize queries that filter by customer and date.",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- Create composite index\n",
+    "solution": "CREATE INDEX idx_orders_customer_date\nON Orders (CustomerID, OrderDate);",
+    "testCases": [
+      {
+        "input": "index creation",
+        "expectedOutput": "Composite index created",
+        "isHidden": false,
+        "description": "Multi-column index"
+      }
+    ],
+    "hints": [
+      "List columns in parentheses.",
+      "Column order matters for query patterns."
+    ]
+  },
+  {
+    "id": "cs205-ex-6-4",
+    "subjectId": "cs205",
+    "topicId": "cs205-6",
+    "title": "Covering Index",
+    "description": "Create an index that covers queries selecting Name and Email filtered by Status.",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- Covering index for status lookups\n",
+    "solution": "CREATE INDEX idx_users_status_covering\nON Users (Status)\nINCLUDE (Name, Email);",
+    "testCases": [
+      {
+        "input": "index creation",
+        "expectedOutput": "Covering index with INCLUDE",
+        "isHidden": false,
+        "description": "Covering index"
+      }
+    ],
+    "hints": [
+      "INCLUDE adds non-key columns.",
+      "Covering indexes avoid table lookups."
+    ]
+  },
+  {
+    "id": "cs205-ex-6-5",
+    "subjectId": "cs205",
+    "topicId": "cs205-6",
+    "title": "Partial Index",
+    "description": "Create a partial index on Orders for only active orders (Status = 'Active').",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- Partial index for active orders\n",
+    "solution": "CREATE INDEX idx_orders_active\nON Orders (OrderDate, CustomerID)\nWHERE Status = 'Active';",
+    "testCases": [
+      {
+        "input": "index creation",
+        "expectedOutput": "Partial index created",
+        "isHidden": false,
+        "description": "Filtered index"
+      }
+    ],
+    "hints": [
+      "WHERE clause filters indexed rows.",
+      "Smaller index = faster maintenance."
+    ]
+  },
+  {
+    "id": "cs205-ex-6-6",
+    "subjectId": "cs205",
+    "topicId": "cs205-6",
+    "title": "Drop Index",
+    "description": "Write the SQL to drop an index named idx_old_index from the database.",
+    "difficulty": 1,
+    "language": "sql",
+    "starterCode": "-- Drop the index\n",
+    "solution": "DROP INDEX idx_old_index;",
+    "testCases": [
+      {
+        "input": "drop",
+        "expectedOutput": "Index dropped",
+        "isHidden": false,
+        "description": "Drop index"
+      }
+    ],
+    "hints": [
+      "DROP INDEX removes the index.",
+      "Some databases need table name: DROP INDEX idx ON table."
+    ]
+  },
+  {
+    "id": "cs205-ex-6-7",
+    "subjectId": "cs205",
+    "topicId": "cs205-6",
+    "title": "Function-Based Index",
+    "description": "Create an index on the lowercase version of Email for case-insensitive searches.",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- Index on LOWER(Email)\n",
+    "solution": "CREATE INDEX idx_users_email_lower\nON Users (LOWER(Email));",
+    "testCases": [
+      {
+        "input": "index creation",
+        "expectedOutput": "Expression index created",
+        "isHidden": false,
+        "description": "Function-based index"
+      }
+    ],
+    "hints": [
+      "Expression indexes store computed values.",
+      "Query must use same expression to use index."
+    ]
+  },
+  {
+    "id": "cs205-ex-6-8",
+    "subjectId": "cs205",
+    "topicId": "cs205-6",
+    "title": "B-Tree Node Calculation",
+    "description": "Given a B-tree with order m=100 (max 100 children per node), what is the maximum number of keys per node? Write as a SQL comment.",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- B-tree calculation:\n-- ",
+    "solution": "-- Maximum keys per node = m - 1 = 100 - 1 = 99 keys\n-- A node with m children has m-1 keys (separators between children)\n-- So with order 100, each node can hold up to 99 keys",
+    "testCases": [
+      {
+        "input": "calculation",
+        "expectedOutput": "99 keys",
+        "isHidden": false,
+        "description": "B-tree order"
+      }
+    ],
+    "hints": [
+      "Keys = pointers - 1.",
+      "Keys separate child pointers."
+    ]
+  },
+  {
+    "id": "cs205-ex-6-9",
+    "subjectId": "cs205",
+    "topicId": "cs205-6",
+    "title": "B-Tree Height",
+    "description": "With 1 million records and B-tree order 100, estimate the minimum tree height. Write as SQL comment.",
+    "difficulty": 3,
+    "language": "sql",
+    "starterCode": "-- Calculate minimum B-tree height:\n-- ",
+    "solution": "-- With order m=100, max keys per node = 99\n-- Level 0 (root): 99 keys\n-- Level 1: 100 children × 99 = 9,900 keys\n-- Level 2: 100 × 100 × 99 = 990,000 keys\n-- Level 3: 100 × 100 × 100 × 99 = 99,000,000 keys\n-- \n-- After level 2, we exceed 1 million\n-- Minimum height = 3 (root + 2 levels of internal + leaf)",
+    "testCases": [
+      {
+        "input": "calculation",
+        "expectedOutput": "Height ~3",
+        "isHidden": false,
+        "description": "Tree height"
+      }
+    ],
+    "hints": [
+      "Each level multiplies capacity by order.",
+      "Height = log_m(n) approximately."
+    ]
+  },
+  {
+    "id": "cs205-ex-6-10",
+    "subjectId": "cs205",
+    "topicId": "cs205-6",
+    "title": "Index Selection Analysis",
+    "description": "Given query: SELECT * FROM Orders WHERE CustomerID = ? AND Status = 'Shipped' ORDER BY OrderDate DESC. Which index is best?",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- Best index for this query:\n-- ",
+    "solution": "-- Best index: (CustomerID, Status, OrderDate DESC)\n-- \n-- Reasoning:\n-- 1. CustomerID first - equality condition (most selective)\n-- 2. Status second - equality condition\n-- 3. OrderDate last - for ORDER BY (avoid sort)\n-- \n-- CREATE INDEX idx_orders_query\n-- ON Orders (CustomerID, Status, OrderDate DESC);",
+    "testCases": [
+      {
+        "input": "analysis",
+        "expectedOutput": "Composite index identified",
+        "isHidden": false,
+        "description": "Index selection"
+      }
+    ],
+    "hints": [
+      "Equality columns before range/sort.",
+      "Match ORDER BY to avoid sorting."
+    ]
+  },
+  {
+    "id": "cs205-ex-6-11",
+    "subjectId": "cs205",
+    "topicId": "cs205-6",
+    "title": "Clustered vs Non-Clustered",
+    "description": "Explain when to use a clustered index vs non-clustered. Write as SQL comment with an example table.",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- Clustered vs Non-clustered:\n-- ",
+    "solution": "-- Clustered Index:\n-- - Data rows stored in index order\n-- - Only ONE per table (defines physical order)\n-- - Best for: range queries, columns often used for sorting\n-- - Example: OrderDate for time-series queries\n-- \n-- Non-Clustered Index:\n-- - Separate structure with pointers to data\n-- - Multiple allowed per table\n-- - Best for: point lookups, columns with many distinct values\n-- - Example: Email for user lookups\n-- \n-- CREATE CLUSTERED INDEX idx_orders_date ON Orders(OrderDate);\n-- CREATE NONCLUSTERED INDEX idx_orders_customer ON Orders(CustomerID);",
+    "testCases": [
+      {
+        "input": "explanation",
+        "expectedOutput": "Clear comparison",
+        "isHidden": false,
+        "description": "Index types"
+      }
+    ],
+    "hints": [
+      "Clustered = physical order.",
+      "Only one clustered per table."
+    ]
+  },
+  {
+    "id": "cs205-ex-6-12",
+    "subjectId": "cs205",
+    "topicId": "cs205-6",
+    "title": "Rebuild Index",
+    "description": "Write SQL to rebuild a fragmented index idx_orders_date on the Orders table (SQL Server syntax).",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- Rebuild fragmented index\n",
+    "solution": "-- SQL Server syntax:\nALTER INDEX idx_orders_date ON Orders REBUILD;\n\n-- PostgreSQL alternative:\nREINDEX INDEX idx_orders_date;\n\n-- With options (SQL Server):\n-- ALTER INDEX idx_orders_date ON Orders REBUILD\n-- WITH (ONLINE = ON, FILLFACTOR = 90);",
+    "testCases": [
+      {
+        "input": "maintenance",
+        "expectedOutput": "Index rebuilt",
+        "isHidden": false,
+        "description": "Index rebuild"
+      }
+    ],
+    "hints": [
+      "REBUILD recreates the index.",
+      "ONLINE = ON allows concurrent access."
+    ]
+  },
+  {
+    "id": "cs205-ex-6-13",
+    "subjectId": "cs205",
+    "topicId": "cs205-6",
+    "title": "Index Statistics",
+    "description": "Write SQL to update statistics on the Orders table (helps query optimizer).",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- Update statistics\n",
+    "solution": "-- SQL Server:\nUPDATE STATISTICS Orders;\n\n-- PostgreSQL:\nANALYZE Orders;\n\n-- MySQL:\nANALYZE TABLE Orders;\n\n-- With sampling (SQL Server):\n-- UPDATE STATISTICS Orders WITH FULLSCAN;",
+    "testCases": [
+      {
+        "input": "statistics",
+        "expectedOutput": "Statistics updated",
+        "isHidden": false,
+        "description": "Update stats"
+      }
+    ],
+    "hints": [
+      "Statistics help optimizer choose plans.",
+      "Run after significant data changes."
+    ]
+  },
+  {
+    "id": "cs205-ex-6-14",
+    "subjectId": "cs205",
+    "topicId": "cs205-6",
+    "title": "Index Usage Query",
+    "description": "Write a query to find unused indexes in PostgreSQL (from pg_stat_user_indexes).",
+    "difficulty": 3,
+    "language": "sql",
+    "starterCode": "-- Find unused indexes\n",
+    "solution": "SELECT schemaname, relname AS table_name,\n       indexrelname AS index_name,\n       idx_scan AS times_used,\n       pg_size_pretty(pg_relation_size(indexrelid)) AS index_size\nFROM pg_stat_user_indexes\nWHERE idx_scan = 0\n  AND indexrelname NOT LIKE '%pkey'\nORDER BY pg_relation_size(indexrelid) DESC;",
+    "testCases": [
+      {
+        "input": "query",
+        "expectedOutput": "Unused indexes listed",
+        "isHidden": false,
+        "description": "Index analysis"
+      }
+    ],
+    "hints": [
+      "pg_stat_user_indexes tracks usage.",
+      "idx_scan = 0 means never used."
+    ]
+  },
+  {
+    "id": "cs205-ex-6-15",
+    "subjectId": "cs205",
+    "topicId": "cs205-6",
+    "title": "Index Selectivity",
+    "description": "Calculate selectivity for a Status column with values: Active (8000), Inactive (1500), Pending (500). Write as SQL comment.",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- Calculate selectivity:\n-- ",
+    "solution": "-- Total rows = 8000 + 1500 + 500 = 10,000\n-- \n-- Selectivity = distinct values / total rows\n-- Selectivity = 3 / 10,000 = 0.0003 (very low)\n-- \n-- Cardinality per value:\n-- Active: 8000/10000 = 80% (low selectivity for this value)\n-- Inactive: 1500/10000 = 15%\n-- Pending: 500/10000 = 5% (high selectivity for this value)\n-- \n-- Index on Status alone is poor choice due to low overall selectivity\n-- But useful for partial index: WHERE Status = 'Pending'",
+    "testCases": [
+      {
+        "input": "calculation",
+        "expectedOutput": "Selectivity calculated",
+        "isHidden": false,
+        "description": "Selectivity analysis"
+      }
+    ],
+    "hints": [
+      "Selectivity = distinct/total.",
+      "Higher selectivity = better for indexing."
+    ]
+  },
+  {
+    "id": "cs205-ex-6-16",
+    "subjectId": "cs205",
+    "topicId": "cs205-6",
+    "title": "Hash Index",
+    "description": "Create a hash index on UserID for exact-match lookups (PostgreSQL syntax).",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- Create hash index\n",
+    "solution": "CREATE INDEX idx_sessions_userid_hash\nON Sessions USING HASH (UserID);\n\n-- Note: Hash indexes are best for equality comparisons\n-- They do NOT support:\n-- - Range queries (>, <, BETWEEN)\n-- - ORDER BY\n-- - Pattern matching (LIKE)\n-- Use B-tree for those operations",
+    "testCases": [
+      {
+        "input": "index creation",
+        "expectedOutput": "Hash index created",
+        "isHidden": false,
+        "description": "Hash index"
+      }
+    ],
+    "hints": [
+      "USING HASH specifies hash index.",
+      "Only good for equality (=) lookups."
+    ]
+  },
+  {
+    "id": "cs205-ex-7-1",
+    "subjectId": "cs205",
+    "topicId": "cs205-7",
+    "title": "Basic EXPLAIN",
+    "description": "Write the SQL to get the execution plan for a query selecting all orders from 2024.",
+    "difficulty": 1,
+    "language": "sql",
+    "starterCode": "-- Get execution plan\n",
+    "solution": "EXPLAIN\nSELECT *\nFROM Orders\nWHERE OrderDate >= '2024-01-01'\n  AND OrderDate < '2025-01-01';",
+    "testCases": [
+      {
+        "input": "explain",
+        "expectedOutput": "Execution plan shown",
+        "isHidden": false,
+        "description": "Basic EXPLAIN"
+      }
+    ],
+    "hints": [
+      "EXPLAIN precedes the query.",
+      "Shows how database will execute."
+    ]
+  },
+  {
+    "id": "cs205-ex-7-2",
+    "subjectId": "cs205",
+    "topicId": "cs205-7",
+    "title": "EXPLAIN ANALYZE",
+    "description": "Write SQL to get actual execution statistics (run the query and show real timings).",
+    "difficulty": 1,
+    "language": "sql",
+    "starterCode": "-- Get actual execution stats\n",
+    "solution": "EXPLAIN ANALYZE\nSELECT c.Name, COUNT(o.OrderID) AS OrderCount\nFROM Customers c\nLEFT JOIN Orders o ON c.CustomerID = o.CustomerID\nGROUP BY c.CustomerID, c.Name;",
+    "testCases": [
+      {
+        "input": "explain",
+        "expectedOutput": "Actual timings shown",
+        "isHidden": false,
+        "description": "EXPLAIN ANALYZE"
+      }
+    ],
+    "hints": [
+      "ANALYZE actually runs the query.",
+      "Shows estimated vs actual rows."
+    ]
+  },
+  {
+    "id": "cs205-ex-7-3",
+    "subjectId": "cs205",
+    "topicId": "cs205-7",
+    "title": "Rewrite with Exists",
+    "description": "Rewrite this query using EXISTS instead of IN for better performance: SELECT * FROM Customers WHERE CustomerID IN (SELECT CustomerID FROM Orders)",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- Original uses IN subquery\n-- Rewrite with EXISTS:\n",
+    "solution": "SELECT *\nFROM Customers c\nWHERE EXISTS (\n    SELECT 1\n    FROM Orders o\n    WHERE o.CustomerID = c.CustomerID\n);",
+    "testCases": [
+      {
+        "input": "query",
+        "expectedOutput": "Same results, potentially faster",
+        "isHidden": false,
+        "description": "EXISTS rewrite"
+      }
+    ],
+    "hints": [
+      "EXISTS stops at first match.",
+      "SELECT 1 is efficient - value doesn't matter."
+    ]
+  },
+  {
+    "id": "cs205-ex-7-4",
+    "subjectId": "cs205",
+    "topicId": "cs205-7",
+    "title": "Avoid SELECT *",
+    "description": "Rewrite this query to select only needed columns: SELECT * FROM Products WHERE Category = 'Electronics' (need Name, Price, Stock)",
+    "difficulty": 1,
+    "language": "sql",
+    "starterCode": "-- Original: SELECT * FROM Products WHERE Category = 'Electronics'\n-- Optimized:\n",
+    "solution": "SELECT Name, Price, Stock\nFROM Products\nWHERE Category = 'Electronics';",
+    "testCases": [
+      {
+        "input": "query",
+        "expectedOutput": "Only needed columns",
+        "isHidden": false,
+        "description": "Column selection"
+      }
+    ],
+    "hints": [
+      "SELECT * reads all columns.",
+      "Explicit columns enable covering indexes."
+    ]
+  },
+  {
+    "id": "cs205-ex-7-5",
+    "subjectId": "cs205",
+    "topicId": "cs205-7",
+    "title": "Sargable WHERE",
+    "description": "Rewrite this non-sargable query to use an index: SELECT * FROM Orders WHERE YEAR(OrderDate) = 2024",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- Non-sargable (can't use index on OrderDate):\n-- SELECT * FROM Orders WHERE YEAR(OrderDate) = 2024\n-- \n-- Sargable version:\n",
+    "solution": "SELECT *\nFROM Orders\nWHERE OrderDate >= '2024-01-01'\n  AND OrderDate < '2025-01-01';\n\n-- This is sargable because:\n-- 1. No function applied to the indexed column\n-- 2. Can use range scan on OrderDate index\n-- 3. Much faster than scanning all rows and applying YEAR()",
+    "testCases": [
+      {
+        "input": "query",
+        "expectedOutput": "Index-friendly query",
+        "isHidden": false,
+        "description": "Sargable predicate"
+      }
+    ],
+    "hints": [
+      "Don't apply functions to indexed columns.",
+      "Use range conditions instead."
+    ]
+  },
+  {
+    "id": "cs205-ex-7-6",
+    "subjectId": "cs205",
+    "topicId": "cs205-7",
+    "title": "Join Order Analysis",
+    "description": "Given tables: Orders (1M rows), Customers (10K rows), OrderItems (5M rows). What join order is optimal for: Customers JOIN Orders JOIN OrderItems?",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- Analyze optimal join order:\n-- ",
+    "solution": "-- Optimal order: Customers -> Orders -> OrderItems\n-- \n-- Reasoning:\n-- 1. Start with smallest table (Customers: 10K rows)\n-- 2. Join to Orders (1M rows) - result filtered by customer\n-- 3. Finally join OrderItems (5M rows)\n-- \n-- Alternative if filtering Orders:\n-- If WHERE clause filters Orders significantly,\n-- may be better to start there.\n-- \n-- The optimizer usually handles this, but hints can help:\n-- SELECT /*+ LEADING(c o oi) */ ...\n-- FROM Customers c\n-- JOIN Orders o ON c.CustomerID = o.CustomerID\n-- JOIN OrderItems oi ON o.OrderID = oi.OrderID",
+    "testCases": [
+      {
+        "input": "analysis",
+        "expectedOutput": "Optimal order identified",
+        "isHidden": false,
+        "description": "Join ordering"
+      }
+    ],
+    "hints": [
+      "Start with smallest table.",
+      "Consider filter selectivity."
+    ]
+  },
+  {
+    "id": "cs205-ex-7-7",
+    "subjectId": "cs205",
+    "topicId": "cs205-7",
+    "title": "Correlated to Join",
+    "description": "Rewrite this correlated subquery as a JOIN: SELECT e.Name, (SELECT d.DeptName FROM Departments d WHERE d.DeptID = e.DeptID) FROM Employees e",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- Rewrite as JOIN:\n",
+    "solution": "SELECT e.Name, d.DeptName\nFROM Employees e\nLEFT JOIN Departments d ON e.DeptID = d.DeptID;\n\n-- Why this is better:\n-- 1. Correlated subquery executes once per row\n-- 2. JOIN is set-based, processes all at once\n-- 3. Optimizer can choose optimal join algorithm",
+    "testCases": [
+      {
+        "input": "query",
+        "expectedOutput": "Join version",
+        "isHidden": false,
+        "description": "Subquery to join"
+      }
+    ],
+    "hints": [
+      "LEFT JOIN handles null matches.",
+      "JOINs are usually more efficient than correlated subqueries."
+    ]
+  },
+  {
+    "id": "cs205-ex-7-8",
+    "subjectId": "cs205",
+    "topicId": "cs205-7",
+    "title": "Pagination Optimization",
+    "description": "Optimize this pagination query: SELECT * FROM Products ORDER BY ProductID LIMIT 10 OFFSET 100000",
+    "difficulty": 3,
+    "language": "sql",
+    "starterCode": "-- Original: SELECT * FROM Products ORDER BY ProductID LIMIT 10 OFFSET 100000\n-- Problem: Must scan 100,000 rows then discard\n-- \n-- Optimized keyset pagination:\n",
+    "solution": "-- Keyset pagination (seek method):\nSELECT *\nFROM Products\nWHERE ProductID > 100000  -- last seen ID\nORDER BY ProductID\nLIMIT 10;\n\n-- Benefits:\n-- 1. Uses index seek, not scan\n-- 2. Consistent performance regardless of page\n-- 3. Doesn't skip rows (OFFSET can miss concurrent inserts)\n-- \n-- Requires: knowing last ProductID from previous page\n-- Frontend stores last ID, passes to next request",
+    "testCases": [
+      {
+        "input": "query",
+        "expectedOutput": "Keyset pagination",
+        "isHidden": false,
+        "description": "Efficient paging"
+      }
+    ],
+    "hints": [
+      "OFFSET scans then discards.",
+      "Keyset uses index seek."
+    ]
+  },
+  {
+    "id": "cs205-ex-7-9",
+    "subjectId": "cs205",
+    "topicId": "cs205-7",
+    "title": "UNION vs UNION ALL",
+    "description": "Explain when to use UNION ALL instead of UNION. Provide an example where UNION ALL is correct and faster.",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- UNION vs UNION ALL analysis:\n-- ",
+    "solution": "-- UNION: removes duplicates (requires sort/hash)\n-- UNION ALL: keeps all rows (no dedup overhead)\n-- \n-- Use UNION ALL when:\n-- 1. Source queries can't produce duplicates\n-- 2. Duplicates are acceptable\n-- 3. Performance is critical\n-- \n-- Example: Combining exclusive categories\nSELECT ProductID, Name, 'Electronics' AS Source\nFROM Products\nWHERE Category = 'Electronics'\nUNION ALL\nSELECT ProductID, Name, 'Books'\nFROM Products\nWHERE Category = 'Books';\n-- No duplicates possible - same product can't be in both categories",
+    "testCases": [
+      {
+        "input": "analysis",
+        "expectedOutput": "Clear comparison",
+        "isHidden": false,
+        "description": "UNION optimization"
+      }
+    ],
+    "hints": [
+      "UNION sorts to remove duplicates.",
+      "UNION ALL is always faster."
+    ]
+  },
+  {
+    "id": "cs205-ex-7-10",
+    "subjectId": "cs205",
+    "topicId": "cs205-7",
+    "title": "Batch Processing",
+    "description": "Rewrite this delete to process in batches: DELETE FROM Logs WHERE LogDate < '2020-01-01'",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- Original deletes all at once (locks table, fills log)\n-- Batch version:\n",
+    "solution": "-- Batch delete (run repeatedly until 0 rows affected):\nDELETE FROM Logs\nWHERE LogID IN (\n    SELECT LogID\n    FROM Logs\n    WHERE LogDate < '2020-01-01'\n    LIMIT 10000\n);\n\n-- Or with CTE (PostgreSQL):\nWITH to_delete AS (\n    SELECT LogID\n    FROM Logs\n    WHERE LogDate < '2020-01-01'\n    LIMIT 10000\n)\nDELETE FROM Logs\nWHERE LogID IN (SELECT LogID FROM to_delete);\n\n-- Benefits:\n-- 1. Smaller transactions\n-- 2. Less lock contention\n-- 3. Can pause/resume\n-- 4. Doesn't overflow transaction log",
+    "testCases": [
+      {
+        "input": "query",
+        "expectedOutput": "Batched delete",
+        "isHidden": false,
+        "description": "Batch processing"
+      }
+    ],
+    "hints": [
+      "LIMIT controls batch size.",
+      "Run in loop until done."
+    ]
+  },
+  {
+    "id": "cs205-ex-7-11",
+    "subjectId": "cs205",
+    "topicId": "cs205-7",
+    "title": "Index Hint",
+    "description": "Write a query that forces use of a specific index idx_orders_customer (syntax varies by database).",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- Force index usage\n",
+    "solution": "-- MySQL:\nSELECT *\nFROM Orders FORCE INDEX (idx_orders_customer)\nWHERE CustomerID = 123;\n\n-- PostgreSQL (set planner cost):\nSET enable_seqscan = OFF;  -- Discourage table scan\nSELECT * FROM Orders WHERE CustomerID = 123;\n\n-- SQL Server:\nSELECT *\nFROM Orders WITH (INDEX(idx_orders_customer))\nWHERE CustomerID = 123;\n\n-- Oracle:\nSELECT /*+ INDEX(Orders idx_orders_customer) */ *\nFROM Orders\nWHERE CustomerID = 123;",
+    "testCases": [
+      {
+        "input": "query",
+        "expectedOutput": "Index hint applied",
+        "isHidden": false,
+        "description": "Index hints"
+      }
+    ],
+    "hints": [
+      "Syntax is database-specific.",
+      "Use sparingly - optimizer usually knows best."
+    ]
+  },
+  {
+    "id": "cs205-ex-7-12",
+    "subjectId": "cs205",
+    "topicId": "cs205-7",
+    "title": "Eliminate Sort",
+    "description": "Given an index on (CustomerID, OrderDate), rewrite this query to avoid a sort: SELECT * FROM Orders WHERE CustomerID = 5 ORDER BY OrderDate DESC",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- Current query may need to sort\n-- Optimized version:\n",
+    "solution": "-- If index is (CustomerID, OrderDate ASC), this needs a sort:\n-- SELECT * FROM Orders WHERE CustomerID = 5 ORDER BY OrderDate DESC\n\n-- Solution 1: Create descending index\n-- CREATE INDEX idx_orders_cust_date_desc \n-- ON Orders(CustomerID, OrderDate DESC);\n\n-- Solution 2: Accept ASC order if business allows\nSELECT *\nFROM Orders\nWHERE CustomerID = 5\nORDER BY OrderDate ASC;  -- Matches index direction\n\n-- The query can use index backward scan in some DBs:\n-- PostgreSQL: Can scan B-tree in either direction\n-- So original query may not need explicit DESC index",
+    "testCases": [
+      {
+        "input": "query",
+        "expectedOutput": "Sort-free query",
+        "isHidden": false,
+        "description": "Avoid sorting"
+      }
+    ],
+    "hints": [
+      "Index order must match ORDER BY.",
+      "Some DBs support backward index scans."
+    ]
+  },
+  {
+    "id": "cs205-ex-7-13",
+    "subjectId": "cs205",
+    "topicId": "cs205-7",
+    "title": "Materialized View",
+    "description": "Create a materialized view for a slow aggregation query showing total sales per product category.",
+    "difficulty": 3,
+    "language": "sql",
+    "starterCode": "-- Create materialized view for category sales\n",
+    "solution": "-- PostgreSQL syntax:\nCREATE MATERIALIZED VIEW mv_category_sales AS\nSELECT p.Category,\n       COUNT(DISTINCT o.OrderID) AS OrderCount,\n       SUM(oi.Quantity) AS TotalQuantity,\n       SUM(oi.Quantity * oi.Price) AS TotalRevenue\nFROM Products p\nJOIN OrderItems oi ON p.ProductID = oi.ProductID\nJOIN Orders o ON oi.OrderID = o.OrderID\nGROUP BY p.Category;\n\n-- Create index on materialized view:\nCREATE INDEX idx_mv_category ON mv_category_sales(Category);\n\n-- Refresh when data changes:\nREFRESH MATERIALIZED VIEW mv_category_sales;\n\n-- Query the view (fast!):\nSELECT * FROM mv_category_sales WHERE Category = 'Electronics';",
+    "testCases": [
+      {
+        "input": "view",
+        "expectedOutput": "Materialized view created",
+        "isHidden": false,
+        "description": "Mat view"
+      }
+    ],
+    "hints": [
+      "Materialized views store computed results.",
+      "Must refresh when base data changes."
+    ]
+  },
+  {
+    "id": "cs205-ex-7-14",
+    "subjectId": "cs205",
+    "topicId": "cs205-7",
+    "title": "Query Plan Analysis",
+    "description": "Analyze this plan output: Seq Scan on orders (cost=0.00..15000.00 rows=500000). What does it tell you?",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- Plan: Seq Scan on orders (cost=0.00..15000.00 rows=500000)\n-- Analysis:\n-- ",
+    "solution": "-- Plan Analysis:\n-- \n-- Seq Scan = Sequential Scan (full table scan)\n-- - Reading ALL rows from disk\n-- - No index is being used\n-- \n-- cost=0.00..15000.00\n-- - Startup cost: 0.00 (begins returning rows immediately)\n-- - Total cost: 15000.00 (arbitrary units)\n-- \n-- rows=500000\n-- - Estimated rows to return\n-- \n-- Problem indicators:\n-- 1. Seq Scan on large table is often bad\n-- 2. High row count suggests missing WHERE or no index\n-- \n-- Solutions:\n-- 1. Add index on filtered columns\n-- 2. Add WHERE clause to reduce rows\n-- 3. Check if statistics are up to date (ANALYZE)",
+    "testCases": [
+      {
+        "input": "analysis",
+        "expectedOutput": "Clear interpretation",
+        "isHidden": false,
+        "description": "Plan reading"
+      }
+    ],
+    "hints": [
+      "Seq Scan = no index used.",
+      "Cost is relative, not milliseconds."
+    ]
+  },
+  {
+    "id": "cs205-ex-7-15",
+    "subjectId": "cs205",
+    "topicId": "cs205-7",
+    "title": "OR to UNION",
+    "description": "Rewrite this OR query as UNION for better index usage: SELECT * FROM Products WHERE Category = 'A' OR Price < 10",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- Original: SELECT * FROM Products WHERE Category = 'A' OR Price < 10\n-- This may not use indexes well\n-- \n-- UNION version:\n",
+    "solution": "SELECT * FROM Products WHERE Category = 'A'\nUNION\nSELECT * FROM Products WHERE Price < 10;\n\n-- Why this can be better:\n-- 1. Each SELECT can use its own index:\n--    - idx_products_category for first query\n--    - idx_products_price for second query\n-- 2. OR often causes table scan\n-- \n-- Note: UNION removes duplicates (products matching both)\n-- If duplicates are OK and you have covering indexes:\n-- Use UNION ALL for even better performance\n-- \n-- Modern optimizers may do this automatically (index merge)",
+    "testCases": [
+      {
+        "input": "query",
+        "expectedOutput": "UNION version",
+        "isHidden": false,
+        "description": "OR optimization"
+      }
+    ],
+    "hints": [
+      "OR on different columns prevents single index use.",
+      "UNION lets each part use optimal index."
+    ]
+  },
+  {
+    "id": "cs205-ex-7-16",
+    "subjectId": "cs205",
+    "topicId": "cs205-7",
+    "title": "CTE vs Subquery",
+    "description": "Rewrite using CTE and explain when CTEs help performance: SELECT * FROM Orders WHERE CustomerID IN (SELECT CustomerID FROM VIPCustomers)",
+    "difficulty": 2,
+    "language": "sql",
+    "starterCode": "-- CTE version:\n",
+    "solution": "WITH VIPs AS (\n    SELECT CustomerID\n    FROM VIPCustomers\n)\nSELECT o.*\nFROM Orders o\nJOIN VIPs v ON o.CustomerID = v.CustomerID;\n\n-- When CTEs help:\n-- 1. Readability - named intermediate results\n-- 2. Reuse - reference same CTE multiple times\n-- 3. Recursive queries - only way to do it\n-- \n-- Performance notes:\n-- - PostgreSQL < 12: CTEs were optimization barriers\n-- - PostgreSQL 12+: CTEs can be inlined\n-- - Most DBs: optimizer treats CTE like subquery\n-- \n-- When CTEs hurt:\n-- - Forcing materialization when not needed\n-- - Preventing predicate pushdown (older PostgreSQL)\n-- \n-- For this query, JOIN is likely same performance as IN subquery",
+    "testCases": [
+      {
+        "input": "query",
+        "expectedOutput": "CTE version with explanation",
+        "isHidden": false,
+        "description": "CTE usage"
+      }
+    ],
+    "hints": [
+      "CTEs improve readability.",
+      "Modern optimizers inline CTEs."
+    ]
+  }
+]

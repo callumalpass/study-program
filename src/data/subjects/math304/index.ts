@@ -1,11 +1,20 @@
-import { math304Topics } from './topics';
-import { math304Quizzes } from './quizzes';
-import { math304Exercises } from './exercises';
-import { math304Exams } from './exams';
+/**
+ * MATH304 Subject Data
+ *
+ * This file imports assessment data from JSON files and re-exports
+ * with proper TypeScript types. Topics are still loaded from topics.ts
+ * which handles the markdown content imports.
+ */
 
-export {
-  math304Topics,
-  math304Quizzes,
-  math304Exercises,
-  math304Exams
-};
+import type { Quiz, Exam, Project, Exercise } from '../../../core/types';
+
+import quizzesData from './quizzes.json';
+import examsData from './exams.json';
+import exercisesData from './exercises.json';
+
+export const math304Quizzes = quizzesData as Quiz[];
+export const math304Exams = examsData as Exam[];
+export const math304Exercises = exercisesData as Exercise[];
+
+// Topics still use TypeScript for Vite's ?raw markdown imports
+export { math304Topics } from './topics';

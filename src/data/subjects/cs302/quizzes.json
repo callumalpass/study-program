@@ -1,0 +1,1262 @@
+[
+  {
+    "id": "cs302-quiz-1a",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-1",
+    "title": "Network Architecture - Fundamentals",
+    "questions": [
+      {
+        "id": "q1a-1",
+        "type": "multiple_choice",
+        "prompt": "Which layer of the OSI model is responsible for routing packets between networks?",
+        "options": [
+          "Data Link Layer",
+          "Network Layer",
+          "Transport Layer",
+          "Session Layer"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The Network Layer (Layer 3) handles logical addressing and routing packets across different networks using protocols like IP."
+      },
+      {
+        "id": "q1a-2",
+        "type": "multiple_choice",
+        "prompt": "What is the primary difference between a hub and a switch?",
+        "options": [
+          "Hubs are faster than switches",
+          "Switches broadcast to all ports, hubs forward selectively",
+          "Switches forward frames selectively based on MAC addresses, hubs broadcast to all ports",
+          "Hubs operate at Layer 3, switches at Layer 2"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Switches learn MAC addresses and forward frames only to the appropriate port, while hubs simply broadcast all traffic to every port."
+      },
+      {
+        "id": "q1a-3",
+        "type": "true_false",
+        "prompt": "The TCP/IP model has fewer layers than the OSI model.",
+        "correctAnswer": true,
+        "explanation": "The TCP/IP model has 4 layers (Application, Transport, Internet, Network Access), while the OSI model has 7 layers."
+      },
+      {
+        "id": "q1a-4",
+        "type": "fill_blank",
+        "prompt": "The process of adding header information as data moves down the protocol stack is called ____.",
+        "correctAnswer": "encapsulation",
+        "explanation": "Encapsulation is the process where each layer adds its own header (and sometimes trailer) to the data from the layer above."
+      },
+      {
+        "id": "q1a-5",
+        "type": "multiple_choice",
+        "prompt": "Which organization is responsible for developing Internet standards through RFCs?",
+        "options": [
+          "IEEE",
+          "IETF",
+          "ISO",
+          "W3C"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The Internet Engineering Task Force (IETF) develops Internet standards and publishes them as Request for Comments (RFCs)."
+      }
+    ]
+  },
+  {
+    "id": "cs302-quiz-1b",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-1",
+    "title": "Network Architecture - Application",
+    "questions": [
+      {
+        "id": "q1b-1",
+        "type": "multiple_choice",
+        "prompt": "At which OSI layer does a router operate?",
+        "options": [
+          "Layer 1 - Physical",
+          "Layer 2 - Data Link",
+          "Layer 3 - Network",
+          "Layer 4 - Transport"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Routers operate at Layer 3 (Network Layer) because they make forwarding decisions based on IP addresses."
+      },
+      {
+        "id": "q1b-2",
+        "type": "code_output",
+        "prompt": "In the TCP/IP model, which layer would handle the HTTP protocol?",
+        "codeSnippet": "Layer 4: Application\nLayer 3: Transport (TCP/UDP)\nLayer 2: Internet (IP)\nLayer 1: Network Access",
+        "correctAnswer": "Application",
+        "explanation": "HTTP is an application layer protocol in the TCP/IP model, handling web communication between clients and servers."
+      },
+      {
+        "id": "q1b-3",
+        "type": "multiple_choice",
+        "prompt": "What type of network spans a city or metropolitan area?",
+        "options": [
+          "LAN",
+          "WAN",
+          "MAN",
+          "PAN"
+        ],
+        "correctAnswer": 2,
+        "explanation": "A Metropolitan Area Network (MAN) spans a city or large campus, larger than a LAN but smaller than a WAN."
+      },
+      {
+        "id": "q1b-4",
+        "type": "true_false",
+        "prompt": "A MAC address is 32 bits long.",
+        "correctAnswer": false,
+        "explanation": "A MAC address is 48 bits (6 bytes) long, typically written as six pairs of hexadecimal digits (e.g., AA:BB:CC:DD:EE:FF)."
+      },
+      {
+        "id": "q1b-5",
+        "type": "multiple_choice",
+        "prompt": "Which network device creates separate collision domains for each port?",
+        "options": [
+          "Hub",
+          "Repeater",
+          "Switch",
+          "Modem"
+        ],
+        "correctAnswer": 2,
+        "explanation": "A switch creates a separate collision domain for each port, unlike a hub which shares one collision domain across all ports."
+      }
+    ]
+  },
+  {
+    "id": "cs302-quiz-1c",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-1",
+    "title": "Network Architecture - Advanced",
+    "questions": [
+      {
+        "id": "q1c-1",
+        "type": "multiple_choice",
+        "prompt": "Which IEEE standard defines Ethernet?",
+        "options": [
+          "802.1",
+          "802.3",
+          "802.11",
+          "802.15"
+        ],
+        "correctAnswer": 1,
+        "explanation": "802.3 is the IEEE standard for Ethernet. 802.11 is Wi-Fi, 802.15 is Bluetooth, and 802.1 covers bridging and network management."
+      },
+      {
+        "id": "q1c-2",
+        "type": "multiple_choice",
+        "prompt": "In packet switching, what happens to data before transmission?",
+        "options": [
+          "A dedicated circuit is established",
+          "Data is divided into packets that travel independently",
+          "Data is transmitted as a continuous stream",
+          "Bandwidth is reserved for the entire session"
+        ],
+        "correctAnswer": 1,
+        "explanation": "In packet switching, data is broken into packets that can take different paths through the network and be reassembled at the destination."
+      },
+      {
+        "id": "q1c-3",
+        "type": "fill_blank",
+        "prompt": "The first 3 bytes (24 bits) of a MAC address identify the ____ (vendor/manufacturer).",
+        "correctAnswer": "oui",
+        "explanation": "The OUI (Organizationally Unique Identifier) is assigned by IEEE to manufacturers and identifies the vendor of the network interface."
+      },
+      {
+        "id": "q1c-4",
+        "type": "true_false",
+        "prompt": "The OSI model was developed after the TCP/IP model but is more commonly used in actual Internet implementations.",
+        "correctAnswer": false,
+        "explanation": "While OSI was developed to be the standard, TCP/IP was already in use and became the de facto Internet protocol. OSI serves mainly as a reference model."
+      },
+      {
+        "id": "q1c-5",
+        "type": "multiple_choice",
+        "prompt": "Which layer is responsible for end-to-end communication and port addressing?",
+        "options": [
+          "Network Layer",
+          "Transport Layer",
+          "Session Layer",
+          "Application Layer"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The Transport Layer (Layer 4) provides end-to-end communication between applications using port numbers to identify processes."
+      }
+    ]
+  },
+  {
+    "id": "cs302-quiz-2a",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-2",
+    "title": "Physical and Data Link - Fundamentals",
+    "questions": [
+      {
+        "id": "q2a-1",
+        "type": "multiple_choice",
+        "prompt": "What type of cable is commonly used for Gigabit Ethernet connections up to 100 meters?",
+        "options": [
+          "Coaxial cable",
+          "Cat 5e twisted pair",
+          "Single-mode fiber",
+          "Cat 3 twisted pair"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Cat 5e (or Cat 6) UTP cables support Gigabit Ethernet (1000BASE-T) up to 100 meters."
+      },
+      {
+        "id": "q2a-2",
+        "type": "true_false",
+        "prompt": "CSMA/CD is used in wireless networks to detect collisions.",
+        "correctAnswer": false,
+        "explanation": "Wireless networks use CSMA/CA (Collision Avoidance) because stations cannot detect collisions while transmitting. CSMA/CD is used in wired Ethernet."
+      },
+      {
+        "id": "q2a-3",
+        "type": "multiple_choice",
+        "prompt": "What is the minimum Ethernet frame size (including FCS)?",
+        "options": [
+          "46 bytes",
+          "64 bytes",
+          "1500 bytes",
+          "1518 bytes"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The minimum Ethernet frame size is 64 bytes. If the payload is less than 46 bytes, padding is added. 1518 bytes is the maximum."
+      },
+      {
+        "id": "q2a-4",
+        "type": "fill_blank",
+        "prompt": "The error detection method used in Ethernet frames is ____ (abbreviated).",
+        "correctAnswer": "crc",
+        "explanation": "Ethernet uses CRC-32 (Cyclic Redundancy Check) in the Frame Check Sequence (FCS) field to detect transmission errors."
+      },
+      {
+        "id": "q2a-5",
+        "type": "multiple_choice",
+        "prompt": "What does the EtherType field value 0x0800 indicate?",
+        "options": [
+          "ARP",
+          "IPv4",
+          "IPv6",
+          "VLAN tag"
+        ],
+        "correctAnswer": 1,
+        "explanation": "0x0800 indicates IPv4. ARP is 0x0806, IPv6 is 0x86DD, and VLAN tagging uses 0x8100."
+      }
+    ]
+  },
+  {
+    "id": "cs302-quiz-2b",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-2",
+    "title": "Physical and Data Link - Application",
+    "questions": [
+      {
+        "id": "q2b-1",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of the Spanning Tree Protocol (STP)?",
+        "options": [
+          "To increase network speed",
+          "To prevent loops in switched networks",
+          "To encrypt network traffic",
+          "To compress data frames"
+        ],
+        "correctAnswer": 1,
+        "explanation": "STP (802.1D) prevents layer 2 loops in networks with redundant links by blocking certain ports until needed."
+      },
+      {
+        "id": "q2b-2",
+        "type": "true_false",
+        "prompt": "In half-duplex mode, devices can send and receive data simultaneously.",
+        "correctAnswer": false,
+        "explanation": "Half-duplex allows communication in both directions but not at the same time. Full-duplex allows simultaneous bidirectional communication."
+      },
+      {
+        "id": "q2b-3",
+        "type": "multiple_choice",
+        "prompt": "What Wi-Fi security protocol should never be used due to known vulnerabilities?",
+        "options": [
+          "WPA3",
+          "WPA2",
+          "WPA",
+          "WEP"
+        ],
+        "correctAnswer": 3,
+        "explanation": "WEP (Wired Equivalent Privacy) has serious cryptographic weaknesses and can be cracked in minutes. WPA2 or WPA3 should be used instead."
+      },
+      {
+        "id": "q2b-4",
+        "type": "code_output",
+        "prompt": "What is the broadcast MAC address?",
+        "codeSnippet": "Unicast: First byte even\nMulticast: First byte odd\nBroadcast: All bits set to 1",
+        "correctAnswer": "FF:FF:FF:FF:FF:FF",
+        "explanation": "The broadcast MAC address is FF:FF:FF:FF:FF:FF. All devices on the local network segment receive frames sent to this address."
+      },
+      {
+        "id": "q2b-5",
+        "type": "multiple_choice",
+        "prompt": "In the binary exponential backoff algorithm, after 3 collisions, the random wait is chosen from how many possible slots?",
+        "options": [
+          "2",
+          "4",
+          "8",
+          "16"
+        ],
+        "correctAnswer": 2,
+        "explanation": "After n collisions, the backoff is chosen from 0 to 2^n - 1 slots. After 3 collisions: 2^3 = 8 possible values (0-7)."
+      }
+    ]
+  },
+  {
+    "id": "cs302-quiz-2c",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-2",
+    "title": "Physical and Data Link - Advanced",
+    "questions": [
+      {
+        "id": "q2c-1",
+        "type": "multiple_choice",
+        "prompt": "What does ARP (Address Resolution Protocol) resolve?",
+        "options": [
+          "Domain names to IP addresses",
+          "IP addresses to MAC addresses",
+          "Port numbers to process IDs",
+          "MAC addresses to IP addresses"
+        ],
+        "correctAnswer": 1,
+        "explanation": "ARP maps IP addresses to MAC addresses on a local network, enabling Layer 2 delivery of Layer 3 packets."
+      },
+      {
+        "id": "q2c-2",
+        "type": "fill_blank",
+        "prompt": "IEEE 802.1Q is the standard for ____ tagging.",
+        "correctAnswer": "vlan",
+        "explanation": "802.1Q defines VLAN tagging, adding a 4-byte tag to Ethernet frames to identify virtual LAN membership."
+      },
+      {
+        "id": "q2c-3",
+        "type": "multiple_choice",
+        "prompt": "What mechanism does Wi-Fi use to handle the hidden terminal problem?",
+        "options": [
+          "CSMA/CD",
+          "Token passing",
+          "RTS/CTS",
+          "Polling"
+        ],
+        "correctAnswer": 2,
+        "explanation": "RTS/CTS (Request to Send/Clear to Send) allows stations to reserve the channel, preventing collisions from hidden terminals."
+      },
+      {
+        "id": "q2c-4",
+        "type": "true_false",
+        "prompt": "Single-mode fiber optic cable can transmit data over longer distances than multi-mode fiber.",
+        "correctAnswer": true,
+        "explanation": "Single-mode fiber has a smaller core and uses laser light, enabling transmission up to 100km, while multi-mode is limited to about 2km."
+      },
+      {
+        "id": "q2c-5",
+        "type": "multiple_choice",
+        "prompt": "Which encoding scheme guarantees a transition in every bit period, enabling clock synchronization?",
+        "options": [
+          "NRZ",
+          "NRZI",
+          "Manchester",
+          "4B/5B"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Manchester encoding has a transition in the middle of every bit period (high-to-low for 1, low-to-high for 0), ensuring synchronization."
+      }
+    ]
+  },
+  {
+    "id": "cs302-quiz-3a",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-3",
+    "title": "Network Layer and IP - Fundamentals",
+    "questions": [
+      {
+        "id": "q3a-1",
+        "type": "multiple_choice",
+        "prompt": "How many bits are in an IPv4 address?",
+        "options": [
+          "16 bits",
+          "32 bits",
+          "48 bits",
+          "128 bits"
+        ],
+        "correctAnswer": 1,
+        "explanation": "IPv4 addresses are 32 bits long, typically written as four decimal octets (e.g., 192.168.1.1). IPv6 uses 128 bits."
+      },
+      {
+        "id": "q3a-2",
+        "type": "fill_blank",
+        "prompt": "The private IP address range 192.168.0.0 to 192.168.255.255 is defined in RFC ____.",
+        "correctAnswer": "1918",
+        "explanation": "RFC 1918 defines private IP address ranges: 10.0.0.0/8, 172.16.0.0/12, and 192.168.0.0/16."
+      },
+      {
+        "id": "q3a-3",
+        "type": "true_false",
+        "prompt": "The IP protocol provides guaranteed delivery of packets.",
+        "correctAnswer": false,
+        "explanation": "IP provides best-effort delivery only. It does not guarantee delivery, ordering, or error correction. TCP provides reliability on top of IP."
+      },
+      {
+        "id": "q3a-4",
+        "type": "multiple_choice",
+        "prompt": "What is the CIDR notation for a subnet mask of 255.255.255.0?",
+        "options": [
+          "/8",
+          "/16",
+          "/24",
+          "/32"
+        ],
+        "correctAnswer": 2,
+        "explanation": "255.255.255.0 has 24 bits set to 1 (network portion), so the CIDR notation is /24."
+      },
+      {
+        "id": "q3a-5",
+        "type": "multiple_choice",
+        "prompt": "What happens when a packet's TTL reaches 0?",
+        "options": [
+          "The packet is delivered normally",
+          "The router retransmits the packet",
+          "The packet is discarded and an ICMP message is sent",
+          "The packet is fragmented"
+        ],
+        "correctAnswer": 2,
+        "explanation": "When TTL reaches 0, the router discards the packet and sends an ICMP \"Time Exceeded\" message to the source."
+      }
+    ]
+  },
+  {
+    "id": "cs302-quiz-3b",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-3",
+    "title": "Network Layer and IP - Application",
+    "questions": [
+      {
+        "id": "q3b-1",
+        "type": "code_output",
+        "prompt": "How many usable host addresses are in a /26 network?",
+        "codeSnippet": "Network: x.x.x.0/26\nTotal addresses: 2^(32-26) = 64\nReserved: Network address + Broadcast address",
+        "correctAnswer": "62",
+        "explanation": "A /26 network has 64 total addresses (2^6). Subtracting the network address and broadcast address leaves 62 usable host addresses."
+      },
+      {
+        "id": "q3b-2",
+        "type": "multiple_choice",
+        "prompt": "What ICMP message type is used by the ping command?",
+        "options": [
+          "Destination Unreachable",
+          "Time Exceeded",
+          "Echo Request/Reply",
+          "Redirect"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Ping uses ICMP Echo Request (type 8) and Echo Reply (type 0) to test network connectivity."
+      },
+      {
+        "id": "q3b-3",
+        "type": "true_false",
+        "prompt": "NAT (Network Address Translation) allows multiple devices on a private network to share a single public IP address.",
+        "correctAnswer": true,
+        "explanation": "NAT, specifically PAT (Port Address Translation), allows multiple private IP addresses to be translated to a single public IP using different port numbers."
+      },
+      {
+        "id": "q3b-4",
+        "type": "multiple_choice",
+        "prompt": "Which field in the IPv4 header identifies the upper-layer protocol?",
+        "options": [
+          "Version",
+          "Protocol",
+          "TTL",
+          "Header Checksum"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The Protocol field indicates which protocol is encapsulated in the payload (e.g., 6 for TCP, 17 for UDP, 1 for ICMP)."
+      },
+      {
+        "id": "q3b-5",
+        "type": "fill_blank",
+        "prompt": "The loopback IP address 127.0.0.1 is commonly referred to as ____.",
+        "correctAnswer": "localhost",
+        "explanation": "The loopback address 127.0.0.1 (or any address in 127.0.0.0/8) refers to the local host, used for testing network software."
+      }
+    ]
+  },
+  {
+    "id": "cs302-quiz-3c",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-3",
+    "title": "Network Layer and IP - Advanced",
+    "questions": [
+      {
+        "id": "q3c-1",
+        "type": "multiple_choice",
+        "prompt": "What is the main advantage of IPv6 over IPv4?",
+        "options": [
+          "Faster routing",
+          "Much larger address space",
+          "Better error correction",
+          "Simpler header format"
+        ],
+        "correctAnswer": 1,
+        "explanation": "IPv6 uses 128-bit addresses compared to IPv4's 32-bit, providing approximately 3.4×10^38 addresses versus 4.3 billion for IPv4."
+      },
+      {
+        "id": "q3c-2",
+        "type": "code_output",
+        "prompt": "What is the network address for host 172.16.45.100 with subnet mask 255.255.240.0?",
+        "codeSnippet": "IP:   172.16.45.100\nMask: 255.255.240.0 (/20)\nNetwork = IP AND Mask",
+        "correctAnswer": "172.16.32.0",
+        "explanation": "ANDing 172.16.45.100 with 255.255.240.0: The third octet 45 AND 240 = 32. So the network is 172.16.32.0/20."
+      },
+      {
+        "id": "q3c-3",
+        "type": "multiple_choice",
+        "prompt": "What flag in the IPv4 header indicates that more fragments follow?",
+        "options": [
+          "DF (Don't Fragment)",
+          "MF (More Fragments)",
+          "RF (Reserved Fragment)",
+          "LF (Last Fragment)"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The MF (More Fragments) flag is set to 1 if additional fragments follow, and 0 for the last fragment."
+      },
+      {
+        "id": "q3c-4",
+        "type": "true_false",
+        "prompt": "IPv6 uses ARP for address resolution.",
+        "correctAnswer": false,
+        "explanation": "IPv6 uses Neighbor Discovery Protocol (NDP) with ICMPv6 Neighbor Solicitation/Advertisement instead of ARP."
+      },
+      {
+        "id": "q3c-5",
+        "type": "multiple_choice",
+        "prompt": "Which private address range provides the largest number of addresses?",
+        "options": [
+          "192.168.0.0/16",
+          "172.16.0.0/12",
+          "10.0.0.0/8",
+          "169.254.0.0/16"
+        ],
+        "correctAnswer": 2,
+        "explanation": "10.0.0.0/8 provides about 16.7 million addresses. 172.16.0.0/12 provides about 1 million, and 192.168.0.0/16 provides 65,536."
+      }
+    ]
+  },
+  {
+    "id": "cs302-quiz-4a",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-4",
+    "title": "Routing Algorithms - Fundamentals",
+    "questions": [
+      {
+        "id": "q4a-1",
+        "type": "multiple_choice",
+        "prompt": "What is the key difference between static and dynamic routing?",
+        "options": [
+          "Static routing is faster",
+          "Dynamic routing automatically adapts to network changes",
+          "Static routing uses more bandwidth",
+          "Dynamic routing requires manual configuration for each route"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Dynamic routing protocols automatically discover and adapt to network topology changes, while static routes must be manually configured."
+      },
+      {
+        "id": "q4a-2",
+        "type": "true_false",
+        "prompt": "Distance vector routing protocols share the complete network topology with neighbors.",
+        "correctAnswer": false,
+        "explanation": "Distance vector protocols share only their distance vectors (routing tables) with neighbors. Link state protocols share complete topology information."
+      },
+      {
+        "id": "q4a-3",
+        "type": "fill_blank",
+        "prompt": "The routing table entry that matches all destinations (0.0.0.0/0) is called the ____ route.",
+        "correctAnswer": "default",
+        "explanation": "The default route (0.0.0.0/0) matches any destination not specifically listed in the routing table and is typically used for Internet access."
+      },
+      {
+        "id": "q4a-4",
+        "type": "multiple_choice",
+        "prompt": "Which routing algorithm is used by RIP (Routing Information Protocol)?",
+        "options": [
+          "Link state",
+          "Distance vector",
+          "Path vector",
+          "Hierarchical"
+        ],
+        "correctAnswer": 1,
+        "explanation": "RIP uses the distance vector algorithm, where routers share their routing tables with neighbors and use hop count as the metric."
+      },
+      {
+        "id": "q4a-5",
+        "type": "multiple_choice",
+        "prompt": "What problem can occur in distance vector routing when a router learns about a route from a neighbor it sent it to?",
+        "options": [
+          "Route flapping",
+          "Count to infinity",
+          "Route poisoning",
+          "Split horizon"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Count to infinity occurs when routers continuously increment metrics as bad route information bounces between them."
+      }
+    ]
+  },
+  {
+    "id": "cs302-quiz-4b",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-4",
+    "title": "Routing Algorithms - Application",
+    "questions": [
+      {
+        "id": "q4b-1",
+        "type": "multiple_choice",
+        "prompt": "What algorithm does OSPF use to calculate shortest paths?",
+        "options": [
+          "Bellman-Ford",
+          "Dijkstra",
+          "Floyd-Warshall",
+          "A*"
+        ],
+        "correctAnswer": 1,
+        "explanation": "OSPF uses Dijkstra's algorithm to compute the shortest path tree from each router to all destinations in the network."
+      },
+      {
+        "id": "q4b-2",
+        "type": "true_false",
+        "prompt": "BGP is an Interior Gateway Protocol (IGP).",
+        "correctAnswer": false,
+        "explanation": "BGP (Border Gateway Protocol) is an Exterior Gateway Protocol (EGP) used for routing between autonomous systems (ASes) on the Internet."
+      },
+      {
+        "id": "q4b-3",
+        "type": "multiple_choice",
+        "prompt": "What is the maximum hop count in RIP before a network is considered unreachable?",
+        "options": [
+          "10",
+          "15",
+          "16",
+          "255"
+        ],
+        "correctAnswer": 2,
+        "explanation": "RIP uses hop count as its metric with a maximum of 15 hops. A hop count of 16 indicates an unreachable destination."
+      },
+      {
+        "id": "q4b-4",
+        "type": "fill_blank",
+        "prompt": "OSPF divides large networks into smaller ____ to reduce routing overhead.",
+        "correctAnswer": "areas",
+        "explanation": "OSPF uses areas to create a two-level hierarchy. All areas connect to area 0 (backbone), reducing the size of link-state databases."
+      },
+      {
+        "id": "q4b-5",
+        "type": "multiple_choice",
+        "prompt": "Which technique prevents routing loops in distance vector protocols by not advertising a route back to the router it was learned from?",
+        "options": [
+          "Route poisoning",
+          "Hold-down timers",
+          "Split horizon",
+          "Triggered updates"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Split horizon prevents routing loops by not advertising a route out of the interface through which it was learned."
+      }
+    ]
+  },
+  {
+    "id": "cs302-quiz-4c",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-4",
+    "title": "Routing Algorithms - Advanced",
+    "questions": [
+      {
+        "id": "q4c-1",
+        "type": "multiple_choice",
+        "prompt": "What type of protocol is BGP classified as?",
+        "options": [
+          "Distance vector",
+          "Link state",
+          "Path vector",
+          "Hybrid"
+        ],
+        "correctAnswer": 2,
+        "explanation": "BGP is a path vector protocol that maintains the complete AS path to each destination, preventing routing loops between autonomous systems."
+      },
+      {
+        "id": "q4c-2",
+        "type": "code_output",
+        "prompt": "In Dijkstra's algorithm, what is the shortest path cost from A to D?",
+        "codeSnippet": "Graph:\nA --2-- B --3-- D\nA --5-- C --1-- D\n\nPath A-B-D: 2+3 = 5\nPath A-C-D: 5+1 = 6",
+        "correctAnswer": "5",
+        "explanation": "The shortest path is A→B→D with cost 2+3=5, which is less than A→C→D with cost 5+1=6."
+      },
+      {
+        "id": "q4c-3",
+        "type": "true_false",
+        "prompt": "OSPF uses TCP as its transport protocol.",
+        "correctAnswer": false,
+        "explanation": "OSPF runs directly over IP (protocol number 89), not over TCP or UDP. It implements its own reliability mechanisms."
+      },
+      {
+        "id": "q4c-4",
+        "type": "multiple_choice",
+        "prompt": "What BGP attribute is used to influence outbound routing decisions?",
+        "options": [
+          "Local Preference",
+          "MED (Multi-Exit Discriminator)",
+          "AS Path",
+          "Origin"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Local Preference is used within an AS to prefer one exit point over another for outbound traffic. Higher values are preferred."
+      },
+      {
+        "id": "q4c-5",
+        "type": "fill_blank",
+        "prompt": "The OSPF backbone area is designated as area ____.",
+        "correctAnswer": "0",
+        "explanation": "Area 0 (or 0.0.0.0) is the OSPF backbone. All other areas must connect to area 0, either directly or through virtual links."
+      }
+    ]
+  },
+  {
+    "id": "cs302-quiz-5a",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-5",
+    "title": "Transport Layer - Fundamentals",
+    "questions": [
+      {
+        "id": "q5a-1",
+        "type": "multiple_choice",
+        "prompt": "Which transport protocol provides reliable, ordered delivery?",
+        "options": [
+          "UDP",
+          "TCP",
+          "IP",
+          "ICMP"
+        ],
+        "correctAnswer": 1,
+        "explanation": "TCP (Transmission Control Protocol) provides reliable, ordered delivery through acknowledgments, sequence numbers, and retransmission."
+      },
+      {
+        "id": "q5a-2",
+        "type": "true_false",
+        "prompt": "UDP provides flow control to prevent overwhelming the receiver.",
+        "correctAnswer": false,
+        "explanation": "UDP is connectionless and does not provide flow control. TCP provides flow control through the sliding window mechanism."
+      },
+      {
+        "id": "q5a-3",
+        "type": "fill_blank",
+        "prompt": "Port numbers in the range 0-1023 are called ____ ports.",
+        "correctAnswer": "well-known",
+        "explanation": "Well-known ports (0-1023) are reserved for standard services like HTTP (80), HTTPS (443), SSH (22), and DNS (53)."
+      },
+      {
+        "id": "q5a-4",
+        "type": "multiple_choice",
+        "prompt": "What is the standard port number for HTTP?",
+        "options": [
+          "21",
+          "22",
+          "80",
+          "443"
+        ],
+        "correctAnswer": 2,
+        "explanation": "HTTP uses port 80 by default. HTTPS uses 443, SSH uses 22, and FTP uses 20/21."
+      },
+      {
+        "id": "q5a-5",
+        "type": "multiple_choice",
+        "prompt": "How many bytes is the UDP header?",
+        "options": [
+          "4 bytes",
+          "8 bytes",
+          "16 bytes",
+          "20 bytes"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The UDP header is 8 bytes: source port (2), destination port (2), length (2), and checksum (2)."
+      }
+    ]
+  },
+  {
+    "id": "cs302-quiz-5b",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-5",
+    "title": "Transport Layer - Application",
+    "questions": [
+      {
+        "id": "q5b-1",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of the TCP three-way handshake?",
+        "options": [
+          "To encrypt the connection",
+          "To establish a connection and synchronize sequence numbers",
+          "To negotiate compression",
+          "To verify user authentication"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The TCP three-way handshake (SYN, SYN-ACK, ACK) establishes a connection and allows both sides to synchronize sequence numbers."
+      },
+      {
+        "id": "q5b-2",
+        "type": "code_output",
+        "prompt": "What is the sequence of TCP flags in a three-way handshake?",
+        "codeSnippet": "Client → Server: ?\nServer → Client: ?\nClient → Server: ?",
+        "correctAnswer": "SYN, SYN-ACK, ACK",
+        "explanation": "The three-way handshake: Client sends SYN, Server responds with SYN-ACK, Client sends ACK."
+      },
+      {
+        "id": "q5b-3",
+        "type": "true_false",
+        "prompt": "TCP sequence numbers start at 0 for every connection.",
+        "correctAnswer": false,
+        "explanation": "TCP uses a random Initial Sequence Number (ISN) to prevent sequence prediction attacks and conflicts with old connections."
+      },
+      {
+        "id": "q5b-4",
+        "type": "multiple_choice",
+        "prompt": "What TCP flag is used to gracefully close a connection?",
+        "options": [
+          "SYN",
+          "ACK",
+          "FIN",
+          "RST"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The FIN (Finish) flag is used for graceful connection termination. RST is used for immediate, abrupt termination."
+      },
+      {
+        "id": "q5b-5",
+        "type": "fill_blank",
+        "prompt": "TCP congestion control starts with ____ start, then switches to congestion avoidance.",
+        "correctAnswer": "slow",
+        "explanation": "TCP slow start begins with a small congestion window and doubles it each RTT until reaching the slow start threshold (ssthresh)."
+      }
+    ]
+  },
+  {
+    "id": "cs302-quiz-5c",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-5",
+    "title": "Transport Layer - Advanced",
+    "questions": [
+      {
+        "id": "q5c-1",
+        "type": "multiple_choice",
+        "prompt": "What does the TCP receive window field control?",
+        "options": [
+          "Congestion control",
+          "Flow control",
+          "Error detection",
+          "Routing"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The receive window advertises how much buffer space is available, implementing flow control to prevent the sender from overwhelming the receiver."
+      },
+      {
+        "id": "q5c-2",
+        "type": "multiple_choice",
+        "prompt": "Which TCP congestion control algorithm uses packet loss as a signal of congestion?",
+        "options": [
+          "TCP Tahoe",
+          "TCP Vegas",
+          "DCTCP",
+          "All of the above"
+        ],
+        "correctAnswer": 0,
+        "explanation": "TCP Tahoe (and Reno) use packet loss as the primary congestion signal. TCP Vegas uses RTT changes, and DCTCP uses ECN marking."
+      },
+      {
+        "id": "q5c-3",
+        "type": "true_false",
+        "prompt": "Nagle's algorithm combines small TCP segments to reduce overhead.",
+        "correctAnswer": true,
+        "explanation": "Nagle's algorithm delays sending small segments when there is unacknowledged data, improving efficiency but potentially increasing latency."
+      },
+      {
+        "id": "q5c-4",
+        "type": "code_output",
+        "prompt": "If TCP's congestion window is 4 segments and loss occurs, what is the new ssthresh under TCP Reno?",
+        "codeSnippet": "Congestion window (cwnd) = 4\nPacket loss detected\nNew ssthresh = cwnd / 2",
+        "correctAnswer": "2",
+        "explanation": "When loss is detected, TCP Reno sets ssthresh to half the current congestion window. 4 / 2 = 2 segments."
+      },
+      {
+        "id": "q5c-5",
+        "type": "multiple_choice",
+        "prompt": "What problem does TCP Fast Retransmit address?",
+        "options": [
+          "Slow connection establishment",
+          "Waiting for timeout before retransmitting",
+          "Large receive windows",
+          "DNS resolution delays"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Fast Retransmit triggers retransmission after receiving 3 duplicate ACKs, instead of waiting for the retransmission timeout."
+      }
+    ]
+  },
+  {
+    "id": "cs302-quiz-6a",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-6",
+    "title": "Socket Programming - Fundamentals",
+    "questions": [
+      {
+        "id": "q6a-1",
+        "type": "multiple_choice",
+        "prompt": "What is a socket?",
+        "options": [
+          "A physical network connector",
+          "An endpoint for network communication",
+          "A type of cable",
+          "A routing protocol"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A socket is an endpoint for network communication, identified by an IP address and port number combination."
+      },
+      {
+        "id": "q6a-2",
+        "type": "fill_blank",
+        "prompt": "The socket type SOCK_STREAM is used for ____ connections.",
+        "correctAnswer": "tcp",
+        "explanation": "SOCK_STREAM creates a TCP socket for reliable, stream-oriented connections. SOCK_DGRAM is used for UDP datagrams."
+      },
+      {
+        "id": "q6a-3",
+        "type": "true_false",
+        "prompt": "A server must call connect() before accepting client connections.",
+        "correctAnswer": false,
+        "explanation": "A TCP server calls bind() and listen(), then accept(). The connect() call is used by clients to connect to servers."
+      },
+      {
+        "id": "q6a-4",
+        "type": "multiple_choice",
+        "prompt": "Which socket function is used by a server to wait for incoming connections?",
+        "options": [
+          "bind()",
+          "listen()",
+          "accept()",
+          "connect()"
+        ],
+        "correctAnswer": 2,
+        "explanation": "accept() blocks until a client connects, then returns a new socket for that specific connection. listen() just enables incoming connections."
+      },
+      {
+        "id": "q6a-5",
+        "type": "multiple_choice",
+        "prompt": "What does the bind() function do?",
+        "options": [
+          "Connects to a remote server",
+          "Associates a socket with a local address and port",
+          "Sends data to a remote host",
+          "Closes a socket"
+        ],
+        "correctAnswer": 1,
+        "explanation": "bind() associates a socket with a specific local IP address and port number, required for servers to listen on a specific port."
+      }
+    ]
+  },
+  {
+    "id": "cs302-quiz-6b",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-6",
+    "title": "Socket Programming - Application",
+    "questions": [
+      {
+        "id": "q6b-1",
+        "type": "code_output",
+        "prompt": "What is the correct order of socket calls for a TCP server?",
+        "codeSnippet": "A: accept()\nB: bind()\nC: listen()\nD: socket()",
+        "correctAnswer": "D, B, C, A",
+        "explanation": "TCP server sequence: socket() creates socket, bind() assigns address, listen() enables connections, accept() waits for clients."
+      },
+      {
+        "id": "q6b-2",
+        "type": "multiple_choice",
+        "prompt": "Which function is used to convert a hostname to an IP address?",
+        "options": [
+          "socket()",
+          "gethostbyname()",
+          "bind()",
+          "inet_aton()"
+        ],
+        "correctAnswer": 1,
+        "explanation": "gethostbyname() (or the modern getaddrinfo()) performs DNS lookup to resolve a hostname to an IP address."
+      },
+      {
+        "id": "q6b-3",
+        "type": "true_false",
+        "prompt": "UDP sockets require a listen() call before receiving data.",
+        "correctAnswer": false,
+        "explanation": "UDP is connectionless. After bind(), a UDP server can immediately call recvfrom(). No listen() or accept() is needed."
+      },
+      {
+        "id": "q6b-4",
+        "type": "multiple_choice",
+        "prompt": "What does the select() function do in socket programming?",
+        "options": [
+          "Selects the best route",
+          "Monitors multiple sockets for activity",
+          "Selects TCP or UDP protocol",
+          "Selects the server to connect to"
+        ],
+        "correctAnswer": 1,
+        "explanation": "select() monitors multiple file descriptors (sockets) to see if they are ready for I/O, enabling single-threaded handling of multiple connections."
+      },
+      {
+        "id": "q6b-5",
+        "type": "fill_blank",
+        "prompt": "The ____ option allows a socket to be reused immediately after closing.",
+        "correctAnswer": "so_reuseaddr",
+        "explanation": "SO_REUSEADDR allows binding to a port that is in TIME_WAIT state, useful for servers that need to restart quickly."
+      }
+    ]
+  },
+  {
+    "id": "cs302-quiz-6c",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-6",
+    "title": "Socket Programming - Advanced",
+    "questions": [
+      {
+        "id": "q6c-1",
+        "type": "multiple_choice",
+        "prompt": "What is the advantage of using non-blocking sockets?",
+        "options": [
+          "They are faster",
+          "The process can do other work while waiting for I/O",
+          "They use less memory",
+          "They encrypt data automatically"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Non-blocking sockets return immediately if I/O cannot complete, allowing the program to handle other tasks or multiple connections."
+      },
+      {
+        "id": "q6c-2",
+        "type": "true_false",
+        "prompt": "epoll is more scalable than select for large numbers of connections.",
+        "correctAnswer": true,
+        "explanation": "epoll (Linux) provides O(1) performance regardless of the number of monitored descriptors, while select is O(n)."
+      },
+      {
+        "id": "q6c-3",
+        "type": "multiple_choice",
+        "prompt": "What approach does a multi-threaded server use to handle concurrent connections?",
+        "options": [
+          "Fork a new process for each connection",
+          "Create a new thread for each connection",
+          "Use select() to multiplex",
+          "Queue connections for sequential processing"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A multi-threaded server spawns a new thread (or uses a thread pool) for each connection, allowing parallel request handling."
+      },
+      {
+        "id": "q6c-4",
+        "type": "fill_blank",
+        "prompt": "The socket option ____ disables Nagle's algorithm for low-latency applications.",
+        "correctAnswer": "tcp_nodelay",
+        "explanation": "TCP_NODELAY disables Nagle's algorithm, sending small packets immediately without waiting, useful for interactive applications."
+      },
+      {
+        "id": "q6c-5",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of TLS in socket programming?",
+        "options": [
+          "Improve connection speed",
+          "Reduce packet size",
+          "Provide encryption and authentication",
+          "Enable multicast"
+        ],
+        "correctAnswer": 2,
+        "explanation": "TLS (Transport Layer Security) provides encryption for confidentiality and certificates for authentication over socket connections."
+      }
+    ]
+  },
+  {
+    "id": "cs302-quiz-7a",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-7",
+    "title": "Application Layer - Fundamentals",
+    "questions": [
+      {
+        "id": "q7a-1",
+        "type": "multiple_choice",
+        "prompt": "What protocol does DNS use primarily?",
+        "options": [
+          "TCP only",
+          "UDP only",
+          "UDP primarily, TCP for large responses",
+          "Neither"
+        ],
+        "correctAnswer": 2,
+        "explanation": "DNS uses UDP (port 53) for most queries but falls back to TCP for responses larger than 512 bytes or for zone transfers."
+      },
+      {
+        "id": "q7a-2",
+        "type": "fill_blank",
+        "prompt": "HTTP status code ____ means \"Not Found\".",
+        "correctAnswer": "404",
+        "explanation": "404 Not Found indicates the requested resource does not exist. 200 is OK, 500 is Internal Server Error, 301 is Moved Permanently."
+      },
+      {
+        "id": "q7a-3",
+        "type": "true_false",
+        "prompt": "HTTPS uses the same default port as HTTP.",
+        "correctAnswer": false,
+        "explanation": "HTTP uses port 80 by default, while HTTPS uses port 443. HTTPS adds TLS encryption for secure communication."
+      },
+      {
+        "id": "q7a-4",
+        "type": "multiple_choice",
+        "prompt": "Which protocol is used for sending email?",
+        "options": [
+          "POP3",
+          "IMAP",
+          "SMTP",
+          "FTP"
+        ],
+        "correctAnswer": 2,
+        "explanation": "SMTP (Simple Mail Transfer Protocol) is used for sending email. POP3 and IMAP are used for retrieving email from a server."
+      },
+      {
+        "id": "q7a-5",
+        "type": "multiple_choice",
+        "prompt": "What type of DNS record maps a hostname to an IPv4 address?",
+        "options": [
+          "MX",
+          "CNAME",
+          "A",
+          "AAAA"
+        ],
+        "correctAnswer": 2,
+        "explanation": "An A record maps a hostname to an IPv4 address. AAAA is for IPv6, MX is for mail servers, and CNAME is an alias."
+      }
+    ]
+  },
+  {
+    "id": "cs302-quiz-7b",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-7",
+    "title": "Application Layer - Application",
+    "questions": [
+      {
+        "id": "q7b-1",
+        "type": "multiple_choice",
+        "prompt": "Which HTTP method is used to submit data to a server?",
+        "options": [
+          "GET",
+          "POST",
+          "HEAD",
+          "OPTIONS"
+        ],
+        "correctAnswer": 1,
+        "explanation": "POST is used to submit data to a server (e.g., form data). GET retrieves data and includes parameters in the URL."
+      },
+      {
+        "id": "q7b-2",
+        "type": "code_output",
+        "prompt": "What HTTP version introduced persistent connections by default?",
+        "codeSnippet": "HTTP/1.0: Connection: close (default)\nHTTP/1.1: Connection: keep-alive (default)",
+        "correctAnswer": "HTTP/1.1",
+        "explanation": "HTTP/1.1 made persistent connections the default, reducing the overhead of establishing new TCP connections for each request."
+      },
+      {
+        "id": "q7b-3",
+        "type": "true_false",
+        "prompt": "WebSockets use a completely different protocol from HTTP for the initial connection.",
+        "correctAnswer": false,
+        "explanation": "WebSockets start with an HTTP upgrade request. The connection is then upgraded to the WebSocket protocol for bidirectional communication."
+      },
+      {
+        "id": "q7b-4",
+        "type": "fill_blank",
+        "prompt": "DNS uses a ____ structure where each level is separated by a dot.",
+        "correctAnswer": "hierarchical",
+        "explanation": "DNS uses a hierarchical structure (e.g., www.example.com) with root servers at the top, followed by TLDs, then domain names."
+      },
+      {
+        "id": "q7b-5",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of the SSH protocol?",
+        "options": [
+          "File transfer only",
+          "Secure remote login and command execution",
+          "Email encryption",
+          "Web browsing"
+        ],
+        "correctAnswer": 1,
+        "explanation": "SSH (Secure Shell) provides encrypted remote login, command execution, and can tunnel other protocols securely."
+      }
+    ]
+  },
+  {
+    "id": "cs302-quiz-7c",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-7",
+    "title": "Application Layer - Advanced",
+    "questions": [
+      {
+        "id": "q7c-1",
+        "type": "multiple_choice",
+        "prompt": "What does TLS provide in HTTPS connections?",
+        "options": [
+          "Only encryption",
+          "Only authentication",
+          "Encryption, authentication, and integrity",
+          "Compression and caching"
+        ],
+        "correctAnswer": 2,
+        "explanation": "TLS provides confidentiality (encryption), authentication (certificates), and integrity (MAC) for secure communication."
+      },
+      {
+        "id": "q7c-2",
+        "type": "multiple_choice",
+        "prompt": "What security mechanism prevents an attacker from reusing captured authentication tokens?",
+        "options": [
+          "Encryption",
+          "Replay attack prevention (nonces/timestamps)",
+          "Compression",
+          "Keep-alive"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Nonces (numbers used once) and timestamps prevent replay attacks by ensuring each request is unique and time-limited."
+      },
+      {
+        "id": "q7c-3",
+        "type": "true_false",
+        "prompt": "HTTP/2 uses multiple TCP connections for parallel requests.",
+        "correctAnswer": false,
+        "explanation": "HTTP/2 uses a single TCP connection with multiplexing to handle multiple concurrent request/response streams."
+      },
+      {
+        "id": "q7c-4",
+        "type": "fill_blank",
+        "prompt": "DNSSEC adds ____ signatures to DNS records to prevent spoofing.",
+        "correctAnswer": "digital",
+        "explanation": "DNSSEC uses digital signatures (cryptographic) to verify the authenticity of DNS responses, preventing DNS spoofing attacks."
+      },
+      {
+        "id": "q7c-5",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of the HTTP CORS mechanism?",
+        "options": [
+          "Compress HTTP responses",
+          "Allow cross-origin requests in browsers",
+          "Cache DNS responses",
+          "Encrypt HTTP traffic"
+        ],
+        "correctAnswer": 1,
+        "explanation": "CORS (Cross-Origin Resource Sharing) allows servers to specify which origins can access resources, enabling safe cross-origin requests in browsers."
+      }
+    ]
+  }
+]

@@ -1,13 +1,22 @@
-import { cs401Topics } from './topics';
-import { cs401Quizzes } from './quizzes';
-import { cs401Exercises } from './exercises';
-import { cs401Exams } from './exams';
-import { cs401Projects } from './projects';
+/**
+ * CS401 Subject Data
+ *
+ * This file imports assessment data from JSON files and re-exports
+ * with proper TypeScript types. Topics are still loaded from topics.ts
+ * which handles the markdown content imports.
+ */
 
-export {
-  cs401Topics,
-  cs401Quizzes,
-  cs401Exercises,
-  cs401Exams,
-  cs401Projects
-};
+import type { Quiz, Exam, Project, Exercise } from '../../../core/types';
+
+import quizzesData from './quizzes.json';
+import examsData from './exams.json';
+import projectsData from './projects.json';
+import exercisesData from './exercises.json';
+
+export const cs401Quizzes = quizzesData as Quiz[];
+export const cs401Exams = examsData as Exam[];
+export const cs401Projects = projectsData as Project[];
+export const cs401Exercises = exercisesData as Exercise[];
+
+// Topics still use TypeScript for Vite's ?raw markdown imports
+export { cs401Topics } from './topics';

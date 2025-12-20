@@ -1,8 +1,22 @@
-import { Topic, Quiz, CodingExercise, Project, Exam } from '../../../core/types';
-import { cs303Topics } from './topics';
-import { cs303Quizzes } from './quizzes';
-import { cs303Exercises } from './exercises';
-import { cs303Projects } from './projects';
-import { cs303Exams } from './exams';
+/**
+ * CS303 Subject Data
+ *
+ * This file imports assessment data from JSON files and re-exports
+ * with proper TypeScript types. Topics are still loaded from topics.ts
+ * which handles the markdown content imports.
+ */
 
-export { cs303Topics, cs303Quizzes, cs303Exercises, cs303Projects, cs303Exams };
+import type { Quiz, Exam, Project, Exercise } from '../../../core/types';
+
+import quizzesData from './quizzes.json';
+import examsData from './exams.json';
+import projectsData from './projects.json';
+import exercisesData from './exercises.json';
+
+export const cs303Quizzes = quizzesData as Quiz[];
+export const cs303Exams = examsData as Exam[];
+export const cs303Projects = projectsData as Project[];
+export const cs303Exercises = exercisesData as Exercise[];
+
+// Topics still use TypeScript for Vite's ?raw markdown imports
+export { cs303Topics } from './topics';

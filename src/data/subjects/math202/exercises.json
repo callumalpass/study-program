@@ -1,0 +1,1620 @@
+[
+  {
+    "id": "math202-t1-ex01",
+    "subjectId": "math202",
+    "topicId": "math202-1",
+    "type": "written",
+    "title": "Basic Probability Calculation",
+    "description": "A standard deck of 52 cards is shuffled. What is the probability of drawing a heart or a face card (Jack, Queen, or King)?",
+    "difficulty": 1,
+    "hints": [
+      "Use the addition rule: P(A ∪ B) = P(A) + P(B) - P(A ∩ B)",
+      "Count hearts: 13 cards",
+      "Count face cards: 12 cards (3 per suit)",
+      "Count cards that are both hearts and face cards: 3"
+    ],
+    "solution": "P(Heart or Face) = P(Heart) + P(Face) - P(Heart and Face)\n= 13/52 + 12/52 - 3/52\n= 22/52 = 11/26 ≈ 0.423"
+  },
+  {
+    "id": "math202-t1-ex02",
+    "subjectId": "math202",
+    "topicId": "math202-1",
+    "type": "written",
+    "title": "Conditional Probability",
+    "description": "In a class of 30 students, 18 are taking mathematics, 12 are taking physics, and 8 are taking both. If a student is randomly selected and is taking mathematics, what is the probability they are also taking physics?",
+    "difficulty": 2,
+    "hints": [
+      "This is asking for P(Physics | Mathematics)",
+      "Use the formula P(A|B) = P(A ∩ B) / P(B)",
+      "P(Both) = 8/30, P(Math) = 18/30"
+    ],
+    "solution": "P(Physics | Math) = P(Physics and Math) / P(Math)\n= (8/30) / (18/30)\n= 8/18 = 4/9 ≈ 0.444"
+  },
+  {
+    "id": "math202-t1-ex03",
+    "subjectId": "math202",
+    "topicId": "math202-1",
+    "type": "written",
+    "title": "Independence Test",
+    "description": "Events A and B have P(A) = 0.3, P(B) = 0.4, and P(A ∩ B) = 0.12. Are events A and B independent? Justify your answer.",
+    "difficulty": 2,
+    "hints": [
+      "Events are independent if P(A ∩ B) = P(A) × P(B)",
+      "Calculate P(A) × P(B) and compare to P(A ∩ B)"
+    ],
+    "solution": "Check if P(A ∩ B) = P(A) × P(B):\nP(A) × P(B) = 0.3 × 0.4 = 0.12\nP(A ∩ B) = 0.12\n\nSince P(A ∩ B) = P(A) × P(B), events A and B are independent."
+  },
+  {
+    "id": "math202-t1-ex04",
+    "subjectId": "math202",
+    "topicId": "math202-1",
+    "type": "written",
+    "title": "Bayes' Theorem Application",
+    "description": "A diagnostic test for a disease is 98% accurate for people with the disease (sensitivity) and 95% accurate for people without it (specificity). If 2% of the population has the disease, what is the probability that a person who tests positive actually has the disease?",
+    "difficulty": 3,
+    "hints": [
+      "Let D = has disease, T+ = tests positive",
+      "We want P(D | T+)",
+      "Use Bayes' theorem: P(D|T+) = P(T+|D)P(D) / P(T+)",
+      "P(T+) = P(T+|D)P(D) + P(T+|not D)P(not D)"
+    ],
+    "solution": "Given: P(D) = 0.02, P(T+|D) = 0.98, P(T-|not D) = 0.95, so P(T+|not D) = 0.05\n\nP(T+) = P(T+|D)P(D) + P(T+|not D)P(not D)\n= 0.98(0.02) + 0.05(0.98)\n= 0.0196 + 0.049 = 0.0686\n\nP(D|T+) = P(T+|D)P(D) / P(T+)\n= 0.98(0.02) / 0.0686\n= 0.0196 / 0.0686 ≈ 0.286 or 28.6%"
+  },
+  {
+    "id": "math202-t1-ex05",
+    "subjectId": "math202",
+    "topicId": "math202-1",
+    "type": "written",
+    "title": "Permutations",
+    "description": "How many different ways can 5 books be arranged on a shelf? If 2 specific books must be next to each other, how many arrangements are possible?",
+    "difficulty": 2,
+    "hints": [
+      "Part 1: This is a permutation of 5 objects",
+      "Part 2: Treat the 2 books as a single unit, then multiply by arrangements within that unit"
+    ],
+    "solution": "Part 1: Number of arrangements = 5! = 120\n\nPart 2: Treat 2 specific books as one unit. We have 4 units to arrange: 4! = 24\nThe 2 books within the unit can be arranged 2! = 2 ways\nTotal arrangements = 4! × 2! = 24 × 2 = 48"
+  },
+  {
+    "id": "math202-t1-ex06",
+    "subjectId": "math202",
+    "topicId": "math202-1",
+    "type": "written",
+    "title": "Combinations",
+    "description": "A committee of 5 people is to be selected from a group of 12 people. How many different committees can be formed? If the group consists of 7 men and 5 women, how many committees have exactly 3 women?",
+    "difficulty": 2,
+    "hints": [
+      "Part 1: Use combinations C(12, 5)",
+      "Part 2: Choose 3 women from 5 and 2 men from 7"
+    ],
+    "solution": "Part 1: C(12, 5) = 12!/(5!7!) = (12×11×10×9×8)/(5×4×3×2×1) = 792\n\nPart 2: Choose 3 women from 5: C(5, 3) = 10\nChoose 2 men from 7: C(7, 2) = 21\nTotal committees = 10 × 21 = 210"
+  },
+  {
+    "id": "math202-t1-ex07",
+    "subjectId": "math202",
+    "topicId": "math202-1",
+    "type": "written",
+    "title": "Complement Rule",
+    "description": "A quality control inspector examines 10 items from a production line. If the probability that any single item is defective is 0.05, what is the probability that at least one item is defective?",
+    "difficulty": 2,
+    "hints": [
+      "Use the complement: P(at least one) = 1 - P(none)",
+      "P(none defective) = P(all 10 are good)",
+      "Assume independence"
+    ],
+    "solution": "P(item is good) = 1 - 0.05 = 0.95\nP(all 10 items are good) = (0.95)^10 ≈ 0.5987\nP(at least one defective) = 1 - 0.5987 ≈ 0.4013 or 40.13%"
+  },
+  {
+    "id": "math202-t1-ex08",
+    "subjectId": "math202",
+    "topicId": "math202-1",
+    "type": "written",
+    "title": "Law of Total Probability",
+    "description": "Three machines A, B, and C produce 40%, 35%, and 25% of total output respectively. The defective rates are 2%, 3%, and 4% respectively. What is the probability that a randomly selected item is defective?",
+    "difficulty": 3,
+    "hints": [
+      "Use law of total probability: P(D) = Σ P(D|Mᵢ)P(Mᵢ)",
+      "Sum over all three machines"
+    ],
+    "solution": "P(Defective) = P(D|A)P(A) + P(D|B)P(B) + P(D|C)P(C)\n= 0.02(0.40) + 0.03(0.35) + 0.04(0.25)\n= 0.008 + 0.0105 + 0.01\n= 0.0285 or 2.85%"
+  },
+  {
+    "id": "math202-t1-ex09",
+    "subjectId": "math202",
+    "topicId": "math202-1",
+    "type": "written",
+    "title": "Multiplication Rule for Independent Events",
+    "description": "A fair coin is flipped 4 times. What is the probability of getting exactly 2 heads? What is the probability of getting at least 3 heads?",
+    "difficulty": 2,
+    "hints": [
+      "For exactly 2 heads: use combinations to count favorable outcomes",
+      "For at least 3 heads: P(3 heads) + P(4 heads)"
+    ],
+    "solution": "Exactly 2 heads:\nNumber of ways to choose 2 positions for heads: C(4,2) = 6\nP(exactly 2 heads) = C(4,2) × (1/2)^4 = 6/16 = 3/8 = 0.375\n\nAt least 3 heads:\nP(3 heads) = C(4,3) × (1/2)^4 = 4/16\nP(4 heads) = C(4,4) × (1/2)^4 = 1/16\nP(at least 3 heads) = 4/16 + 1/16 = 5/16 = 0.3125"
+  },
+  {
+    "id": "math202-t1-ex10",
+    "subjectId": "math202",
+    "topicId": "math202-1",
+    "type": "written",
+    "title": "Mutually Exclusive Events",
+    "description": "A single die is rolled. Let A be the event of rolling an even number, and B be the event of rolling a number less than 3. Find P(A ∪ B) and determine if A and B are mutually exclusive.",
+    "difficulty": 1,
+    "hints": [
+      "List outcomes for each event",
+      "Events are mutually exclusive if they cannot both occur"
+    ],
+    "solution": "A = {2, 4, 6}, so P(A) = 3/6 = 1/2\nB = {1, 2}, so P(B) = 2/6 = 1/3\nA ∩ B = {2}, so P(A ∩ B) = 1/6\n\nP(A ∪ B) = P(A) + P(B) - P(A ∩ B) = 1/2 + 1/3 - 1/6 = 3/6 + 2/6 - 1/6 = 4/6 = 2/3\n\nA and B are NOT mutually exclusive because A ∩ B ≠ ∅ (they share outcome 2)."
+  },
+  {
+    "id": "math202-t1-ex11",
+    "subjectId": "math202",
+    "topicId": "math202-1",
+    "type": "written",
+    "title": "Conditional Probability Chain",
+    "description": "An urn contains 5 red balls and 3 blue balls. Two balls are drawn without replacement. What is the probability that both balls are red?",
+    "difficulty": 2,
+    "hints": [
+      "P(both red) = P(1st red) × P(2nd red | 1st red)",
+      "After drawing first red ball, there are 4 red and 3 blue left"
+    ],
+    "solution": "P(1st ball red) = 5/8\nP(2nd ball red | 1st red) = 4/7 (4 red left out of 7 total)\nP(both red) = (5/8) × (4/7) = 20/56 = 5/14 ≈ 0.357"
+  },
+  {
+    "id": "math202-t1-ex12",
+    "subjectId": "math202",
+    "topicId": "math202-1",
+    "type": "written",
+    "title": "Birthday Problem",
+    "description": "In a group of 23 people, what is the probability that at least two people share the same birthday? (Assume 365 days in a year and ignore leap years)",
+    "difficulty": 4,
+    "hints": [
+      "Use the complement: P(at least one match) = 1 - P(all different)",
+      "P(all different) = (365/365) × (364/365) × (363/365) × ..."
+    ],
+    "solution": "P(all different birthdays) = (365/365) × (364/365) × (363/365) × ... × (343/365)\n= 365!/(342! × 365^23)\n≈ 0.493\n\nP(at least one match) = 1 - 0.493 ≈ 0.507 or 50.7%"
+  },
+  {
+    "id": "math202-t1-ex13",
+    "subjectId": "math202",
+    "topicId": "math202-1",
+    "type": "written",
+    "title": "Probability Tree",
+    "description": "A student has a 70% chance of attending class. If they attend, they have an 80% chance of passing the exam. If they don't attend, they have only a 40% chance of passing. What is the probability the student passes the exam?",
+    "difficulty": 2,
+    "hints": [
+      "Draw a probability tree",
+      "Use law of total probability",
+      "P(Pass) = P(Pass|Attend)P(Attend) + P(Pass|Not attend)P(Not attend)"
+    ],
+    "solution": "P(Pass) = P(Pass|Attend)P(Attend) + P(Pass|Not attend)P(Not attend)\n= 0.80(0.70) + 0.40(0.30)\n= 0.56 + 0.12\n= 0.68 or 68%"
+  },
+  {
+    "id": "math202-t1-ex14",
+    "subjectId": "math202",
+    "topicId": "math202-1",
+    "type": "written",
+    "title": "Advanced Bayes' Theorem",
+    "description": "Three boxes contain red and white balls. Box 1: 3 red, 2 white. Box 2: 2 red, 3 white. Box 3: 4 red, 1 white. A box is chosen at random and a ball is drawn. If the ball is red, what is the probability it came from Box 3?",
+    "difficulty": 4,
+    "hints": [
+      "Use Bayes' theorem: P(Box 3|Red) = P(Red|Box 3)P(Box 3) / P(Red)",
+      "Find P(Red) using law of total probability",
+      "Each box has probability 1/3 of being chosen"
+    ],
+    "solution": "P(Box i) = 1/3 for each box\nP(Red|Box 1) = 3/5, P(Red|Box 2) = 2/5, P(Red|Box 3) = 4/5\n\nP(Red) = P(Red|B1)P(B1) + P(Red|B2)P(B2) + P(Red|B3)P(B3)\n= (3/5)(1/3) + (2/5)(1/3) + (4/5)(1/3)\n= (3 + 2 + 4)/(15) = 9/15 = 3/5\n\nP(Box 3|Red) = P(Red|Box 3)P(Box 3) / P(Red)\n= (4/5)(1/3) / (3/5)\n= (4/15) / (3/5) = (4/15) × (5/3) = 20/45 = 4/9 ≈ 0.444"
+  },
+  {
+    "id": "math202-t1-ex15",
+    "subjectId": "math202",
+    "topicId": "math202-1",
+    "type": "written",
+    "title": "Partitions and Permutations",
+    "description": "How many ways can the letters in the word \"STATISTICS\" be arranged?",
+    "difficulty": 3,
+    "hints": [
+      "Count total letters: 10",
+      "Account for repeated letters: S appears 3 times, T appears 3 times, I appears 2 times",
+      "Use the formula: n! / (n₁! × n₂! × ... × nₖ!)"
+    ],
+    "solution": "Total letters: 10\nS appears 3 times, T appears 3 times, I appears 2 times, A appears 1 time, C appears 1 time\n\nNumber of arrangements = 10! / (3! × 3! × 2! × 1! × 1!)\n= 3,628,800 / (6 × 6 × 2 × 1 × 1)\n= 3,628,800 / 72\n= 50,400"
+  },
+  {
+    "id": "math202-t1-ex16",
+    "subjectId": "math202",
+    "topicId": "math202-1",
+    "type": "written",
+    "title": "Probability Axioms Challenge",
+    "description": "Prove that for any two events A and B, P(A ∪ B) ≤ P(A) + P(B). When does equality hold?",
+    "difficulty": 5,
+    "hints": [
+      "Use the addition rule: P(A ∪ B) = P(A) + P(B) - P(A ∩ B)",
+      "Consider the range of P(A ∩ B)"
+    ],
+    "solution": "From the addition rule:\nP(A ∪ B) = P(A) + P(B) - P(A ∩ B)\n\nSince P(A ∩ B) ≥ 0 (probabilities are non-negative):\nP(A ∪ B) = P(A) + P(B) - P(A ∩ B) ≤ P(A) + P(B)\n\nEquality holds when P(A ∩ B) = 0, i.e., when A and B are mutually exclusive events.\n\nThis inequality is known as Boole's inequality or the union bound."
+  },
+  {
+    "id": "math202-t2-ex01",
+    "subjectId": "math202",
+    "topicId": "math202-2",
+    "type": "written",
+    "title": "Discrete Random Variable PMF",
+    "description": "A discrete random variable X has the probability distribution: P(X=0)=0.1, P(X=1)=0.3, P(X=2)=0.4, P(X=3)=0.2. Verify this is a valid PMF and find P(X ≥ 2).",
+    "difficulty": 1,
+    "hints": [
+      "For a valid PMF, all probabilities must be non-negative and sum to 1",
+      "P(X ≥ 2) = P(X=2) + P(X=3)"
+    ],
+    "solution": "Check validity: All probabilities are ≥ 0\nSum: 0.1 + 0.3 + 0.4 + 0.2 = 1.0 ✓\nThis is a valid PMF.\n\nP(X ≥ 2) = P(X=2) + P(X=3) = 0.4 + 0.2 = 0.6"
+  },
+  {
+    "id": "math202-t2-ex02",
+    "subjectId": "math202",
+    "topicId": "math202-2",
+    "type": "written",
+    "title": "Expected Value Calculation",
+    "description": "For the random variable X with distribution: P(X=-1)=0.2, P(X=0)=0.5, P(X=2)=0.3, calculate E[X] and E[X²].",
+    "difficulty": 2,
+    "hints": [
+      "E[X] = Σ x·P(X=x)",
+      "E[X²] = Σ x²·P(X=x)"
+    ],
+    "solution": "E[X] = (-1)(0.2) + (0)(0.5) + (2)(0.3)\n= -0.2 + 0 + 0.6 = 0.4\n\nE[X²] = (-1)²(0.2) + (0)²(0.5) + (2)²(0.3)\n= 1(0.2) + 0 + 4(0.3)\n= 0.2 + 0 + 1.2 = 1.4"
+  },
+  {
+    "id": "math202-t2-ex03",
+    "subjectId": "math202",
+    "topicId": "math202-2",
+    "type": "written",
+    "title": "Variance Calculation",
+    "description": "Given E[X] = 3 and E[X²] = 11, find Var(X) and the standard deviation σ.",
+    "difficulty": 2,
+    "hints": [
+      "Var(X) = E[X²] - (E[X])²",
+      "σ = √Var(X)"
+    ],
+    "solution": "Var(X) = E[X²] - (E[X])²\n= 11 - 3²\n= 11 - 9 = 2\n\nStandard deviation σ = √Var(X) = √2 ≈ 1.414"
+  },
+  {
+    "id": "math202-t2-ex04",
+    "subjectId": "math202",
+    "topicId": "math202-2",
+    "type": "written",
+    "title": "Linear Transformation of Random Variables",
+    "description": "If X has E[X] = 10 and Var(X) = 4, find E[Y] and Var(Y) where Y = 3X + 5.",
+    "difficulty": 2,
+    "hints": [
+      "E[aX + b] = aE[X] + b",
+      "Var(aX + b) = a²Var(X)"
+    ],
+    "solution": "E[Y] = E[3X + 5] = 3E[X] + 5 = 3(10) + 5 = 35\n\nVar(Y) = Var(3X + 5) = 3²Var(X) = 9(4) = 36"
+  },
+  {
+    "id": "math202-t2-ex05",
+    "subjectId": "math202",
+    "topicId": "math202-2",
+    "type": "written",
+    "title": "PDF Integration",
+    "description": "A continuous random variable X has PDF f(x) = 2x for 0 ≤ x ≤ 1, and 0 otherwise. Find P(X ≤ 0.5).",
+    "difficulty": 2,
+    "hints": [
+      "P(X ≤ a) = ∫₀ᵃ f(x)dx",
+      "Integrate 2x from 0 to 0.5"
+    ],
+    "solution": "P(X ≤ 0.5) = ∫₀^0.5 2x dx\n= [x²]₀^0.5\n= (0.5)² - 0²\n= 0.25"
+  },
+  {
+    "id": "math202-t2-ex06",
+    "subjectId": "math202",
+    "topicId": "math202-2",
+    "type": "written",
+    "title": "CDF from PDF",
+    "description": "For the PDF f(x) = 3x² for 0 ≤ x ≤ 1, find the cumulative distribution function F(x).",
+    "difficulty": 3,
+    "hints": [
+      "F(x) = ∫₋∞ˣ f(t)dt",
+      "For 0 ≤ x ≤ 1: F(x) = ∫₀ˣ 3t²dt"
+    ],
+    "solution": "For x < 0: F(x) = 0\nFor 0 ≤ x ≤ 1: F(x) = ∫₀ˣ 3t²dt = [t³]₀ˣ = x³\nFor x > 1: F(x) = 1\n\nTherefore: F(x) = {\n  0,   if x < 0\n  x³,  if 0 ≤ x ≤ 1\n  1,   if x > 1\n}"
+  },
+  {
+    "id": "math202-t2-ex07",
+    "subjectId": "math202",
+    "topicId": "math202-2",
+    "type": "written",
+    "title": "Expected Value of Continuous RV",
+    "description": "For X with PDF f(x) = 2x for 0 ≤ x ≤ 1, calculate E[X].",
+    "difficulty": 2,
+    "hints": [
+      "E[X] = ∫₋∞^∞ x·f(x)dx",
+      "E[X] = ∫₀¹ x·2x dx = ∫₀¹ 2x² dx"
+    ],
+    "solution": "E[X] = ∫₀¹ x·2x dx = ∫₀¹ 2x² dx\n= [2x³/3]₀¹\n= 2/3 - 0 = 2/3 ≈ 0.667"
+  },
+  {
+    "id": "math202-t2-ex08",
+    "subjectId": "math202",
+    "topicId": "math202-2",
+    "type": "written",
+    "title": "Variance of Continuous RV",
+    "description": "For X with PDF f(x) = 2x on [0,1], we found E[X] = 2/3. Find Var(X).",
+    "difficulty": 3,
+    "hints": [
+      "First find E[X²] = ∫₀¹ x²·2x dx",
+      "Then Var(X) = E[X²] - (E[X])²"
+    ],
+    "solution": "E[X²] = ∫₀¹ x²·2x dx = ∫₀¹ 2x³ dx\n= [2x⁴/4]₀¹ = [x⁴/2]₀¹ = 1/2\n\nVar(X) = E[X²] - (E[X])²\n= 1/2 - (2/3)²\n= 1/2 - 4/9\n= 9/18 - 8/18 = 1/18 ≈ 0.056"
+  },
+  {
+    "id": "math202-t2-ex09",
+    "subjectId": "math202",
+    "topicId": "math202-2",
+    "type": "written",
+    "title": "Moment Generating Function",
+    "description": "For a discrete random variable X with P(X=0)=0.5, P(X=1)=0.5, find the MGF M(t) = E[eᵗˣ].",
+    "difficulty": 3,
+    "hints": [
+      "M(t) = Σ eᵗˣ P(X=x)",
+      "Sum over all possible values of X"
+    ],
+    "solution": "M(t) = E[eᵗˣ] = Σ eᵗˣ P(X=x)\n= e^(t·0) P(X=0) + e^(t·1) P(X=1)\n= e⁰(0.5) + eᵗ(0.5)\n= 0.5 + 0.5eᵗ\n= 0.5(1 + eᵗ)"
+  },
+  {
+    "id": "math202-t2-ex10",
+    "subjectId": "math202",
+    "topicId": "math202-2",
+    "type": "written",
+    "title": "MGF and Moments",
+    "description": "Given MGF M(t) = eᵗ + 2e²ᵗ / 3, find E[X] using the MGF.",
+    "difficulty": 3,
+    "hints": [
+      "E[X] = M'(0), the first derivative evaluated at t=0",
+      "First find M'(t), then evaluate at t=0"
+    ],
+    "solution": "M(t) = (1/3)eᵗ + (2/3)e²ᵗ\n\nM'(t) = (1/3)eᵗ + (2/3)·2e²ᵗ = (1/3)eᵗ + (4/3)e²ᵗ\n\nE[X] = M'(0) = (1/3)e⁰ + (4/3)e⁰\n= 1/3 + 4/3 = 5/3 ≈ 1.667"
+  },
+  {
+    "id": "math202-t2-ex11",
+    "subjectId": "math202",
+    "topicId": "math202-2",
+    "type": "written",
+    "title": "Transformation of Random Variables",
+    "description": "If X is uniformly distributed on [0, 2], find the PDF of Y = X².",
+    "difficulty": 4,
+    "hints": [
+      "For X ~ U(0,2), f_X(x) = 1/2 for 0 ≤ x ≤ 2",
+      "Use the transformation method: if y = g(x), then f_Y(y) = f_X(x)|dx/dy|",
+      "From y = x², we get x = √y and dx/dy = 1/(2√y)"
+    ],
+    "solution": "X ~ U(0,2), so f_X(x) = 1/2 for 0 ≤ x ≤ 2\n\nFor Y = X², the range is 0 ≤ y ≤ 4\nFrom y = x², x = √y (taking positive root since x ≥ 0)\ndx/dy = 1/(2√y)\n\nf_Y(y) = f_X(√y)|dx/dy|\n= (1/2) · (1/(2√y))\n= 1/(4√y) for 0 ≤ y ≤ 4"
+  },
+  {
+    "id": "math202-t2-ex12",
+    "subjectId": "math202",
+    "topicId": "math202-2",
+    "type": "written",
+    "title": "Median of a Distribution",
+    "description": "For a random variable X with CDF F(x) = x² for 0 ≤ x ≤ 1, find the median.",
+    "difficulty": 2,
+    "hints": [
+      "The median m satisfies F(m) = 0.5",
+      "Solve m² = 0.5"
+    ],
+    "solution": "The median m satisfies F(m) = 0.5\nm² = 0.5\nm = √0.5 = 1/√2 = √2/2 ≈ 0.707"
+  },
+  {
+    "id": "math202-t2-ex13",
+    "subjectId": "math202",
+    "topicId": "math202-2",
+    "type": "written",
+    "title": "Properties of Expectation",
+    "description": "If X and Y are independent random variables with E[X] = 3, E[Y] = 5, Var(X) = 2, Var(Y) = 4, find E[2X + 3Y] and Var(2X + 3Y).",
+    "difficulty": 3,
+    "hints": [
+      "E[aX + bY] = aE[X] + bE[Y]",
+      "For independent X and Y: Var(aX + bY) = a²Var(X) + b²Var(Y)"
+    ],
+    "solution": "E[2X + 3Y] = 2E[X] + 3E[Y]\n= 2(3) + 3(5) = 6 + 15 = 21\n\nSince X and Y are independent:\nVar(2X + 3Y) = 2²Var(X) + 3²Var(Y)\n= 4(2) + 9(4)\n= 8 + 36 = 44"
+  },
+  {
+    "id": "math202-t2-ex14",
+    "subjectId": "math202",
+    "topicId": "math202-2",
+    "type": "written",
+    "title": "Chebyshev's Inequality",
+    "description": "A random variable X has mean μ = 50 and standard deviation σ = 5. Use Chebyshev's inequality to find a lower bound on P(40 < X < 60).",
+    "difficulty": 3,
+    "hints": [
+      "Chebyshev's inequality: P(|X - μ| ≥ kσ) ≤ 1/k²",
+      "Equivalently: P(|X - μ| < kσ) ≥ 1 - 1/k²",
+      "Find k such that kσ = 10"
+    ],
+    "solution": "We want P(40 < X < 60) = P(|X - 50| < 10)\n\nSince σ = 5, we need kσ = 10, so k = 2\n\nBy Chebyshev's inequality:\nP(|X - μ| < kσ) ≥ 1 - 1/k²\nP(|X - 50| < 10) ≥ 1 - 1/4 = 3/4 = 0.75\n\nTherefore, P(40 < X < 60) ≥ 0.75 or 75%"
+  },
+  {
+    "id": "math202-t2-ex15",
+    "subjectId": "math202",
+    "topicId": "math202-2",
+    "type": "written",
+    "title": "Quantile Function",
+    "description": "For X with CDF F(x) = 1 - e^(-λx) for x ≥ 0 (exponential distribution), find the 75th percentile.",
+    "difficulty": 3,
+    "hints": [
+      "The pth percentile q_p satisfies F(q_p) = p",
+      "Solve 1 - e^(-λq) = 0.75",
+      "Assume λ = 1 for simplicity"
+    ],
+    "solution": "For the 75th percentile, solve F(q) = 0.75\n1 - e^(-λq) = 0.75\ne^(-λq) = 0.25\n-λq = ln(0.25)\nq = -ln(0.25)/λ\n\nWith λ = 1:\nq = -ln(0.25) = ln(4) ≈ 1.386"
+  },
+  {
+    "id": "math202-t2-ex16",
+    "subjectId": "math202",
+    "topicId": "math202-2",
+    "type": "written",
+    "title": "Joint Distributions",
+    "description": "Two independent random variables X and Y both have E[X] = E[Y] = 0 and Var(X) = Var(Y) = 1. Find E[XY] and Var(X - Y).",
+    "difficulty": 3,
+    "hints": [
+      "For independent X and Y: E[XY] = E[X]E[Y]",
+      "Var(X - Y) = Var(X) + Var(-Y) = Var(X) + Var(Y)"
+    ],
+    "solution": "E[XY] = E[X]E[Y] (by independence)\n= 0 · 0 = 0\n\nVar(X - Y) = Var(X) + Var(-Y) (by independence)\n= Var(X) + (-1)²Var(Y)\n= 1 + 1 = 2"
+  },
+  {
+    "id": "math202-t3-ex01",
+    "subjectId": "math202",
+    "topicId": "math202-3",
+    "type": "written",
+    "title": "Binomial Probability",
+    "description": "A fair coin is flipped 10 times. What is the probability of getting exactly 6 heads?",
+    "difficulty": 2,
+    "hints": [
+      "Use binomial formula: P(X=k) = C(n,k) p^k (1-p)^(n-k)",
+      "n=10, k=6, p=0.5"
+    ],
+    "solution": "X ~ Binomial(n=10, p=0.5)\nP(X=6) = C(10,6) (0.5)^6 (0.5)^4\n= 210 × (0.5)^10\n= 210/1024 ≈ 0.205 or 20.5%"
+  },
+  {
+    "id": "math202-t3-ex02",
+    "subjectId": "math202",
+    "topicId": "math202-3",
+    "type": "written",
+    "title": "Binomial Mean and Variance",
+    "description": "If X ~ Binomial(n=20, p=0.3), find E[X] and Var(X).",
+    "difficulty": 1,
+    "hints": [
+      "For binomial: E[X] = np",
+      "Var(X) = np(1-p)"
+    ],
+    "solution": "E[X] = np = 20(0.3) = 6\nVar(X) = np(1-p) = 20(0.3)(0.7) = 4.2\nStandard deviation σ = √4.2 ≈ 2.05"
+  },
+  {
+    "id": "math202-t3-ex03",
+    "subjectId": "math202",
+    "topicId": "math202-3",
+    "type": "written",
+    "title": "Poisson Probability",
+    "description": "Customers arrive at a store at an average rate of 3 per hour. What is the probability that exactly 5 customers arrive in an hour? What is the probability that at most 2 arrive?",
+    "difficulty": 2,
+    "hints": [
+      "Use Poisson formula: P(X=k) = (λ^k e^(-λ))/k!",
+      "λ = 3",
+      "P(X ≤ 2) = P(X=0) + P(X=1) + P(X=2)"
+    ],
+    "solution": "X ~ Poisson(λ=3)\n\nP(X=5) = (3^5 e^(-3))/5! = (243 × 0.0498)/120 ≈ 0.101\n\nP(X≤2) = P(X=0) + P(X=1) + P(X=2)\n= e^(-3)[1 + 3 + 9/2]\n= 0.0498[1 + 3 + 4.5]\n= 0.0498(8.5) ≈ 0.423"
+  },
+  {
+    "id": "math202-t3-ex04",
+    "subjectId": "math202",
+    "topicId": "math202-3",
+    "type": "written",
+    "title": "Poisson Properties",
+    "description": "If X ~ Poisson(λ=4), find E[X], Var(X), and P(X > E[X]).",
+    "difficulty": 2,
+    "hints": [
+      "For Poisson: E[X] = Var(X) = λ",
+      "P(X > 4) = 1 - P(X ≤ 4)"
+    ],
+    "solution": "E[X] = λ = 4\nVar(X) = λ = 4\n\nP(X > 4) = 1 - P(X ≤ 4)\n= 1 - [P(X=0) + P(X=1) + P(X=2) + P(X=3) + P(X=4)]\n= 1 - e^(-4)[1 + 4 + 8 + 32/3 + 32/3]\n≈ 1 - 0.629 = 0.371"
+  },
+  {
+    "id": "math202-t3-ex05",
+    "subjectId": "math202",
+    "topicId": "math202-3",
+    "type": "written",
+    "title": "Geometric Distribution",
+    "description": "A basketball player has a 60% free throw success rate. What is the probability that their first successful free throw is on the 3rd attempt?",
+    "difficulty": 2,
+    "hints": [
+      "Geometric distribution: P(X=k) = (1-p)^(k-1) p",
+      "First two attempts fail, third succeeds"
+    ],
+    "solution": "X ~ Geometric(p=0.6)\nP(X=3) = (1-0.6)^(3-1) × 0.6\n= (0.4)^2 × 0.6\n= 0.16 × 0.6 = 0.096 or 9.6%"
+  },
+  {
+    "id": "math202-t3-ex06",
+    "subjectId": "math202",
+    "topicId": "math202-3",
+    "type": "written",
+    "title": "Normal Distribution Probability",
+    "description": "If X ~ N(μ=100, σ²=225), find P(X > 115).",
+    "difficulty": 2,
+    "hints": [
+      "σ = √225 = 15",
+      "Standardize: Z = (X - μ)/σ",
+      "Use standard normal table or remember P(Z > 1) ≈ 0.1587"
+    ],
+    "solution": "μ = 100, σ = 15\nStandardize: Z = (115 - 100)/15 = 15/15 = 1\n\nP(X > 115) = P(Z > 1) ≈ 0.1587 or 15.87%"
+  },
+  {
+    "id": "math202-t3-ex07",
+    "subjectId": "math202",
+    "topicId": "math202-3",
+    "type": "written",
+    "title": "Normal Distribution Percentiles",
+    "description": "For X ~ N(50, 100), find the value x such that P(X < x) = 0.95.",
+    "difficulty": 3,
+    "hints": [
+      "σ = √100 = 10",
+      "Find z such that P(Z < z) = 0.95 (z ≈ 1.645)",
+      "Convert back: x = μ + zσ"
+    ],
+    "solution": "From standard normal table: P(Z < 1.645) ≈ 0.95\n\nConvert to X scale:\nx = μ + zσ = 50 + 1.645(10)\n= 50 + 16.45 = 66.45"
+  },
+  {
+    "id": "math202-t3-ex08",
+    "subjectId": "math202",
+    "topicId": "math202-3",
+    "type": "written",
+    "title": "Empirical Rule",
+    "description": "For a normal distribution with mean 80 and standard deviation 5, approximately what percentage of values fall between 70 and 90?",
+    "difficulty": 1,
+    "hints": [
+      "70 = 80 - 2(5) and 90 = 80 + 2(5)",
+      "This is the interval [μ - 2σ, μ + 2σ]",
+      "Empirical rule: about 95% within 2 standard deviations"
+    ],
+    "solution": "The interval [70, 90] is [μ - 2σ, μ + 2σ]\n\nBy the empirical rule, approximately 95% of values fall within 2 standard deviations of the mean.\n\nAnswer: About 95%"
+  },
+  {
+    "id": "math202-t3-ex09",
+    "subjectId": "math202",
+    "topicId": "math202-3",
+    "type": "written",
+    "title": "Exponential Distribution",
+    "description": "The time between customer arrivals follows an exponential distribution with mean 10 minutes. What is the probability that the next customer arrives within 5 minutes?",
+    "difficulty": 2,
+    "hints": [
+      "If mean = 1/λ = 10, then λ = 1/10 = 0.1",
+      "CDF: F(x) = 1 - e^(-λx)",
+      "We want P(X ≤ 5)"
+    ],
+    "solution": "Mean = 1/λ = 10, so λ = 0.1\n\nP(X ≤ 5) = 1 - e^(-0.1×5)\n= 1 - e^(-0.5)\n= 1 - 0.6065 ≈ 0.393 or 39.3%"
+  },
+  {
+    "id": "math202-t3-ex10",
+    "subjectId": "math202",
+    "topicId": "math202-3",
+    "type": "written",
+    "title": "Memoryless Property",
+    "description": "For an exponential distribution with λ = 0.5, verify the memoryless property: P(X > 6 | X > 2) = P(X > 4).",
+    "difficulty": 3,
+    "hints": [
+      "For exponential: P(X > x) = e^(-λx)",
+      "P(X > 6 | X > 2) = P(X > 6 and X > 2) / P(X > 2) = P(X > 6) / P(X > 2)"
+    ],
+    "solution": "P(X > 6 | X > 2) = P(X > 6) / P(X > 2)\n= e^(-0.5×6) / e^(-0.5×2)\n= e^(-3) / e^(-1)\n= e^(-3+1) = e^(-2)\n\nP(X > 4) = e^(-0.5×4) = e^(-2)\n\nTherefore P(X > 6 | X > 2) = P(X > 4), verifying the memoryless property."
+  },
+  {
+    "id": "math202-t3-ex11",
+    "subjectId": "math202",
+    "topicId": "math202-3",
+    "type": "written",
+    "title": "Uniform Distribution",
+    "description": "X is uniformly distributed on [2, 8]. Find P(3 < X < 6) and E[X].",
+    "difficulty": 1,
+    "hints": [
+      "For U(a,b): PDF f(x) = 1/(b-a)",
+      "P(c < X < d) = (d-c)/(b-a)",
+      "E[X] = (a+b)/2"
+    ],
+    "solution": "X ~ U(2, 8)\n\nP(3 < X < 6) = (6-3)/(8-2) = 3/6 = 0.5\n\nE[X] = (2+8)/2 = 5"
+  },
+  {
+    "id": "math202-t3-ex12",
+    "subjectId": "math202",
+    "topicId": "math202-3",
+    "type": "written",
+    "title": "Chi-Square Distribution",
+    "description": "If Z₁, Z₂, Z₃ are independent standard normal random variables, what is the distribution of Y = Z₁² + Z₂² + Z₃²? What are E[Y] and Var(Y)?",
+    "difficulty": 2,
+    "hints": [
+      "Sum of k squared independent standard normals has chi-square distribution with k degrees of freedom",
+      "For χ²(k): E[X] = k, Var(X) = 2k"
+    ],
+    "solution": "Y = Z₁² + Z₂² + Z₃² follows a chi-square distribution with 3 degrees of freedom: Y ~ χ²(3)\n\nE[Y] = 3\nVar(Y) = 2(3) = 6"
+  },
+  {
+    "id": "math202-t3-ex13",
+    "subjectId": "math202",
+    "topicId": "math202-3",
+    "type": "written",
+    "title": "Normal Approximation to Binomial",
+    "description": "A coin is flipped 100 times. Use the normal approximation to estimate P(X ≥ 55) where X is the number of heads.",
+    "difficulty": 3,
+    "hints": [
+      "X ~ Binomial(100, 0.5)",
+      "Approximate with Normal: μ = np = 50, σ² = np(1-p) = 25",
+      "Use continuity correction: P(X ≥ 55) ≈ P(Y > 54.5) where Y ~ N(50, 25)"
+    ],
+    "solution": "X ~ Binomial(100, 0.5)\nμ = 100(0.5) = 50, σ = √[100(0.5)(0.5)] = 5\n\nWith continuity correction:\nP(X ≥ 55) ≈ P(Y > 54.5) where Y ~ N(50, 25)\n\nStandardize: Z = (54.5 - 50)/5 = 0.9\nP(Z > 0.9) ≈ 0.184 or 18.4%"
+  },
+  {
+    "id": "math202-t3-ex14",
+    "subjectId": "math202",
+    "topicId": "math202-3",
+    "type": "written",
+    "title": "t-Distribution",
+    "description": "Explain when to use the t-distribution instead of the normal distribution. What happens to the t-distribution as degrees of freedom increase?",
+    "difficulty": 2,
+    "hints": [
+      "Consider sample size and whether population variance is known",
+      "Think about the shape of t vs normal"
+    ],
+    "solution": "Use the t-distribution when:\n1. Sample size is small (typically n < 30)\n2. Population standard deviation σ is unknown\n3. Population is approximately normal\n\nAs degrees of freedom (df) increase, the t-distribution approaches the standard normal distribution N(0,1). With df ≥ 30, they are nearly identical.\n\nThe t-distribution has heavier tails than normal, accounting for additional uncertainty from estimating σ."
+  },
+  {
+    "id": "math202-t3-ex15",
+    "subjectId": "math202",
+    "topicId": "math202-3",
+    "type": "written",
+    "title": "Poisson as Limit of Binomial",
+    "description": "Show that when n is large and p is small such that np = λ remains constant, the Binomial(n,p) approaches Poisson(λ). Use n=100, p=0.02, λ=2.",
+    "difficulty": 4,
+    "hints": [
+      "Calculate P(X=3) for Binomial(100, 0.02)",
+      "Calculate P(X=3) for Poisson(2)",
+      "Compare the results"
+    ],
+    "solution": "For Binomial(100, 0.02):\nP(X=3) = C(100,3)(0.02)³(0.98)⁹⁷\n≈ 161,700 × 8×10⁻⁶ × 0.133 ≈ 0.182\n\nFor Poisson(2):\nP(X=3) = (2³ e⁻²)/3! = 8(0.1353)/6 ≈ 0.180\n\nThe values are very close, demonstrating the Poisson approximation to Binomial."
+  },
+  {
+    "id": "math202-t3-ex16",
+    "subjectId": "math202",
+    "topicId": "math202-3",
+    "type": "written",
+    "title": "Distribution Comparison",
+    "description": "Compare and contrast the Binomial and Poisson distributions. When would you use each?",
+    "difficulty": 2,
+    "hints": [
+      "Consider the type of data each models",
+      "Think about parameters and typical applications"
+    ],
+    "solution": "Binomial Distribution:\n- Fixed number of trials n\n- Each trial has probability p of success\n- Counts successes in n trials\n- Two parameters: n and p\n- Use for: coin flips, quality control with fixed sample size\n\nPoisson Distribution:\n- Models rare events\n- Events occur at constant average rate λ\n- Counts events in fixed interval\n- One parameter: λ\n- Use for: arrivals per hour, defects per unit, calls per day\n\nPoisson approximates Binomial when n is large, p is small, and np = λ is moderate."
+  },
+  {
+    "id": "math202-t4-ex01",
+    "subjectId": "math202",
+    "topicId": "math202-4",
+    "type": "written",
+    "title": "Point Estimation Basics",
+    "description": "A sample of 5 values is drawn: {2, 4, 6, 8, 10}. Calculate the sample mean and sample variance as point estimates of the population parameters.",
+    "difficulty": 1,
+    "hints": [
+      "Sample mean x̄ = Σxᵢ/n",
+      "Sample variance s² = Σ(xᵢ - x̄)²/(n-1)"
+    ],
+    "solution": "Sample mean: x̄ = (2+4+6+8+10)/5 = 30/5 = 6\n\nSample variance:\ns² = [(2-6)² + (4-6)² + (6-6)² + (8-6)² + (10-6)²]/(5-1)\n= [16 + 4 + 0 + 4 + 16]/4\n= 40/4 = 10"
+  },
+  {
+    "id": "math202-t4-ex02",
+    "subjectId": "math202",
+    "topicId": "math202-4",
+    "type": "written",
+    "title": "Unbiased Estimators",
+    "description": "Explain why we divide by (n-1) instead of n when calculating sample variance. What property does this give the estimator?",
+    "difficulty": 2,
+    "hints": [
+      "Consider E[s²] when dividing by n vs. (n-1)",
+      "Think about bias"
+    ],
+    "solution": "When we divide by (n-1) instead of n, the sample variance s² becomes an unbiased estimator of the population variance σ².\n\nDividing by n would give E[s²] < σ² (biased downward) because we use the sample mean instead of the true population mean.\n\nDividing by (n-1) corrects this bias, giving E[s²] = σ². The (n-1) is called Bessel's correction or degrees of freedom correction."
+  },
+  {
+    "id": "math202-t4-ex03",
+    "subjectId": "math202",
+    "topicId": "math202-4",
+    "type": "written",
+    "title": "Confidence Interval for Mean",
+    "description": "A sample of n=25 has mean x̄=50 and standard deviation s=10. Construct a 95% confidence interval for the population mean (use t-distribution with t₀.₀₂₅,₂₄ ≈ 2.064).",
+    "difficulty": 2,
+    "hints": [
+      "CI = x̄ ± t × (s/√n)",
+      "Standard error = s/√n"
+    ],
+    "solution": "Standard error: SE = s/√n = 10/√25 = 10/5 = 2\n\nMargin of error: ME = t × SE = 2.064 × 2 = 4.128\n\n95% CI: 50 ± 4.128 = (45.872, 54.128)\n\nWe are 95% confident the true population mean is between 45.87 and 54.13."
+  },
+  {
+    "id": "math202-t4-ex04",
+    "subjectId": "math202",
+    "topicId": "math202-4",
+    "type": "written",
+    "title": "Confidence Interval for Proportion",
+    "description": "In a survey of 400 people, 240 support a policy. Construct a 95% confidence interval for the true proportion (use z=1.96).",
+    "difficulty": 2,
+    "hints": [
+      "Sample proportion p̂ = x/n",
+      "SE = √[p̂(1-p̂)/n]",
+      "CI = p̂ ± z × SE"
+    ],
+    "solution": "Sample proportion: p̂ = 240/400 = 0.6\n\nStandard error: SE = √[0.6(0.4)/400] = √[0.24/400] = √0.0006 ≈ 0.0245\n\nMargin of error: ME = 1.96 × 0.0245 ≈ 0.048\n\n95% CI: 0.6 ± 0.048 = (0.552, 0.648)\n\nWe are 95% confident the true proportion is between 55.2% and 64.8%."
+  },
+  {
+    "id": "math202-t4-ex05",
+    "subjectId": "math202",
+    "topicId": "math202-4",
+    "type": "written",
+    "title": "Maximum Likelihood Estimation",
+    "description": "Given n independent observations from a Poisson(λ) distribution, find the MLE of λ.",
+    "difficulty": 3,
+    "hints": [
+      "Likelihood: L(λ) = ∏ (λ^xᵢ e^(-λ))/xᵢ!",
+      "Use log-likelihood and take derivative",
+      "Set derivative equal to zero and solve"
+    ],
+    "solution": "Log-likelihood:\nℓ(λ) = Σ[xᵢ ln(λ) - λ - ln(xᵢ!)]\n= ln(λ)Σxᵢ - nλ - Σln(xᵢ!)\n\nDerivative:\ndℓ/dλ = Σxᵢ/λ - n\n\nSet to zero:\nΣxᵢ/λ - n = 0\nλ̂ = Σxᵢ/n = x̄\n\nThe MLE of λ is the sample mean."
+  },
+  {
+    "id": "math202-t4-ex06",
+    "subjectId": "math202",
+    "topicId": "math202-4",
+    "type": "written",
+    "title": "MLE for Normal Distribution",
+    "description": "For n independent observations from N(μ, σ²), find the MLEs of μ and σ².",
+    "difficulty": 4,
+    "hints": [
+      "Log-likelihood: ℓ = -n/2 ln(2πσ²) - Σ(xᵢ-μ)²/(2σ²)",
+      "Take partial derivatives with respect to μ and σ²"
+    ],
+    "solution": "Log-likelihood:\nℓ(μ,σ²) = -n/2 ln(2πσ²) - Σ(xᵢ-μ)²/(2σ²)\n\nPartial derivative wrt μ:\n∂ℓ/∂μ = Σ(xᵢ-μ)/σ² = 0\n⟹ μ̂ = Σxᵢ/n = x̄\n\nPartial derivative wrt σ²:\n∂ℓ/∂σ² = -n/(2σ²) + Σ(xᵢ-μ)²/(2σ⁴) = 0\n⟹ σ̂² = Σ(xᵢ-x̄)²/n\n\nNote: σ̂² divides by n, not (n-1), so it's biased."
+  },
+  {
+    "id": "math202-t4-ex07",
+    "subjectId": "math202",
+    "topicId": "math202-4",
+    "type": "written",
+    "title": "Method of Moments",
+    "description": "For a Uniform(0, θ) distribution, find the method of moments estimator of θ.",
+    "difficulty": 3,
+    "hints": [
+      "For U(0,θ), E[X] = θ/2",
+      "Set sample mean equal to population mean",
+      "Solve for θ"
+    ],
+    "solution": "For X ~ U(0,θ), E[X] = θ/2\n\nMethod of moments: set E[X] = x̄\nθ/2 = x̄\nθ̂ = 2x̄\n\nThe method of moments estimator is θ̂ = 2x̄"
+  },
+  {
+    "id": "math202-t4-ex08",
+    "subjectId": "math202",
+    "topicId": "math202-4",
+    "type": "written",
+    "title": "Sampling Distribution of Mean",
+    "description": "If a population has mean μ=100 and variance σ²=400, what are the mean and standard deviation of the sampling distribution of x̄ based on n=25 observations?",
+    "difficulty": 1,
+    "hints": [
+      "E[x̄] = μ",
+      "Var(x̄) = σ²/n",
+      "SD(x̄) = σ/√n"
+    ],
+    "solution": "Mean of sampling distribution: E[x̄] = μ = 100\n\nVariance of sampling distribution: Var(x̄) = σ²/n = 400/25 = 16\n\nStandard deviation (standard error): SD(x̄) = σ/√n = 20/5 = 4"
+  },
+  {
+    "id": "math202-t4-ex09",
+    "subjectId": "math202",
+    "topicId": "math202-4",
+    "type": "written",
+    "title": "Central Limit Theorem Application",
+    "description": "A population has mean 50 and standard deviation 12. If we take samples of size 36, what is the probability that the sample mean exceeds 53?",
+    "difficulty": 2,
+    "hints": [
+      "By CLT, x̄ is approximately normal with mean μ and SD σ/√n",
+      "Standardize and use normal table"
+    ],
+    "solution": "By CLT, x̄ ~ N(50, 12²/36) approximately\n\nMean: μ_x̄ = 50\nSD: σ_x̄ = 12/√36 = 12/6 = 2\n\nStandardize: Z = (53-50)/2 = 1.5\n\nP(x̄ > 53) = P(Z > 1.5) ≈ 0.0668 or 6.68%"
+  },
+  {
+    "id": "math202-t4-ex10",
+    "subjectId": "math202",
+    "topicId": "math202-4",
+    "type": "written",
+    "title": "Sample Size Determination",
+    "description": "How large a sample is needed to estimate a population mean with 95% confidence and margin of error ±3, if σ=15?",
+    "difficulty": 2,
+    "hints": [
+      "ME = z × σ/√n",
+      "Solve for n: n = (z×σ/ME)²",
+      "Use z=1.96 for 95% confidence"
+    ],
+    "solution": "Given: ME = 3, σ = 15, z = 1.96\n\nFrom ME = z×σ/√n:\n3 = 1.96×15/√n\n√n = 1.96×15/3 = 9.8\nn = (9.8)² = 96.04\n\nRound up: n = 97 observations needed"
+  },
+  {
+    "id": "math202-t4-ex11",
+    "subjectId": "math202",
+    "topicId": "math202-4",
+    "type": "written",
+    "title": "Bias and Variance Tradeoff",
+    "description": "Define bias and variance of an estimator. Explain the bias-variance tradeoff.",
+    "difficulty": 2,
+    "hints": [
+      "Bias = E[θ̂] - θ",
+      "Variance = E[(θ̂ - E[θ̂])²]",
+      "Mean Squared Error relates to both"
+    ],
+    "solution": "Bias of estimator θ̂:\nBias(θ̂) = E[θ̂] - θ\nAn unbiased estimator has E[θ̂] = θ\n\nVariance of estimator:\nVar(θ̂) = E[(θ̂ - E[θ̂])²]\nMeasures spread of estimates around their mean\n\nMean Squared Error:\nMSE(θ̂) = E[(θ̂ - θ)²] = Bias²(θ̂) + Var(θ̂)\n\nBias-Variance Tradeoff: Sometimes accepting a small bias allows much lower variance, reducing overall MSE. This is why we sometimes prefer biased but consistent estimators with lower variance."
+  },
+  {
+    "id": "math202-t4-ex12",
+    "subjectId": "math202",
+    "topicId": "math202-4",
+    "type": "written",
+    "title": "Confidence Level Interpretation",
+    "description": "A 95% confidence interval for μ is (47, 53). Explain what this means and what it does NOT mean.",
+    "difficulty": 2,
+    "hints": [
+      "Think about repeated sampling",
+      "Consider the probability statement"
+    ],
+    "solution": "CORRECT interpretation:\nIf we repeated this sampling process many times, 95% of the confidence intervals constructed would contain the true parameter μ.\n\nINCORRECT interpretations:\n❌ There is a 95% probability that μ is in (47, 53)\n❌ 95% of the data falls in (47, 53)\n❌ The probability that μ = 50 is 95%\n\nThe interval (47, 53) either contains μ or it doesn't (it's not random). The 95% refers to our confidence in the method, not this particular interval."
+  },
+  {
+    "id": "math202-t4-ex13",
+    "subjectId": "math202",
+    "topicId": "math202-4",
+    "type": "written",
+    "title": "Comparing Estimators",
+    "description": "Two estimators of θ have E[θ̂₁] = θ, Var(θ̂₁) = 10 and E[θ̂₂] = θ + 0.5, Var(θ̂₂) = 2. Which is better in terms of MSE?",
+    "difficulty": 3,
+    "hints": [
+      "Calculate MSE for each",
+      "MSE = Bias² + Variance"
+    ],
+    "solution": "For θ̂₁:\nBias = E[θ̂₁] - θ = 0\nMSE(θ̂₁) = 0² + 10 = 10\n\nFor θ̂₂:\nBias = E[θ̂₂] - θ = 0.5\nMSE(θ̂₂) = (0.5)² + 2 = 0.25 + 2 = 2.25\n\nθ̂₂ has lower MSE (2.25 < 10), so it's better despite being biased. The small bias is outweighed by much lower variance."
+  },
+  {
+    "id": "math202-t4-ex14",
+    "subjectId": "math202",
+    "topicId": "math202-4",
+    "type": "written",
+    "title": "Standard Error",
+    "description": "Explain the difference between standard deviation and standard error. How does sample size affect each?",
+    "difficulty": 2,
+    "hints": [
+      "SD measures spread of data",
+      "SE measures precision of estimate"
+    ],
+    "solution": "Standard Deviation (SD):\n- Measures variability in the population or sample\n- SD = σ or s\n- Does not change with sample size (population SD is fixed)\n\nStandard Error (SE):\n- Measures precision of a sample statistic (like x̄)\n- SE = σ/√n\n- Decreases as sample size increases\n- SE → 0 as n → ∞\n\nExample: If σ = 20 and n = 100:\nSD = 20 (unchanged)\nSE = 20/√100 = 2\n\nLarger samples give more precise estimates (smaller SE) but don't change population variability (SD)."
+  },
+  {
+    "id": "math202-t4-ex15",
+    "subjectId": "math202",
+    "topicId": "math202-4",
+    "type": "written",
+    "title": "Bootstrapping Concept",
+    "description": "Explain the basic idea of bootstrap resampling and when it might be useful.",
+    "difficulty": 3,
+    "hints": [
+      "Think about resampling from the sample itself",
+      "Consider when parametric assumptions are questionable"
+    ],
+    "solution": "Bootstrap resampling:\n1. Take a sample of size n from population\n2. Repeatedly resample (with replacement) from this sample\n3. Calculate the statistic of interest for each resample\n4. Use the distribution of these statistics to estimate properties\n\nWhen useful:\n- Unknown or complex sampling distribution\n- Small samples where CLT may not apply\n- Non-standard statistics (median, trimmed mean, etc.)\n- Estimating confidence intervals without parametric assumptions\n\nExample: From original sample {2,5,7,9}, we might create bootstrap samples like {2,2,7,9}, {5,7,7,9}, {2,5,5,9}, etc., calculate x̄ for each, and use these to estimate SE(x̄) and construct CIs."
+  },
+  {
+    "id": "math202-t4-ex16",
+    "subjectId": "math202",
+    "topicId": "math202-4",
+    "type": "written",
+    "title": "Fisher Information",
+    "description": "For a Bernoulli(p) distribution, the Fisher information is I(p) = 1/(p(1-p)). What does this tell us about the precision of estimation for different values of p?",
+    "difficulty": 4,
+    "hints": [
+      "Higher Fisher information means more information about the parameter",
+      "Variance of MLE is approximately 1/(n×I(p))",
+      "Consider p = 0.5 vs p = 0.1"
+    ],
+    "solution": "Fisher information I(p) = 1/(p(1-p))\n\nThe Cramér-Rao lower bound states that Var(p̂) ≥ 1/(n×I(p)) = p(1-p)/n\n\nAt p = 0.5:\nI(0.5) = 1/(0.5×0.5) = 4\nMinimum variance = 0.25/n\n\nAt p = 0.1:\nI(0.1) = 1/(0.1×0.9) = 11.11\nMinimum variance = 0.09/n\n\nCounter-intuitively, estimation is most difficult (lowest information) when p = 0.5, and easier when p is near 0 or 1. This is because extreme probabilities provide more information per observation about which category you're in."
+  },
+  {
+    "id": "math202-t5-ex01",
+    "subjectId": "math202",
+    "topicId": "math202-5",
+    "type": "written",
+    "title": "Setting Up Hypotheses",
+    "description": "A manufacturer claims their light bulbs last an average of 1000 hours. You suspect they last less. Set up the null and alternative hypotheses.",
+    "difficulty": 1,
+    "hints": [
+      "H₀ typically contains \"=\"",
+      "Hₐ reflects what you're trying to show"
+    ],
+    "solution": "H₀: μ = 1000 (manufacturer's claim)\nHₐ: μ < 1000 (our suspicion)\n\nThis is a one-tailed (left-tailed) test."
+  },
+  {
+    "id": "math202-t5-ex02",
+    "subjectId": "math202",
+    "topicId": "math202-5",
+    "type": "written",
+    "title": "Type I and Type II Errors",
+    "description": "In a criminal trial, H₀ is \"defendant is innocent\". Describe Type I and Type II errors in this context and their consequences.",
+    "difficulty": 2,
+    "hints": [
+      "Type I: Reject true H₀",
+      "Type II: Fail to reject false H₀"
+    ],
+    "solution": "Type I Error:\n- Reject H₀ when it's true\n- Convict an innocent person\n- Consequence: Injustice to innocent defendant\n- Probability: α (significance level)\n\nType II Error:\n- Fail to reject H₀ when it's false\n- Acquit a guilty person\n- Consequence: Guilty person goes free\n- Probability: β\n\nLegal system is designed to minimize Type I error (\"innocent until proven guilty\"), accepting higher Type II error risk."
+  },
+  {
+    "id": "math202-t5-ex03",
+    "subjectId": "math202",
+    "topicId": "math202-5",
+    "type": "written",
+    "title": "One-Sample Z-Test",
+    "description": "A sample of 36 observations has mean 52. Population standard deviation is known to be σ=12. Test H₀: μ=50 vs Hₐ: μ≠50 at α=0.05.",
+    "difficulty": 2,
+    "hints": [
+      "Test statistic: z = (x̄ - μ₀)/(σ/√n)",
+      "Critical values for two-tailed test: ±1.96"
+    ],
+    "solution": "Given: n=36, x̄=52, σ=12, μ₀=50, α=0.05\n\nTest statistic:\nz = (52 - 50)/(12/√36) = 2/(12/6) = 2/2 = 1\n\nCritical values (two-tailed): ±1.96\n\nDecision: |z| = 1 < 1.96, so fail to reject H₀\n\nConclusion: Insufficient evidence to conclude μ ≠ 50 at α=0.05 level.\n\nP-value ≈ 2×P(Z>1) = 2(0.1587) = 0.317"
+  },
+  {
+    "id": "math202-t5-ex04",
+    "subjectId": "math202",
+    "topicId": "math202-5",
+    "type": "written",
+    "title": "One-Sample t-Test",
+    "description": "A sample of n=16 has x̄=75 and s=8. Test H₀: μ=70 vs Hₐ: μ>70 at α=0.05. (Use t₀.₀₅,₁₅ ≈ 1.753)",
+    "difficulty": 2,
+    "hints": [
+      "Test statistic: t = (x̄ - μ₀)/(s/√n)",
+      "df = n - 1 = 15",
+      "One-tailed test"
+    ],
+    "solution": "Given: n=16, x̄=75, s=8, μ₀=70, α=0.05\n\nTest statistic:\nt = (75 - 70)/(8/√16) = 5/(8/4) = 5/2 = 2.5\n\nCritical value (one-tailed, df=15): t₀.₀₅,₁₅ = 1.753\n\nDecision: t = 2.5 > 1.753, so reject H₀\n\nConclusion: Significant evidence that μ > 70 at α=0.05 level."
+  },
+  {
+    "id": "math202-t5-ex05",
+    "subjectId": "math202",
+    "topicId": "math202-5",
+    "type": "written",
+    "title": "Two-Sample t-Test",
+    "description": "Group 1: n₁=20, x̄₁=85, s₁=10. Group 2: n₂=25, x̄₂=80, s₂=12. Test if the means differ at α=0.05. Assume equal variances.",
+    "difficulty": 3,
+    "hints": [
+      "Pooled variance: s²ₚ = [(n₁-1)s₁² + (n₂-1)s₂²]/(n₁+n₂-2)",
+      "Test statistic: t = (x̄₁ - x̄₂)/√[s²ₚ(1/n₁ + 1/n₂)]",
+      "df = n₁ + n₂ - 2 = 43"
+    ],
+    "solution": "Pooled variance:\ns²ₚ = [(19)(100) + (24)(144)]/43\n= [1900 + 3456]/43 = 5356/43 ≈ 124.56\n\nStandard error:\nSE = √[124.56(1/20 + 1/25)] = √[124.56(0.09)] = √11.21 ≈ 3.35\n\nTest statistic:\nt = (85 - 80)/3.35 = 5/3.35 ≈ 1.49\n\nCritical value (two-tailed, df≈43): t₀.₀₂₅ ≈ 2.02\n\nDecision: |t| = 1.49 < 2.02, fail to reject H₀\n\nConclusion: Insufficient evidence that means differ at α=0.05."
+  },
+  {
+    "id": "math202-t5-ex06",
+    "subjectId": "math202",
+    "topicId": "math202-5",
+    "type": "written",
+    "title": "Paired t-Test",
+    "description": "Before/after measurements for 8 subjects: differences = {2, 5, 3, 4, 6, 1, 3, 4}. Test if there's a significant improvement at α=0.05.",
+    "difficulty": 2,
+    "hints": [
+      "Calculate mean and SD of differences",
+      "Test H₀: μd=0 vs Hₐ: μd>0",
+      "Use t-test with df = n-1 = 7"
+    ],
+    "solution": "Differences: {2, 5, 3, 4, 6, 1, 3, 4}\n\nMean: d̄ = (2+5+3+4+6+1+3+4)/8 = 28/8 = 3.5\n\nSD: sd = √[Σ(di - d̄)²/7]\n= √[(2.25+2.25+0.25+0.25+6.25+6.25+0.25+0.25)/7]\n= √[18/7] ≈ 1.60\n\nTest statistic:\nt = 3.5/(1.60/√8) = 3.5/0.566 ≈ 6.19\n\nCritical value (one-tailed, df=7): t₀.₀₅,₇ ≈ 1.895\n\nDecision: t = 6.19 > 1.895, reject H₀\n\nConclusion: Significant evidence of improvement."
+  },
+  {
+    "id": "math202-t5-ex07",
+    "subjectId": "math202",
+    "topicId": "math202-5",
+    "type": "written",
+    "title": "Test for Proportion",
+    "description": "A company claims 90% customer satisfaction. In a sample of 200, 170 were satisfied. Test the claim at α=0.05.",
+    "difficulty": 2,
+    "hints": [
+      "Sample proportion: p̂ = 170/200",
+      "Test statistic: z = (p̂ - p₀)/√[p₀(1-p₀)/n]"
+    ],
+    "solution": "Given: n=200, x=170, p₀=0.90\np̂ = 170/200 = 0.85\n\nTest statistic:\nz = (0.85 - 0.90)/√[0.90(0.10)/200]\n= -0.05/√0.00045\n= -0.05/0.0212 ≈ -2.36\n\nCritical values (two-tailed): ±1.96\n\nDecision: |z| = 2.36 > 1.96, reject H₀\n\nConclusion: Significant evidence that satisfaction rate ≠ 90%. The actual rate appears lower."
+  },
+  {
+    "id": "math202-t5-ex08",
+    "subjectId": "math202",
+    "topicId": "math202-5",
+    "type": "written",
+    "title": "Chi-Square Goodness of Fit",
+    "description": "A die is rolled 60 times with outcomes: {1:8, 2:12, 3:9, 4:11, 5:10, 6:10}. Test if the die is fair at α=0.05.",
+    "difficulty": 3,
+    "hints": [
+      "Expected frequency for each outcome: 60/6 = 10",
+      "χ² = Σ(O-E)²/E",
+      "df = 6 - 1 = 5"
+    ],
+    "solution": "H₀: Die is fair (all probabilities = 1/6)\nExpected frequency: E = 60/6 = 10 for each outcome\n\nχ² = (8-10)²/10 + (12-10)²/10 + (9-10)²/10 + (11-10)²/10 + (10-10)²/10 + (10-10)²/10\n= 4/10 + 4/10 + 1/10 + 1/10 + 0 + 0\n= 10/10 = 1.0\n\nCritical value (df=5, α=0.05): χ²₀.₀₅,₅ ≈ 11.07\n\nDecision: χ² = 1.0 < 11.07, fail to reject H₀\n\nConclusion: No evidence that die is unfair."
+  },
+  {
+    "id": "math202-t5-ex09",
+    "subjectId": "math202",
+    "topicId": "math202-5",
+    "type": "written",
+    "title": "Chi-Square Test of Independence",
+    "description": "Test if smoking and lung disease are independent:\n             Disease  No Disease\nSmoker         20        30\nNon-smoker     10        40\nUse α=0.05.",
+    "difficulty": 3,
+    "hints": [
+      "Calculate expected frequencies: E = (row total × column total)/grand total",
+      "χ² = ΣΣ(O-E)²/E",
+      "df = (rows-1)(cols-1) = 1"
+    ],
+    "solution": "Row totals: 50, 50. Column totals: 30, 70. Grand total: 100\n\nExpected frequencies:\nE₁₁ = (50×30)/100 = 15\nE₁₂ = (50×70)/100 = 35\nE₂₁ = (50×30)/100 = 15\nE₂₂ = (50×70)/100 = 35\n\nχ² = (20-15)²/15 + (30-35)²/35 + (10-15)²/15 + (40-35)²/35\n= 25/15 + 25/35 + 25/15 + 25/35\n= 1.667 + 0.714 + 1.667 + 0.714 = 4.762\n\nCritical value (df=1, α=0.05): χ²₀.₀₅,₁ = 3.84\n\nDecision: χ² = 4.762 > 3.84, reject H₀\n\nConclusion: Significant evidence that smoking and lung disease are not independent."
+  },
+  {
+    "id": "math202-t5-ex10",
+    "subjectId": "math202",
+    "topicId": "math202-5",
+    "type": "written",
+    "title": "ANOVA F-Test",
+    "description": "Three groups have: Group 1: n₁=5, x̄₁=10, s₁²=4; Group 2: n₂=5, x̄₂=12, s₂²=5; Group 3: n₃=5, x̄₃=15, s₃²=6. Test if means differ at α=0.05.",
+    "difficulty": 4,
+    "hints": [
+      "Grand mean: x̄ = Σnᵢx̄ᵢ/N",
+      "SSB = Σnᵢ(x̄ᵢ - x̄)², MSB = SSB/(k-1)",
+      "SSW = Σ(nᵢ-1)sᵢ², MSW = SSW/(N-k)",
+      "F = MSB/MSW"
+    ],
+    "solution": "N = 15, k = 3\nGrand mean: x̄ = (5×10 + 5×12 + 5×15)/15 = 185/15 ≈ 12.33\n\nSSB = 5(10-12.33)² + 5(12-12.33)² + 5(15-12.33)²\n= 5(5.43) + 5(0.11) + 5(7.13)\n= 27.15 + 0.55 + 35.65 = 63.35\nMSB = 63.35/2 = 31.675\n\nSSW = 4(4) + 4(5) + 4(6) = 16 + 20 + 24 = 60\nMSW = 60/12 = 5\n\nF = 31.675/5 = 6.335\n\nCritical value F₀.₀₅(2,12) ≈ 3.89\n\nDecision: F = 6.335 > 3.89, reject H₀\n\nConclusion: Significant evidence that at least one mean differs."
+  },
+  {
+    "id": "math202-t5-ex11",
+    "subjectId": "math202",
+    "topicId": "math202-5",
+    "type": "written",
+    "title": "p-Value Interpretation",
+    "description": "A test yields p-value = 0.03. Interpret this for α = 0.05 and α = 0.01.",
+    "difficulty": 1,
+    "hints": [
+      "Compare p-value to significance level",
+      "Smaller p-value means stronger evidence against H₀"
+    ],
+    "solution": "p-value = 0.03 means:\n\"If H₀ were true, the probability of observing data as extreme as ours is 0.03 or 3%\"\n\nFor α = 0.05:\np = 0.03 < 0.05, so reject H₀\nResult is statistically significant at the 5% level.\n\nFor α = 0.01:\np = 0.03 > 0.01, so fail to reject H₀\nResult is NOT statistically significant at the 1% level.\n\nConclusion: We have moderate evidence against H₀, significant at 5% but not at 1% level."
+  },
+  {
+    "id": "math202-t5-ex12",
+    "subjectId": "math202",
+    "topicId": "math202-5",
+    "type": "written",
+    "title": "Statistical vs Practical Significance",
+    "description": "A drug lowers blood pressure by an average of 0.5 mmHg with p < 0.001 in a study of 10,000 patients. Discuss statistical vs practical significance.",
+    "difficulty": 2,
+    "hints": [
+      "Consider effect size vs sample size",
+      "Think about clinical relevance"
+    ],
+    "solution": "Statistical significance:\np < 0.001 is highly statistically significant\nWith n=10,000, we have very high power to detect even tiny effects\nWe're very confident the effect is real (not due to chance)\n\nPractical significance:\n0.5 mmHg reduction is clinically trivial\nNormal blood pressure variation is much larger\nThis effect has minimal health impact\n\nConclusion: The result is statistically significant but NOT practically significant. Large samples can detect tiny effects that have no practical importance. Always consider effect size, not just p-value."
+  },
+  {
+    "id": "math202-t5-ex13",
+    "subjectId": "math202",
+    "topicId": "math202-5",
+    "type": "written",
+    "title": "Power of a Test",
+    "description": "Define statistical power. What factors increase the power of a hypothesis test?",
+    "difficulty": 2,
+    "hints": [
+      "Power = 1 - β",
+      "Consider sample size, effect size, significance level"
+    ],
+    "solution": "Statistical Power:\nPower = P(Reject H₀ | H₀ is false) = 1 - β\nProbability of correctly rejecting a false null hypothesis\nProbability of detecting a real effect\n\nFactors that INCREASE power:\n1. Larger sample size (n↑)\n2. Larger effect size (true difference from H₀)\n3. Higher significance level (α↑, but increases Type I error)\n4. Lower population variance (σ²↓)\n5. One-tailed vs two-tailed test (if direction is known)\n\nTypical target: Power ≥ 0.80 (80% chance of detecting effect if it exists)"
+  },
+  {
+    "id": "math202-t5-ex14",
+    "subjectId": "math202",
+    "topicId": "math202-5",
+    "type": "written",
+    "title": "Power Calculation",
+    "description": "For testing H₀: μ=50 vs Hₐ: μ>50 with σ=10, n=25, α=0.05, calculate the power if the true mean is μ=54.",
+    "difficulty": 4,
+    "hints": [
+      "Find critical value for x̄ under H₀",
+      "Calculate probability of exceeding this under true μ=54"
+    ],
+    "solution": "Under H₀: μ₀=50, σx̄ = 10/√25 = 2\nCritical value: z = 1.645\nx̄c = 50 + 1.645(2) = 53.29\n\nUnder true μ=54:\nz = (53.29 - 54)/2 = -0.355\n\nPower = P(x̄ > 53.29 | μ=54)\n= P(Z > -0.355)\n= 1 - P(Z < -0.355)\n≈ 1 - 0.361 = 0.639 or 63.9%\n\nThere's about 64% chance of detecting the difference if μ=54."
+  },
+  {
+    "id": "math202-t5-ex15",
+    "subjectId": "math202",
+    "topicId": "math202-5",
+    "type": "written",
+    "title": "Multiple Testing Problem",
+    "description": "Explain the multiple testing problem. If you conduct 20 independent tests at α=0.05, what is the probability of at least one Type I error?",
+    "difficulty": 3,
+    "hints": [
+      "Each test has 5% chance of Type I error",
+      "Use complement: P(at least 1) = 1 - P(none)"
+    ],
+    "solution": "Multiple Testing Problem:\nWhen conducting multiple hypothesis tests, the probability of at least one Type I error increases.\n\nFor 20 independent tests at α=0.05:\nP(no Type I errors) = (1-0.05)^20 = (0.95)^20 ≈ 0.358\nP(at least one Type I error) = 1 - 0.358 = 0.642\n\nAbout 64% chance of at least one false positive!\n\nSolutions:\n1. Bonferroni correction: Use α/k for each test\n2. False Discovery Rate control\n3. Adjust significance level\n4. Plan analyses in advance, limit exploratory testing\n\nThis is why \"p-hacking\" (testing many hypotheses until finding p<0.05) is problematic."
+  },
+  {
+    "id": "math202-t5-ex16",
+    "subjectId": "math202",
+    "topicId": "math202-5",
+    "type": "written",
+    "title": "Effect Size Measures",
+    "description": "For comparing two means, explain Cohen's d as an effect size measure. Why is it useful beyond just reporting p-values?",
+    "difficulty": 3,
+    "hints": [
+      "Cohen's d = (x̄₁ - x̄₂)/s_pooled",
+      "It standardizes the difference"
+    ],
+    "solution": "Cohen's d = (μ₁ - μ₂)/σ or (x̄₁ - x̄₂)/s_pooled\n\nInterpretation (rough guidelines):\nd ≈ 0.2: Small effect\nd ≈ 0.5: Medium effect\nd ≈ 0.8: Large effect\n\nWhy useful:\n1. Independent of sample size (unlike p-values)\n2. Standardized, allowing comparison across studies\n3. Indicates practical significance, not just statistical\n4. Example: d=0.2 with p<0.001 (large n) vs d=0.8 with p=0.06 (small n)\n   Second has larger effect despite not being \"significant\"\n\nAlways report effect sizes with p-values for complete interpretation."
+  },
+  {
+    "id": "math202-t6-ex01",
+    "subjectId": "math202",
+    "topicId": "math202-6",
+    "type": "written",
+    "title": "Simple Linear Regression Coefficients",
+    "description": "Given data points (1,2), (2,4), (3,5), (4,7), (5,8), find the least squares regression line ŷ = β₀ + β₁x.",
+    "difficulty": 3,
+    "hints": [
+      "β₁ = Σ(xᵢ-x̄)(yᵢ-ȳ) / Σ(xᵢ-x̄)²",
+      "β₀ = ȳ - β₁x̄",
+      "Calculate means first"
+    ],
+    "solution": "x̄ = (1+2+3+4+5)/5 = 3\nȳ = (2+4+5+7+8)/5 = 5.2\n\nΣ(xᵢ-x̄)(yᵢ-ȳ) = (-2)(-3.2) + (-1)(-1.2) + (0)(-0.2) + (1)(1.8) + (2)(2.8)\n= 6.4 + 1.2 + 0 + 1.8 + 5.6 = 15\n\nΣ(xᵢ-x̄)² = 4 + 1 + 0 + 1 + 4 = 10\n\nβ₁ = 15/10 = 1.5\nβ₀ = 5.2 - 1.5(3) = 5.2 - 4.5 = 0.7\n\nRegression line: ŷ = 0.7 + 1.5x"
+  },
+  {
+    "id": "math202-t6-ex02",
+    "subjectId": "math202",
+    "topicId": "math202-6",
+    "type": "written",
+    "title": "Coefficient of Determination",
+    "description": "For a regression with SST=100 and SSE=25, calculate R² and interpret it.",
+    "difficulty": 2,
+    "hints": [
+      "R² = 1 - SSE/SST = SSR/SST",
+      "R² represents proportion of variance explained"
+    ],
+    "solution": "R² = 1 - SSE/SST = 1 - 25/100 = 1 - 0.25 = 0.75\n\nInterpretation: 75% of the variance in Y is explained by the linear relationship with X. The model explains a substantial portion of the variability in the response variable."
+  },
+  {
+    "id": "math202-t6-ex03",
+    "subjectId": "math202",
+    "topicId": "math202-6",
+    "type": "written",
+    "title": "Residual Analysis",
+    "description": "Observed y: {2, 4, 5, 7, 8}. Predicted ŷ: {2.2, 3.7, 5.2, 6.7, 8.2}. Calculate the residuals and SSE.",
+    "difficulty": 2,
+    "hints": [
+      "Residual eᵢ = yᵢ - ŷᵢ",
+      "SSE = Σeᵢ²"
+    ],
+    "solution": "Residuals:\ne₁ = 2 - 2.2 = -0.2\ne₂ = 4 - 3.7 = 0.3\ne₃ = 5 - 5.2 = -0.2\ne₄ = 7 - 6.7 = 0.3\ne₅ = 8 - 8.2 = -0.2\n\nSSE = (-0.2)² + (0.3)² + (-0.2)² + (0.3)² + (-0.2)²\n= 0.04 + 0.09 + 0.04 + 0.09 + 0.04 = 0.30"
+  },
+  {
+    "id": "math202-t6-ex04",
+    "subjectId": "math202",
+    "topicId": "math202-6",
+    "type": "written",
+    "title": "Testing Slope Significance",
+    "description": "For a regression with β₁=2.5, SE(β₁)=0.8, n=20, test H₀: β₁=0 vs Hₐ: β₁≠0 at α=0.05.",
+    "difficulty": 2,
+    "hints": [
+      "Test statistic: t = β₁/SE(β₁)",
+      "df = n - 2",
+      "Critical value for df=18: t₀.₀₂₅ ≈ 2.101"
+    ],
+    "solution": "t = 2.5/0.8 = 3.125\n\ndf = 20 - 2 = 18\nCritical value (two-tailed): t₀.₀₂₅,₁₈ ≈ 2.101\n\nDecision: |t| = 3.125 > 2.101, reject H₀\n\nConclusion: Significant evidence that the slope is not zero. X is a significant predictor of Y."
+  },
+  {
+    "id": "math202-t6-ex05",
+    "subjectId": "math202",
+    "topicId": "math202-6",
+    "type": "written",
+    "title": "Prediction vs Confidence Intervals",
+    "description": "Explain the difference between a confidence interval for the mean response and a prediction interval for a new observation at x=x₀.",
+    "difficulty": 2,
+    "hints": [
+      "Confidence interval is for E[Y|x₀]",
+      "Prediction interval is for a new y₀",
+      "Which has more uncertainty?"
+    ],
+    "solution": "Confidence Interval for Mean Response:\n- Estimates E[Y|x=x₀], the average Y at x₀\n- Narrower interval\n- Formula: ŷ ± t × SE(ŷ)\n- Uncertainty only from estimating the regression line\n\nPrediction Interval for New Observation:\n- Predicts individual y₀ at x=x₀\n- Wider interval\n- Formula: ŷ ± t × √[SE(ŷ)² + MSE]\n- Additional uncertainty from individual variation around the line\n\nPrediction intervals are always wider because they account for both estimation uncertainty AND natural variability of individual observations."
+  },
+  {
+    "id": "math202-t6-ex06",
+    "subjectId": "math202",
+    "topicId": "math202-6",
+    "type": "written",
+    "title": "Correlation vs Regression",
+    "description": "For the same data, the correlation is r=0.9. Explain the relationship between r and the regression slope β₁.",
+    "difficulty": 2,
+    "hints": [
+      "β₁ = r(sy/sx)",
+      "r is standardized, β₁ depends on units"
+    ],
+    "solution": "Relationship: β₁ = r × (sy/sx)\n\nKey differences:\n1. Correlation r:\n   - Ranges from -1 to 1\n   - Symmetric: r(X,Y) = r(Y,X)\n   - Unit-free\n   - Measures strength of linear relationship\n\n2. Slope β₁:\n   - Can be any value\n   - NOT symmetric: regressing Y on X gives different slope than X on Y\n   - Has units: (units of Y)/(units of X)\n   - Measures rate of change\n\nExample: If sy=10, sx=5, r=0.9, then β₁ = 0.9(10/5) = 1.8"
+  },
+  {
+    "id": "math202-t6-ex07",
+    "subjectId": "math202",
+    "topicId": "math202-6",
+    "type": "written",
+    "title": "Regression Assumptions",
+    "description": "List the four main assumptions of linear regression and describe how to check each.",
+    "difficulty": 2,
+    "hints": [
+      "LINE: Linearity, Independence, Normality, Equal variance"
+    ],
+    "solution": "1. Linearity:\n   - Relationship between X and Y is linear\n   - Check: Scatterplot of Y vs X, residual plot\n   - Violation: Curved pattern in residuals\n\n2. Independence:\n   - Observations are independent\n   - Check: Consider study design, plot residuals vs time/order\n   - Violation: Patterns in residual plot suggest dependence\n\n3. Normality:\n   - Residuals are normally distributed\n   - Check: Normal probability plot (Q-Q plot), histogram of residuals\n   - Violation: Q-Q plot deviates from straight line\n\n4. Equal variance (Homoscedasticity):\n   - Variance of residuals is constant across X\n   - Check: Residual plot (residuals vs fitted values)\n   - Violation: \"Fan\" or \"funnel\" shape in residual plot"
+  },
+  {
+    "id": "math202-t6-ex08",
+    "subjectId": "math202",
+    "topicId": "math202-6",
+    "type": "written",
+    "title": "Influential Points",
+    "description": "Explain the concepts of leverage and influence. Can a point have high leverage but low influence?",
+    "difficulty": 3,
+    "hints": [
+      "Leverage: distance from x̄",
+      "Influence: effect on regression line"
+    ],
+    "solution": "Leverage:\n- Measure of how far xᵢ is from x̄\n- High leverage points have extreme x values\n- Potential to influence the fit\n\nInfluence:\n- Actual effect on regression coefficients\n- Measured by Cook's distance\n- A point is influential if removing it substantially changes the fit\n\nHigh Leverage, Low Influence:\nYES - if a high leverage point falls close to the regression line determined by other points, it has low influence.\n\nExample: If most data shows y = 2x, and we add point (100, 200), it has:\n- High leverage (x=100 is far from other x values)\n- Low influence (it follows the same pattern, y ≈ 2x)\n\nMost concerning: High leverage AND doesn't fit pattern = highly influential outlier"
+  },
+  {
+    "id": "math202-t6-ex09",
+    "subjectId": "math202",
+    "topicId": "math202-6",
+    "type": "written",
+    "title": "Multiple Regression Basics",
+    "description": "For ŷ = 10 + 2x₁ + 3x₂, interpret the coefficients β₁=2 and β₂=3.",
+    "difficulty": 1,
+    "hints": [
+      "Interpret each coefficient holding others constant"
+    ],
+    "solution": "β₁ = 2:\nHolding x₂ constant, for each one-unit increase in x₁, y increases by 2 units on average.\n\nβ₂ = 3:\nHolding x₁ constant, for each one-unit increase in x₂, y increases by 3 units on average.\n\nβ₀ = 10:\nWhen x₁=0 and x₂=0, the predicted value of y is 10.\n\nKey point: In multiple regression, each coefficient represents the partial effect of that predictor, controlling for all other predictors in the model."
+  },
+  {
+    "id": "math202-t6-ex10",
+    "subjectId": "math202",
+    "topicId": "math202-6",
+    "type": "written",
+    "title": "Adjusted R²",
+    "description": "Model 1: R²=0.75, k=2, n=50. Model 2: R²=0.78, k=8, n=50. Calculate adjusted R² for each and compare.",
+    "difficulty": 3,
+    "hints": [
+      "R²_adj = 1 - (1-R²)(n-1)/(n-k-1)",
+      "Adjusted R² penalizes adding predictors"
+    ],
+    "solution": "Model 1: R²=0.75, k=2, n=50\nR²_adj = 1 - (1-0.75)(49)/(50-2-1)\n= 1 - 0.25(49/47)\n= 1 - 0.2606 = 0.7394\n\nModel 2: R²=0.78, k=8, n=50\nR²_adj = 1 - (1-0.78)(49)/(50-8-1)\n= 1 - 0.22(49/41)\n= 1 - 0.2629 = 0.7371\n\nDespite Model 2 having higher R² (0.78 vs 0.75), Model 1 has higher adjusted R² (0.739 vs 0.737).\n\nConclusion: The extra 6 predictors in Model 2 don't justify their addition. Model 1 is preferred - simpler with similar explanatory power."
+  },
+  {
+    "id": "math202-t6-ex11",
+    "subjectId": "math202",
+    "topicId": "math202-6",
+    "type": "written",
+    "title": "Multicollinearity Detection",
+    "description": "In a multiple regression, predictor x₁ has VIF=8.5. What does this indicate and what problems might it cause?",
+    "difficulty": 2,
+    "hints": [
+      "VIF > 5 or 10 suggests multicollinearity",
+      "VIF = 1/(1-R²ⱼ) where R²ⱼ is from regressing xⱼ on other predictors"
+    ],
+    "solution": "VIF = 8.5 indicates significant multicollinearity.\n\nFrom VIF = 1/(1-R²₁):\n8.5 = 1/(1-R²₁)\nR²₁ = 1 - 1/8.5 = 0.882\n\nThis means 88.2% of variance in x₁ is explained by other predictors - high correlation with other variables.\n\nProblems caused:\n1. Inflated standard errors for coefficients\n2. Unstable coefficient estimates (sensitive to small data changes)\n3. Difficult to determine individual predictor effects\n4. Coefficients may have wrong signs\n5. Overall model may fit well (high R²) but individual predictors appear non-significant\n\nSolutions:\n- Remove one of the correlated predictors\n- Combine correlated predictors (e.g., principal components)\n- Increase sample size\n- Use ridge regression or other regularization"
+  },
+  {
+    "id": "math202-t6-ex12",
+    "subjectId": "math202",
+    "topicId": "math202-6",
+    "type": "written",
+    "title": "F-Test in Regression",
+    "description": "For a multiple regression with k=3 predictors, n=24, SSR=300, SSE=100, test if the model is significant at α=0.05.",
+    "difficulty": 3,
+    "hints": [
+      "F = (SSR/k) / (SSE/(n-k-1))",
+      "df₁ = k, df₂ = n-k-1"
+    ],
+    "solution": "MSR = SSR/k = 300/3 = 100\nMSE = SSE/(n-k-1) = 100/(24-3-1) = 100/20 = 5\n\nF = MSR/MSE = 100/5 = 20\n\ndf₁ = 3, df₂ = 20\nCritical value F₀.₀₅(3,20) ≈ 3.10\n\nDecision: F = 20 > 3.10, reject H₀\n\nConclusion: The model is highly significant. At least one predictor is significantly related to Y.\n\nNote: This tests H₀: β₁ = β₂ = β₃ = 0 (all slopes zero) vs Hₐ: at least one βᵢ ≠ 0"
+  },
+  {
+    "id": "math202-t6-ex13",
+    "subjectId": "math202",
+    "topicId": "math202-6",
+    "type": "written",
+    "title": "Model Selection with AIC",
+    "description": "Model A: k=2, log-likelihood=-120. Model B: k=5, log-likelihood=-115. Calculate AIC for each. Which is preferred?",
+    "difficulty": 2,
+    "hints": [
+      "AIC = 2k - 2×log-likelihood",
+      "Lower AIC is better"
+    ],
+    "solution": "Model A:\nAIC_A = 2(2) - 2(-120) = 4 + 240 = 244\n\nModel B:\nAIC_B = 2(5) - 2(-115) = 10 + 230 = 240\n\nModel B has lower AIC (240 < 244), so it's preferred.\n\nInterpretation: Despite having 3 more parameters, Model B's improved fit (higher log-likelihood) more than compensates for the complexity penalty.\n\nAIC balances:\n- Goodness of fit (log-likelihood, higher is better)\n- Model complexity (number of parameters, lower is better)"
+  },
+  {
+    "id": "math202-t6-ex14",
+    "subjectId": "math202",
+    "topicId": "math202-6",
+    "type": "written",
+    "title": "Polynomial Regression",
+    "description": "When might you use polynomial regression? What are the risks of high-degree polynomials?",
+    "difficulty": 2,
+    "hints": [
+      "Consider non-linear relationships",
+      "Think about overfitting"
+    ],
+    "solution": "When to use polynomial regression:\n1. Scatterplot shows curved relationship\n2. Theory suggests non-linear relationship\n3. Residual plot shows systematic pattern\n4. Example: ŷ = β₀ + β₁x + β₂x² (quadratic)\n\nRisks of high-degree polynomials:\n1. Overfitting:\n   - Fits noise in the data\n   - Poor prediction for new data\n   - High variance\n\n2. Extrapolation problems:\n   - Extreme predictions outside data range\n   - Polynomials can diverge to ±∞\n\n3. Interpretation difficulty:\n   - Hard to interpret β coefficients\n   - Effect of x depends on x value\n\n4. Multicollinearity:\n   - High correlation between x, x², x³, etc.\n   - Inflated standard errors\n\nRecommendation: Rarely go beyond quadratic (x²) or cubic (x³). Consider alternative approaches like splines for complex curves."
+  },
+  {
+    "id": "math202-t6-ex15",
+    "subjectId": "math202",
+    "topicId": "math202-6",
+    "type": "written",
+    "title": "Interaction Terms",
+    "description": "Model: ŷ = 50 + 2x₁ + 3x₂ + 0.5x₁x₂. Interpret the interaction term. What is the effect of x₁ when x₂=10?",
+    "difficulty": 3,
+    "hints": [
+      "Interaction means effect of one variable depends on another",
+      "Calculate ∂ŷ/∂x₁"
+    ],
+    "solution": "ŷ = 50 + 2x₁ + 3x₂ + 0.5x₁x₂\n\nInteraction term 0.5x₁x₂:\nThe effect of x₁ on y depends on the value of x₂ (and vice versa).\n\nEffect of x₁:\n∂ŷ/∂x₁ = 2 + 0.5x₂\n\nWhen x₂ = 0: effect of x₁ is 2\nWhen x₂ = 10: effect of x₁ is 2 + 0.5(10) = 7\nWhen x₂ = 20: effect of x₁ is 2 + 0.5(20) = 12\n\nInterpretation: As x₂ increases, the effect of x₁ becomes stronger. For each unit increase in x₂, the slope for x₁ increases by 0.5.\n\nWithout interaction, the effect of x₁ would be constant (2) regardless of x₂ value."
+  },
+  {
+    "id": "math202-t6-ex16",
+    "subjectId": "math202",
+    "topicId": "math202-6",
+    "type": "written",
+    "title": "Standardized Regression",
+    "description": "Why might we standardize variables before regression? How does this affect interpretation of coefficients?",
+    "difficulty": 2,
+    "hints": [
+      "Standardize: z = (x - x̄)/s",
+      "Consider comparing coefficients"
+    ],
+    "solution": "Standardizing variables (converting to z-scores):\nz = (x - x̄)/s\n\nReasons to standardize:\n1. Compare coefficient magnitudes:\n   - Original coefficients depend on units\n   - Standardized coefficients (β*) are unit-free\n   - Can compare which predictors have stronger effects\n\n2. Multicollinearity reduction:\n   - Centering can help with polynomial terms\n   - Reduces correlation between x and x²\n\n3. Interpretation when variables on different scales:\n   - Age (years) vs Income ($) vs Test scores\n   - Standardization puts all on same scale\n\nInterpretation after standardizing:\nβ* represents change in Y (in standard deviations) for one standard deviation change in X.\n\nExample:\nBefore: ŷ = 10 + 2000×(income in $1000s)\nAfter: ŷ = 10 + 0.8×(standardized income)\n\nβ*=0.8 means: one SD increase in income → 0.8 SD increase in ŷ"
+  },
+  {
+    "id": "math202-t7-ex01",
+    "subjectId": "math202",
+    "topicId": "math202-7",
+    "type": "written",
+    "title": "Bayesian vs Frequentist Philosophy",
+    "description": "Explain the fundamental philosophical difference between Bayesian and frequentist approaches to probability and inference.",
+    "difficulty": 2,
+    "hints": [
+      "Consider how each treats parameters",
+      "Think about the role of prior knowledge"
+    ],
+    "solution": "Frequentist approach:\n- Parameters are fixed but unknown constants\n- Probability is long-run frequency\n- Inference based solely on data (likelihood)\n- No prior knowledge incorporated\n- Example: \"95% CI means in repeated sampling, 95% of intervals contain θ\"\n\nBayesian approach:\n- Parameters are random variables with probability distributions\n- Probability represents degree of belief/uncertainty\n- Combines prior knowledge with data (posterior ∝ likelihood × prior)\n- Updates beliefs as evidence accumulates\n- Example: \"95% credible interval means θ has 95% probability of being in the interval\"\n\nKey difference: Bayesian treats unknown parameter as uncertain (has distribution), frequentist treats it as fixed (only data varies)."
+  },
+  {
+    "id": "math202-t7-ex02",
+    "subjectId": "math202",
+    "topicId": "math202-7",
+    "type": "written",
+    "title": "Beta-Binomial Conjugacy",
+    "description": "A coin is flipped 10 times and shows 7 heads. Using a Beta(2, 2) prior for the probability of heads θ, find the posterior distribution and the posterior mean estimate of θ.",
+    "difficulty": 3,
+    "hints": [
+      "Beta is conjugate to Binomial",
+      "If prior is Beta(α, β) and we observe x successes in n trials, posterior is Beta(α + x, β + n - x)",
+      "The mean of Beta(a, b) is a/(a+b)"
+    ],
+    "solution": "Prior: θ ~ Beta(2, 2)\nData: x = 7 heads, n = 10 flips\n\nPosterior (using conjugacy):\nθ | data ~ Beta(α + x, β + n - x)\n= Beta(2 + 7, 2 + 10 - 7)\n= Beta(9, 5)\n\nPosterior mean:\nE[θ | data] = α'/(α' + β')\n= 9/(9 + 5)\n= 9/14 ≈ 0.643\n\nCompare to MLE: 7/10 = 0.7\nThe posterior mean is pulled toward the prior mean of 0.5, demonstrating shrinkage."
+  },
+  {
+    "id": "math202-t7-ex03",
+    "subjectId": "math202",
+    "topicId": "math202-7",
+    "type": "written",
+    "title": "Informative vs Non-informative Priors",
+    "description": "For estimating a population proportion θ ∈ [0, 1], compare and contrast using (a) Beta(1, 1), (b) Beta(0.5, 0.5), and (c) Beta(10, 10) as prior distributions. Which would you consider informative vs non-informative?",
+    "difficulty": 3,
+    "hints": [
+      "Calculate the mean and variance for each prior",
+      "Consider how concentrated each distribution is",
+      "Think about what prior beliefs each represents"
+    ],
+    "solution": "Beta(1, 1): Uniform prior\n- Mean = 0.5, Variance = 1/12 ≈ 0.083\n- Flat distribution, assigns equal probability to all θ values\n- Non-informative: represents \"no preference\" about θ\n\nBeta(0.5, 0.5): Jeffreys prior\n- Mean = 0.5, Variance = 0.125\n- U-shaped, concentrates mass near 0 and 1\n- Non-informative: derived from Fisher information, invariant under reparameterization\n\nBeta(10, 10): Informative prior\n- Mean = 0.5, Variance ≈ 0.012 (much smaller)\n- Bell-shaped, concentrated around 0.5\n- Informative: equivalent to having seen 20 prior observations with 10 successes\n- Represents strong belief that θ is near 0.5\n\nKey distinction: Informative priors encode specific prior beliefs; non-informative priors aim to \"let the data speak.\""
+  },
+  {
+    "id": "math202-t7-ex04",
+    "subjectId": "math202",
+    "topicId": "math202-7",
+    "type": "written",
+    "title": "Posterior Credible Interval",
+    "description": "Given a posterior distribution θ | data ~ Beta(12, 8), compute the 95% equal-tailed credible interval and the posterior probability that θ > 0.5.",
+    "difficulty": 4,
+    "hints": [
+      "Use quantile function for credible interval",
+      "For Beta(12, 8), can use statistical tables or software",
+      "P(θ > 0.5) = 1 - F(0.5) where F is the Beta CDF"
+    ],
+    "solution": "Posterior: θ | data ~ Beta(12, 8)\n\n95% Equal-tailed Credible Interval:\nFind q_0.025 and q_0.975 of Beta(12, 8)\n\nUsing Beta distribution quantiles:\n- q_0.025 ≈ 0.400 (2.5th percentile)\n- q_0.975 ≈ 0.781 (97.5th percentile)\n\n95% CI: (0.400, 0.781)\n\nP(θ > 0.5 | data):\nUsing Beta CDF, P(θ ≤ 0.5 | data) ≈ 0.180\nTherefore, P(θ > 0.5 | data) = 1 - 0.180 = 0.820\n\nInterpretation: There is 82% posterior probability that θ exceeds 0.5.\n\nNote: These calculations require statistical software or tables. The Beta(12, 8) has mean 12/20 = 0.6."
+  },
+  {
+    "id": "math202-t7-ex05",
+    "subjectId": "math202",
+    "topicId": "math202-7",
+    "type": "written",
+    "title": "Normal-Normal Conjugacy",
+    "description": "Suppose we observe a single data point x = 12 from a Normal(μ, σ² = 4) distribution. Using a Normal(10, τ² = 9) prior for μ, derive the posterior distribution for μ.",
+    "difficulty": 4,
+    "hints": [
+      "Normal prior is conjugate to Normal likelihood with known variance",
+      "Posterior precision = prior precision + data precision",
+      "Posterior mean is precision-weighted average"
+    ],
+    "solution": "Prior: μ ~ Normal(μ₀ = 10, τ² = 9)\nLikelihood: x | μ ~ Normal(μ, σ² = 4)\nData: x = 12\n\nUsing precision (inverse variance):\n- Prior precision: 1/τ² = 1/9\n- Data precision: 1/σ² = 1/4\n\nPosterior precision:\n1/τ²_post = 1/τ² + 1/σ² = 1/9 + 1/4 = 13/36\nτ²_post = 36/13 ≈ 2.77\n\nPosterior mean:\nμ_post = [(1/τ²)μ₀ + (1/σ²)x] / (1/τ² + 1/σ²)\n= [(1/9)(10) + (1/4)(12)] / (13/36)\n= [10/9 + 3] / (13/36)\n= [10/9 + 27/9] / (13/36)\n= (37/9) × (36/13)\n= 37×4/13 ≈ 11.38\n\nPosterior: μ | x ~ Normal(11.38, 2.77)\n\nThe posterior mean is a weighted average of prior mean (10) and data (12), weighted by precisions."
+  },
+  {
+    "id": "math202-t7-ex06",
+    "subjectId": "math202",
+    "topicId": "math202-7",
+    "type": "written",
+    "title": "Bayes Factor Calculation",
+    "description": "For a coin flip experiment with 8 heads in 10 flips, calculate the Bayes factor comparing H₀: θ = 0.5 (fair coin) versus H₁: θ ~ Uniform(0, 1).",
+    "difficulty": 5,
+    "hints": [
+      "Bayes factor BF₀₁ = P(data | H₀) / P(data | H₁)",
+      "Under H₀, directly calculate binomial probability",
+      "Under H₁, integrate likelihood over the prior (marginal likelihood)"
+    ],
+    "solution": "Data: x = 8, n = 10\n\nP(data | H₀): Direct calculation under θ = 0.5\n= C(10,8) × 0.5⁸ × 0.5² = 45 × (0.5)¹⁰ = 45/1024 ≈ 0.0439\n\nP(data | H₁): Marginal likelihood under Uniform(0,1) prior\n= ∫₀¹ P(x=8|θ) × p(θ) dθ\n= ∫₀¹ C(10,8) × θ⁸ × (1-θ)² × 1 dθ\n= 45 × B(9, 3) where B is Beta function\n= 45 × Γ(9)Γ(3)/Γ(12)\n= 45 × 8! × 2! / 11!\n= 45 × (40320 × 2) / 39916800\n= 45 / 495 = 1/11 ≈ 0.0909\n\nBayes Factor:\nBF₀₁ = P(data|H₀) / P(data|H₁)\n= 0.0439 / 0.0909 ≈ 0.483\n\nBF₁₀ = 1/BF₀₁ ≈ 2.07\n\nInterpretation: The data provide weak evidence (about 2:1) in favor of H₁ over H₀."
+  },
+  {
+    "id": "math202-t7-ex07",
+    "subjectId": "math202",
+    "topicId": "math202-7",
+    "type": "written",
+    "title": "Posterior Predictive Distribution",
+    "description": "After observing n coin flips with x heads and using a Beta(α, β) prior, the posterior is Beta(α + x, β + n - x). Derive the posterior predictive probability of observing heads on the next flip.",
+    "difficulty": 4,
+    "hints": [
+      "Posterior predictive = ∫ P(new data | θ) × p(θ | old data) dθ",
+      "The integral of θ × Beta(a, b) is the mean of Beta(a, b)",
+      "Mean of Beta(a, b) = a/(a+b)"
+    ],
+    "solution": "Let Y = 1 if next flip is heads, 0 otherwise.\n\nPosterior predictive:\nP(Y = 1 | data) = ∫ P(Y=1|θ) × p(θ|data) dθ\n= ∫₀¹ θ × Beta(θ | α+x, β+n-x) dθ\n= E[θ | data]\n= (α + x) / (α + x + β + n - x)\n= (α + x) / (α + β + n)\n\nThis is the posterior mean of θ!\n\nExample: With Beta(1, 1) prior (uniform) and x = 7, n = 10:\nP(next heads) = (1 + 7) / (1 + 1 + 10) = 8/12 = 2/3\n\nWith Beta(2, 2) prior:\nP(next heads) = (2 + 7) / (2 + 2 + 10) = 9/14 ≈ 0.643\n\nThis differs from both the MLE (7/10) and the prior mean (0.5), representing a compromise."
+  },
+  {
+    "id": "math202-t7-ex08",
+    "subjectId": "math202",
+    "topicId": "math202-7",
+    "type": "written",
+    "title": "MAP vs Posterior Mean",
+    "description": "For a Beta(3, 2) posterior distribution, calculate both the Maximum A Posteriori (MAP) estimate and the posterior mean. Explain when each might be preferred.",
+    "difficulty": 3,
+    "hints": [
+      "MAP is the mode of the posterior",
+      "Mode of Beta(a, b) = (a-1)/(a+b-2) for a, b > 1",
+      "Mean of Beta(a, b) = a/(a+b)"
+    ],
+    "solution": "Posterior: θ | data ~ Beta(3, 2)\n\nMAP (Mode):\nFor Beta(a, b) with a, b > 1:\nMode = (a - 1)/(a + b - 2)\n= (3 - 1)/(3 + 2 - 2)\n= 2/3 ≈ 0.667\n\nPosterior Mean:\nMean = a/(a + b)\n= 3/(3 + 2)\n= 3/5 = 0.6\n\nDifference: MAP (0.667) > Mean (0.6)\n\nWhen to use each:\n\nMAP preferred when:\n- Want a single \"most likely\" point estimate\n- Loss function is 0-1 (correct vs incorrect)\n- Distribution is highly skewed\n- Computational simplicity needed (no integration)\n\nPosterior mean preferred when:\n- Loss function is squared error\n- Want to minimize expected squared loss\n- Need a \"balanced\" estimate accounting for all of posterior\n- Distribution is symmetric (where MAP = mean anyway)"
+  },
+  {
+    "id": "math202-t7-ex09",
+    "subjectId": "math202",
+    "topicId": "math202-7",
+    "type": "written",
+    "title": "Sequential Bayesian Updating",
+    "description": "Starting with a Beta(1, 1) prior, sequentially update your belief about a coin's probability of heads after observing: first flip = H, second flip = H, third flip = T. Show the posterior after each observation.",
+    "difficulty": 3,
+    "hints": [
+      "Each observation updates prior → posterior",
+      "Previous posterior becomes next prior",
+      "For Beta prior with Binomial data: Beta(α, β) → Beta(α+1, β) for heads, Beta(α, β+1) for tails"
+    ],
+    "solution": "Initial prior: θ ~ Beta(1, 1) = Uniform(0, 1)\n\nAfter first flip (H):\nPosterior = Beta(1 + 1, 1 + 0) = Beta(2, 1)\nPosterior mean = 2/3 ≈ 0.667\n\nAfter second flip (H):\nPrior = Beta(2, 1)\nPosterior = Beta(2 + 1, 1 + 0) = Beta(3, 1)\nPosterior mean = 3/4 = 0.75\n\nAfter third flip (T):\nPrior = Beta(3, 1)\nPosterior = Beta(3 + 0, 1 + 1) = Beta(3, 2)\nPosterior mean = 3/5 = 0.6\n\nSummary:\n| Observation | Posterior | Mean |\n|-------------|-----------|------|\n| (none)      | Beta(1,1) | 0.50 |\n| H           | Beta(2,1) | 0.67 |\n| HH          | Beta(3,1) | 0.75 |\n| HHT         | Beta(3,2) | 0.60 |\n\nNote: Final posterior Beta(3, 2) is the same as if we had updated all at once with 2 heads, 1 tail."
+  },
+  {
+    "id": "math202-t7-ex10",
+    "subjectId": "math202",
+    "topicId": "math202-7",
+    "type": "written",
+    "title": "Gamma-Poisson Conjugacy",
+    "description": "Suppose the number of customer arrivals per hour follows Poisson(λ). Using a Gamma(α = 3, β = 1) prior for λ, if we observe 5 arrivals in 2 hours, find the posterior distribution for λ.",
+    "difficulty": 4,
+    "hints": [
+      "Gamma is conjugate to Poisson",
+      "With Gamma(α, β) prior and observing total count x over time t, posterior is Gamma(α + x, β + t)",
+      "Mean of Gamma(α, β) = α/β"
+    ],
+    "solution": "Prior: λ ~ Gamma(α = 3, β = 1)\nData: x = 5 arrivals, t = 2 hours\n\nPosterior (using conjugacy):\nλ | data ~ Gamma(α + x, β + t)\n= Gamma(3 + 5, 1 + 2)\n= Gamma(8, 3)\n\nPosterior characteristics:\n- Mean: α'/β' = 8/3 ≈ 2.67 arrivals/hour\n- Variance: α'/β'² = 8/9 ≈ 0.89\n- Mode: (α' - 1)/β' = 7/3 ≈ 2.33 (for α' > 1)\n\nPrior mean was 3/1 = 3 arrivals/hour\nMLE would be 5/2 = 2.5 arrivals/hour\nPosterior mean (2.67) is between prior and MLE\n\nInterpretation: After observing 5 arrivals in 2 hours, our estimate of the arrival rate is pulled from the prior mean of 3 toward the observed rate of 2.5."
+  },
+  {
+    "id": "math202-t7-ex11",
+    "subjectId": "math202",
+    "topicId": "math202-7",
+    "type": "written",
+    "title": "Bayesian Hypothesis Testing",
+    "description": "Test whether a coin is fair using Bayesian methods. Prior: P(fair) = 0.8, P(biased) = 0.2. If biased, θ ~ Uniform(0.6, 1). After 10 flips showing 9 heads, calculate the posterior probability the coin is fair.",
+    "difficulty": 5,
+    "hints": [
+      "Use Bayes theorem: P(fair|data) ∝ P(data|fair) × P(fair)",
+      "Calculate P(data|fair) directly",
+      "Calculate P(data|biased) by integrating over the conditional prior"
+    ],
+    "solution": "Let F = fair (θ = 0.5), B = biased (θ ~ Uniform(0.6, 1))\nData: 9 heads in 10 flips\n\nPrior probabilities: P(F) = 0.8, P(B) = 0.2\n\nP(data | F): θ = 0.5\n= C(10,9) × 0.5⁹ × 0.5¹ = 10 × (0.5)¹⁰ = 10/1024 ≈ 0.00977\n\nP(data | B): Integrate over θ ~ Uniform(0.6, 1)\n= ∫₀.₆¹ C(10,9) × θ⁹ × (1-θ)¹ × (1/0.4) dθ\n= (10/0.4) ∫₀.₆¹ θ⁹(1-θ) dθ\n= 25 × [θ¹⁰/10 - θ¹¹/11]₀.₆¹\n= 25 × [(1/10 - 1/11) - (0.6¹⁰/10 - 0.6¹¹/11)]\n= 25 × [1/110 - (0.00605/10 - 0.00363/11)]\n= 25 × [0.00909 - 0.000274]\n≈ 0.220\n\nPosterior:\nP(F|data) = P(data|F)P(F) / [P(data|F)P(F) + P(data|B)P(B)]\n= (0.00977)(0.8) / [(0.00977)(0.8) + (0.220)(0.2)]\n= 0.00782 / (0.00782 + 0.044)\n= 0.00782 / 0.0518\n≈ 0.151\n\nP(fair | data) ≈ 15.1%\n\nDespite strong prior belief in fairness (80%), the data strongly suggest bias."
+  },
+  {
+    "id": "math202-t7-ex12",
+    "subjectId": "math202",
+    "topicId": "math202-7",
+    "type": "written",
+    "title": "Metropolis-Hastings Algorithm",
+    "description": "Describe the Metropolis-Hastings algorithm for sampling from a posterior distribution. Include the acceptance probability formula and explain why this algorithm works.",
+    "difficulty": 4,
+    "hints": [
+      "MH generates a Markov chain whose stationary distribution is the target posterior",
+      "Key components: proposal distribution, acceptance probability",
+      "The algorithm ensures detailed balance"
+    ],
+    "solution": "Metropolis-Hastings Algorithm:\n\n1. Initialize: Choose starting value θ₀\n\n2. For iteration i = 1, 2, ..., N:\n   a. Propose: Generate θ* from proposal distribution q(θ*|θᵢ₋₁)\n   \n   b. Calculate acceptance probability:\n      α = min(1, [p(θ*|data) × q(θᵢ₋₁|θ*)] / [p(θᵢ₋₁|data) × q(θ*|θᵢ₋₁)])\n   \n   c. Accept/Reject:\n      - Generate u ~ Uniform(0, 1)\n      - If u < α: set θᵢ = θ* (accept)\n      - Else: set θᵢ = θᵢ₋₁ (reject, stay at current value)\n\n3. After burn-in period, samples {θᵢ} approximate draws from posterior\n\nWhy it works:\n- Detailed balance: π(θ)T(θ→θ*) = π(θ*)T(θ*→θ)\n  where π is target distribution, T is transition kernel\n- This ensures the Markov chain has π as its stationary distribution\n- The acceptance ratio cancels normalizing constants, so we only need posterior up to proportionality\n\nSpecial case - Metropolis: When q is symmetric, q(θ*|θ) = q(θ|θ*), the ratio simplifies to:\nα = min(1, p(θ*|data)/p(θᵢ₋₁|data))"
+  },
+  {
+    "id": "math202-t7-ex13",
+    "subjectId": "math202",
+    "topicId": "math202-7",
+    "type": "written",
+    "title": "Gibbs Sampling",
+    "description": "Explain how Gibbs sampling works for a model with two parameters θ₁ and θ₂. What are its advantages over general Metropolis-Hastings?",
+    "difficulty": 4,
+    "hints": [
+      "Gibbs samples from full conditional distributions",
+      "Alternates between updating each parameter given the others",
+      "Special case of MH with acceptance probability = 1"
+    ],
+    "solution": "Gibbs Sampling for two parameters:\n\n1. Initialize: θ₁⁽⁰⁾, θ₂⁽⁰⁾\n\n2. For iteration i = 1, 2, ..., N:\n   a. Sample θ₁⁽ⁱ⁾ ~ p(θ₁ | θ₂⁽ⁱ⁻¹⁾, data)\n   b. Sample θ₂⁽ⁱ⁾ ~ p(θ₂ | θ₁⁽ⁱ⁾, data)\n\n3. After burn-in, {(θ₁⁽ⁱ⁾, θ₂⁽ⁱ⁾)} are draws from joint posterior\n\nKey insight: Each step samples from a full conditional distribution (one parameter given all others and data).\n\nAdvantages over general MH:\n1. No proposal distribution to tune\n2. All proposals are accepted (acceptance rate = 100%)\n3. Often easier when full conditionals have known forms (e.g., conjugate priors)\n4. No need to calculate acceptance ratios\n5. Can exploit conjugate relationships within hierarchical models\n\nDisadvantages:\n- Requires knowing full conditionals in closed form\n- Can mix slowly with highly correlated parameters\n- May not be applicable when conditionals are intractable\n\nGibbs as special case of MH:\nThe Gibbs update is MH with proposal q(θ₁*|θ₁, θ₂) = p(θ₁|θ₂, data), giving acceptance ratio = 1."
+  },
+  {
+    "id": "math202-t7-ex14",
+    "subjectId": "math202",
+    "topicId": "math202-7",
+    "type": "written",
+    "title": "Empirical Bayes",
+    "description": "Explain the empirical Bayes approach and contrast it with fully Bayesian inference. What are its advantages and limitations?",
+    "difficulty": 3,
+    "hints": [
+      "Empirical Bayes estimates hyperparameters from data",
+      "Consider the distinction between unknown parameters and hyperparameters",
+      "Think about computational and philosophical trade-offs"
+    ],
+    "solution": "Empirical Bayes Approach:\n\nHierarchical model: Data ~ p(x|θ), Prior: θ ~ p(θ|η)\n\nEmpirical Bayes (EB):\n1. Estimate hyperparameters η from marginal likelihood:\n   η̂ = argmax p(data | η) = argmax ∫ p(data|θ)p(θ|η) dθ\n2. Use p(θ|η̂) as \"estimated prior\"\n3. Compute posterior p(θ|data, η̂)\n\nFully Bayesian:\n1. Place hyperprior on η: p(η)\n2. Compute full posterior p(θ, η|data)\n3. Marginalize: p(θ|data) = ∫ p(θ|data, η)p(η|data) dη\n\nAdvantages of Empirical Bayes:\n- Computationally simpler (avoid hyperprior integration)\n- Data-driven prior specification\n- Good practical performance, especially with large datasets\n- No need to specify subjective hyperprior\n\nLimitations:\n- Underestimates uncertainty (ignores variability in η)\n- \"Double-dipping\": uses data twice (to set prior and for inference)\n- Not coherently Bayesian (philosophical objection)\n- Can overfit with small samples\n\nWhen EB works well:\n- Large sample sizes (η well-estimated)\n- Many related parameters (borrowing strength)\n- Computational constraints prevent full Bayes"
+  },
+  {
+    "id": "math202-t7-ex15",
+    "subjectId": "math202",
+    "topicId": "math202-7",
+    "type": "written",
+    "title": "Bayesian Linear Regression",
+    "description": "In Bayesian linear regression with y = Xβ + ε where ε ~ N(0, σ²I), suppose we use prior β ~ N(0, τ²I). Describe how this relates to ridge regression and explain the posterior distribution of β.",
+    "difficulty": 5,
+    "hints": [
+      "Ridge regression adds L2 penalty λ||β||²",
+      "The connection involves the ratio σ²/τ²",
+      "Posterior is also Normal (conjugacy)"
+    ],
+    "solution": "Setup:\n- Likelihood: y | β, σ² ~ N(Xβ, σ²I)\n- Prior: β ~ N(0, τ²I)\n\nPosterior of β | y, σ², τ²:\n\nBy conjugacy, posterior is Normal:\nβ | y ~ N(μ_post, Σ_post)\n\nwhere:\nΣ_post = (X'X/σ² + I/τ²)⁻¹\nμ_post = Σ_post × (X'y/σ²)\n\nAlternatively:\nμ_post = (X'X + λI)⁻¹X'y where λ = σ²/τ²\n\nConnection to Ridge Regression:\n- Ridge estimate: β̂_ridge = (X'X + λI)⁻¹X'y\n- This equals the Bayesian posterior mean!\n- λ = σ²/τ² is the regularization parameter\n- Larger prior variance τ² → smaller λ → less shrinkage\n- Smaller prior variance τ² → larger λ → more shrinkage toward 0\n\nInterpretation:\n- Ridge regression is MAP estimation under Normal prior\n- τ² controls strength of prior belief that β is near 0\n- Bayesian approach additionally quantifies uncertainty via Σ_post\n- Can obtain credible intervals, prediction intervals, etc.\n\nBayesian advantage: Full posterior distribution, not just point estimate."
+  },
+  {
+    "id": "math202-t7-ex16",
+    "subjectId": "math202",
+    "topicId": "math202-7",
+    "type": "written",
+    "title": "Model Comparison with BIC",
+    "description": "The Bayesian Information Criterion (BIC) approximates -2 log(marginal likelihood). For comparing two models M₁ (2 parameters) and M₂ (5 parameters), if their maximized log-likelihoods are ℓ₁ = -150 and ℓ₂ = -145 with n = 100 observations, which model is preferred?",
+    "difficulty": 4,
+    "hints": [
+      "BIC = -2ℓ + k×log(n) where k is number of parameters",
+      "Lower BIC is better",
+      "BIC approximates -2 log(Bayes factor) + constant"
+    ],
+    "solution": "BIC formula: BIC = -2ℓ + k×log(n)\n\nwhere ℓ = maximized log-likelihood, k = number of parameters, n = sample size\n\nFor M₁ (k₁ = 2, ℓ₁ = -150):\nBIC₁ = -2(-150) + 2×log(100)\n= 300 + 2×4.605\n= 300 + 9.21\n= 309.21\n\nFor M₂ (k₂ = 5, ℓ₂ = -145):\nBIC₂ = -2(-145) + 5×log(100)\n= 290 + 5×4.605\n= 290 + 23.03\n= 313.03\n\nComparison:\nBIC₁ = 309.21 < BIC₂ = 313.03\n\nΔBIC = BIC₂ - BIC₁ = 3.82\n\nDecision: M₁ (simpler model) is preferred\n\nInterpretation:\n- Although M₂ fits better (higher likelihood), the 3 extra parameters are not justified\n- ΔBIC ≈ 3.82 corresponds to \"positive evidence\" for M₁ (Kass & Raftery scale)\n- exp(-ΔBIC/2) ≈ 0.15 is approximate Bayes factor, suggesting M₁ is ~7× more probable\n\nNote: BIC penalizes complexity more heavily than AIC, favoring simpler models."
+  }
+]

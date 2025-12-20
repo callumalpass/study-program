@@ -1,0 +1,381 @@
+[
+  {
+    "id": "cs307-project-1",
+    "subjectId": "cs307",
+    "title": "Secure Password Manager",
+    "description": "Build a command-line password manager that implements industry-standard cryptographic practices. This project focuses on secure key derivation, proper encryption/decryption, and secure password storage. Students will learn to implement PBKDF2 or Argon2 for key derivation, AES-256 for encryption, and proper key management techniques. The password manager should support storing, retrieving, updating, and deleting password entries while maintaining confidentiality and integrity.",
+    "requirements": [
+      "Implement secure master password handling with PBKDF2 or Argon2 key derivation (minimum 100,000 iterations)",
+      "Use AES-256-GCM or ChaCha20-Poly1305 for encrypting password entries",
+      "Generate cryptographically secure random passwords with configurable length and character sets",
+      "Store encrypted passwords with proper salt and IV/nonce handling",
+      "Implement secure memory handling to prevent password leakage",
+      "Add password strength validation and enforcement",
+      "Implement automatic clipboard clearing after password retrieval",
+      "Create comprehensive documentation explaining cryptographic choices",
+      "Include unit tests for all cryptographic operations",
+      "Handle edge cases and error conditions securely (no information leakage)"
+    ],
+    "rubric": [
+      {
+        "name": "Cryptographic Implementation",
+        "weight": 35,
+        "levels": [
+          {
+            "score": 1,
+            "label": "Incomplete",
+            "description": "Uses weak or no encryption; hardcoded keys; missing key derivation; passwords stored in plaintext or with weak hashing"
+          },
+          {
+            "score": 2,
+            "label": "Basic",
+            "description": "Uses encryption but with weak parameters (e.g., low iteration count); basic key derivation present but not properly configured; some security issues remain"
+          },
+          {
+            "score": 3,
+            "label": "Proficient",
+            "description": "Implements AES-256 with proper key derivation (PBKDF2/Argon2); uses appropriate iteration counts; properly handles salts and IVs; minor issues in implementation"
+          },
+          {
+            "score": 4,
+            "label": "Exemplary",
+            "description": "Flawless cryptographic implementation using authenticated encryption (GCM/Poly1305); optimal parameters; secure random number generation; considers timing attacks and side channels"
+          }
+        ]
+      },
+      {
+        "name": "Secure Storage and Key Management",
+        "weight": 25,
+        "levels": [
+          {
+            "score": 1,
+            "label": "Incomplete",
+            "description": "Stores keys or passwords insecurely; no separation of encrypted data and metadata; missing salt or IV storage"
+          },
+          {
+            "score": 2,
+            "label": "Basic",
+            "description": "Basic storage structure present; stores salts and IVs but with organizational issues; key management has vulnerabilities"
+          },
+          {
+            "score": 3,
+            "label": "Proficient",
+            "description": "Proper storage format with separated encrypted data, salts, and IVs; secure key derivation from master password; good file structure"
+          },
+          {
+            "score": 4,
+            "label": "Exemplary",
+            "description": "Sophisticated storage with integrity checks (HMAC); considers file permissions; implements secure deletion; versioning support; backup considerations"
+          }
+        ]
+      },
+      {
+        "name": "Security Best Practices",
+        "weight": 25,
+        "levels": [
+          {
+            "score": 1,
+            "label": "Incomplete",
+            "description": "Passwords visible in memory/logs; no input validation; error messages leak information; insecure random generation"
+          },
+          {
+            "score": 2,
+            "label": "Basic",
+            "description": "Basic input validation; attempts to clear sensitive data; some error handling; uses system random but not cryptographically secure"
+          },
+          {
+            "score": 3,
+            "label": "Proficient",
+            "description": "Cryptographically secure random generation; clears sensitive data from memory; generic error messages; clipboard clearing implemented"
+          },
+          {
+            "score": 4,
+            "label": "Exemplary",
+            "description": "Comprehensive security measures including timing attack prevention, secure memory zeroing, audit logging, rate limiting on authentication attempts"
+          }
+        ]
+      },
+      {
+        "name": "Documentation and Testing",
+        "weight": 15,
+        "levels": [
+          {
+            "score": 1,
+            "label": "Incomplete",
+            "description": "Minimal or no documentation; no tests; unclear cryptographic choices"
+          },
+          {
+            "score": 2,
+            "label": "Basic",
+            "description": "Basic documentation present; some tests covering happy paths; cryptographic choices mentioned but not explained"
+          },
+          {
+            "score": 3,
+            "label": "Proficient",
+            "description": "Clear documentation explaining security decisions; comprehensive test coverage including edge cases; usage instructions provided"
+          },
+          {
+            "score": 4,
+            "label": "Exemplary",
+            "description": "Exceptional documentation with threat model analysis; extensive testing including security-specific tests; performance benchmarks; considers compliance standards"
+          }
+        ]
+      }
+    ],
+    "estimatedHours": 25
+  },
+  {
+    "id": "cs307-project-2",
+    "subjectId": "cs307",
+    "title": "Secure REST API Server",
+    "description": "Develop a secure REST API server implementing multiple layers of defense. This project emphasizes authentication, authorization, input validation, output encoding, rate limiting, and secure session management. Students will build an API for a simple application (e.g., task management, note-taking) while implementing OWASP Top 10 defenses. The focus is on preventing injection attacks, implementing proper authentication with JWT or session tokens, validating all inputs, and protecting against common web vulnerabilities.",
+    "requirements": [
+      "Implement secure user authentication with JWT or secure session tokens",
+      "Add role-based access control (RBAC) with at least 3 permission levels",
+      "Validate and sanitize all user inputs to prevent injection attacks",
+      "Implement parameterized queries or ORM to prevent SQL injection",
+      "Add rate limiting per endpoint and per user to prevent abuse",
+      "Implement CORS policies, CSP headers, and security headers (HSTS, X-Frame-Options)",
+      "Use HTTPS/TLS with proper certificate validation",
+      "Implement secure password storage with bcrypt, scrypt, or Argon2",
+      "Add comprehensive logging for security events (without logging sensitive data)",
+      "Implement proper error handling without information disclosure",
+      "Add input validation middleware with whitelist approach",
+      "Include security testing suite (authentication bypass, injection attempts, XSS)"
+    ],
+    "rubric": [
+      {
+        "name": "Authentication and Authorization",
+        "weight": 30,
+        "levels": [
+          {
+            "score": 1,
+            "label": "Incomplete",
+            "description": "No authentication or uses insecure methods (e.g., passwords in URLs); no authorization checks; session management vulnerabilities"
+          },
+          {
+            "score": 2,
+            "label": "Basic",
+            "description": "Basic authentication implemented but with weaknesses (e.g., weak token generation); minimal authorization; session handling has issues"
+          },
+          {
+            "score": 3,
+            "label": "Proficient",
+            "description": "Secure JWT or session-based authentication; proper RBAC implementation; secure password hashing; token expiration and refresh implemented"
+          },
+          {
+            "score": 4,
+            "label": "Exemplary",
+            "description": "Sophisticated auth system with multi-factor considerations, secure token rotation, refresh token security, account lockout policies, proper session invalidation"
+          }
+        ]
+      },
+      {
+        "name": "Input Validation and Injection Prevention",
+        "weight": 30,
+        "levels": [
+          {
+            "score": 1,
+            "label": "Incomplete",
+            "description": "No input validation; vulnerable to SQL injection, XSS, or command injection; directly concatenates user input into queries"
+          },
+          {
+            "score": 2,
+            "label": "Basic",
+            "description": "Some input validation present but inconsistent; attempts to use parameterized queries but has gaps; basic XSS prevention"
+          },
+          {
+            "score": 3,
+            "label": "Proficient",
+            "description": "Comprehensive input validation using whitelist approach; parameterized queries throughout; proper output encoding; content type validation"
+          },
+          {
+            "score": 4,
+            "label": "Exemplary",
+            "description": "Defense-in-depth with validation middleware, schema validation, context-aware output encoding, file upload security, JSON/XML parser hardening"
+          }
+        ]
+      },
+      {
+        "name": "Rate Limiting and DoS Protection",
+        "weight": 20,
+        "levels": [
+          {
+            "score": 1,
+            "label": "Incomplete",
+            "description": "No rate limiting; API vulnerable to abuse and DoS attacks; no request size limits"
+          },
+          {
+            "score": 2,
+            "label": "Basic",
+            "description": "Basic global rate limiting; no per-user or per-endpoint limits; limited DoS protection"
+          },
+          {
+            "score": 3,
+            "label": "Proficient",
+            "description": "Implements per-user and per-endpoint rate limiting; request size limits; appropriate HTTP 429 responses with retry-after headers"
+          },
+          {
+            "score": 4,
+            "label": "Exemplary",
+            "description": "Sophisticated rate limiting with tiered limits based on user roles, adaptive rate limiting, distributed rate limiting support, connection limits"
+          }
+        ]
+      },
+      {
+        "name": "Security Headers and Testing",
+        "weight": 20,
+        "levels": [
+          {
+            "score": 1,
+            "label": "Incomplete",
+            "description": "Missing security headers; no HTTPS enforcement; no security tests; error messages leak stack traces or system information"
+          },
+          {
+            "score": 2,
+            "label": "Basic",
+            "description": "Some security headers present; basic HTTPS support; minimal security testing; error handling improved but incomplete"
+          },
+          {
+            "score": 3,
+            "label": "Proficient",
+            "description": "Comprehensive security headers (CSP, HSTS, X-Frame-Options); proper CORS configuration; security test suite covering common vulnerabilities; generic error messages"
+          },
+          {
+            "score": 4,
+            "label": "Exemplary",
+            "description": "Advanced header configuration with strict CSP; security testing includes fuzzing and edge cases; penetration testing documentation; security audit logging"
+          }
+        ]
+      }
+    ],
+    "estimatedHours": 30
+  },
+  {
+    "id": "cs307-project-3",
+    "subjectId": "cs307",
+    "title": "Security Audit and Vulnerability Assessment Tool",
+    "description": "Create a defensive security tool that performs static code analysis and configuration auditing to identify common security vulnerabilities. This project teaches students to think like both attackers and defenders by building automated security checks. The tool should scan codebases or configurations for OWASP Top 10 vulnerabilities, insecure cryptographic practices, hardcoded secrets, and misconfigurations. Students will implement pattern matching, AST parsing, and rule-based detection while learning about secure development practices.",
+    "requirements": [
+      "Implement static analysis for at least one programming language (Python, JavaScript, Java, or similar)",
+      "Detect common vulnerabilities: SQL injection patterns, XSS vulnerabilities, hardcoded secrets, weak cryptography",
+      "Scan for insecure dependencies with known CVEs using vulnerability databases",
+      "Check for security misconfigurations (debug mode enabled, default credentials, exposed endpoints)",
+      "Implement detection for insecure deserialization and XXE vulnerabilities",
+      "Generate detailed security reports with severity ratings (Critical, High, Medium, Low)",
+      "Provide remediation recommendations for each finding",
+      "Support multiple output formats (JSON, HTML report, CSV)",
+      "Implement configurable rule sets and custom rule creation",
+      "Add false positive suppression mechanisms",
+      "Include performance optimization for large codebases",
+      "Create comprehensive documentation with examples of detected vulnerabilities"
+    ],
+    "rubric": [
+      {
+        "name": "Vulnerability Detection Accuracy",
+        "weight": 35,
+        "levels": [
+          {
+            "score": 1,
+            "label": "Incomplete",
+            "description": "Detects fewer than 3 vulnerability types; high false positive rate; misses obvious security issues; unreliable detection"
+          },
+          {
+            "score": 2,
+            "label": "Basic",
+            "description": "Detects 3-5 vulnerability types with moderate accuracy; some false positives; basic pattern matching; misses complex variants"
+          },
+          {
+            "score": 3,
+            "label": "Proficient",
+            "description": "Accurately detects 6+ vulnerability types from OWASP Top 10; low false positive rate; uses AST parsing or advanced techniques; catches common patterns"
+          },
+          {
+            "score": 4,
+            "label": "Exemplary",
+            "description": "Comprehensive detection with data flow analysis; minimal false positives; detects complex attack chains; includes taint analysis; machine learning or advanced static analysis"
+          }
+        ]
+      },
+      {
+        "name": "Rule System and Extensibility",
+        "weight": 25,
+        "levels": [
+          {
+            "score": 1,
+            "label": "Incomplete",
+            "description": "Hardcoded rules; no extensibility; cannot add custom rules; inflexible detection logic"
+          },
+          {
+            "score": 2,
+            "label": "Basic",
+            "description": "Basic rule system with limited configurability; difficult to extend; simple rule format; limited customization"
+          },
+          {
+            "score": 3,
+            "label": "Proficient",
+            "description": "Well-designed rule system with external configuration; users can create custom rules; clear rule syntax; supports rule disabling/enabling"
+          },
+          {
+            "score": 4,
+            "label": "Exemplary",
+            "description": "Sophisticated rule engine with complex conditions, severity customization, rule inheritance, rule marketplace support, plugin architecture"
+          }
+        ]
+      },
+      {
+        "name": "Reporting and Usability",
+        "weight": 25,
+        "levels": [
+          {
+            "score": 1,
+            "label": "Incomplete",
+            "description": "Poor or no reporting; unclear vulnerability descriptions; missing severity ratings; no remediation guidance; difficult to use"
+          },
+          {
+            "score": 2,
+            "label": "Basic",
+            "description": "Basic text output; includes file and line numbers; severity ratings present; minimal remediation suggestions; basic CLI interface"
+          },
+          {
+            "score": 3,
+            "label": "Proficient",
+            "description": "Professional reports with multiple formats (JSON, HTML); clear vulnerability explanations; actionable remediation steps; good CLI/API; filtering options"
+          },
+          {
+            "score": 4,
+            "label": "Exemplary",
+            "description": "Exceptional reporting with code snippets, visual dashboards, trend analysis, integration with CI/CD, SARIF format support, prioritization assistance"
+          }
+        ]
+      },
+      {
+        "name": "Documentation and Testing",
+        "weight": 15,
+        "levels": [
+          {
+            "score": 1,
+            "label": "Incomplete",
+            "description": "Minimal documentation; no test suite; unclear how to use or extend; missing vulnerability examples"
+          },
+          {
+            "score": 2,
+            "label": "Basic",
+            "description": "Basic usage documentation; some tests covering core functionality; vulnerability examples provided but limited"
+          },
+          {
+            "score": 3,
+            "label": "Proficient",
+            "description": "Comprehensive documentation with examples; extensive test suite including vulnerable code samples; clear extension guide; performance benchmarks"
+          },
+          {
+            "score": 4,
+            "label": "Exemplary",
+            "description": "Exceptional documentation with security research references, CVE mappings, detection methodology explanations, comprehensive test corpus, comparison with other tools"
+          }
+        ]
+      }
+    ],
+    "estimatedHours": 35
+  }
+]

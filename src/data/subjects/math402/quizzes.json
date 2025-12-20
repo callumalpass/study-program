@@ -1,0 +1,1367 @@
+[
+  {
+    "id": "math402-quiz-1a",
+    "subjectId": "math402",
+    "topicId": "math402-topic-1",
+    "title": "Error Analysis - Fundamentals",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "What is machine epsilon (ε_mach) for double precision floating-point?",
+        "options": [
+          "2^{-23} ≈ 1.19 × 10^{-7}",
+          "2^{-52} ≈ 2.22 × 10^{-16}",
+          "2^{-64} ≈ 5.42 × 10^{-20}",
+          "2^{-128}"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Double precision (64-bit) uses 52 bits for the mantissa, so machine epsilon is 2^{-52} ≈ 2.22 × 10^{-16}."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "The absolute error is defined as:",
+        "options": [
+          "|approximate - true| / |true|",
+          "|approximate - true|",
+          "|true - approximate| / |approximate|",
+          "(approximate - true)^2"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Absolute error is simply the magnitude of the difference: |x̃ - x|, where x̃ is the approximation and x is the true value."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "Relative error is more meaningful than absolute error when comparing errors in numbers of different magnitudes.",
+        "correctAnswer": true,
+        "explanation": "True. Relative error normalizes by the true value, making it scale-independent and better for comparing errors across different magnitudes."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "Which statement about floating-point representation is correct?",
+        "options": [
+          "All real numbers can be exactly represented",
+          "Floating-point numbers are uniformly distributed",
+          "The gap between consecutive floating-point numbers increases with magnitude",
+          "Addition is always associative in floating-point arithmetic"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The spacing between floating-point numbers grows exponentially with the magnitude of the numbers, leading to less precision for larger values."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "The maximum relative error in representing a number in floating-point is approximately ____.",
+        "correctAnswer": "machine epsilon",
+        "explanation": "Machine epsilon (ε_mach) represents the upper bound on the relative error due to rounding in floating-point arithmetic."
+      }
+    ]
+  },
+  {
+    "id": "math402-quiz-1b",
+    "subjectId": "math402",
+    "topicId": "math402-topic-1",
+    "title": "Error Analysis - Application",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "Which operation is most prone to catastrophic cancellation?",
+        "options": [
+          "Addition of numbers with similar magnitudes",
+          "Subtraction of nearly equal numbers",
+          "Multiplication of small numbers",
+          "Division by large numbers"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Subtracting nearly equal numbers eliminates significant digits, leaving only roundoff error in the result—this is catastrophic cancellation."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "If a problem has condition number κ = 10^6 and the input has relative error 10^{-10}, what is the expected relative error in the output?",
+        "options": [
+          "At most 10^{-16}",
+          "At most 10^{-10}",
+          "At most 10^{-4}",
+          "Exactly 10^6"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The output relative error is bounded by κ × (input relative error) = 10^6 × 10^{-10} = 10^{-4}. The condition number amplifies input errors."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "A numerically stable algorithm always produces accurate results.",
+        "correctAnswer": false,
+        "explanation": "False. A stable algorithm does not amplify errors, but if the problem itself is ill-conditioned (high condition number), even a stable algorithm may produce inaccurate results."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "When computing √(x^2 + 1) - x for large x, which reformulation avoids cancellation?",
+        "options": [
+          "√(x^2 + 1) - x (no change needed)",
+          "1 / (√(x^2 + 1) + x)",
+          "x(√(1 + 1/x^2) - 1)",
+          "(x^2 + 1 - x^2) / (√(x^2 + 1) + x)"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Multiplying by the conjugate: (√(x^2 + 1) - x)(√(x^2 + 1) + x)/(√(x^2 + 1) + x) = 1/(√(x^2 + 1) + x) avoids subtracting nearly equal numbers."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "In error propagation, if f(x,y) = x + y and both x and y have error ε, the error in f is approximately:",
+        "options": [
+          "ε",
+          "√2 ε",
+          "2ε",
+          "ε^2"
+        ],
+        "correctAnswer": 2,
+        "explanation": "For addition, errors combine directly: |Δf| ≈ |Δx| + |Δy| = ε + ε = 2ε."
+      }
+    ]
+  },
+  {
+    "id": "math402-quiz-1c",
+    "subjectId": "math402",
+    "topicId": "math402-topic-1",
+    "title": "Error Analysis - Mastery",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "A backward stable algorithm guarantees that:",
+        "options": [
+          "The computed result is the exact result for a slightly perturbed problem",
+          "The forward error is minimized",
+          "The algorithm never amplifies errors",
+          "The condition number is less than 1"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Backward stability means the computed result f̃(x) equals f(x̃) for some x̃ close to x, i.e., the result is exact for a nearby problem."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "For the problem of computing x - y where x ≈ y, what is the condition number?",
+        "options": [
+          "1",
+          "x/(x-y)",
+          "Large (problem is well-conditioned)",
+          "Small (problem is ill-conditioned)"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The condition number for subtraction is κ = (|x| + |y|)/|x - y|. When x ≈ y, the denominator is small, making κ very large (ill-conditioned)."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "If an algorithm is backward stable and the problem is well-conditioned, then the algorithm produces accurate results.",
+        "correctAnswer": true,
+        "explanation": "True. Backward stability ensures the computed answer is exact for a nearby problem, and well-conditioning ensures nearby problems have nearby solutions."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "The condition number of evaluating f(x) = e^x near x = 0 is approximately:",
+        "options": [
+          "x",
+          "|x|",
+          "1",
+          "e^x"
+        ],
+        "correctAnswer": 1,
+        "explanation": "κ(x) = |xf'(x)/f(x)| = |x·e^x/e^x| = |x|. Near x = 0, the condition number is small, indicating a well-conditioned problem."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "In IEEE 754 double precision, subnormal numbers exist to:",
+        "options": [
+          "Increase the range of representable numbers",
+          "Allow gradual underflow and maintain relative error bounds near zero",
+          "Improve the speed of floating-point operations",
+          "Eliminate the need for special values like NaN"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Subnormal (denormalized) numbers fill the gap between zero and the smallest normalized number, preventing abrupt underflow to zero and maintaining error properties."
+      }
+    ]
+  },
+  {
+    "id": "math402-quiz-2a",
+    "subjectId": "math402",
+    "topicId": "math402-topic-2",
+    "title": "Root-Finding Methods - Fundamentals",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "The bisection method requires which condition to guarantee convergence?",
+        "options": [
+          "f must be differentiable",
+          "f must be continuous and f(a)·f(b) < 0",
+          "f must be monotonic",
+          "The initial guess must be close to the root"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The bisection method requires a continuous function and an interval [a,b] where f(a) and f(b) have opposite signs (Intermediate Value Theorem)."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "What is the convergence order of the bisection method?",
+        "options": [
+          "Linear with rate 1/2",
+          "Quadratic",
+          "Superlinear",
+          "No guaranteed convergence"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Bisection has linear convergence with rate 1/2, as the error is reduced by half in each iteration: |e_{n+1}| ≤ (1/2)|e_n|."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "Newton's method requires the function to be twice differentiable for quadratic convergence.",
+        "correctAnswer": false,
+        "explanation": "False. Newton's method requires only first derivative continuity (f ∈ C^1) for quadratic convergence at simple roots. Second derivative is needed for the convergence analysis but not for the method itself."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "The fixed-point iteration x_{n+1} = g(x_n) converges if:",
+        "options": [
+          "g is continuous",
+          "|g'(x)| < 1 near the fixed point",
+          "g(x) = x has a solution",
+          "x_0 is sufficiently large"
+        ],
+        "correctAnswer": 1,
+        "explanation": "By the Fixed-Point Theorem, if |g'(x)| < 1 in a neighborhood of the fixed point x*, the iteration converges for x_0 sufficiently close to x*."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "Newton's method iteration formula is x_{n+1} = x_n - ____.",
+        "correctAnswer": "f(x_n)/f'(x_n)",
+        "explanation": "Newton's method: x_{n+1} = x_n - f(x_n)/f'(x_n), derived from the tangent line approximation."
+      }
+    ]
+  },
+  {
+    "id": "math402-quiz-2b",
+    "subjectId": "math402",
+    "topicId": "math402-topic-2",
+    "title": "Root-Finding Methods - Application",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "What is the convergence order of Newton's method for a simple root?",
+        "options": [
+          "Linear",
+          "Superlinear (≈1.618)",
+          "Quadratic",
+          "Cubic"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Newton's method has quadratic convergence (order 2) for simple roots: |e_{n+1}| ≈ C|e_n|^2, meaning the number of correct digits approximately doubles each iteration."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "Which method requires two initial guesses?",
+        "options": [
+          "Bisection method",
+          "Newton's method",
+          "Secant method",
+          "Fixed-point iteration"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The secant method needs two initial guesses x_0 and x_1 to approximate the derivative: f'(x_n) ≈ (f(x_n) - f(x_{n-1}))/(x_n - x_{n-1})."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "The secant method always converges faster than the bisection method.",
+        "correctAnswer": false,
+        "explanation": "False. While the secant method has superlinear convergence (order ≈1.618) which is faster than bisection's linear convergence, the secant method is not guaranteed to converge—it can diverge with poor initial guesses."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "To find √2 using Newton's method, which function should you use?",
+        "options": [
+          "f(x) = √x - 2",
+          "f(x) = x^2 - 2",
+          "f(x) = x - 2",
+          "f(x) = 2x - 1"
+        ],
+        "correctAnswer": 1,
+        "explanation": "To find √2, solve x^2 = 2, which means finding the root of f(x) = x^2 - 2. Newton's method gives x_{n+1} = (x_n + 2/x_n)/2."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "If Newton's method is applied to f(x) = x^2 with x_0 = 1, what happens?",
+        "options": [
+          "Converges to 0 quadratically",
+          "Converges to 0 linearly",
+          "Diverges to infinity",
+          "Oscillates indefinitely"
+        ],
+        "correctAnswer": 1,
+        "explanation": "At a multiple root (x = 0 has multiplicity 2), Newton's method converges only linearly. The iteration becomes x_{n+1} = x_n/2, showing linear convergence with rate 1/2."
+      }
+    ]
+  },
+  {
+    "id": "math402-quiz-2c",
+    "subjectId": "math402",
+    "topicId": "math402-topic-2",
+    "title": "Root-Finding Methods - Mastery",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "For a root of multiplicity m > 1, what is the convergence order of standard Newton's method?",
+        "options": [
+          "Quadratic",
+          "Linear",
+          "No convergence",
+          "Cubic"
+        ],
+        "correctAnswer": 1,
+        "explanation": "For a root with multiplicity m > 1, Newton's method degrades to linear convergence. The modified Newton's method x_{n+1} = x_n - m·f(x_n)/f'(x_n) restores quadratic convergence."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "The order of convergence of the secant method is:",
+        "options": [
+          "1 (linear)",
+          "φ = (1 + √5)/2 ≈ 1.618 (golden ratio)",
+          "2 (quadratic)",
+          "3 (cubic)"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The secant method has superlinear convergence with order φ = (1 + √5)/2 ≈ 1.618, the golden ratio. It's faster than linear but slower than quadratic."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "If g'(x*) = 0 at a fixed point x*, then fixed-point iteration has at least quadratic convergence.",
+        "correctAnswer": true,
+        "explanation": "True. When g'(x*) = 0, the convergence is at least quadratic. If g'(x*) = g''(x*) = ... = g^(p-1)(x*) = 0 and g^(p)(x*) ≠ 0, the order is p."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "Which statement about Newton's method is FALSE?",
+        "options": [
+          "It can fail if f'(x_n) = 0 during iteration",
+          "It requires only one function evaluation per iteration",
+          "It uses local linearization via the tangent line",
+          "Basin of attraction can be fractal for complex functions"
+        ],
+        "correctAnswer": 1,
+        "explanation": "False: Newton's method requires TWO function evaluations per iteration: f(x_n) and f'(x_n). This is why the secant method (one evaluation) can be more efficient despite slower convergence."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "The optimal relaxation parameter for the modified fixed-point iteration x_{n+1} = x_n + λ(g(x_n) - x_n) to achieve quadratic convergence is:",
+        "options": [
+          "λ = 1",
+          "λ = 1/(1 - g'(x*))",
+          "λ = 0.5",
+          "λ = g'(x*)"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Choosing λ = 1/(1 - g'(x*)) makes the effective g'(x*) = 0 for the relaxed iteration, achieving quadratic convergence (this is Steffensen's method in disguise)."
+      }
+    ]
+  },
+  {
+    "id": "math402-quiz-3a",
+    "subjectId": "math402",
+    "topicId": "math402-topic-3",
+    "title": "Interpolation and Approximation - Fundamentals",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "Given n+1 distinct points, the degree of the unique interpolating polynomial is:",
+        "options": [
+          "Exactly n",
+          "At most n",
+          "At least n",
+          "n+1"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A polynomial of degree at most n is uniquely determined by n+1 points. The actual degree may be less than n if the data lies on a lower-degree curve."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "What is the main advantage of Newton's divided difference form over Lagrange interpolation?",
+        "options": [
+          "Newton form has lower degree",
+          "Newton form is easier to update when adding new points",
+          "Newton form always has smaller error",
+          "Newton form doesn't require distinct x values"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Newton's form is incremental: adding a new point requires only computing one new divided difference and adding one term, whereas Lagrange requires recomputing all basis polynomials."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "Increasing the degree of an interpolating polynomial always decreases the interpolation error.",
+        "correctAnswer": false,
+        "explanation": "False. Higher-degree polynomials can exhibit Runge's phenomenon with wild oscillations between data points, especially with equally-spaced points. The error can actually increase."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "Hermite interpolation differs from standard polynomial interpolation by:",
+        "options": [
+          "Using trigonometric functions instead of polynomials",
+          "Matching derivative values in addition to function values",
+          "Only working with equally-spaced points",
+          "Minimizing the L2 error instead of exact matching"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Hermite interpolation matches both function values and derivative values at the interpolation points, requiring a higher-degree polynomial."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "A ____ spline uses piecewise cubic polynomials and requires C^2 continuity at interior knots.",
+        "correctAnswer": "cubic",
+        "explanation": "A cubic spline uses cubic polynomials on each interval with continuous first and second derivatives at the knots, providing smooth interpolation."
+      }
+    ]
+  },
+  {
+    "id": "math402-quiz-3b",
+    "subjectId": "math402",
+    "topicId": "math402-topic-3",
+    "title": "Interpolation and Approximation - Application",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "For a function f ∈ C^{n+1}[a,b], the error in polynomial interpolation at n+1 points is bounded by:",
+        "options": [
+          "M/(n+1)! max|ω(x)|, where ω(x) is the node polynomial",
+          "M/n! max|f(x)|",
+          "M max|ω(x)|",
+          "M/(n+1) for some constant M"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The interpolation error is f(x) - p_n(x) = f^{(n+1)}(ξ)/(n+1)! · ω(x), where ω(x) = ∏(x - x_i) and ξ ∈ [a,b]."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "Chebyshev nodes are used in interpolation because they:",
+        "options": [
+          "Are equally spaced, making computation easier",
+          "Minimize the maximum value of the node polynomial ω(x)",
+          "Always produce zero error",
+          "Work only for trigonometric functions"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Chebyshev nodes minimize max|ω(x)| over [-1,1], reducing Runge's phenomenon and providing near-optimal interpolation error bounds."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "Natural cubic splines have zero second derivatives at the endpoints.",
+        "correctAnswer": true,
+        "explanation": "True. Natural splines impose the boundary conditions S''(x_0) = S''(x_n) = 0, which provides two additional equations to determine all spline coefficients."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "Given data points at x = 0, 1, 2 with values 1, 2, 4, the first divided difference f[1,2] is:",
+        "options": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ],
+        "correctAnswer": 1,
+        "explanation": "f[1,2] = (f(2) - f(1))/(2 - 1) = (4 - 2)/1 = 2. Divided differences are the discrete analog of derivatives."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "A cubic spline through n+1 points has how many unknown coefficients to determine?",
+        "options": [
+          "n",
+          "2n",
+          "4n",
+          "4(n+1)"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Each of the n intervals has a cubic polynomial with 4 coefficients, giving 4n unknowns. These are determined by 4n equations from continuity and boundary conditions."
+      }
+    ]
+  },
+  {
+    "id": "math402-quiz-3c",
+    "subjectId": "math402",
+    "topicId": "math402-topic-3",
+    "title": "Interpolation and Approximation - Mastery",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "The Lebesgue constant Λ_n for a set of interpolation nodes measures:",
+        "options": [
+          "The maximum interpolation error",
+          "The condition number of the interpolation problem",
+          "The spacing between nodes",
+          "The degree of the interpolating polynomial"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The Lebesgue constant Λ_n bounds how the interpolation error compares to the best polynomial approximation: ||p_n - f|| ≤ (1 + Λ_n)||p*_n - f||. It measures ill-conditioning."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "Runge's phenomenon is best mitigated by:",
+        "options": [
+          "Using equally-spaced points with higher degree",
+          "Using Chebyshev nodes or piecewise polynomial interpolation",
+          "Decreasing the number of interpolation points",
+          "Using linear interpolation only"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Chebyshev nodes cluster near endpoints to control oscillations, and splines use low-degree pieces to avoid high-degree polynomial instability."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "The divided difference f[x_0, x_1, ..., x_n] equals f^{(n)}(ξ)/n! for some ξ in the smallest interval containing all x_i.",
+        "correctAnswer": true,
+        "explanation": "True. This is a fundamental theorem connecting divided differences to derivatives, showing that divided differences generalize derivatives to discrete data."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "For a clamped cubic spline (given endpoint derivatives), how many continuity conditions are imposed?",
+        "options": [
+          "2(n-1) for function values, 2(n-1) for derivatives",
+          "n-1 for S, n-1 for S', n-1 for S'', plus 2 boundary conditions",
+          "4n conditions total",
+          "All of the above (equivalent formulations)"
+        ],
+        "correctAnswer": 3,
+        "explanation": "All formulations are equivalent: matching values and derivatives at n-1 interior knots (2(n-1) each), plus C^2 continuity (n-1 more), plus 2 clamped boundary conditions = 4n equations for 4n unknowns."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "B-splines are advantageous because they:",
+        "options": [
+          "Have local support, making modifications local",
+          "Form a stable basis for the spline space",
+          "Allow efficient computation and numerical stability",
+          "All of the above"
+        ],
+        "correctAnswer": 3,
+        "explanation": "B-splines possess local support (changing one control point affects only nearby regions), form a well-conditioned basis, and enable efficient stable algorithms—making them ideal for practical applications."
+      }
+    ]
+  },
+  {
+    "id": "math402-quiz-4a",
+    "subjectId": "math402",
+    "topicId": "math402-topic-4",
+    "title": "Numerical Differentiation and Integration - Fundamentals",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "The forward difference approximation f'(x) ≈ (f(x+h) - f(x))/h has truncation error of order:",
+        "options": [
+          "O(h^2)",
+          "O(h)",
+          "O(1)",
+          "O(h^3)"
+        ],
+        "correctAnswer": 1,
+        "explanation": "By Taylor expansion: f(x+h) = f(x) + hf'(x) + (h^2/2)f''(x) + ..., so the forward difference has error O(h)."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "Which formula provides a better approximation for f'(x)?",
+        "options": [
+          "Forward difference: (f(x+h) - f(x))/h",
+          "Backward difference: (f(x) - f(x-h))/h",
+          "Centered difference: (f(x+h) - f(x-h))/(2h)",
+          "All are equally accurate"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Centered difference is O(h^2) accurate (even terms in Taylor series cancel), while forward and backward differences are only O(h)."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "The trapezoidal rule is exact for linear functions.",
+        "correctAnswer": true,
+        "explanation": "True. The trapezoidal rule integrates by approximating the function as a line segment, so it exactly integrates any linear function f(x) = ax + b."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "Simpson's rule uses what type of interpolation?",
+        "options": [
+          "Linear",
+          "Quadratic",
+          "Cubic",
+          "Exponential"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Simpson's rule approximates the integrand using quadratic polynomials through three points, integrating exactly all polynomials of degree ≤ 2."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "The ____ rule divides the interval into equal subintervals and approximates the area using trapezoids.",
+        "correctAnswer": "trapezoidal",
+        "explanation": "The trapezoidal rule (or composite trapezoidal rule) sums the areas of trapezoids to approximate the integral."
+      }
+    ]
+  },
+  {
+    "id": "math402-quiz-4b",
+    "subjectId": "math402",
+    "topicId": "math402-topic-4",
+    "title": "Numerical Differentiation and Integration - Application",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "The composite trapezoidal rule with n subintervals has error of order:",
+        "options": [
+          "O(h)",
+          "O(h^2)",
+          "O(h^3)",
+          "O(h^4)"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The composite trapezoidal rule has global error O(h^2), where h = (b-a)/n. Each panel has local error O(h^3), but summing n = O(1/h) panels gives O(h^2)."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "Richardson extrapolation improves the order of accuracy by:",
+        "options": [
+          "Using smaller step sizes",
+          "Combining approximations at different step sizes to cancel leading error terms",
+          "Using higher-order polynomials",
+          "Averaging forward and backward differences"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Richardson extrapolation combines results at different h values (e.g., h and h/2) with appropriate weights to eliminate the leading error term, increasing accuracy."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "Simpson's rule has error O(h^4) per panel despite using only quadratic interpolation.",
+        "correctAnswer": true,
+        "explanation": "True. Simpson's rule is exact for cubics (not just quadratics) due to symmetry, giving local error O(h^5) and global error O(h^4)."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "When computing numerical derivatives, making h too small can:",
+        "options": [
+          "Increase truncation error",
+          "Increase roundoff error",
+          "Improve accuracy indefinitely",
+          "Have no effect"
+        ],
+        "correctAnswer": 1,
+        "explanation": "For very small h, the subtraction f(x+h) - f(x) suffers catastrophic cancellation, amplifying roundoff error. There's an optimal h balancing truncation and roundoff."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "Romberg integration uses Richardson extrapolation on:",
+        "options": [
+          "Simpson's rule",
+          "Gaussian quadrature",
+          "Trapezoidal rule",
+          "Midpoint rule"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Romberg integration applies Richardson extrapolation to the trapezoidal rule with successively halved step sizes, building a triangular table of increasingly accurate approximations."
+      }
+    ]
+  },
+  {
+    "id": "math402-quiz-4c",
+    "subjectId": "math402",
+    "topicId": "math402-topic-4",
+    "title": "Numerical Differentiation and Integration - Mastery",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "Gaussian quadrature with n points integrates exactly polynomials of degree up to:",
+        "options": [
+          "n-1",
+          "n",
+          "2n-1",
+          "2n"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Gaussian quadrature optimally chooses both nodes and weights, achieving exactness for polynomials of degree up to 2n-1 using n points (compared to 2n-1 for Newton-Cotes with n points)."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "The optimal step size h for centered difference approximation balancing truncation O(h^2) and roundoff O(ε/h) is approximately:",
+        "options": [
+          "ε",
+          "√ε",
+          "ε^{1/3}",
+          "ε^{2/3}"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Total error is Ch^2 + Dε/h. Minimizing: 2Ch - Dε/h^2 = 0 gives h ∝ (ε/C)^{1/3} = O(ε^{1/3}). For ε ≈ 10^{-16}, optimal h ≈ 10^{-5}."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "Adaptive quadrature methods recursively subdivide intervals where the estimated error exceeds a tolerance.",
+        "correctAnswer": true,
+        "explanation": "True. Adaptive methods like adaptive Simpson's estimate local error and refine the mesh only where needed, achieving target accuracy efficiently even for irregular integrands."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "For the Euler-Maclaurin formula, the trapezoidal rule has asymptotic error expansion in powers of:",
+        "options": [
+          "h",
+          "h^2",
+          "h and h^2",
+          "All powers of h"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The Euler-Maclaurin formula shows that trapezoidal rule error has asymptotic expansion in even powers: E = c_2h^2 + c_4h^4 + ... This enables Richardson extrapolation."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "Which statement about Gaussian vs Newton-Cotes quadrature is correct?",
+        "options": [
+          "Gaussian quadrature uses predetermined equally-spaced nodes",
+          "Newton-Cotes has higher degree of exactness for given n",
+          "Gaussian quadrature optimizes both nodes and weights for maximum exactness",
+          "They perform identically for polynomial integrands"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Gaussian quadrature chooses optimal (non-equally-spaced) nodes as zeros of orthogonal polynomials, plus optimal weights, achieving degree 2n-1 exactness vs n-1 for Newton-Cotes with n points."
+      }
+    ]
+  },
+  {
+    "id": "math402-quiz-5a",
+    "subjectId": "math402",
+    "topicId": "math402-topic-5",
+    "title": "Direct Methods for Linear Systems - Fundamentals",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "Gaussian elimination without pivoting can fail when:",
+        "options": [
+          "The matrix is not square",
+          "A zero pivot is encountered",
+          "The matrix is symmetric",
+          "The right-hand side is zero"
+        ],
+        "correctAnswer": 1,
+        "explanation": "If a diagonal element (pivot) becomes zero during elimination, division by zero occurs. Pivoting (row swapping) is needed to continue."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "The computational complexity of Gaussian elimination for an n×n system is:",
+        "options": [
+          "O(n)",
+          "O(n^2)",
+          "O(n^3)",
+          "O(2^n)"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Gaussian elimination requires approximately (2/3)n^3 floating-point operations for the forward elimination phase, making it O(n^3)."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "LU decomposition is only possible for invertible matrices.",
+        "correctAnswer": false,
+        "explanation": "False. LU decomposition (with partial pivoting as PA=LU) is possible for any matrix, though the L and U factors reveal rank deficiency for singular matrices."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "The main advantage of LU decomposition over direct Gaussian elimination is:",
+        "options": [
+          "Lower computational cost",
+          "Ability to solve multiple systems with the same matrix efficiently",
+          "Better numerical stability",
+          "Works for singular matrices"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Once A = LU is computed (O(n^3)), solving Ax = b for different b requires only forward/backward substitution (O(n^2) each), making it efficient for multiple right-hand sides."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "In LU decomposition A = LU, L is a ____ triangular matrix and U is an upper triangular matrix.",
+        "correctAnswer": "lower",
+        "explanation": "L (Lower) is lower triangular with ones on the diagonal, and U (Upper) is upper triangular."
+      }
+    ]
+  },
+  {
+    "id": "math402-quiz-5b",
+    "subjectId": "math402",
+    "topicId": "math402-topic-5",
+    "title": "Direct Methods for Linear Systems - Application",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "Partial pivoting in Gaussian elimination involves:",
+        "options": [
+          "Swapping rows to maximize the pivot element in the current column",
+          "Swapping both rows and columns",
+          "Dividing by the largest element in the matrix",
+          "Scaling each row by its maximum element"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Partial pivoting selects the row with the largest absolute value in the current column as the pivot row, improving numerical stability by avoiding small pivots."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "Cholesky decomposition A = LL^T can be applied when A is:",
+        "options": [
+          "Any invertible matrix",
+          "Symmetric positive definite",
+          "Upper triangular",
+          "Diagonal"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Cholesky requires A to be symmetric positive definite (SPD). It computes L such that A = LL^T, using only (1/3)n^3 operations—half the cost of standard LU."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "The condition number κ(A) = ||A|| ||A^{-1}|| measures the sensitivity of the solution to perturbations in the data.",
+        "correctAnswer": true,
+        "explanation": "True. A large condition number indicates ill-conditioning: small changes in A or b can cause large changes in the solution x. κ(A) ≥ 1 for all matrices."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "QR factorization decomposes A into an orthogonal matrix Q and:",
+        "options": [
+          "A lower triangular matrix R",
+          "An upper triangular matrix R",
+          "A diagonal matrix R",
+          "Another orthogonal matrix R"
+        ],
+        "correctAnswer": 1,
+        "explanation": "QR factorization gives A = QR where Q is orthogonal (Q^TQ = I) and R is upper triangular. It's particularly useful for least squares problems."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "What is the storage cost advantage of storing LU factors compared to storing L and U separately?",
+        "options": [
+          "No advantage—requires the same space",
+          "LU can be stored in-place in the original matrix space",
+          "LU requires half the space",
+          "LU requires logarithmic space"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Since L has ones on the diagonal, we can store L's subdiagonal elements and U's elements in the space of the original n×n matrix, saving memory."
+      }
+    ]
+  },
+  {
+    "id": "math402-quiz-5c",
+    "subjectId": "math402",
+    "topicId": "math402-topic-5",
+    "title": "Direct Methods for Linear Systems - Mastery",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "The growth factor in Gaussian elimination with partial pivoting measures:",
+        "options": [
+          "The increase in the condition number",
+          "How much the elements grow during elimination",
+          "The number of row swaps performed",
+          "The error in the computed solution"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Growth factor ρ = max_{i,j,k}|a_{ij}^{(k)}| / max_{i,j}|a_{ij}| measures element growth. For partial pivoting, ρ ≤ 2^{n-1}, though this worst case is rarely observed in practice."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "The Singular Value Decomposition (SVD) A = UΣV^T provides:",
+        "options": [
+          "A faster alternative to LU for solving linear systems",
+          "Optimal low-rank approximations and condition number computation",
+          "A method only applicable to square matrices",
+          "Lower computational cost than QR factorization"
+        ],
+        "correctAnswer": 1,
+        "explanation": "SVD reveals the rank, null space, condition number (κ = σ_max/σ_min), and optimal low-rank approximations of any matrix. It's computationally expensive but extremely informative."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "For a symmetric positive definite matrix, Cholesky decomposition is both faster and more stable than LU decomposition.",
+        "correctAnswer": true,
+        "explanation": "True. Cholesky requires half the operations of LU, produces a smaller growth factor, and doesn't require pivoting for SPD matrices, making it preferable when applicable."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "If the condition number κ(A) = 10^8 and the solution is computed with machine precision 10^{-16}, the expected number of accurate digits in the solution is approximately:",
+        "options": [
+          "16",
+          "8",
+          "24",
+          "0"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Relative error in solution ≈ κ(A) × machine precision = 10^8 × 10^{-16} = 10^{-8}. This gives about 8 significant digits of accuracy (16 - log_{10}(10^8) = 8)."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "The main advantage of iterative refinement for linear systems is:",
+        "options": [
+          "Reducing the computational cost from O(n^3) to O(n^2)",
+          "Improving the accuracy of an approximate solution using residuals",
+          "Eliminating the need for factorization",
+          "Working only with sparse matrices"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Iterative refinement solves A(x + δx) = b - Ax̃ = r (residual) repeatedly to improve accuracy. Computing r in higher precision can recover full accuracy even for ill-conditioned systems."
+      }
+    ]
+  },
+  {
+    "id": "math402-quiz-6a",
+    "subjectId": "math402",
+    "topicId": "math402-topic-6",
+    "title": "Iterative Methods for Linear Systems - Fundamentals",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "The Jacobi method updates each component of x^{(k+1)} using:",
+        "options": [
+          "All components of x^{(k)} only",
+          "A mixture of x^{(k)} and x^{(k+1)} components",
+          "The residual vector",
+          "The inverse of the matrix"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Jacobi simultaneously updates all components using only old values: x_i^{(k+1)} = (b_i - Σ_{j≠i} a_{ij}x_j^{(k)})/a_{ii}. This allows parallel implementation."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "The Gauss-Seidel method differs from Jacobi by:",
+        "options": [
+          "Using partial pivoting",
+          "Using updated components x^{(k+1)} as soon as they are computed",
+          "Requiring fewer iterations",
+          "Being applicable to more matrices"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Gauss-Seidel uses x_i^{(k+1)} values immediately in computing subsequent components: x_i^{(k+1)} = (b_i - Σ_{j<i} a_{ij}x_j^{(k+1)} - Σ_{j>i} a_{ij}x_j^{(k)})/a_{ii}."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "Iterative methods are generally preferred over direct methods for small dense systems.",
+        "correctAnswer": false,
+        "explanation": "False. For small dense systems, direct methods (Gaussian elimination, LU) are typically faster and more reliable. Iterative methods excel for large sparse systems where storing/computing factors is expensive."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "A sufficient condition for Jacobi and Gauss-Seidel to converge is that A is:",
+        "options": [
+          "Symmetric",
+          "Positive definite",
+          "Strictly diagonally dominant",
+          "Upper triangular"
+        ],
+        "correctAnswer": 2,
+        "explanation": "If A is strictly diagonally dominant (|a_{ii}| > Σ_{j≠i}|a_{ij}| for all i), both Jacobi and Gauss-Seidel converge for any initial guess. This is sufficient but not necessary."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "Iterative methods converge when the spectral radius of the iteration matrix is ____ than 1.",
+        "correctAnswer": "less",
+        "explanation": "Convergence requires ρ(G) < 1, where ρ is the spectral radius (largest eigenvalue magnitude) of the iteration matrix G."
+      }
+    ]
+  },
+  {
+    "id": "math402-quiz-6b",
+    "subjectId": "math402",
+    "topicId": "math402-topic-6",
+    "title": "Iterative Methods for Linear Systems - Application",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "The Successive Over-Relaxation (SOR) method introduces a relaxation parameter ω where:",
+        "options": [
+          "0 < ω < 1 for under-relaxation, ω = 1 gives Gauss-Seidel, 1 < ω < 2 for over-relaxation",
+          "ω must always equal 1",
+          "ω > 2 for fastest convergence",
+          "ω is the condition number"
+        ],
+        "correctAnswer": 0,
+        "explanation": "SOR: x^{(k+1)} = ωx̃^{(k+1)} + (1-ω)x^{(k)}, where x̃ is the Gauss-Seidel update. Optimal ω ∈ (1,2) can significantly accelerate convergence; ω = 1 recovers Gauss-Seidel."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "The Conjugate Gradient (CG) method is applicable when A is:",
+        "options": [
+          "Any invertible matrix",
+          "Symmetric positive definite",
+          "Lower triangular",
+          "Diagonal"
+        ],
+        "correctAnswer": 1,
+        "explanation": "CG requires A to be symmetric positive definite (SPD). It solves Ax = b in at most n iterations (in exact arithmetic) by minimizing the energy norm ||x - x*||_A."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "Gauss-Seidel always converges faster than Jacobi when both converge.",
+        "correctAnswer": false,
+        "explanation": "False. While Gauss-Seidel typically converges faster, there exist matrices for which Jacobi converges faster. However, if both converge, Gauss-Seidel often requires fewer iterations."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "GMRES (Generalized Minimal Residual) method minimizes:",
+        "options": [
+          "The energy norm of the error",
+          "The 2-norm of the residual ||Ax^{(k)} - b||_2",
+          "The condition number",
+          "The number of iterations"
+        ],
+        "correctAnswer": 1,
+        "explanation": "GMRES minimizes ||r^{(k)}||_2 = ||Ax^{(k)} - b||_2 over the Krylov subspace K_k. It works for any invertible matrix, not just SPD."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "What is the main practical limitation of GMRES?",
+        "options": [
+          "Only works for symmetric matrices",
+          "Memory and computation grow with iteration count",
+          "Converges slower than Jacobi",
+          "Cannot be preconditioned"
+        ],
+        "correctAnswer": 1,
+        "explanation": "GMRES stores all previous search directions, requiring O(kn) storage and O(kn^2) work at iteration k. Restarted GMRES limits k to control costs."
+      }
+    ]
+  },
+  {
+    "id": "math402-quiz-6c",
+    "subjectId": "math402",
+    "topicId": "math402-topic-6",
+    "title": "Iterative Methods for Linear Systems - Mastery",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "For symmetric positive definite A, the optimal SOR parameter ω can be computed from:",
+        "options": [
+          "The condition number of A",
+          "The spectral radius of the Jacobi iteration matrix",
+          "The largest eigenvalue of A",
+          "The matrix norm"
+        ],
+        "correctAnswer": 1,
+        "explanation": "For SPD tridiagonal matrices (like discretized PDEs), ω_opt = 2/(1 + √(1 - ρ(G_J)^2)), where ρ(G_J) is the spectral radius of the Jacobi matrix. This can dramatically accelerate convergence."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "Preconditioning a linear system Ax = b means:",
+        "options": [
+          "Scaling rows to have unit norm",
+          "Solving M^{-1}Ax = M^{-1}b where M approximates A and M^{-1} is easy to apply",
+          "Reordering rows and columns",
+          "Using double precision arithmetic"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A preconditioner M approximates A such that κ(M^{-1}A) << κ(A). Good preconditioners are cheap to apply (M^{-1}z for any z) and cluster eigenvalues, accelerating iterative convergence."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "In exact arithmetic, CG converges in at most n iterations for an n×n SPD matrix.",
+        "correctAnswer": true,
+        "explanation": "True. CG is a direct method in exact arithmetic, finding the exact solution in at most n steps. In practice, roundoff and preconditioning make it effective as an iterative method."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "The conjugate gradient method generates search directions that are:",
+        "options": [
+          "Orthogonal in the Euclidean norm",
+          "A-orthogonal (conjugate with respect to A)",
+          "Parallel to eigenvectors of A",
+          "Random directions"
+        ],
+        "correctAnswer": 1,
+        "explanation": "CG search directions p^{(i)} satisfy (p^{(i)})^T A p^{(j)} = 0 for i ≠ j. This A-orthogonality (conjugacy) ensures each direction optimally contributes to minimizing ||x - x*||_A."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "Which statement about Krylov subspace methods is FALSE?",
+        "options": [
+          "They build approximate solutions in K_k = span{r^{(0)}, Ar^{(0)}, ..., A^{k-1}r^{(0)}}",
+          "CG is optimal for SPD matrices in the A-norm",
+          "GMRES is optimal for general matrices in the residual norm",
+          "They require storing and inverting the full matrix A"
+        ],
+        "correctAnswer": 3,
+        "explanation": "False: Krylov methods only need matrix-vector products Av, not storage or inversion of A. This makes them ideal for large sparse systems where A is stored implicitly."
+      }
+    ]
+  },
+  {
+    "id": "math402-quiz-7a",
+    "subjectId": "math402",
+    "topicId": "math402-topic-7",
+    "title": "Numerical Solutions of ODEs - Fundamentals",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "Euler's method approximates y' = f(t,y) using:",
+        "options": [
+          "y_{n+1} = y_n + h·f(t_n, y_n)",
+          "y_{n+1} = y_n + (h/2)·(f(t_n, y_n) + f(t_{n+1}, y_{n+1}))",
+          "y_{n+1} = y_n + h·f(t_{n+1}, y_n)",
+          "y_{n+1} = y_n + h^2·f(t_n, y_n)"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Euler's method uses forward difference: y_{n+1} = y_n + h·f(t_n, y_n). It's the simplest one-step method with local error O(h^2) and global error O(h)."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "The order of accuracy of Euler's method is:",
+        "options": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Euler's method has order 1: the global error is O(h). Each step introduces local truncation error O(h^2), but accumulating over O(1/h) steps gives O(h) global error."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "The classical RK4 (fourth-order Runge-Kutta) method requires four function evaluations per step.",
+        "correctAnswer": true,
+        "explanation": "True. RK4 uses four stages (k1, k2, k3, k4) with specific weights, achieving fourth-order accuracy with four function evaluations per step."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "A numerical ODE method is explicit if:",
+        "options": [
+          "y_{n+1} can be computed directly from y_n without solving equations",
+          "It requires solving a nonlinear system for y_{n+1}",
+          "It uses values from multiple previous steps",
+          "It has high accuracy"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Explicit methods compute y_{n+1} directly (e.g., Euler, RK4). Implicit methods require solving equations for y_{n+1} (e.g., backward Euler: y_{n+1} = y_n + h·f(t_{n+1}, y_{n+1}))."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "The ____ method uses a weighted average of slopes at multiple points within the interval to improve accuracy.",
+        "correctAnswer": "Runge-Kutta",
+        "explanation": "Runge-Kutta methods evaluate f at multiple intermediate points to approximate higher-order Taylor terms without computing derivatives."
+      }
+    ]
+  },
+  {
+    "id": "math402-quiz-7b",
+    "subjectId": "math402",
+    "topicId": "math402-topic-7",
+    "title": "Numerical Solutions of ODEs - Application",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "The trapezoidal method (implicit Euler) for y' = f(t,y) is:",
+        "options": [
+          "y_{n+1} = y_n + h·f(t_n, y_n)",
+          "y_{n+1} = y_n + (h/2)·[f(t_n, y_n) + f(t_{n+1}, y_{n+1})]",
+          "y_{n+1} = y_n + h·f(t_{n+1}, y_{n+1})",
+          "y_{n+1} = 2y_n - y_{n-1} + h^2·f(t_n, y_n)"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The trapezoidal (Crank-Nicolson) method averages slopes at t_n and t_{n+1}. It's implicit (requires solving for y_{n+1}), second-order accurate, and A-stable."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "Multistep methods (like Adams-Bashforth) use:",
+        "options": [
+          "Only the current point y_n",
+          "Values from multiple previous steps y_{n}, y_{n-1}, ...",
+          "Multiple stages within a single step",
+          "Random sampling points"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Multistep methods use values from k previous steps: y_{n+1} = Σ a_i y_{n-i} + h Σ b_i f(t_{n-i}, y_{n-i}). They achieve high order efficiently but require special starting procedures."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "Implicit methods generally have better stability properties than explicit methods.",
+        "correctAnswer": true,
+        "explanation": "True. Implicit methods can be A-stable (stable for all h on Re(λ) < 0), making them superior for stiff problems where explicit methods require tiny h for stability despite accuracy needs."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "A stiff differential equation is characterized by:",
+        "options": [
+          "Large right-hand side values",
+          "Multiple time scales with vastly different rates",
+          "Nonlinear terms",
+          "Discontinuous solutions"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Stiffness arises when solutions have multiple components evolving at vastly different rates. Explicit methods become impractical (require tiny h for stability), but implicit methods handle stiffness well."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "The stability region of a numerical ODE method is:",
+        "options": [
+          "The set of h for which roundoff errors are small",
+          "The set of hλ values (in the complex plane) for which the method is stable",
+          "The interval where the method converges",
+          "The domain of the exact solution"
+        ],
+        "correctAnswer": 1,
+        "explanation": "For y' = λy, the stability region S = {z = hλ ∈ ℂ : method is stable}. For RK4, S is a bounded region. A-stable methods have S containing all Re(z) ≤ 0."
+      }
+    ]
+  },
+  {
+    "id": "math402-quiz-7c",
+    "subjectId": "math402",
+    "topicId": "math402-topic-7",
+    "title": "Numerical Solutions of ODEs - Mastery",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "A-stability for an ODE method means:",
+        "options": [
+          "The method has high accuracy",
+          "The stability region contains the entire left half-plane Re(z) ≤ 0",
+          "The method is explicit",
+          "The method works for all ODEs"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A-stable methods have stability regions containing {z ∈ ℂ : Re(z) ≤ 0}, making them stable for all h on stiff problems (where λ has large negative real part). Backward Euler and trapezoidal method are A-stable."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "Adaptive step size control typically uses:",
+        "options": [
+          "Fixed reduction/increase of h",
+          "Error estimates from comparing methods of different orders",
+          "User-specified h",
+          "Random step sizes"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Adaptive methods estimate local error (e.g., Richardson extrapolation or embedded RK pairs like RK45) and adjust h to maintain error within tolerance: h_new ≈ h(tol/error)^{1/(p+1)}."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "For stiff ODEs, implicit methods can use much larger step sizes than explicit methods while maintaining stability.",
+        "correctAnswer": true,
+        "explanation": "True. Explicit methods require h < 2/|λ_max| for stability on stiff problems, which can be very restrictive. A-stable implicit methods have no such restriction, allowing h to be chosen based on accuracy alone."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "Boundary value problems (BVPs) differ from initial value problems (IVPs) by:",
+        "options": [
+          "Having conditions specified at multiple points, not just t_0",
+          "Being easier to solve numerically",
+          "Always having unique solutions",
+          "Not requiring derivative information"
+        ],
+        "correctAnswer": 0,
+        "explanation": "BVPs specify conditions at multiple points (e.g., y(a) and y(b)), requiring different techniques like shooting methods or finite differences. IVPs specify all conditions at t_0."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "The shooting method for BVPs works by:",
+        "options": [
+          "Directly discretizing the BVP into a linear system",
+          "Converting the BVP into an IVP by guessing missing initial conditions",
+          "Using finite element methods",
+          "Eliminating boundary conditions"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Shooting converts the BVP into an IVP by guessing unknown initial conditions, solving the IVP, and iterating (e.g., Newton's method) until boundary conditions are satisfied. Simple but can be unstable for some BVPs."
+      }
+    ]
+  }
+]

@@ -1,0 +1,1834 @@
+[
+  {
+    "id": "cs102-ex-1",
+    "subjectId": "cs102",
+    "topicId": "cs102-1",
+    "title": "Number System Converter",
+    "difficulty": 2,
+    "description": "Write a Python function that converts a decimal number to binary, octal, and hexadecimal representations. The function should return a dictionary with the conversions.",
+    "starterCode": "def convert_number(decimal_num):\n    \"\"\"\n    Convert a decimal number to binary, octal, and hexadecimal.\n    \n    Args:\n        decimal_num: An integer in decimal format\n    \n    Returns:\n        A dictionary with keys 'binary', 'octal', 'hexadecimal'\n    \"\"\"\n    # Your code here\n    pass",
+    "testCases": [],
+    "hints": [
+      "Python has built-in functions bin(), oct(), and hex() that can help",
+      "Remember to remove the prefix characters (0b, 0o, 0x) from the built-in function outputs",
+      "Use string slicing [2:] to remove the first two characters from the output"
+    ],
+    "solution": "def convert_number(decimal_num):\n    return {\n        'binary': bin(decimal_num)[2:],\n        'octal': oct(decimal_num)[2:],\n        'hexadecimal': hex(decimal_num)[2:]\n    }",
+    "language": "python"
+  },
+  {
+    "id": "cs102-t1-ex02",
+    "subjectId": "cs102",
+    "topicId": "cs102-1",
+    "title": "Binary to Decimal",
+    "difficulty": 1,
+    "description": "Write a function that converts a binary string to its decimal equivalent without using int() with base parameter.",
+    "starterCode": "# Convert binary string to decimal\ndef binary_to_decimal(binary_str):\n    # Your code here\n    pass\n\nprint(binary_to_decimal(\"1011\"))\nprint(binary_to_decimal(\"11111111\"))",
+    "solution": "def binary_to_decimal(binary_str):\n    result = 0\n    power = 0\n    for bit in reversed(binary_str):\n        if bit == \"1\":\n            result += 2 ** power\n        power += 1\n    return result\n\nprint(binary_to_decimal(\"1011\"))\nprint(binary_to_decimal(\"11111111\"))",
+    "testCases": [],
+    "hints": [
+      "Start from the rightmost bit (least significant)",
+      "Each bit position represents a power of 2",
+      "Multiply each bit by 2^position and sum"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t1-ex03",
+    "subjectId": "cs102",
+    "topicId": "cs102-1",
+    "title": "Decimal to Binary",
+    "difficulty": 1,
+    "description": "Write a function that converts a decimal number to binary string without using bin().",
+    "starterCode": "# Convert decimal to binary string\ndef decimal_to_binary(n):\n    # Your code here\n    pass\n\nprint(decimal_to_binary(11))\nprint(decimal_to_binary(255))",
+    "solution": "def decimal_to_binary(n):\n    if n == 0:\n        return \"0\"\n    result = \"\"\n    while n > 0:\n        result = str(n % 2) + result\n        n = n // 2\n    return result\n\nprint(decimal_to_binary(11))\nprint(decimal_to_binary(255))",
+    "testCases": [],
+    "hints": [
+      "Repeatedly divide by 2 and collect remainders",
+      "The remainders form the binary number (in reverse order)",
+      "Handle the special case of 0"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t1-ex04",
+    "subjectId": "cs102",
+    "topicId": "cs102-1",
+    "title": "Hex to Decimal",
+    "difficulty": 2,
+    "description": "Write a function that converts a hexadecimal string to decimal without using int() with base parameter.",
+    "starterCode": "# Convert hexadecimal string to decimal\ndef hex_to_decimal(hex_str):\n    # Your code here\n    pass\n\nprint(hex_to_decimal(\"1A\"))\nprint(hex_to_decimal(\"FF\"))",
+    "solution": "def hex_to_decimal(hex_str):\n    hex_chars = \"0123456789ABCDEF\"\n    result = 0\n    for char in hex_str.upper():\n        result = result * 16 + hex_chars.index(char)\n    return result\n\nprint(hex_to_decimal(\"1A\"))\nprint(hex_to_decimal(\"FF\"))",
+    "testCases": [],
+    "hints": [
+      "A-F represent values 10-15",
+      "Each position is a power of 16",
+      "Process from left to right, multiplying running total by 16"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t1-ex05",
+    "subjectId": "cs102",
+    "topicId": "cs102-1",
+    "title": "Binary to Hexadecimal",
+    "difficulty": 2,
+    "description": "Write a function that converts a binary string directly to hexadecimal. Group binary digits into sets of 4.",
+    "starterCode": "# Convert binary to hexadecimal\ndef binary_to_hex(binary_str):\n    # Your code here\n    pass\n\nprint(binary_to_hex(\"11010\"))\nprint(binary_to_hex(\"11111111\"))",
+    "solution": "def binary_to_hex(binary_str):\n    hex_chars = \"0123456789abcdef\"\n    # Pad to multiple of 4\n    while len(binary_str) % 4 != 0:\n        binary_str = \"0\" + binary_str\n    \n    result = \"\"\n    for i in range(0, len(binary_str), 4):\n        group = binary_str[i:i+4]\n        value = int(group[0])*8 + int(group[1])*4 + int(group[2])*2 + int(group[3])*1\n        result += hex_chars[value]\n    return result\n\nprint(binary_to_hex(\"11010\"))\nprint(binary_to_hex(\"11111111\"))",
+    "testCases": [],
+    "hints": [
+      "Each hex digit represents exactly 4 binary bits",
+      "Pad the binary string to a multiple of 4 bits",
+      "Convert each group of 4 bits to a hex character"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t1-ex06",
+    "subjectId": "cs102",
+    "topicId": "cs102-1",
+    "title": "Base Converter",
+    "difficulty": 3,
+    "description": "Write a function that converts a number from any base (2-16) to any other base (2-16).",
+    "starterCode": "# Convert between any bases (2-16)\ndef convert_base(number_str, from_base, to_base):\n    # Your code here\n    pass\n\nprint(convert_base(\"1011\", 2, 10))  # Binary to decimal\nprint(convert_base(\"255\", 10, 16))  # Decimal to hex",
+    "solution": "def convert_base(number_str, from_base, to_base):\n    chars = \"0123456789abcdef\"\n    # Convert to decimal first\n    decimal = 0\n    for char in number_str.lower():\n        decimal = decimal * from_base + chars.index(char)\n    \n    # Convert from decimal to target base\n    if decimal == 0:\n        return \"0\"\n    result = \"\"\n    while decimal > 0:\n        result = chars[decimal % to_base] + result\n        decimal = decimal // to_base\n    return result\n\nprint(convert_base(\"1011\", 2, 10))\nprint(convert_base(\"255\", 10, 16))",
+    "testCases": [],
+    "hints": [
+      "First convert to decimal as an intermediate step",
+      "Then convert from decimal to the target base",
+      "Use a character string for digits 0-9 and a-f"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t1-ex07",
+    "subjectId": "cs102",
+    "topicId": "cs102-1",
+    "title": "Octal Operations",
+    "difficulty": 3,
+    "description": "Write functions to convert between octal and other bases. Implement octal_to_decimal and decimal_to_octal.",
+    "starterCode": "# Octal conversions\ndef octal_to_decimal(octal_str):\n    # Your code here\n    pass\n\ndef decimal_to_octal(n):\n    # Your code here\n    pass\n\nprint(octal_to_decimal(\"77\"))\nprint(decimal_to_octal(63))",
+    "solution": "def octal_to_decimal(octal_str):\n    result = 0\n    for digit in octal_str:\n        result = result * 8 + int(digit)\n    return result\n\ndef decimal_to_octal(n):\n    if n == 0:\n        return \"0\"\n    result = \"\"\n    while n > 0:\n        result = str(n % 8) + result\n        n = n // 8\n    return result\n\nprint(octal_to_decimal(\"77\"))\nprint(decimal_to_octal(63))",
+    "testCases": [],
+    "hints": [
+      "Octal uses base 8 (digits 0-7)",
+      "Each position is a power of 8",
+      "Similar algorithms to binary conversion, but with 8 instead of 2"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t1-ex08",
+    "subjectId": "cs102",
+    "topicId": "cs102-1",
+    "title": "Number System Validator",
+    "difficulty": 4,
+    "description": "Write a function that validates whether a string is a valid representation in a given base. Return True if valid, False otherwise.",
+    "starterCode": "# Validate number in given base\ndef is_valid_number(number_str, base):\n    # Your code here\n    pass\n\nprint(is_valid_number(\"1011\", 2))   # True\nprint(is_valid_number(\"123\", 2))    # False (3 not valid in binary)\nprint(is_valid_number(\"1G\", 16))    # False (G not valid in hex)",
+    "solution": "def is_valid_number(number_str, base):\n    valid_chars = \"0123456789abcdef\"[:base]\n    for char in number_str.lower():\n        if char not in valid_chars:\n            return False\n    return len(number_str) > 0\n\nprint(is_valid_number(\"1011\", 2))\nprint(is_valid_number(\"123\", 2))\nprint(is_valid_number(\"1G\", 16))",
+    "testCases": [],
+    "hints": [
+      "Valid digits depend on the base",
+      "Base 2: only 0 and 1",
+      "Base 16: 0-9 and a-f",
+      "Check each character against valid digits for that base"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t1-ex09",
+    "subjectId": "cs102",
+    "topicId": "cs102-1",
+    "title": "Gray Code to Binary",
+    "difficulty": 3,
+    "description": "Write a function that converts an n-bit Gray code string to its binary representation.",
+    "starterCode": "# Convert Gray code to binary\ndef gray_to_binary(gray_str):\n    # Your code here\n    pass\n\nprint(gray_to_binary(\"1101\"))  # -> 1011",
+    "solution": "def gray_to_binary(gray_str):\n    # First bit is the same\n    binary = gray_str[0]\n    for i in range(1, len(gray_str)):\n        # XOR previous binary bit with current gray bit\n        prev_bit = int(binary[-1])\n        gbit = int(gray_str[i])\n        bbit = prev_bit ^ gbit\n        binary += str(bbit)\n    return binary\n\nprint(gray_to_binary(\"1101\"))",
+    "testCases": [],
+    "hints": [
+      "First binary bit equals first Gray bit.",
+      "Each next binary bit = previous binary bit XOR current Gray bit.",
+      "Process left to right."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t1-ex10",
+    "subjectId": "cs102",
+    "topicId": "cs102-1",
+    "title": "Binary Fraction to Decimal",
+    "difficulty": 3,
+    "description": "Convert a binary fraction string like \"101.101\" to its decimal floating value without using float().",
+    "starterCode": "# Convert binary fraction to decimal\ndef binary_fraction_to_decimal(binary_str):\n    # Your code here\n    pass\n\nprint(binary_fraction_to_decimal(\"101.101\"))  # 5.625",
+    "solution": "def binary_fraction_to_decimal(binary_str):\n    if \".\" in binary_str:\n        int_part, frac_part = binary_str.split(\".\")\n    else:\n        int_part, frac_part = binary_str, \"\"\n    # Integer part\n    total = 0\n    for bit in int_part:\n        total = total * 2 + int(bit)\n    # Fractional part\n    power = 0.5\n    for bit in frac_part:\n        if bit == \"1\":\n            total += power\n        power /= 2\n    return total\n\nprint(binary_fraction_to_decimal(\"101.101\"))",
+    "testCases": [],
+    "hints": [
+      "Split integer and fractional parts on \".\"",
+      "Left of dot: same as normal binary conversion.",
+      "Right of dot: weights are 1/2, 1/4, 1/8, ..."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t1-drill-1",
+    "subjectId": "cs102",
+    "topicId": "cs102-1",
+    "title": "Hex Digit to Binary",
+    "difficulty": 1,
+    "description": "Write a function that takes a single hex digit (0-9, A-F) and returns its 4-bit binary string.",
+    "starterCode": "# Hex digit to binary nibble\ndef hex_digit_to_bin(ch):\n    # Your code here\n    pass\n\nprint(hex_digit_to_bin(\"A\"))  # 1010",
+    "solution": "def hex_digit_to_bin(ch):\n    ch = ch.lower()\n    digits = \"0123456789abcdef\"\n    val = digits.index(ch)\n    return bin(val)[2:].zfill(4)\n\nprint(hex_digit_to_bin(\"A\"))",
+    "testCases": [],
+    "hints": [
+      "Map hex digit to its value 0–15, then format as 4-bit binary.",
+      "Use zfill(4) to pad leading zeros."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t1-drill-2",
+    "subjectId": "cs102",
+    "topicId": "cs102-1",
+    "title": "Binary Padding for Hex",
+    "difficulty": 1,
+    "description": "Write a function that pads a binary string to a multiple of 4 bits by adding leading zeros.",
+    "starterCode": "# Pad binary to nibble boundary\ndef pad_binary(binary_str):\n    # Your code here\n    pass\n\nprint(pad_binary(\"101\"))   # 0101\nprint(pad_binary(\"10101\")) # 00010101",
+    "solution": "def pad_binary(binary_str):\n    while len(binary_str) % 4 != 0:\n        binary_str = \"0\" + binary_str\n    return binary_str\n\nprint(pad_binary(\"101\"))\nprint(pad_binary(\"10101\"))",
+    "testCases": [],
+    "hints": [
+      "Prepend zeros until length % 4 == 0.",
+      "Return the padded string."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t1-ex13",
+    "subjectId": "cs102",
+    "topicId": "cs102-1",
+    "title": "Base-4 Conversion",
+    "difficulty": 2,
+    "description": "Write a function `to_base4(n)` that converts a decimal integer to a base-4 string.",
+    "starterCode": "def to_base4(n):\n    # Your code here\n    pass\n\nprint(to_base4(10)) # 22 (2*4 + 2)",
+    "solution": "def to_base4(n):\n    if n == 0: return \"0\"\n    res = \"\"\n    while n > 0:\n        res = str(n % 4) + res\n        n //= 4\n    return res\n\nprint(to_base4(10))",
+    "testCases": [],
+    "hints": [
+      "Repeatedly divide by 4 and take remainders."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t1-ex14",
+    "subjectId": "cs102",
+    "topicId": "cs102-1",
+    "title": "Binary Palindrome",
+    "difficulty": 2,
+    "description": "Return True if the binary representation of `n` reads the same forwards and backwards.",
+    "starterCode": "def binary_palindrome(n):\n    # Your code here\n    pass\n\nprint(binary_palindrome(9)) # 1001 -> True",
+    "solution": "def binary_palindrome(n):\n    b = bin(n)[2:]\n    return b == b[::-1]\n\nprint(binary_palindrome(9))",
+    "testCases": [],
+    "hints": [
+      "Convert to binary string.",
+      "Check if string equals its reverse."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t1-ex15",
+    "subjectId": "cs102",
+    "topicId": "cs102-1",
+    "title": "Power of Two Check",
+    "difficulty": 1,
+    "description": "Return True if `n` is a power of two, using bitwise operations (no loops or log).",
+    "starterCode": "def is_power_of_two(n):\n    # Your code here\n    pass\n\nprint(is_power_of_two(16)) # True\nprint(is_power_of_two(18)) # False",
+    "solution": "def is_power_of_two(n):\n    return n > 0 and (n & (n - 1)) == 0\n\nprint(is_power_of_two(16))",
+    "testCases": [],
+    "hints": [
+      "n & (n-1) removes the lowest set bit.",
+      "If n is a power of two, it has exactly one bit set."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t1-ex16",
+    "subjectId": "cs102",
+    "topicId": "cs102-1",
+    "title": "Hamming Distance",
+    "difficulty": 3,
+    "description": "Calculate the Hamming distance between two integers `x` and `y` (number of bits that differ).",
+    "starterCode": "def hamming_dist(x, y):\n    # Your code here\n    pass\n\nprint(hamming_dist(1, 4)) # 001 vs 100 -> 2 bits differ",
+    "solution": "def hamming_dist(x, y):\n    return bin(x ^ y).count(\"1\")\n\nprint(hamming_dist(1, 4))",
+    "testCases": [],
+    "hints": [
+      "XOR the numbers.",
+      "Count the 1s in the result."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-ex-2",
+    "subjectId": "cs102",
+    "topicId": "cs102-2",
+    "title": "Binary Addition Calculator",
+    "difficulty": 3,
+    "description": "Implement a function that performs binary addition on two binary strings and returns the result as a binary string. Do not use built-in base conversion functions.",
+    "starterCode": "def binary_addition(bin1, bin2):\n    \"\"\"\n    Add two binary numbers represented as strings.\n    \n    Args:\n        bin1: First binary number as string (e.g., \"1011\")\n        bin2: Second binary number as string (e.g., \"0110\")\n    \n    Returns:\n        Sum as binary string\n    \"\"\"\n    # Your code here\n    pass",
+    "testCases": [],
+    "hints": [
+      "Start adding from the rightmost bit (least significant bit)",
+      "Keep track of the carry bit as you move left",
+      "Pad the shorter string with leading zeros to make both strings equal length"
+    ],
+    "solution": "def binary_addition(bin1, bin2):\n    max_len = max(len(bin1), len(bin2))\n    bin1 = bin1.zfill(max_len)\n    bin2 = bin2.zfill(max_len)\n    \n    result = []\n    carry = 0\n    \n    for i in range(max_len - 1, -1, -1):\n        bit_sum = int(bin1[i]) + int(bin2[i]) + carry\n        result.append(str(bit_sum % 2))\n        carry = bit_sum // 2\n    \n    if carry:\n        result.append(\"1\")\n    \n    return \"\".join(reversed(result))",
+    "language": "python"
+  },
+  {
+    "id": "cs102-t2-ex02",
+    "subjectId": "cs102",
+    "topicId": "cs102-2",
+    "title": "Binary Increment",
+    "difficulty": 1,
+    "description": "Write a function that adds 1 to a binary number string.",
+    "starterCode": "# Add 1 to a binary number\ndef binary_increment(binary_str):\n    # Your code here\n    pass\n\nprint(binary_increment(\"1010\"))\nprint(binary_increment(\"1111\"))",
+    "solution": "def binary_increment(binary_str):\n    result = list(binary_str)\n    carry = 1\n    for i in range(len(result) - 1, -1, -1):\n        if carry == 0:\n            break\n        if result[i] == \"0\":\n            result[i] = \"1\"\n            carry = 0\n        else:\n            result[i] = \"0\"\n    if carry:\n        result.insert(0, \"1\")\n    return \"\".join(result)\n\nprint(binary_increment(\"1010\"))\nprint(binary_increment(\"1111\"))",
+    "testCases": [],
+    "hints": [
+      "Start from the rightmost bit",
+      "If bit is 0, change to 1 and done",
+      "If bit is 1, change to 0 and continue (carry)"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t2-ex03",
+    "subjectId": "cs102",
+    "topicId": "cs102-2",
+    "title": "Ones Complement",
+    "difficulty": 1,
+    "description": "Write a function that returns the ones complement of a binary string (flip all bits).",
+    "starterCode": "# Get ones complement (flip all bits)\ndef ones_complement(binary_str):\n    # Your code here\n    pass\n\nprint(ones_complement(\"1010\"))\nprint(ones_complement(\"11110000\"))",
+    "solution": "def ones_complement(binary_str):\n    result = \"\"\n    for bit in binary_str:\n        result += \"0\" if bit == \"1\" else \"1\"\n    return result\n\nprint(ones_complement(\"1010\"))\nprint(ones_complement(\"11110000\"))",
+    "testCases": [],
+    "hints": [
+      "Flip each bit: 0 becomes 1, 1 becomes 0",
+      "Process each character in the string",
+      "Build the result string"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t2-ex04",
+    "subjectId": "cs102",
+    "topicId": "cs102-2",
+    "title": "Twos Complement",
+    "difficulty": 2,
+    "description": "Write a function that returns the twos complement of a binary string. Twos complement = ones complement + 1.",
+    "starterCode": "# Get twos complement\ndef twos_complement(binary_str):\n    # Your code here\n    pass\n\nprint(twos_complement(\"0101\"))  # 5 becomes -5\nprint(twos_complement(\"0001\"))  # 1 becomes -1",
+    "solution": "def twos_complement(binary_str):\n    # First get ones complement\n    ones = \"\"\n    for bit in binary_str:\n        ones += \"0\" if bit == \"1\" else \"1\"\n    \n    # Add 1\n    result = list(ones)\n    carry = 1\n    for i in range(len(result) - 1, -1, -1):\n        if carry == 0:\n            break\n        if result[i] == \"0\":\n            result[i] = \"1\"\n            carry = 0\n        else:\n            result[i] = \"0\"\n    return \"\".join(result)\n\nprint(twos_complement(\"0101\"))\nprint(twos_complement(\"0001\"))",
+    "testCases": [],
+    "hints": [
+      "First compute ones complement (flip all bits)",
+      "Then add 1 to the result",
+      "Handle the carry propagation"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t2-ex05",
+    "subjectId": "cs102",
+    "topicId": "cs102-2",
+    "title": "Binary Subtraction",
+    "difficulty": 3,
+    "description": "Write a function that subtracts two binary numbers (bin1 - bin2) using twos complement addition.",
+    "starterCode": "# Subtract binary numbers using twos complement\ndef binary_subtract(bin1, bin2):\n    # Your code here\n    pass\n\nprint(binary_subtract(\"1010\", \"0011\"))  # 10 - 3 = 7",
+    "solution": "def binary_subtract(bin1, bin2):\n    # Ensure same length\n    max_len = max(len(bin1), len(bin2))\n    bin1 = bin1.zfill(max_len)\n    bin2 = bin2.zfill(max_len)\n    \n    # Get twos complement of bin2\n    twos = \"\"\n    for bit in bin2:\n        twos += \"0\" if bit == \"1\" else \"1\"\n    # Add 1\n    twos_list = list(twos)\n    carry = 1\n    for i in range(len(twos_list) - 1, -1, -1):\n        if carry == 0:\n            break\n        if twos_list[i] == \"0\":\n            twos_list[i] = \"1\"\n            carry = 0\n        else:\n            twos_list[i] = \"0\"\n    twos = \"\".join(twos_list)\n    \n    # Add bin1 + twos complement of bin2\n    result = []\n    carry = 0\n    for i in range(max_len - 1, -1, -1):\n        bit_sum = int(bin1[i]) + int(twos[i]) + carry\n        result.append(str(bit_sum % 2))\n        carry = bit_sum // 2\n    \n    return \"\".join(reversed(result))\n\nprint(binary_subtract(\"1010\", \"0011\"))",
+    "testCases": [],
+    "hints": [
+      "Subtraction A - B = A + (-B)",
+      "-B in binary is the twos complement of B",
+      "Add bin1 and the twos complement of bin2"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t2-ex06",
+    "subjectId": "cs102",
+    "topicId": "cs102-2",
+    "title": "Detect Overflow",
+    "difficulty": 3,
+    "description": "Write a function that adds two signed binary numbers and detects if overflow occurred. Use 8-bit signed representation.",
+    "starterCode": "# Add signed binary and detect overflow\ndef add_with_overflow(bin1, bin2):\n    # Returns tuple: (result, overflow_occurred)\n    # Your code here\n    pass\n\nprint(add_with_overflow(\"01111111\", \"00000001\"))  # 127 + 1, overflow!",
+    "solution": "def add_with_overflow(bin1, bin2):\n    # Ensure 8 bits\n    bin1 = bin1.zfill(8)\n    bin2 = bin2.zfill(8)\n    \n    # Add\n    result = []\n    carry = 0\n    for i in range(7, -1, -1):\n        bit_sum = int(bin1[i]) + int(bin2[i]) + carry\n        result.append(str(bit_sum % 2))\n        carry = bit_sum // 2\n    \n    result_str = \"\".join(reversed(result))\n    \n    # Overflow if signs of operands are same but result sign differs\n    sign1 = bin1[0]\n    sign2 = bin2[0]\n    result_sign = result_str[0]\n    \n    overflow = (sign1 == sign2) and (result_sign != sign1)\n    \n    return (result_str, overflow)\n\nprint(add_with_overflow(\"01111111\", \"00000001\"))",
+    "testCases": [],
+    "hints": [
+      "Overflow occurs when adding two positives gives negative",
+      "Or when adding two negatives gives positive",
+      "Check the sign bit (MSB) of inputs and result"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t2-ex07",
+    "subjectId": "cs102",
+    "topicId": "cs102-2",
+    "title": "Binary Multiplication",
+    "difficulty": 4,
+    "description": "Write a function that multiplies two binary numbers using the shift-and-add method.",
+    "starterCode": "# Multiply binary numbers using shift-and-add\ndef binary_multiply(bin1, bin2):\n    # Your code here\n    pass\n\nprint(binary_multiply(\"101\", \"11\"))  # 5 * 3 = 15",
+    "solution": "def binary_multiply(bin1, bin2):\n    # Convert to integers for simplicity of demonstration\n    # but use binary operations\n    result = \"0\"\n    \n    for i, bit in enumerate(reversed(bin2)):\n        if bit == \"1\":\n            shifted = bin1 + \"0\" * i\n            # Add to result\n            max_len = max(len(result), len(shifted))\n            result = result.zfill(max_len)\n            shifted = shifted.zfill(max_len)\n            \n            new_result = []\n            carry = 0\n            for j in range(max_len - 1, -1, -1):\n                bit_sum = int(result[j]) + int(shifted[j]) + carry\n                new_result.append(str(bit_sum % 2))\n                carry = bit_sum // 2\n            if carry:\n                new_result.append(\"1\")\n            result = \"\".join(reversed(new_result))\n    \n    return result.lstrip(\"0\") or \"0\"\n\nprint(binary_multiply(\"101\", \"11\"))",
+    "testCases": [],
+    "hints": [
+      "For each 1 bit in multiplier, shift multiplicand and add",
+      "Shift left = append zeros",
+      "Sum all the shifted partial products"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t2-ex08",
+    "subjectId": "cs102",
+    "topicId": "cs102-2",
+    "title": "Signed Integer Representation",
+    "difficulty": 5,
+    "description": "Write functions to convert between decimal and 8-bit twos complement signed binary.",
+    "starterCode": "# Convert between decimal and 8-bit twos complement\ndef decimal_to_signed_binary(n):\n    # n is between -128 and 127\n    # Your code here\n    pass\n\ndef signed_binary_to_decimal(binary_str):\n    # Your code here\n    pass\n\nprint(decimal_to_signed_binary(-5))\nprint(signed_binary_to_decimal(\"11111011\"))",
+    "solution": "def decimal_to_signed_binary(n):\n    if n >= 0:\n        return bin(n)[2:].zfill(8)\n    else:\n        # Twos complement for negative\n        return bin(256 + n)[2:]\n\ndef signed_binary_to_decimal(binary_str):\n    binary_str = binary_str.zfill(8)\n    if binary_str[0] == \"0\":\n        # Positive\n        return int(binary_str, 2)\n    else:\n        # Negative - twos complement\n        return int(binary_str, 2) - 256\n\nprint(decimal_to_signed_binary(-5))\nprint(signed_binary_to_decimal(\"11111011\"))",
+    "testCases": [],
+    "hints": [
+      "For positive numbers, just convert to binary",
+      "For negative numbers, use twos complement",
+      "Shortcut: for n-bit twos complement of -x, compute 2^n - x"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t2-ex09",
+    "subjectId": "cs102",
+    "topicId": "cs102-2",
+    "title": "Binary Division (Restoring)",
+    "difficulty": 4,
+    "description": "Implement unsigned binary division using the restoring division algorithm. Return the tuple (quotient, remainder) as binary strings.",
+    "starterCode": "# Unsigned binary restoring division\ndef binary_divide(dividend, divisor):\n    # Your code here\n    pass\n\nprint(binary_divide(\"1101\", \"11\"))  # (100, 1)",
+    "solution": "def binary_divide(dividend, divisor):\n    if divisor == \"0\":\n        raise ValueError(\"divide by zero\")\n    n = len(dividend)\n    divisor_int = int(divisor, 2)\n    remainder = 0\n    quotient_bits = []\n    for bit in dividend:\n        remainder = (remainder << 1) + int(bit)\n        if remainder >= divisor_int:\n            remainder -= divisor_int\n            quotient_bits.append(\"1\")\n        else:\n            quotient_bits.append(\"0\")\n    q = \"\".join(quotient_bits).lstrip(\"0\") or \"0\"\n    r = bin(remainder)[2:]\n    return (q, r)\n\nprint(binary_divide(\"1101\", \"11\"))",
+    "testCases": [],
+    "hints": [
+      "Process bits left to right, keeping a running remainder.",
+      "Shift remainder, bring down next bit, compare to divisor.",
+      "Set quotient bit to 1 when remainder >= divisor, then subtract."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t2-ex10",
+    "subjectId": "cs102",
+    "topicId": "cs102-2",
+    "title": "Saturating Add (8-bit signed)",
+    "difficulty": 3,
+    "description": "Implement 8-bit signed addition with saturation. If overflow would occur, clamp to 01111111 (+127) or 10000000 (-128) instead of wrapping.",
+    "starterCode": "# Saturating add for 8-bit signed\ndef saturating_add(bin1, bin2):\n    # Return saturated 8-bit binary string\n    pass\n\nprint(saturating_add(\"01111111\", \"00000001\"))  # clamp to 01111111",
+    "solution": "def saturating_add(bin1, bin2):\n    bin1 = bin1.zfill(8)\n    bin2 = bin2.zfill(8)\n    a = int(bin1, 2)\n    b = int(bin2, 2)\n    # Interpret as signed\n    def to_signed(x):\n        return x - 256 if x & 0b10000000 else x\n    def to_unsigned(x):\n        return x & 0xFF\n    sa, sb = to_signed(a), to_signed(b)\n    s = sa + sb\n    if s > 127:\n        return \"01111111\"\n    if s < -128:\n        return \"10000000\"\n    return bin(to_unsigned(s))[2:].zfill(8)\n\nprint(saturating_add(\"01111111\", \"00000001\"))",
+    "testCases": [],
+    "hints": [
+      "Convert to signed ints, add, then clamp to [-128, 127].",
+      "Convert back to 8-bit two's complement.",
+      "Be careful to preserve leading zeros when returning binary."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t2-drill-1",
+    "subjectId": "cs102",
+    "topicId": "cs102-2",
+    "title": "Check Signed Overflow (8-bit)",
+    "difficulty": 1,
+    "description": "Given two 8-bit signed binaries, return True if adding them would overflow in two's complement.",
+    "starterCode": "# Detect signed overflow in 8-bit add\ndef will_overflow(a, b):\n    # Your code here\n    pass\n\nprint(will_overflow(\"01111111\", \"00000001\"))  # True",
+    "solution": "def will_overflow(a, b):\n    a = a.zfill(8)\n    b = b.zfill(8)\n    sign_a, sign_b = a[0], b[0]\n    # add to get sign of result\n    res = add_bits(a, b)\n    sign_r = res[0]\n    return sign_a == sign_b and sign_r != sign_a\n\ndef add_bits(x, y):\n    max_len = max(len(x), len(y))\n    x = x.zfill(max_len)\n    y = y.zfill(max_len)\n    carry = 0\n    out = []\n    for i in range(max_len - 1, -1, -1):\n        s = int(x[i]) + int(y[i]) + carry\n        out.append(str(s % 2))\n        carry = s // 2\n    if carry:\n        out.append(\"1\")\n    return \"\".join(reversed(out))[-8:]\n\nprint(will_overflow(\"01111111\", \"00000001\"))",
+    "testCases": [],
+    "hints": [
+      "Overflow only when signs of operands match but differ from result sign.",
+      "You can simulate addition or reuse existing add logic.",
+      "Keep width at 8 bits."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t2-drill-2",
+    "subjectId": "cs102",
+    "topicId": "cs102-2",
+    "title": "Half Adder Bitwise",
+    "difficulty": 1,
+    "description": "Implement a pure-bitwise half-adder function that returns (sum, carry) for inputs a,b ∈ {0,1}.",
+    "starterCode": "# Half adder using bitwise ops\ndef half_adder_bit(a, b):\n    # Your code here\n    pass\n\nprint(half_adder_bit(1, 1))",
+    "solution": "def half_adder_bit(a, b):\n    sum_bit = a ^ b\n    carry = a & b\n    return (sum_bit, carry)\n\nprint(half_adder_bit(1, 1))",
+    "testCases": [],
+    "hints": [
+      "sum = XOR, carry = AND.",
+      "Inputs are 0/1 integers."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t2-ex13",
+    "subjectId": "cs102",
+    "topicId": "cs102-2",
+    "title": "Logical Shift Left",
+    "difficulty": 1,
+    "description": "Implement logical left shift `x << n` without using `<<` operator. Assume 8-bit width.",
+    "starterCode": "def logical_lshift(x, n):\n    # Your code here\n    pass\n\nprint(logical_lshift(3, 2)) # 12",
+    "solution": "def logical_lshift(x, n):\n    return (x * (2**n)) & 0xFF\n\nprint(logical_lshift(3, 2))",
+    "testCases": [],
+    "hints": [
+      "Left shift by n is equivalent to multiplying by 2^n.",
+      "Mask with 0xFF to keep 8 bits."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t2-ex14",
+    "subjectId": "cs102",
+    "topicId": "cs102-2",
+    "title": "Logical Shift Right",
+    "difficulty": 1,
+    "description": "Implement logical right shift `x >> n` without `>>`.",
+    "starterCode": "def logical_rshift(x, n):\n    # Your code here\n    pass\n\nprint(logical_rshift(12, 2)) # 3",
+    "solution": "def logical_rshift(x, n):\n    return x // (2**n)\n\nprint(logical_rshift(12, 2))",
+    "testCases": [],
+    "hints": [
+      "Right shift by n is integer division by 2^n."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t2-ex15",
+    "subjectId": "cs102",
+    "topicId": "cs102-2",
+    "title": "Rotate Left (8-bit)",
+    "difficulty": 3,
+    "description": "Rotate bits of an 8-bit integer `x` left by `n` positions.",
+    "starterCode": "def rotate_left(x, n):\n    # Your code here\n    pass\n\nprint(rotate_left(0b10000001, 1)) # 0b00000011 (3)",
+    "solution": "def rotate_left(x, n):\n    n = n % 8\n    return ((x << n) | (x >> (8 - n))) & 0xFF\n\nprint(rotate_left(0x81, 1))",
+    "testCases": [],
+    "hints": [
+      "Combine left shift and right shift.",
+      "Mask with 0xFF."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t2-ex16",
+    "subjectId": "cs102",
+    "topicId": "cs102-2",
+    "title": "Hamming Weight",
+    "difficulty": 2,
+    "description": "Count the number of 1s in the binary representation of `x` (population count).",
+    "starterCode": "def pop_count(x):\n    # Your code here\n    pass\n\nprint(pop_count(15)) # 4 (1111)",
+    "solution": "def pop_count(x):\n    return bin(x).count(\"1\")\n\nprint(pop_count(15))",
+    "testCases": [],
+    "hints": [
+      "Convert to binary string and count \"1\"s."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-ex-3",
+    "subjectId": "cs102",
+    "topicId": "cs102-3",
+    "title": "Character Encoding Explorer",
+    "difficulty": 2,
+    "description": "Write a function that takes a string and returns information about its character encoding, including ASCII values for ASCII characters and UTF-8 byte representation.",
+    "starterCode": "def analyze_encoding(text):\n    \"\"\"\n    Analyze character encoding of a string.\n    \n    Args:\n        text: A string to analyze\n    \n    Returns:\n        A list of dictionaries with character info\n    \"\"\"\n    # Your code here\n    pass",
+    "testCases": [],
+    "hints": [
+      "Use the ord() function to get the ASCII/Unicode code point of a character",
+      "Use the encode() method with 'utf-8' to get byte representation",
+      "len() on the encoded bytes gives you the number of bytes in UTF-8"
+    ],
+    "solution": "def analyze_encoding(text):\n    result = []\n    for char in text:\n        result.append({\n            'char': char,\n            'ascii': ord(char),\n            'utf8_bytes': len(char.encode('utf-8'))\n        })\n    return result",
+    "language": "python"
+  },
+  {
+    "id": "cs102-t3-ex02",
+    "subjectId": "cs102",
+    "topicId": "cs102-3",
+    "title": "ASCII Table Lookup",
+    "difficulty": 1,
+    "description": "Write a function that takes a character and returns its ASCII code, and another that takes a code and returns the character.",
+    "starterCode": "# ASCII conversions\ndef char_to_ascii(char):\n    # Your code here\n    pass\n\ndef ascii_to_char(code):\n    # Your code here\n    pass\n\nprint(char_to_ascii(\"A\"))\nprint(ascii_to_char(65))",
+    "solution": "def char_to_ascii(char):\n    return ord(char)\n\ndef ascii_to_char(code):\n    return chr(code)\n\nprint(char_to_ascii(\"A\"))\nprint(ascii_to_char(65))",
+    "testCases": [],
+    "hints": [
+      "ord() converts a character to its ASCII/Unicode value",
+      "chr() converts an ASCII/Unicode value to a character"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t3-ex03",
+    "subjectId": "cs102",
+    "topicId": "cs102-3",
+    "title": "Integer Range Calculator",
+    "difficulty": 1,
+    "description": "Write a function that calculates the range of values for n-bit unsigned and signed integers.",
+    "starterCode": "# Calculate integer ranges for n bits\ndef integer_range(n_bits):\n    # Returns dict with unsigned_min, unsigned_max, signed_min, signed_max\n    # Your code here\n    pass\n\nprint(integer_range(8))\nprint(integer_range(16))",
+    "solution": "def integer_range(n_bits):\n    return {\n        \"unsigned_min\": 0,\n        \"unsigned_max\": 2**n_bits - 1,\n        \"signed_min\": -(2**(n_bits-1)),\n        \"signed_max\": 2**(n_bits-1) - 1\n    }\n\nprint(integer_range(8))\nprint(integer_range(16))",
+    "testCases": [],
+    "hints": [
+      "Unsigned range: 0 to 2^n - 1",
+      "Signed range: -2^(n-1) to 2^(n-1) - 1",
+      "Use ** for exponentiation"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t3-ex04",
+    "subjectId": "cs102",
+    "topicId": "cs102-3",
+    "title": "Float to Binary",
+    "difficulty": 3,
+    "description": "Write a function that shows how a simple positive float is represented as a 32-bit IEEE 754 number. Return sign, exponent (8 bits), and mantissa (23 bits).",
+    "starterCode": "# Show IEEE 754 representation of a float\ndef float_to_ieee754(f):\n    # Return dict with sign, exponent, mantissa as binary strings\n    # Your code here\n    pass\n\nprint(float_to_ieee754(5.5))",
+    "solution": "import struct\n\ndef float_to_ieee754(f):\n    # Pack float as bytes, unpack as integer\n    packed = struct.pack(\">f\", f)\n    integer = struct.unpack(\">I\", packed)[0]\n    \n    binary = bin(integer)[2:].zfill(32)\n    \n    return {\n        \"sign\": binary[0],\n        \"exponent\": binary[1:9],\n        \"mantissa\": binary[9:]\n    }\n\nprint(float_to_ieee754(5.5))",
+    "testCases": [],
+    "hints": [
+      "IEEE 754: 1 sign bit + 8 exponent bits + 23 mantissa bits",
+      "Use struct module to get raw bytes",
+      "Sign bit: 0 for positive, 1 for negative"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t3-ex05",
+    "subjectId": "cs102",
+    "topicId": "cs102-3",
+    "title": "Byte Order Converter",
+    "difficulty": 2,
+    "description": "Write functions to convert between big-endian and little-endian byte order for a 32-bit integer represented as hex.",
+    "starterCode": "# Convert byte order\ndef swap_endian(hex_str):\n    # Input: \"12345678\" (big-endian)\n    # Output: \"78563412\" (little-endian) or vice versa\n    # Your code here\n    pass\n\nprint(swap_endian(\"12345678\"))\nprint(swap_endian(\"78563412\"))",
+    "solution": "def swap_endian(hex_str):\n    # Split into bytes (pairs of hex digits)\n    hex_str = hex_str.zfill(8)  # Ensure 4 bytes\n    bytes_list = [hex_str[i:i+2] for i in range(0, 8, 2)]\n    # Reverse byte order\n    return \"\".join(reversed(bytes_list))\n\nprint(swap_endian(\"12345678\"))\nprint(swap_endian(\"78563412\"))",
+    "testCases": [],
+    "hints": [
+      "A byte is 2 hex digits",
+      "Big-endian: most significant byte first",
+      "Little-endian: least significant byte first",
+      "Reverse the order of bytes"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t3-ex06",
+    "subjectId": "cs102",
+    "topicId": "cs102-3",
+    "title": "String to Binary",
+    "difficulty": 2,
+    "description": "Write a function that converts a string to its binary representation (ASCII values as 8-bit binary).",
+    "starterCode": "# Convert string to binary\ndef string_to_binary(text):\n    # Return binary representation of each character\n    # Your code here\n    pass\n\nprint(string_to_binary(\"Hi\"))",
+    "solution": "def string_to_binary(text):\n    result = []\n    for char in text:\n        binary = bin(ord(char))[2:].zfill(8)\n        result.append(binary)\n    return \" \".join(result)\n\nprint(string_to_binary(\"Hi\"))",
+    "testCases": [],
+    "hints": [
+      "Get ASCII value with ord()",
+      "Convert to binary with bin()",
+      "Pad to 8 bits with zfill(8)"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t3-ex07",
+    "subjectId": "cs102",
+    "topicId": "cs102-3",
+    "title": "Fixed Point Representation",
+    "difficulty": 4,
+    "description": "Implement fixed-point number representation using 8 bits total with 4 bits for integer part and 4 bits for fractional part.",
+    "starterCode": "# Fixed-point representation (4.4 format)\ndef decimal_to_fixed(d):\n    # Convert decimal to 8-bit fixed point (4.4)\n    # Your code here\n    pass\n\ndef fixed_to_decimal(binary_str):\n    # Convert 8-bit fixed point to decimal\n    # Your code here\n    pass\n\nprint(decimal_to_fixed(5.5))\nprint(fixed_to_decimal(\"01011000\"))",
+    "solution": "def decimal_to_fixed(d):\n    # Multiply by 16 (2^4) to shift decimal point\n    fixed_int = int(d * 16)\n    return bin(fixed_int)[2:].zfill(8)\n\ndef fixed_to_decimal(binary_str):\n    value = int(binary_str, 2)\n    return value / 16\n\nprint(decimal_to_fixed(5.5))\nprint(fixed_to_decimal(\"01011000\"))",
+    "testCases": [],
+    "hints": [
+      "Fixed point: multiply by 2^(fractional bits) to get integer",
+      "To convert back: divide by 2^(fractional bits)",
+      "4.4 format means 4 integer bits, 4 fractional bits"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t3-ex08",
+    "subjectId": "cs102",
+    "topicId": "cs102-3",
+    "title": "UTF-8 Encoder",
+    "difficulty": 5,
+    "description": "Write a function that shows how a Unicode code point is encoded in UTF-8 format. Return the bytes as hex.",
+    "starterCode": "# Encode Unicode code point to UTF-8\ndef unicode_to_utf8(code_point):\n    # Return UTF-8 bytes as hex string\n    # Your code here\n    pass\n\nprint(unicode_to_utf8(0x0041))    # A\nprint(unicode_to_utf8(0x00A9))    # Copyright symbol\nprint(unicode_to_utf8(0x4E2D))    # Chinese character",
+    "solution": "def unicode_to_utf8(code_point):\n    if code_point <= 0x7F:\n        # 1 byte: 0xxxxxxx\n        return format(code_point, \"02x\")\n    elif code_point <= 0x7FF:\n        # 2 bytes: 110xxxxx 10xxxxxx\n        b1 = 0xC0 | (code_point >> 6)\n        b2 = 0x80 | (code_point & 0x3F)\n        return format(b1, \"02x\") + format(b2, \"02x\")\n    elif code_point <= 0xFFFF:\n        # 3 bytes: 1110xxxx 10xxxxxx 10xxxxxx\n        b1 = 0xE0 | (code_point >> 12)\n        b2 = 0x80 | ((code_point >> 6) & 0x3F)\n        b3 = 0x80 | (code_point & 0x3F)\n        return format(b1, \"02x\") + format(b2, \"02x\") + format(b3, \"02x\")\n    else:\n        # 4 bytes: 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx\n        b1 = 0xF0 | (code_point >> 18)\n        b2 = 0x80 | ((code_point >> 12) & 0x3F)\n        b3 = 0x80 | ((code_point >> 6) & 0x3F)\n        b4 = 0x80 | (code_point & 0x3F)\n        return format(b1, \"02x\") + format(b2, \"02x\") + format(b3, \"02x\") + format(b4, \"02x\")\n\nprint(unicode_to_utf8(0x0041))\nprint(unicode_to_utf8(0x00A9))\nprint(unicode_to_utf8(0x4E2D))",
+    "testCases": [],
+    "hints": [
+      "UTF-8 uses 1-4 bytes depending on code point",
+      "0x00-0x7F: 1 byte (ASCII compatible)",
+      "0x80-0x7FF: 2 bytes",
+      "0x800-0xFFFF: 3 bytes",
+      "Use bit manipulation to extract and combine bits"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t3-ex09",
+    "subjectId": "cs102",
+    "topicId": "cs102-3",
+    "title": "Float Bit Breakdown",
+    "difficulty": 4,
+    "description": "Given a 32-bit binary string, interpret it as an IEEE 754 single-precision float and return a tuple (sign, exponent, fraction, value).",
+    "starterCode": "# Interpret IEEE 754 single precision bits\ndef decode_float32(bits):\n    # bits: 32-char string of 0/1\n    # Return (sign_bit, exponent_int, fraction_int, numeric_value)\n    pass\n\nprint(decode_float32(\"01000000101000000000000000000000\"))  # 5.0",
+    "solution": "import struct\n\ndef decode_float32(bits):\n    if len(bits) != 32:\n        raise ValueError(\"need 32 bits\")\n    sign_bit = int(bits[0], 2)\n    exponent_bits = bits[1:9]\n    fraction_bits = bits[9:]\n    exponent = int(exponent_bits, 2)\n    fraction = int(fraction_bits, 2)\n    # Convert to actual float using struct\n    as_int = int(bits, 2)\n    packed = as_int.to_bytes(4, byteorder=\"big\")\n    value = struct.unpack('>f', packed)[0]\n    return (sign_bit, exponent, fraction, value)\n\nprint(decode_float32(\"01000000101000000000000000000000\"))",
+    "testCases": [],
+    "hints": [
+      "Split bits into sign (1), exponent (8), fraction (23).",
+      "You can reuse Python struct to get numeric value; the point is to show the pieces.",
+      "Remember exponent bias is 127."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t3-ex10",
+    "subjectId": "cs102",
+    "topicId": "cs102-3",
+    "title": "Endian Swap 32-bit",
+    "difficulty": 2,
+    "description": "Write a function that takes an 8-hex-digit string (e.g., \"1234ABCD\") and returns the bytes swapped from little endian to big endian (e.g., \"CDAB3412\").",
+    "starterCode": "# Swap endian of 32-bit hex string\ndef swap_endian32(hex_str):\n    # Your code here\n    pass\n\nprint(swap_endian32(\"1234ABCD\"))",
+    "solution": "def swap_endian32(hex_str):\n    if len(hex_str) != 8:\n        raise ValueError(\"need exactly 8 hex chars\")\n    hex_str = hex_str.lower()\n    bytes_list = [hex_str[i:i+2] for i in range(0, 8, 2)]\n    bytes_list.reverse()\n    return \"\".join(bytes_list)\n\nprint(swap_endian32(\"1234ABCD\"))",
+    "testCases": [],
+    "hints": [
+      "Group hex string into bytes (2 hex chars each).",
+      "Reverse byte order, then join back.",
+      "Assume valid hex input of length 8."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t3-drill-1",
+    "subjectId": "cs102",
+    "topicId": "cs102-3",
+    "title": "Unsigned vs Signed Interpret",
+    "difficulty": 1,
+    "description": "Given an 8-bit binary string, return a tuple (unsigned_value, signed_value).",
+    "starterCode": "# Interpret 8-bit value as unsigned and signed\ndef interpret_byte(bits):\n    # Your code here\n    pass\n\nprint(interpret_byte(\"11111111\"))  # (255, -1)",
+    "solution": "def interpret_byte(bits):\n    bits = bits.zfill(8)\n    unsigned_val = int(bits, 2)\n    signed_val = unsigned_val - 256 if bits[0] == \"1\" else unsigned_val\n    return (unsigned_val, signed_val)\n\nprint(interpret_byte(\"11111111\"))",
+    "testCases": [],
+    "hints": [
+      "Unsigned: plain base-2.",
+      "Signed: subtract 256 if sign bit is 1.",
+      "Ensure string is 8 bits."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t3-drill-2",
+    "subjectId": "cs102",
+    "topicId": "cs102-3",
+    "title": "Printable ASCII Check",
+    "difficulty": 1,
+    "description": "Given a byte value (0-255), return True if it is a printable ASCII character (0x20-0x7E).",
+    "starterCode": "# Check printable ASCII\ndef is_printable(byte_val):\n    # Your code here\n    pass\n\nprint(is_printable(65))  # True for \"A\"",
+    "solution": "def is_printable(byte_val):\n    return 0x20 <= byte_val <= 0x7E\n\nprint(is_printable(65))",
+    "testCases": [],
+    "hints": [
+      "Printable ASCII ranges from 32 (space) to 126 (~).",
+      "Return boolean."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t3-ex13",
+    "subjectId": "cs102",
+    "topicId": "cs102-3",
+    "title": "ASCII Is Upper",
+    "difficulty": 1,
+    "description": "Return True if `char` is an uppercase ASCII letter (A-Z), without using .isupper().",
+    "starterCode": "def is_upper_ascii(char):\n    # Your code here\n    pass\n\nprint(is_upper_ascii(\"A\"))",
+    "solution": "def is_upper_ascii(char):\n    return 0x41 <= ord(char) <= 0x5A\n\nprint(is_upper_ascii(\"A\"))",
+    "testCases": [],
+    "hints": [
+      "A is 65 (0x41), Z is 90 (0x5A).",
+      "Use ord()."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t3-ex14",
+    "subjectId": "cs102",
+    "topicId": "cs102-3",
+    "title": "ASCII To Lower",
+    "difficulty": 1,
+    "description": "Convert an uppercase ASCII char to lowercase by manipulating the bit value. Hint: 'a' - 'A' = 32.",
+    "starterCode": "def to_lower_ascii(char):\n    # Your code here\n    pass\n\nprint(to_lower_ascii(\"G\"))",
+    "solution": "def to_lower_ascii(char):\n    if \"A\" <= char <= \"Z\":\n        return chr(ord(char) | 0x20)\n    return char\n\nprint(to_lower_ascii(\"G\"))",
+    "testCases": [],
+    "hints": [
+      "OR with 0x20 (32) sets the 6th bit, converting upper to lower."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t3-ex15",
+    "subjectId": "cs102",
+    "topicId": "cs102-3",
+    "title": "Hex Dump String",
+    "difficulty": 2,
+    "description": "Given a string, return a space-separated string of hex values for each character.",
+    "starterCode": "def hex_dump(s):\n    # Your code here\n    pass\n\nprint(hex_dump(\"Hi\")) # \"48 69\"",
+    "solution": "def hex_dump(s):\n    return \" \".join(format(ord(c), \"02x\") for c in s)\n\nprint(hex_dump(\"Hi\"))",
+    "testCases": [],
+    "hints": [
+      "Iterate chars.",
+      "Convert each to hex.",
+      "Join with spaces."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t3-ex16",
+    "subjectId": "cs102",
+    "topicId": "cs102-3",
+    "title": "Simple RLE",
+    "difficulty": 3,
+    "description": "Run Length Encode a string of 0s and 1s. E.g., \"00011\" -> \"0312\".",
+    "starterCode": "def rle_encode(s):\n    # Your code here\n    pass\n\nprint(rle_encode(\"00011\"))",
+    "solution": "def rle_encode(s):\n    if not s: return \"\"\n    res = \"\"\n    count = 1\n    curr = s[0]\n    for c in s[1:]:\n        if c == curr:\n            count += 1\n        else:\n            res += curr + str(count)\n            curr = c\n            count = 1\n    res += curr + str(count)\n    return res\n\nprint(rle_encode(\"00011\"))",
+    "testCases": [],
+    "hints": [
+      "Track current char and count.",
+      "Append to result when char changes."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-ex-4",
+    "subjectId": "cs102",
+    "topicId": "cs102-4",
+    "title": "Boolean Expression Evaluator",
+    "difficulty": 3,
+    "description": "Create a function that evaluates simple Boolean expressions with AND, OR, and NOT operations. The function should accept a Boolean expression as a string and a dictionary of variable values.",
+    "starterCode": "def evaluate_boolean(expression, variables):\n    \"\"\"\n    Evaluate a Boolean expression.\n    \n    Args:\n        expression: Boolean expression as string (e.g., \"A AND B\")\n        variables: Dictionary mapping variable names to boolean values\n    \n    Returns:\n        Boolean result of the expression\n    \"\"\"\n    # Your code here\n    pass",
+    "testCases": [],
+    "hints": [
+      "Replace variable names in the expression with their values from the dictionary",
+      "Convert boolean values to strings \"True\" and \"False\" for replacement"
+    ],
+    "solution": "def evaluate_boolean(expression, variables):\n    result_expr = expression\n    for var_name, var_value in variables.items():\n        result_expr = result_expr.replace(var_name, str(var_value))\n    result_expr = result_expr.replace(\"AND\", \"and\").replace(\"OR\", \"or\").replace(\"NOT\", \"not\")\n    return eval(result_expr)",
+    "language": "python"
+  },
+  {
+    "id": "cs102-t4-ex02",
+    "subjectId": "cs102",
+    "topicId": "cs102-4",
+    "title": "AND Gate",
+    "difficulty": 1,
+    "description": "Implement a function that simulates an AND gate. Returns True only if both inputs are True.",
+    "starterCode": "# AND gate implementation\ndef and_gate(a, b):\n    # Your code here\n    pass\n\nprint(and_gate(True, True))\nprint(and_gate(True, False))\nprint(and_gate(False, False))",
+    "solution": "def and_gate(a, b):\n    return a and b\n\nprint(and_gate(True, True))\nprint(and_gate(True, False))\nprint(and_gate(False, False))",
+    "testCases": [],
+    "hints": [
+      "AND returns True only when both inputs are True",
+      "You can use Python's and operator"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t4-ex03",
+    "subjectId": "cs102",
+    "topicId": "cs102-4",
+    "title": "OR Gate",
+    "difficulty": 1,
+    "description": "Implement a function that simulates an OR gate. Returns True if at least one input is True.",
+    "starterCode": "# OR gate implementation\ndef or_gate(a, b):\n    # Your code here\n    pass\n\nprint(or_gate(True, False))\nprint(or_gate(False, False))",
+    "solution": "def or_gate(a, b):\n    return a or b\n\nprint(or_gate(True, False))\nprint(or_gate(False, False))",
+    "testCases": [],
+    "hints": [
+      "OR returns True when at least one input is True",
+      "You can use Python's or operator"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t4-ex04",
+    "subjectId": "cs102",
+    "topicId": "cs102-4",
+    "title": "XOR Gate",
+    "difficulty": 2,
+    "description": "Implement a function that simulates an XOR (exclusive OR) gate. Returns True if inputs are different.",
+    "starterCode": "# XOR gate implementation\ndef xor_gate(a, b):\n    # Your code here\n    pass\n\nprint(xor_gate(True, False))\nprint(xor_gate(True, True))",
+    "solution": "def xor_gate(a, b):\n    return a != b\n\nprint(xor_gate(True, False))\nprint(xor_gate(True, True))",
+    "testCases": [],
+    "hints": [
+      "XOR returns True when inputs are different",
+      "XOR returns False when inputs are the same",
+      "You can use != to check inequality"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t4-ex05",
+    "subjectId": "cs102",
+    "topicId": "cs102-4",
+    "title": "NAND Gate",
+    "difficulty": 2,
+    "description": "Implement a NAND gate (NOT AND). NAND is a universal gate - any logic circuit can be built with just NAND gates.",
+    "starterCode": "# NAND gate implementation\ndef nand_gate(a, b):\n    # Your code here\n    pass\n\nprint(nand_gate(True, True))\nprint(nand_gate(True, False))",
+    "solution": "def nand_gate(a, b):\n    return not (a and b)\n\nprint(nand_gate(True, True))\nprint(nand_gate(True, False))",
+    "testCases": [],
+    "hints": [
+      "NAND = NOT AND",
+      "Invert the result of AND gate",
+      "NAND only returns False when both inputs are True"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t4-ex06",
+    "subjectId": "cs102",
+    "topicId": "cs102-4",
+    "title": "Truth Table Generator",
+    "difficulty": 3,
+    "description": "Write a function that generates a truth table for a boolean expression with 2 variables A and B.",
+    "starterCode": "# Generate truth table for expression\ndef truth_table(expression):\n    # expression is a string like \"A AND B\" or \"A OR B\"\n    # Return list of tuples: [(A, B, result), ...]\n    # Your code here\n    pass\n\nprint(truth_table(\"A AND B\"))",
+    "solution": "def truth_table(expression):\n    results = []\n    for a in [False, True]:\n        for b in [False, True]:\n            expr = expression.replace(\"A\", str(a)).replace(\"B\", str(b))\n            expr = expr.replace(\"AND\", \"and\").replace(\"OR\", \"or\").replace(\"NOT\", \"not\")\n            result = eval(expr)\n            results.append((a, b, result))\n    return results\n\nprint(truth_table(\"A AND B\"))",
+    "testCases": [],
+    "hints": [
+      "Iterate through all combinations of A and B",
+      "There are 4 combinations: FF, FT, TF, TT",
+      "Substitute values and evaluate expression"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t4-ex07",
+    "subjectId": "cs102",
+    "topicId": "cs102-4",
+    "title": "De Morgan's Laws",
+    "difficulty": 4,
+    "description": "Implement functions to demonstrate De Morgan's laws: NOT(A AND B) = (NOT A) OR (NOT B), NOT(A OR B) = (NOT A) AND (NOT B).",
+    "starterCode": "# Demonstrate De Morgan's Laws\ndef verify_demorgans_and(a, b):\n    # Verify NOT(A AND B) = (NOT A) OR (NOT B)\n    # Return tuple (left_side, right_side, equal)\n    # Your code here\n    pass\n\ndef verify_demorgans_or(a, b):\n    # Verify NOT(A OR B) = (NOT A) AND (NOT B)\n    # Your code here\n    pass\n\nprint(verify_demorgans_and(True, False))\nprint(verify_demorgans_or(True, True))",
+    "solution": "def verify_demorgans_and(a, b):\n    left = not (a and b)\n    right = (not a) or (not b)\n    return (left, right, left == right)\n\ndef verify_demorgans_or(a, b):\n    left = not (a or b)\n    right = (not a) and (not b)\n    return (left, right, left == right)\n\nprint(verify_demorgans_and(True, False))\nprint(verify_demorgans_or(True, True))",
+    "testCases": [],
+    "hints": [
+      "NOT(A AND B) = (NOT A) OR (NOT B)",
+      "NOT(A OR B) = (NOT A) AND (NOT B)",
+      "Calculate both sides and check if they're equal"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t4-ex08",
+    "subjectId": "cs102",
+    "topicId": "cs102-4",
+    "title": "Half Adder",
+    "difficulty": 4,
+    "description": "Implement a half adder circuit using logic gates. A half adder adds two bits and produces sum and carry outputs.",
+    "starterCode": "# Half adder: adds two bits\ndef half_adder(a, b):\n    # Return tuple (sum, carry)\n    # sum = a XOR b\n    # carry = a AND b\n    # Your code here\n    pass\n\nprint(half_adder(0, 0))\nprint(half_adder(1, 1))\nprint(half_adder(1, 0))",
+    "solution": "def half_adder(a, b):\n    sum_bit = a ^ b  # XOR for sum\n    carry = a & b    # AND for carry\n    return (sum_bit, carry)\n\nprint(half_adder(0, 0))\nprint(half_adder(1, 1))\nprint(half_adder(1, 0))",
+    "testCases": [],
+    "hints": [
+      "Sum = A XOR B (use ^ in Python)",
+      "Carry = A AND B (use & in Python)",
+      "This is the building block of binary adders"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t4-ex09",
+    "subjectId": "cs102",
+    "topicId": "cs102-4",
+    "title": "Full Adder",
+    "difficulty": 5,
+    "description": "Implement a full adder circuit that adds two bits plus a carry-in bit, producing sum and carry-out.",
+    "starterCode": "# Full adder: adds two bits plus carry-in\ndef full_adder(a, b, carry_in):\n    # Return tuple (sum, carry_out)\n    # Your code here\n    pass\n\nprint(full_adder(1, 1, 0))\nprint(full_adder(1, 1, 1))\nprint(full_adder(0, 1, 1))",
+    "solution": "def full_adder(a, b, carry_in):\n    # First half adder\n    sum1 = a ^ b\n    carry1 = a & b\n    \n    # Second half adder (with carry_in)\n    sum_out = sum1 ^ carry_in\n    carry2 = sum1 & carry_in\n    \n    # Final carry\n    carry_out = carry1 | carry2\n    \n    return (sum_out, carry_out)\n\nprint(full_adder(1, 1, 0))\nprint(full_adder(1, 1, 1))\nprint(full_adder(0, 1, 1))",
+    "testCases": [],
+    "hints": [
+      "Full adder = two half adders + OR gate",
+      "First half adder: adds A and B",
+      "Second half adder: adds result with carry_in",
+      "Carry out = carry from either half adder"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t4-ex10",
+    "subjectId": "cs102",
+    "topicId": "cs102-4",
+    "title": "Truth Table Generator",
+    "difficulty": 4,
+    "description": "Write a function that, given a Boolean expression using variables A, B, C and operators &, |, ^, ~, and parentheses, returns its truth table as a list of (assignment, result). Assume the expression is safe to eval.",
+    "starterCode": "import itertools\n\n# Generate truth table for expression like \"(A & B) | ~C\"\ndef truth_table(expr):\n    # Your code here\n    pass\n\nprint(truth_table(\"A & B\"))",
+    "solution": "import itertools\n\ndef truth_table(expr):\n    results = []\n    for vals in itertools.product([0, 1], repeat=3):\n        A, B, C = vals\n        result = int(eval(expr.replace(\"~\", \"1-\")))  # replace ~x with 1-x for NOT\n        results.append(((A, B, C), result))\n    return results\n\nprint(truth_table(\"A & B\"))",
+    "testCases": [],
+    "hints": [
+      "Iterate over all 2^3 assignments of A,B,C.",
+      "Replace ~ with Python-friendly form (e.g., 1- or not).",
+      "Use eval cautiously; assume trusted input for this exercise."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t4-ex11",
+    "subjectId": "cs102",
+    "topicId": "cs102-4",
+    "title": "Boolean Simplifier (Algebraic)",
+    "difficulty": 3,
+    "description": "Implement a simple algebraic simplifier that applies a few laws: idempotent (X|X = X, X&X = X), annihilator (X|1 = 1, X&0 = 0), identity (X|0 = X, X&1 = X), complement (X|~X = 1, X&~X = 0). Expression variables are single uppercase letters; operators: | for OR, & for AND, ~ for NOT. No parentheses.",
+    "starterCode": "# Very small Boolean simplifier\ndef simplify(expr):\n    # expr like \"A|A\" or \"A&1\" or \"A|~A\"\n    # Your code here\n    pass\n\nprint(simplify(\"A|A\"))\nprint(simplify(\"A&1\"))\nprint(simplify(\"A|~A\"))",
+    "solution": "def simplify(expr):\n    expr = expr.replace(\" \", \"\")\n    # Handle complement forms first\n    if \"|~\" in expr or \"~\" in expr and \"|\" in expr:\n        parts = expr.split(\"|\")\n        if len(parts) == 2 and parts[1].startswith(\"~\") and parts[1][1:] == parts[0]:\n            return \"1\"\n    if \"&~\" in expr or \"~\" in expr and \"&\" in expr:\n        parts = expr.split(\"&\")\n        if len(parts) == 2 and parts[1].startswith(\"~\") and parts[1][1:] == parts[0]:\n            return \"0\"\n    # Idempotent\n    if \"|\" in expr:\n        a, b = expr.split(\"|\")\n        if a == b:\n            return a\n        if a == \"1\" or b == \"1\":\n            return \"1\"\n        if a == \"0\":\n            return b\n        if b == \"0\":\n            return a\n    if \"&\" in expr:\n        a, b = expr.split(\"&\")\n        if a == b:\n            return a\n        if a == \"0\" or b == \"0\":\n            return \"0\"\n        if a == \"1\":\n            return b\n        if b == \"1\":\n            return a\n    return expr\n\nprint(simplify(\"A|A\"))\nprint(simplify(\"A&1\"))\nprint(simplify(\"A|~A\"))",
+    "testCases": [],
+    "hints": [
+      "Handle complement cases A|~A=1 and A&~A=0 early.",
+      "Then apply idempotent and identity/annihilator laws.",
+      "Assume no parentheses and only one operator for simplicity."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t4-drill-1",
+    "subjectId": "cs102",
+    "topicId": "cs102-4",
+    "title": "XOR Parity Bit",
+    "difficulty": 1,
+    "description": "Given a binary string, return 1 if it has odd parity (odd number of 1s), else 0. Use XOR, not count().",
+    "starterCode": "# Parity using XOR\ndef parity(bit_str):\n    # Your code here\n    pass\n\nprint(parity(\"1011\"))  # 1",
+    "solution": "def parity(bit_str):\n    p = 0\n    for b in bit_str:\n        p ^= int(b)\n    return p\n\nprint(parity(\"1011\"))",
+    "testCases": [],
+    "hints": [
+      "Initialize parity bit to 0 and XOR with each input bit.",
+      "XOR accumulates odd/even counts of 1s."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t4-drill-2",
+    "subjectId": "cs102",
+    "topicId": "cs102-4",
+    "title": "NAND from AND/NOT",
+    "difficulty": 1,
+    "description": "Implement a NAND function using only Python’s logical operations (not using bitwise operators). Inputs are booleans.",
+    "starterCode": "# NAND using and/not\ndef nand(a, b):\n    # Your code here\n    pass\n\nprint(nand(True, True))",
+    "solution": "def nand(a, b):\n    return not (a and b)\n\nprint(nand(True, True))",
+    "testCases": [],
+    "hints": [
+      "NAND is the negation of AND.",
+      "Use logical operators, not bitwise."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t4-ex14",
+    "subjectId": "cs102",
+    "topicId": "cs102-4",
+    "title": "NOR Gate",
+    "difficulty": 1,
+    "description": "Implement a NOR gate (NOT OR). Returns True only if both inputs are False.",
+    "starterCode": "def nor_gate(a, b):\n    pass\n\nprint(nor_gate(False, False))",
+    "solution": "def nor_gate(a, b):\n    return not (a or b)\n\nprint(nor_gate(False, False))",
+    "testCases": [],
+    "hints": [
+      "Negate the result of OR."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t4-ex15",
+    "subjectId": "cs102",
+    "topicId": "cs102-4",
+    "title": "XNOR Gate",
+    "difficulty": 1,
+    "description": "Implement XNOR (Exclusive NOR). Returns True if inputs are the same.",
+    "starterCode": "def xnor_gate(a, b):\n    pass\n\nprint(xnor_gate(True, True))",
+    "solution": "def xnor_gate(a, b):\n    return a == b\n\nprint(xnor_gate(True, True))",
+    "testCases": [],
+    "hints": [
+      "Check if a equals b."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t4-ex16",
+    "subjectId": "cs102",
+    "topicId": "cs102-4",
+    "title": "Majority Gate",
+    "difficulty": 2,
+    "description": "Return True if more than half of the 3 inputs are True.",
+    "starterCode": "def majority(a, b, c):\n    pass\n\nprint(majority(True, True, False))",
+    "solution": "def majority(a, b, c):\n    return (a + b + c) >= 2\n\nprint(majority(True, True, False))",
+    "testCases": [],
+    "hints": [
+      "Sum the boolean values (True=1).",
+      "Check if sum >= 2."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-ex-5",
+    "subjectId": "cs102",
+    "topicId": "cs102-5",
+    "title": "Simple CPU Simulator",
+    "difficulty": 4,
+    "description": "Implement a simple CPU simulator that can execute basic instructions on a set of registers. Support operations: LOAD (load value to register), ADD (add two registers), and STORE (store register value).",
+    "starterCode": "class SimpleCPU:\n    def __init__(self):\n        self.registers = {'R0': 0, 'R1': 0, 'R2': 0, 'R3': 0}\n        self.memory = {}\n    \n    def execute(self, instruction):\n        # Your code here\n        pass\n    \n    def get_register(self, reg_name):\n        return self.registers.get(reg_name, 0)",
+    "testCases": [],
+    "hints": [
+      "Split the instruction string into parts using split()",
+      "The first part is the operation, remaining parts are operands",
+      "For LOAD, the second part is the register and third is the value",
+      "For ADD, second part is destination, third and fourth are source registers"
+    ],
+    "solution": "class SimpleCPU:\n    def __init__(self):\n        self.registers = {'R0': 0, 'R1': 0, 'R2': 0, 'R3': 0}\n        self.memory = {}\n    \n    def execute(self, instruction):\n        parts = instruction.split()\n        operation = parts[0]\n        \n        if operation == 'LOAD':\n            reg = parts[1]\n            value = int(parts[2])\n            self.registers[reg] = value\n        elif operation == 'ADD':\n            dest = parts[1]\n            src1 = parts[2]\n            src2 = parts[3]\n            self.registers[dest] = self.registers[src1] + self.registers[src2]\n        elif operation == 'STORE':\n            reg = parts[1]\n            addr = int(parts[2])\n            self.memory[addr] = self.registers[reg]\n    \n    def get_register(self, reg_name):\n        return self.registers.get(reg_name, 0)",
+    "language": "python"
+  },
+  {
+    "id": "cs102-t5-ex02",
+    "subjectId": "cs102",
+    "topicId": "cs102-5",
+    "title": "Memory Simulator",
+    "difficulty": 1,
+    "description": "Create a simple memory simulator that can read and write bytes to addresses.",
+    "starterCode": "class Memory:\n    def __init__(self, size=256):\n        # Initialize memory array\n        # Your code here\n        pass\n    \n    def write(self, address, value):\n        # Write value at address\n        # Your code here\n        pass\n    \n    def read(self, address):\n        # Read value at address\n        # Your code here\n        pass\n\nmem = Memory()\nmem.write(0, 42)\nprint(mem.read(0))",
+    "solution": "class Memory:\n    def __init__(self, size=256):\n        self.data = [0] * size\n    \n    def write(self, address, value):\n        if 0 <= address < len(self.data):\n            self.data[address] = value & 0xFF  # Keep byte range\n    \n    def read(self, address):\n        if 0 <= address < len(self.data):\n            return self.data[address]\n        return 0\n\nmem = Memory()\nmem.write(0, 42)\nprint(mem.read(0))",
+    "testCases": [],
+    "hints": [
+      "Use a list to represent memory",
+      "Check address bounds before read/write",
+      "Bytes are 0-255 range"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t5-ex03",
+    "subjectId": "cs102",
+    "topicId": "cs102-5",
+    "title": "Program Counter",
+    "difficulty": 1,
+    "description": "Implement a program counter that tracks the current instruction address and supports increment and jump operations.",
+    "starterCode": "class ProgramCounter:\n    def __init__(self):\n        # Your code here\n        pass\n    \n    def increment(self):\n        # Move to next instruction\n        pass\n    \n    def jump(self, address):\n        # Jump to specific address\n        pass\n    \n    def get_address(self):\n        # Return current address\n        pass\n\npc = ProgramCounter()\nprint(pc.get_address())\npc.increment()\nprint(pc.get_address())",
+    "solution": "class ProgramCounter:\n    def __init__(self):\n        self.address = 0\n    \n    def increment(self):\n        self.address += 1\n    \n    def jump(self, address):\n        self.address = address\n    \n    def get_address(self):\n        return self.address\n\npc = ProgramCounter()\nprint(pc.get_address())\npc.increment()\nprint(pc.get_address())",
+    "testCases": [],
+    "hints": [
+      "Start at address 0",
+      "Increment adds 1 to address",
+      "Jump sets address to new value"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t5-ex04",
+    "subjectId": "cs102",
+    "topicId": "cs102-5",
+    "title": "ALU Operations",
+    "difficulty": 2,
+    "description": "Implement a simple ALU (Arithmetic Logic Unit) that supports basic operations: ADD, SUB, AND, OR, NOT.",
+    "starterCode": "class ALU:\n    def execute(self, operation, operand1, operand2=None):\n        # Execute ALU operation\n        # Your code here\n        pass\n\nalu = ALU()\nprint(alu.execute(\"ADD\", 5, 3))\nprint(alu.execute(\"NOT\", 255))",
+    "solution": "class ALU:\n    def execute(self, operation, operand1, operand2=None):\n        if operation == \"ADD\":\n            return operand1 + operand2\n        elif operation == \"SUB\":\n            return operand1 - operand2\n        elif operation == \"AND\":\n            return operand1 & operand2\n        elif operation == \"OR\":\n            return operand1 | operand2\n        elif operation == \"NOT\":\n            return ~operand1 & 0xFF  # 8-bit NOT\n        return 0\n\nalu = ALU()\nprint(alu.execute(\"ADD\", 5, 3))\nprint(alu.execute(\"NOT\", 255))",
+    "testCases": [],
+    "hints": [
+      "Use + for ADD, - for SUB",
+      "Use & for AND, | for OR, ~ for NOT",
+      "NOT operation may need masking for fixed bit width"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t5-ex05",
+    "subjectId": "cs102",
+    "topicId": "cs102-5",
+    "title": "Fetch-Decode-Execute Cycle",
+    "difficulty": 3,
+    "description": "Simulate the fetch-decode-execute cycle. Given a list of instructions in memory, fetch and execute them in sequence.",
+    "starterCode": "class FDESimulator:\n    def __init__(self, program):\n        # program is a list of instructions\n        self.memory = program\n        self.pc = 0\n        self.registers = {'R0': 0, 'R1': 0}\n    \n    def fetch(self):\n        # Return instruction at PC and increment PC\n        pass\n    \n    def decode_execute(self, instruction):\n        # Decode and execute the instruction\n        pass\n    \n    def run(self):\n        # Run until end of program\n        pass\n\nsim = FDESimulator([\"LOAD R0 5\", \"LOAD R1 3\", \"ADD R0 R0 R1\"])\nsim.run()\nprint(sim.registers[\"R0\"])",
+    "solution": "class FDESimulator:\n    def __init__(self, program):\n        self.memory = program\n        self.pc = 0\n        self.registers = {'R0': 0, 'R1': 0}\n    \n    def fetch(self):\n        if self.pc < len(self.memory):\n            instruction = self.memory[self.pc]\n            self.pc += 1\n            return instruction\n        return None\n    \n    def decode_execute(self, instruction):\n        parts = instruction.split()\n        op = parts[0]\n        if op == \"LOAD\":\n            self.registers[parts[1]] = int(parts[2])\n        elif op == \"ADD\":\n            self.registers[parts[1]] = self.registers[parts[2]] + self.registers[parts[3]]\n    \n    def run(self):\n        while True:\n            instruction = self.fetch()\n            if instruction is None:\n                break\n            self.decode_execute(instruction)\n\nsim = FDESimulator([\"LOAD R0 5\", \"LOAD R1 3\", \"ADD R0 R0 R1\"])\nsim.run()\nprint(sim.registers[\"R0\"])",
+    "testCases": [],
+    "hints": [
+      "Fetch: get instruction at PC, increment PC",
+      "Decode: parse the instruction string",
+      "Execute: perform the operation",
+      "Loop until no more instructions"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t5-ex06",
+    "subjectId": "cs102",
+    "topicId": "cs102-5",
+    "title": "Cache Simulator",
+    "difficulty": 3,
+    "description": "Implement a simple direct-mapped cache with 4 entries. Track hits and misses.",
+    "starterCode": "class Cache:\n    def __init__(self, size=4):\n        # Your code here\n        pass\n    \n    def access(self, address):\n        # Return (hit/miss, value)\n        # Your code here\n        pass\n    \n    def get_stats(self):\n        # Return (hits, misses)\n        pass\n\ncache = Cache()\ncache.access(0)\ncache.access(0)  # Should be hit\nprint(cache.get_stats())",
+    "solution": "class Cache:\n    def __init__(self, size=4):\n        self.size = size\n        self.data = [None] * size\n        self.hits = 0\n        self.misses = 0\n    \n    def access(self, address):\n        index = address % self.size\n        if self.data[index] == address:\n            self.hits += 1\n            return (\"hit\", address)\n        else:\n            self.misses += 1\n            self.data[index] = address\n            return (\"miss\", address)\n    \n    def get_stats(self):\n        return (self.hits, self.misses)\n\ncache = Cache()\ncache.access(0)\ncache.access(0)\nprint(cache.get_stats())",
+    "testCases": [],
+    "hints": [
+      "Direct-mapped: address % cache_size gives index",
+      "If entry at index matches, it's a hit",
+      "Otherwise, it's a miss and we update the cache"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t5-ex07",
+    "subjectId": "cs102",
+    "topicId": "cs102-5",
+    "title": "Stack Machine",
+    "difficulty": 4,
+    "description": "Implement a stack-based virtual machine that supports PUSH, POP, ADD, SUB operations.",
+    "starterCode": "class StackMachine:\n    def __init__(self):\n        self.stack = []\n    \n    def execute(self, instruction):\n        # Execute instruction\n        # PUSH n - push n onto stack\n        # POP - pop top of stack\n        # ADD - pop two, push sum\n        # SUB - pop two, push difference\n        pass\n    \n    def top(self):\n        return self.stack[-1] if self.stack else None\n\nsm = StackMachine()\nsm.execute(\"PUSH 5\")\nsm.execute(\"PUSH 3\")\nsm.execute(\"ADD\")\nprint(sm.top())",
+    "solution": "class StackMachine:\n    def __init__(self):\n        self.stack = []\n    \n    def execute(self, instruction):\n        parts = instruction.split()\n        op = parts[0]\n        \n        if op == \"PUSH\":\n            self.stack.append(int(parts[1]))\n        elif op == \"POP\":\n            if self.stack:\n                return self.stack.pop()\n        elif op == \"ADD\":\n            if len(self.stack) >= 2:\n                b = self.stack.pop()\n                a = self.stack.pop()\n                self.stack.append(a + b)\n        elif op == \"SUB\":\n            if len(self.stack) >= 2:\n                b = self.stack.pop()\n                a = self.stack.pop()\n                self.stack.append(a - b)\n    \n    def top(self):\n        return self.stack[-1] if self.stack else None\n\nsm = StackMachine()\nsm.execute(\"PUSH 5\")\nsm.execute(\"PUSH 3\")\nsm.execute(\"ADD\")\nprint(sm.top())",
+    "testCases": [],
+    "hints": [
+      "PUSH adds to top of stack",
+      "ADD/SUB pop two operands, push result",
+      "Order matters for subtraction"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t5-ex08",
+    "subjectId": "cs102",
+    "topicId": "cs102-5",
+    "title": "CPU with Branching",
+    "difficulty": 5,
+    "description": "Extend the CPU simulator to support conditional branching: JMP (unconditional), JZ (jump if zero), JNZ (jump if not zero).",
+    "starterCode": "class CPUWithBranching:\n    def __init__(self, program):\n        self.program = program\n        self.pc = 0\n        self.registers = {'R0': 0, 'R1': 0, 'R2': 0}\n        self.zero_flag = False\n    \n    def execute_instruction(self):\n        # Fetch and execute one instruction\n        # Your code here\n        pass\n    \n    def run(self):\n        while self.pc < len(self.program):\n            self.execute_instruction()\n\n# Program counts down from 3 to 0\nprog = [\"LOAD R0 3\", \"SUB R0 R0 1\", \"JNZ 1\", \"HALT\"]\ncpu = CPUWithBranching(prog)\ncpu.run()\nprint(cpu.registers[\"R0\"])",
+    "solution": "class CPUWithBranching:\n    def __init__(self, program):\n        self.program = program\n        self.pc = 0\n        self.registers = {'R0': 0, 'R1': 0, 'R2': 0}\n        self.zero_flag = False\n        self.halted = False\n    \n    def execute_instruction(self):\n        if self.pc >= len(self.program):\n            self.halted = True\n            return\n        \n        instruction = self.program[self.pc]\n        parts = instruction.split()\n        op = parts[0]\n        \n        if op == \"LOAD\":\n            self.registers[parts[1]] = int(parts[2])\n            self.pc += 1\n        elif op == \"SUB\":\n            val = self.registers[parts[2]] - int(parts[3])\n            self.registers[parts[1]] = val\n            self.zero_flag = (val == 0)\n            self.pc += 1\n        elif op == \"JMP\":\n            self.pc = int(parts[1])\n        elif op == \"JZ\":\n            if self.zero_flag:\n                self.pc = int(parts[1])\n            else:\n                self.pc += 1\n        elif op == \"JNZ\":\n            if not self.zero_flag:\n                self.pc = int(parts[1])\n            else:\n                self.pc += 1\n        elif op == \"HALT\":\n            self.halted = True\n    \n    def run(self):\n        while not self.halted and self.pc < len(self.program):\n            self.execute_instruction()\n\nprog = [\"LOAD R0 3\", \"SUB R0 R0 1\", \"JNZ 1\", \"HALT\"]\ncpu = CPUWithBranching(prog)\ncpu.run()\nprint(cpu.registers[\"R0\"])",
+    "testCases": [],
+    "hints": [
+      "Use a zero flag updated after arithmetic",
+      "JMP: set PC to address",
+      "JZ: jump only if zero flag is set",
+      "JNZ: jump only if zero flag is not set"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t5-ex09",
+    "subjectId": "cs102",
+    "topicId": "cs102-5",
+    "title": "Direct-Mapped Cache Simulator",
+    "difficulty": 4,
+    "description": "Simulate a tiny direct-mapped cache. Given a list of byte addresses, a cache size in lines, and a line size in bytes, return the number of hits and misses.",
+    "starterCode": "# Direct-mapped cache simulator\ndef cache_sim(addresses, num_lines, line_size):\n    # addresses: list of ints\n    # Return tuple (hits, misses)\n    pass\n\nprint(cache_sim([0, 4, 8, 0, 16, 4], num_lines=2, line_size=4))",
+    "solution": "def cache_sim(addresses, num_lines, line_size):\n    cache_tags = [None] * num_lines\n    hits = misses = 0\n    for addr in addresses:\n        line_index = (addr // line_size) % num_lines\n        tag = addr // line_size\n        if cache_tags[line_index] == tag:\n            hits += 1\n        else:\n            misses += 1\n            cache_tags[line_index] = tag\n    return (hits, misses)\n\nprint(cache_sim([0, 4, 8, 0, 16, 4], num_lines=2, line_size=4))",
+    "testCases": [],
+    "hints": [
+      "Line index = (address / line_size) mod num_lines.",
+      "Tag = address / line_size (integer division).",
+      "On miss, replace the line with the new tag."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t5-ex10",
+    "subjectId": "cs102",
+    "topicId": "cs102-5",
+    "title": "Instruction Trace Logger",
+    "difficulty": 3,
+    "description": "Extend the simple CPU simulator to emit a trace of (pc, instruction) for each step. Return the trace list. Use the same instruction set as the earlier CPUWithBranching exercise.",
+    "starterCode": "class TracingCPU:\n    def __init__(self, program):\n        self.program = program\n        self.pc = 0\n        self.registers = {\"R0\": 0, \"R1\": 0}\n        self.zero_flag = False\n        self.trace = []\n    \n    def step(self):\n        # Execute one instruction and log (pc, instruction)\n        pass\n    \n    def run(self):\n        while self.pc < len(self.program):\n            self.step()\n\nprog = [\"LOAD R0 2\", \"SUB R0 R0 1\", \"JNZ 1\", \"HALT\"]\ncpu = TracingCPU(prog)\ncpu.run()\nprint(cpu.trace)",
+    "solution": "class TracingCPU:\n    def __init__(self, program):\n        self.program = program\n        self.pc = 0\n        self.registers = {\"R0\": 0, \"R1\": 0}\n        self.zero_flag = False\n        self.halted = False\n        self.trace = []\n    \n    def step(self):\n        if self.halted or self.pc >= len(self.program):\n            return\n        instr = self.program[self.pc]\n        self.trace.append((self.pc, instr))\n        parts = instr.split()\n        op = parts[0]\n        if op == \"LOAD\":\n            self.registers[parts[1]] = int(parts[2])\n            self.zero_flag = (self.registers[parts[1]] == 0)\n            self.pc += 1\n        elif op == \"SUB\":\n            dest, src, imm = parts[1], parts[2], int(parts[3])\n            self.registers[dest] = self.registers[src] - imm\n            self.zero_flag = (self.registers[dest] == 0)\n            self.pc += 1\n        elif op == \"JNZ\":\n            target = int(parts[1])\n            if not self.zero_flag:\n                self.pc = target\n            else:\n                self.pc += 1\n        elif op == \"HALT\":\n            self.halted = True\n        else:\n            self.pc += 1\n    \n    def run(self):\n        while not self.halted and self.pc < len(self.program):\n            self.step()\n\nprog = [\"LOAD R0 2\", \"SUB R0 R0 1\", \"JNZ 1\", \"HALT\"]\ncpu = TracingCPU(prog)\ncpu.run()\nprint(cpu.trace)",
+    "testCases": [],
+    "hints": [
+      "Log (pc, instruction) before executing it.",
+      "Update zero_flag after arithmetic and loads.",
+      "Stop on HALT or when pc runs off the end."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t5-drill-1",
+    "subjectId": "cs102",
+    "topicId": "cs102-5",
+    "title": "Program Counter Increment",
+    "difficulty": 1,
+    "description": "Given a starting PC and instruction size (bytes), compute the next PC after sequential execution of n instructions.",
+    "starterCode": "# Compute next PC after n sequential instructions\ndef next_pc(start_pc, instr_size, n):\n    # Your code here\n    pass\n\nprint(next_pc(0, 4, 3))  # 12",
+    "solution": "def next_pc(start_pc, instr_size, n):\n    return start_pc + instr_size * n\n\nprint(next_pc(0, 4, 3))",
+    "testCases": [],
+    "hints": [
+      "Sequential execution just increments by instr_size each step.",
+      "Arithmetic only."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t5-drill-2",
+    "subjectId": "cs102",
+    "topicId": "cs102-5",
+    "title": "Cycles vs Time",
+    "difficulty": 1,
+    "description": "Given CPU frequency in MHz and number of cycles, return the elapsed time in microseconds.",
+    "starterCode": "# Convert cycles to microseconds\ndef cycles_to_us(cycles, mhz):\n    # Your code here\n    pass\n\nprint(cycles_to_us(10_000, 100))  # 100 us",
+    "solution": "def cycles_to_us(cycles, mhz):\n    # period per cycle in microseconds = 1 / (mhz)\n    period_us = 1.0 / mhz\n    return cycles * period_us\n\nprint(cycles_to_us(10_000, 100))",
+    "testCases": [],
+    "hints": [
+      "1 MHz = 1 cycle per microsecond.",
+      "Time = cycles / (frequency in cycles per microsecond)."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t5-ex13",
+    "subjectId": "cs102",
+    "topicId": "cs102-5",
+    "title": "CPI Calculation",
+    "difficulty": 2,
+    "description": "Calculate Cycles Per Instruction (CPI). `CPI = Total_Cycles / Instruction_Count`.",
+    "starterCode": "def calc_cpi(cycles, instr_count):\n    pass\n\nprint(calc_cpi(1000, 500))",
+    "solution": "def calc_cpi(cycles, instr_count):\n    return cycles / instr_count\n\nprint(calc_cpi(1000, 500))",
+    "testCases": [],
+    "hints": [
+      "Divide total cycles by instruction count."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t5-ex14",
+    "subjectId": "cs102",
+    "topicId": "cs102-5",
+    "title": "MIPS Calculation",
+    "difficulty": 2,
+    "description": "Calculate MIPS (Million Instructions Per Second). `MIPS = (Instr_Count / Execution_Time_Seconds) / 10^6`.",
+    "starterCode": "def calc_mips(instr_count, seconds):\n    pass\n\nprint(calc_mips(2000000, 1))",
+    "solution": "def calc_mips(instr_count, seconds):\n    return (instr_count / seconds) / 1000000.0\n\nprint(calc_mips(2000000, 1))",
+    "testCases": [],
+    "hints": [
+      "Instructions per second, divided by 1 million."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t5-ex15",
+    "subjectId": "cs102",
+    "topicId": "cs102-5",
+    "title": "Amdahl's Law Speedup",
+    "difficulty": 3,
+    "description": "Calculate theoretical speedup. `Speedup = 1 / ((1 - p) + (p / s))`, where `p` is portion parallelizable, `s` is speedup of that portion.",
+    "starterCode": "def amdahl_speedup(p, s):\n    pass\n\nprint(amdahl_speedup(0.5, 2))",
+    "solution": "def amdahl_speedup(p, s):\n    return 1.0 / ((1.0 - p) + (p / s))\n\nprint(amdahl_speedup(0.5, 2))",
+    "testCases": [],
+    "hints": [
+      "Apply the formula."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t5-ex16",
+    "subjectId": "cs102",
+    "topicId": "cs102-5",
+    "title": "Clock Period",
+    "difficulty": 1,
+    "description": "Calculate Clock Period (T) given Frequency (f). `T = 1 / f`. Input f is in Hz, return T in seconds.",
+    "starterCode": "def clock_period(freq_hz):\n    pass\n\nprint(clock_period(1000000000)) # 1 GHz -> 1e-9 sec",
+    "solution": "def clock_period(freq_hz):\n    return 1.0 / freq_hz\n\nprint(clock_period(1000000000))",
+    "testCases": [],
+    "hints": [
+      "Inverse of frequency."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t6-ex01",
+    "subjectId": "cs102",
+    "topicId": "cs102-6",
+    "title": "Simulate Register Move",
+    "difficulty": 1,
+    "description": "Write a function `simulate_mov(registers, dest, src)` where `registers` is a dictionary (e.g., `{\"AX\": 0, \"BX\": 5}`), and `dest`/`src` are register names. The function should copy the value from `src` to `dest` and return the updated dictionary.",
+    "starterCode": "def simulate_mov(registers, dest, src):\n    # Your code here\n    pass\n\nregs = {\"AX\": 10, \"BX\": 20}\nprint(simulate_mov(regs, \"AX\", \"BX\"))",
+    "solution": "def simulate_mov(registers, dest, src):\n    if src in registers and dest in registers:\n        registers[dest] = registers[src]\n    return registers\n\nregs = {\"AX\": 10, \"BX\": 20}\nprint(simulate_mov(regs, \"AX\", \"BX\"))",
+    "testCases": [],
+    "hints": [
+      "Access the dictionary using the keys provided.",
+      "Assign the value of registers[src] to registers[dest]."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t6-ex02",
+    "subjectId": "cs102",
+    "topicId": "cs102-6",
+    "title": "Simulate ADD Instruction",
+    "difficulty": 1,
+    "description": "Write a function `simulate_add(registers, dest, src)` that adds the value of `src` to `dest` and stores the result in `dest`. Return the updated registers.",
+    "starterCode": "def simulate_add(registers, dest, src):\n    # Your code here\n    pass\n\nregs = {\"AX\": 5, \"BX\": 3}\nprint(simulate_add(regs, \"AX\", \"BX\")) # AX should be 8",
+    "solution": "def simulate_add(registers, dest, src):\n    registers[dest] += registers[src]\n    return registers\n\nregs = {\"AX\": 5, \"BX\": 3}\nprint(simulate_add(regs, \"AX\", \"BX\"))",
+    "testCases": [],
+    "hints": [
+      "Similar to MOV, but perform addition.",
+      "registers[dest] = registers[dest] + registers[src]"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t6-ex03",
+    "subjectId": "cs102",
+    "topicId": "cs102-6",
+    "title": "Simulate Immediate Value",
+    "difficulty": 1,
+    "description": "Assembly instructions often use \"immediate\" values (constants). Modify `simulate_mov` to handle cases where `src` is an integer (e.g., 5) instead of a register name.",
+    "starterCode": "def simulate_mov_imm(registers, dest, src):\n    # src can be a string (register) or int (immediate)\n    # Your code here\n    pass\n\nregs = {\"AX\": 0}\nprint(simulate_mov_imm(regs, \"AX\", 42))",
+    "solution": "def simulate_mov_imm(registers, dest, src):\n    if isinstance(src, int):\n        registers[dest] = src\n    elif src in registers:\n        registers[dest] = registers[src]\n    return registers\n\nregs = {\"AX\": 0}\nprint(simulate_mov_imm(regs, \"AX\", 42))",
+    "testCases": [],
+    "hints": [
+      "Check the type of `src` using `isinstance(src, int)`",
+      "If it is an int, assign directly. If it is a string, look it up in registers."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t6-ex04",
+    "subjectId": "cs102",
+    "topicId": "cs102-6",
+    "title": "Zero Flag Simulation",
+    "difficulty": 2,
+    "description": "Write a function `update_zero_flag(result)` that returns `1` if the result is 0, and `0` otherwise. This simulates the CPU Zero Flag (ZF).",
+    "starterCode": "def update_zero_flag(result):\n    # Your code here\n    pass\n\nprint(update_zero_flag(0))  # Should return 1\nprint(update_zero_flag(5))  # Should return 0",
+    "solution": "def update_zero_flag(result):\n    return 1 if result == 0 else 0\n\nprint(update_zero_flag(0))\nprint(update_zero_flag(5))",
+    "testCases": [],
+    "hints": [
+      "Use a simple if statement or conditional expression.",
+      "The Zero Flag is set (1) when the result of an operation is zero."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t6-ex05",
+    "subjectId": "cs102",
+    "topicId": "cs102-6",
+    "title": "Sign Flag Simulation",
+    "difficulty": 2,
+    "description": "Write a function `update_sign_flag(result, bits=8)` that returns `1` if the result is negative (MSB is 1) in an n-bit system, and `0` otherwise.",
+    "starterCode": "def update_sign_flag(result, bits=8):\n    # Your code here\n    pass\n\nprint(update_sign_flag(-5))      # 1\nprint(update_sign_flag(127))     # 0\nprint(update_sign_flag(0xFF, 8)) # 1 (if interpreted as signed 8-bit)",
+    "solution": "def update_sign_flag(result, bits=8):\n    # Mask to keep only relevant bits\n    val = result & ((1 << bits) - 1)\n    # Check MSB\n    msb = (val >> (bits - 1)) & 1\n    return msb\n\nprint(update_sign_flag(-5))",
+    "testCases": [],
+    "hints": [
+      "Use bitwise operators to isolate the Most Significant Bit (MSB).",
+      "MSB position is `bits - 1`."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t6-ex06",
+    "subjectId": "cs102",
+    "topicId": "cs102-6",
+    "title": "Simulate CMP Instruction",
+    "difficulty": 2,
+    "description": "The `CMP dest, src` instruction subtracts `src` from `dest` internally to update flags but does NOT store the result. Write `simulate_cmp(dest_val, src_val)` that returns a dict `{\"ZF\": ?, \"SF\": ?}` based on `dest_val - src_val`.",
+    "starterCode": "def simulate_cmp(dest_val, src_val):\n    # Returns dictionary with ZF and SF\n    pass\n\nprint(simulate_cmp(5, 5))  # ZF=1, SF=0\nprint(simulate_cmp(5, 10)) # ZF=0, SF=1",
+    "solution": "def simulate_cmp(dest_val, src_val):\n    res = dest_val - src_val\n    zf = 1 if res == 0 else 0\n    sf = 1 if res < 0 else 0\n    return {\"ZF\": zf, \"SF\": sf}\n\nprint(simulate_cmp(5, 5))\nprint(simulate_cmp(5, 10))",
+    "testCases": [],
+    "hints": [
+      "Calculate the difference `dest_val - src_val`.",
+      "Set ZF to 1 if difference is 0.",
+      "Set SF to 1 if difference is negative."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t6-ex07",
+    "subjectId": "cs102",
+    "topicId": "cs102-6",
+    "title": "Jump Condition Checker",
+    "difficulty": 3,
+    "description": "Implement `check_jump(condition, flags)` where `condition` is a string like \"JE\" (Jump Equal), \"JNE\" (Jump Not Equal), \"JL\" (Jump Less), \"JG\" (Jump Greater), and `flags` is `{\"ZF\": 0/1, \"SF\": 0/1}`. Return True if jump should be taken.",
+    "starterCode": "def check_jump(condition, flags):\n    # JE: Jump if ZF=1\n    # JNE: Jump if ZF=0\n    # JL: Jump if SF != OF (simplify to SF=1 for this ex)\n    # JG: Jump if ZF=0 and SF=OF (simplify to ZF=0 and SF=0)\n    pass\n\nprint(check_jump(\"JE\", {\"ZF\": 1, \"SF\": 0}))",
+    "solution": "def check_jump(condition, flags):\n    zf = flags.get(\"ZF\", 0)\n    sf = flags.get(\"SF\", 0)\n    if condition == \"JE\":\n        return zf == 1\n    elif condition == \"JNE\":\n        return zf == 0\n    elif condition == \"JL\":\n        return sf == 1\n    elif condition == \"JG\":\n        return zf == 0 and sf == 0\n    return False\n\nprint(check_jump(\"JE\", {\"ZF\": 1, \"SF\": 0}))",
+    "testCases": [],
+    "hints": [
+      "Map each mnemonic to its flag logic.",
+      "JE checks ZF==1.",
+      "JNE checks ZF==0."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t6-ex08",
+    "subjectId": "cs102",
+    "topicId": "cs102-6",
+    "title": "Program Counter Increment",
+    "difficulty": 2,
+    "description": "In a simple CPU, the Program Counter (PC) increments by 1 after each instruction, unless a jump occurs. Write `next_pc(current_pc, instruction_type, jump_taken, target_addr)`. If jump_taken is True, return target_addr. Else return current_pc + 1.",
+    "starterCode": "def next_pc(current_pc, is_jump, jump_taken, target_addr):\n    # Your code here\n    pass\n\nprint(next_pc(10, True, True, 50))  # Should return 50\nprint(next_pc(10, True, False, 50)) # Should return 11",
+    "solution": "def next_pc(current_pc, is_jump, jump_taken, target_addr):\n    if is_jump and jump_taken:\n        return target_addr\n    return current_pc + 1\n\nprint(next_pc(10, True, True, 50))\nprint(next_pc(10, True, False, 50))",
+    "testCases": [],
+    "hints": [
+      "Check if it is a jump AND the jump condition was met.",
+      "If so, return the target.",
+      "Otherwise, just add 1."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t6-ex09",
+    "subjectId": "cs102",
+    "topicId": "cs102-6",
+    "title": "Stack Push Simulation",
+    "difficulty": 3,
+    "description": "Simulate a `PUSH` instruction. You have a `stack` (list) and a `registers` (dict). `PUSH src` should append `registers[src]` to `stack`. Write `simulate_push(stack, registers, src)`.",
+    "starterCode": "def simulate_push(stack, registers, src):\n    # Your code here\n    pass\n\nstack = []\nregs = {\"AX\": 42}\nsimulate_push(stack, regs, \"AX\")\nprint(stack) # [42]",
+    "solution": "def simulate_push(stack, registers, src):\n    if src in registers:\n        stack.append(registers[src])\n    return stack\n\nstack = []\nregs = {\"AX\": 42}\nsimulate_push(stack, regs, \"AX\")\nprint(stack)",
+    "testCases": [],
+    "hints": [
+      "Use list.append() to simulate pushing to the stack.",
+      "Get the value from the registers dict."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t6-ex10",
+    "subjectId": "cs102",
+    "topicId": "cs102-6",
+    "title": "Stack Pop Simulation",
+    "difficulty": 3,
+    "description": "Simulate `POP dest`. It should remove the last item from `stack` and store it in `registers[dest]`. Write `simulate_pop(stack, registers, dest)`.",
+    "starterCode": "def simulate_pop(stack, registers, dest):\n    # Your code here\n    pass\n\nstack = [10, 20]\nregs = {\"AX\": 0}\nsimulate_pop(stack, regs, \"AX\")\nprint(regs[\"AX\"]) # 20\nprint(stack)      # [10]",
+    "solution": "def simulate_pop(stack, registers, dest):\n    if stack:\n        val = stack.pop()\n        registers[dest] = val\n    return registers\n\nstack = [10, 20]\nregs = {\"AX\": 0}\nsimulate_pop(stack, regs, \"AX\")\nprint(regs[\"AX\"])",
+    "testCases": [],
+    "hints": [
+      "Use list.pop() to get the top element.",
+      "Store it in the register."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t6-ex11",
+    "subjectId": "cs102",
+    "topicId": "cs102-6",
+    "title": "Instruction Decoder",
+    "difficulty": 4,
+    "description": "Write a function that parses a string like \"MOV AX, 5\" and returns a tuple `(opcode, dest, src)`. Handle whitespace flexibly.",
+    "starterCode": "def decode_instruction(instr_str):\n    # Your code here\n    pass\n\nprint(decode_instruction(\"MOV AX, 5\")) # (\"MOV\", \"AX\", \"5\")",
+    "solution": "def decode_instruction(instr_str):\n    parts = instr_str.replace(\",\", \" \").split()\n    opcode = parts[0]\n    dest = parts[1]\n    src = parts[2] if len(parts) > 2 else None\n    return (opcode, dest, src)\n\nprint(decode_instruction(\"MOV AX, 5\"))",
+    "testCases": [],
+    "hints": [
+      "Replace commas with spaces to simplify splitting.",
+      "Split the string into a list of words.",
+      "The first word is opcode, second is dest, third is src."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t6-ex12",
+    "subjectId": "cs102",
+    "topicId": "cs102-6",
+    "title": "Execute Program Loop",
+    "difficulty": 5,
+    "description": "Simulate running a tiny program. Given a list of instructions (tuples) and initial regs, execute them sequentially. Support \"MOV\", \"ADD\", \"SUB\". Ignore jumps for now.",
+    "starterCode": "def run_program(instructions, registers):\n    for opcode, dest, src in instructions:\n        # implement logic\n        pass\n    return registers\n\nprog = [(\"MOV\", \"AX\", 10), (\"MOV\", \"BX\", 5), (\"ADD\", \"AX\", \"BX\")]\nregs = {\"AX\": 0, \"BX\": 0}\nprint(run_program(prog, regs))",
+    "solution": "def run_program(instructions, registers):\n    for opcode, dest, src in instructions:\n        val = src\n        if isinstance(src, str) and src in registers:\n            val = registers[src]\n        \n        if opcode == \"MOV\":\n            registers[dest] = val\n        elif opcode == \"ADD\":\n            registers[dest] += val\n        elif opcode == \"SUB\":\n            registers[dest] -= val\n    return registers\n\nprog = [(\"MOV\", \"AX\", 10), (\"MOV\", \"BX\", 5), (\"ADD\", \"AX\", \"BX\")]\nregs = {\"AX\": 0, \"BX\": 0}\nprint(run_program(prog, regs))",
+    "testCases": [],
+    "hints": [
+      "Iterate through the list of instruction tuples.",
+      "Use if/elif blocks to handle each opcode.",
+      "Resolve `src` to a value (integer or register lookup) before operating."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t6-ex13",
+    "subjectId": "cs102",
+    "topicId": "cs102-6",
+    "title": "Relative Addressing",
+    "difficulty": 3,
+    "description": "Calculate the physical address given a base address and an offset. `calc_address(base, offset)`.",
+    "starterCode": "def calc_address(base, offset):\n    # Your code here\n    pass\n\nprint(calc_address(0x1000, 0x0020))",
+    "solution": "def calc_address(base, offset):\n    return base + offset\n\nprint(calc_address(0x1000, 0x0020))",
+    "testCases": [],
+    "hints": [
+      "Simply add the base and offset."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t6-ex14",
+    "subjectId": "cs102",
+    "topicId": "cs102-6",
+    "title": "Simple Memory Store",
+    "difficulty": 3,
+    "description": "Simulate `MOV [addr], src`. Write `store_memory(memory_dict, address, value)`.",
+    "starterCode": "def store_memory(memory, addr, val):\n    # Your code here\n    pass\n\nmem = {}\nstore_memory(mem, 1024, 255)\nprint(mem)",
+    "solution": "def store_memory(memory, addr, val):\n    memory[addr] = val\n    return memory\n\nmem = {}\nstore_memory(mem, 1024, 255)\nprint(mem)",
+    "testCases": [],
+    "hints": [
+      "Use the address as the dictionary key.",
+      "Set the value."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t6-ex15",
+    "subjectId": "cs102",
+    "topicId": "cs102-6",
+    "title": "Instruction Pointer with Jump",
+    "difficulty": 4,
+    "description": "Enhance the program loop. Use a `pc` variable index. Allow `(\"JMP\", target_index)` instruction. Write `run_program_with_jump(instructions)`.",
+    "starterCode": "def run_program_with_jump(prog):\n    regs = {\"AX\": 0}\n    pc = 0\n    while pc < len(prog):\n        # execute instruction at pc\n        # handle JMP\n        pass\n    return regs\n\nprog = [(\"MOV\", \"AX\", 1), (\"JMP\", 3), (\"MOV\", \"AX\", 99), (\"ADD\", \"AX\", 1)]\n# Should skip the 99 assignment\nprint(run_program_with_jump(prog))",
+    "solution": "def run_program_with_jump(prog):\n    regs = {\"AX\": 0}\n    pc = 0\n    while pc < len(prog):\n        op = prog[pc]\n        opcode = op[0]\n        \n        if opcode == \"JMP\":\n            pc = op[1]\n            continue\n        elif opcode == \"MOV\":\n            regs[op[1]] = op[2]\n        elif opcode == \"ADD\":\n            regs[op[1]] += op[2]\n            \n        pc += 1\n    return regs\n\nprog = [(\"MOV\", \"AX\", 1), (\"JMP\", 3), (\"MOV\", \"AX\", 99), (\"ADD\", \"AX\", 1)]\nprint(run_program_with_jump(prog))",
+    "testCases": [],
+    "hints": [
+      "Use a while loop with `pc` index.",
+      "If opcode is JMP, set `pc` to the target and `continue`.",
+      "Otherwise, execute and increment `pc`."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t6-ex16",
+    "subjectId": "cs102",
+    "topicId": "cs102-6",
+    "title": "End of Assembly Drill",
+    "difficulty": 1,
+    "description": "Return the string \"HALT\" to signify the end of the program.",
+    "starterCode": "def end_program():\n    pass",
+    "solution": "def end_program():\n    return \"HALT\"",
+    "testCases": [],
+    "hints": [
+      "Just return the string \"HALT\""
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t7-ex01",
+    "subjectId": "cs102",
+    "topicId": "cs102-7",
+    "title": "Calculate Total Bits",
+    "difficulty": 1,
+    "description": "Write a function `total_bits(bytes)` that returns the number of bits in a given number of bytes.",
+    "starterCode": "def total_bits(bytes_count):\n    # Your code here\n    pass\n\nprint(total_bits(2))  # 16",
+    "solution": "def total_bits(bytes_count):\n    return bytes_count * 8\n\nprint(total_bits(2))",
+    "testCases": [],
+    "hints": [
+      "1 byte = 8 bits."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t7-ex02",
+    "subjectId": "cs102",
+    "topicId": "cs102-7",
+    "title": "Addressable Memory",
+    "difficulty": 2,
+    "description": "How many distinct addresses can be represented by `n` bits? Write `addressable_locations(n)`.",
+    "starterCode": "def addressable_locations(n_bits):\n    # Your code here\n    pass\n\nprint(addressable_locations(32))",
+    "solution": "def addressable_locations(n_bits):\n    return 2 ** n_bits\n\nprint(addressable_locations(32))",
+    "testCases": [],
+    "hints": [
+      "The number of combinations of n bits is 2 to the power of n."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t7-ex03",
+    "subjectId": "cs102",
+    "topicId": "cs102-7",
+    "title": "Cache Line Index",
+    "difficulty": 3,
+    "description": "In a Direct Mapped Cache, the index is calculated as `(address // block_size) % num_lines`. Write this function.",
+    "starterCode": "def get_cache_index(address, block_size, num_lines):\n    # Your code here\n    pass\n\nprint(get_cache_index(100, 16, 8))",
+    "solution": "def get_cache_index(address, block_size, num_lines):\n    return (address // block_size) % num_lines\n\nprint(get_cache_index(100, 16, 8))",
+    "testCases": [],
+    "hints": [
+      "Integer division `//` gets the block number.",
+      "Modulo `%` maps it to a line index."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t7-ex04",
+    "subjectId": "cs102",
+    "topicId": "cs102-7",
+    "title": "Cache Tag Calculation",
+    "difficulty": 3,
+    "description": "The tag identifies which block is currently in the line. `tag = address // (block_size * num_lines)`. Write `get_cache_tag`.",
+    "starterCode": "def get_cache_tag(address, block_size, num_lines):\n    # Your code here\n    pass",
+    "solution": "def get_cache_tag(address, block_size, num_lines):\n    return address // (block_size * num_lines)\n",
+    "testCases": [],
+    "hints": [
+      "Divide the address by the total size of the cache (in bytes)."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t7-ex05",
+    "subjectId": "cs102",
+    "topicId": "cs102-7",
+    "title": "Simulate Cache Hit",
+    "difficulty": 3,
+    "description": "Write `is_cache_hit(cache_tags, index, tag)`. `cache_tags` is a list of current tags at each index. Return True if `cache_tags[index]` matches `tag`, else False.",
+    "starterCode": "def is_cache_hit(cache_tags, index, tag):\n    # Your code here\n    pass\n\ntags = [-1, 5, 20, -1] # -1 means empty\nprint(is_cache_hit(tags, 1, 5)) # True",
+    "solution": "def is_cache_hit(cache_tags, index, tag):\n    if index < 0 or index >= len(cache_tags):\n        return False\n    return cache_tags[index] == tag\n\ntags = [-1, 5, 20, -1]\nprint(is_cache_hit(tags, 1, 5))",
+    "testCases": [],
+    "hints": [
+      "Check if the value at the given index equals the tag."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t7-ex06",
+    "subjectId": "cs102",
+    "topicId": "cs102-7",
+    "title": "LRU Update",
+    "difficulty": 4,
+    "description": "Simulate updating an LRU list. You have a list `lru_queue` of indices. When an index is accessed, it moves to the back (most recently used). Write `update_lru(queue, index)`.",
+    "starterCode": "def update_lru(queue, index):\n    # Remove index if present, then append to end\n    pass\n\nq = [1, 2, 3]\nupdate_lru(q, 2)\nprint(q) # [1, 3, 2]",
+    "solution": "def update_lru(queue, index):\n    if index in queue:\n        queue.remove(index)\n    queue.append(index)\n    return queue\n\nq = [1, 2, 3]\nupdate_lru(q, 2)\nprint(q)",
+    "testCases": [],
+    "hints": [
+      "Use `remove()` to take it out.",
+      "Use `append()` to put it at the end."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t7-ex07",
+    "subjectId": "cs102",
+    "topicId": "cs102-7",
+    "title": "Byte Alignment",
+    "difficulty": 2,
+    "description": "Data accesses are often aligned to 4 or 8 bytes. Write `is_aligned(address, alignment)` returning True if address is a multiple of alignment.",
+    "starterCode": "def is_aligned(addr, align):\n    pass\n\nprint(is_aligned(100, 4)) # True\nprint(is_aligned(101, 4)) # False",
+    "solution": "def is_aligned(addr, align):\n    return addr % align == 0\n\nprint(is_aligned(100, 4))",
+    "testCases": [],
+    "hints": [
+      "Use the modulo operator."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t7-ex08",
+    "subjectId": "cs102",
+    "topicId": "cs102-7",
+    "title": "Page Number Calculation",
+    "difficulty": 3,
+    "description": "Virtual memory splits addresses into Page Number and Offset. `page_num = address // page_size`. Write this function.",
+    "starterCode": "def get_page_number(address, page_size):\n    pass",
+    "solution": "def get_page_number(address, page_size):\n    return address // page_size",
+    "testCases": [],
+    "hints": [
+      "Integer division."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t7-ex09",
+    "subjectId": "cs102",
+    "topicId": "cs102-7",
+    "title": "Page Offset Calculation",
+    "difficulty": 3,
+    "description": "The offset is `address % page_size`. Write `get_page_offset(address, page_size)`.",
+    "starterCode": "def get_page_offset(address, page_size):\n    pass",
+    "solution": "def get_page_offset(address, page_size):\n    return address % page_size",
+    "testCases": [],
+    "hints": [
+      "Modulo operator."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t7-ex10",
+    "subjectId": "cs102",
+    "topicId": "cs102-7",
+    "title": "Simulate Page Fault",
+    "difficulty": 3,
+    "description": "Check if a page number is in the `page_table` (a set). Return True if IT IS (Hit), False if NOT (Page Fault).",
+    "starterCode": "def check_page_table(page_table, page_num):\n    pass",
+    "solution": "def check_page_table(page_table, page_num):\n    return page_num in page_table",
+    "testCases": [],
+    "hints": [
+      "Use the `in` operator."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t7-ex11",
+    "subjectId": "cs102",
+    "topicId": "cs102-7",
+    "title": "Physical Address Translation",
+    "difficulty": 4,
+    "description": "Convert virtual address to physical. `phys_addr = frame_num * page_size + offset`. Write `translate(virt_addr, page_size, page_table_dict)`. `page_table_dict` maps page_num -> frame_num.",
+    "starterCode": "def translate(virt_addr, page_size, page_table):\n    # 1. Get page num and offset\n    # 2. Look up frame num\n    # 3. Calculate phys addr\n    pass",
+    "solution": "def translate(virt_addr, page_size, page_table):\n    p_num = virt_addr // page_size\n    offset = virt_addr % page_size\n    if p_num in page_table:\n        frame = page_table[p_num]\n        return frame * page_size + offset\n    return -1 # Fault\n",
+    "testCases": [],
+    "hints": [
+      "Extract page number and offset first.",
+      "Find the frame number in the dictionary.",
+      "Combine frame number and offset."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t7-ex12",
+    "subjectId": "cs102",
+    "topicId": "cs102-7",
+    "title": "Disk Access Time Estimate",
+    "difficulty": 2,
+    "description": "Estimate access time. `time = seek_time + rotational_latency + transfer_time`. Write a function that sums these.",
+    "starterCode": "def disk_time(seek, rot, xfer):\n    pass",
+    "solution": "def disk_time(seek, rot, xfer):\n    return seek + rot + xfer",
+    "testCases": [],
+    "hints": [
+      "Just add them up."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t7-ex13",
+    "subjectId": "cs102",
+    "topicId": "cs102-7",
+    "title": "Effective Access Time (EAT)",
+    "difficulty": 4,
+    "description": "EAT = Hit_Time + (Miss_Rate * Miss_Penalty). Write `calc_eat(hit_time, miss_rate, miss_penalty)`.",
+    "starterCode": "def calc_eat(h_time, m_rate, m_penalty):\n    # m_rate is a float 0.0-1.0\n    pass",
+    "solution": "def calc_eat(h_time, m_rate, m_penalty):\n    return h_time + (m_rate * m_penalty)",
+    "testCases": [],
+    "hints": [
+      "Apply the formula directly."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t7-ex14",
+    "subjectId": "cs102",
+    "topicId": "cs102-7",
+    "title": "Multi-Level Cache EAT",
+    "difficulty": 5,
+    "description": "EAT = L1_Hit + L1_Miss_Rate * (L2_Hit + L2_Miss_Rate * Main_Mem_Time). Write `calc_eat_l2(l1_hit, l1_miss, l2_hit, l2_miss, mem_time)`.",
+    "starterCode": "def calc_eat_l2(l1h, l1m, l2h, l2m, mem):\n    pass",
+    "solution": "def calc_eat_l2(l1h, l1m, l2h, l2m, mem):\n    return l1h + l1m * (l2h + l2m * mem)",
+    "testCases": [],
+    "hints": [
+      "Nest the formulas: cost of L1 miss is the EAT of L2."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t7-ex15",
+    "subjectId": "cs102",
+    "topicId": "cs102-7",
+    "title": "Interrupt Overhead",
+    "difficulty": 3,
+    "description": "Calculate overhead %: `(interrupt_service_time / interval_between_interrupts) * 100`.",
+    "starterCode": "def interrupt_overhead(service_time, interval):\n    pass",
+    "solution": "def interrupt_overhead(service_time, interval):\n    return (service_time / interval) * 100",
+    "testCases": [],
+    "hints": [
+      "Simple percentage calculation."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs102-t7-ex16",
+    "subjectId": "cs102",
+    "topicId": "cs102-7",
+    "title": "Memory Drill Complete",
+    "difficulty": 1,
+    "description": "Return \"ACK\".",
+    "starterCode": "def ack():\n    pass",
+    "solution": "def ack():\n    return \"ACK\"",
+    "testCases": [],
+    "hints": [
+      "Return \"ACK\""
+    ],
+    "language": "python"
+  }
+]

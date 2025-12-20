@@ -1,0 +1,315 @@
+[
+  {
+    "id": "cs103-project-1",
+    "subjectId": "cs103",
+    "title": "Library Management System",
+    "description": "Design and implement a comprehensive library management system using object-oriented programming principles. This project brings together all OOP concepts from CS103: classes, encapsulation, inheritance, polymorphism, and design patterns.\n\nYour system should model a real library with different types of items (books, magazines, DVDs), members with borrowing privileges, and transactions. The architecture should demonstrate proper class hierarchy, data protection through encapsulation, and flexible behavior through polymorphism.\n\nThis project emphasizes thinking in objects: identifying entities, their attributes, behaviors, and relationships. You'll practice designing clean interfaces, protecting internal state, and building extensible systems that can accommodate new requirements.",
+    "requirements": [
+      "Create a LibraryItem base class with common attributes (title, item_id, is_available) and methods",
+      "Implement Book, Magazine, and DVD classes that inherit from LibraryItem with specialized attributes",
+      "Books have ISBN, author, genre; Magazines have issue_number, publication_date; DVDs have director, runtime",
+      "Create a Member class with encapsulated member information (id, name, email, borrowed_items)",
+      "Use @property decorators to protect sensitive data and validate inputs (e.g., email format)",
+      "Members have different borrowing limits based on membership tier (Regular: 3, Premium: 7)",
+      "Implement a Library class that manages collections and enforces business rules",
+      "Add polymorphic checkout/return methods that work with any LibraryItem type",
+      "Implement a search function using duck typing that can find items by multiple criteria",
+      "Track due dates (14 days for books, 7 days for magazines, 3 days for DVDs)",
+      "Calculate overdue fines ($0.25/day for books, $0.50/day for magazines, $1.00/day for DVDs)",
+      "Use the Factory pattern to create LibraryItems from a data source",
+      "Implement the Observer pattern to notify members of due dates or new arrivals",
+      "Write comprehensive unit tests for all classes (minimum 80% coverage)",
+      "Include proper error handling with custom exception classes",
+      "Create a command-line interface demonstrating all functionality"
+    ],
+    "rubric": [
+      {
+        "name": "Class Design and OOP Principles",
+        "weight": 25,
+        "levels": [
+          {
+            "score": 0,
+            "label": "Insufficient",
+            "description": "Classes are poorly designed, no clear use of OOP principles, inheritance misused or absent"
+          },
+          {
+            "score": 70,
+            "label": "Developing",
+            "description": "Basic class structure present, some use of inheritance and encapsulation, but design could be improved"
+          },
+          {
+            "score": 85,
+            "label": "Proficient",
+            "description": "Good class design with proper inheritance hierarchy, encapsulation used effectively, clear object relationships"
+          },
+          {
+            "score": 100,
+            "label": "Exemplary",
+            "description": "Excellent class design demonstrating deep understanding of OOP, proper use of polymorphism, elegant inheritance hierarchy, well-encapsulated data with meaningful properties"
+          }
+        ]
+      },
+      {
+        "name": "Encapsulation and Data Protection",
+        "weight": 15,
+        "levels": [
+          {
+            "score": 0,
+            "label": "Insufficient",
+            "description": "All attributes public, no validation, data can be corrupted easily"
+          },
+          {
+            "score": 70,
+            "label": "Developing",
+            "description": "Some use of private/protected attributes, basic validation present"
+          },
+          {
+            "score": 85,
+            "label": "Proficient",
+            "description": "Proper use of @property decorators, good input validation, defensive copying where needed"
+          },
+          {
+            "score": 100,
+            "label": "Exemplary",
+            "description": "Exemplary data protection with comprehensive validation, immutable objects where appropriate, all internal state properly guarded"
+          }
+        ]
+      },
+      {
+        "name": "Design Patterns Implementation",
+        "weight": 20,
+        "levels": [
+          {
+            "score": 0,
+            "label": "Insufficient",
+            "description": "No design patterns used or patterns applied incorrectly"
+          },
+          {
+            "score": 70,
+            "label": "Developing",
+            "description": "One design pattern attempted but implementation has issues or pattern choice is questionable"
+          },
+          {
+            "score": 85,
+            "label": "Proficient",
+            "description": "Two design patterns correctly implemented and appropriate for the use cases"
+          },
+          {
+            "score": 100,
+            "label": "Exemplary",
+            "description": "Multiple design patterns correctly implemented, patterns chosen wisely and genuinely improve the design, clear documentation of pattern usage"
+          }
+        ]
+      },
+      {
+        "name": "Functionality and Requirements",
+        "weight": 20,
+        "levels": [
+          {
+            "score": 0,
+            "label": "Insufficient",
+            "description": "Many requirements missing, core functionality does not work"
+          },
+          {
+            "score": 70,
+            "label": "Developing",
+            "description": "Most basic requirements met, some core features working, some edge cases not handled"
+          },
+          {
+            "score": 85,
+            "label": "Proficient",
+            "description": "All major requirements implemented and working correctly, good error handling"
+          },
+          {
+            "score": 100,
+            "label": "Exemplary",
+            "description": "All requirements fully implemented, excellent error handling with custom exceptions, additional useful features added thoughtfully"
+          }
+        ]
+      },
+      {
+        "name": "Code Quality and Testing",
+        "weight": 15,
+        "levels": [
+          {
+            "score": 0,
+            "label": "Insufficient",
+            "description": "Code is difficult to read, no tests, poor variable naming"
+          },
+          {
+            "score": 70,
+            "label": "Developing",
+            "description": "Code is readable, some basic tests present, decent naming conventions"
+          },
+          {
+            "score": 85,
+            "label": "Proficient",
+            "description": "Clean, well-organized code, unit tests with good coverage, good docstrings"
+          },
+          {
+            "score": 100,
+            "label": "Exemplary",
+            "description": "Exemplary code quality with 80%+ test coverage, excellent documentation, follows PEP 8, type hints used"
+          }
+        ]
+      },
+      {
+        "name": "User Interface and Usability",
+        "weight": 5,
+        "levels": [
+          {
+            "score": 0,
+            "label": "Insufficient",
+            "description": "No user interface or completely unusable"
+          },
+          {
+            "score": 70,
+            "label": "Developing",
+            "description": "Basic CLI present but confusing or limited functionality"
+          },
+          {
+            "score": 85,
+            "label": "Proficient",
+            "description": "Clear, functional CLI with good user prompts and error messages"
+          },
+          {
+            "score": 100,
+            "label": "Exemplary",
+            "description": "Excellent CLI with intuitive commands, helpful feedback, and robust input validation"
+          }
+        ]
+      }
+    ],
+    "estimatedHours": 25
+  },
+  {
+    "id": "cs103-project-2",
+    "subjectId": "cs103",
+    "title": "Plugin Architecture Framework",
+    "description": "Build a simple application framework that supports plugins using OOP principles. This advanced project focuses on designing extensible systems where new functionality can be added without modifying existing code.\n\nCreate a text processing application where plugins can add new commands (word count, find/replace, format conversion). The core application should define interfaces that plugins implement, demonstrating the Open/Closed Principle in action.\n\nThis project emphasizes designing for extensibility, defining clean interfaces, and understanding how real frameworks achieve flexibility through OOP.",
+    "requirements": [
+      "Create a Plugin abstract base class with initialize(), execute(), and get_name() methods",
+      "Implement a PluginManager that discovers, loads, and manages plugins",
+      "Use the Factory pattern for plugin instantiation",
+      "Create at least 4 built-in plugins: WordCount, FindReplace, UpperCase, Statistics",
+      "Each plugin should be in its own class with proper encapsulation",
+      "Implement a Document class that plugins operate on",
+      "Document should protect its content through proper encapsulation",
+      "Use the Command pattern for undo/redo functionality",
+      "Implement the Observer pattern to notify when document changes",
+      "Create a configuration system using the Singleton pattern",
+      "Plugins should be able to register their own commands and menu items",
+      "Implement plugin dependencies (plugin A requires plugin B)",
+      "Add plugin priority/ordering for execution",
+      "Write extensive tests for the plugin loading and execution system",
+      "Document the plugin API so others could write plugins"
+    ],
+    "rubric": [
+      {
+        "name": "Extensibility Architecture",
+        "weight": 35,
+        "levels": [
+          {
+            "score": 4,
+            "label": "Excellent",
+            "description": "New plugins can be added without any changes to core code. Clean plugin API. Well-documented extension points."
+          },
+          {
+            "score": 3,
+            "label": "Good",
+            "description": "Good extensibility with minor coupling issues."
+          },
+          {
+            "score": 2,
+            "label": "Satisfactory",
+            "description": "Plugins work but require core changes for some features."
+          },
+          {
+            "score": 1,
+            "label": "Needs Improvement",
+            "description": "Poor extensibility. Adding plugins requires significant core changes."
+          }
+        ]
+      },
+      {
+        "name": "Design Patterns",
+        "weight": 30,
+        "levels": [
+          {
+            "score": 4,
+            "label": "Excellent",
+            "description": "All required patterns (Factory, Command, Observer, Singleton) correctly implemented and well-integrated."
+          },
+          {
+            "score": 3,
+            "label": "Good",
+            "description": "Most patterns correct with minor issues."
+          },
+          {
+            "score": 2,
+            "label": "Satisfactory",
+            "description": "Some patterns implemented but integration is weak."
+          },
+          {
+            "score": 1,
+            "label": "Needs Improvement",
+            "description": "Few patterns implemented correctly."
+          }
+        ]
+      },
+      {
+        "name": "Interface Design",
+        "weight": 20,
+        "levels": [
+          {
+            "score": 4,
+            "label": "Excellent",
+            "description": "Clean, intuitive plugin interface. Good use of abstract base classes. Proper separation of concerns."
+          },
+          {
+            "score": 3,
+            "label": "Good",
+            "description": "Solid interface design with minor usability issues."
+          },
+          {
+            "score": 2,
+            "label": "Satisfactory",
+            "description": "Interface works but is awkward or overly complex."
+          },
+          {
+            "score": 1,
+            "label": "Needs Improvement",
+            "description": "Poor interface design. Difficult for plugins to implement."
+          }
+        ]
+      },
+      {
+        "name": "Code Quality and Documentation",
+        "weight": 15,
+        "levels": [
+          {
+            "score": 4,
+            "label": "Excellent",
+            "description": "Professional code quality. Comprehensive API documentation. Good test coverage."
+          },
+          {
+            "score": 3,
+            "label": "Good",
+            "description": "Good code with decent documentation."
+          },
+          {
+            "score": 2,
+            "label": "Satisfactory",
+            "description": "Working code but documentation is sparse."
+          },
+          {
+            "score": 1,
+            "label": "Needs Improvement",
+            "description": "Poor quality code and documentation."
+          }
+        ]
+      }
+    ],
+    "estimatedHours": 28
+  }
+]

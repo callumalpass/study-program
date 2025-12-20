@@ -393,7 +393,48 @@ Each rubric criterion must have:
 
 ---
 
-## 9. Validation Commands
+## 9. Data Storage Format
+
+Assessment data (quizzes, exams, exercises, projects) is stored in **JSON files** for easier editing and validation:
+
+### File Structure
+
+```
+src/data/subjects/{subject}/
+├── index.ts          # TypeScript loader (imports JSON, exports with types)
+├── topics.ts         # Topic definitions (handles markdown imports)
+├── quizzes.json      # All quizzes for the subject
+├── exams.json        # Midterm and final exams
+├── exercises.json    # All exercises for the subject
+└── projects.json     # Projects (CS subjects only)
+```
+
+### Why JSON?
+
+1. **Easier to edit** - No TypeScript syntax to worry about
+2. **Validation** - Can be validated against JSON Schema
+3. **Tooling** - Better editor support for data files
+4. **Separation** - Content data separate from code logic
+
+### TypeScript Types
+
+The `index.ts` file imports JSON and exports with proper types:
+
+```typescript
+import type { Quiz, Exam, Exercise } from '../../../core/types';
+import quizzesData from './quizzes.json';
+import examsData from './exams.json';
+import exercisesData from './exercises.json';
+
+export const {subject}Quizzes = quizzesData as Quiz[];
+export const {subject}Exams = examsData as Exam[];
+export const {subject}Exercises = exercisesData as Exercise[];
+export { {subject}Topics } from './topics';
+```
+
+---
+
+## 10. Validation Commands
 
 To validate a subject meets standards:
 
@@ -405,24 +446,29 @@ find src/content/subjects/{subject}/topic-* -name "*.md" | wc -l
 # Estimate word counts
 wc -w src/content/subjects/{subject}/topic-*/*.md
 
-# Count exercises
-grep -c "id: '{subject}-t" src/data/subjects/{subject}/exercises/*.ts
+# Count exercises (from JSON)
+jq 'length' src/data/subjects/{subject}/exercises.json
+# Expected: 112
 
-# Count quiz questions
-# Count quiz questions (globally unique IDs like '{subject}-q1', or per-quiz IDs like 'q1')
-# If your question IDs are globally unique:
-rg -c "id:\\s*'{subject}-q\\d+'" src/data/subjects/{subject}/quizzes.ts
-# If your question IDs are only unique within each quiz:
-rg -c "id:\\s*'q\\d+'" src/data/subjects/{subject}/quizzes.ts
+# Count quizzes
+jq 'length' src/data/subjects/{subject}/quizzes.json
+# Expected: 21
+
+# Count quiz questions total
+jq '[.[].questions | length] | add' src/data/subjects/{subject}/quizzes.json
 # Expected: 105 (21 quizzes × 5 questions)
+
+# Run quality analysis
+npm run quality -- {subject}
 ```
 
 ---
 
-## 10. Version History
+## 11. Version History
 
 | Version | Date | Changes |
 |---------|------|---------|
+| 1.1 | 2025-12-20 | Migrated assessment data from TypeScript to JSON format |
 | 1.0 | 2025-12-17 | Initial standard based on curriculum review |
 
 ---

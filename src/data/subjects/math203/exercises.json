@@ -1,0 +1,2050 @@
+[
+  {
+    "id": "math203-t1-drill-1",
+    "subjectId": "math203",
+    "topicId": "math203-topic-1",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Direct Substitution",
+    "description": "Evaluate: $\\lim_{x \\to 2} (3x^2 - 2x + 1)$",
+    "hints": [
+      "Try substituting x = 2 directly into the expression."
+    ],
+    "solution": "$\\lim_{x \\to 2} (3x^2 - 2x + 1) = 3(4) - 2(2) + 1 = 12 - 4 + 1 = 9$"
+  },
+  {
+    "id": "math203-t1-drill-2",
+    "subjectId": "math203",
+    "topicId": "math203-topic-1",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Simple Factoring",
+    "description": "Evaluate: $\\lim_{x \\to 3} \\frac{x^2 - 9}{x - 3}$",
+    "hints": [
+      "Factor the numerator as a difference of squares."
+    ],
+    "solution": "$\\lim_{x \\to 3} \\frac{x^2 - 9}{x - 3} = \\lim_{x \\to 3} \\frac{(x-3)(x+3)}{x-3} = \\lim_{x \\to 3} (x + 3) = 6$"
+  },
+  {
+    "id": "math203-t1-drill-3",
+    "subjectId": "math203",
+    "topicId": "math203-topic-1",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Limit at Infinity",
+    "description": "Evaluate: $\\lim_{x \\to \\infty} \\frac{3x^2 + 1}{x^2 - 5}$",
+    "hints": [
+      "Divide numerator and denominator by x²."
+    ],
+    "solution": "$\\lim_{x \\to \\infty} \\frac{3x^2 + 1}{x^2 - 5} = \\lim_{x \\to \\infty} \\frac{3 + 1/x^2}{1 - 5/x^2} = \\frac{3 + 0}{1 - 0} = 3$"
+  },
+  {
+    "id": "math203-t1-drill-4",
+    "subjectId": "math203",
+    "topicId": "math203-topic-1",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Continuity Check",
+    "description": "Is $f(x) = \\frac{x^2 - 4}{x - 2}$ continuous at $x = 2$? Why or why not?",
+    "hints": [
+      "Check the three conditions for continuity: f(a) defined, limit exists, limit equals f(a)."
+    ],
+    "solution": "No. The function is not defined at x = 2 (division by zero), so it fails the first condition for continuity. The limit exists and equals 4, but f(2) is undefined."
+  },
+  {
+    "id": "math203-t1-ex01",
+    "subjectId": "math203",
+    "topicId": "math203-topic-1",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Factoring and Cancellation",
+    "description": "Evaluate the following limits:\n\n(a) $\\lim_{x \\to 2} \\frac{x^2 - 4}{x^2 - 5x + 6}$\n\n(b) $\\lim_{x \\to -1} \\frac{x^3 + 1}{x + 1}$\n\n(c) $\\lim_{x \\to 4} \\frac{x^2 - 16}{x^2 - 3x - 4}$",
+    "hints": [
+      "Factor both numerator and denominator completely.",
+      "For (b), recall the sum of cubes: a³ + b³ = (a + b)(a² - ab + b²).",
+      "Cancel common factors, then substitute."
+    ],
+    "solution": "(a) $\\frac{x^2 - 4}{x^2 - 5x + 6} = \\frac{(x-2)(x+2)}{(x-2)(x-3)}$\nAfter canceling: $\\lim_{x \\to 2} \\frac{x+2}{x-3} = \\frac{4}{-1} = -4$\n\n(b) $\\frac{x^3 + 1}{x + 1} = \\frac{(x+1)(x^2 - x + 1)}{x+1}$\nAfter canceling: $\\lim_{x \\to -1} (x^2 - x + 1) = 1 + 1 + 1 = 3$\n\n(c) $\\frac{x^2 - 16}{x^2 - 3x - 4} = \\frac{(x-4)(x+4)}{(x-4)(x+1)}$\nAfter canceling: $\\lim_{x \\to 4} \\frac{x+4}{x+1} = \\frac{8}{5}$"
+  },
+  {
+    "id": "math203-t1-ex02",
+    "subjectId": "math203",
+    "topicId": "math203-topic-1",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Rationalizing Techniques",
+    "description": "Evaluate the following limits by rationalizing:\n\n(a) $\\lim_{x \\to 0} \\frac{\\sqrt{x+4} - 2}{x}$\n\n(b) $\\lim_{x \\to 0} \\frac{\\sqrt{1+x} - \\sqrt{1-x}}{x}$\n\n(c) $\\lim_{x \\to 9} \\frac{x - 9}{\\sqrt{x} - 3}$",
+    "hints": [
+      "Multiply by the conjugate of the radical expression.",
+      "For (a), multiply by (√(x+4) + 2)/(√(x+4) + 2).",
+      "For (c), you can rationalize the denominator instead."
+    ],
+    "solution": "(a) Multiply by conjugate:\n$\\frac{\\sqrt{x+4} - 2}{x} \\cdot \\frac{\\sqrt{x+4} + 2}{\\sqrt{x+4} + 2} = \\frac{(x+4) - 4}{x(\\sqrt{x+4} + 2)} = \\frac{1}{\\sqrt{x+4} + 2}$\n$\\lim_{x \\to 0} \\frac{1}{\\sqrt{x+4} + 2} = \\frac{1}{2 + 2} = \\frac{1}{4}$\n\n(b) Multiply by conjugate:\n$\\frac{(\\sqrt{1+x} - \\sqrt{1-x})(\\sqrt{1+x} + \\sqrt{1-x})}{x(\\sqrt{1+x} + \\sqrt{1-x})} = \\frac{(1+x) - (1-x)}{x(\\sqrt{1+x} + \\sqrt{1-x})} = \\frac{2x}{x(\\sqrt{1+x} + \\sqrt{1-x})}$\n$\\lim_{x \\to 0} \\frac{2}{\\sqrt{1+x} + \\sqrt{1-x}} = \\frac{2}{1 + 1} = 1$\n\n(c) Multiply by conjugate of denominator:\n$\\frac{(x - 9)(\\sqrt{x} + 3)}{(\\sqrt{x} - 3)(\\sqrt{x} + 3)} = \\frac{(x - 9)(\\sqrt{x} + 3)}{x - 9} = \\sqrt{x} + 3$\n$\\lim_{x \\to 9} (\\sqrt{x} + 3) = 3 + 3 = 6$"
+  },
+  {
+    "id": "math203-t1-ex03",
+    "subjectId": "math203",
+    "topicId": "math203-topic-1",
+    "type": "written",
+    "difficulty": 2,
+    "title": "One-Sided Limits",
+    "description": "For the piecewise function:\n$$f(x) = \\begin{cases} x^2 + 1 & \\text{if } x < 2 \\\\ 3x - 1 & \\text{if } x \\geq 2 \\end{cases}$$\n\n(a) Find $\\lim_{x \\to 2^-} f(x)$\n(b) Find $\\lim_{x \\to 2^+} f(x)$\n(c) Does $\\lim_{x \\to 2} f(x)$ exist? Explain.\n(d) Is $f$ continuous at $x = 2$?",
+    "hints": [
+      "Use the appropriate piece of the function for each one-sided limit.",
+      "The two-sided limit exists only if both one-sided limits are equal.",
+      "For continuity, also check that the limit equals the function value."
+    ],
+    "solution": "(a) $\\lim_{x \\to 2^-} f(x) = \\lim_{x \\to 2^-} (x^2 + 1) = 4 + 1 = 5$\n\n(b) $\\lim_{x \\to 2^+} f(x) = \\lim_{x \\to 2^+} (3x - 1) = 6 - 1 = 5$\n\n(c) Yes, $\\lim_{x \\to 2} f(x) = 5$ because both one-sided limits exist and are equal.\n\n(d) Yes, f is continuous at x = 2:\n- f(2) = 3(2) - 1 = 5 ✓ (defined)\n- $\\lim_{x \\to 2} f(x) = 5$ ✓ (limit exists)\n- $\\lim_{x \\to 2} f(x) = f(2) = 5$ ✓ (limit equals value)"
+  },
+  {
+    "id": "math203-t1-ex04",
+    "subjectId": "math203",
+    "topicId": "math203-topic-1",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Limits at Infinity",
+    "description": "Evaluate the following limits:\n\n(a) $\\lim_{x \\to \\infty} \\frac{2x^3 - x + 5}{4x^3 + 3x^2 - 1}$\n\n(b) $\\lim_{x \\to \\infty} \\frac{x^2 + 1}{x^3 - 2}$\n\n(c) $\\lim_{x \\to -\\infty} \\frac{x + 2}{\\sqrt{x^2 + 1}}$",
+    "hints": [
+      "Compare degrees of numerator and denominator.",
+      "Divide by the highest power of x in the denominator.",
+      "For (c), be careful with √(x²) when x < 0: √(x²) = |x| = -x when x < 0."
+    ],
+    "solution": "(a) Same degree (3), so limit is ratio of leading coefficients:\n$\\lim_{x \\to \\infty} \\frac{2x^3 - x + 5}{4x^3 + 3x^2 - 1} = \\frac{2}{4} = \\frac{1}{2}$\n\n(b) Degree of numerator (2) < degree of denominator (3):\n$\\lim_{x \\to \\infty} \\frac{x^2 + 1}{x^3 - 2} = 0$\n\n(c) Divide by |x| = -x (since x → -∞):\n$\\frac{x + 2}{\\sqrt{x^2 + 1}} = \\frac{x + 2}{|x|\\sqrt{1 + 1/x^2}} = \\frac{x + 2}{-x\\sqrt{1 + 1/x^2}}$\n$= \\frac{1 + 2/x}{-\\sqrt{1 + 1/x^2}} \\to \\frac{1}{-1} = -1$"
+  },
+  {
+    "id": "math203-t1-ex05",
+    "subjectId": "math203",
+    "topicId": "math203-topic-1",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Squeeze Theorem",
+    "description": "Use the Squeeze Theorem to evaluate:\n\n(a) $\\lim_{x \\to 0} x^2 \\sin\\left(\\frac{1}{x}\\right)$\n\n(b) $\\lim_{x \\to \\infty} \\frac{\\sin x}{x}$\n\n(c) $\\lim_{x \\to 0} x^2 \\cos\\left(\\frac{1}{x^2}\\right)$",
+    "hints": [
+      "Bound the oscillating function: -1 ≤ sin(θ) ≤ 1 and -1 ≤ cos(θ) ≤ 1.",
+      "Multiply the inequality by the non-oscillating factor.",
+      "If the bounds go to the same limit, so does the middle function."
+    ],
+    "solution": "(a) Since $-1 \\leq \\sin(1/x) \\leq 1$, we have:\n$-x^2 \\leq x^2 \\sin(1/x) \\leq x^2$\nAs $x \\to 0$: $-x^2 \\to 0$ and $x^2 \\to 0$\nBy Squeeze Theorem: $\\lim_{x \\to 0} x^2 \\sin(1/x) = 0$\n\n(b) Since $-1 \\leq \\sin x \\leq 1$, we have:\n$-\\frac{1}{x} \\leq \\frac{\\sin x}{x} \\leq \\frac{1}{x}$ for $x > 0$\nAs $x \\to \\infty$: $-1/x \\to 0$ and $1/x \\to 0$\nBy Squeeze Theorem: $\\lim_{x \\to \\infty} \\frac{\\sin x}{x} = 0$\n\n(c) Since $-1 \\leq \\cos(1/x^2) \\leq 1$, we have:\n$-x^2 \\leq x^2 \\cos(1/x^2) \\leq x^2$\nAs $x \\to 0$: both bounds approach 0\nBy Squeeze Theorem: $\\lim_{x \\to 0} x^2 \\cos(1/x^2) = 0$"
+  },
+  {
+    "id": "math203-t1-ex06",
+    "subjectId": "math203",
+    "topicId": "math203-topic-1",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Special Trigonometric Limits",
+    "description": "Evaluate using the fundamental limit $\\lim_{\\theta \\to 0} \\frac{\\sin\\theta}{\\theta} = 1$:\n\n(a) $\\lim_{x \\to 0} \\frac{\\sin(5x)}{x}$\n\n(b) $\\lim_{x \\to 0} \\frac{\\tan x}{x}$\n\n(c) $\\lim_{x \\to 0} \\frac{\\sin(3x)}{\\sin(5x)}$\n\n(d) $\\lim_{x \\to 0} \\frac{1 - \\cos x}{x^2}$",
+    "hints": [
+      "Rewrite to create forms like sin(θ)/θ.",
+      "For (b), tan x = sin x / cos x.",
+      "For (c), multiply and divide appropriately.",
+      "For (d), use the identity 1 - cos x = 2sin²(x/2) or L'Hôpital's Rule."
+    ],
+    "solution": "(a) $\\lim_{x \\to 0} \\frac{\\sin(5x)}{x} = \\lim_{x \\to 0} 5 \\cdot \\frac{\\sin(5x)}{5x} = 5 \\cdot 1 = 5$\n\n(b) $\\lim_{x \\to 0} \\frac{\\tan x}{x} = \\lim_{x \\to 0} \\frac{\\sin x}{x \\cos x} = \\lim_{x \\to 0} \\frac{\\sin x}{x} \\cdot \\frac{1}{\\cos x} = 1 \\cdot 1 = 1$\n\n(c) $\\lim_{x \\to 0} \\frac{\\sin(3x)}{\\sin(5x)} = \\lim_{x \\to 0} \\frac{\\sin(3x)}{3x} \\cdot \\frac{5x}{\\sin(5x)} \\cdot \\frac{3x}{5x} = 1 \\cdot 1 \\cdot \\frac{3}{5} = \\frac{3}{5}$\n\n(d) Using $1 - \\cos x = 2\\sin^2(x/2)$:\n$\\lim_{x \\to 0} \\frac{2\\sin^2(x/2)}{x^2} = \\lim_{x \\to 0} \\frac{2\\sin^2(x/2)}{4(x/2)^2} = \\frac{1}{2} \\lim_{u \\to 0} \\left(\\frac{\\sin u}{u}\\right)^2 = \\frac{1}{2}$"
+  },
+  {
+    "id": "math203-t1-ex07",
+    "subjectId": "math203",
+    "topicId": "math203-topic-1",
+    "type": "written",
+    "difficulty": 3,
+    "title": "L'Hôpital's Rule",
+    "description": "Use L'Hôpital's Rule to evaluate:\n\n(a) $\\lim_{x \\to 0} \\frac{e^x - 1}{x}$\n\n(b) $\\lim_{x \\to 0} \\frac{\\sin x - x}{x^3}$\n\n(c) $\\lim_{x \\to \\infty} \\frac{\\ln x}{x}$\n\n(d) $\\lim_{x \\to 0^+} x \\ln x$",
+    "hints": [
+      "Verify the limit is an indeterminate form (0/0 or ∞/∞) before applying.",
+      "You may need to apply L'Hôpital's Rule multiple times.",
+      "For (d), rewrite as a fraction first: x ln x = ln x / (1/x)."
+    ],
+    "solution": "(a) Form 0/0. Apply L'Hôpital:\n$\\lim_{x \\to 0} \\frac{e^x - 1}{x} = \\lim_{x \\to 0} \\frac{e^x}{1} = 1$\n\n(b) Form 0/0. Apply L'Hôpital repeatedly:\n$\\lim_{x \\to 0} \\frac{\\sin x - x}{x^3} = \\lim_{x \\to 0} \\frac{\\cos x - 1}{3x^2}$ (still 0/0)\n$= \\lim_{x \\to 0} \\frac{-\\sin x}{6x}$ (still 0/0)\n$= \\lim_{x \\to 0} \\frac{-\\cos x}{6} = -\\frac{1}{6}$\n\n(c) Form ∞/∞. Apply L'Hôpital:\n$\\lim_{x \\to \\infty} \\frac{\\ln x}{x} = \\lim_{x \\to \\infty} \\frac{1/x}{1} = 0$\n\n(d) Rewrite: $x \\ln x = \\frac{\\ln x}{1/x}$ (form -∞/∞)\nApply L'Hôpital:\n$\\lim_{x \\to 0^+} \\frac{\\ln x}{1/x} = \\lim_{x \\to 0^+} \\frac{1/x}{-1/x^2} = \\lim_{x \\to 0^+} (-x) = 0$"
+  },
+  {
+    "id": "math203-t1-ex08",
+    "subjectId": "math203",
+    "topicId": "math203-topic-1",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Infinite Limits and Vertical Asymptotes",
+    "description": "Find all vertical asymptotes and evaluate the one-sided limits:\n\n(a) $f(x) = \\frac{1}{x - 3}$\n\n(b) $f(x) = \\frac{x}{x^2 - 4}$\n\n(c) $f(x) = \\frac{x^2 - 1}{x - 1}$",
+    "hints": [
+      "Vertical asymptotes occur where the denominator is zero but the numerator is not.",
+      "Check if factors cancel before concluding there is an asymptote.",
+      "Determine signs near the asymptote to find if limit is +∞ or -∞."
+    ],
+    "solution": "(a) Vertical asymptote at x = 3.\n$\\lim_{x \\to 3^-} \\frac{1}{x-3} = -\\infty$ (numerator positive, denominator negative small)\n$\\lim_{x \\to 3^+} \\frac{1}{x-3} = +\\infty$ (numerator positive, denominator positive small)\n\n(b) $f(x) = \\frac{x}{(x-2)(x+2)}$\nVertical asymptotes at x = 2 and x = -2.\nAt x = 2: $\\lim_{x \\to 2^-} = -\\infty$, $\\lim_{x \\to 2^+} = +\\infty$\nAt x = -2: $\\lim_{x \\to -2^-} = +\\infty$, $\\lim_{x \\to -2^+} = -\\infty$\n\n(c) $f(x) = \\frac{(x-1)(x+1)}{x-1} = x + 1$ for $x \\neq 1$\nNo vertical asymptote! There is a removable discontinuity (hole) at x = 1.\n$\\lim_{x \\to 1} f(x) = 2$"
+  },
+  {
+    "id": "math203-t1-ex09",
+    "subjectId": "math203",
+    "topicId": "math203-topic-1",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Classifying Discontinuities",
+    "description": "For each function, identify all points of discontinuity and classify each as removable, jump, or infinite:\n\n(a) $f(x) = \\frac{x^2 - 4}{x - 2}$\n\n(b) $g(x) = \\begin{cases} x + 1 & \\text{if } x < 0 \\\\ x^2 & \\text{if } x \\geq 0 \\end{cases}$\n\n(c) $h(x) = \\frac{1}{x^2}$",
+    "hints": [
+      "Removable: limit exists but ≠ function value (or function undefined).",
+      "Jump: left and right limits both exist but are different.",
+      "Infinite: function approaches ±∞."
+    ],
+    "solution": "(a) $f(x) = \\frac{(x-2)(x+2)}{x-2} = x + 2$ for $x \\neq 2$\nDiscontinuity at x = 2.\n$\\lim_{x \\to 2} f(x) = 4$ exists, but f(2) is undefined.\n**Removable discontinuity** at x = 2.\n\n(b) Check at x = 0:\n$\\lim_{x \\to 0^-} g(x) = 0 + 1 = 1$\n$\\lim_{x \\to 0^+} g(x) = 0^2 = 0$\n$g(0) = 0$\nLeft and right limits differ.\n**Jump discontinuity** at x = 0.\n\n(c) $h(x) = \\frac{1}{x^2}$\nDiscontinuity at x = 0.\n$\\lim_{x \\to 0} h(x) = +\\infty$\n**Infinite discontinuity** at x = 0."
+  },
+  {
+    "id": "math203-t1-ex10",
+    "subjectId": "math203",
+    "topicId": "math203-topic-1",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Horizontal and Oblique Asymptotes",
+    "description": "Find all horizontal and oblique (slant) asymptotes:\n\n(a) $f(x) = \\frac{2x^2 + 3}{x^2 - 1}$\n\n(b) $g(x) = \\frac{x^2 + 1}{x - 1}$\n\n(c) $h(x) = \\frac{x^3 + 2x}{x^2 + 1}$",
+    "hints": [
+      "Horizontal asymptote: compare degrees of numerator and denominator.",
+      "Oblique asymptote: occurs when degree of numerator = degree of denominator + 1.",
+      "Use polynomial long division to find oblique asymptotes."
+    ],
+    "solution": "(a) Degrees equal (both 2):\nHorizontal asymptote: $y = \\frac{2}{1} = 2$\n\n(b) Degree of numerator (2) = degree of denominator (1) + 1.\nLong division: $\\frac{x^2 + 1}{x - 1} = x + 1 + \\frac{2}{x-1}$\nOblique asymptote: $y = x + 1$\n\n(c) Degree of numerator (3) = degree of denominator (2) + 1.\nLong division: $\\frac{x^3 + 2x}{x^2 + 1} = x + \\frac{x}{x^2+1}$\nSince $\\frac{x}{x^2+1} \\to 0$ as $x \\to \\pm\\infty$\nOblique asymptote: $y = x$"
+  },
+  {
+    "id": "math203-t1-ex11",
+    "subjectId": "math203",
+    "topicId": "math203-topic-1",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Continuity on Intervals",
+    "description": "Determine the value of $k$ that makes each function continuous everywhere:\n\n(a) $f(x) = \\begin{cases} x^2 & \\text{if } x \\leq 2 \\\\ kx + 1 & \\text{if } x > 2 \\end{cases}$\n\n(b) $g(x) = \\begin{cases} \\frac{x^2 - 9}{x - 3} & \\text{if } x \\neq 3 \\\\ k & \\text{if } x = 3 \\end{cases}$\n\n(c) $h(x) = \\begin{cases} \\frac{\\sin(kx)}{x} & \\text{if } x \\neq 0 \\\\ 3 & \\text{if } x = 0 \\end{cases}$",
+    "hints": [
+      "For continuity, the limit must equal the function value at the point.",
+      "Set left and right limits equal for piecewise functions.",
+      "For (c), use the limit sin(θ)/θ → 1 as θ → 0."
+    ],
+    "solution": "(a) For continuity at x = 2:\n$\\lim_{x \\to 2^-} x^2 = 4$\n$\\lim_{x \\to 2^+} (kx + 1) = 2k + 1$\nSet equal: $2k + 1 = 4 \\Rightarrow k = \\frac{3}{2}$\n\n(b) $\\lim_{x \\to 3} \\frac{x^2 - 9}{x - 3} = \\lim_{x \\to 3} \\frac{(x-3)(x+3)}{x-3} = 6$\nFor continuity: $k = 6$\n\n(c) $\\lim_{x \\to 0} \\frac{\\sin(kx)}{x} = \\lim_{x \\to 0} k \\cdot \\frac{\\sin(kx)}{kx} = k \\cdot 1 = k$\nFor continuity: $k = 3$"
+  },
+  {
+    "id": "math203-t1-ex12",
+    "subjectId": "math203",
+    "topicId": "math203-topic-1",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Intermediate Value Theorem",
+    "description": "Use the Intermediate Value Theorem to prove:\n\n(a) The equation $x^3 - x - 1 = 0$ has a solution in the interval $(1, 2)$.\n\n(b) The equation $\\cos x = x$ has at least one solution.\n\n(c) Any polynomial of odd degree has at least one real root.",
+    "hints": [
+      "IVT: If f is continuous on [a,b] and N is between f(a) and f(b), then f(c) = N for some c in (a,b).",
+      "Show f(a) and f(b) have opposite signs (one positive, one negative).",
+      "For (c), consider behavior as x → ±∞."
+    ],
+    "solution": "(a) Let $f(x) = x^3 - x - 1$. f is continuous (polynomial).\n$f(1) = 1 - 1 - 1 = -1 < 0$\n$f(2) = 8 - 2 - 1 = 5 > 0$\nSince f(1) < 0 < f(2), by IVT there exists c ∈ (1, 2) where f(c) = 0. ✓\n\n(b) Let $g(x) = \\cos x - x$. g is continuous.\n$g(0) = \\cos 0 - 0 = 1 > 0$\n$g(\\pi/2) = \\cos(\\pi/2) - \\pi/2 = 0 - \\pi/2 < 0$\nBy IVT, there exists c ∈ (0, π/2) where g(c) = 0, i.e., cos c = c. ✓\n\n(c) Let $p(x) = a_n x^n + ... + a_0$ where n is odd and $a_n \\neq 0$.\nFor large |x|, the leading term dominates:\n- If $a_n > 0$: $p(x) \\to +\\infty$ as $x \\to +\\infty$ and $p(x) \\to -\\infty$ as $x \\to -\\infty$\n- If $a_n < 0$: $p(x) \\to -\\infty$ as $x \\to +\\infty$ and $p(x) \\to +\\infty$ as $x \\to -\\infty$\nEither way, p takes both positive and negative values.\nBy IVT, p(c) = 0 for some real c. ✓"
+  },
+  {
+    "id": "math203-t1-ex13",
+    "subjectId": "math203",
+    "topicId": "math203-topic-1",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Epsilon-Delta Proof",
+    "description": "Use the formal ε-δ definition to prove:\n\n$\\lim_{x \\to 3} (2x - 1) = 5$\n\nThat is, for every ε > 0, find δ > 0 such that if 0 < |x - 3| < δ, then |f(x) - 5| < ε.",
+    "hints": [
+      "Start with what you want: |f(x) - 5| < ε.",
+      "Simplify |(2x - 1) - 5| = |2x - 6| = 2|x - 3|.",
+      "Find the relationship between δ and ε."
+    ],
+    "solution": "We want: $|(2x - 1) - 5| < \\varepsilon$\n\nSimplify:\n$|2x - 1 - 5| = |2x - 6| = 2|x - 3|$\n\nWe need: $2|x - 3| < \\varepsilon$\nThis gives: $|x - 3| < \\varepsilon/2$\n\n**Proof:** Let ε > 0 be given. Choose $\\delta = \\varepsilon/2$.\n\nIf $0 < |x - 3| < \\delta = \\varepsilon/2$, then:\n$|(2x - 1) - 5| = |2x - 6| = 2|x - 3| < 2 \\cdot \\frac{\\varepsilon}{2} = \\varepsilon$\n\nTherefore, by the definition of a limit, $\\lim_{x \\to 3} (2x - 1) = 5$. ∎"
+  },
+  {
+    "id": "math203-t1-ex14",
+    "subjectId": "math203",
+    "topicId": "math203-topic-1",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Exponential Limits",
+    "description": "Evaluate the following limits:\n\n(a) $\\lim_{x \\to \\infty} \\left(1 + \\frac{1}{x}\\right)^x$\n\n(b) $\\lim_{x \\to 0} \\frac{e^{3x} - 1}{x}$\n\n(c) $\\lim_{x \\to \\infty} \\left(1 + \\frac{2}{x}\\right)^{3x}$\n\n(d) $\\lim_{x \\to 0} \\frac{a^x - 1}{x}$ where $a > 0$",
+    "hints": [
+      "The fundamental limit: lim(1 + 1/n)^n = e as n → ∞.",
+      "Use the fact that lim (e^u - 1)/u = 1 as u → 0.",
+      "For (c), rewrite in terms of the standard form.",
+      "For (d), write a^x = e^(x ln a)."
+    ],
+    "solution": "(a) This is the definition of e:\n$\\lim_{x \\to \\infty} \\left(1 + \\frac{1}{x}\\right)^x = e$\n\n(b) Let $u = 3x$, so as $x \\to 0$, $u \\to 0$:\n$\\lim_{x \\to 0} \\frac{e^{3x} - 1}{x} = \\lim_{u \\to 0} \\frac{e^u - 1}{u/3} = 3 \\lim_{u \\to 0} \\frac{e^u - 1}{u} = 3 \\cdot 1 = 3$\n\n(c) Rewrite: $\\left(1 + \\frac{2}{x}\\right)^{3x} = \\left[\\left(1 + \\frac{2}{x}\\right)^{x/2}\\right]^6$\nLet $n = x/2$, so as $x \\to \\infty$, $n \\to \\infty$:\n$\\left(1 + \\frac{1}{n}\\right)^n \\to e$\nTherefore: $\\lim_{x \\to \\infty} \\left(1 + \\frac{2}{x}\\right)^{3x} = e^6$\n\n(d) Write $a^x = e^{x \\ln a}$:\n$\\lim_{x \\to 0} \\frac{e^{x \\ln a} - 1}{x} = \\ln a \\cdot \\lim_{u \\to 0} \\frac{e^u - 1}{u} = \\ln a$ (where $u = x \\ln a$)"
+  },
+  {
+    "id": "math203-t1-ex15",
+    "subjectId": "math203",
+    "topicId": "math203-topic-1",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Indeterminate Forms with L'Hôpital",
+    "description": "Evaluate these limits involving indeterminate forms $0^0$, $1^\\infty$, or $\\infty^0$:\n\n(a) $\\lim_{x \\to 0^+} x^x$\n\n(b) $\\lim_{x \\to \\infty} \\left(1 + \\frac{3}{x}\\right)^x$\n\n(c) $\\lim_{x \\to \\infty} x^{1/x}$",
+    "hints": [
+      "For forms like f(x)^g(x), take ln: ln(y) = g(x) ln(f(x)).",
+      "Evaluate the limit of ln(y), then exponentiate.",
+      "Convert products to quotients if needed for L'Hôpital."
+    ],
+    "solution": "(a) Form $0^0$. Let $y = x^x$, so $\\ln y = x \\ln x$.\nWe already showed $\\lim_{x \\to 0^+} x \\ln x = 0$.\nTherefore: $\\lim_{x \\to 0^+} x^x = e^0 = 1$\n\n(b) Form $1^\\infty$. Let $y = \\left(1 + \\frac{3}{x}\\right)^x$\n$\\ln y = x \\ln\\left(1 + \\frac{3}{x}\\right) = \\frac{\\ln(1 + 3/x)}{1/x}$ (form 0/0)\nApply L'Hôpital:\n$= \\lim_{x \\to \\infty} \\frac{\\frac{-3/x^2}{1 + 3/x}}{-1/x^2} = \\lim_{x \\to \\infty} \\frac{3}{1 + 3/x} = 3$\nTherefore: $\\lim_{x \\to \\infty} \\left(1 + \\frac{3}{x}\\right)^x = e^3$\n\n(c) Form $\\infty^0$. Let $y = x^{1/x}$\n$\\ln y = \\frac{\\ln x}{x}$\nWe showed $\\lim_{x \\to \\infty} \\frac{\\ln x}{x} = 0$.\nTherefore: $\\lim_{x \\to \\infty} x^{1/x} = e^0 = 1$"
+  },
+  {
+    "id": "math203-t1-ex16",
+    "subjectId": "math203",
+    "topicId": "math203-topic-1",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Limits and Absolute Value",
+    "description": "Evaluate:\n\n(a) $\\lim_{x \\to 0} \\frac{|x|}{x}$\n\n(b) $\\lim_{x \\to 2} \\frac{|x - 2|}{x - 2}$\n\n(c) $\\lim_{x \\to 0} \\frac{x}{|x| + x}$",
+    "hints": [
+      "Consider one-sided limits separately.",
+      "For x > 0: |x| = x. For x < 0: |x| = -x.",
+      "The limit exists only if both one-sided limits are equal."
+    ],
+    "solution": "(a) $\\lim_{x \\to 0^+} \\frac{|x|}{x} = \\lim_{x \\to 0^+} \\frac{x}{x} = 1$\n$\\lim_{x \\to 0^-} \\frac{|x|}{x} = \\lim_{x \\to 0^-} \\frac{-x}{x} = -1$\nSince $1 \\neq -1$, the limit **does not exist**.\n\n(b) $\\lim_{x \\to 2^+} \\frac{|x-2|}{x-2} = \\lim_{x \\to 2^+} \\frac{x-2}{x-2} = 1$\n$\\lim_{x \\to 2^-} \\frac{|x-2|}{x-2} = \\lim_{x \\to 2^-} \\frac{-(x-2)}{x-2} = -1$\nSince $1 \\neq -1$, the limit **does not exist**.\n\n(c) For $x > 0$: $\\frac{x}{|x| + x} = \\frac{x}{x + x} = \\frac{x}{2x} = \\frac{1}{2}$\nFor $x < 0$: $\\frac{x}{|x| + x} = \\frac{x}{-x + x} = \\frac{x}{0}$ (undefined)\n$\\lim_{x \\to 0^+} = \\frac{1}{2}$\n$\\lim_{x \\to 0^-}$ does not exist (approaches $-\\infty$)\nThe limit **does not exist**."
+  },
+  {
+    "id": "math203-t2-drill-1",
+    "subjectId": "math203",
+    "topicId": "math203-topic-2",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Difference Quotient",
+    "description": "Write the difference quotient $\\frac{f(x+h) - f(x)}{h}$ for $f(x) = x^2$. Simplify but do not take the limit.",
+    "hints": [
+      "Expand (x + h)² and subtract x²."
+    ],
+    "solution": "$\\frac{(x+h)^2 - x^2}{h} = \\frac{x^2 + 2xh + h^2 - x^2}{h} = \\frac{2xh + h^2}{h} = 2x + h$"
+  },
+  {
+    "id": "math203-t2-drill-2",
+    "subjectId": "math203",
+    "topicId": "math203-topic-2",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Derivative from Definition",
+    "description": "Using the limit definition, find $f'(x)$ for $f(x) = 3x$.",
+    "hints": [
+      "The limit definition is f'(x) = lim[h→0] (f(x+h) - f(x))/h."
+    ],
+    "solution": "$f'(x) = \\lim_{h \\to 0} \\frac{3(x+h) - 3x}{h} = \\lim_{h \\to 0} \\frac{3h}{h} = \\lim_{h \\to 0} 3 = 3$"
+  },
+  {
+    "id": "math203-t2-drill-3",
+    "subjectId": "math203",
+    "topicId": "math203-topic-2",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Tangent Line Slope",
+    "description": "If $f(x) = x^2$ and $f'(x) = 2x$, what is the slope of the tangent line at $x = 3$?",
+    "hints": [
+      "Evaluate f'(3)."
+    ],
+    "solution": "The slope is $f'(3) = 2(3) = 6$."
+  },
+  {
+    "id": "math203-t2-drill-4",
+    "subjectId": "math203",
+    "topicId": "math203-topic-2",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Differentiability Check",
+    "description": "Is $f(x) = |x|$ differentiable at $x = 0$? Explain briefly.",
+    "hints": [
+      "Consider the left and right derivatives at x = 0."
+    ],
+    "solution": "No. The left derivative is $\\lim_{h \\to 0^-} \\frac{|h|}{h} = -1$ and the right derivative is $\\lim_{h \\to 0^+} \\frac{|h|}{h} = 1$. Since these are not equal, f is not differentiable at x = 0."
+  },
+  {
+    "id": "math203-t2-ex01",
+    "subjectId": "math203",
+    "topicId": "math203-topic-2",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Derivative from the Definition: Polynomials",
+    "description": "Use the limit definition of the derivative to find $f'(x)$ for each function:\n\n(a) $f(x) = x^3$\n\n(b) $f(x) = 2x^2 - 3x + 1$\n\n(c) $f(x) = x^4$",
+    "hints": [
+      "Use (x+h)³ = x³ + 3x²h + 3xh² + h³.",
+      "For (b), handle each term separately.",
+      "For (c), expand (x+h)⁴ or use the binomial theorem."
+    ],
+    "solution": "(a) $f'(x) = \\lim_{h \\to 0} \\frac{(x+h)^3 - x^3}{h}$\n$= \\lim_{h \\to 0} \\frac{x^3 + 3x^2h + 3xh^2 + h^3 - x^3}{h}$\n$= \\lim_{h \\to 0} \\frac{3x^2h + 3xh^2 + h^3}{h} = \\lim_{h \\to 0} (3x^2 + 3xh + h^2) = 3x^2$\n\n(b) $f'(x) = \\lim_{h \\to 0} \\frac{[2(x+h)^2 - 3(x+h) + 1] - [2x^2 - 3x + 1]}{h}$\n$= \\lim_{h \\to 0} \\frac{2x^2 + 4xh + 2h^2 - 3x - 3h + 1 - 2x^2 + 3x - 1}{h}$\n$= \\lim_{h \\to 0} \\frac{4xh + 2h^2 - 3h}{h} = \\lim_{h \\to 0} (4x + 2h - 3) = 4x - 3$\n\n(c) $f'(x) = \\lim_{h \\to 0} \\frac{(x+h)^4 - x^4}{h}$\nUsing binomial: $(x+h)^4 = x^4 + 4x^3h + 6x^2h^2 + 4xh^3 + h^4$\n$= \\lim_{h \\to 0} \\frac{4x^3h + 6x^2h^2 + 4xh^3 + h^4}{h} = 4x^3$"
+  },
+  {
+    "id": "math203-t2-ex02",
+    "subjectId": "math203",
+    "topicId": "math203-topic-2",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Derivative from the Definition: Radicals",
+    "description": "Use the limit definition to find $f'(x)$ for:\n\n(a) $f(x) = \\sqrt{x}$\n\n(b) $f(x) = \\sqrt{2x + 1}$\n\n(c) $f(x) = \\frac{1}{\\sqrt{x}}$",
+    "hints": [
+      "Rationalize by multiplying by the conjugate.",
+      "For (a): multiply by (√(x+h) + √x) / (√(x+h) + √x).",
+      "For (c), find a common denominator first, then rationalize."
+    ],
+    "solution": "(a) $f'(x) = \\lim_{h \\to 0} \\frac{\\sqrt{x+h} - \\sqrt{x}}{h} \\cdot \\frac{\\sqrt{x+h} + \\sqrt{x}}{\\sqrt{x+h} + \\sqrt{x}}$\n$= \\lim_{h \\to 0} \\frac{(x+h) - x}{h(\\sqrt{x+h} + \\sqrt{x})} = \\lim_{h \\to 0} \\frac{1}{\\sqrt{x+h} + \\sqrt{x}} = \\frac{1}{2\\sqrt{x}}$\n\n(b) $f'(x) = \\lim_{h \\to 0} \\frac{\\sqrt{2(x+h)+1} - \\sqrt{2x+1}}{h} \\cdot \\frac{\\sqrt{2x+2h+1} + \\sqrt{2x+1}}{\\sqrt{2x+2h+1} + \\sqrt{2x+1}}$\n$= \\lim_{h \\to 0} \\frac{2h}{h(\\sqrt{2x+2h+1} + \\sqrt{2x+1})} = \\frac{2}{2\\sqrt{2x+1}} = \\frac{1}{\\sqrt{2x+1}}$\n\n(c) $f'(x) = \\lim_{h \\to 0} \\frac{\\frac{1}{\\sqrt{x+h}} - \\frac{1}{\\sqrt{x}}}{h} = \\lim_{h \\to 0} \\frac{\\sqrt{x} - \\sqrt{x+h}}{h\\sqrt{x}\\sqrt{x+h}}$\nRationalize: $= \\lim_{h \\to 0} \\frac{x - (x+h)}{h\\sqrt{x}\\sqrt{x+h}(\\sqrt{x} + \\sqrt{x+h})}$\n$= \\lim_{h \\to 0} \\frac{-1}{\\sqrt{x}\\sqrt{x+h}(\\sqrt{x} + \\sqrt{x+h})} = \\frac{-1}{x \\cdot 2\\sqrt{x}} = -\\frac{1}{2x^{3/2}}$"
+  },
+  {
+    "id": "math203-t2-ex03",
+    "subjectId": "math203",
+    "topicId": "math203-topic-2",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Derivative from the Definition: Rational Functions",
+    "description": "Use the limit definition to find $f'(x)$ for:\n\n(a) $f(x) = \\frac{1}{x}$\n\n(b) $f(x) = \\frac{1}{x^2}$\n\n(c) $f(x) = \\frac{x}{x+1}$",
+    "hints": [
+      "Get a common denominator in the numerator.",
+      "Factor and simplify before taking the limit.",
+      "For (c), be careful with the algebra."
+    ],
+    "solution": "(a) $f'(x) = \\lim_{h \\to 0} \\frac{\\frac{1}{x+h} - \\frac{1}{x}}{h} = \\lim_{h \\to 0} \\frac{x - (x+h)}{h \\cdot x(x+h)}$\n$= \\lim_{h \\to 0} \\frac{-h}{hx(x+h)} = \\lim_{h \\to 0} \\frac{-1}{x(x+h)} = -\\frac{1}{x^2}$\n\n(b) $f'(x) = \\lim_{h \\to 0} \\frac{\\frac{1}{(x+h)^2} - \\frac{1}{x^2}}{h} = \\lim_{h \\to 0} \\frac{x^2 - (x+h)^2}{h \\cdot x^2(x+h)^2}$\n$= \\lim_{h \\to 0} \\frac{x^2 - x^2 - 2xh - h^2}{hx^2(x+h)^2} = \\lim_{h \\to 0} \\frac{-2xh - h^2}{hx^2(x+h)^2}$\n$= \\lim_{h \\to 0} \\frac{-2x - h}{x^2(x+h)^2} = \\frac{-2x}{x^4} = -\\frac{2}{x^3}$\n\n(c) $f'(x) = \\lim_{h \\to 0} \\frac{\\frac{x+h}{x+h+1} - \\frac{x}{x+1}}{h}$\n$= \\lim_{h \\to 0} \\frac{(x+h)(x+1) - x(x+h+1)}{h(x+1)(x+h+1)}$\n$= \\lim_{h \\to 0} \\frac{x^2 + x + hx + h - x^2 - xh - x}{h(x+1)(x+h+1)} = \\lim_{h \\to 0} \\frac{h}{h(x+1)(x+h+1)}$\n$= \\frac{1}{(x+1)^2}$"
+  },
+  {
+    "id": "math203-t2-ex04",
+    "subjectId": "math203",
+    "topicId": "math203-topic-2",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Tangent Line Equations",
+    "description": "Find the equation of the tangent line to each curve at the given point:\n\n(a) $f(x) = x^2 - 3x$ at $x = 2$\n\n(b) $f(x) = \\sqrt{x}$ at $x = 4$\n\n(c) $f(x) = \\frac{1}{x}$ at $x = 2$",
+    "hints": [
+      "The tangent line has slope f'(a) and passes through (a, f(a)).",
+      "Equation: y - f(a) = f'(a)(x - a).",
+      "You may use the derivatives computed in previous exercises."
+    ],
+    "solution": "(a) $f(2) = 4 - 6 = -2$\n$f'(x) = 2x - 3$, so $f'(2) = 4 - 3 = 1$\nTangent line: $y - (-2) = 1(x - 2)$\n$\\boxed{y = x - 4}$\n\n(b) $f(4) = 2$\n$f'(x) = \\frac{1}{2\\sqrt{x}}$, so $f'(4) = \\frac{1}{4}$\nTangent line: $y - 2 = \\frac{1}{4}(x - 4)$\n$\\boxed{y = \\frac{1}{4}x + 1}$\n\n(c) $f(2) = \\frac{1}{2}$\n$f'(x) = -\\frac{1}{x^2}$, so $f'(2) = -\\frac{1}{4}$\nTangent line: $y - \\frac{1}{2} = -\\frac{1}{4}(x - 2)$\n$\\boxed{y = -\\frac{1}{4}x + 1}$"
+  },
+  {
+    "id": "math203-t2-ex05",
+    "subjectId": "math203",
+    "topicId": "math203-topic-2",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Derivative at a Point",
+    "description": "Use the alternative definition $f'(a) = \\lim_{x \\to a} \\frac{f(x) - f(a)}{x - a}$ to find:\n\n(a) $f'(1)$ where $f(x) = x^3$\n\n(b) $f'(4)$ where $f(x) = \\sqrt{x}$\n\n(c) $f'(2)$ where $f(x) = \\frac{1}{x}$",
+    "hints": [
+      "This form is useful when you know the specific point.",
+      "Factor to cancel (x - a) from the denominator.",
+      "For (a), use x³ - 1 = (x-1)(x² + x + 1)."
+    ],
+    "solution": "(a) $f'(1) = \\lim_{x \\to 1} \\frac{x^3 - 1}{x - 1} = \\lim_{x \\to 1} \\frac{(x-1)(x^2 + x + 1)}{x - 1}$\n$= \\lim_{x \\to 1} (x^2 + x + 1) = 1 + 1 + 1 = 3$\n\n(b) $f'(4) = \\lim_{x \\to 4} \\frac{\\sqrt{x} - 2}{x - 4}$\nRationalize: $= \\lim_{x \\to 4} \\frac{(\\sqrt{x} - 2)(\\sqrt{x} + 2)}{(x - 4)(\\sqrt{x} + 2)} = \\lim_{x \\to 4} \\frac{x - 4}{(x - 4)(\\sqrt{x} + 2)}$\n$= \\lim_{x \\to 4} \\frac{1}{\\sqrt{x} + 2} = \\frac{1}{4}$\n\n(c) $f'(2) = \\lim_{x \\to 2} \\frac{\\frac{1}{x} - \\frac{1}{2}}{x - 2} = \\lim_{x \\to 2} \\frac{2 - x}{2x(x - 2)}$\n$= \\lim_{x \\to 2} \\frac{-(x - 2)}{2x(x - 2)} = \\lim_{x \\to 2} \\frac{-1}{2x} = -\\frac{1}{4}$"
+  },
+  {
+    "id": "math203-t2-ex06",
+    "subjectId": "math203",
+    "topicId": "math203-topic-2",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Velocity and Rate of Change",
+    "description": "A ball is thrown upward with initial velocity 64 ft/sec from a height of 80 ft. Its height at time $t$ is $s(t) = -16t^2 + 64t + 80$ feet.\n\n(a) Find the velocity function $v(t) = s'(t)$ using the limit definition.\n(b) What is the velocity at $t = 1$ second?\n(c) When is the ball at its highest point?\n(d) What is the maximum height?",
+    "hints": [
+      "Velocity is the derivative of position.",
+      "The ball is at its highest when velocity is zero.",
+      "Be careful expanding (t + h)²."
+    ],
+    "solution": "(a) $v(t) = s'(t) = \\lim_{h \\to 0} \\frac{s(t+h) - s(t)}{h}$\n$s(t+h) = -16(t+h)^2 + 64(t+h) + 80 = -16t^2 - 32th - 16h^2 + 64t + 64h + 80$\n$s(t+h) - s(t) = -32th - 16h^2 + 64h$\n$\\frac{s(t+h) - s(t)}{h} = -32t - 16h + 64$\n$v(t) = \\lim_{h \\to 0} (-32t - 16h + 64) = \\boxed{-32t + 64}$ ft/sec\n\n(b) $v(1) = -32(1) + 64 = 32$ ft/sec (still going up)\n\n(c) Highest point when $v(t) = 0$:\n$-32t + 64 = 0 \\Rightarrow t = 2$ seconds\n\n(d) Maximum height: $s(2) = -16(4) + 64(2) + 80 = -64 + 128 + 80 = 144$ feet"
+  },
+  {
+    "id": "math203-t2-ex07",
+    "subjectId": "math203",
+    "topicId": "math203-topic-2",
+    "type": "written",
+    "difficulty": 3,
+    "title": "One-Sided Derivatives",
+    "description": "For the function $f(x) = |x - 1|$:\n\n(a) Find the left derivative at $x = 1$: $f'_-(1)$\n(b) Find the right derivative at $x = 1$: $f'_+(1)$\n(c) Is $f$ differentiable at $x = 1$?\n(d) Is $f$ continuous at $x = 1$?",
+    "hints": [
+      "For x < 1: |x - 1| = -(x - 1) = 1 - x.",
+      "For x > 1: |x - 1| = x - 1.",
+      "Differentiable requires equal one-sided derivatives."
+    ],
+    "solution": "(a) For $x < 1$: $f(x) = 1 - x$\n$f'_-(1) = \\lim_{h \\to 0^-} \\frac{f(1+h) - f(1)}{h} = \\lim_{h \\to 0^-} \\frac{(1 - (1+h)) - 0}{h}$\n$= \\lim_{h \\to 0^-} \\frac{-h}{h} = -1$\n\n(b) For $x > 1$: $f(x) = x - 1$\n$f'_+(1) = \\lim_{h \\to 0^+} \\frac{f(1+h) - f(1)}{h} = \\lim_{h \\to 0^+} \\frac{((1+h) - 1) - 0}{h}$\n$= \\lim_{h \\to 0^+} \\frac{h}{h} = 1$\n\n(c) No, f is not differentiable at x = 1 because $f'_-(1) = -1 \\neq 1 = f'_+(1)$.\nThere is a corner at x = 1.\n\n(d) Yes, f is continuous at x = 1:\n- $f(1) = |1 - 1| = 0$ ✓\n- $\\lim_{x \\to 1} |x - 1| = 0$ ✓\n- Limit equals function value ✓"
+  },
+  {
+    "id": "math203-t2-ex08",
+    "subjectId": "math203",
+    "topicId": "math203-topic-2",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Piecewise Functions and Differentiability",
+    "description": "For the function:\n$$f(x) = \\begin{cases} x^2 & \\text{if } x \\leq 1 \\\\ ax + b & \\text{if } x > 1 \\end{cases}$$\n\nFind values of $a$ and $b$ such that $f$ is differentiable everywhere.",
+    "hints": [
+      "Differentiability at x = 1 requires continuity at x = 1.",
+      "Also requires equal one-sided derivatives at x = 1.",
+      "Set up a system of equations."
+    ],
+    "solution": "For differentiability at x = 1, we need:\n\n**Continuity:** $\\lim_{x \\to 1^-} f(x) = \\lim_{x \\to 1^+} f(x) = f(1)$\n$1^2 = a(1) + b$\n$a + b = 1$ ... (1)\n\n**Equal derivatives:**\nLeft derivative: $f'_-(1) = \\lim_{h \\to 0^-} \\frac{(1+h)^2 - 1}{h} = \\lim_{h \\to 0^-} \\frac{2h + h^2}{h} = 2$\nRight derivative: $f'_+(1) = \\lim_{h \\to 0^+} \\frac{a(1+h) + b - (a + b)}{h} = a$\nSo $a = 2$ ... (2)\n\nFrom (1): $2 + b = 1 \\Rightarrow b = -1$\n\n**Answer:** $a = 2$, $b = -1$\n\nVerification: $f(x) = \\begin{cases} x^2 & x \\leq 1 \\\\ 2x - 1 & x > 1 \\end{cases}$\nAt x = 1: both pieces give value 1, both derivatives give 2. ✓"
+  },
+  {
+    "id": "math203-t2-ex09",
+    "subjectId": "math203",
+    "topicId": "math203-topic-2",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Linear Approximation",
+    "description": "Use linear approximation (tangent line) to estimate:\n\n(a) $\\sqrt{4.1}$ using $f(x) = \\sqrt{x}$ near $x = 4$\n\n(b) $(2.01)^3$ using $f(x) = x^3$ near $x = 2$\n\n(c) $\\frac{1}{1.02}$ using $f(x) = \\frac{1}{x}$ near $x = 1$",
+    "hints": [
+      "Linear approximation: f(a + Δx) ≈ f(a) + f'(a)·Δx.",
+      "Choose a nearby point where you know the exact value.",
+      "Compare your estimates to calculator values."
+    ],
+    "solution": "(a) $f(x) = \\sqrt{x}$, $a = 4$, $\\Delta x = 0.1$\n$f(4) = 2$, $f'(x) = \\frac{1}{2\\sqrt{x}}$, $f'(4) = \\frac{1}{4}$\n$\\sqrt{4.1} \\approx 2 + \\frac{1}{4}(0.1) = 2.025$\n(Actual: 2.0248...)\n\n(b) $f(x) = x^3$, $a = 2$, $\\Delta x = 0.01$\n$f(2) = 8$, $f'(x) = 3x^2$, $f'(2) = 12$\n$(2.01)^3 \\approx 8 + 12(0.01) = 8.12$\n(Actual: 8.120601...)\n\n(c) $f(x) = \\frac{1}{x}$, $a = 1$, $\\Delta x = 0.02$\n$f(1) = 1$, $f'(x) = -\\frac{1}{x^2}$, $f'(1) = -1$\n$\\frac{1}{1.02} \\approx 1 + (-1)(0.02) = 0.98$\n(Actual: 0.9804...)"
+  },
+  {
+    "id": "math203-t2-ex10",
+    "subjectId": "math203",
+    "topicId": "math203-topic-2",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Higher Derivatives from Definition",
+    "description": "For $f(x) = x^3$:\n\n(a) Find $f'(x)$ using the limit definition.\n(b) Find $f''(x)$ using the limit definition (derivative of $f'$).\n(c) Find $f'''(x)$ using the limit definition.\n(d) What is $f^{(4)}(x)$?",
+    "hints": [
+      "Apply the limit definition to each derivative in turn.",
+      "Each derivative is simpler than the previous.",
+      "Look for a pattern."
+    ],
+    "solution": "(a) $f'(x) = \\lim_{h \\to 0} \\frac{(x+h)^3 - x^3}{h} = \\lim_{h \\to 0} \\frac{3x^2h + 3xh^2 + h^3}{h}$\n$= \\lim_{h \\to 0} (3x^2 + 3xh + h^2) = 3x^2$\n\n(b) $f''(x) = \\lim_{h \\to 0} \\frac{3(x+h)^2 - 3x^2}{h} = \\lim_{h \\to 0} \\frac{3(x^2 + 2xh + h^2) - 3x^2}{h}$\n$= \\lim_{h \\to 0} \\frac{6xh + 3h^2}{h} = \\lim_{h \\to 0} (6x + 3h) = 6x$\n\n(c) $f'''(x) = \\lim_{h \\to 0} \\frac{6(x+h) - 6x}{h} = \\lim_{h \\to 0} \\frac{6h}{h} = 6$\n\n(d) $f^{(4)}(x) = \\lim_{h \\to 0} \\frac{6 - 6}{h} = 0$\n\nPattern: For $f(x) = x^n$, the $n$th derivative is $n!$ and all higher derivatives are 0."
+  },
+  {
+    "id": "math203-t2-ex11",
+    "subjectId": "math203",
+    "topicId": "math203-topic-2",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Differentiability and Continuity",
+    "description": "Prove or disprove:\n\n(a) If $f$ is differentiable at $a$, then $f$ is continuous at $a$.\n\n(b) If $f$ is continuous at $a$, then $f$ is differentiable at $a$.\n\n(c) If $f$ and $g$ are both not differentiable at $a$, then $f + g$ is not differentiable at $a$.",
+    "hints": [
+      "For (a), write f(x) - f(a) in terms of the difference quotient.",
+      "For (b) and (c), find counterexamples.",
+      "Consider functions like |x|."
+    ],
+    "solution": "(a) **TRUE.** Proof:\nIf f is differentiable at a, then $\\lim_{x \\to a} \\frac{f(x) - f(a)}{x - a} = f'(a)$ exists.\n$\\lim_{x \\to a} [f(x) - f(a)] = \\lim_{x \\to a} \\frac{f(x) - f(a)}{x - a} \\cdot (x - a) = f'(a) \\cdot 0 = 0$\nTherefore $\\lim_{x \\to a} f(x) = f(a)$, so f is continuous at a. ✓\n\n(b) **FALSE.** Counterexample: $f(x) = |x|$ at $a = 0$.\nf is continuous at 0 (lim|x| = 0 = f(0)), but not differentiable (left and right derivatives differ).\n\n(c) **FALSE.** Counterexample: At $a = 0$,\n$f(x) = |x|$ (not differentiable at 0)\n$g(x) = -|x|$ (not differentiable at 0)\n$(f + g)(x) = |x| + (-|x|) = 0$ (constant, differentiable everywhere)"
+  },
+  {
+    "id": "math203-t2-ex12",
+    "subjectId": "math203",
+    "topicId": "math203-topic-2",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Derivative of sin(x) from Definition",
+    "description": "Use the limit definition to prove that $\\frac{d}{dx}[\\sin x] = \\cos x$.\n\nYou may use:\n- $\\sin(A + B) = \\sin A \\cos B + \\cos A \\sin B$\n- $\\lim_{h \\to 0} \\frac{\\sin h}{h} = 1$\n- $\\lim_{h \\to 0} \\frac{1 - \\cos h}{h} = 0$",
+    "hints": [
+      "Apply the angle sum formula to sin(x + h).",
+      "Separate into terms involving (sin h)/h and (1 - cos h)/h.",
+      "Use the given limits."
+    ],
+    "solution": "$\\frac{d}{dx}[\\sin x] = \\lim_{h \\to 0} \\frac{\\sin(x+h) - \\sin x}{h}$\n\nUsing the angle sum formula:\n$\\sin(x+h) = \\sin x \\cos h + \\cos x \\sin h$\n\n$= \\lim_{h \\to 0} \\frac{\\sin x \\cos h + \\cos x \\sin h - \\sin x}{h}$\n\n$= \\lim_{h \\to 0} \\frac{\\sin x (\\cos h - 1) + \\cos x \\sin h}{h}$\n\n$= \\lim_{h \\to 0} \\left[\\sin x \\cdot \\frac{\\cos h - 1}{h} + \\cos x \\cdot \\frac{\\sin h}{h}\\right]$\n\n$= \\sin x \\cdot \\lim_{h \\to 0} \\frac{-(1 - \\cos h)}{h} + \\cos x \\cdot \\lim_{h \\to 0} \\frac{\\sin h}{h}$\n\n$= \\sin x \\cdot (-0) + \\cos x \\cdot 1$\n\n$= \\cos x$ ∎"
+  },
+  {
+    "id": "math203-t2-ex13",
+    "subjectId": "math203",
+    "topicId": "math203-topic-2",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Derivative of Exponential from Definition",
+    "description": "Use the limit definition to show that $\\frac{d}{dx}[e^x] = e^x$.\n\nYou may use the fact that $\\lim_{h \\to 0} \\frac{e^h - 1}{h} = 1$.",
+    "hints": [
+      "Use the property e^(x+h) = e^x · e^h.",
+      "Factor out e^x from the difference quotient.",
+      "Apply the given limit."
+    ],
+    "solution": "$\\frac{d}{dx}[e^x] = \\lim_{h \\to 0} \\frac{e^{x+h} - e^x}{h}$\n\nUsing $e^{x+h} = e^x \\cdot e^h$:\n\n$= \\lim_{h \\to 0} \\frac{e^x \\cdot e^h - e^x}{h}$\n\n$= \\lim_{h \\to 0} \\frac{e^x(e^h - 1)}{h}$\n\n$= e^x \\cdot \\lim_{h \\to 0} \\frac{e^h - 1}{h}$\n\n$= e^x \\cdot 1$\n\n$= e^x$ ∎\n\nNote: This proves the remarkable property that $e^x$ is its own derivative!"
+  },
+  {
+    "id": "math203-t2-ex14",
+    "subjectId": "math203",
+    "topicId": "math203-topic-2",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Points of Non-Differentiability",
+    "description": "For each function, find all points where the function is not differentiable and explain why:\n\n(a) $f(x) = |x^2 - 4|$\n\n(b) $g(x) = x^{1/3}$\n\n(c) $h(x) = \\begin{cases} \\sin x & x < 0 \\\\ x & x \\geq 0 \\end{cases}$",
+    "hints": [
+      "Look for corners, cusps, vertical tangents, and discontinuities.",
+      "For (a), where does x² - 4 change sign?",
+      "For (b), check the derivative at x = 0."
+    ],
+    "solution": "(a) $|x^2 - 4| = |x-2||x+2|$\nChanges sign at x = -2 and x = 2.\nNot differentiable at $x = -2$ and $x = 2$ (corners where the inside changes sign).\n\n(b) $g(x) = x^{1/3}$\n$g'(x) = \\frac{1}{3}x^{-2/3} = \\frac{1}{3x^{2/3}}$\nAs $x \\to 0$: $g'(x) \\to \\infty$\nNot differentiable at $x = 0$ (vertical tangent/cusp).\n\n(c) Check at x = 0:\nLeft derivative: $\\lim_{h \\to 0^-} \\frac{\\sin h - 0}{h} = 1$ (using standard limit)\nRight derivative: $\\lim_{h \\to 0^+} \\frac{h - 0}{h} = 1$\nBoth equal 1, so h IS differentiable at x = 0!\nAlso need to check continuity: $\\lim_{x \\to 0} \\sin x = 0 = h(0)$ ✓\n**h is differentiable everywhere.**"
+  },
+  {
+    "id": "math203-t2-ex15",
+    "subjectId": "math203",
+    "topicId": "math203-topic-2",
+    "type": "written",
+    "difficulty": 4,
+    "title": "General Power Rule from Definition",
+    "description": "Use the limit definition to prove that for any positive integer $n$:\n$$\\frac{d}{dx}[x^n] = nx^{n-1}$$\n\nYou may use the factorization:\n$$a^n - b^n = (a-b)(a^{n-1} + a^{n-2}b + a^{n-3}b^2 + \\cdots + b^{n-1})$$",
+    "hints": [
+      "Use the alternative form f'(a) = lim[x→a] (f(x) - f(a))/(x - a).",
+      "Apply the given factorization with a = x and b = a.",
+      "Count the number of terms in the second factor."
+    ],
+    "solution": "Let $f(x) = x^n$. Using the alternative definition:\n\n$f'(a) = \\lim_{x \\to a} \\frac{x^n - a^n}{x - a}$\n\nApply the factorization $x^n - a^n = (x-a)(x^{n-1} + x^{n-2}a + x^{n-3}a^2 + \\cdots + a^{n-1})$:\n\n$f'(a) = \\lim_{x \\to a} \\frac{(x-a)(x^{n-1} + x^{n-2}a + \\cdots + xa^{n-2} + a^{n-1})}{x - a}$\n\n$= \\lim_{x \\to a} (x^{n-1} + x^{n-2}a + \\cdots + xa^{n-2} + a^{n-1})$\n\nAs $x \\to a$, each term becomes $a^{n-1}$:\n\n$= a^{n-1} + a^{n-1} + \\cdots + a^{n-1}$ (n terms)\n\n$= n \\cdot a^{n-1}$\n\nSince this holds for any $a$, we have $\\frac{d}{dx}[x^n] = nx^{n-1}$. ∎"
+  },
+  {
+    "id": "math203-t2-ex16",
+    "subjectId": "math203",
+    "topicId": "math203-topic-2",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Normal Lines",
+    "description": "The normal line to a curve at a point is perpendicular to the tangent line at that point.\n\nFind the equation of the normal line to:\n\n(a) $f(x) = x^2$ at $x = 2$\n\n(b) $f(x) = \\sqrt{x}$ at $x = 1$\n\n(c) $f(x) = \\frac{1}{x}$ at $x = 1$",
+    "hints": [
+      "If the tangent has slope m, the normal has slope -1/m.",
+      "First find the tangent slope using f'(a).",
+      "Use point-slope form for the normal line."
+    ],
+    "solution": "(a) $f(2) = 4$, $f'(x) = 2x$, $f'(2) = 4$\nTangent slope = 4, Normal slope = $-\\frac{1}{4}$\nNormal line: $y - 4 = -\\frac{1}{4}(x - 2)$\n$\\boxed{y = -\\frac{1}{4}x + \\frac{9}{2}}$\n\n(b) $f(1) = 1$, $f'(x) = \\frac{1}{2\\sqrt{x}}$, $f'(1) = \\frac{1}{2}$\nTangent slope = $\\frac{1}{2}$, Normal slope = $-2$\nNormal line: $y - 1 = -2(x - 1)$\n$\\boxed{y = -2x + 3}$\n\n(c) $f(1) = 1$, $f'(x) = -\\frac{1}{x^2}$, $f'(1) = -1$\nTangent slope = $-1$, Normal slope = $1$\nNormal line: $y - 1 = 1(x - 1)$\n$\\boxed{y = x}$"
+  },
+  {
+    "id": "math203-t3-drill-1",
+    "subjectId": "math203",
+    "topicId": "math203-topic-3",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Power Rule",
+    "description": "Differentiate: $f(x) = x^7$",
+    "hints": [
+      "Use the power rule: d/dx[x^n] = nx^(n-1)."
+    ],
+    "solution": "$f'(x) = 7x^6$"
+  },
+  {
+    "id": "math203-t3-drill-2",
+    "subjectId": "math203",
+    "topicId": "math203-topic-3",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Sum Rule",
+    "description": "Differentiate: $f(x) = x^3 + 5x^2 - 2x + 7$",
+    "hints": [
+      "Differentiate each term separately."
+    ],
+    "solution": "$f'(x) = 3x^2 + 10x - 2$"
+  },
+  {
+    "id": "math203-t3-drill-3",
+    "subjectId": "math203",
+    "topicId": "math203-topic-3",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Chain Rule (Simple)",
+    "description": "Differentiate: $f(x) = (3x + 1)^5$",
+    "hints": [
+      "Use the chain rule: d/dx[u^n] = n·u^(n-1)·u'."
+    ],
+    "solution": "$f'(x) = 5(3x + 1)^4 \\cdot 3 = 15(3x + 1)^4$"
+  },
+  {
+    "id": "math203-t3-drill-4",
+    "subjectId": "math203",
+    "topicId": "math203-topic-3",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Product Rule",
+    "description": "Differentiate: $f(x) = x^2 \\sin x$",
+    "hints": [
+      "Product rule: (fg)' = f'g + fg'."
+    ],
+    "solution": "$f'(x) = 2x \\sin x + x^2 \\cos x$"
+  },
+  {
+    "id": "math203-t3-ex01",
+    "subjectId": "math203",
+    "topicId": "math203-topic-3",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Power Rule with Fractional and Negative Exponents",
+    "description": "Differentiate each function:\n\n(a) $f(x) = x^{3/2}$\n\n(b) $g(x) = x^{-4}$\n\n(c) $h(x) = \\sqrt[3]{x^2}$\n\n(d) $k(x) = \\frac{1}{x^5}$",
+    "hints": [
+      "Rewrite roots and fractions as powers: √x = x^(1/2), 1/x^n = x^(-n).",
+      "∛(x²) = x^(2/3).",
+      "Apply the power rule: d/dx[x^n] = nx^(n-1)."
+    ],
+    "solution": "(a) $f(x) = x^{3/2}$\n$f'(x) = \\frac{3}{2}x^{1/2} = \\frac{3}{2}\\sqrt{x}$\n\n(b) $g(x) = x^{-4}$\n$g'(x) = -4x^{-5} = -\\frac{4}{x^5}$\n\n(c) $h(x) = x^{2/3}$\n$h'(x) = \\frac{2}{3}x^{-1/3} = \\frac{2}{3\\sqrt[3]{x}}$\n\n(d) $k(x) = x^{-5}$\n$k'(x) = -5x^{-6} = -\\frac{5}{x^6}$"
+  },
+  {
+    "id": "math203-t3-ex02",
+    "subjectId": "math203",
+    "topicId": "math203-topic-3",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Product Rule",
+    "description": "Use the product rule to differentiate:\n\n(a) $f(x) = x^3 e^x$\n\n(b) $g(x) = (2x + 1)(x^2 - 3)$\n\n(c) $h(x) = \\sqrt{x} \\ln x$\n\n(d) $k(x) = e^x \\sin x$",
+    "hints": [
+      "Product rule: (fg)' = f'g + fg'.",
+      "Remember: d/dx[e^x] = e^x, d/dx[ln x] = 1/x.",
+      "d/dx[sin x] = cos x."
+    ],
+    "solution": "(a) $f'(x) = 3x^2 \\cdot e^x + x^3 \\cdot e^x = e^x(3x^2 + x^3) = x^2 e^x(3 + x)$\n\n(b) $g'(x) = 2(x^2 - 3) + (2x + 1)(2x) = 2x^2 - 6 + 4x^2 + 2x = 6x^2 + 2x - 6$\n\n(c) $h'(x) = \\frac{1}{2\\sqrt{x}} \\cdot \\ln x + \\sqrt{x} \\cdot \\frac{1}{x} = \\frac{\\ln x}{2\\sqrt{x}} + \\frac{1}{\\sqrt{x}} = \\frac{\\ln x + 2}{2\\sqrt{x}}$\n\n(d) $k'(x) = e^x \\sin x + e^x \\cos x = e^x(\\sin x + \\cos x)$"
+  },
+  {
+    "id": "math203-t3-ex03",
+    "subjectId": "math203",
+    "topicId": "math203-topic-3",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Quotient Rule",
+    "description": "Use the quotient rule to differentiate:\n\n(a) $f(x) = \\frac{x^2}{x + 1}$\n\n(b) $g(x) = \\frac{e^x}{x^2}$\n\n(c) $h(x) = \\frac{\\sin x}{\\cos x}$\n\n(d) $k(x) = \\frac{x - 1}{x + 1}$",
+    "hints": [
+      "Quotient rule: (f/g)' = (f'g - fg')/g².",
+      "For (c), this should give you the derivative of tan x.",
+      "Simplify your answers when possible."
+    ],
+    "solution": "(a) $f'(x) = \\frac{2x(x+1) - x^2(1)}{(x+1)^2} = \\frac{2x^2 + 2x - x^2}{(x+1)^2} = \\frac{x^2 + 2x}{(x+1)^2} = \\frac{x(x+2)}{(x+1)^2}$\n\n(b) $g'(x) = \\frac{e^x \\cdot x^2 - e^x \\cdot 2x}{x^4} = \\frac{e^x(x^2 - 2x)}{x^4} = \\frac{e^x(x - 2)}{x^3}$\n\n(c) $h'(x) = \\frac{\\cos x \\cdot \\cos x - \\sin x \\cdot (-\\sin x)}{\\cos^2 x} = \\frac{\\cos^2 x + \\sin^2 x}{\\cos^2 x} = \\frac{1}{\\cos^2 x} = \\sec^2 x$\n(This confirms d/dx[tan x] = sec² x)\n\n(d) $k'(x) = \\frac{1(x+1) - (x-1)(1)}{(x+1)^2} = \\frac{x + 1 - x + 1}{(x+1)^2} = \\frac{2}{(x+1)^2}$"
+  },
+  {
+    "id": "math203-t3-ex04",
+    "subjectId": "math203",
+    "topicId": "math203-topic-3",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Chain Rule",
+    "description": "Use the chain rule to differentiate:\n\n(a) $f(x) = (x^2 + 1)^{10}$\n\n(b) $g(x) = \\sin(3x)$\n\n(c) $h(x) = e^{x^2}$\n\n(d) $k(x) = \\ln(x^2 + 1)$",
+    "hints": [
+      "Chain rule: d/dx[f(g(x))] = f'(g(x)) · g'(x).",
+      "Identify the \"outer\" and \"inner\" functions.",
+      "d/dx[e^u] = e^u · u', d/dx[ln u] = (1/u) · u'."
+    ],
+    "solution": "(a) Outer: u^10, Inner: u = x² + 1\n$f'(x) = 10(x^2 + 1)^9 \\cdot 2x = 20x(x^2 + 1)^9$\n\n(b) Outer: sin u, Inner: u = 3x\n$g'(x) = \\cos(3x) \\cdot 3 = 3\\cos(3x)$\n\n(c) Outer: e^u, Inner: u = x²\n$h'(x) = e^{x^2} \\cdot 2x = 2xe^{x^2}$\n\n(d) Outer: ln u, Inner: u = x² + 1\n$k'(x) = \\frac{1}{x^2 + 1} \\cdot 2x = \\frac{2x}{x^2 + 1}$"
+  },
+  {
+    "id": "math203-t3-ex05",
+    "subjectId": "math203",
+    "topicId": "math203-topic-3",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Combining Rules",
+    "description": "Differentiate using multiple rules:\n\n(a) $f(x) = x^2 \\sin(3x)$\n\n(b) $g(x) = \\frac{e^{2x}}{x^2 + 1}$\n\n(c) $h(x) = (x^2 + 1)^3 (x^3 - 1)^2$",
+    "hints": [
+      "Identify which rules to use: product, quotient, chain.",
+      "Apply rules in the correct order.",
+      "Simplify carefully."
+    ],
+    "solution": "(a) Product rule + chain rule:\n$f'(x) = 2x \\sin(3x) + x^2 \\cdot \\cos(3x) \\cdot 3 = 2x\\sin(3x) + 3x^2\\cos(3x)$\n\n(b) Quotient rule + chain rule:\n$g'(x) = \\frac{e^{2x} \\cdot 2 \\cdot (x^2+1) - e^{2x} \\cdot 2x}{(x^2+1)^2} = \\frac{2e^{2x}(x^2 + 1 - x)}{(x^2+1)^2} = \\frac{2e^{2x}(x^2 - x + 1)}{(x^2+1)^2}$\n\n(c) Product rule + chain rule:\nLet $u = (x^2+1)^3$ and $v = (x^3-1)^2$\n$u' = 3(x^2+1)^2 \\cdot 2x = 6x(x^2+1)^2$\n$v' = 2(x^3-1) \\cdot 3x^2 = 6x^2(x^3-1)$\n$h'(x) = 6x(x^2+1)^2(x^3-1)^2 + (x^2+1)^3 \\cdot 6x^2(x^3-1)$\n$= 6x(x^2+1)^2(x^3-1)[(x^3-1) + x(x^2+1)]$\n$= 6x(x^2+1)^2(x^3-1)(2x^3 + x - 1)$"
+  },
+  {
+    "id": "math203-t3-ex06",
+    "subjectId": "math203",
+    "topicId": "math203-topic-3",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Trigonometric Derivatives",
+    "description": "Differentiate:\n\n(a) $f(x) = \\sin^2 x$\n\n(b) $g(x) = \\cos(x^2)$\n\n(c) $h(x) = \\tan(2x)$\n\n(d) $k(x) = \\sec x \\tan x$",
+    "hints": [
+      "sin²x = (sin x)², so use chain rule.",
+      "d/dx[tan x] = sec²x, d/dx[sec x] = sec x tan x.",
+      "For (d), use the product rule."
+    ],
+    "solution": "(a) $f(x) = (\\sin x)^2$\n$f'(x) = 2\\sin x \\cdot \\cos x = \\sin(2x)$\n\n(b) $g'(x) = -\\sin(x^2) \\cdot 2x = -2x\\sin(x^2)$\n\n(c) $h'(x) = \\sec^2(2x) \\cdot 2 = 2\\sec^2(2x)$\n\n(d) $k'(x) = \\sec x \\tan x \\cdot \\tan x + \\sec x \\cdot \\sec^2 x$\n$= \\sec x \\tan^2 x + \\sec^3 x = \\sec x(\\tan^2 x + \\sec^2 x)$\nOr: $= \\sec x(\\sec^2 x - 1 + \\sec^2 x) = \\sec x(2\\sec^2 x - 1)$"
+  },
+  {
+    "id": "math203-t3-ex07",
+    "subjectId": "math203",
+    "topicId": "math203-topic-3",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Exponential and Logarithmic Derivatives",
+    "description": "Differentiate:\n\n(a) $f(x) = e^{3x+1}$\n\n(b) $g(x) = 2^x$\n\n(c) $h(x) = \\ln(\\sin x)$\n\n(d) $k(x) = x^x$ (for $x > 0$)",
+    "hints": [
+      "d/dx[a^x] = a^x ln(a).",
+      "d/dx[ln u] = u'/u.",
+      "For (d), use logarithmic differentiation: take ln of both sides."
+    ],
+    "solution": "(a) $f'(x) = e^{3x+1} \\cdot 3 = 3e^{3x+1}$\n\n(b) $g'(x) = 2^x \\ln 2$\n\n(c) $h'(x) = \\frac{1}{\\sin x} \\cdot \\cos x = \\frac{\\cos x}{\\sin x} = \\cot x$\n\n(d) Let $y = x^x$. Take ln: $\\ln y = x \\ln x$\nDifferentiate implicitly:\n$\\frac{1}{y} \\cdot y' = \\ln x + x \\cdot \\frac{1}{x} = \\ln x + 1$\n$y' = y(\\ln x + 1) = x^x(\\ln x + 1)$"
+  },
+  {
+    "id": "math203-t3-ex08",
+    "subjectId": "math203",
+    "topicId": "math203-topic-3",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Inverse Trigonometric Derivatives",
+    "description": "Differentiate:\n\n(a) $f(x) = \\arcsin(2x)$\n\n(b) $g(x) = \\arctan(x^2)$\n\n(c) $h(x) = x \\arcsin x$\n\n(d) $k(x) = \\arccos(e^x)$",
+    "hints": [
+      "d/dx[arcsin x] = 1/√(1-x²), d/dx[arctan x] = 1/(1+x²).",
+      "d/dx[arccos x] = -1/√(1-x²).",
+      "Combine with chain rule and product rule as needed."
+    ],
+    "solution": "(a) $f'(x) = \\frac{1}{\\sqrt{1-(2x)^2}} \\cdot 2 = \\frac{2}{\\sqrt{1-4x^2}}$\n\n(b) $g'(x) = \\frac{1}{1+(x^2)^2} \\cdot 2x = \\frac{2x}{1+x^4}$\n\n(c) Product rule:\n$h'(x) = 1 \\cdot \\arcsin x + x \\cdot \\frac{1}{\\sqrt{1-x^2}} = \\arcsin x + \\frac{x}{\\sqrt{1-x^2}}$\n\n(d) $k'(x) = -\\frac{1}{\\sqrt{1-(e^x)^2}} \\cdot e^x = -\\frac{e^x}{\\sqrt{1-e^{2x}}}$"
+  },
+  {
+    "id": "math203-t3-ex09",
+    "subjectId": "math203",
+    "topicId": "math203-topic-3",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Implicit Differentiation",
+    "description": "Find $\\frac{dy}{dx}$ using implicit differentiation:\n\n(a) $x^2 + y^2 = 25$\n\n(b) $x^3 + y^3 = 6xy$\n\n(c) $\\sin(xy) = x$",
+    "hints": [
+      "Differentiate both sides with respect to x.",
+      "Remember y is a function of x: d/dx[y²] = 2y · dy/dx.",
+      "Collect terms with dy/dx on one side."
+    ],
+    "solution": "(a) $2x + 2y\\frac{dy}{dx} = 0$\n$\\frac{dy}{dx} = -\\frac{x}{y}$\n\n(b) $3x^2 + 3y^2\\frac{dy}{dx} = 6y + 6x\\frac{dy}{dx}$\n$3y^2\\frac{dy}{dx} - 6x\\frac{dy}{dx} = 6y - 3x^2$\n$\\frac{dy}{dx}(3y^2 - 6x) = 6y - 3x^2$\n$\\frac{dy}{dx} = \\frac{6y - 3x^2}{3y^2 - 6x} = \\frac{2y - x^2}{y^2 - 2x}$\n\n(c) $\\cos(xy) \\cdot (y + x\\frac{dy}{dx}) = 1$\n$y\\cos(xy) + x\\cos(xy)\\frac{dy}{dx} = 1$\n$\\frac{dy}{dx} = \\frac{1 - y\\cos(xy)}{x\\cos(xy)}$"
+  },
+  {
+    "id": "math203-t3-ex10",
+    "subjectId": "math203",
+    "topicId": "math203-topic-3",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Logarithmic Differentiation",
+    "description": "Use logarithmic differentiation to find $\\frac{dy}{dx}$:\n\n(a) $y = \\frac{x^2 \\sqrt{x+1}}{(x-1)^3}$\n\n(b) $y = (\\sin x)^x$ for $0 < x < \\pi$\n\n(c) $y = x^{\\sin x}$ for $x > 0$",
+    "hints": [
+      "Take ln of both sides, then use properties of logarithms.",
+      "Differentiate implicitly, then solve for dy/dx.",
+      "Remember d/dx[ln f] = f'/f."
+    ],
+    "solution": "(a) $\\ln y = 2\\ln x + \\frac{1}{2}\\ln(x+1) - 3\\ln(x-1)$\n$\\frac{1}{y}\\frac{dy}{dx} = \\frac{2}{x} + \\frac{1}{2(x+1)} - \\frac{3}{x-1}$\n$\\frac{dy}{dx} = \\frac{x^2\\sqrt{x+1}}{(x-1)^3}\\left(\\frac{2}{x} + \\frac{1}{2(x+1)} - \\frac{3}{x-1}\\right)$\n\n(b) $\\ln y = x \\ln(\\sin x)$\n$\\frac{1}{y}\\frac{dy}{dx} = \\ln(\\sin x) + x \\cdot \\frac{\\cos x}{\\sin x}$\n$\\frac{dy}{dx} = (\\sin x)^x \\left(\\ln(\\sin x) + x\\cot x\\right)$\n\n(c) $\\ln y = \\sin x \\cdot \\ln x$\n$\\frac{1}{y}\\frac{dy}{dx} = \\cos x \\cdot \\ln x + \\sin x \\cdot \\frac{1}{x}$\n$\\frac{dy}{dx} = x^{\\sin x}\\left(\\cos x \\ln x + \\frac{\\sin x}{x}\\right)$"
+  },
+  {
+    "id": "math203-t3-ex11",
+    "subjectId": "math203",
+    "topicId": "math203-topic-3",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Second Derivatives",
+    "description": "Find $f''(x)$:\n\n(a) $f(x) = x^4 - 3x^2 + 2x - 1$\n\n(b) $f(x) = e^{2x}$\n\n(c) $f(x) = \\sin(3x)$\n\n(d) $f(x) = \\ln x$",
+    "hints": [
+      "Find f'(x) first, then differentiate again.",
+      "The second derivative describes concavity.",
+      "Look for patterns."
+    ],
+    "solution": "(a) $f'(x) = 4x^3 - 6x + 2$\n$f''(x) = 12x^2 - 6$\n\n(b) $f'(x) = 2e^{2x}$\n$f''(x) = 4e^{2x}$\n\n(c) $f'(x) = 3\\cos(3x)$\n$f''(x) = -9\\sin(3x)$\n\n(d) $f'(x) = \\frac{1}{x} = x^{-1}$\n$f''(x) = -x^{-2} = -\\frac{1}{x^2}$"
+  },
+  {
+    "id": "math203-t3-ex12",
+    "subjectId": "math203",
+    "topicId": "math203-topic-3",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Nested Chain Rules",
+    "description": "Differentiate:\n\n(a) $f(x) = \\sin(\\cos(x^2))$\n\n(b) $g(x) = e^{\\sin(3x)}$\n\n(c) $h(x) = \\ln(\\ln x)$\n\n(d) $k(x) = \\sqrt{1 + \\sqrt{x}}$",
+    "hints": [
+      "Work from outside to inside.",
+      "Multiply derivatives at each layer.",
+      "Be careful to track all the pieces."
+    ],
+    "solution": "(a) $f'(x) = \\cos(\\cos(x^2)) \\cdot (-\\sin(x^2)) \\cdot 2x$\n$= -2x\\sin(x^2)\\cos(\\cos(x^2))$\n\n(b) $g'(x) = e^{\\sin(3x)} \\cdot \\cos(3x) \\cdot 3 = 3\\cos(3x)e^{\\sin(3x)}$\n\n(c) $h'(x) = \\frac{1}{\\ln x} \\cdot \\frac{1}{x} = \\frac{1}{x\\ln x}$\n\n(d) $k(x) = (1 + x^{1/2})^{1/2}$\n$k'(x) = \\frac{1}{2}(1 + \\sqrt{x})^{-1/2} \\cdot \\frac{1}{2}x^{-1/2}$\n$= \\frac{1}{4\\sqrt{x}\\sqrt{1 + \\sqrt{x}}} = \\frac{1}{4\\sqrt{x + x\\sqrt{x}}}$"
+  },
+  {
+    "id": "math203-t3-ex13",
+    "subjectId": "math203",
+    "topicId": "math203-topic-3",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Equations of Tangent Lines",
+    "description": "Find the equation of the tangent line:\n\n(a) To $y = e^x$ at $x = 0$\n\n(b) To $y = \\ln x$ at $x = e$\n\n(c) To $y = \\tan x$ at $x = \\pi/4$",
+    "hints": [
+      "Find the point (a, f(a)) and slope f'(a).",
+      "Use point-slope form: y - f(a) = f'(a)(x - a).",
+      "Remember tan(π/4) = 1, sec(π/4) = √2."
+    ],
+    "solution": "(a) Point: $(0, e^0) = (0, 1)$\n$y' = e^x$, so slope $= e^0 = 1$\nTangent: $y - 1 = 1(x - 0)$\n$\\boxed{y = x + 1}$\n\n(b) Point: $(e, \\ln e) = (e, 1)$\n$y' = \\frac{1}{x}$, so slope $= \\frac{1}{e}$\nTangent: $y - 1 = \\frac{1}{e}(x - e)$\n$\\boxed{y = \\frac{1}{e}x}$ or $\\boxed{y = \\frac{x}{e}}$\n\n(c) Point: $(\\pi/4, \\tan(\\pi/4)) = (\\pi/4, 1)$\n$y' = \\sec^2 x$, so slope $= \\sec^2(\\pi/4) = (\\sqrt{2})^2 = 2$\nTangent: $y - 1 = 2(x - \\pi/4)$\n$\\boxed{y = 2x + 1 - \\frac{\\pi}{2}}$"
+  },
+  {
+    "id": "math203-t3-ex14",
+    "subjectId": "math203",
+    "topicId": "math203-topic-3",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Implicit Second Derivative",
+    "description": "For the curve $x^2 + y^2 = 25$:\n\n(a) Find $\\frac{dy}{dx}$ by implicit differentiation.\n\n(b) Find $\\frac{d^2y}{dx^2}$ in terms of $x$ and $y$.\n\n(c) Evaluate $\\frac{d^2y}{dx^2}$ at the point $(3, 4)$.",
+    "hints": [
+      "For the second derivative, differentiate dy/dx with respect to x.",
+      "Remember dy/dx appears in the expression, so use the chain rule.",
+      "Substitute the expression for dy/dx to simplify."
+    ],
+    "solution": "(a) $2x + 2y\\frac{dy}{dx} = 0$\n$\\frac{dy}{dx} = -\\frac{x}{y}$\n\n(b) Differentiate $\\frac{dy}{dx} = -\\frac{x}{y}$ with respect to x:\n$\\frac{d^2y}{dx^2} = -\\frac{y \\cdot 1 - x \\cdot \\frac{dy}{dx}}{y^2} = -\\frac{y - x(-\\frac{x}{y})}{y^2}$\n$= -\\frac{y + \\frac{x^2}{y}}{y^2} = -\\frac{y^2 + x^2}{y^3}$\n\nSince $x^2 + y^2 = 25$:\n$\\frac{d^2y}{dx^2} = -\\frac{25}{y^3}$\n\n(c) At $(3, 4)$: $y = 4$\n$\\frac{d^2y}{dx^2} = -\\frac{25}{64}$"
+  },
+  {
+    "id": "math203-t3-ex15",
+    "subjectId": "math203",
+    "topicId": "math203-topic-3",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Derivatives and Tangent Lines to Implicit Curves",
+    "description": "Find the equation of the tangent line to the curve $x^3 + y^3 = 9$ at the point $(1, 2)$.",
+    "hints": [
+      "Use implicit differentiation to find dy/dx.",
+      "Evaluate dy/dx at the given point.",
+      "Use point-slope form for the tangent line."
+    ],
+    "solution": "Implicit differentiation:\n$3x^2 + 3y^2 \\frac{dy}{dx} = 0$\n$\\frac{dy}{dx} = -\\frac{x^2}{y^2}$\n\nAt $(1, 2)$:\n$\\frac{dy}{dx} = -\\frac{1}{4}$\n\nTangent line:\n$y - 2 = -\\frac{1}{4}(x - 1)$\n$y = -\\frac{1}{4}x + \\frac{1}{4} + 2$\n$\\boxed{y = -\\frac{1}{4}x + \\frac{9}{4}}$"
+  },
+  {
+    "id": "math203-t3-ex16",
+    "subjectId": "math203",
+    "topicId": "math203-topic-3",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Parametric Differentiation",
+    "description": "A curve is given parametrically by $x = t^2 - 1$ and $y = t^3 - t$.\n\n(a) Find $\\frac{dy}{dx}$ in terms of $t$.\n\n(b) Find the equation of the tangent line at $t = 2$.\n\n(c) At what point(s) is the tangent horizontal?",
+    "hints": [
+      "dy/dx = (dy/dt)/(dx/dt).",
+      "For (b), find x and y when t = 2.",
+      "Horizontal tangent means dy/dx = 0, so dy/dt = 0."
+    ],
+    "solution": "(a) $\\frac{dx}{dt} = 2t$, $\\frac{dy}{dt} = 3t^2 - 1$\n$\\frac{dy}{dx} = \\frac{dy/dt}{dx/dt} = \\frac{3t^2 - 1}{2t}$\n\n(b) At $t = 2$:\n$x = 4 - 1 = 3$, $y = 8 - 2 = 6$\n$\\frac{dy}{dx} = \\frac{12 - 1}{4} = \\frac{11}{4}$\n\nTangent line: $y - 6 = \\frac{11}{4}(x - 3)$\n$\\boxed{y = \\frac{11}{4}x - \\frac{9}{4}}$\n\n(c) Horizontal tangent when $\\frac{dy}{dt} = 0$:\n$3t^2 - 1 = 0 \\Rightarrow t = \\pm\\frac{1}{\\sqrt{3}}$\n\nAt $t = \\frac{1}{\\sqrt{3}}$: $x = \\frac{1}{3} - 1 = -\\frac{2}{3}$, $y = \\frac{1}{3\\sqrt{3}} - \\frac{1}{\\sqrt{3}} = -\\frac{2}{3\\sqrt{3}}$\n\nAt $t = -\\frac{1}{\\sqrt{3}}$: $x = -\\frac{2}{3}$, $y = \\frac{2}{3\\sqrt{3}}$\n\nPoints: $\\left(-\\frac{2}{3}, -\\frac{2\\sqrt{3}}{9}\\right)$ and $\\left(-\\frac{2}{3}, \\frac{2\\sqrt{3}}{9}\\right)$"
+  },
+  {
+    "id": "math203-t4-drill-1",
+    "subjectId": "math203",
+    "topicId": "math203-topic-4",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Finding Critical Points",
+    "description": "Find the critical points of $f(x) = x^3 - 3x$.",
+    "hints": [
+      "Set f'(x) = 0 and solve."
+    ],
+    "solution": "$f'(x) = 3x^2 - 3 = 3(x^2 - 1) = 3(x-1)(x+1) = 0$\nCritical points: $x = -1$ and $x = 1$"
+  },
+  {
+    "id": "math203-t4-drill-2",
+    "subjectId": "math203",
+    "topicId": "math203-topic-4",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Increasing/Decreasing",
+    "description": "If $f'(x) = x - 2$, on what interval is $f$ increasing?",
+    "hints": [
+      "f is increasing where f'(x) > 0."
+    ],
+    "solution": "$f'(x) > 0$ when $x - 2 > 0$, i.e., $x > 2$.\nf is increasing on $(2, \\infty)$."
+  },
+  {
+    "id": "math203-t4-drill-3",
+    "subjectId": "math203",
+    "topicId": "math203-topic-4",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Concavity",
+    "description": "If $f''(x) = 6x$, where is $f$ concave up?",
+    "hints": [
+      "f is concave up where f''(x) > 0."
+    ],
+    "solution": "$f''(x) > 0$ when $6x > 0$, i.e., $x > 0$.\nf is concave up on $(0, \\infty)$."
+  },
+  {
+    "id": "math203-t4-drill-4",
+    "subjectId": "math203",
+    "topicId": "math203-topic-4",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Second Derivative Test",
+    "description": "If $f'(2) = 0$ and $f''(2) = -5$, classify the critical point at $x = 2$.",
+    "hints": [
+      "f''(c) < 0 means the function is concave down there."
+    ],
+    "solution": "Since $f''(2) = -5 < 0$, the function is concave down at $x = 2$.\nTherefore, $x = 2$ is a **local maximum**."
+  },
+  {
+    "id": "math203-t4-ex01",
+    "subjectId": "math203",
+    "topicId": "math203-topic-4",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Finding Intervals of Increase and Decrease",
+    "description": "For $f(x) = x^3 - 12x + 1$:\n\n(a) Find all critical points.\n(b) Determine where $f$ is increasing and where it is decreasing.\n(c) Identify local maxima and minima.",
+    "hints": [
+      "Find f'(x) and set it equal to zero.",
+      "Make a sign chart for f'(x).",
+      "f increases where f' > 0 and decreases where f' < 0."
+    ],
+    "solution": "(a) $f'(x) = 3x^2 - 12 = 3(x^2 - 4) = 3(x-2)(x+2)$\nCritical points: $x = -2$ and $x = 2$\n\n(b) Sign chart for $f'(x) = 3(x-2)(x+2)$:\n- For $x < -2$: $(-)(-) = +$, so $f' > 0$ → increasing\n- For $-2 < x < 2$: $(+)(-) = -$, so $f' < 0$ → decreasing\n- For $x > 2$: $(+)(+) = +$, so $f' > 0$ → increasing\n\n$f$ increasing on $(-\\infty, -2)$ and $(2, \\infty)$\n$f$ decreasing on $(-2, 2)$\n\n(c) At $x = -2$: $f'$ changes from + to − → **local maximum**\n$f(-2) = -8 + 24 + 1 = 17$\n\nAt $x = 2$: $f'$ changes from − to + → **local minimum**\n$f(2) = 8 - 24 + 1 = -15$\n\nLocal max at $(-2, 17)$, local min at $(2, -15)$"
+  },
+  {
+    "id": "math203-t4-ex02",
+    "subjectId": "math203",
+    "topicId": "math203-topic-4",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Concavity and Inflection Points",
+    "description": "For $f(x) = x^4 - 4x^3$:\n\n(a) Find all inflection points.\n(b) Determine intervals of concavity.",
+    "hints": [
+      "Find f''(x) and set it equal to zero.",
+      "Check for sign changes in f''(x).",
+      "Inflection points require a sign change in f''."
+    ],
+    "solution": "$f'(x) = 4x^3 - 12x^2 = 4x^2(x - 3)$\n$f''(x) = 12x^2 - 24x = 12x(x - 2)$\n\n(a) $f''(x) = 0$ when $x = 0$ or $x = 2$.\n\nSign chart for $f''(x) = 12x(x-2)$:\n- For $x < 0$: $(-)(-)=+$ → concave up\n- For $0 < x < 2$: $(+)(-)=-$ → concave down\n- For $x > 2$: $(+)(+)=+$ → concave up\n\nSign changes at $x = 0$ and $x = 2$, so both are **inflection points**.\n\n$f(0) = 0$, $f(2) = 16 - 32 = -16$\n\n**Inflection points:** $(0, 0)$ and $(2, -16)$\n\n(b) Concave up on $(-\\infty, 0) \\cup (2, \\infty)$\nConcave down on $(0, 2)$"
+  },
+  {
+    "id": "math203-t4-ex03",
+    "subjectId": "math203",
+    "topicId": "math203-topic-4",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Second Derivative Test",
+    "description": "Use the second derivative test to classify the critical points of:\n\n(a) $f(x) = x^3 - 3x^2 - 9x + 5$\n\n(b) $g(x) = x^4 - 4x^2$",
+    "hints": [
+      "Find critical points from f'(x) = 0.",
+      "Evaluate f''(x) at each critical point.",
+      "If f''(c) > 0 → min; if f''(c) < 0 → max; if f''(c) = 0 → inconclusive."
+    ],
+    "solution": "(a) $f'(x) = 3x^2 - 6x - 9 = 3(x^2 - 2x - 3) = 3(x-3)(x+1) = 0$\nCritical points: $x = -1, x = 3$\n\n$f''(x) = 6x - 6$\n$f''(-1) = -6 - 6 = -12 < 0$ → **local maximum** at $x = -1$\n$f''(3) = 18 - 6 = 12 > 0$ → **local minimum** at $x = 3$\n\n(b) $g'(x) = 4x^3 - 8x = 4x(x^2 - 2) = 0$\nCritical points: $x = 0, x = \\pm\\sqrt{2}$\n\n$g''(x) = 12x^2 - 8$\n$g''(0) = -8 < 0$ → **local maximum** at $x = 0$\n$g''(\\sqrt{2}) = 24 - 8 = 16 > 0$ → **local minimum** at $x = \\sqrt{2}$\n$g''(-\\sqrt{2}) = 24 - 8 = 16 > 0$ → **local minimum** at $x = -\\sqrt{2}$"
+  },
+  {
+    "id": "math203-t4-ex04",
+    "subjectId": "math203",
+    "topicId": "math203-topic-4",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Absolute Extrema on Closed Intervals",
+    "description": "Find the absolute maximum and minimum of each function on the given interval:\n\n(a) $f(x) = x^3 - 3x + 2$ on $[-2, 3]$\n\n(b) $g(x) = x^2 e^{-x}$ on $[0, 4]$",
+    "hints": [
+      "Find critical points in the interior of the interval.",
+      "Evaluate f at critical points and endpoints.",
+      "Compare all values to find absolute max and min."
+    ],
+    "solution": "(a) $f'(x) = 3x^2 - 3 = 0 \\Rightarrow x = \\pm 1$\nBoth are in $[-2, 3]$.\n\nEvaluate:\n- $f(-2) = -8 + 6 + 2 = 0$\n- $f(-1) = -1 + 3 + 2 = 4$\n- $f(1) = 1 - 3 + 2 = 0$\n- $f(3) = 27 - 9 + 2 = 20$\n\n**Absolute max:** $f(3) = 20$\n**Absolute min:** $f(-2) = f(1) = 0$\n\n(b) $g'(x) = 2xe^{-x} + x^2(-e^{-x}) = e^{-x}(2x - x^2) = xe^{-x}(2-x) = 0$\nCritical points: $x = 0$ and $x = 2$ (both in $[0, 4]$)\n\nEvaluate:\n- $g(0) = 0$\n- $g(2) = 4e^{-2} \\approx 0.541$\n- $g(4) = 16e^{-4} \\approx 0.293$\n\n**Absolute max:** $g(2) = 4e^{-2}$\n**Absolute min:** $g(0) = 0$"
+  },
+  {
+    "id": "math203-t4-ex05",
+    "subjectId": "math203",
+    "topicId": "math203-topic-4",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Mean Value Theorem",
+    "description": "Verify that the Mean Value Theorem applies and find the value(s) of $c$:\n\n(a) $f(x) = x^3 - x$ on $[0, 2]$\n\n(b) $f(x) = \\sqrt{x}$ on $[0, 4]$",
+    "hints": [
+      "Check that f is continuous on [a,b] and differentiable on (a,b).",
+      "Find the slope of the secant: (f(b) - f(a))/(b - a).",
+      "Solve f'(c) = secant slope."
+    ],
+    "solution": "(a) $f(x) = x^3 - x$ is a polynomial, so continuous and differentiable everywhere. ✓\n\nSecant slope: $\\frac{f(2) - f(0)}{2 - 0} = \\frac{(8-2) - 0}{2} = 3$\n\n$f'(x) = 3x^2 - 1$\n$f'(c) = 3 \\Rightarrow 3c^2 - 1 = 3 \\Rightarrow c^2 = \\frac{4}{3} \\Rightarrow c = \\frac{2}{\\sqrt{3}} = \\frac{2\\sqrt{3}}{3}$\n(taking positive value since $c \\in (0, 2)$)\n\n(b) $f(x) = \\sqrt{x}$ is continuous on $[0, 4]$ and differentiable on $(0, 4)$. ✓\n\nSecant slope: $\\frac{f(4) - f(0)}{4 - 0} = \\frac{2 - 0}{4} = \\frac{1}{2}$\n\n$f'(x) = \\frac{1}{2\\sqrt{x}}$\n$f'(c) = \\frac{1}{2} \\Rightarrow \\frac{1}{2\\sqrt{c}} = \\frac{1}{2} \\Rightarrow \\sqrt{c} = 1 \\Rightarrow c = 1$"
+  },
+  {
+    "id": "math203-t4-ex06",
+    "subjectId": "math203",
+    "topicId": "math203-topic-4",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Applications of MVT",
+    "description": "Use the Mean Value Theorem to prove:\n\n(a) $|\\sin a - \\sin b| \\leq |a - b|$ for all $a, b$.\n\n(b) If $f'(x) = 0$ for all $x$ in an interval, then $f$ is constant on that interval.",
+    "hints": [
+      "Apply MVT and use the bound on the derivative.",
+      "For (a), what is the maximum value of |cos c|?",
+      "For (b), apply MVT between any two points in the interval."
+    ],
+    "solution": "(a) Let $f(x) = \\sin x$. By MVT, there exists $c$ between $a$ and $b$ such that:\n$\\frac{\\sin b - \\sin a}{b - a} = \\cos c$\n\nTherefore: $|\\sin b - \\sin a| = |\\cos c| \\cdot |b - a|$\n\nSince $|\\cos c| \\leq 1$ for all $c$:\n$|\\sin b - \\sin a| \\leq |b - a|$ ∎\n\n(b) Let $a < b$ be any two points in the interval. By MVT, there exists $c \\in (a, b)$ such that:\n$f'(c) = \\frac{f(b) - f(a)}{b - a}$\n\nSince $f'(x) = 0$ for all $x$, we have $f'(c) = 0$:\n$0 = \\frac{f(b) - f(a)}{b - a}$\n$f(b) - f(a) = 0$\n$f(b) = f(a)$\n\nSince this holds for any two points in the interval, $f$ is constant. ∎"
+  },
+  {
+    "id": "math203-t4-ex07",
+    "subjectId": "math203",
+    "topicId": "math203-topic-4",
+    "type": "written",
+    "difficulty": 2,
+    "title": "First Derivative Test in Detail",
+    "description": "For $f(x) = x^4 - 4x^3 + 4x^2$:\n\n(a) Factor $f'(x)$ completely.\n(b) Find all critical points.\n(c) Use the first derivative test to classify each.\n(d) Sketch the general shape of $f$.",
+    "hints": [
+      "Factor out common terms.",
+      "Check sign of f' on each interval between critical points.",
+      "No sign change means neither max nor min."
+    ],
+    "solution": "(a) $f'(x) = 4x^3 - 12x^2 + 8x = 4x(x^2 - 3x + 2) = 4x(x-1)(x-2)$\n\n(b) Critical points: $x = 0, 1, 2$\n\n(c) Sign chart for $f'(x) = 4x(x-1)(x-2)$:\n- $x < 0$: $(-)(-)(-)= -$ → decreasing\n- $0 < x < 1$: $(+)(-)(-)= +$ → increasing\n- $1 < x < 2$: $(+)(+)(-)= -$ → decreasing\n- $x > 2$: $(+)(+)(+)= +$ → increasing\n\nAt $x = 0$: − to + → **local minimum**, $f(0) = 0$\nAt $x = 1$: + to − → **local maximum**, $f(1) = 1 - 4 + 4 = 1$\nAt $x = 2$: − to + → **local minimum**, $f(2) = 16 - 32 + 16 = 0$\n\n(d) Shape: Starts high (as $x \\to -\\infty$, $f \\to +\\infty$), decreases to local min at (0,0), increases to local max at (1,1), decreases to local min at (2,0), then increases to infinity."
+  },
+  {
+    "id": "math203-t4-ex08",
+    "subjectId": "math203",
+    "topicId": "math203-topic-4",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Critical Points Where Derivative Doesn't Exist",
+    "description": "Find all critical points and classify them:\n\n(a) $f(x) = |x^2 - 4|$\n\n(b) $g(x) = x^{2/3}(x - 5)$",
+    "hints": [
+      "Critical points occur where f' = 0 OR f' doesn't exist.",
+      "For (a), consider where x² - 4 changes sign.",
+      "For (b), find where g'(x) = 0 or undefined."
+    ],
+    "solution": "(a) $f(x) = |x^2 - 4| = \\begin{cases} x^2 - 4 & |x| \\geq 2 \\\\ -(x^2 - 4) = 4 - x^2 & |x| < 2 \\end{cases}$\n\nFor $|x| > 2$: $f'(x) = 2x$\nFor $|x| < 2$: $f'(x) = -2x$\nAt $x = \\pm 2$: $f'$ doesn't exist (corner)\n\nCritical points: $x = 0$ (where $f' = 0$) and $x = \\pm 2$ (where $f'$ DNE)\n\nAt $x = 0$: local max ($f(0) = 4$)\nAt $x = \\pm 2$: local min ($f(\\pm 2) = 0$)\n\n(b) $g(x) = x^{2/3}(x - 5)$\n$g'(x) = \\frac{2}{3}x^{-1/3}(x-5) + x^{2/3} = \\frac{2(x-5)}{3x^{1/3}} + x^{2/3}$\n$= \\frac{2(x-5) + 3x}{3x^{1/3}} = \\frac{5x - 10}{3x^{1/3}} = \\frac{5(x-2)}{3x^{1/3}}$\n\n$g'(x) = 0$ when $x = 2$\n$g'(x)$ undefined when $x = 0$\n\nCritical points: $x = 0$ and $x = 2$\n\nSign analysis:\n- $x < 0$: $(-)/(-)= +$\n- $0 < x < 2$: $(-)/(+)= -$\n- $x > 2$: $(+)/(+)= +$\n\nAt $x = 0$: local max (cusp), $g(0) = 0$\nAt $x = 2$: local min, $g(2) = 2^{2/3}(-3) = -3\\sqrt[3]{4}$"
+  },
+  {
+    "id": "math203-t4-ex09",
+    "subjectId": "math203",
+    "topicId": "math203-topic-4",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Rolle's Theorem Application",
+    "description": "Show that the equation $x^3 + 3x - 5 = 0$ has exactly one real root.",
+    "hints": [
+      "Use IVT to show at least one root exists.",
+      "Use Rolle's Theorem (or derivative analysis) to show at most one root.",
+      "If there were two roots, what would Rolle's Theorem say about f'?"
+    ],
+    "solution": "Let $f(x) = x^3 + 3x - 5$.\n\n**At least one root (IVT):**\n$f(1) = 1 + 3 - 5 = -1 < 0$\n$f(2) = 8 + 6 - 5 = 9 > 0$\nBy IVT, there is at least one root in $(1, 2)$.\n\n**At most one root (via Rolle's Theorem):**\nSuppose there were two roots $a < b$ with $f(a) = f(b) = 0$.\nBy Rolle's Theorem, there would exist $c \\in (a, b)$ with $f'(c) = 0$.\n\nBut $f'(x) = 3x^2 + 3 = 3(x^2 + 1) \\geq 3 > 0$ for all $x$.\n\nThis is a contradiction! So there cannot be two roots.\n\n**Conclusion:** The equation has exactly one real root. ∎"
+  },
+  {
+    "id": "math203-t4-ex10",
+    "subjectId": "math203",
+    "topicId": "math203-topic-4",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Motion Analysis",
+    "description": "A particle moves along a line with position $s(t) = t^3 - 6t^2 + 9t + 2$ for $t \\geq 0$.\n\n(a) Find velocity and acceleration functions.\n(b) When is the particle at rest?\n(c) When is it moving to the right (positive direction)?\n(d) When is it speeding up?",
+    "hints": [
+      "Velocity = s'(t), Acceleration = s''(t).",
+      "At rest means velocity = 0.",
+      "Moving right means v(t) > 0.",
+      "Speeding up means v and a have the same sign."
+    ],
+    "solution": "(a) $v(t) = s'(t) = 3t^2 - 12t + 9 = 3(t^2 - 4t + 3) = 3(t-1)(t-3)$\n$a(t) = v'(t) = 6t - 12 = 6(t - 2)$\n\n(b) At rest when $v(t) = 0$: $t = 1$ and $t = 3$\n\n(c) Moving right when $v(t) > 0$:\n$v(t) = 3(t-1)(t-3) > 0$ when $t < 1$ or $t > 3$\n(For $t \\geq 0$: on $[0, 1) \\cup (3, \\infty)$)\n\n(d) Speeding up when $v$ and $a$ have the same sign:\n- $v(t) > 0$ on $(0, 1) \\cup (3, \\infty)$\n- $a(t) > 0$ on $(2, \\infty)$\n- $v(t) < 0$ on $(1, 3)$\n- $a(t) < 0$ on $(0, 2)$\n\nSame sign: $(1, 2)$ (both negative) and $(3, \\infty)$ (both positive)\n\n**Speeding up on $(1, 2) \\cup (3, \\infty)$**"
+  },
+  {
+    "id": "math203-t4-ex11",
+    "subjectId": "math203",
+    "topicId": "math203-topic-4",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Complete Function Analysis",
+    "description": "Analyze $f(x) = \\frac{x^2}{x^2 - 1}$ completely:\n\n(a) Domain\n(b) Intercepts\n(c) Symmetry\n(d) Asymptotes\n(e) Intervals of increase/decrease\n(f) Local extrema\n(g) Concavity and inflection points",
+    "hints": [
+      "Domain excludes where denominator = 0.",
+      "Check if f(-x) = f(x) or f(-x) = -f(x).",
+      "Use quotient rule for derivatives."
+    ],
+    "solution": "(a) **Domain:** $x \\neq \\pm 1$, i.e., $(-\\infty, -1) \\cup (-1, 1) \\cup (1, \\infty)$\n\n(b) **Intercepts:**\ny-intercept: $f(0) = 0$, so $(0, 0)$\nx-intercept: $x^2 = 0 \\Rightarrow x = 0$, so $(0, 0)$\n\n(c) **Symmetry:** $f(-x) = \\frac{(-x)^2}{(-x)^2 - 1} = \\frac{x^2}{x^2 - 1} = f(x)$\nEven function (symmetric about y-axis)\n\n(d) **Asymptotes:**\nVertical: $x = 1$ and $x = -1$\nHorizontal: $\\lim_{x \\to \\pm\\infty} \\frac{x^2}{x^2 - 1} = 1$, so $y = 1$\n\n(e) $f'(x) = \\frac{2x(x^2-1) - x^2(2x)}{(x^2-1)^2} = \\frac{-2x}{(x^2-1)^2}$\nCritical point: $x = 0$\n$f' > 0$ for $x < 0$ (increasing)\n$f' < 0$ for $x > 0$ (decreasing)\n\n(f) **Local max at $x = 0$:** $f(0) = 0$\n\n(g) $f''(x) = \\frac{-2(x^2-1)^2 - (-2x) \\cdot 2(x^2-1)(2x)}{(x^2-1)^4} = \\frac{-2(x^2-1) + 8x^2}{(x^2-1)^3} = \\frac{6x^2 + 2}{(x^2-1)^3}$\n\n$f'' > 0$ when $(x^2-1)^3 > 0$, i.e., $|x| > 1$: concave up on $(-\\infty, -1) \\cup (1, \\infty)$\n$f'' < 0$ when $|x| < 1$: concave down on $(-1, 1)$\n\nNo inflection points (concavity changes only at asymptotes)"
+  },
+  {
+    "id": "math203-t4-ex12",
+    "subjectId": "math203",
+    "topicId": "math203-topic-4",
+    "type": "written",
+    "difficulty": 3,
+    "title": "L'Hôpital's Rule with Derivatives",
+    "description": "Use L'Hôpital's Rule to evaluate:\n\n(a) $\\lim_{x \\to 0} \\frac{e^x - 1 - x}{x^2}$\n\n(b) $\\lim_{x \\to 0} \\frac{\\tan x - x}{x^3}$\n\n(c) $\\lim_{x \\to \\infty} x \\ln\\left(1 + \\frac{1}{x}\\right)$",
+    "hints": [
+      "Check indeterminate form before applying.",
+      "May need to apply L'Hôpital multiple times.",
+      "For (c), rewrite as a quotient first."
+    ],
+    "solution": "(a) Form: $\\frac{0}{0}$\n$\\lim_{x \\to 0} \\frac{e^x - 1 - x}{x^2} = \\lim_{x \\to 0} \\frac{e^x - 1}{2x}$ (still $\\frac{0}{0}$)\n$= \\lim_{x \\to 0} \\frac{e^x}{2} = \\frac{1}{2}$\n\n(b) Form: $\\frac{0}{0}$\n$\\lim_{x \\to 0} \\frac{\\tan x - x}{x^3} = \\lim_{x \\to 0} \\frac{\\sec^2 x - 1}{3x^2}$ (still $\\frac{0}{0}$)\n$= \\lim_{x \\to 0} \\frac{2\\sec^2 x \\tan x}{6x}$ (still $\\frac{0}{0}$)\n$= \\lim_{x \\to 0} \\frac{2\\sec^2 x \\cdot \\sec^2 x + 2\\tan x \\cdot 2\\sec^2 x \\tan x}{6}$\nAt $x = 0$: $= \\frac{2 \\cdot 1 + 0}{6} = \\frac{1}{3}$\n\n(c) Rewrite: $\\frac{\\ln(1 + 1/x)}{1/x}$ as $x \\to \\infty$\nLet $u = 1/x \\to 0^+$:\n$\\lim_{u \\to 0^+} \\frac{\\ln(1 + u)}{u}$ (form $\\frac{0}{0}$)\n$= \\lim_{u \\to 0^+} \\frac{1/(1+u)}{1} = 1$"
+  },
+  {
+    "id": "math203-t4-ex13",
+    "subjectId": "math203",
+    "topicId": "math203-topic-4",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Proving Inequalities with Derivatives",
+    "description": "Use calculus to prove:\n\n(a) $e^x \\geq 1 + x$ for all $x$\n\n(b) $\\ln x \\leq x - 1$ for $x > 0$\n\n(c) $\\sin x \\leq x$ for $x \\geq 0$",
+    "hints": [
+      "Consider the function f(x) = (left side) - (right side).",
+      "Show f has a minimum at the point where equality holds.",
+      "Use the sign of f' to analyze f's behavior."
+    ],
+    "solution": "(a) Let $f(x) = e^x - 1 - x$\n$f'(x) = e^x - 1 = 0 \\Rightarrow x = 0$\n$f''(x) = e^x > 0$ always, so $f$ is concave up everywhere.\n\n$f(0) = 1 - 1 - 0 = 0$ is the minimum.\nTherefore $f(x) \\geq 0$ for all $x$, i.e., $e^x \\geq 1 + x$. ∎\n\n(b) Let $f(x) = \\ln x - (x - 1) = \\ln x - x + 1$ for $x > 0$\n$f'(x) = \\frac{1}{x} - 1 = 0 \\Rightarrow x = 1$\n$f''(x) = -\\frac{1}{x^2} < 0$ always, so $f$ is concave down.\n\n$f(1) = 0 - 1 + 1 = 0$ is the maximum.\nTherefore $f(x) \\leq 0$ for $x > 0$, i.e., $\\ln x \\leq x - 1$. ∎\n\n(c) Let $f(x) = x - \\sin x$ for $x \\geq 0$\n$f'(x) = 1 - \\cos x \\geq 0$ for all $x$ (since $\\cos x \\leq 1$)\n\n$f$ is increasing on $[0, \\infty)$ and $f(0) = 0$.\nTherefore $f(x) \\geq 0$ for $x \\geq 0$, i.e., $x \\geq \\sin x$. ∎"
+  },
+  {
+    "id": "math203-t4-ex14",
+    "subjectId": "math203",
+    "topicId": "math203-topic-4",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Analyzing Exponential and Logarithmic Functions",
+    "description": "Analyze $f(x) = x e^{-x}$ for $x \\geq 0$:\n\n(a) Find critical points and determine local extrema.\n(b) Find inflection points.\n(c) Find limits as $x \\to 0^+$ and $x \\to \\infty$.\n(d) Sketch the graph.",
+    "hints": [
+      "Use the product rule.",
+      "Remember lim x→∞ of x/e^x = 0.",
+      "Factor the derivatives to analyze signs."
+    ],
+    "solution": "(a) $f'(x) = e^{-x} + x(-e^{-x}) = e^{-x}(1 - x)$\n$f'(x) = 0$ when $x = 1$\n\n$f' > 0$ for $x < 1$ (increasing)\n$f' < 0$ for $x > 1$ (decreasing)\n\n**Local maximum at $x = 1$:** $f(1) = e^{-1} = \\frac{1}{e}$\n\n(b) $f''(x) = -e^{-x}(1-x) + e^{-x}(-1) = e^{-x}(x - 2)$\n$f''(x) = 0$ when $x = 2$\n\n$f'' < 0$ for $x < 2$ (concave down)\n$f'' > 0$ for $x > 2$ (concave up)\n\n**Inflection point at $(2, 2e^{-2})$**\n\n(c) $\\lim_{x \\to 0^+} xe^{-x} = 0 \\cdot 1 = 0$\n$\\lim_{x \\to \\infty} xe^{-x} = \\lim_{x \\to \\infty} \\frac{x}{e^x} = 0$ (by L'Hôpital)\n\n(d) Starts at origin, increases to max at $(1, 1/e)$, decreases through inflection at $(2, 2/e^2)$, approaches 0 as $x \\to \\infty$."
+  },
+  {
+    "id": "math203-t4-ex15",
+    "subjectId": "math203",
+    "topicId": "math203-topic-4",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Antiderivative Reasoning",
+    "description": "If $f'(x) = 6x^2 - 4x + 3$ and $f(0) = 5$, find $f(x)$.",
+    "hints": [
+      "Integrate f'(x) to get f(x) + C.",
+      "Use the initial condition to find C.",
+      "Verify by differentiating your answer."
+    ],
+    "solution": "Integrate $f'(x) = 6x^2 - 4x + 3$:\n$f(x) = \\int (6x^2 - 4x + 3) dx = 2x^3 - 2x^2 + 3x + C$\n\nUse initial condition $f(0) = 5$:\n$f(0) = 0 - 0 + 0 + C = C = 5$\n\nTherefore: $\\boxed{f(x) = 2x^3 - 2x^2 + 3x + 5}$\n\nVerification: $f'(x) = 6x^2 - 4x + 3$ ✓"
+  },
+  {
+    "id": "math203-t4-ex16",
+    "subjectId": "math203",
+    "topicId": "math203-topic-4",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Graphical Interpretation of Derivatives",
+    "description": "Given that $f$ is continuous and differentiable everywhere with:\n- $f(0) = 2$\n- $f'(x) > 0$ for $x < 1$ and $x > 3$\n- $f'(x) < 0$ for $1 < x < 3$\n- $f'(1) = f'(3) = 0$\n- $f''(x) > 0$ for $x > 2$\n- $f''(x) < 0$ for $x < 2$\n\nDescribe the behavior of $f$ and sketch a possible graph.",
+    "hints": [
+      "f' > 0 means increasing, f' < 0 means decreasing.",
+      "Critical points where f' = 0.",
+      "f'' > 0 means concave up, f'' < 0 means concave down."
+    ],
+    "solution": "**Analysis:**\n\n**Critical points:** $x = 1$ and $x = 3$ (where $f' = 0$)\n\n**Increasing/Decreasing:**\n- Increasing on $(-\\infty, 1)$ and $(3, \\infty)$\n- Decreasing on $(1, 3)$\n\n**Local extrema:**\n- At $x = 1$: changes from increasing to decreasing → **local maximum**\n- At $x = 3$: changes from decreasing to increasing → **local minimum**\n\n**Concavity:**\n- Concave down on $(-\\infty, 2)$\n- Concave up on $(2, \\infty)$\n- **Inflection point at $x = 2$** (concavity changes)\n\n**Key points:**\n- $(0, 2)$ is on the graph\n- Local max somewhere above the point $(1, f(1))$\n- Inflection at $x = 2$ (on the decreasing part)\n- Local min at $x = 3$\n\n**Sketch description:** The function starts low on the left, increases (concave down) to a local max at $x=1$, decreases through an inflection at $x=2$, reaches a local min at $x=3$, then increases (concave up) toward infinity."
+  },
+  {
+    "id": "math203-t5-drill-1",
+    "subjectId": "math203",
+    "topicId": "math203-topic-5",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Identifying Objective Function",
+    "description": "A farmer wants to maximize the area of a rectangular pen with 100 m of fencing. What is the objective function to maximize?",
+    "hints": [
+      "Area of rectangle = length × width."
+    ],
+    "solution": "If the sides are $x$ and $y$ with constraint $2x + 2y = 100$, then $y = 50 - x$ and the objective function is $A = xy = x(50 - x) = 50x - x^2$."
+  },
+  {
+    "id": "math203-t5-drill-2",
+    "subjectId": "math203",
+    "topicId": "math203-topic-5",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Setting Up Constraint",
+    "description": "Write the constraint equation: A box with a square base and open top has surface area 300 cm². Let $x$ = side of base, $h$ = height.",
+    "hints": [
+      "Surface area = base + 4 sides (no top)."
+    ],
+    "solution": "Surface area $= x^2 + 4xh = 300$"
+  },
+  {
+    "id": "math203-t5-drill-3",
+    "subjectId": "math203",
+    "topicId": "math203-topic-5",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Critical Point Check",
+    "description": "If $A(x) = 100x - x^2$ for $0 < x < 100$, find the value of $x$ that maximizes $A$.",
+    "hints": [
+      "Set A'(x) = 0."
+    ],
+    "solution": "$A'(x) = 100 - 2x = 0 \\Rightarrow x = 50$\n$A''(x) = -2 < 0$, confirming maximum at $x = 50$."
+  },
+  {
+    "id": "math203-t5-drill-4",
+    "subjectId": "math203",
+    "topicId": "math203-topic-5",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Verify Domain",
+    "description": "If $x$ is the length of one side of a rectangle with perimeter 20, what is the domain for $x$?",
+    "hints": [
+      "Both sides must be positive."
+    ],
+    "solution": "With perimeter $2x + 2y = 20$, we have $y = 10 - x$.\nFor both $x > 0$ and $y > 0$: $x > 0$ and $10 - x > 0$, so $0 < x < 10$."
+  },
+  {
+    "id": "math203-t5-ex01",
+    "subjectId": "math203",
+    "topicId": "math203-topic-5",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Maximum Area Rectangle",
+    "description": "A farmer has 400 meters of fencing to enclose a rectangular field. What dimensions will maximize the enclosed area?",
+    "hints": [
+      "Let x = length, y = width.",
+      "Constraint: 2x + 2y = 400.",
+      "Objective: Maximize A = xy."
+    ],
+    "solution": "**Variables:** $x$ = length, $y$ = width\n\n**Constraint:** $2x + 2y = 400 \\Rightarrow y = 200 - x$\n\n**Objective:** $A = xy = x(200 - x) = 200x - x^2$\n\n**Domain:** $0 < x < 200$\n\n**Optimize:**\n$A'(x) = 200 - 2x = 0 \\Rightarrow x = 100$\n$A''(x) = -2 < 0$ ✓ (confirms maximum)\n\n**Solution:** $x = 100$ m, $y = 100$ m\n\n**The field should be a square with sides of 100 m.**\nMaximum area: $A = 10,000$ m²"
+  },
+  {
+    "id": "math203-t5-ex02",
+    "subjectId": "math203",
+    "topicId": "math203-topic-5",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Minimum Perimeter",
+    "description": "A rectangular garden must have an area of 1600 m². What dimensions minimize the amount of fencing needed (perimeter)?",
+    "hints": [
+      "Constraint: xy = 1600.",
+      "Objective: Minimize P = 2x + 2y.",
+      "Express P in terms of one variable."
+    ],
+    "solution": "**Variables:** $x$ = length, $y$ = width\n\n**Constraint:** $xy = 1600 \\Rightarrow y = \\frac{1600}{x}$\n\n**Objective:** $P = 2x + 2y = 2x + \\frac{3200}{x}$\n\n**Domain:** $x > 0$\n\n**Optimize:**\n$P'(x) = 2 - \\frac{3200}{x^2} = 0$\n$x^2 = 1600 \\Rightarrow x = 40$ (positive)\n\n$P''(x) = \\frac{6400}{x^3} > 0$ for $x > 0$ ✓ (confirms minimum)\n\n**Solution:** $x = 40$ m, $y = 40$ m\n\n**The garden should be a 40 m × 40 m square.**\nMinimum perimeter: $P = 160$ m"
+  },
+  {
+    "id": "math203-t5-ex03",
+    "subjectId": "math203",
+    "topicId": "math203-topic-5",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Box with Maximum Volume",
+    "description": "An open-top box is made from a 24 cm × 24 cm square of cardboard by cutting squares of side $x$ from each corner and folding up the sides. Find the value of $x$ that maximizes the volume.",
+    "hints": [
+      "After cutting, the base is (24-2x) × (24-2x).",
+      "Height of the box is x.",
+      "Domain: 0 < x < 12."
+    ],
+    "solution": "**Setup:** After cutting squares of side $x$ from corners:\n- Base: $(24 - 2x) \\times (24 - 2x)$\n- Height: $x$\n\n**Objective:** $V = x(24 - 2x)^2$\n\n**Domain:** $0 < x < 12$\n\n**Expand and differentiate:**\n$V = x(576 - 96x + 4x^2) = 4x^3 - 96x^2 + 576x$\n$V'(x) = 12x^2 - 192x + 576 = 12(x^2 - 16x + 48) = 12(x - 4)(x - 12)$\n\n**Critical points:** $x = 4$ and $x = 12$\n\nOnly $x = 4$ is in the domain $(0, 12)$.\n\n**Verify:** $V''(x) = 24x - 192$, $V''(4) = 96 - 192 = -96 < 0$ ✓\n\n**Solution:** Cut squares of side $x = 4$ cm.\nMaximum volume: $V = 4(16)^2 = 1024$ cm³"
+  },
+  {
+    "id": "math203-t5-ex04",
+    "subjectId": "math203",
+    "topicId": "math203-topic-5",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Minimum Surface Area Cylinder",
+    "description": "A cylindrical can must hold 1000 cm³ of liquid. Find the dimensions that minimize the amount of material used (surface area of top, bottom, and sides).",
+    "hints": [
+      "Volume: πr²h = 1000.",
+      "Surface area: 2πr² + 2πrh.",
+      "Express h in terms of r."
+    ],
+    "solution": "**Variables:** $r$ = radius, $h$ = height\n\n**Constraint:** $\\pi r^2 h = 1000 \\Rightarrow h = \\frac{1000}{\\pi r^2}$\n\n**Objective:** $S = 2\\pi r^2 + 2\\pi rh = 2\\pi r^2 + 2\\pi r \\cdot \\frac{1000}{\\pi r^2}$\n$S = 2\\pi r^2 + \\frac{2000}{r}$\n\n**Domain:** $r > 0$\n\n**Optimize:**\n$S'(r) = 4\\pi r - \\frac{2000}{r^2} = 0$\n$4\\pi r = \\frac{2000}{r^2}$\n$r^3 = \\frac{500}{\\pi}$\n$r = \\sqrt[3]{\\frac{500}{\\pi}} \\approx 5.42$ cm\n\n$h = \\frac{1000}{\\pi r^2} = \\frac{1000}{\\pi \\cdot (500/\\pi)^{2/3}} = \\frac{1000 \\cdot \\pi^{-1/3}}{500^{2/3}}$\n\nSimplifying: $h = 2r$ (the height equals the diameter!)\n\n**Solution:** $r \\approx 5.42$ cm, $h \\approx 10.84$ cm"
+  },
+  {
+    "id": "math203-t5-ex05",
+    "subjectId": "math203",
+    "topicId": "math203-topic-5",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Closest Point on a Curve",
+    "description": "Find the point on the parabola $y = x^2$ that is closest to the point $(3, 0)$.",
+    "hints": [
+      "Distance from (x, x²) to (3, 0) is √[(x-3)² + x⁴].",
+      "Minimize D² instead of D (easier calculus).",
+      "Set derivative equal to zero and solve."
+    ],
+    "solution": "**Point on parabola:** $(x, x^2)$\n\n**Distance squared:** $D^2 = (x - 3)^2 + (x^2 - 0)^2 = (x-3)^2 + x^4$\n\n**Objective:** Minimize $f(x) = (x-3)^2 + x^4$\n\n**Optimize:**\n$f'(x) = 2(x-3) + 4x^3 = 2x - 6 + 4x^3 = 0$\n$4x^3 + 2x - 6 = 0$\n$2x^3 + x - 3 = 0$\n\nTesting $x = 1$: $2 + 1 - 3 = 0$ ✓\n\nFactor: $(x - 1)(2x^2 + 2x + 3) = 0$\n\nThe quadratic $2x^2 + 2x + 3$ has discriminant $4 - 24 < 0$, so no real roots.\n\n**Solution:** $x = 1$, so $y = 1$.\n\n**Closest point: $(1, 1)$**\n\nDistance: $D = \\sqrt{(1-3)^2 + 1^2} = \\sqrt{5}$"
+  },
+  {
+    "id": "math203-t5-ex06",
+    "subjectId": "math203",
+    "topicId": "math203-topic-5",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Maximum Profit",
+    "description": "A company's profit from selling $x$ units is $P(x) = -0.01x^2 + 50x - 10000$. Find the production level that maximizes profit and the maximum profit.",
+    "hints": [
+      "This is a parabola opening downward.",
+      "Maximum at vertex.",
+      "Set P'(x) = 0."
+    ],
+    "solution": "**Objective:** $P(x) = -0.01x^2 + 50x - 10000$\n\n**Optimize:**\n$P'(x) = -0.02x + 50 = 0$\n$x = \\frac{50}{0.02} = 2500$\n\n**Verify:** $P''(x) = -0.02 < 0$ ✓ (maximum)\n\n**Maximum profit:**\n$P(2500) = -0.01(6250000) + 50(2500) - 10000$\n$= -62500 + 125000 - 10000$\n$= 52500$\n\n**Produce 2500 units for a maximum profit of $52,500.**"
+  },
+  {
+    "id": "math203-t5-ex07",
+    "subjectId": "math203",
+    "topicId": "math203-topic-5",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Fencing with River",
+    "description": "A rectangular field is bounded on one side by a river and on the other three sides by 1000 m of fencing. What dimensions maximize the area?",
+    "hints": [
+      "Only three sides need fencing.",
+      "Let x = side perpendicular to river, y = side parallel to river.",
+      "Constraint: 2x + y = 1000."
+    ],
+    "solution": "**Variables:** $x$ = perpendicular sides (2 of them), $y$ = parallel to river (1 side)\n\n**Constraint:** $2x + y = 1000 \\Rightarrow y = 1000 - 2x$\n\n**Objective:** $A = xy = x(1000 - 2x) = 1000x - 2x^2$\n\n**Domain:** $0 < x < 500$\n\n**Optimize:**\n$A'(x) = 1000 - 4x = 0 \\Rightarrow x = 250$\n$A''(x) = -4 < 0$ ✓\n\n**Solution:** $x = 250$ m, $y = 500$ m\n\n**Dimensions: 250 m × 500 m (with 500 m side along river)**\nMaximum area: $A = 125,000$ m²"
+  },
+  {
+    "id": "math203-t5-ex08",
+    "subjectId": "math203",
+    "topicId": "math203-topic-5",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Maximum Area Triangle",
+    "description": "A right triangle has a hypotenuse of length 10. Find the lengths of the legs that maximize the area.",
+    "hints": [
+      "If legs are a and b, then a² + b² = 100.",
+      "Area = (1/2)ab.",
+      "Express b in terms of a (or use implicit differentiation)."
+    ],
+    "solution": "**Variables:** legs $a$ and $b$\n\n**Constraint:** $a^2 + b^2 = 100 \\Rightarrow b = \\sqrt{100 - a^2}$\n\n**Objective:** $A = \\frac{1}{2}ab = \\frac{1}{2}a\\sqrt{100 - a^2}$\n\n**Domain:** $0 < a < 10$\n\n**Optimize** (easier to maximize $A^2$):\n$A^2 = \\frac{1}{4}a^2(100 - a^2) = 25a^2 - \\frac{1}{4}a^4$\n\n$\\frac{d(A^2)}{da} = 50a - a^3 = a(50 - a^2) = 0$\n$a = \\sqrt{50} = 5\\sqrt{2}$ (positive solution)\n\nThen $b = \\sqrt{100 - 50} = \\sqrt{50} = 5\\sqrt{2}$\n\n**Solution:** Both legs have length $5\\sqrt{2} \\approx 7.07$.\n\nThe maximum area right triangle with hypotenuse 10 is **isoceles**.\nMaximum area: $A = \\frac{1}{2}(5\\sqrt{2})^2 = 25$"
+  },
+  {
+    "id": "math203-t5-ex09",
+    "subjectId": "math203",
+    "topicId": "math203-topic-5",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Minimum Cost Container",
+    "description": "A rectangular box with a square base and open top must have a volume of 32,000 cm³. The material for the base costs $0.20 per cm² and the material for the sides costs $0.10 per cm². Find the dimensions that minimize the total cost.",
+    "hints": [
+      "Let x = side of square base, h = height.",
+      "Volume: x²h = 32000.",
+      "Cost = 0.20x² + 0.10(4xh)."
+    ],
+    "solution": "**Variables:** $x$ = base side, $h$ = height\n\n**Constraint:** $x^2 h = 32000 \\Rightarrow h = \\frac{32000}{x^2}$\n\n**Objective (Cost):**\n$C = 0.20x^2 + 0.10(4xh) = 0.20x^2 + 0.40xh$\n$C = 0.20x^2 + 0.40x \\cdot \\frac{32000}{x^2} = 0.20x^2 + \\frac{12800}{x}$\n\n**Domain:** $x > 0$\n\n**Optimize:**\n$C'(x) = 0.40x - \\frac{12800}{x^2} = 0$\n$0.40x = \\frac{12800}{x^2}$\n$x^3 = 32000$\n$x = \\sqrt[3]{32000} = 20\\sqrt[3]{4} \\approx 31.75$ cm\n\nWait, let me recalculate:\n$x^3 = \\frac{12800}{0.40} = 32000$\n$x = \\sqrt[3]{32000} = 20 \\cdot \\sqrt[3]{4}$\n\nActually: $32000 = 32 \\times 1000$, and $\\sqrt[3]{32000} = \\sqrt[3]{32} \\cdot 10 = 3.17... \\times 10 \\approx 31.7$\n\n$h = \\frac{32000}{x^2} = \\frac{32000}{(31.75)^2} \\approx 31.75$ cm\n\n**Solution:** Base side $x \\approx 31.75$ cm, height $h \\approx 31.75$ cm\n\nInterestingly, the box is nearly cubic despite different costs!"
+  },
+  {
+    "id": "math203-t5-ex10",
+    "subjectId": "math203",
+    "topicId": "math203-topic-5",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Maximum Rectangle Under a Curve",
+    "description": "Find the dimensions of the largest rectangle that can be inscribed under the curve $y = 4 - x^2$ with its base on the x-axis.",
+    "hints": [
+      "By symmetry, the rectangle extends from -x to x.",
+      "The width is 2x and height is y = 4 - x².",
+      "Maximize area A = 2x(4 - x²)."
+    ],
+    "solution": "**Setup:** Rectangle from $(-x, 0)$ to $(x, 0)$ to $(x, y)$ to $(-x, y)$\nwhere $y = 4 - x^2$\n\n**Objective:** $A = (2x) \\cdot (4 - x^2) = 8x - 2x^3$\n\n**Domain:** $0 < x < 2$ (where the parabola is above x-axis)\n\n**Optimize:**\n$A'(x) = 8 - 6x^2 = 0$\n$x^2 = \\frac{4}{3}$\n$x = \\frac{2}{\\sqrt{3}} = \\frac{2\\sqrt{3}}{3}$\n\n$A''(x) = -12x < 0$ for $x > 0$ ✓\n\n**Dimensions:**\nWidth: $2x = \\frac{4\\sqrt{3}}{3} \\approx 2.31$\nHeight: $y = 4 - \\frac{4}{3} = \\frac{8}{3} \\approx 2.67$\n\n**Maximum area:** $A = \\frac{4\\sqrt{3}}{3} \\cdot \\frac{8}{3} = \\frac{32\\sqrt{3}}{9} \\approx 6.16$"
+  },
+  {
+    "id": "math203-t5-ex11",
+    "subjectId": "math203",
+    "topicId": "math203-topic-5",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Minimum Distance",
+    "description": "Find the point on the line $y = 2x + 3$ that is closest to the origin.",
+    "hints": [
+      "Distance from (x, 2x+3) to origin is √[x² + (2x+3)²].",
+      "Minimize D² = x² + (2x+3)².",
+      "Or use the formula for distance from point to line."
+    ],
+    "solution": "**Point on line:** $(x, 2x + 3)$\n\n**Distance squared:** $D^2 = x^2 + (2x + 3)^2 = x^2 + 4x^2 + 12x + 9 = 5x^2 + 12x + 9$\n\n**Optimize:**\n$\\frac{d(D^2)}{dx} = 10x + 12 = 0$\n$x = -\\frac{6}{5}$\n\n$y = 2(-\\frac{6}{5}) + 3 = -\\frac{12}{5} + \\frac{15}{5} = \\frac{3}{5}$\n\n**Closest point:** $\\left(-\\frac{6}{5}, \\frac{3}{5}\\right)$\n\n**Minimum distance:** $D = \\sqrt{\\frac{36}{25} + \\frac{9}{25}} = \\sqrt{\\frac{45}{25}} = \\frac{3\\sqrt{5}}{5}$\n\n*Alternative:* Using distance formula: $d = \\frac{|Ax_0 + By_0 + C|}{\\sqrt{A^2 + B^2}}$\nLine: $2x - y + 3 = 0$, point $(0, 0)$:\n$d = \\frac{|0 - 0 + 3|}{\\sqrt{4 + 1}} = \\frac{3}{\\sqrt{5}} = \\frac{3\\sqrt{5}}{5}$ ✓"
+  },
+  {
+    "id": "math203-t5-ex12",
+    "subjectId": "math203",
+    "topicId": "math203-topic-5",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Cone of Maximum Volume",
+    "description": "A cone is inscribed in a sphere of radius $R$. Find the ratio of the height to the radius of the cone that maximizes its volume.",
+    "hints": [
+      "Place sphere centered at origin.",
+      "If apex is at top of sphere, apex at (0, R).",
+      "Base circle at height y, with radius r where r² + y² = R²."
+    ],
+    "solution": "**Setup:** Sphere centered at origin with radius $R$.\nCone with apex at $(0, R)$, base at height $y$ (where $-R \\leq y < R$).\n\nAt height $y$, the sphere has radius $r = \\sqrt{R^2 - y^2}$.\nCone height: $h = R - y$\n\n**Objective:** $V = \\frac{1}{3}\\pi r^2 h = \\frac{1}{3}\\pi (R^2 - y^2)(R - y)$\n\nLet $u = R - y$ (so $y = R - u$ and $R^2 - y^2 = R^2 - (R-u)^2 = 2Ru - u^2$):\n$V = \\frac{\\pi}{3}(2Ru - u^2)u = \\frac{\\pi}{3}(2Ru^2 - u^3)$\n\n**Optimize:**\n$V'(u) = \\frac{\\pi}{3}(4Ru - 3u^2) = \\frac{\\pi u}{3}(4R - 3u) = 0$\n$u = \\frac{4R}{3}$ (taking positive value)\n\nSo $h = u = \\frac{4R}{3}$\n\n$y = R - \\frac{4R}{3} = -\\frac{R}{3}$\n$r = \\sqrt{R^2 - \\frac{R^2}{9}} = R\\sqrt{\\frac{8}{9}} = \\frac{2\\sqrt{2}R}{3}$\n\n**Ratio:** $\\frac{h}{r} = \\frac{4R/3}{2\\sqrt{2}R/3} = \\frac{4}{2\\sqrt{2}} = \\sqrt{2}$"
+  },
+  {
+    "id": "math203-t5-ex13",
+    "subjectId": "math203",
+    "topicId": "math203-topic-5",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Optimal Pricing",
+    "description": "A store sells 200 items per week at $50 each. For each $5 price reduction, 20 more items are sold per week. What price maximizes weekly revenue?",
+    "hints": [
+      "Let x = number of $5 reductions.",
+      "Price = 50 - 5x, Quantity = 200 + 20x.",
+      "Revenue = Price × Quantity."
+    ],
+    "solution": "**Variables:** Let $x$ = number of $5 reductions\n\n**Price:** $p = 50 - 5x$\n**Quantity:** $q = 200 + 20x$\n\n**Revenue:** $R = pq = (50 - 5x)(200 + 20x)$\n$R = 10000 + 1000x - 1000x - 100x^2 = 10000 - 100x^2$\n\nWait, let me recalculate:\n$R = 50(200) + 50(20x) - 5x(200) - 5x(20x)$\n$= 10000 + 1000x - 1000x - 100x^2 = 10000 - 100x^2$\n\nThis is maximized at $x = 0$... Let me recheck.\n\nActually: $(50 - 5x)(200 + 20x) = 10000 + 1000x - 1000x - 100x^2$\n\nThe cross terms cancel! So revenue is maximized at $x = 0$.\n\n**Hmm, this suggests no price reduction.** But let me verify the original model makes sense by trying a different approach.\n\n$R = (50 - 5x)(200 + 20x)$\n$R' = -5(200 + 20x) + (50 - 5x)(20) = -1000 - 100x + 1000 - 100x = -200x$\n\n$R' = 0$ when $x = 0$.\n\n**The maximum revenue is at the original price of $50.**\nMaximum revenue: $R = 50 × 200 = $10,000"
+  },
+  {
+    "id": "math203-t5-ex14",
+    "subjectId": "math203",
+    "topicId": "math203-topic-5",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Pipeline Problem",
+    "description": "An oil rig is 4 km offshore. A refinery is 8 km down the coast. Underwater pipe costs $1 million per km, and land pipe costs $500,000 per km. Where should the pipe come ashore to minimize cost?",
+    "hints": [
+      "Let x = distance from the point on shore closest to the rig to where pipe comes ashore.",
+      "Underwater distance: √(4² + x²) = √(16 + x²).",
+      "Land distance: 8 - x."
+    ],
+    "solution": "**Variables:** Let $x$ = distance along shore from closest point to rig\n\n**Underwater distance:** $\\sqrt{16 + x^2}$ km\n**Land distance:** $(8 - x)$ km\n\n**Cost (in millions):**\n$C = 1 \\cdot \\sqrt{16 + x^2} + 0.5 \\cdot (8 - x)$\n$C = \\sqrt{16 + x^2} + 4 - 0.5x$\n\n**Domain:** $0 \\leq x \\leq 8$\n\n**Optimize:**\n$C'(x) = \\frac{x}{\\sqrt{16 + x^2}} - 0.5 = 0$\n$\\frac{x}{\\sqrt{16 + x^2}} = 0.5$\n$x = 0.5\\sqrt{16 + x^2}$\n$x^2 = 0.25(16 + x^2)$\n$x^2 = 4 + 0.25x^2$\n$0.75x^2 = 4$\n$x^2 = \\frac{16}{3}$\n$x = \\frac{4}{\\sqrt{3}} = \\frac{4\\sqrt{3}}{3} \\approx 2.31$ km\n\n**The pipe should come ashore approximately 2.31 km from the closest point to the rig.**\n\nMinimum cost: $C = \\sqrt{16 + 16/3} + 4 - 0.5(4/\\sqrt{3}) \\approx \\$7.93$ million"
+  },
+  {
+    "id": "math203-t5-ex15",
+    "subjectId": "math203",
+    "topicId": "math203-topic-5",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Inscribed Rectangle in Circle",
+    "description": "Find the dimensions of the rectangle of maximum area that can be inscribed in a circle of radius 5.",
+    "hints": [
+      "Place circle at origin: x² + y² = 25.",
+      "Rectangle with vertices at (±a, ±b).",
+      "Constraint: a² + b² = 25."
+    ],
+    "solution": "**Setup:** Rectangle with vertices at $(\\pm a, \\pm b)$\n\n**Constraint:** $a^2 + b^2 = 25$ (vertices on circle)\n\n**Objective:** $A = (2a)(2b) = 4ab$\n\nUsing constraint: $b = \\sqrt{25 - a^2}$\n$A = 4a\\sqrt{25 - a^2}$\n\n**Optimize** (maximize $A^2 = 16a^2(25 - a^2) = 400a^2 - 16a^4$):\n$\\frac{d(A^2)}{da} = 800a - 64a^3 = 0$\n$a(800 - 64a^2) = 0$\n$a^2 = \\frac{800}{64} = 12.5$\n$a = \\sqrt{12.5} = \\frac{5}{\\sqrt{2}} = \\frac{5\\sqrt{2}}{2}$\n\nBy symmetry: $b = \\frac{5\\sqrt{2}}{2}$\n\n**The rectangle is a square!**\n\n**Dimensions:** $2a \\times 2b = 5\\sqrt{2} \\times 5\\sqrt{2}$\n\n**Maximum area:** $A = 50$"
+  },
+  {
+    "id": "math203-t5-ex16",
+    "subjectId": "math203",
+    "topicId": "math203-topic-5",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Norman Window",
+    "description": "A Norman window has the shape of a rectangle topped by a semicircle. If the perimeter is 10 m, find the dimensions that maximize the area.",
+    "hints": [
+      "Let r = radius of semicircle (= half the width).",
+      "Let h = height of rectangular part.",
+      "Perimeter: 2h + 2r + πr = 10.",
+      "Area: 2rh + (1/2)πr²."
+    ],
+    "solution": "**Variables:** $r$ = radius of semicircle, $h$ = height of rectangle\nWidth of rectangle = $2r$\n\n**Constraint:** $2h + 2r + \\pi r = 10$\n$h = \\frac{10 - 2r - \\pi r}{2} = 5 - r - \\frac{\\pi r}{2}$\n\n**Objective:** $A = 2rh + \\frac{1}{2}\\pi r^2$\n$A = 2r\\left(5 - r - \\frac{\\pi r}{2}\\right) + \\frac{\\pi r^2}{2}$\n$A = 10r - 2r^2 - \\pi r^2 + \\frac{\\pi r^2}{2}$\n$A = 10r - 2r^2 - \\frac{\\pi r^2}{2}$\n$A = 10r - r^2\\left(2 + \\frac{\\pi}{2}\\right)$\n\n**Optimize:**\n$A'(r) = 10 - 2r\\left(2 + \\frac{\\pi}{2}\\right) = 0$\n$r = \\frac{10}{4 + \\pi} = \\frac{10}{4 + \\pi}$\n\n$h = 5 - r\\left(1 + \\frac{\\pi}{2}\\right) = 5 - \\frac{10(1 + \\pi/2)}{4 + \\pi} = 5 - \\frac{10 + 5\\pi}{4 + \\pi}$\n$= \\frac{5(4 + \\pi) - 10 - 5\\pi}{4 + \\pi} = \\frac{20 + 5\\pi - 10 - 5\\pi}{4 + \\pi} = \\frac{10}{4 + \\pi}$\n\n**So $h = r$!**\n\n**Dimensions:** $r = h = \\frac{10}{4 + \\pi} \\approx 1.40$ m\nWidth = $2r \\approx 2.80$ m"
+  },
+  {
+    "id": "math203-t6-drill-1",
+    "subjectId": "math203",
+    "topicId": "math203-topic-6",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Implicit Differentiation with Time",
+    "description": "If $x^2 + y^2 = 25$ and $\\frac{dx}{dt} = 3$, find $\\frac{dy}{dt}$ when $x = 3$ and $y = 4$.",
+    "hints": [
+      "Differentiate both sides with respect to t."
+    ],
+    "solution": "Differentiating: $2x\\frac{dx}{dt} + 2y\\frac{dy}{dt} = 0$\n\nAt $(3, 4)$ with $\\frac{dx}{dt} = 3$:\n$2(3)(3) + 2(4)\\frac{dy}{dt} = 0$\n$18 + 8\\frac{dy}{dt} = 0$\n$\\frac{dy}{dt} = -\\frac{9}{4}$"
+  },
+  {
+    "id": "math203-t6-drill-2",
+    "subjectId": "math203",
+    "topicId": "math203-topic-6",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Rate of Area Change",
+    "description": "The radius of a circle is increasing at 2 cm/sec. How fast is the area changing when $r = 5$ cm?",
+    "hints": [
+      "A = πr², differentiate with respect to t."
+    ],
+    "solution": "$A = \\pi r^2$\n$\\frac{dA}{dt} = 2\\pi r \\frac{dr}{dt}$\n\nWhen $r = 5$ and $\\frac{dr}{dt} = 2$:\n$\\frac{dA}{dt} = 2\\pi(5)(2) = 20\\pi$ cm²/sec"
+  },
+  {
+    "id": "math203-t6-drill-3",
+    "subjectId": "math203",
+    "topicId": "math203-topic-6",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Volume Rate",
+    "description": "A cube has side length $s$. If $s$ is increasing at 0.5 cm/min, how fast is the volume increasing when $s = 4$ cm?",
+    "hints": [
+      "V = s³, differentiate with respect to t."
+    ],
+    "solution": "$V = s^3$\n$\\frac{dV}{dt} = 3s^2 \\frac{ds}{dt}$\n\nWhen $s = 4$ and $\\frac{ds}{dt} = 0.5$:\n$\\frac{dV}{dt} = 3(16)(0.5) = 24$ cm³/min"
+  },
+  {
+    "id": "math203-t6-drill-4",
+    "subjectId": "math203",
+    "topicId": "math203-topic-6",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Pythagorean Relation",
+    "description": "Two cars start from the same point. One goes north at 40 mph, the other goes east at 30 mph. After 2 hours, how fast is the distance between them changing?",
+    "hints": [
+      "After 2 hours: x = 60 miles east, y = 80 miles north."
+    ],
+    "solution": "Let $x$ = east distance, $y$ = north distance, $D$ = distance between.\n$D^2 = x^2 + y^2$\n$2D\\frac{dD}{dt} = 2x\\frac{dx}{dt} + 2y\\frac{dy}{dt}$\n\nAfter 2 hours: $x = 60$, $y = 80$, $D = 100$\n$\\frac{dx}{dt} = 30$, $\\frac{dy}{dt} = 40$\n\n$100\\frac{dD}{dt} = 60(30) + 80(40) = 1800 + 3200 = 5000$\n$\\frac{dD}{dt} = 50$ mph"
+  },
+  {
+    "id": "math203-t6-ex01",
+    "subjectId": "math203",
+    "topicId": "math203-topic-6",
+    "type": "written",
+    "difficulty": 2,
+    "title": "The Ladder Problem",
+    "description": "A 13-foot ladder leans against a wall. The bottom of the ladder is pulled away from the wall at 2 ft/sec. How fast is the top of the ladder sliding down when the bottom is 5 feet from the wall?",
+    "hints": [
+      "Use Pythagorean theorem: x² + y² = 169.",
+      "Differentiate with respect to t.",
+      "Find y when x = 5."
+    ],
+    "solution": "**Setup:** Let $x$ = distance from wall to base, $y$ = height of top.\n\n**Equation:** $x^2 + y^2 = 169$\n\n**Find y when x = 5:**\n$25 + y^2 = 169 \\Rightarrow y = 12$\n\n**Differentiate with respect to t:**\n$2x\\frac{dx}{dt} + 2y\\frac{dy}{dt} = 0$\n\n**Substitute:** $x = 5$, $y = 12$, $\\frac{dx}{dt} = 2$:\n$2(5)(2) + 2(12)\\frac{dy}{dt} = 0$\n$20 + 24\\frac{dy}{dt} = 0$\n$\\frac{dy}{dt} = -\\frac{20}{24} = -\\frac{5}{6}$\n\n**The top slides down at $\\frac{5}{6}$ ft/sec.**"
+  },
+  {
+    "id": "math203-t6-ex02",
+    "subjectId": "math203",
+    "topicId": "math203-topic-6",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Conical Tank",
+    "description": "Water is poured into a conical tank at 5 m³/min. The tank has a height of 10 m and a base radius of 4 m. How fast is the water level rising when the water is 5 m deep?",
+    "hints": [
+      "Similar triangles: r/h = 4/10 = 2/5.",
+      "Volume of cone: V = (1/3)πr²h.",
+      "Express V in terms of h only."
+    ],
+    "solution": "**Setup:** Cone with radius $r$, height $h$.\nSimilar triangles: $\\frac{r}{h} = \\frac{4}{10} = \\frac{2}{5}$, so $r = \\frac{2h}{5}$\n\n**Volume in terms of h:**\n$V = \\frac{1}{3}\\pi r^2 h = \\frac{1}{3}\\pi \\left(\\frac{2h}{5}\\right)^2 h = \\frac{1}{3}\\pi \\cdot \\frac{4h^2}{25} \\cdot h = \\frac{4\\pi h^3}{75}$\n\n**Differentiate:**\n$\\frac{dV}{dt} = \\frac{4\\pi}{75} \\cdot 3h^2 \\frac{dh}{dt} = \\frac{4\\pi h^2}{25}\\frac{dh}{dt}$\n\n**Substitute:** $\\frac{dV}{dt} = 5$, $h = 5$:\n$5 = \\frac{4\\pi (25)}{25}\\frac{dh}{dt} = 4\\pi \\frac{dh}{dt}$\n$\\frac{dh}{dt} = \\frac{5}{4\\pi} \\approx 0.398$ m/min\n\n**The water level rises at $\\frac{5}{4\\pi}$ m/min ≈ 0.40 m/min.**"
+  },
+  {
+    "id": "math203-t6-ex03",
+    "subjectId": "math203",
+    "topicId": "math203-topic-6",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Expanding Sphere",
+    "description": "A spherical balloon is being inflated at 100 cm³/sec. How fast is the radius increasing when the radius is 10 cm? How fast is the surface area increasing at that moment?",
+    "hints": [
+      "V = (4/3)πr³, S = 4πr².",
+      "Differentiate each with respect to t.",
+      "First find dr/dt, then dS/dt."
+    ],
+    "solution": "**Volume:** $V = \\frac{4}{3}\\pi r^3$\n$\\frac{dV}{dt} = 4\\pi r^2 \\frac{dr}{dt}$\n\nWhen $r = 10$ and $\\frac{dV}{dt} = 100$:\n$100 = 4\\pi (100) \\frac{dr}{dt}$\n$\\frac{dr}{dt} = \\frac{100}{400\\pi} = \\frac{1}{4\\pi}$ cm/sec\n\n**Surface Area:** $S = 4\\pi r^2$\n$\\frac{dS}{dt} = 8\\pi r \\frac{dr}{dt}$\n\n$\\frac{dS}{dt} = 8\\pi (10) \\cdot \\frac{1}{4\\pi} = 20$ cm²/sec\n\n**Answers:**\n- Radius increases at $\\frac{1}{4\\pi} \\approx 0.08$ cm/sec\n- Surface area increases at 20 cm²/sec"
+  },
+  {
+    "id": "math203-t6-ex04",
+    "subjectId": "math203",
+    "topicId": "math203-topic-6",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Shadow Problem",
+    "description": "A 6-foot tall person walks away from a 15-foot lamppost at 4 ft/sec. How fast is the person's shadow lengthening? How fast is the tip of the shadow moving?",
+    "hints": [
+      "Let x = distance from post, s = shadow length.",
+      "Use similar triangles: 15/(x+s) = 6/s.",
+      "The tip moves at dx/dt + ds/dt."
+    ],
+    "solution": "**Setup:** Let $x$ = person's distance from post, $s$ = shadow length.\n\n**Similar triangles:**\n$\\frac{15}{x + s} = \\frac{6}{s}$\n$15s = 6(x + s) = 6x + 6s$\n$9s = 6x$\n$s = \\frac{2x}{3}$\n\n**Differentiate:**\n$\\frac{ds}{dt} = \\frac{2}{3}\\frac{dx}{dt} = \\frac{2}{3}(4) = \\frac{8}{3}$ ft/sec\n\n**Shadow lengthening: $\\frac{8}{3}$ ft/sec ≈ 2.67 ft/sec**\n\n**Tip of shadow speed:**\nTip is at distance $x + s$ from the post.\n$\\frac{d(x+s)}{dt} = \\frac{dx}{dt} + \\frac{ds}{dt} = 4 + \\frac{8}{3} = \\frac{20}{3}$ ft/sec\n\n**Tip moves at $\\frac{20}{3}$ ft/sec ≈ 6.67 ft/sec**\n\nNote: The shadow length rate is constant (doesn't depend on x)!"
+  },
+  {
+    "id": "math203-t6-ex05",
+    "subjectId": "math203",
+    "topicId": "math203-topic-6",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Two Moving Objects",
+    "description": "Ship A is 150 km due west of ship B. A sails east at 35 km/hr and B sails north at 25 km/hr. How fast is the distance between them changing after 3 hours?",
+    "hints": [
+      "After t hours: A has moved 35t km east, B has moved 25t km north.",
+      "Distance between depends on positions.",
+      "Set up coordinates carefully."
+    ],
+    "solution": "**Setup:** At time $t$:\n- A starts at (-150, 0), moves east at 35 km/hr: position $(-150 + 35t, 0)$\n- B starts at (0, 0), moves north at 25 km/hr: position $(0, 25t)$\n\n**Distance:**\n$D^2 = (-150 + 35t - 0)^2 + (0 - 25t)^2$\n$D^2 = (35t - 150)^2 + (25t)^2$\n\n**After 3 hours:**\n$35(3) - 150 = 105 - 150 = -45$ (A is still west of B)\n$25(3) = 75$\n$D = \\sqrt{45^2 + 75^2} = \\sqrt{2025 + 5625} = \\sqrt{7650} = 15\\sqrt{34}$\n\n**Differentiate:**\n$2D\\frac{dD}{dt} = 2(35t - 150)(35) + 2(25t)(25)$\n$D\\frac{dD}{dt} = 35(35t - 150) + 625t$\n\nAt $t = 3$:\n$15\\sqrt{34} \\cdot \\frac{dD}{dt} = 35(-45) + 625(3) = -1575 + 1875 = 300$\n$\\frac{dD}{dt} = \\frac{300}{15\\sqrt{34}} = \\frac{20}{\\sqrt{34}} = \\frac{20\\sqrt{34}}{34} \\approx 3.43$ km/hr\n\n**The ships are getting closer at about 3.43 km/hr.**"
+  },
+  {
+    "id": "math203-t6-ex06",
+    "subjectId": "math203",
+    "topicId": "math203-topic-6",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Angle of Elevation",
+    "description": "A rocket rises vertically at 300 m/sec. An observer is 2 km from the launch pad. How fast is the angle of elevation of the rocket changing when the rocket is 1.5 km high?",
+    "hints": [
+      "tan(θ) = h/2000 where h is height in meters.",
+      "Differentiate: sec²(θ) dθ/dt = (1/2000) dh/dt.",
+      "Find θ when h = 1500."
+    ],
+    "solution": "**Setup:** Let $h$ = height (m), $\\theta$ = angle of elevation.\nObserver is 2000 m from launch pad.\n\n**Equation:**\n$\\tan\\theta = \\frac{h}{2000}$\n\n**Differentiate:**\n$\\sec^2\\theta \\cdot \\frac{d\\theta}{dt} = \\frac{1}{2000}\\frac{dh}{dt}$\n\n**At h = 1500 m:**\n$\\tan\\theta = \\frac{1500}{2000} = \\frac{3}{4}$\n$\\sec^2\\theta = 1 + \\tan^2\\theta = 1 + \\frac{9}{16} = \\frac{25}{16}$\n\n**Substitute:** $\\frac{dh}{dt} = 300$ m/sec:\n$\\frac{25}{16} \\cdot \\frac{d\\theta}{dt} = \\frac{300}{2000} = \\frac{3}{20}$\n$\\frac{d\\theta}{dt} = \\frac{3}{20} \\cdot \\frac{16}{25} = \\frac{48}{500} = \\frac{12}{125}$ rad/sec\n\n**Converting:** $\\frac{12}{125} \\times \\frac{180}{\\pi} \\approx 5.5°$/sec\n\n**The angle changes at $\\frac{12}{125}$ rad/sec ≈ 0.096 rad/sec ≈ 5.5°/sec**"
+  },
+  {
+    "id": "math203-t6-ex07",
+    "subjectId": "math203",
+    "topicId": "math203-topic-6",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Sliding Ladder with Constant Speed",
+    "description": "A 10-foot ladder slides down a wall. The top moves down at a constant 3 ft/sec. How fast is the bottom moving when the top is 6 feet above the ground?",
+    "hints": [
+      "x² + y² = 100.",
+      "Given dy/dt = -3 (negative because moving down).",
+      "Find dx/dt."
+    ],
+    "solution": "**Setup:** $x$ = distance of base from wall, $y$ = height of top.\n$x^2 + y^2 = 100$\n\n**When y = 6:**\n$x^2 + 36 = 100 \\Rightarrow x = 8$\n\n**Differentiate:**\n$2x\\frac{dx}{dt} + 2y\\frac{dy}{dt} = 0$\n\n**Substitute:** $x = 8$, $y = 6$, $\\frac{dy}{dt} = -3$:\n$2(8)\\frac{dx}{dt} + 2(6)(-3) = 0$\n$16\\frac{dx}{dt} - 36 = 0$\n$\\frac{dx}{dt} = \\frac{36}{16} = \\frac{9}{4} = 2.25$ ft/sec\n\n**The bottom moves away at 2.25 ft/sec.**\n\nNote: As the top gets lower, the bottom speeds up (try y = 2 to see this)!"
+  },
+  {
+    "id": "math203-t6-ex08",
+    "subjectId": "math203",
+    "topicId": "math203-topic-6",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Filling a Trough",
+    "description": "A trough is 10 m long with a triangular cross-section (isosceles, 2 m wide at top, 1 m deep). Water is pumped in at 0.5 m³/min. How fast is the water level rising when the water is 0.5 m deep?",
+    "hints": [
+      "Width of water surface at depth h: use similar triangles.",
+      "Volume = (1/2)(base)(height)(length).",
+      "Express V in terms of h."
+    ],
+    "solution": "**Setup:** At water depth $h$:\nSimilar triangles: $\\frac{w}{h} = \\frac{2}{1}$, so $w = 2h$\n\n**Cross-sectional area:** $A = \\frac{1}{2}(w)(h) = \\frac{1}{2}(2h)(h) = h^2$\n\n**Volume:** $V = 10 \\cdot h^2 = 10h^2$\n\n**Differentiate:**\n$\\frac{dV}{dt} = 20h\\frac{dh}{dt}$\n\n**Substitute:** $\\frac{dV}{dt} = 0.5$, $h = 0.5$:\n$0.5 = 20(0.5)\\frac{dh}{dt} = 10\\frac{dh}{dt}$\n$\\frac{dh}{dt} = 0.05$ m/min = 5 cm/min\n\n**The water level rises at 5 cm/min.**"
+  },
+  {
+    "id": "math203-t6-ex09",
+    "subjectId": "math203",
+    "topicId": "math203-topic-6",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Airplane Distance",
+    "description": "An airplane flies horizontally at 500 mph at an altitude of 3 miles. It passes directly over a radar station. How fast is the distance from the plane to the station changing when the plane is 4 miles from the station (slant distance)?",
+    "hints": [
+      "Horizontal distance x, altitude 3, slant distance D.",
+      "D² = x² + 9.",
+      "When D = 4, find x."
+    ],
+    "solution": "**Setup:** Let $x$ = horizontal distance, $D$ = slant distance.\n$D^2 = x^2 + 9$ (altitude = 3 miles)\n\n**When D = 4:**\n$16 = x^2 + 9 \\Rightarrow x = \\sqrt{7}$\n\n**Differentiate:**\n$2D\\frac{dD}{dt} = 2x\\frac{dx}{dt}$\n$D\\frac{dD}{dt} = x\\frac{dx}{dt}$\n\n**Substitute:** $D = 4$, $x = \\sqrt{7}$, $\\frac{dx}{dt} = 500$:\n$4\\frac{dD}{dt} = \\sqrt{7}(500)$\n$\\frac{dD}{dt} = \\frac{500\\sqrt{7}}{4} = 125\\sqrt{7} \\approx 331$ mph\n\n**The distance is increasing at $125\\sqrt{7}$ mph ≈ 331 mph.**"
+  },
+  {
+    "id": "math203-t6-ex10",
+    "subjectId": "math203",
+    "topicId": "math203-topic-6",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Draining Hemispherical Tank",
+    "description": "A hemispherical tank of radius 10 m is being drained at 2 m³/min. How fast is the water level dropping when the water is 5 m deep?\n\n(Volume of spherical cap: $V = \\pi h^2(R - \\frac{h}{3})$ where $R$ is sphere radius, $h$ is cap height)",
+    "hints": [
+      "The tank is a hemisphere, so R = 10.",
+      "Use the given formula for volume.",
+      "Differentiate with respect to t."
+    ],
+    "solution": "**Setup:** $R = 10$, $h$ = water depth.\n$V = \\pi h^2\\left(10 - \\frac{h}{3}\\right) = \\pi\\left(10h^2 - \\frac{h^3}{3}\\right)$\n\n**Differentiate:**\n$\\frac{dV}{dt} = \\pi\\left(20h - h^2\\right)\\frac{dh}{dt}$\n\n**Substitute:** $\\frac{dV}{dt} = -2$ (draining), $h = 5$:\n$-2 = \\pi(20(5) - 25)\\frac{dh}{dt} = \\pi(100 - 25)\\frac{dh}{dt} = 75\\pi\\frac{dh}{dt}$\n\n$\\frac{dh}{dt} = -\\frac{2}{75\\pi} \\approx -0.0085$ m/min\n\n**The water level drops at $\\frac{2}{75\\pi}$ m/min ≈ 0.85 cm/min.**"
+  },
+  {
+    "id": "math203-t6-ex11",
+    "subjectId": "math203",
+    "topicId": "math203-topic-6",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Spotlight on Moving Object",
+    "description": "A spotlight on the ground shines on a wall 30 m away. A person 2 m tall walks toward the wall at 2 m/sec. How fast is the height of the shadow changing when the person is 10 m from the wall?",
+    "hints": [
+      "Let x = distance from person to wall.",
+      "Use similar triangles with the spotlight.",
+      "The person is 30 - x meters from the spotlight."
+    ],
+    "solution": "**Setup:** Let $x$ = distance from person to wall.\nPerson is $30 - x$ meters from spotlight.\nShadow height on wall = $y$.\n\n**Similar triangles:**\n$\\frac{y}{30} = \\frac{2}{30 - x}$\n$y = \\frac{60}{30 - x}$\n\n**Differentiate:**\n$\\frac{dy}{dt} = \\frac{60}{(30-x)^2} \\cdot \\frac{dx}{dt}$\n\nNote: Person walks toward wall, so $\\frac{dx}{dt} = -2$ (x decreasing).\n\n**When x = 10:**\n$\\frac{dy}{dt} = \\frac{60}{(20)^2} \\cdot (-2) = \\frac{60}{400} \\cdot (-2) = -0.3$ m/sec\n\nWait, this seems wrong. Let me reconsider the sign.\n\nAs person gets closer to wall (x decreases), shadow gets smaller.\n$\\frac{dx}{dt} = -2$ (walking toward wall)\n$\\frac{dy}{dt} = \\frac{60}{400}(-2) = -0.3$ m/sec\n\n**The shadow shrinks at 0.3 m/sec (30 cm/sec).**"
+  },
+  {
+    "id": "math203-t6-ex12",
+    "subjectId": "math203",
+    "topicId": "math203-topic-6",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Car on Circular Track",
+    "description": "A car travels counterclockwise around a circular track of radius 200 m at 20 m/sec. A searchlight at the center tracks the car. How fast is the beam of light rotating (in radians per second)?",
+    "hints": [
+      "Arc length s = rθ.",
+      "Differentiate: ds/dt = r(dθ/dt).",
+      "ds/dt is the car's speed."
+    ],
+    "solution": "**Setup:** Arc length $s$ and angle $\\theta$ related by:\n$s = r\\theta = 200\\theta$\n\n**Differentiate:**\n$\\frac{ds}{dt} = 200\\frac{d\\theta}{dt}$\n\n**Substitute:** $\\frac{ds}{dt} = 20$ m/sec:\n$20 = 200\\frac{d\\theta}{dt}$\n$\\frac{d\\theta}{dt} = \\frac{20}{200} = 0.1$ rad/sec\n\n**The searchlight rotates at 0.1 rad/sec.**\n\nIn other units: $0.1 \\times \\frac{180}{\\pi} \\approx 5.73°$/sec\nOr: $0.1 \\times \\frac{60}{2\\pi} \\approx 0.955$ RPM"
+  },
+  {
+    "id": "math203-t6-ex13",
+    "subjectId": "math203",
+    "topicId": "math203-topic-6",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Kite Problem",
+    "description": "A kite is 100 ft high and moves horizontally at 8 ft/sec away from the person holding the string. How fast is the string being let out when 200 ft of string is out?",
+    "hints": [
+      "Height is constant at 100 ft.",
+      "Let x = horizontal distance, s = string length.",
+      "s² = x² + 100²."
+    ],
+    "solution": "**Setup:** Height $h = 100$ (constant), $x$ = horizontal distance, $s$ = string length.\n$s^2 = x^2 + 10000$\n\n**When s = 200:**\n$40000 = x^2 + 10000 \\Rightarrow x = \\sqrt{30000} = 100\\sqrt{3}$\n\n**Differentiate:**\n$2s\\frac{ds}{dt} = 2x\\frac{dx}{dt}$\n$s\\frac{ds}{dt} = x\\frac{dx}{dt}$\n\n**Substitute:** $s = 200$, $x = 100\\sqrt{3}$, $\\frac{dx}{dt} = 8$:\n$200\\frac{ds}{dt} = 100\\sqrt{3}(8) = 800\\sqrt{3}$\n$\\frac{ds}{dt} = 4\\sqrt{3} \\approx 6.93$ ft/sec\n\n**String is let out at $4\\sqrt{3}$ ft/sec ≈ 6.93 ft/sec.**"
+  },
+  {
+    "id": "math203-t6-ex14",
+    "subjectId": "math203",
+    "topicId": "math203-topic-6",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Two Rates Given",
+    "description": "A particle moves along the curve $y = x^2$. At a certain instant, $x = 2$, $\\frac{dx}{dt} = 3$. Find $\\frac{dy}{dt}$ and the rate of change of the distance from the origin at that instant.",
+    "hints": [
+      "From y = x², differentiate to get dy/dt.",
+      "Distance D = √(x² + y²).",
+      "Use chain rule for D."
+    ],
+    "solution": "**Part 1: Find dy/dt**\n$y = x^2$\n$\\frac{dy}{dt} = 2x\\frac{dx}{dt} = 2(2)(3) = 12$\n\n**Part 2: Find rate of change of distance**\nAt $x = 2$: $y = 4$\n$D = \\sqrt{x^2 + y^2}$\n$D^2 = x^2 + y^2$\n$2D\\frac{dD}{dt} = 2x\\frac{dx}{dt} + 2y\\frac{dy}{dt}$\n$D\\frac{dD}{dt} = x\\frac{dx}{dt} + y\\frac{dy}{dt}$\n\nAt $(2, 4)$: $D = \\sqrt{4 + 16} = \\sqrt{20} = 2\\sqrt{5}$\n\n$2\\sqrt{5} \\cdot \\frac{dD}{dt} = 2(3) + 4(12) = 6 + 48 = 54$\n$\\frac{dD}{dt} = \\frac{54}{2\\sqrt{5}} = \\frac{27}{\\sqrt{5}} = \\frac{27\\sqrt{5}}{5} \\approx 12.07$\n\n**Answers:**\n- $\\frac{dy}{dt} = 12$\n- Distance changes at $\\frac{27\\sqrt{5}}{5}$ ≈ 12.07 units/time"
+  },
+  {
+    "id": "math203-t6-ex15",
+    "subjectId": "math203",
+    "topicId": "math203-topic-6",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Melting Ice Cube",
+    "description": "An ice cube melts so that its volume decreases at a rate proportional to its surface area. If the edge length is $s$, show that $\\frac{ds}{dt}$ is constant.",
+    "hints": [
+      "V = s³, Surface area = 6s².",
+      "Given: dV/dt = -k(6s²) for some constant k > 0.",
+      "Relate dV/dt to ds/dt."
+    ],
+    "solution": "**Setup:** Edge length $s$, Volume $V = s^3$, Surface area $A = 6s^2$\n\n**Given condition:** $\\frac{dV}{dt} = -kA = -6ks^2$ for some $k > 0$\n(negative because volume is decreasing)\n\n**Relate to ds/dt:**\n$\\frac{dV}{dt} = 3s^2\\frac{ds}{dt}$\n\n**Equate:**\n$3s^2\\frac{ds}{dt} = -6ks^2$\n\n**Solve for ds/dt:**\n$\\frac{ds}{dt} = -2k$ (a constant!)\n\n**Conclusion:** The edge shrinks at a constant rate of $2k$.\n\nThis makes physical sense: as the cube gets smaller, it has less surface area (slower melting) but also less volume to lose per unit of shrinkage. These effects balance to give constant $\\frac{ds}{dt}$."
+  },
+  {
+    "id": "math203-t6-ex16",
+    "subjectId": "math203",
+    "topicId": "math203-topic-6",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Baseball Diamond",
+    "description": "A baseball diamond is a square with 90-foot sides. A batter hits the ball and runs to first base at 25 ft/sec. How fast is the distance from the batter to second base changing when the batter is halfway to first base?",
+    "hints": [
+      "Set up coordinates: home at origin, first base at (90, 0), second at (90, 90).",
+      "Let x = distance run toward first base.",
+      "Distance to second base: D = √[(90-x)² + 90²]."
+    ],
+    "solution": "**Setup:** Home plate at origin.\n- First base at $(90, 0)$\n- Second base at $(90, 90)$\n- Batter at $(x, 0)$ after running $x$ feet toward first\n\n**Distance to second base:**\n$D = \\sqrt{(90 - x)^2 + 90^2}$\n$D^2 = (90 - x)^2 + 8100$\n\n**Differentiate:**\n$2D\\frac{dD}{dt} = 2(90 - x)(-1)\\frac{dx}{dt}$\n$D\\frac{dD}{dt} = -(90 - x)\\frac{dx}{dt}$\n\n**When x = 45 (halfway):**\n$D = \\sqrt{45^2 + 90^2} = \\sqrt{2025 + 8100} = \\sqrt{10125} = 45\\sqrt{5}$\n\n$45\\sqrt{5} \\cdot \\frac{dD}{dt} = -(45)(25) = -1125$\n$\\frac{dD}{dt} = \\frac{-1125}{45\\sqrt{5}} = \\frac{-25}{\\sqrt{5}} = -5\\sqrt{5} \\approx -11.18$ ft/sec\n\n**The distance to second base is decreasing at $5\\sqrt{5}$ ft/sec ≈ 11.18 ft/sec.**"
+  },
+  {
+    "id": "math203-t7-drill-1",
+    "subjectId": "math203",
+    "topicId": "math203-topic-7",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Finding Domain",
+    "description": "Find the domain of $f(x) = \\frac{x}{x^2 - 4}$.",
+    "hints": [
+      "Set denominator ≠ 0."
+    ],
+    "solution": "$x^2 - 4 \\neq 0 \\Rightarrow x \\neq \\pm 2$\n\nDomain: $(-\\infty, -2) \\cup (-2, 2) \\cup (2, \\infty)$"
+  },
+  {
+    "id": "math203-t7-drill-2",
+    "subjectId": "math203",
+    "topicId": "math203-topic-7",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Vertical Asymptotes",
+    "description": "Find the vertical asymptotes of $f(x) = \\frac{1}{x-3}$.",
+    "hints": [
+      "Vertical asymptotes where denominator = 0."
+    ],
+    "solution": "Denominator = 0 when $x = 3$.\n\nVertical asymptote: $x = 3$"
+  },
+  {
+    "id": "math203-t7-drill-3",
+    "subjectId": "math203",
+    "topicId": "math203-topic-7",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Horizontal Asymptotes",
+    "description": "Find the horizontal asymptote of $f(x) = \\frac{3x^2 + 1}{x^2 - 5}$.",
+    "hints": [
+      "Compare degrees; take ratio of leading coefficients."
+    ],
+    "solution": "Degrees equal (both 2). Horizontal asymptote: $y = \\frac{3}{1} = 3$"
+  },
+  {
+    "id": "math203-t7-drill-4",
+    "subjectId": "math203",
+    "topicId": "math203-topic-7",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Symmetry",
+    "description": "Is $f(x) = x^3 - x$ even, odd, or neither?",
+    "hints": [
+      "Check if f(-x) = f(x) or f(-x) = -f(x)."
+    ],
+    "solution": "$f(-x) = (-x)^3 - (-x) = -x^3 + x = -(x^3 - x) = -f(x)$\n\n$f$ is **odd** (symmetric about origin)."
+  },
+  {
+    "id": "math203-t7-ex01",
+    "subjectId": "math203",
+    "topicId": "math203-topic-7",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Complete Analysis: Polynomial",
+    "description": "Analyze and sketch $f(x) = x^3 - 3x^2$:\n\n(a) Domain\n(b) Intercepts\n(c) Critical points and local extrema\n(d) Inflection points\n(e) End behavior\n(f) Sketch the graph",
+    "hints": [
+      "Factor: f(x) = x²(x - 3).",
+      "Find f' and f'' for extrema and inflection.",
+      "For end behavior, dominant term is x³."
+    ],
+    "solution": "(a) **Domain:** All real numbers\n\n(b) **Intercepts:**\n- y-intercept: $f(0) = 0$\n- x-intercepts: $x^2(x - 3) = 0 \\Rightarrow x = 0$ (double) and $x = 3$\n\n(c) **Critical points:**\n$f'(x) = 3x^2 - 6x = 3x(x - 2) = 0$\nCritical points: $x = 0$, $x = 2$\n\n- At $x = 0$: $f'$ changes from + to − → local max, $f(0) = 0$\n- At $x = 2$: $f'$ changes from − to + → local min, $f(2) = 8 - 12 = -4$\n\n(d) **Inflection points:**\n$f''(x) = 6x - 6 = 0 \\Rightarrow x = 1$\n$f(1) = 1 - 3 = -2$\nInflection point: $(1, -2)$\n\n(e) **End behavior:**\n- As $x \\to -\\infty$: $f(x) \\to -\\infty$\n- As $x \\to \\infty$: $f(x) \\to \\infty$\n\n(f) **Sketch:** Curve passes through (0,0), rises to local max at (0,0), falls to local min at (2,-4), crosses x-axis at (3,0), then rises to infinity. Inflection at (1,-2)."
+  },
+  {
+    "id": "math203-t7-ex02",
+    "subjectId": "math203",
+    "topicId": "math203-topic-7",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Complete Analysis: Rational Function",
+    "description": "Analyze and sketch $f(x) = \\frac{x^2 - 1}{x^2 - 4}$:\n\n(a) Domain and asymptotes\n(b) Intercepts\n(c) Symmetry\n(d) First derivative analysis\n(e) Sketch the graph",
+    "hints": [
+      "Factor both numerator and denominator.",
+      "Check for holes vs. asymptotes.",
+      "Horizontal asymptote since degrees are equal."
+    ],
+    "solution": "**Factor:** $f(x) = \\frac{(x-1)(x+1)}{(x-2)(x+2)}$\n\n(a) **Domain:** $x \\neq \\pm 2$\n\n**Asymptotes:**\n- Vertical: $x = 2$ and $x = -2$\n- Horizontal: $y = 1$ (ratio of leading coefficients)\n\n(b) **Intercepts:**\n- y-intercept: $f(0) = \\frac{-1}{-4} = \\frac{1}{4}$\n- x-intercepts: $x = \\pm 1$\n\n(c) **Symmetry:** $f(-x) = \\frac{(-x)^2 - 1}{(-x)^2 - 4} = \\frac{x^2 - 1}{x^2 - 4} = f(x)$\n**Even function** (symmetric about y-axis)\n\n(d) **First derivative:**\n$f'(x) = \\frac{2x(x^2-4) - (x^2-1)(2x)}{(x^2-4)^2} = \\frac{2x(x^2 - 4 - x^2 + 1)}{(x^2-4)^2} = \\frac{-6x}{(x^2-4)^2}$\n\n$f'(x) = 0$ when $x = 0$\n$f' > 0$ for $x < 0$ (excluding asymptotes): increasing\n$f' < 0$ for $x > 0$: decreasing\n\n**Local max at $(0, 1/4)$**\n\n(e) **Sketch:**\n- Approaches $y = 1$ as $x \\to \\pm\\infty$\n- Vertical asymptotes at $x = \\pm 2$\n- Crosses x-axis at $\\pm 1$\n- Local max at $(0, 1/4)$\n- Between asymptotes: U-shaped with max at (0, 1/4)"
+  },
+  {
+    "id": "math203-t7-ex03",
+    "subjectId": "math203",
+    "topicId": "math203-topic-7",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Oblique Asymptote",
+    "description": "Find all asymptotes and sketch $f(x) = \\frac{x^2 + 1}{x}$.",
+    "hints": [
+      "Degree of numerator = degree of denominator + 1.",
+      "Perform polynomial division.",
+      "The quotient gives the oblique asymptote."
+    ],
+    "solution": "**Polynomial division:**\n$\\frac{x^2 + 1}{x} = x + \\frac{1}{x}$\n\n**Asymptotes:**\n- Vertical: $x = 0$ (denominator = 0)\n- Oblique: $y = x$ (as $x \\to \\pm\\infty$, $1/x \\to 0$)\n\n**Analysis:**\n$f(x) = x + \\frac{1}{x}$\n\n$f'(x) = 1 - \\frac{1}{x^2} = \\frac{x^2 - 1}{x^2}$\n$f'(x) = 0$ when $x = \\pm 1$\n\n- At $x = -1$: local max, $f(-1) = -1 - 1 = -2$\n- At $x = 1$: local min, $f(1) = 1 + 1 = 2$\n\n**Behavior near asymptote $x = 0$:**\n- As $x \\to 0^+$: $f(x) \\to +\\infty$\n- As $x \\to 0^-$: $f(x) \\to -\\infty$\n\n**Sketch:** Two branches, each approaching the line $y = x$ and the vertical asymptote. Local max at $(-1, -2)$ on left branch, local min at $(1, 2)$ on right branch."
+  },
+  {
+    "id": "math203-t7-ex04",
+    "subjectId": "math203",
+    "topicId": "math203-topic-7",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Exponential Function Analysis",
+    "description": "Analyze and sketch $f(x) = xe^{-x}$ for all real $x$.",
+    "hints": [
+      "Find domain, intercepts, asymptotes.",
+      "Use product rule for derivatives.",
+      "Find limits as x → ±∞."
+    ],
+    "solution": "**Domain:** All real numbers\n\n**Intercepts:**\n- $f(0) = 0$ (origin)\n- $f(x) = 0$ when $x = 0$\n\n**Asymptotes:**\n- As $x \\to \\infty$: $f(x) = \\frac{x}{e^x} \\to 0$ (horizontal: $y = 0$)\n- As $x \\to -\\infty$: $f(x) \\to -\\infty$ (no asymptote)\n\n**First derivative:**\n$f'(x) = e^{-x} - xe^{-x} = e^{-x}(1 - x)$\n$f'(x) = 0$ when $x = 1$\n- $f' > 0$ for $x < 1$: increasing\n- $f' < 0$ for $x > 1$: decreasing\n**Local max at $x = 1$:** $f(1) = e^{-1} = \\frac{1}{e}$\n\n**Second derivative:**\n$f''(x) = -e^{-x}(1-x) + e^{-x}(-1) = e^{-x}(x - 2)$\n$f''(x) = 0$ when $x = 2$\n**Inflection point at $(2, 2e^{-2})$**\n\n**Sketch:** Passes through origin, rises to max at $(1, 1/e)$, decreases through inflection at $(2, 2/e^2)$, approaches y = 0 as $x \\to \\infty$. Goes to $-\\infty$ as $x \\to -\\infty$."
+  },
+  {
+    "id": "math203-t7-ex05",
+    "subjectId": "math203",
+    "topicId": "math203-topic-7",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Logarithmic Function Analysis",
+    "description": "Analyze and sketch $f(x) = x - \\ln x$ for $x > 0$.",
+    "hints": [
+      "Domain is x > 0 only.",
+      "Find critical points and concavity.",
+      "Check limits at boundary (x → 0⁺) and infinity."
+    ],
+    "solution": "**Domain:** $x > 0$\n\n**Intercepts:**\n- y-intercept: None ($x = 0$ not in domain)\n- x-intercepts: $x - \\ln x = 0$ has solution $x = 1$? $1 - 0 = 1 \\neq 0$. Need to solve numerically: $x \\approx 0.567$ (this is actually impossible since $\\ln x < x$ for all $x > 0$)\n\nActually: For $x > 0$, $x > \\ln x$ always, so $f(x) > 0$ always. No x-intercepts!\n\n**Limits:**\n- As $x \\to 0^+$: $\\ln x \\to -\\infty$, so $f(x) \\to +\\infty$\n- As $x \\to \\infty$: $f(x) \\to \\infty$ (x dominates)\n\n**First derivative:**\n$f'(x) = 1 - \\frac{1}{x} = \\frac{x - 1}{x}$\n$f'(x) = 0$ when $x = 1$\n- $f' < 0$ for $0 < x < 1$: decreasing\n- $f' > 0$ for $x > 1$: increasing\n**Local min at $x = 1$:** $f(1) = 1 - 0 = 1$\n\n**Second derivative:**\n$f''(x) = \\frac{1}{x^2} > 0$ for all $x > 0$\n**Concave up everywhere**\n\n**Sketch:** Comes down from $+\\infty$ as $x \\to 0^+$, decreases to min at $(1, 1)$, then increases to $\\infty$. Always concave up."
+  },
+  {
+    "id": "math203-t7-ex06",
+    "subjectId": "math203",
+    "topicId": "math203-topic-7",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Rational Function with Hole",
+    "description": "Analyze $f(x) = \\frac{x^2 - x - 2}{x - 2}$. Find any holes, asymptotes, and sketch.",
+    "hints": [
+      "Factor the numerator.",
+      "Look for common factors (holes).",
+      "Simplify and analyze the result."
+    ],
+    "solution": "**Factor:** $f(x) = \\frac{(x-2)(x+1)}{x-2}$\n\n**Simplify:** For $x \\neq 2$: $f(x) = x + 1$\n\n**Domain:** $x \\neq 2$\n\n**Hole:** At $x = 2$, the function is undefined, but:\n$\\lim_{x \\to 2} f(x) = 2 + 1 = 3$\n\nSo there's a **hole at $(2, 3)$**.\n\n**Asymptotes:** None! The simplified function is a line.\n\n**Intercepts:**\n- y-intercept: $f(0) = 1$\n- x-intercept: $x + 1 = 0 \\Rightarrow x = -1$\n\n**Sketch:** The graph is the line $y = x + 1$ with a **hole at $(2, 3)$**.\n\nThis is a classic example of a removable discontinuity."
+  },
+  {
+    "id": "math203-t7-ex07",
+    "subjectId": "math203",
+    "topicId": "math203-topic-7",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Quartic Polynomial",
+    "description": "Analyze $f(x) = x^4 - 4x^3$ completely.",
+    "hints": [
+      "Factor: f(x) = x³(x - 4).",
+      "Find first and second derivatives.",
+      "Be careful classifying x = 0."
+    ],
+    "solution": "**Factor:** $f(x) = x^3(x - 4)$\n\n**Domain:** All real numbers\n\n**Intercepts:**\n- $f(0) = 0$ (y and x-intercept)\n- $x$-intercepts: $x = 0$ (triple root) and $x = 4$\n\n**First derivative:**\n$f'(x) = 4x^3 - 12x^2 = 4x^2(x - 3)$\nCritical points: $x = 0$, $x = 3$\n\n**Sign analysis of $f'$:**\n- For $x < 0$: $(+)(-) = -$ (decreasing)\n- For $0 < x < 3$: $(+)(-) = -$ (decreasing)\n- For $x > 3$: $(+)(+) = +$ (increasing)\n\nAt $x = 0$: No sign change → neither max nor min (horizontal inflection)\nAt $x = 3$: − to + → **local min**, $f(3) = 81 - 108 = -27$\n\n**Second derivative:**\n$f''(x) = 12x^2 - 24x = 12x(x - 2)$\n$f''(x) = 0$ when $x = 0$ or $x = 2$\n\n- For $x < 0$: concave up\n- For $0 < x < 2$: concave down\n- For $x > 2$: concave up\n\n**Inflection points:** $(0, 0)$ and $(2, -16)$\n\n**End behavior:** As $x \\to \\pm\\infty$: $f(x) \\to +\\infty$\n\n**Sketch:** Starts high (left), decreases through inflection at origin, continues decreasing to min at (3, -27), then rises through (4, 0) to infinity."
+  },
+  {
+    "id": "math203-t7-ex08",
+    "subjectId": "math203",
+    "topicId": "math203-topic-7",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Function with Absolute Value",
+    "description": "Analyze and sketch $f(x) = x|x|$.",
+    "hints": [
+      "Rewrite as piecewise: f(x) = x² for x ≥ 0, f(x) = -x² for x < 0.",
+      "Check continuity and differentiability at x = 0.",
+      "Find derivatives on each piece."
+    ],
+    "solution": "**Rewrite:**\n$f(x) = \\begin{cases} x^2 & x \\geq 0 \\\\ -x^2 & x < 0 \\end{cases}$\n\n**Domain:** All real numbers\n\n**Continuity at $x = 0$:**\n$\\lim_{x \\to 0^+} x^2 = 0 = \\lim_{x \\to 0^-} (-x^2) = 0 = f(0)$ ✓\n\n**Differentiability at $x = 0$:**\n- Right: $\\lim_{h \\to 0^+} \\frac{h^2 - 0}{h} = 0$\n- Left: $\\lim_{h \\to 0^-} \\frac{-h^2 - 0}{h} = 0$\nBoth equal, so $f'(0) = 0$. ✓\n\n**Derivative:**\n$f'(x) = \\begin{cases} 2x & x \\geq 0 \\\\ -2x & x < 0 \\end{cases} = 2|x|$\n\n**Second derivative:** $f''(x) = \\pm 2$ (doesn't exist at $x = 0$)\n\n**Critical point:** $x = 0$ (local and global minimum, $f(0) = 0$)\n\n**Symmetry:** $f(-x) = (-x)|-x| = -x|x| = -f(x)$\n**Odd function** (origin symmetry)\n\n**Sketch:** Smooth curve through origin, looks like $x^2$ for $x > 0$ and like $-x^2$ for $x < 0$. Tangent is horizontal at origin."
+  },
+  {
+    "id": "math203-t7-ex09",
+    "subjectId": "math203",
+    "topicId": "math203-topic-7",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Complex Rational Function",
+    "description": "Analyze $f(x) = \\frac{x^3}{x^2 - 1}$ completely.",
+    "hints": [
+      "Domain excludes x = ±1.",
+      "Perform polynomial division for oblique asymptote.",
+      "Check symmetry."
+    ],
+    "solution": "**Domain:** $x \\neq \\pm 1$\n\n**Polynomial division:**\n$\\frac{x^3}{x^2 - 1} = x + \\frac{x}{x^2 - 1}$\n\n**Asymptotes:**\n- Vertical: $x = 1$ and $x = -1$\n- Oblique: $y = x$\n\n**Symmetry:** $f(-x) = \\frac{-x^3}{x^2 - 1} = -f(x)$\n**Odd function**\n\n**Intercepts:**\n- Origin: $f(0) = 0$\n\n**First derivative:**\n$f'(x) = \\frac{3x^2(x^2-1) - x^3(2x)}{(x^2-1)^2} = \\frac{3x^4 - 3x^2 - 2x^4}{(x^2-1)^2} = \\frac{x^4 - 3x^2}{(x^2-1)^2} = \\frac{x^2(x^2-3)}{(x^2-1)^2}$\n\n$f'(x) = 0$ when $x = 0$ or $x = \\pm\\sqrt{3}$\n\n**Analysis:**\n- $f'(x) > 0$ for $|x| > \\sqrt{3}$ (increasing)\n- $f'(x) < 0$ for $0 < |x| < \\sqrt{3}$, $|x| \\neq 1$ (decreasing)\n\nAt $x = \\sqrt{3}$: local min, $f(\\sqrt{3}) = \\frac{3\\sqrt{3}}{2} = \\frac{3\\sqrt{3}}{2}$\nAt $x = -\\sqrt{3}$: local max, $f(-\\sqrt{3}) = -\\frac{3\\sqrt{3}}{2}$\nAt $x = 0$: neither (horizontal inflection by symmetry)\n\n**Sketch:** Odd function with oblique asymptote $y = x$, vertical asymptotes at $\\pm 1$, passing through origin, with local min/max at $\\pm\\sqrt{3}$."
+  },
+  {
+    "id": "math203-t7-ex10",
+    "subjectId": "math203",
+    "topicId": "math203-topic-7",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Trigonometric Function",
+    "description": "Analyze $f(x) = \\sin x + \\cos x$ on $[0, 2\\pi]$.",
+    "hints": [
+      "Rewrite as R·sin(x + φ) form, or just use calculus.",
+      "Find critical points where f'(x) = 0.",
+      "Check endpoints."
+    ],
+    "solution": "**Domain:** $[0, 2\\pi]$\n\n**Alternate form:** $f(x) = \\sqrt{2}\\sin\\left(x + \\frac{\\pi}{4}\\right)$\n\n**First derivative:**\n$f'(x) = \\cos x - \\sin x = 0$\n$\\cos x = \\sin x$\n$\\tan x = 1$\n$x = \\frac{\\pi}{4}, \\frac{5\\pi}{4}$ in $[0, 2\\pi]$\n\n**Values:**\n- $f(0) = 0 + 1 = 1$\n- $f(\\pi/4) = \\frac{\\sqrt{2}}{2} + \\frac{\\sqrt{2}}{2} = \\sqrt{2}$\n- $f(5\\pi/4) = -\\frac{\\sqrt{2}}{2} - \\frac{\\sqrt{2}}{2} = -\\sqrt{2}$\n- $f(2\\pi) = 0 + 1 = 1$\n\n**Extrema:**\n- Absolute max: $\\sqrt{2}$ at $x = \\pi/4$\n- Absolute min: $-\\sqrt{2}$ at $x = 5\\pi/4$\n\n**Second derivative:**\n$f''(x) = -\\sin x - \\cos x = -f(x)$\n$f''(x) = 0$ when $f(x) = 0$: $\\sin x + \\cos x = 0 \\Rightarrow \\tan x = -1$\n$x = \\frac{3\\pi}{4}, \\frac{7\\pi}{4}$\n\n**Inflection points:** $(3\\pi/4, 0)$ and $(7\\pi/4, 0)$\n\n**Sketch:** Sinusoidal wave with amplitude $\\sqrt{2}$, shifted by $\\pi/4$."
+  },
+  {
+    "id": "math203-t7-ex11",
+    "subjectId": "math203",
+    "topicId": "math203-topic-7",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Gaussian-like Function",
+    "description": "Analyze $f(x) = e^{-x^2}$.",
+    "hints": [
+      "This is the famous bell curve (without normalization).",
+      "Find critical point and inflection points.",
+      "Note: always positive."
+    ],
+    "solution": "**Domain:** All real numbers\n\n**Symmetry:** $f(-x) = e^{-(-x)^2} = e^{-x^2} = f(x)$\n**Even function**\n\n**Range:** $(0, 1]$ (always positive, max at $x = 0$)\n\n**Limits:**\n- $\\lim_{x \\to \\pm\\infty} e^{-x^2} = 0$ (horizontal asymptote $y = 0$)\n\n**First derivative:**\n$f'(x) = e^{-x^2} \\cdot (-2x) = -2xe^{-x^2}$\n$f'(x) = 0$ when $x = 0$\n- $f' > 0$ for $x < 0$: increasing\n- $f' < 0$ for $x > 0$: decreasing\n**Global max at $x = 0$:** $f(0) = 1$\n\n**Second derivative:**\n$f''(x) = -2e^{-x^2} + (-2x)(-2x)e^{-x^2} = e^{-x^2}(-2 + 4x^2) = 2e^{-x^2}(2x^2 - 1)$\n\n$f''(x) = 0$ when $x^2 = \\frac{1}{2}$, i.e., $x = \\pm\\frac{1}{\\sqrt{2}}$\n\n**Inflection points:** $\\left(\\pm\\frac{1}{\\sqrt{2}}, e^{-1/2}\\right) = \\left(\\pm\\frac{\\sqrt{2}}{2}, \\frac{1}{\\sqrt{e}}\\right)$\n\n**Sketch:** Bell-shaped curve, peak at $(0, 1)$, symmetric, approaches but never touches y = 0."
+  },
+  {
+    "id": "math203-t7-ex12",
+    "subjectId": "math203",
+    "topicId": "math203-topic-7",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Matching Graph to Derivatives",
+    "description": "The graph of $f'(x)$ is given by $f'(x) = x^2 - 4$. Determine:\n\n(a) Where is $f$ increasing/decreasing?\n(b) Location and nature of critical points\n(c) Where is $f$ concave up/down?\n(d) Location of inflection points\n(e) Sketch a possible graph of $f$",
+    "hints": [
+      "f increasing where f' > 0.",
+      "Critical points where f' = 0.",
+      "For concavity, find f'' from f'."
+    ],
+    "solution": "Given: $f'(x) = x^2 - 4 = (x-2)(x+2)$\n\n**(a) Increasing/Decreasing:**\n$f'(x) > 0$ when $|x| > 2$: $f$ increasing on $(-\\infty, -2) \\cup (2, \\infty)$\n$f'(x) < 0$ when $|x| < 2$: $f$ decreasing on $(-2, 2)$\n\n**(b) Critical points:**\n$f'(x) = 0$ at $x = -2$ and $x = 2$\n- At $x = -2$: $f'$ changes from + to − → **local maximum**\n- At $x = 2$: $f'$ changes from − to + → **local minimum**\n\n**(c) Concavity:**\n$f''(x) = 2x$\n$f'' > 0$ when $x > 0$: concave up on $(0, \\infty)$\n$f'' < 0$ when $x < 0$: concave down on $(-\\infty, 0)$\n\n**(d) Inflection point:**\n$f''(x) = 0$ at $x = 0$\nSign changes from − to +: **inflection point at $x = 0$**\n\n**(e) Sketch:** Rises from $-\\infty$, reaches local max at $x = -2$, decreases through inflection at $x = 0$, reaches local min at $x = 2$, then rises to $\\infty$. The curve is concave down for $x < 0$ and concave up for $x > 0$."
+  },
+  {
+    "id": "math203-t7-ex13",
+    "subjectId": "math203",
+    "topicId": "math203-topic-7",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Reciprocal Function",
+    "description": "Analyze $f(x) = x + \\frac{4}{x}$ for $x > 0$.",
+    "hints": [
+      "This is like the earlier problem but restricted to x > 0.",
+      "Find critical point and classify.",
+      "Check behavior at boundaries (0 and ∞)."
+    ],
+    "solution": "**Domain:** $x > 0$\n\n**Limits:**\n- As $x \\to 0^+$: $f(x) \\to +\\infty$\n- As $x \\to \\infty$: $f(x) \\to \\infty$\n\n**Asymptote:** Oblique asymptote $y = x$ (as $x \\to \\infty$)\n\n**First derivative:**\n$f'(x) = 1 - \\frac{4}{x^2} = \\frac{x^2 - 4}{x^2}$\n$f'(x) = 0$ when $x = 2$ (only positive solution)\n\n- $f' < 0$ for $0 < x < 2$: decreasing\n- $f' > 0$ for $x > 2$: increasing\n**Local min at $x = 2$:** $f(2) = 2 + 2 = 4$\n\n**Second derivative:**\n$f''(x) = \\frac{8}{x^3} > 0$ for $x > 0$\n**Concave up everywhere** (no inflection)\n\n**Sketch:** Comes down from $+\\infty$ (near $x = 0$), reaches minimum at $(2, 4)$, then rises along the line $y = x$.\n\nNote: $f(x) \\geq 4$ for all $x > 0$ (AM-GM inequality: $x + 4/x \\geq 2\\sqrt{4} = 4$)"
+  },
+  {
+    "id": "math203-t7-ex14",
+    "subjectId": "math203",
+    "topicId": "math203-topic-7",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Function with Multiple Asymptotes",
+    "description": "Analyze $f(x) = \\frac{x^2 - 4}{x^2 - x - 2}$ completely.",
+    "hints": [
+      "Factor both: (x-2)(x+2) / (x-2)(x+1).",
+      "Look for holes vs. asymptotes.",
+      "The simplified form reveals structure."
+    ],
+    "solution": "**Factor:**\n$f(x) = \\frac{(x-2)(x+2)}{(x-2)(x+1)}$\n\n**For $x \\neq 2$:** $f(x) = \\frac{x+2}{x+1}$\n\n**Domain:** $x \\neq 2$ and $x \\neq -1$\n\n**Hole:** At $x = 2$, $\\lim_{x \\to 2} \\frac{x+2}{x+1} = \\frac{4}{3}$\nHole at $(2, \\frac{4}{3})$\n\n**Vertical asymptote:** $x = -1$\n\n**Horizontal asymptote:**\n$\\lim_{x \\to \\pm\\infty} \\frac{x+2}{x+1} = 1$\nAsymptote: $y = 1$\n\n**Intercepts:**\n- y-intercept: $f(0) = \\frac{2}{1} = 2$\n- x-intercept: $x + 2 = 0 \\Rightarrow x = -2$\n\n**First derivative** (of simplified form):\n$f'(x) = \\frac{(x+1) - (x+2)}{(x+1)^2} = \\frac{-1}{(x+1)^2} < 0$ always\n\n**Always decreasing** (where defined)\n\n**Sketch:** Decreasing function, approaches $y = 1$ at both ends, has vertical asymptote at $x = -1$, passes through $(-2, 0)$ and $(0, 2)$, with a hole at $(2, 4/3)$."
+  },
+  {
+    "id": "math203-t7-ex15",
+    "subjectId": "math203",
+    "topicId": "math203-topic-7",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Sketching from Derivative Information",
+    "description": "Sketch a function $f$ satisfying all of the following:\n- $f(0) = 0$, $f(2) = 1$, $f(4) = 0$\n- $f'(x) > 0$ for $x < 2$, $f'(x) < 0$ for $x > 2$\n- $f''(x) < 0$ for all $x$",
+    "hints": [
+      "f' > 0 means increasing, f' < 0 means decreasing.",
+      "f'' < 0 everywhere means always concave down.",
+      "Plot the known points first."
+    ],
+    "solution": "**Analysis:**\n\n**Known points:** $(0, 0)$, $(2, 1)$, $(4, 0)$\n\n**From f' conditions:**\n- Increasing for $x < 2$\n- Decreasing for $x > 2$\n- Local maximum at $x = 2$ (value = 1)\n\n**From f'' < 0:**\n- Concave down everywhere\n- Graph curves like an inverted parabola\n\n**Sketch description:**\n1. Start at $(0, 0)$\n2. Curve upward but always bending down (concave down + increasing)\n3. Reach maximum at $(2, 1)$\n4. Curve downward, still concave down (decreasing + concave down)\n5. Pass through $(4, 0)$\n6. Continue decreasing and concave down\n\nThe shape resembles an inverted parabola or a smooth hill, symmetric-looking but passing through the specified points.\n\n**End behavior:** As the function continues to decrease with negative concavity, it must eventually go to $-\\infty$ as $x \\to \\pm\\infty$."
+  },
+  {
+    "id": "math203-t7-ex16",
+    "subjectId": "math203",
+    "topicId": "math203-topic-7",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Complete Analysis Challenge",
+    "description": "Perform a complete analysis of $f(x) = \\frac{x^2 + 1}{x}$ and sketch the graph.",
+    "hints": [
+      "Rewrite as x + 1/x.",
+      "Odd function.",
+      "Has both vertical and oblique asymptotes."
+    ],
+    "solution": "**Rewrite:** $f(x) = x + \\frac{1}{x}$\n\n**Domain:** $x \\neq 0$\n\n**Symmetry:** $f(-x) = -x - \\frac{1}{x} = -\\left(x + \\frac{1}{x}\\right) = -f(x)$\n**Odd function** (origin symmetry)\n\n**Asymptotes:**\n- Vertical: $x = 0$\n- Oblique: $y = x$ (as $x \\to \\pm\\infty$)\n\n**Intercepts:** None (never crosses axes)\n\n**First derivative:**\n$f'(x) = 1 - \\frac{1}{x^2} = \\frac{x^2 - 1}{x^2}$\n$f'(x) = 0$ when $x = \\pm 1$\n\n- For $|x| > 1$: $f' > 0$ (increasing)\n- For $0 < |x| < 1$: $f' < 0$ (decreasing)\n\n**Critical points:**\n- At $x = 1$: local min, $f(1) = 2$\n- At $x = -1$: local max, $f(-1) = -2$\n\n**Second derivative:**\n$f''(x) = \\frac{2}{x^3}$\n- $f'' > 0$ for $x > 0$: concave up\n- $f'' < 0$ for $x < 0$: concave down\n\n**No inflection points** (concavity only changes at asymptote)\n\n**Behavior near $x = 0$:**\n- As $x \\to 0^+$: $f(x) \\to +\\infty$\n- As $x \\to 0^-$: $f(x) \\to -\\infty$\n\n**Sketch:** Two branches:\n- Right ($x > 0$): comes from $+\\infty$ near 0, decreases to min at $(1, 2)$, increases toward line $y = x$\n- Left ($x < 0$): comes from $-\\infty$ near 0, increases to max at $(-1, -2)$, decreases toward line $y = x$ (from below)"
+  }
+]

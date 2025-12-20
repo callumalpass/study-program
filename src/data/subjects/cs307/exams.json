@@ -1,0 +1,1030 @@
+[
+  {
+    "id": "cs307-midterm",
+    "subjectId": "cs307",
+    "title": "CS307 Midterm Exam",
+    "questions": [
+      {
+        "id": "cs307-mid-q1",
+        "type": "multiple_choice",
+        "prompt": "Which component of the CIA triad ensures that data is not modified by unauthorized parties?",
+        "options": [
+          "Confidentiality",
+          "Integrity",
+          "Availability",
+          "Authentication"
+        ],
+        "correctAnswer": "Integrity",
+        "explanation": "Integrity ensures that data remains accurate and unaltered except by authorized parties. Confidentiality prevents unauthorized access, while availability ensures systems remain accessible."
+      },
+      {
+        "id": "cs307-mid-q2",
+        "type": "multiple_choice",
+        "prompt": "What is the primary goal of threat modeling in secure system design?",
+        "options": [
+          "To identify and prioritize potential security threats before implementation",
+          "To test the system after deployment for vulnerabilities",
+          "To encrypt all data at rest and in transit",
+          "To establish user authentication mechanisms"
+        ],
+        "correctAnswer": "To identify and prioritize potential security threats before implementation",
+        "explanation": "Threat modeling is a proactive approach used during design phase to identify potential threats, assess risks, and determine appropriate countermeasures before the system is built."
+      },
+      {
+        "id": "cs307-mid-q3",
+        "type": "multiple_choice",
+        "prompt": "Which security principle suggests implementing multiple layers of security controls?",
+        "options": [
+          "Principle of least privilege",
+          "Defense in depth",
+          "Separation of duties",
+          "Fail-safe defaults"
+        ],
+        "correctAnswer": "Defense in depth",
+        "explanation": "Defense in depth is a layered security approach where multiple independent security controls are implemented so that if one fails, others still provide protection."
+      },
+      {
+        "id": "cs307-mid-q4",
+        "type": "multiple_choice",
+        "prompt": "The principle of least privilege states that users should have:",
+        "options": [
+          "Maximum permissions to perform their job efficiently",
+          "Only the minimum permissions necessary to perform their job functions",
+          "Administrative access to all systems they use",
+          "Permission to delegate their access rights to others"
+        ],
+        "correctAnswer": "Only the minimum permissions necessary to perform their job functions",
+        "explanation": "Least privilege minimizes the potential damage from accidents or malicious actions by granting users only the minimum access required for their legitimate tasks."
+      },
+      {
+        "id": "cs307-mid-q5",
+        "type": "multiple_choice",
+        "prompt": "What is a key benefit of implementing \"fail-safe defaults\" in security design?",
+        "options": [
+          "Systems automatically grant access when authorization servers are unavailable",
+          "Systems deny access by default unless explicitly granted",
+          "Systems maintain functionality even when security controls fail",
+          "Systems revert to backup authentication methods automatically"
+        ],
+        "correctAnswer": "Systems deny access by default unless explicitly granted",
+        "explanation": "Fail-safe defaults ensure that when something goes wrong or is undefined, the system defaults to a secure state (deny access) rather than an insecure one."
+      },
+      {
+        "id": "cs307-mid-q6",
+        "type": "multiple_choice",
+        "prompt": "In a security context, what does the principle of \"complete mediation\" require?",
+        "options": [
+          "All security decisions must be made by a centralized authority",
+          "Every access to every object must be checked for authorization",
+          "Security controls must completely prevent all types of attacks",
+          "All users must complete security training before system access"
+        ],
+        "correctAnswer": "Every access to every object must be checked for authorization",
+        "explanation": "Complete mediation requires that all accesses to objects are checked to ensure they are allowed, preventing unauthorized access through cached or outdated permissions."
+      },
+      {
+        "id": "cs307-mid-q7",
+        "type": "multiple_choice",
+        "prompt": "What is the main difference between symmetric and asymmetric encryption?",
+        "options": [
+          "Symmetric encryption is faster but uses the same key for encryption and decryption",
+          "Asymmetric encryption is faster and more secure than symmetric encryption",
+          "Symmetric encryption uses public keys while asymmetric uses private keys",
+          "Asymmetric encryption cannot be used for data confidentiality"
+        ],
+        "correctAnswer": "Symmetric encryption is faster but uses the same key for encryption and decryption",
+        "explanation": "Symmetric encryption uses a single shared key for both operations and is computationally faster. Asymmetric encryption uses a key pair (public and private) and is slower but solves the key distribution problem."
+      },
+      {
+        "id": "cs307-mid-q8",
+        "type": "multiple_choice",
+        "prompt": "Which cryptographic hash function is currently considered secure for most applications?",
+        "options": [
+          "MD5",
+          "SHA-1",
+          "SHA-256",
+          "CRC32"
+        ],
+        "correctAnswer": "SHA-256",
+        "explanation": "SHA-256 (part of SHA-2 family) is currently considered secure. MD5 and SHA-1 have known collision vulnerabilities, and CRC32 is not cryptographically secure."
+      },
+      {
+        "id": "cs307-mid-q9",
+        "type": "multiple_choice",
+        "prompt": "What is the primary purpose of a digital signature?",
+        "options": [
+          "To encrypt data for confidentiality",
+          "To verify the authenticity and integrity of a message",
+          "To compress data for efficient transmission",
+          "To generate random keys for encryption"
+        ],
+        "correctAnswer": "To verify the authenticity and integrity of a message",
+        "explanation": "Digital signatures use asymmetric cryptography to prove that a message came from a specific sender (authenticity) and has not been altered (integrity)."
+      },
+      {
+        "id": "cs307-mid-q10",
+        "type": "multiple_choice",
+        "prompt": "In public key cryptography, which key should be used to encrypt a message intended for Alice?",
+        "options": [
+          "Alice's private key",
+          "Alice's public key",
+          "The sender's private key",
+          "A shared symmetric key"
+        ],
+        "correctAnswer": "Alice's public key",
+        "explanation": "To send a confidential message to Alice, you encrypt it with her public key. Only Alice can decrypt it using her corresponding private key, ensuring confidentiality."
+      },
+      {
+        "id": "cs307-mid-q11",
+        "type": "multiple_choice",
+        "prompt": "What property of cryptographic hash functions prevents finding two different inputs that produce the same hash output?",
+        "options": [
+          "Pre-image resistance",
+          "Collision resistance",
+          "Second pre-image resistance",
+          "Avalanche effect"
+        ],
+        "correctAnswer": "Collision resistance",
+        "explanation": "Collision resistance means it should be computationally infeasible to find two different inputs that hash to the same output. This is crucial for digital signatures and integrity verification."
+      },
+      {
+        "id": "cs307-mid-q12",
+        "type": "multiple_choice",
+        "prompt": "Why is salt added to password hashes?",
+        "options": [
+          "To make the hash computation faster",
+          "To prevent rainbow table attacks and make each hash unique",
+          "To encrypt the password before hashing",
+          "To reduce the storage size of the hash"
+        ],
+        "correctAnswer": "To prevent rainbow table attacks and make each hash unique",
+        "explanation": "Salt is random data added to passwords before hashing. This ensures that identical passwords produce different hashes and makes precomputed hash tables (rainbow tables) ineffective."
+      },
+      {
+        "id": "cs307-mid-q13",
+        "type": "multiple_choice",
+        "prompt": "Which authentication factor is \"something you know\"?",
+        "options": [
+          "Fingerprint scan",
+          "Password",
+          "Security token",
+          "Smart card"
+        ],
+        "correctAnswer": "Password",
+        "explanation": "Authentication factors are categorized as: something you know (passwords, PINs), something you have (tokens, cards), and something you are (biometrics)."
+      },
+      {
+        "id": "cs307-mid-q14",
+        "type": "multiple_choice",
+        "prompt": "What is the primary security benefit of Multi-Factor Authentication (MFA)?",
+        "options": [
+          "It makes login faster and more convenient",
+          "It provides protection even if one factor is compromised",
+          "It eliminates the need for password complexity requirements",
+          "It allows users to share credentials safely"
+        ],
+        "correctAnswer": "It provides protection even if one factor is compromised",
+        "explanation": "MFA requires multiple independent factors, so an attacker who compromises one factor (e.g., steals a password) still cannot authenticate without the other factors."
+      },
+      {
+        "id": "cs307-mid-q15",
+        "type": "multiple_choice",
+        "prompt": "In OAuth 2.0, what is the role of the Authorization Server?",
+        "options": [
+          "To store user passwords and validate login credentials",
+          "To issue access tokens after authenticating the resource owner",
+          "To host the protected resources that clients want to access",
+          "To encrypt all communications between client and server"
+        ],
+        "correctAnswer": "To issue access tokens after authenticating the resource owner",
+        "explanation": "The Authorization Server authenticates the resource owner (user) and issues access tokens to clients, which can then be used to access protected resources."
+      },
+      {
+        "id": "cs307-mid-q16",
+        "type": "multiple_choice",
+        "prompt": "What is the main difference between Role-Based Access Control (RBAC) and Attribute-Based Access Control (ABAC)?",
+        "options": [
+          "RBAC uses user roles while ABAC uses attributes and policies for access decisions",
+          "RBAC is more flexible and scalable than ABAC",
+          "ABAC only works with file system permissions",
+          "RBAC requires multi-factor authentication while ABAC does not"
+        ],
+        "correctAnswer": "RBAC uses user roles while ABAC uses attributes and policies for access decisions",
+        "explanation": "RBAC grants permissions based on assigned roles. ABAC evaluates multiple attributes (user, resource, environment) against policies, providing more fine-grained and flexible access control."
+      },
+      {
+        "id": "cs307-mid-q17",
+        "type": "multiple_choice",
+        "prompt": "What is a session token used for in web applications?",
+        "options": [
+          "To encrypt data transmitted between client and server",
+          "To identify and track authenticated user sessions",
+          "To generate one-time passwords for MFA",
+          "To hash user passwords before storage"
+        ],
+        "correctAnswer": "To identify and track authenticated user sessions",
+        "explanation": "After successful authentication, a session token is issued to maintain the user's authenticated state across multiple requests without requiring re-authentication for each request."
+      },
+      {
+        "id": "cs307-mid-q18",
+        "type": "multiple_choice",
+        "prompt": "Which of the following is a secure practice for password storage?",
+        "options": [
+          "Store passwords encrypted with a symmetric key",
+          "Store passwords in plaintext but in a secure database",
+          "Store passwords hashed with a slow algorithm like bcrypt and a unique salt",
+          "Store passwords using Base64 encoding"
+        ],
+        "correctAnswer": "Store passwords hashed with a slow algorithm like bcrypt and a unique salt",
+        "explanation": "Passwords should be hashed (not encrypted or encoded) using algorithms designed for passwords (bcrypt, scrypt, Argon2) that are intentionally slow to resist brute-force attacks, with unique salts per password."
+      },
+      {
+        "id": "cs307-mid-q19",
+        "type": "multiple_choice",
+        "prompt": "What is SQL injection and how can it be prevented?",
+        "options": [
+          "Injecting SQL commands through user input; prevented by using prepared statements",
+          "Corrupting database files; prevented by regular backups",
+          "Stealing database credentials; prevented by encryption",
+          "Overloading the database; prevented by rate limiting"
+        ],
+        "correctAnswer": "Injecting SQL commands through user input; prevented by using prepared statements",
+        "explanation": "SQL injection occurs when attackers insert malicious SQL code through input fields. Prepared statements (parameterized queries) separate SQL code from data, preventing injection."
+      },
+      {
+        "id": "cs307-mid-q20",
+        "type": "multiple_choice",
+        "prompt": "Which of the following best describes Cross-Site Scripting (XSS)?",
+        "options": [
+          "Injecting malicious scripts into web pages viewed by other users",
+          "Forging requests from authenticated users",
+          "Breaking SSL/TLS encryption on websites",
+          "Bypassing same-origin policy restrictions"
+        ],
+        "correctAnswer": "Injecting malicious scripts into web pages viewed by other users",
+        "explanation": "XSS allows attackers to inject malicious scripts (usually JavaScript) into web pages. When other users view the page, the script executes in their browser, potentially stealing data or performing actions on their behalf."
+      },
+      {
+        "id": "cs307-mid-q21",
+        "type": "multiple_choice",
+        "prompt": "How does Cross-Site Request Forgery (CSRF) work?",
+        "options": [
+          "It tricks authenticated users into executing unwanted actions on a web application",
+          "It steals session cookies from users' browsers",
+          "It injects malicious scripts into trusted websites",
+          "It intercepts network traffic between client and server"
+        ],
+        "correctAnswer": "It tricks authenticated users into executing unwanted actions on a web application",
+        "explanation": "CSRF exploits the trust a web application has in an authenticated user's browser by tricking the browser into sending unauthorized requests using the user's existing session."
+      },
+      {
+        "id": "cs307-mid-q22",
+        "type": "multiple_choice",
+        "prompt": "What is the primary cause of buffer overflow vulnerabilities?",
+        "options": [
+          "Insufficient network bandwidth",
+          "Writing data beyond the boundaries of allocated memory",
+          "Using weak encryption algorithms",
+          "Failing to validate SSL certificates"
+        ],
+        "correctAnswer": "Writing data beyond the boundaries of allocated memory",
+        "explanation": "Buffer overflows occur when a program writes more data to a buffer than it can hold, overwriting adjacent memory. This can lead to crashes or arbitrary code execution if exploited."
+      },
+      {
+        "id": "cs307-mid-q23",
+        "type": "multiple_choice",
+        "prompt": "Which vulnerability involves exposing sensitive information through error messages?",
+        "options": [
+          "Information disclosure",
+          "Privilege escalation",
+          "Denial of service",
+          "Man-in-the-middle"
+        ],
+        "correctAnswer": "Information disclosure",
+        "explanation": "Information disclosure vulnerabilities leak sensitive data (database structure, file paths, system details) through error messages, stack traces, or other outputs, helping attackers plan further attacks."
+      },
+      {
+        "id": "cs307-mid-q24",
+        "type": "multiple_choice",
+        "prompt": "What is broken access control in the context of OWASP Top 10?",
+        "options": [
+          "Firewall rules that are incorrectly configured",
+          "Users able to access resources or perform actions outside their permissions",
+          "Authentication systems that fail to verify passwords",
+          "Network connections that are not encrypted"
+        ],
+        "correctAnswer": "Users able to access resources or perform actions outside their permissions",
+        "explanation": "Broken access control occurs when applications fail to properly enforce restrictions on what authenticated users can do, allowing unauthorized access to data or functionality."
+      },
+      {
+        "id": "cs307-mid-q25",
+        "type": "multiple_choice",
+        "prompt": "What mitigation technique is most effective against XSS attacks?",
+        "options": [
+          "Using HTTPS for all connections",
+          "Implementing rate limiting on requests",
+          "Output encoding/escaping user-supplied data before rendering",
+          "Requiring multi-factor authentication"
+        ],
+        "correctAnswer": "Output encoding/escaping user-supplied data before rendering",
+        "explanation": "Properly encoding/escaping user-supplied data before outputting it to HTML, JavaScript, or other contexts prevents browsers from interpreting it as executable code."
+      },
+      {
+        "id": "cs307-mid-q26",
+        "type": "multiple_choice",
+        "prompt": "What is the security risk of using components with known vulnerabilities?",
+        "options": [
+          "Decreased application performance",
+          "Increased development time",
+          "Attackers can exploit publicly disclosed vulnerabilities to compromise the system",
+          "Higher cloud hosting costs"
+        ],
+        "correctAnswer": "Attackers can exploit publicly disclosed vulnerabilities to compromise the system",
+        "explanation": "When applications use libraries, frameworks, or components with known vulnerabilities, attackers can use publicly available exploits to compromise the system. Regular updates and dependency scanning are essential."
+      }
+    ]
+  },
+  {
+    "id": "cs307-final",
+    "subjectId": "cs307",
+    "title": "CS307 Final Exam",
+    "questions": [
+      {
+        "id": "cs307-final-q1",
+        "type": "multiple_choice",
+        "prompt": "Which principle ensures that actions can be traced to the individual who performed them?",
+        "options": [
+          "Confidentiality",
+          "Accountability",
+          "Availability",
+          "Integrity"
+        ],
+        "correctAnswer": "Accountability",
+        "explanation": "Accountability (often considered alongside the CIA triad) ensures that actions can be traced to responsible parties through logging, auditing, and non-repudiation mechanisms."
+      },
+      {
+        "id": "cs307-final-q2",
+        "type": "multiple_choice",
+        "prompt": "In threat modeling, what does STRIDE stand for?",
+        "options": [
+          "Security, Testing, Risk, Implementation, Defense, Evaluation",
+          "Spoofing, Tampering, Repudiation, Information disclosure, Denial of service, Elevation of privilege",
+          "System, Threat, Risk, Impact, Detection, Elimination",
+          "Secure, Tested, Reliable, Integrated, Defended, Encrypted"
+        ],
+        "correctAnswer": "Spoofing, Tampering, Repudiation, Information disclosure, Denial of service, Elevation of privilege",
+        "explanation": "STRIDE is a threat modeling framework developed by Microsoft that categorizes threats into six types to help identify security vulnerabilities in system design."
+      },
+      {
+        "id": "cs307-final-q3",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of separation of duties in security design?",
+        "options": [
+          "To distribute workload evenly across team members",
+          "To prevent any single person from having complete control over critical operations",
+          "To separate development and production environments",
+          "To isolate network segments using firewalls"
+        ],
+        "correctAnswer": "To prevent any single person from having complete control over critical operations",
+        "explanation": "Separation of duties requires multiple people to complete critical tasks, reducing the risk of fraud, errors, or malicious actions by ensuring no single individual has end-to-end control."
+      },
+      {
+        "id": "cs307-final-q4",
+        "type": "multiple_choice",
+        "prompt": "Which encryption mode requires an initialization vector (IV) to ensure identical plaintexts produce different ciphertexts?",
+        "options": [
+          "ECB (Electronic Codebook)",
+          "CBC (Cipher Block Chaining)",
+          "RSA encryption",
+          "Hash-based encryption"
+        ],
+        "correctAnswer": "CBC (Cipher Block Chaining)",
+        "explanation": "CBC mode uses an IV to XOR with the first plaintext block, and each subsequent block is XORed with the previous ciphertext block. This ensures identical plaintexts produce different ciphertexts. ECB does not use an IV and has this weakness."
+      },
+      {
+        "id": "cs307-final-q5",
+        "type": "multiple_choice",
+        "prompt": "What is a key exchange protocol used to securely establish shared keys over an insecure channel?",
+        "options": [
+          "AES",
+          "SHA-256",
+          "Diffie-Hellman",
+          "MD5"
+        ],
+        "correctAnswer": "Diffie-Hellman",
+        "explanation": "Diffie-Hellman is a cryptographic protocol that allows two parties to establish a shared secret key over an insecure channel without ever transmitting the key itself."
+      },
+      {
+        "id": "cs307-final-q6",
+        "type": "multiple_choice",
+        "prompt": "What attack does using a pepper (secret salt) in addition to per-password salts help prevent?",
+        "options": [
+          "SQL injection",
+          "XSS attacks",
+          "Offline brute-force attacks if the database is compromised",
+          "Man-in-the-middle attacks"
+        ],
+        "correctAnswer": "Offline brute-force attacks if the database is compromised",
+        "explanation": "A pepper is a secret value added to all passwords before hashing (in addition to unique salts). If the database is stolen but the pepper is stored separately, attackers cannot effectively brute-force the hashes without the pepper."
+      },
+      {
+        "id": "cs307-final-q7",
+        "type": "multiple_choice",
+        "prompt": "In the context of OAuth 2.0, what is the purpose of the refresh token?",
+        "options": [
+          "To access protected resources directly",
+          "To obtain new access tokens without requiring user re-authentication",
+          "To encrypt data during transmission",
+          "To validate user credentials"
+        ],
+        "correctAnswer": "To obtain new access tokens without requiring user re-authentication",
+        "explanation": "Refresh tokens are long-lived credentials used to obtain new access tokens when they expire, without requiring the user to re-authenticate. Access tokens are short-lived for security."
+      },
+      {
+        "id": "cs307-final-q8",
+        "type": "multiple_choice",
+        "prompt": "What is privilege escalation?",
+        "options": [
+          "Upgrading user accounts to premium tiers",
+          "Exploiting vulnerabilities to gain higher access privileges than intended",
+          "Increasing server capacity to handle more users",
+          "Promoting users to administrator roles through proper authorization"
+        ],
+        "correctAnswer": "Exploiting vulnerabilities to gain higher access privileges than intended",
+        "explanation": "Privilege escalation occurs when attackers exploit bugs or misconfigurations to gain elevated access rights, either horizontally (accessing other users' resources) or vertically (gaining admin rights)."
+      },
+      {
+        "id": "cs307-final-q9",
+        "type": "multiple_choice",
+        "prompt": "Which HTTP header can help prevent clickjacking attacks?",
+        "options": [
+          "Content-Type",
+          "X-Frame-Options",
+          "Accept-Encoding",
+          "User-Agent"
+        ],
+        "correctAnswer": "X-Frame-Options",
+        "explanation": "X-Frame-Options (or newer Content-Security-Policy frame-ancestors) prevents clickjacking by controlling whether a page can be embedded in frames/iframes, preventing attackers from overlaying invisible frames."
+      },
+      {
+        "id": "cs307-final-q10",
+        "type": "multiple_choice",
+        "prompt": "What is the primary defense against CSRF attacks?",
+        "options": [
+          "Using HTTPS for all connections",
+          "Implementing anti-CSRF tokens that are validated on state-changing requests",
+          "Encrypting all form data",
+          "Requiring strong passwords"
+        ],
+        "correctAnswer": "Implementing anti-CSRF tokens that are validated on state-changing requests",
+        "explanation": "Anti-CSRF tokens are unique, unpredictable values embedded in forms and validated server-side. Since attackers cannot access these tokens due to same-origin policy, they cannot forge valid requests."
+      },
+      {
+        "id": "cs307-final-q11",
+        "type": "multiple_choice",
+        "prompt": "What type of XSS occurs when malicious scripts are permanently stored on the server (e.g., in a database)?",
+        "options": [
+          "Reflected XSS",
+          "Stored XSS",
+          "DOM-based XSS",
+          "Server-side XSS"
+        ],
+        "correctAnswer": "Stored XSS",
+        "explanation": "Stored (or persistent) XSS occurs when malicious scripts are saved on the server and later served to users. This is more dangerous than reflected XSS as it affects all users who view the compromised content."
+      },
+      {
+        "id": "cs307-final-q12",
+        "type": "multiple_choice",
+        "prompt": "What is XML External Entity (XXE) injection?",
+        "options": [
+          "Injecting SQL commands through XML documents",
+          "Exploiting XML parsers to access local files or internal systems",
+          "Cross-site scripting using XML data",
+          "Denying service by sending large XML files"
+        ],
+        "correctAnswer": "Exploiting XML parsers to access local files or internal systems",
+        "explanation": "XXE attacks exploit XML parsers that process external entity references, allowing attackers to read local files, perform SSRF attacks, or cause denial of service."
+      },
+      {
+        "id": "cs307-final-q13",
+        "type": "multiple_choice",
+        "prompt": "What is insecure deserialization?",
+        "options": [
+          "Transmitting serialized data without encryption",
+          "Processing untrusted serialized objects that can lead to remote code execution",
+          "Storing data in inefficient formats",
+          "Converting data between incompatible formats"
+        ],
+        "correctAnswer": "Processing untrusted serialized objects that can lead to remote code execution",
+        "explanation": "Insecure deserialization occurs when applications deserialize untrusted data without proper validation. Attackers can craft malicious serialized objects that execute arbitrary code when deserialized."
+      },
+      {
+        "id": "cs307-final-q14",
+        "type": "multiple_choice",
+        "prompt": "What is the principle of \"input validation\"?",
+        "options": [
+          "Checking that user inputs are formatted correctly for display",
+          "Verifying that all input data meets expected criteria before processing",
+          "Encrypting user input before storage",
+          "Logging all user inputs for audit purposes"
+        ],
+        "correctAnswer": "Verifying that all input data meets expected criteria before processing",
+        "explanation": "Input validation ensures that data conforms to expected format, type, length, and range before processing. This is a fundamental defense against injection attacks and other vulnerabilities."
+      },
+      {
+        "id": "cs307-final-q15",
+        "type": "multiple_choice",
+        "prompt": "Which approach is more secure for input validation?",
+        "options": [
+          "Blacklisting known bad inputs",
+          "Whitelisting known good inputs",
+          "Removing suspicious characters",
+          "Converting all inputs to lowercase"
+        ],
+        "correctAnswer": "Whitelisting known good inputs",
+        "explanation": "Whitelisting (allowing only known good inputs) is more secure than blacklisting because it's impossible to enumerate all bad inputs. Whitelisting defines what is acceptable and rejects everything else."
+      },
+      {
+        "id": "cs307-final-q16",
+        "type": "multiple_choice",
+        "prompt": "What is output encoding and why is it important?",
+        "options": [
+          "Compressing output data to save bandwidth",
+          "Converting output to appropriate format to prevent interpretation as code",
+          "Encrypting data before transmission",
+          "Formatting output for better readability"
+        ],
+        "correctAnswer": "Converting output to appropriate format to prevent interpretation as code",
+        "explanation": "Output encoding transforms special characters into safe representations for the output context (HTML, JavaScript, SQL, etc.), preventing data from being interpreted as executable code."
+      },
+      {
+        "id": "cs307-final-q17",
+        "type": "multiple_choice",
+        "prompt": "What should be included in error messages shown to users?",
+        "options": [
+          "Detailed technical information to help diagnose issues",
+          "Stack traces showing the exact line where errors occurred",
+          "Generic messages that don't reveal system internals",
+          "Database query details that failed"
+        ],
+        "correctAnswer": "Generic messages that don't reveal system internals",
+        "explanation": "User-facing error messages should be generic to avoid information disclosure. Detailed errors should be logged securely for administrators while users see only what they need to know."
+      },
+      {
+        "id": "cs307-final-q18",
+        "type": "multiple_choice",
+        "prompt": "What is the secure approach to handling secrets (API keys, passwords) in code?",
+        "options": [
+          "Hardcode them in source code for easy access",
+          "Store them in environment variables or secure secret management systems",
+          "Include them in configuration files committed to version control",
+          "Encrypt them with a key stored in the same repository"
+        ],
+        "correctAnswer": "Store them in environment variables or secure secret management systems",
+        "explanation": "Secrets should never be hardcoded or committed to version control. Use environment variables, secret management systems (like HashiCorp Vault), or cloud provider secret services."
+      },
+      {
+        "id": "cs307-final-q19",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of Content Security Policy (CSP)?",
+        "options": [
+          "To encrypt content during transmission",
+          "To specify which sources of content browsers should allow to load",
+          "To compress content for faster delivery",
+          "To cache content on CDN servers"
+        ],
+        "correctAnswer": "To specify which sources of content browsers should allow to load",
+        "explanation": "CSP is a security header that controls which sources can load scripts, styles, images, etc. This helps prevent XSS attacks by blocking inline scripts and unauthorized external sources."
+      },
+      {
+        "id": "cs307-final-q20",
+        "type": "multiple_choice",
+        "prompt": "Why should applications use parameterized queries instead of string concatenation for database operations?",
+        "options": [
+          "Parameterized queries execute faster",
+          "They prevent SQL injection by separating SQL code from data",
+          "They use less memory",
+          "They automatically create database indexes"
+        ],
+        "correctAnswer": "They prevent SQL injection by separating SQL code from data",
+        "explanation": "Parameterized queries (prepared statements) treat user input as data, not executable code. The database knows which parts are SQL structure and which are data, preventing injection."
+      },
+      {
+        "id": "cs307-final-q21",
+        "type": "multiple_choice",
+        "prompt": "What is the principle of \"secure by default\"?",
+        "options": [
+          "All systems should have maximum security settings enabled",
+          "Systems should be configured securely out of the box without requiring user action",
+          "Default passwords should be complex and random",
+          "Security features should be disabled by default for performance"
+        ],
+        "correctAnswer": "Systems should be configured securely out of the box without requiring user action",
+        "explanation": "Secure by default means systems ship with secure configurations enabled, rather than requiring users to manually enable security features. This reduces the risk of insecure deployments."
+      },
+      {
+        "id": "cs307-final-q22",
+        "type": "multiple_choice",
+        "prompt": "What is the security benefit of using an ORM (Object-Relational Mapping) framework?",
+        "options": [
+          "ORMs automatically encrypt all database data",
+          "ORMs typically use parameterized queries, reducing SQL injection risk",
+          "ORMs eliminate the need for input validation",
+          "ORMs prevent all types of database attacks"
+        ],
+        "correctAnswer": "ORMs typically use parameterized queries, reducing SQL injection risk",
+        "explanation": "ORMs generally use parameterized queries internally, which helps prevent SQL injection. However, they don't eliminate all risks - raw queries and other vulnerabilities can still exist."
+      },
+      {
+        "id": "cs307-final-q23",
+        "type": "multiple_choice",
+        "prompt": "What is race condition vulnerability in secure coding?",
+        "options": [
+          "When code runs too slowly and times out",
+          "When multiple threads access shared resources in an uncontrolled way, causing security issues",
+          "When database queries compete for resources",
+          "When network latency causes delays"
+        ],
+        "correctAnswer": "When multiple threads access shared resources in an uncontrolled way, causing security issues",
+        "explanation": "Race conditions occur when multiple threads/processes access shared data concurrently without proper synchronization. This can lead to security vulnerabilities like privilege escalation or data corruption."
+      },
+      {
+        "id": "cs307-final-q24",
+        "type": "multiple_choice",
+        "prompt": "Why is it important to validate file uploads on both client and server side?",
+        "options": [
+          "Client-side validation improves UX; server-side validation provides security",
+          "Client-side validation is sufficient for security",
+          "Server-side validation is only needed for performance",
+          "Both are equally important for security"
+        ],
+        "correctAnswer": "Client-side validation improves UX; server-side validation provides security",
+        "explanation": "Client-side validation can be bypassed by attackers, so it only improves user experience. Server-side validation is essential for security as it cannot be bypassed and enforces security policies."
+      },
+      {
+        "id": "cs307-final-q25",
+        "type": "multiple_choice",
+        "prompt": "What security measures should be implemented for file uploads?",
+        "options": [
+          "Accept any file type to maximize flexibility",
+          "Validate file type, size, scan for malware, and store outside web root",
+          "Only check file extensions",
+          "Store all uploads in the public web directory"
+        ],
+        "correctAnswer": "Validate file type, size, scan for malware, and store outside web root",
+        "explanation": "Secure file upload requires: validating actual file content (not just extension), limiting size, scanning for malware, storing outside the web root, and generating random filenames to prevent path traversal."
+      },
+      {
+        "id": "cs307-final-q26",
+        "type": "multiple_choice",
+        "prompt": "What is the primary purpose of TLS/SSL?",
+        "options": [
+          "To compress data for faster transmission",
+          "To provide encryption, authentication, and integrity for network communications",
+          "To route traffic through multiple servers",
+          "To block malicious IP addresses"
+        ],
+        "correctAnswer": "To provide encryption, authentication, and integrity for network communications",
+        "explanation": "TLS (Transport Layer Security) provides confidentiality through encryption, authentication via certificates, and integrity through message authentication codes to secure network communications."
+      },
+      {
+        "id": "cs307-final-q27",
+        "type": "multiple_choice",
+        "prompt": "What does a firewall primarily do?",
+        "options": [
+          "Encrypts all network traffic",
+          "Filters network traffic based on security rules",
+          "Scans files for viruses",
+          "Backs up network data"
+        ],
+        "correctAnswer": "Filters network traffic based on security rules",
+        "explanation": "Firewalls monitor and control network traffic based on predetermined security rules, allowing or blocking traffic between trusted and untrusted networks."
+      },
+      {
+        "id": "cs307-final-q28",
+        "type": "multiple_choice",
+        "prompt": "What is the difference between IDS and IPS?",
+        "options": [
+          "IDS detects threats while IPS detects and actively prevents/blocks threats",
+          "IDS is hardware-based while IPS is software-based",
+          "IDS monitors internal networks while IPS monitors external networks",
+          "There is no difference; they are the same thing"
+        ],
+        "correctAnswer": "IDS detects threats while IPS detects and actively prevents/blocks threats",
+        "explanation": "Intrusion Detection Systems (IDS) monitor and alert on suspicious activity. Intrusion Prevention Systems (IPS) also actively block or prevent detected threats from causing harm."
+      },
+      {
+        "id": "cs307-final-q29",
+        "type": "multiple_choice",
+        "prompt": "What is the primary security benefit of a VPN (Virtual Private Network)?",
+        "options": [
+          "Faster internet connection speeds",
+          "Encrypted tunnel for secure communication over untrusted networks",
+          "Free access to premium content",
+          "Automatic malware scanning"
+        ],
+        "correctAnswer": "Encrypted tunnel for secure communication over untrusted networks",
+        "explanation": "VPNs create encrypted tunnels between endpoints, protecting data confidentiality and integrity when communicating over untrusted networks like public WiFi or the internet."
+      },
+      {
+        "id": "cs307-final-q30",
+        "type": "multiple_choice",
+        "prompt": "What is DNS poisoning (DNS spoofing)?",
+        "options": [
+          "Overloading DNS servers with requests",
+          "Corrupting DNS cache to redirect users to malicious sites",
+          "Stealing DNS server credentials",
+          "Encrypting DNS records"
+        ],
+        "correctAnswer": "Corrupting DNS cache to redirect users to malicious sites",
+        "explanation": "DNS poisoning involves inserting false DNS records into cache, causing DNS queries to return incorrect IP addresses and redirecting users to malicious sites instead of legitimate ones."
+      },
+      {
+        "id": "cs307-final-q31",
+        "type": "multiple_choice",
+        "prompt": "What does DNSSEC provide?",
+        "options": [
+          "Encryption of DNS queries",
+          "Authentication and integrity of DNS responses",
+          "Faster DNS resolution",
+          "Automatic DNS caching"
+        ],
+        "correctAnswer": "Authentication and integrity of DNS responses",
+        "explanation": "DNSSEC (DNS Security Extensions) uses digital signatures to verify that DNS responses are authentic and have not been tampered with. It does not provide confidentiality (encryption)."
+      },
+      {
+        "id": "cs307-final-q32",
+        "type": "multiple_choice",
+        "prompt": "What is a man-in-the-middle (MITM) attack?",
+        "options": [
+          "An attacker intercepts and potentially alters communications between two parties",
+          "An attacker floods a server with requests",
+          "An attacker guesses passwords through brute force",
+          "An attacker injects code into web applications"
+        ],
+        "correctAnswer": "An attacker intercepts and potentially alters communications between two parties",
+        "explanation": "In MITM attacks, attackers position themselves between two communicating parties to intercept, read, or modify data. TLS/SSL with proper certificate validation helps prevent these attacks."
+      },
+      {
+        "id": "cs307-final-q33",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of network segmentation in security?",
+        "options": [
+          "To increase network speed",
+          "To isolate different parts of the network and limit breach impact",
+          "To reduce hardware costs",
+          "To simplify network management"
+        ],
+        "correctAnswer": "To isolate different parts of the network and limit breach impact",
+        "explanation": "Network segmentation divides networks into isolated zones, limiting lateral movement during breaches. If one segment is compromised, attackers cannot easily access other segments."
+      },
+      {
+        "id": "cs307-final-q34",
+        "type": "multiple_choice",
+        "prompt": "What is a DDoS (Distributed Denial of Service) attack?",
+        "options": [
+          "Stealing data from distributed databases",
+          "Overwhelming a target with traffic from multiple sources to make it unavailable",
+          "Encrypting files and demanding ransom",
+          "Injecting malicious code into multiple websites"
+        ],
+        "correctAnswer": "Overwhelming a target with traffic from multiple sources to make it unavailable",
+        "explanation": "DDoS attacks use multiple compromised systems to flood a target with traffic, exhausting resources and making the service unavailable to legitimate users."
+      },
+      {
+        "id": "cs307-final-q35",
+        "type": "multiple_choice",
+        "prompt": "What security control does HTTPS provide over HTTP?",
+        "options": [
+          "Faster page loading",
+          "Better search engine rankings",
+          "Encryption and authentication using TLS/SSL",
+          "Automatic content compression"
+        ],
+        "correctAnswer": "Encryption and authentication using TLS/SSL",
+        "explanation": "HTTPS uses TLS/SSL to encrypt data in transit, authenticate the server (via certificates), and ensure data integrity, protecting against eavesdropping and tampering."
+      },
+      {
+        "id": "cs307-final-q36",
+        "type": "multiple_choice",
+        "prompt": "What is certificate pinning?",
+        "options": [
+          "Storing certificates on physical devices",
+          "Hardcoding or caching expected certificates to prevent MITM attacks",
+          "Rotating certificates frequently",
+          "Using self-signed certificates"
+        ],
+        "correctAnswer": "Hardcoding or caching expected certificates to prevent MITM attacks",
+        "explanation": "Certificate pinning involves embedding or caching the expected certificate or public key in the application. This prevents MITM attacks using fraudulent certificates, even from compromised CAs."
+      },
+      {
+        "id": "cs307-final-q37",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of a WAF (Web Application Firewall)?",
+        "options": [
+          "To block all web traffic",
+          "To filter and monitor HTTP/HTTPS traffic to protect web applications",
+          "To encrypt web application data",
+          "To cache web application content"
+        ],
+        "correctAnswer": "To filter and monitor HTTP/HTTPS traffic to protect web applications",
+        "explanation": "WAFs inspect HTTP/HTTPS traffic to web applications, filtering malicious requests and protecting against attacks like SQL injection, XSS, and other OWASP Top 10 vulnerabilities."
+      },
+      {
+        "id": "cs307-final-q38",
+        "type": "multiple_choice",
+        "prompt": "What is the difference between vulnerability scanning and penetration testing?",
+        "options": [
+          "Vulnerability scanning is automated detection; penetration testing is manual exploitation",
+          "They are the same thing with different names",
+          "Vulnerability scanning is only for networks; penetration testing is only for applications",
+          "Penetration testing is automated while vulnerability scanning is manual"
+        ],
+        "correctAnswer": "Vulnerability scanning is automated detection; penetration testing is manual exploitation",
+        "explanation": "Vulnerability scanning uses automated tools to identify potential vulnerabilities. Penetration testing involves manual exploitation attempts to validate vulnerabilities and assess real-world impact."
+      },
+      {
+        "id": "cs307-final-q39",
+        "type": "multiple_choice",
+        "prompt": "What is Static Application Security Testing (SAST)?",
+        "options": [
+          "Testing applications while they are running",
+          "Analyzing source code for security vulnerabilities without executing it",
+          "Testing network security configurations",
+          "Scanning for malware in deployed applications"
+        ],
+        "correctAnswer": "Analyzing source code for security vulnerabilities without executing it",
+        "explanation": "SAST analyzes source code, bytecode, or binaries without executing the program to identify potential security vulnerabilities like SQL injection, buffer overflows, or insecure cryptography."
+      },
+      {
+        "id": "cs307-final-q40",
+        "type": "multiple_choice",
+        "prompt": "What is Dynamic Application Security Testing (DAST)?",
+        "options": [
+          "Analyzing source code without execution",
+          "Testing running applications by simulating attacks",
+          "Reviewing code during development",
+          "Static analysis of configuration files"
+        ],
+        "correctAnswer": "Testing running applications by simulating attacks",
+        "explanation": "DAST tests running applications from the outside by sending various inputs and analyzing responses, similar to how an attacker would probe for vulnerabilities without access to source code."
+      },
+      {
+        "id": "cs307-final-q41",
+        "type": "multiple_choice",
+        "prompt": "What is fuzzing in security testing?",
+        "options": [
+          "Encrypting test data for security",
+          "Providing invalid, unexpected, or random data as input to find vulnerabilities",
+          "Obfuscating code to prevent reverse engineering",
+          "Testing with incomplete or partial data"
+        ],
+        "correctAnswer": "Providing invalid, unexpected, or random data as input to find vulnerabilities",
+        "explanation": "Fuzzing involves automatically generating and submitting malformed, unexpected, or random data to applications to discover crashes, memory leaks, or security vulnerabilities."
+      },
+      {
+        "id": "cs307-final-q42",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of security code review?",
+        "options": [
+          "To check code formatting and style",
+          "To manually examine code for security vulnerabilities and insecure practices",
+          "To optimize code performance",
+          "To document code functionality"
+        ],
+        "correctAnswer": "To manually examine code for security vulnerabilities and insecure practices",
+        "explanation": "Security code review involves manual inspection of source code by security experts to identify vulnerabilities, insecure patterns, and violations of secure coding practices that automated tools might miss."
+      },
+      {
+        "id": "cs307-final-q43",
+        "type": "multiple_choice",
+        "prompt": "What is a bug bounty program?",
+        "options": [
+          "An internal program to track software bugs",
+          "A program that rewards external researchers for finding and reporting vulnerabilities",
+          "Automated bug detection software",
+          "A training program for security testers"
+        ],
+        "correctAnswer": "A program that rewards external researchers for finding and reporting vulnerabilities",
+        "explanation": "Bug bounty programs incentivize external security researchers to find and responsibly disclose vulnerabilities in exchange for rewards, leveraging the broader security community."
+      },
+      {
+        "id": "cs307-final-q44",
+        "type": "multiple_choice",
+        "prompt": "What is the principle of \"responsible disclosure\" in security research?",
+        "options": [
+          "Immediately publishing all vulnerabilities found",
+          "Reporting vulnerabilities to vendors privately and allowing time to fix before public disclosure",
+          "Selling vulnerability information to the highest bidder",
+          "Never disclosing vulnerabilities publicly"
+        ],
+        "correctAnswer": "Reporting vulnerabilities to vendors privately and allowing time to fix before public disclosure",
+        "explanation": "Responsible disclosure involves privately informing vendors of vulnerabilities and giving them reasonable time to develop and deploy fixes before making the vulnerability public."
+      },
+      {
+        "id": "cs307-final-q45",
+        "type": "multiple_choice",
+        "prompt": "What is the OWASP Testing Guide used for?",
+        "options": [
+          "Training developers in secure coding",
+          "Providing a comprehensive framework for web application security testing",
+          "Automating security scans",
+          "Certifying security professionals"
+        ],
+        "correctAnswer": "Providing a comprehensive framework for web application security testing",
+        "explanation": "The OWASP Testing Guide is a comprehensive resource that provides methodologies, techniques, and best practices for testing web application security across various vulnerability categories."
+      },
+      {
+        "id": "cs307-final-q46",
+        "type": "multiple_choice",
+        "prompt": "What is regression testing in the context of security?",
+        "options": [
+          "Testing older versions of software",
+          "Verifying that security fixes don't introduce new vulnerabilities or break functionality",
+          "Testing for performance degradation",
+          "Reverting to previous software versions"
+        ],
+        "correctAnswer": "Verifying that security fixes don't introduce new vulnerabilities or break functionality",
+        "explanation": "Security regression testing ensures that security patches and updates don't introduce new vulnerabilities or break existing functionality, and that previously fixed vulnerabilities remain fixed."
+      },
+      {
+        "id": "cs307-final-q47",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of threat intelligence in security testing?",
+        "options": [
+          "To encrypt sensitive test data",
+          "To inform testing strategies with knowledge of current threats and attack techniques",
+          "To automate security scans",
+          "To generate test cases automatically"
+        ],
+        "correctAnswer": "To inform testing strategies with knowledge of current threats and attack techniques",
+        "explanation": "Threat intelligence provides information about current threats, attack patterns, and vulnerabilities in the wild, allowing security testing to focus on the most relevant and likely attack vectors."
+      },
+      {
+        "id": "cs307-final-q48",
+        "type": "multiple_choice",
+        "prompt": "What is security orchestration in the context of security testing and response?",
+        "options": [
+          "Coordinating multiple security tools and processes to work together efficiently",
+          "Organizing security team members",
+          "Scheduling security tests",
+          "Prioritizing vulnerability fixes"
+        ],
+        "correctAnswer": "Coordinating multiple security tools and processes to work together efficiently",
+        "explanation": "Security orchestration involves integrating and coordinating various security tools, processes, and workflows to automate responses and improve efficiency in detecting, analyzing, and responding to threats."
+      },
+      {
+        "id": "cs307-final-q49",
+        "type": "multiple_choice",
+        "prompt": "What is the primary goal of red team exercises?",
+        "options": [
+          "To train new security staff",
+          "To simulate real-world attacks and test an organization's detection and response capabilities",
+          "To develop new security tools",
+          "To audit compliance requirements"
+        ],
+        "correctAnswer": "To simulate real-world attacks and test an organization's detection and response capabilities",
+        "explanation": "Red team exercises involve skilled security professionals simulating sophisticated attacks to test how well an organization can detect, respond to, and recover from real-world threats."
+      },
+      {
+        "id": "cs307-final-q50",
+        "type": "multiple_choice",
+        "prompt": "What is the role of a blue team in security exercises?",
+        "options": [
+          "To attack the organization's systems",
+          "To defend against attacks and improve security posture",
+          "To develop new applications",
+          "To manage security budgets"
+        ],
+        "correctAnswer": "To defend against attacks and improve security posture",
+        "explanation": "Blue teams are responsible for defending the organization's systems, detecting attacks (including red team exercises), responding to incidents, and continuously improving security controls."
+      },
+      {
+        "id": "cs307-final-q51",
+        "type": "multiple_choice",
+        "prompt": "What is the main advantage of integrating security testing into CI/CD pipelines?",
+        "options": [
+          "Faster deployment times",
+          "Early detection of vulnerabilities before production deployment",
+          "Reduced infrastructure costs",
+          "Simplified code review process"
+        ],
+        "correctAnswer": "Early detection of vulnerabilities before production deployment",
+        "explanation": "Integrating security testing into CI/CD (DevSecOps) catches vulnerabilities early in the development cycle when they're cheaper and easier to fix, preventing insecure code from reaching production."
+      },
+      {
+        "id": "cs307-final-q52",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of security baseline testing?",
+        "options": [
+          "To establish minimum acceptable security configurations and verify compliance",
+          "To test the fastest possible deployment",
+          "To determine maximum system capacity",
+          "To optimize application performance"
+        ],
+        "correctAnswer": "To establish minimum acceptable security configurations and verify compliance",
+        "explanation": "Security baseline testing verifies that systems meet minimum security configuration standards (hardening guides, CIS benchmarks) and helps maintain consistent security posture across the organization."
+      }
+    ]
+  }
+]

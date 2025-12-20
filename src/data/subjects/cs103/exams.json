@@ -1,0 +1,774 @@
+[
+  {
+    "id": "cs103-exam-midterm",
+    "subjectId": "cs103",
+    "title": "CS103 Midterm (OOP Foundations)",
+    "durationMinutes": 75,
+    "instructions": [
+      "Closed-book style: rely on concepts, not copy/paste.",
+      "Answer all questions; passing is 70% or higher.",
+      "Fill-in answers are case-sensitive unless specified.",
+      "Coding prompts include runnable tests—ensure they pass."
+    ],
+    "questions": [
+      {
+        "id": "mid-q1",
+        "type": "multiple_choice",
+        "prompt": "What is the best description of an object?",
+        "options": [
+          "A blueprint for creating data",
+          "An instance of a class with its own state",
+          "A Python module",
+          "A function with parameters"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Objects are instances of classes and store per-instance state."
+      },
+      {
+        "id": "mid-q2",
+        "type": "fill_blank",
+        "prompt": "The special method called when an object is created is ____.",
+        "correctAnswer": "__init__",
+        "explanation": "`__init__` initializes a newly created instance."
+      },
+      {
+        "id": "mid-q3",
+        "type": "code_output",
+        "prompt": "What is printed by this code?",
+        "codeSnippet": "class A:\n    x = 0\n    def __init__(self):\n        A.x += 1\n\nA()\nA()\nprint(A.x)",
+        "correctAnswer": "2",
+        "explanation": "`x` is a class variable; each instantiation increments `A.x`."
+      },
+      {
+        "id": "mid-q4",
+        "type": "true_false",
+        "prompt": "In Python, instance attributes can always be added dynamically to an object at runtime.",
+        "correctAnswer": false,
+        "explanation": "Often yes, but classes using `__slots__` can restrict which attributes are allowed."
+      },
+      {
+        "id": "mid-q5",
+        "type": "multiple_choice",
+        "prompt": "Which dunder method is used to define behavior for the `+` operator?",
+        "options": [
+          "__plus__",
+          "__add__",
+          "__sum__",
+          "__concat__"
+        ],
+        "correctAnswer": 1,
+        "explanation": "`__add__` implements addition for a custom type."
+      },
+      {
+        "id": "mid-q6",
+        "type": "code_output",
+        "prompt": "What is printed by this code?",
+        "codeSnippet": "class C:\n    def __repr__(self):\n        return \"C()\"\n\nprint(C())",
+        "correctAnswer": "C()",
+        "explanation": "If `__str__` is not defined, `print(obj)` falls back to `__repr__`."
+      },
+      {
+        "id": "mid-q7",
+        "type": "fill_blank",
+        "prompt": "A method bound to the class (receives `cls`) uses the ____ decorator.",
+        "correctAnswer": "classmethod",
+        "explanation": "`@classmethod` defines a method that receives `cls` rather than `self`."
+      },
+      {
+        "id": "mid-q8",
+        "type": "multiple_choice",
+        "prompt": "Encapsulation is primarily about:",
+        "options": [
+          "Creating many subclasses",
+          "Hiding internal state and exposing a safe public interface",
+          "Overloading operators for readability",
+          "Using recursion instead of loops"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Encapsulation protects invariants and reduces coupling by exposing a controlled interface."
+      },
+      {
+        "id": "mid-q9",
+        "type": "multiple_choice",
+        "prompt": "In Python, what does a leading underscore (e.g., `_balance`) conventionally indicate?",
+        "options": [
+          "Truly private, inaccessible",
+          "Internal/protected by convention",
+          "Constant value",
+          "Static variable"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Python uses conventions: `_name` indicates internal/protected usage."
+      },
+      {
+        "id": "mid-q10",
+        "type": "fill_blank",
+        "prompt": "To define a setter for `@property def x(self)`, you write `@x.____`.",
+        "correctAnswer": "setter",
+        "explanation": "Property setters use `@prop_name.setter`."
+      },
+      {
+        "id": "mid-q11",
+        "type": "code_output",
+        "prompt": "What is printed by this code?",
+        "codeSnippet": "class Box:\n    def __init__(self, items):\n        self._items = items\n    @property\n    def items(self):\n        return list(self._items)\n\nb = Box([1, 2])\ncopy = b.items\ncopy.append(3)\nprint(b.items)",
+        "correctAnswer": "[1, 2]",
+        "explanation": "The property returns a copy, so mutations of the returned list do not affect internal state."
+      },
+      {
+        "id": "mid-q12",
+        "type": "true_false",
+        "prompt": "Name mangling for `__x` prevents any access to the attribute from outside the class.",
+        "correctAnswer": false,
+        "explanation": "Name mangling discourages accidental access but can still be accessed as `_ClassName__x`."
+      },
+      {
+        "id": "mid-q13",
+        "type": "written",
+        "prompt": "Explain (briefly) why returning defensive copies from getters can improve class design.",
+        "correctAnswer": "defensive copies",
+        "explanation": "Defensive copies prevent callers from mutating internal state directly, preserving invariants and reducing coupling.",
+        "modelAnswer": "Returning a defensive copy (e.g., `list(self._items)` or `dict(self._data)`) prevents external code from modifying a class’s internal mutable state without going through the class’s API. This helps maintain invariants, makes bugs less likely, and allows internal representations to change without breaking callers."
+      },
+      {
+        "id": "mid-q14",
+        "type": "multiple_choice",
+        "prompt": "Inheritance most directly models which relationship?",
+        "options": [
+          "Has-a",
+          "Is-a",
+          "Depends-on",
+          "Contained-in"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Inheritance expresses an “is-a” relationship between a subclass and its base class."
+      },
+      {
+        "id": "mid-q15",
+        "type": "fill_blank",
+        "prompt": "The function used to access the next method in the MRO (typically the parent) is ____.",
+        "correctAnswer": "super",
+        "explanation": "`super()` calls the next implementation in the method resolution order."
+      },
+      {
+        "id": "mid-q16",
+        "type": "code_output",
+        "prompt": "What is printed by this code?",
+        "codeSnippet": "class A:\n    def f(self): return \"A\"\nclass B(A):\n    def f(self): return \"B\"\nclass C(A):\n    def f(self): return \"C\"\nclass D(B, C):\n    pass\n\nprint(D().f())",
+        "correctAnswer": "B",
+        "explanation": "MRO checks `B` before `C` for `D(B, C)`."
+      },
+      {
+        "id": "mid-q17",
+        "type": "true_false",
+        "prompt": "Duck typing enables polymorphism without requiring explicit inheritance.",
+        "correctAnswer": true,
+        "explanation": "If an object has the needed methods/attributes, it can be used regardless of class hierarchy."
+      },
+      {
+        "id": "mid-q18",
+        "type": "multiple_choice",
+        "prompt": "What does MRO stand for?",
+        "options": [
+          "Method Runtime Override",
+          "Memory Read Only",
+          "Method Resolution Order",
+          "Multiple Return Output"
+        ],
+        "correctAnswer": 2,
+        "explanation": "MRO is Method Resolution Order."
+      },
+      {
+        "id": "mid-q19",
+        "type": "code_output",
+        "prompt": "What is printed by this code?",
+        "codeSnippet": "class Base:\n    def __init__(self):\n        self.x = 1\nclass Child(Base):\n    def __init__(self):\n        super().__init__()\n        self.x += 2\n\nprint(Child().x)",
+        "correctAnswer": "3",
+        "explanation": "Base sets x=1, child adds 2."
+      },
+      {
+        "id": "mid-q20",
+        "type": "multiple_choice",
+        "prompt": "Which is a common sign that composition might be better than inheritance?",
+        "options": [
+          "You are modeling a clear “is-a” relationship",
+          "You need polymorphic substitution",
+          "You are inheriting mainly to reuse a few helper methods",
+          "You want a shared interface for many implementations"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Inheritance used only for code reuse can create tight coupling; composition is often cleaner."
+      },
+      {
+        "id": "mid-q21",
+        "type": "code_output",
+        "prompt": "What is printed by this code?",
+        "codeSnippet": "class Dog:\n    def speak(self): return \"woof\"\nclass Cat:\n    def speak(self): return \"meow\"\n\ndef chorus(animals):\n    for a in animals:\n        print(a.speak())\n\nchorus([Dog(), Cat()])",
+        "correctAnswer": "woof\nmeow",
+        "explanation": "Both classes implement `speak`, so the same function works for both."
+      },
+      {
+        "id": "mid-q22",
+        "type": "coding",
+        "prompt": "Implement a class `Temperature` with a property `celsius` that rejects values below -273.15 (raise ValueError).",
+        "starterCode": "class Temperature:\n    def __init__(self, celsius):\n        # TODO\n        pass\n\n    @property\n    def celsius(self):\n        # TODO\n        pass\n\n    @celsius.setter\n    def celsius(self, value):\n        # TODO\n        pass\n",
+        "language": "python",
+        "solution": "class Temperature:\n    def __init__(self, celsius):\n        self.celsius = celsius\n\n    @property\n    def celsius(self):\n        return self._celsius\n\n    @celsius.setter\n    def celsius(self, value):\n        if value < -273.15:\n            raise ValueError(\"below absolute zero\")\n        self._celsius = value\n",
+        "testCases": [
+          {
+            "input": "t = Temperature(0)\nprint(t.celsius)",
+            "isHidden": false,
+            "description": "Stores 0"
+          },
+          {
+            "input": "t = Temperature(1); t.celsius = 10; print(t.celsius)",
+            "isHidden": false,
+            "description": "Setter updates"
+          },
+          {
+            "input": "try:\n    Temperature(-300)\n    print(\"no\")\nexcept ValueError:\n    print(\"yes\")",
+            "isHidden": true,
+            "description": "Reject below absolute zero"
+          }
+        ],
+        "correctAnswer": true,
+        "explanation": "Use a backing field and validate in the property setter."
+      },
+      {
+        "id": "mid-q23",
+        "type": "coding",
+        "prompt": "Implement a class `Vector2D(x, y)` with `__add__` (vector addition) and `__repr__` returning `Vector2D(x, y)`.",
+        "starterCode": "class Vector2D:\n    def __init__(self, x, y):\n        # TODO\n        pass\n\n    def __add__(self, other):\n        # TODO\n        pass\n\n    def __repr__(self):\n        # TODO\n        pass\n",
+        "language": "python",
+        "solution": "class Vector2D:\n    def __init__(self, x, y):\n        self.x = x\n        self.y = y\n\n    def __add__(self, other):\n        return Vector2D(self.x + other.x, self.y + other.y)\n\n    def __repr__(self):\n        return f\"Vector2D({self.x}, {self.y})\"\n",
+        "testCases": [
+          {
+            "input": "print(Vector2D(1,2) + Vector2D(3,4))",
+            "isHidden": false,
+            "description": "Adds components"
+          },
+          {
+            "input": "v = Vector2D(-1,5) + Vector2D(1,-2)\nprint(v)",
+            "isHidden": false,
+            "description": "Handles negatives"
+          },
+          {
+            "input": "print(repr(Vector2D(0,0)))",
+            "isHidden": true,
+            "description": "repr format"
+          }
+        ],
+        "correctAnswer": true,
+        "explanation": "Overload `+` by implementing `__add__` and return a new Vector2D."
+      },
+      {
+        "id": "mid-q24",
+        "type": "multiple_choice",
+        "prompt": "Which built-in function calls `__len__` under the hood?",
+        "options": [
+          "sum",
+          "len",
+          "print",
+          "repr"
+        ],
+        "correctAnswer": 1,
+        "explanation": "`len(obj)` calls `obj.__len__()`."
+      },
+      {
+        "id": "mid-q25",
+        "type": "code_output",
+        "prompt": "What is printed by this code?",
+        "codeSnippet": "class A:\n    def __len__(self): return 3\n\nprint(len(A()))",
+        "correctAnswer": "3",
+        "explanation": "`len()` uses the object’s `__len__` implementation."
+      },
+      {
+        "id": "mid-q26",
+        "type": "multiple_choice",
+        "prompt": "Which statement about `@staticmethod` is correct?",
+        "options": [
+          "It receives `self` automatically",
+          "It receives `cls` automatically",
+          "It receives no automatic first argument",
+          "It can only be used in abstract classes"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Static methods are functions stored on a class; no implicit `self`/`cls` is passed."
+      },
+      {
+        "id": "mid-q27",
+        "type": "true_false",
+        "prompt": "Overriding a method in a subclass is one common way to implement polymorphism.",
+        "correctAnswer": true,
+        "explanation": "Different subclasses can respond to the same method name with different behavior."
+      },
+      {
+        "id": "mid-q28",
+        "type": "fill_blank",
+        "prompt": "The dunder method used for a user-friendly string representation is ____.",
+        "correctAnswer": "__str__",
+        "explanation": "`__str__` is intended for user-facing output."
+      }
+    ]
+  },
+  {
+    "id": "cs103-exam-final",
+    "subjectId": "cs103",
+    "title": "CS103 Final (OOP + Design)",
+    "durationMinutes": 120,
+    "instructions": [
+      "Closed-book style: rely on concepts, not copy/paste.",
+      "Answer all questions; passing is 70% or higher.",
+      "Fill-in answers are case-sensitive unless specified.",
+      "Coding prompts include runnable tests—ensure they pass.",
+      "Written answers are graded for correctness and clarity."
+    ],
+    "questions": [
+      {
+        "id": "final-q1",
+        "type": "multiple_choice",
+        "prompt": "Which is the best definition of polymorphism?",
+        "options": [
+          "Many classes in one file",
+          "The same interface working with different concrete types",
+          "A class with many attributes",
+          "A function with many parameters"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Polymorphism allows the same operation/interface to apply to multiple types."
+      },
+      {
+        "id": "final-q2",
+        "type": "true_false",
+        "prompt": "A property can be computed dynamically and does not have to store a backing field.",
+        "correctAnswer": true,
+        "explanation": "Properties can compute values from other fields on access."
+      },
+      {
+        "id": "final-q3",
+        "type": "fill_blank",
+        "prompt": "The dunder method that customizes object creation before `__init__` is ____.",
+        "correctAnswer": "__new__",
+        "explanation": "`__new__` creates the instance; `__init__` initializes it."
+      },
+      {
+        "id": "final-q4",
+        "type": "code_output",
+        "prompt": "What is printed by this code?",
+        "codeSnippet": "class A:\n    def __str__(self): return \"str\"\n    def __repr__(self): return \"repr\"\n\nprint(str(A()))\nprint(repr(A()))",
+        "correctAnswer": "str\nrepr",
+        "explanation": "`str()` uses `__str__`; `repr()` uses `__repr__`."
+      },
+      {
+        "id": "final-q5",
+        "type": "multiple_choice",
+        "prompt": "Which is the best reason to prefer composition over inheritance?",
+        "options": [
+          "Composition always runs faster",
+          "Composition can reduce coupling and make behavior easier to swap",
+          "Inheritance cannot implement polymorphism",
+          "Inheritance is not supported in Python"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Composition lets you swap parts without deep hierarchies and reduces fragile coupling."
+      },
+      {
+        "id": "final-q6",
+        "type": "code_output",
+        "prompt": "What does this code print?",
+        "codeSnippet": "class A:\n    def f(self): return \"A\"\nclass B(A):\n    def f(self): return \"B\"\n\ndef g(x: A):\n    return x.f()\n\nprint(g(B()))",
+        "correctAnswer": "B",
+        "explanation": "Subclasses can be used where the base type is expected (substitutability)."
+      },
+      {
+        "id": "final-q7",
+        "type": "multiple_choice",
+        "prompt": "What does the Dependency Inversion Principle (DIP) encourage?",
+        "options": [
+          "High-level code should depend on low-level details",
+          "Both high-level and low-level code should depend on abstractions",
+          "Never use interfaces",
+          "Only use singletons for dependencies"
+        ],
+        "correctAnswer": 1,
+        "explanation": "DIP reduces coupling by depending on stable abstractions rather than concrete details."
+      },
+      {
+        "id": "final-q8",
+        "type": "fill_blank",
+        "prompt": "In `typing`, an interface based on required methods (not explicit inheritance) is called a ____.",
+        "correctAnswer": "Protocol",
+        "explanation": "Protocols express structural typing (“has the right methods”)."
+      },
+      {
+        "id": "final-q9",
+        "type": "true_false",
+        "prompt": "Deep inheritance hierarchies can make refactoring risky because changes in base classes can affect many subclasses.",
+        "correctAnswer": true,
+        "explanation": "Inheritance couples subclasses to base behavior; changes can ripple through the hierarchy."
+      },
+      {
+        "id": "final-q10",
+        "type": "written",
+        "prompt": "Explain the difference between “is-a” and “has-a” relationships and give one example of each.",
+        "correctAnswer": "relationships",
+        "explanation": "“Is-a” is inheritance; “has-a” is composition.",
+        "modelAnswer": "“Is-a” describes inheritance/subtyping: a `Dog` is an `Animal`, so `Dog(Animal)` can override/extend behavior. “Has-a” describes composition: a `Car` has an `Engine`, so the `Car` stores an `Engine` instance and delegates to it. Inheritance models specialization; composition models collaboration/containment."
+      },
+      {
+        "id": "final-q11",
+        "type": "multiple_choice",
+        "prompt": "Which pattern is primarily used to create objects without exposing concrete classes to callers?",
+        "options": [
+          "Observer",
+          "Factory",
+          "Decorator",
+          "Adapter"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Factories decouple object creation from use."
+      },
+      {
+        "id": "final-q12",
+        "type": "multiple_choice",
+        "prompt": "Which pattern adds behavior to an object without modifying its class?",
+        "options": [
+          "Decorator",
+          "Singleton",
+          "Factory",
+          "Template Method"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Decorator wraps an object and extends behavior while preserving the interface."
+      },
+      {
+        "id": "final-q13",
+        "type": "multiple_choice",
+        "prompt": "Which pattern translates one interface into another expected by clients?",
+        "options": [
+          "Adapter",
+          "Observer",
+          "Strategy",
+          "Singleton"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Adapter wraps an object to present a compatible interface."
+      },
+      {
+        "id": "final-q14",
+        "type": "multiple_choice",
+        "prompt": "Which pattern is used for event-driven notifications to multiple listeners?",
+        "options": [
+          "Observer",
+          "Factory",
+          "Adapter",
+          "Facade"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Observer notifies subscribers when an event occurs."
+      },
+      {
+        "id": "final-q15",
+        "type": "code_output",
+        "prompt": "What is printed by this code?",
+        "codeSnippet": "class Notifier:\n    def __init__(self):\n        self._subs = []\n    def subscribe(self, fn):\n        self._subs.append(fn)\n    def notify(self, msg):\n        for fn in self._subs:\n            fn(msg)\n\nn = Notifier()\nn.subscribe(lambda m: print(\"A:\" + m))\nn.subscribe(lambda m: print(\"B:\" + m))\nn.notify(\"hi\")",
+        "correctAnswer": "A:hi\nB:hi",
+        "explanation": "Two subscribers are notified in the order they were subscribed."
+      },
+      {
+        "id": "final-q16",
+        "type": "true_false",
+        "prompt": "Singletons can make testing harder by hiding dependencies and introducing global mutable state.",
+        "correctAnswer": true,
+        "explanation": "Singletons often behave like globals and can cause hidden coupling."
+      },
+      {
+        "id": "final-q17",
+        "type": "fill_blank",
+        "prompt": "In the Strategy pattern, you typically swap out an object representing an algorithm/policy called a ____.",
+        "correctAnswer": "strategy",
+        "explanation": "The strategy object provides interchangeable behavior."
+      },
+      {
+        "id": "final-q18",
+        "type": "code_output",
+        "prompt": "What is printed by this code?",
+        "codeSnippet": "class Service:\n    def run(self): return \"ok\"\n\nclass LoggingDecorator:\n    def __init__(self, svc): self._svc = svc\n    def run(self): return \"LOG:\" + self._svc.run()\n\nprint(LoggingDecorator(Service()).run())",
+        "correctAnswer": "LOG:ok",
+        "explanation": "Decorator wraps the service and adds logging behavior."
+      },
+      {
+        "id": "final-q19",
+        "type": "multiple_choice",
+        "prompt": "Which pattern provides a simplified interface over a complex subsystem?",
+        "options": [
+          "Facade",
+          "Observer",
+          "Decorator",
+          "Strategy"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Facade hides subsystem complexity behind a simple API."
+      },
+      {
+        "id": "final-q20",
+        "type": "true_false",
+        "prompt": "Patterns are mandatory templates that must be followed exactly as written.",
+        "correctAnswer": false,
+        "explanation": "Patterns are adaptable templates; they should be used when they solve a real problem."
+      },
+      {
+        "id": "final-q21",
+        "type": "multiple_choice",
+        "prompt": "Which is an anti-pattern?",
+        "options": [
+          "God Object",
+          "Strategy",
+          "Adapter",
+          "Factory"
+        ],
+        "correctAnswer": 0,
+        "explanation": "God Object centralizes too much responsibility and becomes hard to maintain/test."
+      },
+      {
+        "id": "final-q22",
+        "type": "fill_blank",
+        "prompt": "A common technique to improve testability is dependency ____ (passing dependencies in).",
+        "correctAnswer": "injection",
+        "explanation": "Dependency injection reduces coupling and makes dependencies swappable in tests."
+      },
+      {
+        "id": "final-q23",
+        "type": "multiple_choice",
+        "prompt": "What is a key benefit of coding to an interface/abstraction?",
+        "options": [
+          "It guarantees faster runtime",
+          "It reduces coupling and makes implementations swappable",
+          "It removes the need for tests",
+          "It forbids inheritance"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Abstractions allow new implementations without changing callers."
+      },
+      {
+        "id": "final-q24",
+        "type": "true_false",
+        "prompt": "Abstract base classes (ABCs) can prevent instantiation if abstract methods are not implemented.",
+        "correctAnswer": true,
+        "explanation": "Python raises TypeError when instantiating an abstract class with unimplemented abstract methods."
+      },
+      {
+        "id": "final-q25",
+        "type": "multiple_choice",
+        "prompt": "Which module is used to define ABCs and abstract methods?",
+        "options": [
+          "typing",
+          "abc",
+          "dataclasses",
+          "inspect"
+        ],
+        "correctAnswer": 1,
+        "explanation": "`abc` provides `ABC` and `@abstractmethod`."
+      },
+      {
+        "id": "final-q26",
+        "type": "code_output",
+        "prompt": "What happens when you run this code?",
+        "codeSnippet": "from abc import ABC, abstractmethod\n\nclass A(ABC):\n    @abstractmethod\n    def f(self): pass\n\nA()",
+        "correctAnswer": "TypeError",
+        "explanation": "Abstract classes with unimplemented abstract methods cannot be instantiated (TypeError)."
+      },
+      {
+        "id": "final-q27",
+        "type": "multiple_choice",
+        "prompt": "Which is a risk of overly large interfaces?",
+        "options": [
+          "They reduce memory use",
+          "They force implementations to include irrelevant methods",
+          "They prevent polymorphism",
+          "They improve cohesion"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Large interfaces hurt cohesion and increase coupling (interface bloat)."
+      },
+      {
+        "id": "final-q28",
+        "type": "written",
+        "prompt": "Briefly explain why “small, focused interfaces” are usually better than “large, do-everything interfaces”.",
+        "correctAnswer": "focused",
+        "explanation": "Small interfaces are easier to implement, test, and evolve without breaking consumers.",
+        "modelAnswer": "Small, focused interfaces improve cohesion and reduce coupling. Implementers only need to support relevant operations (fewer meaningless stubs), and consumers depend on fewer methods, so changes are less likely to break code. This also makes testing simpler and enables better substitution and composition."
+      },
+      {
+        "id": "final-q29",
+        "type": "fill_blank",
+        "prompt": "Structural typing checks whether an object ____ the required methods, not whether it inherits from a specific class.",
+        "correctAnswer": "has",
+        "explanation": "Structural typing is based on shape/behavior (“has-a method”), not explicit inheritance."
+      },
+      {
+        "id": "final-q30",
+        "type": "multiple_choice",
+        "prompt": "When might an ABC be preferable to a Protocol?",
+        "options": [
+          "When you want runtime `isinstance` checks and shared template logic",
+          "When you want no inheritance anywhere",
+          "When you only care about output formatting",
+          "When you want to avoid abstractions entirely"
+        ],
+        "correctAnswer": 0,
+        "explanation": "ABCs support runtime checks and can contain shared base logic."
+      },
+      {
+        "id": "final-q31",
+        "type": "coding",
+        "prompt": "Write a class `EventBus` with `subscribe(fn)`, `unsubscribe(fn)`, and `publish(message)` that notifies all subscribers.",
+        "starterCode": "class EventBus:\n    def __init__(self):\n        # TODO\n        pass\n    def subscribe(self, fn):\n        pass\n    def unsubscribe(self, fn):\n        pass\n    def publish(self, message):\n        pass\n",
+        "language": "python",
+        "solution": "class EventBus:\n    def __init__(self):\n        self._subs = []\n    def subscribe(self, fn):\n        self._subs.append(fn)\n    def unsubscribe(self, fn):\n        self._subs = [s for s in self._subs if s is not fn]\n    def publish(self, message):\n        for fn in list(self._subs):\n            fn(message)\n",
+        "testCases": [
+          {
+            "input": "bus = EventBus(); out = []\ndef f(m): out.append(\"f:\" + m)\ndef g(m): out.append(\"g:\" + m)\nbus.subscribe(f); bus.subscribe(g); bus.publish(\"x\")\nprint(out)",
+            "isHidden": false,
+            "description": "Two subscribers notified"
+          },
+          {
+            "input": "bus = EventBus(); out = []\ndef f(m): out.append(m)\nbus.subscribe(f); bus.publish(\"a\"); bus.unsubscribe(f); bus.publish(\"b\")\nprint(out)",
+            "isHidden": false,
+            "description": "Unsubscribe works"
+          },
+          {
+            "input": "bus = EventBus(); bus.publish(\"x\"); print(\"ok\")",
+            "isHidden": true,
+            "description": "No subscribers ok"
+          }
+        ],
+        "correctAnswer": true,
+        "explanation": "Maintain a list of subscriber callables and notify them on publish."
+      },
+      {
+        "id": "final-q32",
+        "type": "coding",
+        "prompt": "Write a class `Validator` that takes a list of rules (objects with `check(text) -> bool`) and returns True only if all rules pass.",
+        "starterCode": "class Validator:\n    def __init__(self, rules):\n        pass\n    def is_valid(self, text):\n        pass\n",
+        "language": "python",
+        "solution": "class Validator:\n    def __init__(self, rules):\n        self.rules = list(rules)\n    def is_valid(self, text):\n        return all(r.check(text) for r in self.rules)\n",
+        "testCases": [
+          {
+            "input": "class MinLen:\n    def __init__(self, n): self.n=n\n    def check(self, t): return len(t)>=self.n\n\nv = Validator([MinLen(3)])\nprint(v.is_valid(\"abc\"), v.is_valid(\"ab\"))",
+            "isHidden": false,
+            "description": "Single rule"
+          },
+          {
+            "input": "class HasA:\n    def check(self, t): return \"a\" in t\nclass MinLen:\n    def __init__(self, n): self.n=n\n    def check(self, t): return len(t)>=self.n\n\nv = Validator([HasA(), MinLen(3)])\nprint(v.is_valid(\"cat\"), v.is_valid(\"bbb\"))",
+            "isHidden": false,
+            "description": "Two rules combined"
+          },
+          {
+            "input": "v = Validator([])\nprint(v.is_valid(\"anything\"))",
+            "isHidden": true,
+            "description": "No rules => True"
+          }
+        ],
+        "correctAnswer": true,
+        "explanation": "Validator composes rule objects and uses `all(...)` to combine results."
+      },
+      {
+        "id": "final-q33",
+        "type": "multiple_choice",
+        "prompt": "What is the main benefit of dependency injection for testing?",
+        "options": [
+          "It makes code shorter",
+          "It allows replacing dependencies with fakes/stubs",
+          "It prevents exceptions",
+          "It enforces inheritance"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Injected dependencies can be replaced with fakes/stubs/spies during tests."
+      },
+      {
+        "id": "final-q34",
+        "type": "true_false",
+        "prompt": "Unit tests should usually assert public behavior rather than private implementation details.",
+        "correctAnswer": true,
+        "explanation": "Asserting private details makes tests brittle during refactoring."
+      },
+      {
+        "id": "final-q35",
+        "type": "multiple_choice",
+        "prompt": "Which is a reasonable guideline for constructors (`__init__`)?",
+        "options": [
+          "Do network calls in __init__ to ensure readiness",
+          "Keep __init__ cheap; avoid slow/external side effects",
+          "Always print debug output from __init__",
+          "Never store arguments on self"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Cheap constructors improve testability and reduce surprises."
+      },
+      {
+        "id": "final-q36",
+        "type": "code_output",
+        "prompt": "What is printed by this code?",
+        "codeSnippet": "class Counter:\n    def __init__(self):\n        self.n = 0\n    def inc(self):\n        self.n += 1\n\nc = Counter()\nc.inc()\nprint(c.n)",
+        "correctAnswer": "1",
+        "explanation": "Instance state is updated by calling the instance method."
+      },
+      {
+        "id": "final-q37",
+        "type": "fill_blank",
+        "prompt": "Refactoring improves internal structure without changing ____ behavior.",
+        "correctAnswer": "external",
+        "explanation": "Refactoring preserves externally observable behavior while changing internal design."
+      },
+      {
+        "id": "final-q38",
+        "type": "multiple_choice",
+        "prompt": "Which of these is a good signal you should refactor?",
+        "options": [
+          "Code duplication and hard-to-test design",
+          "The program runs fast",
+          "The code has many comments",
+          "The file is short"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Duplication and poor testability are common drivers for refactoring."
+      },
+      {
+        "id": "final-q39",
+        "type": "code_output",
+        "prompt": "What is printed by this code?",
+        "codeSnippet": "class A:\n    def __init__(self): self._x = 1\n    @property\n    def x(self): return self._x\n\na = A()\nprint(a.x)",
+        "correctAnswer": "1",
+        "explanation": "The property getter returns the backing field."
+      },
+      {
+        "id": "final-q40",
+        "type": "multiple_choice",
+        "prompt": "Which pattern is most directly related to “swap behavior at runtime”?",
+        "options": [
+          "Observer",
+          "Strategy",
+          "Singleton",
+          "Builder"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Strategy encapsulates interchangeable algorithms/policies."
+      },
+      {
+        "id": "final-q41",
+        "type": "true_false",
+        "prompt": "Good abstractions are usually small and stable, even if implementations change.",
+        "correctAnswer": true,
+        "explanation": "Small interfaces reduce coupling and are less likely to break dependents."
+      },
+      {
+        "id": "final-q42",
+        "type": "fill_blank",
+        "prompt": "The principle that subclasses should be usable wherever the base class is expected is the Liskov ____ Principle.",
+        "correctAnswer": "Substitution",
+        "explanation": "LSP ensures substitutability of subclasses for base types."
+      }
+    ]
+  }
+]

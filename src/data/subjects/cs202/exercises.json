@@ -1,0 +1,1649 @@
+[
+  {
+    "id": "cs202-t1-ex1",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic1",
+    "type": "written",
+    "title": "Identify ISA Components",
+    "description": "Classify the following as part of the ISA or microarchitecture: (a) Number of general-purpose registers (b) Pipeline depth (c) Instruction encoding format (d) Cache size (e) Addressing modes supported",
+    "difficulty": 1,
+    "hints": [
+      "ISA is the interface visible to programmers",
+      "Microarchitecture is about implementation details"
+    ],
+    "solution": "ISA components (visible to programmers):\n(a) Number of general-purpose registers - ISA (programmers must know how many registers are available)\n(c) Instruction encoding format - ISA (assemblers and compilers must know instruction formats)\n(e) Addressing modes supported - ISA (determines how programs specify memory addresses)\n\nMicroarchitecture (implementation details):\n(b) Pipeline depth - Microarchitecture (how instructions flow through hardware)\n(d) Cache size - Microarchitecture (performance optimization, not visible to ISA)\n\nThe ISA is the interface between software and hardware. Different microarchitectures can implement the same ISA differently."
+  },
+  {
+    "id": "cs202-t1-ex2",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic1",
+    "type": "written",
+    "title": "MIPS R-Format Decoding",
+    "description": "Decode the following MIPS instruction: 0x012A4020. Break it down into opcode, rs, rt, rd, shamt, and funct fields, and identify the instruction.",
+    "difficulty": 3,
+    "hints": [
+      "Convert hex to binary first",
+      "R-format: opcode(6) | rs(5) | rt(5) | rd(5) | shamt(5) | funct(6)"
+    ],
+    "solution": "Binary: 0000 0001 0010 1010 0100 0000 0010 0000\n\nField breakdown:\n- opcode (bits 31-26): 000000 = 0 (R-type)\n- rs (bits 25-21): 00001 = 1 ($at or $1)\n- rt (bits 20-16): 01010 = 10 ($t2)\n- rd (bits 15-11): 01000 = 8 ($t0)\n- shamt (bits 10-6): 00000 = 0\n- funct (bits 5-0): 100000 = 32 (add)\n\nInstruction: add $t0, $at, $t2\nOr: add $t0, $1, $10\n\nThis adds the contents of register $at ($1) and $t2 ($10), storing the result in $t0 ($8)."
+  },
+  {
+    "id": "cs202-t1-ex3",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic1",
+    "type": "written",
+    "title": "Address Calculation",
+    "description": "For the instruction \"lw $t0, 100($s0)\", if $s0 contains 0x10000000, calculate the effective memory address. Also explain what type of addressing mode this represents.",
+    "difficulty": 2,
+    "hints": [
+      "Effective Address = Base + Offset",
+      "Convert offset to hex for easier addition"
+    ],
+    "solution": "Effective Address Calculation:\nBase register ($s0): 0x10000000\nOffset: 100 (decimal) = 0x64 (hexadecimal)\n\nEffective Address = Base + Offset\n= 0x10000000 + 0x64\n= 0x10000064\n\nAddressing Mode: Base + Offset (also called Base + Displacement)\n\nThis is the primary addressing mode for accessing arrays and structure fields:\n- Base register points to start of data structure\n- Offset specifies displacement to desired element\n- Very efficient for sequential array access when combined with pointer increment"
+  },
+  {
+    "id": "cs202-t1-ex4",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic1",
+    "type": "written",
+    "title": "Immediate Field Range",
+    "description": "The MIPS I-format uses a 16-bit immediate field. (a) What range of values can be represented as unsigned? (b) What range as signed (two's complement)? (c) How would you load the value 0x12345678 into a register?",
+    "difficulty": 3,
+    "hints": [
+      "Unsigned: 0 to 2^n - 1",
+      "Signed: -2^(n-1) to 2^(n-1) - 1",
+      "lui loads upper 16 bits"
+    ],
+    "solution": "(a) Unsigned range:\n- Minimum: 0\n- Maximum: 2^16 - 1 = 65,535 (0xFFFF)\n- Range: 0 to 65,535\n\n(b) Signed (two's complement) range:\n- Minimum: -2^15 = -32,768 (0x8000 interpreted as signed)\n- Maximum: 2^15 - 1 = 32,767 (0x7FFF)\n- Range: -32,768 to 32,767\n\n(c) Loading 0x12345678 requires two instructions:\nlui $t0, 0x1234      # Load upper 16 bits: $t0 = 0x12340000\nori $t0, $t0, 0x5678 # OR in lower 16 bits: $t0 = 0x12345678\n\nThis is necessary because no single instruction can specify a 32-bit immediate.\nThe assembler pseudo-instruction \"li $t0, 0x12345678\" generates these two instructions automatically."
+  },
+  {
+    "id": "cs202-t1-ex5",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic1",
+    "type": "written",
+    "title": "CISC vs RISC Instruction Comparison",
+    "description": "Compare how x86 (CISC) and MIPS (RISC) would implement: memory[B] = memory[A] + memory[B]. Write the assembly for both and count the memory accesses.",
+    "difficulty": 3,
+    "hints": [
+      "CISC allows memory-to-memory operations",
+      "RISC requires load-store pattern"
+    ],
+    "solution": "x86 (CISC) approach:\nmov eax, [A]        ; Load memory[A] into eax\nadd [B], eax        ; Add eax to memory[B], store result in memory[B]\n\nMemory accesses: 4\n- Read A (1)\n- Read B (for the add, 1)\n- Write B (store result, 1)\n- Plus instruction fetches\n\nTotal instructions: 2\n\nMIPS (RISC) approach:\nlw $t0, A($zero)    ; Load memory[A] into $t0\nlw $t1, B($zero)    ; Load memory[B] into $t1\nadd $t2, $t0, $t1   ; Add: $t2 = $t0 + $t1\nsw $t2, B($zero)    ; Store result to memory[B]\n\nMemory accesses: 3 (2 loads, 1 store)\nTotal instructions: 4\n\nKey differences:\n- CISC: Fewer instructions, but memory-memory operations\n- RISC: More instructions, but load-store only, simpler decode\n- RISC makes pipelining easier because each instruction is simple and regular"
+  },
+  {
+    "id": "cs202-t1-ex6",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic1",
+    "type": "written",
+    "title": "J-Format Address Calculation",
+    "description": "For a MIPS jump instruction at address 0x00400024, with a 26-bit target field of 0x100008, calculate the jump target address. Explain the address calculation process.",
+    "difficulty": 4,
+    "hints": [
+      "Jump uses upper 4 bits of PC+4",
+      "Target is shifted left by 2",
+      "Result is concatenation"
+    ],
+    "solution": "MIPS J-format jump target calculation:\n\nGiven:\n- PC of jump instruction: 0x00400024\n- 26-bit target field: 0x100008 = 00 0001 0000 0000 0000 0000 1000 (binary)\n\nJump target address composition:\n1. Take upper 4 bits of PC+4: 0x004 (from 0x00400028)\n2. Shift 26-bit target left by 2 (word alignment): 0x100008 << 2 = 0x400020\n3. Concatenate: upper 4 bits || (target << 2)\n\nTarget = (PC+4)[31:28] || (target << 2)\n       = 0x0 || 0x0400020\n       = 0x00400020\n\nVerification:\n- Upper 4 bits: 0000 (from PC region)\n- Lower 28 bits: 0x0400020 (target × 4)\n- Full address: 0x00400020\n\nNotes:\n- The shift by 2 allows addressing word-aligned instructions (every 4 bytes)\n- The upper 4 bits from PC mean jumps are limited to the same 256MB region\n- For cross-region jumps, use jr (jump register) instruction"
+  },
+  {
+    "id": "cs202-t1-ex7",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic1",
+    "type": "written",
+    "title": "Instruction Type Identification",
+    "description": "Categorize each instruction by type (data transfer, arithmetic, logical, control flow): ADD, LW, BEQ, AND, SW, JR, SLT, SLL, JAL, SUB",
+    "difficulty": 1,
+    "hints": [
+      "Data transfer moves data between registers and memory",
+      "Control flow changes program execution order"
+    ],
+    "solution": "Data Transfer Instructions (move data between registers and memory):\n- LW (Load Word) - Reads from memory to register\n- SW (Store Word) - Writes from register to memory\n\nArithmetic Instructions (mathematical operations):\n- ADD - Addition\n- SUB - Subtraction\n- SLT (Set Less Than) - Comparison that produces 0 or 1\n\nLogical Instructions (bitwise operations):\n- AND - Bitwise AND\n- SLL (Shift Left Logical) - Bit shifting\n\nControl Flow Instructions (change execution order):\n- BEQ (Branch if Equal) - Conditional branch\n- JR (Jump Register) - Indirect jump\n- JAL (Jump and Link) - Function call\n\nNote: SLT could also be considered logical (produces boolean result).\nCategories can overlap; e.g., CMP in x86 is both arithmetic (subtraction) and comparison."
+  },
+  {
+    "id": "cs202-t1-ex8",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic1",
+    "type": "written",
+    "title": "PC-Relative Addressing",
+    "description": "A BEQ instruction is located at address 0x00400100. If the branch is taken, execution continues at 0x00400120. What is the value stored in the 16-bit offset field of the instruction?",
+    "difficulty": 3,
+    "hints": [
+      "Target = (PC + 4) + (offset × 4)",
+      "Offset is in words, not bytes"
+    ],
+    "solution": "PC-relative addressing in MIPS branches:\n\nGiven:\n- BEQ instruction at: 0x00400100\n- Target address: 0x00400120\n\nBranch target calculation: Target = (PC + 4) + (offset × 4)\n\nSolving for offset:\n0x00400120 = (0x00400100 + 4) + (offset × 4)\n0x00400120 = 0x00400104 + (offset × 4)\n0x00400120 - 0x00400104 = offset × 4\n0x0000001C = offset × 4\noffset = 0x0000001C / 4\noffset = 0x00000007 = 7\n\nThe 16-bit offset field contains: 0x0007 (or just 7)\n\nVerification:\nTarget = 0x00400104 + (7 × 4)\n      = 0x00400104 + 0x1C\n      = 0x00400120 ✓\n\nThe offset is in words (4 bytes), not bytes, extending the branch range by 4×."
+  },
+  {
+    "id": "cs202-t1-ex9",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic1",
+    "type": "written",
+    "title": "Register Conventions Purpose",
+    "description": "Explain why MIPS has conventions for registers like $a0-$a3 (arguments), $v0-$v1 (return values), and $t0-$t9 (temporaries). What would happen without these conventions?",
+    "difficulty": 3,
+    "hints": [
+      "Think about separate compilation",
+      "Consider caller-saved vs callee-saved"
+    ],
+    "solution": "Purpose of Register Conventions:\n\n1. Enable separate compilation:\n   - Caller knows where to put arguments ($a0-$a3)\n   - Callee knows where to find arguments\n   - Libraries can be compiled separately from user code\n\n2. Efficient function calls:\n   - No need to save/restore all registers\n   - Caller-saved ($t0-$t9): Callee can use freely\n   - Callee-saved ($s0-$s7): Callee must preserve\n\n3. Clear responsibility:\n   - $ra: Return address from JAL\n   - $sp: Stack pointer (must be maintained)\n   - $gp: Global pointer (for global data access)\n\nWithout conventions:\n- Every function call would need to save ALL registers\n- Functions couldn't be compiled independently\n- Linking would require knowledge of all register usage\n- No way for caller/callee to agree on interface\n- Libraries would be impossible to use\n\nThe ABI (Application Binary Interface) standardizes these conventions, making interoperability possible."
+  },
+  {
+    "id": "cs202-t1-ex10",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic1",
+    "type": "written",
+    "title": "Fixed vs Variable Length Instructions",
+    "description": "MIPS uses fixed 32-bit instructions while x86 uses variable length (1-15 bytes). Discuss the trade-offs in terms of: (a) code density, (b) decode complexity, (c) pipelining ease.",
+    "difficulty": 4,
+    "hints": [
+      "Consider instruction cache efficiency",
+      "Think about superscalar fetch"
+    ],
+    "solution": "(a) Code Density:\nVariable-length (x86):\n- Common instructions can be short (1-3 bytes)\n- Complex instructions encoded only when needed\n- Better code density (smaller executables)\n\nFixed-length (MIPS):\n- Every instruction is 4 bytes, even simple ones\n- NOPs and padding waste space\n- Typically 25-30% larger executables\n\n(b) Decode Complexity:\nVariable-length (x86):\n- Must determine instruction length before decoding next\n- Prefix bytes, multiple opcode bytes, variable operands\n- Modern x86: Pre-decode stage to find boundaries\n- Historically limited superscalar width\n\nFixed-length (MIPS):\n- Every instruction at PC, PC+4, PC+8, etc.\n- Instruction fields in fixed positions\n- Simple, parallel decode of multiple instructions\n- Enables easy superscalar implementations\n\n(c) Pipelining:\nVariable-length (x86):\n- Instruction cache must deliver variable amounts\n- Branch target might not be instruction-aligned\n- Complex instruction buffer management\n- Harder to fetch/decode multiple per cycle\n\nFixed-length (MIPS):\n- Fetch N × 4 bytes = N instructions\n- Branch targets always word-aligned\n- Simple instruction fetch/buffer\n- Enables efficient wide issue\n\nModern x86 mitigates these issues by converting to fixed-length micro-ops internally."
+  },
+  {
+    "id": "cs202-t1-ex11",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic1",
+    "type": "written",
+    "title": "Endianness Impact",
+    "description": "The 32-bit value 0x12345678 is stored at address 0x1000. Show the byte layout in memory for both big-endian and little-endian systems. Which byte is at address 0x1000 in each case?",
+    "difficulty": 2,
+    "hints": [
+      "Big-endian: Most significant byte first",
+      "Little-endian: Least significant byte first"
+    ],
+    "solution": "Value: 0x12345678\n- Most significant byte: 0x12\n- Least significant byte: 0x78\n\nBig-Endian (MSB at lowest address):\nAddress   Byte\n0x1000    0x12  ← Most significant byte first\n0x1001    0x34\n0x1002    0x56\n0x1003    0x78\n\nLittle-Endian (LSB at lowest address):\nAddress   Byte\n0x1000    0x78  ← Least significant byte first\n0x1001    0x56\n0x1002    0x34\n0x1003    0x12\n\nAt address 0x1000:\n- Big-endian: 0x12\n- Little-endian: 0x78\n\nPractical implications:\n- Network protocols typically use big-endian (\"network byte order\")\n- x86 is little-endian\n- ARM can be configured either way\n- When accessing bytes of a word (e.g., string characters), order matters\n- When reading 32-bit words, hardware handles endianness transparently"
+  },
+  {
+    "id": "cs202-t1-ex12",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic1",
+    "type": "written",
+    "title": "Instruction Encoding",
+    "description": "Encode the MIPS instruction \"addi $t0, $s1, -5\" into its 32-bit binary representation. Show your work.",
+    "difficulty": 3,
+    "hints": [
+      "addi is I-format",
+      "Use two's complement for negative immediate"
+    ],
+    "solution": "Instruction: addi $t0, $s1, -5\n\nMIPS I-format layout:\n| opcode (6) | rs (5) | rt (5) | immediate (16) |\n\nField values:\n- opcode for addi: 001000 (8)\n- rs (source): $s1 = register 17 = 10001\n- rt (destination): $t0 = register 8 = 01000\n- immediate: -5 in 16-bit two's complement\n\nComputing -5 in 16-bit two's complement:\n5 in binary: 0000 0000 0000 0101\nInvert:      1111 1111 1111 1010\nAdd 1:       1111 1111 1111 1011\n-5 =         0xFFFB = 1111 1111 1111 1011\n\nComplete instruction:\n| 001000 | 10001 | 01000 | 1111 1111 1111 1011 |\n\nBinary: 0010 0010 0010 1000 1111 1111 1111 1011\n\nGrouped as hex: 0x2228FFFB\n\nVerification:\n- Opcode 0x08 = addi ✓\n- rs = 17 = $s1 ✓\n- rt = 8 = $t0 ✓\n- imm = 0xFFFB = -5 ✓"
+  },
+  {
+    "id": "cs202-t1-ex13",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic1",
+    "type": "written",
+    "title": "ISA Design Trade-off",
+    "description": "You are designing an ISA for an embedded system with limited memory. You can choose between: (A) 32 registers with 32-bit fixed instructions, or (B) 8 registers with 16-bit fixed instructions. Analyze the trade-offs.",
+    "difficulty": 5,
+    "hints": [
+      "More registers reduce spills to memory",
+      "16-bit instructions have code density advantages"
+    ],
+    "solution": "Analysis of both options:\n\nOption A: 32 registers, 32-bit instructions\n\nAdvantages:\n- More registers reduce memory traffic (less spilling)\n- Larger immediate fields possible\n- More opcodes/functionality available\n- Better for compute-intensive code\n\nDisadvantages:\n- Each instruction is 4 bytes\n- Code size is larger\n- More instruction memory needed\n\nOption B: 8 registers, 16-bit instructions\n\nAdvantages:\n- 2× code density (important for embedded!)\n- Lower instruction cache requirements\n- Lower power for instruction fetch\n- Register specifiers only need 3 bits each\n\nDisadvantages:\n- Frequent register spilling to memory\n- Small immediates (need more instructions for constants)\n- Limited instruction encoding space\n- More memory traffic for spilled registers\n\nRecommendation for embedded:\nConsider a hybrid like ARM Thumb or MIPS16:\n- 16-bit instructions for common operations\n- 32-bit for complex operations\n- Achieves ~70% code size of pure 32-bit\n- Register window or subset addressing\n\nReal-world examples:\n- ARM Thumb-2: Mixed 16/32-bit\n- RISC-V Compressed: 16-bit subset\n- MIPS16e: 16-bit extension mode"
+  },
+  {
+    "id": "cs202-t1-ex14",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic1",
+    "type": "written",
+    "title": "Compare x86 and ARM Instructions",
+    "description": "Compare how x86 and ARM would implement \"if (a == 0) b = c + d\". Write pseudo-assembly for both and highlight ISA differences.",
+    "difficulty": 3,
+    "hints": [
+      "ARM has conditional execution",
+      "x86 uses two-operand format"
+    ],
+    "solution": "Assume: a in R0, b in R1, c in R2, d in R3\n\nx86 approach:\n    cmp eax, 0        ; Compare a with 0, sets flags\n    jne skip          ; Jump if not equal (ZF=0)\n    mov ebx, ecx      ; b = c\n    add ebx, edx      ; b = c + d\nskip:\n\nCharacteristics:\n- Separate compare instruction sets flags\n- Conditional jump based on flags\n- Two-operand instructions (dest = dest op src)\n\nARM approach:\n    cmp r0, #0        ; Compare a with 0, sets flags\n    addeq r1, r2, r3  ; If equal, b = c + d (conditional execution!)\n\nOr without predication:\n    cmp r0, #0\n    bne skip\n    add r1, r2, r3\nskip:\n\nCharacteristics:\n- Predicated execution: most instructions can be conditional\n- Three-operand format (dest, src1, src2)\n- Can avoid branch entirely with conditional execution\n\nKey differences:\n1. ARM has conditional execution on most instructions\n2. ARM uses 3-operand format (non-destructive)\n3. x86 uses 2-operand format (destination is also source)\n4. ARM predication avoids branch penalty for short conditionals\n5. x86 has implicit flags register; ARM sets flags explicitly (S suffix)"
+  },
+  {
+    "id": "cs202-t1-ex15",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic1",
+    "type": "written",
+    "title": "RISC-V Extension Analysis",
+    "description": "RISC-V has a base ISA (RV32I) and optional extensions (M for multiply, F for float, etc.). Discuss advantages and challenges of this modular approach.",
+    "difficulty": 5,
+    "hints": [
+      "Think about customization for different applications",
+      "Consider software ecosystem challenges"
+    ],
+    "solution": "Advantages of Modular Extensions:\n\n1. Customization for application:\n   - Embedded: RV32I only (minimal area)\n   - Scientific: RV64GC (full 64-bit with float)\n   - Crypto: Add Zk extension\n   - No unused hardware for your use case\n\n2. Implementation flexibility:\n   - Simple cores: Trap unimplemented instructions to software\n   - Complex cores: Hardware implementation of all extensions\n   - Same binaries can run (with different performance)\n\n3. Future-proof:\n   - Add new extensions without breaking compatibility\n   - Reserved opcode space for future use\n   - V (vector), P (packed SIMD) added recently\n\n4. Reduces verification burden:\n   - Each extension verified independently\n   - Base ISA is small and well-tested\n\nChallenges:\n\n1. Software compatibility:\n   - Compiler must know which extensions are available\n   - Libraries may need multiple versions\n   - Runtime detection adds complexity\n\n2. Fragmentation risk:\n   - Too many combinations to test\n   - Some extension combinations may conflict\n   - Hardware/software ecosystem splitting\n\n3. Discovery mechanism:\n   - Software must detect available extensions\n   - CSRs (Control/Status Registers) for discovery\n   - Boot-time vs. runtime detection\n\n4. ABI challenges:\n   - Calling conventions depend on extensions (float registers?)\n   - Binary compatibility across extension sets\n   - Dynamic linking with extension-specific code\n\nReal-world status:\n- RISC-V has profiles (RVA, RVB) that define standard combinations\n- This reduces fragmentation while keeping modularity"
+  },
+  {
+    "id": "cs202-t1-ex16",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic1",
+    "type": "written",
+    "title": "Instruction Fetch Width Calculation",
+    "description": "A processor fetches instructions from a 64-byte aligned cache line. For MIPS (32-bit fixed), x86 (variable 1-15 bytes), and Thumb-2 (mixed 16/32-bit), how many instructions can maximally be fetched per cache line?",
+    "difficulty": 3,
+    "hints": [
+      "64 bytes / instruction size = max instructions",
+      "Variable length needs analysis of best/worst case"
+    ],
+    "solution": "64-byte cache line analysis:\n\nMIPS (fixed 32-bit = 4 bytes):\n- Each instruction: 4 bytes\n- Maximum instructions per line: 64 / 4 = 16 instructions\n- Predictable, always 16 instructions (if aligned)\n\nx86 (variable 1-15 bytes):\n- Minimum instruction size: 1 byte\n- Maximum instruction size: 15 bytes\n- Best case: 64 / 1 = 64 instructions (all 1-byte, like NOP)\n- Worst case: 64 / 15 ≈ 4 instructions\n- Typical: ~15-20 instructions (average ~3-4 bytes)\n- Note: Cannot know count without decoding!\n\nARM Thumb-2 (mixed 16/32-bit):\n- 16-bit instructions: 2 bytes\n- 32-bit instructions: 4 bytes\n- Best case: 64 / 2 = 32 instructions (all 16-bit)\n- Worst case: 64 / 4 = 16 instructions (all 32-bit)\n- Typical: ~20-24 instructions (mix of both)\n- Better predictability than x86 (only 2 sizes)\n\nImplications for fetch:\n- MIPS: Simple, fetch exactly N instructions\n- x86: Complex pre-decode to find boundaries\n- Thumb-2: Easier boundary detection than x86\n\nModern x86 CPUs use instruction length decoders in L1 cache to mark boundaries, reducing decode complexity."
+  },
+  {
+    "id": "cs202-t2-ex1",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic2",
+    "type": "written",
+    "title": "Register Identification",
+    "description": "Identify the conventional use for: $zero, $v0, $a0, $t0, $s0, $sp, $ra. When would you use each?",
+    "difficulty": 1,
+    "hints": [
+      "Consider caller-saved vs callee-saved",
+      "Think about function calling conventions"
+    ],
+    "solution": "$zero ($0): Always contains 0, useful for comparisons and loading constants\n$v0-$v1 ($2-$3): Return values from functions, syscall codes\n$a0-$a3 ($4-$7): First 4 function arguments\n$t0-$t9 ($8-$15, $24-$25): Temporaries, caller-saved (not preserved across calls)\n$s0-$s7 ($16-$23): Saved registers, callee-saved (preserved across calls)\n$sp ($29): Stack pointer, points to top of stack\n$ra ($31): Return address, set by jal instruction\n\nUse cases:\n- Loop counters: $t0-$t9 (temporary, don't need to save)\n- Important values across function calls: $s0-$s7 (preserved)\n- Passing arguments: $a0-$a3 first, then stack\n- Getting return value: $v0 (or $v0-$v1 for 64-bit)"
+  },
+  {
+    "id": "cs202-t2-ex2",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic2",
+    "type": "written",
+    "title": "Array Sum in Assembly",
+    "description": "Write MIPS assembly to sum an array of 10 integers. Assume array base in $a0, length in $a1.",
+    "difficulty": 3,
+    "hints": [
+      "Use sll to multiply index by 4",
+      "Initialize sum to 0 in $v0"
+    ],
+    "solution": "# Sum array elements\n# Input: $a0 = array base address, $a1 = length (10)\n# Output: $v0 = sum\n\nsum_array:\n    li   $v0, 0           # sum = 0\n    li   $t0, 0           # i = 0\n\nloop:\n    bge  $t0, $a1, done   # if i >= length, exit\n    sll  $t1, $t0, 2      # t1 = i * 4 (byte offset)\n    add  $t1, $a0, $t1    # t1 = &array[i]\n    lw   $t2, 0($t1)      # t2 = array[i]\n    add  $v0, $v0, $t2    # sum += array[i]\n    addi $t0, $t0, 1      # i++\n    j    loop             # repeat\n\ndone:\n    jr   $ra              # return\n\nKey points:\n- sll by 2 multiplies index by 4 for word addressing\n- Using $t registers since we don't call other functions\n- Return value in $v0 per convention"
+  },
+  {
+    "id": "cs202-t2-ex3",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic2",
+    "type": "written",
+    "title": "Recursive Factorial",
+    "description": "Write MIPS assembly for factorial(n). Handle the base case (n <= 1) and recursive case.",
+    "difficulty": 4,
+    "hints": [
+      "Must save $ra before recursive call",
+      "Use $s0 to preserve n across calls"
+    ],
+    "solution": "# Factorial function\n# Input: $a0 = n\n# Output: $v0 = n!\n\nfactorial:\n    # Prologue - save $ra and $s0\n    addi $sp, $sp, -8     # allocate stack frame\n    sw   $ra, 4($sp)      # save return address\n    sw   $s0, 0($sp)      # save $s0\n\n    # Base case: n <= 1\n    move $s0, $a0         # save n in $s0\n    li   $v0, 1           # default result = 1\n    ble  $a0, 1, fact_done # if n <= 1, return 1\n\n    # Recursive case: n * factorial(n-1)\n    addi $a0, $s0, -1     # argument = n - 1\n    jal  factorial        # call factorial(n-1)\n    mul  $v0, $s0, $v0    # result = n * factorial(n-1)\n\nfact_done:\n    # Epilogue - restore and return\n    lw   $s0, 0($sp)      # restore $s0\n    lw   $ra, 4($sp)      # restore return address\n    addi $sp, $sp, 8      # deallocate stack frame\n    jr   $ra              # return"
+  },
+  {
+    "id": "cs202-t2-ex4",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic2",
+    "type": "written",
+    "title": "Branch Instruction Encoding",
+    "description": "Explain how branch target addresses are calculated in MIPS. Given beq at address 0x00400020 with offset 5, what is the target address?",
+    "difficulty": 3,
+    "hints": [
+      "PC-relative addressing",
+      "Offset is in words, not bytes",
+      "PC is already incremented when offset is added"
+    ],
+    "solution": "Branch target calculation in MIPS:\nTarget = (PC + 4) + (offset × 4)\n\nThe PC is incremented to point to the next instruction before the offset is applied.\nThe offset is in words (4 bytes), so it's multiplied by 4.\n\nGiven: beq at 0x00400020, offset = 5\nPC + 4 = 0x00400020 + 4 = 0x00400024\nTarget = 0x00400024 + (5 × 4) = 0x00400024 + 0x14 = 0x00400038\n\nThis allows branches to reach ±2^15 words = ±2^17 bytes = ±128KB from PC+4.\n\nThe 16-bit signed offset allows:\n- Forward: up to 32,767 words (131,068 bytes)\n- Backward: up to 32,768 words (131,072 bytes)"
+  },
+  {
+    "id": "cs202-t2-ex5",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic2",
+    "type": "written",
+    "title": "Syscall Usage",
+    "description": "Write MIPS code to: (a) Print \"Hello\" (b) Read an integer from user (c) Exit program. What syscall codes are used?",
+    "difficulty": 2,
+    "hints": [
+      "Syscall code goes in $v0",
+      "$a0 holds string address or integer to print"
+    ],
+    "solution": "# (a) Print \"Hello\"\n    .data\nmsg:    .asciiz \"Hello\"\n\n    .text\n    la   $a0, msg      # $a0 = address of string\n    li   $v0, 4        # syscall 4 = print string\n    syscall\n\n# (b) Read an integer\n    li   $v0, 5        # syscall 5 = read integer\n    syscall            # result in $v0\n    move $t0, $v0      # save input to $t0\n\n# (c) Exit program\n    li   $v0, 10       # syscall 10 = exit\n    syscall\n\nCommon syscall codes:\n1 - print integer ($a0 = integer)\n4 - print string ($a0 = address)\n5 - read integer (result in $v0)\n8 - read string ($a0 = buffer, $a1 = length)\n10 - exit\n11 - print character ($a0 = char)\n12 - read character (result in $v0)"
+  },
+  {
+    "id": "cs202-t2-ex6",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic2",
+    "type": "written",
+    "title": "Stack Frame Construction",
+    "description": "Draw the stack frame for a function that uses $s0, $s1, and $ra, and has 2 local variables (4 bytes each). Show the proper prologue and epilogue code.",
+    "difficulty": 3,
+    "hints": [
+      "Stack grows downward",
+      "Calculate total frame size",
+      "Use negative offsets from $sp after allocation"
+    ],
+    "solution": "Stack Frame Layout (16 bytes total):\n           ┌──────────────┐\n    $sp+12 │     $ra      │  (return address)\n           ├──────────────┤\n    $sp+8  │     $s1      │  (saved register)\n           ├──────────────┤\n    $sp+4  │     $s0      │  (saved register)\n           ├──────────────┤\n    $sp+0  │   local2     │  (local variable)\n           ├──────────────┤\n    $sp-4  │   local1     │  (local variable)\n           └──────────────┘\n\nPrologue:\n    addi $sp, $sp, -16    # allocate 16 bytes\n    sw   $ra, 12($sp)     # save return address\n    sw   $s1, 8($sp)      # save $s1\n    sw   $s0, 4($sp)      # save $s0\n    # locals at 0($sp) and -4($sp) if needed below $sp\n\nEpilogue:\n    lw   $s0, 4($sp)      # restore $s0\n    lw   $s1, 8($sp)      # restore $s1\n    lw   $ra, 12($sp)     # restore return address\n    addi $sp, $sp, 16     # deallocate frame\n    jr   $ra              # return"
+  },
+  {
+    "id": "cs202-t2-ex7",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic2",
+    "type": "written",
+    "title": "Translate C to Assembly",
+    "description": "Translate to MIPS: int max(int a, int b) { if (a > b) return a; else return b; }",
+    "difficulty": 2,
+    "hints": [
+      "Arguments in $a0, $a1",
+      "Return value in $v0",
+      "Use bgt or slt for comparison"
+    ],
+    "solution": "# int max(int a, int b)\n# $a0 = a, $a1 = b\n# Returns max in $v0\n\nmax:\n    # No need for stack frame (leaf function, no $s regs used)\n\n    bgt  $a0, $a1, a_greater  # if a > b, go to a_greater\n\n    # else: return b\n    move $v0, $a1\n    jr   $ra\n\na_greater:\n    # return a\n    move $v0, $a0\n    jr   $ra\n\nAlternative using slt:\nmax_alt:\n    slt  $t0, $a1, $a0    # t0 = 1 if b < a (i.e., a > b)\n    beqz $t0, return_b    # if not (a > b), return b\n    move $v0, $a0         # return a\n    jr   $ra\nreturn_b:\n    move $v0, $a1         # return b\n    jr   $ra"
+  },
+  {
+    "id": "cs202-t2-ex8",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic2",
+    "type": "written",
+    "title": "While Loop Translation",
+    "description": "Translate to MIPS: int i = 0; while (i < 100) { sum += arr[i]; i++; }. Assume arr base in $s0, sum in $s1.",
+    "difficulty": 3,
+    "hints": [
+      "Initialize loop variable",
+      "Check condition at top or bottom of loop",
+      "Update index by 4 for word array"
+    ],
+    "solution": "# Assume: $s0 = arr base, $s1 = sum (initialized elsewhere)\n# Use $t0 for i, $t1 for address calculation, $t2 for arr[i]\n\n    li   $t0, 0           # i = 0\n\nwhile_loop:\n    li   $t3, 100         # load constant for comparison\n    bge  $t0, $t3, end_while  # if i >= 100, exit loop\n\n    # sum += arr[i]\n    sll  $t1, $t0, 2      # t1 = i * 4\n    add  $t1, $s0, $t1    # t1 = &arr[i]\n    lw   $t2, 0($t1)      # t2 = arr[i]\n    add  $s1, $s1, $t2    # sum += arr[i]\n\n    # i++\n    addi $t0, $t0, 1\n\n    j    while_loop       # repeat\n\nend_while:\n    # continue with rest of program\n\nNote: We use $s0, $s1 for arr and sum because they need to persist.\n$t0-$t2 are used for temporaries within this code block."
+  },
+  {
+    "id": "cs202-t2-ex9",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic2",
+    "type": "written",
+    "title": "Nested Function Calls",
+    "description": "Function A calls B, which calls C. Trace the stack contents and $ra values throughout. What happens if B forgets to save $ra?",
+    "difficulty": 4,
+    "hints": [
+      "Each jal overwrites $ra",
+      "Stack grows with each call",
+      "Missing save causes return to wrong location"
+    ],
+    "solution": "Execution trace with proper $ra saving:\n\n1. main at 0x400000 calls A (jal A)\n   $ra = 0x400004 (return to main)\n\n2. A at 0x400100 saves $ra, calls B (jal B)\n   Stack: [0x400004]  <- A's saved $ra\n   $ra = 0x400108 (return to A)\n\n3. B at 0x400200 saves $ra, calls C (jal C)\n   Stack: [0x400004, 0x400108]  <- Both saved\n   $ra = 0x400208 (return to B)\n\n4. C returns: jr $ra → goes to 0x400208 (B)\n5. B restores $ra=0x400108, returns → goes to A\n6. A restores $ra=0x400004, returns → goes to main\n\nIf B forgets to save $ra:\n- When B calls C: $ra = 0x400208 (return to B)\n- C returns correctly to B\n- B tries jr $ra, but $ra still = 0x400208 (not 0x400108!)\n- B returns to itself! → infinite loop or crash"
+  },
+  {
+    "id": "cs202-t2-ex10",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic2",
+    "type": "written",
+    "title": "Pseudo-instruction Expansion",
+    "description": "Show how the assembler expands these pseudo-instructions into real MIPS instructions: (a) li $t0, 0x12345678 (b) la $t0, label (c) bgt $t0, $t1, target",
+    "difficulty": 3,
+    "hints": [
+      "li needs lui + ori for large constants",
+      "la uses lui + ori with label address",
+      "bgt uses slt + bne"
+    ],
+    "solution": "(a) li $t0, 0x12345678\nExpands to:\n    lui  $t0, 0x1234      # load upper 16 bits\n    ori  $t0, $t0, 0x5678 # OR in lower 16 bits\nResult: $t0 = 0x12345678\n\n(b) la $t0, label (assuming label at 0x10010000)\nExpands to:\n    lui  $t0, 0x1001      # load upper 16 bits of address\n    ori  $t0, $t0, 0x0000 # OR in lower 16 bits\nOr: lui $at, hi(label); ori $t0, $at, lo(label)\n\n(c) bgt $t0, $t1, target  (branch if $t0 > $t1)\nExpands to:\n    slt  $at, $t1, $t0    # $at = 1 if $t1 < $t0 (i.e., $t0 > $t1)\n    bne  $at, $zero, target # branch if $at != 0\n\nThe assembler uses $at ($1) for temporaries in expansions.\nThis is why $at is reserved for assembler use."
+  },
+  {
+    "id": "cs202-t2-ex11",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic2",
+    "type": "written",
+    "title": "Memory Layout",
+    "description": "Describe the MIPS memory layout. Where are text, data, heap, and stack segments? What are their starting addresses and growth directions?",
+    "difficulty": 2,
+    "hints": [
+      "Text starts at 0x00400000",
+      "Stack at top of user memory",
+      "Heap grows up, stack grows down"
+    ],
+    "solution": "MIPS Memory Layout:\n\n0x7FFFFFFF ┌─────────────────┐\n           │     Stack       │ ← Grows DOWN (toward lower addresses)\n           │       ↓         │   $sp points to top of stack\n           ├─────────────────┤\n           │                 │\n           │    (unused)     │\n           │                 │\n           ├─────────────────┤\n           │       ↑         │\n           │     Heap        │ ← Grows UP (toward higher addresses)\n0x10040000 ├─────────────────┤   Dynamic allocation (malloc)\n           │   Static Data   │ ← .data segment\n0x10000000 ├─────────────────┤   Global variables, constants\n           │     Text        │ ← .text segment (program code)\n0x00400000 ├─────────────────┤   Instructions start here\n           │    Reserved     │ ← OS/kernel use\n0x00000000 └─────────────────┘\n\nKey points:\n- Stack and heap grow toward each other\n- Stack overflow occurs if they collide\n- Static data has fixed addresses at compile time\n- $gp (global pointer) typically points to middle of static data"
+  },
+  {
+    "id": "cs202-t2-ex12",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic2",
+    "type": "written",
+    "title": "Leaf vs Non-Leaf Functions",
+    "description": "What distinguishes a leaf function from a non-leaf function? What optimizations can be made for leaf functions? Write an example of each.",
+    "difficulty": 2,
+    "hints": [
+      "Leaf = does not call other functions",
+      "Consider which registers need saving"
+    ],
+    "solution": "Leaf function: Does not call any other functions\nNon-leaf function: Calls at least one other function\n\nLeaf function optimizations:\n- No need to save $ra (won't be overwritten)\n- Can use $t registers freely (no calls to corrupt them)\n- Smaller/no stack frame needed\n\nExample Leaf Function (no stack frame needed):\nsquare:               # int square(int x)\n    mul  $v0, $a0, $a0  # return x * x\n    jr   $ra\n\nExample Non-Leaf Function (must save $ra):\nsum_squares:          # int sum_squares(int a, int b)\n    addi $sp, $sp, -12\n    sw   $ra, 8($sp)\n    sw   $s0, 4($sp)\n    sw   $s1, 0($sp)\n\n    move $s0, $a0       # save a\n    jal  square         # square(a)\n    move $s1, $v0       # save result\n\n    move $a0, $s0       # restore b... wait, we need to save b too!\n    # This shows why careful register planning is needed\n\n    lw   $s1, 0($sp)\n    lw   $s0, 4($sp)\n    lw   $ra, 8($sp)\n    addi $sp, $sp, 12\n    jr   $ra"
+  },
+  {
+    "id": "cs202-t2-ex13",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic2",
+    "type": "written",
+    "title": "Debugging Assembly",
+    "description": "The following code should compute n! but has bugs. Find and fix them:\n\nfact: li $v0, 1\n      ble $a0, $zero, done\nloop: mul $v0, $v0, $a0\n      sub $a0, $a0, 1\n      bne $a0, $zero, loop\ndone: jr $ra",
+    "difficulty": 3,
+    "hints": [
+      "Trace through with n=3",
+      "Check the base case condition",
+      "Check the loop termination"
+    ],
+    "solution": "Bug analysis:\n\nOriginal code traced with n=3:\n- $a0=3, $v0=1\n- 3 > 0, skip to loop\n- mul: $v0 = 1*3 = 3\n- sub: $a0 = 3-1 = 2\n- 2 != 0, goto loop\n- mul: $v0 = 3*2 = 6\n- sub: $a0 = 2-1 = 1\n- 1 != 0, goto loop\n- mul: $v0 = 6*1 = 6\n- sub: $a0 = 1-1 = 0\n- 0 == 0, fall through to done\n- Returns 6 ✓ (Works for this case!)\n\nBut traced with n=0:\n- $a0=0, $v0=1\n- 0 <= 0, goto done\n- Returns 1 ✓ (Correct!)\n\nTraced with n=1:\n- $a0=1, $v0=1\n- 1 > 0, skip to loop\n- mul: $v0 = 1*1 = 1\n- sub: $a0 = 1-1 = 0\n- 0 == 0, done\n- Returns 1 ✓ (Correct!)\n\nActually, the code works! But there are style issues:\n1. Should use subi (pseudo) or addi with negative\n2. Base case should be $a0 <= 1, not <= 0\n\nFixed version (same logic, clearer):\nfact: li   $v0, 1\n      ble  $a0, 1, done    # 0! = 1! = 1\nloop: mul  $v0, $v0, $a0\n      addi $a0, $a0, -1\n      bgt  $a0, 1, loop    # continue while a0 > 1\ndone: jr   $ra"
+  },
+  {
+    "id": "cs202-t2-ex14",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic2",
+    "type": "written",
+    "title": "Passing Arrays to Functions",
+    "description": "Write MIPS code to pass a 10-element array to a function that finds the maximum value. Show both the caller and callee code.",
+    "difficulty": 3,
+    "hints": [
+      "Pass array by reference (address)",
+      "Pass length as second argument"
+    ],
+    "solution": "# Caller code\n    .data\narr:    .word 5, 2, 8, 1, 9, 3, 7, 4, 6, 0\n\n    .text\nmain:\n    la   $a0, arr         # $a0 = array address\n    li   $a1, 10          # $a1 = length\n    jal  find_max         # call function\n    move $s0, $v0         # save max value\n    # ... continue\n\n# Callee code\n# int find_max(int* arr, int len)\n# $a0 = array address, $a1 = length\n# Returns max value in $v0\n\nfind_max:\n    lw   $v0, 0($a0)      # max = arr[0]\n    li   $t0, 1           # i = 1\n\nmax_loop:\n    bge  $t0, $a1, max_done  # if i >= len, done\n\n    sll  $t1, $t0, 2      # t1 = i * 4\n    add  $t1, $a0, $t1    # t1 = &arr[i]\n    lw   $t2, 0($t1)      # t2 = arr[i]\n\n    ble  $t2, $v0, skip   # if arr[i] <= max, skip\n    move $v0, $t2         # max = arr[i]\n\nskip:\n    addi $t0, $t0, 1      # i++\n    j    max_loop\n\nmax_done:\n    jr   $ra              # return max in $v0"
+  },
+  {
+    "id": "cs202-t2-ex15",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic2",
+    "type": "written",
+    "title": "String Processing",
+    "description": "Write MIPS assembly to calculate the length of a null-terminated string. The string address is in $a0. Return length in $v0.",
+    "difficulty": 3,
+    "hints": [
+      "Strings end with byte 0x00",
+      "Use lb to load a byte",
+      "Count until you hit null"
+    ],
+    "solution": "# int strlen(char* s)\n# $a0 = string address\n# Returns length in $v0\n\nstrlen:\n    move $t0, $a0         # t0 = current position\n    li   $v0, 0           # length = 0\n\nstrlen_loop:\n    lb   $t1, 0($t0)      # load byte at current position\n    beqz $t1, strlen_done # if null terminator, done\n\n    addi $v0, $v0, 1      # length++\n    addi $t0, $t0, 1      # move to next character\n    j    strlen_loop\n\nstrlen_done:\n    jr   $ra\n\nExample trace with \"Hi\":\nAddress:  0x10010000  0x10010001  0x10010002\nContent:  'H' (72)    'i' (105)   0 (null)\n\n- t0 = 0x10010000, load 'H', not null, v0=1, t0++\n- t0 = 0x10010001, load 'i', not null, v0=2, t0++\n- t0 = 0x10010002, load 0, is null, return v0=2"
+  },
+  {
+    "id": "cs202-t2-ex16",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic2",
+    "type": "written",
+    "title": "2D Array Access",
+    "description": "Given a 4x4 matrix of integers stored in row-major order, write MIPS code to access element matrix[i][j]. Assume matrix base in $s0, i in $s1, j in $s2.",
+    "difficulty": 4,
+    "hints": [
+      "Row-major: rows stored contiguously",
+      "Address = base + (i * num_cols + j) * element_size",
+      "Each row has 4 elements"
+    ],
+    "solution": "# Access matrix[i][j] where matrix is 4x4 integers\n# $s0 = base address, $s1 = i, $s2 = j\n# Result in $t0\n\n    # Calculate row offset: i * 4 (columns per row)\n    sll  $t0, $s1, 2      # t0 = i * 4\n\n    # Add column index: i * 4 + j\n    add  $t0, $t0, $s2    # t0 = i * 4 + j\n\n    # Convert to byte offset: (i * 4 + j) * 4\n    sll  $t0, $t0, 2      # t0 = (i * 4 + j) * 4\n\n    # Calculate final address\n    add  $t0, $s0, $t0    # t0 = base + offset\n\n    # Load the element\n    lw   $t1, 0($t0)      # t1 = matrix[i][j]\n\nMemory layout for 4x4 matrix (addresses relative to base):\n        j=0   j=1   j=2   j=3\ni=0     0     4     8     12\ni=1     16    20    24    28\ni=2     32    36    40    44\ni=3     48    52    56    60\n\nExample: matrix[2][3]\noffset = (2 * 4 + 3) * 4 = 11 * 4 = 44 bytes\naddress = base + 44"
+  },
+  {
+    "id": "cs202-t3-ex1",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic3",
+    "type": "written",
+    "title": "Datapath Components",
+    "description": "List the five major components of a basic MIPS datapath and explain the function of each.",
+    "difficulty": 1,
+    "hints": [
+      "Think about what happens in each stage of execution",
+      "Consider both instruction and data memory"
+    ],
+    "solution": "Five major components of MIPS datapath:\n\n1. Program Counter (PC)\n   - 32-bit register holding address of current instruction\n   - Incremented by 4 each cycle (or set by branch/jump)\n   - Input: next PC value, Output: current instruction address\n\n2. Instruction Memory\n   - Read-only memory containing program instructions\n   - Input: PC address, Output: 32-bit instruction\n   - Addressed by PC\n\n3. Register File\n   - 32 general-purpose 32-bit registers\n   - 2 read ports (rs, rt) and 1 write port (rd)\n   - Read is combinational, write on clock edge\n\n4. ALU (Arithmetic Logic Unit)\n   - Performs arithmetic/logical operations\n   - Inputs: two 32-bit operands, ALU control\n   - Outputs: 32-bit result, zero flag\n\n5. Data Memory\n   - RAM for load/store operations\n   - Inputs: address, write data, control signals\n   - Output: read data (for loads)"
+  },
+  {
+    "id": "cs202-t3-ex2",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic3",
+    "type": "written",
+    "title": "Single-Cycle Add Execution",
+    "description": "Trace the execution of \"add $t0, $s1, $s2\" through a single-cycle datapath. List which components are active and what data flows through each.",
+    "difficulty": 2,
+    "hints": [
+      "R-type instruction",
+      "Follow the instruction through IF, decode, execute, writeback"
+    ],
+    "solution": "Trace of \"add $t0, $s1, $s2\" (R-type):\n\n1. Instruction Fetch:\n   - PC provides address to Instruction Memory\n   - Instruction = 0x02328020 fetched\n   - PC + 4 calculated for next instruction\n\n2. Instruction Decode:\n   - opcode = 000000 → R-type, control signals set\n   - rs = 10001 (17) = $s1 → Read Register 1\n   - rt = 10010 (18) = $s2 → Read Register 2\n   - rd = 01000 (8) = $t0 → Write Register\n   - funct = 100000 → ALU operation = ADD\n\n3. Execute:\n   - Read Data 1 ($s1 value) → ALU input A\n   - Read Data 2 ($s2 value) → ALU input B\n   - ALU performs addition\n   - Result = $s1 + $s2\n\n4. Write Back:\n   - ALU result → Write Data input of Register File\n   - RegWrite = 1 (enabled)\n   - Result written to $t0 on clock edge\n\nData Memory NOT used (no load/store)\nControl signals: RegDst=1, ALUSrc=0, MemtoReg=0, RegWrite=1, MemRead=0, MemWrite=0, Branch=0"
+  },
+  {
+    "id": "cs202-t3-ex3",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic3",
+    "type": "written",
+    "title": "Load Word Datapath",
+    "description": "Show how \"lw $t0, 8($s1)\" uses the datapath. Draw the active paths and list all control signals.",
+    "difficulty": 3,
+    "hints": [
+      "I-type instruction",
+      "ALU calculates address",
+      "Data comes from memory, not ALU"
+    ],
+    "solution": "Execution of \"lw $t0, 8($s1)\":\n\nActive Datapath:\nPC → Instr Mem → Decode → Reg File → ALU → Data Mem → Reg File\n                  ↓           ↓        ↓\n               Control      $s1    address(8)\n\nStep-by-step:\n1. Fetch: PC → Instruction Memory → instruction\n\n2. Decode:\n   - opcode = 100011 (lw)\n   - rs = $s1 (base register)\n   - rt = $t0 (destination)\n   - immediate = 8 (offset)\n\n3. Execute:\n   - $s1 value → ALU input A\n   - Sign-extended immediate (8) → ALU input B (via ALUSrc mux)\n   - ALU computes: address = $s1 + 8\n\n4. Memory:\n   - ALU result → Data Memory address\n   - MemRead = 1 → Data read from memory\n\n5. Write Back:\n   - Memory data → Register File (via MemtoReg mux)\n   - Written to $t0\n\nControl Signals:\n- RegDst = 0 (rt is destination, not rd)\n- ALUSrc = 1 (immediate, not register)\n- MemtoReg = 1 (data from memory, not ALU)\n- RegWrite = 1 (write to register)\n- MemRead = 1 (read from memory)\n- MemWrite = 0\n- Branch = 0"
+  },
+  {
+    "id": "cs202-t3-ex4",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic3",
+    "type": "written",
+    "title": "Branch Datapath",
+    "description": "Explain how \"beq $t0, $t1, label\" determines whether to branch. What components are involved and what calculations are performed?",
+    "difficulty": 3,
+    "hints": [
+      "ALU compares registers",
+      "Branch target calculated in parallel",
+      "Zero flag controls branch"
+    ],
+    "solution": "Branch execution for \"beq $t0, $t1, label\":\n\nComponents involved:\n1. Register File - reads $t0 and $t1\n2. ALU - compares values\n3. Adder - calculates branch target\n4. AND gate - combines Branch signal and Zero flag\n5. MUX - selects next PC\n\nCalculations:\n1. ALU performs: $t0 - $t1\n   - If equal: result = 0, Zero flag = 1\n   - If not equal: result ≠ 0, Zero flag = 0\n\n2. Branch target (calculated in parallel):\n   Target = (PC + 4) + (sign-extended offset × 4)\n\n3. Next PC selection:\n   PCSrc = Branch AND Zero\n   - If beq and equal: PCSrc = 1 → next PC = branch target\n   - Otherwise: PCSrc = 0 → next PC = PC + 4\n\nControl Signals:\n- RegDst = X (don't care, no register write)\n- ALUSrc = 0 (compare two registers)\n- MemtoReg = X\n- RegWrite = 0 (no write)\n- MemRead = 0\n- MemWrite = 0\n- Branch = 1 (this is a branch instruction)\n- ALUOp = 01 (subtract for comparison)"
+  },
+  {
+    "id": "cs202-t3-ex5",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic3",
+    "type": "written",
+    "title": "Control Signal Table",
+    "description": "Create a truth table showing control signals for: R-type, lw, sw, beq. Include RegDst, ALUSrc, MemtoReg, RegWrite, MemRead, MemWrite, Branch.",
+    "difficulty": 2,
+    "hints": [
+      "Consider what each instruction needs",
+      "X means \"don't care\""
+    ],
+    "solution": "Control Signal Truth Table:\n\nInstruction | RegDst | ALUSrc | MemtoReg | RegWrite | MemRead | MemWrite | Branch\n------------|--------|--------|----------|----------|---------|----------|-------\nR-type      |   1    |   0    |    0     |    1     |    0    |    0     |   0\nlw          |   0    |   1    |    1     |    1     |    1    |    0     |   0\nsw          |   X    |   1    |    X     |    0     |    0    |    1     |   0\nbeq         |   X    |   0    |    X     |    0     |    0    |    0     |   1\n\nExplanation:\n- RegDst: 1 selects rd (R-type), 0 selects rt (lw)\n- ALUSrc: 1 uses immediate (lw, sw), 0 uses register (R-type, beq)\n- MemtoReg: 1 writes memory data (lw), 0 writes ALU result (R-type)\n- RegWrite: 1 for instructions that write registers (R-type, lw)\n- MemRead: 1 only for load instructions\n- MemWrite: 1 only for store instructions\n- Branch: 1 only for branch instructions\n\nX = don't care (signal has no effect on this instruction)"
+  },
+  {
+    "id": "cs202-t3-ex6",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic3",
+    "type": "written",
+    "title": "ALU Control",
+    "description": "Given ALUOp = 10 (R-type) and funct = 100010 (sub), determine the ALU control signal. Explain the two-level decoding process.",
+    "difficulty": 3,
+    "hints": [
+      "First level: main control sets ALUOp",
+      "Second level: ALU control decodes funct"
+    ],
+    "solution": "Two-level ALU control decoding:\n\nLevel 1: Main Control → ALUOp\n- 00: lw/sw (add for address calculation)\n- 01: beq (subtract for comparison)\n- 10: R-type (look at funct field)\n\nLevel 2: ALU Control Unit\nInput: ALUOp and funct field\nOutput: 4-bit ALU control signal\n\nFor ALUOp = 10, funct = 100010 (sub):\n┌─────────┬────────┬─────────────┐\n│ ALUOp   │ funct  │ ALU Control │\n├─────────┼────────┼─────────────┤\n│   00    │ XXXXXX │    0010     │ (add)\n│   01    │ XXXXXX │    0110     │ (sub)\n│   10    │ 100000 │    0010     │ (add)\n│   10    │ 100010 │    0110     │ (sub) ← This case\n│   10    │ 100100 │    0000     │ (and)\n│   10    │ 100101 │    0001     │ (or)\n│   10    │ 101010 │    0111     │ (slt)\n└─────────┴────────┴─────────────┘\n\nResult: ALU Control = 0110 (subtract)\n\nALU Control signals:\n0000 = AND\n0001 = OR\n0010 = add\n0110 = subtract\n0111 = set-on-less-than"
+  },
+  {
+    "id": "cs202-t3-ex7",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic3",
+    "type": "written",
+    "title": "Single-Cycle Timing",
+    "description": "Given these delays: Instruction Memory 200ps, Register Read 100ps, ALU 200ps, Data Memory 200ps, Register Write 100ps. What is the minimum clock period for single-cycle?",
+    "difficulty": 2,
+    "hints": [
+      "Find the longest path (critical path)",
+      "lw uses all components",
+      "Add up delays on critical path"
+    ],
+    "solution": "Timing analysis for single-cycle datapath:\n\nComponent delays:\n- Instruction Memory: 200ps\n- Register Read: 100ps\n- ALU: 200ps\n- Data Memory: 200ps\n- Register Write: 100ps\n\nPath analysis by instruction type:\n\nR-type path:\nIM + RegRead + ALU + RegWrite\n= 200 + 100 + 200 + 100 = 600ps\n\nLoad (lw) path - CRITICAL:\nIM + RegRead + ALU + DM + RegWrite\n= 200 + 100 + 200 + 200 + 100 = 800ps\n\nStore (sw) path:\nIM + RegRead + ALU + DM\n= 200 + 100 + 200 + 200 = 700ps\n\nBranch (beq) path:\nIM + RegRead + ALU\n= 200 + 100 + 200 = 500ps\n(plus mux and adder for target, typically parallel)\n\nCritical path = lw = 800ps\n\nMinimum clock period = 800ps\nMaximum frequency = 1/800ps = 1.25 GHz\n\nProblem: Clock period must accommodate slowest instruction,\neven though most instructions are faster."
+  },
+  {
+    "id": "cs202-t3-ex8",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic3",
+    "type": "written",
+    "title": "Multi-Cycle Advantages",
+    "description": "Explain three advantages of multi-cycle datapath over single-cycle. Why doesn't every instruction take 5 cycles?",
+    "difficulty": 2,
+    "hints": [
+      "Consider clock period",
+      "Consider resource sharing",
+      "Consider instruction mix"
+    ],
+    "solution": "Advantages of multi-cycle datapath:\n\n1. Shorter Clock Period\n   - Single-cycle: clock = longest instruction (lw = 800ps)\n   - Multi-cycle: clock = longest stage (200ps)\n   - 4× faster clock (though more cycles per instruction)\n\n2. Resource Sharing\n   - Single memory unit (not separate I-mem and D-mem)\n   - Single ALU (not separate adders for PC and branch)\n   - Reduces hardware cost and complexity\n\n3. Variable Instruction Timing\n   - R-type: 4 cycles (no memory access)\n   - lw: 5 cycles\n   - sw: 4 cycles (no writeback)\n   - beq: 3 cycles (no memory, no writeback)\n   - Jump: 3 cycles\n\nWhy not all 5 cycles?\nDifferent instructions need different stages:\n- beq doesn't need MEM or WB stages\n- sw doesn't need WB stage\n- R-type doesn't need MEM stage\n\nAverage CPI example (assuming instruction mix):\n25% lw (5) + 10% sw (4) + 45% R-type (4) + 15% beq (3) + 5% j (3)\n= 1.25 + 0.4 + 1.8 + 0.45 + 0.15 = 4.05 cycles average\n\nEffective speedup depends on instruction mix and cycle time ratio."
+  },
+  {
+    "id": "cs202-t3-ex9",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic3",
+    "type": "written",
+    "title": "Multi-Cycle States",
+    "description": "List the five states of multi-cycle datapath execution and what happens in each state for a load word instruction.",
+    "difficulty": 3,
+    "hints": [
+      "IF, ID, EX, MEM, WB",
+      "Each state takes one clock cycle",
+      "Intermediate values stored in registers"
+    ],
+    "solution": "Multi-cycle states for lw $t0, offset($s1):\n\nState 0: Instruction Fetch (IF)\n- IR = Memory[PC]  (fetch instruction)\n- PC = PC + 4      (increment PC)\n- 1 cycle\n\nState 1: Instruction Decode (ID)\n- A = Reg[rs]      (read $s1 into A register)\n- B = Reg[rt]      (read $t0 into B register - not used for lw)\n- ALUOut = PC + (sign-extend(offset) << 2)  (compute branch target)\n- 1 cycle\n\nState 2: Execution (EX)\n- ALUOut = A + sign-extend(offset)  (compute memory address)\n- 1 cycle\n\nState 3: Memory Access (MEM)\n- MDR = Memory[ALUOut]  (read data from computed address)\n- 1 cycle\n\nState 4: Write Back (WB)\n- Reg[rt] = MDR    (write loaded data to $t0)\n- 1 cycle\n\nTotal: 5 cycles for lw\n\nKey registers added for multi-cycle:\n- IR: Instruction Register (holds current instruction)\n- MDR: Memory Data Register (holds data from memory)\n- A, B: Hold register values between cycles\n- ALUOut: Holds ALU result between cycles"
+  },
+  {
+    "id": "cs202-t3-ex10",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic3",
+    "type": "written",
+    "title": "ALU Design",
+    "description": "Design a 1-bit ALU slice that supports AND, OR, ADD, and SUB. Show how to cascade these for a 32-bit ALU.",
+    "difficulty": 4,
+    "hints": [
+      "Use a mux to select operation",
+      "Full adder for arithmetic",
+      "Binvert input for subtraction"
+    ],
+    "solution": "1-bit ALU slice design:\n\nInputs: a, b, Binvert, CarryIn, Operation[1:0]\nOutputs: Result, CarryOut\n\n         ┌───────────────────────────────────┐\n    b ──►│ 0──┐                              │\n         │    │ Binvert                       │\n   ~b ──►│ 1──┘──┬──────────────────┐        │\n         │       │                   │        │\n         │       ▼                   ▼        │\n         │    ┌─────┐            ┌─────┐     │\n    a ──►│───►│ AND │           │Full │     │\n    b'──►│───►│     │           │Adder│     │\n         │    └──┬──┘           └──┬──┘     │\n         │       │    ┌─────┐     │  │       │\n    a ──►│───────┼───►│ OR  │     │  │       │\n    b'──►│───────┼───►│     │     │  │       │\n         │       │    └──┬──┘     │  │       │\n         │       │       │        │  │       │\n         │       ▼       ▼        ▼  │       │\n         │    ┌──────────────────────┴──┐    │\n         │    │         4:1 MUX         │    │\n         │    │  00  01  10  11         │───►│Result\n         │    └─────────────────────────┘    │\n         │                           CarryOut│───►\n         └───────────────────────────────────┘\n\nOperations (via Operation[1:0]):\n00: AND (a AND b')\n01: OR (a OR b')\n10: ADD (a + b' + CarryIn)\n11: (reserved for SLT)\n\n32-bit ALU:\n- Chain 32 slices, connecting CarryOut to next CarryIn\n- LSB: CarryIn = Binvert (0 for add, 1 for subtract)\n- Binvert: 0 for normal b, 1 for ~b (used in subtraction)\n- Subtract: Binvert=1, CarryIn=1 (a + ~b + 1 = a - b)"
+  },
+  {
+    "id": "cs202-t3-ex11",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic3",
+    "type": "written",
+    "title": "Register File Design",
+    "description": "Design a register file with 32 registers, 2 read ports, and 1 write port. Show how to implement the read and write operations.",
+    "difficulty": 4,
+    "hints": [
+      "Read is combinational (mux)",
+      "Write is clocked (decoder + registers)"
+    ],
+    "solution": "Register File Design (32 × 32-bit):\n\nRead Ports (combinational):\n- 5-bit Read Register 1 → 32:1 MUX → Read Data 1\n- 5-bit Read Register 2 → 32:1 MUX → Read Data 2\n\n         ┌─────────────────────────────┐\n Read1───►│  5-to-32                   │\n         │  Decoder  ──────┐           │\n         │                 │           │\n         │  ┌──────────────▼───────┐   │\n         │  │      32:1 MUX        │──►│ Data1\n         │  │  (selects register)  │   │\n         │  └──────────────────────┘   │\n         │                             │\n Read2───►│  Same structure           │──► Data2\n         └─────────────────────────────┘\n\nWrite Port (clocked):\n         ┌─────────────────────────────┐\n Write───►│  5-to-32    RegWrite       │\n Reg      │  Decoder ────AND───┐       │\n         │     │               │       │\n         │     ▼               ▼       │\n         │  ┌─────┐         ┌─────┐   │\n Write───►│  │Reg 0│◄────────│ EN  │   │\n Data     │  └─────┘         └─────┘   │\n         │  ┌─────┐                    │\n         │  │Reg 1│◄─────── ...        │\n         │  └─────┘                    │\n         │    ...                      │\n         │  ┌─────┐                    │\n         │  │Reg31│◄───────            │\n         │  └─────┘                    │\n         └─────────────────────────────┘\n\nSpecial: Register 0 ($zero) is hardwired to 0\n- Ignore writes to register 0\n- Read always returns 0\n\nTiming:\n- Read: ~register access time (combinational)\n- Write: On rising clock edge when RegWrite=1"
+  },
+  {
+    "id": "cs202-t3-ex12",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic3",
+    "type": "written",
+    "title": "Jump Instruction Support",
+    "description": "The basic datapath handles R-type, lw, sw, beq. What modifications are needed to support the j (jump) instruction?",
+    "difficulty": 3,
+    "hints": [
+      "J-type uses 26-bit address",
+      "Target = PC[31:28] || address || 00",
+      "Need new mux for PC"
+    ],
+    "solution": "Modifications for jump instruction:\n\nJ-format: | opcode(6) | address(26) |\n\nJump target calculation:\nTarget = PC+4[31:28] || address || 00\n       = Upper 4 bits of PC+4\n         concatenated with\n         26-bit address field\n         concatenated with\n         00 (word aligned)\n\nDatapath modifications:\n\n1. Add shift-left-2 unit for address field:\n   address[25:0] << 2 → address[27:0]\n\n2. Concatenation unit:\n   {PC+4[31:28], address[27:0]} → Jump Target\n\n3. Add MUX to PC input:\n   Before: 2:1 MUX (PC+4 or Branch Target)\n   After: 3:1 MUX (PC+4, Branch Target, or Jump Target)\n\n4. New control signal: Jump\n   - Jump = 1 for j instruction\n   - Combined with Branch for PC selection\n\nPC selection logic:\nif (Jump) PC = JumpTarget\nelse if (Branch && Zero) PC = BranchTarget\nelse PC = PC + 4\n\nControl signals for j:\n- RegWrite = 0\n- MemWrite = 0\n- Jump = 1\n- All others = don't care"
+  },
+  {
+    "id": "cs202-t3-ex13",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic3",
+    "type": "written",
+    "title": "Performance Comparison",
+    "description": "Compare performance of single-cycle vs multi-cycle for a program with: 25% loads, 10% stores, 50% ALU, 10% branches, 5% jumps. Component delays: IM=200ps, Reg=100ps, ALU=200ps, DM=200ps.",
+    "difficulty": 4,
+    "hints": [
+      "Calculate CPI for each design",
+      "Single-cycle CPI = 1 but long clock",
+      "Multi-cycle variable CPI but short clock"
+    ],
+    "solution": "Performance analysis:\n\nSingle-Cycle:\n- Clock period = critical path = lw\n- IM + Reg + ALU + DM + Reg = 200+100+200+200+100 = 800ps\n- CPI = 1 (all instructions take 1 cycle)\n- Execution time per instruction = 800ps\n\nMulti-Cycle:\n- Clock period = longest stage = max(IM, Reg, ALU, DM) = 200ps\n- Cycle counts:\n  * lw: 5 cycles\n  * sw: 4 cycles\n  * ALU: 4 cycles\n  * beq: 3 cycles\n  * j: 3 cycles\n\nAverage CPI (weighted):\n= 0.25(5) + 0.10(4) + 0.50(4) + 0.10(3) + 0.05(3)\n= 1.25 + 0.40 + 2.00 + 0.30 + 0.15\n= 4.10 cycles\n\nMulti-cycle execution time = 4.10 × 200ps = 820ps\n\nComparison:\n- Single-cycle: 800ps per instruction\n- Multi-cycle: 820ps per instruction (average)\n\nIn this case, single-cycle is slightly faster!\nBut multi-cycle uses less hardware (shared ALU, single memory).\n\nMulti-cycle wins when:\n- Instruction mix has more fast instructions (branches, jumps)\n- Memory is slower (larger DM delay increases single-cycle clock)"
+  },
+  {
+    "id": "cs202-t3-ex14",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic3",
+    "type": "written",
+    "title": "Control Unit FSM",
+    "description": "Draw the finite state machine (states and transitions) for the multi-cycle control unit handling lw, sw, and R-type instructions.",
+    "difficulty": 4,
+    "hints": [
+      "Start with common IF and ID states",
+      "Branch based on opcode",
+      "Each instruction type has different path"
+    ],
+    "solution": "Multi-cycle Control FSM:\n\nState 0: Instruction Fetch (IF)\n  - IR = Mem[PC], PC = PC + 4\n  - Next: State 1\n\nState 1: Instruction Decode (ID)\n  - A = Reg[rs], B = Reg[rt]\n  - ALUOut = PC + (offset << 2)  [for branch target]\n  - Next: based on opcode\n    * R-type → State 6\n    * lw/sw → State 2\n    * beq → State 8\n\nState 2: Memory Address (for lw/sw)\n  - ALUOut = A + sign-extend(offset)\n  - Next: lw → State 3, sw → State 5\n\nState 3: Memory Read (lw)\n  - MDR = Mem[ALUOut]\n  - Next: State 4\n\nState 4: Write Back (lw)\n  - Reg[rt] = MDR\n  - Next: State 0 (done)\n\nState 5: Memory Write (sw)\n  - Mem[ALUOut] = B\n  - Next: State 0 (done)\n\nState 6: Execute (R-type)\n  - ALUOut = A op B\n  - Next: State 7\n\nState 7: R-type Write Back\n  - Reg[rd] = ALUOut\n  - Next: State 0 (done)\n\nState 8: Branch Complete (beq)\n  - if (A == B) PC = ALUOut\n  - Next: State 0 (done)\n\nFSM Diagram:\n       ┌──────────────────────────────┐\n       │                              │\n       ▼                              │\n   [State 0] ──► [State 1] ──┬──► [State 6] ──► [State 7] ──┘\n       IF           ID       │       EX           WB\n                             │\n                             ├──► [State 2] ──┬──► [State 3] ──► [State 4] ──┘\n                             │    MemAddr     │    MemRead       WB (lw)\n                             │                │\n                             │                └──► [State 5] ──────────────┘\n                             │                     MemWrite (sw)\n                             │\n                             └──► [State 8] ──────────────────────────────┘\n                                  Branch"
+  },
+  {
+    "id": "cs202-t3-ex15",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic3",
+    "type": "written",
+    "title": "Sign Extension",
+    "description": "Explain why sign extension is needed for I-type instructions. Show the sign extension of 0xFFFC (16-bit) to 32 bits.",
+    "difficulty": 2,
+    "hints": [
+      "Immediate is 16 bits, ALU needs 32 bits",
+      "Preserve the numeric value",
+      "Copy the sign bit"
+    ],
+    "solution": "Why sign extension is needed:\n\nI-type immediate field is 16 bits, but:\n- ALU operates on 32-bit values\n- Addresses are 32 bits\n- Must preserve the signed value\n\nSign extension rule:\n- Copy the most significant bit (sign bit) to fill upper bits\n- Preserves the two's complement value\n\nExample: Sign-extend 0xFFFC (16-bit)\n\n16-bit value: 1111 1111 1111 1100\nDecimal: -4 (two's complement)\n\nSign bit = 1 (negative number)\n\nSign-extended to 32 bits:\n1111 1111 1111 1111 1111 1111 1111 1100\n= 0xFFFFFFFC\nDecimal: -4 ✓ (same value)\n\nExample: Sign-extend 0x0004 (16-bit)\n\n16-bit value: 0000 0000 0000 0100\nDecimal: +4\n\nSign bit = 0 (positive number)\n\nSign-extended to 32 bits:\n0000 0000 0000 0000 0000 0000 0000 0100\n= 0x00000004\nDecimal: +4 ✓\n\nHardware implementation:\n- Take bit 15 of immediate\n- Replicate it 16 times as upper bits\n- Concatenate: {16{imm[15]}, imm[15:0]}"
+  },
+  {
+    "id": "cs202-t3-ex16",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic3",
+    "type": "written",
+    "title": "Extending the ISA",
+    "description": "What datapath and control modifications would be needed to add the \"addi\" instruction to our basic MIPS implementation?",
+    "difficulty": 3,
+    "hints": [
+      "addi is I-type",
+      "Similar to lw but no memory access",
+      "rt is destination (not rd)"
+    ],
+    "solution": "Adding addi $rt, $rs, immediate:\n\nInstruction format: I-type\nopcode | rs | rt | immediate(16)\n\nDesired operation: Reg[rt] = Reg[rs] + sign-extend(imm)\n\nDatapath analysis:\n- Reads rs from register file ✓ (already exists)\n- Uses sign-extended immediate ✓ (already exists)\n- ALU adds them ✓ (already exists)\n- Writes result to rt ✓ (rt path exists for lw)\n\nDatapath modifications needed: NONE!\nThe existing datapath already supports this path.\n\nControl modifications:\n\nNeed to recognize addi opcode (001000) and set:\n- RegDst = 0 (write to rt, not rd) - same as lw\n- ALUSrc = 1 (use immediate) - same as lw\n- MemtoReg = 0 (ALU result, not memory) - same as R-type\n- RegWrite = 1 - same as lw/R-type\n- MemRead = 0 - same as R-type\n- MemWrite = 0 - same as everything except sw\n- Branch = 0\n- ALUOp = 00 (add) - same as lw\n\nControl table addition:\nInstruction | RegDst | ALUSrc | MemtoReg | RegWrite | MemRead | MemWrite | Branch | ALUOp\naddi        |   0    |   1    |    0     |    1     |    0    |    0     |   0    |  00\n\nSummary: Only control unit needs modification (add new opcode decoding).\nNo new datapath components required."
+  },
+  {
+    "id": "cs202-t4-ex1",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic4",
+    "type": "written",
+    "title": "Pipeline Basics",
+    "description": "A non-pipelined processor takes 800ps per instruction. If we split it into 5 equal stages, what is the ideal speedup? What factors reduce the actual speedup?",
+    "difficulty": 1,
+    "hints": [
+      "Ideal speedup = number of stages",
+      "Consider pipeline register overhead and hazards"
+    ],
+    "solution": "Ideal speedup analysis:\n\nNon-pipelined: 800ps per instruction\nPipelined: 5 stages of 800/5 = 160ps each\n\nIdeal speedup = number of stages = 5×\n\nThroughput improvement:\n- Non-pipelined: 1 instruction per 800ps\n- Pipelined: 1 instruction per 160ps (after pipeline fills)\n\nFactors reducing actual speedup:\n\n1. Pipeline register overhead\n   - Each stage needs registers to hold intermediate values\n   - Adds ~20ps per stage\n   - New clock period: 160 + 20 = 180ps\n   - Actual speedup: 800/180 = 4.44×\n\n2. Pipeline hazards cause stalls:\n   - Data hazards: instruction depends on previous result\n   - Control hazards: branches change instruction flow\n   - Structural hazards: resource conflicts (rare in MIPS)\n\n3. Unbalanced stages\n   - If stages aren't equal, clock = slowest stage\n   - Fast stages waste time waiting\n\n4. Pipeline fill/drain\n   - First instruction takes 5 cycles\n   - Last instructions drain without new work\n   - Matters for short programs"
+  },
+  {
+    "id": "cs202-t4-ex2",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic4",
+    "type": "written",
+    "title": "Identify Hazards",
+    "description": "Identify all hazards in this sequence:\nadd $t0, $t1, $t2\nsub $t3, $t0, $t4\nand $t5, $t0, $t3\nlw $t6, 0($t3)",
+    "difficulty": 2,
+    "hints": [
+      "Look for RAW (read-after-write) dependencies",
+      "Check which registers are read vs written"
+    ],
+    "solution": "Hazard analysis:\n\nI1: add $t0, $t1, $t2    # Writes $t0\nI2: sub $t3, $t0, $t4    # Reads $t0, writes $t3\nI3: and $t5, $t0, $t3    # Reads $t0 and $t3\nI4: lw  $t6, 0($t3)      # Reads $t3\n\nData hazards (RAW - Read After Write):\n\n1. I1 → I2 on $t0 (distance 1)\n   - add writes $t0, sub reads $t0\n   - Most severe: add in EX when sub in ID\n\n2. I1 → I3 on $t0 (distance 2)\n   - add writes $t0, and reads $t0\n   - Less severe due to distance\n\n3. I2 → I3 on $t3 (distance 1)\n   - sub writes $t3, and reads $t3\n   - Severe hazard\n\n4. I2 → I4 on $t3 (distance 2)\n   - sub writes $t3, lw reads $t3 for address\n   - Less severe\n\nPipeline diagram showing hazards:\nCycle:    1    2    3    4    5    6    7    8\nI1 add:  IF   ID   EX   MEM  WB\nI2 sub:       IF   ID   EX   MEM  WB\n              ↑hazard on $t0\nI3 and:            IF   ID   EX   MEM  WB\n                   ↑hazard on $t0, $t3\nI4 lw:                  IF   ID   EX   MEM  WB\n                        ↑hazard on $t3\n\nNo structural hazards (separate I-mem and D-mem).\nNo control hazards (no branches)."
+  },
+  {
+    "id": "cs202-t4-ex3",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic4",
+    "type": "written",
+    "title": "Forwarding Paths",
+    "description": "Draw the pipeline diagram for the sequence in the previous exercise with forwarding. Show which forwarding paths are used.",
+    "difficulty": 3,
+    "hints": [
+      "EX/MEM → EX forward",
+      "MEM/WB → EX forward",
+      "Forwarding eliminates most stalls"
+    ],
+    "solution": "Pipeline with forwarding:\n\nCycle:    1    2    3    4    5    6    7    8\nI1 add:  IF   ID   EX   MEM  WB\nI2 sub:       IF   ID   EX   MEM  WB\nI3 and:            IF   ID   EX   MEM  WB\nI4 lw:                  IF   ID   EX   MEM  WB\n\nForwarding paths used:\n\n1. I1 → I2 (EX/MEM → EX forward)\n   - Cycle 4: add finishes EX, result in EX/MEM register\n   - Cycle 4: sub needs value in EX stage\n   - Forward from EX/MEM to ALU input\n\n2. I1 → I3 (MEM/WB → EX forward)\n   - Cycle 5: add finishes MEM, result in MEM/WB register\n   - Cycle 5: and needs value in EX stage\n   - Forward from MEM/WB to ALU input\n\n3. I2 → I3 (EX/MEM → EX forward)\n   - Cycle 5: sub finishes EX, result in EX/MEM register\n   - Cycle 5: and needs value in EX stage\n   - Forward from EX/MEM to ALU input\n\n4. I2 → I4 (MEM/WB → EX forward)\n   - Cycle 6: sub finishes MEM, result in MEM/WB register\n   - Cycle 6: lw needs value in EX stage (address calc)\n   - Forward from MEM/WB to ALU input\n\nNo stalls needed! Forwarding handles all hazards.\n\nForwarding unit logic:\nif (EX/MEM.RegWrite && EX/MEM.Rd == ID/EX.Rs)\n    ForwardA = EX/MEM.ALUResult\nelse if (MEM/WB.RegWrite && MEM/WB.Rd == ID/EX.Rs)\n    ForwardA = MEM/WB.Result\nelse\n    ForwardA = ID/EX.ReadData1"
+  },
+  {
+    "id": "cs202-t4-ex4",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic4",
+    "type": "written",
+    "title": "Load-Use Hazard",
+    "description": "Why can't forwarding alone solve the load-use hazard? Show the pipeline diagram for:\nlw $t0, 0($t1)\nadd $t2, $t0, $t3",
+    "difficulty": 3,
+    "hints": [
+      "When is load data available?",
+      "When does add need it?",
+      "Data travels back in time?"
+    ],
+    "solution": "Load-use hazard analysis:\n\nlw  $t0, 0($t1)    # Load value into $t0\nadd $t2, $t0, $t3  # Use $t0 immediately\n\nPipeline without stall (impossible):\nCycle:    1    2    3    4    5\nlw:      IF   ID   EX   MEM  WB\nadd:          IF   ID   EX   MEM  WB\n                   ↑    ↑\n              needs   data\n              data   ready\n\nThe problem:\n- add needs $t0 in cycle 3 (for EX stage)\n- lw produces $t0 in cycle 4 (end of MEM stage)\n- Data arrives one cycle AFTER it's needed!\n- Forwarding cannot send data backwards in time\n\nSolution: Pipeline stall (bubble)\n\nCycle:    1    2    3    4    5    6\nlw:      IF   ID   EX   MEM  WB\nadd:          IF   ID   --   EX   MEM  WB\n                   ↑stall\n\nWith stall:\n- Cycle 3: ID repeated for add (or bubble inserted)\n- Cycle 4: lw finishes MEM, data available\n- Cycle 5: add EX uses forwarded data from MEM/WB\n\nThe stall costs 1 cycle but is unavoidable.\n\nHardware detection:\nif (ID/EX.MemRead &&\n    ID/EX.Rt == IF/ID.Rs || ID/EX.Rt == IF/ID.Rt)\n    stall pipeline\n\nThis is why lw followed by dependent instruction costs extra cycle."
+  },
+  {
+    "id": "cs202-t4-ex5",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic4",
+    "type": "written",
+    "title": "Branch Prediction",
+    "description": "Compare static \"always not taken\" prediction vs a 1-bit dynamic predictor for a loop that executes 10 times.",
+    "difficulty": 3,
+    "hints": [
+      "Count mispredictions for each",
+      "When does 1-bit predictor change?"
+    ],
+    "solution": "Loop executing 10 times analysis:\n\nStatic \"Always Not Taken\":\nIteration 1-9: branch taken → misprediction (9 wrong)\nIteration 10: branch not taken → correct (1 right)\nAccuracy: 1/10 = 10%\nMispredictions: 9\n\n1-bit Dynamic Predictor:\n(Starts with \"not taken\" prediction)\n\nIter | Actual | Predict | Result    | Next State\n-----|--------|---------|-----------|------------\n  1  | taken  | NT      | WRONG     | T\n  2  | taken  | T       | correct   | T\n  3  | taken  | T       | correct   | T\n  4  | taken  | T       | correct   | T\n  5  | taken  | T       | correct   | T\n  6  | taken  | T       | correct   | T\n  7  | taken  | T       | correct   | T\n  8  | taken  | T       | correct   | T\n  9  | taken  | T       | correct   | T\n 10  | NT     | T       | WRONG     | NT\n\nAccuracy: 8/10 = 80%\nMispredictions: 2 (first and last iterations)\n\n1-bit predictor is much better for loops!\n\nProblem with 1-bit: Nested loops cause issues\n- Outer loop ending mispredicts\n- Inner loop starting mispredicts\n- 2 mispredictions per outer iteration\n\n2-bit predictor solution:\n- Takes 2 mispredictions to change prediction\n- Better handles loop exit transitions"
+  },
+  {
+    "id": "cs202-t4-ex6",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic4",
+    "type": "written",
+    "title": "2-bit Saturating Counter",
+    "description": "Draw the state machine for a 2-bit saturating counter branch predictor. Show all states and transitions for taken/not-taken outcomes.",
+    "difficulty": 2,
+    "hints": [
+      "4 states: strongly/weakly taken/not-taken",
+      "Takes 2 wrong predictions to flip"
+    ],
+    "solution": "2-bit Saturating Counter Branch Predictor:\n\nStates:\n00: Strongly Not Taken (predict NT)\n01: Weakly Not Taken (predict NT)\n10: Weakly Taken (predict T)\n11: Strongly Taken (predict T)\n\nState Machine:\n                    NT                 NT\n           ┌───────────────┐   ┌───────────────┐\n           │               ▼   │               ▼\n        ┌──┴──┐         ┌──┴──┐         ┌─────┐         ┌─────┐\n        │ 00  │◄───NT───│ 01  │◄───NT───│ 10  │◄───NT───│ 11  │\n        │ SNT │         │ WNT │         │ WT  │         │ ST  │\n        │     │───T────►│     │───T────►│     │───T────►│     │\n        └─────┘         └─────┘         └─────┘         └──┬──┘\n           │               ▲               ▲               │\n           └───────────────┘               └───────────────┘\n                    T                              T\n\nPrediction based on MSB:\n- States 00, 01 → Predict Not Taken\n- States 10, 11 → Predict Taken\n\nAdvantages over 1-bit:\n1. Loop example (10 iterations):\n   - Start at SNT (00)\n   - Iter 1: T, wrong → WNT (01)\n   - Iter 2: T, wrong → WT (10), now predicting T\n   - Iter 3-9: T, correct → stays WT or ST\n   - Iter 10: NT, wrong → WNT\n   - Only 3 mispredictions vs 2 for 1-bit\n\n2. Better for loop in loop:\n   - Inner loop exit: wrong → weakly change\n   - Next inner loop start: still predicts taken\n   - Avoids double misprediction"
+  },
+  {
+    "id": "cs202-t4-ex7",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic4",
+    "type": "written",
+    "title": "Control Hazard Penalty",
+    "description": "Calculate the CPI for a processor where 20% of instructions are branches, branch prediction accuracy is 85%, and misprediction penalty is 3 cycles.",
+    "difficulty": 2,
+    "hints": [
+      "Base CPI = 1 with no hazards",
+      "Add penalty cycles for mispredictions"
+    ],
+    "solution": "Control hazard CPI calculation:\n\nGiven:\n- Base CPI = 1 (ideal pipelined)\n- Branch frequency = 20%\n- Prediction accuracy = 85%\n- Misprediction penalty = 3 cycles\n\nMisprediction rate = 1 - 0.85 = 0.15 (15%)\n\nStall cycles due to branches:\n= branch_frequency × misprediction_rate × penalty\n= 0.20 × 0.15 × 3\n= 0.09 cycles per instruction\n\nActual CPI = Base CPI + Branch stalls\n= 1 + 0.09\n= 1.09\n\nPerformance impact:\n- Ideal: 1.0 CPI\n- Actual: 1.09 CPI\n- Slowdown: 9%\n\nSensitivity analysis:\nIf prediction improves to 95%:\nStalls = 0.20 × 0.05 × 3 = 0.03\nCPI = 1.03 (only 3% slowdown)\n\nIf penalty increases to 5 cycles:\nStalls = 0.20 × 0.15 × 5 = 0.15\nCPI = 1.15 (15% slowdown)\n\nThis shows importance of:\n1. Better branch prediction\n2. Lower misprediction penalty (resolve branches earlier)"
+  },
+  {
+    "id": "cs202-t4-ex8",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic4",
+    "type": "written",
+    "title": "Pipeline Diagram with Hazards",
+    "description": "Draw the complete pipeline diagram showing stalls for:\nlw $t0, 0($s0)\nadd $t1, $t0, $t2\nsub $t3, $t1, $t4\nAssume forwarding is available.",
+    "difficulty": 3,
+    "hints": [
+      "Load-use requires one stall",
+      "add-sub can be forwarded",
+      "Show bubble in diagram"
+    ],
+    "solution": "Pipeline diagram with hazards:\n\nInstructions:\nI1: lw  $t0, 0($s0)    # loads into $t0\nI2: add $t1, $t0, $t2  # uses $t0 (load-use hazard)\nI3: sub $t3, $t1, $t4  # uses $t1\n\nCycle:    1    2    3    4    5    6    7    8\nI1 lw:   IF   ID   EX   MEM  WB\nI2 add:       IF   ID   **   EX   MEM  WB\n                   stall\nI3 sub:            IF   **   ID   EX   MEM  WB\n                        stall\n\n** = stall/bubble\n\nDetailed analysis:\n\nCycle 1: I1 in IF\nCycle 2: I1 in ID, I2 in IF\nCycle 3: I1 in EX, I2 in ID\n         - Hazard detected: I1 is lw, I2 reads $t0\n         - Must stall I2 (and I3)\nCycle 4: I1 in MEM, I2 stalled (ID repeated), I3 stalled\n         - Bubble inserted in EX stage\nCycle 5: I1 in WB, I2 in EX (forward from MEM/WB), I3 in ID\nCycle 6: I2 in MEM, I3 in EX (forward from EX/MEM)\nCycle 7: I2 in WB, I3 in MEM\nCycle 8: I3 in WB\n\nForwarding paths:\n- Cycle 5: MEM/WB.Data → I2 EX (load result)\n- Cycle 6: EX/MEM.ALUOut → I3 EX (add result)\n\nTotal cycles: 8 (instead of 7 without hazard)\nStall cycles: 1"
+  },
+  {
+    "id": "cs202-t4-ex9",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic4",
+    "type": "written",
+    "title": "Exception Handling",
+    "description": "Explain how a pipelined processor handles an arithmetic overflow exception in the EX stage. What happens to instructions in earlier and later stages?",
+    "difficulty": 4,
+    "hints": [
+      "Precise exceptions",
+      "Instructions before must complete",
+      "Instructions after must be cancelled"
+    ],
+    "solution": "Exception handling in pipelined processor:\n\nScenario: Overflow occurs during add in EX stage\n\nPipeline state at exception:\nCycle N:\nIF:  I4 (being fetched)\nID:  I3 (being decoded)\nEX:  I2 add - OVERFLOW!\nMEM: I1 (in memory stage)\nWB:  I0 (completing)\n\nRequirements for precise exception:\n1. All instructions before I2 must complete (I0, I1)\n2. I2 and all instructions after must be cancelled (I2, I3, I4)\n3. Exception handler must see state as if I2 never started\n\nSteps:\n\n1. Detect exception in EX stage\n   - Overflow flag set by ALU\n   - EX/MEM pipeline register marks exception\n\n2. Let earlier instructions complete\n   - I0 finishes WB normally\n   - I1 finishes MEM, then WB\n\n3. Flush later stages\n   - Convert I2, I3, I4 to NOPs (bubbles)\n   - Prevent any state changes\n\n4. Save exception state\n   - EPC = address of I2 (excepting instruction)\n   - Cause register = overflow\n   - Save any needed state\n\n5. Jump to handler\n   - PC = exception handler address\n   - Begin fetching handler code\n\nPipeline after handling:\nCycle N+1: Flush I4, I3, I2\nCycle N+2: I1 in WB, handler IF\nCycle N+3: Handler executing\n\nChallenges:\n- Multiple exceptions in different stages\n- Handling exceptions in order (oldest first)\n- Speculative instructions (branch misprediction)"
+  },
+  {
+    "id": "cs202-t4-ex10",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic4",
+    "type": "written",
+    "title": "Delayed Branch",
+    "description": "Explain the MIPS delayed branch mechanism. Why does MIPS have a \"branch delay slot\"? Fill the delay slot for: beq $t0, $t1, target followed by add $s0, $s1, $s2",
+    "difficulty": 3,
+    "hints": [
+      "Instruction after branch always executes",
+      "Can often be filled with useful work",
+      "Compiler responsibility"
+    ],
+    "solution": "MIPS Delayed Branch:\n\nIn MIPS, the instruction immediately after a branch ALWAYS executes,\nregardless of whether the branch is taken. This is the \"delay slot.\"\n\nWhy delayed branch exists:\n- Original MIPS had no branch prediction\n- Branch target not known until ID/EX\n- 1 cycle penalty inevitable\n- Rather than waste the cycle, execute useful instruction\n\nExample:\n    beq $t0, $t1, target\n    add $s0, $s1, $s2    # Branch delay slot - ALWAYS executes\n    ...\ntarget:\n    ...\n\nFilling strategies:\n\n1. Move instruction from BEFORE branch (best):\nBefore:\n    add $s0, $s1, $s2\n    beq $t0, $t1, target\n\nAfter (optimized):\n    beq $t0, $t1, target\n    add $s0, $s1, $s2    # From before branch, no dependency\n\n2. Move from branch target (if taken likely):\n    beq $t0, $t1, target\n    first_target_inst    # Duplicated from target\n\n3. Move from fall-through (if not-taken likely):\n    beq $t0, $t1, target\n    fall_through_inst    # Only safe if branch usually not taken\n\n4. NOP if nothing safe:\n    beq $t0, $t1, target\n    nop                  # Wasted slot\n\nFor the given code:\n    beq $t0, $t1, target\n    add $s0, $s1, $s2\n\nIf add is independent of branch (doesn't use $t0, $t1 or affect branch):\n- Keep as is - add always executes\n- Works correctly whether branch taken or not\n\nModern processors use branch prediction instead."
+  },
+  {
+    "id": "cs202-t4-ex11",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic4",
+    "type": "written",
+    "title": "Structural Hazards",
+    "description": "A processor has a single memory port for both instructions and data. Show how this causes structural hazards. What is the solution in MIPS?",
+    "difficulty": 2,
+    "hints": [
+      "IF and MEM both need memory",
+      "When do they conflict?",
+      "Harvard architecture"
+    ],
+    "solution": "Structural hazard with single memory port:\n\nSingle-port memory (von Neumann):\n- Both IF and MEM need memory access\n- Only one access per cycle possible\n\nConflict scenario:\nCycle:    1    2    3    4    5    6\nI1:      IF   ID   EX   MEM  WB\nI2:           IF   ID   EX   MEM  WB\nI3:                IF   ID   EX   MEM\nI4:                     IF   ID   EX\n                        ↑    ↑\n                      Conflict!\n\nAt cycle 4:\n- I1 needs memory for data (MEM stage) - e.g., lw\n- I4 needs memory for instruction (IF stage)\n- Both cannot be served!\n\nSolutions:\n\n1. Stall one stage (poor performance):\nCycle:    1    2    3    4    5    6    7\nI1 lw:   IF   ID   EX   MEM  WB\nI2:           IF   ID   EX   MEM  WB\nI3:                IF   ID   EX   MEM  WB\nI4:                     IF   **   ID   EX\n                        stall\n\n2. MIPS solution - Harvard Architecture:\n- Separate instruction memory and data memory\n- IF uses I-cache, MEM uses D-cache\n- No structural hazard possible\n\nIn cache-based systems:\n- L1 split into I-cache and D-cache\n- Both can be accessed simultaneously\n- Unified L2/L3 can still have conflicts (handled by cache controller)\n\nRegister file structural hazard:\n- Potential conflict: ID reads, WB writes\n- Solution: Write in first half of cycle, read in second half\n- Or: Multiple read/write ports"
+  },
+  {
+    "id": "cs202-t4-ex12",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic4",
+    "type": "written",
+    "title": "WAW and WAR Hazards",
+    "description": "Define WAW (Write After Write) and WAR (Write After Read) hazards. Do they occur in a standard 5-stage MIPS pipeline? Why or why not?",
+    "difficulty": 3,
+    "hints": [
+      "Consider in-order vs out-of-order execution",
+      "All writes happen in WB stage",
+      "Consider instruction ordering"
+    ],
+    "solution": "WAW and WAR Hazard Analysis:\n\nWAW (Write After Write):\n- Later instruction writes before earlier instruction\n- Example: I1 writes R1, I3 writes R1\n- If I3 writes first, I1 overwrites with stale value\n\nWAR (Write After Read):\n- Later instruction writes before earlier instruction reads\n- Example: I1 reads R1, I3 writes R1\n- If I3 writes first, I1 reads new (wrong) value\n\nIn standard 5-stage MIPS pipeline:\n\nWAW hazards - NO\n- All writes happen in WB stage (stage 5)\n- Instructions proceed in order\n- Earlier instruction always reaches WB first\n- Correct final value guaranteed\n\nExample:\nI1: add $t0, $t1, $t2    # writes $t0 in cycle 5\nI2: ...\nI3: sub $t0, $t3, $t4    # writes $t0 in cycle 7\nResult: $t0 = sub result (correct - latest write wins)\n\nWAR hazards - NO\n- All reads happen in ID stage (stage 2)\n- All writes happen in WB stage (stage 5)\n- Reads always happen before writes in pipeline order\n- No way for later write to overtake earlier read\n\nExample:\nI1: add $t0, $s0, $s1    # reads $s0 in cycle 2\nI2: sub $s0, $t1, $t2    # writes $s0 in cycle 6\nI1 reads $s0 long before I2 writes it - no hazard\n\nWhen do WAW/WAR occur?\n- Out-of-order execution\n- Variable-latency operations (FP divide)\n- Multi-cycle operations completing out of order\n- Solved with register renaming in superscalar processors"
+  },
+  {
+    "id": "cs202-t4-ex13",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic4",
+    "type": "written",
+    "title": "Deep Pipeline Trade-offs",
+    "description": "A processor has the option of a 5-stage or 10-stage pipeline. Compare the trade-offs including clock speed, CPI, and hazard impacts.",
+    "difficulty": 4,
+    "hints": [
+      "More stages = higher clock frequency",
+      "More stages = more hazard penalties",
+      "Consider branch misprediction cost"
+    ],
+    "solution": "Deep Pipeline Analysis: 5-stage vs 10-stage\n\nClock Speed:\n- 5-stage: Stage delay = total/5, clock = 1/(stage + overhead)\n- 10-stage: Stage delay = total/10, clock = 1/(stage + overhead)\n- 10-stage has ~2× higher frequency (ideally)\n- But overhead (pipeline registers) is larger fraction of shorter stages\n\nExample: 1000ps total logic, 50ps register overhead\n- 5-stage: 200ps + 50ps = 250ps clock → 4 GHz\n- 10-stage: 100ps + 50ps = 150ps clock → 6.67 GHz\n- Actual speedup: 1.67× (not 2×)\n\nHazard Impacts:\n\nData hazards:\n- 5-stage: Load-use = 1 stall cycle\n- 10-stage: More stages between load and use\n- May need 2-3 stall cycles for load-use\n\nBranch misprediction:\n- 5-stage: ~2-3 cycle penalty (IF, ID, EX flushed)\n- 10-stage: ~5-6 cycle penalty (more stages to flush)\n- Misprediction much more expensive!\n\nCPI Analysis:\nAssume: 20% branches, 15% misprediction, 25% loads, 50% load-use\n\n5-stage:\nBranch penalty: 0.20 × 0.15 × 3 = 0.09\nLoad-use stalls: 0.25 × 0.50 × 1 = 0.125\nCPI = 1 + 0.09 + 0.125 = 1.215\n\n10-stage:\nBranch penalty: 0.20 × 0.15 × 6 = 0.18\nLoad-use stalls: 0.25 × 0.50 × 2 = 0.25\nCPI = 1 + 0.18 + 0.25 = 1.43\n\nPerformance comparison:\n5-stage: 4 GHz / 1.215 = 3.29 billion inst/sec\n10-stage: 6.67 GHz / 1.43 = 4.66 billion inst/sec\n\n10-stage is faster despite higher CPI due to clock speed.\nBut needs better branch prediction to be worthwhile."
+  },
+  {
+    "id": "cs202-t4-ex14",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic4",
+    "type": "written",
+    "title": "Code Scheduling",
+    "description": "Reorder these instructions to minimize stalls (assume forwarding):\nlw $t0, 0($s0)\nlw $t1, 4($s0)\nadd $t2, $t0, $t1\nsw $t2, 8($s0)",
+    "difficulty": 3,
+    "hints": [
+      "Load-use hazards cause stalls",
+      "Put independent instructions between load and use",
+      "Both loads can happen early"
+    ],
+    "solution": "Code scheduling to minimize stalls:\n\nOriginal code:\n    lw  $t0, 0($s0)     # I1\n    lw  $t1, 4($s0)     # I2\n    add $t2, $t0, $t1   # I3: uses $t0 (load-use!), uses $t1 (load-use!)\n    sw  $t2, 8($s0)     # I4: uses $t2\n\nOriginal pipeline (with stalls):\nCycle:  1   2   3   4   5   6   7   8   9   10\nI1 lw: IF  ID  EX  MEM WB\nI2 lw:     IF  ID  EX  MEM WB\nI3 add:        IF  ID  **  EX  MEM WB\n                   stall (wait for $t1)\nI4 sw:             IF  **  ID  EX  MEM WB\n\nStalls: 2 cycles (one for each load-use)\nTotal: 10 cycles\n\nScheduled code (no reordering possible to eliminate both):\nThe problem: add needs BOTH $t0 and $t1\n- $t0 available after I1 MEM (cycle 4)\n- $t1 available after I2 MEM (cycle 5)\n- add in EX needs both in cycle 5 at earliest\n\nBetter schedule:\n    lw  $t0, 0($s0)     # I1\n    lw  $t1, 4($s0)     # I2\n    nop                  # or move unrelated instruction here\n    add $t2, $t0, $t1   # I3: now both values available via forwarding\n    sw  $t2, 8($s0)     # I4\n\nCycle:  1   2   3   4   5   6   7   8   9\nI1 lw: IF  ID  EX  MEM WB\nI2 lw:     IF  ID  EX  MEM WB\nnop:           IF  ID  EX  MEM WB\nI3 add:            IF  ID  EX  MEM WB\nI4 sw:                 IF  ID  EX  MEM\n\nWith proper scheduling: 9 cycles (1 stall or nop)\nSaved 1 cycle!\n\nThe key insight:\n- Start both loads early\n- Give time for both to reach MEM before add needs them"
+  },
+  {
+    "id": "cs202-t4-ex15",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic4",
+    "type": "written",
+    "title": "Forwarding Unit Design",
+    "description": "Write the logic equations for the forwarding unit that detects when to forward from EX/MEM or MEM/WB to the ALU inputs.",
+    "difficulty": 4,
+    "hints": [
+      "Check destination register matches source",
+      "EX/MEM has priority over MEM/WB",
+      "Must check RegWrite is enabled"
+    ],
+    "solution": "Forwarding Unit Logic Design:\n\nInputs:\n- EX/MEM.RegisterRd: destination of instruction in MEM\n- MEM/WB.RegisterRd: destination of instruction in WB\n- ID/EX.RegisterRs: first source of instruction in EX\n- ID/EX.RegisterRt: second source of instruction in EX\n- EX/MEM.RegWrite: is MEM instruction writing?\n- MEM/WB.RegWrite: is WB instruction writing?\n\nOutputs:\n- ForwardA[1:0]: mux select for first ALU operand\n- ForwardB[1:0]: mux select for second ALU operand\n\nForwardA/B encoding:\n00 = use register file output (no forwarding)\n01 = forward from MEM/WB\n10 = forward from EX/MEM\n\nLogic for ForwardA (first ALU input):\n\n// EX hazard (forward from EX/MEM)\nEX_hazard_A = EX/MEM.RegWrite\n           && (EX/MEM.RegisterRd != 0)\n           && (EX/MEM.RegisterRd == ID/EX.RegisterRs)\n\n// MEM hazard (forward from MEM/WB)\nMEM_hazard_A = MEM/WB.RegWrite\n            && (MEM/WB.RegisterRd != 0)\n            && (MEM/WB.RegisterRd == ID/EX.RegisterRs)\n            && NOT(EX_hazard_A)  // EX hazard has priority\n\nForwardA = EX_hazard_A ? 10 :\n           MEM_hazard_A ? 01 :\n           00\n\nLogic for ForwardB (second ALU input):\n\n// Same logic but with RegisterRt\nEX_hazard_B = EX/MEM.RegWrite\n           && (EX/MEM.RegisterRd != 0)\n           && (EX/MEM.RegisterRd == ID/EX.RegisterRt)\n\nMEM_hazard_B = MEM/WB.RegWrite\n            && (MEM/WB.RegisterRd != 0)\n            && (MEM/WB.RegisterRd == ID/EX.RegisterRt)\n            && NOT(EX_hazard_B)\n\nForwardB = EX_hazard_B ? 10 :\n           MEM_hazard_B ? 01 :\n           00\n\nKey points:\n- Check Rd != 0 because $zero is hardwired\n- EX/MEM has priority (more recent value)\n- Must check RegWrite (not all instructions write)"
+  },
+  {
+    "id": "cs202-t4-ex16",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic4",
+    "type": "written",
+    "title": "Pipeline Performance Equation",
+    "description": "Derive the speedup formula for pipelining. Calculate the speedup for a 5-stage pipeline with 20% stall cycles due to hazards.",
+    "difficulty": 3,
+    "hints": [
+      "Throughput vs latency",
+      "Consider steady state",
+      "CPI with stalls"
+    ],
+    "solution": "Pipeline Speedup Derivation:\n\nNon-pipelined execution time for N instructions:\nT_unpipelined = N × (k × t)\nwhere k = number of stages, t = stage time\n\nPipelined execution time:\n- First instruction: k cycles (fills pipeline)\n- Remaining N-1 instructions: 1 cycle each (ideally)\n- Plus stall cycles\n\nT_pipelined_ideal = (k + N - 1) × t\n\nFor large N:\nT_pipelined_ideal ≈ N × t\n\nIdeal Speedup = T_unpipelined / T_pipelined\n             = (N × k × t) / (N × t)\n             = k\n\nWith stalls (CPI > 1):\nT_pipelined = N × CPI × t\n\nActual Speedup = (N × k × t) / (N × CPI × t)\n               = k / CPI\n\nGiven: 5-stage pipeline, 20% stall cycles\nCPI = 1 + 0.20 = 1.20\n\nSpeedup = 5 / 1.20 = 4.17×\n\nComparison:\n- Ideal: 5× speedup\n- Actual: 4.17× speedup\n- Lost: 0.83× due to hazards\n\nBreaking down the loss:\n- Stall cycles waste potential throughput\n- 20% of cycles are bubbles\n- Effective utilization: 1/1.20 = 83.3%\n\nGeneral formula:\nSpeedup = Pipeline_depth / (1 + Stall_rate)\n\nOr: Speedup = Pipeline_depth × Pipeline_efficiency\nwhere efficiency = 1 / CPI"
+  },
+  {
+    "id": "cs202-t5-ex1",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic5",
+    "type": "written",
+    "title": "Cache Address Breakdown",
+    "description": "For a 32KB direct-mapped cache with 64-byte blocks and 32-bit addresses, calculate the number of bits for tag, index, and offset fields.",
+    "difficulty": 2,
+    "hints": [
+      "Total size = blocks × block size",
+      "Offset bits = log2(block size)",
+      "Index bits = log2(number of blocks)"
+    ],
+    "solution": "Cache parameter calculation:\n\nGiven:\n- Cache size: 32KB = 32 × 1024 = 32768 bytes\n- Block size: 64 bytes\n- Address: 32 bits\n\nStep 1: Calculate number of blocks\nNumber of blocks = Cache size / Block size\n= 32768 / 64 = 512 blocks\n\nStep 2: Calculate offset bits\nOffset addresses bytes within a block\nOffset bits = log2(64) = 6 bits\n\nStep 3: Calculate index bits\nIndex selects which block (set)\nIndex bits = log2(512) = 9 bits\n\nStep 4: Calculate tag bits\nTag = remaining address bits\nTag bits = 32 - 9 - 6 = 17 bits\n\nAddress breakdown:\n| Tag (17 bits) | Index (9 bits) | Offset (6 bits) |\n|   31 - 15     |    14 - 6      |     5 - 0       |\n\nVerification:\n- 2^6 = 64 bytes per block ✓\n- 2^9 = 512 blocks ✓\n- 512 × 64 = 32KB ✓"
+  },
+  {
+    "id": "cs202-t5-ex2",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic5",
+    "type": "written",
+    "title": "Cache Access Sequence",
+    "description": "For a direct-mapped cache with 4 blocks (0-3) and addresses that map as: addr mod 4, trace accesses to addresses: 0, 4, 8, 0, 4, 12, 0. Show hits/misses.",
+    "difficulty": 2,
+    "hints": [
+      "Direct-mapped means one possible location",
+      "Track what's in each block",
+      "Address mod 4 gives index"
+    ],
+    "solution": "Direct-mapped cache trace (4 blocks, index = addr mod 4):\n\nInitial state: all blocks empty\n\nAccess 0: index = 0 mod 4 = 0\n- Block 0 empty → MISS\n- Load addr 0 into block 0\n- Cache: [0, -, -, -]\n\nAccess 4: index = 4 mod 4 = 0\n- Block 0 has addr 0, need 4 → MISS (conflict)\n- Replace with addr 4\n- Cache: [4, -, -, -]\n\nAccess 8: index = 8 mod 4 = 0\n- Block 0 has addr 4, need 8 → MISS (conflict)\n- Replace with addr 8\n- Cache: [8, -, -, -]\n\nAccess 0: index = 0 mod 4 = 0\n- Block 0 has addr 8, need 0 → MISS (conflict)\n- Replace with addr 0\n- Cache: [0, -, -, -]\n\nAccess 4: index = 4 mod 4 = 0\n- Block 0 has addr 0, need 4 → MISS (conflict)\n- Replace with addr 4\n- Cache: [4, -, -, -]\n\nAccess 12: index = 12 mod 4 = 0\n- Block 0 has addr 4, need 12 → MISS (conflict)\n- Replace with addr 12\n- Cache: [12, -, -, -]\n\nAccess 0: index = 0 mod 4 = 0\n- Block 0 has addr 12, need 0 → MISS (conflict)\n- Replace with addr 0\n- Cache: [0, -, -, -]\n\nResults: 7 accesses, 0 hits, 7 misses\nHit rate: 0%\n\nProblem: All addresses map to same block!\nThis is pathological worst case for direct-mapped.\nSet-associative cache would help."
+  },
+  {
+    "id": "cs202-t5-ex3",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic5",
+    "type": "written",
+    "title": "Set-Associative Cache",
+    "description": "Redo the previous exercise with a 2-way set-associative cache (2 sets, 2 blocks each). Use LRU replacement.",
+    "difficulty": 3,
+    "hints": [
+      "2 sets means index = addr mod 2",
+      "Each set holds 2 blocks",
+      "LRU evicts least recently used"
+    ],
+    "solution": "2-way set-associative cache trace:\n(2 sets × 2 ways = 4 blocks total, index = addr mod 2)\n\nInitial: Set 0: [-, -], Set 1: [-, -]\n\nAccess 0: index = 0 mod 2 = 0\n- Set 0 empty → MISS\n- Load 0 into Set 0, Way 0\n- Set 0: [0, -], LRU order: 0\n\nAccess 4: index = 4 mod 2 = 0\n- Set 0 has [0, -], no 4 → MISS\n- Load 4 into Set 0, Way 1\n- Set 0: [0, 4], LRU order: 0, 4 (0 is older)\n\nAccess 8: index = 8 mod 2 = 0\n- Set 0 has [0, 4], no 8 → MISS\n- LRU is 0, replace it\n- Set 0: [8, 4], LRU order: 4, 8\n\nAccess 0: index = 0 mod 2 = 0\n- Set 0 has [8, 4], no 0 → MISS\n- LRU is 4, replace it\n- Set 0: [8, 0], LRU order: 8, 0\n\nAccess 4: index = 4 mod 2 = 0\n- Set 0 has [8, 0], no 4 → MISS\n- LRU is 8, replace it\n- Set 0: [4, 0], LRU order: 0, 4\n\nAccess 12: index = 12 mod 2 = 0\n- Set 0 has [4, 0], no 12 → MISS\n- LRU is 0, replace it\n- Set 0: [4, 12], LRU order: 4, 12\n\nAccess 0: index = 0 mod 2 = 0\n- Set 0 has [4, 12], no 0 → MISS\n- LRU is 4, replace it\n- Set 0: [0, 12], LRU order: 12, 0\n\nResults: 7 accesses, 0 hits, 7 misses\nStill 0% hit rate - this sequence is adversarial!\n\nNote: 4-way or fully associative would help here."
+  },
+  {
+    "id": "cs202-t5-ex4",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic5",
+    "type": "written",
+    "title": "AMAT Calculation",
+    "description": "Calculate AMAT for: L1 hit time = 1 cycle, L1 miss rate = 5%, L2 hit time = 10 cycles, L2 miss rate = 20%, Memory = 100 cycles.",
+    "difficulty": 2,
+    "hints": [
+      "AMAT = Hit time + Miss rate × Miss penalty",
+      "L2 miss penalty includes memory access",
+      "Chain the calculations"
+    ],
+    "solution": "Average Memory Access Time (AMAT) calculation:\n\nGiven:\n- L1 hit time: 1 cycle\n- L1 miss rate: 5% (0.05)\n- L2 hit time: 10 cycles\n- L2 miss rate: 20% (0.20) - miss rate GIVEN L1 miss\n- Memory access time: 100 cycles\n\nMethod 1: Hierarchical AMAT\n\nL2 AMAT (when L1 misses):\nAMAT_L2 = L2_hit_time + L2_miss_rate × Memory_time\n= 10 + 0.20 × 100\n= 10 + 20\n= 30 cycles\n\nTotal AMAT:\nAMAT = L1_hit_time + L1_miss_rate × L2_AMAT\n= 1 + 0.05 × 30\n= 1 + 1.5\n= 2.5 cycles\n\nMethod 2: Probability breakdown\n\nP(L1 hit) = 0.95 → 1 cycle\nP(L1 miss, L2 hit) = 0.05 × 0.80 = 0.04 → 1 + 10 = 11 cycles\nP(L1 miss, L2 miss) = 0.05 × 0.20 = 0.01 → 1 + 10 + 100 = 111 cycles\n\nAMAT = 0.95(1) + 0.04(11) + 0.01(111)\n= 0.95 + 0.44 + 1.11\n= 2.5 cycles ✓\n\nInterpretation:\n- Average memory access takes 2.5 cycles\n- L1 provides most of the performance (95% hits at 1 cycle)\n- L2 catches most L1 misses (80% of 5%)\n- Only 1% of accesses go to memory"
+  },
+  {
+    "id": "cs202-t5-ex5",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic5",
+    "type": "written",
+    "title": "Three Cs Classification",
+    "description": "Classify these misses using the 3 Cs: (a) First access to array element (b) Working set larger than cache (c) Two arrays mapping to same cache lines",
+    "difficulty": 2,
+    "hints": [
+      "Compulsory: first access ever",
+      "Capacity: not enough total space",
+      "Conflict: mapping collision"
+    ],
+    "solution": "Three Cs Miss Classification:\n\n(a) First access to array element: COMPULSORY (Cold) miss\n- Data has never been in cache before\n- Cannot be avoided (except by prefetching)\n- Would occur even with infinite cache size\n- Example: First iteration of loop accessing array\n\n(b) Working set larger than cache: CAPACITY miss\n- Cache too small to hold all active data\n- Would occur even with full associativity\n- Solution: Larger cache or better algorithm locality\n- Example: Matrix multiply where matrix doesn't fit\n\n(c) Two arrays mapping to same lines: CONFLICT miss\n- Multiple addresses compete for same cache set\n- Would NOT occur with full associativity\n- Solution: More associativity or array padding\n- Example: Stride access pattern hitting same sets\n\nMiss classification summary:\n┌────────────┬──────────────────────┬───────────────────┐\n│ Type       │ Cause                │ Solution          │\n├────────────┼──────────────────────┼───────────────────┤\n│ Compulsory │ First access         │ Prefetching       │\n│ Capacity   │ Cache too small      │ Larger cache      │\n│ Conflict   │ Limited associativity│ More ways         │\n└────────────┴──────────────────────┴───────────────────┘\n\nRelative impact (typical):\n- Compulsory: Small (happens once per block)\n- Capacity: Can be large for big datasets\n- Conflict: Often significant, reduced by associativity"
+  },
+  {
+    "id": "cs202-t5-ex6",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic5",
+    "type": "written",
+    "title": "Write Policies",
+    "description": "Compare write-through and write-back policies. For a program that writes 1000 times to the same address, how many memory writes occur with each policy?",
+    "difficulty": 2,
+    "hints": [
+      "Write-through writes to memory every time",
+      "Write-back only writes when evicted",
+      "Consider dirty bit"
+    ],
+    "solution": "Write Policy Comparison:\n\nWrite-Through:\n- Every write goes to both cache AND memory\n- Simple, keeps memory consistent\n- High memory bandwidth usage\n\nWrite-Back:\n- Write only goes to cache\n- Mark block as \"dirty\"\n- Write to memory only when evicted\n- Requires extra dirty bit\n\nFor 1000 writes to same address:\n\nWrite-Through:\n- Each write updates memory\n- Memory writes: 1000\n- Memory reads: 1 (initial miss, assuming cold start)\n- Total memory traffic: 1001 accesses\n\nWrite-Back:\n- First write: miss, bring block to cache, write to cache\n- Writes 2-1000: hit, update cache only\n- On eviction: write dirty block back\n- Memory writes: 1 (on eviction)\n- Memory reads: 1 (initial miss)\n- Total memory traffic: 2 accesses\n\nComparison:\n┌─────────────────┬───────────────┬─────────────┐\n│ Metric          │ Write-Through │ Write-Back  │\n├─────────────────┼───────────────┼─────────────┤\n│ Memory writes   │     1000      │      1      │\n│ Memory reads    │       1       │      1      │\n│ Total traffic   │     1001      │      2      │\n│ Complexity      │     Low       │    Higher   │\n│ Consistency     │   Immediate   │   Delayed   │\n└─────────────────┴───────────────┴─────────────┘\n\nWrite-back is 500× less memory traffic for this case!\n\nWrite buffers (enhancement for write-through):\n- Queue writes, continue execution\n- Reduces stalls but still uses bandwidth"
+  },
+  {
+    "id": "cs202-t5-ex7",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic5",
+    "type": "written",
+    "title": "Cache Optimization",
+    "description": "A programmer writes code that accesses a 2D array column by column (arr[j][i] in inner loop). The array is 1024×1024 integers stored row-major. Explain why this is bad and how to fix it.",
+    "difficulty": 3,
+    "hints": [
+      "Row-major means row elements are consecutive",
+      "Column access has large stride",
+      "Consider cache block utilization"
+    ],
+    "solution": "Column-wise access problem:\n\nArray layout (row-major, C/C++):\narr[0][0], arr[0][1], arr[0][2], ... arr[0][1023],\narr[1][0], arr[1][1], arr[1][2], ... arr[1][1023],\n...\n\nArray size: 1024 × 1024 × 4 bytes = 4MB\n\nColumn access pattern (arr[j][i]):\nfor (i = 0; i < 1024; i++)      // outer\n    for (j = 0; j < 1024; j++)  // inner\n        sum += arr[j][i];       // Column access!\n\nAccess sequence: arr[0][0], arr[1][0], arr[2][0], ...\n\nStride = 1024 integers = 4096 bytes between accesses\n\nProblem analysis:\n- Cache block typically 64 bytes = 16 integers\n- Access arr[0][0]: bring in arr[0][0..15]\n- Next access arr[1][0]: none of those 16 are needed!\n- 15/16 = 93.75% of fetched data is wasted\n\nWith 64-byte blocks:\n- 1024 × 1024 = 1M accesses\n- Almost every access is a miss (stride > block size)\n- ~1M misses!\n\nFixed code (row-wise access):\nfor (i = 0; i < 1024; i++)\n    for (j = 0; j < 1024; j++)\n        sum += arr[i][j];       // Row access!\n\nAccess sequence: arr[0][0], arr[0][1], arr[0][2], ...\n\nNow:\n- Access arr[0][0]: bring in arr[0][0..15]\n- Next 15 accesses hit in cache!\n- 1 miss per 16 accesses\n- ~64K misses (vs 1M!)\n\nSpeedup: 15× fewer misses, potentially much faster"
+  },
+  {
+    "id": "cs202-t5-ex8",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic5",
+    "type": "written",
+    "title": "Multi-Level Inclusion",
+    "description": "Explain inclusive vs exclusive cache hierarchies. If L1 is 32KB and L2 is 256KB, what is the effective size for each policy?",
+    "difficulty": 3,
+    "hints": [
+      "Inclusive: L1 ⊆ L2",
+      "Exclusive: L1 ∩ L2 = ∅",
+      "Consider total unique data"
+    ],
+    "solution": "Cache Inclusion Policies:\n\nInclusive Cache:\n- All data in L1 is also in L2\n- L1 ⊆ L2 (L1 is subset of L2)\n- Simple coherence (snoop L2 only)\n- L1 eviction doesn't need L2 action\n\nExclusive Cache:\n- L1 and L2 have no overlap\n- L1 ∩ L2 = ∅\n- Maximum capacity\n- L1 eviction → move to L2\n\nEffective sizes for L1=32KB, L2=256KB:\n\nInclusive:\n- L2 contains everything L1 has\n- Unique data = L2 size = 256KB\n- L1's 32KB is \"duplicated\" in L2\n- Effective total: 256KB\n\nExclusive:\n- L1 and L2 are disjoint\n- Unique data = L1 + L2 = 32KB + 256KB\n- Effective total: 288KB\n\nComparison:\n┌────────────┬───────────┬───────────────────────────┐\n│ Policy     │ Capacity  │ Trade-off                 │\n├────────────┼───────────┼───────────────────────────┤\n│ Inclusive  │  256KB    │ Simple, coherence easy    │\n│ Exclusive  │  288KB    │ +12.5% capacity, complex  │\n└────────────┴───────────┴───────────────────────────┘\n\nNINE (Non-Inclusive, Non-Exclusive):\n- Hybrid approach\n- L2 may or may not contain L1 data\n- Intermediate complexity and capacity\n- Used in some modern processors\n\nIntel typically uses inclusive L3\nAMD often uses exclusive or NINE policies"
+  },
+  {
+    "id": "cs202-t5-ex9",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic5",
+    "type": "written",
+    "title": "Block Size Trade-off",
+    "description": "Analyze the impact of increasing block size from 32 to 128 bytes. What improves? What gets worse?",
+    "difficulty": 3,
+    "hints": [
+      "Consider spatial locality",
+      "Consider miss penalty",
+      "Consider number of blocks"
+    ],
+    "solution": "Block Size Trade-off Analysis:\n\nGoing from 32-byte to 128-byte blocks:\n\nIMPROVEMENTS (what gets better):\n\n1. Better spatial locality exploitation\n   - More adjacent data brought in per miss\n   - Sequential access patterns benefit\n   - Compulsory misses reduced\n\n2. Lower tag overhead\n   - Fewer blocks = fewer tags\n   - 32B: need tag for every 32 bytes\n   - 128B: need tag for every 128 bytes (4× fewer)\n\n3. Potentially fewer misses for streaming access\n   - Miss every 128 bytes vs every 32 bytes\n   - Up to 4× fewer misses for sequential patterns\n\nDEGRADATIONS (what gets worse):\n\n1. Higher miss penalty\n   - 128 bytes takes longer to transfer than 32\n   - Miss penalty increases (roughly linearly)\n\n2. More wasted bandwidth on small accesses\n   - Access 4 bytes, fetch 128\n   - 97% of transfer unused if no spatial locality\n\n3. More pollution/conflict misses\n   - Fewer blocks in same-size cache\n   - 64KB cache: 2048 32B blocks vs 512 128B blocks\n   - Higher conflict probability\n\n4. Worse for random access patterns\n   - Each miss brings unneeded data\n   - Miss rate may increase\n\nOptimal point:\n- Depends on access patterns\n- Typical L1: 64 bytes\n- Typical L2/L3: 64-128 bytes\n\nFormula consideration:\nAMAT = Hit_time + Miss_rate × Miss_penalty\n- Block size ↑ → Miss_rate may ↓\n- Block size ↑ → Miss_penalty ↑\n- Optimal balances these effects"
+  },
+  {
+    "id": "cs202-t5-ex10",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic5",
+    "type": "written",
+    "title": "Virtual Memory and Caches",
+    "description": "Explain the difference between virtually-indexed/physically-tagged (VIPT) and physically-indexed/physically-tagged (PIPT) caches. Why is VIPT common for L1?",
+    "difficulty": 4,
+    "hints": [
+      "Virtual address available immediately",
+      "Physical address needs TLB lookup",
+      "Consider timing critical path"
+    ],
+    "solution": "Cache Indexing and Tagging Options:\n\nPIPT (Physically-Indexed, Physically-Tagged):\n- Both index and tag use physical address\n- Requires TLB lookup BEFORE cache access\n- Timeline: VA → TLB → PA → Cache\n- Slower: TLB in critical path\n\nVIPT (Virtually-Indexed, Physically-Tagged):\n- Index uses virtual address (fast)\n- Tag uses physical address (correct)\n- Timeline: VA → Cache index || TLB → compare tags\n- Faster: TLB and cache index in parallel\n\nWhy VIPT for L1:\n\nTiming advantage:\n┌─────────────────────────────────────────────┐\n│ PIPT (Serial):                              │\n│ VA ──► TLB ──► PA ──► Cache Index ──► Data  │\n│        ~1ns         ~1ns                    │\n│ Total: ~2ns                                 │\n├─────────────────────────────────────────────┤\n│ VIPT (Parallel):                            │\n│ VA ──► Cache Index ──► Data                 │\n│    ╲                                        │\n│     ──► TLB ──► Tag Compare                 │\n│ Total: ~1ns (TLB hidden)                    │\n└─────────────────────────────────────────────┘\n\nVIPT constraints:\n- Index bits must be same in VA and PA\n- Constraint: cache_size ≤ page_size × associativity\n- For 4KB pages, 64B blocks:\n  - Offset: 6 bits (within block)\n  - Index: up to 6 bits (page offset - block offset)\n  - Max direct-mapped: 4KB\n  - 8-way: up to 32KB\n\nSynonym problem:\n- Different VAs map to same PA\n- VIPT with small cache: no issue (index from page offset)\n- Large VIPT cache needs extra handling\n\nL2/L3 typically PIPT:\n- Not as timing critical\n- Simpler, no synonym issues\n- TLB already done for L1 access"
+  },
+  {
+    "id": "cs202-t5-ex11",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic5",
+    "type": "written",
+    "title": "LRU Implementation",
+    "description": "For a 4-way set-associative cache, describe how to implement true LRU replacement. What is the storage cost? Describe a pseudo-LRU alternative.",
+    "difficulty": 4,
+    "hints": [
+      "Track relative order of all ways",
+      "How many bits for ordering?",
+      "Tree-based pseudo-LRU"
+    ],
+    "solution": "LRU Implementation for 4-way Cache:\n\nTrue LRU:\nNeed to track relative ordering of 4 ways.\n\nMethod 1: Counter per way\n- Each way has 2-bit counter (0-3)\n- On access: set counter to 3 (most recent)\n- Decrement other counters\n- Evict way with counter = 0\n- Storage: 4 × 2 = 8 bits per set\n\nMethod 2: Ordering matrix\n- N×N bit matrix for N ways\n- row[i][j] = 1 if way i more recent than j\n- Storage: N² bits = 16 bits per set\n- But updates complex\n\nMethod 3: Order list\n- log2(4!) = log2(24) = 5 bits needed\n- Encode one of 24 possible orderings\n- Storage: 5 bits per set\n- Complex decode logic\n\nTrue LRU storage for 4-way:\n5-8 bits per set (depending on method)\n\nPseudo-LRU (Tree-based):\nBinary tree with 3 bits for 4 ways:\n\n        [B0]\n       /    \\\n    [B1]    [B2]\n    /  \\    /  \\\n  W0   W1  W2   W3\n\nEach bit points to \"less recently used\" subtree\n- B0=0: left subtree less recent\n- B0=1: right subtree less recent\n\nOn access to Way 2:\n- B0 → 0 (right side used)\n- B2 → 0 (left of right used)\n\nFind victim: Follow bits to leaf\nStorage: 3 bits per set (vs 5-8 for true LRU)\n\nTrade-off:\n- True LRU: Optimal but complex\n- Pseudo-LRU: ~1% worse hit rate, much simpler\n- Most modern caches use pseudo-LRU or random"
+  },
+  {
+    "id": "cs202-t5-ex12",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic5",
+    "type": "written",
+    "title": "Cache Performance Impact",
+    "description": "A processor runs at 3GHz with CPI=1.0 (no memory stalls). L1 cache has 2% miss rate, 10 cycle miss penalty. Calculate new CPI and performance impact.",
+    "difficulty": 2,
+    "hints": [
+      "Assume some percentage of instructions are memory ops",
+      "Miss penalty adds to CPI",
+      "Consider typical instruction mix"
+    ],
+    "solution": "Cache Performance Impact Analysis:\n\nGiven:\n- CPU frequency: 3 GHz\n- Base CPI: 1.0 (without memory stalls)\n- L1 miss rate: 2%\n- L1 miss penalty: 10 cycles\n\nAssumption: 30% of instructions are loads/stores\n(typical for many workloads)\n\nMemory stall cycles per instruction:\n= Memory_instruction_fraction × Miss_rate × Miss_penalty\n= 0.30 × 0.02 × 10\n= 0.06 cycles per instruction\n\nNew CPI with memory stalls:\nCPI = Base_CPI + Memory_stall_cycles\n= 1.0 + 0.06\n= 1.06\n\nPerformance impact:\nSpeedup = Old_CPI / New_CPI = 1.0 / 1.06 = 0.943\nSlowdown = 1 - 0.943 = 5.7%\n\nAlternative calculation (if ALL instructions accessed memory):\nMemory stalls = 1.0 × 0.02 × 10 = 0.2 cycles\nCPI = 1.0 + 0.2 = 1.2\n20% slowdown\n\nReal-world consideration:\n- Miss penalty often hidden by out-of-order execution\n- Multiple outstanding misses (MLP)\n- Prefetching reduces effective miss rate\n- Actual impact often less than calculated\n\nSensitivity:\n- If miss rate → 4%: stalls = 0.12, CPI = 1.12 (12% slowdown)\n- If miss penalty → 20: stalls = 0.12, CPI = 1.12\n- Memory performance critical for overall performance!"
+  },
+  {
+    "id": "cs202-t5-ex13",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic5",
+    "type": "written",
+    "title": "Cache Blocking",
+    "description": "Explain cache blocking (tiling) for matrix multiplication. For matrices A, B, C that don't fit in cache, how does blocking help?",
+    "difficulty": 4,
+    "hints": [
+      "Divide matrices into smaller blocks",
+      "Keep blocks in cache",
+      "Work on one block at a time"
+    ],
+    "solution": "Cache Blocking for Matrix Multiplication:\n\nStandard matrix multiply: C = A × B\nfor (i = 0; i < N; i++)\n    for (j = 0; j < N; j++)\n        for (k = 0; k < N; k++)\n            C[i][j] += A[i][k] * B[k][j];\n\nProblem with large matrices:\n- A, B, C each N×N elements\n- If N=1000: 3 × 4MB = 12MB total\n- Typical L1: 32KB, L2: 256KB\n- Inner loop accesses entire row of A, column of B\n- Massive cache misses!\n\nCache Blocking (Tiling):\nDivide into B×B blocks that fit in cache\n\nfor (ii = 0; ii < N; ii += B)\n    for (jj = 0; jj < N; jj += B)\n        for (kk = 0; kk < N; kk += B)\n            // Multiply block [ii:ii+B] × [kk:kk+B]\n            for (i = ii; i < min(ii+B, N); i++)\n                for (j = jj; j < min(jj+B, N); j++)\n                    for (k = kk; k < min(kk+B, N); k++)\n                        C[i][j] += A[i][k] * B[k][j];\n\nWhy it works:\n- Block size B chosen so 3 B×B blocks fit in cache\n- Cache requirement: 3 × B² × 4 bytes < Cache size\n- For 32KB L1: B ≈ 50\n\nData reuse analysis:\nWithout blocking (N=1000):\n- Each A element used N times, but evicted between uses\n- B column accessed N times with cache misses each time\n\nWith blocking (B=50):\n- A block loaded once, used for B iterations\n- B block loaded once, used for B iterations\n- Much better cache utilization\n\nPerformance improvement:\n- Unblocked: O(N³) memory accesses\n- Blocked: O(N³/B) memory accesses\n- Speedup factor: ~B (up to 10-50×)"
+  },
+  {
+    "id": "cs202-t5-ex14",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic5",
+    "type": "written",
+    "title": "Prefetching",
+    "description": "Explain hardware vs software prefetching. What are the benefits and risks of prefetching? Give an example prefetch strategy for sequential array access.",
+    "difficulty": 3,
+    "hints": [
+      "Prefetch brings data before it's needed",
+      "Can waste bandwidth if wrong",
+      "Timing is critical"
+    ],
+    "solution": "Prefetching: Fetching Data Before It's Needed\n\nHardware Prefetching:\n- Automatically detects access patterns\n- Stream prefetcher: detects sequential accesses\n- Stride prefetcher: detects constant stride patterns\n- No programmer effort required\n- May prefetch incorrectly\n\nSoftware Prefetching:\n- Programmer inserts prefetch instructions\n- __builtin_prefetch(addr) in GCC\n- Precise control over what to prefetch\n- Requires programmer effort/knowledge\n\nExample: Sequential Array Access\nfor (i = 0; i < N; i++)\n    sum += arr[i];\n\nWithout prefetch:\n- arr[0] miss, wait 100 cycles\n- arr[1-15] hits (same cache line)\n- arr[16] miss, wait 100 cycles\n- ...\n\nWith software prefetch:\nfor (i = 0; i < N; i++) {\n    __builtin_prefetch(&arr[i + 16]);  // Prefetch ahead\n    sum += arr[i];\n}\n\nTimeline:\ni=0: prefetch arr[16], access arr[0] (miss)\ni=1-15: prefetch arr[17-31], access arr[1-15] (hits)\ni=16: arr[16] already prefetched! (hit)\n...\n\nBenefits:\n- Hides memory latency\n- Converts compulsory misses to hits\n- Can dramatically improve streaming performance\n\nRisks:\n1. Prefetch too early → data evicted before use\n2. Prefetch too late → data not ready\n3. Wrong data → wasted bandwidth\n4. Cache pollution → evicts useful data\n5. Bandwidth saturation → slows other accesses\n\nOptimal prefetch distance:\nDistance = Memory_latency / Time_per_iteration\nFor 100 cycle latency, 5 cycles per iteration: prefetch 20 ahead"
+  },
+  {
+    "id": "cs202-t5-ex15",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic5",
+    "type": "written",
+    "title": "Cache Coherence Problem",
+    "description": "Two processors share memory. Processor 1 writes X=5 (initially X=0). Processor 2's cache still has X=0. Explain this coherence problem and how snooping protocols address it.",
+    "difficulty": 4,
+    "hints": [
+      "Multiple copies of same data",
+      "Writes must be visible to all",
+      "Invalidate or update?"
+    ],
+    "solution": "Cache Coherence Problem:\n\nInitial state:\n- Memory: X = 0\n- P1 cache: X = 0\n- P2 cache: X = 0\n\nAfter P1 writes X = 5:\n- Memory: X = 5 (with write-through) or X = 0 (write-back)\n- P1 cache: X = 5\n- P2 cache: X = 0  ← STALE DATA!\n\nIf P2 reads X, it gets 0 instead of 5!\nThis violates cache coherence.\n\nCoherence requirements:\n1. Write propagation: writes eventually visible to all\n2. Write serialization: all processors see writes in same order\n\nSnooping Protocol Solution:\n\nBus-based snooping (MSI protocol):\nStates per cache line:\n- Modified (M): exclusive, dirty\n- Shared (S): clean, others may have copy\n- Invalid (I): not valid\n\nP1 writes X:\n1. P1 broadcasts \"write X\" on bus\n2. P2 snoops bus, sees write to X\n3. P2 invalidates its copy (S → I)\n4. P1 writes X = 5, marks Modified\n\nP2 reads X:\n1. P2 has X Invalid, must fetch\n2. P1 snoops read request\n3. P1 supplies X = 5 (has Modified copy)\n4. Both transition to Shared\n\nState transitions:\nP1: I → M (on write)\nP2: S → I (on snoop of write)\nP2: I → S (on read, P1 supplies data)\nP1: M → S (on snoop of read)\n\nAlternatives to invalidation:\n- Update protocol: broadcast new value\n- Trade-off: invalidate has less traffic for multiple writes\n- Most systems use invalidation"
+  },
+  {
+    "id": "cs202-t5-ex16",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic5",
+    "type": "written",
+    "title": "TLB and Cache Interaction",
+    "description": "Draw a diagram showing the interaction between TLB, L1 cache, L2 cache, and main memory for a memory access. Show the critical path for a TLB hit/L1 hit case.",
+    "difficulty": 3,
+    "hints": [
+      "TLB translates virtual to physical",
+      "L1 can be VIPT or PIPT",
+      "Multiple levels accessed on miss"
+    ],
+    "solution": "Memory Access Flow Diagram:\n\nCPU generates Virtual Address (VA)\n            │\n            ▼\n    ┌───────────────┐\n    │     TLB       │──────────────┐\n    │  (VA → PA)    │              │ TLB Miss\n    └───────┬───────┘              ▼\n            │ TLB Hit         Page Table Walk\n            │ (PA ready)           │\n            ▼                      │\n    ┌───────────────┐              │\n    │   L1 Cache    │◄─────────────┘\n    │   (VIPT)      │\n    └───────┬───────┘\n            │ L1 Miss\n            │ (has PA from TLB)\n            ▼\n    ┌───────────────┐\n    │   L2 Cache    │\n    │   (PIPT)      │\n    └───────┬───────┘\n            │ L2 Miss\n            ▼\n    ┌───────────────┐\n    │   L3 Cache    │\n    │   (PIPT)      │\n    └───────┬───────┘\n            │ L3 Miss\n            ▼\n    ┌───────────────┐\n    │  Main Memory  │\n    └───────────────┘\n\nCritical Path (TLB Hit, L1 Hit):\n\nCycle 1: VA → TLB lookup || VA → L1 index (parallel for VIPT)\nCycle 1: TLB returns PA, L1 returns candidate tags\nCycle 2: Compare tags, data ready\n\nTotal: ~2 cycles for VIPT L1\n\nFor PIPT L1 (serial):\nCycle 1: VA → TLB → PA\nCycle 2: PA → L1 index → tag compare\nCycle 3: Data ready\n\nTotal: ~3 cycles\n\nMiss cases (cumulative latency):\nTLB hit, L1 hit:    2 cycles\nTLB hit, L1 miss:   2 + 10 = 12 cycles (L2 access)\nTLB hit, L2 miss:   12 + 30 = 42 cycles (L3 access)\nTLB hit, L3 miss:   42 + 100 = 142 cycles (memory)\nTLB miss:           +20-100 cycles (page table walk)"
+  },
+  {
+    "id": "cs202-t6-ex1",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic6",
+    "type": "written",
+    "title": "Memory Hierarchy Levels",
+    "description": "List the levels of the memory hierarchy from fastest to slowest. Give typical capacity and access time for each level.",
+    "difficulty": 1,
+    "hints": [
+      "Start with CPU registers",
+      "End with archival storage",
+      "Note the trade-offs"
+    ],
+    "solution": "Memory Hierarchy (fastest to slowest):\n\nLevel      │ Capacity    │ Access Time │ Cost/GB  │ Technology\n───────────┼─────────────┼─────────────┼──────────┼──────────────\nRegisters  │ ~1 KB       │ ~0.25 ns    │ -        │ SRAM (in CPU)\nL1 Cache   │ 32-64 KB    │ ~1 ns       │ ~$1000   │ SRAM\nL2 Cache   │ 256KB-1MB   │ ~4 ns       │ ~$100    │ SRAM\nL3 Cache   │ 8-64 MB     │ ~10-20 ns   │ ~$10     │ SRAM\nMain Mem   │ 8-256 GB    │ ~50-100 ns  │ ~$5      │ DRAM\nSSD        │ 256GB-4TB   │ ~50-100 μs  │ ~$0.10   │ Flash\nHDD        │ 1-16 TB     │ ~5-10 ms    │ ~$0.02   │ Magnetic\nTape       │ Petabytes   │ seconds-min │ ~$0.002  │ Magnetic\n\nKey observations:\n1. Capacity increases ~10-1000× per level\n2. Latency increases ~10× per level\n3. Cost decreases ~10× per level\n\nThe hierarchy works because of locality:\n- Temporal: Recently accessed data accessed again\n- Spatial: Nearby data accessed soon\n\nDesign goal: Make average access time close to fastest level\nwhile having capacity of slowest level.\n\nModern system example:\n- L1: 32KB × 2 (I+D), 4 cycles\n- L2: 256KB, 12 cycles\n- L3: 8MB shared, 40 cycles\n- DRAM: 16GB, 200+ cycles"
+  },
+  {
+    "id": "cs202-t6-ex2",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic6",
+    "type": "written",
+    "title": "DRAM vs SRAM",
+    "description": "Compare DRAM and SRAM in terms of structure, speed, density, cost, and typical use. Why is SRAM used for caches and DRAM for main memory?",
+    "difficulty": 2,
+    "hints": [
+      "SRAM uses flip-flops",
+      "DRAM uses capacitors",
+      "Consider transistor count"
+    ],
+    "solution": "DRAM vs SRAM Comparison:\n\nStructure:\n┌──────────────────────────────────────────────────┐\n│ SRAM Cell (6 transistors):                       │\n│     ┌───┐     ┌───┐                             │\n│ BL──┤   ├──┬──┤   ├──BL'                        │\n│     └───┘  │  └───┘                             │\n│            ▼                                     │\n│      Cross-coupled inverters                     │\n│      (bistable - holds value)                    │\n├──────────────────────────────────────────────────┤\n│ DRAM Cell (1 transistor + 1 capacitor):         │\n│                                                  │\n│     WL ─┬─                                       │\n│         │                                        │\n│ BL ────┤├──┤├──                                 │\n│            ═ capacitor                           │\n│            │                                     │\n│           GND                                    │\n└──────────────────────────────────────────────────┘\n\nComparison:\n┌─────────────┬────────────────┬────────────────┐\n│ Property    │ SRAM           │ DRAM           │\n├─────────────┼────────────────┼────────────────┤\n│ Transistors │ 6 per bit      │ 1 per bit      │\n│ Speed       │ Fast (~1-2 ns) │ Slower (~50 ns)│\n│ Density     │ Lower          │ ~6× higher     │\n│ Cost/bit    │ ~10× higher    │ Lower          │\n│ Refresh     │ Not needed     │ Required       │\n│ Power       │ Higher static  │ Lower static   │\n│ Volatility  │ Volatile       │ Volatile       │\n└─────────────┴────────────────┴────────────────┘\n\nWhy SRAM for caches:\n- Speed critical for cache hits\n- Small capacity needed (KB-MB)\n- Higher cost acceptable for small size\n- No refresh simplifies design\n\nWhy DRAM for main memory:\n- Need large capacity (GB)\n- Cost per bit critical\n- Speed hidden by caches\n- Refresh overhead acceptable"
+  },
+  {
+    "id": "cs202-t6-ex3",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic6",
+    "type": "written",
+    "title": "DRAM Timing Parameters",
+    "description": "Explain tRCD, CL (tCAS), and tRP. For a DDR4-2400 module with CL=17, tRCD=17, tRP=17, calculate the time to access a random memory location.",
+    "difficulty": 3,
+    "hints": [
+      "Row activate → Column read → Precharge",
+      "Times are in clock cycles",
+      "DDR4-2400 has specific clock frequency"
+    ],
+    "solution": "DRAM Timing Parameters:\n\ntRCD (RAS to CAS Delay):\n- Time from row activation to column access\n- Opens the row, charges sense amplifiers\n- Row address → wait tRCD → column address\n\nCL (CAS Latency) or tCAS:\n- Time from column address to data output\n- Also called tCL\n- Column address → wait CL → data available\n\ntRP (Row Precharge):\n- Time to close row before opening another\n- Prepares bank for next row activation\n- Close row → wait tRP → can activate new row\n\nAccess Sequence:\n┌─────────────────────────────────────────────────────┐\n│ ROW ACT ──tRCD──► COL READ ──CL──► DATA            │\n│                                                     │\n│ For new row: close old row first                   │\n│ PRECHARGE ──tRP──► ROW ACT ──tRCD──► COL ──CL──►   │\n└─────────────────────────────────────────────────────┘\n\nDDR4-2400 Calculation:\n\nClock frequency:\n- DDR4-2400: 2400 MT/s (megatransfers/second)\n- Actual clock: 1200 MHz (DDR = double data rate)\n- Clock period: 1/1200MHz = 0.833 ns\n\nGiven: CL=17, tRCD=17, tRP=17\n\nRandom access (different row than last access):\nTime = tRP + tRCD + CL\n= 17 + 17 + 17\n= 51 clock cycles\n= 51 × 0.833 ns\n= 42.5 ns\n\nRow hit (same row as last access):\nTime = CL = 17 cycles = 14.2 ns\n\nThis is why row buffer hits are important!\nRandom access: 3× slower than row hit."
+  },
+  {
+    "id": "cs202-t6-ex4",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic6",
+    "type": "written",
+    "title": "DRAM Banking",
+    "description": "A DRAM module has 8 banks. Explain how banking helps hide latency. If back-to-back accesses go to different banks, how does this help?",
+    "difficulty": 3,
+    "hints": [
+      "Banks operate independently",
+      "Pipeline accesses across banks",
+      "Interleaving addresses"
+    ],
+    "solution": "DRAM Banking and Latency Hiding:\n\nBank Structure:\n┌─────────────────────────────────────────┐\n│             DRAM Module                  │\n│ ┌─────┐ ┌─────┐ ┌─────┐ ┌─────┐        │\n│ │Bank0│ │Bank1│ │Bank2│ │Bank3│        │\n│ └─────┘ └─────┘ └─────┘ └─────┘        │\n│ ┌─────┐ ┌─────┐ ┌─────┐ ┌─────┐        │\n│ │Bank4│ │Bank5│ │Bank6│ │Bank7│        │\n│ └─────┘ └─────┘ └─────┘ └─────┘        │\n│            Shared Data Bus              │\n└─────────────────────────────────────────┘\n\nKey insight: Banks operate INDEPENDENTLY\n- Each bank has its own row buffer\n- Can have different rows active\n- Only share the data bus\n\nSingle Bank Sequential Access:\nTime: | Act0 | Read0 | Pre0 | Act1 | Read1 | Pre1 |...\n      |←────── 50ns ──────→|←────── 50ns ──────→|\n\nMulti-Bank Interleaved Access:\nBank0: | Act0 | Read0 | Pre0 |\nBank1:    | Act1 | Read1 | Pre1 |\nBank2:       | Act2 | Read2 | Pre2 |\n\nTime:    0    10    20    30    40    50 ns\nData:              D0    D1    D2    ...\n\nBenefits:\n1. Latency hiding: Start next bank while current completes\n2. Higher bandwidth: Data arrives more frequently\n3. Better utilization: Banks stay busy\n\nAddress interleaving strategies:\n- Bank bits in low-order address → sequential addresses hit different banks\n- Example: Address[5:3] selects bank\n- Sequential access automatically interleaved\n\nEffective bandwidth with 8 banks:\n- Single bank: ~1 access per 50ns = 20 million/s\n- 8 banks interleaved: up to 8× = 160 million/s\n- Limited by bus bandwidth in practice"
+  },
+  {
+    "id": "cs202-t6-ex5",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic6",
+    "type": "written",
+    "title": "Memory Controller Scheduling",
+    "description": "Explain FR-FCFS (First-Ready First-Come-First-Serve) memory scheduling. Why prioritize row hits? What are the trade-offs?",
+    "difficulty": 4,
+    "hints": [
+      "Row hits are faster",
+      "Order affects performance",
+      "Consider fairness"
+    ],
+    "solution": "FR-FCFS Memory Scheduling:\n\nBasic FCFS (First-Come-First-Serve):\n- Process requests in arrival order\n- Simple, fair\n- Ignores row buffer state\n\nFR-FCFS (First-Ready FCFS):\n- Prioritize requests that hit open row\n- Among row hits, use FCFS\n- Row misses wait for row hits to complete\n\nAlgorithm:\n1. If any request hits open row → serve oldest row hit\n2. Else → serve oldest request (will cause row miss)\n\nExample:\nQueue: [A: row 5, B: row 3, C: row 3, D: row 5]\nCurrently open: row 3\n\nFCFS order: A, B, C, D\n- A: row miss (close 3, open 5, read)\n- B: row miss (close 5, open 3, read)\n- C: row hit\n- D: row miss\nTotal: 3 row misses\n\nFR-FCFS order: B, C, A, D\n- B: row hit (row 3 open)\n- C: row hit\n- A: row miss (close 3, open 5, read)\n- D: row hit\nTotal: 1 row miss!\n\nTrade-offs:\n\nAdvantages:\n- Maximizes row buffer hits\n- Reduces average latency\n- Increases effective bandwidth\n\nDisadvantages:\n1. Unfairness: Some requests delayed indefinitely\n   - If row X keeps getting hits, row Y requests starve\n2. Complexity: Track row buffer state\n3. Reordering: May violate program order\n\nModern solutions:\n- Batching: Group requests, FR-FCFS within batch\n- Age-based priority: Old requests get priority\n- Per-application fairness: Track delays per thread"
+  },
+  {
+    "id": "cs202-t6-ex6",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic6",
+    "type": "written",
+    "title": "SSD vs HDD",
+    "description": "Compare SSD and HDD for: random read, sequential read, write endurance, and cost. When would you choose each?",
+    "difficulty": 2,
+    "hints": [
+      "SSD has no mechanical parts",
+      "HDD has seek time",
+      "Flash has limited writes"
+    ],
+    "solution": "SSD vs HDD Comparison:\n\nPerformance:\n┌─────────────────┬────────────────┬────────────────┐\n│ Operation       │ SSD            │ HDD            │\n├─────────────────┼────────────────┼────────────────┤\n│ Random Read     │ ~0.1 ms        │ ~10 ms         │\n│ Random Write    │ ~0.1 ms        │ ~10 ms         │\n│ Sequential Read │ ~500 MB/s      │ ~150 MB/s      │\n│ Sequential Write│ ~450 MB/s      │ ~150 MB/s      │\n│ IOPS (4KB rand) │ 100,000+       │ ~100           │\n└─────────────────┴────────────────┴────────────────┘\n\nWhy SSD is faster for random:\n- No mechanical seek (HDD head movement)\n- No rotational latency (HDD platter spin)\n- Direct electrical access to any cell\n\nOther factors:\n┌─────────────────┬────────────────┬────────────────┐\n│ Factor          │ SSD            │ HDD            │\n├─────────────────┼────────────────┼────────────────┤\n│ Cost/GB         │ $0.08-0.15     │ $0.02-0.03     │\n│ Capacity        │ 256GB - 8TB    │ 1TB - 20TB     │\n│ Power           │ 2-5W           │ 6-15W          │\n│ Durability      │ No moving parts│ Shock sensitive│\n│ Write endurance │ Limited (TBW)  │ Essentially ∞  │\n│ Noise           │ Silent         │ Audible        │\n└─────────────────┴────────────────┴────────────────┘\n\nWhen to choose SSD:\n- Boot/OS drive (many random accesses)\n- Databases (random I/O heavy)\n- Laptops (durability, power, speed)\n- Any workload with random access\n\nWhen to choose HDD:\n- Large media storage (movies, photos)\n- Backup/archive (write once, read rarely)\n- Budget-constrained bulk storage\n- Sequential workloads (video editing source)\n\nBest practice: Hybrid\n- SSD for OS and frequently accessed data\n- HDD for bulk storage and archives"
+  },
+  {
+    "id": "cs202-t6-ex7",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic6",
+    "type": "written",
+    "title": "Bandwidth vs Latency",
+    "description": "A memory system has 50ns latency and 25.6 GB/s bandwidth. For a 64-byte cache line fetch, calculate the total transfer time. What dominates for small vs large transfers?",
+    "difficulty": 2,
+    "hints": [
+      "Total time = latency + size/bandwidth",
+      "Consider both components",
+      "Graph transfer size vs time"
+    ],
+    "solution": "Bandwidth vs Latency Analysis:\n\nGiven:\n- Latency: 50 ns\n- Bandwidth: 25.6 GB/s = 25.6 bytes/ns\n\nTotal time = Latency + Transfer time\n           = Latency + Size / Bandwidth\n\nFor 64-byte cache line:\nTransfer time = 64 bytes / 25.6 bytes/ns = 2.5 ns\nTotal time = 50 ns + 2.5 ns = 52.5 ns\n\nBreakdown:\n- Latency: 50 ns (95%)\n- Transfer: 2.5 ns (5%)\nLatency dominates!\n\nAnalysis for different sizes:\n┌───────────┬──────────┬────────────┬─────────┬────────────┐\n│ Size      │ Transfer │ Total Time │ Latency │ BW Portion │\n├───────────┼──────────┼────────────┼─────────┼────────────┤\n│ 64 B      │ 2.5 ns   │ 52.5 ns    │ 95%     │ 5%         │\n│ 256 B     │ 10 ns    │ 60 ns      │ 83%     │ 17%        │\n│ 1 KB      │ 40 ns    │ 90 ns      │ 56%     │ 44%        │\n│ 4 KB      │ 160 ns   │ 210 ns     │ 24%     │ 76%        │\n│ 64 KB     │ 2560 ns  │ 2610 ns    │ 2%      │ 98%        │\n└───────────┴──────────┴────────────┴─────────┴────────────┘\n\nConclusions:\n1. Small transfers: Latency-bound\n   - Most time waiting for first byte\n   - Higher bandwidth doesn't help much\n\n2. Large transfers: Bandwidth-bound\n   - Most time transferring data\n   - Lower latency doesn't help much\n\n3. Crossover point: Size = Latency × Bandwidth\n   = 50 ns × 25.6 B/ns = 1280 bytes\n\nImplications:\n- Cache lines: Focus on reducing latency\n- DMA/streaming: Focus on bandwidth\n- Prefetching: Convert latency-bound to bandwidth-bound"
+  },
+  {
+    "id": "cs202-t6-ex8",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic6",
+    "type": "written",
+    "title": "DDR Evolution",
+    "description": "Compare DDR3, DDR4, and DDR5 in terms of data rate, prefetch, voltage, and typical bandwidth. What improvements does each generation bring?",
+    "difficulty": 3,
+    "hints": [
+      "Each gen roughly doubles bandwidth",
+      "Prefetch doubles each generation",
+      "Voltage decreases"
+    ],
+    "solution": "DDR Evolution Comparison:\n\n┌─────────────┬───────────────┬───────────────┬───────────────┐\n│ Parameter   │ DDR3          │ DDR4          │ DDR5          │\n├─────────────┼───────────────┼───────────────┼───────────────┤\n│ Data Rate   │ 800-2133 MT/s │ 1600-3200 MT/s│ 3200-6400 MT/s│\n│ Prefetch    │ 8n            │ 8n            │ 16n           │\n│ Voltage     │ 1.5V / 1.35V  │ 1.2V          │ 1.1V          │\n│ Max Capacity│ 8GB/DIMM      │ 64GB/DIMM     │ 128GB/DIMM    │\n│ Banks       │ 8             │ 16 (4 groups) │ 32 (8 groups) │\n│ Burst Length│ 8             │ 8             │ 16            │\n│ Year        │ 2007          │ 2014          │ 2020          │\n└─────────────┴───────────────┴───────────────┴───────────────┘\n\nPeak Bandwidth (typical configs):\n- DDR3-1600: 12.8 GB/s per channel\n- DDR4-2400: 19.2 GB/s per channel\n- DDR4-3200: 25.6 GB/s per channel\n- DDR5-4800: 38.4 GB/s per channel\n- DDR5-6400: 51.2 GB/s per channel\n\nKey improvements per generation:\n\nDDR3 → DDR4:\n- 50% higher data rate\n- Lower voltage (20% power reduction)\n- Bank groups enable higher efficiency\n- Larger capacity per DIMM\n\nDDR4 → DDR5:\n- 2× prefetch (8n → 16n)\n- 2× bank groups (more parallelism)\n- On-DIMM voltage regulation\n- Dual 32-bit channels (vs single 64-bit)\n- Better power management\n- ECC on-die\n\nLatency (hasn't improved much):\nDDR3-1600 CL11: 13.75 ns\nDDR4-2400 CL17: 14.17 ns\nDDR5-4800 CL40: 16.67 ns\n\nNote: Absolute latency (ns) similar or worse!\nBandwidth improved, not latency."
+  },
+  {
+    "id": "cs202-t6-ex9",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic6",
+    "type": "written",
+    "title": "ECC Memory",
+    "description": "Explain how ECC memory works. What errors can SECDED (Single Error Correction, Double Error Detection) handle? When is ECC essential?",
+    "difficulty": 3,
+    "hints": [
+      "Extra bits for error correction",
+      "Hamming code principles",
+      "Servers vs consumer"
+    ],
+    "solution": "ECC Memory (Error Correcting Code):\n\nHow it works:\n- Extra bits store error-correcting codes\n- Standard: 72 bits per 64 bits of data (8 ECC bits)\n- On read: calculate syndrome, detect/correct errors\n\nSECDED (Single Error Correction, Double Error Detection):\n- Correct any 1-bit error automatically\n- Detect (but not correct) 2-bit errors\n- Uses Hamming code with extra parity bit\n\nExample encoding (simplified):\nData: 64 bits\nECC:  8 bits (calculated from data)\nTotal: 72 bits stored\n\nRead process:\n1. Read 72 bits (data + ECC)\n2. Recalculate ECC from data\n3. XOR with stored ECC = syndrome\n4. Syndrome = 0: no error\n5. Syndrome = single bit pattern: correct that bit\n6. Syndrome = other pattern: uncorrectable error detected\n\nError types and handling:\n┌────────────────┬────────────────┬─────────────────────┐\n│ Error Type     │ Detection      │ Correction          │\n├────────────────┼────────────────┼─────────────────────┤\n│ No error       │ ✓              │ N/A                 │\n│ 1-bit error    │ ✓              │ ✓ (automatic)       │\n│ 2-bit error    │ ✓              │ ✗ (halt/flag)       │\n│ 3+ bit error   │ Maybe          │ ✗                   │\n└────────────────┴────────────────┴─────────────────────┘\n\nWhen ECC is essential:\n1. Servers: Uptime critical, can't reboot\n2. Scientific computing: Incorrect results unacceptable\n3. Financial systems: Data integrity mandatory\n4. Medical/safety: Lives depend on correctness\n5. Large memory systems: More bits = more errors\n\nSoft error rates:\n- ~1 error per GB per year (varies by environment)\n- 128GB server: ~10 errors/month without ECC\n- Cosmic rays, alpha particles cause bit flips\n\nConsumer systems mostly skip ECC:\n- Cost: ~10-20% more expensive\n- Compatibility: Needs ECC support in CPU/motherboard\n- Acceptable risk for most users"
+  },
+  {
+    "id": "cs202-t6-ex10",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic6",
+    "type": "written",
+    "title": "Memory Channels",
+    "description": "A system has 4 memory channels, each 64 bits wide at DDR4-3200. Calculate the peak memory bandwidth. How does multi-channel help?",
+    "difficulty": 2,
+    "hints": [
+      "Bandwidth = width × frequency",
+      "Channels are independent",
+      "DDR means double data rate"
+    ],
+    "solution": "Multi-Channel Memory Bandwidth:\n\nGiven:\n- 4 memory channels\n- 64 bits per channel\n- DDR4-3200 (3200 MT/s)\n\nSingle channel bandwidth:\nData rate: 3200 MT/s (megatransfers/second)\nWidth: 64 bits = 8 bytes\n\nBandwidth = 3200 × 10⁶ × 8 bytes/s\n          = 25.6 GB/s per channel\n\nTotal system bandwidth:\n4 channels × 25.6 GB/s = 102.4 GB/s peak\n\nHow multi-channel helps:\n\n1. Parallel access\n   ┌────────┐  ┌────────┐  ┌────────┐  ┌────────┐\n   │ Chan 0 │  │ Chan 1 │  │ Chan 2 │  │ Chan 3 │\n   │ DIMM   │  │ DIMM   │  │ DIMM   │  │ DIMM   │\n   └───┬────┘  └───┬────┘  └───┬────┘  └───┬────┘\n       │           │           │           │\n       └─────────┬─┴───────────┴─┬─────────┘\n                 │  Memory       │\n                 │ Controller    │\n                 └───────────────┘\n\n2. Interleaved addressing\n   - Address bits select channel\n   - Sequential accesses spread across channels\n   - 4× bandwidth for streaming access\n\n3. Independent operation\n   - Each channel has own command/data buses\n   - Different requests can proceed in parallel\n\nReal-world considerations:\n- Peak bandwidth rarely achieved\n- Memory controller overhead\n- Access patterns affect utilization\n- Typical utilization: 60-80% of peak\n\nDiminishing returns:\n1 → 2 channels: ~2× bandwidth (huge gain)\n2 → 4 channels: ~2× bandwidth (good gain)\n4 → 8 channels: <2× bandwidth (limited by other factors)"
+  },
+  {
+    "id": "cs202-t6-ex11",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic6",
+    "type": "written",
+    "title": "HBM Architecture",
+    "description": "Explain High Bandwidth Memory (HBM). How does it achieve higher bandwidth than DDR? What are its use cases?",
+    "difficulty": 4,
+    "hints": [
+      "3D stacking",
+      "Wide interface",
+      "Close to processor"
+    ],
+    "solution": "High Bandwidth Memory (HBM):\n\nArchitecture:\n┌─────────────────────────────────────────┐\n│           GPU/CPU Die                    │\n│  ┌─────────────────────────────────┐    │\n│  │         Logic                    │    │\n│  └─────────────────────────────────┘    │\n│           │Silicon Interposer│           │\n│  ┌───┐ ┌───┐ ┌───┐ ┌───┐              │\n│  │HBM│ │HBM│ │HBM│ │HBM│              │\n│  │ 1 │ │ 2 │ │ 3 │ │ 4 │              │\n│  └───┘ └───┘ └───┘ └───┘              │\n└─────────────────────────────────────────┘\n\nHBM Stack (3D):\n    ┌──────────┐\n    │ DRAM die │ Layer 4\n    ├──────────┤\n    │ DRAM die │ Layer 3\n    ├──────────┤\n    │ DRAM die │ Layer 2\n    ├──────────┤\n    │ DRAM die │ Layer 1\n    ├──────────┤\n    │ Logic die│ Base\n    └──────────┘\n    Through-silicon vias (TSVs)\n\nWhy HBM is faster:\n\n1. Wide interface: 1024 bits vs 64 bits\n   DDR5: 64 bits × 6400 MT/s = 51.2 GB/s\n   HBM2: 1024 bits × 2000 MT/s = 256 GB/s per stack\n\n2. Short distance: <1mm vs ~10cm for DIMMs\n   - Lower power (less capacitance)\n   - Faster signaling possible\n\n3. 3D stacking:\n   - Multiple DRAM dies per stack\n   - More bandwidth per footprint\n\nHBM Generations:\n┌──────┬──────────────┬────────────────┐\n│ Gen  │ BW/stack     │ Capacity/stack │\n├──────┼──────────────┼────────────────┤\n│ HBM  │ 128 GB/s     │ 1 GB           │\n│ HBM2 │ 256 GB/s     │ 8 GB           │\n│ HBM2e│ 307 GB/s     │ 16 GB          │\n│ HBM3 │ 600 GB/s     │ 24 GB          │\n└──────┴──────────────┴────────────────┘\n\nUse cases:\n- GPUs (NVIDIA A100: 80GB HBM2e, 2 TB/s)\n- AI accelerators (bandwidth-hungry workloads)\n- High-end FPGAs\n- Supercomputers\n\nLimitations:\n- Higher cost per GB\n- Limited capacity (vs DDR)\n- Complex packaging\n- Heat dissipation challenges"
+  },
+  {
+    "id": "cs202-t6-ex12",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic6",
+    "type": "written",
+    "title": "Non-Volatile Memory",
+    "description": "Compare Intel Optane (3D XPoint) with NAND flash and DRAM. What gap does it fill in the memory hierarchy?",
+    "difficulty": 3,
+    "hints": [
+      "Between DRAM and SSD",
+      "Byte-addressable option",
+      "Persistence"
+    ],
+    "solution": "Non-Volatile Memory Comparison:\n\nTechnology comparison:\n┌─────────────┬────────────┬────────────┬────────────┐\n│ Property    │ DRAM       │ 3D XPoint  │ NAND Flash │\n├─────────────┼────────────┼────────────┼────────────┤\n│ Read latency│ ~50 ns     │ ~300 ns    │ ~50 μs     │\n│ Write speed │ ~50 ns     │ ~100 ns    │ ~200 μs    │\n│ Endurance   │ Unlimited  │ High       │ Limited    │\n│ Byte-addr   │ Yes        │ Yes        │ No (pages) │\n│ Density     │ Low        │ Medium     │ High       │\n│ Cost/GB     │ ~$5        │ ~$2-4      │ ~$0.10     │\n│ Volatile    │ Yes        │ No         │ No         │\n└─────────────┴────────────┴────────────┴────────────┘\n\nMemory hierarchy position:\n        Speed\n          ↑\n    DRAM  │  ●\n          │      ● 3D XPoint (Optane)\n          │\n          │              ● NAND SSD\n          │\n          └──────────────────────→ Capacity\n\nGap filled by 3D XPoint:\n1. Faster than NAND, cheaper than DRAM\n2. Non-volatile with near-DRAM speed\n3. Byte-addressable (can use as memory)\n\nOptane use modes:\n\n1. Persistent Memory (Memory Mode):\n   - Extends memory capacity\n   - DRAM as cache for Optane\n   - Transparent to software\n\n2. App Direct Mode:\n   - Directly addressable NVM\n   - Applications aware of persistence\n   - Used for in-memory databases\n\n3. Storage (Optane SSD):\n   - Very fast SSD\n   - Great for latency-sensitive workloads\n   - Lower capacity than NAND SSDs\n\nApplications:\n- Databases with persistent data structures\n- Fast restart (memory survives reboot)\n- Large in-memory computing\n- Storage caching tier\n\nNote: Intel discontinued Optane (2022)\nFuture: CXL-attached memory, other NVM technologies"
+  },
+  {
+    "id": "cs202-t6-ex13",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic6",
+    "type": "written",
+    "title": "NUMA Architecture",
+    "description": "Explain NUMA (Non-Uniform Memory Access). How does memory placement affect performance? What should programmers consider?",
+    "difficulty": 4,
+    "hints": [
+      "Local vs remote memory",
+      "Memory affinity",
+      "NUMA-aware allocation"
+    ],
+    "solution": "NUMA (Non-Uniform Memory Access):\n\nArchitecture:\n┌─────────────────────────────────────────────────────┐\n│                   NUMA System                        │\n│                                                      │\n│  Node 0              Interconnect          Node 1   │\n│ ┌────────────┐      ═══════════════      ┌────────────┐\n│ │   CPU 0    │◄────────────────────────►│   CPU 1    │\n│ │            │                          │            │\n│ │  L3 Cache  │                          │  L3 Cache  │\n│ └────────────┘                          └────────────┘\n│       │                                        │\n│       ▼                                        ▼\n│ ┌────────────┐                          ┌────────────┐\n│ │  Memory 0  │                          │  Memory 1  │\n│ │  (Local)   │                          │  (Local)   │\n│ └────────────┘                          └────────────┘\n└─────────────────────────────────────────────────────┘\n\nAccess latency:\n- Local memory: ~50 ns\n- Remote memory: ~100-150 ns (1.5-3× slower)\n\nNUMA ratio = Remote_latency / Local_latency\nTypical: 1.5 - 3.0×\n\nWhy NUMA exists:\n- Scalability: Single memory controller doesn't scale\n- Bandwidth: Each node has dedicated bandwidth\n- Locality: Most accesses should be local\n\nPerformance implications:\n\nBad: Process on Node 0, data on Node 1\n- Every access crosses interconnect\n- 2× latency, shared interconnect bandwidth\n\nGood: Process and data on same node\n- Local memory access\n- Full bandwidth, low latency\n\nProgrammer considerations:\n\n1. Memory allocation:\n   // NUMA-aware allocation\n   numa_alloc_onnode(size, node);\n   // or let OS place on current node\n   numa_alloc_local(size);\n\n2. Thread placement:\n   - Pin threads to CPUs\n   - Keep threads near their data\n\n3. Data structures:\n   - Partition data by NUMA node\n   - Avoid false sharing across nodes\n\n4. First-touch policy:\n   - Memory allocated on node that first touches it\n   - Initialize data on thread that will use it\n\nLinux tools:\n- numactl: Control NUMA policy\n- numastat: View NUMA statistics\n- /proc/*/numa_maps: Process NUMA mapping"
+  },
+  {
+    "id": "cs202-t6-ex14",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic6",
+    "type": "written",
+    "title": "Memory Power Management",
+    "description": "Describe DRAM power states and their trade-offs. How does the memory controller balance power and performance?",
+    "difficulty": 3,
+    "hints": [
+      "Active, standby, power-down states",
+      "Wake-up latency vs power savings",
+      "Predictive techniques"
+    ],
+    "solution": "DRAM Power States:\n\nState progression (most to least power):\n┌────────────────┬─────────┬────────────┬───────────────┐\n│ State          │ Power   │ Wake-up    │ When used     │\n├────────────────┼─────────┼────────────┼───────────────┤\n│ Active         │ High    │ 0          │ Currently     │\n│                │         │            │ accessing     │\n├────────────────┼─────────┼────────────┼───────────────┤\n│ Idle/Standby   │ Medium  │ ~1 cycle   │ No current    │\n│                │         │            │ access        │\n├────────────────┼─────────┼────────────┼───────────────┤\n│ Power-Down     │ Low     │ ~10 cycles │ Idle period   │\n│ (Fast exit)    │         │            │               │\n├────────────────┼─────────┼────────────┼───────────────┤\n│ Power-Down     │ Very Low│ ~100 cycles│ Long idle     │\n│ (Slow exit)    │         │            │               │\n├────────────────┼─────────┼────────────┼───────────────┤\n│ Self-Refresh   │ Minimal │ ~1000 cycles│ System sleep  │\n└────────────────┴─────────┴────────────┴───────────────┘\n\nPower breakdown (typical DDR4):\n- Active: 100%\n- Idle: ~60%\n- Power-down: ~20%\n- Self-refresh: ~5%\n\nTrade-offs:\n1. More aggressive power-down = more wake-up latency\n2. Frequent transitions waste energy\n3. Prediction errors hurt performance\n\nMemory controller strategies:\n\n1. Timeout-based:\n   if (idle_time > threshold)\n       enter_power_down();\n   Simple but reactive\n\n2. Predictive:\n   - Track access patterns\n   - Predict idle duration\n   - Enter appropriate state proactively\n\n3. Rank-level management:\n   - Put unused ranks in power-down\n   - Keep active ranks ready\n   - Balance across ranks\n\nDVFS (Dynamic Voltage/Frequency Scaling):\n- Lower frequency during light load\n- Reduces power significantly\n- Bandwidth trade-off\n\nModern techniques:\n- Rank interleaving: Spread accesses, allow sleep\n- Page policy: Close-page vs open-page affects power\n- Scheduling: Batch accesses, maximize sleep time\n\nPower proportionality goal:\nPower consumption ∝ Work done\nNot fully achieved in current DRAM (high idle power)"
+  },
+  {
+    "id": "cs202-t6-ex15",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic6",
+    "type": "written",
+    "title": "RAID Levels",
+    "description": "Compare RAID 0, 1, 5, and 6. For a 4-drive array with 1TB drives, calculate usable capacity and fault tolerance for each level.",
+    "difficulty": 3,
+    "hints": [
+      "RAID 0: striping",
+      "RAID 1: mirroring",
+      "RAID 5/6: parity"
+    ],
+    "solution": "RAID Levels Comparison:\n\nConfiguration: 4 × 1TB drives\n\nRAID 0 (Striping):\n┌──────┬──────┬──────┬──────┐\n│ D0   │ D1   │ D2   │ D3   │\n│ D4   │ D5   │ D6   │ D7   │\n│ ...  │ ...  │ ...  │ ...  │\n└──────┴──────┴──────┴──────┘\n- Capacity: 4TB (100%)\n- Fault tolerance: 0 drives (any failure = data loss)\n- Performance: 4× read/write\n- Use: Speed, no redundancy needed\n\nRAID 1 (Mirroring):\n┌──────┬──────┐ ┌──────┬──────┐\n│ D0   │ D0   │ │ D1   │ D1   │\n│ D2   │ D2   │ │ D3   │ D3   │\n└──────┴──────┘ └──────┴──────┘\n  Mirror 1        Mirror 2\n- Capacity: 2TB (50%)\n- Fault tolerance: 1 drive per mirror (up to 2)\n- Performance: 2× read, 1× write\n- Use: High reliability, simple\n\nRAID 5 (Striping + Distributed Parity):\n┌──────┬──────┬──────┬──────┐\n│ D0   │ D1   │ D2   │ P0   │\n│ D3   │ D4   │ P1   │ D5   │\n│ D6   │ P2   │ D7   │ D8   │\n└──────┴──────┴──────┴──────┘\n- Capacity: 3TB (75%)\n- Fault tolerance: 1 drive\n- Performance: ~3× read, slower write (parity calc)\n- Use: Balance of capacity and protection\n\nRAID 6 (Striping + Dual Parity):\n┌──────┬──────┬──────┬──────┐\n│ D0   │ D1   │ P0   │ Q0   │\n│ D2   │ P1   │ Q1   │ D3   │\n│ P2   │ Q2   │ D4   │ D5   │\n└──────┴──────┴──────┴──────┘\n- Capacity: 2TB (50%)\n- Fault tolerance: 2 drives\n- Performance: ~2× read, slower write\n- Use: Mission-critical, large arrays\n\nSummary:\n┌───────┬──────────┬─────────┬─────────────┐\n│ Level │ Capacity │ Survive │ Performance │\n├───────┼──────────┼─────────┼─────────────┤\n│ 0     │ 4 TB     │ 0 drive │ Excellent   │\n│ 1     │ 2 TB     │ 1-2     │ Good read   │\n│ 5     │ 3 TB     │ 1 drive │ Good        │\n│ 6     │ 2 TB     │ 2 drives│ Moderate    │\n└───────┴──────────┴─────────┴─────────────┘"
+  },
+  {
+    "id": "cs202-t6-ex16",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic6",
+    "type": "written",
+    "title": "Memory-Level Parallelism",
+    "description": "Define Memory-Level Parallelism (MLP). How do modern processors exploit MLP? Why is it important for performance?",
+    "difficulty": 4,
+    "hints": [
+      "Multiple outstanding misses",
+      "Out-of-order execution",
+      "Miss bandwidth vs miss latency"
+    ],
+    "solution": "Memory-Level Parallelism (MLP):\n\nDefinition:\nMLP = number of memory accesses outstanding simultaneously\nHigher MLP = better utilization of memory bandwidth\n\nWhy MLP matters:\nWithout MLP (serial misses):\nTime: |--miss 1--|--miss 2--|--miss 3--|\n      100 ns      100 ns      100 ns\nTotal: 300 ns\n\nWith MLP (parallel misses):\nTime: |--miss 1--|\n      |--miss 2--|\n      |--miss 3--|\nTotal: ~100 ns (if memory can handle 3 parallel)\n\nSpeedup: up to 3× (limited by memory bandwidth)\n\nHow processors exploit MLP:\n\n1. Out-of-Order Execution:\n   - Continue executing past cache miss\n   - Find independent misses\n   - Issue them in parallel\n\n   load R1, [addr1]    # miss\n   add R2, R3, R4      # independent, continues\n   load R5, [addr2]    # miss - overlapped with first!\n\n2. Non-blocking caches:\n   - Cache handles multiple misses\n   - Miss Status Holding Registers (MSHRs)\n   - Each MSHR tracks one outstanding miss\n\n3. Hardware prefetching:\n   - Detect access patterns\n   - Issue prefetches ahead of demand\n   - Increases outstanding requests\n\n4. Runahead execution:\n   - On long-latency miss, checkpoint state\n   - Speculatively execute ahead\n   - Discover future misses\n   - Restore state when miss returns\n\nMetrics:\n- Standalone miss latency: 100 ns\n- Effective miss latency with MLP=4: 100/4 = 25 ns\n\nMLP-aware analysis:\nTraditional: Stall_cycles = Miss_count × Miss_latency\nWith MLP: Stall_cycles = Miss_count × Miss_latency / MLP\n\nExample:\n100 misses, 100 cycle latency\nMLP = 1: 10,000 cycles\nMLP = 4: 2,500 cycles\n\nModern CPUs: MLP of 8-16 for memory accesses\nKey insight: Miss bandwidth matters as much as miss rate!"
+  },
+  {
+    "id": "cs202-t7-ex1",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic7",
+    "type": "written",
+    "title": "ILP Fundamentals",
+    "description": "Define ILP and explain the difference between ILP available in a program vs ILP exploited by hardware. What limits each?",
+    "difficulty": 2,
+    "hints": [
+      "Program ILP = parallelism in code",
+      "Hardware ILP = what processor extracts",
+      "Consider dependencies"
+    ],
+    "solution": "Instruction-Level Parallelism (ILP):\n\nDefinition: ILP is the potential to execute multiple instructions\nsimultaneously within a single thread.\n\nProgram ILP (inherent):\n- Parallelism available in the instruction stream\n- Limited by true data dependencies\n- Independent of hardware\n\nExample:\na = b + c;     # Independent\nd = e + f;     # Can execute in parallel\ng = a + d;     # Depends on both above\n\nProgram ILP = 2 (first two can be parallel)\n\nExploited ILP (realized):\n- Parallelism actually extracted by hardware\n- Limited by hardware resources and mechanisms\n\nLimits on Program ILP:\n1. True dependencies (RAW - Read After Write)\n   add R1, R2, R3\n   sub R4, R1, R5  # Must wait for R1\n\n2. Control dependencies (branches)\n   beq R1, R2, L1\n   add R3, R4, R5  # Don't know if needed\n\n3. Memory dependencies (potential aliases)\n   store [R1], R2\n   load R3, [R4]   # Might be same address!\n\nLimits on Exploited ILP:\n1. Issue width: How many instructions per cycle?\n2. Window size: How far ahead can we look?\n3. Functional units: Enough ALUs, FPUs?\n4. Register file ports: Can read/write enough?\n5. Branch prediction: Mispredictions waste work\n\nTypical values:\n- Program ILP: Varies widely (2-100+)\n- Exploited ILP: 2-4 (modern CPUs)\n- Gap due to hardware limitations and conservative choices"
+  },
+  {
+    "id": "cs202-t7-ex2",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic7",
+    "type": "written",
+    "title": "Superscalar Basics",
+    "description": "A 4-wide superscalar processor can issue 4 instructions per cycle. Given this code, what is the maximum IPC achievable? \nadd R1, R2, R3\nmul R4, R5, R6\nsub R7, R1, R8\ndiv R9, R4, R10",
+    "difficulty": 3,
+    "hints": [
+      "Check dependencies between instructions",
+      "Consider which can issue together",
+      "Look at RAW hazards"
+    ],
+    "solution": "Superscalar Analysis (4-wide):\n\nInstructions:\nI1: add R1, R2, R3\nI2: mul R4, R5, R6\nI3: sub R7, R1, R8   # Depends on I1 (RAW on R1)\nI4: div R9, R4, R10  # Depends on I2 (RAW on R4)\n\nDependency graph:\nI1 ──────► I3\n    R1\nI2 ──────► I4\n    R4\n\nCycle-by-cycle execution (assuming 1-cycle latency):\n\nCycle 1: Issue I1, I2 (both independent)\n- I1, I2 execute\n- I3 waits for R1\n- I4 waits for R4\n\nCycle 2: Issue I3, I4 (dependencies resolved)\n- I3 uses R1 (forwarded from I1)\n- I4 uses R4 (forwarded from I2)\n\nTotal: 4 instructions in 2 cycles\nIPC = 4 / 2 = 2.0\n\nMaximum theoretical IPC = 4.0 (issue width)\nAchieved IPC = 2.0 (limited by dependencies)\n\nIf all were independent:\nCycle 1: I1, I2, I3, I4 (all 4)\nIPC = 4.0\n\nAnalysis:\n- Dependencies create serialization\n- I1→I3 and I2→I4 each form chains\n- Two chains can execute in parallel\n- But each chain is serialized\n\nBest case for 4-wide superscalar requires\nat least 4 independent instructions per cycle."
+  },
+  {
+    "id": "cs202-t7-ex3",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic7",
+    "type": "written",
+    "title": "Register Renaming",
+    "description": "Explain how register renaming eliminates WAW and WAR hazards. Show the renaming for:\nadd R1, R2, R3\nsub R4, R1, R5\nadd R1, R6, R7\nmul R8, R1, R4",
+    "difficulty": 4,
+    "hints": [
+      "Architectural vs physical registers",
+      "Each write gets new physical register",
+      "Eliminates false dependencies"
+    ],
+    "solution": "Register Renaming:\n\nOriginal code:\nI1: add R1, R2, R3\nI2: sub R4, R1, R5    # RAW on R1 (true)\nI3: add R1, R6, R7    # WAW on R1 (false), WAR with I2\nI4: mul R8, R1, R4    # RAW on R1, R4 (true)\n\nWithout renaming:\n- I3 must wait for I2 to read R1 (WAR hazard)\n- I3 must wait for I1 to write R1 (WAW hazard)\n- Limits parallelism despite no TRUE dependency\n\nWith register renaming:\nPhysical registers: P1, P2, P3, ...\nRegister Alias Table (RAT): maps arch → physical\n\nInitial RAT: R1→P1, R2→P2, R3→P3, R4→P4, ...\n\nI1: add R1, R2, R3\n    Rename: add P10, P2, P3  (new P10 for R1)\n    RAT: R1→P10\n\nI2: sub R4, R1, R5\n    Rename: sub P11, P10, P5  (uses current R1=P10)\n    RAT: R4→P11\n\nI3: add R1, R6, R7\n    Rename: add P12, P6, P7  (new P12 for R1, different!)\n    RAT: R1→P12\n\nI4: mul R8, R1, R4\n    Rename: mul P13, P12, P11  (uses current R1=P12, R4=P11)\n\nAfter renaming:\nadd P10, P2, P3     # No dependencies\nsub P11, P10, P5    # RAW on P10 only\nadd P12, P6, P7     # No dependencies!\nmul P13, P12, P11   # RAW on P12, P11\n\nNow I1 and I3 can execute in parallel!\nWAW and WAR eliminated - only true RAW remains.\n\nParallelism exposed:\nCycle 1: I1, I3 (both independent now)\nCycle 2: I2, I4 (dependencies resolved)"
+  },
+  {
+    "id": "cs202-t7-ex4",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic7",
+    "type": "written",
+    "title": "Tomasulo Algorithm",
+    "description": "Describe the three key components of Tomasulo's algorithm. How does it enable out-of-order execution while maintaining correctness?",
+    "difficulty": 4,
+    "hints": [
+      "Reservation stations",
+      "Common Data Bus",
+      "Register renaming via tags"
+    ],
+    "solution": "Tomasulo's Algorithm Components:\n\n1. Reservation Stations (RS):\n   - Buffer for instructions waiting to execute\n   - Hold operands or tags for pending operands\n   - Distributed (per functional unit)\n\n   Structure:\n   ┌────┬────┬─────┬─────┬─────┬─────┐\n   │ Op │Busy│ Qj  │ Vj  │ Qk  │ Vk  │\n   ├────┼────┼─────┼─────┼─────┼─────┤\n   │ADD │  1 │  -  │ 10  │ RS2 │  -  │\n   │MUL │  1 │ RS1 │  -  │  -  │  5  │\n   └────┴────┴─────┴─────┴─────┴─────┘\n   Q = tag of producing RS (0 = value ready)\n   V = actual value (when ready)\n\n2. Common Data Bus (CDB):\n   - Broadcasts results to all waiting stations\n   - Tag + Value broadcast\n   - All RS snoop for matching tags\n\n   When RS completes:\n   CDB ← {Tag: RS_ID, Value: result}\n   All RS with Qj/Qk = Tag update Vj/Vk\n\n3. Register Status (Rename Table):\n   - Maps arch register to producing RS\n   - Qi = 0 means value in register file\n   - Qi = RSx means wait for RSx result\n\n   ┌──────┬─────┬───────┐\n   │ Reg  │ Qi  │ Value │\n   ├──────┼─────┼───────┤\n   │  R1  │ RS2 │   -   │ (waiting)\n   │  R2  │  0  │  42   │ (ready)\n   └──────┴─────┴───────┘\n\nExecution flow:\n1. Issue: Allocate RS, read ready operands, set tags\n2. Execute: When all operands ready, execute\n3. Write Result: Broadcast on CDB, update waiting RS\n\nCorrectness maintained by:\n- True dependencies: Operand tags ensure waiting\n- WAW/WAR: Eliminated by renaming to RS tags\n- In-order issue: Respects program order\n- Out-of-order execute: Safe due to renaming\n- In-order commit: Via Reorder Buffer (added later)"
+  },
+  {
+    "id": "cs202-t7-ex5",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic7",
+    "type": "written",
+    "title": "Branch Prediction Accuracy",
+    "description": "A processor with 90% branch prediction accuracy executes a program where 20% of instructions are branches. If the misprediction penalty is 15 cycles, what is the CPI impact?",
+    "difficulty": 2,
+    "hints": [
+      "Misprediction rate = 1 - accuracy",
+      "Calculate stall cycles per instruction"
+    ],
+    "solution": "Branch Prediction Impact Analysis:\n\nGiven:\n- Branch prediction accuracy: 90%\n- Branch frequency: 20% of instructions\n- Misprediction penalty: 15 cycles\n- Assume base CPI = 1.0\n\nMisprediction rate:\n= 1 - accuracy = 1 - 0.90 = 0.10 (10%)\n\nBranch misprediction stalls per instruction:\n= Branch_frequency × Misprediction_rate × Penalty\n= 0.20 × 0.10 × 15\n= 0.30 cycles per instruction\n\nCPI with branch stalls:\nCPI = Base_CPI + Branch_stalls\n= 1.0 + 0.30\n= 1.30\n\nPerformance impact:\n- Without branches: CPI = 1.0\n- With branches: CPI = 1.30\n- Slowdown: 30%\n- Speedup potential: 1.30/1.0 = 1.30× with perfect prediction\n\nSensitivity analysis:\n\nIf accuracy improves to 95%:\nStalls = 0.20 × 0.05 × 15 = 0.15\nCPI = 1.15 (15% slowdown)\n\nIf accuracy improves to 99%:\nStalls = 0.20 × 0.01 × 15 = 0.03\nCPI = 1.03 (3% slowdown)\n\nKey insight:\nEvery 1% improvement in branch prediction:\nSaves: 0.20 × 0.01 × 15 = 0.03 CPI\n3% of ideal performance per 1% accuracy\n\nHigh accuracy (>95%) critical for deep pipelines!"
+  },
+  {
+    "id": "cs202-t7-ex6",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic7",
+    "type": "written",
+    "title": "Speculative Execution",
+    "description": "Explain speculative execution and the role of the Reorder Buffer (ROB). What happens on a branch misprediction?",
+    "difficulty": 3,
+    "hints": [
+      "Execute before knowing if needed",
+      "ROB holds speculative results",
+      "Recovery on misprediction"
+    ],
+    "solution": "Speculative Execution:\n\nDefinition:\nExecute instructions before knowing if they should execute\n(usually past unresolved branches)\n\nWhy speculate?\n- Branch takes cycles to resolve\n- Don't waste time waiting\n- High accuracy makes speculation profitable\n\nReorder Buffer (ROB):\n- Holds speculative instruction results\n- Maintains program order\n- Enables in-order commit despite OoO execution\n\nROB structure:\n┌─────┬──────┬───────┬───────┬────────┬─────────┐\n│Entry│ Busy │ Instr │ State │ Dest   │ Value   │\n├─────┼──────┼───────┼───────┼────────┼─────────┤\n│  0  │  1   │ add   │ Commit│  R1    │   42    │\n│  1  │  1   │ beq   │ Exec  │  -     │   -     │\n│  2  │  1   │ mul   │ Done  │  R2    │   15    │ ← Speculative!\n│  3  │  1   │ sub   │ Issue │  R3    │   -     │ ← Speculative!\n└─────┴──────┴───────┴───────┴────────┴─────────┘\n                       ↑\n               Head (oldest)\n\nNormal flow:\n1. Issue: Allocate ROB entry, rename dest to ROB#\n2. Execute: Compute result, write to ROB\n3. Commit: When head of ROB, write to arch register\n\nOn branch misprediction:\n\nBefore misprediction discovered:\nROB: [branch, speculative_instr1, speculative_instr2, ...]\n\nMisprediction detected at commit:\n1. Flush ROB entries after mispredicted branch\n2. Discard speculative results\n3. Restore register rename table to checkpoint\n4. Redirect fetch to correct path\n\nRecovery steps:\n┌────────────────────────────────────────────────┐\n│ 1. Squash: Clear speculative ROB entries       │\n│ 2. Restore: Rename table to safe checkpoint    │\n│ 3. Redirect: PC to correct branch target       │\n│ 4. Resume: Fetch from correct path             │\n└────────────────────────────────────────────────┘\n\nCost of misprediction:\n- Lost work: All speculative instructions wasted\n- Pipeline refill: Frontend delay\n- Penalty: Typically 10-20 cycles on modern CPUs"
+  },
+  {
+    "id": "cs202-t7-ex7",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic7",
+    "type": "written",
+    "title": "VLIW vs Superscalar",
+    "description": "Compare VLIW and superscalar approaches to exploiting ILP. What are the advantages and disadvantages of each?",
+    "difficulty": 3,
+    "hints": [
+      "Who does the scheduling?",
+      "Hardware complexity",
+      "Code compatibility"
+    ],
+    "solution": "VLIW vs Superscalar Comparison:\n\nVLIW (Very Long Instruction Word):\n- Compiler schedules parallel operations\n- Hardware executes bundles as specified\n- Simple hardware, complex compiler\n\nExample VLIW instruction (128-bit):\n┌─────────────┬─────────────┬─────────────┬─────────────┐\n│  ALU Op 1   │  ALU Op 2   │  Memory Op  │  Branch Op  │\n│  add r1,r2  │  mul r3,r4  │  ld r5,[r6] │    nop      │\n└─────────────┴─────────────┴─────────────┴─────────────┘\nCompiler guarantees no conflicts!\n\nSuperscalar:\n- Hardware schedules parallel operations\n- Instructions issued dynamically\n- Complex hardware, standard compiler\n\nComparison:\n┌─────────────────┬───────────────┬────────────────────┐\n│ Aspect          │ VLIW          │ Superscalar        │\n├─────────────────┼───────────────┼────────────────────┤\n│ Scheduling by   │ Compiler      │ Hardware           │\n│ HW complexity   │ Low           │ High               │\n│ Compiler work   │ High          │ Moderate           │\n│ Power           │ Lower         │ Higher             │\n│ Binary compat   │ Poor          │ Good               │\n│ Dynamic adapt   │ No            │ Yes                │\n│ Code size       │ Larger (NOPs) │ Normal             │\n└─────────────────┴───────────────┴────────────────────┘\n\nVLIW Advantages:\n1. Simpler, lower-power hardware\n2. More predictable performance\n3. Compiler has global view\n4. Good for DSPs, embedded (IA-64, TI DSPs)\n\nVLIW Disadvantages:\n1. Code tied to specific implementation\n2. Can't adapt to runtime conditions\n3. NOP waste for low-ILP code\n4. Branch penalties harder to hide\n\nSuperscalar Advantages:\n1. Binary compatibility across generations\n2. Adapts to runtime conditions\n3. Works with legacy code\n4. Handles variable latencies\n\nSuperscalar Disadvantages:\n1. Complex, power-hungry hardware\n2. Scheduling overhead every cycle\n3. Limited by window size\n\nModern trend: Superscalar dominates general-purpose,\nVLIW successful in DSPs and specific domains."
+  },
+  {
+    "id": "cs202-t7-ex8",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic7",
+    "type": "written",
+    "title": "Loop Unrolling",
+    "description": "Show how unrolling this loop by a factor of 4 exposes more ILP:\nfor(i=0; i<100; i++) A[i] = A[i] + B[i];",
+    "difficulty": 3,
+    "hints": [
+      "Replicate loop body",
+      "Separate iterations become parallel",
+      "Reduce loop overhead"
+    ],
+    "solution": "Loop Unrolling Analysis:\n\nOriginal loop:\nfor (i = 0; i < 100; i++)\n    A[i] = A[i] + B[i];\n\nAssembly (simplified):\nloop:\n    load  R1, A[i]      # 1\n    load  R2, B[i]      # 2\n    add   R3, R1, R2    # 3 - depends on 1,2\n    store A[i], R3      # 4 - depends on 3\n    addi  i, i, 1       # 5\n    blt   i, 100, loop  # 6 - depends on 5\n\nILP per iteration: Limited\n- loads can be parallel\n- add waits for loads\n- store waits for add\n- branch overhead each iteration\n\nUnrolled by 4:\nfor (i = 0; i < 100; i += 4) {\n    A[i]   = A[i]   + B[i];\n    A[i+1] = A[i+1] + B[i+1];\n    A[i+2] = A[i+2] + B[i+2];\n    A[i+3] = A[i+3] + B[i+3];\n}\n\nAssembly (unrolled):\nloop:\n    load  R1, A[i]      # Iteration 0\n    load  R2, B[i]\n    load  R3, A[i+1]    # Iteration 1 - PARALLEL!\n    load  R4, B[i+1]\n    load  R5, A[i+2]    # Iteration 2 - PARALLEL!\n    load  R6, B[i+2]\n    load  R7, A[i+3]    # Iteration 3 - PARALLEL!\n    load  R8, B[i+3]\n    add   R9,  R1, R2   # All adds can be parallel!\n    add   R10, R3, R4\n    add   R11, R5, R6\n    add   R12, R7, R8\n    store A[i],   R9    # All stores independent\n    store A[i+1], R10\n    store A[i+2], R11\n    store A[i+3], R12\n    addi  i, i, 4       # Only 1 increment\n    blt   i, 100, loop  # Only 1 branch\n\nBenefits:\n1. 8 loads can issue in parallel\n2. 4 adds can issue in parallel\n3. 4 stores can issue in parallel\n4. Loop overhead reduced 4×\n\nILP exposed: ~8 (vs ~2 before)\nBranches reduced: 4× fewer iterations"
+  },
+  {
+    "id": "cs202-t7-ex9",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic7",
+    "type": "written",
+    "title": "SIMD Operations",
+    "description": "Explain how SIMD (Single Instruction Multiple Data) differs from superscalar. Give an example of adding four pairs of numbers using SSE/AVX.",
+    "difficulty": 2,
+    "hints": [
+      "One instruction, multiple data elements",
+      "Wide registers",
+      "Data-level parallelism"
+    ],
+    "solution": "SIMD (Single Instruction Multiple Data):\n\nConcept:\n- One instruction operates on multiple data elements\n- Wide registers hold vectors of values\n- Same operation applied to all elements\n\nSIMD vs Superscalar:\n┌─────────────────┬─────────────────────┬───────────────────┐\n│ Aspect          │ Superscalar         │ SIMD              │\n├─────────────────┼─────────────────────┼───────────────────┤\n│ Parallelism     │ Different instrs    │ Same instr        │\n│ Data            │ Scalar values       │ Vector of values  │\n│ Control         │ Multiple streams    │ Single stream     │\n│ Best for        │ General code        │ Data parallel     │\n└─────────────────┴─────────────────────┴───────────────────┘\n\nSSE/AVX Example: Add four pairs of floats\n\nScalar code (4 instructions):\n    add r1, a[0], b[0]  # result[0]\n    add r2, a[1], b[1]  # result[1]\n    add r3, a[2], b[2]  # result[2]\n    add r4, a[3], b[3]  # result[3]\n\nSIMD code (1 instruction):\n    vaddps xmm0, xmm1, xmm2  # All 4 at once!\n\n    xmm1: [a[0], a[1], a[2], a[3]]  (128-bit)\n    xmm2: [b[0], b[1], b[2], b[3]]\n    xmm0: [a[0]+b[0], a[1]+b[1], a[2]+b[2], a[3]+b[3]]\n\nAVX-512 example (16 floats at once):\n    vaddps zmm0, zmm1, zmm2\n\n    zmm1: [a[0], a[1], ..., a[15]]  (512-bit)\n    zmm2: [b[0], b[1], ..., b[15]]\n    zmm0: [sum[0], sum[1], ..., sum[15]]\n\nSIMD width progression:\n- MMX: 64-bit (8 × 8-bit or 4 × 16-bit)\n- SSE: 128-bit (4 × 32-bit float)\n- AVX: 256-bit (8 × 32-bit float)\n- AVX-512: 512-bit (16 × 32-bit float)\n\nBest applications:\n- Image/video processing\n- Scientific computing\n- Machine learning\n- Any loop over arrays with same operation"
+  },
+  {
+    "id": "cs202-t7-ex10",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic7",
+    "type": "written",
+    "title": "Amdahl's Law",
+    "description": "A program spends 80% of time in parallelizable code. Using Amdahl's Law, calculate the maximum speedup with infinite parallel processors. What if only 50% is parallelizable?",
+    "difficulty": 2,
+    "hints": [
+      "Serial portion limits speedup",
+      "Formula: 1/((1-P) + P/N)",
+      "Consider N → ∞"
+    ],
+    "solution": "Amdahl's Law Analysis:\n\nAmdahl's Law formula:\nSpeedup = 1 / ((1 - P) + P/N)\n\nWhere:\n- P = parallelizable fraction\n- N = number of processors\n- (1-P) = serial fraction\n\nCase 1: P = 0.80 (80% parallelizable)\n\nWith N = 2 processors:\nSpeedup = 1 / (0.20 + 0.80/2)\n        = 1 / (0.20 + 0.40)\n        = 1 / 0.60\n        = 1.67×\n\nWith N = 4 processors:\nSpeedup = 1 / (0.20 + 0.80/4)\n        = 1 / (0.20 + 0.20)\n        = 1 / 0.40\n        = 2.5×\n\nWith N → ∞ (maximum speedup):\nSpeedup = 1 / (0.20 + 0)\n        = 1 / 0.20\n        = 5× maximum\n\nCase 2: P = 0.50 (50% parallelizable)\n\nWith N → ∞:\nSpeedup = 1 / (0.50 + 0)\n        = 1 / 0.50\n        = 2× maximum\n\nComparison table:\n┌─────────┬──────────────────────────────────┐\n│    N    │  P=50%    P=80%    P=95%    P=99% │\n├─────────┼──────────────────────────────────┤\n│    2    │  1.33×    1.67×    1.90×    1.98× │\n│    4    │  1.60×    2.50×    3.48×    3.88× │\n│    8    │  1.78×    3.33×    5.93×    7.48× │\n│   16    │  1.88×    4.00×    9.14×   13.91× │\n│   ∞     │  2.00×    5.00×   20.00×  100.00× │\n└─────────┴──────────────────────────────────┘\n\nKey insight:\nSerial portion dominates as N increases.\nEven 1% serial limits speedup to 100×!\n\nImplications:\n- Focus optimization on serial bottlenecks\n- Diminishing returns adding processors\n- Need high parallelizable fraction for many-core"
+  },
+  {
+    "id": "cs202-t7-ex11",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic7",
+    "type": "written",
+    "title": "Dependency Types",
+    "description": "Identify all dependencies (RAW, WAR, WAW) in this code:\nI1: R1 = R2 + R3\nI2: R4 = R1 - R5\nI3: R1 = R6 * R7\nI4: R8 = R1 + R4",
+    "difficulty": 3,
+    "hints": [
+      "RAW: true dependency",
+      "WAR: anti-dependency",
+      "WAW: output dependency"
+    ],
+    "solution": "Dependency Analysis:\n\nInstructions:\nI1: R1 = R2 + R3\nI2: R4 = R1 - R5\nI3: R1 = R6 * R7\nI4: R8 = R1 + R4\n\nStep 1: Identify all reads and writes\n\n│ Instr │ Writes │ Reads     │\n├───────┼────────┼───────────┤\n│  I1   │  R1    │ R2, R3    │\n│  I2   │  R4    │ R1, R5    │\n│  I3   │  R1    │ R6, R7    │\n│  I4   │  R8    │ R1, R4    │\n\nStep 2: Find dependencies\n\nRAW (Read After Write) - True dependencies:\n• I1 → I2 on R1 (I1 writes R1, I2 reads R1)\n• I2 → I4 on R4 (I2 writes R4, I4 reads R4)\n• I3 → I4 on R1 (I3 writes R1, I4 reads R1)\n\nWAR (Write After Read) - Anti-dependencies:\n• I2 → I3 on R1 (I2 reads R1, I3 writes R1)\n\nWAW (Write After Write) - Output dependencies:\n• I1 → I3 on R1 (I1 writes R1, I3 writes R1)\n\nDependency diagram:\n        RAW(R1)    WAW(R1)\n    I1 ─────────► I2 ────────┐\n    │             │          │\n    │ WAW(R1)     │ WAR(R1)  │\n    └──────► I3 ◄─┘          │\n              │              │\n              │ RAW(R1)      │ RAW(R4)\n              └──────► I4 ◄──┘\n\nTrue (RAW) dependencies: 3\nAnti (WAR) dependencies: 1\nOutput (WAW) dependencies: 1\n\nWith register renaming (eliminates WAR, WAW):\nI1: P1 = P2 + P3\nI2: P4 = P1 - P5      # RAW on P1\nI3: P10 = P6 + P7     # Renamed! No WAW\nI4: P8 = P10 + P4     # RAW on P10, P4\n\nNow I1, I3 can execute in parallel!"
+  },
+  {
+    "id": "cs202-t7-ex12",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic7",
+    "type": "written",
+    "title": "Issue Width vs Window Size",
+    "description": "Explain the difference between issue width and instruction window size. Why might a processor have a window much larger than its issue width?",
+    "difficulty": 3,
+    "hints": [
+      "Issue width = instructions per cycle",
+      "Window = instructions being examined",
+      "Dependencies may span many instructions"
+    ],
+    "solution": "Issue Width vs Window Size:\n\nIssue Width:\n- Maximum instructions issued per cycle\n- Determines peak IPC\n- Limited by: decode width, rename bandwidth, functional units\n\nInstruction Window (ROB size):\n- Number of instructions \"in-flight\"\n- Instructions between oldest and newest being tracked\n- Determines how far ahead processor can look\n\nTypical values:\n┌────────────────┬──────────────┬─────────────────┐\n│ Processor      │ Issue Width  │ Window (ROB)    │\n├────────────────┼──────────────┼─────────────────┤\n│ Intel Core     │ 4-6          │ 224-352         │\n│ AMD Zen        │ 4-6          │ 256             │\n│ Apple M1       │ 8            │ ~600            │\n│ Typical ratio  │ 1            │ 40-100×         │\n└────────────────┴──────────────┴─────────────────┘\n\nWhy window >> issue width?\n\n1. Finding ILP:\n   Large window needed to find independent instructions\n\n   Example: If dependencies span 10 instructions,\n   need window > 10 to overlap next independent group\n\n2. Hiding latency:\n   Long-latency operations (cache miss = 100s cycles)\n   Need large window to have work during miss\n\n   Example: 4-wide, 200 cycle miss\n   Need 800 entry window to stay busy!\n\n3. Branch coverage:\n   Window spans multiple basic blocks\n   More opportunities to find parallelism\n\n4. Memory-level parallelism:\n   Multiple cache misses in flight\n   Large window = more outstanding misses\n\nAnalogy:\nIssue width = checkout lanes at store\nWindow size = shopping carts in store\n\nMany carts can be filling while few checkout at a time.\nLarge window keeps pipeline fed despite dependencies."
+  },
+  {
+    "id": "cs202-t7-ex13",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic7",
+    "type": "written",
+    "title": "Precise Exceptions",
+    "description": "Why are precise exceptions difficult with out-of-order execution? How does the Reorder Buffer enable precise exceptions?",
+    "difficulty": 4,
+    "hints": [
+      "OoO changes completion order",
+      "Need consistent state on exception",
+      "ROB commits in order"
+    ],
+    "solution": "Precise Exceptions with OoO Execution:\n\nThe problem:\nOut-of-order execution completes instructions in different\norder than program order. But exceptions must show\narchitectural state AS IF program ran in order.\n\nExample:\nI1: div R1, R2, R3     # slow, may trap\nI2: add R4, R5, R6     # fast\nI3: load R7, [R8]      # may trap\n\nExecution order: I2, I3, I1 (div is slow)\n\nIf I1 causes divide-by-zero:\n- I2 has completed (wrote R4)\n- I3 has completed (wrote R7)\n- But they shouldn't have! They're \"after\" I1\n\nImprecise exception state:\nSome later instructions completed\nNot consistent with any program point\n\nReorder Buffer solution:\n\nROB commits instructions IN ORDER regardless of\nwhen they complete execution.\n\nStructure:\n┌─────┬────────┬───────┬──────────┐\n│ ROB │ Instr  │ Done? │ Value    │\n├─────┼────────┼───────┼──────────┤\n│  0  │ I1 div │  No   │ pending  │ ← HEAD (oldest)\n│  1  │ I2 add │  Yes  │ 42       │ (waiting to commit)\n│  2  │ I3 load│  Yes  │ 100      │ (waiting to commit)\n└─────┴────────┴───────┴──────────┘\n\nCommit rules:\n1. Only HEAD can commit\n2. Instruction must be complete\n3. Commit writes to architectural state\n4. Exception checked at commit time\n\nException handling:\n1. I1 completes with exception\n2. At commit: I1 is HEAD, has exception\n3. Flush ROB (I2, I3 results discarded)\n4. Architectural state is precisely before I1\n5. Handle exception\n\nKey insight:\n- Speculative results stay in ROB until commit\n- Architectural registers updated ONLY at commit\n- In-order commit despite out-of-order execution\n- Exception sees clean state at I1\n\nCost:\n- ROB storage for all in-flight results\n- Commit bandwidth limits sustained IPC\n- Worthwhile for correct exception handling"
+  },
+  {
+    "id": "cs202-t7-ex14",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic7",
+    "type": "written",
+    "title": "Memory Disambiguation",
+    "description": "Explain the memory disambiguation problem. How can loads be speculatively executed before earlier stores?",
+    "difficulty": 4,
+    "hints": [
+      "Stores might alias with loads",
+      "Can't know addresses until execution",
+      "Speculation and recovery"
+    ],
+    "solution": "Memory Disambiguation Problem:\n\nThe issue:\nstore [R1], R2\nload  R3, [R4]  # Does R4 == R1? Don't know until execute!\n\nIf R1 == R4: RAW dependency (must wait)\nIf R1 != R4: Independent (can execute in parallel)\n\nChallenge: Addresses computed at execution time\nCan't know dependencies at decode/issue\n\nConservative approach:\nWait for all earlier stores before any load\nKills memory-level parallelism!\n\nAggressive approach (speculation):\nExecute loads before stores, recover if wrong\n\nLoad Store Queue (LSQ) architecture:\n┌─────────────────────────────────────────────┐\n│           Load Store Queue                   │\n│                                              │\n│  Store Queue      │    Load Queue            │\n│ ┌────┬─────┬────┐ │ ┌────┬─────┬────┐       │\n│ │Addr│Data │Done│ │ │Addr│Data │Done│       │\n│ ├────┼─────┼────┤ │ ├────┼─────┼────┤       │\n│ │100 │ 42  │ Y  │ │ │104 │ 15  │ Y  │       │\n│ │ ?  │ 7   │ N  │ │ │ ?  │  ?  │ N  │       │\n│ └────┴─────┴────┘ │ └────┴─────┴────┘       │\n└─────────────────────────────────────────────┘\n\nSpeculative load execution:\n1. Issue load, check store queue\n2. If older store has same address → forward data\n3. If older store address unknown → speculate no conflict\n4. Execute load, get data from cache/memory\n5. When older stores get addresses, verify speculation\n\nStore-to-load forwarding:\nstore [100], R5    # Value in store queue\nload  R6, [100]    # Get value from store queue!\nNo memory access needed - forwarded from store queue\n\nConflict detection:\nWhen older store gets address:\nif (store.addr == speculative_load.addr)\n    # Misspeculation! Flush load and later instructions\n\nModern CPUs:\n- Use predictors to guess load/store independence\n- Sophisticated LSQ searching\n- Store-to-load forwarding common and fast\n- Misspeculation penalty: flush and re-execute"
+  },
+  {
+    "id": "cs202-t7-ex15",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic7",
+    "type": "written",
+    "title": "Limits of ILP",
+    "description": "List five factors that limit achievable ILP in real programs. For each, explain why it's a fundamental limit.",
+    "difficulty": 3,
+    "hints": [
+      "Dependencies, branches, memory, finite resources, power"
+    ],
+    "solution": "Fundamental Limits of ILP:\n\n1. True Data Dependencies\n   Why fundamental: Laws of physics/mathematics\n   - Result must be computed before it's used\n   - Cannot violate causality\n   - Sets minimum serialization\n\n   Example: a = b + c; d = a * 2;\n   Must compute 'a' before 'd'\n\n2. Control Dependencies (Branches)\n   Why fundamental: Program semantics\n   - Don't know which instructions needed until branch resolves\n   - Speculation helps but has limits\n   - Misprediction wastes all speculative work\n\n   Typical impact: 15-20% of instructions are branches\n   Even 95% accuracy = 1 mispredict per 20 branches\n\n3. Memory Latency and Bandwidth\n   Why fundamental: Physical distance, speed of light\n   - Data must travel from memory\n   - Cache misses impose long stalls\n   - Memory bandwidth is finite\n\n   Impact: Cache miss = 100s of potential instructions\n\n4. Finite Hardware Resources\n   Why fundamental: Cost, power, complexity\n   - Limited issue width (decode, rename, issue)\n   - Limited functional units\n   - Limited instruction window (ROB)\n   - Limited physical registers\n\n   Practical limits: ~4-8 wide issue common\n\n5. Power and Thermal Constraints\n   Why fundamental: Physics of computation\n   - More parallelism = more power\n   - Chip can only dissipate so much heat\n   - Diminishing returns on parallelism\n\n   Modern CPUs: Can't use all transistors at once\n\nStudy data (Wall's 1991 limits):\nPerfect predictor, infinite window, infinite resources:\n- Average program ILP: ~50-100\nReal processors achieve: ~2-4 IPC\n\nGap caused by practical limits on all above factors."
+  },
+  {
+    "id": "cs202-t7-ex16",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic7",
+    "type": "written",
+    "title": "SMT Basics",
+    "description": "Explain Simultaneous Multithreading (SMT/Hyper-Threading). How does it improve resource utilization compared to superscalar alone?",
+    "difficulty": 3,
+    "hints": [
+      "Multiple threads share functional units",
+      "Fill bubbles from one thread with another",
+      "Horizontal vs vertical waste"
+    ],
+    "solution": "Simultaneous Multithreading (SMT):\n\nConcept:\nExecute instructions from multiple threads simultaneously\non a single superscalar core.\n\nSuperscalar alone (single-threaded):\nCycle:    1    2    3    4    5    6\nALU 0:  [I1] [ - ] [I5] [ - ] [ - ] [I8]\nALU 1:  [I2] [ - ] [ - ] [I6] [ - ] [ - ]\nFPU:    [I3] [I4] [ - ] [ - ] [I7] [ - ]\nLoad:   [ - ] [ - ] [I5] [ - ] [ - ] [ - ]\n\nBubbles (empty slots) due to:\n- Dependencies in single thread\n- Branch mispredictions\n- Cache misses\n\nSMT (two threads):\nCycle:    1    2    3    4    5    6\nALU 0:  [T1] [T2] [T1] [T2] [T1] [T2]\nALU 1:  [T1] [T2] [T2] [T1] [T2] [T1]\nFPU:    [T2] [T1] [T2] [T1] [T2] [T1]\nLoad:   [T1] [T2] [T1] [T2] [T1] [T2]\n\nFill bubbles from one thread with instructions from another!\n\nResource sharing:\n┌───────────────┬─────────────────────────────────┐\n│ Duplicated    │ Shared                          │\n├───────────────┼─────────────────────────────────┤\n│ Arch state    │ Fetch/decode bandwidth          │\n│ PC            │ Execution units (ALU, FPU)      │\n│ Register file*│ Caches (L1, L2, L3)            │\n│ Small buffers │ Branch predictors (partitioned) │\n└───────────────┴─────────────────────────────────┘\n* Some physical registers per thread, shared pool\n\nPerformance characteristics:\n- Single thread: No improvement (may be slightly worse)\n- Two threads: 10-30% total throughput increase\n- Per-thread performance: May decrease 0-20%\n\nWhy not 2× speedup?\n- Threads compete for resources\n- Cache interference\n- Some resources already well-utilized\n\nSMT vs CMP (Chip Multiprocessor):\nSMT: Share everything, fine-grain mixing\nCMP: Duplicate cores, coarse-grain parallelism\n\nModern CPUs: Both! Multiple SMT cores\nExample: 8 cores × 2 threads = 16 logical processors"
+  }
+]

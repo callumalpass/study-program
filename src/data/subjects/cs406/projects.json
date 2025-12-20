@@ -1,0 +1,1199 @@
+[
+  {
+    "id": "cs406-project-1",
+    "subjectId": "cs406",
+    "title": "Intelligent Game Playing Agent",
+    "description": "Build an AI agent that plays a complex game using adversarial search techniques.\n\n## Objectives\n- Implement minimax with alpha-beta pruning\n- Design effective evaluation functions\n- Optimize search depth and move ordering\n- Compare with MCTS implementation\n- Analyze performance and play quality\n\n## Deliverables\n- Complete game implementation with GUI\n- Multiple AI agents with different strategies\n- Performance analysis and comparison\n- Tournament results and statistics\n- Technical report on design decisions",
+    "requirements": [
+      "Choose a game: Chess, Go (9x9), Othello, or Connect Four",
+      "Implement game rules and state representation",
+      "Implement minimax with alpha-beta pruning",
+      "Design domain-specific evaluation function",
+      "Implement move ordering heuristics",
+      "(Bonus) Implement MCTS for comparison",
+      "Create AI vs AI tournament system",
+      "Analyze time complexity and branching factor"
+    ],
+    "rubric": [
+      {
+        "name": "Game Implementation",
+        "weight": 20,
+        "levels": [
+          {
+            "score": 4,
+            "label": "Excellent",
+            "description": "Complete game implementation with robust state representation, all rules correctly implemented, and polished GUI"
+          },
+          {
+            "score": 3,
+            "label": "Good",
+            "description": "Functional game implementation with correct rules and basic GUI, minor issues present"
+          },
+          {
+            "score": 2,
+            "label": "Satisfactory",
+            "description": "Basic game implementation with most rules working, GUI may be incomplete"
+          },
+          {
+            "score": 1,
+            "label": "Needs Improvement",
+            "description": "Incomplete game implementation with significant rule errors or missing components"
+          }
+        ]
+      },
+      {
+        "name": "Minimax and Alpha-Beta Pruning",
+        "weight": 25,
+        "levels": [
+          {
+            "score": 4,
+            "label": "Excellent",
+            "description": "Correct minimax with alpha-beta pruning, optimal move ordering, excellent performance optimization"
+          },
+          {
+            "score": 3,
+            "label": "Good",
+            "description": "Correct minimax with alpha-beta pruning, basic move ordering implemented"
+          },
+          {
+            "score": 2,
+            "label": "Satisfactory",
+            "description": "Minimax implemented, alpha-beta pruning present but may have inefficiencies"
+          },
+          {
+            "score": 1,
+            "label": "Needs Improvement",
+            "description": "Minimax incomplete or incorrect, pruning missing or broken"
+          }
+        ]
+      },
+      {
+        "name": "Evaluation Function",
+        "weight": 20,
+        "levels": [
+          {
+            "score": 4,
+            "label": "Excellent",
+            "description": "Sophisticated domain-specific evaluation function with multiple strategic features, produces strong play"
+          },
+          {
+            "score": 3,
+            "label": "Good",
+            "description": "Effective evaluation function with relevant features, produces competent play"
+          },
+          {
+            "score": 2,
+            "label": "Satisfactory",
+            "description": "Basic evaluation function that works but lacks strategic depth"
+          },
+          {
+            "score": 1,
+            "label": "Needs Improvement",
+            "description": "Naive or incorrect evaluation function, poor game play quality"
+          }
+        ]
+      },
+      {
+        "name": "Performance Analysis",
+        "weight": 20,
+        "levels": [
+          {
+            "score": 4,
+            "label": "Excellent",
+            "description": "Comprehensive analysis including complexity analysis, tournament results, strategy comparisons, and detailed insights"
+          },
+          {
+            "score": 3,
+            "label": "Good",
+            "description": "Good analysis with tournament results and performance metrics, covers main aspects"
+          },
+          {
+            "score": 2,
+            "label": "Satisfactory",
+            "description": "Basic performance analysis present, some metrics or comparisons missing"
+          },
+          {
+            "score": 1,
+            "label": "Needs Improvement",
+            "description": "Minimal or superficial analysis, lacking key performance metrics"
+          }
+        ]
+      },
+      {
+        "name": "Code Quality and Documentation",
+        "weight": 15,
+        "levels": [
+          {
+            "score": 4,
+            "label": "Excellent",
+            "description": "Clean, well-organized code with comprehensive documentation and technical report explaining all design decisions"
+          },
+          {
+            "score": 3,
+            "label": "Good",
+            "description": "Well-structured code with good documentation covering main components"
+          },
+          {
+            "score": 2,
+            "label": "Satisfactory",
+            "description": "Functional code with basic documentation, could be better organized"
+          },
+          {
+            "score": 1,
+            "label": "Needs Improvement",
+            "description": "Poorly organized code with minimal documentation"
+          }
+        ]
+      }
+    ],
+    "estimatedHours": 40
+  },
+  {
+    "id": "cs406-project-2",
+    "subjectId": "cs406",
+    "title": "Path Planning for Autonomous Robot",
+    "description": "Develop a path planning system for an autonomous robot using search algorithms.\n\n## Objectives\n- Implement multiple search algorithms (A*, RRT, PRM)\n- Handle dynamic obstacles and replanning\n- Optimize for different cost metrics\n- Visualize search process and results\n- Compare algorithm performance\n\n## Deliverables\n- Multi-algorithm path planning system\n- Interactive visualization tool\n- Performance benchmarks and analysis\n- Video demonstrations\n- Technical documentation",
+    "requirements": [
+      "Create 2D environment with static and dynamic obstacles",
+      "Implement A* with multiple heuristics",
+      "Implement RRT (Rapidly-exploring Random Tree)",
+      "Implement PRM (Probabilistic Roadmap)",
+      "Support different cost functions (distance, time, energy)",
+      "Handle moving obstacles with replanning",
+      "Visualize search trees and final paths",
+      "Benchmark algorithms on various scenarios"
+    ],
+    "rubric": [
+      {
+        "name": "Algorithm Implementation",
+        "weight": 30,
+        "levels": [
+          {
+            "score": 4,
+            "label": "Excellent",
+            "description": "All three algorithms (A*, RRT, PRM) correctly implemented with optimal performance and robust handling of edge cases"
+          },
+          {
+            "score": 3,
+            "label": "Good",
+            "description": "All algorithms implemented and functional, minor performance or correctness issues"
+          },
+          {
+            "score": 2,
+            "label": "Satisfactory",
+            "description": "Two algorithms fully working, third incomplete or has significant issues"
+          },
+          {
+            "score": 1,
+            "label": "Needs Improvement",
+            "description": "Only one algorithm working or major correctness issues in implementations"
+          }
+        ]
+      },
+      {
+        "name": "Dynamic Obstacle Handling",
+        "weight": 20,
+        "levels": [
+          {
+            "score": 4,
+            "label": "Excellent",
+            "description": "Sophisticated replanning system that efficiently handles dynamic obstacles in real-time"
+          },
+          {
+            "score": 3,
+            "label": "Good",
+            "description": "Working replanning mechanism that handles most dynamic scenarios effectively"
+          },
+          {
+            "score": 2,
+            "label": "Satisfactory",
+            "description": "Basic replanning implemented but may be slow or handle limited scenarios"
+          },
+          {
+            "score": 1,
+            "label": "Needs Improvement",
+            "description": "Minimal or non-functional dynamic obstacle handling"
+          }
+        ]
+      },
+      {
+        "name": "Visualization and Interface",
+        "weight": 20,
+        "levels": [
+          {
+            "score": 4,
+            "label": "Excellent",
+            "description": "Interactive, polished visualization showing search trees, paths, and real-time algorithm execution"
+          },
+          {
+            "score": 3,
+            "label": "Good",
+            "description": "Effective visualization of key elements with good user interaction"
+          },
+          {
+            "score": 2,
+            "label": "Satisfactory",
+            "description": "Basic visualization present, limited interactivity or polish"
+          },
+          {
+            "score": 1,
+            "label": "Needs Improvement",
+            "description": "Minimal visualization or poor usability"
+          }
+        ]
+      },
+      {
+        "name": "Performance Analysis",
+        "weight": 20,
+        "levels": [
+          {
+            "score": 4,
+            "label": "Excellent",
+            "description": "Comprehensive benchmarks across diverse scenarios, detailed analysis of algorithm tradeoffs and cost metrics"
+          },
+          {
+            "score": 3,
+            "label": "Good",
+            "description": "Good benchmarking with clear comparison of algorithms in multiple scenarios"
+          },
+          {
+            "score": 2,
+            "label": "Satisfactory",
+            "description": "Basic performance comparison present, limited scenario diversity"
+          },
+          {
+            "score": 1,
+            "label": "Needs Improvement",
+            "description": "Minimal or incomplete performance analysis"
+          }
+        ]
+      },
+      {
+        "name": "Code Quality and Documentation",
+        "weight": 10,
+        "levels": [
+          {
+            "score": 4,
+            "label": "Excellent",
+            "description": "Clean, modular code with comprehensive technical documentation and video demonstrations"
+          },
+          {
+            "score": 3,
+            "label": "Good",
+            "description": "Well-organized code with good documentation covering main components"
+          },
+          {
+            "score": 2,
+            "label": "Satisfactory",
+            "description": "Functional code with basic documentation"
+          },
+          {
+            "score": 1,
+            "label": "Needs Improvement",
+            "description": "Poorly structured code with minimal documentation"
+          }
+        ]
+      }
+    ],
+    "estimatedHours": 35
+  },
+  {
+    "id": "cs406-project-3",
+    "subjectId": "cs406",
+    "title": "CSP Solver for Real-World Problems",
+    "description": "Build a general-purpose CSP solver and apply it to real-world scheduling problems.\n\n## Objectives\n- Implement backtracking with advanced heuristics\n- Integrate constraint propagation (AC-3)\n- Solve practical scheduling problems\n- Visualize search process\n- Analyze solution quality and efficiency\n\n## Deliverables\n- General CSP solver library\n- GUI for problem specification\n- Solutions to 3+ real-world problems\n- Performance comparison of techniques\n- User documentation",
+    "requirements": [
+      "Implement generic CSP framework",
+      "Backtracking with MRV, degree heuristic, LCV",
+      "Forward checking and AC-3 constraint propagation",
+      "Handle multiple problem types: Course scheduling, Nurse rostering, Exam timetabling, Sudoku puzzles",
+      "Conflict-directed backjumping",
+      "Min-conflicts local search",
+      "Interactive problem builder",
+      "Solution visualization"
+    ],
+    "rubric": [
+      {
+        "name": "CSP Framework and Backtracking",
+        "weight": 25,
+        "levels": [
+          {
+            "score": 4,
+            "label": "Excellent",
+            "description": "Robust generic CSP framework with all heuristics (MRV, degree, LCV) correctly implemented and optimized"
+          },
+          {
+            "score": 3,
+            "label": "Good",
+            "description": "Functional framework with backtracking and main heuristics working correctly"
+          },
+          {
+            "score": 2,
+            "label": "Satisfactory",
+            "description": "Basic backtracking present, some heuristics missing or incomplete"
+          },
+          {
+            "score": 1,
+            "label": "Needs Improvement",
+            "description": "Framework incomplete or backtracking has major issues"
+          }
+        ]
+      },
+      {
+        "name": "Constraint Propagation",
+        "weight": 20,
+        "levels": [
+          {
+            "score": 4,
+            "label": "Excellent",
+            "description": "AC-3 and forward checking correctly implemented with efficient conflict-directed backjumping"
+          },
+          {
+            "score": 3,
+            "label": "Good",
+            "description": "AC-3 or forward checking working well, backjumping present"
+          },
+          {
+            "score": 2,
+            "label": "Satisfactory",
+            "description": "Basic constraint propagation implemented, may have efficiency issues"
+          },
+          {
+            "score": 1,
+            "label": "Needs Improvement",
+            "description": "Constraint propagation missing or incorrect"
+          }
+        ]
+      },
+      {
+        "name": "Problem Diversity and Solutions",
+        "weight": 25,
+        "levels": [
+          {
+            "score": 4,
+            "label": "Excellent",
+            "description": "Successfully solves 4+ diverse real-world problems with high-quality solutions and min-conflicts local search"
+          },
+          {
+            "score": 3,
+            "label": "Good",
+            "description": "Solves 3+ problems effectively with reasonable solution quality"
+          },
+          {
+            "score": 2,
+            "label": "Satisfactory",
+            "description": "Solves 2-3 problems, solutions may be suboptimal"
+          },
+          {
+            "score": 1,
+            "label": "Needs Improvement",
+            "description": "Solves fewer than 2 problems or solutions are poor quality"
+          }
+        ]
+      },
+      {
+        "name": "User Interface and Visualization",
+        "weight": 15,
+        "levels": [
+          {
+            "score": 4,
+            "label": "Excellent",
+            "description": "Interactive problem builder with excellent visualization of search process and solutions"
+          },
+          {
+            "score": 3,
+            "label": "Good",
+            "description": "Functional GUI for problem specification and good visualization"
+          },
+          {
+            "score": 2,
+            "label": "Satisfactory",
+            "description": "Basic interface present, limited visualization capabilities"
+          },
+          {
+            "score": 1,
+            "label": "Needs Improvement",
+            "description": "Poor or minimal interface and visualization"
+          }
+        ]
+      },
+      {
+        "name": "Performance Analysis and Documentation",
+        "weight": 15,
+        "levels": [
+          {
+            "score": 4,
+            "label": "Excellent",
+            "description": "Comprehensive performance comparison of techniques with detailed user documentation"
+          },
+          {
+            "score": 3,
+            "label": "Good",
+            "description": "Good performance analysis with clear documentation"
+          },
+          {
+            "score": 2,
+            "label": "Satisfactory",
+            "description": "Basic performance comparison and documentation present"
+          },
+          {
+            "score": 1,
+            "label": "Needs Improvement",
+            "description": "Minimal analysis or documentation"
+          }
+        ]
+      }
+    ],
+    "estimatedHours": 30
+  },
+  {
+    "id": "cs406-project-4",
+    "subjectId": "cs406",
+    "title": "Automated Planning System",
+    "description": "Develop an automated planning system for logistics or robotics domains.\n\n## Objectives\n- Implement STRIPS/PDDL planning\n- Create domain-specific heuristics\n- Handle complex planning problems\n- Visualize plan execution\n- Compare planning approaches\n\n## Deliverables\n- Multi-algorithm planning system\n- PDDL problem library\n- Plan visualization and execution\n- Comparative performance analysis\n- Technical report on heuristic design",
+    "requirements": [
+      "Implement STRIPS planner with forward search",
+      "Implement GraphPlan algorithm",
+      "Design delete-relaxation heuristics",
+      "Create PDDL parser for problem specification",
+      "Implement at least 2 domains: Blocks World, Logistics (packages, trucks, locations), or Robot navigation with actions",
+      "Plan validation and execution simulation",
+      "Handle partial observability",
+      "Visualize planning graph and solutions"
+    ],
+    "rubric": [
+      {
+        "name": "Planning Algorithms",
+        "weight": 30,
+        "levels": [
+          {
+            "score": 4,
+            "label": "Excellent",
+            "description": "Both STRIPS and GraphPlan correctly implemented with optimal performance and robust error handling"
+          },
+          {
+            "score": 3,
+            "label": "Good",
+            "description": "Both algorithms functional with correct plan generation, minor issues present"
+          },
+          {
+            "score": 2,
+            "label": "Satisfactory",
+            "description": "One algorithm fully working, other incomplete or has issues"
+          },
+          {
+            "score": 1,
+            "label": "Needs Improvement",
+            "description": "Major issues with algorithm implementations or only basic functionality"
+          }
+        ]
+      },
+      {
+        "name": "Heuristics and PDDL",
+        "weight": 20,
+        "levels": [
+          {
+            "score": 4,
+            "label": "Excellent",
+            "description": "Sophisticated delete-relaxation heuristics with complete PDDL parser supporting complex problem specifications"
+          },
+          {
+            "score": 3,
+            "label": "Good",
+            "description": "Effective heuristics and functional PDDL parser for standard problems"
+          },
+          {
+            "score": 2,
+            "label": "Satisfactory",
+            "description": "Basic heuristics present, PDDL parser handles simple cases"
+          },
+          {
+            "score": 1,
+            "label": "Needs Improvement",
+            "description": "Weak heuristics or limited PDDL support"
+          }
+        ]
+      },
+      {
+        "name": "Domain Implementation",
+        "weight": 20,
+        "levels": [
+          {
+            "score": 4,
+            "label": "Excellent",
+            "description": "3+ diverse domains with partial observability, plan validation, and execution simulation"
+          },
+          {
+            "score": 3,
+            "label": "Good",
+            "description": "2+ domains well-implemented with validation and simulation"
+          },
+          {
+            "score": 2,
+            "label": "Satisfactory",
+            "description": "2 domains present, validation or simulation may be limited"
+          },
+          {
+            "score": 1,
+            "label": "Needs Improvement",
+            "description": "Fewer than 2 domains or poor implementation quality"
+          }
+        ]
+      },
+      {
+        "name": "Visualization and Analysis",
+        "weight": 20,
+        "levels": [
+          {
+            "score": 4,
+            "label": "Excellent",
+            "description": "Comprehensive visualization of planning graphs and execution, detailed comparative performance analysis"
+          },
+          {
+            "score": 3,
+            "label": "Good",
+            "description": "Good visualization tools with solid performance comparison"
+          },
+          {
+            "score": 2,
+            "label": "Satisfactory",
+            "description": "Basic visualization present, limited performance analysis"
+          },
+          {
+            "score": 1,
+            "label": "Needs Improvement",
+            "description": "Minimal visualization or analysis"
+          }
+        ]
+      },
+      {
+        "name": "Code Quality and Documentation",
+        "weight": 10,
+        "levels": [
+          {
+            "score": 4,
+            "label": "Excellent",
+            "description": "Clean, well-architected code with comprehensive PDDL library and detailed technical report"
+          },
+          {
+            "score": 3,
+            "label": "Good",
+            "description": "Well-organized code with good documentation and problem library"
+          },
+          {
+            "score": 2,
+            "label": "Satisfactory",
+            "description": "Functional code with basic documentation"
+          },
+          {
+            "score": 1,
+            "label": "Needs Improvement",
+            "description": "Poor code organization or minimal documentation"
+          }
+        ]
+      }
+    ],
+    "estimatedHours": 35
+  },
+  {
+    "id": "cs406-project-5",
+    "subjectId": "cs406",
+    "title": "Medical Diagnosis Expert System",
+    "description": "Build a knowledge-based expert system for medical diagnosis using logic and probabilistic reasoning.\n\n## Objectives\n- Represent medical knowledge using logic\n- Implement inference mechanisms\n- Integrate probabilistic reasoning\n- Create interactive diagnosis interface\n- Explain reasoning to users\n\n## Deliverables\n- Expert system with knowledge base\n- Interactive diagnosis tool\n- Inference engine with explanations\n- Test cases with known diagnoses\n- User manual and technical documentation",
+    "requirements": [
+      "Knowledge base with 20+ diseases and symptoms",
+      "First-order logic representation",
+      "Forward and backward chaining inference",
+      "Bayesian network for uncertain reasoning",
+      "Explanation facility for diagnoses",
+      "Certainty factors for recommendations",
+      "User-friendly diagnosis interface",
+      "Handle missing or uncertain information"
+    ],
+    "rubric": [
+      {
+        "name": "Knowledge Representation",
+        "weight": 25,
+        "levels": [
+          {
+            "score": 4,
+            "label": "Excellent",
+            "description": "Comprehensive knowledge base with 25+ diseases, accurate first-order logic representation, well-structured medical knowledge"
+          },
+          {
+            "score": 3,
+            "label": "Good",
+            "description": "20+ diseases with good logic representation and relationships"
+          },
+          {
+            "score": 2,
+            "label": "Satisfactory",
+            "description": "15-20 diseases with basic logic representation"
+          },
+          {
+            "score": 1,
+            "label": "Needs Improvement",
+            "description": "Fewer than 15 diseases or poor knowledge representation"
+          }
+        ]
+      },
+      {
+        "name": "Inference Mechanisms",
+        "weight": 25,
+        "levels": [
+          {
+            "score": 4,
+            "label": "Excellent",
+            "description": "Both forward and backward chaining correctly implemented with Bayesian network for uncertainty, handles complex reasoning"
+          },
+          {
+            "score": 3,
+            "label": "Good",
+            "description": "Both chaining methods working with probabilistic reasoning"
+          },
+          {
+            "score": 2,
+            "label": "Satisfactory",
+            "description": "One chaining method working well, basic uncertainty handling"
+          },
+          {
+            "score": 1,
+            "label": "Needs Improvement",
+            "description": "Inference mechanisms incomplete or incorrect"
+          }
+        ]
+      },
+      {
+        "name": "Probabilistic Reasoning",
+        "weight": 20,
+        "levels": [
+          {
+            "score": 4,
+            "label": "Excellent",
+            "description": "Sophisticated Bayesian network with certainty factors, handles missing information elegantly"
+          },
+          {
+            "score": 3,
+            "label": "Good",
+            "description": "Working probabilistic reasoning with uncertainty handling"
+          },
+          {
+            "score": 2,
+            "label": "Satisfactory",
+            "description": "Basic probabilistic features, limited uncertainty handling"
+          },
+          {
+            "score": 1,
+            "label": "Needs Improvement",
+            "description": "Minimal or incorrect probabilistic reasoning"
+          }
+        ]
+      },
+      {
+        "name": "User Interface and Explanations",
+        "weight": 20,
+        "levels": [
+          {
+            "score": 4,
+            "label": "Excellent",
+            "description": "Intuitive interface with comprehensive explanation facility showing reasoning steps and confidence levels"
+          },
+          {
+            "score": 3,
+            "label": "Good",
+            "description": "User-friendly interface with good explanations of diagnoses"
+          },
+          {
+            "score": 2,
+            "label": "Satisfactory",
+            "description": "Functional interface with basic explanations"
+          },
+          {
+            "score": 1,
+            "label": "Needs Improvement",
+            "description": "Poor interface or minimal explanation capability"
+          }
+        ]
+      },
+      {
+        "name": "Testing and Documentation",
+        "weight": 10,
+        "levels": [
+          {
+            "score": 4,
+            "label": "Excellent",
+            "description": "Extensive test cases with validation, comprehensive user manual and technical documentation"
+          },
+          {
+            "score": 3,
+            "label": "Good",
+            "description": "Good test coverage with clear documentation"
+          },
+          {
+            "score": 2,
+            "label": "Satisfactory",
+            "description": "Basic test cases and documentation present"
+          },
+          {
+            "score": 1,
+            "label": "Needs Improvement",
+            "description": "Minimal testing or documentation"
+          }
+        ]
+      }
+    ],
+    "estimatedHours": 30
+  },
+  {
+    "id": "cs406-project-6",
+    "subjectId": "cs406",
+    "title": "Robot Localization with Particle Filters",
+    "description": "Implement a complete localization system for a mobile robot using probabilistic methods.\n\n## Objectives\n- Implement particle filter (Monte Carlo localization)\n- Handle sensor noise and motion uncertainty\n- Integrate with robot simulator\n- Visualize belief distribution\n- Compare with other localization methods\n\n## Deliverables\n- Robot localization system\n- Multiple filtering algorithms\n- Interactive simulation environment\n- Performance comparison analysis\n- Video demonstrations\n- Technical report on probabilistic robotics",
+    "requirements": [
+      "Robot simulator with sensors and actuators",
+      "Particle filter implementation",
+      "Motion model with noise",
+      "Sensor model for range measurements",
+      "Extended Kalman Filter for comparison",
+      "Grid-based localization (histogram filter)",
+      "Map representation and obstacle handling",
+      "Real-time visualization of particle cloud",
+      "Kidnapped robot problem handling"
+    ],
+    "rubric": [
+      {
+        "name": "Particle Filter Implementation",
+        "weight": 30,
+        "levels": [
+          {
+            "score": 4,
+            "label": "Excellent",
+            "description": "Robust Monte Carlo localization with adaptive resampling, handles kidnapped robot problem effectively"
+          },
+          {
+            "score": 3,
+            "label": "Good",
+            "description": "Working particle filter with correct localization in most scenarios"
+          },
+          {
+            "score": 2,
+            "label": "Satisfactory",
+            "description": "Basic particle filter working, may struggle with difficult scenarios"
+          },
+          {
+            "score": 1,
+            "label": "Needs Improvement",
+            "description": "Particle filter incomplete or produces poor localization"
+          }
+        ]
+      },
+      {
+        "name": "Models and Multiple Algorithms",
+        "weight": 25,
+        "levels": [
+          {
+            "score": 4,
+            "label": "Excellent",
+            "description": "Accurate motion and sensor models with noise, all three filters (particle, EKF, histogram) correctly implemented"
+          },
+          {
+            "score": 3,
+            "label": "Good",
+            "description": "Good models with 2-3 working filter implementations"
+          },
+          {
+            "score": 2,
+            "label": "Satisfactory",
+            "description": "Basic models, 2 filters working with some issues"
+          },
+          {
+            "score": 1,
+            "label": "Needs Improvement",
+            "description": "Poor models or only one filter working"
+          }
+        ]
+      },
+      {
+        "name": "Simulation Environment",
+        "weight": 20,
+        "levels": [
+          {
+            "score": 4,
+            "label": "Excellent",
+            "description": "Complete robot simulator with realistic sensors, actuators, and obstacle handling"
+          },
+          {
+            "score": 3,
+            "label": "Good",
+            "description": "Functional simulator with good sensor and motion modeling"
+          },
+          {
+            "score": 2,
+            "label": "Satisfactory",
+            "description": "Basic simulator present, limited realism"
+          },
+          {
+            "score": 1,
+            "label": "Needs Improvement",
+            "description": "Incomplete or overly simplistic simulator"
+          }
+        ]
+      },
+      {
+        "name": "Visualization and Analysis",
+        "weight": 15,
+        "levels": [
+          {
+            "score": 4,
+            "label": "Excellent",
+            "description": "Real-time particle cloud visualization, comprehensive performance comparison with video demonstrations"
+          },
+          {
+            "score": 3,
+            "label": "Good",
+            "description": "Good visualization and solid performance analysis"
+          },
+          {
+            "score": 2,
+            "label": "Satisfactory",
+            "description": "Basic visualization present, limited analysis"
+          },
+          {
+            "score": 1,
+            "label": "Needs Improvement",
+            "description": "Minimal visualization or analysis"
+          }
+        ]
+      },
+      {
+        "name": "Technical Report",
+        "weight": 10,
+        "levels": [
+          {
+            "score": 4,
+            "label": "Excellent",
+            "description": "Comprehensive technical report covering probabilistic robotics theory and implementation insights"
+          },
+          {
+            "score": 3,
+            "label": "Good",
+            "description": "Good technical documentation explaining key concepts and results"
+          },
+          {
+            "score": 2,
+            "label": "Satisfactory",
+            "description": "Basic report present with main findings"
+          },
+          {
+            "score": 1,
+            "label": "Needs Improvement",
+            "description": "Minimal or poor quality documentation"
+          }
+        ]
+      }
+    ],
+    "estimatedHours": 40
+  },
+  {
+    "id": "cs406-project-7",
+    "subjectId": "cs406",
+    "title": "Natural Language Processing with Logic",
+    "description": "Build an NLP system that converts natural language to logic and performs reasoning.\n\n## Objectives\n- Parse natural language to logical form\n- Build knowledge base from text\n- Answer questions using inference\n- Handle semantic ambiguity\n- Explain reasoning process\n\n## Deliverables\n- NL to logic converter\n- Inference-based QA system\n- Test corpus of statements and questions\n- Performance evaluation\n- User interface\n- Technical documentation",
+    "requirements": [
+      "Natural language parser (simple grammar)",
+      "Convert sentences to first-order logic",
+      "Build knowledge base from statements",
+      "Question answering using resolution",
+      "Handle quantifiers (all, some, no)",
+      "Handle temporal relations",
+      "Handle negation and compound sentences",
+      "Ambiguity resolution strategies",
+      "Explanation generation",
+      "Interactive interface"
+    ],
+    "rubric": [
+      {
+        "name": "Natural Language Parsing",
+        "weight": 25,
+        "levels": [
+          {
+            "score": 4,
+            "label": "Excellent",
+            "description": "Robust parser handling complex sentences with quantifiers, temporal relations, negation, and compounds"
+          },
+          {
+            "score": 3,
+            "label": "Good",
+            "description": "Parser handles most sentence types with good accuracy"
+          },
+          {
+            "score": 2,
+            "label": "Satisfactory",
+            "description": "Basic parser working for simple sentences, limited complex structure support"
+          },
+          {
+            "score": 1,
+            "label": "Needs Improvement",
+            "description": "Parser incomplete or handles only very simple sentences"
+          }
+        ]
+      },
+      {
+        "name": "Logic Conversion and Knowledge Base",
+        "weight": 25,
+        "levels": [
+          {
+            "score": 4,
+            "label": "Excellent",
+            "description": "Accurate conversion to first-order logic, well-organized knowledge base with effective representation"
+          },
+          {
+            "score": 3,
+            "label": "Good",
+            "description": "Good logic conversion with functional knowledge base"
+          },
+          {
+            "score": 2,
+            "label": "Satisfactory",
+            "description": "Basic conversion working, knowledge base may have organizational issues"
+          },
+          {
+            "score": 1,
+            "label": "Needs Improvement",
+            "description": "Poor logic conversion or inadequate knowledge base"
+          }
+        ]
+      },
+      {
+        "name": "Question Answering and Inference",
+        "weight": 25,
+        "levels": [
+          {
+            "score": 4,
+            "label": "Excellent",
+            "description": "Resolution-based inference produces correct answers for complex questions with ambiguity handling"
+          },
+          {
+            "score": 3,
+            "label": "Good",
+            "description": "Good QA performance using inference, handles most questions"
+          },
+          {
+            "score": 2,
+            "label": "Satisfactory",
+            "description": "Basic QA working for simple questions"
+          },
+          {
+            "score": 1,
+            "label": "Needs Improvement",
+            "description": "QA system incomplete or produces poor results"
+          }
+        ]
+      },
+      {
+        "name": "Interface and Explanations",
+        "weight": 15,
+        "levels": [
+          {
+            "score": 4,
+            "label": "Excellent",
+            "description": "Interactive interface with comprehensive explanation generation showing reasoning steps"
+          },
+          {
+            "score": 3,
+            "label": "Good",
+            "description": "User-friendly interface with good explanations"
+          },
+          {
+            "score": 2,
+            "label": "Satisfactory",
+            "description": "Functional interface with basic explanations"
+          },
+          {
+            "score": 1,
+            "label": "Needs Improvement",
+            "description": "Poor interface or minimal explanation capability"
+          }
+        ]
+      },
+      {
+        "name": "Testing and Documentation",
+        "weight": 10,
+        "levels": [
+          {
+            "score": 4,
+            "label": "Excellent",
+            "description": "Comprehensive test corpus with performance evaluation and detailed technical documentation"
+          },
+          {
+            "score": 3,
+            "label": "Good",
+            "description": "Good test coverage with evaluation and documentation"
+          },
+          {
+            "score": 2,
+            "label": "Satisfactory",
+            "description": "Basic testing and documentation present"
+          },
+          {
+            "score": 1,
+            "label": "Needs Improvement",
+            "description": "Minimal testing or documentation"
+          }
+        ]
+      }
+    ],
+    "estimatedHours": 35
+  },
+  {
+    "id": "cs406-project-8",
+    "subjectId": "cs406",
+    "title": "Multi-Agent Coordination System",
+    "description": "Develop a system for coordinating multiple intelligent agents to solve complex tasks.\n\n## Objectives\n- Design agent architectures\n- Implement coordination protocols\n- Handle conflicts and resource allocation\n- Optimize collective behavior\n- Visualize multi-agent interactions\n\n## Deliverables\n- Multi-agent simulation framework\n- Coordinated agent behaviors\n- Visualization of agent interactions\n- Performance analysis\n- Comparison of coordination strategies\n- Technical report",
+    "requirements": [
+      "Multiple agent types (reactive, deliberative, hybrid)",
+      "Communication protocols",
+      "Contract Net Protocol implementation",
+      "Auction-based allocation",
+      "Voting mechanisms",
+      "Cooperative pathfinding",
+      "Apply to domain: Warehouse automation, Traffic management, Disaster response, or Multi-robot exploration",
+      "Conflict resolution strategies",
+      "Performance metrics for coordination",
+      "Scalability analysis"
+    ],
+    "rubric": [
+      {
+        "name": "Agent Architectures",
+        "weight": 25,
+        "levels": [
+          {
+            "score": 4,
+            "label": "Excellent",
+            "description": "Sophisticated implementation of all three agent types (reactive, deliberative, hybrid) with appropriate architectures"
+          },
+          {
+            "score": 3,
+            "label": "Good",
+            "description": "All agent types implemented and functioning well"
+          },
+          {
+            "score": 2,
+            "label": "Satisfactory",
+            "description": "Two agent types working, limited architectural sophistication"
+          },
+          {
+            "score": 1,
+            "label": "Needs Improvement",
+            "description": "Only one agent type or poor implementation quality"
+          }
+        ]
+      },
+      {
+        "name": "Coordination Mechanisms",
+        "weight": 30,
+        "levels": [
+          {
+            "score": 4,
+            "label": "Excellent",
+            "description": "All coordination protocols correctly implemented (Contract Net, auctions, voting, cooperative pathfinding) with efficient conflict resolution"
+          },
+          {
+            "score": 3,
+            "label": "Good",
+            "description": "3+ coordination mechanisms working effectively with good conflict handling"
+          },
+          {
+            "score": 2,
+            "label": "Satisfactory",
+            "description": "2 coordination mechanisms present, basic conflict resolution"
+          },
+          {
+            "score": 1,
+            "label": "Needs Improvement",
+            "description": "Minimal coordination capability or poor implementation"
+          }
+        ]
+      },
+      {
+        "name": "Domain Application",
+        "weight": 20,
+        "levels": [
+          {
+            "score": 4,
+            "label": "Excellent",
+            "description": "Complex domain implementation with realistic constraints, excellent collective behavior optimization"
+          },
+          {
+            "score": 3,
+            "label": "Good",
+            "description": "Good domain implementation showing effective coordination"
+          },
+          {
+            "score": 2,
+            "label": "Satisfactory",
+            "description": "Basic domain present, limited complexity"
+          },
+          {
+            "score": 1,
+            "label": "Needs Improvement",
+            "description": "Overly simplistic domain or poor task execution"
+          }
+        ]
+      },
+      {
+        "name": "Visualization and Analysis",
+        "weight": 15,
+        "levels": [
+          {
+            "score": 4,
+            "label": "Excellent",
+            "description": "Comprehensive visualization of agent interactions with detailed performance analysis and scalability testing"
+          },
+          {
+            "score": 3,
+            "label": "Good",
+            "description": "Good visualization and solid performance metrics"
+          },
+          {
+            "score": 2,
+            "label": "Satisfactory",
+            "description": "Basic visualization, limited performance analysis"
+          },
+          {
+            "score": 1,
+            "label": "Needs Improvement",
+            "description": "Minimal visualization or analysis"
+          }
+        ]
+      },
+      {
+        "name": "Comparison and Documentation",
+        "weight": 10,
+        "levels": [
+          {
+            "score": 4,
+            "label": "Excellent",
+            "description": "Thorough comparison of coordination strategies with comprehensive technical report"
+          },
+          {
+            "score": 3,
+            "label": "Good",
+            "description": "Good strategy comparison with solid documentation"
+          },
+          {
+            "score": 2,
+            "label": "Satisfactory",
+            "description": "Basic comparison and documentation present"
+          },
+          {
+            "score": 1,
+            "label": "Needs Improvement",
+            "description": "Minimal comparison or documentation"
+          }
+        ]
+      }
+    ],
+    "estimatedHours": 40
+  }
+]
