@@ -7,6 +7,32 @@ Perform a thorough quality review of this subject's content and **write your rep
 
 **IMPORTANT: Write your final report to:** `/home/calluma/projects/comp_sci_degree/reviews/{SUBJECT_ID}_review.md`
 
+## Automated Analysis Tools
+
+Before manual review, run the automated analysis scripts to get a quick overview:
+
+```bash
+# Fast content analysis - shows counts for exercises, quizzes, exams, projects
+# Also shows breakdowns by type, difficulty, language, test coverage, etc.
+npm run quality
+
+# Import validation - verifies TypeScript modules load correctly
+npm run validate
+
+# Run both
+npm run check
+```
+
+These scripts provide:
+- Exercise counts per topic with type breakdown (coding vs written)
+- Test case coverage (tests vs AI-evaluated)
+- Quiz question counts with type breakdown (multiple_choice, code_output, etc.)
+- Exam presence and question counts
+- Project counts with rubric coverage
+- Content word counts per subtopic
+
+Use this output to quickly identify gaps before diving into detailed review.
+
 ## Subject Location
 
 All subject content is colocated in a single directory:
@@ -137,18 +163,19 @@ Write a markdown file with this exact structure:
 
 ## Process
 
-1. First, read the subject's index.ts to understand the structure
-2. Read topics.ts to get the list of topics (uses glob imports via buildTopicsFromGlob)
-3. For each topic:
+1. Run `npm run quality` and `npm run validate` to get automated metrics
+2. Read the subject's index.ts to understand the structure
+3. Read topics.ts to get the list of topics (uses glob imports via buildTopicsFromGlob)
+4. For each topic:
    - Count and list subtopics from content/topic-N/*.md files
    - Verify each markdown file has frontmatter (id, title, order)
    - Estimate word count for each subtopic content
    - Count exercises in exercises.json
    - Count quiz questions in quizzes.json
-4. Check exams.json for midterm and final
-5. Check projects.json if it exists
-6. Compile findings into the report format above
-7. **Write the report to the specified file path**
+5. Check exams.json for midterm and final
+6. Check projects.json if it exists
+7. Compile findings into the report format above
+8. **Write the report to the specified file path**
 
 Be thorough and accurate in your counts. The goal is to identify exactly what work remains to complete each subject.
 

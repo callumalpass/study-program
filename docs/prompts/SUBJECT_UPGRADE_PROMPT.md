@@ -16,7 +16,31 @@ You are upgrading the subject **[SUBJECT_ID]** to meet the production-ready qual
 
 ## Phase 1: Audit Current State
 
-Audit the current state of [SUBJECT_ID]:
+### Quick Quality Check
+
+Before diving into manual auditing, run the quality analysis scripts:
+
+```bash
+# Fast content analysis (reads JSON/markdown directly)
+npm run quality
+
+# Import validation (uses Vite SSR to verify TypeScript modules work)
+npm run validate
+
+# Run both
+npm run check
+```
+
+The quality script provides detailed breakdowns:
+- **Exercises**: Coding vs written, with tests vs AI evaluation, language distribution, difficulty spread
+- **Quizzes**: Question types, explanation coverage, code snippet usage
+- **Exams**: Duration, question types, midterm/final status
+- **Projects**: Requirements count, rubric coverage
+- **Content**: Word counts per subtopic
+
+### Manual Audit
+
+If you need to inspect specific files:
 
 1. **Topics**: Count topics in `src/subjects/[subject]/topics.ts`
 2. **Subtopics**: Check each topic for subtopics array; count markdown files in `src/subjects/[subject]/content/topic-N/`
@@ -525,6 +549,8 @@ Before marking upgrade complete:
 - [ ] topics.ts uses glob imports and buildTopicsFromGlob
 - [ ] index.ts imports JSON files and exports with types
 - [ ] Build passes without errors (`npm run build`)
+- [ ] Quality check passes (`npm run quality`)
+- [ ] Import validation passes (`npm run validate`)
 - [ ] Subject review updated (Phase 4)
 
 ---
