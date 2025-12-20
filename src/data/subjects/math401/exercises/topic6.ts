@@ -6,149 +6,237 @@ export const topic6Exercises: WrittenExercise[] = [
     subjectId: 'math401',
     topicId: 'math401-topic-6',
     type: 'written',
-    title: 'Joint PMF',
-    description: 'Let (X,Y) have joint PMF: P(X=0,Y=0)=0.2, P(X=0,Y=1)=0.1, P(X=1,Y=0)=0.3, P(X=1,Y=1)=0.4. Find P(X=0).',
-    difficulty: 1,
+    title: 'Computing Residue at Simple Pole',
+    description: 'Find the residue of f(z) = z/(z²-1) at z = 1.',
+    difficulty: 2,
     hints: [
-      'Marginal probability P(X=0) is the sum over all y values',
-      'P(X=0) = P(X=0,Y=0) + P(X=0,Y=1)',
-      'Sum the probabilities where X=0'
+      'For simple pole: Res(f,a) = lim_{z→a} (z-a)f(z)',
+      'Factor denominator',
+      'Apply formula'
     ],
-    solution: 'P(X=0) = P(X=0,Y=0) + P(X=0,Y=1) = 0.2 + 0.1 = 0.3.'
+    solution: 'z²-1 = (z-1)(z+1). Res(f,1) = lim_{z→1} (z-1)·z/[(z-1)(z+1)] = lim_{z→1} z/(z+1) = 1/2.'
   },
   {
     id: 'math401-t6-ex02',
     subjectId: 'math401',
     topicId: 'math401-topic-6',
     type: 'written',
-    title: 'Independence Test',
-    description: 'Using the joint PMF from the previous problem, determine if X and Y are independent.',
+    title: 'Residue Theorem Application',
+    description: 'Evaluate ∫_{|z|=2} 1/(z²-1) dz using residue theorem.',
     difficulty: 2,
     hints: [
-      'X and Y are independent if P(X=x,Y=y) = P(X=x)P(Y=y) for all x,y',
-      'Find marginal P(X=0), P(Y=0), P(X=1), P(Y=1)',
-      'Check if any joint probability fails the independence test'
+      'Find poles inside |z| = 2',
+      'Compute residues',
+      'Apply residue theorem: ∫ = 2πi·Σ residues'
     ],
-    solution: 'P(X=0)=0.3, P(X=1)=0.7, P(Y=0)=0.5, P(Y=1)=0.5. Check: P(X=0,Y=0) = 0.2, but P(X=0)P(Y=0) = 0.3·0.5 = 0.15. Since 0.2 ≠ 0.15, X and Y are NOT independent.'
+    solution: 'Poles at z = ±1, both inside. Res(f,1) = 1/2, Res(f,-1) = -1/2. ∫ = 2πi(1/2 - 1/2) = 0.'
   },
   {
     id: 'math401-t6-ex03',
     subjectId: 'math401',
     topicId: 'math401-topic-6',
     type: 'written',
-    title: 'Joint PDF Integration',
-    description: 'Let (X,Y) have joint PDF f(x,y) = 6xy for 0 ≤ x ≤ 1, 0 ≤ y ≤ 1, and 0 otherwise. Find P(X + Y ≤ 1).',
-    difficulty: 3,
+    title: 'Residue at Higher Order Pole',
+    description: 'Find residue of f(z) = 1/(z-1)³ at z = 1.',
+    difficulty: 2,
     hints: [
-      'Integrate over the region where x + y ≤ 1',
-      'Set up the integral: ∫∫_R 6xy dA',
-      'The region is a triangle with vertices (0,0), (1,0), (0,1)'
+      'Pole of order n: Res = (1/(n-1)!)·lim d^(n-1)/dz^(n-1)[(z-a)^n f(z)]',
+      'Here n = 3'
     ],
-    solution: 'P(X + Y ≤ 1) = ∫₀¹ ∫₀^(1-x) 6xy dy dx = ∫₀¹ 6x[y²/2]₀^(1-x) dx = ∫₀¹ 3x(1-x)² dx = ∫₀¹ 3x(1-2x+x²) dx = ∫₀¹ (3x-6x²+3x³) dx = [3x²/2 - 2x³ + 3x⁴/4]₀¹ = 3/2 - 2 + 3/4 = 1/4.'
+    solution: 'For n=3 pole: Res = (1/2!)·lim d²/dz²[(z-1)³·1/(z-1)³] = (1/2)·lim d²/dz²[1] = 0.'
   },
   {
     id: 'math401-t6-ex04',
     subjectId: 'math401',
     topicId: 'math401-topic-6',
     type: 'written',
-    title: 'Marginal PDF',
-    description: 'For the joint PDF f(x,y) = 6xy on [0,1]×[0,1], find the marginal PDF f_X(x).',
-    difficulty: 2,
+    title: 'Real Integral via Residues',
+    description: 'Evaluate ∫_{-∞}^∞ dx/(x²+1) using residue theorem.',
+    difficulty: 3,
     hints: [
-      'f_X(x) = ∫_{-∞}^∞ f(x,y) dy',
-      'For this problem, integrate from 0 to 1',
-      'f_X(x) = ∫₀¹ 6xy dy'
+      'Use semicircle contour in upper half-plane',
+      'Pole at z = i',
+      'Semicircle contribution → 0 as R → ∞'
     ],
-    solution: 'f_X(x) = ∫₀¹ 6xy dy = 6x[y²/2]₀¹ = 3x for 0 ≤ x ≤ 1, and 0 otherwise.'
+    solution: 'f(z) = 1/(z²+1) = 1/[(z-i)(z+i)]. Pole at z=i in upper half. Res(f,i) = 1/(2i). ∫_{-∞}^∞ = 2πi·(1/2i) = π.'
   },
   {
     id: 'math401-t6-ex05',
     subjectId: 'math401',
     topicId: 'math401-topic-6',
     type: 'written',
-    title: 'Conditional Distribution',
-    description: 'Given the joint PDF f(x,y) = 6xy on [0,1]×[0,1], find the conditional PDF f_{Y|X}(y|x=0.5).',
+    title: 'Trigonometric Integral',
+    description: 'Evaluate ∫_0^{2π} dθ/(2+cos θ) using residue theorem.',
     difficulty: 3,
     hints: [
-      'f_{Y|X}(y|x) = f(x,y)/f_X(x)',
-      'From previous problem, f_X(0.5) = 3(0.5) = 1.5',
-      'f_{Y|X}(y|0.5) = 6(0.5)y / 1.5'
+      'Substitute z = e^{iθ}, cos θ = (z+1/z)/2',
+      'Convert to contour integral on |z|=1',
+      'Find residues inside unit circle'
     ],
-    solution: 'f_{Y|X}(y|0.5) = f(0.5,y)/f_X(0.5) = 6(0.5)y / 3(0.5) = 3y / 1.5 = 2y for 0 ≤ y ≤ 1.'
+    solution: 'z = e^{iθ}, dz = ize^{iθ}dθ, dθ = dz/(iz). cos θ = (z+z^{-1})/2. Integral becomes ∫_{|z|=1} 1/(iz(2+(z+z^{-1})/2)) dz. Simplify and find residues. Answer: 2π/√3.'
   },
   {
     id: 'math401-t6-ex06',
     subjectId: 'math401',
     topicId: 'math401-topic-6',
     type: 'written',
-    title: 'Expected Value of Function',
-    description: 'If (X,Y) has joint PMF P(0,0)=0.2, P(0,1)=0.3, P(1,0)=0.4, P(1,1)=0.1, find E[XY].',
+    title: 'Residue from Laurent Series',
+    description: 'Find residue of f(z) = e^z/z² at z = 0 using Laurent series.',
     difficulty: 2,
     hints: [
-      'E[g(X,Y)] = Σₓ Σᵧ g(x,y)P(X=x,Y=y)',
-      'Here g(x,y) = xy',
-      'Only the (1,1) term contributes'
+      'e^z = 1 + z + z²/2! + ...',
+      'Divide by z²',
+      'Residue is coefficient of z^{-1}'
     ],
-    solution: 'E[XY] = (0)(0)(0.2) + (0)(1)(0.3) + (1)(0)(0.4) + (1)(1)(0.1) = 0 + 0 + 0 + 0.1 = 0.1.'
+    solution: 'e^z/z² = (1 + z + z²/2! + ...)/z² = z^{-2} + z^{-1} + 1/2! + ... Residue (coeff of z^{-1}) = 1.'
   },
   {
     id: 'math401-t6-ex07',
     subjectId: 'math401',
     topicId: 'math401-topic-6',
     type: 'written',
-    title: 'Correlation Coefficient',
-    description: 'For random variables X and Y with Var(X)=4, Var(Y)=9, Cov(X,Y)=3, find the correlation ρ(X,Y).',
-    difficulty: 2,
+    title: 'Jordan\'s Lemma',
+    description: 'State Jordan\'s lemma and explain its use in evaluating improper integrals.',
+    difficulty: 3,
     hints: [
-      'ρ(X,Y) = Cov(X,Y)/(σ_X σ_Y)',
-      'σ_X = √Var(X) = 2',
-      'σ_Y = √Var(Y) = 3'
+      'Jordan\'s lemma for semicircular contours',
+      'Condition: f(z) → 0',
+      'Used with e^{iaz}'
     ],
-    solution: 'ρ(X,Y) = Cov(X,Y)/(σ_X σ_Y) = 3/(2·3) = 3/6 = 0.5. This indicates positive correlation.'
+    solution: 'Jordan\'s Lemma: If f(z) → 0 uniformly on semicircular arc as R → ∞, then ∫_{C_R} f(z)e^{iaz}dz → 0 for a > 0. Allows evaluating ∫_{-∞}^∞ f(x)e^{iax}dx by closing contour with semicircle.'
   },
   {
     id: 'math401-t6-ex08',
     subjectId: 'math401',
     topicId: 'math401-topic-6',
     type: 'written',
-    title: 'Bivariate Normal',
-    description: 'If (X,Y) ~ Bivariate Normal with ρ=0, what can you conclude about X and Y?',
-    difficulty: 2,
+    title: 'Residue at Infinity',
+    description: 'Find residue of f(z) = 1/z² at infinity.',
+    difficulty: 3,
     hints: [
-      'For bivariate normal, ρ=0 implies independence',
-      'This is special to the normal distribution',
-      'Uncorrelated does not imply independent in general'
+      'Res(f,∞) = -Res(g,0) where g(w) = -w^{-2}f(1/w)',
+      'Substitute w = 1/z'
     ],
-    solution: 'For bivariate normal distributions, ρ=0 (uncorrelated) implies that X and Y are independent. This is a special property of the multivariate normal distribution. In general, uncorrelated does not imply independent, but it does for jointly normal random variables.'
+    solution: 'g(w) = -w^{-2}·1/(1/w)² = -w^{-2}·w² = -1. No negative powers, so Res(g,0) = 0. Thus Res(f,∞) = 0.'
   },
   {
     id: 'math401-t6-ex09',
     subjectId: 'math401',
     topicId: 'math401-topic-6',
     type: 'written',
-    title: 'Convolution Formula',
-    description: 'If X and Y are independent, derive the PDF of Z = X + Y in terms of f_X and f_Y.',
+    title: 'Argument Principle',
+    description: 'State the argument principle and relate it to zeros and poles.',
     difficulty: 4,
     hints: [
-      'Use f_Z(z) = ∫_{-∞}^∞ f_X(x)f_Y(z-x) dx',
-      'This is called the convolution of f_X and f_Y',
-      'Denoted f_Z = f_X * f_Y'
+      'Argument principle: (1/2πi)∫_γ f\'/f dz',
+      'Equals N - P',
+      'N = zeros, P = poles inside γ'
     ],
-    solution: 'For independent X and Y, the PDF of Z = X + Y is given by the convolution: f_Z(z) = ∫_{-∞}^∞ f_X(x)f_Y(z-x) dx = (f_X * f_Y)(z). This can be derived by computing P(Z ≤ z) = ∫∫_{x+y≤z} f(x,y) dx dy and differentiating with respect to z.'
+    solution: 'Argument Principle: If f is meromorphic on and inside γ, then (1/2πi)∫_γ f\'/f dz = N - P, where N is number of zeros and P is number of poles (counted with multiplicity) inside γ.'
   },
   {
     id: 'math401-t6-ex10',
     subjectId: 'math401',
     topicId: 'math401-topic-6',
     type: 'written',
-    title: 'Sum of Independent Normals',
-    description: 'If X ~ N(μ₁, σ₁²) and Y ~ N(μ₂, σ₂²) are independent, find the distribution of Z = X + Y.',
-    difficulty: 2,
+    title: 'Rouché\'s Theorem',
+    description: 'Use Rouché\'s theorem to show z^5 + 3z + 1 has 5 roots in |z| < 2.',
+    difficulty: 4,
     hints: [
-      'The sum of independent normals is normal',
-      'E[X + Y] = E[X] + E[Y]',
-      'Var(X + Y) = Var(X) + Var(Y) for independent variables'
+      'Rouché: if |f-g| < |f| + |g| on γ, then f and g have same number of zeros',
+      'Choose f(z) = z^5',
+      'Show |3z+1| < |z^5| on |z| = 2'
     ],
-    solution: 'Z = X + Y ~ N(μ₁ + μ₂, σ₁² + σ₂²). The sum of independent normal random variables is normal with mean equal to the sum of means and variance equal to the sum of variances.'
+    solution: 'Let f(z) = z^5, g(z) = 3z+1. On |z|=2: |z^5| = 32, |3z+1| ≤ 6+1 = 7 < 32. By Rouché, z^5+3z+1 has same number of zeros as z^5 in |z|<2, which is 5.'
+  },
+  {
+    id: 'math401-t6-ex11',
+    subjectId: 'math401',
+    topicId: 'math401-topic-6',
+    type: 'written',
+    title: 'Principal Value Integral',
+    description: 'Explain principal value P.V.∫_{-∞}^∞ sin x/x dx and evaluate using residues.',
+    difficulty: 4,
+    hints: [
+      'sin x/x = Im[e^{ix}/x]',
+      'Use contour with small indent at origin',
+      'Symmetry and Jordan\'s lemma'
+    ],
+    solution: 'sin x/x is even. Consider ∫_{-∞}^∞ e^{ix}/x dx. Use semicircular contour with small indent at 0. e^{iz}/z entire except at 0. Contribution from large semicircle → 0 by Jordan. Small semicircle gives -πi. Result: π. So ∫ sin x/x dx = π.'
+  },
+  {
+    id: 'math401-t6-ex12',
+    subjectId: 'math401',
+    topicId: 'math401-topic-6',
+    type: 'written',
+    title: 'Residue with Branch Cut',
+    description: 'Evaluate ∫_0^∞ x^{-1/2}/(1+x) dx using keyhole contour.',
+    difficulty: 4,
+    hints: [
+      'Branch cut along positive real axis',
+      'Keyhole contour',
+      'Relate top and bottom of cut'
+    ],
+    solution: 'Use keyhole contour around [0,∞). z^{-1/2} has branch cut. On top: arg z = 0. On bottom: arg z = 2π. Ratio of integrals: (e^{-iπ/2}-e^{iπ/2}). Pole at z=-1 with residue calculation. Result: π.'
+  },
+  {
+    id: 'math401-t6-ex13',
+    subjectId: 'math401',
+    topicId: 'math401-topic-6',
+    type: 'written',
+    title: 'Series Summation via Residues',
+    description: 'Use residues to evaluate Σ_{n=-∞}^∞ 1/(n²+1).',
+    difficulty: 4,
+    hints: [
+      'Consider f(z) = π cot(πz)/(z²+1)',
+      'Residues at poles of cot and of 1/(z²+1)',
+      'Residue theorem'
+    ],
+    solution: 'π cot(πz) has simple poles at integers with residue 1. Sum of residues of π cot(πz)/(z²+1) at integers = Σ 1/(n²+1). Also compute residues at z=±i. Residue theorem: sum = π coth(π)/1.'
+  },
+  {
+    id: 'math401-t6-ex14',
+    subjectId: 'math401',
+    topicId: 'math401-topic-6',
+    type: 'written',
+    title: 'Logarithmic Residue',
+    description: 'Find residue of f\'/f where f(z) = (z-1)²(z+2).',
+    difficulty: 3,
+    hints: [
+      'f\'/f has simple poles at zeros of f',
+      'Residue at zero of order m is m',
+      'Sum residues'
+    ],
+    solution: 'f\' = 2(z-1)(z+2) + (z-1)² = (z-1)[2(z+2) + (z-1)]. f\'/f has poles at z=1 (order 2) and z=-2 (order 1). Res(f\'/f, 1) = 2, Res(f\'/f, -2) = 1.'
+  },
+  {
+    id: 'math401-t6-ex15',
+    subjectId: 'math401',
+    topicId: 'math401-topic-6',
+    type: 'written',
+    title: 'Fresnel Integral',
+    description: 'Evaluate ∫_0^∞ cos(x²) dx using complex contour integration.',
+    difficulty: 4,
+    hints: [
+      'Consider ∫ e^{iz²} dz',
+      'Use wedge contour: [0,R], arc, [R,0] along angle π/4',
+      'Gaussian integral'
+    ],
+    solution: 'Use wedge contour with angle π/4. e^{iz²} entire. On angled segment, z = re^{iπ/4}, z² = r²e^{iπ/2} = ir². ∫ e^{-r²} along ray. Relates to Gaussian ∫ e^{-t²} = √π/2. Result: √(π/8).'
+  },
+  {
+    id: 'math401-t6-ex16',
+    subjectId: 'math401',
+    topicId: 'math401-topic-6',
+    type: 'written',
+    title: 'Mittag-Leffler Expansion',
+    description: 'Explain how residue theory relates to partial fraction expansions.',
+    difficulty: 4,
+    hints: [
+      'Mittag-Leffler theorem',
+      'Meromorphic function as sum of principal parts',
+      'Residues at poles'
+    ],
+    solution: 'Mittag-Leffler: meromorphic function can be represented as sum over principal parts at its poles plus entire function. Partial fractions are special case. Residues determine coefficients.'
   }
 ];

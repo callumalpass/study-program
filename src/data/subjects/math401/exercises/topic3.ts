@@ -6,149 +6,239 @@ export const topic3Exercises: WrittenExercise[] = [
     subjectId: 'math401',
     topicId: 'math401-topic-3',
     type: 'written',
-    title: 'Discrete Random Variable Probability',
-    description: 'Let X be a discrete random variable with PMF P(X = 1) = 0.3, P(X = 2) = 0.5, P(X = 3) = 0.2. Find P(X ≤ 2).',
-    difficulty: 1,
+    title: 'Line Integral Computation',
+    description: 'Compute ∫_γ z dz where γ is the line segment from 0 to 1+i.',
+    difficulty: 2,
     hints: [
-      'P(X ≤ 2) means the probability that X takes values 1 or 2',
-      'Add the individual probabilities',
-      'Use P(X ≤ 2) = P(X = 1) + P(X = 2)'
+      'Parameterize the line: z(t) = t(1+i) for t ∈ [0,1]',
+      'Find dz = z\'(t)dt',
+      'Substitute and integrate'
     ],
-    solution: 'P(X ≤ 2) = P(X = 1) + P(X = 2) = 0.3 + 0.5 = 0.8'
+    solution: 'Parameterize: z(t) = t(1+i), so dz = (1+i)dt for t ∈ [0,1]. ∫_γ z dz = ∫₀¹ t(1+i)(1+i)dt = (1+i)² ∫₀¹ t dt = (1+2i-1)[t²/2]₀¹ = 2i · 1/2 = i.'
   },
   {
     id: 'math401-t3-ex02',
     subjectId: 'math401',
     topicId: 'math401-topic-3',
     type: 'written',
-    title: 'CDF from PMF',
-    description: 'For the random variable X with PMF P(X = 0) = 0.2, P(X = 1) = 0.5, P(X = 2) = 0.3, find the cumulative distribution function F(x) for all x.',
+    title: 'Contour Integral of Polynomial',
+    description: 'Evaluate ∫_γ (z² + 3z) dz where γ is the unit circle traversed once counterclockwise.',
     difficulty: 2,
     hints: [
-      'CDF F(x) = P(X ≤ x)',
-      'Define F(x) piecewise for different ranges',
-      'F(x) is 0 before the first value, and 1 after the last value'
+      'z² + 3z is entire (analytic everywhere)',
+      'Use Cauchy-Goursat theorem',
+      'Alternatively, find an antiderivative'
     ],
-    solution: 'F(x) = 0 for x < 0; F(x) = 0.2 for 0 ≤ x < 1; F(x) = 0.7 for 1 ≤ x < 2; F(x) = 1 for x ≥ 2. This is a step function that jumps at each value in the support of X.'
+    solution: 'Since f(z) = z² + 3z is entire, by Cauchy-Goursat theorem, ∫_γ f(z)dz = 0 for any closed contour γ. Alternatively, F(z) = z³/3 + 3z²/2 is an antiderivative, and since γ is closed, ∫_γ f = F(end) - F(start) = 0.'
   },
   {
     id: 'math401-t3-ex03',
     subjectId: 'math401',
     topicId: 'math401-topic-3',
     type: 'written',
-    title: 'Continuous Random Variable PDF',
-    description: 'Let X have PDF f(x) = 2x for 0 ≤ x ≤ 1, and 0 otherwise. Verify this is a valid PDF and find P(1/4 ≤ X ≤ 3/4).',
-    difficulty: 2,
+    title: 'Parameterized Circle Integration',
+    description: 'Compute ∫_{|z|=2} z̄ dz where the circle is traversed counterclockwise.',
+    difficulty: 3,
     hints: [
-      'A valid PDF must integrate to 1',
-      'Compute ∫₀¹ 2x dx',
-      'For P(a ≤ X ≤ b), integrate the PDF from a to b'
+      'Parameterize: z = 2e^(iθ) for θ ∈ [0, 2π]',
+      'Find z̄ and dz in terms of θ',
+      'Substitute and integrate'
     ],
-    solution: '∫₀¹ 2x dx = [x²]₀¹ = 1, so it is a valid PDF. P(1/4 ≤ X ≤ 3/4) = ∫₁/₄³/⁴ 2x dx = [x²]₁/₄³/⁴ = 9/16 - 1/16 = 8/16 = 1/2.'
+    solution: 'z = 2e^(iθ), z̄ = 2e^(-iθ), dz = 2ie^(iθ)dθ. ∫_{|z|=2} z̄ dz = ∫₀^(2π) 2e^(-iθ) · 2ie^(iθ)dθ = 4i∫₀^(2π) dθ = 4i[θ]₀^(2π) = 8πi.'
   },
   {
     id: 'math401-t3-ex04',
     subjectId: 'math401',
     topicId: 'math401-topic-3',
     type: 'written',
-    title: 'Finding PDF from CDF',
-    description: 'If X has CDF F(x) = x² for 0 ≤ x ≤ 1 (and 0 for x < 0, 1 for x > 1), find the PDF f(x).',
-    difficulty: 2,
+    title: 'ML Inequality Application',
+    description: 'Use the ML inequality to bound |∫_{|z|=1} e^z/z² dz|.',
+    difficulty: 3,
     hints: [
-      'The PDF is the derivative of the CDF',
-      'f(x) = dF/dx',
-      'Take the derivative only where F is differentiable'
+      'ML inequality: |∫_γ f| ≤ ML where M = max|f| on γ, L = length of γ',
+      'On |z|=1, find bound for |e^z|',
+      'Length of unit circle is 2π'
     ],
-    solution: 'f(x) = dF/dx = d/dx(x²) = 2x for 0 ≤ x ≤ 1, and f(x) = 0 elsewhere. This matches the triangular distribution on [0,1].'
+    solution: 'On |z|=1: |e^z| = e^(Re z) ≤ e¹ = e (since Re z ≤ |z| = 1). So |e^z/z²| = |e^z|/|z|² ≤ e/1 = e. Length L = 2π. By ML inequality: |∫_{|z|=1} e^z/z² dz| ≤ e · 2π = 2πe.'
   },
   {
     id: 'math401-t3-ex05',
     subjectId: 'math401',
     topicId: 'math401-topic-3',
     type: 'written',
-    title: 'Uniform Distribution Properties',
-    description: 'Let X ~ Uniform(0, 4). Find P(X > 2) and the median of X.',
+    title: 'Independence of Path',
+    description: 'Show that ∫_γ e^z dz is independent of path by finding an antiderivative.',
     difficulty: 2,
     hints: [
-      'For Uniform(a,b), the PDF is f(x) = 1/(b-a) for a ≤ x ≤ b',
-      'P(X > 2) is the area under the PDF from 2 to 4',
-      'The median m satisfies P(X ≤ m) = 1/2'
+      'An antiderivative F satisfies F\' = f',
+      'Check if d/dz(e^z) = e^z',
+      'If antiderivative exists, integral depends only on endpoints'
     ],
-    solution: 'For Uniform(0,4), f(x) = 1/4 for 0 ≤ x ≤ 4. P(X > 2) = ∫₂⁴ (1/4)dx = (1/4)(4-2) = 1/2. For the median, we need F(m) = m/4 = 1/2, so m = 2. The median is 2.'
+    solution: 'F(z) = e^z is an antiderivative of f(z) = e^z since d/dz(e^z) = e^z. Therefore, for any path γ from a to b: ∫_γ e^z dz = F(b) - F(a) = e^b - e^a, which depends only on endpoints, not on the path.'
   },
   {
     id: 'math401-t3-ex06',
     subjectId: 'math401',
     topicId: 'math401-topic-3',
     type: 'written',
-    title: 'Transformation of Random Variables',
-    description: 'If X ~ Uniform(0,1), find the PDF of Y = X².',
-    difficulty: 3,
+    title: 'Cauchy-Goursat Application',
+    description: 'Evaluate ∫_γ cos(z) dz where γ is any closed contour not enclosing any singularities.',
+    difficulty: 2,
     hints: [
-      'Use the transformation formula: f_Y(y) = f_X(x)|dx/dy|',
-      'First solve y = x² for x in terms of y',
-      'Find the range of Y'
+      'Check if cos(z) is analytic',
+      'cos(z) = (e^(iz) + e^(-iz))/2 is entire',
+      'Apply Cauchy-Goursat theorem'
     ],
-    solution: 'For 0 ≤ x ≤ 1, we have 0 ≤ y ≤ 1. From y = x², we get x = √y (taking positive root). dx/dy = 1/(2√y). Since X ~ Uniform(0,1), f_X(x) = 1. Therefore f_Y(y) = f_X(√y)|dx/dy| = 1 · 1/(2√y) = 1/(2√y) for 0 < y < 1, and 0 otherwise.'
+    solution: 'cos(z) is entire (analytic everywhere in ℂ). By the Cauchy-Goursat theorem, for any closed contour γ in the complex plane, ∫_γ cos(z) dz = 0.'
   },
   {
     id: 'math401-t3-ex07',
     subjectId: 'math401',
     topicId: 'math401-topic-3',
     type: 'written',
-    title: 'Exponential Distribution',
-    description: 'Let X ~ Exponential(λ = 2). Find P(X > 1) and the CDF F(x).',
-    difficulty: 2,
+    title: 'Integral with Branch Cut',
+    description: 'Explain why ∫_γ √z dz depends on the path when γ goes around the origin.',
+    difficulty: 3,
     hints: [
-      'Exponential PDF: f(x) = λe^(-λx) for x ≥ 0',
-      'CDF: F(x) = 1 - e^(-λx) for x ≥ 0',
-      'P(X > 1) = 1 - F(1)'
+      '√z is multi-valued and requires a branch cut',
+      '√z is not analytic on any domain containing the origin',
+      'Going around origin changes the branch'
     ],
-    solution: 'For Exponential(λ=2), F(x) = 1 - e^(-2x) for x ≥ 0. P(X > 1) = 1 - F(1) = 1 - (1 - e^(-2)) = e^(-2) ≈ 0.1353. Alternatively, P(X > 1) = ∫₁^∞ 2e^(-2x)dx = [-e^(-2x)]₁^∞ = e^(-2).'
+    solution: 'The function √z is multi-valued and not analytic on any domain containing the origin. Any branch of √z has a branch cut (typically along the negative real axis or another ray from the origin). When a contour γ crosses the branch cut or encircles the origin, the integral depends on how the branch is traversed. Therefore ∫_γ √z dz is path-dependent when γ goes around the origin.'
   },
   {
     id: 'math401-t3-ex08',
     subjectId: 'math401',
     topicId: 'math401-topic-3',
     type: 'written',
-    title: 'Memoryless Property',
-    description: 'Prove that the exponential distribution has the memoryless property: P(X > s+t | X > s) = P(X > t).',
+    title: 'Deformation of Contours',
+    description: 'Let γ₁ be the circle |z|=1 and γ₂ be the circle |z|=2, both counterclockwise. Show that ∫_{γ₁} f(z)dz = ∫_{γ₂} f(z)dz for f(z) = 1/(z-3).',
     difficulty: 3,
     hints: [
-      'Use conditional probability: P(A|B) = P(A ∩ B)/P(B)',
-      'X > s+t and X > s implies X > s+t',
-      'Use P(X > x) = e^(-λx) for exponential'
+      'Check where f is analytic',
+      'The singularity is at z = 3',
+      'Both contours don\'t enclose the singularity'
     ],
-    solution: 'P(X > s+t | X > s) = P(X > s+t ∩ X > s)/P(X > s) = P(X > s+t)/P(X > s) = e^(-λ(s+t))/e^(-λs) = e^(-λt) = P(X > t). This shows the exponential distribution is memoryless.'
+    solution: 'f(z) = 1/(z-3) has a singularity only at z = 3. Since |3| > 2 > 1, the point z = 3 is outside both circles. Therefore f is analytic in the annulus 1 ≤ |z| ≤ 2. By deformation of contours (or Cauchy-Goursat applied to the region between contours): ∫_{γ₁} f dz = ∫_{γ₂} f dz. In fact, both equal 0.'
   },
   {
     id: 'math401-t3-ex09',
     subjectId: 'math401',
     topicId: 'math401-topic-3',
     type: 'written',
-    title: 'Quantile Function',
-    description: 'For X ~ Exponential(λ), find the median (50th percentile) in terms of λ.',
+    title: 'Computing with Antiderivative',
+    description: 'Evaluate ∫_γ sin(z) dz where γ goes from 0 to πi along any path.',
     difficulty: 2,
     hints: [
-      'The median m satisfies F(m) = 0.5',
-      'Use F(x) = 1 - e^(-λx)',
-      'Solve 1 - e^(-λm) = 0.5'
+      'Find an antiderivative of sin(z)',
+      'd/dz(-cos(z)) = sin(z)',
+      'Use fundamental theorem of contour integration'
     ],
-    solution: 'Setting F(m) = 0.5: 1 - e^(-λm) = 0.5. So e^(-λm) = 0.5. Taking natural log: -λm = ln(0.5) = -ln(2). Therefore m = ln(2)/λ. For λ = 1, the median is ln(2) ≈ 0.693.'
+    solution: 'An antiderivative of sin(z) is F(z) = -cos(z). Therefore ∫_γ sin(z) dz = F(πi) - F(0) = -cos(πi) - (-cos(0)) = -cos(πi) + cos(0). Using cos(z) = (e^(iz) + e^(-iz))/2: cos(πi) = (e^(-π) + e^π)/2 = cosh(π). So the answer is -cosh(π) + 1 = 1 - cosh(π).'
   },
   {
     id: 'math401-t3-ex10',
     subjectId: 'math401',
     topicId: 'math401-topic-3',
     type: 'written',
-    title: 'Mixed Random Variable',
-    description: 'A random variable X has P(X = 0) = 0.3, and for x > 0, has PDF f(x) = 0.7e^(-x). Find P(X ≤ 1).',
+    title: 'Winding Number',
+    description: 'Compute the winding number n(γ, 0) where γ is the circle |z|=1 traversed twice counterclockwise.',
+    difficulty: 2,
+    hints: [
+      'Winding number: n(γ,a) = (1/2πi)∫_γ dz/(z-a)',
+      'For circle |z|=r traversed once counterclockwise around a, n = 1',
+      'Traversing twice doubles the winding number'
+    ],
+    solution: 'n(γ,0) = (1/2πi)∫_γ dz/z. For unit circle traversed once, ∫_{|z|=1} dz/z = 2πi. Since γ is traversed twice, ∫_γ dz/z = 2·2πi = 4πi. Therefore n(γ,0) = (1/2πi)·4πi = 2.'
+  },
+  {
+    id: 'math401-t3-ex11',
+    subjectId: 'math401',
+    topicId: 'math401-topic-3',
+    type: 'written',
+    title: 'Integral Along Rectangle',
+    description: 'Evaluate ∫_γ (2z + 1) dz where γ is the rectangle with vertices at 0, 2, 2+i, i traversed counterclockwise.',
     difficulty: 3,
     hints: [
-      'This is a mixed distribution with a point mass at 0',
-      'P(X ≤ 1) = P(X = 0) + P(0 < X ≤ 1)',
-      'Integrate the continuous part'
+      'The integrand is entire',
+      'Apply Cauchy-Goursat theorem',
+      'Or use antiderivative F(z) = z² + z'
     ],
-    solution: 'P(X ≤ 1) = P(X = 0) + P(0 < X ≤ 1) = 0.3 + ∫₀¹ 0.7e^(-x)dx = 0.3 + 0.7[-e^(-x)]₀¹ = 0.3 + 0.7(1 - e^(-1)) = 0.3 + 0.7(1 - 0.368) = 0.3 + 0.443 = 0.743.'
+    solution: 'Since f(z) = 2z + 1 is entire (analytic everywhere), by Cauchy-Goursat theorem, ∫_γ f(z)dz = 0 for any closed contour γ. Alternatively, F(z) = z² + z is an antiderivative, and since γ is closed: ∫_γ f = F(end) - F(start) = F(0) - F(0) = 0.'
+  },
+  {
+    id: 'math401-t3-ex12',
+    subjectId: 'math401',
+    topicId: 'math401-topic-3',
+    type: 'written',
+    title: 'Contour Integration with Multiple Paths',
+    description: 'Let γ₁ be the line segment from 0 to 1+i, and γ₂ be the path from 0 to 1 to 1+i (two line segments). Show that ∫_{γ₁} z² dz = ∫_{γ₂} z² dz.',
+    difficulty: 2,
+    hints: [
+      'z² is entire',
+      'Find antiderivative',
+      'Both paths have same endpoints'
+    ],
+    solution: 'Since f(z) = z² is entire, it has antiderivative F(z) = z³/3 in all of ℂ. Both γ₁ and γ₂ go from 0 to 1+i. Therefore ∫_{γ₁} z² dz = F(1+i) - F(0) = (1+i)³/3 - 0 = (1 + 3i - 3 - i)/3 = (-2 + 2i)/3. Similarly for γ₂. The integrals are equal.'
+  },
+  {
+    id: 'math401-t3-ex13',
+    subjectId: 'math401',
+    topicId: 'math401-topic-3',
+    type: 'written',
+    title: 'Integral of Conjugate Function',
+    description: 'Show that ∫_γ z̄ dz ≠ 0 for some closed contour γ, proving z̄ is not analytic.',
+    difficulty: 3,
+    hints: [
+      'Try γ = unit circle',
+      'Parameterize and compute',
+      'If z̄ were analytic, Cauchy-Goursat would give 0'
+    ],
+    solution: 'Let γ be the unit circle traversed counterclockwise. From exercise 3, we found ∫_{|z|=2} z̄ dz = 8πi. For unit circle: z = e^(iθ), z̄ = e^(-iθ), dz = ie^(iθ)dθ. ∫_γ z̄ dz = ∫₀^(2π) e^(-iθ)·ie^(iθ)dθ = i∫₀^(2π) dθ = 2πi ≠ 0. This shows z̄ cannot be analytic (Cauchy-Goursat would require the integral to be 0).'
+  },
+  {
+    id: 'math401-t3-ex14',
+    subjectId: 'math401',
+    topicId: 'math401-topic-3',
+    type: 'written',
+    title: 'Length of Contour',
+    description: 'Find the length of the contour γ parameterized by z(t) = t + it² for t ∈ [0,1].',
+    difficulty: 2,
+    hints: [
+      'Length: L = ∫_a^b |z\'(t)| dt',
+      'Compute z\'(t) = dz/dt',
+      'Find |z\'(t)|'
+    ],
+    solution: 'z(t) = t + it², so z\'(t) = 1 + 2it. |z\'(t)| = |1 + 2it| = √(1² + (2t)²) = √(1 + 4t²). Length: L = ∫₀¹ √(1 + 4t²) dt. Using substitution u = 2t: L = (1/2)∫₀² √(1 + u²) du = (1/2)[u√(1+u²)/2 + (1/2)ln|u + √(1+u²)|]₀² = (1/4)[2√5 + ln(2+√5)] ≈ 1.48.'
+  },
+  {
+    id: 'math401-t3-ex15',
+    subjectId: 'math401',
+    topicId: 'math401-topic-3',
+    type: 'written',
+    title: 'Maximum Modulus on Contour',
+    description: 'Find the maximum value of |z²| on the contour |z-1| = 1.',
+    difficulty: 3,
+    hints: [
+      'Parameterize the circle: z = 1 + e^(iθ)',
+      'Compute |z²| and find its maximum',
+      'Or use geometric reasoning'
+    ],
+    solution: 'The circle |z-1| = 1 is centered at 1 with radius 1, so it passes through 0 and 2. |z²| = |z|². On this circle, z ranges from points with minimum |z| = 0 (at z = 0) to maximum |z| = 2 (at z = 2). Therefore max|z²| = 2² = 4.'
+  },
+  {
+    id: 'math401-t3-ex16',
+    subjectId: 'math401',
+    topicId: 'math401-topic-3',
+    type: 'written',
+    title: 'Fundamental Theorem Application',
+    description: 'Use the fundamental theorem of contour integration to evaluate ∫_γ (1/z²) dz where γ goes from 1 to i along any path not passing through 0.',
+    difficulty: 2,
+    hints: [
+      'Find an antiderivative of 1/z²',
+      'd/dz(-1/z) = 1/z²',
+      'Apply fundamental theorem'
+    ],
+    solution: 'F(z) = -1/z is an antiderivative of f(z) = 1/z² (valid on ℂ\\{0}). By the fundamental theorem: ∫_γ (1/z²) dz = F(i) - F(1) = -1/i - (-1/1) = -1/i + 1 = 1 + i (using 1/i = -i).'
   }
 ];

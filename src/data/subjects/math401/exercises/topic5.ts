@@ -6,149 +6,227 @@ export const topic5Exercises: WrittenExercise[] = [
     subjectId: 'math401',
     topicId: 'math401-topic-5',
     type: 'written',
-    title: 'Bernoulli Distribution',
-    description: 'A coin has probability p = 0.6 of landing heads. Let X = 1 if heads, X = 0 if tails. Find E[X] and Var(X).',
-    difficulty: 1,
+    title: 'Radius of Convergence',
+    description: 'Find the radius of convergence of the power series Σ(z^n)/n².',
+    difficulty: 2,
     hints: [
-      'This is a Bernoulli(p) distribution',
-      'E[X] = p',
-      'Var(X) = p(1-p)'
+      'Use the ratio test or root test',
+      'R = 1/lim sup |aₙ|^(1/n)',
+      'Here aₙ = 1/n²'
     ],
-    solution: 'X ~ Bernoulli(0.6). E[X] = p = 0.6. Var(X) = p(1-p) = 0.6(0.4) = 0.24.'
+    solution: 'Using root test: |aₙ|^(1/n) = (1/n²)^(1/n) = 1/n^(2/n) → 1 as n → ∞. Therefore R = 1/1 = 1.'
   },
   {
     id: 'math401-t5-ex02',
     subjectId: 'math401',
     topicId: 'math401-topic-5',
     type: 'written',
-    title: 'Binomial Distribution Probability',
-    description: 'A fair coin is flipped 10 times. Find the probability of getting exactly 6 heads.',
+    title: 'Taylor Series Expansion',
+    description: 'Find the first 4 terms of the Taylor series for f(z) = e^(z²) around z = 0.',
     difficulty: 2,
     hints: [
-      'Let X = number of heads, then X ~ Binomial(n=10, p=0.5)',
-      'P(X = k) = C(n,k)p^k(1-p)^(n-k)',
-      'Calculate C(10,6) = 10!/(6!4!) = 210'
+      'Use e^w = Σw^n/n!',
+      'Substitute w = z²',
+      'Expand'
     ],
-    solution: 'X ~ Binomial(10, 0.5). P(X = 6) = C(10,6)(0.5)^6(0.5)^4 = 210(0.5)^10 = 210/1024 ≈ 0.205.'
+    solution: 'e^(z²) = 1 + z² + z⁴/2 + z⁶/6 + ...'
   },
   {
     id: 'math401-t5-ex03',
     subjectId: 'math401',
     topicId: 'math401-topic-5',
     type: 'written',
-    title: 'Binomial Mean and Variance',
-    description: 'If X ~ Binomial(n, p), derive that E[X] = np.',
+    title: 'Laurent Series in Annulus',
+    description: 'Find Laurent series for f(z) = 1/(z(z-1)) in 1 < |z| < ∞.',
     difficulty: 3,
     hints: [
-      'Think of X as the sum of n independent Bernoulli(p) trials',
-      'Use linearity of expectation',
-      'E[X] = E[X₁ + X₂ + ... + Xₙ]'
+      'Partial fractions',
+      'Expand for |z| > 1'
     ],
-    solution: 'X = X₁ + X₂ + ... + Xₙ where each Xᵢ ~ Bernoulli(p) is independent. By linearity: E[X] = E[X₁] + ... + E[Xₙ] = p + p + ... + p (n times) = np.'
+    solution: 'Partial fractions: 1/(z(z-1)) = 1/(z-1) - 1/z. For |z| > 1: 1/(z-1) = (1/z)/(1-1/z) = z^(-1) + z^(-2) + z^(-3) + ... So f(z) = z^(-2) + z^(-3) + ...'
   },
   {
     id: 'math401-t5-ex04',
     subjectId: 'math401',
     topicId: 'math401-topic-5',
     type: 'written',
-    title: 'Geometric Distribution',
-    description: 'Roll a fair die repeatedly until you get a 6. Let X = number of rolls needed. Find P(X = 3) and E[X].',
-    difficulty: 2,
+    title: 'Classifying Singularities',
+    description: 'Classify singularity of f(z) = (1 - cos z)/z² at z = 0.',
+    difficulty: 3,
     hints: [
-      'X ~ Geometric(p) where p = 1/6',
-      'P(X = k) = (1-p)^(k-1)p',
-      'E[X] = 1/p'
+      'Find Laurent series',
+      'Use cos z = 1 - z²/2! + z⁴/4! - ...'
     ],
-    solution: 'X ~ Geometric(1/6). P(X = 3) = (5/6)²(1/6) = 25/216 ≈ 0.116. E[X] = 1/p = 1/(1/6) = 6 rolls on average.'
+    solution: '1 - cos z = z²/2 - z⁴/24 + ... So f(z) = 1/2 - z²/24 + ... Removable singularity.'
   },
   {
     id: 'math401-t5-ex05',
     subjectId: 'math401',
     topicId: 'math401-topic-5',
     type: 'written',
-    title: 'Poisson Distribution',
-    description: 'Emails arrive at rate λ = 3 per hour. Let X = number of emails in one hour. Find P(X = 5).',
+    title: 'Order of Pole',
+    description: 'Find order of pole of f(z) = z/(z²+1)² at z = i.',
     difficulty: 2,
     hints: [
-      'X ~ Poisson(λ = 3)',
-      'P(X = k) = e^(-λ)λ^k/k!',
-      'Calculate e^(-3) · 3^5 / 5!'
+      'Factor: z²+1 = (z-i)(z+i)',
+      'Count power of (z-i)'
     ],
-    solution: 'X ~ Poisson(3). P(X = 5) = e^(-3) · 3^5 / 5! = e^(-3) · 243 / 120 ≈ 0.0498 · 2.025 ≈ 0.101.'
+    solution: '(z²+1)² = (z-i)²(z+i)², so f has pole of order 2 at z = i.'
   },
   {
     id: 'math401-t5-ex06',
     subjectId: 'math401',
     topicId: 'math401-topic-5',
     type: 'written',
-    title: 'Poisson Approximation to Binomial',
-    description: 'A factory produces 1000 items, each with probability 0.002 of being defective. Approximate P(X ≤ 1) where X is the number of defectives.',
-    difficulty: 3,
+    title: 'Essential Singularity',
+    description: 'Show f(z) = e^(1/z) has essential singularity at z = 0.',
+    difficulty: 2,
     hints: [
-      'X ~ Binomial(1000, 0.002), but n is large and p is small',
-      'Use Poisson approximation with λ = np',
-      'P(X ≤ 1) = P(X = 0) + P(X = 1)'
+      'Write Laurent series',
+      'e^w = Σw^n/n!'
     ],
-    solution: 'λ = np = 1000(0.002) = 2. Approximate X ~ Poisson(2). P(X = 0) = e^(-2) · 2^0 / 0! = e^(-2) ≈ 0.135. P(X = 1) = e^(-2) · 2^1 / 1! = 2e^(-2) ≈ 0.271. P(X ≤ 1) ≈ 0.135 + 0.271 = 0.406.'
+    solution: 'e^(1/z) = 1 + 1/z + 1/(2!z²) + ... has infinitely many negative powers, so essential singularity.'
   },
   {
     id: 'math401-t5-ex07',
     subjectId: 'math401',
     topicId: 'math401-topic-5',
     type: 'written',
-    title: 'Normal Distribution Standardization',
-    description: 'If X ~ N(μ = 50, σ² = 25), find P(X > 60) using the standard normal table.',
-    difficulty: 2,
+    title: 'Simple Zero',
+    description: 'If f(z₀) = 0 and f\'(z₀) ≠ 0, show z₀ is simple zero.',
+    difficulty: 3,
     hints: [
-      'Standardize: Z = (X - μ)/σ',
-      'Convert X = 60 to a z-score',
-      'Use P(X > 60) = P(Z > z)'
+      'Taylor series',
+      'f(z₀) = 0 means a₀ = 0',
+      'f\'(z₀) ≠ 0 means a₁ ≠ 0'
     ],
-    solution: 'σ = √25 = 5. Z = (60 - 50)/5 = 2. P(X > 60) = P(Z > 2) = 1 - Φ(2) ≈ 1 - 0.9772 = 0.0228.'
+    solution: 'f(z) = a₁(z-z₀) + a₂(z-z₀)² + ... = (z-z₀)g(z) where g(z₀) ≠ 0. Simple zero.'
   },
   {
     id: 'math401-t5-ex08',
     subjectId: 'math401',
     topicId: 'math401-topic-5',
     type: 'written',
-    title: 'Normal Distribution Percentiles',
-    description: 'For X ~ N(100, 225), find the 95th percentile.',
-    difficulty: 2,
+    title: 'Laurent Uniqueness',
+    description: 'Explain why Laurent series in annulus is unique.',
+    difficulty: 3,
     hints: [
-      'Find z₀.₉₅ such that Φ(z₀.₉₅) = 0.95',
-      'From tables, z₀.₉₅ ≈ 1.645',
-      'Transform back: x = μ + zσ'
+      'Coefficients from integrals',
+      'aₙ = (1/2πi)∫ f(z)/(z-a)^(n+1) dz'
     ],
-    solution: 'σ = √225 = 15. From standard normal tables, z₀.₉₅ ≈ 1.645. The 95th percentile is x = 100 + 1.645(15) = 100 + 24.675 = 124.675.'
+    solution: 'Laurent coefficients uniquely determined by contour integrals.'
   },
   {
     id: 'math401-t5-ex09',
     subjectId: 'math401',
     topicId: 'math401-topic-5',
     type: 'written',
-    title: 'Chi-Square Distribution',
-    description: 'If X₁, X₂, ..., X₅ are independent N(0,1) random variables, what is the distribution of Y = X₁² + X₂² + ... + X₅²?',
-    difficulty: 2,
+    title: 'Analytic Continuation',
+    description: 'Explain analytic continuation of Σz^n to 1/(1-z).',
+    difficulty: 3,
     hints: [
-      'The sum of squares of independent standard normals follows a chi-square distribution',
-      'The degrees of freedom equals the number of terms',
-      'Y ~ χ²(k) where k is the df'
+      'Series converges for |z| < 1',
+      '1/(1-z) defined for z ≠ 1'
     ],
-    solution: 'Y = Σᵢ₌₁⁵ Xᵢ² where Xᵢ ~ N(0,1) independent. Therefore Y ~ χ²(5), the chi-square distribution with 5 degrees of freedom.'
+    solution: 'Σz^n = 1/(1-z) for |z| < 1. Function 1/(1-z) extends series beyond radius of convergence.'
   },
   {
     id: 'math401-t5-ex10',
     subjectId: 'math401',
     topicId: 'math401-topic-5',
     type: 'written',
-    title: 'Student t-Distribution',
-    description: 'Let Z ~ N(0,1) and V ~ χ²(n) be independent. Define T = Z/√(V/n). What is the distribution of T?',
+    title: 'Boundary Convergence',
+    description: 'Does Σz^n/n converge on |z| = 1?',
     difficulty: 3,
     hints: [
-      'This is the definition of the Student t-distribution',
-      'T ~ t(n) with n degrees of freedom',
-      'As n → ∞, t(n) → N(0,1)'
+      'Check z = 1 and z = -1',
+      'Use series tests'
     ],
-    solution: 'By definition, T = Z/√(V/n) where Z ~ N(0,1) and V ~ χ²(n) are independent follows the Student t-distribution with n degrees of freedom, written T ~ t(n). This distribution has heavier tails than the normal distribution, especially for small n.'
+    solution: 'At z = 1: diverges. At z = -1: converges. Depends on point.'
+  },
+  {
+    id: 'math401-t5-ex11',
+    subjectId: 'math401',
+    topicId: 'math401-topic-5',
+    type: 'written',
+    title: 'Taylor Coefficients',
+    description: 'Find Taylor series for 1/(1-z)² around z = 0.',
+    difficulty: 2,
+    hints: [
+      'Differentiate Σz^n',
+      'Term-by-term'
+    ],
+    solution: '1/(1-z)² = Σ(n+1)z^n = 1 + 2z + 3z² + ...'
+  },
+  {
+    id: 'math401-t5-ex12',
+    subjectId: 'math401',
+    topicId: 'math401-topic-5',
+    type: 'written',
+    title: 'Multiple Laurent Regions',
+    description: 'Find Laurent series for 1/[z(z-2)] in 0 < |z| < 2 and |z| > 2.',
+    difficulty: 4,
+    hints: [
+      'Partial fractions',
+      'Expand differently'
+    ],
+    solution: 'For 0 < |z| < 2: -1/(2z) - Σz^n/2^(n+1). For |z| > 2: different expansion.'
+  },
+  {
+    id: 'math401-t5-ex13',
+    subjectId: 'math401',
+    topicId: 'math401-topic-5',
+    type: 'written',
+    title: 'Identity Theorem',
+    description: 'If f(1/n) = g(1/n) for all n and 0 ∈ D, prove f = g.',
+    difficulty: 4,
+    hints: [
+      '1/n → 0',
+      'Identity theorem'
+    ],
+    solution: 'Points with limit point 0. By identity theorem, f = g on connected D.'
+  },
+  {
+    id: 'math401-t5-ex14',
+    subjectId: 'math401',
+    topicId: 'math401-topic-5',
+    type: 'written',
+    title: 'Series Multiplication',
+    description: 'Find power series for f(z)g(z) given their series.',
+    difficulty: 3,
+    hints: [
+      'Cauchy product',
+      'Σ_{k=0}^n aₖbₙ₋ₖ'
+    ],
+    solution: 'Coefficient of z^n is Σ_{k=0}^n aₖbₙ₋ₖ (Cauchy product).'
+  },
+  {
+    id: 'math401-t5-ex15',
+    subjectId: 'math401',
+    topicId: 'math401-topic-5',
+    type: 'written',
+    title: 'Removable Singularity',
+    description: 'If lim (z-a)f(z) = 0, prove removable singularity.',
+    difficulty: 4,
+    hints: [
+      'Laurent series',
+      'Principal part vanishes'
+    ],
+    solution: 'Limit condition forces a₋₁ = 0. All negative coefficients zero. Removable.'
+  },
+  {
+    id: 'math401-t5-ex16',
+    subjectId: 'math401',
+    topicId: 'math401-topic-5',
+    type: 'written',
+    title: 'Radius from Singularities',
+    description: 'Why is R = 1 for 1/(z²-3z+2) around z = 0?',
+    difficulty: 3,
+    hints: [
+      'Factor denominator',
+      'Find singularities',
+      'Distance to nearest'
+    ],
+    solution: 'Poles at z = 1, 2. Nearest to 0 is at distance 1. So R = 1.'
   }
 ];

@@ -1,11 +1,152 @@
-import type { Topic } from '../../../core/types';
+import type { Topic, Subtopic } from '../../../core/types';
+
+// Import subtopic markdown content
+// Topic 1: Problem Formulation
+import t1s1 from '../../../content/subjects/math404/topic-1/01-optimization-intro.md?raw';
+import t1s2 from '../../../content/subjects/math404/topic-1/02-mathematical-formulation.md?raw';
+import t1s3 from '../../../content/subjects/math404/topic-1/03-feasibility.md?raw';
+import t1s4 from '../../../content/subjects/math404/topic-1/04-convexity-intro.md?raw';
+import t1s5 from '../../../content/subjects/math404/topic-1/05-local-global.md?raw';
+import t1s6 from '../../../content/subjects/math404/topic-1/06-optimality-conditions.md?raw';
+import t1s7 from '../../../content/subjects/math404/topic-1/07-applications-overview.md?raw';
+
+// Topic 2: Linear Programming
+import t2s1 from '../../../content/subjects/math404/topic-2/01-lp-formulation.md?raw';
+import t2s2 from '../../../content/subjects/math404/topic-2/02-graphical-method.md?raw';
+import t2s3 from '../../../content/subjects/math404/topic-2/03-simplex-algorithm.md?raw';
+import t2s4 from '../../../content/subjects/math404/topic-2/04-simplex-tableau.md?raw';
+import t2s5 from '../../../content/subjects/math404/topic-2/05-degeneracy.md?raw';
+import t2s6 from '../../../content/subjects/math404/topic-2/06-sensitivity-analysis.md?raw';
+import t2s7 from '../../../content/subjects/math404/topic-2/07-interior-point.md?raw';
+
+// Topic 3: Duality Theory
+import t3s1 from '../../../content/subjects/math404/topic-3/01-dual-problem.md?raw';
+import t3s2 from '../../../content/subjects/math404/topic-3/02-weak-duality.md?raw';
+import t3s3 from '../../../content/subjects/math404/topic-3/03-strong-duality.md?raw';
+import t3s4 from '../../../content/subjects/math404/topic-3/04-complementary-slackness.md?raw';
+import t3s5 from '../../../content/subjects/math404/topic-3/05-farkas-lemma.md?raw';
+import t3s6 from '../../../content/subjects/math404/topic-3/06-economic-interpretation.md?raw';
+import t3s7 from '../../../content/subjects/math404/topic-3/07-dual-simplex.md?raw';
+
+// Topic 4: Convex Sets and Functions
+import t4s1 from '../../../content/subjects/math404/topic-4/01-convex-sets.md?raw';
+import t4s2 from '../../../content/subjects/math404/topic-4/02-convex-combinations.md?raw';
+import t4s3 from '../../../content/subjects/math404/topic-4/03-convex-functions.md?raw';
+import t4s4 from '../../../content/subjects/math404/topic-4/04-operations-preserving.md?raw';
+import t4s5 from '../../../content/subjects/math404/topic-4/05-conjugate-functions.md?raw';
+import t4s6 from '../../../content/subjects/math404/topic-4/06-sublevel-sets.md?raw';
+import t4s7 from '../../../content/subjects/math404/topic-4/07-separation-theorems.md?raw';
+
+// Topic 5: Convex Optimization
+import t5s1 from '../../../content/subjects/math404/topic-5/01-convex-programs.md?raw';
+import t5s2 from '../../../content/subjects/math404/topic-5/02-global-optimality.md?raw';
+import t5s3 from '../../../content/subjects/math404/topic-5/03-sdp.md?raw';
+import t5s4 from '../../../content/subjects/math404/topic-5/04-socp.md?raw';
+import t5s5 from '../../../content/subjects/math404/topic-5/05-geometric-programming.md?raw';
+import t5s6 from '../../../content/subjects/math404/topic-5/06-quasiconvex.md?raw';
+import t5s7 from '../../../content/subjects/math404/topic-5/07-robust-optimization.md?raw';
+
+// Topic 6: Gradient Methods
+import t6s1 from '../../../content/subjects/math404/topic-6/01-gradient-descent.md?raw';
+import t6s2 from '../../../content/subjects/math404/topic-6/02-convergence-analysis.md?raw';
+import t6s3 from '../../../content/subjects/math404/topic-6/03-line-search.md?raw';
+import t6s4 from '../../../content/subjects/math404/topic-6/04-newton-method-opt.md?raw';
+import t6s5 from '../../../content/subjects/math404/topic-6/05-quasi-newton.md?raw';
+import t6s6 from '../../../content/subjects/math404/topic-6/06-coordinate-descent.md?raw';
+import t6s7 from '../../../content/subjects/math404/topic-6/07-stochastic-gradient.md?raw';
+
+// Topic 7: Constrained Optimization
+import t7s1 from '../../../content/subjects/math404/topic-7/01-lagrangian.md?raw';
+import t7s2 from '../../../content/subjects/math404/topic-7/02-kkt-conditions.md?raw';
+import t7s3 from '../../../content/subjects/math404/topic-7/03-kkt-examples.md?raw';
+import t7s4 from '../../../content/subjects/math404/topic-7/04-augmented-lagrangian.md?raw';
+import t7s5 from '../../../content/subjects/math404/topic-7/05-penalty-methods.md?raw';
+import t7s6 from '../../../content/subjects/math404/topic-7/06-interior-point-nonlinear.md?raw';
+import t7s7 from '../../../content/subjects/math404/topic-7/07-sqp.md?raw';
+
+// Define subtopics arrays
+const topic1Subtopics: Subtopic[] = [
+  { id: 'math404-t1-optimization-intro', slug: 'optimization-intro', title: 'Introduction to Optimization', content: t1s1, order: 1 },
+  { id: 'math404-t1-mathematical-formulation', slug: 'mathematical-formulation', title: 'Mathematical Formulation', content: t1s2, order: 2 },
+  { id: 'math404-t1-feasibility', slug: 'feasibility', title: 'Feasibility and Constraint Qualification', content: t1s3, order: 3 },
+  { id: 'math404-t1-convexity-intro', slug: 'convexity-intro', title: 'Introduction to Convexity', content: t1s4, order: 4 },
+  { id: 'math404-t1-local-global', slug: 'local-global', title: 'Local vs Global Optimality', content: t1s5, order: 5 },
+  { id: 'math404-t1-optimality-conditions', slug: 'optimality-conditions', title: 'Optimality Conditions', content: t1s6, order: 6 },
+  { id: 'math404-t1-applications-overview', slug: 'applications-overview', title: 'Applications Overview', content: t1s7, order: 7 },
+];
+
+const topic2Subtopics: Subtopic[] = [
+  { id: 'math404-t2-lp-formulation', slug: 'lp-formulation', title: 'Linear Programming Formulation', content: t2s1, order: 1 },
+  { id: 'math404-t2-graphical-method', slug: 'graphical-method', title: 'Graphical Method for Linear Programming', content: t2s2, order: 2 },
+  { id: 'math404-t2-simplex-algorithm', slug: 'simplex-algorithm', title: 'The Simplex Algorithm', content: t2s3, order: 3 },
+  { id: 'math404-t2-simplex-tableau', slug: 'simplex-tableau', title: 'Simplex Tableau Method', content: t2s4, order: 4 },
+  { id: 'math404-t2-degeneracy', slug: 'degeneracy', title: 'Degeneracy in Linear Programming', content: t2s5, order: 5 },
+  { id: 'math404-t2-sensitivity-analysis', slug: 'sensitivity-analysis', title: 'Sensitivity Analysis', content: t2s6, order: 6 },
+  { id: 'math404-t2-interior-point', slug: 'interior-point', title: 'Interior-Point Methods for Linear Programming', content: t2s7, order: 7 },
+];
+
+const topic3Subtopics: Subtopic[] = [
+  { id: 'math404-t3-dual-problem', slug: 'dual-problem', title: 'The Dual Problem', content: t3s1, order: 1 },
+  { id: 'math404-t3-weak-duality', slug: 'weak-duality', title: 'Weak Duality', content: t3s2, order: 2 },
+  { id: 'math404-t3-strong-duality', slug: 'strong-duality', title: 'Strong Duality', content: t3s3, order: 3 },
+  { id: 'math404-t3-complementary-slackness', slug: 'complementary-slackness', title: 'Complementary Slackness', content: t3s4, order: 4 },
+  { id: 'math404-t3-farkas-lemma', slug: 'farkas-lemma', title: 'Farkas\' Lemma', content: t3s5, order: 5 },
+  { id: 'math404-t3-economic-interpretation', slug: 'economic-interpretation', title: 'Economic Interpretation of Duality', content: t3s6, order: 6 },
+  { id: 'math404-t3-dual-simplex', slug: 'dual-simplex', title: 'Dual Simplex Method', content: t3s7, order: 7 },
+];
+
+const topic4Subtopics: Subtopic[] = [
+  { id: 'math404-t4-convex-sets', slug: 'convex-sets', title: 'Convex Sets', content: t4s1, order: 1 },
+  { id: 'math404-t4-convex-combinations', slug: 'convex-combinations', title: 'Convex Combinations and Hulls', content: t4s2, order: 2 },
+  { id: 'math404-t4-convex-functions', slug: 'convex-functions', title: 'Convex Functions', content: t4s3, order: 3 },
+  { id: 'math404-t4-operations-preserving', slug: 'operations-preserving', title: 'Operations Preserving Convexity', content: t4s4, order: 4 },
+  { id: 'math404-t4-conjugate-functions', slug: 'conjugate-functions', title: 'Conjugate Functions', content: t4s5, order: 5 },
+  { id: 'math404-t4-sublevel-sets', slug: 'sublevel-sets', title: 'Sublevel Sets and Epigraphs', content: t4s6, order: 6 },
+  { id: 'math404-t4-separation-theorems', slug: 'separation-theorems', title: 'Separation Theorems', content: t4s7, order: 7 },
+];
+
+const topic5Subtopics: Subtopic[] = [
+  { id: 'math404-t5-convex-programs', slug: 'convex-programs', title: 'Convex Programs', content: t5s1, order: 1 },
+  { id: 'math404-t5-global-optimality', slug: 'global-optimality', title: 'Global Optimality in Convex Programs', content: t5s2, order: 2 },
+  { id: 'math404-t5-sdp', slug: 'sdp', title: 'Semidefinite Programming', content: t5s3, order: 3 },
+  { id: 'math404-t5-socp', slug: 'socp', title: 'Second-Order Cone Programming', content: t5s4, order: 4 },
+  { id: 'math404-t5-geometric-programming', slug: 'geometric-programming', title: 'Geometric Programming', content: t5s5, order: 5 },
+  { id: 'math404-t5-quasiconvex', slug: 'quasiconvex', title: 'Quasiconvex Optimization', content: t5s6, order: 6 },
+  { id: 'math404-t5-robust-optimization', slug: 'robust-optimization', title: 'Robust Optimization', content: t5s7, order: 7 },
+];
+
+const topic6Subtopics: Subtopic[] = [
+  { id: 'math404-t6-gradient-descent', slug: 'gradient-descent', title: 'Gradient Descent', content: t6s1, order: 1 },
+  { id: 'math404-t6-convergence-analysis', slug: 'convergence-analysis', title: 'Convergence Analysis', content: t6s2, order: 2 },
+  { id: 'math404-t6-line-search', slug: 'line-search', title: 'Line Search Methods', content: t6s3, order: 3 },
+  { id: 'math404-t6-newton-method-opt', slug: 'newton-method-opt', title: 'Newton\'s Method', content: t6s4, order: 4 },
+  { id: 'math404-t6-quasi-newton', slug: 'quasi-newton', title: 'Quasi-Newton Methods', content: t6s5, order: 5 },
+  { id: 'math404-t6-coordinate-descent', slug: 'coordinate-descent', title: 'Coordinate Descent', content: t6s6, order: 6 },
+  { id: 'math404-t6-stochastic-gradient', slug: 'stochastic-gradient', title: 'Stochastic Gradient Descent', content: t6s7, order: 7 },
+];
+
+const topic7Subtopics: Subtopic[] = [
+  { id: 'math404-t7-lagrangian', slug: 'lagrangian', title: 'Lagrangian Methods', content: t7s1, order: 1 },
+  { id: 'math404-t7-kkt-conditions', slug: 'kkt-conditions', title: 'KKT Conditions', content: t7s2, order: 2 },
+  { id: 'math404-t7-kkt-examples', slug: 'kkt-examples', title: 'KKT Examples', content: t7s3, order: 3 },
+  { id: 'math404-t7-augmented-lagrangian', slug: 'augmented-lagrangian', title: 'Augmented Lagrangian Method', content: t7s4, order: 4 },
+  { id: 'math404-t7-penalty-methods', slug: 'penalty-methods', title: 'Penalty Methods', content: t7s5, order: 5 },
+  { id: 'math404-t7-interior-point-nonlinear', slug: 'interior-point-nonlinear', title: 'Interior-Point Methods for Nonlinear Programming', content: t7s6, order: 6 },
+  { id: 'math404-t7-sqp', slug: 'sqp', title: 'Sequential Quadratic Programming', content: t7s7, order: 7 },
+];
 
 export const topics: Topic[] = [
   {
-    id: 'topic-1',
+    id: 'math404-topic-1',
     title: 'Problem Formulation',
-    quizIds: ['math404-quiz-1'],
-    exerciseIds: ['math404-t1-ex1', 'math404-t1-ex2', 'math404-t1-ex3'],
+    subtopics: topic1Subtopics,
+    quizIds: ['math404-quiz-1a', 'math404-quiz-1b', 'math404-quiz-1c'],
+    exerciseIds: [
+      'math404-t1-ex01', 'math404-t1-ex02', 'math404-t1-ex03', 'math404-t1-ex04',
+      'math404-t1-ex05', 'math404-t1-ex06', 'math404-t1-ex07', 'math404-t1-ex08',
+      'math404-t1-ex09', 'math404-t1-ex10', 'math404-t1-ex11', 'math404-t1-ex12',
+      'math404-t1-ex13', 'math404-t1-ex14', 'math404-t1-ex15', 'math404-t1-ex16'
+    ],
     content: `# Problem Formulation
 
 ## Introduction to Optimization
@@ -60,10 +201,16 @@ For unconstrained optimization:
 For constrained optimization, the KKT conditions generalize these.`
   },
   {
-    id: 'topic-2',
+    id: 'math404-topic-2',
     title: 'Linear Programming',
-    quizIds: ['math404-quiz-2'],
-    exerciseIds: ['math404-t2-ex1', 'math404-t2-ex2', 'math404-t2-ex3'],
+    subtopics: topic2Subtopics,
+    quizIds: ['math404-quiz-2a', 'math404-quiz-2b', 'math404-quiz-2c'],
+    exerciseIds: [
+      'math404-t2-ex01', 'math404-t2-ex02', 'math404-t2-ex03', 'math404-t2-ex04',
+      'math404-t2-ex05', 'math404-t2-ex06', 'math404-t2-ex07', 'math404-t2-ex08',
+      'math404-t2-ex09', 'math404-t2-ex10', 'math404-t2-ex11', 'math404-t2-ex12',
+      'math404-t2-ex13', 'math404-t2-ex14', 'math404-t2-ex15', 'math404-t2-ex16'
+    ],
     content: `# Linear Programming
 
 ## LP Formulation
@@ -119,10 +266,16 @@ Analyzes how the optimal solution changes with small perturbations:
 Alternative to simplex that moves through the interior of the feasible region, achieving polynomial worst-case complexity.`
   },
   {
-    id: 'topic-3',
+    id: 'math404-topic-3',
     title: 'Duality Theory',
-    quizIds: ['math404-quiz-3'],
-    exerciseIds: ['math404-t3-ex1', 'math404-t3-ex2', 'math404-t3-ex3'],
+    subtopics: topic3Subtopics,
+    quizIds: ['math404-quiz-3a', 'math404-quiz-3b', 'math404-quiz-3c'],
+    exerciseIds: [
+      'math404-t3-ex01', 'math404-t3-ex02', 'math404-t3-ex03', 'math404-t3-ex04',
+      'math404-t3-ex05', 'math404-t3-ex06', 'math404-t3-ex07', 'math404-t3-ex08',
+      'math404-t3-ex09', 'math404-t3-ex10', 'math404-t3-ex11', 'math404-t3-ex12',
+      'math404-t3-ex13', 'math404-t3-ex14', 'math404-t3-ex15', 'math404-t3-ex16'
+    ],
     content: `# Duality Theory
 
 ## The Dual Problem
@@ -175,10 +328,16 @@ This is fundamental for proving LP duality.
 Dual variables are **shadow prices** - the marginal value of relaxing a constraint. If $y_i^* = 5$, increasing $b_i$ by 1 increases the optimal objective by 5.`
   },
   {
-    id: 'topic-4',
+    id: 'math404-topic-4',
     title: 'Convex Sets and Functions',
-    quizIds: ['math404-quiz-4'],
-    exerciseIds: ['math404-t4-ex1', 'math404-t4-ex2', 'math404-t4-ex3'],
+    subtopics: topic4Subtopics,
+    quizIds: ['math404-quiz-4a', 'math404-quiz-4b', 'math404-quiz-4c'],
+    exerciseIds: [
+      'math404-t4-ex01', 'math404-t4-ex02', 'math404-t4-ex03', 'math404-t4-ex04',
+      'math404-t4-ex05', 'math404-t4-ex06', 'math404-t4-ex07', 'math404-t4-ex08',
+      'math404-t4-ex09', 'math404-t4-ex10', 'math404-t4-ex11', 'math404-t4-ex12',
+      'math404-t4-ex13', 'math404-t4-ex14', 'math404-t4-ex15', 'math404-t4-ex16'
+    ],
     content: `# Convex Sets and Functions
 
 ## Convex Sets
@@ -228,10 +387,16 @@ $$f^*(y) = \\sup_x (y^T x - f(x))$$
 The conjugate of a convex function is always convex.`
   },
   {
-    id: 'topic-5',
+    id: 'math404-topic-5',
     title: 'Convex Optimization',
-    quizIds: ['math404-quiz-5'],
-    exerciseIds: ['math404-t5-ex1', 'math404-t5-ex2', 'math404-t5-ex3'],
+    subtopics: topic5Subtopics,
+    quizIds: ['math404-quiz-5a', 'math404-quiz-5b', 'math404-quiz-5c'],
+    exerciseIds: [
+      'math404-t5-ex01', 'math404-t5-ex02', 'math404-t5-ex03', 'math404-t5-ex04',
+      'math404-t5-ex05', 'math404-t5-ex06', 'math404-t5-ex07', 'math404-t5-ex08',
+      'math404-t5-ex09', 'math404-t5-ex10', 'math404-t5-ex11', 'math404-t5-ex12',
+      'math404-t5-ex13', 'math404-t5-ex14', 'math404-t5-ex15', 'math404-t5-ex16'
+    ],
     content: `# Convex Optimization
 
 ## Convex Optimization Problems
@@ -282,10 +447,16 @@ $$\\min_x \\max_{a \\in \\mathcal{U}} f(x, a)$$
 Where $\\mathcal{U}$ is the uncertainty set.`
   },
   {
-    id: 'topic-6',
+    id: 'math404-topic-6',
     title: 'Gradient Methods',
-    quizIds: ['math404-quiz-6'],
-    exerciseIds: ['math404-t6-ex1', 'math404-t6-ex2', 'math404-t6-ex3'],
+    subtopics: topic6Subtopics,
+    quizIds: ['math404-quiz-6a', 'math404-quiz-6b', 'math404-quiz-6c'],
+    exerciseIds: [
+      'math404-t6-ex01', 'math404-t6-ex02', 'math404-t6-ex03', 'math404-t6-ex04',
+      'math404-t6-ex05', 'math404-t6-ex06', 'math404-t6-ex07', 'math404-t6-ex08',
+      'math404-t6-ex09', 'math404-t6-ex10', 'math404-t6-ex11', 'math404-t6-ex12',
+      'math404-t6-ex13', 'math404-t6-ex14', 'math404-t6-ex15', 'math404-t6-ex16'
+    ],
     content: `# Gradient Methods
 
 ## Gradient Descent
@@ -340,10 +511,16 @@ Where $g_k$ is a stochastic estimate of the gradient.
 Crucial for machine learning with large datasets.`
   },
   {
-    id: 'topic-7',
+    id: 'math404-topic-7',
     title: 'Constrained Optimization',
-    quizIds: ['math404-quiz-7'],
-    exerciseIds: ['math404-t7-ex1', 'math404-t7-ex2', 'math404-t7-ex3'],
+    subtopics: topic7Subtopics,
+    quizIds: ['math404-quiz-7a', 'math404-quiz-7b', 'math404-quiz-7c'],
+    exerciseIds: [
+      'math404-t7-ex01', 'math404-t7-ex02', 'math404-t7-ex03', 'math404-t7-ex04',
+      'math404-t7-ex05', 'math404-t7-ex06', 'math404-t7-ex07', 'math404-t7-ex08',
+      'math404-t7-ex09', 'math404-t7-ex10', 'math404-t7-ex11', 'math404-t7-ex12',
+      'math404-t7-ex13', 'math404-t7-ex14', 'math404-t7-ex15', 'math404-t7-ex16'
+    ],
     content: `# Constrained Optimization
 
 ## Lagrangian Methods

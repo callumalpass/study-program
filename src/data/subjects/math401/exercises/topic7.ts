@@ -6,149 +6,243 @@ export const topic7Exercises: WrittenExercise[] = [
     subjectId: 'math401',
     topicId: 'math401-topic-7',
     type: 'written',
-    title: 'Law of Large Numbers Application',
-    description: 'A fair die is rolled n times. Let X̄_n be the average of the outcomes. According to the Law of Large Numbers, what value does X̄_n approach as n → ∞?',
-    difficulty: 1,
+    title: 'Conformal Mapping Basics',
+    description: 'Show that f(z) = z² is conformal except at z = 0.',
+    difficulty: 2,
     hints: [
-      'Find E[X] for a single die roll',
-      'E[X] = (1+2+3+4+5+6)/6',
-      'LLN says X̄_n → E[X] as n → ∞'
+      'Conformal requires f\'(z) ≠ 0',
+      'Compute f\'(z)',
+      'Check where derivative vanishes'
     ],
-    solution: 'For a fair die, E[X] = (1+2+3+4+5+6)/6 = 21/6 = 3.5. By the Law of Large Numbers, X̄_n → 3.5 almost surely as n → ∞. This means the sample average converges to the population mean.'
+    solution: 'f\'(z) = 2z. This is zero only at z = 0. Therefore f is conformal everywhere except at the origin.'
   },
   {
     id: 'math401-t7-ex02',
     subjectId: 'math401',
     topicId: 'math401-topic-7',
     type: 'written',
-    title: 'Weak vs Strong LLN',
-    description: 'Explain the difference between the Weak Law of Large Numbers and the Strong Law of Large Numbers.',
-    difficulty: 2,
+    title: 'Möbius Transformation Properties',
+    description: 'Show that w = (z-1)/(z+1) maps the unit circle to the imaginary axis.',
+    difficulty: 3,
     hints: [
-      'Weak LLN: X̄_n → μ in probability',
-      'Strong LLN: X̄_n → μ almost surely',
-      'Almost sure convergence is stronger than convergence in probability'
+      'Substitute z = e^{iθ}',
+      'Simplify the expression',
+      'Show w is purely imaginary'
     ],
-    solution: 'Weak LLN states that X̄_n converges to μ in probability: for any ε > 0, P(|X̄_n - μ| > ε) → 0 as n → ∞. Strong LLN states that X̄_n converges to μ almost surely: P(lim_{n→∞} X̄_n = μ) = 1. Almost sure convergence implies convergence in probability, but not vice versa. The strong law makes a stronger statement about the limiting behavior.'
+    solution: 'For |z| = 1: z = e^{iθ}. w = (e^{iθ}-1)/(e^{iθ}+1). Multiply by conjugate: w = (e^{iθ}-1)(e^{-iθ}+1)/|e^{iθ}+1|² = (1+e^{-iθ}-e^{iθ}-1)/|e^{iθ}+1|² = -2i sin θ/(2+2cos θ) = -i tan(θ/2). Purely imaginary.'
   },
   {
     id: 'math401-t7-ex03',
     subjectId: 'math401',
     topicId: 'math401-topic-7',
     type: 'written',
-    title: 'Central Limit Theorem Setup',
-    description: 'Let X₁, X₂, ..., X_n be i.i.d. with E[Xᵢ] = μ and Var(Xᵢ) = σ². State what the Central Limit Theorem says about S_n = X₁ + ... + X_n.',
-    difficulty: 2,
+    title: 'Inversion Mapping',
+    description: 'Describe how w = 1/z maps circles and lines.',
+    difficulty: 3,
     hints: [
-      'Standardize S_n: Z_n = (S_n - nμ)/(σ√n)',
-      'CLT says Z_n converges in distribution',
-      'The limiting distribution is standard normal'
+      'Lines through origin map to lines',
+      'Lines not through origin map to circles',
+      'Circles through origin map to lines',
+      'Circles not through origin map to circles'
     ],
-    solution: 'The Central Limit Theorem states that Z_n = (S_n - nμ)/(σ√n) converges in distribution to N(0,1) as n → ∞. Equivalently, S_n is approximately N(nμ, nσ²) for large n. This holds regardless of the distribution of the Xᵢ (as long as μ and σ² exist and are finite).'
+    solution: 'w = 1/z: (1) Lines through 0 → lines through 0. (2) Lines not through 0 → circles through 0. (3) Circles through 0 → lines not through 0. (4) Circles not through 0 → circles not through 0.'
   },
   {
     id: 'math401-t7-ex04',
     subjectId: 'math401',
     topicId: 'math401-topic-7',
     type: 'written',
-    title: 'CLT for Sample Mean',
-    description: 'A population has mean μ=50 and standard deviation σ=10. A sample of n=100 is taken. Using CLT, approximate P(X̄ > 52).',
-    difficulty: 3,
+    title: 'Exponential Map',
+    description: 'Show that w = e^z maps vertical lines to circles and horizontal lines to rays.',
+    difficulty: 2,
     hints: [
-      'X̄ ~ approximately N(μ, σ²/n)',
-      'X̄ ~ N(50, 100/100) = N(50, 1)',
-      'Standardize and use normal table'
+      'Let z = x + iy',
+      'w = e^x e^{iy}',
+      'Vertical line: x constant',
+      'Horizontal line: y constant'
     ],
-    solution: 'By CLT, X̄ ~ approximately N(50, 10²/100) = N(50, 1). Standardize: Z = (52-50)/1 = 2. P(X̄ > 52) = P(Z > 2) ≈ 1 - Φ(2) ≈ 1 - 0.9772 = 0.0228.'
+    solution: 'z = x+iy, w = e^x e^{iy}. Vertical line x = c: |w| = e^c (circle of radius e^c). Horizontal line y = c: arg w = c (ray at angle c from origin).'
   },
   {
     id: 'math401-t7-ex05',
     subjectId: 'math401',
     topicId: 'math401-topic-7',
     type: 'written',
-    title: 'Continuity Correction',
-    description: 'Let S_n ~ Binomial(100, 0.5). Use CLT with continuity correction to approximate P(S_n = 55).',
+    title: 'Joukowski Transform',
+    description: 'The Joukowski transform w = z + 1/z maps the unit circle to what?',
     difficulty: 3,
     hints: [
-      'For Binomial(n,p): μ=np=50, σ²=np(1-p)=25',
-      'Use continuity correction: P(S_n = 55) ≈ P(54.5 < S_n < 55.5)',
-      'Standardize with N(50, 25)'
+      'Set z = e^{iθ} on unit circle',
+      'w = e^{iθ} + e^{-iθ}',
+      'Use Euler formula'
     ],
-    solution: 'μ = 100(0.5) = 50, σ = √(100·0.5·0.5) = 5. With continuity correction: P(S_n = 55) ≈ P(54.5 < S_n < 55.5). Standardize: P((54.5-50)/5 < Z < (55.5-50)/5) = P(0.9 < Z < 1.1) = Φ(1.1) - Φ(0.9) ≈ 0.8643 - 0.8159 = 0.0484.'
+    solution: 'For z = e^{iθ}: w = e^{iθ} + e^{-iθ} = 2cos θ. As θ varies from 0 to 2π, w traces the line segment [-2, 2] twice (real axis).'
   },
   {
     id: 'math401-t7-ex06',
     subjectId: 'math401',
     topicId: 'math401-topic-7',
     type: 'written',
-    title: 'Convergence in Probability',
-    description: 'Define what it means for a sequence of random variables Y_n to converge in probability to a constant c.',
-    difficulty: 2,
+    title: 'Cross-Ratio',
+    description: 'Define the cross-ratio and explain its invariance under Möbius transformations.',
+    difficulty: 4,
     hints: [
-      'Use the ε-δ definition',
-      'Consider P(|Y_n - c| > ε)',
-      'This probability should go to 0'
+      'Cross-ratio of z₁,z₂,z₃,z₄: (z₁-z₃)(z₂-z₄)/[(z₁-z₄)(z₂-z₃)]',
+      'Möbius maps preserve cross-ratios',
+      'Used to construct Möbius maps'
     ],
-    solution: 'Y_n converges in probability to c (written Y_n →^P c) if for every ε > 0, lim_{n→∞} P(|Y_n - c| > ε) = 0. Equivalently, lim_{n→∞} P(|Y_n - c| ≤ ε) = 1. This means that for large n, Y_n is likely to be close to c.'
+    solution: 'Cross-ratio: (z₁,z₂;z₃,z₄) = [(z₁-z₃)(z₂-z₄)]/[(z₁-z₄)(z₂-z₃)]. Möbius transformations preserve cross-ratios: if w = T(z), then (w₁,w₂;w₃,w₄) = (z₁,z₂;z₃,z₄). Used to find Möbius map sending 3 points to 3 points.'
   },
   {
     id: 'math401-t7-ex07',
     subjectId: 'math401',
     topicId: 'math401-topic-7',
     type: 'written',
-    title: 'Convergence in Distribution',
-    description: 'What does it mean for X_n to converge in distribution to X? How does this differ from convergence in probability?',
+    title: 'Riemann Mapping Theorem',
+    description: 'State the Riemann Mapping Theorem and give its significance.',
     difficulty: 3,
     hints: [
-      'Convergence in distribution: F_n(x) → F(x)',
-      'Only requires CDFs to converge',
-      'Weaker than convergence in probability'
+      'Simply connected domain',
+      'Conformal map to unit disk',
+      'Existence and uniqueness'
     ],
-    solution: 'X_n converges in distribution to X (written X_n →^D X) if lim_{n→∞} F_n(x) = F(x) at all continuity points of F, where F_n and F are the CDFs. This is weaker than convergence in probability because it only requires the distributions to converge, not the random variables themselves. Convergence in probability implies convergence in distribution, but not vice versa.'
+    solution: 'Riemann Mapping Theorem: Any simply connected domain D ⊂ ℂ with D ≠ ℂ can be conformally mapped to the unit disk. The map is unique up to Möbius transformations of the disk. Significance: classifies all simply connected domains.'
   },
   {
     id: 'math401-t7-ex08',
     subjectId: 'math401',
     topicId: 'math401-topic-7',
     type: 'written',
-    title: 'Slutsky\'s Theorem',
-    description: 'State Slutsky\'s Theorem and give an example of its application.',
-    difficulty: 3,
+    title: 'Schwarz-Christoffel Formula',
+    description: 'Explain the Schwarz-Christoffel formula for mapping upper half-plane to polygon.',
+    difficulty: 4,
     hints: [
-      'If X_n →^D X and Y_n →^P c',
-      'Then X_n + Y_n →^D X + c',
-      'Useful for combining convergence results'
+      'Maps ℍ to polygon with vertices',
+      'Formula involves product of powers',
+      'Angles at vertices determine exponents'
     ],
-    solution: 'Slutsky\'s Theorem: If X_n →^D X and Y_n →^P c (constant), then (1) X_n + Y_n →^D X + c, (2) X_n Y_n →^D cX, (3) X_n/Y_n →^D X/c (if c ≠ 0). Example: If Z_n →^D N(0,1) and S_n² →^P σ², then Z_n/S_n →^D N(0,σ²). This is used in deriving the distribution of the t-statistic.'
+    solution: 'Schwarz-Christoffel: f(z) = A∫(z-x₁)^{-α₁}(z-x₂)^{-α₂}...(z-xₙ)^{-αₙ} dz + B maps upper half-plane to polygon with interior angles παᵢ at vertices corresponding to real points xᵢ. A, B are constants.'
   },
   {
     id: 'math401-t7-ex09',
     subjectId: 'math401',
     topicId: 'math401-topic-7',
     type: 'written',
-    title: 'Delta Method',
-    description: 'State the Delta Method and explain when it is useful.',
-    difficulty: 4,
+    title: 'Fluid Flow Application',
+    description: 'Explain how conformal maps model 2D incompressible fluid flow.',
+    difficulty: 3,
     hints: [
-      'If √n(Y_n - θ) →^D N(0, σ²)',
-      'Then √n(g(Y_n) - g(θ)) →^D N(0, [g\'(θ)]²σ²)',
-      'Used to find asymptotic distributions of transformations'
+      'Complex potential Ω = φ + iψ',
+      'φ = velocity potential, ψ = stream function',
+      'Cauchy-Riemann equations',
+      'Laplace equation'
     ],
-    solution: 'Delta Method: If √n(Y_n - θ) →^D N(0, σ²) and g is differentiable at θ with g\'(θ) ≠ 0, then √n(g(Y_n) - g(θ)) →^D N(0, [g\'(θ)]²σ²). This allows us to find the asymptotic distribution of a function of an estimator. Example: If X̄_n estimates p and √n(X̄_n - p) →^D N(0, p(1-p)), then for g(x) = log(x), √n(log(X̄_n) - log(p)) →^D N(0, 1/p²·p(1-p)) = N(0, (1-p)/p).'
+    solution: 'In 2D incompressible flow: velocity (u,v) has potential φ and stream function ψ. Complex potential Ω = φ+iψ is analytic. Cauchy-Riemann: ∂φ/∂x = ∂ψ/∂y, ∂φ/∂y = -∂ψ/∂x give u = ∂φ/∂x, v = ∂φ/∂y. Conformal maps transform one flow to another.'
   },
   {
     id: 'math401-t7-ex10',
     subjectId: 'math401',
     topicId: 'math401-topic-7',
     type: 'written',
-    title: 'Sample Size for CLT',
-    description: 'A population is highly skewed with mean 100 and standard deviation 20. Approximately how large should n be for the distribution of X̄ to be approximately normal?',
-    difficulty: 2,
+    title: 'Electrostatics Application',
+    description: 'How are conformal maps used to solve 2D electrostatics problems?',
+    difficulty: 3,
     hints: [
-      'Rule of thumb: n ≥ 30 for moderately skewed',
-      'More skewed distributions need larger n',
-      'CLT works better with larger samples'
+      'Laplace equation ∇²φ = 0',
+      'Harmonic functions',
+      'Boundary value problems'
     ],
-    solution: 'For highly skewed distributions, a common rule of thumb is n ≥ 30, though n ≥ 50 or even n ≥ 100 may be needed for very heavy skewness. The more the population deviates from normality, the larger n must be for the CLT approximation to be accurate. For this highly skewed population, n ≥ 50 would be safer, though n = 30 might give a reasonable approximation. The exact requirement depends on how much accuracy is needed.'
+    solution: 'Electric potential φ satisfies Laplace\'s equation ∇²φ = 0, so φ is harmonic. Real/imaginary parts of analytic functions are harmonic. Conformal maps preserve harmonicity, transforming boundary value problems in complex domains to simpler domains (like half-plane or disk) where solutions are known.'
+  },
+  {
+    id: 'math401-t7-ex11',
+    subjectId: 'math401',
+    topicId: 'math401-topic-7',
+    type: 'written',
+    title: 'Annulus Mapping',
+    description: 'Can every annulus be conformally mapped to a standard annulus r < |z| < 1?',
+    difficulty: 4,
+    hints: [
+      'Annulus modulus',
+      'Conformal equivalence depends on ratio',
+      'Not all annuli are conformally equivalent'
+    ],
+    solution: 'No. Two annuli are conformally equivalent iff they have the same modulus (ratio of radii). An annulus R₁ < |z| < R₂ has modulus R₂/R₁. This is a conformal invariant. Annuli with different moduli cannot be conformally mapped to each other.'
+  },
+  {
+    id: 'math401-t7-ex12',
+    subjectId: 'math401',
+    topicId: 'math401-topic-7',
+    type: 'written',
+    title: 'Conformal Automorphisms',
+    description: 'Find all conformal automorphisms (bijective conformal maps) of the unit disk.',
+    difficulty: 4,
+    hints: [
+      'Möbius maps preserving unit disk',
+      'Form: (z-a)/(1-āz) with |a| < 1',
+      'Include rotations'
+    ],
+    solution: 'Conformal automorphisms of unit disk: φ(z) = e^{iθ}(z-a)/(1-āz) where |a| < 1 and θ ∈ ℝ. These are exactly the Möbius transformations mapping disk to itself.'
+  },
+  {
+    id: 'math401-t7-ex13',
+    subjectId: 'math401',
+    topicId: 'math401-topic-7',
+    type: 'written',
+    title: 'Mapping Upper Half-Plane to Disk',
+    description: 'Find a Möbius transformation mapping upper half-plane to unit disk.',
+    difficulty: 3,
+    hints: [
+      'Send specific points to specific points',
+      'w = (z-i)/(z+i) works',
+      'Verify'
+    ],
+    solution: 'w = (z-i)/(z+i) maps ℍ to unit disk. Check: i → 0, ∞ → 1, 0 → -1. For Im z > 0: |w| < 1 (verify by computation).'
+  },
+  {
+    id: 'math401-t7-ex14',
+    subjectId: 'math401',
+    topicId: 'math401-topic-7',
+    type: 'written',
+    title: 'Angle Preservation',
+    description: 'Prove that conformal maps preserve angles between curves.',
+    difficulty: 3,
+    hints: [
+      'Consider two curves intersecting at z₀',
+      'Tangent vectors',
+      'Multiplication by f\'(z₀) rotates and scales'
+    ],
+    solution: 'Let γ₁, γ₂ be curves intersecting at z₀ with tangent vectors v₁, v₂. Under w = f(z), images have tangents f\'(z₀)v₁, f\'(z₀)v₂. Since f\'(z₀) ≠ 0, multiplication by f\'(z₀) is rotation + scaling, preserving angle: arg(f\'v₂/f\'v₁) = arg(v₂/v₁).'
+  },
+  {
+    id: 'math401-t7-ex15',
+    subjectId: 'math401',
+    topicId: 'math401-topic-7',
+    type: 'written',
+    title: 'Critical Points',
+    description: 'What happens to conformality at critical points where f\'(z) = 0?',
+    difficulty: 3,
+    hints: [
+      'Angle multiplication',
+      'If f\'(z₀) = 0 but f\'\'(z₀) ≠ 0',
+      'Angles are doubled'
+    ],
+    solution: 'At critical point z₀ where f\'(z₀) = 0, f is not conformal. If f\'\'(z₀) ≠ 0, near z₀: f(z) ≈ f(z₀) + (1/2)f\'\'(z₀)(z-z₀)². Angles are multiplied by 2 (e.g., f(z) = z² at origin doubles angles).'
+  },
+  {
+    id: 'math401-t7-ex16',
+    subjectId: 'math401',
+    topicId: 'math401-topic-7',
+    type: 'written',
+    title: 'Dirichlet Problem',
+    description: 'Explain how conformal mapping solves the Dirichlet problem.',
+    difficulty: 4,
+    hints: [
+      'Dirichlet: find harmonic u with given boundary values',
+      'Transform domain conformally',
+      'Solve in simpler domain',
+      'Transform solution back'
+    ],
+    solution: 'Dirichlet problem: find harmonic u in domain D with u = g on ∂D. If f: D → D\' conformally, and u\' solves Dirichlet in D\', then u = u\' ∘ f solves it in D (harmonicity preserved). Strategy: map to disk/half-plane where solution is explicit (Poisson integral), then pull back.'
   }
 ];
