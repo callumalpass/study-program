@@ -36,7 +36,7 @@ const topicConfigs = [
   },
   {
     number: 4,
-    title: "Cauchy\\",
+    title: "Cauchy's Theorem and Applications",
     quizIds: ['math401-quiz-4-1', 'math401-quiz-4-2', 'math401-quiz-4-3'],
     exerciseIds: ['math401-t4-ex01', 'math401-t4-ex02', 'math401-t4-ex03', 'math401-t4-ex04', 'math401-t4-ex05', 'math401-t4-ex06', 'math401-t4-ex07', 'math401-t4-ex08', 'math401-t4-ex09', 'math401-t4-ex10', 'math401-t4-ex11', 'math401-t4-ex12', 'math401-t4-ex13', 'math401-t4-ex14', 'math401-t4-ex15', 'math401-t4-ex16'],
   },

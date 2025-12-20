@@ -7,8 +7,8 @@
 
 | Status | Count | Percentage |
 |--------|-------|------------|
-| COMPLETE (10/10) | 28 | 74% |
-| COMPLETE (7-9/10) | 7 | 18% |
+| COMPLETE (10/10) | 29 | 76% |
+| COMPLETE (7-9/10) | 6 | 16% |
 | NEEDS WORK | 3 | 8% |
 | INCOMPLETE | 0 | 0% |
 
@@ -39,6 +39,7 @@
 - MATH203: Calculus I
 - MATH302: Ordinary Differential Equations
 - MATH304: Abstract Algebra
+- MATH401: Complex Analysis
 - MATH402: Numerical Methods
 - MATH403: Introduction to Topology
 
@@ -55,7 +56,6 @@
 - CS104: Data Structures (8/10) - exercise count shortfall
 - CS405: Cloud Computing (8/10) - exercise shortage
 - MATH204: Calculus II (4/10) - exercise shortage
-- MATH401: Complex Analysis (7/10) - wrong exercises for Topics 3-7
 - MATH404: Optimization Theory (7/10) - exercises complete, quizzes/content need work
 
 ## Common Issues
@@ -69,7 +69,7 @@ Some subjects have subtopics below the 800-word minimum:
 - (None remaining)
 
 ### 3. Missing/Incomplete Content
-- MATH401: Wrong exercises assigned to Topics 3-7
+- (None remaining)
 
 ## Priority Action Items
 
@@ -77,8 +77,8 @@ Some subjects have subtopics below the 800-word minimum:
 (None - all immediate blockers resolved)
 
 ### High Priority
-1. **MATH401**: Fix exercise assignments for Topics 3-7
-2. **MATH204**: Add exercises
+1. **MATH204**: Add exercises
+2. **CS405**: Add exercises
 
 ## Year-by-Year Summary
 
@@ -97,23 +97,24 @@ Some subjects have subtopics below the 800-word minimum:
 - **Good:** CS302, MATH301, MATH303
 
 ### Year 4 (11 subjects)
-- **Complete:** CS402, CS403, CS404, CS406, CS407, MATH402, MATH403
+- **Complete:** CS402, CS403, CS404, CS406, CS407, MATH401, MATH402, MATH403
 - **Good:** CS401
-- **Needs Work:** CS405, MATH401, MATH404
+- **Needs Work:** CS405, MATH404
 
 ## Estimated Work Remaining
 
 | Subject | Estimated Hours |
 |---------|-----------------|
-| MATH401 | 5-10 |
 | MATH204 | 10-15 |
+| CS405 | 5-10 |
 | Others | 5-10 each |
 
-**Total Estimated:** 20-45 hours to bring all subjects to production quality.
+**Total Estimated:** 15-35 hours to bring all subjects to production quality.
 
 ## Recent Updates (2025-12-21)
 
 ### Subjects Upgraded to Production Ready
+- **MATH401: Complex Analysis** - Verified complete: 49 subtopics (avg 1,629 words), 112 exercises (16/topic), 21 quizzes (105 questions), midterm (26q) + final (42q), subject-spec.yaml present, TypeScript build passes, quality score 100%
 - **CS407: Data Science and Analytics** - Verified complete: all 49 subtopics at 1,000+ words (range: 1,134-4,062), 112 exercises (16/topic), 21 quizzes (3/topic × 5 questions), midterm (26 questions) + final (42 questions), 2 projects with rubrics, TypeScript build passes
 - **CS406: Artificial Intelligence** - Expanded Topic 3 and Topic 7 subtopics to 800+ words, added 65 exercises (Topics 3-7 now have 16 each), verified all 105 quiz questions, TypeScript build passes
 - **MATH402: Numerical Methods** - Fixed Topic 4 exercises.json (invalid format), added 10 exercises to Topic 2 (now 16/16), verified TypeScript build

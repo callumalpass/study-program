@@ -1,0 +1,256 @@
+# MATH401: Complex Analysis - Subject Specification
+# This spec guides content creation for an advanced proof-based math course on functions of a complex variable.
+
+# ==============================================================================
+# SUBJECT IDENTITY
+# ==============================================================================
+
+id: math401
+title: Complex Analysis
+category: math
+
+role:
+  level: advanced
+  transformation: >
+    From "I can do calculus on real numbers" to "I can analyze and prove properties
+    of analytic functions, evaluate complex integrals using residues, and apply
+    conformal mappings to solve boundary value problems."
+
+# ==============================================================================
+# CURRICULUM
+# ==============================================================================
+
+curriculum:
+  subtopic_word_target: 1000
+
+  prerequisite_knowledge:
+    - Calculus I, II, and III (multivariable calculus)
+    - Real Analysis or strong calculus background
+    - Comfort with proofs and mathematical rigor
+    - Linear algebra fundamentals
+
+  essential_concepts:
+    - Complex numbers, polar form, and the complex plane
+    - Analytic functions and Cauchy-Riemann equations
+    - Complex integration and Cauchy-Goursat theorem
+    - Cauchy's integral formula and its consequences
+    - Power series, Taylor series, and Laurent series
+    - Singularities, residues, and the residue theorem
+    - Conformal mappings and applications
+
+  out_of_scope:
+    - Riemann surfaces (graduate-level)
+    - Several complex variables
+    - Elliptic functions beyond brief mention
+    - Advanced functional analysis
+
+# ==============================================================================
+# PEDAGOGICAL APPROACH
+# ==============================================================================
+
+pedagogy:
+  knowledge_type: proof-based
+
+  mastery_indicators:
+    - Verifies Cauchy-Riemann equations for given functions
+    - Evaluates contour integrals using appropriate techniques
+    - Applies Cauchy's integral formula to compute derivatives
+    - Classifies singularities and computes residues
+    - Uses residue theorem to evaluate real integrals
+    - Constructs conformal maps between standard domains
+
+  common_struggles:
+    - Confusing analyticity with real differentiability
+    - Misapplying Cauchy's theorem when singularities are present
+    - Incorrect contour orientation in residue calculations
+    - Computing Laurent series in wrong annular regions
+    - Branch cut handling for multi-valued functions
+
+# ==============================================================================
+# CONTENT STANDARDS
+# ==============================================================================
+
+content:
+  subtopic_requirements:
+    - Each theorem stated precisely with proof or proof sketch
+    - Worked examples before asking students to solve similar problems
+    - Visual intuition where applicable (complex plane diagrams)
+    - Connection to applications (physics, engineering) where relevant
+    - Clear distinction between necessary and sufficient conditions
+
+  conventions:
+    - LaTeX for all mathematical expressions
+    - Use standard notation (z = x + iy, f = u + iv)
+    - Contours traversed counterclockwise unless stated otherwise
+    - Principal branch for multi-valued functions unless specified
+
+# ==============================================================================
+# ASSESSMENT PHILOSOPHY
+# ==============================================================================
+
+assessment:
+  philosophy: >
+    Complex analysis requires both computational fluency and proof construction.
+    Students must be able to compute integrals and residues efficiently while
+    also understanding why theorems hold. Assessments balance calculation with
+    conceptual understanding and occasional proof construction.
+
+  measures:
+    - Ability to compute contour integrals using various methods
+    - Correct application of Cauchy's theorem and residue theorem
+    - Proper classification of singularities
+    - Construction of valid proofs for standard results
+    - Problem-solving with conformal mappings
+
+  anti_patterns:
+    - Pure memorization of theorem statements without understanding
+    - Asking students to prove theorems verbatim from text
+    - Computational problems with no conceptual component
+    - Problems requiring obscure tricks rather than systematic methods
+
+# ==============================================================================
+# GRADING THRESHOLDS
+# ==============================================================================
+
+grading:
+  passing_score: 65
+
+  thresholds:
+    exercises: 60
+    quizzes: 65
+    exams: 60
+
+  rationale: >
+    Complex analysis is challenging, combining proof skills with computation.
+    A student scoring 60%+ on exercises demonstrates engagement with difficult
+    material. The course rewards both partial understanding and mastery.
+
+# ==============================================================================
+# EXERCISE SPECIFICATIONS
+# ==============================================================================
+
+exercises:
+  rationale: >
+    Exercises develop both computational skills (contour integrals, residue
+    calculations, series expansions) and proof abilities. Written exercises
+    allow for partial credit and multiple valid approaches.
+
+  types:
+    coding_with_tests: "0%"
+    coding_ai_evaluated: "0%"
+    written: "100%"
+    justification: >
+      Pure mathematics course. All exercises are proof or calculation problems
+      evaluated by AI comparison to reference solutions.
+
+  per_topic:
+    minimum: 14
+    target: 16
+    maximum: 18
+    justification: >
+      Full base standard count. Complex analysis has rich problem sets at each
+      level. Mix of routine calculations and deeper proofs.
+
+  difficulty_distribution:
+    1: 2
+    2: 3
+    3: 5
+    4: 4
+    5: 2
+    justification: >
+      Even distribution across difficulties. Easy exercises verify definitions,
+      medium exercises apply standard techniques, hard exercises combine methods
+      or require insight.
+
+# ==============================================================================
+# QUIZ SPECIFICATIONS
+# ==============================================================================
+
+quizzes:
+  rationale: >
+    Quizzes test theorem recall, quick calculations, and conceptual understanding.
+    They prepare students for exam-style questions without the time pressure.
+
+  per_topic:
+    count: 3
+    questions_each: 5
+    justification: >
+      Standard count. Three quizzes per topic allow progression from fundamentals
+      to applications to mastery-level questions.
+
+  question_types:
+    multiple_choice: "50%"
+    true_false: "30%"
+    fill_blank: "10%"
+    code_output: "0%"
+    coding: "0%"
+    written: "10%"
+    justification: >
+      Heavy on true/false to test precise understanding of theorem conditions.
+      Multiple choice for computational shortcuts. Limited written for short
+      calculations or brief justifications.
+
+# ==============================================================================
+# EXAM SPECIFICATIONS
+# ==============================================================================
+
+exams:
+  rationale: >
+    Exams test computational fluency and conceptual understanding under time
+    pressure. Mix of straightforward calculations and problems requiring synthesis.
+
+  midterm:
+    questions:
+      minimum: 20
+      target: 26
+      maximum: 30
+    duration_minutes: 75
+    format: >
+      Mix of multiple choice, short answer, and calculation problems.
+      Focus on Cauchy-Riemann, contour integrals, Cauchy's formula.
+    coverage: "Topics 1-4: Complex numbers, analytic functions, integration, Cauchy theory"
+
+  final:
+    questions:
+      minimum: 35
+      target: 42
+      maximum: 48
+    duration_minutes: 120
+    format: >
+      Comprehensive with emphasis on later topics. Must include residue
+      calculations, series problems, and conformal mapping applications.
+    coverage: "Comprehensive: all 7 topics with emphasis on residues and mappings"
+    cumulative: true
+
+# ==============================================================================
+# PROJECT SPECIFICATIONS
+# ==============================================================================
+
+projects:
+  required: false
+  count: 0
+  rationale: >
+    Pure math courses traditionally assess via problem sets and exams rather than
+    projects. The extensive exercise set provides sufficient practice and depth.
+
+# ==============================================================================
+# SUBJECT-SPECIFIC RED FLAGS
+# ==============================================================================
+
+red_flags:
+  - Exercise requires remembering specific contour choices that aren't natural
+  - Asking for proof of theorem exactly as in content
+  - Integral evaluation requiring non-standard tricks
+  - Conformal mapping problem with no clear geometric intuition
+  - Quiz question testable only by memorization
+
+# ==============================================================================
+# NOTES
+# ==============================================================================
+
+notes: >
+  Complex analysis is a beautiful subject where powerful theorems lead to
+  elegant computational techniques. Content should emphasize both the aesthetic
+  appeal of the theory and its practical applications. The residue theorem's
+  ability to evaluate real integrals should be a highlight. Conformal mappings
+  connect to physics applications that motivate the abstract theory.
