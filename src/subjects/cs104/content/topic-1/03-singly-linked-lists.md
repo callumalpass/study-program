@@ -213,3 +213,76 @@ def length(self):
 - Random access by index
 - Traversing backwards (need doubly linked)
 - Cache-sensitive applications (poor locality)
+
+## Advanced Techniques
+
+### Reversing a Linked List
+
+One of the most common interview problems and a fundamental skill:
+
+```python
+def reverse(self):
+    prev = None
+    current = self.head
+    while current:
+        next_node = current.next  # Save next
+        current.next = prev       # Reverse pointer
+        prev = current            # Move prev forward
+        current = next_node       # Move current forward
+    self.head = prev
+```
+
+This runs in O(n) time and O(1) space—no extra data structure needed.
+
+### Finding the Middle Node
+
+Use the "fast and slow pointer" technique:
+
+```python
+def find_middle(self):
+    if not self.head:
+        return None
+
+    slow = self.head
+    fast = self.head
+
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+
+    return slow  # slow is at the middle
+```
+
+When fast reaches the end, slow is at the middle. This works because fast moves twice as fast.
+
+### Detecting Cycles
+
+If a linked list has a cycle (some node's next points to an earlier node), regular traversal would loop forever:
+
+```python
+def has_cycle(self):
+    if not self.head:
+        return False
+
+    slow = self.head
+    fast = self.head
+
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+        if slow == fast:
+            return True
+    return False
+```
+
+This is Floyd's Cycle Detection algorithm (also called "tortoise and hare").
+
+## Key Takeaways
+
+- Linked lists store elements in nodes connected by pointers, not contiguous memory
+- Insertion and deletion at the head is O(1), making them ideal for stack implementations
+- Random access is O(n) because you must traverse from the head
+- Always handle edge cases: empty list, single element, and operations at head/tail
+- The "fast and slow pointer" technique solves many linked list problems efficiently
+- Memory overhead from pointers makes linked lists less cache-efficient than arrays
+- Choose linked lists when insertion/deletion patterns favor the head and you don't need random access

@@ -206,3 +206,98 @@ With sentinels, you never need to check for null head or tail - the structure is
 - Only need forward traversal
 - Implementing simple stack or queue
 - Insertions/deletions only at head
+
+## Common Implementation Patterns
+
+### Converting Between List Types
+
+Sometimes you need to convert a doubly linked list to an array or vice versa:
+
+```python
+def to_array(self):
+    result = []
+    current = self.head
+    while current:
+        result.append(current.data)
+        current = current.next
+    return result
+
+@classmethod
+def from_array(cls, arr):
+    dll = cls()
+    for item in arr:
+        dll.insert_at_tail(item)
+    return dll
+```
+
+### Swapping Adjacent Nodes
+
+Unlike arrays where swapping is simple, linked list node swapping requires careful pointer manipulation:
+
+```python
+def swap_nodes(self, node1, node2):
+    """Swap two adjacent nodes where node1.next == node2"""
+    if not node1 or not node2 or node1.next != node2:
+        return
+
+    # Update external links
+    if node1.prev:
+        node1.prev.next = node2
+    else:
+        self.head = node2
+
+    if node2.next:
+        node2.next.prev = node1
+    else:
+        self.tail = node1
+
+    # Swap the nodes
+    node2.prev = node1.prev
+    node1.prev = node2
+    node1.next = node2.next
+    node2.next = node1
+```
+
+## Debugging Tips
+
+When working with doubly linked lists, bugs often come from incorrect pointer updates. Use these strategies:
+
+1. **Draw diagrams**: Before coding, sketch the before and after states of pointer changes
+2. **Check invariants**: After each operation, verify that for every node `n`, `n.next.prev == n` and `n.prev.next == n`
+3. **Walk both directions**: Traverse forward and backward to ensure consistency
+4. **Count nodes**: The size should match the number of nodes reachable from head and from tail
+
+```python
+def validate(self):
+    """Check that the list structure is consistent"""
+    if not self.head:
+        return self.tail is None and self.size == 0
+
+    # Check forward traversal
+    count_forward = 0
+    current = self.head
+    while current:
+        count_forward += 1
+        if current.next:
+            assert current.next.prev == current
+        current = current.next
+
+    # Check backward traversal matches
+    count_backward = 0
+    current = self.tail
+    while current:
+        count_backward += 1
+        current = current.prev
+
+    assert count_forward == count_backward == self.size
+    return True
+```
+
+## Key Takeaways
+
+- Doubly linked lists add a previous pointer, enabling O(1) deletion at the tail and O(1) deletion of any node given a reference to it
+- The extra pointer doubles memory overhead compared to singly linked lists
+- Sentinel nodes eliminate edge cases for empty lists and boundary operations
+- Common uses include LRU caches, browser history, and deques
+- Always update both `next` and `prev` pointers when modifying the list to maintain consistency
+- Choose doubly linked when you need backward traversal or frequent deletions from both ends

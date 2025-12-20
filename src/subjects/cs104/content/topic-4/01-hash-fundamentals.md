@@ -168,6 +168,45 @@ Python uses several optimizations:
 - Memory is extremely limited
 - All keys hash to same value
 
-## Summary
+## Load Factor
 
-Hash tables provide O(1) average-case operations by using hash functions to map keys to array indices. Collisions are inevitable but manageable with proper techniques. Understanding the fundamentals prepares you for collision resolution strategies and practical applications covered in following sections.
+The **load factor** is the ratio of stored elements to bucket count:
+
+```python
+load_factor = num_elements / num_buckets
+```
+
+- **Low load factor** (< 0.5): Few collisions but wasted space
+- **High load factor** (> 0.75): More collisions, slower operations
+- **Optimal**: 0.5 to 0.75 for most use cases
+
+Python's dict resizes when load factor exceeds 2/3, doubling capacity to maintain O(1) operations.
+
+## Hashable Keys
+
+Not all objects can be hash table keys. Keys must be:
+- **Hashable**: Have a `__hash__()` method
+- **Immutable**: Hash value can't change during lifetime
+- **Equatable**: Have `__eq__()` for collision resolution
+
+```python
+# Hashable (immutable)
+d = {}
+d[42] = "integer"          # OK
+d["hello"] = "string"      # OK
+d[(1, 2, 3)] = "tuple"     # OK
+
+# Not hashable (mutable)
+d[[1, 2, 3]] = "list"      # TypeError!
+d[{1, 2}] = "set"          # TypeError!
+```
+
+## Key Takeaways
+
+- Hash tables provide O(1) average-case operations by mapping keys to array indices
+- Hash functions must be deterministic, fast, and provide uniform distribution
+- Collisions are inevitable due to the pigeonhole principle
+- Load factor affects performance: too high means more collisions, too low wastes memory
+- Only immutable, hashable objects can be used as keys
+- Python's `dict` is a highly optimized hash table implementation
+- Understanding hash table internals helps debug performance issues

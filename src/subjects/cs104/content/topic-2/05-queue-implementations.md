@@ -240,3 +240,46 @@ Python's `queue.Queue` handles all synchronization internally, making it safe fo
 - **Thread-safe needed**: Use `queue.Queue`
 - **Custom behavior needed**: Implement circular array or linked list
 - **Learning/interviews**: Understand all approaches
+
+## The Modulo Trick for Circular Queues
+
+The key to circular queue implementation is the modulo operator `%`:
+
+```python
+# Without wrapping:
+rear = front + size  # Can exceed array bounds!
+
+# With modulo (circular):
+rear = (front + size) % capacity  # Always within [0, capacity)
+```
+
+This creates the "wrap around" effect:
+- When `front + size` equals `capacity`, rear becomes `0`
+- Elements logically follow each other even when physically wrapped
+
+```
+Logical order:  [A][B][C][D][E]
+Physical array: [D][E][_][A][B][C]
+                 ↑  ↑      ↑
+               rear     front
+```
+
+## Common Implementation Bugs
+
+1. **Empty vs Full Confusion**: In circular arrays without a size counter, empty (`front == rear`) and full (`front == rear` after wrap) look the same. Solution: track size separately or waste one slot.
+
+2. **Off-by-One in Resize**: When resizing, elements must be copied in logical order starting from `front`, not physical order starting from index 0.
+
+3. **Forgetting to Update Rear After Enqueue**: The rear pointer must advance after adding, not before.
+
+4. **Not Handling Single Element**: When the queue has one element and you dequeue, both front and rear need resetting.
+
+## Key Takeaways
+
+- Naive array queues have O(n) dequeue; use circular arrays for O(1)
+- The circular queue uses modulo arithmetic for wrap-around indexing
+- Linked list queues are simpler but have higher memory overhead
+- Two-stack queues achieve amortized O(1) using only stack operations
+- Python's `collections.deque` is optimized for O(1) operations at both ends
+- Thread-safe operations require `queue.Queue` or explicit synchronization
+- Understanding all implementations helps in interviews and system design

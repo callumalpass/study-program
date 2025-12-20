@@ -175,6 +175,57 @@ def check_heap_invariant(heap):
     return True
 ```
 
-## Summary
+## Why Array Representation Works
 
-Heaps are complete binary trees with parent-child ordering. They provide O(1) access to min/max and O(log n) insertion and extraction. The array representation is space-efficient with simple index calculations. Heaps power priority queues, sorting, and graph algorithms. Python's heapq provides a min-heap implementation.
+The array representation is efficient because:
+
+1. **No wasted space**: Complete binary trees have no gaps
+2. **Simple navigation**: Parent/child found by arithmetic, not pointers
+3. **Cache-friendly**: Sequential memory access
+4. **Space-efficient**: No pointer overhead (saves 8-16 bytes per node)
+
+```
+# Tree visualization from array [90, 80, 70, 50, 60, 40, 30]
+Index:  0   1   2   3   4   5   6
+Value: 90  80  70  50  60  40  30
+
+       90 (idx 0)
+      /  \
+   80     70
+  (1)    (2)
+  / \    / \
+50  60  40  30
+(3)(4) (5)(6)
+```
+
+## Common Mistakes with Heaps
+
+1. **Assuming heap is sorted**: A heap is NOT sorted; only the root is guaranteed to be min/max
+2. **Forgetting 0-indexing**: Index formulas differ for 0-based vs 1-based arrays
+3. **Using wrong heap type**: Min-heap when you need max-heap (or vice versa)
+4. **Expecting O(1) arbitrary access**: Finding a specific element is O(n), not O(1)
+5. **Not using heapify**: Building heap with repeated pushes is O(n log n); heapify is O(n)
+
+## Heap Sort Preview
+
+Heaps enable an elegant O(n log n) in-place sort:
+
+```python
+import heapq
+
+def heap_sort(arr):
+    heapq.heapify(arr)  # O(n)
+    return [heapq.heappop(arr) for _ in range(len(arr))]  # O(n log n)
+```
+
+This extracts elements in sorted order. The full in-place version builds a max-heap and repeatedly extracts the maximum.
+
+## Key Takeaways
+
+- Heaps are complete binary trees satisfying the heap property (min or max)
+- Array representation enables efficient storage with simple index arithmetic
+- O(1) access to min/max makes heaps ideal for priority queues
+- O(log n) insertion and extraction maintain the heap property
+- Python's heapq provides min-heap; negate values for max-heap behavior
+- Heaps power Dijkstra's algorithm, heap sort, and median maintenance
+- Building a heap with heapify is O(n), faster than repeated insertions

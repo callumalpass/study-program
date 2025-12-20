@@ -194,3 +194,38 @@ task_queue.join()  # Wait for all tasks to complete
 ```
 
 The producer-consumer pattern relies heavily on queues for safe communication between threads.
+
+## Queue Terminology
+
+Different contexts use different terminology for queue operations:
+
+| Operation | Standard | Alternative Names |
+|-----------|----------|-------------------|
+| Add item | Enqueue | offer, add, put, push (confusing but used) |
+| Remove item | Dequeue | poll, remove, get, pop (confusing but used) |
+| View front | Front/Peek | head, first |
+| View rear | Rear | back, last, tail |
+
+Be aware that some languages use "push/pop" for queues (confusingly similar to stacks), so always check documentation.
+
+## Time and Space Complexity
+
+| Operation | Time Complexity | Notes |
+|-----------|-----------------|-------|
+| Enqueue | O(1) | With proper implementation |
+| Dequeue | O(1) | With proper implementation |
+| Front/Peek | O(1) | Just return pointer |
+| Is Empty | O(1) | Check size or front pointer |
+| Size | O(1) | If tracked; O(n) if counting |
+
+**Warning**: Using Python's `list.pop(0)` for dequeue is O(n) because all elements shift. Use `collections.deque` for O(1) operations.
+
+## Key Takeaways
+
+- Queues follow FIFO: First In, First Out
+- Core operations (enqueue, dequeue, front) should all be O(1)
+- Python's `collections.deque` is the recommended queue implementation
+- Queues are essential for BFS, task scheduling, and producer-consumer patterns
+- Priority queues and deques are important variants for different use cases
+- Thread-safe queues (`queue.Queue`) are fundamental for concurrent programming
+- Always use the right data structure: stack for LIFO, queue for FIFO, deque for both

@@ -157,3 +157,49 @@ s.pop();  // Note: returns void in C++
 2. **Forgetting stack is LIFO**: Drawing diagrams helps
 3. **Using list.pop(0) as stack**: That's a queue operation (O(n))
 4. **Confusing peek and pop**: Peek doesn't remove the element
+
+## Stack Terminology Across Languages
+
+Different programming languages use different terminology for stack operations:
+
+| Operation | Python (list) | Java | C++ | Description |
+|-----------|--------------|------|-----|-------------|
+| Add element | `append()` | `push()` | `push()` | Add to top |
+| Remove element | `pop()` | `pop()` | `pop()` | Remove from top |
+| View top | `[-1]` | `peek()` | `top()` | See without removing |
+| Check empty | `not stack` | `isEmpty()` | `empty()` | Returns boolean |
+| Get size | `len()` | `size()` | `size()` | Number of elements |
+
+Note that C++'s `pop()` doesn't return the element—you must call `top()` first if you need the value.
+
+## Stack Memory vs Heap Memory
+
+It's important to distinguish the stack data structure from the memory concepts:
+
+- **Stack data structure**: An abstract data type with LIFO behavior
+- **Stack memory**: The region of memory used for function calls, local variables
+- **Heap memory**: Dynamically allocated memory for objects with longer lifetimes
+
+The call stack uses stack memory to store function activation records. When you call a function, a new frame is pushed; when the function returns, the frame is popped.
+
+## Time and Space Complexity
+
+| Operation | Time Complexity | Space Complexity |
+|-----------|-----------------|------------------|
+| Push | O(1) amortized | O(1) |
+| Pop | O(1) | O(1) |
+| Peek | O(1) | O(1) |
+| Is Empty | O(1) | O(1) |
+| Search | O(n) | O(1) |
+| Size | O(1)* | O(1) |
+
+*O(1) if size is tracked, O(n) if counting nodes
+
+## Key Takeaways
+
+- Stacks follow LIFO: Last In, First Out
+- Core operations (push, pop, peek) should all be O(1)
+- The call stack manages function execution in all programming languages
+- Stacks are ideal for reversing sequences, matching brackets, and backtracking
+- Choose between array-based (cache efficient) and linked list-based (guaranteed O(1)) implementations
+- Always check if the stack is empty before popping to avoid runtime errors

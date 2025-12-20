@@ -216,3 +216,62 @@ class ThreadSafeStack:
 - Memory fragmentation is acceptable
 
 In practice, array-based implementations (like Python lists) are used in most situations due to their simplicity and cache efficiency.
+
+## Memory Layout Comparison
+
+Understanding the memory layout helps explain performance differences:
+
+**Array-based stack**:
+```
+Memory: [10][20][30][40][__][__][__][__]
+         ↑               ↑
+       base            top
+Elements are contiguous → excellent cache locality
+```
+
+**Linked list stack**:
+```
+Memory: scattered nodes
+[10|ptr] → [20|ptr] → [30|ptr] → [40|None]
+   ↑
+  head (top)
+Each node may be anywhere in memory → poor cache locality
+```
+
+The cache advantage of arrays is significant: accessing sequential memory locations is much faster because CPU caches load blocks of memory at once.
+
+## Implementing a Min Stack
+
+A common interview problem is implementing a stack that tracks the minimum element in O(1):
+
+```python
+class MinStack:
+    def __init__(self):
+        self._stack = []
+        self._min_stack = []  # Tracks minimums
+
+    def push(self, val):
+        self._stack.append(val)
+        if not self._min_stack or val <= self._min_stack[-1]:
+            self._min_stack.append(val)
+
+    def pop(self):
+        val = self._stack.pop()
+        if val == self._min_stack[-1]:
+            self._min_stack.pop()
+        return val
+
+    def get_min(self):
+        return self._min_stack[-1]
+```
+
+The auxiliary min stack stores the minimum at each "level" of the main stack, allowing O(1) min retrieval.
+
+## Key Takeaways
+
+- Array-based stacks are simpler and more cache-efficient for most use cases
+- Linked list stacks provide guaranteed O(1) operations without amortization
+- Python's `list` and `collections.deque` are production-ready stack implementations
+- Use `queue.Queue` or explicit locks for thread-safe stack operations
+- The MinStack pattern (auxiliary tracking stack) is a common technique for O(1) additional queries
+- Fixed-size stacks are useful in constrained environments like embedded systems

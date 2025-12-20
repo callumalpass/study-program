@@ -252,3 +252,90 @@ class RoundRobinScheduler:
 - More complex implementation
 - Slightly harder to debug
 - Need careful handling of edge cases
+
+## Josephus Problem
+
+A classic application of circular linked lists is the Josephus Problem: n people stand in a circle, and every k-th person is eliminated until one remains.
+
+```python
+def josephus(n, k):
+    """Find the survivor in the Josephus problem"""
+    # Create circular list of n people numbered 1 to n
+    head = Node(1)
+    current = head
+    for i in range(2, n + 1):
+        current.next = Node(i)
+        current = current.next
+    current.next = head  # Make it circular
+
+    # Eliminate every k-th person
+    current = head
+    prev = None
+
+    # Find the last node (to track previous during first elimination)
+    temp = head
+    while temp.next != head:
+        temp = temp.next
+    prev = temp
+
+    remaining = n
+    while remaining > 1:
+        # Move k-1 steps
+        for _ in range(k - 1):
+            prev = current
+            current = current.next
+
+        # Eliminate current person
+        prev.next = current.next
+        current = current.next
+        remaining -= 1
+
+    return current.data  # Survivor's position
+```
+
+## Circular Buffer Implementation
+
+A circular buffer (ring buffer) is commonly used in producer-consumer scenarios:
+
+```python
+class CircularBuffer:
+    def __init__(self, capacity):
+        self.buffer = [None] * capacity
+        self.capacity = capacity
+        self.head = 0  # Read position
+        self.tail = 0  # Write position
+        self.count = 0
+
+    def is_full(self):
+        return self.count == self.capacity
+
+    def is_empty(self):
+        return self.count == 0
+
+    def enqueue(self, item):
+        if self.is_full():
+            raise BufferError("Buffer is full")
+        self.buffer[self.tail] = item
+        self.tail = (self.tail + 1) % self.capacity
+        self.count += 1
+
+    def dequeue(self):
+        if self.is_empty():
+            raise BufferError("Buffer is empty")
+        item = self.buffer[self.head]
+        self.head = (self.head + 1) % self.capacity
+        self.count -= 1
+        return item
+```
+
+This uses an array with wrap-around indices rather than linked nodes, which is more cache-efficient for fixed-size buffers.
+
+## Key Takeaways
+
+- Circular linked lists connect the tail back to the head, eliminating null termination
+- They're ideal for applications that cycle through elements repeatedly (scheduling, playlists)
+- A tail pointer alone is sufficient since head is always `tail.next`
+- Traversal must check for returning to the starting point to avoid infinite loops
+- Floyd's algorithm detects cycles in O(n) time and O(1) space using two pointers
+- The Josephus problem is a classic example where circular structure simplifies the solution
+- Circular buffers can be implemented with arrays or linked lists depending on whether size is fixed

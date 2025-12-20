@@ -157,3 +157,36 @@ They're less ideal when:
 - Frequent insertions/deletions at the beginning or middle
 - Memory is extremely constrained
 - You need guaranteed O(1) worst-case (not amortized) operations
+
+## Common Mistakes
+
+Understanding dynamic arrays involves avoiding several common pitfalls that can lead to subtle bugs or performance issues:
+
+1. **Modifying while iterating**: Adding or removing elements during iteration can cause unexpected behavior because the underlying array may be reallocated, invalidating any pointers or indices you're using.
+
+2. **Assuming constant-time append always**: While amortized O(1), individual append operations can be O(n) during resize. In real-time systems where consistent latency matters, this spike can cause problems.
+
+3. **Forgetting about capacity vs. size**: The capacity is how much space is allocated; size is how many elements are actually stored. Accessing elements between size and capacity is undefined behavior in many implementations.
+
+4. **Not pre-allocating when size is known**: If you're going to add 10,000 elements and you know this upfront, pre-allocate to avoid multiple resize operations.
+
+```python
+# Common mistake: gradual growth
+result = []
+for i in range(10000):
+    result.append(expensive_computation(i))  # Multiple resizes
+
+# Better: pre-allocate if using index assignment
+result = [None] * 10000
+for i in range(10000):
+    result[i] = expensive_computation(i)  # No resizes
+```
+
+## Key Takeaways
+
+- Dynamic arrays provide O(1) random access like static arrays while allowing flexible sizing
+- The doubling strategy ensures amortized O(1) append operations
+- Amortized analysis averages cost over many operations rather than looking at worst-case individual operations
+- Pre-allocating capacity when the final size is known avoids resize overhead
+- The growth factor (1.5x vs 2x) represents a tradeoff between memory efficiency and resize frequency
+- Dynamic arrays are the foundation for Python lists, Java ArrayLists, and C++ vectors

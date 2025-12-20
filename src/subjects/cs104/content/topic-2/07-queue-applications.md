@@ -263,3 +263,53 @@ These systems handle millions of messages per second, demonstrating the importan
 - Implementing BFS or level-order traversal
 - Managing resources fairly (scheduling)
 - Decoupling components in distributed systems
+
+## Queue vs Stack in Algorithm Design
+
+Choosing between queue and stack fundamentally changes traversal behavior:
+
+| Aspect | Queue (BFS) | Stack (DFS) |
+|--------|-------------|-------------|
+| Traversal order | Level by level | Deep paths first |
+| Memory usage | O(width of tree/graph) | O(height of tree/graph) |
+| Shortest path | Guaranteed in unweighted | Not guaranteed |
+| Space for balanced tree | O(n/2) at deepest level | O(log n) |
+| Space for linear structure | O(1) | O(n) |
+
+For shortest path problems, always use BFS (queue). For memory-constrained scenarios with deep structures, consider DFS (stack).
+
+## Event-Driven Programming
+
+Queues are central to event-driven architectures:
+
+```python
+class EventLoop:
+    def __init__(self):
+        self.event_queue = deque()
+        self.running = False
+
+    def dispatch(self, event):
+        self.event_queue.append(event)
+
+    def run(self):
+        self.running = True
+        while self.running and self.event_queue:
+            event = self.event_queue.popleft()
+            self.handle_event(event)
+
+    def handle_event(self, event):
+        # Route to appropriate handler
+        pass
+```
+
+JavaScript, GUI frameworks, and game engines all use event queues to process user input, network responses, and timer callbacks.
+
+## Key Takeaways
+
+- BFS uses queues to explore graphs level by level, guaranteeing shortest paths in unweighted graphs
+- Level-order tree traversal processes all nodes at depth d before depth d+1
+- Operating systems use queues for fair process scheduling (round-robin)
+- Message queues decouple producers and consumers in distributed systems
+- I/O buffers use queues to handle bursty input/output
+- Event loops in GUI and network programming are essentially queue-based dispatchers
+- Production systems like Kafka and RabbitMQ scale queue concepts to millions of messages per second

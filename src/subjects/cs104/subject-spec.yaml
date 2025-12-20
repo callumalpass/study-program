@@ -1,0 +1,265 @@
+# CS104: Data Structures - Subject Specification
+# This spec guides content creation for a foundational data structures course.
+
+# ==============================================================================
+# SUBJECT IDENTITY
+# ==============================================================================
+
+id: cs104
+title: Data Structures
+category: cs
+
+role:
+  level: introductory
+  transformation: >
+    From "I can write programs" to "I can choose the right data structure for
+    any problem and understand the performance tradeoffs." Students learn to
+    think algorithmically about how data is organized and accessed.
+
+# ==============================================================================
+# CURRICULUM
+# ==============================================================================
+
+curriculum:
+  subtopic_word_target: 800
+
+  prerequisite_knowledge:
+    - CS101 or equivalent (basic programming in Python or similar language)
+    - Understanding of variables, functions, loops, and conditionals
+    - Basic familiarity with lists/arrays
+    - Elementary math (algebra, basic counting)
+
+  essential_concepts:
+    - Arrays and dynamic arrays (resizing, amortized analysis)
+    - Linked lists (singly, doubly, circular)
+    - Stacks and queues (LIFO vs FIFO, implementations)
+    - Trees and binary search trees (traversals, balanced trees)
+    - Hash tables (hash functions, collision resolution)
+    - Graphs (representations, BFS, DFS, shortest paths)
+    - Sorting algorithms (quadratic, O(n log n), linear)
+    - Heaps and priority queues
+
+  out_of_scope:
+    - Advanced graph algorithms (max flow, bipartite matching)
+    - Advanced tree structures (B-trees, red-black trees in depth)
+    - Amortized analysis proofs (intuition only)
+    - Distributed data structures
+
+# ==============================================================================
+# PEDAGOGICAL APPROACH
+# ==============================================================================
+
+pedagogy:
+  knowledge_type: mixed
+
+  mastery_indicators:
+    - Chooses appropriate data structure for a given problem
+    - Implements fundamental data structures from scratch
+    - Analyzes time and space complexity of operations
+    - Traces through algorithms step by step
+    - Recognizes when to use arrays vs linked structures
+
+  common_struggles:
+    - Confusing array indices (0-indexed vs 1-indexed)
+    - Pointer manipulation in linked structures
+    - Off-by-one errors in tree heights and depths
+    - Understanding amortized analysis intuitively
+    - Choosing between adjacency list and adjacency matrix
+    - Understanding when O(n) beats O(log n) for small n
+
+# ==============================================================================
+# CONTENT STANDARDS
+# ==============================================================================
+
+content:
+  subtopic_requirements:
+    - Include complexity analysis for every operation
+    - Show step-by-step visualizations for key algorithms
+    - Provide Python implementations that are runnable
+    - Compare alternatives (when to use which data structure)
+    - Include common mistakes and how to avoid them
+
+  conventions:
+    - Python 3.10+ syntax
+    - Big-O notation for complexity analysis
+    - Consistent variable naming (node, left, right for trees)
+    - Diagrams using ASCII art or described clearly in text
+
+# ==============================================================================
+# ASSESSMENT PHILOSOPHY
+# ==============================================================================
+
+assessment:
+  philosophy: >
+    Data structures mastery requires both conceptual understanding and
+    implementation skills. Students should be able to trace through algorithms
+    on paper, analyze complexity, and write correct implementations. Exercises
+    progress from tracing to implementation to design.
+
+  measures:
+    - Correct implementation of data structure operations
+    - Accurate complexity analysis
+    - Algorithm tracing and debugging skills
+    - Design decisions (choosing the right data structure)
+
+  anti_patterns:
+    - Memorizing specific implementations without understanding
+    - Questions that only test syntax rather than concepts
+    - Exercises with only one valid implementation approach
+    - Problems solvable without understanding the data structure
+
+# ==============================================================================
+# GRADING THRESHOLDS
+# ==============================================================================
+
+grading:
+  passing_score: 70
+
+  thresholds:
+    exercises: 70
+    quizzes: 65
+    exams: 65
+
+  rationale: >
+    Standard passing threshold. Data structures requires hands-on practice,
+    so exercise threshold matches overall. Quiz and exam thresholds slightly
+    lower since multiple-choice can be tricky even with conceptual understanding.
+
+# ==============================================================================
+# EXERCISE SPECIFICATIONS
+# ==============================================================================
+
+exercises:
+  rationale: >
+    Mix of implementation and analysis exercises. Early exercises focus on
+    implementing individual operations, later exercises combine concepts.
+    Automated tests provide immediate feedback on correctness.
+
+  types:
+    coding_with_tests: "90%"
+    coding_ai_evaluated: "5%"
+    written: "5%"
+    justification: >
+      Most exercises are coding with automated tests for immediate feedback.
+      Some AI-evaluated for open-ended design questions. A few written for
+      complexity analysis justifications.
+
+  per_topic:
+    minimum: 14
+    target: 16
+    maximum: 18
+    justification: >
+      Full base standard count. Data structures benefits from volume of
+      practice with different operations and edge cases.
+
+  difficulty_distribution:
+    1: 3
+    2: 3
+    3: 4
+    4: 3
+    5: 3
+    justification: >
+      Standard distribution. Difficulty 1-2 for basic operations, 3 for
+      combining concepts, 4-5 for optimization and complex implementations.
+
+# ==============================================================================
+# QUIZ SPECIFICATIONS
+# ==============================================================================
+
+quizzes:
+  rationale: >
+    Quizzes test conceptual understanding and ability to trace through
+    algorithms. They complement coding exercises by testing mental models.
+
+  per_topic:
+    count: 3
+    questions_each: 5
+    justification: >
+      Standard base count. Three quizzes per topic: fundamentals, application,
+      mastery. Mix of conceptual and code tracing questions.
+
+  question_types:
+    multiple_choice: "40%"
+    true_false: "15%"
+    fill_blank: "15%"
+    code_output: "30%"
+    coding: "0%"
+    written: "0%"
+    justification: >
+      Heavy on code_output to test algorithm tracing ability. Multiple choice
+      for conceptual understanding and complexity analysis.
+
+# ==============================================================================
+# EXAM SPECIFICATIONS
+# ==============================================================================
+
+exams:
+  rationale: >
+    Exams test comprehensive understanding without IDE assistance. Mix of
+    tracing, analysis, and short implementation problems.
+
+  midterm:
+    questions:
+      minimum: 24
+      target: 26
+      maximum: 30
+    duration_minutes: 75
+    format: >
+      8-10 code tracing, 8-10 multiple choice on concepts and complexity,
+      6-8 short implementation problems.
+    coverage: "Topics 1-4: Arrays, linked lists, stacks/queues, trees"
+
+  final:
+    questions:
+      minimum: 38
+      target: 42
+      maximum: 48
+    duration_minutes: 120
+    format: >
+      12-15 code tracing, 12-15 multiple choice, 10-12 implementation.
+      Emphasis on graphs, sorting, and heaps. At least one comprehensive
+      problem integrating multiple data structures.
+    coverage: "Comprehensive: all 7 topics"
+    cumulative: true
+
+# ==============================================================================
+# PROJECT SPECIFICATIONS
+# ==============================================================================
+
+projects:
+  required: true
+  count: 2
+  rationale: >
+    Projects give students experience implementing larger data structures and
+    seeing how they're used in realistic applications. Two projects: one
+    focused on a single data structure implementation, one on applying multiple
+    data structures to solve a problem.
+
+  goals:
+    - Implement a complete data structure with all operations
+    - Apply data structures to solve a realistic problem
+    - Handle edge cases and write thorough tests
+    - Analyze and document time/space complexity
+
+  estimated_hours: "10-15"
+
+# ==============================================================================
+# SUBJECT-SPECIFIC RED FLAGS
+# ==============================================================================
+
+red_flags:
+  - Exercise expects specific implementation when multiple valid approaches exist
+  - Complexity analysis question with ambiguous "best case" vs "worst case"
+  - Tree problem uses 1-indexed arrays when course uses 0-indexed
+  - Graph problem assumes directed when example shows undirected (or vice versa)
+  - Hash table exercise tests specific hash function rather than concept
+
+# ==============================================================================
+# NOTES
+# ==============================================================================
+
+notes: >
+  Data Structures bridges the gap between basic programming and algorithm
+  analysis. Students should leave understanding not just HOW data structures
+  work but WHEN to use each one. Content should emphasize tradeoffs and
+  decision-making, not just implementation details.

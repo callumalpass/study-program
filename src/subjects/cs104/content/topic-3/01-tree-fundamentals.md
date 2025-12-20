@@ -201,3 +201,52 @@ Trees provide efficient operations that linear structures cannot:
 - **Sorting**: In-order traversal of BST gives sorted output
 - **Range queries**: Efficiently find values in a range
 - **Prefix matching**: Tries for autocomplete
+
+## Tree vs Linear Structure Comparison
+
+| Aspect | Array/List | Tree (Balanced) |
+|--------|------------|-----------------|
+| Search | O(n) or O(log n) if sorted | O(log n) |
+| Insert (maintain order) | O(n) | O(log n) |
+| Delete | O(n) | O(log n) |
+| Find min/max | O(n) or O(1) at ends | O(log n) or O(1) |
+| Memory | Contiguous | Non-contiguous (pointers) |
+| Cache performance | Excellent | Poor |
+
+## Common Mistakes with Trees
+
+1. **Confusing height and depth**: Height is measured from the bottom (leaves), depth from the top (root)
+2. **Off-by-one in height calculation**: Clarify whether a single node has height 0 or 1
+3. **Forgetting base case**: Always check for `None` before accessing children
+4. **Not handling empty tree**: An empty tree (root = None) is valid
+5. **Assuming balance**: General trees aren't balanced; only specific types guarantee balance
+
+## Recursion and Trees
+
+Trees and recursion are natural partners. Most tree operations follow this pattern:
+
+```python
+def tree_operation(node):
+    if not node:
+        return base_case
+
+    # Process current node (preorder)
+
+    left_result = tree_operation(node.left)
+    right_result = tree_operation(node.right)
+
+    # Combine results (postorder)
+    return combine(left_result, right_result)
+```
+
+This recursive structure mirrors the tree's hierarchical nature.
+
+## Key Takeaways
+
+- Trees are hierarchical structures with parent-child relationships
+- Binary trees restrict each node to at most two children
+- Complete binary trees enable efficient array representation
+- Tree height determines operation complexity: balanced trees give O(log n)
+- Understanding terminology (root, leaf, depth, height) is essential
+- Trees power file systems, databases, compilers, and AI algorithms
+- Most tree algorithms are naturally recursive

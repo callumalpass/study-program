@@ -247,3 +247,54 @@ def factorial_iterative(n):
 ```
 
 Converting recursive algorithms to iterative ones with stacks is essential for handling deep recursion without stack overflow.
+
+## String Reversal
+
+A simple but illustrative application—reversing a string using a stack:
+
+```python
+def reverse_string(s):
+    stack = list(s)  # Push all characters
+    result = []
+
+    while stack:
+        result.append(stack.pop())
+
+    return ''.join(result)
+
+# More Pythonic, but same principle:
+def reverse_string_simple(s):
+    return s[::-1]
+```
+
+This demonstrates the fundamental property: LIFO order naturally produces reversal.
+
+## Path Simplification
+
+Simplifying file paths like `/a/b/../c/./d` to `/a/c/d`:
+
+```python
+def simplify_path(path):
+    stack = []
+
+    for part in path.split('/'):
+        if part == '..':
+            if stack:
+                stack.pop()
+        elif part and part != '.':
+            stack.append(part)
+
+    return '/' + '/'.join(stack)
+
+# Example: simplify_path("/a/./b/../../c/") → "/c"
+```
+
+## Key Takeaways
+
+- Stacks excel at problems requiring reversal, matching, or backtracking
+- The bracket matching problem is a canonical stack application used in parsers and compilers
+- Expression evaluation (infix to postfix, postfix evaluation) demonstrates how stacks handle operator precedence
+- Undo/redo and browser history use two stacks to navigate forward and backward through state
+- DFS can be implemented iteratively using an explicit stack, avoiding recursion limits
+- Monotonic stacks solve problems like "next greater element" in O(n) time
+- When you see nested or paired structures (brackets, tags, function calls), think stacks

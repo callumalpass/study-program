@@ -122,6 +122,44 @@ def measure_sort(sort_func, n, trials=5):
 3. **Wrong algorithm for size**: O(n²) is fine for n=100, not n=1,000,000
 4. **Modifying while iterating**: Don't sort the array you're iterating over
 
-## Summary
+## Sorting Visualizations
 
-Sorting is fundamental to computer science. Understand the trade-offs between algorithms: time complexity, space complexity, stability, and adaptiveness. Use language built-ins (Timsort in Python) for general cases, but know when specialized algorithms are better.
+Understanding how elements move during sorting helps internalize algorithms:
+
+```
+Bubble Sort passes:     Selection Sort:         Insertion Sort:
+[5,3,8,1,2]            [5,3,8,1,2]             [5,3,8,1,2]
+[3,5,1,2,8]            [1,3,8,5,2] swap min    [3,5,8,1,2] insert 3
+[3,1,2,5,8]            [1,2,8,5,3] swap min    [3,5,8,1,2] 8 in place
+[1,2,3,5,8]            [1,2,3,5,8] continue    [1,3,5,8,2] insert 1
+[1,2,3,5,8]            [1,2,3,5,8] done        [1,2,3,5,8] insert 2
+```
+
+## Real-World Considerations
+
+Beyond asymptotic complexity, practical sorting considers:
+
+1. **Cache behavior**: Merge sort's sequential access is cache-friendly; quicksort's random access can cause cache misses
+2. **Branch prediction**: Sorting networks (like Bitonic sort) avoid branch mispredictions
+3. **Parallelization**: Merge sort parallelizes naturally; quicksort requires careful work distribution
+4. **Data characteristics**: Nearly sorted, many duplicates, uniform distribution
+
+## Timsort: Python's Default
+
+Timsort, used by Python and Java, combines merge sort and insertion sort:
+
+1. Find "runs" (already-sorted subsequences)
+2. Extend short runs with insertion sort
+3. Merge runs intelligently using galloping mode
+
+This makes Timsort O(n) on sorted or reverse-sorted data, while maintaining O(n log n) worst case.
+
+## Key Takeaways
+
+- Sorting is fundamental: binary search, database operations, and many algorithms require sorted input
+- O(n log n) is the lower bound for comparison-based sorting
+- Stability matters when sorting by multiple keys
+- In-place algorithms use O(1) extra space but may sacrifice stability or simplicity
+- Use language built-ins (Timsort) unless you have specific needs
+- Practical considerations (cache, parallelism) can matter more than asymptotic complexity
+- Understanding trade-offs helps choose the right algorithm for each situation
