@@ -363,7 +363,7 @@ function renderWrittenExercisePage(
           completionId: `completion_${Date.now()}`,
           timestamp: new Date().toISOString(),
           code: content,
-          passed: content.trim().length > 0,
+          passed: content.trim().length > 0, // Preliminary - updated by onEvaluate if AI is used
           timeSpentSeconds,
           type: 'written',
         };
@@ -379,6 +379,29 @@ function renderWrittenExercisePage(
             badge.className = 'completion-badge saved';
             badge.innerHTML = `${Icons.Check} Proof Saved`;
             metaRow.appendChild(badge);
+          }
+        }
+      },
+      onEvaluate: (result) => {
+        // Update the exercise completion with AI evaluation result
+        const existingCompletion = progressStorage.getExerciseCompletion(subjectId, exerciseId);
+        if (existingCompletion) {
+          const updatedCompletion: ExerciseCompletion = {
+            ...existingCompletion,
+            passed: result.passed, // AI determines pass/fail (score >= 70%)
+          };
+          progressStorage.addExerciseCompletion(subjectId, exerciseId, updatedCompletion);
+
+          // Update the header badge based on AI result
+          const metaRow = container.querySelector('.exercise-meta-row');
+          if (metaRow) {
+            const existingBadge = metaRow.querySelector('.completion-badge');
+            if (existingBadge) {
+              existingBadge.className = `completion-badge ${result.passed ? 'passed' : 'not-passed'}`;
+              existingBadge.innerHTML = result.passed
+                ? `${Icons.Check} Passed (${result.score}%)`
+                : `${Icons.Cross} Needs Work (${result.score}%)`;
+            }
           }
         }
       },

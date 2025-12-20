@@ -168,6 +168,16 @@ export interface StarterResource {
   link?: string;
 }
 
+// Spaced Repetition Types
+export interface ReviewItem {
+  itemType: 'quiz' | 'exercise';
+  itemId: string;
+  subjectId: string;
+  nextReviewAt: string;      // ISO date string
+  interval: number;          // Days until next review
+  streak: number;            // Consecutive correct answers
+}
+
 // User Progress Types
 export interface UserProgress {
   version: number;
@@ -175,6 +185,7 @@ export interface UserProgress {
   lastUpdated?: string; // ISO date string - for sync conflict resolution
   subjects: Record<string, SubjectProgress>;
   settings: UserSettings;
+  reviewQueue?: ReviewItem[]; // Spaced repetition review queue
 }
 
 export interface SubtopicView {

@@ -1,5 +1,5 @@
 // Home/Dashboard page
-import type { Subject } from '@/core/types';
+import type { Subject, ReviewItem } from '@/core/types';
 import { progressStorage } from '@/core/storage';
 import {
   calculateOverallProgress,
@@ -8,6 +8,86 @@ import {
 } from '@/core/progress';
 import { navigateToSubject, navigateToCurriculum } from '@/core/router';
 import { Icons } from '../components/icons';
+
+/**
+ * Format a review item ID into a human-readable title
+ * e.g., "cs101-t1-quiz-a" -> "CS101 Topic 1 Quiz A"
+ */
+function formatReviewItemTitle(item: ReviewItem): string {
+  const id = item.itemId;
+
+  // Extract subject code (e.g., "cs101" or "math201")
+  const subjectMatch = id.match(/^([a-z]+\d+)/i);
+  const subjectCode = subjectMatch ? subjectMatch[1].toUpperCase() : '';
+
+  // Extract topic number
+  const topicMatch = id.match(/-t(\d+)-/);
+  const topicNum = topicMatch ? `Topic ${topicMatch[1]}` : '';
+
+  if (item.itemType === 'quiz') {
+    // Format: cs101-t1-quiz-a -> CS101 Topic 1 Quiz A
+    const quizMatch = id.match(/quiz-([abc])/i);
+    const quizLevel = quizMatch ? `Quiz ${quizMatch[1].toUpperCase()}` : 'Quiz';
+    return `${subjectCode} ${topicNum} ${quizLevel}`.trim();
+  } else {
+    // Format: cs101-t1-ex01 -> CS101 Topic 1 Exercise 1
+    const exMatch = id.match(/ex(\d+)/i);
+    const exNum = exMatch ? `Exercise ${parseInt(exMatch[1])}` : 'Exercise';
+    return `${subjectCode} ${topicNum} ${exNum}`.trim();
+  }
+}
+
+/**
+ * Get the navigation URL for a review item
+ */
+function getReviewItemUrl(item: ReviewItem): string {
+  if (item.itemType === 'quiz') {
+    return `#/subject/${item.subjectId}/quiz/${item.itemId}`;
+  } else {
+    return `#/subject/${item.subjectId}/exercise/${item.itemId}`;
+  }
+}
+
+/**
+ * Render the daily review section
+ */
+function renderDailyReviewSection(): string {
+  const dueItems = progressStorage.getDueReviewItems(5);
+  const totalDue = progressStorage.getDueReviewCount();
+
+  if (dueItems.length === 0) {
+    return '';
+  }
+
+  return `
+    <section class="daily-review">
+      <h2>
+        ${Icons.Review || '📚'} Due for Review
+        <span class="review-count">${totalDue} item${totalDue !== 1 ? 's' : ''}</span>
+      </h2>
+      <p class="review-description">These items need reinforcement based on your previous performance.</p>
+      <div class="review-list">
+        ${dueItems.map(item => `
+          <a href="${getReviewItemUrl(item)}" class="review-item" data-item-id="${item.itemId}" data-item-type="${item.itemType}">
+            <div class="review-item-icon">
+              ${item.itemType === 'quiz' ? Icons.Quiz || '📝' : Icons.Code || '💻'}
+            </div>
+            <div class="review-item-content">
+              <span class="review-item-title">${formatReviewItemTitle(item)}</span>
+              <span class="review-item-meta">
+                Streak: ${item.streak} · Next interval: ${item.interval} day${item.interval !== 1 ? 's' : ''}
+              </span>
+            </div>
+            <div class="review-item-arrow">→</div>
+          </a>
+        `).join('')}
+      </div>
+      ${totalDue > 5 ? `
+        <p class="review-more">+ ${totalDue - 5} more items due for review</p>
+      ` : ''}
+    </section>
+  `;
+}
 
 /**
  * Render the home/dashboard page
@@ -85,6 +165,8 @@ export function renderHomePage(container: HTMLElement, subjects: Subject[]): voi
           </div>
         </section>
       `}
+
+      ${renderDailyReviewSection()}
 
       ${inProgressSubjects.length > 0 ? `
         <section class="recent-subjects">

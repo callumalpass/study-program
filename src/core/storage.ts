@@ -10,11 +10,28 @@ import type {
   UserSettings,
   AiGrade,
   SubtopicView,
+  ReviewItem,
 } from './types';
 import { githubService } from '../services/github';
 
 const STORAGE_KEY = 'cs_degree_progress';
-const CURRENT_VERSION = 2;
+const CURRENT_VERSION = 3;
+
+/**
+ * Calculate the next review interval based on streak and pass/fail
+ * Simple three-tier system: 1 day -> 3 days -> 7 days -> 14 days -> 30 days
+ */
+function calculateNextInterval(streak: number, passed: boolean): number {
+  if (!passed) return 1;  // Failed: review tomorrow
+
+  switch (streak) {
+    case 0: return 1;     // First time: 1 day
+    case 1: return 3;     // Second correct: 3 days
+    case 2: return 7;     // Third correct: 1 week
+    case 3: return 14;    // Fourth correct: 2 weeks
+    default: return 30;   // Mastered: monthly
+  }
+}
 const SYNC_DEBOUNCE_MS = 5000; // Sync at most every 5 seconds
 
 export class ProgressStorage {
@@ -234,6 +251,11 @@ export class ProgressStorage {
       migrated.settings = this.getDefaults().settings;
     }
 
+    // Add reviewQueue if missing (v3+)
+    if (!migrated.reviewQueue) {
+      migrated.reviewQueue = [];
+    }
+
     // Ensure subject containers include new structures
     if (migrated.subjects) {
       Object.keys(migrated.subjects).forEach(subjectId => {
@@ -314,6 +336,19 @@ export class ProgressStorage {
     }
 
     subjectProgress.quizAttempts[quizId].push(attempt);
+
+    // Auto-add to review queue if score < 85%
+    if (attempt.score < 85) {
+      this.addToReviewQueue({
+        itemType: 'quiz',
+        itemId: quizId,
+        subjectId,
+      });
+    } else {
+      // Good score - update review item if it exists (extends interval)
+      this.updateReviewItem(quizId, 'quiz', true);
+    }
+
     this.save();
   }
 
@@ -415,6 +450,18 @@ export class ProgressStorage {
         ...completion,
         timeSpentSeconds: totalTime,
       };
+    }
+
+    // Auto-add to review queue if failed
+    if (!completion.passed) {
+      this.addToReviewQueue({
+        itemType: 'exercise',
+        itemId: exerciseId,
+        subjectId,
+      });
+    } else {
+      // Passed - update review item if it exists (extends interval)
+      this.updateReviewItem(exerciseId, 'exercise', true);
     }
 
     this.save();
@@ -576,6 +623,100 @@ export class ProgressStorage {
       return false;
     }
   }
+
+  // ==================== Spaced Repetition Methods ====================
+
+  /**
+   * Add an item to the review queue (if not already present)
+   */
+  addToReviewQueue(item: { itemType: 'quiz' | 'exercise'; itemId: string; subjectId: string }): void {
+    if (!this.progress.reviewQueue) {
+      this.progress.reviewQueue = [];
+    }
+
+    // Check if already in queue
+    const existing = this.progress.reviewQueue.find(
+      r => r.itemId === item.itemId && r.itemType === item.itemType
+    );
+
+    if (!existing) {
+      this.progress.reviewQueue.push({
+        ...item,
+        nextReviewAt: new Date().toISOString(), // Due now
+        interval: 1,
+        streak: 0,
+      });
+      // Note: save() is called by the parent method
+    }
+  }
+
+  /**
+   * Update a review item after an attempt (recalculates next review date)
+   */
+  updateReviewItem(itemId: string, itemType: 'quiz' | 'exercise', passed: boolean): void {
+    const queue = this.progress.reviewQueue;
+    if (!queue) return;
+
+    const item = queue.find(r => r.itemId === itemId && r.itemType === itemType);
+    if (!item) return;
+
+    if (passed) {
+      item.streak += 1;
+    } else {
+      item.streak = 0;
+    }
+
+    item.interval = calculateNextInterval(item.streak, passed);
+
+    const nextDate = new Date();
+    nextDate.setDate(nextDate.getDate() + item.interval);
+    item.nextReviewAt = nextDate.toISOString();
+
+    // Note: save() is called by the parent method
+  }
+
+  /**
+   * Get items due for review (sorted by due date, oldest first)
+   */
+  getDueReviewItems(limit: number = 10): ReviewItem[] {
+    const queue = this.progress.reviewQueue || [];
+    const now = new Date();
+
+    return queue
+      .filter(item => new Date(item.nextReviewAt) <= now)
+      .sort((a, b) => new Date(a.nextReviewAt).getTime() - new Date(b.nextReviewAt).getTime())
+      .slice(0, limit);
+  }
+
+  /**
+   * Get all items in the review queue (including future items)
+   */
+  getReviewQueue(): ReviewItem[] {
+    return this.progress.reviewQueue || [];
+  }
+
+  /**
+   * Remove an item from the review queue (e.g., when mastered)
+   */
+  removeFromReviewQueue(itemId: string, itemType: 'quiz' | 'exercise'): void {
+    if (!this.progress.reviewQueue) return;
+
+    this.progress.reviewQueue = this.progress.reviewQueue.filter(
+      r => !(r.itemId === itemId && r.itemType === itemType)
+    );
+    this.save();
+  }
+
+  /**
+   * Get count of items due for review
+   */
+  getDueReviewCount(): number {
+    const queue = this.progress.reviewQueue || [];
+    const now = new Date();
+    return queue.filter(item => new Date(item.nextReviewAt) <= now).length;
+  }
+
+  // ==================== End Spaced Repetition Methods ====================
 
   /**
    * Reset all progress (with confirmation)

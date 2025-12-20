@@ -90,7 +90,8 @@ src/content/subjects/{subject}/topic-{N}/
 ### Requirements
 - **Exactly 16 exercises** per topic (112 total per subject)
 - Difficulty ratings from 1-5
-- Complete starter code, solution, test cases, and hints
+- Two exercise types: **Coding** (CS subjects) and **Written** (MATH/theory subjects)
+- Complete solutions and hints for all exercises
 
 ### Difficulty Distribution (per topic)
 
@@ -102,7 +103,18 @@ src/content/subjects/{subject}/topic-{N}/
 | 4 (Hard) | 3 | Complex problems, edge cases |
 | 5 (Expert) | 3 | Advanced, optimization, multiple approaches |
 
-### Exercise Components
+### Exercise Types
+
+Subjects use one of two exercise types:
+
+| Subject Type | Exercise Type | Validation Method |
+|--------------|---------------|-------------------|
+| CS (Programming) | Coding | Automated test cases |
+| MATH/Theory | Written | LLM evaluation (Gemini API) |
+
+---
+
+### Coding Exercise Components
 
 | Component | Required | Specification |
 |-----------|----------|---------------|
@@ -129,6 +141,41 @@ Each test case must have:
 - `expectedOutput`: Expected result (or auto-generated from solution)
 - `isHidden`: Boolean
 - `description`: What this test validates
+
+---
+
+### Written Exercise Components
+
+| Component | Required | Specification |
+|-----------|----------|---------------|
+| id | Yes | Format: `{subject}-t{topic}-ex{NN}` |
+| type | Yes | Must be `'written'` |
+| title | Yes | Clear, descriptive (3-8 words) |
+| description | Yes | Problem statement with markdown/LaTeX support |
+| difficulty | Yes | Integer 1-5 |
+| solution | Yes | Complete reference solution for LLM comparison |
+| hints | Yes | 3-4 progressive hints |
+
+### Written Exercise Evaluation
+
+Written exercises are evaluated by the Gemini API, which compares student submissions against the reference solution. The evaluation returns:
+
+| Field | Description |
+|-------|-------------|
+| `passed` | Boolean (score ≥ 70%) |
+| `score` | 0-100 percentage |
+| `feedback` | Detailed explanation of evaluation |
+| `strengths` | What the student did well |
+| `improvements` | Areas for improvement |
+
+**Grading Criteria:**
+1. **Correctness** - Is the logic/reasoning valid?
+2. **Completeness** - Are all parts of the problem addressed?
+3. **Clarity** - Is the explanation well-structured?
+
+**Flexibility:** The LLM accepts alternative valid approaches, different notation, and equivalent proofs that differ from the reference solution.
+
+---
 
 ### Hint Guidelines
 1. **Hint 1:** General direction ("Think about what data structure would help...")
