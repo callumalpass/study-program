@@ -1,56 +1,171 @@
+# CS404: Capstone Project - Subject Specification
+# This spec guides content creation for the capstone software project course.
+
+# ==============================================================================
+# SUBJECT IDENTITY
+# ==============================================================================
+
 id: cs404
-title: Software Project Management
+title: Capstone Project
 category: cs
+
 role:
-  level: advanced
-  transformation: From "coding in isolation" to "delivering professional software projects in a team context"
+  level: capstone
+  transformation: >
+    From "coding in isolation" to "delivering professional software projects in a team context."
+    Students finish able to plan, execute, and deliver complete software projects following
+    industry-standard practices.
+
+# ==============================================================================
+# CURRICULUM
+# ==============================================================================
+
+curriculum:
+  subtopic_word_target: 800
+
+  prerequisite_knowledge:
+    - Software engineering fundamentals (CS204)
+    - Web development skills (CS305)
+    - Database design and implementation (CS205)
+    - Version control proficiency (Git)
+    - Basic understanding of testing principles
+
+  essential_concepts:
+    - Project planning and scope definition
+    - Software architecture and design patterns
+    - Development workflow and version control strategies
+    - Testing strategies (unit, integration, E2E)
+    - CI/CD pipelines and deployment automation
+    - Monitoring, logging, and operations
+    - Technical documentation and user guides
+    - Demo preparation and project delivery
+
+  out_of_scope:
+    - Advanced DevOps and infrastructure-as-code
+    - Machine learning operations (MLOps)
+    - Enterprise-scale architecture patterns
+    - Multi-cloud deployment strategies
+
+# ==============================================================================
+# PEDAGOGICAL APPROACH
+# ==============================================================================
+
 pedagogy:
   knowledge_type: applied
+
   mastery_indicators:
     - Creates comprehensive project documentation (spec, design, API)
     - Sets up and maintains professional development infrastructure (CI/CD, testing)
     - Manages project lifecycle including risks, timeline, and quality
+    - Delivers polished demos and presentations
+    - Writes clear, maintainable technical documentation
+
   common_struggles:
-    - Undestimating time requirements (optimism bias)
+    - Underestimating time requirements (optimism bias)
     - Neglecting non-functional requirements
     - Skipping documentation or testing under pressure
+    - Poor scope management and feature creep
+    - Inadequate error handling and edge case coverage
+
+# ==============================================================================
+# CONTENT STANDARDS
+# ==============================================================================
+
 content:
   subtopic_requirements:
     - Include templates or examples for documentation
     - Practical scenarios for decision making
+    - Real-world case studies where applicable
+    - Checklists and best practices for each phase
+
   conventions:
     - Agile/Scrum terminology
     - Industry standard tools (Git, Docker, etc. mentioned generically)
+    - Platform-agnostic examples where possible
+
+# ==============================================================================
+# ASSESSMENT PHILOSOPHY
+# ==============================================================================
+
 assessment:
-  philosophy: Focus on the process and artifacts of software delivery, not just the final code.
+  philosophy: >
+    Focus on the process and artifacts of software delivery, not just the final code.
+    Students should demonstrate professional-quality deliverables at each project phase.
+
   measures:
     - Quality of documentation and planning artifacts
     - Effectiveness of setup and process (CI/CD, testing)
     - Practical application of project management concepts
+    - Ability to identify and mitigate risks
+
   anti_patterns:
     - Pure theory questions without scenario context
     - Ignoring the "soft skills" aspect of project management
+    - Testing memorization of tool commands rather than understanding
+
+# ==============================================================================
+# GRADING THRESHOLDS
+# ==============================================================================
+
 grading:
   passing_score: 70
-  rationale: High standard required for capstone-level professional preparation.
+
+  thresholds:
+    exercises: 70
+    quizzes: 70
+    exams: 65
+
+  rationale: >
+    High standard required for capstone-level professional preparation.
+    Lower exam threshold acknowledges scenario-based questions can be challenging.
+
+# ==============================================================================
+# EXERCISE SPECIFICATIONS
+# ==============================================================================
+
 exercises:
-  rationale: Mix of document creation and technical configuration.
+  rationale: >
+    Mix of document creation and technical configuration. Students practice
+    both the planning/documentation side and the technical implementation side
+    of project delivery.
+
   types:
     coding_with_tests: "30%"
     coding_ai_evaluated: "30%"
     written: "40%"
-    justification: Heavy focus on documentation and process artifacts (written) and configuration (coding/AI).
+    justification: >
+      Heavy focus on documentation and process artifacts (written) and
+      configuration (coding/AI). Many capstone deliverables are documents,
+      not code.
+
   per_topic:
     minimum: 10
     target: 16
     maximum: 20
     justification: Standard volume to practice various aspects of the topic.
+
+  difficulty_distribution:
+    1: 3
+    2: 3
+    3: 4
+    4: 3
+    5: 3
+    justification: >
+      Standard distribution. Capstone exercises should challenge students
+      across all difficulty levels as they prepare for professional work.
+
+# ==============================================================================
+# QUIZ SPECIFICATIONS
+# ==============================================================================
+
 quizzes:
   rationale: Verify understanding of concepts and terminology.
+
   per_topic:
     count: 3
     questions_each: 5
-    justification: Standard check.
+    justification: Standard check for concept retention.
+
   question_types:
     multiple_choice: "60%"
     true_false: "20%"
@@ -58,9 +173,19 @@ quizzes:
     code_output: "0%"
     coding: "0%"
     written: "0%"
-    justification: Conceptual checks mostly.
+    justification: >
+      Conceptual checks mostly. Code output not relevant for project
+      management and documentation topics.
+
+# ==============================================================================
+# EXAM SPECIFICATIONS
+# ==============================================================================
+
 exams:
-  rationale: Comprehensive review of methodologies and practices.
+  rationale: >
+    Comprehensive review of methodologies and practices. Exams use
+    scenario-based questions that mirror real project decisions.
+
   midterm:
     questions:
       minimum: 20
@@ -68,7 +193,8 @@ exams:
       maximum: 30
     duration_minutes: 75
     format: Scenario-based MC and short answer
-    coverage: Topics 1-4
+    coverage: Topics 1-4 (Planning through Implementation Phase 2)
+
   final:
     questions:
       minimum: 35
@@ -78,14 +204,43 @@ exams:
     format: Comprehensive scenario analysis
     coverage: All topics
     cumulative: true
+
+# ==============================================================================
+# PROJECT SPECIFICATIONS
+# ==============================================================================
+
 projects:
   required: true
   count: 7
-  rationale: The course itself is structured around a semester-long project lifecycle broken into 7 phases.
+
+  rationale: >
+    The course itself is structured around a semester-long project lifecycle
+    broken into 7 phases. Each topic corresponds to a project phase deliverable.
+
   goals:
     - Apply all learned phases to a single coherent project
+    - Build a portfolio-ready project from start to finish
+    - Practice professional software development workflow
+    - Experience the full project lifecycle
+
   estimated_hours: "40+"
+
+# ==============================================================================
+# SUBJECT-SPECIFIC RED FLAGS
+# ==============================================================================
+
 red_flags:
   - Theoretical questions that ignore practical reality
   - Outdated waterfall-only methodologies
-notes: Ensure content balances technical tooling with management process.
+  - Tool-specific commands without explaining the concept
+  - Exercises that can't be completed without specific paid tools
+  - Content that doesn't reflect modern development practices
+
+# ==============================================================================
+# NOTES
+# ==============================================================================
+
+notes: >
+  Ensure content balances technical tooling with management process.
+  Students should understand both the "what" and the "why" of each practice.
+  Examples should be practical and applicable to real projects.
