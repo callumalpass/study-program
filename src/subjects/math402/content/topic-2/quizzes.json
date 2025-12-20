@@ -33,23 +33,18 @@
       },
       {
         "id": "q3",
-        "type": "true_false",
-        "prompt": "Newton's method requires the function to be twice differentiable for quadratic convergence.",
-        "correctAnswer": false,
-        "explanation": "False. Newton's method requires only first derivative continuity (f ∈ C^1) for quadratic convergence at simple roots. Second derivative is needed for the convergence analysis but not for the method itself."
+        "type": "code_output",
+        "prompt": "What is the output of this bisection method iteration?",
+        "codeSnippet": "a, b = 1.0, 2.0\nf = lambda x: x**2 - 2\nfor i in range(3):\n    c = (a + b) / 2\n    if f(a) * f(c) < 0:\n        b = c\n    else:\n        a = c\nprint(f'{c:.4f}')",
+        "correctAnswer": "1.3750",
+        "explanation": "After 3 iterations of bisection on [1,2] for f(x) = x² - 2: [1,2]→[1,1.5]→[1.25,1.5]→[1.25,1.375], giving c = 1.375."
       },
       {
         "id": "q4",
-        "type": "multiple_choice",
-        "prompt": "The fixed-point iteration x_{n+1} = g(x_n) converges if:",
-        "options": [
-          "g is continuous",
-          "|g'(x)| < 1 near the fixed point",
-          "g(x) = x has a solution",
-          "x_0 is sufficiently large"
-        ],
-        "correctAnswer": 1,
-        "explanation": "By the Fixed-Point Theorem, if |g'(x)| < 1 in a neighborhood of the fixed point x*, the iteration converges for x_0 sufficiently close to x*."
+        "type": "true_false",
+        "prompt": "The fixed-point iteration x_{n+1} = g(x_n) converges if |g'(x)| < 1 near the fixed point.",
+        "correctAnswer": true,
+        "explanation": "True. By the Fixed-Point Theorem, if |g'(x)| < 1 in a neighborhood of the fixed point x*, the iteration converges for x_0 sufficiently close to x*."
       },
       {
         "id": "q5",
@@ -81,6 +76,14 @@
       },
       {
         "id": "q2",
+        "type": "code_output",
+        "prompt": "What value is printed after one Newton iteration?",
+        "codeSnippet": "import math\nx = 1.0  # initial guess\nf = lambda x: x**2 - 2\ndf = lambda x: 2*x\nx_new = x - f(x) / df(x)\nprint(f'{x_new:.6f}')",
+        "correctAnswer": "1.500000",
+        "explanation": "Newton iteration: x_new = 1 - (1² - 2)/(2·1) = 1 - (-1)/2 = 1.5. This is the classic Babylonian method for computing √2."
+      },
+      {
+        "id": "q3",
         "type": "multiple_choice",
         "prompt": "Which method requires two initial guesses?",
         "options": [
@@ -93,37 +96,18 @@
         "explanation": "The secant method needs two initial guesses x_0 and x_1 to approximate the derivative: f'(x_n) ≈ (f(x_n) - f(x_{n-1}))/(x_n - x_{n-1})."
       },
       {
-        "id": "q3",
+        "id": "q4",
         "type": "true_false",
         "prompt": "The secant method always converges faster than the bisection method.",
         "correctAnswer": false,
         "explanation": "False. While the secant method has superlinear convergence (order ≈1.618) which is faster than bisection's linear convergence, the secant method is not guaranteed to converge—it can diverge with poor initial guesses."
       },
       {
-        "id": "q4",
-        "type": "multiple_choice",
-        "prompt": "To find √2 using Newton's method, which function should you use?",
-        "options": [
-          "f(x) = √x - 2",
-          "f(x) = x^2 - 2",
-          "f(x) = x - 2",
-          "f(x) = 2x - 1"
-        ],
-        "correctAnswer": 1,
-        "explanation": "To find √2, solve x^2 = 2, which means finding the root of f(x) = x^2 - 2. Newton's method gives x_{n+1} = (x_n + 2/x_n)/2."
-      },
-      {
         "id": "q5",
-        "type": "multiple_choice",
-        "prompt": "If Newton's method is applied to f(x) = x^2 with x_0 = 1, what happens?",
-        "options": [
-          "Converges to 0 quadratically",
-          "Converges to 0 linearly",
-          "Diverges to infinity",
-          "Oscillates indefinitely"
-        ],
-        "correctAnswer": 1,
-        "explanation": "At a multiple root (x = 0 has multiplicity 2), Newton's method converges only linearly. The iteration becomes x_{n+1} = x_n/2, showing linear convergence with rate 1/2."
+        "type": "fill_blank",
+        "prompt": "If Newton's method is applied to a root of multiplicity m > 1, the convergence is only ____.",
+        "correctAnswer": "linear",
+        "explanation": "At multiple roots, Newton's method degrades from quadratic to linear convergence. Modified Newton's method x_{n+1} = x_n - m·f(x_n)/f'(x_n) restores quadratic convergence."
       }
     ]
   },
@@ -161,36 +145,25 @@
       },
       {
         "id": "q3",
+        "type": "code_output",
+        "prompt": "What is the output of this fixed-point iteration?",
+        "codeSnippet": "g = lambda x: (x + 2/x) / 2  # for sqrt(2)\nx = 1.0\nfor _ in range(2):\n    x = g(x)\nprint(f'{x:.8f}')",
+        "correctAnswer": "1.41421356",
+        "explanation": "This is Newton's method for √2 written as fixed-point: g(x) = (x + 2/x)/2. Iteration 1: (1 + 2)/2 = 1.5. Iteration 2: (1.5 + 2/1.5)/2 ≈ 1.41666667. After convergence: ≈1.41421356."
+      },
+      {
+        "id": "q4",
         "type": "true_false",
         "prompt": "If g'(x*) = 0 at a fixed point x*, then fixed-point iteration has at least quadratic convergence.",
         "correctAnswer": true,
         "explanation": "True. When g'(x*) = 0, the convergence is at least quadratic. If g'(x*) = g''(x*) = ... = g^(p-1)(x*) = 0 and g^(p)(x*) ≠ 0, the order is p."
       },
       {
-        "id": "q4",
-        "type": "multiple_choice",
-        "prompt": "Which statement about Newton's method is FALSE?",
-        "options": [
-          "It can fail if f'(x_n) = 0 during iteration",
-          "It requires only one function evaluation per iteration",
-          "It uses local linearization via the tangent line",
-          "Basin of attraction can be fractal for complex functions"
-        ],
-        "correctAnswer": 1,
-        "explanation": "False: Newton's method requires TWO function evaluations per iteration: f(x_n) and f'(x_n). This is why the secant method (one evaluation) can be more efficient despite slower convergence."
-      },
-      {
         "id": "q5",
-        "type": "multiple_choice",
-        "prompt": "The optimal relaxation parameter for the modified fixed-point iteration x_{n+1} = x_n + λ(g(x_n) - x_n) to achieve quadratic convergence is:",
-        "options": [
-          "λ = 1",
-          "λ = 1/(1 - g'(x*))",
-          "λ = 0.5",
-          "λ = g'(x*)"
-        ],
-        "correctAnswer": 1,
-        "explanation": "Choosing λ = 1/(1 - g'(x*)) makes the effective g'(x*) = 0 for the relaxed iteration, achieving quadratic convergence (this is Steffensen's method in disguise)."
+        "type": "fill_blank",
+        "prompt": "The optimal relaxation parameter for the modified fixed-point iteration to achieve quadratic convergence is λ = ____.",
+        "correctAnswer": "1/(1 - g'(x*))",
+        "explanation": "Choosing λ = 1/(1 - g'(x*)) makes the effective g'(x*) = 0 for the relaxed iteration x_{n+1} = x_n + λ(g(x_n) - x_n), achieving quadratic convergence."
       }
     ]
   }

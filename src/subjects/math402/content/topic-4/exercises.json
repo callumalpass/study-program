@@ -4,21 +4,27 @@
     "subjectId": "math402",
     "topicId": "topic-4",
     "difficulty": 1,
-    "title": "Topic 4 Exercise 1",
-    "description": "Fundamental exercise for topic 4. Implement the basic algorithm for topic 4.",
-    "starterCode": "import numpy as np\n\ndef topic4_algorithm():\n    \"\"\"\n    Implementation of topic 4 algorithm.\n\n    This is a complete solution with:\n    - Input validation\n    - Error handling\n    - Test cases\n    \"\"\"\n    # TODO: Implementation here\n    pass\n\n# Test cases\nprint(\"Testing topic 4 implementation\")\n# Add test cases\nprint(\"All tests passed!\")",
+    "title": "Forward and Backward Finite Differences",
+    "description": "Implement forward and backward finite difference approximations for the first derivative. The forward difference formula is f'(x) ≈ [f(x+h) - f(x)] / h and the backward difference formula is f'(x) ≈ [f(x) - f(x-h)] / h. Both methods have O(h) truncation error. Test your implementation on f(x) = sin(x) at x = π/4 with h = 0.1 and compare to the exact derivative cos(π/4) = √2/2 ≈ 0.707107.",
+    "starterCode": "import numpy as np\n\ndef forward_difference(f, x, h):\n    \"\"\"\n    Compute forward difference approximation of f'(x).\n    \n    Parameters:\n    - f: Function to differentiate\n    - x: Point at which to compute derivative\n    - h: Step size\n    \n    Returns:\n    - Approximation of f'(x)\n    \"\"\"\n    # TODO: Implement forward difference formula\n    pass\n\ndef backward_difference(f, x, h):\n    \"\"\"\n    Compute backward difference approximation of f'(x).\n    \n    Parameters:\n    - f: Function to differentiate\n    - x: Point at which to compute derivative\n    - h: Step size\n    \n    Returns:\n    - Approximation of f'(x)\n    \"\"\"\n    # TODO: Implement backward difference formula\n    pass\n\n# Test your implementation\nf = lambda x: np.sin(x)\nx = np.pi / 4\nh = 0.1\nexact = np.cos(x)\n\nfwd = forward_difference(f, x, h)\nbwd = backward_difference(f, x, h)\n\nprint(f\"Forward difference: {fwd:.10f}, Error: {abs(fwd - exact):.2e}\")\nprint(f\"Backward difference: {bwd:.10f}, Error: {abs(bwd - exact):.2e}\")\nprint(f\"Exact derivative: {exact:.10f}\")",
     "hints": [
-      "Review the theory",
-      "Start with simple test cases",
-      "Validate your implementation"
+      "Forward difference uses f(x+h), backward uses f(x-h)",
+      "Both formulas divide by h, not h²",
+      "Both methods have O(h) truncation error"
     ],
-    "solution": "import numpy as np\n\ndef topic4_algorithm():\n    \"\"\"\n    Implementation of topic 4 algorithm.\n\n    This is a complete solution with:\n    - Input validation\n    - Error handling\n    - Test cases\n    \"\"\"\n    # Implementation here\n    pass\n\n# Test cases\nprint(\"Testing topic 4 implementation\")\n# Add test cases\nprint(\"All tests passed!\")",
+    "solution": "import numpy as np\n\ndef forward_difference(f, x, h):\n    \"\"\"\n    Compute forward difference approximation of f'(x).\n    \n    Parameters:\n    - f: Function to differentiate\n    - x: Point at which to compute derivative\n    - h: Step size\n    \n    Returns:\n    - Approximation of f'(x)\n    \"\"\"\n    return (f(x + h) - f(x)) / h\n\ndef backward_difference(f, x, h):\n    \"\"\"\n    Compute backward difference approximation of f'(x).\n    \n    Parameters:\n    - f: Function to differentiate\n    - x: Point at which to compute derivative\n    - h: Step size\n    \n    Returns:\n    - Approximation of f'(x)\n    \"\"\"\n    return (f(x) - f(x - h)) / h\n\n# Test your implementation\nf = lambda x: np.sin(x)\nx = np.pi / 4\nh = 0.1\nexact = np.cos(x)\n\nfwd = forward_difference(f, x, h)\nbwd = backward_difference(f, x, h)\n\nprint(f\"Forward difference: {fwd:.10f}, Error: {abs(fwd - exact):.2e}\")\nprint(f\"Backward difference: {bwd:.10f}, Error: {abs(bwd - exact):.2e}\")\nprint(f\"Exact derivative: {exact:.10f}\")\n\n# Verify accuracy\nassert abs(fwd - exact) < 0.01\nassert abs(bwd - exact) < 0.01\n\nprint(\"\\nAll tests passed!\")",
     "testCases": [
       {
-        "input": "test input",
-        "expectedOutput": "expected output",
+        "input": "f=lambda x: x**2, x=2.0, h=0.01",
+        "expectedOutput": "forward ≈ 4.01, backward ≈ 3.99 (exact: 4.0)",
         "isHidden": false,
-        "description": "Basic test case"
+        "description": "Test on f(x) = x² at x=2, exact derivative is 4"
+      },
+      {
+        "input": "f=lambda x: np.sin(x), x=np.pi/4, h=0.1",
+        "expectedOutput": "Both errors approximately O(h) ≈ 0.01",
+        "isHidden": false,
+        "description": "Verify first-order accuracy on sine function"
       }
     ],
     "language": "python"
@@ -27,22 +33,28 @@
     "id": "math402-ex-4-2",
     "subjectId": "math402",
     "topicId": "topic-4",
-    "difficulty": 2,
-    "title": "Topic 4 Exercise 2",
-    "description": "Intermediate exercise for topic 4. Apply the algorithm to a more complex problem.",
-    "starterCode": "import numpy as np\n\ndef advanced_implementation():\n    \"\"\"Advanced implementation with optimization.\"\"\"\n    # TODO: Implement\n    pass\n\n# Complete solution with tests",
+    "difficulty": 1,
+    "title": "Central Difference Method",
+    "description": "Implement the central difference formula for numerical differentiation, which provides better accuracy than forward or backward differences. The central difference formula is f'(x) ≈ [f(x+h) - f(x-h)] / (2h), and has O(h²) truncation error compared to O(h) for forward/backward differences. Demonstrate its superior accuracy by comparing errors across different step sizes on f(x) = exp(x) at x = 1.0.",
+    "starterCode": "import numpy as np\n\ndef central_difference(f, x, h):\n    \"\"\"\n    Compute central difference approximation of f'(x).\n    \n    Parameters:\n    - f: Function to differentiate\n    - x: Point at which to compute derivative\n    - h: Step size\n    \n    Returns:\n    - Approximation of f'(x)\n    \"\"\"\n    # TODO: Implement central difference formula\n    pass\n\n# Test on f(x) = exp(x) where f'(x) = exp(x)\nf = lambda x: np.exp(x)\nf_prime = lambda x: np.exp(x)\nx = 1.0\n\nprint(\"Step size comparison:\")\nfor h in [0.1, 0.01, 0.001, 0.0001]:\n    approx = central_difference(f, x, h)\n    exact = f_prime(x)\n    error = abs(approx - exact)\n    print(f\"h={h:.4f}: Approximation={approx:.10f}, Error={error:.2e}\")\n\nprint(f\"\\nExact value: {f_prime(x):.10f}\")",
     "hints": [
-      "Build on the basic implementation",
-      "Consider edge cases",
-      "Optimize for performance"
+      "Central difference uses points on both sides of x",
+      "The formula divides by 2h, not h",
+      "Error should decrease by factor of 4 when h is halved (quadratic convergence)"
     ],
-    "solution": "import numpy as np\n\ndef advanced_implementation():\n    \"\"\"Advanced implementation with optimization.\"\"\"\n    pass\n\n# Complete solution with tests",
+    "solution": "import numpy as np\n\ndef central_difference(f, x, h):\n    \"\"\"\n    Compute central difference approximation of f'(x).\n    \n    Parameters:\n    - f: Function to differentiate\n    - x: Point at which to compute derivative\n    - h: Step size\n    \n    Returns:\n    - Approximation of f'(x)\n    \"\"\"\n    return (f(x + h) - f(x - h)) / (2 * h)\n\n# Test on f(x) = exp(x) where f'(x) = exp(x)\nf = lambda x: np.exp(x)\nf_prime = lambda x: np.exp(x)\nx = 1.0\n\nprint(\"Step size comparison:\")\nprev_error = None\nfor h in [0.1, 0.01, 0.001, 0.0001]:\n    approx = central_difference(f, x, h)\n    exact = f_prime(x)\n    error = abs(approx - exact)\n    ratio = prev_error / error if prev_error else 0\n    print(f\"h={h:.4f}: Approximation={approx:.10f}, Error={error:.2e}, Ratio={ratio:.1f}\")\n    prev_error = error\n\nprint(f\"\\nExact value: {f_prime(x):.10f}\")\nprint(\"\\nNote: Error ratio ≈ 100 confirms O(h²) convergence!\\n\")\nprint(\"All tests passed!\")",
     "testCases": [
       {
-        "input": "test input",
-        "expectedOutput": "expected output",
+        "input": "f=lambda x: x**3, x=2.0, h=0.01",
+        "expectedOutput": "≈ 12.0 (error < 1e-4)",
         "isHidden": false,
-        "description": "Intermediate test case"
+        "description": "Central difference on f(x) = x³ at x=2, exact derivative is 12"
+      },
+      {
+        "input": "convergence test with h={0.1, 0.01, 0.001}",
+        "expectedOutput": "Error decreases by ~100x when h decreases by 10x",
+        "isHidden": false,
+        "description": "Verify O(h²) convergence rate"
       }
     ],
     "language": "python"
@@ -51,22 +63,424 @@
     "id": "math402-ex-4-3",
     "subjectId": "math402",
     "topicId": "topic-4",
-    "difficulty": 3,
-    "title": "Topic 4 Exercise 3",
-    "description": "Advanced exercise combining multiple concepts. Implement an optimized version with error analysis.",
-    "starterCode": "import numpy as np\nimport matplotlib.pyplot as plt\n\ndef optimized_algorithm():\n    \"\"\"Optimized implementation with complete analysis.\"\"\"\n    # TODO: Implement\n    pass\n\n# Comprehensive solution",
+    "difficulty": 2,
+    "title": "Second Derivative Approximation",
+    "description": "Implement the second derivative approximation using finite differences. The formula is f''(x) ≈ [f(x+h) - 2f(x) + f(x-h)] / h², which also has O(h²) truncation error. Test your implementation on functions with known second derivatives such as f(x) = x⁴ (where f''(x) = 12x²) and f(x) = sin(x) (where f''(x) = -sin(x)).",
+    "starterCode": "import numpy as np\n\ndef second_derivative(f, x, h):\n    \"\"\"\n    Compute second derivative using central difference.\n    \n    Parameters:\n    - f: Function to differentiate\n    - x: Point at which to compute second derivative\n    - h: Step size\n    \n    Returns:\n    - Approximation of f''(x)\n    \"\"\"\n    # TODO: Implement second derivative formula\n    pass\n\n# Test 1: f(x) = x^4, f''(x) = 12x^2\nf1 = lambda x: x**4\nx = 2.0\nh = 0.01\nexact = 12 * x**2\napprox = second_derivative(f1, x, h)\nerror = abs(approx - exact)\n\nprint(f\"Test 1: f(x) = x^4 at x=2\")\nprint(f\"Exact f''(2) = {exact}\")\nprint(f\"Approx f''(2) = {approx:.6f}\")\nprint(f\"Error = {error:.2e}\\n\")\n\n# Test 2: f(x) = sin(x), f''(x) = -sin(x)\nf2 = lambda x: np.sin(x)\nx = np.pi/4\nexact2 = -np.sin(x)\napprox2 = second_derivative(f2, x, h)\nerror2 = abs(approx2 - exact2)\n\nprint(f\"Test 2: f(x) = sin(x) at x=π/4\")\nprint(f\"Exact f''(π/4) = {exact2:.6f}\")\nprint(f\"Approx f''(π/4) = {approx2:.6f}\")\nprint(f\"Error = {error2:.2e}\")",
     "hints": [
-      "Combine multiple techniques",
-      "Analyze performance and accuracy",
-      "Include visualizations"
+      "The formula uses three function evaluations: f(x-h), f(x), f(x+h)",
+      "Note the denominator is h², not h",
+      "The middle term has coefficient -2"
     ],
-    "solution": "import numpy as np\nimport matplotlib.pyplot as plt\n\ndef optimized_algorithm():\n    \"\"\"Optimized implementation with complete analysis.\"\"\"\n    pass\n\n# Comprehensive solution",
+    "solution": "import numpy as np\n\ndef second_derivative(f, x, h):\n    \"\"\"\n    Compute second derivative using central difference.\n    \n    Parameters:\n    - f: Function to differentiate\n    - x: Point at which to compute second derivative\n    - h: Step size\n    \n    Returns:\n    - Approximation of f''(x)\n    \"\"\"\n    return (f(x + h) - 2*f(x) + f(x - h)) / h**2\n\n# Test 1: f(x) = x^4, f''(x) = 12x^2\nf1 = lambda x: x**4\nx = 2.0\nh = 0.01\nexact = 12 * x**2\napprox = second_derivative(f1, x, h)\nerror = abs(approx - exact)\n\nprint(f\"Test 1: f(x) = x^4 at x=2\")\nprint(f\"Exact f''(2) = {exact}\")\nprint(f\"Approx f''(2) = {approx:.6f}\")\nprint(f\"Error = {error:.2e}\\n\")\n\n# Test 2: f(x) = sin(x), f''(x) = -sin(x)\nf2 = lambda x: np.sin(x)\nx = np.pi/4\nexact2 = -np.sin(x)\napprox2 = second_derivative(f2, x, h)\nerror2 = abs(approx2 - exact2)\n\nprint(f\"Test 2: f(x) = sin(x) at x=π/4\")\nprint(f\"Exact f''(π/4) = {exact2:.6f}\")\nprint(f\"Approx f''(π/4) = {approx2:.6f}\")\nprint(f\"Error = {error2:.2e}\")\n\n# Verify accuracy\nassert error < 0.01\nassert error2 < 0.01\n\nprint(\"\\nAll tests passed!\")",
     "testCases": [
       {
-        "input": "test input",
-        "expectedOutput": "expected output",
+        "input": "f=lambda x: np.exp(x), x=0.0, h=0.01",
+        "expectedOutput": "≈ 1.0 (error < 1e-4)",
         "isHidden": false,
-        "description": "Advanced test case"
+        "description": "Second derivative of exp(x) at x=0 is 1.0"
+      },
+      {
+        "input": "f=lambda x: x**4, x=2.0, h=0.001",
+        "expectedOutput": "≈ 48.0 (error < 1e-3)",
+        "isHidden": false,
+        "description": "Second derivative of x⁴ at x=2 is 48.0"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math402-ex-4-4",
+    "subjectId": "math402",
+    "topicId": "topic-4",
+    "difficulty": 2,
+    "title": "Richardson Extrapolation for Derivatives",
+    "description": "Implement Richardson extrapolation to improve the accuracy of numerical differentiation. Richardson extrapolation eliminates lower-order error terms by combining approximations at different step sizes. For central difference with error O(h²), we can achieve O(h⁴) accuracy using: D_improved = [4*D(h/2) - D(h)] / 3. Build a Richardson table with multiple levels to achieve even higher accuracy.",
+    "starterCode": "import numpy as np\n\ndef central_difference(f, x, h):\n    \"\"\"Central difference approximation.\"\"\"\n    return (f(x + h) - f(x - h)) / (2 * h)\n\ndef richardson_derivative(f, x, h, levels=2):\n    \"\"\"\n    Compute derivative using Richardson extrapolation.\n    \n    Parameters:\n    - f: Function to differentiate\n    - x: Point at which to compute derivative\n    - h: Initial step size\n    - levels: Number of Richardson levels\n    \n    Returns:\n    - Improved approximation of f'(x)\n    \"\"\"\n    # TODO: Create Richardson table\n    # R[0, 0] = D(h)\n    # R[1, 0] = D(h/2)\n    # R[1, 1] = [4*R[1,0] - R[0,0]] / 3\n    # Continue for higher levels\n    pass\n\n# Test\nf = lambda x: np.sin(x)\nf_prime = lambda x: np.cos(x)\nx = np.pi / 4\nh = 0.1\n\nbasic = central_difference(f, x, h)\nrich = richardson_derivative(f, x, h, levels=3)\nexact = f_prime(x)\n\nprint(f\"Basic central difference: {basic:.12f}, Error: {abs(basic - exact):.2e}\")\nprint(f\"Richardson extrapolation: {rich:.12f}, Error: {abs(rich - exact):.2e}\")\nprint(f\"Exact derivative: {exact:.12f}\")\nprint(f\"\\nImprovement factor: {abs(basic - exact) / abs(rich - exact):.1f}x\")",
+    "hints": [
+      "Build a triangular table of approximations",
+      "Each column increases order of accuracy by 2",
+      "Use the formula: R[i,j] = (4^j * R[i,j-1] - R[i-1,j-1]) / (4^j - 1)"
+    ],
+    "solution": "import numpy as np\n\ndef central_difference(f, x, h):\n    \"\"\"Central difference approximation.\"\"\"\n    return (f(x + h) - f(x - h)) / (2 * h)\n\ndef richardson_derivative(f, x, h, levels=2):\n    \"\"\"\n    Compute derivative using Richardson extrapolation.\n    \n    Parameters:\n    - f: Function to differentiate\n    - x: Point at which to compute derivative\n    - h: Initial step size\n    - levels: Number of Richardson levels\n    \n    Returns:\n    - Improved approximation of f'(x)\n    \"\"\"\n    R = np.zeros((levels, levels))\n    \n    # First column: basic central differences at different h values\n    for i in range(levels):\n        h_i = h / (2**i)\n        R[i, 0] = central_difference(f, x, h_i)\n    \n    # Richardson extrapolation\n    for j in range(1, levels):\n        for i in range(j, levels):\n            R[i, j] = (4**j * R[i, j-1] - R[i-1, j-1]) / (4**j - 1)\n    \n    return R[levels-1, levels-1]\n\n# Test\nf = lambda x: np.sin(x)\nf_prime = lambda x: np.cos(x)\nx = np.pi / 4\nh = 0.1\n\nbasic = central_difference(f, x, h)\nrich = richardson_derivative(f, x, h, levels=3)\nexact = f_prime(x)\n\nprint(f\"Basic central difference: {basic:.12f}, Error: {abs(basic - exact):.2e}\")\nprint(f\"Richardson extrapolation: {rich:.12f}, Error: {abs(rich - exact):.2e}\")\nprint(f\"Exact derivative: {exact:.12f}\")\nprint(f\"\\nImprovement factor: {abs(basic - exact) / abs(rich - exact):.1f}x\")\n\n# Verify significant improvement\nassert abs(rich - exact) < abs(basic - exact) / 100\n\nprint(\"\\nAll tests passed!\")",
+    "testCases": [
+      {
+        "input": "f=lambda x: np.exp(x), x=1.0, h=0.1, levels=3",
+        "expectedOutput": "Error improvement > 100x compared to basic central difference",
+        "isHidden": false,
+        "description": "Richardson should dramatically reduce error"
+      },
+      {
+        "input": "levels=3",
+        "expectedOutput": "Achieves O(h⁶) accuracy",
+        "isHidden": false,
+        "description": "Three levels of extrapolation"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math402-ex-4-5",
+    "subjectId": "math402",
+    "topicId": "topic-4",
+    "difficulty": 2,
+    "title": "Trapezoidal Rule Implementation",
+    "description": "Implement the composite trapezoidal rule for numerical integration. The trapezoidal rule approximates an integral by summing areas of trapezoids: ∫[a,b] f(x)dx ≈ (h/2)[f(x₀) + 2f(x₁) + 2f(x₂) + ... + 2f(xₙ₋₁) + f(xₙ)], where h = (b-a)/n. Test on various functions including ∫₀^π sin(x)dx = 2 and ∫₀¹ x²dx = 1/3.",
+    "starterCode": "import numpy as np\n\ndef trapezoidal(f, a, b, n):\n    \"\"\"\n    Compute integral using composite trapezoidal rule.\n    \n    Parameters:\n    - f: Function to integrate\n    - a, b: Integration limits\n    - n: Number of subintervals\n    \n    Returns:\n    - Approximation to integral\n    \"\"\"\n    # TODO: Implement trapezoidal rule\n    pass\n\n# Test cases\nprint(\"Test 1: ∫₀^π sin(x)dx = 2\")\nresult1 = trapezoidal(np.sin, 0, np.pi, 100)\nprint(f\"Result: {result1:.10f}, Error: {abs(result1 - 2.0):.2e}\\n\")\n\nprint(\"Test 2: ∫₀¹ x²dx = 1/3\")\nresult2 = trapezoidal(lambda x: x**2, 0, 1, 100)\nprint(f\"Result: {result2:.10f}, Error: {abs(result2 - 1/3):.2e}\")",
+    "hints": [
+      "The step size is h = (b-a)/n",
+      "Interior points have weight 2, endpoints have weight 1",
+      "Use np.linspace to generate equally-spaced points"
+    ],
+    "solution": "import numpy as np\n\ndef trapezoidal(f, a, b, n):\n    \"\"\"\n    Compute integral using composite trapezoidal rule.\n    \n    Parameters:\n    - f: Function to integrate\n    - a, b: Integration limits\n    - n: Number of subintervals\n    \n    Returns:\n    - Approximation to integral\n    \"\"\"\n    h = (b - a) / n\n    x = np.linspace(a, b, n + 1)\n    y = f(x)\n    \n    # Apply trapezoidal formula: (h/2) * [y0 + 2*y1 + 2*y2 + ... + 2*yn-1 + yn]\n    result = (y[0] + 2*np.sum(y[1:-1]) + y[-1]) * h / 2\n    return result\n\n# Test cases\nprint(\"Test 1: ∫₀^π sin(x)dx = 2\")\nresult1 = trapezoidal(np.sin, 0, np.pi, 100)\nprint(f\"Result: {result1:.10f}, Error: {abs(result1 - 2.0):.2e}\\n\")\n\nprint(\"Test 2: ∫₀¹ x²dx = 1/3\")\nresult2 = trapezoidal(lambda x: x**2, 0, 1, 100)\nprint(f\"Result: {result2:.10f}, Error: {abs(result2 - 1/3):.2e}\")\n\n# Verify accuracy\nassert abs(result1 - 2.0) < 1e-4\nassert abs(result2 - 1/3) < 1e-4\n\nprint(\"\\nAll tests passed!\")",
+    "testCases": [
+      {
+        "input": "f=lambda x: x, a=0, b=1, n=10",
+        "expectedOutput": "0.5 (exact for linear functions)",
+        "isHidden": false,
+        "description": "Linear function integrated exactly"
+      },
+      {
+        "input": "f=np.exp, a=0, b=1, n=100",
+        "expectedOutput": "≈ 1.718282 (e - 1)",
+        "isHidden": false,
+        "description": "Exponential function"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math402-ex-4-6",
+    "subjectId": "math402",
+    "topicId": "topic-4",
+    "difficulty": 2,
+    "title": "Simpson's Rule",
+    "description": "Implement Simpson's 1/3 rule for numerical integration, which uses parabolic interpolation for higher accuracy. Simpson's rule: ∫[a,b] f(x)dx ≈ (h/3)[f(x₀) + 4f(x₁) + 2f(x₂) + 4f(x₃) + ... + 4f(xₙ₋₁) + f(xₙ)]. The pattern of coefficients is 1, 4, 2, 4, 2, ..., 4, 1. Note that n must be even. This method has O(h⁴) error and is exact for polynomials up to degree 3.",
+    "starterCode": "import numpy as np\n\ndef simpsons(f, a, b, n):\n    \"\"\"\n    Compute integral using composite Simpson's rule.\n    \n    Parameters:\n    - f: Function to integrate\n    - a, b: Integration limits\n    - n: Number of subintervals (must be even)\n    \n    Returns:\n    - Approximation to integral\n    \"\"\"\n    if n % 2 != 0:\n        raise ValueError(\"n must be even for Simpson's rule\")\n    \n    # TODO: Implement Simpson's rule\n    pass\n\n# Test\nf = lambda x: np.exp(x)\na, b = 0, 1\nexact = np.e - 1\n\nfor n in [10, 20, 50, 100]:\n    result = simpsons(f, a, b, n)\n    error = abs(result - exact)\n    print(f\"n={n:3d}: Result={result:.12f}, Error={error:.2e}\")",
+    "hints": [
+      "Odd-indexed points get coefficient 4",
+      "Even-indexed interior points get coefficient 2",
+      "Use array slicing: y[1:-1:2] for odd indices"
+    ],
+    "solution": "import numpy as np\n\ndef simpsons(f, a, b, n):\n    \"\"\"\n    Compute integral using composite Simpson's rule.\n    \n    Parameters:\n    - f: Function to integrate\n    - a, b: Integration limits\n    - n: Number of subintervals (must be even)\n    \n    Returns:\n    - Approximation to integral\n    \"\"\"\n    if n % 2 != 0:\n        raise ValueError(\"n must be even for Simpson's rule\")\n    \n    h = (b - a) / n\n    x = np.linspace(a, b, n + 1)\n    y = f(x)\n    \n    # Simpson's formula: (h/3)[y0 + 4*y1 + 2*y2 + 4*y3 + ... + 4*yn-1 + yn]\n    # Pattern: 1, 4, 2, 4, 2, ..., 4, 1\n    result = y[0] + y[-1]  # Endpoints\n    result += 4 * np.sum(y[1:-1:2])  # Odd indices\n    result += 2 * np.sum(y[2:-1:2])  # Even indices (except endpoints)\n    result *= h / 3\n    \n    return result\n\n# Test\nf = lambda x: np.exp(x)\na, b = 0, 1\nexact = np.e - 1\n\nfor n in [10, 20, 50, 100]:\n    result = simpsons(f, a, b, n)\n    error = abs(result - exact)\n    print(f\"n={n:3d}: Result={result:.12f}, Error={error:.2e}\")\n\n# Verify cubic polynomial is exact\nf_cubic = lambda x: x**3\nresult_cubic = simpsons(f_cubic, 0, 2, 10)\nexact_cubic = 4.0\nassert abs(result_cubic - exact_cubic) < 1e-12\n\nprint(\"\\nAll tests passed!\")",
+    "testCases": [
+      {
+        "input": "f=lambda x: x**3, a=0, b=2, n=10",
+        "expectedOutput": "4.0 (exact for cubic)",
+        "isHidden": false,
+        "description": "Cubic function (exact for Simpson's)"
+      },
+      {
+        "input": "f=np.sin, a=0, b=np.pi, n=20",
+        "expectedOutput": "≈ 2.0 (error < 1e-10)",
+        "isHidden": false,
+        "description": "Sine function"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math402-ex-4-7",
+    "subjectId": "math402",
+    "topicId": "topic-4",
+    "difficulty": 3,
+    "title": "Composite Newton-Cotes Formulas",
+    "description": "Implement a general framework for composite Newton-Cotes integration formulas. Create a function that can apply trapezoidal, Simpson's, and Simpson's 3/8 rule. Compare their accuracy and efficiency on various test functions. Simpson's 3/8 rule uses intervals of 3: ∫[a,b] f(x)dx ≈ (3h/8)[f(x₀) + 3f(x₁) + 3f(x₂) + f(x₃) + ...]. Analyze the convergence rates empirically.",
+    "starterCode": "import numpy as np\n\ndef newton_cotes_integrate(f, a, b, n, method='simpson'):\n    \"\"\"\n    Integrate using composite Newton-Cotes formulas.\n    \n    Parameters:\n    - f: Function to integrate\n    - a, b: Integration limits\n    - n: Number of subintervals\n    - method: 'trapezoidal', 'simpson', or 'simpson38'\n    \n    Returns:\n    - Approximation to integral\n    \"\"\"\n    # TODO: Implement multiple Newton-Cotes methods\n    pass\n\ndef compare_methods(f, a, b, exact):\n    \"\"\"Compare different Newton-Cotes methods.\"\"\"\n    # TODO: Test all three methods with varying n\n    pass\n\n# Test: ∫₀¹ exp(x) dx = e - 1\nf = lambda x: np.exp(x)\nexact = np.e - 1\n\ncompare_methods(f, 0, 1, exact)",
+    "hints": [
+      "Trapezoidal has O(h²) error, Simpson has O(h⁴) error",
+      "Simpson's 3/8 rule requires n divisible by 3",
+      "Verify convergence rates by plotting log(error) vs log(h)"
+    ],
+    "solution": "import numpy as np\n\ndef newton_cotes_integrate(f, a, b, n, method='simpson'):\n    \"\"\"\n    Integrate using composite Newton-Cotes formulas.\n    \n    Parameters:\n    - f: Function to integrate\n    - a, b: Integration limits\n    - n: Number of subintervals\n    - method: 'trapezoidal', 'simpson', or 'simpson38'\n    \n    Returns:\n    - Approximation to integral\n    \"\"\"\n    if method == 'trapezoidal':\n        h = (b - a) / n\n        x = np.linspace(a, b, n + 1)\n        y = f(x)\n        return (y[0] + 2*np.sum(y[1:-1]) + y[-1]) * h / 2\n    \n    elif method == 'simpson':\n        if n % 2 != 0:\n            n += 1  # Make even\n        h = (b - a) / n\n        x = np.linspace(a, b, n + 1)\n        y = f(x)\n        result = y[0] + y[-1]\n        result += 4 * np.sum(y[1:-1:2])\n        result += 2 * np.sum(y[2:-1:2])\n        return result * h / 3\n    \n    elif method == 'simpson38':\n        if n % 3 != 0:\n            n = ((n // 3) + 1) * 3  # Make divisible by 3\n        h = (b - a) / n\n        x = np.linspace(a, b, n + 1)\n        y = f(x)\n        result = y[0] + y[-1]\n        for i in range(1, n):\n            if i % 3 == 0:\n                result += 2 * y[i]\n            else:\n                result += 3 * y[i]\n        return result * 3 * h / 8\n    \n    else:\n        raise ValueError(f\"Unknown method: {method}\")\n\ndef compare_methods(f, a, b, exact):\n    \"\"\"Compare different Newton-Cotes methods.\"\"\"\n    methods = ['trapezoidal', 'simpson', 'simpson38']\n    n_values = [10, 20, 50, 100]\n    \n    print(f\"Comparing Newton-Cotes methods (Exact = {exact:.10f})\")\n    print(\"=\" * 70)\n    \n    for method in methods:\n        print(f\"\\n{method.upper()}:\")\n        print(f\"{'n':>5} {'Result':>15} {'Error':>12} {'Ratio':>8}\")\n        print(\"-\" * 50)\n        prev_error = None\n        for n in n_values:\n            result = newton_cotes_integrate(f, a, b, n, method)\n            error = abs(result - exact)\n            ratio = prev_error / error if prev_error else 0\n            print(f\"{n:5d} {result:15.10f} {error:12.2e} {ratio:8.1f}\")\n            prev_error = error\n\n# Test: ∫₀¹ exp(x) dx = e - 1\nf = lambda x: np.exp(x)\nexact = np.e - 1\n\ncompare_methods(f, 0, 1, exact)\n\nprint(\"\\nAll tests passed!\")",
+    "testCases": [
+      {
+        "input": "f=lambda x: x**5, method='simpson'",
+        "expectedOutput": "Exact result (Simpson's exact for degree ≤ 3)",
+        "isHidden": false,
+        "description": "Test polynomial integration"
+      },
+      {
+        "input": "Convergence rate analysis",
+        "expectedOutput": "Trapezoidal: O(h²), Simpson: O(h⁴)",
+        "isHidden": false,
+        "description": "Verify theoretical convergence rates"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math402-ex-4-8",
+    "subjectId": "math402",
+    "topicId": "topic-4",
+    "difficulty": 3,
+    "title": "Gauss-Legendre Quadrature",
+    "description": "Implement Gauss-Legendre quadrature for numerical integration. Gaussian quadrature achieves degree 2n-1 precision with n points by optimally choosing both nodes and weights. For the interval [-1, 1], nodes are roots of Legendre polynomials. Transform the method to work on arbitrary intervals [a, b] using the transformation x = (b-a)/2 * t + (a+b)/2. Compare efficiency with Newton-Cotes methods.",
+    "starterCode": "import numpy as np\nfrom numpy.polynomial import legendre\n\ndef gauss_legendre(f, a, b, n):\n    \"\"\"\n    Compute integral using n-point Gauss-Legendre quadrature.\n    \n    Parameters:\n    - f: Function to integrate\n    - a, b: Integration limits\n    - n: Number of quadrature points\n    \n    Returns:\n    - Approximation to integral\n    \"\"\"\n    # Get nodes and weights for [-1, 1]\n    nodes, weights = legendre.leggauss(n)\n    \n    # TODO: Transform to [a, b] and compute integral\n    # Transformation: x = (b-a)/2 * t + (a+b)/2\n    pass\n\n# Test: Compare with Simpson's rule\nf = lambda x: np.exp(x)\na, b = 0, 1\nexact = np.e - 1\n\nprint(\"Gauss-Legendre Quadrature:\")\nfor n in [2, 3, 4, 5]:\n    result = gauss_legendre(f, a, b, n)\n    error = abs(result - exact)\n    print(f\"n={n}: Result={result:.15f}, Error={error:.2e}\")",
+    "hints": [
+      "Use legendre.leggauss(n) to get nodes and weights",
+      "Transform x = (b-a)/2 * t + (a+b)/2 maps [-1,1] to [a,b]",
+      "Don't forget the Jacobian factor (b-a)/2"
+    ],
+    "solution": "import numpy as np\nfrom numpy.polynomial import legendre\n\ndef gauss_legendre(f, a, b, n):\n    \"\"\"\n    Compute integral using n-point Gauss-Legendre quadrature.\n    \n    Parameters:\n    - f: Function to integrate\n    - a, b: Integration limits\n    - n: Number of quadrature points\n    \n    Returns:\n    - Approximation to integral\n    \"\"\"\n    # Get nodes and weights for [-1, 1]\n    nodes, weights = legendre.leggauss(n)\n    \n    # Transform nodes from [-1, 1] to [a, b]\n    # x = (b-a)/2 * t + (a+b)/2\n    x = 0.5 * (b - a) * nodes + 0.5 * (a + b)\n    \n    # Compute integral with Jacobian (b-a)/2\n    integral = 0.5 * (b - a) * np.sum(weights * f(x))\n    \n    return integral\n\n# Test: Compare with Simpson's rule\nf = lambda x: np.exp(x)\na, b = 0, 1\nexact = np.e - 1\n\nprint(\"Gauss-Legendre Quadrature:\")\nfor n in [2, 3, 4, 5]:\n    result = gauss_legendre(f, a, b, n)\n    error = abs(result - exact)\n    print(f\"n={n}: Result={result:.15f}, Error={error:.2e}\")\n\n# Test polynomial exactness\nprint(\"\\nPolynomial exactness test:\")\nf_poly = lambda x: x**5\nresult_poly = gauss_legendre(f_poly, 0, 1, 3)\nexact_poly = 1/6\nprint(f\"∫₀¹ x⁵ dx: Result={result_poly:.15f}, Exact={exact_poly:.15f}\")\nassert abs(result_poly - exact_poly) < 1e-14\n\nprint(\"\\nAll tests passed!\")",
+    "testCases": [
+      {
+        "input": "f=lambda x: x**5, a=0, b=1, n=3",
+        "expectedOutput": "1/6 (exact with 3 points, degree 2*3-1=5)",
+        "isHidden": false,
+        "description": "Polynomial of degree 5 (exact with 3 points)"
+      },
+      {
+        "input": "f=lambda x: 1/(1+x**2), a=0, b=1, n=5",
+        "expectedOutput": "≈ π/4 (error < 1e-8)",
+        "isHidden": false,
+        "description": "Arctangent integral"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math402-ex-4-9",
+    "subjectId": "math402",
+    "topicId": "topic-4",
+    "difficulty": 3,
+    "title": "Romberg Integration",
+    "description": "Implement the Romberg integration algorithm, which systematically applies Richardson extrapolation to the trapezoidal rule. Build a triangular table where each column doubles the order of accuracy. The first column contains trapezoidal rule values with successive mesh refinements, and Richardson extrapolation fills the rest of the table using R[i,j] = (4^j * R[i,j-1] - R[i-1,j-1]) / (4^j - 1). Achieve machine precision with minimal function evaluations.",
+    "starterCode": "import numpy as np\n\ndef romberg(f, a, b, max_level=6):\n    \"\"\"\n    Compute integral using Romberg integration.\n    \n    Parameters:\n    - f: Function to integrate\n    - a, b: Integration limits\n    - max_level: Number of refinement levels\n    \n    Returns:\n    - R: Romberg table\n    - result: Best approximation (R[max_level-1, max_level-1])\n    \"\"\"\n    R = np.zeros((max_level, max_level))\n    \n    # TODO: Build Romberg table\n    # Column 0: Trapezoidal rule with successive refinements\n    # R[0,0] = (b-a) * [f(a) + f(b)] / 2\n    # R[i,0] = R[i-1,0]/2 + h * sum(f(new points))\n    # \n    # Richardson extrapolation:\n    # R[i,j] = (4^j * R[i,j-1] - R[i-1,j-1]) / (4^j - 1)\n    \n    pass\n\n# Test\nf = lambda x: np.sin(x)\na, b = 0, np.pi\nexact = 2.0\n\nR, result = romberg(f, a, b, max_level=6)\nprint(f\"Romberg result: {result:.15f}\")\nprint(f\"Exact value: {exact:.15f}\")\nprint(f\"Error: {abs(result - exact):.2e}\")",
+    "hints": [
+      "Build first column using adaptive trapezoidal refinement",
+      "Each row doubles the number of subintervals",
+      "Use Richardson formula with powers of 4"
+    ],
+    "solution": "import numpy as np\n\ndef romberg(f, a, b, max_level=6):\n    \"\"\"\n    Compute integral using Romberg integration.\n    \n    Parameters:\n    - f: Function to integrate\n    - a, b: Integration limits\n    - max_level: Number of refinement levels\n    \n    Returns:\n    - R: Romberg table\n    - result: Best approximation (R[max_level-1, max_level-1])\n    \"\"\"\n    R = np.zeros((max_level, max_level))\n    \n    # First column: Trapezoidal rule with successive refinements\n    h = b - a\n    R[0, 0] = h * (f(a) + f(b)) / 2\n    \n    for i in range(1, max_level):\n        h /= 2\n        # Add new interior points\n        sum_new = sum(f(a + k*h) for k in range(1, 2**i, 2))\n        R[i, 0] = R[i-1, 0] / 2 + h * sum_new\n    \n    # Richardson extrapolation to fill table\n    for j in range(1, max_level):\n        for i in range(j, max_level):\n            R[i, j] = (4**j * R[i, j-1] - R[i-1, j-1]) / (4**j - 1)\n    \n    return R, R[max_level-1, max_level-1]\n\n# Test\nf = lambda x: np.sin(x)\na, b = 0, np.pi\nexact = 2.0\n\nR, result = romberg(f, a, b, max_level=6)\nprint(f\"Romberg result: {result:.15f}\")\nprint(f\"Exact value: {exact:.15f}\")\nprint(f\"Error: {abs(result - exact):.2e}\")\n\nprint(f\"\\nRomberg table (diagonal):\")\nfor i in range(6):\n    print(f\"Level {i}: {R[i,i]:.15f}\")\n\n# Verify high accuracy\nassert abs(result - exact) < 1e-12\n\nprint(\"\\nAll tests passed!\")",
+    "testCases": [
+      {
+        "input": "f=lambda x: np.exp(-x**2), a=0, b=1, max_level=6",
+        "expectedOutput": "Error < 1e-12",
+        "isHidden": false,
+        "description": "Gaussian function"
+      },
+      {
+        "input": "convergence analysis",
+        "expectedOutput": "Each column doubles order: O(h^(2k+2))",
+        "isHidden": false,
+        "description": "Verify exponential convergence"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math402-ex-4-10",
+    "subjectId": "math402",
+    "topicId": "topic-4",
+    "difficulty": 3,
+    "title": "Adaptive Simpson Integration",
+    "description": "Implement adaptive Simpson's rule that automatically refines the mesh where needed. Use error estimation to decide when to subdivide: if |S(a,c) + S(c,b) - S(a,b)| / 15 < tolerance, accept the result; otherwise recursively subdivide. This achieves a specified tolerance with minimal function evaluations and handles functions with varying smoothness efficiently.",
+    "starterCode": "import numpy as np\n\ndef simpsons_basic(f, a, b):\n    \"\"\"Basic Simpson's rule on [a,b].\"\"\"\n    c = (a + b) / 2\n    return (b - a) / 6 * (f(a) + 4*f(c) + f(b))\n\ndef adaptive_simpson(f, a, b, tol=1e-10, max_depth=50):\n    \"\"\"\n    Adaptive Simpson's rule with automatic refinement.\n    \n    Parameters:\n    - f: Function to integrate\n    - a, b: Integration limits\n    - tol: Error tolerance\n    - max_depth: Maximum recursion depth\n    \n    Returns:\n    - Approximation to integral\n    \"\"\"\n    def recursive_simpson(a, b, S_ab, tol, depth):\n        if depth > max_depth:\n            return S_ab\n        \n        c = (a + b) / 2\n        # TODO: Compute S(a,c) and S(c,b)\n        # Estimate error\n        # If error < tol, accept; otherwise recurse\n        pass\n    \n    S_ab = simpsons_basic(f, a, b)\n    return recursive_simpson(a, b, S_ab, tol, 0)\n\n# Test on smooth function\nf1 = lambda x: np.sin(x)\nresult1 = adaptive_simpson(f1, 0, np.pi, tol=1e-12)\nprint(f\"Smooth function: {result1:.15f}, Error: {abs(result1 - 2.0):.2e}\")\n\n# Test on function with sharp peak\nf2 = lambda x: np.exp(-100*(x-0.5)**2)\nresult2 = adaptive_simpson(f2, 0, 1, tol=1e-12)\nprint(f\"Sharp peak: {result2:.15f}\")",
+    "hints": [
+      "Compare full interval S(a,b) with split S(a,c) + S(c,b)",
+      "Error estimate uses factor 1/15 = 1/(2^4 - 1)",
+      "Subdivide tolerance by 2 for each subinterval"
+    ],
+    "solution": "import numpy as np\n\ndef simpsons_basic(f, a, b):\n    \"\"\"Basic Simpson's rule on [a,b].\"\"\"\n    c = (a + b) / 2\n    return (b - a) / 6 * (f(a) + 4*f(c) + f(b))\n\ndef adaptive_simpson(f, a, b, tol=1e-10, max_depth=50):\n    \"\"\"\n    Adaptive Simpson's rule with automatic refinement.\n    \n    Parameters:\n    - f: Function to integrate\n    - a, b: Integration limits\n    - tol: Error tolerance\n    - max_depth: Maximum recursion depth\n    \n    Returns:\n    - Approximation to integral\n    \"\"\"\n    def recursive_simpson(a, b, S_ab, tol, depth):\n        if depth > max_depth:\n            return S_ab\n        \n        c = (a + b) / 2\n        S_ac = simpsons_basic(f, a, c)\n        S_cb = simpsons_basic(f, c, b)\n        S_split = S_ac + S_cb\n        \n        # Error estimate\n        error = abs(S_split - S_ab) / 15\n        \n        if error < tol:\n            # Accept with correction\n            return S_split + error\n        else:\n            # Recursively subdivide\n            left = recursive_simpson(a, c, S_ac, tol/2, depth+1)\n            right = recursive_simpson(c, b, S_cb, tol/2, depth+1)\n            return left + right\n    \n    S_ab = simpsons_basic(f, a, b)\n    return recursive_simpson(a, b, S_ab, tol, 0)\n\n# Test on smooth function\nf1 = lambda x: np.sin(x)\nresult1 = adaptive_simpson(f1, 0, np.pi, tol=1e-12)\nprint(f\"Smooth function: {result1:.15f}, Error: {abs(result1 - 2.0):.2e}\")\n\n# Test on function with sharp peak\nf2 = lambda x: np.exp(-100*(x-0.5)**2)\nresult2 = adaptive_simpson(f2, 0, 1, tol=1e-12)\nprint(f\"Sharp peak: {result2:.15f}\")\n\n# Verify accuracy\nassert abs(result1 - 2.0) < 1e-10\n\nprint(\"\\nAll tests passed!\")",
+    "testCases": [
+      {
+        "input": "f=lambda x: 1/(1+x**2), a=0, b=1, tol=1e-10",
+        "expectedOutput": "≈ π/4 (error < 1e-10)",
+        "isHidden": false,
+        "description": "Arctangent integral"
+      },
+      {
+        "input": "f=lambda x: np.exp(-100*(x-0.7)**2), a=0, b=1",
+        "expectedOutput": "Adaptive refinement handles localized peak",
+        "isHidden": false,
+        "description": "Localized peak requires adaptive refinement"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math402-ex-4-11",
+    "subjectId": "math402",
+    "topicId": "topic-4",
+    "difficulty": 3,
+    "title": "Gauss-Laguerre Quadrature for Exponential Weights",
+    "description": "Implement Gauss-Laguerre quadrature for integrals of the form ∫₀^∞ e^(-x)f(x)dx. Gauss-Laguerre quadrature provides optimal nodes and weights for exponentially weighted integrals over [0,∞). The nodes are roots of Laguerre polynomials. Test on integrals with known exact values such as ∫₀^∞ e^(-x) x² dx = 2 and ∫₀^∞ e^(-x) sin(x) dx = 1/2. Compare efficiency with truncation methods.",
+    "starterCode": "import numpy as np\nfrom scipy.special import roots_laguerre\n\ndef gauss_laguerre(f, n=20):\n    \"\"\"\n    Compute ∫₀^∞ e^(-x) f(x) dx using Gauss-Laguerre quadrature.\n    \n    Parameters:\n    - f: Function to integrate (without e^(-x) factor)\n    - n: Number of quadrature points\n    \n    Returns:\n    - Approximation to integral\n    \"\"\"\n    # TODO: Get Laguerre nodes and weights\n    # Compute weighted sum\n    pass\n\n# Test: ∫₀^∞ e^(-x) x² dx = 2\nf = lambda x: x**2\nresult = gauss_laguerre(f, n=10)\nprint(f\"n=10: {result:.15f}, Error: {abs(result - 2.0):.2e}\")\n\nresult = gauss_laguerre(f, n=20)\nprint(f\"n=20: {result:.15f}, Error: {abs(result - 2.0):.2e}\")\n\n# Test: ∫₀^∞ e^(-x) sin(x) dx = 1/2\nf2 = lambda x: np.sin(x)\nresult2 = gauss_laguerre(f2, n=20)\nexact2 = 0.5\nprint(f\"\\nSin test: {result2:.15f}, Error: {abs(result2 - exact2):.2e}\")",
+    "hints": [
+      "Use scipy.special.roots_laguerre to get nodes and weights",
+      "The weight e^(-x) is built into the weights",
+      "Don't multiply f(x) by e^(-x)"
+    ],
+    "solution": "import numpy as np\nfrom scipy.special import roots_laguerre\n\ndef gauss_laguerre(f, n=20):\n    \"\"\"\n    Compute ∫₀^∞ e^(-x) f(x) dx using Gauss-Laguerre quadrature.\n    \n    Parameters:\n    - f: Function to integrate (without e^(-x) factor)\n    - n: Number of quadrature points\n    \n    Returns:\n    - Approximation to integral\n    \"\"\"\n    # Get Laguerre nodes and weights\n    x, w = roots_laguerre(n)\n    \n    # Compute weighted sum (weights already include e^(-x))\n    return np.sum(w * f(x))\n\n# Test: ∫₀^∞ e^(-x) x² dx = 2\nf = lambda x: x**2\nresult = gauss_laguerre(f, n=10)\nprint(f\"n=10: {result:.15f}, Error: {abs(result - 2.0):.2e}\")\n\nresult = gauss_laguerre(f, n=20)\nprint(f\"n=20: {result:.15f}, Error: {abs(result - 2.0):.2e}\")\n\n# Test: ∫₀^∞ e^(-x) sin(x) dx = 1/2\nf2 = lambda x: np.sin(x)\nresult2 = gauss_laguerre(f2, n=20)\nexact2 = 0.5\nprint(f\"\\nSin test: {result2:.15f}, Error: {abs(result2 - exact2):.2e}\")\n\n# Test polynomial (should be exact)\nf3 = lambda x: x**3\nresult3 = gauss_laguerre(f3, n=10)\nexact3 = 6.0\nprint(f\"\\nPolynomial test: {result3:.15f}, Error: {abs(result3 - exact3):.2e}\")\nassert abs(result3 - exact3) < 1e-12\n\nprint(\"\\nAll tests passed!\")",
+    "testCases": [
+      {
+        "input": "f=lambda x: x**3, n=10",
+        "expectedOutput": "6.0 (exact for polynomial)",
+        "isHidden": false,
+        "description": "Polynomial integrand"
+      },
+      {
+        "input": "f=lambda x: np.cos(x), n=30",
+        "expectedOutput": "≈ 0.5 (error < 1e-10)",
+        "isHidden": false,
+        "description": "Oscillatory integrand"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math402-ex-4-12",
+    "subjectId": "math402",
+    "topicId": "topic-4",
+    "difficulty": 4,
+    "title": "Singularity Handling in Integration",
+    "description": "Implement multiple methods to handle endpoint singularities in integrals. For integrals like ∫₀¹ x^(-1/2)dx with a singularity at x=0, implement: (1) epsilon-offset method (integrate from a+ε), (2) transformation method (use substitution to remove singularity), and (3) specialized quadrature. Test on ∫₀¹ x^(-1/2) dx = 2 and ∫₀¹ ln(x) dx = -1. Compare accuracy and efficiency of different approaches.",
+    "starterCode": "import numpy as np\nfrom scipy import integrate\n\ndef epsilon_method(f, a, b, epsilon=1e-10):\n    \"\"\"\n    Handle singularity at a by integrating from a+epsilon.\n    \n    Parameters:\n    - f: Function to integrate\n    - a, b: Integration limits\n    - epsilon: Offset from singularity\n    \n    Returns:\n    - Approximation to integral\n    \"\"\"\n    # TODO: Integrate from a+epsilon to b\n    pass\n\ndef transformation_method(a, b):\n    \"\"\"\n    Handle ∫₀¹ x^(-1/2) dx using substitution x = t².\n    Result: ∫₀¹ 2 dt = 2\n    \n    Parameters:\n    - a, b: Integration limits\n    \n    Returns:\n    - Approximation to integral\n    \"\"\"\n    # TODO: Apply transformation and integrate\n    pass\n\n# Test: ∫₀¹ x^(-1/2) dx = 2\nexact = 2.0\n\nf = lambda x: x**(-0.5)\nresult1 = epsilon_method(f, 0, 1, epsilon=1e-10)\nresult2 = transformation_method(0, 1)\n\nprint(f\"Epsilon method: {result1:.10f}, Error: {abs(result1 - exact):.2e}\")\nprint(f\"Transform method: {result2:.10f}, Error: {abs(result2 - exact):.2e}\")\nprint(f\"Exact: {exact:.10f}\")",
+    "hints": [
+      "Transformation x = t² removes the singularity",
+      "Don't forget the Jacobian when transforming",
+      "scipy.integrate.quad can handle some singularities automatically"
+    ],
+    "solution": "import numpy as np\nfrom scipy import integrate\n\ndef epsilon_method(f, a, b, epsilon=1e-10):\n    \"\"\"\n    Handle singularity at a by integrating from a+epsilon.\n    \n    Parameters:\n    - f: Function to integrate\n    - a, b: Integration limits\n    - epsilon: Offset from singularity\n    \n    Returns:\n    - Approximation to integral\n    \"\"\"\n    result, error = integrate.quad(f, a + epsilon, b)\n    return result\n\ndef transformation_method(a, b):\n    \"\"\"\n    Handle ∫₀¹ x^(-1/2) dx using substitution x = t².\n    Result: ∫₀¹ 2 dt = 2\n    \n    Parameters:\n    - a, b: Integration limits\n    \n    Returns:\n    - Approximation to integral\n    \"\"\"\n    # After substitution x = t², dx = 2t dt\n    # ∫ x^(-1/2) dx = ∫ t^(-1) * 2t dt = ∫ 2 dt\n    integrand = lambda t: 2.0\n    result, error = integrate.quad(integrand, np.sqrt(a) if a > 0 else 0, np.sqrt(b))\n    return result\n\n# Test: ∫₀¹ x^(-1/2) dx = 2\nexact = 2.0\n\nf = lambda x: x**(-0.5)\nresult1 = epsilon_method(f, 0, 1, epsilon=1e-10)\nresult2 = transformation_method(0, 1)\n\n# Method 3: scipy's built-in handling\nresult3, _ = integrate.quad(f, 0, 1)\n\nprint(f\"Epsilon method: {result1:.10f}, Error: {abs(result1 - exact):.2e}\")\nprint(f\"Transform method: {result2:.10f}, Error: {abs(result2 - exact):.2e}\")\nprint(f\"SciPy quad: {result3:.10f}, Error: {abs(result3 - exact):.2e}\")\nprint(f\"Exact: {exact:.10f}\")\n\n# Test logarithmic singularity: ∫₀¹ ln(x) dx = -1\nprint(\"\\nLogarithmic singularity test:\")\nf_log = lambda x: np.log(x)\nexact_log = -1.0\nresult_log, _ = integrate.quad(f_log, 0, 1)\nprint(f\"∫₀¹ ln(x) dx: {result_log:.10f}, Error: {abs(result_log - exact_log):.2e}\")\nassert abs(result_log - exact_log) < 1e-8\n\nprint(\"\\nAll tests passed!\")",
+    "testCases": [
+      {
+        "input": "f=lambda x: 1/np.sqrt(x), limits=[0, 1]",
+        "expectedOutput": "2.0 (error < 1e-8)",
+        "isHidden": false,
+        "description": "Square root singularity at x=0"
+      },
+      {
+        "input": "f=lambda x: np.log(x), limits=[0, 1]",
+        "expectedOutput": "-1.0 (error < 1e-6)",
+        "isHidden": false,
+        "description": "Logarithmic singularity"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math402-ex-4-13",
+    "subjectId": "math402",
+    "topicId": "topic-4",
+    "difficulty": 4,
+    "title": "Improper Integrals with Infinite Limits",
+    "description": "Implement methods to handle integrals with infinite limits. For ∫[a,∞] f(x)dx, implement: (1) truncation method (approximate as ∫[a,T]), and (2) transformation method (use x = a + t/(1-t) to map [0,1) to [a,∞)). Test on exponentially decaying functions like ∫₀^∞ e^(-x²)dx = √π/2 and ∫₀^∞ e^(-x)dx = 1. Analyze error estimation and choose appropriate truncation points.",
+    "starterCode": "import numpy as np\nfrom scipy import integrate\n\ndef truncation_method(f, a, T):\n    \"\"\"\n    Integrate from a to infinity using truncation.\n    \n    Parameters:\n    - f: Function to integrate\n    - a: Lower limit\n    - T: Truncation point (replaces infinity)\n    \n    Returns:\n    - Approximation to integral\n    \"\"\"\n    # TODO: Use scipy.integrate.quad or other method\n    pass\n\ndef transform_infinite(f, a):\n    \"\"\"\n    Integrate from a to infinity using transformation x = a + t/(1-t).\n    \n    Parameters:\n    - f: Function to integrate\n    - a: Lower limit\n    \n    Returns:\n    - Approximation to integral\n    \"\"\"\n    def transformed_integrand(t):\n        if t >= 1.0:\n            return 0.0\n        # TODO: Apply transformation and Jacobian\n        pass\n    \n    result, error = integrate.quad(transformed_integrand, 0, 0.9999)\n    return result\n\n# Test: ∫₀^∞ e^(-x²)dx = √π/2\nf = lambda x: np.exp(-x**2)\nexact = np.sqrt(np.pi) / 2\n\nresult_trunc = truncation_method(f, 0, 10)\nresult_transform = transform_infinite(f, 0)\n\nprint(f\"Truncation method: {result_trunc:.10f}, Error: {abs(result_trunc - exact):.2e}\")\nprint(f\"Transform method: {result_transform:.10f}, Error: {abs(result_transform - exact):.2e}\")\nprint(f\"Exact: {exact:.10f}\")",
+    "hints": [
+      "For truncation, choose T so tail contribution is negligible",
+      "Transformation: dx = dt/(1-t)²",
+      "Avoid evaluating exactly at t=1"
+    ],
+    "solution": "import numpy as np\nfrom scipy import integrate\n\ndef truncation_method(f, a, T):\n    \"\"\"\n    Integrate from a to infinity using truncation.\n    \n    Parameters:\n    - f: Function to integrate\n    - a: Lower limit\n    - T: Truncation point (replaces infinity)\n    \n    Returns:\n    - Approximation to integral\n    \"\"\"\n    result, error = integrate.quad(f, a, T)\n    return result\n\ndef transform_infinite(f, a):\n    \"\"\"\n    Integrate from a to infinity using transformation x = a + t/(1-t).\n    \n    Parameters:\n    - f: Function to integrate\n    - a: Lower limit\n    \n    Returns:\n    - Approximation to integral\n    \"\"\"\n    def transformed_integrand(t):\n        if t >= 1.0:\n            return 0.0\n        x = a + t / (1 - t)\n        jacobian = 1 / (1 - t)**2\n        return f(x) * jacobian\n    \n    result, error = integrate.quad(transformed_integrand, 0, 0.9999)\n    return result\n\n# Test: ∫₀^∞ e^(-x²)dx = √π/2\nf = lambda x: np.exp(-x**2)\nexact = np.sqrt(np.pi) / 2\n\nresult_trunc = truncation_method(f, 0, 10)\nresult_transform = transform_infinite(f, 0)\n\nprint(f\"Truncation method: {result_trunc:.10f}, Error: {abs(result_trunc - exact):.2e}\")\nprint(f\"Transform method: {result_transform:.10f}, Error: {abs(result_transform - exact):.2e}\")\nprint(f\"Exact: {exact:.10f}\")\n\n# Test: ∫₀^∞ e^(-x) dx = 1\nprint(\"\\nExponential decay test:\")\nf2 = lambda x: np.exp(-x)\nexact2 = 1.0\nresult2_trunc = truncation_method(f2, 0, 20)\nresult2_transform = transform_infinite(f2, 0)\nprint(f\"Truncation: {result2_trunc:.10f}, Error: {abs(result2_trunc - exact2):.2e}\")\nprint(f\"Transform: {result2_transform:.10f}, Error: {abs(result2_transform - exact2):.2e}\")\nassert abs(result2_trunc - exact2) < 1e-8\n\nprint(\"\\nAll tests passed!\")",
+    "testCases": [
+      {
+        "input": "f=lambda x: np.exp(-x), integral=[0, inf]",
+        "expectedOutput": "1.0 (error < 1e-8)",
+        "isHidden": false,
+        "description": "Exponential decay"
+      },
+      {
+        "input": "f=lambda x: 1/(1+x**2), integral=[0, inf]",
+        "expectedOutput": "≈ π/2 (error < 1e-6)",
+        "isHidden": false,
+        "description": "Arctangent integral"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math402-ex-4-14",
+    "subjectId": "math402",
+    "topicId": "topic-4",
+    "difficulty": 4,
+    "title": "Two-Dimensional Integration",
+    "description": "Extend 1D quadrature to 2D using tensor products of quadrature rules. Implement 2D trapezoidal rule for computing double integrals ∬[a,b]×[c,d] f(x,y) dA by applying the trapezoidal rule in each dimension. Test on polynomial and separable functions. Understand the curse of dimensionality: an n-point 1D rule becomes n² points in 2D. Test on ∬[0,1]² (x²+y²) dA = 2/3 and ∬[0,π]² sin(x)cos(y) dA = 4.",
+    "starterCode": "import numpy as np\n\ndef integrate_2d_trapezoidal(f, a, b, c, d, nx=50, ny=50):\n    \"\"\"\n    Integrate 2D function using product of trapezoidal rules.\n    \n    Parameters:\n    - f: Function f(x, y) to integrate\n    - a, b: x-axis limits\n    - c, d: y-axis limits\n    - nx, ny: Number of points in x and y\n    \n    Returns:\n    - Approximation to double integral\n    \"\"\"\n    # TODO: Create grids\n    # Apply trapezoidal rule in y-direction first\n    # Then apply in x-direction\n    pass\n\n# Test: ∬[0,1]×[0,1] (x² + y²) dA = 2/3\nf = lambda x, y: x**2 + y**2\nresult = integrate_2d_trapezoidal(f, 0, 1, 0, 1, nx=100, ny=100)\nexact = 2/3\n\nprint(f\"Result: {result:.10f}\")\nprint(f\"Exact: {exact:.10f}\")\nprint(f\"Error: {abs(result - exact):.2e}\")",
+    "hints": [
+      "Use np.meshgrid to create 2D grid",
+      "Apply np.trapz twice: once for each dimension",
+      "Order of integration doesn't matter for these problems"
+    ],
+    "solution": "import numpy as np\n\ndef integrate_2d_trapezoidal(f, a, b, c, d, nx=50, ny=50):\n    \"\"\"\n    Integrate 2D function using product of trapezoidal rules.\n    \n    Parameters:\n    - f: Function f(x, y) to integrate\n    - a, b: x-axis limits\n    - c, d: y-axis limits\n    - nx, ny: Number of points in x and y\n    \n    Returns:\n    - Approximation to double integral\n    \"\"\"\n    x = np.linspace(a, b, nx)\n    y = np.linspace(c, d, ny)\n    X, Y = np.meshgrid(x, y)\n    \n    # Evaluate function on grid\n    Z = f(X, Y)\n    \n    # Apply trapezoidal rule in y-direction first\n    integral_y = np.trapz(Z, y, axis=0)\n    \n    # Then apply in x-direction\n    result = np.trapz(integral_y, x)\n    \n    return result\n\n# Test: ∬[0,1]×[0,1] (x² + y²) dA = 2/3\nf = lambda x, y: x**2 + y**2\nresult = integrate_2d_trapezoidal(f, 0, 1, 0, 1, nx=100, ny=100)\nexact = 2/3\n\nprint(f\"Result: {result:.10f}\")\nprint(f\"Exact: {exact:.10f}\")\nprint(f\"Error: {abs(result - exact):.2e}\")\n\n# Test separable function\nprint(\"\\nSeparable function test:\")\nf2 = lambda x, y: x * y\nresult2 = integrate_2d_trapezoidal(f2, 0, 1, 0, 1, nx=50, ny=50)\nexact2 = 0.25\nprint(f\"Result: {result2:.10f}, Exact: {exact2:.10f}, Error: {abs(result2 - exact2):.2e}\")\nassert abs(result2 - exact2) < 1e-8\n\nprint(\"\\nAll tests passed!\")",
+    "testCases": [
+      {
+        "input": "f=lambda x, y: x*y, domain=[0,1]×[0,1]",
+        "expectedOutput": "0.25 (error < 1e-8)",
+        "isHidden": false,
+        "description": "Product of linear functions"
+      },
+      {
+        "input": "f=lambda x, y: np.sin(x)*np.cos(y), domain=[0,π]×[0,π]",
+        "expectedOutput": "≈ 4.0 (error < 1e-6)",
+        "isHidden": false,
+        "description": "Separable trigonometric function"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math402-ex-4-15",
+    "subjectId": "math402",
+    "topicId": "topic-4",
+    "difficulty": 5,
+    "title": "Monte Carlo Integration",
+    "description": "Implement Monte Carlo integration using uniform random sampling. Monte Carlo estimates integrals as: ∫_Ω f(x)dx ≈ V(Ω)/N * Σf(xᵢ), where xᵢ are random points and V(Ω) is the domain volume. The key advantage is dimension-independent convergence: O(N^(-1/2)) regardless of dimension. Implement with error estimation using standard error = std(values) / √N. Test on 1D, 2D, and higher-dimensional problems.",
+    "starterCode": "import numpy as np\n\ndef monte_carlo_integrate(f, bounds, N=10000):\n    \"\"\"\n    Monte Carlo integration using uniform random sampling.\n    \n    Parameters:\n    - f: Function to integrate (accepts array of coordinates)\n    - bounds: List of (min, max) for each dimension\n    - N: Number of random samples\n    \n    Returns:\n    - result: Integral estimate\n    - std_error: Standard error estimate\n    \"\"\"\n    d = len(bounds)\n    \n    # TODO: Generate uniform random samples\n    # Evaluate function at samples\n    # Compute mean and standard error\n    # Multiply by volume\n    pass\n\n# Test 1D: ∫₀¹ x² dx = 1/3\nf1 = lambda x: x[0]**2\nresult1, error1 = monte_carlo_integrate(f1, [(0, 1)], N=10000)\nprint(f\"1D test: {result1:.6f} ± {error1:.6f}, Exact: 0.333333\")\n\n# Test 2D: ∬[0,1]² (x²+y²) dA = 2/3\nf2 = lambda x: x[0]**2 + x[1]**2\nresult2, error2 = monte_carlo_integrate(f2, [(0,1), (0,1)], N=100000)\nprint(f\"2D test: {result2:.6f} ± {error2:.6f}, Exact: 0.666667\")",
+    "hints": [
+      "Generate random points using np.random.uniform",
+      "Standard error is std(values) / sqrt(N)",
+      "Don't forget to multiply by domain volume"
+    ],
+    "solution": "import numpy as np\n\ndef monte_carlo_integrate(f, bounds, N=10000):\n    \"\"\"\n    Monte Carlo integration using uniform random sampling.\n    \n    Parameters:\n    - f: Function to integrate (accepts array of coordinates)\n    - bounds: List of (min, max) for each dimension\n    - N: Number of random samples\n    \n    Returns:\n    - result: Integral estimate\n    - std_error: Standard error estimate\n    \"\"\"\n    d = len(bounds)\n    \n    # Generate uniform random samples\n    samples = np.random.uniform(\n        low=[b[0] for b in bounds],\n        high=[b[1] for b in bounds],\n        size=(N, d)\n    )\n    \n    # Evaluate function at samples\n    values = np.array([f(s) for s in samples])\n    \n    # Compute volume of domain\n    volume = np.prod([b[1] - b[0] for b in bounds])\n    \n    # Monte Carlo estimate\n    result = volume * np.mean(values)\n    \n    # Standard error estimate\n    std_error = volume * np.std(values) / np.sqrt(N)\n    \n    return result, std_error\n\n# Test 1D: ∫₀¹ x² dx = 1/3\nf1 = lambda x: x[0]**2\nresult1, error1 = monte_carlo_integrate(f1, [(0, 1)], N=10000)\nprint(f\"1D test: {result1:.6f} ± {error1:.6f}, Exact: 0.333333\")\n\n# Test 2D: ∬[0,1]² (x²+y²) dA = 2/3\nf2 = lambda x: x[0]**2 + x[1]**2\nresult2, error2 = monte_carlo_integrate(f2, [(0,1), (0,1)], N=100000)\nprint(f\"2D test: {result2:.6f} ± {error2:.6f}, Exact: 0.666667\")\n\n# Test 5D Gaussian\nprint(\"\\n5D Gaussian test:\")\nf5d = lambda x: np.exp(-np.sum(x**2))\nresult5d, error5d = monte_carlo_integrate(f5d, [(-1,1)]*5, N=100000)\nprint(f\"5D result: {result5d:.6f} ± {error5d:.6f}\")\nprint(\"(Convergence rate O(N^-0.5) independent of dimension!)\")\n\nprint(\"\\nAll tests passed!\")",
+    "testCases": [
+      {
+        "input": "f=lambda x: np.exp(-np.sum(x**2)), bounds=[(-1,1)]*5, N=100000",
+        "expectedOutput": "Convergence O(N^-0.5)",
+        "isHidden": false,
+        "description": "5D Gaussian, dimension-independent convergence"
+      },
+      {
+        "input": "Estimate unit sphere volume in 3D",
+        "expectedOutput": "≈ 4π/3 (tolerance ~0.1)",
+        "isHidden": false,
+        "description": "Volume estimation by counting points inside"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math402-ex-4-16",
+    "subjectId": "math402",
+    "topicId": "topic-4",
+    "difficulty": 5,
+    "title": "High-Dimensional Sphere Volume Estimation",
+    "description": "Apply Monte Carlo integration to estimate the volume of a unit sphere in high dimensions. The exact volume formula is V_d = π^(d/2) / Γ(d/2 + 1). Use Monte Carlo by sampling points in the enclosing hypercube [-1,1]^d and counting how many fall inside the sphere (||x|| ≤ 1). Demonstrate that Monte Carlo maintains constant relative accuracy across dimensions while deterministic methods fail due to the curse of dimensionality. Test dimensions d = 2, 3, 4, ..., 12.",
+    "starterCode": "import numpy as np\nfrom scipy.special import gamma\n\ndef sphere_volume_monte_carlo(d, N=100000):\n    \"\"\"\n    Estimate volume of unit sphere in d dimensions using Monte Carlo.\n    \n    Parameters:\n    - d: Dimension\n    - N: Number of samples\n    \n    Returns:\n    - Estimated volume\n    - Standard error\n    \"\"\"\n    # TODO: Generate uniform random points in [-1,1]^d\n    # Count points with ||x|| <= 1\n    # Volume of hypercube is 2^d\n    # Estimate as (hypercube_volume * points_inside / total_points)\n    pass\n\ndef sphere_volume_exact(d):\n    \"\"\"Exact volume formula.\"\"\"\n    return np.pi**(d/2) / gamma(d/2 + 1)\n\n# Test across dimensions\nprint(\"Sphere Volume Estimation\")\nprint(\"-\" * 70)\nprint(f\"{'Dim':>4} {'Monte Carlo':>15} {'Exact':>15} {'Error':>12} {'Rel Error':>12}\")\nprint(\"-\" * 70)\n\nfor d in [2, 3, 4, 5, 6, 8, 10, 12]:\n    mc_volume, mc_error = sphere_volume_monte_carlo(d, N=1000000)\n    exact = sphere_volume_exact(d)\n    error = abs(mc_volume - exact)\n    rel_error = error / exact * 100\n    \n    print(f\"{d:4d} {mc_volume:15.6f} {exact:15.6f} {error:12.6f} {rel_error:11.2f}%\")",
+    "hints": [
+      "Use np.linalg.norm to compute distances",
+      "Fraction of points inside estimates volume ratio",
+      "Error decreases as O(N^-0.5) regardless of dimension"
+    ],
+    "solution": "import numpy as np\nfrom scipy.special import gamma\n\ndef sphere_volume_monte_carlo(d, N=100000):\n    \"\"\"\n    Estimate volume of unit sphere in d dimensions using Monte Carlo.\n    \n    Parameters:\n    - d: Dimension\n    - N: Number of samples\n    \n    Returns:\n    - Estimated volume\n    - Standard error\n    \"\"\"\n    # Generate uniform random points in [-1,1]^d\n    points = np.random.uniform(-1, 1, size=(N, d))\n    \n    # Count points inside unit sphere (||x|| <= 1)\n    distances = np.linalg.norm(points, axis=1)\n    inside = np.sum(distances <= 1)\n    \n    # Volume of hypercube [-1,1]^d is 2^d\n    hypercube_volume = 2**d\n    \n    # Estimate sphere volume\n    sphere_volume = hypercube_volume * (inside / N)\n    \n    # Standard error estimate\n    p = inside / N\n    std_error = hypercube_volume * np.sqrt(p * (1 - p) / N)\n    \n    return sphere_volume, std_error\n\ndef sphere_volume_exact(d):\n    \"\"\"Exact volume formula.\"\"\"\n    return np.pi**(d/2) / gamma(d/2 + 1)\n\n# Test across dimensions\nprint(\"Sphere Volume Estimation\")\nprint(\"-\" * 70)\nprint(f\"{'Dim':>4} {'Monte Carlo':>15} {'Exact':>15} {'Error':>12} {'Rel Error':>12}\")\nprint(\"-\" * 70)\n\nfor d in [2, 3, 4, 5, 6, 8, 10, 12]:\n    mc_volume, mc_error = sphere_volume_monte_carlo(d, N=1000000)\n    exact = sphere_volume_exact(d)\n    error = abs(mc_volume - exact)\n    rel_error = error / exact * 100\n    \n    print(f\"{d:4d} {mc_volume:15.6f} {exact:15.6f} {error:12.6f} {rel_error:11.2f}%\")\n\nprint(\"\\nNote: Relative error remains roughly constant across all dimensions!\")\nprint(\"This demonstrates Monte Carlo's dimension-independent convergence.\")\nprint(\"\\nAll tests passed!\")",
+    "testCases": [
+      {
+        "input": "d=2, N=100000",
+        "expectedOutput": "≈ π (tolerance 5%)",
+        "isHidden": false,
+        "description": "2D circle area"
+      },
+      {
+        "input": "d=3, N=100000",
+        "expectedOutput": "≈ 4π/3 (tolerance 5%)",
+        "isHidden": false,
+        "description": "3D sphere volume"
+      },
+      {
+        "input": "d=10, N=1000000",
+        "expectedOutput": "Consistent relative accuracy",
+        "isHidden": false,
+        "description": "Accuracy remains consistent in high dimensions"
       }
     ],
     "language": "python"

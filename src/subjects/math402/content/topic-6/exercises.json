@@ -1,52 +1,675 @@
 [
   {
-    "id": "math402-ex-6-1",
+    "id": "math402-t6-ex01",
     "subjectId": "math402",
-    "topicId": "topic-6",
-    "difficulty": 1,
+    "topicId": "math402-topic-6",
     "title": "Jacobi Iteration",
-    "description": "Implement the Jacobi iterative method for solving linear systems. The Jacobi method splits A = D + R where D is diagonal, and iterates x^(k+1) = D^(-1)(b - Rx^(k)). This is the simplest stationary iterative method.",
-    "starterCode": "import numpy as np\n\ndef jacobi_iteration(A, b, x0=None, max_iter=100, tol=1e-6):\n    \"\"\"\n    Solve Ax = b using Jacobi iteration.\n\n    Parameters:\n    - A: n×n coefficient matrix\n    - b: n×1 right-hand side\n    - x0: initial guess (default: zero vector)\n    - max_iter: maximum iterations\n    - tol: convergence tolerance\n\n    Returns:\n    - x: solution\n    - iterations: number of iterations\n    - residuals: list of residual norms\n    \"\"\"\n    # TODO: Implement this function\n    pass\n\n# Test case: diagonally dominant system\nA = np.array([\n    [4.0, 1.0, 0.0],\n    [1.0, 4.0, 1.0],\n    [0.0, 1.0, 4.0]\n], dtype=float)\n\nb = np.array([6.0, 8.0, 6.0])\n\nx, iters, residuals = jacobi_iteration(A, b)\nprint(f\"Solution: {x}\")\nprint(f\"Iterations: {iters}\")\nprint(f\"Final residual: {residuals[-1]:.2e}\")",
+    "difficulty": "beginner",
+    "estimatedTime": "30 minutes",
+    "learningObjectives": [
+      "Implement the Jacobi iterative method for linear systems",
+      "Understand diagonal dominance and convergence",
+      "Track residual convergence over iterations"
+    ],
+    "problem": "Implement the Jacobi iterative method for solving linear systems. The Jacobi method splits A = D + R where D is diagonal, and iterates x^(k+1) = D^(-1)(b - Rx^(k)). This is the simplest stationary iterative method.\n\nYour implementation should:\n- Extract the diagonal and off-diagonal parts of the matrix\n- Use all old values x^(k) to compute all new values x^(k+1)\n- Track residual norms at each iteration\n- Return the solution, iteration count, and residual history",
+    "starterCode": "import numpy as np\n\ndef jacobi_iteration(A, b, x0=None, max_iter=100, tol=1e-6):\n    \"\"\"\n    Solve Ax = b using Jacobi iteration.\n\n    Parameters:\n    - A: n×n coefficient matrix\n    - b: n×1 right-hand side\n    - x0: initial guess (default: zero vector)\n    - max_iter: maximum iterations\n    - tol: convergence tolerance\n\n    Returns:\n    - x: solution\n    - iterations: number of iterations\n    - residuals: list of residual norms\n    \"\"\"\n    # TODO: Implement this function\n    pass",
+    "solution": "import numpy as np\n\ndef jacobi_iteration(A, b, x0=None, max_iter=100, tol=1e-6):\n    \"\"\"\n    Solve Ax = b using Jacobi iteration.\n\n    Parameters:\n    - A: n×n coefficient matrix\n    - b: n×1 right-hand side\n    - x0: initial guess (default: zero vector)\n    - max_iter: maximum iterations\n    - tol: convergence tolerance\n\n    Returns:\n    - x: solution\n    - iterations: number of iterations\n    - residuals: list of residual norms\n    \"\"\"\n    n = len(b)\n\n    # Initialize\n    if x0 is None:\n        x = np.zeros(n)\n    else:\n        x = x0.copy()\n\n    residuals = []\n\n    for k in range(max_iter):\n        # Compute residual\n        residual = b - A @ x\n        res_norm = np.linalg.norm(residual)\n        residuals.append(res_norm)\n\n        # Check convergence\n        if res_norm < tol:\n            return x, k + 1, residuals\n\n        # Jacobi update: x_new[i] = (b[i] - sum(A[i,j]*x[j] for j≠i)) / A[i,i]\n        x_new = np.zeros(n)\n        for i in range(n):\n            sigma = sum(A[i, j] * x[j] for j in range(n) if j != i)\n            x_new[i] = (b[i] - sigma) / A[i, i]\n\n        x = x_new\n\n    # Max iterations reached\n    residual = b - A @ x\n    residuals.append(np.linalg.norm(residual))\n\n    return x, max_iter, residuals",
+    "testCases": [
+      {
+        "input": {"A": "[[4.0, 1.0, 0.0], [1.0, 4.0, 1.0], [0.0, 1.0, 4.0]]", "b": "[6.0, 8.0, 6.0]"},
+        "expected": {"iterations": "< 20", "converged": true},
+        "description": "Diagonally dominant 3×3 system should converge"
+      }
+    ],
     "hints": [
       "Extract diagonal D and off-diagonal R where A = D + R",
       "Update: x^(k+1)[i] = (b[i] - sum(A[i,j]*x^(k)[j] for j≠i)) / A[i,i]",
       "Use all old values x^(k) to compute all new values x^(k+1)",
       "Check convergence: ||b - Ax|| < tol"
     ],
-    "solution": "import numpy as np\n\ndef jacobi_iteration(A, b, x0=None, max_iter=100, tol=1e-6):\n    \"\"\"\n    Solve Ax = b using Jacobi iteration.\n\n    Parameters:\n    - A: n×n coefficient matrix\n    - b: n×1 right-hand side\n    - x0: initial guess (default: zero vector)\n    - max_iter: maximum iterations\n    - tol: convergence tolerance\n\n    Returns:\n    - x: solution\n    - iterations: number of iterations\n    - residuals: list of residual norms\n    \"\"\"\n    n = len(b)\n\n    # Initialize\n    if x0 is None:\n        x = np.zeros(n)\n    else:\n        x = x0.copy()\n\n    residuals = []\n\n    for k in range(max_iter):\n        # Compute residual\n        residual = b - A @ x\n        res_norm = np.linalg.norm(residual)\n        residuals.append(res_norm)\n\n        # Check convergence\n        if res_norm < tol:\n            return x, k + 1, residuals\n\n        # Jacobi update: x_new[i] = (b[i] - sum(A[i,j]*x[j] for j≠i)) / A[i,i]\n        x_new = np.zeros(n)\n        for i in range(n):\n            sigma = sum(A[i, j] * x[j] for j in range(n) if j != i)\n            x_new[i] = (b[i] - sigma) / A[i, i]\n\n        x = x_new\n\n    # Max iterations reached\n    residual = b - A @ x\n    residuals.append(np.linalg.norm(residual))\n\n    return x, max_iter, residuals\n\n# Test case: diagonally dominant system\nA = np.array([\n    [4.0, 1.0, 0.0],\n    [1.0, 4.0, 1.0],\n    [0.0, 1.0, 4.0]\n], dtype=float)\n\nb = np.array([6.0, 8.0, 6.0])\n\nx, iters, residuals = jacobi_iteration(A, b)\nprint(f\"Solution: {x}\")\nprint(f\"Iterations: {iters}\")\nprint(f\"Final residual: {residuals[-1]:.2e}\")\n\n# Verify\nprint(f\"\\nVerification Ax: {A @ x}\")\nprint(f\"Original b: {b}\")\n\n# Compare with direct solve\nx_exact = np.linalg.solve(A, b)\nprint(f\"\\nDifference from exact: {np.linalg.norm(x - x_exact):.2e}\")\n\n# Plot convergence\nimport matplotlib.pyplot as plt\nplt.semilogy(residuals)\nplt.xlabel('Iteration')\nplt.ylabel('Residual norm')\nplt.title('Jacobi Convergence')\nplt.grid(True)\nplt.show()\n\nprint(\"\\nAll tests passed!\")",
-    "testCases": [
-      {
-        "input": "Diagonally dominant 3×3 system",
-        "expectedOutput": "Converged solution in ~10-20 iterations",
-        "isHidden": false,
-        "description": "Basic Jacobi iteration convergence"
-      }
+    "commonMistakes": [
+      "Using updated values within the same iteration (that's Gauss-Seidel, not Jacobi)",
+      "Not checking for zero diagonal elements before division",
+      "Computing residual inefficiently with full matrix multiplication each time"
     ],
-    "language": "python"
+    "extensionActivities": [
+      "Compare convergence speed with different initial guesses",
+      "Visualize residual convergence on a log-scale plot",
+      "Implement weighted Jacobi with relaxation parameter"
+    ]
   },
   {
-    "id": "math402-ex-6-2",
+    "id": "math402-t6-ex02",
     "subjectId": "math402",
-    "topicId": "topic-6",
-    "difficulty": 2,
+    "topicId": "math402-topic-6",
     "title": "Gauss-Seidel Method",
-    "description": "Implement Gauss-Seidel iteration which uses updated values immediately. Gauss-Seidel often converges faster than Jacobi because it uses the most recent information. Update: x^(k+1)[i] uses already-computed x^(k+1)[j] for j < i.",
-    "starterCode": "import numpy as np\n\ndef gauss_seidel(A, b, x0=None, max_iter=100, tol=1e-6):\n    \"\"\"\n    Solve Ax = b using Gauss-Seidel iteration.\n\n    Parameters:\n    - A: n×n coefficient matrix\n    - b: n×1 right-hand side\n    - x0: initial guess\n    - max_iter: maximum iterations\n    - tol: convergence tolerance\n\n    Returns:\n    - x: solution\n    - iterations: number of iterations\n    - residuals: list of residual norms\n    \"\"\"\n    # TODO: Implement this function\n    pass\n\n# Test case\nA = np.array([\n    [4.0, 1.0, 0.0],\n    [1.0, 4.0, 1.0],\n    [0.0, 1.0, 4.0]\n], dtype=float)\n\nb = np.array([6.0, 8.0, 6.0])\n\nx, iters, residuals = gauss_seidel(A, b)\nprint(f\"Solution: {x}\")\nprint(f\"Iterations: {iters}\")",
+    "difficulty": "beginner",
+    "estimatedTime": "35 minutes",
+    "learningObjectives": [
+      "Implement Gauss-Seidel iteration using updated values immediately",
+      "Compare convergence with Jacobi method",
+      "Understand the benefits of using most recent information"
+    ],
+    "problem": "Implement Gauss-Seidel iteration which uses updated values immediately. Gauss-Seidel often converges faster than Jacobi because it uses the most recent information. Update: x^(k+1)[i] uses already-computed x^(k+1)[j] for j < i.\n\nYour implementation should:\n- Update values in-place, using new values as soon as they're computed\n- Track residual norms\n- Return solution, iteration count, and residual history",
+    "starterCode": "import numpy as np\n\ndef gauss_seidel(A, b, x0=None, max_iter=100, tol=1e-6):\n    \"\"\"\n    Solve Ax = b using Gauss-Seidel iteration.\n\n    Parameters:\n    - A: n×n coefficient matrix\n    - b: n×1 right-hand side\n    - x0: initial guess\n    - max_iter: maximum iterations\n    - tol: convergence tolerance\n\n    Returns:\n    - x: solution\n    - iterations: number of iterations\n    - residuals: list of residual norms\n    \"\"\"\n    # TODO: Implement this function\n    pass",
+    "solution": "import numpy as np\n\ndef gauss_seidel(A, b, x0=None, max_iter=100, tol=1e-6):\n    \"\"\"\n    Solve Ax = b using Gauss-Seidel iteration.\n\n    Parameters:\n    - A: n×n coefficient matrix\n    - b: n×1 right-hand side\n    - x0: initial guess\n    - max_iter: maximum iterations\n    - tol: convergence tolerance\n\n    Returns:\n    - x: solution\n    - iterations: number of iterations\n    - residuals: list of residual norms\n    \"\"\"\n    n = len(b)\n\n    if x0 is None:\n        x = np.zeros(n)\n    else:\n        x = x0.copy()\n\n    residuals = []\n\n    for k in range(max_iter):\n        # Compute residual\n        residual = b - A @ x\n        res_norm = np.linalg.norm(residual)\n        residuals.append(res_norm)\n\n        if res_norm < tol:\n            return x, k + 1, residuals\n\n        # Gauss-Seidel update (in-place)\n        for i in range(n):\n            sigma = sum(A[i, j] * x[j] for j in range(n) if j != i)\n            x[i] = (b[i] - sigma) / A[i, i]\n\n    residual = b - A @ x\n    residuals.append(np.linalg.norm(residual))\n\n    return x, max_iter, residuals",
+    "testCases": [
+      {
+        "input": {"A": "[[4.0, 1.0, 0.0], [1.0, 4.0, 1.0], [0.0, 1.0, 4.0]]", "b": "[6.0, 8.0, 6.0]"},
+        "expected": {"iterations": "< Jacobi iterations", "converged": true},
+        "description": "Same system as Jacobi, should converge faster"
+      }
+    ],
     "hints": [
       "Use updated values immediately in the same iteration",
       "x[i] = (b[i] - sum(A[i,j]*x[j] for j<i) - sum(A[i,j]*x[j] for j>i)) / A[i,i]",
       "First sum uses new x values, second sum uses old x values",
       "Typically converges faster than Jacobi"
     ],
-    "solution": "import numpy as np\n\ndef gauss_seidel(A, b, x0=None, max_iter=100, tol=1e-6):\n    \"\"\"\n    Solve Ax = b using Gauss-Seidel iteration.\n\n    Parameters:\n    - A: n×n coefficient matrix\n    - b: n×1 right-hand side\n    - x0: initial guess\n    - max_iter: maximum iterations\n    - tol: convergence tolerance\n\n    Returns:\n    - x: solution\n    - iterations: number of iterations\n    - residuals: list of residual norms\n    \"\"\"\n    n = len(b)\n\n    if x0 is None:\n        x = np.zeros(n)\n    else:\n        x = x0.copy()\n\n    residuals = []\n\n    for k in range(max_iter):\n        # Compute residual\n        residual = b - A @ x\n        res_norm = np.linalg.norm(residual)\n        residuals.append(res_norm)\n\n        if res_norm < tol:\n            return x, k + 1, residuals\n\n        # Gauss-Seidel update (in-place)\n        for i in range(n):\n            sigma = sum(A[i, j] * x[j] for j in range(n) if j != i)\n            x[i] = (b[i] - sigma) / A[i, i]\n\n    residual = b - A @ x\n    residuals.append(np.linalg.norm(residual))\n\n    return x, max_iter, residuals\n\ndef compare_jacobi_gs(A, b):\n    \"\"\"Compare Jacobi and Gauss-Seidel convergence.\"\"\"\n    from math402_ex_6_1 import jacobi_iteration\n\n    # Run both methods\n    x_j, iters_j, res_j = jacobi_iteration(A, b)\n    x_gs, iters_gs, res_gs = gauss_seidel(A, b)\n\n    print(\"Jacobi:\")\n    print(f\"  Iterations: {iters_j}\")\n    print(f\"  Final residual: {res_j[-1]:.2e}\")\n\n    print(\"\\nGauss-Seidel:\")\n    print(f\"  Iterations: {iters_gs}\")\n    print(f\"  Final residual: {res_gs[-1]:.2e}\")\n\n    print(f\"\\nSpeedup: {iters_j / iters_gs:.2f}x\")\n\n    # Plot comparison\n    import matplotlib.pyplot as plt\n    plt.semilogy(res_j, label='Jacobi', marker='o')\n    plt.semilogy(res_gs, label='Gauss-Seidel', marker='s')\n    plt.xlabel('Iteration')\n    plt.ylabel('Residual norm')\n    plt.title('Convergence Comparison')\n    plt.legend()\n    plt.grid(True)\n    plt.show()\n\n# Test case\nA = np.array([\n    [4.0, 1.0, 0.0],\n    [1.0, 4.0, 1.0],\n    [0.0, 1.0, 4.0]\n], dtype=float)\n\nb = np.array([6.0, 8.0, 6.0])\n\nx, iters, residuals = gauss_seidel(A, b)\nprint(f\"Solution: {x}\")\nprint(f\"Iterations: {iters}\")\nprint(f\"Final residual: {residuals[-1]:.2e}\")\n\n# Verify\nprint(f\"\\nVerification Ax: {A @ x}\")\nprint(f\"Original b: {b}\")\n\nx_exact = np.linalg.solve(A, b)\nprint(f\"Difference from exact: {np.linalg.norm(x - x_exact):.2e}\")\n\nprint(\"\\nAll tests passed!\")",
+    "commonMistakes": [
+      "Not updating in-place, which reverts to Jacobi method",
+      "Computing all new values first, then updating (that's Jacobi)",
+      "Not preserving the order of updates"
+    ],
+    "extensionActivities": [
+      "Compare convergence rates with Jacobi on the same system",
+      "Test on a system where Jacobi diverges but Gauss-Seidel converges",
+      "Implement backward Gauss-Seidel (updating in reverse order)"
+    ]
+  },
+  {
+    "id": "math402-t6-ex03",
+    "subjectId": "math402",
+    "topicId": "math402-topic-6",
+    "title": "Diagonal Dominance Checker",
+    "difficulty": "beginner",
+    "estimatedTime": "25 minutes",
+    "learningObjectives": [
+      "Understand strict and weak diagonal dominance",
+      "Implement convergence condition checking",
+      "Relate matrix properties to iterative method convergence"
+    ],
+    "problem": "Implement a function that checks whether a matrix is strictly or weakly diagonally dominant. A matrix is strictly diagonally dominant if |a_ii| > sum(|a_ij|) for j≠i for all rows. This is a sufficient condition for Jacobi and Gauss-Seidel convergence.\n\nYour function should return both strict and weak diagonal dominance status.",
+    "starterCode": "import numpy as np\n\ndef check_diagonal_dominance(A):\n    \"\"\"\n    Check if matrix is diagonally dominant.\n\n    Parameters:\n    - A: n×n matrix\n\n    Returns:\n    - strict_dd: bool, True if strictly diagonally dominant\n    - weak_dd: bool, True if weakly diagonally dominant\n    \"\"\"\n    # TODO: Implement this function\n    pass",
+    "solution": "import numpy as np\n\ndef check_diagonal_dominance(A):\n    \"\"\"\n    Check if matrix is diagonally dominant.\n\n    Parameters:\n    - A: n×n matrix\n\n    Returns:\n    - strict_dd: bool, True if strictly diagonally dominant\n    - weak_dd: bool, True if weakly diagonally dominant\n    \"\"\"\n    n = A.shape[0]\n    strict = True\n    weak = True\n\n    for i in range(n):\n        # Sum of absolute values of off-diagonal elements in row i\n        row_sum = np.sum(np.abs(A[i, :])) - np.abs(A[i, i])\n        \n        # Check strict diagonal dominance: |a_ii| > sum\n        if np.abs(A[i, i]) <= row_sum:\n            strict = False\n        \n        # Check weak diagonal dominance: |a_ii| >= sum\n        if np.abs(A[i, i]) < row_sum:\n            weak = False\n\n    return strict, weak",
     "testCases": [
       {
-        "input": "Same system as Jacobi",
-        "expectedOutput": "Faster convergence than Jacobi",
-        "isHidden": false,
-        "description": "Gauss-Seidel convergence comparison"
+        "input": {"A": "[[4, 1, 0], [1, 4, 1], [0, 1, 4]]"},
+        "expected": {"strict": true, "weak": true},
+        "description": "Tridiagonal matrix is strictly diagonally dominant"
+      },
+      {
+        "input": {"A": "[[2, 1, 1], [1, 2, 1], [1, 1, 2]]"},
+        "expected": {"strict": false, "weak": true},
+        "description": "Matrix is weakly but not strictly diagonally dominant"
+      },
+      {
+        "input": {"A": "[[1, 2, 0], [2, 1, 2], [0, 2, 1]]"},
+        "expected": {"strict": false, "weak": false},
+        "description": "Matrix is not diagonally dominant"
       }
     ],
-    "language": "python"
+    "hints": [
+      "For each row i, compute sum of |a_ij| for all j ≠ i",
+      "Strict: |a_ii| > row_sum for ALL rows",
+      "Weak: |a_ii| >= row_sum for ALL rows",
+      "A single failing row makes the entire matrix non-dominant"
+    ],
+    "commonMistakes": [
+      "Forgetting to take absolute values",
+      "Including diagonal element in the row sum",
+      "Checking only some rows instead of all rows",
+      "Confusing strict (>) with weak (>=) conditions"
+    ],
+    "extensionActivities": [
+      "Implement a function to reorder rows to achieve diagonal dominance if possible",
+      "Compute the 'degree' of diagonal dominance as min_i(|a_ii| / row_sum_i)",
+      "Test various matrices and predict which iterative methods will converge"
+    ]
+  },
+  {
+    "id": "math402-t6-ex04",
+    "subjectId": "math402",
+    "topicId": "math402-topic-6",
+    "title": "SOR with Relaxation Parameter",
+    "difficulty": "intermediate",
+    "estimatedTime": "40 minutes",
+    "learningObjectives": [
+      "Implement Successive Over-Relaxation (SOR)",
+      "Understand the effect of relaxation parameter omega",
+      "Explore over-relaxation and under-relaxation"
+    ],
+    "problem": "Implement the SOR method which combines Gauss-Seidel updates with a relaxation parameter ω. The SOR update is: x_i^(k+1) = (1-ω)x_i^(k) + ω*x_i^GS, where x_i^GS is the Gauss-Seidel update.\n\nFor ω = 1, SOR reduces to Gauss-Seidel. For 1 < ω < 2, we get over-relaxation (acceleration). For 0 < ω < 1, we get under-relaxation (stabilization).",
+    "starterCode": "import numpy as np\n\ndef sor(A, b, omega, x0=None, max_iter=100, tol=1e-6):\n    \"\"\"\n    Solve Ax = b using SOR.\n\n    Parameters:\n    - A: n×n coefficient matrix\n    - b: n×1 right-hand side\n    - omega: relaxation parameter (0 < omega < 2)\n    - x0: initial guess\n    - max_iter: maximum iterations\n    - tol: convergence tolerance\n\n    Returns:\n    - x: solution\n    - iterations: number of iterations\n    - residuals: list of residual norms\n    \"\"\"\n    # TODO: Implement this function\n    pass",
+    "solution": "import numpy as np\n\ndef sor(A, b, omega, x0=None, max_iter=100, tol=1e-6):\n    \"\"\"\n    Solve Ax = b using SOR.\n\n    Parameters:\n    - A: n×n coefficient matrix\n    - b: n×1 right-hand side\n    - omega: relaxation parameter (0 < omega < 2)\n    - x0: initial guess\n    - max_iter: maximum iterations\n    - tol: convergence tolerance\n\n    Returns:\n    - x: solution\n    - iterations: number of iterations\n    - residuals: list of residual norms\n    \"\"\"\n    n = len(b)\n    \n    if omega <= 0 or omega >= 2:\n        raise ValueError(\"Relaxation parameter must satisfy 0 < omega < 2\")\n    \n    if x0 is None:\n        x = np.zeros(n)\n    else:\n        x = x0.copy()\n\n    residuals = []\n\n    for k in range(max_iter):\n        x_old = x.copy()\n        \n        # Compute residual\n        residual = b - A @ x\n        res_norm = np.linalg.norm(residual)\n        residuals.append(res_norm)\n\n        if res_norm < tol:\n            return x, k + 1, residuals\n\n        # SOR update\n        for i in range(n):\n            # Compute Gauss-Seidel update\n            sigma = sum(A[i, j] * x[j] for j in range(n) if j != i)\n            x_gs = (b[i] - sigma) / A[i, i]\n            \n            # SOR: weighted average of old value and GS update\n            x[i] = (1 - omega) * x_old[i] + omega * x_gs\n\n    residual = b - A @ x\n    residuals.append(np.linalg.norm(residual))\n\n    return x, max_iter, residuals",
+    "testCases": [
+      {
+        "input": {"A": "[[4, 1, 0], [1, 4, 1], [0, 1, 4]]", "b": "[5, 6, 7]", "omega": 1.25},
+        "expected": {"iterations": "< Gauss-Seidel iterations", "converged": true},
+        "description": "Over-relaxation should accelerate convergence"
+      },
+      {
+        "input": {"A": "[[4, 1, 0], [1, 4, 1], [0, 1, 4]]", "b": "[5, 6, 7]", "omega": 1.0},
+        "expected": {"same_as": "Gauss-Seidel"},
+        "description": "omega=1 should give Gauss-Seidel behavior"
+      }
+    ],
+    "hints": [
+      "Validate that 0 < omega < 2 before starting iterations",
+      "Compute Gauss-Seidel update first: x_gs = (b[i] - sum) / A[i,i]",
+      "Then apply relaxation: x[i] = (1-omega)*x_old[i] + omega*x_gs",
+      "Store x_old before updating for the weighted average"
+    ],
+    "commonMistakes": [
+      "Using x[i] instead of x_old[i] in the weighted average",
+      "Not validating omega is in valid range (0, 2)",
+      "Computing x[i] = omega * x_gs without the (1-omega)*x_old[i] term",
+      "Not copying x_old before starting updates"
+    ],
+    "extensionActivities": [
+      "Implement a function to find optimal omega empirically",
+      "Compare convergence for omega values from 0.5 to 1.95",
+      "Visualize how iteration count varies with omega"
+    ]
+  },
+  {
+    "id": "math402-t6-ex05",
+    "subjectId": "math402",
+    "topicId": "math402-topic-6",
+    "title": "Spectral Radius Computation",
+    "difficulty": "intermediate",
+    "estimatedTime": "35 minutes",
+    "learningObjectives": [
+      "Compute iteration matrices for classical methods",
+      "Calculate spectral radius to predict convergence",
+      "Understand the relationship between spectral radius and convergence rate"
+    ],
+    "problem": "Implement functions to compute the iteration matrices and spectral radii for Jacobi and Gauss-Seidel methods. The spectral radius ρ(G) is the maximum absolute eigenvalue of the iteration matrix G. A method converges if and only if ρ(G) < 1.\n\nFor Jacobi: G_J = D^(-1)(L+U) where A = D - L - U\nFor Gauss-Seidel: G_GS = (D-L)^(-1)U",
+    "starterCode": "import numpy as np\n\ndef iteration_matrix_jacobi(A):\n    \"\"\"\n    Compute the Jacobi iteration matrix.\n    \n    Parameters:\n    - A: n×n coefficient matrix\n    \n    Returns:\n    - G: Jacobi iteration matrix\n    \"\"\"\n    # TODO: Implement this function\n    pass\n\ndef iteration_matrix_gauss_seidel(A):\n    \"\"\"\n    Compute the Gauss-Seidel iteration matrix.\n    \n    Parameters:\n    - A: n×n coefficient matrix\n    \n    Returns:\n    - G: Gauss-Seidel iteration matrix\n    \"\"\"\n    # TODO: Implement this function\n    pass\n\ndef spectral_radius(G):\n    \"\"\"\n    Compute the spectral radius of a matrix.\n    \n    Parameters:\n    - G: input matrix\n    \n    Returns:\n    - rho: spectral radius (max eigenvalue magnitude)\n    \"\"\"\n    # TODO: Implement this function\n    pass",
+    "solution": "import numpy as np\n\ndef iteration_matrix_jacobi(A):\n    \"\"\"\n    Compute the Jacobi iteration matrix.\n    \n    Parameters:\n    - A: n×n coefficient matrix\n    \n    Returns:\n    - G: Jacobi iteration matrix\n    \"\"\"\n    n = A.shape[0]\n    D = np.diag(np.diag(A))\n    L = -np.tril(A, -1)  # Negative lower triangular\n    U = -np.triu(A, 1)   # Negative upper triangular\n    D_inv = np.linalg.inv(D)\n    return D_inv @ (L + U)\n\ndef iteration_matrix_gauss_seidel(A):\n    \"\"\"\n    Compute the Gauss-Seidel iteration matrix.\n    \n    Parameters:\n    - A: n×n coefficient matrix\n    \n    Returns:\n    - G: Gauss-Seidel iteration matrix\n    \"\"\"\n    n = A.shape[0]\n    D = np.diag(np.diag(A))\n    L = -np.tril(A, -1)\n    U = -np.triu(A, 1)\n    return np.linalg.inv(D - L) @ U\n\ndef spectral_radius(G):\n    \"\"\"\n    Compute the spectral radius of a matrix.\n    \n    Parameters:\n    - G: input matrix\n    \n    Returns:\n    - rho: spectral radius (max eigenvalue magnitude)\n    \"\"\"\n    eigenvalues = np.linalg.eigvals(G)\n    return np.max(np.abs(eigenvalues))",
+    "testCases": [
+      {
+        "input": {"A": "[[4, -1, 0], [-1, 4, -1], [0, -1, 4]]"},
+        "expected": {"rho_J": "< 1", "rho_GS": "< rho_J", "converges": true},
+        "description": "Tridiagonal matrix should have ρ(G_GS) = [ρ(G_J)]²"
+      }
+    ],
+    "hints": [
+      "Decompose A = D - L - U where D is diagonal, L is strictly lower, U is strictly upper",
+      "Note the negative signs in L and U decomposition",
+      "Use np.linalg.inv for matrix inverse",
+      "Spectral radius is max(|eigenvalues|)"
+    ],
+    "commonMistakes": [
+      "Forgetting negative signs in L and U decomposition",
+      "Using A = D + L + U instead of A = D - L - U",
+      "Not taking absolute value of eigenvalues",
+      "Confusing matrix multiplication order"
+    ],
+    "extensionActivities": [
+      "Verify the relationship ρ(G_GS) ≈ [ρ(G_J)]² for tridiagonal matrices",
+      "Estimate number of iterations needed: k ≈ ln(ε) / ln(ρ)",
+      "Compare theoretical predictions with actual iteration counts"
+    ]
+  },
+  {
+    "id": "math402-t6-ex06",
+    "subjectId": "math402",
+    "topicId": "math402-topic-6",
+    "title": "Basic Conjugate Gradient",
+    "difficulty": "intermediate",
+    "estimatedTime": "50 minutes",
+    "learningObjectives": [
+      "Implement the Conjugate Gradient method for SPD matrices",
+      "Understand conjugate directions and A-orthogonality",
+      "Observe finite termination property in exact arithmetic"
+    ],
+    "problem": "Implement the Conjugate Gradient (CG) method for symmetric positive definite matrices. CG minimizes the quadratic function f(x) = (1/2)x^T A x - b^T x by moving along conjugate directions.\n\nThe algorithm maintains:\n- Residual r^(k) = b - Ax^(k)\n- Search direction p^(k) conjugate to previous directions\n- Step size α_k and direction update parameter β_k",
+    "starterCode": "import numpy as np\n\ndef conjugate_gradient(A, b, x0=None, max_iter=None, tol=1e-6):\n    \"\"\"\n    Solve Ax = b using Conjugate Gradient.\n\n    Parameters:\n    - A: n×n symmetric positive definite matrix\n    - b: n×1 right-hand side\n    - x0: initial guess\n    - max_iter: maximum iterations (default: n)\n    - tol: convergence tolerance\n\n    Returns:\n    - x: solution\n    - iterations: number of iterations\n    - residuals: list of residual norms\n    \"\"\"\n    # TODO: Implement this function\n    pass",
+    "solution": "import numpy as np\n\ndef conjugate_gradient(A, b, x0=None, max_iter=None, tol=1e-6):\n    \"\"\"\n    Solve Ax = b using Conjugate Gradient.\n\n    Parameters:\n    - A: n×n symmetric positive definite matrix\n    - b: n×1 right-hand side\n    - x0: initial guess\n    - max_iter: maximum iterations (default: n)\n    - tol: convergence tolerance\n\n    Returns:\n    - x: solution\n    - iterations: number of iterations\n    - residuals: list of residual norms\n    \"\"\"\n    n = len(b)\n    x = np.zeros(n) if x0 is None else x0.copy()\n    max_iter = n if max_iter is None else max_iter\n\n    # Check symmetry\n    if not np.allclose(A, A.T):\n        raise ValueError(\"Matrix must be symmetric\")\n\n    # Initial residual and search direction\n    r = b - A @ x\n    p = r.copy()\n\n    # Store initial residual norm\n    residuals = [np.linalg.norm(r)]\n    r_dot_r = np.dot(r, r)\n\n    for iteration in range(max_iter):\n        # Check convergence\n        if np.sqrt(r_dot_r) < tol:\n            return x, iteration, residuals\n\n        # Compute A * p\n        Ap = A @ p\n\n        # Compute step size alpha\n        p_dot_Ap = np.dot(p, Ap)\n        if abs(p_dot_Ap) < 1e-14:\n            return x, iteration, residuals\n\n        alpha = r_dot_r / p_dot_Ap\n\n        # Update solution and residual\n        x = x + alpha * p\n        r = r - alpha * Ap\n\n        # Store new residual norm\n        r_dot_r_new = np.dot(r, r)\n        residuals.append(np.sqrt(r_dot_r_new))\n\n        # Compute beta and update search direction\n        beta = r_dot_r_new / r_dot_r\n        p = r + beta * p\n\n        # Update r_dot_r for next iteration\n        r_dot_r = r_dot_r_new\n\n    return x, max_iter, residuals",
+    "testCases": [
+      {
+        "input": {"A": "[[4, 1], [1, 3]]", "b": "[1, 2]"},
+        "expected": {"iterations": "<= 2", "converged": true},
+        "description": "2×2 SPD system should converge in at most 2 iterations"
+      }
+    ],
+    "hints": [
+      "Initialize r = b - Ax^(0), p = r",
+      "Compute α_k = (r^T r) / (p^T A p)",
+      "Update: x = x + α*p, r = r - α*Ap",
+      "Compute β_k = (r_new^T r_new) / (r_old^T r_old)",
+      "Update direction: p = r + β*p"
+    ],
+    "commonMistakes": [
+      "Computing residual as b - Ax instead of updating r = r - α*Ap",
+      "Not reusing r^T r computation (computed for β, needed for α)",
+      "Incorrect β calculation using wrong residual",
+      "Not checking matrix symmetry"
+    ],
+    "extensionActivities": [
+      "Verify finite termination: should converge in n iterations for n×n system",
+      "Compare with Gauss-Seidel on the same SPD matrix",
+      "Plot residual convergence and observe superlinear behavior"
+    ]
+  },
+  {
+    "id": "math402-t6-ex07",
+    "subjectId": "math402",
+    "topicId": "math402-topic-6",
+    "title": "Arnoldi Iteration",
+    "difficulty": "advanced",
+    "estimatedTime": "60 minutes",
+    "learningObjectives": [
+      "Implement the Arnoldi process for building Krylov subspace basis",
+      "Understand orthogonalization in Krylov methods",
+      "Construct the Hessenberg matrix H"
+    ],
+    "problem": "Implement the Arnoldi iteration which builds an orthonormal basis for the Krylov subspace K_k(A,v) = span{v, Av, A²v, ..., A^(k-1)v}. This is the foundation of GMRES and other Krylov methods.\n\nThe process produces:\n- V: matrix with orthonormal columns spanning the Krylov subspace\n- H: upper Hessenberg matrix satisfying AV = VH + h_{k+1,k}v_{k+1}e_k^T",
+    "starterCode": "import numpy as np\n\ndef arnoldi(A, v, k):\n    \"\"\"\n    Arnoldi iteration to build orthonormal basis for Krylov subspace.\n\n    Parameters:\n    - A: n×n coefficient matrix\n    - v: n×1 initial vector (normalized)\n    - k: number of iterations\n\n    Returns:\n    - V: n×(k+1) matrix with orthonormal columns\n    - H: (k+1)×k upper Hessenberg matrix\n    \"\"\"\n    # TODO: Implement this function\n    pass",
+    "solution": "import numpy as np\n\ndef arnoldi(A, v, k):\n    \"\"\"\n    Arnoldi iteration to build orthonormal basis for Krylov subspace.\n\n    Parameters:\n    - A: n×n coefficient matrix\n    - v: n×1 initial vector (normalized)\n    - k: number of iterations\n\n    Returns:\n    - V: n×(k+1) matrix with orthonormal columns\n    - H: (k+1)×k upper Hessenberg matrix\n    \"\"\"\n    n = len(v)\n    V = np.zeros((n, k + 1))\n    H = np.zeros((k + 1, k))\n\n    # Normalize initial vector\n    V[:, 0] = v / np.linalg.norm(v)\n\n    for j in range(k):\n        # Compute w = A * v_j\n        w = A @ V[:, j]\n\n        # Modified Gram-Schmidt orthogonalization\n        for i in range(j + 1):\n            H[i, j] = np.dot(w, V[:, i])\n            w = w - H[i, j] * V[:, i]\n\n        # Compute norm and check for breakdown\n        H[j + 1, j] = np.linalg.norm(w)\n        \n        if H[j + 1, j] < 1e-14:\n            # Krylov subspace has become invariant\n            return V[:, :j+1], H[:j+1, :j]\n\n        # Normalize to get next basis vector\n        V[:, j + 1] = w / H[j + 1, j]\n\n    return V, H",
+    "testCases": [
+      {
+        "input": {"A": "[[1, 2], [3, 4]]", "v": "[1, 0]", "k": 2},
+        "expected": {"V_orthonormal": true, "H_hessenberg": true},
+        "description": "V should have orthonormal columns, H should be upper Hessenberg"
+      }
+    ],
+    "hints": [
+      "Start with v_1 = v / ||v||",
+      "For each j: compute w = A*v_j",
+      "Use Modified Gram-Schmidt: h_ij = w^T v_i, w = w - h_ij*v_i for i=1..j",
+      "Compute h_{j+1,j} = ||w||, v_{j+1} = w / h_{j+1,j}",
+      "Check for breakdown when ||w|| ≈ 0"
+    ],
+    "commonMistakes": [
+      "Using classical Gram-Schmidt instead of modified (less numerically stable)",
+      "Not checking for breakdown (h_{j+1,j} ≈ 0)",
+      "Incorrect indexing for H matrix",
+      "Not normalizing initial vector v"
+    ],
+    "extensionActivities": [
+      "Verify orthonormality: V^T V should be identity",
+      "Check Arnoldi relation: AV_k = V_{k+1}H_k",
+      "Implement classical Gram-Schmidt and compare stability"
+    ]
+  },
+  {
+    "id": "math402-t6-ex08",
+    "subjectId": "math402",
+    "topicId": "math402-topic-6",
+    "title": "GMRES Implementation",
+    "difficulty": "advanced",
+    "estimatedTime": "70 minutes",
+    "learningObjectives": [
+      "Implement GMRES for general nonsymmetric matrices",
+      "Use Arnoldi process to build Krylov subspace",
+      "Solve least squares problem to minimize residual"
+    ],
+    "problem": "Implement the full GMRES (Generalized Minimal Residual) method for solving nonsymmetric linear systems. GMRES minimizes the residual norm over the Krylov subspace at each iteration.\n\nGMRES uses the Arnoldi process to build an orthonormal basis, then solves a least squares problem: min ||β*e_1 - H*y|| where β = ||r^(0)||.",
+    "starterCode": "import numpy as np\n\ndef gmres(A, b, x0=None, max_iter=None, tol=1e-6):\n    \"\"\"\n    Solve Ax = b using GMRES.\n\n    Parameters:\n    - A: n×n coefficient matrix (can be nonsymmetric)\n    - b: n×1 right-hand side\n    - x0: initial guess\n    - max_iter: maximum iterations (default: n)\n    - tol: convergence tolerance\n\n    Returns:\n    - x: solution\n    - iterations: number of iterations\n    - residuals: list of residual norms\n    \"\"\"\n    # TODO: Implement this function\n    # Hint: Use arnoldi function from previous exercise\n    pass",
+    "solution": "import numpy as np\n\ndef arnoldi_internal(A, v, k):\n    \"\"\"Internal Arnoldi for GMRES.\"\"\"\n    n = len(v)\n    V = np.zeros((n, k + 1))\n    H = np.zeros((k + 1, k))\n    V[:, 0] = v / np.linalg.norm(v)\n    \n    for j in range(k):\n        w = A @ V[:, j]\n        for i in range(j + 1):\n            H[i, j] = np.dot(w, V[:, i])\n            w = w - H[i, j] * V[:, i]\n        H[j + 1, j] = np.linalg.norm(w)\n        if H[j + 1, j] < 1e-14:\n            return V[:, :j+1], H[:j+1, :j]\n        V[:, j + 1] = w / H[j + 1, j]\n    return V, H\n\ndef gmres(A, b, x0=None, max_iter=None, tol=1e-6):\n    \"\"\"\n    Solve Ax = b using GMRES.\n\n    Parameters:\n    - A: n×n coefficient matrix (can be nonsymmetric)\n    - b: n×1 right-hand side\n    - x0: initial guess\n    - max_iter: maximum iterations (default: n)\n    - tol: convergence tolerance\n\n    Returns:\n    - x: solution\n    - iterations: number of iterations\n    - residuals: list of residual norms\n    \"\"\"\n    n = len(b)\n    x = np.zeros(n) if x0 is None else x0.copy()\n    max_iter = n if max_iter is None else max_iter\n\n    residuals = []\n\n    # Compute initial residual\n    r = b - A @ x\n    beta = np.linalg.norm(r)\n    residuals.append(beta)\n\n    if beta < tol:\n        return x, 0, residuals\n\n    v1 = r / beta\n\n    # Build Krylov subspace using Arnoldi\n    V, H = arnoldi_internal(A, v1, max_iter)\n\n    # Solve least squares problem: min ||beta*e1 - H*y||\n    e1 = np.zeros(H.shape[0])\n    e1[0] = beta\n\n    # Use lstsq for robust solution\n    y, residuals_lstsq, rank, s = np.linalg.lstsq(H, e1, rcond=None)\n\n    # Update solution\n    x = x + V[:, :len(y)] @ y\n\n    # Compute actual residual norm\n    r = b - A @ x\n    final_residual = np.linalg.norm(r)\n    residuals.append(final_residual)\n\n    return x, len(y), residuals",
+    "testCases": [
+      {
+        "input": {"A": "[[5, 2, 1], [1, 4, 2], [2, 1, 6]]", "b": "[1, 2, 3]"},
+        "expected": {"iterations": "<= 3", "converged": true},
+        "description": "3×3 nonsymmetric system should converge in at most 3 iterations"
+      }
+    ],
+    "hints": [
+      "Compute initial residual r = b - Ax^(0), β = ||r||",
+      "Use Arnoldi to build V and H",
+      "Solve least squares: min ||β*e_1 - H*y||",
+      "Update solution: x = x^(0) + V*y",
+      "Use np.linalg.lstsq for robust least squares solution"
+    ],
+    "commonMistakes": [
+      "Not normalizing initial residual before Arnoldi",
+      "Incorrect least squares problem formulation",
+      "Using wrong size for e_1 vector",
+      "Not handling case when Arnoldi terminates early"
+    ],
+    "extensionActivities": [
+      "Implement restarted GMRES(m) with restart parameter",
+      "Compare GMRES with CG on symmetric positive definite matrices",
+      "Verify monotonic residual decrease property"
+    ]
+  },
+  {
+    "id": "math402-t6-ex09",
+    "subjectId": "math402",
+    "topicId": "math402-topic-6",
+    "title": "Jacobi Preconditioner",
+    "difficulty": "beginner",
+    "estimatedTime": "30 minutes",
+    "learningObjectives": [
+      "Implement diagonal (Jacobi) preconditioning",
+      "Understand how preconditioning improves convergence",
+      "Apply preconditioner to transform linear systems"
+    ],
+    "problem": "Implement the Jacobi (diagonal) preconditioner, the simplest preconditioning technique. The Jacobi preconditioner M = diag(A) uses only the diagonal elements of A.\n\nPreconditioning transforms the system Ax = b into M^(-1)Ax = M^(-1)b, which should have better convergence properties.",
+    "starterCode": "import numpy as np\n\ndef jacobi_preconditioner(A):\n    \"\"\"\n    Construct Jacobi (diagonal) preconditioner.\n\n    Parameters:\n    - A: n×n coefficient matrix\n\n    Returns:\n    - M_inv: diagonal preconditioner as 1D array (M^(-1) diagonal)\n    \"\"\"\n    # TODO: Implement this function\n    pass\n\ndef apply_preconditioner(M_inv, v):\n    \"\"\"\n    Apply diagonal preconditioner to vector.\n    \n    Parameters:\n    - M_inv: 1D array of diagonal elements of M^(-1)\n    - v: vector to precondition\n    \n    Returns:\n    - M^(-1) * v\n    \"\"\"\n    # TODO: Implement this function\n    pass",
+    "solution": "import numpy as np\n\ndef jacobi_preconditioner(A):\n    \"\"\"\n    Construct Jacobi (diagonal) preconditioner.\n\n    Parameters:\n    - A: n×n coefficient matrix\n\n    Returns:\n    - M_inv: diagonal preconditioner as 1D array (M^(-1) diagonal)\n    \"\"\"\n    # Extract diagonal and invert\n    diag = np.diag(A)\n    \n    # Avoid division by zero\n    M_inv = np.where(np.abs(diag) > 1e-14, 1.0 / diag, 1.0)\n    \n    return M_inv\n\ndef apply_preconditioner(M_inv, v):\n    \"\"\"\n    Apply diagonal preconditioner to vector.\n    \n    Parameters:\n    - M_inv: 1D array of diagonal elements of M^(-1)\n    - v: vector to precondition\n    \n    Returns:\n    - M^(-1) * v\n    \"\"\"\n    return M_inv * v",
+    "testCases": [
+      {
+        "input": {"A": "[[4, 1, 0], [1, 9, 1], [0, 1, 16]]"},
+        "expected": {"M_inv": "[0.25, 0.111..., 0.0625]"},
+        "description": "Diagonal preconditioner should be reciprocals of diagonal elements"
+      }
+    ],
+    "hints": [
+      "Extract diagonal: diag = np.diag(A)",
+      "Invert diagonal elements: M_inv = 1.0 / diag",
+      "Check for zero diagonal elements to avoid division by zero",
+      "Application is just element-wise multiplication"
+    ],
+    "commonMistakes": [
+      "Not checking for zero diagonal elements",
+      "Creating full matrix M instead of storing just diagonal",
+      "Forgetting that preconditioner is M^(-1), not M",
+      "Using matrix multiplication instead of element-wise"
+    ],
+    "extensionActivities": [
+      "Integrate with conjugate gradient to create preconditioned CG",
+      "Compare iteration counts with and without preconditioning",
+      "Test on ill-conditioned matrices"
+    ]
+  },
+  {
+    "id": "math402-t6-ex10",
+    "subjectId": "math402",
+    "topicId": "math402-topic-6",
+    "title": "Preconditioned Conjugate Gradient",
+    "difficulty": "intermediate",
+    "estimatedTime": "55 minutes",
+    "learningObjectives": [
+      "Implement preconditioned conjugate gradient (PCG)",
+      "Understand how preconditioning accelerates convergence",
+      "Modify CG algorithm to incorporate preconditioning"
+    ],
+    "problem": "Implement the Preconditioned Conjugate Gradient (PCG) method. PCG modifies standard CG to use a preconditioner M that approximates A. The key change is using z = M^(-1)r instead of r directly in the algorithm.\n\nPCG can dramatically reduce iterations for ill-conditioned systems.",
+    "starterCode": "import numpy as np\n\ndef preconditioned_cg(A, b, M_inv, x0=None, max_iter=None, tol=1e-6):\n    \"\"\"\n    Solve Ax = b using Preconditioned Conjugate Gradient.\n\n    Parameters:\n    - A: n×n symmetric positive definite matrix\n    - b: n×1 right-hand side\n    - M_inv: preconditioner (function or diagonal array)\n    - x0: initial guess\n    - max_iter: maximum iterations\n    - tol: convergence tolerance\n\n    Returns:\n    - x: solution\n    - iterations: number of iterations\n    - residuals: list of residual norms\n    \"\"\"\n    # TODO: Implement this function\n    pass",
+    "solution": "import numpy as np\n\ndef preconditioned_cg(A, b, M_inv, x0=None, max_iter=None, tol=1e-6):\n    \"\"\"\n    Solve Ax = b using Preconditioned Conjugate Gradient.\n\n    Parameters:\n    - A: n×n symmetric positive definite matrix\n    - b: n×1 right-hand side\n    - M_inv: preconditioner (function or diagonal array)\n    - x0: initial guess\n    - max_iter: maximum iterations\n    - tol: convergence tolerance\n\n    Returns:\n    - x: solution\n    - iterations: number of iterations\n    - residuals: list of residual norms\n    \"\"\"\n    n = len(b)\n    x = np.zeros(n) if x0 is None else x0.copy()\n    max_iter = n if max_iter is None else max_iter\n\n    # Initial residual\n    r = b - A @ x\n    \n    # Apply preconditioner\n    if callable(M_inv):\n        z = M_inv(r)\n    else:\n        z = M_inv * r  # Diagonal preconditioner\n    \n    p = z.copy()\n    \n    residuals = [np.linalg.norm(r)]\n    rz_old = np.dot(r, z)\n\n    for iteration in range(max_iter):\n        if np.linalg.norm(r) < tol:\n            return x, iteration, residuals\n\n        # Compute A*p\n        Ap = A @ p\n\n        # Step length (using r^T z instead of r^T r)\n        alpha = rz_old / np.dot(p, Ap)\n\n        # Update solution and residual\n        x = x + alpha * p\n        r = r - alpha * Ap\n        \n        residuals.append(np.linalg.norm(r))\n\n        # Apply preconditioner\n        if callable(M_inv):\n            z = M_inv(r)\n        else:\n            z = M_inv * r\n\n        # Update search direction (using r^T z)\n        rz_new = np.dot(r, z)\n        beta = rz_new / rz_old\n        p = z + beta * p\n        \n        rz_old = rz_new\n\n    return x, max_iter, residuals",
+    "testCases": [
+      {
+        "input": {"A": "[[100, 1], [1, 100]]", "b": "[101, 101]", "M_inv": "diag([0.01, 0.01])"},
+        "expected": {"iterations": "< standard CG iterations"},
+        "description": "Preconditioning should reduce iterations for ill-conditioned system"
+      }
+    ],
+    "hints": [
+      "Main change from CG: use z = M^(-1)r instead of r",
+      "Compute rz = r^T z (replaces r^T r in standard CG)",
+      "Step size: α = rz_old / (p^T Ap)",
+      "Beta: β = rz_new / rz_old",
+      "Direction: p = z + β*p"
+    ],
+    "commonMistakes": [
+      "Using r instead of z in direction update",
+      "Computing α = (r^T r) / (p^T Ap) instead of α = (r^T z) / (p^T Ap)",
+      "Not applying preconditioner to residual before computing inner products",
+      "Forgetting to update rz_old = rz_new"
+    ],
+    "extensionActivities": [
+      "Compare convergence with and without preconditioning",
+      "Test with Jacobi preconditioner on ill-conditioned matrices",
+      "Measure how condition number affects speedup"
+    ]
+  },
+  {
+    "id": "math402-t6-ex11",
+    "subjectId": "math402",
+    "topicId": "math402-topic-6",
+    "title": "SSOR Preconditioner",
+    "difficulty": "advanced",
+    "estimatedTime": "60 minutes",
+    "learningObjectives": [
+      "Implement Symmetric Successive Over-Relaxation preconditioner",
+      "Understand forward and backward sweep combination",
+      "Apply SSOR preconditioning to iterative methods"
+    ],
+    "problem": "Implement the SSOR (Symmetric Successive Over-Relaxation) preconditioner. SSOR combines forward and backward SOR sweeps to create a symmetric preconditioner suitable for CG.\n\nThe SSOR preconditioner solves Mz = r by:\n1. Forward SOR sweep with (D + ωL)\n2. Backward SOR sweep with (D + ωU)\n\nThis creates a symmetric preconditioner when A is symmetric.",
+    "starterCode": "import numpy as np\n\ndef ssor_preconditioner_solve(A, r, omega=1.0):\n    \"\"\"\n    Apply SSOR preconditioner: solve Mz = r.\n\n    Parameters:\n    - A: n×n symmetric coefficient matrix\n    - r: n×1 residual vector\n    - omega: relaxation parameter (0 < omega < 2)\n\n    Returns:\n    - z: M^(-1) * r\n    \"\"\"\n    # TODO: Implement this function\n    pass",
+    "solution": "import numpy as np\n\ndef ssor_preconditioner_solve(A, r, omega=1.0):\n    \"\"\"\n    Apply SSOR preconditioner: solve Mz = r.\n\n    Parameters:\n    - A: n×n symmetric coefficient matrix\n    - r: n×1 residual vector\n    - omega: relaxation parameter (0 < omega < 2)\n\n    Returns:\n    - z: M^(-1) * r\n    \"\"\"\n    n = len(r)\n    D = np.diag(np.diag(A))\n    L = np.tril(A, -1)\n    U = np.triu(A, 1)\n    \n    # Factor for SSOR\n    factor = omega * (2 - omega)\n    \n    # Forward sweep: solve (D + omega*L)*w = factor*r\n    w = np.zeros(n)\n    for i in range(n):\n        sum_L = sum(L[i, j] * w[j] for j in range(i))\n        w[i] = (factor * r[i] - omega * sum_L) / D[i, i]\n    \n    # Backward sweep: solve (D + omega*U)*z = D*w\n    z = np.zeros(n)\n    for i in range(n - 1, -1, -1):\n        sum_U = sum(U[i, j] * z[j] for j in range(i + 1, n))\n        z[i] = (D[i, i] * w[i] - omega * sum_U) / D[i, i]\n    \n    return z",
+    "testCases": [
+      {
+        "input": {"A": "[[4, 1, 0], [1, 4, 1], [0, 1, 4]]", "r": "[1, 1, 1]", "omega": 1.5},
+        "expected": {"z_computed": true},
+        "description": "SSOR preconditioner should solve Mz = r"
+      }
+    ],
+    "hints": [
+      "SSOR = (D + ωL) D^(-1) (D + ωU) / (ω(2-ω))",
+      "Forward sweep: solve (D + ωL)w = ω(2-ω)r",
+      "Backward sweep: solve (D + ωU)z = Dw",
+      "Use forward substitution for lower triangular, backward for upper"
+    ],
+    "commonMistakes": [
+      "Not scaling by factor ω(2-ω) in forward sweep",
+      "Using wrong direction for substitution (forward vs backward)",
+      "Not extracting L and U correctly (should not include diagonal)",
+      "Forgetting D matrix in backward sweep"
+    ],
+    "extensionActivities": [
+      "Use SSOR with preconditioned CG",
+      "Compare different omega values (0.5, 1.0, 1.5)",
+      "Test on various SPD matrices and measure speedup"
+    ]
+  },
+  {
+    "id": "math402-t6-ex12",
+    "subjectId": "math402",
+    "topicId": "math402-topic-6",
+    "title": "Convergence Rate Estimation",
+    "difficulty": "intermediate",
+    "estimatedTime": "40 minutes",
+    "learningObjectives": [
+      "Estimate convergence rate from residual history",
+      "Understand asymptotic and average convergence rates",
+      "Predict iteration count needed for desired accuracy"
+    ],
+    "problem": "Implement functions to analyze convergence rates of iterative methods. Given a spectral radius ρ or residual history, estimate:\n1. Asymptotic convergence rate R(G) = -ln(ρ)\n2. Average convergence rate from residual history\n3. Predicted iterations needed to reach tolerance\n\nThe convergence rate determines how quickly errors decrease.",
+    "starterCode": "import numpy as np\n\ndef asymptotic_convergence_rate(rho):\n    \"\"\"\n    Compute asymptotic convergence rate.\n    \n    Parameters:\n    - rho: spectral radius of iteration matrix\n    \n    Returns:\n    - R: convergence rate (-ln(rho))\n    \"\"\"\n    # TODO: Implement this function\n    pass\n\ndef average_convergence_rate(residuals):\n    \"\"\"\n    Compute average convergence rate from residual history.\n    \n    Parameters:\n    - residuals: list of residual norms\n    \n    Returns:\n    - R_avg: average convergence rate\n    \"\"\"\n    # TODO: Implement this function\n    pass\n\ndef estimate_iterations(rho, tolerance=1e-6):\n    \"\"\"\n    Estimate iterations needed for convergence.\n    \n    Parameters:\n    - rho: spectral radius\n    - tolerance: desired error reduction\n    \n    Returns:\n    - k: estimated iterations\n    \"\"\"\n    # TODO: Implement this function\n    pass",
+    "solution": "import numpy as np\n\ndef asymptotic_convergence_rate(rho):\n    \"\"\"\n    Compute asymptotic convergence rate.\n    \n    Parameters:\n    - rho: spectral radius of iteration matrix\n    \n    Returns:\n    - R: convergence rate (-ln(rho))\n    \"\"\"\n    if rho >= 1:\n        return -np.inf  # No convergence\n    return -np.log(rho)\n\ndef average_convergence_rate(residuals):\n    \"\"\"\n    Compute average convergence rate from residual history.\n    \n    Parameters:\n    - residuals: list of residual norms\n    \n    Returns:\n    - R_avg: average convergence rate\n    \"\"\"\n    if len(residuals) < 2:\n        return 0.0\n    \n    k = len(residuals) - 1\n    \n    # Avoid log of zero\n    if residuals[-1] < 1e-16 or residuals[0] < 1e-16:\n        return np.inf\n    \n    # R_avg = -(1/k) * ln(||e^(k)|| / ||e^(0)||)\n    R_avg = -(1.0 / k) * np.log(residuals[-1] / residuals[0])\n    \n    return R_avg\n\ndef estimate_iterations(rho, tolerance=1e-6):\n    \"\"\"\n    Estimate iterations needed for convergence.\n    \n    Parameters:\n    - rho: spectral radius\n    - tolerance: desired error reduction\n    \n    Returns:\n    - k: estimated iterations\n    \"\"\"\n    if rho >= 1:\n        return np.inf\n    \n    # k ≈ ln(tolerance) / ln(rho)\n    k = np.log(tolerance) / np.log(rho)\n    \n    return int(np.ceil(k))",
+    "testCases": [
+      {
+        "input": {"rho": 0.5, "tolerance": 1e-6},
+        "expected": {"iterations": "approximately 20"},
+        "description": "ρ=0.5 should need about 20 iterations for 1e-6 tolerance"
+      },
+      {
+        "input": {"residuals": "[1.0, 0.5, 0.25, 0.125, 0.0625]"},
+        "expected": {"R_avg": "approximately 0.693"},
+        "description": "Halving residuals gives R ≈ ln(2) ≈ 0.693"
+      }
+    ],
+    "hints": [
+      "Asymptotic rate: R(G) = -ln(ρ(G))",
+      "Average rate: R_k = -(1/k) ln(||e^(k)|| / ||e^(0)||)",
+      "Iterations: k ≈ ln(ε) / ln(ρ)",
+      "Handle edge cases: ρ >= 1 means no convergence"
+    ],
+    "commonMistakes": [
+      "Forgetting negative sign in convergence rate formula",
+      "Not handling ρ >= 1 case (divergence)",
+      "Division by zero when residual becomes exactly zero",
+      "Using log base 10 instead of natural log"
+    ],
+    "extensionActivities": [
+      "Compare predicted vs actual iteration counts for various methods",
+      "Plot convergence rate as function of spectral radius",
+      "Analyze how condition number affects convergence rate for CG"
+    ]
+  },
+  {
+    "id": "math402-t6-ex13",
+    "subjectId": "math402",
+    "topicId": "math402-topic-6",
+    "title": "Restarted GMRES",
+    "difficulty": "advanced",
+    "estimatedTime": "65 minutes",
+    "learningObjectives": [
+      "Implement GMRES with restart to control memory usage",
+      "Understand trade-off between memory and convergence",
+      "Handle restart cycles and convergence monitoring"
+    ],
+    "problem": "Implement GMRES(m), the restarted version of GMRES. Full GMRES has memory requirements that grow with iterations. GMRES(m) restarts after m iterations, using the current solution as a new starting point.\n\nRestarting controls memory but may slow convergence. Typical values are m = 10 to 50.",
+    "starterCode": "import numpy as np\n\ndef gmres_restart(A, b, restart=20, x0=None, max_iter=100, tol=1e-6):\n    \"\"\"\n    Solve Ax = b using restarted GMRES(m).\n\n    Parameters:\n    - A: n×n coefficient matrix\n    - b: n×1 right-hand side\n    - restart: restart parameter m\n    - x0: initial guess\n    - max_iter: maximum total iterations\n    - tol: convergence tolerance\n\n    Returns:\n    - x: solution\n    - total_iterations: total iterations across all cycles\n    - residuals: list of residual norms\n    \"\"\"\n    # TODO: Implement this function\n    pass",
+    "solution": "import numpy as np\n\ndef arnoldi_for_gmres(A, v, k):\n    \"\"\"Arnoldi iteration.\"\"\"\n    n = len(v)\n    V = np.zeros((n, k + 1))\n    H = np.zeros((k + 1, k))\n    V[:, 0] = v / np.linalg.norm(v)\n    \n    for j in range(k):\n        w = A @ V[:, j]\n        for i in range(j + 1):\n            H[i, j] = np.dot(w, V[:, i])\n            w = w - H[i, j] * V[:, i]\n        H[j + 1, j] = np.linalg.norm(w)\n        if H[j + 1, j] < 1e-14:\n            return V[:, :j+1], H[:j+1, :j]\n        V[:, j + 1] = w / H[j + 1, j]\n    return V, H\n\ndef gmres_restart(A, b, restart=20, x0=None, max_iter=100, tol=1e-6):\n    \"\"\"\n    Solve Ax = b using restarted GMRES(m).\n\n    Parameters:\n    - A: n×n coefficient matrix\n    - b: n×1 right-hand side\n    - restart: restart parameter m\n    - x0: initial guess\n    - max_iter: maximum total iterations\n    - tol: convergence tolerance\n\n    Returns:\n    - x: solution\n    - total_iterations: total iterations across all cycles\n    - residuals: list of residual norms\n    \"\"\"\n    n = len(b)\n    x = np.zeros(n) if x0 is None else x0.copy()\n    \n    residuals = []\n    total_iterations = 0\n    \n    # Restart cycles\n    num_cycles = (max_iter + restart - 1) // restart\n    \n    for cycle in range(num_cycles):\n        # Compute residual for this cycle\n        r = b - A @ x\n        beta = np.linalg.norm(r)\n        residuals.append(beta)\n        \n        if beta < tol:\n            return x, total_iterations, residuals\n        \n        # Normalize initial vector\n        v1 = r / beta\n        \n        # Run GMRES for up to 'restart' iterations\n        k = min(restart, max_iter - total_iterations)\n        V, H = arnoldi_for_gmres(A, v1, k)\n        \n        # Solve least squares: min ||beta*e1 - H*y||\n        e1 = np.zeros(H.shape[0])\n        e1[0] = beta\n        \n        y, _, _, _ = np.linalg.lstsq(H, e1, rcond=None)\n        \n        # Update solution\n        x = x + V[:, :len(y)] @ y\n        \n        # Update iteration count\n        total_iterations += len(y)\n        \n        # Check convergence\n        r = b - A @ x\n        beta = np.linalg.norm(r)\n        residuals.append(beta)\n        \n        if beta < tol or total_iterations >= max_iter:\n            return x, total_iterations, residuals\n    \n    return x, total_iterations, residuals",
+    "testCases": [
+      {
+        "input": {"A": "50×50 random", "restart": 10, "max_iter": 100},
+        "expected": {"memory": "O(n*restart)", "converged": true},
+        "description": "Memory should be limited by restart parameter"
+      }
+    ],
+    "hints": [
+      "Outer loop: restart cycles",
+      "Inner loop: run standard GMRES for m iterations",
+      "Use current solution as starting point for next cycle",
+      "Track total iterations across all cycles",
+      "Check convergence after each cycle"
+    ],
+    "commonMistakes": [
+      "Not using updated solution as new starting point",
+      "Accumulating Krylov space across restarts (defeats purpose)",
+      "Not tracking total iterations correctly",
+      "Continuing past max_iter",
+      "Not checking convergence between cycles"
+    ],
+    "extensionActivities": [
+      "Compare different restart values (5, 10, 20, 50)",
+      "Plot residual history showing restart points",
+      "Compare memory usage: full GMRES vs GMRES(m)"
+    ]
+  },
+  {
+    "id": "math402-t6-ex14",
+    "subjectId": "math402",
+    "topicId": "math402-topic-6",
+    "title": "Iterative Method Comparison Framework",
+    "difficulty": "intermediate",
+    "estimatedTime": "50 minutes",
+    "learningObjectives": [
+      "Compare multiple iterative methods systematically",
+      "Analyze performance across different matrix types",
+      "Generate comparative performance reports"
+    ],
+    "problem": "Create a framework to compare different iterative methods (Jacobi, Gauss-Seidel, SOR, CG, GMRES) on the same linear system. The framework should:\n1. Run all applicable methods\n2. Track iterations, time, and final residual\n3. Generate a comparison report\n\nThis helps understand which method is best for different problem types.",
+    "starterCode": "import numpy as np\nimport time\n\ndef compare_iterative_methods(A, b, methods=['jacobi', 'gauss_seidel', 'cg'], tol=1e-6):\n    \"\"\"\n    Compare multiple iterative methods on same system.\n    \n    Parameters:\n    - A: n×n coefficient matrix\n    - b: n×1 right-hand side\n    - methods: list of method names to compare\n    - tol: convergence tolerance\n    \n    Returns:\n    - results: dict with performance metrics for each method\n    \"\"\"\n    # TODO: Implement this function\n    pass",
+    "solution": "import numpy as np\nimport time\n\ndef jacobi_method(A, b, tol=1e-6, max_iter=1000):\n    \"\"\"Simple Jacobi implementation.\"\"\"\n    n = len(b)\n    x = np.zeros(n)\n    for k in range(max_iter):\n        x_new = np.zeros(n)\n        for i in range(n):\n            sigma = sum(A[i, j] * x[j] for j in range(n) if j != i)\n            x_new[i] = (b[i] - sigma) / A[i, i]\n        if np.linalg.norm(b - A @ x_new) < tol:\n            return x_new, k + 1\n        x = x_new\n    return x, max_iter\n\ndef gauss_seidel_method(A, b, tol=1e-6, max_iter=1000):\n    \"\"\"Simple Gauss-Seidel implementation.\"\"\"\n    n = len(b)\n    x = np.zeros(n)\n    for k in range(max_iter):\n        for i in range(n):\n            sigma = sum(A[i, j] * x[j] for j in range(n) if j != i)\n            x[i] = (b[i] - sigma) / A[i, i]\n        if np.linalg.norm(b - A @ x) < tol:\n            return x, k + 1\n    return x, max_iter\n\ndef cg_method(A, b, tol=1e-6, max_iter=None):\n    \"\"\"Simple CG implementation.\"\"\"\n    n = len(b)\n    max_iter = n if max_iter is None else max_iter\n    x = np.zeros(n)\n    r = b - A @ x\n    p = r.copy()\n    r_dot_r = np.dot(r, r)\n    \n    for k in range(max_iter):\n        if np.sqrt(r_dot_r) < tol:\n            return x, k\n        Ap = A @ p\n        alpha = r_dot_r / np.dot(p, Ap)\n        x = x + alpha * p\n        r = r - alpha * Ap\n        r_dot_r_new = np.dot(r, r)\n        beta = r_dot_r_new / r_dot_r\n        p = r + beta * p\n        r_dot_r = r_dot_r_new\n    return x, max_iter\n\ndef compare_iterative_methods(A, b, methods=['jacobi', 'gauss_seidel', 'cg'], tol=1e-6):\n    \"\"\"\n    Compare multiple iterative methods on same system.\n    \n    Parameters:\n    - A: n×n coefficient matrix\n    - b: n×1 right-hand side\n    - methods: list of method names to compare\n    - tol: convergence tolerance\n    \n    Returns:\n    - results: dict with performance metrics for each method\n    \"\"\"\n    results = {}\n    \n    method_funcs = {\n        'jacobi': jacobi_method,\n        'gauss_seidel': gauss_seidel_method,\n        'cg': cg_method\n    }\n    \n    for method_name in methods:\n        if method_name not in method_funcs:\n            continue\n        \n        try:\n            # Time the method\n            start_time = time.time()\n            x, iterations = method_funcs[method_name](A, b, tol=tol)\n            elapsed_time = time.time() - start_time\n            \n            # Compute final residual\n            residual = np.linalg.norm(b - A @ x)\n            \n            results[method_name] = {\n                'iterations': iterations,\n                'time': elapsed_time,\n                'final_residual': residual,\n                'converged': residual < tol,\n                'solution': x\n            }\n        except Exception as e:\n            results[method_name] = {\n                'error': str(e),\n                'converged': False\n            }\n    \n    return results",
+    "testCases": [
+      {
+        "input": {"A": "[[4, 1, 0], [1, 4, 1], [0, 1, 4]]", "b": "[6, 8, 6]"},
+        "expected": {"all_methods_converge": true, "gauss_seidel_faster_than_jacobi": true},
+        "description": "All methods should converge, GS should be faster than Jacobi"
+      }
+    ],
+    "hints": [
+      "Create dictionary mapping method names to functions",
+      "For each method: time it, count iterations, compute final residual",
+      "Use try-except to handle methods that don't apply (e.g., CG on nonsymmetric)",
+      "Return structured results for easy comparison"
+    ],
+    "commonMistakes": [
+      "Not handling exceptions when method doesn't apply",
+      "Not timing properly (include only solution time)",
+      "Comparing methods with different tolerance values",
+      "Not checking if methods actually converged"
+    ],
+    "extensionActivities": [
+      "Add visualization comparing iteration counts",
+      "Test on various matrix types (SPD, diagonally dominant, ill-conditioned)",
+      "Add more methods to comparison (SOR, GMRES)",
+      "Generate LaTeX table of results"
+    ]
+  },
+  {
+    "id": "math402-t6-ex15",
+    "subjectId": "math402",
+    "topicId": "math402-topic-6",
+    "title": "Optimal SOR Parameter Finding",
+    "difficulty": "advanced",
+    "estimatedTime": "55 minutes",
+    "learningObjectives": [
+      "Implement empirical optimization of SOR relaxation parameter",
+      "Understand theoretical optimal omega formula",
+      "Compare empirical vs theoretical optimal values"
+    ],
+    "problem": "Implement functions to find the optimal SOR relaxation parameter ω both theoretically and empirically. For certain matrices (like those from 2D Poisson), the theoretical optimal is:\n\nω_opt = 2 / (1 + sqrt(1 - ρ_J²))\n\nwhere ρ_J is the Jacobi spectral radius. Empirically, we can test multiple ω values and find the one giving fastest convergence.",
+    "starterCode": "import numpy as np\n\ndef theoretical_optimal_omega(A):\n    \"\"\"\n    Compute theoretical optimal omega using Jacobi spectral radius.\n    \n    Parameters:\n    - A: n×n coefficient matrix\n    \n    Returns:\n    - omega_opt: optimal relaxation parameter\n    \"\"\"\n    # TODO: Implement this function\n    pass\n\ndef empirical_optimal_omega(A, b, omega_range=None, num_trials=20):\n    \"\"\"\n    Find optimal omega empirically by testing multiple values.\n    \n    Parameters:\n    - A: n×n coefficient matrix\n    - b: n×1 right-hand side\n    - omega_range: (min, max) for omega values\n    - num_trials: number of omega values to test\n    \n    Returns:\n    - omega_best: empirically best omega\n    - iteration_counts: list of iteration counts for each omega\n    \"\"\"\n    # TODO: Implement this function\n    pass",
+    "solution": "import numpy as np\n\ndef compute_jacobi_spectral_radius(A):\n    \"\"\"Helper to compute Jacobi spectral radius.\"\"\"\n    n = A.shape[0]\n    D = np.diag(np.diag(A))\n    L = -np.tril(A, -1)\n    U = -np.triu(A, 1)\n    D_inv = np.linalg.inv(D)\n    G_J = D_inv @ (L + U)\n    eigenvalues = np.linalg.eigvals(G_J)\n    return np.max(np.abs(eigenvalues))\n\ndef theoretical_optimal_omega(A):\n    \"\"\"\n    Compute theoretical optimal omega using Jacobi spectral radius.\n    \n    Parameters:\n    - A: n×n coefficient matrix\n    \n    Returns:\n    - omega_opt: optimal relaxation parameter\n    \"\"\"\n    rho_J = compute_jacobi_spectral_radius(A)\n    \n    if rho_J >= 1:\n        return 1.0  # Jacobi doesn't converge, return GS (omega=1)\n    \n    # ω_opt = 2 / (1 + sqrt(1 - ρ_J²))\n    omega_opt = 2.0 / (1.0 + np.sqrt(1.0 - rho_J**2))\n    \n    return omega_opt\n\ndef sor_simple(A, b, omega, tol=1e-6, max_iter=1000):\n    \"\"\"Simple SOR for testing.\"\"\"\n    n = len(b)\n    x = np.zeros(n)\n    \n    for k in range(max_iter):\n        x_old = x.copy()\n        for i in range(n):\n            sigma = sum(A[i, j] * x[j] for j in range(n) if j != i)\n            x_gs = (b[i] - sigma) / A[i, i]\n            x[i] = (1 - omega) * x_old[i] + omega * x_gs\n        \n        if np.linalg.norm(b - A @ x) < tol:\n            return x, k + 1\n    \n    return x, max_iter\n\ndef empirical_optimal_omega(A, b, omega_range=None, num_trials=20):\n    \"\"\"\n    Find optimal omega empirically by testing multiple values.\n    \n    Parameters:\n    - A: n×n coefficient matrix\n    - b: n×1 right-hand side\n    - omega_range: (min, max) for omega values\n    - num_trials: number of omega values to test\n    \n    Returns:\n    - omega_best: empirically best omega\n    - iteration_counts: list of iteration counts for each omega\n    \"\"\"\n    if omega_range is None:\n        omega_range = (1.0, 1.99)\n    \n    omega_values = np.linspace(omega_range[0], omega_range[1], num_trials)\n    iteration_counts = []\n    \n    for omega in omega_values:\n        try:\n            _, iters = sor_simple(A, b, omega, tol=1e-8, max_iter=2000)\n            iteration_counts.append(iters)\n        except:\n            iteration_counts.append(float('inf'))\n    \n    # Find omega with minimum iterations\n    best_idx = np.argmin(iteration_counts)\n    omega_best = omega_values[best_idx]\n    \n    return omega_best, list(zip(omega_values, iteration_counts))",
+    "testCases": [
+      {
+        "input": {"A": "[[4, -1, 0], [-1, 4, -1], [0, -1, 4]]"},
+        "expected": {"omega_opt": "in range [1, 2]", "empirical_close_to_theoretical": true},
+        "description": "Empirical and theoretical omega should be close"
+      }
+    ],
+    "hints": [
+      "First compute Jacobi iteration matrix and its spectral radius",
+      "Use formula: ω_opt = 2 / (1 + sqrt(1 - ρ_J²))",
+      "For empirical: test omega from 1.0 to 1.99 in small steps",
+      "Run SOR for each omega and count iterations",
+      "Return omega giving minimum iterations"
+    ],
+    "commonMistakes": [
+      "Not checking if ρ_J < 1 (convergence condition)",
+      "Testing omega outside valid range (0, 2)",
+      "Using too coarse grid for empirical search",
+      "Not handling divergent cases (omega too large)"
+    ],
+    "extensionActivities": [
+      "Plot iteration count vs omega to visualize optimal point",
+      "Compare theoretical and empirical for different matrix types",
+      "Implement adaptive omega adjustment during iteration"
+    ]
+  },
+  {
+    "id": "math402-t6-ex16",
+    "subjectId": "math402",
+    "topicId": "math402-topic-6",
+    "title": "Complete Solver with Auto-Selection",
+    "difficulty": "advanced",
+    "estimatedTime": "70 minutes",
+    "learningObjectives": [
+      "Implement intelligent method selection based on matrix properties",
+      "Combine multiple techniques into unified solver",
+      "Handle various matrix types automatically"
+    ],
+    "problem": "Create a comprehensive linear system solver that automatically selects the best iterative method based on matrix properties:\n\n- Check if matrix is symmetric positive definite → use CG or PCG\n- Check if matrix is symmetric → use MINRES or symmetric methods\n- Check diagonal dominance → use Jacobi or Gauss-Seidel\n- For general nonsymmetric → use GMRES\n- Apply preconditioning when beneficial\n\nThe solver should analyze the matrix and choose the most efficient method.",
+    "starterCode": "import numpy as np\n\ndef auto_solve(A, b, tol=1e-6, max_iter=None, verbose=False):\n    \"\"\"\n    Automatically solve Ax = b by selecting best method.\n    \n    Parameters:\n    - A: n×n coefficient matrix\n    - b: n×1 right-hand side\n    - tol: convergence tolerance\n    - max_iter: maximum iterations\n    - verbose: print selected method and diagnostics\n    \n    Returns:\n    - x: solution\n    - info: dict with method used, iterations, etc.\n    \"\"\"\n    # TODO: Implement this function\n    pass",
+    "solution": "import numpy as np\n\ndef is_symmetric(A, tol=1e-10):\n    \"\"\"Check if matrix is symmetric.\"\"\"\n    return np.allclose(A, A.T, atol=tol)\n\ndef is_positive_definite(A):\n    \"\"\"Check if matrix is positive definite.\"\"\"\n    try:\n        np.linalg.cholesky(A)\n        return True\n    except np.linalg.LinAlgError:\n        return False\n\ndef is_diagonally_dominant(A):\n    \"\"\"Check strict diagonal dominance.\"\"\"\n    n = A.shape[0]\n    for i in range(n):\n        row_sum = np.sum(np.abs(A[i, :])) - np.abs(A[i, i])\n        if np.abs(A[i, i]) <= row_sum:\n            return False\n    return True\n\ndef cg_solver(A, b, tol=1e-6, max_iter=None):\n    \"\"\"Conjugate Gradient solver.\"\"\"\n    n = len(b)\n    max_iter = n if max_iter is None else max_iter\n    x = np.zeros(n)\n    r = b - A @ x\n    p = r.copy()\n    r_dot_r = np.dot(r, r)\n    \n    for k in range(max_iter):\n        if np.sqrt(r_dot_r) < tol:\n            return x, k, np.sqrt(r_dot_r)\n        Ap = A @ p\n        alpha = r_dot_r / np.dot(p, Ap)\n        x = x + alpha * p\n        r = r - alpha * Ap\n        r_dot_r_new = np.dot(r, r)\n        beta = r_dot_r_new / r_dot_r\n        p = r + beta * p\n        r_dot_r = r_dot_r_new\n    \n    return x, max_iter, np.sqrt(r_dot_r)\n\ndef gauss_seidel_solver(A, b, tol=1e-6, max_iter=1000):\n    \"\"\"Gauss-Seidel solver.\"\"\"\n    n = len(b)\n    x = np.zeros(n)\n    \n    for k in range(max_iter):\n        for i in range(n):\n            sigma = sum(A[i, j] * x[j] for j in range(n) if j != i)\n            x[i] = (b[i] - sigma) / A[i, i]\n        \n        residual = np.linalg.norm(b - A @ x)\n        if residual < tol:\n            return x, k + 1, residual\n    \n    return x, max_iter, np.linalg.norm(b - A @ x)\n\ndef gmres_solver(A, b, tol=1e-6, max_iter=None, restart=20):\n    \"\"\"Simple GMRES solver.\"\"\"\n    # For brevity, use numpy's lstsq-based approach\n    n = len(b)\n    max_iter = n if max_iter is None else max_iter\n    \n    # Simple implementation: just return lstsq solution\n    # In practice, would implement full GMRES\n    x = np.linalg.lstsq(A, b, rcond=None)[0]\n    residual = np.linalg.norm(b - A @ x)\n    \n    return x, 1, residual\n\ndef auto_solve(A, b, tol=1e-6, max_iter=None, verbose=False):\n    \"\"\"\n    Automatically solve Ax = b by selecting best method.\n    \n    Parameters:\n    - A: n×n coefficient matrix\n    - b: n×1 right-hand side\n    - tol: convergence tolerance\n    - max_iter: maximum iterations\n    - verbose: print selected method and diagnostics\n    \n    Returns:\n    - x: solution\n    - info: dict with method used, iterations, etc.\n    \"\"\"\n    n = A.shape[0]\n    max_iter = n if max_iter is None else max_iter\n    \n    # Analyze matrix properties\n    sym = is_symmetric(A)\n    spd = sym and is_positive_definite(A)\n    dd = is_diagonally_dominant(A)\n    \n    # Select method based on properties\n    if spd:\n        method = \"Conjugate Gradient\"\n        x, iters, residual = cg_solver(A, b, tol, max_iter)\n    elif dd:\n        method = \"Gauss-Seidel\"\n        x, iters, residual = gauss_seidel_solver(A, b, tol, max_iter)\n    else:\n        method = \"GMRES\"\n        x, iters, residual = gmres_solver(A, b, tol, max_iter)\n    \n    info = {\n        'method': method,\n        'iterations': iters,\n        'final_residual': residual,\n        'converged': residual < tol,\n        'matrix_properties': {\n            'symmetric': sym,\n            'positive_definite': spd,\n            'diagonally_dominant': dd\n        }\n    }\n    \n    if verbose:\n        print(f\"Matrix Analysis:\")\n        print(f\"  Symmetric: {sym}\")\n        print(f\"  Positive Definite: {spd}\")\n        print(f\"  Diagonally Dominant: {dd}\")\n        print(f\"\\nSelected Method: {method}\")\n        print(f\"Iterations: {iters}\")\n        print(f\"Final Residual: {residual:.2e}\")\n        print(f\"Converged: {residual < tol}\")\n    \n    return x, info",
+    "testCases": [
+      {
+        "input": {"A": "[[4, 1], [1, 3]] (SPD)", "b": "[1, 2]"},
+        "expected": {"method": "Conjugate Gradient"},
+        "description": "Should select CG for SPD matrix"
+      },
+      {
+        "input": {"A": "[[4, 1, 0], [1, 4, 1], [0, 1, 4]] (DD)", "b": "[6, 8, 6]"},
+        "expected": {"method": "Gauss-Seidel or CG"},
+        "description": "Should select appropriate method for diagonally dominant matrix"
+      }
+    ],
+    "hints": [
+      "Check symmetry: np.allclose(A, A.T)",
+      "Check SPD: try Cholesky factorization",
+      "Check diagonal dominance: |a_ii| > sum(|a_ij|) for j≠i",
+      "Priority: SPD → CG, then DD → Gauss-Seidel, else → GMRES",
+      "Return detailed info about selection"
+    ],
+    "commonMistakes": [
+      "Not checking properties in correct order",
+      "Assuming symmetric means positive definite",
+      "Not handling edge cases (singular, ill-conditioned)",
+      "Not providing enough diagnostic information"
+    ],
+    "extensionActivities": [
+      "Add automatic preconditioning selection",
+      "Include direct methods for small systems",
+      "Add condition number estimation to guide method choice",
+      "Implement fallback if selected method fails"
+    ]
   }
 ]

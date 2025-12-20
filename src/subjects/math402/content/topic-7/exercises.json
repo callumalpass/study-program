@@ -1,72 +1,402 @@
 [
   {
-    "id": "math402-ex-7-1",
+    "id": "math402-t7-ex01",
     "subjectId": "math402",
-    "topicId": "topic-7",
+    "topicId": "math402-topic-7",
     "difficulty": 1,
-    "title": "Topic 7 Exercise 1",
-    "description": "Fundamental exercise for topic 7. Implement the basic algorithm for topic 7.",
-    "starterCode": "import numpy as np\n\ndef topic7_algorithm():\n    \"\"\"\n    Implementation of topic 7 algorithm.\n\n    This is a complete solution with:\n    - Input validation\n    - Error handling\n    - Test cases\n    \"\"\"\n    # TODO: Implementation here\n    pass\n\n# Test cases\nprint(\"Testing topic 7 implementation\")\n# Add test cases\nprint(\"All tests passed!\")",
+    "title": "Euler's Method - Basic Implementation",
+    "description": "Implement Euler's method to solve the initial value problem dy/dt = -2y with y(0) = 1 over the interval [0, 2] with step size h = 0.1.\n\nEuler's method uses the formula:\ny_{n+1} = y_n + h * f(t_n, y_n)\n\nwhere f(t, y) is the derivative function. This is the simplest explicit method for solving ODEs, providing first-order accuracy.\n\nYour function should:\n1. Accept parameters: f (derivative function), t0, y0, t_final, h (step size)\n2. Return arrays of t values and corresponding y values\n3. Apply Euler's formula iteratively",
+    "starterCode": "import numpy as np\n\ndef euler_method(f, t0, y0, t_final, h):\n    \"\"\"\n    Solve ODE dy/dt = f(t, y) using Euler's method.\n    \n    Parameters:\n    -----------\n    f : callable\n        Derivative function f(t, y)\n    t0 : float\n        Initial time\n    y0 : float\n        Initial value\n    t_final : float\n        Final time\n    h : float\n        Step size\n    \n    Returns:\n    --------\n    t : ndarray\n        Array of time points\n    y : ndarray\n        Array of solution values\n    \"\"\"\n    # TODO: Calculate number of steps\n    # TODO: Initialize arrays for t and y\n    # TODO: Implement Euler's method iteration\n    pass\n\n# Test with dy/dt = -2y, y(0) = 1\nf = lambda t, y: -2 * y\nt, y = euler_method(f, 0, 1, 2, 0.1)\nprint(f\"Final value: y(2) = {y[-1]:.6f}\")\nprint(f\"Exact solution: y(2) = {np.exp(-4):.6f}\")",
     "hints": [
-      "Review the theory",
-      "Start with simple test cases",
-      "Validate your implementation"
+      "Calculate the number of steps as n_steps = int((t_final - t0) / h) + 1",
+      "Initialize t and y arrays: t = np.zeros(n_steps), y = np.zeros(n_steps), then set t[0] = t0, y[0] = y0",
+      "Use a loop to apply the Euler formula: y[i+1] = y[i] + h * f(t[i], y[i]) and t[i+1] = t[i] + h",
+      "The exact solution to dy/dt = -2y with y(0) = 1 is y(t) = e^(-2t), useful for verification"
     ],
-    "solution": "import numpy as np\n\ndef topic7_algorithm():\n    \"\"\"\n    Implementation of topic 7 algorithm.\n\n    This is a complete solution with:\n    - Input validation\n    - Error handling\n    - Test cases\n    \"\"\"\n    # Implementation here\n    pass\n\n# Test cases\nprint(\"Testing topic 7 implementation\")\n# Add test cases\nprint(\"All tests passed!\")",
+    "solution": "import numpy as np\n\ndef euler_method(f, t0, y0, t_final, h):\n    \"\"\"\n    Solve ODE dy/dt = f(t, y) using Euler's method.\n    \n    Parameters:\n    -----------\n    f : callable\n        Derivative function f(t, y)\n    t0 : float\n        Initial time\n    y0 : float\n        Initial value\n    t_final : float\n        Final time\n    h : float\n        Step size\n    \n    Returns:\n    --------\n    t : ndarray\n        Array of time points\n    y : ndarray\n        Array of solution values\n    \"\"\"\n    # Calculate number of steps\n    n_steps = int((t_final - t0) / h) + 1\n    \n    # Initialize arrays\n    t = np.zeros(n_steps)\n    y = np.zeros(n_steps)\n    \n    # Set initial conditions\n    t[0] = t0\n    y[0] = y0\n    \n    # Euler's method iteration\n    for i in range(n_steps - 1):\n        y[i+1] = y[i] + h * f(t[i], y[i])\n        t[i+1] = t[i] + h\n    \n    return t, y\n\n# Test with dy/dt = -2y, y(0) = 1\nf = lambda t, y: -2 * y\nt, y = euler_method(f, 0, 1, 2, 0.1)\nprint(f\"Final value: y(2) = {y[-1]:.6f}\")\nprint(f\"Exact solution: y(2) = {np.exp(-4):.6f}\")\nprint(f\"Error: {abs(y[-1] - np.exp(-4)):.6f}\")\n\n# Verify solution\nassert len(t) == 21, \"Should have 21 time points\"\nassert abs(y[-1] - np.exp(-4)) < 0.01, \"Solution should be reasonably close to exact\"\nprint(\"\\nAll tests passed!\")",
     "testCases": [
       {
-        "input": "test input",
-        "expectedOutput": "expected output",
+        "input": "f = lambda t, y: -2 * y; euler_method(f, 0, 1, 2, 0.1)",
+        "expectedOutput": "y(2) ≈ 0.018 (exact: 0.0183)",
         "isHidden": false,
-        "description": "Basic test case"
+        "description": "Solve dy/dt = -2y with y(0) = 1"
       }
     ],
     "language": "python"
   },
   {
-    "id": "math402-ex-7-2",
+    "id": "math402-t7-ex02",
     "subjectId": "math402",
-    "topicId": "topic-7",
+    "topicId": "math402-topic-7",
+    "difficulty": 1,
+    "title": "Euler's Method - Convergence Analysis",
+    "description": "Implement Euler's method and verify its first-order convergence by solving dy/dt = y with y(0) = 1 over [0, 1] using different step sizes.\n\nCompute the error at t = 1 for step sizes h = 0.1, 0.05, 0.025 and verify that halving the step size approximately halves the error (first-order convergence).\n\nThe exact solution is y(t) = e^t, so y(1) = e ≈ 2.71828.",
+    "starterCode": "import numpy as np\n\ndef euler_method(f, t0, y0, t_final, h):\n    \"\"\"\n    Solve ODE using Euler's method.\n    \"\"\"\n    # TODO: Implement Euler's method\n    pass\n\ndef analyze_convergence():\n    \"\"\"\n    Analyze convergence order of Euler's method.\n    \n    Returns:\n    --------\n    step_sizes : list\n        Step sizes used\n    errors : list\n        Absolute errors at t=1\n    \"\"\"\n    f = lambda t, y: y  # dy/dt = y\n    exact = np.exp(1)   # y(1) = e\n    step_sizes = [0.1, 0.05, 0.025]\n    errors = []\n    \n    # TODO: Compute errors for each step size\n    # TODO: Verify first-order convergence\n    \n    return step_sizes, errors\n\n# Test convergence\nstep_sizes, errors = analyze_convergence()\nfor h, err in zip(step_sizes, errors):\n    print(f\"h = {h:.3f}: error = {err:.6f}\")",
+    "hints": [
+      "Reuse the Euler method from the previous exercise",
+      "For each step size, compute y(1) and calculate error as abs(y_computed - np.exp(1))",
+      "First-order convergence means error(h/2) ≈ error(h)/2, so check ratios errors[i]/errors[i+1]",
+      "The ratio should be approximately 2 for first-order methods"
+    ],
+    "solution": "import numpy as np\n\ndef euler_method(f, t0, y0, t_final, h):\n    \"\"\"\n    Solve ODE using Euler's method.\n    \"\"\"\n    n_steps = int((t_final - t0) / h) + 1\n    t = np.zeros(n_steps)\n    y = np.zeros(n_steps)\n    t[0] = t0\n    y[0] = y0\n    \n    for i in range(n_steps - 1):\n        y[i+1] = y[i] + h * f(t[i], y[i])\n        t[i+1] = t[i] + h\n    \n    return t, y\n\ndef analyze_convergence():\n    \"\"\"\n    Analyze convergence order of Euler's method.\n    \n    Returns:\n    --------\n    step_sizes : list\n        Step sizes used\n    errors : list\n        Absolute errors at t=1\n    \"\"\"\n    f = lambda t, y: y  # dy/dt = y\n    exact = np.exp(1)   # y(1) = e\n    step_sizes = [0.1, 0.05, 0.025]\n    errors = []\n    \n    for h in step_sizes:\n        t, y = euler_method(f, 0, 1, 1, h)\n        error = abs(y[-1] - exact)\n        errors.append(error)\n    \n    # Verify first-order convergence\n    print(\"\\nConvergence analysis:\")\n    for i in range(len(errors) - 1):\n        ratio = errors[i] / errors[i+1]\n        print(f\"Error ratio (h={step_sizes[i]})/(h={step_sizes[i+1]}): {ratio:.3f}\")\n        print(f\"Expected ratio for 1st order: ~2.0\")\n    \n    return step_sizes, errors\n\n# Test convergence\nstep_sizes, errors = analyze_convergence()\nprint(\"\\nErrors at t=1:\")\nfor h, err in zip(step_sizes, errors):\n    print(f\"h = {h:.3f}: error = {err:.6f}\")\n\n# Verify first-order convergence\nratio = errors[0] / errors[1]\nassert 1.8 < ratio < 2.2, \"Should show approximately first-order convergence\"\nprint(\"\\nAll tests passed!\")",
+    "testCases": [
+      {
+        "input": "analyze_convergence()",
+        "expectedOutput": "Error ratios approximately 2.0, confirming first-order convergence",
+        "isHidden": false,
+        "description": "Verify first-order convergence of Euler's method"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math402-t7-ex03",
+    "subjectId": "math402",
+    "topicId": "math402-topic-7",
     "difficulty": 2,
-    "title": "Topic 7 Exercise 2",
-    "description": "Intermediate exercise for topic 7. Apply the algorithm to a more complex problem.",
-    "starterCode": "import numpy as np\n\ndef advanced_implementation():\n    \"\"\"Advanced implementation with optimization.\"\"\"\n    # TODO: Implement\n    pass\n\n# Complete solution with tests",
+    "title": "Improved Euler (Heun's Method)",
+    "description": "Implement the improved Euler method (Heun's method) to solve ODEs. This predictor-corrector method achieves second-order accuracy.\n\nThe algorithm:\n1. Predictor: y*_{n+1} = y_n + h * f(t_n, y_n)\n2. Corrector: y_{n+1} = y_n + (h/2) * [f(t_n, y_n) + f(t_{n+1}, y*_{n+1})]\n\nSolve dy/dt = -y + t + 1 with y(0) = 1 over [0, 2] with h = 0.1.\nExact solution: y(t) = t + e^(-t)",
+    "starterCode": "import numpy as np\n\ndef heun_method(f, t0, y0, t_final, h):\n    \"\"\"\n    Solve ODE using Heun's method (Improved Euler).\n    \n    Parameters:\n    -----------\n    f : callable\n        Derivative function f(t, y)\n    t0 : float\n        Initial time\n    y0 : float\n        Initial value\n    t_final : float\n        Final time\n    h : float\n        Step size\n    \n    Returns:\n    --------\n    t : ndarray\n        Array of time points\n    y : ndarray\n        Array of solution values\n    \"\"\"\n    # TODO: Initialize arrays\n    # TODO: Implement predictor step\n    # TODO: Implement corrector step\n    pass\n\n# Test with dy/dt = -y + t + 1, y(0) = 1\nf = lambda t, y: -y + t + 1\nt, y = heun_method(f, 0, 1, 2, 0.1)\nexact = t + np.exp(-t)\nprint(f\"Final value: y(2) = {y[-1]:.6f}\")\nprint(f\"Exact: y(2) = {exact[-1]:.6f}\")\nprint(f\"Error: {abs(y[-1] - exact[-1]):.6e}\")",
     "hints": [
-      "Build on the basic implementation",
-      "Consider edge cases",
-      "Optimize for performance"
+      "Initialize arrays similar to Euler's method",
+      "In the loop: first compute the predictor y_pred = y[i] + h * f(t[i], y[i])",
+      "Then compute the corrector: y[i+1] = y[i] + (h/2) * (f(t[i], y[i]) + f(t[i+1], y_pred))",
+      "Heun's method should give much better accuracy than basic Euler for the same step size"
     ],
-    "solution": "import numpy as np\n\ndef advanced_implementation():\n    \"\"\"Advanced implementation with optimization.\"\"\"\n    pass\n\n# Complete solution with tests",
+    "solution": "import numpy as np\n\ndef heun_method(f, t0, y0, t_final, h):\n    \"\"\"\n    Solve ODE using Heun's method (Improved Euler).\n    \n    Parameters:\n    -----------\n    f : callable\n        Derivative function f(t, y)\n    t0 : float\n        Initial time\n    y0 : float\n        Initial value\n    t_final : float\n        Final time\n    h : float\n        Step size\n    \n    Returns:\n    --------\n    t : ndarray\n        Array of time points\n    y : ndarray\n        Array of solution values\n    \"\"\"\n    n_steps = int((t_final - t0) / h) + 1\n    t = np.zeros(n_steps)\n    y = np.zeros(n_steps)\n    t[0] = t0\n    y[0] = y0\n    \n    for i in range(n_steps - 1):\n        # Predictor step (Euler)\n        y_pred = y[i] + h * f(t[i], y[i])\n        \n        # Update time\n        t[i+1] = t[i] + h\n        \n        # Corrector step (trapezoidal)\n        y[i+1] = y[i] + (h/2) * (f(t[i], y[i]) + f(t[i+1], y_pred))\n    \n    return t, y\n\n# Test with dy/dt = -y + t + 1, y(0) = 1\nf = lambda t, y: -y + t + 1\nt, y = heun_method(f, 0, 1, 2, 0.1)\nexact = t + np.exp(-t)\nprint(f\"Final value: y(2) = {y[-1]:.6f}\")\nprint(f\"Exact: y(2) = {exact[-1]:.6f}\")\nprint(f\"Error: {abs(y[-1] - exact[-1]):.6e}\")\n\n# Verify second-order accuracy\nassert abs(y[-1] - exact[-1]) < 1e-4, \"Error should be very small with h=0.1\"\nprint(\"\\nAll tests passed!\")",
     "testCases": [
       {
-        "input": "test input",
-        "expectedOutput": "expected output",
+        "input": "f = lambda t, y: -y + t + 1; heun_method(f, 0, 1, 2, 0.1)",
+        "expectedOutput": "y(2) ≈ 2.135, error < 1e-4",
         "isHidden": false,
-        "description": "Intermediate test case"
+        "description": "Solve linear ODE with Heun's method"
       }
     ],
     "language": "python"
   },
   {
-    "id": "math402-ex-7-3",
+    "id": "math402-t7-ex04",
     "subjectId": "math402",
-    "topicId": "topic-7",
-    "difficulty": 3,
-    "title": "Topic 7 Exercise 3",
-    "description": "Advanced exercise combining multiple concepts. Implement an optimized version with error analysis.",
-    "starterCode": "import numpy as np\nimport matplotlib.pyplot as plt\n\ndef optimized_algorithm():\n    \"\"\"Optimized implementation with complete analysis.\"\"\"\n    # TODO: Implement\n    pass\n\n# Comprehensive solution",
+    "topicId": "math402-topic-7",
+    "difficulty": 2,
+    "title": "Classical Runge-Kutta Method (RK4)",
+    "description": "Implement the classical 4th-order Runge-Kutta method (RK4), one of the most widely used ODE solvers.\n\nThe RK4 algorithm:\nk1 = f(t_n, y_n)\nk2 = f(t_n + h/2, y_n + h*k1/2)\nk3 = f(t_n + h/2, y_n + h*k2/2)\nk4 = f(t_n + h, y_n + h*k3)\ny_{n+1} = y_n + (h/6)(k1 + 2*k2 + 2*k3 + k4)\n\nSolve dy/dt = t * sqrt(y) with y(0) = 1 over [0, 1] with h = 0.1.",
+    "starterCode": "import numpy as np\n\ndef rk4_method(f, t0, y0, t_final, h):\n    \"\"\"\n    Solve ODE using classical 4th-order Runge-Kutta method.\n    \n    Parameters:\n    -----------\n    f : callable\n        Derivative function f(t, y)\n    t0 : float\n        Initial time\n    y0 : float\n        Initial value\n    t_final : float\n        Final time\n    h : float\n        Step size\n    \n    Returns:\n    --------\n    t : ndarray\n        Array of time points\n    y : ndarray\n        Array of solution values\n    \"\"\"\n    # TODO: Initialize arrays\n    # TODO: Compute k1, k2, k3, k4\n    # TODO: Update y using weighted average\n    pass\n\n# Test with dy/dt = t * sqrt(y), y(0) = 1\nf = lambda t, y: t * np.sqrt(y)\nt, y = rk4_method(f, 0, 1, 1, 0.1)\nprint(f\"Final value: y(1) = {y[-1]:.6f}\")",
     "hints": [
-      "Combine multiple techniques",
-      "Analyze performance and accuracy",
-      "Include visualizations"
+      "Initialize arrays as before: n_steps = int((t_final - t0) / h) + 1",
+      "For each step, compute k1 = f(t[i], y[i])",
+      "Then k2 = f(t[i] + h/2, y[i] + h*k1/2), k3 = f(t[i] + h/2, y[i] + h*k2/2), k4 = f(t[i] + h, y[i] + h*k3)",
+      "Finally: y[i+1] = y[i] + (h/6) * (k1 + 2*k2 + 2*k3 + k4)"
     ],
-    "solution": "import numpy as np\nimport matplotlib.pyplot as plt\n\ndef optimized_algorithm():\n    \"\"\"Optimized implementation with complete analysis.\"\"\"\n    pass\n\n# Comprehensive solution",
+    "solution": "import numpy as np\n\ndef rk4_method(f, t0, y0, t_final, h):\n    \"\"\"\n    Solve ODE using classical 4th-order Runge-Kutta method.\n    \n    Parameters:\n    -----------\n    f : callable\n        Derivative function f(t, y)\n    t0 : float\n        Initial time\n    y0 : float\n        Initial value\n    t_final : float\n        Final time\n    h : float\n        Step size\n    \n    Returns:\n    --------\n    t : ndarray\n        Array of time points\n    y : ndarray\n        Array of solution values\n    \"\"\"\n    n_steps = int((t_final - t0) / h) + 1\n    t = np.zeros(n_steps)\n    y = np.zeros(n_steps)\n    t[0] = t0\n    y[0] = y0\n    \n    for i in range(n_steps - 1):\n        # Compute the four stages\n        k1 = f(t[i], y[i])\n        k2 = f(t[i] + h/2, y[i] + h*k1/2)\n        k3 = f(t[i] + h/2, y[i] + h*k2/2)\n        k4 = f(t[i] + h, y[i] + h*k3)\n        \n        # Update solution\n        y[i+1] = y[i] + (h/6) * (k1 + 2*k2 + 2*k3 + k4)\n        t[i+1] = t[i] + h\n    \n    return t, y\n\n# Test with dy/dt = t * sqrt(y), y(0) = 1\nf = lambda t, y: t * np.sqrt(y)\nt, y = rk4_method(f, 0, 1, 1, 0.1)\nprint(f\"Final value: y(1) = {y[-1]:.6f}\")\n\n# Compare with Euler for same problem\ndef euler_method(f, t0, y0, t_final, h):\n    n_steps = int((t_final - t0) / h) + 1\n    t = np.zeros(n_steps)\n    y = np.zeros(n_steps)\n    t[0] = t0\n    y[0] = y0\n    for i in range(n_steps - 1):\n        y[i+1] = y[i] + h * f(t[i], y[i])\n        t[i+1] = t[i] + h\n    return t, y\n\nt_euler, y_euler = euler_method(f, 0, 1, 1, 0.1)\nprint(f\"\\nComparison with Euler:\")\nprint(f\"RK4:   y(1) = {y[-1]:.6f}\")\nprint(f\"Euler: y(1) = {y_euler[-1]:.6f}\")\nprint(f\"Difference: {abs(y[-1] - y_euler[-1]):.6f}\")\n\nassert len(t) == 11, \"Should have 11 time points\"\nprint(\"\\nAll tests passed!\")",
     "testCases": [
       {
-        "input": "test input",
-        "expectedOutput": "expected output",
+        "input": "f = lambda t, y: t * np.sqrt(y); rk4_method(f, 0, 1, 1, 0.1)",
+        "expectedOutput": "y(1) computed with high accuracy",
         "isHidden": false,
-        "description": "Advanced test case"
+        "description": "Solve nonlinear ODE with RK4"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math402-t7-ex05",
+    "subjectId": "math402",
+    "topicId": "math402-topic-7",
+    "difficulty": 2,
+    "title": "Implicit Euler Method",
+    "description": "Implement the implicit (backward) Euler method for solving stiff ODEs.\n\nImplicit Euler: y_{n+1} = y_n + h * f(t_{n+1}, y_{n+1})\n\nSince y_{n+1} appears on both sides, this requires solving a nonlinear equation at each step. Use Newton's method: iterate until |y^{k+1} - y^k| < tol.\n\nNewton iteration: y^{k+1} = y^k - [y^k - y_n - h*f(t_{n+1}, y^k)] / [1 - h*f'(t_{n+1}, y^k)]\n\nSolve dy/dt = -100y + 100t + 101 with y(0) = 1 over [0, 1] with h = 0.1.\nExact: y(t) = t + 1",
+    "starterCode": "import numpy as np\n\ndef implicit_euler(f, df_dy, t0, y0, t_final, h, tol=1e-8, max_iter=20):\n    \"\"\"\n    Solve ODE using implicit Euler method with Newton iteration.\n    \n    Parameters:\n    -----------\n    f : callable\n        Derivative function f(t, y)\n    df_dy : callable\n        Partial derivative df/dy\n    t0, y0 : float\n        Initial conditions\n    t_final : float\n        Final time\n    h : float\n        Step size\n    tol : float\n        Newton iteration tolerance\n    max_iter : int\n        Maximum Newton iterations\n    \n    Returns:\n    --------\n    t, y : ndarray\n        Solution arrays\n    \"\"\"\n    # TODO: Initialize arrays\n    # TODO: For each step, use Newton iteration to solve implicit equation\n    pass\n\n# Test with stiff equation: dy/dt = -100y + 100t + 101\nf = lambda t, y: -100*y + 100*t + 101\ndf_dy = lambda t, y: -100\nt, y = implicit_euler(f, df_dy, 0, 1, 1, 0.1)\nexact = t + 1\nprint(f\"Max error: {np.max(np.abs(y - exact)):.6e}\")",
+    "hints": [
+      "Initialize arrays as usual, then use nested loop: outer for time steps, inner for Newton iterations",
+      "Start Newton iteration with predictor y_guess = y[i] (use previous value)",
+      "Newton update: g = y_guess - y[i] - h*f(t[i+1], y_guess), g_prime = 1 - h*df_dy(t[i+1], y_guess)",
+      "Update: y_guess = y_guess - g/g_prime, repeat until |g| < tol or max_iter reached"
+    ],
+    "solution": "import numpy as np\n\ndef implicit_euler(f, df_dy, t0, y0, t_final, h, tol=1e-8, max_iter=20):\n    \"\"\"\n    Solve ODE using implicit Euler method with Newton iteration.\n    \n    Parameters:\n    -----------\n    f : callable\n        Derivative function f(t, y)\n    df_dy : callable\n        Partial derivative df/dy\n    t0, y0 : float\n        Initial conditions\n    t_final : float\n        Final time\n    h : float\n        Step size\n    tol : float\n        Newton iteration tolerance\n    max_iter : int\n        Maximum Newton iterations\n    \n    Returns:\n    --------\n    t, y : ndarray\n        Solution arrays\n    \"\"\"\n    n_steps = int((t_final - t0) / h) + 1\n    t = np.zeros(n_steps)\n    y = np.zeros(n_steps)\n    t[0] = t0\n    y[0] = y0\n    \n    for i in range(n_steps - 1):\n        t[i+1] = t[i] + h\n        \n        # Newton iteration to solve: y_{n+1} = y_n + h*f(t_{n+1}, y_{n+1})\n        y_guess = y[i]  # Initial guess\n        \n        for _ in range(max_iter):\n            # Residual: g(y) = y - y_n - h*f(t_{n+1}, y)\n            g = y_guess - y[i] - h * f(t[i+1], y_guess)\n            \n            if abs(g) < tol:\n                break\n            \n            # Derivative: g'(y) = 1 - h*f'(t_{n+1}, y)\n            g_prime = 1 - h * df_dy(t[i+1], y_guess)\n            \n            # Newton update\n            y_guess = y_guess - g / g_prime\n        \n        y[i+1] = y_guess\n    \n    return t, y\n\n# Test with stiff equation: dy/dt = -100y + 100t + 101\n# Exact solution: y(t) = t + 1\nf = lambda t, y: -100*y + 100*t + 101\ndf_dy = lambda t, y: -100\nt, y = implicit_euler(f, df_dy, 0, 1, 1, 0.1)\nexact = t + 1\n\nprint(\"Implicit Euler for stiff ODE:\")\nprint(f\"Max error: {np.max(np.abs(y - exact)):.6e}\")\nprint(f\"Final value: y(1) = {y[-1]:.6f}\")\nprint(f\"Exact: y(1) = {exact[-1]:.6f}\")\n\n# Verify stability on stiff problem\nassert np.max(np.abs(y - exact)) < 0.1, \"Implicit Euler should be stable for stiff problems\"\nassert not np.any(np.isnan(y)), \"Solution should not contain NaN\"\nprint(\"\\nAll tests passed!\")",
+    "testCases": [
+      {
+        "input": "implicit_euler(lambda t,y: -100*y+100*t+101, lambda t,y: -100, 0, 1, 1, 0.1)",
+        "expectedOutput": "Stable solution for stiff ODE, max error < 0.1",
+        "isHidden": false,
+        "description": "Solve stiff ODE with implicit Euler"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math402-t7-ex06",
+    "subjectId": "math402",
+    "topicId": "math402-topic-7",
+    "difficulty": 3,
+    "title": "Adams-Bashforth Multi-Step Method",
+    "description": "Implement the 4-step Adams-Bashforth explicit method for solving ODEs. Multi-step methods use information from several previous points.\n\nAdams-Bashforth 4-step formula:\ny_{n+1} = y_n + (h/24)[55*f_n - 59*f_{n-1} + 37*f_{n-2} - 9*f_{n-3}]\n\nwhere f_i = f(t_i, y_i).\n\nSince this requires 4 previous points, use RK4 for the first 3 steps.\n\nSolve dy/dt = -y + sin(t) with y(0) = 1 over [0, 5] with h = 0.1.",
+    "starterCode": "import numpy as np\n\ndef adams_bashforth_4(f, t0, y0, t_final, h):\n    \"\"\"\n    Solve ODE using 4-step Adams-Bashforth method.\n    \n    Parameters:\n    -----------\n    f : callable\n        Derivative function f(t, y)\n    t0, y0 : float\n        Initial conditions\n    t_final : float\n        Final time\n    h : float\n        Step size\n    \n    Returns:\n    --------\n    t, y : ndarray\n        Solution arrays\n    \"\"\"\n    # TODO: Initialize arrays\n    # TODO: Use RK4 for first 3 steps to get y[0], y[1], y[2], y[3]\n    # TODO: Compute f values for first 4 points\n    # TODO: Apply Adams-Bashforth formula for remaining steps\n    pass\n\n# Test\nf = lambda t, y: -y + np.sin(t)\nt, y = adams_bashforth_4(f, 0, 1, 5, 0.1)\nprint(f\"Final value: y(5) = {y[-1]:.6f}\")",
+    "hints": [
+      "Start by implementing or copying RK4 to bootstrap the first 3 steps",
+      "Store f values in an array: f_vals = [f(t[i], y[i]) for i in range(4)]",
+      "For i >= 3, apply: y[i+1] = y[i] + (h/24)*(55*f_vals[3] - 59*f_vals[2] + 37*f_vals[1] - 9*f_vals[0])",
+      "After each step, shift f_vals: f_vals = [f_vals[1], f_vals[2], f_vals[3], f(t[i+1], y[i+1])]"
+    ],
+    "solution": "import numpy as np\n\ndef rk4_step(f, t, y, h):\n    \"\"\"Single RK4 step.\"\"\"\n    k1 = f(t, y)\n    k2 = f(t + h/2, y + h*k1/2)\n    k3 = f(t + h/2, y + h*k2/2)\n    k4 = f(t + h, y + h*k3)\n    return y + (h/6) * (k1 + 2*k2 + 2*k3 + k4)\n\ndef adams_bashforth_4(f, t0, y0, t_final, h):\n    \"\"\"\n    Solve ODE using 4-step Adams-Bashforth method.\n    \n    Parameters:\n    -----------\n    f : callable\n        Derivative function f(t, y)\n    t0, y0 : float\n        Initial conditions\n    t_final : float\n        Final time\n    h : float\n        Step size\n    \n    Returns:\n    --------\n    t, y : ndarray\n        Solution arrays\n    \"\"\"\n    n_steps = int((t_final - t0) / h) + 1\n    t = np.zeros(n_steps)\n    y = np.zeros(n_steps)\n    t[0] = t0\n    y[0] = y0\n    \n    # Use RK4 for first 3 steps\n    for i in range(3):\n        t[i+1] = t[i] + h\n        y[i+1] = rk4_step(f, t[i], y[i], h)\n    \n    # Compute f values at first 4 points\n    f_vals = [f(t[i], y[i]) for i in range(4)]\n    \n    # Adams-Bashforth for remaining steps\n    for i in range(3, n_steps - 1):\n        t[i+1] = t[i] + h\n        \n        # 4-step Adams-Bashforth formula\n        y[i+1] = y[i] + (h/24) * (55*f_vals[3] - 59*f_vals[2] + \n                                   37*f_vals[1] - 9*f_vals[0])\n        \n        # Update f values (shift left and add new)\n        f_vals = f_vals[1:] + [f(t[i+1], y[i+1])]\n    \n    return t, y\n\n# Test\nf = lambda t, y: -y + np.sin(t)\nt, y = adams_bashforth_4(f, 0, 1, 5, 0.1)\nprint(f\"Final value: y(5) = {y[-1]:.6f}\")\nprint(f\"Number of steps: {len(t)}\")\n\n# Verify solution is reasonable\nassert len(t) == 51, \"Should have 51 time points\"\nassert not np.any(np.isnan(y)), \"Solution should not contain NaN\"\nassert not np.any(np.isinf(y)), \"Solution should not contain Inf\"\nprint(\"\\nAll tests passed!\")",
+    "testCases": [
+      {
+        "input": "adams_bashforth_4(lambda t,y: -y+np.sin(t), 0, 1, 5, 0.1)",
+        "expectedOutput": "Stable multi-step solution over [0,5]",
+        "isHidden": false,
+        "description": "Solve ODE with 4-step Adams-Bashforth"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math402-t7-ex07",
+    "subjectId": "math402",
+    "topicId": "math402-topic-7",
+    "difficulty": 3,
+    "title": "Adams-Moulton Predictor-Corrector",
+    "description": "Implement a predictor-corrector method combining Adams-Bashforth (predictor) and Adams-Moulton (corrector).\n\nPredictor (Adams-Bashforth 4-step):\ny*_{n+1} = y_n + (h/24)[55*f_n - 59*f_{n-1} + 37*f_{n-2} - 9*f_{n-3}]\n\nCorrector (Adams-Moulton 3-step):\ny_{n+1} = y_n + (h/24)[9*f*_{n+1} + 19*f_n - 5*f_{n-1} + f_{n-2}]\n\nwhere f*_{n+1} = f(t_{n+1}, y*_{n+1})\n\nThis combines the efficiency of explicit methods with the stability of implicit methods.\n\nSolve dy/dt = y - t^2 + 1 with y(0) = 0.5 over [0, 2] with h = 0.1.\nExact: y(t) = (t+1)^2 - 0.5*e^t",
+    "starterCode": "import numpy as np\n\ndef adams_pc(f, t0, y0, t_final, h):\n    \"\"\"\n    Solve ODE using Adams-Bashforth-Moulton predictor-corrector.\n    \n    Parameters:\n    -----------\n    f : callable\n        Derivative function f(t, y)\n    t0, y0 : float\n        Initial conditions\n    t_final : float\n        Final time\n    h : float\n        Step size\n    \n    Returns:\n    --------\n    t, y : ndarray\n        Solution arrays\n    \"\"\"\n    # TODO: Use RK4 for first 3 steps\n    # TODO: Store f values at multiple points\n    # TODO: Apply predictor (AB4)\n    # TODO: Apply corrector (AM3)\n    pass\n\n# Test\nf = lambda t, y: y - t**2 + 1\nt, y = adams_pc(f, 0, 0.5, 2, 0.1)\nexact = lambda t: (t + 1)**2 - 0.5*np.exp(t)\nprint(f\"Final value: y(2) = {y[-1]:.6f}\")\nprint(f\"Exact: y(2) = {exact(2):.6f}\")\nprint(f\"Error: {abs(y[-1] - exact(2)):.6e}\")",
+    "hints": [
+      "Reuse the RK4 bootstrap code from Adams-Bashforth",
+      "After predictor: y_pred = y[i] + (h/24)*(55*f_vals[3] - 59*f_vals[2] + 37*f_vals[1] - 9*f_vals[0])",
+      "Compute f_pred = f(t[i+1], y_pred)",
+      "Corrector: y[i+1] = y[i] + (h/24)*(9*f_pred + 19*f_vals[3] - 5*f_vals[2] + f_vals[1])"
+    ],
+    "solution": "import numpy as np\n\ndef rk4_step(f, t, y, h):\n    \"\"\"Single RK4 step.\"\"\"\n    k1 = f(t, y)\n    k2 = f(t + h/2, y + h*k1/2)\n    k3 = f(t + h/2, y + h*k2/2)\n    k4 = f(t + h, y + h*k3)\n    return y + (h/6) * (k1 + 2*k2 + 2*k3 + k4)\n\ndef adams_pc(f, t0, y0, t_final, h):\n    \"\"\"\n    Solve ODE using Adams-Bashforth-Moulton predictor-corrector.\n    \n    Parameters:\n    -----------\n    f : callable\n        Derivative function f(t, y)\n    t0, y0 : float\n        Initial conditions\n    t_final : float\n        Final time\n    h : float\n        Step size\n    \n    Returns:\n    --------\n    t, y : ndarray\n        Solution arrays\n    \"\"\"\n    n_steps = int((t_final - t0) / h) + 1\n    t = np.zeros(n_steps)\n    y = np.zeros(n_steps)\n    t[0] = t0\n    y[0] = y0\n    \n    # Bootstrap with RK4\n    for i in range(3):\n        t[i+1] = t[i] + h\n        y[i+1] = rk4_step(f, t[i], y[i], h)\n    \n    # Store f values\n    f_vals = [f(t[i], y[i]) for i in range(4)]\n    \n    # Predictor-corrector loop\n    for i in range(3, n_steps - 1):\n        t[i+1] = t[i] + h\n        \n        # Predictor: Adams-Bashforth 4-step\n        y_pred = y[i] + (h/24) * (55*f_vals[3] - 59*f_vals[2] + \n                                   37*f_vals[1] - 9*f_vals[0])\n        \n        # Evaluate f at predicted point\n        f_pred = f(t[i+1], y_pred)\n        \n        # Corrector: Adams-Moulton 3-step\n        y[i+1] = y[i] + (h/24) * (9*f_pred + 19*f_vals[3] - \n                                   5*f_vals[2] + f_vals[1])\n        \n        # Update f values with corrected value\n        f_vals = f_vals[1:] + [f(t[i+1], y[i+1])]\n    \n    return t, y\n\n# Test\nf = lambda t, y: y - t**2 + 1\nt, y = adams_pc(f, 0, 0.5, 2, 0.1)\nexact = lambda t: (t + 1)**2 - 0.5*np.exp(t)\n\nprint(\"Adams Predictor-Corrector Method:\")\nprint(f\"Final value: y(2) = {y[-1]:.6f}\")\nprint(f\"Exact: y(2) = {exact(2):.6f}\")\nprint(f\"Error: {abs(y[-1] - exact(2)):.6e}\")\n\n# Verify accuracy\nassert abs(y[-1] - exact(2)) < 1e-4, \"Error should be small with predictor-corrector\"\nprint(\"\\nAll tests passed!\")",
+    "testCases": [
+      {
+        "input": "adams_pc(lambda t,y: y-t**2+1, 0, 0.5, 2, 0.1)",
+        "expectedOutput": "High accuracy with error < 1e-4",
+        "isHidden": false,
+        "description": "Solve ODE with predictor-corrector method"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math402-t7-ex08",
+    "subjectId": "math402",
+    "topicId": "math402-topic-7",
+    "difficulty": 3,
+    "title": "System of ODEs - Predator-Prey Model",
+    "description": "Implement RK4 for systems of ODEs by solving the Lotka-Volterra predator-prey equations:\n\ndx/dt = ax - bxy (prey)\ndy/dt = -cy + dxy (predators)\n\nwhere x = prey population, y = predator population.\n\nUse parameters: a=1.5, b=1.0, c=3.0, d=1.0\nInitial conditions: x(0)=10, y(0)=5\nSolve over [0, 15] with h = 0.01\n\nYour RK4 implementation should handle vector-valued functions and states.",
+    "starterCode": "import numpy as np\n\ndef rk4_system(f, t0, y0, t_final, h):\n    \"\"\"\n    Solve system of ODEs using RK4.\n    \n    Parameters:\n    -----------\n    f : callable\n        Function f(t, y) returning array of derivatives\n        y is a vector of state variables\n    t0 : float\n        Initial time\n    y0 : ndarray\n        Initial state vector\n    t_final : float\n        Final time\n    h : float\n        Step size\n    \n    Returns:\n    --------\n    t : ndarray\n        Time points\n    y : ndarray\n        Solution array (n_steps x n_vars)\n    \"\"\"\n    # TODO: Initialize arrays (y is now 2D)\n    # TODO: Apply RK4 with vector operations\n    pass\n\n# Lotka-Volterra predator-prey model\ndef predator_prey(t, y):\n    x, y_pred = y  # prey, predator\n    a, b, c, d = 1.5, 1.0, 3.0, 1.0\n    dx = a*x - b*x*y_pred\n    dy = -c*y_pred + d*x*y_pred\n    return np.array([dx, dy])\n\ny0 = np.array([10.0, 5.0])  # Initial: 10 prey, 5 predators\nt, y = rk4_system(predator_prey, 0, y0, 15, 0.01)\nprint(f\"Final populations: prey={y[-1,0]:.2f}, predators={y[-1,1]:.2f}\")",
+    "hints": [
+      "y0 is now a vector, so y should be a 2D array: y = np.zeros((n_steps, len(y0)))",
+      "Apply RK4 formula to vectors: k1 = f(t[i], y[i]), k2 = f(t[i]+h/2, y[i]+h*k1/2), etc.",
+      "All arithmetic operations work element-wise with numpy arrays",
+      "The solution should show oscillatory behavior (periodic cycles)"
+    ],
+    "solution": "import numpy as np\n\ndef rk4_system(f, t0, y0, t_final, h):\n    \"\"\"\n    Solve system of ODEs using RK4.\n    \n    Parameters:\n    -----------\n    f : callable\n        Function f(t, y) returning array of derivatives\n        y is a vector of state variables\n    t0 : float\n        Initial time\n    y0 : ndarray\n        Initial state vector\n    t_final : float\n        Final time\n    h : float\n        Step size\n    \n    Returns:\n    --------\n    t : ndarray\n        Time points\n    y : ndarray\n        Solution array (n_steps x n_vars)\n    \"\"\"\n    n_steps = int((t_final - t0) / h) + 1\n    n_vars = len(y0)\n    \n    t = np.zeros(n_steps)\n    y = np.zeros((n_steps, n_vars))\n    \n    t[0] = t0\n    y[0] = y0\n    \n    for i in range(n_steps - 1):\n        # RK4 for systems\n        k1 = f(t[i], y[i])\n        k2 = f(t[i] + h/2, y[i] + h*k1/2)\n        k3 = f(t[i] + h/2, y[i] + h*k2/2)\n        k4 = f(t[i] + h, y[i] + h*k3)\n        \n        y[i+1] = y[i] + (h/6) * (k1 + 2*k2 + 2*k3 + k4)\n        t[i+1] = t[i] + h\n    \n    return t, y\n\n# Lotka-Volterra predator-prey model\ndef predator_prey(t, y):\n    x, y_pred = y  # prey, predator\n    a, b, c, d = 1.5, 1.0, 3.0, 1.0\n    dx = a*x - b*x*y_pred\n    dy = -c*y_pred + d*x*y_pred\n    return np.array([dx, dy])\n\ny0 = np.array([10.0, 5.0])  # Initial: 10 prey, 5 predators\nt, y = rk4_system(predator_prey, 0, y0, 15, 0.01)\n\nprint(\"Predator-Prey Model Solution:\")\nprint(f\"Initial populations: prey={y[0,0]:.2f}, predators={y[0,1]:.2f}\")\nprint(f\"Final populations: prey={y[-1,0]:.2f}, predators={y[-1,1]:.2f}\")\nprint(f\"Max prey: {np.max(y[:,0]):.2f}\")\nprint(f\"Max predators: {np.max(y[:,1]):.2f}\")\n\n# Verify populations stay positive\nassert np.all(y[:,0] > 0), \"Prey population should stay positive\"\nassert np.all(y[:,1] > 0), \"Predator population should stay positive\"\nprint(\"\\nAll tests passed!\")",
+    "testCases": [
+      {
+        "input": "rk4_system(predator_prey, 0, [10, 5], 15, 0.01)",
+        "expectedOutput": "Oscillatory populations, both stay positive",
+        "isHidden": false,
+        "description": "Solve predator-prey system"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math402-t7-ex09",
+    "subjectId": "math402",
+    "topicId": "math402-topic-7",
+    "difficulty": 3,
+    "title": "Error Estimation and Adaptive Step Size",
+    "description": "Implement a simple adaptive step size controller using embedded RK methods. Compare RK2 (Heun) and RK1 (Euler) to estimate local error.\n\nAlgorithm:\n1. Compute y_{n+1} using both RK2 (accurate) and RK1 (less accurate)\n2. Estimate error: err = |y_RK2 - y_RK1|\n3. If err < tol: accept step, potentially increase h\n4. If err > tol: reject step, decrease h\n\nNew step size: h_new = h * min(max(0.5, safety * (tol/err)^(1/2)), 2.0)\n\nSolve dy/dt = y with y(0) = 1 over [0, 3] with initial h = 0.1, tol = 1e-4.",
+    "starterCode": "import numpy as np\n\ndef adaptive_rk(f, t0, y0, t_final, h_init, tol=1e-4, safety=0.9):\n    \"\"\"\n    Solve ODE with adaptive step size using RK1/RK2 pair.\n    \n    Parameters:\n    -----------\n    f : callable\n        Derivative function\n    t0, y0 : float\n        Initial conditions\n    t_final : float\n        Final time\n    h_init : float\n        Initial step size\n    tol : float\n        Error tolerance\n    safety : float\n        Safety factor for step size adjustment\n    \n    Returns:\n    --------\n    t, y : ndarray\n        Solution (variable step sizes)\n    \"\"\"\n    # TODO: Use lists to store variable-length results\n    # TODO: Compute both RK1 and RK2 estimates\n    # TODO: Estimate error and adjust step size\n    # TODO: Accept or reject step\n    pass\n\n# Test\nf = lambda t, y: y\nt, y = adaptive_rk(f, 0, 1, 3, 0.1, tol=1e-4)\nprint(f\"Number of steps: {len(t)}\")\nprint(f\"Final value: y(3) = {y[-1]:.6f}\")\nprint(f\"Exact: {np.exp(3):.6f}\")",
+    "hints": [
+      "Use lists instead of arrays: t_list = [t0], y_list = [y0], then append in loop",
+      "RK1 (Euler): y1 = y + h*f(t, y); RK2 (Heun): y2 = y + (h/2)*(f(t,y) + f(t+h, y+h*f(t,y)))",
+      "Error estimate: err = abs(y2 - y1), then h_new = h * min(max(0.5, safety*(tol/err)**0.5), 2.0)",
+      "If err <= tol: accept (append y2 to y_list, t+h to t_list), else reject and retry with h_new"
+    ],
+    "solution": "import numpy as np\n\ndef adaptive_rk(f, t0, y0, t_final, h_init, tol=1e-4, safety=0.9):\n    \"\"\"\n    Solve ODE with adaptive step size using RK1/RK2 pair.\n    \n    Parameters:\n    -----------\n    f : callable\n        Derivative function\n    t0, y0 : float\n        Initial conditions\n    t_final : float\n        Final time\n    h_init : float\n        Initial step size\n    tol : float\n        Error tolerance\n    safety : float\n        Safety factor for step size adjustment\n    \n    Returns:\n    --------\n    t, y : ndarray\n        Solution (variable step sizes)\n    \"\"\"\n    t_list = [t0]\n    y_list = [y0]\n    \n    t = t0\n    y = y0\n    h = h_init\n    \n    while t < t_final:\n        # Don't step past t_final\n        if t + h > t_final:\n            h = t_final - t\n        \n        # RK1 (Euler) estimate\n        k1 = f(t, y)\n        y1 = y + h * k1\n        \n        # RK2 (Heun) estimate\n        k2 = f(t + h, y1)\n        y2 = y + (h/2) * (k1 + k2)\n        \n        # Error estimate\n        err = abs(y2 - y1)\n        \n        if err <= tol or err == 0:\n            # Accept step\n            t = t + h\n            y = y2\n            t_list.append(t)\n            y_list.append(y)\n            \n            # Try to increase step size for next step\n            if err > 0:\n                h_new = h * min(2.0, safety * (tol / err) ** 0.5)\n            else:\n                h_new = h * 2.0\n            h = h_new\n        else:\n            # Reject step and reduce step size\n            h = h * max(0.5, safety * (tol / err) ** 0.5)\n    \n    return np.array(t_list), np.array(y_list)\n\n# Test\nf = lambda t, y: y\nt, y = adaptive_rk(f, 0, 1, 3, 0.1, tol=1e-4)\n\nprint(\"Adaptive Step Size Method:\")\nprint(f\"Number of steps: {len(t)}\")\nprint(f\"Final value: y(3) = {y[-1]:.6f}\")\nprint(f\"Exact: {np.exp(3):.6f}\")\nprint(f\"Error: {abs(y[-1] - np.exp(3)):.6e}\")\n\n# Verify error is within tolerance\nassert abs(y[-1] - np.exp(3)) < 1e-3, \"Error should be controlled\"\nassert len(t) < 1000, \"Should not take excessive steps\"\nprint(\"\\nAll tests passed!\")",
+    "testCases": [
+      {
+        "input": "adaptive_rk(lambda t,y: y, 0, 1, 3, 0.1, tol=1e-4)",
+        "expectedOutput": "Variable step sizes, error controlled to tolerance",
+        "isHidden": false,
+        "description": "Solve ODE with adaptive stepping"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math402-t7-ex10",
+    "subjectId": "math402",
+    "topicId": "math402-topic-7",
+    "difficulty": 3,
+    "title": "Order Verification Through Richardson Extrapolation",
+    "description": "Verify the convergence order of different ODE solvers using Richardson extrapolation.\n\nFor a method of order p, the error behaves as E(h) ≈ C*h^p.\nUsing solutions with step sizes h and h/2:\n\nlog(E(h)/E(h/2)) / log(2) ≈ p\n\nImplement a function that:\n1. Solves an ODE with known exact solution using a given method\n2. Computes solutions with h, h/2, h/4\n3. Estimates the convergence order\n\nTest with dy/dt = -y, y(0) = 1 (exact: y = e^(-t)) over [0, 1]\nVerify: Euler is O(h), RK4 is O(h^4)",
+    "starterCode": "import numpy as np\n\ndef verify_order(method, f, t0, y0, t_final, exact_func, h_base=0.2):\n    \"\"\"\n    Verify convergence order of an ODE method.\n    \n    Parameters:\n    -----------\n    method : callable\n        ODE solver method(f, t0, y0, t_final, h)\n    f : callable\n        Derivative function\n    t0, y0 : float\n        Initial conditions\n    t_final : float\n        Final time\n    exact_func : callable\n        Exact solution y(t)\n    h_base : float\n        Base step size\n    \n    Returns:\n    --------\n    estimated_order : float\n        Estimated convergence order\n    \"\"\"\n    # TODO: Solve with h, h/2, h/4\n    # TODO: Compute errors\n    # TODO: Estimate order using log(E(h)/E(h/2)) / log(2)\n    pass\n\n# Test with Euler (should get order ≈ 1)\ndef euler_method(f, t0, y0, t_final, h):\n    # TODO: Implement Euler\n    pass\n\n# Test with RK4 (should get order ≈ 4)\ndef rk4_method(f, t0, y0, t_final, h):\n    # TODO: Implement RK4\n    pass\n\nf = lambda t, y: -y\nexact = lambda t: np.exp(-t)\n\norder_euler = verify_order(euler_method, f, 0, 1, 1, exact)\norder_rk4 = verify_order(rk4_method, f, 0, 1, 1, exact)\n\nprint(f\"Euler order: {order_euler:.2f} (expected: 1.0)\")\nprint(f\"RK4 order: {order_rk4:.2f} (expected: 4.0)\")",
+    "hints": [
+      "Solve three times with h = h_base, h_base/2, h_base/4",
+      "Compute errors: E1 = |y(t_final) - exact(t_final)| for each h",
+      "Estimate order: p ≈ log(E1/E2) / log(2) where E1, E2 are errors for h and h/2",
+      "Average two estimates: (log(E1/E2) + log(E2/E3)) / (2*log(2))"
+    ],
+    "solution": "import numpy as np\n\ndef euler_method(f, t0, y0, t_final, h):\n    \"\"\"Euler's method.\"\"\"\n    n_steps = int((t_final - t0) / h) + 1\n    t = np.zeros(n_steps)\n    y = np.zeros(n_steps)\n    t[0] = t0\n    y[0] = y0\n    for i in range(n_steps - 1):\n        y[i+1] = y[i] + h * f(t[i], y[i])\n        t[i+1] = t[i] + h\n    return t, y\n\ndef rk4_method(f, t0, y0, t_final, h):\n    \"\"\"RK4 method.\"\"\"\n    n_steps = int((t_final - t0) / h) + 1\n    t = np.zeros(n_steps)\n    y = np.zeros(n_steps)\n    t[0] = t0\n    y[0] = y0\n    for i in range(n_steps - 1):\n        k1 = f(t[i], y[i])\n        k2 = f(t[i] + h/2, y[i] + h*k1/2)\n        k3 = f(t[i] + h/2, y[i] + h*k2/2)\n        k4 = f(t[i] + h, y[i] + h*k3)\n        y[i+1] = y[i] + (h/6) * (k1 + 2*k2 + 2*k3 + k4)\n        t[i+1] = t[i] + h\n    return t, y\n\ndef verify_order(method, f, t0, y0, t_final, exact_func, h_base=0.2):\n    \"\"\"\n    Verify convergence order of an ODE method.\n    \n    Parameters:\n    -----------\n    method : callable\n        ODE solver method(f, t0, y0, t_final, h)\n    f : callable\n        Derivative function\n    t0, y0 : float\n        Initial conditions\n    t_final : float\n        Final time\n    exact_func : callable\n        Exact solution y(t)\n    h_base : float\n        Base step size\n    \n    Returns:\n    --------\n    estimated_order : float\n        Estimated convergence order\n    \"\"\"\n    step_sizes = [h_base, h_base/2, h_base/4]\n    errors = []\n    \n    exact_value = exact_func(t_final)\n    \n    for h in step_sizes:\n        t, y = method(f, t0, y0, t_final, h)\n        error = abs(y[-1] - exact_value)\n        errors.append(error)\n    \n    # Estimate order using two consecutive pairs\n    order1 = np.log(errors[0] / errors[1]) / np.log(2)\n    order2 = np.log(errors[1] / errors[2]) / np.log(2)\n    \n    estimated_order = (order1 + order2) / 2\n    \n    return estimated_order\n\n# Test\nf = lambda t, y: -y\nexact = lambda t: np.exp(-t)\n\nprint(\"Convergence Order Verification:\\n\")\n\norder_euler = verify_order(euler_method, f, 0, 1, 1, exact)\nprint(f\"Euler method:\")\nprint(f\"  Estimated order: {order_euler:.2f}\")\nprint(f\"  Expected order: 1.00\")\nprint(f\"  Match: {abs(order_euler - 1.0) < 0.2}\\n\")\n\norder_rk4 = verify_order(rk4_method, f, 0, 1, 1, exact)\nprint(f\"RK4 method:\")\nprint(f\"  Estimated order: {order_rk4:.2f}\")\nprint(f\"  Expected order: 4.00\")\nprint(f\"  Match: {abs(order_rk4 - 4.0) < 0.5}\")\n\n# Verify orders are reasonable\nassert abs(order_euler - 1.0) < 0.2, \"Euler should be first order\"\nassert abs(order_rk4 - 4.0) < 0.5, \"RK4 should be fourth order\"\nprint(\"\\nAll tests passed!\")",
+    "testCases": [
+      {
+        "input": "verify_order(euler_method, lambda t,y: -y, 0, 1, 1, lambda t: np.exp(-t))",
+        "expectedOutput": "Order ≈ 1.0 for Euler, ≈ 4.0 for RK4",
+        "isHidden": false,
+        "description": "Verify convergence orders"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math402-t7-ex11",
+    "subjectId": "math402",
+    "topicId": "math402-topic-7",
+    "difficulty": 4,
+    "title": "Runge-Kutta-Fehlberg Adaptive Method (RKF45)",
+    "description": "Implement the Runge-Kutta-Fehlberg method (RKF45), which uses embedded RK formulas of orders 4 and 5 for adaptive step size control.\n\nRKF45 uses 6 stages to compute both 4th and 5th order estimates:\nk1 = f(t_n, y_n)\nk2 = f(t_n + (1/4)h, y_n + (1/4)h*k1)\nk3 = f(t_n + (3/8)h, y_n + h*(3/32*k1 + 9/32*k2))\nk4 = f(t_n + (12/13)h, y_n + h*(1932/2197*k1 - 7200/2197*k2 + 7296/2197*k3))\nk5 = f(t_n + h, y_n + h*(439/216*k1 - 8*k2 + 3680/513*k3 - 845/4104*k4))\nk6 = f(t_n + (1/2)h, y_n + h*(-8/27*k1 + 2*k2 - 3544/2565*k3 + 1859/4104*k4 - 11/40*k5))\n\ny4 = y_n + h*(25/216*k1 + 1408/2565*k3 + 2197/4104*k4 - 1/5*k5)\ny5 = y_n + h*(16/135*k1 + 6656/12825*k3 + 28561/56430*k4 - 9/50*k5 + 2/55*k6)\n\nError estimate: err = |y5 - y4|\n\nSolve dy/dt = y*sin(t) with y(0) = 1 over [0, 10] with tol = 1e-6.",
+    "starterCode": "import numpy as np\n\ndef rkf45(f, t0, y0, t_final, h_init=0.1, tol=1e-6, safety=0.9):\n    \"\"\"\n    Solve ODE using Runge-Kutta-Fehlberg method with adaptive stepping.\n    \n    Parameters:\n    -----------\n    f : callable\n        Derivative function f(t, y)\n    t0, y0 : float\n        Initial conditions\n    t_final : float\n        Final time\n    h_init : float\n        Initial step size\n    tol : float\n        Error tolerance\n    safety : float\n        Safety factor\n    \n    Returns:\n    --------\n    t, y : ndarray\n        Solution arrays\n    \"\"\"\n    # TODO: Implement 6-stage RKF45\n    # TODO: Compute both 4th and 5th order estimates\n    # TODO: Adaptive step size control\n    pass\n\n# Test\nf = lambda t, y: y * np.sin(t)\nt, y = rkf45(f, 0, 1, 10, tol=1e-6)\nprint(f\"Steps taken: {len(t)}\")\nprint(f\"Final value: y(10) = {y[-1]:.6f}\")",
+    "hints": [
+      "Define Butcher tableau coefficients as constants before the loop",
+      "Compute k1 through k6 using the given formulas",
+      "Fourth-order: y4 = y + h*(25/216*k1 + 1408/2565*k3 + 2197/4104*k4 - 1/5*k5)",
+      "Fifth-order: y5 = y + h*(16/135*k1 + 6656/12825*k3 + 28561/56430*k4 - 9/50*k5 + 2/55*k6)",
+      "Step size: h_new = safety * h * (tol/err)**(1/4) if err > 0"
+    ],
+    "solution": "import numpy as np\n\ndef rkf45(f, t0, y0, t_final, h_init=0.1, tol=1e-6, safety=0.9):\n    \"\"\"\n    Solve ODE using Runge-Kutta-Fehlberg method with adaptive stepping.\n    \n    Parameters:\n    -----------\n    f : callable\n        Derivative function f(t, y)\n    t0, y0 : float\n        Initial conditions\n    t_final : float\n        Final time\n    h_init : float\n        Initial step size\n    tol : float\n        Error tolerance\n    safety : float\n        Safety factor\n    \n    Returns:\n    --------\n    t, y : ndarray\n        Solution arrays\n    \"\"\"\n    t_list = [t0]\n    y_list = [y0]\n    \n    t = t0\n    y = y0\n    h = h_init\n    \n    while t < t_final:\n        if t + h > t_final:\n            h = t_final - t\n        \n        # Six stages of RKF45\n        k1 = f(t, y)\n        k2 = f(t + h/4, y + h*k1/4)\n        k3 = f(t + 3*h/8, y + h*(3*k1/32 + 9*k2/32))\n        k4 = f(t + 12*h/13, y + h*(1932*k1/2197 - 7200*k2/2197 + 7296*k3/2197))\n        k5 = f(t + h, y + h*(439*k1/216 - 8*k2 + 3680*k3/513 - 845*k4/4104))\n        k6 = f(t + h/2, y + h*(-8*k1/27 + 2*k2 - 3544*k3/2565 + 1859*k4/4104 - 11*k5/40))\n        \n        # 4th and 5th order estimates\n        y4 = y + h*(25*k1/216 + 1408*k3/2565 + 2197*k4/4104 - k5/5)\n        y5 = y + h*(16*k1/135 + 6656*k3/12825 + 28561*k4/56430 - 9*k5/50 + 2*k6/55)\n        \n        # Error estimate\n        err = abs(y5 - y4)\n        \n        if err <= tol or err == 0:\n            # Accept step\n            t = t + h\n            y = y5  # Use 5th order estimate\n            t_list.append(t)\n            y_list.append(y)\n            \n            # Adjust step size for next step\n            if err > 0:\n                h_new = safety * h * (tol / err) ** 0.25\n                h = min(h_new, 2*h)  # Don't grow too fast\n            else:\n                h = 2*h\n        else:\n            # Reject and reduce step size\n            h = safety * h * (tol / err) ** 0.25\n    \n    return np.array(t_list), np.array(y_list)\n\n# Test\nf = lambda t, y: y * np.sin(t)\nt, y = rkf45(f, 0, 1, 10, tol=1e-6)\n\nprint(\"RKF45 Adaptive Method:\")\nprint(f\"Steps taken: {len(t)}\")\nprint(f\"Final value: y(10) = {y[-1]:.6f}\")\nprint(f\"Average step size: {10/(len(t)-1):.4f}\")\n\n# Verify solution is reasonable\nassert len(t) > 10, \"Should take multiple steps\"\nassert len(t) < 10000, \"Should not take excessive steps\"\nassert not np.any(np.isnan(y)), \"Solution should not contain NaN\"\nprint(\"\\nAll tests passed!\")",
+    "testCases": [
+      {
+        "input": "rkf45(lambda t,y: y*np.sin(t), 0, 1, 10, tol=1e-6)",
+        "expectedOutput": "Efficient adaptive solution with controlled error",
+        "isHidden": false,
+        "description": "Solve ODE with RKF45 adaptive method"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math402-t7-ex12",
+    "subjectId": "math402",
+    "topicId": "math402-topic-7",
+    "difficulty": 4,
+    "title": "BDF2 Method for Stiff ODEs",
+    "description": "Implement the 2-step Backward Differentiation Formula (BDF2) for solving stiff ODEs.\n\nBDF2 is an implicit multi-step method:\n(3/2)y_{n+1} - 2y_n + (1/2)y_{n-1} = h*f(t_{n+1}, y_{n+1})\n\nRearranging for Newton iteration:\ny_{n+1} - (2h/3)*f(t_{n+1}, y_{n+1}) = (4y_n - y_{n-1})/3\n\nDefine g(y) = y - (2h/3)*f(t_{n+1}, y) - (4y_n - y_{n-1})/3\nNewton: y^{k+1} = y^k - g(y^k)/g'(y^k)\n\nwhere g'(y) = 1 - (2h/3)*f'(t_{n+1}, y)\n\nSolve the van der Pol equation (stiff for μ large):\ndy1/dt = y2\ndy2/dt = μ(1-y1²)y2 - y1\n\nwith μ=1000, y1(0)=2, y2(0)=0 over [0, 2000] with h=1.0.",
+    "starterCode": "import numpy as np\n\ndef bdf2_system(f, jac, t0, y0, t_final, h, tol=1e-8, max_iter=20):\n    \"\"\"\n    Solve system of stiff ODEs using BDF2 method.\n    \n    Parameters:\n    -----------\n    f : callable\n        Derivative function f(t, y) returning array\n    jac : callable\n        Jacobian matrix df/dy\n    t0 : float\n        Initial time\n    y0 : ndarray\n        Initial state vector\n    t_final : float\n        Final time\n    h : float\n        Step size\n    tol : float\n        Newton iteration tolerance\n    max_iter : int\n        Max Newton iterations\n    \n    Returns:\n    --------\n    t, y : ndarray\n        Solution arrays\n    \"\"\"\n    # TODO: Use RK4 for first step to bootstrap\n    # TODO: Implement BDF2 with Newton iteration for systems\n    pass\n\n# Van der Pol oscillator (stiff)\ndef van_der_pol(t, y, mu=1000):\n    return np.array([y[1], mu*(1 - y[0]**2)*y[1] - y[0]])\n\ndef van_der_pol_jac(t, y, mu=1000):\n    return np.array([[0, 1], [-2*mu*y[0]*y[1] - 1, mu*(1 - y[0]**2)]])\n\ny0 = np.array([2.0, 0.0])\nt, y = bdf2_system(lambda t, y: van_der_pol(t, y, 1000),\n                   lambda t, y: van_der_pol_jac(t, y, 1000),\n                   0, y0, 2000, 1.0)\nprint(f\"Solution computed over {len(t)} steps\")",
+    "hints": [
+      "Bootstrap first step with RK4 to get y[1]",
+      "For each step i >= 1, solve: y_{i+1} - (2h/3)*f(t_{i+1}, y_{i+1}) = (4y_i - y_{i-1})/3",
+      "For systems, use Newton with Jacobian: (I - (2h/3)*J) * delta = -g where J = jac(t, y)",
+      "Solve linear system for delta, then update y_guess += delta"
+    ],
+    "solution": "import numpy as np\nfrom numpy.linalg import solve\n\ndef rk4_step_system(f, t, y, h):\n    \"\"\"Single RK4 step for systems.\"\"\"\n    k1 = f(t, y)\n    k2 = f(t + h/2, y + h*k1/2)\n    k3 = f(t + h/2, y + h*k2/2)\n    k4 = f(t + h, y + h*k3)\n    return y + (h/6) * (k1 + 2*k2 + 2*k3 + k4)\n\ndef bdf2_system(f, jac, t0, y0, t_final, h, tol=1e-8, max_iter=20):\n    \"\"\"\n    Solve system of stiff ODEs using BDF2 method.\n    \n    Parameters:\n    -----------\n    f : callable\n        Derivative function f(t, y) returning array\n    jac : callable\n        Jacobian matrix df/dy\n    t0 : float\n        Initial time\n    y0 : ndarray\n        Initial state vector\n    t_final : float\n        Final time\n    h : float\n        Step size\n    tol : float\n        Newton iteration tolerance\n    max_iter : int\n        Max Newton iterations\n    \n    Returns:\n    --------\n    t, y : ndarray\n        Solution arrays\n    \"\"\"\n    n_steps = int((t_final - t0) / h) + 1\n    n_vars = len(y0)\n    \n    t = np.zeros(n_steps)\n    y = np.zeros((n_steps, n_vars))\n    \n    t[0] = t0\n    y[0] = y0\n    \n    # Bootstrap first step with RK4\n    t[1] = t[0] + h\n    y[1] = rk4_step_system(f, t[0], y[0], h)\n    \n    # BDF2 for remaining steps\n    for i in range(1, n_steps - 1):\n        t[i+1] = t[i] + h\n        \n        # Newton iteration to solve BDF2 implicit equation\n        y_guess = y[i]  # Initial guess\n        rhs = (4*y[i] - y[i-1]) / 3\n        \n        for _ in range(max_iter):\n            # Residual: g(y) = y - (2h/3)*f(t, y) - rhs\n            g = y_guess - (2*h/3)*f(t[i+1], y_guess) - rhs\n            \n            if np.linalg.norm(g) < tol:\n                break\n            \n            # Jacobian of g: I - (2h/3)*J\n            J = jac(t[i+1], y_guess)\n            g_jac = np.eye(n_vars) - (2*h/3)*J\n            \n            # Newton update\n            delta = solve(g_jac, -g)\n            y_guess = y_guess + delta\n        \n        y[i+1] = y_guess\n    \n    return t, y\n\n# Van der Pol oscillator (stiff)\ndef van_der_pol(t, y, mu=1000):\n    return np.array([y[1], mu*(1 - y[0]**2)*y[1] - y[0]])\n\ndef van_der_pol_jac(t, y, mu=1000):\n    return np.array([[0, 1], [-2*mu*y[0]*y[1] - 1, mu*(1 - y[0]**2)]])\n\nprint(\"BDF2 for Stiff Van der Pol Equation:\")\ny0 = np.array([2.0, 0.0])\nt, y = bdf2_system(lambda t, y: van_der_pol(t, y, 1000),\n                   lambda t, y: van_der_pol_jac(t, y, 1000),\n                   0, y0, 2000, 1.0)\n\nprint(f\"Solved over {len(t)} steps\")\nprint(f\"Final state: y1={y[-1,0]:.4f}, y2={y[-1,1]:.4f}\")\n\n# Verify stability (should not blow up)\nassert not np.any(np.isnan(y)), \"Solution should be stable\"\nassert np.all(np.abs(y) < 1e6), \"Solution should be bounded\"\nprint(\"\\nAll tests passed!\")",
+    "testCases": [
+      {
+        "input": "bdf2_system(van_der_pol, van_der_pol_jac, 0, [2,0], 2000, 1.0)",
+        "expectedOutput": "Stable solution for stiff van der Pol equation",
+        "isHidden": false,
+        "description": "Solve stiff ODE with BDF2"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math402-t7-ex13",
+    "subjectId": "math402",
+    "topicId": "math402-topic-7",
+    "difficulty": 4,
+    "title": "Shooting Method for Boundary Value Problems",
+    "description": "Implement the shooting method to solve a two-point boundary value problem (BVP):\n\ny'' = -y with y(0) = 1, y(π/2) = 0\n\nExact solution: y(x) = cos(x)\n\nThe shooting method:\n1. Convert to IVP: y'' = f(x, y, y'), y(0) = α, y'(0) = s (unknown)\n2. Solve IVP for different values of s\n3. Adjust s until y(π/2) = β (use secant method)\n\nConvert to system: y1 = y, y2 = y'\ndy1/dx = y2\ndy2/dx = -y1\n\nInitial conditions: y1(0) = 1, y2(0) = s\nTarget: y1(π/2) = 0\n\nUse secant method to find s.",
+    "starterCode": "import numpy as np\n\ndef shooting_method(f, x0, xf, alpha, beta, s_guess1, s_guess2, tol=1e-6):\n    \"\"\"\n    Solve BVP using shooting method with secant iteration.\n    \n    Parameters:\n    -----------\n    f : callable\n        RHS of system dy/dx = f(x, y) where y is vector [y, y']\n    x0, xf : float\n        Boundary points\n    alpha, beta : float\n        Boundary values y(x0) = alpha, y(xf) = beta\n    s_guess1, s_guess2 : float\n        Initial guesses for y'(x0)\n    tol : float\n        Tolerance for boundary condition\n    \n    Returns:\n    --------\n    x, y : ndarray\n        Solution arrays\n    \"\"\"\n    # TODO: Implement RK4 to solve IVP\n    # TODO: Use secant method to find correct initial slope\n    pass\n\n# BVP: y'' = -y, y(0) = 1, y(π/2) = 0\ndef bvp_system(x, y):\n    # y[0] = y, y[1] = y'\n    return np.array([y[1], -y[0]])\n\nx, y = shooting_method(bvp_system, 0, np.pi/2, 1, 0, -0.5, -1.5)\nexact = np.cos(x)\nprint(f\"Max error: {np.max(np.abs(y[:,0] - exact)):.6e}\")",
+    "hints": [
+      "Create a helper function solve_ivp(s) that solves the IVP with y'(0) = s and returns y(xf)",
+      "Secant method: s_new = s2 - F(s2)*(s2-s1)/(F(s2)-F(s1)) where F(s) = y(xf) - beta",
+      "Iterate until |F(s)| < tol",
+      "Use RK4 to solve the system from x0 to xf"
+    ],
+    "solution": "import numpy as np\n\ndef rk4_system(f, x0, y0, xf, h):\n    \"\"\"Solve system using RK4.\"\"\"\n    n_steps = int((xf - x0) / h) + 1\n    x = np.linspace(x0, xf, n_steps)\n    y = np.zeros((n_steps, len(y0)))\n    y[0] = y0\n    \n    for i in range(n_steps - 1):\n        h_step = x[i+1] - x[i]\n        k1 = f(x[i], y[i])\n        k2 = f(x[i] + h_step/2, y[i] + h_step*k1/2)\n        k3 = f(x[i] + h_step/2, y[i] + h_step*k2/2)\n        k4 = f(x[i] + h_step, y[i] + h_step*k3)\n        y[i+1] = y[i] + (h_step/6) * (k1 + 2*k2 + 2*k3 + k4)\n    \n    return x, y\n\ndef shooting_method(f, x0, xf, alpha, beta, s_guess1, s_guess2, tol=1e-6):\n    \"\"\"\n    Solve BVP using shooting method with secant iteration.\n    \n    Parameters:\n    -----------\n    f : callable\n        RHS of system dy/dx = f(x, y) where y is vector [y, y']\n    x0, xf : float\n        Boundary points\n    alpha, beta : float\n        Boundary values y(x0) = alpha, y(xf) = beta\n    s_guess1, s_guess2 : float\n        Initial guesses for y'(x0)\n    tol : float\n        Tolerance for boundary condition\n    \n    Returns:\n    --------\n    x, y : ndarray\n        Solution arrays\n    \"\"\"\n    def solve_ivp(s):\n        \"\"\"Solve IVP with initial slope s.\"\"\"\n        y0 = np.array([alpha, s])\n        x, y = rk4_system(f, x0, y0, xf, 0.01)\n        return x, y, y[-1, 0]  # Return final y value\n    \n    # Initial evaluations\n    _, _, F1 = solve_ivp(s_guess1)\n    _, _, F2 = solve_ivp(s_guess2)\n    F1 -= beta\n    F2 -= beta\n    \n    s1, s2 = s_guess1, s_guess2\n    \n    # Secant method iteration\n    for iteration in range(50):\n        if abs(F2) < tol:\n            break\n        \n        # Secant update\n        s_new = s2 - F2 * (s2 - s1) / (F2 - F1)\n        \n        # Evaluate at new point\n        _, _, F_new = solve_ivp(s_new)\n        F_new -= beta\n        \n        # Update for next iteration\n        s1, F1 = s2, F2\n        s2, F2 = s_new, F_new\n    \n    # Final solution with converged slope\n    x, y, _ = solve_ivp(s2)\n    return x, y\n\n# BVP: y'' = -y, y(0) = 1, y(π/2) = 0\n# Exact solution: y(x) = cos(x)\ndef bvp_system(x, y):\n    # y[0] = y, y[1] = y'\n    return np.array([y[1], -y[0]])\n\nprint(\"Shooting Method for BVP:\")\nx, y = shooting_method(bvp_system, 0, np.pi/2, 1, 0, -0.5, -1.5)\nexact = np.cos(x)\n\nprint(f\"Initial condition: y(0) = {y[0,0]:.6f}\")\nprint(f\"Final value: y(π/2) = {y[-1,0]:.6f} (target: 0.0)\")\nprint(f\"Max error: {np.max(np.abs(y[:,0] - exact)):.6e}\")\n\nassert abs(y[-1,0]) < 1e-5, \"Should satisfy boundary condition\"\nassert np.max(np.abs(y[:,0] - exact)) < 1e-4, \"Should match exact solution\"\nprint(\"\\nAll tests passed!\")",
+    "testCases": [
+      {
+        "input": "shooting_method(bvp_system, 0, π/2, 1, 0, -0.5, -1.5)",
+        "expectedOutput": "Solution satisfies both boundary conditions",
+        "isHidden": false,
+        "description": "Solve BVP with shooting method"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math402-t7-ex14",
+    "subjectId": "math402",
+    "topicId": "math402-topic-7",
+    "difficulty": 4,
+    "title": "Finite Difference Method for BVPs",
+    "description": "Implement the finite difference method to solve the boundary value problem:\n\ny'' + p(x)y' + q(x)y = r(x) with y(a) = α, y(b) = β\n\nDiscretize using central differences:\ny''_i ≈ (y_{i+1} - 2y_i + y_{i-1})/h²\ny'_i ≈ (y_{i+1} - y_{i-1})/(2h)\n\nThis gives a tridiagonal system Ay = b.\n\nSolve: y'' - 4y = -4x with y(0) = 0, y(1) = 0 over [0, 1] with n=20 points.\nExact: y(x) = x - sinh(2x)/sinh(2)",
+    "starterCode": "import numpy as np\nfrom numpy.linalg import solve\n\ndef finite_difference_bvp(p, q, r, a, b, alpha, beta, n):\n    \"\"\"\n    Solve linear BVP using finite difference method.\n    \n    Solves: y'' + p(x)y' + q(x)y = r(x)\n    with: y(a) = alpha, y(b) = beta\n    \n    Parameters:\n    -----------\n    p, q, r : callable\n        Coefficient functions\n    a, b : float\n        Interval endpoints\n    alpha, beta : float\n        Boundary values\n    n : int\n        Number of interior points\n    \n    Returns:\n    --------\n    x, y : ndarray\n        Solution arrays\n    \"\"\"\n    # TODO: Set up grid\n    # TODO: Build tridiagonal matrix A\n    # TODO: Build RHS vector b\n    # TODO: Solve system and include boundary values\n    pass\n\n# Test: y'' - 4y = -4x, y(0) = 0, y(1) = 0\np = lambda x: 0\nq = lambda x: -4\nr = lambda x: -4*x\n\nx, y = finite_difference_bvp(p, q, r, 0, 1, 0, 0, 20)\nexact = lambda x: x - np.sinh(2*x)/np.sinh(2)\nprint(f\"Max error: {np.max(np.abs(y - exact(x))):.6e}\")",
+    "hints": [
+      "Create grid: h = (b-a)/(n+1), x = np.linspace(a, b, n+2)",
+      "Interior points: x_i for i = 1, ..., n (x_0 = a, x_{n+1} = b)",
+      "For each interior point i: [1/h² - p(x_i)/(2h)]y_{i-1} + [-2/h² + q(x_i)]y_i + [1/h² + p(x_i)/(2h)]y_{i+1} = r(x_i)",
+      "Adjust first and last equations to include boundary conditions"
+    ],
+    "solution": "import numpy as np\nfrom numpy.linalg import solve\n\ndef finite_difference_bvp(p, q, r, a, b, alpha, beta, n):\n    \"\"\"\n    Solve linear BVP using finite difference method.\n    \n    Solves: y'' + p(x)y' + q(x)y = r(x)\n    with: y(a) = alpha, y(b) = beta\n    \n    Parameters:\n    -----------\n    p, q, r : callable\n        Coefficient functions\n    a, b : float\n        Interval endpoints\n    alpha, beta : float\n        Boundary values\n    n : int\n        Number of interior points\n    \n    Returns:\n    --------\n    x, y : ndarray\n        Solution arrays\n    \"\"\"\n    # Setup grid\n    h = (b - a) / (n + 1)\n    x = np.linspace(a, b, n + 2)\n    \n    # Build tridiagonal matrix A and RHS vector b\n    A = np.zeros((n, n))\n    b_vec = np.zeros(n)\n    \n    for i in range(n):\n        x_i = x[i + 1]  # Interior point (x[0] and x[n+1] are boundaries)\n        \n        # Coefficients for finite difference\n        # y''_i = (y_{i-1} - 2y_i + y_{i+1})/h^2\n        # y'_i = (y_{i+1} - y_{i-1})/(2h)\n        \n        # Coefficient of y_{i-1}\n        c_left = 1/h**2 - p(x_i)/(2*h)\n        # Coefficient of y_i\n        c_center = -2/h**2 + q(x_i)\n        # Coefficient of y_{i+1}\n        c_right = 1/h**2 + p(x_i)/(2*h)\n        \n        # Fill matrix\n        A[i, i] = c_center\n        if i > 0:\n            A[i, i-1] = c_left\n        if i < n - 1:\n            A[i, i+1] = c_right\n        \n        # RHS\n        b_vec[i] = r(x_i)\n        \n        # Boundary adjustments\n        if i == 0:\n            b_vec[i] -= c_left * alpha\n        if i == n - 1:\n            b_vec[i] -= c_right * beta\n    \n    # Solve tridiagonal system\n    y_interior = solve(A, b_vec)\n    \n    # Combine with boundary values\n    y = np.zeros(n + 2)\n    y[0] = alpha\n    y[1:n+1] = y_interior\n    y[n+1] = beta\n    \n    return x, y\n\n# Test: y'' - 4y = -4x, y(0) = 0, y(1) = 0\n# Exact: y(x) = x - sinh(2x)/sinh(2)\np = lambda x: 0\nq = lambda x: -4\nr = lambda x: -4*x\n\nprint(\"Finite Difference Method for BVP:\")\nx, y = finite_difference_bvp(p, q, r, 0, 1, 0, 0, 20)\nexact = lambda x: x - np.sinh(2*x)/np.sinh(2)\n\nprint(f\"Grid points: {len(x)}\")\nprint(f\"Boundary values: y(0)={y[0]:.6f}, y(1)={y[-1]:.6f}\")\nprint(f\"Max error: {np.max(np.abs(y - exact(x))):.6e}\")\n\nassert abs(y[0]) < 1e-10, \"Left boundary should be 0\"\nassert abs(y[-1]) < 1e-10, \"Right boundary should be 0\"\nassert np.max(np.abs(y - exact(x))) < 1e-4, \"Should match exact solution\"\nprint(\"\\nAll tests passed!\")",
+    "testCases": [
+      {
+        "input": "finite_difference_bvp(lambda x: 0, lambda x: -4, lambda x: -4*x, 0, 1, 0, 0, 20)",
+        "expectedOutput": "Accurate solution with error < 1e-4",
+        "isHidden": false,
+        "description": "Solve BVP with finite differences"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math402-t7-ex15",
+    "subjectId": "math402",
+    "topicId": "math402-topic-7",
+    "difficulty": 3,
+    "title": "Stiffness Detection in ODEs",
+    "description": "Implement a stiffness detector for ODEs based on eigenvalue analysis of the Jacobian matrix.\n\nAn ODE system is stiff if the ratio of largest to smallest (in magnitude) eigenvalue of the Jacobian is very large (stiffness ratio > 1000).\n\nFor dy/dt = f(t, y), compute J = ∂f/∂y and find eigenvalues.\nStiffness ratio = max|λ|/min|λ|\n\nTest on:\n1. Non-stiff: dy/dt = -y (ratio ≈ 1)\n2. Moderately stiff: dy/dt = -10y (ratio ≈ 1)\n3. Very stiff: dy/dt = -1000y (ratio ≈ 1 for scalar, but causes numerical issues)\n\nFor systems, test the stiff van der Pol with μ=1000.",
+    "starterCode": "import numpy as np\nfrom numpy.linalg import eig\n\ndef detect_stiffness(jac, t, y, threshold=1000):\n    \"\"\"\n    Detect if ODE is stiff by analyzing Jacobian eigenvalues.\n    \n    Parameters:\n    -----------\n    jac : callable\n        Jacobian function jac(t, y) returning matrix\n    t : float\n        Current time\n    y : ndarray\n        Current state (scalar or vector)\n    threshold : float\n        Stiffness ratio threshold\n    \n    Returns:\n    --------\n    is_stiff : bool\n        True if stiff\n    ratio : float\n        Stiffness ratio\n    eigenvalues : ndarray\n        Eigenvalues of Jacobian\n    \"\"\"\n    # TODO: Compute Jacobian at (t, y)\n    # TODO: Find eigenvalues\n    # TODO: Compute stiffness ratio\n    pass\n\n# Test cases\ndef test_stiffness_detection():\n    # Non-stiff\n    jac1 = lambda t, y: np.array([[-1.0]])\n    is_stiff, ratio, eigs = detect_stiffness(jac1, 0, np.array([1.0]))\n    print(f\"dy/dt = -y: stiff={is_stiff}, ratio={ratio:.2f}\")\n    \n    # Very stiff (van der Pol)\n    def vdp_jac(t, y, mu=1000):\n        return np.array([[0, 1], [-2*mu*y[0]*y[1] - 1, mu*(1 - y[0]**2)]])\n    \n    y_vdp = np.array([2.0, 0.0])\n    is_stiff, ratio, eigs = detect_stiffness(vdp_jac, 0, y_vdp)\n    print(f\"Van der Pol (μ=1000): stiff={is_stiff}, ratio={ratio:.2f}\")\n\ntest_stiffness_detection()",
+    "hints": [
+      "Compute J = jac(t, y), ensuring y is properly shaped",
+      "Use np.linalg.eig(J) to get eigenvalues",
+      "Compute magnitudes: abs_eigs = np.abs(eigenvalues)",
+      "Stiffness ratio = max(abs_eigs) / min(abs_eigs) if min > 0"
+    ],
+    "solution": "import numpy as np\nfrom numpy.linalg import eig\n\ndef detect_stiffness(jac, t, y, threshold=1000):\n    \"\"\"\n    Detect if ODE is stiff by analyzing Jacobian eigenvalues.\n    \n    Parameters:\n    -----------\n    jac : callable\n        Jacobian function jac(t, y) returning matrix\n    t : float\n        Current time\n    y : ndarray\n        Current state (scalar or vector)\n    threshold : float\n        Stiffness ratio threshold\n    \n    Returns:\n    --------\n    is_stiff : bool\n        True if stiff\n    ratio : float\n        Stiffness ratio\n    eigenvalues : ndarray\n        Eigenvalues of Jacobian\n    \"\"\"\n    # Ensure y is array\n    if np.isscalar(y):\n        y = np.array([y])\n    \n    # Compute Jacobian\n    J = jac(t, y)\n    \n    # Ensure J is 2D\n    if J.ndim == 0:\n        J = np.array([[J]])\n    elif J.ndim == 1:\n        J = J.reshape(1, -1)\n    \n    # Compute eigenvalues\n    eigenvalues, _ = eig(J)\n    \n    # Compute stiffness ratio\n    abs_eigs = np.abs(eigenvalues)\n    \n    # Filter out zero eigenvalues\n    nonzero_eigs = abs_eigs[abs_eigs > 1e-10]\n    \n    if len(nonzero_eigs) == 0:\n        ratio = 1.0\n    else:\n        ratio = np.max(nonzero_eigs) / np.min(nonzero_eigs)\n    \n    is_stiff = ratio > threshold\n    \n    return is_stiff, ratio, eigenvalues\n\ndef test_stiffness_detection():\n    print(\"Stiffness Detection:\\n\")\n    \n    # Non-stiff\n    print(\"1. Non-stiff system:\")\n    jac1 = lambda t, y: np.array([[-1.0]])\n    is_stiff, ratio, eigs = detect_stiffness(jac1, 0, np.array([1.0]))\n    print(f\"   dy/dt = -y\")\n    print(f\"   Eigenvalues: {eigs}\")\n    print(f\"   Stiffness ratio: {ratio:.2f}\")\n    print(f\"   Is stiff: {is_stiff}\\n\")\n    \n    # Moderate\n    print(\"2. Moderate system:\")\n    jac2 = lambda t, y: np.array([[-100.0]])\n    is_stiff, ratio, eigs = detect_stiffness(jac2, 0, np.array([1.0]))\n    print(f\"   dy/dt = -100y\")\n    print(f\"   Eigenvalues: {eigs}\")\n    print(f\"   Stiffness ratio: {ratio:.2f}\")\n    print(f\"   Is stiff: {is_stiff}\\n\")\n    \n    # Very stiff (van der Pol)\n    print(\"3. Very stiff system (Van der Pol, μ=1000):\")\n    def vdp_jac(t, y, mu=1000):\n        return np.array([[0, 1], [-2*mu*y[0]*y[1] - 1, mu*(1 - y[0]**2)]])\n    \n    y_vdp = np.array([2.0, 0.0])\n    is_stiff, ratio, eigs = detect_stiffness(vdp_jac, 0, y_vdp)\n    print(f\"   Eigenvalues: {eigs}\")\n    print(f\"   Stiffness ratio: {ratio:.2f}\")\n    print(f\"   Is stiff: {is_stiff}\")\n    \n    assert is_stiff, \"Van der Pol with μ=1000 should be detected as stiff\"\n    assert ratio > 1000, \"Stiffness ratio should be large\"\n\ntest_stiffness_detection()\nprint(\"\\nAll tests passed!\")",
+    "testCases": [
+      {
+        "input": "detect_stiffness(vdp_jacobian, 0, [2.0, 0.0]) with μ=1000",
+        "expectedOutput": "is_stiff=True, ratio > 1000",
+        "isHidden": false,
+        "description": "Detect stiffness in van der Pol equation"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math402-t7-ex16",
+    "subjectId": "math402",
+    "topicId": "math402-topic-7",
+    "difficulty": 5,
+    "title": "Stability Region Analysis for ODE Methods",
+    "description": "Analyze and visualize the stability regions of different ODE methods by applying them to the test equation dy/dt = λy where λ is complex.\n\nFor a method with update y_{n+1} = R(z)y_n where z = hλ, the method is stable if |R(z)| ≤ 1.\n\nImplement:\n1. Compute R(z) for Euler, RK4, and implicit Euler\n2. For each method, create a grid of z = hλ values in the complex plane\n3. Compute |R(z)| and determine stability region\n4. Identify A-stability (stable for all Re(λ) < 0)\n\nStability functions:\n- Euler: R(z) = 1 + z\n- RK4: R(z) = 1 + z + z²/2 + z³/6 + z⁴/24\n- Implicit Euler: R(z) = 1/(1 - z)\n\nCreate stability region data for Re(z) ∈ [-4, 2], Im(z) ∈ [-3, 3].",
+    "starterCode": "import numpy as np\n\ndef stability_function(method_name, z):\n    \"\"\"\n    Compute stability function R(z) for given method.\n    \n    Parameters:\n    -----------\n    method_name : str\n        'euler', 'rk4', or 'implicit_euler'\n    z : complex or ndarray\n        Complex value(s) z = h*lambda\n    \n    Returns:\n    --------\n    R : complex or ndarray\n        Stability function value(s)\n    \"\"\"\n    # TODO: Implement R(z) for each method\n    pass\n\ndef compute_stability_region(method_name, re_range=(-4, 2), im_range=(-3, 3), n_points=200):\n    \"\"\"\n    Compute stability region for ODE method.\n    \n    Parameters:\n    -----------\n    method_name : str\n        Method name\n    re_range, im_range : tuple\n        Ranges for real and imaginary parts\n    n_points : int\n        Grid resolution\n    \n    Returns:\n    --------\n    re_grid, im_grid : ndarray\n        Real and imaginary coordinate grids\n    is_stable : ndarray (boolean)\n        True where |R(z)| <= 1\n    \"\"\"\n    # TODO: Create grid of z values\n    # TODO: Compute R(z) on grid\n    # TODO: Check |R(z)| <= 1\n    pass\n\n# Analyze stability\nfor method in ['euler', 'rk4', 'implicit_euler']:\n    re_grid, im_grid, is_stable = compute_stability_region(method)\n    stable_area = np.sum(is_stable) / is_stable.size\n    print(f\"{method}: {stable_area*100:.1f}% of test region is stable\")",
+    "hints": [
+      "For Euler: R(z) = 1 + z",
+      "For RK4: R(z) = 1 + z + z²/2! + z³/3! + z⁴/4!",
+      "For Implicit Euler: R(z) = 1/(1 - z)",
+      "Create complex grid: re = np.linspace(...), im = np.linspace(...), then z = re[:, None] + 1j*im[None, :]",
+      "Stability condition: np.abs(R(z)) <= 1"
+    ],
+    "solution": "import numpy as np\n\ndef stability_function(method_name, z):\n    \"\"\"\n    Compute stability function R(z) for given method.\n    \n    Parameters:\n    -----------\n    method_name : str\n        'euler', 'rk4', or 'implicit_euler'\n    z : complex or ndarray\n        Complex value(s) z = h*lambda\n    \n    Returns:\n    --------\n    R : complex or ndarray\n        Stability function value(s)\n    \"\"\"\n    if method_name == 'euler':\n        return 1 + z\n    elif method_name == 'rk4':\n        return 1 + z + z**2/2 + z**3/6 + z**4/24\n    elif method_name == 'implicit_euler':\n        return 1 / (1 - z)\n    else:\n        raise ValueError(f\"Unknown method: {method_name}\")\n\ndef compute_stability_region(method_name, re_range=(-4, 2), im_range=(-3, 3), n_points=200):\n    \"\"\"\n    Compute stability region for ODE method.\n    \n    Parameters:\n    -----------\n    method_name : str\n        Method name\n    re_range, im_range : tuple\n        Ranges for real and imaginary parts\n    n_points : int\n        Grid resolution\n    \n    Returns:\n    --------\n    re_grid, im_grid : ndarray\n        Real and imaginary coordinate grids\n    is_stable : ndarray (boolean)\n        True where |R(z)| <= 1\n    \"\"\"\n    # Create grid of z values in complex plane\n    re = np.linspace(re_range[0], re_range[1], n_points)\n    im = np.linspace(im_range[0], im_range[1], n_points)\n    \n    # Create meshgrid\n    re_grid, im_grid = np.meshgrid(re, im)\n    z = re_grid + 1j * im_grid\n    \n    # Compute stability function\n    R = stability_function(method_name, z)\n    \n    # Stability condition: |R(z)| <= 1\n    is_stable = np.abs(R) <= 1.0\n    \n    return re_grid, im_grid, is_stable\n\ndef analyze_a_stability(method_name):\n    \"\"\"\n    Check if method is A-stable (stable for all Re(z) < 0).\n    \"\"\"\n    # Test on left half-plane\n    re_grid, im_grid, is_stable = compute_stability_region(method_name, re_range=(-10, 0))\n    \n    # Check if entire left half-plane is stable\n    left_half = re_grid < 0\n    is_a_stable = np.all(is_stable[left_half])\n    \n    return is_a_stable\n\n# Analyze stability regions\nprint(\"Stability Region Analysis:\\n\")\nprint(\"=\"*60)\n\nfor method in ['euler', 'rk4', 'implicit_euler']:\n    print(f\"\\n{method.upper().replace('_', ' ')}:\")\n    \n    re_grid, im_grid, is_stable = compute_stability_region(method)\n    stable_area = np.sum(is_stable) / is_stable.size\n    \n    print(f\"  Stable region: {stable_area*100:.1f}% of test domain\")\n    \n    # Check A-stability\n    is_a_stable = analyze_a_stability(method)\n    print(f\"  A-stable: {is_a_stable}\")\n    \n    # Additional analysis\n    if method == 'euler':\n        # Euler: stable in disk |1 + z| <= 1\n        # Center at z = -1, radius = 1\n        print(f\"  Expected: Stable in disk centered at z=-1 with radius 1\")\n    elif method == 'implicit_euler':\n        # Implicit Euler: stable for Re(z) < 0 (A-stable)\n        print(f\"  Expected: A-stable (stable for all Re(z) < 0)\")\n    elif method == 'rk4':\n        # RK4: larger stability region than Euler, but not A-stable\n        print(f\"  Expected: Large stability region, not A-stable\")\n\nprint(\"\\n\" + \"=\"*60)\n\n# Verify implicit Euler is A-stable\nassert analyze_a_stability('implicit_euler'), \"Implicit Euler should be A-stable\"\nassert not analyze_a_stability('euler'), \"Forward Euler should not be A-stable\"\nprint(\"\\nAll tests passed!\")",
+    "testCases": [
+      {
+        "input": "compute_stability_region('implicit_euler')",
+        "expectedOutput": "A-stable: entire left half-plane is stable",
+        "isHidden": false,
+        "description": "Verify A-stability of implicit Euler"
       }
     ],
     "language": "python"

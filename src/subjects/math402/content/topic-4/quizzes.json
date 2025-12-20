@@ -33,30 +33,25 @@
       },
       {
         "id": "q3",
+        "type": "code_output",
+        "prompt": "What is the output of this centered difference approximation?",
+        "codeSnippet": "import math\nf = lambda x: x**2\nx = 2.0\nh = 0.1\ndf_approx = (f(x + h) - f(x - h)) / (2 * h)\nprint(f'{df_approx:.1f}')",
+        "correctAnswer": "4.0",
+        "explanation": "Centered difference for f(x)=x² at x=2: (f(2.1)-f(1.9))/(2·0.1) = (4.41-3.61)/0.2 = 0.8/0.2 = 4.0. Exact derivative is 2x = 4."
+      },
+      {
+        "id": "q4",
         "type": "true_false",
         "prompt": "The trapezoidal rule is exact for linear functions.",
         "correctAnswer": true,
         "explanation": "True. The trapezoidal rule integrates by approximating the function as a line segment, so it exactly integrates any linear function f(x) = ax + b."
       },
       {
-        "id": "q4",
-        "type": "multiple_choice",
-        "prompt": "Simpson's rule uses what type of interpolation?",
-        "options": [
-          "Linear",
-          "Quadratic",
-          "Cubic",
-          "Exponential"
-        ],
-        "correctAnswer": 1,
-        "explanation": "Simpson's rule approximates the integrand using quadratic polynomials through three points, integrating exactly all polynomials of degree ≤ 2."
-      },
-      {
         "id": "q5",
         "type": "fill_blank",
-        "prompt": "The ____ rule divides the interval into equal subintervals and approximates the area using trapezoids.",
-        "correctAnswer": "trapezoidal",
-        "explanation": "The trapezoidal rule (or composite trapezoidal rule) sums the areas of trapezoids to approximate the integral."
+        "prompt": "Simpson's rule uses ____ interpolation to approximate the integrand.",
+        "correctAnswer": "quadratic",
+        "explanation": "Simpson's rule approximates the integrand using quadratic polynomials through three points, integrating exactly all polynomials of degree ≤ 2."
       }
     ]
   },
@@ -81,6 +76,14 @@
       },
       {
         "id": "q2",
+        "type": "code_output",
+        "prompt": "What does this trapezoidal rule integration output?",
+        "codeSnippet": "f = lambda x: x**2\na, b = 0, 2\nn = 4\nh = (b - a) / n\nintegral = (f(a) + f(b)) / 2\nfor i in range(1, n):\n    integral += f(a + i * h)\nintegral *= h\nprint(f'{integral:.2f}')",
+        "correctAnswer": "2.75",
+        "explanation": "Trapezoidal rule with n=4: h=0.5, points at 0,0.5,1,1.5,2. Integral = 0.5·[(0+4)/2 + 0.25 + 1 + 2.25] = 0.5·5.5 = 2.75. Exact: ∫₀²x²dx = 8/3 ≈ 2.67."
+      },
+      {
+        "id": "q3",
         "type": "multiple_choice",
         "prompt": "Richardson extrapolation improves the order of accuracy by:",
         "options": [
@@ -93,36 +96,17 @@
         "explanation": "Richardson extrapolation combines results at different h values (e.g., h and h/2) with appropriate weights to eliminate the leading error term, increasing accuracy."
       },
       {
-        "id": "q3",
+        "id": "q4",
         "type": "true_false",
         "prompt": "Simpson's rule has error O(h^4) per panel despite using only quadratic interpolation.",
         "correctAnswer": true,
         "explanation": "True. Simpson's rule is exact for cubics (not just quadratics) due to symmetry, giving local error O(h^5) and global error O(h^4)."
       },
       {
-        "id": "q4",
-        "type": "multiple_choice",
-        "prompt": "When computing numerical derivatives, making h too small can:",
-        "options": [
-          "Increase truncation error",
-          "Increase roundoff error",
-          "Improve accuracy indefinitely",
-          "Have no effect"
-        ],
-        "correctAnswer": 1,
-        "explanation": "For very small h, the subtraction f(x+h) - f(x) suffers catastrophic cancellation, amplifying roundoff error. There's an optimal h balancing truncation and roundoff."
-      },
-      {
         "id": "q5",
-        "type": "multiple_choice",
-        "prompt": "Romberg integration uses Richardson extrapolation on:",
-        "options": [
-          "Simpson's rule",
-          "Gaussian quadrature",
-          "Trapezoidal rule",
-          "Midpoint rule"
-        ],
-        "correctAnswer": 2,
+        "type": "fill_blank",
+        "prompt": "Romberg integration applies Richardson extrapolation to the ____ rule.",
+        "correctAnswer": "trapezoidal",
         "explanation": "Romberg integration applies Richardson extrapolation to the trapezoidal rule with successively halved step sizes, building a triangular table of increasingly accurate approximations."
       }
     ]
@@ -161,35 +145,24 @@
       },
       {
         "id": "q3",
+        "type": "code_output",
+        "prompt": "What does this Simpson's rule implementation output?",
+        "codeSnippet": "import math\nf = lambda x: math.sin(x)\na, b = 0, math.pi\nn = 2  # 2 subintervals, 3 points\nh = (b - a) / n\nintegral = f(a) + f(b)\nfor i in range(1, n, 2):\n    integral += 4 * f(a + i * h)\nfor i in range(2, n, 2):\n    integral += 2 * f(a + i * h)\nintegral *= h / 3\nprint(f'{integral:.4f}')",
+        "correctAnswer": "2.0944",
+        "explanation": "Simpson's rule: h=π/2. Points: 0,π/2,π. Integral = (π/6)·[sin(0) + 4sin(π/2) + sin(π)] = (π/6)·[0+4+0] = 2π/3 ≈ 2.0944. Exact: ∫₀^π sin(x)dx = 2."
+      },
+      {
+        "id": "q4",
         "type": "true_false",
         "prompt": "Adaptive quadrature methods recursively subdivide intervals where the estimated error exceeds a tolerance.",
         "correctAnswer": true,
         "explanation": "True. Adaptive methods like adaptive Simpson's estimate local error and refine the mesh only where needed, achieving target accuracy efficiently even for irregular integrands."
       },
       {
-        "id": "q4",
-        "type": "multiple_choice",
-        "prompt": "For the Euler-Maclaurin formula, the trapezoidal rule has asymptotic error expansion in powers of:",
-        "options": [
-          "h",
-          "h^2",
-          "h and h^2",
-          "All powers of h"
-        ],
-        "correctAnswer": 1,
-        "explanation": "The Euler-Maclaurin formula shows that trapezoidal rule error has asymptotic expansion in even powers: E = c_2h^2 + c_4h^4 + ... This enables Richardson extrapolation."
-      },
-      {
         "id": "q5",
-        "type": "multiple_choice",
-        "prompt": "Which statement about Gaussian vs Newton-Cotes quadrature is correct?",
-        "options": [
-          "Gaussian quadrature uses predetermined equally-spaced nodes",
-          "Newton-Cotes has higher degree of exactness for given n",
-          "Gaussian quadrature optimizes both nodes and weights for maximum exactness",
-          "They perform identically for polynomial integrands"
-        ],
-        "correctAnswer": 2,
+        "type": "fill_blank",
+        "prompt": "Gaussian quadrature optimizes both ____ and weights for maximum degree of exactness.",
+        "correctAnswer": "nodes",
         "explanation": "Gaussian quadrature chooses optimal (non-equally-spaced) nodes as zeros of orthogonal polynomials, plus optimal weights, achieving degree 2n-1 exactness vs n-1 for Newton-Cotes with n points."
       }
     ]

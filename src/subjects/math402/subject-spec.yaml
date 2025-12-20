@@ -1,0 +1,278 @@
+# MATH402: Numerical Methods - Subject Specification
+# This spec guides content creation for an advanced applied mathematics course
+# focusing on computational algorithms for solving mathematical problems.
+
+# ==============================================================================
+# SUBJECT IDENTITY
+# ==============================================================================
+
+id: math402
+title: Numerical Methods
+category: math
+
+role:
+  level: advanced
+  transformation: >
+    From "I know mathematical concepts analytically" to "I can implement stable,
+    efficient algorithms to solve mathematical problems computationally, understand
+    their convergence properties, and analyze their error characteristics."
+
+# ==============================================================================
+# CURRICULUM
+# ==============================================================================
+
+curriculum:
+  subtopic_word_target: 1000
+
+  prerequisite_knowledge:
+    - Calculus I and II (derivatives, integrals, Taylor series)
+    - Linear Algebra (matrix operations, eigenvalues, vector spaces)
+    - Ordinary Differential Equations (basic ODEs, initial value problems)
+    - Programming experience (ability to implement algorithms)
+    - Basic understanding of computer arithmetic and floating-point numbers
+
+  essential_concepts:
+    - Floating-point arithmetic and error analysis
+    - Root-finding algorithms (bisection, Newton, secant methods)
+    - Polynomial interpolation and approximation theory
+    - Numerical differentiation and integration
+    - Direct methods for linear systems (Gaussian elimination, LU, QR)
+    - Iterative methods for linear systems (Jacobi, Gauss-Seidel, conjugate gradient)
+    - Numerical solution of ordinary differential equations
+    - Stability and convergence analysis
+
+  out_of_scope:
+    - Partial differential equations (separate graduate course)
+    - Monte Carlo methods and stochastic simulation
+    - Optimization algorithms beyond basic concepts
+    - Parallel and distributed computing implementations
+    - Finite element methods
+
+# ==============================================================================
+# PEDAGOGICAL APPROACH
+# ==============================================================================
+
+pedagogy:
+  knowledge_type: applied
+
+  mastery_indicators:
+    - Implements numerical algorithms correctly in Python
+    - Analyzes convergence rates and error bounds for algorithms
+    - Chooses appropriate methods based on problem characteristics
+    - Identifies and avoids numerical instabilities
+    - Validates numerical solutions through error analysis
+    - Applies condition number analysis to assess problem sensitivity
+
+  common_struggles:
+    - Confusing truncation error with round-off error
+    - Ignoring numerical stability in algorithm implementation
+    - Choosing inappropriate step sizes or tolerances
+    - Misunderstanding convergence rate notation (O(h) vs O(h^2))
+    - Applying methods outside their convergence regions
+    - Overlooking the impact of condition numbers on accuracy
+
+# ==============================================================================
+# CONTENT STANDARDS
+# ==============================================================================
+
+content:
+  subtopic_requirements:
+    - Every algorithm should include a complete Python implementation
+    - Error analysis with both theoretical bounds and practical examples
+    - Convergence proofs or explanations for each iterative method
+    - Worked examples showing step-by-step calculations
+    - Comparison with alternative methods where applicable
+    - Discussion of when to use and when to avoid each method
+
+  conventions:
+    - Python 3.10+ with NumPy for all implementations
+    - LaTeX for mathematical expressions
+    - Consistent notation for errors (ε for machine epsilon, h for step size)
+    - Big-O notation for complexity and convergence analysis
+    - IEEE 754 double precision as the default floating-point format
+
+# ==============================================================================
+# ASSESSMENT PHILOSOPHY
+# ==============================================================================
+
+assessment:
+  philosophy: >
+    Numerical methods combines mathematical theory with practical implementation.
+    Assessments should test both: ability to analyze algorithms theoretically
+    (convergence, stability, error bounds) and ability to implement and apply
+    them correctly. Students should demonstrate understanding of when methods
+    work and when they fail.
+
+  measures:
+    - Correct implementation of numerical algorithms
+    - Error analysis and convergence rate determination
+    - Selection of appropriate methods for given problems
+    - Understanding of numerical stability concepts
+    - Ability to diagnose and fix numerical issues
+
+  anti_patterns:
+    - Memorization of formulas without understanding derivation
+    - Implementing algorithms without testing against known solutions
+    - Ignoring error analysis in practical applications
+    - Treating all problems as equally well-conditioned
+
+# ==============================================================================
+# GRADING THRESHOLDS
+# ==============================================================================
+
+grading:
+  passing_score: 70
+
+  thresholds:
+    exercises: 70
+    quizzes: 65
+    exams: 65
+
+  rationale: >
+    Standard passing threshold as this is an applied course where implementation
+    correctness is verifiable. Quizzes test conceptual understanding which can
+    be nuanced, so slightly lower threshold there. Exams allow partial credit
+    for correct approaches even with computational errors.
+
+# ==============================================================================
+# EXERCISE SPECIFICATIONS
+# ==============================================================================
+
+exercises:
+  rationale: >
+    Numerical methods is learned by doing. Each exercise should require
+    implementing an algorithm, analyzing its behavior, or solving a computational
+    problem. The mix of coding and written exercises reflects the dual nature
+    of the subject: implementation skills and theoretical understanding.
+
+  types:
+    coding_with_tests: "60%"
+    coding_ai_evaluated: "20%"
+    written: "20%"
+    justification: >
+      Most exercises are coding with tests for immediate feedback on correctness.
+      Some open-ended coding problems (algorithm design, optimization) need AI
+      evaluation. Written exercises cover error analysis and theoretical questions
+      that require mathematical derivation.
+
+  per_topic:
+    minimum: 14
+    target: 16
+    maximum: 18
+    justification: >
+      Full base standard. Each topic has substantial algorithmic content that
+      requires practice. The mix of implementation and analysis exercises provides
+      comprehensive coverage of each numerical method.
+
+  difficulty_distribution:
+    1: 2
+    2: 4
+    3: 5
+    4: 3
+    5: 2
+    justification: >
+      Slightly weighted toward middle difficulties. Basic implementation exercises
+      at difficulty 1-2, standard applications at 3, complex analysis and edge
+      cases at 4-5. Fewer difficulty-5 since numerical methods already has high
+      conceptual overhead.
+
+# ==============================================================================
+# QUIZ SPECIFICATIONS
+# ==============================================================================
+
+quizzes:
+  rationale: >
+    Quizzes test conceptual understanding of algorithms and error analysis
+    without requiring full implementations. They verify students understand
+    convergence properties, stability concepts, and can trace algorithm behavior.
+
+  per_topic:
+    count: 3
+    questions_each: 5
+    justification: >
+      Standard base count. Three quizzes per topic allow progression from
+      basic definitions to application to mastery of edge cases and error analysis.
+
+  question_types:
+    multiple_choice: "50%"
+    true_false: "15%"
+    fill_blank: "15%"
+    code_output: "20%"
+    coding: "0%"
+    written: "0%"
+    justification: >
+      Heavy on multiple choice for testing conceptual understanding of convergence,
+      stability, and method properties. Code output for tracing algorithm steps.
+      Fill-blank for formulas and error expressions. No full coding in quizzes.
+
+# ==============================================================================
+# EXAM SPECIFICATIONS
+# ==============================================================================
+
+exams:
+  rationale: >
+    Exams test comprehensive understanding including algorithm derivation,
+    error analysis, method selection, and short implementations. Time pressure
+    tests fluency with fundamental techniques.
+
+  midterm:
+    questions:
+      minimum: 24
+      target: 26
+      maximum: 30
+    duration_minutes: 90
+    format: >
+      Mix of conceptual questions (convergence, stability), short derivations
+      (error bounds, Taylor series), algorithm tracing, and brief coding problems.
+      Emphasis on Topics 1-4: error analysis, root-finding, interpolation, integration.
+    coverage: "Topics 1-4"
+
+  final:
+    questions:
+      minimum: 38
+      target: 42
+      maximum: 48
+    duration_minutes: 150
+    format: >
+      Comprehensive coverage of all topics with emphasis on linear algebra methods
+      (Topics 5-6) and ODEs (Topic 7). Includes method comparison questions and
+      multi-step problems requiring integration of concepts.
+    coverage: "All 7 topics, comprehensive"
+    cumulative: true
+
+# ==============================================================================
+# PROJECT SPECIFICATIONS
+# ==============================================================================
+
+projects:
+  required: false
+  count: 0
+  rationale: >
+    As a MATH subject, extensive exercises with implementations serve the role
+    that projects would in a CS subject. The coding exercises provide substantial
+    implementation practice. Full projects are not required.
+
+# ==============================================================================
+# SUBJECT-SPECIFIC RED FLAGS
+# ==============================================================================
+
+red_flags:
+  - Code example that would produce numerically unstable results
+  - Algorithm without discussion of convergence conditions
+  - Missing error bounds or accuracy analysis
+  - Implementation that ignores special cases (zero pivot, convergence failure)
+  - Exercises requiring libraries not covered in the course (scipy.optimize, etc.)
+  - Confusion between O(h) and O(h^2) convergence in explanations
+  - Recommending methods for problems where they don't converge
+
+# ==============================================================================
+# NOTES
+# ==============================================================================
+
+notes: >
+  Numerical Methods bridges pure mathematics and computer science. Content should
+  emphasize both rigorous analysis (error bounds, convergence proofs) and practical
+  implementation (Python code, numerical experiments). Students should finish able
+  to implement fundamental numerical algorithms, analyze their accuracy, and choose
+  appropriate methods for real-world computational problems. All code examples should
+  be complete, runnable, and demonstrate good numerical practices.

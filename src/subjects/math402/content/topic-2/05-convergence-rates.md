@@ -190,11 +190,222 @@ print("Newton's Method on x³ - 2 = 0:")
 compute_convergence_factors(errors)
 ```
 
-## Summary
+## Practical Considerations
 
-Convergence rate analysis:
-- **Determines iteration count** needed for accuracy
-- **Newton typically fastest** for smooth functions
-- **Secant good compromise** when derivatives expensive
-- **Bisection most robust** but slowest
-- **Consider efficiency index** not just convergence order
+### Choosing Based on Convergence Rate
+
+The convergence rate determines how quickly an algorithm approaches the solution:
+
+**Linear Convergence ($\alpha = 1$)**: Each iteration adds roughly a constant number of correct digits. For bisection with $\lambda = 0.5$, each iteration approximately doubles accuracy.
+
+**Quadratic Convergence ($\alpha = 2$)**: The number of correct digits approximately doubles with each iteration. This is why Newton's method can achieve machine precision in very few iterations.
+
+**Superlinear Convergence ($1 < \alpha < 2$)**: The secant method with $\alpha = \phi \approx 1.618$ (golden ratio) provides a middle ground between linear and quadratic convergence.
+
+```python
+def compare_iterations_to_tolerance():
+    """
+    Estimate iterations needed to reach tolerance.
+
+    For linear convergence: n ≈ log(tol/e_0) / log(λ)
+    For quadratic: n ≈ log(log(tol/e_0)) / log(2)
+    """
+    e_0 = 0.1  # Initial error
+    tol = 1e-10
+
+    print("Iterations to reach tolerance 1e-10:")
+    print(f"{'Method':<15} {'Order':<10} {'Estimated Iters':<15}")
+    print("=" * 45)
+
+    # Bisection (linear, λ=0.5)
+    n_bisect = np.ceil(np.log(tol/e_0) / np.log(0.5))
+    print(f"{'Bisection':<15} {'1 (λ=0.5)':<10} {int(n_bisect):<15}")
+
+    # Secant (superlinear, α≈1.618)
+    # Approximate using α^n formula
+    n_secant = np.ceil(np.log(np.log(tol/e_0)) / np.log(1.618))
+    print(f"{'Secant':<15} {'1.618':<10} {int(n_secant):<15}")
+
+    # Newton (quadratic, α=2)
+    n_newton = np.ceil(np.log2(np.log(tol/e_0)))
+    print(f"{'Newton':<15} {'2':<10} {int(n_newton):<15}")
+
+    print("\nNote: These are theoretical estimates; actual iterations may vary")
+
+compare_iterations_to_tolerance()
+```
+
+### Error Analysis
+
+Understanding how errors propagate is crucial for predicting algorithm behavior:
+
+**Error Equation**: For order $\alpha$:
+$$|e_{n+1}| = \lambda |e_n|^\alpha + O(|e_n|^{\alpha+1})$$
+
+This means:
+- **Linear**: Error multiplied by constant factor each iteration
+- **Quadratic**: Error squared each iteration (rapid convergence near solution)
+- **Cubic**: Error cubed (even faster, but requires more function evaluations)
+
+```python
+def analyze_error_propagation():
+    """Visualize error reduction patterns."""
+    import matplotlib.pyplot as plt
+
+    e_0 = 0.1
+    iterations = 10
+
+    # Bisection (linear, λ=0.5)
+    errors_bisect = [e_0 * (0.5)**n for n in range(iterations)]
+
+    # Newton (quadratic, λ=1)
+    errors_newton = [e_0]
+    for _ in range(iterations - 1):
+        errors_newton.append(errors_newton[-1]**2)
+
+    # Secant (α=1.618)
+    errors_secant = [e_0, 0.05]
+    for _ in range(iterations - 2):
+        if errors_secant[-1] > 0:
+            errors_secant.append(errors_secant[-1]**1.618)
+
+    plt.figure(figsize=(10, 6))
+    plt.semilogy(errors_bisect, 'o-', label='Bisection (α=1)', linewidth=2)
+    plt.semilogy(errors_newton[:7], 's-', label='Newton (α=2)', linewidth=2)
+    plt.semilogy(errors_secant[:8], '^-', label='Secant (α≈1.618)', linewidth=2)
+
+    plt.xlabel('Iteration', fontsize=12)
+    plt.ylabel('Error', fontsize=12)
+    plt.title('Error Reduction Patterns for Different Convergence Orders', fontsize=14)
+    plt.legend(fontsize=10)
+    plt.grid(True, alpha=0.3)
+    plt.savefig('error_propagation.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Error propagation plot saved")
+
+analyze_error_propagation()
+```
+
+## Advanced Topics
+
+### Asymptotic vs. Global Convergence
+
+**Asymptotic convergence** describes behavior near the root, while **global convergence** concerns behavior from arbitrary starting points.
+
+- Newton's method has excellent asymptotic properties (quadratic) but poor global properties (may diverge)
+- Bisection has linear asymptotic convergence but guaranteed global convergence
+- Hybrid methods combine both: use bisection to get close, then switch to Newton
+
+```python
+def hybrid_method(f, f_prime, a, b, switch_tol=0.1, tol=1e-10, max_iter=100):
+    """
+    Hybrid bisection-Newton method.
+
+    Uses bisection until within switch_tol of root, then switches to Newton.
+    """
+    # Phase 1: Bisection
+    phase = "Bisection"
+    iterations_bisect = 0
+
+    while b - a > switch_tol and iterations_bisect < max_iter:
+        c = (a + b) / 2
+        if f(a) * f(c) < 0:
+            b = c
+        else:
+            a = c
+        iterations_bisect += 1
+
+    # Phase 2: Newton from midpoint
+    x = (a + b) / 2
+    phase = "Newton"
+    iterations_newton = 0
+
+    for i in range(max_iter):
+        fx = f(x)
+        if abs(fx) < tol:
+            break
+
+        fpx = f_prime(x)
+        if abs(fpx) < 1e-15:
+            break
+
+        x = x - fx / fpx
+        iterations_newton += 1
+
+    print(f"Hybrid Method Results:")
+    print(f"  Bisection iterations: {iterations_bisect}")
+    print(f"  Newton iterations: {iterations_newton}")
+    print(f"  Total iterations: {iterations_bisect + iterations_newton}")
+    print(f"  Final approximation: {x}")
+
+    return x
+
+# Test hybrid method
+f = lambda x: x**3 - 2*x - 5
+f_prime = lambda x: 3*x**2 - 2
+
+root = hybrid_method(f, f_prime, 2, 3)
+```
+
+### Computational Cost Analysis
+
+Beyond theoretical order, practical efficiency depends on:
+
+1. **Function evaluations**: Cost per iteration
+2. **Convergence rate**: Iterations to convergence
+3. **Implementation complexity**: Overhead per iteration
+
+**Example**: Comparing Newton vs Secant
+
+```python
+def cost_analysis():
+    """Compare computational cost considering function evaluations."""
+    print("\nComputational Cost Analysis:")
+    print("=" * 70)
+
+    # Assume derivative costs 50% more than function evaluation
+    cost_f = 1.0
+    cost_fprime = 1.5
+
+    methods = [
+        ("Bisection", 1, 0.5, 1, 34),  # name, order, λ, f_evals, iters
+        ("Secant", 1.618, 1, 1, 7),
+        ("Newton", 2, 1, 2, 5),
+        ("Halley", 3, 1, 3, 4),
+    ]
+
+    print(f"{'Method':<12} {'Iters':<8} {'F Evals':<10} {'Cost Units':<12} {'Efficiency':<12}")
+    print("-" * 70)
+
+    for name, order, lam, f_per_iter, iters in methods:
+        if name == "Newton":
+            total_cost = iters * (cost_f + cost_fprime)
+        elif name == "Halley":
+            total_cost = iters * (cost_f + cost_fprime + cost_fprime)
+        else:
+            total_cost = iters * cost_f
+
+        efficiency = order ** (1/f_per_iter)
+
+        print(f"{name:<12} {iters:<8} {iters*f_per_iter:<10} {total_cost:<12.1f} {efficiency:<12.3f}")
+
+cost_analysis()
+```
+
+## Key Takeaways
+
+1. **Order of convergence** quantifies how rapidly errors decrease near the root
+2. **Higher order doesn't always mean faster**: Must consider function evaluation cost
+3. **Efficiency index** $E = \alpha^{1/p}$ balances order and cost
+4. **Secant method** often optimal: superlinear convergence with only one function evaluation
+5. **Experimental estimation** of convergence order validates theoretical analysis
+6. **Hybrid approaches** combine global robustness with local speed
+7. **Context matters**: Best method depends on function properties and computational resources
+
+## Common Mistakes
+
+1. **Ignoring cost per iteration**: High-order methods may be slower overall if derivatives are expensive
+2. **Using asymptotic rates too early**: Convergence order describes behavior near the root, not far from it
+3. **Underestimating bisection**: Despite linear convergence, guaranteed convergence and simplicity make it valuable
+4. **Not monitoring convergence**: Always check if observed convergence matches theoretical predictions
+5. **Forgetting numerical stability**: Some high-order methods can be numerically unstable

@@ -1,74 +1,640 @@
 [
   {
-    "id": "math402-ex-3-1",
+    "id": "math402-t3-ex01",
     "subjectId": "math402",
-    "topicId": "topic-3",
-    "difficulty": 1,
-    "title": "Topic 3 Exercise 1",
-    "description": "Fundamental exercise for topic 3. Implement the basic algorithm for topic 3.",
-    "starterCode": "import numpy as np\n\ndef topic3_algorithm():\n    \"\"\"\n    Implementation of topic 3 algorithm.\n\n    This is a complete solution with:\n    - Input validation\n    - Error handling\n    - Test cases\n    \"\"\"\n    # TODO: Implementation here\n    pass\n\n# Test cases\nprint(\"Testing topic 3 implementation\")\n# Add test cases\nprint(\"All tests passed!\")",
-    "hints": [
-      "Review the theory",
-      "Start with simple test cases",
-      "Validate your implementation"
+    "topicId": "math402-topic-3",
+    "title": "Basic Lagrange Interpolation",
+    "difficulty": "beginner",
+    "estimatedTime": "20 minutes",
+    "learningObjectives": [
+      "Implement Lagrange basis polynomials",
+      "Construct interpolating polynomial through given points",
+      "Evaluate polynomial at arbitrary points"
     ],
-    "solution": "import numpy as np\n\ndef topic3_algorithm():\n    \"\"\"\n    Implementation of topic 3 algorithm.\n\n    This is a complete solution with:\n    - Input validation\n    - Error handling\n    - Test cases\n    \"\"\"\n    # Implementation here\n    pass\n\n# Test cases\nprint(\"Testing topic 3 implementation\")\n# Add test cases\nprint(\"All tests passed!\")",
+    "problem": "# Basic Lagrange Interpolation\n\nImplement Lagrange interpolation to find the polynomial passing through the points (0, 1), (1, 3), and (2, 2).\n\n## Requirements\n\n1. Implement `lagrange_basis(x, x_data, i)` that computes the i-th Lagrange basis polynomial\n2. Implement `lagrange_interpolation(x, x_data, y_data)` that returns the interpolating polynomial values\n3. Evaluate your polynomial at x = 0.5 and x = 1.5\n\n## Expected Output\n\nYour function should return the interpolated values at the requested points.",
+    "starterCode": "import numpy as np\n\ndef lagrange_basis(x, x_data, i):\n    \"\"\"\n    Compute i-th Lagrange basis polynomial at x.\n    \n    Parameters:\n    - x: evaluation points (scalar or array)\n    - x_data: interpolation node x-coordinates\n    - i: index of basis polynomial\n    \n    Returns:\n    - L_i(x): basis polynomial values\n    \"\"\"\n    # TODO: Implement Lagrange basis\n    pass\n\ndef lagrange_interpolation(x, x_data, y_data):\n    \"\"\"\n    Lagrange interpolation.\n    \n    Parameters:\n    - x: evaluation points\n    - x_data: interpolation node x-coordinates\n    - y_data: interpolation node y-coordinates\n    \n    Returns:\n    - P(x): interpolating polynomial values\n    \"\"\"\n    # TODO: Implement interpolation\n    pass\n\n# Test\nx_data = np.array([0.0, 1.0, 2.0])\ny_data = np.array([1.0, 3.0, 2.0])\n\nx_eval = np.array([0.5, 1.5])\nresult = lagrange_interpolation(x_eval, x_data, y_data)\nprint(f\"Interpolated values: {result}\")",
+    "solution": "import numpy as np\n\ndef lagrange_basis(x, x_data, i):\n    \"\"\"\n    Compute i-th Lagrange basis polynomial at x.\n    \n    Parameters:\n    - x: evaluation points (scalar or array)\n    - x_data: interpolation node x-coordinates\n    - i: index of basis polynomial\n    \n    Returns:\n    - L_i(x): basis polynomial values\n    \"\"\"\n    n = len(x_data)\n    L = np.ones_like(x, dtype=float)\n    \n    for j in range(n):\n        if j != i:\n            L *= (x - x_data[j]) / (x_data[i] - x_data[j])\n    \n    return L\n\ndef lagrange_interpolation(x, x_data, y_data):\n    \"\"\"\n    Lagrange interpolation.\n    \n    Parameters:\n    - x: evaluation points\n    - x_data: interpolation node x-coordinates\n    - y_data: interpolation node y-coordinates\n    \n    Returns:\n    - P(x): interpolating polynomial values\n    \"\"\"\n    n = len(x_data)\n    P = np.zeros_like(x, dtype=float)\n    \n    for i in range(n):\n        P += y_data[i] * lagrange_basis(x, x_data, i)\n    \n    return P\n\n# Test\nx_data = np.array([0.0, 1.0, 2.0])\ny_data = np.array([1.0, 3.0, 2.0])\n\nx_eval = np.array([0.5, 1.5])\nresult = lagrange_interpolation(x_eval, x_data, y_data)\nprint(f\"Interpolated values: {result}\")",
     "testCases": [
       {
-        "input": "test input",
-        "expectedOutput": "expected output",
-        "isHidden": false,
-        "description": "Basic test case"
+        "input": {"x_data": [0.0, 1.0, 2.0], "y_data": [1.0, 3.0, 2.0], "x_eval": [0.5, 1.5]},
+        "expected": {"values": [2.25, 2.75]},
+        "description": "Basic 3-point interpolation"
+      },
+      {
+        "input": {"x_data": [0.0, 1.0, 2.0], "y_data": [1.0, 3.0, 2.0], "x_eval": [0.0, 1.0, 2.0]},
+        "expected": {"values": [1.0, 3.0, 2.0]},
+        "description": "Should match data points exactly"
       }
     ],
-    "language": "python"
+    "hints": [
+      "The Lagrange basis polynomial L_i(x) equals 1 at x_i and 0 at all other nodes",
+      "Use a product over all j != i for the basis polynomial",
+      "The final polynomial is a weighted sum of basis polynomials"
+    ],
+    "commonMistakes": [
+      "Forgetting to skip j=i in the basis polynomial product",
+      "Not converting to float, causing integer division errors",
+      "Incorrect indexing in the denominator of the basis polynomial"
+    ],
+    "extensionActivities": [
+      "Implement barycentric form for more efficient evaluation",
+      "Compare accuracy with different numbers of interpolation points",
+      "Visualize the basis polynomials for a given set of nodes"
+    ]
   },
   {
-    "id": "math402-ex-3-2",
+    "id": "math402-t3-ex02",
     "subjectId": "math402",
-    "topicId": "topic-3",
-    "difficulty": 2,
-    "title": "Topic 3 Exercise 2",
-    "description": "Intermediate exercise for topic 3. Apply the algorithm to a more complex problem.",
-    "starterCode": "import numpy as np\n\ndef advanced_implementation():\n    \"\"\"Advanced implementation with optimization.\"\"\"\n    # TODO: Implement\n    pass\n\n# Complete solution with tests",
-    "hints": [
-      "Build on the basic implementation",
-      "Consider edge cases",
-      "Optimize for performance"
+    "topicId": "math402-topic-3",
+    "title": "Newton Divided Differences",
+    "difficulty": "beginner",
+    "estimatedTime": "25 minutes",
+    "learningObjectives": [
+      "Construct divided difference table",
+      "Extract Newton polynomial coefficients",
+      "Evaluate polynomial using Horner's method"
     ],
-    "solution": "import numpy as np\n\ndef advanced_implementation():\n    \"\"\"Advanced implementation with optimization.\"\"\"\n    pass\n\n# Complete solution with tests",
+    "problem": "# Newton Divided Differences\n\nImplement Newton's divided difference method for polynomial interpolation.\n\n## Requirements\n\n1. Create a divided difference table for the points (0, 1), (1, 2), (3, 10)\n2. Extract the Newton coefficients (top row of the table)\n3. Evaluate the polynomial at x = 2 using Horner's method\n\n## Theory\n\nThe divided difference table is built recursively:\n- f[x_i] = f(x_i)\n- f[x_i, x_{i+1}] = (f[x_{i+1}] - f[x_i]) / (x_{i+1} - x_i)\n- Higher orders follow similarly",
+    "starterCode": "import numpy as np\n\ndef divided_differences(x, f):\n    \"\"\"\n    Compute divided difference table.\n    \n    Parameters:\n    - x: array of n+1 distinct points\n    - f: array of n+1 function values\n    \n    Returns:\n    - table: (n+1) × (n+1) array where table[i,j] = f[x_i, ..., x_{i+j}]\n    \"\"\"\n    # TODO: Implement\n    pass\n\ndef newton_coefficients(x, f):\n    \"\"\"\n    Compute Newton interpolation coefficients.\n    \n    Returns coefficients [a0, a1, ..., an]\n    \"\"\"\n    # TODO: Implement\n    pass\n\ndef newton_eval(x_data, coeffs, x):\n    \"\"\"\n    Evaluate Newton polynomial at x using Horner's method.\n    \"\"\"\n    # TODO: Implement\n    pass\n\n# Test\nx_data = np.array([0.0, 1.0, 3.0])\nf_data = np.array([1.0, 2.0, 10.0])\n\ncoeffs = newton_coefficients(x_data, f_data)\nresult = newton_eval(x_data, coeffs, 2.0)\nprint(f\"Coefficients: {coeffs}\")\nprint(f\"P(2) = {result}\")",
+    "solution": "import numpy as np\n\ndef divided_differences(x, f):\n    \"\"\"\n    Compute divided difference table.\n    \n    Parameters:\n    - x: array of n+1 distinct points\n    - f: array of n+1 function values\n    \n    Returns:\n    - table: (n+1) × (n+1) array where table[i,j] = f[x_i, ..., x_{i+j}]\n    \"\"\"\n    n = len(x)\n    table = np.zeros((n, n))\n    \n    # First column is function values\n    table[:, 0] = f\n    \n    # Fill table column by column\n    for j in range(1, n):\n        for i in range(n - j):\n            table[i, j] = (table[i+1, j-1] - table[i, j-1]) / (x[i+j] - x[i])\n    \n    return table\n\ndef newton_coefficients(x, f):\n    \"\"\"\n    Compute Newton interpolation coefficients.\n    \n    Returns coefficients [a0, a1, ..., an]\n    \"\"\"\n    table = divided_differences(x, f)\n    return table[0, :]  # Top row contains coefficients\n\ndef newton_eval(x_data, coeffs, x):\n    \"\"\"\n    Evaluate Newton polynomial at x using Horner's method.\n    \"\"\"\n    n = len(coeffs)\n    \n    # Start with last coefficient\n    p = coeffs[-1]\n    \n    # Work backwards\n    for i in range(n - 2, -1, -1):\n        p = coeffs[i] + (x - x_data[i]) * p\n    \n    return p\n\n# Test\nx_data = np.array([0.0, 1.0, 3.0])\nf_data = np.array([1.0, 2.0, 10.0])\n\ncoeffs = newton_coefficients(x_data, f_data)\nresult = newton_eval(x_data, coeffs, 2.0)\nprint(f\"Coefficients: {coeffs}\")\nprint(f\"P(2) = {result}\")",
     "testCases": [
       {
-        "input": "test input",
-        "expectedOutput": "expected output",
-        "isHidden": false,
-        "description": "Intermediate test case"
+        "input": {"x_data": [0.0, 1.0, 3.0], "f_data": [1.0, 2.0, 10.0], "x_eval": 2.0},
+        "expected": {"value": 5.0},
+        "description": "Evaluate at intermediate point"
+      },
+      {
+        "input": {"x_data": [0.0, 1.0, 3.0], "f_data": [1.0, 2.0, 10.0], "x_eval": 0.0},
+        "expected": {"value": 1.0},
+        "description": "Should match data point exactly"
       }
     ],
-    "language": "python"
+    "hints": [
+      "Build the divided difference table column by column",
+      "The coefficients you need are in the first row of the table",
+      "Horner's method works backwards from the highest degree term"
+    ],
+    "commonMistakes": [
+      "Wrong indices when computing divided differences",
+      "Not working backwards in Horner's method",
+      "Confusing row and column indices in the table"
+    ],
+    "extensionActivities": [
+      "Implement incremental point addition to Newton interpolation",
+      "Compare performance with Lagrange interpolation",
+      "Visualize the divided difference table structure"
+    ]
   },
   {
-    "id": "math402-ex-3-3",
+    "id": "math402-t3-ex03",
     "subjectId": "math402",
-    "topicId": "topic-3",
-    "difficulty": 3,
-    "title": "Topic 3 Exercise 3",
-    "description": "Advanced exercise combining multiple concepts. Implement an optimized version with error analysis.",
-    "starterCode": "import numpy as np\nimport matplotlib.pyplot as plt\n\ndef optimized_algorithm():\n    \"\"\"Optimized implementation with complete analysis.\"\"\"\n    # TODO: Implement\n    pass\n\n# Comprehensive solution",
-    "hints": [
-      "Combine multiple techniques",
-      "Analyze performance and accuracy",
-      "Include visualizations"
+    "topicId": "math402-topic-3",
+    "title": "Runge's Phenomenon Analysis",
+    "difficulty": "intermediate",
+    "estimatedTime": "35 minutes",
+    "learningObjectives": [
+      "Observe Runge's phenomenon with equally spaced nodes",
+      "Compute and analyze interpolation error",
+      "Compare different node distributions"
     ],
-    "solution": "import numpy as np\nimport matplotlib.pyplot as plt\n\ndef optimized_algorithm():\n    \"\"\"Optimized implementation with complete analysis.\"\"\"\n    pass\n\n# Comprehensive solution",
+    "problem": "# Runge's Phenomenon Analysis\n\nDemonstrate Runge's phenomenon by interpolating the function f(x) = 1/(1+25x²) on [-1, 1].\n\n## Requirements\n\n1. Implement Lagrange interpolation for equally spaced nodes\n2. Test with n = 5, 10, 15, 20 nodes\n3. Compute the maximum interpolation error for each n\n4. Return a dictionary with the errors for each degree\n\n## Expected Behavior\n\nYou should observe that the error *increases* with higher degrees near the endpoints, demonstrating Runge's phenomenon.",
+    "starterCode": "import numpy as np\n\ndef lagrange_interpolation(x, x_data, y_data):\n    \"\"\"Lagrange interpolation (from previous exercise).\"\"\"\n    # TODO: Implement or copy from ex01\n    pass\n\ndef analyze_runge_phenomenon():\n    \"\"\"\n    Analyze Runge's phenomenon for different polynomial degrees.\n    \n    Returns:\n    - errors: dict mapping degree to maximum error\n    \"\"\"\n    f = lambda x: 1 / (1 + 25*x**2)\n    \n    degrees = [5, 10, 15, 20]\n    errors = {}\n    \n    x_eval = np.linspace(-1, 1, 500)\n    f_true = f(x_eval)\n    \n    for n in degrees:\n        # TODO: Create n+1 equally spaced nodes\n        # TODO: Interpolate\n        # TODO: Compute max error\n        pass\n    \n    return errors\n\n# Test\nerrors = analyze_runge_phenomenon()\nfor degree, error in errors.items():\n    print(f\"Degree {degree}: max error = {error:.6f}\")",
+    "solution": "import numpy as np\n\ndef lagrange_interpolation(x, x_data, y_data):\n    \"\"\"Lagrange interpolation.\"\"\"\n    n = len(x_data)\n    P = np.zeros_like(x, dtype=float)\n    \n    for i in range(n):\n        L = np.ones_like(x, dtype=float)\n        for j in range(n):\n            if j != i:\n                L *= (x - x_data[j]) / (x_data[i] - x_data[j])\n        P += y_data[i] * L\n    \n    return P\n\ndef analyze_runge_phenomenon():\n    \"\"\"\n    Analyze Runge's phenomenon for different polynomial degrees.\n    \n    Returns:\n    - errors: dict mapping degree to maximum error\n    \"\"\"\n    f = lambda x: 1 / (1 + 25*x**2)\n    \n    degrees = [5, 10, 15, 20]\n    errors = {}\n    \n    x_eval = np.linspace(-1, 1, 500)\n    f_true = f(x_eval)\n    \n    for n in degrees:\n        # Create n+1 equally spaced nodes\n        x_data = np.linspace(-1, 1, n+1)\n        y_data = f(x_data)\n        \n        # Interpolate\n        P = lagrange_interpolation(x_eval, x_data, y_data)\n        \n        # Compute max error\n        error = np.max(np.abs(f_true - P))\n        errors[n] = error\n    \n    return errors\n\n# Test\nerrors = analyze_runge_phenomenon()\nfor degree, error in errors.items():\n    print(f\"Degree {degree}: max error = {error:.6f}\")",
     "testCases": [
       {
-        "input": "test input",
-        "expectedOutput": "expected output",
-        "isHidden": false,
-        "description": "Advanced test case"
+        "input": {},
+        "expected": {"increasing_error": true},
+        "description": "Error should increase with degree for Runge's function"
       }
     ],
-    "language": "python"
+    "hints": [
+      "Runge's function is f(x) = 1/(1+25x²)",
+      "Use linspace to create equally spaced nodes",
+      "The error should grow dramatically near x = ±1 for high degrees"
+    ],
+    "commonMistakes": [
+      "Not using enough evaluation points to capture the error peaks",
+      "Confusing degree n with number of nodes (n+1)",
+      "Not using a fine enough grid to see the oscillations"
+    ],
+    "extensionActivities": [
+      "Plot the interpolations to visualize the oscillations",
+      "Compare with Chebyshev nodes (next exercises)",
+      "Find the approximate location of maximum error"
+    ]
+  },
+  {
+    "id": "math402-t3-ex04",
+    "subjectId": "math402",
+    "topicId": "math402-topic-3",
+    "title": "Chebyshev Nodes Implementation",
+    "difficulty": "intermediate",
+    "estimatedTime": "30 minutes",
+    "learningObjectives": [
+      "Compute Chebyshev nodes for a given interval",
+      "Compare interpolation accuracy with equally spaced nodes",
+      "Understand optimal node placement"
+    ],
+    "problem": "# Chebyshev Nodes Implementation\n\nImplement Chebyshev node computation and compare interpolation accuracy with equally spaced nodes.\n\n## Requirements\n\n1. Implement `chebyshev_nodes(n, a, b)` to compute n+1 Chebyshev nodes on [a, b]\n2. Use these nodes to interpolate Runge's function f(x) = 1/(1+25x²)\n3. Compare maximum error with equally spaced nodes for n = 10\n\n## Theory\n\nChebyshev nodes on [-1, 1] are: x_i = cos((2i+1)π/(2(n+1))) for i = 0, ..., n\n\nFor [a, b], transform: x = (b-a)/2 * t + (a+b)/2",
+    "starterCode": "import numpy as np\n\ndef chebyshev_nodes(n, a=-1, b=1):\n    \"\"\"\n    Compute n+1 Chebyshev nodes on interval [a, b].\n    \n    Parameters:\n    - n: degree of interpolating polynomial\n    - a, b: interval endpoints\n    \n    Returns:\n    - x: array of n+1 Chebyshev nodes\n    \"\"\"\n    # TODO: Implement\n    pass\n\ndef compare_node_types():\n    \"\"\"\n    Compare interpolation with equally spaced vs Chebyshev nodes.\n    \n    Returns:\n    - error_equal: max error with equally spaced nodes\n    - error_cheb: max error with Chebyshev nodes\n    \"\"\"\n    f = lambda x: 1 / (1 + 25*x**2)\n    n = 10\n    \n    # TODO: Implement comparison\n    pass\n\n# Test\nerror_equal, error_cheb = compare_node_types()\nprint(f\"Equally spaced error: {error_equal:.6f}\")\nprint(f\"Chebyshev error: {error_cheb:.6f}\")\nprint(f\"Improvement factor: {error_equal/error_cheb:.2f}x\")",
+    "solution": "import numpy as np\nfrom numpy.polynomial import polynomial as P\n\ndef chebyshev_nodes(n, a=-1, b=1):\n    \"\"\"\n    Compute n+1 Chebyshev nodes on interval [a, b].\n    \n    Parameters:\n    - n: degree of interpolating polynomial\n    - a, b: interval endpoints\n    \n    Returns:\n    - x: array of n+1 Chebyshev nodes\n    \"\"\"\n    k = np.arange(n+1)\n    # Nodes on [-1, 1]\n    t = np.cos((2*k + 1) * np.pi / (2*(n+1)))\n    \n    # Transform to [a, b]\n    x = (b - a) / 2 * t + (a + b) / 2\n    \n    return x\n\ndef compare_node_types():\n    \"\"\"\n    Compare interpolation with equally spaced vs Chebyshev nodes.\n    \n    Returns:\n    - error_equal: max error with equally spaced nodes\n    - error_cheb: max error with Chebyshev nodes\n    \"\"\"\n    f = lambda x: 1 / (1 + 25*x**2)\n    n = 10\n    \n    # Evaluation points\n    x_eval = np.linspace(-1, 1, 500)\n    f_true = f(x_eval)\n    \n    # Equally spaced nodes\n    x_equal = np.linspace(-1, 1, n+1)\n    y_equal = f(x_equal)\n    poly_equal = P.polyfit(x_equal, y_equal, n)\n    p_equal = P.polyval(x_eval, poly_equal)\n    error_equal = np.max(np.abs(f_true - p_equal))\n    \n    # Chebyshev nodes\n    x_cheb = chebyshev_nodes(n)\n    y_cheb = f(x_cheb)\n    poly_cheb = P.polyfit(x_cheb, y_cheb, n)\n    p_cheb = P.polyval(x_eval, poly_cheb)\n    error_cheb = np.max(np.abs(f_true - p_cheb))\n    \n    return error_equal, error_cheb\n\n# Test\nerror_equal, error_cheb = compare_node_types()\nprint(f\"Equally spaced error: {error_equal:.6f}\")\nprint(f\"Chebyshev error: {error_cheb:.6f}\")\nprint(f\"Improvement factor: {error_equal/error_cheb:.2f}x\")",
+    "testCases": [
+      {
+        "input": {"n": 5, "a": -1, "b": 1},
+        "expected": {"num_nodes": 6, "symmetric": true},
+        "description": "Should return 6 symmetric nodes"
+      },
+      {
+        "input": {"comparison": "runge"},
+        "expected": {"cheb_better": true},
+        "description": "Chebyshev should give much smaller error"
+      }
+    ],
+    "hints": [
+      "Use np.cos and np.arange to compute the nodes",
+      "Chebyshev nodes cluster near the endpoints",
+      "The improvement factor should be significant (10x or more)"
+    ],
+    "commonMistakes": [
+      "Forgetting to transform from [-1,1] to [a,b]",
+      "Wrong indexing in the cosine formula",
+      "Not sorting the nodes if needed for your application"
+    ],
+    "extensionActivities": [
+      "Visualize the distribution of Chebyshev vs equally spaced nodes",
+      "Test with different functions and compare improvement",
+      "Implement Chebyshev polynomial evaluation directly"
+    ]
+  },
+  {
+    "id": "math402-t3-ex05",
+    "subjectId": "math402",
+    "topicId": "math402-topic-3",
+    "title": "Natural Cubic Spline Construction",
+    "difficulty": "intermediate",
+    "estimatedTime": "40 minutes",
+    "learningObjectives": [
+      "Construct tridiagonal system for cubic spline",
+      "Solve for second derivatives at knots",
+      "Evaluate piecewise cubic polynomials"
+    ],
+    "problem": "# Natural Cubic Spline Construction\n\nImplement a natural cubic spline interpolation.\n\n## Requirements\n\n1. Build the tridiagonal system for natural boundary conditions (M[0] = M[n] = 0)\n2. Solve for second derivatives M at interior knots\n3. Evaluate the spline at arbitrary points\n\n## Test Data\n\nUse points: (0, 0), (1, 1), (2, 0), (3, -1), (4, 0)",
+    "starterCode": "import numpy as np\n\ndef natural_cubic_spline(x_data, f_data):\n    \"\"\"\n    Construct natural cubic spline.\n    \n    Parameters:\n    - x_data: array of n+1 knots\n    - f_data: function values at knots\n    \n    Returns:\n    - M: second derivatives at knots\n    - h: interval widths\n    \"\"\"\n    # TODO: Implement\n    pass\n\ndef evaluate_spline(x, x_data, f_data, M, h):\n    \"\"\"\n    Evaluate cubic spline at points x.\n    \n    Parameters:\n    - x: evaluation points\n    - x_data: knot locations\n    - f_data: function values at knots\n    - M: second derivatives from natural_cubic_spline\n    - h: interval widths\n    \n    Returns:\n    - S(x): spline values\n    \"\"\"\n    # TODO: Implement\n    pass\n\n# Test\nx_data = np.array([0.0, 1.0, 2.0, 3.0, 4.0])\nf_data = np.array([0.0, 1.0, 0.0, -1.0, 0.0])\n\nM, h = natural_cubic_spline(x_data, f_data)\nx_eval = np.array([0.5, 1.5, 2.5, 3.5])\nS = evaluate_spline(x_eval, x_data, f_data, M, h)\nprint(f\"Second derivatives: {M}\")\nprint(f\"Spline values: {S}\")",
+    "solution": "import numpy as np\n\ndef natural_cubic_spline(x_data, f_data):\n    \"\"\"\n    Construct natural cubic spline.\n    \n    Parameters:\n    - x_data: array of n+1 knots\n    - f_data: function values at knots\n    \n    Returns:\n    - M: second derivatives at knots\n    - h: interval widths\n    \"\"\"\n    n = len(x_data) - 1\n    h = np.diff(x_data)\n    \n    # Build tridiagonal system\n    # Natural boundary conditions: M[0] = M[n] = 0\n    A = np.zeros((n-1, n-1))\n    b = np.zeros(n-1)\n    \n    for i in range(n-1):\n        if i > 0:\n            A[i, i-1] = h[i]\n        A[i, i] = 2 * (h[i] + h[i+1])\n        if i < n-2:\n            A[i, i+1] = h[i+1]\n        \n        b[i] = 6 * ((f_data[i+2] - f_data[i+1])/h[i+1] -\n                     (f_data[i+1] - f_data[i])/h[i])\n    \n    # Solve for interior M values\n    M_interior = np.linalg.solve(A, b)\n    \n    # Add boundary values\n    M = np.zeros(n+1)\n    M[1:-1] = M_interior\n    \n    return M, h\n\ndef evaluate_spline(x, x_data, f_data, M, h):\n    \"\"\"\n    Evaluate cubic spline at points x.\n    \n    Parameters:\n    - x: evaluation points\n    - x_data: knot locations\n    - f_data: function values at knots\n    - M: second derivatives from natural_cubic_spline\n    - h: interval widths\n    \n    Returns:\n    - S(x): spline values\n    \"\"\"\n    n = len(x_data) - 1\n    result = np.zeros_like(x, dtype=float)\n    \n    for k in range(len(x)):\n        # Find interval containing x[k]\n        i = np.searchsorted(x_data[1:], x[k])\n        i = min(i, n-1)  # Handle x[k] = x_data[-1]\n        \n        # Compute spline value on interval [x_i, x_{i+1}]\n        dx_left = x_data[i+1] - x[k]\n        dx_right = x[k] - x_data[i]\n        \n        result[k] = (M[i] * dx_left**3 / (6*h[i]) +\n                     M[i+1] * dx_right**3 / (6*h[i]) +\n                     (f_data[i] - M[i]*h[i]**2/6) * dx_left / h[i] +\n                     (f_data[i+1] - M[i+1]*h[i]**2/6) * dx_right / h[i])\n    \n    return result\n\n# Test\nx_data = np.array([0.0, 1.0, 2.0, 3.0, 4.0])\nf_data = np.array([0.0, 1.0, 0.0, -1.0, 0.0])\n\nM, h = natural_cubic_spline(x_data, f_data)\nx_eval = np.array([0.5, 1.5, 2.5, 3.5])\nS = evaluate_spline(x_eval, x_data, f_data, M, h)\nprint(f\"Second derivatives: {M}\")\nprint(f\"Spline values: {S}\")",
+    "testCases": [
+      {
+        "input": {"x_data": [0.0, 1.0, 2.0], "f_data": [0.0, 1.0, 0.0]},
+        "expected": {"M_boundary": [0.0, 0.0]},
+        "description": "Natural spline has zero second derivative at endpoints"
+      }
+    ],
+    "hints": [
+      "The tridiagonal matrix has 2(h[i] + h[i+1]) on the diagonal",
+      "Natural boundary conditions mean M[0] = M[n] = 0",
+      "Use np.searchsorted to find which interval contains each evaluation point"
+    ],
+    "commonMistakes": [
+      "Wrong indices in the tridiagonal system",
+      "Forgetting to add boundary M values (zeros for natural spline)",
+      "Not handling the case when x equals the last knot"
+    ],
+    "extensionActivities": [
+      "Implement clamped spline with specified derivatives at endpoints",
+      "Compare spline smoothness with polynomial interpolation",
+      "Visualize the spline and its second derivative"
+    ]
+  },
+  {
+    "id": "math402-t3-ex06",
+    "subjectId": "math402",
+    "topicId": "math402-topic-3",
+    "title": "Hermite Interpolation with Derivatives",
+    "difficulty": "intermediate",
+    "estimatedTime": "35 minutes",
+    "learningObjectives": [
+      "Implement Hermite interpolation using divided differences",
+      "Handle coincident points in divided difference table",
+      "Match both function values and derivatives"
+    ],
+    "problem": "# Hermite Interpolation with Derivatives\n\nImplement Hermite interpolation that matches both function values and derivatives.\n\n## Requirements\n\n1. Build divided difference table with doubled points for derivatives\n2. Extract Newton coefficients\n3. Evaluate the Hermite polynomial\n\n## Test Case\n\nInterpolate f(x) = e^x at x = 0 and x = 1 with derivatives f'(x) = e^x:\n- (x₀, f₀, f₀') = (0, 1, 1)\n- (x₁, f₁, f₁') = (1, e, e) where e ≈ 2.71828",
+    "starterCode": "import numpy as np\n\ndef hermite_interpolation(x_data, f_data, df_data):\n    \"\"\"\n    Hermite interpolation using divided differences.\n    \n    Parameters:\n    - x_data: array of n+1 distinct interpolation nodes\n    - f_data: function values at nodes\n    - df_data: derivative values at nodes\n    \n    Returns:\n    - coeffs: Newton coefficients\n    - z_data: expanded node sequence (with doubled points)\n    \"\"\"\n    # TODO: Implement\n    pass\n\ndef hermite_eval(z_data, coeffs, x):\n    \"\"\"\n    Evaluate Hermite polynomial using Horner's method.\n    \n    Parameters:\n    - z_data: expanded node sequence\n    - coeffs: Newton coefficients from hermite_interpolation\n    - x: evaluation point(s)\n    \n    Returns:\n    - H(x): interpolated values\n    \"\"\"\n    # TODO: Implement\n    pass\n\n# Test\nx_data = np.array([0.0, 1.0])\nf_data = np.array([1.0, np.e])\ndf_data = np.array([1.0, np.e])\n\ncoeffs, z_data = hermite_interpolation(x_data, f_data, df_data)\nH_half = hermite_eval(z_data, coeffs, 0.5)\nprint(f\"H(0.5) = {H_half:.6f}\")\nprint(f\"e^0.5 = {np.exp(0.5):.6f}\")\nprint(f\"Error = {abs(np.exp(0.5) - H_half):.6f}\")",
+    "solution": "import numpy as np\n\ndef hermite_interpolation(x_data, f_data, df_data):\n    \"\"\"\n    Hermite interpolation using divided differences.\n    \n    Parameters:\n    - x_data: array of n+1 distinct interpolation nodes\n    - f_data: function values at nodes\n    - df_data: derivative values at nodes\n    \n    Returns:\n    - coeffs: Newton coefficients\n    - z_data: expanded node sequence (with doubled points)\n    \"\"\"\n    n = len(x_data)\n    \n    # Create expanded arrays with doubled points\n    z_data = np.zeros(2*n)\n    Q = np.zeros((2*n, 2*n))\n    \n    # Fill z and first column of Q\n    for i in range(n):\n        z_data[2*i] = x_data[i]\n        z_data[2*i + 1] = x_data[i]\n        Q[2*i, 0] = f_data[i]\n        Q[2*i + 1, 0] = f_data[i]\n    \n    # Fill second column\n    for i in range(n):\n        Q[2*i + 1, 1] = df_data[i]\n        if i < n - 1:\n            Q[2*i + 2, 1] = (Q[2*i + 2, 0] - Q[2*i + 1, 0]) / (z_data[2*i + 2] - z_data[2*i + 1])\n    \n    # Fill remaining columns\n    for j in range(2, 2*n):\n        for i in range(2*n - j):\n            Q[i, j] = (Q[i+1, j-1] - Q[i, j-1]) / (z_data[i+j] - z_data[i])\n    \n    # Coefficients are top row\n    coeffs = Q[0, :]\n    \n    return coeffs, z_data\n\ndef hermite_eval(z_data, coeffs, x):\n    \"\"\"\n    Evaluate Hermite polynomial using Horner's method.\n    \n    Parameters:\n    - z_data: expanded node sequence\n    - coeffs: Newton coefficients from hermite_interpolation\n    - x: evaluation point(s)\n    \n    Returns:\n    - H(x): interpolated values\n    \"\"\"\n    n = len(coeffs)\n    result = coeffs[-1] * np.ones_like(x, dtype=float)\n    \n    for i in range(n-2, -1, -1):\n        result = coeffs[i] + (x - z_data[i]) * result\n    \n    return result\n\n# Test\nx_data = np.array([0.0, 1.0])\nf_data = np.array([1.0, np.e])\ndf_data = np.array([1.0, np.e])\n\ncoeffs, z_data = hermite_interpolation(x_data, f_data, df_data)\nH_half = hermite_eval(z_data, coeffs, 0.5)\nprint(f\"H(0.5) = {H_half:.6f}\")\nprint(f\"e^0.5 = {np.exp(0.5):.6f}\")\nprint(f\"Error = {abs(np.exp(0.5) - H_half):.6f}\")",
+    "testCases": [
+      {
+        "input": {"x_data": [0.0, 1.0], "f_data": [1.0, 2.71828], "df_data": [1.0, 2.71828], "x_eval": 0.5},
+        "expected": {"close_to_exp": true},
+        "description": "Should approximate e^0.5 well"
+      }
+    ],
+    "hints": [
+      "Double each point in the node sequence for Hermite interpolation",
+      "Derivative values go in the second column at odd indices",
+      "Use the same Horner evaluation as Newton interpolation"
+    ],
+    "commonMistakes": [
+      "Not doubling the points correctly in the z_data array",
+      "Wrong indexing when filling the divided difference table",
+      "Forgetting that the polynomial degree is 2n+1, not n"
+    ],
+    "extensionActivities": [
+      "Compare accuracy with standard Lagrange interpolation using same points",
+      "Implement cubic Hermite splines",
+      "Visualize tangent lines at the interpolation points"
+    ]
+  },
+  {
+    "id": "math402-t3-ex07",
+    "subjectId": "math402",
+    "topicId": "math402-topic-3",
+    "title": "Polynomial Least Squares Fitting",
+    "difficulty": "beginner",
+    "estimatedTime": "25 minutes",
+    "learningObjectives": [
+      "Build design matrix for polynomial fitting",
+      "Solve normal equations for least squares",
+      "Compute residual error"
+    ],
+    "problem": "# Polynomial Least Squares Fitting\n\nImplement polynomial least squares approximation for noisy data.\n\n## Requirements\n\n1. Build the Vandermonde-like design matrix A\n2. Solve the normal equations A^T A c = A^T y\n3. Compute the sum of squared residuals\n\n## Test Data\n\nFit a line (degree 1) to: (0, 1), (1, 3), (2, 4), (3, 4)",
+    "starterCode": "import numpy as np\n\ndef least_squares_poly(x_data, y_data, degree):\n    \"\"\"\n    Polynomial least squares approximation.\n    \n    Parameters:\n    - x_data: array of x-coordinates (m points)\n    - y_data: array of y-coordinates (m points)\n    - degree: degree n of approximating polynomial\n    \n    Returns:\n    - coeffs: polynomial coefficients [c0, c1, ..., cn]\n    - residual: sum of squared residuals\n    \"\"\"\n    # TODO: Implement\n    pass\n\ndef evaluate_poly(coeffs, x):\n    \"\"\"Evaluate polynomial with given coefficients.\"\"\"\n    # TODO: Implement\n    pass\n\n# Test\nx_data = np.array([0.0, 1.0, 2.0, 3.0])\ny_data = np.array([1.0, 3.0, 4.0, 4.0])\n\ncoeffs, residual = least_squares_poly(x_data, y_data, 1)\nprint(f\"Coefficients: {coeffs}\")\nprint(f\"Residual: {residual:.6f}\")\nprint(f\"Best fit line: y = {coeffs[0]:.2f} + {coeffs[1]:.2f}x\")",
+    "solution": "import numpy as np\n\ndef least_squares_poly(x_data, y_data, degree):\n    \"\"\"\n    Polynomial least squares approximation.\n    \n    Parameters:\n    - x_data: array of x-coordinates (m points)\n    - y_data: array of y-coordinates (m points)\n    - degree: degree n of approximating polynomial\n    \n    Returns:\n    - coeffs: polynomial coefficients [c0, c1, ..., cn]\n    - residual: sum of squared residuals\n    \"\"\"\n    m = len(x_data)\n    n = degree + 1\n    \n    # Build design matrix A\n    A = np.zeros((m, n))\n    for j in range(n):\n        A[:, j] = x_data**j\n    \n    # Solve normal equations: A^T A c = A^T y\n    ATA = A.T @ A\n    ATy = A.T @ y_data\n    \n    coeffs = np.linalg.solve(ATA, ATy)\n    \n    # Compute residual\n    y_approx = A @ coeffs\n    residual = np.sum((y_data - y_approx)**2)\n    \n    return coeffs, residual\n\ndef evaluate_poly(coeffs, x):\n    \"\"\"Evaluate polynomial with given coefficients.\"\"\"\n    result = np.zeros_like(x, dtype=float)\n    for j, c in enumerate(coeffs):\n        result += c * x**j\n    return result\n\n# Test\nx_data = np.array([0.0, 1.0, 2.0, 3.0])\ny_data = np.array([1.0, 3.0, 4.0, 4.0])\n\ncoeffs, residual = least_squares_poly(x_data, y_data, 1)\nprint(f\"Coefficients: {coeffs}\")\nprint(f\"Residual: {residual:.6f}\")\nprint(f\"Best fit line: y = {coeffs[0]:.2f} + {coeffs[1]:.2f}x\")",
+    "testCases": [
+      {
+        "input": {"x_data": [0.0, 1.0, 2.0, 3.0], "y_data": [1.0, 3.0, 4.0, 4.0], "degree": 1},
+        "expected": {"c0": 1.5, "c1": 1.0, "residual": 1.0},
+        "description": "Linear fit to 4 points"
+      }
+    ],
+    "hints": [
+      "The design matrix has A[i,j] = x_data[i]^j",
+      "Use @ operator for matrix multiplication",
+      "The normal equations give a square system of size (n+1) × (n+1)"
+    ],
+    "commonMistakes": [
+      "Building the design matrix with wrong powers",
+      "Not using enough data points (need m > n)",
+      "Confusing degree with number of coefficients"
+    ],
+    "extensionActivities": [
+      "Implement using QR decomposition for better stability",
+      "Add weighted least squares for non-uniform data quality",
+      "Compare different polynomial degrees and choose best"
+    ]
+  },
+  {
+    "id": "math402-t3-ex08",
+    "subjectId": "math402",
+    "topicId": "math402-topic-3",
+    "title": "Trigonometric Interpolation using FFT",
+    "difficulty": "intermediate",
+    "estimatedTime": "30 minutes",
+    "learningObjectives": [
+      "Use FFT to compute Fourier coefficients",
+      "Evaluate trigonometric polynomials",
+      "Understand periodic interpolation"
+    ],
+    "problem": "# Trigonometric Interpolation using FFT\n\nImplement trigonometric interpolation for periodic functions using the Fast Fourier Transform.\n\n## Requirements\n\n1. Use np.fft.fft to compute Fourier coefficients\n2. Evaluate the trigonometric polynomial at arbitrary points\n3. Test with f(x) = sin(3x) + 0.5*cos(5x)\n\n## Note\n\nThe function must be sampled at equally spaced points on [0, 2π).",
+    "starterCode": "import numpy as np\n\ndef trigonometric_interpolation(x_data, f_data):\n    \"\"\"\n    Trigonometric interpolation using FFT.\n    \n    Parameters:\n    - x_data: equally spaced points on [0, 2π)\n    - f_data: function values at x_data\n    \n    Returns:\n    - coeffs: complex Fourier coefficients\n    \"\"\"\n    # TODO: Implement\n    pass\n\ndef evaluate_trig_poly(coeffs, x):\n    \"\"\"\n    Evaluate trigonometric polynomial at points x.\n    \n    Parameters:\n    - coeffs: complex Fourier coefficients from DFT\n    - x: evaluation points\n    \n    Returns:\n    - T(x): interpolated values (real)\n    \"\"\"\n    # TODO: Implement\n    pass\n\n# Test\nN = 16\nx_data = np.linspace(0, 2*np.pi, N, endpoint=False)\nf_data = np.sin(3*x_data) + 0.5*np.cos(5*x_data)\n\ncoeffs = trigonometric_interpolation(x_data, f_data)\n\nx_eval = np.linspace(0, 2*np.pi, 100)\nf_interp = evaluate_trig_poly(coeffs, x_eval)\nf_true = np.sin(3*x_eval) + 0.5*np.cos(5*x_eval)\n\nerror = np.max(np.abs(f_true - f_interp))\nprint(f\"Maximum interpolation error: {error:.10f}\")",
+    "solution": "import numpy as np\n\ndef trigonometric_interpolation(x_data, f_data):\n    \"\"\"\n    Trigonometric interpolation using FFT.\n    \n    Parameters:\n    - x_data: equally spaced points on [0, 2π)\n    - f_data: function values at x_data\n    \n    Returns:\n    - coeffs: complex Fourier coefficients\n    \"\"\"\n    N = len(f_data)\n    \n    # Compute DFT using FFT\n    coeffs = np.fft.fft(f_data) / N\n    \n    return coeffs\n\ndef evaluate_trig_poly(coeffs, x):\n    \"\"\"\n    Evaluate trigonometric polynomial at points x.\n    \n    Parameters:\n    - coeffs: complex Fourier coefficients from DFT\n    - x: evaluation points\n    \n    Returns:\n    - T(x): interpolated values (real)\n    \"\"\"\n    N = len(coeffs)\n    n = (N - 1) // 2  # degree of trig polynomial\n    \n    # Rearrange coefficients from FFT ordering to [-n, ..., n]\n    c = np.concatenate([coeffs[N//2+1:], coeffs[:N//2+1]])\n    \n    # Evaluate sum\n    result = np.zeros_like(x, dtype=complex)\n    for k in range(-n, n+1):\n        result += c[k+n] * np.exp(1j * k * x)\n    \n    return np.real(result)  # Should be real for real input\n\n# Test\nN = 16\nx_data = np.linspace(0, 2*np.pi, N, endpoint=False)\nf_data = np.sin(3*x_data) + 0.5*np.cos(5*x_data)\n\ncoeffs = trigonometric_interpolation(x_data, f_data)\n\nx_eval = np.linspace(0, 2*np.pi, 100)\nf_interp = evaluate_trig_poly(coeffs, x_eval)\nf_true = np.sin(3*x_eval) + 0.5*np.cos(5*x_eval)\n\nerror = np.max(np.abs(f_true - f_interp))\nprint(f\"Maximum interpolation error: {error:.10f}\")",
+    "testCases": [
+      {
+        "input": {"function": "sin(3x) + 0.5*cos(5x)", "N": 16},
+        "expected": {"error_small": true},
+        "description": "Should interpolate periodic function accurately"
+      }
+    ],
+    "hints": [
+      "Use np.fft.fft and normalize by N",
+      "The FFT coefficients need to be rearranged for evaluation",
+      "Use np.real to extract real part of the result"
+    ],
+    "commonMistakes": [
+      "Forgetting to normalize FFT output by N",
+      "Not using equally spaced points",
+      "Including endpoint in the sample (should use endpoint=False)"
+    ],
+    "extensionActivities": [
+      "Compare with polynomial interpolation for periodic functions",
+      "Implement inverse FFT verification",
+      "Analyze aliasing effects with insufficient sampling"
+    ]
+  },
+  {
+    "id": "math402-t3-ex09",
+    "subjectId": "math402",
+    "topicId": "math402-topic-3",
+    "title": "Barycentric Lagrange Interpolation",
+    "difficulty": "advanced",
+    "estimatedTime": "40 minutes",
+    "learningObjectives": [
+      "Implement barycentric form of Lagrange interpolation",
+      "Compute barycentric weights efficiently",
+      "Understand numerical stability improvements"
+    ],
+    "problem": "# Barycentric Lagrange Interpolation\n\nImplement the barycentric form of Lagrange interpolation, which is more numerically stable and efficient than the standard form.\n\n## Requirements\n\n1. Compute barycentric weights w_i = 1 / ∏(x_i - x_j) for j ≠ i\n2. Evaluate using barycentric formula\n3. Handle exact node matches\n4. Compare performance with standard Lagrange form\n\n## Theory\n\nBarycentric form: P(x) = (Σ w_i * y_i / (x - x_i)) / (Σ w_i / (x - x_i))",
+    "starterCode": "import numpy as np\nimport time\n\ndef barycentric_weights(x_data):\n    \"\"\"\n    Compute barycentric weights.\n    \n    Parameters:\n    - x_data: interpolation nodes\n    \n    Returns:\n    - w: barycentric weights\n    \"\"\"\n    # TODO: Implement\n    pass\n\ndef barycentric_interpolation(x, x_data, y_data, w=None):\n    \"\"\"\n    Barycentric form of Lagrange interpolation.\n    \n    Parameters:\n    - x: evaluation points\n    - x_data: interpolation nodes\n    - y_data: function values\n    - w: precomputed barycentric weights (optional)\n    \n    Returns:\n    - P(x): interpolated values\n    \"\"\"\n    # TODO: Implement\n    pass\n\ndef compare_performance():\n    \"\"\"\n    Compare barycentric vs standard Lagrange.\n    \n    Returns:\n    - time_standard: execution time for standard form\n    - time_barycentric: execution time for barycentric form\n    \"\"\"\n    # TODO: Implement comparison\n    pass\n\n# Test\nresult = compare_performance()\nprint(f\"Standard Lagrange: {result['time_standard']:.6f}s\")\nprint(f\"Barycentric form: {result['time_barycentric']:.6f}s\")\nprint(f\"Speedup: {result['speedup']:.2f}x\")",
+    "solution": "import numpy as np\nimport time\n\ndef barycentric_weights(x_data):\n    \"\"\"\n    Compute barycentric weights.\n    \n    Parameters:\n    - x_data: interpolation nodes\n    \n    Returns:\n    - w: barycentric weights\n    \"\"\"\n    n = len(x_data)\n    w = np.ones(n)\n    \n    for i in range(n):\n        for j in range(n):\n            if i != j:\n                w[i] /= (x_data[i] - x_data[j])\n    \n    return w\n\ndef barycentric_interpolation(x, x_data, y_data, w=None):\n    \"\"\"\n    Barycentric form of Lagrange interpolation.\n    \n    Parameters:\n    - x: evaluation points\n    - x_data: interpolation nodes\n    - y_data: function values\n    - w: precomputed barycentric weights (optional)\n    \n    Returns:\n    - P(x): interpolated values\n    \"\"\"\n    if w is None:\n        w = barycentric_weights(x_data)\n    \n    # Handle exact nodes\n    P = np.zeros_like(x, dtype=float)\n    \n    for k in range(len(x)):\n        # Check if x[k] coincides with a node\n        exact = False\n        for i, xi in enumerate(x_data):\n            if abs(x[k] - xi) < 1e-14:\n                P[k] = y_data[i]\n                exact = True\n                break\n        \n        if not exact:\n            numer = sum(w[i] * y_data[i] / (x[k] - x_data[i]) for i in range(len(x_data)))\n            denom = sum(w[i] / (x[k] - x_data[i]) for i in range(len(x_data)))\n            P[k] = numer / denom\n    \n    return P\n\ndef lagrange_interpolation_standard(x, x_data, y_data):\n    \"\"\"Standard Lagrange form for comparison.\"\"\"\n    n = len(x_data)\n    P = np.zeros_like(x, dtype=float)\n    \n    for i in range(n):\n        L = np.ones_like(x, dtype=float)\n        for j in range(n):\n            if j != i:\n                L *= (x - x_data[j]) / (x_data[i] - x_data[j])\n        P += y_data[i] * L\n    \n    return P\n\ndef compare_performance():\n    \"\"\"\n    Compare barycentric vs standard Lagrange.\n    \n    Returns:\n    - Dictionary with timing results\n    \"\"\"\n    x_data = np.linspace(0, 1, 20)\n    y_data = np.sin(2*np.pi*x_data)\n    x = np.linspace(0, 1, 1000)\n    \n    # Standard form\n    start = time.time()\n    P1 = lagrange_interpolation_standard(x, x_data, y_data)\n    time_standard = time.time() - start\n    \n    # Barycentric form (with precomputed weights)\n    w = barycentric_weights(x_data)\n    start = time.time()\n    P2 = barycentric_interpolation(x, x_data, y_data, w)\n    time_barycentric = time.time() - start\n    \n    return {\n        'time_standard': time_standard,\n        'time_barycentric': time_barycentric,\n        'speedup': time_standard / time_barycentric,\n        'max_difference': np.max(np.abs(P1 - P2))\n    }\n\n# Test\nresult = compare_performance()\nprint(f\"Standard Lagrange: {result['time_standard']:.6f}s\")\nprint(f\"Barycentric form: {result['time_barycentric']:.6f}s\")\nprint(f\"Speedup: {result['speedup']:.2f}x\")\nprint(f\"Max difference: {result['max_difference']:.2e}\")",
+    "testCases": [
+      {
+        "input": {"n_nodes": 20, "n_eval": 1000},
+        "expected": {"speedup_positive": true, "accurate": true},
+        "description": "Barycentric should be faster and equally accurate"
+      }
+    ],
+    "hints": [
+      "Barycentric weights can be precomputed once and reused",
+      "Check for exact node matches to avoid division by zero",
+      "The barycentric form is O(n) per evaluation after weight computation"
+    ],
+    "commonMistakes": [
+      "Not handling exact node matches (division by zero)",
+      "Forgetting to precompute weights for performance comparison",
+      "Using wrong tolerance for exact match detection"
+    ],
+    "extensionActivities": [
+      "Implement second barycentric form with modified weights",
+      "Analyze condition numbers for different node distributions",
+      "Test with Chebyshev nodes for optimal stability"
+    ]
+  },
+  {
+    "id": "math402-t3-ex10",
+    "subjectId": "math402",
+    "topicId": "math402-topic-3",
+    "title": "Spline vs Polynomial Comparison",
+    "difficulty": "intermediate",
+    "estimatedTime": "35 minutes",
+    "learningObjectives": [
+      "Compare cubic splines with high-degree polynomials",
+      "Analyze interpolation error and smoothness",
+      "Understand advantages of piecewise methods"
+    ],
+    "problem": "# Spline vs Polynomial Comparison\n\nCompare cubic spline interpolation with polynomial interpolation on Runge's function.\n\n## Requirements\n\n1. Implement both methods for the same data points\n2. Compute maximum errors for both\n3. Analyze which method performs better and why\n4. Test with n = 9 equally spaced points on [-1, 1]\n\n## Expected Result\n\nThe spline should significantly outperform the polynomial.",
+    "starterCode": "import numpy as np\nfrom numpy.polynomial import polynomial as P\n\ndef natural_cubic_spline(x_data, f_data):\n    \"\"\"Natural cubic spline (from previous exercise).\"\"\"\n    # TODO: Implement or copy from ex05\n    pass\n\ndef evaluate_spline(x, x_data, f_data, M, h):\n    \"\"\"Evaluate spline (from previous exercise).\"\"\"\n    # TODO: Implement or copy from ex05\n    pass\n\ndef compare_methods():\n    \"\"\"\n    Compare cubic spline vs polynomial interpolation.\n    \n    Returns:\n    - error_spline: max error for spline\n    - error_poly: max error for polynomial\n    \"\"\"\n    f = lambda x: 1 / (1 + 25*x**2)\n    n = 9\n    \n    # TODO: Implement comparison\n    pass\n\n# Test\nerror_spline, error_poly = compare_methods()\nprint(f\"Spline max error: {error_spline:.6e}\")\nprint(f\"Polynomial max error: {error_poly:.6e}\")\nprint(f\"Spline is {error_poly/error_spline:.1f}x better\")",
+    "solution": "import numpy as np\nfrom numpy.polynomial import polynomial as P\n\ndef natural_cubic_spline(x_data, f_data):\n    \"\"\"Natural cubic spline.\"\"\"\n    n = len(x_data) - 1\n    h = np.diff(x_data)\n    \n    A = np.zeros((n-1, n-1))\n    b = np.zeros(n-1)\n    \n    for i in range(n-1):\n        if i > 0:\n            A[i, i-1] = h[i]\n        A[i, i] = 2 * (h[i] + h[i+1])\n        if i < n-2:\n            A[i, i+1] = h[i+1]\n        \n        b[i] = 6 * ((f_data[i+2] - f_data[i+1])/h[i+1] -\n                     (f_data[i+1] - f_data[i])/h[i])\n    \n    M_interior = np.linalg.solve(A, b)\n    M = np.zeros(n+1)\n    M[1:-1] = M_interior\n    \n    return M, h\n\ndef evaluate_spline(x, x_data, f_data, M, h):\n    \"\"\"Evaluate spline.\"\"\"\n    n = len(x_data) - 1\n    result = np.zeros_like(x, dtype=float)\n    \n    for k in range(len(x)):\n        i = np.searchsorted(x_data[1:], x[k])\n        i = min(i, n-1)\n        \n        dx_left = x_data[i+1] - x[k]\n        dx_right = x[k] - x_data[i]\n        \n        result[k] = (M[i] * dx_left**3 / (6*h[i]) +\n                     M[i+1] * dx_right**3 / (6*h[i]) +\n                     (f_data[i] - M[i]*h[i]**2/6) * dx_left / h[i] +\n                     (f_data[i+1] - M[i+1]*h[i]**2/6) * dx_right / h[i])\n    \n    return result\n\ndef compare_methods():\n    \"\"\"\n    Compare cubic spline vs polynomial interpolation.\n    \n    Returns:\n    - error_spline: max error for spline\n    - error_poly: max error for polynomial\n    \"\"\"\n    f = lambda x: 1 / (1 + 25*x**2)\n    n = 9\n    \n    # Data points\n    x_data = np.linspace(-1, 1, n)\n    f_data = f(x_data)\n    \n    # Evaluation points\n    x_eval = np.linspace(-1, 1, 500)\n    f_true = f(x_eval)\n    \n    # Cubic spline\n    M, h = natural_cubic_spline(x_data, f_data)\n    S = evaluate_spline(x_eval, x_data, f_data, M, h)\n    error_spline = np.max(np.abs(f_true - S))\n    \n    # Polynomial interpolation\n    poly_coeffs = P.polyfit(x_data, f_data, n-1)\n    poly_vals = P.polyval(x_eval, poly_coeffs)\n    error_poly = np.max(np.abs(f_true - poly_vals))\n    \n    return error_spline, error_poly\n\n# Test\nerror_spline, error_poly = compare_methods()\nprint(f\"Spline max error: {error_spline:.6e}\")\nprint(f\"Polynomial max error: {error_poly:.6e}\")\nprint(f\"Spline is {error_poly/error_spline:.1f}x better\")",
+    "testCases": [
+      {
+        "input": {"function": "Runge", "n_points": 9},
+        "expected": {"spline_better": true},
+        "description": "Spline should have much smaller error than polynomial"
+      }
+    ],
+    "hints": [
+      "Use the same data points for both methods",
+      "Runge's function shows dramatic differences between methods",
+      "Splines avoid oscillations by using piecewise low-degree polynomials"
+    ],
+    "commonMistakes": [
+      "Using different data points for the two methods",
+      "Not using enough evaluation points to capture oscillations",
+      "Comparing different polynomial degrees"
+    ],
+    "extensionActivities": [
+      "Visualize both interpolations to see the oscillations",
+      "Test with different numbers of data points",
+      "Analyze the second derivative continuity of the spline"
+    ]
+  },
+  {
+    "id": "math402-t3-ex11",
+    "subjectId": "math402",
+    "topicId": "math402-topic-3",
+    "title": "Least Squares with QR Decomposition",
+    "difficulty": "advanced",
+    "estimatedTime": "40 minutes",
+    "learningObjectives": [
+      "Implement least squares using QR decomposition",
+      "Understand numerical stability advantages",
+      "Compare with normal equations approach"
+    ],
+    "problem": "# Least Squares with QR Decomposition\n\nImplement polynomial least squares using QR decomposition for improved numerical stability.\n\n## Requirements\n\n1. Use np.linalg.qr to decompose the design matrix\n2. Solve R c = Q^T y by back-substitution\n3. Compare results with normal equations for high-degree polynomials\n\n## Theory\n\nQR decomposition avoids forming A^T A, which can be ill-conditioned for high polynomial degrees.",
+    "starterCode": "import numpy as np\n\ndef least_squares_qr(x_data, y_data, degree):\n    \"\"\"\n    Least squares using QR decomposition.\n    \n    Parameters:\n    - x_data, y_data: data points\n    - degree: polynomial degree\n    \n    Returns:\n    - coeffs: polynomial coefficients\n    - residual: sum of squared residuals\n    \"\"\"\n    # TODO: Implement\n    pass\n\ndef least_squares_normal(x_data, y_data, degree):\n    \"\"\"\n    Least squares using normal equations.\n    \"\"\"\n    # TODO: Implement\n    pass\n\ndef compare_stability():\n    \"\"\"\n    Compare QR vs normal equations for high degree.\n    \n    Returns:\n    - condition_ATA: condition number of A^T A\n    - condition_R: condition number of R\n    - difference: max difference in coefficients\n    \"\"\"\n    # TODO: Implement\n    pass\n\n# Test\nresult = compare_stability()\nprint(f\"Condition number of A^T A: {result['condition_ATA']:.2e}\")\nprint(f\"Condition number of R: {result['condition_R']:.2e}\")\nprint(f\"Coefficient difference: {result['difference']:.2e}\")",
+    "solution": "import numpy as np\n\ndef least_squares_qr(x_data, y_data, degree):\n    \"\"\"\n    Least squares using QR decomposition.\n    \n    Parameters:\n    - x_data, y_data: data points\n    - degree: polynomial degree\n    \n    Returns:\n    - coeffs: polynomial coefficients\n    - residual: sum of squared residuals\n    \"\"\"\n    m = len(x_data)\n    n = degree + 1\n    \n    # Build design matrix\n    A = np.vander(x_data, n, increasing=True)\n    \n    # QR decomposition\n    Q, R = np.linalg.qr(A)\n    \n    # Solve R c = Q^T y\n    coeffs = np.linalg.solve(R, Q.T @ y_data)\n    \n    # Compute residual\n    y_approx = A @ coeffs\n    residual = np.sum((y_data - y_approx)**2)\n    \n    return coeffs, residual\n\ndef least_squares_normal(x_data, y_data, degree):\n    \"\"\"\n    Least squares using normal equations.\n    \"\"\"\n    m = len(x_data)\n    n = degree + 1\n    \n    A = np.vander(x_data, n, increasing=True)\n    \n    # Solve normal equations: A^T A c = A^T y\n    ATA = A.T @ A\n    ATy = A.T @ y_data\n    \n    coeffs = np.linalg.solve(ATA, ATy)\n    \n    y_approx = A @ coeffs\n    residual = np.sum((y_data - y_approx)**2)\n    \n    return coeffs, residual\n\ndef compare_stability():\n    \"\"\"\n    Compare QR vs normal equations for high degree.\n    \n    Returns:\n    - condition_ATA: condition number of A^T A\n    - condition_R: condition number of R\n    - difference: max difference in coefficients\n    \"\"\"\n    # Generate test data\n    np.random.seed(42)\n    x_data = np.linspace(0, 1, 20)\n    y_data = np.sin(2*np.pi*x_data) + 0.1*np.random.randn(len(x_data))\n    \n    degree = 12\n    n = degree + 1\n    \n    # Build design matrix\n    A = np.vander(x_data, n, increasing=True)\n    \n    # Compute condition numbers\n    ATA = A.T @ A\n    Q, R = np.linalg.qr(A)\n    \n    condition_ATA = np.linalg.cond(ATA)\n    condition_R = np.linalg.cond(R)\n    \n    # Compare solutions\n    coeffs_normal, _ = least_squares_normal(x_data, y_data, degree)\n    coeffs_qr, _ = least_squares_qr(x_data, y_data, degree)\n    \n    difference = np.max(np.abs(coeffs_normal - coeffs_qr))\n    \n    return {\n        'condition_ATA': condition_ATA,\n        'condition_R': condition_R,\n        'difference': difference\n    }\n\n# Test\nresult = compare_stability()\nprint(f\"Condition number of A^T A: {result['condition_ATA']:.2e}\")\nprint(f\"Condition number of R: {result['condition_R']:.2e}\")\nprint(f\"Coefficient difference: {result['difference']:.2e}\")",
+    "testCases": [
+      {
+        "input": {"degree": 12, "n_points": 20},
+        "expected": {"R_better_conditioned": true},
+        "description": "R should be better conditioned than A^T A"
+      }
+    ],
+    "hints": [
+      "Use np.linalg.qr for the decomposition",
+      "Condition number of A^T A is roughly square of condition number of A",
+      "QR is more stable for high-degree polynomials"
+    ],
+    "commonMistakes": [
+      "Not using the correct orientation of Q in Q^T y",
+      "Forgetting that R is upper triangular (could use solve_triangular)",
+      "Using np.vander with wrong ordering (use increasing=True)"
+    ],
+    "extensionActivities": [
+      "Implement weighted least squares with QR",
+      "Test with even higher degrees to see numerical breakdown",
+      "Analyze how condition number grows with polynomial degree"
+    ]
+  },
+  {
+    "id": "math402-t3-ex12",
+    "subjectId": "math402",
+    "topicId": "math402-topic-3",
+    "title": "Clamped Cubic Spline",
+    "difficulty": "advanced",
+    "estimatedTime": "40 minutes",
+    "learningObjectives": [
+      "Implement clamped boundary conditions for splines",
+      "Modify tridiagonal system for derivative constraints",
+      "Compare with natural spline"
+    ],
+    "problem": "# Clamped Cubic Spline\n\nImplement cubic spline with clamped boundary conditions (specified derivatives at endpoints).\n\n## Requirements\n\n1. Modify the tridiagonal system to include clamped boundary conditions\n2. Use specified derivatives at x_0 and x_n instead of zero second derivatives\n3. Test with f(x) = sin(x) on [0, π] with exact derivatives at endpoints\n\n## Theory\n\nClamped conditions: S'(x_0) = f_0' and S'(x_n) = f_n'\n\nThis adds two equations instead of setting M_0 = M_n = 0.",
+    "starterCode": "import numpy as np\n\ndef clamped_cubic_spline(x_data, f_data, df0, dfn):\n    \"\"\"\n    Construct clamped cubic spline.\n    \n    Parameters:\n    - x_data: array of n+1 knots\n    - f_data: function values at knots\n    - df0: derivative at first knot\n    - dfn: derivative at last knot\n    \n    Returns:\n    - M: second derivatives at knots\n    - h: interval widths\n    \"\"\"\n    # TODO: Implement\n    pass\n\ndef evaluate_spline(x, x_data, f_data, M, h):\n    \"\"\"Evaluate spline (same as natural spline).\"\"\"\n    # TODO: Implement or copy from ex05\n    pass\n\ndef test_clamped_spline():\n    \"\"\"\n    Test clamped spline on sin(x).\n    \n    Returns:\n    - max_error: maximum interpolation error\n    \"\"\"\n    # TODO: Implement\n    pass\n\n# Test\nerror = test_clamped_spline()\nprint(f\"Maximum error with clamped spline: {error:.6e}\")",
+    "solution": "import numpy as np\n\ndef clamped_cubic_spline(x_data, f_data, df0, dfn):\n    \"\"\"\n    Construct clamped cubic spline.\n    \n    Parameters:\n    - x_data: array of n+1 knots\n    - f_data: function values at knots\n    - df0: derivative at first knot\n    - dfn: derivative at last knot\n    \n    Returns:\n    - M: second derivatives at knots\n    - h: interval widths\n    \"\"\"\n    n = len(x_data) - 1\n    h = np.diff(x_data)\n    \n    # Build tridiagonal system (n+1 equations for n+1 unknowns)\n    A = np.zeros((n+1, n+1))\n    b = np.zeros(n+1)\n    \n    # First row: clamped condition at x_0\n    A[0, 0] = 2*h[0]\n    A[0, 1] = h[0]\n    b[0] = 6*((f_data[1] - f_data[0])/h[0] - df0)\n    \n    # Interior rows\n    for i in range(1, n):\n        A[i, i-1] = h[i-1]\n        A[i, i] = 2*(h[i-1] + h[i])\n        A[i, i+1] = h[i]\n        b[i] = 6*((f_data[i+1] - f_data[i])/h[i] - (f_data[i] - f_data[i-1])/h[i-1])\n    \n    # Last row: clamped condition at x_n\n    A[n, n-1] = h[n-1]\n    A[n, n] = 2*h[n-1]\n    b[n] = 6*(dfn - (f_data[n] - f_data[n-1])/h[n-1])\n    \n    # Solve for M\n    M = np.linalg.solve(A, b)\n    \n    return M, h\n\ndef evaluate_spline(x, x_data, f_data, M, h):\n    \"\"\"Evaluate spline.\"\"\"\n    n = len(x_data) - 1\n    result = np.zeros_like(x, dtype=float)\n    \n    for k in range(len(x)):\n        i = np.searchsorted(x_data[1:], x[k])\n        i = min(i, n-1)\n        \n        dx_left = x_data[i+1] - x[k]\n        dx_right = x[k] - x_data[i]\n        \n        result[k] = (M[i] * dx_left**3 / (6*h[i]) +\n                     M[i+1] * dx_right**3 / (6*h[i]) +\n                     (f_data[i] - M[i]*h[i]**2/6) * dx_left / h[i] +\n                     (f_data[i+1] - M[i+1]*h[i]**2/6) * dx_right / h[i])\n    \n    return result\n\ndef test_clamped_spline():\n    \"\"\"\n    Test clamped spline on sin(x).\n    \n    Returns:\n    - max_error: maximum interpolation error\n    \"\"\"\n    # Data points\n    x_data = np.linspace(0, np.pi, 6)\n    f_data = np.sin(x_data)\n    \n    # Derivatives at endpoints\n    df0 = np.cos(0)  # cos(0) = 1\n    dfn = np.cos(np.pi)  # cos(π) = -1\n    \n    # Construct spline\n    M, h = clamped_cubic_spline(x_data, f_data, df0, dfn)\n    \n    # Evaluate\n    x_eval = np.linspace(0, np.pi, 500)\n    S = evaluate_spline(x_eval, x_data, f_data, M, h)\n    f_true = np.sin(x_eval)\n    \n    error = np.max(np.abs(f_true - S))\n    \n    return error\n\n# Test\nerror = test_clamped_spline()\nprint(f\"Maximum error with clamped spline: {error:.6e}\")",
+    "testCases": [
+      {
+        "input": {"function": "sin(x)", "interval": "[0, π]", "n_points": 6},
+        "expected": {"small_error": true},
+        "description": "Should interpolate sin(x) very accurately with exact derivatives"
+      }
+    ],
+    "hints": [
+      "Clamped spline has n+1 equations for n+1 unknowns (including M_0 and M_n)",
+      "The boundary equations involve the specified derivatives",
+      "The tridiagonal structure is slightly different from natural spline"
+    ],
+    "commonMistakes": [
+      "Using natural boundary conditions instead of clamped",
+      "Wrong signs in the boundary equations",
+      "Forgetting to include M_0 and M_n in the system"
+    ],
+    "extensionActivities": [
+      "Compare clamped vs natural spline accuracy",
+      "Implement periodic splines for periodic functions",
+      "Test sensitivity to incorrect derivative values at endpoints"
+    ]
+  },
+  {
+    "id": "math402-t3-ex13",
+    "subjectId": "math402",
+    "topicId": "math402-topic-3",
+    "title": "Weighted Least Squares Regression",
+    "difficulty": "intermediate",
+    "estimatedTime": "30 minutes",
+    "learningObjectives": [
+      "Implement weighted least squares for varying data quality",
+      "Understand how weights affect the fit",
+      "Apply to data with non-uniform uncertainties"
+    ],
+    "problem": "# Weighted Least Squares Regression\n\nImplement weighted least squares where different data points have different reliabilities.\n\n## Requirements\n\n1. Modify normal equations to include weight matrix W\n2. Solve A^T W A c = A^T W y\n3. Test with data where some points have larger uncertainties\n\n## Application\n\nCommon in physics/engineering where measurements have different error bars.",
+    "starterCode": "import numpy as np\n\ndef weighted_least_squares(x_data, y_data, weights, degree):\n    \"\"\"\n    Weighted polynomial least squares.\n    \n    Parameters:\n    - x_data: x-coordinates\n    - y_data: y-coordinates\n    - weights: array of weights w_i (often 1/σ_i²)\n    - degree: polynomial degree\n    \n    Returns:\n    - coeffs: polynomial coefficients\n    - residual: weighted sum of squared residuals\n    \"\"\"\n    # TODO: Implement\n    pass\n\ndef generate_test_data():\n    \"\"\"\n    Generate test data with varying uncertainties.\n    \n    Returns:\n    - x_data, y_data, weights\n    \"\"\"\n    # TODO: Implement\n    pass\n\n# Test\nx_data, y_data, weights = generate_test_data()\ncoeffs_weighted, res_weighted = weighted_least_squares(x_data, y_data, weights, 1)\ncoeffs_unweighted, res_unweighted = weighted_least_squares(x_data, y_data, np.ones_like(weights), 1)\n\nprint(f\"Weighted coefficients: {coeffs_weighted}\")\nprint(f\"Unweighted coefficients: {coeffs_unweighted}\")\nprint(f\"Difference: {np.linalg.norm(coeffs_weighted - coeffs_unweighted):.6f}\")",
+    "solution": "import numpy as np\n\ndef weighted_least_squares(x_data, y_data, weights, degree):\n    \"\"\"\n    Weighted polynomial least squares.\n    \n    Parameters:\n    - x_data: x-coordinates\n    - y_data: y-coordinates\n    - weights: array of weights w_i (often 1/σ_i²)\n    - degree: polynomial degree\n    \n    Returns:\n    - coeffs: polynomial coefficients\n    - residual: weighted sum of squared residuals\n    \"\"\"\n    m = len(x_data)\n    n = degree + 1\n    \n    # Build design matrix\n    A = np.zeros((m, n))\n    for j in range(n):\n        A[:, j] = x_data**j\n    \n    # Weight matrix\n    W = np.diag(weights)\n    \n    # Solve weighted normal equations: A^T W A c = A^T W y\n    ATWA = A.T @ W @ A\n    ATWy = A.T @ W @ y_data\n    \n    coeffs = np.linalg.solve(ATWA, ATWy)\n    \n    # Compute weighted residual\n    y_approx = A @ coeffs\n    residual = np.sum(weights * (y_data - y_approx)**2)\n    \n    return coeffs, residual\n\ndef generate_test_data():\n    \"\"\"\n    Generate test data with varying uncertainties.\n    \n    Returns:\n    - x_data, y_data, weights\n    \"\"\"\n    np.random.seed(42)\n    n = 20\n    \n    x_data = np.linspace(0, 10, n)\n    y_true = 2 + 1.5*x_data  # True line: y = 2 + 1.5x\n    \n    # Variable uncertainties (larger at ends)\n    sigma = 0.5 + 0.5*np.abs(x_data - 5)/5\n    \n    # Add noise proportional to uncertainty\n    y_data = y_true + sigma * np.random.randn(n)\n    \n    # Weights are inverse variance\n    weights = 1 / sigma**2\n    \n    return x_data, y_data, weights\n\n# Test\nx_data, y_data, weights = generate_test_data()\ncoeffs_weighted, res_weighted = weighted_least_squares(x_data, y_data, weights, 1)\ncoeffs_unweighted, res_unweighted = weighted_least_squares(x_data, y_data, np.ones_like(weights), 1)\n\nprint(f\"Weighted coefficients: {coeffs_weighted}\")\nprint(f\"Unweighted coefficients: {coeffs_unweighted}\")\nprint(f\"Difference: {np.linalg.norm(coeffs_weighted - coeffs_unweighted):.6f}\")\nprint(f\"\\nTrue coefficients: [2.0, 1.5]\")",
+    "testCases": [
+      {
+        "input": {"true_line": "y = 2 + 1.5x", "varying_uncertainty": true},
+        "expected": {"weighted_closer_to_true": true},
+        "description": "Weighted fit should be closer to true parameters"
+      }
+    ],
+    "hints": [
+      "Weight matrix W is diagonal with weights on diagonal",
+      "Higher weights mean more reliable data points",
+      "Weights are often w_i = 1/σ_i² where σ_i is the uncertainty"
+    ],
+    "commonMistakes": [
+      "Using uncertainty values directly instead of 1/σ²",
+      "Not using matrix multiplication correctly with W",
+      "Forgetting to apply weights to residual computation"
+    ],
+    "extensionActivities": [
+      "Visualize the fit showing error bars proportional to 1/√w_i",
+      "Implement iteratively reweighted least squares",
+      "Compare with robust regression methods"
+    ]
+  },
+  {
+    "id": "math402-t3-ex14",
+    "subjectId": "math402",
+    "topicId": "math402-topic-3",
+    "title": "Interpolation Error Bounds",
+    "difficulty": "beginner",
+    "estimatedTime": "25 minutes",
+    "learningObjectives": [
+      "Compute theoretical error bounds for interpolation",
+      "Compare with actual observed errors",
+      "Understand role of derivatives in error"
+    ],
+    "problem": "# Interpolation Error Bounds\n\nCompute theoretical error bounds for polynomial interpolation and compare with actual errors.\n\n## Requirements\n\n1. Implement error bound formula: |f(x) - P_n(x)| ≤ M/(n+1)! * |∏(x - x_i)|\n2. Estimate M = max|f^(n+1)(x)| numerically\n3. Compare bound with actual error\n\n## Test Function\n\nUse f(x) = sin(x) on [0, π] with 5 equally spaced nodes.",
+    "starterCode": "import numpy as np\nfrom scipy.misc import derivative\n\ndef nodal_polynomial(x, x_data):\n    \"\"\"\n    Compute nodal polynomial ∏(x - x_i).\n    \n    Parameters:\n    - x: evaluation points\n    - x_data: interpolation nodes\n    \n    Returns:\n    - Product of (x - x_i) for all i\n    \"\"\"\n    # TODO: Implement\n    pass\n\ndef estimate_derivative_bound(f, n, a, b):\n    \"\"\"\n    Estimate max|f^(n)(x)| on [a,b].\n    \n    Parameters:\n    - f: function\n    - n: derivative order\n    - a, b: interval\n    \n    Returns:\n    - M: estimated bound\n    \"\"\"\n    # TODO: Implement\n    pass\n\ndef compute_error_bound(f, x_data, x_eval, degree):\n    \"\"\"\n    Compute theoretical error bound.\n    \n    Returns:\n    - bound: array of error bounds at x_eval points\n    \"\"\"\n    # TODO: Implement\n    pass\n\n# Test\nf = lambda x: np.sin(x)\nx_data = np.linspace(0, np.pi, 5)\nx_eval = np.linspace(0, np.pi, 100)\n\nbound = compute_error_bound(f, x_data, x_eval, len(x_data)-1)\nprint(f\"Max theoretical bound: {np.max(bound):.6f}\")",
+    "solution": "import numpy as np\nfrom scipy.misc import derivative\n\ndef nodal_polynomial(x, x_data):\n    \"\"\"\n    Compute nodal polynomial ∏(x - x_i).\n    \n    Parameters:\n    - x: evaluation points\n    - x_data: interpolation nodes\n    \n    Returns:\n    - Product of (x - x_i) for all i\n    \"\"\"\n    result = np.ones_like(x, dtype=float)\n    for xi in x_data:\n        result *= (x - xi)\n    return result\n\ndef estimate_derivative_bound(f, n, a, b, num_points=100):\n    \"\"\"\n    Estimate max|f^(n)(x)| on [a,b].\n    \n    Parameters:\n    - f: function\n    - n: derivative order\n    - a, b: interval\n    - num_points: number of sample points\n    \n    Returns:\n    - M: estimated bound\n    \"\"\"\n    x_sample = np.linspace(a, b, num_points)\n    \n    # Compute n-th derivative numerically\n    df = np.array([derivative(f, xi, n=n, dx=1e-5) for xi in x_sample])\n    \n    M = np.max(np.abs(df))\n    return M\n\ndef compute_error_bound(f, x_data, x_eval, degree):\n    \"\"\"\n    Compute theoretical error bound.\n    \n    Returns:\n    - bound: array of error bounds at x_eval points\n    \"\"\"\n    n = degree\n    a, b = np.min(x_data), np.max(x_data)\n    \n    # Estimate M = max|f^(n+1)(x)|\n    M = estimate_derivative_bound(f, n+1, a, b)\n    \n    # Compute nodal polynomial\n    nodal = np.abs(nodal_polynomial(x_eval, x_data))\n    \n    # Error bound: M/(n+1)! * |nodal polynomial|\n    bound = M / np.math.factorial(n+1) * nodal\n    \n    return bound\n\n# Test\nfrom numpy.polynomial import polynomial as P\n\nf = lambda x: np.sin(x)\nx_data = np.linspace(0, np.pi, 5)\ny_data = f(x_data)\nx_eval = np.linspace(0, np.pi, 100)\n\n# Compute bound\nbound = compute_error_bound(f, x_data, x_eval, len(x_data)-1)\n\n# Compute actual error\npoly_coeffs = P.polyfit(x_data, y_data, len(x_data)-1)\np_eval = P.polyval(x_eval, poly_coeffs)\nactual_error = np.abs(f(x_eval) - p_eval)\n\nprint(f\"Max theoretical bound: {np.max(bound):.6f}\")\nprint(f\"Max actual error: {np.max(actual_error):.6f}\")\nprint(f\"Bound is valid: {np.all(actual_error <= bound + 1e-10)}\")",
+    "testCases": [
+      {
+        "input": {"function": "sin(x)", "interval": "[0, π]", "n_nodes": 5},
+        "expected": {"bound_valid": true},
+        "description": "Theoretical bound should exceed actual error"
+      }
+    ],
+    "hints": [
+      "Use scipy.misc.derivative for numerical differentiation",
+      "The nodal polynomial is the product of (x - x_i) for all nodes",
+      "The error bound should always be ≥ actual error"
+    ],
+    "commonMistakes": [
+      "Forgetting the factorial in the denominator",
+      "Using wrong derivative order (should be n+1, not n)",
+      "Not taking absolute value of nodal polynomial"
+    ],
+    "extensionActivities": [
+      "Compare error bounds for equally spaced vs Chebyshev nodes",
+      "Analyze how bound changes with number of nodes",
+      "Find points where error is close to the bound"
+    ]
+  },
+  {
+    "id": "math402-t3-ex15",
+    "subjectId": "math402",
+    "topicId": "math402-topic-3",
+    "title": "Nyquist Sampling and Aliasing",
+    "difficulty": "advanced",
+    "estimatedTime": "35 minutes",
+    "learningObjectives": [
+      "Understand aliasing in trigonometric interpolation",
+      "Verify Nyquist-Shannon sampling theorem",
+      "Identify aliased frequencies in undersampled signals"
+    ],
+    "problem": "# Nyquist Sampling and Aliasing\n\nDemonstrate aliasing effects when sampling rate is insufficient for signal frequency.\n\n## Requirements\n\n1. Create signals with different frequencies\n2. Sample at various rates and reconstruct using FFT\n3. Show that high frequencies alias to low frequencies when undersampled\n4. Verify Nyquist criterion: sample rate ≥ 2 * max frequency\n\n## Example\n\ncos(10x) sampled at N=8 points appears identical to a lower frequency.",
+    "starterCode": "import numpy as np\n\ndef sample_and_reconstruct(f, frequency, N):\n    \"\"\"\n    Sample periodic function and reconstruct using trigonometric interpolation.\n    \n    Parameters:\n    - f: function (should be periodic with period 2π)\n    - frequency: main frequency component\n    - N: number of sample points\n    \n    Returns:\n    - x_data: sample points\n    - f_data: sampled values\n    - reconstructed: reconstructed function on fine grid\n    - aliased: True if aliasing occurs\n    \"\"\"\n    # TODO: Implement\n    pass\n\ndef demonstrate_aliasing():\n    \"\"\"\n    Demonstrate aliasing with different sampling rates.\n    \n    Returns:\n    - results: dict with aliasing analysis\n    \"\"\"\n    # TODO: Implement\n    pass\n\n# Test\nresults = demonstrate_aliasing()\nfor key, value in results.items():\n    print(f\"{key}: {value}\")",
+    "solution": "import numpy as np\n\ndef sample_and_reconstruct(f, frequency, N):\n    \"\"\"\n    Sample periodic function and reconstruct using trigonometric interpolation.\n    \n    Parameters:\n    - f: function (should be periodic with period 2π)\n    - frequency: main frequency component\n    - N: number of sample points\n    \n    Returns:\n    - x_data: sample points\n    - f_data: sampled values\n    - x_fine: fine grid for reconstruction\n    - reconstructed: reconstructed function on fine grid\n    - aliased: True if aliasing occurs\n    \"\"\"\n    # Sample\n    x_data = np.linspace(0, 2*np.pi, N, endpoint=False)\n    f_data = f(x_data)\n    \n    # Reconstruct using FFT\n    coeffs = np.fft.fft(f_data) / N\n    \n    # Evaluate on fine grid\n    x_fine = np.linspace(0, 2*np.pi, 500)\n    n = (N - 1) // 2\n    \n    c = np.concatenate([coeffs[N//2+1:], coeffs[:N//2+1]])\n    \n    reconstructed = np.zeros_like(x_fine, dtype=complex)\n    for k in range(-n, n+1):\n        reconstructed += c[k+n] * np.exp(1j * k * x_fine)\n    \n    reconstructed = np.real(reconstructed)\n    \n    # Check for aliasing: Nyquist frequency is N/2\n    nyquist_freq = N // 2\n    aliased = frequency > nyquist_freq\n    \n    return x_data, f_data, x_fine, reconstructed, aliased\n\ndef demonstrate_aliasing():\n    \"\"\"\n    Demonstrate aliasing with different sampling rates.\n    \n    Returns:\n    - results: dict with aliasing analysis\n    \"\"\"\n    results = {}\n    \n    # Test case 1: Adequate sampling\n    freq1 = 3\n    N1 = 16  # Nyquist requires N ≥ 2*freq1 = 6\n    f1 = lambda x: np.cos(freq1 * x)\n    _, _, x_fine1, recon1, alias1 = sample_and_reconstruct(f1, freq1, N1)\n    error1 = np.max(np.abs(f1(x_fine1) - recon1))\n    \n    results['adequate_sampling_N'] = N1\n    results['adequate_sampling_freq'] = freq1\n    results['adequate_sampling_error'] = error1\n    results['adequate_sampling_aliased'] = alias1\n    \n    # Test case 2: Undersampling (aliasing)\n    freq2 = 10\n    N2 = 8  # Nyquist requires N ≥ 20, but we only use 8\n    f2 = lambda x: np.cos(freq2 * x)\n    _, _, x_fine2, recon2, alias2 = sample_and_reconstruct(f2, freq2, N2)\n    \n    # The frequency 10 aliases to freq_alias = 10 mod 8 = 2\n    freq_alias = freq2 % N2\n    if freq_alias > N2 // 2:\n        freq_alias = N2 - freq_alias\n    \n    f_alias = lambda x: np.cos(freq_alias * x)\n    match_error = np.max(np.abs(f_alias(x_fine2) - recon2))\n    \n    results['undersampling_N'] = N2\n    results['undersampling_freq'] = freq2\n    results['undersampling_aliased'] = alias2\n    results['aliased_frequency'] = freq_alias\n    results['alias_match_error'] = match_error\n    \n    return results\n\n# Test\nresults = demonstrate_aliasing()\nprint(\"Adequate Sampling:\")\nprint(f\"  N={results['adequate_sampling_N']}, freq={results['adequate_sampling_freq']}\")\nprint(f\"  Error: {results['adequate_sampling_error']:.2e}\")\nprint(f\"  Aliased: {results['adequate_sampling_aliased']}\")\nprint(\"\\nUndersampling (Aliasing):\")\nprint(f\"  N={results['undersampling_N']}, freq={results['undersampling_freq']}\")\nprint(f\"  Aliased: {results['undersampling_aliased']}\")\nprint(f\"  Frequency {results['undersampling_freq']} aliases to {results['aliased_frequency']}\")\nprint(f\"  Match error: {results['alias_match_error']:.2e}\")",
+    "testCases": [
+      {
+        "input": {"freq": 10, "N": 8},
+        "expected": {"aliased": true, "apparent_freq": 2},
+        "description": "Frequency 10 with 8 samples should alias to frequency 2"
+      },
+      {
+        "input": {"freq": 3, "N": 16},
+        "expected": {"aliased": false, "accurate": true},
+        "description": "Frequency 3 with 16 samples should not alias"
+      }
+    ],
+    "hints": [
+      "Nyquist frequency is N/2 for N sample points",
+      "Frequencies above Nyquist appear as lower frequencies",
+      "Use modular arithmetic to find aliased frequency",
+      "The reconstructed signal matches the aliased frequency, not the original"
+    ],
+    "commonMistakes": [
+      "Not understanding that aliasing is unavoidable with insufficient samples",
+      "Computing aliased frequency incorrectly",
+      "Expecting error to indicate aliasing (reconstruction is exact for aliased frequency)"
+    ],
+    "extensionActivities": [
+      "Visualize original vs aliased signals",
+      "Implement anti-aliasing filters",
+      "Explore aliasing in audio or image signals"
+    ]
+  },
+  {
+    "id": "math402-t3-ex16",
+    "subjectId": "math402",
+    "topicId": "math402-topic-3",
+    "title": "Comprehensive Interpolation Toolkit",
+    "difficulty": "advanced",
+    "estimatedTime": "50 minutes",
+    "learningObjectives": [
+      "Implement unified interface for multiple interpolation methods",
+      "Compare all methods on same test problems",
+      "Choose appropriate method for given data characteristics"
+    ],
+    "problem": "# Comprehensive Interpolation Toolkit\n\nCreate a unified toolkit that implements all interpolation methods studied and provides recommendations.\n\n## Requirements\n\n1. Implement class-based interface for:\n   - Lagrange interpolation\n   - Newton divided differences\n   - Natural cubic spline\n   - Hermite interpolation (if derivatives available)\n   - Trigonometric interpolation (if periodic)\n\n2. Provide `fit()` and `evaluate()` methods for each\n\n3. Implement `recommend_method()` that analyzes data and suggests best approach\n\n4. Compare all methods on test datasets\n\n## Decision Criteria\n\n- If periodic: use trigonometric\n- If derivatives available: use Hermite\n- If many points (>20): use spline\n- If smooth function, few points: use polynomial with Chebyshev nodes\n- Default: natural cubic spline",
+    "starterCode": "import numpy as np\nfrom abc import ABC, abstractmethod\n\nclass Interpolator(ABC):\n    \"\"\"Base class for interpolation methods.\"\"\"\n    \n    @abstractmethod\n    def fit(self, x_data, y_data, **kwargs):\n        \"\"\"Fit interpolant to data.\"\"\"\n        pass\n    \n    @abstractmethod\n    def evaluate(self, x):\n        \"\"\"Evaluate interpolant at points x.\"\"\"\n        pass\n\nclass LagrangeInterpolator(Interpolator):\n    # TODO: Implement\n    pass\n\nclass NewtonInterpolator(Interpolator):\n    # TODO: Implement\n    pass\n\nclass SplineInterpolator(Interpolator):\n    # TODO: Implement\n    pass\n\nclass HermiteInterpolator(Interpolator):\n    # TODO: Implement\n    pass\n\nclass TrigonometricInterpolator(Interpolator):\n    # TODO: Implement\n    pass\n\ndef recommend_method(x_data, y_data, derivatives=None):\n    \"\"\"\n    Recommend best interpolation method based on data characteristics.\n    \n    Returns:\n    - method_name: string name of recommended method\n    - reason: explanation of recommendation\n    \"\"\"\n    # TODO: Implement decision logic\n    pass\n\ndef compare_all_methods(x_data, y_data, f_true, x_eval):\n    \"\"\"\n    Compare all applicable methods.\n    \n    Returns:\n    - results: dict mapping method name to max error\n    \"\"\"\n    # TODO: Implement\n    pass\n\n# Test on multiple datasets\nprint(\"Test 1: Smooth non-periodic function\")\nprint(\"Test 2: Periodic function\")\nprint(\"Test 3: Function with many data points\")",
+    "solution": "import numpy as np\nfrom abc import ABC, abstractmethod\nfrom numpy.polynomial import polynomial as P\n\nclass Interpolator(ABC):\n    \"\"\"Base class for interpolation methods.\"\"\"\n    \n    @abstractmethod\n    def fit(self, x_data, y_data, **kwargs):\n        \"\"\"Fit interpolant to data.\"\"\"\n        pass\n    \n    @abstractmethod\n    def evaluate(self, x):\n        \"\"\"Evaluate interpolant at points x.\"\"\"\n        pass\n\nclass LagrangeInterpolator(Interpolator):\n    def fit(self, x_data, y_data, **kwargs):\n        self.x_data = x_data\n        self.y_data = y_data\n    \n    def evaluate(self, x):\n        n = len(self.x_data)\n        P_result = np.zeros_like(x, dtype=float)\n        for i in range(n):\n            L = np.ones_like(x, dtype=float)\n            for j in range(n):\n                if j != i:\n                    L *= (x - self.x_data[j]) / (self.x_data[i] - self.x_data[j])\n            P_result += self.y_data[i] * L\n        return P_result\n\nclass NewtonInterpolator(Interpolator):\n    def fit(self, x_data, y_data, **kwargs):\n        self.x_data = x_data\n        n = len(x_data)\n        table = np.zeros((n, n))\n        table[:, 0] = y_data\n        for j in range(1, n):\n            for i in range(n - j):\n                table[i, j] = (table[i+1, j-1] - table[i, j-1]) / (x_data[i+j] - x_data[i])\n        self.coeffs = table[0, :]\n    \n    def evaluate(self, x):\n        n = len(self.coeffs)\n        p = self.coeffs[-1] * np.ones_like(x, dtype=float)\n        for i in range(n - 2, -1, -1):\n            p = self.coeffs[i] + (x - self.x_data[i]) * p\n        return p\n\nclass SplineInterpolator(Interpolator):\n    def fit(self, x_data, y_data, **kwargs):\n        self.x_data = x_data\n        self.y_data = y_data\n        n = len(x_data) - 1\n        self.h = np.diff(x_data)\n        \n        A = np.zeros((n-1, n-1))\n        b = np.zeros(n-1)\n        \n        for i in range(n-1):\n            if i > 0:\n                A[i, i-1] = self.h[i]\n            A[i, i] = 2 * (self.h[i] + self.h[i+1])\n            if i < n-2:\n                A[i, i+1] = self.h[i+1]\n            b[i] = 6 * ((y_data[i+2] - y_data[i+1])/self.h[i+1] -\n                         (y_data[i+1] - y_data[i])/self.h[i])\n        \n        M_interior = np.linalg.solve(A, b)\n        self.M = np.zeros(n+1)\n        self.M[1:-1] = M_interior\n    \n    def evaluate(self, x):\n        n = len(self.x_data) - 1\n        result = np.zeros_like(x, dtype=float)\n        \n        for k in range(len(x)):\n            i = np.searchsorted(self.x_data[1:], x[k])\n            i = min(i, n-1)\n            \n            dx_left = self.x_data[i+1] - x[k]\n            dx_right = x[k] - self.x_data[i]\n            \n            result[k] = (self.M[i] * dx_left**3 / (6*self.h[i]) +\n                         self.M[i+1] * dx_right**3 / (6*self.h[i]) +\n                         (self.y_data[i] - self.M[i]*self.h[i]**2/6) * dx_left / self.h[i] +\n                         (self.y_data[i+1] - self.M[i+1]*self.h[i]**2/6) * dx_right / self.h[i])\n        \n        return result\n\nclass TrigonometricInterpolator(Interpolator):\n    def fit(self, x_data, y_data, **kwargs):\n        self.coeffs = np.fft.fft(y_data) / len(y_data)\n        self.N = len(y_data)\n    \n    def evaluate(self, x):\n        n = (self.N - 1) // 2\n        c = np.concatenate([self.coeffs[self.N//2+1:], self.coeffs[:self.N//2+1]])\n        result = np.zeros_like(x, dtype=complex)\n        for k in range(-n, n+1):\n            result += c[k+n] * np.exp(1j * k * x)\n        return np.real(result)\n\ndef is_periodic(x_data, y_data, tol=1e-6):\n    \"\"\"Check if data appears periodic.\"\"\"\n    if len(x_data) < 3:\n        return False\n    # Simple check: first and last values similar, equally spaced\n    return abs(y_data[0] - y_data[-1]) < tol and np.allclose(np.diff(x_data), np.diff(x_data)[0])\n\ndef recommend_method(x_data, y_data, derivatives=None):\n    \"\"\"\n    Recommend best interpolation method based on data characteristics.\n    \n    Returns:\n    - method_name: string name of recommended method\n    - reason: explanation of recommendation\n    \"\"\"\n    n = len(x_data)\n    \n    # Check for periodicity\n    if is_periodic(x_data, y_data):\n        return \"trigonometric\", \"Data appears periodic, trigonometric interpolation optimal\"\n    \n    # Check if derivatives available\n    if derivatives is not None:\n        return \"hermite\", \"Derivatives provided, Hermite interpolation recommended\"\n    \n    # Many points: use spline\n    if n > 20:\n        return \"spline\", f\"Many points (n={n}), spline avoids oscillations\"\n    \n    # Moderate points: spline is safe default\n    if n > 10:\n        return \"spline\", \"Spline provides good balance of accuracy and smoothness\"\n    \n    # Few points: could use polynomial, but spline is safer\n    return \"spline\", \"Spline recommended as safe default for small datasets\"\n\ndef compare_all_methods(x_data, y_data, f_true, x_eval):\n    \"\"\"\n    Compare all applicable methods.\n    \n    Returns:\n    - results: dict mapping method name to max error\n    \"\"\"\n    y_true = f_true(x_eval)\n    results = {}\n    \n    # Lagrange\n    try:\n        lagrange = LagrangeInterpolator()\n        lagrange.fit(x_data, y_data)\n        y_lagrange = lagrange.evaluate(x_eval)\n        results['lagrange'] = np.max(np.abs(y_true - y_lagrange))\n    except:\n        results['lagrange'] = float('inf')\n    \n    # Newton\n    try:\n        newton = NewtonInterpolator()\n        newton.fit(x_data, y_data)\n        y_newton = newton.evaluate(x_eval)\n        results['newton'] = np.max(np.abs(y_true - y_newton))\n    except:\n        results['newton'] = float('inf')\n    \n    # Spline\n    try:\n        spline = SplineInterpolator()\n        spline.fit(x_data, y_data)\n        y_spline = spline.evaluate(x_eval)\n        results['spline'] = np.max(np.abs(y_true - y_spline))\n    except:\n        results['spline'] = float('inf')\n    \n    # Trigonometric (if periodic)\n    if is_periodic(x_data, y_data):\n        try:\n            trig = TrigonometricInterpolator()\n            trig.fit(x_data, y_data)\n            y_trig = trig.evaluate(x_eval)\n            results['trigonometric'] = np.max(np.abs(y_true - y_trig))\n        except:\n            results['trigonometric'] = float('inf')\n    \n    return results\n\n# Test on multiple datasets\nprint(\"Test 1: Smooth non-periodic function (Runge)\")\nf1 = lambda x: 1 / (1 + 25*x**2)\nx_data1 = np.linspace(-1, 1, 9)\ny_data1 = f1(x_data1)\nx_eval1 = np.linspace(-1, 1, 200)\nresults1 = compare_all_methods(x_data1, y_data1, f1, x_eval1)\nmethod1, reason1 = recommend_method(x_data1, y_data1)\nprint(f\"Recommended: {method1} - {reason1}\")\nfor method, error in sorted(results1.items(), key=lambda x: x[1]):\n    print(f\"  {method}: {error:.6e}\")\n\nprint(\"\\nTest 2: Periodic function\")\nf2 = lambda x: np.sin(3*x)\nx_data2 = np.linspace(0, 2*np.pi, 16, endpoint=False)\ny_data2 = f2(x_data2)\nx_eval2 = np.linspace(0, 2*np.pi, 200)\nresults2 = compare_all_methods(x_data2, y_data2, f2, x_eval2)\nmethod2, reason2 = recommend_method(x_data2, y_data2)\nprint(f\"Recommended: {method2} - {reason2}\")\nfor method, error in sorted(results2.items(), key=lambda x: x[1]):\n    print(f\"  {method}: {error:.6e}\")\n\nprint(\"\\nTest 3: Smooth function with moderate points\")\nf3 = lambda x: np.exp(-x**2)\nx_data3 = np.linspace(-2, 2, 12)\ny_data3 = f3(x_data3)\nx_eval3 = np.linspace(-2, 2, 200)\nresults3 = compare_all_methods(x_data3, y_data3, f3, x_eval3)\nmethod3, reason3 = recommend_method(x_data3, y_data3)\nprint(f\"Recommended: {method3} - {reason3}\")\nfor method, error in sorted(results3.items(), key=lambda x: x[1]):\n    print(f\"  {method}: {error:.6e}\")",
+    "testCases": [
+      {
+        "input": {"test": "runge_function"},
+        "expected": {"spline_recommended": true},
+        "description": "Should recommend spline for Runge's function"
+      },
+      {
+        "input": {"test": "periodic_function"},
+        "expected": {"trig_recommended": true},
+        "description": "Should recommend trigonometric for periodic data"
+      }
+    ],
+    "hints": [
+      "Use abstract base class for common interface",
+      "Check data characteristics to make recommendation",
+      "Periodicity can be detected by comparing endpoints and spacing",
+      "Spline is a safe default for most cases"
+    ],
+    "commonMistakes": [
+      "Not handling edge cases where methods fail",
+      "Recommending polynomial for all cases (oscillations!)",
+      "Not checking if data is actually periodic before using trig interpolation",
+      "Forgetting that Lagrange and Newton give identical results"
+    ],
+    "extensionActivities": [
+      "Add confidence intervals for interpolation",
+      "Implement adaptive node selection",
+      "Create visualization dashboard comparing all methods",
+      "Add support for 2D interpolation",
+      "Implement cross-validation for method selection"
+    ]
   }
 ]

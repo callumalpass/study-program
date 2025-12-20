@@ -3,23 +3,262 @@
     "id": "math402-midterm",
     "subjectId": "math402",
     "title": "MATH402 Midterm Examination",
-    "durationMinutes": 120,
+    "durationMinutes": 90,
     "instructions": [
-      "Covers Error Analysis, Root Finding, Interpolation, and Numerical Integration"
+      "Covers Error Analysis, Root Finding, Interpolation, and Numerical Integration",
+      "Answer all questions to the best of your ability",
+      "Show work for written questions"
     ],
     "questions": [
       {
-        "id": "mc1",
+        "id": "m1",
         "type": "multiple_choice",
-        "prompt": "For the bisection method on interval [a, b], how many iterations are needed to achieve tolerance ε?",
+        "prompt": "What is machine epsilon (ε_mach) in IEEE 754 double precision?",
         "options": [
-          "log₂((b-a)/ε)",
-          "⌈log₂((b-a)/ε)⌉",
-          "(b-a)/(2ε)",
-          "ε/(b-a)"
+          "2^-52",
+          "2^-53",
+          "2^-64",
+          "2^-23"
         ],
         "correctAnswer": 1,
-        "explanation": "The number of iterations required is ⌈log₂((b-a)/ε)⌉, which ensures the interval is reduced to less than ε."
+        "explanation": "Machine epsilon for double precision is 2^-53, which represents the smallest number such that 1 + ε_mach ≠ 1 in floating-point arithmetic."
+      },
+      {
+        "id": "m2",
+        "type": "fill_blank",
+        "prompt": "If x* is an approximation to x, the relative error is defined as |x - x*| / _____.",
+        "correctAnswer": "|x|",
+        "explanation": "Relative error is |x - x*| / |x|, which expresses the error as a fraction of the true value."
+      },
+      {
+        "id": "m3",
+        "type": "true_false",
+        "prompt": "Subtractive cancellation occurs when adding two numbers of nearly equal magnitude but opposite signs.",
+        "correctAnswer": false,
+        "explanation": "Subtractive cancellation occurs when subtracting two nearly equal numbers, not adding numbers of opposite signs. This leads to loss of significant digits."
+      },
+      {
+        "id": "m4",
+        "type": "multiple_choice",
+        "prompt": "A problem is well-conditioned if:",
+        "options": [
+          "Small changes in input cause small changes in output",
+          "Small changes in input cause large changes in output",
+          "The algorithm converges quickly",
+          "The round-off error is minimized"
+        ],
+        "correctAnswer": 0,
+        "explanation": "A well-conditioned problem is one where small perturbations in the input lead to small changes in the output. This is measured by the condition number."
+      },
+      {
+        "id": "m5",
+        "type": "code_output",
+        "prompt": "What is the output of this numerical error demonstration?",
+        "codeSnippet": "a = 1.0\nfor i in range(1000000):\n    a += 0.0000001\nprint(f\"{a:.10f}\")\nprint(f\"Expected: {1.0 + 1000000 * 0.0000001:.10f}\")",
+        "correctAnswer": "1.0999999253\nExpected: 1.1000000000",
+        "explanation": "Accumulation of floating-point errors leads to a result slightly different from the mathematically exact value due to rounding errors in repeated additions."
+      },
+      {
+        "id": "m6",
+        "type": "multiple_choice",
+        "prompt": "The condition number of a matrix A is defined as:",
+        "options": [
+          "||A|| × ||A^-1||",
+          "||A|| / ||A^-1||",
+          "||A^-1|| / ||A||",
+          "||A - A^-1||"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The condition number κ(A) = ||A|| × ||A^-1||, measuring the sensitivity of the solution to perturbations in the input."
+      },
+      {
+        "id": "m7",
+        "type": "written",
+        "prompt": "Explain the difference between truncation error and round-off error. Give an example of each.",
+        "modelAnswer": "Truncation error arises from approximating an infinite process with a finite one, such as truncating a Taylor series after n terms. Example: Using only the first two terms of e^x ≈ 1 + x introduces truncation error. Round-off error occurs from the limited precision of floating-point representation. Example: Storing 1/3 = 0.333... in finite precision results in round-off error since only a finite number of digits can be represented."
+      },
+      {
+        "id": "m8",
+        "type": "multiple_choice",
+        "prompt": "The bisection method is guaranteed to converge if:",
+        "options": [
+          "f(a) and f(b) have opposite signs and f is continuous",
+          "f'(x) ≠ 0 in the interval",
+          "The function is differentiable",
+          "The initial guess is close to the root"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The bisection method requires a continuous function with f(a) and f(b) having opposite signs by the Intermediate Value Theorem. It is guaranteed to converge under these conditions."
+      },
+      {
+        "id": "m9",
+        "type": "fill_blank",
+        "prompt": "Newton's method has _____ convergence near simple roots when the derivative is non-zero.",
+        "correctAnswer": "quadratic",
+        "explanation": "Newton's method exhibits quadratic convergence (the error is squared at each iteration) when converging to a simple root with non-zero derivative."
+      },
+      {
+        "id": "m10",
+        "type": "code_output",
+        "prompt": "What root does this Newton's method iteration find?",
+        "codeSnippet": "def f(x):\n    return x**2 - 2\n\ndef df(x):\n    return 2*x\n\nx = 1.0\nfor i in range(5):\n    x = x - f(x)/df(x)\n    \nprint(f\"{x:.6f}\")",
+        "correctAnswer": "1.414214",
+        "explanation": "This Newton's method iteration finds the square root of 2, starting from x=1 and converging rapidly to approximately 1.414214."
+      },
+      {
+        "id": "m11",
+        "type": "multiple_choice",
+        "prompt": "The secant method requires:",
+        "options": [
+          "One initial guess and the derivative",
+          "Two initial guesses, no derivative needed",
+          "Three initial guesses",
+          "The second derivative"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The secant method approximates the derivative using two points, requiring two initial guesses but no explicit derivative calculation."
+      },
+      {
+        "id": "m12",
+        "type": "true_false",
+        "prompt": "The fixed-point iteration x_{n+1} = g(x_n) converges if |g'(x)| < 1 in a neighborhood of the fixed point.",
+        "correctAnswer": true,
+        "explanation": "This is the fixed-point convergence theorem. If |g'(x)| < 1 near the fixed point, the iteration will converge to that point."
+      },
+      {
+        "id": "m13",
+        "type": "multiple_choice",
+        "prompt": "What is the convergence rate of the bisection method?",
+        "options": [
+          "Quadratic",
+          "Superlinear",
+          "Linear with rate 1/2",
+          "Cubic"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The bisection method has linear convergence with rate 1/2, as the interval containing the root is halved at each iteration."
+      },
+      {
+        "id": "m14",
+        "type": "multiple_choice",
+        "prompt": "Lagrange interpolation of n+1 data points produces a polynomial of degree:",
+        "options": [
+          "n+1",
+          "n",
+          "n-1",
+          "2n"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The Lagrange interpolating polynomial through n+1 points has degree at most n. This is the unique polynomial of minimal degree passing through all points."
+      },
+      {
+        "id": "m15",
+        "type": "fill_blank",
+        "prompt": "The divided difference notation [x_0, x_1, ..., x_n]f represents the coefficient of _____ in Newton's interpolating polynomial.",
+        "correctAnswer": "x^n",
+        "explanation": "The nth divided difference [x_0, x_1, ..., x_n]f is the leading coefficient (coefficient of x^n) in the Newton form of the interpolating polynomial."
+      },
+      {
+        "id": "m16",
+        "type": "true_false",
+        "prompt": "Cubic splines require the second derivative to be continuous at the interior nodes.",
+        "correctAnswer": true,
+        "explanation": "Cubic splines enforce continuity of the function, first derivative, and second derivative at all interior nodes, resulting in a smooth interpolating curve."
+      },
+      {
+        "id": "m17",
+        "type": "code_output",
+        "prompt": "What is the output of this Lagrange interpolation?",
+        "codeSnippet": "import numpy as np\n\n# Points: (0,1), (1,3), (2,2)\nx_data = np.array([0, 1, 2])\ny_data = np.array([1, 3, 2])\n\n# Evaluate at x=0.5\nx = 0.5\nresult = 0\nfor i in range(len(x_data)):\n    L_i = 1\n    for j in range(len(x_data)):\n        if i != j:\n            L_i *= (x - x_data[j]) / (x_data[i] - x_data[j])\n    result += y_data[i] * L_i\n\nprint(f\"{result:.2f}\")",
+        "correctAnswer": "2.38",
+        "explanation": "The Lagrange interpolation through the three points evaluates to 2.375 (rounded to 2.38) at x=0.5."
+      },
+      {
+        "id": "m18",
+        "type": "multiple_choice",
+        "prompt": "Chebyshev nodes are used in polynomial interpolation to:",
+        "options": [
+          "Minimize the maximum interpolation error",
+          "Maximize the convergence rate",
+          "Simplify the computation",
+          "Ensure equal spacing"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Chebyshev nodes minimize the maximum interpolation error by reducing the Runge phenomenon, which occurs with equally spaced nodes at high degrees."
+      },
+      {
+        "id": "m19",
+        "type": "multiple_choice",
+        "prompt": "In least squares fitting, the objective is to minimize:",
+        "options": [
+          "The sum of absolute errors",
+          "The sum of squared residuals",
+          "The maximum error",
+          "The number of parameters"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Least squares fitting minimizes the sum of squared residuals, leading to the normal equations A^T A x = A^T b."
+      },
+      {
+        "id": "m20",
+        "type": "fill_blank",
+        "prompt": "The forward difference approximation for f'(x) has truncation error of order _____.",
+        "correctAnswer": "h",
+        "explanation": "The forward difference f'(x) ≈ (f(x+h) - f(x))/h has truncation error O(h), as shown by Taylor series analysis."
+      },
+      {
+        "id": "m21",
+        "type": "multiple_choice",
+        "prompt": "The composite trapezoidal rule with n subintervals has error of order:",
+        "options": [
+          "O(h)",
+          "O(h^2)",
+          "O(h^3)",
+          "O(h^4)"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The composite trapezoidal rule has global error O(h^2) where h is the subinterval width, despite the local error being O(h^3)."
+      },
+      {
+        "id": "m22",
+        "type": "true_false",
+        "prompt": "Simpson's rule requires the number of subintervals to be even.",
+        "correctAnswer": true,
+        "explanation": "Simpson's rule uses parabolic approximations over pairs of intervals, so it requires an even number of subintervals (or odd number of points)."
+      },
+      {
+        "id": "m23",
+        "type": "code_output",
+        "prompt": "What is the approximate integral using the trapezoidal rule?",
+        "codeSnippet": "import numpy as np\n\ndef f(x):\n    return x**2\n\na, b = 0, 2\nn = 4\nh = (b - a) / n\nx = np.linspace(a, b, n+1)\ny = f(x)\n\nintegral = h * (0.5*y[0] + np.sum(y[1:-1]) + 0.5*y[-1])\nprint(f\"{integral:.4f}\")",
+        "correctAnswer": "2.7500",
+        "explanation": "The composite trapezoidal rule with 4 subintervals approximates the integral of x^2 from 0 to 2 as 2.75, compared to the exact value of 8/3 ≈ 2.667."
+      },
+      {
+        "id": "m24",
+        "type": "multiple_choice",
+        "prompt": "Gaussian quadrature with n points integrates polynomials of degree up to:",
+        "options": [
+          "n-1",
+          "n",
+          "2n-1",
+          "2n"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Gaussian quadrature with n points achieves exact integration for polynomials of degree up to 2n-1 by optimal choice of nodes and weights."
+      },
+      {
+        "id": "m25",
+        "type": "fill_blank",
+        "prompt": "Adaptive quadrature methods refine the mesh in regions where the integrand has _____ variation.",
+        "correctAnswer": "high",
+        "explanation": "Adaptive quadrature automatically refines the mesh in regions of high variation or rapid change to maintain accuracy while minimizing computational cost."
+      },
+      {
+        "id": "m26",
+        "type": "written",
+        "prompt": "Explain why Richardson extrapolation can be used to improve the accuracy of numerical differentiation. Give a specific example.",
+        "modelAnswer": "Richardson extrapolation improves accuracy by combining results from different step sizes to cancel leading error terms. For example, the central difference formula f'(x) ≈ (f(x+h) - f(x-h))/(2h) has error O(h^2). By computing approximations with step sizes h and h/2, we can form the combination (4*D(h/2) - D(h))/3, which has error O(h^4), significantly improving accuracy. This works because the error has a known asymptotic expansion in powers of h."
       }
     ]
   },
@@ -27,10 +266,413 @@
     "id": "math402-final",
     "subjectId": "math402",
     "title": "MATH402 Final Examination",
-    "durationMinutes": 180,
+    "durationMinutes": 150,
     "instructions": [
-      "Comprehensive exam covering all course topics"
+      "Comprehensive exam covering all course topics",
+      "Answer all questions to the best of your ability",
+      "Show work for written questions",
+      "No calculators or external resources allowed"
     ],
-    "questions": []
+    "questions": [
+      {
+        "id": "f1",
+        "type": "multiple_choice",
+        "prompt": "In IEEE 754 single precision, how many bits are used for the exponent?",
+        "options": [
+          "8 bits",
+          "11 bits",
+          "23 bits",
+          "52 bits"
+        ],
+        "correctAnswer": 0,
+        "explanation": "IEEE 754 single precision uses 8 bits for the exponent, 23 bits for the mantissa, and 1 bit for the sign."
+      },
+      {
+        "id": "f2",
+        "type": "true_false",
+        "prompt": "A numerically stable algorithm produces results close to the exact solution of a slightly perturbed problem.",
+        "correctAnswer": true,
+        "explanation": "Numerical stability means the algorithm produces a solution that is the exact solution to a nearby problem, ensuring errors don't grow excessively."
+      },
+      {
+        "id": "f3",
+        "type": "fill_blank",
+        "prompt": "The condition number κ(A) = 1 indicates that matrix A is _____.",
+        "correctAnswer": "perfectly conditioned",
+        "explanation": "A condition number of 1 is the best possible, indicating the matrix is perfectly conditioned (orthogonal or unitary matrices have κ = 1)."
+      },
+      {
+        "id": "f4",
+        "type": "multiple_choice",
+        "prompt": "Which operation is most susceptible to catastrophic cancellation?",
+        "options": [
+          "Multiplying two large numbers",
+          "Subtracting nearly equal numbers",
+          "Adding numbers of different magnitudes",
+          "Dividing by a small number"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Subtracting nearly equal numbers causes catastrophic cancellation, where significant digits are lost, leaving only round-off error."
+      },
+      {
+        "id": "f5",
+        "type": "code_output",
+        "prompt": "What does this error propagation demonstrate?",
+        "codeSnippet": "import numpy as np\n\nx = 1.0 + 1e-15\ny = 1.0\nresult = (x - y) * 1e15\nprint(f\"{result:.1f}\")\nprint(f\"Expected: 1.0\")",
+        "correctAnswer": "1.0\nExpected: 1.0",
+        "explanation": "Despite the subtraction of nearly equal numbers, the result is exact in this case because 1 + 1e-15 can be represented exactly in double precision for this specific value."
+      },
+      {
+        "id": "f6",
+        "type": "multiple_choice",
+        "prompt": "If absolute error is bounded by ε and the true value is x, the relative error is bounded by:",
+        "options": [
+          "ε",
+          "ε/x",
+          "ε/|x|",
+          "ε*|x|"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Relative error = |x - x*|/|x|, so if |x - x*| ≤ ε, the relative error is bounded by ε/|x|."
+      },
+      {
+        "id": "f7",
+        "type": "multiple_choice",
+        "prompt": "For Newton's method x_{n+1} = x_n - f(x_n)/f'(x_n), what happens at a multiple root where f(r) = f'(r) = 0?",
+        "options": [
+          "Quadratic convergence is maintained",
+          "Convergence becomes only linear",
+          "The method diverges",
+          "Convergence becomes cubic"
+        ],
+        "correctAnswer": 1,
+        "explanation": "At a multiple root, Newton's method converges only linearly instead of quadratically. Modified Newton's method can restore quadratic convergence."
+      },
+      {
+        "id": "f8",
+        "type": "fill_blank",
+        "prompt": "The secant method has convergence rate approximately _____.",
+        "correctAnswer": "1.618",
+        "explanation": "The secant method has superlinear convergence with order φ ≈ 1.618 (the golden ratio), which is between linear and quadratic."
+      },
+      {
+        "id": "f9",
+        "type": "true_false",
+        "prompt": "The bisection method can find complex roots of polynomials.",
+        "correctAnswer": false,
+        "explanation": "The bisection method only works for real roots on the real line, as it requires the Intermediate Value Theorem which applies to real-valued continuous functions."
+      },
+      {
+        "id": "f10",
+        "type": "code_output",
+        "prompt": "How many iterations does this fixed-point iteration take to converge?",
+        "codeSnippet": "def g(x):\n    return (x + 2/x) / 2  # Finding sqrt(2)\n\nx = 1.0\ntol = 1e-6\niterations = 0\nwhile True:\n    x_new = g(x)\n    iterations += 1\n    if abs(x_new - x) < tol:\n        break\n    x = x_new\n    if iterations > 100:\n        break\n        \nprint(iterations)",
+        "correctAnswer": "5",
+        "explanation": "This fixed-point iteration (equivalent to Newton's method for sqrt(2)) converges in 5 iterations due to its quadratic convergence rate."
+      },
+      {
+        "id": "f11",
+        "type": "multiple_choice",
+        "prompt": "Müller's method uses:",
+        "options": [
+          "Linear interpolation through two points",
+          "Quadratic interpolation through three points",
+          "Cubic interpolation through four points",
+          "The derivative at one point"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Müller's method fits a parabola (quadratic) through three points and finds where it crosses the x-axis, allowing it to find complex roots."
+      },
+      {
+        "id": "f12",
+        "type": "written",
+        "prompt": "Compare and contrast Newton's method and the secant method for root finding. Discuss convergence rates, computational cost per iteration, and when you would choose one over the other.",
+        "modelAnswer": "Newton's method requires both f(x) and f'(x), has quadratic convergence (error squared each iteration), but requires derivative computation. The secant method only needs f(x), approximates the derivative using two points, has superlinear convergence (rate ≈ 1.618), and requires less computation per iteration. Choose Newton's method when derivatives are easily available and fast convergence is critical. Choose secant method when derivatives are expensive or unavailable, as it achieves good convergence with lower per-iteration cost."
+      },
+      {
+        "id": "f13",
+        "type": "multiple_choice",
+        "prompt": "The error in polynomial interpolation can be bounded using:",
+        "options": [
+          "The maximum value of the polynomial",
+          "The (n+1)st derivative of the function",
+          "The condition number of the Vandermonde matrix",
+          "The spacing between data points"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The interpolation error is bounded by max|f^(n+1)(ξ)|/(n+1)! times the product of distances to data points, involving the (n+1)st derivative."
+      },
+      {
+        "id": "f14",
+        "type": "fill_blank",
+        "prompt": "Hermite interpolation differs from Lagrange interpolation by also matching _____ at the data points.",
+        "correctAnswer": "derivatives",
+        "explanation": "Hermite interpolation matches both function values and derivative values at the data points, requiring more information but producing smoother interpolants."
+      },
+      {
+        "id": "f15",
+        "type": "true_false",
+        "prompt": "Natural cubic splines require the second derivative to be zero at the endpoints.",
+        "correctAnswer": true,
+        "explanation": "Natural boundary conditions for cubic splines specify that S''(x₀) = S''(xₙ) = 0, making the spline linear beyond the endpoints."
+      },
+      {
+        "id": "f16",
+        "type": "code_output",
+        "prompt": "What degree polynomial does this Newton divided difference create?",
+        "codeSnippet": "import numpy as np\n\nx = np.array([1, 2, 3, 4, 5])\ny = np.array([1, 4, 9, 16, 25])\n\n# Newton divided differences\nn = len(x)\ncoef = np.copy(y).astype(float)\nfor j in range(1, n):\n    for i in range(n-1, j-1, -1):\n        coef[i] = (coef[i] - coef[i-1]) / (x[i] - x[i-j])\n\nprint(f\"Degree: {len(coef)-1}\")\nprint(f\"Leading coefficient: {coef[-1]:.1f}\")",
+        "correctAnswer": "Degree: 4\nLeading coefficient: 0.0",
+        "explanation": "The polynomial through 5 points has degree at most 4, but since the data represents y=x², the leading coefficient is 0 (polynomial is actually degree 2)."
+      },
+      {
+        "id": "f17",
+        "type": "multiple_choice",
+        "prompt": "The Runge phenomenon in polynomial interpolation:",
+        "options": [
+          "Occurs with low-degree polynomials",
+          "Shows oscillations at the center of the interval",
+          "Shows large oscillations near the endpoints with equally spaced nodes",
+          "Is eliminated by using more data points"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The Runge phenomenon causes large oscillations near the endpoints when using high-degree polynomials with equally spaced nodes. Chebyshev nodes mitigate this."
+      },
+      {
+        "id": "f18",
+        "type": "multiple_choice",
+        "prompt": "In least squares approximation with the normal equations A^T A x = A^T b, what happens when A^T A is nearly singular?",
+        "options": [
+          "The solution is more accurate",
+          "The problem is ill-conditioned and sensitive to errors",
+          "The computation is faster",
+          "Multiple exact solutions exist"
+        ],
+        "correctAnswer": 1,
+        "explanation": "When A^T A is nearly singular, the condition number is large, making the problem ill-conditioned. Small errors in data lead to large errors in the solution."
+      },
+      {
+        "id": "f19",
+        "type": "multiple_choice",
+        "prompt": "The central difference approximation for f'(x) is:",
+        "options": [
+          "(f(x+h) - f(x))/h",
+          "(f(x) - f(x-h))/h",
+          "(f(x+h) - f(x-h))/(2h)",
+          "(f(x+h) - 2f(x) + f(x-h))/h"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The central difference formula f'(x) ≈ (f(x+h) - f(x-h))/(2h) has error O(h²), better than forward or backward differences which have error O(h)."
+      },
+      {
+        "id": "f20",
+        "type": "fill_blank",
+        "prompt": "Simpson's rule has error of order _____ for a single interval.",
+        "correctAnswer": "h^5",
+        "explanation": "Simpson's rule has local error O(h⁵) for a single interval, where h is the interval width, because it integrates cubics exactly."
+      },
+      {
+        "id": "f21",
+        "type": "true_false",
+        "prompt": "Romberg integration combines trapezoidal rule estimates with Richardson extrapolation.",
+        "correctAnswer": true,
+        "explanation": "Romberg integration systematically applies Richardson extrapolation to trapezoidal rule estimates with decreasing step sizes to achieve high accuracy."
+      },
+      {
+        "id": "f22",
+        "type": "code_output",
+        "prompt": "What is the result of this Simpson's rule integration?",
+        "codeSnippet": "import numpy as np\n\ndef f(x):\n    return np.sin(x)\n\na, b = 0, np.pi\nn = 2  # number of subintervals (must be even)\nh = (b - a) / n\nx = np.linspace(a, b, n+1)\ny = f(x)\n\nintegral = h/3 * (y[0] + 4*np.sum(y[1:-1:2]) + 2*np.sum(y[2:-1:2]) + y[-1])\nprint(f\"{integral:.6f}\")",
+        "correctAnswer": "2.094395",
+        "explanation": "Simpson's rule with 2 subintervals approximates the integral of sin(x) from 0 to π as approximately 2.094395, compared to the exact value of 2."
+      },
+      {
+        "id": "f23",
+        "type": "multiple_choice",
+        "prompt": "Gaussian quadrature nodes are the zeros of:",
+        "options": [
+          "Chebyshev polynomials",
+          "Legendre polynomials",
+          "Hermite polynomials",
+          "Laguerre polynomials"
+        ],
+        "correctAnswer": 1,
+        "explanation": "For the standard interval [-1, 1], Gaussian quadrature nodes are the zeros of Legendre polynomials, chosen to maximize the degree of exactness."
+      },
+      {
+        "id": "f24",
+        "type": "written",
+        "prompt": "Describe adaptive quadrature and explain why it is more efficient than using a uniform mesh for integration. What criterion is typically used to decide whether to refine a subinterval?",
+        "modelAnswer": "Adaptive quadrature automatically adjusts the mesh refinement based on the local behavior of the integrand. It uses finer meshes where the function varies rapidly and coarser meshes where it is smooth, making it more efficient than uniform meshes which waste computation in smooth regions. The typical refinement criterion compares two estimates of the integral over a subinterval (e.g., using different orders or step sizes): if their difference exceeds a tolerance, the interval is subdivided. This ensures the error tolerance is met with minimal function evaluations."
+      },
+      {
+        "id": "f25",
+        "type": "multiple_choice",
+        "prompt": "In Gaussian elimination, partial pivoting involves:",
+        "options": [
+          "Swapping columns to avoid division by zero",
+          "Swapping rows to place the largest element on the diagonal",
+          "Swapping both rows and columns",
+          "Avoiding any swaps"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Partial pivoting swaps rows to place the element with largest absolute value in the pivot position, improving numerical stability."
+      },
+      {
+        "id": "f26",
+        "type": "fill_blank",
+        "prompt": "The LU decomposition of matrix A expresses it as A = _____ where L is lower triangular and U is upper triangular.",
+        "correctAnswer": "LU",
+        "explanation": "LU decomposition factors A = LU where L is lower triangular with ones on the diagonal and U is upper triangular."
+      },
+      {
+        "id": "f27",
+        "type": "true_false",
+        "prompt": "Cholesky decomposition can be applied to any invertible matrix.",
+        "correctAnswer": false,
+        "explanation": "Cholesky decomposition requires the matrix to be symmetric (or Hermitian) and positive definite, not just invertible."
+      },
+      {
+        "id": "f28",
+        "type": "code_output",
+        "prompt": "What is the determinant computed via this LU decomposition?",
+        "codeSnippet": "import numpy as np\nfrom scipy.linalg import lu\n\nA = np.array([[2, 1, 1],\n              [4, -6, 0],\n              [-2, 7, 2]])\n\nP, L, U = lu(A)\ndet = np.prod(np.diag(U)) * np.linalg.det(P)\nprint(f\"{det:.1f}\")",
+        "correctAnswer": "-20.0",
+        "explanation": "The determinant of A equals det(P) × det(L) × det(U) = det(P) × 1 × prod(diag(U)), where det(P) accounts for row swaps."
+      },
+      {
+        "id": "f29",
+        "type": "multiple_choice",
+        "prompt": "The condition number κ(A) of a matrix indicates:",
+        "options": [
+          "How fast Gaussian elimination will be",
+          "How sensitive the solution Ax=b is to perturbations in A and b",
+          "The number of iterations needed for convergence",
+          "The rank of the matrix"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The condition number measures sensitivity: a large κ(A) means small changes in A or b can cause large changes in the solution x."
+      },
+      {
+        "id": "f30",
+        "type": "multiple_choice",
+        "prompt": "QR decomposition expresses A as:",
+        "options": [
+          "A = QR where Q is orthogonal and R is upper triangular",
+          "A = QR where Q is lower triangular and R is orthogonal",
+          "A = QR where both Q and R are orthogonal",
+          "A = QR where both Q and R are triangular"
+        ],
+        "correctAnswer": 0,
+        "explanation": "QR decomposition factors A = QR where Q is orthogonal (Q^T Q = I) and R is upper triangular, useful for solving least squares problems."
+      },
+      {
+        "id": "f31",
+        "type": "multiple_choice",
+        "prompt": "For which type of matrices does the Jacobi method guarantee convergence?",
+        "options": [
+          "All invertible matrices",
+          "Strictly diagonally dominant matrices",
+          "Upper triangular matrices",
+          "Orthogonal matrices"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The Jacobi iterative method is guaranteed to converge for strictly diagonally dominant matrices, where |a_ii| > Σ_{j≠i} |a_ij| for all i."
+      },
+      {
+        "id": "f32",
+        "type": "fill_blank",
+        "prompt": "In the Gauss-Seidel method, each component x_i^(k+1) is computed using the _____ available values.",
+        "correctAnswer": "most recent",
+        "explanation": "Gauss-Seidel uses the most recently computed values, including new values from the current iteration, typically converging faster than Jacobi."
+      },
+      {
+        "id": "f33",
+        "type": "true_false",
+        "prompt": "The SOR (Successive Over-Relaxation) method with ω = 1 is equivalent to the Gauss-Seidel method.",
+        "correctAnswer": true,
+        "explanation": "SOR with relaxation parameter ω = 1 reduces exactly to Gauss-Seidel. Values 1 < ω < 2 typically accelerate convergence."
+      },
+      {
+        "id": "f34",
+        "type": "code_output",
+        "prompt": "How many iterations does this Jacobi method take?",
+        "codeSnippet": "import numpy as np\n\nA = np.array([[4, 1, 0],\n              [1, 4, 1],\n              [0, 1, 4]], dtype=float)\nb = np.array([1, 2, 3], dtype=float)\n\nx = np.zeros_like(b)\ntol = 1e-6\niterations = 0\n\nwhile iterations < 100:\n    x_new = np.zeros_like(x)\n    for i in range(len(b)):\n        x_new[i] = (b[i] - np.dot(A[i, :i], x[:i]) - np.dot(A[i, i+1:], x[i+1:])) / A[i, i]\n    \n    if np.linalg.norm(x_new - x, np.inf) < tol:\n        iterations += 1\n        break\n    x = x_new\n    iterations += 1\n\nprint(iterations)",
+        "correctAnswer": "15",
+        "explanation": "The Jacobi method on this strictly diagonally dominant system converges in approximately 15 iterations to the specified tolerance."
+      },
+      {
+        "id": "f35",
+        "type": "multiple_choice",
+        "prompt": "The Conjugate Gradient (CG) method is designed for:",
+        "options": [
+          "Any linear system",
+          "Symmetric positive definite systems",
+          "Upper triangular systems",
+          "Overdetermined systems"
+        ],
+        "correctAnswer": 1,
+        "explanation": "CG is specifically designed for symmetric positive definite (SPD) systems, where it theoretically converges in at most n iterations."
+      },
+      {
+        "id": "f36",
+        "type": "written",
+        "prompt": "Explain the purpose of preconditioning in iterative methods for solving linear systems. Give an example of a preconditioner and explain how it improves convergence.",
+        "modelAnswer": "Preconditioning transforms the linear system Ax = b into an equivalent system that is easier to solve iteratively, typically by improving the condition number. Instead of solving Ax = b, we solve M^(-1)Ax = M^(-1)b where M approximates A but is easy to invert. Example: Jacobi preconditioning uses M = diag(A). This improves convergence because the preconditioned system has eigenvalues clustered closer together, reducing the spectral radius of the iteration matrix. Good preconditioners balance two goals: being close enough to A to improve conditioning, while being cheap to apply."
+      },
+      {
+        "id": "f37",
+        "type": "multiple_choice",
+        "prompt": "The forward Euler method for solving dy/dt = f(t,y) is:",
+        "options": [
+          "y_{n+1} = y_n + h*f(t_n, y_n)",
+          "y_{n+1} = y_n + h*f(t_{n+1}, y_{n+1})",
+          "y_{n+1} = y_n + (h/2)*(f(t_n, y_n) + f(t_{n+1}, y_{n+1}))",
+          "y_{n+1} = y_n + h*(f(t_n, y_n) + f(t_{n+1}, y_n + h*f(t_n, y_n)))/2"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Forward (explicit) Euler is y_{n+1} = y_n + h*f(t_n, y_n), the simplest explicit one-step method with local error O(h²)."
+      },
+      {
+        "id": "f38",
+        "type": "fill_blank",
+        "prompt": "The classical fourth-order Runge-Kutta method (RK4) has local truncation error of order _____.",
+        "correctAnswer": "h^5",
+        "explanation": "RK4 has local truncation error O(h⁵), giving global error O(h⁴), making it much more accurate than Euler's method for the same step size."
+      },
+      {
+        "id": "f39",
+        "type": "true_false",
+        "prompt": "Implicit methods like backward Euler are better than explicit methods for stiff ODEs.",
+        "correctAnswer": true,
+        "explanation": "Implicit methods have better stability properties for stiff ODEs, where explicit methods require extremely small step sizes for stability."
+      },
+      {
+        "id": "f40",
+        "type": "code_output",
+        "prompt": "What is the approximate solution using forward Euler?",
+        "codeSnippet": "import numpy as np\n\n# Solve dy/dt = -y, y(0) = 1\n# Exact solution: y(t) = e^(-t)\n\ndef f(t, y):\n    return -y\n\nt0, y0 = 0.0, 1.0\nh = 0.1\nsteps = 10\n\ny = y0\nfor i in range(steps):\n    y = y + h * f(t0 + i*h, y)\n\nprint(f\"{y:.6f}\")\nprint(f\"Exact: {np.exp(-1.0):.6f}\")",
+        "correctAnswer": "0.348678\nExact: 0.367879",
+        "explanation": "Forward Euler approximates e^(-1) ≈ 0.3679 as 0.3487 after 10 steps of size 0.1, showing the method's first-order accuracy."
+      },
+      {
+        "id": "f41",
+        "type": "multiple_choice",
+        "prompt": "Adams-Bashforth methods are:",
+        "options": [
+          "Implicit multistep methods",
+          "Explicit multistep methods",
+          "One-step Runge-Kutta methods",
+          "Boundary value problem solvers"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Adams-Bashforth methods are explicit multistep methods that use function values from previous steps, while Adams-Moulton methods are implicit."
+      },
+      {
+        "id": "f42",
+        "type": "written",
+        "prompt": "Describe the shooting method for solving two-point boundary value problems. Why is it called the 'shooting' method? What are its main advantages and disadvantages compared to finite difference methods?",
+        "modelAnswer": "The shooting method converts a boundary value problem (BVP) into initial value problems (IVPs). Given a BVP with conditions at two points, we guess the missing initial condition(s), solve the resulting IVP, and check if the solution satisfies the boundary condition at the other end. We iterate, adjusting our guess (like aiming a gun, hence 'shooting') until both boundary conditions are met. Advantages: uses well-developed IVP solvers, handles nonlinear problems naturally. Disadvantages: can be sensitive to initial guesses, may be unstable for some problems, requires root-finding iteration. Finite difference methods discretize the entire domain at once, producing a system of equations that is more robust but potentially larger and more complex for nonlinear problems."
+      }
+    ]
   }
 ]

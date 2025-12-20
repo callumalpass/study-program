@@ -33,23 +33,18 @@
       },
       {
         "id": "q3",
+        "type": "code_output",
+        "prompt": "What is the output after one step of Gaussian elimination?",
+        "codeSnippet": "import numpy as np\nA = np.array([[2.0, 1.0], [4.0, 3.0]])\nb = np.array([3.0, 7.0])\n# Eliminate A[1,0]\nmultiplier = A[1,0] / A[0,0]\nA[1] = A[1] - multiplier * A[0]\nb[1] = b[1] - multiplier * b[0]\nprint(f'{A[1,1]:.1f}')",
+        "correctAnswer": "1.0",
+        "explanation": "Multiplier = 4/2 = 2. A[1,1] = 3 - 2·1 = 1.0. This eliminates the (1,0) element, creating upper triangular form."
+      },
+      {
+        "id": "q4",
         "type": "true_false",
         "prompt": "LU decomposition is only possible for invertible matrices.",
         "correctAnswer": false,
         "explanation": "False. LU decomposition (with partial pivoting as PA=LU) is possible for any matrix, though the L and U factors reveal rank deficiency for singular matrices."
-      },
-      {
-        "id": "q4",
-        "type": "multiple_choice",
-        "prompt": "The main advantage of LU decomposition over direct Gaussian elimination is:",
-        "options": [
-          "Lower computational cost",
-          "Ability to solve multiple systems with the same matrix efficiently",
-          "Better numerical stability",
-          "Works for singular matrices"
-        ],
-        "correctAnswer": 1,
-        "explanation": "Once A = LU is computed (O(n^3)), solving Ax = b for different b requires only forward/backward substitution (O(n^2) each), making it efficient for multiple right-hand sides."
       },
       {
         "id": "q5",
@@ -81,6 +76,14 @@
       },
       {
         "id": "q2",
+        "type": "code_output",
+        "prompt": "What is the output of this forward substitution?",
+        "codeSnippet": "import numpy as np\nL = np.array([[1, 0, 0], [2, 1, 0], [1, 3, 1]])\nb = np.array([2, 6, 11])\nx = np.zeros(3)\nx[0] = b[0] / L[0,0]\nx[1] = (b[1] - L[1,0]*x[0]) / L[1,1]\nx[2] = (b[2] - L[2,0]*x[0] - L[2,1]*x[1]) / L[2,2]\nprint(f'{x[2]:.0f}')",
+        "correctAnswer": "3",
+        "explanation": "Forward substitution: x[0] = 2/1 = 2, x[1] = (6-2·2)/1 = 2, x[2] = (11-1·2-3·2)/1 = (11-2-6)/1 = 3."
+      },
+      {
+        "id": "q3",
         "type": "multiple_choice",
         "prompt": "Cholesky decomposition A = LL^T can be applied when A is:",
         "options": [
@@ -93,37 +96,18 @@
         "explanation": "Cholesky requires A to be symmetric positive definite (SPD). It computes L such that A = LL^T, using only (1/3)n^3 operations—half the cost of standard LU."
       },
       {
-        "id": "q3",
+        "id": "q4",
         "type": "true_false",
         "prompt": "The condition number κ(A) = ||A|| ||A^{-1}|| measures the sensitivity of the solution to perturbations in the data.",
         "correctAnswer": true,
         "explanation": "True. A large condition number indicates ill-conditioning: small changes in A or b can cause large changes in the solution x. κ(A) ≥ 1 for all matrices."
       },
       {
-        "id": "q4",
-        "type": "multiple_choice",
-        "prompt": "QR factorization decomposes A into an orthogonal matrix Q and:",
-        "options": [
-          "A lower triangular matrix R",
-          "An upper triangular matrix R",
-          "A diagonal matrix R",
-          "Another orthogonal matrix R"
-        ],
-        "correctAnswer": 1,
-        "explanation": "QR factorization gives A = QR where Q is orthogonal (Q^TQ = I) and R is upper triangular. It's particularly useful for least squares problems."
-      },
-      {
         "id": "q5",
-        "type": "multiple_choice",
-        "prompt": "What is the storage cost advantage of storing LU factors compared to storing L and U separately?",
-        "options": [
-          "No advantage—requires the same space",
-          "LU can be stored in-place in the original matrix space",
-          "LU requires half the space",
-          "LU requires logarithmic space"
-        ],
-        "correctAnswer": 1,
-        "explanation": "Since L has ones on the diagonal, we can store L's subdiagonal elements and U's elements in the space of the original n×n matrix, saving memory."
+        "type": "fill_blank",
+        "prompt": "QR factorization decomposes A into an orthogonal matrix Q and an upper ____ matrix R.",
+        "correctAnswer": "triangular",
+        "explanation": "QR factorization gives A = QR where Q is orthogonal (Q^TQ = I) and R is upper triangular. It's particularly useful for least squares problems."
       }
     ]
   },
@@ -161,35 +145,24 @@
       },
       {
         "id": "q3",
+        "type": "code_output",
+        "prompt": "What condition number does this code compute?",
+        "codeSnippet": "import numpy as np\nA = np.array([[4, 0], [0, 1]])\neig_vals = np.linalg.eigvals(A)\ncond = np.max(eig_vals) / np.min(eig_vals)\nprint(f'{cond:.1f}')",
+        "correctAnswer": "4.0",
+        "explanation": "For diagonal matrix A = diag(4,1), eigenvalues are 4 and 1. For symmetric A, κ(A) = |λ_max|/|λ_min| = 4/1 = 4.0."
+      },
+      {
+        "id": "q4",
         "type": "true_false",
         "prompt": "For a symmetric positive definite matrix, Cholesky decomposition is both faster and more stable than LU decomposition.",
         "correctAnswer": true,
         "explanation": "True. Cholesky requires half the operations of LU, produces a smaller growth factor, and doesn't require pivoting for SPD matrices, making it preferable when applicable."
       },
       {
-        "id": "q4",
-        "type": "multiple_choice",
-        "prompt": "If the condition number κ(A) = 10^8 and the solution is computed with machine precision 10^{-16}, the expected number of accurate digits in the solution is approximately:",
-        "options": [
-          "16",
-          "8",
-          "24",
-          "0"
-        ],
-        "correctAnswer": 1,
-        "explanation": "Relative error in solution ≈ κ(A) × machine precision = 10^8 × 10^{-16} = 10^{-8}. This gives about 8 significant digits of accuracy (16 - log_{10}(10^8) = 8)."
-      },
-      {
         "id": "q5",
-        "type": "multiple_choice",
-        "prompt": "The main advantage of iterative refinement for linear systems is:",
-        "options": [
-          "Reducing the computational cost from O(n^3) to O(n^2)",
-          "Improving the accuracy of an approximate solution using residuals",
-          "Eliminating the need for factorization",
-          "Working only with sparse matrices"
-        ],
-        "correctAnswer": 1,
+        "type": "fill_blank",
+        "prompt": "Iterative refinement improves accuracy by repeatedly solving for the ____ vector.",
+        "correctAnswer": "residual",
         "explanation": "Iterative refinement solves A(x + δx) = b - Ax̃ = r (residual) repeatedly to improve accuracy. Computing r in higher precision can recover full accuracy even for ill-conditioned systems."
       }
     ]

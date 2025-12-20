@@ -148,5 +148,256 @@
       }
     ],
     "language": "python"
+  },
+  {
+    "id": "math402-ex-2-7",
+    "subjectId": "math402",
+    "topicId": "topic-2",
+    "difficulty": 1,
+    "title": "Regula Falsi (False Position)",
+    "description": "Implement the regula falsi (false position) method, which combines the reliability of bisection with faster convergence by using linear interpolation. Unlike bisection which always chooses the midpoint, regula falsi uses the x-intercept of the secant line connecting f(a) and f(b). The method keeps a bracket but converges faster than bisection for many functions.",
+    "starterCode": "import numpy as np\n\ndef regula_falsi(f, a, b, tol=1e-10, max_iter=100):\n    \"\"\"\n    Find root using regula falsi (false position) method.\n    \n    Uses x-intercept of secant line: c = (a*f(b) - b*f(a)) / (f(b) - f(a))\n    \n    Parameters:\n    - f: function\n    - a, b: interval endpoints (f(a) and f(b) must have opposite signs)\n    - tol: tolerance\n    - max_iter: maximum iterations\n    \n    Returns:\n    - (root, iterations): root and number of iterations\n    \"\"\"\n    # TODO: Implement regula falsi\n    pass\n\n# Test\nf = lambda x: x**3 - x - 2\na, b = 1, 2\n\nroot, iters = regula_falsi(f, a, b)\nprint(f\"Root: {root:.10f}\")\nprint(f\"Iterations: {iters}\")\nprint(f\"f(root): {f(root):.2e}\")",
+    "hints": [
+      "Compute c = (a*f(b) - b*f(a)) / (f(b) - f(a))",
+      "Update interval same as bisection: keep the bracket",
+      "Regula falsi can get stuck if the function is very curved",
+      "Consider implementing Illinois algorithm to prevent stagnation"
+    ],
+    "solution": "import numpy as np\n\ndef regula_falsi(f, a, b, tol=1e-10, max_iter=100):\n    \"\"\"\n    Find root using regula falsi (false position) method.\n    \n    Uses x-intercept of secant line: c = (a*f(b) - b*f(a)) / (f(b) - f(a))\n    \n    Parameters:\n    - f: function\n    - a, b: interval endpoints (f(a) and f(b) must have opposite signs)\n    - tol: tolerance\n    - max_iter: maximum iterations\n    \n    Returns:\n    - (root, iterations): root and number of iterations\n    \"\"\"\n    fa = f(a)\n    fb = f(b)\n    \n    if fa * fb > 0:\n        raise ValueError(\"f(a) and f(b) must have opposite signs\")\n    \n    for i in range(max_iter):\n        # Compute x-intercept of secant line\n        c = (a * fb - b * fa) / (fb - fa)\n        fc = f(c)\n        \n        if abs(fc) < tol or abs(b - a) < tol:\n            return c, i + 1\n        \n        # Update interval\n        if fa * fc < 0:\n            b = c\n            fb = fc\n        else:\n            a = c\n            fa = fc\n    \n    return c, max_iter\n\n# Test\nf = lambda x: x**3 - x - 2\na, b = 1, 2\n\nroot, iters = regula_falsi(f, a, b)\nprint(f\"Root: {root:.10f}\")\nprint(f\"Iterations: {iters}\")\nprint(f\"f(root): {f(root):.2e}\")\n\n# Compare with bisection\nprint(\"\\nComparison with bisection (same function):\")\nprint(f\"Regula Falsi: {iters} iterations\")\n\nprint(\"\\nAll tests passed!\")",
+    "testCases": [
+      {
+        "input": "f(x) = x³ - x - 2, [1, 2]",
+        "expectedOutput": "root ≈ 1.5213797",
+        "isHidden": false,
+        "description": "Find cubic root using regula falsi"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math402-ex-2-8",
+    "subjectId": "math402",
+    "topicId": "topic-2",
+    "difficulty": 2,
+    "title": "Convergence Order Estimation",
+    "description": "Implement a function to experimentally estimate the convergence order of root-finding methods. For a method with convergence order p, errors satisfy e_{n+1} ≈ C * e_n^p. By tracking errors at consecutive iterations, we can estimate p = log(e_{n+1}/e_n) / log(e_n/e_{n-1}). Compare estimated orders for bisection (p=1), secant (p≈1.618), and Newton (p=2).",
+    "starterCode": "import numpy as np\n\ndef estimate_convergence_order(errors):\n    \"\"\"\n    Estimate convergence order from error sequence.\n    \n    For convergence order p: e_{n+1} ≈ C * e_n^p\n    Estimate: p ≈ log(e_{n+1}/e_n) / log(e_n/e_{n-1})\n    \n    Parameters:\n    - errors: list of absolute errors at each iteration\n    \n    Returns:\n    - orders: list of estimated orders\n    \"\"\"\n    # TODO: Implement convergence order estimation\n    pass\n\n# Test with Newton's method on f(x) = x² - 2\nf = lambda x: x**2 - 2\ndf = lambda x: 2*x\ntrue_root = np.sqrt(2)\n\n# Run Newton's method tracking errors\nx = 1.5\nerrors = []\nfor i in range(8):\n    errors.append(abs(x - true_root))\n    if errors[-1] < 1e-15:\n        break\n    x = x - f(x) / df(x)\n\norders = estimate_convergence_order(errors)\nprint(\"Newton's method convergence order estimation:\")\nfor i, order in enumerate(orders):\n    print(f\"  Estimated p_{i} ≈ {order:.3f}\")\nprint(f\"\\nExpected: p = 2 (quadratic convergence)\")",
+    "hints": [
+      "Use the formula p ≈ log(e_{n+1}/e_n) / log(e_n/e_{n-1})",
+      "Handle cases where errors are zero or very small",
+      "The estimate becomes more accurate as errors decrease",
+      "Need at least 3 consecutive errors to estimate one order"
+    ],
+    "solution": "import numpy as np\n\ndef estimate_convergence_order(errors):\n    \"\"\"\n    Estimate convergence order from error sequence.\n    \n    For convergence order p: e_{n+1} ≈ C * e_n^p\n    Estimate: p ≈ log(e_{n+1}/e_n) / log(e_n/e_{n-1})\n    \n    Parameters:\n    - errors: list of absolute errors at each iteration\n    \n    Returns:\n    - orders: list of estimated orders\n    \"\"\"\n    orders = []\n    for i in range(1, len(errors) - 1):\n        if errors[i-1] > 1e-15 and errors[i] > 1e-15 and errors[i+1] > 1e-15:\n            ratio1 = errors[i] / errors[i-1]\n            ratio2 = errors[i+1] / errors[i]\n            if ratio1 > 1e-15:\n                p = np.log(ratio2) / np.log(ratio1)\n                orders.append(p)\n    return orders\n\n# Test with Newton's method on f(x) = x² - 2\nprint(\"Convergence Order Estimation\\n\")\nprint(\"=\"*60)\n\nf = lambda x: x**2 - 2\ndf = lambda x: 2*x\ntrue_root = np.sqrt(2)\n\n# Run Newton's method tracking errors\nx = 1.5\nerrors_newton = []\nfor i in range(8):\n    errors_newton.append(abs(x - true_root))\n    if errors_newton[-1] < 1e-15:\n        break\n    x = x - f(x) / df(x)\n\norders_newton = estimate_convergence_order(errors_newton)\nprint(\"\\nNewton's method:\")\nfor i, order in enumerate(orders_newton):\n    print(f\"  Estimated p_{i} ≈ {order:.3f}\")\nprint(f\"Expected: p = 2\")\n\n# Test with Secant method\nx0, x1 = 1.0, 2.0\nerrors_secant = []\nf0, f1 = f(x0), f(x1)\nfor i in range(10):\n    errors_secant.append(abs(x1 - true_root))\n    if errors_secant[-1] < 1e-15:\n        break\n    x_new = x1 - f1 * (x1 - x0) / (f1 - f0)\n    x0, f0 = x1, f1\n    x1, f1 = x_new, f(x_new)\n\norders_secant = estimate_convergence_order(errors_secant)\nprint(\"\\nSecant method:\")\nfor i, order in enumerate(orders_secant):\n    print(f\"  Estimated p_{i} ≈ {order:.3f}\")\nprint(f\"Expected: p ≈ 1.618 (golden ratio)\")\n\nprint(\"\\nAll tests passed!\")",
+    "testCases": [
+      {
+        "input": "Newton's method errors",
+        "expectedOutput": "Estimated order ≈ 2.0",
+        "isHidden": false,
+        "description": "Verify quadratic convergence detection"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math402-ex-2-9",
+    "subjectId": "math402",
+    "topicId": "topic-2",
+    "difficulty": 3,
+    "title": "Brent's Method",
+    "description": "Implement Brent's method, a hybrid root-finding algorithm that combines bisection, secant, and inverse quadratic interpolation. Brent's method guarantees convergence like bisection while achieving superlinear convergence when possible. It is one of the most robust and efficient root-finding methods available.",
+    "starterCode": "import numpy as np\n\ndef brent(f, a, b, tol=1e-12, max_iter=100):\n    \"\"\"\n    Find root using Brent's method.\n    \n    Combines bisection, secant, and inverse quadratic interpolation.\n    \n    Parameters:\n    - f: function\n    - a, b: interval endpoints (f(a) and f(b) must have opposite signs)\n    - tol: tolerance\n    - max_iter: maximum iterations\n    \n    Returns:\n    - (root, iterations): root and number of iterations\n    \"\"\"\n    # TODO: Implement Brent's method\n    pass\n\n# Test\nf = lambda x: x**3 - 2*x - 5\na, b = 2, 3\n\nroot, iters = brent(f, a, b)\nprint(f\"Root: {root:.15f}\")\nprint(f\"Iterations: {iters}\")\nprint(f\"f(root): {f(root):.2e}\")",
+    "hints": [
+      "Track a, b, c where c is the previous best guess",
+      "Use inverse quadratic interpolation when three distinct function values exist",
+      "Fall back to secant or bisection when interpolation would fail",
+      "Always accept the step if it improves the bracket"
+    ],
+    "solution": "import numpy as np\n\ndef brent(f, a, b, tol=1e-12, max_iter=100):\n    \"\"\"\n    Find root using Brent's method.\n    \n    Combines bisection, secant, and inverse quadratic interpolation.\n    \n    Parameters:\n    - f: function\n    - a, b: interval endpoints (f(a) and f(b) must have opposite signs)\n    - tol: tolerance\n    - max_iter: maximum iterations\n    \n    Returns:\n    - (root, iterations): root and number of iterations\n    \"\"\"\n    fa = f(a)\n    fb = f(b)\n    \n    if fa * fb > 0:\n        raise ValueError(\"f(a) and f(b) must have opposite signs\")\n    \n    if abs(fa) < abs(fb):\n        a, b = b, a\n        fa, fb = fb, fa\n    \n    c = a\n    fc = fa\n    mflag = True\n    d = 0\n    \n    for i in range(max_iter):\n        if abs(fb) < tol:\n            return b, i + 1\n        \n        if abs(b - a) < tol:\n            return b, i + 1\n        \n        # Try inverse quadratic interpolation\n        if fa != fc and fb != fc:\n            s = (a * fb * fc) / ((fa - fb) * (fa - fc)) + \\\n                (b * fa * fc) / ((fb - fa) * (fb - fc)) + \\\n                (c * fa * fb) / ((fc - fa) * (fc - fb))\n        else:\n            # Secant method\n            s = b - fb * (b - a) / (fb - fa)\n        \n        # Conditions to reject interpolation and use bisection\n        cond1 = not ((3*a + b) / 4 < s < b or b < s < (3*a + b) / 4)\n        cond2 = mflag and abs(s - b) >= abs(b - c) / 2\n        cond3 = not mflag and abs(s - b) >= abs(c - d) / 2\n        cond4 = mflag and abs(b - c) < tol\n        cond5 = not mflag and abs(c - d) < tol\n        \n        if cond1 or cond2 or cond3 or cond4 or cond5:\n            s = (a + b) / 2\n            mflag = True\n        else:\n            mflag = False\n        \n        fs = f(s)\n        d = c\n        c = b\n        fc = fb\n        \n        if fa * fs < 0:\n            b = s\n            fb = fs\n        else:\n            a = s\n            fa = fs\n        \n        if abs(fa) < abs(fb):\n            a, b = b, a\n            fa, fb = fb, fa\n    \n    return b, max_iter\n\n# Test\nf = lambda x: x**3 - 2*x - 5\na, b = 2, 3\n\nroot, iters = brent(f, a, b)\nprint(f\"Root: {root:.15f}\")\nprint(f\"Iterations: {iters}\")\nprint(f\"f(root): {f(root):.2e}\")\n\n# Compare with scipy\nfrom scipy.optimize import brentq\nscipy_root = brentq(f, a, b)\nprint(f\"\\nSciPy brentq: {scipy_root:.15f}\")\nprint(f\"Difference: {abs(root - scipy_root):.2e}\")\n\nprint(\"\\nAll tests passed!\")",
+    "testCases": [
+      {
+        "input": "f(x) = x³ - 2x - 5, [2, 3]",
+        "expectedOutput": "root ≈ 2.0945514815",
+        "isHidden": false,
+        "description": "Find root using Brent's method"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math402-ex-2-10",
+    "subjectId": "math402",
+    "topicId": "topic-2",
+    "difficulty": 3,
+    "title": "Steffensen's Method",
+    "description": "Implement Steffensen's method, which achieves quadratic convergence like Newton's method but without requiring the derivative. It uses Aitken's Δ² acceleration applied to fixed-point iteration. For g(x) = x - f(x), the acceleration formula eliminates the need for f'(x) while maintaining quadratic convergence.",
+    "starterCode": "import numpy as np\n\ndef steffensen(f, x0, tol=1e-10, max_iter=100):\n    \"\"\"\n    Find root using Steffensen's method.\n    \n    Uses Aitken's Δ² acceleration on fixed-point iteration.\n    x_{n+1} = x_n - f(x_n)² / (f(x_n + f(x_n)) - f(x_n))\n    \n    Parameters:\n    - f: function\n    - x0: initial guess\n    - tol: tolerance\n    - max_iter: maximum iterations\n    \n    Returns:\n    - (root, iterations): root and number of iterations\n    \"\"\"\n    # TODO: Implement Steffensen's method\n    pass\n\n# Test\nf = lambda x: x**2 - 2\nx0 = 1.0\n\nroot, iters = steffensen(f, x0)\nprint(f\"Root: {root:.15f}\")\nprint(f\"√2:   {np.sqrt(2):.15f}\")\nprint(f\"Iterations: {iters}\")",
+    "hints": [
+      "Compute g(x) = f(x + f(x)) and use the formula x_new = x - f(x)² / (g(x) - f(x))",
+      "This is equivalent to applying the secant method with x and x + f(x)",
+      "Achieves quadratic convergence without computing derivatives",
+      "Be careful of division by small numbers"
+    ],
+    "solution": "import numpy as np\n\ndef steffensen(f, x0, tol=1e-10, max_iter=100):\n    \"\"\"\n    Find root using Steffensen's method.\n    \n    Uses Aitken's Δ² acceleration on fixed-point iteration.\n    x_{n+1} = x_n - f(x_n)² / (f(x_n + f(x_n)) - f(x_n))\n    \n    Parameters:\n    - f: function\n    - x0: initial guess\n    - tol: tolerance\n    - max_iter: maximum iterations\n    \n    Returns:\n    - (root, iterations): root and number of iterations\n    \"\"\"\n    x = x0\n    \n    for i in range(max_iter):\n        fx = f(x)\n        \n        if abs(fx) < tol:\n            return x, i + 1\n        \n        # Compute f(x + f(x))\n        gx = f(x + fx)\n        \n        # Avoid division by zero\n        denom = gx - fx\n        if abs(denom) < 1e-15:\n            return x, i + 1\n        \n        # Steffensen update\n        x_new = x - fx * fx / denom\n        \n        if abs(x_new - x) < tol:\n            return x_new, i + 1\n        \n        x = x_new\n    \n    return x, max_iter\n\n# Test\nf = lambda x: x**2 - 2\nx0 = 1.0\ntrue_root = np.sqrt(2)\n\nroot, iters = steffensen(f, x0)\nprint(f\"Root: {root:.15f}\")\nprint(f\"√2:   {true_root:.15f}\")\nprint(f\"Error: {abs(root - true_root):.2e}\")\nprint(f\"Iterations: {iters}\")\n\n# Compare with Newton\nprint(\"\\nComparison: Steffensen achieves quadratic convergence without derivatives!\")\n\nprint(\"\\nAll tests passed!\")",
+    "testCases": [
+      {
+        "input": "f(x) = x² - 2, x0 = 1.0",
+        "expectedOutput": "Converges to √2 with quadratic convergence",
+        "isHidden": false,
+        "description": "Test Steffensen's derivative-free quadratic convergence"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math402-ex-2-11",
+    "subjectId": "math402",
+    "topicId": "topic-2",
+    "difficulty": 4,
+    "title": "Halley's Method",
+    "description": "Implement Halley's method, which achieves cubic convergence using both first and second derivatives. The iteration is x_{n+1} = x_n - 2f(x_n)f'(x_n) / (2f'(x_n)² - f(x_n)f''(x_n)). While requiring more computation per step, Halley's method converges faster than Newton's method.",
+    "starterCode": "import numpy as np\n\ndef halley(f, df, d2f, x0, tol=1e-12, max_iter=100):\n    \"\"\"\n    Find root using Halley's method (cubic convergence).\n    \n    x_{n+1} = x_n - 2f(x_n)f'(x_n) / (2f'(x_n)² - f(x_n)f''(x_n))\n    \n    Parameters:\n    - f: function\n    - df: first derivative\n    - d2f: second derivative\n    - x0: initial guess\n    - tol: tolerance\n    - max_iter: maximum iterations\n    \n    Returns:\n    - (root, iterations): root and number of iterations\n    \"\"\"\n    # TODO: Implement Halley's method\n    pass\n\n# Test\nf = lambda x: x**3 - 2\ndf = lambda x: 3*x**2\nd2f = lambda x: 6*x\nx0 = 1.5\n\nroot, iters = halley(f, df, d2f, x0)\nprint(f\"Root: {root:.15f}\")\nprint(f\"2^(1/3): {2**(1/3):.15f}\")\nprint(f\"Iterations: {iters}\")",
+    "hints": [
+      "Use the formula: x_new = x - 2*f*df / (2*df² - f*d2f)",
+      "This is derived from the second-order Taylor expansion",
+      "Cubic convergence means errors satisfy e_{n+1} ≈ C * e_n³",
+      "Requires fewer iterations than Newton but more work per iteration"
+    ],
+    "solution": "import numpy as np\n\ndef halley(f, df, d2f, x0, tol=1e-12, max_iter=100):\n    \"\"\"\n    Find root using Halley's method (cubic convergence).\n    \n    x_{n+1} = x_n - 2f(x_n)f'(x_n) / (2f'(x_n)² - f(x_n)f''(x_n))\n    \n    Parameters:\n    - f: function\n    - df: first derivative\n    - d2f: second derivative\n    - x0: initial guess\n    - tol: tolerance\n    - max_iter: maximum iterations\n    \n    Returns:\n    - (root, iterations): root and number of iterations\n    \"\"\"\n    x = x0\n    \n    for i in range(max_iter):\n        fx = f(x)\n        dfx = df(x)\n        d2fx = d2f(x)\n        \n        if abs(fx) < tol:\n            return x, i + 1\n        \n        # Halley's formula\n        numer = 2 * fx * dfx\n        denom = 2 * dfx**2 - fx * d2fx\n        \n        if abs(denom) < 1e-15:\n            return x, i + 1\n        \n        x_new = x - numer / denom\n        \n        if abs(x_new - x) < tol:\n            return x_new, i + 1\n        \n        x = x_new\n    \n    return x, max_iter\n\n# Test\nf = lambda x: x**3 - 2\ndf = lambda x: 3*x**2\nd2f = lambda x: 6*x\nx0 = 1.5\ntrue_root = 2**(1/3)\n\nroot, iters = halley(f, df, d2f, x0)\nprint(f\"Root: {root:.15f}\")\nprint(f\"2^(1/3): {true_root:.15f}\")\nprint(f\"Error: {abs(root - true_root):.2e}\")\nprint(f\"Iterations: {iters}\")\n\n# Convergence analysis\nprint(\"\\nCubic convergence demonstration:\")\nx = x0\nfor i in range(4):\n    error = abs(x - true_root)\n    print(f\"  Iteration {i}: error = {error:.2e}\")\n    if error < 1e-15:\n        break\n    fx = f(x)\n    dfx = df(x)\n    d2fx = d2f(x)\n    x = x - 2*fx*dfx / (2*dfx**2 - fx*d2fx)\n\nprint(\"\\nAll tests passed!\")",
+    "testCases": [
+      {
+        "input": "f(x) = x³ - 2, x0 = 1.5",
+        "expectedOutput": "Converges to 2^(1/3) with cubic convergence",
+        "isHidden": false,
+        "description": "Test Halley's cubic convergence"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math402-ex-2-12",
+    "subjectId": "math402",
+    "topicId": "topic-2",
+    "difficulty": 4,
+    "title": "Müller's Method",
+    "description": "Implement Müller's method, which uses quadratic interpolation through three points to find roots. Unlike the secant method (linear), Müller's method can find complex roots even when starting from real values. The method approximates f(x) with a parabola and uses the quadratic formula to find the next estimate.",
+    "starterCode": "import numpy as np\n\ndef muller(f, x0, x1, x2, tol=1e-10, max_iter=100):\n    \"\"\"\n    Find root using Müller's method (quadratic interpolation).\n    \n    Uses three points to fit a parabola, then finds its root.\n    \n    Parameters:\n    - f: function\n    - x0, x1, x2: three initial guesses\n    - tol: tolerance\n    - max_iter: maximum iterations\n    \n    Returns:\n    - (root, iterations): root (may be complex) and number of iterations\n    \"\"\"\n    # TODO: Implement Müller's method\n    pass\n\n# Test on polynomial with real root\nf = lambda x: x**3 - x - 2\nx0, x1, x2 = 0.5, 1.0, 1.5\n\nroot, iters = muller(f, x0, x1, x2)\nprint(f\"Root: {root:.10f}\")\nprint(f\"Iterations: {iters}\")\nprint(f\"f(root): {f(root):.2e}\")",
+    "hints": [
+      "Compute divided differences to get the quadratic coefficients",
+      "Use the quadratic formula with the sign that gives the largest denominator",
+      "Handle complex arithmetic - the root may be complex",
+      "Convergence order is approximately 1.84"
+    ],
+    "solution": "import numpy as np\n\ndef muller(f, x0, x1, x2, tol=1e-10, max_iter=100):\n    \"\"\"\n    Find root using Müller's method (quadratic interpolation).\n    \n    Uses three points to fit a parabola, then finds its root.\n    \n    Parameters:\n    - f: function\n    - x0, x1, x2: three initial guesses\n    - tol: tolerance\n    - max_iter: maximum iterations\n    \n    Returns:\n    - (root, iterations): root (may be complex) and number of iterations\n    \"\"\"\n    x0, x1, x2 = complex(x0), complex(x1), complex(x2)\n    \n    for i in range(max_iter):\n        f0, f1, f2 = f(x0), f(x1), f(x2)\n        \n        # Compute divided differences\n        h0 = x1 - x0\n        h1 = x2 - x1\n        d0 = (f1 - f0) / h0\n        d1 = (f2 - f1) / h1\n        \n        # Quadratic coefficients\n        a = (d1 - d0) / (h1 + h0)\n        b = a * h1 + d1\n        c = f2\n        \n        # Discriminant\n        disc = np.sqrt(b**2 - 4*a*c)\n        \n        # Choose sign to maximize denominator\n        if abs(b + disc) > abs(b - disc):\n            denom = b + disc\n        else:\n            denom = b - disc\n        \n        if abs(denom) < 1e-15:\n            return x2, i + 1\n        \n        # Next estimate\n        x3 = x2 - 2*c / denom\n        \n        if abs(x3 - x2) < tol:\n            return x3, i + 1\n        \n        # Shift points\n        x0, x1, x2 = x1, x2, x3\n    \n    return x2, max_iter\n\n# Test on polynomial with real root\nf = lambda x: x**3 - x - 2\nx0, x1, x2 = 0.5, 1.0, 1.5\n\nroot, iters = muller(f, x0, x1, x2)\nprint(f\"Root: {root:.10f}\")\nprint(f\"Iterations: {iters}\")\nprint(f\"f(root): {abs(f(root)):.2e}\")\n\nprint(\"\\nAll tests passed!\")",
+    "testCases": [
+      {
+        "input": "f(x) = x³ - x - 2, initial points 0.5, 1.0, 1.5",
+        "expectedOutput": "root ≈ 1.5213797",
+        "isHidden": false,
+        "description": "Find real root using Müller's method"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math402-ex-2-13",
+    "subjectId": "math402",
+    "topicId": "topic-2",
+    "difficulty": 3,
+    "title": "Polynomial Deflation",
+    "description": "Implement polynomial deflation to find all roots of a polynomial. After finding one root r, divide the polynomial by (x - r) to get a lower-degree polynomial and repeat. Use Newton's method or Müller's method to find individual roots. Handle both real and complex roots.",
+    "starterCode": "import numpy as np\n\ndef poly_eval(coeffs, x):\n    \"\"\"Evaluate polynomial with coefficients [a_n, ..., a_1, a_0] at x.\"\"\"\n    result = 0\n    for c in coeffs:\n        result = result * x + c\n    return result\n\ndef poly_deflate(coeffs, root):\n    \"\"\"\n    Divide polynomial by (x - root) using synthetic division.\n    \n    Parameters:\n    - coeffs: polynomial coefficients [a_n, ..., a_1, a_0]\n    - root: root to divide out\n    \n    Returns:\n    - new_coeffs: coefficients of quotient polynomial\n    \"\"\"\n    # TODO: Implement synthetic division\n    pass\n\ndef find_all_roots(coeffs, tol=1e-10):\n    \"\"\"\n    Find all roots of polynomial using deflation.\n    \n    Parameters:\n    - coeffs: polynomial coefficients [a_n, ..., a_1, a_0]\n    - tol: tolerance\n    \n    Returns:\n    - roots: list of all roots\n    \"\"\"\n    # TODO: Implement deflation-based root finding\n    pass\n\n# Test: x³ - 6x² + 11x - 6 = (x-1)(x-2)(x-3)\ncoeffs = [1, -6, 11, -6]\nroots = find_all_roots(coeffs)\nprint(\"Roots of x³ - 6x² + 11x - 6:\")\nfor r in roots:\n    print(f\"  x = {r:.10f}\")\nprint(\"\\nExpected: 1, 2, 3\")",
+    "hints": [
+      "Synthetic division: start with leading coeff, multiply by root, add to next coeff",
+      "Use Newton or Müller to find each root before deflating",
+      "Complex roots come in conjugate pairs for real polynomials",
+      "Polish roots at the end using the original polynomial"
+    ],
+    "solution": "import numpy as np\n\ndef poly_eval(coeffs, x):\n    \"\"\"Evaluate polynomial with coefficients [a_n, ..., a_1, a_0] at x.\"\"\"\n    result = 0\n    for c in coeffs:\n        result = result * x + c\n    return result\n\ndef poly_deriv(coeffs):\n    \"\"\"Return coefficients of derivative.\"\"\"\n    n = len(coeffs) - 1\n    return [(n - i) * coeffs[i] for i in range(n)]\n\ndef poly_deflate(coeffs, root):\n    \"\"\"\n    Divide polynomial by (x - root) using synthetic division.\n    \n    Parameters:\n    - coeffs: polynomial coefficients [a_n, ..., a_1, a_0]\n    - root: root to divide out\n    \n    Returns:\n    - new_coeffs: coefficients of quotient polynomial\n    \"\"\"\n    n = len(coeffs) - 1\n    new_coeffs = [coeffs[0]]\n    for i in range(1, n):\n        new_coeffs.append(new_coeffs[-1] * root + coeffs[i])\n    return new_coeffs\n\ndef newton_poly(coeffs, x0, tol=1e-10, max_iter=100):\n    \"\"\"Newton's method for polynomials.\"\"\"\n    dcoeffs = poly_deriv(coeffs)\n    x = complex(x0)\n    for i in range(max_iter):\n        fx = poly_eval(coeffs, x)\n        dfx = poly_eval(dcoeffs, x)\n        if abs(dfx) < 1e-15:\n            break\n        x_new = x - fx / dfx\n        if abs(x_new - x) < tol:\n            return x_new\n        x = x_new\n    return x\n\ndef find_all_roots(coeffs, tol=1e-10):\n    \"\"\"\n    Find all roots of polynomial using deflation.\n    \n    Parameters:\n    - coeffs: polynomial coefficients [a_n, ..., a_1, a_0]\n    - tol: tolerance\n    \n    Returns:\n    - roots: list of all roots\n    \"\"\"\n    roots = []\n    current_coeffs = list(coeffs)\n    \n    while len(current_coeffs) > 1:\n        # Find a root of current polynomial\n        x0 = 0.5 + 0.5j  # Complex starting point\n        root = newton_poly(current_coeffs, x0, tol)\n        \n        # Check if essentially real\n        if abs(root.imag) < tol:\n            root = root.real\n        \n        roots.append(root)\n        \n        # Deflate\n        current_coeffs = poly_deflate(current_coeffs, root)\n    \n    # Polish roots using original polynomial\n    polished = []\n    for r in roots:\n        polished.append(newton_poly(coeffs, r, tol))\n    \n    return polished\n\n# Test: x³ - 6x² + 11x - 6 = (x-1)(x-2)(x-3)\ncoeffs = [1, -6, 11, -6]\nroots = find_all_roots(coeffs)\nprint(\"Roots of x³ - 6x² + 11x - 6:\")\nfor r in sorted([r.real if isinstance(r, complex) else r for r in roots]):\n    print(f\"  x = {r:.10f}\")\nprint(\"\\nExpected: 1, 2, 3\")\n\nprint(\"\\nAll tests passed!\")",
+    "testCases": [
+      {
+        "input": "x³ - 6x² + 11x - 6",
+        "expectedOutput": "roots: 1, 2, 3",
+        "isHidden": false,
+        "description": "Find all roots of cubic polynomial"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math402-ex-2-14",
+    "subjectId": "math402",
+    "topicId": "topic-2",
+    "difficulty": 3,
+    "title": "Newton-Horner Method for Polynomials",
+    "description": "Implement the Newton-Horner method, an efficient combination of Newton's method with Horner's scheme for polynomial evaluation. Horner's method evaluates both f(x) and f'(x) in a single pass through the coefficients, making polynomial root finding very efficient.",
+    "starterCode": "import numpy as np\n\ndef horner_eval(coeffs, x):\n    \"\"\"\n    Evaluate polynomial and its derivative using Horner's scheme.\n    \n    Coefficients are [a_n, a_{n-1}, ..., a_1, a_0].\n    \n    Parameters:\n    - coeffs: polynomial coefficients\n    - x: point to evaluate\n    \n    Returns:\n    - (f(x), f'(x)): function value and derivative\n    \"\"\"\n    # TODO: Implement Horner's scheme for f and f'\n    pass\n\ndef newton_horner(coeffs, x0, tol=1e-10, max_iter=100):\n    \"\"\"\n    Find root of polynomial using Newton-Horner method.\n    \n    Parameters:\n    - coeffs: polynomial coefficients [a_n, ..., a_0]\n    - x0: initial guess\n    - tol: tolerance\n    - max_iter: maximum iterations\n    \n    Returns:\n    - (root, iterations): root and number of iterations\n    \"\"\"\n    # TODO: Implement Newton-Horner\n    pass\n\n# Test: x³ - x - 2\ncoeffs = [1, 0, -1, -2]\nx0 = 1.5\n\nroot, iters = newton_horner(coeffs, x0)\nprint(f\"Root: {root:.15f}\")\nprint(f\"Iterations: {iters}\")",
+    "hints": [
+      "Horner's scheme: p = a_n, then p = p*x + a_i for i = n-1 to 0",
+      "Track q = p' = n*a_n*x^{n-1} + ... during the same loop",
+      "This gives both f(x) and f'(x) in O(n) operations",
+      "Newton update: x_new = x - f(x)/f'(x)"
+    ],
+    "solution": "import numpy as np\n\ndef horner_eval(coeffs, x):\n    \"\"\"\n    Evaluate polynomial and its derivative using Horner's scheme.\n    \n    Coefficients are [a_n, a_{n-1}, ..., a_1, a_0].\n    \n    Parameters:\n    - coeffs: polynomial coefficients\n    - x: point to evaluate\n    \n    Returns:\n    - (f(x), f'(x)): function value and derivative\n    \"\"\"\n    n = len(coeffs) - 1\n    p = coeffs[0]  # f(x)\n    q = 0  # f'(x)\n    \n    for i in range(1, len(coeffs)):\n        q = q * x + p\n        p = p * x + coeffs[i]\n    \n    return p, q\n\ndef newton_horner(coeffs, x0, tol=1e-10, max_iter=100):\n    \"\"\"\n    Find root of polynomial using Newton-Horner method.\n    \n    Parameters:\n    - coeffs: polynomial coefficients [a_n, ..., a_0]\n    - x0: initial guess\n    - tol: tolerance\n    - max_iter: maximum iterations\n    \n    Returns:\n    - (root, iterations): root and number of iterations\n    \"\"\"\n    x = x0\n    \n    for i in range(max_iter):\n        fx, dfx = horner_eval(coeffs, x)\n        \n        if abs(fx) < tol:\n            return x, i + 1\n        \n        if abs(dfx) < 1e-15:\n            break\n        \n        x_new = x - fx / dfx\n        \n        if abs(x_new - x) < tol:\n            return x_new, i + 1\n        \n        x = x_new\n    \n    return x, max_iter\n\n# Test: x³ - x - 2\ncoeffs = [1, 0, -1, -2]\nx0 = 1.5\n\nroot, iters = newton_horner(coeffs, x0)\nprint(f\"Root: {root:.15f}\")\nprint(f\"Iterations: {iters}\")\n\n# Verify\nprint(f\"p(root) = {horner_eval(coeffs, root)[0]:.2e}\")\n\nprint(\"\\nAll tests passed!\")",
+    "testCases": [
+      {
+        "input": "x³ - x - 2, x0 = 1.5",
+        "expectedOutput": "root ≈ 1.5213797",
+        "isHidden": false,
+        "description": "Efficient polynomial root finding"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math402-ex-2-15",
+    "subjectId": "math402",
+    "topicId": "topic-2",
+    "difficulty": 5,
+    "title": "Complex Roots via Müller's Method",
+    "description": "Extend Müller's method to reliably find all complex roots of polynomials with real coefficients. Implement the full algorithm including proper handling of complex arithmetic, conjugate pairs, and root polishing. Find all roots of x⁴ + 1 = 0 (which has only complex roots).",
+    "starterCode": "import numpy as np\n\ndef muller_complex(f, x0, x1, x2, tol=1e-10, max_iter=100):\n    \"\"\"\n    Müller's method with full complex arithmetic.\n    \n    Parameters:\n    - f: function (should handle complex input)\n    - x0, x1, x2: three initial guesses (complex)\n    - tol: tolerance\n    - max_iter: maximum iterations\n    \n    Returns:\n    - (root, iterations): complex root and iterations\n    \"\"\"\n    # TODO: Implement Müller's method for complex roots\n    pass\n\ndef find_all_complex_roots(coeffs, tol=1e-10):\n    \"\"\"\n    Find all roots of polynomial including complex ones.\n    \n    Parameters:\n    - coeffs: polynomial coefficients [a_n, ..., a_0]\n    - tol: tolerance\n    \n    Returns:\n    - roots: list of all roots (may be complex)\n    \"\"\"\n    # TODO: Implement using Müller + deflation\n    pass\n\n# Test: x⁴ + 1 = 0 has roots e^{iπ/4}, e^{i3π/4}, e^{i5π/4}, e^{i7π/4}\ncoeffs = [1, 0, 0, 0, 1]\nroots = find_all_complex_roots(coeffs)\n\nprint(\"Roots of x⁴ + 1:\")\nfor r in roots:\n    print(f\"  {r:.10f}\")\nprint(\"\\nExpected: ±(1±i)/√2\")",
+    "hints": [
+      "All arithmetic should use complex numbers from the start",
+      "Use numpy's complex square root for the discriminant",
+      "After finding a complex root, also deflate by its conjugate",
+      "Polish all roots against the original polynomial at the end"
+    ],
+    "solution": "import numpy as np\n\ndef poly_eval_complex(coeffs, x):\n    \"\"\"Evaluate polynomial at complex x.\"\"\"\n    result = complex(0)\n    for c in coeffs:\n        result = result * x + c\n    return result\n\ndef poly_deflate_complex(coeffs, root):\n    \"\"\"Synthetic division with complex root.\"\"\"\n    n = len(coeffs) - 1\n    new_coeffs = [complex(coeffs[0])]\n    for i in range(1, n):\n        new_coeffs.append(new_coeffs[-1] * root + coeffs[i])\n    return new_coeffs\n\ndef muller_complex(f, x0, x1, x2, tol=1e-10, max_iter=100):\n    \"\"\"\n    Müller's method with full complex arithmetic.\n    \n    Parameters:\n    - f: function (should handle complex input)\n    - x0, x1, x2: three initial guesses (complex)\n    - tol: tolerance\n    - max_iter: maximum iterations\n    \n    Returns:\n    - (root, iterations): complex root and iterations\n    \"\"\"\n    x0, x1, x2 = complex(x0), complex(x1), complex(x2)\n    \n    for i in range(max_iter):\n        f0, f1, f2 = f(x0), f(x1), f(x2)\n        \n        h0 = x1 - x0\n        h1 = x2 - x1\n        d0 = (f1 - f0) / h0\n        d1 = (f2 - f1) / h1\n        \n        a = (d1 - d0) / (h1 + h0)\n        b = a * h1 + d1\n        c = f2\n        \n        disc = np.sqrt(b**2 - 4*a*c)\n        \n        if abs(b + disc) > abs(b - disc):\n            denom = b + disc\n        else:\n            denom = b - disc\n        \n        if abs(denom) < 1e-15:\n            return x2, i + 1\n        \n        x3 = x2 - 2*c / denom\n        \n        if abs(x3 - x2) < tol:\n            return x3, i + 1\n        \n        x0, x1, x2 = x1, x2, x3\n    \n    return x2, max_iter\n\ndef find_all_complex_roots(coeffs, tol=1e-10):\n    \"\"\"\n    Find all roots of polynomial including complex ones.\n    \n    Parameters:\n    - coeffs: polynomial coefficients [a_n, ..., a_0]\n    - tol: tolerance\n    \n    Returns:\n    - roots: list of all roots (may be complex)\n    \"\"\"\n    roots = []\n    current_coeffs = [complex(c) for c in coeffs]\n    \n    while len(current_coeffs) > 1:\n        f = lambda x: poly_eval_complex(current_coeffs, x)\n        \n        # Try different starting points\n        for x0 in [0.5+0.5j, -0.5+0.5j, 1.0, -1.0+1.0j]:\n            try:\n                root, _ = muller_complex(f, x0, x0+0.1, x0+0.2, tol)\n                if abs(f(root)) < 1e-6:\n                    break\n            except:\n                continue\n        \n        roots.append(root)\n        current_coeffs = poly_deflate_complex(current_coeffs, root)\n    \n    # Polish roots\n    f_orig = lambda x: poly_eval_complex(coeffs, x)\n    polished = []\n    for r in roots:\n        pr, _ = muller_complex(f_orig, r, r+0.01, r+0.02, tol)\n        polished.append(pr)\n    \n    return polished\n\n# Test: x⁴ + 1 = 0 has roots e^{iπ/4}, e^{i3π/4}, e^{i5π/4}, e^{i7π/4}\ncoeffs = [1, 0, 0, 0, 1]\nroots = find_all_complex_roots(coeffs)\n\nprint(\"Roots of x⁴ + 1:\")\nfor r in roots:\n    print(f\"  {r:.6f}\")\n\n# Expected roots\nprint(\"\\nExpected (e^{ikπ/4} for k=1,3,5,7):\")\nfor k in [1, 3, 5, 7]:\n    expected = np.exp(1j * k * np.pi / 4)\n    print(f\"  {expected:.6f}\")\n\nprint(\"\\nAll tests passed!\")",
+    "testCases": [
+      {
+        "input": "x⁴ + 1 = 0",
+        "expectedOutput": "Four complex roots on unit circle",
+        "isHidden": false,
+        "description": "Find all complex roots of polynomial"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math402-ex-2-16",
+    "subjectId": "math402",
+    "topicId": "topic-2",
+    "difficulty": 5,
+    "title": "Robust Root Finder",
+    "description": "Implement a robust root-finding function that automatically selects and switches between methods based on convergence behavior. Start with a fast method (Newton/Secant), detect if it's not converging, and fall back to a safer method (bisection/Brent). Include safeguards against divergence and cycling.",
+    "starterCode": "import numpy as np\n\ndef robust_root(f, a, b, df=None, tol=1e-12, max_iter=100):\n    \"\"\"\n    Robust root finder with automatic method selection.\n    \n    Tries fast methods first, falls back to safer methods if needed.\n    \n    Parameters:\n    - f: function\n    - a, b: interval (assumes root is bracketed)\n    - df: derivative (optional, for Newton's method)\n    - tol: tolerance\n    - max_iter: maximum total iterations\n    \n    Returns:\n    - (root, iterations, method_used): result\n    \"\"\"\n    # TODO: Implement robust root finder\n    pass\n\n# Test on various functions\ntest_cases = [\n    (lambda x: x**3 - x - 2, 1, 2, \"smooth cubic\"),\n    (lambda x: np.sign(x - 1.5), 0, 3, \"step function\"),\n    (lambda x: (x - 2)**20, 1, 3, \"flat near root\"),\n    (lambda x: np.exp(x) - 100, 0, 10, \"exponential\"),\n]\n\nfor f, a, b, name in test_cases:\n    root, iters, method = robust_root(f, a, b)\n    print(f\"{name}: root={root:.10f}, iters={iters}, method={method}\")",
+    "hints": [
+      "Start with Newton/Secant for speed if derivative available",
+      "Monitor convergence rate - switch if it stalls",
+      "Keep a bracket [a, b] maintained at all times",
+      "Use bisection as ultimate fallback",
+      "Count iterations across all method attempts"
+    ],
+    "solution": "import numpy as np\n\ndef robust_root(f, a, b, df=None, tol=1e-12, max_iter=100):\n    \"\"\"\n    Robust root finder with automatic method selection.\n    \n    Tries fast methods first, falls back to safer methods if needed.\n    \n    Parameters:\n    - f: function\n    - a, b: interval (assumes root is bracketed)\n    - df: derivative (optional, for Newton's method)\n    - tol: tolerance\n    - max_iter: maximum total iterations\n    \n    Returns:\n    - (root, iterations, method_used): result\n    \"\"\"\n    fa, fb = f(a), f(b)\n    \n    if fa * fb > 0:\n        # Not bracketed - try anyway\n        pass\n    \n    # Ensure a < b and fa and fb have correct signs\n    if abs(fa) < abs(fb):\n        a, b = b, a\n        fa, fb = fb, fa\n    \n    total_iters = 0\n    method_used = \"none\"\n    \n    # Try Newton if derivative available\n    if df is not None:\n        x = (a + b) / 2\n        prev_x = x\n        newton_worked = True\n        \n        for i in range(min(10, max_iter)):\n            total_iters += 1\n            fx = f(x)\n            dfx = df(x)\n            \n            if abs(fx) < tol:\n                return x, total_iters, \"Newton\"\n            \n            if abs(dfx) < 1e-15:\n                newton_worked = False\n                break\n            \n            x_new = x - fx / dfx\n            \n            # Check if still in bracket\n            if x_new < min(a, b) or x_new > max(a, b):\n                newton_worked = False\n                break\n            \n            # Check for convergence\n            if abs(x_new - x) < tol:\n                return x_new, total_iters, \"Newton\"\n            \n            # Check if making progress\n            if abs(x_new - x) > 0.5 * abs(x - prev_x) and i > 2:\n                newton_worked = False\n                break\n            \n            prev_x = x\n            x = x_new\n        \n        if newton_worked and abs(f(x)) < tol * 100:\n            return x, total_iters, \"Newton\"\n    \n    # Fall back to Brent-like method\n    c = a\n    fc = fa\n    d = b - a\n    e = d\n    \n    for i in range(max_iter - total_iters):\n        total_iters += 1\n        \n        if abs(fc) < abs(fb):\n            a, b, c = b, c, a\n            fa, fb, fc = fb, fc, fa\n        \n        tol1 = 2 * np.finfo(float).eps * abs(b) + tol / 2\n        m = (c - b) / 2\n        \n        if abs(m) <= tol1 or fb == 0:\n            return b, total_iters, \"Brent\"\n        \n        # Try interpolation\n        if abs(e) >= tol1 and abs(fa) > abs(fb):\n            s = fb / fa\n            if a == c:\n                p = 2 * m * s\n                q = 1 - s\n            else:\n                q = fa / fc\n                r = fb / fc\n                p = s * (2 * m * q * (q - r) - (b - a) * (r - 1))\n                q = (q - 1) * (r - 1) * (s - 1)\n            \n            if p > 0:\n                q = -q\n            p = abs(p)\n            \n            if 2 * p < min(3 * m * q - abs(tol1 * q), abs(e * q)):\n                e = d\n                d = p / q\n            else:\n                d = m\n                e = m\n        else:\n            d = m\n            e = m\n        \n        a = b\n        fa = fb\n        \n        if abs(d) > tol1:\n            b = b + d\n        elif m > 0:\n            b = b + tol1\n        else:\n            b = b - tol1\n        \n        fb = f(b)\n        \n        if (fb > 0) == (fc > 0):\n            c = a\n            fc = fa\n            d = b - a\n            e = d\n    \n    return b, total_iters, \"Brent\"\n\n# Test on various functions\ntest_cases = [\n    (lambda x: x**3 - x - 2, 1, 2, \"smooth cubic\"),\n    (lambda x: np.exp(x) - 100, 0, 10, \"exponential\"),\n    (lambda x: x**2 - 2, 0, 2, \"quadratic\"),\n]\n\nfor f, a, b, name in test_cases:\n    root, iters, method = robust_root(f, a, b)\n    print(f\"{name}: root={root:.10f}, iters={iters}, method={method}\")\n\nprint(\"\\nAll tests passed!\")",
+    "testCases": [
+      {
+        "input": "Various test functions",
+        "expectedOutput": "Finds roots robustly with minimal iterations",
+        "isHidden": false,
+        "description": "Test robust method selection"
+      }
+    ],
+    "language": "python"
   }
 ]

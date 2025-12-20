@@ -33,23 +33,18 @@
       },
       {
         "id": "q3",
+        "type": "code_output",
+        "prompt": "What is the output after one Jacobi iteration?",
+        "codeSnippet": "import numpy as np\nA = np.array([[4.0, 1.0], [1.0, 3.0]])\nb = np.array([5.0, 4.0])\nx_old = np.array([0.0, 0.0])\nx_new = np.zeros(2)\nx_new[0] = (b[0] - A[0,1]*x_old[1]) / A[0,0]\nx_new[1] = (b[1] - A[1,0]*x_old[0]) / A[1,1]\nprint(f'{x_new[0]:.2f}')",
+        "correctAnswer": "1.25",
+        "explanation": "Jacobi iteration: x_new[0] = (5 - 1·0)/4 = 1.25, x_new[1] = (4 - 1·0)/3 ≈ 1.33. Uses only old values."
+      },
+      {
+        "id": "q4",
         "type": "true_false",
         "prompt": "Iterative methods are generally preferred over direct methods for small dense systems.",
         "correctAnswer": false,
         "explanation": "False. For small dense systems, direct methods (Gaussian elimination, LU) are typically faster and more reliable. Iterative methods excel for large sparse systems where storing/computing factors is expensive."
-      },
-      {
-        "id": "q4",
-        "type": "multiple_choice",
-        "prompt": "A sufficient condition for Jacobi and Gauss-Seidel to converge is that A is:",
-        "options": [
-          "Symmetric",
-          "Positive definite",
-          "Strictly diagonally dominant",
-          "Upper triangular"
-        ],
-        "correctAnswer": 2,
-        "explanation": "If A is strictly diagonally dominant (|a_{ii}| > Σ_{j≠i}|a_{ij}| for all i), both Jacobi and Gauss-Seidel converge for any initial guess. This is sufficient but not necessary."
       },
       {
         "id": "q5",
@@ -81,6 +76,14 @@
       },
       {
         "id": "q2",
+        "type": "code_output",
+        "prompt": "What does this Gauss-Seidel iteration output?",
+        "codeSnippet": "import numpy as np\nA = np.array([[4.0, 1.0], [1.0, 3.0]])\nb = np.array([5.0, 4.0])\nx = np.array([0.0, 0.0])\n# One Gauss-Seidel iteration\nx[0] = (b[0] - A[0,1]*x[1]) / A[0,0]\nx[1] = (b[1] - A[1,0]*x[0]) / A[1,1]\nprint(f'{x[1]:.4f}')",
+        "correctAnswer": "0.9167",
+        "explanation": "Gauss-Seidel uses updated values immediately: x[0] = (5-1·0)/4 = 1.25, then x[1] = (4-1·1.25)/3 = 2.75/3 ≈ 0.9167."
+      },
+      {
+        "id": "q3",
         "type": "multiple_choice",
         "prompt": "The Conjugate Gradient (CG) method is applicable when A is:",
         "options": [
@@ -93,37 +96,18 @@
         "explanation": "CG requires A to be symmetric positive definite (SPD). It solves Ax = b in at most n iterations (in exact arithmetic) by minimizing the energy norm ||x - x*||_A."
       },
       {
-        "id": "q3",
+        "id": "q4",
         "type": "true_false",
         "prompt": "Gauss-Seidel always converges faster than Jacobi when both converge.",
         "correctAnswer": false,
         "explanation": "False. While Gauss-Seidel typically converges faster, there exist matrices for which Jacobi converges faster. However, if both converge, Gauss-Seidel often requires fewer iterations."
       },
       {
-        "id": "q4",
-        "type": "multiple_choice",
-        "prompt": "GMRES (Generalized Minimal Residual) method minimizes:",
-        "options": [
-          "The energy norm of the error",
-          "The 2-norm of the residual ||Ax^{(k)} - b||_2",
-          "The condition number",
-          "The number of iterations"
-        ],
-        "correctAnswer": 1,
-        "explanation": "GMRES minimizes ||r^{(k)}||_2 = ||Ax^{(k)} - b||_2 over the Krylov subspace K_k. It works for any invertible matrix, not just SPD."
-      },
-      {
         "id": "q5",
-        "type": "multiple_choice",
-        "prompt": "What is the main practical limitation of GMRES?",
-        "options": [
-          "Only works for symmetric matrices",
-          "Memory and computation grow with iteration count",
-          "Converges slower than Jacobi",
-          "Cannot be preconditioned"
-        ],
-        "correctAnswer": 1,
-        "explanation": "GMRES stores all previous search directions, requiring O(kn) storage and O(kn^2) work at iteration k. Restarted GMRES limits k to control costs."
+        "type": "fill_blank",
+        "prompt": "GMRES (Generalized Minimal Residual) minimizes the ____ of the residual over the Krylov subspace.",
+        "correctAnswer": "2-norm",
+        "explanation": "GMRES minimizes ||r^{(k)}||_2 = ||Ax^{(k)} - b||_2 over the Krylov subspace K_k. It works for any invertible matrix, not just SPD."
       }
     ]
   },
@@ -161,36 +145,25 @@
       },
       {
         "id": "q3",
+        "type": "code_output",
+        "prompt": "What spectral radius does this iteration matrix have?",
+        "codeSnippet": "import numpy as np\nD = np.array([[4, 0], [0, 3]])\nL_U = np.array([[0, 1], [1, 0]])\nG_jacobi = -np.linalg.inv(D) @ L_U\neig_vals = np.linalg.eigvals(G_jacobi)\nrho = np.max(np.abs(eig_vals))\nprint(f'{rho:.4f}')",
+        "correctAnswer": "0.2887",
+        "explanation": "G_jacobi = -D^{-1}(L+U) for A = [[4,1],[1,3]]. G = -[[1/4,0],[0,1/3]][[0,1],[1,0]] = [[0,-1/4],[-1/3,0]]. Eigenvalues: ±√(1/12) ≈ ±0.2887. ρ ≈ 0.2887."
+      },
+      {
+        "id": "q4",
         "type": "true_false",
         "prompt": "In exact arithmetic, CG converges in at most n iterations for an n×n SPD matrix.",
         "correctAnswer": true,
         "explanation": "True. CG is a direct method in exact arithmetic, finding the exact solution in at most n steps. In practice, roundoff and preconditioning make it effective as an iterative method."
       },
       {
-        "id": "q4",
-        "type": "multiple_choice",
-        "prompt": "The conjugate gradient method generates search directions that are:",
-        "options": [
-          "Orthogonal in the Euclidean norm",
-          "A-orthogonal (conjugate with respect to A)",
-          "Parallel to eigenvectors of A",
-          "Random directions"
-        ],
-        "correctAnswer": 1,
-        "explanation": "CG search directions p^{(i)} satisfy (p^{(i)})^T A p^{(j)} = 0 for i ≠ j. This A-orthogonality (conjugacy) ensures each direction optimally contributes to minimizing ||x - x*||_A."
-      },
-      {
         "id": "q5",
-        "type": "multiple_choice",
-        "prompt": "Which statement about Krylov subspace methods is FALSE?",
-        "options": [
-          "They build approximate solutions in K_k = span{r^{(0)}, Ar^{(0)}, ..., A^{k-1}r^{(0)}}",
-          "CG is optimal for SPD matrices in the A-norm",
-          "GMRES is optimal for general matrices in the residual norm",
-          "They require storing and inverting the full matrix A"
-        ],
-        "correctAnswer": 3,
-        "explanation": "False: Krylov methods only need matrix-vector products Av, not storage or inversion of A. This makes them ideal for large sparse systems where A is stored implicitly."
+        "type": "fill_blank",
+        "prompt": "CG search directions are A-orthogonal, also called ____.",
+        "correctAnswer": "conjugate",
+        "explanation": "CG search directions p^{(i)} satisfy (p^{(i)})^T A p^{(j)} = 0 for i ≠ j. This A-orthogonality (conjugacy) ensures each direction optimally contributes to minimizing ||x - x*||_A."
       }
     ]
   }

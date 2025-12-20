@@ -20,6 +20,14 @@
       },
       {
         "id": "q2",
+        "type": "code_output",
+        "prompt": "What does this Lagrange interpolation code output?",
+        "codeSnippet": "import numpy as np\nx_points = [0, 1, 2]\ny_points = [1, 3, 2]\nx = 0.5\nresult = 0\nfor i in range(3):\n    L = 1\n    for j in range(3):\n        if i != j:\n            L *= (x - x_points[j]) / (x_points[i] - x_points[j])\n    result += y_points[i] * L\nprint(f'{result:.2f}')",
+        "correctAnswer": "2.25",
+        "explanation": "Lagrange interpolation at x=0.5: L_0(0.5)=0.375, L_1(0.5)=0.75, L_2(0.5)=-0.125. Result = 1(0.375) + 3(0.75) + 2(-0.125) = 2.25."
+      },
+      {
+        "id": "q3",
         "type": "multiple_choice",
         "prompt": "What is the main advantage of Newton's divided difference form over Lagrange interpolation?",
         "options": [
@@ -32,24 +40,11 @@
         "explanation": "Newton's form is incremental: adding a new point requires only computing one new divided difference and adding one term, whereas Lagrange requires recomputing all basis polynomials."
       },
       {
-        "id": "q3",
+        "id": "q4",
         "type": "true_false",
         "prompt": "Increasing the degree of an interpolating polynomial always decreases the interpolation error.",
         "correctAnswer": false,
         "explanation": "False. Higher-degree polynomials can exhibit Runge's phenomenon with wild oscillations between data points, especially with equally-spaced points. The error can actually increase."
-      },
-      {
-        "id": "q4",
-        "type": "multiple_choice",
-        "prompt": "Hermite interpolation differs from standard polynomial interpolation by:",
-        "options": [
-          "Using trigonometric functions instead of polynomials",
-          "Matching derivative values in addition to function values",
-          "Only working with equally-spaced points",
-          "Minimizing the L2 error instead of exact matching"
-        ],
-        "correctAnswer": 1,
-        "explanation": "Hermite interpolation matches both function values and derivative values at the interpolation points, requiring a higher-degree polynomial."
       },
       {
         "id": "q5",
@@ -94,36 +89,25 @@
       },
       {
         "id": "q3",
+        "type": "code_output",
+        "prompt": "What is the output of this divided difference calculation?",
+        "codeSnippet": "x = [0, 1, 2, 3]\ny = [1, 2, 4, 8]\n# Second divided difference f[1,2,3]\nf_12 = (y[2] - y[1]) / (x[2] - x[1])\nf_23 = (y[3] - y[2]) / (x[3] - x[2])\nf_123 = (f_23 - f_12) / (x[3] - x[1])\nprint(f'{f_123:.1f}')",
+        "correctAnswer": "1.0",
+        "explanation": "f[1,2] = (4-2)/(2-1) = 2, f[2,3] = (8-4)/(3-2) = 4, f[1,2,3] = (4-2)/(3-1) = 1.0. This represents the second derivative approximation."
+      },
+      {
+        "id": "q4",
         "type": "true_false",
         "prompt": "Natural cubic splines have zero second derivatives at the endpoints.",
         "correctAnswer": true,
         "explanation": "True. Natural splines impose the boundary conditions S''(x_0) = S''(x_n) = 0, which provides two additional equations to determine all spline coefficients."
       },
       {
-        "id": "q4",
-        "type": "multiple_choice",
-        "prompt": "Given data points at x = 0, 1, 2 with values 1, 2, 4, the first divided difference f[1,2] is:",
-        "options": [
-          "1",
-          "2",
-          "3",
-          "4"
-        ],
-        "correctAnswer": 1,
-        "explanation": "f[1,2] = (f(2) - f(1))/(2 - 1) = (4 - 2)/1 = 2. Divided differences are the discrete analog of derivatives."
-      },
-      {
         "id": "q5",
-        "type": "multiple_choice",
-        "prompt": "A cubic spline through n+1 points has how many unknown coefficients to determine?",
-        "options": [
-          "n",
-          "2n",
-          "4n",
-          "4(n+1)"
-        ],
-        "correctAnswer": 2,
-        "explanation": "Each of the n intervals has a cubic polynomial with 4 coefficients, giving 4n unknowns. These are determined by 4n equations from continuity and boundary conditions."
+        "type": "fill_blank",
+        "prompt": "Hermite interpolation matches both function values and ____ values at the interpolation points.",
+        "correctAnswer": "derivative",
+        "explanation": "Hermite interpolation matches both function values and derivative values at the interpolation points, requiring a higher-degree polynomial than standard interpolation."
       }
     ]
   },
@@ -161,36 +145,25 @@
       },
       {
         "id": "q3",
+        "type": "code_output",
+        "prompt": "What does this Chebyshev node calculation output?",
+        "codeSnippet": "import numpy as np\nn = 3  # 3 nodes\na, b = -1, 1\nk = 1  # second node (0-indexed)\nx_k = np.cos((2*k + 1) * np.pi / (2*n))\nprint(f'{x_k:.6f}')",
+        "correctAnswer": "0.000000",
+        "explanation": "Chebyshev nodes on [-1,1]: x_k = cos((2k+1)π/(2n)). For n=3, k=1: x_1 = cos(3π/6) = cos(π/2) = 0."
+      },
+      {
+        "id": "q4",
         "type": "true_false",
         "prompt": "The divided difference f[x_0, x_1, ..., x_n] equals f^{(n)}(ξ)/n! for some ξ in the smallest interval containing all x_i.",
         "correctAnswer": true,
         "explanation": "True. This is a fundamental theorem connecting divided differences to derivatives, showing that divided differences generalize derivatives to discrete data."
       },
       {
-        "id": "q4",
-        "type": "multiple_choice",
-        "prompt": "For a clamped cubic spline (given endpoint derivatives), how many continuity conditions are imposed?",
-        "options": [
-          "2(n-1) for function values, 2(n-1) for derivatives",
-          "n-1 for S, n-1 for S', n-1 for S'', plus 2 boundary conditions",
-          "4n conditions total",
-          "All of the above (equivalent formulations)"
-        ],
-        "correctAnswer": 3,
-        "explanation": "All formulations are equivalent: matching values and derivatives at n-1 interior knots (2(n-1) each), plus C^2 continuity (n-1 more), plus 2 clamped boundary conditions = 4n equations for 4n unknowns."
-      },
-      {
         "id": "q5",
-        "type": "multiple_choice",
-        "prompt": "B-splines are advantageous because they:",
-        "options": [
-          "Have local support, making modifications local",
-          "Form a stable basis for the spline space",
-          "Allow efficient computation and numerical stability",
-          "All of the above"
-        ],
-        "correctAnswer": 3,
-        "explanation": "B-splines possess local support (changing one control point affects only nearby regions), form a well-conditioned basis, and enable efficient stable algorithms—making them ideal for practical applications."
+        "type": "fill_blank",
+        "prompt": "B-splines have ____ support, making modifications local and computations efficient.",
+        "correctAnswer": "local",
+        "explanation": "B-splines possess local support: changing one control point affects only nearby regions. This property, combined with forming a well-conditioned basis, makes them ideal for practical applications."
       }
     ]
   }
