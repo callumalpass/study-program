@@ -502,5 +502,684 @@ export const cs405Quizzes: Quiz[] = [
         explanation: 'Docker Compose uses YAML files to define multi-container applications with their networks, volumes, and configurations, enabling easy deployment and management.'
       }
     ]
+  },
+
+  // ============================================================================
+  // TOPIC 4: Kubernetes (3 quizzes)
+  // ============================================================================
+  {
+    id: 'cs405-quiz-4',
+    subjectId: 'cs405',
+    topicId: 'cs405-topic-4',
+    title: 'Kubernetes - Architecture and Fundamentals',
+    questions: [
+      {
+        id: 'q4-1',
+        type: 'multiple_choice',
+        prompt: 'Which component is the Kubernetes control plane\'s API server?',
+        options: ['kubelet', 'kube-apiserver', 'kube-scheduler', 'etcd'],
+        correctAnswer: 1,
+        explanation: 'kube-apiserver is the front-end of the Kubernetes control plane, exposing the Kubernetes API. All operations go through the API server.'
+      },
+      {
+        id: 'q4-2',
+        type: 'true_false',
+        prompt: 'Pods are the smallest deployable units in Kubernetes.',
+        correctAnswer: true,
+        explanation: 'Pods are the smallest and simplest Kubernetes objects. A Pod represents a single instance of a running process in your cluster and can contain one or more containers.'
+      },
+      {
+        id: 'q4-3',
+        type: 'multiple_choice',
+        prompt: 'What is the role of kubelet?',
+        options: [
+          'Manages the API server',
+          'Runs on worker nodes and manages pods',
+          'Stores cluster state',
+          'Schedules pods to nodes'
+        ],
+        correctAnswer: 1,
+        explanation: 'kubelet is an agent that runs on each worker node. It ensures containers are running in a Pod and reports node and pod status back to the control plane.'
+      },
+      {
+        id: 'q4-4',
+        type: 'multiple_choice',
+        prompt: 'Which Kubernetes object stores cluster state?',
+        options: ['kube-apiserver', 'etcd', 'kube-controller-manager', 'kube-proxy'],
+        correctAnswer: 1,
+        explanation: 'etcd is a consistent and highly-available key-value store used as Kubernetes\' backing store for all cluster data. It\'s the source of truth for the cluster.'
+      },
+      {
+        id: 'q4-5',
+        type: 'true_false',
+        prompt: 'Each Pod gets its own unique IP address in Kubernetes.',
+        correctAnswer: true,
+        explanation: 'Kubernetes assigns each Pod a unique IP address. Containers within a Pod share the network namespace, including the IP address and network ports.'
+      }
+    ]
+  },
+  {
+    id: 'cs405-quiz-4b',
+    subjectId: 'cs405',
+    topicId: 'cs405-topic-4',
+    title: 'Kubernetes - Deployments and Services',
+    questions: [
+      {
+        id: 'q4b-1',
+        type: 'multiple_choice',
+        prompt: 'What is the primary purpose of a Kubernetes Deployment?',
+        options: [
+          'Expose applications to the network',
+          'Manage stateful applications',
+          'Provide declarative updates for Pods and ReplicaSets',
+          'Store configuration data'
+        ],
+        correctAnswer: 2,
+        explanation: 'Deployments provide declarative updates for Pods and ReplicaSets. They manage rolling updates, rollbacks, and scaling of applications.'
+      },
+      {
+        id: 'q4b-2',
+        type: 'true_false',
+        prompt: 'A Kubernetes Service provides a stable IP address and DNS name for accessing Pods.',
+        correctAnswer: true,
+        explanation: 'Services provide stable networking for Pods, which have ephemeral IPs. A Service gets a stable ClusterIP and DNS name that doesn\'t change when Pods are recreated.'
+      },
+      {
+        id: 'q4b-3',
+        type: 'multiple_choice',
+        prompt: 'Which Service type exposes the Service on a static port on each node?',
+        options: ['ClusterIP', 'NodePort', 'LoadBalancer', 'ExternalName'],
+        correctAnswer: 1,
+        explanation: 'NodePort exposes the Service on a static port (30000-32767) on each node\'s IP. External traffic can access the Service via <NodeIP>:<NodePort>.'
+      },
+      {
+        id: 'q4b-4',
+        type: 'multiple_choice',
+        prompt: 'What happens when you update a Deployment with a new image?',
+        options: [
+          'All Pods are deleted and recreated simultaneously',
+          'Pods are updated one at a time with zero downtime',
+          'The Deployment is deleted and recreated',
+          'Nothing happens automatically'
+        ],
+        correctAnswer: 1,
+        explanation: 'Deployments perform rolling updates by default, gradually replacing Pods with the new version. This ensures zero downtime during updates.'
+      },
+      {
+        id: 'q4b-5',
+        type: 'true_false',
+        prompt: 'LoadBalancer Service type only works on cloud providers.',
+        correctAnswer: true,
+        explanation: 'LoadBalancer Service type provisions a cloud load balancer (AWS ELB, Azure Load Balancer, etc.). On-premises clusters typically use MetalLB or similar for LoadBalancer support.'
+      }
+    ]
+  },
+  {
+    id: 'cs405-quiz-4c',
+    subjectId: 'cs405',
+    topicId: 'cs405-topic-4',
+    title: 'Kubernetes - Configuration and Scaling',
+    questions: [
+      {
+        id: 'q4c-1',
+        type: 'multiple_choice',
+        prompt: 'What is the difference between ConfigMaps and Secrets?',
+        options: [
+          'No difference, they are identical',
+          'ConfigMaps store non-sensitive data, Secrets store sensitive data with base64 encoding',
+          'ConfigMaps are encrypted, Secrets are not',
+          'Secrets are faster than ConfigMaps'
+        ],
+        correctAnswer: 1,
+        explanation: 'ConfigMaps store non-sensitive configuration data. Secrets store sensitive data (passwords, tokens) and are base64-encoded. Secrets can be encrypted at rest with additional configuration.'
+      },
+      {
+        id: 'q4c-2',
+        type: 'true_false',
+        prompt: 'Horizontal Pod Autoscaler (HPA) automatically scales the number of Pods based on CPU/memory usage.',
+        correctAnswer: true,
+        explanation: 'HPA automatically scales the number of Pods in a Deployment or ReplicaSet based on observed metrics like CPU utilization, memory, or custom metrics.'
+      },
+      {
+        id: 'q4c-3',
+        type: 'multiple_choice',
+        prompt: 'Which kubectl command scales a Deployment to 5 replicas?',
+        options: [
+          'kubectl scale deployment myapp --replicas=5',
+          'kubectl set replicas myapp 5',
+          'kubectl resize deployment myapp 5',
+          'kubectl update deployment myapp --size=5'
+        ],
+        correctAnswer: 0,
+        explanation: 'kubectl scale deployment <name> --replicas=<count> scales a Deployment. For example: kubectl scale deployment myapp --replicas=5'
+      },
+      {
+        id: 'q4c-4',
+        type: 'multiple_choice',
+        prompt: 'What is a StatefulSet used for?',
+        options: [
+          'Stateless applications',
+          'Managing stateful applications with stable network identities',
+          'Batch jobs',
+          'One-off tasks'
+        ],
+        correctAnswer: 1,
+        explanation: 'StatefulSets manage stateful applications requiring stable network identities, persistent storage, and ordered deployment/scaling (databases, distributed systems).'
+      },
+      {
+        id: 'q4c-5',
+        type: 'true_false',
+        prompt: 'Helm is a package manager for Kubernetes.',
+        correctAnswer: true,
+        explanation: 'Helm is the package manager for Kubernetes. It uses "charts" (packages of pre-configured Kubernetes resources) to define, install, and upgrade complex Kubernetes applications.'
+      }
+    ]
+  },
+
+  // ============================================================================
+  // TOPIC 5: Serverless Computing (3 quizzes)
+  // ============================================================================
+  {
+    id: 'cs405-quiz-5',
+    subjectId: 'cs405',
+    topicId: 'cs405-topic-5',
+    title: 'Serverless - Fundamentals and FaaS',
+    questions: [
+      {
+        id: 'q5-1',
+        type: 'multiple_choice',
+        prompt: 'What is the main benefit of serverless computing?',
+        options: [
+          'Servers are eliminated entirely',
+          'You only pay for actual execution time, no idle costs',
+          'Unlimited free computing resources',
+          'Servers never crash'
+        ],
+        correctAnswer: 1,
+        explanation: 'Serverless means you don\'t manage servers and only pay for actual execution time. The cloud provider handles infrastructure, scaling, and availability.'
+      },
+      {
+        id: 'q5-2',
+        type: 'true_false',
+        prompt: 'Cold starts in serverless functions occur when a function hasn\'t been invoked recently.',
+        correctAnswer: true,
+        explanation: 'Cold start is the latency when a function is invoked after being idle. The runtime environment must be initialized, causing higher latency than warm starts.'
+      },
+      {
+        id: 'q5-3',
+        type: 'multiple_choice',
+        prompt: 'What is the AWS serverless compute service called?',
+        options: ['EC2', 'Lambda', 'ECS', 'Batch'],
+        correctAnswer: 1,
+        explanation: 'AWS Lambda is AWS\'s Function-as-a-Service (FaaS) offering. Google Cloud has Cloud Functions, Azure has Azure Functions.'
+      },
+      {
+        id: 'q5-4',
+        type: 'multiple_choice',
+        prompt: 'What is the typical maximum execution time for AWS Lambda functions?',
+        options: ['1 minute', '5 minutes', '15 minutes', '1 hour'],
+        correctAnswer: 2,
+        explanation: 'AWS Lambda functions have a maximum execution time of 15 minutes. For longer-running tasks, use services like ECS, Batch, or Step Functions.'
+      },
+      {
+        id: 'q5-5',
+        type: 'true_false',
+        prompt: 'Serverless functions should be stateless and idempotent.',
+        correctAnswer: true,
+        explanation: 'Functions should be stateless (no local state persists) and idempotent (safe to retry). Use external storage (databases, S3) for state persistence.'
+      }
+    ]
+  },
+  {
+    id: 'cs405-quiz-5b',
+    subjectId: 'cs405',
+    topicId: 'cs405-topic-5',
+    title: 'Serverless - Event-Driven Architecture',
+    questions: [
+      {
+        id: 'q5b-1',
+        type: 'multiple_choice',
+        prompt: 'What is an event-driven architecture?',
+        options: [
+          'Applications that run on scheduled timers',
+          'Systems where components communicate through events',
+          'Applications that never fail',
+          'Systems that don\'t use databases'
+        ],
+        correctAnswer: 1,
+        explanation: 'Event-driven architecture is a software pattern where components communicate asynchronously through events. Producers emit events, consumers react to them.'
+      },
+      {
+        id: 'q5b-2',
+        type: 'true_false',
+        prompt: 'AWS API Gateway can trigger Lambda functions via HTTP requests.',
+        correctAnswer: true,
+        explanation: 'API Gateway creates RESTful or HTTP APIs that trigger Lambda functions. It handles request routing, authentication, rate limiting, and more.'
+      },
+      {
+        id: 'q5b-3',
+        type: 'multiple_choice',
+        prompt: 'Which AWS service is commonly used for event messaging in serverless architectures?',
+        options: ['RDS', 'S3', 'SNS/SQS', 'Route53'],
+        correctAnswer: 2,
+        explanation: 'SNS (Simple Notification Service) and SQS (Simple Queue Service) are AWS messaging services. SNS is pub/sub, SQS is queuing. Both trigger Lambda functions.'
+      },
+      {
+        id: 'q5b-4',
+        type: 'multiple_choice',
+        prompt: 'What pattern helps handle Lambda function failures?',
+        options: [
+          'Ignore failures',
+          'Dead Letter Queues (DLQ)',
+          'Restart the server',
+          'Use larger instances'
+        ],
+        correctAnswer: 1,
+        explanation: 'Dead Letter Queues (DLQ) capture failed events for later analysis or retry. Lambda can send failed events to SQS or SNS DLQs.'
+      },
+      {
+        id: 'q5b-5',
+        type: 'true_false',
+        prompt: 'Lambda functions can be triggered by S3 events like object uploads.',
+        correctAnswer: true,
+        explanation: 'S3 can trigger Lambda functions on events like object creation, deletion, or modification. Common use case: process uploaded files automatically.'
+      }
+    ]
+  },
+  {
+    id: 'cs405-quiz-5c',
+    subjectId: 'cs405',
+    topicId: 'cs405-topic-5',
+    title: 'Serverless - Best Practices and Optimization',
+    questions: [
+      {
+        id: 'q5c-1',
+        type: 'multiple_choice',
+        prompt: 'How can you reduce Lambda cold start times?',
+        options: [
+          'Use larger memory allocation and keep functions warm',
+          'Add more code',
+          'Use smaller memory settings',
+          'Disable logging'
+        ],
+        correctAnswer: 0,
+        explanation: 'Reduce cold starts by: increasing memory (faster CPU), keeping functions warm with scheduled pings, using provisioned concurrency, and minimizing dependencies.'
+      },
+      {
+        id: 'q5c-2',
+        type: 'true_false',
+        prompt: 'Lambda charges are based on execution time and memory allocated, not actual memory used.',
+        correctAnswer: true,
+        explanation: 'Lambda pricing is based on: number of requests, execution duration (in GB-seconds), and allocated memory. You\'re charged for allocated memory, not actual usage.'
+      },
+      {
+        id: 'q5c-3',
+        type: 'multiple_choice',
+        prompt: 'What is the recommended way to manage environment-specific configuration in Lambda?',
+        options: [
+          'Hard-code values in functions',
+          'Use environment variables and Parameter Store/Secrets Manager',
+          'Store in function code',
+          'Use global variables'
+        ],
+        correctAnswer: 1,
+        explanation: 'Use Lambda environment variables for non-sensitive config. For secrets, use AWS Systems Manager Parameter Store or Secrets Manager.'
+      },
+      {
+        id: 'q5c-4',
+        type: 'multiple_choice',
+        prompt: 'Which AWS service helps orchestrate complex serverless workflows?',
+        options: ['Lambda only', 'Step Functions', 'CloudWatch', 'IAM'],
+        correctAnswer: 1,
+        explanation: 'AWS Step Functions orchestrates multiple Lambda functions and services into serverless workflows. It handles state management, error handling, and retries.'
+      },
+      {
+        id: 'q5c-5',
+        type: 'code_output',
+        prompt: 'If a Lambda function with 1024 MB memory runs for 500ms and is invoked 1 million times per month, approximately how many GB-seconds are consumed?',
+        codeSnippet: '# GB-seconds = (Memory in GB) × (Duration in seconds) × Invocations\n# = (1024/1024) × 0.5 × 1,000,000',
+        correctAnswer: '500000',
+        explanation: 'GB-seconds = 1 GB × 0.5 seconds × 1,000,000 invocations = 500,000 GB-seconds. AWS Lambda pricing is based on GB-seconds consumed.'
+      }
+    ]
+  },
+
+  // ============================================================================
+  // TOPIC 6: Cloud Storage and Databases (3 quizzes)
+  // ============================================================================
+  {
+    id: 'cs405-quiz-6',
+    subjectId: 'cs405',
+    topicId: 'cs405-topic-6',
+    title: 'Cloud Storage - Types and Object Storage',
+    questions: [
+      {
+        id: 'q6-1',
+        type: 'multiple_choice',
+        prompt: 'What are the three main types of cloud storage?',
+        options: [
+          'Fast, Medium, Slow',
+          'Object, Block, File',
+          'SQL, NoSQL, Graph',
+          'Hot, Warm, Cold'
+        ],
+        correctAnswer: 1,
+        explanation: 'The three main types are: Object storage (S3, Blob), Block storage (EBS, persistent disks), and File storage (EFS, Azure Files).'
+      },
+      {
+        id: 'q6-2',
+        type: 'true_false',
+        prompt: 'Object storage is ideal for frequently modified files like databases.',
+        correctAnswer: false,
+        explanation: 'Object storage is optimized for read-heavy workloads and immutable data. For frequently modified files, use block or file storage. Databases need block storage.'
+      },
+      {
+        id: 'q6-3',
+        type: 'multiple_choice',
+        prompt: 'Which S3 storage class is most cost-effective for archival data accessed less than once per year?',
+        options: ['S3 Standard', 'S3 Intelligent-Tiering', 'S3 Glacier Deep Archive', 'S3 One Zone-IA'],
+        correctAnswer: 2,
+        explanation: 'S3 Glacier Deep Archive is the lowest-cost storage for archival data accessed rarely (once or twice per year). Retrieval takes 12-48 hours.'
+      },
+      {
+        id: 'q6-4',
+        type: 'multiple_choice',
+        prompt: 'What is the maximum size of a single object in S3?',
+        options: ['1 GB', '5 GB', '100 GB', '5 TB'],
+        correctAnswer: 3,
+        explanation: 'S3 supports objects up to 5 TB. Files larger than 100 MB should use multipart upload. Single PUT operations are limited to 5 GB.'
+      },
+      {
+        id: 'q6-5',
+        type: 'true_false',
+        prompt: 'S3 bucket names must be globally unique across all AWS accounts.',
+        correctAnswer: true,
+        explanation: 'S3 bucket names must be globally unique across all AWS accounts and regions. They\'re used in DNS, so duplicates aren\'t allowed.'
+      }
+    ]
+  },
+  {
+    id: 'cs405-quiz-6b',
+    subjectId: 'cs405',
+    topicId: 'cs405-topic-6',
+    title: 'Cloud Storage - Block and File Storage',
+    questions: [
+      {
+        id: 'q6b-1',
+        type: 'multiple_choice',
+        prompt: 'What is AWS EBS primarily used for?',
+        options: [
+          'Object storage',
+          'Block storage for EC2 instances',
+          'File sharing between multiple instances',
+          'Database backups'
+        ],
+        correctAnswer: 1,
+        explanation: 'EBS (Elastic Block Store) provides block-level storage volumes for EC2 instances. It\'s like a virtual hard drive attached to a VM.'
+      },
+      {
+        id: 'q6b-2',
+        type: 'true_false',
+        prompt: 'An EBS volume can be attached to multiple EC2 instances simultaneously.',
+        correctAnswer: false,
+        explanation: 'Standard EBS volumes can only attach to one instance at a time. Multi-attach is available for specific EBS volume types (io1/io2) in limited scenarios.'
+      },
+      {
+        id: 'q6b-3',
+        type: 'multiple_choice',
+        prompt: 'Which storage type allows multiple instances to access the same files simultaneously?',
+        options: ['Object storage (S3)', 'Block storage (EBS)', 'File storage (EFS)', 'Instance store'],
+        correctAnswer: 2,
+        explanation: 'File storage like EFS (Elastic File System) allows multiple EC2 instances to mount and access the same file system concurrently using NFS protocol.'
+      },
+      {
+        id: 'q6b-4',
+        type: 'multiple_choice',
+        prompt: 'What is IOPS in the context of EBS?',
+        options: [
+          'Internet Operations Per Second',
+          'Input/Output Operations Per Second',
+          'Instance Operations Per Second',
+          'Internal Only Processing Speed'
+        ],
+        correctAnswer: 1,
+        explanation: 'IOPS (Input/Output Operations Per Second) measures storage performance. Higher IOPS means faster disk operations. Provisioned IOPS SSD (io1/io2) offers consistent performance.'
+      },
+      {
+        id: 'q6b-5',
+        type: 'true_false',
+        prompt: 'EBS snapshots are incremental backups stored in S3.',
+        correctAnswer: true,
+        explanation: 'EBS snapshots are incremental: only changed blocks are saved. They\'re stored in S3 (transparently) and can restore volumes or create new volumes in any AZ.'
+      }
+    ]
+  },
+  {
+    id: 'cs405-quiz-6c',
+    subjectId: 'cs405',
+    topicId: 'cs405-topic-6',
+    title: 'Cloud Storage - Databases and Optimization',
+    questions: [
+      {
+        id: 'q6c-1',
+        type: 'multiple_choice',
+        prompt: 'What type of database is DynamoDB?',
+        options: ['Relational', 'NoSQL Key-Value', 'Graph', 'Time-series'],
+        correctAnswer: 1,
+        explanation: 'DynamoDB is a fully managed NoSQL key-value and document database. It provides single-digit millisecond performance at any scale.'
+      },
+      {
+        id: 'q6c-2',
+        type: 'true_false',
+        prompt: 'RDS (Relational Database Service) automatically handles backups, patching, and failover.',
+        correctAnswer: true,
+        explanation: 'RDS is a managed relational database service. AWS handles backups, software patching, automatic failure detection, and recovery.'
+      },
+      {
+        id: 'q6c-3',
+        type: 'multiple_choice',
+        prompt: 'Which AWS database is best for serverless applications requiring unpredictable workloads?',
+        options: ['RDS with provisioned capacity', 'DynamoDB on-demand', 'Self-managed MySQL', 'Redis'],
+        correctAnswer: 1,
+        explanation: 'DynamoDB on-demand mode automatically scales and charges per-request, ideal for unpredictable workloads. RDS requires provisioned capacity planning.'
+      },
+      {
+        id: 'q6c-4',
+        type: 'multiple_choice',
+        prompt: 'What is the purpose of CloudFront CDN with S3?',
+        options: [
+          'Increase storage capacity',
+          'Cache content at edge locations for faster delivery',
+          'Encrypt data',
+          'Backup data automatically'
+        ],
+        correctAnswer: 1,
+        explanation: 'CloudFront is a CDN that caches content at edge locations worldwide. It reduces latency and improves performance by serving content from locations closer to users.'
+      },
+      {
+        id: 'q6c-5',
+        type: 'true_false',
+        prompt: 'Using S3 Intelligent-Tiering automatically moves objects between storage classes based on access patterns.',
+        correctAnswer: true,
+        explanation: 'S3 Intelligent-Tiering automatically moves objects between frequent and infrequent access tiers based on usage patterns, optimizing costs without performance impact.'
+      }
+    ]
+  },
+
+  // ============================================================================
+  // TOPIC 7: Cloud-Native Architecture (3 quizzes)
+  // ============================================================================
+  {
+    id: 'cs405-quiz-7',
+    subjectId: 'cs405',
+    topicId: 'cs405-topic-7',
+    title: 'Cloud-Native - Principles and Twelve-Factor App',
+    questions: [
+      {
+        id: 'q7-1',
+        type: 'multiple_choice',
+        prompt: 'What is a core principle of cloud-native applications?',
+        options: [
+          'Always use monolithic architecture',
+          'Design for failure and resilience',
+          'Avoid using containers',
+          'Never use managed services'
+        ],
+        correctAnswer: 1,
+        explanation: 'Cloud-native apps are designed for failure. They use distributed architectures, graceful degradation, retries, circuit breakers, and assume components can fail.'
+      },
+      {
+        id: 'q7-2',
+        type: 'true_false',
+        prompt: 'The Twelve-Factor App methodology states that configuration should be stored in the code.',
+        correctAnswer: false,
+        explanation: 'Factor III states: store config in environment variables, not code. Config varies between deployments (dev/staging/prod), code doesn\'t.'
+      },
+      {
+        id: 'q7-3',
+        type: 'multiple_choice',
+        prompt: 'According to the Twelve-Factor App, what is Factor IX about?',
+        options: [
+          'Fast startup and shutdown (disposability)',
+          'Always run in production mode',
+          'Use the largest servers available',
+          'Never update dependencies'
+        ],
+        correctAnswer: 0,
+        explanation: 'Factor IX (Disposability) emphasizes fast startup and graceful shutdown. Apps should start quickly and shut down gracefully when receiving SIGTERM.'
+      },
+      {
+        id: 'q7-4',
+        type: 'multiple_choice',
+        prompt: 'What does "cattle, not pets" mean in cloud-native thinking?',
+        options: [
+          'Servers are named and manually managed',
+          'Servers are disposable and replaceable',
+          'Only use expensive hardware',
+          'Never delete old servers'
+        ],
+        correctAnswer: 1,
+        explanation: '"Cattle, not pets" means treating servers as disposable and interchangeable (cattle), not unique and irreplaceable (pets). Automate provisioning and embrace immutability.'
+      },
+      {
+        id: 'q7-5',
+        type: 'true_false',
+        prompt: 'Cloud-native applications should be stateless, with state stored externally.',
+        correctAnswer: true,
+        explanation: 'Cloud-native apps are stateless. State is stored in backing services (databases, caches, object storage). This enables horizontal scaling and resilience.'
+      }
+    ]
+  },
+  {
+    id: 'cs405-quiz-7b',
+    subjectId: 'cs405',
+    topicId: 'cs405-topic-7',
+    title: 'Cloud-Native - Microservices and Service Mesh',
+    questions: [
+      {
+        id: 'q7b-1',
+        type: 'multiple_choice',
+        prompt: 'What is the main advantage of microservices architecture?',
+        options: [
+          'Everything runs in one process',
+          'Independent deployment and scaling of services',
+          'Simpler code',
+          'No need for APIs'
+        ],
+        correctAnswer: 1,
+        explanation: 'Microservices enable independent deployment, scaling, and technology choices. Teams can deploy services without coordinating with others. Services scale independently based on demand.'
+      },
+      {
+        id: 'q7b-2',
+        type: 'true_false',
+        prompt: 'A service mesh provides service-to-service communication features like load balancing and encryption.',
+        correctAnswer: true,
+        explanation: 'Service mesh (Istio, Linkerd) provides: traffic management, load balancing, service discovery, failure recovery, metrics, and mTLS encryption between services.'
+      },
+      {
+        id: 'q7b-3',
+        type: 'multiple_choice',
+        prompt: 'What is the purpose of an API Gateway in microservices?',
+        options: [
+          'Store data',
+          'Single entry point for clients, handles routing and authentication',
+          'Replace databases',
+          'Compile code'
+        ],
+        correctAnswer: 1,
+        explanation: 'API Gateway is a single entry point for clients. It routes requests to microservices, handles authentication, rate limiting, request transformation, and monitoring.'
+      },
+      {
+        id: 'q7b-4',
+        type: 'multiple_choice',
+        prompt: 'What pattern helps prevent cascading failures in microservices?',
+        options: ['Ignoring errors', 'Circuit Breaker', 'Using bigger servers', 'Manual intervention'],
+        correctAnswer: 1,
+        explanation: 'Circuit Breaker pattern prevents cascading failures. When a service fails repeatedly, the circuit "opens" and calls fail immediately without attempting, preventing system overload.'
+      },
+      {
+        id: 'q7b-5',
+        type: 'true_false',
+        prompt: 'In microservices, each service should have its own database (database per service pattern).',
+        correctAnswer: true,
+        explanation: 'Database-per-service pattern ensures loose coupling. Each microservice owns its data and doesn\'t directly access other services\' databases. Services communicate via APIs.'
+      }
+    ]
+  },
+  {
+    id: 'cs405-quiz-7c',
+    subjectId: 'cs405',
+    topicId: 'cs405-topic-7',
+    title: 'Cloud-Native - Observability and CI/CD',
+    questions: [
+      {
+        id: 'q7c-1',
+        type: 'multiple_choice',
+        prompt: 'What are the three pillars of observability?',
+        options: [
+          'Frontend, Backend, Database',
+          'Logs, Metrics, Traces',
+          'CPU, Memory, Disk',
+          'Dev, Test, Prod'
+        ],
+        correctAnswer: 1,
+        explanation: 'The three pillars of observability are: Logs (discrete events), Metrics (numeric measurements over time), and Traces (request flows through distributed systems).'
+      },
+      {
+        id: 'q7c-2',
+        type: 'true_false',
+        prompt: 'Distributed tracing helps identify performance bottlenecks across multiple microservices.',
+        correctAnswer: true,
+        explanation: 'Distributed tracing (OpenTelemetry, Jaeger, Zipkin) tracks requests as they flow through multiple services, showing latency at each step and identifying bottlenecks.'
+      },
+      {
+        id: 'q7c-3',
+        type: 'multiple_choice',
+        prompt: 'What is the primary goal of CI/CD?',
+        options: [
+          'Slow down deployments',
+          'Automate testing and deployment for faster, reliable releases',
+          'Eliminate all testing',
+          'Deploy manually'
+        ],
+        correctAnswer: 1,
+        explanation: 'CI/CD (Continuous Integration/Continuous Deployment) automates building, testing, and deploying code. This enables frequent, reliable releases with reduced risk.'
+      },
+      {
+        id: 'q7c-4',
+        type: 'multiple_choice',
+        prompt: 'Which deployment strategy updates a small percentage of instances first before rolling out to all?',
+        options: ['Big Bang', 'Canary', 'Recreate', 'Blue-Green'],
+        correctAnswer: 1,
+        explanation: 'Canary deployment gradually rolls out changes to a small subset of users first. If successful, it progressively rolls out to more users, reducing risk.'
+      },
+      {
+        id: 'q7c-5',
+        type: 'true_false',
+        prompt: 'Blue-Green deployment maintains two identical production environments and switches traffic between them.',
+        correctAnswer: true,
+        explanation: 'Blue-Green deployment keeps two identical environments (blue=current, green=new). Deploy to green, test it, then switch traffic. Enables instant rollback by switching back.'
+      }
+    ]
   }
 ];
