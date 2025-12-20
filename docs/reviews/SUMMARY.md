@@ -8,8 +8,8 @@
 | Status | Count | Percentage |
 |--------|-------|------------|
 | COMPLETE (10/10) | 23 | 61% |
-| COMPLETE (7-9/10) | 5 | 13% |
-| NEEDS WORK | 10 | 26% |
+| COMPLETE (7-9/10) | 9 | 24% |
+| NEEDS WORK | 8 | 21% |
 | INCOMPLETE | 0 | 0% |
 
 ## Subjects by Status
@@ -46,6 +46,7 @@
 - CS406: Artificial Intelligence (9/10) - exercise shortage
 - MATH301: Multivariable Calculus (8/10)
 - MATH303: Real Analysis (8/10)
+- MATH404: Optimization Theory (7/10) - exercises complete, quizzes/content need work
 
 ### Needs Significant Work (4-6/10)
 - CS104: Data Structures (8/10) - exercise count shortfall
@@ -56,7 +57,6 @@
 - MATH204: Calculus II (4/10) - exercise shortage
 - MATH401: Complex Analysis (7/10) - wrong exercises for Topics 3-7
 - MATH402: Numerical Methods (5/10) - incomplete content for Topics 4-7
-- MATH404: Optimization Theory (2/10) - severe exercise shortage
 
 ## Common Issues
 
@@ -64,7 +64,6 @@
 Many Year 4 subjects don't have 16 exercises per topic:
 - CS404: Only 11 exercises (needs 112)
 - CS402: Missing exercises for Topics 1-4
-- MATH404: Only 4-6 exercises per topic (needs 16)
 
 ### 2. Word Count Deficiencies
 Some subjects have subtopics below the 800-word minimum:
@@ -77,17 +76,15 @@ Some subjects have subtopics below the 800-word minimum:
 ## Priority Action Items
 
 ### Immediate (Blocking Production)
-1. **MATH404**: Add ~80 exercises
-
-### High Priority
-2. **CS404**: Add 101 exercises
-3. **CS402**: Add exercises for Topics 1-4
-4. **MATH402**: Complete content for Topics 4-7
+1. **CS404**: Add 101 exercises
+2. **CS402**: Add exercises for Topics 1-4
+3. **MATH402**: Complete content for Topics 4-7
 
 ### Medium Priority
-5. **CS406**: Add missing exercises
-6. **CS407**: Add exercises per topic
-7. **MATH401**: Fix exercise assignments for Topics 3-7
+4. **CS406**: Add missing exercises
+5. **CS407**: Add exercises per topic
+6. **MATH401**: Fix exercise assignments for Topics 3-7
+7. **MATH204**: Add exercises
 
 ## Year-by-Year Summary
 
@@ -107,8 +104,8 @@ Some subjects have subtopics below the 800-word minimum:
 
 ### Year 4 (11 subjects)
 - **Complete:** CS403, MATH403
-- **Good:** CS401, CS406
-- **Needs Work:** CS402, CS404, CS405, CS407, MATH401, MATH402, MATH404
+- **Good:** CS401, CS406, MATH404
+- **Needs Work:** CS402, CS404, CS405, CS407, MATH401, MATH402
 
 ## Estimated Work Remaining
 
@@ -119,10 +116,9 @@ Some subjects have subtopics below the 800-word minimum:
 | CS406 | 20-30 |
 | CS407 | 20-30 |
 | MATH402 | 30-40 |
-| MATH404 | 40-50 |
 | Others | 5-10 each |
 
-**Total Estimated:** 185-280 hours to bring all subjects to production quality.
+**Total Estimated:** 145-230 hours to bring all subjects to production quality.
 
 ## Recent Updates (2025-12-20)
 
@@ -132,6 +128,9 @@ Some subjects have subtopics below the 800-word minimum:
 - **CS403: Advanced Algorithms** - Confirmed complete (was already 10/10, outdated in previous SUMMARY)
 - **MATH304: Abstract Algebra** - Expanded 22 subtopics from ~45,000 to ~74,367 total words
 - **MATH403: Introduction to Topology** - Expanded Topics 5, 6, and 7 to meet 800+ word requirement per subtopic
+
+### Subjects Upgraded to Good (7-9/10)
+- **MATH404: Optimization Theory** - Added 52 exercises (Topics 4-7), now has 112/112 exercises complete
 
 ### Technical Fixes Applied
 - Fixed TypeScript compilation errors in CS405 and CS406 exercise files (escaped $ in Python f-strings)
