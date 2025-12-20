@@ -1,18 +1,60 @@
 [
   {
-    "id": "cs407-midterm",
+    "id": "cs407-exam-midterm",
     "subjectId": "cs407",
-    "title": "CS407 Midterm Exam",
+    "title": "CS407 Data Science Midterm Examination",
     "durationMinutes": 90,
     "instructions": [
-      "This exam covers data collection, data cleaning, and exploratory data analysis.",
+      "This exam covers Topics 1-4: Data Collection, Data Cleaning, Exploratory Data Analysis, and Feature Engineering.",
       "Answer all questions to the best of your ability.",
       "For written questions, provide detailed explanations with examples.",
+      "Show your reasoning for code output questions.",
       "Passing score is 70%."
     ],
     "questions": [
       {
         "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "Which HTTP method is typically used to retrieve data from a REST API without modifying server state?",
+        "options": [
+          "POST",
+          "GET",
+          "PUT",
+          "DELETE"
+        ],
+        "correctAnswer": 1,
+        "explanation": "GET requests are used to retrieve data without modifying server state, making them idempotent and safe for data collection."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "What is web scraping?",
+        "options": [
+          "A method for cleaning data in spreadsheets",
+          "Extracting data from websites by parsing HTML content",
+          "A database query optimization technique",
+          "A machine learning feature selection method"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Web scraping involves programmatically extracting data from websites by parsing their HTML content, typically using libraries like BeautifulSoup or Scrapy."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "Rate limiting in APIs is designed to prevent abuse and ensure fair usage across all clients.",
+        "correctAnswer": true,
+        "explanation": "Rate limiting restricts the number of requests a client can make within a time period to prevent abuse, ensure fair resource allocation, and maintain service stability."
+      },
+      {
+        "id": "q4",
+        "type": "code_output",
+        "prompt": "What will be the output of this code?",
+        "codeSnippet": "import pandas as pd\nimport numpy as np\n\ndf = pd.DataFrame({'A': [1, 2, np.nan, 4], 'B': [5, np.nan, np.nan, 8]})\nprint(df.isnull().sum().sum())",
+        "correctAnswer": "3",
+        "explanation": "There are 3 NaN values total: 1 in column A and 2 in column B. The inner sum() counts NaN per column, the outer sum() totals them."
+      },
+      {
+        "id": "q5",
         "type": "written",
         "prompt": "Explain the difference between MCAR (Missing Completely At Random), MAR (Missing At Random), and MNAR (Missing Not At Random). Provide an example of each type of missingness.",
         "correctAnswer": "mcar mar mnar random missing pattern mechanism",
@@ -20,7 +62,41 @@
         "modelAnswer": "MCAR (Missing Completely At Random): The probability of missingness is the same for all observations. Example: A survey respondent randomly skips questions by accident. MAR (Missing At Random): The probability of missingness depends on observed data but not the missing values themselves. Example: Younger people are less likely to report income, but missingness depends only on age (which is observed). MNAR (Missing Not At Random): The probability of missingness depends on the unobserved values. Example: People with very high incomes deliberately skip income questions. Understanding these mechanisms helps choose appropriate imputation methods and assess potential bias."
       },
       {
-        "id": "q2",
+        "id": "q6",
+        "type": "multiple_choice",
+        "prompt": "Which imputation method is most appropriate for data that is NOT missing at random (MNAR)?",
+        "options": [
+          "Mean imputation",
+          "Median imputation",
+          "Multiple imputation with domain knowledge",
+          "Forward fill"
+        ],
+        "correctAnswer": 2,
+        "explanation": "MNAR requires careful handling with domain knowledge because the missingness depends on the unobserved values themselves. Simple imputation methods can introduce significant bias."
+      },
+      {
+        "id": "q7",
+        "type": "code_output",
+        "prompt": "What will be printed?",
+        "codeSnippet": "import pandas as pd\n\ndf = pd.DataFrame({'values': [1, 2, 3, 4, 5]})\nprint(df['values'].mean())",
+        "correctAnswer": "3.0",
+        "explanation": "The mean of [1, 2, 3, 4, 5] is (1+2+3+4+5)/5 = 15/5 = 3.0"
+      },
+      {
+        "id": "q8",
+        "type": "multiple_choice",
+        "prompt": "What is the IQR (Interquartile Range) used for in outlier detection?",
+        "options": [
+          "Calculating the mean of the dataset",
+          "Identifying values that fall outside Q1 - 1.5*IQR and Q3 + 1.5*IQR",
+          "Normalizing data to a 0-1 range",
+          "Converting categorical variables to numeric"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The IQR method identifies outliers as values below Q1 - 1.5*IQR or above Q3 + 1.5*IQR, based on the spread of the middle 50% of data."
+      },
+      {
+        "id": "q9",
         "type": "written",
         "prompt": "You have a dataset with 40% missing values in a critical column. Describe three different strategies you could use to handle this missing data, including the pros and cons of each approach.",
         "correctAnswer": "deletion imputation mean median knn model strategy",
@@ -28,41 +104,35 @@
         "modelAnswer": "Strategy 1 - Deletion: Remove rows with missing values. Pros: Simple, no assumptions needed. Cons: Loses 40% of data, may introduce bias if not MCAR. Strategy 2 - Simple Imputation (mean/median): Fill with column mean or median. Pros: Retains all rows, fast computation. Cons: Reduces variance, ignores relationships with other features, inappropriate for MNAR. Strategy 3 - Advanced Imputation (KNN/MICE): Use similar observations or multiple imputation. Pros: Preserves relationships, handles complex patterns. Cons: Computationally expensive, requires careful validation, assumptions about data distribution."
       },
       {
-        "id": "q3",
+        "id": "q10",
+        "type": "true_false",
+        "prompt": "A correlation coefficient of 0 indicates that there is absolutely no relationship between two variables.",
+        "correctAnswer": false,
+        "explanation": "A correlation coefficient of 0 indicates no LINEAR relationship, but there could still be a non-linear relationship between the variables."
+      },
+      {
+        "id": "q11",
         "type": "multiple_choice",
-        "prompt": "What is the primary purpose of feature scaling in machine learning?",
+        "prompt": "Which measure of central tendency is most robust to outliers?",
         "options": [
-          "To remove missing values from the dataset",
-          "To ensure features contribute equally to distance-based algorithms",
-          "To increase the number of features in the dataset",
-          "To convert categorical variables to numeric"
+          "Mean",
+          "Median",
+          "Mode",
+          "Range"
         ],
         "correctAnswer": 1,
-        "explanation": "Feature scaling ensures that features with different ranges contribute equally to distance calculations in algorithms like k-NN, SVM, and gradient descent."
+        "explanation": "The median is the middle value when data is sorted and is not affected by extreme values, making it robust to outliers unlike the mean."
       },
       {
-        "id": "q4",
-        "type": "multiple_choice",
-        "prompt": "Which of the following algorithms does NOT typically require feature scaling?",
-        "options": [
-          "K-Nearest Neighbors (k-NN)",
-          "Support Vector Machines (SVM)",
-          "Decision Trees",
-          "Gradient Descent-based algorithms"
-        ],
-        "correctAnswer": 2,
-        "explanation": "Decision trees and tree-based algorithms (Random Forests, XGBoost) do not require feature scaling because they make decisions based on splitting thresholds, not distances."
+        "id": "q12",
+        "type": "code_output",
+        "prompt": "What is the output?",
+        "codeSnippet": "import numpy as np\n\ndata = np.array([1, 2, 3, 4, 100])\nprint(f\"Mean: {np.mean(data):.1f}, Median: {np.median(data):.1f}\")",
+        "correctAnswer": "Mean: 22.0, Median: 3.0",
+        "explanation": "The mean (22.0) is heavily influenced by the outlier 100, while the median (3.0) represents the middle value and is unaffected."
       },
       {
-        "id": "q5",
-        "type": "written",
-        "prompt": "Compare and contrast data lakes and data warehouses. Discuss their architecture, typical use cases, and the types of users who would use each system.",
-        "correctAnswer": "data lake warehouse structured unstructured schema analytics storage",
-        "explanation": "Understanding the differences between data lakes and warehouses is essential for designing modern data architectures.",
-        "modelAnswer": "Data Lakes: Architecture - Store raw, unstructured/semi-structured data in native format (schema-on-read). Use technologies like Hadoop, S3, Azure Data Lake. Use Cases - Big data analytics, machine learning, exploratory analysis, storing diverse data types. Users - Data scientists, ML engineers, analysts exploring new data sources. Data Warehouses: Architecture - Store structured, processed data with defined schema (schema-on-write). Use relational databases, dimensional modeling (star/snowflake schemas). Use Cases - Business intelligence, reporting, OLAP, historical analysis. Users - Business analysts, executives, BI developers. Key Differences: Lakes are flexible but require more data engineering; warehouses are optimized for queries but less flexible."
-      },
-      {
-        "id": "q6",
+        "id": "q13",
         "type": "multiple_choice",
         "prompt": "In exploratory data analysis, which visualization is most appropriate for examining the distribution of a continuous variable?",
         "options": [
@@ -75,21 +145,145 @@
         "explanation": "Histograms display the frequency distribution of continuous data by dividing it into bins, making it easy to see the shape, spread, and central tendency."
       },
       {
-        "id": "q7",
+        "id": "q14",
+        "type": "fill_blank",
+        "prompt": "A distribution with a long tail to the right is called positively ______.",
+        "correctAnswer": "skewed",
+        "explanation": "Positive (right) skewness occurs when the distribution has a longer tail on the right side, with the mean typically greater than the median."
+      },
+      {
+        "id": "q15",
+        "type": "multiple_choice",
+        "prompt": "What does a Pearson correlation coefficient of -0.85 indicate?",
+        "options": [
+          "A weak positive relationship",
+          "A strong negative linear relationship",
+          "No relationship",
+          "A perfect positive relationship"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A correlation of -0.85 indicates a strong negative linear relationship: as one variable increases, the other tends to decrease consistently."
+      },
+      {
+        "id": "q16",
+        "type": "code_output",
+        "prompt": "What will be printed?",
+        "codeSnippet": "import pandas as pd\n\ndf = pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6]})\nprint(df.corr().loc['A', 'B'])",
+        "correctAnswer": "1.0",
+        "explanation": "Both columns increase linearly together (perfect positive correlation), so the Pearson correlation coefficient is 1.0."
+      },
+      {
+        "id": "q17",
+        "type": "multiple_choice",
+        "prompt": "What is the primary purpose of feature scaling in machine learning?",
+        "options": [
+          "To remove missing values from the dataset",
+          "To ensure features contribute equally to distance-based algorithms",
+          "To increase the number of features in the dataset",
+          "To convert categorical variables to numeric"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Feature scaling ensures that features with different ranges contribute equally to distance calculations in algorithms like k-NN, SVM, and gradient descent."
+      },
+      {
+        "id": "q18",
+        "type": "multiple_choice",
+        "prompt": "Which of the following algorithms does NOT typically require feature scaling?",
+        "options": [
+          "K-Nearest Neighbors (k-NN)",
+          "Support Vector Machines (SVM)",
+          "Decision Trees",
+          "Gradient Descent-based algorithms"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Decision trees and tree-based algorithms (Random Forests, XGBoost) do not require feature scaling because they make decisions based on splitting thresholds, not distances."
+      },
+      {
+        "id": "q19",
+        "type": "code_output",
+        "prompt": "What is the output?",
+        "codeSnippet": "from sklearn.preprocessing import StandardScaler\nimport numpy as np\n\ndata = np.array([[0], [0], [1], [1]]).astype(float)\nscaler = StandardScaler()\nscaled = scaler.fit_transform(data)\nprint(f\"Mean: {scaled.mean():.1f}, Std: {scaled.std():.1f}\")",
+        "correctAnswer": "Mean: 0.0, Std: 1.0",
+        "explanation": "StandardScaler transforms data to have mean 0 and standard deviation 1, which is the definition of standardization."
+      },
+      {
+        "id": "q20",
+        "type": "multiple_choice",
+        "prompt": "Which encoding method is most appropriate for a categorical variable with natural ordering (e.g., 'low', 'medium', 'high')?",
+        "options": [
+          "One-hot encoding",
+          "Ordinal encoding",
+          "Binary encoding",
+          "Hash encoding"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Ordinal encoding preserves the natural order of categories by assigning sequential integers, which is appropriate when categories have a meaningful order."
+      },
+      {
+        "id": "q21",
         "type": "true_false",
-        "prompt": "A correlation coefficient of 0 indicates that there is absolutely no relationship between two variables.",
-        "correctAnswer": false,
-        "explanation": "A correlation coefficient of 0 indicates no LINEAR relationship, but there could still be a non-linear relationship between the variables."
+        "prompt": "One-hot encoding always increases the number of columns in a dataset.",
+        "correctAnswer": true,
+        "explanation": "One-hot encoding creates a new binary column for each category (or n-1 columns with drop_first=True), always increasing the number of columns compared to the original single categorical column."
+      },
+      {
+        "id": "q22",
+        "type": "written",
+        "prompt": "Explain the difference between filter methods, wrapper methods, and embedded methods for feature selection. Provide an example of each.",
+        "correctAnswer": "filter wrapper embedded selection correlation importance",
+        "explanation": "Understanding different feature selection approaches is crucial for building efficient ML models.",
+        "modelAnswer": "Filter Methods: Evaluate features independently of the model using statistical measures. Example: Selecting features based on correlation with target or variance threshold. Pros: Fast, model-agnostic. Cons: Ignores feature interactions. Wrapper Methods: Use a model's performance to evaluate feature subsets. Example: Recursive Feature Elimination (RFE) that iteratively removes features and evaluates model performance. Pros: Considers feature interactions. Cons: Computationally expensive. Embedded Methods: Feature selection is built into the model training process. Example: Lasso regression (L1 regularization) that shrinks some coefficients to zero, effectively selecting features. Pros: Efficient, considers feature interactions. Cons: Model-specific."
+      },
+      {
+        "id": "q23",
+        "type": "multiple_choice",
+        "prompt": "What is the main purpose of dimensionality reduction?",
+        "options": [
+          "To increase the number of features",
+          "To reduce computational cost and avoid the curse of dimensionality",
+          "To normalize feature values",
+          "To handle missing data"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Dimensionality reduction reduces the number of features while preserving important information, helping avoid the curse of dimensionality and reducing computational costs."
+      },
+      {
+        "id": "q24",
+        "type": "multiple_choice",
+        "prompt": "Which dimensionality reduction technique is non-linear and is particularly good for visualization of high-dimensional data?",
+        "options": [
+          "PCA (Principal Component Analysis)",
+          "t-SNE (t-Distributed Stochastic Neighbor Embedding)",
+          "StandardScaler",
+          "One-hot encoding"
+        ],
+        "correctAnswer": 1,
+        "explanation": "t-SNE is a non-linear dimensionality reduction technique that excels at preserving local structure, making it ideal for visualization of high-dimensional data in 2D or 3D."
+      },
+      {
+        "id": "q25",
+        "type": "code_output",
+        "prompt": "What will be printed?",
+        "codeSnippet": "from sklearn.preprocessing import MinMaxScaler\nimport numpy as np\n\ndata = np.array([[10], [20], [30]]).astype(float)\nscaler = MinMaxScaler()\nscaled = scaler.fit_transform(data)\nprint(scaled.flatten())",
+        "correctAnswer": "[0.  0.5 1. ]",
+        "explanation": "MinMaxScaler scales data to the range [0, 1]. The minimum (10) becomes 0, the maximum (30) becomes 1, and 20 (midpoint) becomes 0.5."
+      },
+      {
+        "id": "q26",
+        "type": "fill_blank",
+        "prompt": "The process of creating new features from existing ones to improve model performance is called feature ______.",
+        "correctAnswer": "engineering",
+        "explanation": "Feature engineering involves creating, transforming, and selecting features to improve machine learning model performance."
       }
     ]
   },
   {
-    "id": "cs407-final",
+    "id": "cs407-exam-final",
     "subjectId": "cs407",
-    "title": "CS407 Final Exam",
+    "title": "CS407 Data Science Final Examination",
     "durationMinutes": 120,
     "instructions": [
-      "This comprehensive exam covers all CS407 topics including data pipelines, statistical inference, machine learning basics, and ethics.",
+      "This comprehensive exam covers all CS407 topics including data collection, cleaning, EDA, feature engineering, visualization, big data, and ethics.",
       "Answer all questions thoroughly.",
       "For design questions, consider scalability, reliability, and best practices.",
       "Passing score is 70%."
@@ -97,22 +291,102 @@
     "questions": [
       {
         "id": "q1",
-        "type": "written",
-        "prompt": "Design a complete data pipeline for a real-time analytics system that processes streaming user events (clicks, page views, etc.). Include data collection, processing, storage, and visualization components. Address scalability and error handling.",
-        "correctAnswer": "pipeline streaming kafka spark storage processing analytics real-time",
-        "explanation": "Real-time data pipelines require careful consideration of throughput, latency, fault tolerance, and scalability.",
-        "modelAnswer": "Data Collection: Use Apache Kafka or AWS Kinesis to ingest streaming events from web/mobile apps. Implement client-side buffering and retry logic for reliability. Processing: Use Apache Spark Streaming or Flink for stream processing. Implement windowing (tumbling/sliding) for aggregations, stateful processing for sessionization. Storage: Hot path - Redis/Memcached for real-time dashboards. Warm path - Cassandra/DynamoDB for recent data queries. Cold path - S3/Parquet for historical analysis and ML training. Visualization: Grafana or custom dashboard consuming real-time aggregates from Redis. Scalability: Horizontal scaling of Kafka partitions, Spark executors. Auto-scaling based on queue depth. Error Handling: Dead letter queues for failed messages, circuit breakers, monitoring/alerting with Prometheus/Grafana, data quality checks at ingestion."
+        "type": "multiple_choice",
+        "prompt": "What is the primary advantage of using APIs over web scraping for data collection?",
+        "options": [
+          "APIs are always faster",
+          "APIs provide structured data and are officially supported",
+          "APIs are always free",
+          "APIs work without internet connection"
+        ],
+        "correctAnswer": 1,
+        "explanation": "APIs provide structured, reliable data access that is officially supported by the data provider, whereas web scraping can break when websites change and may violate terms of service."
       },
       {
         "id": "q2",
-        "type": "written",
-        "prompt": "Discuss three major ethical considerations in data science (such as privacy, bias, transparency, consent, etc.) and explain concrete practices that data scientists should implement to address each one.",
-        "correctAnswer": "ethics privacy bias fairness transparency consent responsible data",
-        "explanation": "Ethical considerations are fundamental to responsible data science practice.",
-        "modelAnswer": "1. Privacy and Consent: Users should have control over their data. Practices: Implement privacy-by-design, use differential privacy for aggregates, anonymize/pseudonymize data, obtain informed consent, follow GDPR/CCPA, minimize data collection, provide opt-out mechanisms. 2. Algorithmic Bias and Fairness: Models can perpetuate historical biases. Practices: Audit training data for representation, use fairness metrics (demographic parity, equalized odds), test across demographic groups, diverse team review, document limitations, regular bias audits. 3. Transparency and Explainability: Users deserve to understand decisions affecting them. Practices: Use interpretable models when possible, implement SHAP/LIME for complex models, document model cards, provide clear explanations for automated decisions, allow human appeal/override, regular audits and reporting."
+        "type": "multiple_choice",
+        "prompt": "Which of the following is NOT a common data format for API responses?",
+        "options": [
+          "JSON",
+          "XML",
+          "CSV",
+          "HTML"
+        ],
+        "correctAnswer": 3,
+        "explanation": "APIs typically return structured data formats like JSON, XML, or CSV. HTML is a presentation format for web pages, not typically used for API data exchange."
       },
       {
         "id": "q3",
+        "type": "code_output",
+        "prompt": "What is the output?",
+        "codeSnippet": "import pandas as pd\nimport numpy as np\n\ndf = pd.DataFrame({'A': [1, np.nan, 3, np.nan, 5]})\ndf['A'].fillna(df['A'].median(), inplace=True)\nprint(df['A'].tolist())",
+        "correctAnswer": "[1.0, 3.0, 3.0, 3.0, 5.0]",
+        "explanation": "The median of non-null values [1, 3, 5] is 3.0. The two NaN values are replaced with 3.0."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "When using KNN imputation, missing values are filled based on:",
+        "options": [
+          "The global mean of the column",
+          "Random values from the same column",
+          "Values from similar observations (nearest neighbors)",
+          "The mode of the column"
+        ],
+        "correctAnswer": 2,
+        "explanation": "KNN imputation finds the k most similar complete observations and uses their values (typically weighted by distance) to impute missing values."
+      },
+      {
+        "id": "q5",
+        "type": "true_false",
+        "prompt": "The Z-score method for outlier detection assumes the data follows a normal distribution.",
+        "correctAnswer": true,
+        "explanation": "Z-scores measure how many standard deviations a value is from the mean, which is most meaningful when data is normally distributed."
+      },
+      {
+        "id": "q6",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of the Box-Cox transformation?",
+        "options": [
+          "To remove outliers from the dataset",
+          "To make data more normally distributed",
+          "To encode categorical variables",
+          "To reduce dimensionality"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Box-Cox transformation applies a power transformation to make data more normally distributed, which can improve the performance of many statistical methods."
+      },
+      {
+        "id": "q7",
+        "type": "code_output",
+        "prompt": "What will be printed?",
+        "codeSnippet": "import pandas as pd\n\ndf = pd.DataFrame({'values': [10, 20, 30, 40, 50]})\nq1 = df['values'].quantile(0.25)\nq3 = df['values'].quantile(0.75)\niqr = q3 - q1\nprint(f\"IQR: {iqr}\")",
+        "correctAnswer": "IQR: 20.0",
+        "explanation": "Q1 (25th percentile) = 20, Q3 (75th percentile) = 40. IQR = Q3 - Q1 = 40 - 20 = 20.0"
+      },
+      {
+        "id": "q8",
+        "type": "multiple_choice",
+        "prompt": "Which statistical test would you use to compare means of more than two independent groups?",
+        "options": [
+          "t-test",
+          "Chi-square test",
+          "ANOVA",
+          "Pearson correlation"
+        ],
+        "correctAnswer": 2,
+        "explanation": "ANOVA (Analysis of Variance) is used to compare means across more than two groups, while t-tests are limited to comparing two groups."
+      },
+      {
+        "id": "q9",
+        "type": "written",
+        "prompt": "Explain the difference between Type I and Type II errors in hypothesis testing. Give a practical example of each in a data science context.",
+        "correctAnswer": "type I type II error false positive false negative",
+        "explanation": "Understanding error types is crucial for setting appropriate significance levels.",
+        "modelAnswer": "Type I Error (False Positive): Rejecting a true null hypothesis. Example: A fraud detection model flags a legitimate transaction as fraudulent. The null hypothesis (transaction is legitimate) is true, but we incorrectly reject it. Type II Error (False Negative): Failing to reject a false null hypothesis. Example: A fraud detection model fails to catch an actual fraudulent transaction. The null hypothesis (transaction is legitimate) is false, but we fail to reject it. Trade-off: Reducing Type I errors (lower significance level) increases Type II errors, and vice versa. The acceptable balance depends on the cost of each error type."
+      },
+      {
+        "id": "q10",
         "type": "multiple_choice",
         "prompt": "In hypothesis testing, what does a p-value represent?",
         "options": [
@@ -125,7 +399,48 @@
         "explanation": "The p-value is the probability of obtaining test results at least as extreme as the observed results, assuming the null hypothesis is true."
       },
       {
-        "id": "q4",
+        "id": "q11",
+        "type": "fill_blank",
+        "prompt": "The 95% confidence interval means that if we repeated the sampling process many times, approximately ____% of the intervals would contain the true population parameter.",
+        "correctAnswer": "95",
+        "explanation": "A 95% confidence interval means 95% of similarly constructed intervals would contain the true population parameter."
+      },
+      {
+        "id": "q12",
+        "type": "multiple_choice",
+        "prompt": "Which correlation coefficient should be used for ordinal data?",
+        "options": [
+          "Pearson correlation",
+          "Spearman correlation",
+          "Point-biserial correlation",
+          "Phi coefficient"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Spearman correlation is rank-based and appropriate for ordinal data, as it doesn't assume linear relationships or normal distributions."
+      },
+      {
+        "id": "q13",
+        "type": "code_output",
+        "prompt": "What is the output?",
+        "codeSnippet": "import numpy as np\nfrom scipy import stats\n\nx = [1, 2, 3, 4, 5]\ny = [5, 4, 3, 2, 1]\nprint(f\"{stats.pearsonr(x, y)[0]:.1f}\")",
+        "correctAnswer": "-1.0",
+        "explanation": "The variables have a perfect negative linear relationship (as x increases, y decreases by the same amount), resulting in a correlation of -1.0."
+      },
+      {
+        "id": "q14",
+        "type": "multiple_choice",
+        "prompt": "What is the main advantage of using StandardScaler over MinMaxScaler?",
+        "options": [
+          "StandardScaler is faster to compute",
+          "StandardScaler is less sensitive to outliers",
+          "StandardScaler preserves the original data range",
+          "StandardScaler is more robust to outliers than MinMaxScaler"
+        ],
+        "correctAnswer": 3,
+        "explanation": "StandardScaler uses mean and standard deviation which are less affected by extreme values than the min/max used by MinMaxScaler."
+      },
+      {
+        "id": "q15",
         "type": "multiple_choice",
         "prompt": "Which of the following is NOT a characteristic of a good machine learning feature?",
         "options": [
@@ -138,21 +453,225 @@
         "explanation": "Features with unique values for each observation (like IDs) do not generalize well. Good features balance predictive power with generalizability."
       },
       {
-        "id": "q5",
+        "id": "q16",
+        "type": "code_output",
+        "prompt": "What will be printed?",
+        "codeSnippet": "import pandas as pd\n\ndf = pd.DataFrame({'color': ['red', 'blue', 'red', 'green']})\nencoded = pd.get_dummies(df['color'])\nprint(encoded.shape)",
+        "correctAnswer": "(4, 3)",
+        "explanation": "One-hot encoding creates one column per unique category. With 4 rows and 3 unique colors (red, blue, green), the shape is (4, 3)."
+      },
+      {
+        "id": "q17",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of target encoding for categorical variables?",
+        "options": [
+          "To convert text to lowercase",
+          "To replace categories with the mean of the target variable for that category",
+          "To remove rare categories",
+          "To create binary columns for each category"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Target encoding replaces each category with the mean (or other aggregate) of the target variable for observations in that category, encoding the relationship with the target."
+      },
+      {
+        "id": "q18",
+        "type": "true_false",
+        "prompt": "PCA (Principal Component Analysis) preserves the original interpretability of features.",
+        "correctAnswer": false,
+        "explanation": "PCA creates new features (principal components) that are linear combinations of original features, making them harder to interpret in terms of the original variables."
+      },
+      {
+        "id": "q19",
+        "type": "multiple_choice",
+        "prompt": "Which visualization type is best for showing the relationship between two continuous variables?",
+        "options": [
+          "Bar chart",
+          "Pie chart",
+          "Scatter plot",
+          "Box plot"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Scatter plots display each data point's position on two axes, making them ideal for visualizing relationships between two continuous variables."
+      },
+      {
+        "id": "q20",
+        "type": "multiple_choice",
+        "prompt": "What is the main advantage of using Plotly over Matplotlib for data visualization?",
+        "options": [
+          "Plotly produces higher resolution images",
+          "Plotly creates interactive visualizations",
+          "Plotly is faster for large datasets",
+          "Plotly requires less code"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Plotly's main advantage is creating interactive visualizations with zoom, pan, hover tooltips, and other interactive features."
+      },
+      {
+        "id": "q21",
+        "type": "fill_blank",
+        "prompt": "The process of telling a story with data, using visualizations and narrative to communicate insights, is called data ______.",
+        "correctAnswer": "storytelling",
+        "explanation": "Data storytelling combines data, visualizations, and narrative to communicate insights effectively to an audience."
+      },
+      {
+        "id": "q22",
+        "type": "multiple_choice",
+        "prompt": "Which color scheme is recommended for sequential data (e.g., temperature from low to high)?",
+        "options": [
+          "Diverging color scheme",
+          "Qualitative color scheme",
+          "Sequential color scheme",
+          "Rainbow color scheme"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Sequential color schemes use a gradient of a single hue to represent ordered data, making it easy to perceive relative magnitude."
+      },
+      {
+        "id": "q23",
+        "type": "multiple_choice",
+        "prompt": "What are the '3 Vs' that define Big Data?",
+        "options": [
+          "Value, Variety, Velocity",
+          "Volume, Variety, Velocity",
+          "Volume, Verification, Velocity",
+          "Value, Variety, Verification"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The 3 Vs of Big Data are Volume (large amounts of data), Variety (different types of data), and Velocity (speed of data generation and processing)."
+      },
+      {
+        "id": "q24",
+        "type": "written",
+        "prompt": "Compare and contrast data lakes and data warehouses. Discuss their architecture, typical use cases, and the types of users who would use each system.",
+        "correctAnswer": "data lake warehouse structured unstructured schema analytics storage",
+        "explanation": "Understanding the differences between data lakes and warehouses is essential for designing modern data architectures.",
+        "modelAnswer": "Data Lakes: Architecture - Store raw, unstructured/semi-structured data in native format (schema-on-read). Use technologies like Hadoop, S3, Azure Data Lake. Use Cases - Big data analytics, machine learning, exploratory analysis, storing diverse data types. Users - Data scientists, ML engineers, analysts exploring new data sources. Data Warehouses: Architecture - Store structured, processed data with defined schema (schema-on-write). Use relational databases, dimensional modeling (star/snowflake schemas). Use Cases - Business intelligence, reporting, OLAP, historical analysis. Users - Business analysts, executives, BI developers. Key Differences: Lakes are flexible but require more data engineering; warehouses are optimized for queries but less flexible."
+      },
+      {
+        "id": "q25",
+        "type": "multiple_choice",
+        "prompt": "What is Apache Spark's primary advantage over Hadoop MapReduce?",
+        "options": [
+          "Spark can process larger datasets",
+          "Spark processes data in-memory, making it much faster",
+          "Spark is easier to install",
+          "Spark is open-source while Hadoop is not"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Spark's in-memory processing can be up to 100x faster than Hadoop MapReduce's disk-based approach for iterative algorithms."
+      },
+      {
+        "id": "q26",
+        "type": "multiple_choice",
+        "prompt": "In a star schema, what is a fact table?",
+        "options": [
+          "A table containing only primary keys",
+          "A central table containing measurable, quantitative data and foreign keys to dimension tables",
+          "A table containing only text descriptions",
+          "A backup table for data recovery"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A fact table in a star schema contains quantitative measures (facts) and foreign keys linking to dimension tables that provide context."
+      },
+      {
+        "id": "q27",
+        "type": "fill_blank",
+        "prompt": "The difference between ETL and ELT is that in ELT, data is first loaded into the target system and then ______ there.",
+        "correctAnswer": "transformed",
+        "explanation": "In ELT (Extract, Load, Transform), raw data is loaded first and transformed in the target system, leveraging its processing power."
+      },
+      {
+        "id": "q28",
+        "type": "multiple_choice",
+        "prompt": "Which technology is commonly used for real-time data streaming?",
+        "options": [
+          "PostgreSQL",
+          "Apache Kafka",
+          "Pandas",
+          "Matplotlib"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Apache Kafka is a distributed streaming platform designed for high-throughput, real-time data pipelines and streaming applications."
+      },
+      {
+        "id": "q29",
+        "type": "code_output",
+        "prompt": "What is the output?",
+        "codeSnippet": "from pyspark.sql import SparkSession\n\n# Simulated output for concept check\ndf_count = 1000\ndf_partitions = 4\nprint(f\"Records: {df_count}, Partitions: {df_partitions}\")",
+        "correctAnswer": "Records: 1000, Partitions: 4",
+        "explanation": "This demonstrates Spark's distributed processing: data is split across partitions for parallel processing."
+      },
+      {
+        "id": "q30",
         "type": "true_false",
         "prompt": "Cross-validation helps prevent overfitting by testing the model on data it has not seen during training.",
         "correctAnswer": true,
         "explanation": "Cross-validation splits data into training and validation sets, allowing us to assess how well the model generalizes to unseen data, which helps detect and prevent overfitting."
       },
       {
-        "id": "q6",
-        "type": "fill_blank",
-        "prompt": "The process of creating new features from existing ones to improve model performance is called feature ______.",
-        "correctAnswer": "engineering",
-        "explanation": "Feature engineering involves creating, transforming, and selecting features to improve machine learning model performance."
+        "id": "q31",
+        "type": "written",
+        "prompt": "Design a complete data pipeline for a real-time analytics system that processes streaming user events (clicks, page views, etc.). Include data collection, processing, storage, and visualization components. Address scalability and error handling.",
+        "correctAnswer": "pipeline streaming kafka spark storage processing analytics real-time",
+        "explanation": "Real-time data pipelines require careful consideration of throughput, latency, fault tolerance, and scalability.",
+        "modelAnswer": "Data Collection: Use Apache Kafka or AWS Kinesis to ingest streaming events from web/mobile apps. Implement client-side buffering and retry logic for reliability. Processing: Use Apache Spark Streaming or Flink for stream processing. Implement windowing (tumbling/sliding) for aggregations, stateful processing for sessionization. Storage: Hot path - Redis/Memcached for real-time dashboards. Warm path - Cassandra/DynamoDB for recent data queries. Cold path - S3/Parquet for historical analysis and ML training. Visualization: Grafana or custom dashboard consuming real-time aggregates from Redis. Scalability: Horizontal scaling of Kafka partitions, Spark executors. Auto-scaling based on queue depth. Error Handling: Dead letter queues for failed messages, circuit breakers, monitoring/alerting with Prometheus/Grafana, data quality checks at ingestion."
       },
       {
-        "id": "q7",
+        "id": "q32",
+        "type": "multiple_choice",
+        "prompt": "What is differential privacy?",
+        "options": [
+          "A method for encrypting data in transit",
+          "A technique that adds noise to data or queries to protect individual privacy while allowing aggregate analysis",
+          "A type of data compression",
+          "A method for detecting data leaks"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Differential privacy adds mathematical noise to data or query results to ensure individual records cannot be identified while still allowing meaningful aggregate analysis."
+      },
+      {
+        "id": "q33",
+        "type": "written",
+        "prompt": "Discuss three major ethical considerations in data science (such as privacy, bias, transparency, consent, etc.) and explain concrete practices that data scientists should implement to address each one.",
+        "correctAnswer": "ethics privacy bias fairness transparency consent responsible data",
+        "explanation": "Ethical considerations are fundamental to responsible data science practice.",
+        "modelAnswer": "1. Privacy and Consent: Users should have control over their data. Practices: Implement privacy-by-design, use differential privacy for aggregates, anonymize/pseudonymize data, obtain informed consent, follow GDPR/CCPA, minimize data collection, provide opt-out mechanisms. 2. Algorithmic Bias and Fairness: Models can perpetuate historical biases. Practices: Audit training data for representation, use fairness metrics (demographic parity, equalized odds), test across demographic groups, diverse team review, document limitations, regular bias audits. 3. Transparency and Explainability: Users deserve to understand decisions affecting them. Practices: Use interpretable models when possible, implement SHAP/LIME for complex models, document model cards, provide clear explanations for automated decisions, allow human appeal/override, regular audits and reporting."
+      },
+      {
+        "id": "q34",
+        "type": "multiple_choice",
+        "prompt": "What is algorithmic bias?",
+        "options": [
+          "When an algorithm runs too slowly",
+          "When an algorithm's outputs systematically favor or disadvantage certain groups",
+          "When an algorithm uses too much memory",
+          "When an algorithm produces inconsistent results"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Algorithmic bias occurs when an algorithm's outputs systematically and unfairly discriminate against certain individuals or groups based on protected characteristics."
+      },
+      {
+        "id": "q35",
+        "type": "multiple_choice",
+        "prompt": "Under GDPR, what is the 'right to be forgotten'?",
+        "options": [
+          "The right to unlimited data storage",
+          "The right to have personal data deleted upon request",
+          "The right to access competitor data",
+          "The right to automatic data backup"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The right to erasure (right to be forgotten) allows individuals to request deletion of their personal data when there's no compelling reason for its continued processing."
+      },
+      {
+        "id": "q36",
+        "type": "fill_blank",
+        "prompt": "SHAP and LIME are techniques used for model ______, helping explain why a model made a particular prediction.",
+        "correctAnswer": "explainability",
+        "explanation": "SHAP (SHapley Additive exPlanations) and LIME (Local Interpretable Model-agnostic Explanations) are model explainability techniques."
+      },
+      {
+        "id": "q37",
         "type": "multiple_choice",
         "prompt": "What is the main purpose of a confusion matrix in classification problems?",
         "options": [
@@ -165,7 +684,7 @@
         "explanation": "A confusion matrix displays the counts of true positives, true negatives, false positives, and false negatives, helping evaluate classification model performance."
       },
       {
-        "id": "q8",
+        "id": "q38",
         "type": "multiple_choice",
         "prompt": "Which metric would be most appropriate for evaluating a highly imbalanced classification problem where positive class is rare?",
         "options": [
@@ -176,6 +695,42 @@
         ],
         "correctAnswer": 1,
         "explanation": "For imbalanced datasets, F1-score (harmonic mean of precision and recall) or AUC-ROC are better than accuracy, which can be misleadingly high by predicting the majority class."
+      },
+      {
+        "id": "q39",
+        "type": "true_false",
+        "prompt": "Data anonymization always guarantees complete privacy protection.",
+        "correctAnswer": false,
+        "explanation": "Anonymized data can sometimes be re-identified through linkage attacks, especially when combined with other datasets. Additional techniques like k-anonymity or differential privacy may be needed."
+      },
+      {
+        "id": "q40",
+        "type": "multiple_choice",
+        "prompt": "What is demographic parity in the context of algorithmic fairness?",
+        "options": [
+          "When all users have equal access to the system",
+          "When the positive prediction rate is equal across different demographic groups",
+          "When the dataset has equal representation of all groups",
+          "When the algorithm processes all groups at the same speed"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Demographic parity (also called statistical parity) requires that the proportion of positive predictions be the same across different demographic groups."
+      },
+      {
+        "id": "q41",
+        "type": "code_output",
+        "prompt": "What is the output?",
+        "codeSnippet": "from sklearn.metrics import precision_score, recall_score\n\ny_true = [1, 1, 1, 0, 0]\ny_pred = [1, 1, 0, 0, 0]\n\nprecision = precision_score(y_true, y_pred)\nrecall = recall_score(y_true, y_pred)\nprint(f\"Precision: {precision:.2f}, Recall: {recall:.2f}\")",
+        "correctAnswer": "Precision: 1.00, Recall: 0.67",
+        "explanation": "Precision = TP/(TP+FP) = 2/(2+0) = 1.0. Recall = TP/(TP+FN) = 2/(2+1) = 0.67. All positive predictions were correct, but we missed one actual positive."
+      },
+      {
+        "id": "q42",
+        "type": "written",
+        "prompt": "Describe the Cambridge Analytica scandal and explain what ethical principles were violated. What safeguards could have prevented this situation?",
+        "correctAnswer": "cambridge analytica privacy consent data misuse facebook",
+        "explanation": "Understanding real-world ethical failures helps data scientists avoid similar mistakes.",
+        "modelAnswer": "The Cambridge Analytica Scandal: In 2018, it was revealed that Cambridge Analytica obtained personal data of up to 87 million Facebook users without consent through a third-party quiz app. The data was used for political advertising targeting. Ethical Principles Violated: 1) Informed Consent - Users consented to a quiz, not to having their data used for political campaigns. 2) Purpose Limitation - Data collected for academic research was used commercially. 3) Data Minimization - More data was collected than necessary through friend networks. 4) Transparency - Users were not informed how their data would be used. Safeguards: Stricter API access controls, clearer consent mechanisms, regular audits of third-party data access, privacy-by-design principles, stronger enforcement of terms of service, regulatory oversight (now partially addressed by GDPR), and whistleblower protections."
       }
     ]
   }

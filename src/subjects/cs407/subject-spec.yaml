@@ -1,0 +1,272 @@
+# CS407: Data Science and Analytics - Subject Specification
+# This spec guides content creation for an applied data science course.
+
+# ==============================================================================
+# SUBJECT IDENTITY
+# ==============================================================================
+
+id: cs407
+title: Data Science and Analytics
+category: cs
+
+role:
+  level: advanced
+  transformation: >
+    From "I can analyze structured datasets" to "I can design end-to-end data
+    pipelines, apply statistical methods rigorously, create compelling
+    visualizations, and build ethical, scalable data solutions."
+
+# ==============================================================================
+# CURRICULUM
+# ==============================================================================
+
+curriculum:
+  subtopic_word_target: 800
+
+  prerequisite_knowledge:
+    - Programming proficiency (Python preferred)
+    - Basic statistics (probability, distributions, hypothesis testing)
+    - Database fundamentals (SQL queries, relational concepts)
+    - Linear algebra basics (vectors, matrices)
+    - Machine learning foundations (supervised/unsupervised learning concepts)
+
+  essential_concepts:
+    - Data collection from diverse sources (APIs, web scraping, databases)
+    - Data cleaning and preprocessing (missing data, outliers, normalization)
+    - Exploratory data analysis (descriptive statistics, distributions, correlations)
+    - Feature engineering (creation, selection, extraction, transformation)
+    - Data visualization (principles, tools, dashboards, storytelling)
+    - Big data technologies (Hadoop, Spark, data lakes, warehouses)
+    - Data ethics (privacy, bias, transparency, regulations)
+
+  out_of_scope:
+    - Deep learning architectures (covered in CS402 Machine Learning)
+    - Advanced statistical modeling (covered in MATH202)
+    - Database administration (covered in CS205)
+    - Natural language processing (specialized topic)
+
+# ==============================================================================
+# PEDAGOGICAL APPROACH
+# ==============================================================================
+
+pedagogy:
+  knowledge_type: applied
+
+  mastery_indicators:
+    - Designs and implements complete data pipelines from collection to analysis
+    - Selects appropriate statistical methods for different data types and questions
+    - Creates clear, insightful visualizations for technical and non-technical audiences
+    - Identifies and mitigates bias in data collection and analysis
+    - Works with both structured and unstructured data at scale
+    - Communicates data insights effectively with stakeholders
+
+  common_struggles:
+    - Choosing the right visualization type for the data and audience
+    - Understanding when to use different statistical tests
+    - Handling messy, real-world data with multiple quality issues
+    - Balancing statistical rigor with practical constraints
+    - Scaling analyses from prototype to production systems
+    - Recognizing and addressing ethical implications of data work
+
+# ==============================================================================
+# CONTENT STANDARDS
+# ==============================================================================
+
+content:
+  subtopic_requirements:
+    - Every concept demonstrated with realistic Python/SQL code examples
+    - Include real-world datasets or realistic synthetic examples
+    - Show common pitfalls and how to avoid them
+    - Connect concepts to industry practice and tools
+    - Include best practices from production data systems
+
+  conventions:
+    - Python 3.10+ with pandas, numpy, matplotlib, seaborn
+    - SQL examples using standard ANSI SQL
+    - Use mermaid diagrams for architecture and workflow visualizations
+    - LaTeX for statistical formulas and notation
+
+# ==============================================================================
+# ASSESSMENT PHILOSOPHY
+# ==============================================================================
+
+assessment:
+  philosophy: >
+    Data science is an applied discipline. Assessments should mirror real-world
+    tasks: cleaning messy data, building visualizations, interpreting results,
+    and making data-driven recommendations. Both coding skills and statistical
+    understanding must be tested.
+
+  measures:
+    - Code correctness and efficiency for data manipulation tasks
+    - Appropriate statistical method selection and interpretation
+    - Quality and clarity of data visualizations
+    - Understanding of ethical considerations and best practices
+    - Ability to communicate findings clearly
+
+  anti_patterns:
+    - Exercises with clean, toy datasets that don't reflect reality
+    - Questions asking for memorization of library syntax
+    - Statistical questions without context or practical application
+    - Visualizations evaluated only on aesthetics, not insight
+
+# ==============================================================================
+# GRADING THRESHOLDS
+# ==============================================================================
+
+grading:
+  passing_score: 70
+
+  thresholds:
+    exercises: 70
+    quizzes: 65
+    exams: 70
+
+  rationale: >
+    Standard passing threshold. Data science requires both theoretical
+    understanding and practical skills. Students must demonstrate competence
+    in both statistical reasoning and implementation.
+
+# ==============================================================================
+# EXERCISE SPECIFICATIONS
+# ==============================================================================
+
+exercises:
+  rationale: >
+    Exercises combine coding with interpretation. Students should write code
+    to manipulate data and visualize results, then interpret their findings.
+    Mix of automated testing (for code correctness) and AI evaluation (for
+    interpretation quality).
+
+  types:
+    coding_with_tests: "70%"
+    coding_ai_evaluated: "20%"
+    written: "10%"
+    justification: >
+      Most exercises are coding with tests for data manipulation and analysis
+      tasks. AI-evaluated coding for open-ended visualization and exploration
+      tasks. Written exercises for statistical interpretation and ethical analysis.
+
+  per_topic:
+    minimum: 14
+    target: 16
+    maximum: 18
+    justification: >
+      Full base standard count. Data science benefits from extensive hands-on
+      practice with diverse datasets and techniques.
+
+  difficulty_distribution:
+    1: 2
+    2: 3
+    3: 5
+    4: 4
+    5: 2
+    justification: >
+      Balanced distribution with emphasis on medium difficulty. Year 4 students
+      should be ready for more challenging exercises. Multiple expert-level
+      exercises to prepare for industry work.
+
+# ==============================================================================
+# QUIZ SPECIFICATIONS
+# ==============================================================================
+
+quizzes:
+  rationale: >
+    Quizzes test conceptual understanding of statistical methods, data science
+    best practices, and tool knowledge. Complement hands-on exercises with
+    theoretical foundation checks.
+
+  per_topic:
+    count: 3
+    questions_each: 5
+    justification: >
+      Standard base count. Three quizzes per topic for progressive difficulty:
+      definitions, application, and mastery.
+
+  question_types:
+    multiple_choice: "45%"
+    true_false: "15%"
+    fill_blank: "10%"
+    code_output: "25%"
+    coding: "5%"
+    written: "0%"
+    justification: >
+      Heavy on multiple choice and code output for testing statistical concepts
+      and data manipulation understanding. Some coding for short implementation
+      checks.
+
+# ==============================================================================
+# EXAM SPECIFICATIONS
+# ==============================================================================
+
+exams:
+  rationale: >
+    Exams test ability to analyze data problems, choose appropriate methods,
+    and interpret results. Mix of conceptual questions, code tracing, and
+    short implementation tasks.
+
+  midterm:
+    questions:
+      minimum: 22
+      target: 26
+      maximum: 30
+    duration_minutes: 90
+    format: >
+      10-12 multiple choice on concepts, 6-8 code tracing/output, 4-6 short
+      written on methodology choice and interpretation, 2-3 short coding tasks.
+    coverage: "Topics 1-4: Data collection, cleaning, EDA, feature engineering"
+
+  final:
+    questions:
+      minimum: 38
+      target: 42
+      maximum: 46
+    duration_minutes: 120
+    format: >
+      15-18 multiple choice, 10-12 code tracing, 8-10 methodology/interpretation,
+      5-6 coding tasks. Cumulative with emphasis on later topics.
+    coverage: "Comprehensive: all 7 topics"
+    cumulative: true
+
+# ==============================================================================
+# PROJECT SPECIFICATIONS
+# ==============================================================================
+
+projects:
+  required: true
+  count: 2
+  rationale: >
+    Projects give students experience with end-to-end data science workflows.
+    Students should work with real or realistic datasets, perform complete
+    analyses, and present findings professionally.
+
+  goals:
+    - Apply complete data science workflow from collection to insight
+    - Work with messy, real-world data requiring cleaning and preprocessing
+    - Create compelling visualizations and presentations
+    - Consider ethical implications of data work
+    - Produce portfolio-quality deliverables
+
+  estimated_hours: "15-20"
+
+# ==============================================================================
+# SUBJECT-SPECIFIC RED FLAGS
+# ==============================================================================
+
+red_flags:
+  - Exercise uses perfectly clean data with no missing values or outliers
+  - Statistical test applied without checking assumptions
+  - Visualization without clear title, labels, or legend
+  - Code example that wouldn't scale to realistic dataset sizes
+  - Ethical considerations treated as optional or afterthought
+  - Hardcoded file paths or dataset-specific values in solutions
+
+# ==============================================================================
+# NOTES
+# ==============================================================================
+
+notes: >
+  Data science is inherently interdisciplinary. Content should connect to
+  statistics, software engineering, and domain expertise. Real-world examples
+  and industry practices are essential. Students should graduate ready to
+  contribute to data teams immediately.
