@@ -1,0 +1,259 @@
+[
+  {
+    "id": "cs105-exercise-4",
+    "subjectId": "cs105",
+    "topicId": "cs105-topic-4",
+    "title": "Student Record Structure",
+    "difficulty": 2,
+    "description": "Define a structure to store student information (name, ID, GPA) and create a function to print student details.",
+    "starterCode": "#include <stdio.h>\n#include <string.h>\n\n// Define Student structure here\n\nvoid printStudent(struct Student s) {\n    // Print student details\n}\n\nint main() {\n    struct Student s1;\n    strcpy(s1.name, \"John Doe\");\n    s1.id = 12345;\n    s1.gpa = 3.8;\n    \n    printStudent(s1);\n    return 0;\n}",
+    "testCases": [],
+    "hints": [
+      "Define a struct with char array for name, int for id, and float for gpa",
+      "Use printf with appropriate format specifiers",
+      "Use %.2f to print GPA with 2 decimal places"
+    ],
+    "solution": "#include <stdio.h>\n#include <string.h>\n\nstruct Student {\n    char name[50];\n    int id;\n    float gpa;\n};\n\nvoid printStudent(struct Student s) {\n    printf(\"Name: %s\\n\", s.name);\n    printf(\"ID: %d\\n\", s.id);\n    printf(\"GPA: %.2f\", s.gpa);\n}\n\nint main() {\n    struct Student s1;\n    strcpy(s1.name, \"John Doe\");\n    s1.id = 12345;\n    s1.gpa = 3.8;\n    \n    printStudent(s1);\n    return 0;\n}",
+    "language": "c"
+  },
+  {
+    "id": "cs105-t4-ex02",
+    "subjectId": "cs105",
+    "topicId": "cs105-topic-4",
+    "title": "Point Structure",
+    "difficulty": 1,
+    "description": "Define a Point structure with x, y coordinates. Calculate distance between two points.",
+    "starterCode": "#include <stdio.h>\n#include <math.h>\n\n// Define Point structure\n\nfloat distance(struct Point p1, struct Point p2) {\n    // Calculate Euclidean distance\n}\n\nint main() {\n    struct Point a = {0, 0};\n    struct Point b = {3, 4};\n    printf(\"Distance: %.2f\", distance(a, b));\n    return 0;\n}",
+    "solution": "#include <stdio.h>\n#include <math.h>\n\nstruct Point {\n    float x;\n    float y;\n};\n\nfloat distance(struct Point p1, struct Point p2) {\n    float dx = p2.x - p1.x;\n    float dy = p2.y - p1.y;\n    return sqrt(dx*dx + dy*dy);\n}\n\nint main() {\n    struct Point a = {0, 0};\n    struct Point b = {3, 4};\n    printf(\"Distance: %.2f\", distance(a, b));\n    return 0;\n}",
+    "testCases": [],
+    "hints": [
+      "Distance = sqrt((x2-x1)^2 + (y2-y1)^2)",
+      "Use math.h for sqrt()"
+    ],
+    "language": "c"
+  },
+  {
+    "id": "cs105-t4-ex03",
+    "subjectId": "cs105",
+    "topicId": "cs105-topic-4",
+    "title": "Structure with Typedef",
+    "difficulty": 1,
+    "description": "Use typedef to create a Rectangle type and calculate its area.",
+    "starterCode": "#include <stdio.h>\n\n// Use typedef to define Rectangle\n\nint area(Rectangle r) {\n    // Return area\n}\n\nint main() {\n    Rectangle rect = {5, 3};\n    printf(\"Area: %d\", area(rect));\n    return 0;\n}",
+    "solution": "#include <stdio.h>\n\ntypedef struct {\n    int width;\n    int height;\n} Rectangle;\n\nint area(Rectangle r) {\n    return r.width * r.height;\n}\n\nint main() {\n    Rectangle rect = {5, 3};\n    printf(\"Area: %d\", area(rect));\n    return 0;\n}",
+    "testCases": [],
+    "hints": [
+      "typedef struct {...} Name;",
+      "Then use Name instead of struct Name"
+    ],
+    "language": "c"
+  },
+  {
+    "id": "cs105-t4-ex04",
+    "subjectId": "cs105",
+    "topicId": "cs105-topic-4",
+    "title": "Pointer to Structure",
+    "difficulty": 2,
+    "description": "Use arrow operator to modify structure through a pointer.",
+    "starterCode": "#include <stdio.h>\n\ntypedef struct {\n    int x;\n    int y;\n} Point;\n\nvoid movePoint(Point *p, int dx, int dy) {\n    // Move point by dx, dy using arrow operator\n}\n\nint main() {\n    Point p = {5, 10};\n    movePoint(&p, 3, -2);\n    printf(\"Point: (%d, %d)\", p.x, p.y);\n    return 0;\n}",
+    "solution": "#include <stdio.h>\n\ntypedef struct {\n    int x;\n    int y;\n} Point;\n\nvoid movePoint(Point *p, int dx, int dy) {\n    p->x += dx;\n    p->y += dy;\n}\n\nint main() {\n    Point p = {5, 10};\n    movePoint(&p, 3, -2);\n    printf(\"Point: (%d, %d)\", p.x, p.y);\n    return 0;\n}",
+    "testCases": [],
+    "hints": [
+      "Use -> for pointer to struct",
+      "p->x is same as (*p).x"
+    ],
+    "language": "c"
+  },
+  {
+    "id": "cs105-t4-ex05",
+    "subjectId": "cs105",
+    "topicId": "cs105-topic-4",
+    "title": "Nested Structures",
+    "difficulty": 3,
+    "description": "Create a Person structure containing an Address structure.",
+    "starterCode": "#include <stdio.h>\n#include <string.h>\n\n// Define Address structure\n// Define Person structure containing Address\n\nvoid printPerson(Person p) {\n    // Print name and full address\n}\n\nint main() {\n    Person p;\n    strcpy(p.name, \"Alice\");\n    strcpy(p.addr.street, \"123 Main St\");\n    strcpy(p.addr.city, \"Boston\");\n    \n    printPerson(p);\n    return 0;\n}",
+    "solution": "#include <stdio.h>\n#include <string.h>\n\ntypedef struct {\n    char street[50];\n    char city[30];\n} Address;\n\ntypedef struct {\n    char name[30];\n    Address addr;\n} Person;\n\nvoid printPerson(Person p) {\n    printf(\"Name: %s\\n\", p.name);\n    printf(\"Address: %s, %s\", p.addr.street, p.addr.city);\n}\n\nint main() {\n    Person p;\n    strcpy(p.name, \"Alice\");\n    strcpy(p.addr.street, \"123 Main St\");\n    strcpy(p.addr.city, \"Boston\");\n    \n    printPerson(p);\n    return 0;\n}",
+    "testCases": [],
+    "hints": [
+      "Define inner struct first",
+      "Access with p.addr.city"
+    ],
+    "language": "c"
+  },
+  {
+    "id": "cs105-t4-ex06",
+    "subjectId": "cs105",
+    "topicId": "cs105-topic-4",
+    "title": "Array of Structures",
+    "difficulty": 2,
+    "description": "Create an array of Product structures and find the most expensive one.",
+    "starterCode": "#include <stdio.h>\n\ntypedef struct {\n    char name[20];\n    float price;\n} Product;\n\nint findMostExpensive(Product products[], int n) {\n    // Return index of most expensive\n}\n\nint main() {\n    Product products[3] = {\n        {\"Apple\", 1.50},\n        {\"Bread\", 2.75},\n        {\"Milk\", 3.00}\n    };\n    \n    int idx = findMostExpensive(products, 3);\n    printf(\"Most expensive: %s ($%.2f)\", products[idx].name, products[idx].price);\n    return 0;\n}",
+    "solution": "#include <stdio.h>\n\ntypedef struct {\n    char name[20];\n    float price;\n} Product;\n\nint findMostExpensive(Product products[], int n) {\n    int maxIdx = 0;\n    for (int i = 1; i < n; i++) {\n        if (products[i].price > products[maxIdx].price) {\n            maxIdx = i;\n        }\n    }\n    return maxIdx;\n}\n\nint main() {\n    Product products[3] = {\n        {\"Apple\", 1.50},\n        {\"Bread\", 2.75},\n        {\"Milk\", 3.00}\n    };\n    \n    int idx = findMostExpensive(products, 3);\n    printf(\"Most expensive: %s ($%.2f)\", products[idx].name, products[idx].price);\n    return 0;\n}",
+    "testCases": [],
+    "hints": [
+      "Track index of maximum",
+      "Access with products[i].price"
+    ],
+    "language": "c"
+  },
+  {
+    "id": "cs105-t4-ex07",
+    "subjectId": "cs105",
+    "topicId": "cs105-topic-4",
+    "title": "Self-Referential Structure (Linked List Node)",
+    "difficulty": 4,
+    "description": "Define a Node structure for a linked list and create a simple 3-node list.",
+    "starterCode": "#include <stdio.h>\n#include <stdlib.h>\n\n// Define Node with int data and pointer to next Node\n\nvoid printList(struct Node *head) {\n    // Print all values\n}\n\nint main() {\n    // Create 3 nodes: 1 -> 2 -> 3\n    // Print the list\n    // Free memory\n    \n    return 0;\n}",
+    "solution": "#include <stdio.h>\n#include <stdlib.h>\n\nstruct Node {\n    int data;\n    struct Node *next;\n};\n\nvoid printList(struct Node *head) {\n    struct Node *current = head;\n    while (current != NULL) {\n        printf(\"%d \", current->data);\n        current = current->next;\n    }\n}\n\nint main() {\n    struct Node *n1 = malloc(sizeof(struct Node));\n    struct Node *n2 = malloc(sizeof(struct Node));\n    struct Node *n3 = malloc(sizeof(struct Node));\n    \n    n1->data = 1; n1->next = n2;\n    n2->data = 2; n2->next = n3;\n    n3->data = 3; n3->next = NULL;\n    \n    printList(n1);\n    \n    free(n1); free(n2); free(n3);\n    return 0;\n}",
+    "testCases": [],
+    "hints": [
+      "struct Node contains struct Node *next",
+      "Last node's next is NULL"
+    ],
+    "language": "c"
+  },
+  {
+    "id": "cs105-t4-ex08",
+    "subjectId": "cs105",
+    "topicId": "cs105-topic-4",
+    "title": "Structure Size and Padding",
+    "difficulty": 3,
+    "description": "Explore structure padding by comparing sizes of different struct arrangements.",
+    "starterCode": "#include <stdio.h>\n\nstruct A {\n    char c;\n    int i;\n    char d;\n};\n\nstruct B {\n    char c;\n    char d;\n    int i;\n};\n\nint main() {\n    printf(\"Size of struct A: %zu\\n\", sizeof(struct A));\n    printf(\"Size of struct B: %zu\\n\", sizeof(struct B));\n    // Explain why they differ!\n    return 0;\n}",
+    "solution": "#include <stdio.h>\n\nstruct A {\n    char c;\n    int i;\n    char d;\n};\n\nstruct B {\n    char c;\n    char d;\n    int i;\n};\n\nint main() {\n    printf(\"Size of struct A: %zu\\n\", sizeof(struct A));\n    printf(\"Size of struct B: %zu\\n\", sizeof(struct B));\n    // A has padding after c and d for alignment\n    // B groups chars together, less padding needed\n    return 0;\n}",
+    "testCases": [],
+    "hints": [
+      "int requires 4-byte alignment",
+      "Padding is added between members"
+    ],
+    "language": "c"
+  },
+  {
+    "id": "cs105-t4-ex09",
+    "subjectId": "cs105",
+    "topicId": "cs105-topic-4",
+    "title": "Complex Number Structure",
+    "difficulty": 2,
+    "description": "Create a Complex number structure and implement add and multiply functions.",
+    "starterCode": "#include <stdio.h>\n\ntypedef struct {\n    double real;\n    double imag;\n} Complex;\n\nComplex add(Complex a, Complex b) {\n    // Return sum of two complex numbers\n}\n\nComplex multiply(Complex a, Complex b) {\n    // (a+bi)(c+di) = (ac-bd) + (ad+bc)i\n}\n\nvoid print(Complex c) {\n    printf(\"%.1f + %.1fi\\n\", c.real, c.imag);\n}\n\nint main() {\n    Complex a = {3, 2};   // 3 + 2i\n    Complex b = {1, 4};   // 1 + 4i\n    \n    printf(\"a = \"); print(a);\n    printf(\"b = \"); print(b);\n    printf(\"a+b = \"); print(add(a, b));\n    printf(\"a*b = \"); print(multiply(a, b));\n    \n    return 0;\n}",
+    "solution": "#include <stdio.h>\n\ntypedef struct {\n    double real;\n    double imag;\n} Complex;\n\nComplex add(Complex a, Complex b) {\n    Complex result;\n    result.real = a.real + b.real;\n    result.imag = a.imag + b.imag;\n    return result;\n}\n\nComplex multiply(Complex a, Complex b) {\n    Complex result;\n    result.real = a.real * b.real - a.imag * b.imag;\n    result.imag = a.real * b.imag + a.imag * b.real;\n    return result;\n}\n\nvoid print(Complex c) {\n    printf(\"%.1f + %.1fi\\n\", c.real, c.imag);\n}\n\nint main() {\n    Complex a = {3, 2};\n    Complex b = {1, 4};\n    \n    printf(\"a = \"); print(a);\n    printf(\"b = \"); print(b);\n    printf(\"a+b = \"); print(add(a, b));\n    printf(\"a*b = \"); print(multiply(a, b));\n    \n    return 0;\n}",
+    "testCases": [],
+    "hints": [
+      "Add real parts together, imaginary parts together",
+      "FOIL for multiplication"
+    ],
+    "language": "c"
+  },
+  {
+    "id": "cs105-t4-ex10",
+    "subjectId": "cs105",
+    "topicId": "cs105-topic-4",
+    "title": "Date Structure Comparison",
+    "difficulty": 2,
+    "description": "Create a Date structure and compare two dates.",
+    "starterCode": "#include <stdio.h>\n\ntypedef struct {\n    int day;\n    int month;\n    int year;\n} Date;\n\nint compareDates(Date d1, Date d2) {\n    // Return -1 if d1 < d2, 0 if equal, 1 if d1 > d2\n}\n\nint main() {\n    Date d1 = {15, 6, 2023};\n    Date d2 = {20, 3, 2023};\n    \n    int result = compareDates(d1, d2);\n    if (result < 0)\n        printf(\"d1 is before d2\");\n    else if (result > 0)\n        printf(\"d1 is after d2\");\n    else\n        printf(\"dates are equal\");\n    \n    return 0;\n}",
+    "solution": "#include <stdio.h>\n\ntypedef struct {\n    int day;\n    int month;\n    int year;\n} Date;\n\nint compareDates(Date d1, Date d2) {\n    if (d1.year != d2.year)\n        return d1.year - d2.year;\n    if (d1.month != d2.month)\n        return d1.month - d2.month;\n    return d1.day - d2.day;\n}\n\nint main() {\n    Date d1 = {15, 6, 2023};\n    Date d2 = {20, 3, 2023};\n    \n    int result = compareDates(d1, d2);\n    if (result < 0)\n        printf(\"d1 is before d2\");\n    else if (result > 0)\n        printf(\"d1 is after d2\");\n    else\n        printf(\"dates are equal\");\n    \n    return 0;\n}",
+    "testCases": [],
+    "hints": [
+      "Compare year first, then month, then day",
+      "Return difference to indicate direction"
+    ],
+    "language": "c"
+  },
+  {
+    "id": "cs105-t4-ex11",
+    "subjectId": "cs105",
+    "topicId": "cs105-topic-4",
+    "title": "Circle Structure",
+    "difficulty": 2,
+    "description": "Create a Circle structure with center point and radius. Calculate area and check if a point is inside.",
+    "starterCode": "#include <stdio.h>\n#include <math.h>\n\n#define PI 3.14159\n\ntypedef struct {\n    double x;\n    double y;\n} Point;\n\ntypedef struct {\n    Point center;\n    double radius;\n} Circle;\n\ndouble area(Circle c) {\n    // Return area of circle\n}\n\nint isInside(Circle c, Point p) {\n    // Return 1 if point is inside circle, 0 otherwise\n}\n\nint main() {\n    Circle c = {{0, 0}, 5};\n    Point p1 = {3, 3};\n    Point p2 = {10, 10};\n    \n    printf(\"Area: %.2f\\n\", area(c));\n    printf(\"p1 inside: %s\\n\", isInside(c, p1) ? \"yes\" : \"no\");\n    printf(\"p2 inside: %s\", isInside(c, p2) ? \"yes\" : \"no\");\n    \n    return 0;\n}",
+    "solution": "#include <stdio.h>\n#include <math.h>\n\n#define PI 3.14159\n\ntypedef struct {\n    double x;\n    double y;\n} Point;\n\ntypedef struct {\n    Point center;\n    double radius;\n} Circle;\n\ndouble area(Circle c) {\n    return PI * c.radius * c.radius;\n}\n\nint isInside(Circle c, Point p) {\n    double dx = p.x - c.center.x;\n    double dy = p.y - c.center.y;\n    double dist = sqrt(dx*dx + dy*dy);\n    return dist <= c.radius;\n}\n\nint main() {\n    Circle c = {{0, 0}, 5};\n    Point p1 = {3, 3};\n    Point p2 = {10, 10};\n    \n    printf(\"Area: %.2f\\n\", area(c));\n    printf(\"p1 inside: %s\\n\", isInside(c, p1) ? \"yes\" : \"no\");\n    printf(\"p2 inside: %s\", isInside(c, p2) ? \"yes\" : \"no\");\n    \n    return 0;\n}",
+    "testCases": [],
+    "hints": [
+      "Area = PI * r^2",
+      "Point inside if distance to center <= radius"
+    ],
+    "language": "c"
+  },
+  {
+    "id": "cs105-t4-ex12",
+    "subjectId": "cs105",
+    "topicId": "cs105-topic-4",
+    "title": "Employee Sorting",
+    "difficulty": 3,
+    "description": "Sort an array of Employee structures by salary using bubble sort.",
+    "starterCode": "#include <stdio.h>\n#include <string.h>\n\ntypedef struct {\n    char name[30];\n    float salary;\n} Employee;\n\nvoid sortBySalary(Employee emps[], int n) {\n    // Sort by salary (ascending)\n}\n\nint main() {\n    Employee emps[] = {\n        {\"Alice\", 55000},\n        {\"Bob\", 45000},\n        {\"Charlie\", 65000}\n    };\n    int n = 3;\n    \n    sortBySalary(emps, n);\n    \n    printf(\"Sorted by salary:\\n\");\n    for (int i = 0; i < n; i++) {\n        printf(\"%s: %.0f\\n\", emps[i].name, emps[i].salary);\n    }\n    return 0;\n}",
+    "solution": "#include <stdio.h>\n#include <string.h>\n\ntypedef struct {\n    char name[30];\n    float salary;\n} Employee;\n\nvoid sortBySalary(Employee emps[], int n) {\n    for (int i = 0; i < n - 1; i++) {\n        for (int j = 0; j < n - i - 1; j++) {\n            if (emps[j].salary > emps[j+1].salary) {\n                Employee temp = emps[j];\n                emps[j] = emps[j+1];\n                emps[j+1] = temp;\n            }\n        }\n    }\n}\n\nint main() {\n    Employee emps[] = {\n        {\"Alice\", 55000},\n        {\"Bob\", 45000},\n        {\"Charlie\", 65000}\n    };\n    int n = 3;\n    \n    sortBySalary(emps, n);\n    \n    printf(\"Sorted by salary:\\n\");\n    for (int i = 0; i < n; i++) {\n        printf(\"%s: %.0f\\n\", emps[i].name, emps[i].salary);\n    }\n    return 0;\n}",
+    "testCases": [],
+    "hints": [
+      "Swap entire structures when swapping",
+      "Compare emps[j].salary"
+    ],
+    "language": "c"
+  },
+  {
+    "id": "cs105-t4-ex13",
+    "subjectId": "cs105",
+    "topicId": "cs105-topic-4",
+    "title": "Linked List Operations",
+    "difficulty": 4,
+    "description": "Implement insert and delete operations for a linked list.",
+    "starterCode": "#include <stdio.h>\n#include <stdlib.h>\n\ntypedef struct Node {\n    int data;\n    struct Node *next;\n} Node;\n\nNode *createNode(int data) {\n    Node *n = (Node *)malloc(sizeof(Node));\n    n->data = data;\n    n->next = NULL;\n    return n;\n}\n\nvoid insertFront(Node **head, int data) {\n    // Insert at front of list\n}\n\nvoid deleteNode(Node **head, int data) {\n    // Delete first node with given data\n}\n\nvoid printList(Node *head) {\n    while (head) {\n        printf(\"%d -> \", head->data);\n        head = head->next;\n    }\n    printf(\"NULL\\n\");\n}\n\nint main() {\n    Node *head = NULL;\n    \n    insertFront(&head, 3);\n    insertFront(&head, 2);\n    insertFront(&head, 1);\n    printf(\"Initial: \"); printList(head);\n    \n    deleteNode(&head, 2);\n    printf(\"After delete 2: \"); printList(head);\n    \n    return 0;\n}",
+    "solution": "#include <stdio.h>\n#include <stdlib.h>\n\ntypedef struct Node {\n    int data;\n    struct Node *next;\n} Node;\n\nNode *createNode(int data) {\n    Node *n = (Node *)malloc(sizeof(Node));\n    n->data = data;\n    n->next = NULL;\n    return n;\n}\n\nvoid insertFront(Node **head, int data) {\n    Node *n = createNode(data);\n    n->next = *head;\n    *head = n;\n}\n\nvoid deleteNode(Node **head, int data) {\n    if (*head == NULL) return;\n    \n    if ((*head)->data == data) {\n        Node *temp = *head;\n        *head = (*head)->next;\n        free(temp);\n        return;\n    }\n    \n    Node *curr = *head;\n    while (curr->next && curr->next->data != data) {\n        curr = curr->next;\n    }\n    if (curr->next) {\n        Node *temp = curr->next;\n        curr->next = temp->next;\n        free(temp);\n    }\n}\n\nvoid printList(Node *head) {\n    while (head) {\n        printf(\"%d -> \", head->data);\n        head = head->next;\n    }\n    printf(\"NULL\\n\");\n}\n\nint main() {\n    Node *head = NULL;\n    \n    insertFront(&head, 3);\n    insertFront(&head, 2);\n    insertFront(&head, 1);\n    printf(\"Initial: \"); printList(head);\n    \n    deleteNode(&head, 2);\n    printf(\"After delete 2: \"); printList(head);\n    \n    return 0;\n}",
+    "testCases": [],
+    "hints": [
+      "Use double pointer to modify head",
+      "Handle deleting head node specially"
+    ],
+    "language": "c"
+  },
+  {
+    "id": "cs105-t4-ex14",
+    "subjectId": "cs105",
+    "topicId": "cs105-topic-4",
+    "title": "Union vs Structure (Written)",
+    "difficulty": 2,
+    "description": "This is a written exercise. Explain the difference between union and struct, and predict the output.",
+    "starterCode": "/* WRITTEN EXERCISE - Predict the output and explain */\n\n#include <stdio.h>\n\nstruct MyStruct {\n    int i;\n    float f;\n    char c;\n};\n\nunion MyUnion {\n    int i;\n    float f;\n    char c;\n};\n\nint main() {\n    printf(\"sizeof(struct MyStruct) = %zu\\n\", sizeof(struct MyStruct));\n    printf(\"sizeof(union MyUnion) = %zu\\n\", sizeof(union MyUnion));\n    \n    union MyUnion u;\n    u.i = 65;\n    printf(\"u.i = %d\\n\", u.i);\n    printf(\"u.c = %c\\n\", u.c);\n    \n    return 0;\n}\n\n/* Questions:\n * 1. What is the size of the struct? Why?\n * 2. What is the size of the union? Why?\n * 3. What will u.c print? Why?\n * 4. When would you use a union instead of a struct?\n *\n * Write your answers below:\n */",
+    "solution": "/* ANSWERS:\n *\n * 1. sizeof(struct MyStruct) = 12 bytes (typically)\n *    - int: 4 bytes\n *    - float: 4 bytes  \n *    - char: 1 byte + 3 bytes padding\n *    Struct allocates memory for ALL members.\n *\n * 2. sizeof(union MyUnion) = 4 bytes\n *    Union only needs space for its LARGEST member.\n *    All members share the same memory location.\n *\n * 3. u.c will print 'A'\n *    Because u.i = 65, and 65 is ASCII for 'A'.\n *    Since union members share memory, reading u.c\n *    reads the first byte of u.i, which is 65 on\n *    little-endian systems.\n *\n * 4. Use union when:\n *    - Only one member is valid at a time\n *    - Memory efficiency matters\n *    - Type punning (reinterpreting bytes)\n *    - Implementing variant types (tagged unions)\n *    \n *    Example: A value that can be int OR float, but not both.\n */",
+    "testCases": [],
+    "hints": [
+      "Struct members are stored sequentially",
+      "Union members share same memory"
+    ],
+    "language": "c"
+  },
+  {
+    "id": "cs105-t4-ex15",
+    "subjectId": "cs105",
+    "topicId": "cs105-topic-4",
+    "title": "Bit Fields",
+    "difficulty": 3,
+    "description": "Use bit fields to pack multiple flags into a single byte.",
+    "starterCode": "#include <stdio.h>\n\ntypedef struct {\n    unsigned int isActive : 1;\n    unsigned int priority : 3;    // 0-7\n    unsigned int type : 4;        // 0-15\n} TaskFlags;\n\nint main() {\n    TaskFlags task;\n    \n    task.isActive = 1;\n    task.priority = 5;\n    task.type = 12;\n    \n    printf(\"Size of TaskFlags: %zu bytes\\n\", sizeof(TaskFlags));\n    printf(\"isActive: %u\\n\", task.isActive);\n    printf(\"priority: %u\\n\", task.priority);\n    printf(\"type: %u\\n\", task.type);\n    \n    // What happens if we exceed the bit width?\n    task.priority = 10;  // 10 in binary is 1010, but only 3 bits!\n    printf(\"priority after setting 10: %u\\n\", task.priority);\n    \n    return 0;\n}",
+    "solution": "#include <stdio.h>\n\ntypedef struct {\n    unsigned int isActive : 1;\n    unsigned int priority : 3;    // 0-7\n    unsigned int type : 4;        // 0-15\n} TaskFlags;\n\nint main() {\n    TaskFlags task;\n    \n    task.isActive = 1;\n    task.priority = 5;\n    task.type = 12;\n    \n    printf(\"Size of TaskFlags: %zu bytes\\n\", sizeof(TaskFlags));\n    printf(\"isActive: %u\\n\", task.isActive);\n    printf(\"priority: %u\\n\", task.priority);\n    printf(\"type: %u\\n\", task.type);\n    \n    // Value is truncated to fit bit width\n    task.priority = 10;  // 1010 -> 010 = 2\n    printf(\"priority after setting 10: %u\\n\", task.priority);\n    // Output: 2 (10 mod 8, since 3 bits can hold 0-7)\n    \n    return 0;\n}",
+    "testCases": [],
+    "hints": [
+      "Total is 8 bits = 1 byte, but alignment may increase size",
+      "Values are truncated to bit width"
+    ],
+    "language": "c"
+  },
+  {
+    "id": "cs105-t4-ex16",
+    "subjectId": "cs105",
+    "topicId": "cs105-topic-4",
+    "title": "Structure Padding Optimization (Written)",
+    "difficulty": 4,
+    "description": "This is a written exercise. Reorder structure members to minimize padding.",
+    "starterCode": "/* WRITTEN EXERCISE - Optimize these structures */\n\n#include <stdio.h>\n\n// Original structure - how much padding?\nstruct Original {\n    char a;      // 1 byte\n    double b;    // 8 bytes\n    char c;      // 1 byte\n    int d;       // 4 bytes\n    char e;      // 1 byte\n};\n\n// Your optimized version:\nstruct Optimized {\n    // Reorder members to minimize padding\n    // Your answer here\n};\n\nint main() {\n    printf(\"Original size: %zu\\n\", sizeof(struct Original));\n    // What is the optimized size?\n    return 0;\n}\n\n/* Questions:\n * 1. What is sizeof(struct Original)? Show padding bytes.\n * 2. What is the optimal member order?\n * 3. What is the minimum possible size?\n * 4. State the rule for ordering structure members.\n *\n * Write your answers below:\n */",
+    "solution": "/* ANSWERS:\n *\n * 1. sizeof(struct Original) = 32 bytes (typically)\n *    Layout with padding:\n *    char a;      // offset 0, 1 byte\n *    [7 bytes padding to align double]\n *    double b;    // offset 8, 8 bytes\n *    char c;      // offset 16, 1 byte\n *    [3 bytes padding to align int]\n *    int d;       // offset 20, 4 bytes\n *    char e;      // offset 24, 1 byte\n *    [7 bytes end padding for array alignment]\n *    Total: 32 bytes\n *\n * 2. Optimal member order (largest to smallest):\n *    struct Optimized {\n *        double b;    // 8 bytes\n *        int d;       // 4 bytes\n *        char a;      // 1 byte\n *        char c;      // 1 byte  \n *        char e;      // 1 byte\n *        // 3 bytes end padding\n *    };\n *\n * 3. Minimum size = 16 bytes\n *    (8 + 4 + 1 + 1 + 1 + 3 padding = 16)\n *\n * 4. Rule: Order members from largest alignment\n *    to smallest. This groups small types together\n *    and minimizes internal padding.\n */",
+    "testCases": [],
+    "hints": [
+      "Order largest to smallest alignment",
+      "Group chars together to share padding"
+    ],
+    "language": "c"
+  }
+]

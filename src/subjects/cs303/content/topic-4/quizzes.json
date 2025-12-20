@@ -1,0 +1,221 @@
+[
+  {
+    "id": "cs303-t4-quiz-1",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-4",
+    "title": "Semantics Basics",
+    "questions": [
+      {
+        "id": "cs303-t4-q1-1",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of formal semantics?",
+        "options": [
+          "To make code look formal",
+          "To give precise mathematical meaning to programs",
+          "To improve performance",
+          "To simplify syntax"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Formal semantics provides unambiguous, mathematical definitions of what programs mean and how they behave."
+      },
+      {
+        "id": "cs303-t4-q1-2",
+        "type": "multiple_choice",
+        "prompt": "What does operational semantics describe?",
+        "options": [
+          "Operations on data",
+          "How programs execute step by step",
+          "Operator precedence",
+          "Operating system behavior"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Operational semantics defines program meaning through execution rules that describe computation steps."
+      },
+      {
+        "id": "cs303-t4-q1-3",
+        "type": "multiple_choice",
+        "prompt": "What is the difference between big-step and small-step semantics?",
+        "options": [
+          "Size of programs",
+          "Big-step evaluates to final value; small-step shows individual steps",
+          "Memory usage",
+          "Compilation speed"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Big-step (natural) semantics relates expressions to final values; small-step (structural) shows each computation step."
+      },
+      {
+        "id": "cs303-t4-q1-4",
+        "type": "multiple_choice",
+        "prompt": "What does denotational semantics do?",
+        "options": [
+          "Denotes variable names",
+          "Maps programs to mathematical objects (denotations)",
+          "Describes program names",
+          "Defines notation"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Denotational semantics maps programs to mathematical objects that represent their meaning compositionally."
+      },
+      {
+        "id": "cs303-t4-q1-5",
+        "type": "multiple_choice",
+        "prompt": "What is a semantic domain?",
+        "options": [
+          "A website for semantics",
+          "The set of possible meanings for a language construct",
+          "A domain name",
+          "A type of variable"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A semantic domain is the mathematical set that provides the meanings (denotations) for language constructs."
+      }
+    ]
+  },
+  {
+    "id": "cs303-t4-quiz-2",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-4",
+    "title": "Axiomatic Semantics",
+    "questions": [
+      {
+        "id": "cs303-t4-q2-1",
+        "type": "multiple_choice",
+        "prompt": "What is Hoare logic used for?",
+        "options": [
+          "Logic puzzles",
+          "Reasoning about program correctness with pre/postconditions",
+          "Boolean logic",
+          "Hardware design"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Hoare logic uses {P}C{Q} triples to specify that if precondition P holds and C executes, postcondition Q holds."
+      },
+      {
+        "id": "cs303-t4-q2-2",
+        "type": "multiple_choice",
+        "prompt": "In a Hoare triple {P} C {Q}, what is P?",
+        "options": [
+          "Program",
+          "Precondition",
+          "Postcondition",
+          "Procedure"
+        ],
+        "correctAnswer": 1,
+        "explanation": "P is the precondition: the assertion that must be true before command C executes."
+      },
+      {
+        "id": "cs303-t4-q2-3",
+        "type": "multiple_choice",
+        "prompt": "What is a loop invariant?",
+        "options": [
+          "A loop that never changes",
+          "An assertion true before and after each loop iteration",
+          "A constant in a loop",
+          "An infinite loop"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A loop invariant is an assertion that holds before and after every iteration, used to reason about loops."
+      },
+      {
+        "id": "cs303-t4-q2-4",
+        "type": "multiple_choice",
+        "prompt": "What does partial correctness mean?",
+        "options": [
+          "Partially working code",
+          "If the program terminates, it satisfies the specification",
+          "Some tests pass",
+          "Incomplete implementation"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Partial correctness means if a program terminates, the postcondition holds. It doesn't guarantee termination."
+      },
+      {
+        "id": "cs303-t4-q2-5",
+        "type": "multiple_choice",
+        "prompt": "What additional property is needed for total correctness?",
+        "options": [
+          "Performance",
+          "Termination",
+          "Documentation",
+          "Testing"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Total correctness = partial correctness + termination (the program must terminate)."
+      }
+    ]
+  },
+  {
+    "id": "cs303-t4-quiz-3",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-4",
+    "title": "Program Verification",
+    "questions": [
+      {
+        "id": "cs303-t4-q3-1",
+        "type": "multiple_choice",
+        "prompt": "What is abstract interpretation?",
+        "options": [
+          "Art interpretation",
+          "Analyzing programs using approximations of their semantics",
+          "Interpreting bytecode",
+          "Abstract art programming"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Abstract interpretation analyzes programs by computing over abstract domains that approximate concrete values."
+      },
+      {
+        "id": "cs303-t4-q3-2",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of a weakest precondition?",
+        "options": [
+          "Finding bugs",
+          "Finding the minimal precondition that ensures a postcondition",
+          "Weak typing",
+          "Performance optimization"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The weakest precondition wp(C,Q) is the least restrictive precondition guaranteeing postcondition Q after C."
+      },
+      {
+        "id": "cs303-t4-q3-3",
+        "type": "multiple_choice",
+        "prompt": "What is a fixed point in denotational semantics?",
+        "options": [
+          "A constant value",
+          "A value x where f(x) = x, used to define recursion",
+          "A point in memory",
+          "The end of a program"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Fixed points define recursive functions: the meaning of recursion is the least fixed point of a function."
+      },
+      {
+        "id": "cs303-t4-q3-4",
+        "type": "multiple_choice",
+        "prompt": "What does soundness mean for a program analysis?",
+        "options": [
+          "It makes sound",
+          "If it reports no errors, the program is error-free",
+          "It runs quietly",
+          "It's well-documented"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A sound analysis never misses real errors (no false negatives), though it may report false positives."
+      },
+      {
+        "id": "cs303-t4-q3-5",
+        "type": "multiple_choice",
+        "prompt": "What does completeness mean for a program analysis?",
+        "options": [
+          "All code is analyzed",
+          "If the program is error-free, no errors are reported",
+          "The analysis finishes",
+          "Full test coverage"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A complete analysis reports errors only for actual errors (no false positives), but may miss some errors."
+      }
+    ]
+  }
+]

@@ -1,0 +1,189 @@
+[
+  {
+    "id": "cs102-quiz-4",
+    "subjectId": "cs102",
+    "topicId": "cs102-4",
+    "title": "Logic Gates Fundamentals",
+    "questions": [
+      {
+        "id": "cs102-q4-1",
+        "type": "multiple_choice",
+        "prompt": "Output of AND when inputs are 1, 1?",
+        "options": [
+          "0",
+          "1"
+        ],
+        "correctAnswer": 1,
+        "explanation": "1 AND 1 = 1."
+      },
+      {
+        "id": "cs102-q4-2",
+        "type": "multiple_choice",
+        "prompt": "Output of XOR when inputs are 1, 1?",
+        "options": [
+          "0",
+          "1"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Exclusive OR means one or the other, but not both."
+      },
+      {
+        "id": "cs102-q4-3",
+        "type": "multiple_choice",
+        "prompt": "Which gate outputs 0 only when both inputs are 1?",
+        "options": [
+          "OR",
+          "NAND",
+          "NOR",
+          "XOR"
+        ],
+        "correctAnswer": 1,
+        "explanation": "NAND is NOT AND. 1 AND 1 = 1, NOT 1 = 0."
+      },
+      {
+        "id": "cs102-q4-4",
+        "type": "true_false",
+        "prompt": "NOT(A) is 1 if A is 0.",
+        "correctAnswer": true,
+        "explanation": "Inverter logic."
+      },
+      {
+        "id": "cs102-q4-5",
+        "type": "multiple_choice",
+        "prompt": "De Morgan: NOT(A AND B) = ?",
+        "options": [
+          "NOT A AND NOT B",
+          "NOT A OR NOT B"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Break the line, change the sign."
+      }
+    ]
+  },
+  {
+    "id": "cs102-quiz-4-b",
+    "subjectId": "cs102",
+    "topicId": "cs102-4",
+    "title": "Logic Gates Application",
+    "questions": [
+      {
+        "id": "cs102-q4-b-1",
+        "type": "multiple_choice",
+        "prompt": "If A=1, B=0, C=1, what is (A AND B) OR C?",
+        "options": [
+          "0",
+          "1"
+        ],
+        "correctAnswer": 1,
+        "explanation": "(1 AND 0) = 0. 0 OR 1 = 1."
+      },
+      {
+        "id": "cs102-q4-b-2",
+        "type": "multiple_choice",
+        "prompt": "Which gate is \"Universal\"?",
+        "options": [
+          "AND",
+          "OR",
+          "NAND",
+          "XOR"
+        ],
+        "correctAnswer": 2,
+        "explanation": "NAND (and NOR) can build all other gates."
+      },
+      {
+        "id": "cs102-q4-b-3",
+        "type": "true_false",
+        "prompt": "A Half Adder produces a Sum and a Carry.",
+        "correctAnswer": true,
+        "explanation": "Sum = A XOR B, Carry = A AND B."
+      },
+      {
+        "id": "cs102-q4-b-4",
+        "type": "multiple_choice",
+        "prompt": "Simplest form of A OR (A AND B)?",
+        "options": [
+          "A",
+          "B",
+          "A AND B",
+          "1"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Absorption Law."
+      },
+      {
+        "id": "cs102-q4-b-5",
+        "type": "fill_blank",
+        "prompt": "How many rows are in a truth table for 3 variables?",
+        "correctAnswer": "8",
+        "explanation": "2^3 = 8."
+      }
+    ]
+  },
+  {
+    "id": "cs102-quiz-4-c",
+    "subjectId": "cs102",
+    "topicId": "cs102-4",
+    "title": "Logic Gates Advanced",
+    "questions": [
+      {
+        "id": "cs102-q4-c-1",
+        "type": "multiple_choice",
+        "prompt": "A Full Adder can be constructed from:",
+        "options": [
+          "2 Half Adders + OR",
+          "2 Half Adders + AND",
+          "3 Half Adders",
+          "2 OR gates"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Standard composition."
+      },
+      {
+        "id": "cs102-q4-c-2",
+        "type": "multiple_choice",
+        "prompt": "Which expression is equivalent to A XOR B?",
+        "options": [
+          "(A+B)(AB)",
+          "(A+B)(~A+~B)",
+          "A+B",
+          "AB"
+        ],
+        "correctAnswer": 1,
+        "explanation": "(A OR B) AND (NOT A OR NOT B) is equivalent to (A OR B) AND NOT(A AND B)."
+      },
+      {
+        "id": "cs102-q4-c-3",
+        "type": "true_false",
+        "prompt": "A 4:1 Multiplexer needs 2 selection bits.",
+        "correctAnswer": true,
+        "explanation": "2 bits can select 4 lines (00, 01, 10, 11)."
+      },
+      {
+        "id": "cs102-q4-c-4",
+        "type": "multiple_choice",
+        "prompt": "The dual of expression (A + 1) is:",
+        "options": [
+          "A . 1",
+          "A . 0",
+          "A + 0",
+          "0"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Swap OR(+) with AND(.), and 1 with 0."
+      },
+      {
+        "id": "cs102-q4-c-5",
+        "type": "multiple_choice",
+        "prompt": "K-Maps are used for:",
+        "options": [
+          "Calculating delay",
+          "Minimizing boolean expressions",
+          "Drawing circuits",
+          "Testing gates"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Karnaugh Maps help visualize simplification."
+      }
+    ]
+  }
+]

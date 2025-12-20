@@ -1,0 +1,306 @@
+[
+  {
+    "id": "cs402-t2-ex01",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-2",
+    "title": "Implement Simple Linear Regression",
+    "difficulty": 2,
+    "description": "Implement linear regression from scratch using normal equation.\n\nRequirements:\n- Calculate optimal weights: w = (X^T X)^-1 X^T y\n- Add bias term (column of ones)\n- Implement fit and predict methods\n- Return coefficients and intercept",
+    "starterCode": "import numpy as np\n\nclass LinearRegression:\n    def __init__(self):\n        self.weights = None\n        self.bias = None\n\n    def fit(self, X, y):\n        \"\"\"Fit linear regression using normal equation.\"\"\"\n        # TODO: Implement fit\n        pass\n\n    def predict(self, X):\n        \"\"\"Predict using linear model.\"\"\"\n        # TODO: Implement predict\n        pass",
+    "solution": "import numpy as np\n\nclass LinearRegression:\n    def __init__(self):\n        self.weights = None\n        self.bias = None\n\n    def fit(self, X, y):\n        \"\"\"Fit linear regression using normal equation.\"\"\"\n        X = np.array(X)\n        y = np.array(y)\n\n        # Add bias term\n        X_b = np.c_[np.ones((X.shape[0], 1)), X]\n\n        # Normal equation: w = (X^T X)^-1 X^T y\n        theta = np.linalg.inv(X_b.T @ X_b) @ X_b.T @ y\n\n        self.bias = theta[0]\n        self.weights = theta[1:]\n\n        return self\n\n    def predict(self, X):\n        \"\"\"Predict using linear model.\"\"\"\n        X = np.array(X)\n        return X @ self.weights + self.bias",
+    "testCases": [],
+    "hints": [
+      "Add column of ones to X for bias term",
+      "Use @ operator for matrix multiplication",
+      "np.linalg.inv() computes matrix inverse",
+      "First element of theta is bias, rest are weights",
+      "Normal equation: w = (X^T X)^-1 X^T y"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-t2-ex02",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-2",
+    "title": "Calculate Mean Squared Error",
+    "difficulty": 1,
+    "description": "Implement MSE cost function for regression.\n\nRequirements:\n- Calculate MSE: (1/n) * Σ(y_pred - y_true)^2\n- Handle both vectors and scalars\n- Return single float value",
+    "starterCode": "import numpy as np\n\ndef mean_squared_error(y_true, y_pred):\n    \"\"\"\n    Calculate mean squared error.\n\n    Args:\n        y_true: True values\n        y_pred: Predicted values\n\n    Returns:\n        MSE as float\n    \"\"\"\n    # TODO: Implement MSE\n    pass",
+    "solution": "import numpy as np\n\ndef mean_squared_error(y_true, y_pred):\n    \"\"\"\n    Calculate mean squared error.\n\n    Args:\n        y_true: True values\n        y_pred: Predicted values\n\n    Returns:\n        MSE as float\n    \"\"\"\n    y_true = np.array(y_true)\n    y_pred = np.array(y_pred)\n\n    mse = np.mean((y_pred - y_true) ** 2)\n    return mse",
+    "testCases": [],
+    "hints": [
+      "MSE = average of squared errors",
+      "Use np.mean() for averaging",
+      "Square the differences: (y_pred - y_true) ** 2",
+      "MSE is always non-negative",
+      "Perfect predictions give MSE = 0"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-t2-ex03",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-2",
+    "title": "Implement Gradient Descent for Linear Regression",
+    "difficulty": 3,
+    "description": "Implement batch gradient descent to optimize linear regression.\n\nRequirements:\n- Initialize weights randomly\n- Calculate gradient: dw = (2/n) * X^T * (X*w - y)\n- Update weights: w = w - learning_rate * gradient\n- Track cost history\n- Implement early stopping",
+    "starterCode": "import numpy as np\n\nclass GradientDescentRegression:\n    def __init__(self, learning_rate=0.01, n_iterations=1000):\n        self.learning_rate = learning_rate\n        self.n_iterations = n_iterations\n        self.weights = None\n        self.bias = None\n        self.cost_history = []\n\n    def fit(self, X, y):\n        \"\"\"Fit using gradient descent.\"\"\"\n        # TODO: Implement gradient descent\n        pass\n\n    def predict(self, X):\n        \"\"\"Predict using linear model.\"\"\"\n        # TODO: Implement predict\n        pass",
+    "solution": "import numpy as np\n\nclass GradientDescentRegression:\n    def __init__(self, learning_rate=0.01, n_iterations=1000):\n        self.learning_rate = learning_rate\n        self.n_iterations = n_iterations\n        self.weights = None\n        self.bias = None\n        self.cost_history = []\n\n    def fit(self, X, y):\n        \"\"\"Fit using gradient descent.\"\"\"\n        X = np.array(X)\n        y = np.array(y)\n        n_samples, n_features = X.shape\n\n        # Initialize parameters\n        self.weights = np.zeros(n_features)\n        self.bias = 0\n\n        # Gradient descent\n        for _ in range(self.n_iterations):\n            # Forward pass\n            y_pred = X @ self.weights + self.bias\n\n            # Calculate cost (MSE)\n            cost = np.mean((y_pred - y) ** 2)\n            self.cost_history.append(cost)\n\n            # Calculate gradients\n            dw = (2 / n_samples) * X.T @ (y_pred - y)\n            db = (2 / n_samples) * np.sum(y_pred - y)\n\n            # Update parameters\n            self.weights -= self.learning_rate * dw\n            self.bias -= self.learning_rate * db\n\n        return self\n\n    def predict(self, X):\n        \"\"\"Predict using linear model.\"\"\"\n        X = np.array(X)\n        return X @ self.weights + self.bias",
+    "testCases": [],
+    "hints": [
+      "Initialize weights to zeros or small random values",
+      "Gradient for weights: dw = (2/n) * X^T * (y_pred - y)",
+      "Gradient for bias: db = (2/n) * sum(y_pred - y)",
+      "Update: w = w - learning_rate * dw",
+      "Cost should decrease over iterations"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-t2-ex04",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-2",
+    "title": "Implement Stochastic Gradient Descent",
+    "difficulty": 3,
+    "description": "Implement SGD where gradient is computed on single random sample each iteration.\n\nRequirements:\n- Randomly shuffle data each epoch\n- Update weights after each sample\n- Implement multiple epochs\n- Track cost after each epoch",
+    "starterCode": "import numpy as np\n\nclass SGDRegression:\n    def __init__(self, learning_rate=0.01, n_epochs=100):\n        self.learning_rate = learning_rate\n        self.n_epochs = n_epochs\n        self.weights = None\n        self.bias = None\n        self.cost_history = []\n\n    def fit(self, X, y):\n        \"\"\"Fit using stochastic gradient descent.\"\"\"\n        # TODO: Implement SGD\n        pass\n\n    def predict(self, X):\n        \"\"\"Predict using linear model.\"\"\"\n        # TODO: Implement predict\n        pass",
+    "solution": "import numpy as np\n\nclass SGDRegression:\n    def __init__(self, learning_rate=0.01, n_epochs=100):\n        self.learning_rate = learning_rate\n        self.n_epochs = n_epochs\n        self.weights = None\n        self.bias = None\n        self.cost_history = []\n\n    def fit(self, X, y):\n        \"\"\"Fit using stochastic gradient descent.\"\"\"\n        X = np.array(X)\n        y = np.array(y)\n        n_samples, n_features = X.shape\n\n        # Initialize parameters\n        self.weights = np.zeros(n_features)\n        self.bias = 0\n\n        # SGD epochs\n        for epoch in range(self.n_epochs):\n            # Shuffle data\n            indices = np.random.permutation(n_samples)\n\n            # Update on each sample\n            for idx in indices:\n                xi = X[idx]\n                yi = y[idx]\n\n                # Forward pass\n                y_pred = xi @ self.weights + self.bias\n\n                # Calculate gradients for single sample\n                error = y_pred - yi\n                dw = 2 * xi * error\n                db = 2 * error\n\n                # Update parameters\n                self.weights -= self.learning_rate * dw\n                self.bias -= self.learning_rate * db\n\n            # Calculate cost after epoch\n            y_pred_all = X @ self.weights + self.bias\n            cost = np.mean((y_pred_all - y) ** 2)\n            self.cost_history.append(cost)\n\n        return self\n\n    def predict(self, X):\n        \"\"\"Predict using linear model.\"\"\"\n        X = np.array(X)\n        return X @ self.weights + self.bias",
+    "testCases": [],
+    "hints": [
+      "Shuffle data at the start of each epoch",
+      "Update weights after each single sample",
+      "Gradient for one sample: dw = 2 * x * error",
+      "SGD is noisier but faster than batch GD",
+      "Calculate full cost after each epoch for monitoring"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-t2-ex05",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-2",
+    "title": "Implement Mini-Batch Gradient Descent",
+    "difficulty": 3,
+    "description": "Implement mini-batch GD where gradient is computed on small batches.\n\nRequirements:\n- Split data into mini-batches\n- Update weights after each batch\n- Shuffle data each epoch\n- Support variable batch sizes",
+    "starterCode": "import numpy as np\n\nclass MiniBatchGD:\n    def __init__(self, learning_rate=0.01, n_epochs=100, batch_size=32):\n        self.learning_rate = learning_rate\n        self.n_epochs = n_epochs\n        self.batch_size = batch_size\n        self.weights = None\n        self.bias = None\n        self.cost_history = []\n\n    def fit(self, X, y):\n        \"\"\"Fit using mini-batch gradient descent.\"\"\"\n        # TODO: Implement mini-batch GD\n        pass\n\n    def predict(self, X):\n        \"\"\"Predict using linear model.\"\"\"\n        # TODO: Implement predict\n        pass",
+    "solution": "import numpy as np\n\nclass MiniBatchGD:\n    def __init__(self, learning_rate=0.01, n_epochs=100, batch_size=32):\n        self.learning_rate = learning_rate\n        self.n_epochs = n_epochs\n        self.batch_size = batch_size\n        self.weights = None\n        self.bias = None\n        self.cost_history = []\n\n    def fit(self, X, y):\n        \"\"\"Fit using mini-batch gradient descent.\"\"\"\n        X = np.array(X)\n        y = np.array(y)\n        n_samples, n_features = X.shape\n\n        # Initialize parameters\n        self.weights = np.zeros(n_features)\n        self.bias = 0\n\n        # Mini-batch GD epochs\n        for epoch in range(self.n_epochs):\n            # Shuffle data\n            indices = np.random.permutation(n_samples)\n            X_shuffled = X[indices]\n            y_shuffled = y[indices]\n\n            # Process mini-batches\n            for i in range(0, n_samples, self.batch_size):\n                batch_end = min(i + self.batch_size, n_samples)\n                X_batch = X_shuffled[i:batch_end]\n                y_batch = y_shuffled[i:batch_end]\n                batch_size_actual = len(X_batch)\n\n                # Forward pass\n                y_pred = X_batch @ self.weights + self.bias\n\n                # Calculate gradients for batch\n                dw = (2 / batch_size_actual) * X_batch.T @ (y_pred - y_batch)\n                db = (2 / batch_size_actual) * np.sum(y_pred - y_batch)\n\n                # Update parameters\n                self.weights -= self.learning_rate * dw\n                self.bias -= self.learning_rate * db\n\n            # Calculate cost after epoch\n            y_pred_all = X @ self.weights + self.bias\n            cost = np.mean((y_pred_all - y) ** 2)\n            self.cost_history.append(cost)\n\n        return self\n\n    def predict(self, X):\n        \"\"\"Predict using linear model.\"\"\"\n        X = np.array(X)\n        return X @ self.weights + self.bias",
+    "testCases": [],
+    "hints": [
+      "Mini-batch is between SGD (batch=1) and batch GD (batch=n)",
+      "Shuffle data at start of each epoch",
+      "Process data in chunks of batch_size",
+      "Handle last batch which may be smaller",
+      "Typical batch sizes: 32, 64, 128, 256"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-t2-ex06",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-2",
+    "title": "Implement L2 Regularization (Ridge)",
+    "difficulty": 3,
+    "description": "Add L2 regularization to linear regression to prevent overfitting.\n\nRequirements:\n- Add penalty term: λ * ||w||^2\n- Modified cost: MSE + λ * sum(w^2)\n- Modified gradient: gradient + 2λw\n- Implement with gradient descent",
+    "starterCode": "import numpy as np\n\nclass RidgeRegression:\n    def __init__(self, learning_rate=0.01, n_iterations=1000, alpha=1.0):\n        self.learning_rate = learning_rate\n        self.n_iterations = n_iterations\n        self.alpha = alpha  # Regularization strength\n        self.weights = None\n        self.bias = None\n        self.cost_history = []\n\n    def fit(self, X, y):\n        \"\"\"Fit Ridge regression with L2 regularization.\"\"\"\n        # TODO: Implement Ridge regression\n        pass\n\n    def predict(self, X):\n        \"\"\"Predict using linear model.\"\"\"\n        # TODO: Implement predict\n        pass",
+    "solution": "import numpy as np\n\nclass RidgeRegression:\n    def __init__(self, learning_rate=0.01, n_iterations=1000, alpha=1.0):\n        self.learning_rate = learning_rate\n        self.n_iterations = n_iterations\n        self.alpha = alpha  # Regularization strength\n        self.weights = None\n        self.bias = None\n        self.cost_history = []\n\n    def fit(self, X, y):\n        \"\"\"Fit Ridge regression with L2 regularization.\"\"\"\n        X = np.array(X)\n        y = np.array(y)\n        n_samples, n_features = X.shape\n\n        # Initialize parameters\n        self.weights = np.zeros(n_features)\n        self.bias = 0\n\n        # Gradient descent with L2 regularization\n        for _ in range(self.n_iterations):\n            # Forward pass\n            y_pred = X @ self.weights + self.bias\n\n            # Calculate cost with L2 penalty\n            mse = np.mean((y_pred - y) ** 2)\n            l2_penalty = self.alpha * np.sum(self.weights ** 2)\n            cost = mse + l2_penalty\n            self.cost_history.append(cost)\n\n            # Calculate gradients with L2 regularization\n            dw = (2 / n_samples) * X.T @ (y_pred - y) + 2 * self.alpha * self.weights\n            db = (2 / n_samples) * np.sum(y_pred - y)\n\n            # Update parameters\n            self.weights -= self.learning_rate * dw\n            self.bias -= self.learning_rate * db\n\n        return self\n\n    def predict(self, X):\n        \"\"\"Predict using linear model.\"\"\"\n        X = np.array(X)\n        return X @ self.weights + self.bias",
+    "testCases": [],
+    "hints": [
+      "L2 penalty: alpha * sum(w^2)",
+      "Modified gradient: original_gradient + 2*alpha*w",
+      "Bias is not regularized",
+      "Larger alpha = more regularization = simpler model",
+      "Ridge shrinks weights toward zero"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-t2-ex07",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-2",
+    "title": "Implement L1 Regularization (Lasso)",
+    "difficulty": 3,
+    "description": "Add L1 regularization to linear regression for feature selection.\n\nRequirements:\n- Add penalty term: λ * ||w||_1\n- Modified cost: MSE + λ * sum(|w|)\n- Modified gradient uses sign of weights\n- Can drive weights exactly to zero",
+    "starterCode": "import numpy as np\n\nclass LassoRegression:\n    def __init__(self, learning_rate=0.01, n_iterations=1000, alpha=1.0):\n        self.learning_rate = learning_rate\n        self.n_iterations = n_iterations\n        self.alpha = alpha\n        self.weights = None\n        self.bias = None\n        self.cost_history = []\n\n    def fit(self, X, y):\n        \"\"\"Fit Lasso regression with L1 regularization.\"\"\"\n        # TODO: Implement Lasso regression\n        pass\n\n    def predict(self, X):\n        \"\"\"Predict using linear model.\"\"\"\n        # TODO: Implement predict\n        pass",
+    "solution": "import numpy as np\n\nclass LassoRegression:\n    def __init__(self, learning_rate=0.01, n_iterations=1000, alpha=1.0):\n        self.learning_rate = learning_rate\n        self.n_iterations = n_iterations\n        self.alpha = alpha\n        self.weights = None\n        self.bias = None\n        self.cost_history = []\n\n    def fit(self, X, y):\n        \"\"\"Fit Lasso regression with L1 regularization.\"\"\"\n        X = np.array(X)\n        y = np.array(y)\n        n_samples, n_features = X.shape\n\n        # Initialize parameters\n        self.weights = np.zeros(n_features)\n        self.bias = 0\n\n        # Gradient descent with L1 regularization\n        for _ in range(self.n_iterations):\n            # Forward pass\n            y_pred = X @ self.weights + self.bias\n\n            # Calculate cost with L1 penalty\n            mse = np.mean((y_pred - y) ** 2)\n            l1_penalty = self.alpha * np.sum(np.abs(self.weights))\n            cost = mse + l1_penalty\n            self.cost_history.append(cost)\n\n            # Calculate gradients with L1 regularization\n            # L1 gradient is sign of weight\n            dw = (2 / n_samples) * X.T @ (y_pred - y) + self.alpha * np.sign(self.weights)\n            db = (2 / n_samples) * np.sum(y_pred - y)\n\n            # Update parameters\n            self.weights -= self.learning_rate * dw\n            self.bias -= self.learning_rate * db\n\n        return self\n\n    def predict(self, X):\n        \"\"\"Predict using linear model.\"\"\"\n        X = np.array(X)\n        return X @ self.weights + self.bias",
+    "testCases": [],
+    "hints": [
+      "L1 penalty: alpha * sum(|w|)",
+      "L1 gradient: alpha * sign(w)",
+      "np.sign() returns -1, 0, or 1",
+      "L1 can drive weights exactly to zero",
+      "Lasso performs automatic feature selection"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-t2-ex08",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-2",
+    "title": "Implement Sigmoid Function",
+    "difficulty": 1,
+    "description": "Implement sigmoid activation function for logistic regression.\n\nRequirements:\n- Sigmoid: σ(z) = 1 / (1 + e^(-z))\n- Handle numerical stability (large positive/negative values)\n- Return values in range (0, 1)",
+    "starterCode": "import numpy as np\n\ndef sigmoid(z):\n    \"\"\"\n    Compute sigmoid function.\n\n    Args:\n        z: Input (can be scalar, vector, or matrix)\n\n    Returns:\n        Sigmoid output in range (0, 1)\n    \"\"\"\n    # TODO: Implement sigmoid\n    pass",
+    "solution": "import numpy as np\n\ndef sigmoid(z):\n    \"\"\"\n    Compute sigmoid function.\n\n    Args:\n        z: Input (can be scalar, vector, or matrix)\n\n    Returns:\n        Sigmoid output in range (0, 1)\n    \"\"\"\n    # Clip z for numerical stability\n    z = np.clip(z, -500, 500)\n    return 1 / (1 + np.exp(-z))",
+    "testCases": [],
+    "hints": [
+      "Sigmoid formula: 1 / (1 + exp(-z))",
+      "Clip z to prevent overflow in exp()",
+      "Sigmoid(0) = 0.5",
+      "Sigmoid approaches 1 as z → ∞",
+      "Sigmoid approaches 0 as z → -∞"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-t2-ex09",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-2",
+    "title": "Implement Binary Cross-Entropy Loss",
+    "difficulty": 2,
+    "description": "Implement binary cross-entropy loss for logistic regression.\n\nRequirements:\n- Loss: -[y*log(p) + (1-y)*log(1-p)]\n- Handle numerical stability\n- Return average loss over samples",
+    "starterCode": "import numpy as np\n\ndef binary_cross_entropy(y_true, y_pred):\n    \"\"\"\n    Calculate binary cross-entropy loss.\n\n    Args:\n        y_true: True labels (0 or 1)\n        y_pred: Predicted probabilities\n\n    Returns:\n        Average BCE loss\n    \"\"\"\n    # TODO: Implement BCE loss\n    pass",
+    "solution": "import numpy as np\n\ndef binary_cross_entropy(y_true, y_pred):\n    \"\"\"\n    Calculate binary cross-entropy loss.\n\n    Args:\n        y_true: True labels (0 or 1)\n        y_pred: Predicted probabilities\n\n    Returns:\n        Average BCE loss\n    \"\"\"\n    # Clip predictions for numerical stability\n    epsilon = 1e-15\n    y_pred = np.clip(y_pred, epsilon, 1 - epsilon)\n\n    # Binary cross-entropy formula\n    loss = -np.mean(y_true * np.log(y_pred) + (1 - y_true) * np.log(1 - y_pred))\n\n    return loss",
+    "testCases": [],
+    "hints": [
+      "Clip predictions to avoid log(0)",
+      "Formula: -[y*log(p) + (1-y)*log(1-p)]",
+      "Take mean over all samples",
+      "Loss is minimized when y_pred = y_true",
+      "Small epsilon (e.g., 1e-15) prevents log(0)"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-t2-ex10",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-2",
+    "title": "Implement Logistic Regression",
+    "difficulty": 3,
+    "description": "Implement binary logistic regression from scratch.\n\nRequirements:\n- Use sigmoid activation\n- Binary cross-entropy loss\n- Gradient descent optimization\n- Predict probabilities and classes",
+    "starterCode": "import numpy as np\n\nclass LogisticRegression:\n    def __init__(self, learning_rate=0.01, n_iterations=1000):\n        self.learning_rate = learning_rate\n        self.n_iterations = n_iterations\n        self.weights = None\n        self.bias = None\n        self.cost_history = []\n\n    def sigmoid(self, z):\n        \"\"\"Sigmoid activation function.\"\"\"\n        # TODO: Implement sigmoid\n        pass\n\n    def fit(self, X, y):\n        \"\"\"Fit logistic regression using gradient descent.\"\"\"\n        # TODO: Implement fit\n        pass\n\n    def predict_proba(self, X):\n        \"\"\"Predict class probabilities.\"\"\"\n        # TODO: Implement predict_proba\n        pass\n\n    def predict(self, X, threshold=0.5):\n        \"\"\"Predict class labels.\"\"\"\n        # TODO: Implement predict\n        pass",
+    "solution": "import numpy as np\n\nclass LogisticRegression:\n    def __init__(self, learning_rate=0.01, n_iterations=1000):\n        self.learning_rate = learning_rate\n        self.n_iterations = n_iterations\n        self.weights = None\n        self.bias = None\n        self.cost_history = []\n\n    def sigmoid(self, z):\n        \"\"\"Sigmoid activation function.\"\"\"\n        z = np.clip(z, -500, 500)\n        return 1 / (1 + np.exp(-z))\n\n    def fit(self, X, y):\n        \"\"\"Fit logistic regression using gradient descent.\"\"\"\n        X = np.array(X)\n        y = np.array(y)\n        n_samples, n_features = X.shape\n\n        # Initialize parameters\n        self.weights = np.zeros(n_features)\n        self.bias = 0\n\n        # Gradient descent\n        for _ in range(self.n_iterations):\n            # Forward pass\n            z = X @ self.weights + self.bias\n            y_pred = self.sigmoid(z)\n\n            # Calculate cost (binary cross-entropy)\n            epsilon = 1e-15\n            y_pred_clipped = np.clip(y_pred, epsilon, 1 - epsilon)\n            cost = -np.mean(y * np.log(y_pred_clipped) + (1 - y) * np.log(1 - y_pred_clipped))\n            self.cost_history.append(cost)\n\n            # Calculate gradients\n            dw = (1 / n_samples) * X.T @ (y_pred - y)\n            db = (1 / n_samples) * np.sum(y_pred - y)\n\n            # Update parameters\n            self.weights -= self.learning_rate * dw\n            self.bias -= self.learning_rate * db\n\n        return self\n\n    def predict_proba(self, X):\n        \"\"\"Predict class probabilities.\"\"\"\n        X = np.array(X)\n        z = X @ self.weights + self.bias\n        return self.sigmoid(z)\n\n    def predict(self, X, threshold=0.5):\n        \"\"\"Predict class labels.\"\"\"\n        probas = self.predict_proba(X)\n        return (probas >= threshold).astype(int)",
+    "testCases": [],
+    "hints": [
+      "Use sigmoid to convert linear output to probabilities",
+      "Binary cross-entropy is the appropriate loss function",
+      "Gradient: dw = (1/n) * X^T * (y_pred - y)",
+      "Predict class 1 if probability >= threshold",
+      "Clip probabilities for numerical stability in loss calculation"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-t2-ex11",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-2",
+    "title": "Implement Logistic Regression with L2 Regularization",
+    "difficulty": 3,
+    "description": "Add L2 regularization to logistic regression.\n\nRequirements:\n- Add L2 penalty to cost function\n- Modify gradient with regularization term\n- Prevent overfitting on training data",
+    "starterCode": "import numpy as np\n\nclass RegularizedLogisticRegression:\n    def __init__(self, learning_rate=0.01, n_iterations=1000, alpha=1.0):\n        self.learning_rate = learning_rate\n        self.n_iterations = n_iterations\n        self.alpha = alpha\n        self.weights = None\n        self.bias = None\n        self.cost_history = []\n\n    def sigmoid(self, z):\n        \"\"\"Sigmoid activation function.\"\"\"\n        z = np.clip(z, -500, 500)\n        return 1 / (1 + np.exp(-z))\n\n    def fit(self, X, y):\n        \"\"\"Fit regularized logistic regression.\"\"\"\n        # TODO: Implement fit with L2 regularization\n        pass\n\n    def predict_proba(self, X):\n        \"\"\"Predict class probabilities.\"\"\"\n        # TODO: Implement predict_proba\n        pass\n\n    def predict(self, X, threshold=0.5):\n        \"\"\"Predict class labels.\"\"\"\n        # TODO: Implement predict\n        pass",
+    "solution": "import numpy as np\n\nclass RegularizedLogisticRegression:\n    def __init__(self, learning_rate=0.01, n_iterations=1000, alpha=1.0):\n        self.learning_rate = learning_rate\n        self.n_iterations = n_iterations\n        self.alpha = alpha\n        self.weights = None\n        self.bias = None\n        self.cost_history = []\n\n    def sigmoid(self, z):\n        \"\"\"Sigmoid activation function.\"\"\"\n        z = np.clip(z, -500, 500)\n        return 1 / (1 + np.exp(-z))\n\n    def fit(self, X, y):\n        \"\"\"Fit regularized logistic regression.\"\"\"\n        X = np.array(X)\n        y = np.array(y)\n        n_samples, n_features = X.shape\n\n        # Initialize parameters\n        self.weights = np.zeros(n_features)\n        self.bias = 0\n\n        # Gradient descent with L2 regularization\n        for _ in range(self.n_iterations):\n            # Forward pass\n            z = X @ self.weights + self.bias\n            y_pred = self.sigmoid(z)\n\n            # Calculate cost with L2 penalty\n            epsilon = 1e-15\n            y_pred_clipped = np.clip(y_pred, epsilon, 1 - epsilon)\n            bce = -np.mean(y * np.log(y_pred_clipped) + (1 - y) * np.log(1 - y_pred_clipped))\n            l2_penalty = (self.alpha / (2 * n_samples)) * np.sum(self.weights ** 2)\n            cost = bce + l2_penalty\n            self.cost_history.append(cost)\n\n            # Calculate gradients with L2 regularization\n            dw = (1 / n_samples) * X.T @ (y_pred - y) + (self.alpha / n_samples) * self.weights\n            db = (1 / n_samples) * np.sum(y_pred - y)\n\n            # Update parameters\n            self.weights -= self.learning_rate * dw\n            self.bias -= self.learning_rate * db\n\n        return self\n\n    def predict_proba(self, X):\n        \"\"\"Predict class probabilities.\"\"\"\n        X = np.array(X)\n        z = X @ self.weights + self.bias\n        return self.sigmoid(z)\n\n    def predict(self, X, threshold=0.5):\n        \"\"\"Predict class labels.\"\"\"\n        probas = self.predict_proba(X)\n        return (probas >= threshold).astype(int)",
+    "testCases": [],
+    "hints": [
+      "L2 penalty: (alpha/(2*n)) * sum(w^2)",
+      "Modified gradient: gradient + (alpha/n) * w",
+      "Bias is typically not regularized",
+      "Regularization prevents large weight values",
+      "Higher alpha = stronger regularization"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-t2-ex12",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-2",
+    "title": "Implement One-vs-Rest Multiclass Classification",
+    "difficulty": 4,
+    "description": "Extend binary logistic regression to multiclass using One-vs-Rest.\n\nRequirements:\n- Train one binary classifier per class\n- Predict using all classifiers\n- Return class with highest probability\n- Handle k classes",
+    "starterCode": "import numpy as np\n\nclass OneVsRestClassifier:\n    def __init__(self, learning_rate=0.01, n_iterations=1000):\n        self.learning_rate = learning_rate\n        self.n_iterations = n_iterations\n        self.classifiers = []\n        self.classes = None\n\n    def fit(self, X, y):\n        \"\"\"Train one binary classifier per class.\"\"\"\n        # TODO: Implement One-vs-Rest training\n        pass\n\n    def predict_proba(self, X):\n        \"\"\"Predict probabilities for each class.\"\"\"\n        # TODO: Implement predict_proba\n        pass\n\n    def predict(self, X):\n        \"\"\"Predict class labels.\"\"\"\n        # TODO: Implement predict\n        pass",
+    "solution": "import numpy as np\n\nclass BinaryLogisticRegression:\n    def __init__(self, learning_rate=0.01, n_iterations=1000):\n        self.learning_rate = learning_rate\n        self.n_iterations = n_iterations\n        self.weights = None\n        self.bias = None\n\n    def sigmoid(self, z):\n        z = np.clip(z, -500, 500)\n        return 1 / (1 + np.exp(-z))\n\n    def fit(self, X, y):\n        X = np.array(X)\n        y = np.array(y)\n        n_samples, n_features = X.shape\n        self.weights = np.zeros(n_features)\n        self.bias = 0\n\n        for _ in range(self.n_iterations):\n            z = X @ self.weights + self.bias\n            y_pred = self.sigmoid(z)\n            dw = (1 / n_samples) * X.T @ (y_pred - y)\n            db = (1 / n_samples) * np.sum(y_pred - y)\n            self.weights -= self.learning_rate * dw\n            self.bias -= self.learning_rate * db\n        return self\n\n    def predict_proba(self, X):\n        X = np.array(X)\n        z = X @ self.weights + self.bias\n        return self.sigmoid(z)\n\nclass OneVsRestClassifier:\n    def __init__(self, learning_rate=0.01, n_iterations=1000):\n        self.learning_rate = learning_rate\n        self.n_iterations = n_iterations\n        self.classifiers = []\n        self.classes = None\n\n    def fit(self, X, y):\n        \"\"\"Train one binary classifier per class.\"\"\"\n        X = np.array(X)\n        y = np.array(y)\n        self.classes = np.unique(y)\n\n        # Train one classifier per class\n        for cls in self.classes:\n            # Create binary labels: 1 if class matches, 0 otherwise\n            y_binary = (y == cls).astype(int)\n\n            # Train binary classifier\n            clf = BinaryLogisticRegression(self.learning_rate, self.n_iterations)\n            clf.fit(X, y_binary)\n            self.classifiers.append(clf)\n\n        return self\n\n    def predict_proba(self, X):\n        \"\"\"Predict probabilities for each class.\"\"\"\n        # Get predictions from all classifiers\n        probas = np.array([clf.predict_proba(X) for clf in self.classifiers]).T\n        # Normalize so probabilities sum to 1\n        probas = probas / np.sum(probas, axis=1, keepdims=True)\n        return probas\n\n    def predict(self, X):\n        \"\"\"Predict class labels.\"\"\"\n        probas = self.predict_proba(X)\n        return self.classes[np.argmax(probas, axis=1)]",
+    "testCases": [],
+    "hints": [
+      "Train k binary classifiers for k classes",
+      "Each classifier: current class vs all others",
+      "Create binary labels: 1 for target class, 0 for others",
+      "Predict: class with highest probability",
+      "Normalize probabilities to sum to 1"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-t2-ex13",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-2",
+    "title": "Implement Softmax Function",
+    "difficulty": 2,
+    "description": "Implement softmax activation for multiclass classification.\n\nRequirements:\n- Convert logits to probabilities\n- Ensure numerical stability\n- Probabilities sum to 1\n- Handle batches of inputs",
+    "starterCode": "import numpy as np\n\ndef softmax(z):\n    \"\"\"\n    Compute softmax activation.\n\n    Args:\n        z: Logits (n_samples, n_classes) or (n_classes,)\n\n    Returns:\n        Probabilities that sum to 1\n    \"\"\"\n    # TODO: Implement softmax\n    pass",
+    "solution": "import numpy as np\n\ndef softmax(z):\n    \"\"\"\n    Compute softmax activation.\n\n    Args:\n        z: Logits (n_samples, n_classes) or (n_classes,)\n\n    Returns:\n        Probabilities that sum to 1\n    \"\"\"\n    z = np.array(z)\n\n    # Subtract max for numerical stability\n    if z.ndim == 1:\n        z_shifted = z - np.max(z)\n        exp_z = np.exp(z_shifted)\n        return exp_z / np.sum(exp_z)\n    else:\n        z_shifted = z - np.max(z, axis=1, keepdims=True)\n        exp_z = np.exp(z_shifted)\n        return exp_z / np.sum(exp_z, axis=1, keepdims=True)",
+    "testCases": [],
+    "hints": [
+      "Softmax: exp(z_i) / sum(exp(z_j))",
+      "Subtract max(z) before exp for numerical stability",
+      "Output probabilities sum to 1",
+      "Handle both single samples and batches",
+      "Use keepdims=True for correct broadcasting"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-t2-ex14",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-2",
+    "title": "Implement Learning Rate Decay",
+    "difficulty": 2,
+    "description": "Implement learning rate schedules for better convergence.\n\nRequirements:\n- Step decay: reduce by factor every n epochs\n- Exponential decay: multiply by decay rate\n- Time-based decay: decrease over iterations\n- Return updated learning rate",
+    "starterCode": "import numpy as np\n\nclass LearningRateScheduler:\n    def __init__(self, initial_lr=0.1):\n        self.initial_lr = initial_lr\n        self.current_lr = initial_lr\n\n    def step_decay(self, epoch, drop_rate=0.5, epochs_drop=10):\n        \"\"\"Step decay: reduce LR every epochs_drop.\"\"\"\n        # TODO: Implement step decay\n        pass\n\n    def exponential_decay(self, epoch, decay_rate=0.95):\n        \"\"\"Exponential decay: lr = lr0 * decay_rate^epoch.\"\"\"\n        # TODO: Implement exponential decay\n        pass\n\n    def time_decay(self, epoch, decay_rate=0.01):\n        \"\"\"Time-based decay: lr = lr0 / (1 + decay_rate * epoch).\"\"\"\n        # TODO: Implement time decay\n        pass",
+    "solution": "import numpy as np\n\nclass LearningRateScheduler:\n    def __init__(self, initial_lr=0.1):\n        self.initial_lr = initial_lr\n        self.current_lr = initial_lr\n\n    def step_decay(self, epoch, drop_rate=0.5, epochs_drop=10):\n        \"\"\"Step decay: reduce LR every epochs_drop.\"\"\"\n        self.current_lr = self.initial_lr * (drop_rate ** (epoch // epochs_drop))\n        return self.current_lr\n\n    def exponential_decay(self, epoch, decay_rate=0.95):\n        \"\"\"Exponential decay: lr = lr0 * decay_rate^epoch.\"\"\"\n        self.current_lr = self.initial_lr * (decay_rate ** epoch)\n        return self.current_lr\n\n    def time_decay(self, epoch, decay_rate=0.01):\n        \"\"\"Time-based decay: lr = lr0 / (1 + decay_rate * epoch).\"\"\"\n        self.current_lr = self.initial_lr / (1 + decay_rate * epoch)\n        return self.current_lr",
+    "testCases": [],
+    "hints": [
+      "Step decay: lr *= drop_rate every epochs_drop",
+      "Exponential: lr = lr0 * decay_rate^epoch",
+      "Time-based: lr = lr0 / (1 + decay * epoch)",
+      "Learning rate should decrease over time",
+      "Helps with fine-tuning in later epochs"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-t2-ex15",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-2",
+    "title": "Implement Early Stopping",
+    "difficulty": 3,
+    "description": "Implement early stopping to prevent overfitting during training.\n\nRequirements:\n- Monitor validation loss\n- Stop if no improvement for patience epochs\n- Save best model weights\n- Restore best weights after stopping",
+    "starterCode": "import numpy as np\n\nclass EarlyStopping:\n    def __init__(self, patience=10, min_delta=0.001):\n        self.patience = patience\n        self.min_delta = min_delta\n        self.best_loss = None\n        self.counter = 0\n        self.best_weights = None\n\n    def __call__(self, val_loss, model):\n        \"\"\"\n        Check if training should stop.\n\n        Args:\n            val_loss: Current validation loss\n            model: Model with weights attribute\n\n        Returns:\n            True if should stop, False otherwise\n        \"\"\"\n        # TODO: Implement early stopping logic\n        pass",
+    "solution": "import numpy as np\n\nclass EarlyStopping:\n    def __init__(self, patience=10, min_delta=0.001):\n        self.patience = patience\n        self.min_delta = min_delta\n        self.best_loss = None\n        self.counter = 0\n        self.best_weights = None\n\n    def __call__(self, val_loss, model):\n        \"\"\"\n        Check if training should stop.\n\n        Args:\n            val_loss: Current validation loss\n            model: Model with weights attribute\n\n        Returns:\n            True if should stop, False otherwise\n        \"\"\"\n        if self.best_loss is None:\n            # First epoch\n            self.best_loss = val_loss\n            self.best_weights = model.weights.copy()\n            return False\n\n        if val_loss < self.best_loss - self.min_delta:\n            # Improvement found\n            self.best_loss = val_loss\n            self.best_weights = model.weights.copy()\n            self.counter = 0\n            return False\n        else:\n            # No improvement\n            self.counter += 1\n            if self.counter >= self.patience:\n                # Restore best weights\n                model.weights = self.best_weights\n                return True\n            return False",
+    "testCases": [],
+    "hints": [
+      "Track best validation loss seen so far",
+      "Increment counter if no improvement",
+      "Reset counter when improvement found",
+      "Stop when counter reaches patience",
+      "Save and restore best model weights"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-t2-ex16",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-2",
+    "title": "Calculate R-Squared Score",
+    "difficulty": 2,
+    "description": "Implement R² (coefficient of determination) for regression evaluation.\n\nRequirements:\n- Calculate total sum of squares (TSS)\n- Calculate residual sum of squares (RSS)\n- R² = 1 - (RSS / TSS)\n- Return score between -∞ and 1",
+    "starterCode": "import numpy as np\n\ndef r2_score(y_true, y_pred):\n    \"\"\"\n    Calculate R-squared score.\n\n    Args:\n        y_true: True values\n        y_pred: Predicted values\n\n    Returns:\n        R² score\n    \"\"\"\n    # TODO: Implement R² score\n    pass",
+    "solution": "import numpy as np\n\ndef r2_score(y_true, y_pred):\n    \"\"\"\n    Calculate R-squared score.\n\n    Args:\n        y_true: True values\n        y_pred: Predicted values\n\n    Returns:\n        R² score\n    \"\"\"\n    y_true = np.array(y_true)\n    y_pred = np.array(y_pred)\n\n    # Total sum of squares (variance in y)\n    y_mean = np.mean(y_true)\n    tss = np.sum((y_true - y_mean) ** 2)\n\n    # Residual sum of squares (variance not explained)\n    rss = np.sum((y_true - y_pred) ** 2)\n\n    # R² = 1 - (RSS / TSS)\n    r2 = 1 - (rss / tss)\n\n    return r2",
+    "testCases": [],
+    "hints": [
+      "TSS = sum((y_true - y_mean)^2)",
+      "RSS = sum((y_true - y_pred)^2)",
+      "R² = 1 - RSS/TSS",
+      "R² = 1 means perfect predictions",
+      "R² = 0 means predictions equal to mean"
+    ],
+    "language": "python"
+  }
+]

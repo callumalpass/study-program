@@ -1,0 +1,177 @@
+[
+  {
+    "id": "cs101-quiz-5",
+    "subjectId": "cs101",
+    "topicId": "cs101-topic-5",
+    "title": "File I/O - Fundamentals",
+    "questions": [
+      {
+        "id": "q5-1",
+        "type": "multiple_choice",
+        "prompt": "Which file mode should you use to add content to the end of an existing file?",
+        "options": [
+          "\"r\"",
+          "\"w\"",
+          "\"a\"",
+          "\"x\""
+        ],
+        "correctAnswer": 2,
+        "explanation": "The \"a\" mode (append) adds content to the end of a file without overwriting existing content. \"w\" would overwrite the file."
+      },
+      {
+        "id": "q5-2",
+        "type": "true_false",
+        "prompt": "Using the \"with\" statement when opening files automatically closes the file when done.",
+        "correctAnswer": true,
+        "explanation": "The \"with\" statement is a context manager that automatically handles file closing, even if an error occurs."
+      },
+      {
+        "id": "q5-3",
+        "type": "multiple_choice",
+        "prompt": "What method reads the entire contents of a file as a single string?",
+        "options": [
+          "file.readline()",
+          "file.read()",
+          "file.readlines()",
+          "file.readall()"
+        ],
+        "correctAnswer": 1,
+        "explanation": "file.read() reads the entire file content as one string. readline() reads one line, and readlines() reads all lines into a list."
+      },
+      {
+        "id": "q5-4",
+        "type": "multiple_choice",
+        "prompt": "What happens if you open a file with mode \"w\" and the file already exists?",
+        "options": [
+          "An error is raised",
+          "Content is added to the end",
+          "The existing content is deleted",
+          "The file is renamed"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Mode \"w\" (write) overwrites the file, deleting all existing content. Use \"a\" to append instead."
+      },
+      {
+        "id": "q5-5",
+        "type": "true_false",
+        "prompt": "The readlines() method returns a list of strings, one for each line in the file.",
+        "correctAnswer": true,
+        "explanation": "readlines() reads all lines into a list. Each element is a string including the newline character (\\n) at the end."
+      }
+    ]
+  },
+  {
+    "id": "cs101-quiz-5b",
+    "subjectId": "cs101",
+    "topicId": "cs101-topic-5",
+    "title": "File I/O - Working with Files",
+    "questions": [
+      {
+        "id": "q5b-1",
+        "type": "multiple_choice",
+        "prompt": "Which module do you import to work with JSON files?",
+        "options": [
+          "file",
+          "io",
+          "json",
+          "data"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The json module provides json.load() to read JSON files and json.dump() to write them."
+      },
+      {
+        "id": "q5b-2",
+        "type": "code_output",
+        "prompt": "What will json.loads('{\"name\": \"Alice\"}')[\"name\"] return?",
+        "codeSnippet": "import json\nresult = json.loads('{\"name\": \"Alice\"}')[\"name\"]\nprint(result)",
+        "correctAnswer": "Alice",
+        "explanation": "json.loads() parses a JSON string into a Python dict. Then [\"name\"] accesses the value, which is \"Alice\"."
+      },
+      {
+        "id": "q5b-3",
+        "type": "true_false",
+        "prompt": "You should always specify encoding=\"utf-8\" when opening text files to avoid character encoding issues.",
+        "correctAnswer": true,
+        "explanation": "Specifying encoding explicitly (usually UTF-8) prevents issues with non-ASCII characters and ensures consistent behavior across systems."
+      },
+      {
+        "id": "q5b-4",
+        "type": "multiple_choice",
+        "prompt": "What does csv.DictReader do?",
+        "options": [
+          "Reads CSV as a dictionary of lists",
+          "Reads each row as a dictionary with column headers as keys",
+          "Converts a dictionary to CSV format",
+          "Creates an empty dictionary for CSV data"
+        ],
+        "correctAnswer": 1,
+        "explanation": "csv.DictReader uses the first row as headers and returns each subsequent row as a dictionary with header keys."
+      },
+      {
+        "id": "q5b-5",
+        "type": "code_output",
+        "prompt": "If a file contains \"Hello\\nWorld\", what will file.read().strip() return?",
+        "codeSnippet": "# File content: \"Hello\\nWorld\\n\"\ncontent = file.read().strip()\nprint(repr(content))",
+        "correctAnswer": "'Hello\\nWorld'",
+        "explanation": "strip() removes leading/trailing whitespace including newlines. The \\n between words is preserved."
+      }
+    ]
+  },
+  {
+    "id": "cs101-quiz-5c",
+    "subjectId": "cs101",
+    "topicId": "cs101-topic-5",
+    "title": "File I/O - Mastery",
+    "questions": [
+      {
+        "id": "q5c-1",
+        "type": "multiple_choice",
+        "prompt": "What exception is raised when trying to open a non-existent file for reading?",
+        "options": [
+          "IOError",
+          "FileNotFoundError",
+          "ValueError",
+          "PermissionError"
+        ],
+        "correctAnswer": 1,
+        "explanation": "FileNotFoundError is raised when the file does not exist. Use try/except to handle this gracefully."
+      },
+      {
+        "id": "q5c-2",
+        "type": "code_output",
+        "prompt": "What will Path(\"folder/file.txt\").suffix return?",
+        "codeSnippet": "from pathlib import Path\nprint(Path(\"folder/file.txt\").suffix)",
+        "correctAnswer": ".txt",
+        "explanation": "Path.suffix returns the file extension including the dot. For \"file.txt\", it returns \".txt\"."
+      },
+      {
+        "id": "q5c-3",
+        "type": "true_false",
+        "prompt": "Using file mode \"x\" raises an error if the file already exists.",
+        "correctAnswer": true,
+        "explanation": "Mode \"x\" is exclusive creation - it creates the file only if it doesn't exist, otherwise raises FileExistsError."
+      },
+      {
+        "id": "q5c-4",
+        "type": "multiple_choice",
+        "prompt": "What is the best practice for iterating over a large file line by line?",
+        "options": [
+          "file.read().split(\"\\n\")",
+          "file.readlines()",
+          "for line in file:",
+          "while file.readline():"
+        ],
+        "correctAnswer": 2,
+        "explanation": "\"for line in file:\" is memory-efficient as it reads one line at a time. readlines() loads the entire file into memory."
+      },
+      {
+        "id": "q5c-5",
+        "type": "code_output",
+        "prompt": "What will json.dumps({\"a\": 1}, indent=2) output (first 3 chars)?",
+        "codeSnippet": "import json\noutput = json.dumps({\"a\": 1}, indent=2)\nprint(output[:3])",
+        "correctAnswer": "{\\n ",
+        "explanation": "json.dumps() with indent=2 produces formatted JSON. It starts with \"{\", then newline, then 2 spaces for indentation."
+      }
+    ]
+  }
+]

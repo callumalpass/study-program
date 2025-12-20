@@ -1,0 +1,170 @@
+[
+  {
+    "id": "cs103-quiz-4",
+    "subjectId": "cs103",
+    "topicId": "cs103-4",
+    "title": "Polymorphism — Quiz A (Fundamentals)",
+    "questions": [
+      {
+        "id": "cs103-q4a-1",
+        "type": "multiple_choice",
+        "prompt": "What is polymorphism in OOP?",
+        "options": [
+          "A class having many constructors",
+          "Different objects responding to the same interface in different ways",
+          "Using many variables in one function",
+          "Storing objects in multiple lists"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Polymorphism means the same operation can work with different types that share an interface."
+      },
+      {
+        "id": "cs103-q4a-2",
+        "type": "true_false",
+        "prompt": "Duck typing is a form of polymorphism that does not require explicit inheritance.",
+        "correctAnswer": true,
+        "explanation": "Duck typing relies on behavior (“has the right methods”), not type hierarchy."
+      },
+      {
+        "id": "cs103-q4a-3",
+        "type": "fill_blank",
+        "prompt": "The dunder method for adding two objects with `+` is ____.",
+        "correctAnswer": "__add__",
+        "explanation": "`__add__` implements the `+` operator for a custom type."
+      },
+      {
+        "id": "cs103-q4a-4",
+        "type": "multiple_choice",
+        "prompt": "Which built-in function demonstrates polymorphism across types in Python?",
+        "options": [
+          "len",
+          "id",
+          "type",
+          "dir"
+        ],
+        "correctAnswer": 0,
+        "explanation": "`len()` works on strings, lists, dictionaries, and any object implementing `__len__`."
+      },
+      {
+        "id": "cs103-q4a-5",
+        "type": "multiple_choice",
+        "prompt": "Which approach is the most “Pythonic” way to support polymorphism?",
+        "options": [
+          "Switch on type using many `if isinstance(...)` checks",
+          "Duck typing and small interfaces",
+          "Global variables",
+          "Deep inheritance trees"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Python favors duck typing and simple, behavior-based interfaces."
+      }
+    ]
+  },
+  {
+    "id": "cs103-quiz-4b",
+    "subjectId": "cs103",
+    "topicId": "cs103-4",
+    "title": "Polymorphism — Quiz B (Application)",
+    "questions": [
+      {
+        "id": "cs103-q4b-1",
+        "type": "code_output",
+        "prompt": "What is printed by this code?",
+        "codeSnippet": "class Dog:\n    def speak(self): return \"woof\"\nclass Cat:\n    def speak(self): return \"meow\"\n\ndef chorus(animals):\n    for a in animals:\n        print(a.speak())\n\nchorus([Dog(), Cat(), Dog()])",
+        "correctAnswer": "woof\nmeow\nwoof",
+        "explanation": "`chorus` relies on the `speak` method; both classes satisfy the interface."
+      },
+      {
+        "id": "cs103-q4b-2",
+        "type": "multiple_choice",
+        "prompt": "What is the main downside of writing many `if isinstance(x, ...)` branches to choose behavior?",
+        "options": [
+          "It is too fast",
+          "It couples behavior to concrete types and is hard to extend",
+          "It prevents unit tests",
+          "It makes inheritance impossible"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Type-check branching is brittle; adding a new type often requires editing many branches."
+      },
+      {
+        "id": "cs103-q4b-3",
+        "type": "code_output",
+        "prompt": "What is printed by this code?",
+        "codeSnippet": "class Vec:\n    def __init__(self, x): self.x = x\n    def __add__(self, other): return Vec(self.x + other.x)\n    def __str__(self): return str(self.x)\n\nprint(Vec(2) + Vec(5))",
+        "correctAnswer": "7",
+        "explanation": "`__add__` returns a new `Vec` whose `x` is summed; printing uses `__str__`."
+      },
+      {
+        "id": "cs103-q4b-4",
+        "type": "true_false",
+        "prompt": "Operator overloading can improve readability when it matches user expectations for a domain type.",
+        "correctAnswer": true,
+        "explanation": "Overloading is useful when it expresses natural operations (e.g., vector addition)."
+      },
+      {
+        "id": "cs103-q4b-5",
+        "type": "fill_blank",
+        "prompt": "To support iteration in `for x in obj:`, a class can implement the ____ dunder method.",
+        "correctAnswer": "__iter__",
+        "explanation": "`__iter__` returns an iterator; alternatively `__getitem__` can sometimes enable iteration."
+      }
+    ]
+  },
+  {
+    "id": "cs103-quiz-4c",
+    "subjectId": "cs103",
+    "topicId": "cs103-4",
+    "title": "Polymorphism — Quiz C (Advanced)",
+    "questions": [
+      {
+        "id": "cs103-q4c-1",
+        "type": "multiple_choice",
+        "prompt": "In duck typing, what is the most reliable way to ensure compatibility?",
+        "options": [
+          "Check the exact type",
+          "Check method names and required behavior (interface)",
+          "Use global flags",
+          "Avoid functions"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Compatibility is about required operations/behavior, not concrete types."
+      },
+      {
+        "id": "cs103-q4c-2",
+        "type": "code_output",
+        "prompt": "What is printed by this code?",
+        "codeSnippet": "class A:\n    def __len__(self): return 3\n\nprint(len(A()))",
+        "correctAnswer": "3",
+        "explanation": "Python’s `len()` calls the object’s `__len__` method."
+      },
+      {
+        "id": "cs103-q4c-3",
+        "type": "multiple_choice",
+        "prompt": "What does `functools.singledispatch` primarily provide?",
+        "options": [
+          "Multiple inheritance",
+          "Runtime function overloading based on the first argument type",
+          "Static method binding",
+          "Automatic property generation"
+        ],
+        "correctAnswer": 1,
+        "explanation": "`singledispatch` selects an implementation based on the type of the first argument at runtime."
+      },
+      {
+        "id": "cs103-q4c-4",
+        "type": "true_false",
+        "prompt": "It is always better to overload operators rather than provide explicit method names.",
+        "correctAnswer": false,
+        "explanation": "Operator overloading can be confusing if it doesn’t match expectations; explicit method names are often clearer."
+      },
+      {
+        "id": "cs103-q4c-5",
+        "type": "fill_blank",
+        "prompt": "The method that provides a developer-oriented representation of an object is ____.",
+        "correctAnswer": "__repr__",
+        "explanation": "`__repr__` is intended to be unambiguous and helpful for debugging."
+      }
+    ]
+  }
+]

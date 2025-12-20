@@ -1,0 +1,242 @@
+[
+  {
+    "id": "cs204-t5-ex1",
+    "subjectId": "cs204",
+    "topicId": "cs204-topic-5",
+    "type": "written",
+    "title": "Testing Levels",
+    "description": "Explain the four main levels of software testing (unit, integration, system, acceptance). For each level, describe its purpose and who typically performs it.",
+    "difficulty": 1,
+    "hints": [
+      "Consider scope of each level",
+      "Think about what defects each level catches",
+      "Consider the testing pyramid"
+    ],
+    "solution": "**Unit Testing**: Tests individual functions/methods in isolation. Catches logic errors. Performed by developers.\n\n**Integration Testing**: Tests interaction between components/modules. Catches interface mismatches. Performed by developers or QA.\n\n**System Testing**: Tests complete integrated system against requirements. Catches end-to-end issues. Performed by QA team.\n\n**Acceptance Testing**: Validates system meets business needs. Performed by customers/end-users (UAT) or automated (ATDD)."
+  },
+  {
+    "id": "cs204-t5-ex2",
+    "subjectId": "cs204",
+    "topicId": "cs204-topic-5",
+    "type": "written",
+    "title": "Black-box vs White-box",
+    "description": "Compare black-box and white-box testing approaches. Give two techniques used in each and explain when to prefer one over the other.",
+    "difficulty": 2,
+    "hints": [
+      "Black-box ignores internal structure",
+      "White-box examines code paths",
+      "Consider who performs each type"
+    ],
+    "solution": "**Black-box Testing**: Tests functionality without knowledge of internal implementation.\n- Techniques: Equivalence partitioning, boundary value analysis\n- When to use: Functional testing, UAT, when testers don't have code access\n\n**White-box Testing**: Tests with knowledge of internal code structure.\n- Techniques: Statement coverage, branch coverage, path testing\n- When to use: Unit testing, security testing, when aiming for code coverage\n\n**Key difference**: Black-box tests WHAT the system does; white-box tests HOW it does it."
+  },
+  {
+    "id": "cs204-t5-ex3",
+    "subjectId": "cs204",
+    "topicId": "cs204-topic-5",
+    "type": "written",
+    "title": "Test-Driven Development",
+    "description": "Describe the TDD cycle (Red-Green-Refactor). Implement a simple example: write tests first for a function that calculates factorial.",
+    "difficulty": 2,
+    "hints": [
+      "Red: write failing test first",
+      "Green: write minimal code to pass",
+      "Refactor: improve code without changing behavior"
+    ],
+    "solution": "**TDD Cycle:**\n1. **Red**: Write a failing test for desired functionality\n2. **Green**: Write minimal code to make test pass\n3. **Refactor**: Clean up code while keeping tests green\n\n**Example:**\n// RED - Write test first\ntest('factorial of 5 is 120', () => {\n  expect(factorial(5)).toBe(120);\n});\ntest('factorial of 0 is 1', () => {\n  expect(factorial(0)).toBe(1);\n});\n\n// GREEN - Minimal implementation\nfunction factorial(n: number): number {\n  if (n <= 1) return 1;\n  return n * factorial(n - 1);\n}\n\n// REFACTOR - Optimize if needed (iterative version, memoization)"
+  },
+  {
+    "id": "cs204-t5-ex4",
+    "subjectId": "cs204",
+    "topicId": "cs204-topic-5",
+    "type": "written",
+    "title": "Equivalence Partitioning",
+    "description": "A function validates age for a website (valid range: 13-120). Apply equivalence partitioning to identify test cases that minimize redundancy while maximizing coverage.",
+    "difficulty": 2,
+    "hints": [
+      "Identify valid and invalid partitions",
+      "One test per partition is sufficient",
+      "Consider boundary between partitions"
+    ],
+    "solution": "**Partitions Identified:**\n1. Invalid (below range): age < 13\n2. Valid: 13 ≤ age ≤ 120\n3. Invalid (above range): age > 120\n4. Invalid (non-numeric or negative): age < 0\n\n**Test Cases (one per partition):**\n- age = 10 → Invalid (below)\n- age = 50 → Valid\n- age = 130 → Invalid (above)\n- age = -5 → Invalid (negative)\n\n**Rationale:** Values within same partition should behave identically. Testing age=50 is representative of all valid ages 13-120."
+  },
+  {
+    "id": "cs204-t5-ex5",
+    "subjectId": "cs204",
+    "topicId": "cs204-topic-5",
+    "type": "written",
+    "title": "Boundary Value Analysis",
+    "description": "Using the same age validation (13-120), apply boundary value analysis to identify additional test cases beyond equivalence partitioning.",
+    "difficulty": 2,
+    "hints": [
+      "Test at exact boundaries",
+      "Test one value on each side of boundary",
+      "Boundaries are where defects often hide"
+    ],
+    "solution": "**Boundary Values for age 13-120:**\n\nLower boundary (13):\n- age = 12 → Invalid (just below)\n- age = 13 → Valid (at boundary)\n- age = 14 → Valid (just above)\n\nUpper boundary (120):\n- age = 119 → Valid (just below)\n- age = 120 → Valid (at boundary)\n- age = 121 → Invalid (just above)\n\n**Additional boundaries:**\n- age = 0 → Invalid (zero boundary)\n- age = -1 → Invalid (negative boundary)\n\n**Rationale:** Off-by-one errors are common; BVA specifically targets these boundaries."
+  },
+  {
+    "id": "cs204-t5-ex6",
+    "subjectId": "cs204",
+    "topicId": "cs204-topic-5",
+    "type": "written",
+    "title": "Code Coverage Metrics",
+    "description": "Explain statement coverage, branch coverage, and path coverage. Given a function with an if-else statement, show what tests achieve each coverage level.",
+    "difficulty": 3,
+    "hints": [
+      "Statement: every line executed",
+      "Branch: every decision outcome",
+      "Path: every possible route through code"
+    ],
+    "solution": "function checkValue(x: number): string {\n  if (x > 0) {\n    return \"positive\";\n  } else {\n    return \"non-positive\";\n  }\n}\n\n**Statement Coverage** (execute every statement):\n- Test: x=1 → covers lines 2,3\n- Test: x=-1 → covers lines 4,5\n- Result: 100% statement coverage\n\n**Branch Coverage** (every decision true/false):\n- Test: x=1 → if branch (true)\n- Test: x=-1 → else branch (false)\n- Result: 100% branch coverage\n\n**Path Coverage** (all execution paths):\nSame as branch for simple if-else.\nFor nested conditionals or loops, path count grows exponentially.\n\n**Relationship**: Path ⊃ Branch ⊃ Statement"
+  },
+  {
+    "id": "cs204-t5-ex7",
+    "subjectId": "cs204",
+    "topicId": "cs204-topic-5",
+    "type": "written",
+    "title": "Test Doubles",
+    "description": "Explain the differences between stubs, mocks, and fakes. Provide an example scenario where each would be appropriate.",
+    "difficulty": 3,
+    "hints": [
+      "Stubs provide canned answers",
+      "Mocks verify interactions",
+      "Fakes have working implementations"
+    ],
+    "solution": "**Stub**: Returns predefined data; no behavior verification.\n- Use case: Testing code that reads from database. Stub returns fixed user object.\n\n**Mock**: Verifies specific interactions occurred.\n- Use case: Testing email service was called with correct parameters after user registration.\n- expect(emailMock).toHaveBeenCalledWith(\"welcome@...\", user.email)\n\n**Fake**: Working implementation unsuitable for production.\n- Use case: In-memory database for integration tests instead of real database.\n\n**Spy**: Real object with tracked interactions.\n- Use case: Verify real logger was called without replacing it.\n\n**Key**: Stubs for state verification; Mocks for behavior verification; Fakes for realistic substitutes."
+  },
+  {
+    "id": "cs204-t5-ex8",
+    "subjectId": "cs204",
+    "topicId": "cs204-topic-5",
+    "type": "written",
+    "title": "Testing Legacy Code",
+    "description": "You inherit code with no tests and tight coupling. Describe strategies for safely adding tests without major refactoring.",
+    "difficulty": 4,
+    "hints": [
+      "Characterization tests capture current behavior",
+      "Seams allow dependency injection",
+      "Start with highest-risk areas"
+    ],
+    "solution": "**Strategies:**\n\n1. **Characterization Tests**: Write tests that document current behavior (even if buggy). Establishes safety net before changes.\n\n2. **Find Seams**: Identify points where behavior can be changed without editing code:\n   - Constructor injection\n   - Method parameter injection\n   - Subclass and override\n\n3. **Extract and Override**: Create protected methods for dependencies, override in test subclass.\n\n4. **Sprout Methods/Classes**: Add new functionality in testable new code that existing code calls.\n\n5. **Prioritize by Risk**: Start testing critical paths, frequently changed code, or bug-prone areas.\n\n**Key principle**: Make minimal changes to enable testing; larger refactoring comes after test coverage exists."
+  },
+  {
+    "id": "cs204-t5-ex9",
+    "subjectId": "cs204",
+    "topicId": "cs204-topic-5",
+    "type": "written",
+    "title": "Integration Testing Strategies",
+    "description": "Compare top-down, bottom-up, and sandwich integration testing approaches. Discuss stubs vs drivers needed for each.",
+    "difficulty": 3,
+    "hints": [
+      "Top-down starts from UI/main",
+      "Bottom-up starts from utilities",
+      "Consider stub/driver overhead"
+    ],
+    "solution": "**Top-Down Integration:**\n- Start with high-level modules, integrate downward\n- Requires: Stubs for lower modules not yet integrated\n- Pros: Early validation of main control flow\n- Cons: Low-level functionality tested late\n\n**Bottom-Up Integration:**\n- Start with low-level utilities, integrate upward\n- Requires: Drivers to call lower modules\n- Pros: Thoroughly tests foundation first\n- Cons: Working system visible only at end\n\n**Sandwich (Hybrid):**\n- Simultaneous top-down and bottom-up, meeting in middle\n- Requires: Both stubs and drivers\n- Pros: Balances early visibility with thorough testing\n- Cons: More complex coordination"
+  },
+  {
+    "id": "cs204-t5-ex10",
+    "subjectId": "cs204",
+    "topicId": "cs204-topic-5",
+    "type": "written",
+    "title": "Regression Testing",
+    "description": "Explain what regression testing is and why it matters. Describe strategies for managing a growing regression test suite.",
+    "difficulty": 2,
+    "hints": [
+      "Regression catches unintended side effects",
+      "Automation is essential",
+      "Test selection reduces execution time"
+    ],
+    "solution": "**Regression Testing**: Re-running tests after code changes to ensure existing functionality still works.\n\n**Why it matters:**\n- Code changes can break existing features\n- Dependencies create unexpected side effects\n- Confidence to refactor and improve code\n\n**Management Strategies:**\n1. **Automation**: Manual regression is unsustainable; automate test execution\n2. **Prioritization**: Run critical tests first; full suite nightly\n3. **Test Selection**: Run only tests affected by changes (risk-based)\n4. **Test Maintenance**: Remove obsolete tests; update for requirement changes\n5. **Continuous Integration**: Run regression on every commit\n\n**Balance**: Comprehensive coverage vs. execution time. Use smoke tests for fast feedback, full regression periodically."
+  },
+  {
+    "id": "cs204-t5-ex11",
+    "subjectId": "cs204",
+    "topicId": "cs204-topic-5",
+    "type": "written",
+    "title": "Performance Testing Types",
+    "description": "Differentiate between load testing, stress testing, and endurance testing. Explain what each measures and when to use it.",
+    "difficulty": 3,
+    "hints": [
+      "Load: expected conditions",
+      "Stress: beyond capacity",
+      "Endurance: sustained load over time"
+    ],
+    "solution": "**Load Testing:**\n- Tests system under expected user load\n- Measures: Response time, throughput at normal capacity\n- Use: Verify performance meets SLAs under typical conditions\n\n**Stress Testing:**\n- Tests beyond normal capacity until failure\n- Measures: Breaking point, failure behavior, recovery\n- Use: Find system limits, ensure graceful degradation\n\n**Endurance (Soak) Testing:**\n- Tests sustained load over extended period\n- Measures: Memory leaks, resource exhaustion, degradation over time\n- Use: Detect issues that only appear after hours/days of operation\n\n**Related: Spike Testing** - sudden load increases\n**Related: Scalability Testing** - performance vs. resource changes"
+  },
+  {
+    "id": "cs204-t5-ex12",
+    "subjectId": "cs204",
+    "topicId": "cs204-topic-5",
+    "type": "written",
+    "title": "Test Case Design",
+    "description": "Write comprehensive test cases for a login function that accepts username and password. Include positive, negative, and edge cases.",
+    "difficulty": 3,
+    "hints": [
+      "Valid credentials scenario",
+      "Invalid credentials variations",
+      "Edge cases: empty, special chars, SQL injection"
+    ],
+    "solution": "**Positive Tests:**\n- Valid username + valid password → login success\n- Case sensitivity: Username \"User\" vs \"user\" (per requirements)\n\n**Negative Tests:**\n- Valid username + wrong password → fail with message\n- Invalid username + any password → fail (same message for security)\n- Empty username → validation error\n- Empty password → validation error\n- Both empty → validation error\n\n**Edge Cases:**\n- Max length username/password → should work\n- Exceeds max length → validation error\n- Special characters in password → should work\n- SQL injection attempt: \"'; DROP TABLE--\" → sanitized, fails safely\n- Account locked after N failures → lockout message\n\n**Security Tests:**\n- Timing attack: same response time for valid/invalid usernames\n- No password in error messages or logs"
+  },
+  {
+    "id": "cs204-t5-ex13",
+    "subjectId": "cs204",
+    "topicId": "cs204-topic-5",
+    "type": "written",
+    "title": "Continuous Integration Testing",
+    "description": "Design a CI/CD pipeline test strategy. What tests run on commit, on PR, nightly, and before release?",
+    "difficulty": 4,
+    "hints": [
+      "Fast feedback for frequent events",
+      "Comprehensive testing less frequently",
+      "Consider test execution time"
+    ],
+    "solution": "**On Every Commit (< 5 min):**\n- Linting and static analysis\n- Unit tests\n- Build verification\n\n**On Pull Request (< 15 min):**\n- All commit checks\n- Integration tests\n- Code coverage check\n- Security scanning (SAST)\n\n**Nightly (< 2 hours):**\n- Full regression suite\n- Performance benchmarks\n- End-to-end UI tests\n- Dependency vulnerability scan\n\n**Before Release:**\n- All of above\n- Smoke tests in staging environment\n- Penetration testing\n- UAT sign-off\n- Load/stress testing\n\n**Key Principle**: Fast tests run often; slow comprehensive tests run less frequently but before release."
+  },
+  {
+    "id": "cs204-t5-ex14",
+    "subjectId": "cs204",
+    "topicId": "cs204-topic-5",
+    "type": "written",
+    "title": "Mutation Testing",
+    "description": "Explain mutation testing and how it evaluates test suite quality. What are mutants, and what does it mean to kill a mutant?",
+    "difficulty": 4,
+    "hints": [
+      "Mutants are modified versions of code",
+      "Good tests should detect (kill) mutants",
+      "Surviving mutants indicate weak tests"
+    ],
+    "solution": "**Mutation Testing**: Evaluates test quality by introducing small code changes (mutations) and checking if tests detect them.\n\n**Process:**\n1. Create mutants: modify code (change + to -, < to <=, etc.)\n2. Run tests against each mutant\n3. Mutant \"killed\" if tests fail; \"survives\" if tests pass\n\n**Mutation Operators:**\n- Arithmetic: + → -\n- Relational: < → <=\n- Logical: && → ||\n- Statement deletion\n\n**Mutation Score** = killed mutants / total mutants\n\n**Interpretation:**\n- High score (>80%): Tests effectively detect changes\n- Surviving mutants: Indicate missing test cases or dead code\n- Better quality metric than code coverage alone\n\n**Limitation**: Computationally expensive (run tests N times per mutant)"
+  },
+  {
+    "id": "cs204-t5-ex15",
+    "subjectId": "cs204",
+    "topicId": "cs204-topic-5",
+    "type": "written",
+    "title": "Testing Anti-patterns",
+    "description": "Identify and explain three common testing anti-patterns. For each, describe why it is problematic and how to fix it.",
+    "difficulty": 4,
+    "hints": [
+      "Flaky tests, slow tests, brittle tests",
+      "Consider maintenance burden",
+      "Think about test independence"
+    ],
+    "solution": "**1. Flaky Tests**\n- Problem: Tests pass/fail randomly without code changes\n- Causes: Timing dependencies, shared state, external services\n- Fix: Isolate tests, use deterministic data, mock external dependencies\n\n**2. Testing Implementation Details**\n- Problem: Tests break when refactoring even if behavior unchanged\n- Causes: Testing private methods, asserting on internal state\n- Fix: Test public interface and observable behavior only\n\n**3. Slow Test Suite**\n- Problem: Tests take too long, developers skip them\n- Causes: Real database/network calls, unnecessary setup\n- Fix: Use test doubles, optimize setup, parallelize tests\n\n**Also common:**\n- Interdependent tests (order matters)\n- No assertions (tests that can't fail)\n- Testing the framework (verifying library behavior)"
+  },
+  {
+    "id": "cs204-t5-ex16",
+    "subjectId": "cs204",
+    "topicId": "cs204-topic-5",
+    "type": "written",
+    "title": "Test Plan Creation",
+    "description": "Create a test plan outline for a new e-commerce checkout feature. Include scope, approach, resources, schedule, and risk assessment.",
+    "difficulty": 5,
+    "hints": [
+      "Define what is/isn't being tested",
+      "Identify test types needed",
+      "Consider dependencies and risks"
+    ],
+    "solution": "**Test Plan: E-commerce Checkout Feature**\n\n**1. Scope**\n- In scope: Cart→checkout flow, payment processing, order confirmation\n- Out of scope: Inventory management, shipping carrier integration\n\n**2. Test Approach**\n- Unit: Payment calculation, validation logic\n- Integration: Payment gateway, order service\n- E2E: Complete purchase flow\n- Performance: Checkout under 100 concurrent users\n- Security: Payment data handling, PCI compliance\n\n**3. Entry/Exit Criteria**\n- Entry: Feature code complete, test environment ready\n- Exit: 95% test pass rate, no critical bugs, coverage >80%\n\n**4. Resources**\n- Team: 2 QA engineers, 1 automation engineer\n- Tools: Jest, Cypress, k6 for load testing\n- Environments: Dev, staging with payment sandbox\n\n**5. Risks**\n- Payment gateway sandbox availability\n- Test data management for orders\n- Mitigation: Mock payment service, automated data cleanup"
+  }
+]

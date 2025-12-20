@@ -1,0 +1,294 @@
+[
+  {
+    "id": "math101-t2-drill-1",
+    "subjectId": "math101",
+    "topicId": "math101-topic-2",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Direct Proof Step",
+    "description": "If x = 3 and y = 5, prove x + y is even.",
+    "hints": [
+      "Calculate the sum."
+    ],
+    "solution": "3 + 5 = 8. 8 is divisible by 2, so it is even."
+  },
+  {
+    "id": "math101-t2-drill-2",
+    "subjectId": "math101",
+    "topicId": "math101-topic-2",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Contrapositive",
+    "description": "What is the contrapositive of \"If it rains, then the ground is wet\"?",
+    "hints": [
+      "Flip and negate both sides."
+    ],
+    "solution": "If the ground is NOT wet, then it is NOT raining."
+  },
+  {
+    "id": "math101-t2-drill-3",
+    "subjectId": "math101",
+    "topicId": "math101-topic-2",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Negation",
+    "description": "Negate the statement: \"All birds can fly.\"",
+    "hints": [
+      "The negation of \"All\" is \"There exists at least one that does not\"."
+    ],
+    "solution": "There exists a bird that cannot fly."
+  },
+  {
+    "id": "math101-t2-drill-4",
+    "subjectId": "math101",
+    "topicId": "math101-topic-2",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Counterexample",
+    "description": "Find a counterexample for: \"All prime numbers are odd.\"",
+    "hints": [
+      "Check the first prime number."
+    ],
+    "solution": "2 is a prime number and it is even."
+  },
+  {
+    "id": "math101-ex-2",
+    "subjectId": "math101",
+    "topicId": "math101-topic-2",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Proof by Mathematical Induction",
+    "description": "Use mathematical induction to prove that for all positive integers n, the sum 1 + 2 + 3 + ... + n = n(n+1)/2. Show all steps clearly: base case, inductive hypothesis, and inductive step.",
+    "hints": [
+      "Base case: Verify the formula works for n = 1.",
+      "Inductive hypothesis: Assume the formula holds for n = k.",
+      "Inductive step: Use the hypothesis to prove it holds for n = k + 1.",
+      "Remember that the sum up to k+1 equals (sum up to k) plus (k+1)."
+    ],
+    "solution": "Proof by induction:\n\nBase case (n = 1): Left side = 1. Right side = 1(1+1)/2 = 1. The formula holds for n = 1.\n\nInductive hypothesis: Assume that for some positive integer k, we have 1 + 2 + 3 + ... + k = k(k+1)/2.\n\nInductive step: We must show that 1 + 2 + 3 + ... + k + (k+1) = (k+1)(k+2)/2.\n\nStarting with the left side:\n1 + 2 + 3 + ... + k + (k+1)\n= [1 + 2 + 3 + ... + k] + (k+1)\n= k(k+1)/2 + (k+1)  [by inductive hypothesis]\n= (k+1)[k/2 + 1]\n= (k+1)(k+2)/2\n\nThis matches the formula for n = k+1. Therefore, by mathematical induction, the formula holds for all positive integers n."
+  },
+  {
+    "id": "math101-t2-ex02",
+    "subjectId": "math101",
+    "topicId": "math101-topic-2",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Direct Proof",
+    "description": "Prove directly that the sum of two even integers is even.",
+    "hints": [
+      "Define what it means for an integer to be even",
+      "Let the two even integers be 2a and 2b",
+      "Add them and show the result is also even"
+    ],
+    "solution": "Proof:\n\nLet x and y be even integers.\n\nBy definition of even, there exist integers a and b such that:\nx = 2a and y = 2b\n\nTheir sum is:\nx + y = 2a + 2b = 2(a + b)\n\nSince a + b is an integer (integers are closed under addition), we have that x + y = 2(a + b) is divisible by 2.\n\nTherefore, x + y is even by definition.\n\nQ.E.D."
+  },
+  {
+    "id": "math101-t2-ex03",
+    "subjectId": "math101",
+    "topicId": "math101-topic-2",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Proof by Contrapositive",
+    "description": "Prove by contrapositive: If n² is even, then n is even.",
+    "hints": [
+      "The contrapositive of \"if P then Q\" is \"if not Q then not P\"",
+      "State the contrapositive clearly",
+      "Prove the contrapositive using direct proof"
+    ],
+    "solution": "Original statement: If n² is even, then n is even.\n\nContrapositive: If n is NOT even (i.e., n is odd), then n² is NOT even (i.e., n² is odd).\n\nProof of contrapositive:\n\nAssume n is odd. By definition, there exists an integer k such that:\nn = 2k + 1\n\nThen:\nn² = (2k + 1)²\n   = 4k² + 4k + 1\n   = 2(2k² + 2k) + 1\n\nSince 2k² + 2k is an integer, we have n² = 2m + 1 where m = 2k² + 2k.\n\nTherefore, n² is odd.\n\nSince we proved the contrapositive, the original statement is true.\n\nQ.E.D."
+  },
+  {
+    "id": "math101-t2-ex04",
+    "subjectId": "math101",
+    "topicId": "math101-topic-2",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Proof by Contradiction",
+    "description": "Prove by contradiction that √2 is irrational.",
+    "hints": [
+      "Assume √2 IS rational, meaning √2 = a/b in lowest terms",
+      "Square both sides and derive a contradiction",
+      "Show that both a and b must be even, contradicting \"lowest terms\""
+    ],
+    "solution": "Proof by contradiction:\n\nAssume √2 is rational. Then √2 = a/b where a, b are integers with b ≠ 0, and the fraction is in lowest terms (gcd(a,b) = 1).\n\nSquaring both sides:\n2 = a²/b²\na² = 2b²\n\nSince a² = 2b², a² is even. By our earlier result, if a² is even, then a is even.\n\nSo a = 2k for some integer k. Substituting:\n(2k)² = 2b²\n4k² = 2b²\n2k² = b²\n\nThis means b² is even. Again by our earlier result, b must be even.\n\nBut now both a and b are even, meaning they share a common factor of 2. This contradicts our assumption that a/b is in lowest terms.\n\nTherefore, our assumption is false, and √2 is irrational.\n\nQ.E.D."
+  },
+  {
+    "id": "math101-t2-ex05",
+    "subjectId": "math101",
+    "topicId": "math101-topic-2",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Induction - Sum of Squares",
+    "description": "Prove by induction: 1² + 2² + 3² + ... + n² = n(n+1)(2n+1)/6 for all positive integers n.",
+    "hints": [
+      "Base case: Check n = 1",
+      "Assume true for n = k",
+      "Show it holds for n = k + 1 by adding (k+1)²"
+    ],
+    "solution": "Proof by induction:\n\nBase case (n = 1):\nLHS = 1² = 1\nRHS = 1(1+1)(2·1+1)/6 = 1·2·3/6 = 1 ✓\n\nInductive hypothesis:\nAssume 1² + 2² + ... + k² = k(k+1)(2k+1)/6 for some positive integer k.\n\nInductive step:\nShow: 1² + 2² + ... + k² + (k+1)² = (k+1)(k+2)(2k+3)/6\n\nLHS = [1² + 2² + ... + k²] + (k+1)²\n    = k(k+1)(2k+1)/6 + (k+1)²    [by hypothesis]\n    = (k+1)[k(2k+1)/6 + (k+1)]\n    = (k+1)[k(2k+1) + 6(k+1)]/6\n    = (k+1)[2k² + k + 6k + 6]/6\n    = (k+1)[2k² + 7k + 6]/6\n    = (k+1)(k+2)(2k+3)/6    [factoring 2k² + 7k + 6 = (k+2)(2k+3)]\n\nThis equals the RHS with n = k+1. By induction, the formula holds for all positive integers n.\n\nQ.E.D."
+  },
+  {
+    "id": "math101-t2-ex06",
+    "subjectId": "math101",
+    "topicId": "math101-topic-2",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Proof by Cases",
+    "description": "Prove that for any integer n, n² + n is always even.",
+    "hints": [
+      "Consider two cases: n is even and n is odd",
+      "Prove the statement holds in each case",
+      "Factor n² + n = n(n+1) and use the fact about consecutive integers"
+    ],
+    "solution": "Proof by cases:\n\nNote that n² + n = n(n+1), the product of two consecutive integers.\n\nCase 1: n is even\nIf n is even, then n = 2k for some integer k.\nThen n(n+1) = 2k(n+1) = 2 · k(n+1), which is even.\n\nCase 2: n is odd\nIf n is odd, then n+1 is even, so n+1 = 2m for some integer m.\nThen n(n+1) = n · 2m = 2 · nm, which is even.\n\nIn both cases, n² + n is even.\n\nAlternative proof: Of any two consecutive integers n and n+1, exactly one must be even. Therefore their product is always even.\n\nQ.E.D."
+  },
+  {
+    "id": "math101-t2-ex07",
+    "subjectId": "math101",
+    "topicId": "math101-topic-2",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Strong Induction",
+    "description": "Use strong induction to prove that every integer n ≥ 2 can be written as a product of prime numbers.",
+    "hints": [
+      "Strong induction allows using ALL cases from base to k-1, not just k",
+      "Base case: 2 is prime, so it is a product of one prime",
+      "For the inductive step, consider if n is prime or composite"
+    ],
+    "solution": "Proof by strong induction:\n\nBase case (n = 2):\n2 is prime, so 2 = 2 is a product of one prime (itself). ✓\n\nInductive hypothesis:\nAssume that for some k ≥ 2, every integer from 2 to k can be written as a product of primes.\n\nInductive step:\nConsider n = k + 1. We show n can be written as a product of primes.\n\nCase 1: n is prime\nThen n is a product of one prime (itself). ✓\n\nCase 2: n is composite\nThen n = a · b where 2 ≤ a, b < n.\nSince a and b are both in the range [2, k], by the strong inductive hypothesis, both can be written as products of primes:\na = p₁ · p₂ · ... · pᵣ\nb = q₁ · q₂ · ... · qₛ\n\nTherefore:\nn = a · b = p₁ · p₂ · ... · pᵣ · q₁ · q₂ · ... · qₛ\n\nThis is a product of primes. ✓\n\nBy strong induction, every integer n ≥ 2 can be written as a product of primes.\n\nQ.E.D."
+  },
+  {
+    "id": "math101-t2-ex08",
+    "subjectId": "math101",
+    "topicId": "math101-topic-2",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Induction - Divisibility",
+    "description": "Prove by induction that n³ - n is divisible by 6 for all positive integers n.",
+    "hints": [
+      "Factor: n³ - n = n(n² - 1) = n(n-1)(n+1)",
+      "Or use induction directly",
+      "For divisibility by 6, show divisibility by both 2 and 3"
+    ],
+    "solution": "Proof by induction:\n\nNote: n³ - n = n(n-1)(n+1) = (n-1)n(n+1), the product of three consecutive integers.\n\nBase case (n = 1):\n1³ - 1 = 0 = 6 · 0, which is divisible by 6. ✓\n\nInductive hypothesis:\nAssume k³ - k is divisible by 6 for some positive integer k.\nThat is, k³ - k = 6m for some integer m.\n\nInductive step:\nShow (k+1)³ - (k+1) is divisible by 6.\n\n(k+1)³ - (k+1)\n= k³ + 3k² + 3k + 1 - k - 1\n= k³ + 3k² + 2k\n= (k³ - k) + 3k² + 3k\n= (k³ - k) + 3k(k + 1)\n\nBy hypothesis, k³ - k = 6m for some integer m.\n\nFor 3k(k+1): Since k and k+1 are consecutive, one of them is even.\nSo k(k+1) is even, meaning k(k+1) = 2t for some integer t.\nThus 3k(k+1) = 6t.\n\nTherefore:\n(k+1)³ - (k+1) = 6m + 6t = 6(m + t)\n\nThis is divisible by 6. ✓\n\nBy induction, n³ - n is divisible by 6 for all positive integers n.\n\nQ.E.D."
+  },
+  {
+    "id": "math101-t2-ex09",
+    "subjectId": "math101",
+    "topicId": "math101-topic-2",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Pigeonhole Principle",
+    "description": "Prove that in any group of 6 people, there are either 3 mutual friends or 3 mutual strangers.",
+    "hints": [
+      "This is a classic Ramsey Theory problem.",
+      "Consider one person A. By PHP, A must have either 3 friends or 3 strangers among the other 5.",
+      "Analyze the relationships between those 3 people."
+    ],
+    "solution": "Proof:\nSelect any person A. The remaining 5 people are either friends with A or strangers to A.\nBy the Pigeonhole Principle, at least 3 of them fall into the same category.\n\nCase 1: A has 3 friends (call them B, C, D).\n- If any pair among B, C, D are friends (e.g., B and C), then A, B, C form a triangle of 3 mutual friends.\n- If NO pair among B, C, D are friends, then B, C, D form a group of 3 mutual strangers.\nIn either subcase, the proposition holds.\n\nCase 2: A has 3 strangers (call them X, Y, Z).\n- If any pair among X, Y, Z are strangers (e.g., X and Y), then A, X, Y form a group of 3 mutual strangers.\n- If NO pair among X, Y, Z are strangers (meaning they are all friends), then X, Y, Z form a triangle of 3 mutual friends.\n\nThus, in all cases, there are either 3 mutual friends or 3 mutual strangers."
+  },
+  {
+    "id": "math101-t2-ex10",
+    "subjectId": "math101",
+    "topicId": "math101-topic-2",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Disproof by Counterexample",
+    "description": "Disprove the statement: \"For all real numbers x and y, if x² = y², then x = y.\"",
+    "hints": [
+      "Find specific values for x and y where the hypothesis is true but the conclusion is false.",
+      "Think about negative numbers."
+    ],
+    "solution": "To disprove the statement \"For all x, y, if x² = y², then x = y\", we need a single counterexample.\n\nLet x = 2 and y = -2.\n\nHypothesis check: x² = 2² = 4, and y² = (-2)² = 4. So x² = y² is TRUE.\n\nConclusion check: x = 2 and y = -2. So x = y is FALSE.\n\nSince we found a case where the hypothesis is true but the conclusion is false, the universal statement is False."
+  },
+  {
+    "id": "math101-t2-ex11",
+    "subjectId": "math101",
+    "topicId": "math101-topic-2",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Closure of Rational Numbers",
+    "description": "Prove directly that the sum of two rational numbers is rational.",
+    "hints": [
+      "Definition of rational: x = p/q where p, q are integers and q ≠ 0.",
+      "Add two fractions a/b and c/d.",
+      "Show the result is a ratio of integers with non-zero denominator."
+    ],
+    "solution": "Proof:\nLet x and y be rational numbers.\nBy definition, x = a/b and y = c/d for some integers a, b, c, d where b ≠ 0 and d ≠ 0.\n\nThen x + y = a/b + c/d.\nFinding a common denominator:\nx + y = (ad + bc) / (bd).\n\nLet p = ad + bc and q = bd.\nSince a, b, c, d are integers, p is an integer (integers closed under multiplication and addition).\nSince b ≠ 0 and d ≠ 0, q = bd ≠ 0.\n\nThus x + y = p/q, which satisfies the definition of a rational number.\n\nTherefore, the sum of two rational numbers is rational."
+  },
+  {
+    "id": "math101-t2-ex12",
+    "subjectId": "math101",
+    "topicId": "math101-topic-2",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Euclid's Theorem (Infinitude of Primes)",
+    "description": "Prove by contradiction that there are infinitely many prime numbers.",
+    "hints": [
+      "Assume there is a finite list of primes p₁, p₂, ..., pₙ.",
+      "Construct a number N = p₁p₂...pₙ + 1.",
+      "Consider the prime factors of N."
+    ],
+    "solution": "Proof by contradiction:\nAssume there are finitely many primes. List them as p₁, p₂, ..., pₙ.\n\nConsider the number N = (p₁ · p₂ · ... · pₙ) + 1.\n\nN is an integer > 1, so by the Fundamental Theorem of Arithmetic, it must have at least one prime factor, say q.\n\nSince p₁, ..., pₙ are ALL the primes, q must be one of them (say q = pᵢ).\n\nIf q divides N, and q divides the product (p₁...pₙ), then q must divide their difference:\nN - (p₁...pₙ) = 1.\n\nBut no prime divides 1. This is a contradiction.\n\nTherefore, our assumption that there are finitely many primes is false.\n\nQ.E.D."
+  },
+  {
+    "id": "math101-t2-ex13",
+    "subjectId": "math101",
+    "topicId": "math101-topic-2",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Induction - Inequality",
+    "description": "Prove by induction that 2ⁿ > n² for all integers n ≥ 5.",
+    "hints": [
+      "Base case: n = 5.",
+      "Inductive step: Show 2ᵏ⁺¹ > (k+1)² assuming 2ᵏ > k².",
+      "You may need to show 2k² > (k+1)² separately."
+    ],
+    "solution": "Proof by induction:\n\nBase case (n = 5):\n2⁵ = 32\n5² = 25\n32 > 25, so base case holds.\n\nInductive hypothesis: Assume 2ᵏ > k² for some k ≥ 5.\n\nInductive step: Show 2ᵏ⁺¹ > (k+1)².\nLHS = 2ᵏ⁺¹ = 2 · 2ᵏ\n > 2 · k²  (by hypothesis)\n\nWe need to show 2k² > (k+1)² = k² + 2k + 1.\nSubtracting k² from both sides, we need to show k² > 2k + 1.\n\nSince k ≥ 5:\nk² = k · k ≥ 5k = 2k + 3k > 2k + 1.\nSo the inequality holds.\n\nTherefore, 2ᵏ⁺¹ > 2k² > (k+1)².\n\nBy induction, 2ⁿ > n² for all n ≥ 5."
+  },
+  {
+    "id": "math101-t2-ex14",
+    "subjectId": "math101",
+    "topicId": "math101-topic-2",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Without Loss of Generality (WLOG)",
+    "description": "Prove that if x and y are integers and xy is even, then at least one of x or y is even.",
+    "hints": [
+      "Use the contrapositive or contradiction.",
+      "Alternatively, use WLOG to avoid repeating symmetric cases in a direct proof.",
+      "Actually, contrapositive is easiest here: If both are odd, product is odd."
+    ],
+    "solution": "We prove the contrapositive: If x is odd AND y is odd, then xy is odd.\n\nLet x = 2a + 1 and y = 2b + 1.\nxy = (2a + 1)(2b + 1)\n   = 4ab + 2a + 2b + 1\n   = 2(2ab + a + b) + 1\n\nThis is of the form 2m + 1, so xy is odd.\n\nSince the contrapositive is true, the original statement is true: if xy is even, then NOT (x is odd AND y is odd), which means at least one is even."
+  },
+  {
+    "id": "math101-t2-ex15",
+    "subjectId": "math101",
+    "topicId": "math101-topic-2",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Constructive Existence Proof",
+    "description": "Prove that there exists a positive integer that can be written as the sum of two cubes in two different ways.",
+    "hints": [
+      "This is the famous logic of the \"Hardy-Ramanujan number\".",
+      "Try small cubes: 1³, 2³, ..., 10³ and look for sums that match.",
+      "12³ + 1³ = ?"
+    ],
+    "solution": "We construct such a number by example.\nConsider 1729.\n\n12³ + 1³ = 1728 + 1 = 1729\n10³ + 9³ = 1000 + 729 = 1729\n\nSince we have found a number (1729) that satisfies the property, the existence theorem is proven."
+  },
+  {
+    "id": "math101-t2-ex16",
+    "subjectId": "math101",
+    "topicId": "math101-topic-2",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Non-Constructive Existence Proof",
+    "description": "Prove that there exist irrational numbers x and y such that x^y is rational.",
+    "hints": [
+      "Consider the number √2^√2.",
+      "If it is rational, you are done (x=y=√2).",
+      "If it is irrational, let x = √2^√2 and y = √2."
+    ],
+    "solution": "Proof:\nConsider the number α = √2^√2.\n\nCase 1: α is rational.\nThen we choose x = √2 and y = √2. Both are irrational, and x^y = α is rational. The theorem holds.\n\nCase 2: α is irrational.\nThen we choose x = α (which is irrational) and y = √2 (irrational).\nConsider x^y = (√2^√2)^√2 = √2^(√2·√2) = √2² = 2.\nSince 2 is rational, the theorem holds.\n\nWe don't know which case is true, but in EITHER case, we have found suitable x and y. Thus such numbers exist."
+  }
+]

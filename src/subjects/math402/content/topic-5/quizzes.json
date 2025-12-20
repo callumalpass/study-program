@@ -1,0 +1,197 @@
+[
+  {
+    "id": "math402-quiz-5a",
+    "subjectId": "math402",
+    "topicId": "math402-topic-5",
+    "title": "Direct Methods for Linear Systems - Fundamentals",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "Gaussian elimination without pivoting can fail when:",
+        "options": [
+          "The matrix is not square",
+          "A zero pivot is encountered",
+          "The matrix is symmetric",
+          "The right-hand side is zero"
+        ],
+        "correctAnswer": 1,
+        "explanation": "If a diagonal element (pivot) becomes zero during elimination, division by zero occurs. Pivoting (row swapping) is needed to continue."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "The computational complexity of Gaussian elimination for an n×n system is:",
+        "options": [
+          "O(n)",
+          "O(n^2)",
+          "O(n^3)",
+          "O(2^n)"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Gaussian elimination requires approximately (2/3)n^3 floating-point operations for the forward elimination phase, making it O(n^3)."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "LU decomposition is only possible for invertible matrices.",
+        "correctAnswer": false,
+        "explanation": "False. LU decomposition (with partial pivoting as PA=LU) is possible for any matrix, though the L and U factors reveal rank deficiency for singular matrices."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "The main advantage of LU decomposition over direct Gaussian elimination is:",
+        "options": [
+          "Lower computational cost",
+          "Ability to solve multiple systems with the same matrix efficiently",
+          "Better numerical stability",
+          "Works for singular matrices"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Once A = LU is computed (O(n^3)), solving Ax = b for different b requires only forward/backward substitution (O(n^2) each), making it efficient for multiple right-hand sides."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "In LU decomposition A = LU, L is a ____ triangular matrix and U is an upper triangular matrix.",
+        "correctAnswer": "lower",
+        "explanation": "L (Lower) is lower triangular with ones on the diagonal, and U (Upper) is upper triangular."
+      }
+    ]
+  },
+  {
+    "id": "math402-quiz-5b",
+    "subjectId": "math402",
+    "topicId": "math402-topic-5",
+    "title": "Direct Methods for Linear Systems - Application",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "Partial pivoting in Gaussian elimination involves:",
+        "options": [
+          "Swapping rows to maximize the pivot element in the current column",
+          "Swapping both rows and columns",
+          "Dividing by the largest element in the matrix",
+          "Scaling each row by its maximum element"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Partial pivoting selects the row with the largest absolute value in the current column as the pivot row, improving numerical stability by avoiding small pivots."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "Cholesky decomposition A = LL^T can be applied when A is:",
+        "options": [
+          "Any invertible matrix",
+          "Symmetric positive definite",
+          "Upper triangular",
+          "Diagonal"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Cholesky requires A to be symmetric positive definite (SPD). It computes L such that A = LL^T, using only (1/3)n^3 operations—half the cost of standard LU."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "The condition number κ(A) = ||A|| ||A^{-1}|| measures the sensitivity of the solution to perturbations in the data.",
+        "correctAnswer": true,
+        "explanation": "True. A large condition number indicates ill-conditioning: small changes in A or b can cause large changes in the solution x. κ(A) ≥ 1 for all matrices."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "QR factorization decomposes A into an orthogonal matrix Q and:",
+        "options": [
+          "A lower triangular matrix R",
+          "An upper triangular matrix R",
+          "A diagonal matrix R",
+          "Another orthogonal matrix R"
+        ],
+        "correctAnswer": 1,
+        "explanation": "QR factorization gives A = QR where Q is orthogonal (Q^TQ = I) and R is upper triangular. It's particularly useful for least squares problems."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "What is the storage cost advantage of storing LU factors compared to storing L and U separately?",
+        "options": [
+          "No advantage—requires the same space",
+          "LU can be stored in-place in the original matrix space",
+          "LU requires half the space",
+          "LU requires logarithmic space"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Since L has ones on the diagonal, we can store L's subdiagonal elements and U's elements in the space of the original n×n matrix, saving memory."
+      }
+    ]
+  },
+  {
+    "id": "math402-quiz-5c",
+    "subjectId": "math402",
+    "topicId": "math402-topic-5",
+    "title": "Direct Methods for Linear Systems - Mastery",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "The growth factor in Gaussian elimination with partial pivoting measures:",
+        "options": [
+          "The increase in the condition number",
+          "How much the elements grow during elimination",
+          "The number of row swaps performed",
+          "The error in the computed solution"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Growth factor ρ = max_{i,j,k}|a_{ij}^{(k)}| / max_{i,j}|a_{ij}| measures element growth. For partial pivoting, ρ ≤ 2^{n-1}, though this worst case is rarely observed in practice."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "The Singular Value Decomposition (SVD) A = UΣV^T provides:",
+        "options": [
+          "A faster alternative to LU for solving linear systems",
+          "Optimal low-rank approximations and condition number computation",
+          "A method only applicable to square matrices",
+          "Lower computational cost than QR factorization"
+        ],
+        "correctAnswer": 1,
+        "explanation": "SVD reveals the rank, null space, condition number (κ = σ_max/σ_min), and optimal low-rank approximations of any matrix. It's computationally expensive but extremely informative."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "For a symmetric positive definite matrix, Cholesky decomposition is both faster and more stable than LU decomposition.",
+        "correctAnswer": true,
+        "explanation": "True. Cholesky requires half the operations of LU, produces a smaller growth factor, and doesn't require pivoting for SPD matrices, making it preferable when applicable."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "If the condition number κ(A) = 10^8 and the solution is computed with machine precision 10^{-16}, the expected number of accurate digits in the solution is approximately:",
+        "options": [
+          "16",
+          "8",
+          "24",
+          "0"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Relative error in solution ≈ κ(A) × machine precision = 10^8 × 10^{-16} = 10^{-8}. This gives about 8 significant digits of accuracy (16 - log_{10}(10^8) = 8)."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "The main advantage of iterative refinement for linear systems is:",
+        "options": [
+          "Reducing the computational cost from O(n^3) to O(n^2)",
+          "Improving the accuracy of an approximate solution using residuals",
+          "Eliminating the need for factorization",
+          "Working only with sparse matrices"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Iterative refinement solves A(x + δx) = b - Ax̃ = r (residual) repeatedly to improve accuracy. Computing r in higher precision can recover full accuracy even for ill-conditioned systems."
+      }
+    ]
+  }
+]

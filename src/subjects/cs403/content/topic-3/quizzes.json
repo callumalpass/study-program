@@ -1,0 +1,180 @@
+[
+  {
+    "id": "cs403-quiz-3-1",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-3",
+    "title": "Topic 3: Randomization — Fundamentals",
+    "questions": [
+      {
+        "id": "cs403-q31",
+        "type": "multiple_choice",
+        "prompt": "A Las Vegas randomized algorithm is one that:",
+        "options": [
+          "Always outputs a correct answer, but has random runtime",
+          "Runs in fixed time but may be wrong",
+          "Is correct only with probability ≥ 1/2",
+          "Requires an oracle for randomness"
+        ],
+        "correctAnswer": "Always outputs a correct answer, but has random runtime",
+        "explanation": "Las Vegas algorithms never sacrifice correctness; the randomness affects runtime (e.g., expected polynomial time), not the probability of error."
+      },
+      {
+        "id": "cs403-q32",
+        "type": "multiple_choice",
+        "prompt": "Karger’s min-cut algorithm finds the true min-cut in one run with probability at least:",
+        "options": [
+          "2/(n(n-1))",
+          "1/n",
+          "1/2",
+          "1/e"
+        ],
+        "correctAnswer": "2/(n(n-1))",
+        "explanation": "Karger’s contraction algorithm succeeds with probability ≥ 2/(n(n−1)) per run; repeating boosts success probability."
+      },
+      {
+        "id": "cs403-q33",
+        "type": "true_false",
+        "prompt": "Pairwise independent hash functions are sufficient to guarantee zero collisions.",
+        "correctAnswer": false,
+        "explanation": "Pairwise independence controls collision probability but does not eliminate collisions. Collisions are inevitable when mapping a larger domain to a smaller range."
+      },
+      {
+        "id": "cs403-q34",
+        "type": "fill_blank",
+        "prompt": "Randomized quicksort has expected time complexity O(n _____).",
+        "correctAnswer": "log n",
+        "explanation": "Randomized quicksort runs in expected O(n log n) time due to the expected balance of partitions."
+      },
+      {
+        "id": "cs403-q35",
+        "type": "code_output",
+        "prompt": "What is the output?",
+        "codeSnippet": "function trial(p: number): boolean {\n  return Math.random() < p;\n}\n\nlet wins = 0;\nfor (let i = 0; i < 0; i++) {\n  if (trial(0.5)) wins++;\n}\nconsole.log(wins);",
+        "correctAnswer": "0",
+        "explanation": "The loop runs zero iterations, so `wins` stays 0 and 0 is printed. This question is about reading code carefully, not probability."
+      }
+    ]
+  },
+  {
+    "id": "cs403-quiz-3-2",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-3",
+    "title": "Topic 3: Randomization — Application",
+    "questions": [
+      {
+        "id": "cs403-q36",
+        "type": "multiple_choice",
+        "prompt": "If an event happens with probability at least 1/2 in each independent trial, how many independent trials are needed to make failure probability ≤ 1/16?",
+        "options": [
+          "2",
+          "4",
+          "8",
+          "16"
+        ],
+        "correctAnswer": "4",
+        "explanation": "Failure per trial is ≤ 1/2. After t independent trials, failure probability is ≤ (1/2)^t. Setting (1/2)^t ≤ 1/16 gives t ≥ 4."
+      },
+      {
+        "id": "cs403-q37",
+        "type": "multiple_choice",
+        "prompt": "Which technique is commonly used to reduce error probability in a Monte Carlo algorithm?",
+        "options": [
+          "Amplification via repetition and majority vote",
+          "Memoization",
+          "Topological sorting",
+          "Dynamic programming"
+        ],
+        "correctAnswer": "Amplification via repetition and majority vote",
+        "explanation": "Repeating independent runs and taking a majority vote (or appropriate aggregation) reduces error exponentially in the number of repetitions."
+      },
+      {
+        "id": "cs403-q38",
+        "type": "true_false",
+        "prompt": "Miller–Rabin primality test can be made to have error probability at most 2^{-k} by running k independent rounds.",
+        "correctAnswer": true,
+        "explanation": "Each independent round reduces the probability that a composite number is declared “probably prime.” The error decreases exponentially with the number of rounds."
+      },
+      {
+        "id": "cs403-q39",
+        "type": "fill_blank",
+        "prompt": "Reservoir sampling maintains a uniform random sample of size k from a stream of unknown length using O(_____) memory.",
+        "correctAnswer": "k",
+        "explanation": "Reservoir sampling stores only the k sampled items (plus small overhead), using O(k) memory independent of stream length."
+      },
+      {
+        "id": "cs403-q40",
+        "type": "multiple_choice",
+        "prompt": "In randomized selection (Quickselect), the expected time is O(n) because:",
+        "options": [
+          "The expected size of the remaining subproblem decreases geometrically",
+          "It sorts the array first",
+          "It always picks the median pivot",
+          "It uses a heap"
+        ],
+        "correctAnswer": "The expected size of the remaining subproblem decreases geometrically",
+        "explanation": "With a random pivot, there is a constant probability of discarding a constant fraction of elements each step, giving expected linear time."
+      }
+    ]
+  },
+  {
+    "id": "cs403-quiz-3-3",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-3",
+    "title": "Topic 3: Randomization — Mastery",
+    "questions": [
+      {
+        "id": "cs403-q41",
+        "type": "multiple_choice",
+        "prompt": "Yao’s minimax principle is used to relate:",
+        "options": [
+          "Randomized algorithm lower bounds to distributions over inputs",
+          "Approximation ratios to LP duals",
+          "Competitive ratios to amortized costs",
+          "Hashing to sorting"
+        ],
+        "correctAnswer": "Randomized algorithm lower bounds to distributions over inputs",
+        "explanation": "Yao’s principle states that the expected cost of the best randomized algorithm on the worst input is at least the expected cost of the best deterministic algorithm on some input distribution."
+      },
+      {
+        "id": "cs403-q42",
+        "type": "true_false",
+        "prompt": "The linearity of expectation allows computing expected values without any independence assumptions.",
+        "correctAnswer": true,
+        "explanation": "Linearity of expectation holds regardless of whether random variables are independent, making it a powerful tool in randomized algorithm analysis."
+      },
+      {
+        "id": "cs403-q43",
+        "type": "multiple_choice",
+        "prompt": "A Chernoff bound is most directly used to bound:",
+        "options": [
+          "The probability that the sum of independent random variables deviates far from its mean",
+          "The worst-case runtime of deterministic algorithms",
+          "Exact optimal solutions to NP-hard problems",
+          "The number of edges in a graph"
+        ],
+        "correctAnswer": "The probability that the sum of independent random variables deviates far from its mean",
+        "explanation": "Chernoff bounds provide exponentially small tail bounds for sums of independent bounded random variables, commonly used to show concentration around the mean."
+      },
+      {
+        "id": "cs403-q44",
+        "type": "fill_blank",
+        "prompt": "A Monte Carlo algorithm that always runs in polynomial time but may be wrong has probabilistic _____ (not runtime).",
+        "correctAnswer": "correctness",
+        "explanation": "Monte Carlo algorithms have bounded runtime and may err; the randomness affects correctness probability rather than runtime."
+      },
+      {
+        "id": "cs403-q45",
+        "type": "multiple_choice",
+        "prompt": "For Karger’s algorithm, repeating O(n² log n) times is enough to achieve:",
+        "options": [
+          "High probability of finding the min-cut",
+          "Deterministic correctness",
+          "Polynomial memory usage instead of linear",
+          "Exact max-flow computation"
+        ],
+        "correctAnswer": "High probability of finding the min-cut",
+        "explanation": "Each run succeeds with small probability, but repeating enough times amplifies success to high probability using the union bound and exponential decay."
+      }
+    ]
+  }
+]

@@ -1,0 +1,306 @@
+[
+  {
+    "id": "cs402-t1-ex01",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-1",
+    "title": "Load and Explore Dataset",
+    "difficulty": 1,
+    "description": "Load a CSV dataset using pandas and perform basic exploratory data analysis.\n\nRequirements:\n- Load data from 'data.csv'\n- Display first 5 rows\n- Show data types and missing values\n- Calculate basic statistics\n- Display shape of dataset",
+    "starterCode": "import pandas as pd\nimport numpy as np\n\n# Load the dataset\ndf = None\n\n# Display information\n# TODO: Implement exploration",
+    "solution": "import pandas as pd\nimport numpy as np\n\n# Load the dataset\ndf = pd.read_csv('data.csv')\n\n# Display first 5 rows\nprint(df.head())\n\n# Show data types and missing values\nprint(\"\\nData Info:\")\nprint(df.info())\n\nprint(\"\\nMissing Values:\")\nprint(df.isnull().sum())\n\n# Calculate basic statistics\nprint(\"\\nBasic Statistics:\")\nprint(df.describe())\n\n# Display shape\nprint(f\"\\nDataset Shape: {df.shape}\")",
+    "testCases": [],
+    "hints": [
+      "Use pd.read_csv() to load CSV files",
+      "df.head() shows the first few rows",
+      "df.info() provides data types and null counts",
+      "df.describe() gives statistical summary",
+      "df.shape returns (rows, columns)"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-t1-ex02",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-1",
+    "title": "Handle Missing Values",
+    "difficulty": 2,
+    "description": "Implement different strategies for handling missing values in a dataset.\n\nRequirements:\n- Identify columns with missing values\n- Remove rows with any missing values\n- Fill numeric columns with mean\n- Fill categorical columns with mode\n- Forward fill time series data",
+    "starterCode": "import pandas as pd\nimport numpy as np\n\ndef handle_missing_values(df, strategy='mean'):\n    \"\"\"\n    Handle missing values using specified strategy.\n\n    Args:\n        df: DataFrame with missing values\n        strategy: 'drop', 'mean', 'median', 'mode', 'ffill'\n\n    Returns:\n        DataFrame with handled missing values\n    \"\"\"\n    # TODO: Implement missing value handling\n    pass",
+    "solution": "import pandas as pd\nimport numpy as np\n\ndef handle_missing_values(df, strategy='mean'):\n    \"\"\"\n    Handle missing values using specified strategy.\n\n    Args:\n        df: DataFrame with missing values\n        strategy: 'drop', 'mean', 'median', 'mode', 'ffill'\n\n    Returns:\n        DataFrame with handled missing values\n    \"\"\"\n    df_clean = df.copy()\n\n    if strategy == 'drop':\n        df_clean = df_clean.dropna()\n    elif strategy == 'mean':\n        numeric_cols = df_clean.select_dtypes(include=[np.number]).columns\n        df_clean[numeric_cols] = df_clean[numeric_cols].fillna(df_clean[numeric_cols].mean())\n    elif strategy == 'median':\n        numeric_cols = df_clean.select_dtypes(include=[np.number]).columns\n        df_clean[numeric_cols] = df_clean[numeric_cols].fillna(df_clean[numeric_cols].median())\n    elif strategy == 'mode':\n        for col in df_clean.columns:\n            df_clean[col].fillna(df_clean[col].mode()[0], inplace=True)\n    elif strategy == 'ffill':\n        df_clean = df_clean.fillna(method='ffill')\n\n    return df_clean",
+    "testCases": [],
+    "hints": [
+      "Use df.dropna() to remove rows with missing values",
+      "df.fillna() can fill with specific values",
+      "df.mean(), df.median(), df.mode() calculate statistics",
+      "select_dtypes() helps identify numeric columns",
+      "Forward fill propagates last valid observation forward"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-t1-ex03",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-1",
+    "title": "Detect and Remove Outliers",
+    "difficulty": 2,
+    "description": "Detect outliers using IQR method and optionally remove them.\n\nRequirements:\n- Calculate Q1, Q3, and IQR for numeric columns\n- Identify outliers using 1.5 * IQR rule\n- Return boolean mask of outliers\n- Optionally remove outlier rows",
+    "starterCode": "import pandas as pd\nimport numpy as np\n\ndef detect_outliers(df, columns=None, remove=False):\n    \"\"\"\n    Detect outliers using IQR method.\n\n    Args:\n        df: Input DataFrame\n        columns: List of columns to check (None = all numeric)\n        remove: If True, remove outlier rows\n\n    Returns:\n        If remove=False: boolean mask\n        If remove=True: cleaned DataFrame\n    \"\"\"\n    # TODO: Implement outlier detection\n    pass",
+    "solution": "import pandas as pd\nimport numpy as np\n\ndef detect_outliers(df, columns=None, remove=False):\n    \"\"\"\n    Detect outliers using IQR method.\n\n    Args:\n        df: Input DataFrame\n        columns: List of columns to check (None = all numeric)\n        remove: If True, remove outlier rows\n\n    Returns:\n        If remove=False: boolean mask\n        If remove=True: cleaned DataFrame\n    \"\"\"\n    if columns is None:\n        columns = df.select_dtypes(include=[np.number]).columns\n\n    outlier_mask = pd.Series([False] * len(df), index=df.index)\n\n    for col in columns:\n        Q1 = df[col].quantile(0.25)\n        Q3 = df[col].quantile(0.75)\n        IQR = Q3 - Q1\n\n        lower_bound = Q1 - 1.5 * IQR\n        upper_bound = Q3 + 1.5 * IQR\n\n        col_outliers = (df[col] < lower_bound) | (df[col] > upper_bound)\n        outlier_mask = outlier_mask | col_outliers\n\n    if remove:\n        return df[~outlier_mask]\n    else:\n        return outlier_mask",
+    "testCases": [],
+    "hints": [
+      "Q1 is the 25th percentile, Q3 is the 75th percentile",
+      "IQR = Q3 - Q1",
+      "Outliers are below Q1 - 1.5*IQR or above Q3 + 1.5*IQR",
+      "Use quantile() method to calculate percentiles",
+      "Combine boolean masks with | (or) operator"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-t1-ex04",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-1",
+    "title": "Implement Label Encoding",
+    "difficulty": 2,
+    "description": "Convert categorical variables to numeric labels.\n\nRequirements:\n- Identify categorical columns\n- Map each unique category to an integer\n- Return encoded DataFrame and mapping dictionary\n- Handle unseen categories in transform",
+    "starterCode": "import pandas as pd\nimport numpy as np\n\nclass LabelEncoder:\n    def __init__(self):\n        self.mapping = {}\n\n    def fit(self, data):\n        \"\"\"Learn the mapping from categories to integers.\"\"\"\n        # TODO: Implement fit\n        pass\n\n    def transform(self, data):\n        \"\"\"Transform categories to integers.\"\"\"\n        # TODO: Implement transform\n        pass\n\n    def fit_transform(self, data):\n        \"\"\"Fit and transform in one step.\"\"\"\n        self.fit(data)\n        return self.transform(data)",
+    "solution": "import pandas as pd\nimport numpy as np\n\nclass LabelEncoder:\n    def __init__(self):\n        self.mapping = {}\n\n    def fit(self, data):\n        \"\"\"Learn the mapping from categories to integers.\"\"\"\n        unique_values = sorted(data.unique())\n        self.mapping = {val: idx for idx, val in enumerate(unique_values)}\n        return self\n\n    def transform(self, data):\n        \"\"\"Transform categories to integers.\"\"\"\n        return data.map(self.mapping).fillna(-1).astype(int)\n\n    def fit_transform(self, data):\n        \"\"\"Fit and transform in one step.\"\"\"\n        self.fit(data)\n        return self.transform(data)",
+    "testCases": [],
+    "hints": [
+      "Use data.unique() to get unique categories",
+      "Create dictionary mapping categories to integers",
+      "Use map() to apply the mapping",
+      "Handle missing mappings with fillna()",
+      "Sort categories for consistent encoding"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-t1-ex05",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-1",
+    "title": "Implement One-Hot Encoding",
+    "difficulty": 2,
+    "description": "Convert categorical variables to binary columns (one-hot encoding).\n\nRequirements:\n- Create binary column for each category\n- Handle multiple categorical columns\n- Avoid dummy variable trap (drop first column)\n- Return DataFrame with encoded columns",
+    "starterCode": "import pandas as pd\nimport numpy as np\n\ndef one_hot_encode(df, columns, drop_first=True):\n    \"\"\"\n    One-hot encode categorical columns.\n\n    Args:\n        df: Input DataFrame\n        columns: List of columns to encode\n        drop_first: Drop first category to avoid multicollinearity\n\n    Returns:\n        DataFrame with one-hot encoded columns\n    \"\"\"\n    # TODO: Implement one-hot encoding\n    pass",
+    "solution": "import pandas as pd\nimport numpy as np\n\ndef one_hot_encode(df, columns, drop_first=True):\n    \"\"\"\n    One-hot encode categorical columns.\n\n    Args:\n        df: Input DataFrame\n        columns: List of columns to encode\n        drop_first: Drop first category to avoid multicollinearity\n\n    Returns:\n        DataFrame with one-hot encoded columns\n    \"\"\"\n    df_encoded = df.copy()\n\n    for col in columns:\n        # Create dummy variables\n        dummies = pd.get_dummies(df_encoded[col], prefix=col, drop_first=drop_first)\n\n        # Drop original column and add dummy columns\n        df_encoded = df_encoded.drop(col, axis=1)\n        df_encoded = pd.concat([df_encoded, dummies], axis=1)\n\n    return df_encoded",
+    "testCases": [],
+    "hints": [
+      "Use pd.get_dummies() for one-hot encoding",
+      "Set prefix parameter to include original column name",
+      "drop_first=True removes one category to avoid dummy trap",
+      "Use pd.concat() to combine DataFrames",
+      "Drop original column after creating dummies"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-t1-ex06",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-1",
+    "title": "Implement Min-Max Scaling",
+    "difficulty": 2,
+    "description": "Scale features to a fixed range [0, 1] using min-max normalization.\n\nRequirements:\n- Calculate min and max for each feature\n- Scale features: (x - min) / (max - min)\n- Handle case where min = max\n- Implement fit and transform methods",
+    "starterCode": "import numpy as np\n\nclass MinMaxScaler:\n    def __init__(self):\n        self.min_ = None\n        self.max_ = None\n\n    def fit(self, X):\n        \"\"\"Learn min and max from training data.\"\"\"\n        # TODO: Implement fit\n        pass\n\n    def transform(self, X):\n        \"\"\"Scale features to [0, 1] range.\"\"\"\n        # TODO: Implement transform\n        pass\n\n    def fit_transform(self, X):\n        \"\"\"Fit and transform in one step.\"\"\"\n        self.fit(X)\n        return self.transform(X)",
+    "solution": "import numpy as np\n\nclass MinMaxScaler:\n    def __init__(self):\n        self.min_ = None\n        self.max_ = None\n\n    def fit(self, X):\n        \"\"\"Learn min and max from training data.\"\"\"\n        self.min_ = np.min(X, axis=0)\n        self.max_ = np.max(X, axis=0)\n        return self\n\n    def transform(self, X):\n        \"\"\"Scale features to [0, 1] range.\"\"\"\n        X = np.array(X)\n        # Handle case where min = max\n        range_ = self.max_ - self.min_\n        range_[range_ == 0] = 1\n\n        X_scaled = (X - self.min_) / range_\n        return X_scaled\n\n    def fit_transform(self, X):\n        \"\"\"Fit and transform in one step.\"\"\"\n        self.fit(X)\n        return self.transform(X)",
+    "testCases": [],
+    "hints": [
+      "Use np.min() and np.max() with axis=0 for column-wise",
+      "Formula: (x - min) / (max - min)",
+      "When min = max, set range to 1 to avoid division by zero",
+      "Store min and max during fit for later transform",
+      "Ensure X is numpy array for vectorized operations"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-t1-ex07",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-1",
+    "title": "Implement Standard Scaling",
+    "difficulty": 2,
+    "description": "Standardize features by removing mean and scaling to unit variance.\n\nRequirements:\n- Calculate mean and standard deviation\n- Scale features: (x - mean) / std\n- Handle case where std = 0\n- Implement fit and transform methods",
+    "starterCode": "import numpy as np\n\nclass StandardScaler:\n    def __init__(self):\n        self.mean_ = None\n        self.std_ = None\n\n    def fit(self, X):\n        \"\"\"Learn mean and std from training data.\"\"\"\n        # TODO: Implement fit\n        pass\n\n    def transform(self, X):\n        \"\"\"Standardize features.\"\"\"\n        # TODO: Implement transform\n        pass\n\n    def fit_transform(self, X):\n        \"\"\"Fit and transform in one step.\"\"\"\n        self.fit(X)\n        return self.transform(X)",
+    "solution": "import numpy as np\n\nclass StandardScaler:\n    def __init__(self):\n        self.mean_ = None\n        self.std_ = None\n\n    def fit(self, X):\n        \"\"\"Learn mean and std from training data.\"\"\"\n        self.mean_ = np.mean(X, axis=0)\n        self.std_ = np.std(X, axis=0)\n        return self\n\n    def transform(self, X):\n        \"\"\"Standardize features.\"\"\"\n        X = np.array(X)\n        # Handle case where std = 0\n        std = self.std_.copy()\n        std[std == 0] = 1\n\n        X_scaled = (X - self.mean_) / std\n        return X_scaled\n\n    def fit_transform(self, X):\n        \"\"\"Fit and transform in one step.\"\"\"\n        self.fit(X)\n        return self.transform(X)",
+    "testCases": [],
+    "hints": [
+      "Use np.mean() and np.std() with axis=0",
+      "Formula: (x - mean) / std",
+      "When std = 0, set it to 1 to avoid division by zero",
+      "Standardized data has mean=0 and std=1",
+      "Store statistics during fit for consistent transform"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-t1-ex08",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-1",
+    "title": "Implement Train-Test Split",
+    "difficulty": 2,
+    "description": "Split dataset into training and testing sets.\n\nRequirements:\n- Support stratified splitting for classification\n- Shuffle data before splitting\n- Handle both numpy arrays and pandas DataFrames\n- Return X_train, X_test, y_train, y_test",
+    "starterCode": "import numpy as np\nimport pandas as pd\n\ndef train_test_split(X, y, test_size=0.2, random_state=None, stratify=None):\n    \"\"\"\n    Split data into training and testing sets.\n\n    Args:\n        X: Features\n        y: Target\n        test_size: Proportion for test set\n        random_state: Random seed\n        stratify: If not None, data is split in a stratified fashion\n\n    Returns:\n        X_train, X_test, y_train, y_test\n    \"\"\"\n    # TODO: Implement train-test split\n    pass",
+    "solution": "import numpy as np\nimport pandas as pd\n\ndef train_test_split(X, y, test_size=0.2, random_state=None, stratify=None):\n    \"\"\"\n    Split data into training and testing sets.\n\n    Args:\n        X: Features\n        y: Target\n        test_size: Proportion for test set\n        random_state: Random seed\n        stratify: If not None, data is split in a stratified fashion\n\n    Returns:\n        X_train, X_test, y_train, y_test\n    \"\"\"\n    if random_state is not None:\n        np.random.seed(random_state)\n\n    n_samples = len(X)\n    n_test = int(n_samples * test_size)\n\n    if stratify is not None:\n        # Stratified split\n        unique_classes = np.unique(stratify)\n        train_idx = []\n        test_idx = []\n\n        for cls in unique_classes:\n            cls_idx = np.where(stratify == cls)[0]\n            np.random.shuffle(cls_idx)\n            n_cls_test = int(len(cls_idx) * test_size)\n            test_idx.extend(cls_idx[:n_cls_test])\n            train_idx.extend(cls_idx[n_cls_test:])\n\n        train_idx = np.array(train_idx)\n        test_idx = np.array(test_idx)\n    else:\n        # Random split\n        indices = np.arange(n_samples)\n        np.random.shuffle(indices)\n        test_idx = indices[:n_test]\n        train_idx = indices[n_test:]\n\n    # Handle pandas DataFrame\n    if isinstance(X, pd.DataFrame):\n        X_train = X.iloc[train_idx]\n        X_test = X.iloc[test_idx]\n        y_train = y.iloc[train_idx]\n        y_test = y.iloc[test_idx]\n    else:\n        X_train = X[train_idx]\n        X_test = X[test_idx]\n        y_train = y[train_idx]\n        y_test = y[test_idx]\n\n    return X_train, X_test, y_train, y_test",
+    "testCases": [],
+    "hints": [
+      "Use np.random.shuffle() to randomize data",
+      "Calculate test size as proportion of total samples",
+      "For stratified split, maintain class proportions",
+      "Use np.where() to find indices of each class",
+      "Handle both numpy arrays and pandas DataFrames"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-t1-ex09",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-1",
+    "title": "Create Polynomial Features",
+    "difficulty": 3,
+    "description": "Generate polynomial and interaction features from input features.\n\nRequirements:\n- Create features up to specified degree\n- Include interaction terms (x1*x2)\n- Include bias term (column of ones)\n- Handle multiple features efficiently",
+    "starterCode": "import numpy as np\nfrom itertools import combinations_with_replacement\n\nclass PolynomialFeatures:\n    def __init__(self, degree=2, include_bias=True):\n        self.degree = degree\n        self.include_bias = include_bias\n\n    def fit_transform(self, X):\n        \"\"\"Generate polynomial features.\"\"\"\n        # TODO: Implement polynomial feature generation\n        pass",
+    "solution": "import numpy as np\nfrom itertools import combinations_with_replacement\n\nclass PolynomialFeatures:\n    def __init__(self, degree=2, include_bias=True):\n        self.degree = degree\n        self.include_bias = include_bias\n\n    def fit_transform(self, X):\n        \"\"\"Generate polynomial features.\"\"\"\n        X = np.array(X)\n        n_samples, n_features = X.shape\n\n        # Generate all combinations of features up to degree\n        combinations = []\n        for d in range(0 if self.include_bias else 1, self.degree + 1):\n            for combo in combinations_with_replacement(range(n_features), d):\n                combinations.append(combo)\n\n        # Create polynomial features\n        X_poly = np.zeros((n_samples, len(combinations)))\n        for i, combo in enumerate(combinations):\n            if len(combo) == 0:\n                # Bias term\n                X_poly[:, i] = 1\n            else:\n                # Product of features in combination\n                X_poly[:, i] = np.prod(X[:, combo], axis=1)\n\n        return X_poly",
+    "testCases": [],
+    "hints": [
+      "Use itertools.combinations_with_replacement for feature combinations",
+      "For degree=2 with 2 features: [1, x1, x2, x1^2, x1*x2, x2^2]",
+      "np.prod() computes product along axis",
+      "Empty combination represents bias term (1)",
+      "Number of features grows quickly with degree"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-t1-ex10",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-1",
+    "title": "Implement Feature Selection by Correlation",
+    "difficulty": 3,
+    "description": "Select features based on correlation with target variable.\n\nRequirements:\n- Calculate correlation between each feature and target\n- Select top k features with highest absolute correlation\n- Return selected feature indices and correlations\n- Handle multicollinearity (highly correlated features)",
+    "starterCode": "import numpy as np\nimport pandas as pd\n\ndef select_features_by_correlation(X, y, k=10, threshold=0.9):\n    \"\"\"\n    Select features by correlation with target.\n\n    Args:\n        X: Feature matrix\n        y: Target variable\n        k: Number of features to select\n        threshold: Remove features with correlation > threshold\n\n    Returns:\n        selected_indices: Indices of selected features\n        correlations: Correlation values\n    \"\"\"\n    # TODO: Implement feature selection\n    pass",
+    "solution": "import numpy as np\nimport pandas as pd\n\ndef select_features_by_correlation(X, y, k=10, threshold=0.9):\n    \"\"\"\n    Select features by correlation with target.\n\n    Args:\n        X: Feature matrix\n        y: Target variable\n        k: Number of features to select\n        threshold: Remove features with correlation > threshold\n\n    Returns:\n        selected_indices: Indices of selected features\n        correlations: Correlation values\n    \"\"\"\n    X = np.array(X)\n    y = np.array(y)\n\n    # Calculate correlation with target\n    correlations = []\n    for i in range(X.shape[1]):\n        corr = np.corrcoef(X[:, i], y)[0, 1]\n        correlations.append(abs(corr))\n\n    correlations = np.array(correlations)\n\n    # Sort by correlation\n    sorted_indices = np.argsort(correlations)[::-1]\n\n    # Select features, avoiding multicollinearity\n    selected_indices = []\n    for idx in sorted_indices:\n        if len(selected_indices) >= k:\n            break\n\n        # Check correlation with already selected features\n        is_collinear = False\n        for selected_idx in selected_indices:\n            corr = abs(np.corrcoef(X[:, idx], X[:, selected_idx])[0, 1])\n            if corr > threshold:\n                is_collinear = True\n                break\n\n        if not is_collinear:\n            selected_indices.append(idx)\n\n    return np.array(selected_indices), correlations[selected_indices]",
+    "testCases": [],
+    "hints": [
+      "Use np.corrcoef() to calculate correlation",
+      "Take absolute value to consider both positive and negative correlation",
+      "np.argsort()[::-1] sorts in descending order",
+      "Check correlation between features to avoid multicollinearity",
+      "Stop when k features are selected"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-t1-ex11",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-1",
+    "title": "Handle Imbalanced Datasets",
+    "difficulty": 3,
+    "description": "Implement techniques to handle imbalanced classification datasets.\n\nRequirements:\n- Random oversampling of minority class\n- Random undersampling of majority class\n- SMOTE-like synthetic sample generation\n- Return balanced dataset",
+    "starterCode": "import numpy as np\n\ndef balance_dataset(X, y, method='oversample'):\n    \"\"\"\n    Balance imbalanced dataset.\n\n    Args:\n        X: Feature matrix\n        y: Target labels\n        method: 'oversample', 'undersample', or 'smote'\n\n    Returns:\n        X_balanced, y_balanced\n    \"\"\"\n    # TODO: Implement dataset balancing\n    pass",
+    "solution": "import numpy as np\n\ndef balance_dataset(X, y, method='oversample'):\n    \"\"\"\n    Balance imbalanced dataset.\n\n    Args:\n        X: Feature matrix\n        y: Target labels\n        method: 'oversample', 'undersample', or 'smote'\n\n    Returns:\n        X_balanced, y_balanced\n    \"\"\"\n    X = np.array(X)\n    y = np.array(y)\n\n    classes, counts = np.unique(y, return_counts=True)\n\n    if method == 'oversample':\n        # Oversample minority classes\n        max_count = np.max(counts)\n        X_balanced = []\n        y_balanced = []\n\n        for cls in classes:\n            cls_idx = np.where(y == cls)[0]\n            X_cls = X[cls_idx]\n            y_cls = y[cls_idx]\n\n            # Resample with replacement\n            n_samples = max_count - len(cls_idx)\n            if n_samples > 0:\n                resample_idx = np.random.choice(len(cls_idx), n_samples, replace=True)\n                X_cls = np.vstack([X_cls, X_cls[resample_idx]])\n                y_cls = np.hstack([y_cls, y_cls[resample_idx]])\n\n            X_balanced.append(X_cls)\n            y_balanced.append(y_cls)\n\n        X_balanced = np.vstack(X_balanced)\n        y_balanced = np.hstack(y_balanced)\n\n    elif method == 'undersample':\n        # Undersample majority classes\n        min_count = np.min(counts)\n        X_balanced = []\n        y_balanced = []\n\n        for cls in classes:\n            cls_idx = np.where(y == cls)[0]\n            # Sample without replacement\n            sample_idx = np.random.choice(cls_idx, min_count, replace=False)\n            X_balanced.append(X[sample_idx])\n            y_balanced.append(y[sample_idx])\n\n        X_balanced = np.vstack(X_balanced)\n        y_balanced = np.hstack(y_balanced)\n\n    elif method == 'smote':\n        # Simple SMOTE: create synthetic samples between neighbors\n        max_count = np.max(counts)\n        X_balanced = []\n        y_balanced = []\n\n        for cls in classes:\n            cls_idx = np.where(y == cls)[0]\n            X_cls = X[cls_idx]\n            y_cls = y[cls_idx]\n\n            n_synthetic = max_count - len(cls_idx)\n            if n_synthetic > 0:\n                # Generate synthetic samples\n                for _ in range(n_synthetic):\n                    idx1, idx2 = np.random.choice(len(cls_idx), 2, replace=True)\n                    # Linear interpolation\n                    alpha = np.random.random()\n                    synthetic = X_cls[idx1] + alpha * (X_cls[idx2] - X_cls[idx1])\n                    X_cls = np.vstack([X_cls, synthetic])\n                    y_cls = np.hstack([y_cls, cls])\n\n            X_balanced.append(X_cls)\n            y_balanced.append(y_cls)\n\n        X_balanced = np.vstack(X_balanced)\n        y_balanced = np.hstack(y_balanced)\n\n    return X_balanced, y_balanced",
+    "testCases": [],
+    "hints": [
+      "Use np.unique() with return_counts=True to find class distribution",
+      "Oversample: duplicate minority class samples randomly",
+      "Undersample: randomly select subset of majority class",
+      "SMOTE: create synthetic samples between existing samples",
+      "Linear interpolation: x_new = x1 + alpha * (x2 - x1)"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-t1-ex12",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-1",
+    "title": "Implement K-Fold Cross-Validation Indices",
+    "difficulty": 3,
+    "description": "Generate indices for k-fold cross-validation.\n\nRequirements:\n- Split data into k folds\n- Return train and validation indices for each fold\n- Support stratified k-fold for classification\n- Handle edge cases (k > n_samples)",
+    "starterCode": "import numpy as np\n\ndef k_fold_indices(n_samples, k=5, stratify=None):\n    \"\"\"\n    Generate k-fold cross-validation indices.\n\n    Args:\n        n_samples: Number of samples\n        k: Number of folds\n        stratify: Labels for stratified k-fold\n\n    Yields:\n        train_idx, val_idx for each fold\n    \"\"\"\n    # TODO: Implement k-fold index generation\n    pass",
+    "solution": "import numpy as np\n\ndef k_fold_indices(n_samples, k=5, stratify=None):\n    \"\"\"\n    Generate k-fold cross-validation indices.\n\n    Args:\n        n_samples: Number of samples\n        k: Number of folds\n        stratify: Labels for stratified k-fold\n\n    Yields:\n        train_idx, val_idx for each fold\n    \"\"\"\n    if k > n_samples:\n        raise ValueError(f\"k={k} cannot be greater than n_samples={n_samples}\")\n\n    if stratify is not None:\n        # Stratified k-fold\n        unique_classes = np.unique(stratify)\n        fold_indices = [[] for _ in range(k)]\n\n        for cls in unique_classes:\n            cls_idx = np.where(stratify == cls)[0]\n            np.random.shuffle(cls_idx)\n            # Distribute class samples across folds\n            for i, idx in enumerate(cls_idx):\n                fold_indices[i % k].append(idx)\n\n        # Convert to arrays\n        fold_indices = [np.array(fold) for fold in fold_indices]\n    else:\n        # Regular k-fold\n        indices = np.arange(n_samples)\n        np.random.shuffle(indices)\n        fold_indices = np.array_split(indices, k)\n\n    # Generate train/val splits\n    for i in range(k):\n        val_idx = fold_indices[i]\n        train_idx = np.concatenate([fold_indices[j] for j in range(k) if j != i])\n        yield train_idx, val_idx",
+    "testCases": [],
+    "hints": [
+      "Divide samples into k approximately equal folds",
+      "For each fold: use fold as validation, rest as training",
+      "Stratified: maintain class proportions in each fold",
+      "Use np.array_split() to divide into k parts",
+      "Yield train and validation indices for each fold"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-t1-ex13",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-1",
+    "title": "Feature Binning",
+    "difficulty": 2,
+    "description": "Discretize continuous features into bins.\n\nRequirements:\n- Support equal-width binning\n- Support equal-frequency (quantile) binning\n- Return bin edges and transformed data\n- Handle edge cases",
+    "starterCode": "import numpy as np\n\ndef bin_features(X, n_bins=5, strategy='uniform'):\n    \"\"\"\n    Bin continuous features.\n\n    Args:\n        X: Feature array\n        n_bins: Number of bins\n        strategy: 'uniform' (equal width) or 'quantile' (equal frequency)\n\n    Returns:\n        X_binned, bin_edges\n    \"\"\"\n    # TODO: Implement feature binning\n    pass",
+    "solution": "import numpy as np\n\ndef bin_features(X, n_bins=5, strategy='uniform'):\n    \"\"\"\n    Bin continuous features.\n\n    Args:\n        X: Feature array\n        n_bins: Number of bins\n        strategy: 'uniform' (equal width) or 'quantile' (equal frequency)\n\n    Returns:\n        X_binned, bin_edges\n    \"\"\"\n    X = np.array(X)\n\n    if strategy == 'uniform':\n        # Equal-width bins\n        min_val = np.min(X)\n        max_val = np.max(X)\n        bin_edges = np.linspace(min_val, max_val, n_bins + 1)\n    elif strategy == 'quantile':\n        # Equal-frequency bins\n        quantiles = np.linspace(0, 100, n_bins + 1)\n        bin_edges = np.percentile(X, quantiles)\n        # Ensure unique edges\n        bin_edges = np.unique(bin_edges)\n    else:\n        raise ValueError(f\"Unknown strategy: {strategy}\")\n\n    # Bin the data\n    X_binned = np.digitize(X, bin_edges[:-1]) - 1\n    # Clip to valid range\n    X_binned = np.clip(X_binned, 0, n_bins - 1)\n\n    return X_binned, bin_edges",
+    "testCases": [],
+    "hints": [
+      "Uniform: use np.linspace() between min and max",
+      "Quantile: use np.percentile() for equal-frequency bins",
+      "np.digitize() assigns values to bins",
+      "Subtract 1 from digitize result for 0-based indexing",
+      "Use np.clip() to ensure bins are in valid range"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-t1-ex14",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-1",
+    "title": "Calculate Feature Importance",
+    "difficulty": 3,
+    "description": "Calculate feature importance using permutation importance.\n\nRequirements:\n- Train a simple model\n- For each feature, permute values and measure performance drop\n- Larger drop = more important feature\n- Return feature importance scores",
+    "starterCode": "import numpy as np\n\ndef permutation_importance(model, X, y, metric='accuracy', n_repeats=10):\n    \"\"\"\n    Calculate permutation feature importance.\n\n    Args:\n        model: Trained model with predict method\n        X: Feature matrix\n        y: True labels\n        metric: 'accuracy' or 'mse'\n        n_repeats: Number of permutations per feature\n\n    Returns:\n        importances: Array of importance scores\n    \"\"\"\n    # TODO: Implement permutation importance\n    pass",
+    "solution": "import numpy as np\n\ndef permutation_importance(model, X, y, metric='accuracy', n_repeats=10):\n    \"\"\"\n    Calculate permutation feature importance.\n\n    Args:\n        model: Trained model with predict method\n        X: Feature matrix\n        y: True labels\n        metric: 'accuracy' or 'mse'\n        n_repeats: Number of permutations per feature\n\n    Returns:\n        importances: Array of importance scores\n    \"\"\"\n    X = np.array(X)\n    y = np.array(y)\n    n_features = X.shape[1]\n\n    # Calculate baseline score\n    y_pred = model.predict(X)\n    if metric == 'accuracy':\n        baseline_score = np.mean(y_pred == y)\n    elif metric == 'mse':\n        baseline_score = -np.mean((y_pred - y) ** 2)  # Negative for consistency\n\n    importances = np.zeros(n_features)\n\n    # Permute each feature\n    for i in range(n_features):\n        scores = []\n        for _ in range(n_repeats):\n            X_permuted = X.copy()\n            # Permute feature i\n            X_permuted[:, i] = np.random.permutation(X_permuted[:, i])\n\n            # Calculate score with permuted feature\n            y_pred = model.predict(X_permuted)\n            if metric == 'accuracy':\n                score = np.mean(y_pred == y)\n            elif metric == 'mse':\n                score = -np.mean((y_pred - y) ** 2)\n\n            scores.append(score)\n\n        # Importance is drop in performance\n        importances[i] = baseline_score - np.mean(scores)\n\n    return importances",
+    "testCases": [],
+    "hints": [
+      "Calculate baseline performance with original features",
+      "Permute each feature independently",
+      "Measure performance drop after permutation",
+      "Average over multiple permutations for stability",
+      "Important features cause large performance drop when permuted"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-t1-ex15",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-1",
+    "title": "Time Series Train-Test Split",
+    "difficulty": 2,
+    "description": "Split time series data maintaining temporal order.\n\nRequirements:\n- Preserve temporal order (no shuffling)\n- Split by date or index\n- Support multiple time-based splits\n- Return train and test indices",
+    "starterCode": "import numpy as np\nimport pandas as pd\n\ndef time_series_split(data, n_splits=5, test_size=None):\n    \"\"\"\n    Split time series data preserving temporal order.\n\n    Args:\n        data: Time series data or indices\n        n_splits: Number of splits\n        test_size: Size of test set (if None, use expanding window)\n\n    Yields:\n        train_idx, test_idx for each split\n    \"\"\"\n    # TODO: Implement time series split\n    pass",
+    "solution": "import numpy as np\nimport pandas as pd\n\ndef time_series_split(data, n_splits=5, test_size=None):\n    \"\"\"\n    Split time series data preserving temporal order.\n\n    Args:\n        data: Time series data or indices\n        n_splits: Number of splits\n        test_size: Size of test set (if None, use expanding window)\n\n    Yields:\n        train_idx, test_idx for each split\n    \"\"\"\n    n_samples = len(data)\n\n    if test_size is None:\n        # Expanding window: each split adds more training data\n        test_size = n_samples // (n_splits + 1)\n\n    for i in range(n_splits):\n        # Test set starts after training set\n        test_start = (i + 1) * test_size\n        test_end = test_start + test_size\n\n        if test_end > n_samples:\n            test_end = n_samples\n\n        train_idx = np.arange(0, test_start)\n        test_idx = np.arange(test_start, test_end)\n\n        if len(test_idx) > 0:\n            yield train_idx, test_idx",
+    "testCases": [],
+    "hints": [
+      "Never shuffle time series data",
+      "Training data always comes before test data",
+      "Expanding window: training set grows with each split",
+      "Test sets should be consecutive time periods",
+      "Ensure test set exists for each split"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-t1-ex16",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-1",
+    "title": "Data Augmentation for Tabular Data",
+    "difficulty": 3,
+    "description": "Augment tabular dataset by adding noise and synthetic samples.\n\nRequirements:\n- Add Gaussian noise to numeric features\n- Create synthetic samples via interpolation\n- Preserve data distribution\n- Return augmented dataset",
+    "starterCode": "import numpy as np\n\ndef augment_tabular_data(X, y=None, n_augment=None, noise_level=0.1):\n    \"\"\"\n    Augment tabular data with noise and synthetic samples.\n\n    Args:\n        X: Feature matrix\n        y: Labels (optional)\n        n_augment: Number of synthetic samples to create\n        noise_level: Standard deviation of Gaussian noise\n\n    Returns:\n        X_augmented, y_augmented (if y provided)\n    \"\"\"\n    # TODO: Implement data augmentation\n    pass",
+    "solution": "import numpy as np\n\ndef augment_tabular_data(X, y=None, n_augment=None, noise_level=0.1):\n    \"\"\"\n    Augment tabular data with noise and synthetic samples.\n\n    Args:\n        X: Feature matrix\n        y: Labels (optional)\n        n_augment: Number of synthetic samples to create\n        noise_level: Standard deviation of Gaussian noise\n\n    Returns:\n        X_augmented, y_augmented (if y provided)\n    \"\"\"\n    X = np.array(X)\n    n_samples, n_features = X.shape\n\n    if n_augment is None:\n        n_augment = n_samples // 2\n\n    X_synthetic = []\n    y_synthetic = [] if y is not None else None\n\n    for _ in range(n_augment):\n        # Select two random samples\n        idx1, idx2 = np.random.choice(n_samples, 2, replace=True)\n\n        # Create synthetic sample via interpolation\n        alpha = np.random.random()\n        x_new = X[idx1] + alpha * (X[idx2] - X[idx1])\n\n        # Add Gaussian noise\n        noise = np.random.normal(0, noise_level * np.std(X, axis=0), n_features)\n        x_new = x_new + noise\n\n        X_synthetic.append(x_new)\n\n        if y is not None:\n            # Use label from closer sample\n            y_new = y[idx1] if alpha < 0.5 else y[idx2]\n            y_synthetic.append(y_new)\n\n    X_augmented = np.vstack([X, np.array(X_synthetic)])\n\n    if y is not None:\n        y_augmented = np.hstack([y, np.array(y_synthetic)])\n        return X_augmented, y_augmented\n    else:\n        return X_augmented",
+    "testCases": [],
+    "hints": [
+      "Interpolate between existing samples: x_new = x1 + alpha*(x2-x1)",
+      "Add small Gaussian noise scaled by feature std",
+      "For labels, use label of closer sample",
+      "noise_level controls augmentation strength",
+      "Use np.std() to scale noise by feature variance"
+    ],
+    "language": "python"
+  }
+]

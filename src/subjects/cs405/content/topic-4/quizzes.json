@@ -1,0 +1,185 @@
+[
+  {
+    "id": "cs405-quiz-4",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-4",
+    "title": "Kubernetes - Architecture and Fundamentals",
+    "questions": [
+      {
+        "id": "q4-1",
+        "type": "multiple_choice",
+        "prompt": "Which component is the Kubernetes control plane's API server?",
+        "options": [
+          "kubelet",
+          "kube-apiserver",
+          "kube-scheduler",
+          "etcd"
+        ],
+        "correctAnswer": 1,
+        "explanation": "kube-apiserver is the front-end of the Kubernetes control plane, exposing the Kubernetes API. All operations go through the API server."
+      },
+      {
+        "id": "q4-2",
+        "type": "true_false",
+        "prompt": "Pods are the smallest deployable units in Kubernetes.",
+        "correctAnswer": true,
+        "explanation": "Pods are the smallest and simplest Kubernetes objects. A Pod represents a single instance of a running process in your cluster and can contain one or more containers."
+      },
+      {
+        "id": "q4-3",
+        "type": "multiple_choice",
+        "prompt": "What is the role of kubelet?",
+        "options": [
+          "Manages the API server",
+          "Runs on worker nodes and manages pods",
+          "Stores cluster state",
+          "Schedules pods to nodes"
+        ],
+        "correctAnswer": 1,
+        "explanation": "kubelet is an agent that runs on each worker node. It ensures containers are running in a Pod and reports node and pod status back to the control plane."
+      },
+      {
+        "id": "q4-4",
+        "type": "multiple_choice",
+        "prompt": "Which Kubernetes object stores cluster state?",
+        "options": [
+          "kube-apiserver",
+          "etcd",
+          "kube-controller-manager",
+          "kube-proxy"
+        ],
+        "correctAnswer": 1,
+        "explanation": "etcd is a consistent and highly-available key-value store used as Kubernetes' backing store for all cluster data. It's the source of truth for the cluster."
+      },
+      {
+        "id": "q4-5",
+        "type": "true_false",
+        "prompt": "Each Pod gets its own unique IP address in Kubernetes.",
+        "correctAnswer": true,
+        "explanation": "Kubernetes assigns each Pod a unique IP address. Containers within a Pod share the network namespace, including the IP address and network ports."
+      }
+    ]
+  },
+  {
+    "id": "cs405-quiz-4b",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-4",
+    "title": "Kubernetes - Deployments and Services",
+    "questions": [
+      {
+        "id": "q4b-1",
+        "type": "multiple_choice",
+        "prompt": "What is the primary purpose of a Kubernetes Deployment?",
+        "options": [
+          "Expose applications to the network",
+          "Manage stateful applications",
+          "Provide declarative updates for Pods and ReplicaSets",
+          "Store configuration data"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Deployments provide declarative updates for Pods and ReplicaSets. They manage rolling updates, rollbacks, and scaling of applications."
+      },
+      {
+        "id": "q4b-2",
+        "type": "true_false",
+        "prompt": "A Kubernetes Service provides a stable IP address and DNS name for accessing Pods.",
+        "correctAnswer": true,
+        "explanation": "Services provide stable networking for Pods, which have ephemeral IPs. A Service gets a stable ClusterIP and DNS name that doesn't change when Pods are recreated."
+      },
+      {
+        "id": "q4b-3",
+        "type": "multiple_choice",
+        "prompt": "Which Service type exposes the Service on a static port on each node?",
+        "options": [
+          "ClusterIP",
+          "NodePort",
+          "LoadBalancer",
+          "ExternalName"
+        ],
+        "correctAnswer": 1,
+        "explanation": "NodePort exposes the Service on a static port (30000-32767) on each node's IP. External traffic can access the Service via <NodeIP>:<NodePort>."
+      },
+      {
+        "id": "q4b-4",
+        "type": "multiple_choice",
+        "prompt": "What happens when you update a Deployment with a new image?",
+        "options": [
+          "All Pods are deleted and recreated simultaneously",
+          "Pods are updated one at a time with zero downtime",
+          "The Deployment is deleted and recreated",
+          "Nothing happens automatically"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Deployments perform rolling updates by default, gradually replacing Pods with the new version. This ensures zero downtime during updates."
+      },
+      {
+        "id": "q4b-5",
+        "type": "true_false",
+        "prompt": "LoadBalancer Service type only works on cloud providers.",
+        "correctAnswer": true,
+        "explanation": "LoadBalancer Service type provisions a cloud load balancer (AWS ELB, Azure Load Balancer, etc.). On-premises clusters typically use MetalLB or similar for LoadBalancer support."
+      }
+    ]
+  },
+  {
+    "id": "cs405-quiz-4c",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-4",
+    "title": "Kubernetes - Configuration and Scaling",
+    "questions": [
+      {
+        "id": "q4c-1",
+        "type": "multiple_choice",
+        "prompt": "What is the difference between ConfigMaps and Secrets?",
+        "options": [
+          "No difference, they are identical",
+          "ConfigMaps store non-sensitive data, Secrets store sensitive data with base64 encoding",
+          "ConfigMaps are encrypted, Secrets are not",
+          "Secrets are faster than ConfigMaps"
+        ],
+        "correctAnswer": 1,
+        "explanation": "ConfigMaps store non-sensitive configuration data. Secrets store sensitive data (passwords, tokens) and are base64-encoded. Secrets can be encrypted at rest with additional configuration."
+      },
+      {
+        "id": "q4c-2",
+        "type": "true_false",
+        "prompt": "Horizontal Pod Autoscaler (HPA) automatically scales the number of Pods based on CPU/memory usage.",
+        "correctAnswer": true,
+        "explanation": "HPA automatically scales the number of Pods in a Deployment or ReplicaSet based on observed metrics like CPU utilization, memory, or custom metrics."
+      },
+      {
+        "id": "q4c-3",
+        "type": "multiple_choice",
+        "prompt": "Which kubectl command scales a Deployment to 5 replicas?",
+        "options": [
+          "kubectl scale deployment myapp --replicas=5",
+          "kubectl set replicas myapp 5",
+          "kubectl resize deployment myapp 5",
+          "kubectl update deployment myapp --size=5"
+        ],
+        "correctAnswer": 0,
+        "explanation": "kubectl scale deployment <name> --replicas=<count> scales a Deployment. For example: kubectl scale deployment myapp --replicas=5"
+      },
+      {
+        "id": "q4c-4",
+        "type": "multiple_choice",
+        "prompt": "What is a StatefulSet used for?",
+        "options": [
+          "Stateless applications",
+          "Managing stateful applications with stable network identities",
+          "Batch jobs",
+          "One-off tasks"
+        ],
+        "correctAnswer": 1,
+        "explanation": "StatefulSets manage stateful applications requiring stable network identities, persistent storage, and ordered deployment/scaling (databases, distributed systems)."
+      },
+      {
+        "id": "q4c-5",
+        "type": "true_false",
+        "prompt": "Helm is a package manager for Kubernetes.",
+        "correctAnswer": true,
+        "explanation": "Helm is the package manager for Kubernetes. It uses \"charts\" (packages of pre-configured Kubernetes resources) to define, install, and upgrade complex Kubernetes applications."
+      }
+    ]
+  }
+]

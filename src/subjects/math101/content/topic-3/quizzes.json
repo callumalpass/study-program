@@ -1,0 +1,185 @@
+[
+  {
+    "id": "math101-quiz-3a",
+    "subjectId": "math101",
+    "topicId": "math101-topic-3",
+    "title": "Sets and Set Operations - Fundamentals",
+    "questions": [
+      {
+        "id": "math101-q3a-1",
+        "type": "multiple_choice",
+        "prompt": "If A = {1, 2, 3} and B = {3, 4, 5}, what is A ∩ B?",
+        "options": [
+          "{1, 2, 3, 4, 5}",
+          "{3}",
+          "{1, 2}",
+          "∅"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The intersection A ∩ B contains only elements that are in both A and B. The only element common to both sets is 3."
+      },
+      {
+        "id": "math101-q3a-2",
+        "type": "multiple_choice",
+        "prompt": "If A = {1, 2, 3} and B = {3, 4, 5}, what is A ∪ B?",
+        "options": [
+          "{1, 2, 3, 4, 5}",
+          "{3}",
+          "{1, 2, 4, 5}",
+          "{1, 2}"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The union A ∪ B contains all elements that are in A OR in B (or both). Combined: {1, 2, 3, 4, 5}."
+      },
+      {
+        "id": "math101-q3a-3",
+        "type": "true_false",
+        "prompt": "For any set A, the empty set ∅ is a subset of A.",
+        "correctAnswer": true,
+        "explanation": "True. The empty set is a subset of every set. This is because there are no elements in ∅ that could fail to be in A."
+      },
+      {
+        "id": "math101-q3a-4",
+        "type": "multiple_choice",
+        "prompt": "How many elements are in the power set of a set with 4 elements?",
+        "options": [
+          "4",
+          "8",
+          "16",
+          "32"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The power set of a set with n elements has 2^n elements. For n = 4, we get 2^4 = 16 subsets (including the empty set and the set itself)."
+      },
+      {
+        "id": "math101-q3a-5",
+        "type": "fill_blank",
+        "prompt": "The set containing all elements that are in A but not in B is called the set ____ of B from A.",
+        "correctAnswer": "difference",
+        "explanation": "The set difference A - B (or A \\ B) contains elements in A that are not in B."
+      }
+    ]
+  },
+  {
+    "id": "math101-quiz-3b",
+    "subjectId": "math101",
+    "topicId": "math101-topic-3",
+    "title": "Sets and Set Operations - Application",
+    "questions": [
+      {
+        "id": "math101-q3b-1",
+        "type": "multiple_choice",
+        "prompt": "If U = {1, 2, 3, 4, 5} is the universal set and A = {1, 3, 5}, what is the complement of A?",
+        "options": [
+          "{1, 3, 5}",
+          "{2, 4}",
+          "{1, 2, 3, 4, 5}",
+          "∅"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The complement of A contains all elements in the universal set U that are NOT in A. Ā = U - A = {2, 4}."
+      },
+      {
+        "id": "math101-q3b-2",
+        "type": "true_false",
+        "prompt": "For any sets A and B: A - B = A ∩ B̄ (where B̄ is the complement of B).",
+        "correctAnswer": true,
+        "explanation": "Yes, the set difference A - B is equivalent to the intersection of A with the complement of B. Both represent \"elements in A but not in B.\""
+      },
+      {
+        "id": "math101-q3b-3",
+        "type": "multiple_choice",
+        "prompt": "Which of the following equals (A ∪ B)̄ according to De Morgan's Law?",
+        "options": [
+          "Ā ∪ B̄",
+          "Ā ∩ B̄",
+          "A ∩ B",
+          "A ∪ B"
+        ],
+        "correctAnswer": 1,
+        "explanation": "De Morgan's Law: The complement of a union is the intersection of the complements. (A ∪ B)̄ = Ā ∩ B̄."
+      },
+      {
+        "id": "math101-q3b-4",
+        "type": "multiple_choice",
+        "prompt": "What is the cardinality of A × B if |A| = 3 and |B| = 4?",
+        "options": [
+          "7",
+          "12",
+          "81",
+          "24"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The Cartesian product A × B contains all ordered pairs (a, b) where a ∈ A and b ∈ B. |A × B| = |A| × |B| = 3 × 4 = 12."
+      },
+      {
+        "id": "math101-q3b-5",
+        "type": "true_false",
+        "prompt": "If A ⊆ B and B ⊆ A, then A = B.",
+        "correctAnswer": true,
+        "explanation": "This is how set equality is defined. Two sets are equal if and only if each is a subset of the other."
+      }
+    ]
+  },
+  {
+    "id": "math101-quiz-3c",
+    "subjectId": "math101",
+    "topicId": "math101-topic-3",
+    "title": "Sets and Set Operations - Advanced",
+    "questions": [
+      {
+        "id": "math101-q3c-1",
+        "type": "multiple_choice",
+        "prompt": "For finite sets A and B, which formula gives |A ∪ B|?",
+        "options": [
+          "|A| + |B|",
+          "|A| × |B|",
+          "|A| + |B| - |A ∩ B|",
+          "|A| - |B|"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The inclusion-exclusion principle: |A ∪ B| = |A| + |B| - |A ∩ B|. We subtract the intersection to avoid counting common elements twice."
+      },
+      {
+        "id": "math101-q3c-2",
+        "type": "true_false",
+        "prompt": "The power set of {1, 2} is {{}, {1}, {2}, {1, 2}}.",
+        "correctAnswer": true,
+        "explanation": "The power set contains all subsets: the empty set {}, each singleton {1} and {2}, and the set itself {1, 2}. That's 2² = 4 elements."
+      },
+      {
+        "id": "math101-q3c-3",
+        "type": "multiple_choice",
+        "prompt": "Which property states that A ∪ (B ∩ C) = (A ∪ B) ∩ (A ∪ C)?",
+        "options": [
+          "Commutative property",
+          "Associative property",
+          "Distributive property",
+          "De Morgan's Law"
+        ],
+        "correctAnswer": 2,
+        "explanation": "This is the distributive property of union over intersection. Union distributes over intersection (and vice versa)."
+      },
+      {
+        "id": "math101-q3c-4",
+        "type": "multiple_choice",
+        "prompt": "If A = {1, 2} and B = {a, b}, what is (A × B) ∩ (B × A)?",
+        "options": [
+          "{(1, a), (2, b)}",
+          "{(a, 1), (b, 2)}",
+          "∅",
+          "{(1, 1), (2, 2)}"
+        ],
+        "correctAnswer": 2,
+        "explanation": "A × B contains pairs like (1, a), (1, b), etc. B × A contains pairs like (a, 1), (b, 2), etc. No ordered pair appears in both, so the intersection is empty."
+      },
+      {
+        "id": "math101-q3c-5",
+        "type": "fill_blank",
+        "prompt": "The symmetric difference A △ B contains elements that are in A or B but not in both. It equals (A - B) ∪ ____.",
+        "correctAnswer": "(B - A)",
+        "explanation": "A △ B = (A - B) ∪ (B - A) = (A ∪ B) - (A ∩ B). It's the \"exclusive or\" for sets."
+      }
+    ]
+  }
+]

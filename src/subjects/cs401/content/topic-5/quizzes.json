@@ -1,0 +1,221 @@
+[
+  {
+    "id": "cs401-quiz-5-1",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-5",
+    "title": "Fault Tolerance - Failure Types",
+    "questions": [
+      {
+        "id": "cs401-q61",
+        "type": "multiple_choice",
+        "prompt": "What is a fail-stop failure?",
+        "options": [
+          "Process halts and others can detect it",
+          "Process sends corrupted data",
+          "Process continues with wrong behavior",
+          "Network partition"
+        ],
+        "correctAnswer": "Process halts and others can detect it",
+        "explanation": "In fail-stop failures, a process halts completely and other processes can reliably detect that it has failed, making it easier to handle than other failure types."
+      },
+      {
+        "id": "cs401-q62",
+        "type": "multiple_choice",
+        "prompt": "What is a Byzantine failure?",
+        "options": [
+          "Arbitrary or malicious behavior",
+          "Process crashes",
+          "Network delay",
+          "Disk failure"
+        ],
+        "correctAnswer": "Arbitrary or malicious behavior",
+        "explanation": "Byzantine failures involve arbitrary or malicious behavior where nodes may send incorrect or contradictory information. This is the most difficult failure type to handle."
+      },
+      {
+        "id": "cs401-q63",
+        "type": "multiple_choice",
+        "prompt": "How many failures can Byzantine Fault Tolerance (BFT) tolerate with N nodes?",
+        "options": [
+          "(N-1)/3 failures",
+          "N/2 failures",
+          "N-1 failures",
+          "Any number"
+        ],
+        "correctAnswer": "(N-1)/3 failures",
+        "explanation": "BFT systems require at least 3f+1 nodes to tolerate f Byzantine failures, meaning they can tolerate less than one-third failures, which is more expensive than crash tolerance."
+      },
+      {
+        "id": "cs401-q64",
+        "type": "multiple_choice",
+        "prompt": "What is a failure detector?",
+        "options": [
+          "Component that monitors and reports process failures",
+          "Hardware that prevents failures",
+          "Software that fixes bugs",
+          "Network monitoring tool"
+        ],
+        "correctAnswer": "Component that monitors and reports process failures",
+        "explanation": "A failure detector is a distributed system component that monitors processes and reports suspected failures, typically using heartbeats and timeouts, though it may be unreliable."
+      },
+      {
+        "id": "cs401-q65",
+        "type": "multiple_choice",
+        "prompt": "What is the difference between completeness and accuracy in failure detection?",
+        "options": [
+          "Completeness: detect all failures; Accuracy: no false positives",
+          "Completeness: fast detection; Accuracy: low overhead",
+          "Completeness: correct failures; Accuracy: complete failures",
+          "They are the same thing"
+        ],
+        "correctAnswer": "Completeness: detect all failures; Accuracy: no false positives",
+        "explanation": "Completeness means eventually detecting all actual failures. Accuracy means not incorrectly suspecting correct processes. Perfect failure detection is impossible in asynchronous systems."
+      }
+    ]
+  },
+  {
+    "id": "cs401-quiz-5-2",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-5",
+    "title": "Fault Tolerance - Recovery Mechanisms",
+    "questions": [
+      {
+        "id": "cs401-q66",
+        "type": "multiple_choice",
+        "prompt": "What is an eventually perfect failure detector?",
+        "options": [
+          "Eventually stops making mistakes about correct processes",
+          "Immediately detects all failures",
+          "Never makes mistakes",
+          "Detects Byzantine failures"
+        ],
+        "correctAnswer": "Eventually stops making mistakes about correct processes",
+        "explanation": "An eventually perfect failure detector may make mistakes initially but eventually accurately identifies all crashed processes and stops suspecting correct ones, useful in practice."
+      },
+      {
+        "id": "cs401-q67",
+        "type": "multiple_choice",
+        "prompt": "What is checkpointing in fault tolerance?",
+        "options": [
+          "Periodically saving process state for recovery",
+          "Validating data correctness",
+          "Testing system security",
+          "Monitoring performance"
+        ],
+        "correctAnswer": "Periodically saving process state for recovery",
+        "explanation": "Checkpointing involves periodically saving the state of a process to stable storage, allowing it to recover to a consistent state after a failure without restarting from the beginning."
+      },
+      {
+        "id": "cs401-q68",
+        "type": "multiple_choice",
+        "prompt": "What is message logging used for in fault tolerance?",
+        "options": [
+          "Recording messages to replay after recovery",
+          "Debugging message content",
+          "Compressing messages",
+          "Routing messages"
+        ],
+        "correctAnswer": "Recording messages to replay after recovery",
+        "explanation": "Message logging records received messages so that after a failure, a process can recover from a checkpoint and replay logged messages to reach a consistent state."
+      },
+      {
+        "id": "cs401-q69",
+        "type": "multiple_choice",
+        "prompt": "What is the orphan problem in recovery?",
+        "options": [
+          "Recovered process doesn't know about messages it sent before failure",
+          "Lost child processes",
+          "Undelivered messages",
+          "Memory leaks"
+        ],
+        "correctAnswer": "Recovered process doesn't know about messages it sent before failure",
+        "explanation": "The orphan problem occurs when a recovered process doesn't remember sending messages before failure, but other processes have received them and acted on them, causing inconsistencies."
+      },
+      {
+        "id": "cs401-q70",
+        "type": "multiple_choice",
+        "prompt": "What is a circuit breaker pattern?",
+        "options": [
+          "Preventing cascading failures by stopping calls to failing services",
+          "Breaking network connections",
+          "Interrupting power supply",
+          "Stopping all processes"
+        ],
+        "correctAnswer": "Preventing cascading failures by stopping calls to failing services",
+        "explanation": "Circuit breakers monitor for failures and \"open\" (stop forwarding requests) when failure rate exceeds a threshold, preventing cascading failures and giving failing services time to recover."
+      }
+    ]
+  },
+  {
+    "id": "cs401-quiz-5-3",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-5",
+    "title": "Fault Tolerance - Resilience Patterns",
+    "questions": [
+      {
+        "id": "cs401-q71",
+        "type": "multiple_choice",
+        "prompt": "What are the three states in a circuit breaker?",
+        "options": [
+          "Closed, Open, Half-Open",
+          "On, Off, Standby",
+          "Active, Inactive, Suspended",
+          "Running, Stopped, Paused"
+        ],
+        "correctAnswer": "Closed, Open, Half-Open",
+        "explanation": "Circuit breakers have three states: Closed (normal operation), Open (blocking requests after failures), and Half-Open (testing if service recovered by allowing limited requests)."
+      },
+      {
+        "id": "cs401-q72",
+        "type": "multiple_choice",
+        "prompt": "What is the bulkhead pattern in fault tolerance?",
+        "options": [
+          "Isolating resources to prevent failure propagation",
+          "Adding more servers",
+          "Encrypting communications",
+          "Load balancing"
+        ],
+        "correctAnswer": "Isolating resources to prevent failure propagation",
+        "explanation": "Bulkhead pattern isolates resources (like thread pools or connection pools) so that failure in one part doesn't consume all resources and affect other parts of the system."
+      },
+      {
+        "id": "cs401-q73",
+        "type": "multiple_choice",
+        "prompt": "What is graceful degradation?",
+        "options": [
+          "Continuing with reduced functionality when failures occur",
+          "Slowly shutting down",
+          "Improving performance over time",
+          "Preventing all failures"
+        ],
+        "correctAnswer": "Continuing with reduced functionality when failures occur",
+        "explanation": "Graceful degradation allows a system to continue operating with reduced functionality when failures occur, rather than completely failing, improving overall availability."
+      },
+      {
+        "id": "cs401-q74",
+        "type": "multiple_choice",
+        "prompt": "What is retry with exponential backoff?",
+        "options": [
+          "Retrying failed operations with increasing delays",
+          "Retrying immediately many times",
+          "Never retrying",
+          "Retrying with random delays"
+        ],
+        "correctAnswer": "Retrying failed operations with increasing delays",
+        "explanation": "Exponential backoff increases delay between retries exponentially (e.g., 1s, 2s, 4s, 8s), preventing overwhelming a failing service while giving it time to recover."
+      },
+      {
+        "id": "cs401-q75",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of timeout in distributed systems?",
+        "options": [
+          "Detecting failures and preventing indefinite waiting",
+          "Measuring performance",
+          "Scheduling tasks",
+          "Encrypting data"
+        ],
+        "correctAnswer": "Detecting failures and preventing indefinite waiting",
+        "explanation": "Timeouts prevent processes from waiting indefinitely for responses, allowing failure detection and recovery. However, setting appropriate timeout values is challenging."
+      }
+    ]
+  }
+]

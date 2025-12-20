@@ -1,0 +1,185 @@
+[
+  {
+    "id": "math201-quiz-6a",
+    "subjectId": "math201",
+    "topicId": "math201-6",
+    "title": "Eigenvalues and Eigenvectors - Fundamentals",
+    "questions": [
+      {
+        "id": "math201-q6a-1",
+        "type": "multiple_choice",
+        "prompt": "A vector $v$ is an eigenvector of matrix $A$ if:",
+        "options": [
+          "$Av = v$",
+          "$Av = \\lambda v$ for some scalar $\\lambda$",
+          "$Av = 0$",
+          "$v = 0$"
+        ],
+        "correctAnswer": 1,
+        "explanation": "By definition, $v$ is an eigenvector if $Av = \\lambda v$ for some scalar $\\lambda$ (the eigenvalue), and $v \\neq 0$."
+      },
+      {
+        "id": "math201-q6a-2",
+        "type": "true_false",
+        "prompt": "The zero vector can be an eigenvector.",
+        "correctAnswer": false,
+        "explanation": "False. By definition, eigenvectors must be nonzero. The equation $Av = \\lambda v$ holds for $v = 0$ with any $\\lambda$, but we exclude this trivial case."
+      },
+      {
+        "id": "math201-q6a-3",
+        "type": "multiple_choice",
+        "prompt": "The characteristic equation of matrix $A$ is:",
+        "options": [
+          "$Av = \\lambda v$",
+          "$\\det(A - \\lambda I) = 0$",
+          "$A - \\lambda I = 0$",
+          "$\\det(A) = \\lambda$"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The characteristic equation is $\\det(A - \\lambda I) = 0$. Its solutions are the eigenvalues of $A$."
+      },
+      {
+        "id": "math201-q6a-4",
+        "type": "multiple_choice",
+        "prompt": "For an $n \\times n$ matrix, the characteristic polynomial has degree:",
+        "options": [
+          "$n-1$",
+          "$n$",
+          "$n+1$",
+          "$2n$"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The characteristic polynomial $\\det(A - \\lambda I)$ is a polynomial in $\\lambda$ of degree $n$ for an $n \\times n$ matrix."
+      },
+      {
+        "id": "math201-q6a-5",
+        "type": "fill_blank",
+        "prompt": "The set of all eigenvectors corresponding to eigenvalue $\\lambda$ (plus the zero vector) is called the ____ of $\\lambda$.",
+        "correctAnswer": "eigenspace",
+        "explanation": "The eigenspace of $\\lambda$ is the null space of $(A - \\lambda I)$, containing all eigenvectors for $\\lambda$ plus the zero vector."
+      }
+    ]
+  },
+  {
+    "id": "math201-quiz-6b",
+    "subjectId": "math201",
+    "topicId": "math201-6",
+    "title": "Eigenvalues and Eigenvectors - Application",
+    "questions": [
+      {
+        "id": "math201-q6b-1",
+        "type": "multiple_choice",
+        "prompt": "A matrix $A$ is diagonalizable if:",
+        "options": [
+          "It has $n$ linearly independent eigenvectors",
+          "It is already diagonal",
+          "It is symmetric",
+          "It is invertible"
+        ],
+        "correctAnswer": 0,
+        "explanation": "An $n \\times n$ matrix is diagonalizable if and only if it has $n$ linearly independent eigenvectors, allowing $A = PDP^{-1}$ where $D$ is diagonal."
+      },
+      {
+        "id": "math201-q6b-2",
+        "type": "multiple_choice",
+        "prompt": "If $A = PDP^{-1}$ where $D$ is diagonal, then the columns of $P$ are:",
+        "options": [
+          "The eigenvalues of $A$",
+          "The eigenvectors of $A$",
+          "The rows of $A$",
+          "The diagonal entries of $D$"
+        ],
+        "correctAnswer": 1,
+        "explanation": "In the diagonalization $A = PDP^{-1}$, the columns of $P$ are eigenvectors of $A$, and the diagonal entries of $D$ are the corresponding eigenvalues."
+      },
+      {
+        "id": "math201-q6b-3",
+        "type": "true_false",
+        "prompt": "Eigenvectors corresponding to different eigenvalues are always linearly independent.",
+        "correctAnswer": true,
+        "explanation": "True. If $v_1, \\ldots, v_k$ are eigenvectors corresponding to distinct eigenvalues, they are automatically linearly independent."
+      },
+      {
+        "id": "math201-q6b-4",
+        "type": "multiple_choice",
+        "prompt": "The trace of matrix $A$ equals:",
+        "options": [
+          "The product of eigenvalues",
+          "The sum of eigenvalues",
+          "The largest eigenvalue",
+          "The determinant"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The trace (sum of diagonal entries) equals the sum of eigenvalues: $\\text{tr}(A) = \\lambda_1 + \\cdots + \\lambda_n$."
+      },
+      {
+        "id": "math201-q6b-5",
+        "type": "fill_blank",
+        "prompt": "The determinant of matrix $A$ equals the ____ of its eigenvalues.",
+        "correctAnswer": "product",
+        "explanation": "The determinant equals the product of eigenvalues: $\\det(A) = \\lambda_1 \\cdots \\lambda_n$."
+      }
+    ]
+  },
+  {
+    "id": "math201-quiz-6c",
+    "subjectId": "math201",
+    "topicId": "math201-6",
+    "title": "Eigenvalues and Eigenvectors - Mastery",
+    "questions": [
+      {
+        "id": "math201-q6c-1",
+        "type": "multiple_choice",
+        "prompt": "If $\\lambda$ is an eigenvalue of $A$, then $\\lambda^2$ is an eigenvalue of:",
+        "options": [
+          "$A$",
+          "$2A$",
+          "$A^2$",
+          "$A^{-1}$"
+        ],
+        "correctAnswer": 2,
+        "explanation": "If $Av = \\lambda v$, then $A^2v = A(Av) = A(\\lambda v) = \\lambda(Av) = \\lambda^2 v$. So $\\lambda^2$ is an eigenvalue of $A^2$."
+      },
+      {
+        "id": "math201-q6c-2",
+        "type": "multiple_choice",
+        "prompt": "A symmetric matrix is always:",
+        "options": [
+          "Invertible",
+          "Diagonalizable",
+          "Upper triangular",
+          "Has determinant 1"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The Spectral Theorem guarantees that every symmetric matrix is diagonalizable (in fact, orthogonally diagonalizable)."
+      },
+      {
+        "id": "math201-q6c-3",
+        "type": "true_false",
+        "prompt": "If 0 is an eigenvalue of $A$, then $A$ is not invertible.",
+        "correctAnswer": true,
+        "explanation": "True. If $\\lambda = 0$ is an eigenvalue, then $\\det(A - 0 \\cdot I) = \\det(A) = 0$, so $A$ is singular (not invertible)."
+      },
+      {
+        "id": "math201-q6c-4",
+        "type": "multiple_choice",
+        "prompt": "The geometric multiplicity of eigenvalue $\\lambda$ is:",
+        "options": [
+          "The number of times $\\lambda$ appears as a root of characteristic polynomial",
+          "The dimension of the eigenspace of $\\lambda$",
+          "Always equal to 1",
+          "The trace of the matrix"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Geometric multiplicity is $\\dim(\\text{Nul}(A - \\lambda I))$, the dimension of the eigenspace. Algebraic multiplicity is the multiplicity as a root of the characteristic polynomial."
+      },
+      {
+        "id": "math201-q6c-5",
+        "type": "fill_blank",
+        "prompt": "If all eigenvalues of $A$ are positive, the matrix is called ____ definite.",
+        "correctAnswer": "positive",
+        "explanation": "A symmetric matrix with all positive eigenvalues is positive definite. All negative eigenvalues means negative definite."
+      }
+    ]
+  }
+]

@@ -1,0 +1,242 @@
+[
+  {
+    "id": "math404-t7-ex01",
+    "subjectId": "math404",
+    "topicId": "math404-topic-7",
+    "type": "written",
+    "title": "Second-Order Cone Constraint",
+    "description": "Formulate a constraint as a second-order cone constraint and identify its structure.",
+    "difficulty": 2,
+    "hints": [
+      "SOCP form: ||Ax + b||₂ ≤ cᵀx + d",
+      "Can represent various nonlinear constraints",
+      "Lorentz cone: K = {(t, x) : ||x||₂ ≤ t}"
+    ],
+    "solution": "**Second-Order Cone (Lorentz cone):**\nK = {(t, x) ∈ ℝ × ℝⁿ : ||x||₂ ≤ t}\n\n**Example 1: Norm constraint**\n||x|| ≤ 3\nSOCP form: (3, x) ∈ K\n\n**Example 2: Quadratic inequality**\nx² + y² ≤ z\nRewrite: ||(x, y)||₂ ≤ √z\nSOCP: Requires z ≥ 0, then (√z, x, y) ∈ K\nOr use rotated cone: x² + y² ≤ z·1\n\n**Example 3: Robust linear constraint**\n(a + u)ᵀx ≤ b for all ||u|| ≤ 1\nWorst case: aᵀx + ||x|| ≤ b\nSOCP: (b - aᵀx, x) ∈ K\n\n**Example 4: Euclidean distance**\n||x - c|| ≤ r\nSOCP: (r, x - c) ∈ K\n\n**Standard SOCP form:**\nmin cᵀx\ns.t. ||Aᵢx + bᵢ||₂ ≤ dᵢᵀx + eᵢ for i = 1,...,m\n\n**Complexity:** O(n² × m) per iteration with interior point methods"
+  },
+  {
+    "id": "math404-t7-ex02",
+    "subjectId": "math404",
+    "topicId": "math404-topic-7",
+    "type": "written",
+    "title": "Semidefinite Programming Formulation",
+    "description": "Formulate a semidefinite programming (SDP) problem for matrix optimization.",
+    "difficulty": 3,
+    "hints": [
+      "SDP minimizes a linear function over positive semidefinite matrices",
+      "Write X ⪰ 0 to denote X is positive semidefinite",
+      "Linear constraints use trace: tr(AᵢX) = bᵢ"
+    ],
+    "solution": "**SDP Standard Form:**\nmin tr(CX)\ns.t. tr(AᵢX) = bᵢ for i = 1,...,m\n     X ⪰ 0\n\nwhere X ⪰ 0 means X is positive semidefinite (all eigenvalues ≥ 0).\n\n**Example 1: Maximum eigenvalue**\nMinimize the largest eigenvalue of matrix A:\nmin t\ns.t. A ⪯ tI\n     (equivalently: tI - A ⪰ 0)\n\n**Example 2: Matrix completion**\nFind PSD matrix X matching known entries:\nmin ||X||_* (nuclear norm)\ns.t. Xᵢⱼ = Mᵢⱼ for (i,j) ∈ Ω\n     X ⪰ 0\n\n**Example 3: Minimum trace**\nmin tr(X)\ns.t. Xᵢⱼ = 1 for all i,j\n     X ⪰ 0\n\nSolution: X = eeᵀ where e = (1,...,1)ᵀ\n\n**Dual SDP:**\nmax bᵀy\ns.t. ΣyᵢAᵢ + S = C\n     S ⪰ 0\n\n**Strong duality holds when Slater's condition satisfied (strictly feasible point exists)."
+  },
+  {
+    "id": "math404-t7-ex03",
+    "subjectId": "math404",
+    "topicId": "math404-topic-7",
+    "type": "written",
+    "title": "MAX-CUT SDP Relaxation",
+    "description": "Derive the SDP relaxation for the MAX-CUT problem and explain the Goemans-Williamson approximation.",
+    "difficulty": 4,
+    "hints": [
+      "Start with labels xᵢ ∈ {-1, +1}",
+      "Use X = xxᵀ, then relax to X ⪰ 0",
+      "Diagonal entries Xᵢᵢ = 1 since xᵢ² = 1"
+    ],
+    "solution": "**MAX-CUT Integer Programming:**\nmax (1/4) Σ_{(i,j)∈E} wᵢⱼ(1 - xᵢxⱼ)\ns.t. xᵢ ∈ {-1, +1}\n\n**SDP Relaxation:**\nLet Xᵢⱼ = xᵢxⱼ. Note X = xxᵀ ⪰ 0 and Xᵢᵢ = 1.\n\nmax (1/4) Σ wᵢⱼ(1 - Xᵢⱼ)\ns.t. Xᵢᵢ = 1 for all i\n     X ⪰ 0\n\n**Matrix form:** max (1/4) tr(W(J - X))\nwhere J is the all-ones matrix.\n\n**Goemans-Williamson Rounding:**\n1. Solve SDP to get X*\n2. Decompose X* = VVᵀ (Cholesky-like)\n3. Choose random hyperplane r uniformly on unit sphere\n4. Set xᵢ = sign(vᵢᵀr)\n\n**Approximation guarantee:**\nE[cut value] ≥ α·OPT_SDP ≥ α·OPT_IP\n\nwhere α = min_{θ∈[0,π]} (2/π)θ/(1-cos(θ)) ≈ 0.878\n\n**Example:**\nGraph: Triangle with edge weights = 1\nOPT = 2 (cut one vertex from other two)\nSDP = 2 (exact in this case)\n\n**This 0.878 ratio is optimal under the Unique Games Conjecture!**"
+  },
+  {
+    "id": "math404-t7-ex04",
+    "subjectId": "math404",
+    "topicId": "math404-topic-7",
+    "type": "written",
+    "title": "Robust Linear Programming",
+    "description": "Formulate a robust LP where constraint coefficients have ellipsoidal uncertainty.",
+    "difficulty": 4,
+    "hints": [
+      "Uncertain constraint: (a + u)ᵀx ≤ b for all u ∈ U",
+      "For ellipsoidal U = {u: ||u|| ≤ ρ}, find the worst case",
+      "max_{||u||≤ρ} uᵀx = ρ||x||₂"
+    ],
+    "solution": "**Nominal LP:** min cᵀx, s.t. aᵀx ≤ b\n\n**Uncertain constraint:** (a + u)ᵀx ≤ b for all u ∈ U\nwhere U = {u : ||u||₂ ≤ ρ} (ellipsoidal uncertainty)\n\n**Robust counterpart:**\nThe constraint must hold for worst-case u:\naᵀx + max_{||u||≤ρ} uᵀx ≤ b\n\nSince max_{||u||≤ρ} uᵀx = ρ||x||₂ (achieved at u = ρx/||x||₂):\n\naᵀx + ρ||x||₂ ≤ b\n\n**Final robust LP:**\nmin cᵀx\ns.t. aᵀx + ρ||x||₂ ≤ b\n\n**SOCP formulation:**\nmin cᵀx\ns.t. (b - aᵀx, ρx) ∈ SOC\n\n**Example:**\nNominal: min x + y, s.t. x + y ≤ 2\nUncertainty: coefficients in ±0.1\n\nRobust: min x + y, s.t. x + y + 0.1||(x,y)|| ≤ 2\n\n**Trade-off:**\n- Larger ρ → more protection → worse objective\n- Smaller ρ → less protection → risk of infeasibility\n\n**Price of robustness:**\nRobust_obj - Nominal_obj = cost of hedging against uncertainty"
+  },
+  {
+    "id": "math404-t7-ex05",
+    "subjectId": "math404",
+    "topicId": "math404-topic-7",
+    "type": "written",
+    "title": "Integer Programming Formulation",
+    "description": "Formulate a combinatorial optimization problem as an integer program.",
+    "difficulty": 2,
+    "hints": [
+      "Use binary variables xᵢ ∈ {0,1} for selection decisions",
+      "Model logical constraints with linear inequalities",
+      "Common: xᵢ ≤ xⱼ (implication), xᵢ + xⱼ ≤ 1 (exclusive)"
+    ],
+    "solution": "**Knapsack Problem:**\nItems with values vᵢ and weights wᵢ, capacity W.\nSelect items to maximize total value within capacity.\n\n**IP Formulation:**\nmax Σᵢ vᵢxᵢ\ns.t. Σᵢ wᵢxᵢ ≤ W\n     xᵢ ∈ {0, 1}\n\n**Set Cover Problem:**\nSets S₁,...,Sₘ with costs cⱼ, cover universe U.\nFind minimum cost collection covering all elements.\n\n**IP Formulation:**\nmin Σⱼ cⱼxⱼ\ns.t. Σⱼ:i∈Sⱼ xⱼ ≥ 1 for all i ∈ U\n     xⱼ ∈ {0, 1}\n\n**Facility Location:**\nFacilities at locations j with costs fⱼ, clients i with demands dᵢ.\nCost cᵢⱼ to serve client i from facility j.\n\n**IP Formulation:**\nmin Σⱼ fⱼyⱼ + Σᵢ,ⱼ cᵢⱼxᵢⱼ\ns.t. Σⱼ xᵢⱼ = 1 for all clients i\n     xᵢⱼ ≤ yⱼ for all i,j\n     xᵢⱼ, yⱼ ∈ {0, 1}\n\n**Logical constraints as linear inequalities:**\n- AND: z = x₁ ∧ x₂ → z ≤ x₁, z ≤ x₂, z ≥ x₁ + x₂ - 1\n- OR: z = x₁ ∨ x₂ → z ≥ x₁, z ≥ x₂, z ≤ x₁ + x₂\n- Implication: x₁ → x₂ → x₁ ≤ x₂"
+  },
+  {
+    "id": "math404-t7-ex06",
+    "subjectId": "math404",
+    "topicId": "math404-topic-7",
+    "type": "written",
+    "title": "LP Relaxation and Integrality Gap",
+    "description": "Compute the LP relaxation of an integer program and analyze the integrality gap.",
+    "difficulty": 3,
+    "hints": [
+      "LP relaxation: replace xᵢ ∈ {0,1} with 0 ≤ xᵢ ≤ 1",
+      "Integrality gap = OPT_IP / OPT_LP (for max) or vice versa",
+      "Smaller gap means LP relaxation is tighter"
+    ],
+    "solution": "**Vertex Cover IP:**\nGiven graph G = (V, E), find minimum vertex set covering all edges.\n\nmin Σᵥ xᵥ\ns.t. xᵤ + xᵥ ≥ 1 for all (u,v) ∈ E\n     xᵥ ∈ {0, 1}\n\n**LP Relaxation:**\nmin Σᵥ xᵥ\ns.t. xᵤ + xᵥ ≥ 1 for all (u,v) ∈ E\n     0 ≤ xᵥ ≤ 1\n\n**Example: Triangle graph (K₃)**\nLP optimal: xᵥ = 1/2 for all v, value = 3/2\nIP optimal: select any 2 vertices, value = 2\n\n**Integrality gap:** 2 / (3/2) = 4/3\n\n**General bounds:**\nFor vertex cover: gap ≤ 2\n(Rounding x̂ᵥ = 1 if xᵥ ≥ 1/2 gives 2-approximation)\n\n**Tight example for 2-gap:**\nComplete bipartite graph Kₙ,ₙ:\n- LP optimal: all vertices = 1/2, value = n\n- IP optimal: one side, value = n\n- Gap = 1 (no gap for bipartite!)\n\nFor general graphs, gap → 2 as n → ∞.\n\n**Strengthening LP relaxations:**\n1. Add valid inequalities (cuts)\n2. Lift-and-project\n3. Semidefinite relaxation"
+  },
+  {
+    "id": "math404-t7-ex07",
+    "subjectId": "math404",
+    "topicId": "math404-topic-7",
+    "type": "written",
+    "title": "Branch and Bound",
+    "description": "Apply the branch and bound algorithm to solve a small integer program.",
+    "difficulty": 3,
+    "hints": [
+      "Solve LP relaxation at each node",
+      "Branch on fractional variable",
+      "Prune nodes with bound worse than incumbent"
+    ],
+    "solution": "**Problem:**\nmax 5x₁ + 4x₂\ns.t. x₁ + x₂ ≤ 5\n     10x₁ + 6x₂ ≤ 45\n     x₁, x₂ ∈ {0,1,2,3,...} (integer)\n\n**Node 0 (Root):** Solve LP relaxation\nLP optimal: x₁ = 3.75, x₂ = 1.25, z = 23.75\nFractional, so branch on x₁.\n\n**Node 1:** x₁ ≤ 3\nLP: x₁ = 3, x₂ = 2, z = 23\nInteger! Update incumbent: z* = 23, x* = (3, 2)\n\n**Node 2:** x₁ ≥ 4\nLP: x₁ = 4, x₂ = 0.83, z = 23.33\nz = 23.33 > z* = 23, but fractional.\nBranch on x₂.\n\n**Node 3:** x₁ ≥ 4, x₂ ≤ 0\nLP: x₁ = 4.5, x₂ = 0, z = 22.5\nz = 22.5 < z* = 23 → PRUNE\n\n**Node 4:** x₁ ≥ 4, x₂ ≥ 1\nLP: x₁ = 3.9, x₂ = 1, z = 23.5\nConstraint x₁ ≥ 4 violated → infeasible → PRUNE\n\n**Optimal:** x* = (3, 2), z* = 23\n\n**Key insights:**\n1. LP relaxation provides upper bound (for max)\n2. Integer solutions provide lower bound\n3. Prune when bound ≤ incumbent\n4. Choice of branching variable affects efficiency"
+  },
+  {
+    "id": "math404-t7-ex08",
+    "subjectId": "math404",
+    "topicId": "math404-topic-7",
+    "type": "written",
+    "title": "Cutting Planes",
+    "description": "Derive a Gomory cutting plane from an optimal LP tableau.",
+    "difficulty": 4,
+    "hints": [
+      "Gomory cut from row with fractional basic variable",
+      "Use fractional parts of coefficients",
+      "Cut eliminates current LP solution but preserves integer solutions"
+    ],
+    "solution": "**Optimal LP Tableau:**\n| BV | x₁ | x₂ | s₁ | s₂ | RHS  |\n|----|----|----|----|----|------|\n| x₁ | 1  | 0  | 2/3| -1/3| 7/3 |\n| x₂ | 0  | 1  |-1/3| 2/3 | 4/3 |\n\nCurrent LP optimal: x₁ = 7/3, x₂ = 4/3 (fractional)\n\n**Gomory Cut from Row 1:**\nx₁ + (2/3)s₁ + (-1/3)s₂ = 7/3\n\n**Fractional parts:**\nLet f(a) = a - ⌊a⌋\n\nf(7/3) = 1/3\nf(2/3) = 2/3\nf(-1/3) = 2/3 (since -1/3 - (-1) = 2/3)\n\n**Gomory cut:**\nf(2/3)s₁ + f(2/3)s₂ ≥ f(7/3)\n(2/3)s₁ + (2/3)s₂ ≥ 1/3\n\nMultiply by 3:\n2s₁ + 2s₂ ≥ 1\n\n**Add to tableau:**\ns₁ = 5 - x₁ - x₂\ns₂ = 45 - 10x₁ - 6x₂\n\n2(5 - x₁ - x₂) + 2(45 - 10x₁ - 6x₂) ≥ 1\n10 - 2x₁ - 2x₂ + 90 - 20x₁ - 12x₂ ≥ 1\n100 - 22x₁ - 14x₂ ≥ 1\n22x₁ + 14x₂ ≤ 99\n\n**This cut eliminates (7/3, 4/3) but keeps all integer solutions!**\n\n**Properties:**\n- Gomory cuts finite convergence for pure IP\n- Practical: combine with branch and bound (branch and cut)"
+  },
+  {
+    "id": "math404-t7-ex09",
+    "subjectId": "math404",
+    "topicId": "math404-topic-7",
+    "type": "written",
+    "title": "Geometric Programming",
+    "description": "Formulate and solve a geometric programming problem.",
+    "difficulty": 4,
+    "hints": [
+      "GP: minimize posynomial subject to posynomial ≤ 1",
+      "Posynomial: sum of monomials with positive coefficients",
+      "Transform to convex problem via log substitution"
+    ],
+    "solution": "**Geometric Programming Standard Form:**\nmin f₀(x)\ns.t. fᵢ(x) ≤ 1, i = 1,...,m\n     gⱼ(x) = 1, j = 1,...,p\n\nwhere fᵢ are posynomials (sum of monomials).\n\n**Monomial:** cxₐ₁¹...xₐₙⁿ with c > 0\n**Posynomial:** Σₖ cₖ xₐₖ¹¹...xₐₖⁿⁿ\n\n**Example: Box design**\nMaximize volume V = xyz subject to:\n- Surface area: 2(xy + yz + xz) ≤ A\n- Aspect ratio: x/y ≤ 2, y/x ≤ 2\n\n**GP formulation (minimize 1/V):**\nmin x⁻¹y⁻¹z⁻¹\ns.t. (2/A)(xy + yz + xz) ≤ 1\n     (1/2)xy⁻¹ ≤ 1\n     (1/2)x⁻¹y ≤ 1\n\n**Convex transformation:**\nLet yᵢ = log(xᵢ). Then xᵢ = e^{yᵢ}.\n\nMonomial: c·e^{a₁y₁+...+aₙyₙ} (log-sum-exp)\nlog of posynomial: log(Σₖ e^{aₖᵀy + bₖ}) (convex!)\n\n**Transformed problem:**\nmin -y₁ - y₂ - y₃\ns.t. log(e^{y₁+y₂} + e^{y₂+y₃} + e^{y₁+y₃}) ≤ log(A/2)\n     y₁ - y₂ ≤ log(2)\n     y₂ - y₁ ≤ log(2)\n\nThis is a convex optimization problem!\n\n**Solution:** For A = 6, optimal is x = y = z = 1 (cube), V = 1"
+  },
+  {
+    "id": "math404-t7-ex10",
+    "subjectId": "math404",
+    "topicId": "math404-topic-7",
+    "type": "written",
+    "title": "Conic Programming Hierarchy",
+    "description": "Explain the hierarchy of conic programs: LP, SOCP, SDP.",
+    "difficulty": 3,
+    "hints": [
+      "LP ⊂ SOCP ⊂ SDP in terms of problem classes",
+      "Each cone generalizes the previous",
+      "Complexity increases but more problems can be modeled"
+    ],
+    "solution": "**Cone Hierarchy:**\n\n**1. Linear Programming (LP)**\nCone: ℝⁿ₊ = {x : xᵢ ≥ 0}\nForm: min cᵀx s.t. Ax = b, x ≥ 0\n\n**2. Second-Order Cone Programming (SOCP)**\nCone: Kₛₒc = {(t,x) : ||x||₂ ≤ t}\nForm: min cᵀx s.t. ||Aᵢx + bᵢ|| ≤ dᵢᵀx + eᵢ\n\n**3. Semidefinite Programming (SDP)**\nCone: S₊ⁿ = {X : X ⪰ 0} (PSD matrices)\nForm: min tr(CX) s.t. tr(AᵢX) = bᵢ, X ⪰ 0\n\n**Inclusion relationships:**\n\n**LP as SOCP:**\nx ≥ 0 ↔ (x, 0) ∈ Kₛₒc\n\n**SOCP as SDP:**\n||x||₂ ≤ t ↔ [[tI, x], [xᵀ, t]] ⪰ 0 (Schur complement)\n\n**Complexity per interior-point iteration:**\n| Problem | Variables | Per-iteration |\n|---------|-----------|---------------|\n| LP      | n         | O(n²)         |\n| SOCP    | n         | O(n²)         |\n| SDP     | n×n       | O(n⁶)         |\n\n**Iteration count:** O(√n log(1/ε)) for all\n\n**Modeling power:**\n- LP: Linear constraints only\n- SOCP: Norm constraints, rotated cones\n- SDP: Eigenvalue constraints, matrix inequalities\n\n**Example progression:**\nPortfolio optimization:\n- LP: Linear utility, no risk constraint\n- SOCP: Quadratic risk constraint ||Σ^½w|| ≤ σ\n- SDP: More complex risk measures"
+  },
+  {
+    "id": "math404-t7-ex11",
+    "subjectId": "math404",
+    "topicId": "math404-topic-7",
+    "type": "written",
+    "title": "Convex Relaxation of Rank Constraint",
+    "description": "Derive the nuclear norm relaxation for low-rank matrix optimization.",
+    "difficulty": 5,
+    "hints": [
+      "Rank constraint is non-convex",
+      "Nuclear norm ||X||_* = Σσᵢ(X) is convex envelope of rank",
+      "Replace rank(X) ≤ k with ||X||_* ≤ τ"
+    ],
+    "solution": "**Low-Rank Matrix Optimization:**\nmin ||A(X) - b||²\ns.t. rank(X) ≤ k\n\nThis is NP-hard in general!\n\n**Nuclear Norm Relaxation:**\n||X||_* = Σᵢ σᵢ(X) = tr(√(XᵀX))\n\n**Theorem:** Nuclear norm is the convex envelope of rank over unit spectral norm ball.\n\n**Relaxed problem:**\nmin ||A(X) - b||² + λ||X||_*\n\nor equivalently (for some τ):\nmin ||X||_*\ns.t. ||A(X) - b||² ≤ ε\n\n**SDP formulation of nuclear norm:**\n||X||_* = min{(1/2)(tr(W₁) + tr(W₂)) : [[W₁, X], [Xᵀ, W₂]] ⪰ 0}\n\n**Matrix Completion Example:**\nObserve entries Ωᵢⱼ of rank-k matrix M.\nmin ||X||_*\ns.t. Xᵢⱼ = Mᵢⱼ for (i,j) ∈ Ω\n\n**Recovery guarantee (Candès-Recht):**\nIf M is rank-r and incoherent, with |Ω| ≥ Cn^{1.2}r log n,\nthen X* = M with high probability!\n\n**Applications:**\n1. Netflix recommendation (matrix completion)\n2. Video surveillance (background/foreground separation)\n3. Robust PCA"
+  },
+  {
+    "id": "math404-t7-ex12",
+    "subjectId": "math404",
+    "topicId": "math404-topic-7",
+    "type": "written",
+    "title": "Stochastic Programming",
+    "description": "Formulate a two-stage stochastic program with recourse.",
+    "difficulty": 4,
+    "hints": [
+      "First stage: decisions before uncertainty revealed",
+      "Second stage: recourse decisions after observing ξ",
+      "Objective: minimize first stage + expected second stage cost"
+    ],
+    "solution": "**Two-Stage Stochastic Program:**\n\n**First stage (here-and-now):**\nChoose x before uncertainty ξ is revealed.\nCost: cᵀx\n\n**Second stage (wait-and-see):**\nObserve ξ, then choose y(ξ).\nCost: Q(x, ξ) = min{q(ξ)ᵀy : W(ξ)y = h(ξ) - T(ξ)x, y ≥ 0}\n\n**Full problem:**\nmin cᵀx + E_ξ[Q(x, ξ)]\ns.t. Ax = b\n     x ≥ 0\n\n**Example: Newsvendor**\nOrder x newspapers (first stage, cost c per paper).\nDemand D is random. Sell at price p, salvage at s < c.\n\n**Second stage:** Given demand D and order x:\nQ(x, D) = -p·min(x, D) - s·max(x-D, 0)\n\n**Full problem:**\nmin cx + E_D[-p·min(x, D) - s·(x-D)⁺]\n\n**Optimal solution:** Order x* where:\nP(D ≥ x*) = (c - s)/(p - s)\n\n**Scenario-based formulation:**\nIf ξ ∈ {ξ₁,...,ξₛ} with probabilities π₁,...,πₛ:\n\nmin cᵀx + Σₛ πₛ qₛᵀyₛ\ns.t. Ax = b\n     Wₛyₛ = hₛ - Tₛx, for s = 1,...,S\n     x, yₛ ≥ 0\n\nThis is a large LP (solvable by decomposition methods)."
+  },
+  {
+    "id": "math404-t7-ex13",
+    "subjectId": "math404",
+    "topicId": "math404-topic-7",
+    "type": "written",
+    "title": "Benders Decomposition",
+    "description": "Apply Benders decomposition to solve a structured optimization problem.",
+    "difficulty": 5,
+    "hints": [
+      "Separate problem into master (x) and subproblem (y)",
+      "Subproblem provides cuts for master",
+      "Iterate until convergence"
+    ],
+    "solution": "**Original Problem:**\nmin cᵀx + dᵀy\ns.t. Ax = b\n     Bx + Dy = e\n     x, y ≥ 0\n\n**Decomposition:**\nFor fixed x, subproblem in y:\nQ(x) = min{dᵀy : Dy = e - Bx, y ≥ 0}\n\n**Master problem:**\nmin cᵀx + θ\ns.t. Ax = b\n     θ ≥ Q(x)  (implicitly)\n     x ≥ 0\n\n**Benders Cuts:**\nFrom dual of subproblem:\nQ(x) = max{πᵀ(e - Bx) : πᵀD ≤ dᵀ}\n\nExtreme points: π₁,...,πₖ\nExtreme rays: ρ₁,...,ρₘ\n\n**Feasibility cut (if subproblem infeasible):**\nρⱼᵀ(e - Bx) ≤ 0\n\n**Optimality cut (if subproblem bounded):**\nθ ≥ πⱼᵀ(e - Bx)\n\n**Algorithm:**\n1. Initialize master with no cuts\n2. Solve master → (x*, θ*)\n3. Solve subproblem with x = x*\n   - If infeasible: add feasibility cut\n   - If bounded: add optimality cut if πᵀ(e - Bx*) > θ*\n4. If no cut added: STOP (optimal)\n5. Else: go to step 2\n\n**Convergence:** Finite (finite number of extreme points/rays)\n\n**Application:** Two-stage stochastic programming\n- Master: first-stage decisions\n- Subproblems: second-stage for each scenario"
+  },
+  {
+    "id": "math404-t7-ex14",
+    "subjectId": "math404",
+    "topicId": "math404-topic-7",
+    "type": "written",
+    "title": "Sum-of-Squares Relaxation",
+    "description": "Use sum-of-squares relaxation to check polynomial non-negativity.",
+    "difficulty": 5,
+    "hints": [
+      "Polynomial p(x) ≥ 0 is hard to verify in general",
+      "SOS: p(x) = Σqᵢ(x)² is sufficient for non-negativity",
+      "SOS can be checked via SDP"
+    ],
+    "solution": "**Non-negativity Certification:**\nIs p(x) ≥ 0 for all x?\n\nThis is NP-hard for general polynomials (degree ≥ 4).\n\n**Sum-of-Squares (SOS):**\np(x) is SOS if p(x) = Σⱼ qⱼ(x)² for some polynomials qⱼ.\n\nSOS ⟹ non-negative (converse false in general)\n\n**SDP Formulation:**\np(x) = m(x)ᵀQm(x)\nwhere m(x) = [1, x, x², ..., x^d] (monomial basis)\n\np is SOS ⟺ Q ⪰ 0 (SDP constraint!)\n\n**Example:**\np(x) = x⁴ + 2x² + 1\nm(x) = [1, x, x²]\n\nFind Q ⪰ 0 such that:\nm(x)ᵀQm(x) = q₁₁ + 2q₁₂x + (2q₁₃ + q₂₂)x² + 2q₂₃x³ + q₃₃x⁴\n\nMatching: q₃₃ = 1, 2q₂₃ = 0, 2q₁₃ + q₂₂ = 2, 2q₁₂ = 0, q₁₁ = 1\n\nOne solution: Q = [[1,0,0], [0,2,0], [0,0,1]] ⪰ 0 ✓\n\nSo p(x) = 1 + 2x² + x⁴ = (1)² + (√2 x)² + (x²)²\n\n**Hierarchy of relaxations:**\nAs SOS degree increases, approximates true non-negativity better.\n\n**Applications:**\n- Control: Lyapunov function synthesis\n- Optimization: Global polynomial optimization\n- Robotics: Safety verification"
+  },
+  {
+    "id": "math404-t7-ex15",
+    "subjectId": "math404",
+    "topicId": "math404-topic-7",
+    "type": "written",
+    "title": "Distributed Optimization",
+    "description": "Formulate a distributed optimization problem and describe ADMM algorithm.",
+    "difficulty": 4,
+    "hints": [
+      "Decompose problem among agents",
+      "Consensus constraint: all local copies agree",
+      "ADMM: alternating minimization with dual update"
+    ],
+    "solution": "**Distributed Problem:**\nmin Σᵢ fᵢ(xᵢ)\ns.t. xᵢ = z for all i (consensus)\n\nEach agent i has local data and computes fᵢ.\n\n**ADMM (Alternating Direction Method of Multipliers):**\n\n**Augmented Lagrangian:**\nL_ρ(x, z, y) = Σᵢ[fᵢ(xᵢ) + yᵢᵀ(xᵢ - z) + (ρ/2)||xᵢ - z||²]\n\n**Algorithm:**\n1. **x-update (parallel):**\n   xᵢ^{k+1} = argmin_xᵢ{fᵢ(xᵢ) + yᵢ^kᵀxᵢ + (ρ/2)||xᵢ - z^k||²}\n\n2. **z-update (aggregation):**\n   z^{k+1} = (1/n)Σᵢ(xᵢ^{k+1} + yᵢ^k/ρ)\n\n3. **Dual update (parallel):**\n   yᵢ^{k+1} = yᵢ^k + ρ(xᵢ^{k+1} - z^{k+1})\n\n**Example: Distributed LASSO**\nmin (1/2)Σᵢ||Aᵢx - bᵢ||² + λ||x||₁\n\nSplit: fᵢ(xᵢ) = (1/2)||Aᵢxᵢ - bᵢ||², g(z) = λ||z||₁\n\n**ADMM updates:**\nxᵢ^{k+1} = (AᵢᵀAᵢ + ρI)⁻¹(Aᵢᵀbᵢ + ρz^k - yᵢ^k)\nz^{k+1} = soft_threshold(x̄^{k+1} + ȳ^k/ρ, λ/(nρ))\nyᵢ^{k+1} = yᵢ^k + ρ(xᵢ^{k+1} - z^{k+1})\n\n**Convergence:** O(1/k) for convex problems\n\n**Communication:** Only z needs to be shared (centralized) or exchanged (decentralized)"
+  },
+  {
+    "id": "math404-t7-ex16",
+    "subjectId": "math404",
+    "topicId": "math404-topic-7",
+    "type": "written",
+    "title": "Multi-Objective Optimization",
+    "description": "Solve a bi-objective optimization problem and find the Pareto frontier.",
+    "difficulty": 3,
+    "hints": [
+      "No single solution optimizes all objectives",
+      "Pareto optimal: cannot improve one without worsening another",
+      "Methods: weighted sum, ε-constraint, goal programming"
+    ],
+    "solution": "**Bi-Objective Problem:**\nmin (f₁(x), f₂(x))\ns.t. x ∈ X\n\n**Pareto Dominance:**\nx dominates y if:\n- f₁(x) ≤ f₁(y) and f₂(x) ≤ f₂(y)\n- At least one strict inequality\n\n**Pareto Optimal:** Not dominated by any feasible x.\n\n**Example:**\nmin (x², (x-2)²)\ns.t. x ∈ [0, 2]\n\n**Analysis:**\nf₁(x) = x² is minimized at x = 0\nf₂(x) = (x-2)² is minimized at x = 2\n\nFor x ∈ [0, 2], all points are Pareto optimal!\n\n**Pareto frontier:** {(x², (x-2)²) : x ∈ [0, 2]}\n= {(t, (2-√t)²) : t ∈ [0, 4]}\n\n**Method 1: Weighted Sum**\nmin w₁f₁(x) + w₂f₂(x), w₁ + w₂ = 1, w ≥ 0\n\nFor w₁ = w₂ = 0.5:\nmin 0.5x² + 0.5(x-2)² = 0.5(2x² - 4x + 4)\nd/dx = 2x - 2 = 0 → x* = 1\nSolution: (1, 1) on Pareto frontier\n\n**Method 2: ε-Constraint**\nmin f₁(x)\ns.t. f₂(x) ≤ ε\n     x ∈ X\n\nFor ε = 0.5:\nmin x² s.t. (x-2)² ≤ 0.5\nx ∈ [2-√0.5, 2] ≈ [1.29, 2]\nOptimal: x* ≈ 1.29\n\n**Varying ε traces the Pareto frontier!**\n\n**Applications:**\n- Cost vs quality\n- Risk vs return\n- Accuracy vs interpretability"
+  }
+]

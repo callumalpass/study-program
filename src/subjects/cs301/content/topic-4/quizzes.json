@@ -1,0 +1,209 @@
+[
+  {
+    "id": "cs301-q4-1",
+    "subjectId": "cs301",
+    "topicId": "cs301-t4",
+    "title": "Critical Section Problem",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "What is a race condition?",
+        "options": [
+          "Fast process execution",
+          "Outcome depends on execution order",
+          "CPU competition",
+          "Memory allocation"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A race condition occurs when the result depends on the timing/order of concurrent operations."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "What is mutual exclusion?",
+        "options": [
+          "Only one process in critical section at a time",
+          "Processes exclude each other from system",
+          "Memory isolation",
+          "Process termination"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Mutual exclusion ensures only one process can execute in its critical section at any time."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "What is the progress requirement for critical section?",
+        "options": [
+          "Processes must finish quickly",
+          "Selection cannot be postponed indefinitely",
+          "All processes must participate",
+          "CPU must be fast"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Progress requires that if no process is in CS, selection of next process cannot be delayed indefinitely."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "What is bounded waiting?",
+        "options": [
+          "Time limit on execution",
+          "Limit on times a process can be bypassed",
+          "Memory bounds",
+          "Queue length limit"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Bounded waiting ensures no process waits forever; there's a limit on how often others can enter first."
+      },
+      {
+        "id": "q5",
+        "type": "true_false",
+        "prompt": "Disabling interrupts is a good solution for multiprocessor critical sections.",
+        "correctAnswer": false,
+        "explanation": "Disabling interrupts only works on uniprocessors; other CPUs can still access shared data."
+      }
+    ]
+  },
+  {
+    "id": "cs301-q4-2",
+    "subjectId": "cs301",
+    "topicId": "cs301-t4",
+    "title": "Synchronization Primitives",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "What is a mutex?",
+        "options": [
+          "A type of process",
+          "A lock for mutual exclusion",
+          "A memory region",
+          "A scheduling algorithm"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A mutex is a synchronization primitive that provides mutual exclusion through lock/unlock."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "What is a counting semaphore?",
+        "options": [
+          "Semaphore limited to 0 and 1",
+          "Semaphore with integer value >= 0",
+          "Hardware counter",
+          "Process counter"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A counting semaphore can have any non-negative integer value, controlling access to multiple resources."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "What does wait() (P operation) do to a semaphore?",
+        "options": [
+          "Increments value",
+          "Decrements value or blocks",
+          "Destroys semaphore",
+          "Creates semaphore"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Wait decrements the semaphore; if it would become negative, the process blocks."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "What does signal() (V operation) do to a semaphore?",
+        "options": [
+          "Increments value",
+          "Decrements value",
+          "Blocks process",
+          "Terminates process"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Signal increments the semaphore value and may wake a blocked process."
+      },
+      {
+        "id": "q5",
+        "type": "true_false",
+        "prompt": "A binary semaphore is equivalent to a mutex in functionality.",
+        "correctAnswer": true,
+        "explanation": "A binary semaphore restricted to 0 and 1 provides the same mutual exclusion as a mutex."
+      }
+    ]
+  },
+  {
+    "id": "cs301-q4-3",
+    "subjectId": "cs301",
+    "topicId": "cs301-t4",
+    "title": "Classic Synchronization Problems",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "In producer-consumer, what semaphore tracks empty buffer slots?",
+        "options": [
+          "mutex",
+          "full",
+          "empty",
+          "count"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The empty semaphore counts available empty slots for the producer to use."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "In readers-writers, when can a writer write?",
+        "options": [
+          "Anytime",
+          "When no readers or writers are active",
+          "When at least one reader is active",
+          "Never"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A writer needs exclusive access: no other readers or writers can be in the critical section."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "What causes deadlock in naive dining philosophers?",
+        "options": [
+          "Eating too fast",
+          "All pick up left fork simultaneously",
+          "Too many philosophers",
+          "Forks are broken"
+        ],
+        "correctAnswer": 1,
+        "explanation": "If all philosophers pick up their left fork, no one can get their right fork, causing circular wait."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "What is a monitor?",
+        "options": [
+          "Display device",
+          "High-level synchronization construct",
+          "Low-level hardware",
+          "Operating system"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A monitor is a high-level construct that encapsulates shared data with synchronized access methods."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "What do condition variables provide in monitors?",
+        "options": [
+          "Mutual exclusion",
+          "Way to wait for conditions",
+          "Resource counting",
+          "Priority scheduling"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Condition variables let threads wait for specific conditions and be signaled when conditions change."
+      }
+    ]
+  }
+]

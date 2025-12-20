@@ -1,0 +1,185 @@
+[
+  {
+    "id": "math201-quiz-4a",
+    "subjectId": "math201",
+    "topicId": "math201-4",
+    "title": "Linear Independence and Basis - Fundamentals",
+    "questions": [
+      {
+        "id": "math201-q4a-1",
+        "type": "multiple_choice",
+        "prompt": "To test if vectors $\\{v_1, v_2, v_3\\}$ in $\\mathbb{R}^n$ are linearly independent, form matrix $A = [v_1 \\; v_2 \\; v_3]$ and:",
+        "options": [
+          "Find the determinant",
+          "Check if $Ax = 0$ has only the trivial solution",
+          "Find the rank",
+          "Both B and C"
+        ],
+        "correctAnswer": 3,
+        "explanation": "Vectors are independent if and only if $Ax = 0$ has only the trivial solution, which occurs when the rank equals the number of columns."
+      },
+      {
+        "id": "math201-q4a-2",
+        "type": "true_false",
+        "prompt": "Any set of 5 vectors in $\\mathbb{R}^3$ must be linearly dependent.",
+        "correctAnswer": true,
+        "explanation": "True. In $\\mathbb{R}^3$, any set of more than 3 vectors is linearly dependent. You cannot have more linearly independent vectors than the dimension of the space."
+      },
+      {
+        "id": "math201-q4a-3",
+        "type": "multiple_choice",
+        "prompt": "The coordinate vector of $x$ with respect to basis $\\mathcal{B} = \\{b_1, b_2\\}$ is $[x]_\\mathcal{B} = \\begin{bmatrix} 3 \\\\ -2 \\end{bmatrix}$. This means:",
+        "options": [
+          "$x = 3b_1 - 2b_2$",
+          "$x = -2b_1 + 3b_2$",
+          "$x = b_1 + b_2$",
+          "$x = 3 - 2$"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The coordinate vector $[x]_\\mathcal{B} = \\begin{bmatrix} c_1 \\\\ c_2 \\end{bmatrix}$ means $x = c_1b_1 + c_2b_2$. So $x = 3b_1 - 2b_2$."
+      },
+      {
+        "id": "math201-q4a-4",
+        "type": "multiple_choice",
+        "prompt": "The Rank-Nullity Theorem states that for an $m \\times n$ matrix $A$:",
+        "options": [
+          "$\\text{rank}(A) + \\text{nullity}(A) = m$",
+          "$\\text{rank}(A) + \\text{nullity}(A) = n$",
+          "$\\text{rank}(A) \\times \\text{nullity}(A) = n$",
+          "$\\text{rank}(A) = \\text{nullity}(A)$"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The Rank-Nullity Theorem: rank$(A)$ + nullity$(A) = n$ (the number of columns). This relates the dimensions of column space and null space."
+      },
+      {
+        "id": "math201-q4a-5",
+        "type": "fill_blank",
+        "prompt": "The rank of a matrix is the dimension of its ____ space.",
+        "correctAnswer": "column",
+        "explanation": "The rank of a matrix is the dimension of its column space (also equals the dimension of its row space)."
+      }
+    ]
+  },
+  {
+    "id": "math201-quiz-4b",
+    "subjectId": "math201",
+    "topicId": "math201-4",
+    "title": "Linear Independence and Basis - Application",
+    "questions": [
+      {
+        "id": "math201-q4b-1",
+        "type": "multiple_choice",
+        "prompt": "If the columns of $A$ form a basis for $\\mathbb{R}^m$, then:",
+        "options": [
+          "$A$ has $m$ linearly independent columns",
+          "$A$ must be square",
+          "$A$ is invertible",
+          "All of the above if $A$ is $m \\times m$"
+        ],
+        "correctAnswer": 3,
+        "explanation": "If columns form a basis for $\\mathbb{R}^m$, there must be exactly $m$ linearly independent columns. For an $m \\times m$ matrix, this means $A$ is invertible."
+      },
+      {
+        "id": "math201-q4b-2",
+        "type": "multiple_choice",
+        "prompt": "The change-of-basis matrix from basis $\\mathcal{B}$ to basis $\\mathcal{C}$ is denoted:",
+        "options": [
+          "$P_{\\mathcal{B} \\leftarrow \\mathcal{C}}$",
+          "$P_{\\mathcal{C} \\leftarrow \\mathcal{B}}$",
+          "$\\mathcal{C} - \\mathcal{B}$",
+          "$\\mathcal{B} \\times \\mathcal{C}$"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The change-of-basis matrix $P_{\\mathcal{B} \\leftarrow \\mathcal{C}}$ converts coordinates from $\\mathcal{C}$ to $\\mathcal{B}$: $[x]_\\mathcal{B} = P_{\\mathcal{B} \\leftarrow \\mathcal{C}}[x]_\\mathcal{C}$."
+      },
+      {
+        "id": "math201-q4b-3",
+        "type": "true_false",
+        "prompt": "The pivot columns of a matrix form a basis for its column space.",
+        "correctAnswer": true,
+        "explanation": "True. The pivot columns of the original matrix $A$ (not the RREF) form a basis for Col$(A)$."
+      },
+      {
+        "id": "math201-q4b-4",
+        "type": "multiple_choice",
+        "prompt": "If matrix $A$ has rank $r$, then the dimension of Nul$(A)$ is:",
+        "options": [
+          "$r$",
+          "$n - r$ where $n$ is the number of columns",
+          "$m - r$ where $m$ is the number of rows",
+          "Cannot be determined"
+        ],
+        "correctAnswer": 1,
+        "explanation": "By the Rank-Nullity Theorem: nullity$(A) = n - r$ where $n$ is the number of columns and $r$ is the rank."
+      },
+      {
+        "id": "math201-q4b-5",
+        "type": "fill_blank",
+        "prompt": "The standard basis for $\\mathbb{R}^3$ is $\\{e_1, e_2, e_3\\}$ where $e_1 = \\begin{bmatrix} 1 \\\\ 0 \\\\ 0 \\end{bmatrix}$, and the entries are called ____.",
+        "correctAnswer": "unit vectors",
+        "explanation": "The standard basis vectors are unit vectors (length 1) aligned with the coordinate axes."
+      }
+    ]
+  },
+  {
+    "id": "math201-quiz-4c",
+    "subjectId": "math201",
+    "topicId": "math201-4",
+    "title": "Linear Independence and Basis - Mastery",
+    "questions": [
+      {
+        "id": "math201-q4c-1",
+        "type": "multiple_choice",
+        "prompt": "If $\\mathcal{B} = \\{b_1, b_2\\}$ is a basis for $\\mathbb{R}^2$ and $P_{\\mathcal{B} \\leftarrow \\mathcal{E}} = [b_1 \\; b_2]$ where $\\mathcal{E}$ is the standard basis, then:",
+        "options": [
+          "$[x]_\\mathcal{B} = P_{\\mathcal{B} \\leftarrow \\mathcal{E}} x$",
+          "$x = P_{\\mathcal{B} \\leftarrow \\mathcal{E}} [x]_\\mathcal{B}$",
+          "$x = [x]_\\mathcal{B}$",
+          "None of the above"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The change-of-basis matrix $P_{\\mathcal{B} \\leftarrow \\mathcal{E}} = [b_1 \\; b_2]$ satisfies $x = P_{\\mathcal{B} \\leftarrow \\mathcal{E}}[x]_\\mathcal{B}$, converting $\\mathcal{B}$-coordinates to standard coordinates."
+      },
+      {
+        "id": "math201-q4c-2",
+        "type": "multiple_choice",
+        "prompt": "For which values of $k$ are the vectors $\\begin{bmatrix} 1 \\\\ 2 \\end{bmatrix}$ and $\\begin{bmatrix} 2 \\\\ k \\end{bmatrix}$ linearly dependent?",
+        "options": [
+          "$k = 0$",
+          "$k = 2$",
+          "$k = 4$",
+          "Never dependent"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Vectors in $\\mathbb{R}^2$ are dependent if one is a scalar multiple of the other. $\\begin{bmatrix} 2 \\\\ k \\end{bmatrix} = 2\\begin{bmatrix} 1 \\\\ 2 \\end{bmatrix}$ when $k = 4$."
+      },
+      {
+        "id": "math201-q4c-3",
+        "type": "true_false",
+        "prompt": "If vectors span $\\mathbb{R}^n$ and there are exactly $n$ vectors, they must be linearly independent.",
+        "correctAnswer": true,
+        "explanation": "True. If $n$ vectors span $\\mathbb{R}^n$ (which has dimension $n$), they must be linearly independent and form a basis."
+      },
+      {
+        "id": "math201-q4c-4",
+        "type": "multiple_choice",
+        "prompt": "The row space of $A$ equals:",
+        "options": [
+          "The column space of $A$",
+          "The column space of $A^T$",
+          "The null space of $A$",
+          "The null space of $A^T$"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Row$(A)$ = Col$(A^T)$ because the rows of $A$ are the columns of $A^T$."
+      },
+      {
+        "id": "math201-q4c-5",
+        "type": "fill_blank",
+        "prompt": "If $A$ is an $m \\times n$ matrix with rank $m$, we say $A$ has ____ rank.",
+        "correctAnswer": "full",
+        "explanation": "A matrix has full rank if its rank equals the minimum of $m$ and $n$. For rank $= m$, we specifically say full row rank."
+      }
+    ]
+  }
+]

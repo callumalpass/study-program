@@ -1,0 +1,486 @@
+[
+  {
+    "id": "cs302-t6-ex01",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-6",
+    "title": "Socket Address Parser",
+    "difficulty": 1,
+    "description": "Parse a socket address string into IP and port components. Handle formats like \"192.168.1.1:8080\".",
+    "starterCode": "# Parse socket address\ndef parse_address(address):\n    # Return tuple: (ip, port)\n    pass\n\n# Test your function\nprint(parse_address(\"192.168.1.1:8080\"))\nprint(parse_address(\"127.0.0.1:80\"))",
+    "solution": "def parse_address(address):\n    parts = address.rsplit(\":\", 1)\n    ip = parts[0]\n    port = int(parts[1])\n    return (ip, port)\n\nprint(parse_address(\"192.168.1.1:8080\"))\nprint(parse_address(\"127.0.0.1:80\"))",
+    "testCases": [
+      {
+        "input": "\"192.168.1.1:8080\"",
+        "isHidden": false,
+        "description": "Standard format"
+      },
+      {
+        "input": "\"127.0.0.1:80\"",
+        "isHidden": false,
+        "description": "Localhost"
+      },
+      {
+        "input": "\"10.0.0.1:443\"",
+        "isHidden": true,
+        "description": "HTTPS port"
+      }
+    ],
+    "hints": [
+      "Split on the last colon",
+      "Use rsplit with maxsplit=1",
+      "Convert port to integer",
+      "Return as tuple (ip, port)"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs302-t6-ex02",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-6",
+    "title": "Socket Type Selector",
+    "difficulty": 1,
+    "description": "Given a use case, return the appropriate socket type (SOCK_STREAM for TCP, SOCK_DGRAM for UDP).",
+    "starterCode": "import socket\n\n# Select appropriate socket type\ndef get_socket_type(use_case):\n    # Return socket.SOCK_STREAM or socket.SOCK_DGRAM\n    pass\n\n# Test your function\nprint(get_socket_type(\"file_transfer\"))\nprint(get_socket_type(\"video_streaming\"))\nprint(get_socket_type(\"web_browsing\"))",
+    "solution": "import socket\n\ndef get_socket_type(use_case):\n    tcp_uses = [\"file_transfer\", \"web_browsing\", \"email\", \"ssh\", \"http\", \"https\", \"ftp\"]\n    udp_uses = [\"video_streaming\", \"voip\", \"dns_query\", \"gaming\", \"broadcast\"]\n    \n    use_case_lower = use_case.lower()\n    if use_case_lower in tcp_uses:\n        return socket.SOCK_STREAM\n    elif use_case_lower in udp_uses:\n        return socket.SOCK_DGRAM\n    # Default to TCP for reliability\n    return socket.SOCK_STREAM\n\nprint(get_socket_type(\"file_transfer\"))\nprint(get_socket_type(\"video_streaming\"))\nprint(get_socket_type(\"web_browsing\"))",
+    "testCases": [
+      {
+        "input": "\"file_transfer\"",
+        "isHidden": false,
+        "description": "TCP for files"
+      },
+      {
+        "input": "\"video_streaming\"",
+        "isHidden": false,
+        "description": "UDP for video"
+      },
+      {
+        "input": "\"dns_query\"",
+        "isHidden": true,
+        "description": "UDP for DNS"
+      }
+    ],
+    "hints": [
+      "TCP (SOCK_STREAM): reliable, ordered delivery",
+      "UDP (SOCK_DGRAM): fast, no guarantee",
+      "File transfer needs reliability (TCP)",
+      "Streaming prefers low latency (UDP)"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs302-t6-ex03",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-6",
+    "title": "Socket State Machine",
+    "difficulty": 3,
+    "description": "Implement a simplified TCP socket state machine for client-side connection.",
+    "starterCode": "class ClientSocket:\n    def __init__(self):\n        self.state = \"CLOSED\"\n    \n    def connect(self):\n        # Transition through connection states\n        pass\n    \n    def send(self, data):\n        # Send data (only if connected)\n        pass\n    \n    def close(self):\n        # Close connection\n        pass\n    \n    def get_state(self):\n        return self.state\n\n# Test your class\nsock = ClientSocket()\nprint(sock.get_state())  # CLOSED\nsock.connect()\nprint(sock.get_state())  # ESTABLISHED",
+    "solution": "class ClientSocket:\n    def __init__(self):\n        self.state = \"CLOSED\"\n    \n    def connect(self):\n        if self.state == \"CLOSED\":\n            self.state = \"SYN_SENT\"\n            # Simulate handshake completion\n            self.state = \"ESTABLISHED\"\n            return True\n        return False\n    \n    def send(self, data):\n        if self.state == \"ESTABLISHED\":\n            return len(data)\n        raise ConnectionError(\"Socket not connected\")\n    \n    def close(self):\n        if self.state == \"ESTABLISHED\":\n            self.state = \"FIN_WAIT\"\n            # Simulate close completion\n            self.state = \"CLOSED\"\n            return True\n        elif self.state != \"CLOSED\":\n            self.state = \"CLOSED\"\n            return True\n        return False\n    \n    def get_state(self):\n        return self.state\n\nsock = ClientSocket()\nprint(sock.get_state())\nsock.connect()\nprint(sock.get_state())",
+    "testCases": [
+      {
+        "input": "initial state",
+        "isHidden": false,
+        "description": "CLOSED"
+      },
+      {
+        "input": "after connect",
+        "isHidden": false,
+        "description": "ESTABLISHED"
+      },
+      {
+        "input": "send when closed",
+        "isHidden": true,
+        "description": "Error"
+      }
+    ],
+    "hints": [
+      "Start in CLOSED state",
+      "connect() -> SYN_SENT -> ESTABLISHED",
+      "send() only works in ESTABLISHED",
+      "close() -> FIN_WAIT -> CLOSED"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs302-t6-ex04",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-6",
+    "title": "Message Framing",
+    "difficulty": 2,
+    "description": "Implement message framing for TCP streams. Add length prefix to messages and extract messages from buffered data.",
+    "starterCode": "# Frame a message with length prefix\ndef frame_message(message):\n    # Return bytes with 4-byte length prefix\n    pass\n\ndef unframe_messages(buffer):\n    # Extract complete messages from buffer\n    # Return (list of messages, remaining buffer)\n    pass\n\n# Test your functions\nframed = frame_message(b\"Hello\")\nprint(framed)\nmsgs, remaining = unframe_messages(framed + frame_message(b\"World\"))\nprint(msgs)",
+    "solution": "import struct\n\ndef frame_message(message):\n    if isinstance(message, str):\n        message = message.encode()\n    length = len(message)\n    return struct.pack(\">I\", length) + message\n\ndef unframe_messages(buffer):\n    messages = []\n    while len(buffer) >= 4:\n        length = struct.unpack(\">I\", buffer[:4])[0]\n        if len(buffer) < 4 + length:\n            break\n        messages.append(buffer[4:4+length])\n        buffer = buffer[4+length:]\n    return (messages, buffer)\n\nframed = frame_message(b\"Hello\")\nprint(framed)\nmsgs, remaining = unframe_messages(framed + frame_message(b\"World\"))\nprint(msgs)",
+    "testCases": [
+      {
+        "input": "frame \"Hello\"",
+        "isHidden": false,
+        "description": "Add length prefix"
+      },
+      {
+        "input": "unframe multiple",
+        "isHidden": true,
+        "description": "Extract messages"
+      }
+    ],
+    "hints": [
+      "Use struct.pack(\">I\", length) for 4-byte big-endian int",
+      "Prefix message with its length",
+      "When unframing, check if full message received",
+      "Return remaining buffer for incomplete messages"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs302-t6-ex05",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-6",
+    "title": "Non-blocking Socket Simulator",
+    "difficulty": 3,
+    "description": "Simulate non-blocking socket behavior. Track buffer state and return appropriate results for read/write operations.",
+    "starterCode": "class NonBlockingSocket:\n    def __init__(self, recv_buffer_size=1024):\n        self.recv_buffer = b\"\"\n        self.send_buffer = b\"\"\n        self.recv_buffer_size = recv_buffer_size\n        self.connected = False\n    \n    def recv(self, size):\n        # Return data or raise WouldBlock\n        pass\n    \n    def send(self, data):\n        # Return bytes sent or raise WouldBlock\n        pass\n    \n    # Helper to simulate data arrival\n    def _add_recv_data(self, data):\n        self.recv_buffer += data\n\nclass WouldBlock(Exception):\n    pass\n\n# Test your class\nsock = NonBlockingSocket()\nsock._add_recv_data(b\"Hello\")\nprint(sock.recv(10))",
+    "solution": "class WouldBlock(Exception):\n    pass\n\nclass NonBlockingSocket:\n    def __init__(self, recv_buffer_size=1024):\n        self.recv_buffer = b\"\"\n        self.send_buffer = b\"\"\n        self.recv_buffer_size = recv_buffer_size\n        self.connected = True\n    \n    def recv(self, size):\n        if not self.recv_buffer:\n            raise WouldBlock(\"No data available\")\n        data = self.recv_buffer[:size]\n        self.recv_buffer = self.recv_buffer[size:]\n        return data\n    \n    def send(self, data):\n        if len(self.send_buffer) >= self.recv_buffer_size:\n            raise WouldBlock(\"Buffer full\")\n        available = self.recv_buffer_size - len(self.send_buffer)\n        to_send = min(len(data), available)\n        self.send_buffer += data[:to_send]\n        return to_send\n    \n    def _add_recv_data(self, data):\n        self.recv_buffer += data\n\nsock = NonBlockingSocket()\nsock._add_recv_data(b\"Hello\")\nprint(sock.recv(10))",
+    "testCases": [
+      {
+        "input": "recv with data",
+        "isHidden": false,
+        "description": "Returns data"
+      },
+      {
+        "input": "recv empty buffer",
+        "isHidden": true,
+        "description": "Raises WouldBlock"
+      }
+    ],
+    "hints": [
+      "Non-blocking: return immediately or raise WouldBlock",
+      "recv returns available data up to size",
+      "send returns bytes actually sent",
+      "Check buffer space before operations"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs302-t6-ex06",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-6",
+    "title": "Echo Server Logic",
+    "difficulty": 2,
+    "description": "Implement the core logic of an echo server. Process received data and return it back.",
+    "starterCode": "class EchoServer:\n    def __init__(self):\n        self.connections = {}  # client_id -> buffer\n    \n    def on_connect(self, client_id):\n        # Handle new connection\n        pass\n    \n    def on_data(self, client_id, data):\n        # Handle received data, return response\n        pass\n    \n    def on_disconnect(self, client_id):\n        # Handle disconnection\n        pass\n\n# Test your class\nserver = EchoServer()\nserver.on_connect(\"client1\")\nresponse = server.on_data(\"client1\", b\"Hello World\")\nprint(response)",
+    "solution": "class EchoServer:\n    def __init__(self):\n        self.connections = {}\n    \n    def on_connect(self, client_id):\n        self.connections[client_id] = b\"\"\n        return True\n    \n    def on_data(self, client_id, data):\n        if client_id not in self.connections:\n            return None\n        # Echo the data back\n        return data\n    \n    def on_disconnect(self, client_id):\n        if client_id in self.connections:\n            del self.connections[client_id]\n            return True\n        return False\n\nserver = EchoServer()\nserver.on_connect(\"client1\")\nresponse = server.on_data(\"client1\", b\"Hello World\")\nprint(response)",
+    "testCases": [
+      {
+        "input": "send data",
+        "isHidden": false,
+        "description": "Echo back"
+      },
+      {
+        "input": "unknown client",
+        "isHidden": true,
+        "description": "Return None"
+      }
+    ],
+    "hints": [
+      "Track connected clients",
+      "Echo: return the same data received",
+      "Clean up on disconnect",
+      "Handle unknown clients gracefully"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs302-t6-ex07",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-6",
+    "title": "UDP Datagram Handler",
+    "difficulty": 2,
+    "description": "Handle UDP datagrams with source tracking. Store messages by source address.",
+    "starterCode": "class UDPHandler:\n    def __init__(self):\n        self.messages = {}  # source_addr -> list of messages\n    \n    def receive(self, data, source_addr):\n        # Store message from source\n        pass\n    \n    def get_messages(self, source_addr):\n        # Get all messages from source\n        pass\n    \n    def get_sources(self):\n        # Get all known source addresses\n        pass\n\n# Test your class\nhandler = UDPHandler()\nhandler.receive(b\"Hello\", (\"192.168.1.1\", 5000))\nhandler.receive(b\"World\", (\"192.168.1.1\", 5000))\nhandler.receive(b\"Test\", (\"192.168.1.2\", 5001))\nprint(handler.get_messages((\"192.168.1.1\", 5000)))",
+    "solution": "class UDPHandler:\n    def __init__(self):\n        self.messages = {}\n    \n    def receive(self, data, source_addr):\n        if source_addr not in self.messages:\n            self.messages[source_addr] = []\n        self.messages[source_addr].append(data)\n    \n    def get_messages(self, source_addr):\n        return self.messages.get(source_addr, []).copy()\n    \n    def get_sources(self):\n        return list(self.messages.keys())\n\nhandler = UDPHandler()\nhandler.receive(b\"Hello\", (\"192.168.1.1\", 5000))\nhandler.receive(b\"World\", (\"192.168.1.1\", 5000))\nhandler.receive(b\"Test\", (\"192.168.1.2\", 5001))\nprint(handler.get_messages((\"192.168.1.1\", 5000)))",
+    "testCases": [
+      {
+        "input": "messages from one source",
+        "isHidden": false,
+        "description": "Grouped by source"
+      },
+      {
+        "input": "get all sources",
+        "isHidden": true,
+        "description": "List sources"
+      }
+    ],
+    "hints": [
+      "UDP includes source address with each datagram",
+      "Group messages by (ip, port) tuple",
+      "Return copy of messages to prevent modification",
+      "Handle unknown sources gracefully"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs302-t6-ex08",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-6",
+    "title": "Connection Pool Manager",
+    "difficulty": 3,
+    "description": "Implement a connection pool for socket connections. Manage a fixed pool of reusable connections.",
+    "starterCode": "class ConnectionPool:\n    def __init__(self, max_connections):\n        self.max_connections = max_connections\n        self.available = []  # Available connections\n        self.in_use = set()  # Connections being used\n    \n    def acquire(self):\n        # Get a connection from pool (create if needed)\n        # Return connection or None if at max\n        pass\n    \n    def release(self, conn):\n        # Return connection to pool\n        pass\n    \n    def stats(self):\n        # Return pool statistics\n        pass\n\n# Test your class\npool = ConnectionPool(3)\nc1 = pool.acquire()\nc2 = pool.acquire()\nprint(pool.stats())\npool.release(c1)\nprint(pool.stats())",
+    "solution": "class ConnectionPool:\n    def __init__(self, max_connections):\n        self.max_connections = max_connections\n        self.available = []\n        self.in_use = set()\n        self.next_id = 0\n    \n    def _create_connection(self):\n        conn_id = f\"conn_{self.next_id}\"\n        self.next_id += 1\n        return conn_id\n    \n    def acquire(self):\n        if self.available:\n            conn = self.available.pop()\n            self.in_use.add(conn)\n            return conn\n        elif len(self.in_use) < self.max_connections:\n            conn = self._create_connection()\n            self.in_use.add(conn)\n            return conn\n        return None\n    \n    def release(self, conn):\n        if conn in self.in_use:\n            self.in_use.remove(conn)\n            self.available.append(conn)\n            return True\n        return False\n    \n    def stats(self):\n        return {\n            \"available\": len(self.available),\n            \"in_use\": len(self.in_use),\n            \"total\": len(self.available) + len(self.in_use),\n            \"max\": self.max_connections\n        }\n\npool = ConnectionPool(3)\nc1 = pool.acquire()\nc2 = pool.acquire()\nprint(pool.stats())\npool.release(c1)\nprint(pool.stats())",
+    "testCases": [
+      {
+        "input": "acquire two connections",
+        "isHidden": false,
+        "description": "Track in use"
+      },
+      {
+        "input": "release and reacquire",
+        "isHidden": true,
+        "description": "Connection reuse"
+      }
+    ],
+    "hints": [
+      "Reuse available connections first",
+      "Create new if under max limit",
+      "Return None if at capacity",
+      "Released connections become available"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs302-t6-ex09",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-6",
+    "title": "Select/Poll Simulator",
+    "difficulty": 4,
+    "description": "Simulate I/O multiplexing with select/poll. Track sockets ready for reading or writing.",
+    "starterCode": "class IOMultiplexer:\n    def __init__(self):\n        self.read_sockets = {}  # socket_id -> has_data\n        self.write_sockets = {}  # socket_id -> can_write\n    \n    def register_read(self, socket_id):\n        # Register socket for read monitoring\n        pass\n    \n    def register_write(self, socket_id):\n        # Register socket for write monitoring\n        pass\n    \n    def select(self):\n        # Return (readable, writable) socket lists\n        pass\n    \n    # Helpers for testing\n    def _set_readable(self, socket_id, readable=True):\n        self.read_sockets[socket_id] = readable\n    \n    def _set_writable(self, socket_id, writable=True):\n        self.write_sockets[socket_id] = writable\n\n# Test your class\nmux = IOMultiplexer()\nmux.register_read(\"sock1\")\nmux.register_read(\"sock2\")\nmux.register_write(\"sock1\")\nmux._set_readable(\"sock1\", True)\nmux._set_writable(\"sock1\", True)\nprint(mux.select())",
+    "solution": "class IOMultiplexer:\n    def __init__(self):\n        self.read_sockets = {}\n        self.write_sockets = {}\n    \n    def register_read(self, socket_id):\n        self.read_sockets[socket_id] = False\n    \n    def register_write(self, socket_id):\n        self.write_sockets[socket_id] = False\n    \n    def unregister(self, socket_id):\n        self.read_sockets.pop(socket_id, None)\n        self.write_sockets.pop(socket_id, None)\n    \n    def select(self):\n        readable = [sid for sid, ready in self.read_sockets.items() if ready]\n        writable = [sid for sid, ready in self.write_sockets.items() if ready]\n        return (readable, writable)\n    \n    def _set_readable(self, socket_id, readable=True):\n        if socket_id in self.read_sockets:\n            self.read_sockets[socket_id] = readable\n    \n    def _set_writable(self, socket_id, writable=True):\n        if socket_id in self.write_sockets:\n            self.write_sockets[socket_id] = writable\n\nmux = IOMultiplexer()\nmux.register_read(\"sock1\")\nmux.register_read(\"sock2\")\nmux.register_write(\"sock1\")\nmux._set_readable(\"sock1\", True)\nmux._set_writable(\"sock1\", True)\nprint(mux.select())",
+    "testCases": [
+      {
+        "input": "select ready sockets",
+        "isHidden": false,
+        "description": "Returns ready sockets"
+      },
+      {
+        "input": "no ready sockets",
+        "isHidden": true,
+        "description": "Empty lists"
+      }
+    ],
+    "hints": [
+      "Track sockets registered for read/write",
+      "select() returns lists of ready sockets",
+      "A socket can be monitored for both read and write",
+      "Only return sockets that are ready"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs302-t6-ex10",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-6",
+    "title": "Socket Buffer Manager",
+    "difficulty": 3,
+    "description": "Manage send and receive buffers for a socket. Handle partial reads/writes.",
+    "starterCode": "class SocketBuffer:\n    def __init__(self, recv_size=4096, send_size=4096):\n        self.recv_buffer = b\"\"\n        self.send_buffer = b\"\"\n        self.recv_size = recv_size\n        self.send_size = send_size\n    \n    def queue_send(self, data):\n        # Add data to send buffer, return bytes queued\n        pass\n    \n    def get_send_data(self, max_bytes):\n        # Get data to send (remove from buffer)\n        pass\n    \n    def add_recv_data(self, data):\n        # Add received data to buffer\n        pass\n    \n    def read_recv_data(self, max_bytes):\n        # Read from receive buffer\n        pass\n\n# Test your class\nbuf = SocketBuffer(recv_size=100, send_size=100)\nbuf.queue_send(b\"Hello World\")\nprint(buf.get_send_data(5))\nprint(buf.get_send_data(100))",
+    "solution": "class SocketBuffer:\n    def __init__(self, recv_size=4096, send_size=4096):\n        self.recv_buffer = b\"\"\n        self.send_buffer = b\"\"\n        self.recv_size = recv_size\n        self.send_size = send_size\n    \n    def queue_send(self, data):\n        available = self.send_size - len(self.send_buffer)\n        to_queue = min(len(data), available)\n        self.send_buffer += data[:to_queue]\n        return to_queue\n    \n    def get_send_data(self, max_bytes):\n        to_send = min(max_bytes, len(self.send_buffer))\n        data = self.send_buffer[:to_send]\n        self.send_buffer = self.send_buffer[to_send:]\n        return data\n    \n    def add_recv_data(self, data):\n        available = self.recv_size - len(self.recv_buffer)\n        to_add = min(len(data), available)\n        self.recv_buffer += data[:to_add]\n        return to_add\n    \n    def read_recv_data(self, max_bytes):\n        to_read = min(max_bytes, len(self.recv_buffer))\n        data = self.recv_buffer[:to_read]\n        self.recv_buffer = self.recv_buffer[to_read:]\n        return data\n\nbuf = SocketBuffer(recv_size=100, send_size=100)\nbuf.queue_send(b\"Hello World\")\nprint(buf.get_send_data(5))\nprint(buf.get_send_data(100))",
+    "testCases": [
+      {
+        "input": "queue and get send data",
+        "isHidden": false,
+        "description": "Partial read"
+      },
+      {
+        "input": "buffer full",
+        "isHidden": true,
+        "description": "Respect limits"
+      }
+    ],
+    "hints": [
+      "Track available space in each buffer",
+      "Partial operations are common",
+      "Remove data after it's retrieved",
+      "Return amount actually queued/read"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs302-t6-ex11",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-6",
+    "title": "DNS Resolver Mock",
+    "difficulty": 3,
+    "description": "Implement a mock DNS resolver for socket programming. Support forward and reverse lookups.",
+    "starterCode": "class DNSResolver:\n    def __init__(self):\n        self.forward = {}  # hostname -> list of IPs\n        self.reverse = {}  # IP -> hostname\n    \n    def add_record(self, hostname, ip):\n        # Add A record\n        pass\n    \n    def resolve(self, hostname):\n        # Forward lookup: hostname -> IP\n        pass\n    \n    def reverse_lookup(self, ip):\n        # Reverse lookup: IP -> hostname\n        pass\n\n# Test your class\ndns = DNSResolver()\ndns.add_record(\"example.com\", \"93.184.216.34\")\ndns.add_record(\"example.com\", \"93.184.216.35\")\nprint(dns.resolve(\"example.com\"))\nprint(dns.reverse_lookup(\"93.184.216.34\"))",
+    "solution": "class DNSResolver:\n    def __init__(self):\n        self.forward = {}\n        self.reverse = {}\n    \n    def add_record(self, hostname, ip):\n        hostname = hostname.lower()\n        if hostname not in self.forward:\n            self.forward[hostname] = []\n        if ip not in self.forward[hostname]:\n            self.forward[hostname].append(ip)\n        self.reverse[ip] = hostname\n    \n    def resolve(self, hostname):\n        hostname = hostname.lower()\n        ips = self.forward.get(hostname, [])\n        return ips[0] if ips else None\n    \n    def resolve_all(self, hostname):\n        hostname = hostname.lower()\n        return self.forward.get(hostname, []).copy()\n    \n    def reverse_lookup(self, ip):\n        return self.reverse.get(ip)\n\ndns = DNSResolver()\ndns.add_record(\"example.com\", \"93.184.216.34\")\ndns.add_record(\"example.com\", \"93.184.216.35\")\nprint(dns.resolve(\"example.com\"))\nprint(dns.reverse_lookup(\"93.184.216.34\"))",
+    "testCases": [
+      {
+        "input": "forward lookup",
+        "isHidden": false,
+        "description": "Hostname to IP"
+      },
+      {
+        "input": "reverse lookup",
+        "isHidden": true,
+        "description": "IP to hostname"
+      }
+    ],
+    "hints": [
+      "One hostname can have multiple IPs (A records)",
+      "resolve() returns first IP",
+      "Reverse maps IP back to hostname",
+      "Normalize hostname to lowercase"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs302-t6-ex12",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-6",
+    "title": "Chat Protocol Parser",
+    "difficulty": 3,
+    "description": "Parse a simple chat protocol. Messages format: \"USER:MESSAGE\\n\"",
+    "starterCode": "class ChatProtocol:\n    def __init__(self):\n        self.buffer = \"\"\n    \n    def add_data(self, data):\n        # Add received data to buffer\n        pass\n    \n    def get_messages(self):\n        # Extract complete messages\n        # Return list of (user, message) tuples\n        pass\n\n# Test your class\nchat = ChatProtocol()\nchat.add_data(\"alice:Hello\\nbob:Hi there\\ncharlie:Par\")\nprint(chat.get_messages())\nchat.add_data(\"tial message\\n\")\nprint(chat.get_messages())",
+    "solution": "class ChatProtocol:\n    def __init__(self):\n        self.buffer = \"\"\n    \n    def add_data(self, data):\n        if isinstance(data, bytes):\n            data = data.decode()\n        self.buffer += data\n    \n    def get_messages(self):\n        messages = []\n        while \"\\n\" in self.buffer:\n            line, self.buffer = self.buffer.split(\"\\n\", 1)\n            if \":\" in line:\n                user, message = line.split(\":\", 1)\n                messages.append((user.strip(), message.strip()))\n        return messages\n\nchat = ChatProtocol()\nchat.add_data(\"alice:Hello\\nbob:Hi there\\ncharlie:Par\")\nprint(chat.get_messages())\nchat.add_data(\"tial message\\n\")\nprint(chat.get_messages())",
+    "testCases": [
+      {
+        "input": "complete messages",
+        "isHidden": false,
+        "description": "Parse two messages"
+      },
+      {
+        "input": "partial message",
+        "isHidden": true,
+        "description": "Buffer incomplete"
+      }
+    ],
+    "hints": [
+      "Messages are newline-terminated",
+      "Split on first colon for user:message",
+      "Buffer partial messages until complete",
+      "Return list of (user, message) tuples"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs302-t6-ex13",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-6",
+    "title": "Timeout Handler",
+    "difficulty": 3,
+    "description": "Implement socket operation timeout handling. Track operation start times and check for timeout.",
+    "starterCode": "import time\n\nclass TimeoutHandler:\n    def __init__(self, timeout_seconds):\n        self.timeout = timeout_seconds\n        self.operations = {}  # op_id -> start_time\n    \n    def start_operation(self, op_id):\n        # Start timing an operation\n        pass\n    \n    def check_timeout(self, op_id):\n        # Return True if operation has timed out\n        pass\n    \n    def complete_operation(self, op_id):\n        # Mark operation complete\n        pass\n    \n    def get_remaining(self, op_id):\n        # Get remaining time before timeout\n        pass\n\n# Test your class\nth = TimeoutHandler(5)\nth.start_operation(\"connect\")\nprint(th.get_remaining(\"connect\"))",
+    "solution": "import time\n\nclass TimeoutHandler:\n    def __init__(self, timeout_seconds):\n        self.timeout = timeout_seconds\n        self.operations = {}\n    \n    def start_operation(self, op_id):\n        self.operations[op_id] = time.time()\n    \n    def check_timeout(self, op_id):\n        if op_id not in self.operations:\n            return False\n        elapsed = time.time() - self.operations[op_id]\n        return elapsed >= self.timeout\n    \n    def complete_operation(self, op_id):\n        if op_id in self.operations:\n            del self.operations[op_id]\n            return True\n        return False\n    \n    def get_remaining(self, op_id):\n        if op_id not in self.operations:\n            return 0\n        elapsed = time.time() - self.operations[op_id]\n        remaining = self.timeout - elapsed\n        return max(0, remaining)\n\nth = TimeoutHandler(5)\nth.start_operation(\"connect\")\nprint(th.get_remaining(\"connect\"))",
+    "testCases": [
+      {
+        "input": "get remaining time",
+        "isHidden": false,
+        "description": "Time before timeout"
+      },
+      {
+        "input": "check timeout",
+        "isHidden": true,
+        "description": "After timeout"
+      }
+    ],
+    "hints": [
+      "Store start time for each operation",
+      "Elapsed = current_time - start_time",
+      "Timed out if elapsed >= timeout",
+      "Remaining = timeout - elapsed (min 0)"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs302-t6-ex14",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-6",
+    "title": "Rate Limiter for Connections",
+    "difficulty": 3,
+    "description": "Implement connection rate limiting. Limit connections per client IP per time window.",
+    "starterCode": "import time\n\nclass ConnectionRateLimiter:\n    def __init__(self, max_connections, window_seconds):\n        self.max_connections = max_connections\n        self.window = window_seconds\n        self.connections = {}  # ip -> list of timestamps\n    \n    def allow_connection(self, ip):\n        # Return True if connection allowed\n        pass\n    \n    def get_count(self, ip):\n        # Get current connection count for IP\n        pass\n\n# Test your class\nrl = ConnectionRateLimiter(max_connections=3, window_seconds=60)\nprint(rl.allow_connection(\"192.168.1.1\"))  # True\nprint(rl.allow_connection(\"192.168.1.1\"))  # True\nprint(rl.allow_connection(\"192.168.1.1\"))  # True\nprint(rl.allow_connection(\"192.168.1.1\"))  # False",
+    "solution": "import time\n\nclass ConnectionRateLimiter:\n    def __init__(self, max_connections, window_seconds):\n        self.max_connections = max_connections\n        self.window = window_seconds\n        self.connections = {}\n    \n    def _cleanup(self, ip):\n        if ip in self.connections:\n            cutoff = time.time() - self.window\n            self.connections[ip] = [t for t in self.connections[ip] if t > cutoff]\n    \n    def allow_connection(self, ip):\n        self._cleanup(ip)\n        \n        if ip not in self.connections:\n            self.connections[ip] = []\n        \n        if len(self.connections[ip]) < self.max_connections:\n            self.connections[ip].append(time.time())\n            return True\n        return False\n    \n    def get_count(self, ip):\n        self._cleanup(ip)\n        return len(self.connections.get(ip, []))\n\nrl = ConnectionRateLimiter(max_connections=3, window_seconds=60)\nprint(rl.allow_connection(\"192.168.1.1\"))\nprint(rl.allow_connection(\"192.168.1.1\"))\nprint(rl.allow_connection(\"192.168.1.1\"))\nprint(rl.allow_connection(\"192.168.1.1\"))",
+    "testCases": [
+      {
+        "input": "within limit",
+        "isHidden": false,
+        "description": "Connections allowed"
+      },
+      {
+        "input": "exceed limit",
+        "isHidden": false,
+        "description": "Connection denied"
+      },
+      {
+        "input": "after window",
+        "isHidden": true,
+        "description": "Old connections expire"
+      }
+    ],
+    "hints": [
+      "Track connection timestamps per IP",
+      "Remove timestamps outside window",
+      "Count only recent connections",
+      "Allow if under max_connections"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs302-t6-ex15",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-6",
+    "title": "Binary Protocol Builder",
+    "difficulty": 4,
+    "description": "Build binary protocol messages with structured fields. Support common field types.",
+    "starterCode": "import struct\n\nclass BinaryProtocol:\n    def __init__(self):\n        self.buffer = b\"\"\n    \n    def add_byte(self, value):\n        pass\n    \n    def add_uint16(self, value):\n        pass\n    \n    def add_uint32(self, value):\n        pass\n    \n    def add_string(self, value):\n        # Length-prefixed string\n        pass\n    \n    def build(self):\n        # Return built message\n        pass\n\n# Test your class\nprot = BinaryProtocol()\nprot.add_byte(1)        # Message type\nprot.add_uint16(100)    # Sequence\nprot.add_string(\"Hello\")\nprint(prot.build().hex())",
+    "solution": "import struct\n\nclass BinaryProtocol:\n    def __init__(self):\n        self.buffer = b\"\"\n    \n    def add_byte(self, value):\n        self.buffer += struct.pack(\">B\", value)\n        return self\n    \n    def add_uint16(self, value):\n        self.buffer += struct.pack(\">H\", value)\n        return self\n    \n    def add_uint32(self, value):\n        self.buffer += struct.pack(\">I\", value)\n        return self\n    \n    def add_string(self, value):\n        if isinstance(value, str):\n            value = value.encode()\n        # Length prefix (2 bytes) + string data\n        self.buffer += struct.pack(\">H\", len(value)) + value\n        return self\n    \n    def build(self):\n        result = self.buffer\n        self.buffer = b\"\"\n        return result\n\nprot = BinaryProtocol()\nprot.add_byte(1)\nprot.add_uint16(100)\nprot.add_string(\"Hello\")\nprint(prot.build().hex())",
+    "testCases": [
+      {
+        "input": "build protocol message",
+        "isHidden": false,
+        "description": "Binary format"
+      },
+      {
+        "input": "string encoding",
+        "isHidden": true,
+        "description": "Length-prefixed"
+      }
+    ],
+    "hints": [
+      "Use struct.pack for binary encoding",
+      ">B = unsigned byte, >H = uint16, >I = uint32",
+      "> means big-endian (network byte order)",
+      "Strings: length prefix + data"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs302-t6-ex16",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-6",
+    "title": "Keep-Alive Manager",
+    "difficulty": 3,
+    "description": "Manage connection keep-alive. Track last activity and identify idle connections.",
+    "starterCode": "import time\n\nclass KeepAliveManager:\n    def __init__(self, timeout_seconds=30):\n        self.timeout = timeout_seconds\n        self.connections = {}  # conn_id -> last_activity\n    \n    def add_connection(self, conn_id):\n        pass\n    \n    def update_activity(self, conn_id):\n        pass\n    \n    def get_idle_connections(self):\n        # Return list of connections that have timed out\n        pass\n    \n    def remove_connection(self, conn_id):\n        pass\n\n# Test your class\nkam = KeepAliveManager(timeout_seconds=5)\nkam.add_connection(\"conn1\")\nkam.add_connection(\"conn2\")\nkam.update_activity(\"conn1\")\nprint(kam.get_idle_connections())",
+    "solution": "import time\n\nclass KeepAliveManager:\n    def __init__(self, timeout_seconds=30):\n        self.timeout = timeout_seconds\n        self.connections = {}\n    \n    def add_connection(self, conn_id):\n        self.connections[conn_id] = time.time()\n    \n    def update_activity(self, conn_id):\n        if conn_id in self.connections:\n            self.connections[conn_id] = time.time()\n    \n    def get_idle_connections(self):\n        current = time.time()\n        idle = []\n        for conn_id, last_activity in self.connections.items():\n            if current - last_activity > self.timeout:\n                idle.append(conn_id)\n        return idle\n    \n    def remove_connection(self, conn_id):\n        if conn_id in self.connections:\n            del self.connections[conn_id]\n            return True\n        return False\n\nkam = KeepAliveManager(timeout_seconds=5)\nkam.add_connection(\"conn1\")\nkam.add_connection(\"conn2\")\nkam.update_activity(\"conn1\")\nprint(kam.get_idle_connections())",
+    "testCases": [
+      {
+        "input": "track connections",
+        "isHidden": false,
+        "description": "Update activity"
+      },
+      {
+        "input": "identify idle",
+        "isHidden": true,
+        "description": "Timeout detection"
+      }
+    ],
+    "hints": [
+      "Track last activity timestamp per connection",
+      "Update timestamp on any activity",
+      "Idle if current_time - last_activity > timeout",
+      "Return list of timed-out connections"
+    ],
+    "language": "python"
+  }
+]

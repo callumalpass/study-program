@@ -1,0 +1,185 @@
+[
+  {
+    "id": "math204-quiz-6a",
+    "subjectId": "math204",
+    "topicId": "math204-6",
+    "title": "Sequences and Series - Fundamentals",
+    "questions": [
+      {
+        "id": "math204-q6a-1",
+        "type": "multiple_choice",
+        "prompt": "A sequence is:",
+        "options": [
+          "A sum of terms",
+          "An ordered list of numbers",
+          "A function from natural numbers to real numbers",
+          "Both B and C"
+        ],
+        "correctAnswer": 3,
+        "explanation": "A sequence is both an ordered list and a function $a_n: \\mathbb{N} \\to \\mathbb{R}$."
+      },
+      {
+        "id": "math204-q6a-2",
+        "type": "true_false",
+        "prompt": "A series is the sum of the terms of a sequence.",
+        "correctAnswer": true,
+        "explanation": "True. A series is $\\sum_{n=1}^\\infty a_n = a_1 + a_2 + a_3 + \\cdots$"
+      },
+      {
+        "id": "math204-q6a-3",
+        "type": "multiple_choice",
+        "prompt": "The sequence $a_n = \\frac{1}{n}$ converges to:",
+        "options": [
+          "$0$",
+          "$1$",
+          "$\\infty$",
+          "Does not converge"
+        ],
+        "correctAnswer": 0,
+        "explanation": "$\\lim_{n \\to \\infty} \\frac{1}{n} = 0$, so the sequence converges to 0."
+      },
+      {
+        "id": "math204-q6a-4",
+        "type": "multiple_choice",
+        "prompt": "If $\\lim_{n \\to \\infty} a_n \\neq 0$, what can we conclude about $\\sum a_n$?",
+        "options": [
+          "It converges",
+          "It diverges",
+          "It oscillates",
+          "Cannot determine"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The nth Term Test (Divergence Test): if $\\lim a_n \\neq 0$, then $\\sum a_n$ diverges."
+      },
+      {
+        "id": "math204-q6a-5",
+        "type": "fill_blank",
+        "prompt": "A sequence is ____ if it approaches a finite limit as n approaches infinity.",
+        "correctAnswer": "convergent",
+        "explanation": "A sequence converges if $\\lim_{n \\to \\infty} a_n = L$ for some finite $L$."
+      }
+    ]
+  },
+  {
+    "id": "math204-quiz-6b",
+    "subjectId": "math204",
+    "topicId": "math204-6",
+    "title": "Series - Convergence Tests",
+    "questions": [
+      {
+        "id": "math204-q6b-1",
+        "type": "multiple_choice",
+        "prompt": "The geometric series $\\sum_{n=0}^\\infty ar^n$ converges when:",
+        "options": [
+          "$|r| < 1$",
+          "$|r| > 1$",
+          "$r < 1$",
+          "$a < 1$"
+        ],
+        "correctAnswer": 0,
+        "explanation": "A geometric series converges if and only if $|r| < 1$, and sums to $\\frac{a}{1-r}$."
+      },
+      {
+        "id": "math204-q6b-2",
+        "type": "true_false",
+        "prompt": "The Integral Test can only be used if the function is positive, continuous, and decreasing.",
+        "correctAnswer": true,
+        "explanation": "True. These conditions ensure the comparison between the series and integral is valid."
+      },
+      {
+        "id": "math204-q6b-3",
+        "type": "multiple_choice",
+        "prompt": "What is the sum of $\\sum_{n=0}^\\infty \\frac{1}{2^n}$?",
+        "options": [
+          "$1$",
+          "$2$",
+          "$\\frac{1}{2}$",
+          "Diverges"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Geometric series with $a = 1, r = \\frac{1}{2}$. Sum = $\\frac{a}{1-r} = \\frac{1}{1-1/2} = 2$."
+      },
+      {
+        "id": "math204-q6b-4",
+        "type": "multiple_choice",
+        "prompt": "The Alternating Series Test requires:",
+        "options": [
+          "Terms alternate in sign",
+          "Terms decrease in absolute value",
+          "$\\lim_{n \\to \\infty} a_n = 0$",
+          "All of the above"
+        ],
+        "correctAnswer": 3,
+        "explanation": "Alternating Series Test: series $\\sum (-1)^n a_n$ converges if $a_n$ decreases to 0."
+      },
+      {
+        "id": "math204-q6b-5",
+        "type": "fill_blank",
+        "prompt": "The Ratio Test uses the limit $L = \\lim_{n \\to \\infty} \\left|\\frac{a_{n+1}}{a_n}\\right|$. If L < 1, the series ____.",
+        "correctAnswer": "converges",
+        "explanation": "Ratio Test: converges if $L < 1$, diverges if $L > 1$, inconclusive if $L = 1$."
+      }
+    ]
+  },
+  {
+    "id": "math204-quiz-6c",
+    "subjectId": "math204",
+    "topicId": "math204-6",
+    "title": "Series - Advanced Tests",
+    "questions": [
+      {
+        "id": "math204-q6c-1",
+        "type": "multiple_choice",
+        "prompt": "The Ratio Test is particularly useful for series containing:",
+        "options": [
+          "Polynomials",
+          "Factorials or exponentials",
+          "Logarithms",
+          "Trigonometric functions"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The Ratio Test works well with factorials, exponentials, and powers because the ratio simplifies nicely."
+      },
+      {
+        "id": "math204-q6c-2",
+        "type": "true_false",
+        "prompt": "The Root Test uses $L = \\lim_{n \\to \\infty} \\sqrt[n]{|a_n|}$ and has the same conclusions as the Ratio Test.",
+        "correctAnswer": true,
+        "explanation": "True. Both tests have the same convergence criteria: $L < 1$ converges, $L > 1$ diverges, $L = 1$ inconclusive."
+      },
+      {
+        "id": "math204-q6c-3",
+        "type": "multiple_choice",
+        "prompt": "By the Direct Comparison Test, if $0 \\leq a_n \\leq b_n$ and $\\sum b_n$ converges, then:",
+        "options": [
+          "$\\sum a_n$ converges",
+          "$\\sum a_n$ diverges",
+          "Cannot determine",
+          "$\\sum a_n = \\sum b_n$"
+        ],
+        "correctAnswer": 0,
+        "explanation": "If the larger series converges, the smaller series must also converge."
+      },
+      {
+        "id": "math204-q6c-4",
+        "type": "multiple_choice",
+        "prompt": "The Limit Comparison Test compares $\\sum a_n$ and $\\sum b_n$ using:",
+        "options": [
+          "$\\lim \\frac{a_n}{b_n}$",
+          "$\\lim (a_n - b_n)$",
+          "$\\lim (a_n + b_n)$",
+          "$\\lim a_n b_n$"
+        ],
+        "correctAnswer": 0,
+        "explanation": "If $\\lim \\frac{a_n}{b_n} = L$ where $0 < L < \\infty$, both series converge or both diverge."
+      },
+      {
+        "id": "math204-q6c-5",
+        "type": "fill_blank",
+        "prompt": "A series is ____ convergent if it converges but does not converge absolutely.",
+        "correctAnswer": "conditionally",
+        "explanation": "Conditional convergence: $\\sum a_n$ converges but $\\sum |a_n|$ diverges."
+      }
+    ]
+  }
+]

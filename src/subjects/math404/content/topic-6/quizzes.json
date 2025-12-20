@@ -1,0 +1,179 @@
+[
+  {
+    "id": "math404-quiz-6a",
+    "subjectId": "math404",
+    "topicId": "math404-topic-6",
+    "title": "Gradient Methods - Fundamentals",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "What determines the convergence rate of gradient descent on a quadratic function?",
+        "options": [
+          "The objective value",
+          "The condition number of the Hessian",
+          "The dimension of the problem",
+          "The initial point"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The condition number κ = λ_max/λ_min determines convergence rate: (κ-1)/(κ+1)."
+      },
+      {
+        "id": "q2",
+        "type": "true_false",
+        "prompt": "Newton's method converges quadratically near the optimum.",
+        "correctAnswer": true,
+        "explanation": "Newton's method achieves quadratic convergence when started sufficiently close to the optimum."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "The gradient descent update is: x_{k+1} = x_k - α_k ∇f(x_k). What does α_k represent?",
+        "options": [
+          "The gradient",
+          "The step size (learning rate)",
+          "The optimal solution",
+          "The Hessian"
+        ],
+        "correctAnswer": 1,
+        "explanation": "α_k is the step size or learning rate, determining how far to move in the negative gradient direction."
+      },
+      {
+        "id": "q4",
+        "type": "fill_blank",
+        "prompt": "For L-smooth convex functions, gradient descent with appropriate step size achieves O(1/_____) convergence.",
+        "correctAnswer": "k",
+        "explanation": "GD on L-smooth convex functions converges as O(1/k), meaning f(x_k) - f(x*) ≤ C/k."
+      },
+      {
+        "id": "q5",
+        "type": "true_false",
+        "prompt": "Gradient descent requires computing second derivatives.",
+        "correctAnswer": false,
+        "explanation": "Gradient descent only uses first-order information (gradients). Newton's method uses second derivatives (Hessian)."
+      }
+    ]
+  },
+  {
+    "id": "math404-quiz-6b",
+    "subjectId": "math404",
+    "topicId": "math404-topic-6",
+    "title": "Gradient Methods - Application",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "The Armijo condition for line search requires:",
+        "options": [
+          "Exact minimization",
+          "Sufficient decrease in objective",
+          "Zero gradient",
+          "Positive definite Hessian"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Armijo requires f(x + αd) ≤ f(x) + c·α·∇f(x)ᵀd for some c ∈ (0,1), ensuring sufficient decrease."
+      },
+      {
+        "id": "q2",
+        "type": "true_false",
+        "prompt": "Exact line search always outperforms backtracking line search in practice.",
+        "correctAnswer": false,
+        "explanation": "Exact line search is expensive to compute and backtracking is often more efficient overall despite using more iterations."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "BFGS is a:",
+        "options": [
+          "First-order method",
+          "Quasi-Newton method",
+          "Zero-order method",
+          "Exact Newton method"
+        ],
+        "correctAnswer": 1,
+        "explanation": "BFGS is a quasi-Newton method that approximates the Hessian using gradient information."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "For strongly convex functions with condition number κ, gradient descent converges as:",
+        "options": [
+          "O(1/k)",
+          "O((κ-1)/(κ+1))^k",
+          "O(1/k²)",
+          "O(e^{-k})"
+        ],
+        "correctAnswer": 1,
+        "explanation": "For μ-strongly convex, L-smooth functions, GD achieves linear convergence with rate ((κ-1)/(κ+1))^k where κ = L/μ."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "The _____ method uses only function evaluations, no gradients.",
+        "correctAnswer": "Nelder-Mead",
+        "explanation": "Nelder-Mead (simplex search) is a zero-order method using only function evaluations, suitable when gradients are unavailable."
+      }
+    ]
+  },
+  {
+    "id": "math404-quiz-6c",
+    "subjectId": "math404",
+    "topicId": "math404-topic-6",
+    "title": "Gradient Methods - Mastery",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "L-BFGS improves upon BFGS by:",
+        "options": [
+          "Using exact Hessian",
+          "Storing only recent gradient pairs",
+          "Using higher-order derivatives",
+          "Requiring fewer iterations"
+        ],
+        "correctAnswer": 1,
+        "explanation": "L-BFGS stores only the last m gradient differences, making it suitable for large-scale problems with O(mn) memory."
+      },
+      {
+        "id": "q2",
+        "type": "true_false",
+        "prompt": "Stochastic gradient descent uses the exact gradient at each iteration.",
+        "correctAnswer": false,
+        "explanation": "SGD uses stochastic gradient estimates (e.g., from mini-batches), not the full exact gradient."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "Coordinate descent updates:",
+        "options": [
+          "All variables simultaneously",
+          "One variable at a time",
+          "Random subsets of variables",
+          "Only the largest gradient component"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Coordinate descent minimizes over one coordinate at a time, cycling or randomly selecting coordinates."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "The Wolfe conditions combine Armijo with a:",
+        "options": [
+          "Gradient condition",
+          "Curvature condition",
+          "Feasibility condition",
+          "Optimality condition"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Wolfe conditions add a curvature condition |∇f(x+αd)ᵀd| ≤ c₂|∇f(x)ᵀd| to Armijo to ensure sufficient progress."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "For non-convex smooth functions, gradient descent converges to a _____ point.",
+        "correctAnswer": "stationary",
+        "explanation": "For non-convex problems, GD converges to stationary points where ∇f(x) = 0, which may be local minima, maxima, or saddle points."
+      }
+    ]
+  }
+]

@@ -1,0 +1,185 @@
+[
+  {
+    "id": "math403-quiz-6-1",
+    "subjectId": "math403",
+    "topicId": "math403-topic-6",
+    "title": "Metric Spaces - Fundamentals",
+    "questions": [
+      {
+        "id": "math403-q6-1-1",
+        "type": "multiple_choice",
+        "prompt": "Which property is NOT required for a metric d?",
+        "options": [
+          "d(x, y) ≥ 0",
+          "d(x, y) = d(y, x)",
+          "d(x, y) ≤ d(x, z) + d(z, y)",
+          "d(x, y) = d(x, z) + d(z, y) for some z"
+        ],
+        "correctAnswer": 3,
+        "explanation": "The triangle inequality states d(x,y) ≤ d(x,z) + d(z,y), not equality. Option (d) is not a required property."
+      },
+      {
+        "id": "math403-q6-1-2",
+        "type": "true_false",
+        "prompt": "Every metric space is Hausdorff.",
+        "correctAnswer": true,
+        "explanation": "True. In any metric space, distinct points can be separated by disjoint open balls, making metric spaces Hausdorff (T₂)."
+      },
+      {
+        "id": "math403-q6-1-3",
+        "type": "multiple_choice",
+        "prompt": "In a metric space, a sequence (xₙ) converges to x if:",
+        "options": [
+          "xₙ = x for all n",
+          "d(xₙ, x) → 0 as n → ∞",
+          "xₙ is eventually constant",
+          "d(xₙ, xₙ₊₁) → 0"
+        ],
+        "correctAnswer": 1,
+        "explanation": "xₙ → x iff d(xₙ, x) → 0, i.e., for all ε > 0, ∃N such that n ≥ N ⇒ d(xₙ, x) < ε."
+      },
+      {
+        "id": "math403-q6-1-4",
+        "type": "true_false",
+        "prompt": "Every metric space is first countable.",
+        "correctAnswer": true,
+        "explanation": "True. {B(x, 1/n) : n ∈ ℕ} is a countable local basis at every point x in a metric space."
+      },
+      {
+        "id": "math403-q6-1-5",
+        "type": "multiple_choice",
+        "prompt": "A metric space is complete if:",
+        "options": [
+          "Every sequence converges",
+          "Every Cauchy sequence converges",
+          "The space is compact",
+          "The space is bounded"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A metric space is complete if every Cauchy sequence converges to a point in the space."
+      }
+    ]
+  },
+  {
+    "id": "math403-quiz-6-2",
+    "subjectId": "math403",
+    "topicId": "math403-topic-6",
+    "title": "Metric Spaces - Applications",
+    "questions": [
+      {
+        "id": "math403-q6-2-1",
+        "type": "true_false",
+        "prompt": "ℚ with the standard metric is complete.",
+        "correctAnswer": false,
+        "explanation": "False. ℚ is not complete. For example, a Cauchy sequence converging to √2 has no limit in ℚ."
+      },
+      {
+        "id": "math403-q6-2-2",
+        "type": "multiple_choice",
+        "prompt": "The Banach Fixed Point Theorem (Contraction Mapping Theorem) applies to:",
+        "options": [
+          "All continuous functions on compact spaces",
+          "Contractions on complete metric spaces",
+          "All functions on ℝ",
+          "Homeomorphisms"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A contraction on a complete metric space has a unique fixed point. This requires completeness and the contraction property."
+      },
+      {
+        "id": "math403-q6-2-3",
+        "type": "multiple_choice",
+        "prompt": "A function f: (X, d) → (Y, ρ) is a contraction if:",
+        "options": [
+          "ρ(f(x), f(y)) < d(x, y) for all x ≠ y",
+          "ρ(f(x), f(y)) ≤ d(x, y) for all x, y",
+          "ρ(f(x), f(y)) ≤ k·d(x, y) for some k < 1",
+          "f is continuous"
+        ],
+        "correctAnswer": 2,
+        "explanation": "A contraction satisfies ρ(f(x), f(y)) ≤ k·d(x, y) for some Lipschitz constant k < 1."
+      },
+      {
+        "id": "math403-q6-2-4",
+        "type": "true_false",
+        "prompt": "The Baire Category Theorem states that every complete metric space is nonmeager.",
+        "correctAnswer": true,
+        "explanation": "True. In a complete metric space, the intersection of countably many dense open sets is dense (equivalently, the space is nonmeager in itself)."
+      },
+      {
+        "id": "math403-q6-2-5",
+        "type": "multiple_choice",
+        "prompt": "Which space is NOT complete?",
+        "options": [
+          "ℝ with standard metric",
+          "(0, 1) with standard metric",
+          "ℝⁿ with Euclidean metric",
+          "C[0,1] with sup metric"
+        ],
+        "correctAnswer": 1,
+        "explanation": "(0, 1) is not complete. For example, the sequence xₙ = 1/n is Cauchy but converges to 0 ∉ (0, 1)."
+      }
+    ]
+  },
+  {
+    "id": "math403-quiz-6-3",
+    "subjectId": "math403",
+    "topicId": "math403-topic-6",
+    "title": "Metric Spaces - Advanced",
+    "questions": [
+      {
+        "id": "math403-q6-3-1",
+        "type": "multiple_choice",
+        "prompt": "The completion of a metric space (X, d) is:",
+        "options": [
+          "The closure of X in a larger space",
+          "A complete metric space containing X as a dense subset",
+          "X ∪ {all limit points}",
+          "The one-point compactification of X"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The completion is a complete metric space in which X embeds as a dense subspace, unique up to isometry."
+      },
+      {
+        "id": "math403-q6-3-2",
+        "type": "true_false",
+        "prompt": "Every separable metric space is second countable.",
+        "correctAnswer": true,
+        "explanation": "True. In metric spaces, separability implies (and is implied by) second countability."
+      },
+      {
+        "id": "math403-q6-3-3",
+        "type": "multiple_choice",
+        "prompt": "A metrizable space is one that:",
+        "options": [
+          "Is a metric space",
+          "Has a topology that can be induced by some metric",
+          "Is complete",
+          "Is separable"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A topological space is metrizable if its topology can be induced by some metric (not necessarily unique)."
+      },
+      {
+        "id": "math403-q6-3-4",
+        "type": "true_false",
+        "prompt": "Every compact metric space is complete.",
+        "correctAnswer": true,
+        "explanation": "True. Compactness implies completeness in metric spaces. Every Cauchy sequence in a compact metric space converges."
+      },
+      {
+        "id": "math403-q6-3-5",
+        "type": "multiple_choice",
+        "prompt": "The Urysohn Metrization Theorem states:",
+        "options": [
+          "Every topological space is metrizable",
+          "Every second countable regular space is metrizable",
+          "Every compact space is metrizable",
+          "Every Hausdorff space is metrizable"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A space is metrizable if it is second countable and regular (T₃). This is the Urysohn Metrization Theorem."
+      }
+    ]
+  }
+]

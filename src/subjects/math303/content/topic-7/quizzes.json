@@ -1,0 +1,221 @@
+[
+  {
+    "id": "math303-quiz-7-1",
+    "subjectId": "math303",
+    "title": "Sequences of Functions - Pointwise Convergence",
+    "topicId": "math303-topic-7",
+    "questions": [
+      {
+        "id": "math303-q91",
+        "type": "multiple_choice",
+        "prompt": "A sequence of functions (fₙ) converges pointwise to f on a set E if:",
+        "options": [
+          "For each x in E, lim(n→∞) fₙ(x) = f(x)",
+          "lim(n→∞) sup{|fₙ(x) - f(x)| : x in E} = 0",
+          "fₙ = f for all n",
+          "fₙ is continuous for all n"
+        ],
+        "correctAnswer": "For each x in E, lim(n→∞) fₙ(x) = f(x)",
+        "explanation": "Pointwise convergence means convergence at each individual point. For each fixed x, the sequence of numbers fₙ(x) converges to f(x)."
+      },
+      {
+        "id": "math303-q92",
+        "type": "multiple_choice",
+        "prompt": "Let fₙ(x) = xⁿ on [0, 1]. The pointwise limit is:",
+        "options": [
+          "f(x) = 0 for x in [0, 1), and f(1) = 1",
+          "f(x) = 1 for all x in [0, 1]",
+          "f(x) = 0 for all x in [0, 1]",
+          "f(x) = x for all x in [0, 1]"
+        ],
+        "correctAnswer": "f(x) = 0 for x in [0, 1), and f(1) = 1",
+        "explanation": "For x < 1, xⁿ → 0. For x = 1, 1ⁿ = 1. The limit function is discontinuous even though each fₙ is continuous."
+      },
+      {
+        "id": "math303-q93",
+        "type": "multiple_choice",
+        "prompt": "The pointwise limit of continuous functions is:",
+        "options": [
+          "Not necessarily continuous",
+          "Always continuous",
+          "Always differentiable",
+          "Always uniformly continuous"
+        ],
+        "correctAnswer": "Not necessarily continuous",
+        "explanation": "Pointwise convergence does not preserve continuity. Example: fₙ(x) = xⁿ on [0, 1] has a discontinuous limit."
+      },
+      {
+        "id": "math303-q94",
+        "type": "multiple_choice",
+        "prompt": "If fₙ → f pointwise and each fₙ is integrable, then:",
+        "options": [
+          "∫ fₙ may not converge to ∫ f",
+          "∫ fₙ always converges to ∫ f",
+          "f is not integrable",
+          "∫ fₙ = ∫ f for all n"
+        ],
+        "correctAnswer": "∫ fₙ may not converge to ∫ f",
+        "explanation": "Pointwise convergence does not guarantee that integrals converge. Stronger convergence (like uniform) is needed to interchange limit and integral."
+      },
+      {
+        "id": "math303-q95",
+        "type": "multiple_choice",
+        "prompt": "A series of functions ∑fₙ converges pointwise to f if:",
+        "options": [
+          "The sequence of partial sums Sₙ(x) = ∑(k=1 to n) fₖ(x) converges to f(x) for each x",
+          "∑|fₙ(x)| converges for each x",
+          "fₙ(x) → 0 for each x",
+          "∑fₙ is finite"
+        ],
+        "correctAnswer": "The sequence of partial sums Sₙ(x) = ∑(k=1 to n) fₖ(x) converges to f(x) for each x",
+        "explanation": "Series convergence is defined through convergence of partial sums, just as with numerical series."
+      }
+    ]
+  },
+  {
+    "id": "math303-quiz-7-2",
+    "subjectId": "math303",
+    "title": "Sequences of Functions - Uniform Convergence",
+    "topicId": "math303-topic-7",
+    "questions": [
+      {
+        "id": "math303-q96",
+        "type": "multiple_choice",
+        "prompt": "A sequence (fₙ) converges uniformly to f on E if:",
+        "options": [
+          "lim(n→∞) sup{|fₙ(x) - f(x)| : x in E} = 0",
+          "lim(n→∞) fₙ(x) = f(x) for each x in E",
+          "fₙ is continuous for all n",
+          "f is continuous"
+        ],
+        "correctAnswer": "lim(n→∞) sup{|fₙ(x) - f(x)| : x in E} = 0",
+        "explanation": "Uniform convergence requires convergence at the same rate for all x. The supremum of |fₙ(x) - f(x)| over all x must go to 0."
+      },
+      {
+        "id": "math303-q97",
+        "type": "multiple_choice",
+        "prompt": "If fₙ → f uniformly on E and each fₙ is continuous, then:",
+        "options": [
+          "f is continuous on E",
+          "f is not continuous",
+          "f is differentiable",
+          "f is constant"
+        ],
+        "correctAnswer": "f is continuous on E",
+        "explanation": "This is the Uniform Limit Theorem: uniform convergence of continuous functions preserves continuity."
+      },
+      {
+        "id": "math303-q98",
+        "type": "multiple_choice",
+        "prompt": "Let fₙ(x) = x/n on [0, 1]. Does fₙ converge uniformly to 0?",
+        "options": [
+          "Yes",
+          "No",
+          "Only pointwise",
+          "Not even pointwise"
+        ],
+        "correctAnswer": "Yes",
+        "explanation": "sup{|x/n| : x in [0, 1]} = 1/n → 0, so convergence is uniform. Each fₙ is within 1/n of 0 uniformly over [0, 1]."
+      },
+      {
+        "id": "math303-q99",
+        "type": "multiple_choice",
+        "prompt": "If fₙ → f uniformly on [a, b] and each fₙ is integrable, then:",
+        "options": [
+          "∫ₐᵇ fₙ → ∫ₐᵇ f",
+          "∫ₐᵇ fₙ diverges",
+          "∫ₐᵇ f does not exist",
+          "Cannot determine"
+        ],
+        "correctAnswer": "∫ₐᵇ fₙ → ∫ₐᵇ f",
+        "explanation": "Uniform convergence allows us to interchange limit and integral: lim ∫fₙ = ∫(lim fₙ) = ∫f."
+      },
+      {
+        "id": "math303-q100",
+        "type": "multiple_choice",
+        "prompt": "The Weierstrass M-Test states that if |fₙ(x)| ≤ Mₙ for all x and ∑Mₙ converges, then:",
+        "options": [
+          "∑fₙ converges uniformly",
+          "∑fₙ converges pointwise only",
+          "∑fₙ diverges",
+          "∑fₙ = 0"
+        ],
+        "correctAnswer": "∑fₙ converges uniformly",
+        "explanation": "The Weierstrass M-Test provides a sufficient condition for uniform convergence of a series of functions by comparison with a convergent numerical series."
+      }
+    ]
+  },
+  {
+    "id": "math303-quiz-7-3",
+    "subjectId": "math303",
+    "title": "Sequences of Functions - Interchange of Limits",
+    "topicId": "math303-topic-7",
+    "questions": [
+      {
+        "id": "math303-q101",
+        "type": "multiple_choice",
+        "prompt": "If fₙ → f uniformly on [a, b] and each fₙ is differentiable with f'ₙ → g uniformly, then:",
+        "options": [
+          "f is differentiable and f' = g",
+          "f is not differentiable",
+          "f' ≠ g",
+          "f is constant"
+        ],
+        "correctAnswer": "f is differentiable and f' = g",
+        "explanation": "Under uniform convergence of both functions and derivatives, we can interchange limit and differentiation: (lim fₙ)' = lim(f'ₙ)."
+      },
+      {
+        "id": "math303-q102",
+        "type": "multiple_choice",
+        "prompt": "A power series ∑aₙ(x - c)ⁿ converges uniformly on:",
+        "options": [
+          "Any closed interval [a, b] inside its interval of convergence",
+          "The entire real line",
+          "Only at x = c",
+          "Nowhere"
+        ],
+        "correctAnswer": "Any closed interval [a, b] inside its interval of convergence",
+        "explanation": "Power series converge uniformly on compact subsets of their interval of convergence, though not necessarily on the entire interval."
+      },
+      {
+        "id": "math303-q103",
+        "type": "multiple_choice",
+        "prompt": "The Stone-Weierstrass Theorem states that polynomials are dense in:",
+        "options": [
+          "C([a, b]), the space of continuous functions on [a, b]",
+          "L²([a, b])",
+          "The space of all functions",
+          "The space of discontinuous functions"
+        ],
+        "correctAnswer": "C([a, b]), the space of continuous functions on [a, b]",
+        "explanation": "The Stone-Weierstrass Theorem generalizes Weierstrass Approximation: any continuous function on [a, b] can be uniformly approximated by polynomials."
+      },
+      {
+        "id": "math303-q104",
+        "type": "multiple_choice",
+        "prompt": "Weierstrass Approximation Theorem states that any continuous f on [a, b] can be:",
+        "options": [
+          "Uniformly approximated by polynomials",
+          "Pointwise approximated by step functions",
+          "Differentiated",
+          "Integrated to give a polynomial"
+        ],
+        "correctAnswer": "Uniformly approximated by polynomials",
+        "explanation": "For any ε > 0, there exists a polynomial p such that |f(x) - p(x)| < ε for all x in [a, b]."
+      },
+      {
+        "id": "math303-q105",
+        "type": "multiple_choice",
+        "prompt": "If fₙ → f uniformly and gₙ → g uniformly on a bounded set E, then:",
+        "options": [
+          "fₙ + gₙ → f + g uniformly",
+          "fₙgₙ → fg uniformly",
+          "fₙ/gₙ → f/g uniformly",
+          "None of the above"
+        ],
+        "correctAnswer": "fₙ + gₙ → f + g uniformly",
+        "explanation": "Uniform convergence is preserved under addition. However, multiplication and division require additional conditions (like boundedness)."
+      }
+    ]
+  }
+]

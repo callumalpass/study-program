@@ -1,0 +1,185 @@
+[
+  {
+    "id": "cs405-quiz-2",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-2",
+    "title": "Virtualization - Fundamentals",
+    "questions": [
+      {
+        "id": "q2-1",
+        "type": "multiple_choice",
+        "prompt": "What is the primary difference between Type 1 and Type 2 hypervisors?",
+        "options": [
+          "Type 1 runs on bare metal, Type 2 runs on a host OS",
+          "Type 1 is faster, Type 2 is cheaper",
+          "Type 1 is open source, Type 2 is commercial",
+          "Type 1 is for Windows, Type 2 is for Linux"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Type 1 hypervisors (bare-metal) run directly on hardware. Type 2 hypervisors (hosted) run as applications on a conventional operating system."
+      },
+      {
+        "id": "q2-2",
+        "type": "true_false",
+        "prompt": "Paravirtualization requires modification of the guest operating system.",
+        "correctAnswer": true,
+        "explanation": "Paravirtualization modifies the guest OS to cooperate with the hypervisor using hypercalls instead of privileged instructions. Full virtualization runs unmodified guest OS."
+      },
+      {
+        "id": "q2-3",
+        "type": "multiple_choice",
+        "prompt": "Which technology enables hardware-assisted virtualization on Intel processors?",
+        "options": [
+          "Hyper-V",
+          "VT-x",
+          "KVM",
+          "ESXi"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Intel VT-x (Virtualization Technology) is the CPU extension that enables hardware-assisted virtualization. AMD's equivalent is AMD-V."
+      },
+      {
+        "id": "q2-4",
+        "type": "multiple_choice",
+        "prompt": "What is the typical CPU overhead of modern virtualization with hardware support?",
+        "options": [
+          "0-2%",
+          "2-10%",
+          "20-30%",
+          "40-50%"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Modern hypervisors with hardware virtualization support (VT-x/AMD-V) introduce only 2-10% CPU overhead, making virtualization very efficient."
+      },
+      {
+        "id": "q2-5",
+        "type": "true_false",
+        "prompt": "Containers provide stronger isolation than virtual machines because each container has its own kernel.",
+        "correctAnswer": false,
+        "explanation": "Containers share the host OS kernel, providing process-level isolation. VMs have stronger isolation because each VM has its own complete OS and kernel."
+      }
+    ]
+  },
+  {
+    "id": "cs405-quiz-2b",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-2",
+    "title": "Virtualization - Hypervisors and Management",
+    "questions": [
+      {
+        "id": "q2b-1",
+        "type": "multiple_choice",
+        "prompt": "Which hypervisor is used by AWS (historically) and other cloud providers?",
+        "options": [
+          "VMware ESXi",
+          "Microsoft Hyper-V",
+          "Xen",
+          "VirtualBox"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Xen powered AWS EC2 for many years (now transitioning to KVM-based Nitro). Xen is an open-source Type 1 hypervisor designed for cloud environments."
+      },
+      {
+        "id": "q2b-2",
+        "type": "true_false",
+        "prompt": "Live migration (vMotion) allows moving a running VM between hosts without downtime.",
+        "correctAnswer": true,
+        "explanation": "Live migration moves a running VM from one host to another with only milliseconds of downtime. This enables maintenance without service interruption."
+      },
+      {
+        "id": "q2b-3",
+        "type": "multiple_choice",
+        "prompt": "What is memory ballooning used for in virtualization?",
+        "options": [
+          "Increasing VM performance",
+          "Reclaiming unused memory from VMs",
+          "Expanding physical memory",
+          "Compressing memory"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Memory ballooning allows the hypervisor to reclaim unused memory from VMs by inflating a balloon driver in the guest OS, which then releases memory back to the hypervisor."
+      },
+      {
+        "id": "q2b-4",
+        "type": "multiple_choice",
+        "prompt": "Which hypervisor is part of the Linux kernel?",
+        "options": [
+          "Xen",
+          "ESXi",
+          "KVM",
+          "Hyper-V"
+        ],
+        "correctAnswer": 2,
+        "explanation": "KVM (Kernel-based Virtual Machine) is built into the Linux kernel, turning Linux into a Type 1 hypervisor. It's used by many cloud providers."
+      },
+      {
+        "id": "q2b-5",
+        "type": "true_false",
+        "prompt": "Thin provisioning allocates full disk space to a VM upfront.",
+        "correctAnswer": false,
+        "explanation": "Thin provisioning allocates disk space on-demand as data is written, improving storage efficiency. Thick provisioning allocates full space upfront."
+      }
+    ]
+  },
+  {
+    "id": "cs405-quiz-2c",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-2",
+    "title": "Virtualization - Virtual Machines and Resources",
+    "questions": [
+      {
+        "id": "q2c-1",
+        "type": "multiple_choice",
+        "prompt": "What is a vCPU?",
+        "options": [
+          "A physical CPU core",
+          "A virtual CPU thread allocated to a VM",
+          "A type of CPU cache",
+          "A CPU scheduling algorithm"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A vCPU (virtual CPU) represents CPU resources allocated to a VM. Each vCPU maps to physical CPU threads/cores, and VMs can have multiple vCPUs."
+      },
+      {
+        "id": "q2c-2",
+        "type": "true_false",
+        "prompt": "Over-subscription means allocating more virtual resources than available physical resources.",
+        "correctAnswer": true,
+        "explanation": "Over-subscription allocates more virtual resources (vCPUs, memory) than physically available, betting that not all VMs will use maximum resources simultaneously."
+      },
+      {
+        "id": "q2c-3",
+        "type": "multiple_choice",
+        "prompt": "Which virtual disk format is used by VMware?",
+        "options": [
+          "VHD",
+          "VMDK",
+          "QCOW2",
+          "IMG"
+        ],
+        "correctAnswer": 1,
+        "explanation": "VMDK (Virtual Machine Disk) is VMware's virtual disk format. VHD is used by Hyper-V, QCOW2 by KVM/QEMU."
+      },
+      {
+        "id": "q2c-4",
+        "type": "multiple_choice",
+        "prompt": "What is the recommended practice for sizing VMs?",
+        "options": [
+          "Always allocate maximum resources",
+          "Start small and scale up based on monitoring",
+          "Use fixed 4 vCPU and 16GB RAM for all VMs",
+          "Over-provision by 200% for safety"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Best practice is to start with minimal resources and scale up based on actual usage monitoring. Over-provisioning wastes resources and can hurt performance."
+      },
+      {
+        "id": "q2c-5",
+        "type": "true_false",
+        "prompt": "Snapshots should be used as a long-term backup solution.",
+        "correctAnswer": false,
+        "explanation": "Snapshots are point-in-time captures for short-term use (testing, updates). They can degrade performance and should not replace proper backups. Delete snapshots after use."
+      }
+    ]
+  }
+]

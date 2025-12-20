@@ -1,0 +1,203 @@
+[
+  {
+    "id": "cs306-quiz-1-1",
+    "subjectId": "cs306",
+    "topicId": "cs306-topic-1",
+    "title": "Graphics Pipeline Basics",
+    "questions": [
+      {
+        "id": "cs306-q1",
+        "type": "multiple_choice",
+        "prompt": "What is the correct order of stages in the graphics pipeline?",
+        "options": [
+          "Application → Geometry → Rasterization → Fragment Processing",
+          "Geometry → Application → Rasterization → Fragment Processing",
+          "Rasterization → Geometry → Application → Fragment Processing",
+          "Fragment Processing → Geometry → Rasterization → Application"
+        ],
+        "correctAnswer": "Application → Geometry → Rasterization → Fragment Processing",
+        "explanation": "The graphics pipeline follows a specific order: Application (CPU) prepares data, Geometry transforms vertices, Rasterization converts to fragments, and Fragment Processing determines final pixel colors."
+      },
+      {
+        "id": "cs306-q2",
+        "type": "multiple_choice",
+        "prompt": "Which stage of the graphics pipeline is primarily executed on the CPU?",
+        "options": [
+          "Application stage",
+          "Geometry stage",
+          "Rasterization stage",
+          "Fragment processing stage"
+        ],
+        "correctAnswer": "Application stage",
+        "explanation": "The application stage runs on the CPU and handles tasks like collision detection, input handling, and preparing geometry data to send to the GPU."
+      },
+      {
+        "id": "cs306-q3",
+        "type": "multiple_choice",
+        "prompt": "What is the primary output of the geometry stage?",
+        "options": [
+          "Transformed vertices in screen space",
+          "Final pixel colors",
+          "Texture coordinates",
+          "Fragment data"
+        ],
+        "correctAnswer": "Transformed vertices in screen space",
+        "explanation": "The geometry stage transforms vertices from object space through various coordinate systems to screen space, preparing them for rasterization."
+      },
+      {
+        "id": "cs306-q4",
+        "type": "true_false",
+        "prompt": "The rasterization stage converts geometric primitives into discrete fragments (pixels).",
+        "correctAnswer": "true",
+        "explanation": "Rasterization is the process of determining which pixels are covered by geometric primitives like triangles, converting continuous geometry into discrete fragments."
+      },
+      {
+        "id": "cs306-q5",
+        "type": "multiple_choice",
+        "prompt": "Which buffer stores depth information to handle visibility in 3D scenes?",
+        "options": [
+          "Z-buffer (depth buffer)",
+          "Color buffer",
+          "Stencil buffer",
+          "Accumulation buffer"
+        ],
+        "correctAnswer": "Z-buffer (depth buffer)",
+        "explanation": "The Z-buffer (or depth buffer) stores depth information for each pixel, enabling proper visibility determination by keeping track of which surfaces are closest to the camera."
+      }
+    ]
+  },
+  {
+    "id": "cs306-quiz-1-2",
+    "subjectId": "cs306",
+    "topicId": "cs306-topic-1",
+    "title": "Shaders and Primitives",
+    "questions": [
+      {
+        "id": "cs306-q6",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of vertex shaders in the graphics pipeline?",
+        "options": [
+          "Transform vertex positions and compute per-vertex attributes",
+          "Determine final pixel colors",
+          "Convert primitives to fragments",
+          "Handle texture filtering"
+        ],
+        "correctAnswer": "Transform vertex positions and compute per-vertex attributes",
+        "explanation": "Vertex shaders are programmable units that transform vertex positions from object space to clip space and can compute various per-vertex attributes like normals and texture coordinates."
+      },
+      {
+        "id": "cs306-q7",
+        "type": "multiple_choice",
+        "prompt": "Which primitive type is most commonly used in modern graphics rendering?",
+        "options": [
+          "Triangles",
+          "Quadrilaterals",
+          "Circles",
+          "Polygons"
+        ],
+        "correctAnswer": "Triangles",
+        "explanation": "Triangles are the fundamental primitive in modern graphics because they are always planar, easy to rasterize, and can approximate any surface efficiently."
+      },
+      {
+        "id": "cs306-q8",
+        "type": "true_false",
+        "prompt": "Fragment shaders execute once per vertex in the scene.",
+        "correctAnswer": "false",
+        "explanation": "Fragment shaders execute once per fragment (potential pixel), not per vertex. Vertex shaders execute per vertex, while fragment shaders process the rasterized fragments."
+      },
+      {
+        "id": "cs306-q9",
+        "type": "multiple_choice",
+        "prompt": "What does the clipping stage remove from the pipeline?",
+        "options": [
+          "Geometry outside the view frustum",
+          "Hidden surfaces",
+          "Transparent objects",
+          "Texture coordinates"
+        ],
+        "correctAnswer": "Geometry outside the view frustum",
+        "explanation": "Clipping removes or truncates geometry that lies outside the viewing frustum, preventing unnecessary processing of invisible primitives."
+      },
+      {
+        "id": "cs306-q10",
+        "type": "multiple_choice",
+        "prompt": "Which component is responsible for managing the final display of rendered images?",
+        "options": [
+          "Frame buffer",
+          "Vertex buffer",
+          "Index buffer",
+          "Uniform buffer"
+        ],
+        "correctAnswer": "Frame buffer",
+        "explanation": "The frame buffer stores the final rendered image and is responsible for displaying the result on the screen, often using double buffering to prevent tearing."
+      }
+    ]
+  },
+  {
+    "id": "cs306-quiz-1-3",
+    "subjectId": "cs306",
+    "topicId": "cs306-topic-1",
+    "title": "Pipeline Optimization",
+    "questions": [
+      {
+        "id": "cs306-q11",
+        "type": "multiple_choice",
+        "prompt": "What is back-face culling used for?",
+        "options": [
+          "Removing polygons facing away from the camera",
+          "Removing polygons outside the view frustum",
+          "Removing occluded polygons",
+          "Removing transparent polygons"
+        ],
+        "correctAnswer": "Removing polygons facing away from the camera",
+        "explanation": "Back-face culling is an optimization that removes polygons whose normals point away from the camera, typically reducing the number of polygons to render by about 50%."
+      },
+      {
+        "id": "cs306-q12",
+        "type": "true_false",
+        "prompt": "Double buffering prevents screen tearing by rendering to an off-screen buffer.",
+        "correctAnswer": "true",
+        "explanation": "Double buffering uses two buffers: one for display and one for rendering. When rendering completes, the buffers swap, preventing the visual artifact of screen tearing."
+      },
+      {
+        "id": "cs306-q13",
+        "type": "multiple_choice",
+        "prompt": "Which test determines if a fragment should be written to the frame buffer based on its depth value?",
+        "options": [
+          "Depth test",
+          "Stencil test",
+          "Alpha test",
+          "Scissor test"
+        ],
+        "correctAnswer": "Depth test",
+        "explanation": "The depth test compares a fragment's depth value with the value in the depth buffer to determine visibility, writing only the closest fragments to the frame buffer."
+      },
+      {
+        "id": "cs306-q14",
+        "type": "multiple_choice",
+        "prompt": "What is the primary purpose of the viewport transformation?",
+        "options": [
+          "Map normalized device coordinates to screen coordinates",
+          "Transform world coordinates to view coordinates",
+          "Apply perspective projection",
+          "Perform texture mapping"
+        ],
+        "correctAnswer": "Map normalized device coordinates to screen coordinates",
+        "explanation": "The viewport transformation converts normalized device coordinates (typically -1 to 1) to actual screen pixel coordinates based on the viewport dimensions."
+      },
+      {
+        "id": "cs306-q15",
+        "type": "multiple_choice",
+        "prompt": "Which blending operation is commonly used for transparency?",
+        "options": [
+          "Alpha blending",
+          "Additive blending",
+          "Multiplicative blending",
+          "Subtractive blending"
+        ],
+        "correctAnswer": "Alpha blending",
+        "explanation": "Alpha blending combines source and destination colors based on alpha values, enabling transparency effects by blending the new fragment with the existing pixel color."
+      }
+    ]
+  }
+]

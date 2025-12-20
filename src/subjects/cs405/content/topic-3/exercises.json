@@ -1,0 +1,78 @@
+[
+  {
+    "id": "cs405-ex-3-1",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-3",
+    "title": "Build Multi-Stage Dockerfile",
+    "difficulty": 3,
+    "description": "Create a multi-stage Dockerfile for a Node.js application that:\n\n1. Uses separate build and production stages\n2. Installs dependencies in build stage\n3. Runs tests in build stage\n4. Creates minimal production image\n5. Runs as non-root user\n6. Includes health check\n\nAlso create a .dockerignore file to exclude unnecessary files.",
+    "starterCode": "# Dockerfile\n# TODO: Build stage\n\n# TODO: Production stage\n\n# .dockerignore\n# TODO: Add files to exclude",
+    "solution": "# Dockerfile\n# Multi-stage build for Node.js application\n\n# Stage 1: Dependencies\nFROM node:18-alpine AS dependencies\nWORKDIR /app\nCOPY package*.json ./\nRUN npm ci --only=production && \\\n    npm cache clean --force\n\n# Stage 2: Build\nFROM node:18-alpine AS builder\nWORKDIR /app\n\n# Copy package files\nCOPY package*.json ./\n\n# Install all dependencies (including dev)\nRUN npm ci\n\n# Copy source code\nCOPY . .\n\n# Run tests\nRUN npm test\n\n# Build application\nRUN npm run build\n\n# Stage 3: Production\nFROM node:18-alpine\n\n# Install dumb-init for proper signal handling\nRUN apk add --no-cache dumb-init\n\n# Create non-root user\nRUN addgroup -g 1001 -S nodejs && \\\n    adduser -S nodejs -u 1001\n\n# Set working directory\nWORKDIR /app\n\n# Copy production dependencies from dependencies stage\nCOPY --from=dependencies --chown=nodejs:nodejs /app/node_modules ./node_modules\n\n# Copy built application from builder stage\nCOPY --from=builder --chown=nodejs:nodejs /app/dist ./dist\nCOPY --from=builder --chown=nodejs:nodejs /app/package*.json ./\n\n# Switch to non-root user\nUSER nodejs\n\n# Expose port\nEXPOSE 3000\n\n# Health check\nHEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \\\n  CMD node -e \"require('http').get('http://localhost:3000/health', (res) => process.exit(res.statusCode === 200 ? 0 : 1))\"\n\n# Use dumb-init to handle signals\nENTRYPOINT [\"dumb-init\", \"--\"]\n\n# Start application\nCMD [\"node\", \"dist/index.js\"]\n\n# .dockerignore file\nnode_modules\nnpm-debug.log\n.git\n.gitignore\nREADME.md\n.env\n.env.local\n.env.*.local\n.vscode\n.idea\n*.md\ncoverage\n.nyc_output\ndist\nbuild\n.DS_Store\nThumbs.db\n*.log\n.dockerignore\nDockerfile\ndocker-compose.yml",
+    "hints": [
+      "Use Alpine images for smaller size",
+      "Copy package.json before source code for better caching",
+      "Clean npm cache in same RUN command",
+      "Use COPY --chown to set ownership",
+      "Health checks enable automatic restart"
+    ],
+    "testCases": [
+      {
+        "input": "docker build -t myapp .",
+        "expectedOutput": "Image built successfully, tests pass",
+        "isHidden": false,
+        "description": "Build multi-stage Docker image"
+      },
+      {
+        "input": "docker run myapp",
+        "expectedOutput": "Container runs as non-root user",
+        "isHidden": false,
+        "description": "Run container with non-root user"
+      },
+      {
+        "input": "docker inspect myapp",
+        "expectedOutput": "Health check configured",
+        "isHidden": false,
+        "description": "Verify health check is configured"
+      }
+    ],
+    "language": "dockerfile"
+  },
+  {
+    "id": "cs405-ex-3-2",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-3",
+    "title": "Docker Compose Full-Stack Application",
+    "difficulty": 4,
+    "description": "Create a docker-compose.yml for a full-stack application with:\n\n1. Frontend (React/Vue)\n2. Backend API (Node.js/Python)\n3. Database (PostgreSQL)\n4. Redis cache\n5. Nginx reverse proxy\n\nInclude:\n- Custom networks (frontend, backend)\n- Named volumes for data persistence\n- Environment variables\n- Health checks\n- Resource limits\n- Proper service dependencies",
+    "starterCode": "version: '3.8'\n\nservices:\n  # TODO: Define all services\n\nnetworks:\n  # TODO: Define networks\n\nvolumes:\n  # TODO: Define volumes",
+    "solution": "version: '3.8'\n\nservices:\n  # PostgreSQL Database\n  postgres:\n    image: postgres:15-alpine\n    container_name: app-database\n    restart: unless-stopped\n    environment:\n      POSTGRES_DB: ${DB_NAME:-appdb}\n      POSTGRES_USER: ${DB_USER:-appuser}\n      POSTGRES_PASSWORD: ${DB_PASSWORD:-secret}\n      PGDATA: /var/lib/postgresql/data/pgdata\n    volumes:\n      - postgres-data:/var/lib/postgresql/data\n      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro\n    networks:\n      - backend\n    healthcheck:\n      test: [\"CMD-SHELL\", \"pg_isready -U ${DB_USER:-appuser} -d ${DB_NAME:-appdb}\"]\n      interval: 10s\n      timeout: 5s\n      retries: 5\n      start_period: 10s\n    deploy:\n      resources:\n        limits:\n          cpus: '1'\n          memory: 1G\n        reservations:\n          cpus: '0.5'\n          memory: 512M\n\n  # Redis Cache\n  redis:\n    image: redis:7-alpine\n    container_name: app-cache\n    restart: unless-stopped\n    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD:-redissecret}\n    volumes:\n      - redis-data:/data\n    networks:\n      - backend\n    healthcheck:\n      test: [\"CMD\", \"redis-cli\", \"--raw\", \"incr\", \"ping\"]\n      interval: 10s\n      timeout: 3s\n      retries: 5\n    deploy:\n      resources:\n        limits:\n          cpus: '0.5'\n          memory: 512M\n\n  # Backend API\n  backend:\n    build:\n      context: ./backend\n      dockerfile: Dockerfile\n      target: production\n    container_name: app-backend\n    restart: unless-stopped\n    depends_on:\n      postgres:\n        condition: service_healthy\n      redis:\n        condition: service_healthy\n    environment:\n      NODE_ENV: production\n      PORT: 5000\n      DB_HOST: postgres\n      DB_PORT: 5432\n      DB_NAME: ${DB_NAME:-appdb}\n      DB_USER: ${DB_USER:-appuser}\n      DB_PASSWORD: ${DB_PASSWORD:-secret}\n      REDIS_HOST: redis\n      REDIS_PORT: 6379\n      REDIS_PASSWORD: ${REDIS_PASSWORD:-redissecret}\n      JWT_SECRET: ${JWT_SECRET:-change-me-in-production}\n    volumes:\n      - ./backend/uploads:/app/uploads\n    networks:\n      - frontend\n      - backend\n    healthcheck:\n      test: [\"CMD\", \"node\", \"-e\", \"require('http').get('http://localhost:5000/health')\"]\n      interval: 30s\n      timeout: 10s\n      retries: 3\n      start_period: 40s\n    deploy:\n      resources:\n        limits:\n          cpus: '1'\n          memory: 1G\n        reservations:\n          cpus: '0.5'\n          memory: 512M\n\n  # Frontend\n  frontend:\n    build:\n      context: ./frontend\n      dockerfile: Dockerfile\n      args:\n        REACT_APP_API_URL: /api\n    container_name: app-frontend\n    restart: unless-stopped\n    depends_on:\n      backend:\n        condition: service_healthy\n    networks:\n      - frontend\n    deploy:\n      resources:\n        limits:\n          cpus: '0.5'\n          memory: 512M\n\n  # Nginx Reverse Proxy\n  nginx:\n    image: nginx:alpine\n    container_name: app-nginx\n    restart: unless-stopped\n    depends_on:\n      - frontend\n      - backend\n    ports:\n      - \"80:80\"\n      - \"443:443\"\n    volumes:\n      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro\n      - ./nginx/ssl:/etc/nginx/ssl:ro\n      - nginx-cache:/var/cache/nginx\n    networks:\n      - frontend\n    healthcheck:\n      test: [\"CMD\", \"wget\", \"--quiet\", \"--tries=1\", \"--spider\", \"http://localhost/health\"]\n      interval: 30s\n      timeout: 10s\n      retries: 3\n    deploy:\n      resources:\n        limits:\n          cpus: '0.5'\n          memory: 256M\n\n  # PGAdmin (optional, for development)\n  pgadmin:\n    image: dpage/pgadmin4:latest\n    container_name: app-pgadmin\n    restart: unless-stopped\n    profiles:\n      - dev  # Only runs when using --profile dev\n    environment:\n      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL:-admin@example.com}\n      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD:-admin}\n    ports:\n      - \"5050:80\"\n    volumes:\n      - pgadmin-data:/var/lib/pgadmin\n    networks:\n      - backend\n    depends_on:\n      - postgres\n\nnetworks:\n  frontend:\n    driver: bridge\n    ipam:\n      config:\n        - subnet: 172.20.0.0/16\n\n  backend:\n    driver: bridge\n    internal: true  # No external access\n    ipam:\n      config:\n        - subnet: 172.21.0.0/16\n\nvolumes:\n  postgres-data:\n    driver: local\n  redis-data:\n    driver: local\n  nginx-cache:\n    driver: local\n  pgadmin-data:\n    driver: local\n\n# nginx/nginx.conf\n# events {\n#     worker_connections 1024;\n# }\n#\n# http {\n#     upstream backend {\n#         server backend:5000;\n#     }\n#\n#     upstream frontend {\n#         server frontend:3000;\n#     }\n#\n#     server {\n#         listen 80;\n#         server_name localhost;\n#\n#         # Frontend\n#         location / {\n#             proxy_pass http://frontend;\n#             proxy_http_version 1.1;\n#             proxy_set_header Upgrade $http_upgrade;\n#             proxy_set_header Connection 'upgrade';\n#             proxy_set_header Host $host;\n#             proxy_cache_bypass $http_upgrade;\n#         }\n#\n#         # Backend API\n#         location /api {\n#             rewrite ^/api/(.*) /$1 break;\n#             proxy_pass http://backend;\n#             proxy_http_version 1.1;\n#             proxy_set_header Host $host;\n#             proxy_set_header X-Real-IP $remote_addr;\n#             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n#             proxy_set_header X-Forwarded-Proto $scheme;\n#         }\n#\n#         # Health check\n#         location /health {\n#             access_log off;\n#             return 200 \"healthy\\n\";\n#             add_header Content-Type text/plain;\n#         }\n#     }\n# }\n\n# .env file\n# DB_NAME=appdb\n# DB_USER=appuser\n# DB_PASSWORD=secret-password-change-me\n# REDIS_PASSWORD=redis-secret-change-me\n# JWT_SECRET=jwt-secret-change-me\n# PGADMIN_EMAIL=admin@example.com\n# PGADMIN_PASSWORD=admin",
+    "hints": [
+      "Use depends_on with condition: service_healthy",
+      "Internal networks prevent external access",
+      "Named volumes persist data across restarts",
+      "Resource limits prevent resource exhaustion",
+      "Profiles enable optional services"
+    ],
+    "testCases": [
+      {
+        "input": "docker compose up",
+        "expectedOutput": "All services start in correct order",
+        "isHidden": false,
+        "description": "Start all services with Docker Compose"
+      },
+      {
+        "input": "docker compose ps",
+        "expectedOutput": "All services running and healthy",
+        "isHidden": false,
+        "description": "Check service status"
+      },
+      {
+        "input": "curl http://localhost",
+        "expectedOutput": "Frontend accessible via Nginx",
+        "isHidden": false,
+        "description": "Test frontend access through Nginx"
+      }
+    ],
+    "language": "yaml"
+  }
+]

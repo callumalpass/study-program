@@ -1,0 +1,242 @@
+[
+  {
+    "id": "cs202-t6-ex1",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic6",
+    "type": "written",
+    "title": "Memory Hierarchy Levels",
+    "description": "List the levels of the memory hierarchy from fastest to slowest. Give typical capacity and access time for each level.",
+    "difficulty": 1,
+    "hints": [
+      "Start with CPU registers",
+      "End with archival storage",
+      "Note the trade-offs"
+    ],
+    "solution": "Memory Hierarchy (fastest to slowest):\n\nLevel      │ Capacity    │ Access Time │ Cost/GB  │ Technology\n───────────┼─────────────┼─────────────┼──────────┼──────────────\nRegisters  │ ~1 KB       │ ~0.25 ns    │ -        │ SRAM (in CPU)\nL1 Cache   │ 32-64 KB    │ ~1 ns       │ ~$1000   │ SRAM\nL2 Cache   │ 256KB-1MB   │ ~4 ns       │ ~$100    │ SRAM\nL3 Cache   │ 8-64 MB     │ ~10-20 ns   │ ~$10     │ SRAM\nMain Mem   │ 8-256 GB    │ ~50-100 ns  │ ~$5      │ DRAM\nSSD        │ 256GB-4TB   │ ~50-100 μs  │ ~$0.10   │ Flash\nHDD        │ 1-16 TB     │ ~5-10 ms    │ ~$0.02   │ Magnetic\nTape       │ Petabytes   │ seconds-min │ ~$0.002  │ Magnetic\n\nKey observations:\n1. Capacity increases ~10-1000× per level\n2. Latency increases ~10× per level\n3. Cost decreases ~10× per level\n\nThe hierarchy works because of locality:\n- Temporal: Recently accessed data accessed again\n- Spatial: Nearby data accessed soon\n\nDesign goal: Make average access time close to fastest level\nwhile having capacity of slowest level.\n\nModern system example:\n- L1: 32KB × 2 (I+D), 4 cycles\n- L2: 256KB, 12 cycles\n- L3: 8MB shared, 40 cycles\n- DRAM: 16GB, 200+ cycles"
+  },
+  {
+    "id": "cs202-t6-ex2",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic6",
+    "type": "written",
+    "title": "DRAM vs SRAM",
+    "description": "Compare DRAM and SRAM in terms of structure, speed, density, cost, and typical use. Why is SRAM used for caches and DRAM for main memory?",
+    "difficulty": 2,
+    "hints": [
+      "SRAM uses flip-flops",
+      "DRAM uses capacitors",
+      "Consider transistor count"
+    ],
+    "solution": "DRAM vs SRAM Comparison:\n\nStructure:\n┌──────────────────────────────────────────────────┐\n│ SRAM Cell (6 transistors):                       │\n│     ┌───┐     ┌───┐                             │\n│ BL──┤   ├──┬──┤   ├──BL'                        │\n│     └───┘  │  └───┘                             │\n│            ▼                                     │\n│      Cross-coupled inverters                     │\n│      (bistable - holds value)                    │\n├──────────────────────────────────────────────────┤\n│ DRAM Cell (1 transistor + 1 capacitor):         │\n│                                                  │\n│     WL ─┬─                                       │\n│         │                                        │\n│ BL ────┤├──┤├──                                 │\n│            ═ capacitor                           │\n│            │                                     │\n│           GND                                    │\n└──────────────────────────────────────────────────┘\n\nComparison:\n┌─────────────┬────────────────┬────────────────┐\n│ Property    │ SRAM           │ DRAM           │\n├─────────────┼────────────────┼────────────────┤\n│ Transistors │ 6 per bit      │ 1 per bit      │\n│ Speed       │ Fast (~1-2 ns) │ Slower (~50 ns)│\n│ Density     │ Lower          │ ~6× higher     │\n│ Cost/bit    │ ~10× higher    │ Lower          │\n│ Refresh     │ Not needed     │ Required       │\n│ Power       │ Higher static  │ Lower static   │\n│ Volatility  │ Volatile       │ Volatile       │\n└─────────────┴────────────────┴────────────────┘\n\nWhy SRAM for caches:\n- Speed critical for cache hits\n- Small capacity needed (KB-MB)\n- Higher cost acceptable for small size\n- No refresh simplifies design\n\nWhy DRAM for main memory:\n- Need large capacity (GB)\n- Cost per bit critical\n- Speed hidden by caches\n- Refresh overhead acceptable"
+  },
+  {
+    "id": "cs202-t6-ex3",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic6",
+    "type": "written",
+    "title": "DRAM Timing Parameters",
+    "description": "Explain tRCD, CL (tCAS), and tRP. For a DDR4-2400 module with CL=17, tRCD=17, tRP=17, calculate the time to access a random memory location.",
+    "difficulty": 3,
+    "hints": [
+      "Row activate → Column read → Precharge",
+      "Times are in clock cycles",
+      "DDR4-2400 has specific clock frequency"
+    ],
+    "solution": "DRAM Timing Parameters:\n\ntRCD (RAS to CAS Delay):\n- Time from row activation to column access\n- Opens the row, charges sense amplifiers\n- Row address → wait tRCD → column address\n\nCL (CAS Latency) or tCAS:\n- Time from column address to data output\n- Also called tCL\n- Column address → wait CL → data available\n\ntRP (Row Precharge):\n- Time to close row before opening another\n- Prepares bank for next row activation\n- Close row → wait tRP → can activate new row\n\nAccess Sequence:\n┌─────────────────────────────────────────────────────┐\n│ ROW ACT ──tRCD──► COL READ ──CL──► DATA            │\n│                                                     │\n│ For new row: close old row first                   │\n│ PRECHARGE ──tRP──► ROW ACT ──tRCD──► COL ──CL──►   │\n└─────────────────────────────────────────────────────┘\n\nDDR4-2400 Calculation:\n\nClock frequency:\n- DDR4-2400: 2400 MT/s (megatransfers/second)\n- Actual clock: 1200 MHz (DDR = double data rate)\n- Clock period: 1/1200MHz = 0.833 ns\n\nGiven: CL=17, tRCD=17, tRP=17\n\nRandom access (different row than last access):\nTime = tRP + tRCD + CL\n= 17 + 17 + 17\n= 51 clock cycles\n= 51 × 0.833 ns\n= 42.5 ns\n\nRow hit (same row as last access):\nTime = CL = 17 cycles = 14.2 ns\n\nThis is why row buffer hits are important!\nRandom access: 3× slower than row hit."
+  },
+  {
+    "id": "cs202-t6-ex4",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic6",
+    "type": "written",
+    "title": "DRAM Banking",
+    "description": "A DRAM module has 8 banks. Explain how banking helps hide latency. If back-to-back accesses go to different banks, how does this help?",
+    "difficulty": 3,
+    "hints": [
+      "Banks operate independently",
+      "Pipeline accesses across banks",
+      "Interleaving addresses"
+    ],
+    "solution": "DRAM Banking and Latency Hiding:\n\nBank Structure:\n┌─────────────────────────────────────────┐\n│             DRAM Module                  │\n│ ┌─────┐ ┌─────┐ ┌─────┐ ┌─────┐        │\n│ │Bank0│ │Bank1│ │Bank2│ │Bank3│        │\n│ └─────┘ └─────┘ └─────┘ └─────┘        │\n│ ┌─────┐ ┌─────┐ ┌─────┐ ┌─────┐        │\n│ │Bank4│ │Bank5│ │Bank6│ │Bank7│        │\n│ └─────┘ └─────┘ └─────┘ └─────┘        │\n│            Shared Data Bus              │\n└─────────────────────────────────────────┘\n\nKey insight: Banks operate INDEPENDENTLY\n- Each bank has its own row buffer\n- Can have different rows active\n- Only share the data bus\n\nSingle Bank Sequential Access:\nTime: | Act0 | Read0 | Pre0 | Act1 | Read1 | Pre1 |...\n      |←────── 50ns ──────→|←────── 50ns ──────→|\n\nMulti-Bank Interleaved Access:\nBank0: | Act0 | Read0 | Pre0 |\nBank1:    | Act1 | Read1 | Pre1 |\nBank2:       | Act2 | Read2 | Pre2 |\n\nTime:    0    10    20    30    40    50 ns\nData:              D0    D1    D2    ...\n\nBenefits:\n1. Latency hiding: Start next bank while current completes\n2. Higher bandwidth: Data arrives more frequently\n3. Better utilization: Banks stay busy\n\nAddress interleaving strategies:\n- Bank bits in low-order address → sequential addresses hit different banks\n- Example: Address[5:3] selects bank\n- Sequential access automatically interleaved\n\nEffective bandwidth with 8 banks:\n- Single bank: ~1 access per 50ns = 20 million/s\n- 8 banks interleaved: up to 8× = 160 million/s\n- Limited by bus bandwidth in practice"
+  },
+  {
+    "id": "cs202-t6-ex5",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic6",
+    "type": "written",
+    "title": "Memory Controller Scheduling",
+    "description": "Explain FR-FCFS (First-Ready First-Come-First-Serve) memory scheduling. Why prioritize row hits? What are the trade-offs?",
+    "difficulty": 4,
+    "hints": [
+      "Row hits are faster",
+      "Order affects performance",
+      "Consider fairness"
+    ],
+    "solution": "FR-FCFS Memory Scheduling:\n\nBasic FCFS (First-Come-First-Serve):\n- Process requests in arrival order\n- Simple, fair\n- Ignores row buffer state\n\nFR-FCFS (First-Ready FCFS):\n- Prioritize requests that hit open row\n- Among row hits, use FCFS\n- Row misses wait for row hits to complete\n\nAlgorithm:\n1. If any request hits open row → serve oldest row hit\n2. Else → serve oldest request (will cause row miss)\n\nExample:\nQueue: [A: row 5, B: row 3, C: row 3, D: row 5]\nCurrently open: row 3\n\nFCFS order: A, B, C, D\n- A: row miss (close 3, open 5, read)\n- B: row miss (close 5, open 3, read)\n- C: row hit\n- D: row miss\nTotal: 3 row misses\n\nFR-FCFS order: B, C, A, D\n- B: row hit (row 3 open)\n- C: row hit\n- A: row miss (close 3, open 5, read)\n- D: row hit\nTotal: 1 row miss!\n\nTrade-offs:\n\nAdvantages:\n- Maximizes row buffer hits\n- Reduces average latency\n- Increases effective bandwidth\n\nDisadvantages:\n1. Unfairness: Some requests delayed indefinitely\n   - If row X keeps getting hits, row Y requests starve\n2. Complexity: Track row buffer state\n3. Reordering: May violate program order\n\nModern solutions:\n- Batching: Group requests, FR-FCFS within batch\n- Age-based priority: Old requests get priority\n- Per-application fairness: Track delays per thread"
+  },
+  {
+    "id": "cs202-t6-ex6",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic6",
+    "type": "written",
+    "title": "SSD vs HDD",
+    "description": "Compare SSD and HDD for: random read, sequential read, write endurance, and cost. When would you choose each?",
+    "difficulty": 2,
+    "hints": [
+      "SSD has no mechanical parts",
+      "HDD has seek time",
+      "Flash has limited writes"
+    ],
+    "solution": "SSD vs HDD Comparison:\n\nPerformance:\n┌─────────────────┬────────────────┬────────────────┐\n│ Operation       │ SSD            │ HDD            │\n├─────────────────┼────────────────┼────────────────┤\n│ Random Read     │ ~0.1 ms        │ ~10 ms         │\n│ Random Write    │ ~0.1 ms        │ ~10 ms         │\n│ Sequential Read │ ~500 MB/s      │ ~150 MB/s      │\n│ Sequential Write│ ~450 MB/s      │ ~150 MB/s      │\n│ IOPS (4KB rand) │ 100,000+       │ ~100           │\n└─────────────────┴────────────────┴────────────────┘\n\nWhy SSD is faster for random:\n- No mechanical seek (HDD head movement)\n- No rotational latency (HDD platter spin)\n- Direct electrical access to any cell\n\nOther factors:\n┌─────────────────┬────────────────┬────────────────┐\n│ Factor          │ SSD            │ HDD            │\n├─────────────────┼────────────────┼────────────────┤\n│ Cost/GB         │ $0.08-0.15     │ $0.02-0.03     │\n│ Capacity        │ 256GB - 8TB    │ 1TB - 20TB     │\n│ Power           │ 2-5W           │ 6-15W          │\n│ Durability      │ No moving parts│ Shock sensitive│\n│ Write endurance │ Limited (TBW)  │ Essentially ∞  │\n│ Noise           │ Silent         │ Audible        │\n└─────────────────┴────────────────┴────────────────┘\n\nWhen to choose SSD:\n- Boot/OS drive (many random accesses)\n- Databases (random I/O heavy)\n- Laptops (durability, power, speed)\n- Any workload with random access\n\nWhen to choose HDD:\n- Large media storage (movies, photos)\n- Backup/archive (write once, read rarely)\n- Budget-constrained bulk storage\n- Sequential workloads (video editing source)\n\nBest practice: Hybrid\n- SSD for OS and frequently accessed data\n- HDD for bulk storage and archives"
+  },
+  {
+    "id": "cs202-t6-ex7",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic6",
+    "type": "written",
+    "title": "Bandwidth vs Latency",
+    "description": "A memory system has 50ns latency and 25.6 GB/s bandwidth. For a 64-byte cache line fetch, calculate the total transfer time. What dominates for small vs large transfers?",
+    "difficulty": 2,
+    "hints": [
+      "Total time = latency + size/bandwidth",
+      "Consider both components",
+      "Graph transfer size vs time"
+    ],
+    "solution": "Bandwidth vs Latency Analysis:\n\nGiven:\n- Latency: 50 ns\n- Bandwidth: 25.6 GB/s = 25.6 bytes/ns\n\nTotal time = Latency + Transfer time\n           = Latency + Size / Bandwidth\n\nFor 64-byte cache line:\nTransfer time = 64 bytes / 25.6 bytes/ns = 2.5 ns\nTotal time = 50 ns + 2.5 ns = 52.5 ns\n\nBreakdown:\n- Latency: 50 ns (95%)\n- Transfer: 2.5 ns (5%)\nLatency dominates!\n\nAnalysis for different sizes:\n┌───────────┬──────────┬────────────┬─────────┬────────────┐\n│ Size      │ Transfer │ Total Time │ Latency │ BW Portion │\n├───────────┼──────────┼────────────┼─────────┼────────────┤\n│ 64 B      │ 2.5 ns   │ 52.5 ns    │ 95%     │ 5%         │\n│ 256 B     │ 10 ns    │ 60 ns      │ 83%     │ 17%        │\n│ 1 KB      │ 40 ns    │ 90 ns      │ 56%     │ 44%        │\n│ 4 KB      │ 160 ns   │ 210 ns     │ 24%     │ 76%        │\n│ 64 KB     │ 2560 ns  │ 2610 ns    │ 2%      │ 98%        │\n└───────────┴──────────┴────────────┴─────────┴────────────┘\n\nConclusions:\n1. Small transfers: Latency-bound\n   - Most time waiting for first byte\n   - Higher bandwidth doesn't help much\n\n2. Large transfers: Bandwidth-bound\n   - Most time transferring data\n   - Lower latency doesn't help much\n\n3. Crossover point: Size = Latency × Bandwidth\n   = 50 ns × 25.6 B/ns = 1280 bytes\n\nImplications:\n- Cache lines: Focus on reducing latency\n- DMA/streaming: Focus on bandwidth\n- Prefetching: Convert latency-bound to bandwidth-bound"
+  },
+  {
+    "id": "cs202-t6-ex8",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic6",
+    "type": "written",
+    "title": "DDR Evolution",
+    "description": "Compare DDR3, DDR4, and DDR5 in terms of data rate, prefetch, voltage, and typical bandwidth. What improvements does each generation bring?",
+    "difficulty": 3,
+    "hints": [
+      "Each gen roughly doubles bandwidth",
+      "Prefetch doubles each generation",
+      "Voltage decreases"
+    ],
+    "solution": "DDR Evolution Comparison:\n\n┌─────────────┬───────────────┬───────────────┬───────────────┐\n│ Parameter   │ DDR3          │ DDR4          │ DDR5          │\n├─────────────┼───────────────┼───────────────┼───────────────┤\n│ Data Rate   │ 800-2133 MT/s │ 1600-3200 MT/s│ 3200-6400 MT/s│\n│ Prefetch    │ 8n            │ 8n            │ 16n           │\n│ Voltage     │ 1.5V / 1.35V  │ 1.2V          │ 1.1V          │\n│ Max Capacity│ 8GB/DIMM      │ 64GB/DIMM     │ 128GB/DIMM    │\n│ Banks       │ 8             │ 16 (4 groups) │ 32 (8 groups) │\n│ Burst Length│ 8             │ 8             │ 16            │\n│ Year        │ 2007          │ 2014          │ 2020          │\n└─────────────┴───────────────┴───────────────┴───────────────┘\n\nPeak Bandwidth (typical configs):\n- DDR3-1600: 12.8 GB/s per channel\n- DDR4-2400: 19.2 GB/s per channel\n- DDR4-3200: 25.6 GB/s per channel\n- DDR5-4800: 38.4 GB/s per channel\n- DDR5-6400: 51.2 GB/s per channel\n\nKey improvements per generation:\n\nDDR3 → DDR4:\n- 50% higher data rate\n- Lower voltage (20% power reduction)\n- Bank groups enable higher efficiency\n- Larger capacity per DIMM\n\nDDR4 → DDR5:\n- 2× prefetch (8n → 16n)\n- 2× bank groups (more parallelism)\n- On-DIMM voltage regulation\n- Dual 32-bit channels (vs single 64-bit)\n- Better power management\n- ECC on-die\n\nLatency (hasn't improved much):\nDDR3-1600 CL11: 13.75 ns\nDDR4-2400 CL17: 14.17 ns\nDDR5-4800 CL40: 16.67 ns\n\nNote: Absolute latency (ns) similar or worse!\nBandwidth improved, not latency."
+  },
+  {
+    "id": "cs202-t6-ex9",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic6",
+    "type": "written",
+    "title": "ECC Memory",
+    "description": "Explain how ECC memory works. What errors can SECDED (Single Error Correction, Double Error Detection) handle? When is ECC essential?",
+    "difficulty": 3,
+    "hints": [
+      "Extra bits for error correction",
+      "Hamming code principles",
+      "Servers vs consumer"
+    ],
+    "solution": "ECC Memory (Error Correcting Code):\n\nHow it works:\n- Extra bits store error-correcting codes\n- Standard: 72 bits per 64 bits of data (8 ECC bits)\n- On read: calculate syndrome, detect/correct errors\n\nSECDED (Single Error Correction, Double Error Detection):\n- Correct any 1-bit error automatically\n- Detect (but not correct) 2-bit errors\n- Uses Hamming code with extra parity bit\n\nExample encoding (simplified):\nData: 64 bits\nECC:  8 bits (calculated from data)\nTotal: 72 bits stored\n\nRead process:\n1. Read 72 bits (data + ECC)\n2. Recalculate ECC from data\n3. XOR with stored ECC = syndrome\n4. Syndrome = 0: no error\n5. Syndrome = single bit pattern: correct that bit\n6. Syndrome = other pattern: uncorrectable error detected\n\nError types and handling:\n┌────────────────┬────────────────┬─────────────────────┐\n│ Error Type     │ Detection      │ Correction          │\n├────────────────┼────────────────┼─────────────────────┤\n│ No error       │ ✓              │ N/A                 │\n│ 1-bit error    │ ✓              │ ✓ (automatic)       │\n│ 2-bit error    │ ✓              │ ✗ (halt/flag)       │\n│ 3+ bit error   │ Maybe          │ ✗                   │\n└────────────────┴────────────────┴─────────────────────┘\n\nWhen ECC is essential:\n1. Servers: Uptime critical, can't reboot\n2. Scientific computing: Incorrect results unacceptable\n3. Financial systems: Data integrity mandatory\n4. Medical/safety: Lives depend on correctness\n5. Large memory systems: More bits = more errors\n\nSoft error rates:\n- ~1 error per GB per year (varies by environment)\n- 128GB server: ~10 errors/month without ECC\n- Cosmic rays, alpha particles cause bit flips\n\nConsumer systems mostly skip ECC:\n- Cost: ~10-20% more expensive\n- Compatibility: Needs ECC support in CPU/motherboard\n- Acceptable risk for most users"
+  },
+  {
+    "id": "cs202-t6-ex10",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic6",
+    "type": "written",
+    "title": "Memory Channels",
+    "description": "A system has 4 memory channels, each 64 bits wide at DDR4-3200. Calculate the peak memory bandwidth. How does multi-channel help?",
+    "difficulty": 2,
+    "hints": [
+      "Bandwidth = width × frequency",
+      "Channels are independent",
+      "DDR means double data rate"
+    ],
+    "solution": "Multi-Channel Memory Bandwidth:\n\nGiven:\n- 4 memory channels\n- 64 bits per channel\n- DDR4-3200 (3200 MT/s)\n\nSingle channel bandwidth:\nData rate: 3200 MT/s (megatransfers/second)\nWidth: 64 bits = 8 bytes\n\nBandwidth = 3200 × 10⁶ × 8 bytes/s\n          = 25.6 GB/s per channel\n\nTotal system bandwidth:\n4 channels × 25.6 GB/s = 102.4 GB/s peak\n\nHow multi-channel helps:\n\n1. Parallel access\n   ┌────────┐  ┌────────┐  ┌────────┐  ┌────────┐\n   │ Chan 0 │  │ Chan 1 │  │ Chan 2 │  │ Chan 3 │\n   │ DIMM   │  │ DIMM   │  │ DIMM   │  │ DIMM   │\n   └───┬────┘  └───┬────┘  └───┬────┘  └───┬────┘\n       │           │           │           │\n       └─────────┬─┴───────────┴─┬─────────┘\n                 │  Memory       │\n                 │ Controller    │\n                 └───────────────┘\n\n2. Interleaved addressing\n   - Address bits select channel\n   - Sequential accesses spread across channels\n   - 4× bandwidth for streaming access\n\n3. Independent operation\n   - Each channel has own command/data buses\n   - Different requests can proceed in parallel\n\nReal-world considerations:\n- Peak bandwidth rarely achieved\n- Memory controller overhead\n- Access patterns affect utilization\n- Typical utilization: 60-80% of peak\n\nDiminishing returns:\n1 → 2 channels: ~2× bandwidth (huge gain)\n2 → 4 channels: ~2× bandwidth (good gain)\n4 → 8 channels: <2× bandwidth (limited by other factors)"
+  },
+  {
+    "id": "cs202-t6-ex11",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic6",
+    "type": "written",
+    "title": "HBM Architecture",
+    "description": "Explain High Bandwidth Memory (HBM). How does it achieve higher bandwidth than DDR? What are its use cases?",
+    "difficulty": 4,
+    "hints": [
+      "3D stacking",
+      "Wide interface",
+      "Close to processor"
+    ],
+    "solution": "High Bandwidth Memory (HBM):\n\nArchitecture:\n┌─────────────────────────────────────────┐\n│           GPU/CPU Die                    │\n│  ┌─────────────────────────────────┐    │\n│  │         Logic                    │    │\n│  └─────────────────────────────────┘    │\n│           │Silicon Interposer│           │\n│  ┌───┐ ┌───┐ ┌───┐ ┌───┐              │\n│  │HBM│ │HBM│ │HBM│ │HBM│              │\n│  │ 1 │ │ 2 │ │ 3 │ │ 4 │              │\n│  └───┘ └───┘ └───┘ └───┘              │\n└─────────────────────────────────────────┘\n\nHBM Stack (3D):\n    ┌──────────┐\n    │ DRAM die │ Layer 4\n    ├──────────┤\n    │ DRAM die │ Layer 3\n    ├──────────┤\n    │ DRAM die │ Layer 2\n    ├──────────┤\n    │ DRAM die │ Layer 1\n    ├──────────┤\n    │ Logic die│ Base\n    └──────────┘\n    Through-silicon vias (TSVs)\n\nWhy HBM is faster:\n\n1. Wide interface: 1024 bits vs 64 bits\n   DDR5: 64 bits × 6400 MT/s = 51.2 GB/s\n   HBM2: 1024 bits × 2000 MT/s = 256 GB/s per stack\n\n2. Short distance: <1mm vs ~10cm for DIMMs\n   - Lower power (less capacitance)\n   - Faster signaling possible\n\n3. 3D stacking:\n   - Multiple DRAM dies per stack\n   - More bandwidth per footprint\n\nHBM Generations:\n┌──────┬──────────────┬────────────────┐\n│ Gen  │ BW/stack     │ Capacity/stack │\n├──────┼──────────────┼────────────────┤\n│ HBM  │ 128 GB/s     │ 1 GB           │\n│ HBM2 │ 256 GB/s     │ 8 GB           │\n│ HBM2e│ 307 GB/s     │ 16 GB          │\n│ HBM3 │ 600 GB/s     │ 24 GB          │\n└──────┴──────────────┴────────────────┘\n\nUse cases:\n- GPUs (NVIDIA A100: 80GB HBM2e, 2 TB/s)\n- AI accelerators (bandwidth-hungry workloads)\n- High-end FPGAs\n- Supercomputers\n\nLimitations:\n- Higher cost per GB\n- Limited capacity (vs DDR)\n- Complex packaging\n- Heat dissipation challenges"
+  },
+  {
+    "id": "cs202-t6-ex12",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic6",
+    "type": "written",
+    "title": "Non-Volatile Memory",
+    "description": "Compare Intel Optane (3D XPoint) with NAND flash and DRAM. What gap does it fill in the memory hierarchy?",
+    "difficulty": 3,
+    "hints": [
+      "Between DRAM and SSD",
+      "Byte-addressable option",
+      "Persistence"
+    ],
+    "solution": "Non-Volatile Memory Comparison:\n\nTechnology comparison:\n┌─────────────┬────────────┬────────────┬────────────┐\n│ Property    │ DRAM       │ 3D XPoint  │ NAND Flash │\n├─────────────┼────────────┼────────────┼────────────┤\n│ Read latency│ ~50 ns     │ ~300 ns    │ ~50 μs     │\n│ Write speed │ ~50 ns     │ ~100 ns    │ ~200 μs    │\n│ Endurance   │ Unlimited  │ High       │ Limited    │\n│ Byte-addr   │ Yes        │ Yes        │ No (pages) │\n│ Density     │ Low        │ Medium     │ High       │\n│ Cost/GB     │ ~$5        │ ~$2-4      │ ~$0.10     │\n│ Volatile    │ Yes        │ No         │ No         │\n└─────────────┴────────────┴────────────┴────────────┘\n\nMemory hierarchy position:\n        Speed\n          ↑\n    DRAM  │  ●\n          │      ● 3D XPoint (Optane)\n          │\n          │              ● NAND SSD\n          │\n          └──────────────────────→ Capacity\n\nGap filled by 3D XPoint:\n1. Faster than NAND, cheaper than DRAM\n2. Non-volatile with near-DRAM speed\n3. Byte-addressable (can use as memory)\n\nOptane use modes:\n\n1. Persistent Memory (Memory Mode):\n   - Extends memory capacity\n   - DRAM as cache for Optane\n   - Transparent to software\n\n2. App Direct Mode:\n   - Directly addressable NVM\n   - Applications aware of persistence\n   - Used for in-memory databases\n\n3. Storage (Optane SSD):\n   - Very fast SSD\n   - Great for latency-sensitive workloads\n   - Lower capacity than NAND SSDs\n\nApplications:\n- Databases with persistent data structures\n- Fast restart (memory survives reboot)\n- Large in-memory computing\n- Storage caching tier\n\nNote: Intel discontinued Optane (2022)\nFuture: CXL-attached memory, other NVM technologies"
+  },
+  {
+    "id": "cs202-t6-ex13",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic6",
+    "type": "written",
+    "title": "NUMA Architecture",
+    "description": "Explain NUMA (Non-Uniform Memory Access). How does memory placement affect performance? What should programmers consider?",
+    "difficulty": 4,
+    "hints": [
+      "Local vs remote memory",
+      "Memory affinity",
+      "NUMA-aware allocation"
+    ],
+    "solution": "NUMA (Non-Uniform Memory Access):\n\nArchitecture:\n┌─────────────────────────────────────────────────────┐\n│                   NUMA System                        │\n│                                                      │\n│  Node 0              Interconnect          Node 1   │\n│ ┌────────────┐      ═══════════════      ┌────────────┐\n│ │   CPU 0    │◄────────────────────────►│   CPU 1    │\n│ │            │                          │            │\n│ │  L3 Cache  │                          │  L3 Cache  │\n│ └────────────┘                          └────────────┘\n│       │                                        │\n│       ▼                                        ▼\n│ ┌────────────┐                          ┌────────────┐\n│ │  Memory 0  │                          │  Memory 1  │\n│ │  (Local)   │                          │  (Local)   │\n│ └────────────┘                          └────────────┘\n└─────────────────────────────────────────────────────┘\n\nAccess latency:\n- Local memory: ~50 ns\n- Remote memory: ~100-150 ns (1.5-3× slower)\n\nNUMA ratio = Remote_latency / Local_latency\nTypical: 1.5 - 3.0×\n\nWhy NUMA exists:\n- Scalability: Single memory controller doesn't scale\n- Bandwidth: Each node has dedicated bandwidth\n- Locality: Most accesses should be local\n\nPerformance implications:\n\nBad: Process on Node 0, data on Node 1\n- Every access crosses interconnect\n- 2× latency, shared interconnect bandwidth\n\nGood: Process and data on same node\n- Local memory access\n- Full bandwidth, low latency\n\nProgrammer considerations:\n\n1. Memory allocation:\n   // NUMA-aware allocation\n   numa_alloc_onnode(size, node);\n   // or let OS place on current node\n   numa_alloc_local(size);\n\n2. Thread placement:\n   - Pin threads to CPUs\n   - Keep threads near their data\n\n3. Data structures:\n   - Partition data by NUMA node\n   - Avoid false sharing across nodes\n\n4. First-touch policy:\n   - Memory allocated on node that first touches it\n   - Initialize data on thread that will use it\n\nLinux tools:\n- numactl: Control NUMA policy\n- numastat: View NUMA statistics\n- /proc/*/numa_maps: Process NUMA mapping"
+  },
+  {
+    "id": "cs202-t6-ex14",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic6",
+    "type": "written",
+    "title": "Memory Power Management",
+    "description": "Describe DRAM power states and their trade-offs. How does the memory controller balance power and performance?",
+    "difficulty": 3,
+    "hints": [
+      "Active, standby, power-down states",
+      "Wake-up latency vs power savings",
+      "Predictive techniques"
+    ],
+    "solution": "DRAM Power States:\n\nState progression (most to least power):\n┌────────────────┬─────────┬────────────┬───────────────┐\n│ State          │ Power   │ Wake-up    │ When used     │\n├────────────────┼─────────┼────────────┼───────────────┤\n│ Active         │ High    │ 0          │ Currently     │\n│                │         │            │ accessing     │\n├────────────────┼─────────┼────────────┼───────────────┤\n│ Idle/Standby   │ Medium  │ ~1 cycle   │ No current    │\n│                │         │            │ access        │\n├────────────────┼─────────┼────────────┼───────────────┤\n│ Power-Down     │ Low     │ ~10 cycles │ Idle period   │\n│ (Fast exit)    │         │            │               │\n├────────────────┼─────────┼────────────┼───────────────┤\n│ Power-Down     │ Very Low│ ~100 cycles│ Long idle     │\n│ (Slow exit)    │         │            │               │\n├────────────────┼─────────┼────────────┼───────────────┤\n│ Self-Refresh   │ Minimal │ ~1000 cycles│ System sleep  │\n└────────────────┴─────────┴────────────┴───────────────┘\n\nPower breakdown (typical DDR4):\n- Active: 100%\n- Idle: ~60%\n- Power-down: ~20%\n- Self-refresh: ~5%\n\nTrade-offs:\n1. More aggressive power-down = more wake-up latency\n2. Frequent transitions waste energy\n3. Prediction errors hurt performance\n\nMemory controller strategies:\n\n1. Timeout-based:\n   if (idle_time > threshold)\n       enter_power_down();\n   Simple but reactive\n\n2. Predictive:\n   - Track access patterns\n   - Predict idle duration\n   - Enter appropriate state proactively\n\n3. Rank-level management:\n   - Put unused ranks in power-down\n   - Keep active ranks ready\n   - Balance across ranks\n\nDVFS (Dynamic Voltage/Frequency Scaling):\n- Lower frequency during light load\n- Reduces power significantly\n- Bandwidth trade-off\n\nModern techniques:\n- Rank interleaving: Spread accesses, allow sleep\n- Page policy: Close-page vs open-page affects power\n- Scheduling: Batch accesses, maximize sleep time\n\nPower proportionality goal:\nPower consumption ∝ Work done\nNot fully achieved in current DRAM (high idle power)"
+  },
+  {
+    "id": "cs202-t6-ex15",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic6",
+    "type": "written",
+    "title": "RAID Levels",
+    "description": "Compare RAID 0, 1, 5, and 6. For a 4-drive array with 1TB drives, calculate usable capacity and fault tolerance for each level.",
+    "difficulty": 3,
+    "hints": [
+      "RAID 0: striping",
+      "RAID 1: mirroring",
+      "RAID 5/6: parity"
+    ],
+    "solution": "RAID Levels Comparison:\n\nConfiguration: 4 × 1TB drives\n\nRAID 0 (Striping):\n┌──────┬──────┬──────┬──────┐\n│ D0   │ D1   │ D2   │ D3   │\n│ D4   │ D5   │ D6   │ D7   │\n│ ...  │ ...  │ ...  │ ...  │\n└──────┴──────┴──────┴──────┘\n- Capacity: 4TB (100%)\n- Fault tolerance: 0 drives (any failure = data loss)\n- Performance: 4× read/write\n- Use: Speed, no redundancy needed\n\nRAID 1 (Mirroring):\n┌──────┬──────┐ ┌──────┬──────┐\n│ D0   │ D0   │ │ D1   │ D1   │\n│ D2   │ D2   │ │ D3   │ D3   │\n└──────┴──────┘ └──────┴──────┘\n  Mirror 1        Mirror 2\n- Capacity: 2TB (50%)\n- Fault tolerance: 1 drive per mirror (up to 2)\n- Performance: 2× read, 1× write\n- Use: High reliability, simple\n\nRAID 5 (Striping + Distributed Parity):\n┌──────┬──────┬──────┬──────┐\n│ D0   │ D1   │ D2   │ P0   │\n│ D3   │ D4   │ P1   │ D5   │\n│ D6   │ P2   │ D7   │ D8   │\n└──────┴──────┴──────┴──────┘\n- Capacity: 3TB (75%)\n- Fault tolerance: 1 drive\n- Performance: ~3× read, slower write (parity calc)\n- Use: Balance of capacity and protection\n\nRAID 6 (Striping + Dual Parity):\n┌──────┬──────┬──────┬──────┐\n│ D0   │ D1   │ P0   │ Q0   │\n│ D2   │ P1   │ Q1   │ D3   │\n│ P2   │ Q2   │ D4   │ D5   │\n└──────┴──────┴──────┴──────┘\n- Capacity: 2TB (50%)\n- Fault tolerance: 2 drives\n- Performance: ~2× read, slower write\n- Use: Mission-critical, large arrays\n\nSummary:\n┌───────┬──────────┬─────────┬─────────────┐\n│ Level │ Capacity │ Survive │ Performance │\n├───────┼──────────┼─────────┼─────────────┤\n│ 0     │ 4 TB     │ 0 drive │ Excellent   │\n│ 1     │ 2 TB     │ 1-2     │ Good read   │\n│ 5     │ 3 TB     │ 1 drive │ Good        │\n│ 6     │ 2 TB     │ 2 drives│ Moderate    │\n└───────┴──────────┴─────────┴─────────────┘"
+  },
+  {
+    "id": "cs202-t6-ex16",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic6",
+    "type": "written",
+    "title": "Memory-Level Parallelism",
+    "description": "Define Memory-Level Parallelism (MLP). How do modern processors exploit MLP? Why is it important for performance?",
+    "difficulty": 4,
+    "hints": [
+      "Multiple outstanding misses",
+      "Out-of-order execution",
+      "Miss bandwidth vs miss latency"
+    ],
+    "solution": "Memory-Level Parallelism (MLP):\n\nDefinition:\nMLP = number of memory accesses outstanding simultaneously\nHigher MLP = better utilization of memory bandwidth\n\nWhy MLP matters:\nWithout MLP (serial misses):\nTime: |--miss 1--|--miss 2--|--miss 3--|\n      100 ns      100 ns      100 ns\nTotal: 300 ns\n\nWith MLP (parallel misses):\nTime: |--miss 1--|\n      |--miss 2--|\n      |--miss 3--|\nTotal: ~100 ns (if memory can handle 3 parallel)\n\nSpeedup: up to 3× (limited by memory bandwidth)\n\nHow processors exploit MLP:\n\n1. Out-of-Order Execution:\n   - Continue executing past cache miss\n   - Find independent misses\n   - Issue them in parallel\n\n   load R1, [addr1]    # miss\n   add R2, R3, R4      # independent, continues\n   load R5, [addr2]    # miss - overlapped with first!\n\n2. Non-blocking caches:\n   - Cache handles multiple misses\n   - Miss Status Holding Registers (MSHRs)\n   - Each MSHR tracks one outstanding miss\n\n3. Hardware prefetching:\n   - Detect access patterns\n   - Issue prefetches ahead of demand\n   - Increases outstanding requests\n\n4. Runahead execution:\n   - On long-latency miss, checkpoint state\n   - Speculatively execute ahead\n   - Discover future misses\n   - Restore state when miss returns\n\nMetrics:\n- Standalone miss latency: 100 ns\n- Effective miss latency with MLP=4: 100/4 = 25 ns\n\nMLP-aware analysis:\nTraditional: Stall_cycles = Miss_count × Miss_latency\nWith MLP: Stall_cycles = Miss_count × Miss_latency / MLP\n\nExample:\n100 misses, 100 cycle latency\nMLP = 1: 10,000 cycles\nMLP = 4: 2,500 cycles\n\nModern CPUs: MLP of 8-16 for memory accesses\nKey insight: Miss bandwidth matters as much as miss rate!"
+  }
+]

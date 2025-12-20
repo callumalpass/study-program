@@ -1,0 +1,221 @@
+[
+  {
+    "id": "cs401-quiz-2-1",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-2",
+    "title": "Time and Ordering - Clock Synchronization",
+    "questions": [
+      {
+        "id": "cs401-q16",
+        "type": "multiple_choice",
+        "prompt": "Why is clock synchronization difficult in distributed systems?",
+        "options": [
+          "No shared physical clock and network delays",
+          "Computers run at different speeds",
+          "Time zones differ",
+          "Hardware clock precision"
+        ],
+        "correctAnswer": "No shared physical clock and network delays",
+        "explanation": "Without a shared physical clock and with variable network delays, achieving precise clock synchronization across distributed nodes is fundamentally challenging."
+      },
+      {
+        "id": "cs401-q17",
+        "type": "multiple_choice",
+        "prompt": "What is clock drift?",
+        "options": [
+          "Gradual divergence of a clock from actual time",
+          "Moving servers to different locations",
+          "Network delay variations",
+          "Time zone changes"
+        ],
+        "correctAnswer": "Gradual divergence of a clock from actual time",
+        "explanation": "Clock drift occurs when a computer's clock gradually runs faster or slower than actual time due to hardware imperfections, requiring periodic synchronization."
+      },
+      {
+        "id": "cs401-q18",
+        "type": "multiple_choice",
+        "prompt": "What does the Network Time Protocol (NTP) provide?",
+        "options": [
+          "Clock synchronization across networks",
+          "Logical time ordering",
+          "Network bandwidth measurement",
+          "Packet routing"
+        ],
+        "correctAnswer": "Clock synchronization across networks",
+        "explanation": "NTP synchronizes computer clocks across networks using a hierarchy of time servers, accounting for network delays to achieve millisecond-level accuracy."
+      },
+      {
+        "id": "cs401-q19",
+        "type": "multiple_choice",
+        "prompt": "What is the key insight of Lamport logical clocks?",
+        "options": [
+          "Event ordering matters more than absolute time",
+          "All nodes need synchronized physical clocks",
+          "Time can go backwards",
+          "Concurrent events don't exist"
+        ],
+        "correctAnswer": "Event ordering matters more than absolute time",
+        "explanation": "Lamport clocks focus on capturing the happens-before relationship between events rather than their absolute time, which is sufficient for many distributed algorithms."
+      },
+      {
+        "id": "cs401-q20",
+        "type": "multiple_choice",
+        "prompt": "In Lamport clocks, when does a process increment its counter?",
+        "options": [
+          "Before each event",
+          "Only when receiving messages",
+          "Only when sending messages",
+          "Once per second"
+        ],
+        "correctAnswer": "Before each event",
+        "explanation": "In Lamport's algorithm, each process increments its logical clock before each event (internal, send, or receive), ensuring causally related events have ordered timestamps."
+      }
+    ]
+  },
+  {
+    "id": "cs401-quiz-2-2",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-2",
+    "title": "Time and Ordering - Logical Clocks",
+    "questions": [
+      {
+        "id": "cs401-q21",
+        "type": "multiple_choice",
+        "prompt": "What happens when a process receives a message in Lamport clocks?",
+        "options": [
+          "Sets clock to max(local, message) + 1",
+          "Uses the message timestamp",
+          "Decrements its clock",
+          "Resets clock to zero"
+        ],
+        "correctAnswer": "Sets clock to max(local, message) + 1",
+        "explanation": "When receiving a message, a process updates its clock to the maximum of its local clock and the message timestamp, then increments, ensuring consistency with the happens-before relation."
+      },
+      {
+        "id": "cs401-q22",
+        "type": "multiple_choice",
+        "prompt": "What limitation do Lamport clocks have?",
+        "options": [
+          "Cannot detect concurrent events",
+          "Require physical clock synchronization",
+          "Too complex to implement",
+          "Don't work with more than two processes"
+        ],
+        "correctAnswer": "Cannot detect concurrent events",
+        "explanation": "Lamport clocks can determine if events are ordered but cannot distinguish concurrent events (those that don't causally affect each other) since concurrent events may have different timestamps."
+      },
+      {
+        "id": "cs401-q23",
+        "type": "multiple_choice",
+        "prompt": "What do vector clocks provide that Lamport clocks don't?",
+        "options": [
+          "Detection of concurrent events",
+          "Faster execution",
+          "Less memory usage",
+          "Physical time accuracy"
+        ],
+        "correctAnswer": "Detection of concurrent events",
+        "explanation": "Vector clocks maintain a vector of logical times (one per process), allowing them to detect concurrent events by comparing vectors, which Lamport clocks cannot do."
+      },
+      {
+        "id": "cs401-q24",
+        "type": "multiple_choice",
+        "prompt": "In a system with N processes, how large is each vector clock?",
+        "options": [
+          "N entries",
+          "1 entry",
+          "log(N) entries",
+          "N^2 entries"
+        ],
+        "correctAnswer": "N entries",
+        "explanation": "Each vector clock contains N entries, one for each process in the system, tracking that process's view of the logical time at every other process."
+      },
+      {
+        "id": "cs401-q25",
+        "type": "multiple_choice",
+        "prompt": "How can you tell if two events are concurrent using vector clocks?",
+        "options": [
+          "Neither vector is less than or equal to the other",
+          "Vectors are identical",
+          "One vector is strictly less than the other",
+          "Timestamps are equal"
+        ],
+        "correctAnswer": "Neither vector is less than or equal to the other",
+        "explanation": "Two events are concurrent if their vector clocks are incomparable (neither is less than or equal to the other), meaning neither event causally preceded the other."
+      }
+    ]
+  },
+  {
+    "id": "cs401-quiz-2-3",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-2",
+    "title": "Time and Ordering - Causality",
+    "questions": [
+      {
+        "id": "cs401-q26",
+        "type": "multiple_choice",
+        "prompt": "What is the happens-before relation in distributed systems?",
+        "options": [
+          "A partial ordering of events based on causality",
+          "Strict time-based ordering",
+          "Random event ordering",
+          "Process ID-based ordering"
+        ],
+        "correctAnswer": "A partial ordering of events based on causality",
+        "explanation": "The happens-before relation (→) is a partial order that captures causal dependencies: if event a could affect event b, then a → b, but concurrent events are unordered."
+      },
+      {
+        "id": "cs401-q27",
+        "type": "multiple_choice",
+        "prompt": "Which statement about causality is correct?",
+        "options": [
+          "If a → b, then a causally affects b",
+          "All events are causally related",
+          "Causality requires physical time",
+          "Concurrent events have causal relationship"
+        ],
+        "correctAnswer": "If a → b, then a causally affects b",
+        "explanation": "The happens-before relation captures causality: if a → b, then a could have causally affected b. Events that are concurrent have no causal relationship."
+      },
+      {
+        "id": "cs401-q28",
+        "type": "multiple_choice",
+        "prompt": "What is total ordering in distributed systems?",
+        "options": [
+          "Every pair of events has a defined order",
+          "Only causally related events are ordered",
+          "Events are unordered",
+          "Only local events are ordered"
+        ],
+        "correctAnswer": "Every pair of events has a defined order",
+        "explanation": "Total ordering means every pair of events has a defined order, even concurrent ones. This is stronger than the partial ordering provided by causality alone."
+      },
+      {
+        "id": "cs401-q29",
+        "type": "multiple_choice",
+        "prompt": "What is causal ordering of messages?",
+        "options": [
+          "Messages are delivered in causal order",
+          "Messages arrive in send order",
+          "Messages are sorted by timestamp",
+          "Messages are delivered randomly"
+        ],
+        "correctAnswer": "Messages are delivered in causal order",
+        "explanation": "Causal ordering ensures that if message m1 causally precedes m2, then m1 is delivered before m2 at all common destinations, preserving causal relationships."
+      },
+      {
+        "id": "cs401-q30",
+        "type": "multiple_choice",
+        "prompt": "Why might causal ordering be preferred over total ordering?",
+        "options": [
+          "Allows more concurrency and better performance",
+          "Easier to implement",
+          "Requires less bandwidth",
+          "Works without network"
+        ],
+        "correctAnswer": "Allows more concurrency and better performance",
+        "explanation": "Causal ordering only orders causally related events, allowing concurrent events to be processed in parallel, enabling better performance than total ordering which orders everything."
+      }
+    ]
+  }
+]

@@ -1,0 +1,221 @@
+[
+  {
+    "id": "cs304-t4-quiz-1",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-4",
+    "title": "IR Fundamentals",
+    "questions": [
+      {
+        "id": "cs304-t4-q1-1",
+        "type": "multiple_choice",
+        "prompt": "Why do compilers use intermediate representations?",
+        "options": [
+          "To slow down compilation",
+          "To decouple front-end from back-end and enable optimization",
+          "IRs are required by language standards",
+          "To increase code size"
+        ],
+        "correctAnswer": 1,
+        "explanation": "IRs provide a common representation enabling front-end/back-end separation and machine-independent optimization."
+      },
+      {
+        "id": "cs304-t4-q1-2",
+        "type": "multiple_choice",
+        "prompt": "What is three-address code?",
+        "options": [
+          "Code with three functions",
+          "IR where each instruction has at most three operands",
+          "Code for 3-bit machines",
+          "Assembly with three registers"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Three-address code uses instructions of the form x = y op z, with at most two sources and one destination."
+      },
+      {
+        "id": "cs304-t4-q1-3",
+        "type": "multiple_choice",
+        "prompt": "What is a basic block?",
+        "options": [
+          "A simple function",
+          "A maximal sequence of instructions with one entry and one exit",
+          "A block of memory",
+          "The smallest unit of code"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A basic block is a maximal sequence of straight-line code with no branches except at entry and exit."
+      },
+      {
+        "id": "cs304-t4-q1-4",
+        "type": "multiple_choice",
+        "prompt": "What is a control flow graph (CFG)?",
+        "options": [
+          "A graph of function calls",
+          "A directed graph of basic blocks showing control flow",
+          "A data structure",
+          "A parse tree"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A CFG is a directed graph where nodes are basic blocks and edges represent control flow between them."
+      },
+      {
+        "id": "cs304-t4-q1-5",
+        "type": "multiple_choice",
+        "prompt": "What distinguishes high-level IR from low-level IR?",
+        "options": [
+          "High-level is faster",
+          "High-level preserves more source structure; low-level is closer to machine code",
+          "Low-level is more portable",
+          "They are the same"
+        ],
+        "correctAnswer": 1,
+        "explanation": "High-level IRs retain source-like constructs; low-level IRs are closer to target machine operations."
+      }
+    ]
+  },
+  {
+    "id": "cs304-t4-quiz-2",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-4",
+    "title": "SSA Form",
+    "questions": [
+      {
+        "id": "cs304-t4-q2-1",
+        "type": "multiple_choice",
+        "prompt": "What is Static Single Assignment (SSA) form?",
+        "options": [
+          "Code with only one statement",
+          "Each variable is assigned exactly once in the program text",
+          "Single-threaded code",
+          "Code without loops"
+        ],
+        "correctAnswer": 1,
+        "explanation": "In SSA form, each variable has exactly one definition (assignment) in the static program text."
+      },
+      {
+        "id": "cs304-t4-q2-2",
+        "type": "multiple_choice",
+        "prompt": "What is a phi (φ) function in SSA?",
+        "options": [
+          "A mathematical function",
+          "A function that selects a value based on control flow path taken",
+          "A hashing function",
+          "An optimization function"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Phi functions merge values at control flow join points, selecting the value from the incoming edge taken."
+      },
+      {
+        "id": "cs304-t4-q2-3",
+        "type": "multiple_choice",
+        "prompt": "Where are phi functions placed in SSA form?",
+        "options": [
+          "At function entries",
+          "At dominance frontiers of variable definitions",
+          "At loop exits",
+          "Everywhere"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Phi functions are placed at dominance frontiers, where multiple definitions of a variable may reach."
+      },
+      {
+        "id": "cs304-t4-q2-4",
+        "type": "multiple_choice",
+        "prompt": "What is a major benefit of SSA form for optimization?",
+        "options": [
+          "Smaller code",
+          "Faster execution",
+          "Explicit def-use chains simplify many analyses",
+          "Fewer variables"
+        ],
+        "correctAnswer": 2,
+        "explanation": "SSA makes def-use relationships explicit, simplifying optimizations like constant propagation and dead code elimination."
+      },
+      {
+        "id": "cs304-t4-q2-5",
+        "type": "multiple_choice",
+        "prompt": "What is \"destruction\" of SSA form?",
+        "options": [
+          "Deleting the IR",
+          "Converting back to non-SSA form by eliminating phi functions",
+          "Removing optimizations",
+          "Memory deallocation"
+        ],
+        "correctAnswer": 1,
+        "explanation": "SSA destruction converts SSA to conventional form by replacing phi functions with copies."
+      }
+    ]
+  },
+  {
+    "id": "cs304-t4-quiz-3",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-4",
+    "title": "IR in Practice",
+    "questions": [
+      {
+        "id": "cs304-t4-q3-1",
+        "type": "multiple_choice",
+        "prompt": "What is LLVM IR?",
+        "options": [
+          "A hardware description language",
+          "A typed, SSA-based IR used by LLVM compilers",
+          "A virtual machine",
+          "An assembly language"
+        ],
+        "correctAnswer": 1,
+        "explanation": "LLVM IR is a typed, SSA-based intermediate representation used throughout the LLVM compiler infrastructure."
+      },
+      {
+        "id": "cs304-t4-q3-2",
+        "type": "multiple_choice",
+        "prompt": "What is the difference between quadruples and triples in three-address code?",
+        "options": [
+          "No difference",
+          "Quadruples store result name; triples use instruction position",
+          "Triples are larger",
+          "Quadruples are deprecated"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Quadruples explicitly name the result; triples reference results by instruction number (position)."
+      },
+      {
+        "id": "cs304-t4-q3-3",
+        "type": "multiple_choice",
+        "prompt": "What is IR lowering?",
+        "options": [
+          "Reducing IR quality",
+          "Translating high-level constructs to lower-level operations",
+          "Compressing IR",
+          "Removing optimizations"
+        ],
+        "correctAnswer": 1,
+        "explanation": "IR lowering transforms high-level operations (like array access) into sequences of simpler operations."
+      },
+      {
+        "id": "cs304-t4-q3-4",
+        "type": "multiple_choice",
+        "prompt": "What is a dominator in a control flow graph?",
+        "options": [
+          "The entry block",
+          "A block through which all paths to another block must pass",
+          "The most executed block",
+          "A recursive block"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Block A dominates block B if every path from entry to B goes through A."
+      },
+      {
+        "id": "cs304-t4-q3-5",
+        "type": "multiple_choice",
+        "prompt": "Why might a compiler use multiple IR levels?",
+        "options": [
+          "To confuse readers",
+          "Different optimizations work better at different abstraction levels",
+          "Required by standards",
+          "To increase compilation time"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Multiple IR levels allow optimizations appropriate to each abstraction level (high-level restructuring, low-level register work)."
+      }
+    ]
+  }
+]

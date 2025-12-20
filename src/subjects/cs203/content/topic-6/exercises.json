@@ -1,0 +1,242 @@
+[
+  {
+    "id": "cs203-t6-ex1",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-6",
+    "type": "written",
+    "title": "The Halting Problem",
+    "description": "State the halting problem and prove it is undecidable using diagonalization.",
+    "difficulty": 5,
+    "hints": [
+      "Assume a halting decider H exists",
+      "Build a machine D that uses H to contradict itself",
+      "Consider what happens when D runs on its own encoding"
+    ],
+    "solution": "**The Halting Problem**\n\n**Definition:**\nHALT_TM = {⟨M, w⟩ | TM M halts on input w}\n\n**Theorem:** HALT_TM is undecidable.\n\n**Proof by diagonalization:**\n\nAssume for contradiction that HALT_TM is decidable.\nThen there exists a decider H where:\n- H(⟨M, w⟩) = accept if M halts on w\n- H(⟨M, w⟩) = reject if M doesn't halt on w\n\n**Construct machine D:**\n\nD on input ⟨M⟩:\n1. Run H on ⟨M, ⟨M⟩⟩\n2. If H accepts (M halts on ⟨M⟩):\n   Loop forever\n3. If H rejects (M doesn't halt on ⟨M⟩):\n   Halt (accept)\n\n**Consider D on input ⟨D⟩:**\n\n**Case 1:** Suppose D halts on ⟨D⟩\n- Then H(⟨D, ⟨D⟩⟩) accepts (since D halts on ⟨D⟩)\n- So D goes to step 2 and loops forever\n- Contradiction: D doesn't halt on ⟨D⟩\n\n**Case 2:** Suppose D doesn't halt on ⟨D⟩\n- Then H(⟨D, ⟨D⟩⟩) rejects (since D doesn't halt)\n- So D goes to step 3 and halts\n- Contradiction: D does halt on ⟨D⟩\n\n**Both cases lead to contradiction.**\n\nTherefore, our assumption that H exists is false.\nHALT_TM is undecidable. ∎\n\n**Key insight:** Self-reference creates the paradox\n- D \"asks\" about its own behavior\n- Then does the opposite\n- Like the liar's paradox: \"This statement is false\"\n\n**Corollary:** A_TM = {⟨M, w⟩ | M accepts w} is also undecidable\n(Similar proof, or reduce from HALT)"
+  },
+  {
+    "id": "cs203-t6-ex2",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-6",
+    "type": "written",
+    "title": "Mapping Reductions",
+    "description": "Define mapping reduction (≤_m) and prove that if A ≤_m B and B is decidable, then A is decidable.",
+    "difficulty": 3,
+    "hints": [
+      "A ≤_m B means there is a computable function f where w ∈ A iff f(w) ∈ B",
+      "f transforms A-instances to B-instances",
+      "Use the decider for B to decide A"
+    ],
+    "solution": "**Mapping Reductions**\n\n**Definition:**\nA **mapping reduction** from A to B (written A ≤_m B) is a computable function f: Σ* → Σ* such that:\n\n∀w: w ∈ A ⟺ f(w) ∈ B\n\n**Intuition:**\n- f transforms any instance of A into an instance of B\n- The answer is preserved: YES ↔ YES, NO ↔ NO\n- f is computable (there's a TM computing it)\n\n**Theorem:** If A ≤_m B and B is decidable, then A is decidable.\n\n**Proof:**\n\nGiven:\n- f is the computable reduction from A to B\n- M_B is a decider for B\n\nConstruct decider M_A for A:\n\nM_A on input w:\n1. Compute f(w)\n2. Run M_B on f(w)\n3. Output what M_B outputs\n\n**Correctness:**\n- f is computable, so step 1 terminates\n- M_B is a decider, so step 2 terminates\n- M_A accepts w ⟺ M_B accepts f(w) ⟺ f(w) ∈ B ⟺ w ∈ A ✓\n\n**M_A decides A. ∎**\n\n**Contrapositive (more often used):**\nIf A ≤_m B and A is undecidable, then B is undecidable.\n\nThis is how we prove new undecidability results:\n1. Show known undecidable A reduces to B\n2. Conclude B is undecidable\n\n**Example:** Reducing HALT to A_TM\n\nDefine f(⟨M, w⟩) = ⟨M', w⟩ where M':\n- On input x: Run M on w; if M halts, accept\n\nThen:\n⟨M, w⟩ ∈ HALT ⟺ M halts on w ⟺ M' accepts w ⟺ ⟨M', w⟩ ∈ A_TM\n\nSo HALT ≤_m A_TM. Since HALT is undecidable, A_TM is undecidable.\n\n**Properties of ≤_m:**\n- Reflexive: A ≤_m A (use identity function)\n- Transitive: A ≤_m B and B ≤_m C implies A ≤_m C\n- Not symmetric: A ≤_m B does not imply B ≤_m A"
+  },
+  {
+    "id": "cs203-t6-ex3",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-6",
+    "type": "written",
+    "title": "Rice's Theorem",
+    "description": "State Rice's theorem and use it to prove that \"Does TM M accept any string?\" is undecidable.",
+    "difficulty": 5,
+    "hints": [
+      "Rice's theorem is about semantic properties of languages",
+      "Non-trivial means some TMs have the property, some don't",
+      "The property \"L(M) ≠ ∅\" is semantic and non-trivial"
+    ],
+    "solution": "**Rice's Theorem**\n\n**Statement:**\nLet P be a property of Turing-recognizable languages (not TMs themselves).\nIf P is **non-trivial** (some TMs have it, some don't), then the problem:\n\n\"Does L(M) satisfy P?\"\n\nis undecidable.\n\n**Formal statement:**\nLet P be a set of Turing-recognizable languages (P ⊂ RE).\nIf P ≠ ∅ and P ≠ RE, then:\nL_P = {⟨M⟩ | L(M) ∈ P} is undecidable.\n\n**Application: \"Does M accept any string?\"**\n\n**The property:** P = {L | L ≠ ∅} (non-empty languages)\n\n**Is P non-trivial?**\n- Some TMs recognize non-empty languages: L = {a} ∈ P ✓\n- Some TMs recognize empty languages: L = ∅ ∉ P ✓\n- P is non-trivial ✓\n\n**Is P semantic?**\n- P depends only on L(M), not on M's structure\n- Two different TMs with L(M₁) = L(M₂) give same answer ✓\n\n**By Rice's theorem:**\nE_TM = {⟨M⟩ | L(M) = ∅} is undecidable.\nEquivalently, NE_TM = {⟨M⟩ | L(M) ≠ ∅} is undecidable. ∎\n\n**Proof of Rice's theorem (sketch):**\n\nReduce from A_TM.\n\nGiven ⟨M, w⟩, construct M' such that:\n- If M accepts w: L(M') ∈ P\n- If M doesn't accept w: L(M') ∉ P\n\nConstruction of M' depends on P:\n- Let M_P be a TM with L(M_P) ∈ P (exists since P non-empty)\n- Let M_∅ be a TM with L(M_∅) ∉ P (exists since P ≠ RE)\n\nM' on input x:\n1. Run M on w (may loop)\n2. If M accepts w, simulate M_P on x\n\nThen:\n- M accepts w ⟹ L(M') = L(M_P) ∈ P\n- M doesn't accept w ⟹ L(M') = ∅ or subset, arrange ∉ P\n\n**More examples using Rice's theorem:**\n- \"Is L(M) regular?\" — undecidable\n- \"Is L(M) = Σ*?\" — undecidable\n- \"Is L(M) finite?\" — undecidable\n- \"Does M accept string w?\" — NOT Rice (depends on specific w, not just property of L(M))"
+  },
+  {
+    "id": "cs203-t6-ex4",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-6",
+    "type": "written",
+    "title": "Decidability of DFA Problems",
+    "description": "Prove that the following problems are decidable for DFAs: (a) emptiness, (b) membership, (c) equivalence.",
+    "difficulty": 3,
+    "hints": [
+      "DFAs have finite state structure",
+      "Emptiness: is any accepting state reachable?",
+      "Equivalence: use symmetric difference"
+    ],
+    "solution": "**Decidability of DFA Problems**\n\n**(a) DFA Emptiness: E_DFA = {⟨M⟩ | L(M) = ∅}**\n\n**Algorithm:**\n1. Mark the start state\n2. Repeat: mark any state reachable from a marked state\n3. Accept if no accepting state is marked\n4. Reject if some accepting state is marked\n\n**Correctness:**\n- L(M) = ∅ ⟺ no accepting state is reachable from start\n- BFS/DFS finds all reachable states in O(|Q| × |Σ|) time\n\n**Decidable in polynomial time. ✓**\n\n**(b) DFA Membership: A_DFA = {⟨M, w⟩ | M accepts w}**\n\n**Algorithm:**\n1. Simulate M on input w\n2. Process one symbol at a time: q := δ(q, aᵢ)\n3. Accept if final state is in F\n4. Reject otherwise\n\n**Correctness:**\n- DFA is deterministic, so simulation is straightforward\n- Exactly |w| transitions\n- Time: O(|w|)\n\n**Decidable in linear time. ✓**\n\n**(c) DFA Equivalence: EQ_DFA = {⟨M₁, M₂⟩ | L(M₁) = L(M₂)}**\n\n**Algorithm using symmetric difference:**\n\nL(M₁) = L(M₂) ⟺ L(M₁) △ L(M₂) = ∅\n\nwhere △ is symmetric difference:\nL₁ △ L₂ = (L₁ ∩ L̄₂) ∪ (L̄₁ ∩ L₂)\n\n**Steps:**\n1. Construct DFA for L̄₁ (complement of M₁)\n2. Construct DFA for L̄₂ (complement of M₂)\n3. Construct DFA for L₁ ∩ L̄₂ (product construction)\n4. Construct DFA for L̄₁ ∩ L₂ (product construction)\n5. Construct DFA for (L₁ ∩ L̄₂) ∪ (L̄₁ ∩ L₂)\n6. Test if this DFA accepts empty language\n\n**Correctness:**\n- Each step preserves regularity\n- Final DFA accepts L₁ △ L₂\n- L₁ = L₂ ⟺ symmetric difference is empty\n\n**Complexity:** O(|Q₁| × |Q₂|) states in product DFAs\n\n**Decidable in polynomial time. ✓**\n\n**Alternative for equivalence:**\nMinimize both DFAs, check if isomorphic.\nMinimization: O(n log n), isomorphism check: O(n)\n\n**Summary:**\n| Problem | Decidable? | Complexity |\n|---------|------------|------------|\n| E_DFA | Yes | O(n) |\n| A_DFA | Yes | O(|w|) |\n| EQ_DFA | Yes | O(n²) |"
+  },
+  {
+    "id": "cs203-t6-ex5",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-6",
+    "type": "written",
+    "title": "Undecidability of TM Emptiness",
+    "description": "Prove that E_TM = {⟨M⟩ | L(M) = ∅} is undecidable by reducing from A_TM.",
+    "difficulty": 5,
+    "hints": [
+      "Given A_TM instance ⟨M, w⟩, construct M' where emptiness depends on whether M accepts w",
+      "M' should accept some string iff M accepts w",
+      "Use the reduction to show E_TM is undecidable"
+    ],
+    "solution": "**Proving E_TM is Undecidable**\n\n**Claim:** E_TM = {⟨M⟩ | L(M) = ∅} is undecidable.\n\n**Proof by reduction from A_TM:**\n\nWe show A_TM ≤_m Ē_TM (complement of E_TM).\nThen since A_TM is undecidable, Ē_TM is undecidable, hence E_TM is undecidable.\n\nActually, let's reduce A_TM to Ē_TM directly:\n\n**Reduction:**\nGiven input ⟨M, w⟩ (instance of A_TM), construct TM M':\n\nM' on input x:\n1. Ignore x\n2. Run M on w\n3. If M accepts, accept\n4. (If M rejects or loops, M' doesn't accept x)\n\n**Computing the reduction:**\nOutput ⟨M'⟩\n\n**Correctness:**\n\n**Case: M accepts w**\n- M' reaches step 3 and accepts (for any x)\n- L(M') = Σ* ≠ ∅\n- ⟨M'⟩ ∈ Ē_TM\n\n**Case: M does not accept w**\n- M either rejects or loops forever in step 2\n- M' never accepts any x\n- L(M') = ∅\n- ⟨M'⟩ ∉ Ē_TM (equivalently, ⟨M'⟩ ∈ E_TM)\n\n**Summary:**\n⟨M, w⟩ ∈ A_TM ⟺ L(M') ≠ ∅ ⟺ ⟨M'⟩ ∈ Ē_TM\n\n**Conclusion:**\nA_TM ≤_m Ē_TM\nSince A_TM is undecidable, Ē_TM is undecidable.\nTherefore E_TM is undecidable (complement of undecidable is undecidable for recognizable languages, and we can show E_TM is co-recognizable).\n\nActually, more directly:\nIf E_TM were decidable, then Ē_TM would be decidable.\nBut A_TM ≤_m Ē_TM and A_TM is undecidable.\nSo Ē_TM is undecidable, hence E_TM is undecidable. ∎\n\n**Note:** This also shows E_TM is not Turing-recognizable (it's co-RE but not RE)."
+  },
+  {
+    "id": "cs203-t6-ex6",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-6",
+    "type": "written",
+    "title": "Complement and Recognizability",
+    "description": "Prove: L is decidable if and only if both L and L̄ are Turing-recognizable.",
+    "difficulty": 3,
+    "hints": [
+      "For →: a decider recognizes L, and its complement recognizes L̄",
+      "For ←: run both recognizers in parallel (dovetailing)",
+      "One must accept, giving a decision"
+    ],
+    "solution": "**Theorem:** L is decidable ⟺ both L and L̄ are Turing-recognizable.\n\n**Proof of (⟹):**\nAssume L is decidable via decider M.\n\n**L is recognizable:**\nM itself recognizes L (deciders are recognizers).\n\n**L̄ is recognizable:**\nConstruct M' from M by swapping accept and reject.\nM' recognizes L̄.\n\n**Proof of (⟸):**\nAssume:\n- M₁ recognizes L\n- M₂ recognizes L̄\n\n**Construct decider D for L:**\n\nD on input w:\n1. Run M₁ and M₂ in parallel on w\n   (Alternate: 1 step of M₁, 1 step of M₂, repeat)\n2. If M₁ accepts, accept\n3. If M₂ accepts, reject\n\n**Correctness:**\n\nFor any w, exactly one of the following holds:\n- w ∈ L (so M₁ will eventually accept)\n- w ∈ L̄ (so M₂ will eventually accept)\n\nSince one must eventually accept, D always halts.\n\n**D accepts w ⟺ M₁ accepts w ⟺ w ∈ L ✓**\n\n**D is a decider for L. ∎**\n\n**Corollary:**\nIf L is recognizable but not decidable, then L̄ is not recognizable.\n\n**Proof:**\nIf L̄ were recognizable, then by the theorem, L would be decidable.\nBut L is not decidable.\nSo L̄ is not recognizable. ∎\n\n**Example:**\n- A_TM is recognizable (simulate M on w, accept if accepts)\n- Ā_TM is NOT recognizable\n- Therefore A_TM is not decidable\n\n**The technique of running in parallel is called \"dovetailing.\"**\n\nIt ensures we don't get stuck waiting on one machine that loops forever."
+  },
+  {
+    "id": "cs203-t6-ex7",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-6",
+    "type": "written",
+    "title": "Self-Reference and Recursion Theorem",
+    "description": "State the Recursion theorem for TMs. Explain why it implies that self-printing programs exist.",
+    "difficulty": 5,
+    "hints": [
+      "The recursion theorem lets TMs \"know\" their own description",
+      "A TM can compute with ⟨M⟩ where M is itself",
+      "This enables quines (self-printing programs)"
+    ],
+    "solution": "**The Recursion Theorem**\n\n**Statement:**\nFor any computable function t: Σ* → Σ*, there exists a TM R such that:\nR is equivalent to the TM t(⟨R⟩)\n\nIn other words: R can compute using its own description ⟨R⟩.\n\n**Alternative formulation:**\nFor any TM T, there exists a TM R such that:\nR(w) = T(⟨R⟩, w) for all w\n\nR behaves like T, but with access to its own code ⟨R⟩.\n\n**Proof sketch (Kleene's trick):**\n\nLet T be a TM that computes t.\n\nBuild R in two parts: R = A ∘ B\n\n**Part A:**\nOn input w:\n1. Obtain description ⟨B⟩ (hardcoded)\n2. Compute ⟨A ∘ B⟩ = ⟨R⟩\n3. Run T on ⟨R⟩ to get t(⟨R⟩)\n4. Simulate t(⟨R⟩) on original input\n\n**Part B:**\nContains the code of A, allowing A to reconstruct ⟨R⟩.\n\nThe construction is self-referential but well-defined.\n\n**Application: Quines (Self-Printing Programs)**\n\n**Goal:** Build TM Q that prints ⟨Q⟩.\n\n**Using recursion theorem:**\nLet T be a TM that, given ⟨M⟩ and w, outputs ⟨M⟩.\nT(⟨M⟩, w) = ⟨M⟩\n\nBy recursion theorem, there exists Q such that:\nQ(w) = T(⟨Q⟩, w) = ⟨Q⟩\n\n**Q prints its own description! ∎**\n\n**Direct construction of a quine:**\n\nQuine structure: Print-A Print-B\n\nPart A: Print \"Print-B\" then print Part-B\nPart B: Contains encoded representation of Part-A\n\nWhen run:\n1. A prints \"Print-B\" (literal text)\n2. A prints B's contents (which encode A)\n3. Result: \"Print-A Print-B\" = the whole program\n\n**Other applications of recursion theorem:**\n1. Proving undecidability (self-referential constructions)\n2. Computer viruses (self-copying programs)\n3. Fixed-point theorems in computability\n4. Proof that certain problems have no algorithm\n\n**Example undecidability proof using recursion theorem:**\n\nClaim: {⟨M⟩ | M accepts ⟨M⟩} is undecidable.\n\nProof: Suppose decider D exists.\nBy recursion theorem, build M that on any input:\n1. Obtains ⟨M⟩\n2. Runs D on ⟨M⟩\n3. Does opposite of D's answer\n\nThis M contradicts D. So D doesn't exist. ∎"
+  },
+  {
+    "id": "cs203-t6-ex8",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-6",
+    "type": "written",
+    "title": "Post Correspondence Problem",
+    "description": "Define the Post Correspondence Problem (PCP). Prove it is undecidable.",
+    "difficulty": 5,
+    "hints": [
+      "PCP is about matching sequences of dominoes",
+      "Reduce from a known undecidable problem",
+      "Can encode TM computations as domino sequences"
+    ],
+    "solution": "**Post Correspondence Problem (PCP)**\n\n**Definition:**\nGiven a set of \"dominoes\" (pairs of strings):\n{[t₁/b₁], [t₂/b₂], ..., [tₖ/bₖ]}\n\nwhere tᵢ is the \"top\" string and bᵢ is the \"bottom\" string.\n\n**Question:** Is there a sequence i₁, i₂, ..., iₙ (repeats allowed) such that:\nt_{i₁}t_{i₂}...t_{iₙ} = b_{i₁}b_{i₂}...b_{iₙ}\n\n(Concatenation of tops equals concatenation of bottoms)\n\n**Example:**\nDominoes: {[a/ab], [b/ca], [ca/a], [abc/c]}\n\nMatch: [a/ab][b/ca][ca/a][a/ab][abc/c]\nTops: a·b·ca·a·abc = abcaaabc\nBottoms: ab·ca·a·ab·c = abcaaabc ✓\n\n**Theorem:** PCP is undecidable.\n\n**Proof (reduction from A_TM):**\n\nGiven TM M and input w, construct PCP instance that has a match iff M accepts w.\n\n**Key idea:** Dominoes encode computation history of M on w.\nA match corresponds to a valid accepting computation.\n\n**Construction outline:**\n\n**1. Starting domino:**\nTop: #\nBottom: #q₀w#\n\nForces the match to begin with initial configuration.\n\n**2. Transition dominoes:**\nFor each transition δ(q, a) = (r, b, R):\nTop: qa\nBottom: br\n\nThis allows the match to extend with valid transitions.\n\n**3. Copying dominoes:**\nFor each symbol a:\nTop: a\nBottom: a\n\nCopies tape symbols not at head position.\n\n**4. Configuration separator:**\nTop: #\nBottom: #\n\nSeparates configurations.\n\n**5. Accepting dominoes:**\nWhen accept state appears, special dominoes to \"finish\" the match.\n\n**Why it works:**\n- Match starts with #⟨initial config⟩#\n- Each step extends with valid transition\n- If M accepts, match can be completed\n- If M doesn't accept, no valid match exists\n\n**Technical details:**\nThe construction ensures that any match must encode a valid computation of M on w, ending in accept.\n\n**Conclusion:**\nA_TM ≤_m PCP\nSince A_TM is undecidable, PCP is undecidable. ∎\n\n**MPCP (Modified PCP):**\nMPCP requires starting with a specific first domino.\nOften reduce to MPCP first, then to PCP.\n\n**Applications:**\nPCP undecidability implies many string/grammar problems are undecidable:\n- CFG ambiguity\n- Grammar equivalence\n- Other pattern matching problems"
+  },
+  {
+    "id": "cs203-t6-ex9",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-6",
+    "type": "written",
+    "title": "Decidability of CFG Problems",
+    "description": "Determine the decidability status of these CFG problems: (a) membership, (b) emptiness, (c) finiteness. Provide algorithms or prove undecidability.",
+    "difficulty": 3,
+    "hints": [
+      "CFG membership: CYK algorithm works",
+      "Emptiness: check if start symbol is useful",
+      "Finiteness: look for cycles in grammar graph"
+    ],
+    "solution": "**Decidability of CFG Problems**\n\n**(a) CFG Membership: A_CFG = {⟨G, w⟩ | w ∈ L(G)}**\n\n**Decidable!**\n\n**Algorithm (CYK):**\n1. Convert G to Chomsky Normal Form\n2. Apply CYK dynamic programming algorithm\n3. Accept if start symbol can derive w\n\n**CYK Algorithm:**\n- Build table T[i,j] = {A | A derives substring wᵢ...wⱼ}\n- Base: T[i,i] = {A | A → wᵢ}\n- Induction: A ∈ T[i,j] if A → BC and B ∈ T[i,k], C ∈ T[k+1,j]\n- Accept if S ∈ T[1,n]\n\n**Complexity:** O(n³ × |G|)\n\n**Decidable in polynomial time. ✓**\n\n**(b) CFG Emptiness: E_CFG = {⟨G⟩ | L(G) = ∅}**\n\n**Decidable!**\n\n**Algorithm:**\n1. Mark all terminals as \"generating\"\n2. Repeat: mark variable A as generating if A → α where all symbols in α are generating\n3. Accept (L(G) = ∅) if S is not marked generating\n\n**Correctness:**\n- A is generating ⟺ A derives some terminal string\n- L(G) ≠ ∅ ⟺ S is generating\n\n**Complexity:** O(|G|)\n\n**Decidable in linear time. ✓**\n\n**(c) CFG Finiteness: FINITE_CFG = {⟨G⟩ | L(G) is finite}**\n\n**Decidable!**\n\n**Algorithm:**\n1. Remove useless symbols and productions\n2. Build \"dependency graph\" of useful variables\n3. L(G) is infinite ⟺ graph has a cycle\n\n**Dependency graph:**\n- Nodes: useful variables\n- Edge A → B if production A → αBβ exists\n\n**Correctness:**\n- Cycle means unbounded recursion, generating infinite language\n- No cycle means bounded derivation depth, finite language\n\n**Complexity:** O(|G|) for graph construction and cycle detection\n\n**Decidable in linear time. ✓**\n\n**Summary:**\n| Problem | Decidable? | Complexity |\n|---------|------------|------------|\n| A_CFG | Yes | O(n³) |\n| E_CFG | Yes | O(|G|) |\n| FINITE_CFG | Yes | O(|G|) |\n\n**Contrast with TM problems:**\nAll three are undecidable for TMs!\n\n**Undecidable CFG problems (for reference):**\n- Ambiguity: Is G ambiguous?\n- Equivalence: L(G₁) = L(G₂)?\n- Universality: L(G) = Σ*?"
+  },
+  {
+    "id": "cs203-t6-ex10",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-6",
+    "type": "written",
+    "title": "The Diagonalization Method",
+    "description": "Explain the diagonalization technique and how it's used to prove undecidability. Compare it to Cantor's diagonal argument.",
+    "difficulty": 3,
+    "hints": [
+      "Enumerate all TMs and all strings",
+      "Build a \"table\" of acceptance",
+      "Construct something that differs from every row"
+    ],
+    "solution": "**The Diagonalization Method**\n\n**Origin: Cantor's Diagonal Argument (1891)**\n\n**Cantor's proof that reals are uncountable:**\n1. Assume reals in [0,1] are countable: r₁, r₂, r₃, ...\n2. Write decimal expansions:\n   r₁ = 0.d₁₁d₁₂d₁₃...\n   r₂ = 0.d₂₁d₂₂d₂₃...\n   r₃ = 0.d₃₁d₃₂d₃₃...\n   ...\n3. Construct x = 0.x₁x₂x₃... where xᵢ ≠ dᵢᵢ\n4. x differs from each rᵢ in the iᵗʰ position\n5. x is not in the list — contradiction!\n\n**Turing's Application to Computability (1936)**\n\n**Setup:**\n- Enumerate all TMs: M₁, M₂, M₃, ...\n- Enumerate all strings: w₁, w₂, w₃, ...\n- Build \"acceptance table\":\n\n|     | w₁ | w₂ | w₃ | ... |\n|-----|----|----|----|----- |\n| M₁  | 0  | 1  | 0  | ... |\n| M₂  | 1  | 1  | 0  | ... |\n| M₃  | 0  | 0  | 1  | ... |\n| ... | ...| ...| ...| ... |\n\nEntry (i,j) = 1 if Mᵢ accepts wⱼ, else 0.\n\n**Diagonal language:**\nD = {wᵢ | Mᵢ does not accept wᵢ}\n  = {wᵢ | entry (i,i) = 0}\n\n**Claim:** D is not Turing-recognizable.\n\n**Proof:**\nSuppose TM Mₖ recognizes D.\nConsider wₖ:\n- If wₖ ∈ D: Then Mₖ accepts wₖ, so wₖ ∉ D (by definition of D)\n- If wₖ ∉ D: Then Mₖ doesn't accept wₖ, so wₖ ∈ D (by definition of D)\n\nContradiction! So no such Mₖ exists. ∎\n\n**Halting problem proof uses similar structure:**\nInstead of D, define D_halt = {⟨M⟩ | M doesn't halt on ⟨M⟩}\nAssuming HALT is decidable lets us build a TM that contradicts itself.\n\n**Key insight:**\nSelf-reference creates paradox:\n- M is asked about its own behavior on its own description\n- M then does the opposite\n- This is impossible\n\n**Diagonalization template:**\n1. Assume problem is decidable/recognizable\n2. Use assumption to build \"diagonal\" object\n3. Show diagonal differs from every possibility\n4. Contradiction!\n\n**Power and limitations:**\n- Very powerful technique for undecidability\n- But: relativization shows limits (can't separate P vs NP)"
+  },
+  {
+    "id": "cs203-t6-ex11",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-6",
+    "type": "written",
+    "title": "Computation Histories",
+    "description": "Define computation history of a TM. Explain how encoding computation histories enables undecidability proofs.",
+    "difficulty": 3,
+    "hints": [
+      "History is sequence of configurations",
+      "Can be encoded as a string",
+      "Checking validity is local/decidable"
+    ],
+    "solution": "**Computation Histories**\n\n**Definition:**\nA **computation history** of TM M on input w is a sequence of configurations:\nC₁, C₂, C₃, ..., Cₖ\n\nwhere:\n- C₁ is the starting configuration (q₀, w, start position)\n- Each Cᵢ₊₁ follows from Cᵢ by M's transition function\n- Cₖ is a halting configuration (accept or reject)\n\n**Encoding:**\nEncode each configuration as a string (state, tape contents, head position).\nSeparate configurations with delimiter (e.g., #).\n\nH = #C₁#C₂#...#Cₖ#\n\n**Properties of computation histories:**\n\n**1. Length bounded by time:**\nIf M runs in t steps, history has t+1 configurations.\n\n**2. Local validity checking:**\nTo verify H is valid:\n- Check C₁ is correct starting configuration\n- For each consecutive pair (Cᵢ, Cᵢ₊₁): check transition is valid\n- Check Cₖ is halting\n\nEach local check is decidable! (Just examine finite symbols)\n\n**3. Acceptingness checkable:**\nH is accepting if final configuration is in accept state.\n\n**Why histories enable undecidability proofs:**\n\n**Key insight:** Many problems reduce to \"Does a valid accepting history exist?\"\n\n**Example: A_TM**\n⟨M, w⟩ ∈ A_TM ⟺ ∃ accepting computation history of M on w\n\n**Technique for reduction:**\n\nTo reduce A_TM to problem P:\n1. Given ⟨M, w⟩, construct an instance I_P of P\n2. Design I_P so: I_P is a YES-instance ⟺ accepting history exists\n3. Use local structure of histories in the construction\n\n**Applications:**\n\n**PCP undecidability:**\nConstruct dominoes that \"build\" computation histories.\nMatch exists ⟺ valid accepting history exists.\n\n**CFG problems:**\nEncode history-checking in grammar productions.\nE.g., ALL_CFG = {⟨G⟩ | L(G) = Σ*} is undecidable:\n- Encode histories as strings\n- Accepting histories ∉ L(G) iff some symbol wrong\n- L(G) = Σ* iff no accepting history exists iff M doesn't accept\n\n**Linear Bounded Automata:**\nLBA computation histories are polynomially bounded.\nMany PSPACE-complete problems involve LBA history existence.\n\n**Summary:**\nComputation histories provide:\n- Formal representation of computation\n- Decidable local validity\n- Existential quantification reduces to search/matching\n- Bridge between TM problems and other formalisms"
+  },
+  {
+    "id": "cs203-t6-ex12",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-6",
+    "type": "written",
+    "title": "Busy Beaver Function",
+    "description": "Define the Busy Beaver function BB(n). Explain why it is not computable.",
+    "difficulty": 5,
+    "hints": [
+      "BB(n) = max steps among halting n-state TMs",
+      "If BB were computable, we could solve halting problem",
+      "BB grows faster than any computable function"
+    ],
+    "solution": "**The Busy Beaver Function**\n\n**Definition:**\nBB(n) = maximum number of 1s that an n-state TM can write on a blank tape before halting.\n\n**Variant (Σ):**\nΣ(n) = max 1s written by halting n-state TM\nS(n) = max steps taken by halting n-state TM\n\n**Known values:**\n- BB(1) = 1\n- BB(2) = 4\n- BB(3) = 6\n- BB(4) = 13\n- BB(5) ≥ 4098 (current lower bound)\n- BB(6) ≥ 10^18267 (!)\n\n**Theorem:** BB(n) is not computable.\n\n**Proof:**\n\nAssume BB is computable (there's a TM computing BB).\n\n**Build halting decider H:**\n\nH on input ⟨M⟩ (encoding of n-state TM M):\n1. Compute BB(n) — we assumed this is possible\n2. Simulate M for BB(n) steps\n3. If M halts within BB(n) steps: report \"halts\"\n4. Otherwise: report \"doesn't halt\"\n\n**Correctness:**\nIf M halts, it does so within BB(n) steps (by definition of BB).\nSo H correctly determines halting.\n\n**But the halting problem is undecidable!**\nContradiction.\n\nTherefore BB is not computable. ∎\n\n**Growth rate:**\nBB grows faster than any computable function!\n\n**Proof:**\nLet f be any computable function.\nThen there's a TM M_f computing f with some fixed number of states c.\n\nFor n > c: an n-state machine can:\n1. Compute f(n) (using c states for M_f)\n2. Write f(n) ones\n3. Halt\n\nSo BB(n) ≥ f(n) for large n.\nSince f was arbitrary computable function, BB eventually dominates it.\n\n**Implications:**\n\n1. **Non-computability:** Can't program BB calculator\n\n2. **Independence:** For large n, BB(n)'s value is independent of ZFC set theory\n   - Can't prove exact value within standard math\n\n3. **Complexity explosion:** Shows how quickly complexity grows with TM size\n\n4. **Gödel incompleteness connection:**\n   - BB values encode unprovable statements\n   - ZFC can't prove BB(n) for all n\n\n**Fun fact:**\nA 5-state TM can simulate Rule 110 (universal cellular automaton), so BB(5) involves universal computation.\n\n**Open problems:**\n- Exact value of BB(5) unknown\n- Many \"busy beaver candidates\" remain unresolved"
+  },
+  {
+    "id": "cs203-t6-ex13",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-6",
+    "type": "written",
+    "title": "Recursively Enumerable Sets",
+    "description": "Prove that a set is recursively enumerable (Turing-recognizable) iff it is the range of a partial computable function.",
+    "difficulty": 5,
+    "hints": [
+      "RE sets can be enumerated by a TM",
+      "The TM output gives the range",
+      "Conversely, given range of f, can recognize membership"
+    ],
+    "solution": "**Recursively Enumerable Sets and Partial Computable Functions**\n\n**Theorem:** S ⊆ ℕ is recursively enumerable ⟺ S = range(f) for some partial computable function f.\n\n**Note:** A set of strings is RE iff it corresponds to an RE set of natural numbers under standard encoding.\n\n**Proof of (⟹): RE set → Range of partial computable function**\n\nLet M be a TM recognizing S.\n\nDefine partial function f: ℕ → ℕ by:\nf(n) = output of running M on the n-th string, if M accepts\n\n**How f is computed:**\n1. Decode n to get string wₙ\n2. Run M on wₙ\n3. If M accepts, output wₙ (as number)\n4. If M rejects or loops, f(n) is undefined\n\n**Range of f:**\nrange(f) = {f(n) | f(n) is defined}\n         = {wₙ | M accepts wₙ}\n         = S ✓\n\n**f is partial computable** (just simulate M).\n\n**Proof of (⟸): Range of partial computable → RE set**\n\nLet f be a partial computable function.\nS = range(f) = {f(n) | f(n) is defined}\n\n**Build TM M recognizing S:**\n\nM on input x:\n1. For i = 1, 2, 3, ...:\n   For j = 1 to i:\n     Simulate f(j) for i steps\n     If f(j) halts and f(j) = x: accept\n2. Continue forever\n\n**Correctness:**\n- If x ∈ S: x = f(n) for some n\n  - At stage i ≥ max(n, steps to compute f(n)), we find f(n) = x\n  - M accepts\n- If x ∉ S: x is never output by f\n  - M never accepts (runs forever)\n\n**M recognizes S. ✓**\n\n**Dovetailing is crucial:**\nWe can't just compute f(1), f(2), f(3), ... sequentially.\nSome f(n) may be undefined (infinite loop).\nDovetailing ensures we don't get stuck.\n\n**Alternative characterizations of RE:**\n1. Recognized by some TM\n2. Range of a partial computable function\n3. Domain of a partial computable function\n4. Enumerable by a TM (prints elements)\n5. Semi-decidable (can verify YES, not NO)\n\n**Relationship to decidability:**\n- S decidable ⟺ S and S̄ both RE\n- S decidable ⟺ S = range(total computable function) in increasing order"
+  },
+  {
+    "id": "cs203-t6-ex14",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-6",
+    "type": "written",
+    "title": "Undecidability of CFG Ambiguity",
+    "description": "Prove that determining whether a CFG is ambiguous is undecidable.",
+    "difficulty": 5,
+    "hints": [
+      "Reduce from PCP",
+      "Create a grammar where ambiguity corresponds to PCP match",
+      "Two derivations when PCP has solution"
+    ],
+    "solution": "**Undecidability of CFG Ambiguity**\n\n**Problem:** AMBIG_CFG = {⟨G⟩ | G is ambiguous}\n\n**Theorem:** AMBIG_CFG is undecidable.\n\n**Proof by reduction from PCP:**\n\nGiven PCP instance P = {[t₁/b₁], ..., [tₖ/bₖ]}, construct CFG G such that:\nG is ambiguous ⟺ PCP has a solution\n\n**Construction of G:**\n\n**Idea:** Create two paths to generate the same string iff PCP matches.\n\n**Variables:** S, T, B\n**Terminals:** Σ = {t₁, ..., tₖ, b₁, ..., bₖ} ∪ {a₁, ..., aₖ} (indices as markers)\n\n**Productions:**\n\nS → T | B\n\nT → t₁Ta₁ | t₂Ta₂ | ... | tₖTaₖ | t₁a₁ | t₂a₂ | ... | tₖaₖ\n(T generates strings tᵢ₁tᵢ₂...tᵢₙaᵢₙ...aᵢ₂aᵢ₁ - tops with reversed indices)\n\nB → b₁Ba₁ | b₂Ba₂ | ... | bₖBaₖ | b₁a₁ | b₂a₂ | ... | bₖaₖ\n(B generates strings bᵢ₁bᵢ₂...bᵢₙaᵢₙ...aᵢ₂aᵢ₁ - bottoms with reversed indices)\n\n**Key insight:**\n\nIf PCP has solution i₁, i₂, ..., iₙ (tops = bottoms), then:\n- tᵢ₁tᵢ₂...tᵢₙ = bᵢ₁bᵢ₂...bᵢₙ\n\nThe string tᵢ₁tᵢ₂...tᵢₙaᵢₙ...aᵢ₁ can be derived:\n1. Via S → T → ... (using T productions)\n2. Via S → B → ... (using B productions)\n\n**Two different parse trees, same string → ambiguous!**\n\n**Conversely:**\nIf G is ambiguous, some string has two derivations.\nThe only way this happens is through S → T and S → B producing the same string.\nThis means tᵢ₁...tᵢₙ = bᵢ₁...bᵢₙ for some sequence.\nThis is a PCP solution!\n\n**Correctness:**\nG is ambiguous ⟺ ∃ string with two parse trees\n                ⟺ T and B can generate the same string\n                ⟺ PCP has a solution\n\n**Conclusion:**\nPCP ≤_m AMBIG_CFG\nSince PCP is undecidable, AMBIG_CFG is undecidable. ∎\n\n**Note:** The grammar G is unambiguous if we only consider indices — ambiguity comes from the relationship between tops and bottoms in PCP."
+  },
+  {
+    "id": "cs203-t6-ex15",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-6",
+    "type": "written",
+    "title": "The Arithmetic Hierarchy",
+    "description": "Define the arithmetic hierarchy (Σ₁, Π₁, Σ₂, ...). Place HALT and TOTAL in this hierarchy.",
+    "difficulty": 5,
+    "hints": [
+      "Hierarchy based on alternating quantifiers",
+      "Σₙ: starts with ∃, n-1 alternations",
+      "Πₙ: starts with ∀, n-1 alternations"
+    ],
+    "solution": "**The Arithmetic Hierarchy**\n\n**Definition:**\nSets classified by complexity of defining formula with quantifiers over ℕ.\n\n**Σ₁ (Recursively Enumerable):**\nS ∈ Σ₁ ⟺ S = {x | ∃y R(x,y)} where R is computable (decidable)\n- One existential quantifier\n- Same as Turing-recognizable (RE)\n\n**Π₁ (co-RE):**\nS ∈ Π₁ ⟺ S = {x | ∀y R(x,y)} where R is computable\n- One universal quantifier\n- Complements of RE sets\n\n**Σ₂:**\nS ∈ Σ₂ ⟺ S = {x | ∃y ∀z R(x,y,z)} where R is computable\n- Exists-forall pattern\n\n**Π₂:**\nS ∈ Π₂ ⟺ S = {x | ∀y ∃z R(x,y,z)} where R is computable\n- Forall-exists pattern\n\n**General pattern:**\n- Σₙ: ∃∀∃∀... (starts ∃, n alternations)\n- Πₙ: ∀∃∀∃... (starts ∀, n alternations)\n\n**Relationships:**\n- Σₙ = co-Πₙ (complements)\n- Σₙ ∪ Πₙ ⊆ Σₙ₊₁ ∩ Πₙ₊₁\n- Decidable = Σ₁ ∩ Π₁ = Δ₁\n\n**Placing HALT:**\n\nHALT = {⟨M, w⟩ | M halts on w}\n\n⟨M, w⟩ ∈ HALT ⟺ ∃t (M halts within t steps on w)\n\nThe predicate \"M halts within t steps\" is decidable (just simulate).\n\n**HALT ∈ Σ₁** (RE) ✓\n\n**HALT ∉ Π₁** (since HALT is undecidable, and Σ₁ ∩ Π₁ = decidable)\n\n**Placing TOTAL:**\n\nTOTAL = {⟨M⟩ | M halts on all inputs}\n      = {⟨M⟩ | ∀w M halts on w}\n\n⟨M⟩ ∈ TOTAL ⟺ ∀w ∃t (M halts on w within t steps)\n\n**TOTAL ∈ Π₂** ✓\n\nIs TOTAL Π₂-complete? Yes!\n- Not in Σ₂ (or even Σ₁ = RE)\n- Complete for Π₂ under many-one reductions\n\n**Summary:**\n| Set | Definition | Level |\n|-----|------------|-------|\n| Decidable | ∃ and ∀ finite | Δ₁ = Σ₁ ∩ Π₁ |\n| HALT | ∃t halts | Σ₁ |\n| H̄ALT | ∀t ¬halts | Π₁ |\n| TOTAL | ∀w ∃t halts | Π₂ |\n| FIN = {M : L(M) finite} | ∃n ∀w (|w|>n → reject) | Σ₂ |\n\n**The hierarchy is strict:**\nΣₙ ⊊ Σₙ₊₁ and Πₙ ⊊ Πₙ₊₁ (proper inclusions)"
+  },
+  {
+    "id": "cs203-t6-ex16",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-6",
+    "type": "written",
+    "title": "Gödel's Incompleteness and Undecidability",
+    "description": "Explain the connection between Turing's undecidability results and Gödel's incompleteness theorems.",
+    "difficulty": 5,
+    "hints": [
+      "Both involve self-reference and diagonalization",
+      "Undecidability → incompleteness of formal systems",
+      "Can encode TM behavior in arithmetic"
+    ],
+    "solution": "**Gödel's Incompleteness and Turing's Undecidability**\n\n**Historical context:**\n- Gödel (1931): Incompleteness theorems\n- Turing (1936): Undecidability of halting problem\n- Both address fundamental limits of formal systems\n\n**Gödel's First Incompleteness Theorem:**\nAny consistent formal system F capable of expressing basic arithmetic contains statements that are true but unprovable in F.\n\n**Turing's Undecidability:**\nThe halting problem is undecidable — no algorithm can determine if an arbitrary program halts.\n\n**Connection via encoding:**\n\n**Key insight:** TM computations can be encoded in arithmetic.\n\n**Encoding scheme:**\n- TM configurations as numbers\n- Transitions as arithmetic relations\n- \"M halts on w\" becomes an arithmetic statement\n\n**From undecidability to incompleteness:**\n\n**Theorem:** If formal system F is:\n1. Consistent (doesn't prove contradictions)\n2. Sound (only proves true statements)\n3. Can express \"TM M halts on w\"\n\nThen F is incomplete.\n\n**Proof:**\n\nSuppose F is complete and sound.\n\nBuild halting decider H:\n- H(⟨M, w⟩): Search for proof in F of \"M halts\" or \"M doesn't halt\"\n- Since F is complete, one exists\n- Since F is sound, it's true\n- Output accordingly\n\nBut halting is undecidable! Contradiction.\n\nSo F must be incomplete. ∎\n\n**Gödel sentence vs. Halting:**\n\n**Gödel's approach:** Construct G saying \"G is unprovable in F\"\n- If G is provable → F proves something false → inconsistent\n- If ¬G is provable → G is provable → contradiction\n- So G is true but unprovable\n\n**Turing's approach:** Direct via halting\n- If halting were decidable, inconsistent F could be detected\n- Since F consistent, halting undecidable\n- Since F complete would decide halting, F incomplete\n\n**Deeper connections:**\n\n1. **Both use self-reference:**\n   - Gödel: statement about its own provability\n   - Turing: TM examining its own behavior\n\n2. **Both use diagonalization:**\n   - Gödel: enumerate proofs, construct diagonal\n   - Turing: enumerate TMs, construct diagonal\n\n3. **Arithmetization:**\n   - Gödel numbering ≈ TM encoding\n   - Both reduce meta-questions to arithmetic\n\n**Church-Turing thesis connection:**\n- \"Provable\" means \"derivable by algorithm\"\n- Incompleteness = non-computability of truth\n- Formal systems are essentially TMs\n\n**Summary:**\n| Concept | Gödel | Turing |\n|---------|-------|--------|\n| Object | Formal proofs | TM computations |\n| Self-reference | \"This is unprovable\" | \"Does M halt on ⟨M⟩?\" |\n| Result | True but unprovable | Undecidable |\n| Method | Diagonalization | Diagonalization |"
+  }
+]

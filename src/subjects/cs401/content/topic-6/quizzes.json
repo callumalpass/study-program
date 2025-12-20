@@ -1,0 +1,221 @@
+[
+  {
+    "id": "cs401-quiz-6-1",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-6",
+    "title": "Distributed Storage and Processing - Partitioning",
+    "questions": [
+      {
+        "id": "cs401-q76",
+        "type": "multiple_choice",
+        "prompt": "What is sharding in distributed databases?",
+        "options": [
+          "Partitioning data across multiple nodes",
+          "Encrypting data",
+          "Compressing data",
+          "Caching data"
+        ],
+        "correctAnswer": "Partitioning data across multiple nodes",
+        "explanation": "Sharding (horizontal partitioning) splits data across multiple nodes based on a shard key, distributing load and enabling horizontal scaling beyond single-node capacity."
+      },
+      {
+        "id": "cs401-q77",
+        "type": "multiple_choice",
+        "prompt": "What is consistent hashing used for?",
+        "options": [
+          "Distributing data with minimal rebalancing when nodes change",
+          "Encrypting data",
+          "Validating data integrity",
+          "Sorting data"
+        ],
+        "correctAnswer": "Distributing data with minimal rebalancing when nodes change",
+        "explanation": "Consistent hashing maps both data and nodes to a hash ring, minimizing data movement when nodes are added or removed, making it ideal for dynamic distributed systems."
+      },
+      {
+        "id": "cs401-q78",
+        "type": "multiple_choice",
+        "prompt": "What problem does the MapReduce programming model solve?",
+        "options": [
+          "Processing large datasets in parallel across many nodes",
+          "Real-time data processing",
+          "Small dataset analysis",
+          "Single-machine computation"
+        ],
+        "correctAnswer": "Processing large datasets in parallel across many nodes",
+        "explanation": "MapReduce provides a simple programming model for processing massive datasets in parallel across clusters, handling distribution, fault tolerance, and load balancing automatically."
+      },
+      {
+        "id": "cs401-q79",
+        "type": "multiple_choice",
+        "prompt": "What does the Map function in MapReduce do?",
+        "options": [
+          "Transforms input records into key-value pairs",
+          "Merges results",
+          "Sorts data",
+          "Deletes data"
+        ],
+        "correctAnswer": "Transforms input records into key-value pairs",
+        "explanation": "The Map function processes input records and emits intermediate key-value pairs, which are then grouped by key and passed to Reduce functions for aggregation."
+      },
+      {
+        "id": "cs401-q80",
+        "type": "multiple_choice",
+        "prompt": "What does the Reduce function in MapReduce do?",
+        "options": [
+          "Aggregates values for each key",
+          "Filters input data",
+          "Distributes data",
+          "Validates data"
+        ],
+        "correctAnswer": "Aggregates values for each key",
+        "explanation": "The Reduce function receives all values for a particular key and aggregates them (e.g., sum, count, average) to produce the final output for that key."
+      }
+    ]
+  },
+  {
+    "id": "cs401-quiz-6-2",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-6",
+    "title": "Distributed Storage and Processing - MapReduce and DFS",
+    "questions": [
+      {
+        "id": "cs401-q81",
+        "type": "multiple_choice",
+        "prompt": "What is the difference between batch and stream processing?",
+        "options": [
+          "Batch processes bounded datasets; Stream processes unbounded data",
+          "Batch is faster",
+          "Stream uses less memory",
+          "They are the same"
+        ],
+        "correctAnswer": "Batch processes bounded datasets; Stream processes unbounded data",
+        "explanation": "Batch processing handles finite datasets with delayed results, while stream processing handles infinite data streams with near real-time results, each optimized for different use cases."
+      },
+      {
+        "id": "cs401-q82",
+        "type": "multiple_choice",
+        "prompt": "What is a distributed file system?",
+        "options": [
+          "File system spanning multiple machines",
+          "Cloud storage",
+          "Local file system",
+          "Database"
+        ],
+        "correctAnswer": "File system spanning multiple machines",
+        "explanation": "Distributed file systems (like HDFS, GFS) store files across multiple machines, providing fault tolerance through replication and enabling massive storage capacity and parallel access."
+      },
+      {
+        "id": "cs401-q83",
+        "type": "multiple_choice",
+        "prompt": "How does HDFS (Hadoop Distributed File System) achieve fault tolerance?",
+        "options": [
+          "Replicating blocks across multiple nodes",
+          "RAID arrays",
+          "Daily backups",
+          "Error correcting codes"
+        ],
+        "correctAnswer": "Replicating blocks across multiple nodes",
+        "explanation": "HDFS divides files into blocks and replicates each block (typically 3 copies) across different nodes and racks, ensuring data survives node and even rack failures."
+      },
+      {
+        "id": "cs401-q84",
+        "type": "multiple_choice",
+        "prompt": "What is the role of the NameNode in HDFS?",
+        "options": [
+          "Manages metadata and namespace",
+          "Stores actual data",
+          "Processes MapReduce jobs",
+          "Encrypts data"
+        ],
+        "correctAnswer": "Manages metadata and namespace",
+        "explanation": "The NameNode is the master server that manages the file system namespace and metadata (which blocks belong to which files, where blocks are stored), while DataNodes store actual data."
+      },
+      {
+        "id": "cs401-q85",
+        "type": "multiple_choice",
+        "prompt": "What is a key-value store?",
+        "options": [
+          "NoSQL database storing data as key-value pairs",
+          "Relational database",
+          "File system",
+          "Cache only"
+        ],
+        "correctAnswer": "NoSQL database storing data as key-value pairs",
+        "explanation": "Key-value stores are NoSQL databases that store data as simple key-value pairs, providing fast access, easy partitioning, and horizontal scaling at the cost of limited query capabilities."
+      }
+    ]
+  },
+  {
+    "id": "cs401-quiz-6-3",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-6",
+    "title": "Distributed Storage and Processing - NoSQL Systems",
+    "questions": [
+      {
+        "id": "cs401-q86",
+        "type": "multiple_choice",
+        "prompt": "What is Amazon DynamoDB's consistency model?",
+        "options": [
+          "Eventual consistency by default, optional strong consistency",
+          "Always strongly consistent",
+          "No consistency guarantees",
+          "Causal consistency only"
+        ],
+        "correctAnswer": "Eventual consistency by default, optional strong consistency",
+        "explanation": "DynamoDB uses eventual consistency by default for better performance and availability, but allows applications to request strongly consistent reads when needed, trading performance for consistency."
+      },
+      {
+        "id": "cs401-q87",
+        "type": "multiple_choice",
+        "prompt": "What is a document store (like MongoDB)?",
+        "options": [
+          "NoSQL database storing semi-structured documents",
+          "File storage system",
+          "Relational database",
+          "Cache"
+        ],
+        "correctAnswer": "NoSQL database storing semi-structured documents",
+        "explanation": "Document stores manage semi-structured documents (JSON, BSON, XML), allowing flexible schemas, nested data, and richer queries than key-value stores while maintaining horizontal scalability."
+      },
+      {
+        "id": "cs401-q88",
+        "type": "multiple_choice",
+        "prompt": "What is a column-family store (like Cassandra)?",
+        "options": [
+          "NoSQL database organizing data into column families",
+          "Spreadsheet application",
+          "Relational database",
+          "Graph database"
+        ],
+        "correctAnswer": "NoSQL database organizing data into column families",
+        "explanation": "Column-family stores group related columns together, optimizing for read/write performance on specific column sets, and are designed for massive scale and high write throughput."
+      },
+      {
+        "id": "cs401-q89",
+        "type": "multiple_choice",
+        "prompt": "What is data locality in distributed processing?",
+        "options": [
+          "Moving computation to where data resides",
+          "Storing all data locally",
+          "Using local caches",
+          "Regional data centers"
+        ],
+        "correctAnswer": "Moving computation to where data resides",
+        "explanation": "Data locality means scheduling computation on nodes that already have the data, minimizing network transfer. MapReduce and similar frameworks optimize for data locality to improve performance."
+      },
+      {
+        "id": "cs401-q90",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of a distributed cache?",
+        "options": [
+          "Reduce latency by caching frequently accessed data",
+          "Permanent storage",
+          "Data processing",
+          "Authentication"
+        ],
+        "correctAnswer": "Reduce latency by caching frequently accessed data",
+        "explanation": "Distributed caches (like Redis, Memcached) store frequently accessed data in memory across multiple nodes, providing extremely low latency access and reducing load on backend databases."
+      }
+    ]
+  }
+]

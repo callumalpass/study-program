@@ -1,0 +1,315 @@
+[
+  {
+    "id": "cs402-t6-ex01",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-6",
+    "title": "Implement K-Means from Scratch",
+    "difficulty": 3,
+    "description": "Build k-means clustering algorithm without sklearn.\n\nRequirements:\n- Initialize centroids using k-means++\n- Implement assignment and update steps\n- Track convergence (when centroids stop moving)\n- Return cluster assignments and final centroids",
+    "starterCode": "import numpy as np\n\nclass KMeans:\n    def __init__(self, n_clusters=3, max_iters=100):\n        self.n_clusters = n_clusters\n        self.max_iters = max_iters\n        \n    def fit(self, X):\n        # Initialize centroids\n        # Iterate until convergence\n        pass\n        \n    def predict(self, X):\n        # Assign to nearest centroid\n        pass",
+    "solution": "import numpy as np\n\nclass KMeans:\n    def __init__(self, n_clusters=3, max_iters=100):\n        self.n_clusters = n_clusters\n        self.max_iters = max_iters\n        self.centroids = None\n        \n    def fit(self, X):\n        # K-means++ initialization\n        centroids = [X[np.random.randint(len(X))]]\n        for _ in range(1, self.n_clusters):\n            distances = np.array([min([np.linalg.norm(x-c)**2 for c in centroids]) for x in X])\n            probs = distances / distances.sum()\n            centroids.append(X[np.random.choice(len(X), p=probs)])\n        self.centroids = np.array(centroids)\n        \n        # Main loop\n        for _ in range(self.max_iters):\n            # Assign\n            labels = self.predict(X)\n            # Update\n            new_centroids = np.array([X[labels == k].mean(axis=0) \n                                     for k in range(self.n_clusters)])\n            if np.allclose(new_centroids, self.centroids):\n                break\n            self.centroids = new_centroids\n        return self\n        \n    def predict(self, X):\n        distances = np.array([[np.linalg.norm(x - c) for c in self.centroids] for x in X])\n        return np.argmin(distances, axis=1)",
+    "testCases": [],
+    "hints": [
+      "Use k-means++ initialization to choose initial centroids wisely",
+      "In each iteration, assign each point to the nearest centroid",
+      "Update centroids by taking the mean of all points assigned to each cluster",
+      "Check convergence by comparing old and new centroids",
+      "Use np.linalg.norm to calculate Euclidean distances"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-ex-6-2",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-6",
+    "title": "Calculate Silhouette Score",
+    "difficulty": 2,
+    "description": "Compute silhouette score to evaluate clustering quality.\n\nRequirements:\n- For each point, compute a(i) = average distance to points in same cluster\n- Compute b(i) = min average distance to points in other clusters\n- Silhouette = (b(i) - a(i)) / max(a(i), b(i))\n- Return mean silhouette score across all points",
+    "starterCode": "import numpy as np\n\ndef silhouette_score(X, labels):\n    \"\"\"\n    Compute silhouette score.\n\n    Args:\n        X: data points (n_samples, n_features)\n        labels: cluster assignments (n_samples,)\n\n    Returns:\n        mean silhouette score\n    \"\"\"\n    # TODO: Implement\n    pass",
+    "solution": "import numpy as np\n\ndef silhouette_score(X, labels):\n    \"\"\"\n    Compute silhouette score.\n\n    Args:\n        X: data points (n_samples, n_features)\n        labels: cluster assignments (n_samples,)\n\n    Returns:\n        mean silhouette score\n    \"\"\"\n    n_samples = len(X)\n    silhouette_vals = np.zeros(n_samples)\n\n    for i in range(n_samples):\n        # Get cluster of current point\n        cluster_i = labels[i]\n\n        # Points in same cluster\n        same_cluster = X[labels == cluster_i]\n\n        # a(i): mean distance to points in same cluster\n        if len(same_cluster) > 1:\n            a_i = np.mean([np.linalg.norm(X[i] - x) for x in same_cluster if not np.array_equal(x, X[i])])\n        else:\n            a_i = 0\n\n        # b(i): min mean distance to points in other clusters\n        b_i = float('inf')\n        for cluster_j in np.unique(labels):\n            if cluster_j != cluster_i:\n                other_cluster = X[labels == cluster_j]\n                mean_dist = np.mean([np.linalg.norm(X[i] - x) for x in other_cluster])\n                b_i = min(b_i, mean_dist)\n\n        # Compute silhouette\n        if max(a_i, b_i) > 0:\n            silhouette_vals[i] = (b_i - a_i) / max(a_i, b_i)\n        else:\n            silhouette_vals[i] = 0\n\n    return np.mean(silhouette_vals)",
+    "testCases": [],
+    "hints": [
+      "a(i) measures cohesion: how close point is to its cluster",
+      "b(i) measures separation: distance to nearest other cluster",
+      "Silhouette ranges from -1 (wrong cluster) to +1 (perfect)",
+      "Handle single-point clusters by setting a(i) = 0",
+      "Use Euclidean distance for distance calculations"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-ex-6-3",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-6",
+    "title": "Implement Elbow Method",
+    "difficulty": 1,
+    "description": "Determine optimal number of clusters using elbow method.\n\nRequirements:\n- Run k-means for k = 1 to max_k\n- Compute within-cluster sum of squares (WCSS) for each k\n- Plot WCSS vs k to find \"elbow\"\n- Return WCSS values for all k",
+    "starterCode": "import numpy as np\nfrom sklearn.cluster import KMeans\n\ndef elbow_method(X, max_k=10):\n    \"\"\"\n    Apply elbow method to find optimal k.\n\n    Args:\n        X: data points\n        max_k: maximum k to try\n\n    Returns:\n        wcss: list of WCSS for each k\n    \"\"\"\n    # TODO: Implement\n    pass",
+    "solution": "import numpy as np\nfrom sklearn.cluster import KMeans\nimport matplotlib.pyplot as plt\n\ndef elbow_method(X, max_k=10):\n    \"\"\"\n    Apply elbow method to find optimal k.\n\n    Args:\n        X: data points\n        max_k: maximum k to try\n\n    Returns:\n        wcss: list of WCSS for each k\n    \"\"\"\n    wcss = []\n\n    for k in range(1, max_k + 1):\n        kmeans = KMeans(n_clusters=k, random_state=42)\n        kmeans.fit(X)\n\n        # Compute within-cluster sum of squares\n        wcss.append(kmeans.inertia_)\n\n    return wcss\n\n# Usage with plotting\nX = np.random.randn(300, 2)\nwcss = elbow_method(X, max_k=10)\n\nplt.plot(range(1, 11), wcss, marker='o')\nplt.xlabel('Number of clusters (k)')\nplt.ylabel('WCSS')\nplt.title('Elbow Method')\nplt.show()",
+    "testCases": [],
+    "hints": [
+      "WCSS is the sum of squared distances from points to their centroids",
+      "KMeans.inertia_ gives the WCSS directly",
+      "Plot shows decreasing WCSS as k increases",
+      "Look for \"elbow\" where improvement slows down",
+      "Optimal k is at the elbow point"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-ex-6-4",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-6",
+    "title": "Build Hierarchical Clustering",
+    "difficulty": 3,
+    "description": "Implement agglomerative hierarchical clustering.\n\nRequirements:\n- Start with each point as its own cluster\n- Use single linkage (minimum distance between clusters)\n- Merge closest clusters iteratively\n- Build dendrogram structure\n- Support different linkage methods",
+    "starterCode": "import numpy as np\n\nclass HierarchicalClustering:\n    def __init__(self, linkage='single'):\n        self.linkage = linkage\n\n    def fit(self, X, n_clusters=2):\n        \"\"\"\n        Perform hierarchical clustering.\n\n        Args:\n            X: data points\n            n_clusters: number of final clusters\n\n        Returns:\n            cluster labels\n        \"\"\"\n        # TODO: Implement\n        pass",
+    "solution": "import numpy as np\n\nclass HierarchicalClustering:\n    def __init__(self, linkage='single'):\n        self.linkage = linkage\n\n    def compute_distance(self, cluster1, cluster2):\n        \"\"\"Compute distance between two clusters.\"\"\"\n        if self.linkage == 'single':\n            # Minimum distance\n            return np.min([np.linalg.norm(p1 - p2)\n                          for p1 in cluster1 for p2 in cluster2])\n        elif self.linkage == 'complete':\n            # Maximum distance\n            return np.max([np.linalg.norm(p1 - p2)\n                          for p1 in cluster1 for p2 in cluster2])\n        elif self.linkage == 'average':\n            # Average distance\n            return np.mean([np.linalg.norm(p1 - p2)\n                           for p1 in cluster1 for p2 in cluster2])\n\n    def fit(self, X, n_clusters=2):\n        \"\"\"\n        Perform hierarchical clustering.\n\n        Args:\n            X: data points (n_samples, n_features)\n            n_clusters: number of final clusters\n\n        Returns:\n            cluster labels\n        \"\"\"\n        # Initialize: each point is a cluster\n        clusters = [[i] for i in range(len(X))]\n\n        # Merge until we have n_clusters\n        while len(clusters) > n_clusters:\n            # Find closest pair of clusters\n            min_dist = float('inf')\n            merge_i, merge_j = 0, 1\n\n            for i in range(len(clusters)):\n                for j in range(i + 1, len(clusters)):\n                    cluster_i = X[clusters[i]]\n                    cluster_j = X[clusters[j]]\n                    dist = self.compute_distance(cluster_i, cluster_j)\n\n                    if dist < min_dist:\n                        min_dist = dist\n                        merge_i, merge_j = i, j\n\n            # Merge closest clusters\n            clusters[merge_i].extend(clusters[merge_j])\n            clusters.pop(merge_j)\n\n        # Create label array\n        labels = np.zeros(len(X), dtype=int)\n        for cluster_id, cluster in enumerate(clusters):\n            for point_id in cluster:\n                labels[point_id] = cluster_id\n\n        return labels",
+    "testCases": [],
+    "hints": [
+      "Start with n clusters (one per point)",
+      "Single linkage: distance = min distance between any two points",
+      "Complete linkage: distance = max distance between any two points",
+      "Average linkage: distance = mean of all pairwise distances",
+      "Merge closest clusters until reaching desired number"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-ex-6-5",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-6",
+    "title": "Implement DBSCAN",
+    "difficulty": 4,
+    "description": "Build DBSCAN density-based clustering from scratch.\n\nRequirements:\n- Find core points (points with >= min_samples neighbors within eps)\n- Expand clusters from core points\n- Mark border points and noise\n- Handle arbitrary cluster shapes",
+    "starterCode": "import numpy as np\n\nclass DBSCAN:\n    def __init__(self, eps=0.5, min_samples=5):\n        self.eps = eps\n        self.min_samples = min_samples\n\n    def fit_predict(self, X):\n        \"\"\"\n        Perform DBSCAN clustering.\n\n        Args:\n            X: data points\n\n        Returns:\n            labels (-1 for noise)\n        \"\"\"\n        # TODO: Implement\n        pass",
+    "solution": "import numpy as np\n\nclass DBSCAN:\n    def __init__(self, eps=0.5, min_samples=5):\n        self.eps = eps\n        self.min_samples = min_samples\n\n    def get_neighbors(self, X, point_idx):\n        \"\"\"Find all neighbors within eps distance.\"\"\"\n        neighbors = []\n        for i in range(len(X)):\n            if np.linalg.norm(X[point_idx] - X[i]) <= self.eps:\n                neighbors.append(i)\n        return neighbors\n\n    def expand_cluster(self, X, labels, point_idx, neighbors, cluster_id):\n        \"\"\"Expand cluster from a core point.\"\"\"\n        labels[point_idx] = cluster_id\n\n        i = 0\n        while i < len(neighbors):\n            neighbor_idx = neighbors[i]\n\n            # If noise, change to border point\n            if labels[neighbor_idx] == -1:\n                labels[neighbor_idx] = cluster_id\n\n            # If unvisited\n            elif labels[neighbor_idx] == 0:\n                labels[neighbor_idx] = cluster_id\n\n                # Check if neighbor is core point\n                neighbor_neighbors = self.get_neighbors(X, neighbor_idx)\n                if len(neighbor_neighbors) >= self.min_samples:\n                    neighbors.extend(neighbor_neighbors)\n\n            i += 1\n\n    def fit_predict(self, X):\n        \"\"\"\n        Perform DBSCAN clustering.\n\n        Args:\n            X: data points (n_samples, n_features)\n\n        Returns:\n            labels (-1 for noise, 0+ for clusters)\n        \"\"\"\n        n_samples = len(X)\n        labels = np.zeros(n_samples, dtype=int)  # 0 = unvisited\n        cluster_id = 0\n\n        for point_idx in range(n_samples):\n            # Skip if already processed\n            if labels[point_idx] != 0:\n                continue\n\n            # Find neighbors\n            neighbors = self.get_neighbors(X, point_idx)\n\n            # Mark as noise if not enough neighbors\n            if len(neighbors) < self.min_samples:\n                labels[point_idx] = -1\n            else:\n                # Create new cluster\n                cluster_id += 1\n                self.expand_cluster(X, labels, point_idx, neighbors, cluster_id)\n\n        return labels",
+    "testCases": [],
+    "hints": [
+      "Core point: has at least min_samples neighbors within eps",
+      "Border point: not core but within eps of a core point",
+      "Noise point: neither core nor border",
+      "Use breadth-first search to expand clusters",
+      "Label noise as -1, clusters as 1, 2, 3, ..."
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-ex-6-6",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-6",
+    "title": "Implement PCA from Scratch",
+    "difficulty": 3,
+    "description": "Build Principal Component Analysis without sklearn.\n\nRequirements:\n- Center the data by subtracting mean\n- Compute covariance matrix\n- Find eigenvectors and eigenvalues\n- Sort by eigenvalues (descending)\n- Project data onto top k components",
+    "starterCode": "import numpy as np\n\nclass PCA:\n    def __init__(self, n_components=2):\n        self.n_components = n_components\n        self.components = None\n        self.mean = None\n\n    def fit(self, X):\n        # TODO: Implement\n        pass\n\n    def transform(self, X):\n        # TODO: Implement\n        pass",
+    "solution": "import numpy as np\n\nclass PCA:\n    def __init__(self, n_components=2):\n        self.n_components = n_components\n        self.components = None\n        self.mean = None\n        self.explained_variance = None\n\n    def fit(self, X):\n        \"\"\"\n        Fit PCA model.\n\n        Args:\n            X: data matrix (n_samples, n_features)\n        \"\"\"\n        # Center the data\n        self.mean = np.mean(X, axis=0)\n        X_centered = X - self.mean\n\n        # Compute covariance matrix\n        cov_matrix = np.cov(X_centered.T)\n\n        # Compute eigenvectors and eigenvalues\n        eigenvalues, eigenvectors = np.linalg.eig(cov_matrix)\n\n        # Sort by eigenvalues (descending)\n        idx = np.argsort(eigenvalues)[::-1]\n        eigenvalues = eigenvalues[idx]\n        eigenvectors = eigenvectors[:, idx]\n\n        # Store top k components\n        self.components = eigenvectors[:, :self.n_components]\n        self.explained_variance = eigenvalues[:self.n_components]\n\n        return self\n\n    def transform(self, X):\n        \"\"\"\n        Project data onto principal components.\n\n        Args:\n            X: data matrix\n\n        Returns:\n            transformed data\n        \"\"\"\n        # Center and project\n        X_centered = X - self.mean\n        return X_centered @ self.components\n\n    def fit_transform(self, X):\n        \"\"\"Fit and transform in one step.\"\"\"\n        self.fit(X)\n        return self.transform(X)\n\n    def explained_variance_ratio(self):\n        \"\"\"Return proportion of variance explained by each component.\"\"\"\n        total_var = np.sum(self.explained_variance)\n        return self.explained_variance / total_var",
+    "testCases": [],
+    "hints": [
+      "Center data by subtracting mean before computing covariance",
+      "Covariance matrix: C = (1/n) * X^T * X",
+      "Use np.linalg.eig to compute eigenvectors and eigenvalues",
+      "Sort eigenvectors by eigenvalues in descending order",
+      "Project data: X_transformed = X_centered @ eigenvectors",
+      "Explained variance is proportional to eigenvalues"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-ex-6-7",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-6",
+    "title": "Calculate Explained Variance",
+    "difficulty": 1,
+    "description": "Compute explained variance ratio for PCA components.\n\nRequirements:\n- Use eigenvalues from PCA\n- Calculate proportion of variance for each component\n- Return cumulative explained variance\n- Help determine number of components needed",
+    "starterCode": "import numpy as np\n\ndef explained_variance_ratio(eigenvalues, n_components=None):\n    \"\"\"\n    Compute explained variance ratio.\n\n    Args:\n        eigenvalues: eigenvalues from PCA\n        n_components: number of components (or None for all)\n\n    Returns:\n        individual and cumulative explained variance\n    \"\"\"\n    # TODO: Implement\n    pass",
+    "solution": "import numpy as np\n\ndef explained_variance_ratio(eigenvalues, n_components=None):\n    \"\"\"\n    Compute explained variance ratio.\n\n    Args:\n        eigenvalues: eigenvalues from PCA\n        n_components: number of components (or None for all)\n\n    Returns:\n        individual and cumulative explained variance\n    \"\"\"\n    # Sort eigenvalues descending\n    eigenvalues = np.sort(eigenvalues)[::-1]\n\n    if n_components is not None:\n        eigenvalues = eigenvalues[:n_components]\n\n    # Compute total variance\n    total_var = np.sum(eigenvalues)\n\n    # Individual explained variance\n    explained_var = eigenvalues / total_var\n\n    # Cumulative explained variance\n    cumulative_var = np.cumsum(explained_var)\n\n    return explained_var, cumulative_var\n\n# Example usage\neigenvalues = np.array([50, 30, 15, 5])\nindividual, cumulative = explained_variance_ratio(eigenvalues)\n\nprint(\"Individual:\", individual)\n# Output: [0.5  0.3  0.15 0.05]\n\nprint(\"Cumulative:\", cumulative)\n# Output: [0.5  0.8  0.95 1.0]\n\n# First 2 components explain 80% of variance",
+    "testCases": [],
+    "hints": [
+      "Total variance is sum of all eigenvalues",
+      "Each component explains: eigenvalue / total_variance",
+      "Cumulative variance: running sum of explained variance",
+      "Use np.cumsum for cumulative sum",
+      "Common threshold: keep components until 95% variance explained"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-ex-6-8",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-6",
+    "title": "Implement Kernel PCA",
+    "difficulty": 4,
+    "description": "Build kernel PCA for non-linear dimensionality reduction.\n\nRequirements:\n- Support RBF (Gaussian) kernel\n- Compute kernel matrix K\n- Center kernel matrix\n- Perform eigendecomposition\n- Project new data using kernel trick",
+    "starterCode": "import numpy as np\n\nclass KernelPCA:\n    def __init__(self, n_components=2, kernel='rbf', gamma=1.0):\n        self.n_components = n_components\n        self.kernel = kernel\n        self.gamma = gamma\n\n    def fit(self, X):\n        # TODO: Implement\n        pass\n\n    def transform(self, X):\n        # TODO: Implement\n        pass",
+    "solution": "import numpy as np\n\nclass KernelPCA:\n    def __init__(self, n_components=2, kernel='rbf', gamma=1.0):\n        self.n_components = n_components\n        self.kernel = kernel\n        self.gamma = gamma\n        self.X_fit = None\n        self.alphas = None\n\n    def rbf_kernel(self, X1, X2):\n        \"\"\"Compute RBF kernel matrix.\"\"\"\n        sq_dists = np.sum(X1**2, axis=1, keepdims=True) +                    np.sum(X2**2, axis=1) - 2 * X1 @ X2.T\n        return np.exp(-self.gamma * sq_dists)\n\n    def fit(self, X):\n        \"\"\"\n        Fit kernel PCA.\n\n        Args:\n            X: data matrix (n_samples, n_features)\n        \"\"\"\n        self.X_fit = X\n        n_samples = X.shape[0]\n\n        # Compute kernel matrix\n        K = self.rbf_kernel(X, X)\n\n        # Center kernel matrix\n        one_n = np.ones((n_samples, n_samples)) / n_samples\n        K_centered = K - one_n @ K - K @ one_n + one_n @ K @ one_n\n\n        # Compute eigenvectors\n        eigenvalues, eigenvectors = np.linalg.eigh(K_centered)\n\n        # Sort by eigenvalues (descending)\n        idx = np.argsort(eigenvalues)[::-1]\n        eigenvalues = eigenvalues[idx]\n        eigenvectors = eigenvectors[:, idx]\n\n        # Normalize eigenvectors\n        # alphas = eigenvectors / sqrt(eigenvalues)\n        self.alphas = eigenvectors[:, :self.n_components] /                       np.sqrt(eigenvalues[:self.n_components])\n\n        return self\n\n    def transform(self, X):\n        \"\"\"\n        Project data onto principal components.\n\n        Args:\n            X: data matrix\n\n        Returns:\n            transformed data\n        \"\"\"\n        K = self.rbf_kernel(X, self.X_fit)\n\n        # Center kernel matrix\n        n_samples = self.X_fit.shape[0]\n        one_n = np.ones((len(X), n_samples)) / n_samples\n        K_fit = self.rbf_kernel(self.X_fit, self.X_fit)\n\n        K_centered = K - one_n @ K_fit -                      K @ (np.ones((n_samples, n_samples)) / n_samples) +                      one_n @ K_fit @ (np.ones((n_samples, n_samples)) / n_samples)\n\n        # Project\n        return K_centered @ self.alphas",
+    "testCases": [],
+    "hints": [
+      "RBF kernel: K(x,y) = exp(-gamma * ||x-y||^2)",
+      "Center kernel matrix using: K_c = K - 1*K - K*1 + 1*K*1",
+      "Eigenvectors must be normalized: alpha = v / sqrt(lambda)",
+      "For new data, compute kernel with training data",
+      "Kernel PCA can capture non-linear structure"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-ex-6-9",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-6",
+    "title": "Implement t-SNE Gradient",
+    "difficulty": 5,
+    "description": "Implement core gradient computation for t-SNE.\n\nRequirements:\n- Compute pairwise similarities in high dimension (Gaussian)\n- Compute pairwise similarities in low dimension (t-distribution)\n- Calculate KL divergence gradient\n- Support perplexity parameter",
+    "starterCode": "import numpy as np\n\ndef tsne_gradient(X_high, X_low, perplexity=30):\n    \"\"\"\n    Compute t-SNE gradient.\n\n    Args:\n        X_high: high-dimensional data\n        X_low: current low-dimensional embedding\n        perplexity: perplexity parameter\n\n    Returns:\n        gradient with respect to X_low\n    \"\"\"\n    # TODO: Implement\n    pass",
+    "solution": "import numpy as np\n\ndef compute_p_matrix(X, perplexity=30):\n    \"\"\"Compute pairwise affinities in high dimension.\"\"\"\n    n = len(X)\n    P = np.zeros((n, n))\n\n    # Target entropy from perplexity\n    target_entropy = np.log(perplexity)\n\n    for i in range(n):\n        # Binary search for sigma\n        sigma = 1.0\n        for _ in range(50):\n            # Compute p_j|i\n            diff = X[i] - X\n            distances = np.sum(diff**2, axis=1)\n            exp_vals = np.exp(-distances / (2 * sigma**2))\n            exp_vals[i] = 0  # Set p_i|i = 0\n\n            sum_exp = np.sum(exp_vals)\n            if sum_exp == 0:\n                p_i = np.zeros(n)\n            else:\n                p_i = exp_vals / sum_exp\n\n            # Compute entropy\n            p_i_nonzero = p_i[p_i > 0]\n            entropy = -np.sum(p_i_nonzero * np.log2(p_i_nonzero))\n\n            # Adjust sigma based on entropy\n            if entropy > target_entropy:\n                sigma *= 1.1\n            else:\n                sigma *= 0.9\n\n        P[i] = p_i\n\n    # Symmetrize\n    P = (P + P.T) / (2 * n)\n    return np.maximum(P, 1e-12)\n\ndef compute_q_matrix(X_low):\n    \"\"\"Compute pairwise affinities in low dimension (t-distribution).\"\"\"\n    n = len(X_low)\n    diff = X_low[:, np.newaxis] - X_low\n    distances = np.sum(diff**2, axis=2)\n\n    # t-distribution with 1 degree of freedom\n    Q = 1 / (1 + distances)\n    np.fill_diagonal(Q, 0)\n\n    Q = Q / np.sum(Q)\n    return np.maximum(Q, 1e-12)\n\ndef tsne_gradient(X_high, X_low, perplexity=30):\n    \"\"\"\n    Compute t-SNE gradient.\n\n    Args:\n        X_high: high-dimensional data (n_samples, n_features_high)\n        X_low: current low-dimensional embedding (n_samples, n_features_low)\n        perplexity: perplexity parameter\n\n    Returns:\n        gradient with respect to X_low\n    \"\"\"\n    n = len(X_high)\n\n    # Compute P and Q matrices\n    P = compute_p_matrix(X_high, perplexity)\n    Q = compute_q_matrix(X_low)\n\n    # Compute gradient\n    PQ_diff = P - Q\n    grad = np.zeros_like(X_low)\n\n    for i in range(n):\n        diff = X_low[i] - X_low\n        distances = np.sum(diff**2, axis=1)\n        weights = PQ_diff[i] * (1 / (1 + distances))\n        grad[i] = 4 * np.sum(weights[:, np.newaxis] * diff, axis=0)\n\n    return grad",
+    "testCases": [],
+    "hints": [
+      "High-dim similarities use Gaussian kernel",
+      "Low-dim similarities use t-distribution (heavy tails)",
+      "Perplexity controls effective number of neighbors",
+      "Use binary search to find appropriate sigma for each point",
+      "Gradient: 4 * sum((p_ij - q_ij) * (y_i - y_j) / (1 + ||y_i - y_j||^2))",
+      "t-SNE minimizes KL divergence between P and Q"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-ex-6-10",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-6",
+    "title": "Build Gaussian Mixture Model",
+    "difficulty": 4,
+    "description": "Implement GMM using Expectation-Maximization algorithm.\n\nRequirements:\n- E-step: compute responsibilities (posterior probabilities)\n- M-step: update means, covariances, and mixing coefficients\n- Handle multiple Gaussian components\n- Support diagonal covariance matrices",
+    "starterCode": "import numpy as np\n\nclass GaussianMixture:\n    def __init__(self, n_components=3, max_iter=100):\n        self.n_components = n_components\n        self.max_iter = max_iter\n\n    def fit(self, X):\n        # TODO: Implement EM algorithm\n        pass",
+    "solution": "import numpy as np\n\nclass GaussianMixture:\n    def __init__(self, n_components=3, max_iter=100):\n        self.n_components = n_components\n        self.max_iter = max_iter\n        self.means = None\n        self.covs = None\n        self.mixing_coefs = None\n\n    def gaussian_pdf(self, X, mean, cov):\n        \"\"\"Compute Gaussian PDF.\"\"\"\n        n_features = X.shape[1]\n        diff = X - mean\n        cov_inv = np.linalg.inv(cov)\n        cov_det = np.linalg.det(cov)\n\n        norm_const = 1 / np.sqrt((2 * np.pi)**n_features * cov_det)\n        exponent = -0.5 * np.sum((diff @ cov_inv) * diff, axis=1)\n\n        return norm_const * np.exp(exponent)\n\n    def fit(self, X):\n        \"\"\"\n        Fit GMM using EM algorithm.\n\n        Args:\n            X: data matrix (n_samples, n_features)\n        \"\"\"\n        n_samples, n_features = X.shape\n\n        # Initialize parameters\n        # Random initialization of means\n        idx = np.random.choice(n_samples, self.n_components, replace=False)\n        self.means = X[idx]\n\n        # Initialize covariances as identity\n        self.covs = [np.eye(n_features) for _ in range(self.n_components)]\n\n        # Initialize mixing coefficients uniformly\n        self.mixing_coefs = np.ones(self.n_components) / self.n_components\n\n        for iteration in range(self.max_iter):\n            # E-step: compute responsibilities\n            responsibilities = np.zeros((n_samples, self.n_components))\n\n            for k in range(self.n_components):\n                responsibilities[:, k] = self.mixing_coefs[k] *                     self.gaussian_pdf(X, self.means[k], self.covs[k])\n\n            # Normalize responsibilities\n            responsibilities /= responsibilities.sum(axis=1, keepdims=True)\n\n            # M-step: update parameters\n            N_k = responsibilities.sum(axis=0)\n\n            # Update means\n            for k in range(self.n_components):\n                self.means[k] = (responsibilities[:, k:k+1] * X).sum(axis=0) / N_k[k]\n\n            # Update covariances\n            for k in range(self.n_components):\n                diff = X - self.means[k]\n                self.covs[k] = (responsibilities[:, k:k+1] * diff).T @ diff / N_k[k]\n                # Add small value to diagonal for numerical stability\n                self.covs[k] += np.eye(n_features) * 1e-6\n\n            # Update mixing coefficients\n            self.mixing_coefs = N_k / n_samples\n\n        return self\n\n    def predict_proba(self, X):\n        \"\"\"Return probability of each component.\"\"\"\n        n_samples = X.shape[0]\n        probs = np.zeros((n_samples, self.n_components))\n\n        for k in range(self.n_components):\n            probs[:, k] = self.mixing_coefs[k] *                 self.gaussian_pdf(X, self.means[k], self.covs[k])\n\n        return probs / probs.sum(axis=1, keepdims=True)\n\n    def predict(self, X):\n        \"\"\"Return most likely component.\"\"\"\n        return np.argmax(self.predict_proba(X), axis=1)",
+    "testCases": [],
+    "hints": [
+      "E-step: compute gamma_ik = pi_k * N(x_i | mu_k, Sigma_k)",
+      "Normalize responsibilities to sum to 1",
+      "M-step: update means as weighted average of points",
+      "Update covariances using weighted outer products",
+      "Mixing coefficients: pi_k = N_k / N (proportion of points)",
+      "Add small value to covariance diagonal for numerical stability"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-ex-6-11",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-6",
+    "title": "Implement Anomaly Detection",
+    "difficulty": 3,
+    "description": "Build statistical anomaly detection using Gaussian distribution.\n\nRequirements:\n- Fit Gaussian distribution to training data\n- Compute probability density for new points\n- Flag points below threshold as anomalies\n- Support multivariate Gaussian",
+    "starterCode": "import numpy as np\n\nclass AnomalyDetector:\n    def __init__(self, threshold=0.01):\n        self.threshold = threshold\n        self.mean = None\n        self.cov = None\n\n    def fit(self, X):\n        # TODO: Implement\n        pass\n\n    def predict(self, X):\n        # TODO: Implement\n        pass",
+    "solution": "import numpy as np\n\nclass AnomalyDetector:\n    def __init__(self, threshold=0.01):\n        self.threshold = threshold\n        self.mean = None\n        self.cov = None\n\n    def fit(self, X):\n        \"\"\"\n        Fit Gaussian distribution to data.\n\n        Args:\n            X: training data (normal examples)\n        \"\"\"\n        self.mean = np.mean(X, axis=0)\n        self.cov = np.cov(X.T)\n\n        # Ensure covariance is positive definite\n        self.cov += np.eye(len(self.cov)) * 1e-6\n\n        return self\n\n    def probability_density(self, X):\n        \"\"\"\n        Compute probability density under Gaussian.\n\n        Args:\n            X: data points\n\n        Returns:\n            probability densities\n        \"\"\"\n        n_features = X.shape[1]\n\n        # Compute multivariate Gaussian PDF\n        diff = X - self.mean\n        cov_inv = np.linalg.inv(self.cov)\n        cov_det = np.linalg.det(self.cov)\n\n        norm_const = 1 / np.sqrt((2 * np.pi)**n_features * cov_det)\n        exponent = -0.5 * np.sum((diff @ cov_inv) * diff, axis=1)\n\n        return norm_const * np.exp(exponent)\n\n    def predict(self, X):\n        \"\"\"\n        Predict anomalies.\n\n        Args:\n            X: data points\n\n        Returns:\n            labels (1 = normal, -1 = anomaly)\n        \"\"\"\n        probabilities = self.probability_density(X)\n        return np.where(probabilities >= self.threshold, 1, -1)\n\n    def decision_function(self, X):\n        \"\"\"Return anomaly scores (negative log probability).\"\"\"\n        probabilities = self.probability_density(X)\n        return -np.log(probabilities + 1e-10)",
+    "testCases": [],
+    "hints": [
+      "Fit multivariate Gaussian to normal training data",
+      "Probability density: p(x) = N(x | mu, Sigma)",
+      "Points with low probability are anomalies",
+      "Choose threshold based on validation set",
+      "Can also use negative log probability as anomaly score",
+      "Add small value to covariance diagonal for stability"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-ex-6-12",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-6",
+    "title": "Build Isolation Forest",
+    "difficulty": 4,
+    "description": "Implement Isolation Forest for anomaly detection.\n\nRequirements:\n- Build random isolation trees\n- Anomalies are easier to isolate (shorter paths)\n- Compute anomaly score based on path length\n- Support multiple trees (ensemble)",
+    "starterCode": "import numpy as np\n\nclass IsolationTree:\n    def __init__(self, height_limit):\n        self.height_limit = height_limit\n\n    def fit(self, X, current_height=0):\n        # TODO: Implement\n        pass\n\nclass IsolationForest:\n    def __init__(self, n_trees=100):\n        self.n_trees = n_trees\n        self.trees = []\n\n    def fit(self, X):\n        # TODO: Implement\n        pass",
+    "solution": "import numpy as np\n\nclass IsolationTree:\n    def __init__(self, height_limit):\n        self.height_limit = height_limit\n        self.split_feature = None\n        self.split_value = None\n        self.left = None\n        self.right = None\n        self.size = 0\n\n    def fit(self, X, current_height=0):\n        \"\"\"\n        Build isolation tree.\n\n        Args:\n            X: data points\n            current_height: current depth in tree\n        \"\"\"\n        self.size = len(X)\n\n        # Stop if height limit reached or only one point\n        if current_height >= self.height_limit or len(X) <= 1:\n            return self\n\n        # Random split\n        n_features = X.shape[1]\n        self.split_feature = np.random.randint(0, n_features)\n\n        feature_values = X[:, self.split_feature]\n        min_val, max_val = feature_values.min(), feature_values.max()\n\n        if min_val == max_val:\n            return self\n\n        self.split_value = np.random.uniform(min_val, max_val)\n\n        # Split data\n        left_mask = feature_values < self.split_value\n        right_mask = ~left_mask\n\n        if left_mask.sum() > 0:\n            self.left = IsolationTree(self.height_limit)\n            self.left.fit(X[left_mask], current_height + 1)\n\n        if right_mask.sum() > 0:\n            self.right = IsolationTree(self.height_limit)\n            self.right.fit(X[right_mask], current_height + 1)\n\n        return self\n\n    def path_length(self, x, current_height=0):\n        \"\"\"Compute path length for a point.\"\"\"\n        if self.split_feature is None:\n            # External node\n            return current_height + self._c(self.size)\n\n        if x[self.split_feature] < self.split_value:\n            if self.left is not None:\n                return self.left.path_length(x, current_height + 1)\n        else:\n            if self.right is not None:\n                return self.right.path_length(x, current_height + 1)\n\n        return current_height + self._c(self.size)\n\n    def _c(self, n):\n        \"\"\"Average path length of unsuccessful search in BST.\"\"\"\n        if n <= 1:\n            return 0\n        return 2 * (np.log(n - 1) + 0.5772156649) - 2 * (n - 1) / n\n\nclass IsolationForest:\n    def __init__(self, n_trees=100, sample_size=256):\n        self.n_trees = n_trees\n        self.sample_size = sample_size\n        self.trees = []\n\n    def fit(self, X):\n        \"\"\"\n        Build isolation forest.\n\n        Args:\n            X: training data\n        \"\"\"\n        n_samples = len(X)\n        height_limit = int(np.ceil(np.log2(self.sample_size)))\n\n        self.trees = []\n        for _ in range(self.n_trees):\n            # Sample subset\n            sample_idx = np.random.choice(n_samples,\n                                         min(self.sample_size, n_samples),\n                                         replace=False)\n            X_sample = X[sample_idx]\n\n            # Build tree\n            tree = IsolationTree(height_limit)\n            tree.fit(X_sample)\n            self.trees.append(tree)\n\n        return self\n\n    def anomaly_score(self, X):\n        \"\"\"\n        Compute anomaly scores.\n\n        Args:\n            X: data points\n\n        Returns:\n            scores (higher = more anomalous)\n        \"\"\"\n        avg_path_lengths = np.zeros(len(X))\n\n        for tree in self.trees:\n            for i, x in enumerate(X):\n                avg_path_lengths[i] += tree.path_length(x)\n\n        avg_path_lengths /= len(self.trees)\n\n        # Normalize\n        c = self.trees[0]._c(self.sample_size)\n        scores = 2 ** (-avg_path_lengths / c)\n\n        return scores\n\n    def predict(self, X, threshold=0.5):\n        \"\"\"Predict anomalies (score > threshold).\"\"\"\n        scores = self.anomaly_score(X)\n        return np.where(scores > threshold, -1, 1)",
+    "testCases": [],
+    "hints": [
+      "Isolation trees use random splits on random features",
+      "Anomalies have shorter average path lengths",
+      "Height limit: ceil(log2(sample_size))",
+      "Sample subset of data for each tree (default 256 points)",
+      "Anomaly score: 2^(-E[h(x)] / c(n))",
+      "Score close to 1 indicates anomaly, close to 0 indicates normal"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-ex-6-13",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-6",
+    "title": "Implement Autoencoder for Anomaly Detection",
+    "difficulty": 4,
+    "description": "Build autoencoder neural network for unsupervised anomaly detection.\n\nRequirements:\n- Encoder: compress input to lower-dimensional latent space\n- Decoder: reconstruct input from latent representation\n- Train to minimize reconstruction error\n- Use reconstruction error as anomaly score",
+    "starterCode": "import torch\nimport torch.nn as nn\n\nclass Autoencoder(nn.Module):\n    def __init__(self, input_dim, latent_dim):\n        super().__init__()\n        # Define encoder and decoder\n\n    def forward(self, x):\n        # TODO: Implement\n        pass\n\ndef detect_anomalies(model, X, threshold):\n    # TODO: Implement\n    pass",
+    "solution": "import torch\nimport torch.nn as nn\nimport torch.optim as optim\nimport numpy as np\n\nclass Autoencoder(nn.Module):\n    def __init__(self, input_dim, latent_dim):\n        super().__init__()\n\n        # Encoder\n        self.encoder = nn.Sequential(\n            nn.Linear(input_dim, 64),\n            nn.ReLU(),\n            nn.Linear(64, 32),\n            nn.ReLU(),\n            nn.Linear(32, latent_dim)\n        )\n\n        # Decoder\n        self.decoder = nn.Sequential(\n            nn.Linear(latent_dim, 32),\n            nn.ReLU(),\n            nn.Linear(32, 64),\n            nn.ReLU(),\n            nn.Linear(64, input_dim)\n        )\n\n    def forward(self, x):\n        \"\"\"Forward pass through autoencoder.\"\"\"\n        latent = self.encoder(x)\n        reconstruction = self.decoder(latent)\n        return reconstruction\n\ndef train_autoencoder(model, X_train, epochs=50, lr=0.001):\n    \"\"\"\n    Train autoencoder.\n\n    Args:\n        model: autoencoder model\n        X_train: training data (normal examples)\n        epochs: number of training epochs\n        lr: learning rate\n    \"\"\"\n    optimizer = optim.Adam(model.parameters(), lr=lr)\n    criterion = nn.MSELoss()\n\n    X_train_tensor = torch.FloatTensor(X_train)\n\n    for epoch in range(epochs):\n        model.train()\n        optimizer.zero_grad()\n\n        # Forward pass\n        reconstruction = model(X_train_tensor)\n        loss = criterion(reconstruction, X_train_tensor)\n\n        # Backward pass\n        loss.backward()\n        optimizer.step()\n\n        if (epoch + 1) % 10 == 0:\n            print(f'Epoch {epoch+1}/{epochs}, Loss: {loss.item():.4f}')\n\ndef detect_anomalies(model, X, threshold):\n    \"\"\"\n    Detect anomalies using reconstruction error.\n\n    Args:\n        model: trained autoencoder\n        X: data points\n        threshold: reconstruction error threshold\n\n    Returns:\n        labels (1 = normal, -1 = anomaly)\n        reconstruction errors\n    \"\"\"\n    model.eval()\n    with torch.no_grad():\n        X_tensor = torch.FloatTensor(X)\n        reconstruction = model(X_tensor)\n\n        # Compute reconstruction error for each sample\n        errors = torch.mean((X_tensor - reconstruction)**2, dim=1)\n        errors = errors.numpy()\n\n    # Flag high error as anomalies\n    labels = np.where(errors < threshold, 1, -1)\n\n    return labels, errors\n\n# Example usage\ninput_dim = 10\nlatent_dim = 3\n\nmodel = Autoencoder(input_dim, latent_dim)\nX_train = np.random.randn(1000, input_dim)\n\ntrain_autoencoder(model, X_train)\n\n# Determine threshold from training data\n_, train_errors = detect_anomalies(model, X_train, threshold=float('inf'))\nthreshold = np.percentile(train_errors, 95)  # 95th percentile\n\n# Detect anomalies in test data\nX_test = np.random.randn(100, input_dim)\nlabels, errors = detect_anomalies(model, X_test, threshold)",
+    "testCases": [],
+    "hints": [
+      "Train autoencoder only on normal data",
+      "Encoder compresses to latent dimension (bottleneck)",
+      "Decoder reconstructs from latent representation",
+      "Use MSE loss for reconstruction error",
+      "Anomalies have high reconstruction error",
+      "Set threshold based on validation data (e.g., 95th percentile)"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-ex-6-14",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-6",
+    "title": "Implement Davies-Bouldin Index",
+    "difficulty": 2,
+    "description": "Compute Davies-Bouldin index to evaluate clustering quality.\n\nRequirements:\n- For each cluster, compute average distance to cluster center\n- Compute cluster similarity (sum of spreads / distance between centers)\n- Lower DB index indicates better clustering\n- Compare different clustering solutions",
+    "starterCode": "import numpy as np\n\ndef davies_bouldin_index(X, labels):\n    \"\"\"\n    Compute Davies-Bouldin index.\n\n    Args:\n        X: data points\n        labels: cluster assignments\n\n    Returns:\n        DB index (lower is better)\n    \"\"\"\n    # TODO: Implement\n    pass",
+    "solution": "import numpy as np\n\ndef davies_bouldin_index(X, labels):\n    \"\"\"\n    Compute Davies-Bouldin index.\n\n    Args:\n        X: data points (n_samples, n_features)\n        labels: cluster assignments\n\n    Returns:\n        DB index (lower is better)\n    \"\"\"\n    n_clusters = len(np.unique(labels))\n\n    # Compute cluster centers\n    centers = np.array([X[labels == k].mean(axis=0)\n                       for k in range(n_clusters)])\n\n    # Compute average distance within each cluster (spread)\n    spreads = np.zeros(n_clusters)\n    for k in range(n_clusters):\n        cluster_points = X[labels == k]\n        if len(cluster_points) > 0:\n            spreads[k] = np.mean([np.linalg.norm(x - centers[k])\n                                 for x in cluster_points])\n\n    # Compute DB index\n    db_scores = np.zeros(n_clusters)\n\n    for i in range(n_clusters):\n        max_ratio = 0\n        for j in range(n_clusters):\n            if i != j:\n                # Distance between centers\n                center_dist = np.linalg.norm(centers[i] - centers[j])\n\n                if center_dist > 0:\n                    # Ratio of spreads to separation\n                    ratio = (spreads[i] + spreads[j]) / center_dist\n                    max_ratio = max(max_ratio, ratio)\n\n        db_scores[i] = max_ratio\n\n    # Average over all clusters\n    return np.mean(db_scores)",
+    "testCases": [],
+    "hints": [
+      "Spread S_i: average distance from points to cluster center",
+      "Separation M_ij: distance between cluster centers i and j",
+      "Similarity R_ij = (S_i + S_j) / M_ij",
+      "For each cluster i, find max R_ij over all other clusters j",
+      "DB index is average of these max values",
+      "Lower DB index means better separated, compact clusters"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-ex-6-15",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-6",
+    "title": "Build Mean Shift Clustering",
+    "difficulty": 4,
+    "description": "Implement mean shift algorithm for clustering.\n\nRequirements:\n- Iteratively shift points toward density maxima\n- Use kernel (Gaussian) for weighting neighbors\n- Merge points that converge to same mode\n- Support bandwidth parameter",
+    "starterCode": "import numpy as np\n\nclass MeanShift:\n    def __init__(self, bandwidth=1.0, max_iter=300):\n        self.bandwidth = bandwidth\n        self.max_iter = max_iter\n\n    def fit_predict(self, X):\n        # TODO: Implement\n        pass",
+    "solution": "import numpy as np\n\nclass MeanShift:\n    def __init__(self, bandwidth=1.0, max_iter=300, tol=1e-3):\n        self.bandwidth = bandwidth\n        self.max_iter = max_iter\n        self.tol = tol\n        self.cluster_centers = None\n\n    def gaussian_kernel(self, distance):\n        \"\"\"Gaussian kernel for weighting.\"\"\"\n        return np.exp(-(distance**2) / (2 * self.bandwidth**2))\n\n    def shift_point(self, point, X):\n        \"\"\"Shift point toward density maximum.\"\"\"\n        for _ in range(self.max_iter):\n            # Compute distances to all points\n            distances = np.linalg.norm(X - point, axis=1)\n\n            # Compute weights using Gaussian kernel\n            weights = self.gaussian_kernel(distances)\n\n            # Compute weighted mean\n            new_point = np.sum(weights[:, np.newaxis] * X, axis=0) / np.sum(weights)\n\n            # Check convergence\n            if np.linalg.norm(new_point - point) < self.tol:\n                break\n\n            point = new_point\n\n        return point\n\n    def fit_predict(self, X):\n        \"\"\"\n        Perform mean shift clustering.\n\n        Args:\n            X: data points (n_samples, n_features)\n\n        Returns:\n            cluster labels\n        \"\"\"\n        n_samples = len(X)\n\n        # Shift each point to find modes\n        modes = np.zeros_like(X)\n        for i in range(n_samples):\n            modes[i] = self.shift_point(X[i].copy(), X)\n\n        # Merge nearby modes\n        cluster_centers = []\n        labels = np.zeros(n_samples, dtype=int)\n\n        for i in range(n_samples):\n            # Check if mode is close to existing cluster center\n            is_new_cluster = True\n\n            for j, center in enumerate(cluster_centers):\n                if np.linalg.norm(modes[i] - center) < self.bandwidth:\n                    labels[i] = j\n                    is_new_cluster = False\n                    break\n\n            if is_new_cluster:\n                cluster_centers.append(modes[i])\n                labels[i] = len(cluster_centers) - 1\n\n        self.cluster_centers = np.array(cluster_centers)\n        return labels",
+    "testCases": [],
+    "hints": [
+      "Mean shift moves points toward highest density region",
+      "Use Gaussian kernel to weight nearby points",
+      "New position: weighted average of neighbors",
+      "Iterate until convergence (small movement)",
+      "Points converging to same mode belong to same cluster",
+      "Bandwidth controls neighborhood size (similar to KDE)"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-ex-6-16",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-6",
+    "title": "Implement Spectral Clustering",
+    "difficulty": 5,
+    "description": "Build spectral clustering using graph Laplacian.\n\nRequirements:\n- Construct similarity graph (RBF kernel)\n- Compute graph Laplacian matrix\n- Find eigenvectors of Laplacian\n- Apply k-means to eigenvector representation\n- Handle non-convex clusters",
+    "starterCode": "import numpy as np\n\nclass SpectralClustering:\n    def __init__(self, n_clusters=3, gamma=1.0):\n        self.n_clusters = n_clusters\n        self.gamma = gamma\n\n    def fit_predict(self, X):\n        # TODO: Implement\n        pass",
+    "solution": "import numpy as np\nfrom sklearn.cluster import KMeans\n\nclass SpectralClustering:\n    def __init__(self, n_clusters=3, gamma=1.0):\n        self.n_clusters = n_clusters\n        self.gamma = gamma\n\n    def rbf_kernel(self, X):\n        \"\"\"Compute RBF (Gaussian) similarity matrix.\"\"\"\n        sq_dists = np.sum(X**2, axis=1, keepdims=True) +                    np.sum(X**2, axis=1) - 2 * X @ X.T\n        return np.exp(-self.gamma * sq_dists)\n\n    def fit_predict(self, X):\n        \"\"\"\n        Perform spectral clustering.\n\n        Args:\n            X: data points (n_samples, n_features)\n\n        Returns:\n            cluster labels\n        \"\"\"\n        n_samples = len(X)\n\n        # Step 1: Compute similarity matrix\n        W = self.rbf_kernel(X)\n\n        # Step 2: Compute degree matrix\n        D = np.diag(np.sum(W, axis=1))\n\n        # Step 3: Compute normalized graph Laplacian\n        # L = D^(-1/2) * (D - W) * D^(-1/2)\n        D_sqrt_inv = np.diag(1.0 / np.sqrt(np.diag(D) + 1e-10))\n        L = D_sqrt_inv @ (D - W) @ D_sqrt_inv\n\n        # Step 4: Compute eigenvectors\n        eigenvalues, eigenvectors = np.linalg.eigh(L)\n\n        # Step 5: Use first k eigenvectors (smallest eigenvalues)\n        U = eigenvectors[:, :self.n_clusters]\n\n        # Step 6: Normalize rows to unit length\n        U_normalized = U / (np.linalg.norm(U, axis=1, keepdims=True) + 1e-10)\n\n        # Step 7: Apply k-means to the eigenvector representation\n        kmeans = KMeans(n_clusters=self.n_clusters, random_state=42)\n        labels = kmeans.fit_predict(U_normalized)\n\n        return labels",
+    "testCases": [],
+    "hints": [
+      "Construct affinity matrix using RBF kernel: W_ij = exp(-gamma * ||x_i - x_j||^2)",
+      "Degree matrix D is diagonal with D_ii = sum_j W_ij",
+      "Normalized Laplacian: L = D^(-1/2) * (D - W) * D^(-1/2)",
+      "Use eigenvectors corresponding to k smallest eigenvalues",
+      "Normalize eigenvector rows before k-means",
+      "Spectral clustering can find non-convex clusters"
+    ],
+    "language": "python"
+  }
+]

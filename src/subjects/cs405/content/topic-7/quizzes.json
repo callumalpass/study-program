@@ -1,0 +1,185 @@
+[
+  {
+    "id": "cs405-quiz-7",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-7",
+    "title": "Cloud-Native - Principles and Twelve-Factor App",
+    "questions": [
+      {
+        "id": "q7-1",
+        "type": "multiple_choice",
+        "prompt": "What is a core principle of cloud-native applications?",
+        "options": [
+          "Always use monolithic architecture",
+          "Design for failure and resilience",
+          "Avoid using containers",
+          "Never use managed services"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Cloud-native apps are designed for failure. They use distributed architectures, graceful degradation, retries, circuit breakers, and assume components can fail."
+      },
+      {
+        "id": "q7-2",
+        "type": "true_false",
+        "prompt": "The Twelve-Factor App methodology states that configuration should be stored in the code.",
+        "correctAnswer": false,
+        "explanation": "Factor III states: store config in environment variables, not code. Config varies between deployments (dev/staging/prod), code doesn't."
+      },
+      {
+        "id": "q7-3",
+        "type": "multiple_choice",
+        "prompt": "According to the Twelve-Factor App, what is Factor IX about?",
+        "options": [
+          "Fast startup and shutdown (disposability)",
+          "Always run in production mode",
+          "Use the largest servers available",
+          "Never update dependencies"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Factor IX (Disposability) emphasizes fast startup and graceful shutdown. Apps should start quickly and shut down gracefully when receiving SIGTERM."
+      },
+      {
+        "id": "q7-4",
+        "type": "multiple_choice",
+        "prompt": "What does \"cattle, not pets\" mean in cloud-native thinking?",
+        "options": [
+          "Servers are named and manually managed",
+          "Servers are disposable and replaceable",
+          "Only use expensive hardware",
+          "Never delete old servers"
+        ],
+        "correctAnswer": 1,
+        "explanation": "\"Cattle, not pets\" means treating servers as disposable and interchangeable (cattle), not unique and irreplaceable (pets). Automate provisioning and embrace immutability."
+      },
+      {
+        "id": "q7-5",
+        "type": "true_false",
+        "prompt": "Cloud-native applications should be stateless, with state stored externally.",
+        "correctAnswer": true,
+        "explanation": "Cloud-native apps are stateless. State is stored in backing services (databases, caches, object storage). This enables horizontal scaling and resilience."
+      }
+    ]
+  },
+  {
+    "id": "cs405-quiz-7b",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-7",
+    "title": "Cloud-Native - Microservices and Service Mesh",
+    "questions": [
+      {
+        "id": "q7b-1",
+        "type": "multiple_choice",
+        "prompt": "What is the main advantage of microservices architecture?",
+        "options": [
+          "Everything runs in one process",
+          "Independent deployment and scaling of services",
+          "Simpler code",
+          "No need for APIs"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Microservices enable independent deployment, scaling, and technology choices. Teams can deploy services without coordinating with others. Services scale independently based on demand."
+      },
+      {
+        "id": "q7b-2",
+        "type": "true_false",
+        "prompt": "A service mesh provides service-to-service communication features like load balancing and encryption.",
+        "correctAnswer": true,
+        "explanation": "Service mesh (Istio, Linkerd) provides: traffic management, load balancing, service discovery, failure recovery, metrics, and mTLS encryption between services."
+      },
+      {
+        "id": "q7b-3",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of an API Gateway in microservices?",
+        "options": [
+          "Store data",
+          "Single entry point for clients, handles routing and authentication",
+          "Replace databases",
+          "Compile code"
+        ],
+        "correctAnswer": 1,
+        "explanation": "API Gateway is a single entry point for clients. It routes requests to microservices, handles authentication, rate limiting, request transformation, and monitoring."
+      },
+      {
+        "id": "q7b-4",
+        "type": "multiple_choice",
+        "prompt": "What pattern helps prevent cascading failures in microservices?",
+        "options": [
+          "Ignoring errors",
+          "Circuit Breaker",
+          "Using bigger servers",
+          "Manual intervention"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Circuit Breaker pattern prevents cascading failures. When a service fails repeatedly, the circuit \"opens\" and calls fail immediately without attempting, preventing system overload."
+      },
+      {
+        "id": "q7b-5",
+        "type": "true_false",
+        "prompt": "In microservices, each service should have its own database (database per service pattern).",
+        "correctAnswer": true,
+        "explanation": "Database-per-service pattern ensures loose coupling. Each microservice owns its data and doesn't directly access other services' databases. Services communicate via APIs."
+      }
+    ]
+  },
+  {
+    "id": "cs405-quiz-7c",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-7",
+    "title": "Cloud-Native - Observability and CI/CD",
+    "questions": [
+      {
+        "id": "q7c-1",
+        "type": "multiple_choice",
+        "prompt": "What are the three pillars of observability?",
+        "options": [
+          "Frontend, Backend, Database",
+          "Logs, Metrics, Traces",
+          "CPU, Memory, Disk",
+          "Dev, Test, Prod"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The three pillars of observability are: Logs (discrete events), Metrics (numeric measurements over time), and Traces (request flows through distributed systems)."
+      },
+      {
+        "id": "q7c-2",
+        "type": "true_false",
+        "prompt": "Distributed tracing helps identify performance bottlenecks across multiple microservices.",
+        "correctAnswer": true,
+        "explanation": "Distributed tracing (OpenTelemetry, Jaeger, Zipkin) tracks requests as they flow through multiple services, showing latency at each step and identifying bottlenecks."
+      },
+      {
+        "id": "q7c-3",
+        "type": "multiple_choice",
+        "prompt": "What is the primary goal of CI/CD?",
+        "options": [
+          "Slow down deployments",
+          "Automate testing and deployment for faster, reliable releases",
+          "Eliminate all testing",
+          "Deploy manually"
+        ],
+        "correctAnswer": 1,
+        "explanation": "CI/CD (Continuous Integration/Continuous Deployment) automates building, testing, and deploying code. This enables frequent, reliable releases with reduced risk."
+      },
+      {
+        "id": "q7c-4",
+        "type": "multiple_choice",
+        "prompt": "Which deployment strategy updates a small percentage of instances first before rolling out to all?",
+        "options": [
+          "Big Bang",
+          "Canary",
+          "Recreate",
+          "Blue-Green"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Canary deployment gradually rolls out changes to a small subset of users first. If successful, it progressively rolls out to more users, reducing risk."
+      },
+      {
+        "id": "q7c-5",
+        "type": "true_false",
+        "prompt": "Blue-Green deployment maintains two identical production environments and switches traffic between them.",
+        "correctAnswer": true,
+        "explanation": "Blue-Green deployment keeps two identical environments (blue=current, green=new). Deploy to green, test it, then switch traffic. Enables instant rollback by switching back."
+      }
+    ]
+  }
+]

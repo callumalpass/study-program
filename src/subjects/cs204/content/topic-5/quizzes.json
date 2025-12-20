@@ -1,0 +1,221 @@
+[
+  {
+    "id": "cs204-topic-5-quiz-1",
+    "subjectId": "cs204",
+    "topicId": "cs204-topic-5",
+    "title": "Testing Fundamentals",
+    "questions": [
+      {
+        "id": "cs204-t5-q1-1",
+        "type": "multiple_choice",
+        "prompt": "What is the difference between verification and validation in testing?",
+        "options": [
+          "They are the same thing",
+          "Verification checks if we built the product right; validation checks if we built the right product",
+          "Verification is automated; validation is manual",
+          "Verification is for unit tests; validation is for integration tests"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Verification asks \"Did we build it right?\" (meets specifications), while validation asks \"Did we build the right thing?\" (meets user needs)."
+      },
+      {
+        "id": "cs204-t5-q1-2",
+        "type": "multiple_choice",
+        "prompt": "Which testing level focuses on individual units or components in isolation?",
+        "options": [
+          "System testing",
+          "Integration testing",
+          "Unit testing",
+          "Acceptance testing"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Unit testing tests individual units or components in isolation to verify they work correctly independently."
+      },
+      {
+        "id": "cs204-t5-q1-3",
+        "type": "multiple_choice",
+        "prompt": "What is black-box testing?",
+        "options": [
+          "Testing with knowledge of internal code structure",
+          "Testing based on specifications without knowledge of internal implementation",
+          "Testing only error conditions",
+          "Testing in a dark room"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Black-box testing tests functionality based on specifications without knowledge of internal implementation, focusing on inputs and expected outputs."
+      },
+      {
+        "id": "cs204-t5-q1-4",
+        "type": "multiple_choice",
+        "prompt": "What is white-box testing?",
+        "options": [
+          "Testing without code access",
+          "Testing with knowledge of internal code structure and logic",
+          "Testing only happy paths",
+          "User acceptance testing"
+        ],
+        "correctAnswer": 1,
+        "explanation": "White-box testing examines internal code structure and logic, designing tests to exercise paths, branches, and conditions within the code."
+      },
+      {
+        "id": "cs204-t5-q1-5",
+        "type": "multiple_choice",
+        "prompt": "What is the primary goal of integration testing?",
+        "options": [
+          "To test individual functions",
+          "To verify that components work correctly together",
+          "To test user interfaces",
+          "To measure performance"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Integration testing verifies that different components or modules work correctly together when integrated, catching interface and interaction issues."
+      }
+    ]
+  },
+  {
+    "id": "cs204-topic-5-quiz-2",
+    "subjectId": "cs204",
+    "topicId": "cs204-topic-5",
+    "title": "TDD and Test Automation",
+    "questions": [
+      {
+        "id": "cs204-t5-q2-1",
+        "type": "multiple_choice",
+        "prompt": "In Test-Driven Development (TDD), when do you write tests?",
+        "options": [
+          "After writing production code",
+          "Before writing production code",
+          "Only for bug fixes",
+          "Never, TDD does not use tests"
+        ],
+        "correctAnswer": 1,
+        "explanation": "In TDD, you write tests before writing production code. The cycle is: write a failing test, write minimal code to pass it, then refactor."
+      },
+      {
+        "id": "cs204-t5-q2-2",
+        "type": "multiple_choice",
+        "prompt": "What is the TDD cycle often called?",
+        "options": [
+          "Build-Test-Deploy",
+          "Red-Green-Refactor",
+          "Plan-Do-Check",
+          "Write-Run-Fix"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The TDD cycle is \"Red-Green-Refactor\": Red (write failing test), Green (make it pass), Refactor (improve code while keeping tests green)."
+      },
+      {
+        "id": "cs204-t5-q2-3",
+        "type": "multiple_choice",
+        "prompt": "What is the test pyramid concept?",
+        "options": [
+          "All tests should be manual",
+          "Have many unit tests, fewer integration tests, and even fewer UI/end-to-end tests",
+          "Have mostly UI tests",
+          "All tests should be automated"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The test pyramid suggests having many fast unit tests at the base, fewer integration tests in the middle, and fewer slow end-to-end tests at the top."
+      },
+      {
+        "id": "cs204-t5-q2-4",
+        "type": "multiple_choice",
+        "prompt": "What is a key benefit of test automation?",
+        "options": [
+          "Eliminates need for testers",
+          "Enables fast, repeatable testing and rapid feedback",
+          "Makes tests harder to write",
+          "Only works for small projects"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Test automation enables fast, repeatable testing, providing rapid feedback and allowing frequent regression testing as the codebase evolves."
+      },
+      {
+        "id": "cs204-t5-q2-5",
+        "type": "multiple_choice",
+        "prompt": "What is a mock object in testing?",
+        "options": [
+          "A real object used in tests",
+          "A simulated object that mimics the behavior of real objects for testing",
+          "An object that always fails",
+          "A testing framework"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A mock object is a simulated object that mimics the behavior of real objects, used to isolate the unit under test from its dependencies."
+      }
+    ]
+  },
+  {
+    "id": "cs204-topic-5-quiz-3",
+    "subjectId": "cs204",
+    "topicId": "cs204-topic-5",
+    "title": "Test Coverage and Management",
+    "questions": [
+      {
+        "id": "cs204-t5-q3-1",
+        "type": "multiple_choice",
+        "prompt": "What does code coverage measure?",
+        "options": [
+          "How fast tests run",
+          "The percentage of code executed by tests",
+          "The number of bugs found",
+          "How many tests exist"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Code coverage measures the percentage of code (lines, branches, statements) that is executed when tests run."
+      },
+      {
+        "id": "cs204-t5-q3-2",
+        "type": "multiple_choice",
+        "prompt": "Is 100% code coverage a guarantee of bug-free software?",
+        "options": [
+          "Yes, 100% coverage means no bugs",
+          "No, high coverage does not guarantee all behaviors are correctly tested",
+          "Only if using TDD",
+          "Yes, but only for unit tests"
+        ],
+        "correctAnswer": 1,
+        "explanation": "100% code coverage does not guarantee correctness. Tests might execute code but not verify all behaviors, edge cases, or logical correctness."
+      },
+      {
+        "id": "cs204-t5-q3-3",
+        "type": "multiple_choice",
+        "prompt": "What is regression testing?",
+        "options": [
+          "Testing new features only",
+          "Re-running tests to ensure existing functionality still works after changes",
+          "Testing for performance regressions only",
+          "Manual testing only"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Regression testing re-runs tests to ensure that existing functionality still works correctly after code changes, catching unintended side effects."
+      },
+      {
+        "id": "cs204-t5-q3-4",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of a test plan?",
+        "options": [
+          "To write test code",
+          "To define testing scope, approach, resources, and schedule",
+          "To replace testing",
+          "To generate test data"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A test plan defines the scope, approach, resources, and schedule for testing activities, providing a roadmap for the testing effort."
+      },
+      {
+        "id": "cs204-t5-q3-5",
+        "type": "multiple_choice",
+        "prompt": "What is a defect/bug tracking system used for?",
+        "options": [
+          "Writing code",
+          "Recording, tracking, and managing bugs throughout their lifecycle",
+          "Running tests",
+          "Deploying software"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A defect tracking system records, tracks, and manages bugs from discovery through resolution, facilitating communication and accountability."
+      }
+    ]
+  }
+]

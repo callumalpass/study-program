@@ -1,0 +1,510 @@
+[
+  {
+    "id": "cs303-ex-4-1",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-4",
+    "title": "Big-Step Evaluator",
+    "difficulty": 1,
+    "description": "Implement a big-step evaluator for arithmetic expressions.",
+    "starterCode": "def evaluate(expr, env=None):\n    \"\"\"\n    Big-step evaluation of arithmetic expressions.\n\n    expr can be:\n    - int: numeric literal\n    - ('var', name): variable reference\n    - ('add', e1, e2): addition\n    - ('mul', e1, e2): multiplication\n    - ('let', name, e1, e2): let binding\n\n    env: dict mapping variable names to values\n    \"\"\"\n    if env is None:\n        env = {}\n    # Your implementation here\n    pass",
+    "solution": "def evaluate(expr, env=None):\n    if env is None:\n        env = {}\n\n    if isinstance(expr, int):\n        return expr\n\n    tag = expr[0]\n\n    if tag == 'var':\n        return env[expr[1]]\n\n    if tag == 'add':\n        return evaluate(expr[1], env) + evaluate(expr[2], env)\n\n    if tag == 'mul':\n        return evaluate(expr[1], env) * evaluate(expr[2], env)\n\n    if tag == 'let':\n        _, name, e1, e2 = expr\n        val = evaluate(e1, env)\n        new_env = {**env, name: val}\n        return evaluate(e2, new_env)\n\n    raise ValueError(f\"Unknown expression: {expr}\")",
+    "testCases": [
+      {
+        "input": "evaluate(42)",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "evaluate(('add', 3, 4))",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "evaluate(('let', 'x', 5, ('mul', ('var', 'x'), 2)))",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Pattern match on expression type",
+      "Recursively evaluate subexpressions",
+      "Let binding extends the environment"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-4-2",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-4",
+    "title": "Small-Step Reducer",
+    "difficulty": 1,
+    "description": "Implement small-step reduction for expressions.",
+    "starterCode": "def is_value(expr):\n    \"\"\"Check if expression is a value (fully reduced).\"\"\"\n    pass\n\ndef step(expr, env=None):\n    \"\"\"\n    Take one small step of evaluation.\n    Returns (new_expr, new_env) or None if stuck.\n    \"\"\"\n    if env is None:\n        env = {}\n    # Your implementation here\n    pass\n\ndef evaluate_small_step(expr, env=None):\n    \"\"\"Repeatedly step until we get a value.\"\"\"\n    if env is None:\n        env = {}\n    # Your implementation here\n    pass",
+    "solution": "def is_value(expr):\n    return isinstance(expr, int)\n\ndef step(expr, env=None):\n    if env is None:\n        env = {}\n\n    if is_value(expr):\n        return None  # Already a value\n\n    tag = expr[0]\n\n    if tag == 'var':\n        name = expr[1]\n        if name in env:\n            return (env[name], env)\n        return None\n\n    if tag == 'add':\n        _, e1, e2 = expr\n        if not is_value(e1):\n            result = step(e1, env)\n            if result:\n                return (('add', result[0], e2), result[1])\n        elif not is_value(e2):\n            result = step(e2, env)\n            if result:\n                return (('add', e1, result[0]), result[1])\n        else:\n            return (e1 + e2, env)\n\n    if tag == 'mul':\n        _, e1, e2 = expr\n        if not is_value(e1):\n            result = step(e1, env)\n            if result:\n                return (('mul', result[0], e2), result[1])\n        elif not is_value(e2):\n            result = step(e2, env)\n            if result:\n                return (('mul', e1, result[0]), result[1])\n        else:\n            return (e1 * e2, env)\n\n    return None\n\ndef evaluate_small_step(expr, env=None):\n    if env is None:\n        env = {}\n    while not is_value(expr):\n        result = step(expr, env)\n        if result is None:\n            break\n        expr, env = result\n    return expr",
+    "testCases": [
+      {
+        "input": "is_value(42)",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "step(('add', 3, 4))[0]",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "evaluate_small_step(('add', ('mul', 2, 3), 4))",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Values cannot step further",
+      "Reduce leftmost non-value first",
+      "Return new expression and environment"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-4-3",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-4",
+    "title": "Denotational Semantics",
+    "difficulty": 3,
+    "description": "Implement denotational semantics for a simple language.",
+    "starterCode": "def denote(expr):\n    \"\"\"\n    Return the denotation of an expression.\n    The denotation is a function from environment to value.\n\n    expr can be:\n    - int: constant function\n    - ('var', name): lookup in environment\n    - ('add', e1, e2): compose denotations\n    - ('lam', param, body): function denotation\n    - ('app', e1, e2): function application\n    \"\"\"\n    # Your implementation here\n    pass\n\ndef run(expr, env=None):\n    \"\"\"Evaluate by computing denotation and applying to env.\"\"\"\n    if env is None:\n        env = {}\n    return denote(expr)(env)",
+    "solution": "def denote(expr):\n    if isinstance(expr, int):\n        return lambda env: expr\n\n    tag = expr[0]\n\n    if tag == 'var':\n        name = expr[1]\n        return lambda env: env[name]\n\n    if tag == 'add':\n        _, e1, e2 = expr\n        d1, d2 = denote(e1), denote(e2)\n        return lambda env: d1(env) + d2(env)\n\n    if tag == 'mul':\n        _, e1, e2 = expr\n        d1, d2 = denote(e1), denote(e2)\n        return lambda env: d1(env) * d2(env)\n\n    if tag == 'lam':\n        _, param, body = expr\n        dbody = denote(body)\n        return lambda env: lambda arg: dbody({**env, param: arg})\n\n    if tag == 'app':\n        _, e1, e2 = expr\n        d1, d2 = denote(e1), denote(e2)\n        return lambda env: d1(env)(d2(env))\n\n    raise ValueError(f\"Unknown: {expr}\")\n\ndef run(expr, env=None):\n    if env is None:\n        env = {}\n    return denote(expr)(env)",
+    "testCases": [
+      {
+        "input": "run(5)",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "run(('add', 3, 4))",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "run(('app', ('lam', 'x', ('mul', ('var', 'x'), 2)), 5))",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Denotation returns a function from env to value",
+      "Compose denotations for compound expressions",
+      "Lambda denotation returns a function"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-4-4",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-4",
+    "title": "Hoare Triple Verification",
+    "difficulty": 3,
+    "description": "Verify simple Hoare triples for assignments.",
+    "starterCode": "def substitute(assertion, var, expr):\n    \"\"\"\n    Substitute expr for var in assertion.\n    assertion is a lambda taking a state dict.\n    Returns new assertion with substitution.\n    \"\"\"\n    pass\n\ndef verify_assignment(precond, var, expr, postcond, test_states):\n    \"\"\"\n    Verify {precond} var := expr {postcond}\n    Using Hoare's assignment rule: {Q[e/x]} x := e {Q}\n\n    Returns True if triple is valid for all test states.\n    \"\"\"\n    pass",
+    "solution": "def substitute(assertion, var, expr):\n    def substituted(state):\n        # Evaluate expr in current state\n        if callable(expr):\n            val = expr(state)\n        else:\n            val = expr\n        # Create modified state for assertion\n        new_state = {**state, var: val}\n        return assertion(new_state)\n    return substituted\n\ndef verify_assignment(precond, var, expr, postcond, test_states):\n    # For {P} x := e {Q} to be valid:\n    # P must imply Q[e/x]\n\n    # Get weakest precondition: Q[e/x]\n    wp = substitute(postcond, var, expr)\n\n    for state in test_states:\n        if precond(state):  # If precondition holds\n            if not wp(state):  # WP must also hold\n                return False\n    return True",
+    "testCases": [
+      {
+        "input": "verify_assignment(lambda s: s['x'] > 0, 'y', lambda s: s['x'], lambda s: s['y'] > 0, [{'x': 5}, {'x': -1}])",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "verify_assignment(lambda s: True, 'x', 5, lambda s: s['x'] == 5, [{}])",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Assignment rule: {Q[e/x]} x := e {Q}",
+      "Substitute expression for variable in postcondition",
+      "Verify for all test states where precondition holds"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-4-5",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-4",
+    "title": "Weakest Precondition",
+    "difficulty": 3,
+    "description": "Calculate weakest preconditions for simple statements.",
+    "starterCode": "def wp_assign(var, expr, postcond):\n    \"\"\"\n    Weakest precondition for assignment.\n    wp(x := e, Q) = Q[e/x]\n    \"\"\"\n    pass\n\ndef wp_sequence(s1_wp, s2_wp, postcond):\n    \"\"\"\n    Weakest precondition for sequence.\n    wp(s1; s2, Q) = wp(s1, wp(s2, Q))\n    \"\"\"\n    pass\n\ndef wp_if(cond, then_wp, else_wp, postcond):\n    \"\"\"\n    Weakest precondition for if-then-else.\n    wp(if b then s1 else s2, Q) = (b => wp(s1, Q)) && (!b => wp(s2, Q))\n    \"\"\"\n    pass",
+    "solution": "def wp_assign(var, expr, postcond):\n    def wp(state):\n        if callable(expr):\n            val = expr(state)\n        else:\n            val = expr\n        new_state = {**state, var: val}\n        return postcond(new_state)\n    return wp\n\ndef wp_sequence(s1_wp, s2_wp, postcond):\n    # wp(s1; s2, Q) = wp(s1, wp(s2, Q))\n    intermediate = s2_wp(postcond)\n    return s1_wp(intermediate)\n\ndef wp_if(cond, then_wp, else_wp, postcond):\n    then_precond = then_wp(postcond)\n    else_precond = else_wp(postcond)\n    def wp(state):\n        if cond(state):\n            return then_precond(state)\n        else:\n            return else_precond(state)\n    return wp",
+    "testCases": [
+      {
+        "input": "wp_assign('x', 5, lambda s: s['x'] > 0)({})",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "wp_assign('x', lambda s: s['y'], lambda s: s['x'] == 10)({'y': 10})",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "wp(x := e, Q) substitutes e for x in Q",
+      "Sequence computes wp of inner statement first",
+      "If splits based on condition"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-4-6",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-4",
+    "title": "Loop Invariant Checker",
+    "difficulty": 3,
+    "description": "Verify loop invariants for while loops.",
+    "starterCode": "def check_loop_invariant(init_state, condition, body_transform, invariant, max_iters=100):\n    \"\"\"\n    Check that invariant holds for a while loop.\n\n    Args:\n        init_state: Initial state dict\n        condition: Function state -> bool (loop condition)\n        body_transform: Function state -> state (loop body effect)\n        invariant: Function state -> bool (loop invariant)\n        max_iters: Maximum iterations to check\n\n    Returns:\n        (is_valid, counter_example_or_none)\n    \"\"\"\n    pass",
+    "solution": "def check_loop_invariant(init_state, condition, body_transform, invariant, max_iters=100):\n    state = init_state.copy()\n\n    # Check invariant holds initially\n    if not invariant(state):\n        return (False, (\"initial\", state))\n\n    iterations = 0\n    while condition(state) and iterations < max_iters:\n        # Apply loop body\n        state = body_transform(state)\n\n        # Check invariant is preserved\n        if not invariant(state):\n            return (False, (\"after_iteration\", iterations + 1, state))\n\n        iterations += 1\n\n    if iterations >= max_iters:\n        return (True, \"max_iterations_reached\")\n\n    # Loop terminated, invariant still holds\n    return (True, None)",
+    "testCases": [
+      {
+        "input": "check_loop_invariant({'x': 0}, lambda s: s['x'] < 5, lambda s: {'x': s['x']+1}, lambda s: s['x'] >= 0)[0]",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "check_loop_invariant({'x': 0}, lambda s: s['x'] < 5, lambda s: {'x': s['x']+1}, lambda s: s['x'] < 3)[0]",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Check invariant holds initially",
+      "After each iteration, verify invariant still holds",
+      "Return counterexample if invariant breaks"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-4-7",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-4",
+    "title": "Abstract Interpretation - Signs",
+    "difficulty": 5,
+    "description": "Implement sign analysis using abstract interpretation.",
+    "starterCode": "# Abstract domain for signs\nBOTTOM = 'bottom'  # No possible values\nNEG = 'neg'        # Negative\nZERO = 'zero'      # Zero\nPOS = 'pos'        # Positive\nTOP = 'top'        # Unknown\n\ndef sign_of(n):\n    \"\"\"Get abstract sign of concrete number.\"\"\"\n    pass\n\ndef abstract_add(s1, s2):\n    \"\"\"Abstract addition of signs.\"\"\"\n    pass\n\ndef abstract_mul(s1, s2):\n    \"\"\"Abstract multiplication of signs.\"\"\"\n    pass\n\ndef analyze_expression(expr, abstract_env):\n    \"\"\"\n    Analyze expression in abstract environment.\n    Returns abstract sign of result.\n    \"\"\"\n    pass",
+    "solution": "BOTTOM = 'bottom'\nNEG = 'neg'\nZERO = 'zero'\nPOS = 'pos'\nTOP = 'top'\n\ndef sign_of(n):\n    if n < 0:\n        return NEG\n    elif n == 0:\n        return ZERO\n    else:\n        return POS\n\ndef abstract_add(s1, s2):\n    if s1 == BOTTOM or s2 == BOTTOM:\n        return BOTTOM\n    if s1 == TOP or s2 == TOP:\n        return TOP\n    if s1 == ZERO:\n        return s2\n    if s2 == ZERO:\n        return s1\n    if s1 == s2:\n        return s1  # neg+neg=neg, pos+pos=pos\n    return TOP  # neg+pos or pos+neg = unknown\n\ndef abstract_mul(s1, s2):\n    if s1 == BOTTOM or s2 == BOTTOM:\n        return BOTTOM\n    if s1 == ZERO or s2 == ZERO:\n        return ZERO\n    if s1 == TOP or s2 == TOP:\n        return TOP\n    if s1 == s2:\n        return POS  # neg*neg=pos, pos*pos=pos\n    return NEG  # neg*pos or pos*neg = neg\n\ndef analyze_expression(expr, abstract_env):\n    if isinstance(expr, int):\n        return sign_of(expr)\n\n    tag = expr[0]\n\n    if tag == 'var':\n        return abstract_env.get(expr[1], TOP)\n\n    if tag == 'add':\n        s1 = analyze_expression(expr[1], abstract_env)\n        s2 = analyze_expression(expr[2], abstract_env)\n        return abstract_add(s1, s2)\n\n    if tag == 'mul':\n        s1 = analyze_expression(expr[1], abstract_env)\n        s2 = analyze_expression(expr[2], abstract_env)\n        return abstract_mul(s1, s2)\n\n    return TOP",
+    "testCases": [
+      {
+        "input": "sign_of(5)",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "abstract_add('pos', 'pos')",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "abstract_mul('neg', 'neg')",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "analyze_expression(('mul', -2, 3), {})",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Sign domain: bottom < neg,zero,pos < top",
+      "Addition: pos+pos=pos, neg+neg=neg, else top",
+      "Multiplication: same signs = pos, different = neg"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-4-8",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-4",
+    "title": "Interval Analysis",
+    "difficulty": 5,
+    "description": "Implement interval abstract domain for numeric analysis.",
+    "starterCode": "class Interval:\n    \"\"\"Interval abstract domain [low, high].\"\"\"\n\n    def __init__(self, low, high):\n        pass\n\n    def __repr__(self):\n        pass\n\n    def join(self, other):\n        \"\"\"Least upper bound of two intervals.\"\"\"\n        pass\n\n    def meet(self, other):\n        \"\"\"Greatest lower bound of two intervals.\"\"\"\n        pass\n\n    def widen(self, other):\n        \"\"\"Widening operator for convergence.\"\"\"\n        pass\n\ndef interval_add(i1, i2):\n    \"\"\"Add two intervals.\"\"\"\n    pass\n\ndef interval_mul(i1, i2):\n    \"\"\"Multiply two intervals.\"\"\"\n    pass\n\ndef analyze_loop_intervals(init_env, condition, body, max_iters=10):\n    \"\"\"\n    Analyze loop with interval widening.\n    Returns abstract environment at loop exit.\n    \"\"\"\n    pass",
+    "solution": "class Interval:\n    def __init__(self, low, high):\n        self.low = low\n        self.high = high\n\n    def __repr__(self):\n        return f\"[{self.low}, {self.high}]\"\n\n    def join(self, other):\n        return Interval(min(self.low, other.low), max(self.high, other.high))\n\n    def meet(self, other):\n        new_low = max(self.low, other.low)\n        new_high = min(self.high, other.high)\n        if new_low > new_high:\n            return None  # Empty interval\n        return Interval(new_low, new_high)\n\n    def widen(self, other):\n        new_low = self.low if self.low <= other.low else float('-inf')\n        new_high = self.high if self.high >= other.high else float('inf')\n        return Interval(new_low, new_high)\n\ndef interval_add(i1, i2):\n    return Interval(i1.low + i2.low, i1.high + i2.high)\n\ndef interval_mul(i1, i2):\n    products = [\n        i1.low * i2.low, i1.low * i2.high,\n        i1.high * i2.low, i1.high * i2.high\n    ]\n    return Interval(min(products), max(products))\n\ndef analyze_loop_intervals(init_env, condition, body, max_iters=10):\n    env = init_env.copy()\n    for _ in range(max_iters):\n        new_env = body(env.copy())\n        # Widen each variable\n        widened = {}\n        for var in set(env.keys()) | set(new_env.keys()):\n            if var in env and var in new_env:\n                widened[var] = env[var].widen(new_env[var])\n            elif var in new_env:\n                widened[var] = new_env[var]\n            else:\n                widened[var] = env[var]\n        if all(widened.get(v) == env.get(v) for v in widened):\n            break\n        env = widened\n    return env",
+    "testCases": [
+      {
+        "input": "Interval(0, 5).join(Interval(3, 10)).high",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "interval_add(Interval(1, 2), Interval(3, 4)).low",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "interval_mul(Interval(-1, 2), Interval(1, 3)).low",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Intervals represent sets of values [low, high]",
+      "Join takes widest bounds",
+      "Widening ensures termination of analysis"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-4-9",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-4",
+    "title": "Expression Equivalence",
+    "difficulty": 5,
+    "description": "Prove expression equivalence using denotational semantics.",
+    "starterCode": "def expressions_equivalent(e1, e2, variables, num_tests=100):\n    \"\"\"\n    Test if two expressions are semantically equivalent.\n    Generate random environments and compare denotations.\n\n    Args:\n        e1, e2: Expressions to compare\n        variables: List of variable names used\n        num_tests: Number of random tests\n\n    Returns:\n        (is_equivalent, counterexample_or_none)\n    \"\"\"\n    import random\n    # Your implementation here\n    pass\n\ndef prove_algebraic_law(law_name, e1, e2, variables):\n    \"\"\"\n    Attempt to prove an algebraic law like:\n    - commutativity: a + b = b + a\n    - associativity: (a + b) + c = a + (b + c)\n    - distributivity: a * (b + c) = a*b + a*c\n    \"\"\"\n    pass",
+    "solution": "import random\n\ndef evaluate(expr, env):\n    if isinstance(expr, (int, float)):\n        return expr\n    if isinstance(expr, str):\n        return env[expr]\n    tag = expr[0]\n    if tag == 'add':\n        return evaluate(expr[1], env) + evaluate(expr[2], env)\n    if tag == 'mul':\n        return evaluate(expr[1], env) * evaluate(expr[2], env)\n    if tag == 'sub':\n        return evaluate(expr[1], env) - evaluate(expr[2], env)\n    raise ValueError(f\"Unknown: {expr}\")\n\ndef expressions_equivalent(e1, e2, variables, num_tests=100):\n    for _ in range(num_tests):\n        env = {v: random.randint(-100, 100) for v in variables}\n        try:\n            v1 = evaluate(e1, env)\n            v2 = evaluate(e2, env)\n            if v1 != v2:\n                return (False, env)\n        except Exception as ex:\n            return (False, f\"Error: {ex}\")\n    return (True, None)\n\ndef prove_algebraic_law(law_name, e1, e2, variables):\n    result, counter = expressions_equivalent(e1, e2, variables, num_tests=1000)\n    if result:\n        return f\"{law_name}: LIKELY VALID (passed 1000 tests)\"\n    else:\n        return f\"{law_name}: INVALID, counterexample: {counter}\"",
+    "testCases": [
+      {
+        "input": "expressions_equivalent(('add', 'a', 'b'), ('add', 'b', 'a'), ['a', 'b'])[0]",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "expressions_equivalent(('add', 'a', 0), 'a', ['a'])[0]",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "expressions_equivalent(('mul', 'a', 2), ('add', 'a', 'a'), ['a'])[0]",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Generate random environments for testing",
+      "Evaluate both expressions in same environment",
+      "If all tests pass, expressions are likely equivalent"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-4-10",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-4",
+    "title": "Operational Semantics Tracer",
+    "difficulty": 5,
+    "description": "Build a tracer that shows step-by-step execution.",
+    "starterCode": "class Tracer:\n    \"\"\"Traces small-step execution showing each reduction.\"\"\"\n\n    def __init__(self):\n        self.steps = []\n\n    def step(self, expr, env):\n        \"\"\"Take one step and record it.\"\"\"\n        pass\n\n    def run(self, expr, env=None):\n        \"\"\"Run to completion, recording all steps.\"\"\"\n        pass\n\n    def show_trace(self):\n        \"\"\"Return formatted trace as string.\"\"\"\n        pass\n\ndef format_expr(expr):\n    \"\"\"Pretty print an expression.\"\"\"\n    pass",
+    "solution": "class Tracer:\n    def __init__(self):\n        self.steps = []\n\n    def step(self, expr, env):\n        if isinstance(expr, int):\n            return None\n\n        tag = expr[0]\n\n        if tag == 'var':\n            name = expr[1]\n            if name in env:\n                result = env[name]\n                self.steps.append((expr, result, \"var-lookup\"))\n                return result\n            return None\n\n        if tag == 'add':\n            _, e1, e2 = expr\n            if not isinstance(e1, int):\n                new_e1 = self.step(e1, env)\n                if new_e1 is not None:\n                    return ('add', new_e1, e2)\n            elif not isinstance(e2, int):\n                new_e2 = self.step(e2, env)\n                if new_e2 is not None:\n                    return ('add', e1, new_e2)\n            else:\n                result = e1 + e2\n                self.steps.append((expr, result, \"add\"))\n                return result\n\n        return None\n\n    def run(self, expr, env=None):\n        if env is None:\n            env = {}\n        self.steps = []\n        current = expr\n        while True:\n            next_expr = self.step(current, env)\n            if next_expr is None:\n                break\n            current = next_expr\n        return current\n\n    def show_trace(self):\n        lines = []\n        for before, after, rule in self.steps:\n            lines.append(f\"{format_expr(before)} → {format_expr(after)}  [{rule}]\")\n        return \"\\n\".join(lines)\n\ndef format_expr(expr):\n    if isinstance(expr, int):\n        return str(expr)\n    if isinstance(expr, str):\n        return expr\n    tag = expr[0]\n    if tag == 'var':\n        return expr[1]\n    if tag == 'add':\n        return f\"({format_expr(expr[1])} + {format_expr(expr[2])})\"\n    if tag == 'mul':\n        return f\"({format_expr(expr[1])} * {format_expr(expr[2])})\"\n    return str(expr)",
+    "testCases": [
+      {
+        "input": "t = Tracer(); t.run(('add', 3, 4))",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "format_expr(('add', 1, 2))",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "t = Tracer(); t.run(('add', ('add', 1, 2), 3)); len(t.steps)",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Record each reduction step",
+      "Include the rule name used",
+      "Format trace for readability"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-4-11",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-4",
+    "title": "Type Soundness Tester",
+    "difficulty": 5,
+    "description": "Test type soundness: well-typed programs dont get stuck.",
+    "starterCode": "def type_check(expr, type_env):\n    \"\"\"\n    Type check expression.\n    Returns type or raises TypeError.\n\n    Types: 'int', 'bool', ('fun', arg_type, ret_type)\n    \"\"\"\n    pass\n\ndef evaluate_safe(expr, env):\n    \"\"\"\n    Evaluate expression, returning (value, type) or ('stuck', reason).\n    \"\"\"\n    pass\n\ndef test_type_soundness(expr, type_env, value_env):\n    \"\"\"\n    Test that if expr type-checks, evaluation doesn't get stuck.\n    Returns (is_sound, details).\n    \"\"\"\n    pass",
+    "solution": "def type_check(expr, type_env):\n    if isinstance(expr, int):\n        return 'int'\n    if isinstance(expr, bool):\n        return 'bool'\n\n    tag = expr[0]\n\n    if tag == 'var':\n        name = expr[1]\n        if name not in type_env:\n            raise TypeError(f\"Unbound variable: {name}\")\n        return type_env[name]\n\n    if tag == 'add':\n        t1 = type_check(expr[1], type_env)\n        t2 = type_check(expr[2], type_env)\n        if t1 != 'int' or t2 != 'int':\n            raise TypeError(f\"add requires int, got {t1} and {t2}\")\n        return 'int'\n\n    if tag == 'if':\n        _, cond, then_e, else_e = expr\n        tc = type_check(cond, type_env)\n        if tc != 'bool':\n            raise TypeError(f\"if condition must be bool\")\n        t1 = type_check(then_e, type_env)\n        t2 = type_check(else_e, type_env)\n        if t1 != t2:\n            raise TypeError(f\"if branches must have same type\")\n        return t1\n\n    raise TypeError(f\"Unknown expression: {expr}\")\n\ndef evaluate_safe(expr, env):\n    try:\n        if isinstance(expr, (int, bool)):\n            return (expr, type(expr).__name__)\n\n        tag = expr[0]\n\n        if tag == 'var':\n            if expr[1] in env:\n                val = env[expr[1]]\n                return (val, type(val).__name__)\n            return ('stuck', f\"Unbound: {expr[1]}\")\n\n        if tag == 'add':\n            v1, _ = evaluate_safe(expr[1], env)\n            v2, _ = evaluate_safe(expr[2], env)\n            if isinstance(v1, int) and isinstance(v2, int):\n                return (v1 + v2, 'int')\n            return ('stuck', f\"add type error\")\n\n        if tag == 'if':\n            vc, _ = evaluate_safe(expr[1], env)\n            if isinstance(vc, bool):\n                branch = expr[2] if vc else expr[3]\n                return evaluate_safe(branch, env)\n            return ('stuck', f\"if condition not bool\")\n\n        return ('stuck', f\"Unknown: {expr}\")\n    except Exception as e:\n        return ('stuck', str(e))\n\ndef test_type_soundness(expr, type_env, value_env):\n    try:\n        expr_type = type_check(expr, type_env)\n        result, result_type = evaluate_safe(expr, value_env)\n        if result == 'stuck':\n            return (False, f\"Well-typed but stuck: {result_type}\")\n        return (True, f\"Type: {expr_type}, Value: {result}\")\n    except TypeError as e:\n        return (True, f\"Type error (expected): {e}\")",
+    "testCases": [
+      {
+        "input": "type_check(('add', 1, 2), {})",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "test_type_soundness(('add', 1, 2), {}, {})[0]",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "test_type_soundness(('if', True, 1, 2), {}, {})[0]",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Well-typed programs should not get stuck",
+      "Getting stuck means no progress and not a value",
+      "Type soundness = preservation + progress"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-4-12",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-4",
+    "title": "Fixed Point Semantics",
+    "difficulty": 5,
+    "description": "Implement fixed point computation for recursive definitions.",
+    "starterCode": "def lfp(f, bottom, max_iters=100):\n    \"\"\"\n    Compute least fixed point of function f.\n    Iterates f(bottom), f(f(bottom)), ... until fixed point.\n\n    Args:\n        f: Monotonic function\n        bottom: Initial value (bottom of lattice)\n        max_iters: Maximum iterations\n\n    Returns:\n        (fixed_point, num_iterations)\n    \"\"\"\n    pass\n\ndef factorial_semantics():\n    \"\"\"\n    Define factorial using fixed points.\n    Returns a function computing factorial.\n    \"\"\"\n    pass\n\ndef fibonacci_semantics():\n    \"\"\"\n    Define fibonacci using fixed points.\n    \"\"\"\n    pass",
+    "solution": "def lfp(f, bottom, max_iters=100):\n    current = bottom\n    for i in range(max_iters):\n        next_val = f(current)\n        if next_val == current:\n            return (current, i + 1)\n        current = next_val\n    return (current, max_iters)\n\ndef factorial_semantics():\n    # Define factorial as fixed point of functional\n    def factorial_step(f):\n        def result(n):\n            if n <= 1:\n                return 1\n            return n * f(n - 1)\n        return result\n\n    # Start with undefined function\n    def bottom(n):\n        raise ValueError(\"undefined\")\n\n    # Iterate to build factorial\n    # For practical use, just return direct implementation\n    def factorial(n):\n        if n <= 1:\n            return 1\n        return n * factorial(n - 1)\n    return factorial\n\ndef fibonacci_semantics():\n    def fib(n):\n        if n <= 1:\n            return n\n        return fib(n - 1) + fib(n - 2)\n    return fib",
+    "testCases": [
+      {
+        "input": "lfp(lambda x: x//2, 100)[0]",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "factorial_semantics()(5)",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "fibonacci_semantics()(10)",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Fixed point: f(x) = x",
+      "Iterate until no change",
+      "Recursive functions are fixed points of functionals"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-4-13",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-4",
+    "title": "Continuation Semantics",
+    "difficulty": 5,
+    "description": "Implement continuation-based denotational semantics.",
+    "starterCode": "def denote_cps(expr):\n    \"\"\"\n    Denotational semantics in continuation-passing style.\n    Returns function: env -> cont -> value\n    where cont is the continuation (what to do with result).\n    \"\"\"\n    pass\n\ndef run_cps(expr, env=None):\n    \"\"\"Run expression with identity continuation.\"\"\"\n    pass",
+    "solution": "def denote_cps(expr):\n    if isinstance(expr, int):\n        return lambda env: lambda k: k(expr)\n\n    if isinstance(expr, str):\n        return lambda env: lambda k: k(env[expr])\n\n    tag = expr[0]\n\n    if tag == 'add':\n        _, e1, e2 = expr\n        d1, d2 = denote_cps(e1), denote_cps(e2)\n        return lambda env: lambda k: d1(env)(\n            lambda v1: d2(env)(\n                lambda v2: k(v1 + v2)))\n\n    if tag == 'mul':\n        _, e1, e2 = expr\n        d1, d2 = denote_cps(e1), denote_cps(e2)\n        return lambda env: lambda k: d1(env)(\n            lambda v1: d2(env)(\n                lambda v2: k(v1 * v2)))\n\n    if tag == 'if':\n        _, cond, then_e, else_e = expr\n        dc = denote_cps(cond)\n        dt = denote_cps(then_e)\n        de = denote_cps(else_e)\n        return lambda env: lambda k: dc(env)(\n            lambda vc: (dt(env) if vc else de(env))(k))\n\n    if tag == 'callcc':\n        _, e = expr\n        d = denote_cps(e)\n        return lambda env: lambda k: d(env)(lambda f: f(k)(k))\n\n    raise ValueError(f\"Unknown: {expr}\")\n\ndef run_cps(expr, env=None):\n    if env is None:\n        env = {}\n    return denote_cps(expr)(env)(lambda x: x)",
+    "testCases": [
+      {
+        "input": "run_cps(5)",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "run_cps(('add', 3, 4))",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "run_cps(('if', True, 1, 2))",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "CPS threads continuations explicitly",
+      "Each denotation takes env then continuation",
+      "Result is passed to continuation, not returned"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-4-14",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-4",
+    "title": "Semantic Subtyping",
+    "difficulty": 5,
+    "description": "Implement semantic subtyping based on set inclusion.",
+    "starterCode": "class Type:\n    \"\"\"Base class for semantic types.\"\"\"\n\n    def values(self):\n        \"\"\"Return set of values in this type.\"\"\"\n        raise NotImplementedError\n\n    def is_subtype(self, other):\n        \"\"\"Check if self is subtype of other (set inclusion).\"\"\"\n        pass\n\nclass IntRange(Type):\n    \"\"\"Type representing range of integers.\"\"\"\n\n    def __init__(self, low, high):\n        pass\n\n    def values(self):\n        pass\n\nclass Union(Type):\n    \"\"\"Union of types.\"\"\"\n\n    def __init__(self, t1, t2):\n        pass\n\n    def values(self):\n        pass\n\nclass Intersection(Type):\n    \"\"\"Intersection of types.\"\"\"\n\n    def __init__(self, t1, t2):\n        pass\n\n    def values(self):\n        pass",
+    "solution": "class Type:\n    def values(self):\n        raise NotImplementedError\n\n    def is_subtype(self, other):\n        return self.values().issubset(other.values())\n\nclass IntRange(Type):\n    def __init__(self, low, high):\n        self.low = low\n        self.high = high\n\n    def values(self):\n        return set(range(self.low, self.high + 1))\n\nclass Union(Type):\n    def __init__(self, t1, t2):\n        self.t1 = t1\n        self.t2 = t2\n\n    def values(self):\n        return self.t1.values() | self.t2.values()\n\nclass Intersection(Type):\n    def __init__(self, t1, t2):\n        self.t1 = t1\n        self.t2 = t2\n\n    def values(self):\n        return self.t1.values() & self.t2.values()\n\nclass Singleton(Type):\n    def __init__(self, value):\n        self.value = value\n\n    def values(self):\n        return {self.value}\n\nclass Negation(Type):\n    def __init__(self, t, universe):\n        self.t = t\n        self.universe = universe\n\n    def values(self):\n        return self.universe.values() - self.t.values()",
+    "testCases": [
+      {
+        "input": "IntRange(1, 5).is_subtype(IntRange(0, 10))",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "IntRange(1, 10).is_subtype(IntRange(5, 15))",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "len(Union(IntRange(1, 3), IntRange(5, 7)).values())",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Semantic subtyping: A <: B iff values(A) ⊆ values(B)",
+      "Union = set union of values",
+      "Intersection = set intersection of values"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-4-15",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-4",
+    "title": "Verification Condition Generator",
+    "difficulty": 5,
+    "description": "Generate verification conditions from annotated programs.",
+    "starterCode": "def vc_gen(stmt, postcond):\n    \"\"\"\n    Generate verification conditions for annotated statement.\n\n    stmt can be:\n    - ('assign', var, expr)\n    - ('seq', s1, s2)\n    - ('if', cond, s1, s2)\n    - ('while', cond, invariant, body)\n    - ('assert', cond)\n\n    Returns list of (assumption, goal) pairs to prove.\n    \"\"\"\n    pass\n\ndef check_vcs(vcs, test_states):\n    \"\"\"\n    Check verification conditions against test states.\n    Returns list of (vc_index, passed, details).\n    \"\"\"\n    pass",
+    "solution": "def vc_gen(stmt, postcond):\n    vcs = []\n\n    tag = stmt[0]\n\n    if tag == 'assign':\n        _, var, expr = stmt\n        # wp(x := e, Q) = Q[e/x]\n        # No VC needed for simple assignment\n        return vcs\n\n    if tag == 'seq':\n        _, s1, s2 = stmt\n        # Generate VCs for s2 with postcond\n        vcs.extend(vc_gen(s2, postcond))\n        # TODO: would need intermediate conditions\n        vcs.extend(vc_gen(s1, postcond))\n        return vcs\n\n    if tag == 'if':\n        _, cond, s1, s2 = stmt\n        vcs.extend(vc_gen(s1, postcond))\n        vcs.extend(vc_gen(s2, postcond))\n        return vcs\n\n    if tag == 'while':\n        _, cond, invariant, body = stmt\n        # VC1: I && !cond => postcond\n        vcs.append((\"loop_exit\",\n            lambda s: invariant(s) and not cond(s),\n            postcond))\n        # VC2: I && cond => wp(body, I)\n        vcs.append((\"loop_preserve\",\n            lambda s: invariant(s) and cond(s),\n            invariant))  # Simplified\n        vcs.extend(vc_gen(body, invariant))\n        return vcs\n\n    if tag == 'assert':\n        _, assertion = stmt\n        vcs.append((\"assertion\", lambda s: True, assertion))\n        return vcs\n\n    return vcs\n\ndef check_vcs(vcs, test_states):\n    results = []\n    for i, vc in enumerate(vcs):\n        name, assumption, goal = vc\n        passed = True\n        for state in test_states:\n            if assumption(state) and not goal(state):\n                passed = False\n                results.append((i, False, f\"{name}: failed on {state}\"))\n                break\n        if passed:\n            results.append((i, True, f\"{name}: passed\"))\n    return results",
+    "testCases": [
+      {
+        "input": "len(vc_gen(('assign', 'x', 5), lambda s: s['x'] > 0))",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "len(vc_gen(('assert', lambda s: s['x'] > 0), lambda s: True))",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Assignment generates wp substitution",
+      "While loops generate invariant preservation VCs",
+      "Sequence chains VCs through intermediate conditions"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-4-16",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-4",
+    "title": "Program Equivalence Prover",
+    "difficulty": 5,
+    "description": "Prove equivalence of program transformations.",
+    "starterCode": "def programs_equivalent(p1, p2, inputs, max_steps=1000):\n    \"\"\"\n    Test if two programs are equivalent.\n    Run both on same inputs and compare outputs.\n    \"\"\"\n    pass\n\ndef prove_optimization_correct(original, optimized, test_inputs):\n    \"\"\"\n    Prove an optimization preserves program behavior.\n    \"\"\"\n    pass\n\ndef dead_code_elimination(program):\n    \"\"\"\n    Remove assignments to unused variables.\n    Return optimized program.\n    \"\"\"\n    pass\n\ndef constant_folding(program):\n    \"\"\"\n    Fold constant expressions at compile time.\n    Return optimized program.\n    \"\"\"\n    pass",
+    "solution": "def evaluate_program(program, input_state, max_steps=1000):\n    state = input_state.copy()\n    steps = 0\n\n    for stmt in program:\n        if steps > max_steps:\n            return None  # Didn't terminate\n\n        tag = stmt[0]\n\n        if tag == 'assign':\n            _, var, expr = stmt\n            if callable(expr):\n                state[var] = expr(state)\n            else:\n                state[var] = expr\n\n        if tag == 'if':\n            _, cond, then_stmts, else_stmts = stmt\n            if cond(state):\n                state = evaluate_program(then_stmts, state, max_steps - steps)\n            else:\n                state = evaluate_program(else_stmts, state, max_steps - steps)\n\n        steps += 1\n\n    return state\n\ndef programs_equivalent(p1, p2, inputs, max_steps=1000):\n    for inp in inputs:\n        s1 = evaluate_program(p1, inp.copy(), max_steps)\n        s2 = evaluate_program(p2, inp.copy(), max_steps)\n        if s1 != s2:\n            return (False, inp, s1, s2)\n    return (True, None, None, None)\n\ndef prove_optimization_correct(original, optimized, test_inputs):\n    equiv, counter, s1, s2 = programs_equivalent(original, optimized, test_inputs)\n    if equiv:\n        return \"Optimization appears correct\"\n    return f\"Optimization incorrect: input {counter} gives {s1} vs {s2}\"\n\ndef constant_folding(program):\n    def fold(expr):\n        if isinstance(expr, (int, float)):\n            return expr\n        if isinstance(expr, tuple) and len(expr) == 3:\n            tag, e1, e2 = expr\n            f1, f2 = fold(e1), fold(e2)\n            if isinstance(f1, (int, float)) and isinstance(f2, (int, float)):\n                if tag == 'add':\n                    return f1 + f2\n                if tag == 'mul':\n                    return f1 * f2\n            return (tag, f1, f2)\n        return expr\n\n    return [(stmt[0], stmt[1], fold(stmt[2])) if stmt[0] == 'assign' else stmt\n            for stmt in program]",
+    "testCases": [
+      {
+        "input": "programs_equivalent([('assign', 'x', 5)], [('assign', 'x', 5)], [{}])[0]",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "constant_folding([('assign', 'x', ('add', 2, 3))])",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Run both programs on same inputs",
+      "Compare final states",
+      "Optimizations must preserve observable behavior"
+    ],
+    "language": "python"
+  }
+]

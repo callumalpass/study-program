@@ -1,0 +1,186 @@
+[
+  {
+    "id": "cs403-quiz-2-1",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-2",
+    "title": "Topic 2: Approximation — Fundamentals",
+    "questions": [
+      {
+        "id": "cs403-q16",
+        "type": "multiple_choice",
+        "prompt": "For a minimization problem, an algorithm is a ρ-approximation if:",
+        "options": [
+          "It always returns a solution with cost ≤ ρ · OPT",
+          "It returns OPT with probability at least ρ",
+          "It runs in time O(n^ρ)",
+          "It returns a solution with cost ≥ ρ · OPT"
+        ],
+        "correctAnswer": "It always returns a solution with cost ≤ ρ · OPT",
+        "explanation": "For minimization, approximation factor ρ means the algorithm’s solution cost is within a multiplicative factor ρ of the optimal cost."
+      },
+      {
+        "id": "cs403-q17",
+        "type": "multiple_choice",
+        "prompt": "Which statement correctly defines an FPTAS?",
+        "options": [
+          "A (1+ε)-approximation scheme with runtime polynomial in n and 1/ε",
+          "A constant-factor approximation with runtime polynomial in n",
+          "An exact algorithm with expected polynomial runtime",
+          "A scheme with runtime polynomial in n and log(1/ε)"
+        ],
+        "correctAnswer": "A (1+ε)-approximation scheme with runtime polynomial in n and 1/ε",
+        "explanation": "An FPTAS is a fully polynomial-time approximation scheme: it produces a (1+ε) solution in time poly(n, 1/ε)."
+      },
+      {
+        "id": "cs403-q18",
+        "type": "true_false",
+        "prompt": "In metric TSP (triangle inequality), Christofides’ algorithm guarantees a 3/2-approximation.",
+        "correctAnswer": true,
+        "explanation": "Christofides combines an MST with minimum-weight matching on odd-degree vertices to yield a tour of cost at most 1.5·OPT for metric TSP."
+      },
+      {
+        "id": "cs403-q19",
+        "type": "fill_blank",
+        "prompt": "The greedy algorithm for Set Cover achieves an approximation ratio of Θ(_____) where n is the universe size.",
+        "correctAnswer": "log n",
+        "explanation": "Greedy set cover achieves an O(log n) approximation and this is tight under standard complexity assumptions."
+      },
+      {
+        "id": "cs403-q20",
+        "type": "multiple_choice",
+        "prompt": "A classic 2-approximation for Vertex Cover is based on:",
+        "options": [
+          "Maximum matching",
+          "Minimum spanning tree",
+          "Shortest paths",
+          "Dynamic programming"
+        ],
+        "correctAnswer": "Maximum matching",
+        "explanation": "Take any maximal matching and include both endpoints of each matched edge; this yields a vertex cover at most twice optimal."
+      }
+    ]
+  },
+  {
+    "id": "cs403-quiz-2-2",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-2",
+    "title": "Topic 2: Approximation — Application",
+    "questions": [
+      {
+        "id": "cs403-q21",
+        "type": "multiple_choice",
+        "prompt": "You have a 2-approximation algorithm for a minimization problem. If OPT = 10, the algorithm guarantees a solution of cost at most:",
+        "options": [
+          "5",
+          "10",
+          "20",
+          "40"
+        ],
+        "correctAnswer": "20",
+        "explanation": "A 2-approximation guarantees cost ≤ 2·OPT = 20 for minimization."
+      },
+      {
+        "id": "cs403-q22",
+        "type": "multiple_choice",
+        "prompt": "For unweighted Vertex Cover, the algorithm that repeatedly picks an uncovered edge and adds both endpoints produces:",
+        "options": [
+          "A 2-approximation",
+          "A 1.5-approximation",
+          "An exact solution",
+          "No approximation guarantee"
+        ],
+        "correctAnswer": "A 2-approximation",
+        "explanation": "The picked edges form a matching, and any vertex cover must include at least one endpoint from each edge in the matching. Taking both endpoints gives factor 2."
+      },
+      {
+        "id": "cs403-q23",
+        "type": "code_output",
+        "prompt": "What is printed by the following code (assume `OPT = 10`)?",
+        "codeSnippet": "const OPT = 10;\nconst rho = 2;\nconst guarantee = rho * OPT;\nconsole.log(guarantee);",
+        "correctAnswer": "20",
+        "explanation": "The code computes ρ·OPT with ρ=2 and OPT=10, which is 20."
+      },
+      {
+        "id": "cs403-q24",
+        "type": "true_false",
+        "prompt": "If a PTAS exists for an NP-hard problem, then P = NP.",
+        "correctAnswer": false,
+        "explanation": "A PTAS gives (1+ε)-approximation in polynomial time for each fixed ε, but the degree of the polynomial may depend on 1/ε. PTAS existence does not imply P=NP."
+      },
+      {
+        "id": "cs403-q25",
+        "type": "multiple_choice",
+        "prompt": "For 0/1 Knapsack, which statement is true?",
+        "options": [
+          "There is an FPTAS",
+          "No approximation is possible unless P=NP",
+          "A 2-approximation is impossible",
+          "The problem is solvable exactly in O(n log n)"
+        ],
+        "correctAnswer": "There is an FPTAS",
+        "explanation": "0/1 Knapsack admits an FPTAS via value scaling and dynamic programming, despite being NP-hard."
+      }
+    ]
+  },
+  {
+    "id": "cs403-quiz-2-3",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-2",
+    "title": "Topic 2: Approximation — Mastery",
+    "questions": [
+      {
+        "id": "cs403-q26",
+        "type": "multiple_choice",
+        "prompt": "Hardness of approximation results typically show that:",
+        "options": [
+          "No polynomial-time algorithm can approximate within a certain factor unless P=NP (or stronger assumptions)",
+          "No exponential-time algorithm exists",
+          "Randomized algorithms always beat deterministic ones",
+          "Greedy algorithms are always optimal"
+        ],
+        "correctAnswer": "No polynomial-time algorithm can approximate within a certain factor unless P=NP (or stronger assumptions)",
+        "explanation": "Inapproximability results bound what approximation ratios are achievable in polynomial time under widely believed assumptions."
+      },
+      {
+        "id": "cs403-q27",
+        "type": "multiple_choice",
+        "prompt": "The integrality gap of an LP relaxation measures:",
+        "options": [
+          "How much worse the best integer solution can be compared to the fractional LP optimum",
+          "The runtime of the simplex algorithm",
+          "The number of constraints in the LP",
+          "The probability that rounding succeeds"
+        ],
+        "correctAnswer": "How much worse the best integer solution can be compared to the fractional LP optimum",
+        "explanation": "Integrality gap is the worst-case ratio between the optimal integer solution and the optimal fractional (LP) solution; it informs achievable approximation via rounding."
+      },
+      {
+        "id": "cs403-q28",
+        "type": "true_false",
+        "prompt": "For minimization problems, rounding an LP solution can never give a solution better than OPT.",
+        "correctAnswer": false,
+        "explanation": "Rounding can sometimes produce an optimal or even equal-to-OPT solution; it just cannot beat the true optimum for the original integer problem."
+      },
+      {
+        "id": "cs403-q29",
+        "type": "fill_blank",
+        "prompt": "A PTAS for Euclidean TSP exists in fixed dimension due to the work of _____.",
+        "correctAnswer": "Arora",
+        "explanation": "Arora (and independently Mitchell) developed PTAS results for Euclidean TSP in fixed dimension using geometric decompositions."
+      },
+      {
+        "id": "cs403-q30",
+        "type": "multiple_choice",
+        "prompt": "A primal–dual approximation algorithm is most naturally associated with:",
+        "options": [
+          "Linear programming duality",
+          "Divide-and-conquer recurrences",
+          "Random sampling",
+          "Amortized analysis"
+        ],
+        "correctAnswer": "Linear programming duality",
+        "explanation": "Primal–dual methods simultaneously build a feasible primal solution and a dual certificate that lower-bounds OPT, yielding an approximation factor from complementary slackness-like arguments."
+      }
+    ]
+  }
+]

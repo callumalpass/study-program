@@ -1,0 +1,203 @@
+[
+  {
+    "id": "cs301-q2-1",
+    "subjectId": "cs301",
+    "topicId": "cs301-t2",
+    "title": "Thread Fundamentals",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "What resource is shared between threads of the same process?",
+        "options": [
+          "Stack",
+          "Program counter",
+          "Registers",
+          "Code and data sections"
+        ],
+        "correctAnswer": 3,
+        "explanation": "Threads share code, data, and heap sections. Each thread has its own stack, registers, and program counter."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "What is the main advantage of threads over processes?",
+        "options": [
+          "Better isolation",
+          "Faster creation and context switching",
+          "Simpler programming model",
+          "More security"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Threads have lower overhead because they share address space and resources, making creation and switching faster."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "User-level threads can take advantage of multiple CPUs without kernel support.",
+        "correctAnswer": false,
+        "explanation": "User-level threads are invisible to the kernel, so the kernel cannot schedule them on different CPUs."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "In the one-to-one threading model, what happens when one thread blocks?",
+        "options": [
+          "All threads block",
+          "Only that thread blocks",
+          "The process terminates",
+          "The kernel crashes"
+        ],
+        "correctAnswer": 1,
+        "explanation": "In one-to-one, each user thread maps to a kernel thread, so blocking one doesn't affect others."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "What is thread-local storage (TLS)?",
+        "options": [
+          "Shared global variables",
+          "Per-thread private data",
+          "Heap memory",
+          "Stack memory"
+        ],
+        "correctAnswer": 1,
+        "explanation": "TLS provides each thread with its own instance of a variable, avoiding synchronization issues."
+      }
+    ]
+  },
+  {
+    "id": "cs301-q2-2",
+    "subjectId": "cs301",
+    "topicId": "cs301-t2",
+    "title": "Thread Libraries",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "Which pthread function creates a new thread?",
+        "options": [
+          "pthread_init()",
+          "pthread_create()",
+          "pthread_new()",
+          "pthread_spawn()"
+        ],
+        "correctAnswer": 1,
+        "explanation": "pthread_create() creates a new thread with specified attributes and start routine."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "What does pthread_join() do?",
+        "options": [
+          "Creates a thread",
+          "Waits for a thread to terminate",
+          "Detaches a thread",
+          "Kills a thread"
+        ],
+        "correctAnswer": 1,
+        "explanation": "pthread_join() blocks until the specified thread terminates and optionally retrieves its return value."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "What is implicit threading?",
+        "options": [
+          "Manually creating threads",
+          "Compiler/runtime manages thread creation",
+          "Single-threaded execution",
+          "Hardware threading"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Implicit threading shifts thread management from programmers to compilers and runtime libraries."
+      },
+      {
+        "id": "q4",
+        "type": "true_false",
+        "prompt": "OpenMP uses compiler directives to parallelize code.",
+        "correctAnswer": true,
+        "explanation": "OpenMP uses #pragma directives that the compiler interprets to generate parallel code."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of a thread pool?",
+        "options": [
+          "Store thread information",
+          "Pre-create threads for handling requests",
+          "Synchronize threads",
+          "Debug threads"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A thread pool maintains pre-created threads that can handle tasks, avoiding creation overhead."
+      }
+    ]
+  },
+  {
+    "id": "cs301-q2-3",
+    "subjectId": "cs301",
+    "topicId": "cs301-t2",
+    "title": "Concurrency Issues",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "What makes a function thread-safe?",
+        "options": [
+          "It runs fast",
+          "It can be safely called by multiple threads",
+          "It uses global variables",
+          "It is recursive"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A thread-safe function can be called concurrently without causing race conditions or data corruption."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "What is a reentrant function?",
+        "options": [
+          "A function that can be interrupted and safely called again",
+          "A function that loops",
+          "A function that returns",
+          "A function that recurses"
+        ],
+        "correctAnswer": 0,
+        "explanation": "A reentrant function can be interrupted mid-execution and safely called again before completion."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "All thread-safe functions are reentrant.",
+        "correctAnswer": false,
+        "explanation": "Thread-safe functions may use locks, making them not reentrant if interrupted while holding a lock."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "What is Amdahl's Law used for?",
+        "options": [
+          "Memory allocation",
+          "Calculating parallel speedup limits",
+          "Thread synchronization",
+          "CPU scheduling"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Amdahl's Law calculates the theoretical speedup of a program based on its parallelizable fraction."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "According to Amdahl's Law, if 75% of code is parallelizable, what is the maximum speedup with infinite processors?",
+        "options": [
+          "2x",
+          "4x",
+          "75x",
+          "Infinite"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Maximum speedup = 1/(1-P) = 1/0.25 = 4x, limited by the serial 25% portion."
+      }
+    ]
+  }
+]

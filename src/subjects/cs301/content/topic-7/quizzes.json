@@ -1,0 +1,203 @@
+[
+  {
+    "id": "cs301-q7-1",
+    "subjectId": "cs301",
+    "topicId": "cs301-t7",
+    "title": "Virtual Memory",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "What is demand paging?",
+        "options": [
+          "Loading all pages at once",
+          "Loading pages only when needed",
+          "Deleting pages",
+          "Caching pages"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Demand paging loads pages into memory only when they are accessed (on demand)."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "What happens during a page fault?",
+        "options": [
+          "CPU crashes",
+          "Requested page is loaded from disk",
+          "Memory is cleared",
+          "Process terminates"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A page fault triggers loading the requested page from secondary storage."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "What is the optimal page replacement algorithm?",
+        "options": [
+          "Replace random page",
+          "Replace page that won't be used longest",
+          "Replace newest page",
+          "Replace smallest page"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Optimal replaces the page that won't be used for the longest time in the future."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "Why is optimal replacement impractical?",
+        "options": [
+          "Too slow",
+          "Requires knowing future references",
+          "Too complex",
+          "Hardware limitation"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Optimal requires knowing future page references, which is impossible in practice."
+      },
+      {
+        "id": "q5",
+        "type": "true_false",
+        "prompt": "FIFO page replacement can suffer from Belady's anomaly.",
+        "correctAnswer": true,
+        "explanation": "FIFO can have more page faults with more frames in certain cases (Belady's anomaly)."
+      }
+    ]
+  },
+  {
+    "id": "cs301-q7-2",
+    "subjectId": "cs301",
+    "topicId": "cs301-t7",
+    "title": "Page Replacement Algorithms",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "How does LRU determine which page to replace?",
+        "options": [
+          "Randomly",
+          "The page least recently used",
+          "The smallest page",
+          "The first loaded page"
+        ],
+        "correctAnswer": 1,
+        "explanation": "LRU replaces the page that has not been used for the longest time."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "What is the clock algorithm?",
+        "options": [
+          "Time-based scheduling",
+          "Second-chance FIFO with reference bit",
+          "Hardware clock",
+          "Real-time algorithm"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Clock algorithm is a circular queue with reference bits giving pages a second chance."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "What is thrashing?",
+        "options": [
+          "Fast paging",
+          "Excessive paging reducing performance",
+          "Memory overflow",
+          "CPU overload"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Thrashing occurs when the system spends more time paging than executing."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "What is the working set?",
+        "options": [
+          "All memory",
+          "Pages a process is actively using",
+          "Disk pages",
+          "CPU registers"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The working set is the set of pages a process needs during a time window."
+      },
+      {
+        "id": "q5",
+        "type": "true_false",
+        "prompt": "Adding more memory always reduces thrashing.",
+        "correctAnswer": true,
+        "explanation": "More memory allows more working sets to fit, reducing page faults and thrashing."
+      }
+    ]
+  },
+  {
+    "id": "cs301-q7-3",
+    "subjectId": "cs301",
+    "topicId": "cs301-t7",
+    "title": "File Systems",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "What is an inode in Unix?",
+        "options": [
+          "File name",
+          "Data structure containing file metadata",
+          "Directory",
+          "Disk sector"
+        ],
+        "correctAnswer": 1,
+        "explanation": "An inode stores file metadata and pointers to data blocks, but not the file name."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "What does journaling provide?",
+        "options": [
+          "Faster access",
+          "Crash recovery by logging changes",
+          "Larger capacity",
+          "Better security"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Journaling records operations before committing, enabling recovery after crashes."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "What is the difference between hard and symbolic links?",
+        "options": [
+          "No difference",
+          "Hard links share inode, symbolic links store path",
+          "Hard links are faster",
+          "Symbolic links use more space"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Hard links point to the same inode; symbolic links store the path to another file."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "What file allocation method does ext4 primarily use?",
+        "options": [
+          "Contiguous",
+          "Linked",
+          "Indexed with extents",
+          "FAT"
+        ],
+        "correctAnswer": 2,
+        "explanation": "ext4 uses extents, which are contiguous block ranges, for efficient allocation."
+      },
+      {
+        "id": "q5",
+        "type": "true_false",
+        "prompt": "Copy-on-write file systems like ZFS modify data in place.",
+        "correctAnswer": false,
+        "explanation": "COW systems write to new locations, never modifying existing data, enabling snapshots."
+      }
+    ]
+  }
+]

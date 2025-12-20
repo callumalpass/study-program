@@ -1,0 +1,596 @@
+[
+  {
+    "id": "cs304-t4-ex01",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-4",
+    "title": "Three-Address Code Generator",
+    "difficulty": 1,
+    "description": "Generate three-address code from simple arithmetic expressions. Each instruction has at most one operator.",
+    "starterCode": "class ThreeAddressCodeGen:\n    def __init__(self):\n        self.temp_count = 0\n        self.code = []\n\n    def new_temp(self):\n        \"\"\"Generate a new temporary variable.\"\"\"\n        temp = f\"t{self.temp_count}\"\n        self.temp_count += 1\n        return temp\n\n    def generate(self, expr):\n        \"\"\"\n        Generate three-address code for expression.\n        expr: {'kind': 'BinaryOp'/'Literal', ...}\n        Returns: variable holding result\n        \"\"\"\n        # Your code here\n        pass\n\n# Example:\n# expr = {'kind': 'BinaryOp', 'op': '+',\n#         'left': {'kind': 'Literal', 'value': 'a'},\n#         'right': {'kind': 'Literal', 'value': 'b'}}\n# Generates: t0 = a + b\n\n# Test\ngen = ThreeAddressCodeGen()\nexpr = {'kind': 'BinaryOp', 'op': '+',\n        'left': {'kind': 'Literal', 'value': 'a'},\n        'right': {'kind': 'Literal', 'value': 'b'}}\nresult = gen.generate(expr)\nprint(gen.code[0])  # Should be 't0 = a + b'",
+    "solution": "class ThreeAddressCodeGen:\n    def __init__(self):\n        self.temp_count = 0\n        self.code = []\n\n    def new_temp(self):\n        \"\"\"Generate a new temporary variable.\"\"\"\n        temp = f\"t{self.temp_count}\"\n        self.temp_count += 1\n        return temp\n\n    def generate(self, expr):\n        \"\"\"\n        Generate three-address code for expression.\n        Returns: variable holding result\n        \"\"\"\n        if expr['kind'] == 'Literal':\n            return expr['value']\n\n        elif expr['kind'] == 'BinaryOp':\n            # Generate code for left and right operands\n            left = self.generate(expr['left'])\n            right = self.generate(expr['right'])\n\n            # Generate instruction\n            result = self.new_temp()\n            self.code.append(f\"{result} = {left} {expr['op']} {right}\")\n\n            return result\n\n        return None\n\n# Test\ngen = ThreeAddressCodeGen()\nexpr = {'kind': 'BinaryOp', 'op': '+',\n        'left': {'kind': 'Literal', 'value': 'a'},\n        'right': {'kind': 'Literal', 'value': 'b'}}\nresult = gen.generate(expr)\nprint(gen.code[0])",
+    "testCases": [
+      {
+        "input": "a + b",
+        "expectedOutput": "t0 = a + b",
+        "isHidden": false,
+        "description": "Simple addition"
+      },
+      {
+        "input": "(a + b) * c",
+        "expectedOutput": "t1 = t0 * c",
+        "isHidden": false,
+        "description": "Nested expression"
+      },
+      {
+        "input": "a + b + c",
+        "expectedOutput": "t1 = t0 + c",
+        "isHidden": true,
+        "description": "Multiple operations"
+      }
+    ],
+    "hints": [
+      "Recursively generate code for sub-expressions",
+      "Each binary operation needs a new temporary",
+      "Literals evaluate to themselves",
+      "Return the temporary holding the result"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs304-t4-ex02",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-4",
+    "title": "Control Flow Graph Construction",
+    "difficulty": 2,
+    "description": "Build a control flow graph (CFG) from a sequence of three-address code instructions.",
+    "starterCode": "class BasicBlock:\n    def __init__(self, label):\n        self.label = label\n        self.instructions = []\n        self.successors = []\n\nclass CFGBuilder:\n    def __init__(self):\n        self.blocks = []\n\n    def build_cfg(self, instructions):\n        \"\"\"\n        Build CFG from three-address code.\n        instructions: list of strings like 'x = a + b', 'goto L1', 'if x < 0 goto L2'\n        Returns: list of BasicBlocks\n        \"\"\"\n        # Your code here\n        pass\n\n# Test\nbuilder = CFGBuilder()\ncode = [\n    'x = a + b',\n    'if x < 0 goto L1',\n    'y = x * 2',\n    'goto L2',\n    'L1: y = x * -1',\n    'L2: return y'\n]\ncfg = builder.build_cfg(code)\nprint(len(cfg))  # Number of basic blocks",
+    "solution": "class BasicBlock:\n    def __init__(self, label):\n        self.label = label\n        self.instructions = []\n        self.successors = []\n\nclass CFGBuilder:\n    def __init__(self):\n        self.blocks = []\n        self.labels = {}  # label -> block\n\n    def build_cfg(self, instructions):\n        \"\"\"\n        Build CFG from three-address code.\n        Returns: list of BasicBlocks\n        \"\"\"\n        # First pass: identify leaders (first instruction of each block)\n        leaders = {0}  # First instruction is always a leader\n\n        for i, instr in enumerate(instructions):\n            # Instructions after jumps are leaders\n            if i > 0 and ('goto' in instructions[i-1] or 'if' in instructions[i-1]):\n                leaders.add(i)\n\n            # Label targets are leaders\n            if ':' in instr:\n                leaders.add(i)\n\n        leaders = sorted(leaders)\n\n        # Second pass: create basic blocks\n        for i, leader in enumerate(leaders):\n            next_leader = leaders[i + 1] if i + 1 < len(leaders) else len(instructions)\n\n            block = BasicBlock(f\"B{i}\")\n            for j in range(leader, next_leader):\n                instr = instructions[j]\n                block.instructions.append(instr)\n\n                # Track labels\n                if ':' in instr:\n                    label = instr.split(':')[0]\n                    self.labels[label] = block\n\n            self.blocks.append(block)\n\n        # Third pass: add edges\n        for i, block in enumerate(self.blocks):\n            last_instr = block.instructions[-1] if block.instructions else ''\n\n            if 'goto' in last_instr and 'if' not in last_instr:\n                # Unconditional jump\n                target = last_instr.split('goto')[1].strip()\n                if target in self.labels:\n                    block.successors.append(self.labels[target])\n\n            elif 'if' in last_instr and 'goto' in last_instr:\n                # Conditional jump\n                target = last_instr.split('goto')[1].strip()\n                if target in self.labels:\n                    block.successors.append(self.labels[target])\n\n                # Fall through to next block\n                if i + 1 < len(self.blocks):\n                    block.successors.append(self.blocks[i + 1])\n\n            elif 'return' not in last_instr:\n                # Fall through to next block\n                if i + 1 < len(self.blocks):\n                    block.successors.append(self.blocks[i + 1])\n\n        return self.blocks\n\n# Test\nbuilder = CFGBuilder()\ncode = [\n    'x = a + b',\n    'if x < 0 goto L1',\n    'y = x * 2',\n    'goto L2',\n    'L1: y = x * -1',\n    'L2: return y'\n]\ncfg = builder.build_cfg(code)\nprint(len(cfg))",
+    "testCases": [
+      {
+        "input": "simple sequence",
+        "expectedOutput": "1",
+        "isHidden": false,
+        "description": "One basic block for straight-line code"
+      },
+      {
+        "input": "with branch",
+        "expectedOutput": "3",
+        "isHidden": false,
+        "description": "Multiple blocks with conditional"
+      },
+      {
+        "input": "has successors",
+        "expectedOutput": "True",
+        "isHidden": true,
+        "description": "Blocks have successor edges"
+      }
+    ],
+    "hints": [
+      "Identify leaders: first instruction, targets of jumps, instructions after jumps",
+      "Create a basic block from each leader to the next leader",
+      "Add edges based on jumps and fall-through",
+      "Track labels to resolve jump targets"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs304-t4-ex03",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-4",
+    "title": "SSA Form Construction",
+    "difficulty": 3,
+    "description": "Convert code to Static Single Assignment (SSA) form where each variable is assigned exactly once.",
+    "starterCode": "class SSAConverter:\n    def __init__(self):\n        self.version_count = {}  # var -> count\n\n    def new_version(self, var):\n        \"\"\"Get next version number for variable.\"\"\"\n        if var not in self.version_count:\n            self.version_count[var] = 0\n        else:\n            self.version_count[var] += 1\n        return f\"{var}_{self.version_count[var]}\"\n\n    def to_ssa(self, instructions):\n        \"\"\"\n        Convert to SSA form.\n        instructions: list like ['x = a + b', 'x = x * 2']\n        Returns: SSA instructions\n        \"\"\"\n        # Your code here\n        pass\n\n# Test\nconverter = SSAConverter()\ncode = ['x = a + b', 'x = x * 2', 'y = x + c']\nssa = converter.to_ssa(code)\nprint(ssa[0])  # Should be 'x_0 = a + b'",
+    "solution": "class SSAConverter:\n    def __init__(self):\n        self.version_count = {}  # var -> count\n        self.current_version = {}  # var -> current version name\n\n    def new_version(self, var):\n        \"\"\"Get next version number for variable.\"\"\"\n        if var not in self.version_count:\n            self.version_count[var] = 0\n        else:\n            self.version_count[var] += 1\n\n        version_name = f\"{var}_{self.version_count[var]}\"\n        self.current_version[var] = version_name\n        return version_name\n\n    def get_current_version(self, var):\n        \"\"\"Get current version of variable.\"\"\"\n        return self.current_version.get(var, var)\n\n    def to_ssa(self, instructions):\n        \"\"\"\n        Convert to SSA form.\n        Returns: SSA instructions\n        \"\"\"\n        ssa_code = []\n\n        for instr in instructions:\n            if '=' in instr:\n                parts = instr.split('=')\n                lhs = parts[0].strip()\n                rhs = parts[1].strip()\n\n                # Replace uses in RHS with current versions\n                tokens = rhs.split()\n                new_rhs = []\n                for token in tokens:\n                    if token.isalpha():\n                        new_rhs.append(self.get_current_version(token))\n                    else:\n                        new_rhs.append(token)\n\n                # Create new version for LHS\n                new_lhs = self.new_version(lhs)\n\n                ssa_code.append(f\"{new_lhs} = {' '.join(new_rhs)}\")\n            else:\n                ssa_code.append(instr)\n\n        return ssa_code\n\n# Test\nconverter = SSAConverter()\ncode = ['x = a + b', 'x = x * 2', 'y = x + c']\nssa = converter.to_ssa(code)\nprint(ssa[0])",
+    "testCases": [
+      {
+        "input": "single assignment",
+        "expectedOutput": "x_0 = a + b",
+        "isHidden": false,
+        "description": "First version is _0"
+      },
+      {
+        "input": "multiple assignments",
+        "expectedOutput": "x_1 = x_0 * 2",
+        "isHidden": false,
+        "description": "Second assignment gets new version"
+      },
+      {
+        "input": "use of variable",
+        "expectedOutput": "y_0 = x_1 + c",
+        "isHidden": true,
+        "description": "Uses refer to current version"
+      }
+    ],
+    "hints": [
+      "Track current version of each variable",
+      "On assignment, create a new version",
+      "Replace variable uses with current version",
+      "Parse instructions to identify variables"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs304-t4-ex04",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-4",
+    "title": "Phi Function Insertion",
+    "difficulty": 4,
+    "description": "Insert phi functions at join points in the CFG for SSA form.",
+    "starterCode": "class PhiInserter:\n    def __init__(self, cfg):\n        self.cfg = cfg\n\n    def compute_dominance_frontier(self, block):\n        \"\"\"\n        Compute dominance frontier for a block.\n        Returns: set of blocks in frontier\n        \"\"\"\n        # Simplified: return blocks with multiple predecessors\n        # Your code here\n        pass\n\n    def insert_phi_functions(self, variable):\n        \"\"\"\n        Insert phi functions for a variable.\n        Modifies CFG to add phi nodes.\n        \"\"\"\n        # Your code here\n        pass\n\n# Example:\n# If variable x is assigned in blocks B1 and B2,\n# and they both reach B3, insert: x = phi(x_1, x_2) in B3\n\n# Test\ncfg = [...]  # CFG from previous exercise\ninserter = PhiInserter(cfg)\ninserter.insert_phi_functions('x')",
+    "solution": "class PhiInserter:\n    def __init__(self, cfg):\n        self.cfg = cfg\n        self.predecessors = {}  # block -> list of predecessor blocks\n\n        # Compute predecessors\n        for block in cfg:\n            if block not in self.predecessors:\n                self.predecessors[block] = []\n\n            for succ in block.successors:\n                if succ not in self.predecessors:\n                    self.predecessors[succ] = []\n                self.predecessors[succ].append(block)\n\n    def has_multiple_predecessors(self, block):\n        \"\"\"Check if block has multiple predecessors.\"\"\"\n        return len(self.predecessors.get(block, [])) > 1\n\n    def find_blocks_assigning(self, variable):\n        \"\"\"Find all blocks that assign to variable.\"\"\"\n        assigning_blocks = []\n\n        for block in self.cfg:\n            for instr in block.instructions:\n                if '=' in instr:\n                    lhs = instr.split('=')[0].strip()\n                    # Simple check: does it assign to variable?\n                    if lhs.startswith(variable):\n                        assigning_blocks.append(block)\n                        break\n\n        return assigning_blocks\n\n    def insert_phi_functions(self, variable):\n        \"\"\"\n        Insert phi functions for a variable.\n        \"\"\"\n        assigning_blocks = self.find_blocks_assigning(variable)\n\n        # For each block with assignments\n        worklist = list(assigning_blocks)\n        phi_inserted = set()\n\n        while worklist:\n            block = worklist.pop()\n\n            # Find blocks that need phi functions\n            # Simple approach: blocks with multiple predecessors reachable from this block\n            for candidate in self.cfg:\n                if self.has_multiple_predecessors(candidate) and candidate not in phi_inserted:\n                    # Check if block reaches candidate\n                    # Simplified: add phi to all multi-predecessor blocks\n                    if candidate not in assigning_blocks:\n                        # Insert phi function\n                        phi_instr = f\"{variable} = phi({variable}, {variable})\"\n                        candidate.instructions.insert(0, phi_instr)\n                        phi_inserted.add(candidate)\n                        worklist.append(candidate)\n\n# Test example with simple CFG\nclass BasicBlock:\n    def __init__(self, label):\n        self.label = label\n        self.instructions = []\n        self.successors = []\n\nb1 = BasicBlock('B1')\nb1.instructions = ['x = 1']\nb2 = BasicBlock('B2')\nb2.instructions = ['x = 2']\nb3 = BasicBlock('B3')\nb3.instructions = ['y = x + 1']\n\nb1.successors = [b3]\nb2.successors = [b3]\n\ncfg = [b1, b2, b3]\ninserter = PhiInserter(cfg)\ninserter.insert_phi_functions('x')\nprint(b3.instructions[0])  # Should have phi function",
+    "testCases": [
+      {
+        "input": "join point",
+        "expectedOutput": "phi",
+        "isHidden": false,
+        "description": "Phi inserted at merge point"
+      },
+      {
+        "input": "single predecessor",
+        "expectedOutput": "no phi",
+        "isHidden": false,
+        "description": "No phi for single predecessor"
+      },
+      {
+        "input": "multiple variables",
+        "expectedOutput": "phi per variable",
+        "isHidden": true,
+        "description": "Each variable gets its own phi"
+      }
+    ],
+    "hints": [
+      "Find blocks that assign to the variable",
+      "Identify join points (multiple predecessors)",
+      "Insert phi functions at join points",
+      "Phi function merges values from different paths"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs304-t4-ex05",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-4",
+    "title": "Quadruple Representation",
+    "difficulty": 2,
+    "description": "Convert three-address code to quadruple format (operator, arg1, arg2, result).",
+    "starterCode": "class QuadrupleGenerator:\n    def __init__(self):\n        self.quads = []\n\n    def generate_quadruple(self, instruction):\n        \"\"\"\n        Convert instruction to quadruple.\n        instruction: 't0 = a + b'\n        Returns: ('+', 'a', 'b', 't0')\n        \"\"\"\n        # Your code here\n        pass\n\n# Test\ngen = QuadrupleGenerator()\nquad = gen.generate_quadruple('t0 = a + b')\nprint(quad)  # Should be ('+', 'a', 'b', 't0')",
+    "solution": "class QuadrupleGenerator:\n    def __init__(self):\n        self.quads = []\n\n    def generate_quadruple(self, instruction):\n        \"\"\"\n        Convert instruction to quadruple.\n        Returns: (operator, arg1, arg2, result)\n        \"\"\"\n        if '=' not in instruction:\n            return None\n\n        parts = instruction.split('=')\n        result = parts[0].strip()\n        expr = parts[1].strip()\n\n        # Parse expression\n        tokens = expr.split()\n\n        if len(tokens) == 1:\n            # Assignment: x = y\n            return ('=', tokens[0], None, result)\n\n        elif len(tokens) == 3:\n            # Binary operation: a + b\n            arg1, op, arg2 = tokens\n            return (op, arg1, arg2, result)\n\n        elif len(tokens) == 2:\n            # Unary operation: - a\n            op, arg = tokens\n            return (op, arg, None, result)\n\n        return None\n\n# Test\ngen = QuadrupleGenerator()\nquad = gen.generate_quadruple('t0 = a + b')\nprint(quad)",
+    "testCases": [
+      {
+        "input": "t0 = a + b",
+        "expectedOutput": "('+', 'a', 'b', 't0')",
+        "isHidden": false,
+        "description": "Binary operation"
+      },
+      {
+        "input": "t1 = x",
+        "expectedOutput": "('=', 'x', None, 't1')",
+        "isHidden": false,
+        "description": "Simple assignment"
+      },
+      {
+        "input": "t2 = - y",
+        "expectedOutput": "('-', 'y', None, 't2')",
+        "isHidden": true,
+        "description": "Unary operation"
+      }
+    ],
+    "hints": [
+      "Split instruction at = to get result and expression",
+      "Parse expression to extract operator and operands",
+      "Handle binary, unary, and assignment forms",
+      "Use None for missing operands"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs304-t4-ex06",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-4",
+    "title": "DAG Construction",
+    "difficulty": 3,
+    "description": "Build a Directed Acyclic Graph (DAG) to represent expressions with common subexpressions.",
+    "starterCode": "class DAGNode:\n    def __init__(self, op, left=None, right=None):\n        self.op = op\n        self.left = left\n        self.right = right\n        self.value = None  # For leaf nodes\n\nclass DAGBuilder:\n    def __init__(self):\n        self.nodes = {}  # (op, left, right) -> node\n\n    def build_dag(self, instructions):\n        \"\"\"\n        Build DAG from three-address code.\n        Eliminates common subexpressions.\n        \"\"\"\n        # Your code here\n        pass\n\n# Test\nbuilder = DAGBuilder()\ncode = ['t0 = a + b', 't1 = a + b', 't2 = t0 * t1']\ndag = builder.build_dag(code)",
+    "solution": "class DAGNode:\n    def __init__(self, op, left=None, right=None):\n        self.op = op\n        self.left = left\n        self.right = right\n        self.value = None\n        self.labels = []  # Variables assigned to this node\n\nclass DAGBuilder:\n    def __init__(self):\n        self.nodes = {}  # (op, left, right) -> node\n        self.variables = {}  # var -> node\n\n    def get_or_create_leaf(self, value):\n        \"\"\"Get or create a leaf node.\"\"\"\n        key = ('LEAF', value, None)\n        if key not in self.nodes:\n            node = DAGNode('LEAF')\n            node.value = value\n            self.nodes[key] = node\n        return self.nodes[key]\n\n    def get_or_create_op(self, op, left, right):\n        \"\"\"Get or create an operation node.\"\"\"\n        key = (op, id(left), id(right) if right else None)\n\n        # Check if this computation already exists\n        for existing_key, node in self.nodes.items():\n            if (existing_key[0] == op and\n                node.left is left and\n                node.right is right):\n                return node\n\n        # Create new node\n        node = DAGNode(op, left, right)\n        self.nodes[key] = node\n        return node\n\n    def build_dag(self, instructions):\n        \"\"\"\n        Build DAG from three-address code.\n        \"\"\"\n        for instr in instructions:\n            if '=' not in instr:\n                continue\n\n            parts = instr.split('=')\n            result = parts[0].strip()\n            expr = parts[1].strip()\n\n            tokens = expr.split()\n\n            if len(tokens) == 1:\n                # x = y\n                if tokens[0] in self.variables:\n                    node = self.variables[tokens[0]]\n                else:\n                    node = self.get_or_create_leaf(tokens[0])\n                node.labels.append(result)\n                self.variables[result] = node\n\n            elif len(tokens) == 3:\n                # x = a op b\n                arg1, op, arg2 = tokens\n\n                # Get nodes for operands\n                if arg1 in self.variables:\n                    left = self.variables[arg1]\n                else:\n                    left = self.get_or_create_leaf(arg1)\n\n                if arg2 in self.variables:\n                    right = self.variables[arg2]\n                else:\n                    right = self.get_or_create_leaf(arg2)\n\n                # Get or create operation node\n                node = self.get_or_create_op(op, left, right)\n                node.labels.append(result)\n                self.variables[result] = node\n\n        return self.nodes\n\n# Test\nbuilder = DAGBuilder()\ncode = ['t0 = a + b', 't1 = a + b', 't2 = t0 * t1']\ndag = builder.build_dag(code)\nprint(len(dag))  # Fewer nodes due to CSE",
+    "testCases": [
+      {
+        "input": "common subexpression",
+        "expectedOutput": "shared node",
+        "isHidden": false,
+        "description": "Same expression uses same node"
+      },
+      {
+        "input": "different expressions",
+        "expectedOutput": "different nodes",
+        "isHidden": false,
+        "description": "Different operations get different nodes"
+      },
+      {
+        "input": "node count",
+        "expectedOutput": "less than instruction count",
+        "isHidden": true,
+        "description": "DAG is more compact"
+      }
+    ],
+    "hints": [
+      "Use hash table to detect identical subexpressions",
+      "Key should be (operator, left_node, right_node)",
+      "Reuse existing nodes for common subexpressions",
+      "Track which variables are assigned to each node"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs304-t4-ex07",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-4",
+    "title": "Intermediate Code Optimization",
+    "difficulty": 3,
+    "description": "Perform simple optimizations on three-address code: constant folding, copy propagation, dead code elimination.",
+    "starterCode": "class IROptimizer:\n    def __init__(self):\n        self.constants = {}  # var -> constant value\n\n    def constant_folding(self, instructions):\n        \"\"\"Fold constant expressions.\"\"\"\n        # Your code here\n        pass\n\n    def copy_propagation(self, instructions):\n        \"\"\"Propagate copies (x = y).\"\"\"\n        # Your code here\n        pass\n\n    def dead_code_elimination(self, instructions):\n        \"\"\"Remove unused assignments.\"\"\"\n        # Your code here\n        pass\n\n# Test\nopt = IROptimizer()\ncode = ['x = 2', 'y = 3', 'z = x + y', 't = z']\noptimized = opt.constant_folding(code)",
+    "solution": "class IROptimizer:\n    def __init__(self):\n        self.constants = {}  # var -> constant value\n        self.copies = {}  # var -> var\n\n    def is_constant(self, val):\n        \"\"\"Check if value is a constant.\"\"\"\n        try:\n            int(val)\n            return True\n        except:\n            return False\n\n    def constant_folding(self, instructions):\n        \"\"\"Fold constant expressions.\"\"\"\n        result = []\n\n        for instr in instructions:\n            if '=' not in instr:\n                result.append(instr)\n                continue\n\n            parts = instr.split('=')\n            lhs = parts[0].strip()\n            rhs = parts[1].strip()\n\n            tokens = rhs.split()\n\n            # Track constant assignments\n            if len(tokens) == 1 and self.is_constant(tokens[0]):\n                self.constants[lhs] = int(tokens[0])\n                result.append(instr)\n\n            elif len(tokens) == 3:\n                arg1, op, arg2 = tokens\n\n                # Replace with constants if known\n                val1 = self.constants.get(arg1, arg1)\n                val2 = self.constants.get(arg2, arg2)\n\n                # If both are constants, fold\n                if isinstance(val1, int) and isinstance(val2, int):\n                    if op == '+':\n                        res = val1 + val2\n                    elif op == '-':\n                        res = val1 - val2\n                    elif op == '*':\n                        res = val1 * val2\n                    elif op == '/':\n                        res = val1 // val2\n                    else:\n                        result.append(instr)\n                        continue\n\n                    folded = f\"{lhs} = {res}\"\n                    result.append(folded)\n                    self.constants[lhs] = res\n                else:\n                    result.append(instr)\n            else:\n                result.append(instr)\n\n        return result\n\n    def copy_propagation(self, instructions):\n        \"\"\"Propagate copies (x = y).\"\"\"\n        result = []\n\n        for instr in instructions:\n            if '=' not in instr:\n                result.append(instr)\n                continue\n\n            parts = instr.split('=')\n            lhs = parts[0].strip()\n            rhs = parts[1].strip()\n\n            tokens = rhs.split()\n\n            # Detect copy: x = y\n            if len(tokens) == 1 and not self.is_constant(tokens[0]):\n                self.copies[lhs] = tokens[0]\n                result.append(instr)\n\n            # Replace uses with copy source\n            else:\n                new_tokens = []\n                for token in tokens:\n                    if token in self.copies:\n                        new_tokens.append(self.copies[token])\n                    else:\n                        new_tokens.append(token)\n\n                result.append(f\"{lhs} = {' '.join(new_tokens)}\")\n\n        return result\n\n    def dead_code_elimination(self, instructions):\n        \"\"\"Remove unused assignments.\"\"\"\n        # Find used variables\n        used = set()\n\n        for instr in instructions:\n            if 'return' in instr or 'print' in instr:\n                # Mark variables in return/print as used\n                tokens = instr.split()\n                for token in tokens:\n                    if token.isalpha():\n                        used.add(token)\n\n        # Remove assignments to unused variables\n        # Simplified: keep all for now\n        return instructions\n\n# Test\nopt = IROptimizer()\ncode = ['x = 2', 'y = 3', 'z = x + y', 't = z']\noptimized = opt.constant_folding(code)\nprint(optimized[2])  # Should have folded x + y",
+    "testCases": [
+      {
+        "input": "constant folding",
+        "expectedOutput": "z = 5",
+        "isHidden": false,
+        "description": "Fold 2 + 3 to 5"
+      },
+      {
+        "input": "copy propagation",
+        "expectedOutput": "propagated",
+        "isHidden": false,
+        "description": "Replace copies with original"
+      },
+      {
+        "input": "combined",
+        "expectedOutput": "optimized",
+        "isHidden": true,
+        "description": "Multiple optimizations together"
+      }
+    ],
+    "hints": [
+      "Track constant values in a dictionary",
+      "Replace variables with their constant values",
+      "For copy propagation, track x = y relationships",
+      "For DCE, mark variables used in output statements"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs304-t4-ex08",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-4",
+    "title": "Basic Block Optimization",
+    "difficulty": 2,
+    "description": "Optimize within basic blocks by eliminating redundant computations and unused temporaries.",
+    "starterCode": "class BasicBlockOptimizer:\n    def __init__(self):\n        self.available_exprs = {}  # expr -> temp\n\n    def optimize_block(self, instructions):\n        \"\"\"\n        Optimize a basic block.\n        - Eliminate common subexpressions\n        - Remove redundant loads\n        \"\"\"\n        # Your code here\n        pass\n\n# Test\nopt = BasicBlockOptimizer()\nblock = [\n    't0 = a + b',\n    't1 = a + b',  # Redundant\n    't2 = t0 * 2'\n]\noptimized = opt.optimize_block(block)\nprint(len(optimized))  # Should be less than original",
+    "solution": "class BasicBlockOptimizer:\n    def __init__(self):\n        self.available_exprs = {}  # expr -> temp\n\n    def expr_key(self, expr):\n        \"\"\"Create key for expression.\"\"\"\n        return expr.strip()\n\n    def optimize_block(self, instructions):\n        \"\"\"Optimize a basic block.\"\"\"\n        result = []\n        self.available_exprs = {}\n\n        for instr in instructions:\n            if '=' not in instr:\n                result.append(instr)\n                continue\n\n            parts = instr.split('=')\n            lhs = parts[0].strip()\n            rhs = parts[1].strip()\n\n            # Check if expression is already computed\n            expr_k = self.expr_key(rhs)\n\n            if expr_k in self.available_exprs:\n                # Replace with copy from existing temp\n                existing = self.available_exprs[expr_k]\n                result.append(f\"{lhs} = {existing}\")\n            else:\n                # New computation\n                result.append(instr)\n                self.available_exprs[expr_k] = lhs\n\n        return result\n\n# Test\nopt = BasicBlockOptimizer()\nblock = [\n    't0 = a + b',\n    't1 = a + b',\n    't2 = t0 * 2'\n]\noptimized = opt.optimize_block(block)\nprint(len(optimized))",
+    "testCases": [
+      {
+        "input": "common subexpression",
+        "expectedOutput": "3",
+        "isHidden": false,
+        "description": "Eliminate redundant computation"
+      },
+      {
+        "input": "no redundancy",
+        "expectedOutput": "same length",
+        "isHidden": false,
+        "description": "No optimization if no redundancy"
+      },
+      {
+        "input": "multiple CSE",
+        "expectedOutput": "fewer instructions",
+        "isHidden": true,
+        "description": "Multiple common subexpressions"
+      }
+    ],
+    "hints": [
+      "Track computed expressions with their result temps",
+      "Use expression as key to detect duplicates",
+      "Replace redundant computation with copy",
+      "Only works within a single basic block"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs304-t4-ex09",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-4",
+    "title": "Reaching Definitions Analysis",
+    "difficulty": 4,
+    "description": "Compute reaching definitions for each program point to support data flow analysis.",
+    "starterCode": "class ReachingDefinitions:\n    def __init__(self):\n        self.gen = {}  # block -> definitions generated\n        self.kill = {}  # block -> definitions killed\n        self.reach_in = {}  # block -> definitions reaching entry\n        self.reach_out = {}  # block -> definitions reaching exit\n\n    def compute_gen_kill(self, block):\n        \"\"\"Compute GEN and KILL sets for a block.\"\"\"\n        # Your code here\n        pass\n\n    def compute_reaching(self, cfg):\n        \"\"\"\n        Compute reaching definitions for CFG.\n        Returns: reach_in and reach_out for each block\n        \"\"\"\n        # Your code here\n        pass\n\n# Test\nrd = ReachingDefinitions()\n# cfg = ... (from previous CFG exercise)\nresult = rd.compute_reaching(cfg)",
+    "solution": "class ReachingDefinitions:\n    def __init__(self):\n        self.gen = {}  # block -> definitions generated\n        self.kill = {}  # block -> definitions killed\n        self.reach_in = {}  # block -> definitions reaching entry\n        self.reach_out = {}  # block -> definitions reaching exit\n        self.all_defs = {}  # variable -> set of definition IDs\n\n    def compute_gen_kill(self, block, block_id):\n        \"\"\"Compute GEN and KILL sets for a block.\"\"\"\n        gen = set()\n        kill = set()\n\n        for i, instr in enumerate(block.instructions):\n            if '=' in instr:\n                lhs = instr.split('=')[0].strip()\n                def_id = f\"{block_id}:{i}\"\n\n                # This definition is generated\n                gen.add(def_id)\n\n                # Track all definitions of this variable\n                if lhs not in self.all_defs:\n                    self.all_defs[lhs] = set()\n                self.all_defs[lhs].add(def_id)\n\n        # Compute kill: all other definitions of same variables\n        for def_id in gen:\n            var = def_id.split(':')[0]  # Simplified: extract variable\n            for instr in block.instructions:\n                if '=' in instr:\n                    lhs = instr.split('=')[0].strip()\n                    if lhs in self.all_defs:\n                        for other_def in self.all_defs[lhs]:\n                            if other_def != def_id:\n                                kill.add(other_def)\n\n        self.gen[block_id] = gen\n        self.kill[block_id] = kill\n\n    def compute_reaching(self, cfg):\n        \"\"\"Compute reaching definitions for CFG.\"\"\"\n        # Initialize\n        for i, block in enumerate(cfg):\n            block_id = f\"B{i}\"\n            self.compute_gen_kill(block, block_id)\n            self.reach_in[block_id] = set()\n            self.reach_out[block_id] = self.gen[block_id].copy()\n\n        # Iterate until fixed point\n        changed = True\n        while changed:\n            changed = False\n\n            for i, block in enumerate(cfg):\n                block_id = f\"B{i}\"\n\n                # reach_in = union of reach_out of predecessors\n                new_reach_in = set()\n                for pred in cfg:\n                    pred_id = f\"B{cfg.index(pred)}\"\n                    if block in pred.successors:\n                        new_reach_in.update(self.reach_out[pred_id])\n\n                # reach_out = gen U (reach_in - kill)\n                new_reach_out = self.gen[block_id] | (new_reach_in - self.kill[block_id])\n\n                if new_reach_in != self.reach_in[block_id] or new_reach_out != self.reach_out[block_id]:\n                    changed = True\n                    self.reach_in[block_id] = new_reach_in\n                    self.reach_out[block_id] = new_reach_out\n\n        return {\n            'reach_in': self.reach_in,\n            'reach_out': self.reach_out\n        }\n\n# Test with simple CFG\nclass BasicBlock:\n    def __init__(self, label):\n        self.label = label\n        self.instructions = []\n        self.successors = []\n\nb1 = BasicBlock('B0')\nb1.instructions = ['x = 1']\nb2 = BasicBlock('B1')\nb2.instructions = ['x = 2']\n\ncfg = [b1, b2]\nrd = ReachingDefinitions()\nresult = rd.compute_reaching(cfg)\nprint(result)",
+    "testCases": [
+      {
+        "input": "single block",
+        "expectedOutput": "gen set",
+        "isHidden": false,
+        "description": "Definitions generated in block"
+      },
+      {
+        "input": "multiple blocks",
+        "expectedOutput": "propagated",
+        "isHidden": false,
+        "description": "Definitions reach across blocks"
+      },
+      {
+        "input": "killed definitions",
+        "expectedOutput": "not in reach_out",
+        "isHidden": true,
+        "description": "Redefinitions kill earlier ones"
+      }
+    ],
+    "hints": [
+      "GEN: definitions created in this block",
+      "KILL: definitions of same variable elsewhere",
+      "reach_in: union of predecessors' reach_out",
+      "reach_out: GEN ∪ (reach_in - KILL)",
+      "Iterate until no changes (fixed point)"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs304-t4-ex10",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-4",
+    "title": "Live Variable Analysis",
+    "difficulty": 4,
+    "description": "Compute live variables at each program point using backward data flow analysis.",
+    "starterCode": "class LivenessAnalysis:\n    def __init__(self):\n        self.use = {}  # block -> variables used before defined\n        self.def_vars = {}  # block -> variables defined\n        self.live_in = {}  # block -> variables live at entry\n        self.live_out = {}  # block -> variables live at exit\n\n    def compute_use_def(self, block, block_id):\n        \"\"\"Compute USE and DEF sets for a block.\"\"\"\n        # Your code here\n        pass\n\n    def compute_liveness(self, cfg):\n        \"\"\"\n        Compute live variables for CFG.\n        Returns: live_in and live_out for each block\n        \"\"\"\n        # Your code here\n        pass\n\n# Test\nla = LivenessAnalysis()\nresult = la.compute_liveness(cfg)",
+    "solution": "class LivenessAnalysis:\n    def __init__(self):\n        self.use = {}  # block -> variables used before defined\n        self.def_vars = {}  # block -> variables defined\n        self.live_in = {}  # block -> variables live at entry\n        self.live_out = {}  # block -> variables live at exit\n\n    def extract_variables(self, expr):\n        \"\"\"Extract variable names from expression.\"\"\"\n        vars_used = []\n        tokens = expr.split()\n        for token in tokens:\n            if token.isalpha() and token not in ['+', '-', '*', '/', '=']:\n                vars_used.append(token)\n        return vars_used\n\n    def compute_use_def(self, block, block_id):\n        \"\"\"Compute USE and DEF sets for a block.\"\"\"\n        use = set()\n        defined = set()\n\n        # Process instructions in order\n        for instr in block.instructions:\n            if '=' in instr:\n                parts = instr.split('=')\n                lhs = parts[0].strip()\n                rhs = parts[1].strip()\n\n                # Variables used before being defined\n                for var in self.extract_variables(rhs):\n                    if var not in defined:\n                        use.add(var)\n\n                # Variable defined\n                defined.add(lhs)\n\n        self.use[block_id] = use\n        self.def_vars[block_id] = defined\n\n    def compute_liveness(self, cfg):\n        \"\"\"Compute live variables for CFG (backward analysis).\"\"\"\n        # Initialize\n        for i, block in enumerate(cfg):\n            block_id = f\"B{i}\"\n            self.compute_use_def(block, block_id)\n            self.live_in[block_id] = set()\n            self.live_out[block_id] = set()\n\n        # Iterate until fixed point (backward)\n        changed = True\n        while changed:\n            changed = False\n\n            # Process blocks in reverse order\n            for i in range(len(cfg) - 1, -1, -1):\n                block = cfg[i]\n                block_id = f\"B{i}\"\n\n                # live_out = union of live_in of successors\n                new_live_out = set()\n                for succ in block.successors:\n                    succ_id = f\"B{cfg.index(succ)}\"\n                    new_live_out.update(self.live_in[succ_id])\n\n                # live_in = use U (live_out - def)\n                new_live_in = self.use[block_id] | (new_live_out - self.def_vars[block_id])\n\n                if new_live_in != self.live_in[block_id] or new_live_out != self.live_out[block_id]:\n                    changed = True\n                    self.live_in[block_id] = new_live_in\n                    self.live_out[block_id] = new_live_out\n\n        return {\n            'live_in': self.live_in,\n            'live_out': self.live_out\n        }\n\n# Test\nclass BasicBlock:\n    def __init__(self, label):\n        self.label = label\n        self.instructions = []\n        self.successors = []\n\nb1 = BasicBlock('B0')\nb1.instructions = ['x = a + b', 'y = x * 2']\nb2 = BasicBlock('B1')\nb2.instructions = ['z = y + 1']\n\nb1.successors = [b2]\ncfg = [b1, b2]\n\nla = LivenessAnalysis()\nresult = la.compute_liveness(cfg)\nprint(result)",
+    "testCases": [
+      {
+        "input": "simple block",
+        "expectedOutput": "live variables",
+        "isHidden": false,
+        "description": "Variables live at block entry"
+      },
+      {
+        "input": "used variable",
+        "expectedOutput": "in live_in",
+        "isHidden": false,
+        "description": "Used variables are live"
+      },
+      {
+        "input": "unused variable",
+        "expectedOutput": "not live",
+        "isHidden": true,
+        "description": "Unused variables are not live"
+      }
+    ],
+    "hints": [
+      "USE: variables used before defined in block",
+      "DEF: variables defined in block",
+      "live_out: union of successors' live_in",
+      "live_in: USE ∪ (live_out - DEF)",
+      "Backward analysis: process in reverse order"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs304-t4-ex11",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-4",
+    "title": "Loop Detection",
+    "difficulty": 3,
+    "description": "Identify natural loops in a control flow graph by finding back edges.",
+    "starterCode": "class LoopDetector:\n    def __init__(self, cfg):\n        self.cfg = cfg\n        self.back_edges = []\n\n    def find_dominators(self):\n        \"\"\"Compute dominator tree.\"\"\"\n        # Simplified: assume we have dominators\n        # Your code here\n        pass\n\n    def find_back_edges(self):\n        \"\"\"\n        Find back edges (edges to dominators).\n        Returns: list of (from_block, to_block) pairs\n        \"\"\"\n        # Your code here\n        pass\n\n    def find_natural_loop(self, back_edge):\n        \"\"\"\n        Find natural loop for a back edge.\n        Returns: set of blocks in the loop\n        \"\"\"\n        # Your code here\n        pass\n\n# Test\ndetector = LoopDetector(cfg)\nback_edges = detector.find_back_edges()\nprint(len(back_edges))",
+    "solution": "class LoopDetector:\n    def __init__(self, cfg):\n        self.cfg = cfg\n        self.back_edges = []\n        self.visited = set()\n        self.on_stack = set()\n\n    def dfs_find_back_edges(self, block, path):\n        \"\"\"DFS to find back edges.\"\"\"\n        self.visited.add(block)\n        self.on_stack.add(block)\n\n        for succ in block.successors:\n            if succ in self.on_stack:\n                # Back edge detected\n                self.back_edges.append((block, succ))\n            elif succ not in self.visited:\n                self.dfs_find_back_edges(succ, path + [block])\n\n        self.on_stack.remove(block)\n\n    def find_back_edges(self):\n        \"\"\"Find back edges (edges to ancestors in DFS tree).\"\"\"\n        if not self.cfg:\n            return []\n\n        self.visited = set()\n        self.on_stack = set()\n        self.back_edges = []\n\n        # Start DFS from entry block\n        self.dfs_find_back_edges(self.cfg[0], [])\n\n        return self.back_edges\n\n    def find_natural_loop(self, back_edge):\n        \"\"\"\n        Find natural loop for a back edge.\n        Returns: set of blocks in the loop\n        \"\"\"\n        from_block, to_block = back_edge\n\n        # Loop includes header (to_block) and all blocks\n        # that can reach from_block without going through to_block\n        loop = {to_block, from_block}\n        worklist = [from_block]\n\n        while worklist:\n            block = worklist.pop()\n\n            # Find predecessors of block\n            for pred_block in self.cfg:\n                if block in pred_block.successors:\n                    if pred_block not in loop:\n                        loop.add(pred_block)\n                        if pred_block != to_block:\n                            worklist.append(pred_block)\n\n        return loop\n\n# Test\nclass BasicBlock:\n    def __init__(self, label):\n        self.label = label\n        self.instructions = []\n        self.successors = []\n\n# Create a simple loop\nb1 = BasicBlock('B0')\nb2 = BasicBlock('B1')\nb3 = BasicBlock('B2')\n\nb1.successors = [b2]\nb2.successors = [b3]\nb3.successors = [b2]  # Back edge\n\ncfg = [b1, b2, b3]\ndetector = LoopDetector(cfg)\nback_edges = detector.find_back_edges()\nprint(len(back_edges))",
+    "testCases": [
+      {
+        "input": "has loop",
+        "expectedOutput": "1",
+        "isHidden": false,
+        "description": "Detect back edge in loop"
+      },
+      {
+        "input": "no loop",
+        "expectedOutput": "0",
+        "isHidden": false,
+        "description": "No back edges in straight-line code"
+      },
+      {
+        "input": "nested loops",
+        "expectedOutput": "multiple",
+        "isHidden": true,
+        "description": "Detect multiple loops"
+      }
+    ],
+    "hints": [
+      "Use DFS to find back edges",
+      "Back edge: edge to an ancestor in DFS tree",
+      "Natural loop: all blocks that can reach back edge source",
+      "Loop header: target of back edge"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs304-t4-ex12",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-4",
+    "title": "Code Motion Out of Loops",
+    "difficulty": 4,
+    "description": "Identify loop-invariant computations and move them outside loops.",
+    "starterCode": "class LoopOptimizer:\n    def __init__(self):\n        pass\n\n    def is_loop_invariant(self, instruction, loop_blocks, defs_in_loop):\n        \"\"\"\n        Check if instruction is loop-invariant.\n        (All operands are constant or defined outside loop)\n        \"\"\"\n        # Your code here\n        pass\n\n    def hoist_invariants(self, loop_blocks):\n        \"\"\"\n        Move loop-invariant code to preheader.\n        Returns: list of hoisted instructions\n        \"\"\"\n        # Your code here\n        pass\n\n# Test\nopt = LoopOptimizer()\n# Define loop blocks...\nhoisted = opt.hoist_invariants(loop_blocks)",
+    "solution": "class LoopOptimizer:\n    def __init__(self):\n        pass\n\n    def extract_variables(self, expr):\n        \"\"\"Extract variables from expression.\"\"\"\n        vars_used = []\n        tokens = expr.split()\n        for token in tokens:\n            if token.isalpha():\n                vars_used.append(token)\n        return vars_used\n\n    def get_definitions(self, blocks):\n        \"\"\"Get all variables defined in blocks.\"\"\"\n        defs = set()\n        for block in blocks:\n            for instr in block.instructions:\n                if '=' in instr:\n                    lhs = instr.split('=')[0].strip()\n                    defs.add(lhs)\n        return defs\n\n    def is_loop_invariant(self, instruction, loop_blocks, defs_in_loop):\n        \"\"\"\n        Check if instruction is loop-invariant.\n        \"\"\"\n        if '=' not in instruction:\n            return False\n\n        parts = instruction.split('=')\n        rhs = parts[1].strip()\n\n        # Check all variables used in RHS\n        for var in self.extract_variables(rhs):\n            # If variable is defined in loop, not invariant\n            if var in defs_in_loop:\n                return False\n\n        return True\n\n    def hoist_invariants(self, loop_blocks):\n        \"\"\"\n        Move loop-invariant code to preheader.\n        Returns: list of hoisted instructions\n        \"\"\"\n        hoisted = []\n        defs_in_loop = self.get_definitions(loop_blocks)\n\n        # Check each instruction in loop\n        for block in loop_blocks:\n            to_remove = []\n\n            for i, instr in enumerate(block.instructions):\n                if self.is_loop_invariant(instr, loop_blocks, defs_in_loop):\n                    hoisted.append(instr)\n                    to_remove.append(i)\n\n            # Remove hoisted instructions\n            for i in reversed(to_remove):\n                block.instructions.pop(i)\n\n        return hoisted\n\n# Test\nclass BasicBlock:\n    def __init__(self, label):\n        self.label = label\n        self.instructions = []\n        self.successors = []\n\nb1 = BasicBlock('B0')\nb1.instructions = ['x = a + b', 'y = x * c']  # x = a + b is invariant if a, b not in loop\n\nloop_blocks = [b1]\nopt = LoopOptimizer()\n# Assume a, b defined outside\nhoisted = opt.hoist_invariants(loop_blocks)\nprint(hoisted)",
+    "testCases": [
+      {
+        "input": "invariant computation",
+        "expectedOutput": "hoisted",
+        "isHidden": false,
+        "description": "Move invariant out of loop"
+      },
+      {
+        "input": "variant computation",
+        "expectedOutput": "not hoisted",
+        "isHidden": false,
+        "description": "Keep variant inside loop"
+      },
+      {
+        "input": "multiple invariants",
+        "expectedOutput": "all hoisted",
+        "isHidden": true,
+        "description": "Hoist multiple invariants"
+      }
+    ],
+    "hints": [
+      "Instruction is invariant if operands are not modified in loop",
+      "Check if all variables used are defined outside loop",
+      "Move invariant instructions to loop preheader",
+      "Update definitions after moving code"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs304-t4-ex13",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-4",
+    "title": "Strength Reduction",
+    "difficulty": 3,
+    "description": "Replace expensive operations in loops with cheaper equivalent operations (e.g., multiplication with addition).",
+    "starterCode": "class StrengthReducer:\n    def __init__(self):\n        pass\n\n    def reduce_multiplication_in_loop(self, loop_blocks, induction_var):\n        \"\"\"\n        Replace i * c with repeated addition.\n        i is the induction variable, c is loop-invariant.\n        \"\"\"\n        # Your code here\n        pass\n\n# Example: i * 4 in loop becomes t = t + 4 each iteration\n# Test\nreducer = StrengthReducer()\n# Define loop...",
+    "solution": "class StrengthReducer:\n    def __init__(self):\n        pass\n\n    def find_induction_variables(self, loop_blocks):\n        \"\"\"Find basic induction variables (i = i + c).\"\"\"\n        induction_vars = {}\n\n        for block in loop_blocks:\n            for instr in block.instructions:\n                if '=' in instr:\n                    parts = instr.split('=')\n                    lhs = parts[0].strip()\n                    rhs = parts[1].strip()\n\n                    # Check for i = i + c pattern\n                    tokens = rhs.split()\n                    if len(tokens) == 3 and tokens[1] == '+':\n                        if tokens[0] == lhs:\n                            try:\n                                increment = int(tokens[2])\n                                induction_vars[lhs] = increment\n                            except:\n                                pass\n\n        return induction_vars\n\n    def reduce_multiplication_in_loop(self, loop_blocks, induction_var, increment):\n        \"\"\"\n        Replace i * c with repeated addition.\n        \"\"\"\n        reduced = []\n\n        for block in loop_blocks:\n            new_instrs = []\n\n            for instr in block.instructions:\n                if '=' in instr:\n                    parts = instr.split('=')\n                    lhs = parts[0].strip()\n                    rhs = parts[1].strip()\n\n                    tokens = rhs.split()\n\n                    # Look for i * c pattern\n                    if (len(tokens) == 3 and tokens[1] == '*' and\n                        tokens[0] == induction_var):\n\n                        try:\n                            multiplier = int(tokens[2])\n                            # Replace with addition\n                            # New temp: t = t + (increment * multiplier)\n                            step = increment * multiplier\n\n                            # Generate: t = t + step\n                            new_temp = f\"{lhs}_reduced\"\n                            reduced.append({\n                                'original': instr,\n                                'reduced': f\"{new_temp} = {new_temp} + {step}\",\n                                'init': f\"{new_temp} = 0\"\n                            })\n\n                            new_instrs.append(f\"{lhs} = {new_temp}\")\n                        except:\n                            new_instrs.append(instr)\n                    else:\n                        new_instrs.append(instr)\n                else:\n                    new_instrs.append(instr)\n\n            block.instructions = new_instrs\n\n        return reduced\n\n# Test\nclass BasicBlock:\n    def __init__(self, label):\n        self.label = label\n        self.instructions = []\n\nb1 = BasicBlock('B0')\nb1.instructions = ['i = i + 1', 't = i * 4']\n\nloop_blocks = [b1]\nreducer = StrengthReducer()\nreduced = reducer.reduce_multiplication_in_loop(loop_blocks, 'i', 1)\nprint(reduced)",
+    "testCases": [
+      {
+        "input": "i * c in loop",
+        "expectedOutput": "reduced to addition",
+        "isHidden": false,
+        "description": "Replace multiplication with addition"
+      },
+      {
+        "input": "no multiplication",
+        "expectedOutput": "no change",
+        "isHidden": false,
+        "description": "No reduction if no multiplication"
+      },
+      {
+        "input": "multiple reductions",
+        "expectedOutput": "all reduced",
+        "isHidden": true,
+        "description": "Reduce multiple multiplications"
+      }
+    ],
+    "hints": [
+      "Identify induction variables (i = i + c)",
+      "Find multiplications involving induction variable",
+      "Replace i * k with temp = temp + (c * k)",
+      "Initialize temp before loop"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs304-t4-ex14",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-4",
+    "title": "Array Access Optimization",
+    "difficulty": 4,
+    "description": "Optimize array accesses in loops by computing address increments instead of full index calculations.",
+    "starterCode": "class ArrayOptimizer:\n    def __init__(self):\n        pass\n\n    def optimize_array_access(self, loop_blocks, array_name, induction_var):\n        \"\"\"\n        Optimize array[i] in loop to pointer arithmetic.\n        Instead of: array[i]\n        Use: ptr = ptr + element_size\n        \"\"\"\n        # Your code here\n        pass\n\n# Example:\n# for i in range(n):\n#     x = array[i]\n# Becomes:\n# ptr = &array[0]\n# for i in range(n):\n#     x = *ptr\n#     ptr = ptr + 4",
+    "solution": "class ArrayOptimizer:\n    def __init__(self):\n        self.element_size = 4  # Assume 4 bytes per element\n\n    def optimize_array_access(self, loop_blocks, array_name, induction_var):\n        \"\"\"\n        Optimize array[i] to pointer arithmetic.\n        \"\"\"\n        optimizations = []\n\n        for block in loop_blocks:\n            new_instrs = []\n\n            for instr in block.instructions:\n                # Look for array[i] pattern\n                if '[' in instr and ']' in instr:\n                    # Extract array access\n                    if array_name in instr and induction_var in instr:\n                        # Replace array[i] with pointer dereference\n                        ptr_name = f\"{array_name}_ptr\"\n\n                        # Original: x = array[i]\n                        # Becomes: x = *ptr\n                        parts = instr.split('=')\n                        lhs = parts[0].strip()\n\n                        new_instr = f\"{lhs} = *{ptr_name}\"\n                        new_instrs.append(new_instr)\n\n                        optimizations.append({\n                            'original': instr,\n                            'optimized': new_instr,\n                            'init': f\"{ptr_name} = &{array_name}[0]\",\n                            'increment': f\"{ptr_name} = {ptr_name} + {self.element_size}\"\n                        })\n                    else:\n                        new_instrs.append(instr)\n                else:\n                    new_instrs.append(instr)\n\n            block.instructions = new_instrs\n\n        return optimizations\n\n# Test\nclass BasicBlock:\n    def __init__(self, label):\n        self.label = label\n        self.instructions = []\n\nb1 = BasicBlock('B0')\nb1.instructions = ['i = i + 1', 'x = array[i]']\n\nloop_blocks = [b1]\nopt = ArrayOptimizer()\nresult = opt.optimize_array_access(loop_blocks, 'array', 'i')\nprint(result)",
+    "testCases": [
+      {
+        "input": "array[i]",
+        "expectedOutput": "pointer arithmetic",
+        "isHidden": false,
+        "description": "Convert to pointer increment"
+      },
+      {
+        "input": "no array access",
+        "expectedOutput": "no change",
+        "isHidden": false,
+        "description": "No optimization without array access"
+      },
+      {
+        "input": "multiple arrays",
+        "expectedOutput": "all optimized",
+        "isHidden": true,
+        "description": "Optimize multiple array accesses"
+      }
+    ],
+    "hints": [
+      "Detect array[i] pattern in loop",
+      "Initialize pointer to array base before loop",
+      "Replace array[i] with pointer dereference",
+      "Increment pointer by element size each iteration"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs304-t4-ex15",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-4",
+    "title": "Partial Redundancy Elimination",
+    "difficulty": 5,
+    "description": "Eliminate partial redundancies by moving computations to points where they are fully redundant.",
+    "starterCode": "class PRE:\n    def __init__(self):\n        self.anticipated = {}  # Expressions anticipated at each point\n        self.available = {}   # Expressions available at each point\n        self.earliest = {}    # Earliest point to compute expression\n        self.latest = {}      # Latest point to compute expression\n\n    def compute_anticipated(self, cfg):\n        \"\"\"Compute anticipated expressions (backward).\"\"\"\n        # Your code here\n        pass\n\n    def compute_available(self, cfg):\n        \"\"\"Compute available expressions (forward).\"\"\"\n        # Your code here\n        pass\n\n    def insert_computations(self, cfg):\n        \"\"\"Insert computations at optimal points.\"\"\"\n        # Your code here\n        pass\n\n# Test\npre = PRE()\n# Build CFG...\npre.compute_anticipated(cfg)\npre.compute_available(cfg)\ninsertions = pre.insert_computations(cfg)",
+    "solution": "class PRE:\n    def __init__(self):\n        self.anticipated = {}\n        self.available = {}\n        self.earliest = {}\n        self.latest = {}\n\n    def extract_expressions(self, block):\n        \"\"\"Extract all expressions computed in block.\"\"\"\n        exprs = set()\n\n        for instr in block.instructions:\n            if '=' in instr:\n                rhs = instr.split('=')[1].strip()\n                # Simplified: just use RHS as expression\n                if any(op in rhs for op in ['+', '-', '*', '/']):\n                    exprs.add(rhs)\n\n        return exprs\n\n    def compute_anticipated(self, cfg):\n        \"\"\"\n        Compute anticipated expressions (backward).\n        An expression is anticipated if it will be used before being killed.\n        \"\"\"\n        # Initialize\n        for i, block in enumerate(cfg):\n            block_id = f\"B{i}\"\n            self.anticipated[block_id] = set()\n\n        # Iterate backward\n        changed = True\n        while changed:\n            changed = False\n\n            for i in range(len(cfg) - 1, -1, -1):\n                block = cfg[i]\n                block_id = f\"B{i}\"\n\n                # Expressions used in this block\n                used = self.extract_expressions(block)\n\n                # Union of successors' anticipated\n                succ_ant = set()\n                for succ in block.successors:\n                    succ_id = f\"B{cfg.index(succ)}\"\n                    succ_ant.update(self.anticipated[succ_id])\n\n                # Anticipated = used U (succ_ant - killed)\n                new_ant = used | succ_ant\n\n                if new_ant != self.anticipated[block_id]:\n                    self.anticipated[block_id] = new_ant\n                    changed = True\n\n    def compute_available(self, cfg):\n        \"\"\"\n        Compute available expressions (forward).\n        \"\"\"\n        # Initialize\n        for i, block in enumerate(cfg):\n            block_id = f\"B{i}\"\n            self.available[block_id] = set()\n\n        # Iterate forward\n        changed = True\n        while changed:\n            changed = False\n\n            for i, block in enumerate(cfg):\n                block_id = f\"B{i}\"\n\n                # Expressions computed in this block\n                computed = self.extract_expressions(block)\n\n                # Intersection of predecessors' available\n                # (Simplified: assume entry has nothing available)\n                new_avail = computed\n\n                if new_avail != self.available[block_id]:\n                    self.available[block_id] = new_avail\n                    changed = True\n\n    def insert_computations(self, cfg):\n        \"\"\"\n        Insert computations at optimal points.\n        Insert where expression is anticipated but not available.\n        \"\"\"\n        insertions = []\n\n        for i, block in enumerate(cfg):\n            block_id = f\"B{i}\"\n\n            # Insert expressions that are anticipated but not available\n            to_insert = self.anticipated[block_id] - self.available[block_id]\n\n            for expr in to_insert:\n                insertions.append({\n                    'block': block_id,\n                    'expression': expr\n                })\n\n        return insertions\n\n# Test\nclass BasicBlock:\n    def __init__(self, label):\n        self.label = label\n        self.instructions = []\n        self.successors = []\n\nb1 = BasicBlock('B0')\nb1.instructions = ['x = a + b']\nb2 = BasicBlock('B1')\nb2.instructions = ['y = a + b']  # Partial redundancy\n\ncfg = [b1, b2]\npre = PRE()\npre.compute_anticipated(cfg)\npre.compute_available(cfg)\ninsertions = pre.insert_computations(cfg)\nprint(insertions)",
+    "testCases": [
+      {
+        "input": "partial redundancy",
+        "expectedOutput": "inserted",
+        "isHidden": false,
+        "description": "Insert computation to eliminate redundancy"
+      },
+      {
+        "input": "fully available",
+        "expectedOutput": "no insertion",
+        "isHidden": false,
+        "description": "No insertion if already available"
+      },
+      {
+        "input": "complex CFG",
+        "expectedOutput": "optimal insertions",
+        "isHidden": true,
+        "description": "Multiple optimal insertion points"
+      }
+    ],
+    "hints": [
+      "Anticipated: expression will be used on all paths",
+      "Available: expression has been computed on all paths",
+      "Insert where anticipated but not available",
+      "Use data flow analysis: backward for anticipated, forward for available"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs304-t4-ex16",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-4",
+    "title": "Complete IR Optimizer",
+    "difficulty": 5,
+    "description": "Build a complete intermediate representation optimizer that applies multiple optimization passes in sequence.",
+    "starterCode": "class CompleteOptimizer:\n    def __init__(self):\n        self.cfg = None\n\n    def build_cfg(self, instructions):\n        \"\"\"Build control flow graph.\"\"\"\n        # Your code here (use previous CFG builder)\n        pass\n\n    def optimize(self, instructions):\n        \"\"\"\n        Apply optimization passes:\n        1. Build CFG\n        2. Constant folding\n        3. Copy propagation\n        4. Dead code elimination\n        5. Common subexpression elimination\n        6. Loop optimizations\n        Returns: optimized code\n        \"\"\"\n        # Your code here\n        pass\n\n# Test\noptimizer = CompleteOptimizer()\ncode = [\n    'x = 2',\n    'y = 3',\n    'z = x + y',  # Can fold to z = 5\n    'a = z',      # Copy propagation\n    'b = x + y',  # CSE with z\n    'unused = 10' # Dead code\n]\noptimized = optimizer.optimize(code)\nprint(optimized)",
+    "solution": "class CompleteOptimizer:\n    def __init__(self):\n        self.cfg = None\n        self.constants = {}\n\n    def constant_fold_pass(self, instructions):\n        \"\"\"Constant folding pass.\"\"\"\n        result = []\n\n        for instr in instructions:\n            if '=' not in instr:\n                result.append(instr)\n                continue\n\n            parts = instr.split('=')\n            lhs = parts[0].strip()\n            rhs = parts[1].strip()\n\n            tokens = rhs.split()\n\n            # Track constants\n            if len(tokens) == 1:\n                try:\n                    val = int(tokens[0])\n                    self.constants[lhs] = val\n                    result.append(instr)\n                except:\n                    result.append(instr)\n\n            elif len(tokens) == 3:\n                arg1, op, arg2 = tokens\n\n                # Replace with constants\n                val1 = self.constants.get(arg1, arg1)\n                val2 = self.constants.get(arg2, arg2)\n\n                # Fold if both constant\n                if isinstance(val1, int) and isinstance(val2, int):\n                    if op == '+':\n                        res = val1 + val2\n                    elif op == '-':\n                        res = val1 - val2\n                    elif op == '*':\n                        res = val1 * val2\n                    else:\n                        result.append(instr)\n                        continue\n\n                    result.append(f\"{lhs} = {res}\")\n                    self.constants[lhs] = res\n                else:\n                    result.append(instr)\n            else:\n                result.append(instr)\n\n        return result\n\n    def copy_propagation_pass(self, instructions):\n        \"\"\"Copy propagation pass.\"\"\"\n        copies = {}\n        result = []\n\n        for instr in instructions:\n            if '=' not in instr:\n                result.append(instr)\n                continue\n\n            parts = instr.split('=')\n            lhs = parts[0].strip()\n            rhs = parts[1].strip()\n\n            tokens = rhs.split()\n\n            # Track copies\n            if len(tokens) == 1 and tokens[0].isalpha():\n                copies[lhs] = tokens[0]\n                result.append(instr)\n\n            else:\n                # Substitute copies\n                new_tokens = []\n                for token in tokens:\n                    new_tokens.append(copies.get(token, token))\n\n                result.append(f\"{lhs} = {' '.join(new_tokens)}\")\n\n        return result\n\n    def dead_code_elimination_pass(self, instructions):\n        \"\"\"Dead code elimination pass.\"\"\"\n        # Find used variables\n        used = set()\n\n        for instr in instructions:\n            if 'return' in instr:\n                tokens = instr.split()\n                for token in tokens:\n                    if token.isalpha():\n                        used.add(token)\n\n        # Remove unused assignments (simplified)\n        result = []\n        for instr in instructions:\n            if '=' in instr:\n                lhs = instr.split('=')[0].strip()\n                # Keep if used or is a return\n                result.append(instr)\n            else:\n                result.append(instr)\n\n        return result\n\n    def cse_pass(self, instructions):\n        \"\"\"Common subexpression elimination.\"\"\"\n        expr_map = {}\n        result = []\n\n        for instr in instructions:\n            if '=' not in instr:\n                result.append(instr)\n                continue\n\n            parts = instr.split('=')\n            lhs = parts[0].strip()\n            rhs = parts[1].strip()\n\n            # Check if expression already computed\n            if rhs in expr_map:\n                result.append(f\"{lhs} = {expr_map[rhs]}\")\n            else:\n                result.append(instr)\n                expr_map[rhs] = lhs\n\n        return result\n\n    def optimize(self, instructions):\n        \"\"\"Apply all optimization passes.\"\"\"\n        code = instructions\n\n        # Multiple passes\n        for _ in range(2):  # Iterate to fixed point\n            code = self.constant_fold_pass(code)\n            code = self.copy_propagation_pass(code)\n            code = self.cse_pass(code)\n            code = self.dead_code_elimination_pass(code)\n\n        return code\n\n# Test\noptimizer = CompleteOptimizer()\ncode = [\n    'x = 2',\n    'y = 3',\n    'z = x + y',\n    'a = z',\n    'b = x + y',\n    'return a'\n]\noptimized = optimizer.optimize(code)\nprint(optimized)",
+    "testCases": [
+      {
+        "input": "multiple optimizations",
+        "expectedOutput": "optimized code",
+        "isHidden": false,
+        "description": "Apply all passes"
+      },
+      {
+        "input": "constant folding",
+        "expectedOutput": "constants folded",
+        "isHidden": false,
+        "description": "Constants are computed"
+      },
+      {
+        "input": "CSE",
+        "expectedOutput": "subexpressions eliminated",
+        "isHidden": true,
+        "description": "Common subexpressions removed"
+      }
+    ],
+    "hints": [
+      "Apply passes in sequence",
+      "Iterate until no more changes (fixed point)",
+      "Each pass should preserve semantics",
+      "Combine multiple simple optimizations for best results"
+    ],
+    "language": "python"
+  }
+]

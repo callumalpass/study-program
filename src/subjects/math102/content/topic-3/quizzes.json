@@ -1,0 +1,173 @@
+[
+  {
+    "id": "math102-q3",
+    "subjectId": "math102",
+    "topicId": "math102-3",
+    "title": "Graph Theory - Fundamentals",
+    "questions": [
+      {
+        "id": "math102-q3-1",
+        "type": "multiple_choice",
+        "prompt": "In a complete graph with 6 vertices (K₆), how many edges are there?",
+        "options": [
+          "6",
+          "12",
+          "15",
+          "30"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Complete graph K_n has n(n-1)/2 edges. K₆ has 6×5/2 = 15 edges."
+      },
+      {
+        "id": "math102-q3-2",
+        "type": "multiple_choice",
+        "prompt": "What is the minimum number of edges in a connected graph with 10 vertices?",
+        "options": [
+          "9",
+          "10",
+          "45",
+          "90"
+        ],
+        "correctAnswer": 0,
+        "explanation": "A tree is minimally connected with n-1 edges. So 10 vertices need at least 9 edges."
+      },
+      {
+        "id": "math102-q3-3",
+        "type": "true_false",
+        "prompt": "The handshaking lemma states that the sum of all vertex degrees equals twice the number of edges.",
+        "correctAnswer": true,
+        "explanation": "Σdeg(v) = 2|E| because each edge contributes 2 to the total degree."
+      },
+      {
+        "id": "math102-q3-4",
+        "type": "fill_blank",
+        "prompt": "A tree with n vertices has exactly ____ edges.",
+        "correctAnswer": "n-1",
+        "explanation": "Trees are minimally connected: n vertices, n-1 edges."
+      },
+      {
+        "id": "math102-q3-5",
+        "type": "multiple_choice",
+        "prompt": "A graph is bipartite if and only if it contains no cycles of:",
+        "options": [
+          "Even length",
+          "Odd length",
+          "Length 3",
+          "Length 4"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A graph is bipartite iff it contains no odd-length cycles."
+      }
+    ]
+  },
+  {
+    "id": "math102-q3b",
+    "subjectId": "math102",
+    "topicId": "math102-3",
+    "title": "Graph Theory - Application",
+    "questions": [
+      {
+        "id": "math102-q3b-1",
+        "type": "code_output",
+        "prompt": "If a simple graph has 5 vertices each with degree 3, is this possible? Answer yes or no.",
+        "correctAnswer": "no",
+        "explanation": "Sum of degrees = 5×3 = 15, which is odd. But 2|E| must be even. Contradiction."
+      },
+      {
+        "id": "math102-q3b-2",
+        "type": "multiple_choice",
+        "prompt": "A graph has an Eulerian circuit if and only if:",
+        "options": [
+          "All vertices have degree 2",
+          "All vertices have even degree",
+          "Exactly 2 vertices have odd degree",
+          "The graph is bipartite"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Eulerian circuit exists iff the graph is connected and all vertices have even degree."
+      },
+      {
+        "id": "math102-q3b-3",
+        "type": "true_false",
+        "prompt": "Every connected graph with n vertices has at least n-1 edges.",
+        "correctAnswer": true,
+        "explanation": "A spanning tree has exactly n-1 edges, which is the minimum for connectivity."
+      },
+      {
+        "id": "math102-q3b-4",
+        "type": "multiple_choice",
+        "prompt": "In a directed graph, the in-degree of a vertex is:",
+        "options": [
+          "Number of edges leaving the vertex",
+          "Number of edges entering the vertex",
+          "Total number of incident edges",
+          "Number of self-loops"
+        ],
+        "correctAnswer": 1,
+        "explanation": "In-degree counts edges coming into a vertex; out-degree counts edges leaving."
+      },
+      {
+        "id": "math102-q3b-5",
+        "type": "fill_blank",
+        "prompt": "The number of edges in a complete bipartite graph K_{3,4} is ____.",
+        "correctAnswer": "12",
+        "explanation": "K_{m,n} has m×n edges. K_{3,4} has 3×4 = 12 edges."
+      }
+    ]
+  },
+  {
+    "id": "math102-q3c",
+    "subjectId": "math102",
+    "topicId": "math102-3",
+    "title": "Graph Theory - Advanced",
+    "questions": [
+      {
+        "id": "math102-q3c-1",
+        "type": "multiple_choice",
+        "prompt": "Which graph property is NP-complete to determine?",
+        "options": [
+          "Connectivity",
+          "Bipartiteness",
+          "Hamiltonian path existence",
+          "Eulerian path existence"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Finding Hamiltonian paths is NP-complete. Eulerian paths have polynomial-time checks."
+      },
+      {
+        "id": "math102-q3c-2",
+        "type": "true_false",
+        "prompt": "Two graphs are isomorphic if they have the same number of vertices and edges.",
+        "correctAnswer": false,
+        "explanation": "Isomorphism requires same structure, not just same counts. Counter-examples exist."
+      },
+      {
+        "id": "math102-q3c-3",
+        "type": "multiple_choice",
+        "prompt": "The chromatic number of a complete graph K_n is:",
+        "options": [
+          "1",
+          "2",
+          "n-1",
+          "n"
+        ],
+        "correctAnswer": 3,
+        "explanation": "In K_n, every vertex is adjacent to every other, so n colors are needed."
+      },
+      {
+        "id": "math102-q3c-4",
+        "type": "code_output",
+        "prompt": "How many spanning trees does the complete graph K_4 have?",
+        "correctAnswer": "16",
+        "explanation": "By Cayley's formula, K_n has n^(n-2) spanning trees. K_4 has 4² = 16."
+      },
+      {
+        "id": "math102-q3c-5",
+        "type": "fill_blank",
+        "prompt": "A planar graph with n ≥ 3 vertices has at most ____ edges (Euler's formula consequence).",
+        "correctAnswer": "3n-6",
+        "explanation": "For planar graphs: |E| ≤ 3|V| - 6 when n ≥ 3."
+      }
+    ]
+  }
+]

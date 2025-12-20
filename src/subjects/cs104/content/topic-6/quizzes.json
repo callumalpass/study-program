@@ -1,0 +1,181 @@
+[
+  {
+    "id": "cs104-quiz-6a",
+    "subjectId": "cs104",
+    "topicId": "cs104-topic-6",
+    "title": "Sorting Algorithms - Fundamentals",
+    "questions": [
+      {
+        "id": "cs104-q6a-1",
+        "type": "multiple_choice",
+        "prompt": "What is the time complexity of bubble sort in the worst case?",
+        "options": [
+          "O(n)",
+          "O(n log n)",
+          "O(n²)",
+          "O(log n)"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Bubble sort compares all pairs, requiring O(n²) comparisons in the worst case."
+      },
+      {
+        "id": "cs104-q6a-2",
+        "type": "true_false",
+        "prompt": "Insertion sort is efficient for nearly sorted arrays.",
+        "correctAnswer": true,
+        "explanation": "Insertion sort is O(n) for nearly sorted data because few elements need to be moved."
+      },
+      {
+        "id": "cs104-q6a-3",
+        "type": "fill_blank",
+        "prompt": "A sorting algorithm is ____ if equal elements maintain their relative order after sorting.",
+        "correctAnswer": "stable",
+        "explanation": "Stable sorts preserve the original order of equal elements."
+      },
+      {
+        "id": "cs104-q6a-4",
+        "type": "multiple_choice",
+        "prompt": "Which sorting algorithm has the same time complexity in best, average, and worst cases?",
+        "options": [
+          "Quick sort",
+          "Bubble sort",
+          "Merge sort",
+          "Insertion sort"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Merge sort is always O(n log n) regardless of input distribution."
+      },
+      {
+        "id": "cs104-q6a-5",
+        "type": "multiple_choice",
+        "prompt": "Selection sort works by:",
+        "options": [
+          "Swapping adjacent elements",
+          "Finding minimum and placing at front",
+          "Dividing and conquering",
+          "Using a heap"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Selection sort repeatedly finds the minimum from unsorted portion and places it in sorted position."
+      }
+    ]
+  },
+  {
+    "id": "cs104-quiz-6b",
+    "subjectId": "cs104",
+    "topicId": "cs104-topic-6",
+    "title": "Sorting Algorithms - Application",
+    "questions": [
+      {
+        "id": "cs104-q6b-1",
+        "type": "code_output",
+        "prompt": "After one pass of bubble sort on [5, 3, 8, 4, 2], what is the array state?",
+        "codeSnippet": "# Bubble sort: compare and swap adjacent elements",
+        "correctAnswer": "[3, 5, 4, 2, 8]",
+        "explanation": "After one pass: 5>3 swap -> 3,5,8,4,2 -> 5<8 no swap -> 8>4 swap -> 3,5,4,8,2 -> 8>2 swap -> [3,5,4,2,8]"
+      },
+      {
+        "id": "cs104-q6b-2",
+        "type": "multiple_choice",
+        "prompt": "Quick sort's worst-case O(n²) occurs when:",
+        "options": [
+          "Array is random",
+          "Pivot is always median",
+          "Pivot is always minimum or maximum",
+          "Array has duplicates"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Poor pivot selection (always min/max) creates unbalanced partitions, degrading to O(n²)."
+      },
+      {
+        "id": "cs104-q6b-3",
+        "type": "true_false",
+        "prompt": "Merge sort requires O(n) additional space.",
+        "correctAnswer": true,
+        "explanation": "Standard merge sort needs O(n) auxiliary space for merging sorted halves."
+      },
+      {
+        "id": "cs104-q6b-4",
+        "type": "code_output",
+        "prompt": "What is the result of merging [1, 3, 5] and [2, 4, 6]?",
+        "codeSnippet": "# Merge two sorted arrays",
+        "correctAnswer": "[1, 2, 3, 4, 5, 6]",
+        "explanation": "Merging compares front elements: 1<2→1, 2<3→2, 3<4→3, 4<5→4, 5<6→5, 6"
+      },
+      {
+        "id": "cs104-q6b-5",
+        "type": "multiple_choice",
+        "prompt": "Python's built-in sort uses:",
+        "options": [
+          "Quick sort",
+          "Merge sort",
+          "Timsort",
+          "Heap sort"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Python uses Timsort, a hybrid of merge sort and insertion sort optimized for real-world data."
+      }
+    ]
+  },
+  {
+    "id": "cs104-quiz-6c",
+    "subjectId": "cs104",
+    "topicId": "cs104-topic-6",
+    "title": "Sorting Algorithms - Advanced",
+    "questions": [
+      {
+        "id": "cs104-q6c-1",
+        "type": "multiple_choice",
+        "prompt": "Which algorithm can find the kth largest element in O(n) average time?",
+        "options": [
+          "Merge sort",
+          "Quick select",
+          "Heap sort",
+          "Bubble sort"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Quick select partitions like quick sort but only recurses into one partition, achieving O(n) average."
+      },
+      {
+        "id": "cs104-q6c-2",
+        "type": "true_false",
+        "prompt": "Quick sort is a stable sorting algorithm.",
+        "correctAnswer": false,
+        "explanation": "Standard quick sort is unstable because partitioning can change the relative order of equal elements."
+      },
+      {
+        "id": "cs104-q6c-3",
+        "type": "multiple_choice",
+        "prompt": "The Dutch National Flag problem (3-way partitioning) sorts an array with:",
+        "options": [
+          "n distinct elements",
+          "Only 3 distinct values",
+          "Negative numbers",
+          "Floating point numbers"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Dutch National Flag sorts arrays with 3 distinct values (like 0,1,2) in one pass."
+      },
+      {
+        "id": "cs104-q6c-4",
+        "type": "fill_blank",
+        "prompt": "Counting inversions in an array can be done in O(n log n) using modified ____ sort.",
+        "correctAnswer": "merge",
+        "explanation": "Modified merge sort counts inversions during the merge step efficiently."
+      },
+      {
+        "id": "cs104-q6c-5",
+        "type": "multiple_choice",
+        "prompt": "For sorting a linked list, which algorithm is preferred?",
+        "options": [
+          "Quick sort",
+          "Merge sort",
+          "Heap sort",
+          "Insertion sort"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Merge sort works well on linked lists: O(1) space for splitting, no random access needed."
+      }
+    ]
+  }
+]

@@ -1,0 +1,242 @@
+[
+  {
+    "id": "math404-t5-ex01",
+    "subjectId": "math404",
+    "topicId": "math404-topic-5",
+    "type": "written",
+    "title": "Gradient Descent Update",
+    "description": "Perform gradient descent iterations on a simple quadratic function.",
+    "difficulty": 1,
+    "hints": [
+      "The update rule is x_{k+1} = x_k - α∇f(x_k)",
+      "For quadratic f, gradient is linear in x",
+      "Choose step size carefully to ensure convergence"
+    ],
+    "solution": "**Problem:** Minimize f(x) = x² starting from x₀ = 4, step size α = 0.3\n\n**Gradient:** ∇f(x) = 2x\n\n**Iteration 1:**\nx₁ = x₀ - α∇f(x₀)\n   = 4 - 0.3 × 2 × 4\n   = 4 - 2.4\n   = 1.6\n\n**Iteration 2:**\nx₂ = x₁ - α∇f(x₁)\n   = 1.6 - 0.3 × 2 × 1.6\n   = 1.6 - 0.96\n   = 0.64\n\n**Iteration 3:**\nx₃ = 0.64 - 0.3 × 2 × 0.64\n   = 0.64 - 0.384\n   = 0.256\n\n**Pattern:** x_k = (1 - 2α)^k × x₀ = (0.4)^k × 4\n\n**Convergence:** |1 - 2α| = 0.4 < 1, so converges.\n\n**After k iterations:** x_k = 4 × (0.4)^k → 0 as k → ∞\n\n**Verification:** Optimal x* = 0, f(x*) = 0 ✓"
+  },
+  {
+    "id": "math404-t5-ex02",
+    "subjectId": "math404",
+    "topicId": "math404-topic-5",
+    "type": "written",
+    "title": "Gradient Computation",
+    "description": "Compute the gradient of a multivariate function and verify it using the definition.",
+    "difficulty": 1,
+    "hints": [
+      "Gradient is the vector of partial derivatives",
+      "For f: ℝⁿ → ℝ, ∇f = [∂f/∂x₁, ..., ∂f/∂xₙ]ᵀ",
+      "Check by computing directional derivative"
+    ],
+    "solution": "**Function:** f(x,y) = x²y + 3xy² - 2x + y\n\n**Compute gradient:**\n∂f/∂x = 2xy + 3y² - 2\n∂f/∂y = x² + 6xy + 1\n\n**Gradient:** ∇f(x,y) = [2xy + 3y² - 2, x² + 6xy + 1]ᵀ\n\n**At point (1, 2):**\n∇f(1,2) = [2(1)(2) + 3(4) - 2, 1 + 6(1)(2) + 1]ᵀ\n        = [4 + 12 - 2, 1 + 12 + 1]ᵀ\n        = [14, 14]ᵀ\n\n**Verification using definition:**\nDirectional derivative in direction u = [1,0]:\nlim_{h→0} [f(1+h, 2) - f(1,2)]/h\n= lim_{h→0} [(1+h)²(2) + 3(1+h)(4) - 2(1+h) + 2 - (2 + 12 - 2 + 2)]/h\n= lim_{h→0} [2(1+2h+h²) + 12 + 12h - 2 - 2h + 2 - 14]/h\n= lim_{h→0} [4h + 2h² + 12h - 2h]/h = 14 ✓\n\n**Steepest ascent direction:** ∇f(1,2)/||∇f(1,2)|| = [1/√2, 1/√2]ᵀ"
+  },
+  {
+    "id": "math404-t5-ex03",
+    "subjectId": "math404",
+    "topicId": "math404-topic-5",
+    "type": "written",
+    "title": "Condition Number and Convergence",
+    "description": "Analyze how the condition number affects gradient descent convergence rate.",
+    "difficulty": 2,
+    "hints": [
+      "Condition number κ = λ_max/λ_min for quadratic functions",
+      "Convergence rate is (κ-1)/(κ+1)",
+      "Higher condition number means slower convergence"
+    ],
+    "solution": "**Problem:** f(x) = (1/2)xᵀQx where Q has eigenvalues 1 and 100.\n\n**Condition number:**\nκ = λ_max/λ_min = 100/1 = 100\n\n**Convergence rate for gradient descent:**\nr = (κ-1)/(κ+1) = 99/101 ≈ 0.98\n\n**Analysis:**\nAfter k iterations: ||x_k - x*|| ≤ r^k ||x₀ - x*||\n\n**For ε-accuracy (error ≤ ε||x₀ - x*||):**\nNeed r^k ≤ ε\nk ≥ log(1/ε)/log(1/r)\nk ≥ log(1/ε)/(1-r) ≈ log(1/ε) × (κ+1)/2\n\n**Example:**\nFor ε = 10⁻⁶:\nk ≥ 6 × ln(10) × 101/2 ≈ 697 iterations\n\n**Comparison with well-conditioned problem:**\nIf κ = 2: r = 1/3, k ≥ 6 × ln(10) × 3/2 ≈ 21 iterations\n\n**Conclusion:**\n- High condition number = slow convergence\n- This is the \"zig-zag\" behavior in elongated level sets\n- Preconditioning or Newton's method can help"
+  },
+  {
+    "id": "math404-t5-ex04",
+    "subjectId": "math404",
+    "topicId": "math404-topic-5",
+    "type": "written",
+    "title": "Newton's Method Iteration",
+    "description": "Perform one iteration of Newton's method for optimization and compare to gradient descent.",
+    "difficulty": 2,
+    "hints": [
+      "Newton update: x_{k+1} = x_k - H⁻¹∇f",
+      "For quadratics, Newton converges in one step",
+      "Need to compute and invert the Hessian"
+    ],
+    "solution": "**Problem:** Minimize f(x,y) = x² + 2y² - xy\n\n**Gradient:**\n∇f = [2x - y, 4y - x]ᵀ\n\n**Hessian:**\nH = [[2, -1], [-1, 4]]\n\n**Hessian inverse:**\ndet(H) = 8 - 1 = 7\nH⁻¹ = (1/7)[[4, 1], [1, 2]]\n\n**Starting point:** x₀ = (3, 1)\n\n**Newton iteration:**\n∇f(x₀) = [2(3) - 1, 4(1) - 3]ᵀ = [5, 1]ᵀ\n\nΔx = -H⁻¹∇f(x₀) = -(1/7)[[4,1],[1,2]][5,1]ᵀ\n   = -(1/7)[20+1, 5+2]ᵀ = -(1/7)[21, 7]ᵀ = [-3, -1]ᵀ\n\nx₁ = x₀ + Δx = (3,1) + (-3,-1) = (0, 0)\n\n**Verify optimality:**\n∇f(0,0) = [0, 0]ᵀ ✓\n\n**Newton found exact optimum in ONE iteration!**\n\n**Gradient descent comparison:**\nWith α = 0.2:\nx₁ = (3,1) - 0.2[5,1] = (2, 0.8)\nStill far from optimum after 1 iteration.\n\n**Convergence:**\n- Newton: quadratic convergence (error squares each iteration)\n- GD: linear convergence (error reduces by constant factor)"
+  },
+  {
+    "id": "math404-t5-ex05",
+    "subjectId": "math404",
+    "topicId": "math404-topic-5",
+    "type": "written",
+    "title": "Exact Line Search",
+    "description": "Derive the optimal step size for gradient descent using exact line search.",
+    "difficulty": 3,
+    "hints": [
+      "Exact line search: α* = argmin_α f(x - α∇f(x))",
+      "For quadratics, this has a closed-form solution",
+      "Set derivative with respect to α to zero"
+    ],
+    "solution": "**Problem:** f(x) = (1/2)xᵀQx - bᵀx\n\nFind optimal step size α at point x with descent direction d = -∇f(x) = b - Qx.\n\n**Line search problem:**\nmin_α f(x + αd)\n\n**Expand:**\nf(x + αd) = (1/2)(x + αd)ᵀQ(x + αd) - bᵀ(x + αd)\n          = (1/2)xᵀQx + α xᵀQd + (α²/2)dᵀQd - bᵀx - αbᵀd\n\n**Differentiate with respect to α:**\nd/dα f(x + αd) = xᵀQd + αdᵀQd - bᵀd\n               = dᵀQx + αdᵀQd - dᵀb\n               = dᵀ(Qx - b) + αdᵀQd\n               = -dᵀd + αdᵀQd  (since d = b - Qx)\n\n**Wait, let me recalculate with d = -∇f = -(Qx - b) = b - Qx:**\nd/dα = (Qx - b)ᵀd + αdᵀQd = -||d||² + αdᵀQd\n\n**Set to zero:**\nα* = ||d||²/(dᵀQd) = ||∇f||²/(∇fᵀQ∇f)\n\n**For steepest descent (d = -∇f):**\n**α* = ∇fᵀ∇f / (∇fᵀQ∇f)**\n\n**Example:**\nQ = [[2, 0], [0, 8]], x = (1, 1)\n∇f = Qx = [2, 8]\nα* = (4 + 64)/(4×2 + 64×8) = 68/520 ≈ 0.131\n\n**Properties:**\n- Exact line search guarantees descent\n- Successive gradients are orthogonal: ∇f_{k+1}ᵀ∇f_k = 0\n- Optimal for quadratics with exact arithmetic"
+  },
+  {
+    "id": "math404-t5-ex06",
+    "subjectId": "math404",
+    "topicId": "math404-topic-5",
+    "type": "written",
+    "title": "Backtracking Line Search",
+    "description": "Implement the Armijo backtracking line search and verify sufficient decrease.",
+    "difficulty": 3,
+    "hints": [
+      "Armijo condition: f(x - αd) ≤ f(x) - cα∇fᵀd",
+      "Start with α = 1 and reduce by factor β until condition holds",
+      "Typical values: c = 0.0001, β = 0.5"
+    ],
+    "solution": "**Armijo-Goldstein Condition:**\nf(x_k - α d_k) ≤ f(x_k) - c α ∇f(x_k)ᵀd_k\n\nwhere d_k is descent direction, typically d_k = ∇f(x_k).\n\n**Algorithm:**\n1. Set α = 1, c = 10⁻⁴, β = 0.5\n2. While f(x - αd) > f(x) - cα||d||²:\n     α ← βα\n3. Return α\n\n**Example:**\nf(x) = (x-2)⁴, x₀ = 0, d = -f'(x₀) = -4(0-2)³ = 32\n\n**Check α = 1:**\nf(0 - 1×32) = f(-32) = (-34)⁴ ≈ 1.3 × 10⁶\nf(0) - 0.0001×1×32² = 16 - 0.1 = 15.9\n1.3×10⁶ > 15.9 ✗\n\n**Check α = 0.5:**\nf(-16) = (-18)⁴ = 104,976\nStill much > 15.9 ✗\n\n**Continue reducing...**\n\n**α = 0.0625:**\nf(-2) = (-4)⁴ = 256\nf(0) - 0.0001×0.0625×1024 = 16 - 0.0064 ≈ 16\n256 > 16 ✗\n\n**α = 0.03125:**\nf(-1) = (-3)⁴ = 81\n16 - 0.0032 ≈ 16\n81 > 16 ✗\n\n**α = 0.01:**\nf(-0.32) = (-2.32)⁴ ≈ 29\n16 - 0.001 ≈ 16\n29 > 16 ✗\n\nEventually we find suitable α.\n\n**Key insight:** Backtracking ensures sufficient decrease per iteration."
+  },
+  {
+    "id": "math404-t5-ex07",
+    "subjectId": "math404",
+    "topicId": "math404-topic-5",
+    "type": "written",
+    "title": "Momentum in Gradient Descent",
+    "description": "Compare gradient descent with and without momentum on a poorly conditioned problem.",
+    "difficulty": 3,
+    "hints": [
+      "Momentum update: v_{k+1} = βv_k + ∇f(x_k), x_{k+1} = x_k - αv_{k+1}",
+      "Momentum accelerates convergence in consistent directions",
+      "Typical β = 0.9"
+    ],
+    "solution": "**Problem:** f(x,y) = (1/2)(x² + 100y²) (condition number κ = 100)\n\n**Standard GD with α = 0.01:**\nStarting at (10, 1):\n∇f = [10, 200]\nx₁ = (10, 1) - 0.01[10, 200] = (9.9, -1)\nx₂ = (9.9, -1) - 0.01[9.9, -200] = (9.801, 1)\n...oscillates slowly\n\n**Gradient Descent with Momentum (β = 0.9):**\nv₀ = 0\n∇f(x₀) = [10, 200]\n\n**Iteration 1:**\nv₁ = 0.9×0 + [10, 200] = [10, 200]\nx₁ = (10, 1) - 0.01[10, 200] = (9.9, -1)\n\n**Iteration 2:**\nv₂ = 0.9[10, 200] + [9.9, -200] = [9 + 9.9, 180 - 200] = [18.9, -20]\nx₂ = (9.9, -1) - 0.01[18.9, -20] = (9.711, -0.8)\n\n**Iteration 3:**\nv₃ = 0.9[18.9, -20] + [9.711, -80] = [17.01 + 9.711, -18 - 80] = [26.7, -98]\nx₃ = (9.711, -0.8) - 0.01[26.7, -98] = (9.44, 0.18)\n\n**Comparison:**\n- Without momentum: x-coordinate decreases slowly\n- With momentum: acceleration in x-direction, damping in y-direction\n\n**Theory:**\nWith optimal momentum, convergence rate improves from:\n(κ-1)/(κ+1) to (√κ-1)/(√κ+1)\n\nFor κ = 100:\n- Without momentum: r = 0.98\n- With momentum: r = 0.82"
+  },
+  {
+    "id": "math404-t5-ex08",
+    "subjectId": "math404",
+    "topicId": "math404-topic-5",
+    "type": "written",
+    "title": "Quasi-Newton BFGS Update",
+    "description": "Perform one BFGS update to approximate the inverse Hessian.",
+    "difficulty": 4,
+    "hints": [
+      "BFGS maintains an approximation H_k ≈ (∇²f)⁻¹",
+      "Update uses secant condition: H_{k+1}y_k = s_k",
+      "Formula: H_{k+1} = (I - ρsy^T)H_k(I - ρys^T) + ρss^T"
+    ],
+    "solution": "**BFGS Update Formula:**\nH_{k+1} = (I - ρsyᵀ)H_k(I - ρysᵀ) + ρssᵀ\n\nwhere:\n- s = x_{k+1} - x_k (step)\n- y = ∇f_{k+1} - ∇f_k (gradient change)\n- ρ = 1/(yᵀs)\n\n**Example:**\nH₀ = I (identity initialization)\nx₀ = (2, 1), x₁ = (1, 0.5)\n∇f₀ = (4, 2), ∇f₁ = (2, 1)\n\n**Compute s and y:**\ns = x₁ - x₀ = (-1, -0.5)\ny = ∇f₁ - ∇f₀ = (-2, -1)\n\n**Compute ρ:**\nyᵀs = (-2)(-1) + (-1)(-0.5) = 2 + 0.5 = 2.5\nρ = 1/2.5 = 0.4\n\n**Compute intermediate terms:**\nsyᵀ = [[-1], [-0.5]] × [[-2, -1]] = [[2, 1], [1, 0.5]]\nysᵀ = [[-2], [-1]] × [[-1, -0.5]] = [[2, 1], [1, 0.5]]\nssᵀ = [[1, 0.5], [0.5, 0.25]]\n\n**Update:**\n(I - ρsyᵀ) = [[1-0.8, -0.4], [-0.4, 1-0.2]] = [[0.2, -0.4], [-0.4, 0.8]]\n\nH₁ = [[0.2, -0.4], [-0.4, 0.8]] × I × [[0.2, -0.4], [-0.4, 0.8]]ᵀ + 0.4×ssᵀ\n   = [[0.2, -0.4], [-0.4, 0.8]]² + 0.4[[1, 0.5], [0.5, 0.25]]\n   = [[0.04+0.16, -0.08-0.32], [-0.08-0.32, 0.16+0.64]] + [[0.4, 0.2], [0.2, 0.1]]\n   = [[0.2+0.4, -0.4+0.2], [-0.4+0.2, 0.8+0.1]]\n   = [[0.6, -0.2], [-0.2, 0.9]]\n\n**Verification:** H₁y = s\n[[0.6, -0.2], [-0.2, 0.9]][[-2],[-1]] = [[-1.2+0.2], [0.4-0.9]] = [[-1], [-0.5]] = s ✓"
+  },
+  {
+    "id": "math404-t5-ex09",
+    "subjectId": "math404",
+    "topicId": "math404-topic-5",
+    "type": "written",
+    "title": "Conjugate Gradient Method",
+    "description": "Apply conjugate gradient to minimize a quadratic function.",
+    "difficulty": 4,
+    "hints": [
+      "CG generates Q-conjugate directions: dᵢᵀQdⱼ = 0",
+      "For n-dimensional quadratic, converges in at most n steps",
+      "Update: d_k = -g_k + β_k d_{k-1}"
+    ],
+    "solution": "**Problem:** Minimize f(x) = (1/2)xᵀQx - bᵀx\nwhere Q = [[2, 1], [1, 2]], b = [1, 0]ᵀ\n\n**Conjugate Gradient Algorithm:**\n\n**Initialization:** x₀ = (0, 0)\ng₀ = Qx₀ - b = -[1, 0]ᵀ = [-1, 0]ᵀ\nd₀ = -g₀ = [1, 0]ᵀ\n\n**Iteration 1:**\nα₀ = g₀ᵀg₀ / (d₀ᵀQd₀)\n   = 1 / ([1,0][[2,1],[1,2]][1,0]ᵀ)\n   = 1 / [1,0][2,1]ᵀ = 1/2\n\nx₁ = x₀ + α₀d₀ = (0,0) + 0.5(1,0) = (0.5, 0)\n\ng₁ = Qx₁ - b = [[2,1],[1,2]][0.5,0]ᵀ - [1,0]ᵀ = [1,0.5]ᵀ - [1,0]ᵀ = [0, 0.5]ᵀ\n\nβ₁ = g₁ᵀg₁ / g₀ᵀg₀ = 0.25 / 1 = 0.25\n\nd₁ = -g₁ + β₁d₀ = [0, -0.5]ᵀ + 0.25[1, 0]ᵀ = [0.25, -0.5]ᵀ\n\n**Iteration 2:**\nα₁ = g₁ᵀg₁ / (d₁ᵀQd₁)\nd₁ᵀQd₁ = [0.25, -0.5][[2,1],[1,2]][0.25, -0.5]ᵀ\n       = [0.25, -0.5][0.5-0.5, 0.25-1]ᵀ = [0.25, -0.5][0, -0.75]ᵀ = 0.375\n\nα₁ = 0.25/0.375 = 2/3\n\nx₂ = x₁ + α₁d₁ = (0.5, 0) + (2/3)(0.25, -0.5) = (0.5 + 1/6, -1/3) = (2/3, -1/3)\n\n**Verify:** g₂ = Q x₂ - b = [[2,1],[1,2]][2/3,-1/3]ᵀ - [1,0]ᵀ = [4/3-1/3, 2/3-2/3]ᵀ - [1,0]ᵀ = [0,0]ᵀ ✓\n\n**Solution:** x* = (2/3, -1/3)\nCG converged exactly in n = 2 iterations!"
+  },
+  {
+    "id": "math404-t5-ex10",
+    "subjectId": "math404",
+    "topicId": "math404-topic-5",
+    "type": "written",
+    "title": "Convergence Rate Analysis",
+    "description": "Prove the linear convergence rate of gradient descent for strongly convex functions.",
+    "difficulty": 4,
+    "hints": [
+      "Strong convexity: f(y) ≥ f(x) + ∇f(x)ᵀ(y-x) + (m/2)||y-x||²",
+      "Smoothness: ||∇f(x) - ∇f(y)|| ≤ L||x-y||",
+      "Contraction: ||x_{k+1} - x*|| ≤ (1 - m/L)||x_k - x*||"
+    ],
+    "solution": "**Assumptions:**\n- f is m-strongly convex: ∇²f ⪰ mI\n- f is L-smooth: ∇²f ⪯ LI\n- Condition number: κ = L/m\n\n**Gradient Descent:** x_{k+1} = x_k - (1/L)∇f(x_k)\n\n**Theorem:** ||x_{k+1} - x*||² ≤ (1 - 1/κ)||x_k - x*||²\n\n**Proof sketch:**\nBy L-smoothness:\nf(x_{k+1}) ≤ f(x_k) + ∇f(x_k)ᵀ(x_{k+1} - x_k) + (L/2)||x_{k+1} - x_k||²\n         = f(x_k) - (1/L)||∇f(x_k)||² + (1/2L)||∇f(x_k)||²\n         = f(x_k) - (1/2L)||∇f(x_k)||²\n\nBy strong convexity:\n||∇f(x_k)||² ≥ 2m(f(x_k) - f*)\n\nCombining:\nf(x_{k+1}) - f* ≤ (1 - m/L)(f(x_k) - f*)\n\n**Corollary:** After k iterations:\nf(x_k) - f* ≤ (1 - 1/κ)^k (f(x₀) - f*)\n\n**For ε-accuracy:**\nk ≥ κ log(1/ε)\n\n**Example:**\nκ = 100, ε = 10⁻⁶\nk ≥ 100 × 6 × ln(10) ≈ 1382 iterations\n\n**Optimal step size:** α = 1/L (not 2/(m+L))\nWith α = 2/(m+L): rate = (κ-1)/(κ+1) (slightly better)"
+  },
+  {
+    "id": "math404-t5-ex11",
+    "subjectId": "math404",
+    "topicId": "math404-topic-5",
+    "type": "written",
+    "title": "Stochastic Gradient Descent",
+    "description": "Analyze the convergence of stochastic gradient descent for finite-sum problems.",
+    "difficulty": 4,
+    "hints": [
+      "SGD uses a random gradient estimate instead of full gradient",
+      "For f(x) = (1/n)Σfᵢ(x), use ∇fᵢ(x) for random i",
+      "Convergence is O(1/k) for convex, O(1/√k) for general"
+    ],
+    "solution": "**Problem:** min f(x) = (1/n)Σᵢ₌₁ⁿ fᵢ(x)\n\n**SGD Update:**\n1. Sample i uniformly from {1,...,n}\n2. x_{k+1} = x_k - α_k ∇fᵢ(x_k)\n\n**Key property:** E[∇fᵢ(x)] = ∇f(x) (unbiased estimate)\n\n**Variance:** E[||∇fᵢ - ∇f||²] = σ²\n\n**Convergence for strongly convex f:**\n\n**Constant step size α = 1/L:**\nlim_{k→∞} E[f(x_k) - f*] = O(σ²/m)\n(Does not converge to optimum!)\n\n**Decreasing step size α_k = 1/(m·k):**\nE[f(x_k) - f*] ≤ O(σ²/(mk))\n(Converges but slowly)\n\n**Mini-batch SGD:**\nUse batch of size B: ∇ ≈ (1/B)Σⱼ∈B ∇fⱼ\nReduces variance by factor B\n\n**Comparison for n = 10⁶, ε = 10⁻⁴:**\n\n| Method | Cost per iteration | Iterations | Total cost |\n|--------|-------------------|------------|------------|\n| GD     | n                 | O(κ log 1/ε) | n × κ log 1/ε |\n| SGD    | 1                 | O(κ/ε)     | κ/ε        |\n\nSGD wins when n > κ log(1/ε)/ε\n\n**Variance reduction (SVRG, SAGA):**\nAchieve O(κ log 1/ε) complexity with O(1) per-iteration cost!"
+  },
+  {
+    "id": "math404-t5-ex12",
+    "subjectId": "math404",
+    "topicId": "math404-topic-5",
+    "type": "written",
+    "title": "Proximal Gradient Method",
+    "description": "Apply the proximal gradient method to minimize a composite objective.",
+    "difficulty": 5,
+    "hints": [
+      "For f(x) + g(x) where g is non-smooth, use prox_g",
+      "Proximal operator: prox_g(y) = argmin_x{g(x) + (1/2)||x-y||²}",
+      "Update: x_{k+1} = prox_{αg}(x_k - α∇f(x_k))"
+    ],
+    "solution": "**Problem:** min (1/2)||Ax - b||² + λ||x||₁\n\nf(x) = (1/2)||Ax - b||² (smooth)\ng(x) = λ||x||₁ (non-smooth)\n\n**Proximal operator for L1:**\nprox_{λ||·||₁}(y) = soft-threshold(y, λ)\n[prox(y)]ᵢ = sign(yᵢ) × max(|yᵢ| - λ, 0)\n\n**Proximal Gradient (ISTA):**\n1. Gradient step: z_k = x_k - α AᵀA(Ax_k - b)\n2. Proximal step: x_{k+1} = soft-threshold(z_k, αλ)\n\n**Example:** A = I, b = [3, -1]ᵀ, λ = 0.5, α = 1\n\n**Iteration 1:** x₀ = (0, 0)\nGradient step: z₀ = (0, 0) - 1×(0 - [3, -1]) = (3, -1)\nProximal step: x₁ = (max(3-0.5, 0), -max(1-0.5, 0)) = (2.5, -0.5)\n\n**Iteration 2:**\nz₁ = (2.5, -0.5) - 1×([2.5, -0.5] - [3, -1]) = (2.5, -0.5) - (-0.5, 0.5) = (3, -1)\nx₂ = (2.5, -0.5)\n\n**Converged!** x* = (2.5, -0.5)\n\n**Verification:**\n∇f(x*) = x* - b = (-0.5, 0.5)\nSubgradient of g: ∂g(x*) = λ × sign(x*) = (0.5, -0.5)\n∇f + ∂g ∋ 0 ✓\n\n**Acceleration (FISTA):** Achieves O(1/k²) vs O(1/k)"
+  },
+  {
+    "id": "math404-t5-ex13",
+    "subjectId": "math404",
+    "topicId": "math404-topic-5",
+    "type": "written",
+    "title": "Nesterov Acceleration",
+    "description": "Derive and analyze Nesterov's accelerated gradient method.",
+    "difficulty": 5,
+    "hints": [
+      "Achieves O(1/k²) for convex, vs O(1/k) for standard GD",
+      "Uses momentum with look-ahead gradient",
+      "Optimal for first-order methods"
+    ],
+    "solution": "**Nesterov Accelerated Gradient (NAG):**\n\n**Algorithm:**\ny_k = x_k + β_k(x_k - x_{k-1})  (momentum step)\nx_{k+1} = y_k - α∇f(y_k)        (gradient step)\n\nwhere β_k = (k-1)/(k+2) or β_k = (√κ - 1)/(√κ + 1)\n\n**Key insight:** Compute gradient at \"look-ahead\" point y_k, not x_k\n\n**Comparison:**\n\n**Standard GD:**\nError: f(x_k) - f* ≤ O(L||x₀ - x*||²/k)\nRate: O(1/k)\n\n**NAG:**\nError: f(x_k) - f* ≤ O(L||x₀ - x*||²/k²)\nRate: O(1/k²)\n\n**For strongly convex:**\n\n**Standard GD:**\nf(x_k) - f* ≤ (1 - 1/κ)^k (f(x₀) - f*)\n\n**NAG:**\nf(x_k) - f* ≤ (1 - 1/√κ)^k (f(x₀) - f*)\n\n**Example:** κ = 100\n- GD: need k ≈ 100 × ln(10⁶) ≈ 1382 for ε = 10⁻⁶\n- NAG: need k ≈ 10 × ln(10⁶) ≈ 138 for ε = 10⁻⁶\n\n**10× fewer iterations!**\n\n**Optimality:**\nNesterov showed this rate is optimal for first-order methods:\nAny method using only gradient information requires Ω(√κ log(1/ε)) iterations.\n\n**Implementation:**\n```\nx, x_old = x0, x0\nfor k in range(K):\n    y = x + (k-1)/(k+2) * (x - x_old)\n    x_old = x\n    x = y - alpha * grad_f(y)\n```"
+  },
+  {
+    "id": "math404-t5-ex14",
+    "subjectId": "math404",
+    "topicId": "math404-topic-5",
+    "type": "written",
+    "title": "Coordinate Descent",
+    "description": "Apply coordinate descent to minimize a separable objective function.",
+    "difficulty": 3,
+    "hints": [
+      "Update one coordinate at a time",
+      "For separable problems, each update is a 1D optimization",
+      "Cyclic or randomized coordinate selection"
+    ],
+    "solution": "**Problem:** min f(x₁, x₂) = x₁² + 2x₂² + x₁x₂\n\n**Coordinate Descent:**\nAt each step, minimize over one coordinate holding others fixed.\n\n**Update rule for coordinate i:**\nxᵢ ← argmin_{xᵢ} f(x₁, ..., xᵢ, ..., xₙ)\n\n**For our problem:**\n∂f/∂x₁ = 2x₁ + x₂ = 0 → x₁ = -x₂/2\n∂f/∂x₂ = 4x₂ + x₁ = 0 → x₂ = -x₁/4\n\n**Starting point:** x₀ = (4, 4)\n\n**Iteration 1:**\nUpdate x₁: x₁ = -x₂/2 = -4/2 = -2\nAfter: x = (-2, 4)\n\nUpdate x₂: x₂ = -x₁/4 = -(-2)/4 = 0.5\nAfter: x = (-2, 0.5)\n\n**Iteration 2:**\nUpdate x₁: x₁ = -0.5/2 = -0.25\nAfter: x = (-0.25, 0.5)\n\nUpdate x₂: x₂ = -(-0.25)/4 = 0.0625\nAfter: x = (-0.25, 0.0625)\n\n**Pattern:**\nAfter each full cycle, x₁ reduces by factor 1/8:\nx₁^(k) = (−1/8)^k × x₁^(0)\n\n**Convergence:** x* = (0, 0)\n\n**When coordinate descent works well:**\n1. Separable or nearly separable objectives\n2. Each coordinate update is cheap\n3. High-dimensional problems where full gradient is expensive\n\n**Randomized CD:**\nPick coordinate uniformly at random each iteration.\nOften better bounds than cyclic CD."
+  },
+  {
+    "id": "math404-t5-ex15",
+    "subjectId": "math404",
+    "topicId": "math404-topic-5",
+    "type": "written",
+    "title": "Trust Region Method",
+    "description": "Solve a trust region subproblem and adjust the trust region radius.",
+    "difficulty": 5,
+    "hints": [
+      "Solve min m_k(p) s.t. ||p|| ≤ Δ_k",
+      "m_k(p) = f_k + g_kᵀp + (1/2)pᵀH_kp",
+      "Adjust Δ based on actual vs predicted reduction"
+    ],
+    "solution": "**Trust Region Subproblem:**\nmin m(p) = f + gᵀp + (1/2)pᵀHp\ns.t. ||p|| ≤ Δ\n\n**Case 1: Unconstrained minimizer inside trust region**\nIf H ≻ 0 and ||H⁻¹g|| ≤ Δ:\n  p* = -H⁻¹g (Newton step)\n\n**Case 2: Constrained to boundary**\np*(λ) = -(H + λI)⁻¹g for some λ ≥ 0\nChoose λ such that ||p*(λ)|| = Δ\n\n**Example:**\nf = 10, g = [2, 1]ᵀ, H = [[1, 0], [0, 2]], Δ = 1\n\n**Check unconstrained:**\np_Newton = -H⁻¹g = -[[1,0],[0,0.5]][2,1]ᵀ = [-2, -0.5]ᵀ\n||p_Newton|| = √(4 + 0.25) ≈ 2.06 > 1 = Δ\n\n**Constrain to boundary:**\nNeed ||-(H + λI)⁻¹g|| = 1\n\nFor λ = 1:\nH + I = [[2,0],[0,3]]\np = -[[0.5,0],[0,0.33]][2,1]ᵀ = [-1, -0.33]ᵀ\n||p|| = √(1 + 0.11) ≈ 1.05 > 1\n\nFor λ = 1.2:\np ≈ [-0.91, -0.31]ᵀ, ||p|| ≈ 0.96 < 1\n\nSolve exactly: ||p(λ)|| = 1\n\n**Radius adjustment:**\nρ = (f(x) - f(x + p))/(m(0) - m(p)) (actual/predicted reduction)\n\nIf ρ < 0.25: Δ ← Δ/4 (contract)\nIf ρ > 0.75 and ||p|| = Δ: Δ ← min(2Δ, Δ_max) (expand)\nAccept step if ρ > η (typically η = 0.1)\n\n**Advantages:**\n- Global convergence guarantee\n- Handles indefinite Hessians\n- Naturally adapts step size"
+  },
+  {
+    "id": "math404-t5-ex16",
+    "subjectId": "math404",
+    "topicId": "math404-topic-5",
+    "type": "written",
+    "title": "L-BFGS Method",
+    "description": "Describe the limited-memory BFGS method and its memory efficiency.",
+    "difficulty": 5,
+    "hints": [
+      "Stores only last m pairs (s_i, y_i) instead of full Hessian",
+      "Uses two-loop recursion to compute H_k∇f efficiently",
+      "Typical m = 3-20"
+    ],
+    "solution": "**L-BFGS Motivation:**\n- BFGS stores n×n matrix H_k (O(n²) memory)\n- For large n, this is prohibitive\n- L-BFGS uses only O(mn) memory\n\n**Storage:**\nKeep last m pairs:\n{(s_{k-m}, y_{k-m}), ..., (s_{k-1}, y_{k-1})}\nwhere s_i = x_{i+1} - x_i, y_i = ∇f_{i+1} - ∇f_i\n\n**Two-Loop Recursion:**\n\n**Forward loop (compute coefficients):**\nq ← ∇f_k\nfor i = k-1, k-2, ..., k-m:\n  ρᵢ = 1/(yᵢᵀsᵢ)\n  αᵢ = ρᵢ sᵢᵀ q\n  q ← q - αᵢ yᵢ\n\n**Scale:**\nH⁰ = γI where γ = (s_{k-1}ᵀy_{k-1})/(y_{k-1}ᵀy_{k-1})\nr ← H⁰ q = γq\n\n**Backward loop (apply corrections):**\nfor i = k-m, ..., k-1:\n  β = ρᵢ yᵢᵀ r\n  r ← r + sᵢ(αᵢ - β)\n\nreturn -r\n\n**Complexity:**\n- Memory: O(mn)\n- Per iteration: O(mn) vs O(n²) for full BFGS\n\n**Typical parameters:**\nm = 10 works well for most problems\n\n**Comparison (n = 10,000):**\n| Method | Memory | Per-iteration |\n|--------|--------|---------------|\n| GD     | O(n)   | O(n)          |\n| BFGS   | O(n²)  | O(n²)         |\n| L-BFGS | O(mn)  | O(mn)         |\n\nFor n = 10,000, m = 10:\n- BFGS: 100M entries\n- L-BFGS: 200K entries (500× smaller)\n\n**When to use:**\n- Large-scale smooth optimization\n- When Hessian is too expensive to compute/store\n- Works well with line search"
+  }
+]

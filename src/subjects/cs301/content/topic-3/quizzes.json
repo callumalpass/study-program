@@ -1,0 +1,209 @@
+[
+  {
+    "id": "cs301-q3-1",
+    "subjectId": "cs301",
+    "topicId": "cs301-t3",
+    "title": "Scheduling Basics",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "What does CPU scheduling decide?",
+        "options": [
+          "Memory allocation",
+          "Which process runs next",
+          "File access",
+          "Network priority"
+        ],
+        "correctAnswer": 1,
+        "explanation": "CPU scheduling determines which ready process should be allocated the CPU next."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "What is turnaround time?",
+        "options": [
+          "Time in ready queue",
+          "Time from submission to completion",
+          "Time executing",
+          "Time waiting for I/O"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Turnaround time is the total time from process submission until completion."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "What is response time?",
+        "options": [
+          "Time to first response",
+          "Total execution time",
+          "Context switch time",
+          "I/O time"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Response time is the time from submission until the first output/response is produced."
+      },
+      {
+        "id": "q4",
+        "type": "true_false",
+        "prompt": "Non-preemptive scheduling allows the OS to forcibly remove a running process.",
+        "correctAnswer": false,
+        "explanation": "Non-preemptive scheduling lets processes run until they voluntarily yield or terminate."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "What is the convoy effect in FCFS?",
+        "options": [
+          "Processes move fast",
+          "Short processes wait behind long ones",
+          "CPU idles often",
+          "Memory is wasted"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The convoy effect occurs when short processes are stuck waiting behind a long CPU-bound process."
+      }
+    ]
+  },
+  {
+    "id": "cs301-q3-2",
+    "subjectId": "cs301",
+    "topicId": "cs301-t3",
+    "title": "Scheduling Algorithms",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "Which algorithm is optimal for minimizing average waiting time?",
+        "options": [
+          "FCFS",
+          "SJF",
+          "Round Robin",
+          "Priority"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Shortest Job First minimizes average waiting time by executing shorter jobs first."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "What is the main issue with SJF?",
+        "options": [
+          "Too complex",
+          "Requires knowing burst time in advance",
+          "Too much overhead",
+          "Poor response time"
+        ],
+        "correctAnswer": 1,
+        "explanation": "SJF requires predicting CPU burst time, which is difficult in practice."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "In Round Robin, what happens when time quantum expires?",
+        "options": [
+          "Process terminates",
+          "Process moves to end of ready queue",
+          "Process priority increases",
+          "Process blocks"
+        ],
+        "correctAnswer": 1,
+        "explanation": "When the time quantum expires, the process is preempted and moved to the end of the ready queue."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "What is the effect of a very small time quantum in RR?",
+        "options": [
+          "High throughput",
+          "High context switch overhead",
+          "Low response time",
+          "Simple implementation"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A very small quantum causes frequent context switches, increasing overhead and reducing throughput."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "What is starvation in scheduling?",
+        "options": [
+          "CPU is idle",
+          "A process never gets CPU time",
+          "Memory runs out",
+          "Deadlock occurs"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Starvation occurs when a process waits indefinitely because higher-priority processes keep arriving."
+      }
+    ]
+  },
+  {
+    "id": "cs301-q3-3",
+    "subjectId": "cs301",
+    "topicId": "cs301-t3",
+    "title": "Advanced Scheduling",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "How does aging prevent starvation?",
+        "options": [
+          "Kills old processes",
+          "Gradually increases waiting process priority",
+          "Reduces time quantum",
+          "Adds more CPUs"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Aging gradually increases the priority of waiting processes so they eventually get scheduled."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "What is multilevel feedback queue scheduling?",
+        "options": [
+          "Fixed queue assignment",
+          "Processes can move between priority queues",
+          "Single queue system",
+          "Hardware queue"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Multilevel feedback allows processes to move between queues based on their behavior."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "In multiprocessor scheduling, cache affinity favors keeping processes on the same CPU.",
+        "correctAnswer": true,
+        "explanation": "Cache affinity improves performance by keeping processes on CPUs where their data is cached."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "What is the goal of Rate Monotonic scheduling?",
+        "options": [
+          "Maximize throughput",
+          "Meet periodic task deadlines",
+          "Minimize context switches",
+          "Balance load"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Rate Monotonic is a real-time scheduling algorithm that assigns priorities based on period."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "In EDF scheduling, which process gets highest priority?",
+        "options": [
+          "Shortest job",
+          "Longest job",
+          "Earliest deadline",
+          "Most recent arrival"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Earliest Deadline First schedules the process with the nearest deadline."
+      }
+    ]
+  }
+]

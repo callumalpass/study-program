@@ -1,0 +1,475 @@
+[
+  {
+    "id": "cs407-ex-7-1",
+    "subjectId": "cs407",
+    "topicId": "cs407-t7",
+    "title": "Data Anonymization",
+    "description": "Write a function that anonymizes personally identifiable information (PII) by replacing names with unique IDs.",
+    "difficulty": 2,
+    "language": "python",
+    "starterCode": "import pandas as pd\n\ndef anonymize_names(df, name_column):\n    # Replace names with anonymous IDs like 'USER_001', 'USER_002', etc.\n    pass",
+    "solution": "import pandas as pd\n\ndef anonymize_names(df, name_column):\n    unique_names = df[name_column].unique()\n    name_to_id = {name: f'USER_{str(i+1).zfill(3)}' for i, name in enumerate(unique_names)}\n    df[name_column] = df[name_column].map(name_to_id)\n    return df",
+    "testCases": [
+      {
+        "input": "pd.DataFrame({\"name\": [\"Alice\", \"Bob\", \"Alice\"]}), \"name\"",
+        "expectedOutput": "pd.DataFrame({\"name\": [\"USER_001\", \"USER_002\", \"USER_001\"]})",
+        "isHidden": false,
+        "description": "Anonymize names"
+      }
+    ],
+    "hints": [
+      "Get unique values from the column",
+      "Create a mapping dictionary from names to IDs",
+      "Use .map() to replace names with IDs",
+      "Use str.zfill() to pad numbers with zeros"
+    ]
+  },
+  {
+    "id": "cs407-ex-7-2",
+    "subjectId": "cs407",
+    "topicId": "cs407-t7",
+    "title": "Email Masking",
+    "description": "Write a function that masks email addresses for privacy by showing only the domain.",
+    "difficulty": 1,
+    "language": "python",
+    "starterCode": "import pandas as pd\n\ndef mask_emails(df, email_column):\n    # Replace emails with masked version: user@domain.com -> ****@domain.com\n    # Return modified DataFrame\n    pass",
+    "solution": "import pandas as pd\n\ndef mask_emails(df, email_column):\n    df[email_column] = df[email_column].apply(\n        lambda email: '****@' + email.split('@')[1] if '@' in email else email\n    )\n    return df",
+    "testCases": [
+      {
+        "input": "pd.DataFrame({\"email\": [\"alice@example.com\", \"bob@test.org\"]}), \"email\"",
+        "expectedOutput": "DataFrame with masked emails",
+        "isHidden": false,
+        "description": "Mask email addresses"
+      },
+      {
+        "input": "pd.DataFrame({\"email\": [\"user1@company.com\"]}), \"email\"",
+        "expectedOutput": "DataFrame with ****@company.com",
+        "isHidden": false,
+        "description": "Single email masking"
+      }
+    ],
+    "hints": [
+      "Split email by \"@\" to get domain",
+      "Replace username part with \"****\"",
+      "Use .apply() with lambda function",
+      "Handle cases without @ symbol"
+    ]
+  },
+  {
+    "id": "cs407-ex-7-3",
+    "subjectId": "cs407",
+    "topicId": "cs407-t7",
+    "title": "K-Anonymity Check",
+    "description": "Write a function that checks if a dataset satisfies k-anonymity for given quasi-identifiers.",
+    "difficulty": 3,
+    "language": "python",
+    "starterCode": "import pandas as pd\n\ndef check_k_anonymity(df, quasi_identifiers, k):\n    # Check if every combination of quasi_identifiers appears at least k times\n    # Return True if k-anonymity is satisfied, False otherwise\n    pass",
+    "solution": "import pandas as pd\n\ndef check_k_anonymity(df, quasi_identifiers, k):\n    group_sizes = df.groupby(quasi_identifiers).size()\n    min_group_size = group_sizes.min()\n    return min_group_size >= k",
+    "testCases": [
+      {
+        "input": "df with zip codes and ages, k=2",
+        "expectedOutput": "True or False based on group sizes",
+        "isHidden": false,
+        "description": "Check 2-anonymity"
+      },
+      {
+        "input": "df with gender and city, k=3",
+        "expectedOutput": "Boolean result",
+        "isHidden": false,
+        "description": "Check 3-anonymity"
+      }
+    ],
+    "hints": [
+      "Group by quasi_identifiers columns",
+      "Use .size() to count group sizes",
+      "Find minimum group size",
+      "Return True if min size >= k"
+    ]
+  },
+  {
+    "id": "cs407-ex-7-4",
+    "subjectId": "cs407",
+    "topicId": "cs407-t7",
+    "title": "Bias Detection in Groups",
+    "description": "Write a function that detects demographic parity bias by comparing outcome rates across groups.",
+    "difficulty": 2,
+    "language": "python",
+    "starterCode": "import pandas as pd\n\ndef detect_demographic_parity_bias(df, sensitive_attr, outcome_col, threshold=0.1):\n    # Calculate outcome rate for each group\n    # Check if difference exceeds threshold\n    # Return dict with rates and bias_detected flag\n    pass",
+    "solution": "import pandas as pd\n\ndef detect_demographic_parity_bias(df, sensitive_attr, outcome_col, threshold=0.1):\n    group_rates = df.groupby(sensitive_attr)[outcome_col].mean()\n    max_rate = group_rates.max()\n    min_rate = group_rates.min()\n    difference = max_rate - min_rate\n\n    return {\n        'group_rates': group_rates.to_dict(),\n        'difference': round(difference, 3),\n        'bias_detected': difference > threshold\n    }",
+    "testCases": [
+      {
+        "input": "df with gender and approved columns",
+        "expectedOutput": "Dict with rates and bias detection",
+        "isHidden": false,
+        "description": "Gender bias detection"
+      },
+      {
+        "input": "df with race and hired columns",
+        "expectedOutput": "Bias analysis results",
+        "isHidden": false,
+        "description": "Hiring bias detection"
+      }
+    ],
+    "hints": [
+      "Group by sensitive attribute",
+      "Calculate mean of outcome for each group",
+      "Find difference between max and min rates",
+      "Compare difference to threshold"
+    ]
+  },
+  {
+    "id": "cs407-ex-7-5",
+    "subjectId": "cs407",
+    "topicId": "cs407-t7",
+    "title": "Equal Opportunity Metric",
+    "description": "Write a function that calculates the equal opportunity difference for a binary classifier.",
+    "difficulty": 3,
+    "language": "python",
+    "starterCode": "import pandas as pd\n\ndef calculate_equal_opportunity(df, sensitive_attr, y_true_col, y_pred_col, favorable_label=1):\n    # Calculate True Positive Rate for each group\n    # Return difference between TPRs (equal opportunity metric)\n    pass",
+    "solution": "import pandas as pd\n\ndef calculate_equal_opportunity(df, sensitive_attr, y_true_col, y_pred_col, favorable_label=1):\n    def tpr(group):\n        positives = group[group[y_true_col] == favorable_label]\n        if len(positives) == 0:\n            return 0\n        return (positives[y_pred_col] == favorable_label).sum() / len(positives)\n\n    tpr_by_group = df.groupby(sensitive_attr).apply(tpr)\n    difference = tpr_by_group.max() - tpr_by_group.min()\n\n    return {\n        'tpr_by_group': tpr_by_group.to_dict(),\n        'equal_opportunity_difference': round(difference, 3)\n    }",
+    "testCases": [
+      {
+        "input": "df with predictions and true labels by group",
+        "expectedOutput": "TPR difference between groups",
+        "isHidden": false,
+        "description": "Equal opportunity calculation"
+      }
+    ],
+    "hints": [
+      "Filter for true positive cases (y_true == favorable_label)",
+      "Calculate TPR = correct predictions / total positives",
+      "Compute TPR for each group",
+      "Return difference between max and min TPR"
+    ]
+  },
+  {
+    "id": "cs407-ex-7-6",
+    "subjectId": "cs407",
+    "topicId": "cs407-t7",
+    "title": "Data Suppression",
+    "description": "Write a function that suppresses rare values in a column to protect privacy.",
+    "difficulty": 2,
+    "language": "python",
+    "starterCode": "import pandas as pd\n\ndef suppress_rare_values(df, column, min_count):\n    # Replace values that appear less than min_count times with \"SUPPRESSED\"\n    # Return modified DataFrame\n    pass",
+    "solution": "import pandas as pd\n\ndef suppress_rare_values(df, column, min_count):\n    value_counts = df[column].value_counts()\n    rare_values = value_counts[value_counts < min_count].index\n    df[column] = df[column].apply(\n        lambda x: 'SUPPRESSED' if x in rare_values else x\n    )\n    return df",
+    "testCases": [
+      {
+        "input": "df with occupation column, min_count=2",
+        "expectedOutput": "DataFrame with rare occupations suppressed",
+        "isHidden": false,
+        "description": "Suppress rare occupations"
+      },
+      {
+        "input": "df with city column, min_count=3",
+        "expectedOutput": "Rare cities replaced with SUPPRESSED",
+        "isHidden": false,
+        "description": "Suppress rare cities"
+      }
+    ],
+    "hints": [
+      "Use value_counts() to count occurrences",
+      "Filter for values with count < min_count",
+      "Replace rare values with \"SUPPRESSED\"",
+      "Use .apply() with conditional logic"
+    ]
+  },
+  {
+    "id": "cs407-ex-7-7",
+    "subjectId": "cs407",
+    "topicId": "cs407-t7",
+    "title": "Age Binning for Privacy",
+    "description": "Write a function that bins ages into ranges to reduce identifiability.",
+    "difficulty": 2,
+    "language": "python",
+    "starterCode": "import pandas as pd\n\ndef bin_ages(df, age_column, bin_size=10):\n    # Convert ages to bins (e.g., 20-29, 30-39)\n    # Return modified DataFrame\n    pass",
+    "solution": "import pandas as pd\n\ndef bin_ages(df, age_column, bin_size=10):\n    def age_to_bin(age):\n        lower = (age // bin_size) * bin_size\n        upper = lower + bin_size - 1\n        return f'{lower}-{upper}'\n\n    df[age_column] = df[age_column].apply(age_to_bin)\n    return df",
+    "testCases": [
+      {
+        "input": "df with ages [25, 32, 45], bin_size=10",
+        "expectedOutput": "DataFrame with age ranges [\"20-29\", \"30-39\", \"40-49\"]",
+        "isHidden": false,
+        "description": "Bin ages by decade"
+      },
+      {
+        "input": "df with ages [18, 22, 35], bin_size=5",
+        "expectedOutput": "Age ranges with 5-year bins",
+        "isHidden": false,
+        "description": "5-year age bins"
+      }
+    ],
+    "hints": [
+      "Calculate lower bound: (age // bin_size) * bin_size",
+      "Calculate upper bound: lower + bin_size - 1",
+      "Format as string: \"lower-upper\"",
+      "Use .apply() to transform all ages"
+    ]
+  },
+  {
+    "id": "cs407-ex-7-8",
+    "subjectId": "cs407",
+    "topicId": "cs407-t7",
+    "title": "Consent Tracking",
+    "description": "Write a function that filters data based on user consent for specific purposes.",
+    "difficulty": 2,
+    "language": "python",
+    "starterCode": "import pandas as pd\n\ndef filter_by_consent(df, purpose):\n    # df has columns: user_id, consent_purposes (list), data\n    # Filter to only include users who consented to 'purpose'\n    # Return filtered DataFrame\n    pass",
+    "solution": "import pandas as pd\n\ndef filter_by_consent(df, purpose):\n    return df[df['consent_purposes'].apply(lambda x: purpose in x)]",
+    "testCases": [
+      {
+        "input": "df with consent_purposes, filter for \"marketing\"",
+        "expectedOutput": "DataFrame with only users who consented to marketing",
+        "isHidden": false,
+        "description": "Filter by marketing consent"
+      },
+      {
+        "input": "df with consent_purposes, filter for \"analytics\"",
+        "expectedOutput": "Users who consented to analytics",
+        "isHidden": false,
+        "description": "Filter by analytics consent"
+      }
+    ],
+    "hints": [
+      "consent_purposes is a list for each user",
+      "Check if purpose is in the list",
+      "Use .apply() with lambda to check membership",
+      "Filter DataFrame based on result"
+    ]
+  },
+  {
+    "id": "cs407-ex-7-9",
+    "subjectId": "cs407",
+    "topicId": "cs407-t7",
+    "title": "Differential Privacy Noise",
+    "description": "Write a function that adds Laplacian noise to numeric data for differential privacy.",
+    "difficulty": 3,
+    "language": "python",
+    "starterCode": "import pandas as pd\nimport numpy as np\n\ndef add_laplacian_noise(df, columns, epsilon):\n    # Add Laplacian noise with scale = sensitivity / epsilon\n    # Assume sensitivity = 1 for each column\n    # Return DataFrame with noisy data\n    pass",
+    "solution": "import pandas as pd\nimport numpy as np\n\ndef add_laplacian_noise(df, columns, epsilon):\n    df_noisy = df.copy()\n    scale = 1.0 / epsilon\n\n    for col in columns:\n        noise = np.random.laplace(0, scale, size=len(df))\n        df_noisy[col] = df[col] + noise\n\n    return df_noisy",
+    "testCases": [
+      {
+        "input": "df with salary and age columns, epsilon=0.1",
+        "expectedOutput": "DataFrame with Laplacian noise added",
+        "isHidden": false,
+        "description": "Add noise for privacy"
+      },
+      {
+        "input": "df with score column, epsilon=1.0",
+        "expectedOutput": "Noisy scores with differential privacy",
+        "isHidden": false,
+        "description": "Differential privacy on scores"
+      }
+    ],
+    "hints": [
+      "Scale = sensitivity / epsilon",
+      "Use np.random.laplace(0, scale, size)",
+      "Add noise to each specified column",
+      "Return a copy of the DataFrame with noise"
+    ]
+  },
+  {
+    "id": "cs407-ex-7-10",
+    "subjectId": "cs407",
+    "topicId": "cs407-t7",
+    "title": "Fairness Through Unawareness",
+    "description": "Write a function that removes sensitive attributes from a dataset.",
+    "difficulty": 1,
+    "language": "python",
+    "starterCode": "import pandas as pd\n\ndef remove_sensitive_attributes(df, sensitive_columns):\n    # Remove specified sensitive columns\n    # Return DataFrame without sensitive attributes\n    pass",
+    "solution": "import pandas as pd\n\ndef remove_sensitive_attributes(df, sensitive_columns):\n    return df.drop(columns=sensitive_columns)",
+    "testCases": [
+      {
+        "input": "df with gender, race, age columns, remove [\"gender\", \"race\"]",
+        "expectedOutput": "DataFrame without gender and race",
+        "isHidden": false,
+        "description": "Remove sensitive attributes"
+      },
+      {
+        "input": "df with religion and ethnicity, remove both",
+        "expectedOutput": "DataFrame with attributes removed",
+        "isHidden": false,
+        "description": "Remove multiple sensitive columns"
+      }
+    ],
+    "hints": [
+      "Use df.drop(columns=sensitive_columns)",
+      "This implements fairness through unawareness",
+      "Note: This does not guarantee fairness",
+      "Correlated attributes may still encode bias"
+    ]
+  },
+  {
+    "id": "cs407-ex-7-11",
+    "subjectId": "cs407",
+    "topicId": "cs407-t7",
+    "title": "Disparate Impact Ratio",
+    "description": "Write a function that calculates the disparate impact ratio to detect bias.",
+    "difficulty": 3,
+    "language": "python",
+    "starterCode": "import pandas as pd\n\ndef calculate_disparate_impact(df, sensitive_attr, outcome_col, privileged_value):\n    # Calculate selection rate for privileged and unprivileged groups\n    # Disparate Impact = unprivileged_rate / privileged_rate\n    # Return ratio (should be >= 0.8 for fairness)\n    pass",
+    "solution": "import pandas as pd\n\ndef calculate_disparate_impact(df, sensitive_attr, outcome_col, privileged_value):\n    privileged = df[df[sensitive_attr] == privileged_value]\n    unprivileged = df[df[sensitive_attr] != privileged_value]\n\n    privileged_rate = privileged[outcome_col].mean()\n    unprivileged_rate = unprivileged[outcome_col].mean()\n\n    if privileged_rate == 0:\n        return float('inf')\n\n    di_ratio = unprivileged_rate / privileged_rate\n\n    return {\n        'privileged_rate': round(privileged_rate, 3),\n        'unprivileged_rate': round(unprivileged_rate, 3),\n        'disparate_impact_ratio': round(di_ratio, 3),\n        'fair': di_ratio >= 0.8\n    }",
+    "testCases": [
+      {
+        "input": "df with gender and hired columns",
+        "expectedOutput": "Disparate impact analysis",
+        "isHidden": false,
+        "description": "Hiring fairness check"
+      },
+      {
+        "input": "df with race and approved columns",
+        "expectedOutput": "Approval fairness analysis",
+        "isHidden": false,
+        "description": "Loan approval fairness"
+      }
+    ],
+    "hints": [
+      "Split data into privileged and unprivileged groups",
+      "Calculate mean outcome for each group",
+      "Divide unprivileged_rate by privileged_rate",
+      "80% rule: ratio should be >= 0.8 for fairness"
+    ]
+  },
+  {
+    "id": "cs407-ex-7-12",
+    "subjectId": "cs407",
+    "topicId": "cs407-t7",
+    "title": "Data Retention Policy",
+    "description": "Write a function that removes data older than a specified retention period.",
+    "difficulty": 2,
+    "language": "python",
+    "starterCode": "import pandas as pd\nfrom datetime import datetime, timedelta\n\ndef apply_retention_policy(df, date_column, retention_days):\n    # Remove rows where date is older than retention_days from today\n    # Return filtered DataFrame\n    pass",
+    "solution": "import pandas as pd\nfrom datetime import datetime, timedelta\n\ndef apply_retention_policy(df, date_column, retention_days):\n    cutoff_date = datetime.now() - timedelta(days=retention_days)\n    df[date_column] = pd.to_datetime(df[date_column])\n    return df[df[date_column] >= cutoff_date]",
+    "testCases": [
+      {
+        "input": "df with created_at column, retention_days=365",
+        "expectedOutput": "DataFrame with only data from last year",
+        "isHidden": false,
+        "description": "One year retention"
+      },
+      {
+        "input": "df with timestamp, retention_days=90",
+        "expectedOutput": "Data from last 90 days",
+        "isHidden": false,
+        "description": "90-day retention"
+      }
+    ],
+    "hints": [
+      "Calculate cutoff date: now - retention_days",
+      "Convert date column to datetime",
+      "Filter for dates >= cutoff_date",
+      "Use pd.to_datetime() for conversion"
+    ]
+  },
+  {
+    "id": "cs407-ex-7-13",
+    "subjectId": "cs407",
+    "topicId": "cs407-t7",
+    "title": "Pseudonymization",
+    "description": "Write a function that pseudonymizes user IDs using a hash function.",
+    "difficulty": 2,
+    "language": "python",
+    "starterCode": "import pandas as pd\nimport hashlib\n\ndef pseudonymize_ids(df, id_column, salt=''):\n    # Hash each ID with optional salt\n    # Return DataFrame with pseudonymized IDs\n    pass",
+    "solution": "import pandas as pd\nimport hashlib\n\ndef pseudonymize_ids(df, id_column, salt=''):\n    def hash_id(user_id):\n        data = str(user_id) + salt\n        return hashlib.sha256(data.encode()).hexdigest()[:16]\n\n    df[id_column] = df[id_column].apply(hash_id)\n    return df",
+    "testCases": [
+      {
+        "input": "df with user_id column",
+        "expectedOutput": "DataFrame with hashed IDs",
+        "isHidden": false,
+        "description": "Pseudonymize user IDs"
+      },
+      {
+        "input": "df with customer_id, salt=\"secret123\"",
+        "expectedOutput": "Salted hash pseudonyms",
+        "isHidden": false,
+        "description": "Pseudonymize with salt"
+      }
+    ],
+    "hints": [
+      "Convert ID to string and concatenate with salt",
+      "Use hashlib.sha256() to hash",
+      "Encode string before hashing",
+      "Use hexdigest()[:16] for shorter hash"
+    ]
+  },
+  {
+    "id": "cs407-ex-7-14",
+    "subjectId": "cs407",
+    "topicId": "cs407-t7",
+    "title": "Calibration Fairness",
+    "description": "Write a function that checks if a model is calibrated across different groups.",
+    "difficulty": 4,
+    "language": "python",
+    "starterCode": "import pandas as pd\nimport numpy as np\n\ndef check_calibration_fairness(df, sensitive_attr, y_true_col, y_prob_col, n_bins=10):\n    # For each group, check if predicted probabilities match actual outcomes\n    # Return calibration error for each group\n    pass",
+    "solution": "import pandas as pd\nimport numpy as np\n\ndef check_calibration_fairness(df, sensitive_attr, y_true_col, y_prob_col, n_bins=10):\n    results = {}\n\n    for group in df[sensitive_attr].unique():\n        group_df = df[df[sensitive_attr] == group]\n\n        # Create bins\n        bins = np.linspace(0, 1, n_bins + 1)\n        group_df['bin'] = pd.cut(group_df[y_prob_col], bins=bins, include_lowest=True)\n\n        # Calculate calibration error\n        calibration = group_df.groupby('bin').agg({\n            y_prob_col: 'mean',\n            y_true_col: 'mean'\n        })\n\n        calibration_error = np.abs(\n            calibration[y_prob_col] - calibration[y_true_col]\n        ).mean()\n\n        results[group] = round(calibration_error, 4)\n\n    return results",
+    "testCases": [
+      {
+        "input": "df with predictions, true labels, and demographic group",
+        "expectedOutput": "Calibration error for each group",
+        "isHidden": false,
+        "description": "Check model calibration fairness"
+      }
+    ],
+    "hints": [
+      "Split data by sensitive attribute groups",
+      "Bin predicted probabilities (0 to 1)",
+      "For each bin, compare avg prediction to avg outcome",
+      "Calibration error = mean absolute difference"
+    ]
+  },
+  {
+    "id": "cs407-ex-7-15",
+    "subjectId": "cs407",
+    "topicId": "cs407-t7",
+    "title": "Right to be Forgotten",
+    "description": "Write a function that removes all data associated with specific user IDs.",
+    "difficulty": 2,
+    "language": "python",
+    "starterCode": "import pandas as pd\n\ndef remove_user_data(df, user_id_column, users_to_remove):\n    # Remove all rows associated with users_to_remove\n    # Return DataFrame without the specified users\n    pass",
+    "solution": "import pandas as pd\n\ndef remove_user_data(df, user_id_column, users_to_remove):\n    return df[~df[user_id_column].isin(users_to_remove)]",
+    "testCases": [
+      {
+        "input": "df with user_id, remove [123, 456]",
+        "expectedOutput": "DataFrame without users 123 and 456",
+        "isHidden": false,
+        "description": "Remove specific users"
+      },
+      {
+        "input": "df with customer_id, remove single user",
+        "expectedOutput": "DataFrame with user removed",
+        "isHidden": false,
+        "description": "GDPR data deletion"
+      }
+    ],
+    "hints": [
+      "Use .isin() to check if ID is in removal list",
+      "Use ~ to negate (get rows NOT in list)",
+      "Return filtered DataFrame",
+      "This implements right to erasure (GDPR)"
+    ]
+  },
+  {
+    "id": "cs407-ex-7-16",
+    "subjectId": "cs407",
+    "topicId": "cs407-t7",
+    "title": "Fairness Report",
+    "description": "Write a function that generates a comprehensive fairness report for a model across multiple metrics.",
+    "difficulty": 4,
+    "language": "python",
+    "starterCode": "import pandas as pd\n\ndef generate_fairness_report(df, sensitive_attr, y_true_col, y_pred_col):\n    # Calculate multiple fairness metrics:\n    # - Demographic parity difference\n    # - Equal opportunity difference\n    # - Disparate impact ratio\n    # Return comprehensive report dictionary\n    pass",
+    "solution": "import pandas as pd\n\ndef generate_fairness_report(df, sensitive_attr, y_true_col, y_pred_col):\n    # Demographic Parity\n    selection_rates = df.groupby(sensitive_attr)[y_pred_col].mean()\n    dp_diff = selection_rates.max() - selection_rates.min()\n\n    # Equal Opportunity (TPR difference)\n    def tpr(group):\n        positives = group[group[y_true_col] == 1]\n        if len(positives) == 0:\n            return 0\n        return (positives[y_pred_col] == 1).sum() / len(positives)\n\n    tpr_by_group = df.groupby(sensitive_attr).apply(tpr)\n    eo_diff = tpr_by_group.max() - tpr_by_group.min()\n\n    # Disparate Impact\n    max_rate = selection_rates.max()\n    min_rate = selection_rates.min()\n    di_ratio = min_rate / max_rate if max_rate > 0 else 0\n\n    return {\n        'selection_rates': selection_rates.to_dict(),\n        'demographic_parity_difference': round(dp_diff, 3),\n        'equal_opportunity_difference': round(eo_diff, 3),\n        'disparate_impact_ratio': round(di_ratio, 3),\n        'passes_80_percent_rule': di_ratio >= 0.8,\n        'summary': 'Fair' if (dp_diff < 0.1 and eo_diff < 0.1 and di_ratio >= 0.8) else 'Potentially Biased'\n    }",
+    "testCases": [
+      {
+        "input": "df with sensitive attribute, predictions, and true labels",
+        "expectedOutput": "Comprehensive fairness report",
+        "isHidden": false,
+        "description": "Full fairness assessment"
+      }
+    ],
+    "hints": [
+      "Calculate selection rate for each group",
+      "Calculate TPR for equal opportunity",
+      "Compute disparate impact ratio",
+      "Check 80% rule and threshold violations",
+      "Combine all metrics into report dictionary"
+    ]
+  }
+]

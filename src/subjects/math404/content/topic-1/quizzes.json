@@ -1,0 +1,185 @@
+[
+  {
+    "id": "math404-quiz-1a",
+    "subjectId": "math404",
+    "topicId": "math404-topic-1",
+    "title": "Problem Formulation - Fundamentals",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "Which of the following is NOT a component of an optimization problem?",
+        "options": [
+          "Decision variables",
+          "Objective function",
+          "Constraints",
+          "Probability distribution"
+        ],
+        "correctAnswer": 3,
+        "explanation": "Probability distributions are relevant for stochastic optimization but not required for deterministic optimization problems."
+      },
+      {
+        "id": "q2",
+        "type": "true_false",
+        "prompt": "Every local minimum of a convex optimization problem is also a global minimum.",
+        "correctAnswer": true,
+        "explanation": "This is a fundamental property of convex optimization. Convexity guarantees that local optima are global."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "For an unconstrained optimization problem, what is the first-order necessary condition for a local minimum at x*?",
+        "options": [
+          "∇f(x*) > 0",
+          "∇f(x*) = 0",
+          "∇²f(x*) > 0",
+          "f(x*) = 0"
+        ],
+        "correctAnswer": 1,
+        "explanation": "At a local minimum, the gradient must vanish: ∇f(x*) = 0. This is the first-order necessary condition (FONC)."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "What type of constraint is represented by g(x) ≤ 0?",
+        "options": [
+          "Equality constraint",
+          "Inequality constraint",
+          "Box constraint",
+          "Nonnegativity constraint"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The form g(x) ≤ 0 represents an inequality constraint, which defines a half-space in the feasible region."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "A point is called _____ if it satisfies all constraints of an optimization problem.",
+        "correctAnswer": "feasible",
+        "explanation": "A feasible point satisfies all constraints. The set of all feasible points forms the feasible region."
+      }
+    ]
+  },
+  {
+    "id": "math404-quiz-1b",
+    "subjectId": "math404",
+    "topicId": "math404-topic-1",
+    "title": "Problem Formulation - Application",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "In a production problem, if x₁ represents units of product 1 and x₂ represents units of product 2, which constraint represents a labor limit of 100 hours if product 1 takes 2 hours and product 2 takes 3 hours?",
+        "options": [
+          "2x₁ + 3x₂ = 100",
+          "2x₁ + 3x₂ ≤ 100",
+          "2x₁ + 3x₂ ≥ 100",
+          "x₁ + x₂ ≤ 100"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The total labor used (2x₁ + 3x₂) must not exceed the available 100 hours, giving us the inequality constraint 2x₁ + 3x₂ ≤ 100."
+      },
+      {
+        "id": "q2",
+        "type": "true_false",
+        "prompt": "A convex function always has exactly one local minimum.",
+        "correctAnswer": false,
+        "explanation": "A convex function may have no minimum (unbounded below), a unique minimum, or infinitely many minima (e.g., a constant function). However, if it has a local minimum, that is also a global minimum."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "For which type of optimization problem can we guarantee finding a global optimum in polynomial time?",
+        "options": [
+          "General nonlinear programming",
+          "Integer linear programming",
+          "Convex quadratic programming",
+          "Mixed-integer nonlinear programming"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Convex quadratic programming can be solved to global optimality in polynomial time using interior-point methods. The other problem classes are generally NP-hard."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "What does LICQ (Linear Independence Constraint Qualification) require at a point x*?",
+        "options": [
+          "All constraints are active",
+          "Gradients of active constraints are linearly independent",
+          "The objective function is linear",
+          "The Hessian is positive definite"
+        ],
+        "correctAnswer": 1,
+        "explanation": "LICQ requires that the gradients of all active inequality constraints and all equality constraints are linearly independent at x*."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "In the standard form of an optimization problem, to convert max f(x) to a minimization, we minimize _____.",
+        "correctAnswer": "-f(x)",
+        "explanation": "Maximizing f(x) is equivalent to minimizing -f(x), since the point that gives the highest value of f gives the lowest value of -f."
+      }
+    ]
+  },
+  {
+    "id": "math404-quiz-1c",
+    "subjectId": "math404",
+    "topicId": "math404-topic-1",
+    "title": "Problem Formulation - Mastery",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "Consider f(x,y) = (x-2)² + (y-3)². What is the global minimum and where does it occur?",
+        "options": [
+          "f = 0 at (2,3)",
+          "f = 1 at (1,2)",
+          "f = 5 at (0,0)",
+          "f = 13 at (3,2)"
+        ],
+        "correctAnswer": 0,
+        "explanation": "This is a paraboloid with vertex at (2,3). The minimum value is 0, achieved when both squared terms equal zero, i.e., at (2,3)."
+      },
+      {
+        "id": "q2",
+        "type": "true_false",
+        "prompt": "If a constraint qualification fails at a local optimum, the KKT conditions may not hold.",
+        "correctAnswer": true,
+        "explanation": "Constraint qualifications (like LICQ) ensure that KKT conditions are necessary for optimality. If they fail, KKT may not be necessary."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "For a twice-differentiable function f, which condition is sufficient for x* to be a strict local minimum?",
+        "options": [
+          "∇f(x*) = 0 only",
+          "∇f(x*) = 0 and ∇²f(x*) is positive semidefinite",
+          "∇f(x*) = 0 and ∇²f(x*) is positive definite",
+          "∇²f(x*) is positive definite only"
+        ],
+        "correctAnswer": 2,
+        "explanation": "For a strict local minimum, we need ∇f(x*) = 0 (first-order condition) and ∇²f(x*) positive definite (second-order sufficient condition)."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "Which class of functions has the property that every local minimum is also a global minimum?",
+        "options": [
+          "Continuous functions",
+          "Differentiable functions",
+          "Convex functions",
+          "Polynomial functions"
+        ],
+        "correctAnswer": 2,
+        "explanation": "This is a defining property of convex functions. For convex f, any local minimum is automatically a global minimum."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "A function f is called _____ convex if f(λx + (1-λ)y) < λf(x) + (1-λ)f(y) for all x ≠ y and λ ∈ (0,1).",
+        "correctAnswer": "strictly",
+        "explanation": "Strict convexity requires the inequality to be strict (< instead of ≤) for distinct points, ensuring uniqueness of the minimum."
+      }
+    ]
+  }
+]

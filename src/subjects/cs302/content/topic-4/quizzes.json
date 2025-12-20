@@ -1,0 +1,180 @@
+[
+  {
+    "id": "cs302-quiz-4a",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-4",
+    "title": "Routing Algorithms - Fundamentals",
+    "questions": [
+      {
+        "id": "q4a-1",
+        "type": "multiple_choice",
+        "prompt": "What is the key difference between static and dynamic routing?",
+        "options": [
+          "Static routing is faster",
+          "Dynamic routing automatically adapts to network changes",
+          "Static routing uses more bandwidth",
+          "Dynamic routing requires manual configuration for each route"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Dynamic routing protocols automatically discover and adapt to network topology changes, while static routes must be manually configured."
+      },
+      {
+        "id": "q4a-2",
+        "type": "true_false",
+        "prompt": "Distance vector routing protocols share the complete network topology with neighbors.",
+        "correctAnswer": false,
+        "explanation": "Distance vector protocols share only their distance vectors (routing tables) with neighbors. Link state protocols share complete topology information."
+      },
+      {
+        "id": "q4a-3",
+        "type": "fill_blank",
+        "prompt": "The routing table entry that matches all destinations (0.0.0.0/0) is called the ____ route.",
+        "correctAnswer": "default",
+        "explanation": "The default route (0.0.0.0/0) matches any destination not specifically listed in the routing table and is typically used for Internet access."
+      },
+      {
+        "id": "q4a-4",
+        "type": "multiple_choice",
+        "prompt": "Which routing algorithm is used by RIP (Routing Information Protocol)?",
+        "options": [
+          "Link state",
+          "Distance vector",
+          "Path vector",
+          "Hierarchical"
+        ],
+        "correctAnswer": 1,
+        "explanation": "RIP uses the distance vector algorithm, where routers share their routing tables with neighbors and use hop count as the metric."
+      },
+      {
+        "id": "q4a-5",
+        "type": "multiple_choice",
+        "prompt": "What problem can occur in distance vector routing when a router learns about a route from a neighbor it sent it to?",
+        "options": [
+          "Route flapping",
+          "Count to infinity",
+          "Route poisoning",
+          "Split horizon"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Count to infinity occurs when routers continuously increment metrics as bad route information bounces between them."
+      }
+    ]
+  },
+  {
+    "id": "cs302-quiz-4b",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-4",
+    "title": "Routing Algorithms - Application",
+    "questions": [
+      {
+        "id": "q4b-1",
+        "type": "multiple_choice",
+        "prompt": "What algorithm does OSPF use to calculate shortest paths?",
+        "options": [
+          "Bellman-Ford",
+          "Dijkstra",
+          "Floyd-Warshall",
+          "A*"
+        ],
+        "correctAnswer": 1,
+        "explanation": "OSPF uses Dijkstra's algorithm to compute the shortest path tree from each router to all destinations in the network."
+      },
+      {
+        "id": "q4b-2",
+        "type": "true_false",
+        "prompt": "BGP is an Interior Gateway Protocol (IGP).",
+        "correctAnswer": false,
+        "explanation": "BGP (Border Gateway Protocol) is an Exterior Gateway Protocol (EGP) used for routing between autonomous systems (ASes) on the Internet."
+      },
+      {
+        "id": "q4b-3",
+        "type": "multiple_choice",
+        "prompt": "What is the maximum hop count in RIP before a network is considered unreachable?",
+        "options": [
+          "10",
+          "15",
+          "16",
+          "255"
+        ],
+        "correctAnswer": 2,
+        "explanation": "RIP uses hop count as its metric with a maximum of 15 hops. A hop count of 16 indicates an unreachable destination."
+      },
+      {
+        "id": "q4b-4",
+        "type": "fill_blank",
+        "prompt": "OSPF divides large networks into smaller ____ to reduce routing overhead.",
+        "correctAnswer": "areas",
+        "explanation": "OSPF uses areas to create a two-level hierarchy. All areas connect to area 0 (backbone), reducing the size of link-state databases."
+      },
+      {
+        "id": "q4b-5",
+        "type": "multiple_choice",
+        "prompt": "Which technique prevents routing loops in distance vector protocols by not advertising a route back to the router it was learned from?",
+        "options": [
+          "Route poisoning",
+          "Hold-down timers",
+          "Split horizon",
+          "Triggered updates"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Split horizon prevents routing loops by not advertising a route out of the interface through which it was learned."
+      }
+    ]
+  },
+  {
+    "id": "cs302-quiz-4c",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-4",
+    "title": "Routing Algorithms - Advanced",
+    "questions": [
+      {
+        "id": "q4c-1",
+        "type": "multiple_choice",
+        "prompt": "What type of protocol is BGP classified as?",
+        "options": [
+          "Distance vector",
+          "Link state",
+          "Path vector",
+          "Hybrid"
+        ],
+        "correctAnswer": 2,
+        "explanation": "BGP is a path vector protocol that maintains the complete AS path to each destination, preventing routing loops between autonomous systems."
+      },
+      {
+        "id": "q4c-2",
+        "type": "code_output",
+        "prompt": "In Dijkstra's algorithm, what is the shortest path cost from A to D?",
+        "codeSnippet": "Graph:\nA --2-- B --3-- D\nA --5-- C --1-- D\n\nPath A-B-D: 2+3 = 5\nPath A-C-D: 5+1 = 6",
+        "correctAnswer": "5",
+        "explanation": "The shortest path is A→B→D with cost 2+3=5, which is less than A→C→D with cost 5+1=6."
+      },
+      {
+        "id": "q4c-3",
+        "type": "true_false",
+        "prompt": "OSPF uses TCP as its transport protocol.",
+        "correctAnswer": false,
+        "explanation": "OSPF runs directly over IP (protocol number 89), not over TCP or UDP. It implements its own reliability mechanisms."
+      },
+      {
+        "id": "q4c-4",
+        "type": "multiple_choice",
+        "prompt": "What BGP attribute is used to influence outbound routing decisions?",
+        "options": [
+          "Local Preference",
+          "MED (Multi-Exit Discriminator)",
+          "AS Path",
+          "Origin"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Local Preference is used within an AS to prefer one exit point over another for outbound traffic. Higher values are preferred."
+      },
+      {
+        "id": "q4c-5",
+        "type": "fill_blank",
+        "prompt": "The OSPF backbone area is designated as area ____.",
+        "correctAnswer": "0",
+        "explanation": "Area 0 (or 0.0.0.0) is the OSPF backbone. All other areas must connect to area 0, either directly or through virtual links."
+      }
+    ]
+  }
+]

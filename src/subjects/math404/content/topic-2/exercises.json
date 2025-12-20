@@ -1,0 +1,247 @@
+[
+  {
+    "id": "math404-t2-ex1",
+    "subjectId": "math404",
+    "topicId": "topic-2",
+    "type": "written",
+    "title": "LP Standard Form Conversion",
+    "description": "Convert a linear program with inequality constraints to standard form.",
+    "difficulty": 2,
+    "hints": [
+      "Standard form requires Ax = b with x ≥ 0",
+      "Add slack variables for ≤ constraints",
+      "Subtract surplus variables for ≥ constraints",
+      "Replace free variables x with x⁺ - x⁻"
+    ],
+    "solution": "**Problem:** Convert to standard form:\nmax 3x₁ + 2x₂\ns.t. x₁ + x₂ ≤ 4\n     2x₁ + x₂ ≥ 2\n     x₁ ≥ 0, x₂ free\n\n**Solution:**\n1. Convert max to min: min -3x₁ - 2x₂\n2. Add slack s₁: x₁ + x₂ + s₁ = 4\n3. Subtract surplus s₂: 2x₁ + x₂ - s₂ = 2\n4. Replace x₂ = x₂⁺ - x₂⁻\n\n**Standard form:**\nmin -3x₁ - 2x₂⁺ + 2x₂⁻\ns.t. x₁ + x₂⁺ - x₂⁻ + s₁ = 4\n     2x₁ + x₂⁺ - x₂⁻ - s₂ = 2\n     x₁, x₂⁺, x₂⁻, s₁, s₂ ≥ 0"
+  },
+  {
+    "id": "math404-t2-ex2",
+    "subjectId": "math404",
+    "topicId": "topic-2",
+    "type": "written",
+    "title": "Simplex Method Iteration",
+    "description": "Perform one iteration of the simplex method on a given tableau.",
+    "difficulty": 3,
+    "hints": [
+      "Select entering variable with most negative coefficient in objective row",
+      "Use minimum ratio test to select leaving variable",
+      "Pivot to create new basic feasible solution"
+    ],
+    "solution": "**Simplex Iteration:**\n\nInitial tableau:\n| BV  | x₁ | x₂ | s₁ | s₂ | RHS |\n|-----|----|----|----|----|-----|\n| s₁  | 1  | 2  | 1  | 0  | 8   |\n| s₂  | 4  | 1  | 0  | 1  | 12  |\n| z   | -3 | -2 | 0  | 0  | 0   |\n\n1. **Entering**: x₁ (most negative: -3)\n2. **Leaving**: min(8/1, 12/4) = 3 → s₂ leaves\n3. **Pivot** on row 2, column 1\n\nAfter pivoting:\n| BV  | x₁ | x₂   | s₁ | s₂  | RHS |\n|-----|----|----- |----|----|------|\n| s₁  | 0  | 7/4  | 1  |-1/4| 5    |\n| x₁  | 1  | 1/4  | 0  |1/4 | 3    |\n| z   | 0  |-5/4  | 0  |3/4 | 9    |\n\nCurrent solution: x₁ = 3, x₂ = 0, z = 9"
+  },
+  {
+    "id": "math404-t2-ex3",
+    "subjectId": "math404",
+    "topicId": "topic-2",
+    "type": "written",
+    "title": "LP Infeasibility and Unboundedness",
+    "description": "Identify whether an LP is infeasible, unbounded, or has a unique optimal solution.",
+    "difficulty": 4,
+    "hints": [
+      "Check if Phase I finds feasible solution",
+      "Unbounded if entering variable has no positive coefficients",
+      "Multiple optima if non-basic variable has zero reduced cost"
+    ],
+    "solution": "**Analysis Procedure:**\n\n**Case 1: Infeasibility**\nmax 2x₁ + 3x₂, s.t. x₁ + x₂ ≤ 2, x₁ + x₂ ≥ 4, x ≥ 0\nNo x satisfies both constraints → **Infeasible**\n\n**Case 2: Unboundedness**\nmax 2x₁ + 3x₂, s.t. x₁ - x₂ ≤ 1, x ≥ 0\nMoving along direction (0, 1) increases objective unboundedly → **Unbounded**\n\n**Case 3: Unique Optimal**\nmax x₁ + x₂, s.t. x₁ + 2x₂ ≤ 4, 2x₁ + x₂ ≤ 4, x ≥ 0\nOptimal at (4/3, 4/3), objective = 8/3 → **Unique optimal**\n\n**Detection in Simplex:**\n- Infeasible: Phase I terminates with artificial variables > 0\n- Unbounded: All coefficients in pivot column ≤ 0\n- Multiple optima: Zero reduced cost for non-basic variable"
+  },
+  {
+    "id": "math404-t2-ex04",
+    "subjectId": "math404",
+    "topicId": "topic-2",
+    "type": "written",
+    "title": "Basic Feasible Solutions",
+    "description": "Identify all basic feasible solutions for a given LP and determine which are vertices of the feasible region.",
+    "difficulty": 3,
+    "hints": [
+      "BFS: Set n-m variables to zero, solve for remaining m",
+      "Check if solution satisfies all constraints",
+      "Each BFS corresponds to a vertex of the polytope"
+    ],
+    "solution": "**Problem:** x₁ + x₂ + s₁ = 4, 2x₁ + x₂ + s₂ = 6, x, s ≥ 0\n(n=4 variables, m=2 equations → 2 basic, 2 nonbasic)\n\n**Finding all BFS:**\n\n**1. x₁, x₂ basic (s₁=s₂=0):**\nx₁ + x₂ = 4, 2x₁ + x₂ = 6\n→ x₁ = 2, x₂ = 2\nCheck: x ≥ 0 ✓ → **BFS at (2,2)**\n\n**2. x₁, s₁ basic (x₂=s₂=0):**\nx₁ + s₁ = 4, 2x₁ = 6\n→ x₁ = 3, s₁ = 1\nCheck: x₁, s₁ ≥ 0 ✓ → **BFS at (3,0)**\n\n**3. x₁, s₂ basic (x₂=s₁=0):**\nx₁ = 4, 2x₁ + s₂ = 6\n→ x₁ = 4, s₂ = -2\nCheck: s₂ < 0 ✗ → **Not feasible**\n\n**4. x₂, s₁ basic (x₁=s₂=0):**\nx₂ + s₁ = 4, x₂ = 6\n→ x₂ = 6, s₁ = -2\nCheck: s₁ < 0 ✗ → **Not feasible**\n\n**5. x₂, s₂ basic (x₁=s₁=0):**\nx₂ = 4, x₂ + s₂ = 6\n→ x₂ = 4, s₂ = 2\nCheck: x₂, s₂ ≥ 0 ✓ → **BFS at (0,4)**\n\n**6. s₁, s₂ basic (x₁=x₂=0):**\ns₁ = 4, s₂ = 6\nCheck: s ≥ 0 ✓ → **BFS at (0,0)**\n\n**Vertices:** (0,0), (3,0), (2,2), (0,4)"
+  },
+  {
+    "id": "math404-t2-ex05",
+    "subjectId": "math404",
+    "topicId": "topic-2",
+    "type": "written",
+    "title": "Graphical LP Solution",
+    "description": "Solve a 2-variable LP problem graphically by plotting constraints and identifying the optimal vertex.",
+    "difficulty": 2,
+    "hints": [
+      "Plot each constraint as a line",
+      "Shade the feasible region",
+      "Evaluate objective at each vertex",
+      "Optimal solution is at a vertex"
+    ],
+    "solution": "**Problem:** max 3x₁ + 2x₂\ns.t. x₁ + x₂ ≤ 4\n     2x₁ + x₂ ≤ 6\n     x₁, x₂ ≥ 0\n\n**Step 1: Plot constraints**\n- x₁ + x₂ = 4: passes through (4,0) and (0,4)\n- 2x₁ + x₂ = 6: passes through (3,0) and (0,6)\n- x₁ ≥ 0: right of y-axis\n- x₂ ≥ 0: above x-axis\n\n**Step 2: Find vertices**\n- (0, 0): origin\n- (3, 0): intersection of 2x₁ + x₂ = 6 and x₂ = 0\n- (2, 2): intersection of x₁ + x₂ = 4 and 2x₁ + x₂ = 6\n  Solving: x₁ + x₂ = 4, 2x₁ + x₂ = 6 → x₁ = 2, x₂ = 2\n- (0, 4): intersection of x₁ + x₂ = 4 and x₁ = 0\n\n**Step 3: Evaluate objective**\n| Vertex | z = 3x₁ + 2x₂ |\n|--------|---------------|\n| (0,0)  | 0             |\n| (3,0)  | 9             |\n| (2,2)  | 10            |\n| (0,4)  | 8             |\n\n**Optimal:** x* = (2, 2), z* = 10"
+  },
+  {
+    "id": "math404-t2-ex06",
+    "subjectId": "math404",
+    "topicId": "topic-2",
+    "type": "written",
+    "title": "Slack Variables and Standard Form",
+    "description": "Convert an LP with mixed constraints to standard form by introducing slack and surplus variables.",
+    "difficulty": 2,
+    "hints": [
+      "Add slack for ≤ constraints",
+      "Subtract surplus for ≥ constraints",
+      "Replace free variables with difference of non-negative variables"
+    ],
+    "solution": "**Original Problem:**\nmax 2x₁ + 3x₂ - x₃\ns.t. x₁ + 2x₂ + x₃ ≤ 10\n     3x₁ - x₂ ≥ 5\n     x₁ - x₃ = 2\n     x₁, x₂ ≥ 0, x₃ free\n\n**Step 1: Convert to minimization**\nmin -2x₁ - 3x₂ + x₃\n\n**Step 2: Handle constraints**\n- ≤ constraint: add slack s₁\n  x₁ + 2x₂ + x₃ + s₁ = 10, s₁ ≥ 0\n- ≥ constraint: subtract surplus s₂\n  3x₁ - x₂ - s₂ = 5, s₂ ≥ 0\n- = constraint: keep as is\n  x₁ - x₃ = 2\n\n**Step 3: Handle free variable**\nReplace x₃ = x₃⁺ - x₃⁻ where x₃⁺, x₃⁻ ≥ 0\n\n**Standard Form:**\nmin -2x₁ - 3x₂ + x₃⁺ - x₃⁻\ns.t. x₁ + 2x₂ + x₃⁺ - x₃⁻ + s₁ = 10\n     3x₁ - x₂ - s₂ = 5\n     x₁ - x₃⁺ + x₃⁻ = 2\n     x₁, x₂, x₃⁺, x₃⁻, s₁, s₂ ≥ 0\n\n**Matrix form:** min cᵀx s.t. Ax = b, x ≥ 0\nwhere x = [x₁, x₂, x₃⁺, x₃⁻, s₁, s₂]ᵀ"
+  },
+  {
+    "id": "math404-t2-ex07",
+    "subjectId": "math404",
+    "topicId": "topic-2",
+    "type": "written",
+    "title": "Degeneracy in Simplex",
+    "description": "Identify degenerate basic feasible solutions and explain their impact on the simplex algorithm.",
+    "difficulty": 3,
+    "hints": [
+      "Degeneracy: more than n-m variables are zero",
+      "Can cause cycling in simplex",
+      "Bland's rule prevents cycling"
+    ],
+    "solution": "**Definition:**\nA BFS is degenerate if more than n-m variables are zero (some basic variables = 0).\n\n**Example:** Consider x₁ + x₂ + s₁ = 4, x₁ + x₂ + s₂ = 4, x ≥ 0\n\n**BFS with x₁, s₁ basic:**\nSet x₂ = s₂ = 0: x₁ + s₁ = 4, x₁ = 4\n→ x₁ = 4, s₁ = 0\nThis is **degenerate** (3 variables zero instead of 2)\n\n**Impact on Simplex:**\n1. **Zero pivot:** Minimum ratio test may give tie\n2. **No improvement:** Objective may not change\n3. **Cycling possible:** Algorithm may revisit same basis\n\n**Example of cycling:**\nConsider highly degenerate LP:\nmax -3x₄ + 20x₅ - (1/2)x₆ + 6x₇\ns.t. (1/4)x₄ - 8x₅ - x₆ + 9x₇ ≤ 0\n     (1/2)x₄ - 12x₅ - (1/2)x₆ + 3x₇ ≤ 0\n     x₇ ≤ 1\n\nWithout anti-cycling rules, simplex can cycle through:\nBasis 1 → Basis 2 → Basis 3 → ... → Basis 1 (never terminating)\n\n**Prevention: Bland's Rule**\n- Choose smallest index entering variable among candidates\n- Choose smallest index leaving variable in case of ties\n- Guarantees finite termination\n\n**Geometric interpretation:**\nDegeneracy occurs when more than n constraints intersect at a vertex."
+  },
+  {
+    "id": "math404-t2-ex08",
+    "subjectId": "math404",
+    "topicId": "topic-2",
+    "type": "written",
+    "title": "Revised Simplex Method",
+    "description": "Apply the revised simplex method using basis matrix operations.",
+    "difficulty": 4,
+    "hints": [
+      "Maintain basis matrix B and its inverse B⁻¹",
+      "Compute reduced costs: c̄ⱼ = cⱼ - cᴮᵀB⁻¹Aⱼ",
+      "Update B⁻¹ efficiently using rank-1 updates"
+    ],
+    "solution": "**Problem:** min cᵀx s.t. Ax = b, x ≥ 0\n\n**Revised Simplex Key Ideas:**\nInstead of full tableau, maintain only:\n- Basis B and B⁻¹\n- Basic solution xᴮ = B⁻¹b\n- Dual variables y = cᴮᵀB⁻¹\n\n**Algorithm:**\n\n**1. Pricing:**\nFor each nonbasic j:\n  c̄ⱼ = cⱼ - yᵀAⱼ = cⱼ - cᴮᵀB⁻¹Aⱼ\nIf all c̄ⱼ ≥ 0: STOP (optimal)\nElse: select entering variable k with c̄ₖ < 0\n\n**2. Ratio test:**\nCompute d = B⁻¹Aₖ (direction)\nθ = min{xᴮᵢ/dᵢ : dᵢ > 0}\nSelect leaving variable at position achieving minimum\n\n**3. Update basis:**\nReplace leaving column in B with Aₖ\nUpdate B⁻¹ using Sherman-Morrison or recompute\n\n**Example:**\nA = [[1,1,1,0], [2,1,0,1]], b = [4,6], c = [-3,-2,0,0]\nInitial basis: B = [[1,0],[0,1]] (columns 3,4)\n\n**Iteration 1:**\n- xᴮ = B⁻¹b = [4,6]\n- y = cᴮᵀB⁻¹ = [0,0]\n- c̄₁ = -3 - 0 = -3 < 0 → enter x₁\n- d = B⁻¹A₁ = [1,2]\n- θ = min{4/1, 6/2} = 3 → x₄ leaves\n- New basis: columns {3,1}\n\n**Advantage:** Sparse matrices → much faster for large LPs"
+  },
+  {
+    "id": "math404-t2-ex09",
+    "subjectId": "math404",
+    "topicId": "topic-2",
+    "type": "written",
+    "title": "Sensitivity Analysis: RHS Changes",
+    "description": "Analyze how changes in the right-hand side affect the optimal solution and objective value.",
+    "difficulty": 3,
+    "hints": [
+      "Shadow price = dual variable value",
+      "Valid for changes keeping basis optimal",
+      "Recompute xᴮ = B⁻¹b for new b"
+    ],
+    "solution": "**Optimal Tableau:**\n| BV | x₁ | x₂ | s₁ | s₂ | RHS |\n|----|----|----|----|----|-----|\n| x₁ | 1  | 0  | 2  | -1 | 2   |\n| x₂ | 0  | 1  | -1 | 2  | 3   |\n| z  | 0  | 0  | 1  | 2  | 13  |\n\nDual variables: y₁ = 1, y₂ = 2 (shadow prices)\n\n**Question:** What if b₁ changes from 4 to 4 + Δ₁?\n\n**Analysis:**\nNew RHS = B⁻¹(b + Δ)\nFrom tableau: B⁻¹ = [[2,-1],[-1,2]]\n\nIf b₁ increases by 1:\nNew xᴮ = [[2,-1],[-1,2]][[5],[6]] = [[4],[7]]\n\n**Feasibility range:**\nNeed xᴮ ≥ 0:\n2(4+Δ₁) - 6 ≥ 0 → Δ₁ ≥ -1\n-(4+Δ₁) + 2·6 ≥ 0 → Δ₁ ≤ 8\nRange: -1 ≤ Δ₁ ≤ 8\n\n**Objective change:**\nΔz = y₁Δ₁ = 1·Δ₁\nIf Δ₁ = 2: z increases by 2\n\n**Multiple RHS changes:**\nΔz = y₁Δ₁ + y₂Δ₂\nValid only if new xᴮ ≥ 0\n\n**Economic interpretation:**\nShadow price yᵢ = marginal value of resource i\nIncreasing bᵢ by 1 unit increases optimal profit by yᵢ (within valid range)."
+  },
+  {
+    "id": "math404-t2-ex10",
+    "subjectId": "math404",
+    "topicId": "topic-2",
+    "type": "written",
+    "title": "Sensitivity Analysis: Objective Coefficients",
+    "description": "Determine the range of an objective coefficient that maintains the current optimal basis.",
+    "difficulty": 3,
+    "hints": [
+      "Reduced cost c̄ⱼ = cⱼ - cᴮᵀB⁻¹Aⱼ",
+      "Need c̄ⱼ ≥ 0 for all nonbasic j",
+      "For basic variable: affects cᴮ, recalculate all c̄ⱼ"
+    ],
+    "solution": "**Optimal Tableau:**\n| BV | x₁ | x₂ | s₁ | s₂ | RHS | c̄ⱼ |\n|----|----|----|----|----|-----|-----|\n| x₁ | 1  | 0  | 2  | -1 | 2   |  -  |\n| x₂ | 0  | 1  | -1 | 2  | 3   |  -  |\n| z  | 0  | 0  | 1  | 2  | 13  | 0   |\n\nOriginal: max 3x₁ + 2x₂\nCurrent basis: {x₁, x₂}\n\n**Question 1: Range for c₁**\nLet c₁ = 3 + Δ\nNeed: c̄ⱼ ≥ 0 for all nonbasic {s₁, s₂}\n\nc̄ₛ₁ = 0 - [(3+Δ), 2][[2],[-1]] = -(6+2Δ-2) = -(4+2Δ)\nNeed: 4+2Δ ≥ 0 → Δ ≥ -2 → **c₁ ≥ 1**\n\nc̄ₛ₂ = 0 - [(3+Δ), 2][[-1],[2]] = -(-3-Δ+4) = -(1-Δ)\nNeed: 1-Δ ≥ 0 → Δ ≤ 1 → **c₁ ≤ 4**\n\n**Range: 1 ≤ c₁ ≤ 4**\n\n**Question 2: Range for c₂**\nLet c₂ = 2 + Δ\n\nc̄ₛ₁ = 0 - [3, (2+Δ)][[2],[-1]] = -(6-2-Δ) = -(4-Δ)\nNeed: 4-Δ ≥ 0 → **c₂ ≤ 6**\n\nc̄ₛ₂ = 0 - [3, (2+Δ)][[-1],[2]] = -(-3+4+2Δ) = -(1+2Δ)\nNeed: 1+2Δ ≥ 0 → **c₂ ≥ -1/2**\n\n**Range: -1/2 ≤ c₂ ≤ 6**\n\n**Outside range:** Basis changes, need to re-solve LP"
+  },
+  {
+    "id": "math404-t2-ex11",
+    "subjectId": "math404",
+    "topicId": "topic-2",
+    "type": "written",
+    "title": "Two-Phase Simplex Method",
+    "description": "Apply the two-phase simplex method to find an initial basic feasible solution.",
+    "difficulty": 4,
+    "hints": [
+      "Phase I: Minimize sum of artificial variables",
+      "Add artificial variables for = and ≥ constraints",
+      "Phase II: Use Phase I solution as starting BFS"
+    ],
+    "solution": "**Problem:**\nmin 2x₁ + 3x₂\ns.t. x₁ + x₂ = 4\n     2x₁ + x₂ ≥ 5\n     x₁, x₂ ≥ 0\n\n**Phase I: Find initial BFS**\n\nAdd artificial variables a₁, a₂:\nmin a₁ + a₂\ns.t. x₁ + x₂ + a₁ = 4\n     2x₁ + x₂ - s₂ + a₂ = 5\n     x, s, a ≥ 0\n\n**Initial tableau:**\n| BV | x₁ | x₂ | s₂ | a₁ | a₂ | RHS |\n|----|----|----|----|----|-----|-----|\n| a₁ | 1  | 1  | 0  | 1  | 0   | 4   |\n| a₂ | 2  | 1  | -1 | 0  | 1   | 5   |\n| w  | -3 | -2 | 1  | 0  | 0   | -9  |\n\n(w-row formed by: 0 - (1+2)x₁ - (1+1)x₂ - (-1)s₂)\n\n**Iteration 1:** x₁ enters, a₂ leaves\n**Iteration 2:** x₂ enters, a₁ leaves\n\n**Final Phase I tableau:**\nAll artificial variables nonbasic, w = 0\nBFS: x₁ = 1, x₂ = 3\n\n**Phase II: Optimize original objective**\nUse x₁ = 1, x₂ = 3 as starting BFS\nMinimize 2x₁ + 3x₂\n\n**Result:**\nOptimal: x₁ = 1, x₂ = 3, z* = 11\n\n**Note:** If Phase I ends with artificial variables > 0, problem is infeasible."
+  },
+  {
+    "id": "math404-t2-ex12",
+    "subjectId": "math404",
+    "topicId": "topic-2",
+    "type": "written",
+    "title": "Big-M Method",
+    "description": "Solve an LP using the Big-M method as an alternative to two-phase simplex.",
+    "difficulty": 3,
+    "hints": [
+      "Add artificial variables with large penalty M",
+      "Single phase with modified objective",
+      "M should be large enough to force artificials to zero"
+    ],
+    "solution": "**Problem:**\nmin x₁ + 2x₂\ns.t. x₁ + x₂ = 3\n     2x₁ + x₂ ≥ 4\n     x₁, x₂ ≥ 0\n\n**Big-M Formulation:**\nAdd artificials a₁, a₂ with penalty M:\nmin x₁ + 2x₂ + M·a₁ + M·a₂\ns.t. x₁ + x₂ + a₁ = 3\n     2x₁ + x₂ - s + a₂ = 4\n     x, s, a ≥ 0\n\n**Initial tableau:**\n| BV | x₁    | x₂    | s  | a₁ | a₂ | RHS |\n|----|-------|-------|----|----|-----|-----|\n| a₁ | 1     | 1     | 0  | 1  | 0   | 3   |\n| a₂ | 2     | 1     | -1 | 0  | 1   | 4   |\n| z  |-1-3M |-2-2M  | M  | 0  | 0   | -7M |\n\n**Simplex iterations:**\nM is very large → most negative coefficient is -1-3M\nEnter x₁, leave a₂\n\nAfter pivoting:\n| BV | x₁ | x₂   | s    | a₁ | a₂   | RHS |\n|----|-----|------|------|----|------|-----|\n| a₁ | 0  | 1/2  | 1/2  | 1  |-1/2  | 1   |\n| x₁ | 1  | 1/2  |-1/2  | 0  | 1/2  | 2   |\n| z  | 0  |-1-M/2| M/2-1| 0  |1+3M/2| 2-4M|\n\nContinue until all artificials are driven out.\n\n**Final:** x₁ = 2, x₂ = 1, z* = 4\n(Artificials a₁ = a₂ = 0)\n\n**Practical M:** M = 10⁶ typically sufficient\n**Numerical issues:** Large M can cause ill-conditioning"
+  },
+  {
+    "id": "math404-t2-ex13",
+    "subjectId": "math404",
+    "topicId": "topic-2",
+    "type": "written",
+    "title": "Transportation Problem",
+    "description": "Formulate and solve a transportation problem as a special structured LP.",
+    "difficulty": 3,
+    "hints": [
+      "Variables: xᵢⱼ = amount shipped from source i to destination j",
+      "Supply constraints: Σⱼ xᵢⱼ = sᵢ",
+      "Demand constraints: Σᵢ xᵢⱼ = dⱼ",
+      "Special structure allows efficient algorithms"
+    ],
+    "solution": "**Problem:**\n3 factories supply 4 warehouses\nFactories: supplies s₁=20, s₂=30, s₃=25\nWarehouses: demands d₁=15, d₂=20, d₃=25, d₄=15\nCost cᵢⱼ to ship from factory i to warehouse j\n\n**LP Formulation:**\nmin Σᵢ Σⱼ cᵢⱼxᵢⱼ\n\ns.t. Σⱼ xᵢⱼ = sᵢ  for i=1,2,3  (supply)\n     Σᵢ xᵢⱼ = dⱼ  for j=1,2,3,4  (demand)\n     xᵢⱼ ≥ 0\n\n**Matrix form (cost table):**\n|     | W1 | W2 | W3 | W4 | Supply |\n|-----|----|----|----|----|--------|\n| F1  | 8  | 6  | 10 | 9  | 20     |\n| F2  | 9  | 12 | 13 | 7  | 30     |\n| F3  | 14 | 9  | 16 | 5  | 25     |\n|Demand| 15 | 20 | 25 | 15 | 75     |\n\n**Special Properties:**\n- Totally unimodular → BFS has integer values\n- m+n-1 basic variables (3+4-1 = 6)\n- Network structure → efficient algorithms\n\n**Solution Methods:**\n1. **Northwest Corner:** Start at (1,1), allocate max possible\n2. **Vogel's Approximation:** Greedy based on penalties\n3. **Stepping Stone:** Improvement method\n4. **Network Simplex:** Specialized simplex\n\n**Example Solution:**\nx₁₁=15, x₁₂=5, x₂₂=15, x₂₄=15, x₃₃=25\nTotal cost = 8·15 + 6·5 + 12·15 + 7·15 + 16·25 = 805"
+  },
+  {
+    "id": "math404-t2-ex14",
+    "subjectId": "math404",
+    "topicId": "topic-2",
+    "type": "written",
+    "title": "Assignment Problem",
+    "description": "Formulate the assignment problem as a special case of LP and explain the Hungarian algorithm.",
+    "difficulty": 3,
+    "hints": [
+      "Binary variables: xᵢⱼ ∈ {0,1}",
+      "Each worker assigned to exactly one job",
+      "Each job assigned to exactly one worker",
+      "LP relaxation has integer optimal solution"
+    ],
+    "solution": "**Problem:**\nAssign n workers to n jobs to minimize total cost.\nCost cᵢⱼ for worker i to do job j.\n\n**LP Formulation:**\nmin Σᵢ Σⱼ cᵢⱼxᵢⱼ\ns.t. Σⱼ xᵢⱼ = 1  for all i  (each worker assigned once)\n     Σᵢ xᵢⱼ = 1  for all j  (each job done once)\n     xᵢⱼ ≥ 0\n\n**Remarkably:** LP relaxation (dropping xᵢⱼ ∈ {0,1}) automatically gives integer solution!\n\n**Cost Matrix Example:**\n|        | Job1 | Job2 | Job3 |\n|--------|------|------|------|\n| Worker1| 10   | 19   | 8    |\n| Worker2| 12   | 15   | 13   |\n| Worker3| 14   | 13   | 12   |\n\n**Hungarian Algorithm:**\n\n**Step 1: Row reduction**\nSubtract minimum of each row:\n|   | J1 | J2 | J3 |\n|---|----|----|-----|\n| W1| 2  | 11 | 0   |\n| W2| 0  | 3  | 1   |\n| W3| 2  | 1  | 0   |\n\n**Step 2: Column reduction**\nSubtract minimum of each column:\n|   | J1 | J2 | J3 |\n|---|----|----|-----|\n| W1| 2  | 10 | 0   |\n| W2| 0  | 2  | 1   |\n| W3| 2  | 0  | 0   |\n\n**Step 3: Cover zeros**\nTry to match using minimum lines. If < n lines needed, continue.\n\n**Step 4: Optimal assignment**\nW1→J3, W2→J1, W3→J2\nTotal cost = 8 + 12 + 13 = 33\n\n**Complexity:** O(n³) vs O(n!) brute force"
+  },
+  {
+    "id": "math404-t2-ex15",
+    "subjectId": "math404",
+    "topicId": "topic-2",
+    "type": "written",
+    "title": "Barrier Function for LP",
+    "description": "Apply the logarithmic barrier method to solve a simple LP and trace the central path.",
+    "difficulty": 4,
+    "hints": [
+      "Barrier: φ(x) = -Σ log(bᵢ - aᵢᵀx)",
+      "Minimize f(x) = cᵀx + (1/t)φ(x)",
+      "As t → ∞, solution approaches LP optimum"
+    ],
+    "solution": "**Problem:** min x s.t. x ≥ 0, x ≤ 1\n\n**Barrier function:**\nφ(x) = -log(x) - log(1-x)\n\n**Barrier problem:**\nmin_t(x) = x - (1/t)[log(x) + log(1-x)]\n\n**Optimality condition:**\nf'(x) = 1 + (1/t)[1/x - 1/(1-x)] = 0\n\nSolving:\n1 + (1/t)[(1-x-x)/(x(1-x))] = 0\nt = -(1-2x)/(x(1-x))\nt·x(1-x) = 2x - 1\ntx - tx² = 2x - 1\ntx² - (t-2)x - 1 = 0\n\n**Central path x*(t):**\nx*(t) = [(t-2) + √((t-2)² + 4t)]/(2t)\n\n**Asymptotic behavior:**\nAs t → ∞:\nx*(t) ≈ [(t-2) + √(t²)]/(2t) = [(t-2) + t]/(2t) = (2t-2)/(2t) = 1 - 1/t → 1\n\n**Duality gap:**\nGap = cᵀx - b'ᵀy ≈ 1/t → 0 as t → ∞\n\n**Example values:**\n| t   | x*(t) | f(x*) |\n|-----|-------|-------|\n| 1   | 0.5   | 0.5   |\n| 10  | 0.9   | 0.9   |\n| 100 | 0.99  | 0.99  |\n| ∞   | 1.0   | 1.0   |\n\n**Central path:** Smooth curve from analytic center (t=0: x=0.5) to optimum (x=1)"
+  },
+  {
+    "id": "math404-t2-ex16",
+    "subjectId": "math404",
+    "topicId": "topic-2",
+    "type": "written",
+    "title": "Primal-Dual Interior Point Method",
+    "description": "Explain the primal-dual interior point algorithm for LP and its advantages over simplex.",
+    "difficulty": 4,
+    "hints": [
+      "Simultaneously solve primal and dual",
+      "Maintain strict feasibility",
+      "Newton steps toward KKT conditions",
+      "Polynomial complexity: O(√n log(1/ε))"
+    ],
+    "solution": "**LP Primal-Dual Pair:**\nPrimal: min cᵀx s.t. Ax = b, x ≥ 0\nDual: max bᵀy s.t. Aᵀy + s = c, s ≥ 0\n\n**KKT Conditions:**\n1. Aᵀy + s = c\n2. Ax = b\n3. xᵢsᵢ = 0 for all i (complementarity)\n4. x, s ≥ 0\n\n**Primal-Dual Algorithm:**\n\nReplace complementarity xᵢsᵢ = 0 with xᵢsᵢ = μ (barrier parameter)\n\n**Perturbed KKT:**\nF(x,y,s,μ) = [Aᵀy + s - c, Ax - b, XSe - μe] = 0\nwhere X = diag(x), S = diag(s), e = [1,...,1]ᵀ\n\n**Newton Step:**\nSolve for (Δx, Δy, Δs):\n[0   Aᵀ  I] [Δx]   [rₐ]\n[A   0   0] [Δy] = -[rᵦ]\n[S   0   X] [Δs]   [rμ]\n\nwhere rₐ = Aᵀy + s - c\n      rᵦ = Ax - b\n      rμ = XSe - μe\n\n**Update:**\n(x,y,s) ← (x,y,s) + α(Δx,Δy,Δs)\nα chosen to maintain x,s > 0\n\n**Reduce μ:**\nμ ← σμ (typically σ = 0.1)\n\n**Convergence:**\n- Each outer iteration: reduce μ by constant factor\n- Each outer: O(√n) Newton steps\n- Total: O(√n log(1/ε)) iterations\n\n**Advantages over Simplex:**\n1. Polynomial worst-case (simplex is exponential)\n2. Warm-start for similar problems\n3. Exploits sparsity efficiently\n4. Parallelizable\n\n**Software:** CPLEX, Gurobi, MOSEK use interior point for large LPs"
+  }
+]

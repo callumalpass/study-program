@@ -1,0 +1,185 @@
+[
+  {
+    "id": "math101-quiz-5a",
+    "subjectId": "math101",
+    "topicId": "math101-topic-5",
+    "title": "Functions - Fundamentals",
+    "questions": [
+      {
+        "id": "math101-q5a-1",
+        "type": "multiple_choice",
+        "prompt": "A function f: A → B is:",
+        "options": [
+          "Any relation between A and B",
+          "A relation where each element of A is related to exactly one element of B",
+          "A relation where each element of B is related to at least one element of A",
+          "A bijection between A and B"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A function assigns to EACH element in the domain A EXACTLY ONE element in the codomain B. Not all relations are functions."
+      },
+      {
+        "id": "math101-q5a-2",
+        "type": "true_false",
+        "prompt": "A function f: A → B is injective (one-to-one) if different inputs always produce different outputs.",
+        "correctAnswer": true,
+        "explanation": "Injective means if f(a₁) = f(a₂), then a₁ = a₂. Equivalently, if a₁ ≠ a₂, then f(a₁) ≠ f(a₂)."
+      },
+      {
+        "id": "math101-q5a-3",
+        "type": "multiple_choice",
+        "prompt": "A function f: A → B is surjective (onto) if:",
+        "options": [
+          "Every element of A maps to a unique element of B",
+          "Every element of B is the image of at least one element of A",
+          "f has an inverse function",
+          "The domain equals the codomain"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Surjective means the range equals the codomain. Every element of B is \"hit\" by some element of A."
+      },
+      {
+        "id": "math101-q5a-4",
+        "type": "multiple_choice",
+        "prompt": "A function f: ℝ → ℝ defined by f(x) = x² is:",
+        "options": [
+          "Injective but not surjective",
+          "Surjective but not injective",
+          "Both injective and surjective",
+          "Neither injective nor surjective"
+        ],
+        "correctAnswer": 3,
+        "explanation": "f(x) = x² is not injective because f(-2) = f(2) = 4. It's not surjective because negative numbers are not in the range. So it's neither."
+      },
+      {
+        "id": "math101-q5a-5",
+        "type": "fill_blank",
+        "prompt": "A function that is both injective and surjective is called a ____.",
+        "correctAnswer": "bijection",
+        "explanation": "A bijection (bijective function) is one-to-one (injective) and onto (surjective). Bijections have inverses."
+      }
+    ]
+  },
+  {
+    "id": "math101-quiz-5b",
+    "subjectId": "math101",
+    "topicId": "math101-topic-5",
+    "title": "Functions - Application",
+    "questions": [
+      {
+        "id": "math101-q5b-1",
+        "type": "true_false",
+        "prompt": "Every bijective function has an inverse function.",
+        "correctAnswer": true,
+        "explanation": "True. A function must be bijective (both injective and surjective) to have an inverse. The inverse reverses the mapping of the original function."
+      },
+      {
+        "id": "math101-q5b-2",
+        "type": "multiple_choice",
+        "prompt": "If f(x) = 2x + 1 and g(x) = x², what is (g ∘ f)(3)?",
+        "options": [
+          "19",
+          "49",
+          "14",
+          "50"
+        ],
+        "correctAnswer": 1,
+        "explanation": "(g ∘ f)(3) = g(f(3)) = g(2·3 + 1) = g(7) = 7² = 49."
+      },
+      {
+        "id": "math101-q5b-3",
+        "type": "multiple_choice",
+        "prompt": "For f: A → B and g: B → C, what is the domain and codomain of g ∘ f?",
+        "options": [
+          "Domain: B, Codomain: C",
+          "Domain: A, Codomain: C",
+          "Domain: A, Codomain: B",
+          "Domain: C, Codomain: A"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The composition g ∘ f goes from A to C. We apply f first (A → B), then g (B → C), so overall: A → C."
+      },
+      {
+        "id": "math101-q5b-4",
+        "type": "true_false",
+        "prompt": "If f: A → B is injective and |A| = |B| where both are finite, then f is also surjective.",
+        "correctAnswer": true,
+        "explanation": "For finite sets of equal size, an injection must be a surjection. Since no two elements of A map to the same element of B (injection), and |A| = |B|, every element of B must be hit."
+      },
+      {
+        "id": "math101-q5b-5",
+        "type": "multiple_choice",
+        "prompt": "The floor function ⌊x⌋ gives the greatest integer less than or equal to x. What is ⌊-2.7⌋?",
+        "options": [
+          "-2",
+          "-3",
+          "-2.7",
+          "2"
+        ],
+        "correctAnswer": 1,
+        "explanation": "⌊-2.7⌋ = -3 because -3 is the greatest integer that is ≤ -2.7. Note: -2 > -2.7, so -2 doesn't qualify."
+      }
+    ]
+  },
+  {
+    "id": "math101-quiz-5c",
+    "subjectId": "math101",
+    "topicId": "math101-topic-5",
+    "title": "Functions - Advanced",
+    "questions": [
+      {
+        "id": "math101-q5c-1",
+        "type": "multiple_choice",
+        "prompt": "If f: A → B has an inverse f⁻¹, what is f⁻¹(f(a)) for any a ∈ A?",
+        "options": [
+          "f(a)",
+          "a",
+          "f⁻¹(a)",
+          "0"
+        ],
+        "correctAnswer": 1,
+        "explanation": "By definition of inverse: f⁻¹(f(a)) = a for all a in A, and f(f⁻¹(b)) = b for all b in B."
+      },
+      {
+        "id": "math101-q5c-2",
+        "type": "true_false",
+        "prompt": "The composition of two injective functions is always injective.",
+        "correctAnswer": true,
+        "explanation": "If f and g are injective, then (g ∘ f)(a₁) = (g ∘ f)(a₂) implies g(f(a₁)) = g(f(a₂)), which implies f(a₁) = f(a₂) (g injective), which implies a₁ = a₂ (f injective)."
+      },
+      {
+        "id": "math101-q5c-3",
+        "type": "multiple_choice",
+        "prompt": "If |A| = 5 and |B| = 3, how many surjective functions exist from A to B?",
+        "options": [
+          "0 (impossible)",
+          "3⁵",
+          "150",
+          "5!"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Using inclusion-exclusion: 3⁵ - C(3,1)·2⁵ + C(3,2)·1⁵ = 243 - 96 + 3 = 150 surjective functions. (This counts onto functions from 5 elements to 3.)"
+      },
+      {
+        "id": "math101-q5c-4",
+        "type": "multiple_choice",
+        "prompt": "If f: ℤ → ℤ is defined by f(n) = n + 5, which properties does f have?",
+        "options": [
+          "Injective only",
+          "Surjective only",
+          "Bijective",
+          "Neither injective nor surjective"
+        ],
+        "correctAnswer": 2,
+        "explanation": "f(n) = n + 5 is injective (different n give different n+5) and surjective (every integer m equals n+5 for n = m-5). So f is bijective."
+      },
+      {
+        "id": "math101-q5c-5",
+        "type": "fill_blank",
+        "prompt": "The number of bijections from a set with n elements to itself equals n! (n ____)",
+        "correctAnswer": "factorial",
+        "explanation": "There are n! = n × (n-1) × ... × 2 × 1 bijections (permutations) from a set of n elements to itself."
+      }
+    ]
+  }
+]

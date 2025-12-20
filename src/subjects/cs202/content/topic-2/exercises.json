@@ -1,0 +1,236 @@
+[
+  {
+    "id": "cs202-t2-ex1",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic2",
+    "type": "written",
+    "title": "Register Identification",
+    "description": "Identify the conventional use for: $zero, $v0, $a0, $t0, $s0, $sp, $ra. When would you use each?",
+    "difficulty": 1,
+    "hints": [
+      "Consider caller-saved vs callee-saved",
+      "Think about function calling conventions"
+    ],
+    "solution": "$zero ($0): Always contains 0, useful for comparisons and loading constants\n$v0-$v1 ($2-$3): Return values from functions, syscall codes\n$a0-$a3 ($4-$7): First 4 function arguments\n$t0-$t9 ($8-$15, $24-$25): Temporaries, caller-saved (not preserved across calls)\n$s0-$s7 ($16-$23): Saved registers, callee-saved (preserved across calls)\n$sp ($29): Stack pointer, points to top of stack\n$ra ($31): Return address, set by jal instruction\n\nUse cases:\n- Loop counters: $t0-$t9 (temporary, don't need to save)\n- Important values across function calls: $s0-$s7 (preserved)\n- Passing arguments: $a0-$a3 first, then stack\n- Getting return value: $v0 (or $v0-$v1 for 64-bit)"
+  },
+  {
+    "id": "cs202-t2-ex2",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic2",
+    "type": "written",
+    "title": "Array Sum in Assembly",
+    "description": "Write MIPS assembly to sum an array of 10 integers. Assume array base in $a0, length in $a1.",
+    "difficulty": 3,
+    "hints": [
+      "Use sll to multiply index by 4",
+      "Initialize sum to 0 in $v0"
+    ],
+    "solution": "# Sum array elements\n# Input: $a0 = array base address, $a1 = length (10)\n# Output: $v0 = sum\n\nsum_array:\n    li   $v0, 0           # sum = 0\n    li   $t0, 0           # i = 0\n\nloop:\n    bge  $t0, $a1, done   # if i >= length, exit\n    sll  $t1, $t0, 2      # t1 = i * 4 (byte offset)\n    add  $t1, $a0, $t1    # t1 = &array[i]\n    lw   $t2, 0($t1)      # t2 = array[i]\n    add  $v0, $v0, $t2    # sum += array[i]\n    addi $t0, $t0, 1      # i++\n    j    loop             # repeat\n\ndone:\n    jr   $ra              # return\n\nKey points:\n- sll by 2 multiplies index by 4 for word addressing\n- Using $t registers since we don't call other functions\n- Return value in $v0 per convention"
+  },
+  {
+    "id": "cs202-t2-ex3",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic2",
+    "type": "written",
+    "title": "Recursive Factorial",
+    "description": "Write MIPS assembly for factorial(n). Handle the base case (n <= 1) and recursive case.",
+    "difficulty": 4,
+    "hints": [
+      "Must save $ra before recursive call",
+      "Use $s0 to preserve n across calls"
+    ],
+    "solution": "# Factorial function\n# Input: $a0 = n\n# Output: $v0 = n!\n\nfactorial:\n    # Prologue - save $ra and $s0\n    addi $sp, $sp, -8     # allocate stack frame\n    sw   $ra, 4($sp)      # save return address\n    sw   $s0, 0($sp)      # save $s0\n\n    # Base case: n <= 1\n    move $s0, $a0         # save n in $s0\n    li   $v0, 1           # default result = 1\n    ble  $a0, 1, fact_done # if n <= 1, return 1\n\n    # Recursive case: n * factorial(n-1)\n    addi $a0, $s0, -1     # argument = n - 1\n    jal  factorial        # call factorial(n-1)\n    mul  $v0, $s0, $v0    # result = n * factorial(n-1)\n\nfact_done:\n    # Epilogue - restore and return\n    lw   $s0, 0($sp)      # restore $s0\n    lw   $ra, 4($sp)      # restore return address\n    addi $sp, $sp, 8      # deallocate stack frame\n    jr   $ra              # return"
+  },
+  {
+    "id": "cs202-t2-ex4",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic2",
+    "type": "written",
+    "title": "Branch Instruction Encoding",
+    "description": "Explain how branch target addresses are calculated in MIPS. Given beq at address 0x00400020 with offset 5, what is the target address?",
+    "difficulty": 3,
+    "hints": [
+      "PC-relative addressing",
+      "Offset is in words, not bytes",
+      "PC is already incremented when offset is added"
+    ],
+    "solution": "Branch target calculation in MIPS:\nTarget = (PC + 4) + (offset × 4)\n\nThe PC is incremented to point to the next instruction before the offset is applied.\nThe offset is in words (4 bytes), so it's multiplied by 4.\n\nGiven: beq at 0x00400020, offset = 5\nPC + 4 = 0x00400020 + 4 = 0x00400024\nTarget = 0x00400024 + (5 × 4) = 0x00400024 + 0x14 = 0x00400038\n\nThis allows branches to reach ±2^15 words = ±2^17 bytes = ±128KB from PC+4.\n\nThe 16-bit signed offset allows:\n- Forward: up to 32,767 words (131,068 bytes)\n- Backward: up to 32,768 words (131,072 bytes)"
+  },
+  {
+    "id": "cs202-t2-ex5",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic2",
+    "type": "written",
+    "title": "Syscall Usage",
+    "description": "Write MIPS code to: (a) Print \"Hello\" (b) Read an integer from user (c) Exit program. What syscall codes are used?",
+    "difficulty": 2,
+    "hints": [
+      "Syscall code goes in $v0",
+      "$a0 holds string address or integer to print"
+    ],
+    "solution": "# (a) Print \"Hello\"\n    .data\nmsg:    .asciiz \"Hello\"\n\n    .text\n    la   $a0, msg      # $a0 = address of string\n    li   $v0, 4        # syscall 4 = print string\n    syscall\n\n# (b) Read an integer\n    li   $v0, 5        # syscall 5 = read integer\n    syscall            # result in $v0\n    move $t0, $v0      # save input to $t0\n\n# (c) Exit program\n    li   $v0, 10       # syscall 10 = exit\n    syscall\n\nCommon syscall codes:\n1 - print integer ($a0 = integer)\n4 - print string ($a0 = address)\n5 - read integer (result in $v0)\n8 - read string ($a0 = buffer, $a1 = length)\n10 - exit\n11 - print character ($a0 = char)\n12 - read character (result in $v0)"
+  },
+  {
+    "id": "cs202-t2-ex6",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic2",
+    "type": "written",
+    "title": "Stack Frame Construction",
+    "description": "Draw the stack frame for a function that uses $s0, $s1, and $ra, and has 2 local variables (4 bytes each). Show the proper prologue and epilogue code.",
+    "difficulty": 3,
+    "hints": [
+      "Stack grows downward",
+      "Calculate total frame size",
+      "Use negative offsets from $sp after allocation"
+    ],
+    "solution": "Stack Frame Layout (16 bytes total):\n           ┌──────────────┐\n    $sp+12 │     $ra      │  (return address)\n           ├──────────────┤\n    $sp+8  │     $s1      │  (saved register)\n           ├──────────────┤\n    $sp+4  │     $s0      │  (saved register)\n           ├──────────────┤\n    $sp+0  │   local2     │  (local variable)\n           ├──────────────┤\n    $sp-4  │   local1     │  (local variable)\n           └──────────────┘\n\nPrologue:\n    addi $sp, $sp, -16    # allocate 16 bytes\n    sw   $ra, 12($sp)     # save return address\n    sw   $s1, 8($sp)      # save $s1\n    sw   $s0, 4($sp)      # save $s0\n    # locals at 0($sp) and -4($sp) if needed below $sp\n\nEpilogue:\n    lw   $s0, 4($sp)      # restore $s0\n    lw   $s1, 8($sp)      # restore $s1\n    lw   $ra, 12($sp)     # restore return address\n    addi $sp, $sp, 16     # deallocate frame\n    jr   $ra              # return"
+  },
+  {
+    "id": "cs202-t2-ex7",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic2",
+    "type": "written",
+    "title": "Translate C to Assembly",
+    "description": "Translate to MIPS: int max(int a, int b) { if (a > b) return a; else return b; }",
+    "difficulty": 2,
+    "hints": [
+      "Arguments in $a0, $a1",
+      "Return value in $v0",
+      "Use bgt or slt for comparison"
+    ],
+    "solution": "# int max(int a, int b)\n# $a0 = a, $a1 = b\n# Returns max in $v0\n\nmax:\n    # No need for stack frame (leaf function, no $s regs used)\n\n    bgt  $a0, $a1, a_greater  # if a > b, go to a_greater\n\n    # else: return b\n    move $v0, $a1\n    jr   $ra\n\na_greater:\n    # return a\n    move $v0, $a0\n    jr   $ra\n\nAlternative using slt:\nmax_alt:\n    slt  $t0, $a1, $a0    # t0 = 1 if b < a (i.e., a > b)\n    beqz $t0, return_b    # if not (a > b), return b\n    move $v0, $a0         # return a\n    jr   $ra\nreturn_b:\n    move $v0, $a1         # return b\n    jr   $ra"
+  },
+  {
+    "id": "cs202-t2-ex8",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic2",
+    "type": "written",
+    "title": "While Loop Translation",
+    "description": "Translate to MIPS: int i = 0; while (i < 100) { sum += arr[i]; i++; }. Assume arr base in $s0, sum in $s1.",
+    "difficulty": 3,
+    "hints": [
+      "Initialize loop variable",
+      "Check condition at top or bottom of loop",
+      "Update index by 4 for word array"
+    ],
+    "solution": "# Assume: $s0 = arr base, $s1 = sum (initialized elsewhere)\n# Use $t0 for i, $t1 for address calculation, $t2 for arr[i]\n\n    li   $t0, 0           # i = 0\n\nwhile_loop:\n    li   $t3, 100         # load constant for comparison\n    bge  $t0, $t3, end_while  # if i >= 100, exit loop\n\n    # sum += arr[i]\n    sll  $t1, $t0, 2      # t1 = i * 4\n    add  $t1, $s0, $t1    # t1 = &arr[i]\n    lw   $t2, 0($t1)      # t2 = arr[i]\n    add  $s1, $s1, $t2    # sum += arr[i]\n\n    # i++\n    addi $t0, $t0, 1\n\n    j    while_loop       # repeat\n\nend_while:\n    # continue with rest of program\n\nNote: We use $s0, $s1 for arr and sum because they need to persist.\n$t0-$t2 are used for temporaries within this code block."
+  },
+  {
+    "id": "cs202-t2-ex9",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic2",
+    "type": "written",
+    "title": "Nested Function Calls",
+    "description": "Function A calls B, which calls C. Trace the stack contents and $ra values throughout. What happens if B forgets to save $ra?",
+    "difficulty": 4,
+    "hints": [
+      "Each jal overwrites $ra",
+      "Stack grows with each call",
+      "Missing save causes return to wrong location"
+    ],
+    "solution": "Execution trace with proper $ra saving:\n\n1. main at 0x400000 calls A (jal A)\n   $ra = 0x400004 (return to main)\n\n2. A at 0x400100 saves $ra, calls B (jal B)\n   Stack: [0x400004]  <- A's saved $ra\n   $ra = 0x400108 (return to A)\n\n3. B at 0x400200 saves $ra, calls C (jal C)\n   Stack: [0x400004, 0x400108]  <- Both saved\n   $ra = 0x400208 (return to B)\n\n4. C returns: jr $ra → goes to 0x400208 (B)\n5. B restores $ra=0x400108, returns → goes to A\n6. A restores $ra=0x400004, returns → goes to main\n\nIf B forgets to save $ra:\n- When B calls C: $ra = 0x400208 (return to B)\n- C returns correctly to B\n- B tries jr $ra, but $ra still = 0x400208 (not 0x400108!)\n- B returns to itself! → infinite loop or crash"
+  },
+  {
+    "id": "cs202-t2-ex10",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic2",
+    "type": "written",
+    "title": "Pseudo-instruction Expansion",
+    "description": "Show how the assembler expands these pseudo-instructions into real MIPS instructions: (a) li $t0, 0x12345678 (b) la $t0, label (c) bgt $t0, $t1, target",
+    "difficulty": 3,
+    "hints": [
+      "li needs lui + ori for large constants",
+      "la uses lui + ori with label address",
+      "bgt uses slt + bne"
+    ],
+    "solution": "(a) li $t0, 0x12345678\nExpands to:\n    lui  $t0, 0x1234      # load upper 16 bits\n    ori  $t0, $t0, 0x5678 # OR in lower 16 bits\nResult: $t0 = 0x12345678\n\n(b) la $t0, label (assuming label at 0x10010000)\nExpands to:\n    lui  $t0, 0x1001      # load upper 16 bits of address\n    ori  $t0, $t0, 0x0000 # OR in lower 16 bits\nOr: lui $at, hi(label); ori $t0, $at, lo(label)\n\n(c) bgt $t0, $t1, target  (branch if $t0 > $t1)\nExpands to:\n    slt  $at, $t1, $t0    # $at = 1 if $t1 < $t0 (i.e., $t0 > $t1)\n    bne  $at, $zero, target # branch if $at != 0\n\nThe assembler uses $at ($1) for temporaries in expansions.\nThis is why $at is reserved for assembler use."
+  },
+  {
+    "id": "cs202-t2-ex11",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic2",
+    "type": "written",
+    "title": "Memory Layout",
+    "description": "Describe the MIPS memory layout. Where are text, data, heap, and stack segments? What are their starting addresses and growth directions?",
+    "difficulty": 2,
+    "hints": [
+      "Text starts at 0x00400000",
+      "Stack at top of user memory",
+      "Heap grows up, stack grows down"
+    ],
+    "solution": "MIPS Memory Layout:\n\n0x7FFFFFFF ┌─────────────────┐\n           │     Stack       │ ← Grows DOWN (toward lower addresses)\n           │       ↓         │   $sp points to top of stack\n           ├─────────────────┤\n           │                 │\n           │    (unused)     │\n           │                 │\n           ├─────────────────┤\n           │       ↑         │\n           │     Heap        │ ← Grows UP (toward higher addresses)\n0x10040000 ├─────────────────┤   Dynamic allocation (malloc)\n           │   Static Data   │ ← .data segment\n0x10000000 ├─────────────────┤   Global variables, constants\n           │     Text        │ ← .text segment (program code)\n0x00400000 ├─────────────────┤   Instructions start here\n           │    Reserved     │ ← OS/kernel use\n0x00000000 └─────────────────┘\n\nKey points:\n- Stack and heap grow toward each other\n- Stack overflow occurs if they collide\n- Static data has fixed addresses at compile time\n- $gp (global pointer) typically points to middle of static data"
+  },
+  {
+    "id": "cs202-t2-ex12",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic2",
+    "type": "written",
+    "title": "Leaf vs Non-Leaf Functions",
+    "description": "What distinguishes a leaf function from a non-leaf function? What optimizations can be made for leaf functions? Write an example of each.",
+    "difficulty": 2,
+    "hints": [
+      "Leaf = does not call other functions",
+      "Consider which registers need saving"
+    ],
+    "solution": "Leaf function: Does not call any other functions\nNon-leaf function: Calls at least one other function\n\nLeaf function optimizations:\n- No need to save $ra (won't be overwritten)\n- Can use $t registers freely (no calls to corrupt them)\n- Smaller/no stack frame needed\n\nExample Leaf Function (no stack frame needed):\nsquare:               # int square(int x)\n    mul  $v0, $a0, $a0  # return x * x\n    jr   $ra\n\nExample Non-Leaf Function (must save $ra):\nsum_squares:          # int sum_squares(int a, int b)\n    addi $sp, $sp, -12\n    sw   $ra, 8($sp)\n    sw   $s0, 4($sp)\n    sw   $s1, 0($sp)\n\n    move $s0, $a0       # save a\n    jal  square         # square(a)\n    move $s1, $v0       # save result\n\n    move $a0, $s0       # restore b... wait, we need to save b too!\n    # This shows why careful register planning is needed\n\n    lw   $s1, 0($sp)\n    lw   $s0, 4($sp)\n    lw   $ra, 8($sp)\n    addi $sp, $sp, 12\n    jr   $ra"
+  },
+  {
+    "id": "cs202-t2-ex13",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic2",
+    "type": "written",
+    "title": "Debugging Assembly",
+    "description": "The following code should compute n! but has bugs. Find and fix them:\n\nfact: li $v0, 1\n      ble $a0, $zero, done\nloop: mul $v0, $v0, $a0\n      sub $a0, $a0, 1\n      bne $a0, $zero, loop\ndone: jr $ra",
+    "difficulty": 3,
+    "hints": [
+      "Trace through with n=3",
+      "Check the base case condition",
+      "Check the loop termination"
+    ],
+    "solution": "Bug analysis:\n\nOriginal code traced with n=3:\n- $a0=3, $v0=1\n- 3 > 0, skip to loop\n- mul: $v0 = 1*3 = 3\n- sub: $a0 = 3-1 = 2\n- 2 != 0, goto loop\n- mul: $v0 = 3*2 = 6\n- sub: $a0 = 2-1 = 1\n- 1 != 0, goto loop\n- mul: $v0 = 6*1 = 6\n- sub: $a0 = 1-1 = 0\n- 0 == 0, fall through to done\n- Returns 6 ✓ (Works for this case!)\n\nBut traced with n=0:\n- $a0=0, $v0=1\n- 0 <= 0, goto done\n- Returns 1 ✓ (Correct!)\n\nTraced with n=1:\n- $a0=1, $v0=1\n- 1 > 0, skip to loop\n- mul: $v0 = 1*1 = 1\n- sub: $a0 = 1-1 = 0\n- 0 == 0, done\n- Returns 1 ✓ (Correct!)\n\nActually, the code works! But there are style issues:\n1. Should use subi (pseudo) or addi with negative\n2. Base case should be $a0 <= 1, not <= 0\n\nFixed version (same logic, clearer):\nfact: li   $v0, 1\n      ble  $a0, 1, done    # 0! = 1! = 1\nloop: mul  $v0, $v0, $a0\n      addi $a0, $a0, -1\n      bgt  $a0, 1, loop    # continue while a0 > 1\ndone: jr   $ra"
+  },
+  {
+    "id": "cs202-t2-ex14",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic2",
+    "type": "written",
+    "title": "Passing Arrays to Functions",
+    "description": "Write MIPS code to pass a 10-element array to a function that finds the maximum value. Show both the caller and callee code.",
+    "difficulty": 3,
+    "hints": [
+      "Pass array by reference (address)",
+      "Pass length as second argument"
+    ],
+    "solution": "# Caller code\n    .data\narr:    .word 5, 2, 8, 1, 9, 3, 7, 4, 6, 0\n\n    .text\nmain:\n    la   $a0, arr         # $a0 = array address\n    li   $a1, 10          # $a1 = length\n    jal  find_max         # call function\n    move $s0, $v0         # save max value\n    # ... continue\n\n# Callee code\n# int find_max(int* arr, int len)\n# $a0 = array address, $a1 = length\n# Returns max value in $v0\n\nfind_max:\n    lw   $v0, 0($a0)      # max = arr[0]\n    li   $t0, 1           # i = 1\n\nmax_loop:\n    bge  $t0, $a1, max_done  # if i >= len, done\n\n    sll  $t1, $t0, 2      # t1 = i * 4\n    add  $t1, $a0, $t1    # t1 = &arr[i]\n    lw   $t2, 0($t1)      # t2 = arr[i]\n\n    ble  $t2, $v0, skip   # if arr[i] <= max, skip\n    move $v0, $t2         # max = arr[i]\n\nskip:\n    addi $t0, $t0, 1      # i++\n    j    max_loop\n\nmax_done:\n    jr   $ra              # return max in $v0"
+  },
+  {
+    "id": "cs202-t2-ex15",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic2",
+    "type": "written",
+    "title": "String Processing",
+    "description": "Write MIPS assembly to calculate the length of a null-terminated string. The string address is in $a0. Return length in $v0.",
+    "difficulty": 3,
+    "hints": [
+      "Strings end with byte 0x00",
+      "Use lb to load a byte",
+      "Count until you hit null"
+    ],
+    "solution": "# int strlen(char* s)\n# $a0 = string address\n# Returns length in $v0\n\nstrlen:\n    move $t0, $a0         # t0 = current position\n    li   $v0, 0           # length = 0\n\nstrlen_loop:\n    lb   $t1, 0($t0)      # load byte at current position\n    beqz $t1, strlen_done # if null terminator, done\n\n    addi $v0, $v0, 1      # length++\n    addi $t0, $t0, 1      # move to next character\n    j    strlen_loop\n\nstrlen_done:\n    jr   $ra\n\nExample trace with \"Hi\":\nAddress:  0x10010000  0x10010001  0x10010002\nContent:  'H' (72)    'i' (105)   0 (null)\n\n- t0 = 0x10010000, load 'H', not null, v0=1, t0++\n- t0 = 0x10010001, load 'i', not null, v0=2, t0++\n- t0 = 0x10010002, load 0, is null, return v0=2"
+  },
+  {
+    "id": "cs202-t2-ex16",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic2",
+    "type": "written",
+    "title": "2D Array Access",
+    "description": "Given a 4x4 matrix of integers stored in row-major order, write MIPS code to access element matrix[i][j]. Assume matrix base in $s0, i in $s1, j in $s2.",
+    "difficulty": 4,
+    "hints": [
+      "Row-major: rows stored contiguously",
+      "Address = base + (i * num_cols + j) * element_size",
+      "Each row has 4 elements"
+    ],
+    "solution": "# Access matrix[i][j] where matrix is 4x4 integers\n# $s0 = base address, $s1 = i, $s2 = j\n# Result in $t0\n\n    # Calculate row offset: i * 4 (columns per row)\n    sll  $t0, $s1, 2      # t0 = i * 4\n\n    # Add column index: i * 4 + j\n    add  $t0, $t0, $s2    # t0 = i * 4 + j\n\n    # Convert to byte offset: (i * 4 + j) * 4\n    sll  $t0, $t0, 2      # t0 = (i * 4 + j) * 4\n\n    # Calculate final address\n    add  $t0, $s0, $t0    # t0 = base + offset\n\n    # Load the element\n    lw   $t1, 0($t0)      # t1 = matrix[i][j]\n\nMemory layout for 4x4 matrix (addresses relative to base):\n        j=0   j=1   j=2   j=3\ni=0     0     4     8     12\ni=1     16    20    24    28\ni=2     32    36    40    44\ni=3     48    52    56    60\n\nExample: matrix[2][3]\noffset = (2 * 4 + 3) * 4 = 11 * 4 = 44 bytes\naddress = base + 44"
+  }
+]

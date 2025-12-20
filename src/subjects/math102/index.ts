@@ -7,16 +7,25 @@
  */
 
 import type { Quiz, Exam, Project, Exercise } from '../../core/types';
+import { loadExercisesFromGlob, loadQuizzesFromGlob } from '../loader';
 
-import quizzesData from './quizzes.json';
+// Quizzes are now loaded from topic-level files
+const quizModules = import.meta.glob('./content/*/quizzes.json', {
+  eager: true,
+  import: 'default',
+}) as Record<string, Quiz[]>;
 import examsData from './exams.json';
 import projectsData from './projects.json';
-import exercisesData from './exercises.json';
+// Exercises are now loaded from topic-level files
+const exerciseModules = import.meta.glob('./content/*/exercises.json', {
+  eager: true,
+  import: 'default',
+}) as Record<string, Exercise[]>;
 
-export const math102Quizzes = quizzesData as Quiz[];
+export const math102Quizzes = loadQuizzesFromGlob(quizModules);
 export const math102Exams = examsData as Exam[];
 export const math102Projects = projectsData as Project[];
-export const math102Exercises = exercisesData as Exercise[];
+export const math102Exercises = loadExercisesFromGlob(exerciseModules);
 
 // Topics still use TypeScript for Vite's ?raw markdown imports
 export { math102Topics } from './topics';

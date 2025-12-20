@@ -1,0 +1,581 @@
+[
+  {
+    "id": "cs307-t5-ex01",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-5",
+    "title": "Basic Email Validation",
+    "difficulty": 1,
+    "description": "Write a function to validate an email address using basic format checking. Return True if valid, False otherwise.",
+    "starterCode": "def validate_email(email):\n    # Check for @ symbol and basic format\n    pass\n\nprint(validate_email(\"user@example.com\"))\nprint(validate_email(\"invalid.email\"))",
+    "solution": "def validate_email(email):\n    if not email or '@' not in email:\n        return False\n    parts = email.split('@')\n    if len(parts) != 2:\n        return False\n    local, domain = parts\n    if not local or not domain:\n        return False\n    if '.' not in domain:\n        return False\n    return True\n\nprint(validate_email(\"user@example.com\"))\nprint(validate_email(\"invalid.email\"))",
+    "testCases": [
+      {
+        "input": "\"user@example.com\"",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Valid email"
+      },
+      {
+        "input": "\"invalid.email\"",
+        "expectedOutput": "False",
+        "isHidden": false,
+        "description": "Missing @ symbol"
+      },
+      {
+        "input": "\"user@@example.com\"",
+        "expectedOutput": "False",
+        "isHidden": true,
+        "description": "Multiple @ symbols"
+      }
+    ],
+    "hints": [
+      "Check if email contains exactly one @ symbol",
+      "Split email on @ and validate both parts exist",
+      "Ensure domain has a dot for TLD"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs307-t5-ex02",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-5",
+    "title": "Sanitize User Input",
+    "difficulty": 2,
+    "description": "Write a function to sanitize user input by removing dangerous characters that could be used in injection attacks.",
+    "starterCode": "def sanitize_input(user_input):\n    # Remove potentially dangerous characters: < > & \" ' ;\n    pass\n\nprint(sanitize_input(\"Hello World\"))\nprint(sanitize_input(\"<script>alert('xss')</script>\"))",
+    "solution": "def sanitize_input(user_input):\n    dangerous_chars = ['<', '>', '&', '\"', \"'\", ';']\n    result = user_input\n    for char in dangerous_chars:\n        result = result.replace(char, '')\n    return result\n\nprint(sanitize_input(\"Hello World\"))\nprint(sanitize_input(\"<script>alert('xss')</script>\"))",
+    "testCases": [
+      {
+        "input": "\"Hello World\"",
+        "expectedOutput": "\"Hello World\"",
+        "isHidden": false,
+        "description": "Clean input unchanged"
+      },
+      {
+        "input": "\"<script>alert('xss')</script>\"",
+        "expectedOutput": "\"scriptalert(xss)/script\"",
+        "isHidden": false,
+        "description": "Remove script tags"
+      },
+      {
+        "input": "\"User & Admin\"",
+        "expectedOutput": "\"User  Admin\"",
+        "isHidden": true,
+        "description": "Remove ampersand"
+      }
+    ],
+    "hints": [
+      "Create a list of dangerous characters",
+      "Use string.replace() to remove each character",
+      "Process all dangerous characters one by one"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs307-t5-ex03",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-5",
+    "title": "Integer Input Validation",
+    "difficulty": 1,
+    "description": "Write a function that validates and safely converts user input to an integer within a specified range.",
+    "starterCode": "def validate_integer_input(input_str, min_val=0, max_val=100):\n    # Validate and convert to int, return None if invalid\n    pass\n\nprint(validate_integer_input(\"42\", 0, 100))\nprint(validate_integer_input(\"150\", 0, 100))\nprint(validate_integer_input(\"abc\", 0, 100))",
+    "solution": "def validate_integer_input(input_str, min_val=0, max_val=100):\n    try:\n        value = int(input_str)\n        if min_val <= value <= max_val:\n            return value\n        return None\n    except (ValueError, TypeError):\n        return None\n\nprint(validate_integer_input(\"42\", 0, 100))\nprint(validate_integer_input(\"150\", 0, 100))\nprint(validate_integer_input(\"abc\", 0, 100))",
+    "testCases": [
+      {
+        "input": "\"42\", 0, 100",
+        "expectedOutput": "42",
+        "isHidden": false,
+        "description": "Valid integer in range"
+      },
+      {
+        "input": "\"150\", 0, 100",
+        "expectedOutput": "None",
+        "isHidden": false,
+        "description": "Integer out of range"
+      },
+      {
+        "input": "\"abc\", 0, 100",
+        "expectedOutput": "None",
+        "isHidden": true,
+        "description": "Non-numeric input"
+      }
+    ],
+    "hints": [
+      "Use try-except to catch conversion errors",
+      "Check if converted value is within range",
+      "Return None for invalid inputs"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs307-t5-ex04",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-5",
+    "title": "HTML Entity Encoding",
+    "difficulty": 2,
+    "description": "Write a function to encode special HTML characters to prevent XSS attacks.",
+    "starterCode": "def html_encode(text):\n    # Encode: < > & \" '\n    pass\n\nprint(html_encode(\"Hello World\"))\nprint(html_encode(\"<div>Test & 'quotes'</div>\"))",
+    "solution": "def html_encode(text):\n    encoding_map = {\n        '<': '&lt;',\n        '>': '&gt;',\n        '&': '&amp;',\n        '\"': '&quot;',\n        \"'\": '&#x27;'\n    }\n    result = text\n    for char, entity in encoding_map.items():\n        result = result.replace(char, entity)\n    return result\n\nprint(html_encode(\"Hello World\"))\nprint(html_encode(\"<div>Test & 'quotes'</div>\"))",
+    "testCases": [
+      {
+        "input": "\"Hello World\"",
+        "expectedOutput": "\"Hello World\"",
+        "isHidden": false,
+        "description": "No special chars"
+      },
+      {
+        "input": "\"<div>Test & 'quotes'</div>\"",
+        "expectedOutput": "\"&lt;div&gt;Test &amp; &#x27;quotes&#x27;&lt;/div&gt;\"",
+        "isHidden": false,
+        "description": "Encode HTML entities"
+      },
+      {
+        "input": "\"a<b>c\"",
+        "expectedOutput": "\"a&lt;b&gt;c\"",
+        "isHidden": true,
+        "description": "Simple brackets"
+      }
+    ],
+    "hints": [
+      "Create a dictionary mapping characters to HTML entities",
+      "Replace each special character with its encoded form",
+      "Handle & first to avoid double encoding"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs307-t5-ex05",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-5",
+    "title": "Path Traversal Prevention",
+    "difficulty": 3,
+    "description": "Write a function to validate that a filename does not contain path traversal attempts (../).",
+    "starterCode": "def is_safe_filename(filename):\n    # Check for path traversal attempts\n    pass\n\nprint(is_safe_filename(\"document.pdf\"))\nprint(is_safe_filename(\"../etc/passwd\"))\nprint(is_safe_filename(\"file..name.txt\"))",
+    "solution": "def is_safe_filename(filename):\n    # Check for path traversal patterns\n    dangerous_patterns = ['../', '..\\\\', '/..', '\\\\..']\n\n    for pattern in dangerous_patterns:\n        if pattern in filename:\n            return False\n\n    # Also reject absolute paths\n    if filename.startswith('/') or filename.startswith('\\\\'):\n        return False\n\n    # Reject drive letters on Windows\n    if len(filename) > 1 and filename[1] == ':':\n        return False\n\n    return True\n\nprint(is_safe_filename(\"document.pdf\"))\nprint(is_safe_filename(\"../etc/passwd\"))\nprint(is_safe_filename(\"file..name.txt\"))",
+    "testCases": [
+      {
+        "input": "\"document.pdf\"",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Safe filename"
+      },
+      {
+        "input": "\"../etc/passwd\"",
+        "expectedOutput": "False",
+        "isHidden": false,
+        "description": "Path traversal attempt"
+      },
+      {
+        "input": "\"/etc/passwd\"",
+        "expectedOutput": "False",
+        "isHidden": true,
+        "description": "Absolute path"
+      }
+    ],
+    "hints": [
+      "Check for ../ and ..\\\\ patterns",
+      "Reject absolute paths starting with / or \\\\",
+      "Consider Windows drive letters (C:)"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs307-t5-ex06",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-5",
+    "title": "Secure Error Message",
+    "difficulty": 2,
+    "description": "Write a function that returns a generic error message for users while logging detailed info for developers.",
+    "starterCode": "def handle_login_error(username, error_type):\n    # Return generic user message and detailed log\n    # error_type: 'user_not_found', 'wrong_password', 'account_locked'\n    pass\n\nuser_msg, log_msg = handle_login_error(\"alice\", \"wrong_password\")\nprint(f\"User: {user_msg}\")\nprint(f\"Log: {log_msg}\")",
+    "solution": "def handle_login_error(username, error_type):\n    # Generic message for user (no details leaked)\n    user_message = \"Invalid username or password\"\n\n    # Detailed message for logs\n    log_details = {\n        'user_not_found': f\"Login failed: User '{username}' does not exist\",\n        'wrong_password': f\"Login failed: Invalid password for user '{username}'\",\n        'account_locked': f\"Login failed: Account '{username}' is locked\"\n    }\n\n    log_message = log_details.get(error_type, f\"Login failed for user '{username}'\")\n\n    return user_message, log_message\n\nuser_msg, log_msg = handle_login_error(\"alice\", \"wrong_password\")\nprint(f\"User: {user_msg}\")\nprint(f\"Log: {log_msg}\")",
+    "testCases": [
+      {
+        "input": "\"alice\", \"wrong_password\"",
+        "expectedOutput": "user_msg contains \"Invalid\"",
+        "isHidden": false,
+        "description": "Generic user message"
+      },
+      {
+        "input": "\"bob\", \"user_not_found\"",
+        "expectedOutput": "log contains \"bob\"",
+        "isHidden": false,
+        "description": "Detailed log message"
+      },
+      {
+        "input": "\"charlie\", \"account_locked\"",
+        "expectedOutput": "user_msg same for all errors",
+        "isHidden": true,
+        "description": "Consistent user message"
+      }
+    ],
+    "hints": [
+      "User message should be same for all error types",
+      "Log message should include specific details",
+      "Never reveal which part of login failed to user"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs307-t5-ex07",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-5",
+    "title": "SQL Parameter Validation",
+    "difficulty": 3,
+    "description": "Write a function to validate parameters for SQL queries to prevent injection. Accept only alphanumeric characters and underscores for table/column names.",
+    "starterCode": "def validate_sql_identifier(identifier):\n    # Validate SQL table/column names\n    pass\n\nprint(validate_sql_identifier(\"users_table\"))\nprint(validate_sql_identifier(\"users; DROP TABLE\"))\nprint(validate_sql_identifier(\"user123\"))",
+    "solution": "def validate_sql_identifier(identifier):\n    if not identifier:\n        return False\n\n    # Must start with letter or underscore\n    if not (identifier[0].isalpha() or identifier[0] == '_'):\n        return False\n\n    # Rest must be alphanumeric or underscore\n    for char in identifier:\n        if not (char.isalnum() or char == '_'):\n            return False\n\n    # Additional check: not too long\n    if len(identifier) > 64:\n        return False\n\n    return True\n\nprint(validate_sql_identifier(\"users_table\"))\nprint(validate_sql_identifier(\"users; DROP TABLE\"))\nprint(validate_sql_identifier(\"user123\"))",
+    "testCases": [
+      {
+        "input": "\"users_table\"",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Valid identifier"
+      },
+      {
+        "input": "\"users; DROP TABLE\"",
+        "expectedOutput": "False",
+        "isHidden": false,
+        "description": "SQL injection attempt"
+      },
+      {
+        "input": "\"123users\"",
+        "expectedOutput": "False",
+        "isHidden": true,
+        "description": "Starts with number"
+      }
+    ],
+    "hints": [
+      "Check first character is letter or underscore",
+      "Validate all characters are alphanumeric or underscore",
+      "Consider maximum length limits"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs307-t5-ex08",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-5",
+    "title": "URL Parameter Encoding",
+    "difficulty": 2,
+    "description": "Write a function to safely encode URL parameters to prevent injection attacks.",
+    "starterCode": "def encode_url_param(param):\n    # Encode special characters for URL\n    pass\n\nprint(encode_url_param(\"hello world\"))\nprint(encode_url_param(\"name=value&other=data\"))",
+    "solution": "def encode_url_param(param):\n    # Characters that need encoding\n    encoding_map = {\n        ' ': '%20',\n        '&': '%26',\n        '=': '%3D',\n        '?': '%3F',\n        '#': '%23',\n        '/': '%2F',\n        '+': '%2B'\n    }\n\n    result = param\n    for char, encoded in encoding_map.items():\n        result = result.replace(char, encoded)\n\n    return result\n\nprint(encode_url_param(\"hello world\"))\nprint(encode_url_param(\"name=value&other=data\"))",
+    "testCases": [
+      {
+        "input": "\"hello world\"",
+        "expectedOutput": "\"hello%20world\"",
+        "isHidden": false,
+        "description": "Encode space"
+      },
+      {
+        "input": "\"name=value&other=data\"",
+        "expectedOutput": "\"name%3Dvalue%26other%3Ddata\"",
+        "isHidden": false,
+        "description": "Encode special chars"
+      },
+      {
+        "input": "\"simple\"",
+        "expectedOutput": "\"simple\"",
+        "isHidden": true,
+        "description": "No encoding needed"
+      }
+    ],
+    "hints": [
+      "Create mapping of special chars to percent-encoded values",
+      "Replace each special character",
+      "Common chars: space, &, =, ?, #"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs307-t5-ex09",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-5",
+    "title": "Command Injection Prevention",
+    "difficulty": 4,
+    "description": "Write a function to validate filenames before using them in system commands. Reject any filename with shell metacharacters.",
+    "starterCode": "def is_safe_for_command(filename):\n    # Validate filename has no shell metacharacters\n    pass\n\nprint(is_safe_for_command(\"report.pdf\"))\nprint(is_safe_for_command(\"file.txt; rm -rf /\"))\nprint(is_safe_for_command(\"data|backup.tar\"))",
+    "solution": "def is_safe_for_command(filename):\n    # Shell metacharacters that could be dangerous\n    dangerous_chars = [';', '|', '&', '$', '>', '<', '`', '\\n', '\\r', '(', ')', '{', '}', '[', ']', '!', '*', '?']\n\n    # Check for dangerous characters\n    for char in dangerous_chars:\n        if char in filename:\n            return False\n\n    # Also check for command substitution patterns\n    if '$(' in filename or '${' in filename:\n        return False\n\n    # Reject if starts with dash (option injection)\n    if filename.startswith('-'):\n        return False\n\n    return True\n\nprint(is_safe_for_command(\"report.pdf\"))\nprint(is_safe_for_command(\"file.txt; rm -rf /\"))\nprint(is_safe_for_command(\"data|backup.tar\"))",
+    "testCases": [
+      {
+        "input": "\"report.pdf\"",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Safe filename"
+      },
+      {
+        "input": "\"file.txt; rm -rf /\"",
+        "expectedOutput": "False",
+        "isHidden": false,
+        "description": "Command injection attempt"
+      },
+      {
+        "input": "\"data|backup.tar\"",
+        "expectedOutput": "False",
+        "isHidden": true,
+        "description": "Pipe character"
+      }
+    ],
+    "hints": [
+      "List all shell metacharacters: ; | & $ > < etc.",
+      "Check for command substitution: $( ${",
+      "Reject filenames starting with dash"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs307-t5-ex10",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-5",
+    "title": "Credit Card Masking",
+    "difficulty": 2,
+    "description": "Write a function to mask a credit card number, showing only the last 4 digits.",
+    "starterCode": "def mask_credit_card(card_number):\n    # Show only last 4 digits, mask rest with *\n    pass\n\nprint(mask_credit_card(\"1234567812345678\"))\nprint(mask_credit_card(\"4111111111111111\"))",
+    "solution": "def mask_credit_card(card_number):\n    # Remove spaces and dashes if present\n    cleaned = card_number.replace(' ', '').replace('-', '')\n\n    if len(cleaned) < 4:\n        return '*' * len(cleaned)\n\n    # Mask all but last 4 digits\n    masked = '*' * (len(cleaned) - 4) + cleaned[-4:]\n\n    return masked\n\nprint(mask_credit_card(\"1234567812345678\"))\nprint(mask_credit_card(\"4111111111111111\"))",
+    "testCases": [
+      {
+        "input": "\"1234567812345678\"",
+        "expectedOutput": "\"************5678\"",
+        "isHidden": false,
+        "description": "Mask 16-digit card"
+      },
+      {
+        "input": "\"4111111111111111\"",
+        "expectedOutput": "\"************1111\"",
+        "isHidden": false,
+        "description": "Last 4 visible"
+      },
+      {
+        "input": "\"123\"",
+        "expectedOutput": "\"***\"",
+        "isHidden": true,
+        "description": "Short number"
+      }
+    ],
+    "hints": [
+      "Clean input by removing spaces/dashes",
+      "Replace all but last 4 chars with asterisks",
+      "Handle edge case of short numbers"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs307-t5-ex11",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-5",
+    "title": "JSON Output Sanitization",
+    "difficulty": 3,
+    "description": "Write a function to sanitize data before encoding to JSON, removing sensitive fields.",
+    "starterCode": "def sanitize_for_json(data_dict):\n    # Remove sensitive fields: password, ssn, credit_card\n    pass\n\nuser = {\"name\": \"Alice\", \"password\": \"secret123\", \"email\": \"alice@example.com\"}\nprint(sanitize_for_json(user))",
+    "solution": "def sanitize_for_json(data_dict):\n    sensitive_fields = ['password', 'ssn', 'credit_card', 'secret', 'token', 'api_key']\n\n    # Create a copy to avoid modifying original\n    sanitized = data_dict.copy()\n\n    # Remove sensitive fields (case-insensitive)\n    keys_to_remove = []\n    for key in sanitized.keys():\n        key_lower = key.lower()\n        for sensitive in sensitive_fields:\n            if sensitive in key_lower:\n                keys_to_remove.append(key)\n                break\n\n    for key in keys_to_remove:\n        del sanitized[key]\n\n    return sanitized\n\nuser = {\"name\": \"Alice\", \"password\": \"secret123\", \"email\": \"alice@example.com\"}\nprint(sanitize_for_json(user))",
+    "testCases": [
+      {
+        "input": "{\"name\": \"Alice\", \"password\": \"secret123\"}",
+        "expectedOutput": "{\"name\": \"Alice\"}",
+        "isHidden": false,
+        "description": "Remove password field"
+      },
+      {
+        "input": "{\"id\": 1, \"ssn\": \"123-45-6789\"}",
+        "expectedOutput": "{\"id\": 1}",
+        "isHidden": false,
+        "description": "Remove SSN field"
+      },
+      {
+        "input": "{\"user\": \"Bob\", \"api_key\": \"xyz\"}",
+        "expectedOutput": "{\"user\": \"Bob\"}",
+        "isHidden": true,
+        "description": "Remove API key"
+      }
+    ],
+    "hints": [
+      "Define list of sensitive field names",
+      "Create copy of dictionary",
+      "Check each key against sensitive list",
+      "Delete matching keys from copy"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs307-t5-ex12",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-5",
+    "title": "File Extension Validation",
+    "difficulty": 2,
+    "description": "Write a function to validate file uploads by checking allowed extensions.",
+    "starterCode": "def is_allowed_file(filename, allowed_extensions):\n    # Check if file extension is in allowed list\n    pass\n\nprint(is_allowed_file(\"document.pdf\", [\"pdf\", \"doc\", \"docx\"]))\nprint(is_allowed_file(\"script.exe\", [\"pdf\", \"doc\", \"docx\"]))",
+    "solution": "def is_allowed_file(filename, allowed_extensions):\n    if not filename or '.' not in filename:\n        return False\n\n    # Get extension (everything after last dot)\n    extension = filename.rsplit('.', 1)[1].lower()\n\n    # Normalize allowed extensions to lowercase\n    allowed = [ext.lower() for ext in allowed_extensions]\n\n    return extension in allowed\n\nprint(is_allowed_file(\"document.pdf\", [\"pdf\", \"doc\", \"docx\"]))\nprint(is_allowed_file(\"script.exe\", [\"pdf\", \"doc\", \"docx\"]))",
+    "testCases": [
+      {
+        "input": "\"document.pdf\", [\"pdf\", \"doc\", \"docx\"]",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Allowed extension"
+      },
+      {
+        "input": "\"script.exe\", [\"pdf\", \"doc\", \"docx\"]",
+        "expectedOutput": "False",
+        "isHidden": false,
+        "description": "Disallowed extension"
+      },
+      {
+        "input": "\"file.PDF\", [\"pdf\"]",
+        "expectedOutput": "True",
+        "isHidden": true,
+        "description": "Case insensitive"
+      }
+    ],
+    "hints": [
+      "Use rsplit() to get extension after last dot",
+      "Convert to lowercase for comparison",
+      "Check if extension is in allowed list"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs307-t5-ex13",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-5",
+    "title": "Input Length Validation",
+    "difficulty": 1,
+    "description": "Write a function to validate that user input does not exceed maximum length to prevent buffer overflow-style attacks.",
+    "starterCode": "def validate_length(input_str, max_length=255):\n    # Return True if within limit, False if too long\n    pass\n\nprint(validate_length(\"Hello\", 10))\nprint(validate_length(\"A\" * 300, 255))",
+    "solution": "def validate_length(input_str, max_length=255):\n    if input_str is None:\n        return False\n\n    return len(input_str) <= max_length\n\nprint(validate_length(\"Hello\", 10))\nprint(validate_length(\"A\" * 300, 255))",
+    "testCases": [
+      {
+        "input": "\"Hello\", 10",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Within limit"
+      },
+      {
+        "input": "\"A\" * 300, 255",
+        "expectedOutput": "False",
+        "isHidden": false,
+        "description": "Exceeds limit"
+      },
+      {
+        "input": "\"\", 10",
+        "expectedOutput": "True",
+        "isHidden": true,
+        "description": "Empty string valid"
+      }
+    ],
+    "hints": [
+      "Use len() to get string length",
+      "Compare against max_length",
+      "Handle None input case"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs307-t5-ex14",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-5",
+    "title": "XML Entity Prevention",
+    "difficulty": 4,
+    "description": "Write a function to detect potentially dangerous XML patterns like entity expansion attacks.",
+    "starterCode": "def is_safe_xml_content(xml_string):\n    # Detect dangerous XML patterns\n    pass\n\nprint(is_safe_xml_content(\"<root><data>Hello</data></root>\"))\nprint(is_safe_xml_content(\"<!DOCTYPE test [<!ENTITY xxe SYSTEM 'file:///etc/passwd'>]>\"))",
+    "solution": "def is_safe_xml_content(xml_string):\n    dangerous_patterns = [\n        '<!DOCTYPE',\n        '<!ENTITY',\n        'SYSTEM',\n        'PUBLIC',\n        '<!ELEMENT',\n        '<!ATTLIST'\n    ]\n\n    # Check for dangerous patterns (case-insensitive)\n    xml_upper = xml_string.upper()\n    for pattern in dangerous_patterns:\n        if pattern in xml_upper:\n            return False\n\n    # Check for excessive entity references\n    if xml_string.count('&') > 10:\n        return False\n\n    return True\n\nprint(is_safe_xml_content(\"<root><data>Hello</data></root>\"))\nprint(is_safe_xml_content(\"<!DOCTYPE test [<!ENTITY xxe SYSTEM 'file:///etc/passwd'>]>\"))",
+    "testCases": [
+      {
+        "input": "\"<root><data>Hello</data></root>\"",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Safe XML"
+      },
+      {
+        "input": "\"<!DOCTYPE test [<!ENTITY xxe SYSTEM 'file:///etc/passwd'>]>\"",
+        "expectedOutput": "False",
+        "isHidden": false,
+        "description": "XXE attack pattern"
+      },
+      {
+        "input": "\"<data>&amp;&amp;&amp;</data>\"",
+        "expectedOutput": "True",
+        "isHidden": true,
+        "description": "Few entities OK"
+      }
+    ],
+    "hints": [
+      "Check for DOCTYPE and ENTITY declarations",
+      "Look for SYSTEM and PUBLIC keywords",
+      "Count entity references (&)",
+      "Use case-insensitive matching"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs307-t5-ex15",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-5",
+    "title": "LDAP Injection Prevention",
+    "difficulty": 4,
+    "description": "Write a function to escape special characters in LDAP query inputs to prevent LDAP injection.",
+    "starterCode": "def escape_ldap_filter(input_str):\n    # Escape LDAP special characters\n    pass\n\nprint(escape_ldap_filter(\"John Doe\"))\nprint(escape_ldap_filter(\"admin)(uid=*))(|(uid=*\"))",
+    "solution": "def escape_ldap_filter(input_str):\n    # LDAP special characters and their escaped forms\n    escape_map = {\n        '\\\\': '\\\\5c',\n        '*': '\\\\2a',\n        '(': '\\\\28',\n        ')': '\\\\29',\n        '\\x00': '\\\\00'\n    }\n\n    result = input_str\n    # Escape backslash first to avoid double escaping\n    result = result.replace('\\\\', '\\\\5c')\n    result = result.replace('*', '\\\\2a')\n    result = result.replace('(', '\\\\28')\n    result = result.replace(')', '\\\\29')\n    result = result.replace('\\x00', '\\\\00')\n\n    return result\n\nprint(escape_ldap_filter(\"John Doe\"))\nprint(escape_ldap_filter(\"admin)(uid=*))(|(uid=*\"))",
+    "testCases": [
+      {
+        "input": "\"John Doe\"",
+        "expectedOutput": "\"John Doe\"",
+        "isHidden": false,
+        "description": "No special chars"
+      },
+      {
+        "input": "\"admin)(uid=*))(|(uid=*\"",
+        "expectedOutput": "Escaped parentheses and asterisks",
+        "isHidden": false,
+        "description": "Escape injection chars"
+      },
+      {
+        "input": "\"user*\"",
+        "expectedOutput": "\"user\\\\2a\"",
+        "isHidden": true,
+        "description": "Escape wildcard"
+      }
+    ],
+    "hints": [
+      "LDAP special chars: * ( ) \\\\ and NULL",
+      "Escape to hex codes: \\\\2a \\\\28 \\\\29 \\\\5c",
+      "Escape backslash first to avoid double escaping"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs307-t5-ex16",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-5",
+    "title": "Content Security Policy Header",
+    "difficulty": 3,
+    "description": "Write a function to generate a Content Security Policy header value for secure web applications.",
+    "starterCode": "def generate_csp_header(allow_inline_scripts=False):\n    # Generate CSP header string\n    pass\n\nprint(generate_csp_header(False))\nprint(generate_csp_header(True))",
+    "solution": "def generate_csp_header(allow_inline_scripts=False):\n    # Start with restrictive default\n    policies = [\n        \"default-src 'self'\",\n        \"object-src 'none'\",\n        \"base-uri 'self'\",\n        \"form-action 'self'\"\n    ]\n\n    # Script policy based on parameter\n    if allow_inline_scripts:\n        policies.append(\"script-src 'self' 'unsafe-inline'\")\n    else:\n        policies.append(\"script-src 'self'\")\n\n    # Join with semicolons\n    return '; '.join(policies)\n\nprint(generate_csp_header(False))\nprint(generate_csp_header(True))",
+    "testCases": [
+      {
+        "input": "False",
+        "expectedOutput": "Contains script-src self",
+        "isHidden": false,
+        "description": "Strict CSP"
+      },
+      {
+        "input": "True",
+        "expectedOutput": "Contains unsafe-inline",
+        "isHidden": false,
+        "description": "Allow inline scripts"
+      },
+      {
+        "input": "False",
+        "expectedOutput": "Contains default-src",
+        "isHidden": true,
+        "description": "Has default-src"
+      }
+    ],
+    "hints": [
+      "Use default-src to restrict resource loading",
+      "Set object-src to none to prevent plugins",
+      "script-src controls JavaScript execution",
+      "Join policies with semicolons"
+    ],
+    "language": "python"
+  }
+]

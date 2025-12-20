@@ -1,0 +1,221 @@
+[
+  {
+    "id": "math302-quiz-2-1",
+    "subjectId": "math302",
+    "topicId": "math302-topic-2",
+    "title": "Second-Order Linear - Characteristic Equation",
+    "questions": [
+      {
+        "id": "math302-q16",
+        "type": "multiple_choice",
+        "prompt": "The characteristic equation for y″ - 5y′ + 6y = 0 is:",
+        "options": [
+          "r² - 5r + 6 = 0",
+          "r² + 5r + 6 = 0",
+          "r² - 5r - 6 = 0",
+          "5r² - 6r + 1 = 0"
+        ],
+        "correctAnswer": "r² - 5r + 6 = 0",
+        "explanation": "For ay″ + by′ + cy = 0, the characteristic equation is ar² + br + c = 0. Here: r² - 5r + 6 = 0, giving r = 2, 3."
+      },
+      {
+        "id": "math302-q17",
+        "type": "multiple_choice",
+        "prompt": "If the characteristic equation has roots r = -2 ± 3i, the general solution is:",
+        "options": [
+          "y = e^(-2x)(C₁cos(3x) + C₂sin(3x))",
+          "y = C₁e^(-2x) + C₂e^(3x)",
+          "y = e^(3x)(C₁cos(2x) + C₂sin(2x))",
+          "y = C₁cos(3x) + C₂sin(3x)"
+        ],
+        "correctAnswer": "y = e^(-2x)(C₁cos(3x) + C₂sin(3x))",
+        "explanation": "For complex roots α ± βi, the solution is y = e^(αx)(C₁cos(βx) + C₂sin(βx)). Here α = -2, β = 3."
+      },
+      {
+        "id": "math302-q18",
+        "type": "multiple_choice",
+        "prompt": "The general solution of y″ - 6y′ + 9y = 0 is:",
+        "options": [
+          "y = (C₁ + C₂x)e^(3x)",
+          "y = C₁e^(3x) + C₂e^(-3x)",
+          "y = C₁cos(3x) + C₂sin(3x)",
+          "y = C₁e^(3x) + C₂e^(9x)"
+        ],
+        "correctAnswer": "y = (C₁ + C₂x)e^(3x)",
+        "explanation": "The characteristic equation r² - 6r + 9 = (r - 3)² = 0 has a repeated root r = 3. For repeated roots, y = (C₁ + C₂x)e^(rx)."
+      },
+      {
+        "id": "math302-q19",
+        "type": "multiple_choice",
+        "prompt": "What type of behavior does y″ + 4y′ + 5y = 0 exhibit?",
+        "options": [
+          "Damped oscillation",
+          "Pure oscillation",
+          "Exponential growth",
+          "Overdamped decay"
+        ],
+        "correctAnswer": "Damped oscillation",
+        "explanation": "Characteristic equation: r² + 4r + 5 = 0 gives r = -2 ± i. Complex roots with negative real part indicate damped oscillation."
+      },
+      {
+        "id": "math302-q20",
+        "type": "multiple_choice",
+        "prompt": "Which equation has solutions that grow without bound as x → ∞?",
+        "options": [
+          "y″ - 4y = 0",
+          "y″ + 4y = 0",
+          "y″ + 4y′ + 4y = 0",
+          "y″ + y′ + y = 0"
+        ],
+        "correctAnswer": "y″ - 4y = 0",
+        "explanation": "Characteristic equation r² - 4 = 0 gives r = ±2. The positive root r = 2 produces an e^(2x) term that grows exponentially."
+      }
+    ]
+  },
+  {
+    "id": "math302-quiz-2-2",
+    "subjectId": "math302",
+    "topicId": "math302-topic-2",
+    "title": "Second-Order Linear - Undetermined Coefficients",
+    "questions": [
+      {
+        "id": "math302-q21",
+        "type": "multiple_choice",
+        "prompt": "For y″ + 4y = 8x², what form should the particular solution take?",
+        "options": [
+          "Ax² + Bx + C",
+          "Ax²",
+          "Ae^(2x)",
+          "Acos(2x) + Bsin(2x)"
+        ],
+        "correctAnswer": "Ax² + Bx + C",
+        "explanation": "For a polynomial forcing function of degree n, try a polynomial of the same degree. For 8x², use Ax² + Bx + C."
+      },
+      {
+        "id": "math302-q22",
+        "type": "multiple_choice",
+        "prompt": "For y″ - 3y′ = 6e^(3x), what particular solution form should you try?",
+        "options": [
+          "Axe^(3x)",
+          "Ae^(3x)",
+          "Ax²e^(3x)",
+          "Ae^(3x) + Bx"
+        ],
+        "correctAnswer": "Axe^(3x)",
+        "explanation": "Since e^(3x) is a solution to the homogeneous equation (r = 0, 3), we multiply by x to get the particular solution form Axe^(3x)."
+      },
+      {
+        "id": "math302-q23",
+        "type": "multiple_choice",
+        "prompt": "What particular solution form is appropriate for y″ + 9y = sin(3x)?",
+        "options": [
+          "x(Acos(3x) + Bsin(3x))",
+          "Acos(3x) + Bsin(3x)",
+          "Asin(3x)",
+          "Ae^(3x)"
+        ],
+        "correctAnswer": "x(Acos(3x) + Bsin(3x))",
+        "explanation": "The characteristic equation r² + 9 = 0 gives r = ±3i, so sin(3x) is in the homogeneous solution. Multiply by x."
+      },
+      {
+        "id": "math302-q24",
+        "type": "multiple_choice",
+        "prompt": "For y″ + y = xe^x, the particular solution form is:",
+        "options": [
+          "(Ax + B)e^x",
+          "Axe^x",
+          "Ae^x",
+          "x²e^x"
+        ],
+        "correctAnswer": "(Ax + B)e^x",
+        "explanation": "For a product of polynomial and exponential, use (polynomial of same degree) × exponential. For xe^x, try (Ax + B)e^x."
+      },
+      {
+        "id": "math302-q25",
+        "type": "multiple_choice",
+        "prompt": "The method of undetermined coefficients works when the forcing function is:",
+        "options": [
+          "A combination of polynomials, exponentials, sines, and cosines",
+          "Any continuous function",
+          "Only polynomial functions",
+          "Any differentiable function"
+        ],
+        "correctAnswer": "A combination of polynomials, exponentials, sines, and cosines",
+        "explanation": "Undetermined coefficients applies to forcing functions that are linear combinations of polynomials, e^(ax), cos(bx), and sin(bx)."
+      }
+    ]
+  },
+  {
+    "id": "math302-quiz-2-3",
+    "subjectId": "math302",
+    "topicId": "math302-topic-2",
+    "title": "Second-Order Linear - Variation of Parameters",
+    "questions": [
+      {
+        "id": "math302-q26",
+        "type": "multiple_choice",
+        "prompt": "Variation of parameters is useful when:",
+        "options": [
+          "Undetermined coefficients doesn't apply",
+          "The equation has constant coefficients",
+          "The forcing function is polynomial",
+          "The equation is homogeneous"
+        ],
+        "correctAnswer": "Undetermined coefficients doesn't apply",
+        "explanation": "Variation of parameters works for any continuous forcing function, making it more general than undetermined coefficients."
+      },
+      {
+        "id": "math302-q27",
+        "type": "multiple_choice",
+        "prompt": "For y″ + P(x)y′ + Q(x)y = f(x) with solutions y₁, y₂ to the homogeneous equation, the Wronskian is:",
+        "options": [
+          "W = y₁y₂′ - y₁′y₂",
+          "W = y₁y₂",
+          "W = y₁′y₂′",
+          "W = y₁ + y₂"
+        ],
+        "correctAnswer": "W = y₁y₂′ - y₁′y₂",
+        "explanation": "The Wronskian is defined as W(y₁, y₂) = y₁y₂′ - y₁′y₂. It determines if solutions are linearly independent (W ≠ 0)."
+      },
+      {
+        "id": "math302-q28",
+        "type": "multiple_choice",
+        "prompt": "In variation of parameters, if y_h = C₁y₁ + C₂y₂, the particular solution is:",
+        "options": [
+          "y_p = u₁y₁ + u₂y₂ where u₁ and u₂ are functions",
+          "y_p = Ay₁ + By₂ where A and B are constants",
+          "y_p = y₁ + y₂",
+          "y_p = xy₁ + xy₂"
+        ],
+        "correctAnswer": "y_p = u₁y₁ + u₂y₂ where u₁ and u₂ are functions",
+        "explanation": "Variation of parameters replaces constants C₁, C₂ with functions u₁(x), u₂(x), giving y_p = u₁y₁ + u₂y₂."
+      },
+      {
+        "id": "math302-q29",
+        "type": "multiple_choice",
+        "prompt": "For variation of parameters, u₁′ is given by:",
+        "options": [
+          "u₁′ = -y₂f/W",
+          "u₁′ = y₁f/W",
+          "u₁′ = f/W",
+          "u₁′ = -y₁f/W"
+        ],
+        "correctAnswer": "u₁′ = -y₂f/W",
+        "explanation": "The formulas for variation of parameters are u₁′ = -y₂f/W and u₂′ = y₁f/W, where W is the Wronskian."
+      },
+      {
+        "id": "math302-q30",
+        "type": "multiple_choice",
+        "prompt": "If W(y₁, y₂) = 0 for all x, then y₁ and y₂ are:",
+        "options": [
+          "Linearly dependent",
+          "Linearly independent",
+          "Orthogonal",
+          "Equal"
+        ],
+        "correctAnswer": "Linearly dependent",
+        "explanation": "When the Wronskian is zero everywhere, the solutions are linearly dependent, meaning one is a constant multiple of the other."
+      }
+    ]
+  }
+]

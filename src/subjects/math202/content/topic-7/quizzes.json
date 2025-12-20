@@ -1,0 +1,185 @@
+[
+  {
+    "id": "math202-quiz-7a",
+    "subjectId": "math202",
+    "topicId": "math202-7",
+    "title": "Bayesian Fundamentals",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "The main philosophical difference between Bayesian and frequentist statistics is:",
+        "options": [
+          "Bayesians use more data",
+          "Bayesians treat parameters as random variables",
+          "Frequentists always use priors",
+          "They use different distributions"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Bayesian statistics treats parameters as random variables with probability distributions, while frequentists treat them as fixed but unknown."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "In Bayesian inference, the prior distribution represents:",
+        "options": [
+          "The data",
+          "Our beliefs about parameters before seeing data",
+          "The likelihood",
+          "The final answer"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The prior distribution encodes our beliefs or knowledge about parameters before observing data."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "The posterior distribution combines the prior distribution and the likelihood of the data.",
+        "correctAnswer": true,
+        "explanation": "Bayes' theorem: posterior ∝ likelihood × prior. The posterior updates our beliefs given the data."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "Bayes' theorem in the context of parameter estimation can be written as:",
+        "options": [
+          "P(θ|data) ∝ P(data|θ) × P(θ)",
+          "P(data|θ) = P(θ|data)",
+          "P(θ) = P(data)",
+          "P(θ|data) = P(data)"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Posterior P(θ|data) is proportional to likelihood P(data|θ) times prior P(θ)."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "The distribution of the parameter after observing data is called the ______ distribution.",
+        "correctAnswer": "posterior",
+        "explanation": "The posterior distribution represents our updated beliefs about the parameter after seeing the data."
+      }
+    ]
+  },
+  {
+    "id": "math202-quiz-7b",
+    "subjectId": "math202",
+    "topicId": "math202-7",
+    "title": "Bayesian Estimation",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "A conjugate prior is one that:",
+        "options": [
+          "Always equals the likelihood",
+          "Produces a posterior in the same family as the prior",
+          "Is always uniform",
+          "Requires MCMC"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Conjugate priors result in posterior distributions from the same family, simplifying calculations."
+      },
+      {
+        "id": "q2",
+        "type": "true_false",
+        "prompt": "The Beta distribution is a conjugate prior for the Binomial likelihood.",
+        "correctAnswer": true,
+        "explanation": "Beta-Binomial is a classic conjugate pair: Beta prior + Binomial likelihood = Beta posterior."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "A credible interval in Bayesian statistics is analogous to what in frequentist statistics?",
+        "options": [
+          "Hypothesis test",
+          "Confidence interval",
+          "P-value",
+          "Standard error"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A credible interval is the Bayesian analog of a confidence interval, but with different interpretation."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "A 95% credible interval means:",
+        "options": [
+          "95% of samples fall in the interval",
+          "The parameter is in the interval with 95% probability",
+          "The interval contains 95% of the data",
+          "We used 95% of the data"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Unlike confidence intervals, we can say the parameter has 95% probability of being in a credible interval."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "An uninformative or ______ prior expresses minimal prior knowledge.",
+        "correctAnswer": "noninformative",
+        "explanation": "Noninformative (or flat) priors express little prior knowledge, letting the data dominate the posterior."
+      }
+    ]
+  },
+  {
+    "id": "math202-quiz-7c",
+    "subjectId": "math202",
+    "topicId": "math202-7",
+    "title": "Advanced Bayesian Methods",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "MCMC (Markov Chain Monte Carlo) methods are used to:",
+        "options": [
+          "Calculate exact posteriors",
+          "Approximate complex posterior distributions",
+          "Find conjugate priors",
+          "Test hypotheses"
+        ],
+        "correctAnswer": 1,
+        "explanation": "MCMC methods generate samples from posterior distributions when analytical solutions are intractable."
+      },
+      {
+        "id": "q2",
+        "type": "true_false",
+        "prompt": "The Metropolis-Hastings algorithm is an MCMC method.",
+        "correctAnswer": true,
+        "explanation": "Metropolis-Hastings is a popular MCMC algorithm for sampling from complex distributions."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "Bayes factors are used to:",
+        "options": [
+          "Estimate parameters",
+          "Compare models",
+          "Calculate credible intervals",
+          "Find priors"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Bayes factors compare the evidence for one model versus another."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "A Bayes factor BF₁₀ = 10 means:",
+        "options": [
+          "Model 1 is 10 times more likely than Model 0",
+          "The data are 10 times more likely under Model 1",
+          "Model 0 is preferred",
+          "The prior is 10"
+        ],
+        "correctAnswer": 1,
+        "explanation": "BF₁₀ = P(data|M₁)/P(data|M₀). BF = 10 means data are 10 times more probable under Model 1."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "Gibbs sampling is a special case of ______ where proposals are always accepted.",
+        "correctAnswer": "MCMC",
+        "explanation": "Gibbs sampling is an MCMC method that samples from conditional distributions and always accepts proposals."
+      }
+    ]
+  }
+]

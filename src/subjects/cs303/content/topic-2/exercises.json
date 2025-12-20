@@ -1,0 +1,575 @@
+[
+  {
+    "id": "cs303-ex-2-1",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-2",
+    "title": "Type Annotations",
+    "difficulty": 1,
+    "description": "Add type annotations to Python functions using the typing module.",
+    "starterCode": "from typing import List, Optional, Dict, Tuple\n\ndef find_max(numbers):\n    \"\"\"Find the maximum value in a list.\"\"\"\n    if not numbers:\n        return None\n    return max(numbers)\n\ndef word_count(text):\n    \"\"\"Count occurrences of each word.\"\"\"\n    words = text.lower().split()\n    counts = {}\n    for word in words:\n        counts[word] = counts.get(word, 0) + 1\n    return counts\n\ndef parse_coordinate(s):\n    \"\"\"Parse 'x,y' string into coordinate tuple.\"\"\"\n    parts = s.split(',')\n    return (int(parts[0]), int(parts[1]))\n\n# TODO: Add type annotations to the functions above",
+    "solution": "from typing import List, Optional, Dict, Tuple\n\ndef find_max(numbers: List[int]) -> Optional[int]:\n    \"\"\"Find the maximum value in a list.\"\"\"\n    if not numbers:\n        return None\n    return max(numbers)\n\ndef word_count(text: str) -> Dict[str, int]:\n    \"\"\"Count occurrences of each word.\"\"\"\n    words = text.lower().split()\n    counts: Dict[str, int] = {}\n    for word in words:\n        counts[word] = counts.get(word, 0) + 1\n    return counts\n\ndef parse_coordinate(s: str) -> Tuple[int, int]:\n    \"\"\"Parse 'x,y' string into coordinate tuple.\"\"\"\n    parts = s.split(',')\n    return (int(parts[0]), int(parts[1]))",
+    "testCases": [
+      {
+        "input": "find_max([1, 5, 3])",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "word_count('a b a')['a']",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "parse_coordinate('3,4')",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Use List[T] for list types",
+      "Use Optional[T] for values that might be None",
+      "Use Dict[K, V] for dictionary types"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-2-2",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-2",
+    "title": "Generic Type Parameter",
+    "difficulty": 1,
+    "description": "Implement a generic container class using TypeVar.",
+    "starterCode": "from typing import TypeVar, Generic, Optional\n\nT = TypeVar('T')\n\nclass Box(Generic[T]):\n    \"\"\"\n    A generic container that holds a single value.\n    Type parameter T specifies the type of the contained value.\n    \"\"\"\n\n    def __init__(self, value: T):\n        # Your implementation here\n        pass\n\n    def get(self) -> T:\n        \"\"\"Return the contained value.\"\"\"\n        pass\n\n    def map(self, func):\n        \"\"\"Apply func to the value and return a new Box.\"\"\"\n        pass",
+    "solution": "from typing import TypeVar, Generic, Callable\n\nT = TypeVar('T')\nU = TypeVar('U')\n\nclass Box(Generic[T]):\n    def __init__(self, value: T):\n        self._value = value\n\n    def get(self) -> T:\n        return self._value\n\n    def map(self, func: Callable[[T], U]) -> 'Box[U]':\n        return Box(func(self._value))",
+    "testCases": [
+      {
+        "input": "Box(42).get()",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "Box('hello').map(str.upper).get()",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "Box(3).map(lambda x: x * 2).get()",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "TypeVar creates a type variable",
+      "Generic[T] makes the class generic over T",
+      "map should return a new Box with transformed value"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-2-3",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-2",
+    "title": "Union Types",
+    "difficulty": 1,
+    "description": "Use Union types to handle multiple possible input types.",
+    "starterCode": "from typing import Union, List\n\ndef stringify(value: Union[int, float, str, List]) -> str:\n    \"\"\"\n    Convert various types to string representation.\n    - int/float: convert to string\n    - str: return as-is\n    - list: join elements with commas\n\n    Args:\n        value: An int, float, string, or list\n    Returns:\n        String representation\n    \"\"\"\n    # Your implementation here\n    pass",
+    "solution": "from typing import Union, List\n\ndef stringify(value: Union[int, float, str, List]) -> str:\n    if isinstance(value, (int, float)):\n        return str(value)\n    elif isinstance(value, str):\n        return value\n    elif isinstance(value, list):\n        return ', '.join(str(item) for item in value)\n    return str(value)",
+    "testCases": [
+      {
+        "input": "stringify(42)",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "stringify(3.14)",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "stringify('hello')",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "stringify([1, 2, 3])",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Use isinstance() to check the actual type",
+      "You can check multiple types with isinstance(x, (type1, type2))",
+      "Union[A, B] means the type can be either A or B"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-2-4",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-2",
+    "title": "Protocol Types",
+    "difficulty": 3,
+    "description": "Define and use a Protocol for structural subtyping.",
+    "starterCode": "from typing import Protocol, List\n\nclass Comparable(Protocol):\n    \"\"\"Protocol for objects that can be compared.\"\"\"\n\n    def __lt__(self, other) -> bool:\n        \"\"\"Return True if self < other.\"\"\"\n        ...\n\ndef find_minimum(items: List[Comparable]) -> Comparable:\n    \"\"\"\n    Find the minimum item in a list.\n    Works with any type that implements __lt__.\n\n    Args:\n        items: List of comparable items\n    Returns:\n        The minimum item\n    \"\"\"\n    # Your implementation here\n    pass\n\nclass Point:\n    \"\"\"A 2D point that can be compared by distance from origin.\"\"\"\n\n    def __init__(self, x: float, y: float):\n        # Your implementation here\n        pass\n\n    def __lt__(self, other: 'Point') -> bool:\n        # Compare by distance from origin\n        pass",
+    "solution": "from typing import Protocol, List\nimport math\n\nclass Comparable(Protocol):\n    def __lt__(self, other) -> bool:\n        ...\n\ndef find_minimum(items: List[Comparable]) -> Comparable:\n    if not items:\n        raise ValueError(\"Cannot find minimum of empty list\")\n    result = items[0]\n    for item in items[1:]:\n        if item < result:\n            result = item\n    return result\n\nclass Point:\n    def __init__(self, x: float, y: float):\n        self.x = x\n        self.y = y\n\n    def __lt__(self, other: 'Point') -> bool:\n        self_dist = math.sqrt(self.x**2 + self.y**2)\n        other_dist = math.sqrt(other.x**2 + other.y**2)\n        return self_dist < other_dist",
+    "testCases": [
+      {
+        "input": "find_minimum([3, 1, 4, 1, 5])",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "find_minimum(['c', 'a', 'b'])",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "p = find_minimum([Point(3,4), Point(1,0), Point(2,2)]); (p.x, p.y)",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Protocol defines a structural interface",
+      "Any class with __lt__ satisfies Comparable",
+      "Point distance from origin = sqrt(x² + y²)"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-2-5",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-2",
+    "title": "Type Guards",
+    "difficulty": 3,
+    "description": "Implement type narrowing with TypeGuard.",
+    "starterCode": "from typing import TypeGuard, Union, List, Dict\n\ndef is_string_list(value: List[Union[str, int]]) -> TypeGuard[List[str]]:\n    \"\"\"\n    Check if all elements in the list are strings.\n    This is a type guard that narrows the type.\n    \"\"\"\n    # Your implementation here\n    pass\n\ndef is_valid_person(data: Dict) -> TypeGuard[Dict[str, Union[str, int]]]:\n    \"\"\"\n    Check if dict has 'name' (str) and 'age' (int) keys.\n    \"\"\"\n    # Your implementation here\n    pass\n\ndef process_items(items: List[Union[str, int]]) -> str:\n    \"\"\"\n    Process items: if all strings, join them; otherwise sum numbers.\n    \"\"\"\n    # Your implementation using is_string_list\n    pass",
+    "solution": "from typing import TypeGuard, Union, List, Dict\n\ndef is_string_list(value: List[Union[str, int]]) -> TypeGuard[List[str]]:\n    return all(isinstance(item, str) for item in value)\n\ndef is_valid_person(data: Dict) -> TypeGuard[Dict[str, Union[str, int]]]:\n    return (\n        'name' in data and isinstance(data['name'], str) and\n        'age' in data and isinstance(data['age'], int)\n    )\n\ndef process_items(items: List[Union[str, int]]) -> str:\n    if is_string_list(items):\n        return ' '.join(items)  # Type narrowed to List[str]\n    else:\n        return str(sum(x for x in items if isinstance(x, int)))",
+    "testCases": [
+      {
+        "input": "is_string_list(['a', 'b', 'c'])",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "is_string_list(['a', 1, 'b'])",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "process_items(['hello', 'world'])",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "process_items([1, 2, 3])",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "TypeGuard[T] narrows the type to T when True",
+      "Use all() to check all elements",
+      "After a successful guard, the type checker knows the narrowed type"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-2-6",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-2",
+    "title": "Covariance and Contravariance",
+    "difficulty": 3,
+    "description": "Understand variance with generic types.",
+    "starterCode": "from typing import TypeVar, Generic, Callable, List\n\n# Covariant type variable (for \"producers\")\nT_co = TypeVar('T_co', covariant=True)\n\n# Contravariant type variable (for \"consumers\")\nT_contra = TypeVar('T_contra', contravariant=True)\n\nclass Reader(Generic[T_co]):\n    \"\"\"\n    A covariant reader - produces values of type T.\n    If Cat is subtype of Animal, Reader[Cat] is subtype of Reader[Animal].\n    \"\"\"\n\n    def __init__(self, value: T_co):\n        self._value = value\n\n    def read(self) -> T_co:\n        pass\n\nclass Writer(Generic[T_contra]):\n    \"\"\"\n    A contravariant writer - consumes values of type T.\n    If Cat is subtype of Animal, Writer[Animal] is subtype of Writer[Cat].\n    \"\"\"\n\n    def __init__(self, handler: Callable[[T_contra], None]):\n        self._handler = handler\n\n    def write(self, value: T_contra) -> None:\n        pass",
+    "solution": "from typing import TypeVar, Generic, Callable\n\nT_co = TypeVar('T_co', covariant=True)\nT_contra = TypeVar('T_contra', contravariant=True)\n\nclass Reader(Generic[T_co]):\n    def __init__(self, value: T_co):\n        self._value = value\n\n    def read(self) -> T_co:\n        return self._value\n\nclass Writer(Generic[T_contra]):\n    def __init__(self, handler: Callable[[T_contra], None]):\n        self._handler = handler\n\n    def write(self, value: T_contra) -> None:\n        self._handler(value)",
+    "testCases": [
+      {
+        "input": "Reader('hello').read()",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "Reader(42).read()",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "output = []; Writer(output.append).write(5); output",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Covariant: output positions (return types)",
+      "Contravariant: input positions (parameter types)",
+      "Reader produces values, Writer consumes them"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-2-7",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-2",
+    "title": "TypedDict",
+    "difficulty": 3,
+    "description": "Use TypedDict for structured dictionaries with specific keys.",
+    "starterCode": "from typing import TypedDict, List, Optional\n\nclass Address(TypedDict):\n    \"\"\"A typed dictionary for addresses.\"\"\"\n    street: str\n    city: str\n    zip_code: str\n\nclass Person(TypedDict, total=False):\n    \"\"\"\n    A typed dictionary for person data.\n    total=False means fields are optional.\n    \"\"\"\n    name: str\n    age: int\n    address: Address\n\ndef format_address(addr: Address) -> str:\n    \"\"\"Format an address as a single string.\"\"\"\n    # Your implementation here\n    pass\n\ndef get_person_summary(person: Person) -> str:\n    \"\"\"\n    Get a summary string for a person.\n    Handle optional fields gracefully.\n    \"\"\"\n    # Your implementation here\n    pass",
+    "solution": "from typing import TypedDict\n\nclass Address(TypedDict):\n    street: str\n    city: str\n    zip_code: str\n\nclass Person(TypedDict, total=False):\n    name: str\n    age: int\n    address: Address\n\ndef format_address(addr: Address) -> str:\n    return f\"{addr['street']}, {addr['city']} {addr['zip_code']}\"\n\ndef get_person_summary(person: Person) -> str:\n    name = person.get('name', 'Unknown')\n    age = person.get('age')\n    age_str = f\", {age} years old\" if age is not None else \"\"\n    addr = person.get('address')\n    addr_str = f\" - {format_address(addr)}\" if addr else \"\"\n    return f\"{name}{age_str}{addr_str}\"",
+    "testCases": [
+      {
+        "input": "format_address({'street': '123 Main', 'city': 'NYC', 'zip_code': '10001'})",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "get_person_summary({'name': 'Alice'})",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "get_person_summary({'name': 'Bob', 'age': 30})",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "TypedDict creates a dict with specific key types",
+      "total=False makes all fields optional",
+      "Use .get() with defaults for optional fields"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-2-8",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-2",
+    "title": "Literal Types",
+    "difficulty": 3,
+    "description": "Use Literal types for precise string and int literals.",
+    "starterCode": "from typing import Literal, Union\n\nDirection = Literal['north', 'south', 'east', 'west']\nPriority = Literal[1, 2, 3]\n\ndef move(direction: Direction, steps: int = 1) -> tuple:\n    \"\"\"\n    Calculate new position after moving.\n    Starting from (0, 0), return new (x, y) position.\n\n    north: y increases\n    south: y decreases\n    east: x increases\n    west: x decreases\n    \"\"\"\n    # Your implementation here\n    pass\n\ndef get_priority_label(priority: Priority) -> str:\n    \"\"\"\n    Convert numeric priority to label.\n    1 -> 'high', 2 -> 'medium', 3 -> 'low'\n    \"\"\"\n    # Your implementation here\n    pass",
+    "solution": "from typing import Literal\n\nDirection = Literal['north', 'south', 'east', 'west']\nPriority = Literal[1, 2, 3]\n\ndef move(direction: Direction, steps: int = 1) -> tuple:\n    moves = {\n        'north': (0, steps),\n        'south': (0, -steps),\n        'east': (steps, 0),\n        'west': (-steps, 0)\n    }\n    return moves[direction]\n\ndef get_priority_label(priority: Priority) -> str:\n    labels = {1: 'high', 2: 'medium', 3: 'low'}\n    return labels[priority]",
+    "testCases": [
+      {
+        "input": "move('north', 3)",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "move('east', 2)",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "get_priority_label(1)",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "get_priority_label(3)",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Literal restricts to specific values",
+      "Type checkers will flag invalid literals",
+      "Use dict mapping for clean dispatch"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-2-9",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-2",
+    "title": "Recursive Types",
+    "difficulty": 5,
+    "description": "Define recursive type aliases for tree structures.",
+    "starterCode": "from typing import Union, List, Dict, Any\n\n# JSON can be: null, bool, int, float, str, list of JSON, or dict of JSON\nJSON = Union[None, bool, int, float, str, List['JSON'], Dict[str, 'JSON']]\n\ndef flatten_json(data: JSON, prefix: str = '') -> Dict[str, Any]:\n    \"\"\"\n    Flatten nested JSON to a single-level dict with dot-notation keys.\n\n    Example:\n        {'a': {'b': 1, 'c': 2}} -> {'a.b': 1, 'a.c': 2}\n        [1, 2, 3] -> {'0': 1, '1': 2, '2': 3}\n    \"\"\"\n    # Your implementation here\n    pass\n\ndef json_depth(data: JSON) -> int:\n    \"\"\"\n    Calculate the maximum nesting depth of JSON data.\n    Primitive values have depth 1.\n    \"\"\"\n    # Your implementation here\n    pass",
+    "solution": "from typing import Union, List, Dict, Any\n\nJSON = Union[None, bool, int, float, str, List['JSON'], Dict[str, 'JSON']]\n\ndef flatten_json(data: JSON, prefix: str = '') -> Dict[str, Any]:\n    result: Dict[str, Any] = {}\n\n    if isinstance(data, dict):\n        for key, value in data.items():\n            new_key = f\"{prefix}.{key}\" if prefix else key\n            result.update(flatten_json(value, new_key))\n    elif isinstance(data, list):\n        for i, value in enumerate(data):\n            new_key = f\"{prefix}.{i}\" if prefix else str(i)\n            result.update(flatten_json(value, new_key))\n    else:\n        if prefix:\n            result[prefix] = data\n        else:\n            result[''] = data\n\n    return result\n\ndef json_depth(data: JSON) -> int:\n    if isinstance(data, dict):\n        if not data:\n            return 1\n        return 1 + max(json_depth(v) for v in data.values())\n    elif isinstance(data, list):\n        if not data:\n            return 1\n        return 1 + max(json_depth(v) for v in data)\n    else:\n        return 1",
+    "testCases": [
+      {
+        "input": "flatten_json({'a': 1, 'b': 2})",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "flatten_json({'a': {'b': 1}})",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "json_depth({'a': {'b': {'c': 1}}})",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "json_depth([1, 2, 3])",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Use forward reference string for recursive types",
+      "Handle dict, list, and primitive cases separately",
+      "Recursively process nested structures"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-2-10",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-2",
+    "title": "Dependent Types Simulation",
+    "difficulty": 5,
+    "description": "Simulate dependent types using overloading.",
+    "starterCode": "from typing import overload, Literal, Tuple\n\n@overload\ndef create_array(size: Literal[1]) -> Tuple[int]: ...\n\n@overload\ndef create_array(size: Literal[2]) -> Tuple[int, int]: ...\n\n@overload\ndef create_array(size: Literal[3]) -> Tuple[int, int, int]: ...\n\ndef create_array(size: int) -> tuple:\n    \"\"\"\n    Create a tuple of zeros with the given size.\n    The return type depends on the input value.\n    \"\"\"\n    # Your implementation here\n    pass\n\n@overload\ndef safe_divide(a: int, b: Literal[0]) -> None: ...\n\n@overload\ndef safe_divide(a: int, b: int) -> float: ...\n\ndef safe_divide(a: int, b: int):\n    \"\"\"\n    Divide a by b safely.\n    Returns None if b is 0, otherwise returns the result.\n    \"\"\"\n    # Your implementation here\n    pass",
+    "solution": "from typing import overload, Literal, Tuple, Union\n\n@overload\ndef create_array(size: Literal[1]) -> Tuple[int]: ...\n\n@overload\ndef create_array(size: Literal[2]) -> Tuple[int, int]: ...\n\n@overload\ndef create_array(size: Literal[3]) -> Tuple[int, int, int]: ...\n\n@overload\ndef create_array(size: int) -> tuple: ...\n\ndef create_array(size: int) -> tuple:\n    return tuple(0 for _ in range(size))\n\n@overload\ndef safe_divide(a: int, b: Literal[0]) -> None: ...\n\n@overload\ndef safe_divide(a: int, b: int) -> float: ...\n\ndef safe_divide(a: int, b: int) -> Union[float, None]:\n    if b == 0:\n        return None\n    return a / b",
+    "testCases": [
+      {
+        "input": "create_array(1)",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "create_array(3)",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "safe_divide(10, 2)",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "safe_divide(10, 0)",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "@overload lets you specify different return types",
+      "The actual implementation handles all cases",
+      "Type checkers use overloads for type inference"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-2-11",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-2",
+    "title": "Type Erasure Implementation",
+    "difficulty": 5,
+    "description": "Understand type erasure by implementing runtime type checking.",
+    "starterCode": "from typing import TypeVar, Generic, Type, get_type_hints\nimport inspect\n\nT = TypeVar('T')\n\nclass TypedList(Generic[T]):\n    \"\"\"\n    A list that enforces type checking at runtime.\n    Demonstrates that Python generics are erased at runtime.\n    \"\"\"\n\n    def __init__(self, item_type: Type[T]):\n        # Store the type for runtime checking\n        pass\n\n    def append(self, item: T) -> None:\n        \"\"\"Add item, raising TypeError if wrong type.\"\"\"\n        pass\n\n    def extend(self, items) -> None:\n        \"\"\"Add multiple items with type checking.\"\"\"\n        pass\n\n    def __getitem__(self, index: int) -> T:\n        pass\n\n    def __len__(self) -> int:\n        pass",
+    "solution": "from typing import TypeVar, Generic, Type\n\nT = TypeVar('T')\n\nclass TypedList(Generic[T]):\n    def __init__(self, item_type: Type[T]):\n        self._item_type = item_type\n        self._items: list = []\n\n    def append(self, item: T) -> None:\n        if not isinstance(item, self._item_type):\n            raise TypeError(\n                f\"Expected {self._item_type.__name__}, got {type(item).__name__}\"\n            )\n        self._items.append(item)\n\n    def extend(self, items) -> None:\n        for item in items:\n            self.append(item)\n\n    def __getitem__(self, index: int) -> T:\n        return self._items[index]\n\n    def __len__(self) -> int:\n        return len(self._items)",
+    "testCases": [
+      {
+        "input": "lst = TypedList(int); lst.append(1); lst[0]",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "lst = TypedList(str); lst.extend([\"a\", \"b\"]); len(lst)",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "lst = TypedList(int); lst.append(\"x\")",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Store the type as an instance variable",
+      "Use isinstance() for runtime type checking",
+      "Generic[T] provides static typing, but T is erased at runtime"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-2-12",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-2",
+    "title": "Phantom Types",
+    "difficulty": 5,
+    "description": "Implement phantom types for compile-time safety without runtime overhead.",
+    "starterCode": "from typing import TypeVar, Generic, NewType\n\n# Phantom type markers (never instantiated)\nclass Meters: pass\nclass Feet: pass\n\nUnit = TypeVar('Unit')\n\nclass Distance(Generic[Unit]):\n    \"\"\"\n    A distance value with unit tracking at type level.\n    The Unit parameter is phantom - it doesn't exist at runtime.\n    \"\"\"\n\n    def __init__(self, value: float):\n        # Your implementation here\n        pass\n\n    def get_value(self) -> float:\n        pass\n\n    def __add__(self, other: 'Distance[Unit]') -> 'Distance[Unit]':\n        # Can only add distances with same unit\n        pass\n\ndef meters(value: float) -> Distance[Meters]:\n    \"\"\"Create a distance in meters.\"\"\"\n    pass\n\ndef feet(value: float) -> Distance[Feet]:\n    \"\"\"Create a distance in feet.\"\"\"\n    pass\n\ndef to_meters(d: Distance[Feet]) -> Distance[Meters]:\n    \"\"\"Convert feet to meters.\"\"\"\n    pass",
+    "solution": "from typing import TypeVar, Generic\n\nclass Meters: pass\nclass Feet: pass\n\nUnit = TypeVar('Unit')\n\nclass Distance(Generic[Unit]):\n    def __init__(self, value: float):\n        self._value = value\n\n    def get_value(self) -> float:\n        return self._value\n\n    def __add__(self, other: 'Distance[Unit]') -> 'Distance[Unit]':\n        return Distance(self._value + other._value)\n\ndef meters(value: float) -> Distance[Meters]:\n    return Distance(value)\n\ndef feet(value: float) -> Distance[Feet]:\n    return Distance(value)\n\ndef to_meters(d: Distance[Feet]) -> Distance[Meters]:\n    return meters(d.get_value() * 0.3048)",
+    "testCases": [
+      {
+        "input": "meters(100).get_value()",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "(meters(10) + meters(20)).get_value()",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "round(to_meters(feet(10)).get_value(), 4)",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Phantom types exist only at compile time",
+      "The Unit parameter is never used at runtime",
+      "Type checker prevents adding meters to feet"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-2-13",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-2",
+    "title": "Nominal vs Structural Typing",
+    "difficulty": 5,
+    "description": "Compare nominal and structural typing approaches.",
+    "starterCode": "from typing import Protocol, NewType, runtime_checkable\n\n# Nominal typing with NewType\nUserId = NewType('UserId', int)\nProductId = NewType('ProductId', int)\n\ndef get_user(user_id: UserId) -> str:\n    \"\"\"Get user by nominal UserId type.\"\"\"\n    # Your implementation - return f\"User {user_id}\"\n    pass\n\n# Structural typing with Protocol\n@runtime_checkable\nclass Printable(Protocol):\n    def to_string(self) -> str:\n        ...\n\nclass User:\n    def __init__(self, name: str):\n        self.name = name\n\n    def to_string(self) -> str:\n        pass\n\nclass Product:\n    def __init__(self, title: str):\n        self.title = title\n\n    def to_string(self) -> str:\n        pass\n\ndef print_item(item: Printable) -> str:\n    \"\"\"Print any Printable item structurally.\"\"\"\n    pass",
+    "solution": "from typing import Protocol, NewType, runtime_checkable\n\nUserId = NewType('UserId', int)\nProductId = NewType('ProductId', int)\n\ndef get_user(user_id: UserId) -> str:\n    return f\"User {user_id}\"\n\n@runtime_checkable\nclass Printable(Protocol):\n    def to_string(self) -> str:\n        ...\n\nclass User:\n    def __init__(self, name: str):\n        self.name = name\n\n    def to_string(self) -> str:\n        return f\"User: {self.name}\"\n\nclass Product:\n    def __init__(self, title: str):\n        self.title = title\n\n    def to_string(self) -> str:\n        return f\"Product: {self.title}\"\n\ndef print_item(item: Printable) -> str:\n    return item.to_string()",
+    "testCases": [
+      {
+        "input": "get_user(UserId(42))",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "print_item(User('Alice'))",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "print_item(Product('Widget'))",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "isinstance(User('Test'), Printable)",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "NewType creates a distinct type for type checking",
+      "Protocol enables duck typing with type safety",
+      "@runtime_checkable allows isinstance() checks"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-2-14",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-2",
+    "title": "Type Inference",
+    "difficulty": 5,
+    "description": "Implement a simple type inference engine.",
+    "starterCode": "from typing import Dict, Optional, Union\n\n# Simple type representation\nType = Union[str, tuple]  # 'int', 'bool', ('func', arg_type, ret_type)\n\ndef infer_literal(value) -> Type:\n    \"\"\"Infer type of a literal value.\"\"\"\n    # Your implementation here\n    pass\n\ndef infer_binary_op(op: str, left_type: Type, right_type: Type) -> Optional[Type]:\n    \"\"\"\n    Infer result type of binary operation.\n    Supports: +, -, *, / for int; and, or for bool; == for any\n    Returns None if types are incompatible.\n    \"\"\"\n    # Your implementation here\n    pass\n\ndef infer_expression(expr, env: Dict[str, Type] = None) -> Optional[Type]:\n    \"\"\"\n    Infer type of an expression.\n    expr can be:\n    - literal: 42, True, etc.\n    - variable: ('var', 'x')\n    - binary: ('binop', op, left, right)\n    - if-then-else: ('if', cond, then_expr, else_expr)\n    \"\"\"\n    # Your implementation here\n    pass",
+    "solution": "from typing import Dict, Optional, Union\n\nType = Union[str, tuple]\n\ndef infer_literal(value) -> Type:\n    if isinstance(value, bool):\n        return 'bool'\n    elif isinstance(value, int):\n        return 'int'\n    elif isinstance(value, float):\n        return 'float'\n    elif isinstance(value, str):\n        return 'str'\n    return 'unknown'\n\ndef infer_binary_op(op: str, left_type: Type, right_type: Type) -> Optional[Type]:\n    if op in ['+', '-', '*']:\n        if left_type == 'int' and right_type == 'int':\n            return 'int'\n    if op == '/':\n        if left_type == 'int' and right_type == 'int':\n            return 'float'\n    if op in ['and', 'or']:\n        if left_type == 'bool' and right_type == 'bool':\n            return 'bool'\n    if op == '==':\n        if left_type == right_type:\n            return 'bool'\n    return None\n\ndef infer_expression(expr, env: Dict[str, Type] = None) -> Optional[Type]:\n    if env is None:\n        env = {}\n\n    if isinstance(expr, (int, bool, float, str)) and not isinstance(expr, tuple):\n        return infer_literal(expr)\n\n    if not isinstance(expr, tuple):\n        return None\n\n    tag = expr[0]\n\n    if tag == 'var':\n        return env.get(expr[1])\n\n    if tag == 'binop':\n        _, op, left, right = expr\n        left_type = infer_expression(left, env)\n        right_type = infer_expression(right, env)\n        if left_type and right_type:\n            return infer_binary_op(op, left_type, right_type)\n\n    if tag == 'if':\n        _, cond, then_expr, else_expr = expr\n        cond_type = infer_expression(cond, env)\n        if cond_type != 'bool':\n            return None\n        then_type = infer_expression(then_expr, env)\n        else_type = infer_expression(else_expr, env)\n        if then_type == else_type:\n            return then_type\n\n    return None",
+    "testCases": [
+      {
+        "input": "infer_literal(42)",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "infer_binary_op('+', 'int', 'int')",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "infer_expression(('binop', '+', 1, 2))",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "infer_expression(('if', True, 1, 2))",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Pattern match on expression structure",
+      "Propagate types through subexpressions",
+      "Return None for type errors"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-2-15",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-2",
+    "title": "Gradual Typing",
+    "difficulty": 5,
+    "description": "Implement consistent-with relation for gradual typing.",
+    "starterCode": "from typing import Any, Union, Optional\n\n# Type representation\n# 'Any' = dynamic type\n# 'int', 'str', 'bool' = base types\n# ('list', T) = list of T\n# ('func', [arg_types], ret_type) = function type\n\ndef consistent(t1, t2) -> bool:\n    \"\"\"\n    Check if two types are consistent (gradual typing).\n    Any is consistent with everything.\n    Two non-Any types are consistent if they're equal\n    or their structure matches with consistent components.\n    \"\"\"\n    # Your implementation here\n    pass\n\ndef join_types(t1, t2):\n    \"\"\"\n    Find the join (least upper bound) of two types.\n    Returns Any if types are inconsistent.\n    \"\"\"\n    # Your implementation here\n    pass\n\ndef check_assignment(declared_type, value_type) -> bool:\n    \"\"\"\n    Check if a value of value_type can be assigned to declared_type.\n    Uses consistency checking.\n    \"\"\"\n    # Your implementation here\n    pass",
+    "solution": "from typing import Any, Union, Optional\n\ndef consistent(t1, t2) -> bool:\n    # Any is consistent with everything\n    if t1 == 'Any' or t2 == 'Any':\n        return True\n\n    # Same types are consistent\n    if t1 == t2:\n        return True\n\n    # Check structural types\n    if isinstance(t1, tuple) and isinstance(t2, tuple):\n        if t1[0] != t2[0]:\n            return False\n\n        if t1[0] == 'list':\n            return consistent(t1[1], t2[1])\n\n        if t1[0] == 'func':\n            _, args1, ret1 = t1\n            _, args2, ret2 = t2\n            if len(args1) != len(args2):\n                return False\n            return (all(consistent(a1, a2) for a1, a2 in zip(args1, args2))\n                    and consistent(ret1, ret2))\n\n    return False\n\ndef join_types(t1, t2):\n    if t1 == t2:\n        return t1\n    if t1 == 'Any' or t2 == 'Any':\n        return 'Any'\n    if consistent(t1, t2):\n        # For consistent non-equal types, return Any\n        return 'Any'\n    return 'Any'\n\ndef check_assignment(declared_type, value_type) -> bool:\n    return consistent(declared_type, value_type)",
+    "testCases": [
+      {
+        "input": "consistent('int', 'int')",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "consistent('Any', 'str')",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "consistent('int', 'str')",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "consistent(('list', 'int'), ('list', 'Any'))",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Any is consistent with all types",
+      "Structural types require recursive consistency check",
+      "Join returns most general type covering both inputs"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-2-16",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-2",
+    "title": "Type Class Simulation",
+    "difficulty": 5,
+    "description": "Simulate Haskell-style type classes in Python.",
+    "starterCode": "from typing import TypeVar, Generic, Dict, Type, Callable\nfrom abc import ABC, abstractmethod\n\nT = TypeVar('T')\n\nclass Eq(ABC, Generic[T]):\n    \"\"\"Type class for equality comparison.\"\"\"\n\n    @staticmethod\n    @abstractmethod\n    def eq(a: T, b: T) -> bool:\n        pass\n\nclass Ord(Eq[T], Generic[T]):\n    \"\"\"Type class for ordering (extends Eq).\"\"\"\n\n    @staticmethod\n    @abstractmethod\n    def lt(a: T, b: T) -> bool:\n        pass\n\n    @staticmethod\n    def lte(a: T, b: T) -> bool:\n        \"\"\"Less than or equal - default implementation.\"\"\"\n        pass\n\n# Type class instances registry\n_instances: Dict[tuple, type] = {}\n\ndef register_instance(typeclass: type, for_type: type, instance: type):\n    \"\"\"Register a type class instance.\"\"\"\n    pass\n\ndef get_instance(typeclass: type, for_type: type):\n    \"\"\"Get type class instance for a type.\"\"\"\n    pass\n\n# Implement instances for int\nclass IntEq(Eq[int]):\n    @staticmethod\n    def eq(a: int, b: int) -> bool:\n        pass\n\nclass IntOrd(Ord[int]):\n    @staticmethod\n    def eq(a: int, b: int) -> bool:\n        pass\n\n    @staticmethod\n    def lt(a: int, b: int) -> bool:\n        pass",
+    "solution": "from typing import TypeVar, Generic, Dict, Type\nfrom abc import ABC, abstractmethod\n\nT = TypeVar('T')\n\nclass Eq(ABC, Generic[T]):\n    @staticmethod\n    @abstractmethod\n    def eq(a: T, b: T) -> bool:\n        pass\n\nclass Ord(Eq[T], Generic[T]):\n    @staticmethod\n    @abstractmethod\n    def lt(a: T, b: T) -> bool:\n        pass\n\n    @classmethod\n    def lte(cls, a: T, b: T) -> bool:\n        return cls.lt(a, b) or cls.eq(a, b)\n\n_instances: Dict[tuple, type] = {}\n\ndef register_instance(typeclass: type, for_type: type, instance: type):\n    _instances[(typeclass, for_type)] = instance\n\ndef get_instance(typeclass: type, for_type: type):\n    return _instances.get((typeclass, for_type))\n\nclass IntEq(Eq[int]):\n    @staticmethod\n    def eq(a: int, b: int) -> bool:\n        return a == b\n\nclass IntOrd(Ord[int]):\n    @staticmethod\n    def eq(a: int, b: int) -> bool:\n        return a == b\n\n    @staticmethod\n    def lt(a: int, b: int) -> bool:\n        return a < b\n\nregister_instance(Eq, int, IntEq)\nregister_instance(Ord, int, IntOrd)",
+    "testCases": [
+      {
+        "input": "IntEq.eq(1, 1)",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "IntOrd.lt(1, 2)",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "IntOrd.lte(2, 2)",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "get_instance(Eq, int).__name__",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Type classes define interfaces with default implementations",
+      "Instances implement type classes for specific types",
+      "Registry maps (typeclass, type) pairs to instances"
+    ],
+    "language": "python"
+  }
+]

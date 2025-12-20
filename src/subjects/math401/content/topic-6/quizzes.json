@@ -1,0 +1,211 @@
+[
+  {
+    "id": "math401-quiz-6-1",
+    "subjectId": "math401",
+    "topicId": "math401-topic-6",
+    "title": "Residue Theory Fundamentals",
+    "questions": [
+      {
+        "id": "math401-q51",
+        "type": "multiple_choice",
+        "prompt": "What is the residue of f(z) = 1/z at z = 0?",
+        "options": [
+          "0",
+          "1",
+          "-1",
+          "2πi"
+        ],
+        "correctAnswer": "1",
+        "explanation": "f(z) = 1/z has Laurent series 1/z, so the coefficient of z^(-1) (the residue) is 1"
+      },
+      {
+        "id": "math401-q52",
+        "type": "multiple_choice",
+        "prompt": "The residue theorem: ∫_γ f(z)dz = 2πi × what?",
+        "options": [
+          "Sum of residues inside γ",
+          "Product of residues",
+          "Largest residue",
+          "Number of poles"
+        ],
+        "correctAnswer": "Sum of residues inside γ",
+        "explanation": "Residue theorem: ∫_γ f = 2πi Σ Res(f, aₖ) where aₖ are poles inside γ"
+      },
+      {
+        "id": "math401-q53",
+        "type": "true_false",
+        "prompt": "The residue at a simple pole z = a is lim_{z→a} (z-a)f(z).",
+        "options": [
+          "True",
+          "False"
+        ],
+        "correctAnswer": "True",
+        "explanation": "For a simple pole, Res(f, a) = lim_{z→a} (z-a)f(z)"
+      },
+      {
+        "id": "math401-q54",
+        "type": "multiple_choice",
+        "prompt": "What is ∫_{-∞}^∞ dx/(1+x²) using residues?",
+        "options": [
+          "π/2",
+          "π",
+          "2π",
+          "π/4"
+        ],
+        "correctAnswer": "π",
+        "explanation": "f(z) = 1/(1+z²) has poles at ±i. Using residue at i in upper half-plane: 2πi × (1/2i) = π"
+      },
+      {
+        "id": "math401-q55",
+        "type": "multiple_choice",
+        "prompt": "For f(z) = g(z)/h(z) with h(a) = 0, h'(a) ≠ 0, what is Res(f, a)?",
+        "options": [
+          "g(a)/h(a)",
+          "g(a)/h'(a)",
+          "g'(a)/h'(a)",
+          "0"
+        ],
+        "correctAnswer": "g(a)/h'(a)",
+        "explanation": "For simple pole at zero of denominator: Res(g/h, a) = g(a)/h'(a)"
+      }
+    ]
+  },
+  {
+    "id": "math401-quiz-6-2",
+    "subjectId": "math401",
+    "topicId": "math401-topic-6",
+    "title": "Residue Applications",
+    "questions": [
+      {
+        "id": "math401-q56",
+        "type": "multiple_choice",
+        "prompt": "The residue at a pole of order n is found using which derivative?",
+        "options": [
+          "0th",
+          "1st",
+          "(n-1)th",
+          "nth"
+        ],
+        "correctAnswer": "(n-1)th",
+        "explanation": "Res(f, a) = (1/(n-1)!) lim_{z→a} d^(n-1)/dz^(n-1) [(z-a)^n f(z)]"
+      },
+      {
+        "id": "math401-q57",
+        "type": "true_false",
+        "prompt": "Jordan's lemma helps evaluate improper integrals involving e^(iaz) by showing semicircular contributions vanish.",
+        "options": [
+          "True",
+          "False"
+        ],
+        "correctAnswer": "True",
+        "explanation": "Jordan's lemma: if f→0 on semicircle and a>0, then ∫_{C_R} f·e^(iaz) → 0 as R→∞"
+      },
+      {
+        "id": "math401-q58",
+        "type": "multiple_choice",
+        "prompt": "What contour is typically used for integrals like ∫_0^∞ log(x)/(1+x²) dx?",
+        "options": [
+          "Semicircle",
+          "Rectangle",
+          "Keyhole",
+          "Triangle"
+        ],
+        "correctAnswer": "Keyhole",
+        "explanation": "Keyhole contour avoids branch cut of logarithm, allowing evaluation of such integrals"
+      },
+      {
+        "id": "math401-q59",
+        "type": "multiple_choice",
+        "prompt": "Principal value integrals handle singularities on the real axis by:",
+        "options": [
+          "Ignoring them",
+          "Indenting around them",
+          "Removing them",
+          "Changing variables"
+        ],
+        "correctAnswer": "Indenting around them",
+        "explanation": "P.V. uses small semicircular indents around real axis singularities"
+      },
+      {
+        "id": "math401-q60",
+        "type": "true_false",
+        "prompt": "Residue theory can be used to sum certain infinite series.",
+        "options": [
+          "True",
+          "False"
+        ],
+        "correctAnswer": "True",
+        "explanation": "Functions like π cot(πz) have poles at integers, allowing series summation via residues"
+      }
+    ]
+  },
+  {
+    "id": "math401-quiz-6-3",
+    "subjectId": "math401",
+    "topicId": "math401-topic-6",
+    "title": "Advanced Residue Techniques",
+    "questions": [
+      {
+        "id": "math401-q96",
+        "type": "multiple_choice",
+        "prompt": "What is the residue of f(z) = 1/(z²+1) at z = i?",
+        "options": [
+          "1/(2i)",
+          "-1/(2i)",
+          "1",
+          "i/2"
+        ],
+        "correctAnswer": "1/(2i)",
+        "explanation": "1/(z²+1) = 1/[(z-i)(z+i)]. At simple pole z=i: Res = 1/(z+i)|_{z=i} = 1/(2i)"
+      },
+      {
+        "id": "math401-q97",
+        "type": "true_false",
+        "prompt": "The sum of residues of a rational function at all its poles (including ∞) is zero.",
+        "options": [
+          "True",
+          "False"
+        ],
+        "correctAnswer": "True",
+        "explanation": "This follows from the residue theorem applied to a large circle"
+      },
+      {
+        "id": "math401-q98",
+        "type": "multiple_choice",
+        "prompt": "To evaluate ∫_{-∞}^∞ 1/(x²+1) dx using residues, which contour is typically used?",
+        "options": [
+          "Unit circle",
+          "Semicircle in upper half-plane",
+          "Rectangle",
+          "Full circle"
+        ],
+        "correctAnswer": "Semicircle in upper half-plane",
+        "explanation": "Close the real axis with a semicircle in upper half-plane, capturing pole at z=i"
+      },
+      {
+        "id": "math401-q99",
+        "type": "multiple_choice",
+        "prompt": "For ∫_0^(2π) dθ/(2+cos θ), substitute z = e^(iθ) to get:",
+        "options": [
+          "Integral over |z|=1",
+          "Real integral",
+          "Improper integral",
+          "Laurent series"
+        ],
+        "correctAnswer": "Integral over |z|=1",
+        "explanation": "Substitution z = e^(iθ) converts trigonometric integral to contour integral on unit circle"
+      },
+      {
+        "id": "math401-q100",
+        "type": "true_false",
+        "prompt": "Jordan's lemma requires that f(z) → 0 uniformly on semicircular arcs.",
+        "options": [
+          "True",
+          "False"
+        ],
+        "correctAnswer": "True",
+        "explanation": "Jordan's lemma applies when |f(z)| → 0 uniformly on the semicircular contour as R → ∞"
+      }
+    ]
+  }
+]

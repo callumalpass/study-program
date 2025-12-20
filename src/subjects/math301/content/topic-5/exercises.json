@@ -1,0 +1,520 @@
+[
+  {
+    "id": "math301-t5-ex01",
+    "subjectId": "math301",
+    "topicId": "math301-topic-5",
+    "title": "Double Integral over Rectangle",
+    "difficulty": 1,
+    "description": "Compute a double integral ∫∫_R f(x,y) dA over a rectangular region using numerical integration.",
+    "starterCode": "import numpy as np\nfrom scipy import integrate\n\ndef double_integral_rectangle(f, x_bounds, y_bounds):\n    \"\"\"\n    Compute double integral of f over rectangle [a,b] x [c,d].\n\n    Args:\n        f: Function of two variables f(x, y)\n        x_bounds: Tuple (a, b) for x limits\n        y_bounds: Tuple (c, d) for y limits\n    Returns:\n        The value of the double integral\n    \"\"\"\n    # Your implementation here\n    pass",
+    "solution": "import numpy as np\nfrom scipy import integrate\n\ndef double_integral_rectangle(f, x_bounds, y_bounds):\n    \"\"\"\n    Compute double integral of f over rectangle [a,b] x [c,d].\n    \"\"\"\n    result, _ = integrate.dblquad(f, x_bounds[0], x_bounds[1],\n                                   y_bounds[0], y_bounds[1])\n    return result",
+    "testCases": [
+      {
+        "input": "double_integral_rectangle(lambda y, x: x + y, (0, 1), (0, 1))",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "double_integral_rectangle(lambda y, x: x*y, (0, 2), (0, 2))",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "double_integral_rectangle(lambda y, x: 1, (0, 1), (0, 2))",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Use scipy.integrate.dblquad for numerical integration",
+      "Note that dblquad takes the integrand as f(y, x), not f(x, y)",
+      "The function returns (result, error_estimate)"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math301-t5-ex02",
+    "subjectId": "math301",
+    "topicId": "math301-topic-5",
+    "title": "Iterated Integral Order",
+    "difficulty": 1,
+    "description": "Compute the same iterated integral in both orders (dx dy and dy dx) and verify they give the same result.",
+    "starterCode": "import numpy as np\nfrom scipy import integrate\n\ndef compare_integral_orders(f, x_bounds, y_bounds):\n    \"\"\"\n    Compute integral in both orders and return (result_dxdy, result_dydx).\n\n    Args:\n        f: Function f(x, y)\n        x_bounds: (a, b)\n        y_bounds: (c, d)\n    Returns:\n        Tuple of (integral with dx dy, integral with dy dx)\n    \"\"\"\n    # Your implementation here\n    pass",
+    "solution": "import numpy as np\nfrom scipy import integrate\n\ndef compare_integral_orders(f, x_bounds, y_bounds):\n    \"\"\"\n    Compute integral in both orders and return (result_dxdy, result_dydx).\n    \"\"\"\n    # Order: dy dx (integrate y first, then x)\n    result_dydx, _ = integrate.dblquad(lambda y, x: f(x, y),\n                                        x_bounds[0], x_bounds[1],\n                                        y_bounds[0], y_bounds[1])\n\n    # Order: dx dy (integrate x first, then y)\n    result_dxdy, _ = integrate.dblquad(lambda x, y: f(x, y),\n                                        y_bounds[0], y_bounds[1],\n                                        x_bounds[0], x_bounds[1])\n\n    return (result_dxdy, result_dydx)",
+    "testCases": [
+      {
+        "input": "compare_integral_orders(lambda x, y: x*y, (0, 1), (0, 1))",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "compare_integral_orders(lambda x, y: x**2 + y**2, (0, 2), (0, 2))",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "dblquad integrates the first variable over the inner limits",
+      "Swap the order of integration by swapping the bounds",
+      "Fubini's theorem guarantees both orders give the same result for continuous functions"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math301-t5-ex03",
+    "subjectId": "math301",
+    "topicId": "math301-topic-5",
+    "title": "Double Integral over General Region",
+    "difficulty": 2,
+    "description": "Compute a double integral over a region bounded by y=g1(x) and y=g2(x).",
+    "starterCode": "import numpy as np\nfrom scipy import integrate\n\ndef double_integral_general(f, x_bounds, y_lower, y_upper):\n    \"\"\"\n    Compute ∫∫_D f(x,y) dA where D = {(x,y): a ≤ x ≤ b, g1(x) ≤ y ≤ g2(x)}.\n\n    Args:\n        f: Function f(x, y)\n        x_bounds: (a, b)\n        y_lower: Function g1(x) for lower y bound\n        y_upper: Function g2(x) for upper y bound\n    Returns:\n        Value of the double integral\n    \"\"\"\n    # Your implementation here\n    pass",
+    "solution": "import numpy as np\nfrom scipy import integrate\n\ndef double_integral_general(f, x_bounds, y_lower, y_upper):\n    \"\"\"\n    Compute ∫∫_D f(x,y) dA where D = {(x,y): a ≤ x ≤ b, g1(x) ≤ y ≤ g2(x)}.\n    \"\"\"\n    result, _ = integrate.dblquad(f, x_bounds[0], x_bounds[1],\n                                   y_lower, y_upper)\n    return result",
+    "testCases": [
+      {
+        "input": "double_integral_general(lambda y, x: 1, (0, 1), lambda x: 0, lambda x: x)",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "double_integral_general(lambda y, x: x*y, (0, 1), lambda x: 0, lambda x: x**2)",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "double_integral_general(lambda y, x: x+y, (-1, 1), lambda x: -np.sqrt(1-x**2), lambda x: np.sqrt(1-x**2))",
+        "isHidden": true,
+        "description": "Hidden test"
+      }
+    ],
+    "hints": [
+      "dblquad accepts functions for the inner limits",
+      "The integrand should be f(y, x) due to dblquad convention",
+      "Make sure y_lower and y_upper are functions of x"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math301-t5-ex04",
+    "subjectId": "math301",
+    "topicId": "math301-topic-5",
+    "title": "Polar Coordinates Double Integral",
+    "difficulty": 2,
+    "description": "Convert a double integral to polar coordinates and compute it.",
+    "starterCode": "import numpy as np\nfrom scipy import integrate\n\ndef polar_double_integral(f, r_bounds, theta_bounds):\n    \"\"\"\n    Compute ∫∫ f(r,θ) r dr dθ in polar coordinates.\n\n    Args:\n        f: Function f(r, theta)\n        r_bounds: (r_min, r_max)\n        theta_bounds: (theta_min, theta_max)\n    Returns:\n        Value of the integral\n    \"\"\"\n    # Your implementation here (remember the Jacobian r!)\n    pass",
+    "solution": "import numpy as np\nfrom scipy import integrate\n\ndef polar_double_integral(f, r_bounds, theta_bounds):\n    \"\"\"\n    Compute ∫∫ f(r,θ) r dr dθ in polar coordinates.\n    \"\"\"\n    # Include Jacobian r in the integrand\n    integrand = lambda theta, r: f(r, theta) * r\n    result, _ = integrate.dblquad(integrand,\n                                   r_bounds[0], r_bounds[1],\n                                   theta_bounds[0], theta_bounds[1])\n    return result",
+    "testCases": [
+      {
+        "input": "polar_double_integral(lambda r, theta: 1, (0, 1), (0, 2*np.pi))",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "polar_double_integral(lambda r, theta: r, (0, 2), (0, np.pi))",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "polar_double_integral(lambda r, theta: np.cos(theta), (0, 1), (0, 2*np.pi))",
+        "isHidden": true,
+        "description": "Hidden test"
+      }
+    ],
+    "hints": [
+      "The Jacobian for polar coordinates is r",
+      "Multiply the integrand by r before integrating",
+      "Common bounds: θ ∈ [0, 2π] for full circle"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math301-t5-ex05",
+    "subjectId": "math301",
+    "topicId": "math301-topic-5",
+    "title": "Area Using Double Integral",
+    "difficulty": 2,
+    "description": "Calculate the area of a region using a double integral.",
+    "starterCode": "import numpy as np\nfrom scipy import integrate\n\ndef calculate_area(x_bounds, y_lower, y_upper):\n    \"\"\"\n    Calculate area of region using ∫∫ 1 dA.\n\n    Args:\n        x_bounds: (a, b)\n        y_lower: Function for lower y boundary\n        y_upper: Function for upper y boundary\n    Returns:\n        Area of the region\n    \"\"\"\n    # Your implementation here\n    pass",
+    "solution": "import numpy as np\nfrom scipy import integrate\n\ndef calculate_area(x_bounds, y_lower, y_upper):\n    \"\"\"\n    Calculate area of region using ∫∫ 1 dA.\n    \"\"\"\n    result, _ = integrate.dblquad(lambda y, x: 1,\n                                   x_bounds[0], x_bounds[1],\n                                   y_lower, y_upper)\n    return result",
+    "testCases": [
+      {
+        "input": "calculate_area((0, 2), lambda x: 0, lambda x: 3)",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "calculate_area((0, 1), lambda x: 0, lambda x: x)",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "round(calculate_area((0, 1), lambda x: 0, lambda x: np.sqrt(1-x**2)), 5)",
+        "isHidden": true,
+        "description": "Hidden test"
+      }
+    ],
+    "hints": [
+      "Area is the integral of 1 over the region",
+      "Use the same setup as general region integrals",
+      "For a quarter circle: y goes from 0 to √(1-x²)"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math301-t5-ex06",
+    "subjectId": "math301",
+    "topicId": "math301-topic-5",
+    "title": "Triple Integral over Box",
+    "difficulty": 3,
+    "description": "Compute a triple integral over a rectangular box.",
+    "starterCode": "import numpy as np\nfrom scipy import integrate\n\ndef triple_integral_box(f, x_bounds, y_bounds, z_bounds):\n    \"\"\"\n    Compute ∫∫∫ f(x,y,z) dV over box [a,b] x [c,d] x [e,f].\n\n    Args:\n        f: Function f(x, y, z)\n        x_bounds: (a, b)\n        y_bounds: (c, d)\n        z_bounds: (e, f)\n    Returns:\n        Value of the triple integral\n    \"\"\"\n    # Your implementation here\n    pass",
+    "solution": "import numpy as np\nfrom scipy import integrate\n\ndef triple_integral_box(f, x_bounds, y_bounds, z_bounds):\n    \"\"\"\n    Compute ∫∫∫ f(x,y,z) dV over box [a,b] x [c,d] x [e,f].\n    \"\"\"\n    result, _ = integrate.tplquad(f,\n                                   x_bounds[0], x_bounds[1],\n                                   y_bounds[0], y_bounds[1],\n                                   z_bounds[0], z_bounds[1])\n    return result",
+    "testCases": [
+      {
+        "input": "triple_integral_box(lambda z, y, x: 1, (0, 1), (0, 1), (0, 1))",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "triple_integral_box(lambda z, y, x: x*y*z, (0, 2), (0, 2), (0, 2))",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "triple_integral_box(lambda z, y, x: x+y+z, (0, 1), (0, 1), (0, 1))",
+        "isHidden": true,
+        "description": "Hidden test"
+      }
+    ],
+    "hints": [
+      "Use scipy.integrate.tplquad for triple integrals",
+      "Note: tplquad takes f(z, y, x) as the integrand",
+      "The function signature is tplquad(f, x_min, x_max, y_min, y_max, z_min, z_max)"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math301-t5-ex07",
+    "subjectId": "math301",
+    "topicId": "math301-topic-5",
+    "title": "Volume Using Triple Integral",
+    "difficulty": 3,
+    "description": "Calculate the volume of a 3D region using triple integration.",
+    "starterCode": "import numpy as np\nfrom scipy import integrate\n\ndef volume_under_surface(x_bounds, y_bounds, z_upper):\n    \"\"\"\n    Calculate volume under surface z = f(x,y) using ∫∫∫ 1 dV.\n    Region: a ≤ x ≤ b, c ≤ y ≤ d, 0 ≤ z ≤ f(x,y)\n\n    Args:\n        x_bounds: (a, b)\n        y_bounds: (c, d)\n        z_upper: Function f(x, y) for upper z bound\n    Returns:\n        Volume of the region\n    \"\"\"\n    # Your implementation here\n    pass",
+    "solution": "import numpy as np\nfrom scipy import integrate\n\ndef volume_under_surface(x_bounds, y_bounds, z_upper):\n    \"\"\"\n    Calculate volume under surface z = f(x,y) using ∫∫∫ 1 dV.\n    \"\"\"\n    result, _ = integrate.tplquad(lambda z, y, x: 1,\n                                   x_bounds[0], x_bounds[1],\n                                   y_bounds[0], y_bounds[1],\n                                   lambda x, y: 0, z_upper)\n    return result",
+    "testCases": [
+      {
+        "input": "volume_under_surface((0, 2), (0, 3), lambda x, y: 4)",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "volume_under_surface((0, 1), (0, 1), lambda x, y: x+y)",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "volume_under_surface((0, 1), (0, 1), lambda x, y: 1-x-y)",
+        "isHidden": true,
+        "description": "Hidden test"
+      }
+    ],
+    "hints": [
+      "Volume is the triple integral of 1",
+      "z_upper should be a function of both x and y",
+      "Lower z bound is typically 0"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math301-t5-ex08",
+    "subjectId": "math301",
+    "topicId": "math301-topic-5",
+    "title": "Cylindrical Coordinates Integration",
+    "difficulty": 3,
+    "description": "Compute a triple integral in cylindrical coordinates.",
+    "starterCode": "import numpy as np\nfrom scipy import integrate\n\ndef cylindrical_integral(f, r_bounds, theta_bounds, z_bounds):\n    \"\"\"\n    Compute ∫∫∫ f(r,θ,z) r dr dθ dz in cylindrical coordinates.\n\n    Args:\n        f: Function f(r, theta, z)\n        r_bounds: (r_min, r_max)\n        theta_bounds: (theta_min, theta_max)\n        z_bounds: (z_min, z_max)\n    Returns:\n        Value of the integral\n    \"\"\"\n    # Your implementation here (remember Jacobian r!)\n    pass",
+    "solution": "import numpy as np\nfrom scipy import integrate\n\ndef cylindrical_integral(f, r_bounds, theta_bounds, z_bounds):\n    \"\"\"\n    Compute ∫∫∫ f(r,θ,z) r dr dθ dz in cylindrical coordinates.\n    \"\"\"\n    # Jacobian for cylindrical coordinates is r\n    integrand = lambda z, theta, r: f(r, theta, z) * r\n    result, _ = integrate.tplquad(integrand,\n                                   r_bounds[0], r_bounds[1],\n                                   theta_bounds[0], theta_bounds[1],\n                                   z_bounds[0], z_bounds[1])\n    return result",
+    "testCases": [
+      {
+        "input": "cylindrical_integral(lambda r, theta, z: 1, (0, 1), (0, 2*np.pi), (0, 1))",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "cylindrical_integral(lambda r, theta, z: z, (0, 2), (0, 2*np.pi), (0, 3))",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "round(cylindrical_integral(lambda r, theta, z: r*np.cos(theta), (0, 1), (0, 2*np.pi), (0, 1)), 10)",
+        "isHidden": true,
+        "description": "Hidden test"
+      }
+    ],
+    "hints": [
+      "Cylindrical coordinates: x = r cos θ, y = r sin θ, z = z",
+      "The Jacobian is r",
+      "Common: θ ∈ [0, 2π] for full rotation around z-axis"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math301-t5-ex09",
+    "subjectId": "math301",
+    "topicId": "math301-topic-5",
+    "title": "Spherical Coordinates Integration",
+    "difficulty": 4,
+    "description": "Compute a triple integral in spherical coordinates.",
+    "starterCode": "import numpy as np\nfrom scipy import integrate\n\ndef spherical_integral(f, rho_bounds, theta_bounds, phi_bounds):\n    \"\"\"\n    Compute ∫∫∫ f(ρ,θ,φ) ρ²sin(φ) dρ dθ dφ in spherical coordinates.\n    Convention: ρ = distance, θ = azimuthal, φ = polar angle from z-axis\n\n    Args:\n        f: Function f(rho, theta, phi)\n        rho_bounds: (rho_min, rho_max)\n        theta_bounds: (theta_min, theta_max)\n        phi_bounds: (phi_min, phi_max)\n    Returns:\n        Value of the integral\n    \"\"\"\n    # Your implementation here (remember Jacobian ρ²sin(φ)!)\n    pass",
+    "solution": "import numpy as np\nfrom scipy import integrate\n\ndef spherical_integral(f, rho_bounds, theta_bounds, phi_bounds):\n    \"\"\"\n    Compute ∫∫∫ f(ρ,θ,φ) ρ²sin(φ) dρ dθ dφ in spherical coordinates.\n    \"\"\"\n    # Jacobian for spherical coordinates is ρ²sin(φ)\n    integrand = lambda phi, theta, rho: f(rho, theta, phi) * rho**2 * np.sin(phi)\n    result, _ = integrate.tplquad(integrand,\n                                   rho_bounds[0], rho_bounds[1],\n                                   theta_bounds[0], theta_bounds[1],\n                                   phi_bounds[0], phi_bounds[1])\n    return result",
+    "testCases": [
+      {
+        "input": "round(spherical_integral(lambda rho, theta, phi: 1, (0, 1), (0, 2*np.pi), (0, np.pi)), 5)",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "spherical_integral(lambda rho, theta, phi: rho, (0, 2), (0, 2*np.pi), (0, np.pi))",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "round(spherical_integral(lambda rho, theta, phi: rho**2, (0, 1), (0, 2*np.pi), (0, np.pi)), 5)",
+        "isHidden": true,
+        "description": "Hidden test"
+      }
+    ],
+    "hints": [
+      "Spherical: x = ρsin(φ)cos(θ), y = ρsin(φ)sin(θ), z = ρcos(φ)",
+      "The Jacobian is ρ²sin(φ)",
+      "Full sphere: ρ ∈ [0, R], θ ∈ [0, 2π], φ ∈ [0, π]"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math301-t5-ex10",
+    "subjectId": "math301",
+    "topicId": "math301-topic-5",
+    "title": "Volume of Sphere",
+    "difficulty": 4,
+    "description": "Calculate the volume of a sphere using spherical coordinates.",
+    "starterCode": "import numpy as np\nfrom scipy import integrate\n\ndef sphere_volume(radius):\n    \"\"\"\n    Calculate volume of sphere using spherical coordinates.\n    Should return (4/3)πR³\n\n    Args:\n        radius: Radius of the sphere\n    Returns:\n        Volume of the sphere\n    \"\"\"\n    # Your implementation here\n    pass",
+    "solution": "import numpy as np\nfrom scipy import integrate\n\ndef sphere_volume(radius):\n    \"\"\"\n    Calculate volume of sphere using spherical coordinates.\n    \"\"\"\n    # Integrate 1 with Jacobian ρ²sin(φ)\n    integrand = lambda phi, theta, rho: rho**2 * np.sin(phi)\n    result, _ = integrate.tplquad(integrand,\n                                   0, radius,\n                                   0, 2*np.pi,\n                                   0, np.pi)\n    return result",
+    "testCases": [
+      {
+        "input": "round(sphere_volume(1), 5)",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "round(sphere_volume(2), 5)",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "round(sphere_volume(3), 5)",
+        "isHidden": true,
+        "description": "Hidden test"
+      }
+    ],
+    "hints": [
+      "Integrate 1 with the Jacobian ρ²sin(φ)",
+      "ρ ∈ [0, R], θ ∈ [0, 2π], φ ∈ [0, π]",
+      "Result should be (4/3)πR³"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math301-t5-ex11",
+    "subjectId": "math301",
+    "topicId": "math301-topic-5",
+    "title": "Jacobian Calculation",
+    "difficulty": 4,
+    "description": "Compute the Jacobian determinant for a coordinate transformation.",
+    "starterCode": "import numpy as np\n\ndef compute_jacobian(u, v, x_func, y_func):\n    \"\"\"\n    Compute Jacobian determinant ∂(x,y)/∂(u,v) at point (u, v).\n\n    Args:\n        u: u-coordinate\n        v: v-coordinate\n        x_func: Function x(u, v)\n        y_func: Function y(u, v)\n    Returns:\n        Jacobian determinant at (u, v)\n    \"\"\"\n    # Use numerical derivatives with small h\n    h = 1e-6\n    # Your implementation here\n    pass",
+    "solution": "import numpy as np\n\ndef compute_jacobian(u, v, x_func, y_func):\n    \"\"\"\n    Compute Jacobian determinant ∂(x,y)/∂(u,v) at point (u, v).\n    \"\"\"\n    h = 1e-6\n\n    # Partial derivatives\n    dx_du = (x_func(u + h, v) - x_func(u - h, v)) / (2 * h)\n    dx_dv = (x_func(u, v + h) - x_func(u, v - h)) / (2 * h)\n    dy_du = (y_func(u + h, v) - y_func(u - h, v)) / (2 * h)\n    dy_dv = (y_func(u, v + h) - y_func(u, v - h)) / (2 * h)\n\n    # Jacobian determinant\n    jacobian = dx_du * dy_dv - dx_dv * dy_du\n    return jacobian",
+    "testCases": [
+      {
+        "input": "round(compute_jacobian(1, 0, lambda u, v: u*np.cos(v), lambda u, v: u*np.sin(v)), 5)",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "round(compute_jacobian(2, np.pi/4, lambda u, v: u*np.cos(v), lambda u, v: u*np.sin(v)), 5)",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "compute_jacobian(1, 1, lambda u, v: 2*u+v, lambda u, v: u-3*v)",
+        "isHidden": true,
+        "description": "Hidden test"
+      }
+    ],
+    "hints": [
+      "Jacobian matrix: [[∂x/∂u, ∂x/∂v], [∂y/∂u, ∂y/∂v]]",
+      "Determinant: (∂x/∂u)(∂y/∂v) - (∂x/∂v)(∂y/∂u)",
+      "Use centered differences for numerical derivatives"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math301-t5-ex12",
+    "subjectId": "math301",
+    "topicId": "math301-topic-5",
+    "title": "Change of Variables in Double Integral",
+    "difficulty": 5,
+    "description": "Apply a change of variables transformation with the Jacobian.",
+    "starterCode": "import numpy as np\nfrom scipy import integrate\n\ndef integral_change_variables(f_xy, u_bounds, v_bounds, x_func, y_func, jacobian_func):\n    \"\"\"\n    Compute ∫∫ f(x,y) dx dy using change of variables to (u,v).\n    ∫∫ f(x(u,v), y(u,v)) |J| du dv\n\n    Args:\n        f_xy: Function f(x, y)\n        u_bounds: (u_min, u_max)\n        v_bounds: (v_min, v_max)\n        x_func: Transformation x(u, v)\n        y_func: Transformation y(u, v)\n        jacobian_func: Function |J(u, v)|\n    Returns:\n        Value of the integral\n    \"\"\"\n    # Your implementation here\n    pass",
+    "solution": "import numpy as np\nfrom scipy import integrate\n\ndef integral_change_variables(f_xy, u_bounds, v_bounds, x_func, y_func, jacobian_func):\n    \"\"\"\n    Compute ∫∫ f(x,y) dx dy using change of variables to (u,v).\n    \"\"\"\n    # Transform integrand: f(x(u,v), y(u,v)) * |J(u,v)|\n    def transformed_integrand(v, u):\n        x = x_func(u, v)\n        y = y_func(u, v)\n        J = jacobian_func(u, v)\n        return f_xy(x, y) * abs(J)\n\n    result, _ = integrate.dblquad(transformed_integrand,\n                                   u_bounds[0], u_bounds[1],\n                                   v_bounds[0], v_bounds[1])\n    return result",
+    "testCases": [
+      {
+        "input": "round(integral_change_variables(lambda x, y: 1, (0, 1), (0, 2*np.pi), lambda u, v: u*np.cos(v), lambda u, v: u*np.sin(v), lambda u, v: u), 5)",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "integral_change_variables(lambda x, y: x+y, (0, 1), (0, 1), lambda u, v: u, lambda u, v: v, lambda u, v: 1)",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Transform f(x,y) to f(x(u,v), y(u,v))",
+      "Multiply by the absolute value of the Jacobian",
+      "Integrate over the new region in (u,v) space"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math301-t5-ex13",
+    "subjectId": "math301",
+    "topicId": "math301-topic-5",
+    "title": "Mass of 2D Plate",
+    "difficulty": 5,
+    "description": "Calculate the mass of a 2D plate with variable density using double integration.",
+    "starterCode": "import numpy as np\nfrom scipy import integrate\n\ndef plate_mass(density, x_bounds, y_bounds):\n    \"\"\"\n    Calculate mass of 2D plate: M = ∫∫ ρ(x,y) dA\n\n    Args:\n        density: Density function ρ(x, y)\n        x_bounds: (a, b)\n        y_bounds: (c, d)\n    Returns:\n        Total mass of the plate\n    \"\"\"\n    # Your implementation here\n    pass",
+    "solution": "import numpy as np\nfrom scipy import integrate\n\ndef plate_mass(density, x_bounds, y_bounds):\n    \"\"\"\n    Calculate mass of 2D plate: M = ∫∫ ρ(x,y) dA\n    \"\"\"\n    result, _ = integrate.dblquad(density,\n                                   x_bounds[0], x_bounds[1],\n                                   y_bounds[0], y_bounds[1])\n    return result",
+    "testCases": [
+      {
+        "input": "plate_mass(lambda y, x: 1, (0, 2), (0, 3))",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "plate_mass(lambda y, x: x+y, (0, 1), (0, 1))",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "plate_mass(lambda y, x: x**2 + y**2, (0, 1), (0, 1))",
+        "isHidden": true,
+        "description": "Hidden test"
+      }
+    ],
+    "hints": [
+      "Mass = ∫∫ ρ(x,y) dA where ρ is density",
+      "For uniform density ρ = c, mass = c × area",
+      "Use dblquad with the density function"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math301-t5-ex14",
+    "subjectId": "math301",
+    "topicId": "math301-topic-5",
+    "title": "Center of Mass 2D",
+    "difficulty": 5,
+    "description": "Find the center of mass (x̄, ȳ) of a 2D region with variable density.",
+    "starterCode": "import numpy as np\nfrom scipy import integrate\n\ndef center_of_mass_2d(density, x_bounds, y_bounds):\n    \"\"\"\n    Calculate center of mass (x̄, ȳ) where:\n    x̄ = (1/M) ∫∫ x ρ(x,y) dA\n    ȳ = (1/M) ∫∫ y ρ(x,y) dA\n    M = ∫∫ ρ(x,y) dA\n\n    Args:\n        density: Density function ρ(x, y)\n        x_bounds: (a, b)\n        y_bounds: (c, d)\n    Returns:\n        Tuple (x_bar, y_bar)\n    \"\"\"\n    # Your implementation here\n    pass",
+    "solution": "import numpy as np\nfrom scipy import integrate\n\ndef center_of_mass_2d(density, x_bounds, y_bounds):\n    \"\"\"\n    Calculate center of mass (x̄, ȳ).\n    \"\"\"\n    # Total mass\n    M, _ = integrate.dblquad(density,\n                              x_bounds[0], x_bounds[1],\n                              y_bounds[0], y_bounds[1])\n\n    # Moment about y-axis (M_y = ∫∫ x ρ dA)\n    M_y, _ = integrate.dblquad(lambda y, x: x * density(y, x),\n                                x_bounds[0], x_bounds[1],\n                                y_bounds[0], y_bounds[1])\n\n    # Moment about x-axis (M_x = ∫∫ y ρ dA)\n    M_x, _ = integrate.dblquad(lambda y, x: y * density(y, x),\n                                x_bounds[0], x_bounds[1],\n                                y_bounds[0], y_bounds[1])\n\n    x_bar = M_y / M\n    y_bar = M_x / M\n\n    return (x_bar, y_bar)",
+    "testCases": [
+      {
+        "input": "center_of_mass_2d(lambda y, x: 1, (0, 2), (0, 4))",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "center_of_mass_2d(lambda y, x: 1, (0, 1), (0, 1))",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "tuple(round(c, 5) for c in center_of_mass_2d(lambda y, x: x+1, (0, 2), (0, 2)))",
+        "isHidden": true,
+        "description": "Hidden test"
+      }
+    ],
+    "hints": [
+      "First calculate total mass M = ∫∫ ρ dA",
+      "x̄ = M_y / M where M_y = ∫∫ x ρ dA",
+      "ȳ = M_x / M where M_x = ∫∫ y ρ dA"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math301-t5-ex15",
+    "subjectId": "math301",
+    "topicId": "math301-topic-5",
+    "title": "Moment of Inertia",
+    "difficulty": 5,
+    "description": "Calculate the moment of inertia of a 2D plate about the origin.",
+    "starterCode": "import numpy as np\nfrom scipy import integrate\n\ndef moment_of_inertia(density, x_bounds, y_bounds):\n    \"\"\"\n    Calculate moment of inertia about origin: I_0 = ∫∫ (x²+y²) ρ(x,y) dA\n\n    Args:\n        density: Density function ρ(x, y)\n        x_bounds: (a, b)\n        y_bounds: (c, d)\n    Returns:\n        Moment of inertia about the origin\n    \"\"\"\n    # Your implementation here\n    pass",
+    "solution": "import numpy as np\nfrom scipy import integrate\n\ndef moment_of_inertia(density, x_bounds, y_bounds):\n    \"\"\"\n    Calculate moment of inertia about origin: I_0 = ∫∫ (x²+y²) ρ(x,y) dA\n    \"\"\"\n    integrand = lambda y, x: (x**2 + y**2) * density(y, x)\n    result, _ = integrate.dblquad(integrand,\n                                   x_bounds[0], x_bounds[1],\n                                   y_bounds[0], y_bounds[1])\n    return result",
+    "testCases": [
+      {
+        "input": "moment_of_inertia(lambda y, x: 1, (0, 1), (0, 1))",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "round(moment_of_inertia(lambda y, x: 1, (-1, 1), (-1, 1)), 5)",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "round(moment_of_inertia(lambda y, x: x+y+1, (0, 1), (0, 1)), 5)",
+        "isHidden": true,
+        "description": "Hidden test"
+      }
+    ],
+    "hints": [
+      "Moment of inertia measures resistance to rotation",
+      "I_0 = ∫∫ r² ρ dA where r² = x² + y²",
+      "Multiply distance squared by density and integrate"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math301-t5-ex16",
+    "subjectId": "math301",
+    "topicId": "math301-topic-5",
+    "title": "Average Value of Function",
+    "difficulty": 3,
+    "description": "Calculate the average value of a function over a region.",
+    "starterCode": "import numpy as np\nfrom scipy import integrate\n\ndef average_value(f, x_bounds, y_bounds):\n    \"\"\"\n    Calculate average value: f_avg = (1/A) ∫∫ f(x,y) dA\n    where A is the area of the region.\n\n    Args:\n        f: Function f(x, y)\n        x_bounds: (a, b)\n        y_bounds: (c, d) or functions for bounds\n    Returns:\n        Average value of f over the region\n    \"\"\"\n    # Your implementation here\n    pass",
+    "solution": "import numpy as np\nfrom scipy import integrate\n\ndef average_value(f, x_bounds, y_bounds):\n    \"\"\"\n    Calculate average value: f_avg = (1/A) ∫∫ f(x,y) dA\n    \"\"\"\n    # Calculate area\n    if callable(y_bounds[0]):\n        # General region\n        area, _ = integrate.dblquad(lambda y, x: 1,\n                                     x_bounds[0], x_bounds[1],\n                                     y_bounds[0], y_bounds[1])\n        integral, _ = integrate.dblquad(f,\n                                         x_bounds[0], x_bounds[1],\n                                         y_bounds[0], y_bounds[1])\n    else:\n        # Rectangle\n        area = (x_bounds[1] - x_bounds[0]) * (y_bounds[1] - y_bounds[0])\n        integral, _ = integrate.dblquad(f,\n                                         x_bounds[0], x_bounds[1],\n                                         y_bounds[0], y_bounds[1])\n\n    return integral / area",
+    "testCases": [
+      {
+        "input": "average_value(lambda y, x: x+y, (0, 2), (0, 2))",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "average_value(lambda y, x: x*y, (0, 1), (0, 1))",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "average_value(lambda y, x: 5, (0, 3), (0, 4))",
+        "isHidden": true,
+        "description": "Hidden test"
+      }
+    ],
+    "hints": [
+      "Average = (Total integral) / (Area)",
+      "For rectangles, area = (b-a)(d-c)",
+      "For general regions, calculate area with ∫∫ 1 dA"
+    ],
+    "language": "python"
+  }
+]

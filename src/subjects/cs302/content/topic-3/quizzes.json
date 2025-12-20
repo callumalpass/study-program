@@ -1,0 +1,181 @@
+[
+  {
+    "id": "cs302-quiz-3a",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-3",
+    "title": "Network Layer and IP - Fundamentals",
+    "questions": [
+      {
+        "id": "q3a-1",
+        "type": "multiple_choice",
+        "prompt": "How many bits are in an IPv4 address?",
+        "options": [
+          "16 bits",
+          "32 bits",
+          "48 bits",
+          "128 bits"
+        ],
+        "correctAnswer": 1,
+        "explanation": "IPv4 addresses are 32 bits long, typically written as four decimal octets (e.g., 192.168.1.1). IPv6 uses 128 bits."
+      },
+      {
+        "id": "q3a-2",
+        "type": "fill_blank",
+        "prompt": "The private IP address range 192.168.0.0 to 192.168.255.255 is defined in RFC ____.",
+        "correctAnswer": "1918",
+        "explanation": "RFC 1918 defines private IP address ranges: 10.0.0.0/8, 172.16.0.0/12, and 192.168.0.0/16."
+      },
+      {
+        "id": "q3a-3",
+        "type": "true_false",
+        "prompt": "The IP protocol provides guaranteed delivery of packets.",
+        "correctAnswer": false,
+        "explanation": "IP provides best-effort delivery only. It does not guarantee delivery, ordering, or error correction. TCP provides reliability on top of IP."
+      },
+      {
+        "id": "q3a-4",
+        "type": "multiple_choice",
+        "prompt": "What is the CIDR notation for a subnet mask of 255.255.255.0?",
+        "options": [
+          "/8",
+          "/16",
+          "/24",
+          "/32"
+        ],
+        "correctAnswer": 2,
+        "explanation": "255.255.255.0 has 24 bits set to 1 (network portion), so the CIDR notation is /24."
+      },
+      {
+        "id": "q3a-5",
+        "type": "multiple_choice",
+        "prompt": "What happens when a packet's TTL reaches 0?",
+        "options": [
+          "The packet is delivered normally",
+          "The router retransmits the packet",
+          "The packet is discarded and an ICMP message is sent",
+          "The packet is fragmented"
+        ],
+        "correctAnswer": 2,
+        "explanation": "When TTL reaches 0, the router discards the packet and sends an ICMP \"Time Exceeded\" message to the source."
+      }
+    ]
+  },
+  {
+    "id": "cs302-quiz-3b",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-3",
+    "title": "Network Layer and IP - Application",
+    "questions": [
+      {
+        "id": "q3b-1",
+        "type": "code_output",
+        "prompt": "How many usable host addresses are in a /26 network?",
+        "codeSnippet": "Network: x.x.x.0/26\nTotal addresses: 2^(32-26) = 64\nReserved: Network address + Broadcast address",
+        "correctAnswer": "62",
+        "explanation": "A /26 network has 64 total addresses (2^6). Subtracting the network address and broadcast address leaves 62 usable host addresses."
+      },
+      {
+        "id": "q3b-2",
+        "type": "multiple_choice",
+        "prompt": "What ICMP message type is used by the ping command?",
+        "options": [
+          "Destination Unreachable",
+          "Time Exceeded",
+          "Echo Request/Reply",
+          "Redirect"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Ping uses ICMP Echo Request (type 8) and Echo Reply (type 0) to test network connectivity."
+      },
+      {
+        "id": "q3b-3",
+        "type": "true_false",
+        "prompt": "NAT (Network Address Translation) allows multiple devices on a private network to share a single public IP address.",
+        "correctAnswer": true,
+        "explanation": "NAT, specifically PAT (Port Address Translation), allows multiple private IP addresses to be translated to a single public IP using different port numbers."
+      },
+      {
+        "id": "q3b-4",
+        "type": "multiple_choice",
+        "prompt": "Which field in the IPv4 header identifies the upper-layer protocol?",
+        "options": [
+          "Version",
+          "Protocol",
+          "TTL",
+          "Header Checksum"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The Protocol field indicates which protocol is encapsulated in the payload (e.g., 6 for TCP, 17 for UDP, 1 for ICMP)."
+      },
+      {
+        "id": "q3b-5",
+        "type": "fill_blank",
+        "prompt": "The loopback IP address 127.0.0.1 is commonly referred to as ____.",
+        "correctAnswer": "localhost",
+        "explanation": "The loopback address 127.0.0.1 (or any address in 127.0.0.0/8) refers to the local host, used for testing network software."
+      }
+    ]
+  },
+  {
+    "id": "cs302-quiz-3c",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-3",
+    "title": "Network Layer and IP - Advanced",
+    "questions": [
+      {
+        "id": "q3c-1",
+        "type": "multiple_choice",
+        "prompt": "What is the main advantage of IPv6 over IPv4?",
+        "options": [
+          "Faster routing",
+          "Much larger address space",
+          "Better error correction",
+          "Simpler header format"
+        ],
+        "correctAnswer": 1,
+        "explanation": "IPv6 uses 128-bit addresses compared to IPv4's 32-bit, providing approximately 3.4×10^38 addresses versus 4.3 billion for IPv4."
+      },
+      {
+        "id": "q3c-2",
+        "type": "code_output",
+        "prompt": "What is the network address for host 172.16.45.100 with subnet mask 255.255.240.0?",
+        "codeSnippet": "IP:   172.16.45.100\nMask: 255.255.240.0 (/20)\nNetwork = IP AND Mask",
+        "correctAnswer": "172.16.32.0",
+        "explanation": "ANDing 172.16.45.100 with 255.255.240.0: The third octet 45 AND 240 = 32. So the network is 172.16.32.0/20."
+      },
+      {
+        "id": "q3c-3",
+        "type": "multiple_choice",
+        "prompt": "What flag in the IPv4 header indicates that more fragments follow?",
+        "options": [
+          "DF (Don't Fragment)",
+          "MF (More Fragments)",
+          "RF (Reserved Fragment)",
+          "LF (Last Fragment)"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The MF (More Fragments) flag is set to 1 if additional fragments follow, and 0 for the last fragment."
+      },
+      {
+        "id": "q3c-4",
+        "type": "true_false",
+        "prompt": "IPv6 uses ARP for address resolution.",
+        "correctAnswer": false,
+        "explanation": "IPv6 uses Neighbor Discovery Protocol (NDP) with ICMPv6 Neighbor Solicitation/Advertisement instead of ARP."
+      },
+      {
+        "id": "q3c-5",
+        "type": "multiple_choice",
+        "prompt": "Which private address range provides the largest number of addresses?",
+        "options": [
+          "192.168.0.0/16",
+          "172.16.0.0/12",
+          "10.0.0.0/8",
+          "169.254.0.0/16"
+        ],
+        "correctAnswer": 2,
+        "explanation": "10.0.0.0/8 provides about 16.7 million addresses. 172.16.0.0/12 provides about 1 million, and 192.168.0.0/16 provides 65,536."
+      }
+    ]
+  }
+]

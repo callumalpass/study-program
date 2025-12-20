@@ -1,0 +1,180 @@
+[
+  {
+    "id": "cs302-quiz-7a",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-7",
+    "title": "Application Layer - Fundamentals",
+    "questions": [
+      {
+        "id": "q7a-1",
+        "type": "multiple_choice",
+        "prompt": "What protocol does DNS use primarily?",
+        "options": [
+          "TCP only",
+          "UDP only",
+          "UDP primarily, TCP for large responses",
+          "Neither"
+        ],
+        "correctAnswer": 2,
+        "explanation": "DNS uses UDP (port 53) for most queries but falls back to TCP for responses larger than 512 bytes or for zone transfers."
+      },
+      {
+        "id": "q7a-2",
+        "type": "fill_blank",
+        "prompt": "HTTP status code ____ means \"Not Found\".",
+        "correctAnswer": "404",
+        "explanation": "404 Not Found indicates the requested resource does not exist. 200 is OK, 500 is Internal Server Error, 301 is Moved Permanently."
+      },
+      {
+        "id": "q7a-3",
+        "type": "true_false",
+        "prompt": "HTTPS uses the same default port as HTTP.",
+        "correctAnswer": false,
+        "explanation": "HTTP uses port 80 by default, while HTTPS uses port 443. HTTPS adds TLS encryption for secure communication."
+      },
+      {
+        "id": "q7a-4",
+        "type": "multiple_choice",
+        "prompt": "Which protocol is used for sending email?",
+        "options": [
+          "POP3",
+          "IMAP",
+          "SMTP",
+          "FTP"
+        ],
+        "correctAnswer": 2,
+        "explanation": "SMTP (Simple Mail Transfer Protocol) is used for sending email. POP3 and IMAP are used for retrieving email from a server."
+      },
+      {
+        "id": "q7a-5",
+        "type": "multiple_choice",
+        "prompt": "What type of DNS record maps a hostname to an IPv4 address?",
+        "options": [
+          "MX",
+          "CNAME",
+          "A",
+          "AAAA"
+        ],
+        "correctAnswer": 2,
+        "explanation": "An A record maps a hostname to an IPv4 address. AAAA is for IPv6, MX is for mail servers, and CNAME is an alias."
+      }
+    ]
+  },
+  {
+    "id": "cs302-quiz-7b",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-7",
+    "title": "Application Layer - Application",
+    "questions": [
+      {
+        "id": "q7b-1",
+        "type": "multiple_choice",
+        "prompt": "Which HTTP method is used to submit data to a server?",
+        "options": [
+          "GET",
+          "POST",
+          "HEAD",
+          "OPTIONS"
+        ],
+        "correctAnswer": 1,
+        "explanation": "POST is used to submit data to a server (e.g., form data). GET retrieves data and includes parameters in the URL."
+      },
+      {
+        "id": "q7b-2",
+        "type": "code_output",
+        "prompt": "What HTTP version introduced persistent connections by default?",
+        "codeSnippet": "HTTP/1.0: Connection: close (default)\nHTTP/1.1: Connection: keep-alive (default)",
+        "correctAnswer": "HTTP/1.1",
+        "explanation": "HTTP/1.1 made persistent connections the default, reducing the overhead of establishing new TCP connections for each request."
+      },
+      {
+        "id": "q7b-3",
+        "type": "true_false",
+        "prompt": "WebSockets use a completely different protocol from HTTP for the initial connection.",
+        "correctAnswer": false,
+        "explanation": "WebSockets start with an HTTP upgrade request. The connection is then upgraded to the WebSocket protocol for bidirectional communication."
+      },
+      {
+        "id": "q7b-4",
+        "type": "fill_blank",
+        "prompt": "DNS uses a ____ structure where each level is separated by a dot.",
+        "correctAnswer": "hierarchical",
+        "explanation": "DNS uses a hierarchical structure (e.g., www.example.com) with root servers at the top, followed by TLDs, then domain names."
+      },
+      {
+        "id": "q7b-5",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of the SSH protocol?",
+        "options": [
+          "File transfer only",
+          "Secure remote login and command execution",
+          "Email encryption",
+          "Web browsing"
+        ],
+        "correctAnswer": 1,
+        "explanation": "SSH (Secure Shell) provides encrypted remote login, command execution, and can tunnel other protocols securely."
+      }
+    ]
+  },
+  {
+    "id": "cs302-quiz-7c",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-7",
+    "title": "Application Layer - Advanced",
+    "questions": [
+      {
+        "id": "q7c-1",
+        "type": "multiple_choice",
+        "prompt": "What does TLS provide in HTTPS connections?",
+        "options": [
+          "Only encryption",
+          "Only authentication",
+          "Encryption, authentication, and integrity",
+          "Compression and caching"
+        ],
+        "correctAnswer": 2,
+        "explanation": "TLS provides confidentiality (encryption), authentication (certificates), and integrity (MAC) for secure communication."
+      },
+      {
+        "id": "q7c-2",
+        "type": "multiple_choice",
+        "prompt": "What security mechanism prevents an attacker from reusing captured authentication tokens?",
+        "options": [
+          "Encryption",
+          "Replay attack prevention (nonces/timestamps)",
+          "Compression",
+          "Keep-alive"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Nonces (numbers used once) and timestamps prevent replay attacks by ensuring each request is unique and time-limited."
+      },
+      {
+        "id": "q7c-3",
+        "type": "true_false",
+        "prompt": "HTTP/2 uses multiple TCP connections for parallel requests.",
+        "correctAnswer": false,
+        "explanation": "HTTP/2 uses a single TCP connection with multiplexing to handle multiple concurrent request/response streams."
+      },
+      {
+        "id": "q7c-4",
+        "type": "fill_blank",
+        "prompt": "DNSSEC adds ____ signatures to DNS records to prevent spoofing.",
+        "correctAnswer": "digital",
+        "explanation": "DNSSEC uses digital signatures (cryptographic) to verify the authenticity of DNS responses, preventing DNS spoofing attacks."
+      },
+      {
+        "id": "q7c-5",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of the HTTP CORS mechanism?",
+        "options": [
+          "Compress HTTP responses",
+          "Allow cross-origin requests in browsers",
+          "Cache DNS responses",
+          "Encrypt HTTP traffic"
+        ],
+        "correctAnswer": 1,
+        "explanation": "CORS (Cross-Origin Resource Sharing) allows servers to specify which origins can access resources, enabling safe cross-origin requests in browsers."
+      }
+    ]
+  }
+]

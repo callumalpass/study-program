@@ -1,0 +1,197 @@
+[
+  {
+    "id": "math402-quiz-1a",
+    "subjectId": "math402",
+    "topicId": "math402-topic-1",
+    "title": "Error Analysis - Fundamentals",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "What is machine epsilon (ε_mach) for double precision floating-point?",
+        "options": [
+          "2^{-23} ≈ 1.19 × 10^{-7}",
+          "2^{-52} ≈ 2.22 × 10^{-16}",
+          "2^{-64} ≈ 5.42 × 10^{-20}",
+          "2^{-128}"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Double precision (64-bit) uses 52 bits for the mantissa, so machine epsilon is 2^{-52} ≈ 2.22 × 10^{-16}."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "The absolute error is defined as:",
+        "options": [
+          "|approximate - true| / |true|",
+          "|approximate - true|",
+          "|true - approximate| / |approximate|",
+          "(approximate - true)^2"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Absolute error is simply the magnitude of the difference: |x̃ - x|, where x̃ is the approximation and x is the true value."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "Relative error is more meaningful than absolute error when comparing errors in numbers of different magnitudes.",
+        "correctAnswer": true,
+        "explanation": "True. Relative error normalizes by the true value, making it scale-independent and better for comparing errors across different magnitudes."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "Which statement about floating-point representation is correct?",
+        "options": [
+          "All real numbers can be exactly represented",
+          "Floating-point numbers are uniformly distributed",
+          "The gap between consecutive floating-point numbers increases with magnitude",
+          "Addition is always associative in floating-point arithmetic"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The spacing between floating-point numbers grows exponentially with the magnitude of the numbers, leading to less precision for larger values."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "The maximum relative error in representing a number in floating-point is approximately ____.",
+        "correctAnswer": "machine epsilon",
+        "explanation": "Machine epsilon (ε_mach) represents the upper bound on the relative error due to rounding in floating-point arithmetic."
+      }
+    ]
+  },
+  {
+    "id": "math402-quiz-1b",
+    "subjectId": "math402",
+    "topicId": "math402-topic-1",
+    "title": "Error Analysis - Application",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "Which operation is most prone to catastrophic cancellation?",
+        "options": [
+          "Addition of numbers with similar magnitudes",
+          "Subtraction of nearly equal numbers",
+          "Multiplication of small numbers",
+          "Division by large numbers"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Subtracting nearly equal numbers eliminates significant digits, leaving only roundoff error in the result—this is catastrophic cancellation."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "If a problem has condition number κ = 10^6 and the input has relative error 10^{-10}, what is the expected relative error in the output?",
+        "options": [
+          "At most 10^{-16}",
+          "At most 10^{-10}",
+          "At most 10^{-4}",
+          "Exactly 10^6"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The output relative error is bounded by κ × (input relative error) = 10^6 × 10^{-10} = 10^{-4}. The condition number amplifies input errors."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "A numerically stable algorithm always produces accurate results.",
+        "correctAnswer": false,
+        "explanation": "False. A stable algorithm does not amplify errors, but if the problem itself is ill-conditioned (high condition number), even a stable algorithm may produce inaccurate results."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "When computing √(x^2 + 1) - x for large x, which reformulation avoids cancellation?",
+        "options": [
+          "√(x^2 + 1) - x (no change needed)",
+          "1 / (√(x^2 + 1) + x)",
+          "x(√(1 + 1/x^2) - 1)",
+          "(x^2 + 1 - x^2) / (√(x^2 + 1) + x)"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Multiplying by the conjugate: (√(x^2 + 1) - x)(√(x^2 + 1) + x)/(√(x^2 + 1) + x) = 1/(√(x^2 + 1) + x) avoids subtracting nearly equal numbers."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "In error propagation, if f(x,y) = x + y and both x and y have error ε, the error in f is approximately:",
+        "options": [
+          "ε",
+          "√2 ε",
+          "2ε",
+          "ε^2"
+        ],
+        "correctAnswer": 2,
+        "explanation": "For addition, errors combine directly: |Δf| ≈ |Δx| + |Δy| = ε + ε = 2ε."
+      }
+    ]
+  },
+  {
+    "id": "math402-quiz-1c",
+    "subjectId": "math402",
+    "topicId": "math402-topic-1",
+    "title": "Error Analysis - Mastery",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "A backward stable algorithm guarantees that:",
+        "options": [
+          "The computed result is the exact result for a slightly perturbed problem",
+          "The forward error is minimized",
+          "The algorithm never amplifies errors",
+          "The condition number is less than 1"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Backward stability means the computed result f̃(x) equals f(x̃) for some x̃ close to x, i.e., the result is exact for a nearby problem."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "For the problem of computing x - y where x ≈ y, what is the condition number?",
+        "options": [
+          "1",
+          "x/(x-y)",
+          "Large (problem is well-conditioned)",
+          "Small (problem is ill-conditioned)"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The condition number for subtraction is κ = (|x| + |y|)/|x - y|. When x ≈ y, the denominator is small, making κ very large (ill-conditioned)."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "If an algorithm is backward stable and the problem is well-conditioned, then the algorithm produces accurate results.",
+        "correctAnswer": true,
+        "explanation": "True. Backward stability ensures the computed answer is exact for a nearby problem, and well-conditioning ensures nearby problems have nearby solutions."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "The condition number of evaluating f(x) = e^x near x = 0 is approximately:",
+        "options": [
+          "x",
+          "|x|",
+          "1",
+          "e^x"
+        ],
+        "correctAnswer": 1,
+        "explanation": "κ(x) = |xf'(x)/f(x)| = |x·e^x/e^x| = |x|. Near x = 0, the condition number is small, indicating a well-conditioned problem."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "In IEEE 754 double precision, subnormal numbers exist to:",
+        "options": [
+          "Increase the range of representable numbers",
+          "Allow gradual underflow and maintain relative error bounds near zero",
+          "Improve the speed of floating-point operations",
+          "Eliminate the need for special values like NaN"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Subnormal (denormalized) numbers fill the gap between zero and the smallest normalized number, preventing abrupt underflow to zero and maintaining error properties."
+      }
+    ]
+  }
+]

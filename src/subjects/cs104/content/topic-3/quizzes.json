@@ -1,0 +1,181 @@
+[
+  {
+    "id": "cs104-quiz-3a",
+    "subjectId": "cs104",
+    "topicId": "cs104-topic-3",
+    "title": "Trees - Fundamentals",
+    "questions": [
+      {
+        "id": "cs104-q3a-1",
+        "type": "multiple_choice",
+        "prompt": "In a Binary Search Tree, where are values smaller than the root stored?",
+        "options": [
+          "Right subtree",
+          "Left subtree",
+          "Parent node",
+          "Randomly distributed"
+        ],
+        "correctAnswer": 1,
+        "explanation": "BST property: all values in the left subtree are smaller than the node, and all values in the right subtree are larger."
+      },
+      {
+        "id": "cs104-q3a-2",
+        "type": "fill_blank",
+        "prompt": "A node with no children in a tree is called a ____ node.",
+        "correctAnswer": "leaf",
+        "explanation": "Leaf nodes are the terminal nodes of a tree with no children."
+      },
+      {
+        "id": "cs104-q3a-3",
+        "type": "true_false",
+        "prompt": "A binary tree can have at most two children per node.",
+        "correctAnswer": true,
+        "explanation": "By definition, a binary tree has at most two children (left and right) per node."
+      },
+      {
+        "id": "cs104-q3a-4",
+        "type": "multiple_choice",
+        "prompt": "What is the average-case time complexity for searching in a balanced BST?",
+        "options": [
+          "O(1)",
+          "O(log n)",
+          "O(n)",
+          "O(n log n)"
+        ],
+        "correctAnswer": 1,
+        "explanation": "In a balanced BST, each comparison eliminates half the remaining nodes, giving O(log n) search time."
+      },
+      {
+        "id": "cs104-q3a-5",
+        "type": "multiple_choice",
+        "prompt": "The height of a tree is:",
+        "options": [
+          "Number of nodes",
+          "Number of edges on the longest path from root to leaf",
+          "Number of leaves",
+          "Depth of the root"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Height is the number of edges on the longest path from root to any leaf node."
+      }
+    ]
+  },
+  {
+    "id": "cs104-quiz-3b",
+    "subjectId": "cs104",
+    "topicId": "cs104-topic-3",
+    "title": "Trees - Application",
+    "questions": [
+      {
+        "id": "cs104-q3b-1",
+        "type": "multiple_choice",
+        "prompt": "Which traversal visits nodes in sorted order for a BST?",
+        "options": [
+          "Preorder",
+          "Inorder",
+          "Postorder",
+          "Level-order"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Inorder traversal (left-root-right) of a BST visits nodes in ascending sorted order."
+      },
+      {
+        "id": "cs104-q3b-2",
+        "type": "code_output",
+        "prompt": "What is the preorder traversal of this tree?\n        1\n       / \\\n      2   3\n     / \\\n    4   5",
+        "codeSnippet": "# Preorder: root, left, right",
+        "correctAnswer": "1 2 4 5 3",
+        "explanation": "Preorder visits root first, then recursively left subtree, then right: 1 -> 2 -> 4 -> 5 -> 3."
+      },
+      {
+        "id": "cs104-q3b-3",
+        "type": "true_false",
+        "prompt": "Level-order traversal uses a queue.",
+        "correctAnswer": true,
+        "explanation": "Level-order (BFS) traversal processes nodes level by level using a queue."
+      },
+      {
+        "id": "cs104-q3b-4",
+        "type": "multiple_choice",
+        "prompt": "What is the worst-case time complexity for BST operations when the tree is skewed (unbalanced)?",
+        "options": [
+          "O(1)",
+          "O(log n)",
+          "O(n)",
+          "O(n log n)"
+        ],
+        "correctAnswer": 2,
+        "explanation": "A skewed BST degenerates into a linked list, making operations O(n) in the worst case."
+      },
+      {
+        "id": "cs104-q3b-5",
+        "type": "code_output",
+        "prompt": "What is the inorder traversal of this BST?\n        5\n       / \\\n      3   7\n     / \\\n    2   4",
+        "codeSnippet": "# Inorder: left, root, right",
+        "correctAnswer": "2 3 4 5 7",
+        "explanation": "Inorder of BST gives sorted order: 2 -> 3 -> 4 -> 5 -> 7."
+      }
+    ]
+  },
+  {
+    "id": "cs104-quiz-3c",
+    "subjectId": "cs104",
+    "topicId": "cs104-topic-3",
+    "title": "Trees - Advanced",
+    "questions": [
+      {
+        "id": "cs104-q3c-1",
+        "type": "multiple_choice",
+        "prompt": "Which tree type automatically maintains balance through rotations?",
+        "options": [
+          "Binary Search Tree",
+          "Binary Tree",
+          "AVL Tree",
+          "Skewed Tree"
+        ],
+        "correctAnswer": 2,
+        "explanation": "AVL trees (and Red-Black trees) are self-balancing BSTs that perform rotations to maintain balance."
+      },
+      {
+        "id": "cs104-q3c-2",
+        "type": "true_false",
+        "prompt": "The Lowest Common Ancestor (LCA) of two nodes is the deepest node that has both as descendants.",
+        "correctAnswer": true,
+        "explanation": "LCA is the deepest (lowest) node in the tree that has both target nodes in its subtrees."
+      },
+      {
+        "id": "cs104-q3c-3",
+        "type": "multiple_choice",
+        "prompt": "To validate a BST, you should check:",
+        "options": [
+          "Only immediate children",
+          "The entire subtree constraints",
+          "Node values are unique",
+          "Tree height is balanced"
+        ],
+        "correctAnswer": 1,
+        "explanation": "BST validation requires checking that ALL left subtree values are less than the node and ALL right subtree values are greater."
+      },
+      {
+        "id": "cs104-q3c-4",
+        "type": "fill_blank",
+        "prompt": "A complete binary tree can be efficiently stored in an ____ using index formulas for parent/child.",
+        "correctAnswer": "array",
+        "explanation": "Complete binary trees map naturally to arrays: for node at index i, left child is 2i+1, right is 2i+2."
+      },
+      {
+        "id": "cs104-q3c-5",
+        "type": "multiple_choice",
+        "prompt": "What is the time complexity of finding the diameter (longest path) of a binary tree?",
+        "options": [
+          "O(1)",
+          "O(log n)",
+          "O(n)",
+          "O(n²)"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Finding diameter requires visiting each node once to calculate heights, giving O(n) time."
+      }
+    ]
+  }
+]

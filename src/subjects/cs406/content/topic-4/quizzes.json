@@ -1,0 +1,156 @@
+[
+  {
+    "id": "cs406-quiz-4-1",
+    "subjectId": "cs406",
+    "topicId": "cs406-topic-4",
+    "title": "CSP Fundamentals",
+    "questions": [
+      {
+        "id": "cs406-q16",
+        "type": "multiple_choice",
+        "prompt": "In a CSP, what is a constraint?",
+        "options": [
+          "A restriction on the values variables can simultaneously take",
+          "The set of possible values for a variable",
+          "The order in which variables are assigned",
+          "The goal state"
+        ],
+        "correctAnswer": "A restriction on the values variables can simultaneously take",
+        "explanation": "Constraints specify which combinations of variable values are permitted, e.g., \"X ≠ Y\" for map coloring."
+      },
+      {
+        "id": "cs406-q17",
+        "type": "multiple_choice",
+        "prompt": "Arc consistency AC-3 ensures:",
+        "options": [
+          "For each value in a variables domain, there exists a consistent value in each neighbors domain",
+          "All constraints are satisfied",
+          "A solution exists",
+          "All variables have the same domain size"
+        ],
+        "correctAnswer": "For each value in a variables domain, there exists a consistent value in each neighbors domain",
+        "explanation": "AC-3 makes each arc (directed constraint) consistent by removing domain values that have no supporting values in constrained variables."
+      },
+      {
+        "id": "cs406-q18",
+        "type": "multiple_choice",
+        "prompt": "The Minimum Remaining Values (MRV) heuristic chooses:",
+        "options": [
+          "The variable with the fewest legal values remaining",
+          "The variable with the most constraints",
+          "The first unassigned variable",
+          "The variable with the most remaining values"
+        ],
+        "correctAnswer": "The variable with the fewest legal values remaining",
+        "explanation": "MRV (most constrained variable) chooses the variable most likely to cause failure soon, detecting failures early and reducing search."
+      }
+    ]
+  },
+  {
+    "id": "cs406-quiz-4-2",
+    "subjectId": "cs406",
+    "topicId": "cs406-topic-4",
+    "title": "CSP Algorithms",
+    "questions": [
+      {
+        "id": "cs406-q17",
+        "type": "multiple_choice",
+        "prompt": "Arc consistency AC-3 ensures:",
+        "options": [
+          "For each value in a variables domain, there exists a consistent value in each neighbors domain",
+          "All constraints are satisfied",
+          "A solution exists",
+          "All variables have the same domain size"
+        ],
+        "correctAnswer": "For each value in a variables domain, there exists a consistent value in each neighbors domain",
+        "explanation": "AC-3 makes each arc (directed constraint) consistent by removing domain values that have no supporting values in constrained variables."
+      },
+      {
+        "id": "cs406-q18",
+        "type": "multiple_choice",
+        "prompt": "The Minimum Remaining Values (MRV) heuristic chooses:",
+        "options": [
+          "The variable with the fewest legal values remaining",
+          "The variable with the most constraints",
+          "The first unassigned variable",
+          "The variable with the most remaining values"
+        ],
+        "correctAnswer": "The variable with the fewest legal values remaining",
+        "explanation": "MRV (most constrained variable) chooses the variable most likely to cause failure soon, detecting failures early and reducing search."
+      },
+      {
+        "id": "cs406-q19",
+        "type": "multiple_choice",
+        "prompt": "Forward checking in CSP backtracking:",
+        "options": [
+          "Removes inconsistent values from unassigned variables after each assignment",
+          "Checks all constraints before starting search",
+          "Looks ahead to detect solutions",
+          "Uses arc consistency on all variables"
+        ],
+        "correctAnswer": "Removes inconsistent values from unassigned variables after each assignment",
+        "explanation": "Forward checking propagates constraints immediately after each assignment, removing values from unassigned neighbors that conflict."
+      },
+      {
+        "id": "cs406-q20",
+        "type": "multiple_choice",
+        "prompt": "The min-conflicts algorithm for CSP:",
+        "options": [
+          "Uses local search by changing one variable to minimize constraint violations",
+          "Uses backtracking with forward checking",
+          "Guarantees finding a solution",
+          "Maintains arc consistency"
+        ],
+        "correctAnswer": "Uses local search by changing one variable to minimize constraint violations",
+        "explanation": "Min-conflicts is a local search method that repeatedly selects a conflicting variable and changes it to minimize total conflicts."
+      }
+    ]
+  },
+  {
+    "id": "cs406-quiz-4-3",
+    "subjectId": "cs406",
+    "topicId": "cs406-topic-4",
+    "title": "CSP Applications",
+    "questions": [
+      {
+        "id": "cs406-q19",
+        "type": "multiple_choice",
+        "prompt": "Forward checking in CSP backtracking:",
+        "options": [
+          "Removes inconsistent values from unassigned variables after each assignment",
+          "Checks all constraints before starting search",
+          "Looks ahead to detect solutions",
+          "Uses arc consistency on all variables"
+        ],
+        "correctAnswer": "Removes inconsistent values from unassigned variables after each assignment",
+        "explanation": "Forward checking propagates constraints immediately after each assignment, removing values from unassigned neighbors that conflict."
+      },
+      {
+        "id": "cs406-q20",
+        "type": "multiple_choice",
+        "prompt": "The min-conflicts algorithm for CSP:",
+        "options": [
+          "Uses local search by changing one variable to minimize constraint violations",
+          "Uses backtracking with forward checking",
+          "Guarantees finding a solution",
+          "Maintains arc consistency"
+        ],
+        "correctAnswer": "Uses local search by changing one variable to minimize constraint violations",
+        "explanation": "Min-conflicts is a local search method that repeatedly selects a conflicting variable and changes it to minimize total conflicts."
+      },
+      {
+        "id": "cs406-q21",
+        "type": "multiple_choice",
+        "prompt": "STRIPS operators consist of:",
+        "options": [
+          "Preconditions, add list, and delete list",
+          "Only preconditions",
+          "States and actions",
+          "Goals and subgoals"
+        ],
+        "correctAnswer": "Preconditions, add list, and delete list",
+        "explanation": "STRIPS operators specify preconditions (what must be true to apply), add list (what becomes true), and delete list (what becomes false)."
+      }
+    ]
+  }
+]

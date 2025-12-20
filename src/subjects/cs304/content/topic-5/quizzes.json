@@ -1,0 +1,221 @@
+[
+  {
+    "id": "cs304-t5-quiz-1",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-5",
+    "title": "Instruction Selection",
+    "questions": [
+      {
+        "id": "cs304-t5-q1-1",
+        "type": "multiple_choice",
+        "prompt": "What is instruction selection?",
+        "options": [
+          "Choosing which instructions to delete",
+          "Mapping IR operations to target machine instructions",
+          "Selecting the best algorithm",
+          "Choosing optimization levels"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Instruction selection chooses target machine instructions to implement each IR operation."
+      },
+      {
+        "id": "cs304-t5-q1-2",
+        "type": "multiple_choice",
+        "prompt": "What is tree pattern matching in code generation?",
+        "options": [
+          "Matching AST patterns",
+          "Covering IR trees with instruction tiles",
+          "Pattern matching in functional languages",
+          "Finding trees in code"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Tree pattern matching tiles IR expression trees with instruction patterns, optimizing for cost."
+      },
+      {
+        "id": "cs304-t5-q1-3",
+        "type": "multiple_choice",
+        "prompt": "What is the maximal munch strategy for instruction selection?",
+        "options": [
+          "Use smallest instructions",
+          "Greedily select largest matching tile at each point",
+          "Random selection",
+          "Use most common instructions"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Maximal munch greedily selects the largest (most operations) matching instruction pattern at each node."
+      },
+      {
+        "id": "cs304-t5-q1-4",
+        "type": "multiple_choice",
+        "prompt": "What is the advantage of CISC over RISC for code generation?",
+        "options": [
+          "Simpler instruction selection",
+          "Complex instructions may do more work per instruction",
+          "Faster execution always",
+          "More registers"
+        ],
+        "correctAnswer": 1,
+        "explanation": "CISC instructions can perform complex operations in one instruction, potentially reducing code size."
+      },
+      {
+        "id": "cs304-t5-q1-5",
+        "type": "multiple_choice",
+        "prompt": "What is peephole optimization in code generation?",
+        "options": [
+          "Looking at small windows of instructions to improve them",
+          "Optimizing loops",
+          "Global analysis",
+          "Memory optimization"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Peephole optimization examines small instruction windows to apply local improvements like strength reduction."
+      }
+    ]
+  },
+  {
+    "id": "cs304-t5-quiz-2",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-5",
+    "title": "Register Allocation",
+    "questions": [
+      {
+        "id": "cs304-t5-q2-1",
+        "type": "multiple_choice",
+        "prompt": "Why is register allocation important?",
+        "options": [
+          "Registers are infinite",
+          "Registers are much faster than memory",
+          "Registers are required",
+          "Registers use less power"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Register access is much faster than memory; effective allocation reduces memory traffic and improves performance."
+      },
+      {
+        "id": "cs304-t5-q2-2",
+        "type": "multiple_choice",
+        "prompt": "What is a live range in register allocation?",
+        "options": [
+          "A valid memory address",
+          "The interval from a variable's definition to its last use",
+          "A hardware register",
+          "A loop body"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A live range spans from where a variable is defined to where it is last used."
+      },
+      {
+        "id": "cs304-t5-q2-3",
+        "type": "multiple_choice",
+        "prompt": "How does graph coloring relate to register allocation?",
+        "options": [
+          "Unrelated",
+          "Non-interfering live ranges can share registers (same color)",
+          "Colors represent memory",
+          "Graphs represent instructions"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Graph coloring assigns registers: nodes are live ranges, edges connect simultaneously live ranges, colors are registers."
+      },
+      {
+        "id": "cs304-t5-q2-4",
+        "type": "multiple_choice",
+        "prompt": "What is spilling in register allocation?",
+        "options": [
+          "Memory leak",
+          "Storing a value in memory when no register is available",
+          "Register overflow",
+          "Stack corruption"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Spilling stores a value to memory when all registers are occupied, loading it back when needed."
+      },
+      {
+        "id": "cs304-t5-q2-5",
+        "type": "multiple_choice",
+        "prompt": "What is linear scan register allocation?",
+        "options": [
+          "Scanning registers linearly",
+          "A faster alternative to graph coloring using live intervals",
+          "Allocating registers in order",
+          "Sequential allocation"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Linear scan processes live intervals in order, providing faster allocation than graph coloring with reasonable quality."
+      }
+    ]
+  },
+  {
+    "id": "cs304-t5-quiz-3",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-5",
+    "title": "Calling Conventions and Stack",
+    "questions": [
+      {
+        "id": "cs304-t5-q3-1",
+        "type": "multiple_choice",
+        "prompt": "What does a calling convention specify?",
+        "options": [
+          "Function naming",
+          "How arguments are passed and results returned between functions",
+          "Code formatting",
+          "Variable naming"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Calling conventions define parameter passing, return values, register usage, and stack management between caller/callee."
+      },
+      {
+        "id": "cs304-t5-q3-2",
+        "type": "multiple_choice",
+        "prompt": "What are caller-saved vs callee-saved registers?",
+        "options": [
+          "Same thing",
+          "Caller-saved are preserved by caller; callee-saved by callee",
+          "Caller-saved cannot be used",
+          "Callee-saved are for return values"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Caller-saved registers may be clobbered by callee; callee-saved must be preserved across calls."
+      },
+      {
+        "id": "cs304-t5-q3-3",
+        "type": "multiple_choice",
+        "prompt": "What is an activation record (stack frame)?",
+        "options": [
+          "A log entry",
+          "Memory allocated for a function invocation",
+          "A hardware register",
+          "A calling convention"
+        ],
+        "correctAnswer": 1,
+        "explanation": "An activation record holds a function's local variables, parameters, return address, and saved registers."
+      },
+      {
+        "id": "cs304-t5-q3-4",
+        "type": "multiple_choice",
+        "prompt": "What is the frame pointer (FP) used for?",
+        "options": [
+          "Pointing to code",
+          "Providing a stable reference to the current stack frame",
+          "Pointing to globals",
+          "Heap management"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The frame pointer provides a stable base address for accessing local variables, even as SP changes."
+      },
+      {
+        "id": "cs304-t5-q3-5",
+        "type": "multiple_choice",
+        "prompt": "What is the ELF format?",
+        "options": [
+          "A fantasy creature",
+          "Executable and Linkable Format for Unix object files",
+          "An optimization",
+          "A virtual machine"
+        ],
+        "correctAnswer": 1,
+        "explanation": "ELF (Executable and Linkable Format) is the standard object file format on Unix/Linux systems."
+      }
+    ]
+  }
+]

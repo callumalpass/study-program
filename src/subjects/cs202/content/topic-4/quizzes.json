@@ -1,0 +1,221 @@
+[
+  {
+    "id": "cs202-topic4-quiz1",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic4",
+    "title": "Pipeline Basics",
+    "questions": [
+      {
+        "id": "cs202-t4-q1-1",
+        "type": "multiple_choice",
+        "prompt": "What is the ideal speedup of a 5-stage pipeline over a single-cycle processor?",
+        "options": [
+          "2×",
+          "3×",
+          "5×",
+          "10×"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Ideally, an N-stage pipeline provides N× throughput improvement because N instructions are in flight simultaneously."
+      },
+      {
+        "id": "cs202-t4-q1-2",
+        "type": "multiple_choice",
+        "prompt": "Which of the following is NOT a standard stage in the classic 5-stage MIPS pipeline?",
+        "options": [
+          "Instruction Fetch (IF)",
+          "Decode (ID)",
+          "Memory Access (MEM)",
+          "Cache Lookup (CL)"
+        ],
+        "correctAnswer": 3,
+        "explanation": "The five stages are IF, ID, EX, MEM, WB. Cache lookup happens within IF and MEM, not as a separate stage."
+      },
+      {
+        "id": "cs202-t4-q1-3",
+        "type": "multiple_choice",
+        "prompt": "What determines the clock period in a pipelined processor?",
+        "options": [
+          "Sum of all stage delays",
+          "Delay of the slowest stage",
+          "Delay of the fastest stage",
+          "Average of all stage delays"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The clock period must be at least as long as the slowest pipeline stage, as all stages must complete in one cycle."
+      },
+      {
+        "id": "cs202-t4-q1-4",
+        "type": "multiple_choice",
+        "prompt": "What is stored in pipeline registers?",
+        "options": [
+          "Only instruction opcodes",
+          "Intermediate results and control signals",
+          "Memory addresses only",
+          "Branch outcomes"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Pipeline registers store all information needed by the next stage: data values, register numbers, and control signals."
+      },
+      {
+        "id": "cs202-t4-q1-5",
+        "type": "multiple_choice",
+        "prompt": "Pipelining improves processor performance primarily by increasing:",
+        "options": [
+          "Instruction latency",
+          "Instruction throughput",
+          "Register count",
+          "Memory bandwidth"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Pipelining increases throughput (instructions completed per unit time) while latency for individual instructions may increase."
+      }
+    ]
+  },
+  {
+    "id": "cs202-topic4-quiz2",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic4",
+    "title": "Pipeline Hazards",
+    "questions": [
+      {
+        "id": "cs202-t4-q2-1",
+        "type": "multiple_choice",
+        "prompt": "What type of hazard occurs when an instruction needs a result not yet produced?",
+        "options": [
+          "Structural hazard",
+          "Data hazard (RAW)",
+          "Control hazard",
+          "WAW hazard"
+        ],
+        "correctAnswer": 1,
+        "explanation": "RAW (Read After Write) hazards occur when an instruction needs to read a value that a previous instruction has not yet written."
+      },
+      {
+        "id": "cs202-t4-q2-2",
+        "type": "multiple_choice",
+        "prompt": "A structural hazard can be caused by:",
+        "options": [
+          "Two instructions needing the same functional unit simultaneously",
+          "A branch instruction",
+          "Data dependencies",
+          "Cache misses"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Structural hazards occur when hardware resources are insufficient for the instructions that need them simultaneously."
+      },
+      {
+        "id": "cs202-t4-q2-3",
+        "type": "multiple_choice",
+        "prompt": "How many stall cycles are needed for \"lw $t0, 0($a0); add $t1, $t0, $t2\" without forwarding?",
+        "options": [
+          "0",
+          "1",
+          "2",
+          "3"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Without forwarding, the add must wait for lw to reach WB (2 cycles after lw's MEM stage when data is available)."
+      },
+      {
+        "id": "cs202-t4-q2-4",
+        "type": "multiple_choice",
+        "prompt": "Control hazards are caused by:",
+        "options": [
+          "Memory access conflicts",
+          "Register file port limitations",
+          "Branch and jump instructions",
+          "Long ALU operations"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Control hazards occur because the next instruction address isn't known until branch/jump instructions are resolved."
+      },
+      {
+        "id": "cs202-t4-q2-5",
+        "type": "multiple_choice",
+        "prompt": "A load-use hazard specifically refers to:",
+        "options": [
+          "Any data hazard",
+          "Using a loaded value in the next instruction",
+          "Loading from an invalid address",
+          "Two concurrent loads"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A load-use hazard occurs when the instruction immediately after a load needs to use the loaded value."
+      }
+    ]
+  },
+  {
+    "id": "cs202-topic4-quiz3",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic4",
+    "title": "Forwarding and Branch Prediction",
+    "questions": [
+      {
+        "id": "cs202-t4-q3-1",
+        "type": "multiple_choice",
+        "prompt": "Data forwarding (bypassing) gets values from:",
+        "options": [
+          "The register file only",
+          "Pipeline registers before values reach the register file",
+          "Main memory",
+          "The instruction cache"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Forwarding paths route results from EX/MEM or MEM/WB pipeline registers directly to the ALU inputs."
+      },
+      {
+        "id": "cs202-t4-q3-2",
+        "type": "multiple_choice",
+        "prompt": "Why can't forwarding completely eliminate the load-use hazard?",
+        "options": [
+          "Memory is too slow",
+          "The loaded data isn't available until after MEM, too late for EX",
+          "The register file is unavailable",
+          "Forwarding paths don't exist for loads"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Load data is available after MEM, but the dependent instruction needs it in EX, one cycle earlier."
+      },
+      {
+        "id": "cs202-t4-q3-3",
+        "type": "multiple_choice",
+        "prompt": "A 2-bit branch predictor's key advantage over 1-bit is:",
+        "options": [
+          "Faster prediction",
+          "Tolerates one misprediction in a loop",
+          "Uses less hardware",
+          "Predicts indirect jumps"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A 2-bit predictor requires two mispredictions to change state, avoiding misprediction on both loop entry and exit."
+      },
+      {
+        "id": "cs202-t4-q3-4",
+        "type": "multiple_choice",
+        "prompt": "In a 5-stage pipeline with branches resolved in ID, the branch penalty is:",
+        "options": [
+          "0 cycles",
+          "1 cycle",
+          "2 cycles",
+          "4 cycles"
+        ],
+        "correctAnswer": 1,
+        "explanation": "If the branch is resolved in ID (stage 2), one instruction (in IF) may have been fetched wrongly, giving 1 cycle penalty."
+      },
+      {
+        "id": "cs202-t4-q3-5",
+        "type": "multiple_choice",
+        "prompt": "The branch target buffer (BTB) stores:",
+        "options": [
+          "Branch prediction outcomes only",
+          "Target addresses of recently taken branches",
+          "All instruction addresses",
+          "Register values"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The BTB caches target addresses of branches so the target is known immediately, reducing branch penalty."
+      }
+    ]
+  }
+]

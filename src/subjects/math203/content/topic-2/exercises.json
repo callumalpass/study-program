@@ -1,0 +1,294 @@
+[
+  {
+    "id": "math203-t2-drill-1",
+    "subjectId": "math203",
+    "topicId": "math203-topic-2",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Difference Quotient",
+    "description": "Write the difference quotient $\\frac{f(x+h) - f(x)}{h}$ for $f(x) = x^2$. Simplify but do not take the limit.",
+    "hints": [
+      "Expand (x + h)² and subtract x²."
+    ],
+    "solution": "$\\frac{(x+h)^2 - x^2}{h} = \\frac{x^2 + 2xh + h^2 - x^2}{h} = \\frac{2xh + h^2}{h} = 2x + h$"
+  },
+  {
+    "id": "math203-t2-drill-2",
+    "subjectId": "math203",
+    "topicId": "math203-topic-2",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Derivative from Definition",
+    "description": "Using the limit definition, find $f'(x)$ for $f(x) = 3x$.",
+    "hints": [
+      "The limit definition is f'(x) = lim[h→0] (f(x+h) - f(x))/h."
+    ],
+    "solution": "$f'(x) = \\lim_{h \\to 0} \\frac{3(x+h) - 3x}{h} = \\lim_{h \\to 0} \\frac{3h}{h} = \\lim_{h \\to 0} 3 = 3$"
+  },
+  {
+    "id": "math203-t2-drill-3",
+    "subjectId": "math203",
+    "topicId": "math203-topic-2",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Tangent Line Slope",
+    "description": "If $f(x) = x^2$ and $f'(x) = 2x$, what is the slope of the tangent line at $x = 3$?",
+    "hints": [
+      "Evaluate f'(3)."
+    ],
+    "solution": "The slope is $f'(3) = 2(3) = 6$."
+  },
+  {
+    "id": "math203-t2-drill-4",
+    "subjectId": "math203",
+    "topicId": "math203-topic-2",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Differentiability Check",
+    "description": "Is $f(x) = |x|$ differentiable at $x = 0$? Explain briefly.",
+    "hints": [
+      "Consider the left and right derivatives at x = 0."
+    ],
+    "solution": "No. The left derivative is $\\lim_{h \\to 0^-} \\frac{|h|}{h} = -1$ and the right derivative is $\\lim_{h \\to 0^+} \\frac{|h|}{h} = 1$. Since these are not equal, f is not differentiable at x = 0."
+  },
+  {
+    "id": "math203-t2-ex01",
+    "subjectId": "math203",
+    "topicId": "math203-topic-2",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Derivative from the Definition: Polynomials",
+    "description": "Use the limit definition of the derivative to find $f'(x)$ for each function:\n\n(a) $f(x) = x^3$\n\n(b) $f(x) = 2x^2 - 3x + 1$\n\n(c) $f(x) = x^4$",
+    "hints": [
+      "Use (x+h)³ = x³ + 3x²h + 3xh² + h³.",
+      "For (b), handle each term separately.",
+      "For (c), expand (x+h)⁴ or use the binomial theorem."
+    ],
+    "solution": "(a) $f'(x) = \\lim_{h \\to 0} \\frac{(x+h)^3 - x^3}{h}$\n$= \\lim_{h \\to 0} \\frac{x^3 + 3x^2h + 3xh^2 + h^3 - x^3}{h}$\n$= \\lim_{h \\to 0} \\frac{3x^2h + 3xh^2 + h^3}{h} = \\lim_{h \\to 0} (3x^2 + 3xh + h^2) = 3x^2$\n\n(b) $f'(x) = \\lim_{h \\to 0} \\frac{[2(x+h)^2 - 3(x+h) + 1] - [2x^2 - 3x + 1]}{h}$\n$= \\lim_{h \\to 0} \\frac{2x^2 + 4xh + 2h^2 - 3x - 3h + 1 - 2x^2 + 3x - 1}{h}$\n$= \\lim_{h \\to 0} \\frac{4xh + 2h^2 - 3h}{h} = \\lim_{h \\to 0} (4x + 2h - 3) = 4x - 3$\n\n(c) $f'(x) = \\lim_{h \\to 0} \\frac{(x+h)^4 - x^4}{h}$\nUsing binomial: $(x+h)^4 = x^4 + 4x^3h + 6x^2h^2 + 4xh^3 + h^4$\n$= \\lim_{h \\to 0} \\frac{4x^3h + 6x^2h^2 + 4xh^3 + h^4}{h} = 4x^3$"
+  },
+  {
+    "id": "math203-t2-ex02",
+    "subjectId": "math203",
+    "topicId": "math203-topic-2",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Derivative from the Definition: Radicals",
+    "description": "Use the limit definition to find $f'(x)$ for:\n\n(a) $f(x) = \\sqrt{x}$\n\n(b) $f(x) = \\sqrt{2x + 1}$\n\n(c) $f(x) = \\frac{1}{\\sqrt{x}}$",
+    "hints": [
+      "Rationalize by multiplying by the conjugate.",
+      "For (a): multiply by (√(x+h) + √x) / (√(x+h) + √x).",
+      "For (c), find a common denominator first, then rationalize."
+    ],
+    "solution": "(a) $f'(x) = \\lim_{h \\to 0} \\frac{\\sqrt{x+h} - \\sqrt{x}}{h} \\cdot \\frac{\\sqrt{x+h} + \\sqrt{x}}{\\sqrt{x+h} + \\sqrt{x}}$\n$= \\lim_{h \\to 0} \\frac{(x+h) - x}{h(\\sqrt{x+h} + \\sqrt{x})} = \\lim_{h \\to 0} \\frac{1}{\\sqrt{x+h} + \\sqrt{x}} = \\frac{1}{2\\sqrt{x}}$\n\n(b) $f'(x) = \\lim_{h \\to 0} \\frac{\\sqrt{2(x+h)+1} - \\sqrt{2x+1}}{h} \\cdot \\frac{\\sqrt{2x+2h+1} + \\sqrt{2x+1}}{\\sqrt{2x+2h+1} + \\sqrt{2x+1}}$\n$= \\lim_{h \\to 0} \\frac{2h}{h(\\sqrt{2x+2h+1} + \\sqrt{2x+1})} = \\frac{2}{2\\sqrt{2x+1}} = \\frac{1}{\\sqrt{2x+1}}$\n\n(c) $f'(x) = \\lim_{h \\to 0} \\frac{\\frac{1}{\\sqrt{x+h}} - \\frac{1}{\\sqrt{x}}}{h} = \\lim_{h \\to 0} \\frac{\\sqrt{x} - \\sqrt{x+h}}{h\\sqrt{x}\\sqrt{x+h}}$\nRationalize: $= \\lim_{h \\to 0} \\frac{x - (x+h)}{h\\sqrt{x}\\sqrt{x+h}(\\sqrt{x} + \\sqrt{x+h})}$\n$= \\lim_{h \\to 0} \\frac{-1}{\\sqrt{x}\\sqrt{x+h}(\\sqrt{x} + \\sqrt{x+h})} = \\frac{-1}{x \\cdot 2\\sqrt{x}} = -\\frac{1}{2x^{3/2}}$"
+  },
+  {
+    "id": "math203-t2-ex03",
+    "subjectId": "math203",
+    "topicId": "math203-topic-2",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Derivative from the Definition: Rational Functions",
+    "description": "Use the limit definition to find $f'(x)$ for:\n\n(a) $f(x) = \\frac{1}{x}$\n\n(b) $f(x) = \\frac{1}{x^2}$\n\n(c) $f(x) = \\frac{x}{x+1}$",
+    "hints": [
+      "Get a common denominator in the numerator.",
+      "Factor and simplify before taking the limit.",
+      "For (c), be careful with the algebra."
+    ],
+    "solution": "(a) $f'(x) = \\lim_{h \\to 0} \\frac{\\frac{1}{x+h} - \\frac{1}{x}}{h} = \\lim_{h \\to 0} \\frac{x - (x+h)}{h \\cdot x(x+h)}$\n$= \\lim_{h \\to 0} \\frac{-h}{hx(x+h)} = \\lim_{h \\to 0} \\frac{-1}{x(x+h)} = -\\frac{1}{x^2}$\n\n(b) $f'(x) = \\lim_{h \\to 0} \\frac{\\frac{1}{(x+h)^2} - \\frac{1}{x^2}}{h} = \\lim_{h \\to 0} \\frac{x^2 - (x+h)^2}{h \\cdot x^2(x+h)^2}$\n$= \\lim_{h \\to 0} \\frac{x^2 - x^2 - 2xh - h^2}{hx^2(x+h)^2} = \\lim_{h \\to 0} \\frac{-2xh - h^2}{hx^2(x+h)^2}$\n$= \\lim_{h \\to 0} \\frac{-2x - h}{x^2(x+h)^2} = \\frac{-2x}{x^4} = -\\frac{2}{x^3}$\n\n(c) $f'(x) = \\lim_{h \\to 0} \\frac{\\frac{x+h}{x+h+1} - \\frac{x}{x+1}}{h}$\n$= \\lim_{h \\to 0} \\frac{(x+h)(x+1) - x(x+h+1)}{h(x+1)(x+h+1)}$\n$= \\lim_{h \\to 0} \\frac{x^2 + x + hx + h - x^2 - xh - x}{h(x+1)(x+h+1)} = \\lim_{h \\to 0} \\frac{h}{h(x+1)(x+h+1)}$\n$= \\frac{1}{(x+1)^2}$"
+  },
+  {
+    "id": "math203-t2-ex04",
+    "subjectId": "math203",
+    "topicId": "math203-topic-2",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Tangent Line Equations",
+    "description": "Find the equation of the tangent line to each curve at the given point:\n\n(a) $f(x) = x^2 - 3x$ at $x = 2$\n\n(b) $f(x) = \\sqrt{x}$ at $x = 4$\n\n(c) $f(x) = \\frac{1}{x}$ at $x = 2$",
+    "hints": [
+      "The tangent line has slope f'(a) and passes through (a, f(a)).",
+      "Equation: y - f(a) = f'(a)(x - a).",
+      "You may use the derivatives computed in previous exercises."
+    ],
+    "solution": "(a) $f(2) = 4 - 6 = -2$\n$f'(x) = 2x - 3$, so $f'(2) = 4 - 3 = 1$\nTangent line: $y - (-2) = 1(x - 2)$\n$\\boxed{y = x - 4}$\n\n(b) $f(4) = 2$\n$f'(x) = \\frac{1}{2\\sqrt{x}}$, so $f'(4) = \\frac{1}{4}$\nTangent line: $y - 2 = \\frac{1}{4}(x - 4)$\n$\\boxed{y = \\frac{1}{4}x + 1}$\n\n(c) $f(2) = \\frac{1}{2}$\n$f'(x) = -\\frac{1}{x^2}$, so $f'(2) = -\\frac{1}{4}$\nTangent line: $y - \\frac{1}{2} = -\\frac{1}{4}(x - 2)$\n$\\boxed{y = -\\frac{1}{4}x + 1}$"
+  },
+  {
+    "id": "math203-t2-ex05",
+    "subjectId": "math203",
+    "topicId": "math203-topic-2",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Derivative at a Point",
+    "description": "Use the alternative definition $f'(a) = \\lim_{x \\to a} \\frac{f(x) - f(a)}{x - a}$ to find:\n\n(a) $f'(1)$ where $f(x) = x^3$\n\n(b) $f'(4)$ where $f(x) = \\sqrt{x}$\n\n(c) $f'(2)$ where $f(x) = \\frac{1}{x}$",
+    "hints": [
+      "This form is useful when you know the specific point.",
+      "Factor to cancel (x - a) from the denominator.",
+      "For (a), use x³ - 1 = (x-1)(x² + x + 1)."
+    ],
+    "solution": "(a) $f'(1) = \\lim_{x \\to 1} \\frac{x^3 - 1}{x - 1} = \\lim_{x \\to 1} \\frac{(x-1)(x^2 + x + 1)}{x - 1}$\n$= \\lim_{x \\to 1} (x^2 + x + 1) = 1 + 1 + 1 = 3$\n\n(b) $f'(4) = \\lim_{x \\to 4} \\frac{\\sqrt{x} - 2}{x - 4}$\nRationalize: $= \\lim_{x \\to 4} \\frac{(\\sqrt{x} - 2)(\\sqrt{x} + 2)}{(x - 4)(\\sqrt{x} + 2)} = \\lim_{x \\to 4} \\frac{x - 4}{(x - 4)(\\sqrt{x} + 2)}$\n$= \\lim_{x \\to 4} \\frac{1}{\\sqrt{x} + 2} = \\frac{1}{4}$\n\n(c) $f'(2) = \\lim_{x \\to 2} \\frac{\\frac{1}{x} - \\frac{1}{2}}{x - 2} = \\lim_{x \\to 2} \\frac{2 - x}{2x(x - 2)}$\n$= \\lim_{x \\to 2} \\frac{-(x - 2)}{2x(x - 2)} = \\lim_{x \\to 2} \\frac{-1}{2x} = -\\frac{1}{4}$"
+  },
+  {
+    "id": "math203-t2-ex06",
+    "subjectId": "math203",
+    "topicId": "math203-topic-2",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Velocity and Rate of Change",
+    "description": "A ball is thrown upward with initial velocity 64 ft/sec from a height of 80 ft. Its height at time $t$ is $s(t) = -16t^2 + 64t + 80$ feet.\n\n(a) Find the velocity function $v(t) = s'(t)$ using the limit definition.\n(b) What is the velocity at $t = 1$ second?\n(c) When is the ball at its highest point?\n(d) What is the maximum height?",
+    "hints": [
+      "Velocity is the derivative of position.",
+      "The ball is at its highest when velocity is zero.",
+      "Be careful expanding (t + h)²."
+    ],
+    "solution": "(a) $v(t) = s'(t) = \\lim_{h \\to 0} \\frac{s(t+h) - s(t)}{h}$\n$s(t+h) = -16(t+h)^2 + 64(t+h) + 80 = -16t^2 - 32th - 16h^2 + 64t + 64h + 80$\n$s(t+h) - s(t) = -32th - 16h^2 + 64h$\n$\\frac{s(t+h) - s(t)}{h} = -32t - 16h + 64$\n$v(t) = \\lim_{h \\to 0} (-32t - 16h + 64) = \\boxed{-32t + 64}$ ft/sec\n\n(b) $v(1) = -32(1) + 64 = 32$ ft/sec (still going up)\n\n(c) Highest point when $v(t) = 0$:\n$-32t + 64 = 0 \\Rightarrow t = 2$ seconds\n\n(d) Maximum height: $s(2) = -16(4) + 64(2) + 80 = -64 + 128 + 80 = 144$ feet"
+  },
+  {
+    "id": "math203-t2-ex07",
+    "subjectId": "math203",
+    "topicId": "math203-topic-2",
+    "type": "written",
+    "difficulty": 3,
+    "title": "One-Sided Derivatives",
+    "description": "For the function $f(x) = |x - 1|$:\n\n(a) Find the left derivative at $x = 1$: $f'_-(1)$\n(b) Find the right derivative at $x = 1$: $f'_+(1)$\n(c) Is $f$ differentiable at $x = 1$?\n(d) Is $f$ continuous at $x = 1$?",
+    "hints": [
+      "For x < 1: |x - 1| = -(x - 1) = 1 - x.",
+      "For x > 1: |x - 1| = x - 1.",
+      "Differentiable requires equal one-sided derivatives."
+    ],
+    "solution": "(a) For $x < 1$: $f(x) = 1 - x$\n$f'_-(1) = \\lim_{h \\to 0^-} \\frac{f(1+h) - f(1)}{h} = \\lim_{h \\to 0^-} \\frac{(1 - (1+h)) - 0}{h}$\n$= \\lim_{h \\to 0^-} \\frac{-h}{h} = -1$\n\n(b) For $x > 1$: $f(x) = x - 1$\n$f'_+(1) = \\lim_{h \\to 0^+} \\frac{f(1+h) - f(1)}{h} = \\lim_{h \\to 0^+} \\frac{((1+h) - 1) - 0}{h}$\n$= \\lim_{h \\to 0^+} \\frac{h}{h} = 1$\n\n(c) No, f is not differentiable at x = 1 because $f'_-(1) = -1 \\neq 1 = f'_+(1)$.\nThere is a corner at x = 1.\n\n(d) Yes, f is continuous at x = 1:\n- $f(1) = |1 - 1| = 0$ ✓\n- $\\lim_{x \\to 1} |x - 1| = 0$ ✓\n- Limit equals function value ✓"
+  },
+  {
+    "id": "math203-t2-ex08",
+    "subjectId": "math203",
+    "topicId": "math203-topic-2",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Piecewise Functions and Differentiability",
+    "description": "For the function:\n$$f(x) = \\begin{cases} x^2 & \\text{if } x \\leq 1 \\\\ ax + b & \\text{if } x > 1 \\end{cases}$$\n\nFind values of $a$ and $b$ such that $f$ is differentiable everywhere.",
+    "hints": [
+      "Differentiability at x = 1 requires continuity at x = 1.",
+      "Also requires equal one-sided derivatives at x = 1.",
+      "Set up a system of equations."
+    ],
+    "solution": "For differentiability at x = 1, we need:\n\n**Continuity:** $\\lim_{x \\to 1^-} f(x) = \\lim_{x \\to 1^+} f(x) = f(1)$\n$1^2 = a(1) + b$\n$a + b = 1$ ... (1)\n\n**Equal derivatives:**\nLeft derivative: $f'_-(1) = \\lim_{h \\to 0^-} \\frac{(1+h)^2 - 1}{h} = \\lim_{h \\to 0^-} \\frac{2h + h^2}{h} = 2$\nRight derivative: $f'_+(1) = \\lim_{h \\to 0^+} \\frac{a(1+h) + b - (a + b)}{h} = a$\nSo $a = 2$ ... (2)\n\nFrom (1): $2 + b = 1 \\Rightarrow b = -1$\n\n**Answer:** $a = 2$, $b = -1$\n\nVerification: $f(x) = \\begin{cases} x^2 & x \\leq 1 \\\\ 2x - 1 & x > 1 \\end{cases}$\nAt x = 1: both pieces give value 1, both derivatives give 2. ✓"
+  },
+  {
+    "id": "math203-t2-ex09",
+    "subjectId": "math203",
+    "topicId": "math203-topic-2",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Linear Approximation",
+    "description": "Use linear approximation (tangent line) to estimate:\n\n(a) $\\sqrt{4.1}$ using $f(x) = \\sqrt{x}$ near $x = 4$\n\n(b) $(2.01)^3$ using $f(x) = x^3$ near $x = 2$\n\n(c) $\\frac{1}{1.02}$ using $f(x) = \\frac{1}{x}$ near $x = 1$",
+    "hints": [
+      "Linear approximation: f(a + Δx) ≈ f(a) + f'(a)·Δx.",
+      "Choose a nearby point where you know the exact value.",
+      "Compare your estimates to calculator values."
+    ],
+    "solution": "(a) $f(x) = \\sqrt{x}$, $a = 4$, $\\Delta x = 0.1$\n$f(4) = 2$, $f'(x) = \\frac{1}{2\\sqrt{x}}$, $f'(4) = \\frac{1}{4}$\n$\\sqrt{4.1} \\approx 2 + \\frac{1}{4}(0.1) = 2.025$\n(Actual: 2.0248...)\n\n(b) $f(x) = x^3$, $a = 2$, $\\Delta x = 0.01$\n$f(2) = 8$, $f'(x) = 3x^2$, $f'(2) = 12$\n$(2.01)^3 \\approx 8 + 12(0.01) = 8.12$\n(Actual: 8.120601...)\n\n(c) $f(x) = \\frac{1}{x}$, $a = 1$, $\\Delta x = 0.02$\n$f(1) = 1$, $f'(x) = -\\frac{1}{x^2}$, $f'(1) = -1$\n$\\frac{1}{1.02} \\approx 1 + (-1)(0.02) = 0.98$\n(Actual: 0.9804...)"
+  },
+  {
+    "id": "math203-t2-ex10",
+    "subjectId": "math203",
+    "topicId": "math203-topic-2",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Higher Derivatives from Definition",
+    "description": "For $f(x) = x^3$:\n\n(a) Find $f'(x)$ using the limit definition.\n(b) Find $f''(x)$ using the limit definition (derivative of $f'$).\n(c) Find $f'''(x)$ using the limit definition.\n(d) What is $f^{(4)}(x)$?",
+    "hints": [
+      "Apply the limit definition to each derivative in turn.",
+      "Each derivative is simpler than the previous.",
+      "Look for a pattern."
+    ],
+    "solution": "(a) $f'(x) = \\lim_{h \\to 0} \\frac{(x+h)^3 - x^3}{h} = \\lim_{h \\to 0} \\frac{3x^2h + 3xh^2 + h^3}{h}$\n$= \\lim_{h \\to 0} (3x^2 + 3xh + h^2) = 3x^2$\n\n(b) $f''(x) = \\lim_{h \\to 0} \\frac{3(x+h)^2 - 3x^2}{h} = \\lim_{h \\to 0} \\frac{3(x^2 + 2xh + h^2) - 3x^2}{h}$\n$= \\lim_{h \\to 0} \\frac{6xh + 3h^2}{h} = \\lim_{h \\to 0} (6x + 3h) = 6x$\n\n(c) $f'''(x) = \\lim_{h \\to 0} \\frac{6(x+h) - 6x}{h} = \\lim_{h \\to 0} \\frac{6h}{h} = 6$\n\n(d) $f^{(4)}(x) = \\lim_{h \\to 0} \\frac{6 - 6}{h} = 0$\n\nPattern: For $f(x) = x^n$, the $n$th derivative is $n!$ and all higher derivatives are 0."
+  },
+  {
+    "id": "math203-t2-ex11",
+    "subjectId": "math203",
+    "topicId": "math203-topic-2",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Differentiability and Continuity",
+    "description": "Prove or disprove:\n\n(a) If $f$ is differentiable at $a$, then $f$ is continuous at $a$.\n\n(b) If $f$ is continuous at $a$, then $f$ is differentiable at $a$.\n\n(c) If $f$ and $g$ are both not differentiable at $a$, then $f + g$ is not differentiable at $a$.",
+    "hints": [
+      "For (a), write f(x) - f(a) in terms of the difference quotient.",
+      "For (b) and (c), find counterexamples.",
+      "Consider functions like |x|."
+    ],
+    "solution": "(a) **TRUE.** Proof:\nIf f is differentiable at a, then $\\lim_{x \\to a} \\frac{f(x) - f(a)}{x - a} = f'(a)$ exists.\n$\\lim_{x \\to a} [f(x) - f(a)] = \\lim_{x \\to a} \\frac{f(x) - f(a)}{x - a} \\cdot (x - a) = f'(a) \\cdot 0 = 0$\nTherefore $\\lim_{x \\to a} f(x) = f(a)$, so f is continuous at a. ✓\n\n(b) **FALSE.** Counterexample: $f(x) = |x|$ at $a = 0$.\nf is continuous at 0 (lim|x| = 0 = f(0)), but not differentiable (left and right derivatives differ).\n\n(c) **FALSE.** Counterexample: At $a = 0$,\n$f(x) = |x|$ (not differentiable at 0)\n$g(x) = -|x|$ (not differentiable at 0)\n$(f + g)(x) = |x| + (-|x|) = 0$ (constant, differentiable everywhere)"
+  },
+  {
+    "id": "math203-t2-ex12",
+    "subjectId": "math203",
+    "topicId": "math203-topic-2",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Derivative of sin(x) from Definition",
+    "description": "Use the limit definition to prove that $\\frac{d}{dx}[\\sin x] = \\cos x$.\n\nYou may use:\n- $\\sin(A + B) = \\sin A \\cos B + \\cos A \\sin B$\n- $\\lim_{h \\to 0} \\frac{\\sin h}{h} = 1$\n- $\\lim_{h \\to 0} \\frac{1 - \\cos h}{h} = 0$",
+    "hints": [
+      "Apply the angle sum formula to sin(x + h).",
+      "Separate into terms involving (sin h)/h and (1 - cos h)/h.",
+      "Use the given limits."
+    ],
+    "solution": "$\\frac{d}{dx}[\\sin x] = \\lim_{h \\to 0} \\frac{\\sin(x+h) - \\sin x}{h}$\n\nUsing the angle sum formula:\n$\\sin(x+h) = \\sin x \\cos h + \\cos x \\sin h$\n\n$= \\lim_{h \\to 0} \\frac{\\sin x \\cos h + \\cos x \\sin h - \\sin x}{h}$\n\n$= \\lim_{h \\to 0} \\frac{\\sin x (\\cos h - 1) + \\cos x \\sin h}{h}$\n\n$= \\lim_{h \\to 0} \\left[\\sin x \\cdot \\frac{\\cos h - 1}{h} + \\cos x \\cdot \\frac{\\sin h}{h}\\right]$\n\n$= \\sin x \\cdot \\lim_{h \\to 0} \\frac{-(1 - \\cos h)}{h} + \\cos x \\cdot \\lim_{h \\to 0} \\frac{\\sin h}{h}$\n\n$= \\sin x \\cdot (-0) + \\cos x \\cdot 1$\n\n$= \\cos x$ ∎"
+  },
+  {
+    "id": "math203-t2-ex13",
+    "subjectId": "math203",
+    "topicId": "math203-topic-2",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Derivative of Exponential from Definition",
+    "description": "Use the limit definition to show that $\\frac{d}{dx}[e^x] = e^x$.\n\nYou may use the fact that $\\lim_{h \\to 0} \\frac{e^h - 1}{h} = 1$.",
+    "hints": [
+      "Use the property e^(x+h) = e^x · e^h.",
+      "Factor out e^x from the difference quotient.",
+      "Apply the given limit."
+    ],
+    "solution": "$\\frac{d}{dx}[e^x] = \\lim_{h \\to 0} \\frac{e^{x+h} - e^x}{h}$\n\nUsing $e^{x+h} = e^x \\cdot e^h$:\n\n$= \\lim_{h \\to 0} \\frac{e^x \\cdot e^h - e^x}{h}$\n\n$= \\lim_{h \\to 0} \\frac{e^x(e^h - 1)}{h}$\n\n$= e^x \\cdot \\lim_{h \\to 0} \\frac{e^h - 1}{h}$\n\n$= e^x \\cdot 1$\n\n$= e^x$ ∎\n\nNote: This proves the remarkable property that $e^x$ is its own derivative!"
+  },
+  {
+    "id": "math203-t2-ex14",
+    "subjectId": "math203",
+    "topicId": "math203-topic-2",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Points of Non-Differentiability",
+    "description": "For each function, find all points where the function is not differentiable and explain why:\n\n(a) $f(x) = |x^2 - 4|$\n\n(b) $g(x) = x^{1/3}$\n\n(c) $h(x) = \\begin{cases} \\sin x & x < 0 \\\\ x & x \\geq 0 \\end{cases}$",
+    "hints": [
+      "Look for corners, cusps, vertical tangents, and discontinuities.",
+      "For (a), where does x² - 4 change sign?",
+      "For (b), check the derivative at x = 0."
+    ],
+    "solution": "(a) $|x^2 - 4| = |x-2||x+2|$\nChanges sign at x = -2 and x = 2.\nNot differentiable at $x = -2$ and $x = 2$ (corners where the inside changes sign).\n\n(b) $g(x) = x^{1/3}$\n$g'(x) = \\frac{1}{3}x^{-2/3} = \\frac{1}{3x^{2/3}}$\nAs $x \\to 0$: $g'(x) \\to \\infty$\nNot differentiable at $x = 0$ (vertical tangent/cusp).\n\n(c) Check at x = 0:\nLeft derivative: $\\lim_{h \\to 0^-} \\frac{\\sin h - 0}{h} = 1$ (using standard limit)\nRight derivative: $\\lim_{h \\to 0^+} \\frac{h - 0}{h} = 1$\nBoth equal 1, so h IS differentiable at x = 0!\nAlso need to check continuity: $\\lim_{x \\to 0} \\sin x = 0 = h(0)$ ✓\n**h is differentiable everywhere.**"
+  },
+  {
+    "id": "math203-t2-ex15",
+    "subjectId": "math203",
+    "topicId": "math203-topic-2",
+    "type": "written",
+    "difficulty": 4,
+    "title": "General Power Rule from Definition",
+    "description": "Use the limit definition to prove that for any positive integer $n$:\n$$\\frac{d}{dx}[x^n] = nx^{n-1}$$\n\nYou may use the factorization:\n$$a^n - b^n = (a-b)(a^{n-1} + a^{n-2}b + a^{n-3}b^2 + \\cdots + b^{n-1})$$",
+    "hints": [
+      "Use the alternative form f'(a) = lim[x→a] (f(x) - f(a))/(x - a).",
+      "Apply the given factorization with a = x and b = a.",
+      "Count the number of terms in the second factor."
+    ],
+    "solution": "Let $f(x) = x^n$. Using the alternative definition:\n\n$f'(a) = \\lim_{x \\to a} \\frac{x^n - a^n}{x - a}$\n\nApply the factorization $x^n - a^n = (x-a)(x^{n-1} + x^{n-2}a + x^{n-3}a^2 + \\cdots + a^{n-1})$:\n\n$f'(a) = \\lim_{x \\to a} \\frac{(x-a)(x^{n-1} + x^{n-2}a + \\cdots + xa^{n-2} + a^{n-1})}{x - a}$\n\n$= \\lim_{x \\to a} (x^{n-1} + x^{n-2}a + \\cdots + xa^{n-2} + a^{n-1})$\n\nAs $x \\to a$, each term becomes $a^{n-1}$:\n\n$= a^{n-1} + a^{n-1} + \\cdots + a^{n-1}$ (n terms)\n\n$= n \\cdot a^{n-1}$\n\nSince this holds for any $a$, we have $\\frac{d}{dx}[x^n] = nx^{n-1}$. ∎"
+  },
+  {
+    "id": "math203-t2-ex16",
+    "subjectId": "math203",
+    "topicId": "math203-topic-2",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Normal Lines",
+    "description": "The normal line to a curve at a point is perpendicular to the tangent line at that point.\n\nFind the equation of the normal line to:\n\n(a) $f(x) = x^2$ at $x = 2$\n\n(b) $f(x) = \\sqrt{x}$ at $x = 1$\n\n(c) $f(x) = \\frac{1}{x}$ at $x = 1$",
+    "hints": [
+      "If the tangent has slope m, the normal has slope -1/m.",
+      "First find the tangent slope using f'(a).",
+      "Use point-slope form for the normal line."
+    ],
+    "solution": "(a) $f(2) = 4$, $f'(x) = 2x$, $f'(2) = 4$\nTangent slope = 4, Normal slope = $-\\frac{1}{4}$\nNormal line: $y - 4 = -\\frac{1}{4}(x - 2)$\n$\\boxed{y = -\\frac{1}{4}x + \\frac{9}{2}}$\n\n(b) $f(1) = 1$, $f'(x) = \\frac{1}{2\\sqrt{x}}$, $f'(1) = \\frac{1}{2}$\nTangent slope = $\\frac{1}{2}$, Normal slope = $-2$\nNormal line: $y - 1 = -2(x - 1)$\n$\\boxed{y = -2x + 3}$\n\n(c) $f(1) = 1$, $f'(x) = -\\frac{1}{x^2}$, $f'(1) = -1$\nTangent slope = $-1$, Normal slope = $1$\nNormal line: $y - 1 = 1(x - 1)$\n$\\boxed{y = x}$"
+  }
+]

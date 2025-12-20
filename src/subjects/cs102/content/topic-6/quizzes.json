@@ -1,0 +1,191 @@
+[
+  {
+    "id": "cs102-quiz-6",
+    "subjectId": "cs102",
+    "topicId": "cs102-6",
+    "title": "Assembly Basics Quiz",
+    "questions": [
+      {
+        "id": "cs102-q6-1",
+        "type": "multiple_choice",
+        "prompt": "In \"MOV AX, 5\", \"MOV\" is the:",
+        "options": [
+          "Operand",
+          "Opcode",
+          "Label",
+          "Comment"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Opcode (Operation Code)."
+      },
+      {
+        "id": "cs102-q6-2",
+        "type": "multiple_choice",
+        "prompt": "Which instruction adds values?",
+        "options": [
+          "MOV",
+          "JMP",
+          "ADD",
+          "CMP"
+        ],
+        "correctAnswer": 2,
+        "explanation": "ADD is for addition."
+      },
+      {
+        "id": "cs102-q6-3",
+        "type": "true_false",
+        "prompt": "Assembly language is portable across different CPU architectures.",
+        "correctAnswer": false,
+        "explanation": "It is specific to the ISA (e.g., x86 assembly doesn't work on ARM)."
+      },
+      {
+        "id": "cs102-q6-4",
+        "type": "multiple_choice",
+        "prompt": "JMP represents a:",
+        "options": [
+          "Conditional Jump",
+          "Unconditional Jump",
+          "Function Call",
+          "Stop"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Jump always."
+      },
+      {
+        "id": "cs102-q6-5",
+        "type": "fill_blank",
+        "prompt": "The \";\" character in assembly usually starts a ______.",
+        "correctAnswer": "Comment",
+        "explanation": "Comments."
+      }
+    ]
+  },
+  {
+    "id": "cs102-quiz-6-b",
+    "subjectId": "cs102",
+    "topicId": "cs102-6",
+    "title": "Assembly Application Quiz",
+    "questions": [
+      {
+        "id": "cs102-q6-b-1",
+        "type": "multiple_choice",
+        "prompt": "CMP A, B followed by JE Label means:",
+        "options": [
+          "Jump if A > B",
+          "Jump if A < B",
+          "Jump if A = B",
+          "Jump always"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Jump if Equal."
+      },
+      {
+        "id": "cs102-q6-b-2",
+        "type": "multiple_choice",
+        "prompt": "Stack operates on LIFO principle. LIFO means:",
+        "options": [
+          "Last In First Out",
+          "Low Interest First Option",
+          "Last Int First Op",
+          "Linear Input"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Last In First Out."
+      },
+      {
+        "id": "cs102-q6-b-3",
+        "type": "true_false",
+        "prompt": "PUSH adds an item to the stack.",
+        "correctAnswer": true,
+        "explanation": "True."
+      },
+      {
+        "id": "cs102-q6-b-4",
+        "type": "multiple_choice",
+        "prompt": "Addressing mode for \"MOV AX, [1000]\"?",
+        "options": [
+          "Immediate",
+          "Register",
+          "Direct",
+          "Indirect"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Accessing memory at a constant address."
+      },
+      {
+        "id": "cs102-q6-b-5",
+        "type": "multiple_choice",
+        "prompt": "If AX=5, \"SUB AX, 5\" sets the Zero Flag to:",
+        "options": [
+          "0",
+          "1",
+          "Undefined",
+          "No change"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Result is 0, so Zero Flag becomes 1 (True)."
+      }
+    ]
+  },
+  {
+    "id": "cs102-quiz-6-c",
+    "subjectId": "cs102",
+    "topicId": "cs102-6",
+    "title": "Assembly Advanced Quiz",
+    "questions": [
+      {
+        "id": "cs102-q6-c-1",
+        "type": "multiple_choice",
+        "prompt": "CALL instruction typically does what extra step compared to JMP?",
+        "options": [
+          "Clears registers",
+          "Pushes return address to stack",
+          "Halts CPU",
+          "None"
+        ],
+        "correctAnswer": 1,
+        "explanation": "So RET can return to the correct location."
+      },
+      {
+        "id": "cs102-q6-c-2",
+        "type": "multiple_choice",
+        "prompt": "The Stack Pointer (SP) usually grows:",
+        "options": [
+          "Upwards (higher addresses)",
+          "Downwards (lower addresses)",
+          "Randomly",
+          "It doesn't move"
+        ],
+        "correctAnswer": 1,
+        "explanation": "In most architectures (like x86), stack grows down."
+      },
+      {
+        "id": "cs102-q6-c-3",
+        "type": "true_false",
+        "prompt": "Indirect addressing \"MOV AX, [BX]\" is useful for arrays.",
+        "correctAnswer": true,
+        "explanation": "You can increment BX to traverse the array."
+      },
+      {
+        "id": "cs102-q6-c-4",
+        "type": "multiple_choice",
+        "prompt": "Which flag is set if a signed arithmetic result is too large?",
+        "options": [
+          "Carry Flag",
+          "Zero Flag",
+          "Overflow Flag",
+          "Parity Flag"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Overflow flag (OF)."
+      },
+      {
+        "id": "cs102-q6-c-5",
+        "type": "fill_blank",
+        "prompt": "NOP stands for No ______.",
+        "correctAnswer": "Operation",
+        "explanation": "No Operation. Used for padding or timing."
+      }
+    ]
+  }
+]

@@ -1,0 +1,221 @@
+[
+  {
+    "id": "cs303-t5-quiz-1",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-5",
+    "title": "Interpreter Basics",
+    "questions": [
+      {
+        "id": "cs303-t5-q1-1",
+        "type": "multiple_choice",
+        "prompt": "What is the main difference between an interpreter and a compiler?",
+        "options": [
+          "Speed",
+          "An interpreter executes code directly; a compiler translates to another language",
+          "Memory usage",
+          "Language support"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Interpreters execute source code directly, while compilers translate to another language (often machine code)."
+      },
+      {
+        "id": "cs303-t5-q1-2",
+        "type": "multiple_choice",
+        "prompt": "What is an Abstract Syntax Tree (AST)?",
+        "options": [
+          "A tree in abstract art",
+          "A tree structure representing the syntactic structure of code",
+          "A database tree",
+          "A file system tree"
+        ],
+        "correctAnswer": 1,
+        "explanation": "An AST represents the hierarchical syntactic structure of source code, abstracting away parsing details."
+      },
+      {
+        "id": "cs303-t5-q1-3",
+        "type": "multiple_choice",
+        "prompt": "What is lexical scoping?",
+        "options": [
+          "Scoping for words",
+          "Variable scope determined by program text structure",
+          "Dictionary-based scoping",
+          "Runtime scoping"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Lexical (static) scoping determines variable binding based on where variables are defined in the source code."
+      },
+      {
+        "id": "cs303-t5-q1-4",
+        "type": "multiple_choice",
+        "prompt": "What is dynamic scoping?",
+        "options": [
+          "Scoping that changes",
+          "Variable scope determined by the runtime call stack",
+          "Fast scoping",
+          "Type-based scoping"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Dynamic scoping looks up variables based on the runtime calling context, not lexical structure."
+      },
+      {
+        "id": "cs303-t5-q1-5",
+        "type": "multiple_choice",
+        "prompt": "What is an environment in an interpreter?",
+        "options": [
+          "The operating system",
+          "A mapping from variable names to values",
+          "Hardware settings",
+          "External libraries"
+        ],
+        "correctAnswer": 1,
+        "explanation": "An environment is a data structure mapping identifiers to their bound values during evaluation."
+      }
+    ]
+  },
+  {
+    "id": "cs303-t5-quiz-2",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-5",
+    "title": "Evaluation Strategies",
+    "questions": [
+      {
+        "id": "cs303-t5-q2-1",
+        "type": "multiple_choice",
+        "prompt": "What is call-by-value evaluation?",
+        "options": [
+          "Calling by phone",
+          "Arguments are evaluated before being passed to functions",
+          "Passing values directly",
+          "Value-based programming"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Call-by-value evaluates arguments before the function call, passing the resulting values."
+      },
+      {
+        "id": "cs303-t5-q2-2",
+        "type": "multiple_choice",
+        "prompt": "What is call-by-reference?",
+        "options": [
+          "Using references",
+          "Arguments share memory location with parameters",
+          "Referencing documentation",
+          "Calling by name"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Call-by-reference passes a reference to the argument, so modifications affect the original."
+      },
+      {
+        "id": "cs303-t5-q2-3",
+        "type": "multiple_choice",
+        "prompt": "What is call-by-name?",
+        "options": [
+          "Using string names",
+          "Arguments are substituted unevaluated, evaluated when used",
+          "Named parameters",
+          "Nominal typing"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Call-by-name substitutes unevaluated argument expressions, evaluating them each time they're used."
+      },
+      {
+        "id": "cs303-t5-q2-4",
+        "type": "multiple_choice",
+        "prompt": "What is call-by-need?",
+        "options": [
+          "On-demand calling",
+          "Like call-by-name but caches results after first evaluation",
+          "Need-based allocation",
+          "Lazy calling"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Call-by-need (lazy evaluation) is call-by-name with memoization: evaluate once, cache the result."
+      },
+      {
+        "id": "cs303-t5-q2-5",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of a closure?",
+        "options": [
+          "Closing files",
+          "Capturing the environment where a function is defined",
+          "Ending programs",
+          "Closing connections"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A closure packages a function with its defining environment, enabling access to captured variables."
+      }
+    ]
+  },
+  {
+    "id": "cs303-t5-quiz-3",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-5",
+    "title": "Advanced Interpreters",
+    "questions": [
+      {
+        "id": "cs303-t5-q3-1",
+        "type": "multiple_choice",
+        "prompt": "What is a continuation?",
+        "options": [
+          "A sequel",
+          "A representation of the rest of the computation",
+          "A continuation statement",
+          "A loop construct"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A continuation represents \"what to do next\" - the remaining computation after the current expression."
+      },
+      {
+        "id": "cs303-t5-q3-2",
+        "type": "multiple_choice",
+        "prompt": "What is CPS (Continuation-Passing Style)?",
+        "options": [
+          "A coding standard",
+          "A style where functions receive an explicit continuation argument",
+          "Continuous processing system",
+          "A design pattern"
+        ],
+        "correctAnswer": 1,
+        "explanation": "CPS transforms functions to explicitly pass continuations, making control flow explicit."
+      },
+      {
+        "id": "cs303-t5-q3-3",
+        "type": "multiple_choice",
+        "prompt": "What is a metacircular evaluator?",
+        "options": [
+          "A circular dependency",
+          "An interpreter for a language written in that same language",
+          "A looping evaluator",
+          "Recursive evaluation"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A metacircular evaluator interprets a language using that same language, revealing its semantic essence."
+      },
+      {
+        "id": "cs303-t5-q3-4",
+        "type": "multiple_choice",
+        "prompt": "What does defunctionalization do?",
+        "options": [
+          "Removes functions",
+          "Converts higher-order programs to first-order by representing functions as data",
+          "Debugging functions",
+          "Function optimization"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Defunctionalization transforms higher-order functions into first-order code using data structures."
+      },
+      {
+        "id": "cs303-t5-q3-5",
+        "type": "multiple_choice",
+        "prompt": "What is the eval/apply cycle?",
+        "options": [
+          "A testing cycle",
+          "The fundamental interpreter loop: evaluate expressions, apply functions",
+          "An IDE feature",
+          "A compilation phase"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Eval/apply is the core interpreter structure: eval evaluates expressions, apply applies functions to arguments."
+      }
+    ]
+  }
+]

@@ -1,0 +1,213 @@
+[
+  {
+    "id": "math401-quiz-4-1",
+    "subjectId": "math401",
+    "topicId": "math401-topic-4",
+    "title": "Cauchy's Integral Formula",
+    "questions": [
+      {
+        "id": "math401-q31",
+        "type": "multiple_choice",
+        "prompt": "Cauchy's integral formula: if f is analytic inside and on γ, what is (1/2πi)∫_γ f(z)/(z-a) dz?",
+        "options": [
+          "f(a)",
+          "f'(a)",
+          "0",
+          "2πif(a)"
+        ],
+        "correctAnswer": "f(a)",
+        "explanation": "Cauchy's integral formula: f(a) = (1/2πi)∫_γ f(z)/(z-a) dz for a inside γ"
+      },
+      {
+        "id": "math401-q32",
+        "type": "multiple_choice",
+        "prompt": "What is f'(a) using Cauchy's formula for derivatives?",
+        "options": [
+          "(1/2πi)∫_γ f(z)/(z-a) dz",
+          "(1/2πi)∫_γ f(z)/(z-a)² dz",
+          "(2/2πi)∫_γ f(z)/(z-a)² dz",
+          "∫_γ f(z)/(z-a) dz"
+        ],
+        "correctAnswer": "(1/2πi)∫_γ f(z)/(z-a)² dz",
+        "explanation": "f'(a) = (1/2πi)∫_γ f(z)/(z-a)² dz by Cauchy's formula for the first derivative"
+      },
+      {
+        "id": "math401-q33",
+        "type": "true_false",
+        "prompt": "Liouville's theorem: every bounded entire function is constant.",
+        "options": [
+          "True",
+          "False"
+        ],
+        "correctAnswer": "True",
+        "explanation": "If f is entire and |f| ≤ M for all z, then f is constant. This is Liouville's theorem"
+      },
+      {
+        "id": "math401-q34",
+        "type": "multiple_choice",
+        "prompt": "Which theorem states that a non-constant analytic function on a domain cannot have a local maximum of |f|?",
+        "options": [
+          "Fundamental theorem",
+          "Maximum modulus principle",
+          "Liouville's theorem",
+          "Cauchy's theorem"
+        ],
+        "correctAnswer": "Maximum modulus principle",
+        "explanation": "The maximum modulus principle: |f| attains maximum on the boundary, not in the interior"
+      },
+      {
+        "id": "math401-q35",
+        "type": "multiple_choice",
+        "prompt": "How many times differentiable is an analytic function?",
+        "options": [
+          "Once",
+          "Twice",
+          "Finitely many",
+          "Infinitely many"
+        ],
+        "correctAnswer": "Infinitely many",
+        "explanation": "Analytic functions are infinitely differentiable (this follows from Cauchy's integral formula)"
+      }
+    ]
+  },
+  {
+    "id": "math401-quiz-4-2",
+    "subjectId": "math401",
+    "topicId": "math401-topic-4",
+    "title": "Cauchy's Theorems and Applications",
+    "questions": [
+      {
+        "id": "math401-q36",
+        "type": "multiple_choice",
+        "prompt": "Morera's theorem is the converse of which theorem?",
+        "options": [
+          "Liouville's",
+          "Cauchy-Goursat",
+          "Maximum modulus",
+          "Fundamental theorem of algebra"
+        ],
+        "correctAnswer": "Cauchy-Goursat",
+        "explanation": "Morera: if ∫_γ f = 0 for all closed γ, then f is analytic (converse of Cauchy-Goursat)"
+      },
+      {
+        "id": "math401-q37",
+        "type": "true_false",
+        "prompt": "The fundamental theorem of algebra states that every non-constant polynomial has a root in ℂ.",
+        "options": [
+          "True",
+          "False"
+        ],
+        "correctAnswer": "True",
+        "explanation": "This is proven using Liouville's theorem: a polynomial without roots would give a bounded entire function 1/p(z)"
+      },
+      {
+        "id": "math401-q38",
+        "type": "multiple_choice",
+        "prompt": "If f is analytic on the closed disk |z| ≤ 1 and |f(z)| ≤ 5 for |z| = 1, what can we say about |f(0)|?",
+        "options": [
+          "|f(0)| = 5",
+          "|f(0)| > 5",
+          "|f(0)| ≤ 5",
+          "|f(0)| ≥ 5"
+        ],
+        "correctAnswer": "|f(0)| ≤ 5",
+        "explanation": "By maximum modulus principle, maximum is on boundary, so |f(0)| ≤ max_{|z|=1}|f(z)| ≤ 5"
+      },
+      {
+        "id": "math401-q39",
+        "type": "multiple_choice",
+        "prompt": "What is the nth derivative f^(n)(a) using Cauchy's formula?",
+        "options": [
+          "(n!/2πi)∫_γ f(z)/(z-a)^n dz",
+          "(n!/2πi)∫_γ f(z)/(z-a)^(n+1) dz",
+          "(1/2πi)∫_γ f(z)/(z-a)^n dz",
+          "∫_γ f(z)/(z-a)^(n+1) dz"
+        ],
+        "correctAnswer": "(n!/2πi)∫_γ f(z)/(z-a)^(n+1) dz",
+        "explanation": "General Cauchy formula: f^(n)(a) = (n!/2πi)∫_γ f(z)/(z-a)^(n+1) dz"
+      },
+      {
+        "id": "math401-q40",
+        "type": "true_false",
+        "prompt": "Cauchy's inequality: if |f| ≤ M on |z-a| = R, then |f^(n)(a)| ≤ n!M/R^n.",
+        "options": [
+          "True",
+          "False"
+        ],
+        "correctAnswer": "True",
+        "explanation": "Cauchy's inequality bounds derivatives in terms of maximum modulus on circles"
+      }
+    ]
+  },
+  {
+    "id": "math401-quiz-4-3",
+    "subjectId": "math401",
+    "topicId": "math401-topic-4",
+    "title": "Advanced Applications of Cauchy Theory",
+    "questions": [
+      {
+        "id": "math401-q86",
+        "type": "multiple_choice",
+        "prompt": "Using Cauchy's integral formula, what is ∫_{|z|=1} e^z/z dz?",
+        "options": [
+          "e",
+          "2πi",
+          "2πie",
+          "πi"
+        ],
+        "correctAnswer": "2πi",
+        "explanation": "By Cauchy's formula: ∫_γ f(z)/(z-a)dz = 2πif(a). Here f(z) = e^z, a = 0: result is 2πie^0 = 2πi"
+      },
+      {
+        "id": "math401-q87",
+        "type": "true_false",
+        "prompt": "Liouville's theorem implies that there are no non-constant bounded entire functions.",
+        "options": [
+          "True",
+          "False"
+        ],
+        "correctAnswer": "True",
+        "explanation": "This is precisely the statement of Liouville's theorem"
+      },
+      {
+        "id": "math401-q88",
+        "type": "multiple_choice",
+        "prompt": "What does Morera's theorem provide?",
+        "options": [
+          "Sufficient condition for analyticity",
+          "Necessary condition for analyticity",
+          "Integral formula",
+          "Maximum principle"
+        ],
+        "correctAnswer": "Sufficient condition for analyticity",
+        "explanation": "Morera: if continuous f satisfies ∫_γ f = 0 for all closed γ, then f is analytic"
+      },
+      {
+        "id": "math401-q89",
+        "type": "multiple_choice",
+        "prompt": "If f is analytic and non-constant on a bounded domain D, where does |f| attain its maximum?",
+        "options": [
+          "Interior of D",
+          "Boundary of D",
+          "Nowhere",
+          "Everywhere"
+        ],
+        "correctAnswer": "Boundary of D",
+        "explanation": "Maximum modulus principle: maximum of |f| occurs on the boundary"
+      },
+      {
+        "id": "math401-q90",
+        "type": "multiple_choice",
+        "prompt": "Cauchy's inequality states that if |f(z)| ≤ M on |z-a| = R, then |f'(a)| ≤:",
+        "options": [
+          "M/R",
+          "MR",
+          "M/R²",
+          "M"
+        ],
+        "correctAnswer": "M/R",
+        "explanation": "Cauchy's inequality for n=1: |f'(a)| ≤ M/R"
+      }
+    ]
+  }
+]

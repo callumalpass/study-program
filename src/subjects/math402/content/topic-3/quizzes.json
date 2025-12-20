@@ -1,0 +1,197 @@
+[
+  {
+    "id": "math402-quiz-3a",
+    "subjectId": "math402",
+    "topicId": "math402-topic-3",
+    "title": "Interpolation and Approximation - Fundamentals",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "Given n+1 distinct points, the degree of the unique interpolating polynomial is:",
+        "options": [
+          "Exactly n",
+          "At most n",
+          "At least n",
+          "n+1"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A polynomial of degree at most n is uniquely determined by n+1 points. The actual degree may be less than n if the data lies on a lower-degree curve."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "What is the main advantage of Newton's divided difference form over Lagrange interpolation?",
+        "options": [
+          "Newton form has lower degree",
+          "Newton form is easier to update when adding new points",
+          "Newton form always has smaller error",
+          "Newton form doesn't require distinct x values"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Newton's form is incremental: adding a new point requires only computing one new divided difference and adding one term, whereas Lagrange requires recomputing all basis polynomials."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "Increasing the degree of an interpolating polynomial always decreases the interpolation error.",
+        "correctAnswer": false,
+        "explanation": "False. Higher-degree polynomials can exhibit Runge's phenomenon with wild oscillations between data points, especially with equally-spaced points. The error can actually increase."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "Hermite interpolation differs from standard polynomial interpolation by:",
+        "options": [
+          "Using trigonometric functions instead of polynomials",
+          "Matching derivative values in addition to function values",
+          "Only working with equally-spaced points",
+          "Minimizing the L2 error instead of exact matching"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Hermite interpolation matches both function values and derivative values at the interpolation points, requiring a higher-degree polynomial."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "A ____ spline uses piecewise cubic polynomials and requires C^2 continuity at interior knots.",
+        "correctAnswer": "cubic",
+        "explanation": "A cubic spline uses cubic polynomials on each interval with continuous first and second derivatives at the knots, providing smooth interpolation."
+      }
+    ]
+  },
+  {
+    "id": "math402-quiz-3b",
+    "subjectId": "math402",
+    "topicId": "math402-topic-3",
+    "title": "Interpolation and Approximation - Application",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "For a function f ∈ C^{n+1}[a,b], the error in polynomial interpolation at n+1 points is bounded by:",
+        "options": [
+          "M/(n+1)! max|ω(x)|, where ω(x) is the node polynomial",
+          "M/n! max|f(x)|",
+          "M max|ω(x)|",
+          "M/(n+1) for some constant M"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The interpolation error is f(x) - p_n(x) = f^{(n+1)}(ξ)/(n+1)! · ω(x), where ω(x) = ∏(x - x_i) and ξ ∈ [a,b]."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "Chebyshev nodes are used in interpolation because they:",
+        "options": [
+          "Are equally spaced, making computation easier",
+          "Minimize the maximum value of the node polynomial ω(x)",
+          "Always produce zero error",
+          "Work only for trigonometric functions"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Chebyshev nodes minimize max|ω(x)| over [-1,1], reducing Runge's phenomenon and providing near-optimal interpolation error bounds."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "Natural cubic splines have zero second derivatives at the endpoints.",
+        "correctAnswer": true,
+        "explanation": "True. Natural splines impose the boundary conditions S''(x_0) = S''(x_n) = 0, which provides two additional equations to determine all spline coefficients."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "Given data points at x = 0, 1, 2 with values 1, 2, 4, the first divided difference f[1,2] is:",
+        "options": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ],
+        "correctAnswer": 1,
+        "explanation": "f[1,2] = (f(2) - f(1))/(2 - 1) = (4 - 2)/1 = 2. Divided differences are the discrete analog of derivatives."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "A cubic spline through n+1 points has how many unknown coefficients to determine?",
+        "options": [
+          "n",
+          "2n",
+          "4n",
+          "4(n+1)"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Each of the n intervals has a cubic polynomial with 4 coefficients, giving 4n unknowns. These are determined by 4n equations from continuity and boundary conditions."
+      }
+    ]
+  },
+  {
+    "id": "math402-quiz-3c",
+    "subjectId": "math402",
+    "topicId": "math402-topic-3",
+    "title": "Interpolation and Approximation - Mastery",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "The Lebesgue constant Λ_n for a set of interpolation nodes measures:",
+        "options": [
+          "The maximum interpolation error",
+          "The condition number of the interpolation problem",
+          "The spacing between nodes",
+          "The degree of the interpolating polynomial"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The Lebesgue constant Λ_n bounds how the interpolation error compares to the best polynomial approximation: ||p_n - f|| ≤ (1 + Λ_n)||p*_n - f||. It measures ill-conditioning."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "Runge's phenomenon is best mitigated by:",
+        "options": [
+          "Using equally-spaced points with higher degree",
+          "Using Chebyshev nodes or piecewise polynomial interpolation",
+          "Decreasing the number of interpolation points",
+          "Using linear interpolation only"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Chebyshev nodes cluster near endpoints to control oscillations, and splines use low-degree pieces to avoid high-degree polynomial instability."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "The divided difference f[x_0, x_1, ..., x_n] equals f^{(n)}(ξ)/n! for some ξ in the smallest interval containing all x_i.",
+        "correctAnswer": true,
+        "explanation": "True. This is a fundamental theorem connecting divided differences to derivatives, showing that divided differences generalize derivatives to discrete data."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "For a clamped cubic spline (given endpoint derivatives), how many continuity conditions are imposed?",
+        "options": [
+          "2(n-1) for function values, 2(n-1) for derivatives",
+          "n-1 for S, n-1 for S', n-1 for S'', plus 2 boundary conditions",
+          "4n conditions total",
+          "All of the above (equivalent formulations)"
+        ],
+        "correctAnswer": 3,
+        "explanation": "All formulations are equivalent: matching values and derivatives at n-1 interior knots (2(n-1) each), plus C^2 continuity (n-1 more), plus 2 clamped boundary conditions = 4n equations for 4n unknowns."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "B-splines are advantageous because they:",
+        "options": [
+          "Have local support, making modifications local",
+          "Form a stable basis for the spline space",
+          "Allow efficient computation and numerical stability",
+          "All of the above"
+        ],
+        "correctAnswer": 3,
+        "explanation": "B-splines possess local support (changing one control point affects only nearby regions), form a well-conditioned basis, and enable efficient stable algorithms—making them ideal for practical applications."
+      }
+    ]
+  }
+]

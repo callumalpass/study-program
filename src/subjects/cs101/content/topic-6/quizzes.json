@@ -1,0 +1,178 @@
+[
+  {
+    "id": "cs101-quiz-6",
+    "subjectId": "cs101",
+    "topicId": "cs101-topic-6",
+    "title": "Error Handling - Fundamentals",
+    "questions": [
+      {
+        "id": "q6-1",
+        "type": "multiple_choice",
+        "prompt": "What keyword is used to handle exceptions in Python?",
+        "options": [
+          "catch",
+          "except",
+          "handle",
+          "error"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Python uses \"except\" to catch exceptions. The syntax is try/except, not try/catch like in some other languages."
+      },
+      {
+        "id": "q6-2",
+        "type": "multiple_choice",
+        "prompt": "What exception is raised when you try to divide by zero?",
+        "options": [
+          "ValueError",
+          "TypeError",
+          "ZeroDivisionError",
+          "MathError"
+        ],
+        "correctAnswer": 2,
+        "explanation": "ZeroDivisionError is raised when attempting to divide a number by zero."
+      },
+      {
+        "id": "q6-3",
+        "type": "code_output",
+        "prompt": "What will this code print?",
+        "codeSnippet": "try:\n    x = int(\"hello\")\nexcept ValueError:\n    print(\"Oops\")\nprint(\"Done\")",
+        "correctAnswer": "Oops\nDone",
+        "explanation": "int(\"hello\") raises ValueError which is caught. \"Oops\" is printed, then execution continues normally to print \"Done\"."
+      },
+      {
+        "id": "q6-4",
+        "type": "true_false",
+        "prompt": "Using a bare \"except:\" clause (without specifying an exception type) is considered good practice.",
+        "correctAnswer": false,
+        "explanation": "Bare except clauses catch all exceptions including system ones like KeyboardInterrupt. Always specify the exception type you want to catch."
+      },
+      {
+        "id": "q6-5",
+        "type": "multiple_choice",
+        "prompt": "What exception is raised when accessing a dictionary key that does not exist?",
+        "options": [
+          "IndexError",
+          "KeyError",
+          "ValueError",
+          "AttributeError"
+        ],
+        "correctAnswer": 1,
+        "explanation": "KeyError is raised when a dictionary key is not found. IndexError is for lists, not dictionaries."
+      }
+    ]
+  },
+  {
+    "id": "cs101-quiz-6b",
+    "subjectId": "cs101",
+    "topicId": "cs101-topic-6",
+    "title": "Error Handling - Try/Except/Finally",
+    "questions": [
+      {
+        "id": "q6b-1",
+        "type": "code_output",
+        "prompt": "What will this code print?",
+        "codeSnippet": "try:\n    x = 1 / 0\nexcept ZeroDivisionError:\n    print(\"Error\")\nfinally:\n    print(\"Done\")",
+        "correctAnswer": "Error\nDone",
+        "explanation": "The exception is caught and \"Error\" is printed. The finally block always runs, so \"Done\" is printed regardless."
+      },
+      {
+        "id": "q6b-2",
+        "type": "multiple_choice",
+        "prompt": "When does the \"else\" clause in a try/except/else block execute?",
+        "options": [
+          "Always",
+          "Only when an exception occurs",
+          "Only when no exception occurs",
+          "Never - else is not valid with try"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The else clause runs only if the try block completes without raising any exceptions."
+      },
+      {
+        "id": "q6b-3",
+        "type": "code_output",
+        "prompt": "What will this code print?",
+        "codeSnippet": "try:\n    print(\"A\")\n    x = 5\nexcept:\n    print(\"B\")\nelse:\n    print(\"C\")\nfinally:\n    print(\"D\")",
+        "correctAnswer": "A\nC\nD",
+        "explanation": "No exception occurs: \"A\" prints, try succeeds so else runs (\"C\"), finally always runs (\"D\"). \"B\" is skipped."
+      },
+      {
+        "id": "q6b-4",
+        "type": "true_false",
+        "prompt": "The finally block executes even if a return statement is in the try block.",
+        "correctAnswer": true,
+        "explanation": "The finally block always executes, even if the try block contains return, break, or continue statements."
+      },
+      {
+        "id": "q6b-5",
+        "type": "multiple_choice",
+        "prompt": "How do you catch multiple exception types in a single except clause?",
+        "options": [
+          "except ValueError, TypeError:",
+          "except (ValueError, TypeError):",
+          "except ValueError or TypeError:",
+          "except ValueError and TypeError:"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Use a tuple of exception types: except (ValueError, TypeError). The parentheses are required."
+      }
+    ]
+  },
+  {
+    "id": "cs101-quiz-6c",
+    "subjectId": "cs101",
+    "topicId": "cs101-topic-6",
+    "title": "Error Handling - Raising and Custom Exceptions",
+    "questions": [
+      {
+        "id": "q6c-1",
+        "type": "code_output",
+        "prompt": "What will this code print?",
+        "codeSnippet": "def check(n):\n    if n < 0:\n        raise ValueError(\"Negative!\")\n    return n * 2\n\ntry:\n    print(check(-5))\nexcept ValueError as e:\n    print(e)",
+        "correctAnswer": "Negative!",
+        "explanation": "check(-5) raises ValueError with the message \"Negative!\". The exception is caught and its message is printed."
+      },
+      {
+        "id": "q6c-2",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of \"raise\" without an argument inside an except block?",
+        "options": [
+          "It raises a new exception",
+          "It re-raises the current exception",
+          "It clears the current exception",
+          "It is a syntax error"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Using \"raise\" alone inside an except block re-raises the exception that was just caught, preserving the original traceback."
+      },
+      {
+        "id": "q6c-3",
+        "type": "true_false",
+        "prompt": "Assertions should be used to validate user input in production code.",
+        "correctAnswer": false,
+        "explanation": "Assertions are for catching programmer errors, not user input. They can be disabled with -O flag. Use exceptions for user input validation."
+      },
+      {
+        "id": "q6c-4",
+        "type": "code_output",
+        "prompt": "What will this code print?",
+        "codeSnippet": "class MyError(Exception):\n    pass\n\ntry:\n    raise MyError(\"Custom!\")\nexcept MyError as e:\n    print(type(e).__name__)",
+        "correctAnswer": "MyError",
+        "explanation": "type(e).__name__ gives the class name of the exception, which is \"MyError\"."
+      },
+      {
+        "id": "q6c-5",
+        "type": "multiple_choice",
+        "prompt": "What does \"raise ValueError from original_error\" do?",
+        "options": [
+          "Replaces the original error",
+          "Chains the exceptions, preserving context",
+          "Raises both exceptions simultaneously",
+          "Ignores the original error"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The \"from\" clause chains exceptions. The new exception's __cause__ attribute references the original, preserving the error context."
+      }
+    ]
+  }
+]

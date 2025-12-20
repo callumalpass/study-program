@@ -1,0 +1,258 @@
+[
+  {
+    "id": "cs105-t6-ex01",
+    "subjectId": "cs105",
+    "topicId": "cs105-topic-6",
+    "title": "Simple Macros",
+    "difficulty": 1,
+    "description": "Define macros for PI and a CIRCLE_AREA calculation.",
+    "starterCode": "#include <stdio.h>\n\n// Define PI as 3.14159\n// Define CIRCLE_AREA(r) macro\n\nint main() {\n    double radius = 5.0;\n    printf(\"Area: %.2f\\n\", CIRCLE_AREA(radius));\n    return 0;\n}",
+    "solution": "#include <stdio.h>\n\n#define PI 3.14159\n#define CIRCLE_AREA(r) (PI * (r) * (r))\n\nint main() {\n    double radius = 5.0;\n    printf(\"Area: %.2f\\n\", CIRCLE_AREA(radius));\n    return 0;\n}",
+    "testCases": [],
+    "hints": [
+      "Use #define for constants",
+      "Wrap macro parameters in parentheses"
+    ],
+    "language": "c"
+  },
+  {
+    "id": "cs105-t6-ex02",
+    "subjectId": "cs105",
+    "topicId": "cs105-topic-6",
+    "title": "MIN and MAX Macros",
+    "difficulty": 2,
+    "description": "Define MIN and MAX macros that work with any numeric type.",
+    "starterCode": "#include <stdio.h>\n\n// Define MIN(a, b) macro\n// Define MAX(a, b) macro\n\nint main() {\n    int x = 10, y = 20;\n    printf(\"Min: %d, Max: %d\\n\", MIN(x, y), MAX(x, y));\n    \n    double a = 3.14, b = 2.71;\n    printf(\"Min: %.2f, Max: %.2f\\n\", MIN(a, b), MAX(a, b));\n    return 0;\n}",
+    "solution": "#include <stdio.h>\n\n#define MIN(a, b) ((a) < (b) ? (a) : (b))\n#define MAX(a, b) ((a) > (b) ? (a) : (b))\n\nint main() {\n    int x = 10, y = 20;\n    printf(\"Min: %d, Max: %d\\n\", MIN(x, y), MAX(x, y));\n    \n    double a = 3.14, b = 2.71;\n    printf(\"Min: %.2f, Max: %.2f\\n\", MIN(a, b), MAX(a, b));\n    return 0;\n}",
+    "testCases": [],
+    "hints": [
+      "Use ternary operator in macro",
+      "Parenthesize all parameters"
+    ],
+    "language": "c"
+  },
+  {
+    "id": "cs105-t6-ex03",
+    "subjectId": "cs105",
+    "topicId": "cs105-topic-6",
+    "title": "Debug Macro",
+    "difficulty": 2,
+    "description": "Create a DEBUG_PRINT macro that only prints when DEBUG is defined.",
+    "starterCode": "#include <stdio.h>\n\n#define DEBUG  // Comment out to disable debug output\n\n// Define DEBUG_PRINT(msg) macro\n// Should print \"[DEBUG] msg\" only if DEBUG is defined\n\nint main() {\n    DEBUG_PRINT(\"Starting program\");\n    int x = 42;\n    DEBUG_PRINT(\"x has been set\");\n    printf(\"Result: %d\\n\", x);\n    return 0;\n}",
+    "solution": "#include <stdio.h>\n\n#define DEBUG\n\n#ifdef DEBUG\n    #define DEBUG_PRINT(msg) printf(\"[DEBUG] %s\\n\", msg)\n#else\n    #define DEBUG_PRINT(msg)\n#endif\n\nint main() {\n    DEBUG_PRINT(\"Starting program\");\n    int x = 42;\n    DEBUG_PRINT(\"x has been set\");\n    printf(\"Result: %d\\n\", x);\n    return 0;\n}",
+    "testCases": [],
+    "hints": [
+      "Use #ifdef to check if DEBUG is defined",
+      "Empty macro for release mode"
+    ],
+    "language": "c"
+  },
+  {
+    "id": "cs105-t6-ex04",
+    "subjectId": "cs105",
+    "topicId": "cs105-topic-6",
+    "title": "Include Guard",
+    "difficulty": 2,
+    "description": "Create a header file with proper include guards.",
+    "starterCode": "/* math_utils.h - Add include guards */\n\n/* Your include guard here */\n\n#define PI 3.14159\n\ndouble square(double x);\ndouble cube(double x);\n\n/* End include guard */\n\n/* Explain in comments:\n * 1. What problem do include guards solve?\n * 2. What is the naming convention?\n * 3. How does #pragma once compare?\n */",
+    "solution": "/* math_utils.h */\n\n#ifndef MATH_UTILS_H\n#define MATH_UTILS_H\n\n#define PI 3.14159\n\ndouble square(double x);\ndouble cube(double x);\n\n#endif /* MATH_UTILS_H */\n\n/* Answers:\n * 1. Include guards prevent the same header from being\n *    included multiple times, avoiding redefinition errors.\n *\n * 2. Convention: FILENAME_H or PROJECT_FILENAME_H\n *    Use uppercase with underscores.\n *\n * 3. #pragma once is simpler but non-standard.\n *    Include guards are portable across all compilers.\n */",
+    "testCases": [],
+    "hints": [
+      "#ifndef checks if NOT defined",
+      "Use uppercase with underscores for guard name"
+    ],
+    "language": "c"
+  },
+  {
+    "id": "cs105-t6-ex05",
+    "subjectId": "cs105",
+    "topicId": "cs105-topic-6",
+    "title": "Stringification",
+    "difficulty": 3,
+    "description": "Use the # operator to convert macro arguments to strings.",
+    "starterCode": "#include <stdio.h>\n\n// Define PRINT_VAR(var) that prints \"var = value\"\n// Example: PRINT_VAR(x) prints \"x = 42\"\n\nint main() {\n    int x = 42;\n    double pi = 3.14;\n    char* name = \"Alice\";\n    \n    PRINT_VAR(x);\n    PRINT_VAR(pi);\n    PRINT_VAR(name);\n    \n    return 0;\n}",
+    "solution": "#include <stdio.h>\n\n#define PRINT_INT(var) printf(#var \" = %d\\n\", var)\n#define PRINT_DOUBLE(var) printf(#var \" = %.2f\\n\", var)\n#define PRINT_STR(var) printf(#var \" = %s\\n\", var)\n\n// Generic version using _Generic (C11)\n#define PRINT_VAR(var) _Generic((var), \\\n    int: printf(#var \" = %d\\n\", var), \\\n    double: printf(#var \" = %.2f\\n\", var), \\\n    char*: printf(#var \" = %s\\n\", var))\n\nint main() {\n    int x = 42;\n    double pi = 3.14;\n    char* name = \"Alice\";\n    \n    PRINT_VAR(x);\n    PRINT_VAR(pi);\n    PRINT_VAR(name);\n    \n    return 0;\n}",
+    "testCases": [],
+    "hints": [
+      "# operator converts argument to string literal",
+      "_Generic selects based on type (C11)"
+    ],
+    "language": "c"
+  },
+  {
+    "id": "cs105-t6-ex06",
+    "subjectId": "cs105",
+    "topicId": "cs105-topic-6",
+    "title": "Token Pasting",
+    "difficulty": 3,
+    "description": "Use the ## operator to create variable names dynamically.",
+    "starterCode": "#include <stdio.h>\n\n// Define DECLARE_PAIR(type, name) that creates:\n// type name_first;\n// type name_second;\n\n// Define PAIR_SUM(name) that returns name_first + name_second\n\nint main() {\n    DECLARE_PAIR(int, point);\n    \n    point_first = 10;\n    point_second = 20;\n    \n    printf(\"Sum: %d\\n\", PAIR_SUM(point));\n    return 0;\n}",
+    "solution": "#include <stdio.h>\n\n#define DECLARE_PAIR(type, name) \\\n    type name##_first; \\\n    type name##_second\n\n#define PAIR_SUM(name) ((name##_first) + (name##_second))\n\nint main() {\n    DECLARE_PAIR(int, point);\n    \n    point_first = 10;\n    point_second = 20;\n    \n    printf(\"Sum: %d\\n\", PAIR_SUM(point));\n    return 0;\n}",
+    "testCases": [],
+    "hints": [
+      "## concatenates tokens",
+      "Use backslash for multi-line macros"
+    ],
+    "language": "c"
+  },
+  {
+    "id": "cs105-t6-ex07",
+    "subjectId": "cs105",
+    "topicId": "cs105-topic-6",
+    "title": "Conditional Compilation Platform",
+    "difficulty": 3,
+    "description": "Write code that compiles differently on Windows vs Unix.",
+    "starterCode": "#include <stdio.h>\n\n// Define platform-specific CLEAR_SCREEN command\n// Windows: system(\"cls\")\n// Unix/Linux/Mac: system(\"clear\")\n\n// Define NEWLINE as \"\\r\\n\" for Windows, \"\\n\" for Unix\n\nvoid show_platform() {\n    // Print which platform was detected\n}\n\nint main() {\n    show_platform();\n    printf(\"Hello%s\", NEWLINE);\n    return 0;\n}",
+    "solution": "#include <stdio.h>\n#include <stdlib.h>\n\n#if defined(_WIN32) || defined(_WIN64)\n    #define PLATFORM_WINDOWS\n    #define CLEAR_SCREEN() system(\"cls\")\n    #define NEWLINE \"\\r\\n\"\n#elif defined(__linux__) || defined(__APPLE__)\n    #define PLATFORM_UNIX\n    #define CLEAR_SCREEN() system(\"clear\")\n    #define NEWLINE \"\\n\"\n#else\n    #define CLEAR_SCREEN()\n    #define NEWLINE \"\\n\"\n#endif\n\nvoid show_platform() {\n#ifdef PLATFORM_WINDOWS\n    printf(\"Running on Windows\\n\");\n#elif defined(PLATFORM_UNIX)\n    printf(\"Running on Unix/Linux/Mac\\n\");\n#else\n    printf(\"Unknown platform\\n\");\n#endif\n}\n\nint main() {\n    show_platform();\n    printf(\"Hello%s\", NEWLINE);\n    return 0;\n}",
+    "testCases": [],
+    "hints": [
+      "_WIN32 is defined on Windows",
+      "__linux__ on Linux, __APPLE__ on Mac"
+    ],
+    "language": "c"
+  },
+  {
+    "id": "cs105-t6-ex08",
+    "subjectId": "cs105",
+    "topicId": "cs105-topic-6",
+    "title": "Simple Makefile",
+    "difficulty": 2,
+    "description": "Write a Makefile to compile a multi-file C project.",
+    "starterCode": "# Makefile for a project with:\n# - main.c (includes utils.h)\n# - utils.c (implements utils.h)\n# - utils.h (header file)\n#\n# Write rules for:\n# 1. all: build the program\n# 2. main.o: compile main.c\n# 3. utils.o: compile utils.c\n# 4. program: link object files\n# 5. clean: remove object files and program\n\nCC = gcc\nCFLAGS = -Wall -g\n\n# Your rules here",
+    "solution": "# Makefile\n\nCC = gcc\nCFLAGS = -Wall -g\nOBJS = main.o utils.o\nPROGRAM = program\n\n.PHONY: all clean\n\nall: $(PROGRAM)\n\n$(PROGRAM): $(OBJS)\n\t$(CC) $(CFLAGS) -o $@ $^\n\nmain.o: main.c utils.h\n\t$(CC) $(CFLAGS) -c -o $@ $<\n\nutils.o: utils.c utils.h\n\t$(CC) $(CFLAGS) -c -o $@ $<\n\nclean:\n\trm -f $(OBJS) $(PROGRAM)\n\n# Variables:\n# $@ = target name\n# $< = first prerequisite\n# $^ = all prerequisites",
+    "testCases": [],
+    "hints": [
+      "$@ is target, $< is first prerequisite",
+      ".PHONY for non-file targets"
+    ],
+    "language": "c"
+  },
+  {
+    "id": "cs105-t6-ex09",
+    "subjectId": "cs105",
+    "topicId": "cs105-topic-6",
+    "title": "Header and Implementation (Written)",
+    "difficulty": 3,
+    "description": "This is a written exercise. Create a proper header/source file pair.",
+    "starterCode": "/* WRITTEN EXERCISE - Create stack.h and stack.c */\n\n/*\n * Create a header file (stack.h) and implementation (stack.c)\n * for a simple integer stack with these operations:\n *\n * - Stack* stack_create(int capacity)\n * - void stack_destroy(Stack* s)\n * - bool stack_push(Stack* s, int value)\n * - bool stack_pop(Stack* s, int* value)\n * - bool stack_is_empty(Stack* s)\n * - bool stack_is_full(Stack* s)\n *\n * The Stack struct should be opaque (defined only in .c file).\n *\n * Write both files below:\n */\n\n/* ===== stack.h ===== */\n\n\n/* ===== stack.c ===== */",
+    "solution": "/* ===== stack.h ===== */\n\n#ifndef STACK_H\n#define STACK_H\n\n#include <stdbool.h>\n\n// Opaque type - users can only use pointers\ntypedef struct Stack Stack;\n\n// Create/destroy\nStack* stack_create(int capacity);\nvoid stack_destroy(Stack* s);\n\n// Operations\nbool stack_push(Stack* s, int value);\nbool stack_pop(Stack* s, int* value);\nbool stack_is_empty(Stack* s);\nbool stack_is_full(Stack* s);\n\n#endif /* STACK_H */\n\n/* ===== stack.c ===== */\n\n#include \"stack.h\"\n#include <stdlib.h>\n\nstruct Stack {\n    int* data;\n    int top;\n    int capacity;\n};\n\nStack* stack_create(int capacity) {\n    Stack* s = (Stack*)malloc(sizeof(Stack));\n    if (!s) return NULL;\n    \n    s->data = (int*)malloc(capacity * sizeof(int));\n    if (!s->data) {\n        free(s);\n        return NULL;\n    }\n    \n    s->top = -1;\n    s->capacity = capacity;\n    return s;\n}\n\nvoid stack_destroy(Stack* s) {\n    if (s) {\n        free(s->data);\n        free(s);\n    }\n}\n\nbool stack_push(Stack* s, int value) {\n    if (stack_is_full(s)) return false;\n    s->data[++s->top] = value;\n    return true;\n}\n\nbool stack_pop(Stack* s, int* value) {\n    if (stack_is_empty(s)) return false;\n    *value = s->data[s->top--];\n    return true;\n}\n\nbool stack_is_empty(Stack* s) {\n    return s->top == -1;\n}\n\nbool stack_is_full(Stack* s) {\n    return s->top == s->capacity - 1;\n}",
+    "testCases": [],
+    "hints": [
+      "Use typedef struct X X for opaque type",
+      "Define struct only in .c file"
+    ],
+    "language": "c"
+  },
+  {
+    "id": "cs105-t6-ex10",
+    "subjectId": "cs105",
+    "topicId": "cs105-topic-6",
+    "title": "Macro Pitfalls (Written)",
+    "difficulty": 3,
+    "description": "This is a written exercise. Identify and fix macro bugs.",
+    "starterCode": "/* WRITTEN EXERCISE - Fix these broken macros */\n\n#include <stdio.h>\n\n// BUGGY MACROS - Identify the problems and fix them\n\n#define SQUARE(x) x * x\n\n#define MAX(a, b) a > b ? a : b\n\n#define DOUBLE(x) x + x\n\n#define IS_UPPERCASE(c) c >= 'A' && c <= 'Z'\n\n#define PRINT_AND_INC(x) printf(\"%d\\n\", x); x++\n\nint main() {\n    // Test cases that show the bugs:\n    printf(\"SQUARE(2+3) = %d\\n\", SQUARE(2+3));  // Expected: 25\n    printf(\"MAX(1, 2) * 10 = %d\\n\", MAX(1, 2) * 10);  // Expected: 20\n    printf(\"10 * DOUBLE(5) = %d\\n\", 10 * DOUBLE(5));  // Expected: 100\n    \n    // What problems exist?\n    // Write fixed versions below:\n    \n    return 0;\n}",
+    "solution": "/* WRITTEN EXERCISE - SOLUTIONS */\n\n#include <stdio.h>\n\n/* ORIGINAL BUGS:\n *\n * 1. SQUARE(x) x * x\n *    Bug: SQUARE(2+3) = 2+3 * 2+3 = 2+6+3 = 11 (not 25)\n *    Fix: Parenthesize parameter and result\n *\n * 2. MAX(a, b) a > b ? a : b\n *    Bug: MAX(1,2) * 10 = 1 > 2 ? 1 : 2 * 10 = 20 (works)\n *          but MAX(1, 2) + 0 has precedence issues\n *    Fix: Wrap entire expression in parentheses\n *\n * 3. DOUBLE(x) x + x\n *    Bug: 10 * DOUBLE(5) = 10 * 5 + 5 = 55 (not 100)\n *    Fix: Wrap in parentheses\n *\n * 4. IS_UPPERCASE(c)\n *    Bug: !IS_UPPERCASE(c) = !c >= 'A' && c <= 'Z'\n *    Fix: Wrap entire expression\n *\n * 5. PRINT_AND_INC(x)\n *    Bug: if (cond) PRINT_AND_INC(x); else ... breaks\n *    Fix: Use do-while(0) idiom\n */\n\n/* FIXED MACROS */\n\n#define SQUARE(x) ((x) * (x))\n\n#define MAX(a, b) ((a) > (b) ? (a) : (b))\n\n#define DOUBLE(x) ((x) + (x))\n\n#define IS_UPPERCASE(c) ((c) >= 'A' && (c) <= 'Z')\n\n#define PRINT_AND_INC(x) do { printf(\"%d\\n\", x); (x)++; } while(0)\n\n/* Additional issue: Multiple evaluation\n * MAX(i++, j++) evaluates the larger one twice!\n * This can't be fixed in C89, but C11 has _Generic,\n * and GNU C has statement expressions:\n * #define MAX(a,b) ({ typeof(a) _a=(a); typeof(b) _b=(b); _a>_b?_a:_b; })\n */\n\nint main() {\n    printf(\"SQUARE(2+3) = %d\\n\", SQUARE(2+3));  // 25\n    printf(\"MAX(1, 2) * 10 = %d\\n\", MAX(1, 2) * 10);  // 20\n    printf(\"10 * DOUBLE(5) = %d\\n\", 10 * DOUBLE(5));  // 100\n    \n    return 0;\n}",
+    "testCases": [],
+    "hints": [
+      "Always wrap parameters in parentheses",
+      "do-while(0) for multi-statement macros"
+    ],
+    "language": "c"
+  },
+  {
+    "id": "cs105-t6-ex11",
+    "subjectId": "cs105",
+    "topicId": "cs105-topic-6",
+    "title": "Predefined Macros",
+    "difficulty": 2,
+    "description": "Use predefined macros for debugging output.",
+    "starterCode": "#include <stdio.h>\n\n// Create a LOG macro that prints:\n// [filename:line] function_name: message\n// Use __FILE__, __LINE__, __func__\n\nint main() {\n    LOG(\"Program started\");\n    \n    for (int i = 0; i < 3; i++) {\n        LOG(\"In loop iteration\");\n    }\n    \n    LOG(\"Program ending\");\n    return 0;\n}",
+    "solution": "#include <stdio.h>\n\n#define LOG(msg) printf(\"[%s:%d] %s: %s\\n\", \\\n    __FILE__, __LINE__, __func__, msg)\n\n// More advanced version with format string\n#define LOGF(fmt, ...) printf(\"[%s:%d] %s: \" fmt \"\\n\", \\\n    __FILE__, __LINE__, __func__, ##__VA_ARGS__)\n\nint main() {\n    LOG(\"Program started\");\n    \n    for (int i = 0; i < 3; i++) {\n        LOG(\"In loop iteration\");\n    }\n    \n    LOG(\"Program ending\");\n    return 0;\n}\n\n/* Predefined macros:\n * __FILE__ - current source file name\n * __LINE__ - current line number\n * __func__ - current function name (C99)\n * __DATE__ - compilation date\n * __TIME__ - compilation time\n * __STDC__ - 1 if standard C compiler\n */",
+    "testCases": [],
+    "hints": [
+      "__FILE__ gives filename as string",
+      "__LINE__ gives line number as int"
+    ],
+    "language": "c"
+  },
+  {
+    "id": "cs105-t6-ex12",
+    "subjectId": "cs105",
+    "topicId": "cs105-topic-6",
+    "title": "Compilation Stages (Written)",
+    "difficulty": 2,
+    "description": "This is a written exercise. Explain the C compilation process.",
+    "starterCode": "/* WRITTEN EXERCISE - C Compilation Stages */\n\n/*\n * For this source file:\n *\n * #include <stdio.h>\n * #define MSG \"Hello\"\n * int main() {\n *     printf(\"%s\\n\", MSG);\n *     return 0;\n * }\n *\n * Explain what happens at each stage:\n *\n * 1. PREPROCESSING (cpp or gcc -E)\n *    Input: .c file\n *    Output: ?\n *    What happens:\n *\n * 2. COMPILATION (gcc -S)\n *    Input: preprocessed source\n *    Output: ?\n *    What happens:\n *\n * 3. ASSEMBLY (as or gcc -c)\n *    Input: assembly file\n *    Output: ?\n *    What happens:\n *\n * 4. LINKING (ld or gcc)\n *    Input: object files\n *    Output: ?\n *    What happens:\n *\n * Also explain:\n * - What is a symbol table?\n * - What is relocation?\n * - Static vs dynamic linking?\n */",
+    "solution": "/* ANSWERS */\n\n/*\n * 1. PREPROCESSING (cpp or gcc -E)\n *    Input: source.c\n *    Output: preprocessed source (expanded, still text)\n *    What happens:\n *    - #include files are inserted\n *    - Macros are expanded (MSG -> \"Hello\")\n *    - Conditional compilation (#ifdef) resolved\n *    - Comments removed\n *    - Line continuation (\\) processed\n *\n * 2. COMPILATION (gcc -S)\n *    Input: preprocessed source\n *    Output: assembly file (.s)\n *    What happens:\n *    - Lexical analysis (tokenization)\n *    - Syntax analysis (parsing, AST)\n *    - Semantic analysis (type checking)\n *    - Optimization\n *    - Code generation to assembly\n *\n * 3. ASSEMBLY (as or gcc -c)\n *    Input: assembly file (.s)\n *    Output: object file (.o)\n *    What happens:\n *    - Assembly instructions -> machine code\n *    - Creates symbol table\n *    - Creates relocation entries for external refs\n *    - Organizes into sections (.text, .data, .bss)\n *\n * 4. LINKING (ld or gcc)\n *    Input: object files, libraries\n *    Output: executable or library\n *    What happens:\n *    - Symbol resolution (match declarations to definitions)\n *    - Relocation (assign final addresses)\n *    - Combine sections from all inputs\n *    - Add startup code (_start -> main)\n *\n * Symbol Table:\n *    List of all symbols (functions, variables) with:\n *    - Name, type, size\n *    - Section (.text, .data)\n *    - Binding (local, global, weak)\n *\n * Relocation:\n *    Adjusting addresses in code/data when final\n *    layout is determined. During compilation, addresses\n *    are placeholder; linker fills in real addresses.\n *\n * Static Linking:\n *    - Library code copied into executable\n *    - Larger executable, no dependencies\n *    - Faster startup, no version issues\n *\n * Dynamic Linking:\n *    - Library loaded at runtime (.so/.dll)\n *    - Smaller executable, shared libraries\n *    - Updates without recompilation\n *    - Potential \"DLL hell\" version conflicts\n */",
+    "testCases": [],
+    "hints": [
+      "gcc -E shows preprocessing, gcc -S shows assembly",
+      "Object files contain machine code but unresolved references"
+    ],
+    "language": "c"
+  },
+  {
+    "id": "cs105-t6-ex13",
+    "subjectId": "cs105",
+    "topicId": "cs105-topic-6",
+    "title": "Variadic Macros",
+    "difficulty": 4,
+    "description": "Create a variadic macro for formatted debug output.",
+    "starterCode": "#include <stdio.h>\n\n// Define DEBUG_PRINTF(fmt, ...) macro\n// Should work like printf but only when DEBUG is defined\n// Should prefix output with \"[DEBUG] \"\n\n#define DEBUG\n\nint main() {\n    int x = 42;\n    double pi = 3.14;\n    \n    DEBUG_PRINTF(\"Value of x: %d\\n\", x);\n    DEBUG_PRINTF(\"Pi is approximately %.2f\\n\", pi);\n    DEBUG_PRINTF(\"Sum: %d\\n\", x + 10);\n    \n    return 0;\n}",
+    "solution": "#include <stdio.h>\n\n#define DEBUG\n\n#ifdef DEBUG\n    #define DEBUG_PRINTF(fmt, ...) \\\n        printf(\"[DEBUG] \" fmt, ##__VA_ARGS__)\n#else\n    #define DEBUG_PRINTF(fmt, ...)\n#endif\n\n// Alternative with file/line info:\n#ifdef DEBUG\n    #define DEBUG_LOG(fmt, ...) \\\n        printf(\"[%s:%d] \" fmt, __FILE__, __LINE__, ##__VA_ARGS__)\n#else\n    #define DEBUG_LOG(fmt, ...)\n#endif\n\nint main() {\n    int x = 42;\n    double pi = 3.14;\n    \n    DEBUG_PRINTF(\"Value of x: %d\\n\", x);\n    DEBUG_PRINTF(\"Pi is approximately %.2f\\n\", pi);\n    DEBUG_PRINTF(\"Sum: %d\\n\", x + 10);\n    \n    return 0;\n}\n\n/* Notes:\n * __VA_ARGS__ expands to all variadic arguments\n * ## before __VA_ARGS__ removes trailing comma if empty\n * String literal concatenation: \"a\" \"b\" becomes \"ab\"\n */",
+    "testCases": [],
+    "hints": [
+      "__VA_ARGS__ captures variadic arguments",
+      "## removes comma if no args"
+    ],
+    "language": "c"
+  },
+  {
+    "id": "cs105-t6-ex14",
+    "subjectId": "cs105",
+    "topicId": "cs105-topic-6",
+    "title": "Assert Macro",
+    "difficulty": 3,
+    "description": "Implement your own ASSERT macro similar to standard assert.",
+    "starterCode": "#include <stdio.h>\n#include <stdlib.h>\n\n// Define MY_ASSERT(condition) macro\n// If condition is false:\n//   Print \"Assertion failed: condition, file X, line Y\"\n//   Exit with code 1\n// If NDEBUG is defined, ASSERT should do nothing\n\n// Don't define NDEBUG to enable assertions\n// #define NDEBUG\n\nint divide(int a, int b) {\n    MY_ASSERT(b != 0);\n    return a / b;\n}\n\nint main() {\n    printf(\"%d\\n\", divide(10, 2));\n    printf(\"%d\\n\", divide(10, 0));  // Should fail\n    return 0;\n}",
+    "solution": "#include <stdio.h>\n#include <stdlib.h>\n\n// #define NDEBUG  // Uncomment to disable assertions\n\n#ifdef NDEBUG\n    #define MY_ASSERT(condition) ((void)0)\n#else\n    #define MY_ASSERT(condition) \\\n        do { \\\n            if (!(condition)) { \\\n                fprintf(stderr, \\\n                    \"Assertion failed: %s, file %s, line %d\\n\", \\\n                    #condition, __FILE__, __LINE__); \\\n                abort(); \\\n            } \\\n        } while (0)\n#endif\n\nint divide(int a, int b) {\n    MY_ASSERT(b != 0);\n    return a / b;\n}\n\nint main() {\n    printf(\"%d\\n\", divide(10, 2));\n    printf(\"%d\\n\", divide(10, 0));  // Triggers assertion\n    return 0;\n}\n\n/* Notes:\n * #condition stringifies the condition for error message\n * do-while(0) allows use in any statement context\n * abort() terminates with signal (unlike exit)\n * ((void)0) is a no-op that avoids warnings\n */",
+    "testCases": [],
+    "hints": [
+      "Use # to stringify condition",
+      "abort() for abnormal termination"
+    ],
+    "language": "c"
+  },
+  {
+    "id": "cs105-t6-ex15",
+    "subjectId": "cs105",
+    "topicId": "cs105-topic-6",
+    "title": "Feature Test Macros (Written)",
+    "difficulty": 3,
+    "description": "This is a written exercise. Explain feature test macros.",
+    "starterCode": "/* WRITTEN EXERCISE - Feature Test Macros */\n\n/*\n * Research and explain these topics:\n *\n * 1. What are feature test macros?\n *\n * 2. What does _POSIX_C_SOURCE do?\n *\n * 3. What does _GNU_SOURCE do?\n *\n * 4. What is _XOPEN_SOURCE?\n *\n * 5. Why must these be defined BEFORE any #includes?\n *\n * 6. Write example code that uses strdup() - explain\n *    which feature test macro is needed.\n *\n * 7. What is the relationship between C standards\n *    and POSIX standards?\n */",
+    "solution": "/* ANSWERS */\n\n/*\n * 1. Feature Test Macros:\n *    Macros that control which functions/declarations\n *    are visible from system headers. They select which\n *    standard or extension set to expose.\n *\n * 2. _POSIX_C_SOURCE:\n *    Exposes POSIX functions. Value indicates version:\n *    - 1: POSIX.1-1990\n *    - 2: POSIX.2-1992 (adds regex, etc.)\n *    - 199309L: POSIX.1b-1993 (real-time)\n *    - 199506L: POSIX.1c-1995 (threads)\n *    - 200112L: POSIX.1-2001\n *    - 200809L: POSIX.1-2008\n *\n * 3. _GNU_SOURCE:\n *    Enables all GNU extensions plus POSIX/BSD/SVID.\n *    Very permissive, but non-portable. Includes:\n *    - strdup, strndup, asprintf\n *    - getline, getdelim\n *    - Various Linux-specific functions\n *\n * 4. _XOPEN_SOURCE:\n *    Exposes X/Open (XSI) functions:\n *    - 500: SUSv2 (Single UNIX Spec v2)\n *    - 600: SUSv3 / POSIX.1-2001 + XSI\n *    - 700: SUSv4 / POSIX.1-2008 + XSI\n *\n * 5. Why before includes:\n *    Headers use #ifdef to conditionally declare functions.\n *    The macro must be defined when the header is first\n *    processed to affect declarations.\n *\n * 6. strdup example:\n */\n\n#define _POSIX_C_SOURCE 200809L  // Or _GNU_SOURCE\n#include <string.h>\n#include <stdlib.h>\n#include <stdio.h>\n\nint main() {\n    char *original = \"Hello\";\n    char *copy = strdup(original);  // POSIX, not standard C\n    printf(\"%s\\n\", copy);\n    free(copy);\n    return 0;\n}\n\n/*\n * 7. C vs POSIX:\n *    - C standard defines the core language\n *    - POSIX extends C with OS interfaces\n *    - POSIX requires a conforming C implementation\n *    - C99/C11 are independent of POSIX\n *    - POSIX adds: threads, signals, file ops, IPC\n */",
+    "testCases": [],
+    "hints": [
+      "Feature test macros must come before includes",
+      "_GNU_SOURCE is most permissive but least portable"
+    ],
+    "language": "c"
+  },
+  {
+    "id": "cs105-t6-ex16",
+    "subjectId": "cs105",
+    "topicId": "cs105-topic-6",
+    "title": "Build System Design (Written)",
+    "difficulty": 4,
+    "description": "This is a written exercise. Design a build system for a medium project.",
+    "starterCode": "/* WRITTEN EXERCISE - Build System Design */\n\n/*\n * You have a project with this structure:\n *\n * project/\n * ├── src/\n * │   ├── main.c\n * │   ├── config.c\n * │   └── utils.c\n * ├── lib/\n * │   ├── network.c\n * │   ├── network.h\n * │   ├── crypto.c\n * │   └── crypto.h\n * ├── include/\n * │   ├── config.h\n * │   └── utils.h\n * └── tests/\n *     ├── test_network.c\n *     └── test_crypto.c\n *\n * Design:\n *\n * 1. A Makefile that:\n *    - Compiles src/ to build/obj/\n *    - Creates static library from lib/\n *    - Links into build/program\n *    - Has debug and release configurations\n *    - Has test target\n *    - Has clean target\n *\n * 2. Explain your design choices:\n *    - Directory structure\n *    - Variable naming\n *    - Pattern rules vs explicit rules\n *    - Handling dependencies\n */",
+    "solution": "# Complete Makefile\n\n# Compiler and flags\nCC = gcc\nCFLAGS_COMMON = -Wall -Wextra -I./include -I./lib\nCFLAGS_DEBUG = $(CFLAGS_COMMON) -g -DDEBUG\nCFLAGS_RELEASE = $(CFLAGS_COMMON) -O2 -DNDEBUG\n\n# Default to debug\nCFLAGS ?= $(CFLAGS_DEBUG)\n\n# Directories\nSRC_DIR = src\nLIB_DIR = lib\nTEST_DIR = tests\nBUILD_DIR = build\nOBJ_DIR = $(BUILD_DIR)/obj\n\n# Files\nSRCS = $(wildcard $(SRC_DIR)/*.c)\nLIB_SRCS = $(wildcard $(LIB_DIR)/*.c)\nTEST_SRCS = $(wildcard $(TEST_DIR)/*.c)\n\nOBJS = $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRCS))\nLIB_OBJS = $(patsubst $(LIB_DIR)/%.c,$(OBJ_DIR)/lib_%.o,$(LIB_SRCS))\nTEST_BINS = $(patsubst $(TEST_DIR)/%.c,$(BUILD_DIR)/%,$(TEST_SRCS))\n\nLIBRARY = $(BUILD_DIR)/libproject.a\nPROGRAM = $(BUILD_DIR)/program\n\n# Phony targets\n.PHONY: all debug release clean test dirs\n\n# Default target\nall: dirs $(PROGRAM)\n\n# Create directories\ndirs:\n\t@mkdir -p $(OBJ_DIR)\n\n# Debug build\ndebug: CFLAGS = $(CFLAGS_DEBUG)\ndebug: all\n\n# Release build\nrelease: CFLAGS = $(CFLAGS_RELEASE)\nrelease: clean all\n\n# Link program\n$(PROGRAM): $(OBJS) $(LIBRARY)\n\t$(CC) $(CFLAGS) -o $@ $(OBJS) -L$(BUILD_DIR) -lproject\n\n# Static library\n$(LIBRARY): $(LIB_OBJS)\n\tar rcs $@ $^\n\n# Compile source files\n$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c\n\t$(CC) $(CFLAGS) -c -o $@ $<\n\n# Compile library files\n$(OBJ_DIR)/lib_%.o: $(LIB_DIR)/%.c\n\t$(CC) $(CFLAGS) -c -o $@ $<\n\n# Test targets\ntest: $(TEST_BINS)\n\t@for t in $(TEST_BINS); do echo \"Running $$t\"; ./$$t; done\n\n$(BUILD_DIR)/test_%: $(TEST_DIR)/test_%.c $(LIBRARY)\n\t$(CC) $(CFLAGS) -o $@ $< -L$(BUILD_DIR) -lproject\n\n# Clean\nclean:\n\trm -rf $(BUILD_DIR)\n\n# Auto-generate dependencies (for header changes)\n-include $(OBJS:.o=.d)\n-include $(LIB_OBJS:.o=.d)\n\n$(OBJ_DIR)/%.d: $(SRC_DIR)/%.c | dirs\n\t$(CC) $(CFLAGS) -MM -MT $(OBJ_DIR)/$*.o $< > $@\n\n/* DESIGN CHOICES:\n *\n * 1. Out-of-source build (build/ directory)\n *    - Keeps source tree clean\n *    - Easy to clean with rm -rf build\n *\n * 2. Separate library\n *    - Reusable by tests\n *    - Clear module boundary\n *\n * 3. Pattern rules (%.o: %.c)\n *    - Reduces repetition\n *    - Scales automatically\n *\n * 4. Automatic dependencies\n *    - -include pulls in .d files\n *    - Rebuild when headers change\n *\n * 5. Debug/Release configs\n *    - Target-specific variables\n *    - Release cleans first to ensure full rebuild\n */",
+    "testCases": [],
+    "hints": [
+      "Use wildcard for file discovery",
+      "patsubst for path transformations"
+    ],
+    "language": "c"
+  }
+]

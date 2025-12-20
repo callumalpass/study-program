@@ -1,0 +1,185 @@
+[
+  {
+    "id": "math204-quiz-1a",
+    "subjectId": "math204",
+    "topicId": "math204-1",
+    "title": "Antiderivatives - Fundamentals",
+    "questions": [
+      {
+        "id": "math204-q1a-1",
+        "type": "multiple_choice",
+        "prompt": "What is $\\int 3x^2 \\, dx$?",
+        "options": [
+          "$x^3 + C$",
+          "$6x + C$",
+          "$\\frac{3x^3}{3} + C$",
+          "$3x^3 + C$"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Using the power rule: $\\int x^n \\, dx = \\frac{x^{n+1}}{n+1} + C$, so $\\int 3x^2 \\, dx = 3 \\cdot \\frac{x^3}{3} + C = x^3 + C$."
+      },
+      {
+        "id": "math204-q1a-2",
+        "type": "true_false",
+        "prompt": "The antiderivative of a function is unique.",
+        "correctAnswer": false,
+        "explanation": "False. Antiderivatives differ by a constant. If $F(x)$ is an antiderivative of $f(x)$, then so is $F(x) + C$ for any constant $C$."
+      },
+      {
+        "id": "math204-q1a-3",
+        "type": "multiple_choice",
+        "prompt": "What is $\\int e^x \\, dx$?",
+        "options": [
+          "$e^x + C$",
+          "$xe^x + C$",
+          "$\\frac{e^{x+1}}{x+1} + C$",
+          "$e + C$"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The exponential function $e^x$ is its own antiderivative: $\\int e^x \\, dx = e^x + C$."
+      },
+      {
+        "id": "math204-q1a-4",
+        "type": "multiple_choice",
+        "prompt": "What is $\\int \\frac{1}{x} \\, dx$?",
+        "options": [
+          "$\\frac{1}{x^2} + C$",
+          "$\\ln|x| + C$",
+          "$\\frac{x^2}{2} + C$",
+          "$-\\frac{1}{x^2} + C$"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The antiderivative of $\\frac{1}{x}$ is $\\ln|x| + C$. This is a fundamental integral formula."
+      },
+      {
+        "id": "math204-q1a-5",
+        "type": "fill_blank",
+        "prompt": "If $F'(x) = f(x)$, then $F(x)$ is called an ____ of $f(x)$.",
+        "correctAnswer": "antiderivative",
+        "explanation": "By definition, if the derivative of $F$ equals $f$, then $F$ is an antiderivative of $f$."
+      }
+    ]
+  },
+  {
+    "id": "math204-quiz-1b",
+    "subjectId": "math204",
+    "topicId": "math204-1",
+    "title": "Antiderivatives - Substitution",
+    "questions": [
+      {
+        "id": "math204-q1b-1",
+        "type": "multiple_choice",
+        "prompt": "To evaluate $\\int 2x \\cos(x^2) \\, dx$, what substitution should you use?",
+        "options": [
+          "$u = 2x$",
+          "$u = \\cos(x^2)$",
+          "$u = x^2$",
+          "$u = 2x \\cos(x^2)$"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Let $u = x^2$, then $du = 2x \\, dx$, which matches the form of the integral."
+      },
+      {
+        "id": "math204-q1b-2",
+        "type": "multiple_choice",
+        "prompt": "What is $\\int \\sin x \\, dx$?",
+        "options": [
+          "$\\cos x + C$",
+          "$-\\cos x + C$",
+          "$\\sin^2 x + C$",
+          "$-\\sin x + C$"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The antiderivative of $\\sin x$ is $-\\cos x + C$. You can verify this by differentiating."
+      },
+      {
+        "id": "math204-q1b-3",
+        "type": "true_false",
+        "prompt": "U-substitution is the reverse of the chain rule.",
+        "correctAnswer": true,
+        "explanation": "True. U-substitution undoes the chain rule for differentiation. If we can write the integral in the form $\\int f(g(x))g'(x) \\, dx$, we substitute $u = g(x)$."
+      },
+      {
+        "id": "math204-q1b-4",
+        "type": "multiple_choice",
+        "prompt": "What is $\\int x e^{x^2} \\, dx$?",
+        "options": [
+          "$e^{x^2} + C$",
+          "$\\frac{1}{2}e^{x^2} + C$",
+          "$x^2 e^{x^2} + C$",
+          "$2x e^{x^2} + C$"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Let $u = x^2$, $du = 2x \\, dx$, so $x \\, dx = \\frac{1}{2}du$. Then $\\int x e^{x^2} \\, dx = \\frac{1}{2}\\int e^u \\, du = \\frac{1}{2}e^u + C = \\frac{1}{2}e^{x^2} + C$."
+      },
+      {
+        "id": "math204-q1b-5",
+        "type": "fill_blank",
+        "prompt": "The constant of integration C represents the family of ____ that differ by a constant.",
+        "correctAnswer": "antiderivatives",
+        "explanation": "All antiderivatives of a function differ only by a constant, which is why we include +C."
+      }
+    ]
+  },
+  {
+    "id": "math204-quiz-1c",
+    "subjectId": "math204",
+    "topicId": "math204-1",
+    "title": "Antiderivatives - Applications",
+    "questions": [
+      {
+        "id": "math204-q1c-1",
+        "type": "multiple_choice",
+        "prompt": "If $f'(x) = 6x - 2$ and $f(0) = 5$, what is $f(x)$?",
+        "options": [
+          "$3x^2 - 2x + 5$",
+          "$6x^2 - 2x + 5$",
+          "$3x^2 - 2x$",
+          "$6x - 2$"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Integrate: $f(x) = \\int (6x - 2) \\, dx = 3x^2 - 2x + C$. Use initial condition: $f(0) = 5$ gives $C = 5$. So $f(x) = 3x^2 - 2x + 5$."
+      },
+      {
+        "id": "math204-q1c-2",
+        "type": "multiple_choice",
+        "prompt": "What is $\\int \\sec^2 x \\, dx$?",
+        "options": [
+          "$\\tan x + C$",
+          "$\\sec x + C$",
+          "$\\sec x \\tan x + C$",
+          "$\\cot x + C$"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The antiderivative of $\\sec^2 x$ is $\\tan x + C$. This follows from the derivative formula $\\frac{d}{dx}[\\tan x] = \\sec^2 x$."
+      },
+      {
+        "id": "math204-q1c-3",
+        "type": "true_false",
+        "prompt": "An initial value problem requires both a differential equation and an initial condition.",
+        "correctAnswer": true,
+        "explanation": "True. The initial condition allows us to determine the specific constant C in the antiderivative."
+      },
+      {
+        "id": "math204-q1c-4",
+        "type": "multiple_choice",
+        "prompt": "What is $\\int (x^2 + 3x - 1) \\, dx$?",
+        "options": [
+          "$\\frac{x^3}{3} + \\frac{3x^2}{2} - x + C$",
+          "$x^3 + 3x^2 - x + C$",
+          "$2x + 3 + C$",
+          "$\\frac{x^3}{3} + 3x - 1 + C$"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Integrate term by term: $\\int x^2 \\, dx + \\int 3x \\, dx - \\int 1 \\, dx = \\frac{x^3}{3} + \\frac{3x^2}{2} - x + C$."
+      },
+      {
+        "id": "math204-q1c-5",
+        "type": "fill_blank",
+        "prompt": "The antiderivative of $\\cos x$ is ____.",
+        "correctAnswer": "sin(x) + C",
+        "explanation": "Since $\\frac{d}{dx}[\\sin x] = \\cos x$, we have $\\int \\cos x \\, dx = \\sin x + C$."
+      }
+    ]
+  }
+]

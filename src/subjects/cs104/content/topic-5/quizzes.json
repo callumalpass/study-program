@@ -1,0 +1,186 @@
+[
+  {
+    "id": "cs104-quiz-5a",
+    "subjectId": "cs104",
+    "topicId": "cs104-topic-5",
+    "title": "Graphs - Fundamentals",
+    "questions": [
+      {
+        "id": "cs104-q5a-1",
+        "type": "multiple_choice",
+        "prompt": "What is the space complexity of an adjacency matrix for a graph with V vertices?",
+        "options": [
+          "O(V)",
+          "O(E)",
+          "O(V²)",
+          "O(V + E)"
+        ],
+        "correctAnswer": 2,
+        "explanation": "An adjacency matrix is a V×V 2D array, requiring O(V²) space regardless of edge count."
+      },
+      {
+        "id": "cs104-q5a-2",
+        "type": "true_false",
+        "prompt": "In a directed graph, edges have a specific direction from one vertex to another.",
+        "correctAnswer": true,
+        "explanation": "Directed graph edges go from u to v, not necessarily from v to u."
+      },
+      {
+        "id": "cs104-q5a-3",
+        "type": "fill_blank",
+        "prompt": "A graph with no cycles is called an ____ graph.",
+        "correctAnswer": "acyclic",
+        "explanation": "An acyclic graph contains no cycles. A directed acyclic graph is called a DAG."
+      },
+      {
+        "id": "cs104-q5a-4",
+        "type": "multiple_choice",
+        "prompt": "An adjacency list is more space-efficient than an adjacency matrix for:",
+        "options": [
+          "Dense graphs",
+          "Sparse graphs",
+          "Complete graphs",
+          "All graphs"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Adjacency lists use O(V+E) space, better than O(V²) for sparse graphs where E << V²."
+      },
+      {
+        "id": "cs104-q5a-5",
+        "type": "multiple_choice",
+        "prompt": "Which graph traversal uses a queue?",
+        "options": [
+          "Depth-First Search",
+          "Breadth-First Search",
+          "Both",
+          "Neither"
+        ],
+        "correctAnswer": 1,
+        "explanation": "BFS uses a queue to explore level by level. DFS uses a stack (or recursion)."
+      }
+    ]
+  },
+  {
+    "id": "cs104-quiz-5b",
+    "subjectId": "cs104",
+    "topicId": "cs104-topic-5",
+    "title": "Graphs - Application",
+    "questions": [
+      {
+        "id": "cs104-q5b-1",
+        "type": "multiple_choice",
+        "prompt": "To find the shortest path in an unweighted graph, use:",
+        "options": [
+          "DFS",
+          "BFS",
+          "Dijkstra's",
+          "Floyd-Warshall"
+        ],
+        "correctAnswer": 1,
+        "explanation": "BFS finds shortest paths in unweighted graphs because it explores nodes level by level."
+      },
+      {
+        "id": "cs104-q5b-2",
+        "type": "true_false",
+        "prompt": "DFS can be used to detect cycles in a directed graph.",
+        "correctAnswer": true,
+        "explanation": "DFS with state tracking (unvisited, visiting, visited) can detect back edges indicating cycles."
+      },
+      {
+        "id": "cs104-q5b-3",
+        "type": "multiple_choice",
+        "prompt": "Topological sort is possible only for:",
+        "options": [
+          "Undirected graphs",
+          "Cyclic graphs",
+          "Directed acyclic graphs (DAGs)",
+          "Weighted graphs"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Topological ordering requires a DAG; cycles make it impossible to order dependencies."
+      },
+      {
+        "id": "cs104-q5b-4",
+        "type": "code_output",
+        "prompt": "How many connected components are in this graph?\nVertices: 0, 1, 2, 3, 4\nEdges: (0,1), (1,2), (3,4)",
+        "codeSnippet": "# Two groups: {0,1,2} and {3,4}",
+        "correctAnswer": "2",
+        "explanation": "Vertices 0,1,2 are connected. Vertices 3,4 are connected. Two separate components."
+      },
+      {
+        "id": "cs104-q5b-5",
+        "type": "multiple_choice",
+        "prompt": "The \"Number of Islands\" problem treats the grid as a graph where:",
+        "options": [
+          "Each cell is a vertex",
+          "Only land cells are vertices",
+          "Rows are vertices",
+          "Columns are edges"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Each cell is a vertex with edges to adjacent cells. Islands are connected components of land."
+      }
+    ]
+  },
+  {
+    "id": "cs104-quiz-5c",
+    "subjectId": "cs104",
+    "topicId": "cs104-topic-5",
+    "title": "Graphs - Advanced",
+    "questions": [
+      {
+        "id": "cs104-q5c-1",
+        "type": "multiple_choice",
+        "prompt": "Dijkstra's algorithm finds shortest paths in graphs with:",
+        "options": [
+          "Negative edge weights",
+          "Non-negative edge weights",
+          "Only unweighted edges",
+          "Cycles only"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Dijkstra's requires non-negative weights. Use Bellman-Ford for negative weights."
+      },
+      {
+        "id": "cs104-q5c-2",
+        "type": "true_false",
+        "prompt": "Prim's and Kruskal's algorithms both find minimum spanning trees.",
+        "correctAnswer": true,
+        "explanation": "Both find MST but use different approaches: Prim's grows from a vertex; Kruskal's sorts edges globally."
+      },
+      {
+        "id": "cs104-q5c-3",
+        "type": "multiple_choice",
+        "prompt": "The time complexity of BFS with adjacency list representation is:",
+        "options": [
+          "O(V)",
+          "O(E)",
+          "O(V + E)",
+          "O(V × E)"
+        ],
+        "correctAnswer": 2,
+        "explanation": "BFS visits each vertex and edge once, giving O(V + E) time complexity."
+      },
+      {
+        "id": "cs104-q5c-4",
+        "type": "fill_blank",
+        "prompt": "In topological sort using Kahn's algorithm, we start with nodes having ____-degree of 0.",
+        "correctAnswer": "in",
+        "explanation": "Kahn's algorithm processes nodes with in-degree 0 first (no dependencies)."
+      },
+      {
+        "id": "cs104-q5c-5",
+        "type": "multiple_choice",
+        "prompt": "To detect if an undirected graph is bipartite, you can use:",
+        "options": [
+          "DFS only",
+          "BFS only",
+          "Either DFS or BFS with 2-coloring",
+          "Neither"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Both DFS and BFS can detect bipartiteness by attempting to 2-color the graph."
+      }
+    ]
+  }
+]

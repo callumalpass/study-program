@@ -1,0 +1,215 @@
+[
+  {
+    "id": "math301-quiz-5-1",
+    "subjectId": "math301",
+    "topicId": "math301-topic-5",
+    "title": "Double Integrals",
+    "questions": [
+      {
+        "id": "math301-q61",
+        "type": "multiple_choice",
+        "prompt": "What is the value of ∫₀¹ ∫₀² xy dy dx?",
+        "options": [
+          "1",
+          "2",
+          "1/2",
+          "4"
+        ],
+        "correctAnswer": "1",
+        "explanation": "∫₀¹ ∫₀² xy dy dx = ∫₀¹ [xy²/2]₀² dx = ∫₀¹ 2x dx = [x²]₀¹ = 1"
+      },
+      {
+        "id": "math301-q62",
+        "type": "true_false",
+        "prompt": "For Fubini's theorem to apply, the double integral ∫∫_R f(x,y) dA can be computed as iterated integrals in either order.",
+        "options": [
+          "True",
+          "False"
+        ],
+        "correctAnswer": "True",
+        "explanation": "If f is continuous on the rectangle R, then ∫∫_R f dA = ∫ₐᵇ ∫_c^d f(x,y) dy dx = ∫_c^d ∫ₐᵇ f(x,y) dx dy"
+      },
+      {
+        "id": "math301-q63",
+        "type": "multiple_choice",
+        "prompt": "What does the double integral ∫∫_R 1 dA represent geometrically?",
+        "options": [
+          "Area of region R",
+          "Perimeter of R",
+          "Volume above R",
+          "Center of mass"
+        ],
+        "correctAnswer": "Area of region R",
+        "explanation": "The double integral of 1 over a region gives the area of that region"
+      },
+      {
+        "id": "math301-q64",
+        "type": "multiple_choice",
+        "prompt": "For the region bounded by y = x² and y = 4, which integral setup is correct for ∫∫_R f(x,y) dA?",
+        "options": [
+          "∫₋₂² ∫_{x²}⁴ f(x,y) dy dx",
+          "∫₀⁴ ∫₋₂² f(x,y) dx dy",
+          "∫₀² ∫_{x²}⁴ f(x,y) dy dx",
+          "∫₋₂² ∫₀⁴ f(x,y) dy dx"
+        ],
+        "correctAnswer": "∫₋₂² ∫_{x²}⁴ f(x,y) dy dx",
+        "explanation": "The curves intersect at x = ±2. For each x ∈ [-2,2], y ranges from x² to 4"
+      },
+      {
+        "id": "math301-q65",
+        "type": "multiple_choice",
+        "prompt": "In polar coordinates, what is the area element dA?",
+        "options": [
+          "r dr dθ",
+          "dr dθ",
+          "r² dr dθ",
+          "r dθ dr"
+        ],
+        "correctAnswer": "r dr dθ",
+        "explanation": "The Jacobian of the polar coordinate transformation gives dA = r dr dθ (the extra r factor is crucial)"
+      }
+    ]
+  },
+  {
+    "id": "math301-quiz-5-2",
+    "subjectId": "math301",
+    "topicId": "math301-topic-5",
+    "title": "Polar and Cylindrical Coordinates",
+    "questions": [
+      {
+        "id": "math301-q66",
+        "type": "multiple_choice",
+        "prompt": "What is ∫₀^{2π} ∫₀¹ r² dr dθ in polar coordinates?",
+        "options": [
+          "2π/3",
+          "π",
+          "π/3",
+          "2π"
+        ],
+        "correctAnswer": "2π/3",
+        "explanation": "∫₀^{2π} ∫₀¹ r² dr dθ = ∫₀^{2π} [r³/3]₀¹ dθ = ∫₀^{2π} 1/3 dθ = 2π/3"
+      },
+      {
+        "id": "math301-q67",
+        "type": "true_false",
+        "prompt": "The conversion from Cartesian to polar coordinates is x = r cos(θ), y = r sin(θ).",
+        "options": [
+          "True",
+          "False"
+        ],
+        "correctAnswer": "True",
+        "explanation": "This is the standard conversion formula from polar (r,θ) to Cartesian (x,y) coordinates"
+      },
+      {
+        "id": "math301-q68",
+        "type": "multiple_choice",
+        "prompt": "What is the volume element dV in cylindrical coordinates?",
+        "options": [
+          "r dz dr dθ",
+          "dz dr dθ",
+          "r² dz dr dθ",
+          "r dz dθ dr"
+        ],
+        "correctAnswer": "r dz dr dθ",
+        "explanation": "In cylindrical coordinates (r,θ,z), the volume element is dV = r dz dr dθ"
+      },
+      {
+        "id": "math301-q69",
+        "type": "multiple_choice",
+        "prompt": "In cylindrical coordinates, which conversion formula is correct?",
+        "options": [
+          "x = r cos(θ), y = r sin(θ), z = z",
+          "x = r sin(θ), y = r cos(θ), z = z",
+          "x = r, y = θ, z = z",
+          "x = r cos(z), y = r sin(z)"
+        ],
+        "correctAnswer": "x = r cos(θ), y = r sin(θ), z = z",
+        "explanation": "Cylindrical coordinates extend polar coordinates by adding the z-component unchanged"
+      },
+      {
+        "id": "math301-q70",
+        "type": "multiple_choice",
+        "prompt": "What is the volume element dV in spherical coordinates?",
+        "options": [
+          "ρ² sin(φ) dρ dφ dθ",
+          "ρ² dρ dφ dθ",
+          "ρ sin(φ) dρ dφ dθ",
+          "ρ² cos(φ) dρ dφ dθ"
+        ],
+        "correctAnswer": "ρ² sin(φ) dρ dφ dθ",
+        "explanation": "The Jacobian for spherical coordinates gives dV = ρ² sin(φ) dρ dφ dθ"
+      }
+    ]
+  },
+  {
+    "id": "math301-quiz-5-3",
+    "subjectId": "math301",
+    "topicId": "math301-topic-5",
+    "title": "Triple Integrals and Applications",
+    "questions": [
+      {
+        "id": "math301-q71",
+        "type": "multiple_choice",
+        "prompt": "In spherical coordinates, what is the conversion formula for z?",
+        "options": [
+          "z = ρ cos(φ)",
+          "z = ρ sin(φ)",
+          "z = ρ sin(φ) cos(θ)",
+          "z = ρ cos(θ)"
+        ],
+        "correctAnswer": "z = ρ cos(φ)",
+        "explanation": "In spherical coordinates (ρ,φ,θ), we have z = ρ cos(φ), where φ is the angle from the positive z-axis"
+      },
+      {
+        "id": "math301-q72",
+        "type": "true_false",
+        "prompt": "Triple integrals can be used to find the volume of a solid region.",
+        "options": [
+          "True",
+          "False"
+        ],
+        "correctAnswer": "True",
+        "explanation": "The triple integral ∫∫∫_E 1 dV equals the volume of the solid region E"
+      },
+      {
+        "id": "math301-q73",
+        "type": "multiple_choice",
+        "prompt": "What is the mass of a solid with density δ(x,y,z) occupying region E?",
+        "options": [
+          "∫∫∫_E δ(x,y,z) dV",
+          "∫∫∫_E dV",
+          "∫∫∫_E 1/δ(x,y,z) dV",
+          "∫∫_E δ(x,y,z) dA"
+        ],
+        "correctAnswer": "∫∫∫_E δ(x,y,z) dV",
+        "explanation": "Mass = ∫∫∫_E δ(x,y,z) dV, where δ is the density function"
+      },
+      {
+        "id": "math301-q74",
+        "type": "multiple_choice",
+        "prompt": "For a lamina (thin plate) with density δ(x,y), what is the formula for mass?",
+        "options": [
+          "∫∫_R δ(x,y) dA",
+          "∫∫_R dA",
+          "∫∫_R 1/δ(x,y) dA",
+          "∫_R δ(x,y) ds"
+        ],
+        "correctAnswer": "∫∫_R δ(x,y) dA",
+        "explanation": "For a 2D lamina, mass = ∫∫_R δ(x,y) dA"
+      },
+      {
+        "id": "math301-q75",
+        "type": "fill_blank",
+        "prompt": "The center of mass x̄ of a lamina is M_y divided by what?",
+        "options": [
+          "m",
+          "M_x",
+          "A",
+          "ρ"
+        ],
+        "correctAnswer": "m",
+        "explanation": "x̄ = M_y/m, where M_y is the moment about the y-axis and m is the total mass"
+      }
+    ]
+  }
+]

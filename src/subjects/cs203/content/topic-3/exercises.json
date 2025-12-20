@@ -1,0 +1,242 @@
+[
+  {
+    "id": "cs203-t3-ex1",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-3",
+    "type": "written",
+    "title": "Basic CFG Design",
+    "description": "Design a context-free grammar for the language L = {aⁿbⁿ | n ≥ 1}. Show derivations for \"ab\" and \"aabb\".",
+    "difficulty": 1,
+    "hints": [
+      "Each \"a\" must be matched with a \"b\"",
+      "Think recursively: add one \"a\" and one \"b\" at a time",
+      "Need to ensure at least one of each"
+    ],
+    "solution": "**Context-Free Grammar for L = {aⁿbⁿ | n ≥ 1}**\n\n**Grammar G:**\nS → aSb | ab\n\n**Alternative (using n ≥ 0 base):**\nS → aSb | ε would give {aⁿbⁿ | n ≥ 0}\nFor n ≥ 1: S → aSb | ab\n\n**Derivation of \"ab\":**\nS ⇒ ab\n\n**Derivation of \"aabb\":**\nS ⇒ aSb ⇒ aabb\n\n**Derivation of \"aaabbb\":**\nS ⇒ aSb ⇒ aaSbb ⇒ aaabbb\n\n**Correctness argument:**\n\n**Claim:** L(G) = {aⁿbⁿ | n ≥ 1}\n\n*Part 1: L(G) ⊆ {aⁿbⁿ | n ≥ 1}*\n- Every derivation starts with S\n- S → ab produces a¹b¹ ✓\n- S → aSb adds one 'a' prefix and one 'b' suffix\n- By induction: after k applications of S → aSb followed by S → ab:\n  - Result is aᵏ⁺¹bᵏ⁺¹ ∈ {aⁿbⁿ | n ≥ 1}\n\n*Part 2: {aⁿbⁿ | n ≥ 1} ⊆ L(G)*\n- For any n ≥ 1, apply S → aSb (n-1) times, then S → ab\n- This produces aⁿbⁿ\n\n**Parse tree for \"aabb\":**\n```\n    S\n   /|\\\n  a S b\n    |\n   ab\n```"
+  },
+  {
+    "id": "cs203-t3-ex2",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-3",
+    "type": "written",
+    "title": "Grammar for Palindromes",
+    "description": "Design a CFG for the language of all palindromes over {a, b}. Include derivations for \"aba\" and \"abba\".",
+    "difficulty": 1,
+    "hints": [
+      "A palindrome reads the same forwards and backwards",
+      "Add the same symbol to both ends",
+      "Handle both odd and even length palindromes"
+    ],
+    "solution": "**CFG for palindromes over {a, b}:**\n\n**Grammar G:**\nS → aSa | bSb | a | b | ε\n\n**Explanation:**\n- S → aSa: add 'a' to both ends\n- S → bSb: add 'b' to both ends\n- S → a: odd-length palindrome with 'a' center\n- S → b: odd-length palindrome with 'b' center\n- S → ε: even-length palindrome (empty center)\n\n**Derivation of \"aba\":**\nS ⇒ aSa ⇒ aba (using S → b)\n\n**Derivation of \"abba\":**\nS ⇒ aSa ⇒ abSba ⇒ abba (using S → ε)\n\n**More examples:**\n- \"aa\": S ⇒ aSa ⇒ aa (S → ε)\n- \"aaa\": S ⇒ aSa ⇒ aaa (S → a)\n- \"baab\": S ⇒ bSb ⇒ baSab ⇒ baab (S → ε)\n\n**Parse tree for \"abba\":**\n```\n      S\n     /|\\\n    a S a\n     /|\\\n    b S b\n      |\n      ε\n```\n\n**Correctness:**\n- Every derivation produces a palindrome (symmetric additions)\n- Every palindrome can be derived:\n  - Empty: use S → ε\n  - Single char: use S → a or S → b\n  - Longer: first and last chars match, recurse on middle"
+  },
+  {
+    "id": "cs203-t3-ex3",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-3",
+    "type": "written",
+    "title": "Leftmost and Rightmost Derivations",
+    "description": "For the grammar S → AB, A → aA | a, B → bB | b, give both leftmost and rightmost derivations for \"aabb\".",
+    "difficulty": 3,
+    "hints": [
+      "Leftmost: always expand the leftmost variable",
+      "Rightmost: always expand the rightmost variable",
+      "Both should produce the same string"
+    ],
+    "solution": "**Grammar:**\nS → AB\nA → aA | a\nB → bB | b\n\n**Leftmost derivation of \"aabb\":**\n(Always expand the leftmost variable)\n\nS ⇒_lm AB        (S → AB, expand S)\n  ⇒_lm aAB       (A → aA, expand leftmost A)\n  ⇒_lm aaB       (A → a, expand leftmost A)\n  ⇒_lm aabB      (B → bB, expand leftmost B)\n  ⇒_lm aabb      (B → b, expand leftmost B)\n\n**Rightmost derivation of \"aabb\":**\n(Always expand the rightmost variable)\n\nS ⇒_rm AB        (S → AB, expand S)\n  ⇒_rm AbB       (B → bB, expand rightmost B)\n  ⇒_rm Abb       (B → b, expand rightmost B)\n  ⇒_rm aAbb      (A → aA, expand rightmost A, which is the only A)\n  ⇒_rm aabb      (A → a, expand rightmost A)\n\n**Both produce: \"aabb\" ✓**\n\n**Parse tree (same for both):**\n```\n      S\n     / \\\n    A   B\n   /|   |\\\n  a A   b B\n    |     |\n    a     b\n```\n\n**Key insight:**\n- Different derivations, same parse tree\n- Leftmost and rightmost derivations are canonical forms\n- Ambiguity occurs when multiple leftmost (or rightmost) derivations exist for the same string"
+  },
+  {
+    "id": "cs203-t3-ex4",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-3",
+    "type": "written",
+    "title": "Ambiguous Grammar",
+    "description": "Show that the grammar S → SS | a | b is ambiguous by finding a string with two different parse trees.",
+    "difficulty": 3,
+    "hints": [
+      "Try a string with at least 3 symbols",
+      "Think about different ways to group concatenations",
+      "Consider how \"aab\" could be parsed"
+    ],
+    "solution": "**Proving ambiguity of S → SS | a | b**\n\n**Consider the string \"aab\":**\n\n**Parse Tree 1:** Group as (aa)b\n```\n      S\n     / \\\n    S   S\n   /\\   |\n  S  S  b\n  |  |\n  a  a\n```\nDerivation: S ⇒ SS ⇒ SSS ⇒ aSS ⇒ aaS ⇒ aab\n\n**Parse Tree 2:** Group as a(ab)\n```\n      S\n     / \\\n    S   S\n    |  / \\\n    a S   S\n      |   |\n      a   b\n```\nDerivation: S ⇒ SS ⇒ aS ⇒ aSS ⇒ aaS ⇒ aab\n\n**These are different parse trees for the same string \"aab\".**\n\n**Leftmost derivations:**\n1. S ⇒ SS ⇒ SSS ⇒ aSS ⇒ aaS ⇒ aab\n2. S ⇒ SS ⇒ aS ⇒ aSS ⇒ aaS ⇒ aab\n\n**Wait, these look similar. Let me reconsider the trees:**\n\nActually, for tree 1: S ⇒ SS ⇒ (SS)S ⇒ ... different structure\nFor tree 2: S ⇒ SS ⇒ S(SS) ⇒ ...\n\n**Clearer leftmost derivations:**\nTree 1: S ⇒ SS ⇒ SSS ⇒ aSSS → ... wait, this gets complicated.\n\n**Better approach - use \"ab\":**\n- Tree 1: S → SS → aS → ab (left child is 'a', right child is 'b')\n- Tree 2: This is the only parse for \"ab\" with SS\n\n**For \"aaa\":**\n```\nTree 1:       S           Tree 2:       S\n            / \\                       / \\\n           S   S                     S   S\n          /\\   |                     |   |\\\n         S  S  a                     a  S  S\n         |  |                           |  |\n         a  a                           a  a\n```\n\nThese represent (a·a)·a vs a·(a·a) - different parse trees!\n\n**Conclusion:** The grammar is ambiguous because \"aaa\" (and \"aab\") have multiple distinct parse trees. ∎"
+  },
+  {
+    "id": "cs203-t3-ex5",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-3",
+    "type": "written",
+    "title": "Chomsky Normal Form Conversion",
+    "description": "Convert the grammar S → aAB, A → bB | ε, B → b to Chomsky Normal Form.",
+    "difficulty": 5,
+    "hints": [
+      "First eliminate ε-productions",
+      "Then eliminate unit productions",
+      "Finally convert to binary productions with terminals replaced"
+    ],
+    "solution": "**Converting to Chomsky Normal Form**\n\n**Original grammar:**\nS → aAB\nA → bB | ε\nB → b\n\n**Step 1: Eliminate ε-productions**\n\nNullable variables: A (since A → ε)\n\nFor each production with A, add version without A:\n- S → aAB becomes S → aAB | aB\n- A → bB stays (no A on right side)\n- B → b stays\n\nRemove A → ε.\n\nAfter Step 1:\nS → aAB | aB\nA → bB\nB → b\n\n**Step 2: Eliminate unit productions**\nNo unit productions (A → B form), so nothing to do.\n\n**Step 3: Convert to CNF**\n\nCNF requires: A → BC or A → a\n\n**Problem productions:**\n- S → aAB (length 3, starts with terminal)\n- S → aB (length 2, has terminal)\n- A → bB (length 2, has terminal)\n\n**Fix 1:** Replace terminals with new variables\n- Create Cₐ → a, C_b → b\n\nAfter replacement:\nS → CₐAB | CₐB\nA → C_bB\nB → b\nCₐ → a\nC_b → b\n\n**Fix 2:** Break long productions into binary\n- S → CₐAB becomes S → CₐD, D → AB\n\n**Final CNF grammar:**\nS → CₐD | CₐB\nD → AB\nA → C_bB\nB → b\nCₐ → a\nC_b → b\n\n**Verification for \"abB\" → \"abb\":**\nS ⇒ CₐD ⇒ aD ⇒ aAB ⇒ aC_bBB ⇒ abBB ⇒ abbB ⇒ abbb\nHmm, let's trace \"ab\":\nS ⇒ CₐB ⇒ aB ⇒ ab ✓"
+  },
+  {
+    "id": "cs203-t3-ex6",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-3",
+    "type": "written",
+    "title": "Pumping Lemma for CFLs",
+    "description": "Use the pumping lemma for context-free languages to prove that L = {aⁿbⁿcⁿ | n ≥ 0} is not context-free.",
+    "difficulty": 5,
+    "hints": [
+      "Choose string aᵖbᵖcᵖ where p is the pumping length",
+      "For s = uvxyz, vy can't cover all three symbols equally",
+      "Pumping will unbalance the counts"
+    ],
+    "solution": "**Proof that L = {aⁿbⁿcⁿ | n ≥ 0} is not context-free**\n\nAssume for contradiction that L is context-free with pumping length p.\n\n**Choose string:** s = aᵖbᵖcᵖ ∈ L with |s| = 3p ≥ p\n\n**Apply CFL pumping lemma:** s = uvxyz where:\n1. |vy| > 0 (v and y aren't both empty)\n2. |vxy| ≤ p\n3. uvⁱxyⁱz ∈ L for all i ≥ 0\n\n**Key constraint:** |vxy| ≤ p\n\nSince |vxy| ≤ p and s = aᵖbᵖcᵖ, the substring vxy:\n- Can span at most two different symbol types\n- Cannot span all three (a's, b's, and c's)\n\n**Case analysis:**\n\n**Case 1:** vxy is entirely within aᵖ (all a's)\nThen vy consists only of a's.\nPumping: uv²xy²z has more a's than b's or c's.\nSo uv²xy²z ∉ L (unequal counts). Contradiction.\n\n**Case 2:** vxy is entirely within bᵖ (all b's)\nThen vy consists only of b's.\nPumping: uv²xy²z has more b's than a's or c's.\nSo uv²xy²z ∉ L. Contradiction.\n\n**Case 3:** vxy is entirely within cᵖ (all c's)\nThen vy consists only of c's.\nPumping: uv²xy²z has more c's than a's or b's.\nSo uv²xy²z ∉ L. Contradiction.\n\n**Case 4:** vxy spans a's and b's\nThen vy contains only a's and b's (no c's).\nPumping: uv²xy²z has more a's and/or b's, same c's.\nSince |vy| > 0, at least one of a-count or b-count increases.\nBut c-count stays at p.\nSo uv²xy²z ∉ L. Contradiction.\n\n**Case 5:** vxy spans b's and c's\nThen vy contains only b's and c's (no a's).\nPumping increases b's and/or c's, a-count stays at p.\nSo uv²xy²z ∉ L. Contradiction.\n\n**All cases lead to contradiction.**\n\n**Conclusion:** L = {aⁿbⁿcⁿ} is not context-free. ∎"
+  },
+  {
+    "id": "cs203-t3-ex7",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-3",
+    "type": "written",
+    "title": "CFG for Expression Grammar",
+    "description": "Design an unambiguous CFG for arithmetic expressions with +, *, and parentheses over variable x. Ensure * has higher precedence than + and both are left-associative.",
+    "difficulty": 5,
+    "hints": [
+      "Use separate non-terminals for different precedence levels",
+      "Lower precedence operators at higher levels of the grammar",
+      "Left-recursion gives left-associativity"
+    ],
+    "solution": "**Unambiguous Expression Grammar**\n\n**Grammar G:**\nE → E + T | T\nT → T * F | F\nF → (E) | x\n\n**Explanation:**\n- E (Expression): handles addition (lowest precedence)\n- T (Term): handles multiplication (higher precedence)\n- F (Factor): handles atoms and parentheses (highest precedence)\n\n**Precedence enforcement:**\n- * binds tighter because T appears inside E's production\n- To reach * in E + T, must go through T first\n- Parentheses override precedence by restarting with E\n\n**Left-associativity:**\n- E → E + T makes + left-associative: x+x+x = (x+x)+x\n- T → T * F makes * left-associative: x*x*x = (x*x)*x\n\n**Example derivations:**\n\n**\"x+x*x\" (should be x+(x*x)):**\nE ⇒ E + T ⇒ T + T ⇒ F + T ⇒ x + T ⇒ x + T * F ⇒ x + F * F ⇒ x + x * F ⇒ x + x * x\n\nParse tree groups as x + (x * x) ✓\n\n**\"x+x+x\" (should be (x+x)+x):**\nE ⇒ E + T ⇒ E + T + T ⇒ T + T + T ⇒ x + T + T ⇒ x + x + T ⇒ x + x + x\n\nWait, that derivation doesn't show left-assoc clearly. Correct tree:\nE ⇒ E + T ⇒ (E + T) + T ⇒ ... leftmost E becomes x+x, then +T gives +x\n\n**Parse tree for x+x+x:**\n```\n        E\n       /|\\\n      E + T\n     /|\\  |\n    E + T  x\n    |   |\n    T   x\n    |\n    x\n```\n\nThis groups as ((x)+x)+x = (x+x)+x ✓"
+  },
+  {
+    "id": "cs203-t3-ex8",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-3",
+    "type": "written",
+    "title": "Closure Under Union",
+    "description": "Prove that context-free languages are closed under union. Given CFGs G₁ and G₂, construct a CFG for L(G₁) ∪ L(G₂).",
+    "difficulty": 3,
+    "hints": [
+      "Create a new start symbol",
+      "Choose which grammar to use",
+      "Ensure variable names don't clash"
+    ],
+    "solution": "**Theorem:** CFLs are closed under union.\n\n**Proof by construction:**\n\nLet G₁ = (V₁, Σ, R₁, S₁) generate L₁\nLet G₂ = (V₂, Σ, R₂, S₂) generate L₂\n\nAssume V₁ ∩ V₂ = ∅ (rename if necessary).\n\n**Construct G = (V, Σ, R, S) for L₁ ∪ L₂:**\n\n- V = V₁ ∪ V₂ ∪ {S} where S is new\n- R = R₁ ∪ R₂ ∪ {S → S₁ | S₂}\n- Start symbol: S\n\n**Correctness:**\n\n**Part 1: L(G) ⊆ L₁ ∪ L₂**\nAny derivation in G starts with S → S₁ or S → S₂.\n- If S → S₁: subsequent derivation uses only R₁ rules, producing string in L₁\n- If S → S₂: subsequent derivation uses only R₂ rules, producing string in L₂\nTherefore any string derived is in L₁ or L₂.\n\n**Part 2: L₁ ∪ L₂ ⊆ L(G)**\n- If w ∈ L₁: S ⇒ S₁ ⇒* w using R₁ rules\n- If w ∈ L₂: S ⇒ S₂ ⇒* w using R₂ rules\nTherefore any string in L₁ ∪ L₂ can be derived in G.\n\n**Example:**\nG₁: S₁ → aS₁b | ε (generates {aⁿbⁿ})\nG₂: S₂ → cS₂ | ε (generates c*)\n\nG: S → S₁ | S₂\n   S₁ → aS₁b | ε\n   S₂ → cS₂ | ε\n\nL(G) = {aⁿbⁿ | n ≥ 0} ∪ {cᵐ | m ≥ 0} ∎"
+  },
+  {
+    "id": "cs203-t3-ex9",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-3",
+    "type": "written",
+    "title": "Non-Closure Under Intersection",
+    "description": "Prove that context-free languages are NOT closed under intersection using specific languages.",
+    "difficulty": 3,
+    "hints": [
+      "Use two CFLs whose intersection is not context-free",
+      "Consider {aⁿbⁿcᵐ} ∩ {aᵐbⁿcⁿ}",
+      "The intersection would require matching all three"
+    ],
+    "solution": "**Theorem:** CFLs are NOT closed under intersection.\n\n**Proof:**\n\n**Define two context-free languages:**\n- L₁ = {aⁿbⁿcᵐ | n, m ≥ 0}\n- L₂ = {aᵐbⁿcⁿ | n, m ≥ 0}\n\n**Show L₁ is context-free:**\nGrammar for L₁:\nS → AB\nA → aAb | ε\nB → cB | ε\n\nThis generates strings with equal a's and b's, followed by any number of c's.\nL₁ is context-free. ✓\n\n**Show L₂ is context-free:**\nGrammar for L₂:\nS → AB\nA → aA | ε\nB → bBc | ε\n\nThis generates any number of a's, followed by equal b's and c's.\nL₂ is context-free. ✓\n\n**Compute L₁ ∩ L₂:**\nw ∈ L₁ ∩ L₂ ⟺ w ∈ L₁ AND w ∈ L₂\n⟺ w = aⁿbⁿcᵐ AND w = aᵐ'bⁿ'cⁿ'\n⟺ n = n' (number of a's = number where a's match)...\n\nActually: w = aⁱbʲcᵏ where:\n- From L₁: i = j (equal a's and b's)\n- From L₂: j = k (equal b's and c's)\n- Combined: i = j = k\n\n**Therefore: L₁ ∩ L₂ = {aⁿbⁿcⁿ | n ≥ 0}**\n\n**We proved earlier that {aⁿbⁿcⁿ} is NOT context-free.**\n\n**Conclusion:**\nL₁ and L₂ are both context-free, but L₁ ∩ L₂ is not context-free.\n\nTherefore CFLs are not closed under intersection. ∎\n\n**Corollary:** CFLs are not closed under complement either.\n(If closed under complement: L₁ ∩ L₂ = (L̄₁ ∪ L̄₂)̄ using De Morgan's law. Union is closed, so intersection would be closed. Contradiction.)"
+  },
+  {
+    "id": "cs203-t3-ex10",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-3",
+    "type": "written",
+    "title": "CYK Parsing Algorithm",
+    "description": "Use the CYK algorithm to determine if \"baaba\" is in the language of the CNF grammar: S → AB | BC, A → BA | a, B → CC | b, C → AB | a.",
+    "difficulty": 5,
+    "hints": [
+      "Build a triangular table bottom-up",
+      "Row 1: which variables generate each single symbol",
+      "Each cell (i,j): which variables generate substring from i of length j"
+    ],
+    "solution": "**CYK Algorithm for \"baaba\"**\n\n**Grammar in CNF:**\nS → AB | BC\nA → BA | a\nB → CC | b\nC → AB | a\n\n**String:** b a a b a (positions 1,2,3,4,5)\n\n**Build table T where T[i,j] = variables generating substring starting at i with length j**\n\n**Row 1 (length 1):**\n- T[1,1]: b → {B} (B → b)\n- T[2,1]: a → {A, C} (A → a, C → a)\n- T[3,1]: a → {A, C}\n- T[4,1]: b → {B}\n- T[5,1]: a → {A, C}\n\n**Row 2 (length 2):**\n- T[1,2]: \"ba\" = T[1,1]·T[2,1] = {B}·{A,C}\n  - B·A = BA → A, so A ∈ T[1,2]\n  - B·C = BC → S, so S ∈ T[1,2]\n  - T[1,2] = {A, S}\n\n- T[2,2]: \"aa\" = T[2,1]·T[3,1] = {A,C}·{A,C}\n  - A·A = AA → nothing\n  - A·C = AC → nothing\n  - C·A = CA → nothing\n  - C·C = CC → B, so B ∈ T[2,2]\n  - T[2,2] = {B}\n\n- T[3,2]: \"ab\" = T[3,1]·T[4,1] = {A,C}·{B}\n  - A·B = AB → S,C, so S,C ∈ T[3,2]\n  - C·B = CB → nothing\n  - T[3,2] = {S, C}\n\n- T[4,2]: \"ba\" = T[4,1]·T[5,1] = {B}·{A,C}\n  - B·A = BA → A\n  - B·C = BC → S\n  - T[4,2] = {A, S}\n\n**Row 3 (length 3):**\n- T[1,3]: \"baa\" = T[1,1]·T[2,2] ∪ T[1,2]·T[3,1]\n  - {B}·{B} = BB → nothing\n  - {A,S}·{A,C} = AA,AC,SA,SC → nothing\n  - T[1,3] = {}\n\n- T[2,3]: \"aab\" = T[2,1]·T[3,2] ∪ T[2,2]·T[4,1]\n  - {A,C}·{S,C} = AS,AC,CS,CC → CC → B\n  - {B}·{B} = BB → nothing\n  - T[2,3] = {B}\n\n- T[3,3]: \"aba\" = T[3,1]·T[4,2] ∪ T[3,2]·T[5,1]\n  - {A,C}·{A,S} = AA,AS,CA,CS → nothing\n  - {S,C}·{A,C} = SA,SC,CA,CC → CC → B\n  - T[3,3] = {B}\n\n**Row 4 (length 4):**\n- T[1,4]: \"baab\" = T[1,1]·T[2,3] ∪ T[1,2]·T[3,2] ∪ T[1,3]·T[4,1]\n  - {B}·{B} = BB → nothing\n  - {A,S}·{S,C} = AS,AC,SS,SC → nothing\n  - {}·{B} = nothing\n  - T[1,4] = {}\n\n- T[2,4]: \"aaba\" = T[2,1]·T[3,3] ∪ T[2,2]·T[4,2] ∪ T[2,3]·T[5,1]\n  - {A,C}·{B} = AB,CB → AB → S,C\n  - {B}·{A,S} = BA,BS → BA → A\n  - {B}·{A,C} = BA,BC → BA → A, BC → S\n  - T[2,4] = {S, C, A}\n\n**Row 5 (length 5):**\n- T[1,5]: \"baaba\" = T[1,1]·T[2,4] ∪ T[1,2]·T[3,3] ∪ T[1,3]·T[4,2] ∪ T[1,4]·T[5,1]\n  - {B}·{S,C,A} = BS,BC,BA → BC → S, BA → A\n  - {A,S}·{B} = AB,SB → AB → S,C\n  - {}·{A,S} = nothing\n  - {}·{A,C} = nothing\n  - T[1,5] = {S, A, C}\n\n**S ∈ T[1,5], so \"baaba\" ∈ L(G) ✓**"
+  },
+  {
+    "id": "cs203-t3-ex11",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-3",
+    "type": "written",
+    "title": "Eliminating ε-Productions",
+    "description": "Remove ε-productions from the grammar: S → ABC, A → aA | ε, B → bB | ε, C → c.",
+    "difficulty": 3,
+    "hints": [
+      "Find all nullable variables",
+      "For each production with nullable variables, add versions without them",
+      "Remove the ε-productions themselves"
+    ],
+    "solution": "**Eliminating ε-Productions**\n\n**Original grammar:**\nS → ABC\nA → aA | ε\nB → bB | ε\nC → c\n\n**Step 1: Find nullable variables**\n- A is nullable (A → ε)\n- B is nullable (B → ε)\n- S is nullable? S → ABC, need A, B, C all nullable. C is not nullable.\n- So nullable = {A, B}\n\n**Step 2: Add productions for each way to omit nullable variables**\n\nFor S → ABC:\n- Keep ABC\n- Omit A: BC\n- Omit B: AC\n- Omit both A and B: C\nNew: S → ABC | BC | AC | C\n\nFor A → aA:\n- Keep aA\n- Omit A: a\nNew: A → aA | a\n\nFor B → bB:\n- Keep bB\n- Omit B: b\nNew: B → bB | b\n\nFor C → c:\n- No nullable variables\nKeep: C → c\n\n**Step 3: Remove ε-productions**\nRemove A → ε and B → ε\n\n**Final grammar (ε-free):**\nS → ABC | BC | AC | C\nA → aA | a\nB → bB | b\nC → c\n\n**Verification:**\nOriginal: S ⇒ ABC ⇒ aABC ⇒ aBC ⇒ abBC ⇒ abC ⇒ abc (using ε twice)\nNew: S ⇒ AC ⇒ aAC ⇒ aC... wait let me redo:\nNew: S ⇒ AC ⇒ aC ⇒ ac (if A → a)\nNew: S ⇒ ABC ⇒ aABC ⇒ aBC ⇒ abC ⇒ abc ✓"
+  },
+  {
+    "id": "cs203-t3-ex12",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-3",
+    "type": "written",
+    "title": "Eliminating Unit Productions",
+    "description": "Remove unit productions from: S → A | ab, A → B | a, B → S | bb.",
+    "difficulty": 3,
+    "hints": [
+      "Unit productions are A → B where B is a single variable",
+      "Find all unit pairs (A, B) where A ⇒* B using only unit productions",
+      "Replace with non-unit productions"
+    ],
+    "solution": "**Eliminating Unit Productions**\n\n**Original grammar:**\nS → A | ab\nA → B | a\nB → S | bb\n\n**Step 1: Identify unit productions**\n- S → A (unit)\n- A → B (unit)\n- B → S (unit)\n\n**Step 2: Compute unit pairs (transitive closure)**\nUnit pairs (X, Y) where X ⇒* Y using only unit productions:\n\nReflexive: (S,S), (A,A), (B,B)\n\nDirect unit productions:\n- S → A: (S, A)\n- A → B: (A, B)\n- B → S: (B, S)\n\nTransitive:\n- (S, A) and (A, B) → (S, B)\n- (A, B) and (B, S) → (A, S)\n- (B, S) and (S, A) → (B, A)\n- Continue: (S, B) and (B, S) → (S, S) already have\n- (B, A) and (A, B) → (B, B) already have\n\n**All unit pairs:** {(S,S), (S,A), (S,B), (A,A), (A,B), (A,S), (B,B), (B,S), (B,A)}\n\n**Step 3: For each unit pair (X, Y), add X → α for each non-unit Y → α**\n\nNon-unit productions:\n- S → ab\n- A → a\n- B → bb\n\nFor (S, S): S → ab (already there)\nFor (S, A): S → a\nFor (S, B): S → bb\nFor (A, A): A → a (already there)\nFor (A, B): A → bb\nFor (A, S): A → ab\nFor (B, B): B → bb (already there)\nFor (B, S): B → ab\nFor (B, A): B → a\n\n**Step 4: Remove unit productions**\n\n**Final grammar:**\nS → ab | a | bb\nA → a | bb | ab\nB → bb | ab | a\n\n**Verification:**\nOriginal: S ⇒ A ⇒ B ⇒ bb\nNew: S ⇒ bb ✓"
+  },
+  {
+    "id": "cs203-t3-ex13",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-3",
+    "type": "written",
+    "title": "Grammar for Matching Brackets",
+    "description": "Design a CFG for strings of properly nested brackets using [ and ]. Include strings like \"[]\", \"[[]]\", \"[][]\", \"[[][]]\".",
+    "difficulty": 1,
+    "hints": [
+      "Each [ must have a matching ]",
+      "Brackets can be nested or sequential",
+      "Think recursively: balanced string = [ balanced ] or concat of balanced"
+    ],
+    "solution": "**CFG for Properly Nested Brackets**\n\n**Grammar G:**\nS → [S] | SS | ε\n\n**Alternative (often cleaner):**\nS → [S]S | ε\n\n**Explanation:**\n- S → ε: empty string is balanced\n- S → [S]: a pair of brackets around a balanced string\n- S → SS: concatenation of two balanced strings\n- Combined [S]S handles both nesting and sequence\n\n**Derivations:**\n\n**\"[]\":**\nS ⇒ [S] ⇒ [] (using S → ε)\n\n**\"[[]]\":**\nS ⇒ [S] ⇒ [[S]] ⇒ [[]]\n\n**\"[][]\":**\nS ⇒ SS ⇒ [S]S ⇒ []S ⇒ [][S] ⇒ [][]\n\nOr with S → [S]S:\nS ⇒ [S]S ⇒ []S ⇒ [][S]S ⇒ [][ε]ε ⇒ [][]\n\n**\"[[][]]\":**\nS ⇒ [S] ⇒ [SS] ⇒ [[S]S] ⇒ [[]S] ⇒ [[][S]] ⇒ [[][][]]\n\nHmm, that's [[][]], let me redo:\nS ⇒ [S] ⇒ [SS] ⇒ [[S]S] ⇒ [[][S]] ⇒ [[][][]]...\n\nFor exactly \"[[][]]\":\nS ⇒ [S] ⇒ [SS] ⇒ [[S][S]] ⇒ [[][]] ✓\n\n**Parse tree for \"[[]][]\":**\n```\n       S\n      /|\n     S S\n    /|  |\\\n   [ S ] []\n     |\n    [S]\n     |\n     ε\n```\n\nUsing S → [S]S version:\n```\n         S\n        /|\\\\\n       [ S ] S\n         |   |\\\\\n        [S]S [ S ] S\n         | |   |   |\n         ε ε   ε   ε\n```"
+  },
+  {
+    "id": "cs203-t3-ex14",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-3",
+    "type": "written",
+    "title": "Greibach Normal Form",
+    "description": "Describe Greibach Normal Form (GNF) and explain why every CFG without ε (except possibly S → ε) can be converted to GNF.",
+    "difficulty": 5,
+    "hints": [
+      "GNF requires all productions to start with a terminal",
+      "This is useful for PDA construction",
+      "Conversion involves left-recursion elimination"
+    ],
+    "solution": "**Greibach Normal Form (GNF)**\n\n**Definition:**\nA CFG is in Greibach Normal Form if every production has the form:\nA → aα\nwhere a ∈ Σ (terminal) and α ∈ V* (string of variables)\n\nSpecial case: S → ε is allowed only if S doesn't appear on any right-hand side.\n\n**Properties of GNF:**\n1. Every production starts with exactly one terminal\n2. Followed by zero or more variables\n3. Reading one terminal = one derivation step\n4. Natural correspondence with PDAs (one input symbol per transition)\n\n**Why every ε-free CFG can be converted to GNF:**\n\n**Sketch of conversion algorithm:**\n\n1. **Start with CNF** (or any ε-free form)\n\n2. **Order variables:** A₁, A₂, ..., Aₙ\n\n3. **Transform productions so Aᵢ → Aⱼγ only when j > i:**\n   - If Aᵢ → Aⱼγ with j < i: substitute Aⱼ's productions\n   - If Aᵢ → Aᵢγ (left recursion): eliminate using new variable\n\n4. **Eliminate left recursion:**\n   For Aᵢ → Aᵢα₁ | ... | Aᵢαₘ | β₁ | ... | βₖ (βⱼ don't start with Aᵢ):\n   Replace with:\n   - Aᵢ → β₁ | ... | βₖ | β₁Bᵢ | ... | βₖBᵢ\n   - Bᵢ → α₁ | ... | αₘ | α₁Bᵢ | ... | αₘBᵢ\n\n5. **After step 4:** All productions Aᵢ → Aⱼγ have j > i\n\n6. **Back-substitute:** Starting from Aₙ (highest), substitute downward so all productions start with terminals\n\n**Example:**\nA → Aa | Ab | c\nEliminate left recursion:\nA → c | cB\nB → a | b | aB | bB\n\nNow all productions for A start with terminal 'c'. ✓\n\n**Key insight:** Left recursion elimination and systematic substitution guarantee we can always make productions start with terminals.\n\n**GNF is useful for:**\n- PDA construction (one-to-one with derivation steps)\n- Proving |derivation| = |string| for non-ε strings\n- Parsing algorithms"
+  },
+  {
+    "id": "cs203-t3-ex15",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-3",
+    "type": "written",
+    "title": "Inherent Ambiguity",
+    "description": "Explain what it means for a context-free language to be inherently ambiguous. Give an example of such a language.",
+    "difficulty": 5,
+    "hints": [
+      "Inherent ambiguity is about the language, not a specific grammar",
+      "No unambiguous grammar exists for the language",
+      "Classic example involves matching two different things"
+    ],
+    "solution": "**Inherent Ambiguity**\n\n**Definition:**\nA context-free language L is **inherently ambiguous** if every CFG G with L(G) = L is ambiguous.\n\nIn other words, no unambiguous grammar exists for L.\n\n**Key distinction:**\n- Ambiguous grammar: some string has multiple parse trees\n- Inherently ambiguous language: EVERY grammar for it is ambiguous\n\n**Classic example:**\nL = {aⁿbⁿcᵐdᵐ | n, m ≥ 1} ∪ {aⁿbᵐcᵐdⁿ | n, m ≥ 1}\n\n**Why L is inherently ambiguous:**\n\nConsider strings where n = m, e.g., a²b²c²d² = \"aabbccdd\"\n\nThis string is in L because:\n1. It's in {aⁿbⁿcᵐdᵐ} with n = 2, m = 2\n2. It's in {aⁿbᵐcᵐdⁿ} with n = 2, m = 2\n\nAny grammar for L must handle both cases. For strings where n = m, the grammar cannot \"know\" which pattern applies, leading to two fundamentally different derivations.\n\n**Proof sketch (Ogden's lemma based):**\n- Use Ogden's lemma (marked pumping lemma) to show that any grammar must have productions that can derive both patterns independently for certain strings.\n- The \"overlap\" strings (n = m) will always have multiple derivations.\n\n**Another example:**\nL = {aⁱbʲcᵏ | i = j or j = k}\n\nStrings with i = j = k are in L via both conditions, causing inherent ambiguity.\n\n**Implications:**\n- Some CFLs have no unambiguous grammar\n- LR/LL parsing cannot work for such languages\n- Inherently ambiguous languages still have deterministic recognizers (parsers), just not unambiguous ones\n\n**Contrast with removable ambiguity:**\nL = {all strings over {a,b}} has:\n- Ambiguous grammar: S → SS | a | b\n- Unambiguous grammar: S → aS | bS | ε\n\nSo this L is NOT inherently ambiguous."
+  },
+  {
+    "id": "cs203-t3-ex16",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-3",
+    "type": "written",
+    "title": "Closure Under Kleene Star",
+    "description": "Prove that context-free languages are closed under Kleene star. Given a CFG G, construct a CFG for L(G)*.",
+    "difficulty": 3,
+    "hints": [
+      "L* = {ε} ∪ L ∪ LL ∪ LLL ∪ ...",
+      "Add a new start symbol",
+      "Allow repeating derivations from the original grammar"
+    ],
+    "solution": "**Theorem:** CFLs are closed under Kleene star.\n\n**Proof by construction:**\n\nLet G = (V, Σ, R, S) be a CFG for L.\n\nConstruct G' = (V', Σ, R', S') for L*:\n\n**Construction:**\n- V' = V ∪ {S'} where S' is a new start symbol\n- R' = R ∪ {S' → SS' | ε}\n\n**Alternative (cleaner) construction:**\n- R' = R ∪ {S' → S S' | ε}\n\n**Correctness:**\n\n**Part 1: L(G') ⊆ L***\nAny derivation in G' looks like:\nS' ⇒ SS' ⇒ w₁S' ⇒ w₁SS' ⇒ w₁w₂S' ⇒ ... ⇒ w₁w₂...wₖS' ⇒ w₁w₂...wₖ\n\nWhere each wᵢ ∈ L (derived using original rules from S).\nSo the final string is w₁w₂...wₖ ∈ Lᵏ ⊆ L*.\n\nAlso S' ⇒ ε gives ε ∈ L⁰ ⊆ L*.\n\n**Part 2: L* ⊆ L(G')**\nFor any w ∈ L*:\n- If w = ε: S' ⇒ ε ✓\n- If w = w₁w₂...wₖ where each wᵢ ∈ L:\n  S' ⇒ SS' ⇒ w₁S' ⇒ w₁SS' ⇒ w₁w₂S' ⇒ ... ⇒ w₁...wₖS' ⇒ w₁...wₖ ✓\n\n**Example:**\nG: S → ab generates L = {ab}\n\nG' for L*:\nS' → SS' | ε\nS → ab\n\nDerivation of \"abab\":\nS' ⇒ SS' ⇒ abS' ⇒ abSS' ⇒ ababS' ⇒ abab ✓\n\nDerivation of ε:\nS' ⇒ ε ✓\n\n**Result:** L(G') = L* = {ε, ab, abab, ababab, ...} ∎"
+  }
+]

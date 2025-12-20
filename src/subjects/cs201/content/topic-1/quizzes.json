@@ -1,0 +1,201 @@
+[
+  {
+    "id": "cs201-quiz-1-1",
+    "subjectId": "cs201",
+    "topicId": "cs201-1",
+    "title": "Algorithm Analysis Fundamentals",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "What does Big-O notation describe regarding an algorithm?",
+        "options": [
+          "The exact time it takes to run in seconds",
+          "The worst-case growth rate of operations as input size increases",
+          "The best-case memory usage",
+          "The average time taken on a specific CPU"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Big-O notation provides an upper bound on the growth rate of the algorithm's running time relative to the input size, independent of hardware."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "Which of the following represents constant time complexity?",
+        "options": [
+          "O(1)",
+          "O(n)",
+          "O(log n)",
+          "O(n^2)"
+        ],
+        "correctAnswer": 0,
+        "explanation": "O(1) implies the operation takes the same amount of time regardless of the input size."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "In Big-O analysis, we ignore lower-order terms and constants.",
+        "correctAnswer": true,
+        "explanation": "Yes, for asymptotic analysis, we care about the dominant term as n approaches infinity. 5n^2 + 100n becomes O(n^2)."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "What is the time complexity of iterating through a list of size n?",
+        "options": [
+          "O(1)",
+          "O(n)",
+          "O(log n)",
+          "O(n^2)"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Visiting every element once performs n operations, resulting in linear time O(n)."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "The notation used to describe the asymptotic lower bound of an algorithm is Big-______.",
+        "correctAnswer": "Omega",
+        "explanation": "Big-Omega (Ω) describes the asymptotic lower bound on the growth rate."
+      }
+    ]
+  },
+  {
+    "id": "cs201-quiz-1-2",
+    "subjectId": "cs201",
+    "topicId": "cs201-1",
+    "title": "Big-O Application",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "code_output",
+        "prompt": "What is the Big-O complexity of this code?",
+        "codeSnippet": "def func(n):\n    for i in range(n):\n        print(i)\n    for j in range(n):\n        print(j)",
+        "options": [
+          "O(n)",
+          "O(n^2)",
+          "O(1)",
+          "O(2n)"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The loops are sequential, not nested. O(n) + O(n) = O(2n), which simplifies to O(n)."
+      },
+      {
+        "id": "q2",
+        "type": "code_output",
+        "prompt": "What is the Big-O complexity of this code?",
+        "codeSnippet": "def func(n):\n    for i in range(n):\n        for j in range(n):\n            print(i, j)",
+        "options": [
+          "O(n)",
+          "O(n^2)",
+          "O(log n)",
+          "O(n!)"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The loops are nested. For each of the n iterations of i, the inner loop runs n times. n * n = n^2."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "Which complexity class is generally considered better (faster) for large n?",
+        "options": [
+          "O(n)",
+          "O(n log n)",
+          "O(n^2)",
+          "O(2^n)"
+        ],
+        "correctAnswer": 0,
+        "explanation": "O(n) grows slower than O(n log n), O(n^2), and O(2^n)."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "Binary Search has a time complexity of:",
+        "options": [
+          "O(n)",
+          "O(log n)",
+          "O(1)",
+          "O(n^2)"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Binary search divides the search space in half at each step, resulting in logarithmic complexity."
+      },
+      {
+        "id": "q5",
+        "type": "code_output",
+        "prompt": "What is the complexity if the loop runs `i = i * 2` instead of `i++` up to n?",
+        "codeSnippet": "i = 1\nwhile i < n:\n    print(i)\n    i = i * 2",
+        "options": [
+          "O(n)",
+          "O(n^2)",
+          "O(log n)",
+          "O(1)"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The variable i doubles each time, so it reaches n in log2(n) steps."
+      }
+    ]
+  },
+  {
+    "id": "cs201-quiz-1-3",
+    "subjectId": "cs201",
+    "topicId": "cs201-1",
+    "title": "Advanced Analysis",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "What is the complexity of an algorithm that reduces the problem size by 1 at each step (e.g. recursion n -> n-1)?",
+        "options": [
+          "O(n)",
+          "O(log n)",
+          "O(n^2)",
+          "O(1)"
+        ],
+        "correctAnswer": 0,
+        "explanation": "If you do constant work and reduce problem size by 1, you do n steps. T(n) = T(n-1) + O(1) => O(n)."
+      },
+      {
+        "id": "q2",
+        "type": "true_false",
+        "prompt": "It is possible for an O(n^2) algorithm to run faster than an O(n) algorithm for small inputs.",
+        "correctAnswer": true,
+        "explanation": "Yes, because of the constants. 1000n vs n^2. For n=5, 5000 > 25. The O(n^2) is faster."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "What is the complexity of accessing the nth element in a Linked List?",
+        "options": [
+          "O(1)",
+          "O(n)",
+          "O(log n)",
+          "O(n^2)"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Unlike arrays (O(1)), you must traverse the linked list pointers from the head to reach the nth node."
+      },
+      {
+        "id": "q4",
+        "type": "code_output",
+        "prompt": "Analyze this complexity:",
+        "codeSnippet": "def func(n):\n    if n <= 1: return\n    func(n - 1)\n    func(n - 1)",
+        "options": [
+          "O(n)",
+          "O(n^2)",
+          "O(2^n)",
+          "O(log n)"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Each call branches into two recursive calls, creating a binary tree of depth n. 2^0 + 2^1 + ... + 2^n nodes."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "If T(n) = 2T(n/2) + O(n), then by Master Theorem, T(n) is O(_______).",
+        "correctAnswer": "n log n",
+        "explanation": "This is the standard Merge Sort recurrence case where work is balanced."
+      }
+    ]
+  }
+]

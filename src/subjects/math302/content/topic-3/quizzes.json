@@ -1,0 +1,221 @@
+[
+  {
+    "id": "math302-quiz-3-1",
+    "subjectId": "math302",
+    "topicId": "math302-topic-3",
+    "title": "Higher-Order Linear - Operator Methods",
+    "questions": [
+      {
+        "id": "math302-q31",
+        "type": "multiple_choice",
+        "prompt": "The differential operator D is defined as:",
+        "options": [
+          "D = d/dx",
+          "D = ∫ dx",
+          "D = x d/dx",
+          "D = d²/dx²"
+        ],
+        "correctAnswer": "D = d/dx",
+        "explanation": "The differential operator D represents differentiation: Dy = dy/dx, D²y = d²y/dx², etc."
+      },
+      {
+        "id": "math302-q32",
+        "type": "multiple_choice",
+        "prompt": "The equation (D² - 3D + 2)y = 0 factors as:",
+        "options": [
+          "(D - 1)(D - 2)y = 0",
+          "(D + 1)(D + 2)y = 0",
+          "(D - 2)(D + 1)y = 0",
+          "D(D - 3)y = 0"
+        ],
+        "correctAnswer": "(D - 1)(D - 2)y = 0",
+        "explanation": "The operator D² - 3D + 2 factors like a polynomial: (D - 1)(D - 2). This gives characteristic roots r = 1, 2."
+      },
+      {
+        "id": "math302-q33",
+        "type": "multiple_choice",
+        "prompt": "For a third-order equation y‴ + 6y″ + 11y′ + 6y = 0, how many linearly independent solutions exist?",
+        "options": [
+          "3",
+          "2",
+          "6",
+          "1"
+        ],
+        "correctAnswer": "3",
+        "explanation": "An nth-order linear homogeneous equation has exactly n linearly independent solutions. For third-order, n = 3."
+      },
+      {
+        "id": "math302-q34",
+        "type": "multiple_choice",
+        "prompt": "If the characteristic equation has roots 1, 2, 2, 2, the general solution contains:",
+        "options": [
+          "e^x, e^(2x), xe^(2x), x²e^(2x)",
+          "e^x, e^(2x), e^(3x), e^(4x)",
+          "e^x, 2e^(2x), 3e^(2x), 4e^(2x)",
+          "e^x, e^(2x), e^(4x)"
+        ],
+        "correctAnswer": "e^x, e^(2x), xe^(2x), x²e^(2x)",
+        "explanation": "A root of multiplicity k contributes solutions e^(rx), xe^(rx), ..., x^(k-1)e^(rx). Root 1: e^x. Root 2 (multiplicity 3): e^(2x), xe^(2x), x²e^(2x)."
+      },
+      {
+        "id": "math302-q35",
+        "type": "multiple_choice",
+        "prompt": "The annihilator of e^(3x) is:",
+        "options": [
+          "D - 3",
+          "D + 3",
+          "D² - 9",
+          "D³"
+        ],
+        "correctAnswer": "D - 3",
+        "explanation": "An annihilator L is an operator such that L[f] = 0. Since (D - 3)e^(3x) = 3e^(3x) - 3e^(3x) = 0, the annihilator is D - 3."
+      }
+    ]
+  },
+  {
+    "id": "math302-quiz-3-2",
+    "subjectId": "math302",
+    "topicId": "math302-topic-3",
+    "title": "Higher-Order Linear - Cauchy-Euler Equations",
+    "questions": [
+      {
+        "id": "math302-q36",
+        "type": "multiple_choice",
+        "prompt": "A Cauchy-Euler equation has the form:",
+        "options": [
+          "x²y″ + axy′ + by = 0",
+          "y″ + axy′ + by = 0",
+          "y″ + ay′ + bxy = 0",
+          "x²y″ + xy′ + y = x"
+        ],
+        "correctAnswer": "x²y″ + axy′ + by = 0",
+        "explanation": "Cauchy-Euler equations have the form x²y″ + axy′ + by = 0, where the power of x matches the order of derivative."
+      },
+      {
+        "id": "math302-q37",
+        "type": "multiple_choice",
+        "prompt": "For Cauchy-Euler equations, we try solutions of the form:",
+        "options": [
+          "y = x^r",
+          "y = e^(rx)",
+          "y = r^x",
+          "y = ln(x)"
+        ],
+        "correctAnswer": "y = x^r",
+        "explanation": "For Cauchy-Euler equations, we substitute y = x^r to obtain an algebraic equation (indicial equation) for r."
+      },
+      {
+        "id": "math302-q38",
+        "type": "multiple_choice",
+        "prompt": "The indicial equation for x²y″ - 2xy′ + 2y = 0 is:",
+        "options": [
+          "r² - 3r + 2 = 0",
+          "r² - 2r + 2 = 0",
+          "r² + 2r - 2 = 0",
+          "r² - r + 2 = 0"
+        ],
+        "correctAnswer": "r² - 3r + 2 = 0",
+        "explanation": "Substituting y = x^r gives r(r-1) - 2r + 2 = 0, which simplifies to r² - 3r + 2 = 0, giving r = 1, 2."
+      },
+      {
+        "id": "math302-q39",
+        "type": "multiple_choice",
+        "prompt": "If the indicial equation has a repeated root r, the second solution is:",
+        "options": [
+          "x^r ln(x)",
+          "x^(r+1)",
+          "x^r e^x",
+          "rx^(r-1)"
+        ],
+        "correctAnswer": "x^r ln(x)",
+        "explanation": "For a repeated root r in a Cauchy-Euler equation, the solutions are y₁ = x^r and y₂ = x^r ln(x)."
+      },
+      {
+        "id": "math302-q40",
+        "type": "multiple_choice",
+        "prompt": "If the indicial equation has complex roots α ± βi, the solutions are:",
+        "options": [
+          "x^α cos(β ln x) and x^α sin(β ln x)",
+          "x^α cos(βx) and x^α sin(βx)",
+          "e^(αx) cos(β ln x) and e^(αx) sin(β ln x)",
+          "x^α e^(βx) and x^α e^(-βx)"
+        ],
+        "correctAnswer": "x^α cos(β ln x) and x^α sin(β ln x)",
+        "explanation": "For complex roots α ± βi in Cauchy-Euler equations, the real solutions are x^α cos(β ln x) and x^α sin(β ln x)."
+      }
+    ]
+  },
+  {
+    "id": "math302-quiz-3-3",
+    "subjectId": "math302",
+    "topicId": "math302-topic-3",
+    "title": "Higher-Order Linear - Advanced Topics",
+    "questions": [
+      {
+        "id": "math302-q41",
+        "type": "multiple_choice",
+        "prompt": "Reduction of order is used when:",
+        "options": [
+          "One solution to the homogeneous equation is known",
+          "The equation has constant coefficients",
+          "The forcing function is zero",
+          "All solutions are known"
+        ],
+        "correctAnswer": "One solution to the homogeneous equation is known",
+        "explanation": "Reduction of order finds a second independent solution y₂ when one solution y₁ is already known, using the substitution y₂ = vy₁."
+      },
+      {
+        "id": "math302-q42",
+        "type": "multiple_choice",
+        "prompt": "For y″ + P(x)y′ + Q(x)y = 0 with known solution y₁, the substitution y = vy₁ leads to:",
+        "options": [
+          "A first-order equation in v′",
+          "A second-order equation in v",
+          "An algebraic equation in v",
+          "A separable equation in v"
+        ],
+        "correctAnswer": "A first-order equation in v′",
+        "explanation": "Substituting y = vy₁ and simplifying gives a first-order linear equation in w = v′, which can be solved by integration."
+      },
+      {
+        "id": "math302-q43",
+        "type": "multiple_choice",
+        "prompt": "The general nth-order linear homogeneous equation requires:",
+        "options": [
+          "n linearly independent solutions",
+          "2n solutions",
+          "n + 1 solutions",
+          "1 solution"
+        ],
+        "correctAnswer": "n linearly independent solutions",
+        "explanation": "The solution space of an nth-order linear homogeneous equation is n-dimensional, requiring n linearly independent solutions."
+      },
+      {
+        "id": "math302-q44",
+        "type": "multiple_choice",
+        "prompt": "Abel's formula for the Wronskian W of an equation y″ + P(x)y′ + Q(x)y = 0 is:",
+        "options": [
+          "W = Ce^(-∫P dx)",
+          "W = Ce^(∫P dx)",
+          "W = Ce^(-∫Q dx)",
+          "W = Ce^(Px)"
+        ],
+        "correctAnswer": "W = Ce^(-∫P dx)",
+        "explanation": "Abel's formula states that W(x) = Ce^(-∫P(x)dx), showing the Wronskian either is always zero or never zero."
+      },
+      {
+        "id": "math302-q45",
+        "type": "multiple_choice",
+        "prompt": "For the equation y⁽⁴⁾ - y = 0, how many distinct characteristic roots are there?",
+        "options": [
+          "4",
+          "2",
+          "1",
+          "3"
+        ],
+        "correctAnswer": "4",
+        "explanation": "The characteristic equation r⁴ - 1 = 0 factors as (r² - 1)(r² + 1) = 0, giving r = ±1, ±i (four distinct roots)."
+      }
+    ]
+  }
+]

@@ -1,0 +1,180 @@
+[
+  {
+    "id": "cs302-quiz-6a",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-6",
+    "title": "Socket Programming - Fundamentals",
+    "questions": [
+      {
+        "id": "q6a-1",
+        "type": "multiple_choice",
+        "prompt": "What is a socket?",
+        "options": [
+          "A physical network connector",
+          "An endpoint for network communication",
+          "A type of cable",
+          "A routing protocol"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A socket is an endpoint for network communication, identified by an IP address and port number combination."
+      },
+      {
+        "id": "q6a-2",
+        "type": "fill_blank",
+        "prompt": "The socket type SOCK_STREAM is used for ____ connections.",
+        "correctAnswer": "tcp",
+        "explanation": "SOCK_STREAM creates a TCP socket for reliable, stream-oriented connections. SOCK_DGRAM is used for UDP datagrams."
+      },
+      {
+        "id": "q6a-3",
+        "type": "true_false",
+        "prompt": "A server must call connect() before accepting client connections.",
+        "correctAnswer": false,
+        "explanation": "A TCP server calls bind() and listen(), then accept(). The connect() call is used by clients to connect to servers."
+      },
+      {
+        "id": "q6a-4",
+        "type": "multiple_choice",
+        "prompt": "Which socket function is used by a server to wait for incoming connections?",
+        "options": [
+          "bind()",
+          "listen()",
+          "accept()",
+          "connect()"
+        ],
+        "correctAnswer": 2,
+        "explanation": "accept() blocks until a client connects, then returns a new socket for that specific connection. listen() just enables incoming connections."
+      },
+      {
+        "id": "q6a-5",
+        "type": "multiple_choice",
+        "prompt": "What does the bind() function do?",
+        "options": [
+          "Connects to a remote server",
+          "Associates a socket with a local address and port",
+          "Sends data to a remote host",
+          "Closes a socket"
+        ],
+        "correctAnswer": 1,
+        "explanation": "bind() associates a socket with a specific local IP address and port number, required for servers to listen on a specific port."
+      }
+    ]
+  },
+  {
+    "id": "cs302-quiz-6b",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-6",
+    "title": "Socket Programming - Application",
+    "questions": [
+      {
+        "id": "q6b-1",
+        "type": "code_output",
+        "prompt": "What is the correct order of socket calls for a TCP server?",
+        "codeSnippet": "A: accept()\nB: bind()\nC: listen()\nD: socket()",
+        "correctAnswer": "D, B, C, A",
+        "explanation": "TCP server sequence: socket() creates socket, bind() assigns address, listen() enables connections, accept() waits for clients."
+      },
+      {
+        "id": "q6b-2",
+        "type": "multiple_choice",
+        "prompt": "Which function is used to convert a hostname to an IP address?",
+        "options": [
+          "socket()",
+          "gethostbyname()",
+          "bind()",
+          "inet_aton()"
+        ],
+        "correctAnswer": 1,
+        "explanation": "gethostbyname() (or the modern getaddrinfo()) performs DNS lookup to resolve a hostname to an IP address."
+      },
+      {
+        "id": "q6b-3",
+        "type": "true_false",
+        "prompt": "UDP sockets require a listen() call before receiving data.",
+        "correctAnswer": false,
+        "explanation": "UDP is connectionless. After bind(), a UDP server can immediately call recvfrom(). No listen() or accept() is needed."
+      },
+      {
+        "id": "q6b-4",
+        "type": "multiple_choice",
+        "prompt": "What does the select() function do in socket programming?",
+        "options": [
+          "Selects the best route",
+          "Monitors multiple sockets for activity",
+          "Selects TCP or UDP protocol",
+          "Selects the server to connect to"
+        ],
+        "correctAnswer": 1,
+        "explanation": "select() monitors multiple file descriptors (sockets) to see if they are ready for I/O, enabling single-threaded handling of multiple connections."
+      },
+      {
+        "id": "q6b-5",
+        "type": "fill_blank",
+        "prompt": "The ____ option allows a socket to be reused immediately after closing.",
+        "correctAnswer": "so_reuseaddr",
+        "explanation": "SO_REUSEADDR allows binding to a port that is in TIME_WAIT state, useful for servers that need to restart quickly."
+      }
+    ]
+  },
+  {
+    "id": "cs302-quiz-6c",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-6",
+    "title": "Socket Programming - Advanced",
+    "questions": [
+      {
+        "id": "q6c-1",
+        "type": "multiple_choice",
+        "prompt": "What is the advantage of using non-blocking sockets?",
+        "options": [
+          "They are faster",
+          "The process can do other work while waiting for I/O",
+          "They use less memory",
+          "They encrypt data automatically"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Non-blocking sockets return immediately if I/O cannot complete, allowing the program to handle other tasks or multiple connections."
+      },
+      {
+        "id": "q6c-2",
+        "type": "true_false",
+        "prompt": "epoll is more scalable than select for large numbers of connections.",
+        "correctAnswer": true,
+        "explanation": "epoll (Linux) provides O(1) performance regardless of the number of monitored descriptors, while select is O(n)."
+      },
+      {
+        "id": "q6c-3",
+        "type": "multiple_choice",
+        "prompt": "What approach does a multi-threaded server use to handle concurrent connections?",
+        "options": [
+          "Fork a new process for each connection",
+          "Create a new thread for each connection",
+          "Use select() to multiplex",
+          "Queue connections for sequential processing"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A multi-threaded server spawns a new thread (or uses a thread pool) for each connection, allowing parallel request handling."
+      },
+      {
+        "id": "q6c-4",
+        "type": "fill_blank",
+        "prompt": "The socket option ____ disables Nagle's algorithm for low-latency applications.",
+        "correctAnswer": "tcp_nodelay",
+        "explanation": "TCP_NODELAY disables Nagle's algorithm, sending small packets immediately without waiting, useful for interactive applications."
+      },
+      {
+        "id": "q6c-5",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of TLS in socket programming?",
+        "options": [
+          "Improve connection speed",
+          "Reduce packet size",
+          "Provide encryption and authentication",
+          "Enable multicast"
+        ],
+        "correctAnswer": 2,
+        "explanation": "TLS (Transport Layer Security) provides encryption for confidentiality and certificates for authentication over socket connections."
+      }
+    ]
+  }
+]

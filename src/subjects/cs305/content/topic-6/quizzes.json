@@ -1,0 +1,185 @@
+[
+  {
+    "id": "cs305-quiz-6-1",
+    "title": "Promises Basics",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-6",
+    "questions": [
+      {
+        "id": "cs305-q6-1",
+        "type": "multiple_choice",
+        "prompt": "What is a Promise in JavaScript?",
+        "options": [
+          "A function that returns immediately",
+          "An object representing eventual completion or failure",
+          "A loop structure",
+          "A variable type"
+        ],
+        "correctAnswer": "An object representing eventual completion or failure",
+        "explanation": "A Promise is an object representing the eventual completion (or failure) of an asynchronous operation and its resulting value."
+      },
+      {
+        "id": "cs305-q6-2",
+        "type": "true_false",
+        "prompt": "Promises can be in one of three states: pending, fulfilled, or rejected.",
+        "correctAnswer": "true",
+        "explanation": "A Promise starts in the pending state, then transitions to either fulfilled (resolved successfully) or rejected (failed)."
+      },
+      {
+        "id": "cs305-q6-3",
+        "type": "multiple_choice",
+        "prompt": "Which method is used to handle a fulfilled Promise?",
+        "options": [
+          ".catch()",
+          ".then()",
+          ".finally()",
+          ".resolve()"
+        ],
+        "correctAnswer": ".then()",
+        "explanation": ".then() handles fulfilled Promises, .catch() handles rejections, and .finally() runs regardless of the outcome."
+      },
+      {
+        "id": "cs305-q6-4",
+        "type": "multiple_choice",
+        "prompt": "What does the Fetch API return?",
+        "options": [
+          "A string",
+          "A JSON object",
+          "A Promise",
+          "An array"
+        ],
+        "correctAnswer": "A Promise",
+        "explanation": "The Fetch API returns a Promise that resolves to the Response object representing the response to the request."
+      },
+      {
+        "id": "cs305-q6-5",
+        "type": "fill_blank",
+        "prompt": "To handle errors in a Promise chain, use the ___ method.",
+        "correctAnswer": "catch",
+        "explanation": "The .catch() method handles rejection in a Promise chain, catching errors from any previous .then() in the chain."
+      }
+    ]
+  },
+  {
+    "id": "cs305-quiz-6-2",
+    "title": "Async/Await and Fetch API",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-6",
+    "questions": [
+      {
+        "id": "cs305-q6-6",
+        "type": "multiple_choice",
+        "prompt": "What does the async keyword do to a function?",
+        "options": [
+          "Makes it run faster",
+          "Makes it return a Promise",
+          "Makes it synchronous",
+          "Makes it run in background"
+        ],
+        "correctAnswer": "Makes it return a Promise",
+        "explanation": "The async keyword makes a function return a Promise. The function can use await to pause execution for other Promises."
+      },
+      {
+        "id": "cs305-q6-7",
+        "type": "true_false",
+        "prompt": "The await keyword can only be used inside async functions.",
+        "correctAnswer": "true",
+        "explanation": "await can only be used inside async functions (or at the top level of modules in modern JavaScript). It pauses execution until the Promise resolves."
+      },
+      {
+        "id": "cs305-q6-8",
+        "type": "code_output",
+        "prompt": "What does await fetch(url) do?",
+        "options": [
+          "Returns the URL",
+          "Pauses until fetch completes and returns Response",
+          "Cancels the request",
+          "Returns a string"
+        ],
+        "correctAnswer": "Pauses until fetch completes and returns Response",
+        "explanation": "await pauses the async function execution until the fetch Promise resolves, then returns the Response object."
+      },
+      {
+        "id": "cs305-q6-9",
+        "type": "multiple_choice",
+        "prompt": "How do you parse JSON from a fetch response?",
+        "options": [
+          "response.parse()",
+          "response.json()",
+          "JSON.parse(response)",
+          "response.toJSON()"
+        ],
+        "correctAnswer": "response.json()",
+        "explanation": "The response.json() method returns a Promise that resolves with the result of parsing the response body as JSON."
+      },
+      {
+        "id": "cs305-q6-10",
+        "type": "fill_blank",
+        "prompt": "Promise.___ resolves when all promises in an array are fulfilled.",
+        "correctAnswer": "all",
+        "explanation": "Promise.all() takes an array of Promises and returns a single Promise that resolves when all input Promises are fulfilled, or rejects if any rejects."
+      }
+    ]
+  },
+  {
+    "id": "cs305-quiz-6-3",
+    "title": "Advanced Async Patterns",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-6",
+    "questions": [
+      {
+        "id": "cs305-q6-11",
+        "type": "multiple_choice",
+        "prompt": "What is the difference between Promise.all() and Promise.race()?",
+        "options": [
+          "No difference",
+          "all waits for all, race resolves with first to settle",
+          "race waits for all, all for first",
+          "all is deprecated"
+        ],
+        "correctAnswer": "all waits for all, race resolves with first to settle",
+        "explanation": "Promise.all() waits for all Promises to fulfill (or one to reject), while Promise.race() resolves/rejects with the first Promise to settle."
+      },
+      {
+        "id": "cs305-q6-12",
+        "type": "true_false",
+        "prompt": "Promise.allSettled() waits for all Promises and never rejects.",
+        "correctAnswer": "true",
+        "explanation": "Promise.allSettled() waits for all Promises to settle (fulfill or reject) and always fulfills with an array of results, never rejecting."
+      },
+      {
+        "id": "cs305-q6-13",
+        "type": "code_output",
+        "prompt": "What HTTP method does fetch use by default?",
+        "options": [
+          "POST",
+          "GET",
+          "PUT",
+          "DELETE"
+        ],
+        "correctAnswer": "GET",
+        "explanation": "fetch() uses GET by default. To use other methods, specify the method in the options: fetch(url, { method: \"POST\" })."
+      },
+      {
+        "id": "cs305-q6-14",
+        "type": "multiple_choice",
+        "prompt": "What is CORS in web development?",
+        "options": [
+          "A security feature restricting cross-origin requests",
+          "A CSS framework",
+          "A JavaScript library",
+          "A database query language"
+        ],
+        "correctAnswer": "A security feature restricting cross-origin requests",
+        "explanation": "CORS (Cross-Origin Resource Sharing) is a security feature that restricts web pages from making requests to a different domain than the one serving the page."
+      },
+      {
+        "id": "cs305-q6-15",
+        "type": "fill_blank",
+        "prompt": "To handle errors in async/await, use the ___ statement.",
+        "correctAnswer": "try-catch",
+        "explanation": "Use try-catch blocks with async/await to handle errors: try { await promise } catch (error) { /* handle error */ }."
+      }
+    ]
+  }
+]

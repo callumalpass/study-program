@@ -1,0 +1,507 @@
+[
+  {
+    "id": "cs201-ex-1-1",
+    "subjectId": "cs201",
+    "topicId": "cs201-1",
+    "title": "Constant Time Access",
+    "description": "Write a function `get_first_element(arr)` that returns the first element of an array. This operation should be O(1).",
+    "difficulty": 1,
+    "language": "python",
+    "starterCode": "def get_first_element(arr):\n    # Your code here\n    pass",
+    "solution": "def get_first_element(arr):\n    if not arr:\n        return None\n    return arr[0]",
+    "testCases": [
+      {
+        "input": "[1, 2, 3]",
+        "expectedOutput": "1",
+        "isHidden": false,
+        "description": "First element of integer list"
+      },
+      {
+        "input": "[\"a\", \"b\"]",
+        "expectedOutput": "\"a\"",
+        "isHidden": false,
+        "description": "First element of string list"
+      },
+      {
+        "input": "[]",
+        "expectedOutput": "None",
+        "isHidden": true,
+        "description": "Empty list"
+      }
+    ],
+    "hints": [
+      "Index 0 is the first element.",
+      "Check if array is empty first."
+    ]
+  },
+  {
+    "id": "cs201-ex-1-2",
+    "subjectId": "cs201",
+    "topicId": "cs201-1",
+    "title": "Linear Sum",
+    "description": "Write a function `sum_array(arr)` that returns the sum of all elements. This requires visiting every element, making it O(n).",
+    "difficulty": 1,
+    "language": "python",
+    "starterCode": "def sum_array(arr):\n    pass",
+    "solution": "def sum_array(arr):\n    total = 0\n    for x in arr:\n        total += x\n    return total",
+    "testCases": [
+      {
+        "input": "[1, 2, 3]",
+        "expectedOutput": "6",
+        "isHidden": false,
+        "description": "Sum of positive integers"
+      },
+      {
+        "input": "[-1, 1]",
+        "expectedOutput": "0",
+        "isHidden": false,
+        "description": "Sum cancelling out"
+      },
+      {
+        "input": "[]",
+        "expectedOutput": "0",
+        "isHidden": true,
+        "description": "Sum of empty list"
+      }
+    ],
+    "hints": [
+      "Initialize a accumulator variable to 0.",
+      "Loop through the array adding each element."
+    ]
+  },
+  {
+    "id": "cs201-ex-1-3",
+    "subjectId": "cs201",
+    "topicId": "cs201-1",
+    "title": "Linear Search",
+    "description": "Write `contains(arr, target)` that returns True if target is in arr, False otherwise. Worst case is O(n).",
+    "difficulty": 1,
+    "language": "python",
+    "starterCode": "def contains(arr, target):\n    pass",
+    "solution": "def contains(arr, target):\n    for x in arr:\n        if x == target:\n            return True\n    return False",
+    "testCases": [
+      {
+        "input": "[1, 2, 3], 2",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Target exists"
+      },
+      {
+        "input": "[1, 2, 3], 4",
+        "expectedOutput": "False",
+        "isHidden": false,
+        "description": "Target does not exist"
+      },
+      {
+        "input": "[], 1",
+        "expectedOutput": "False",
+        "isHidden": true,
+        "description": "Empty list"
+      }
+    ],
+    "hints": [
+      "Iterate and compare.",
+      "Return True immediately if found."
+    ]
+  },
+  {
+    "id": "cs201-ex-1-4",
+    "subjectId": "cs201",
+    "topicId": "cs201-1",
+    "title": "Count Pairs",
+    "description": "Write `count_pairs(arr)` that returns the number of pairs (i, j) such that i < j. This requires a nested loop, O(n^2).",
+    "difficulty": 2,
+    "language": "python",
+    "starterCode": "def count_pairs(arr):\n    pass",
+    "solution": "def count_pairs(arr):\n    count = 0\n    n = len(arr)\n    for i in range(n):\n        for j in range(i + 1, n):\n            count += 1\n    return count",
+    "testCases": [
+      {
+        "input": "[1, 2]",
+        "expectedOutput": "1",
+        "isHidden": false,
+        "description": "Two elements"
+      },
+      {
+        "input": "[1, 2, 3]",
+        "expectedOutput": "3",
+        "isHidden": false,
+        "description": "Three elements"
+      },
+      {
+        "input": "[]",
+        "expectedOutput": "0",
+        "isHidden": true,
+        "description": "Empty list"
+      }
+    ],
+    "hints": [
+      "Outer loop i from 0 to n.",
+      "Inner loop j from i+1 to n."
+    ]
+  },
+  {
+    "id": "cs201-ex-1-5",
+    "subjectId": "cs201",
+    "topicId": "cs201-1",
+    "title": "Matrix Addition",
+    "description": "Add two NxN matrices. Requires visiting every element in the NxN grid, so O(N^2) relative to dimension N (or O(n) relative to total elements).",
+    "difficulty": 2,
+    "language": "python",
+    "starterCode": "def add_matrices(mat1, mat2):\n    # Assume mat1 and mat2 are same size square matrices\n    pass",
+    "solution": "def add_matrices(mat1, mat2):\n    n = len(mat1)\n    result = [[0] * n for _ in range(n)]\n    for i in range(n):\n        for j in range(n):\n            result[i][j] = mat1[i][j] + mat2[i][j]\n    return result",
+    "testCases": [
+      {
+        "input": "[[1,2],[3,4]], [[1,1],[1,1]]",
+        "expectedOutput": "[[2, 3], [4, 5]]",
+        "isHidden": false,
+        "description": "2x2 matrix addition"
+      },
+      {
+        "input": "[[1]], [[2]]",
+        "expectedOutput": "[[3]]",
+        "isHidden": false,
+        "description": "1x1 matrix addition"
+      }
+    ],
+    "hints": [
+      "Use nested loops for row and column.",
+      "Create a new result matrix."
+    ]
+  },
+  {
+    "id": "cs201-ex-1-6",
+    "subjectId": "cs201",
+    "topicId": "cs201-1",
+    "title": "Logarithmic Counter",
+    "description": "Write a function `steps_to_one(n)` that counts how many times you can divide n by 2 before it becomes 1. This demonstrates O(log n).",
+    "difficulty": 3,
+    "language": "python",
+    "starterCode": "def steps_to_one(n):\n    pass",
+    "solution": "def steps_to_one(n):\n    count = 0\n    while n > 1:\n        n = n // 2\n        count += 1\n    return count",
+    "testCases": [
+      {
+        "input": "16",
+        "expectedOutput": "4",
+        "isHidden": false,
+        "description": "Power of 2"
+      },
+      {
+        "input": "32",
+        "expectedOutput": "5",
+        "isHidden": false,
+        "description": "Larger power of 2"
+      },
+      {
+        "input": "1",
+        "expectedOutput": "0",
+        "isHidden": true,
+        "description": "Base case"
+      }
+    ],
+    "hints": [
+      "Use a while loop.",
+      "Integer division // 2."
+    ]
+  },
+  {
+    "id": "cs201-ex-1-7",
+    "subjectId": "cs201",
+    "topicId": "cs201-1",
+    "title": "Has Duplicates (Naive)",
+    "description": "Check for duplicates using nested loops. Time complexity: O(n^2).",
+    "difficulty": 3,
+    "language": "python",
+    "starterCode": "def has_duplicates_naive(arr):\n    pass",
+    "solution": "def has_duplicates_naive(arr):\n    for i in range(len(arr)):\n        for j in range(i + 1, len(arr)):\n            if arr[i] == arr[j]:\n                return True\n    return False",
+    "testCases": [
+      {
+        "input": "[1, 2, 3, 1]",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Has duplicates"
+      },
+      {
+        "input": "[1, 2, 3]",
+        "expectedOutput": "False",
+        "isHidden": false,
+        "description": "No duplicates"
+      }
+    ],
+    "hints": [
+      "Compare every element with every other element."
+    ]
+  },
+  {
+    "id": "cs201-ex-1-8",
+    "subjectId": "cs201",
+    "topicId": "cs201-1",
+    "title": "Has Duplicates (Optimized)",
+    "description": "Check for duplicates using a Set (Hash Map). Time complexity: O(n).",
+    "difficulty": 3,
+    "language": "python",
+    "starterCode": "def has_duplicates_optimized(arr):\n    pass",
+    "solution": "def has_duplicates_optimized(arr):\n    seen = set()\n    for x in arr:\n        if x in seen:\n            return True\n        seen.add(x)\n    return False",
+    "testCases": [
+      {
+        "input": "[1, 2, 3, 1]",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Has duplicates"
+      },
+      {
+        "input": "[1, 2, 3]",
+        "expectedOutput": "False",
+        "isHidden": false,
+        "description": "No duplicates"
+      }
+    ],
+    "hints": [
+      "Use a set to store seen elements.",
+      "Set lookups are O(1) on average."
+    ]
+  },
+  {
+    "id": "cs201-ex-1-9",
+    "subjectId": "cs201",
+    "topicId": "cs201-1",
+    "title": "Factorial",
+    "description": "Calculate n! (n factorial). This is O(n) operations.",
+    "difficulty": 2,
+    "language": "python",
+    "starterCode": "def factorial(n):\n    pass",
+    "solution": "def factorial(n):\n    if n == 0: return 1\n    result = 1\n    for i in range(1, n + 1):\n        result *= i\n    return result",
+    "testCases": [
+      {
+        "input": "5",
+        "expectedOutput": "120",
+        "isHidden": false,
+        "description": "5!"
+      },
+      {
+        "input": "0",
+        "expectedOutput": "1",
+        "isHidden": false,
+        "description": "0!"
+      }
+    ],
+    "hints": [
+      "Loop from 1 to n.",
+      "Multiply accumulator."
+    ]
+  },
+  {
+    "id": "cs201-ex-1-10",
+    "subjectId": "cs201",
+    "topicId": "cs201-1",
+    "title": "Reverse String",
+    "description": "Reverse a string. Requires creating a new string of size n, so O(n) time and space.",
+    "difficulty": 2,
+    "language": "python",
+    "starterCode": "def reverse_string(s):\n    pass",
+    "solution": "def reverse_string(s):\n    return s[::-1]",
+    "testCases": [
+      {
+        "input": "\"hello\"",
+        "expectedOutput": "\"olleh\"",
+        "isHidden": false,
+        "description": "Normal string"
+      },
+      {
+        "input": "\"\"",
+        "expectedOutput": "\"\"",
+        "isHidden": false,
+        "description": "Empty string"
+      }
+    ],
+    "hints": [
+      "Python slicing [::-1] is efficient.",
+      "Or loop backwards."
+    ]
+  },
+  {
+    "id": "cs201-ex-1-11",
+    "subjectId": "cs201",
+    "topicId": "cs201-1",
+    "title": "Binary Search Implementation",
+    "description": "Implement binary search on a sorted array. Return index of target or -1.",
+    "difficulty": 4,
+    "language": "python",
+    "starterCode": "def binary_search(arr, target):\n    # arr is sorted\n    pass",
+    "solution": "def binary_search(arr, target):\n    low, high = 0, len(arr) - 1\n    while low <= high:\n        mid = (low + high) // 2\n        if arr[mid] == target:\n            return mid\n        elif arr[mid] < target:\n            low = mid + 1\n        else:\n            high = mid - 1\n    return -1",
+    "testCases": [
+      {
+        "input": "[1, 3, 5, 7], 5",
+        "expectedOutput": "2",
+        "isHidden": false,
+        "description": "Found element"
+      },
+      {
+        "input": "[1, 3, 5, 7], 2",
+        "expectedOutput": "-1",
+        "isHidden": false,
+        "description": "Not found"
+      }
+    ],
+    "hints": [
+      "Maintain low and high pointers.",
+      "Check middle element."
+    ]
+  },
+  {
+    "id": "cs201-ex-1-12",
+    "subjectId": "cs201",
+    "topicId": "cs201-1",
+    "title": "Merge Sorted Arrays",
+    "description": "Merge two sorted arrays into one sorted array. This is the \"Combine\" step of Merge Sort. Time O(n+m).",
+    "difficulty": 4,
+    "language": "python",
+    "starterCode": "def merge_sorted(arr1, arr2):\n    pass",
+    "solution": "def merge_sorted(arr1, arr2):\n    result = []\n    i = j = 0\n    while i < len(arr1) and j < len(arr2):\n        if arr1[i] < arr2[j]:\n            result.append(arr1[i])\n            i += 1\n        else:\n            result.append(arr2[j])\n            j += 1\n    result.extend(arr1[i:])\n    result.extend(arr2[j:])\n    return result",
+    "testCases": [
+      {
+        "input": "[1, 3, 5], [2, 4, 6]",
+        "expectedOutput": "[1, 2, 3, 4, 5, 6]",
+        "isHidden": false,
+        "description": "Interleaved"
+      },
+      {
+        "input": "[], [1]",
+        "expectedOutput": "[1]",
+        "isHidden": false,
+        "description": "One empty"
+      }
+    ],
+    "hints": [
+      "Use two pointers.",
+      "Compare head of each array."
+    ]
+  },
+  {
+    "id": "cs201-ex-1-13",
+    "subjectId": "cs201",
+    "topicId": "cs201-1",
+    "title": "Naive Fibonacci",
+    "description": "Implement the recursive definition of Fibonacci. F(n) = F(n-1) + F(n-2). This is O(2^n). (Don't run with large n!)",
+    "difficulty": 3,
+    "language": "python",
+    "starterCode": "def fib(n):\n    pass",
+    "solution": "def fib(n):\n    if n <= 1: return n\n    return fib(n-1) + fib(n-2)",
+    "testCases": [
+      {
+        "input": "5",
+        "expectedOutput": "5",
+        "isHidden": false,
+        "description": "fib(5)"
+      },
+      {
+        "input": "7",
+        "expectedOutput": "13",
+        "isHidden": false,
+        "description": "fib(7)"
+      }
+    ],
+    "hints": [
+      "Base case: n <= 1.",
+      "Recursive calls."
+    ]
+  },
+  {
+    "id": "cs201-ex-1-14",
+    "subjectId": "cs201",
+    "topicId": "cs201-1",
+    "title": "Check Palindrome",
+    "description": "Check if a string is a palindrome using two pointers (start and end). O(n).",
+    "difficulty": 3,
+    "language": "python",
+    "starterCode": "def is_palindrome(s):\n    pass",
+    "solution": "def is_palindrome(s):\n    left, right = 0, len(s) - 1\n    while left < right:\n        if s[left] != s[right]:\n            return False\n        left += 1\n        right -= 1\n    return True",
+    "testCases": [
+      {
+        "input": "\"racecar\"",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Palindrome"
+      },
+      {
+        "input": "\"hello\"",
+        "expectedOutput": "False",
+        "isHidden": false,
+        "description": "Not palindrome"
+      }
+    ],
+    "hints": [
+      "Compare s[left] and s[right].",
+      "Move pointers towards center."
+    ]
+  },
+  {
+    "id": "cs201-ex-1-15",
+    "subjectId": "cs201",
+    "topicId": "cs201-1",
+    "title": "Is Prime",
+    "description": "Check if a number is prime. You only need to check divisors up to sqrt(n). Complexity O(sqrt(n)).",
+    "difficulty": 4,
+    "language": "python",
+    "starterCode": "def is_prime(n):\n    pass",
+    "solution": "def is_prime(n):\n    if n < 2: return False\n    for i in range(2, int(n**0.5) + 1):\n        if n % i == 0:\n            return False\n    return True",
+    "testCases": [
+      {
+        "input": "17",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Prime"
+      },
+      {
+        "input": "15",
+        "expectedOutput": "False",
+        "isHidden": false,
+        "description": "Composite"
+      },
+      {
+        "input": "1",
+        "expectedOutput": "False",
+        "isHidden": false,
+        "description": "Unit"
+      }
+    ],
+    "hints": [
+      "Loop from 2 to int(sqrt(n)).",
+      "If n % i == 0, not prime."
+    ]
+  },
+  {
+    "id": "cs201-ex-1-16",
+    "subjectId": "cs201",
+    "topicId": "cs201-1",
+    "title": "Fast Power",
+    "description": "Compute x^n using \"Exponentiation by Squaring\". This is O(log n) compared to O(n) for simple multiplication.",
+    "difficulty": 5,
+    "language": "python",
+    "starterCode": "def power(x, n):\n    # Return x raised to power n\n    pass",
+    "solution": "def power(x, n):\n    if n == 0: return 1\n    if n % 2 == 0:\n        half = power(x, n // 2)\n        return half * half\n    else:\n        return x * power(x, n - 1)",
+    "testCases": [
+      {
+        "input": "2, 10",
+        "expectedOutput": "1024",
+        "isHidden": false,
+        "description": "2^10"
+      },
+      {
+        "input": "3, 3",
+        "expectedOutput": "27",
+        "isHidden": false,
+        "description": "3^3"
+      },
+      {
+        "input": "5, 0",
+        "expectedOutput": "1",
+        "isHidden": false,
+        "description": "5^0"
+      }
+    ],
+    "hints": [
+      "If n is even, x^n = (x^(n/2))^2.",
+      "Recursive approach works best."
+    ]
+  }
+]

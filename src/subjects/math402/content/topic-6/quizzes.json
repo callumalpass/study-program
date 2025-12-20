@@ -1,0 +1,197 @@
+[
+  {
+    "id": "math402-quiz-6a",
+    "subjectId": "math402",
+    "topicId": "math402-topic-6",
+    "title": "Iterative Methods for Linear Systems - Fundamentals",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "The Jacobi method updates each component of x^{(k+1)} using:",
+        "options": [
+          "All components of x^{(k)} only",
+          "A mixture of x^{(k)} and x^{(k+1)} components",
+          "The residual vector",
+          "The inverse of the matrix"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Jacobi simultaneously updates all components using only old values: x_i^{(k+1)} = (b_i - Σ_{j≠i} a_{ij}x_j^{(k)})/a_{ii}. This allows parallel implementation."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "The Gauss-Seidel method differs from Jacobi by:",
+        "options": [
+          "Using partial pivoting",
+          "Using updated components x^{(k+1)} as soon as they are computed",
+          "Requiring fewer iterations",
+          "Being applicable to more matrices"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Gauss-Seidel uses x_i^{(k+1)} values immediately in computing subsequent components: x_i^{(k+1)} = (b_i - Σ_{j<i} a_{ij}x_j^{(k+1)} - Σ_{j>i} a_{ij}x_j^{(k)})/a_{ii}."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "Iterative methods are generally preferred over direct methods for small dense systems.",
+        "correctAnswer": false,
+        "explanation": "False. For small dense systems, direct methods (Gaussian elimination, LU) are typically faster and more reliable. Iterative methods excel for large sparse systems where storing/computing factors is expensive."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "A sufficient condition for Jacobi and Gauss-Seidel to converge is that A is:",
+        "options": [
+          "Symmetric",
+          "Positive definite",
+          "Strictly diagonally dominant",
+          "Upper triangular"
+        ],
+        "correctAnswer": 2,
+        "explanation": "If A is strictly diagonally dominant (|a_{ii}| > Σ_{j≠i}|a_{ij}| for all i), both Jacobi and Gauss-Seidel converge for any initial guess. This is sufficient but not necessary."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "Iterative methods converge when the spectral radius of the iteration matrix is ____ than 1.",
+        "correctAnswer": "less",
+        "explanation": "Convergence requires ρ(G) < 1, where ρ is the spectral radius (largest eigenvalue magnitude) of the iteration matrix G."
+      }
+    ]
+  },
+  {
+    "id": "math402-quiz-6b",
+    "subjectId": "math402",
+    "topicId": "math402-topic-6",
+    "title": "Iterative Methods for Linear Systems - Application",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "The Successive Over-Relaxation (SOR) method introduces a relaxation parameter ω where:",
+        "options": [
+          "0 < ω < 1 for under-relaxation, ω = 1 gives Gauss-Seidel, 1 < ω < 2 for over-relaxation",
+          "ω must always equal 1",
+          "ω > 2 for fastest convergence",
+          "ω is the condition number"
+        ],
+        "correctAnswer": 0,
+        "explanation": "SOR: x^{(k+1)} = ωx̃^{(k+1)} + (1-ω)x^{(k)}, where x̃ is the Gauss-Seidel update. Optimal ω ∈ (1,2) can significantly accelerate convergence; ω = 1 recovers Gauss-Seidel."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "The Conjugate Gradient (CG) method is applicable when A is:",
+        "options": [
+          "Any invertible matrix",
+          "Symmetric positive definite",
+          "Lower triangular",
+          "Diagonal"
+        ],
+        "correctAnswer": 1,
+        "explanation": "CG requires A to be symmetric positive definite (SPD). It solves Ax = b in at most n iterations (in exact arithmetic) by minimizing the energy norm ||x - x*||_A."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "Gauss-Seidel always converges faster than Jacobi when both converge.",
+        "correctAnswer": false,
+        "explanation": "False. While Gauss-Seidel typically converges faster, there exist matrices for which Jacobi converges faster. However, if both converge, Gauss-Seidel often requires fewer iterations."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "GMRES (Generalized Minimal Residual) method minimizes:",
+        "options": [
+          "The energy norm of the error",
+          "The 2-norm of the residual ||Ax^{(k)} - b||_2",
+          "The condition number",
+          "The number of iterations"
+        ],
+        "correctAnswer": 1,
+        "explanation": "GMRES minimizes ||r^{(k)}||_2 = ||Ax^{(k)} - b||_2 over the Krylov subspace K_k. It works for any invertible matrix, not just SPD."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "What is the main practical limitation of GMRES?",
+        "options": [
+          "Only works for symmetric matrices",
+          "Memory and computation grow with iteration count",
+          "Converges slower than Jacobi",
+          "Cannot be preconditioned"
+        ],
+        "correctAnswer": 1,
+        "explanation": "GMRES stores all previous search directions, requiring O(kn) storage and O(kn^2) work at iteration k. Restarted GMRES limits k to control costs."
+      }
+    ]
+  },
+  {
+    "id": "math402-quiz-6c",
+    "subjectId": "math402",
+    "topicId": "math402-topic-6",
+    "title": "Iterative Methods for Linear Systems - Mastery",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "For symmetric positive definite A, the optimal SOR parameter ω can be computed from:",
+        "options": [
+          "The condition number of A",
+          "The spectral radius of the Jacobi iteration matrix",
+          "The largest eigenvalue of A",
+          "The matrix norm"
+        ],
+        "correctAnswer": 1,
+        "explanation": "For SPD tridiagonal matrices (like discretized PDEs), ω_opt = 2/(1 + √(1 - ρ(G_J)^2)), where ρ(G_J) is the spectral radius of the Jacobi matrix. This can dramatically accelerate convergence."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "Preconditioning a linear system Ax = b means:",
+        "options": [
+          "Scaling rows to have unit norm",
+          "Solving M^{-1}Ax = M^{-1}b where M approximates A and M^{-1} is easy to apply",
+          "Reordering rows and columns",
+          "Using double precision arithmetic"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A preconditioner M approximates A such that κ(M^{-1}A) << κ(A). Good preconditioners are cheap to apply (M^{-1}z for any z) and cluster eigenvalues, accelerating iterative convergence."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "In exact arithmetic, CG converges in at most n iterations for an n×n SPD matrix.",
+        "correctAnswer": true,
+        "explanation": "True. CG is a direct method in exact arithmetic, finding the exact solution in at most n steps. In practice, roundoff and preconditioning make it effective as an iterative method."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "The conjugate gradient method generates search directions that are:",
+        "options": [
+          "Orthogonal in the Euclidean norm",
+          "A-orthogonal (conjugate with respect to A)",
+          "Parallel to eigenvectors of A",
+          "Random directions"
+        ],
+        "correctAnswer": 1,
+        "explanation": "CG search directions p^{(i)} satisfy (p^{(i)})^T A p^{(j)} = 0 for i ≠ j. This A-orthogonality (conjugacy) ensures each direction optimally contributes to minimizing ||x - x*||_A."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "Which statement about Krylov subspace methods is FALSE?",
+        "options": [
+          "They build approximate solutions in K_k = span{r^{(0)}, Ar^{(0)}, ..., A^{k-1}r^{(0)}}",
+          "CG is optimal for SPD matrices in the A-norm",
+          "GMRES is optimal for general matrices in the residual norm",
+          "They require storing and inverting the full matrix A"
+        ],
+        "correctAnswer": 3,
+        "explanation": "False: Krylov methods only need matrix-vector products Av, not storage or inversion of A. This makes them ideal for large sparse systems where A is stored implicitly."
+      }
+    ]
+  }
+]

@@ -1,0 +1,193 @@
+[
+  {
+    "id": "cs201-quiz-3-1",
+    "subjectId": "cs201",
+    "topicId": "cs201-3",
+    "title": "Searching Fundamentals",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "What is the prerequisite for Binary Search?",
+        "options": [
+          "The array must be in a linked list",
+          "The array must be sorted",
+          "The array must have unique elements",
+          "The array must be small"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Binary Search requires sorted data to determine which half to search next."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "What is the time complexity of Linear Search?",
+        "options": [
+          "O(1)",
+          "O(log n)",
+          "O(n)",
+          "O(n^2)"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Linear Search checks each element one by one, requiring up to n comparisons in the worst case."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "Binary Search can be used on a linked list efficiently.",
+        "correctAnswer": false,
+        "explanation": "Binary Search requires O(1) random access. Linked lists have O(n) access time, negating the benefit."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "In Binary Search, if arr[mid] > target, what should you do?",
+        "options": [
+          "Search the right half",
+          "Search the left half",
+          "Return mid",
+          "Return -1"
+        ],
+        "correctAnswer": 1,
+        "explanation": "If the middle element is greater than target, the target must be in the left (smaller) half."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "For an array of 1 million sorted elements, Binary Search needs at most ____ comparisons.",
+        "correctAnswer": "20",
+        "explanation": "log2(1,000,000) ≈ 20. Binary Search halves the search space each time."
+      }
+    ]
+  },
+  {
+    "id": "cs201-quiz-3-2",
+    "subjectId": "cs201",
+    "topicId": "cs201-3",
+    "title": "Binary Search Variants",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "code_output",
+        "prompt": "What does this modified binary search return?",
+        "codeSnippet": "def search(arr, target):\n    low, high = 0, len(arr) - 1\n    result = -1\n    while low <= high:\n        mid = (low + high) // 2\n        if arr[mid] == target:\n            result = mid\n            high = mid - 1  # Keep searching left\n        elif arr[mid] < target:\n            low = mid + 1\n        else:\n            high = mid - 1\n    return result",
+        "options": [
+          "The index of target",
+          "The first occurrence of target",
+          "The last occurrence of target",
+          "The count of target"
+        ],
+        "correctAnswer": 1,
+        "explanation": "When target is found, it continues searching left (high = mid - 1) to find the first occurrence."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "What is the safe way to calculate mid to avoid integer overflow?",
+        "options": [
+          "mid = (low + high) / 2",
+          "mid = low + (high - low) / 2",
+          "mid = high - low / 2",
+          "mid = (low * high) / 2"
+        ],
+        "correctAnswer": 1,
+        "explanation": "low + (high - low) // 2 avoids overflow that can occur with (low + high) // 2 in some languages."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "Interpolation Search outperforms Binary Search on all sorted datasets.",
+        "correctAnswer": false,
+        "explanation": "Interpolation Search is only better for uniformly distributed data. On non-uniform data, it can be O(n)."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of finding \"lower bound\" in a sorted array?",
+        "options": [
+          "Find the smallest element",
+          "Find the first position where target could be inserted",
+          "Find the last element smaller than target",
+          "Count elements equal to target"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Lower bound returns the first position where target could be inserted while maintaining sorted order."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "How many elements are eliminated after each comparison in Binary Search?",
+        "options": [
+          "1",
+          "log n",
+          "Half of remaining",
+          "n - 1"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Each comparison eliminates approximately half of the remaining search space."
+      }
+    ]
+  },
+  {
+    "id": "cs201-quiz-3-3",
+    "subjectId": "cs201",
+    "topicId": "cs201-3",
+    "title": "Search Applications",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "You need to search a list once. The list is unsorted. What should you do?",
+        "options": [
+          "Sort then Binary Search",
+          "Use Linear Search",
+          "Use Interpolation Search",
+          "Use a Hash Table"
+        ],
+        "correctAnswer": 1,
+        "explanation": "For a single search, Linear Search O(n) is faster than Sort O(n log n) + Binary Search O(log n)."
+      },
+      {
+        "id": "q2",
+        "type": "true_false",
+        "prompt": "Binary Search can be used to find the square root of a number.",
+        "correctAnswer": true,
+        "explanation": "Binary Search can find sqrt(n) by searching for x where x*x = n in the range [0, n]."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "What data structure provides O(1) average-case search?",
+        "options": [
+          "Sorted Array",
+          "Linked List",
+          "Hash Table",
+          "Binary Search Tree"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Hash Tables provide O(1) average-case lookup through direct addressing via hash functions."
+      },
+      {
+        "id": "q4",
+        "type": "code_output",
+        "prompt": "What is wrong with this Binary Search?",
+        "codeSnippet": "def search(arr, target):\n    low, high = 0, len(arr) - 1\n    while low < high:  # Bug here\n        mid = (low + high) // 2\n        if arr[mid] == target:\n            return mid\n        elif arr[mid] < target:\n            low = mid + 1\n        else:\n            high = mid - 1\n    return -1",
+        "options": [
+          "mid calculation is wrong",
+          "Should be low <= high",
+          "Return value is wrong",
+          "high initialization is wrong"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Using low < high instead of low <= high misses the case when low == high (single element remaining)."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "Binary Search is an example of the ______ and Conquer paradigm.",
+        "correctAnswer": "Divide",
+        "explanation": "Binary Search divides the problem in half at each step, a key characteristic of Divide and Conquer."
+      }
+    ]
+  }
+]

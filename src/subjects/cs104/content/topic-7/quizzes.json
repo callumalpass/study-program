@@ -1,0 +1,181 @@
+[
+  {
+    "id": "cs104-quiz-7a",
+    "subjectId": "cs104",
+    "topicId": "cs104-topic-7",
+    "title": "Heaps and Priority Queues - Fundamentals",
+    "questions": [
+      {
+        "id": "cs104-q7a-1",
+        "type": "multiple_choice",
+        "prompt": "In a min-heap, the smallest element is at:",
+        "options": [
+          "A leaf node",
+          "The root",
+          "The last position",
+          "A random position"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Min-heap property ensures every parent is smaller than its children, so root is minimum."
+      },
+      {
+        "id": "cs104-q7a-2",
+        "type": "fill_blank",
+        "prompt": "For a node at index i in a heap array, its left child is at index ____.",
+        "correctAnswer": "2i+1",
+        "explanation": "In 0-indexed heap array: left child = 2i+1, right child = 2i+2, parent = (i-1)//2."
+      },
+      {
+        "id": "cs104-q7a-3",
+        "type": "true_false",
+        "prompt": "Python's heapq module implements a max-heap.",
+        "correctAnswer": false,
+        "explanation": "Python heapq is a min-heap. For max-heap behavior, negate values."
+      },
+      {
+        "id": "cs104-q7a-4",
+        "type": "multiple_choice",
+        "prompt": "What is the time complexity of extracting the minimum from a min-heap?",
+        "options": [
+          "O(1)",
+          "O(log n)",
+          "O(n)",
+          "O(n log n)"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Extract-min removes root, replaces with last element, then heapifies down in O(log n)."
+      },
+      {
+        "id": "cs104-q7a-5",
+        "type": "multiple_choice",
+        "prompt": "A binary heap is a:",
+        "options": [
+          "Binary search tree",
+          "Complete binary tree",
+          "Balanced binary tree",
+          "Full binary tree"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A heap is a complete binary tree (all levels filled except possibly last, filled left to right)."
+      }
+    ]
+  },
+  {
+    "id": "cs104-quiz-7b",
+    "subjectId": "cs104",
+    "topicId": "cs104-topic-7",
+    "title": "Heaps and Priority Queues - Application",
+    "questions": [
+      {
+        "id": "cs104-q7b-1",
+        "type": "code_output",
+        "prompt": "What is printed?",
+        "codeSnippet": "import heapq\nh = []\nheapq.heappush(h, 5)\nheapq.heappush(h, 2)\nheapq.heappush(h, 8)\nprint(heapq.heappop(h))",
+        "correctAnswer": "2",
+        "explanation": "Min-heap: after pushing 5,2,8, the root (minimum) is 2. heappop returns 2."
+      },
+      {
+        "id": "cs104-q7b-2",
+        "type": "multiple_choice",
+        "prompt": "To find the k largest elements efficiently, use:",
+        "options": [
+          "Max-heap of all elements",
+          "Min-heap of size k",
+          "Sorting",
+          "Binary search"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Keep a min-heap of size k; the heap contains k largest, root is kth largest. O(n log k)."
+      },
+      {
+        "id": "cs104-q7b-3",
+        "type": "true_false",
+        "prompt": "Heap sort has O(n log n) time complexity in all cases.",
+        "correctAnswer": true,
+        "explanation": "Heap sort is O(n log n) in best, average, and worst cases—no data pattern causes degradation."
+      },
+      {
+        "id": "cs104-q7b-4",
+        "type": "code_output",
+        "prompt": "After heapify, what is at index 0?",
+        "codeSnippet": "import heapq\narr = [5, 3, 8, 1, 2]\nheapq.heapify(arr)\nprint(arr[0])",
+        "correctAnswer": "1",
+        "explanation": "heapify creates a min-heap. The minimum element (1) moves to root (index 0)."
+      },
+      {
+        "id": "cs104-q7b-5",
+        "type": "multiple_choice",
+        "prompt": "Dijkstra's shortest path algorithm uses a heap as:",
+        "options": [
+          "Stack replacement",
+          "Priority queue for vertices by distance",
+          "Graph representation",
+          "Path storage"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Dijkstra uses a min-heap (priority queue) to always process the vertex with smallest distance."
+      }
+    ]
+  },
+  {
+    "id": "cs104-quiz-7c",
+    "subjectId": "cs104",
+    "topicId": "cs104-topic-7",
+    "title": "Heaps and Priority Queues - Advanced",
+    "questions": [
+      {
+        "id": "cs104-q7c-1",
+        "type": "multiple_choice",
+        "prompt": "Building a heap from n elements takes:",
+        "options": [
+          "O(n²)",
+          "O(n log n)",
+          "O(n)",
+          "O(log n)"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Building a heap bottom-up (heapify) takes O(n), not O(n log n) as with n insertions."
+      },
+      {
+        "id": "cs104-q7c-2",
+        "type": "true_false",
+        "prompt": "To find the running median, you can use two heaps: a max-heap and a min-heap.",
+        "correctAnswer": true,
+        "explanation": "Max-heap stores smaller half, min-heap stores larger half. Median is from heap tops."
+      },
+      {
+        "id": "cs104-q7c-3",
+        "type": "multiple_choice",
+        "prompt": "Merging k sorted lists using a heap takes:",
+        "options": [
+          "O(n)",
+          "O(n log n)",
+          "O(n log k)",
+          "O(nk)"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Each of n elements is pushed/popped once from a k-element heap: O(n log k)."
+      },
+      {
+        "id": "cs104-q7c-4",
+        "type": "fill_blank",
+        "prompt": "The operation to restore heap property after insertion is called heapify ____ or bubble up.",
+        "correctAnswer": "up",
+        "explanation": "After insertion at bottom, element may need to bubble up to restore heap property."
+      },
+      {
+        "id": "cs104-q7c-5",
+        "type": "multiple_choice",
+        "prompt": "Heap sort is NOT stable because:",
+        "options": [
+          "It uses recursion",
+          "Heapify can change relative order of equal elements",
+          "It requires extra space",
+          "It's not comparison-based"
+        ],
+        "correctAnswer": 1,
+        "explanation": "During heapify operations, equal elements may be swapped, changing their relative order."
+      }
+    ]
+  }
+]

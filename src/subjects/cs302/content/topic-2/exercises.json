@@ -1,0 +1,506 @@
+[
+  {
+    "id": "cs302-t2-ex01",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-2",
+    "title": "MAC Address Validator",
+    "difficulty": 1,
+    "description": "Write a function that validates if a string is a valid MAC address. Valid formats: XX:XX:XX:XX:XX:XX or XX-XX-XX-XX-XX-XX where X is a hex digit.",
+    "starterCode": "import re\n\n# Validate MAC address format\ndef is_valid_mac(mac_address):\n    # Your code here\n    pass\n\n# Test your function\nprint(is_valid_mac(\"00:1A:2B:3C:4D:5E\"))\nprint(is_valid_mac(\"00-1A-2B-3C-4D-5E\"))\nprint(is_valid_mac(\"invalid\"))",
+    "solution": "import re\n\ndef is_valid_mac(mac_address):\n    # Pattern for MAC address with : or - separator\n    pattern = r\"^([0-9A-Fa-f]{2}[:-]){5}[0-9A-Fa-f]{2}$\"\n    return bool(re.match(pattern, mac_address))\n\nprint(is_valid_mac(\"00:1A:2B:3C:4D:5E\"))\nprint(is_valid_mac(\"00-1A-2B-3C-4D-5E\"))\nprint(is_valid_mac(\"invalid\"))",
+    "testCases": [
+      {
+        "input": "\"00:1A:2B:3C:4D:5E\"",
+        "isHidden": false,
+        "description": "Valid MAC with colons"
+      },
+      {
+        "input": "\"00-1A-2B-3C-4D-5E\"",
+        "isHidden": false,
+        "description": "Valid MAC with dashes"
+      },
+      {
+        "input": "\"invalid\"",
+        "isHidden": true,
+        "description": "Invalid format"
+      }
+    ],
+    "hints": [
+      "Use a regular expression for validation",
+      "MAC addresses have 6 groups of 2 hex digits",
+      "Accept both : and - as separators",
+      "Hex digits are 0-9 and A-F (case insensitive)"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs302-t2-ex02",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-2",
+    "title": "MAC Address Normalizer",
+    "difficulty": 2,
+    "description": "Write a function that normalizes a MAC address to uppercase with colons. Handle input with dashes or no separators.",
+    "starterCode": "# Normalize MAC address to XX:XX:XX:XX:XX:XX format\ndef normalize_mac(mac_address):\n    # Your code here\n    pass\n\n# Test your function\nprint(normalize_mac(\"00-1a-2b-3c-4d-5e\"))\nprint(normalize_mac(\"001a2b3c4d5e\"))",
+    "solution": "def normalize_mac(mac_address):\n    # Remove any existing separators\n    clean = mac_address.replace(\":\", \"\").replace(\"-\", \"\").upper()\n    # Split into pairs and join with colons\n    pairs = [clean[i:i+2] for i in range(0, 12, 2)]\n    return \":\".join(pairs)\n\nprint(normalize_mac(\"00-1a-2b-3c-4d-5e\"))\nprint(normalize_mac(\"001a2b3c4d5e\"))",
+    "testCases": [
+      {
+        "input": "\"00-1a-2b-3c-4d-5e\"",
+        "isHidden": false,
+        "description": "MAC with dashes"
+      },
+      {
+        "input": "\"001a2b3c4d5e\"",
+        "isHidden": false,
+        "description": "MAC without separators"
+      },
+      {
+        "input": "\"FF:ff:FF:ff:FF:ff\"",
+        "isHidden": true,
+        "description": "Mixed case MAC"
+      }
+    ],
+    "hints": [
+      "First remove all existing separators",
+      "Convert to uppercase",
+      "Split into pairs of 2 characters",
+      "Join with colons"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs302-t2-ex03",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-2",
+    "title": "OUI Lookup",
+    "difficulty": 2,
+    "description": "The first 3 bytes of a MAC address are the OUI (Organizationally Unique Identifier). Write a function to extract the OUI and look up the vendor.",
+    "starterCode": "# Extract OUI and lookup vendor\ndef lookup_oui(mac_address):\n    # Known OUI database (simplified)\n    oui_db = {\n        \"00:1A:2B\": \"Vendor A\",\n        \"00:50:56\": \"VMware\",\n        \"00:0C:29\": \"VMware\",\n        \"AC:DE:48\": \"Vendor B\"\n    }\n    # Your code here\n    pass\n\n# Test your function\nprint(lookup_oui(\"00:50:56:12:34:56\"))",
+    "solution": "def lookup_oui(mac_address):\n    oui_db = {\n        \"00:1A:2B\": \"Vendor A\",\n        \"00:50:56\": \"VMware\",\n        \"00:0C:29\": \"VMware\",\n        \"AC:DE:48\": \"Vendor B\"\n    }\n    # Normalize and extract OUI\n    clean = mac_address.replace(\"-\", \":\").upper()\n    oui = clean[:8]  # First 3 bytes (XX:XX:XX)\n    return oui_db.get(oui, \"Unknown Vendor\")\n\nprint(lookup_oui(\"00:50:56:12:34:56\"))",
+    "testCases": [
+      {
+        "input": "\"00:50:56:12:34:56\"",
+        "isHidden": false,
+        "description": "VMware MAC"
+      },
+      {
+        "input": "\"00-0C-29-AB-CD-EF\"",
+        "isHidden": false,
+        "description": "VMware with dashes"
+      },
+      {
+        "input": "\"FF:FF:FF:FF:FF:FF\"",
+        "isHidden": true,
+        "description": "Unknown vendor"
+      }
+    ],
+    "hints": [
+      "Extract the first 3 bytes (8 characters including colons)",
+      "Normalize the format before lookup",
+      "Use dictionary.get() with a default value",
+      "Handle both : and - separators"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs302-t2-ex04",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-2",
+    "title": "Parity Bit Calculator",
+    "difficulty": 2,
+    "description": "Implement even parity checking. Write functions to add a parity bit to data and to verify data with its parity bit.",
+    "starterCode": "# Calculate and verify even parity\ndef add_parity(data_bits):\n    # data_bits is a string of 0s and 1s\n    # Return data with parity bit appended\n    pass\n\ndef verify_parity(data_with_parity):\n    # Return True if parity is correct\n    pass\n\n# Test your functions\nprint(add_parity(\"1010101\"))\nprint(verify_parity(\"10101011\"))",
+    "solution": "def add_parity(data_bits):\n    ones = data_bits.count(\"1\")\n    parity_bit = \"0\" if ones % 2 == 0 else \"1\"\n    return data_bits + parity_bit\n\ndef verify_parity(data_with_parity):\n    ones = data_with_parity.count(\"1\")\n    return ones % 2 == 0\n\nprint(add_parity(\"1010101\"))\nprint(verify_parity(\"10101011\"))",
+    "testCases": [
+      {
+        "input": "add: \"1010101\"",
+        "isHidden": false,
+        "description": "Add parity to odd count"
+      },
+      {
+        "input": "verify: \"10101010\"",
+        "isHidden": false,
+        "description": "Verify even parity"
+      },
+      {
+        "input": "verify: \"10101011\"",
+        "isHidden": true,
+        "description": "Verify with error"
+      }
+    ],
+    "hints": [
+      "Count the number of 1s in the data",
+      "Even parity: total 1s (including parity bit) should be even",
+      "If odd number of 1s, parity bit is 1",
+      "Verification checks if total 1s is even"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs302-t2-ex05",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-2",
+    "title": "CRC Calculator (Simple)",
+    "difficulty": 4,
+    "description": "Implement a simple CRC (Cyclic Redundancy Check) calculator. Given data bits and a divisor polynomial, calculate the CRC remainder.",
+    "starterCode": "# Calculate CRC remainder using XOR division\ndef calculate_crc(data, divisor):\n    # data and divisor are strings of bits\n    # Return the CRC remainder\n    pass\n\n# Test your function\nprint(calculate_crc(\"1101011011\", \"10011\"))",
+    "solution": "def calculate_crc(data, divisor):\n    # Append zeros to data (divisor length - 1)\n    data_padded = data + \"0\" * (len(divisor) - 1)\n    data_list = list(data_padded)\n    \n    for i in range(len(data)):\n        if data_list[i] == \"1\":\n            for j in range(len(divisor)):\n                data_list[i + j] = str(int(data_list[i + j]) ^ int(divisor[j]))\n    \n    # Remainder is the last (divisor_length - 1) bits\n    remainder = \"\".join(data_list[-(len(divisor)-1):])\n    return remainder\n\nprint(calculate_crc(\"1101011011\", \"10011\"))",
+    "testCases": [
+      {
+        "input": "\"1101011011\", \"10011\"",
+        "isHidden": false,
+        "description": "CRC-4 example"
+      },
+      {
+        "input": "\"11010110\", \"1011\"",
+        "isHidden": true,
+        "description": "CRC-3 example"
+      }
+    ],
+    "hints": [
+      "Append (divisor_length - 1) zeros to the data",
+      "Perform XOR division from left to right",
+      "Only XOR when current bit is 1",
+      "The remainder is the CRC"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs302-t2-ex06",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-2",
+    "title": "Hamming Distance Calculator",
+    "difficulty": 2,
+    "description": "Calculate the Hamming distance between two binary strings (number of bit positions that differ).",
+    "starterCode": "# Calculate Hamming distance between two bit strings\ndef hamming_distance(bits1, bits2):\n    # Your code here\n    pass\n\n# Test your function\nprint(hamming_distance(\"1011101\", \"1001001\"))\nprint(hamming_distance(\"00000\", \"11111\"))",
+    "solution": "def hamming_distance(bits1, bits2):\n    if len(bits1) != len(bits2):\n        raise ValueError(\"Strings must be same length\")\n    distance = 0\n    for b1, b2 in zip(bits1, bits2):\n        if b1 != b2:\n            distance += 1\n    return distance\n\nprint(hamming_distance(\"1011101\", \"1001001\"))\nprint(hamming_distance(\"00000\", \"11111\"))",
+    "testCases": [
+      {
+        "input": "\"1011101\", \"1001001\"",
+        "isHidden": false,
+        "description": "Two bit difference"
+      },
+      {
+        "input": "\"00000\", \"11111\"",
+        "isHidden": false,
+        "description": "All different"
+      },
+      {
+        "input": "\"1010\", \"1010\"",
+        "isHidden": true,
+        "description": "Identical strings"
+      }
+    ],
+    "hints": [
+      "Compare corresponding bits in both strings",
+      "Count positions where bits differ",
+      "Use zip() to pair up characters",
+      "Strings must be the same length"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs302-t2-ex07",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-2",
+    "title": "Frame Builder",
+    "difficulty": 3,
+    "description": "Build an Ethernet frame structure. Given source MAC, destination MAC, and payload, create a frame with proper fields (simplified, no actual checksum).",
+    "starterCode": "# Build a simplified Ethernet frame\ndef build_frame(src_mac, dst_mac, payload, ethertype=\"0800\"):\n    # Return a dict representing the frame structure\n    pass\n\n# Test your function\nframe = build_frame(\"AA:BB:CC:DD:EE:FF\", \"11:22:33:44:55:66\", \"Hello\")\nprint(frame)",
+    "solution": "def build_frame(src_mac, dst_mac, payload, ethertype=\"0800\"):\n    # Calculate padding if needed (minimum payload is 46 bytes)\n    payload_bytes = payload.encode() if isinstance(payload, str) else payload\n    padding_needed = max(0, 46 - len(payload_bytes))\n    \n    frame = {\n        \"preamble\": \"10101010\" * 7,\n        \"sfd\": \"10101011\",\n        \"destination_mac\": dst_mac,\n        \"source_mac\": src_mac,\n        \"ethertype\": ethertype,\n        \"payload\": payload,\n        \"padding\": \"00\" * padding_needed,\n        \"fcs\": \"00000000\"  # Placeholder for checksum\n    }\n    return frame\n\nframe = build_frame(\"AA:BB:CC:DD:EE:FF\", \"11:22:33:44:55:66\", \"Hello\")\nprint(frame)",
+    "testCases": [
+      {
+        "input": "\"AA:BB:CC:DD:EE:FF\", \"11:22:33:44:55:66\", \"Hello\"",
+        "isHidden": false,
+        "description": "Basic frame"
+      },
+      {
+        "input": "\"00:00:00:00:00:01\", \"FF:FF:FF:FF:FF:FF\", \"Data\"",
+        "isHidden": true,
+        "description": "Broadcast frame"
+      }
+    ],
+    "hints": [
+      "Preamble is 7 bytes of 10101010",
+      "SFD (Start Frame Delimiter) is 10101011",
+      "Minimum payload is 46 bytes, add padding if needed",
+      "FCS would normally be a CRC-32 checksum"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs302-t2-ex08",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-2",
+    "title": "CSMA/CD Simulator",
+    "difficulty": 4,
+    "description": "Simulate the CSMA/CD (Carrier Sense Multiple Access with Collision Detection) algorithm. Track collision attempts and backoff times.",
+    "starterCode": "import random\n\n# Simulate CSMA/CD transmission attempt\ndef csmacd_transmit(max_attempts=16, seed=42):\n    random.seed(seed)\n    # Simulate transmission with collision probability\n    # Return dict with: success, attempts, total_backoff\n    pass\n\n# Test your function\nresult = csmacd_transmit()\nprint(result)",
+    "solution": "import random\n\ndef csmacd_transmit(max_attempts=16, seed=42):\n    random.seed(seed)\n    attempts = 0\n    total_backoff = 0\n    collision_prob = 0.3  # Simulated collision probability\n    \n    while attempts < max_attempts:\n        attempts += 1\n        # Check if collision occurs\n        if random.random() > collision_prob:\n            return {\n                \"success\": True,\n                \"attempts\": attempts,\n                \"total_backoff\": total_backoff\n            }\n        # Collision occurred - exponential backoff\n        k = min(attempts, 10)\n        backoff = random.randint(0, 2**k - 1)\n        total_backoff += backoff\n    \n    return {\n        \"success\": False,\n        \"attempts\": attempts,\n        \"total_backoff\": total_backoff\n    }\n\nresult = csmacd_transmit()\nprint(result)",
+    "testCases": [
+      {
+        "input": "max_attempts=16, seed=42",
+        "isHidden": false,
+        "description": "Default parameters"
+      },
+      {
+        "input": "max_attempts=5, seed=123",
+        "isHidden": true,
+        "description": "Limited attempts"
+      }
+    ],
+    "hints": [
+      "CSMA/CD uses binary exponential backoff",
+      "Backoff slot = random(0, 2^k - 1) where k = min(attempt, 10)",
+      "Maximum 16 attempts before giving up",
+      "Track attempts and total backoff time"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs302-t2-ex09",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-2",
+    "title": "ARP Table Manager",
+    "difficulty": 3,
+    "description": "Implement a simple ARP (Address Resolution Protocol) table. Support adding entries, looking up MAC addresses by IP, and expiring old entries.",
+    "starterCode": "import time\n\nclass ARPTable:\n    def __init__(self, ttl=300):\n        self.table = {}  # IP -> (MAC, timestamp)\n        self.ttl = ttl\n    \n    def add_entry(self, ip, mac):\n        # Your code here\n        pass\n    \n    def lookup(self, ip):\n        # Your code here - return MAC or None\n        pass\n    \n    def cleanup(self):\n        # Remove expired entries\n        pass\n\n# Test your class\narp = ARPTable(ttl=5)\narp.add_entry(\"192.168.1.1\", \"AA:BB:CC:DD:EE:FF\")\nprint(arp.lookup(\"192.168.1.1\"))",
+    "solution": "import time\n\nclass ARPTable:\n    def __init__(self, ttl=300):\n        self.table = {}\n        self.ttl = ttl\n    \n    def add_entry(self, ip, mac):\n        self.table[ip] = (mac, time.time())\n    \n    def lookup(self, ip):\n        if ip in self.table:\n            mac, timestamp = self.table[ip]\n            if time.time() - timestamp < self.ttl:\n                return mac\n            else:\n                del self.table[ip]\n        return None\n    \n    def cleanup(self):\n        current_time = time.time()\n        expired = [ip for ip, (_, ts) in self.table.items() \n                   if current_time - ts >= self.ttl]\n        for ip in expired:\n            del self.table[ip]\n\narp = ARPTable(ttl=5)\narp.add_entry(\"192.168.1.1\", \"AA:BB:CC:DD:EE:FF\")\nprint(arp.lookup(\"192.168.1.1\"))",
+    "testCases": [
+      {
+        "input": "add and lookup",
+        "isHidden": false,
+        "description": "Basic operations"
+      },
+      {
+        "input": "expiry test",
+        "isHidden": true,
+        "description": "TTL expiration"
+      }
+    ],
+    "hints": [
+      "Store entries with their creation timestamp",
+      "Check TTL on lookup and return None if expired",
+      "Use time.time() for current timestamp",
+      "Cleanup should remove all expired entries"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs302-t2-ex10",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-2",
+    "title": "VLAN Tag Parser",
+    "difficulty": 3,
+    "description": "Parse an 802.1Q VLAN tag from frame bytes. Extract and return the VLAN ID (12 bits), priority (3 bits), and DEI flag (1 bit).",
+    "starterCode": "# Parse 802.1Q VLAN tag (4 bytes total)\ndef parse_vlan_tag(tag_bytes):\n    # tag_bytes is a 4-byte hex string like \"81000064\"\n    # Return dict with: vlan_id, priority, dei\n    pass\n\n# Test your function\nprint(parse_vlan_tag(\"81000064\"))  # VLAN 100\nprint(parse_vlan_tag(\"8100A001\"))  # Priority 5, VLAN 1",
+    "solution": "def parse_vlan_tag(tag_bytes):\n    # Convert hex string to integer\n    tag_int = int(tag_bytes, 16)\n    \n    # TPID is first 2 bytes (should be 0x8100)\n    tpid = (tag_int >> 16) & 0xFFFF\n    \n    # TCI is last 2 bytes\n    tci = tag_int & 0xFFFF\n    \n    # Priority: bits 15-13 (3 bits)\n    priority = (tci >> 13) & 0x7\n    \n    # DEI: bit 12 (1 bit)\n    dei = (tci >> 12) & 0x1\n    \n    # VLAN ID: bits 11-0 (12 bits)\n    vlan_id = tci & 0xFFF\n    \n    return {\n        \"tpid\": hex(tpid),\n        \"priority\": priority,\n        \"dei\": dei,\n        \"vlan_id\": vlan_id\n    }\n\nprint(parse_vlan_tag(\"81000064\"))  # VLAN 100\nprint(parse_vlan_tag(\"8100A001\"))  # Priority 5, VLAN 1",
+    "testCases": [
+      {
+        "input": "\"81000064\"",
+        "isHidden": false,
+        "description": "VLAN 100"
+      },
+      {
+        "input": "\"8100A001\"",
+        "isHidden": false,
+        "description": "Priority 5, VLAN 1"
+      },
+      {
+        "input": "\"81002000\"",
+        "isHidden": true,
+        "description": "DEI set"
+      }
+    ],
+    "hints": [
+      "802.1Q tag: TPID (16 bits) + TCI (16 bits)",
+      "TPID is 0x8100 for VLAN tagging",
+      "TCI = Priority (3) + DEI (1) + VLAN ID (12)",
+      "Use bitwise operations to extract fields"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs302-t2-ex11",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-2",
+    "title": "Byte Stuffing Encoder",
+    "difficulty": 3,
+    "description": "Implement byte stuffing for frame delimiting. Use FLAG=0x7E and ESCAPE=0x7D. Escape any FLAG or ESCAPE in data by XORing with 0x20.",
+    "starterCode": "# Implement byte stuffing\ndef byte_stuff(data):\n    # data is a list of byte values\n    # Return stuffed data with FLAG at start and end\n    FLAG = 0x7E\n    ESCAPE = 0x7D\n    pass\n\n# Test your function\nprint(byte_stuff([0x01, 0x7E, 0x02, 0x7D, 0x03]))",
+    "solution": "def byte_stuff(data):\n    FLAG = 0x7E\n    ESCAPE = 0x7D\n    result = [FLAG]  # Start flag\n    \n    for byte in data:\n        if byte == FLAG or byte == ESCAPE:\n            result.append(ESCAPE)\n            result.append(byte ^ 0x20)\n        else:\n            result.append(byte)\n    \n    result.append(FLAG)  # End flag\n    return result\n\nprint(byte_stuff([0x01, 0x7E, 0x02, 0x7D, 0x03]))",
+    "testCases": [
+      {
+        "input": "[0x01, 0x7E, 0x02, 0x7D, 0x03]",
+        "isHidden": false,
+        "description": "Data with special bytes"
+      },
+      {
+        "input": "[0x01, 0x02, 0x03]",
+        "isHidden": false,
+        "description": "Normal data"
+      },
+      {
+        "input": "[0x7E, 0x7E]",
+        "isHidden": true,
+        "description": "Consecutive flags"
+      }
+    ],
+    "hints": [
+      "Add FLAG byte at start and end",
+      "If data contains FLAG or ESCAPE, insert ESCAPE",
+      "XOR the escaped byte with 0x20",
+      "0x7E XOR 0x20 = 0x5E, 0x7D XOR 0x20 = 0x5D"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs302-t2-ex12",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-2",
+    "title": "Sliding Window Protocol",
+    "difficulty": 4,
+    "description": "Implement a simple sliding window sender. Track sent but unacknowledged frames within the window size.",
+    "starterCode": "class SlidingWindow:\n    def __init__(self, window_size):\n        self.window_size = window_size\n        self.base = 0  # Oldest unacked sequence number\n        self.next_seq = 0  # Next sequence to send\n        self.sent = {}  # seq -> data\n    \n    def can_send(self):\n        # Return True if window has space\n        pass\n    \n    def send(self, data):\n        # Send data if possible, return sequence number or -1\n        pass\n    \n    def ack(self, seq_num):\n        # Acknowledge up to seq_num (cumulative)\n        pass\n\n# Test your class\nsw = SlidingWindow(4)\nprint(sw.send(\"Frame1\"))\nprint(sw.send(\"Frame2\"))\nsw.ack(1)\nprint(sw.can_send())",
+    "solution": "class SlidingWindow:\n    def __init__(self, window_size):\n        self.window_size = window_size\n        self.base = 0\n        self.next_seq = 0\n        self.sent = {}\n    \n    def can_send(self):\n        return self.next_seq < self.base + self.window_size\n    \n    def send(self, data):\n        if not self.can_send():\n            return -1\n        seq = self.next_seq\n        self.sent[seq] = data\n        self.next_seq += 1\n        return seq\n    \n    def ack(self, seq_num):\n        # Cumulative ACK - acknowledge all up to seq_num\n        while self.base <= seq_num and self.base in self.sent:\n            del self.sent[self.base]\n            self.base += 1\n\nsw = SlidingWindow(4)\nprint(sw.send(\"Frame1\"))\nprint(sw.send(\"Frame2\"))\nsw.ack(1)\nprint(sw.can_send())",
+    "testCases": [
+      {
+        "input": "window_size=4",
+        "isHidden": false,
+        "description": "Window of 4"
+      },
+      {
+        "input": "fill window and ack",
+        "isHidden": true,
+        "description": "Full window cycle"
+      }
+    ],
+    "hints": [
+      "Window spans from base to base + window_size - 1",
+      "Can send if next_seq < base + window_size",
+      "Cumulative ACK: acknowledge all frames up to seq_num",
+      "Remove acknowledged frames and advance base"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs302-t2-ex13",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-2",
+    "title": "Checksum Calculator",
+    "difficulty": 3,
+    "description": "Calculate a simple Internet checksum. Sum 16-bit words, add carry, and take ones complement.",
+    "starterCode": "# Calculate Internet checksum\ndef calculate_checksum(data):\n    # data is a list of bytes\n    # Return 16-bit checksum as hex string\n    pass\n\n# Test your function\nprint(calculate_checksum([0x00, 0x01, 0x00, 0x02, 0x00, 0x03]))",
+    "solution": "def calculate_checksum(data):\n    # Pad with zero if odd number of bytes\n    if len(data) % 2 == 1:\n        data = data + [0]\n    \n    # Sum 16-bit words\n    total = 0\n    for i in range(0, len(data), 2):\n        word = (data[i] << 8) + data[i + 1]\n        total += word\n    \n    # Add carry bits\n    while total > 0xFFFF:\n        total = (total & 0xFFFF) + (total >> 16)\n    \n    # Ones complement\n    checksum = ~total & 0xFFFF\n    return hex(checksum)\n\nprint(calculate_checksum([0x00, 0x01, 0x00, 0x02, 0x00, 0x03]))",
+    "testCases": [
+      {
+        "input": "[0x00, 0x01, 0x00, 0x02, 0x00, 0x03]",
+        "isHidden": false,
+        "description": "Simple data"
+      },
+      {
+        "input": "[0xFF, 0xFF, 0xFF, 0xFF]",
+        "isHidden": true,
+        "description": "Max values"
+      }
+    ],
+    "hints": [
+      "Group bytes into 16-bit words",
+      "Sum all words together",
+      "Wrap around: add carry to lower 16 bits",
+      "Final result is ones complement (~sum)"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs302-t2-ex14",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-2",
+    "title": "MAC Learning Switch",
+    "difficulty": 4,
+    "description": "Implement a basic MAC learning switch. Learn source MACs from incoming frames, and forward or flood based on destination.",
+    "starterCode": "class MACSwitch:\n    def __init__(self, num_ports):\n        self.num_ports = num_ports\n        self.mac_table = {}  # MAC -> port\n    \n    def process_frame(self, src_mac, dst_mac, in_port):\n        # Learn source MAC\n        # Return list of ports to forward to\n        pass\n\n# Test your class\nswitch = MACSwitch(4)\nprint(switch.process_frame(\"AA:AA:AA:AA:AA:AA\", \"BB:BB:BB:BB:BB:BB\", 1))\nprint(switch.process_frame(\"BB:BB:BB:BB:BB:BB\", \"AA:AA:AA:AA:AA:AA\", 2))",
+    "solution": "class MACSwitch:\n    def __init__(self, num_ports):\n        self.num_ports = num_ports\n        self.mac_table = {}\n    \n    def process_frame(self, src_mac, dst_mac, in_port):\n        # Learn source MAC\n        self.mac_table[src_mac] = in_port\n        \n        # Check if destination is known\n        if dst_mac in self.mac_table:\n            out_port = self.mac_table[dst_mac]\n            if out_port != in_port:\n                return [out_port]\n            else:\n                return []  # Don't send back on same port\n        else:\n            # Flood to all ports except incoming\n            return [p for p in range(1, self.num_ports + 1) if p != in_port]\n\nswitch = MACSwitch(4)\nprint(switch.process_frame(\"AA:AA:AA:AA:AA:AA\", \"BB:BB:BB:BB:BB:BB\", 1))\nprint(switch.process_frame(\"BB:BB:BB:BB:BB:BB\", \"AA:AA:AA:AA:AA:AA\", 2))",
+    "testCases": [
+      {
+        "input": "unknown dst",
+        "isHidden": false,
+        "description": "Flood on unknown"
+      },
+      {
+        "input": "known dst",
+        "isHidden": false,
+        "description": "Forward to known"
+      },
+      {
+        "input": "same port",
+        "isHidden": true,
+        "description": "No forward to same port"
+      }
+    ],
+    "hints": [
+      "Always learn the source MAC and port",
+      "If destination is unknown, flood to all ports except incoming",
+      "If destination is known, forward only to that port",
+      "Never send a frame back out the port it came in on"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs302-t2-ex15",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-2",
+    "title": "Bit Error Detector",
+    "difficulty": 3,
+    "description": "Detect single-bit errors using 2D parity. Given a matrix of bits with row and column parity, identify the error position.",
+    "starterCode": "# Detect single bit error position using 2D parity\ndef detect_error(matrix):\n    # matrix is list of lists, last row/col are parity bits\n    # Return (row, col) of error or None if no error\n    pass\n\n# Test - error at position (1, 2)\nmatrix = [\n    [1, 0, 1, 0],  # data + row parity\n    [1, 1, 0, 0],  # data + row parity (error: should be 1)\n    [0, 1, 1, 0],  # column parities\n]\nprint(detect_error(matrix))",
+    "solution": "def detect_error(matrix):\n    rows = len(matrix)\n    cols = len(matrix[0])\n    \n    error_row = -1\n    error_col = -1\n    \n    # Check row parities\n    for r in range(rows - 1):\n        if sum(matrix[r]) % 2 != 0:\n            error_row = r\n    \n    # Check column parities\n    for c in range(cols - 1):\n        col_sum = sum(matrix[r][c] for r in range(rows))\n        if col_sum % 2 != 0:\n            error_col = c\n    \n    if error_row >= 0 and error_col >= 0:\n        return (error_row, error_col)\n    return None\n\nmatrix = [\n    [1, 0, 1, 0],\n    [1, 1, 0, 0],\n    [0, 1, 1, 0],\n]\nprint(detect_error(matrix))",
+    "testCases": [
+      {
+        "input": "matrix with error",
+        "isHidden": false,
+        "description": "Detect error position"
+      },
+      {
+        "input": "clean matrix",
+        "isHidden": true,
+        "description": "No error present"
+      }
+    ],
+    "hints": [
+      "Check each row parity (sum should be even)",
+      "Check each column parity (sum should be even)",
+      "Error is at intersection of bad row and column",
+      "Return None if no error detected"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs302-t2-ex16",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-2",
+    "title": "Spanning Tree Protocol",
+    "difficulty": 5,
+    "description": "Simulate basic STP (Spanning Tree Protocol) root bridge election. Given bridge IDs and priorities, determine the root bridge.",
+    "starterCode": "class Bridge:\n    def __init__(self, bridge_id, priority=32768):\n        self.bridge_id = bridge_id\n        self.priority = priority\n        self.is_root = False\n    \n    def get_bridge_priority(self):\n        # Combined priority (priority + bridge_id)\n        pass\n\ndef elect_root(bridges):\n    # Return the bridge that should be root\n    pass\n\n# Test\nbridges = [\n    Bridge(\"00:00:00:00:00:01\", 32768),\n    Bridge(\"00:00:00:00:00:02\", 16384),\n    Bridge(\"00:00:00:00:00:03\", 32768)\n]\nroot = elect_root(bridges)\nprint(f\"Root bridge: {root.bridge_id}\")",
+    "solution": "class Bridge:\n    def __init__(self, bridge_id, priority=32768):\n        self.bridge_id = bridge_id\n        self.priority = priority\n        self.is_root = False\n    \n    def get_bridge_priority(self):\n        # Lower is better\n        # Compare priority first, then bridge_id\n        return (self.priority, self.bridge_id)\n\ndef elect_root(bridges):\n    # Reset all bridges\n    for b in bridges:\n        b.is_root = False\n    \n    # Find bridge with lowest priority\n    root = min(bridges, key=lambda b: b.get_bridge_priority())\n    root.is_root = True\n    return root\n\nbridges = [\n    Bridge(\"00:00:00:00:00:01\", 32768),\n    Bridge(\"00:00:00:00:00:02\", 16384),\n    Bridge(\"00:00:00:00:00:03\", 32768)\n]\nroot = elect_root(bridges)\nprint(f\"Root bridge: {root.bridge_id}\")",
+    "testCases": [
+      {
+        "input": "different priorities",
+        "isHidden": false,
+        "description": "Priority-based election"
+      },
+      {
+        "input": "same priority",
+        "isHidden": true,
+        "description": "Bridge ID tiebreaker"
+      }
+    ],
+    "hints": [
+      "Lower priority wins in STP",
+      "If priorities are equal, lower bridge ID wins",
+      "Bridge ID is typically the MAC address",
+      "Use tuple comparison (priority, bridge_id)"
+    ],
+    "language": "python"
+  }
+]

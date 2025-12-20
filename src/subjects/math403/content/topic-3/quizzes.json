@@ -1,0 +1,185 @@
+[
+  {
+    "id": "math403-quiz-3-1",
+    "subjectId": "math403",
+    "topicId": "math403-topic-3",
+    "title": "Continuity and Homeomorphisms - Fundamentals",
+    "questions": [
+      {
+        "id": "math403-q3-1-1",
+        "type": "multiple_choice",
+        "prompt": "A function f: X → Y is continuous if and only if:",
+        "options": [
+          "f(U) is open for every open U in X",
+          "f⁻¹(V) is open for every open V in Y",
+          "f maps closed sets to closed sets",
+          "f is sequential continuous"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The fundamental characterization: f is continuous iff the preimage of every open set is open."
+      },
+      {
+        "id": "math403-q3-1-2",
+        "type": "true_false",
+        "prompt": "Every continuous function is an open map.",
+        "correctAnswer": false,
+        "explanation": "False. Constant functions are continuous but not open (they map open sets to singletons, which are not open in most topologies)."
+      },
+      {
+        "id": "math403-q3-1-3",
+        "type": "multiple_choice",
+        "prompt": "A homeomorphism is:",
+        "options": [
+          "A continuous bijection",
+          "An open continuous bijection",
+          "A continuous bijection with continuous inverse",
+          "A closed continuous bijection"
+        ],
+        "correctAnswer": 2,
+        "explanation": "A homeomorphism requires continuity in both directions: f and f⁻¹ must both be continuous."
+      },
+      {
+        "id": "math403-q3-1-4",
+        "type": "true_false",
+        "prompt": "If f: X → Y and g: Y → Z are continuous, then g ∘ f: X → Z is continuous.",
+        "correctAnswer": true,
+        "explanation": "True. The composition of continuous functions is continuous. This is a fundamental property."
+      },
+      {
+        "id": "math403-q3-1-5",
+        "type": "multiple_choice",
+        "prompt": "Which property is preserved by homeomorphisms?",
+        "options": [
+          "Compactness",
+          "Connectedness",
+          "Being Hausdorff",
+          "All of the above"
+        ],
+        "correctAnswer": 3,
+        "explanation": "All topological properties are preserved by homeomorphisms. Homeomorphic spaces are topologically identical."
+      }
+    ]
+  },
+  {
+    "id": "math403-quiz-3-2",
+    "subjectId": "math403",
+    "topicId": "math403-topic-3",
+    "title": "Continuity and Homeomorphisms - Applications",
+    "questions": [
+      {
+        "id": "math403-q3-2-1",
+        "type": "true_false",
+        "prompt": "The projection maps π₁: X × Y → X are always continuous in the product topology.",
+        "correctAnswer": true,
+        "explanation": "True. By definition of the product topology, projection maps are continuous (and also open)."
+      },
+      {
+        "id": "math403-q3-2-2",
+        "type": "multiple_choice",
+        "prompt": "f: X → Y is continuous at x if and only if:",
+        "options": [
+          "For every neighborhood V of f(x), f⁻¹(V) is a neighborhood of x",
+          "For every neighborhood V of f(x), there exists a neighborhood U of x with f(U) ⊆ V",
+          "Both of the above",
+          "Neither of the above"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Both characterizations are equivalent definitions of continuity at a point."
+      },
+      {
+        "id": "math403-q3-2-3",
+        "type": "multiple_choice",
+        "prompt": "Are [0, 1] and (0, 1) homeomorphic?",
+        "options": [
+          "Yes, via f(x) = x",
+          "Yes, via a different bijection",
+          "No, one is compact and the other is not",
+          "No, one is connected and the other is not"
+        ],
+        "correctAnswer": 2,
+        "explanation": "[0, 1] is compact but (0, 1) is not. Since compactness is preserved by homeomorphisms, they cannot be homeomorphic."
+      },
+      {
+        "id": "math403-q3-2-4",
+        "type": "true_false",
+        "prompt": "An open map that is also a continuous bijection must be a homeomorphism.",
+        "correctAnswer": true,
+        "explanation": "True. If f is an open continuous bijection, then f⁻¹ is continuous (since f maps open sets to open sets), making f a homeomorphism."
+      },
+      {
+        "id": "math403-q3-2-5",
+        "type": "multiple_choice",
+        "prompt": "The quotient topology on Y is defined so that:",
+        "options": [
+          "All functions from X are continuous",
+          "The quotient map is continuous",
+          "f: Y → Z is continuous iff f ∘ π is continuous",
+          "Y has the discrete topology"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The quotient topology is the finest topology making the quotient map continuous. It satisfies the universal property: f: Y → Z is continuous iff f ∘ π is continuous."
+      }
+    ]
+  },
+  {
+    "id": "math403-quiz-3-3",
+    "subjectId": "math403",
+    "topicId": "math403-topic-3",
+    "title": "Continuity and Homeomorphisms - Advanced",
+    "questions": [
+      {
+        "id": "math403-q3-3-1",
+        "type": "multiple_choice",
+        "prompt": "In a first countable space, f is continuous at x if and only if:",
+        "options": [
+          "f maps convergent sequences to convergent sequences",
+          "For every sequence xₙ → x, we have f(xₙ) → f(x)",
+          "f is sequentially continuous at x",
+          "All of the above"
+        ],
+        "correctAnswer": 3,
+        "explanation": "In first countable spaces, continuity is equivalent to sequential continuity. All characterizations are equivalent."
+      },
+      {
+        "id": "math403-q3-3-2",
+        "type": "true_false",
+        "prompt": "The product of two continuous functions is continuous.",
+        "correctAnswer": false,
+        "explanation": "False. This question is ambiguous. If it means pointwise product (f · g)(x) = f(x) · g(x) where the codomain has multiplication, then yes for real-valued functions. But \"product\" could mean other things. The composition is continuous, though."
+      },
+      {
+        "id": "math403-q3-3-3",
+        "type": "multiple_choice",
+        "prompt": "Which statement characterizes the product topology on X × Y?",
+        "options": [
+          "The finest topology making projections continuous",
+          "The coarsest topology making projections continuous",
+          "The discrete topology",
+          "The topology generated by products of open sets"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The product topology is the coarsest (weakest) topology making both projection maps continuous."
+      },
+      {
+        "id": "math403-q3-3-4",
+        "type": "true_false",
+        "prompt": "If f: X → Y is a closed continuous bijection, then f is a homeomorphism.",
+        "correctAnswer": true,
+        "explanation": "True. A closed continuous bijection has continuous inverse (since f maps closed sets to closed sets), making it a homeomorphism."
+      },
+      {
+        "id": "math403-q3-3-5",
+        "type": "multiple_choice",
+        "prompt": "The gluing lemma states that if X = A ∪ B with A, B closed, and f: A → Y, g: B → Y agree on A ∩ B, then:",
+        "options": [
+          "The combined function is always continuous",
+          "The combined function is continuous if f and g are continuous",
+          "The combined function exists but may not be continuous",
+          "A and B must be disjoint"
+        ],
+        "correctAnswer": 1,
+        "explanation": "If A and B are closed, f and g are continuous, and they agree on the overlap, then the piecewise function is continuous."
+      }
+    ]
+  }
+]

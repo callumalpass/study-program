@@ -1,0 +1,444 @@
+[
+  {
+    "id": "cs403-t2-ex01",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-2",
+    "title": "Vertex Cover 2-Approximation",
+    "difficulty": 3,
+    "description": "Implement a 2-approximation algorithm for the minimum vertex cover problem using the edge selection strategy.",
+    "starterCode": "def vertex_cover_approximation(graph):\n    \"\"\"\n    Find a 2-approximation for minimum vertex cover.\n\n    Args:\n        graph: Dictionary representing adjacency list.\n\n    Returns:\n        set: A vertex cover (set of vertices covering all edges).\n    \"\"\"\n    # Your code here\n    pass",
+    "solution": "def vertex_cover_approximation(graph):\n    edges = set()\n    for u in graph:\n        for v in graph[u]:\n            if u < v:\n                edges.add((u, v))\n\n    cover = set()\n\n    while edges:\n        u, v = edges.pop()\n        cover.add(u)\n        cover.add(v)\n        edges = {e for e in edges if u not in e and v not in e}\n\n    return cover",
+    "testCases": [
+      {
+        "input": "graph = {0: [1, 2], 1: [0, 2], 2: [0, 1]}",
+        "isHidden": false,
+        "description": "Triangle graph"
+      },
+      {
+        "input": "graph = {0: [1], 1: [0, 2], 2: [1, 3], 3: [2]}",
+        "isHidden": false,
+        "description": "Path graph"
+      }
+    ],
+    "hints": [
+      "Select an edge and add both endpoints",
+      "Remove all covered edges"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs403-t2-ex02",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-2",
+    "title": "Greedy Set Cover",
+    "difficulty": 3,
+    "description": "Implement the greedy O(log n)-approximation algorithm for the set cover problem.",
+    "starterCode": "def greedy_set_cover(universe, sets):\n    \"\"\"\n    Find an approximate set cover using the greedy algorithm.\n\n    Args:\n        universe: Set of elements to cover.\n        sets: List of sets.\n\n    Returns:\n        list: Indices of sets in the cover.\n    \"\"\"\n    # Your code here\n    pass",
+    "solution": "def greedy_set_cover(universe, sets):\n    uncovered = set(universe)\n    cover_indices = []\n\n    while uncovered:\n        best_idx = max(range(len(sets)), key=lambda i: len(sets[i] & uncovered))\n        if len(sets[best_idx] & uncovered) == 0:\n            break\n        cover_indices.append(best_idx)\n        uncovered -= sets[best_idx]\n\n    return cover_indices",
+    "testCases": [
+      {
+        "input": "universe = {1, 2, 3, 4, 5}, sets = [{1, 2, 3}, {2, 4}, {3, 4}, {4, 5}]",
+        "isHidden": false,
+        "description": "Basic instance"
+      },
+      {
+        "input": "universe = {1, 2, 3}, sets = [{1}, {2}, {3}, {1, 2, 3}]",
+        "isHidden": false,
+        "description": "Prefer largest set"
+      }
+    ],
+    "hints": [
+      "Select set covering most uncovered elements",
+      "O(log n) approximation"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs403-t2-ex03",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-2",
+    "title": "Metric TSP 2-Approximation",
+    "difficulty": 4,
+    "description": "Implement a 2-approximation for metric TSP using minimum spanning tree.",
+    "starterCode": "def tsp_mst_approximation(distances):\n    \"\"\"\n    Find a 2-approximation for metric TSP using MST.\n\n    Args:\n        distances: 2D matrix of distances (satisfies triangle inequality)\n\n    Returns:\n        list: Tour as list of vertex indices\n    \"\"\"\n    # Your code here\n    pass",
+    "solution": "def tsp_mst_approximation(distances):\n    n = len(distances)\n    # Prim's MST\n    in_mst = [False] * n\n    mst_adj = [[] for _ in range(n)]\n    in_mst[0] = True\n    edges = [(distances[0][j], 0, j) for j in range(1, n)]\n    import heapq\n    heapq.heapify(edges)\n\n    while edges:\n        cost, u, v = heapq.heappop(edges)\n        if in_mst[v]:\n            continue\n        in_mst[v] = True\n        mst_adj[u].append(v)\n        mst_adj[v].append(u)\n        for w in range(n):\n            if not in_mst[w]:\n                heapq.heappush(edges, (distances[v][w], v, w))\n\n    # DFS preorder traversal\n    tour = []\n    visited = [False] * n\n    def dfs(v):\n        visited[v] = True\n        tour.append(v)\n        for u in mst_adj[v]:\n            if not visited[u]:\n                dfs(u)\n    dfs(0)\n    tour.append(0)\n    return tour",
+    "testCases": [
+      {
+        "input": "distances = [[0,1,2],[1,0,1],[2,1,0]]",
+        "isHidden": false,
+        "description": "3-city metric TSP"
+      },
+      {
+        "input": "distances = [[0,1,1,1],[1,0,1,1],[1,1,0,1],[1,1,1,0]]",
+        "isHidden": false,
+        "description": "Complete graph"
+      }
+    ],
+    "hints": [
+      "Build MST first",
+      "DFS preorder gives Hamiltonian path",
+      "Triangle inequality ensures shortcutting works"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs403-t2-ex04",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-2",
+    "title": "Load Balancing Approximation",
+    "difficulty": 3,
+    "description": "Implement a 2-approximation for load balancing (makespan minimization) using LPT scheduling.",
+    "starterCode": "def load_balance(jobs, num_machines):\n    \"\"\"\n    Assign jobs to machines to minimize makespan.\n\n    Args:\n        jobs: List of job processing times\n        num_machines: Number of machines\n\n    Returns:\n        list: Assignment of each job to a machine\n    \"\"\"\n    # Your code here\n    pass",
+    "solution": "def load_balance(jobs, num_machines):\n    n = len(jobs)\n    assignment = [0] * n\n    loads = [0] * num_machines\n\n    # Sort jobs by decreasing size (LPT)\n    sorted_jobs = sorted(enumerate(jobs), key=lambda x: -x[1])\n\n    for job_idx, job_time in sorted_jobs:\n        # Assign to least loaded machine\n        min_machine = min(range(num_machines), key=lambda m: loads[m])\n        assignment[job_idx] = min_machine\n        loads[min_machine] += job_time\n\n    return assignment",
+    "testCases": [
+      {
+        "input": "jobs = [3, 3, 2, 2, 2], num_machines = 2",
+        "isHidden": false,
+        "description": "Balance 5 jobs on 2 machines"
+      },
+      {
+        "input": "jobs = [5, 4, 3, 2, 1], num_machines = 3",
+        "isHidden": false,
+        "description": "LPT scheduling"
+      }
+    ],
+    "hints": [
+      "Sort jobs by decreasing time",
+      "Assign to least loaded machine",
+      "This is LPT (Longest Processing Time)"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs403-t2-ex05",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-2",
+    "title": "Bin Packing First Fit Decreasing",
+    "difficulty": 3,
+    "description": "Implement the First Fit Decreasing (FFD) algorithm for bin packing, which achieves an 11/9 approximation.",
+    "starterCode": "def bin_packing_ffd(items, capacity):\n    \"\"\"\n    Pack items into bins using First Fit Decreasing.\n\n    Args:\n        items: List of item sizes\n        capacity: Bin capacity\n\n    Returns:\n        list: Assignment of each item to a bin\n    \"\"\"\n    # Your code here\n    pass",
+    "solution": "def bin_packing_ffd(items, capacity):\n    n = len(items)\n    assignment = [0] * n\n    sorted_items = sorted(enumerate(items), key=lambda x: -x[1])\n\n    bins = []  # Current space remaining in each bin\n\n    for item_idx, size in sorted_items:\n        placed = False\n        for bin_idx, remaining in enumerate(bins):\n            if remaining >= size:\n                assignment[item_idx] = bin_idx\n                bins[bin_idx] -= size\n                placed = True\n                break\n        if not placed:\n            assignment[item_idx] = len(bins)\n            bins.append(capacity - size)\n\n    return assignment",
+    "testCases": [
+      {
+        "input": "items = [4, 8, 1, 4, 2, 1], capacity = 10",
+        "isHidden": false,
+        "description": "Decreasing order helps"
+      },
+      {
+        "input": "items = [7, 5, 5, 3, 3, 3, 3], capacity = 10",
+        "isHidden": false,
+        "description": "FFD packing"
+      }
+    ],
+    "hints": [
+      "Sort items by decreasing size first",
+      "First Fit: put in first bin that fits",
+      "11/9 OPT + 6/9 approximation"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs403-t2-ex06",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-2",
+    "title": "Knapsack FPTAS",
+    "difficulty": 5,
+    "description": "Implement a Fully Polynomial-Time Approximation Scheme (FPTAS) for the 0/1 knapsack problem.",
+    "starterCode": "def knapsack_fptas(weights, values, capacity, epsilon):\n    \"\"\"\n    (1-epsilon)-approximation for knapsack.\n\n    Args:\n        weights: List of item weights\n        values: List of item values\n        capacity: Knapsack capacity\n        epsilon: Approximation parameter (0 < epsilon < 1)\n\n    Returns:\n        list: Indices of selected items\n    \"\"\"\n    # Your code here\n    pass",
+    "solution": "def knapsack_fptas(weights, values, capacity, epsilon):\n    n = len(values)\n    if n == 0:\n        return []\n\n    v_max = max(values)\n    K = epsilon * v_max / n  # Scaling factor\n\n    # Scale values\n    scaled = [int(v / K) for v in values]\n    V = sum(scaled)\n\n    # DP with scaled values\n    # dp[v] = min weight to achieve value v\n    INF = float('inf')\n    dp = [INF] * (V + 1)\n    dp[0] = 0\n    parent = [[-1, -1] for _ in range(V + 1)]\n\n    for i in range(n):\n        for v in range(V, scaled[i] - 1, -1):\n            if dp[v - scaled[i]] + weights[i] < dp[v]:\n                dp[v] = dp[v - scaled[i]] + weights[i]\n                parent[v] = [i, v - scaled[i]]\n\n    # Find best achievable value within capacity\n    best_v = max(v for v in range(V + 1) if dp[v] <= capacity)\n\n    # Reconstruct solution\n    selected = []\n    v = best_v\n    while parent[v][0] != -1:\n        selected.append(parent[v][0])\n        v = parent[v][1]\n\n    return selected",
+    "testCases": [
+      {
+        "input": "weights = [2, 3, 4, 5], values = [3, 4, 5, 6], capacity = 8, epsilon = 0.5",
+        "isHidden": false,
+        "description": "FPTAS knapsack"
+      },
+      {
+        "input": "weights = [1, 2, 3], values = [10, 20, 30], capacity = 4, epsilon = 0.3",
+        "isHidden": false,
+        "description": "Small instance"
+      }
+    ],
+    "hints": [
+      "Scale values by K = εv_max/n",
+      "Run DP on scaled values",
+      "Time is O(n³/ε)"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs403-t2-ex07",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-2",
+    "title": "MAX-SAT Approximation",
+    "difficulty": 4,
+    "description": "Implement a 1/2-approximation for MAX-SAT using random assignment.",
+    "starterCode": "def max_sat_random(formula, num_vars):\n    \"\"\"\n    Random 1/2-approximation for MAX-SAT.\n\n    Args:\n        formula: List of clauses (each clause is list of literals)\n        num_vars: Number of variables\n\n    Returns:\n        tuple: (assignment dict, number of satisfied clauses)\n    \"\"\"\n    # Your code here\n    pass",
+    "solution": "import random\n\ndef max_sat_random(formula, num_vars):\n    # Random assignment\n    assignment = {i: random.random() < 0.5 for i in range(1, num_vars + 1)}\n\n    # Count satisfied clauses\n    satisfied = 0\n    for clause in formula:\n        for literal in clause:\n            var = abs(literal)\n            if (literal > 0 and assignment[var]) or (literal < 0 and not assignment[var]):\n                satisfied += 1\n                break\n\n    return (assignment, satisfied)",
+    "testCases": [
+      {
+        "input": "formula = [[1, 2], [-1, -2], [1, -2]], num_vars = 2",
+        "isHidden": false,
+        "description": "Simple MAX-SAT"
+      },
+      {
+        "input": "formula = [[1], [-1]], num_vars = 1",
+        "isHidden": false,
+        "description": "Contradictory clauses"
+      }
+    ],
+    "hints": [
+      "Random assignment satisfies each clause with probability >= 1/2",
+      "Expected number >= m/2 clauses"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs403-t2-ex08",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-2",
+    "title": "Christofides Algorithm Helper",
+    "difficulty": 4,
+    "description": "Implement minimum weight perfect matching for odd-degree vertices (part of Christofides algorithm).",
+    "starterCode": "def find_odd_vertices(mst_adj, n):\n    \"\"\"\n    Find vertices with odd degree in MST.\n\n    Args:\n        mst_adj: Adjacency list of MST\n        n: Number of vertices\n\n    Returns:\n        list: Vertices with odd degree\n    \"\"\"\n    # Your code here\n    pass",
+    "solution": "def find_odd_vertices(mst_adj, n):\n    odd_vertices = []\n    for v in range(n):\n        if len(mst_adj[v]) % 2 == 1:\n            odd_vertices.append(v)\n    return odd_vertices",
+    "testCases": [
+      {
+        "input": "mst_adj = [[1], [0, 2], [1]], n = 3",
+        "isHidden": false,
+        "description": "Path: endpoints odd"
+      },
+      {
+        "input": "mst_adj = [[1, 2, 3], [0], [0], [0]], n = 4",
+        "isHidden": false,
+        "description": "Star: center has degree 3"
+      }
+    ],
+    "hints": [
+      "Count degree of each vertex",
+      "Odd if degree is odd number"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs403-t2-ex09",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-2",
+    "title": "Weighted Vertex Cover LP Rounding",
+    "difficulty": 4,
+    "description": "Implement LP rounding for weighted vertex cover (2-approximation).",
+    "starterCode": "def weighted_vertex_cover_lp(graph, weights):\n    \"\"\"\n    2-approximation for weighted vertex cover via LP rounding.\n\n    Args:\n        graph: Adjacency list\n        weights: Vertex weights\n\n    Returns:\n        set: Vertices in cover\n    \"\"\"\n    # Your code here (assume LP solution provided)\n    pass",
+    "solution": "def weighted_vertex_cover_lp(graph, weights):\n    # Simulate LP relaxation result\n    # In practice, would solve LP: min sum(w_v * x_v) s.t. x_u + x_v >= 1 for each edge\n    # Round: include v if x_v >= 1/2\n\n    n = len(graph)\n    # Simple greedy heuristic simulating LP\n    cover = set()\n    uncovered_edges = set()\n    for u in graph:\n        for v in graph[u]:\n            if u < v:\n                uncovered_edges.add((u, v))\n\n    while uncovered_edges:\n        # Pick edge, add cheaper endpoint (heuristic for LP)\n        u, v = uncovered_edges.pop()\n        chosen = u if weights[u] <= weights[v] else v\n        cover.add(chosen)\n        uncovered_edges = {e for e in uncovered_edges if chosen not in e}\n\n    return cover",
+    "testCases": [
+      {
+        "input": "graph = {0: [1], 1: [0, 2], 2: [1]}, weights = [1, 10, 1]",
+        "isHidden": false,
+        "description": "Prefer cheap vertices"
+      },
+      {
+        "input": "graph = {0: [1, 2], 1: [0], 2: [0]}, weights = [3, 1, 1]",
+        "isHidden": false,
+        "description": "Star with expensive center"
+      }
+    ],
+    "hints": [
+      "LP relaxation allows fractional solutions",
+      "Round threshold at 1/2",
+      "This gives 2-approximation"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs403-t2-ex10",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-2",
+    "title": "Max Cut Approximation",
+    "difficulty": 4,
+    "description": "Implement a 1/2-approximation for MAX-CUT using a simple greedy algorithm.",
+    "starterCode": "def max_cut_greedy(graph):\n    \"\"\"\n    1/2-approximation for MAX-CUT.\n\n    Args:\n        graph: Adjacency list with edge weights\n\n    Returns:\n        tuple: (set S, set T) partition\n    \"\"\"\n    # Your code here\n    pass",
+    "solution": "def max_cut_greedy(graph):\n    vertices = list(graph.keys())\n    S, T = set(), set()\n\n    for v in vertices:\n        # Count edges to S and T\n        edges_to_S = sum(1 for u in graph[v] if u in S)\n        edges_to_T = sum(1 for u in graph[v] if u in T)\n\n        # Put v on side with fewer neighbors (more crossing edges)\n        if edges_to_S <= edges_to_T:\n            S.add(v)\n        else:\n            T.add(v)\n\n    return (S, T)",
+    "testCases": [
+      {
+        "input": "graph = {0: [1, 2], 1: [0, 2], 2: [0, 1]}",
+        "isHidden": false,
+        "description": "Triangle"
+      },
+      {
+        "input": "graph = {0: [1, 2, 3], 1: [0], 2: [0], 3: [0]}",
+        "isHidden": false,
+        "description": "Star graph"
+      }
+    ],
+    "hints": [
+      "Process vertices one by one",
+      "Put each vertex where it creates more cut edges",
+      "Each edge counted with probability >= 1/2"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs403-t2-ex11",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-2",
+    "title": "Metric k-Center",
+    "difficulty": 4,
+    "description": "Implement a 2-approximation for the metric k-center problem.",
+    "starterCode": "def k_center(distances, k):\n    \"\"\"\n    2-approximation for k-center.\n\n    Args:\n        distances: Distance matrix\n        k: Number of centers\n\n    Returns:\n        list: Indices of k center vertices\n    \"\"\"\n    # Your code here\n    pass",
+    "solution": "def k_center(distances, k):\n    n = len(distances)\n    if k >= n:\n        return list(range(n))\n\n    centers = [0]  # Start with arbitrary point\n    min_dist = list(distances[0])  # Distance to nearest center\n\n    for _ in range(k - 1):\n        # Find farthest point from current centers\n        farthest = max(range(n), key=lambda v: min_dist[v])\n        centers.append(farthest)\n\n        # Update min distances\n        for v in range(n):\n            min_dist[v] = min(min_dist[v], distances[farthest][v])\n\n    return centers",
+    "testCases": [
+      {
+        "input": "distances = [[0,1,2],[1,0,1],[2,1,0]], k = 2",
+        "isHidden": false,
+        "description": "3 points, 2 centers"
+      },
+      {
+        "input": "distances = [[0,1,1,1],[1,0,1,1],[1,1,0,1],[1,1,1,0]], k = 1",
+        "isHidden": false,
+        "description": "Single center"
+      }
+    ],
+    "hints": [
+      "Greedy farthest-first traversal",
+      "Each new center is farthest from existing",
+      "2-approximation for metric spaces"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs403-t2-ex12",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-2",
+    "title": "Steiner Tree Approximation",
+    "difficulty": 5,
+    "description": "Implement a 2-approximation for the Steiner tree problem using MST on metric closure.",
+    "starterCode": "def steiner_tree(graph, terminals):\n    \"\"\"\n    2-approximation for Steiner tree.\n\n    Args:\n        graph: Weighted adjacency list\n        terminals: Set of terminal vertices\n\n    Returns:\n        list: Edges in approximate Steiner tree\n    \"\"\"\n    # Your code here\n    pass",
+    "solution": "def steiner_tree(graph, terminals):\n    # Compute shortest paths between all terminals\n    import heapq\n\n    def dijkstra(src):\n        dist = {v: float('inf') for v in graph}\n        dist[src] = 0\n        pq = [(0, src)]\n        while pq:\n            d, u = heapq.heappop(pq)\n            if d > dist[u]:\n                continue\n            for v, w in graph[u]:\n                if dist[u] + w < dist[v]:\n                    dist[v] = dist[u] + w\n                    heapq.heappush(pq, (dist[v], v))\n        return dist\n\n    # Build complete graph on terminals with shortest path distances\n    terminal_list = list(terminals)\n    terminal_dist = {t: dijkstra(t) for t in terminal_list}\n\n    # MST on terminals using Prim's\n    in_mst = {terminal_list[0]}\n    mst_edges = []\n    while len(in_mst) < len(terminal_list):\n        best_edge = None\n        best_cost = float('inf')\n        for u in in_mst:\n            for v in terminal_list:\n                if v not in in_mst and terminal_dist[u][v] < best_cost:\n                    best_cost = terminal_dist[u][v]\n                    best_edge = (u, v)\n        if best_edge:\n            mst_edges.append(best_edge)\n            in_mst.add(best_edge[1])\n\n    return mst_edges",
+    "testCases": [
+      {
+        "input": "graph = {0: [(1, 1)], 1: [(0, 1), (2, 1)], 2: [(1, 1)]}, terminals = {0, 2}",
+        "isHidden": false,
+        "description": "Path graph"
+      },
+      {
+        "input": "graph = {0: [(1, 1), (2, 2)], 1: [(0, 1), (2, 1)], 2: [(0, 2), (1, 1)]}, terminals = {0, 1, 2}",
+        "isHidden": false,
+        "description": "Triangle"
+      }
+    ],
+    "hints": [
+      "Compute metric closure on terminals",
+      "Find MST on terminal graph",
+      "Expand paths back to original graph"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs403-t2-ex13",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-2",
+    "title": "Facility Location Greedy",
+    "difficulty": 4,
+    "description": "Implement a greedy approximation for the uncapacitated facility location problem.",
+    "starterCode": "def facility_location(facility_costs, connection_costs):\n    \"\"\"\n    Greedy approximation for facility location.\n\n    Args:\n        facility_costs: List of opening costs for each facility\n        connection_costs: 2D list where [i][j] is cost to connect client i to facility j\n\n    Returns:\n        list: Indices of opened facilities\n    \"\"\"\n    # Your code here\n    pass",
+    "solution": "def facility_location(facility_costs, connection_costs):\n    num_clients = len(connection_costs)\n    num_facilities = len(facility_costs)\n\n    opened = set()\n    assigned = [None] * num_clients\n\n    # Greedy: repeatedly open best facility\n    while None in assigned:\n        best_facility = None\n        best_improvement = -float('inf')\n\n        for f in range(num_facilities):\n            if f in opened:\n                continue\n            # Cost to open and connect unassigned clients\n            improvement = -facility_costs[f]\n            for c in range(num_clients):\n                if assigned[c] is None:\n                    curr_cost = min(connection_costs[c][of] for of in opened) if opened else float('inf')\n                    new_cost = connection_costs[c][f]\n                    improvement += max(0, curr_cost - new_cost)\n\n            if improvement > best_improvement:\n                best_improvement = improvement\n                best_facility = f\n\n        if best_facility is None:\n            break\n\n        opened.add(best_facility)\n        # Assign clients to closest open facility\n        for c in range(num_clients):\n            if assigned[c] is None or connection_costs[c][best_facility] < connection_costs[c][assigned[c]]:\n                assigned[c] = best_facility\n\n    return list(opened)",
+    "testCases": [
+      {
+        "input": "facility_costs = [10, 10], connection_costs = [[1, 5], [5, 1]]",
+        "isHidden": false,
+        "description": "Two facilities, two clients"
+      },
+      {
+        "input": "facility_costs = [5, 5, 5], connection_costs = [[1, 2, 3], [3, 2, 1]]",
+        "isHidden": false,
+        "description": "Symmetric setup"
+      }
+    ],
+    "hints": [
+      "Open facility with best cost/benefit ratio",
+      "Consider opening cost plus connection savings"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs403-t2-ex14",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-2",
+    "title": "Graph Coloring Greedy",
+    "difficulty": 2,
+    "description": "Implement greedy graph coloring that uses at most Δ+1 colors where Δ is max degree.",
+    "starterCode": "def greedy_coloring(graph):\n    \"\"\"\n    Greedy graph coloring.\n\n    Args:\n        graph: Adjacency list\n\n    Returns:\n        dict: Mapping from vertex to color\n    \"\"\"\n    # Your code here\n    pass",
+    "solution": "def greedy_coloring(graph):\n    coloring = {}\n    vertices = sorted(graph.keys(), key=lambda v: -len(graph[v]))  # Process high-degree first\n\n    for v in vertices:\n        # Find colors used by neighbors\n        neighbor_colors = {coloring[u] for u in graph[v] if u in coloring}\n\n        # Assign smallest available color\n        color = 0\n        while color in neighbor_colors:\n            color += 1\n        coloring[v] = color\n\n    return coloring",
+    "testCases": [
+      {
+        "input": "graph = {0: [1, 2], 1: [0, 2], 2: [0, 1]}",
+        "isHidden": false,
+        "description": "Triangle needs 3 colors"
+      },
+      {
+        "input": "graph = {0: [1], 1: [0, 2], 2: [1, 3], 3: [2]}",
+        "isHidden": false,
+        "description": "Path needs 2 colors"
+      }
+    ],
+    "hints": [
+      "Use smallest color not used by neighbors",
+      "At most Δ+1 colors needed"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs403-t2-ex15",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-2",
+    "title": "Makespan Lower Bound",
+    "difficulty": 2,
+    "description": "Compute lower bounds on optimal makespan for load balancing.",
+    "starterCode": "def makespan_lower_bound(jobs, num_machines):\n    \"\"\"\n    Compute lower bounds on optimal makespan.\n\n    Args:\n        jobs: List of job times\n        num_machines: Number of machines\n\n    Returns:\n        float: Lower bound on optimal makespan\n    \"\"\"\n    # Your code here\n    pass",
+    "solution": "def makespan_lower_bound(jobs, num_machines):\n    # Two lower bounds:\n    # 1. Average load\n    avg_bound = sum(jobs) / num_machines\n    # 2. Largest job\n    max_bound = max(jobs) if jobs else 0\n    return max(avg_bound, max_bound)",
+    "testCases": [
+      {
+        "input": "jobs = [4, 3, 3], num_machines = 2",
+        "isHidden": false,
+        "description": "Total=10, max=4, LB=5"
+      },
+      {
+        "input": "jobs = [10, 1, 1, 1], num_machines = 2",
+        "isHidden": false,
+        "description": "Large job dominates"
+      }
+    ],
+    "hints": [
+      "Average load is a lower bound",
+      "Largest job is a lower bound",
+      "Take maximum"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs403-t2-ex16",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-2",
+    "title": "Approximation Ratio Calculator",
+    "difficulty": 2,
+    "description": "Calculate the approximation ratio given algorithm output and optimal solution.",
+    "starterCode": "def approximation_ratio(algorithm_value, optimal_value, is_minimization):\n    \"\"\"\n    Calculate approximation ratio.\n\n    Args:\n        algorithm_value: Value achieved by algorithm\n        optimal_value: Optimal value\n        is_minimization: True if minimization problem\n\n    Returns:\n        float: Approximation ratio (>= 1)\n    \"\"\"\n    # Your code here\n    pass",
+    "solution": "def approximation_ratio(algorithm_value, optimal_value, is_minimization):\n    if optimal_value == 0:\n        return float('inf') if algorithm_value != 0 else 1.0\n\n    if is_minimization:\n        return algorithm_value / optimal_value\n    else:\n        return optimal_value / algorithm_value",
+    "testCases": [
+      {
+        "input": "algorithm_value = 10, optimal_value = 5, is_minimization = True",
+        "isHidden": false,
+        "description": "2-approx for min"
+      },
+      {
+        "input": "algorithm_value = 7, optimal_value = 10, is_minimization = False",
+        "isHidden": false,
+        "description": "10/7-approx for max"
+      }
+    ],
+    "hints": [
+      "For min: ALG/OPT",
+      "For max: OPT/ALG",
+      "Ratio >= 1 by convention"
+    ],
+    "language": "python"
+  }
+]

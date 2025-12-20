@@ -1,0 +1,175 @@
+[
+  {
+    "id": "cs103-quiz-6a",
+    "subjectId": "cs103",
+    "topicId": "cs103-6",
+    "title": "Abstraction and Interfaces — Quiz A (Fundamentals)",
+    "questions": [
+      {
+        "id": "cs103-q6a-1",
+        "type": "multiple_choice",
+        "prompt": "What is the primary goal of abstraction?",
+        "options": [
+          "Make code shorter",
+          "Hide internal details and expose essential capabilities",
+          "Force all classes to inherit from one base class",
+          "Avoid using functions"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Abstraction helps you focus on what an object can do, reducing coupling to implementation details."
+      },
+      {
+        "id": "cs103-q6a-2",
+        "type": "fill_blank",
+        "prompt": "Python’s module for defining abstract base classes is named ____.",
+        "correctAnswer": "abc",
+        "explanation": "The `abc` module provides `ABC` and `@abstractmethod`."
+      },
+      {
+        "id": "cs103-q6a-3",
+        "type": "true_false",
+        "prompt": "An abstract method can have an implementation, but the subclass is still required to override it (unless the subclass remains abstract).",
+        "correctAnswer": true,
+        "explanation": "Abstract methods may include partial/shared logic, but they still must be implemented by concrete subclasses."
+      },
+      {
+        "id": "cs103-q6a-4",
+        "type": "multiple_choice",
+        "prompt": "What is the key idea behind a `typing.Protocol`?",
+        "options": [
+          "Only classes that inherit the Protocol are compatible",
+          "Compatibility is based on having the required methods (structural typing)",
+          "It disables inheritance",
+          "It is used only for runtime performance"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Protocols express “has the right methods” without forcing inheritance."
+      },
+      {
+        "id": "cs103-q6a-5",
+        "type": "multiple_choice",
+        "prompt": "Which pattern is commonly used when a base class defines algorithm steps and subclasses fill in the details?",
+        "options": [
+          "Factory",
+          "Template Method",
+          "Singleton",
+          "Observer"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Template Method defines a skeleton algorithm in a base class and defers steps to subclasses."
+      }
+    ]
+  },
+  {
+    "id": "cs103-quiz-6b",
+    "subjectId": "cs103",
+    "topicId": "cs103-6",
+    "title": "Abstraction and Interfaces — Quiz B (Application)",
+    "questions": [
+      {
+        "id": "cs103-q6b-1",
+        "type": "code_output",
+        "prompt": "What happens when you try to instantiate this class?",
+        "codeSnippet": "from abc import ABC, abstractmethod\n\nclass A(ABC):\n    @abstractmethod\n    def f(self):\n        pass\n\nA()",
+        "correctAnswer": "TypeError",
+        "explanation": "A class with unimplemented abstract methods cannot be instantiated; Python raises a TypeError."
+      },
+      {
+        "id": "cs103-q6b-2",
+        "type": "multiple_choice",
+        "prompt": "What is a good reason to accept a dependency via a constructor parameter?",
+        "options": [
+          "It guarantees faster code",
+          "It improves testability and reduces coupling",
+          "It prevents polymorphism",
+          "It forces singletons"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Dependency injection makes it easy to swap implementations and write unit tests."
+      },
+      {
+        "id": "cs103-q6b-3",
+        "type": "true_false",
+        "prompt": "Using an interface/ABC can allow you to add new implementations without changing the calling code.",
+        "correctAnswer": true,
+        "explanation": "Callers depend on the contract, so new implementations can be plugged in."
+      },
+      {
+        "id": "cs103-q6b-4",
+        "type": "fill_blank",
+        "prompt": "In a template method, the base class typically calls “step” methods, which are often marked as ____.",
+        "correctAnswer": "abstractmethod",
+        "explanation": "Abstract “steps” ensure subclasses provide required details."
+      },
+      {
+        "id": "cs103-q6b-5",
+        "type": "multiple_choice",
+        "prompt": "Which choice is usually best for a small “capability” interface in Python?",
+        "options": [
+          "Deep inheritance tree",
+          "Global variables",
+          "A small Protocol or duck-typed interface",
+          "A monolithic base class with dozens of methods"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Small, behavior-focused interfaces are easier to implement and test."
+      }
+    ]
+  },
+  {
+    "id": "cs103-quiz-6c",
+    "subjectId": "cs103",
+    "topicId": "cs103-6",
+    "title": "Abstraction and Interfaces — Quiz C (Advanced)",
+    "questions": [
+      {
+        "id": "cs103-q6c-1",
+        "type": "multiple_choice",
+        "prompt": "Which is a risk of overly large interfaces?",
+        "options": [
+          "They increase runtime speed",
+          "They force implementations to define irrelevant methods (poor cohesion)",
+          "They eliminate the need for testing",
+          "They prevent polymorphism"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Large interfaces reduce cohesion and increase coupling; implementations end up with meaningless stubs."
+      },
+      {
+        "id": "cs103-q6c-2",
+        "type": "code_output",
+        "prompt": "What does this code print?",
+        "codeSnippet": "class A:\n    def f(self): return \"A\"\nclass B(A):\n    def f(self): return \"B\"\n\ndef g(x: A):\n    print(x.f())\n\ng(B())",
+        "correctAnswer": "B",
+        "explanation": "Substitutability: a `B` can be used where an `A` is expected."
+      },
+      {
+        "id": "cs103-q6c-3",
+        "type": "true_false",
+        "prompt": "A Protocol can be used for type checking without requiring explicit inheritance by the implementing class.",
+        "correctAnswer": true,
+        "explanation": "That is the key benefit of structural typing."
+      },
+      {
+        "id": "cs103-q6c-4",
+        "type": "fill_blank",
+        "prompt": "Depending on abstractions rather than concrete implementations is known as the Dependency ____ Principle.",
+        "correctAnswer": "Inversion",
+        "explanation": "Dependency Inversion encourages high-level code to depend on abstractions."
+      },
+      {
+        "id": "cs103-q6c-5",
+        "type": "multiple_choice",
+        "prompt": "When might an ABC be preferred over a Protocol?",
+        "options": [
+          "When you need runtime `isinstance` checks and shared template logic",
+          "When you want to avoid any inheritance in your project",
+          "When you want to prevent type checking entirely",
+          "When you need global variables"
+        ],
+        "correctAnswer": 0,
+        "explanation": "ABCs support runtime checks and can provide shared algorithm structure via base methods."
+      }
+    ]
+  }
+]

@@ -1,0 +1,185 @@
+[
+  {
+    "id": "math202-quiz-1a",
+    "subjectId": "math202",
+    "topicId": "math202-1",
+    "title": "Sample Spaces and Basic Probability",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "A fair six-sided die is rolled. What is the probability of rolling a number greater than 4?",
+        "options": [
+          "1/6",
+          "1/3",
+          "1/2",
+          "2/3"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Numbers greater than 4 are {5, 6}. There are 2 favorable outcomes out of 6 possible, so P = 2/6 = 1/3."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "Two coins are flipped. What is the probability of getting exactly one head?",
+        "options": [
+          "1/4",
+          "1/3",
+          "1/2",
+          "2/3"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Sample space: {HH, HT, TH, TT}. Exactly one head: {HT, TH}. P = 2/4 = 1/2."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "The sum of all probabilities in a sample space must equal 1.",
+        "correctAnswer": true,
+        "explanation": "This is one of the fundamental axioms of probability (Kolmogorov axioms)."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "Which of the following is NOT a valid probability value?",
+        "options": [
+          "0",
+          "0.5",
+          "1",
+          "1.2"
+        ],
+        "correctAnswer": 3,
+        "explanation": "Probabilities must be between 0 and 1 inclusive. 1.2 > 1, so it cannot be a valid probability."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "The set of all possible outcomes of a random experiment is called the ______ space.",
+        "correctAnswer": "sample",
+        "explanation": "The sample space is the fundamental concept in probability theory representing all possible outcomes."
+      }
+    ]
+  },
+  {
+    "id": "math202-quiz-1b",
+    "subjectId": "math202",
+    "topicId": "math202-1",
+    "title": "Conditional Probability and Independence",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "If P(A) = 0.4, P(B) = 0.5, and P(A ∩ B) = 0.2, what is P(A|B)?",
+        "options": [
+          "0.2",
+          "0.4",
+          "0.5",
+          "0.8"
+        ],
+        "correctAnswer": 1,
+        "explanation": "P(A|B) = P(A ∩ B) / P(B) = 0.2 / 0.5 = 0.4."
+      },
+      {
+        "id": "q2",
+        "type": "true_false",
+        "prompt": "If events A and B are independent, then P(A ∩ B) = P(A) × P(B).",
+        "correctAnswer": true,
+        "explanation": "This is the definition of independence: two events are independent if and only if P(A ∩ B) = P(A) × P(B)."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "If P(A) = 0.6 and P(B|A) = 0.3, what is P(A ∩ B)?",
+        "options": [
+          "0.18",
+          "0.3",
+          "0.6",
+          "0.9"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Using the definition of conditional probability: P(A ∩ B) = P(B|A) × P(A) = 0.3 × 0.6 = 0.18."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "Two events A and B are mutually exclusive with P(A) = 0.3 and P(B) = 0.4. Are they independent?",
+        "options": [
+          "Yes",
+          "No",
+          "Cannot determine",
+          "Only if P(A ∪ B) = 0.7"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Mutually exclusive events (except those with probability 0) cannot be independent. If P(A ∩ B) = 0 but P(A) × P(B) = 0.12 ≠ 0, they are not independent."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "The probability of event A given that event B has occurred is denoted P(A|B) and is called ______ probability.",
+        "correctAnswer": "conditional",
+        "explanation": "Conditional probability measures the probability of an event given that another event has occurred."
+      }
+    ]
+  },
+  {
+    "id": "math202-quiz-1c",
+    "subjectId": "math202",
+    "topicId": "math202-1",
+    "title": "Bayes' Theorem and Counting",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "How many different 3-letter arrangements can be made from the letters A, B, C, D, E (without repetition)?",
+        "options": [
+          "15",
+          "60",
+          "125",
+          "243"
+        ],
+        "correctAnswer": 1,
+        "explanation": "This is a permutation: P(5,3) = 5!/(5-3)! = 5 × 4 × 3 = 60."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "How many ways can you choose 2 items from a set of 5 items (order doesn't matter)?",
+        "options": [
+          "5",
+          "10",
+          "20",
+          "25"
+        ],
+        "correctAnswer": 1,
+        "explanation": "This is a combination: C(5,2) = 5!/(2!×3!) = (5×4)/(2×1) = 10."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "A disease affects 1% of the population. A test is 95% accurate for sick people and 90% accurate for healthy people. If someone tests positive, approximately what is the probability they have the disease?",
+        "options": [
+          "About 9%",
+          "About 50%",
+          "About 95%",
+          "About 99%"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Using Bayes' theorem: P(Disease|Positive) = P(Positive|Disease)×P(Disease) / P(Positive). P(Positive) = 0.95×0.01 + 0.10×0.99 = 0.1085. So P(Disease|Positive) = 0.0095/0.1085 ≈ 0.088 or about 9%."
+      },
+      {
+        "id": "q4",
+        "type": "true_false",
+        "prompt": "The number of permutations of n distinct objects is n!.",
+        "correctAnswer": true,
+        "explanation": "The factorial n! counts all possible orderings of n distinct objects."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "Bayes' theorem allows us to update our beliefs about a hypothesis based on new ______.",
+        "correctAnswer": "evidence",
+        "explanation": "Bayes' theorem is fundamental for updating probabilities when new evidence or information becomes available."
+      }
+    ]
+  }
+]

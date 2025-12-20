@@ -10,7 +10,39 @@ You are upgrading the subject **[SUBJECT_ID]** to meet the production-ready qual
 
 **Reference Documents:**
 - Quality Standard: `docs/standards/SUBJECT_STANDARD.md`
+- Subject Spec Schema: `docs/standards/SUBJECT_SPEC_SCHEMA.md`
 - Type Definitions: `src/core/types.ts`
+
+---
+
+## Phase 0: Subject Specification (Required First)
+
+Every subject **must** have a `subject-spec.yaml` that defines its pedagogical approach and assessment requirements.
+
+### Check for Existing Spec
+
+```bash
+ls src/subjects/[subject]/subject-spec.yaml
+```
+
+### If No Spec Exists, Create One
+
+Use the schema at `docs/standards/SUBJECT_SPEC_SCHEMA.md` and example specs at:
+- `src/subjects/cs101/subject-spec.yaml` (intro programming example)
+- `src/subjects/math303/subject-spec.yaml` (proof-based math example)
+
+The spec must define:
+- **role**: Level and transformation the subject achieves
+- **curriculum**: Word target per subtopic, prerequisite knowledge, essential concepts, out-of-scope topics
+- **pedagogy**: Knowledge type, mastery indicators, common struggles
+- **assessment**: Philosophy, what assessments measure, anti-patterns
+- **grading**: Passing thresholds with rationale
+- **exercises**: Types, quantities per topic (with justification)
+- **quizzes**: Structure, question types
+- **exams**: Question counts, formats
+- **projects**: Whether required, count, goals
+
+**Important:** The spec's targets (including `curriculum.subtopic_word_target`) will be used by `npm run quality` to validate the subject.
 
 ---
 
@@ -42,27 +74,31 @@ The quality script provides detailed breakdowns:
 
 If you need to inspect specific files:
 
-1. **Topics**: Count topics in `src/subjects/[subject]/topics.ts`
-2. **Subtopics**: Check each topic for subtopics array; count markdown files in `src/subjects/[subject]/content/topic-N/`
-3. **Exercises**: Count exercises in `src/subjects/[subject]/exercises.json`
-4. **Quizzes**: Count quizzes and questions in `src/subjects/[subject]/quizzes.json`
-5. **Exams**: Check if `src/subjects/[subject]/exams.json` exists with Midterm and Final
-6. **Projects**: Review `src/subjects/[subject]/projects.json` (CS subjects only)
+1. **Subject Spec**: Check `src/subjects/[subject]/subject-spec.yaml` exists
+2. **Topics**: Count topics in `src/subjects/[subject]/topics.ts`
+3. **Subtopics**: Count markdown files in `src/subjects/[subject]/content/topic-N/`
+4. **Exercises**: Count exercises in `src/subjects/[subject]/content/topic-N/exercises.json` (per topic)
+5. **Quizzes**: Count quizzes in `src/subjects/[subject]/content/topic-N/quizzes.json` (per topic)
+6. **Exams**: Check if `src/subjects/[subject]/exams.json` exists with Midterm and Final
+7. **Projects**: Review `src/subjects/[subject]/projects.json` (if required by spec)
 
 ---
 
 ## Phase 2: Identify Gaps
 
-Compare against the standard requirements:
+Compare against the subject's spec requirements (or base defaults if not overridden):
 
-| Component | Required | Per Topic | Per Subject |
-|-----------|----------|-----------|-------------|
-| Topics | 7 | — | 7 |
-| Subtopics | 7 per topic (800+ words each) | 7 | 49 |
-| Exercises | 16 per topic (difficulty 1-5) | 16 | 112 |
-| Quizzes | 3 per topic × 5 questions | 15 | 105 questions |
-| Exams | Midterm (25-30 q) + Final (40-45 q) | — | 2 |
-| Projects | 2-3 (CS only) | — | 2-3 or 0 |
+| Component | Default | Notes |
+|-----------|---------|-------|
+| Topics | 7 | Fixed |
+| Subtopics | 7 per topic | Fixed |
+| Words/subtopic | 1000 | Per spec (`curriculum.subtopic_word_target`) |
+| Exercises | 16 per topic | Per spec (can be lower for proof-heavy subjects) |
+| Quizzes | 3 per topic × 5 questions | Per spec |
+| Exams | Midterm ~26q + Final ~42q | Per spec |
+| Projects | 1+ for CS, 0 for MATH | Per spec |
+
+**Check the subject's `subject-spec.yaml`** for actual targets — the quality checker uses these.
 
 ---
 
@@ -124,20 +160,23 @@ All subject content is colocated in a single directory:
 
 ```
 src/subjects/[subject]/
+├── subject-spec.yaml  # REQUIRED: Subject specification
 ├── content/           # Markdown lesson content (with frontmatter)
-│   ├── topic-1/       # Subtopics for topic 1
-│   │   ├── 01-introduction.md    # Each file has frontmatter
+│   ├── topic-1/       # Topic 1 directory
+│   │   ├── 01-introduction.md    # Subtopic (frontmatter: id, title, order)
 │   │   ├── 02-concept-name.md
-│   │   └── ...07-*.md
+│   │   ├── ...07-*.md
+│   │   ├── exercises.json        # Exercises for this topic
+│   │   └── quizzes.json          # Quizzes for this topic
 │   ├── topic-2/
-│   │   └── ...
-│   └── topic-N.md     # Legacy fallback content (optional)
+│   │   ├── *.md
+│   │   ├── exercises.json
+│   │   └── quizzes.json
+│   └── ...
 ├── index.ts           # Re-exports all subject content
 ├── topics.ts          # Topic definitions (uses glob imports)
-├── quizzes.json       # All quizzes for the subject
 ├── exams.json         # Midterm and Final exams
-├── exercises.json     # All exercises for the subject
-└── projects.json      # Projects (CS subjects only)
+└── projects.json      # Projects (if required by spec)
 ```
 
 ### Shared Loader
@@ -355,16 +394,15 @@ interface StarterResource {
 
 ```typescript
 // src/subjects/[subject]/index.ts
-import type { Quiz, Exam, Exercise } from '../../core/types';
+import type { Exam, Project } from '../../core/types';
 
-import quizzesData from './quizzes.json';
 import examsData from './exams.json';
-import exercisesData from './exercises.json';
 import projectsData from './projects.json';
 
-export const [subject]Quizzes = quizzesData as Quiz[];
+// Exercises and quizzes are now per-topic in content/topic-N/ directories
+// They are loaded automatically by the shared loader
+
 export const [subject]Exams = examsData as Exam[];
-export const [subject]Exercises = exercisesData as Exercise[];
 export const [subject]Projects = projectsData as Project[];
 export { [subject]Topics } from './topics';
 ```
@@ -405,10 +443,10 @@ The `buildTopicsFromGlob` function:
 
 ### JSON Data Files
 
-Assessment data is stored in JSON files for easier editing:
+Exercises and quizzes are stored per-topic for easier management:
 
 ```json
-// src/subjects/[subject]/exercises.json
+// src/subjects/[subject]/content/topic-1/exercises.json
 [
   {
     "id": "[subject]-t1-ex01",
@@ -434,7 +472,7 @@ Assessment data is stored in JSON files for easier editing:
 ```
 
 ```json
-// src/subjects/[subject]/quizzes.json
+// src/subjects/[subject]/content/topic-1/quizzes.json
 [
   {
     "id": "[subject]-quiz-1a",
@@ -539,17 +577,17 @@ src/subjects/[subject]/content/topic-N/
 
 Before marking upgrade complete:
 
+- [ ] **subject-spec.yaml exists** with pedagogical justifications
 - [ ] 7 topics with 7 subtopics each (49 total, 800+ words each)
 - [ ] All subtopic markdown files have frontmatter (id, title, order)
-- [ ] 112 exercises in exercises.json (16 per topic, difficulty 1-5 distribution)
-- [ ] 21 quizzes in quizzes.json (3 per topic, 5 questions each)
-- [ ] 2 exams in exams.json (Midterm: 25-30q, Final: 40-45q)
-- [ ] 2-3 projects in projects.json with rubrics (CS only)
+- [ ] Exercises in each `content/topic-N/exercises.json` (per spec, default 16/topic)
+- [ ] Quizzes in each `content/topic-N/quizzes.json` (per spec, default 3×5 questions)
+- [ ] 2 exams in exams.json (per spec, default ~30 midterm, ~45 final)
+- [ ] Projects in projects.json (if required by spec)
 - [ ] All IDs follow naming conventions
 - [ ] topics.ts uses glob imports and buildTopicsFromGlob
-- [ ] index.ts imports JSON files and exports with types
 - [ ] Build passes without errors (`npm run build`)
-- [ ] Quality check passes (`npm run quality`)
+- [ ] Quality check passes (`npm run quality`) — uses spec targets
 - [ ] Import validation passes (`npm run validate`)
 - [ ] Subject review updated (Phase 4)
 
@@ -557,16 +595,22 @@ Before marking upgrade complete:
 
 ## Subject-Specific Notes
 
-**Math subjects (math1xx, math2xx, math3xx, math4xx):**
-- No projects required
-- Use `WrittenExercise` type for proof/calculation exercises
-- Exams should include proof writing (`written` type questions)
+Each subject's `subject-spec.yaml` defines its specific requirements. Common patterns:
 
-**CS theory subjects (cs102 Computer Organization):**
-- No projects required
-- Focus on calculation and analysis exercises
+**Math subjects (proof-based):**
+- Usually fewer exercises per topic (10-14 vs 16)
+- All exercises are `written` type (proofs)
+- Fewer exam questions with more depth
+- Projects typically not required
 
 **CS programming subjects:**
-- 2-3 projects required
-- Use `CodingExercise` type
-- Projects should integrate multiple topics
+- High volume of `coding_with_tests` exercises
+- Projects required (2-3 per subject)
+- Automated test coverage for immediate feedback
+
+**CS theory subjects:**
+- Mix of coding and written exercises
+- May or may not require projects
+- Focus on analysis and calculation
+
+**Always check the subject's spec** for authoritative requirements.

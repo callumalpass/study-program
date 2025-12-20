@@ -1,0 +1,221 @@
+[
+  {
+    "id": "math303-quiz-6-1",
+    "subjectId": "math303",
+    "title": "Riemann Integration - Definition",
+    "topicId": "math303-topic-6",
+    "questions": [
+      {
+        "id": "math303-q76",
+        "type": "multiple_choice",
+        "prompt": "A function f is Riemann integrable on [a, b] if:",
+        "options": [
+          "The upper and lower Riemann sums converge to the same value",
+          "f is continuous on [a, b]",
+          "f is bounded on [a, b]",
+          "f is differentiable on [a, b]"
+        ],
+        "correctAnswer": "The upper and lower Riemann sums converge to the same value",
+        "explanation": "Riemann integrability requires that sup(L(f, P)) = inf(U(f, P)) where L and U are lower and upper sums over all partitions P."
+      },
+      {
+        "id": "math303-q77",
+        "type": "multiple_choice",
+        "prompt": "Every continuous function on [a, b] is:",
+        "options": [
+          "Riemann integrable",
+          "Not Riemann integrable",
+          "Unbounded",
+          "Not differentiable"
+        ],
+        "correctAnswer": "Riemann integrable",
+        "explanation": "Continuity on a closed bounded interval guarantees Riemann integrability. This is a fundamental theorem of integration."
+      },
+      {
+        "id": "math303-q78",
+        "type": "multiple_choice",
+        "prompt": "A bounded function with finitely many discontinuities on [a, b] is:",
+        "options": [
+          "Riemann integrable",
+          "Not Riemann integrable",
+          "Continuous",
+          "Not bounded"
+        ],
+        "correctAnswer": "Riemann integrable",
+        "explanation": "Functions with finitely many discontinuities are Riemann integrable, provided they are bounded. This extends the continuity criterion."
+      },
+      {
+        "id": "math303-q79",
+        "type": "multiple_choice",
+        "prompt": "The function f(x) = 1 if x is rational, 0 if x is irrational, on [0, 1] is:",
+        "options": [
+          "Not Riemann integrable",
+          "Riemann integrable with integral 1",
+          "Riemann integrable with integral 0",
+          "Riemann integrable with integral 1/2"
+        ],
+        "correctAnswer": "Not Riemann integrable",
+        "explanation": "This is Dirichlet's function. It has discontinuities everywhere, so upper sums equal 1 and lower sums equal 0, making it non-integrable."
+      },
+      {
+        "id": "math303-q80",
+        "type": "multiple_choice",
+        "prompt": "If f is Riemann integrable on [a, b], then f is:",
+        "options": [
+          "Bounded on [a, b]",
+          "Continuous on [a, b]",
+          "Differentiable on [a, b]",
+          "Constant on [a, b]"
+        ],
+        "correctAnswer": "Bounded on [a, b]",
+        "explanation": "Riemann integrability requires boundedness. However, the function need not be continuous or differentiable."
+      }
+    ]
+  },
+  {
+    "id": "math303-quiz-6-2",
+    "subjectId": "math303",
+    "title": "Riemann Integration - Properties and FTC",
+    "topicId": "math303-topic-6",
+    "questions": [
+      {
+        "id": "math303-q81",
+        "type": "multiple_choice",
+        "prompt": "If f is integrable on [a, b] and f(x) ≥ 0 for all x, then:",
+        "options": [
+          "∫ₐᵇ f(x)dx ≥ 0",
+          "∫ₐᵇ f(x)dx < 0",
+          "∫ₐᵇ f(x)dx = 0",
+          "f is constant"
+        ],
+        "correctAnswer": "∫ₐᵇ f(x)dx ≥ 0",
+        "explanation": "This is the positivity property of the integral: if f ≥ 0, then its integral is non-negative."
+      },
+      {
+        "id": "math303-q82",
+        "type": "multiple_choice",
+        "prompt": "The Fundamental Theorem of Calculus (Part 1) states that if f is continuous on [a, b] and F(x) = ∫ₐˣ f(t)dt, then:",
+        "options": [
+          "F'(x) = f(x)",
+          "F(x) = f'(x)",
+          "F(x) is constant",
+          "f(x) is constant"
+        ],
+        "correctAnswer": "F'(x) = f(x)",
+        "explanation": "FTC Part 1: the derivative of the integral function F(x) = ∫ₐˣ f(t)dt is f(x). Integration and differentiation are inverse operations."
+      },
+      {
+        "id": "math303-q83",
+        "type": "multiple_choice",
+        "prompt": "The Fundamental Theorem of Calculus (Part 2) states that if f is continuous on [a, b] and F is an antiderivative of f, then:",
+        "options": [
+          "∫ₐᵇ f(x)dx = F(b) - F(a)",
+          "∫ₐᵇ f(x)dx = F'(b) - F'(a)",
+          "∫ₐᵇ f(x)dx = F(a) - F(b)",
+          "∫ₐᵇ f(x)dx = F(b) + F(a)"
+        ],
+        "correctAnswer": "∫ₐᵇ f(x)dx = F(b) - F(a)",
+        "explanation": "FTC Part 2: the definite integral equals the antiderivative evaluated at the endpoints. This is the evaluation theorem."
+      },
+      {
+        "id": "math303-q84",
+        "type": "multiple_choice",
+        "prompt": "If f and g are integrable on [a, b], then ∫ₐᵇ [f(x) + g(x)]dx equals:",
+        "options": [
+          "∫ₐᵇ f(x)dx + ∫ₐᵇ g(x)dx",
+          "∫ₐᵇ f(x)dx · ∫ₐᵇ g(x)dx",
+          "∫ₐᵇ f(x)dx - ∫ₐᵇ g(x)dx",
+          "0"
+        ],
+        "correctAnswer": "∫ₐᵇ f(x)dx + ∫ₐᵇ g(x)dx",
+        "explanation": "This is the linearity property of integration: the integral of a sum is the sum of the integrals."
+      },
+      {
+        "id": "math303-q85",
+        "type": "multiple_choice",
+        "prompt": "For integrable f on [a, b] and c ∈ (a, b):",
+        "options": [
+          "∫ₐᵇ f = ∫ₐᶜ f + ∫ᶜᵇ f",
+          "∫ₐᵇ f = ∫ₐᶜ f · ∫ᶜᵇ f",
+          "∫ₐᵇ f = ∫ₐᶜ f - ∫ᶜᵇ f",
+          "∫ₐᵇ f = 0"
+        ],
+        "correctAnswer": "∫ₐᵇ f = ∫ₐᶜ f + ∫ᶜᵇ f",
+        "explanation": "This is the additivity over intervals property: we can break an integral into pieces and add them."
+      }
+    ]
+  },
+  {
+    "id": "math303-quiz-6-3",
+    "subjectId": "math303",
+    "title": "Riemann Integration - Advanced Topics",
+    "topicId": "math303-topic-6",
+    "questions": [
+      {
+        "id": "math303-q86",
+        "type": "multiple_choice",
+        "prompt": "An improper integral ∫₁^∞ f(x)dx is defined as:",
+        "options": [
+          "lim(t→∞) ∫₁ᵗ f(x)dx",
+          "∫₁^∞ f(x)dx directly",
+          "f(∞) - f(1)",
+          "0"
+        ],
+        "correctAnswer": "lim(t→∞) ∫₁ᵗ f(x)dx",
+        "explanation": "Improper integrals over infinite intervals are defined as limits of proper integrals over finite intervals."
+      },
+      {
+        "id": "math303-q87",
+        "type": "multiple_choice",
+        "prompt": "The improper integral ∫₁^∞ 1/xᵖ dx converges if and only if:",
+        "options": [
+          "p > 1",
+          "p ≥ 1",
+          "p < 1",
+          "p = 1"
+        ],
+        "correctAnswer": "p > 1",
+        "explanation": "This is analogous to the p-series test for infinite series. The integral converges when p > 1 and diverges when p ≤ 1."
+      },
+      {
+        "id": "math303-q88",
+        "type": "multiple_choice",
+        "prompt": "The Mean Value Theorem for Integrals states that if f is continuous on [a, b], then there exists c in [a, b] such that:",
+        "options": [
+          "∫ₐᵇ f(x)dx = f(c)(b - a)",
+          "f(c) = 0",
+          "f'(c) = 0",
+          "f(c) = f(a) + f(b)"
+        ],
+        "correctAnswer": "∫ₐᵇ f(x)dx = f(c)(b - a)",
+        "explanation": "The integral MVT guarantees a point c where the function value times the interval length equals the integral (average value theorem)."
+      },
+      {
+        "id": "math303-q89",
+        "type": "multiple_choice",
+        "prompt": "If f is integrable on [a, b] and m ≤ f(x) ≤ M for all x in [a, b], then:",
+        "options": [
+          "m(b - a) ≤ ∫ₐᵇ f(x)dx ≤ M(b - a)",
+          "∫ₐᵇ f(x)dx = m",
+          "∫ₐᵇ f(x)dx = M",
+          "m ≤ ∫ₐᵇ f(x)dx ≤ M"
+        ],
+        "correctAnswer": "m(b - a) ≤ ∫ₐᵇ f(x)dx ≤ M(b - a)",
+        "explanation": "This is the estimation property: the integral of a bounded function is bounded by the area of rectangles with heights m and M."
+      },
+      {
+        "id": "math303-q90",
+        "type": "multiple_choice",
+        "prompt": "Integration by parts for definite integrals states:",
+        "options": [
+          "∫ₐᵇ u dv = [uv]ₐᵇ - ∫ₐᵇ v du",
+          "∫ₐᵇ u dv = ∫ₐᵇ u · ∫ₐᵇ dv",
+          "∫ₐᵇ u dv = ∫ₐᵇ du dv",
+          "∫ₐᵇ u dv = uv"
+        ],
+        "correctAnswer": "∫ₐᵇ u dv = [uv]ₐᵇ - ∫ₐᵇ v du",
+        "explanation": "Integration by parts is the integral analogue of the product rule for differentiation."
+      }
+    ]
+  }
+]

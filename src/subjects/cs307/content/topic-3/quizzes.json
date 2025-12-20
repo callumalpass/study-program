@@ -1,0 +1,185 @@
+[
+  {
+    "id": "cs307-quiz-3-1",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-3",
+    "title": "Authentication - MFA and OAuth Fundamentals",
+    "questions": [
+      {
+        "id": "cs307-q31",
+        "type": "multiple_choice",
+        "prompt": "What are the three primary factors of authentication?",
+        "options": [
+          "Username, password, email",
+          "Something you know, something you have, something you are",
+          "Encryption, hashing, signing",
+          "Local, network, cloud"
+        ],
+        "correctAnswer": "Something you know, something you have, something you are",
+        "explanation": "The three authentication factors are: something you know (password, PIN), something you have (token, phone, smart card), and something you are (biometrics like fingerprint, face). Multi-factor authentication combines two or more of these."
+      },
+      {
+        "id": "cs307-q32",
+        "type": "true_false",
+        "prompt": "Multi-factor authentication (MFA) significantly increases security even if one factor is compromised.",
+        "correctAnswer": "true",
+        "explanation": "MFA requires multiple independent factors for authentication. Even if an attacker obtains your password (something you know), they still need your second factor (like a phone or biometric), making unauthorized access much more difficult."
+      },
+      {
+        "id": "cs307-q33",
+        "type": "multiple_choice",
+        "prompt": "In OAuth 2.0, what is the purpose of an access token?",
+        "options": [
+          "To store the user's password",
+          "To grant limited access to resources without sharing credentials",
+          "To encrypt network traffic",
+          "To authenticate the user's identity"
+        ],
+        "correctAnswer": "To grant limited access to resources without sharing credentials",
+        "explanation": "An OAuth access token is a credential that allows applications to access specific resources on behalf of a user without requiring the user's password. Tokens can have limited scope and expiration times for enhanced security."
+      },
+      {
+        "id": "cs307-q34",
+        "type": "multiple_choice",
+        "prompt": "What does RBAC stand for in access control?",
+        "options": [
+          "Rule-Based Access Control",
+          "Role-Based Access Control",
+          "Remote-Based Access Control",
+          "Recursive-Based Access Control"
+        ],
+        "correctAnswer": "Role-Based Access Control",
+        "explanation": "RBAC (Role-Based Access Control) assigns permissions to roles rather than individual users. Users are then assigned roles, simplifying permission management in large organizations. For example, all \"Managers\" might have the same set of permissions."
+      },
+      {
+        "id": "cs307-q35",
+        "type": "true_false",
+        "prompt": "Password complexity requirements (special characters, numbers) are more important than password length for security.",
+        "correctAnswer": "false",
+        "explanation": "Modern security guidance emphasizes password length over complexity. A long passphrase like \"correct-horse-battery-staple\" is more secure and memorable than complex but short passwords like \"P@ssw0rd!\". Length exponentially increases the keyspace."
+      }
+    ]
+  },
+  {
+    "id": "cs307-quiz-3-2",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-3",
+    "title": "Authentication - Password Security and RBAC/ABAC",
+    "questions": [
+      {
+        "id": "cs307-q36",
+        "type": "multiple_choice",
+        "prompt": "What is the main security advantage of using a password manager?",
+        "options": [
+          "It eliminates the need for passwords",
+          "It allows you to use strong, unique passwords for every service without memorizing them",
+          "It automatically detects phishing attempts",
+          "It encrypts all network traffic"
+        ],
+        "correctAnswer": "It allows you to use strong, unique passwords for every service without memorizing them",
+        "explanation": "Password managers securely store unique, complex passwords for each service. This prevents password reuse attacks where a breach on one service compromises other accounts. Users only need to remember one strong master password."
+      },
+      {
+        "id": "cs307-q37",
+        "type": "true_false",
+        "prompt": "ABAC (Attribute-Based Access Control) makes access decisions based on attributes of users, resources, and environment.",
+        "correctAnswer": "true",
+        "explanation": "ABAC evaluates multiple attributes to make access decisions. For example, access might be granted if: user.department=\"Finance\" AND resource.classification=\"Confidential\" AND time.hour < 18 AND location=\"Office\". This provides more granular control than RBAC."
+      },
+      {
+        "id": "cs307-q38",
+        "type": "multiple_choice",
+        "prompt": "What security risk does OAuth 2.0 mitigate by using authorization codes and redirect URIs?",
+        "options": [
+          "SQL injection",
+          "Token theft through compromised client applications",
+          "DDoS attacks",
+          "Man-in-the-middle attacks during token exchange"
+        ],
+        "correctAnswer": "Man-in-the-middle attacks during token exchange",
+        "explanation": "OAuth 2.0's authorization code flow with PKCE (Proof Key for Code Exchange) prevents attackers from intercepting authorization codes and exchanging them for tokens. The code is exchanged for tokens on the backend, and PKCE ensures the same client that requested the code exchanges it."
+      },
+      {
+        "id": "cs307-q39",
+        "type": "multiple_choice",
+        "prompt": "Which of the following is the most secure method for implementing MFA?",
+        "options": [
+          "SMS-based one-time codes",
+          "Email-based verification codes",
+          "Hardware security keys using FIDO2/WebAuthn",
+          "Security questions"
+        ],
+        "correctAnswer": "Hardware security keys using FIDO2/WebAuthn",
+        "explanation": "Hardware security keys using FIDO2/WebAuthn are the most secure MFA method. They are phishing-resistant, don't rely on SMS (which can be intercepted), and use public key cryptography. SMS-based codes are vulnerable to SIM swapping and interception."
+      },
+      {
+        "id": "cs307-q40",
+        "type": "true_false",
+        "prompt": "Session tokens should be stored in browser localStorage for easy access across tabs.",
+        "correctAnswer": "false",
+        "explanation": "Session tokens should not be stored in localStorage because they are accessible to any JavaScript on the page, including malicious scripts (XSS attacks). HttpOnly cookies are more secure because they cannot be accessed by JavaScript, only sent automatically with requests."
+      }
+    ]
+  },
+  {
+    "id": "cs307-quiz-3-3",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-3",
+    "title": "Authentication - JWT, Session Management, and Biometrics",
+    "questions": [
+      {
+        "id": "cs307-q41",
+        "type": "multiple_choice",
+        "prompt": "What is the primary purpose of JWT (JSON Web Token) in authentication?",
+        "options": [
+          "To encrypt user passwords",
+          "To provide a self-contained token that carries claims about the user",
+          "To replace HTTPS",
+          "To store session data on the server"
+        ],
+        "correctAnswer": "To provide a self-contained token that carries claims about the user",
+        "explanation": "JWTs are self-contained tokens that include claims (like user ID, roles, expiration) and are digitally signed. Servers can verify and trust the token without storing session state, making them useful for stateless authentication in distributed systems."
+      },
+      {
+        "id": "cs307-q42",
+        "type": "true_false",
+        "prompt": "Account lockout mechanisms that permanently disable accounts after failed login attempts improve security without drawbacks.",
+        "correctAnswer": "false",
+        "explanation": "While account lockout can prevent brute force attacks, permanent lockouts create a denial-of-service vulnerability where attackers can lock out legitimate users. Better approaches include temporary lockouts, rate limiting, CAPTCHA, or alerting users of suspicious activity."
+      },
+      {
+        "id": "cs307-q43",
+        "type": "multiple_choice",
+        "prompt": "What is the main difference between authentication and authorization?",
+        "options": [
+          "There is no difference; they are the same thing",
+          "Authentication verifies identity; authorization determines what actions are permitted",
+          "Authentication is for users; authorization is for systems",
+          "Authorization verifies identity; authentication determines permissions"
+        ],
+        "correctAnswer": "Authentication verifies identity; authorization determines what actions are permitted",
+        "explanation": "Authentication answers \"Who are you?\" (verifying identity through credentials), while authorization answers \"What are you allowed to do?\" (determining permissions based on identity). Both are crucial but serve different purposes in access control."
+      },
+      {
+        "id": "cs307-q44",
+        "type": "multiple_choice",
+        "prompt": "Which OAuth 2.0 grant type is most appropriate for server-side web applications?",
+        "options": [
+          "Implicit grant",
+          "Authorization code grant",
+          "Client credentials grant",
+          "Resource owner password credentials grant"
+        ],
+        "correctAnswer": "Authorization code grant",
+        "explanation": "The authorization code grant (with PKCE) is most secure for web applications because the access token is obtained server-side and never exposed to the browser. The implicit grant is deprecated due to security concerns, and client credentials are for machine-to-machine communication."
+      },
+      {
+        "id": "cs307-q45",
+        "type": "true_false",
+        "prompt": "Biometric authentication factors (like fingerprints) should be used as passwords that are transmitted to servers for verification.",
+        "correctAnswer": "false",
+        "explanation": "Biometric data should never be transmitted or stored as passwords because you can't change your fingerprints if they're compromised. Instead, biometrics should unlock local devices which then use cryptographic keys for authentication, or be processed locally to generate authentication tokens."
+      }
+    ]
+  }
+]

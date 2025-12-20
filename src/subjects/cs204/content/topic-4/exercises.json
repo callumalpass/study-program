@@ -1,0 +1,258 @@
+[
+  {
+    "id": "cs204-t4-ex1",
+    "subjectId": "cs204",
+    "topicId": "cs204-topic-4",
+    "type": "written",
+    "title": "Pattern Categories",
+    "description": "Explain the three categories of GoF design patterns (Creational, Structural, Behavioral). Provide one example pattern from each category and describe its purpose.",
+    "difficulty": 1,
+    "hints": [
+      "Think about what problem each category addresses",
+      "Creational deals with object creation",
+      "Structural deals with composition",
+      "Behavioral deals with communication"
+    ],
+    "solution": "**Creational Patterns** - Control object creation mechanisms.\nExample: Factory Method - Defines interface for creating objects, letting subclasses decide which class to instantiate.\n\n**Structural Patterns** - Compose objects into larger structures.\nExample: Adapter - Converts one interface to another that clients expect.\n\n**Behavioral Patterns** - Define object communication and responsibility.\nExample: Observer - Defines one-to-many dependency so when one object changes, dependents are notified automatically."
+  },
+  {
+    "id": "cs204-t4-ex2",
+    "subjectId": "cs204",
+    "topicId": "cs204-topic-4",
+    "type": "written",
+    "title": "Singleton Pattern",
+    "description": "A logging system should have exactly one instance accessible throughout an application. Design this using the Singleton pattern. Address thread safety concerns.",
+    "difficulty": 2,
+    "hints": [
+      "Private constructor prevents external instantiation",
+      "Static method provides global access point",
+      "Consider lazy vs eager initialization",
+      "Double-checked locking for thread safety"
+    ],
+    "solution": "class Logger {\n  private static instance: Logger;\n  private constructor() {}\n\n  static getInstance(): Logger {\n    if (!Logger.instance) {\n      Logger.instance = new Logger();\n    }\n    return Logger.instance;\n  }\n\n  log(message: string): void { /* ... */ }\n}\n\n**Thread Safety**: Use synchronized/lock in getInstance() or eager initialization (create instance at class loading). Double-checked locking reduces synchronization overhead."
+  },
+  {
+    "id": "cs204-t4-ex3",
+    "subjectId": "cs204",
+    "topicId": "cs204-topic-4",
+    "type": "written",
+    "title": "Factory Method Pattern",
+    "description": "A document application needs to create different document types (PDF, Word, Text). Design a solution using Factory Method that allows easy addition of new document types.",
+    "difficulty": 2,
+    "hints": [
+      "Define abstract creator with factory method",
+      "Concrete creators override to produce specific products",
+      "Products share common interface",
+      "New types require only new creator subclass"
+    ],
+    "solution": "interface Document { open(): void; save(): void; }\n\nabstract class Application {\n  abstract createDocument(): Document;  // Factory Method\n\n  newDocument(): Document {\n    const doc = this.createDocument();\n    doc.open();\n    return doc;\n  }\n}\n\nclass PDFApplication extends Application {\n  createDocument(): Document { return new PDFDocument(); }\n}\n\nclass WordApplication extends Application {\n  createDocument(): Document { return new WordDocument(); }\n}\n\n**Benefit**: Adding new document type requires only new Document class and Application subclass."
+  },
+  {
+    "id": "cs204-t4-ex4",
+    "subjectId": "cs204",
+    "topicId": "cs204-topic-4",
+    "type": "written",
+    "title": "Abstract Factory Pattern",
+    "description": "A UI toolkit must support multiple themes (Light, Dark). Each theme provides consistent Button, TextField, and Checkbox styles. Design using Abstract Factory.",
+    "difficulty": 3,
+    "hints": [
+      "Abstract factory declares creation methods for product family",
+      "Concrete factories implement for each theme",
+      "Products belong to families that work together",
+      "Client code uses factories through abstract interface"
+    ],
+    "solution": "interface UIFactory {\n  createButton(): Button;\n  createTextField(): TextField;\n  createCheckbox(): Checkbox;\n}\n\nclass LightThemeFactory implements UIFactory {\n  createButton() { return new LightButton(); }\n  createTextField() { return new LightTextField(); }\n  createCheckbox() { return new LightCheckbox(); }\n}\n\nclass DarkThemeFactory implements UIFactory {\n  createButton() { return new DarkButton(); }\n  // ... similar for other components\n}\n\n// Client uses factory without knowing concrete types\nfunction buildUI(factory: UIFactory) {\n  const btn = factory.createButton();\n  const txt = factory.createTextField();\n}\n\n**Key**: Ensures UI components are from same family (no mixing light buttons with dark textfields)."
+  },
+  {
+    "id": "cs204-t4-ex5",
+    "subjectId": "cs204",
+    "topicId": "cs204-topic-4",
+    "type": "written",
+    "title": "Builder Pattern",
+    "description": "A meal ordering system creates complex meal objects with main, side, drink, and dessert (each optional). Design using Builder pattern to construct meals step-by-step.",
+    "difficulty": 2,
+    "hints": [
+      "Builder provides methods for each optional part",
+      "Methods return builder for chaining",
+      "build() method returns final product",
+      "Director can define preset configurations"
+    ],
+    "solution": "class Meal {\n  main?: string; side?: string; drink?: string; dessert?: string;\n}\n\nclass MealBuilder {\n  private meal = new Meal();\n\n  withMain(m: string) { this.meal.main = m; return this; }\n  withSide(s: string) { this.meal.side = s; return this; }\n  withDrink(d: string) { this.meal.drink = d; return this; }\n  withDessert(d: string) { this.meal.dessert = d; return this; }\n  build() { return this.meal; }\n}\n\n// Usage:\nconst meal = new MealBuilder()\n  .withMain(\"Burger\")\n  .withDrink(\"Cola\")\n  .build();\n\n**Benefit**: Avoids constructors with many optional parameters; clearly expresses what's being set."
+  },
+  {
+    "id": "cs204-t4-ex6",
+    "subjectId": "cs204",
+    "topicId": "cs204-topic-4",
+    "type": "written",
+    "title": "Adapter Pattern",
+    "description": "Your application uses a MediaPlayer interface, but you have a third-party AdvancedMediaLibrary with incompatible methods. Design an Adapter to integrate it.",
+    "difficulty": 2,
+    "hints": [
+      "Adapter implements target interface",
+      "Adapter holds reference to adaptee",
+      "Adapter translates calls to adaptee methods",
+      "Object adapter uses composition"
+    ],
+    "solution": "// Target interface (what client expects)\ninterface MediaPlayer {\n  play(file: string): void;\n}\n\n// Adaptee (third-party library)\nclass AdvancedMediaLibrary {\n  loadMedia(path: string): void { /* ... */ }\n  startPlayback(): void { /* ... */ }\n}\n\n// Adapter\nclass MediaAdapter implements MediaPlayer {\n  constructor(private library: AdvancedMediaLibrary) {}\n\n  play(file: string): void {\n    this.library.loadMedia(file);\n    this.library.startPlayback();\n  }\n}\n\n// Usage: const player: MediaPlayer = new MediaAdapter(new AdvancedMediaLibrary());\n\n**Key**: Client code works with MediaPlayer interface, unaware of AdvancedMediaLibrary."
+  },
+  {
+    "id": "cs204-t4-ex7",
+    "subjectId": "cs204",
+    "topicId": "cs204-topic-4",
+    "type": "written",
+    "title": "Decorator Pattern",
+    "description": "A coffee shop has base coffee with optional additions (milk, sugar, whipped cream) that add cost. Design using Decorator to dynamically add features without subclass explosion.",
+    "difficulty": 3,
+    "hints": [
+      "Component interface defines operations",
+      "Decorators wrap components and implement same interface",
+      "Decorators delegate to wrapped object and add behavior",
+      "Decorators can be stacked"
+    ],
+    "solution": "interface Coffee {\n  getCost(): number;\n  getDescription(): string;\n}\n\nclass BasicCoffee implements Coffee {\n  getCost() { return 2.00; }\n  getDescription() { return \"Coffee\"; }\n}\n\nabstract class CoffeeDecorator implements Coffee {\n  constructor(protected coffee: Coffee) {}\n  getCost() { return this.coffee.getCost(); }\n  getDescription() { return this.coffee.getDescription(); }\n}\n\nclass MilkDecorator extends CoffeeDecorator {\n  getCost() { return this.coffee.getCost() + 0.50; }\n  getDescription() { return this.coffee.getDescription() + \", Milk\"; }\n}\n\n// Usage:\nconst order = new MilkDecorator(new WhipDecorator(new BasicCoffee()));\n// Dynamically combines behaviors without creating MilkWhipCoffee subclass."
+  },
+  {
+    "id": "cs204-t4-ex8",
+    "subjectId": "cs204",
+    "topicId": "cs204-topic-4",
+    "type": "written",
+    "title": "Observer Pattern",
+    "description": "A weather station should notify multiple displays (CurrentConditions, Statistics, Forecast) when measurements change. Design using Observer pattern.",
+    "difficulty": 2,
+    "hints": [
+      "Subject maintains list of observers",
+      "Subject notifies all observers on state change",
+      "Observers register/unregister themselves",
+      "Push vs pull notification models"
+    ],
+    "solution": "interface Observer { update(temp: number, humidity: number): void; }\n\ninterface Subject {\n  attach(o: Observer): void;\n  detach(o: Observer): void;\n  notify(): void;\n}\n\nclass WeatherStation implements Subject {\n  private observers: Observer[] = [];\n  private temp = 0; private humidity = 0;\n\n  attach(o: Observer) { this.observers.push(o); }\n  detach(o: Observer) { this.observers = this.observers.filter(x => x !== o); }\n  notify() { this.observers.forEach(o => o.update(this.temp, this.humidity)); }\n\n  setMeasurements(t: number, h: number) {\n    this.temp = t; this.humidity = h;\n    this.notify();\n  }\n}\n\nclass CurrentConditionsDisplay implements Observer {\n  update(temp: number, humidity: number) { console.log(`Temp: ${temp}, Humidity: ${humidity}`); }\n}\n\n**Benefit**: Loose coupling - WeatherStation doesn't know concrete display types."
+  },
+  {
+    "id": "cs204-t4-ex9",
+    "subjectId": "cs204",
+    "topicId": "cs204-topic-4",
+    "type": "written",
+    "title": "Strategy Pattern",
+    "description": "A navigation app should support different routing strategies (fastest, shortest, scenic). Design using Strategy to allow runtime algorithm switching.",
+    "difficulty": 2,
+    "hints": [
+      "Strategy interface declares algorithm method",
+      "Concrete strategies implement specific algorithms",
+      "Context holds strategy reference",
+      "Strategy can be changed at runtime"
+    ],
+    "solution": "interface RouteStrategy {\n  calculateRoute(start: Point, end: Point): Route;\n}\n\nclass FastestRoute implements RouteStrategy {\n  calculateRoute(start: Point, end: Point): Route {\n    // Considers traffic, road types for speed\n    return route;\n  }\n}\n\nclass ShortestRoute implements RouteStrategy {\n  calculateRoute(start: Point, end: Point): Route {\n    // Minimizes distance regardless of speed\n    return route;\n  }\n}\n\nclass Navigator {\n  constructor(private strategy: RouteStrategy) {}\n\n  setStrategy(s: RouteStrategy) { this.strategy = s; }\n\n  navigate(start: Point, end: Point): Route {\n    return this.strategy.calculateRoute(start, end);\n  }\n}\n\n// Usage:\nnavigator.setStrategy(new ScenicRoute()); // Switch algorithm at runtime"
+  },
+  {
+    "id": "cs204-t4-ex10",
+    "subjectId": "cs204",
+    "topicId": "cs204-topic-4",
+    "type": "written",
+    "title": "Command Pattern",
+    "description": "A text editor needs undo/redo functionality for operations like insert, delete, and format. Design using Command pattern to encapsulate operations as objects.",
+    "difficulty": 3,
+    "hints": [
+      "Command interface with execute() and undo()",
+      "Concrete commands store state needed for undo",
+      "Invoker maintains command history stack",
+      "Commands can be queued, logged, or undone"
+    ],
+    "solution": "interface Command {\n  execute(): void;\n  undo(): void;\n}\n\nclass InsertTextCommand implements Command {\n  constructor(private doc: Document, private pos: number, private text: string) {}\n\n  execute() { this.doc.insertAt(this.pos, this.text); }\n  undo() { this.doc.deleteAt(this.pos, this.text.length); }\n}\n\nclass Editor {\n  private history: Command[] = [];\n  private undone: Command[] = [];\n\n  executeCommand(cmd: Command) {\n    cmd.execute();\n    this.history.push(cmd);\n    this.undone = [];\n  }\n\n  undo() {\n    const cmd = this.history.pop();\n    if (cmd) { cmd.undo(); this.undone.push(cmd); }\n  }\n\n  redo() {\n    const cmd = this.undone.pop();\n    if (cmd) { cmd.execute(); this.history.push(cmd); }\n  }\n}"
+  },
+  {
+    "id": "cs204-t4-ex11",
+    "subjectId": "cs204",
+    "topicId": "cs204-topic-4",
+    "type": "written",
+    "title": "Composite Pattern",
+    "description": "A file system has files and folders. Folders can contain files or other folders. Design using Composite to treat individual files and compositions uniformly.",
+    "difficulty": 3,
+    "hints": [
+      "Component defines interface for all objects",
+      "Leaf represents end objects (files)",
+      "Composite contains children (folders)",
+      "Same operations work on both leaves and composites"
+    ],
+    "solution": "interface FileSystemItem {\n  getName(): string;\n  getSize(): number;\n}\n\nclass File implements FileSystemItem {\n  constructor(private name: string, private size: number) {}\n  getName() { return this.name; }\n  getSize() { return this.size; }\n}\n\nclass Folder implements FileSystemItem {\n  private items: FileSystemItem[] = [];\n  constructor(private name: string) {}\n\n  add(item: FileSystemItem) { this.items.push(item); }\n  getName() { return this.name; }\n  getSize() {\n    return this.items.reduce((sum, item) => sum + item.getSize(), 0);\n  }\n}\n\n// Usage: folder.getSize() recursively calculates total size\n// Client treats files and folders identically through FileSystemItem interface."
+  },
+  {
+    "id": "cs204-t4-ex12",
+    "subjectId": "cs204",
+    "topicId": "cs204-topic-4",
+    "type": "written",
+    "title": "State Pattern",
+    "description": "A vending machine has states: NoCoin, HasCoin, Dispensing, SoldOut. Behavior varies by state. Design using State pattern to avoid complex conditionals.",
+    "difficulty": 3,
+    "hints": [
+      "State interface declares state-specific behaviors",
+      "Concrete states implement behavior for each state",
+      "Context delegates to current state object",
+      "State transitions change context state reference"
+    ],
+    "solution": "interface VendingState {\n  insertCoin(): void;\n  ejectCoin(): void;\n  dispense(): void;\n}\n\nclass NoCoinState implements VendingState {\n  constructor(private machine: VendingMachine) {}\n\n  insertCoin() {\n    console.log(\"Coin inserted\");\n    this.machine.setState(this.machine.hasCoinState);\n  }\n  ejectCoin() { console.log(\"No coin to eject\"); }\n  dispense() { console.log(\"Insert coin first\"); }\n}\n\nclass VendingMachine {\n  noCoinState = new NoCoinState(this);\n  hasCoinState = new HasCoinState(this);\n  // ... other states\n\n  private state: VendingState = this.noCoinState;\n\n  setState(s: VendingState) { this.state = s; }\n  insertCoin() { this.state.insertCoin(); }\n  // ... delegate other methods\n}\n\n**Benefit**: Each state's logic is isolated; adding states doesn't require modifying existing code."
+  },
+  {
+    "id": "cs204-t4-ex13",
+    "subjectId": "cs204",
+    "topicId": "cs204-topic-4",
+    "type": "written",
+    "title": "Facade Pattern",
+    "description": "A home theater system has multiple subsystems (DVDPlayer, Projector, SoundSystem, Lights). Design a Facade to provide simple \"watchMovie()\" interface.",
+    "difficulty": 2,
+    "hints": [
+      "Facade provides simplified interface to complex subsystem",
+      "Facade coordinates multiple objects",
+      "Clients can still access subsystems directly if needed",
+      "Reduces coupling between clients and subsystems"
+    ],
+    "solution": "class HomeTheaterFacade {\n  constructor(\n    private dvd: DVDPlayer,\n    private projector: Projector,\n    private sound: SoundSystem,\n    private lights: Lights\n  ) {}\n\n  watchMovie(movie: string) {\n    this.lights.dim(10);\n    this.projector.on();\n    this.projector.setInput(\"DVD\");\n    this.sound.on();\n    this.sound.setSurroundMode();\n    this.dvd.on();\n    this.dvd.play(movie);\n  }\n\n  endMovie() {\n    this.dvd.stop();\n    this.dvd.off();\n    this.sound.off();\n    this.projector.off();\n    this.lights.on();\n  }\n}\n\n// Client just calls: theater.watchMovie(\"Inception\");\n// Instead of coordinating all subsystems manually."
+  },
+  {
+    "id": "cs204-t4-ex14",
+    "subjectId": "cs204",
+    "topicId": "cs204-topic-4",
+    "type": "written",
+    "title": "Template Method Pattern",
+    "description": "Beverages (tea, coffee) follow similar preparation: boilWater, brew, pourInCup, addCondiments. Only brew and condiments differ. Design using Template Method.",
+    "difficulty": 2,
+    "hints": [
+      "Abstract class defines template method with algorithm skeleton",
+      "Template method calls abstract methods (hooks)",
+      "Subclasses override only the varying steps",
+      "Common steps defined in base class"
+    ],
+    "solution": "abstract class Beverage {\n  // Template Method - defines algorithm structure\n  prepare(): void {\n    this.boilWater();\n    this.brew();          // Abstract - varies\n    this.pourInCup();\n    this.addCondiments(); // Abstract - varies\n  }\n\n  private boilWater() { console.log(\"Boiling water\"); }\n  private pourInCup() { console.log(\"Pouring into cup\"); }\n\n  abstract brew(): void;\n  abstract addCondiments(): void;\n}\n\nclass Coffee extends Beverage {\n  brew() { console.log(\"Dripping coffee through filter\"); }\n  addCondiments() { console.log(\"Adding sugar and milk\"); }\n}\n\nclass Tea extends Beverage {\n  brew() { console.log(\"Steeping tea\"); }\n  addCondiments() { console.log(\"Adding lemon\"); }\n}\n\n**Key**: Algorithm structure is fixed; only specific steps are customized."
+  },
+  {
+    "id": "cs204-t4-ex15",
+    "subjectId": "cs204",
+    "topicId": "cs204-topic-4",
+    "type": "written",
+    "title": "Pattern Selection",
+    "description": "For each scenario, identify the most appropriate pattern and justify: (1) Parse different config formats (JSON, XML, YAML), (2) Notify UI components of data changes, (3) Add encryption layer to existing stream class.",
+    "difficulty": 4,
+    "hints": [
+      "Consider what problem each pattern solves",
+      "Think about flexibility needs",
+      "Consider coupling implications",
+      "Some scenarios might have multiple valid patterns"
+    ],
+    "solution": "**1. Parse config formats** → **Strategy Pattern**\nJustification: Different parsing algorithms that can be swapped. Create ConfigParser interface with JSONParser, XMLParser, YAMLParser strategies. Context switches parser based on file extension.\n\n**2. Notify UI of data changes** → **Observer Pattern**\nJustification: One-to-many relationship where data model notifies multiple UI components. Model is Subject; UI components are Observers. Decouples data layer from presentation.\n\n**3. Add encryption to streams** → **Decorator Pattern**\nJustification: Adds responsibility (encryption) dynamically without modifying original stream. EncryptedStream wraps base Stream, encrypts on write, decrypts on read. Can stack with other decorators (compression)."
+  },
+  {
+    "id": "cs204-t4-ex16",
+    "subjectId": "cs204",
+    "topicId": "cs204-topic-4",
+    "type": "written",
+    "title": "Pattern Refactoring",
+    "description": "Given code with complex switch statements handling different notification channels (email, SMS, push), identify code smells and refactor using appropriate pattern(s).",
+    "difficulty": 5,
+    "hints": [
+      "Switch on type often signals need for polymorphism",
+      "Consider Strategy or Command patterns",
+      "Factory can help create correct strategy",
+      "Think about Open/Closed Principle"
+    ],
+    "solution": "**Original Code Smells:**\n- Switch statement on notification type\n- Adding new channel requires modifying existing code (violates OCP)\n- Logic for all channels in one place\n\n**Refactored Solution using Strategy + Factory:**\n\ninterface NotificationChannel {\n  send(message: string, recipient: string): void;\n}\n\nclass EmailChannel implements NotificationChannel { /* email logic */ }\nclass SMSChannel implements NotificationChannel { /* SMS logic */ }\nclass PushChannel implements NotificationChannel { /* push logic */ }\n\nclass NotificationFactory {\n  static create(type: string): NotificationChannel {\n    const channels = { email: EmailChannel, sms: SMSChannel, push: PushChannel };\n    return new channels[type]();\n  }\n}\n\nclass NotificationService {\n  send(type: string, message: string, recipient: string) {\n    NotificationFactory.create(type).send(message, recipient);\n  }\n}\n\n**Benefits:** New channels require only new class + factory entry. Each channel's logic is encapsulated."
+  }
+]

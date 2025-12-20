@@ -1,0 +1,221 @@
+[
+  {
+    "id": "cs407-quiz-4-1",
+    "subjectId": "cs407",
+    "topicId": "cs407-t4",
+    "title": "Feature Creation and Extraction",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "What is feature engineering?",
+        "options": [
+          "Removing features from a dataset",
+          "Creating new features from existing data to improve model performance",
+          "Normalizing all features",
+          "Collecting more data"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Feature engineering involves creating, transforming, and selecting features to improve model accuracy."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of polynomial features?",
+        "options": [
+          "Reduce dimensionality",
+          "Capture non-linear relationships",
+          "Remove outliers",
+          "Encode categorical variables"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Polynomial features create interaction and higher-degree terms to model non-linear relationships."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "What does PCA (Principal Component Analysis) do?",
+        "options": [
+          "Removes missing values",
+          "Reduces dimensionality while preserving variance",
+          "Encodes categorical variables",
+          "Detects outliers"
+        ],
+        "correctAnswer": 1,
+        "explanation": "PCA transforms features into uncorrelated principal components, reducing dimensionality while retaining variance."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "What is a derived feature?",
+        "options": [
+          "A feature from external data sources",
+          "A feature calculated from existing features",
+          "A randomly generated feature",
+          "A feature selected by the model"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Derived features are created by combining or transforming existing features (e.g., BMI from height and weight)."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "What is domain knowledge used for in feature engineering?",
+        "options": [
+          "Automating the process",
+          "Creating meaningful features based on expertise",
+          "Removing features",
+          "Scaling features"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Domain knowledge helps identify and create features that capture important relationships in the specific problem domain."
+      }
+    ]
+  },
+  {
+    "id": "cs407-quiz-4-2",
+    "subjectId": "cs407",
+    "topicId": "cs407-t4",
+    "title": "Feature Selection and Encoding",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "What is the curse of dimensionality?",
+        "options": [
+          "Too few features",
+          "Performance degradation with too many features",
+          "Missing data problems",
+          "Categorical encoding issues"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The curse of dimensionality refers to problems that arise when working with high-dimensional data, including sparsity and overfitting."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "What is one-hot encoding used for?",
+        "options": [
+          "Normalizing numerical features",
+          "Converting categorical variables to binary vectors",
+          "Removing outliers",
+          "Feature selection"
+        ],
+        "correctAnswer": 1,
+        "explanation": "One-hot encoding converts categorical variables into binary vectors, creating a column for each category."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "When should you use label encoding instead of one-hot encoding?",
+        "options": [
+          "For nominal categories with no order",
+          "For ordinal categories with meaningful order",
+          "For numerical features",
+          "For datetime features"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Label encoding assigns integers to categories and is suitable for ordinal data where order matters."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of feature selection?",
+        "options": [
+          "Create more features",
+          "Identify and keep only relevant features",
+          "Scale features",
+          "Handle missing data"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Feature selection reduces dimensionality by identifying and retaining only the most informative features."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "What is target encoding?",
+        "options": [
+          "Encoding the target variable",
+          "Replacing categories with the mean target value for that category",
+          "Creating target features",
+          "Selecting features based on target correlation"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Target encoding replaces categorical values with statistics (like mean) of the target variable for each category."
+      }
+    ]
+  },
+  {
+    "id": "cs407-quiz-4-3",
+    "subjectId": "cs407",
+    "topicId": "cs407-t4",
+    "title": "Feature Scaling and Transformation",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "Why is feature scaling important for distance-based algorithms?",
+        "options": [
+          "It improves accuracy",
+          "It prevents features with larger scales from dominating distance calculations",
+          "It removes outliers",
+          "It encodes categorical variables"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Feature scaling ensures all features contribute proportionally to distance calculations in algorithms like KNN and K-means."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "What is the difference between normalization and standardization?",
+        "options": [
+          "They are the same",
+          "Normalization scales to [0,1], standardization to mean=0 and std=1",
+          "Normalization removes outliers, standardization does not",
+          "Standardization scales to [0,1], normalization to mean=0"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Normalization (Min-Max) scales to a range, while standardization (Z-score) centers around mean 0 with unit variance."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "What is binning in feature engineering?",
+        "options": [
+          "Removing bins of data",
+          "Converting continuous variables into discrete intervals",
+          "Encoding categorical variables",
+          "Selecting features"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Binning groups continuous values into discrete intervals or categories (e.g., age groups)."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "What is feature hashing used for?",
+        "options": [
+          "Encrypting features",
+          "Reducing dimensionality of categorical features with many levels",
+          "Detecting duplicates",
+          "Normalizing features"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Feature hashing (hashing trick) maps categorical features to a fixed-size vector, handling high-cardinality efficiently."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "What are interaction features?",
+        "options": [
+          "Features that interact with users",
+          "Products or combinations of two or more features",
+          "Features selected by the model",
+          "Features from external sources"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Interaction features capture relationships between features (e.g., feature1 × feature2) to model combined effects."
+      }
+    ]
+  }
+]

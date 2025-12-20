@@ -1,0 +1,209 @@
+[
+  {
+    "id": "cs404-quiz-4-1",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-4",
+    "title": "Advanced Features Fundamentals",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of React.memo()?",
+        "options": [
+          "To save data to localStorage",
+          "To prevent unnecessary re-renders of components",
+          "To create memoized functions",
+          "To cache API responses"
+        ],
+        "correctAnswer": 1,
+        "explanation": "React.memo() prevents components from re-rendering if their props haven't changed, improving performance by avoiding unnecessary renders."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "What is database query optimization?",
+        "options": [
+          "Deleting old data",
+          "Improving query performance through indexes, efficient queries, and avoiding N+1 problems",
+          "Backing up databases",
+          "Encrypting query results"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Query optimization involves using indexes, writing efficient queries, avoiding N+1 problems, and using EXPLAIN to analyze query performance."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "What is code splitting in frontend applications?",
+        "options": [
+          "Dividing code between frontend and backend",
+          "Loading only the JavaScript needed for current page, not entire app",
+          "Separating CSS from JavaScript",
+          "Splitting teams across features"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Code splitting loads only necessary JavaScript for the current page/route, reducing initial bundle size and improving load times."
+      },
+      {
+        "id": "q4",
+        "type": "true_false",
+        "prompt": "The N+1 query problem occurs when you make one query for a list, then one additional query for each item in that list.",
+        "correctAnswer": true,
+        "explanation": "N+1 problem: querying a list (1 query), then querying related data for each item (N queries). Fix by using joins or eager loading to fetch all data at once."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "What is debouncing in the context of user input?",
+        "options": [
+          "Validating input format",
+          "Delaying function execution until user stops typing",
+          "Encrypting user input",
+          "Formatting input text"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Debouncing delays function execution (like API calls) until user stops typing for a specified time, preventing excessive calls on every keystroke."
+      }
+    ]
+  },
+  {
+    "id": "cs404-quiz-4-2",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-4",
+    "title": "Error Handling Application",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "What is the difference between client-side and server-side validation?",
+        "options": [
+          "They are the same thing",
+          "Client provides UX feedback; server is security requirement",
+          "Client-side is more secure",
+          "Only one is needed"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Client-side validation provides immediate UX feedback. Server-side validation is a security requirement since client-side can be bypassed. Always do both."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "What should error messages never expose to users?",
+        "options": [
+          "That an error occurred",
+          "Internal system details, stack traces, or database structure",
+          "How to fix the error",
+          "Status codes"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Error messages should be user-friendly without exposing internal details like stack traces, SQL queries, or system architecture that could help attackers."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "What is defensive programming?",
+        "options": [
+          "Writing code that protects against hackers",
+          "Writing code that handles unexpected inputs and errors gracefully",
+          "Encrypting all code",
+          "Writing minimal code"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Defensive programming anticipates and handles unexpected inputs, edge cases, and errors gracefully, preventing crashes and security issues."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of try-catch blocks?",
+        "options": [
+          "To make code run faster",
+          "To gracefully handle errors and prevent application crashes",
+          "To test code",
+          "To validate input"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Try-catch blocks catch errors that would otherwise crash the application, allowing you to handle them gracefully and provide meaningful feedback."
+      },
+      {
+        "id": "q5",
+        "type": "true_false",
+        "prompt": "Error logging to monitoring services like Sentry helps you discover and debug errors that users encounter in production.",
+        "correctAnswer": true,
+        "explanation": "Error logging services help you discover, track, and debug errors users encounter in production that you might not see in development."
+      }
+    ]
+  },
+  {
+    "id": "cs404-quiz-4-3",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-4",
+    "title": "Performance and Accessibility Mastery",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of semantic HTML?",
+        "options": [
+          "To style web pages",
+          "To provide meaning to content for accessibility and SEO",
+          "To reduce file size",
+          "To improve JavaScript performance"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Semantic HTML (header, nav, main, article) provides meaning to content structure, improving accessibility for screen readers and SEO."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "What is ARIA and when should you use it?",
+        "options": [
+          "A CSS framework",
+          "Accessible Rich Internet Applications; for accessibility when semantic HTML isn't enough",
+          "An API design pattern",
+          "A testing library"
+        ],
+        "correctAnswer": 1,
+        "explanation": "ARIA attributes enhance accessibility for dynamic content and custom widgets when semantic HTML alone can't convey meaning to assistive technologies."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "Why is keyboard navigation important?",
+        "options": [
+          "It makes development easier",
+          "Many users rely on keyboards/assistive tech; it's required for accessibility",
+          "It improves SEO",
+          "It reduces server load"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Keyboard navigation is essential for users with motor disabilities, screen reader users, and power users. All interactive elements must be keyboard accessible."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of color contrast requirements (WCAG)?",
+        "options": [
+          "To make websites look better",
+          "To ensure text is readable for users with visual impairments",
+          "To reduce bandwidth usage",
+          "To improve loading speed"
+        ],
+        "correctAnswer": 1,
+        "explanation": "WCAG color contrast requirements (4.5:1 for normal text) ensure text is readable for users with visual impairments, color blindness, or viewing in bright light."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "What is lazy loading of images?",
+        "options": [
+          "Loading all images slowly",
+          "Loading images only when they're about to enter viewport",
+          "Compressing images",
+          "Storing images in cache"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Lazy loading defers loading off-screen images until they're needed (near viewport), improving initial page load performance."
+      }
+    ]
+  }
+]

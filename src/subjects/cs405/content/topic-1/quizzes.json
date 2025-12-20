@@ -1,0 +1,187 @@
+[
+  {
+    "id": "cs405-quiz-1",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-1",
+    "title": "Cloud Fundamentals - Core Concepts",
+    "questions": [
+      {
+        "id": "q1-1",
+        "type": "multiple_choice",
+        "prompt": "Which of the following is NOT one of the five essential characteristics of cloud computing according to NIST?",
+        "options": [
+          "On-demand self-service",
+          "Broad network access",
+          "Guaranteed uptime",
+          "Rapid elasticity"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The five essential characteristics are: on-demand self-service, broad network access, resource pooling, rapid elasticity, and measured service. Guaranteed uptime is an SLA consideration, not an essential characteristic."
+      },
+      {
+        "id": "q1-2",
+        "type": "multiple_choice",
+        "prompt": "In which cloud service model does the customer have the MOST control over the operating system?",
+        "options": [
+          "SaaS",
+          "PaaS",
+          "IaaS",
+          "FaaS"
+        ],
+        "correctAnswer": 2,
+        "explanation": "IaaS (Infrastructure as a Service) provides virtual machines where customers control the operating system. In PaaS, the provider manages the OS. In SaaS, the provider manages everything except data and access."
+      },
+      {
+        "id": "q1-3",
+        "type": "true_false",
+        "prompt": "Multi-cloud refers to using multiple public cloud providers simultaneously.",
+        "correctAnswer": true,
+        "explanation": "Multi-cloud means using services from multiple cloud providers (e.g., AWS, Azure, and GCP). This differs from hybrid cloud which combines public and private clouds."
+      },
+      {
+        "id": "q1-4",
+        "type": "multiple_choice",
+        "prompt": "What is the main financial benefit of cloud computing's pay-as-you-go model?",
+        "options": [
+          "Eliminates all IT costs",
+          "Converts CapEx to OpEx",
+          "Reduces employee salaries",
+          "Eliminates the need for budgeting"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Cloud computing converts capital expenditure (CapEx) to operational expenditure (OpEx), eliminating large upfront hardware investments in favor of monthly consumption-based billing."
+      },
+      {
+        "id": "q1-5",
+        "type": "code_output",
+        "prompt": "If a cloud service has a 99.9% SLA, approximately how many minutes of downtime per month is allowed?",
+        "codeSnippet": "# Month = 30 days = 43,200 minutes\n# Downtime = 43,200 * (1 - 0.999)",
+        "correctAnswer": "43.2",
+        "explanation": "With 99.9% uptime, 0.1% downtime is allowed. For a 30-day month: 43,200 minutes × 0.001 = 43.2 minutes of acceptable downtime."
+      }
+    ]
+  },
+  {
+    "id": "cs405-quiz-1b",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-1",
+    "title": "Cloud Fundamentals - Service and Deployment Models",
+    "questions": [
+      {
+        "id": "q1b-1",
+        "type": "multiple_choice",
+        "prompt": "Which deployment model combines on-premises infrastructure with public cloud services?",
+        "options": [
+          "Private cloud",
+          "Public cloud",
+          "Hybrid cloud",
+          "Community cloud"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Hybrid cloud integrates on-premises private cloud infrastructure with public cloud services, enabling workload portability and data synchronization between environments."
+      },
+      {
+        "id": "q1b-2",
+        "type": "true_false",
+        "prompt": "Reserved instances in cloud computing offer lower pricing in exchange for long-term commitment.",
+        "correctAnswer": true,
+        "explanation": "Reserved instances require 1 or 3-year commitments but offer significant discounts (up to 75%) compared to on-demand pricing."
+      },
+      {
+        "id": "q1b-3",
+        "type": "multiple_choice",
+        "prompt": "What does FaaS (Function as a Service) primarily enable?",
+        "options": [
+          "Managing virtual machines",
+          "Running code without managing servers",
+          "Database administration",
+          "Network configuration"
+        ],
+        "correctAnswer": 1,
+        "explanation": "FaaS allows developers to run code in response to events without provisioning or managing servers. The cloud provider handles all infrastructure management."
+      },
+      {
+        "id": "q1b-4",
+        "type": "multiple_choice",
+        "prompt": "Which cloud provider holds the largest market share?",
+        "options": [
+          "Microsoft Azure",
+          "Google Cloud Platform",
+          "Amazon Web Services",
+          "IBM Cloud"
+        ],
+        "correctAnswer": 2,
+        "explanation": "AWS holds approximately 32% market share, making it the largest cloud provider, followed by Azure (~23%) and Google Cloud (~11%)."
+      },
+      {
+        "id": "q1b-5",
+        "type": "true_false",
+        "prompt": "In the shared responsibility model, cloud providers are responsible for data encryption.",
+        "correctAnswer": false,
+        "explanation": "While providers secure the infrastructure, customers are responsible for encrypting their data. The provider may offer encryption services, but enabling and managing encryption is a customer responsibility."
+      }
+    ]
+  },
+  {
+    "id": "cs405-quiz-1c",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-1",
+    "title": "Cloud Fundamentals - Economics and Security",
+    "questions": [
+      {
+        "id": "q1c-1",
+        "type": "multiple_choice",
+        "prompt": "What is the primary advantage of spot instances/preemptible VMs?",
+        "options": [
+          "Guaranteed availability",
+          "Up to 90% cost reduction",
+          "Better performance",
+          "Dedicated hardware"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Spot instances use spare cloud capacity at steep discounts (up to 90%) but can be interrupted with short notice, making them suitable for fault-tolerant workloads."
+      },
+      {
+        "id": "q1c-2",
+        "type": "true_false",
+        "prompt": "Cloud providers offer service credits as compensation when SLAs are not met.",
+        "correctAnswer": true,
+        "explanation": "When providers fail to meet SLA commitments, they typically offer service credits (future usage credits) rather than cash refunds. The credit amount increases with worse availability."
+      },
+      {
+        "id": "q1c-3",
+        "type": "multiple_choice",
+        "prompt": "In the shared responsibility model, who is responsible for patching the guest operating system on IaaS?",
+        "options": [
+          "Cloud provider",
+          "Customer",
+          "Third-party vendor",
+          "Automatic system updates"
+        ],
+        "correctAnswer": 1,
+        "explanation": "In IaaS, customers manage the guest OS including patching. The provider manages the hypervisor and physical infrastructure, but OS maintenance is a customer responsibility."
+      },
+      {
+        "id": "q1c-4",
+        "type": "multiple_choice",
+        "prompt": "What is the main principle behind FinOps (Cloud Financial Operations)?",
+        "options": [
+          "Eliminating all cloud costs",
+          "Maximizing resource usage",
+          "Bringing financial accountability to cloud spending",
+          "Automating all billing"
+        ],
+        "correctAnswer": 2,
+        "explanation": "FinOps brings financial accountability to cloud spending through collaboration between engineering, finance, and business teams, focusing on cost visibility, optimization, and alignment with business value."
+      },
+      {
+        "id": "q1c-5",
+        "type": "code_output",
+        "prompt": "If a 99.99% SLA allows approximately 4.38 minutes of downtime per month, how many minutes are allowed per year?",
+        "codeSnippet": "# Annual downtime = Monthly downtime × 12\n# = 4.38 × 12",
+        "correctAnswer": "52.56",
+        "explanation": "99.99% uptime allows approximately 4.38 minutes downtime per month. Annually: 4.38 × 12 = 52.56 minutes (or about 52.6 minutes total downtime per year)."
+      }
+    ]
+  }
+]

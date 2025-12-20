@@ -1,0 +1,221 @@
+[
+  {
+    "id": "cs401-quiz-7-1",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-7",
+    "title": "Distributed System Design - Microservices Patterns",
+    "questions": [
+      {
+        "id": "cs401-q91",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of an API Gateway in microservices?",
+        "options": [
+          "Single entry point routing requests to services",
+          "Database access",
+          "Service implementation",
+          "Data storage"
+        ],
+        "correctAnswer": "Single entry point routing requests to services",
+        "explanation": "API Gateways provide a single entry point for clients, routing requests to appropriate microservices while handling cross-cutting concerns like authentication, rate limiting, and load balancing."
+      },
+      {
+        "id": "cs401-q92",
+        "type": "multiple_choice",
+        "prompt": "What is service mesh?",
+        "options": [
+          "Infrastructure layer managing service-to-service communication",
+          "Network hardware",
+          "Database cluster",
+          "Web server"
+        ],
+        "correctAnswer": "Infrastructure layer managing service-to-service communication",
+        "explanation": "A service mesh (like Istio, Linkerd) is an infrastructure layer that handles service-to-service communication, providing features like load balancing, encryption, observability, and resilience."
+      },
+      {
+        "id": "cs401-q93",
+        "type": "multiple_choice",
+        "prompt": "What is the Saga pattern used for?",
+        "options": [
+          "Managing distributed transactions across microservices",
+          "Data replication",
+          "Load balancing",
+          "Caching"
+        ],
+        "correctAnswer": "Managing distributed transactions across microservices",
+        "explanation": "Sagas manage long-running distributed transactions by breaking them into local transactions with compensating actions, avoiding distributed locks while maintaining consistency."
+      },
+      {
+        "id": "cs401-q94",
+        "type": "multiple_choice",
+        "prompt": "What are the two types of Sagas?",
+        "options": [
+          "Choreography and Orchestration",
+          "Sync and Async",
+          "Push and Pull",
+          "Active and Passive"
+        ],
+        "correctAnswer": "Choreography and Orchestration",
+        "explanation": "Choreography sagas use events where each service listens and reacts. Orchestration sagas use a central coordinator directing each step. Each has tradeoffs in complexity and coupling."
+      },
+      {
+        "id": "cs401-q95",
+        "type": "multiple_choice",
+        "prompt": "What is event sourcing?",
+        "options": [
+          "Storing state changes as a sequence of events",
+          "Publishing events to topics",
+          "Real-time event processing",
+          "Event logging for debugging"
+        ],
+        "correctAnswer": "Storing state changes as a sequence of events",
+        "explanation": "Event sourcing stores all state changes as events in an append-only log, allowing state reconstruction, complete audit history, and time-travel queries, though increasing complexity."
+      }
+    ]
+  },
+  {
+    "id": "cs401-quiz-7-2",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-7",
+    "title": "Distributed System Design - Advanced Patterns",
+    "questions": [
+      {
+        "id": "cs401-q96",
+        "type": "multiple_choice",
+        "prompt": "What is CQRS (Command Query Responsibility Segregation)?",
+        "options": [
+          "Separating read and write models",
+          "Combining reads and writes",
+          "Query optimization",
+          "Command pattern"
+        ],
+        "correctAnswer": "Separating read and write models",
+        "explanation": "CQRS separates the models for reading and writing data, allowing independent optimization, scaling, and evolution of read and write sides, often combined with event sourcing."
+      },
+      {
+        "id": "cs401-q97",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of distributed tracing?",
+        "options": [
+          "Track requests across multiple services",
+          "Debug local code",
+          "Monitor CPU usage",
+          "Encrypt communications"
+        ],
+        "correctAnswer": "Track requests across multiple services",
+        "explanation": "Distributed tracing (like Jaeger, Zipkin) tracks requests as they flow through microservices, helping identify performance bottlenecks, failures, and dependencies in complex systems."
+      },
+      {
+        "id": "cs401-q98",
+        "type": "multiple_choice",
+        "prompt": "What is a sidecar pattern?",
+        "options": [
+          "Deploying helper components alongside main services",
+          "Backup services",
+          "Load balancing",
+          "Data replication"
+        ],
+        "correctAnswer": "Deploying helper components alongside main services",
+        "explanation": "Sidecar pattern deploys auxiliary components (for logging, monitoring, proxying) alongside main services in the same pod/host, extending functionality without modifying service code."
+      },
+      {
+        "id": "cs401-q99",
+        "type": "multiple_choice",
+        "prompt": "What is the strangler fig pattern?",
+        "options": [
+          "Gradually replacing legacy systems with new ones",
+          "Removing unused code",
+          "Performance optimization",
+          "Data migration"
+        ],
+        "correctAnswer": "Gradually replacing legacy systems with new ones",
+        "explanation": "Strangler fig pattern incrementally replaces legacy system components with new implementations, routing increasing traffic to new services while maintaining old ones until complete replacement."
+      },
+      {
+        "id": "cs401-q100",
+        "type": "multiple_choice",
+        "prompt": "What is rate limiting used for in distributed systems?",
+        "options": [
+          "Controlling request rates to protect services",
+          "Measuring performance",
+          "Data compression",
+          "Encryption"
+        ],
+        "correctAnswer": "Controlling request rates to protect services",
+        "explanation": "Rate limiting restricts the number of requests clients can make, protecting services from overload, implementing fair usage policies, and preventing denial-of-service attacks."
+      }
+    ]
+  },
+  {
+    "id": "cs401-quiz-7-3",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-7",
+    "title": "Distributed System Design - Scalability and Reliability",
+    "questions": [
+      {
+        "id": "cs401-q101",
+        "type": "multiple_choice",
+        "prompt": "What is the difference between horizontal and vertical scaling?",
+        "options": [
+          "Horizontal adds more machines; Vertical adds more resources to one machine",
+          "Horizontal is slower",
+          "Vertical is cheaper",
+          "They are the same"
+        ],
+        "correctAnswer": "Horizontal adds more machines; Vertical adds more resources to one machine",
+        "explanation": "Horizontal scaling (scale-out) adds more machines to distribute load, while vertical scaling (scale-up) adds CPU/memory to existing machines. Horizontal scaling is unlimited but more complex."
+      },
+      {
+        "id": "cs401-q102",
+        "type": "multiple_choice",
+        "prompt": "What is backpressure in distributed systems?",
+        "options": [
+          "Mechanism for handling overload by slowing down producers",
+          "Network congestion",
+          "Database pressure",
+          "Memory pressure"
+        ],
+        "correctAnswer": "Mechanism for handling overload by slowing down producers",
+        "explanation": "Backpressure is a feedback mechanism where overloaded consumers signal producers to slow down, preventing buffer overflow and maintaining system stability under high load."
+      },
+      {
+        "id": "cs401-q103",
+        "type": "multiple_choice",
+        "prompt": "What is idempotency in distributed systems?",
+        "options": [
+          "Operations produce same result when executed multiple times",
+          "Operations are fast",
+          "Operations are simple",
+          "Operations never fail"
+        ],
+        "correctAnswer": "Operations produce same result when executed multiple times",
+        "explanation": "Idempotent operations produce the same result when executed multiple times, making them safe to retry. This is crucial for handling failures and duplicate messages in distributed systems."
+      },
+      {
+        "id": "cs401-q104",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of a message queue in distributed systems?",
+        "options": [
+          "Asynchronous communication between services",
+          "Synchronous RPC",
+          "Data storage",
+          "Authentication"
+        ],
+        "correctAnswer": "Asynchronous communication between services",
+        "explanation": "Message queues (like RabbitMQ, Kafka) enable asynchronous communication, decoupling services, buffering during load spikes, and ensuring reliable message delivery between components."
+      },
+      {
+        "id": "cs401-q105",
+        "type": "multiple_choice",
+        "prompt": "What is the difference between at-most-once, at-least-once, and exactly-once delivery?",
+        "options": [
+          "Guarantees about how many times messages are delivered",
+          "Performance characteristics",
+          "Message size limits",
+          "Network protocols"
+        ],
+        "correctAnswer": "Guarantees about how many times messages are delivered",
+        "explanation": "At-most-once may lose messages, at-least-once may duplicate messages, and exactly-once guarantees single delivery. Each has tradeoffs between complexity, performance, and guarantees."
+      }
+    ]
+  }
+]

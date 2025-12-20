@@ -1,0 +1,215 @@
+[
+  {
+    "id": "math301-quiz-3-1",
+    "subjectId": "math301",
+    "topicId": "math301-topic-3",
+    "title": "Gradient and Directional Derivatives",
+    "questions": [
+      {
+        "id": "math301-q31",
+        "type": "multiple_choice",
+        "prompt": "What is the gradient ∇f for f(x,y) = x² + 2xy + y²?",
+        "options": [
+          "<2x + 2y, 2x + 2y>",
+          "<2x, 2y>",
+          "<2x + 2y, 2y>",
+          "<x + y, x + y>"
+        ],
+        "correctAnswer": "<2x + 2y, 2x + 2y>",
+        "explanation": "∇f = <∂f/∂x, ∂f/∂y> = <2x + 2y, 2x + 2y>"
+      },
+      {
+        "id": "math301-q32",
+        "type": "true_false",
+        "prompt": "The gradient vector points in the direction of maximum rate of increase of the function.",
+        "options": [
+          "True",
+          "False"
+        ],
+        "correctAnswer": "True",
+        "explanation": "The gradient ∇f points in the direction of steepest ascent, and its magnitude gives the rate of increase"
+      },
+      {
+        "id": "math301-q33",
+        "type": "multiple_choice",
+        "prompt": "What is the directional derivative D_u f at a point if u is a unit vector?",
+        "options": [
+          "∇f · u",
+          "|∇f|",
+          "∇f × u",
+          "f · u"
+        ],
+        "correctAnswer": "∇f · u",
+        "explanation": "The directional derivative in the direction of unit vector u is D_u f = ∇f · u"
+      },
+      {
+        "id": "math301-q34",
+        "type": "multiple_choice",
+        "prompt": "For f(x,y) = x² + y², what is the maximum rate of change at point (3,4)?",
+        "options": [
+          "10",
+          "5",
+          "7",
+          "25"
+        ],
+        "correctAnswer": "10",
+        "explanation": "∇f = <2x, 2y>, at (3,4): ∇f = <6, 8>. Maximum rate = |∇f| = √(36 + 64) = √100 = 10"
+      },
+      {
+        "id": "math301-q35",
+        "type": "multiple_choice",
+        "prompt": "The gradient of f is perpendicular to what?",
+        "options": [
+          "Level curves of f",
+          "Direction of steepest ascent",
+          "All tangent vectors",
+          "The xy-plane"
+        ],
+        "correctAnswer": "Level curves of f",
+        "explanation": "The gradient ∇f is perpendicular to the level curves (or level surfaces) of f"
+      }
+    ]
+  },
+  {
+    "id": "math301-quiz-3-2",
+    "subjectId": "math301",
+    "topicId": "math301-topic-3",
+    "title": "Tangent Planes and Normal Lines",
+    "questions": [
+      {
+        "id": "math301-q36",
+        "type": "multiple_choice",
+        "prompt": "What is the equation of the tangent plane to z = x² + y² at point (1, 2, 5)?",
+        "options": [
+          "z = 2x + 4y - 1",
+          "z = x + 2y",
+          "z = 2x + 4y + 5",
+          "z = 2x + 4y"
+        ],
+        "correctAnswer": "z = 2x + 4y - 1",
+        "explanation": "f_x(1,2) = 2, f_y(1,2) = 4. Tangent plane: z - 5 = 2(x-1) + 4(y-2) → z = 2x + 4y - 1"
+      },
+      {
+        "id": "math301-q37",
+        "type": "true_false",
+        "prompt": "The normal vector to the surface z = f(x,y) at a point is parallel to the gradient of f.",
+        "options": [
+          "True",
+          "False"
+        ],
+        "correctAnswer": "True",
+        "explanation": "Rewriting as F(x,y,z) = f(x,y) - z = 0, the normal is ∇F = <f_x, f_y, -1>, which includes the gradient components"
+      },
+      {
+        "id": "math301-q38",
+        "type": "multiple_choice",
+        "prompt": "For f(x,y,z) = x² + y² + z², what is the gradient ∇f at point (1,1,1)?",
+        "options": [
+          "<2, 2, 2>",
+          "<1, 1, 1>",
+          "<2, 0, 0>",
+          "<3, 3, 3>"
+        ],
+        "correctAnswer": "<2, 2, 2>",
+        "explanation": "∇f = <2x, 2y, 2z>, so at (1,1,1): ∇f = <2, 2, 2>"
+      },
+      {
+        "id": "math301-q39",
+        "type": "multiple_choice",
+        "prompt": "The level curve f(x,y) = k represents what?",
+        "options": [
+          "Points where f has the same value k",
+          "Points where ∇f = k",
+          "The tangent line to f",
+          "The maximum of f"
+        ],
+        "correctAnswer": "Points where f has the same value k",
+        "explanation": "A level curve is the set of all points (x,y) where f(x,y) equals the constant k"
+      },
+      {
+        "id": "math301-q40",
+        "type": "fill_blank",
+        "prompt": "The linear approximation L(x,y) approximates f(x,y) near point (a,b) using what geometric object?",
+        "options": [
+          "Tangent plane",
+          "Normal line",
+          "Level curve",
+          "Gradient vector"
+        ],
+        "correctAnswer": "Tangent plane",
+        "explanation": "The linear approximation is the tangent plane to the surface z = f(x,y) at the point"
+      }
+    ]
+  },
+  {
+    "id": "math301-quiz-3-3",
+    "subjectId": "math301",
+    "topicId": "math301-topic-3",
+    "title": "Linear Approximation and Level Curves",
+    "questions": [
+      {
+        "id": "math301-q41",
+        "type": "multiple_choice",
+        "prompt": "At what angle to the gradient is the directional derivative zero?",
+        "options": [
+          "90°",
+          "0°",
+          "45°",
+          "180°"
+        ],
+        "correctAnswer": "90°",
+        "explanation": "D_u f = ∇f · u = |∇f||u|cos(θ) = 0 when θ = 90°, meaning u is perpendicular to ∇f"
+      },
+      {
+        "id": "math301-q42",
+        "type": "multiple_choice",
+        "prompt": "For f(x,y) = xe^y, what is the directional derivative at (1,0) in the direction of u = <3/5, 4/5>?",
+        "options": [
+          "1",
+          "7/5",
+          "3/5",
+          "4/5"
+        ],
+        "correctAnswer": "7/5",
+        "explanation": "∇f = <e^y, xe^y>, at (1,0): ∇f = <1, 1>. D_u f = <1,1> · <3/5, 4/5> = 3/5 + 4/5 = 7/5"
+      },
+      {
+        "id": "math301-q43",
+        "type": "true_false",
+        "prompt": "The directional derivative is maximized when moving in the direction of the gradient.",
+        "options": [
+          "True",
+          "False"
+        ],
+        "correctAnswer": "True",
+        "explanation": "D_u f = ∇f · u = |∇f|cos(θ) is maximized when θ = 0, i.e., when u points in the direction of ∇f"
+      },
+      {
+        "id": "math301-q44",
+        "type": "multiple_choice",
+        "prompt": "What is the normal line to the surface z = x² + y² at point (1,1,2)?",
+        "options": [
+          "r(t) = <1,1,2> + t<2,2,-1>",
+          "r(t) = <1,1,2> + t<1,1,1>",
+          "r(t) = <1,1,2> + t<2,2,1>",
+          "r(t) = <2,2,-1> + t<1,1,2>"
+        ],
+        "correctAnswer": "r(t) = <1,1,2> + t<2,2,-1>",
+        "explanation": "Normal vector is <f_x, f_y, -1> = <2x, 2y, -1> = <2, 2, -1> at (1,1,2). Normal line: r₀ + tn"
+      },
+      {
+        "id": "math301-q45",
+        "type": "multiple_choice",
+        "prompt": "For the surface x² + y² + z² = 9, what is the gradient at point (2,2,1)?",
+        "options": [
+          "<4, 4, 2>",
+          "<2, 2, 1>",
+          "<1, 1, 1>",
+          "<2, 2, 2>"
+        ],
+        "correctAnswer": "<4, 4, 2>",
+        "explanation": "Let F = x² + y² + z² - 9. Then ∇F = <2x, 2y, 2z> = <4, 4, 2> at (2,2,1)"
+      }
+    ]
+  }
+]

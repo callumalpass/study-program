@@ -1,0 +1,185 @@
+[
+  {
+    "id": "cs305-quiz-3-1",
+    "title": "JavaScript Basics",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-3",
+    "questions": [
+      {
+        "id": "cs305-q3-1",
+        "type": "multiple_choice",
+        "prompt": "Which keyword is used to declare a block-scoped variable in JavaScript?",
+        "options": [
+          "var",
+          "let",
+          "const",
+          "Both let and const"
+        ],
+        "correctAnswer": "Both let and const",
+        "explanation": "Both let and const create block-scoped variables. The difference is that const creates a constant reference that cannot be reassigned."
+      },
+      {
+        "id": "cs305-q3-2",
+        "type": "true_false",
+        "prompt": "In JavaScript, \"5\" + 3 results in 53.",
+        "correctAnswer": "true",
+        "explanation": "When using the + operator with a string and a number, JavaScript coerces the number to a string and concatenates them, resulting in \"53\"."
+      },
+      {
+        "id": "cs305-q3-3",
+        "type": "multiple_choice",
+        "prompt": "What is the correct way to declare a function in JavaScript?",
+        "options": [
+          "function myFunc() {}",
+          "def myFunc() {}",
+          "func myFunc() {}",
+          "function: myFunc() {}"
+        ],
+        "correctAnswer": "function myFunc() {}",
+        "explanation": "Functions are declared using the \"function\" keyword followed by the function name and parentheses."
+      },
+      {
+        "id": "cs305-q3-4",
+        "type": "multiple_choice",
+        "prompt": "Which method adds an element to the end of an array?",
+        "options": [
+          "push()",
+          "pop()",
+          "shift()",
+          "unshift()"
+        ],
+        "correctAnswer": "push()",
+        "explanation": "push() adds one or more elements to the end of an array. pop() removes from end, shift() removes from beginning, unshift() adds to beginning."
+      },
+      {
+        "id": "cs305-q3-5",
+        "type": "fill_blank",
+        "prompt": "To access a property \"name\" of an object \"person\", you can use person.___ or person[\"name\"].",
+        "correctAnswer": "name",
+        "explanation": "Object properties can be accessed using dot notation (person.name) or bracket notation (person[\"name\"])."
+      }
+    ]
+  },
+  {
+    "id": "cs305-quiz-3-2",
+    "title": "ES6+ Features",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-3",
+    "questions": [
+      {
+        "id": "cs305-q3-6",
+        "type": "code_output",
+        "prompt": "What does [...arr1, ...arr2] do in JavaScript?",
+        "options": [
+          "Creates nested arrays",
+          "Combines arrays into one",
+          "Subtracts arr2 from arr1",
+          "Compares two arrays"
+        ],
+        "correctAnswer": "Combines arrays into one",
+        "explanation": "The spread operator (...) expands array elements. [...arr1, ...arr2] creates a new array combining all elements from both arrays."
+      },
+      {
+        "id": "cs305-q3-7",
+        "type": "multiple_choice",
+        "prompt": "What is array destructuring in ES6?",
+        "options": [
+          "Deleting array elements",
+          "Extracting values into variables",
+          "Breaking arrays into pieces",
+          "Sorting array elements"
+        ],
+        "correctAnswer": "Extracting values into variables",
+        "explanation": "Array destructuring allows unpacking values from arrays into distinct variables: const [a, b] = [1, 2]."
+      },
+      {
+        "id": "cs305-q3-8",
+        "type": "true_false",
+        "prompt": "Arrow functions have their own \"this\" binding.",
+        "correctAnswer": "false",
+        "explanation": "Arrow functions do not have their own \"this\" binding. They inherit \"this\" from the enclosing lexical scope."
+      },
+      {
+        "id": "cs305-q3-9",
+        "type": "multiple_choice",
+        "prompt": "What does the map() method do?",
+        "options": [
+          "Filters array elements",
+          "Creates a new array by transforming each element",
+          "Finds a specific element",
+          "Sorts the array"
+        ],
+        "correctAnswer": "Creates a new array by transforming each element",
+        "explanation": "map() creates a new array by calling a function on every element of the original array and using the return values."
+      },
+      {
+        "id": "cs305-q3-10",
+        "type": "fill_blank",
+        "prompt": "The ___ method returns the first element in an array that satisfies a testing function.",
+        "correctAnswer": "find",
+        "explanation": "The find() method returns the first element that satisfies the provided testing function. If no element satisfies it, undefined is returned."
+      }
+    ]
+  },
+  {
+    "id": "cs305-quiz-3-3",
+    "title": "Advanced JavaScript Concepts",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-3",
+    "questions": [
+      {
+        "id": "cs305-q3-11",
+        "type": "code_output",
+        "prompt": "What is the output of: const obj = {a: 1}; const {a: b} = obj; console.log(b);",
+        "options": [
+          "undefined",
+          "1",
+          "a",
+          "Error"
+        ],
+        "correctAnswer": "1",
+        "explanation": "This is destructuring with renaming. {a: b} extracts the property \"a\" from obj and assigns it to a new variable \"b\", so b equals 1."
+      },
+      {
+        "id": "cs305-q3-12",
+        "type": "multiple_choice",
+        "prompt": "What is a closure in JavaScript?",
+        "options": [
+          "A way to close programs",
+          "A function with access to outer scope variables",
+          "A syntax error",
+          "A type of loop"
+        ],
+        "correctAnswer": "A function with access to outer scope variables",
+        "explanation": "A closure is a function that has access to variables in its outer (enclosing) lexical scope, even after the outer function has returned."
+      },
+      {
+        "id": "cs305-q3-13",
+        "type": "true_false",
+        "prompt": "The reduce() method can be used to sum all numbers in an array.",
+        "correctAnswer": "true",
+        "explanation": "reduce() executes a reducer function on each array element, resulting in a single output value. It's commonly used for summing: arr.reduce((sum, num) => sum + num, 0)."
+      },
+      {
+        "id": "cs305-q3-14",
+        "type": "multiple_choice",
+        "prompt": "What is the difference between == and === in JavaScript?",
+        "options": [
+          "No difference",
+          "== checks value, === checks value and type",
+          "=== is for strings only",
+          "== is deprecated"
+        ],
+        "correctAnswer": "== checks value, === checks value and type",
+        "explanation": "== performs type coercion before comparison, while === (strict equality) checks both value and type without coercion."
+      },
+      {
+        "id": "cs305-q3-15",
+        "type": "fill_blank",
+        "prompt": "The ___ keyword is used to define a class in ES6 JavaScript.",
+        "correctAnswer": "class",
+        "explanation": "ES6 introduced the class keyword for defining classes, providing syntactic sugar over JavaScript's prototype-based inheritance."
+      }
+    ]
+  }
+]

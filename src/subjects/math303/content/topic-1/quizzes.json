@@ -1,0 +1,221 @@
+[
+  {
+    "id": "math303-quiz-1-1",
+    "subjectId": "math303",
+    "title": "Real Number System - Completeness and Supremum",
+    "topicId": "math303-topic-1",
+    "questions": [
+      {
+        "id": "math303-q1",
+        "type": "multiple_choice",
+        "prompt": "Which property distinguishes the real numbers from the rational numbers?",
+        "options": [
+          "The Completeness Axiom",
+          "The Archimedean Property",
+          "The Trichotomy Law",
+          "Closure under addition"
+        ],
+        "correctAnswer": "The Completeness Axiom",
+        "explanation": "The Completeness Axiom states that every non-empty set of real numbers that is bounded above has a least upper bound (supremum). This property fails for rationals (e.g., {q ∈ Q : q² < 2})."
+      },
+      {
+        "id": "math303-q2",
+        "type": "multiple_choice",
+        "prompt": "Let S = {1/n : n ∈ N}. What is sup(S)?",
+        "options": [
+          "1",
+          "0",
+          "1/2",
+          "Does not exist"
+        ],
+        "correctAnswer": "1",
+        "explanation": "The supremum is the least upper bound. Since 1/1 = 1 is the largest element in S, sup(S) = 1."
+      },
+      {
+        "id": "math303-q3",
+        "type": "multiple_choice",
+        "prompt": "Let S = {x ∈ R : x² < 2}. What is sup(S)?",
+        "options": [
+          "√2",
+          "2",
+          "4",
+          "1"
+        ],
+        "correctAnswer": "√2",
+        "explanation": "S = (-√2, √2). The least upper bound is √2. Note that √2 ∉ S, but it is the smallest number that is ≥ all elements of S."
+      },
+      {
+        "id": "math303-q4",
+        "type": "multiple_choice",
+        "prompt": "If A ⊆ B and both are non-empty and bounded above, which is true?",
+        "options": [
+          "sup(A) ≤ sup(B)",
+          "sup(A) ≥ sup(B)",
+          "sup(A) = sup(B)",
+          "No relationship exists"
+        ],
+        "correctAnswer": "sup(A) ≤ sup(B)",
+        "explanation": "Since A ⊆ B, every upper bound of B is also an upper bound of A. Therefore, the least upper bound of A cannot exceed the least upper bound of B."
+      },
+      {
+        "id": "math303-q5",
+        "type": "multiple_choice",
+        "prompt": "The infimum of the set (0, 1] is:",
+        "options": [
+          "0",
+          "1",
+          "1/2",
+          "Does not exist"
+        ],
+        "correctAnswer": "0",
+        "explanation": "The infimum is the greatest lower bound. Although 0 is not in the set (0, 1], it is the largest number that is ≤ all elements of the set."
+      }
+    ]
+  },
+  {
+    "id": "math303-quiz-1-2",
+    "subjectId": "math303",
+    "title": "Real Number System - Archimedean Property",
+    "topicId": "math303-topic-1",
+    "questions": [
+      {
+        "id": "math303-q6",
+        "type": "multiple_choice",
+        "prompt": "The Archimedean Property states that for any x, y > 0:",
+        "options": [
+          "There exists n ∈ N such that nx > y",
+          "There exists n ∈ N such that x > ny",
+          "x + y > 0",
+          "xy > 0"
+        ],
+        "correctAnswer": "There exists n ∈ N such that nx > y",
+        "explanation": "The Archimedean Property states that given any two positive real numbers, we can always find a natural number multiple of one that exceeds the other."
+      },
+      {
+        "id": "math303-q7",
+        "type": "multiple_choice",
+        "prompt": "Between any two distinct real numbers, there exists:",
+        "options": [
+          "A rational number",
+          "Only irrational numbers",
+          "Exactly one rational number",
+          "No rational numbers"
+        ],
+        "correctAnswer": "A rational number",
+        "explanation": "The rationals are dense in R, meaning between any two distinct real numbers a < b, there exists a rational number r such that a < r < b."
+      },
+      {
+        "id": "math303-q8",
+        "type": "multiple_choice",
+        "prompt": "Between any two distinct real numbers a < b, how many irrational numbers exist?",
+        "options": [
+          "Infinitely many",
+          "Exactly one",
+          "Finitely many",
+          "None"
+        ],
+        "correctAnswer": "Infinitely many",
+        "explanation": "The irrational numbers are also dense in R. Between any two distinct reals, there are infinitely many irrationals."
+      },
+      {
+        "id": "math303-q9",
+        "type": "multiple_choice",
+        "prompt": "If x ∈ R and x > 0, then by the Archimedean Property:",
+        "options": [
+          "There exists n ∈ N such that 1/n < x",
+          "There exists n ∈ N such that n < x",
+          "x ∈ N",
+          "x > 1/2"
+        ],
+        "correctAnswer": "There exists n ∈ N such that 1/n < x",
+        "explanation": "This is a consequence of the Archimedean Property: for any x > 0, we can find n ∈ N large enough that 1/n < x."
+      },
+      {
+        "id": "math303-q10",
+        "type": "multiple_choice",
+        "prompt": "Let In = [0, 1/n] for n ∈ N. Then ∩(n=1 to ∞) In equals:",
+        "options": [
+          "{0}",
+          "[0, 1]",
+          "Empty set",
+          "(0, 1)"
+        ],
+        "correctAnswer": "{0}",
+        "explanation": "The intersection of all these nested intervals is {0}. By the Archimedean Property, for any x > 0, there exists n such that 1/n < x, so x ∉ In."
+      }
+    ]
+  },
+  {
+    "id": "math303-quiz-1-3",
+    "subjectId": "math303",
+    "title": "Real Number System - Countability",
+    "topicId": "math303-topic-1",
+    "questions": [
+      {
+        "id": "math303-q11",
+        "type": "multiple_choice",
+        "prompt": "Which of the following sets is countable?",
+        "options": [
+          "Q (rational numbers)",
+          "R (real numbers)",
+          "(0, 1) (open interval)",
+          "R \\ Q (irrational numbers)"
+        ],
+        "correctAnswer": "Q (rational numbers)",
+        "explanation": "Q is countable (can be put in one-to-one correspondence with N). The reals R, any non-trivial interval, and the irrationals are all uncountable."
+      },
+      {
+        "id": "math303-q12",
+        "type": "multiple_choice",
+        "prompt": "The cardinality of the interval (0, 1) is:",
+        "options": [
+          "Equal to the cardinality of R",
+          "Equal to the cardinality of N",
+          "Greater than the cardinality of R",
+          "Between N and R"
+        ],
+        "correctAnswer": "Equal to the cardinality of R",
+        "explanation": "By the Schröder-Bernstein theorem and explicit bijections, (0, 1) has the same cardinality as R (both are uncountable with cardinality c)."
+      },
+      {
+        "id": "math303-q13",
+        "type": "multiple_choice",
+        "prompt": "If A and B are countable sets, then A ∪ B is:",
+        "options": [
+          "Countable",
+          "Uncountable",
+          "Finite",
+          "Cannot be determined"
+        ],
+        "correctAnswer": "Countable",
+        "explanation": "The union of two countable sets is countable. This can be shown by constructing a bijection with N or a subset of N."
+      },
+      {
+        "id": "math303-q14",
+        "type": "multiple_choice",
+        "prompt": "The set of all finite sequences of natural numbers is:",
+        "options": [
+          "Countable",
+          "Uncountable",
+          "Finite",
+          "Empty"
+        ],
+        "correctAnswer": "Countable",
+        "explanation": "The set of finite sequences from a countable set is countable. It can be viewed as a countable union of countable sets."
+      },
+      {
+        "id": "math303-q15",
+        "type": "multiple_choice",
+        "prompt": "Cantor's diagonal argument proves that:",
+        "options": [
+          "The real numbers are uncountable",
+          "The rational numbers are countable",
+          "The integers are countable",
+          "All infinite sets have the same size"
+        ],
+        "correctAnswer": "The real numbers are uncountable",
+        "explanation": "Cantor's diagonal argument shows that any attempted enumeration of real numbers in [0, 1] must miss at least one number, proving R is uncountable."
+      }
+    ]
+  }
+]

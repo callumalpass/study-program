@@ -1,0 +1,185 @@
+[
+  {
+    "id": "cs305-quiz-4-1",
+    "title": "DOM Basics",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-4",
+    "questions": [
+      {
+        "id": "cs305-q4-1",
+        "type": "multiple_choice",
+        "prompt": "Which method selects an element by its ID?",
+        "options": [
+          "document.querySelector()",
+          "document.getElementById()",
+          "document.getElement()",
+          "document.selectById()"
+        ],
+        "correctAnswer": "document.getElementById()",
+        "explanation": "document.getElementById() selects a single element by its ID attribute. It returns the element or null if not found."
+      },
+      {
+        "id": "cs305-q4-2",
+        "type": "true_false",
+        "prompt": "querySelector() returns all matching elements.",
+        "correctAnswer": "false",
+        "explanation": "querySelector() returns only the first element that matches the selector. Use querySelectorAll() to get all matching elements."
+      },
+      {
+        "id": "cs305-q4-3",
+        "type": "multiple_choice",
+        "prompt": "How do you change the text content of an element?",
+        "options": [
+          "element.text = \"new text\"",
+          "element.textContent = \"new text\"",
+          "element.content = \"new text\"",
+          "element.setText(\"new text\")"
+        ],
+        "correctAnswer": "element.textContent = \"new text\"",
+        "explanation": "The textContent property sets or returns the text content of an element and its descendants."
+      },
+      {
+        "id": "cs305-q4-4",
+        "type": "multiple_choice",
+        "prompt": "Which property is used to change the HTML content of an element?",
+        "options": [
+          "innerHTML",
+          "htmlContent",
+          "innerText",
+          "content"
+        ],
+        "correctAnswer": "innerHTML",
+        "explanation": "innerHTML gets or sets the HTML markup contained within an element. Use with caution as it can introduce XSS vulnerabilities."
+      },
+      {
+        "id": "cs305-q4-5",
+        "type": "fill_blank",
+        "prompt": "To add a CSS class to an element, use element.classList.___(\"className\").",
+        "correctAnswer": "add",
+        "explanation": "The classList.add() method adds one or more class names to an element. Use classList.remove() to remove classes."
+      }
+    ]
+  },
+  {
+    "id": "cs305-quiz-4-2",
+    "title": "Event Handling",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-4",
+    "questions": [
+      {
+        "id": "cs305-q4-6",
+        "type": "multiple_choice",
+        "prompt": "What is event delegation?",
+        "options": [
+          "Deleting events",
+          "Attaching events to parent instead of children",
+          "Preventing default behavior",
+          "Stopping event propagation"
+        ],
+        "correctAnswer": "Attaching events to parent instead of children",
+        "explanation": "Event delegation attaches an event listener to a parent element to handle events from its children, leveraging event bubbling for efficiency."
+      },
+      {
+        "id": "cs305-q4-7",
+        "type": "true_false",
+        "prompt": "The addEventListener() method can attach multiple handlers to the same event.",
+        "correctAnswer": "true",
+        "explanation": "addEventListener() allows multiple event handlers for the same event on an element, unlike onclick which only allows one handler."
+      },
+      {
+        "id": "cs305-q4-8",
+        "type": "multiple_choice",
+        "prompt": "What does event.preventDefault() do?",
+        "options": [
+          "Stops event bubbling",
+          "Prevents the default action",
+          "Removes the event listener",
+          "Delays the event"
+        ],
+        "correctAnswer": "Prevents the default action",
+        "explanation": "preventDefault() prevents the default action of an event (e.g., preventing form submission or link navigation)."
+      },
+      {
+        "id": "cs305-q4-9",
+        "type": "code_output",
+        "prompt": "What does event.stopPropagation() do?",
+        "options": [
+          "Prevents default behavior",
+          "Stops event from bubbling up",
+          "Removes event listener",
+          "Triggers parent events"
+        ],
+        "correctAnswer": "Stops event from bubbling up",
+        "explanation": "stopPropagation() prevents the event from bubbling up to parent elements in the DOM tree."
+      },
+      {
+        "id": "cs305-q4-10",
+        "type": "fill_blank",
+        "prompt": "To create a new HTML element in JavaScript, use document.___(\"tagName\").",
+        "correctAnswer": "createElement",
+        "explanation": "document.createElement() creates a new element node with the specified tag name. It must be appended to the DOM to be visible."
+      }
+    ]
+  },
+  {
+    "id": "cs305-quiz-4-3",
+    "title": "Advanced DOM Operations",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-4",
+    "questions": [
+      {
+        "id": "cs305-q4-11",
+        "type": "multiple_choice",
+        "prompt": "What is the difference between event.target and event.currentTarget?",
+        "options": [
+          "No difference",
+          "target is the element that triggered, currentTarget is where listener is attached",
+          "currentTarget is deprecated",
+          "target is for bubbling, currentTarget for capturing"
+        ],
+        "correctAnswer": "target is the element that triggered, currentTarget is where listener is attached",
+        "explanation": "event.target is the element that actually triggered the event, while event.currentTarget is the element to which the event listener is attached."
+      },
+      {
+        "id": "cs305-q4-12",
+        "type": "true_false",
+        "prompt": "The capturing phase occurs before the bubbling phase in event propagation.",
+        "correctAnswer": "true",
+        "explanation": "Event propagation has three phases: capturing (top-down), target, and bubbling (bottom-up). Capturing occurs first."
+      },
+      {
+        "id": "cs305-q4-13",
+        "type": "multiple_choice",
+        "prompt": "Which method removes an element from the DOM?",
+        "options": [
+          "element.delete()",
+          "element.remove()",
+          "element.removeNode()",
+          "element.destroy()"
+        ],
+        "correctAnswer": "element.remove()",
+        "explanation": "The remove() method removes the element from the DOM. Alternatively, you can use parentNode.removeChild(element)."
+      },
+      {
+        "id": "cs305-q4-14",
+        "type": "code_output",
+        "prompt": "What does element.getAttribute(\"href\") return if the attribute doesn't exist?",
+        "options": [
+          "undefined",
+          "null",
+          "empty string",
+          "Error"
+        ],
+        "correctAnswer": "null",
+        "explanation": "getAttribute() returns null if the specified attribute does not exist on the element."
+      },
+      {
+        "id": "cs305-q4-15",
+        "type": "fill_blank",
+        "prompt": "The ___ method inserts an element as the last child of a parent element.",
+        "correctAnswer": "appendChild",
+        "explanation": "appendChild() adds a node as the last child of a parent node. For more flexibility, use append() which can also add text and multiple nodes."
+      }
+    ]
+  }
+]

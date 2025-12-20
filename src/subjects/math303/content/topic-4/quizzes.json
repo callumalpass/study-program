@@ -1,0 +1,221 @@
+[
+  {
+    "id": "math303-quiz-4-1",
+    "subjectId": "math303",
+    "title": "Continuity - Epsilon-Delta",
+    "topicId": "math303-topic-4",
+    "questions": [
+      {
+        "id": "math303-q46",
+        "type": "multiple_choice",
+        "prompt": "A function f is continuous at c if:",
+        "options": [
+          "For every ε > 0, there exists δ > 0 such that |x - c| < δ implies |f(x) - f(c)| < ε",
+          "lim(x→c) f(x) exists",
+          "f(c) is defined",
+          "|f(x) - f(c)| < 1 for all x"
+        ],
+        "correctAnswer": "For every ε > 0, there exists δ > 0 such that |x - c| < δ implies |f(x) - f(c)| < ε",
+        "explanation": "This is the precise ε-δ definition of continuity at a point. It requires f(c) to be defined, lim(x→c) f(x) to exist, and the two to be equal."
+      },
+      {
+        "id": "math303-q47",
+        "type": "multiple_choice",
+        "prompt": "The function f(x) = 1/x is continuous on:",
+        "options": [
+          "(-∞, 0) ∪ (0, ∞)",
+          "R",
+          "[0, ∞)",
+          "(-∞, 0]"
+        ],
+        "correctAnswer": "(-∞, 0) ∪ (0, ∞)",
+        "explanation": "f(x) = 1/x is continuous everywhere in its domain, which is R \\ {0}. It has a discontinuity at x = 0 where it is not defined."
+      },
+      {
+        "id": "math303-q48",
+        "type": "multiple_choice",
+        "prompt": "If f and g are continuous at c, then f + g is:",
+        "options": [
+          "Continuous at c",
+          "Discontinuous at c",
+          "Not defined at c",
+          "Cannot be determined"
+        ],
+        "correctAnswer": "Continuous at c",
+        "explanation": "The sum of continuous functions is continuous. This follows from the limit laws and the definition of continuity."
+      },
+      {
+        "id": "math303-q49",
+        "type": "multiple_choice",
+        "prompt": "A function f is continuous at c if and only if:",
+        "options": [
+          "lim(x→c) f(x) = f(c)",
+          "f(c) exists",
+          "lim(x→c) f(x) exists",
+          "f is defined on an interval containing c"
+        ],
+        "correctAnswer": "lim(x→c) f(x) = f(c)",
+        "explanation": "Continuity at c requires three conditions: f(c) is defined, lim(x→c) f(x) exists, and lim(x→c) f(x) = f(c)."
+      },
+      {
+        "id": "math303-q50",
+        "type": "multiple_choice",
+        "prompt": "The composition of continuous functions is:",
+        "options": [
+          "Continuous",
+          "Discontinuous",
+          "Not necessarily continuous",
+          "Always constant"
+        ],
+        "correctAnswer": "Continuous",
+        "explanation": "If g is continuous at c and f is continuous at g(c), then f ∘ g is continuous at c. The composition preserves continuity."
+      }
+    ]
+  },
+  {
+    "id": "math303-quiz-4-2",
+    "subjectId": "math303",
+    "title": "Continuity - Uniform Continuity and IVT",
+    "topicId": "math303-topic-4",
+    "questions": [
+      {
+        "id": "math303-q51",
+        "type": "multiple_choice",
+        "prompt": "A function f is uniformly continuous on a set S if:",
+        "options": [
+          "For every ε > 0, there exists δ > 0 such that |x - y| < δ implies |f(x) - f(y)| < ε for all x, y in S",
+          "f is continuous at every point in S",
+          "|f(x) - f(y)| ≤ |x - y| for all x, y in S",
+          "f is bounded on S"
+        ],
+        "correctAnswer": "For every ε > 0, there exists δ > 0 such that |x - y| < δ implies |f(x) - f(y)| < ε for all x, y in S",
+        "explanation": "Uniform continuity requires δ to work for all points simultaneously, not just for individual points as in ordinary continuity."
+      },
+      {
+        "id": "math303-q52",
+        "type": "multiple_choice",
+        "prompt": "The function f(x) = x² on R is:",
+        "options": [
+          "Continuous but not uniformly continuous",
+          "Uniformly continuous",
+          "Not continuous",
+          "Uniformly continuous on every interval"
+        ],
+        "correctAnswer": "Continuous but not uniformly continuous",
+        "explanation": "f(x) = x² is continuous everywhere but not uniformly continuous on R. For large x, small changes in x can produce large changes in f(x)."
+      },
+      {
+        "id": "math303-q53",
+        "type": "multiple_choice",
+        "prompt": "If f is continuous on a closed bounded interval [a, b], then f is:",
+        "options": [
+          "Uniformly continuous on [a, b]",
+          "Not uniformly continuous on [a, b]",
+          "Unbounded on [a, b]",
+          "Not necessarily bounded on [a, b]"
+        ],
+        "correctAnswer": "Uniformly continuous on [a, b]",
+        "explanation": "This is a fundamental theorem: every continuous function on a compact set (like [a, b]) is uniformly continuous."
+      },
+      {
+        "id": "math303-q54",
+        "type": "multiple_choice",
+        "prompt": "The Intermediate Value Theorem states that if f is continuous on [a, b] and f(a) < k < f(b), then:",
+        "options": [
+          "There exists c in (a, b) such that f(c) = k",
+          "f(x) = k for all x in [a, b]",
+          "f is differentiable at some point",
+          "f is constant on [a, b]"
+        ],
+        "correctAnswer": "There exists c in (a, b) such that f(c) = k",
+        "explanation": "The IVT guarantees that a continuous function on [a, b] takes on every value between f(a) and f(b)."
+      },
+      {
+        "id": "math303-q55",
+        "type": "multiple_choice",
+        "prompt": "Which property is NOT guaranteed by the Intermediate Value Theorem?",
+        "options": [
+          "The uniqueness of the intermediate value",
+          "The existence of an intermediate value",
+          "That f is continuous on [a, b]",
+          "That the intermediate value lies in the open interval (a, b)"
+        ],
+        "correctAnswer": "The uniqueness of the intermediate value",
+        "explanation": "The IVT guarantees existence of at least one c with f(c) = k, but not uniqueness. There may be multiple such points."
+      }
+    ]
+  },
+  {
+    "id": "math303-quiz-4-3",
+    "subjectId": "math303",
+    "title": "Continuity - Extreme Value Theorem",
+    "topicId": "math303-topic-4",
+    "questions": [
+      {
+        "id": "math303-q56",
+        "type": "multiple_choice",
+        "prompt": "The Extreme Value Theorem states that if f is continuous on [a, b], then:",
+        "options": [
+          "f attains both a maximum and minimum value on [a, b]",
+          "f is differentiable on (a, b)",
+          "f is uniformly continuous on [a, b]",
+          "f is constant on [a, b]"
+        ],
+        "correctAnswer": "f attains both a maximum and minimum value on [a, b]",
+        "explanation": "The EVT guarantees that a continuous function on a closed bounded interval attains both its supremum and infimum as actual values."
+      },
+      {
+        "id": "math303-q57",
+        "type": "multiple_choice",
+        "prompt": "The function f(x) = 1/x on (0, 1):",
+        "options": [
+          "Does not attain a maximum value",
+          "Attains a maximum at x = 0",
+          "Attains a maximum at x = 1",
+          "Attains a maximum at x = 1/2"
+        ],
+        "correctAnswer": "Does not attain a maximum value",
+        "explanation": "On the open interval (0, 1), f(x) = 1/x is continuous but unbounded as x → 0⁺. The EVT does not apply because the interval is not closed."
+      },
+      {
+        "id": "math303-q58",
+        "type": "multiple_choice",
+        "prompt": "If f is continuous on [a, b], then f([a, b]) is:",
+        "options": [
+          "A closed bounded interval",
+          "An open interval",
+          "Unbounded",
+          "A single point"
+        ],
+        "correctAnswer": "A closed bounded interval",
+        "explanation": "By the IVT and EVT, the image of a closed bounded interval under a continuous function is also a closed bounded interval."
+      },
+      {
+        "id": "math303-q59",
+        "type": "multiple_choice",
+        "prompt": "A continuous function on a compact set is:",
+        "options": [
+          "Bounded",
+          "Unbounded",
+          "Constant",
+          "Differentiable"
+        ],
+        "correctAnswer": "Bounded",
+        "explanation": "By the Extreme Value Theorem, a continuous function on a compact set (like [a, b]) is bounded and attains its bounds."
+      },
+      {
+        "id": "math303-q60",
+        "type": "multiple_choice",
+        "prompt": "Which function violates the conditions of the Extreme Value Theorem on the given domain?",
+        "options": [
+          "f(x) = 1/x on (0, 1]",
+          "f(x) = x² on [0, 1]",
+          "f(x) = sin(x) on [0, π]",
+          "f(x) = |x| on [-1, 1]"
+        ],
+        "correctAnswer": "f(x) = 1/x on (0, 1]",
+        "explanation": "f(x) = 1/x is not continuous on the half-open interval (0, 1] because it is not defined at 0. The other functions are continuous on closed intervals."
+      }
+    ]
+  }
+]

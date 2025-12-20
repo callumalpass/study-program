@@ -1,0 +1,235 @@
+[
+  {
+    "id": "math202-t1-ex01",
+    "subjectId": "math202",
+    "topicId": "math202-1",
+    "type": "written",
+    "title": "Basic Probability Calculation",
+    "description": "A standard deck of 52 cards is shuffled. What is the probability of drawing a heart or a face card (Jack, Queen, or King)?",
+    "difficulty": 1,
+    "hints": [
+      "Use the addition rule: P(A ∪ B) = P(A) + P(B) - P(A ∩ B)",
+      "Count hearts: 13 cards",
+      "Count face cards: 12 cards (3 per suit)",
+      "Count cards that are both hearts and face cards: 3"
+    ],
+    "solution": "P(Heart or Face) = P(Heart) + P(Face) - P(Heart and Face)\n= 13/52 + 12/52 - 3/52\n= 22/52 = 11/26 ≈ 0.423"
+  },
+  {
+    "id": "math202-t1-ex02",
+    "subjectId": "math202",
+    "topicId": "math202-1",
+    "type": "written",
+    "title": "Conditional Probability",
+    "description": "In a class of 30 students, 18 are taking mathematics, 12 are taking physics, and 8 are taking both. If a student is randomly selected and is taking mathematics, what is the probability they are also taking physics?",
+    "difficulty": 2,
+    "hints": [
+      "This is asking for P(Physics | Mathematics)",
+      "Use the formula P(A|B) = P(A ∩ B) / P(B)",
+      "P(Both) = 8/30, P(Math) = 18/30"
+    ],
+    "solution": "P(Physics | Math) = P(Physics and Math) / P(Math)\n= (8/30) / (18/30)\n= 8/18 = 4/9 ≈ 0.444"
+  },
+  {
+    "id": "math202-t1-ex03",
+    "subjectId": "math202",
+    "topicId": "math202-1",
+    "type": "written",
+    "title": "Independence Test",
+    "description": "Events A and B have P(A) = 0.3, P(B) = 0.4, and P(A ∩ B) = 0.12. Are events A and B independent? Justify your answer.",
+    "difficulty": 2,
+    "hints": [
+      "Events are independent if P(A ∩ B) = P(A) × P(B)",
+      "Calculate P(A) × P(B) and compare to P(A ∩ B)"
+    ],
+    "solution": "Check if P(A ∩ B) = P(A) × P(B):\nP(A) × P(B) = 0.3 × 0.4 = 0.12\nP(A ∩ B) = 0.12\n\nSince P(A ∩ B) = P(A) × P(B), events A and B are independent."
+  },
+  {
+    "id": "math202-t1-ex04",
+    "subjectId": "math202",
+    "topicId": "math202-1",
+    "type": "written",
+    "title": "Bayes' Theorem Application",
+    "description": "A diagnostic test for a disease is 98% accurate for people with the disease (sensitivity) and 95% accurate for people without it (specificity). If 2% of the population has the disease, what is the probability that a person who tests positive actually has the disease?",
+    "difficulty": 3,
+    "hints": [
+      "Let D = has disease, T+ = tests positive",
+      "We want P(D | T+)",
+      "Use Bayes' theorem: P(D|T+) = P(T+|D)P(D) / P(T+)",
+      "P(T+) = P(T+|D)P(D) + P(T+|not D)P(not D)"
+    ],
+    "solution": "Given: P(D) = 0.02, P(T+|D) = 0.98, P(T-|not D) = 0.95, so P(T+|not D) = 0.05\n\nP(T+) = P(T+|D)P(D) + P(T+|not D)P(not D)\n= 0.98(0.02) + 0.05(0.98)\n= 0.0196 + 0.049 = 0.0686\n\nP(D|T+) = P(T+|D)P(D) / P(T+)\n= 0.98(0.02) / 0.0686\n= 0.0196 / 0.0686 ≈ 0.286 or 28.6%"
+  },
+  {
+    "id": "math202-t1-ex05",
+    "subjectId": "math202",
+    "topicId": "math202-1",
+    "type": "written",
+    "title": "Permutations",
+    "description": "How many different ways can 5 books be arranged on a shelf? If 2 specific books must be next to each other, how many arrangements are possible?",
+    "difficulty": 2,
+    "hints": [
+      "Part 1: This is a permutation of 5 objects",
+      "Part 2: Treat the 2 books as a single unit, then multiply by arrangements within that unit"
+    ],
+    "solution": "Part 1: Number of arrangements = 5! = 120\n\nPart 2: Treat 2 specific books as one unit. We have 4 units to arrange: 4! = 24\nThe 2 books within the unit can be arranged 2! = 2 ways\nTotal arrangements = 4! × 2! = 24 × 2 = 48"
+  },
+  {
+    "id": "math202-t1-ex06",
+    "subjectId": "math202",
+    "topicId": "math202-1",
+    "type": "written",
+    "title": "Combinations",
+    "description": "A committee of 5 people is to be selected from a group of 12 people. How many different committees can be formed? If the group consists of 7 men and 5 women, how many committees have exactly 3 women?",
+    "difficulty": 2,
+    "hints": [
+      "Part 1: Use combinations C(12, 5)",
+      "Part 2: Choose 3 women from 5 and 2 men from 7"
+    ],
+    "solution": "Part 1: C(12, 5) = 12!/(5!7!) = (12×11×10×9×8)/(5×4×3×2×1) = 792\n\nPart 2: Choose 3 women from 5: C(5, 3) = 10\nChoose 2 men from 7: C(7, 2) = 21\nTotal committees = 10 × 21 = 210"
+  },
+  {
+    "id": "math202-t1-ex07",
+    "subjectId": "math202",
+    "topicId": "math202-1",
+    "type": "written",
+    "title": "Complement Rule",
+    "description": "A quality control inspector examines 10 items from a production line. If the probability that any single item is defective is 0.05, what is the probability that at least one item is defective?",
+    "difficulty": 2,
+    "hints": [
+      "Use the complement: P(at least one) = 1 - P(none)",
+      "P(none defective) = P(all 10 are good)",
+      "Assume independence"
+    ],
+    "solution": "P(item is good) = 1 - 0.05 = 0.95\nP(all 10 items are good) = (0.95)^10 ≈ 0.5987\nP(at least one defective) = 1 - 0.5987 ≈ 0.4013 or 40.13%"
+  },
+  {
+    "id": "math202-t1-ex08",
+    "subjectId": "math202",
+    "topicId": "math202-1",
+    "type": "written",
+    "title": "Law of Total Probability",
+    "description": "Three machines A, B, and C produce 40%, 35%, and 25% of total output respectively. The defective rates are 2%, 3%, and 4% respectively. What is the probability that a randomly selected item is defective?",
+    "difficulty": 3,
+    "hints": [
+      "Use law of total probability: P(D) = Σ P(D|Mᵢ)P(Mᵢ)",
+      "Sum over all three machines"
+    ],
+    "solution": "P(Defective) = P(D|A)P(A) + P(D|B)P(B) + P(D|C)P(C)\n= 0.02(0.40) + 0.03(0.35) + 0.04(0.25)\n= 0.008 + 0.0105 + 0.01\n= 0.0285 or 2.85%"
+  },
+  {
+    "id": "math202-t1-ex09",
+    "subjectId": "math202",
+    "topicId": "math202-1",
+    "type": "written",
+    "title": "Multiplication Rule for Independent Events",
+    "description": "A fair coin is flipped 4 times. What is the probability of getting exactly 2 heads? What is the probability of getting at least 3 heads?",
+    "difficulty": 2,
+    "hints": [
+      "For exactly 2 heads: use combinations to count favorable outcomes",
+      "For at least 3 heads: P(3 heads) + P(4 heads)"
+    ],
+    "solution": "Exactly 2 heads:\nNumber of ways to choose 2 positions for heads: C(4,2) = 6\nP(exactly 2 heads) = C(4,2) × (1/2)^4 = 6/16 = 3/8 = 0.375\n\nAt least 3 heads:\nP(3 heads) = C(4,3) × (1/2)^4 = 4/16\nP(4 heads) = C(4,4) × (1/2)^4 = 1/16\nP(at least 3 heads) = 4/16 + 1/16 = 5/16 = 0.3125"
+  },
+  {
+    "id": "math202-t1-ex10",
+    "subjectId": "math202",
+    "topicId": "math202-1",
+    "type": "written",
+    "title": "Mutually Exclusive Events",
+    "description": "A single die is rolled. Let A be the event of rolling an even number, and B be the event of rolling a number less than 3. Find P(A ∪ B) and determine if A and B are mutually exclusive.",
+    "difficulty": 1,
+    "hints": [
+      "List outcomes for each event",
+      "Events are mutually exclusive if they cannot both occur"
+    ],
+    "solution": "A = {2, 4, 6}, so P(A) = 3/6 = 1/2\nB = {1, 2}, so P(B) = 2/6 = 1/3\nA ∩ B = {2}, so P(A ∩ B) = 1/6\n\nP(A ∪ B) = P(A) + P(B) - P(A ∩ B) = 1/2 + 1/3 - 1/6 = 3/6 + 2/6 - 1/6 = 4/6 = 2/3\n\nA and B are NOT mutually exclusive because A ∩ B ≠ ∅ (they share outcome 2)."
+  },
+  {
+    "id": "math202-t1-ex11",
+    "subjectId": "math202",
+    "topicId": "math202-1",
+    "type": "written",
+    "title": "Conditional Probability Chain",
+    "description": "An urn contains 5 red balls and 3 blue balls. Two balls are drawn without replacement. What is the probability that both balls are red?",
+    "difficulty": 2,
+    "hints": [
+      "P(both red) = P(1st red) × P(2nd red | 1st red)",
+      "After drawing first red ball, there are 4 red and 3 blue left"
+    ],
+    "solution": "P(1st ball red) = 5/8\nP(2nd ball red | 1st red) = 4/7 (4 red left out of 7 total)\nP(both red) = (5/8) × (4/7) = 20/56 = 5/14 ≈ 0.357"
+  },
+  {
+    "id": "math202-t1-ex12",
+    "subjectId": "math202",
+    "topicId": "math202-1",
+    "type": "written",
+    "title": "Birthday Problem",
+    "description": "In a group of 23 people, what is the probability that at least two people share the same birthday? (Assume 365 days in a year and ignore leap years)",
+    "difficulty": 4,
+    "hints": [
+      "Use the complement: P(at least one match) = 1 - P(all different)",
+      "P(all different) = (365/365) × (364/365) × (363/365) × ..."
+    ],
+    "solution": "P(all different birthdays) = (365/365) × (364/365) × (363/365) × ... × (343/365)\n= 365!/(342! × 365^23)\n≈ 0.493\n\nP(at least one match) = 1 - 0.493 ≈ 0.507 or 50.7%"
+  },
+  {
+    "id": "math202-t1-ex13",
+    "subjectId": "math202",
+    "topicId": "math202-1",
+    "type": "written",
+    "title": "Probability Tree",
+    "description": "A student has a 70% chance of attending class. If they attend, they have an 80% chance of passing the exam. If they don't attend, they have only a 40% chance of passing. What is the probability the student passes the exam?",
+    "difficulty": 2,
+    "hints": [
+      "Draw a probability tree",
+      "Use law of total probability",
+      "P(Pass) = P(Pass|Attend)P(Attend) + P(Pass|Not attend)P(Not attend)"
+    ],
+    "solution": "P(Pass) = P(Pass|Attend)P(Attend) + P(Pass|Not attend)P(Not attend)\n= 0.80(0.70) + 0.40(0.30)\n= 0.56 + 0.12\n= 0.68 or 68%"
+  },
+  {
+    "id": "math202-t1-ex14",
+    "subjectId": "math202",
+    "topicId": "math202-1",
+    "type": "written",
+    "title": "Advanced Bayes' Theorem",
+    "description": "Three boxes contain red and white balls. Box 1: 3 red, 2 white. Box 2: 2 red, 3 white. Box 3: 4 red, 1 white. A box is chosen at random and a ball is drawn. If the ball is red, what is the probability it came from Box 3?",
+    "difficulty": 4,
+    "hints": [
+      "Use Bayes' theorem: P(Box 3|Red) = P(Red|Box 3)P(Box 3) / P(Red)",
+      "Find P(Red) using law of total probability",
+      "Each box has probability 1/3 of being chosen"
+    ],
+    "solution": "P(Box i) = 1/3 for each box\nP(Red|Box 1) = 3/5, P(Red|Box 2) = 2/5, P(Red|Box 3) = 4/5\n\nP(Red) = P(Red|B1)P(B1) + P(Red|B2)P(B2) + P(Red|B3)P(B3)\n= (3/5)(1/3) + (2/5)(1/3) + (4/5)(1/3)\n= (3 + 2 + 4)/(15) = 9/15 = 3/5\n\nP(Box 3|Red) = P(Red|Box 3)P(Box 3) / P(Red)\n= (4/5)(1/3) / (3/5)\n= (4/15) / (3/5) = (4/15) × (5/3) = 20/45 = 4/9 ≈ 0.444"
+  },
+  {
+    "id": "math202-t1-ex15",
+    "subjectId": "math202",
+    "topicId": "math202-1",
+    "type": "written",
+    "title": "Partitions and Permutations",
+    "description": "How many ways can the letters in the word \"STATISTICS\" be arranged?",
+    "difficulty": 3,
+    "hints": [
+      "Count total letters: 10",
+      "Account for repeated letters: S appears 3 times, T appears 3 times, I appears 2 times",
+      "Use the formula: n! / (n₁! × n₂! × ... × nₖ!)"
+    ],
+    "solution": "Total letters: 10\nS appears 3 times, T appears 3 times, I appears 2 times, A appears 1 time, C appears 1 time\n\nNumber of arrangements = 10! / (3! × 3! × 2! × 1! × 1!)\n= 3,628,800 / (6 × 6 × 2 × 1 × 1)\n= 3,628,800 / 72\n= 50,400"
+  },
+  {
+    "id": "math202-t1-ex16",
+    "subjectId": "math202",
+    "topicId": "math202-1",
+    "type": "written",
+    "title": "Probability Axioms Challenge",
+    "description": "Prove that for any two events A and B, P(A ∪ B) ≤ P(A) + P(B). When does equality hold?",
+    "difficulty": 5,
+    "hints": [
+      "Use the addition rule: P(A ∪ B) = P(A) + P(B) - P(A ∩ B)",
+      "Consider the range of P(A ∩ B)"
+    ],
+    "solution": "From the addition rule:\nP(A ∪ B) = P(A) + P(B) - P(A ∩ B)\n\nSince P(A ∩ B) ≥ 0 (probabilities are non-negative):\nP(A ∪ B) = P(A) + P(B) - P(A ∩ B) ≤ P(A) + P(B)\n\nEquality holds when P(A ∩ B) = 0, i.e., when A and B are mutually exclusive events.\n\nThis inequality is known as Boole's inequality or the union bound."
+  }
+]

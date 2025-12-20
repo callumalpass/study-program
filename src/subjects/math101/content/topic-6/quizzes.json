@@ -1,0 +1,185 @@
+[
+  {
+    "id": "math101-quiz-6a",
+    "subjectId": "math101",
+    "topicId": "math101-topic-6",
+    "title": "Predicate Logic - Fundamentals",
+    "questions": [
+      {
+        "id": "math101-q6a-1",
+        "type": "multiple_choice",
+        "prompt": "What is a predicate?",
+        "options": [
+          "A proposition that is always true",
+          "A statement containing variables that becomes a proposition when variables are given values",
+          "The negation of a proposition",
+          "A statement about quantifiers"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A predicate is a statement template with variables (like P(x) = \"x is prime\"). It becomes a proposition when specific values are substituted."
+      },
+      {
+        "id": "math101-q6a-2",
+        "type": "true_false",
+        "prompt": "The statement ∀x P(x) is true if P(x) is true for every element in the domain.",
+        "correctAnswer": true,
+        "explanation": "The universal quantifier ∀ means \"for all.\" ∀x P(x) is true when P(x) holds for every x in the domain."
+      },
+      {
+        "id": "math101-q6a-3",
+        "type": "multiple_choice",
+        "prompt": "The statement ∃x P(x) means:",
+        "options": [
+          "P(x) is true for all x",
+          "P(x) is true for at least one x",
+          "P(x) is false for all x",
+          "P(x) is true for exactly one x"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The existential quantifier ∃ means \"there exists.\" ∃x P(x) is true when P(x) holds for at least one x in the domain."
+      },
+      {
+        "id": "math101-q6a-4",
+        "type": "multiple_choice",
+        "prompt": "What is the negation of ∀x P(x)?",
+        "options": [
+          "∀x ¬P(x)",
+          "∃x P(x)",
+          "∃x ¬P(x)",
+          "¬∃x P(x)"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The negation of \"for all x, P(x)\" is \"there exists x such that NOT P(x).\" ¬∀x P(x) ≡ ∃x ¬P(x)."
+      },
+      {
+        "id": "math101-q6a-5",
+        "type": "true_false",
+        "prompt": "The negation of ∃x P(x) is ∀x ¬P(x).",
+        "correctAnswer": true,
+        "explanation": "Negating \"there exists x with P(x)\" gives \"for all x, NOT P(x).\" ¬∃x P(x) ≡ ∀x ¬P(x)."
+      }
+    ]
+  },
+  {
+    "id": "math101-quiz-6b",
+    "subjectId": "math101",
+    "topicId": "math101-topic-6",
+    "title": "Predicate Logic - Application",
+    "questions": [
+      {
+        "id": "math101-q6b-1",
+        "type": "multiple_choice",
+        "prompt": "How would you translate \"All dogs bark\" into predicate logic? (D(x) = \"x is a dog\", B(x) = \"x barks\")",
+        "options": [
+          "∀x (D(x) ∧ B(x))",
+          "∀x (D(x) → B(x))",
+          "∃x (D(x) ∧ B(x))",
+          "∃x (D(x) → B(x))"
+        ],
+        "correctAnswer": 1,
+        "explanation": "\"All dogs bark\" means: for everything, IF it's a dog THEN it barks. Use → with ∀ for \"all A are B.\""
+      },
+      {
+        "id": "math101-q6b-2",
+        "type": "multiple_choice",
+        "prompt": "How would you translate \"Some birds can swim\"? (B(x) = \"x is a bird\", S(x) = \"x can swim\")",
+        "options": [
+          "∀x (B(x) → S(x))",
+          "∃x (B(x) → S(x))",
+          "∃x (B(x) ∧ S(x))",
+          "∀x (B(x) ∧ S(x))"
+        ],
+        "correctAnswer": 2,
+        "explanation": "\"Some birds can swim\" means: there exists something that IS a bird AND can swim. Use ∧ with ∃ for \"some A are B.\""
+      },
+      {
+        "id": "math101-q6b-3",
+        "type": "true_false",
+        "prompt": "The statements ∀x ∃y P(x, y) and ∃y ∀x P(x, y) always have the same truth value.",
+        "correctAnswer": false,
+        "explanation": "Order matters! ∀x ∃y means \"for each x, some y exists (possibly different for each x).\" ∃y ∀x means \"one y works for all x.\" These are different."
+      },
+      {
+        "id": "math101-q6b-4",
+        "type": "multiple_choice",
+        "prompt": "Let the domain be real numbers. Which statement is TRUE?",
+        "options": [
+          "∃y ∀x (y > x)",
+          "∀x ∃y (y > x)",
+          "∀x ∀y (x < y)",
+          "∃x ∃y (x > y ∧ y > x)"
+        ],
+        "correctAnswer": 1,
+        "explanation": "\"For every x, there exists a y greater than x\" is true (just take y = x + 1). \"There exists a y greater than all x\" is false (no largest real number)."
+      },
+      {
+        "id": "math101-q6b-5",
+        "type": "fill_blank",
+        "prompt": "The uniqueness quantifier ∃! x P(x) means \"there exists exactly ____ x such that P(x).\"",
+        "correctAnswer": "one",
+        "explanation": "∃! (exists unique) means there is exactly one element satisfying the property."
+      }
+    ]
+  },
+  {
+    "id": "math101-quiz-6c",
+    "subjectId": "math101",
+    "topicId": "math101-topic-6",
+    "title": "Predicate Logic - Advanced",
+    "questions": [
+      {
+        "id": "math101-q6c-1",
+        "type": "multiple_choice",
+        "prompt": "What is the negation of ∀x (P(x) → Q(x))?",
+        "options": [
+          "∃x (P(x) → ¬Q(x))",
+          "∃x (P(x) ∧ ¬Q(x))",
+          "∀x (P(x) ∧ ¬Q(x))",
+          "∀x (¬P(x) ∨ Q(x))"
+        ],
+        "correctAnswer": 1,
+        "explanation": "¬∀x (P(x) → Q(x)) = ∃x ¬(P(x) → Q(x)) = ∃x (P(x) ∧ ¬Q(x)). Use ¬(P → Q) ≡ P ∧ ¬Q."
+      },
+      {
+        "id": "math101-q6c-2",
+        "type": "true_false",
+        "prompt": "The statements ∀x P(x) ∧ ∀x Q(x) and ∀x (P(x) ∧ Q(x)) are logically equivalent.",
+        "correctAnswer": true,
+        "explanation": "Universal quantifiers distribute over conjunction. \"Everything has P and everything has Q\" ≡ \"Everything has both P and Q.\""
+      },
+      {
+        "id": "math101-q6c-3",
+        "type": "multiple_choice",
+        "prompt": "Which is the correct expansion of ∃!x P(x)?",
+        "options": [
+          "∃x P(x)",
+          "∃x (P(x) ∧ ∀y (P(y) → y = x))",
+          "∀x P(x)",
+          "∃x ∃y (P(x) ∧ P(y))"
+        ],
+        "correctAnswer": 1,
+        "explanation": "∃!x P(x) means \"exists x with P(x), and any y with P(y) must equal x.\" Uniqueness combines existence with the condition that anything else satisfying P is the same element."
+      },
+      {
+        "id": "math101-q6c-4",
+        "type": "multiple_choice",
+        "prompt": "What does ∀x ∃y ∀z P(x, y, z) assert?",
+        "options": [
+          "For all x, y, z: P(x, y, z)",
+          "For each x, there is a y that works for all z",
+          "There is some x such that for all y and z, P holds",
+          "For each pair (x, z), there is a y such that P holds"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Reading left to right: for each x, we can find a y (depending on x) such that for all z, P(x, y, z) is true."
+      },
+      {
+        "id": "math101-q6c-5",
+        "type": "true_false",
+        "prompt": "∃x (P(x) ∧ Q(x)) logically implies (∃x P(x)) ∧ (∃x Q(x)), but not vice versa.",
+        "correctAnswer": true,
+        "explanation": "If some x satisfies both P and Q, then certainly something satisfies P and something satisfies Q. But having witnesses for P and Q separately doesn't mean the SAME witness works for both."
+      }
+    ]
+  }
+]

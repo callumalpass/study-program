@@ -1,0 +1,332 @@
+[
+  {
+    "id": "cs404-ex-1-1",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-1",
+    "title": "Create MoSCoW Prioritization Function",
+    "difficulty": 1,
+    "description": "Implement a function that categorizes project features using the MoSCoW prioritization method.\n\nCreate a TypeScript function that takes a list of features with their importance and effort scores, and categorizes them into Must Have, Should Have, Could Have, and Won't Have categories based on a scoring algorithm.\n\nFeatures with high importance and feasible effort are Must Have.\nFeatures with moderate importance are Should Have.\nFeatures with low effort but low importance are Could Have.\nFeatures with very high effort and low importance are Won't Have.",
+    "starterCode": "interface Feature {\n  name: string;\n  importance: number; // 1-10\n  effort: number; // 1-10\n}\n\ntype MoSCoWCategory = 'Must Have' | 'Should Have' | 'Could Have' | \"Won't Have\";\n\ninterface CategorizedFeature extends Feature {\n  category: MoSCoWCategory;\n}\n\nfunction prioritizeFeatures(features: Feature[]): CategorizedFeature[] {\n  // TODO: Implement MoSCoW prioritization logic\n  return [];\n}\n\n// Test cases\nconst features: Feature[] = [\n  { name: 'User Authentication', importance: 10, effort: 5 },\n  { name: 'Dark Mode', importance: 3, effort: 2 },\n  { name: 'Social Media Sharing', importance: 4, effort: 3 },\n  { name: 'Video Upload', importance: 2, effort: 9 },\n  { name: 'Activity Logging', importance: 9, effort: 4 },\n];\n\nconsole.log(prioritizeFeatures(features));",
+    "solution": "interface Feature {\n  name: string;\n  importance: number; // 1-10\n  effort: number; // 1-10\n}\n\ntype MoSCoWCategory = 'Must Have' | 'Should Have' | 'Could Have' | \"Won't Have\";\n\ninterface CategorizedFeature extends Feature {\n  category: MoSCoWCategory;\n}\n\nfunction prioritizeFeatures(features: Feature[]): CategorizedFeature[] {\n  return features.map(feature => {\n    const { importance, effort } = feature;\n    \n    // Calculate priority score (higher importance / lower effort = higher priority)\n    const priorityScore = importance / effort;\n    \n    // Categorize based on importance and effort\n    let category: MoSCoWCategory;\n    \n    if (importance >= 8 && effort <= 7) {\n      // High importance, reasonable effort -> Must Have\n      category = 'Must Have';\n    } else if (importance >= 6 && effort <= 8) {\n      // Moderate importance, reasonable effort -> Should Have\n      category = 'Should Have';\n    } else if (effort > 8 || importance < 4) {\n      // Very high effort or low importance -> Won't Have\n      category = \"Won't Have\";\n    } else {\n      // Everything else -> Could Have\n      category = 'Could Have';\n    }\n    \n    return {\n      ...feature,\n      category\n    };\n  });\n}\n\n// Test cases\nconst features: Feature[] = [\n  { name: 'User Authentication', importance: 10, effort: 5 },\n  { name: 'Dark Mode', importance: 3, effort: 2 },\n  { name: 'Social Media Sharing', importance: 4, effort: 3 },\n  { name: 'Video Upload', importance: 2, effort: 9 },\n  { name: 'Activity Logging', importance: 9, effort: 4 },\n];\n\nconst prioritized = prioritizeFeatures(features);\nconsole.log(prioritized);\n\n/*\nOutput:\n[\n  { name: 'User Authentication', importance: 10, effort: 5, category: 'Must Have' },\n  { name: 'Dark Mode', importance: 3, effort: 2, category: 'Could Have' },\n  { name: 'Social Media Sharing', importance: 4, effort: 3, category: 'Could Have' },\n  { name: 'Video Upload', importance: 2, effort: 9, category: \"Won't Have\" },\n  { name: 'Activity Logging', importance: 9, effort: 4, category: 'Must Have' }\n]\n*/",
+    "hints": [
+      "Calculate a priority score based on importance/effort ratio",
+      "Use threshold values to categorize features",
+      "Consider both importance and effort in your logic",
+      "Must Have: high importance, feasible effort",
+      "Won't Have: very high effort OR very low importance"
+    ],
+    "testCases": [
+      {
+        "input": "[{ name: \"Feature A\", importance: 10, effort: 3 }]",
+        "expectedOutput": "[{ name: \"Feature A\", importance: 10, effort: 3, category: \"Must Have\" }]",
+        "isHidden": false,
+        "description": "High importance, low effort should be Must Have"
+      },
+      {
+        "input": "[{ name: \"Feature B\", importance: 2, effort: 9 }]",
+        "expectedOutput": "[{ name: \"Feature B\", importance: 2, effort: 9, category: \"Won't Have\" }]",
+        "isHidden": false,
+        "description": "Low importance, high effort should be Won't Have"
+      }
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-ex-1-2",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-1",
+    "title": "Calculate Three-Point Time Estimates",
+    "difficulty": 1,
+    "description": "Implement a function to calculate expected task duration using three-point estimation.\n\nCreate a function that takes optimistic, most likely, and pessimistic time estimates for tasks and calculates the expected duration using the formula: (O + 4M + P) / 6\n\nThis is a common estimation technique in project management that accounts for uncertainty.",
+    "starterCode": "interface TaskEstimate {\n  task: string;\n  optimistic: number;  // Best case (hours)\n  mostLikely: number;  // Realistic estimate (hours)\n  pessimistic: number; // Worst case (hours)\n}\n\ninterface TaskDuration extends TaskEstimate {\n  expectedDuration: number;\n  standardDeviation: number;\n}\n\nfunction calculateTaskDurations(tasks: TaskEstimate[]): TaskDuration[] {\n  // TODO: Implement three-point estimation\n  // Expected Duration = (O + 4M + P) / 6\n  // Standard Deviation = (P - O) / 6\n  return [];\n}\n\nconst tasks: TaskEstimate[] = [\n  { task: 'User Authentication', optimistic: 3, mostLikely: 6, pessimistic: 12 },\n  { task: 'Database Setup', optimistic: 2, mostLikely: 4, pessimistic: 8 },\n];\n\nconsole.log(calculateTaskDurations(tasks));",
+    "solution": "interface TaskEstimate {\n  task: string;\n  optimistic: number;  // Best case (hours)\n  mostLikely: number;  // Realistic estimate (hours)\n  pessimistic: number; // Worst case (hours)\n}\n\ninterface TaskDuration extends TaskEstimate {\n  expectedDuration: number;\n  standardDeviation: number;\n}\n\nfunction calculateTaskDurations(tasks: TaskEstimate[]): TaskDuration[] {\n  return tasks.map(task => {\n    const { optimistic, mostLikely, pessimistic } = task;\n    \n    // Three-point estimation formula\n    const expectedDuration = (optimistic + 4 * mostLikely + pessimistic) / 6;\n    \n    // Standard deviation shows uncertainty\n    const standardDeviation = (pessimistic - optimistic) / 6;\n    \n    return {\n      ...task,\n      expectedDuration: Math.round(expectedDuration * 10) / 10, // Round to 1 decimal\n      standardDeviation: Math.round(standardDeviation * 10) / 10\n    };\n  });\n}\n\nconst tasks: TaskEstimate[] = [\n  { task: 'User Authentication', optimistic: 3, mostLikely: 6, pessimistic: 12 },\n  { task: 'Database Setup', optimistic: 2, mostLikely: 4, pessimistic: 8 },\n  { task: 'Frontend Dashboard', optimistic: 8, mostLikely: 12, pessimistic: 20 },\n];\n\nconst durations = calculateTaskDurations(tasks);\nconsole.log(durations);\n\n// Calculate total project duration\nconst totalDuration = durations.reduce((sum, task) => sum + task.expectedDuration, 0);\nconsole.log(`Total expected duration: ${totalDuration} hours`);\n\n/*\nOutput:\n[\n  {\n    task: 'User Authentication',\n    optimistic: 3,\n    mostLikely: 6,\n    pessimistic: 12,\n    expectedDuration: 6.5,\n    standardDeviation: 1.5\n  },\n  {\n    task: 'Database Setup',\n    optimistic: 2,\n    mostLikely: 4,\n    pessimistic: 8,\n    expectedDuration: 4.3,\n    standardDeviation: 1.0\n  },\n  {\n    task: 'Frontend Dashboard',\n    optimistic: 8,\n    mostLikely: 12,\n    pessimistic: 20,\n    expectedDuration: 12.7,\n    standardDeviation: 2.0\n  }\n]\nTotal expected duration: 23.5 hours\n*/",
+    "hints": [
+      "Use the formula: (O + 4M + P) / 6 for expected duration",
+      "Standard deviation shows uncertainty: (P - O) / 6",
+      "Round results to reasonable precision (1 decimal place)",
+      "Higher standard deviation means more uncertainty"
+    ],
+    "testCases": [
+      {
+        "input": "{ optimistic: 4, mostLikely: 6, pessimistic: 8 }",
+        "expectedOutput": "expectedDuration: 6.0",
+        "isHidden": false,
+        "description": "Calculate expected duration with balanced estimates"
+      },
+      {
+        "input": "{ optimistic: 1, mostLikely: 5, pessimistic: 15 }",
+        "expectedOutput": "expectedDuration: 6.0, standardDeviation: 2.3",
+        "isHidden": false,
+        "description": "Calculate with wide range showing high uncertainty"
+      }
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-ex-1-3",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-1",
+    "title": "Risk Assessment Calculator",
+    "difficulty": 3,
+    "description": "Create a risk assessment tool that calculates risk exposure and prioritizes risks.\n\nBuild a function that takes risks with probability and impact scores, calculates risk exposure, and categorizes them by priority.\n\nRisk Exposure = Probability × Impact\n\nPriority levels:\n- Critical: exposure >= 15\n- High: exposure >= 10\n- Medium: exposure >= 5\n- Low: exposure < 5",
+    "starterCode": "interface Risk {\n  id: string;\n  description: string;\n  probability: number; // 1-5 scale\n  impact: number; // 1-5 scale\n}\n\ninterface AssessedRisk extends Risk {\n  exposure: number;\n  priority: 'Critical' | 'High' | 'Medium' | 'Low';\n}\n\nfunction assessRisks(risks: Risk[]): AssessedRisk[] {\n  // TODO: Calculate risk exposure and assign priority\n  return [];\n}\n\nconst risks: Risk[] = [\n  { id: 'R1', description: 'API deprecated during development', probability: 2, impact: 5 },\n  { id: 'R2', description: 'Task underestimation', probability: 5, impact: 3 },\n  { id: 'R3', description: 'Hard drive failure', probability: 1, impact: 5 },\n];\n\nconsole.log(assessRisks(risks));",
+    "solution": "interface Risk {\n  id: string;\n  description: string;\n  probability: number; // 1-5 scale\n  impact: number; // 1-5 scale\n}\n\ninterface AssessedRisk extends Risk {\n  exposure: number;\n  priority: 'Critical' | 'High' | 'Medium' | 'Low';\n}\n\nfunction assessRisks(risks: Risk[]): AssessedRisk[] {\n  const assessed = risks.map(risk => {\n    // Calculate risk exposure\n    const exposure = risk.probability * risk.impact;\n    \n    // Assign priority based on exposure\n    let priority: 'Critical' | 'High' | 'Medium' | 'Low';\n    if (exposure >= 15) {\n      priority = 'Critical';\n    } else if (exposure >= 10) {\n      priority = 'High';\n    } else if (exposure >= 5) {\n      priority = 'Medium';\n    } else {\n      priority = 'Low';\n    }\n    \n    return {\n      ...risk,\n      exposure,\n      priority\n    };\n  });\n  \n  // Sort by exposure (highest first)\n  return assessed.sort((a, b) => b.exposure - a.exposure);\n}\n\nconst risks: Risk[] = [\n  { id: 'R1', description: 'API deprecated during development', probability: 2, impact: 5 },\n  { id: 'R2', description: 'Task underestimation', probability: 5, impact: 3 },\n  { id: 'R3', description: 'Hard drive failure', probability: 1, impact: 5 },\n  { id: 'R4', description: 'Learning curve for new tech', probability: 4, impact: 4 },\n  { id: 'R5', description: 'Minor UI bug', probability: 3, impact: 1 },\n];\n\nconst assessed = assessRisks(risks);\nconsole.log('Risk Assessment Results:');\nconsole.log('========================');\nassessed.forEach(risk => {\n  console.log(`${risk.priority} - ${risk.description}`);\n  console.log(`  Probability: ${risk.probability}, Impact: ${risk.impact}, Exposure: ${risk.exposure}`);\n  console.log();\n});\n\n/*\nOutput:\nRisk Assessment Results:\n========================\nHigh - Learning curve for new tech\n  Probability: 4, Impact: 4, Exposure: 16\n\nHigh - Task underestimation\n  Probability: 5, Impact: 3, Exposure: 15\n\nHigh - API deprecated during development\n  Probability: 2, Impact: 5, Exposure: 10\n\nMedium - Hard drive failure\n  Probability: 1, Impact: 5, Exposure: 5\n\nLow - Minor UI bug\n  Probability: 3, Impact: 1, Exposure: 3\n*/",
+    "hints": [
+      "Risk Exposure = Probability × Impact",
+      "Sort risks by exposure (highest priority first)",
+      "Use clear threshold values for priority categories",
+      "High probability + high impact = critical risk"
+    ],
+    "testCases": [
+      {
+        "input": "{ probability: 5, impact: 5 }",
+        "expectedOutput": "{ exposure: 25, priority: \"Critical\" }",
+        "isHidden": false,
+        "description": "Maximum risk should be Critical priority"
+      },
+      {
+        "input": "{ probability: 1, impact: 2 }",
+        "expectedOutput": "{ exposure: 2, priority: \"Low\" }",
+        "isHidden": false,
+        "description": "Low probability and impact should be Low priority"
+      }
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-ex-1-4",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-1",
+    "title": "User Story Validator",
+    "difficulty": 2,
+    "description": "Create a function that validates user stories follow the correct format.\n\nA valid user story must:\n- Start with \"As a\"\n- Contain \"I want to\" or \"I want\"\n- Contain \"so that\" or \"so\"\n- Be between 20 and 200 characters\n\nReturn validation results with specific error messages.",
+    "starterCode": "interface ValidationResult {\n  isValid: boolean;\n  errors: string[];\n}\n\nfunction validateUserStory(story: string): ValidationResult {\n  // TODO: Implement user story validation\n  return { isValid: false, errors: [] };\n}\n\n// Test cases\nconsole.log(validateUserStory('As a user, I want to log in so that I can access my account'));\nconsole.log(validateUserStory('Add login feature'));\nconsole.log(validateUserStory('As a user'));",
+    "solution": "interface ValidationResult {\n  isValid: boolean;\n  errors: string[];\n}\n\nfunction validateUserStory(story: string): ValidationResult {\n  const errors: string[] = [];\n\n  // Check length\n  if (story.length < 20) {\n    errors.push('Story is too short (minimum 20 characters)');\n  }\n  if (story.length > 200) {\n    errors.push('Story is too long (maximum 200 characters)');\n  }\n\n  // Check format components\n  if (!story.toLowerCase().startsWith('as a')) {\n    errors.push('Story must start with \"As a\"');\n  }\n\n  if (!story.toLowerCase().includes('i want')) {\n    errors.push('Story must contain \"I want to\" or \"I want\"');\n  }\n\n  if (!story.toLowerCase().includes('so that') && !story.toLowerCase().includes('so ')) {\n    errors.push('Story must contain \"so that\" or \"so\" to explain the benefit');\n  }\n\n  return {\n    isValid: errors.length === 0,\n    errors\n  };\n}\n\n// Test cases\nconsole.log(validateUserStory('As a user, I want to log in so that I can access my account'));\n// { isValid: true, errors: [] }\n\nconsole.log(validateUserStory('Add login feature'));\n// { isValid: false, errors: [...] }\n\nconsole.log(validateUserStory('As a user'));\n// { isValid: false, errors: ['Story is too short...', 'Story must contain \"I want\"', ...] }",
+    "hints": [
+      "Use toLowerCase() for case-insensitive matching",
+      "Check each component separately and collect errors",
+      "Return isValid: true only if errors array is empty",
+      "Use includes() to check for required phrases"
+    ],
+    "testCases": [],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-ex-1-5",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-1",
+    "title": "Milestone Tracker",
+    "difficulty": 2,
+    "description": "Build a milestone tracking system that calculates completion percentage and identifies overdue milestones.\n\nEach milestone has a title, target date, completion status, and weight (importance).\nCalculate overall project completion and list overdue milestones.",
+    "starterCode": "interface Milestone {\n  title: string;\n  targetDate: Date;\n  completed: boolean;\n  weight: number; // 1-10\n}\n\ninterface ProjectStatus {\n  completionPercentage: number;\n  overdueMilestones: string[];\n  onTrack: boolean;\n}\n\nfunction trackMilestones(milestones: Milestone[], currentDate: Date): ProjectStatus {\n  // TODO: Calculate completion and identify overdue milestones\n  return { completionPercentage: 0, overdueMilestones: [], onTrack: true };\n}",
+    "solution": "interface Milestone {\n  title: string;\n  targetDate: Date;\n  completed: boolean;\n  weight: number; // 1-10\n}\n\ninterface ProjectStatus {\n  completionPercentage: number;\n  overdueMilestones: string[];\n  onTrack: boolean;\n}\n\nfunction trackMilestones(milestones: Milestone[], currentDate: Date): ProjectStatus {\n  const totalWeight = milestones.reduce((sum, m) => sum + m.weight, 0);\n  const completedWeight = milestones\n    .filter(m => m.completed)\n    .reduce((sum, m) => sum + m.weight, 0);\n\n  const completionPercentage = totalWeight > 0\n    ? Math.round((completedWeight / totalWeight) * 100)\n    : 0;\n\n  const overdueMilestones = milestones\n    .filter(m => !m.completed && m.targetDate < currentDate)\n    .map(m => m.title);\n\n  const onTrack = overdueMilestones.length === 0;\n\n  return {\n    completionPercentage,\n    overdueMilestones,\n    onTrack\n  };\n}\n\n// Example usage\nconst milestones: Milestone[] = [\n  { title: 'Project Proposal', targetDate: new Date('2024-01-15'), completed: true, weight: 5 },\n  { title: 'Database Design', targetDate: new Date('2024-02-01'), completed: true, weight: 8 },\n  { title: 'API Implementation', targetDate: new Date('2024-02-15'), completed: false, weight: 10 },\n  { title: 'Frontend MVP', targetDate: new Date('2024-03-01'), completed: false, weight: 10 },\n];\n\nconst status = trackMilestones(milestones, new Date('2024-02-20'));\nconsole.log(status);\n// { completionPercentage: 39, overdueMilestones: ['API Implementation'], onTrack: false }",
+    "hints": [
+      "Use weighted completion: completed weight / total weight",
+      "Filter for incomplete milestones with past target dates",
+      "onTrack is true when no overdue milestones exist",
+      "Use reduce() to sum milestone weights"
+    ],
+    "testCases": [],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-ex-1-6",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-1",
+    "title": "Sprint Capacity Calculator",
+    "difficulty": 2,
+    "description": "Calculate sprint capacity based on team availability and task complexity.\n\nGiven team members with their available hours per week and tasks with estimated hours,\ndetermine if the sprint is over-capacity and calculate utilization percentage.",
+    "starterCode": "interface TeamMember {\n  name: string;\n  hoursPerWeek: number;\n}\n\ninterface Task {\n  title: string;\n  estimatedHours: number;\n}\n\ninterface SprintCapacity {\n  totalCapacity: number;\n  plannedWork: number;\n  utilization: number; // percentage\n  overCapacity: boolean;\n}\n\nfunction calculateSprintCapacity(\n  team: TeamMember[],\n  tasks: Task[],\n  sprintWeeks: number\n): SprintCapacity {\n  // TODO: Calculate sprint capacity and utilization\n  return { totalCapacity: 0, plannedWork: 0, utilization: 0, overCapacity: false };\n}",
+    "solution": "interface TeamMember {\n  name: string;\n  hoursPerWeek: number;\n}\n\ninterface Task {\n  title: string;\n  estimatedHours: number;\n}\n\ninterface SprintCapacity {\n  totalCapacity: number;\n  plannedWork: number;\n  utilization: number; // percentage\n  overCapacity: boolean;\n}\n\nfunction calculateSprintCapacity(\n  team: TeamMember[],\n  tasks: Task[],\n  sprintWeeks: number\n): SprintCapacity {\n  // Calculate total team capacity\n  const totalCapacity = team.reduce((sum, member) => {\n    return sum + (member.hoursPerWeek * sprintWeeks);\n  }, 0);\n\n  // Calculate total planned work\n  const plannedWork = tasks.reduce((sum, task) => {\n    return sum + task.estimatedHours;\n  }, 0);\n\n  // Calculate utilization percentage\n  const utilization = totalCapacity > 0\n    ? Math.round((plannedWork / totalCapacity) * 100)\n    : 0;\n\n  // Check if over capacity (>85% is considered risky)\n  const overCapacity = utilization > 85;\n\n  return {\n    totalCapacity,\n    plannedWork,\n    utilization,\n    overCapacity\n  };\n}\n\n// Example usage\nconst team: TeamMember[] = [\n  { name: 'Alice', hoursPerWeek: 40 },\n  { name: 'Bob', hoursPerWeek: 30 }, // Part-time\n  { name: 'Carol', hoursPerWeek: 40 }\n];\n\nconst tasks: Task[] = [\n  { title: 'User Authentication', estimatedHours: 20 },\n  { title: 'Database Setup', estimatedHours: 15 },\n  { title: 'API Endpoints', estimatedHours: 30 },\n  { title: 'Frontend Components', estimatedHours: 40 },\n];\n\nconst sprint = calculateSprintCapacity(team, tasks, 2);\nconsole.log(sprint);\n// { totalCapacity: 220, plannedWork: 105, utilization: 48, overCapacity: false }",
+    "hints": [
+      "Total capacity = sum of (member hours/week × sprint weeks)",
+      "Planned work = sum of all task estimated hours",
+      "Utilization = (planned work / total capacity) × 100",
+      "Over 85% utilization is risky and considered over-capacity"
+    ],
+    "testCases": [],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-ex-1-7",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-1",
+    "title": "Dependency Chain Analyzer",
+    "difficulty": 3,
+    "description": "Analyze task dependencies to find the critical path and identify potential bottlenecks.\n\nGiven tasks with dependencies and durations, calculate the minimum project duration\nand identify which tasks are on the critical path (any delay will delay the project).",
+    "starterCode": "interface Task {\n  id: string;\n  name: string;\n  duration: number; // days\n  dependencies: string[]; // task IDs that must complete first\n}\n\ninterface CriticalPath {\n  minimumDuration: number;\n  criticalTasks: string[];\n  bottlenecks: string[]; // tasks with many dependencies on them\n}\n\nfunction analyzeDependencies(tasks: Task[]): CriticalPath {\n  // TODO: Find critical path and bottlenecks\n  return { minimumDuration: 0, criticalTasks: [], bottlenecks: [] };\n}",
+    "solution": "interface Task {\n  id: string;\n  name: string;\n  duration: number; // days\n  dependencies: string[]; // task IDs that must complete first\n}\n\ninterface CriticalPath {\n  minimumDuration: number;\n  criticalTasks: string[];\n  bottlenecks: string[]; // tasks with many dependencies on them\n}\n\nfunction analyzeDependencies(tasks: Task[]): CriticalPath {\n  // Create a map for quick task lookup\n  const taskMap = new Map(tasks.map(t => [t.id, t]));\n\n  // Calculate earliest start time for each task\n  const earliestStart = new Map<string, number>();\n\n  function calculateEarliestStart(taskId: string): number {\n    if (earliestStart.has(taskId)) {\n      return earliestStart.get(taskId)!;\n    }\n\n    const task = taskMap.get(taskId)!;\n    let maxDependencyEnd = 0;\n\n    for (const depId of task.dependencies) {\n      const depStart = calculateEarliestStart(depId);\n      const depTask = taskMap.get(depId)!;\n      maxDependencyEnd = Math.max(maxDependencyEnd, depStart + depTask.duration);\n    }\n\n    earliestStart.set(taskId, maxDependencyEnd);\n    return maxDependencyEnd;\n  }\n\n  // Calculate for all tasks\n  tasks.forEach(task => calculateEarliestStart(task.id));\n\n  // Find minimum duration (max end time)\n  let minimumDuration = 0;\n  let lastTask = '';\n\n  for (const task of tasks) {\n    const endTime = earliestStart.get(task.id)! + task.duration;\n    if (endTime > minimumDuration) {\n      minimumDuration = endTime;\n      lastTask = task.id;\n    }\n  }\n\n  // Find critical path by backtracking\n  const criticalTasks: string[] = [];\n  const visited = new Set<string>();\n\n  function findCriticalPath(taskId: string, targetEnd: number) {\n    if (visited.has(taskId)) return;\n    visited.add(taskId);\n\n    const task = taskMap.get(taskId)!;\n    const start = earliestStart.get(taskId)!;\n\n    if (start + task.duration === targetEnd) {\n      criticalTasks.push(taskId);\n\n      for (const depId of task.dependencies) {\n        findCriticalPath(depId, start);\n      }\n    }\n  }\n\n  findCriticalPath(lastTask, minimumDuration);\n\n  // Find bottlenecks (tasks that many others depend on)\n  const dependencyCount = new Map<string, number>();\n  tasks.forEach(task => dependencyCount.set(task.id, 0));\n\n  tasks.forEach(task => {\n    task.dependencies.forEach(depId => {\n      dependencyCount.set(depId, (dependencyCount.get(depId) || 0) + 1);\n    });\n  });\n\n  const bottlenecks = Array.from(dependencyCount.entries())\n    .filter(([_, count]) => count >= 2)\n    .map(([id, _]) => id);\n\n  return {\n    minimumDuration,\n    criticalTasks: criticalTasks.reverse(),\n    bottlenecks\n  };\n}\n\n// Example\nconst tasks: Task[] = [\n  { id: 'A', name: 'Requirements', duration: 5, dependencies: [] },\n  { id: 'B', name: 'Design', duration: 7, dependencies: ['A'] },\n  { id: 'C', name: 'Database Setup', duration: 3, dependencies: ['A'] },\n  { id: 'D', name: 'Backend', duration: 10, dependencies: ['B', 'C'] },\n  { id: 'E', name: 'Frontend', duration: 8, dependencies: ['B'] },\n  { id: 'F', name: 'Testing', duration: 5, dependencies: ['D', 'E'] },\n];\n\nconsole.log(analyzeDependencies(tasks));",
+    "hints": [
+      "Use recursion to calculate earliest start times",
+      "Critical path = longest chain of dependencies",
+      "Backtrack from the last task to find critical tasks",
+      "Bottlenecks are tasks that multiple others depend on"
+    ],
+    "testCases": [],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-ex-1-8",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-1",
+    "title": "Requirements Prioritization Matrix",
+    "difficulty": 2,
+    "description": "Create a prioritization matrix based on value vs. complexity scores.\n\nPlot requirements on a 2x2 matrix: Quick Wins (high value, low complexity),\nBig Bets (high value, high complexity), Fill-ins (low value, low complexity),\nand Money Pits (low value, high complexity).",
+    "starterCode": "interface Requirement {\n  id: string;\n  title: string;\n  value: number; // 1-10\n  complexity: number; // 1-10\n}\n\ntype Quadrant = 'Quick Win' | 'Big Bet' | 'Fill-in' | 'Money Pit';\n\ninterface CategorizedRequirement extends Requirement {\n  quadrant: Quadrant;\n  priority: number; // 1-4 (1=highest)\n}\n\nfunction prioritizeRequirements(requirements: Requirement[]): CategorizedRequirement[] {\n  // TODO: Categorize and prioritize requirements\n  return [];\n}",
+    "solution": "interface Requirement {\n  id: string;\n  title: string;\n  value: number; // 1-10\n  complexity: number; // 1-10\n}\n\ntype Quadrant = 'Quick Win' | 'Big Bet' | 'Fill-in' | 'Money Pit';\n\ninterface CategorizedRequirement extends Requirement {\n  quadrant: Quadrant;\n  priority: number; // 1-4 (1=highest)\n}\n\nfunction prioritizeRequirements(requirements: Requirement[]): CategorizedRequirement[] {\n  return requirements.map(req => {\n    const { value, complexity } = req;\n\n    // Determine quadrant based on value and complexity\n    let quadrant: Quadrant;\n    let priority: number;\n\n    if (value >= 6 && complexity <= 5) {\n      // High value, low complexity\n      quadrant = 'Quick Win';\n      priority = 1; // Highest priority\n    } else if (value >= 6 && complexity > 5) {\n      // High value, high complexity\n      quadrant = 'Big Bet';\n      priority = 2; // Second priority\n    } else if (value < 6 && complexity <= 5) {\n      // Low value, low complexity\n      quadrant = 'Fill-in';\n      priority = 3; // Third priority\n    } else {\n      // Low value, high complexity\n      quadrant = 'Money Pit';\n      priority = 4; // Lowest priority (avoid)\n    }\n\n    return {\n      ...req,\n      quadrant,\n      priority\n    };\n  }).sort((a, b) => {\n    // Sort by priority, then by value (descending)\n    if (a.priority !== b.priority) {\n      return a.priority - b.priority;\n    }\n    return b.value - a.value;\n  });\n}\n\n// Example\nconst requirements: Requirement[] = [\n  { id: 'R1', title: 'User Login', value: 9, complexity: 4 },\n  { id: 'R2', title: 'Social Sharing', value: 3, complexity: 7 },\n  { id: 'R3', title: 'Email Notifications', value: 7, complexity: 3 },\n  { id: 'R4', title: 'Advanced Analytics', value: 8, complexity: 9 },\n  { id: 'R5', title: 'Dark Mode', value: 4, complexity: 2 },\n];\n\nconsole.log(prioritizeRequirements(requirements));\n/*\nOutput shows requirements sorted by priority:\n1. Quick Wins first (R1, R3)\n2. Big Bets second (R4)\n3. Fill-ins third (R5)\n4. Money Pits last (R2)\n*/",
+    "hints": [
+      "Use thresholds to categorize: value >= 6 is high, complexity > 5 is high",
+      "Quick Wins should be done first (priority 1)",
+      "Avoid Money Pits (low value, high complexity)",
+      "Sort by priority, then by value within same priority"
+    ],
+    "testCases": [],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-ex-1-9",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-1",
+    "title": "Project Scope Validator",
+    "difficulty": 2,
+    "description": "Validate that a project scope is realistic for a capstone timeframe.\n\nCheck if the scope meets criteria: reasonable feature count, realistic timeline,\nclear MVP definition, and manageable technical complexity.",
+    "starterCode": "interface ProjectScope {\n  features: string[];\n  weeksDuration: number;\n  mvpFeatures: string[];\n  technicalComplexity: 'low' | 'medium' | 'high' | 'very high';\n  teamSize: number;\n}\n\ninterface ScopeValidation {\n  isRealistic: boolean;\n  warnings: string[];\n  recommendations: string[];\n}\n\nfunction validateProjectScope(scope: ProjectScope): ScopeValidation {\n  // TODO: Validate scope realism\n  return { isRealistic: true, warnings: [], recommendations: [] };\n}",
+    "solution": "interface ProjectScope {\n  features: string[];\n  weeksDuration: number;\n  mvpFeatures: string[];\n  technicalComplexity: 'low' | 'medium' | 'high' | 'very high';\n  teamSize: number;\n}\n\ninterface ScopeValidation {\n  isRealistic: boolean;\n  warnings: string[];\n  recommendations: string[];\n}\n\nfunction validateProjectScope(scope: ProjectScope): ScopeValidation {\n  const warnings: string[] = [];\n  const recommendations: string[] = [];\n\n  // Check feature count\n  const featuresPerWeek = scope.features.length / scope.weeksDuration;\n  if (featuresPerWeek > 2) {\n    warnings.push(`Planning ${featuresPerWeek.toFixed(1)} features/week is aggressive`);\n    recommendations.push('Consider reducing scope or extending timeline');\n  }\n\n  // Check MVP ratio\n  const mvpRatio = scope.mvpFeatures.length / scope.features.length;\n  if (mvpRatio > 0.8) {\n    warnings.push('MVP contains most features - may not be truly minimal');\n    recommendations.push('Identify and defer non-essential MVP features');\n  }\n  if (mvpRatio < 0.3) {\n    warnings.push('MVP is very small - may not demonstrate sufficient functionality');\n  }\n\n  // Check complexity vs. timeline\n  const weeksNeeded = {\n    'low': 8,\n    'medium': 12,\n    'high': 16,\n    'very high': 20\n  };\n\n  if (scope.weeksDuration < weeksNeeded[scope.technicalComplexity]) {\n    warnings.push(`${scope.technicalComplexity} complexity typically needs ${weeksNeeded[scope.technicalComplexity]}+ weeks`);\n    recommendations.push('Simplify technical approach or extend timeline');\n  }\n\n  // Check team size consideration\n  if (scope.teamSize === 1 && scope.features.length > 10) {\n    warnings.push('Large scope for solo developer');\n    recommendations.push('Consider reducing features or finding a partner');\n  }\n\n  // Determine if realistic\n  const isRealistic = warnings.length <= 2;\n\n  if (isRealistic && warnings.length === 0) {\n    recommendations.push('Scope appears realistic - proceed with planning');\n  }\n\n  return {\n    isRealistic,\n    warnings,\n    recommendations\n  };\n}\n\n// Example\nconst scope: ProjectScope = {\n  features: ['User Auth', 'Dashboard', 'Data Entry', 'Reports', 'Export', 'API'],\n  weeksDuration: 10,\n  mvpFeatures: ['User Auth', 'Dashboard', 'Data Entry'],\n  technicalComplexity: 'medium',\n  teamSize: 1\n};\n\nconsole.log(validateProjectScope(scope));",
+    "hints": [
+      "More than 2 features/week is aggressive for capstone",
+      "MVP should be 30-60% of total features",
+      "Match complexity to timeline: high complexity needs more time",
+      "Solo developers should limit scope"
+    ],
+    "testCases": [],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-ex-1-10",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-1",
+    "title": "Burndown Chart Calculator",
+    "difficulty": 2,
+    "description": "Calculate burndown data for sprint progress tracking.\n\nGiven total story points, days remaining, and completed points per day,\ncalculate ideal burndown, actual progress, and whether the sprint is on track.",
+    "starterCode": "interface DailyProgress {\n  day: number;\n  completedPoints: number;\n}\n\ninterface BurndownData {\n  day: number;\n  idealRemaining: number;\n  actualRemaining: number;\n  onTrack: boolean;\n}\n\nfunction calculateBurndown(\n  totalPoints: number,\n  sprintDays: number,\n  progress: DailyProgress[]\n): BurndownData[] {\n  // TODO: Calculate burndown chart data\n  return [];\n}",
+    "solution": "interface DailyProgress {\n  day: number;\n  completedPoints: number;\n}\n\ninterface BurndownData {\n  day: number;\n  idealRemaining: number;\n  actualRemaining: number;\n  onTrack: boolean;\n}\n\nfunction calculateBurndown(\n  totalPoints: number,\n  sprintDays: number,\n  progress: DailyProgress[]\n): BurndownData[] {\n  const idealBurnRate = totalPoints / sprintDays;\n  const burndown: BurndownData[] = [];\n\n  let actualRemaining = totalPoints;\n\n  for (let day = 0; day <= sprintDays; day++) {\n    // Calculate ideal remaining (linear burndown)\n    const idealRemaining = Math.max(0, totalPoints - (idealBurnRate * day));\n\n    // Find actual progress for this day\n    const dayProgress = progress.find(p => p.day === day);\n    if (dayProgress) {\n      actualRemaining -= dayProgress.completedPoints;\n    }\n\n    // On track if actual <= ideal (or within 10% tolerance)\n    const tolerance = totalPoints * 0.1;\n    const onTrack = actualRemaining <= idealRemaining + tolerance;\n\n    burndown.push({\n      day,\n      idealRemaining: Math.round(idealRemaining * 10) / 10,\n      actualRemaining: Math.max(0, actualRemaining),\n      onTrack\n    });\n  }\n\n  return burndown;\n}\n\n// Example\nconst progress: DailyProgress[] = [\n  { day: 1, completedPoints: 5 },\n  { day: 2, completedPoints: 3 },\n  { day: 3, completedPoints: 8 },\n  { day: 4, completedPoints: 4 },\n  { day: 5, completedPoints: 6 },\n];\n\nconst burndown = calculateBurndown(50, 10, progress);\nconsole.log(burndown);\n/*\nShows daily: ideal vs. actual remaining points\nand whether sprint is on track\n*/",
+    "hints": [
+      "Ideal burn rate = total points / sprint days",
+      "Ideal remaining decreases linearly each day",
+      "Actual remaining = previous - completed that day",
+      "Allow 10% tolerance for \"on track\" determination"
+    ],
+    "testCases": [],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-ex-1-11",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-1",
+    "title": "Feature Estimation Confidence",
+    "difficulty": 2,
+    "description": "Calculate confidence levels for feature estimates based on familiarity and complexity.\n\nFeatures you've built before have high confidence. New technologies or complex\nfeatures have lower confidence and should include larger buffers.",
+    "starterCode": "interface FeatureEstimate {\n  name: string;\n  baseEstimate: number; // hours\n  familiarity: 'high' | 'medium' | 'low'; // have you done this before?\n  complexity: 'simple' | 'moderate' | 'complex';\n  dependencies: number; // number of dependencies\n}\n\ninterface ConfidentEstimate extends FeatureEstimate {\n  confidence: number; // 0-100%\n  bufferedEstimate: number; // with appropriate buffer\n  riskLevel: 'low' | 'medium' | 'high';\n}\n\nfunction calculateEstimateConfidence(features: FeatureEstimate[]): ConfidentEstimate[] {\n  // TODO: Calculate confidence and buffered estimates\n  return [];\n}",
+    "solution": "interface FeatureEstimate {\n  name: string;\n  baseEstimate: number; // hours\n  familiarity: 'high' | 'medium' | 'low';\n  complexity: 'simple' | 'moderate' | 'complex';\n  dependencies: number;\n}\n\ninterface ConfidentEstimate extends FeatureEstimate {\n  confidence: number; // 0-100%\n  bufferedEstimate: number;\n  riskLevel: 'low' | 'medium' | 'high';\n}\n\nfunction calculateEstimateConfidence(features: FeatureEstimate[]): ConfidentEstimate[] {\n  return features.map(feature => {\n    // Base confidence from familiarity\n    const familiarityScore = {\n      'high': 85,\n      'medium': 60,\n      'low': 40\n    }[feature.familiarity];\n\n    // Complexity penalty\n    const complexityPenalty = {\n      'simple': 0,\n      'moderate': 10,\n      'complex': 20\n    }[feature.complexity];\n\n    // Dependency penalty (5% per dependency)\n    const dependencyPenalty = Math.min(feature.dependencies * 5, 20);\n\n    // Calculate final confidence\n    const confidence = Math.max(20, familiarityScore - complexityPenalty - dependencyPenalty);\n\n    // Calculate buffer multiplier based on confidence\n    const bufferMultiplier = confidence >= 70 ? 1.2 :\n                            confidence >= 50 ? 1.5 :\n                            confidence >= 30 ? 2.0 : 2.5;\n\n    const bufferedEstimate = Math.round(feature.baseEstimate * bufferMultiplier);\n\n    // Determine risk level\n    const riskLevel = confidence >= 60 ? 'low' :\n                     confidence >= 40 ? 'medium' : 'high';\n\n    return {\n      ...feature,\n      confidence,\n      bufferedEstimate,\n      riskLevel\n    };\n  });\n}\n\n// Example\nconst features: FeatureEstimate[] = [\n  { name: 'User Registration', baseEstimate: 8, familiarity: 'high', complexity: 'simple', dependencies: 1 },\n  { name: 'Real-time Chat', baseEstimate: 16, familiarity: 'low', complexity: 'complex', dependencies: 3 },\n  { name: 'Dashboard', baseEstimate: 12, familiarity: 'medium', complexity: 'moderate', dependencies: 2 },\n];\n\nconsole.log(calculateEstimateConfidence(features));",
+    "hints": [
+      "High familiarity = 85% base confidence, low = 40%",
+      "Reduce confidence for complexity and dependencies",
+      "Low confidence needs larger buffer (2-2.5x)",
+      "High confidence can use smaller buffer (1.2x)"
+    ],
+    "testCases": [],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-ex-1-12",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-1",
+    "title": "Project Risk Mitigation Planner",
+    "difficulty": 3,
+    "description": "Create a risk mitigation planning system that suggests strategies for each risk.\n\nBased on risk type and exposure, recommend appropriate mitigation strategies:\naccept, monitor, mitigate, or avoid.",
+    "starterCode": "interface Risk {\n  id: string;\n  description: string;\n  type: 'technical' | 'schedule' | 'resource' | 'external';\n  probability: number; // 1-5\n  impact: number; // 1-5\n}\n\ntype MitigationStrategy = 'accept' | 'monitor' | 'mitigate' | 'avoid';\n\ninterface RiskMitigation extends Risk {\n  exposure: number;\n  strategy: MitigationStrategy;\n  actions: string[];\n}\n\nfunction planRiskMitigation(risks: Risk[]): RiskMitigation[] {\n  // TODO: Determine mitigation strategies and actions\n  return [];\n}",
+    "solution": "interface Risk {\n  id: string;\n  description: string;\n  type: 'technical' | 'schedule' | 'resource' | 'external';\n  probability: number; // 1-5\n  impact: number; // 1-5\n}\n\ntype MitigationStrategy = 'accept' | 'monitor' | 'monitor' | 'mitigate' | 'avoid';\n\ninterface RiskMitigation extends Risk {\n  exposure: number;\n  strategy: MitigationStrategy;\n  actions: string[];\n}\n\nfunction planRiskMitigation(risks: Risk[]): RiskMitigation[] {\n  return risks.map(risk => {\n    const exposure = risk.probability * risk.impact;\n\n    // Determine strategy based on exposure\n    let strategy: MitigationStrategy;\n    let actions: string[] = [];\n\n    if (exposure >= 20) {\n      // Critical risk - avoid or heavily mitigate\n      strategy = 'avoid';\n      actions = getAvoidanceActions(risk);\n    } else if (exposure >= 12) {\n      // High risk - mitigate\n      strategy = 'mitigate';\n      actions = getMitigationActions(risk);\n    } else if (exposure >= 6) {\n      // Medium risk - monitor closely\n      strategy = 'monitor';\n      actions = getMonitoringActions(risk);\n    } else {\n      // Low risk - accept\n      strategy = 'accept';\n      actions = ['Document risk', 'Review periodically'];\n    }\n\n    return {\n      ...risk,\n      exposure,\n      strategy,\n      actions\n    };\n  }).sort((a, b) => b.exposure - a.exposure);\n}\n\nfunction getAvoidanceActions(risk: Risk): string[] {\n  const actions: string[] = [];\n\n  switch (risk.type) {\n    case 'technical':\n      actions.push('Choose proven technology instead');\n      actions.push('Build prototype to validate approach');\n      actions.push('Have backup technology ready');\n      break;\n    case 'schedule':\n      actions.push('Reduce scope significantly');\n      actions.push('Add buffer to timeline');\n      actions.push('Increase team size if possible');\n      break;\n    case 'resource':\n      actions.push('Identify alternative resources early');\n      actions.push('Cross-train team members');\n      break;\n    case 'external':\n      actions.push('Have contingency plan');\n      actions.push('Reduce dependency on external factors');\n      break;\n  }\n\n  return actions;\n}\n\nfunction getMitigationActions(risk: Risk): string[] {\n  const actions: string[] = [];\n\n  switch (risk.type) {\n    case 'technical':\n      actions.push('Conduct spike/proof-of-concept');\n      actions.push('Allocate extra time for learning');\n      actions.push('Seek expert consultation');\n      break;\n    case 'schedule':\n      actions.push('Add 20-30% buffer to estimates');\n      actions.push('Identify tasks that can be parallelized');\n      actions.push('Define clear MVP to enable scope cuts');\n      break;\n    case 'resource':\n      actions.push('Document critical knowledge');\n      actions.push('Have backup team members identified');\n      break;\n    case 'external':\n      actions.push('Maintain regular communication');\n      actions.push('Document dependencies clearly');\n      break;\n  }\n\n  return actions;\n}\n\nfunction getMonitoringActions(risk: Risk): string[] {\n  return [\n    'Check status weekly',\n    'Define clear trigger conditions for escalation',\n    'Document risk in project status reports',\n    'Prepare mitigation plan in advance'\n  ];\n}\n\n// Example\nconst risks: Risk[] = [\n  { id: 'R1', description: 'Learning new framework', type: 'technical', probability: 4, impact: 4 },\n  { id: 'R2', description: 'Tight deadline', type: 'schedule', probability: 3, impact: 5 },\n  { id: 'R3', description: 'API might change', type: 'external', probability: 2, impact: 3 },\n];\n\nconsole.log(planRiskMitigation(risks));",
+    "hints": [
+      "Exposure >= 20: avoid the risk entirely",
+      "Exposure 12-19: actively mitigate",
+      "Exposure 6-11: monitor closely",
+      "Exposure < 6: accept and document",
+      "Different risk types need different mitigation actions"
+    ],
+    "testCases": [],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-ex-1-13",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-1",
+    "title": "Stakeholder Communication Matrix",
+    "difficulty": 2,
+    "description": "Create a stakeholder communication plan based on interest and influence levels.\n\nCategorize stakeholders and determine appropriate communication frequency and detail level.",
+    "starterCode": "interface Stakeholder {\n  name: string;\n  role: string;\n  interest: 'low' | 'medium' | 'high';\n  influence: 'low' | 'medium' | 'high';\n}\n\ninterface CommunicationPlan extends Stakeholder {\n  category: 'Monitor' | 'Keep Informed' | 'Keep Satisfied' | 'Manage Closely';\n  frequency: string;\n  detailLevel: 'summary' | 'moderate' | 'detailed';\n  channels: string[];\n}\n\nfunction createCommunicationPlan(stakeholders: Stakeholder[]): CommunicationPlan[] {\n  // TODO: Categorize and plan communication\n  return [];\n}",
+    "solution": "interface Stakeholder {\n  name: string;\n  role: string;\n  interest: 'low' | 'medium' | 'high';\n  influence: 'low' | 'medium' | 'high';\n}\n\ninterface CommunicationPlan extends Stakeholder {\n  category: 'Monitor' | 'Keep Informed' | 'Keep Satisfied' | 'Manage Closely';\n  frequency: string;\n  detailLevel: 'summary' | 'moderate' | 'detailed';\n  channels: string[];\n}\n\nfunction createCommunicationPlan(stakeholders: Stakeholder[]): CommunicationPlan[] {\n  return stakeholders.map(stakeholder => {\n    const { interest, influence } = stakeholder;\n\n    // Determine category based on interest/influence matrix\n    let category: CommunicationPlan['category'];\n    let frequency: string;\n    let detailLevel: 'summary' | 'moderate' | 'detailed';\n    let channels: string[];\n\n    if (influence === 'high' && interest === 'high') {\n      // Key players - manage closely\n      category = 'Manage Closely';\n      frequency = 'Weekly updates + ad-hoc';\n      detailLevel = 'detailed';\n      channels = ['One-on-one meetings', 'Email', 'Demo sessions'];\n    } else if (influence === 'high' && interest !== 'high') {\n      // Important but not engaged - keep satisfied\n      category = 'Keep Satisfied';\n      frequency = 'Bi-weekly summaries';\n      detailLevel = 'moderate';\n      channels = ['Email updates', 'Monthly meetings'];\n    } else if (influence !== 'high' && interest === 'high') {\n      // Engaged but less influential - keep informed\n      category = 'Keep Informed';\n      frequency = 'Weekly updates';\n      detailLevel = 'moderate';\n      channels = ['Email', 'Slack', 'Demo sessions'];\n    } else {\n      // Low priority - monitor\n      category = 'Monitor';\n      frequency = 'Monthly summaries';\n      detailLevel = 'summary';\n      channels = ['Email newsletter'];\n    }\n\n    return {\n      ...stakeholder,\n      category,\n      frequency,\n      detailLevel,\n      channels\n    };\n  });\n}\n\n// Example\nconst stakeholders: Stakeholder[] = [\n  { name: 'Dr. Smith', role: 'Advisor', interest: 'high', influence: 'high' },\n  { name: 'John Doe', role: 'Department Head', interest: 'low', influence: 'high' },\n  { name: 'Jane User', role: 'Beta Tester', interest: 'high', influence: 'low' },\n  { name: 'Bob', role: 'Peer Reviewer', interest: 'medium', influence: 'low' },\n];\n\nconsole.log(createCommunicationPlan(stakeholders));",
+    "hints": [
+      "High influence + high interest = Manage Closely",
+      "High influence + low interest = Keep Satisfied",
+      "Low influence + high interest = Keep Informed",
+      "Low influence + low interest = Monitor",
+      "Tailor frequency and detail level to category"
+    ],
+    "testCases": [],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-ex-1-14",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-1",
+    "title": "Project Timeline Optimizer",
+    "difficulty": 3,
+    "description": "Optimize project timeline by identifying tasks that can be parallelized.\n\nGiven tasks with dependencies and durations, reorganize them to minimize total\nduration by running independent tasks in parallel.",
+    "starterCode": "interface Task {\n  id: string;\n  name: string;\n  duration: number;\n  dependencies: string[];\n  assignee?: string;\n}\n\ninterface OptimizedSchedule {\n  phases: {\n    phaseNumber: number;\n    tasks: string[];\n    duration: number;\n  }[];\n  totalDuration: number;\n  parallelizationGain: number; // days saved vs. sequential\n}\n\nfunction optimizeTimeline(tasks: Task[]): OptimizedSchedule {\n  // TODO: Optimize schedule by parallelizing independent tasks\n  return { phases: [], totalDuration: 0, parallelizationGain: 0 };\n}",
+    "solution": "interface Task {\n  id: string;\n  name: string;\n  duration: number;\n  dependencies: string[];\n  assignee?: string;\n}\n\ninterface OptimizedSchedule {\n  phases: {\n    phaseNumber: number;\n    tasks: string[];\n    duration: number;\n  }[];\n  totalDuration: number;\n  parallelizationGain: number;\n}\n\nfunction optimizeTimeline(tasks: Task[]): OptimizedSchedule {\n  const taskMap = new Map(tasks.map(t => [t.id, t]));\n  const completed = new Set<string>();\n  const phases: OptimizedSchedule['phases'] = [];\n\n  let phaseNumber = 1;\n\n  // Assign tasks to phases\n  while (completed.size < tasks.length) {\n    // Find tasks that can run in this phase\n    const availableTasks = tasks.filter(task => {\n      if (completed.has(task.id)) return false;\n      return task.dependencies.every(dep => completed.has(dep));\n    });\n\n    if (availableTasks.length === 0) break; // Circular dependency or error\n\n    // Group by assignee if specified (can't parallelize same person's tasks)\n    const assigneeGroups = new Map<string, Task[]>();\n    availableTasks.forEach(task => {\n      const assignee = task.assignee || 'unassigned';\n      if (!assigneeGroups.has(assignee)) {\n        assigneeGroups.set(assignee, []);\n      }\n      assigneeGroups.get(assignee)!.push(task);\n    });\n\n    // For simplicity, take one task per assignee per phase\n    const phaseTasks = Array.from(assigneeGroups.values())\n      .map(group => group[0])\n      .slice(0, 3); // Limit parallelization\n\n    const phaseDuration = Math.max(...phaseTasks.map(t => t.duration));\n\n    phases.push({\n      phaseNumber,\n      tasks: phaseTasks.map(t => t.id),\n      duration: phaseDuration\n    });\n\n    phaseTasks.forEach(t => completed.add(t.id));\n    phaseNumber++;\n  }\n\n  // Calculate total duration\n  const totalDuration = phases.reduce((sum, phase) => sum + phase.duration, 0);\n\n  // Calculate sequential duration for comparison\n  const sequentialDuration = tasks.reduce((sum, task) => sum + task.duration, 0);\n  const parallelizationGain = sequentialDuration - totalDuration;\n\n  return {\n    phases,\n    totalDuration,\n    parallelizationGain\n  };\n}\n\n// Example\nconst tasks: Task[] = [\n  { id: 'A', name: 'Requirements', duration: 5, dependencies: [], assignee: 'Alice' },\n  { id: 'B', name: 'Database Design', duration: 3, dependencies: ['A'], assignee: 'Bob' },\n  { id: 'C', name: 'UI Design', duration: 4, dependencies: ['A'], assignee: 'Carol' },\n  { id: 'D', name: 'Backend API', duration: 8, dependencies: ['B'], assignee: 'Bob' },\n  { id: 'E', name: 'Frontend', duration: 6, dependencies: ['C'], assignee: 'Carol' },\n  { id: 'F', name: 'Integration', duration: 3, dependencies: ['D', 'E'], assignee: 'Alice' },\n];\n\nconsole.log(optimizeTimeline(tasks));",
+    "hints": [
+      "Tasks can run in parallel if dependencies are met",
+      "Group tasks by phase based on dependency completion",
+      "Phase duration = longest task in that phase",
+      "Compare to sequential duration to show gain"
+    ],
+    "testCases": [],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-ex-1-15",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-1",
+    "title": "Acceptance Criteria Generator",
+    "difficulty": 2,
+    "description": "Generate acceptance criteria from user stories using best practices.\n\nFor each user story, generate specific, measurable, testable acceptance criteria\nthat cover happy path, edge cases, and error scenarios.",
+    "starterCode": "interface UserStory {\n  id: string;\n  role: string;\n  action: string;\n  benefit: string;\n}\n\ninterface AcceptanceCriteria {\n  storyId: string;\n  criteria: {\n    scenario: string;\n    given: string;\n    when: string;\n    then: string;\n  }[];\n}\n\nfunction generateAcceptanceCriteria(story: UserStory): AcceptanceCriteria {\n  // TODO: Generate acceptance criteria\n  return { storyId: story.id, criteria: [] };\n}",
+    "solution": "interface UserStory {\n  id: string;\n  role: string;\n  action: string;\n  benefit: string;\n}\n\ninterface AcceptanceCriteria {\n  storyId: string;\n  criteria: {\n    scenario: string;\n    given: string;\n    when: string;\n    then: string;\n  }[];\n}\n\nfunction generateAcceptanceCriteria(story: UserStory): AcceptanceCriteria {\n  const criteria: AcceptanceCriteria['criteria'] = [];\n\n  // Detect story type and generate appropriate criteria\n  const action = story.action.toLowerCase();\n\n  if (action.includes('log in') || action.includes('sign in')) {\n    criteria.push(\n      {\n        scenario: 'Successful login',\n        given: 'I have a valid account',\n        when: 'I enter correct username and password',\n        then: 'I should be logged in and redirected to dashboard'\n      },\n      {\n        scenario: 'Invalid credentials',\n        given: 'I have an account',\n        when: 'I enter incorrect password',\n        then: 'I should see \"Invalid credentials\" error and remain on login page'\n      },\n      {\n        scenario: 'Account lockout',\n        given: 'I have failed login 5 times',\n        when: 'I try to log in again',\n        then: 'I should see \"Account temporarily locked\" message'\n      }\n    );\n  } else if (action.includes('create') || action.includes('add')) {\n    criteria.push(\n      {\n        scenario: 'Successful creation',\n        given: 'I am authenticated',\n        when: 'I submit valid data',\n        then: 'The item should be created and I should see confirmation'\n      },\n      {\n        scenario: 'Invalid data',\n        given: 'I am authenticated',\n        when: 'I submit incomplete data',\n        then: 'I should see validation errors for each field'\n      },\n      {\n        scenario: 'Duplicate prevention',\n        given: 'An item with same identifier exists',\n        when: 'I try to create a duplicate',\n        then: 'I should see \"Already exists\" error'\n      }\n    );\n  } else if (action.includes('edit') || action.includes('update')) {\n    criteria.push(\n      {\n        scenario: 'Successful update',\n        given: 'I own the item',\n        when: 'I submit valid changes',\n        then: 'The item should be updated and I should see confirmation'\n      },\n      {\n        scenario: 'Unauthorized edit',\n        given: 'I do not own the item',\n        when: 'I try to edit it',\n        then: 'I should see \"Access denied\" error'\n      },\n      {\n        scenario: 'Validation on edit',\n        given: 'I am editing an item',\n        when: 'I clear required fields',\n        then: 'I should see validation errors'\n      }\n    );\n  } else if (action.includes('delete') || action.includes('remove')) {\n    criteria.push(\n      {\n        scenario: 'Successful deletion',\n        given: 'I own the item',\n        when: 'I confirm deletion',\n        then: 'The item should be deleted and I should see confirmation'\n      },\n      {\n        scenario: 'Deletion confirmation',\n        given: 'I click delete',\n        when: 'The confirmation dialog appears',\n        then: 'I should be able to cancel or confirm'\n      },\n      {\n        scenario: 'Unauthorized deletion',\n        given: 'I do not own the item',\n        when: 'I try to delete it',\n        then: 'I should see \"Access denied\" error'\n      }\n    );\n  } else {\n    // Generic criteria for other actions\n    criteria.push(\n      {\n        scenario: 'Happy path',\n        given: `I am a ${story.role}`,\n        when: `I ${story.action}`,\n        then: `I should achieve: ${story.benefit}`\n      },\n      {\n        scenario: 'Error handling',\n        given: 'An error occurs',\n        when: `I attempt to ${story.action}`,\n        then: 'I should see a helpful error message'\n      },\n      {\n        scenario: 'Authorization check',\n        given: 'I am not authorized',\n        when: `I try to ${story.action}`,\n        then: 'I should see \"Access denied\" message'\n      }\n    );\n  }\n\n  return {\n    storyId: story.id,\n    criteria\n  };\n}\n\n// Example\nconst story: UserStory = {\n  id: 'US-101',\n  role: 'registered user',\n  action: 'log in with my email and password',\n  benefit: 'I can access my personal dashboard'\n};\n\nconsole.log(generateAcceptanceCriteria(story));",
+    "hints": [
+      "Use Given-When-Then format for each criterion",
+      "Always include: happy path, validation, and authorization",
+      "Pattern match common actions (login, create, edit, delete)",
+      "Generate 3-5 criteria per story"
+    ],
+    "testCases": [],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-ex-1-16",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-1",
+    "title": "Project Health Score Calculator",
+    "difficulty": 3,
+    "description": "Calculate overall project health score based on multiple metrics.\n\nConsider: schedule adherence, scope changes, risk status, team morale indicators,\nand technical debt. Generate an overall health score and recommendations.",
+    "starterCode": "interface ProjectMetrics {\n  scheduleVariance: number; // percentage: negative is behind, positive is ahead\n  scopeChanges: number; // number of approved scope changes\n  openHighRisks: number; // count of high/critical risks\n  codeQualityScore: number; // 0-100\n  testCoverage: number; // percentage\n  teamVelocityTrend: 'increasing' | 'stable' | 'decreasing';\n}\n\ninterface HealthReport {\n  overallScore: number; // 0-100\n  status: 'healthy' | 'at-risk' | 'critical';\n  concerns: string[];\n  recommendations: string[];\n}\n\nfunction calculateProjectHealth(metrics: ProjectMetrics): HealthReport {\n  // TODO: Calculate health score and generate report\n  return { overallScore: 0, status: 'healthy', concerns: [], recommendations: [] };\n}",
+    "solution": "interface ProjectMetrics {\n  scheduleVariance: number;\n  scopeChanges: number;\n  openHighRisks: number;\n  codeQualityScore: number;\n  testCoverage: number;\n  teamVelocityTrend: 'increasing' | 'stable' | 'decreasing';\n}\n\ninterface HealthReport {\n  overallScore: number;\n  status: 'healthy' | 'at-risk' | 'critical';\n  concerns: string[];\n  recommendations: string[];\n}\n\nfunction calculateProjectHealth(metrics: ProjectMetrics): HealthReport {\n  const concerns: string[] = [];\n  const recommendations: string[] = [];\n  let score = 100;\n\n  // Schedule adherence (weight: 25 points)\n  if (metrics.scheduleVariance < -20) {\n    score -= 25;\n    concerns.push('Significantly behind schedule');\n    recommendations.push('Review and adjust timeline or reduce scope');\n  } else if (metrics.scheduleVariance < -10) {\n    score -= 15;\n    concerns.push('Moderately behind schedule');\n    recommendations.push('Identify and address bottlenecks');\n  } else if (metrics.scheduleVariance < -5) {\n    score -= 5;\n  }\n\n  // Scope stability (weight: 15 points)\n  if (metrics.scopeChanges > 5) {\n    score -= 15;\n    concerns.push('Frequent scope changes');\n    recommendations.push('Lock down scope and defer new requests');\n  } else if (metrics.scopeChanges > 3) {\n    score -= 8;\n    concerns.push('Some scope volatility');\n  }\n\n  // Risk management (weight: 20 points)\n  if (metrics.openHighRisks > 3) {\n    score -= 20;\n    concerns.push('Multiple high-priority risks open');\n    recommendations.push('Address critical risks immediately');\n  } else if (metrics.openHighRisks > 1) {\n    score -= 10;\n    concerns.push('High-priority risks need attention');\n    recommendations.push('Develop mitigation plans for open risks');\n  }\n\n  // Code quality (weight: 20 points)\n  if (metrics.codeQualityScore < 60) {\n    score -= 20;\n    concerns.push('Low code quality score');\n    recommendations.push('Allocate time for refactoring and code review');\n  } else if (metrics.codeQualityScore < 75) {\n    score -= 10;\n    concerns.push('Code quality needs improvement');\n    recommendations.push('Increase code review rigor');\n  }\n\n  // Test coverage (weight: 10 points)\n  if (metrics.testCoverage < 50) {\n    score -= 10;\n    concerns.push('Insufficient test coverage');\n    recommendations.push('Prioritize writing tests for critical paths');\n  } else if (metrics.testCoverage < 70) {\n    score -= 5;\n    recommendations.push('Continue increasing test coverage');\n  }\n\n  // Team velocity (weight: 10 points)\n  if (metrics.teamVelocityTrend === 'decreasing') {\n    score -= 10;\n    concerns.push('Team velocity is declining');\n    recommendations.push('Investigate team blockers and morale issues');\n  } else if (metrics.teamVelocityTrend === 'stable') {\n    // No penalty, stable is okay\n  } else {\n    score += 5; // Bonus for increasing velocity\n  }\n\n  // Ensure score stays in valid range\n  score = Math.max(0, Math.min(100, score));\n\n  // Determine status\n  const status: HealthReport['status'] =\n    score >= 75 ? 'healthy' :\n    score >= 50 ? 'at-risk' : 'critical';\n\n  // Add positive notes if healthy\n  if (status === 'healthy' && concerns.length === 0) {\n    recommendations.push('Project is on track - maintain current practices');\n  }\n\n  return {\n    overallScore: score,\n    status,\n    concerns,\n    recommendations\n  };\n}\n\n// Example\nconst metrics: ProjectMetrics = {\n  scheduleVariance: -15,\n  scopeChanges: 2,\n  openHighRisks: 1,\n  codeQualityScore: 78,\n  testCoverage: 68,\n  teamVelocityTrend: 'stable'\n};\n\nconsole.log(calculateProjectHealth(metrics));",
+    "hints": [
+      "Weight different metrics by importance",
+      "Schedule and risks are most critical (25 + 20 points)",
+      "Generate specific concerns and actionable recommendations",
+      "Status: healthy (75+), at-risk (50-74), critical (<50)"
+    ],
+    "testCases": [],
+    "language": "typescript"
+  }
+]

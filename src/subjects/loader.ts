@@ -230,3 +230,23 @@ export function asExercises(data: unknown): Exercise[] {
 export function asProjects(data: unknown): Project[] {
   return data as Project[];
 }
+
+/**
+ * Load and combine exercises from glob-imported topic files.
+ * Flattens all topic-level exercise arrays into a single array.
+ */
+export function loadExercisesFromGlob(
+  globResult: Record<string, Exercise[]>
+): Exercise[] {
+  return Object.values(globResult).flat();
+}
+
+/**
+ * Load and combine quizzes from glob-imported topic files.
+ * Flattens all topic-level quiz arrays into a single array.
+ */
+export function loadQuizzesFromGlob(
+  globResult: Record<string, Quiz[]>
+): Quiz[] {
+  return Object.values(globResult).flat();
+}

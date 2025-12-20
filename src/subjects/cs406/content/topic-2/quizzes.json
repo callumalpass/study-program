@@ -1,0 +1,156 @@
+[
+  {
+    "id": "cs406-quiz-2-1",
+    "subjectId": "cs406",
+    "topicId": "cs406-topic-2",
+    "title": "Search Algorithms - Uninformed",
+    "questions": [
+      {
+        "id": "cs406-q6",
+        "type": "multiple_choice",
+        "prompt": "What is the time complexity of breadth-first search?",
+        "options": [
+          "O(b^d) where b is branching factor and d is depth",
+          "O(bd)",
+          "O(b + d)",
+          "O(d^b)"
+        ],
+        "correctAnswer": "O(b^d) where b is branching factor and d is depth",
+        "explanation": "BFS explores all nodes at each depth level, resulting in exponential time complexity: 1 + b + b² + ... + b^d = O(b^d)."
+      },
+      {
+        "id": "cs406-q7",
+        "type": "multiple_choice",
+        "prompt": "Which search algorithm has the best space complexity while maintaining completeness and optimality?",
+        "options": [
+          "Iterative Deepening DFS",
+          "Breadth-First Search",
+          "Depth-First Search",
+          "Uniform-Cost Search"
+        ],
+        "correctAnswer": "Iterative Deepening DFS",
+        "explanation": "IDDFS combines BFS completeness and optimality with DFS space efficiency O(bd), making it ideal for large state spaces."
+      },
+      {
+        "id": "cs406-q8",
+        "type": "multiple_choice",
+        "prompt": "An admissible heuristic must:",
+        "options": [
+          "Never overestimate the cost to reach the goal",
+          "Always equal the true cost",
+          "Never underestimate the cost",
+          "Be consistent"
+        ],
+        "correctAnswer": "Never overestimate the cost to reach the goal",
+        "explanation": "An admissible heuristic never overestimates h*(n), ensuring A* finds optimal solutions. Consistency is stronger but not required for optimality with tree search."
+      }
+    ]
+  },
+  {
+    "id": "cs406-quiz-2-2",
+    "subjectId": "cs406",
+    "topicId": "cs406-topic-2",
+    "title": "Search Algorithms - Informed",
+    "questions": [
+      {
+        "id": "cs406-q8",
+        "type": "multiple_choice",
+        "prompt": "An admissible heuristic must:",
+        "options": [
+          "Never overestimate the cost to reach the goal",
+          "Always equal the true cost",
+          "Never underestimate the cost",
+          "Be consistent"
+        ],
+        "correctAnswer": "Never overestimate the cost to reach the goal",
+        "explanation": "An admissible heuristic never overestimates h*(n), ensuring A* finds optimal solutions. Consistency is stronger but not required for optimality with tree search."
+      },
+      {
+        "id": "cs406-q9",
+        "type": "multiple_choice",
+        "prompt": "What does A* use to evaluate nodes?",
+        "options": [
+          "f(n) = g(n) + h(n) where g is actual cost and h is heuristic estimate",
+          "Only the heuristic h(n)",
+          "Only the actual cost g(n)",
+          "The number of steps from the start"
+        ],
+        "correctAnswer": "f(n) = g(n) + h(n) where g is actual cost and h is heuristic estimate",
+        "explanation": "A* combines actual path cost g(n) with heuristic estimate h(n) to evaluate the estimated total cost f(n) = g(n) + h(n)."
+      },
+      {
+        "id": "cs406-q10",
+        "type": "multiple_choice",
+        "prompt": "Hill climbing can get stuck in:",
+        "options": [
+          "Local maxima, plateaus, and ridges",
+          "Only global maxima",
+          "Infinite loops",
+          "Optimal solutions"
+        ],
+        "correctAnswer": "Local maxima, plateaus, and ridges",
+        "explanation": "Hill climbing is susceptible to local maxima (peaks that arent global), plateaus (flat regions), and ridges (difficult to navigate)."
+      },
+      {
+        "id": "cs406-q11",
+        "type": "multiple_choice",
+        "prompt": "In minimax, MAX player aims to:",
+        "options": [
+          "Maximize utility",
+          "Minimize utility",
+          "Maximize the number of moves",
+          "Match the opponents strategy"
+        ],
+        "correctAnswer": "Maximize utility",
+        "explanation": "The MAX player chooses moves that maximize the utility value, while MIN player minimizes it (in zero-sum games)."
+      }
+    ]
+  },
+  {
+    "id": "cs406-quiz-2-3",
+    "subjectId": "cs406",
+    "topicId": "cs406-topic-2",
+    "title": "Search Complexity and Applications",
+    "questions": [
+      {
+        "id": "cs406-q9",
+        "type": "multiple_choice",
+        "prompt": "What does A* use to evaluate nodes?",
+        "options": [
+          "f(n) = g(n) + h(n) where g is actual cost and h is heuristic estimate",
+          "Only the heuristic h(n)",
+          "Only the actual cost g(n)",
+          "The number of steps from the start"
+        ],
+        "correctAnswer": "f(n) = g(n) + h(n) where g is actual cost and h is heuristic estimate",
+        "explanation": "A* combines actual path cost g(n) with heuristic estimate h(n) to evaluate the estimated total cost f(n) = g(n) + h(n)."
+      },
+      {
+        "id": "cs406-q10",
+        "type": "multiple_choice",
+        "prompt": "Hill climbing can get stuck in:",
+        "options": [
+          "Local maxima, plateaus, and ridges",
+          "Only global maxima",
+          "Infinite loops",
+          "Optimal solutions"
+        ],
+        "correctAnswer": "Local maxima, plateaus, and ridges",
+        "explanation": "Hill climbing is susceptible to local maxima (peaks that arent global), plateaus (flat regions), and ridges (difficult to navigate)."
+      },
+      {
+        "id": "cs406-q11",
+        "type": "multiple_choice",
+        "prompt": "In minimax, MAX player aims to:",
+        "options": [
+          "Maximize utility",
+          "Minimize utility",
+          "Maximize the number of moves",
+          "Match the opponents strategy"
+        ],
+        "correctAnswer": "Maximize utility",
+        "explanation": "The MAX player chooses moves that maximize the utility value, while MIN player minimizes it (in zero-sum games)."
+      }
+    ]
+  }
+]

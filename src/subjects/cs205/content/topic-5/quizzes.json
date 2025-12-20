@@ -1,0 +1,191 @@
+[
+  {
+    "id": "cs205-quiz-5-1",
+    "subjectId": "cs205",
+    "topicId": "cs205-5",
+    "title": "ACID Properties",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "What does the \"A\" in ACID stand for?",
+        "options": [
+          "Availability",
+          "Atomicity",
+          "Accuracy",
+          "Asynchronous"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Atomicity ensures transactions are all-or-nothing—either fully completed or fully rolled back."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "Which ACID property ensures a transaction transforms the database from one valid state to another?",
+        "options": [
+          "Atomicity",
+          "Consistency",
+          "Isolation",
+          "Durability"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Consistency ensures all database constraints and rules are maintained after the transaction."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "Durability means committed transactions survive system failures.",
+        "correctAnswer": true,
+        "explanation": "Durability guarantees that once committed, transaction effects are permanent even after crashes."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "Isolation ensures that:",
+        "options": [
+          "Transactions are permanent",
+          "Concurrent transactions don't interfere with each other",
+          "Transactions complete fully or not at all",
+          "Databases maintain valid states"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Isolation prevents concurrent transactions from seeing each other's intermediate states."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "The mechanism that records changes before writing to disk is called Write-______ Logging.",
+        "correctAnswer": "Ahead",
+        "explanation": "Write-Ahead Logging (WAL) ensures recoverability by logging changes before applying them."
+      }
+    ]
+  },
+  {
+    "id": "cs205-quiz-5-2",
+    "subjectId": "cs205",
+    "topicId": "cs205-5",
+    "title": "Concurrency Problems",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "A dirty read occurs when a transaction reads:",
+        "options": [
+          "Old committed data",
+          "Data written by an uncommitted transaction",
+          "Data from a different table",
+          "NULL values"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Dirty read means reading uncommitted data that might be rolled back."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "What is a phantom read?",
+        "options": [
+          "Reading non-existent data",
+          "Reading deleted rows",
+          "New rows appearing in repeated queries",
+          "Reading corrupted data"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Phantom reads occur when new rows inserted by other transactions appear in repeated range queries."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "A lost update occurs when two transactions read the same value, modify it, and write back, losing one update.",
+        "correctAnswer": true,
+        "explanation": "Lost updates happen when concurrent transactions overwrite each other's changes."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "Non-repeatable read means:",
+        "options": [
+          "A query cannot be executed twice",
+          "Same query returns different values within one transaction",
+          "Read operations fail randomly",
+          "Queries timeout frequently"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Non-repeatable reads occur when another transaction modifies data between reads in the same transaction."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "Which concurrency problem involves two transactions making disjoint updates that together violate a constraint?",
+        "options": [
+          "Dirty read",
+          "Lost update",
+          "Write skew",
+          "Phantom read"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Write skew occurs when two transactions read overlapping data and make updates that together violate an invariant."
+      }
+    ]
+  },
+  {
+    "id": "cs205-quiz-5-3",
+    "subjectId": "cs205",
+    "topicId": "cs205-5",
+    "title": "Isolation Levels and Locking",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "Which isolation level prevents dirty reads but allows non-repeatable reads?",
+        "options": [
+          "READ UNCOMMITTED",
+          "READ COMMITTED",
+          "REPEATABLE READ",
+          "SERIALIZABLE"
+        ],
+        "correctAnswer": 1,
+        "explanation": "READ COMMITTED prevents dirty reads but allows non-repeatable and phantom reads."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "SERIALIZABLE isolation level ensures:",
+        "options": [
+          "Maximum concurrency",
+          "Transactions appear to execute serially",
+          "Only read operations",
+          "No locks are used"
+        ],
+        "correctAnswer": 1,
+        "explanation": "SERIALIZABLE provides the highest isolation—results are as if transactions ran one after another."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "A deadlock occurs when two or more transactions wait for each other to release locks.",
+        "correctAnswer": true,
+        "explanation": "Deadlock is a circular wait condition where transactions block each other indefinitely."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "Which lock type allows multiple transactions to read the same data?",
+        "options": [
+          "Exclusive lock",
+          "Shared lock",
+          "Update lock",
+          "Intent lock"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Shared locks (S-locks) allow concurrent reads but block writes."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "The Two-Phase Locking protocol has a growing phase and a ______ phase.",
+        "correctAnswer": "shrinking",
+        "explanation": "In 2PL, transactions acquire locks (growing) then release locks (shrinking), never acquiring after releasing."
+      }
+    ]
+  }
+]

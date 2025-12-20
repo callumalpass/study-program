@@ -1,0 +1,689 @@
+[
+  {
+    "id": "cs201-ex-8-1",
+    "subjectId": "cs201",
+    "topicId": "cs201-8",
+    "title": "Linear Search with Loop Invariant",
+    "description": "Implement linear search with explicit assertions checking the loop invariant: \"target is not in arr[0...i-1]\".",
+    "difficulty": 2,
+    "language": "python",
+    "starterCode": "def linear_search_with_invariant(arr, target):\n    # Return index of target or -1\n    # Add assertions to verify loop invariant\n    pass",
+    "solution": "def linear_search_with_invariant(arr, target):\n    # Loop invariant: target is not in arr[0...i-1]\n    for i in range(len(arr)):\n        # Check invariant: target not in previously checked elements\n        assert target not in arr[0:i], f\"Invariant violated at i={i}\"\n        if arr[i] == target:\n            return i\n    # Post-condition: target not found in entire array\n    assert target not in arr, \"Post-condition violated\"\n    return -1",
+    "testCases": [
+      {
+        "input": "[1, 2, 3, 4, 5], 3",
+        "expectedOutput": "2",
+        "isHidden": false,
+        "description": "Target found at index 2"
+      },
+      {
+        "input": "[1, 2, 3, 4, 5], 6",
+        "expectedOutput": "-1",
+        "isHidden": false,
+        "description": "Target not in array"
+      },
+      {
+        "input": "[10, 20, 30], 10",
+        "expectedOutput": "0",
+        "isHidden": false,
+        "description": "Target at first position"
+      },
+      {
+        "input": "[], 5",
+        "expectedOutput": "-1",
+        "isHidden": true,
+        "description": "Empty array"
+      }
+    ],
+    "hints": [
+      "The loop invariant states that target has not been found in arr[0...i-1].",
+      "Use assert statements to check the invariant holds at each iteration.",
+      "The invariant is trivially true when i=0 (no elements checked yet)."
+    ]
+  },
+  {
+    "id": "cs201-ex-8-2",
+    "subjectId": "cs201",
+    "topicId": "cs201-8",
+    "title": "Binary Search with Loop Invariant",
+    "description": "Implement binary search with assertions verifying the loop invariant: \"if target exists, it must be in arr[low...high]\".",
+    "difficulty": 3,
+    "language": "python",
+    "starterCode": "def binary_search_with_invariant(arr, target):\n    # arr is sorted\n    # Return index of target or -1\n    # Add assertions to verify loop invariant\n    pass",
+    "solution": "def binary_search_with_invariant(arr, target):\n    low, high = 0, len(arr) - 1\n    \n    while low <= high:\n        # Invariant: if target exists, it is in arr[low...high]\n        # Verify array is sorted in current range\n        assert all(arr[i] <= arr[i+1] for i in range(low, high)), \"Array not sorted in range\"\n        \n        mid = (low + high) // 2\n        \n        if arr[mid] == target:\n            return mid\n        elif arr[mid] < target:\n            # Target must be in upper half\n            assert target > arr[mid], \"Logic error\"\n            low = mid + 1\n        else:\n            # Target must be in lower half\n            assert target < arr[mid], \"Logic error\"\n            high = mid - 1\n    \n    # Post-condition: target not in array\n    assert target not in arr, \"Post-condition violated - target should not exist\"\n    return -1",
+    "testCases": [
+      {
+        "input": "[1, 3, 5, 7, 9, 11], 7",
+        "expectedOutput": "3",
+        "isHidden": false,
+        "description": "Target found"
+      },
+      {
+        "input": "[1, 3, 5, 7, 9, 11], 4",
+        "expectedOutput": "-1",
+        "isHidden": false,
+        "description": "Target not found"
+      },
+      {
+        "input": "[2, 4, 6, 8, 10], 2",
+        "expectedOutput": "0",
+        "isHidden": false,
+        "description": "Target at beginning"
+      },
+      {
+        "input": "[2, 4, 6, 8, 10], 10",
+        "expectedOutput": "4",
+        "isHidden": true,
+        "description": "Target at end"
+      }
+    ],
+    "hints": [
+      "The invariant is: if target exists in arr, it must be in arr[low...high].",
+      "Initially, low=0 and high=len(arr)-1, so the entire array is considered.",
+      "After each iteration, we maintain the invariant by adjusting low or high based on comparison."
+    ]
+  },
+  {
+    "id": "cs201-ex-8-3",
+    "subjectId": "cs201",
+    "topicId": "cs201-8",
+    "title": "Array Sum with Loop Invariant",
+    "description": "Calculate array sum with assertions checking the invariant: \"sum contains the sum of arr[0...i-1]\".",
+    "difficulty": 2,
+    "language": "python",
+    "starterCode": "def array_sum_with_invariant(arr):\n    # Return sum of all elements\n    # Add assertions to verify loop invariant\n    pass",
+    "solution": "def array_sum_with_invariant(arr):\n    total = 0\n    # Loop invariant: total = sum of arr[0...i-1]\n    \n    for i in range(len(arr)):\n        # Check invariant holds before iteration\n        assert total == sum(arr[0:i]), f\"Invariant violated at i={i}: total={total}, expected={sum(arr[0:i])}\"\n        total += arr[i]\n    \n    # Post-condition: total equals sum of entire array\n    assert total == sum(arr), \"Post-condition violated\"\n    return total",
+    "testCases": [
+      {
+        "input": "[1, 2, 3, 4, 5]",
+        "expectedOutput": "15",
+        "isHidden": false,
+        "description": "Sum of 1 to 5"
+      },
+      {
+        "input": "[10, -5, 3]",
+        "expectedOutput": "8",
+        "isHidden": false,
+        "description": "Mixed positive and negative"
+      },
+      {
+        "input": "[100]",
+        "expectedOutput": "100",
+        "isHidden": false,
+        "description": "Single element"
+      },
+      {
+        "input": "[]",
+        "expectedOutput": "0",
+        "isHidden": true,
+        "description": "Empty array"
+      }
+    ],
+    "hints": [
+      "The invariant states that total equals sum(arr[0...i-1]) at the start of each iteration.",
+      "When i=0, total=0 and arr[0...0] is empty, so invariant holds (0 = sum of empty).",
+      "After adding arr[i], the invariant will hold for the next iteration."
+    ]
+  },
+  {
+    "id": "cs201-ex-8-4",
+    "subjectId": "cs201",
+    "topicId": "cs201-8",
+    "title": "Insertion Sort with Loop Invariant",
+    "description": "Implement insertion sort with assertions verifying: \"arr[0...i-1] is sorted before inserting arr[i]\".",
+    "difficulty": 3,
+    "language": "python",
+    "starterCode": "def insertion_sort_with_invariant(arr):\n    # Sort array in-place\n    # Add assertions to verify loop invariant\n    pass",
+    "solution": "def insertion_sort_with_invariant(arr):\n    n = len(arr)\n    \n    for i in range(1, n):\n        # Invariant: arr[0...i-1] is sorted\n        assert all(arr[j] <= arr[j+1] for j in range(i-1)), f\"Invariant violated at i={i}\"\n        \n        key = arr[i]\n        j = i - 1\n        \n        # Insert arr[i] into sorted sequence arr[0...i-1]\n        while j >= 0 and arr[j] > key:\n            arr[j + 1] = arr[j]\n            j -= 1\n        arr[j + 1] = key\n        \n        # After insertion, arr[0...i] is sorted\n        assert all(arr[k] <= arr[k+1] for k in range(i)), f\"Post-iteration check failed at i={i}\"\n    \n    # Post-condition: entire array is sorted\n    assert all(arr[i] <= arr[i+1] for i in range(len(arr)-1)), \"Array not fully sorted\"\n    return arr",
+    "testCases": [
+      {
+        "input": "[5, 2, 4, 6, 1, 3]",
+        "expectedOutput": "[1, 2, 3, 4, 5, 6]",
+        "isHidden": false,
+        "description": "Unsorted array"
+      },
+      {
+        "input": "[1, 2, 3]",
+        "expectedOutput": "[1, 2, 3]",
+        "isHidden": false,
+        "description": "Already sorted"
+      },
+      {
+        "input": "[3, 2, 1]",
+        "expectedOutput": "[1, 2, 3]",
+        "isHidden": false,
+        "description": "Reverse sorted"
+      },
+      {
+        "input": "[42]",
+        "expectedOutput": "[42]",
+        "isHidden": true,
+        "description": "Single element"
+      }
+    ],
+    "hints": [
+      "The outer loop invariant: arr[0...i-1] is sorted before iteration i.",
+      "Initially (i=1), arr[0...0] is trivially sorted (one element).",
+      "The inner while loop maintains sortedness by shifting larger elements right."
+    ]
+  },
+  {
+    "id": "cs201-ex-8-5",
+    "subjectId": "cs201",
+    "topicId": "cs201-8",
+    "title": "Is Sorted Checker",
+    "description": "Write a function to verify if an array is sorted in non-decreasing order.",
+    "difficulty": 1,
+    "language": "python",
+    "starterCode": "def is_sorted(arr):\n    # Return True if sorted, False otherwise\n    pass",
+    "solution": "def is_sorted(arr):\n    if len(arr) <= 1:\n        return True\n    \n    for i in range(len(arr) - 1):\n        if arr[i] > arr[i + 1]:\n            return False\n    \n    return True",
+    "testCases": [
+      {
+        "input": "[1, 2, 3, 4, 5]",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Sorted array"
+      },
+      {
+        "input": "[1, 3, 2, 4]",
+        "expectedOutput": "False",
+        "isHidden": false,
+        "description": "Unsorted array"
+      },
+      {
+        "input": "[5, 5, 5]",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "All equal elements"
+      },
+      {
+        "input": "[1]",
+        "expectedOutput": "True",
+        "isHidden": true,
+        "description": "Single element"
+      },
+      {
+        "input": "[]",
+        "expectedOutput": "True",
+        "isHidden": true,
+        "description": "Empty array"
+      }
+    ],
+    "hints": [
+      "Check if each element is <= the next element.",
+      "An empty array or single element array is considered sorted.",
+      "Use a loop to compare consecutive pairs."
+    ]
+  },
+  {
+    "id": "cs201-ex-8-6",
+    "subjectId": "cs201",
+    "topicId": "cs201-8",
+    "title": "Verify Binary Search Result",
+    "description": "Write a verifier that checks if a binary search result is correct. Given array, target, and returned index, verify correctness.",
+    "difficulty": 2,
+    "language": "python",
+    "starterCode": "def verify_binary_search(arr, target, result_index):\n    # arr is sorted\n    # result_index is what binary search returned (-1 if not found)\n    # Return True if result is correct, False otherwise\n    pass",
+    "solution": "def verify_binary_search(arr, target, result_index):\n    # First check if array is actually sorted\n    if not all(arr[i] <= arr[i+1] for i in range(len(arr)-1)):\n        return False  # Precondition violated\n    \n    if result_index == -1:\n        # Verify target is not in array\n        return target not in arr\n    else:\n        # Verify index is in bounds\n        if result_index < 0 or result_index >= len(arr):\n            return False\n        # Verify arr[result_index] == target\n        return arr[result_index] == target",
+    "testCases": [
+      {
+        "input": "[1, 3, 5, 7, 9], 5, 2",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Correct result"
+      },
+      {
+        "input": "[1, 3, 5, 7, 9], 4, -1",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Correctly not found"
+      },
+      {
+        "input": "[1, 3, 5, 7, 9], 5, 3",
+        "expectedOutput": "False",
+        "isHidden": false,
+        "description": "Wrong index returned"
+      },
+      {
+        "input": "[1, 3, 5, 7, 9], 7, -1",
+        "expectedOutput": "False",
+        "isHidden": true,
+        "description": "Should have been found"
+      },
+      {
+        "input": "[5, 3, 1], 3, 1",
+        "expectedOutput": "False",
+        "isHidden": true,
+        "description": "Array not sorted"
+      }
+    ],
+    "hints": [
+      "First verify the precondition: array must be sorted.",
+      "If result is -1, verify target is not in array.",
+      "If result is an index, verify arr[index] == target.",
+      "Also check that the index is within valid bounds."
+    ]
+  },
+  {
+    "id": "cs201-ex-8-7",
+    "subjectId": "cs201",
+    "topicId": "cs201-8",
+    "title": "Verify Sorting Algorithm",
+    "description": "Write a function that verifies a sorting algorithm produced correct output. Check: result is sorted, contains same elements as input.",
+    "difficulty": 2,
+    "language": "python",
+    "starterCode": "def verify_sort(original, sorted_result):\n    # Return True if sorted_result is a valid sorted version of original\n    pass",
+    "solution": "def verify_sort(original, sorted_result):\n    # Check 1: Result is sorted\n    for i in range(len(sorted_result) - 1):\n        if sorted_result[i] > sorted_result[i + 1]:\n            return False\n    \n    # Check 2: Result has same length\n    if len(original) != len(sorted_result):\n        return False\n    \n    # Check 3: Result contains same elements (same counts)\n    from collections import Counter\n    return Counter(original) == Counter(sorted_result)",
+    "testCases": [
+      {
+        "input": "[3, 1, 2], [1, 2, 3]",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Correctly sorted"
+      },
+      {
+        "input": "[3, 1, 2], [1, 2, 2]",
+        "expectedOutput": "False",
+        "isHidden": false,
+        "description": "Different elements"
+      },
+      {
+        "input": "[3, 1, 2], [1, 3]",
+        "expectedOutput": "False",
+        "isHidden": false,
+        "description": "Missing element"
+      },
+      {
+        "input": "[5, 5, 1], [1, 5, 5]",
+        "expectedOutput": "True",
+        "isHidden": true,
+        "description": "Duplicates handled correctly"
+      }
+    ],
+    "hints": [
+      "Verify the result is sorted (each element <= next).",
+      "Verify result has same length as original.",
+      "Verify result contains same elements with same counts (use Counter)."
+    ]
+  },
+  {
+    "id": "cs201-ex-8-8",
+    "subjectId": "cs201",
+    "topicId": "cs201-8",
+    "title": "Verify Max Element",
+    "description": "Write a verifier that checks if a returned element is truly the maximum in an array.",
+    "difficulty": 1,
+    "language": "python",
+    "starterCode": "def verify_max(arr, claimed_max):\n    # Return True if claimed_max is the maximum element in arr\n    pass",
+    "solution": "def verify_max(arr, claimed_max):\n    if len(arr) == 0:\n        return False  # No max in empty array\n    \n    # Verify claimed_max is in the array\n    if claimed_max not in arr:\n        return False\n    \n    # Verify no element is greater than claimed_max\n    for element in arr:\n        if element > claimed_max:\n            return False\n    \n    return True",
+    "testCases": [
+      {
+        "input": "[1, 5, 3, 2], 5",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Correct max"
+      },
+      {
+        "input": "[1, 5, 3, 2], 3",
+        "expectedOutput": "False",
+        "isHidden": false,
+        "description": "Not the max"
+      },
+      {
+        "input": "[7, 7, 7], 7",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "All elements equal"
+      },
+      {
+        "input": "[1, 5, 3, 2], 10",
+        "expectedOutput": "False",
+        "isHidden": true,
+        "description": "Max not in array"
+      },
+      {
+        "input": "[], 5",
+        "expectedOutput": "False",
+        "isHidden": true,
+        "description": "Empty array"
+      }
+    ],
+    "hints": [
+      "Check if claimed_max exists in the array.",
+      "Check that no element in array is greater than claimed_max.",
+      "Handle edge case of empty array."
+    ]
+  },
+  {
+    "id": "cs201-ex-8-9",
+    "subjectId": "cs201",
+    "topicId": "cs201-8",
+    "title": "Sudoku Validator",
+    "description": "Write a function to verify if a completed 9x9 Sudoku solution is valid (each row, column, and 3x3 box contains 1-9 exactly once).",
+    "difficulty": 4,
+    "language": "python",
+    "starterCode": "def is_valid_sudoku(board):\n    # board is 9x9 list of lists\n    # Return True if valid complete solution\n    pass",
+    "solution": "def is_valid_sudoku(board):\n    # Check each row\n    for row in board:\n        if sorted(row) != list(range(1, 10)):\n            return False\n    \n    # Check each column\n    for col in range(9):\n        column = [board[row][col] for row in range(9)]\n        if sorted(column) != list(range(1, 10)):\n            return False\n    \n    # Check each 3x3 box\n    for box_row in range(3):\n        for box_col in range(3):\n            box = []\n            for i in range(3):\n                for j in range(3):\n                    box.append(board[box_row*3 + i][box_col*3 + j])\n            if sorted(box) != list(range(1, 10)):\n                return False\n    \n    return True",
+    "testCases": [
+      {
+        "input": "[[5,3,4,6,7,8,9,1,2],[6,7,2,1,9,5,3,4,8],[1,9,8,3,4,2,5,6,7],[8,5,9,7,6,1,4,2,3],[4,2,6,8,5,3,7,9,1],[7,1,3,9,2,4,8,5,6],[9,6,1,5,3,7,2,8,4],[2,8,7,4,1,9,6,3,5],[3,4,5,2,8,6,1,7,9]]",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Valid complete Sudoku"
+      },
+      {
+        "input": "[[5,3,4,6,7,8,9,1,2],[6,7,2,1,9,5,3,4,8],[1,9,8,3,4,2,5,6,7],[8,5,9,7,6,1,4,2,3],[4,2,6,8,5,3,7,9,1],[7,1,3,9,2,4,8,5,6],[9,6,1,5,3,7,2,8,4],[2,8,7,4,1,9,6,3,5],[3,4,5,2,8,6,1,7,5]]",
+        "expectedOutput": "False",
+        "isHidden": false,
+        "description": "Invalid - duplicate in last row"
+      }
+    ],
+    "hints": [
+      "Check all rows: each should contain 1-9 exactly once.",
+      "Check all columns: extract each column and verify.",
+      "Check all 3x3 boxes: there are 9 boxes to check.",
+      "Use sorted() to compare against [1,2,3,4,5,6,7,8,9]."
+    ]
+  },
+  {
+    "id": "cs201-ex-8-10",
+    "subjectId": "cs201",
+    "topicId": "cs201-8",
+    "title": "Graph Cycle Detector",
+    "description": "Given a directed graph as adjacency list, determine if it contains a cycle using DFS.",
+    "difficulty": 4,
+    "language": "python",
+    "starterCode": "def has_cycle(graph):\n    # graph is dict: node -> list of neighbors\n    # Return True if graph has a cycle\n    pass",
+    "solution": "def has_cycle(graph):\n    WHITE, GRAY, BLACK = 0, 1, 2\n    color = {node: WHITE for node in graph}\n    \n    def dfs(node):\n        if color[node] == GRAY:\n            return True  # Back edge found - cycle!\n        if color[node] == BLACK:\n            return False  # Already processed\n        \n        color[node] = GRAY  # Mark as being processed\n        \n        for neighbor in graph.get(node, []):\n            if dfs(neighbor):\n                return True\n        \n        color[node] = BLACK  # Mark as done\n        return False\n    \n    for node in graph:\n        if color[node] == WHITE:\n            if dfs(node):\n                return True\n    \n    return False",
+    "testCases": [
+      {
+        "input": "{'A': ['B'], 'B': ['C'], 'C': []}",
+        "expectedOutput": "False",
+        "isHidden": false,
+        "description": "No cycle - simple chain"
+      },
+      {
+        "input": "{'A': ['B'], 'B': ['C'], 'C': ['A']}",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Cycle present"
+      },
+      {
+        "input": "{'A': ['B'], 'B': ['C'], 'C': [], 'D': ['E'], 'E': []}",
+        "expectedOutput": "False",
+        "isHidden": false,
+        "description": "Disconnected, no cycles"
+      },
+      {
+        "input": "{'A': ['A']}",
+        "expectedOutput": "True",
+        "isHidden": true,
+        "description": "Self-loop"
+      }
+    ],
+    "hints": [
+      "Use DFS with three colors: WHITE (unvisited), GRAY (processing), BLACK (done).",
+      "A back edge to a GRAY node indicates a cycle.",
+      "Process all nodes in case graph is disconnected.",
+      "GRAY means we are currently exploring this path."
+    ]
+  },
+  {
+    "id": "cs201-ex-8-11",
+    "subjectId": "cs201",
+    "topicId": "cs201-8",
+    "title": "Valid Parentheses Checker",
+    "description": "Verify if a string of parentheses/brackets is properly balanced: (), [], {}.",
+    "difficulty": 3,
+    "language": "python",
+    "starterCode": "def is_balanced(s):\n    # Return True if parentheses are balanced\n    pass",
+    "solution": "def is_balanced(s):\n    stack = []\n    matching = {')': '(', ']': '[', '}': '{'}\n    \n    for char in s:\n        if char in '([{':\n            stack.append(char)\n        elif char in ')]}':\n            if not stack or stack[-1] != matching[char]:\n                return False\n            stack.pop()\n    \n    return len(stack) == 0",
+    "testCases": [
+      {
+        "input": "\"()\"",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Simple balanced"
+      },
+      {
+        "input": "\"()[]{}\"",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Multiple types balanced"
+      },
+      {
+        "input": "\"(]\"",
+        "expectedOutput": "False",
+        "isHidden": false,
+        "description": "Mismatched types"
+      },
+      {
+        "input": "\"(()\"",
+        "expectedOutput": "False",
+        "isHidden": false,
+        "description": "Unclosed parenthesis"
+      },
+      {
+        "input": "\"{[()]}\"",
+        "expectedOutput": "True",
+        "isHidden": true,
+        "description": "Nested balanced"
+      },
+      {
+        "input": "\"((()))\"",
+        "expectedOutput": "True",
+        "isHidden": true,
+        "description": "Deep nesting"
+      }
+    ],
+    "hints": [
+      "Use a stack to track opening brackets.",
+      "When you see a closing bracket, check it matches the top of stack.",
+      "At the end, stack should be empty.",
+      "Each closing bracket type must match its corresponding opening bracket."
+    ]
+  },
+  {
+    "id": "cs201-ex-8-12",
+    "subjectId": "cs201",
+    "topicId": "cs201-8",
+    "title": "Verify Graph Coloring",
+    "description": "Given a graph and a coloring (assignment of colors to nodes), verify if it's a valid k-coloring (no adjacent nodes share a color).",
+    "difficulty": 3,
+    "language": "python",
+    "starterCode": "def is_valid_coloring(graph, coloring):\n    # graph: dict node -> list of neighbors\n    # coloring: dict node -> color\n    # Return True if valid coloring\n    pass",
+    "solution": "def is_valid_coloring(graph, coloring):\n    # Check all nodes have a color assigned\n    for node in graph:\n        if node not in coloring:\n            return False\n    \n    # Check no adjacent nodes have same color\n    for node in graph:\n        node_color = coloring[node]\n        for neighbor in graph[node]:\n            if neighbor in coloring and coloring[neighbor] == node_color:\n                return False\n    \n    return True",
+    "testCases": [
+      {
+        "input": "{'A': ['B', 'C'], 'B': ['A', 'C'], 'C': ['A', 'B']}, {'A': 1, 'B': 2, 'C': 3}",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Valid 3-coloring of triangle"
+      },
+      {
+        "input": "{'A': ['B', 'C'], 'B': ['A', 'C'], 'C': ['A', 'B']}, {'A': 1, 'B': 1, 'C': 2}",
+        "expectedOutput": "False",
+        "isHidden": false,
+        "description": "Invalid - A and B are adjacent with same color"
+      },
+      {
+        "input": "{'A': ['B'], 'B': ['A']}, {'A': 1, 'B': 2}",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Valid 2-coloring of edge"
+      },
+      {
+        "input": "{'A': ['B'], 'B': ['A']}, {'A': 1}",
+        "expectedOutput": "False",
+        "isHidden": true,
+        "description": "Missing color assignment"
+      }
+    ],
+    "hints": [
+      "First verify all nodes have a color assigned.",
+      "Then check each edge: the two endpoints must have different colors.",
+      "Iterate through each node and check all its neighbors.",
+      "If any neighbor has the same color, the coloring is invalid."
+    ]
+  },
+  {
+    "id": "cs201-ex-8-13",
+    "subjectId": "cs201",
+    "topicId": "cs201-8",
+    "title": "Reduce Vertex Cover to Set Cover",
+    "description": "Given a graph, convert it to a Set Cover instance. Each edge becomes an element, each vertex becomes a set containing its incident edges.",
+    "difficulty": 4,
+    "language": "python",
+    "starterCode": "def graph_to_set_cover(edges):\n    # edges: list of tuples (u, v)\n    # Return: (universe, sets) where sets is dict: vertex -> set of edges\n    pass",
+    "solution": "def graph_to_set_cover(edges):\n    universe = set(range(len(edges)))  # Each edge is an element\n    sets = {}\n    \n    # Build vertex set - collect all unique vertices\n    vertices = set()\n    for u, v in edges:\n        vertices.add(u)\n        vertices.add(v)\n    \n    # For each vertex, create a set of edges it's incident to\n    for vertex in vertices:\n        sets[vertex] = set()\n        for i, (u, v) in enumerate(edges):\n            if u == vertex or v == vertex:\n                sets[vertex].add(i)\n    \n    return (universe, sets)",
+    "testCases": [
+      {
+        "input": "[(\"A\", \"B\"), (\"B\", \"C\")]",
+        "expectedOutput": "({0, 1}, {'A': {0}, 'B': {0, 1}, 'C': {1}})",
+        "isHidden": false,
+        "description": "Simple path graph"
+      },
+      {
+        "input": "[(\"A\", \"B\"), (\"A\", \"C\"), (\"B\", \"C\")]",
+        "expectedOutput": "({0, 1, 2}, {'A': {0, 1}, 'B': {0, 2}, 'C': {1, 2}})",
+        "isHidden": false,
+        "description": "Triangle graph"
+      }
+    ],
+    "hints": [
+      "The universe is the set of all edges (represented as indices).",
+      "Each vertex becomes a set containing the indices of edges incident to it.",
+      "A vertex cover in the graph corresponds to a set cover in the reduction.",
+      "If vertices cover all edges, then the corresponding sets cover all elements."
+    ]
+  },
+  {
+    "id": "cs201-ex-8-14",
+    "subjectId": "cs201",
+    "topicId": "cs201-8",
+    "title": "3-SAT Clause Evaluator",
+    "description": "Given a 3-SAT clause (3 literals) and variable assignment, evaluate if the clause is satisfied.",
+    "difficulty": 3,
+    "language": "python",
+    "starterCode": "def evaluate_3sat_clause(clause, assignment):\n    # clause: list of 3 literals, e.g., [\"x1\", \"-x2\", \"x3\"]\n    # assignment: dict variable -> bool, e.g., {\"x1\": True, \"x2\": False}\n    # Return True if clause is satisfied\n    pass",
+    "solution": "def evaluate_3sat_clause(clause, assignment):\n    for literal in clause:\n        if literal.startswith(\"-\"):\n            # Negated variable\n            var = literal[1:]\n            if var in assignment and not assignment[var]:\n                return True  # Clause satisfied by this literal\n        else:\n            # Positive variable\n            var = literal\n            if var in assignment and assignment[var]:\n                return True  # Clause satisfied by this literal\n    \n    return False  # No literal satisfied the clause",
+    "testCases": [
+      {
+        "input": "[\"x1\", \"-x2\", \"x3\"], {\"x1\": True, \"x2\": True, \"x3\": False}",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Satisfied by x1"
+      },
+      {
+        "input": "[\"x1\", \"-x2\", \"x3\"], {\"x1\": False, \"x2\": True, \"x3\": False}",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Satisfied by -x2"
+      },
+      {
+        "input": "[\"x1\", \"x2\", \"x3\"], {\"x1\": False, \"x2\": False, \"x3\": False}",
+        "expectedOutput": "False",
+        "isHidden": false,
+        "description": "Not satisfied"
+      },
+      {
+        "input": "[\"-x1\", \"-x2\", \"-x3\"], {\"x1\": False, \"x2\": False, \"x3\": True}",
+        "expectedOutput": "True",
+        "isHidden": true,
+        "description": "Satisfied by negated literals"
+      }
+    ],
+    "hints": [
+      "A clause is satisfied if at least one literal is true.",
+      "A positive literal \"x\" is true if assignment[x] == True.",
+      "A negative literal \"-x\" is true if assignment[x] == False.",
+      "Check if the literal starts with \"-\" to determine if it's negated."
+    ]
+  },
+  {
+    "id": "cs201-ex-8-15",
+    "subjectId": "cs201",
+    "topicId": "cs201-8",
+    "title": "Evaluate 3-SAT Formula",
+    "description": "Given a complete 3-SAT formula (CNF with 3 literals per clause) and variable assignment, determine if the formula is satisfied.",
+    "difficulty": 3,
+    "language": "python",
+    "starterCode": "def evaluate_3sat_formula(formula, assignment):\n    # formula: list of clauses, each clause is list of 3 literals\n    # assignment: dict variable -> bool\n    # Return True if entire formula is satisfied\n    pass",
+    "solution": "def evaluate_3sat_formula(formula, assignment):\n    def evaluate_clause(clause):\n        for literal in clause:\n            if literal.startswith(\"-\"):\n                var = literal[1:]\n                if var in assignment and not assignment[var]:\n                    return True\n            else:\n                var = literal\n                if var in assignment and assignment[var]:\n                    return True\n        return False\n    \n    # All clauses must be satisfied (AND of clauses)\n    for clause in formula:\n        if not evaluate_clause(clause):\n            return False\n    \n    return True",
+    "testCases": [
+      {
+        "input": "[[\"x1\", \"x2\", \"x3\"], [\"-x1\", \"x2\", \"x3\"]], {\"x1\": True, \"x2\": True, \"x3\": False}",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Both clauses satisfied"
+      },
+      {
+        "input": "[[\"x1\", \"x2\", \"x3\"], [\"-x1\", \"-x2\", \"-x3\"]], {\"x1\": False, \"x2\": False, \"x3\": False}",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Second clause satisfied"
+      },
+      {
+        "input": "[[\"x1\", \"x2\", \"x3\"], [\"-x1\", \"-x2\", \"-x3\"]], {\"x1\": True, \"x2\": False, \"x3\": False}",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "First clause satisfied by x1"
+      },
+      {
+        "input": "[[\"x1\"], [\"x2\"], [\"-x1\"]], {\"x1\": True, \"x2\": True}",
+        "expectedOutput": "False",
+        "isHidden": true,
+        "description": "Contradictory clauses"
+      }
+    ],
+    "hints": [
+      "A formula in CNF is satisfied if ALL clauses are satisfied (AND of clauses).",
+      "A clause is satisfied if at least ONE literal is true (OR of literals).",
+      "Reuse the clause evaluation logic from the previous exercise.",
+      "Return False as soon as you find an unsatisfied clause."
+    ]
+  },
+  {
+    "id": "cs201-ex-8-16",
+    "subjectId": "cs201",
+    "topicId": "cs201-8",
+    "title": "Independent Set to Clique Reduction",
+    "description": "Given a graph, construct its complement graph. An independent set in G corresponds to a clique in complement(G).",
+    "difficulty": 4,
+    "language": "python",
+    "starterCode": "def graph_complement(vertices, edges):\n    # vertices: list of vertex names\n    # edges: list of tuples (u, v) representing edges\n    # Return: list of edges in complement graph\n    pass",
+    "solution": "def graph_complement(vertices, edges):\n    # Convert edges to set for O(1) lookup\n    edge_set = set()\n    for u, v in edges:\n        # Store both directions for undirected graph\n        edge_set.add((u, v))\n        edge_set.add((v, u))\n    \n    # Generate all possible edges\n    complement_edges = []\n    for i, u in enumerate(vertices):\n        for v in vertices[i+1:]:\n            # If edge doesn't exist in original, add to complement\n            if (u, v) not in edge_set:\n                complement_edges.append((u, v))\n    \n    return complement_edges",
+    "testCases": [
+      {
+        "input": "[\"A\", \"B\", \"C\"], [(\"A\", \"B\")]",
+        "expectedOutput": "[(\"A\", \"C\"), (\"B\", \"C\")]",
+        "isHidden": false,
+        "description": "Simple complement"
+      },
+      {
+        "input": "[\"A\", \"B\", \"C\"], [(\"A\", \"B\"), (\"B\", \"C\"), (\"A\", \"C\")]",
+        "expectedOutput": "[]",
+        "isHidden": false,
+        "description": "Complete graph has empty complement"
+      },
+      {
+        "input": "[\"A\", \"B\", \"C\"], []",
+        "expectedOutput": "[(\"A\", \"B\"), (\"A\", \"C\"), (\"B\", \"C\")]",
+        "isHidden": false,
+        "description": "Empty graph has complete complement"
+      },
+      {
+        "input": "[\"A\", \"B\", \"C\", \"D\"], [(\"A\", \"B\"), (\"C\", \"D\")]",
+        "expectedOutput": "[(\"A\", \"C\"), (\"A\", \"D\"), (\"B\", \"C\"), (\"B\", \"D\")]",
+        "isHidden": true,
+        "description": "Disconnected graph"
+      }
+    ],
+    "hints": [
+      "The complement graph has the same vertices but opposite edges.",
+      "If edge (u,v) exists in original graph, it does NOT exist in complement.",
+      "Generate all possible pairs of vertices, then exclude existing edges.",
+      "An independent set in G (no edges between vertices) becomes a clique in complement(G) (all edges between vertices)."
+    ]
+  }
+]

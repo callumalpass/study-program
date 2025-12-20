@@ -1,0 +1,437 @@
+[
+  {
+    "id": "cs305-t6-ex01",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-6",
+    "title": "Create a Simple Promise",
+    "description": "Write a function `delay(ms)` that returns a Promise that resolves after the specified milliseconds.",
+    "difficulty": 1,
+    "language": "javascript",
+    "starterCode": "function delay(ms) {\n  // Your code here\n}",
+    "solution": "function delay(ms) {\n  return new Promise(resolve => {\n    setTimeout(resolve, ms);\n  });\n}",
+    "testCases": [
+      {
+        "input": "1000",
+        "expectedOutput": "Promise resolves after 1 second",
+        "isHidden": false,
+        "description": "Delay for 1 second"
+      },
+      {
+        "input": "500",
+        "expectedOutput": "Promise resolves after 0.5 seconds",
+        "isHidden": false,
+        "description": "Delay for half second"
+      }
+    ],
+    "hints": [
+      "Return a new Promise",
+      "Use setTimeout to delay the resolve call",
+      "Call resolve() when the timeout completes"
+    ]
+  },
+  {
+    "id": "cs305-t6-ex02",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-6",
+    "title": "Random Success or Failure",
+    "description": "Create a function `randomPromise()` that returns a Promise that randomly resolves with \"Success!\" or rejects with \"Failed!\" (50% chance each).",
+    "difficulty": 1,
+    "language": "javascript",
+    "starterCode": "function randomPromise() {\n  // Your code here\n}",
+    "solution": "function randomPromise() {\n  return new Promise((resolve, reject) => {\n    if (Math.random() > 0.5) {\n      resolve('Success!');\n    } else {\n      reject('Failed!');\n    }\n  });\n}",
+    "testCases": [
+      {
+        "input": "",
+        "expectedOutput": "\"Success!\" or throws \"Failed!\"",
+        "isHidden": false,
+        "description": "Random outcome"
+      }
+    ],
+    "hints": [
+      "Use Math.random() to generate a random number between 0 and 1",
+      "Call resolve() for success",
+      "Call reject() for failure"
+    ]
+  },
+  {
+    "id": "cs305-t6-ex03",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-6",
+    "title": "Convert Promise to Async/Await",
+    "description": "Write an async function `waitAndReturn(value, ms)` that waits for the specified milliseconds then returns the value.",
+    "difficulty": 1,
+    "language": "javascript",
+    "starterCode": "async function waitAndReturn(value, ms) {\n  // Your code here\n}",
+    "solution": "async function waitAndReturn(value, ms) {\n  await new Promise(resolve => setTimeout(resolve, ms));\n  return value;\n}",
+    "testCases": [
+      {
+        "input": "\"Hello\", 1000",
+        "expectedOutput": "\"Hello\" (after 1 second)",
+        "isHidden": false,
+        "description": "Wait and return string"
+      },
+      {
+        "input": "42, 500",
+        "expectedOutput": "42 (after 0.5 seconds)",
+        "isHidden": false,
+        "description": "Wait and return number"
+      }
+    ],
+    "hints": [
+      "Use await with a delay Promise",
+      "Return the value after the delay",
+      "The function must be declared as async"
+    ]
+  },
+  {
+    "id": "cs305-t6-ex04",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-6",
+    "title": "Fetch Multiple URLs Concurrently",
+    "description": "Write an async function `fetchAll(urls)` that takes an array of URLs and returns a Promise that resolves with an array of all responses. Use Promise.all().",
+    "difficulty": 2,
+    "language": "javascript",
+    "starterCode": "async function fetchAll(urls) {\n  // Your code here\n}",
+    "solution": "async function fetchAll(urls) {\n  const promises = urls.map(url => fetch(url).then(res => res.json()));\n  return await Promise.all(promises);\n}",
+    "testCases": [
+      {
+        "input": "[\"https://api.example.com/1\", \"https://api.example.com/2\"]",
+        "expectedOutput": "Array of JSON responses",
+        "isHidden": false,
+        "description": "Fetch multiple endpoints"
+      }
+    ],
+    "hints": [
+      "Map over the URLs array to create fetch promises",
+      "Use Promise.all() to wait for all promises",
+      "Each fetch should be converted to JSON",
+      "Use await to get the final results"
+    ]
+  },
+  {
+    "id": "cs305-t6-ex05",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-6",
+    "title": "Safe Fetch with Error Handling",
+    "description": "Create an async function `safeFetch(url)` that fetches data and returns {success: true, data} on success or {success: false, error} on failure.",
+    "difficulty": 2,
+    "language": "javascript",
+    "starterCode": "async function safeFetch(url) {\n  // Your code here\n}",
+    "solution": "async function safeFetch(url) {\n  try {\n    const response = await fetch(url);\n    if (!response.ok) {\n      throw new Error(`HTTP error! status: ${response.status}`);\n    }\n    const data = await response.json();\n    return { success: true, data };\n  } catch (error) {\n    return { success: false, error: error.message };\n  }\n}",
+    "testCases": [
+      {
+        "input": "\"https://api.example.com/success\"",
+        "expectedOutput": "{success: true, data: {...}}",
+        "isHidden": false,
+        "description": "Successful fetch"
+      },
+      {
+        "input": "\"https://api.example.com/404\"",
+        "expectedOutput": "{success: false, error: \"...\"}",
+        "isHidden": false,
+        "description": "Failed fetch"
+      }
+    ],
+    "hints": [
+      "Use try/catch to handle errors",
+      "Check response.ok to verify HTTP success",
+      "Parse JSON in the try block",
+      "Return different objects for success and failure"
+    ]
+  },
+  {
+    "id": "cs305-t6-ex06",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-6",
+    "title": "Fetch with Timeout",
+    "description": "Write a function `fetchWithTimeout(url, timeout)` that races a fetch request against a timeout. Reject if timeout is reached first.",
+    "difficulty": 3,
+    "language": "javascript",
+    "starterCode": "async function fetchWithTimeout(url, timeout) {\n  // Your code here\n}",
+    "solution": "async function fetchWithTimeout(url, timeout) {\n  const timeoutPromise = new Promise((_, reject) => {\n    setTimeout(() => reject(new Error('Request timeout')), timeout);\n  });\n\n  return Promise.race([\n    fetch(url).then(res => res.json()),\n    timeoutPromise\n  ]);\n}",
+    "testCases": [
+      {
+        "input": "\"https://api.example.com/fast\", 5000",
+        "expectedOutput": "Data from API",
+        "isHidden": false,
+        "description": "Fast response within timeout"
+      },
+      {
+        "input": "\"https://api.example.com/slow\", 1000",
+        "expectedOutput": "Throws \"Request timeout\"",
+        "isHidden": false,
+        "description": "Timeout exceeded"
+      }
+    ],
+    "hints": [
+      "Create a timeout promise that rejects after the specified time",
+      "Use Promise.race() to race the fetch against the timeout",
+      "The first promise to settle wins"
+    ]
+  },
+  {
+    "id": "cs305-t6-ex07",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-6",
+    "title": "Process Items Sequentially",
+    "description": "Write an async function `processSequentially(items, asyncFn)` that processes an array of items one by one (not in parallel) using the provided async function. Return array of results.",
+    "difficulty": 3,
+    "language": "javascript",
+    "starterCode": "async function processSequentially(items, asyncFn) {\n  // Your code here\n}",
+    "solution": "async function processSequentially(items, asyncFn) {\n  const results = [];\n  for (const item of items) {\n    const result = await asyncFn(item);\n    results.push(result);\n  }\n  return results;\n}",
+    "testCases": [
+      {
+        "input": "[1, 2, 3], async (x) => x * 2",
+        "expectedOutput": "[2, 4, 6]",
+        "isHidden": false,
+        "description": "Sequential processing"
+      }
+    ],
+    "hints": [
+      "Use a for...of loop to iterate sequentially",
+      "Await each async function call before proceeding",
+      "Collect results in an array",
+      "Do not use map() as it processes in parallel"
+    ]
+  },
+  {
+    "id": "cs305-t6-ex08",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-6",
+    "title": "Retry Failed Requests",
+    "description": "Create an async function `retryFetch(url, maxRetries)` that retries a failed fetch request up to maxRetries times before giving up.",
+    "difficulty": 3,
+    "language": "javascript",
+    "starterCode": "async function retryFetch(url, maxRetries) {\n  // Your code here\n}",
+    "solution": "async function retryFetch(url, maxRetries) {\n  let lastError;\n  for (let i = 0; i <= maxRetries; i++) {\n    try {\n      const response = await fetch(url);\n      if (!response.ok) {\n        throw new Error(`HTTP error! status: ${response.status}`);\n      }\n      return await response.json();\n    } catch (error) {\n      lastError = error;\n      if (i < maxRetries) {\n        await new Promise(resolve => setTimeout(resolve, 1000 * (i + 1)));\n      }\n    }\n  }\n  throw lastError;\n}",
+    "testCases": [
+      {
+        "input": "\"https://api.example.com/unreliable\", 3",
+        "expectedOutput": "Data or throws after 3 retries",
+        "isHidden": false,
+        "description": "Retry up to 3 times"
+      }
+    ],
+    "hints": [
+      "Use a for loop from 0 to maxRetries",
+      "Try the fetch in each iteration",
+      "Catch errors and retry if attempts remain",
+      "Add exponential backoff between retries (optional but good practice)",
+      "Throw the last error if all retries fail"
+    ]
+  },
+  {
+    "id": "cs305-t6-ex09",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-6",
+    "title": "Create Debounced Fetch",
+    "description": "Write a function `createDebouncedFetch(delay)` that returns a debounced fetch function. Multiple calls within the delay period should cancel previous pending requests.",
+    "difficulty": 4,
+    "language": "javascript",
+    "starterCode": "function createDebouncedFetch(delay) {\n  // Your code here\n}",
+    "solution": "function createDebouncedFetch(delay) {\n  let timeoutId;\n  let abortController;\n\n  return async function(url) {\n    clearTimeout(timeoutId);\n    if (abortController) {\n      abortController.abort();\n    }\n\n    abortController = new AbortController();\n\n    return new Promise((resolve, reject) => {\n      timeoutId = setTimeout(async () => {\n        try {\n          const response = await fetch(url, { signal: abortController.signal });\n          const data = await response.json();\n          resolve(data);\n        } catch (error) {\n          if (error.name !== 'AbortError') {\n            reject(error);\n          }\n        }\n      }, delay);\n    });\n  };\n}",
+    "testCases": [
+      {
+        "input": "500 delay, multiple rapid calls",
+        "expectedOutput": "Only last call executes",
+        "isHidden": false,
+        "description": "Debouncing effect"
+      }
+    ],
+    "hints": [
+      "Use a closure to maintain timeout and abort controller state",
+      "Clear the previous timeout on each call",
+      "Use AbortController to cancel pending fetch requests",
+      "Return a new promise that resolves with the fetch result"
+    ]
+  },
+  {
+    "id": "cs305-t6-ex10",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-6",
+    "title": "Limit Concurrent Requests",
+    "description": "Create an async function `fetchWithConcurrencyLimit(urls, limit)` that fetches URLs with a maximum of `limit` concurrent requests at a time.",
+    "difficulty": 4,
+    "language": "javascript",
+    "starterCode": "async function fetchWithConcurrencyLimit(urls, limit) {\n  // Your code here\n}",
+    "solution": "async function fetchWithConcurrencyLimit(urls, limit) {\n  const results = [];\n  const executing = [];\n\n  for (const url of urls) {\n    const promise = fetch(url).then(res => res.json());\n    results.push(promise);\n\n    if (limit <= urls.length) {\n      const e = promise.then(() => executing.splice(executing.indexOf(e), 1));\n      executing.push(e);\n      if (executing.length >= limit) {\n        await Promise.race(executing);\n      }\n    }\n  }\n\n  return Promise.all(results);\n}",
+    "testCases": [
+      {
+        "input": "10 URLs, limit of 3",
+        "expectedOutput": "Max 3 requests at a time",
+        "isHidden": false,
+        "description": "Concurrency control"
+      }
+    ],
+    "hints": [
+      "Keep track of currently executing promises",
+      "When limit is reached, wait for one to complete before starting another",
+      "Use Promise.race() to wait for the first completion",
+      "Remove completed promises from the executing array",
+      "Use Promise.all() to get all results at the end"
+    ]
+  },
+  {
+    "id": "cs305-t6-ex11",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-6",
+    "title": "Process API Response",
+    "description": "Write an async function `fetchAndTransform(url)` that fetches data, filters items where status is \"active\", and maps to extract only id and name fields.",
+    "difficulty": 2,
+    "language": "javascript",
+    "starterCode": "async function fetchAndTransform(url) {\n  // Your code here\n}",
+    "solution": "async function fetchAndTransform(url) {\n  const response = await fetch(url);\n  const data = await response.json();\n  return data\n    .filter(item => item.status === 'active')\n    .map(item => ({ id: item.id, name: item.name }));\n}",
+    "testCases": [
+      {
+        "input": "\"https://api.example.com/users\"",
+        "expectedOutput": "[{id: 1, name: \"Alice\"}, ...]",
+        "isHidden": false,
+        "description": "Filter and transform user data"
+      }
+    ],
+    "hints": [
+      "Fetch and parse JSON first",
+      "Use filter() to keep only active items",
+      "Use map() to extract desired fields",
+      "Chain the array methods"
+    ]
+  },
+  {
+    "id": "cs305-t6-ex12",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-6",
+    "title": "Implement Fetch Cache",
+    "description": "Create a function `createCachedFetch()` that returns a fetch function with caching. If the same URL is requested again, return cached data instead of fetching.",
+    "difficulty": 3,
+    "language": "javascript",
+    "starterCode": "function createCachedFetch() {\n  // Your code here\n}",
+    "solution": "function createCachedFetch() {\n  const cache = new Map();\n\n  return async function(url) {\n    if (cache.has(url)) {\n      return cache.get(url);\n    }\n\n    const response = await fetch(url);\n    const data = await response.json();\n    cache.set(url, data);\n    return data;\n  };\n}",
+    "testCases": [
+      {
+        "input": "Same URL called twice",
+        "expectedOutput": "Second call returns cached data",
+        "isHidden": false,
+        "description": "Cache hit"
+      },
+      {
+        "input": "Different URLs",
+        "expectedOutput": "Each URL fetched once",
+        "isHidden": false,
+        "description": "Different cache entries"
+      }
+    ],
+    "hints": [
+      "Use a Map to store cached responses",
+      "Check if URL exists in cache before fetching",
+      "Store the parsed data in cache after first fetch",
+      "Return cached data on subsequent calls"
+    ]
+  },
+  {
+    "id": "cs305-t6-ex13",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-6",
+    "title": "Fallback Data Source",
+    "description": "Write an async function `fetchWithFallback(primaryUrl, fallbackUrl)` that tries the primary URL first, and falls back to the fallback URL if primary fails.",
+    "difficulty": 3,
+    "language": "javascript",
+    "starterCode": "async function fetchWithFallback(primaryUrl, fallbackUrl) {\n  // Your code here\n}",
+    "solution": "async function fetchWithFallback(primaryUrl, fallbackUrl) {\n  try {\n    const response = await fetch(primaryUrl);\n    if (!response.ok) throw new Error('Primary failed');\n    return await response.json();\n  } catch (error) {\n    const response = await fetch(fallbackUrl);\n    if (!response.ok) throw new Error('Both sources failed');\n    return await response.json();\n  }\n}",
+    "testCases": [
+      {
+        "input": "Working primary URL",
+        "expectedOutput": "Data from primary",
+        "isHidden": false,
+        "description": "Primary success"
+      },
+      {
+        "input": "Failed primary, working fallback",
+        "expectedOutput": "Data from fallback",
+        "isHidden": false,
+        "description": "Fallback success"
+      }
+    ],
+    "hints": [
+      "Try primary URL in a try block",
+      "Catch errors and try fallback URL",
+      "Check response.ok for both attempts",
+      "Throw error if both fail"
+    ]
+  },
+  {
+    "id": "cs305-t6-ex14",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-6",
+    "title": "Paginated Data Fetcher",
+    "description": "Create an async function `fetchAllPages(baseUrl)` that fetches paginated data until there are no more pages. Each response has {data: [], nextPage: url|null}.",
+    "difficulty": 4,
+    "language": "javascript",
+    "starterCode": "async function fetchAllPages(baseUrl) {\n  // Your code here\n}",
+    "solution": "async function fetchAllPages(baseUrl) {\n  const allData = [];\n  let url = baseUrl;\n\n  while (url) {\n    const response = await fetch(url);\n    const page = await response.json();\n    allData.push(...page.data);\n    url = page.nextPage;\n  }\n\n  return allData;\n}",
+    "testCases": [
+      {
+        "input": "\"https://api.example.com/items?page=1\"",
+        "expectedOutput": "All items from all pages",
+        "isHidden": false,
+        "description": "Fetch all paginated data"
+      }
+    ],
+    "hints": [
+      "Use a while loop to continue fetching while nextPage exists",
+      "Accumulate all data in an array",
+      "Update the URL to nextPage after each fetch",
+      "Stop when nextPage is null"
+    ]
+  },
+  {
+    "id": "cs305-t6-ex15",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-6",
+    "title": "Fetch Multiple with Status",
+    "description": "Write an async function `fetchAllWithStatus(urls)` that fetches all URLs and returns results with status for each. Use Promise.allSettled() to get both successes and failures.",
+    "difficulty": 3,
+    "language": "javascript",
+    "starterCode": "async function fetchAllWithStatus(urls) {\n  // Your code here\n}",
+    "solution": "async function fetchAllWithStatus(urls) {\n  const promises = urls.map(url =>\n    fetch(url)\n      .then(res => res.json())\n      .then(data => ({ url, data }))\n  );\n\n  const results = await Promise.allSettled(promises);\n\n  return results.map(result => {\n    if (result.status === 'fulfilled') {\n      return { ...result.value, success: true };\n    } else {\n      return { url: null, success: false, error: result.reason.message };\n    }\n  });\n}",
+    "testCases": [
+      {
+        "input": "[\"https://api.example.com/1\", \"https://api.example.com/fail\"]",
+        "expectedOutput": "[{success: true, data: ...}, {success: false, error: ...}]",
+        "isHidden": false,
+        "description": "Mixed success and failure"
+      }
+    ],
+    "hints": [
+      "Map URLs to fetch promises",
+      "Use Promise.allSettled() instead of Promise.all()",
+      "Check result.status for \"fulfilled\" or \"rejected\"",
+      "Format the output to include success status and data/error"
+    ]
+  },
+  {
+    "id": "cs305-t6-ex16",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-6",
+    "title": "Create Task Queue",
+    "description": "Create a class `AsyncQueue` with methods `enqueue(asyncFn)` and `process()`. The process method should execute all queued async functions sequentially and return results.",
+    "difficulty": 5,
+    "language": "javascript",
+    "starterCode": "class AsyncQueue {\n  constructor() {\n    // Your code here\n  }\n\n  enqueue(asyncFn) {\n    // Your code here\n  }\n\n  async process() {\n    // Your code here\n  }\n}",
+    "solution": "class AsyncQueue {\n  constructor() {\n    this.queue = [];\n  }\n\n  enqueue(asyncFn) {\n    this.queue.push(asyncFn);\n  }\n\n  async process() {\n    const results = [];\n    while (this.queue.length > 0) {\n      const task = this.queue.shift();\n      try {\n        const result = await task();\n        results.push({ success: true, result });\n      } catch (error) {\n        results.push({ success: false, error: error.message });\n      }\n    }\n    return results;\n  }\n}",
+    "testCases": [
+      {
+        "input": "Queue 3 async functions, call process()",
+        "expectedOutput": "Array of 3 results processed sequentially",
+        "isHidden": false,
+        "description": "Sequential task processing"
+      }
+    ],
+    "hints": [
+      "Store tasks in an array",
+      "Enqueue adds a task to the array",
+      "Process uses a while loop to execute tasks one by one",
+      "Use try/catch to handle task errors",
+      "Return an array of results with success status"
+    ]
+  }
+]

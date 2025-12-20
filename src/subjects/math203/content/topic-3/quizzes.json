@@ -1,0 +1,185 @@
+[
+  {
+    "id": "math203-quiz-3a",
+    "subjectId": "math203",
+    "topicId": "math203-topic-3",
+    "title": "Differentiation Rules - Fundamentals",
+    "questions": [
+      {
+        "id": "math203-q3a-1",
+        "type": "multiple_choice",
+        "prompt": "What is $\\frac{d}{dx}[x^5]$?",
+        "options": [
+          "$x^4$",
+          "$5x^4$",
+          "$5x^5$",
+          "$4x^5$"
+        ],
+        "correctAnswer": 1,
+        "explanation": "By the power rule: $\\frac{d}{dx}[x^n] = nx^{n-1}$, so $\\frac{d}{dx}[x^5] = 5x^4$."
+      },
+      {
+        "id": "math203-q3a-2",
+        "type": "multiple_choice",
+        "prompt": "What is the derivative of $f(x) = e^x$?",
+        "options": [
+          "$xe^{x-1}$",
+          "$e^x$",
+          "$e^{x-1}$",
+          "$xe^x$"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The exponential function $e^x$ is its own derivative: $\\frac{d}{dx}[e^x] = e^x$."
+      },
+      {
+        "id": "math203-q3a-3",
+        "type": "true_false",
+        "prompt": "The derivative of $e^x$ is $xe^{x-1}$.",
+        "correctAnswer": false,
+        "explanation": "False. The derivative of $e^x$ is $e^x$ itself. The power rule does not apply to exponential functions where the variable is in the exponent."
+      },
+      {
+        "id": "math203-q3a-4",
+        "type": "multiple_choice",
+        "prompt": "What is $\\frac{d}{dx}[\\ln x]$?",
+        "options": [
+          "$\\frac{1}{x}$",
+          "$\\ln x$",
+          "$x \\ln x$",
+          "$e^x$"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The derivative of $\\ln x$ is $\\frac{1}{x}$ for $x > 0$."
+      },
+      {
+        "id": "math203-q3a-5",
+        "type": "fill_blank",
+        "prompt": "The derivative of a constant function $f(x) = c$ is ____.",
+        "correctAnswer": "0",
+        "explanation": "The derivative of any constant is 0 because constants do not change as $x$ changes."
+      }
+    ]
+  },
+  {
+    "id": "math203-quiz-3b",
+    "subjectId": "math203",
+    "topicId": "math203-topic-3",
+    "title": "Differentiation Rules - Application",
+    "questions": [
+      {
+        "id": "math203-q3b-1",
+        "type": "multiple_choice",
+        "prompt": "Using the product rule, what is $\\frac{d}{dx}[x \\cdot e^x]$?",
+        "options": [
+          "$e^x$",
+          "$xe^x$",
+          "$e^x + xe^x$",
+          "$e^x - xe^x$"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Product rule: $(fg)' = f'g + fg'$. Here: $1 \\cdot e^x + x \\cdot e^x = e^x + xe^x = e^x(1 + x)$."
+      },
+      {
+        "id": "math203-q3b-2",
+        "type": "multiple_choice",
+        "prompt": "What is $\\frac{d}{dx}[\\sin(3x)]$?",
+        "options": [
+          "$\\cos(3x)$",
+          "$3\\cos(3x)$",
+          "$-3\\sin(3x)$",
+          "$\\cos(x)$"
+        ],
+        "correctAnswer": 1,
+        "explanation": "By the chain rule: derivative of outer function times derivative of inner. $\\cos(3x) \\cdot 3 = 3\\cos(3x)$."
+      },
+      {
+        "id": "math203-q3b-3",
+        "type": "true_false",
+        "prompt": "The derivative of $\\cos x$ is $\\sin x$.",
+        "correctAnswer": false,
+        "explanation": "False. The derivative of $\\cos x$ is $-\\sin x$ (note the negative sign)."
+      },
+      {
+        "id": "math203-q3b-4",
+        "type": "multiple_choice",
+        "prompt": "Using the quotient rule, what is $\\frac{d}{dx}\\left[\\frac{x}{x+1}\\right]$?",
+        "options": [
+          "$\\frac{1}{x+1}$",
+          "$\\frac{1}{(x+1)^2}$",
+          "$\\frac{x}{(x+1)^2}$",
+          "$\\frac{-1}{(x+1)^2}$"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Quotient rule: $\\frac{(x+1)(1) - x(1)}{(x+1)^2} = \\frac{x+1-x}{(x+1)^2} = \\frac{1}{(x+1)^2}$."
+      },
+      {
+        "id": "math203-q3b-5",
+        "type": "fill_blank",
+        "prompt": "The chain rule states: if $y = f(g(x))$, then $\\frac{dy}{dx} = f'(g(x)) \\cdot $ ____.",
+        "correctAnswer": "g'(x)",
+        "explanation": "The chain rule: $(f(g(x)))' = f'(g(x)) \\cdot g'(x)$. Multiply the derivative of the outer function by the derivative of the inner function."
+      }
+    ]
+  },
+  {
+    "id": "math203-quiz-3c",
+    "subjectId": "math203",
+    "topicId": "math203-topic-3",
+    "title": "Differentiation Rules - Mastery",
+    "questions": [
+      {
+        "id": "math203-q3c-1",
+        "type": "multiple_choice",
+        "prompt": "What is $\\frac{d}{dx}[\\tan x]$?",
+        "options": [
+          "$\\sec x$",
+          "$\\sec^2 x$",
+          "$\\cot x$",
+          "$-\\sec^2 x$"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The derivative of $\\tan x$ is $\\sec^2 x$. This can be derived using quotient rule on $\\frac{\\sin x}{\\cos x}$."
+      },
+      {
+        "id": "math203-q3c-2",
+        "type": "multiple_choice",
+        "prompt": "Find $\\frac{d}{dx}[e^{x^2}]$.",
+        "options": [
+          "$e^{x^2}$",
+          "$2xe^{x^2}$",
+          "$x^2 e^{x^2-1}$",
+          "$2e^{x^2}$"
+        ],
+        "correctAnswer": 1,
+        "explanation": "By chain rule: $\\frac{d}{dx}[e^{x^2}] = e^{x^2} \\cdot 2x = 2xe^{x^2}$."
+      },
+      {
+        "id": "math203-q3c-3",
+        "type": "true_false",
+        "prompt": "The derivative of $\\ln(x^2)$ is $\\frac{1}{x^2}$.",
+        "correctAnswer": false,
+        "explanation": "False. Using the chain rule: $\\frac{d}{dx}[\\ln(x^2)] = \\frac{1}{x^2} \\cdot 2x = \\frac{2}{x}$. Alternatively, $\\ln(x^2) = 2\\ln x$, so the derivative is $\\frac{2}{x}$."
+      },
+      {
+        "id": "math203-q3c-4",
+        "type": "multiple_choice",
+        "prompt": "What is $\\frac{d}{dx}[x^x]$ for $x > 0$?",
+        "options": [
+          "$x^x$",
+          "$x \\cdot x^{x-1}$",
+          "$x^x(\\ln x + 1)$",
+          "$x^x \\ln x$"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Use logarithmic differentiation. Let $y = x^x$, so $\\ln y = x \\ln x$. Then $\\frac{y'}{y} = \\ln x + 1$, giving $y' = x^x(\\ln x + 1)$."
+      },
+      {
+        "id": "math203-q3c-5",
+        "type": "fill_blank",
+        "prompt": "The derivative of $a^x$ (where $a > 0$, $a \\neq 1$) is $a^x \\cdot $ ____.",
+        "correctAnswer": "ln(a)",
+        "explanation": "For exponential functions with base $a$: $\\frac{d}{dx}[a^x] = a^x \\ln a$."
+      }
+    ]
+  }
+]

@@ -1,0 +1,555 @@
+[
+  {
+    "id": "math302-t4-ex01",
+    "subjectId": "math302",
+    "topicId": "math302-topic-4",
+    "title": "Find Eigenvalues - 2x2 Matrix",
+    "difficulty": 1,
+    "description": "Find eigenvalues of the matrix [[3, 1], [0, 2]].",
+    "starterCode": "import numpy as np\n\ndef find_eigenvalues_2x2():\n    \"\"\"\n    Find eigenvalues of [[3, 1], [0, 2]]\n    Return sorted eigenvalues\n    \"\"\"\n    pass",
+    "solution": "import numpy as np\n\ndef find_eigenvalues_2x2():\n    \"\"\"\n    Matrix [[3, 1], [0, 2]]\n    Eigenvalues from det(A - λI) = 0\n    (3-λ)(2-λ) = 0\n    λ = 2, 3\n    \"\"\"\n    A = np.array([[3, 1], [0, 2]])\n    eigenvalues = np.linalg.eigvals(A)\n    return sorted(eigenvalues.real)",
+    "testCases": [
+      {
+        "input": "",
+        "expectedOutput": "[2.0, 3.0]",
+        "isHidden": false,
+        "description": "Eigenvalues 2 and 3"
+      },
+      {
+        "input": "",
+        "expectedOutput": "[2.0, 3.0]",
+        "isHidden": false,
+        "description": "Triangular matrix"
+      }
+    ],
+    "hints": [
+      "For triangular matrix, eigenvalues are diagonal entries",
+      "Use np.linalg.eigvals()",
+      "Can also solve det(A - λI) = 0"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math302-t4-ex02",
+    "subjectId": "math302",
+    "topicId": "math302-topic-4",
+    "title": "Find Eigenvector",
+    "difficulty": 2,
+    "description": "Find the eigenvector for eigenvalue λ=2 of matrix [[3, 1], [0, 2]].",
+    "starterCode": "import numpy as np\n\ndef find_eigenvector():\n    \"\"\"\n    Find eigenvector for λ=2 of [[3, 1], [0, 2]]\n    Return normalized eigenvector\n    \"\"\"\n    pass",
+    "solution": "import numpy as np\n\ndef find_eigenvector():\n    \"\"\"\n    For λ=2: (A - 2I)v = 0\n    [[1, 1], [0, 0]]v = 0\n    v1 + v2 = 0\n    Eigenvector: [1, -1] or normalized\n    \"\"\"\n    A = np.array([[3, 1], [0, 2]])\n    eigenvalues, eigenvectors = np.linalg.eig(A)\n    idx = np.argmin(np.abs(eigenvalues - 2))\n    v = eigenvectors[:, idx].real\n    # Normalize to match [1, -1] direction\n    v = v / v[0]\n    return v",
+    "testCases": [
+      {
+        "input": "",
+        "expectedOutput": "[1.0, -1.0]",
+        "isHidden": false,
+        "description": "Eigenvector for λ=2"
+      },
+      {
+        "input": "",
+        "expectedOutput": "[1.0, -1.0]",
+        "isHidden": false,
+        "description": "Direction [1, -1]"
+      }
+    ],
+    "hints": [
+      "Solve (A - λI)v = 0",
+      "Set up system: [[1,1],[0,0]]v = 0",
+      "One free variable gives eigenvector [1, -1]"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math302-t4-ex03",
+    "subjectId": "math302",
+    "topicId": "math302-topic-4",
+    "title": "Solve System - Distinct Real Eigenvalues",
+    "difficulty": 2,
+    "description": "Solve dx/dt = [[1, 2], [2, 1]]x with x(0) = [1, 1].",
+    "starterCode": "import numpy as np\nfrom scipy.integrate import odeint\n\ndef solve_system_distinct(t):\n    \"\"\"\n    Solve dx/dt = Ax with A = [[1, 2], [2, 1]]\n    x(0) = [1, 1]\n    \"\"\"\n    pass",
+    "solution": "import numpy as np\nfrom scipy.integrate import odeint\n\ndef solve_system_distinct(t):\n    \"\"\"\n    A = [[1, 2], [2, 1]]\n    Eigenvalues: 3, -1\n    Eigenvectors: [1, 1], [1, -1]\n    General: x = c1*[1,1]*e^(3t) + c2*[1,-1]*e^(-t)\n    With x(0) = [1, 1]: c1 = 1, c2 = 0\n    Solution: x = [e^(3t), e^(3t)]\n    \"\"\"\n    return np.array([np.exp(3*t), np.exp(3*t)])",
+    "testCases": [
+      {
+        "input": "0",
+        "expectedOutput": "[1.0, 1.0]",
+        "isHidden": false,
+        "description": "Initial condition"
+      },
+      {
+        "input": "1",
+        "expectedOutput": "[20.0855, 20.0855]",
+        "isHidden": false,
+        "description": "t = 1"
+      },
+      {
+        "input": "0.5",
+        "expectedOutput": "[4.4817, 4.4817]",
+        "isHidden": false,
+        "description": "Intermediate value"
+      },
+      {
+        "input": "-1",
+        "expectedOutput": "[0.0498, 0.0498]",
+        "isHidden": true,
+        "description": "Negative t"
+      }
+    ],
+    "hints": [
+      "Find eigenvalues and eigenvectors of A",
+      "General solution: x = c1*v1*e^(λ1*t) + c2*v2*e^(λ2*t)",
+      "Apply initial condition to find c1, c2"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math302-t4-ex04",
+    "subjectId": "math302",
+    "topicId": "math302-topic-4",
+    "title": "Complex Eigenvalues",
+    "difficulty": 3,
+    "description": "Find eigenvalues of [[0, -1], [1, 0]].",
+    "starterCode": "import numpy as np\n\ndef find_complex_eigenvalues():\n    \"\"\"\n    Find eigenvalues of [[0, -1], [1, 0]]\n    Return eigenvalues\n    \"\"\"\n    pass",
+    "solution": "import numpy as np\n\ndef find_complex_eigenvalues():\n    \"\"\"\n    A = [[0, -1], [1, 0]]\n    det(A - λI) = λ^2 + 1 = 0\n    λ = ±i\n    \"\"\"\n    A = np.array([[0, -1], [1, 0]])\n    eigenvalues = np.linalg.eigvals(A)\n    return sorted(eigenvalues, key=lambda x: x.imag)",
+    "testCases": [
+      {
+        "input": "",
+        "expectedOutput": "[-1j, 1j]",
+        "isHidden": false,
+        "description": "Pure imaginary ±i"
+      },
+      {
+        "input": "",
+        "expectedOutput": "[-1j, 1j]",
+        "isHidden": false,
+        "description": "Rotation matrix eigenvalues"
+      }
+    ],
+    "hints": [
+      "Characteristic equation: λ^2 + 1 = 0",
+      "This is a 90° rotation matrix",
+      "Eigenvalues are ±i"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math302-t4-ex05",
+    "subjectId": "math302",
+    "topicId": "math302-topic-4",
+    "title": "Solve System - Pure Imaginary Eigenvalues",
+    "difficulty": 3,
+    "description": "Solve dx/dt = [[0, -1], [1, 0]]x with x(0) = [1, 0].",
+    "starterCode": "import numpy as np\n\ndef solve_rotation_system(t):\n    \"\"\"\n    Solve dx/dt = [[0, -1], [1, 0]]x\n    x(0) = [1, 0]\n    \"\"\"\n    pass",
+    "solution": "import numpy as np\n\ndef solve_rotation_system(t):\n    \"\"\"\n    A = [[0, -1], [1, 0]]\n    Eigenvalues: ±i\n    Real solution from Euler formula\n    x(t) = [cos(t), sin(t)]\n    This rotates initial vector counterclockwise\n    \"\"\"\n    return np.array([np.cos(t), np.sin(t)])",
+    "testCases": [
+      {
+        "input": "0",
+        "expectedOutput": "[1.0, 0.0]",
+        "isHidden": false,
+        "description": "Initial condition"
+      },
+      {
+        "input": "np.pi/2",
+        "expectedOutput": "[0.0, 1.0]",
+        "isHidden": false,
+        "description": "90° rotation"
+      },
+      {
+        "input": "np.pi",
+        "expectedOutput": "[-1.0, 0.0]",
+        "isHidden": false,
+        "description": "180° rotation"
+      },
+      {
+        "input": "-np.pi/2",
+        "expectedOutput": "[0.0, -1.0]",
+        "isHidden": true,
+        "description": "-90° rotation"
+      }
+    ],
+    "hints": [
+      "Complex eigenvalues ±i give oscillating solutions",
+      "Real solution: x = cos(t)*v_real - sin(t)*v_imag",
+      "This represents rotation in phase plane"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math302-t4-ex06",
+    "subjectId": "math302",
+    "topicId": "math302-topic-4",
+    "title": "Solve System - General Complex Eigenvalues",
+    "difficulty": 3,
+    "description": "Solve dx/dt = [[-1, -2], [2, -1]]x with x(0) = [1, 0].",
+    "starterCode": "import numpy as np\n\ndef solve_spiral_system(t):\n    \"\"\"\n    Solve dx/dt = [[-1, -2], [2, -1]]x\n    x(0) = [1, 0]\n    \"\"\"\n    pass",
+    "solution": "import numpy as np\n\ndef solve_spiral_system(t):\n    \"\"\"\n    A = [[-1, -2], [2, -1]]\n    Eigenvalues: -1 ± 2i\n    Solution: e^(-t)[cos(2t), sin(2t)] (after applying IC)\n    This is a spiral sink\n    \"\"\"\n    return np.exp(-t) * np.array([np.cos(2*t), np.sin(2*t)])",
+    "testCases": [
+      {
+        "input": "0",
+        "expectedOutput": "[1.0, 0.0]",
+        "isHidden": false,
+        "description": "Initial condition"
+      },
+      {
+        "input": "np.pi/4",
+        "expectedOutput": "[0.0, 0.4559]",
+        "isHidden": false,
+        "description": "t = π/4"
+      },
+      {
+        "input": "np.pi/2",
+        "expectedOutput": "[-0.2079, 0.0]",
+        "isHidden": false,
+        "description": "t = π/2"
+      },
+      {
+        "input": "np.pi",
+        "expectedOutput": "[0.0432, 0.0]",
+        "isHidden": true,
+        "description": "Approaches origin"
+      }
+    ],
+    "hints": [
+      "Eigenvalues: -1 ± 2i (α = -1, β = 2)",
+      "Solution spirals inward (α < 0)",
+      "Exponential decay with oscillation"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math302-t4-ex07",
+    "subjectId": "math302",
+    "topicId": "math302-topic-4",
+    "title": "Repeated Eigenvalue - Sufficient Eigenvectors",
+    "difficulty": 4,
+    "description": "Find eigenvalues of [[2, 0], [0, 2]].",
+    "starterCode": "import numpy as np\n\ndef repeated_eigenvalue_diagonal():\n    \"\"\"\n    Find eigenvalues of [[2, 0], [0, 2]]\n    \"\"\"\n    pass",
+    "solution": "import numpy as np\n\ndef repeated_eigenvalue_diagonal():\n    \"\"\"\n    A = 2*I\n    Eigenvalue λ = 2 (repeated)\n    Every vector is an eigenvector\n    Two independent eigenvectors: [1,0], [0,1]\n    \"\"\"\n    A = np.array([[2, 0], [0, 2]])\n    eigenvalues = np.linalg.eigvals(A)\n    return sorted(eigenvalues.real)",
+    "testCases": [
+      {
+        "input": "",
+        "expectedOutput": "[2.0, 2.0]",
+        "isHidden": false,
+        "description": "Repeated eigenvalue 2"
+      },
+      {
+        "input": "",
+        "expectedOutput": "[2.0, 2.0]",
+        "isHidden": false,
+        "description": "Scalar matrix"
+      }
+    ],
+    "hints": [
+      "This is a scalar multiple of identity",
+      "Every vector is an eigenvector",
+      "Two independent eigenvectors exist"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math302-t4-ex08",
+    "subjectId": "math302",
+    "topicId": "math302-topic-4",
+    "title": "Repeated Eigenvalue - Defective Matrix",
+    "difficulty": 4,
+    "description": "Find eigenvalues and number of independent eigenvectors for [[2, 1], [0, 2]].",
+    "starterCode": "import numpy as np\n\ndef defective_matrix():\n    \"\"\"\n    For A = [[2, 1], [0, 2]]\n    Return (eigenvalue, number_of_independent_eigenvectors)\n    \"\"\"\n    pass",
+    "solution": "import numpy as np\n\ndef defective_matrix():\n    \"\"\"\n    A = [[2, 1], [0, 2]]\n    Eigenvalue λ = 2 (repeated)\n    (A - 2I) = [[0, 1], [0, 0]]\n    Rank = 1, nullity = 1\n    Only one independent eigenvector\n    This is a defective matrix\n    \"\"\"\n    return (2.0, 1)",
+    "testCases": [
+      {
+        "input": "",
+        "expectedOutput": "(2.0, 1)",
+        "isHidden": false,
+        "description": "Defective: one eigenvector"
+      },
+      {
+        "input": "",
+        "expectedOutput": "(2.0, 1)",
+        "isHidden": false,
+        "description": "Repeated λ=2, one eigenvector"
+      }
+    ],
+    "hints": [
+      "Repeated eigenvalue λ = 2",
+      "Solve (A - 2I)v = 0",
+      "Only one independent solution exists"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math302-t4-ex09",
+    "subjectId": "math302",
+    "topicId": "math302-topic-4",
+    "title": "Solve System - Repeated Eigenvalue",
+    "difficulty": 4,
+    "description": "Solve dx/dt = [[2, 1], [0, 2]]x with x(0) = [0, 1].",
+    "starterCode": "import numpy as np\n\ndef solve_repeated_eigenvalue(t):\n    \"\"\"\n    Solve dx/dt = [[2, 1], [0, 2]]x\n    x(0) = [0, 1]\n    \"\"\"\n    pass",
+    "solution": "import numpy as np\n\ndef solve_repeated_eigenvalue(t):\n    \"\"\"\n    A = [[2, 1], [0, 2]]\n    Repeated eigenvalue λ = 2\n    Eigenvector: v = [1, 0]\n    Need generalized eigenvector w from (A-2I)w = v\n    w = [0, 1]\n    General: x = c1*[1,0]*e^(2t) + c2*([0,1] + [1,0]*t)*e^(2t)\n    With x(0) = [0, 1]: c1 = 0, c2 = 1\n    Solution: x = [t, 1]*e^(2t)\n    \"\"\"\n    return np.exp(2*t) * np.array([t, 1])",
+    "testCases": [
+      {
+        "input": "0",
+        "expectedOutput": "[0.0, 1.0]",
+        "isHidden": false,
+        "description": "Initial condition"
+      },
+      {
+        "input": "1",
+        "expectedOutput": "[7.3891, 7.3891]",
+        "isHidden": false,
+        "description": "t = 1"
+      },
+      {
+        "input": "0.5",
+        "expectedOutput": "[1.3591, 2.7183]",
+        "isHidden": false,
+        "description": "Intermediate value"
+      },
+      {
+        "input": "2",
+        "expectedOutput": "[109.1963, 54.5982]",
+        "isHidden": true,
+        "description": "t = 2"
+      }
+    ],
+    "hints": [
+      "Need generalized eigenvector for defective matrix",
+      "Solve (A - λI)w = v where v is eigenvector",
+      "Solution includes t*e^(λt) term"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math302-t4-ex10",
+    "subjectId": "math302",
+    "topicId": "math302-topic-4",
+    "title": "Phase Portrait Classification",
+    "difficulty": 4,
+    "description": "Classify the equilibrium at origin for dx/dt = [[3, 0], [0, -2]]x.",
+    "starterCode": "import numpy as np\n\ndef classify_equilibrium():\n    \"\"\"\n    Classify equilibrium for A = [[3, 0], [0, -2]]\n    Return classification: 'saddle', 'node', 'spiral', or 'center'\n    \"\"\"\n    pass",
+    "solution": "import numpy as np\n\ndef classify_equilibrium():\n    \"\"\"\n    A = [[3, 0], [0, -2]]\n    Eigenvalues: 3, -2 (real, opposite signs)\n    One positive, one negative => saddle point\n    \"\"\"\n    return 'saddle'",
+    "testCases": [
+      {
+        "input": "",
+        "expectedOutput": "saddle",
+        "isHidden": false,
+        "description": "Saddle point"
+      },
+      {
+        "input": "",
+        "expectedOutput": "saddle",
+        "isHidden": false,
+        "description": "Opposite sign eigenvalues"
+      }
+    ],
+    "hints": [
+      "Find eigenvalues: 3 and -2",
+      "Real eigenvalues with opposite signs",
+      "This is a saddle point (unstable)"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math302-t4-ex11",
+    "subjectId": "math302",
+    "topicId": "math302-topic-4",
+    "title": "Stability Analysis",
+    "difficulty": 4,
+    "description": "Determine stability of dx/dt = [[-1, 2], [-2, -1]]x.",
+    "starterCode": "import numpy as np\n\ndef determine_stability():\n    \"\"\"\n    For A = [[-1, 2], [-2, -1]]\n    Return 'stable', 'unstable', or 'center'\n    \"\"\"\n    pass",
+    "solution": "import numpy as np\n\ndef determine_stability():\n    \"\"\"\n    A = [[-1, 2], [-2, -1]]\n    Eigenvalues: -1 ± 2i\n    Real part α = -1 < 0\n    Negative real part => stable spiral\n    \"\"\"\n    A = np.array([[-1, 2], [-2, -1]])\n    eigenvalues = np.linalg.eigvals(A)\n    max_real = np.max(eigenvalues.real)\n    if max_real < 0:\n        return 'stable'\n    elif max_real > 0:\n        return 'unstable'\n    else:\n        return 'center'",
+    "testCases": [
+      {
+        "input": "",
+        "expectedOutput": "stable",
+        "isHidden": false,
+        "description": "Stable spiral"
+      },
+      {
+        "input": "",
+        "expectedOutput": "stable",
+        "isHidden": false,
+        "description": "Negative real parts"
+      }
+    ],
+    "hints": [
+      "Find eigenvalues: -1 ± 2i",
+      "Check real part of eigenvalues",
+      "Real part < 0 means stable"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math302-t4-ex12",
+    "subjectId": "math302",
+    "topicId": "math302-topic-4",
+    "title": "Trace-Determinant Classification",
+    "difficulty": 5,
+    "description": "For 2×2 matrix A, classify using trace τ = tr(A) and determinant Δ = det(A). Given τ = -2, Δ = 5.",
+    "starterCode": "import numpy as np\n\ndef classify_trace_det(tau, delta):\n    \"\"\"\n    Classify equilibrium using trace and determinant\n    tau = trace, delta = determinant\n    Return: 'saddle', 'node', 'spiral', 'center', or 'degenerate'\n    \"\"\"\n    pass",
+    "solution": "import numpy as np\n\ndef classify_trace_det(tau, delta):\n    \"\"\"\n    τ = -2, Δ = 5\n    Eigenvalues from λ^2 - τλ + Δ = 0\n    Discriminant: τ^2 - 4Δ = 4 - 20 = -16 < 0\n    => complex eigenvalues\n    τ < 0 => stable spiral\n    \"\"\"\n    discriminant = tau**2 - 4*delta\n\n    if delta < 0:\n        return 'saddle'\n    elif discriminant > 0:\n        if tau < 0:\n            return 'stable node'\n        else:\n            return 'unstable node'\n    elif discriminant < 0:\n        if tau < 0:\n            return 'stable spiral'\n        elif tau > 0:\n            return 'unstable spiral'\n        else:\n            return 'center'\n    else:\n        return 'degenerate'",
+    "testCases": [
+      {
+        "input": "-2, 5",
+        "expectedOutput": "stable spiral",
+        "isHidden": false,
+        "description": "τ=-2, Δ=5"
+      },
+      {
+        "input": "0, 1",
+        "expectedOutput": "center",
+        "isHidden": false,
+        "description": "τ=0, Δ=1"
+      },
+      {
+        "input": "3, -1",
+        "expectedOutput": "saddle",
+        "isHidden": true,
+        "description": "τ=3, Δ=-1"
+      },
+      {
+        "input": "-4, 3",
+        "expectedOutput": "stable node",
+        "isHidden": true,
+        "description": "τ=-4, Δ=3"
+      }
+    ],
+    "hints": [
+      "Discriminant D = τ² - 4Δ determines eigenvalue type",
+      "D < 0: complex (spiral/center)",
+      "D > 0: real (node/saddle)",
+      "Sign of τ and Δ determine stability"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math302-t4-ex13",
+    "subjectId": "math302",
+    "topicId": "math302-topic-4",
+    "title": "Nonhomogeneous System",
+    "difficulty": 5,
+    "description": "Solve dx/dt = [[1, 0], [0, -1]]x + [2, 0] with x(0) = [0, 0].",
+    "starterCode": "import numpy as np\nfrom scipy.integrate import odeint\n\ndef solve_nonhomogeneous_system(t):\n    \"\"\"\n    Solve dx/dt = [[1, 0], [0, -1]]x + [2, 0]\n    x(0) = [0, 0]\n    \"\"\"\n    pass",
+    "solution": "import numpy as np\nfrom scipy.integrate import odeint\n\ndef solve_nonhomogeneous_system(t):\n    \"\"\"\n    dx/dt = [[1, 0], [0, -1]]x + [2, 0]\n    Particular solution: x_p = [-2, 0] (constant)\n    Homogeneous: x_h = [c1*e^t, c2*e^(-t)]\n    General: x = [-2 + c1*e^t, c2*e^(-t)]\n    With x(0) = [0, 0]: c1 = 2, c2 = 0\n    Solution: x = [2(e^t - 1), 0]\n    \"\"\"\n    return np.array([2*(np.exp(t) - 1), 0])",
+    "testCases": [
+      {
+        "input": "0",
+        "expectedOutput": "[0.0, 0.0]",
+        "isHidden": false,
+        "description": "Initial condition"
+      },
+      {
+        "input": "1",
+        "expectedOutput": "[3.4366, 0.0]",
+        "isHidden": false,
+        "description": "t = 1"
+      },
+      {
+        "input": "2",
+        "expectedOutput": "[12.7781, 0.0]",
+        "isHidden": false,
+        "description": "t = 2"
+      },
+      {
+        "input": "0.5",
+        "expectedOutput": "[1.2974, 0.0]",
+        "isHidden": true,
+        "description": "Intermediate value"
+      }
+    ],
+    "hints": [
+      "Find particular solution by trying constant vector",
+      "Add homogeneous solution",
+      "Apply initial condition to find constants"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math302-t4-ex14",
+    "subjectId": "math302",
+    "topicId": "math302-topic-4",
+    "title": "Matrix Exponential",
+    "difficulty": 5,
+    "description": "Compute e^(At) for A = [[0, 1], [0, 0]] at t = 1.",
+    "starterCode": "import numpy as np\nfrom scipy.linalg import expm\n\ndef matrix_exponential():\n    \"\"\"\n    Compute e^(At) at t = 1 for A = [[0, 1], [0, 0]]\n    \"\"\"\n    pass",
+    "solution": "import numpy as np\nfrom scipy.linalg import expm\n\ndef matrix_exponential():\n    \"\"\"\n    A = [[0, 1], [0, 0]]\n    A is nilpotent: A^2 = 0\n    e^(At) = I + At + (At)^2/2! + ... = I + At\n    At t=1: e^A = [[1, 1], [0, 1]]\n    \"\"\"\n    A = np.array([[0, 1], [0, 0]])\n    return expm(A)",
+    "testCases": [
+      {
+        "input": "",
+        "expectedOutput": "[[1.0, 1.0], [0.0, 1.0]]",
+        "isHidden": false,
+        "description": "e^A at t=1"
+      },
+      {
+        "input": "",
+        "expectedOutput": "[[1.0, 1.0], [0.0, 1.0]]",
+        "isHidden": false,
+        "description": "Nilpotent matrix"
+      }
+    ],
+    "hints": [
+      "A² = 0 (nilpotent)",
+      "Series e^A = I + A + A²/2! + ... terminates",
+      "e^A = I + A for this matrix"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math302-t4-ex15",
+    "subjectId": "math302",
+    "topicId": "math302-topic-4",
+    "title": "Coupled Oscillators",
+    "difficulty": 5,
+    "description": "Two masses connected by springs: d²x/dt² = -2x + y, d²y/dt² = x - 2y. Convert to first-order system.",
+    "starterCode": "import numpy as np\n\ndef coupled_oscillators_matrix():\n    \"\"\"\n    Convert second-order system to first-order\n    Return the 4x4 coefficient matrix A\n    where dX/dt = AX with X = [x, y, x', y']\n    \"\"\"\n    pass",
+    "solution": "import numpy as np\n\ndef coupled_oscillators_matrix():\n    \"\"\"\n    Let X = [x, y, x', y']\n    x' = x'\n    y' = y'\n    x'' = -2x + y\n    y'' = x - 2y\n\n    dX/dt = [[0,  0,  1,  0],\n             [0,  0,  0,  1],\n             [-2, 1,  0,  0],\n             [1, -2,  0,  0]] X\n    \"\"\"\n    A = np.array([\n        [0,  0,  1,  0],\n        [0,  0,  0,  1],\n        [-2, 1,  0,  0],\n        [1, -2,  0,  0]\n    ])\n    return A",
+    "testCases": [
+      {
+        "input": "",
+        "expectedOutput": "[[0, 0, 1, 0], [0, 0, 0, 1], [-2, 1, 0, 0], [1, -2, 0, 0]]",
+        "isHidden": false,
+        "description": "First-order system matrix"
+      },
+      {
+        "input": "",
+        "expectedOutput": "[[0, 0, 1, 0], [0, 0, 0, 1], [-2, 1, 0, 0], [1, -2, 0, 0]]",
+        "isHidden": false,
+        "description": "Coupled oscillator matrix"
+      }
+    ],
+    "hints": [
+      "Introduce variables v = dx/dt, w = dy/dt",
+      "State vector: [x, y, v, w]",
+      "First two equations: dx/dt = v, dy/dt = w"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math302-t4-ex16",
+    "subjectId": "math302",
+    "topicId": "math302-topic-4",
+    "title": "Fundamental Matrix",
+    "difficulty": 5,
+    "description": "For dx/dt = [[1, 1], [4, 1]]x, compute the fundamental matrix Φ(t) at t = 0.",
+    "starterCode": "import numpy as np\n\ndef fundamental_matrix():\n    \"\"\"\n    For A = [[1, 1], [4, 1]]\n    Compute fundamental matrix Φ(0)\n    Φ(t) has columns as independent solutions\n    Φ(0) should be identity if normalized\n    \"\"\"\n    pass",
+    "solution": "import numpy as np\n\ndef fundamental_matrix():\n    \"\"\"\n    Fundamental matrix Φ(t) at t=0 is identity\n    when solutions are normalized so that Φ(0) = I\n\n    For this problem, Φ(0) = I\n    \"\"\"\n    return np.eye(2)",
+    "testCases": [
+      {
+        "input": "",
+        "expectedOutput": "[[1.0, 0.0], [0.0, 1.0]]",
+        "isHidden": false,
+        "description": "Φ(0) = I"
+      },
+      {
+        "input": "",
+        "expectedOutput": "[[1.0, 0.0], [0.0, 1.0]]",
+        "isHidden": false,
+        "description": "Identity at t=0"
+      }
+    ],
+    "hints": [
+      "Fundamental matrix contains independent solutions as columns",
+      "At t=0, Φ(0) = I when properly normalized",
+      "Φ(t) = e^(At) when Φ(0) = I"
+    ],
+    "language": "python"
+  }
+]

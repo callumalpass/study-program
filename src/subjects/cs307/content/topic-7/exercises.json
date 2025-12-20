@@ -1,0 +1,594 @@
+[
+  {
+    "id": "cs307-t7-ex01",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-7",
+    "title": "Parse Vulnerability Severity",
+    "difficulty": 1,
+    "description": "Write a function to parse vulnerability severity from a scan report line.",
+    "starterCode": "def parse_severity(report_line):\n    # Extract: CRITICAL, HIGH, MEDIUM, LOW, INFO\n    pass\n\nprint(parse_severity(\"CVE-2024-1234 | HIGH | SQL Injection in login.php\"))\nprint(parse_severity(\"CVE-2024-5678 | LOW | Information disclosure\"))",
+    "solution": "def parse_severity(report_line):\n    severities = ['CRITICAL', 'HIGH', 'MEDIUM', 'LOW', 'INFO']\n\n    parts = report_line.split('|')\n    if len(parts) < 2:\n        return None\n\n    severity_part = parts[1].strip().upper()\n\n    if severity_part in severities:\n        return severity_part\n\n    return None\n\nprint(parse_severity(\"CVE-2024-1234 | HIGH | SQL Injection in login.php\"))\nprint(parse_severity(\"CVE-2024-5678 | LOW | Information disclosure\"))",
+    "testCases": [
+      {
+        "input": "\"CVE-2024-1234 | HIGH | SQL Injection\"",
+        "expectedOutput": "\"HIGH\"",
+        "isHidden": false,
+        "description": "Parse HIGH severity"
+      },
+      {
+        "input": "\"CVE-2024-5678 | LOW | Info leak\"",
+        "expectedOutput": "\"LOW\"",
+        "isHidden": false,
+        "description": "Parse LOW severity"
+      },
+      {
+        "input": "\"Invalid format\"",
+        "expectedOutput": "None",
+        "isHidden": true,
+        "description": "Invalid format"
+      }
+    ],
+    "hints": [
+      "Split on pipe character |",
+      "Severity is in second field",
+      "Strip whitespace and convert to uppercase",
+      "Validate against known severities"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs307-t7-ex02",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-7",
+    "title": "Calculate CVSS Base Score",
+    "difficulty": 3,
+    "description": "Write a simplified function to calculate CVSS v3 base score from attack vector and impact values.",
+    "starterCode": "def calculate_cvss_base(attack_vector, impact):\n    # attack_vector: 'NETWORK'=0.85, 'ADJACENT'=0.62, 'LOCAL'=0.55, 'PHYSICAL'=0.2\n    # impact: 'HIGH'=0.56, 'LOW'=0.22, 'NONE'=0\n    # Formula: min(10, attack_vector * impact * 10)\n    pass\n\nprint(calculate_cvss_base('NETWORK', 'HIGH'))\nprint(calculate_cvss_base('LOCAL', 'LOW'))",
+    "solution": "def calculate_cvss_base(attack_vector, impact):\n    av_values = {\n        'NETWORK': 0.85,\n        'ADJACENT': 0.62,\n        'LOCAL': 0.55,\n        'PHYSICAL': 0.2\n    }\n\n    impact_values = {\n        'HIGH': 0.56,\n        'LOW': 0.22,\n        'NONE': 0\n    }\n\n    if attack_vector not in av_values or impact not in impact_values:\n        return None\n\n    av = av_values[attack_vector]\n    imp = impact_values[impact]\n\n    # Simplified CVSS calculation\n    score = min(10.0, av * imp * 10)\n    return round(score, 1)\n\nprint(calculate_cvss_base('NETWORK', 'HIGH'))\nprint(calculate_cvss_base('LOCAL', 'LOW'))",
+    "testCases": [
+      {
+        "input": "'NETWORK', 'HIGH'",
+        "expectedOutput": "4.8",
+        "isHidden": false,
+        "description": "Network attack, high impact"
+      },
+      {
+        "input": "'LOCAL', 'LOW'",
+        "expectedOutput": "1.2",
+        "isHidden": false,
+        "description": "Local attack, low impact"
+      },
+      {
+        "input": "'PHYSICAL', 'NONE'",
+        "expectedOutput": "0.0",
+        "isHidden": true,
+        "description": "No impact"
+      }
+    ],
+    "hints": [
+      "Create dictionaries for AV and Impact values",
+      "Multiply AV * Impact * 10",
+      "Use min() to cap at 10.0",
+      "Round to 1 decimal place"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs307-t7-ex03",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-7",
+    "title": "Parse CVE Identifier",
+    "difficulty": 1,
+    "description": "Write a function to validate and parse CVE identifiers.",
+    "starterCode": "def parse_cve(cve_string):\n    # Valid format: CVE-YYYY-NNNNN (year and ID)\n    pass\n\nprint(parse_cve(\"CVE-2024-12345\"))\nprint(parse_cve(\"CVE-99-123\"))\nprint(parse_cve(\"INVALID\"))",
+    "solution": "def parse_cve(cve_string):\n    import re\n\n    # CVE format: CVE-YYYY-NNNNN+\n    pattern = r'^CVE-(\\d{4})-(\\d{4,})$'\n\n    match = re.match(pattern, cve_string)\n    if not match:\n        return None\n\n    year = int(match.group(1))\n    cve_id = match.group(2)\n\n    # Year should be reasonable (1999-2099)\n    if year < 1999 or year > 2099:\n        return None\n\n    return {\n        'year': year,\n        'id': cve_id,\n        'full': cve_string\n    }\n\nprint(parse_cve(\"CVE-2024-12345\"))\nprint(parse_cve(\"CVE-99-123\"))\nprint(parse_cve(\"INVALID\"))",
+    "testCases": [
+      {
+        "input": "\"CVE-2024-12345\"",
+        "expectedOutput": "dict with year=2024",
+        "isHidden": false,
+        "description": "Valid CVE"
+      },
+      {
+        "input": "\"CVE-99-123\"",
+        "expectedOutput": "None",
+        "isHidden": false,
+        "description": "Invalid year"
+      },
+      {
+        "input": "\"INVALID\"",
+        "expectedOutput": "None",
+        "isHidden": true,
+        "description": "Not CVE format"
+      }
+    ],
+    "hints": [
+      "Use regex to match CVE-YYYY-NNNNN",
+      "Year is 4 digits",
+      "ID is 4 or more digits",
+      "Validate year is reasonable (1999-2099)"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs307-t7-ex04",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-7",
+    "title": "Categorize Vulnerability Type",
+    "difficulty": 2,
+    "description": "Write a function to categorize vulnerability based on description keywords.",
+    "starterCode": "def categorize_vulnerability(description):\n    # Categories: SQL Injection, XSS, CSRF, Buffer Overflow, etc.\n    pass\n\nprint(categorize_vulnerability(\"SQL injection in user login form\"))\nprint(categorize_vulnerability(\"Cross-site scripting in comment field\"))",
+    "solution": "def categorize_vulnerability(description):\n    desc_lower = description.lower()\n\n    categories = {\n        'SQL Injection': ['sql injection', 'sqli', 'sql inject'],\n        'XSS': ['cross-site scripting', 'xss', 'javascript injection'],\n        'CSRF': ['cross-site request forgery', 'csrf'],\n        'Buffer Overflow': ['buffer overflow', 'bof', 'stack overflow'],\n        'Authentication': ['authentication', 'auth bypass', 'broken auth'],\n        'Access Control': ['access control', 'authorization', 'privilege escalation'],\n        'Cryptographic': ['weak encryption', 'crypto', 'insecure hash'],\n        'Information Disclosure': ['information disclosure', 'info leak', 'exposure']\n    }\n\n    for category, keywords in categories.items():\n        for keyword in keywords:\n            if keyword in desc_lower:\n                return category\n\n    return 'Other'\n\nprint(categorize_vulnerability(\"SQL injection in user login form\"))\nprint(categorize_vulnerability(\"Cross-site scripting in comment field\"))",
+    "testCases": [
+      {
+        "input": "\"SQL injection in login\"",
+        "expectedOutput": "\"SQL Injection\"",
+        "isHidden": false,
+        "description": "Detect SQLi"
+      },
+      {
+        "input": "\"Cross-site scripting in comments\"",
+        "expectedOutput": "\"XSS\"",
+        "isHidden": false,
+        "description": "Detect XSS"
+      },
+      {
+        "input": "\"Buffer overflow in parser\"",
+        "expectedOutput": "\"Buffer Overflow\"",
+        "isHidden": true,
+        "description": "Detect BOF"
+      }
+    ],
+    "hints": [
+      "Create dictionary of categories and keywords",
+      "Convert description to lowercase",
+      "Check for keyword matches",
+      "Return first matching category"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs307-t7-ex05",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-7",
+    "title": "Security Checklist Validator",
+    "difficulty": 2,
+    "description": "Write a function to validate that all security checklist items are marked as complete.",
+    "starterCode": "def validate_security_checklist(checklist):\n    # checklist: dict with items and status (True/False)\n    # Return list of incomplete items\n    pass\n\nchecklist = {\n    \"HTTPS enabled\": True,\n    \"SQL injection testing\": False,\n    \"Password hashing\": True,\n    \"CSRF protection\": False\n}\nprint(validate_security_checklist(checklist))",
+    "solution": "def validate_security_checklist(checklist):\n    incomplete_items = []\n\n    for item, status in checklist.items():\n        if not status:\n            incomplete_items.append(item)\n\n    return incomplete_items\n\nchecklist = {\n    \"HTTPS enabled\": True,\n    \"SQL injection testing\": False,\n    \"Password hashing\": True,\n    \"CSRF protection\": False\n}\nprint(validate_security_checklist(checklist))",
+    "testCases": [
+      {
+        "input": "Checklist with some incomplete",
+        "expectedOutput": "List of incomplete items",
+        "isHidden": false,
+        "description": "Find incomplete items"
+      },
+      {
+        "input": "All items complete",
+        "expectedOutput": "Empty list",
+        "isHidden": false,
+        "description": "All complete"
+      },
+      {
+        "input": "All items incomplete",
+        "expectedOutput": "All items listed",
+        "isHidden": true,
+        "description": "None complete"
+      }
+    ],
+    "hints": [
+      "Iterate through checklist items",
+      "Check if status is False",
+      "Add incomplete items to list",
+      "Return list of incomplete items"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs307-t7-ex06",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-7",
+    "title": "Risk Score Calculator",
+    "difficulty": 3,
+    "description": "Write a function to calculate overall risk score from likelihood and impact ratings.",
+    "starterCode": "def calculate_risk_score(likelihood, impact):\n    # likelihood: 1-5 (1=rare, 5=certain)\n    # impact: 1-5 (1=negligible, 5=catastrophic)\n    # Risk = likelihood * impact\n    # Return: score and category (LOW, MEDIUM, HIGH, CRITICAL)\n    pass\n\nprint(calculate_risk_score(3, 4))\nprint(calculate_risk_score(1, 2))",
+    "solution": "def calculate_risk_score(likelihood, impact):\n    if not (1 <= likelihood <= 5 and 1 <= impact <= 5):\n        return None\n\n    score = likelihood * impact\n\n    # Categorize risk\n    if score <= 4:\n        category = 'LOW'\n    elif score <= 9:\n        category = 'MEDIUM'\n    elif score <= 16:\n        category = 'HIGH'\n    else:\n        category = 'CRITICAL'\n\n    return {\n        'score': score,\n        'category': category,\n        'likelihood': likelihood,\n        'impact': impact\n    }\n\nprint(calculate_risk_score(3, 4))\nprint(calculate_risk_score(1, 2))",
+    "testCases": [
+      {
+        "input": "3, 4",
+        "expectedOutput": "score=12, category=HIGH",
+        "isHidden": false,
+        "description": "High risk"
+      },
+      {
+        "input": "1, 2",
+        "expectedOutput": "score=2, category=LOW",
+        "isHidden": false,
+        "description": "Low risk"
+      },
+      {
+        "input": "5, 5",
+        "expectedOutput": "score=25, category=CRITICAL",
+        "isHidden": true,
+        "description": "Critical risk"
+      }
+    ],
+    "hints": [
+      "Multiply likelihood by impact",
+      "Score 1-4: LOW",
+      "Score 5-9: MEDIUM",
+      "Score 10-16: HIGH, 17+: CRITICAL"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs307-t7-ex07",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-7",
+    "title": "Parse Nmap Output",
+    "difficulty": 3,
+    "description": "Write a function to parse Nmap scan output and extract open ports.",
+    "starterCode": "def parse_nmap_output(nmap_line):\n    # Parse: \"80/tcp   open  http\"\n    pass\n\nprint(parse_nmap_output(\"80/tcp   open  http\"))\nprint(parse_nmap_output(\"443/tcp  open  https\"))\nprint(parse_nmap_output(\"22/tcp   closed ssh\"))",
+    "solution": "def parse_nmap_output(nmap_line):\n    try:\n        parts = nmap_line.split()\n        if len(parts) < 3:\n            return None\n\n        # Parse port/protocol\n        port_proto = parts[0].split('/')\n        if len(port_proto) != 2:\n            return None\n\n        port = int(port_proto[0])\n        protocol = port_proto[1]\n        state = parts[1]\n        service = parts[2] if len(parts) > 2 else 'unknown'\n\n        # Only return if port is open\n        if state != 'open':\n            return None\n\n        return {\n            'port': port,\n            'protocol': protocol,\n            'state': state,\n            'service': service\n        }\n    except (ValueError, IndexError):\n        return None\n\nprint(parse_nmap_output(\"80/tcp   open  http\"))\nprint(parse_nmap_output(\"443/tcp  open  https\"))\nprint(parse_nmap_output(\"22/tcp   closed ssh\"))",
+    "testCases": [
+      {
+        "input": "\"80/tcp   open  http\"",
+        "expectedOutput": "dict with port=80",
+        "isHidden": false,
+        "description": "Parse open HTTP port"
+      },
+      {
+        "input": "\"443/tcp  open  https\"",
+        "expectedOutput": "dict with service=https",
+        "isHidden": false,
+        "description": "Parse open HTTPS port"
+      },
+      {
+        "input": "\"22/tcp   closed ssh\"",
+        "expectedOutput": "None",
+        "isHidden": true,
+        "description": "Ignore closed ports"
+      }
+    ],
+    "hints": [
+      "Split line by whitespace",
+      "Parse port/protocol from first field",
+      "Extract state and service",
+      "Only return open ports"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs307-t7-ex08",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-7",
+    "title": "Static Analysis Rule",
+    "difficulty": 2,
+    "description": "Write a function to detect hardcoded passwords in code (simple pattern matching).",
+    "starterCode": "def detect_hardcoded_password(code_line):\n    # Detect patterns like: password = \"secret123\"\n    pass\n\nprint(detect_hardcoded_password('password = \"secret123\"'))\nprint(detect_hardcoded_password('user = \"admin\"'))",
+    "solution": "def detect_hardcoded_password(code_line):\n    import re\n\n    # Patterns for hardcoded passwords\n    patterns = [\n        r'password\\s*=\\s*[\"']\\w+[\"']',\n        r'passwd\\s*=\\s*[\"']\\w+[\"']',\n        r'pwd\\s*=\\s*[\"']\\w+[\"']',\n        r'secret\\s*=\\s*[\"']\\w+[\"']'\n    ]\n\n    code_lower = code_line.lower()\n\n    for pattern in patterns:\n        if re.search(pattern, code_lower):\n            return True\n\n    return False\n\nprint(detect_hardcoded_password('password = \"secret123\"'))\nprint(detect_hardcoded_password('user = \"admin\"'))",
+    "testCases": [
+      {
+        "input": "'password = \"secret123\"'",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Detect hardcoded password"
+      },
+      {
+        "input": "'user = \"admin\"'",
+        "expectedOutput": "False",
+        "isHidden": false,
+        "description": "Not a password"
+      },
+      {
+        "input": "'SECRET = \"key123\"'",
+        "expectedOutput": "True",
+        "isHidden": true,
+        "description": "Detect secret"
+      }
+    ],
+    "hints": [
+      "Use regex to match password patterns",
+      "Look for: password, passwd, pwd, secret",
+      "Match = followed by quoted string",
+      "Case-insensitive matching"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs307-t7-ex09",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-7",
+    "title": "Vulnerability Report Aggregator",
+    "difficulty": 4,
+    "description": "Write a function to aggregate vulnerability counts by severity from multiple scan results.",
+    "starterCode": "def aggregate_vulnerabilities(scan_results):\n    # scan_results: list of dicts with 'severity' key\n    # Return counts by severity level\n    pass\n\nresults = [\n    {\"id\": \"V1\", \"severity\": \"HIGH\"},\n    {\"id\": \"V2\", \"severity\": \"MEDIUM\"},\n    {\"id\": \"V3\", \"severity\": \"HIGH\"},\n    {\"id\": \"V4\", \"severity\": \"LOW\"}\n]\nprint(aggregate_vulnerabilities(results))",
+    "solution": "def aggregate_vulnerabilities(scan_results):\n    from collections import defaultdict\n\n    severity_counts = defaultdict(int)\n\n    for result in scan_results:\n        severity = result.get('severity', 'UNKNOWN')\n        severity_counts[severity] += 1\n\n    # Convert to regular dict and sort by severity\n    severity_order = ['CRITICAL', 'HIGH', 'MEDIUM', 'LOW', 'INFO', 'UNKNOWN']\n    ordered_counts = {}\n\n    for severity in severity_order:\n        if severity in severity_counts:\n            ordered_counts[severity] = severity_counts[severity]\n\n    return ordered_counts\n\nresults = [\n    {\"id\": \"V1\", \"severity\": \"HIGH\"},\n    {\"id\": \"V2\", \"severity\": \"MEDIUM\"},\n    {\"id\": \"V3\", \"severity\": \"HIGH\"},\n    {\"id\": \"V4\", \"severity\": \"LOW\"}\n]\nprint(aggregate_vulnerabilities(results))",
+    "testCases": [
+      {
+        "input": "Results with mixed severities",
+        "expectedOutput": "dict with counts",
+        "isHidden": false,
+        "description": "Aggregate counts"
+      },
+      {
+        "input": "Empty results",
+        "expectedOutput": "Empty dict",
+        "isHidden": false,
+        "description": "No vulnerabilities"
+      },
+      {
+        "input": "All same severity",
+        "expectedOutput": "Single severity count",
+        "isHidden": true,
+        "description": "Uniform severity"
+      }
+    ],
+    "hints": [
+      "Use defaultdict to count occurrences",
+      "Iterate through results",
+      "Count by severity level",
+      "Order by severity (CRITICAL to LOW)"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs307-t7-ex10",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-7",
+    "title": "Fuzzing Input Generator",
+    "difficulty": 3,
+    "description": "Write a function to generate test inputs for fuzzing by mutating a base input string.",
+    "starterCode": "def generate_fuzz_inputs(base_input, mutations=5):\n    # Generate mutations: add special chars, long strings, etc.\n    pass\n\nprint(generate_fuzz_inputs(\"test\", 3))",
+    "solution": "def generate_fuzz_inputs(base_input, mutations=5):\n    import random\n\n    fuzz_inputs = [base_input]  # Include original\n\n    # Mutation strategies\n    special_chars = ['<', '>', '\"', \"'\", '&', ';', '|', '\\n', '\\0']\n\n    for _ in range(mutations):\n        mutation_type = random.randint(1, 4)\n\n        if mutation_type == 1:\n            # Add special characters\n            char = random.choice(special_chars)\n            fuzz_inputs.append(base_input + char)\n\n        elif mutation_type == 2:\n            # Repeat string\n            fuzz_inputs.append(base_input * random.randint(10, 100))\n\n        elif mutation_type == 3:\n            # Add long string\n            fuzz_inputs.append(base_input + 'A' * random.randint(100, 1000))\n\n        elif mutation_type == 4:\n            # Insert special char in middle\n            char = random.choice(special_chars)\n            pos = len(base_input) // 2\n            fuzz_inputs.append(base_input[:pos] + char + base_input[pos:])\n\n    return fuzz_inputs\n\nprint(generate_fuzz_inputs(\"test\", 3))",
+    "testCases": [
+      {
+        "input": "\"test\", 3",
+        "expectedOutput": "List of 4 inputs",
+        "isHidden": false,
+        "description": "Generate mutations"
+      },
+      {
+        "input": "\"input\", 5",
+        "expectedOutput": "List of 6 inputs",
+        "isHidden": false,
+        "description": "Multiple mutations"
+      },
+      {
+        "input": "\"a\", 1",
+        "expectedOutput": "List of 2 inputs",
+        "isHidden": true,
+        "description": "Single mutation"
+      }
+    ],
+    "hints": [
+      "Include original input in results",
+      "Generate mutations: special chars, long strings",
+      "Random selection of mutation types",
+      "Return list of fuzzed inputs"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs307-t7-ex11",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-7",
+    "title": "Security Test Case Generator",
+    "difficulty": 3,
+    "description": "Write a function to generate security test cases for common vulnerabilities.",
+    "starterCode": "def generate_security_tests(endpoint_type):\n    # endpoint_type: 'login', 'search', 'file_upload'\n    # Return list of test cases\n    pass\n\nprint(generate_security_tests('login'))",
+    "solution": "def generate_security_tests(endpoint_type):\n    test_cases = {\n        'login': [\n            {'test': 'SQL Injection', 'input': \"admin' OR '1'='1\"},\n            {'test': 'XSS', 'input': '<script>alert(1)</script>'},\n            {'test': 'Long password', 'input': 'A' * 10000},\n            {'test': 'Empty credentials', 'input': ''},\n            {'test': 'Special characters', 'input': \"!@#$%^&*()\"}\n        ],\n        'search': [\n            {'test': 'XSS in search', 'input': '<img src=x onerror=alert(1)>'},\n            {'test': 'SQL Injection', 'input': \"' OR 1=1--\"},\n            {'test': 'Long query', 'input': 'search' * 1000},\n            {'test': 'Special chars', 'input': '%00\\n\\r'}\n        ],\n        'file_upload': [\n            {'test': 'Path traversal', 'input': '../../../etc/passwd'},\n            {'test': 'Script upload', 'input': 'shell.php'},\n            {'test': 'Null byte', 'input': 'file.txt\\x00.php'},\n            {'test': 'Large file', 'input': 'A' * 100000000}\n        ]\n    }\n\n    return test_cases.get(endpoint_type, [])\n\nprint(generate_security_tests('login'))",
+    "testCases": [
+      {
+        "input": "'login'",
+        "expectedOutput": "List with SQL injection test",
+        "isHidden": false,
+        "description": "Login tests"
+      },
+      {
+        "input": "'search'",
+        "expectedOutput": "List with XSS test",
+        "isHidden": false,
+        "description": "Search tests"
+      },
+      {
+        "input": "'unknown'",
+        "expectedOutput": "Empty list",
+        "isHidden": true,
+        "description": "Unknown endpoint"
+      }
+    ],
+    "hints": [
+      "Create dictionary of endpoint types",
+      "Each type has list of test cases",
+      "Include SQLi, XSS, and boundary tests",
+      "Return relevant tests for endpoint type"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs307-t7-ex12",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-7",
+    "title": "Incident Response Priority",
+    "difficulty": 2,
+    "description": "Write a function to prioritize security incidents based on severity and affected systems.",
+    "starterCode": "def prioritize_incident(severity, affected_systems):\n    # severity: 'CRITICAL', 'HIGH', 'MEDIUM', 'LOW'\n    # affected_systems: number of systems affected\n    # Return priority score (1-10)\n    pass\n\nprint(prioritize_incident('CRITICAL', 50))\nprint(prioritize_incident('LOW', 2))",
+    "solution": "def prioritize_incident(severity, affected_systems):\n    severity_scores = {\n        'CRITICAL': 10,\n        'HIGH': 7,\n        'MEDIUM': 4,\n        'LOW': 2\n    }\n\n    base_score = severity_scores.get(severity, 1)\n\n    # Increase priority based on affected systems\n    if affected_systems >= 100:\n        multiplier = 1.5\n    elif affected_systems >= 10:\n        multiplier = 1.3\n    elif affected_systems >= 5:\n        multiplier = 1.1\n    else:\n        multiplier = 1.0\n\n    priority = min(10, int(base_score * multiplier))\n\n    return priority\n\nprint(prioritize_incident('CRITICAL', 50))\nprint(prioritize_incident('LOW', 2))",
+    "testCases": [
+      {
+        "input": "'CRITICAL', 50",
+        "expectedOutput": "10",
+        "isHidden": false,
+        "description": "Critical with many systems"
+      },
+      {
+        "input": "'LOW', 2",
+        "expectedOutput": "2",
+        "isHidden": false,
+        "description": "Low with few systems"
+      },
+      {
+        "input": "'HIGH', 150",
+        "expectedOutput": "10",
+        "isHidden": true,
+        "description": "High with massive impact"
+      }
+    ],
+    "hints": [
+      "Assign base scores to severities",
+      "Multiply by affected systems factor",
+      "Cap priority at 10",
+      "More systems = higher priority"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs307-t7-ex13",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-7",
+    "title": "Compliance Checker",
+    "difficulty": 3,
+    "description": "Write a function to check if security controls meet compliance requirements (e.g., PCI DSS).",
+    "starterCode": "def check_pci_compliance(controls):\n    # controls: dict of security controls\n    # Return: compliant status and missing controls\n    pass\n\ncontrols = {\n    \"firewall\": True,\n    \"encryption\": True,\n    \"access_control\": False,\n    \"monitoring\": True,\n    \"vulnerability_scanning\": False\n}\nprint(check_pci_compliance(controls))",
+    "solution": "def check_pci_compliance(controls):\n    required_controls = [\n        'firewall',\n        'encryption',\n        'access_control',\n        'monitoring',\n        'vulnerability_scanning',\n        'secure_systems',\n        'restrict_access'\n    ]\n\n    missing_controls = []\n\n    for control in required_controls:\n        if not controls.get(control, False):\n            missing_controls.append(control)\n\n    is_compliant = len(missing_controls) == 0\n\n    return {\n        'compliant': is_compliant,\n        'missing_controls': missing_controls,\n        'compliance_percentage': int(((len(required_controls) - len(missing_controls)) / len(required_controls)) * 100)\n    }\n\ncontrols = {\n    \"firewall\": True,\n    \"encryption\": True,\n    \"access_control\": False,\n    \"monitoring\": True,\n    \"vulnerability_scanning\": False\n}\nprint(check_pci_compliance(controls))",
+    "testCases": [
+      {
+        "input": "Some controls missing",
+        "expectedOutput": "compliant=False, list missing",
+        "isHidden": false,
+        "description": "Non-compliant"
+      },
+      {
+        "input": "All controls present",
+        "expectedOutput": "compliant=True",
+        "isHidden": false,
+        "description": "Compliant"
+      },
+      {
+        "input": "No controls",
+        "expectedOutput": "All missing",
+        "isHidden": true,
+        "description": "No compliance"
+      }
+    ],
+    "hints": [
+      "Define list of required controls",
+      "Check each control is True in dict",
+      "Track missing controls",
+      "Calculate compliance percentage"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs307-t7-ex14",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-7",
+    "title": "Security Metrics Dashboard",
+    "difficulty": 4,
+    "description": "Write a function to calculate security metrics from vulnerability scan data.",
+    "starterCode": "def calculate_security_metrics(vulnerabilities):\n    # vulnerabilities: list of dicts with severity and status\n    # Return: metrics dict with various KPIs\n    pass\n\nvulns = [\n    {\"severity\": \"HIGH\", \"status\": \"open\", \"days_open\": 30},\n    {\"severity\": \"MEDIUM\", \"status\": \"fixed\", \"days_open\": 5},\n    {\"severity\": \"HIGH\", \"status\": \"open\", \"days_open\": 60}\n]\nprint(calculate_security_metrics(vulns))",
+    "solution": "def calculate_security_metrics(vulnerabilities):\n    total = len(vulnerabilities)\n    if total == 0:\n        return {}\n\n    open_vulns = [v for v in vulnerabilities if v['status'] == 'open']\n    fixed_vulns = [v for v in vulnerabilities if v['status'] == 'fixed']\n\n    # Count by severity\n    critical_count = sum(1 for v in vulnerabilities if v.get('severity') == 'CRITICAL')\n    high_count = sum(1 for v in vulnerabilities if v.get('severity') == 'HIGH')\n\n    # Calculate average time to fix\n    if fixed_vulns:\n        avg_time_to_fix = sum(v.get('days_open', 0) for v in fixed_vulns) / len(fixed_vulns)\n    else:\n        avg_time_to_fix = 0\n\n    # Calculate mean time to remediate (MTTR)\n    open_days = [v.get('days_open', 0) for v in open_vulns]\n    avg_open_days = sum(open_days) / len(open_days) if open_days else 0\n\n    return {\n        'total_vulnerabilities': total,\n        'open_count': len(open_vulns),\n        'fixed_count': len(fixed_vulns),\n        'critical_high_count': critical_count + high_count,\n        'fix_rate': round((len(fixed_vulns) / total) * 100, 1),\n        'avg_time_to_fix': round(avg_time_to_fix, 1),\n        'avg_open_days': round(avg_open_days, 1)\n    }\n\nvulns = [\n    {\"severity\": \"HIGH\", \"status\": \"open\", \"days_open\": 30},\n    {\"severity\": \"MEDIUM\", \"status\": \"fixed\", \"days_open\": 5},\n    {\"severity\": \"HIGH\", \"status\": \"open\", \"days_open\": 60}\n]\nprint(calculate_security_metrics(vulns))",
+    "testCases": [
+      {
+        "input": "Mix of open and fixed vulns",
+        "expectedOutput": "Metrics dict",
+        "isHidden": false,
+        "description": "Calculate all metrics"
+      },
+      {
+        "input": "All fixed vulns",
+        "expectedOutput": "fix_rate=100",
+        "isHidden": false,
+        "description": "Perfect fix rate"
+      },
+      {
+        "input": "Empty list",
+        "expectedOutput": "Empty dict",
+        "isHidden": true,
+        "description": "No data"
+      }
+    ],
+    "hints": [
+      "Count total, open, and fixed vulns",
+      "Calculate fix rate percentage",
+      "Compute average time to fix",
+      "Track critical/high severity counts"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs307-t7-ex15",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-7",
+    "title": "Penetration Test Report Parser",
+    "difficulty": 4,
+    "description": "Write a function to parse penetration test findings and extract actionable remediation steps.",
+    "starterCode": "def parse_pentest_finding(finding_text):\n    # Extract: title, severity, description, remediation\n    pass\n\nfinding = \"\"\"\nFINDING: SQL Injection in Login Form\nSEVERITY: CRITICAL\nDESCRIPTION: The login form is vulnerable to SQL injection attacks.\nREMEDIATION: Use parameterized queries and input validation.\n\"\"\"\nprint(parse_pentest_finding(finding))",
+    "solution": "def parse_pentest_finding(finding_text):\n    lines = finding_text.strip().split('\\n')\n\n    finding_data = {\n        'title': '',\n        'severity': '',\n        'description': '',\n        'remediation': ''\n    }\n\n    current_field = None\n\n    for line in lines:\n        line = line.strip()\n        if not line:\n            continue\n\n        if line.startswith('FINDING:'):\n            current_field = 'title'\n            finding_data['title'] = line.replace('FINDING:', '').strip()\n        elif line.startswith('SEVERITY:'):\n            current_field = 'severity'\n            finding_data['severity'] = line.replace('SEVERITY:', '').strip()\n        elif line.startswith('DESCRIPTION:'):\n            current_field = 'description'\n            finding_data['description'] = line.replace('DESCRIPTION:', '').strip()\n        elif line.startswith('REMEDIATION:'):\n            current_field = 'remediation'\n            finding_data['remediation'] = line.replace('REMEDIATION:', '').strip()\n        elif current_field:\n            # Continuation of previous field\n            finding_data[current_field] += ' ' + line\n\n    return finding_data\n\nfinding = \"\"\"\nFINDING: SQL Injection in Login Form\nSEVERITY: CRITICAL\nDESCRIPTION: The login form is vulnerable to SQL injection attacks.\nREMEDIATION: Use parameterized queries and input validation.\n\"\"\"\nprint(parse_pentest_finding(finding))",
+    "testCases": [
+      {
+        "input": "Full finding text",
+        "expectedOutput": "dict with all fields",
+        "isHidden": false,
+        "description": "Parse complete finding"
+      },
+      {
+        "input": "Partial finding",
+        "expectedOutput": "dict with some fields",
+        "isHidden": false,
+        "description": "Handle incomplete data"
+      },
+      {
+        "input": "Multi-line description",
+        "expectedOutput": "Combined description",
+        "isHidden": true,
+        "description": "Multi-line fields"
+      }
+    ],
+    "hints": [
+      "Split text by newlines",
+      "Look for field markers (FINDING:, SEVERITY:, etc.)",
+      "Extract content after markers",
+      "Handle multi-line field values"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs307-t7-ex16",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-7",
+    "title": "Security Baseline Validator",
+    "difficulty": 4,
+    "description": "Write a function to validate system configuration against security baseline requirements.",
+    "starterCode": "def validate_security_baseline(system_config, baseline):\n    # Compare system config against baseline\n    # Return deviations and compliance score\n    pass\n\nconfig = {\n    \"password_min_length\": 8,\n    \"session_timeout\": 3600,\n    \"encryption_enabled\": True,\n    \"audit_logging\": False\n}\n\nbaseline = {\n    \"password_min_length\": 12,\n    \"session_timeout\": 1800,\n    \"encryption_enabled\": True,\n    \"audit_logging\": True\n}\n\nprint(validate_security_baseline(config, baseline))",
+    "solution": "def validate_security_baseline(system_config, baseline):\n    deviations = []\n    compliant_items = 0\n    total_items = len(baseline)\n\n    for setting, required_value in baseline.items():\n        actual_value = system_config.get(setting)\n\n        if actual_value is None:\n            deviations.append({\n                'setting': setting,\n                'issue': 'missing',\n                'required': required_value,\n                'actual': None\n            })\n        elif isinstance(required_value, bool):\n            # Boolean check\n            if actual_value != required_value:\n                deviations.append({\n                    'setting': setting,\n                    'issue': 'non-compliant',\n                    'required': required_value,\n                    'actual': actual_value\n                })\n            else:\n                compliant_items += 1\n        elif isinstance(required_value, (int, float)):\n            # Numeric check (actual should be >= required for security)\n            if actual_value < required_value:\n                deviations.append({\n                    'setting': setting,\n                    'issue': 'below_minimum',\n                    'required': required_value,\n                    'actual': actual_value\n                })\n            else:\n                compliant_items += 1\n        else:\n            # String or other check\n            if actual_value != required_value:\n                deviations.append({\n                    'setting': setting,\n                    'issue': 'non-compliant',\n                    'required': required_value,\n                    'actual': actual_value\n                })\n            else:\n                compliant_items += 1\n\n    compliance_score = int((compliant_items / total_items) * 100) if total_items > 0 else 0\n\n    return {\n        'compliant': len(deviations) == 0,\n        'compliance_score': compliance_score,\n        'deviations': deviations,\n        'total_checks': total_items\n    }\n\nconfig = {\n    \"password_min_length\": 8,\n    \"session_timeout\": 3600,\n    \"encryption_enabled\": True,\n    \"audit_logging\": False\n}\n\nbaseline = {\n    \"password_min_length\": 12,\n    \"session_timeout\": 1800,\n    \"encryption_enabled\": True,\n    \"audit_logging\": True\n}\n\nprint(validate_security_baseline(config, baseline))",
+    "testCases": [
+      {
+        "input": "Config with deviations",
+        "expectedOutput": "List of deviations",
+        "isHidden": false,
+        "description": "Find non-compliance"
+      },
+      {
+        "input": "Fully compliant config",
+        "expectedOutput": "compliance_score=100",
+        "isHidden": false,
+        "description": "Perfect compliance"
+      },
+      {
+        "input": "Missing settings",
+        "expectedOutput": "Missing settings flagged",
+        "isHidden": true,
+        "description": "Handle missing config"
+      }
+    ],
+    "hints": [
+      "Compare each baseline setting to actual config",
+      "Check for missing settings",
+      "Validate numeric values (actual >= required)",
+      "Calculate compliance percentage"
+    ],
+    "language": "python"
+  }
+]

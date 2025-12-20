@@ -1,0 +1,632 @@
+[
+  {
+    "id": "cs306-t7-ex01",
+    "subjectId": "cs306",
+    "topicId": "cs306-topic-7",
+    "title": "Generate Camera Ray",
+    "difficulty": 1,
+    "description": "Generate a camera ray for a given pixel coordinate. The ray originates from the camera position and passes through the pixel on the image plane.",
+    "starterCode": "def generate_camera_ray(pixel_x, pixel_y, image_width, image_height, camera_pos, fov):\n    \"\"\"\n    Generate a ray from camera through a pixel.\n\n    Args:\n        pixel_x, pixel_y: int, pixel coordinates\n        image_width, image_height: int, image dimensions\n        camera_pos: tuple (x, y, z), camera position\n        fov: float, field of view in degrees\n\n    Returns:\n        tuple (origin, direction) where:\n            origin: tuple (x, y, z)\n            direction: tuple (x, y, z) normalized\n\n    Notes:\n        - Assume camera looks down -Z axis\n        - Image plane is at Z = -1\n    \"\"\"\n    # Your code here\n    pass\n\n# Test\nprint(generate_camera_ray(400, 300, 800, 600, (0.0, 0.0, 0.0), 90.0))",
+    "solution": "def generate_camera_ray(pixel_x, pixel_y, image_width, image_height, camera_pos, fov):\n    \"\"\"\n    Generate a ray from camera through a pixel.\n\n    Args:\n        pixel_x, pixel_y: int, pixel coordinates\n        image_width, image_height: int, image dimensions\n        camera_pos: tuple (x, y, z), camera position\n        fov: float, field of view in degrees\n\n    Returns:\n        tuple (origin, direction) where:\n            origin: tuple (x, y, z)\n            direction: tuple (x, y, z) normalized\n\n    Notes:\n        - Assume camera looks down -Z axis\n        - Image plane is at Z = -1\n    \"\"\"\n    import math\n\n    # Convert to normalized device coordinates [-1, 1]\n    ndc_x = (2.0 * pixel_x / image_width) - 1.0\n    ndc_y = 1.0 - (2.0 * pixel_y / image_height)\n\n    # Apply aspect ratio\n    aspect_ratio = image_width / image_height\n\n    # Calculate viewport dimensions based on FOV\n    fov_rad = math.radians(fov)\n    scale = math.tan(fov_rad / 2.0)\n\n    # Calculate ray direction in camera space\n    ray_x = ndc_x * aspect_ratio * scale\n    ray_y = ndc_y * scale\n    ray_z = -1.0\n\n    # Normalize direction\n    magnitude = math.sqrt(ray_x**2 + ray_y**2 + ray_z**2)\n    direction = (ray_x / magnitude, ray_y / magnitude, ray_z / magnitude)\n\n    # Ray origin is camera position\n    origin = camera_pos\n\n    return (origin, direction)\n\n# Test\nprint(generate_camera_ray(400, 300, 800, 600, (0.0, 0.0, 0.0), 90.0))",
+    "testCases": [
+      {
+        "input": "400, 300, 800, 600, (0.0, 0.0, 0.0), 90.0",
+        "expectedOutput": "((0.0, 0.0, 0.0), (0.0, 0.0, -1.0))",
+        "isHidden": false,
+        "description": "Center pixel ray (straight ahead)"
+      },
+      {
+        "input": "0, 0, 800, 600, (0.0, 0.0, 0.0), 90.0",
+        "expectedOutput": "((0.0, 0.0, 0.0), (-0.7682212795973759, 0.5761659596980319, -0.28808297984901594))",
+        "isHidden": false,
+        "description": "Top-left corner pixel"
+      },
+      {
+        "input": "800, 600, 800, 600, (1.0, 2.0, 3.0), 60.0",
+        "expectedOutput": "((1.0, 2.0, 3.0), (0.6546536707079772, -0.5773502691896257, -0.4909524754503578))",
+        "isHidden": true,
+        "description": "Bottom-right with offset camera position"
+      }
+    ],
+    "hints": [
+      "Convert pixel coordinates to normalized device coordinates (NDC) in range [-1, 1]",
+      "Apply aspect ratio to X coordinate",
+      "Use FOV to calculate the scale (tan(fov/2))",
+      "Ray direction in camera space: (ndc_x * aspect * scale, ndc_y * scale, -1)",
+      "Normalize the direction vector",
+      "Ray origin is the camera position"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs306-t7-ex02",
+    "subjectId": "cs306",
+    "topicId": "cs306-topic-7",
+    "title": "Ray-Sphere Intersection",
+    "difficulty": 2,
+    "description": "Calculate the intersection point(s) between a ray and a sphere. Return the nearest intersection distance, or None if no intersection.",
+    "starterCode": "import math\n\ndef ray_sphere_intersection(ray_origin, ray_dir, sphere_center, sphere_radius):\n    \"\"\"\n    Calculate ray-sphere intersection.\n\n    Args:\n        ray_origin: tuple (x, y, z)\n        ray_dir: tuple (x, y, z), normalized\n        sphere_center: tuple (x, y, z)\n        sphere_radius: float\n\n    Returns:\n        float or None, distance to nearest intersection (None if no hit)\n\n    Notes:\n        Solve: ||origin + t*direction - center||² = radius²\n        This gives a quadratic equation in t\n    \"\"\"\n    # Your code here\n    pass\n\n# Test\nprint(ray_sphere_intersection((0.0, 0.0, 0.0), (0.0, 0.0, -1.0), (0.0, 0.0, -5.0), 1.0))",
+    "solution": "import math\n\ndef ray_sphere_intersection(ray_origin, ray_dir, sphere_center, sphere_radius):\n    \"\"\"\n    Calculate ray-sphere intersection.\n\n    Args:\n        ray_origin: tuple (x, y, z)\n        ray_dir: tuple (x, y, z), normalized\n        sphere_center: tuple (x, y, z)\n        sphere_radius: float\n\n    Returns:\n        float or None, distance to nearest intersection (None if no hit)\n\n    Notes:\n        Solve: ||origin + t*direction - center||² = radius²\n        This gives a quadratic equation in t\n    \"\"\"\n    # Vector from sphere center to ray origin\n    oc_x = ray_origin[0] - sphere_center[0]\n    oc_y = ray_origin[1] - sphere_center[1]\n    oc_z = ray_origin[2] - sphere_center[2]\n\n    # Quadratic coefficients: at² + bt + c = 0\n    # a = direction · direction (which is 1 for normalized direction)\n    a = ray_dir[0]**2 + ray_dir[1]**2 + ray_dir[2]**2\n\n    # b = 2 * (direction · oc)\n    b = 2.0 * (ray_dir[0]*oc_x + ray_dir[1]*oc_y + ray_dir[2]*oc_z)\n\n    # c = oc · oc - radius²\n    c = oc_x**2 + oc_y**2 + oc_z**2 - sphere_radius**2\n\n    # Calculate discriminant\n    discriminant = b*b - 4*a*c\n\n    # No intersection if discriminant is negative\n    if discriminant < 0:\n        return None\n\n    # Calculate both solutions\n    sqrt_discriminant = math.sqrt(discriminant)\n    t1 = (-b - sqrt_discriminant) / (2*a)\n    t2 = (-b + sqrt_discriminant) / (2*a)\n\n    # Return nearest positive intersection\n    if t1 > 0.0001:  # Small epsilon to avoid self-intersection\n        return t1\n    elif t2 > 0.0001:\n        return t2\n    else:\n        return None\n\n# Test\nprint(ray_sphere_intersection((0.0, 0.0, 0.0), (0.0, 0.0, -1.0), (0.0, 0.0, -5.0), 1.0))",
+    "testCases": [
+      {
+        "input": "(0.0, 0.0, 0.0), (0.0, 0.0, -1.0), (0.0, 0.0, -5.0), 1.0",
+        "expectedOutput": "4.0",
+        "isHidden": false,
+        "description": "Ray hits sphere straight on"
+      },
+      {
+        "input": "(0.0, 0.0, 0.0), (0.0, 0.0, -1.0), (5.0, 0.0, -5.0), 1.0",
+        "expectedOutput": "None",
+        "isHidden": false,
+        "description": "Ray misses sphere"
+      },
+      {
+        "input": "(0.0, 0.0, 0.0), (0.7071, 0.0, -0.7071), (2.0, 0.0, -2.0), 1.0",
+        "expectedOutput": "1.8284271247461903",
+        "isHidden": true,
+        "description": "Diagonal ray hits sphere"
+      }
+    ],
+    "hints": [
+      "Use the quadratic formula to solve for intersection parameter t",
+      "Calculate oc = ray_origin - sphere_center",
+      "Coefficients: a = dir·dir, b = 2(dir·oc), c = oc·oc - r²",
+      "Check discriminant: if negative, no intersection",
+      "Return the smaller positive t value (nearest intersection)",
+      "Use a small epsilon to avoid self-intersection artifacts"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs306-t7-ex03",
+    "subjectId": "cs306",
+    "topicId": "cs306-topic-7",
+    "title": "Calculate Sphere Normal",
+    "difficulty": 1,
+    "description": "Calculate the surface normal at a point on a sphere. The normal at any point on a sphere points radially outward from the center.",
+    "starterCode": "import math\n\ndef sphere_normal(point, sphere_center):\n    \"\"\"\n    Calculate surface normal at a point on a sphere.\n\n    Args:\n        point: tuple (x, y, z), point on sphere surface\n        sphere_center: tuple (x, y, z), sphere center\n\n    Returns:\n        tuple (x, y, z), normalized surface normal\n    \"\"\"\n    # Your code here\n    pass\n\n# Test\nprint(sphere_normal((3.0, 0.0, 0.0), (0.0, 0.0, 0.0)))",
+    "solution": "import math\n\ndef sphere_normal(point, sphere_center):\n    \"\"\"\n    Calculate surface normal at a point on a sphere.\n\n    Args:\n        point: tuple (x, y, z), point on sphere surface\n        sphere_center: tuple (x, y, z), sphere center\n\n    Returns:\n        tuple (x, y, z), normalized surface normal\n    \"\"\"\n    # Vector from center to point\n    nx = point[0] - sphere_center[0]\n    ny = point[1] - sphere_center[1]\n    nz = point[2] - sphere_center[2]\n\n    # Normalize\n    magnitude = math.sqrt(nx*nx + ny*ny + nz*nz)\n\n    if magnitude < 0.0001:\n        return (0.0, 1.0, 0.0)  # Arbitrary default\n\n    return (nx / magnitude, ny / magnitude, nz / magnitude)\n\n# Test\nprint(sphere_normal((3.0, 0.0, 0.0), (0.0, 0.0, 0.0)))",
+    "testCases": [
+      {
+        "input": "(3.0, 0.0, 0.0), (0.0, 0.0, 0.0)",
+        "expectedOutput": "(1.0, 0.0, 0.0)",
+        "isHidden": false,
+        "description": "Point on +X axis"
+      },
+      {
+        "input": "(0.0, -2.0, 0.0), (0.0, 0.0, 0.0)",
+        "expectedOutput": "(0.0, -1.0, 0.0)",
+        "isHidden": false,
+        "description": "Point on -Y axis"
+      },
+      {
+        "input": "(1.0, 1.0, 1.0), (0.0, 0.0, 0.0)",
+        "expectedOutput": "(0.5773502691896258, 0.5773502691896258, 0.5773502691896258)",
+        "isHidden": true,
+        "description": "Point on diagonal"
+      }
+    ],
+    "hints": [
+      "The normal is simply the vector from sphere center to the point",
+      "Subtract sphere center from the point to get the direction",
+      "Normalize the resulting vector",
+      "Sphere normals always point radially outward from the center"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs306-t7-ex04",
+    "subjectId": "cs306",
+    "topicId": "cs306-topic-7",
+    "title": "Ray-Plane Intersection",
+    "difficulty": 2,
+    "description": "Calculate the intersection between a ray and an infinite plane. A plane is defined by a point and a normal vector.",
+    "starterCode": "def ray_plane_intersection(ray_origin, ray_dir, plane_point, plane_normal):\n    \"\"\"\n    Calculate ray-plane intersection.\n\n    Args:\n        ray_origin: tuple (x, y, z)\n        ray_dir: tuple (x, y, z), normalized\n        plane_point: tuple (x, y, z), a point on the plane\n        plane_normal: tuple (x, y, z), normalized plane normal\n\n    Returns:\n        float or None, distance to intersection (None if parallel/behind)\n\n    Notes:\n        Plane equation: (P - plane_point) · plane_normal = 0\n        Ray equation: P = origin + t * direction\n        Solve for t\n    \"\"\"\n    # Your code here\n    pass\n\n# Test\nprint(ray_plane_intersection((0.0, 5.0, 0.0), (0.0, -1.0, 0.0), (0.0, 0.0, 0.0), (0.0, 1.0, 0.0)))",
+    "solution": "def ray_plane_intersection(ray_origin, ray_dir, plane_point, plane_normal):\n    \"\"\"\n    Calculate ray-plane intersection.\n\n    Args:\n        ray_origin: tuple (x, y, z)\n        ray_dir: tuple (x, y, z), normalized\n        plane_point: tuple (x, y, z), a point on the plane\n        plane_normal: tuple (x, y, z), normalized plane normal\n\n    Returns:\n        float or None, distance to intersection (None if parallel/behind)\n\n    Notes:\n        Plane equation: (P - plane_point) · plane_normal = 0\n        Ray equation: P = origin + t * direction\n        Solve for t\n    \"\"\"\n    # Calculate denominator: direction · normal\n    denom = (ray_dir[0] * plane_normal[0] +\n             ray_dir[1] * plane_normal[1] +\n             ray_dir[2] * plane_normal[2])\n\n    # If denominator is near zero, ray is parallel to plane\n    if abs(denom) < 0.0001:\n        return None\n\n    # Calculate vector from ray origin to plane point\n    px = plane_point[0] - ray_origin[0]\n    py = plane_point[1] - ray_origin[1]\n    pz = plane_point[2] - ray_origin[2]\n\n    # Calculate numerator: (plane_point - origin) · normal\n    numer = px * plane_normal[0] + py * plane_normal[1] + pz * plane_normal[2]\n\n    # Calculate t\n    t = numer / denom\n\n    # Only return positive t (intersection in front of ray)\n    if t > 0.0001:\n        return t\n    else:\n        return None\n\n# Test\nprint(ray_plane_intersection((0.0, 5.0, 0.0), (0.0, -1.0, 0.0), (0.0, 0.0, 0.0), (0.0, 1.0, 0.0)))",
+    "testCases": [
+      {
+        "input": "(0.0, 5.0, 0.0), (0.0, -1.0, 0.0), (0.0, 0.0, 0.0), (0.0, 1.0, 0.0)",
+        "expectedOutput": "5.0",
+        "isHidden": false,
+        "description": "Ray pointing down at horizontal plane"
+      },
+      {
+        "input": "(0.0, 5.0, 0.0), (0.0, 1.0, 0.0), (0.0, 0.0, 0.0), (0.0, 1.0, 0.0)",
+        "expectedOutput": "None",
+        "isHidden": false,
+        "description": "Ray pointing away from plane"
+      },
+      {
+        "input": "(0.0, 0.0, 5.0), (0.0, 0.0, -1.0), (0.0, 0.0, 0.0), (0.0, 0.0, 1.0)",
+        "expectedOutput": "5.0",
+        "isHidden": true,
+        "description": "Ray along Z axis"
+      }
+    ],
+    "hints": [
+      "Calculate the dot product of ray direction and plane normal",
+      "If this is near zero, the ray is parallel to the plane",
+      "Use the formula: t = ((plane_point - ray_origin) · plane_normal) / (ray_dir · plane_normal)",
+      "Only return t if it's positive (intersection ahead of ray origin)",
+      "Use a small epsilon to avoid numerical issues"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs306-t7-ex05",
+    "subjectId": "cs306",
+    "topicId": "cs306-topic-7",
+    "title": "Calculate Reflection Vector",
+    "difficulty": 2,
+    "description": "Calculate the reflection of a ray direction given a surface normal. This is used for mirror reflections in ray tracing.",
+    "starterCode": "def reflect_ray(incident, normal):\n    \"\"\"\n    Calculate reflection vector.\n\n    Args:\n        incident: tuple (x, y, z), normalized incident ray direction\n        normal: tuple (x, y, z), normalized surface normal\n\n    Returns:\n        tuple (x, y, z), normalized reflection direction\n\n    Notes:\n        R = I - 2(N·I)N\n        where I is incident direction, N is normal\n    \"\"\"\n    # Your code here\n    pass\n\n# Test\nprint(reflect_ray((0.0, -1.0, 0.0), (0.0, 1.0, 0.0)))",
+    "solution": "def reflect_ray(incident, normal):\n    \"\"\"\n    Calculate reflection vector.\n\n    Args:\n        incident: tuple (x, y, z), normalized incident ray direction\n        normal: tuple (x, y, z), normalized surface normal\n\n    Returns:\n        tuple (x, y, z), normalized reflection direction\n\n    Notes:\n        R = I - 2(N·I)N\n        where I is incident direction, N is normal\n    \"\"\"\n    # Calculate dot product N·I\n    dot = normal[0] * incident[0] + normal[1] * incident[1] + normal[2] * incident[2]\n\n    # Calculate reflection: R = I - 2(N·I)N\n    rx = incident[0] - 2.0 * dot * normal[0]\n    ry = incident[1] - 2.0 * dot * normal[1]\n    rz = incident[2] - 2.0 * dot * normal[2]\n\n    return (rx, ry, rz)\n\n# Test\nprint(reflect_ray((0.0, -1.0, 0.0), (0.0, 1.0, 0.0)))",
+    "testCases": [
+      {
+        "input": "(0.0, -1.0, 0.0), (0.0, 1.0, 0.0)",
+        "expectedOutput": "(0.0, 1.0, 0.0)",
+        "isHidden": false,
+        "description": "Ray bouncing straight up"
+      },
+      {
+        "input": "(1.0, 0.0, 0.0), (0.0, 1.0, 0.0)",
+        "expectedOutput": "(1.0, 0.0, 0.0)",
+        "isHidden": false,
+        "description": "Ray parallel to surface"
+      },
+      {
+        "input": "(0.7071, -0.7071, 0.0), (0.0, 1.0, 0.0)",
+        "expectedOutput": "(0.7071, 0.7071, 0.0)",
+        "isHidden": true,
+        "description": "45 degree incident angle"
+      }
+    ],
+    "hints": [
+      "Use the formula R = I - 2(N·I)N",
+      "First calculate the dot product between normal and incident",
+      "Then subtract 2 * (N·I) * N from the incident vector",
+      "The result is already normalized if inputs are normalized"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs306-t7-ex06",
+    "subjectId": "cs306",
+    "topicId": "cs306-topic-7",
+    "title": "Calculate Refraction Vector",
+    "difficulty": 3,
+    "description": "Calculate the refraction vector using Snell's law. This is used for transparent materials like glass and water.",
+    "starterCode": "import math\n\ndef refract_ray(incident, normal, eta_ratio):\n    \"\"\"\n    Calculate refraction vector using Snell's law.\n\n    Args:\n        incident: tuple (x, y, z), normalized incident direction\n        normal: tuple (x, y, z), normalized surface normal\n        eta_ratio: float, ratio of refractive indices (n1/n2)\n\n    Returns:\n        tuple (x, y, z) or None, refracted direction (None if total internal reflection)\n\n    Notes:\n        Snell's law: n1*sin(θ1) = n2*sin(θ2)\n        eta_ratio = n1/n2\n    \"\"\"\n    # Your code here\n    pass\n\n# Test\nprint(refract_ray((0.0, -1.0, 0.0), (0.0, 1.0, 0.0), 1.0/1.5))",
+    "solution": "import math\n\ndef refract_ray(incident, normal, eta_ratio):\n    \"\"\"\n    Calculate refraction vector using Snell's law.\n\n    Args:\n        incident: tuple (x, y, z), normalized incident direction\n        normal: tuple (x, y, z), normalized surface normal\n        eta_ratio: float, ratio of refractive indices (n1/n2)\n\n    Returns:\n        tuple (x, y, z) or None, refracted direction (None if total internal reflection)\n\n    Notes:\n        Snell's law: n1*sin(θ1) = n2*sin(θ2)\n        eta_ratio = n1/n2\n    \"\"\"\n    # Calculate cos(θ1) = -N·I\n    cos_i = -(normal[0]*incident[0] + normal[1]*incident[1] + normal[2]*incident[2])\n\n    # Calculate sin²(θ2) using Snell's law\n    sin2_t = eta_ratio * eta_ratio * (1.0 - cos_i * cos_i)\n\n    # Check for total internal reflection\n    if sin2_t > 1.0:\n        return None\n\n    # Calculate cos(θ2)\n    cos_t = math.sqrt(1.0 - sin2_t)\n\n    # Calculate refracted direction\n    # T = eta * I + (eta * cos_i - cos_t) * N\n    factor = eta_ratio * cos_i - cos_t\n\n    tx = eta_ratio * incident[0] + factor * normal[0]\n    ty = eta_ratio * incident[1] + factor * normal[1]\n    tz = eta_ratio * incident[2] + factor * normal[2]\n\n    return (tx, ty, tz)\n\n# Test\nprint(refract_ray((0.0, -1.0, 0.0), (0.0, 1.0, 0.0), 1.0/1.5))",
+    "testCases": [
+      {
+        "input": "(0.0, -1.0, 0.0), (0.0, 1.0, 0.0), 1.0/1.5",
+        "expectedOutput": "(0.0, -1.0, 0.0)",
+        "isHidden": false,
+        "description": "Normal incidence (straight through)"
+      },
+      {
+        "input": "(0.7071, -0.7071, 0.0), (0.0, 1.0, 0.0), 1.0/1.5",
+        "expectedOutput": "(0.47140452079103173, -0.8819171036881969, 0.0)",
+        "isHidden": false,
+        "description": "45 degree incidence into glass"
+      },
+      {
+        "input": "(0.7071, -0.7071, 0.0), (0.0, 1.0, 0.0), 1.5",
+        "expectedOutput": "None",
+        "isHidden": true,
+        "description": "Total internal reflection"
+      }
+    ],
+    "hints": [
+      "Calculate cos(θ1) = -N·I (negative because we want angle between vectors)",
+      "Use Snell's law to find sin²(θ2) = (n1/n2)² * (1 - cos²(θ1))",
+      "If sin²(θ2) > 1, total internal reflection occurs (return None)",
+      "Calculate cos(θ2) = sqrt(1 - sin²(θ2))",
+      "Refracted direction: T = η*I + (η*cos_i - cos_t)*N",
+      "where η is the ratio of refractive indices"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs306-t7-ex07",
+    "subjectId": "cs306",
+    "topicId": "cs306-topic-7",
+    "title": "Ray-Triangle Intersection",
+    "difficulty": 4,
+    "description": "Implement the Möller-Trumbore algorithm for ray-triangle intersection. This is faster than calculating the plane intersection and checking if point is inside triangle.",
+    "starterCode": "def ray_triangle_intersection(ray_origin, ray_dir, v0, v1, v2):\n    \"\"\"\n    Calculate ray-triangle intersection using Möller-Trumbore algorithm.\n\n    Args:\n        ray_origin: tuple (x, y, z)\n        ray_dir: tuple (x, y, z), normalized\n        v0, v1, v2: tuples (x, y, z), triangle vertices\n\n    Returns:\n        float or None, distance to intersection (None if no hit)\n\n    Notes:\n        Also computes barycentric coordinates u, v\n        Point is inside triangle if u >= 0, v >= 0, u+v <= 1\n    \"\"\"\n    # Your code here\n    pass\n\n# Test\nprint(ray_triangle_intersection(\n    (0.0, 0.0, 5.0), (0.0, 0.0, -1.0),\n    (-1.0, -1.0, 0.0), (1.0, -1.0, 0.0), (0.0, 1.0, 0.0)\n))",
+    "solution": "def ray_triangle_intersection(ray_origin, ray_dir, v0, v1, v2):\n    \"\"\"\n    Calculate ray-triangle intersection using Möller-Trumbore algorithm.\n\n    Args:\n        ray_origin: tuple (x, y, z)\n        ray_dir: tuple (x, y, z), normalized\n        v0, v1, v2: tuples (x, y, z), triangle vertices\n\n    Returns:\n        float or None, distance to intersection (None if no hit)\n\n    Notes:\n        Also computes barycentric coordinates u, v\n        Point is inside triangle if u >= 0, v >= 0, u+v <= 1\n    \"\"\"\n    EPSILON = 0.0000001\n\n    # Calculate edge vectors\n    edge1_x = v1[0] - v0[0]\n    edge1_y = v1[1] - v0[1]\n    edge1_z = v1[2] - v0[2]\n\n    edge2_x = v2[0] - v0[0]\n    edge2_y = v2[1] - v0[1]\n    edge2_z = v2[2] - v0[2]\n\n    # Calculate h = ray_dir × edge2\n    h_x = ray_dir[1] * edge2_z - ray_dir[2] * edge2_y\n    h_y = ray_dir[2] * edge2_x - ray_dir[0] * edge2_z\n    h_z = ray_dir[0] * edge2_y - ray_dir[1] * edge2_x\n\n    # Calculate a = edge1 · h\n    a = edge1_x * h_x + edge1_y * h_y + edge1_z * h_z\n\n    # Ray is parallel to triangle if a is close to 0\n    if abs(a) < EPSILON:\n        return None\n\n    f = 1.0 / a\n\n    # Calculate s = ray_origin - v0\n    s_x = ray_origin[0] - v0[0]\n    s_y = ray_origin[1] - v0[1]\n    s_z = ray_origin[2] - v0[2]\n\n    # Calculate u = f * (s · h)\n    u = f * (s_x * h_x + s_y * h_y + s_z * h_z)\n\n    # Check if intersection is outside triangle\n    if u < 0.0 or u > 1.0:\n        return None\n\n    # Calculate q = s × edge1\n    q_x = s_y * edge1_z - s_z * edge1_y\n    q_y = s_z * edge1_x - s_x * edge1_z\n    q_z = s_x * edge1_y - s_y * edge1_x\n\n    # Calculate v = f * (ray_dir · q)\n    v = f * (ray_dir[0] * q_x + ray_dir[1] * q_y + ray_dir[2] * q_z)\n\n    # Check if intersection is outside triangle\n    if v < 0.0 or u + v > 1.0:\n        return None\n\n    # Calculate t = f * (edge2 · q)\n    t = f * (edge2_x * q_x + edge2_y * q_y + edge2_z * q_z)\n\n    # Check if intersection is in front of ray\n    if t > EPSILON:\n        return t\n    else:\n        return None\n\n# Test\nprint(ray_triangle_intersection(\n    (0.0, 0.0, 5.0), (0.0, 0.0, -1.0),\n    (-1.0, -1.0, 0.0), (1.0, -1.0, 0.0), (0.0, 1.0, 0.0)\n))",
+    "testCases": [
+      {
+        "input": "(0.0, 0.0, 5.0), (0.0, 0.0, -1.0), (-1.0, -1.0, 0.0), (1.0, -1.0, 0.0), (0.0, 1.0, 0.0)",
+        "expectedOutput": "5.0",
+        "isHidden": false,
+        "description": "Ray hits center of triangle"
+      },
+      {
+        "input": "(0.0, 0.0, 5.0), (0.0, 0.0, -1.0), (2.0, 2.0, 0.0), (3.0, 2.0, 0.0), (2.5, 3.0, 0.0)",
+        "expectedOutput": "None",
+        "isHidden": false,
+        "description": "Ray misses triangle"
+      },
+      {
+        "input": "(0.5, -0.5, 5.0), (0.0, 0.0, -1.0), (-1.0, -1.0, 0.0), (1.0, -1.0, 0.0), (0.0, 1.0, 0.0)",
+        "expectedOutput": "5.0",
+        "isHidden": true,
+        "description": "Ray hits triangle off-center"
+      }
+    ],
+    "hints": [
+      "Calculate edge vectors: edge1 = v1 - v0, edge2 = v2 - v0",
+      "Compute h = ray_dir × edge2",
+      "Calculate a = edge1 · h (determinant)",
+      "If a is near zero, ray is parallel to triangle",
+      "Compute barycentric coordinate u using s = origin - v0",
+      "Check u bounds: must be in [0, 1]",
+      "Compute barycentric coordinate v using cross product",
+      "Check v bounds and u+v <= 1 for point to be inside triangle",
+      "Finally calculate t for the intersection distance"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs306-t7-ex08",
+    "subjectId": "cs306",
+    "topicId": "cs306-topic-7",
+    "title": "Simple Ray Tracer with Sphere",
+    "difficulty": 3,
+    "description": "Implement a simple ray tracer that renders a single sphere with diffuse shading. For each pixel, cast a ray and check for sphere intersection.",
+    "starterCode": "import math\n\ndef simple_ray_trace_sphere(width, height, sphere_center, sphere_radius,\n                            light_dir, sphere_color):\n    \"\"\"\n    Render a sphere using ray tracing with diffuse shading.\n\n    Args:\n        width, height: int, image dimensions\n        sphere_center: tuple (x, y, z)\n        sphere_radius: float\n        light_dir: tuple (x, y, z), normalized light direction\n        sphere_color: tuple (r, g, b)\n\n    Returns:\n        2D list of (r, g, b) tuples representing the image\n\n    Notes:\n        - Camera at origin looking down -Z\n        - FOV = 60 degrees\n        - Background color is black (0, 0, 0)\n    \"\"\"\n    # Your code here\n    pass\n\n# Test (small image)\nresult = simple_ray_trace_sphere(4, 4, (0.0, 0.0, -5.0), 1.0,\n                                  (0.0, 0.0, 1.0), (1.0, 0.5, 0.3))\nprint(result[2][2])  # Center pixel",
+    "solution": "import math\n\ndef simple_ray_trace_sphere(width, height, sphere_center, sphere_radius,\n                            light_dir, sphere_color):\n    \"\"\"\n    Render a sphere using ray tracing with diffuse shading.\n\n    Args:\n        width, height: int, image dimensions\n        sphere_center: tuple (x, y, z)\n        sphere_radius: float\n        light_dir: tuple (x, y, z), normalized light direction\n        sphere_color: tuple (r, g, b)\n\n    Returns:\n        2D list of (r, g, b) tuples representing the image\n\n    Notes:\n        - Camera at origin looking down -Z\n        - FOV = 60 degrees\n        - Background color is black (0, 0, 0)\n    \"\"\"\n    image = []\n    fov = 60.0\n    camera_pos = (0.0, 0.0, 0.0)\n\n    for y in range(height):\n        row = []\n        for x in range(width):\n            # Generate ray\n            ndc_x = (2.0 * x / width) - 1.0\n            ndc_y = 1.0 - (2.0 * y / height)\n            aspect = width / height\n            scale = math.tan(math.radians(fov / 2.0))\n\n            ray_x = ndc_x * aspect * scale\n            ray_y = ndc_y * scale\n            ray_z = -1.0\n\n            magnitude = math.sqrt(ray_x**2 + ray_y**2 + ray_z**2)\n            ray_dir = (ray_x/magnitude, ray_y/magnitude, ray_z/magnitude)\n\n            # Ray-sphere intersection\n            oc_x = camera_pos[0] - sphere_center[0]\n            oc_y = camera_pos[1] - sphere_center[1]\n            oc_z = camera_pos[2] - sphere_center[2]\n\n            a = 1.0  # ray_dir is normalized\n            b = 2.0 * (ray_dir[0]*oc_x + ray_dir[1]*oc_y + ray_dir[2]*oc_z)\n            c = oc_x**2 + oc_y**2 + oc_z**2 - sphere_radius**2\n\n            discriminant = b*b - 4*a*c\n\n            if discriminant < 0:\n                # No hit - black background\n                row.append((0.0, 0.0, 0.0))\n            else:\n                # Hit - calculate shading\n                t = (-b - math.sqrt(discriminant)) / (2*a)\n\n                # Hit point\n                hit_x = camera_pos[0] + t * ray_dir[0]\n                hit_y = camera_pos[1] + t * ray_dir[1]\n                hit_z = camera_pos[2] + t * ray_dir[2]\n\n                # Normal at hit point\n                normal_x = hit_x - sphere_center[0]\n                normal_y = hit_y - sphere_center[1]\n                normal_z = hit_z - sphere_center[2]\n                normal_mag = math.sqrt(normal_x**2 + normal_y**2 + normal_z**2)\n                normal = (normal_x/normal_mag, normal_y/normal_mag, normal_z/normal_mag)\n\n                # Diffuse shading\n                n_dot_l = max(0.0, normal[0]*light_dir[0] + normal[1]*light_dir[1] + normal[2]*light_dir[2])\n\n                color = (sphere_color[0] * n_dot_l,\n                        sphere_color[1] * n_dot_l,\n                        sphere_color[2] * n_dot_l)\n                row.append(color)\n\n        image.append(row)\n\n    return image\n\n# Test (small image)\nresult = simple_ray_trace_sphere(4, 4, (0.0, 0.0, -5.0), 1.0,\n                                  (0.0, 0.0, 1.0), (1.0, 0.5, 0.3))\nprint(result[2][2])  # Center pixel",
+    "testCases": [
+      {
+        "input": "4, 4, (0.0, 0.0, -5.0), 1.0, (0.0, 0.0, 1.0), (1.0, 0.5, 0.3)",
+        "expectedOutput": "(1.0, 0.5, 0.3)",
+        "isHidden": false,
+        "description": "Center pixel hits sphere directly"
+      },
+      {
+        "input": "2, 2, (0.0, 0.0, -5.0), 1.0, (0.0, 0.0, 1.0), (0.8, 0.8, 0.8)",
+        "expectedOutput": "(0.8, 0.8, 0.8)",
+        "isHidden": false,
+        "description": "Small gray sphere"
+      },
+      {
+        "input": "3, 3, (0.0, 0.0, -3.0), 0.5, (0.7071, 0.0, 0.7071), (1.0, 0.0, 0.0)",
+        "expectedOutput": "(0.7071067811865476, 0.0, 0.0)",
+        "isHidden": true,
+        "description": "Red sphere with angled light"
+      }
+    ],
+    "hints": [
+      "For each pixel, generate a camera ray",
+      "Test ray-sphere intersection using the quadratic formula",
+      "If hit, calculate the intersection point",
+      "Calculate the surface normal at the hit point",
+      "Apply diffuse shading: color * max(0, N·L)",
+      "If no hit, use background color (black)",
+      "Camera is at origin looking down -Z axis"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs306-t7-ex09",
+    "subjectId": "cs306",
+    "topicId": "cs306-topic-7",
+    "title": "Ray Tracing with Shadows",
+    "difficulty": 4,
+    "description": "Extend ray tracing to include shadow rays. Cast a ray from hit point to light source to check if point is in shadow.",
+    "starterCode": "import math\n\ndef trace_with_shadows(ray_origin, ray_dir, sphere_center, sphere_radius,\n                       light_pos, sphere_color, ambient):\n    \"\"\"\n    Trace a ray and calculate color with shadows.\n\n    Args:\n        ray_origin: tuple (x, y, z)\n        ray_dir: tuple (x, y, z), normalized\n        sphere_center: tuple (x, y, z)\n        sphere_radius: float\n        light_pos: tuple (x, y, z), point light position\n        sphere_color: tuple (r, g, b)\n        ambient: float, ambient light intensity (0-1)\n\n    Returns:\n        tuple (r, g, b) or None if no hit\n\n    Notes:\n        - Check if hit point can see the light (shadow ray)\n        - If in shadow, only ambient lighting\n        - If lit, ambient + diffuse\n    \"\"\"\n    # Your code here\n    pass\n\n# Test\nprint(trace_with_shadows((0.0, 0.0, 0.0), (0.0, 0.0, -1.0),\n                         (0.0, 0.0, -5.0), 1.0, (2.0, 2.0, 0.0),\n                         (1.0, 0.5, 0.3), 0.2))",
+    "solution": "import math\n\ndef trace_with_shadows(ray_origin, ray_dir, sphere_center, sphere_radius,\n                       light_pos, sphere_color, ambient):\n    \"\"\"\n    Trace a ray and calculate color with shadows.\n\n    Args:\n        ray_origin: tuple (x, y, z)\n        ray_dir: tuple (x, y, z), normalized\n        sphere_center: tuple (x, y, z)\n        sphere_radius: float\n        light_pos: tuple (x, y, z), point light position\n        sphere_color: tuple (r, g, b)\n        ambient: float, ambient light intensity (0-1)\n\n    Returns:\n        tuple (r, g, b) or None if no hit\n\n    Notes:\n        - Check if hit point can see the light (shadow ray)\n        - If in shadow, only ambient lighting\n        - If lit, ambient + diffuse\n    \"\"\"\n    # Ray-sphere intersection\n    oc_x = ray_origin[0] - sphere_center[0]\n    oc_y = ray_origin[1] - sphere_center[1]\n    oc_z = ray_origin[2] - sphere_center[2]\n\n    a = 1.0\n    b = 2.0 * (ray_dir[0]*oc_x + ray_dir[1]*oc_y + ray_dir[2]*oc_z)\n    c = oc_x**2 + oc_y**2 + oc_z**2 - sphere_radius**2\n\n    discriminant = b*b - 4*a*c\n\n    if discriminant < 0:\n        return None  # No hit\n\n    # Calculate hit point\n    t = (-b - math.sqrt(discriminant)) / (2*a)\n    hit_x = ray_origin[0] + t * ray_dir[0]\n    hit_y = ray_origin[1] + t * ray_dir[1]\n    hit_z = ray_origin[2] + t * ray_dir[2]\n\n    # Calculate normal\n    normal_x = hit_x - sphere_center[0]\n    normal_y = hit_y - sphere_center[1]\n    normal_z = hit_z - sphere_center[2]\n    normal_mag = math.sqrt(normal_x**2 + normal_y**2 + normal_z**2)\n    normal = (normal_x/normal_mag, normal_y/normal_mag, normal_z/normal_mag)\n\n    # Calculate direction to light\n    to_light_x = light_pos[0] - hit_x\n    to_light_y = light_pos[1] - hit_y\n    to_light_z = light_pos[2] - hit_z\n    light_dist = math.sqrt(to_light_x**2 + to_light_y**2 + to_light_z**2)\n    light_dir = (to_light_x/light_dist, to_light_y/light_dist, to_light_z/light_dist)\n\n    # Shadow ray - offset slightly to avoid self-intersection\n    shadow_origin = (hit_x + normal[0]*0.001,\n                     hit_y + normal[1]*0.001,\n                     hit_z + normal[2]*0.001)\n\n    # Check shadow ray intersection\n    oc_x = shadow_origin[0] - sphere_center[0]\n    oc_y = shadow_origin[1] - sphere_center[1]\n    oc_z = shadow_origin[2] - sphere_center[2]\n\n    a = 1.0\n    b = 2.0 * (light_dir[0]*oc_x + light_dir[1]*oc_y + light_dir[2]*oc_z)\n    c = oc_x**2 + oc_y**2 + oc_z**2 - sphere_radius**2\n\n    shadow_discriminant = b*b - 4*a*c\n\n    # Check if shadow ray hits sphere before reaching light\n    in_shadow = False\n    if shadow_discriminant >= 0:\n        shadow_t = (-b - math.sqrt(shadow_discriminant)) / (2*a)\n        if shadow_t > 0.001 and shadow_t < light_dist:\n            in_shadow = True\n\n    # Calculate lighting\n    if in_shadow:\n        # Only ambient\n        color = (sphere_color[0] * ambient,\n                sphere_color[1] * ambient,\n                sphere_color[2] * ambient)\n    else:\n        # Ambient + diffuse\n        n_dot_l = max(0.0, normal[0]*light_dir[0] + normal[1]*light_dir[1] + normal[2]*light_dir[2])\n        color = (sphere_color[0] * (ambient + n_dot_l),\n                sphere_color[1] * (ambient + n_dot_l),\n                sphere_color[2] * (ambient + n_dot_l))\n\n    return color\n\n# Test\nprint(trace_with_shadows((0.0, 0.0, 0.0), (0.0, 0.0, -1.0),\n                         (0.0, 0.0, -5.0), 1.0, (2.0, 2.0, 0.0),\n                         (1.0, 0.5, 0.3), 0.2))",
+    "testCases": [
+      {
+        "input": "(0.0, 0.0, 0.0), (0.0, 0.0, -1.0), (0.0, 0.0, -5.0), 1.0, (2.0, 2.0, 0.0), (1.0, 0.5, 0.3), 0.2",
+        "expectedOutput": "(0.6832050294337844, 0.3416025147168922, 0.20496150883013532)",
+        "isHidden": false,
+        "description": "Lit sphere (not in shadow)"
+      },
+      {
+        "input": "(0.0, 0.0, 0.0), (0.0, 0.0, -1.0), (0.0, 0.0, -10.0), 2.0, (0.0, 0.0, -5.0), (1.0, 1.0, 1.0), 0.1",
+        "expectedOutput": "(0.1, 0.1, 0.1)",
+        "isHidden": false,
+        "description": "Point in shadow (light blocked)"
+      },
+      {
+        "input": "(0.0, 2.0, 0.0), (0.0, -1.0, 0.0), (0.0, 0.0, 0.0), 1.0, (3.0, 3.0, 0.0), (0.8, 0.2, 0.2), 0.15",
+        "expectedOutput": "(0.6309039081630266, 0.15772597704075666, 0.15772597704075666)",
+        "isHidden": true,
+        "description": "Downward ray with offset light"
+      }
+    ],
+    "hints": [
+      "First, perform ray-sphere intersection to find hit point",
+      "Calculate the surface normal at hit point",
+      "Calculate direction from hit point to light source",
+      "Cast a shadow ray from hit point (slightly offset) toward light",
+      "Check if shadow ray intersects sphere before reaching light",
+      "If in shadow, use only ambient lighting",
+      "If not in shadow, use ambient + diffuse",
+      "Offset the shadow ray origin slightly to avoid self-intersection"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs306-t7-ex10",
+    "subjectId": "cs306",
+    "topicId": "cs306-topic-7",
+    "title": "Ray Tracing with Reflections",
+    "difficulty": 4,
+    "description": "Implement recursive ray tracing with mirror reflections. When a ray hits a reflective surface, cast a reflection ray and blend the colors.",
+    "starterCode": "import math\n\ndef trace_reflection(ray_origin, ray_dir, sphere_center, sphere_radius,\n                    light_dir, sphere_color, reflectivity, depth, max_depth):\n    \"\"\"\n    Trace ray with reflections (recursive).\n\n    Args:\n        ray_origin: tuple (x, y, z)\n        ray_dir: tuple (x, y, z), normalized\n        sphere_center: tuple (x, y, z)\n        sphere_radius: float\n        light_dir: tuple (x, y, z), normalized light direction\n        sphere_color: tuple (r, g, b)\n        reflectivity: float (0-1), how reflective the sphere is\n        depth: int, current recursion depth\n        max_depth: int, maximum recursion depth\n\n    Returns:\n        tuple (r, g, b), final color (black if no hit)\n\n    Notes:\n        - Base case: depth >= max_depth, return diffuse only\n        - Recursive case: blend diffuse with reflected color\n    \"\"\"\n    # Your code here\n    pass\n\n# Test\nprint(trace_reflection((0.0, 0.0, 0.0), (0.0, 0.0, -1.0),\n                       (0.0, 0.0, -5.0), 1.0, (0.0, 1.0, 0.0),\n                       (1.0, 0.5, 0.3), 0.5, 0, 2))",
+    "solution": "import math\n\ndef trace_reflection(ray_origin, ray_dir, sphere_center, sphere_radius,\n                    light_dir, sphere_color, reflectivity, depth, max_depth):\n    \"\"\"\n    Trace ray with reflections (recursive).\n\n    Args:\n        ray_origin: tuple (x, y, z)\n        ray_dir: tuple (x, y, z), normalized\n        sphere_center: tuple (x, y, z)\n        sphere_radius: float\n        light_dir: tuple (x, y, z), normalized light direction\n        sphere_color: tuple (r, g, b)\n        reflectivity: float (0-1), how reflective the sphere is\n        depth: int, current recursion depth\n        max_depth: int, maximum recursion depth\n\n    Returns:\n        tuple (r, g, b), final color (black if no hit)\n\n    Notes:\n        - Base case: depth >= max_depth, return diffuse only\n        - Recursive case: blend diffuse with reflected color\n    \"\"\"\n    # Ray-sphere intersection\n    oc_x = ray_origin[0] - sphere_center[0]\n    oc_y = ray_origin[1] - sphere_center[1]\n    oc_z = ray_origin[2] - sphere_center[2]\n\n    a = 1.0\n    b = 2.0 * (ray_dir[0]*oc_x + ray_dir[1]*oc_y + ray_dir[2]*oc_z)\n    c = oc_x**2 + oc_y**2 + oc_z**2 - sphere_radius**2\n\n    discriminant = b*b - 4*a*c\n\n    if discriminant < 0:\n        return (0.0, 0.0, 0.0)  # No hit - black background\n\n    # Calculate hit point\n    t = (-b - math.sqrt(discriminant)) / (2*a)\n    if t < 0.001:\n        return (0.0, 0.0, 0.0)\n\n    hit_x = ray_origin[0] + t * ray_dir[0]\n    hit_y = ray_origin[1] + t * ray_dir[1]\n    hit_z = ray_origin[2] + t * ray_dir[2]\n\n    # Calculate normal\n    normal_x = hit_x - sphere_center[0]\n    normal_y = hit_y - sphere_center[1]\n    normal_z = hit_z - sphere_center[2]\n    normal_mag = math.sqrt(normal_x**2 + normal_y**2 + normal_z**2)\n    normal = (normal_x/normal_mag, normal_y/normal_mag, normal_z/normal_mag)\n\n    # Calculate diffuse shading\n    n_dot_l = max(0.0, normal[0]*light_dir[0] + normal[1]*light_dir[1] + normal[2]*light_dir[2])\n    diffuse = (sphere_color[0] * n_dot_l,\n               sphere_color[1] * n_dot_l,\n               sphere_color[2] * n_dot_l)\n\n    # Base case: max depth reached\n    if depth >= max_depth:\n        return diffuse\n\n    # Calculate reflection direction\n    dot = normal[0]*ray_dir[0] + normal[1]*ray_dir[1] + normal[2]*ray_dir[2]\n    reflect_dir = (ray_dir[0] - 2.0*dot*normal[0],\n                   ray_dir[1] - 2.0*dot*normal[1],\n                   ray_dir[2] - 2.0*dot*normal[2])\n\n    # Offset reflection origin to avoid self-intersection\n    reflect_origin = (hit_x + normal[0]*0.001,\n                      hit_y + normal[1]*0.001,\n                      hit_z + normal[2]*0.001)\n\n    # Recursive ray trace\n    reflected_color = trace_reflection(reflect_origin, reflect_dir,\n                                       sphere_center, sphere_radius,\n                                       light_dir, sphere_color,\n                                       reflectivity, depth + 1, max_depth)\n\n    # Blend diffuse and reflected color\n    final_r = diffuse[0] * (1 - reflectivity) + reflected_color[0] * reflectivity\n    final_g = diffuse[1] * (1 - reflectivity) + reflected_color[1] * reflectivity\n    final_b = diffuse[2] * (1 - reflectivity) + reflected_color[2] * reflectivity\n\n    return (final_r, final_g, final_b)\n\n# Test\nprint(trace_reflection((0.0, 0.0, 0.0), (0.0, 0.0, -1.0),\n                       (0.0, 0.0, -5.0), 1.0, (0.0, 1.0, 0.0),\n                       (1.0, 0.5, 0.3), 0.5, 0, 2))",
+    "testCases": [
+      {
+        "input": "(0.0, 0.0, 0.0), (0.0, 0.0, -1.0), (0.0, 0.0, -5.0), 1.0, (0.0, 1.0, 0.0), (1.0, 0.5, 0.3), 0.5, 0, 2",
+        "expectedOutput": "(0.0, 0.0, 0.0)",
+        "isHidden": false,
+        "description": "Center hit with upward light (dark)"
+      },
+      {
+        "input": "(0.0, 0.0, 0.0), (0.0, 0.0, -1.0), (0.0, 0.0, -5.0), 1.0, (0.0, 0.0, 1.0), (1.0, 0.5, 0.3), 0.0, 0, 2",
+        "expectedOutput": "(1.0, 0.5, 0.3)",
+        "isHidden": false,
+        "description": "No reflectivity (pure diffuse)"
+      },
+      {
+        "input": "(0.0, 0.0, 0.0), (0.0, 0.0, -1.0), (0.0, 0.0, -5.0), 1.0, (0.0, 0.0, 1.0), (0.8, 0.8, 0.8), 1.0, 0, 1",
+        "expectedOutput": "(0.0, 0.0, 0.0)",
+        "isHidden": true,
+        "description": "Fully reflective (no diffuse contribution)"
+      }
+    ],
+    "hints": [
+      "First perform ray-sphere intersection",
+      "Calculate hit point and surface normal",
+      "Calculate diffuse shading from direct lighting",
+      "Check if max depth reached (base case)",
+      "Calculate reflection direction using R = I - 2(N·I)N",
+      "Recursively trace the reflected ray",
+      "Blend diffuse and reflected color based on reflectivity",
+      "Offset the reflection ray origin to avoid self-intersection",
+      "Final color = diffuse*(1-r) + reflected*r, where r is reflectivity"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs306-t7-ex11",
+    "subjectId": "cs306",
+    "topicId": "cs306-topic-7",
+    "title": "Axis-Aligned Bounding Box Intersection",
+    "difficulty": 3,
+    "description": "Implement ray-AABB (Axis-Aligned Bounding Box) intersection test. This is used for acceleration structures in ray tracing.",
+    "starterCode": "def ray_aabb_intersection(ray_origin, ray_dir, box_min, box_max):\n    \"\"\"\n    Test ray intersection with axis-aligned bounding box.\n\n    Args:\n        ray_origin: tuple (x, y, z)\n        ray_dir: tuple (x, y, z), normalized\n        box_min: tuple (x, y, z), minimum corner of box\n        box_max: tuple (x, y, z), maximum corner of box\n\n    Returns:\n        tuple (t_near, t_far) or None if no intersection\n\n    Notes:\n        Use slab method: test intersection with each axis-aligned plane\n    \"\"\"\n    # Your code here\n    pass\n\n# Test\nprint(ray_aabb_intersection((0.0, 0.0, 0.0), (0.0, 0.0, -1.0),\n                            (-1.0, -1.0, -5.0), (1.0, 1.0, -3.0)))",
+    "solution": "def ray_aabb_intersection(ray_origin, ray_dir, box_min, box_max):\n    \"\"\"\n    Test ray intersection with axis-aligned bounding box.\n\n    Args:\n        ray_origin: tuple (x, y, z)\n        ray_dir: tuple (x, y, z), normalized\n        box_min: tuple (x, y, z), minimum corner of box\n        box_max: tuple (x, y, z), maximum corner of box\n\n    Returns:\n        tuple (t_near, t_far) or None if no intersection\n\n    Notes:\n        Use slab method: test intersection with each axis-aligned plane\n    \"\"\"\n    t_min = float('-inf')\n    t_max = float('inf')\n\n    # Test intersection with each slab (X, Y, Z)\n    for i in range(3):\n        if abs(ray_dir[i]) < 0.0001:\n            # Ray is parallel to slab\n            if ray_origin[i] < box_min[i] or ray_origin[i] > box_max[i]:\n                return None  # Ray is outside slab, no intersection\n        else:\n            # Calculate intersection distances with slab planes\n            t1 = (box_min[i] - ray_origin[i]) / ray_dir[i]\n            t2 = (box_max[i] - ray_origin[i]) / ray_dir[i]\n\n            # Ensure t1 <= t2\n            if t1 > t2:\n                t1, t2 = t2, t1\n\n            # Update t_min and t_max\n            t_min = max(t_min, t1)\n            t_max = min(t_max, t2)\n\n            # Check if slabs don't overlap\n            if t_min > t_max:\n                return None\n\n    # Check if intersection is behind ray origin\n    if t_max < 0:\n        return None\n\n    # Return intersection range\n    if t_min < 0:\n        t_min = 0  # Ray origin is inside box\n\n    return (t_min, t_max)\n\n# Test\nprint(ray_aabb_intersection((0.0, 0.0, 0.0), (0.0, 0.0, -1.0),\n                            (-1.0, -1.0, -5.0), (1.0, 1.0, -3.0)))",
+    "testCases": [
+      {
+        "input": "(0.0, 0.0, 0.0), (0.0, 0.0, -1.0), (-1.0, -1.0, -5.0), (1.0, 1.0, -3.0)",
+        "expectedOutput": "(3.0, 5.0)",
+        "isHidden": false,
+        "description": "Ray hits box from front"
+      },
+      {
+        "input": "(0.0, 0.0, 0.0), (1.0, 0.0, 0.0), (-1.0, -1.0, -1.0), (1.0, 1.0, 1.0)",
+        "expectedOutput": "(0, 1.0)",
+        "isHidden": false,
+        "description": "Ray starts inside box"
+      },
+      {
+        "input": "(5.0, 0.0, 0.0), (0.0, 1.0, 0.0), (-1.0, -1.0, -1.0), (1.0, 1.0, 1.0)",
+        "expectedOutput": "None",
+        "isHidden": true,
+        "description": "Ray misses box"
+      }
+    ],
+    "hints": [
+      "Use the \"slab method\" - test each axis independently",
+      "For each axis, calculate t values where ray intersects the two planes",
+      "Keep track of the maximum of all entry points (t_min)",
+      "Keep track of the minimum of all exit points (t_max)",
+      "If t_min > t_max, the ray misses the box",
+      "Handle the case where ray is parallel to an axis (division by zero)",
+      "If ray origin is inside box, t_min should be 0"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs306-t7-ex12",
+    "subjectId": "cs306",
+    "topicId": "cs306-topic-7",
+    "title": "Barycentric Coordinates",
+    "difficulty": 3,
+    "description": "Calculate barycentric coordinates for a point on a triangle. These coordinates are used for interpolating vertex attributes.",
+    "starterCode": "def barycentric_coordinates(point, v0, v1, v2):\n    \"\"\"\n    Calculate barycentric coordinates of a point on a triangle.\n\n    Args:\n        point: tuple (x, y, z), point on triangle\n        v0, v1, v2: tuples (x, y, z), triangle vertices\n\n    Returns:\n        tuple (u, v, w) where u + v + w = 1\n\n    Notes:\n        u corresponds to v0, v corresponds to v1, w corresponds to v2\n        Point = u*v0 + v*v1 + w*v2\n    \"\"\"\n    # Your code here\n    pass\n\n# Test\nprint(barycentric_coordinates((0.0, 0.0, 0.0),\n                              (-1.0, -1.0, 0.0), (1.0, -1.0, 0.0), (0.0, 1.0, 0.0)))",
+    "solution": "def barycentric_coordinates(point, v0, v1, v2):\n    \"\"\"\n    Calculate barycentric coordinates of a point on a triangle.\n\n    Args:\n        point: tuple (x, y, z), point on triangle\n        v0, v1, v2: tuples (x, y, z), triangle vertices\n\n    Returns:\n        tuple (u, v, w) where u + v + w = 1\n\n    Notes:\n        u corresponds to v0, v corresponds to v1, w corresponds to v2\n        Point = u*v0 + v*v1 + w*v2\n    \"\"\"\n    # Vectors from v0 to v1 and v2\n    v0v1_x = v1[0] - v0[0]\n    v0v1_y = v1[1] - v0[1]\n    v0v1_z = v1[2] - v0[2]\n\n    v0v2_x = v2[0] - v0[0]\n    v0v2_y = v2[1] - v0[1]\n    v0v2_z = v2[2] - v0[2]\n\n    # Vector from v0 to point\n    v0p_x = point[0] - v0[0]\n    v0p_y = point[1] - v0[1]\n    v0p_z = point[2] - v0[2]\n\n    # Calculate dot products\n    d00 = v0v1_x*v0v1_x + v0v1_y*v0v1_y + v0v1_z*v0v1_z\n    d01 = v0v1_x*v0v2_x + v0v1_y*v0v2_y + v0v1_z*v0v2_z\n    d11 = v0v2_x*v0v2_x + v0v2_y*v0v2_y + v0v2_z*v0v2_z\n    d20 = v0p_x*v0v1_x + v0p_y*v0v1_y + v0p_z*v0v1_z\n    d21 = v0p_x*v0v2_x + v0p_y*v0v2_y + v0p_z*v0v2_z\n\n    # Calculate barycentric coordinates\n    denom = d00 * d11 - d01 * d01\n\n    if abs(denom) < 0.0001:\n        # Degenerate triangle\n        return (1.0, 0.0, 0.0)\n\n    v = (d11 * d20 - d01 * d21) / denom\n    w = (d00 * d21 - d01 * d20) / denom\n    u = 1.0 - v - w\n\n    return (u, v, w)\n\n# Test\nprint(barycentric_coordinates((0.0, 0.0, 0.0),\n                              (-1.0, -1.0, 0.0), (1.0, -1.0, 0.0), (0.0, 1.0, 0.0)))",
+    "testCases": [
+      {
+        "input": "(0.0, 0.0, 0.0), (-1.0, -1.0, 0.0), (1.0, -1.0, 0.0), (0.0, 1.0, 0.0)",
+        "expectedOutput": "(0.25, 0.25, 0.5)",
+        "isHidden": false,
+        "description": "Point at center of triangle"
+      },
+      {
+        "input": "(-1.0, -1.0, 0.0), (-1.0, -1.0, 0.0), (1.0, -1.0, 0.0), (0.0, 1.0, 0.0)",
+        "expectedOutput": "(1.0, 0.0, 0.0)",
+        "isHidden": false,
+        "description": "Point at vertex v0"
+      },
+      {
+        "input": "(0.0, -1.0, 0.0), (-1.0, -1.0, 0.0), (1.0, -1.0, 0.0), (0.0, 1.0, 0.0)",
+        "expectedOutput": "(0.5, 0.5, 0.0)",
+        "isHidden": true,
+        "description": "Point on edge between v0 and v1"
+      }
+    ],
+    "hints": [
+      "Calculate vectors from v0 to v1, v2, and the point",
+      "Use dot products to set up a linear system",
+      "Solve for coordinates v and w using Cramer's rule",
+      "Calculate u = 1 - v - w",
+      "The barycentric coordinates represent weights for each vertex",
+      "If point is at vertex i, coordinate i should be 1 and others 0"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs306-t7-ex13",
+    "subjectId": "cs306",
+    "topicId": "cs306-topic-7",
+    "title": "Interpolate Triangle Attributes",
+    "difficulty": 3,
+    "description": "Interpolate vertex attributes (like normals or UV coordinates) across a triangle using barycentric coordinates.",
+    "starterCode": "def interpolate_attribute(bary_coords, attr0, attr1, attr2):\n    \"\"\"\n    Interpolate vertex attributes using barycentric coordinates.\n\n    Args:\n        bary_coords: tuple (u, v, w), barycentric coordinates\n        attr0, attr1, attr2: attribute values at vertices (can be float or tuple)\n\n    Returns:\n        Interpolated attribute value (same type as input attributes)\n\n    Notes:\n        result = u*attr0 + v*attr1 + w*attr2\n    \"\"\"\n    # Your code here\n    pass\n\n# Test with tuple attributes (RGB color)\nprint(interpolate_attribute((0.5, 0.25, 0.25),\n                            (1.0, 0.0, 0.0), (0.0, 1.0, 0.0), (0.0, 0.0, 1.0)))",
+    "solution": "def interpolate_attribute(bary_coords, attr0, attr1, attr2):\n    \"\"\"\n    Interpolate vertex attributes using barycentric coordinates.\n\n    Args:\n        bary_coords: tuple (u, v, w), barycentric coordinates\n        attr0, attr1, attr2: attribute values at vertices (can be float or tuple)\n\n    Returns:\n        Interpolated attribute value (same type as input attributes)\n\n    Notes:\n        result = u*attr0 + v*attr1 + w*attr2\n    \"\"\"\n    u, v, w = bary_coords\n\n    # Check if attributes are tuples (e.g., colors, normals)\n    if isinstance(attr0, tuple):\n        # Interpolate each component\n        result = []\n        for i in range(len(attr0)):\n            interpolated = u * attr0[i] + v * attr1[i] + w * attr2[i]\n            result.append(interpolated)\n        return tuple(result)\n    else:\n        # Scalar attribute (e.g., depth)\n        return u * attr0 + v * attr1 + w * attr2\n\n# Test with tuple attributes (RGB color)\nprint(interpolate_attribute((0.5, 0.25, 0.25),\n                            (1.0, 0.0, 0.0), (0.0, 1.0, 0.0), (0.0, 0.0, 1.0)))",
+    "testCases": [
+      {
+        "input": "(0.5, 0.25, 0.25), (1.0, 0.0, 0.0), (0.0, 1.0, 0.0), (0.0, 0.0, 1.0)",
+        "expectedOutput": "(0.5, 0.25, 0.25)",
+        "isHidden": false,
+        "description": "Interpolate RGB colors"
+      },
+      {
+        "input": "(1.0, 0.0, 0.0), 10.0, 20.0, 30.0",
+        "expectedOutput": "10.0",
+        "isHidden": false,
+        "description": "Interpolate scalar at vertex"
+      },
+      {
+        "input": "(0.333, 0.333, 0.334), (1.0, 0.0, 0.0), (0.0, 1.0, 0.0), (0.0, 0.0, 1.0)",
+        "expectedOutput": "(0.333, 0.333, 0.334)",
+        "isHidden": true,
+        "description": "Interpolate at triangle center"
+      }
+    ],
+    "hints": [
+      "Use the formula: result = u*attr0 + v*attr1 + w*attr2",
+      "Check if attributes are tuples (multi-component like colors/normals)",
+      "If tuple, interpolate each component separately",
+      "If scalar (float), directly compute weighted sum",
+      "Barycentric coordinates sum to 1, ensuring proper interpolation"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs306-t7-ex14",
+    "subjectId": "cs306",
+    "topicId": "cs306-topic-7",
+    "title": "Fresnel Reflectance for Dielectrics",
+    "difficulty": 4,
+    "description": "Calculate the Fresnel reflectance using Schlick's approximation. This determines how much light is reflected vs refracted at a surface.",
+    "starterCode": "import math\n\ndef fresnel_reflectance(cos_theta, eta_ratio):\n    \"\"\"\n    Calculate Fresnel reflectance using Schlick's approximation.\n\n    Args:\n        cos_theta: float, cosine of incident angle\n        eta_ratio: float, ratio of refractive indices (n1/n2)\n\n    Returns:\n        float, reflectance coefficient (0-1)\n\n    Notes:\n        R0 = ((n1-n2)/(n1+n2))²\n        R(θ) = R0 + (1-R0)(1-cos(θ))^5\n    \"\"\"\n    # Your code here\n    pass\n\n# Test\nprint(fresnel_reflectance(1.0, 1.0/1.5))  # Normal incidence, air to glass",
+    "solution": "import math\n\ndef fresnel_reflectance(cos_theta, eta_ratio):\n    \"\"\"\n    Calculate Fresnel reflectance using Schlick's approximation.\n\n    Args:\n        cos_theta: float, cosine of incident angle\n        eta_ratio: float, ratio of refractive indices (n1/n2)\n\n    Returns:\n        float, reflectance coefficient (0-1)\n\n    Notes:\n        R0 = ((n1-n2)/(n1+n2))²\n        R(θ) = R0 + (1-R0)(1-cos(θ))^5\n    \"\"\"\n    # Calculate R0 (reflectance at normal incidence)\n    # R0 = ((n1 - n2) / (n1 + n2))²\n    # Since eta_ratio = n1/n2, we can derive:\n    # R0 = ((1 - 1/eta_ratio) / (1 + 1/eta_ratio))²\n    r0 = ((1.0 - eta_ratio) / (1.0 + eta_ratio)) ** 2\n\n    # Ensure cos_theta is in valid range\n    cos_theta = max(0.0, min(1.0, cos_theta))\n\n    # Schlick's approximation\n    # R(θ) = R0 + (1 - R0)(1 - cos(θ))^5\n    one_minus_cos = 1.0 - cos_theta\n    reflectance = r0 + (1.0 - r0) * (one_minus_cos ** 5)\n\n    return reflectance\n\n# Test\nprint(fresnel_reflectance(1.0, 1.0/1.5))  # Normal incidence, air to glass",
+    "testCases": [
+      {
+        "input": "1.0, 1.0/1.5",
+        "expectedOutput": "0.04000000000000001",
+        "isHidden": false,
+        "description": "Normal incidence (perpendicular), air to glass"
+      },
+      {
+        "input": "0.0, 1.0/1.5",
+        "expectedOutput": "1.0",
+        "isHidden": false,
+        "description": "Grazing angle (parallel), total reflection"
+      },
+      {
+        "input": "0.7071, 1.0/1.33",
+        "expectedOutput": "0.02366158097839823",
+        "isHidden": true,
+        "description": "45 degree angle, air to water"
+      }
+    ],
+    "hints": [
+      "Calculate R0 using the formula ((1-η)/(1+η))²",
+      "Compute (1 - cos(θ))^5",
+      "Apply Schlick's formula: R0 + (1-R0)*(1-cos(θ))^5",
+      "At normal incidence (cos=1), reflectance equals R0",
+      "At grazing angles (cos=0), reflectance approaches 1",
+      "This determines the blend between reflection and refraction"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs306-t7-ex15",
+    "subjectId": "cs306",
+    "topicId": "cs306-topic-7",
+    "title": "Beer-Lambert Absorption",
+    "difficulty": 4,
+    "description": "Calculate light absorption through a transparent medium using Beer-Lambert law. This creates the colored tint when light passes through glass, water, etc.",
+    "starterCode": "import math\n\ndef beer_lambert_absorption(distance, absorption_color):\n    \"\"\"\n    Calculate color absorption through a medium.\n\n    Args:\n        distance: float, distance traveled through medium\n        absorption_color: tuple (r, g, b), absorption coefficients per unit distance\n\n    Returns:\n        tuple (r, g, b), transmission color multiplier\n\n    Notes:\n        Transmission = e^(-absorption * distance)\n        Apply to each color channel independently\n    \"\"\"\n    # Your code here\n    pass\n\n# Test\nprint(beer_lambert_absorption(2.0, (0.1, 0.05, 0.02)))",
+    "solution": "import math\n\ndef beer_lambert_absorption(distance, absorption_color):\n    \"\"\"\n    Calculate color absorption through a medium.\n\n    Args:\n        distance: float, distance traveled through medium\n        absorption_color: tuple (r, g, b), absorption coefficients per unit distance\n\n    Returns:\n        tuple (r, g, b), transmission color multiplier\n\n    Notes:\n        Transmission = e^(-absorption * distance)\n        Apply to each color channel independently\n    \"\"\"\n    # Apply Beer-Lambert law to each channel\n    # T = e^(-α * d)\n    transmission_r = math.exp(-absorption_color[0] * distance)\n    transmission_g = math.exp(-absorption_color[1] * distance)\n    transmission_b = math.exp(-absorption_color[2] * distance)\n\n    return (transmission_r, transmission_g, transmission_b)\n\n# Test\nprint(beer_lambert_absorption(2.0, (0.1, 0.05, 0.02)))",
+    "testCases": [
+      {
+        "input": "2.0, (0.1, 0.05, 0.02)",
+        "expectedOutput": "(0.8187307530779818, 0.9048374180359595, 0.9607894391523232)",
+        "isHidden": false,
+        "description": "Medium distance through colored glass"
+      },
+      {
+        "input": "0.0, (0.5, 0.5, 0.5)",
+        "expectedOutput": "(1.0, 1.0, 1.0)",
+        "isHidden": false,
+        "description": "Zero distance (no absorption)"
+      },
+      {
+        "input": "5.0, (0.8, 0.1, 0.05)",
+        "expectedOutput": "(0.01831563888873418, 0.6065306597126334, 0.7788007830714049)",
+        "isHidden": true,
+        "description": "Long distance, high red absorption (blue/green tint)"
+      }
+    ],
+    "hints": [
+      "Use the Beer-Lambert law: T = e^(-α*d)",
+      "Apply the formula independently to each color channel",
+      "Higher absorption coefficient = more absorption = less transmission",
+      "Distance of 0 should give transmission of 1.0 (full transmission)",
+      "Different absorption per channel creates colored glass effects",
+      "Red glass has low absorption for red, high for blue and green"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs306-t7-ex16",
+    "subjectId": "cs306",
+    "topicId": "cs306-topic-7",
+    "title": "Path Tracing Sample Ray",
+    "difficulty": 5,
+    "description": "Generate a random ray direction for path tracing using importance sampling. Sample the hemisphere around a surface normal weighted by cosine distribution.",
+    "starterCode": "import math\nimport random\n\ndef sample_cosine_hemisphere(normal, random_u1, random_u2):\n    \"\"\"\n    Generate random direction in cosine-weighted hemisphere.\n\n    Args:\n        normal: tuple (x, y, z), normalized surface normal\n        random_u1, random_u2: float (0-1), random numbers\n\n    Returns:\n        tuple (x, y, z), random direction (normalized)\n\n    Notes:\n        Use Malley's method:\n        - Sample unit disk using random numbers\n        - Project up to hemisphere\n        - Transform from local to world space\n    \"\"\"\n    # Your code here\n    pass\n\n# Test with fixed random values\nprint(sample_cosine_hemisphere((0.0, 1.0, 0.0), 0.5, 0.5))",
+    "solution": "import math\nimport random\n\ndef sample_cosine_hemisphere(normal, random_u1, random_u2):\n    \"\"\"\n    Generate random direction in cosine-weighted hemisphere.\n\n    Args:\n        normal: tuple (x, y, z), normalized surface normal\n        random_u1, random_u2: float (0-1), random numbers\n\n    Returns:\n        tuple (x, y, z), random direction (normalized)\n\n    Notes:\n        Use Malley's method:\n        - Sample unit disk using random numbers\n        - Project up to hemisphere\n        - Transform from local to world space\n    \"\"\"\n    # Sample point on unit disk using concentric mapping\n    theta = 2.0 * math.pi * random_u1\n    radius = math.sqrt(random_u2)\n\n    disk_x = radius * math.cos(theta)\n    disk_y = radius * math.sin(theta)\n\n    # Project to hemisphere (z = sqrt(1 - x² - y²))\n    local_z = math.sqrt(max(0.0, 1.0 - disk_x*disk_x - disk_y*disk_y))\n\n    # Local hemisphere coordinates (z is up)\n    local_dir = (disk_x, disk_y, local_z)\n\n    # Build tangent space basis from normal\n    # Find an axis that's not parallel to normal\n    if abs(normal[0]) > 0.9:\n        tangent = (0.0, 1.0, 0.0)\n    else:\n        tangent = (1.0, 0.0, 0.0)\n\n    # Bitangent = normal × tangent\n    bitangent_x = normal[1]*tangent[2] - normal[2]*tangent[1]\n    bitangent_y = normal[2]*tangent[0] - normal[0]*tangent[2]\n    bitangent_z = normal[0]*tangent[1] - normal[1]*tangent[0]\n\n    # Normalize bitangent\n    mag = math.sqrt(bitangent_x**2 + bitangent_y**2 + bitangent_z**2)\n    bitangent = (bitangent_x/mag, bitangent_y/mag, bitangent_z/mag)\n\n    # Tangent = bitangent × normal\n    tangent_x = bitangent[1]*normal[2] - bitangent[2]*normal[1]\n    tangent_y = bitangent[2]*normal[0] - bitangent[0]*normal[2]\n    tangent_z = bitangent[0]*normal[1] - bitangent[1]*normal[0]\n\n    # Transform local direction to world space\n    world_x = local_dir[0]*tangent_x + local_dir[1]*bitangent[0] + local_dir[2]*normal[0]\n    world_y = local_dir[0]*tangent_y + local_dir[1]*bitangent[1] + local_dir[2]*normal[1]\n    world_z = local_dir[0]*tangent_z + local_dir[1]*bitangent[2] + local_dir[2]*normal[2]\n\n    return (world_x, world_y, world_z)\n\n# Test with fixed random values\nprint(sample_cosine_hemisphere((0.0, 1.0, 0.0), 0.5, 0.5))",
+    "testCases": [
+      {
+        "input": "(0.0, 1.0, 0.0), 0.5, 0.5",
+        "expectedOutput": "(0.0, 0.7071067811865476, 0.7071067811865476)",
+        "isHidden": false,
+        "description": "Sample with normal pointing up"
+      },
+      {
+        "input": "(0.0, 1.0, 0.0), 0.0, 0.0",
+        "expectedOutput": "(0.0, 1.0, 0.0)",
+        "isHidden": false,
+        "description": "Center of distribution (straight up)"
+      },
+      {
+        "input": "(1.0, 0.0, 0.0), 0.25, 0.5",
+        "expectedOutput": "(0.7071067811865476, 0.0, 0.7071067811865476)",
+        "isHidden": true,
+        "description": "Normal pointing along X axis"
+      }
+    ],
+    "hints": [
+      "Use Malley's method: sample disk, then project to hemisphere",
+      "Convert random values to polar coordinates: θ = 2πu₁, r = √u₂",
+      "Disk point: (r*cos(θ), r*sin(θ))",
+      "Hemisphere z = √(1 - x² - y²)",
+      "Build tangent space basis (tangent, bitangent, normal)",
+      "Transform local hemisphere coordinates to world space using TBN matrix",
+      "Cosine weighting naturally occurs from disk-to-hemisphere projection",
+      "This is used in path tracing for physically accurate light transport"
+    ],
+    "language": "python"
+  }
+]

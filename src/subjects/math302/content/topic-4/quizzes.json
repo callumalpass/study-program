@@ -1,0 +1,221 @@
+[
+  {
+    "id": "math302-quiz-4-1",
+    "subjectId": "math302",
+    "topicId": "math302-topic-4",
+    "title": "Systems of DEs - Eigenvalue Method",
+    "questions": [
+      {
+        "id": "math302-q46",
+        "type": "multiple_choice",
+        "prompt": "A linear system X′ = AX has the form:",
+        "options": [
+          "X′ = AX where X is a vector and A is a matrix",
+          "X′ = AX + B where X and B are vectors",
+          "dx/dt = ax + by, dy/dt = cx + dy",
+          "Both the first and third options"
+        ],
+        "correctAnswer": "Both the first and third options",
+        "explanation": "X′ = AX is vector notation for a system. For 2D: dx/dt = ax + by, dy/dt = cx + dy, where A = [[a,b],[c,d]]."
+      },
+      {
+        "id": "math302-q47",
+        "type": "multiple_choice",
+        "prompt": "For X′ = AX, if λ is an eigenvalue with eigenvector v, then a solution is:",
+        "options": [
+          "X = ve^(λt)",
+          "X = λe^(vt)",
+          "X = e^(λt)",
+          "X = v + λt"
+        ],
+        "correctAnswer": "X = ve^(λt)",
+        "explanation": "Each eigenvalue-eigenvector pair (λ, v) generates a solution X = ve^(λt) to the system X′ = AX."
+      },
+      {
+        "id": "math302-q48",
+        "type": "multiple_choice",
+        "prompt": "If A has eigenvalues λ₁ = -2, λ₂ = -3 with eigenvectors v₁, v₂, the general solution is:",
+        "options": [
+          "X = c₁v₁e^(-2t) + c₂v₂e^(-3t)",
+          "X = c₁v₁e^(2t) + c₂v₂e^(3t)",
+          "X = (c₁v₁ + c₂v₂)e^(-2t)",
+          "X = c₁e^(-2t) + c₂e^(-3t)"
+        ],
+        "correctAnswer": "X = c₁v₁e^(-2t) + c₂v₂e^(-3t)",
+        "explanation": "The general solution is a linear combination of all fundamental solutions: X = c₁v₁e^(λ₁t) + c₂v₂e^(λ₂t)."
+      },
+      {
+        "id": "math302-q49",
+        "type": "multiple_choice",
+        "prompt": "For complex eigenvalues λ = α ± βi, the solutions involve:",
+        "options": [
+          "e^(αt)cos(βt) and e^(αt)sin(βt)",
+          "e^(αt) and e^(βt)",
+          "cos(αt) and sin(βt)",
+          "e^(βt)cos(αt) and e^(βt)sin(αt)"
+        ],
+        "correctAnswer": "e^(αt)cos(βt) and e^(αt)sin(βt)",
+        "explanation": "Complex eigenvalues α ± βi give oscillatory solutions with exponential factor: e^(αt)cos(βt) and e^(αt)sin(βt)."
+      },
+      {
+        "id": "math302-q50",
+        "type": "multiple_choice",
+        "prompt": "An equilibrium point (critical point) of X′ = AX occurs at:",
+        "options": [
+          "X = 0",
+          "X = A",
+          "X = 1",
+          "AX = 1"
+        ],
+        "correctAnswer": "X = 0",
+        "explanation": "Equilibrium points satisfy X′ = 0. For X′ = AX, this gives AX = 0, so X = 0 (assuming A is non-singular)."
+      }
+    ]
+  },
+  {
+    "id": "math302-quiz-4-2",
+    "subjectId": "math302",
+    "topicId": "math302-topic-4",
+    "title": "Systems of DEs - Phase Portraits",
+    "questions": [
+      {
+        "id": "math302-q51",
+        "type": "multiple_choice",
+        "prompt": "A node (stable or unstable) occurs when eigenvalues are:",
+        "options": [
+          "Real with the same sign",
+          "Real with opposite signs",
+          "Complex conjugates",
+          "Zero"
+        ],
+        "correctAnswer": "Real with the same sign",
+        "explanation": "A node occurs when both eigenvalues are real and have the same sign (both negative: stable node; both positive: unstable node)."
+      },
+      {
+        "id": "math302-q52",
+        "type": "multiple_choice",
+        "prompt": "A saddle point occurs when eigenvalues are:",
+        "options": [
+          "Real with opposite signs",
+          "Real with the same sign",
+          "Complex conjugates",
+          "Both zero"
+        ],
+        "correctAnswer": "Real with opposite signs",
+        "explanation": "A saddle point (unstable) occurs when eigenvalues are real with opposite signs (one positive, one negative)."
+      },
+      {
+        "id": "math302-q53",
+        "type": "multiple_choice",
+        "prompt": "A spiral (stable or unstable) occurs when eigenvalues are:",
+        "options": [
+          "Complex with non-zero real part",
+          "Pure imaginary",
+          "Real and distinct",
+          "Real and equal"
+        ],
+        "correctAnswer": "Complex with non-zero real part",
+        "explanation": "Spiral behavior occurs with complex eigenvalues α ± βi where α ≠ 0. Stable if α < 0, unstable if α > 0."
+      },
+      {
+        "id": "math302-q54",
+        "type": "multiple_choice",
+        "prompt": "A center occurs when eigenvalues are:",
+        "options": [
+          "Pure imaginary (±βi)",
+          "Real and negative",
+          "Real and positive",
+          "Complex with negative real part"
+        ],
+        "correctAnswer": "Pure imaginary (±βi)",
+        "explanation": "A center (neutrally stable) occurs when eigenvalues are pure imaginary λ = ±βi, producing periodic orbits."
+      },
+      {
+        "id": "math302-q55",
+        "type": "multiple_choice",
+        "prompt": "The trace and determinant of matrix A = [[a,b],[c,d]] are:",
+        "options": [
+          "tr(A) = a + d, det(A) = ad - bc",
+          "tr(A) = ad, det(A) = a + d",
+          "tr(A) = a - d, det(A) = ad + bc",
+          "tr(A) = ac + bd, det(A) = ad - bc"
+        ],
+        "correctAnswer": "tr(A) = a + d, det(A) = ad - bc",
+        "explanation": "For 2×2 matrix A, trace = sum of diagonal elements = a + d, determinant = ad - bc. These relate to eigenvalues."
+      }
+    ]
+  },
+  {
+    "id": "math302-quiz-4-3",
+    "subjectId": "math302",
+    "topicId": "math302-topic-4",
+    "title": "Systems of DEs - Advanced Systems",
+    "questions": [
+      {
+        "id": "math302-q56",
+        "type": "multiple_choice",
+        "prompt": "For a repeated eigenvalue λ with only one eigenvector v, the second solution is:",
+        "options": [
+          "X = (vt + w)e^(λt) where (A - λI)w = v",
+          "X = ve^(2λt)",
+          "X = tv e^(λt)",
+          "X = we^(λt) for any vector w"
+        ],
+        "correctAnswer": "X = (vt + w)e^(λt) where (A - λI)w = v",
+        "explanation": "For a defective eigenvalue, the second solution has form X = (vt + w)e^(λt) where w is a generalized eigenvector."
+      },
+      {
+        "id": "math302-q57",
+        "type": "multiple_choice",
+        "prompt": "The fundamental matrix Φ(t) for X′ = AX satisfies:",
+        "options": [
+          "Φ′ = AΦ and Φ(0) = I",
+          "Φ′ = Φ + A",
+          "Φ = e^(At)",
+          "Both the first and third options"
+        ],
+        "correctAnswer": "Both the first and third options",
+        "explanation": "The fundamental matrix satisfies Φ′ = AΦ with Φ(0) = I. It equals the matrix exponential: Φ(t) = e^(At)."
+      },
+      {
+        "id": "math302-q58",
+        "type": "multiple_choice",
+        "prompt": "For a nonhomogeneous system X′ = AX + F(t), the general solution is:",
+        "options": [
+          "X = X_h + X_p",
+          "X = X_h",
+          "X = X_p",
+          "X = AX + F"
+        ],
+        "correctAnswer": "X = X_h + X_p",
+        "explanation": "Like scalar equations, the solution to a nonhomogeneous system is the sum of homogeneous solution X_h and particular solution X_p."
+      },
+      {
+        "id": "math302-q59",
+        "type": "multiple_choice",
+        "prompt": "Variation of parameters for systems gives X_p as:",
+        "options": [
+          "X_p = Φ(t)∫Φ^(-1)(t)F(t) dt",
+          "X_p = ∫F(t) dt",
+          "X_p = Φ(t)F(t)",
+          "X_p = A^(-1)F(t)"
+        ],
+        "correctAnswer": "X_p = Φ(t)∫Φ^(-1)(t)F(t) dt",
+        "explanation": "The particular solution by variation of parameters is X_p = Φ(t)∫Φ^(-1)(s)F(s) ds, where Φ is the fundamental matrix."
+      },
+      {
+        "id": "math302-q60",
+        "type": "multiple_choice",
+        "prompt": "A Lyapunov function V(X) is useful for:",
+        "options": [
+          "Determining stability without solving",
+          "Finding exact solutions",
+          "Computing eigenvalues",
+          "Calculating the Wronskian"
+        ],
+        "correctAnswer": "Determining stability without solving",
+        "explanation": "A Lyapunov function is a scalar function V(X) that helps prove stability of equilibrium points without explicitly solving the system."
+      }
+    ]
+  }
+]

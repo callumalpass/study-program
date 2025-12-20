@@ -1,0 +1,242 @@
+[
+  {
+    "id": "cs202-t5-ex1",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic5",
+    "type": "written",
+    "title": "Cache Address Breakdown",
+    "description": "For a 32KB direct-mapped cache with 64-byte blocks and 32-bit addresses, calculate the number of bits for tag, index, and offset fields.",
+    "difficulty": 2,
+    "hints": [
+      "Total size = blocks × block size",
+      "Offset bits = log2(block size)",
+      "Index bits = log2(number of blocks)"
+    ],
+    "solution": "Cache parameter calculation:\n\nGiven:\n- Cache size: 32KB = 32 × 1024 = 32768 bytes\n- Block size: 64 bytes\n- Address: 32 bits\n\nStep 1: Calculate number of blocks\nNumber of blocks = Cache size / Block size\n= 32768 / 64 = 512 blocks\n\nStep 2: Calculate offset bits\nOffset addresses bytes within a block\nOffset bits = log2(64) = 6 bits\n\nStep 3: Calculate index bits\nIndex selects which block (set)\nIndex bits = log2(512) = 9 bits\n\nStep 4: Calculate tag bits\nTag = remaining address bits\nTag bits = 32 - 9 - 6 = 17 bits\n\nAddress breakdown:\n| Tag (17 bits) | Index (9 bits) | Offset (6 bits) |\n|   31 - 15     |    14 - 6      |     5 - 0       |\n\nVerification:\n- 2^6 = 64 bytes per block ✓\n- 2^9 = 512 blocks ✓\n- 512 × 64 = 32KB ✓"
+  },
+  {
+    "id": "cs202-t5-ex2",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic5",
+    "type": "written",
+    "title": "Cache Access Sequence",
+    "description": "For a direct-mapped cache with 4 blocks (0-3) and addresses that map as: addr mod 4, trace accesses to addresses: 0, 4, 8, 0, 4, 12, 0. Show hits/misses.",
+    "difficulty": 2,
+    "hints": [
+      "Direct-mapped means one possible location",
+      "Track what's in each block",
+      "Address mod 4 gives index"
+    ],
+    "solution": "Direct-mapped cache trace (4 blocks, index = addr mod 4):\n\nInitial state: all blocks empty\n\nAccess 0: index = 0 mod 4 = 0\n- Block 0 empty → MISS\n- Load addr 0 into block 0\n- Cache: [0, -, -, -]\n\nAccess 4: index = 4 mod 4 = 0\n- Block 0 has addr 0, need 4 → MISS (conflict)\n- Replace with addr 4\n- Cache: [4, -, -, -]\n\nAccess 8: index = 8 mod 4 = 0\n- Block 0 has addr 4, need 8 → MISS (conflict)\n- Replace with addr 8\n- Cache: [8, -, -, -]\n\nAccess 0: index = 0 mod 4 = 0\n- Block 0 has addr 8, need 0 → MISS (conflict)\n- Replace with addr 0\n- Cache: [0, -, -, -]\n\nAccess 4: index = 4 mod 4 = 0\n- Block 0 has addr 0, need 4 → MISS (conflict)\n- Replace with addr 4\n- Cache: [4, -, -, -]\n\nAccess 12: index = 12 mod 4 = 0\n- Block 0 has addr 4, need 12 → MISS (conflict)\n- Replace with addr 12\n- Cache: [12, -, -, -]\n\nAccess 0: index = 0 mod 4 = 0\n- Block 0 has addr 12, need 0 → MISS (conflict)\n- Replace with addr 0\n- Cache: [0, -, -, -]\n\nResults: 7 accesses, 0 hits, 7 misses\nHit rate: 0%\n\nProblem: All addresses map to same block!\nThis is pathological worst case for direct-mapped.\nSet-associative cache would help."
+  },
+  {
+    "id": "cs202-t5-ex3",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic5",
+    "type": "written",
+    "title": "Set-Associative Cache",
+    "description": "Redo the previous exercise with a 2-way set-associative cache (2 sets, 2 blocks each). Use LRU replacement.",
+    "difficulty": 3,
+    "hints": [
+      "2 sets means index = addr mod 2",
+      "Each set holds 2 blocks",
+      "LRU evicts least recently used"
+    ],
+    "solution": "2-way set-associative cache trace:\n(2 sets × 2 ways = 4 blocks total, index = addr mod 2)\n\nInitial: Set 0: [-, -], Set 1: [-, -]\n\nAccess 0: index = 0 mod 2 = 0\n- Set 0 empty → MISS\n- Load 0 into Set 0, Way 0\n- Set 0: [0, -], LRU order: 0\n\nAccess 4: index = 4 mod 2 = 0\n- Set 0 has [0, -], no 4 → MISS\n- Load 4 into Set 0, Way 1\n- Set 0: [0, 4], LRU order: 0, 4 (0 is older)\n\nAccess 8: index = 8 mod 2 = 0\n- Set 0 has [0, 4], no 8 → MISS\n- LRU is 0, replace it\n- Set 0: [8, 4], LRU order: 4, 8\n\nAccess 0: index = 0 mod 2 = 0\n- Set 0 has [8, 4], no 0 → MISS\n- LRU is 4, replace it\n- Set 0: [8, 0], LRU order: 8, 0\n\nAccess 4: index = 4 mod 2 = 0\n- Set 0 has [8, 0], no 4 → MISS\n- LRU is 8, replace it\n- Set 0: [4, 0], LRU order: 0, 4\n\nAccess 12: index = 12 mod 2 = 0\n- Set 0 has [4, 0], no 12 → MISS\n- LRU is 0, replace it\n- Set 0: [4, 12], LRU order: 4, 12\n\nAccess 0: index = 0 mod 2 = 0\n- Set 0 has [4, 12], no 0 → MISS\n- LRU is 4, replace it\n- Set 0: [0, 12], LRU order: 12, 0\n\nResults: 7 accesses, 0 hits, 7 misses\nStill 0% hit rate - this sequence is adversarial!\n\nNote: 4-way or fully associative would help here."
+  },
+  {
+    "id": "cs202-t5-ex4",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic5",
+    "type": "written",
+    "title": "AMAT Calculation",
+    "description": "Calculate AMAT for: L1 hit time = 1 cycle, L1 miss rate = 5%, L2 hit time = 10 cycles, L2 miss rate = 20%, Memory = 100 cycles.",
+    "difficulty": 2,
+    "hints": [
+      "AMAT = Hit time + Miss rate × Miss penalty",
+      "L2 miss penalty includes memory access",
+      "Chain the calculations"
+    ],
+    "solution": "Average Memory Access Time (AMAT) calculation:\n\nGiven:\n- L1 hit time: 1 cycle\n- L1 miss rate: 5% (0.05)\n- L2 hit time: 10 cycles\n- L2 miss rate: 20% (0.20) - miss rate GIVEN L1 miss\n- Memory access time: 100 cycles\n\nMethod 1: Hierarchical AMAT\n\nL2 AMAT (when L1 misses):\nAMAT_L2 = L2_hit_time + L2_miss_rate × Memory_time\n= 10 + 0.20 × 100\n= 10 + 20\n= 30 cycles\n\nTotal AMAT:\nAMAT = L1_hit_time + L1_miss_rate × L2_AMAT\n= 1 + 0.05 × 30\n= 1 + 1.5\n= 2.5 cycles\n\nMethod 2: Probability breakdown\n\nP(L1 hit) = 0.95 → 1 cycle\nP(L1 miss, L2 hit) = 0.05 × 0.80 = 0.04 → 1 + 10 = 11 cycles\nP(L1 miss, L2 miss) = 0.05 × 0.20 = 0.01 → 1 + 10 + 100 = 111 cycles\n\nAMAT = 0.95(1) + 0.04(11) + 0.01(111)\n= 0.95 + 0.44 + 1.11\n= 2.5 cycles ✓\n\nInterpretation:\n- Average memory access takes 2.5 cycles\n- L1 provides most of the performance (95% hits at 1 cycle)\n- L2 catches most L1 misses (80% of 5%)\n- Only 1% of accesses go to memory"
+  },
+  {
+    "id": "cs202-t5-ex5",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic5",
+    "type": "written",
+    "title": "Three Cs Classification",
+    "description": "Classify these misses using the 3 Cs: (a) First access to array element (b) Working set larger than cache (c) Two arrays mapping to same cache lines",
+    "difficulty": 2,
+    "hints": [
+      "Compulsory: first access ever",
+      "Capacity: not enough total space",
+      "Conflict: mapping collision"
+    ],
+    "solution": "Three Cs Miss Classification:\n\n(a) First access to array element: COMPULSORY (Cold) miss\n- Data has never been in cache before\n- Cannot be avoided (except by prefetching)\n- Would occur even with infinite cache size\n- Example: First iteration of loop accessing array\n\n(b) Working set larger than cache: CAPACITY miss\n- Cache too small to hold all active data\n- Would occur even with full associativity\n- Solution: Larger cache or better algorithm locality\n- Example: Matrix multiply where matrix doesn't fit\n\n(c) Two arrays mapping to same lines: CONFLICT miss\n- Multiple addresses compete for same cache set\n- Would NOT occur with full associativity\n- Solution: More associativity or array padding\n- Example: Stride access pattern hitting same sets\n\nMiss classification summary:\n┌────────────┬──────────────────────┬───────────────────┐\n│ Type       │ Cause                │ Solution          │\n├────────────┼──────────────────────┼───────────────────┤\n│ Compulsory │ First access         │ Prefetching       │\n│ Capacity   │ Cache too small      │ Larger cache      │\n│ Conflict   │ Limited associativity│ More ways         │\n└────────────┴──────────────────────┴───────────────────┘\n\nRelative impact (typical):\n- Compulsory: Small (happens once per block)\n- Capacity: Can be large for big datasets\n- Conflict: Often significant, reduced by associativity"
+  },
+  {
+    "id": "cs202-t5-ex6",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic5",
+    "type": "written",
+    "title": "Write Policies",
+    "description": "Compare write-through and write-back policies. For a program that writes 1000 times to the same address, how many memory writes occur with each policy?",
+    "difficulty": 2,
+    "hints": [
+      "Write-through writes to memory every time",
+      "Write-back only writes when evicted",
+      "Consider dirty bit"
+    ],
+    "solution": "Write Policy Comparison:\n\nWrite-Through:\n- Every write goes to both cache AND memory\n- Simple, keeps memory consistent\n- High memory bandwidth usage\n\nWrite-Back:\n- Write only goes to cache\n- Mark block as \"dirty\"\n- Write to memory only when evicted\n- Requires extra dirty bit\n\nFor 1000 writes to same address:\n\nWrite-Through:\n- Each write updates memory\n- Memory writes: 1000\n- Memory reads: 1 (initial miss, assuming cold start)\n- Total memory traffic: 1001 accesses\n\nWrite-Back:\n- First write: miss, bring block to cache, write to cache\n- Writes 2-1000: hit, update cache only\n- On eviction: write dirty block back\n- Memory writes: 1 (on eviction)\n- Memory reads: 1 (initial miss)\n- Total memory traffic: 2 accesses\n\nComparison:\n┌─────────────────┬───────────────┬─────────────┐\n│ Metric          │ Write-Through │ Write-Back  │\n├─────────────────┼───────────────┼─────────────┤\n│ Memory writes   │     1000      │      1      │\n│ Memory reads    │       1       │      1      │\n│ Total traffic   │     1001      │      2      │\n│ Complexity      │     Low       │    Higher   │\n│ Consistency     │   Immediate   │   Delayed   │\n└─────────────────┴───────────────┴─────────────┘\n\nWrite-back is 500× less memory traffic for this case!\n\nWrite buffers (enhancement for write-through):\n- Queue writes, continue execution\n- Reduces stalls but still uses bandwidth"
+  },
+  {
+    "id": "cs202-t5-ex7",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic5",
+    "type": "written",
+    "title": "Cache Optimization",
+    "description": "A programmer writes code that accesses a 2D array column by column (arr[j][i] in inner loop). The array is 1024×1024 integers stored row-major. Explain why this is bad and how to fix it.",
+    "difficulty": 3,
+    "hints": [
+      "Row-major means row elements are consecutive",
+      "Column access has large stride",
+      "Consider cache block utilization"
+    ],
+    "solution": "Column-wise access problem:\n\nArray layout (row-major, C/C++):\narr[0][0], arr[0][1], arr[0][2], ... arr[0][1023],\narr[1][0], arr[1][1], arr[1][2], ... arr[1][1023],\n...\n\nArray size: 1024 × 1024 × 4 bytes = 4MB\n\nColumn access pattern (arr[j][i]):\nfor (i = 0; i < 1024; i++)      // outer\n    for (j = 0; j < 1024; j++)  // inner\n        sum += arr[j][i];       // Column access!\n\nAccess sequence: arr[0][0], arr[1][0], arr[2][0], ...\n\nStride = 1024 integers = 4096 bytes between accesses\n\nProblem analysis:\n- Cache block typically 64 bytes = 16 integers\n- Access arr[0][0]: bring in arr[0][0..15]\n- Next access arr[1][0]: none of those 16 are needed!\n- 15/16 = 93.75% of fetched data is wasted\n\nWith 64-byte blocks:\n- 1024 × 1024 = 1M accesses\n- Almost every access is a miss (stride > block size)\n- ~1M misses!\n\nFixed code (row-wise access):\nfor (i = 0; i < 1024; i++)\n    for (j = 0; j < 1024; j++)\n        sum += arr[i][j];       // Row access!\n\nAccess sequence: arr[0][0], arr[0][1], arr[0][2], ...\n\nNow:\n- Access arr[0][0]: bring in arr[0][0..15]\n- Next 15 accesses hit in cache!\n- 1 miss per 16 accesses\n- ~64K misses (vs 1M!)\n\nSpeedup: 15× fewer misses, potentially much faster"
+  },
+  {
+    "id": "cs202-t5-ex8",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic5",
+    "type": "written",
+    "title": "Multi-Level Inclusion",
+    "description": "Explain inclusive vs exclusive cache hierarchies. If L1 is 32KB and L2 is 256KB, what is the effective size for each policy?",
+    "difficulty": 3,
+    "hints": [
+      "Inclusive: L1 ⊆ L2",
+      "Exclusive: L1 ∩ L2 = ∅",
+      "Consider total unique data"
+    ],
+    "solution": "Cache Inclusion Policies:\n\nInclusive Cache:\n- All data in L1 is also in L2\n- L1 ⊆ L2 (L1 is subset of L2)\n- Simple coherence (snoop L2 only)\n- L1 eviction doesn't need L2 action\n\nExclusive Cache:\n- L1 and L2 have no overlap\n- L1 ∩ L2 = ∅\n- Maximum capacity\n- L1 eviction → move to L2\n\nEffective sizes for L1=32KB, L2=256KB:\n\nInclusive:\n- L2 contains everything L1 has\n- Unique data = L2 size = 256KB\n- L1's 32KB is \"duplicated\" in L2\n- Effective total: 256KB\n\nExclusive:\n- L1 and L2 are disjoint\n- Unique data = L1 + L2 = 32KB + 256KB\n- Effective total: 288KB\n\nComparison:\n┌────────────┬───────────┬───────────────────────────┐\n│ Policy     │ Capacity  │ Trade-off                 │\n├────────────┼───────────┼───────────────────────────┤\n│ Inclusive  │  256KB    │ Simple, coherence easy    │\n│ Exclusive  │  288KB    │ +12.5% capacity, complex  │\n└────────────┴───────────┴───────────────────────────┘\n\nNINE (Non-Inclusive, Non-Exclusive):\n- Hybrid approach\n- L2 may or may not contain L1 data\n- Intermediate complexity and capacity\n- Used in some modern processors\n\nIntel typically uses inclusive L3\nAMD often uses exclusive or NINE policies"
+  },
+  {
+    "id": "cs202-t5-ex9",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic5",
+    "type": "written",
+    "title": "Block Size Trade-off",
+    "description": "Analyze the impact of increasing block size from 32 to 128 bytes. What improves? What gets worse?",
+    "difficulty": 3,
+    "hints": [
+      "Consider spatial locality",
+      "Consider miss penalty",
+      "Consider number of blocks"
+    ],
+    "solution": "Block Size Trade-off Analysis:\n\nGoing from 32-byte to 128-byte blocks:\n\nIMPROVEMENTS (what gets better):\n\n1. Better spatial locality exploitation\n   - More adjacent data brought in per miss\n   - Sequential access patterns benefit\n   - Compulsory misses reduced\n\n2. Lower tag overhead\n   - Fewer blocks = fewer tags\n   - 32B: need tag for every 32 bytes\n   - 128B: need tag for every 128 bytes (4× fewer)\n\n3. Potentially fewer misses for streaming access\n   - Miss every 128 bytes vs every 32 bytes\n   - Up to 4× fewer misses for sequential patterns\n\nDEGRADATIONS (what gets worse):\n\n1. Higher miss penalty\n   - 128 bytes takes longer to transfer than 32\n   - Miss penalty increases (roughly linearly)\n\n2. More wasted bandwidth on small accesses\n   - Access 4 bytes, fetch 128\n   - 97% of transfer unused if no spatial locality\n\n3. More pollution/conflict misses\n   - Fewer blocks in same-size cache\n   - 64KB cache: 2048 32B blocks vs 512 128B blocks\n   - Higher conflict probability\n\n4. Worse for random access patterns\n   - Each miss brings unneeded data\n   - Miss rate may increase\n\nOptimal point:\n- Depends on access patterns\n- Typical L1: 64 bytes\n- Typical L2/L3: 64-128 bytes\n\nFormula consideration:\nAMAT = Hit_time + Miss_rate × Miss_penalty\n- Block size ↑ → Miss_rate may ↓\n- Block size ↑ → Miss_penalty ↑\n- Optimal balances these effects"
+  },
+  {
+    "id": "cs202-t5-ex10",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic5",
+    "type": "written",
+    "title": "Virtual Memory and Caches",
+    "description": "Explain the difference between virtually-indexed/physically-tagged (VIPT) and physically-indexed/physically-tagged (PIPT) caches. Why is VIPT common for L1?",
+    "difficulty": 4,
+    "hints": [
+      "Virtual address available immediately",
+      "Physical address needs TLB lookup",
+      "Consider timing critical path"
+    ],
+    "solution": "Cache Indexing and Tagging Options:\n\nPIPT (Physically-Indexed, Physically-Tagged):\n- Both index and tag use physical address\n- Requires TLB lookup BEFORE cache access\n- Timeline: VA → TLB → PA → Cache\n- Slower: TLB in critical path\n\nVIPT (Virtually-Indexed, Physically-Tagged):\n- Index uses virtual address (fast)\n- Tag uses physical address (correct)\n- Timeline: VA → Cache index || TLB → compare tags\n- Faster: TLB and cache index in parallel\n\nWhy VIPT for L1:\n\nTiming advantage:\n┌─────────────────────────────────────────────┐\n│ PIPT (Serial):                              │\n│ VA ──► TLB ──► PA ──► Cache Index ──► Data  │\n│        ~1ns         ~1ns                    │\n│ Total: ~2ns                                 │\n├─────────────────────────────────────────────┤\n│ VIPT (Parallel):                            │\n│ VA ──► Cache Index ──► Data                 │\n│    ╲                                        │\n│     ──► TLB ──► Tag Compare                 │\n│ Total: ~1ns (TLB hidden)                    │\n└─────────────────────────────────────────────┘\n\nVIPT constraints:\n- Index bits must be same in VA and PA\n- Constraint: cache_size ≤ page_size × associativity\n- For 4KB pages, 64B blocks:\n  - Offset: 6 bits (within block)\n  - Index: up to 6 bits (page offset - block offset)\n  - Max direct-mapped: 4KB\n  - 8-way: up to 32KB\n\nSynonym problem:\n- Different VAs map to same PA\n- VIPT with small cache: no issue (index from page offset)\n- Large VIPT cache needs extra handling\n\nL2/L3 typically PIPT:\n- Not as timing critical\n- Simpler, no synonym issues\n- TLB already done for L1 access"
+  },
+  {
+    "id": "cs202-t5-ex11",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic5",
+    "type": "written",
+    "title": "LRU Implementation",
+    "description": "For a 4-way set-associative cache, describe how to implement true LRU replacement. What is the storage cost? Describe a pseudo-LRU alternative.",
+    "difficulty": 4,
+    "hints": [
+      "Track relative order of all ways",
+      "How many bits for ordering?",
+      "Tree-based pseudo-LRU"
+    ],
+    "solution": "LRU Implementation for 4-way Cache:\n\nTrue LRU:\nNeed to track relative ordering of 4 ways.\n\nMethod 1: Counter per way\n- Each way has 2-bit counter (0-3)\n- On access: set counter to 3 (most recent)\n- Decrement other counters\n- Evict way with counter = 0\n- Storage: 4 × 2 = 8 bits per set\n\nMethod 2: Ordering matrix\n- N×N bit matrix for N ways\n- row[i][j] = 1 if way i more recent than j\n- Storage: N² bits = 16 bits per set\n- But updates complex\n\nMethod 3: Order list\n- log2(4!) = log2(24) = 5 bits needed\n- Encode one of 24 possible orderings\n- Storage: 5 bits per set\n- Complex decode logic\n\nTrue LRU storage for 4-way:\n5-8 bits per set (depending on method)\n\nPseudo-LRU (Tree-based):\nBinary tree with 3 bits for 4 ways:\n\n        [B0]\n       /    \\\n    [B1]    [B2]\n    /  \\    /  \\\n  W0   W1  W2   W3\n\nEach bit points to \"less recently used\" subtree\n- B0=0: left subtree less recent\n- B0=1: right subtree less recent\n\nOn access to Way 2:\n- B0 → 0 (right side used)\n- B2 → 0 (left of right used)\n\nFind victim: Follow bits to leaf\nStorage: 3 bits per set (vs 5-8 for true LRU)\n\nTrade-off:\n- True LRU: Optimal but complex\n- Pseudo-LRU: ~1% worse hit rate, much simpler\n- Most modern caches use pseudo-LRU or random"
+  },
+  {
+    "id": "cs202-t5-ex12",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic5",
+    "type": "written",
+    "title": "Cache Performance Impact",
+    "description": "A processor runs at 3GHz with CPI=1.0 (no memory stalls). L1 cache has 2% miss rate, 10 cycle miss penalty. Calculate new CPI and performance impact.",
+    "difficulty": 2,
+    "hints": [
+      "Assume some percentage of instructions are memory ops",
+      "Miss penalty adds to CPI",
+      "Consider typical instruction mix"
+    ],
+    "solution": "Cache Performance Impact Analysis:\n\nGiven:\n- CPU frequency: 3 GHz\n- Base CPI: 1.0 (without memory stalls)\n- L1 miss rate: 2%\n- L1 miss penalty: 10 cycles\n\nAssumption: 30% of instructions are loads/stores\n(typical for many workloads)\n\nMemory stall cycles per instruction:\n= Memory_instruction_fraction × Miss_rate × Miss_penalty\n= 0.30 × 0.02 × 10\n= 0.06 cycles per instruction\n\nNew CPI with memory stalls:\nCPI = Base_CPI + Memory_stall_cycles\n= 1.0 + 0.06\n= 1.06\n\nPerformance impact:\nSpeedup = Old_CPI / New_CPI = 1.0 / 1.06 = 0.943\nSlowdown = 1 - 0.943 = 5.7%\n\nAlternative calculation (if ALL instructions accessed memory):\nMemory stalls = 1.0 × 0.02 × 10 = 0.2 cycles\nCPI = 1.0 + 0.2 = 1.2\n20% slowdown\n\nReal-world consideration:\n- Miss penalty often hidden by out-of-order execution\n- Multiple outstanding misses (MLP)\n- Prefetching reduces effective miss rate\n- Actual impact often less than calculated\n\nSensitivity:\n- If miss rate → 4%: stalls = 0.12, CPI = 1.12 (12% slowdown)\n- If miss penalty → 20: stalls = 0.12, CPI = 1.12\n- Memory performance critical for overall performance!"
+  },
+  {
+    "id": "cs202-t5-ex13",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic5",
+    "type": "written",
+    "title": "Cache Blocking",
+    "description": "Explain cache blocking (tiling) for matrix multiplication. For matrices A, B, C that don't fit in cache, how does blocking help?",
+    "difficulty": 4,
+    "hints": [
+      "Divide matrices into smaller blocks",
+      "Keep blocks in cache",
+      "Work on one block at a time"
+    ],
+    "solution": "Cache Blocking for Matrix Multiplication:\n\nStandard matrix multiply: C = A × B\nfor (i = 0; i < N; i++)\n    for (j = 0; j < N; j++)\n        for (k = 0; k < N; k++)\n            C[i][j] += A[i][k] * B[k][j];\n\nProblem with large matrices:\n- A, B, C each N×N elements\n- If N=1000: 3 × 4MB = 12MB total\n- Typical L1: 32KB, L2: 256KB\n- Inner loop accesses entire row of A, column of B\n- Massive cache misses!\n\nCache Blocking (Tiling):\nDivide into B×B blocks that fit in cache\n\nfor (ii = 0; ii < N; ii += B)\n    for (jj = 0; jj < N; jj += B)\n        for (kk = 0; kk < N; kk += B)\n            // Multiply block [ii:ii+B] × [kk:kk+B]\n            for (i = ii; i < min(ii+B, N); i++)\n                for (j = jj; j < min(jj+B, N); j++)\n                    for (k = kk; k < min(kk+B, N); k++)\n                        C[i][j] += A[i][k] * B[k][j];\n\nWhy it works:\n- Block size B chosen so 3 B×B blocks fit in cache\n- Cache requirement: 3 × B² × 4 bytes < Cache size\n- For 32KB L1: B ≈ 50\n\nData reuse analysis:\nWithout blocking (N=1000):\n- Each A element used N times, but evicted between uses\n- B column accessed N times with cache misses each time\n\nWith blocking (B=50):\n- A block loaded once, used for B iterations\n- B block loaded once, used for B iterations\n- Much better cache utilization\n\nPerformance improvement:\n- Unblocked: O(N³) memory accesses\n- Blocked: O(N³/B) memory accesses\n- Speedup factor: ~B (up to 10-50×)"
+  },
+  {
+    "id": "cs202-t5-ex14",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic5",
+    "type": "written",
+    "title": "Prefetching",
+    "description": "Explain hardware vs software prefetching. What are the benefits and risks of prefetching? Give an example prefetch strategy for sequential array access.",
+    "difficulty": 3,
+    "hints": [
+      "Prefetch brings data before it's needed",
+      "Can waste bandwidth if wrong",
+      "Timing is critical"
+    ],
+    "solution": "Prefetching: Fetching Data Before It's Needed\n\nHardware Prefetching:\n- Automatically detects access patterns\n- Stream prefetcher: detects sequential accesses\n- Stride prefetcher: detects constant stride patterns\n- No programmer effort required\n- May prefetch incorrectly\n\nSoftware Prefetching:\n- Programmer inserts prefetch instructions\n- __builtin_prefetch(addr) in GCC\n- Precise control over what to prefetch\n- Requires programmer effort/knowledge\n\nExample: Sequential Array Access\nfor (i = 0; i < N; i++)\n    sum += arr[i];\n\nWithout prefetch:\n- arr[0] miss, wait 100 cycles\n- arr[1-15] hits (same cache line)\n- arr[16] miss, wait 100 cycles\n- ...\n\nWith software prefetch:\nfor (i = 0; i < N; i++) {\n    __builtin_prefetch(&arr[i + 16]);  // Prefetch ahead\n    sum += arr[i];\n}\n\nTimeline:\ni=0: prefetch arr[16], access arr[0] (miss)\ni=1-15: prefetch arr[17-31], access arr[1-15] (hits)\ni=16: arr[16] already prefetched! (hit)\n...\n\nBenefits:\n- Hides memory latency\n- Converts compulsory misses to hits\n- Can dramatically improve streaming performance\n\nRisks:\n1. Prefetch too early → data evicted before use\n2. Prefetch too late → data not ready\n3. Wrong data → wasted bandwidth\n4. Cache pollution → evicts useful data\n5. Bandwidth saturation → slows other accesses\n\nOptimal prefetch distance:\nDistance = Memory_latency / Time_per_iteration\nFor 100 cycle latency, 5 cycles per iteration: prefetch 20 ahead"
+  },
+  {
+    "id": "cs202-t5-ex15",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic5",
+    "type": "written",
+    "title": "Cache Coherence Problem",
+    "description": "Two processors share memory. Processor 1 writes X=5 (initially X=0). Processor 2's cache still has X=0. Explain this coherence problem and how snooping protocols address it.",
+    "difficulty": 4,
+    "hints": [
+      "Multiple copies of same data",
+      "Writes must be visible to all",
+      "Invalidate or update?"
+    ],
+    "solution": "Cache Coherence Problem:\n\nInitial state:\n- Memory: X = 0\n- P1 cache: X = 0\n- P2 cache: X = 0\n\nAfter P1 writes X = 5:\n- Memory: X = 5 (with write-through) or X = 0 (write-back)\n- P1 cache: X = 5\n- P2 cache: X = 0  ← STALE DATA!\n\nIf P2 reads X, it gets 0 instead of 5!\nThis violates cache coherence.\n\nCoherence requirements:\n1. Write propagation: writes eventually visible to all\n2. Write serialization: all processors see writes in same order\n\nSnooping Protocol Solution:\n\nBus-based snooping (MSI protocol):\nStates per cache line:\n- Modified (M): exclusive, dirty\n- Shared (S): clean, others may have copy\n- Invalid (I): not valid\n\nP1 writes X:\n1. P1 broadcasts \"write X\" on bus\n2. P2 snoops bus, sees write to X\n3. P2 invalidates its copy (S → I)\n4. P1 writes X = 5, marks Modified\n\nP2 reads X:\n1. P2 has X Invalid, must fetch\n2. P1 snoops read request\n3. P1 supplies X = 5 (has Modified copy)\n4. Both transition to Shared\n\nState transitions:\nP1: I → M (on write)\nP2: S → I (on snoop of write)\nP2: I → S (on read, P1 supplies data)\nP1: M → S (on snoop of read)\n\nAlternatives to invalidation:\n- Update protocol: broadcast new value\n- Trade-off: invalidate has less traffic for multiple writes\n- Most systems use invalidation"
+  },
+  {
+    "id": "cs202-t5-ex16",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic5",
+    "type": "written",
+    "title": "TLB and Cache Interaction",
+    "description": "Draw a diagram showing the interaction between TLB, L1 cache, L2 cache, and main memory for a memory access. Show the critical path for a TLB hit/L1 hit case.",
+    "difficulty": 3,
+    "hints": [
+      "TLB translates virtual to physical",
+      "L1 can be VIPT or PIPT",
+      "Multiple levels accessed on miss"
+    ],
+    "solution": "Memory Access Flow Diagram:\n\nCPU generates Virtual Address (VA)\n            │\n            ▼\n    ┌───────────────┐\n    │     TLB       │──────────────┐\n    │  (VA → PA)    │              │ TLB Miss\n    └───────┬───────┘              ▼\n            │ TLB Hit         Page Table Walk\n            │ (PA ready)           │\n            ▼                      │\n    ┌───────────────┐              │\n    │   L1 Cache    │◄─────────────┘\n    │   (VIPT)      │\n    └───────┬───────┘\n            │ L1 Miss\n            │ (has PA from TLB)\n            ▼\n    ┌───────────────┐\n    │   L2 Cache    │\n    │   (PIPT)      │\n    └───────┬───────┘\n            │ L2 Miss\n            ▼\n    ┌───────────────┐\n    │   L3 Cache    │\n    │   (PIPT)      │\n    └───────┬───────┘\n            │ L3 Miss\n            ▼\n    ┌───────────────┐\n    │  Main Memory  │\n    └───────────────┘\n\nCritical Path (TLB Hit, L1 Hit):\n\nCycle 1: VA → TLB lookup || VA → L1 index (parallel for VIPT)\nCycle 1: TLB returns PA, L1 returns candidate tags\nCycle 2: Compare tags, data ready\n\nTotal: ~2 cycles for VIPT L1\n\nFor PIPT L1 (serial):\nCycle 1: VA → TLB → PA\nCycle 2: PA → L1 index → tag compare\nCycle 3: Data ready\n\nTotal: ~3 cycles\n\nMiss cases (cumulative latency):\nTLB hit, L1 hit:    2 cycles\nTLB hit, L1 miss:   2 + 10 = 12 cycles (L2 access)\nTLB hit, L2 miss:   12 + 30 = 42 cycles (L3 access)\nTLB hit, L3 miss:   42 + 100 = 142 cycles (memory)\nTLB miss:           +20-100 cycles (page table walk)"
+  }
+]

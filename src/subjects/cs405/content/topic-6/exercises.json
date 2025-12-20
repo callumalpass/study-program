@@ -1,0 +1,33 @@
+[
+  {
+    "id": "cs405-ex-6-1",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-6",
+    "title": "Implement S3 Lifecycle Policies",
+    "difficulty": 2,
+    "description": "Create AWS CLI scripts to:\n\n1. Create S3 bucket with versioning\n2. Configure lifecycle policies (transition to IA after 30 days, Glacier after 90 days)\n3. Enable encryption\n4. Set up bucket policy for public read\n5. Upload files and verify transitions",
+    "starterCode": "#!/bin/bash\n# TODO: Create bucket\n# TODO: Enable versioning\n# TODO: Configure lifecycle\n# TODO: Enable encryption\n# TODO: Set bucket policy",
+    "solution": "#!/bin/bash\n# S3 Lifecycle Management Script\n\nBUCKET_NAME=\"my-lifecycle-bucket-$(date +%s)\"\nREGION=\"us-east-1\"\n\n# Create bucket\necho \"Creating bucket: $BUCKET_NAME\"\naws s3api create-bucket \\\n  --bucket $BUCKET_NAME \\\n  --region $REGION\n\n# Enable versioning\necho \"Enabling versioning...\"\naws s3api put-bucket-versioning \\\n  --bucket $BUCKET_NAME \\\n  --versioning-configuration Status=Enabled\n\n# Enable encryption\necho \"Enabling encryption...\"\naws s3api put-bucket-encryption \\\n  --bucket $BUCKET_NAME \\\n  --server-side-encryption-configuration '{\n    \"Rules\": [{\n      \"ApplyServerSideEncryptionByDefault\": {\n        \"SSEAlgorithm\": \"AES256\"\n      }\n    }]\n  }'\n\n# Configure lifecycle policy\necho \"Configuring lifecycle policy...\"\ncat > lifecycle-policy.json << 'POLICY'\n{\n  \"Rules\": [\n    {\n      \"Id\": \"TransitionToIA\",\n      \"Status\": \"Enabled\",\n      \"Transitions\": [\n        {\n          \"Days\": 30,\n          \"StorageClass\": \"STANDARD_IA\"\n        },\n        {\n          \"Days\": 90,\n          \"StorageClass\": \"GLACIER\"\n        }\n      ]\n    },\n    {\n      \"Id\": \"DeleteOldVersions\",\n      \"Status\": \"Enabled\",\n      \"NoncurrentVersionExpiration\": {\n        \"NoncurrentDays\": 180\n      }\n    },\n    {\n      \"Id\": \"AbortIncompleteMultipartUpload\",\n      \"Status\": \"Enabled\",\n      \"AbortIncompleteMultipartUpload\": {\n        \"DaysAfterInitiation\": 7\n      }\n    }\n  ]\n}\nPOLICY\n\naws s3api put-bucket-lifecycle-configuration \\\n  --bucket $BUCKET_NAME \\\n  --lifecycle-configuration file://lifecycle-policy.json\n\n# Set bucket policy for public read (optional)\necho \"Setting bucket policy...\"\ncat > bucket-policy.json << POLICY\n{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [\n    {\n      \"Sid\": \"PublicReadGetObject\",\n      \"Effect\": \"Allow\",\n      \"Principal\": \"*\",\n      \"Action\": \"s3:GetObject\",\n      \"Resource\": \"arn:aws:s3:::$BUCKET_NAME/*\"\n    }\n  ]\n}\nPOLICY\n\naws s3api put-bucket-policy \\\n  --bucket $BUCKET_NAME \\\n  --policy file://bucket-policy.json\n\n# Upload test files\necho \"Uploading test files...\"\necho \"Test content\" > test-file.txt\naws s3 cp test-file.txt s3://$BUCKET_NAME/\n\n# Verify configuration\necho \"\\nBucket configuration:\"\naws s3api get-bucket-versioning --bucket $BUCKET_NAME\naws s3api get-bucket-lifecycle-configuration --bucket $BUCKET_NAME\naws s3api get-bucket-encryption --bucket $BUCKET_NAME\n\necho \"\\nBucket created: $BUCKET_NAME\"\necho \"Files will transition to IA after 30 days, Glacier after 90 days\"\necho \"Old versions deleted after 180 days\"",
+    "hints": [
+      "Enable versioning before lifecycle policies",
+      "Use lifecycle transitions for cost optimization",
+      "Always enable encryption",
+      "Clean up incomplete multipart uploads"
+    ],
+    "testCases": [
+      {
+        "input": "aws s3api get-bucket-lifecycle",
+        "expectedOutput": "Lifecycle rules configured",
+        "isHidden": false,
+        "description": "Verify lifecycle policies are configured"
+      },
+      {
+        "input": "aws s3api get-bucket-versioning",
+        "expectedOutput": "Versioning enabled",
+        "isHidden": false,
+        "description": "Verify bucket versioning is enabled"
+      }
+    ],
+    "language": "bash"
+  }
+]

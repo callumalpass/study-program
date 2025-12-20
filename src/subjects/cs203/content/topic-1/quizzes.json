@@ -1,0 +1,221 @@
+[
+  {
+    "id": "cs203-topic-1-quiz-1",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-1",
+    "title": "DFA Fundamentals",
+    "questions": [
+      {
+        "id": "cs203-t1-q1-1",
+        "type": "multiple_choice",
+        "prompt": "Which of the following is NOT a component of a DFA?",
+        "options": [
+          "Set of states Q",
+          "Input alphabet Σ",
+          "Stack alphabet Γ",
+          "Transition function δ"
+        ],
+        "correctAnswer": 2,
+        "explanation": "A DFA consists of (Q, Σ, δ, q₀, F). Stack alphabet Γ is a component of pushdown automata, not DFAs."
+      },
+      {
+        "id": "cs203-t1-q1-2",
+        "type": "multiple_choice",
+        "prompt": "In a DFA, the transition function δ maps to:",
+        "options": [
+          "A set of states",
+          "Exactly one state",
+          "Zero or more states",
+          "The empty set"
+        ],
+        "correctAnswer": 1,
+        "explanation": "In a DFA, δ: Q × Σ → Q maps each (state, symbol) pair to exactly one state, making it deterministic."
+      },
+      {
+        "id": "cs203-t1-q1-3",
+        "type": "multiple_choice",
+        "prompt": "A string is accepted by a DFA if:",
+        "options": [
+          "It visits at least one accepting state",
+          "The computation ends in an accepting state",
+          "All states visited are accepting states",
+          "The string length equals the number of states"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A DFA accepts a string if and only if the final state after processing the entire string is in F (the set of accepting states)."
+      },
+      {
+        "id": "cs203-t1-q1-4",
+        "type": "multiple_choice",
+        "prompt": "What distinguishes an NFA from a DFA?",
+        "options": [
+          "NFAs can have multiple start states",
+          "NFAs can have ε-transitions and multiple transitions on the same symbol",
+          "NFAs have infinite states",
+          "NFAs cannot accept the empty string"
+        ],
+        "correctAnswer": 1,
+        "explanation": "NFAs allow ε-transitions (transitions without consuming input) and multiple transitions from a state on the same input symbol."
+      },
+      {
+        "id": "cs203-t1-q1-5",
+        "type": "multiple_choice",
+        "prompt": "The subset construction algorithm converts:",
+        "options": [
+          "DFA to NFA",
+          "NFA to DFA",
+          "NFA to regular expression",
+          "DFA to PDA"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Subset construction (powerset construction) converts an NFA to an equivalent DFA by tracking sets of NFA states."
+      }
+    ]
+  },
+  {
+    "id": "cs203-topic-1-quiz-2",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-1",
+    "title": "DFA Minimization and State Elimination",
+    "questions": [
+      {
+        "id": "cs203-t1-q2-1",
+        "type": "multiple_choice",
+        "prompt": "Two states p and q are distinguishable if:",
+        "options": [
+          "They have different incoming transitions",
+          "There exists a string w where exactly one of δ*(p,w) and δ*(q,w) is accepting",
+          "They have the same outgoing transitions",
+          "One is the start state"
+        ],
+        "correctAnswer": 1,
+        "explanation": "States are distinguishable if some string w leads from one to an accepting state and from the other to a rejecting state."
+      },
+      {
+        "id": "cs203-t1-q2-2",
+        "type": "multiple_choice",
+        "prompt": "The minimal DFA for a regular language is:",
+        "options": [
+          "Always exponentially smaller than any NFA",
+          "Unique up to isomorphism",
+          "Always has exactly n states for n-symbol alphabet",
+          "Not guaranteed to exist"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The Myhill-Nerode theorem guarantees a unique minimal DFA (up to state renaming) for each regular language."
+      },
+      {
+        "id": "cs203-t1-q2-3",
+        "type": "multiple_choice",
+        "prompt": "State elimination is used to:",
+        "options": [
+          "Minimize a DFA",
+          "Convert a DFA to a regular expression",
+          "Convert an NFA to a DFA",
+          "Remove unreachable states"
+        ],
+        "correctAnswer": 1,
+        "explanation": "State elimination systematically removes states from a GNFA while preserving the language, eventually yielding a regular expression."
+      },
+      {
+        "id": "cs203-t1-q2-4",
+        "type": "multiple_choice",
+        "prompt": "What is the worst-case blowup when converting an NFA with n states to a DFA?",
+        "options": [
+          "O(n)",
+          "O(n²)",
+          "O(2ⁿ)",
+          "O(n!)"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Subset construction can produce up to 2ⁿ states since each DFA state corresponds to a subset of the n NFA states."
+      },
+      {
+        "id": "cs203-t1-q2-5",
+        "type": "multiple_choice",
+        "prompt": "The table-filling algorithm for DFA minimization has time complexity:",
+        "options": [
+          "O(n)",
+          "O(n log n)",
+          "O(n²)",
+          "O(2ⁿ)"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The table-filling algorithm examines all pairs of states, giving O(n²) complexity where n is the number of states."
+      }
+    ]
+  },
+  {
+    "id": "cs203-topic-1-quiz-3",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-1",
+    "title": "Closure Properties and Pumping Lemma",
+    "questions": [
+      {
+        "id": "cs203-t1-q3-1",
+        "type": "multiple_choice",
+        "prompt": "Regular languages are closed under:",
+        "options": [
+          "Union only",
+          "Intersection only",
+          "Union, intersection, and complement",
+          "None of the above"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Regular languages are closed under all Boolean operations including union, intersection, complement, as well as concatenation and Kleene star."
+      },
+      {
+        "id": "cs203-t1-q3-2",
+        "type": "multiple_choice",
+        "prompt": "The pumping lemma is used to:",
+        "options": [
+          "Prove a language is regular",
+          "Prove a language is not regular",
+          "Minimize DFAs",
+          "Convert NFAs to DFAs"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The pumping lemma provides a necessary condition for regularity. By showing a language violates it, we prove non-regularity."
+      },
+      {
+        "id": "cs203-t1-q3-3",
+        "type": "multiple_choice",
+        "prompt": "In the pumping lemma, if L is regular with pumping length p, then for s ∈ L with |s| ≥ p:",
+        "options": [
+          "s can be written as xyz where xy^i z ∈ L for i ≥ 0",
+          "s must contain exactly p symbols",
+          "s can only be pumped once",
+          "The y portion can be anywhere in s"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The pumping lemma states s = xyz where |y| > 0, |xy| ≤ p, and xy^i z ∈ L for all i ≥ 0."
+      },
+      {
+        "id": "cs203-t1-q3-4",
+        "type": "multiple_choice",
+        "prompt": "Which language is NOT regular?",
+        "options": [
+          "All strings over {a,b}",
+          "Strings with even length",
+          "{aⁿbⁿ | n ≥ 0}",
+          "Strings containing \"ab\""
+        ],
+        "correctAnswer": 2,
+        "explanation": "{aⁿbⁿ | n ≥ 0} requires counting and matching, which finite automata cannot do. The pumping lemma proves this."
+      },
+      {
+        "id": "cs203-t1-q3-5",
+        "type": "multiple_choice",
+        "prompt": "To prove closure under intersection, we use:",
+        "options": [
+          "State elimination",
+          "Product construction",
+          "Subset construction",
+          "Pumping lemma"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Product construction builds a DFA whose states are pairs from two DFAs, accepting when both components accept."
+      }
+    ]
+  }
+]

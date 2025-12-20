@@ -1,0 +1,221 @@
+[
+  {
+    "id": "math303-quiz-2-1",
+    "subjectId": "math303",
+    "title": "Sequences and Limits - Convergence",
+    "topicId": "math303-topic-2",
+    "questions": [
+      {
+        "id": "math303-q16",
+        "type": "multiple_choice",
+        "prompt": "A sequence (xₙ) converges to L if:",
+        "options": [
+          "For every ε > 0, there exists N such that |xₙ - L| < ε for all n ≥ N",
+          "There exists ε > 0 such that for all N, |xₙ - L| < ε for some n ≥ N",
+          "For some ε > 0, there exists N such that |xₙ - L| < ε for all n ≥ N",
+          "|xₙ - L| < 1 for all n"
+        ],
+        "correctAnswer": "For every ε > 0, there exists N such that |xₙ - L| < ε for all n ≥ N",
+        "explanation": "This is the precise ε-N definition of convergence. The key is \"for every ε > 0\" - we must be able to get arbitrarily close to L."
+      },
+      {
+        "id": "math303-q17",
+        "type": "multiple_choice",
+        "prompt": "lim(n→∞) (2n + 1)/(3n - 5) equals:",
+        "options": [
+          "2/3",
+          "1",
+          "0",
+          "Does not exist"
+        ],
+        "correctAnswer": "2/3",
+        "explanation": "Divide numerator and denominator by n: (2 + 1/n)/(3 - 5/n) → 2/3 as n → ∞."
+      },
+      {
+        "id": "math303-q18",
+        "type": "multiple_choice",
+        "prompt": "If lim xₙ = L and lim yₙ = M, then lim(xₙ + yₙ) equals:",
+        "options": [
+          "L + M",
+          "L - M",
+          "LM",
+          "Cannot be determined"
+        ],
+        "correctAnswer": "L + M",
+        "explanation": "This is the Sum Law for limits: the limit of a sum is the sum of the limits (when both limits exist)."
+      },
+      {
+        "id": "math303-q19",
+        "type": "multiple_choice",
+        "prompt": "The sequence xₙ = (-1)ⁿ:",
+        "options": [
+          "Diverges",
+          "Converges to 1",
+          "Converges to -1",
+          "Converges to 0"
+        ],
+        "correctAnswer": "Diverges",
+        "explanation": "The sequence oscillates between 1 and -1, so it has no limit. For any proposed limit L, we can find terms arbitrarily far from L."
+      },
+      {
+        "id": "math303-q20",
+        "type": "multiple_choice",
+        "prompt": "If a sequence converges, then it is:",
+        "options": [
+          "Bounded",
+          "Monotone",
+          "Unbounded",
+          "Eventually constant"
+        ],
+        "correctAnswer": "Bounded",
+        "explanation": "Every convergent sequence is bounded. This is a fundamental theorem: if xₙ → L, then there exists M such that |xₙ| ≤ M for all n."
+      }
+    ]
+  },
+  {
+    "id": "math303-quiz-2-2",
+    "subjectId": "math303",
+    "title": "Sequences and Limits - Cauchy Sequences",
+    "topicId": "math303-topic-2",
+    "questions": [
+      {
+        "id": "math303-q21",
+        "type": "multiple_choice",
+        "prompt": "A sequence (xₙ) is Cauchy if:",
+        "options": [
+          "For every ε > 0, there exists N such that |xₘ - xₙ| < ε for all m, n ≥ N",
+          "For some ε > 0, |xₘ - xₙ| < ε for all m, n",
+          "|xₙ₊₁ - xₙ| < 1/n for all n",
+          "The sequence is bounded"
+        ],
+        "correctAnswer": "For every ε > 0, there exists N such that |xₘ - xₙ| < ε for all m, n ≥ N",
+        "explanation": "A Cauchy sequence is one where terms become arbitrarily close to each other. This is the precise ε-N definition."
+      },
+      {
+        "id": "math303-q22",
+        "type": "multiple_choice",
+        "prompt": "In the real numbers, every Cauchy sequence:",
+        "options": [
+          "Converges",
+          "Diverges",
+          "Is bounded but may not converge",
+          "Is monotone"
+        ],
+        "correctAnswer": "Converges",
+        "explanation": "This is the Cauchy Completeness property of R: every Cauchy sequence in R converges to a limit in R. This is equivalent to the Completeness Axiom."
+      },
+      {
+        "id": "math303-q23",
+        "type": "multiple_choice",
+        "prompt": "If (xₙ) is convergent, then (xₙ) is:",
+        "options": [
+          "Cauchy",
+          "Not necessarily Cauchy",
+          "Monotone",
+          "Unbounded"
+        ],
+        "correctAnswer": "Cauchy",
+        "explanation": "Every convergent sequence is Cauchy. If xₙ → L, then for large m, n, both xₘ and xₙ are close to L, hence close to each other."
+      },
+      {
+        "id": "math303-q24",
+        "type": "multiple_choice",
+        "prompt": "Which is true about every Cauchy sequence?",
+        "options": [
+          "It is bounded",
+          "It is unbounded",
+          "It is eventually constant",
+          "It has a constant subsequence"
+        ],
+        "correctAnswer": "It is bounded",
+        "explanation": "Every Cauchy sequence is bounded. Choose ε = 1; then all but finitely many terms lie in a bounded interval, and we can bound the remaining finitely many terms."
+      },
+      {
+        "id": "math303-q25",
+        "type": "multiple_choice",
+        "prompt": "Let xₙ = ∑(k=1 to n) 1/k. Is (xₙ) Cauchy?",
+        "options": [
+          "No, because the harmonic series diverges",
+          "Yes, because each term is positive",
+          "Yes, because it is monotone",
+          "Cannot be determined"
+        ],
+        "correctAnswer": "No, because the harmonic series diverges",
+        "explanation": "The sequence of partial sums of the harmonic series diverges to infinity, so it is not Cauchy. We can show |xₘ - xₙ| can be arbitrarily large."
+      }
+    ]
+  },
+  {
+    "id": "math303-quiz-2-3",
+    "subjectId": "math303",
+    "title": "Sequences and Limits - Limsup and Liminf",
+    "topicId": "math303-topic-2",
+    "questions": [
+      {
+        "id": "math303-q26",
+        "type": "multiple_choice",
+        "prompt": "For the sequence xₙ = (-1)ⁿ, what is lim sup xₙ?",
+        "options": [
+          "1",
+          "-1",
+          "0",
+          "Does not exist"
+        ],
+        "correctAnswer": "1",
+        "explanation": "lim sup xₙ is the largest subsequential limit. The sequence oscillates between -1 and 1, so the largest limit point is 1."
+      },
+      {
+        "id": "math303-q27",
+        "type": "multiple_choice",
+        "prompt": "For the sequence xₙ = (-1)ⁿ, what is lim inf xₙ?",
+        "options": [
+          "-1",
+          "1",
+          "0",
+          "Does not exist"
+        ],
+        "correctAnswer": "-1",
+        "explanation": "lim inf xₙ is the smallest subsequential limit. The smallest limit point of this sequence is -1."
+      },
+      {
+        "id": "math303-q28",
+        "type": "multiple_choice",
+        "prompt": "A sequence (xₙ) converges if and only if:",
+        "options": [
+          "lim sup xₙ = lim inf xₙ",
+          "lim sup xₙ > lim inf xₙ",
+          "lim sup xₙ exists",
+          "lim inf xₙ exists"
+        ],
+        "correctAnswer": "lim sup xₙ = lim inf xₙ",
+        "explanation": "A sequence converges if and only if lim sup xₙ = lim inf xₙ, and in this case, the common value is the limit."
+      },
+      {
+        "id": "math303-q29",
+        "type": "multiple_choice",
+        "prompt": "By the Bolzano-Weierstrass Theorem, every bounded sequence has:",
+        "options": [
+          "A convergent subsequence",
+          "A limit",
+          "A Cauchy subsequence that diverges",
+          "No convergent subsequences"
+        ],
+        "correctAnswer": "A convergent subsequence",
+        "explanation": "The Bolzano-Weierstrass Theorem states that every bounded sequence in R has a convergent subsequence."
+      },
+      {
+        "id": "math303-q30",
+        "type": "multiple_choice",
+        "prompt": "If every subsequence of (xₙ) converges to L, then:",
+        "options": [
+          "The sequence (xₙ) converges to L",
+          "The sequence (xₙ) diverges",
+          "L = 0",
+          "The sequence is unbounded"
+        ],
+        "correctAnswer": "The sequence (xₙ) converges to L",
+        "explanation": "If every subsequence converges to the same limit L, then the original sequence must also converge to L."
+      }
+    ]
+  }
+]

@@ -1,0 +1,179 @@
+[
+  {
+    "id": "math404-quiz-4a",
+    "subjectId": "math404",
+    "topicId": "math404-topic-4",
+    "title": "Convex Sets and Functions - Fundamentals",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "Which operation preserves convexity of a function?",
+        "options": [
+          "Taking the minimum of two convex functions",
+          "Taking the maximum of two convex functions",
+          "Multiplying by -1",
+          "Composing with any function"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The pointwise maximum of convex functions is convex. Minimum can give non-convex results."
+      },
+      {
+        "id": "q2",
+        "type": "true_false",
+        "prompt": "The intersection of two convex sets is always convex.",
+        "correctAnswer": true,
+        "explanation": "The intersection of any collection of convex sets is convex."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "A convex set must be:",
+        "options": [
+          "Closed",
+          "Bounded",
+          "Contain all line segments between its points",
+          "Contain the origin"
+        ],
+        "correctAnswer": 2,
+        "explanation": "By definition, a convex set contains the line segment between any two of its points: λx + (1-λ)y ∈ C for all x,y ∈ C and λ ∈ [0,1]."
+      },
+      {
+        "id": "q4",
+        "type": "fill_blank",
+        "prompt": "A function f is convex if its epigraph is a _____ set.",
+        "correctAnswer": "convex",
+        "explanation": "The epigraph {(x,t) : f(x) ≤ t} is convex if and only if f is a convex function."
+      },
+      {
+        "id": "q5",
+        "type": "true_false",
+        "prompt": "All norms are convex functions.",
+        "correctAnswer": true,
+        "explanation": "All norms satisfy the triangle inequality and homogeneity, which implies convexity."
+      }
+    ]
+  },
+  {
+    "id": "math404-quiz-4b",
+    "subjectId": "math404",
+    "topicId": "math404-topic-4",
+    "title": "Convex Sets and Functions - Application",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "Which of these is NOT a convex set?",
+        "options": [
+          "A hyperplane {x : aᵀx = b}",
+          "A ball {x : ||x-c|| ≤ r}",
+          "Union of two convex sets",
+          "Intersection of halfspaces"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The union of convex sets is generally not convex. The other options are all convex."
+      },
+      {
+        "id": "q2",
+        "type": "true_false",
+        "prompt": "A function is convex if and only if its Hessian is positive semidefinite everywhere.",
+        "correctAnswer": false,
+        "explanation": "This is true for twice-differentiable functions, but convexity can be defined for non-differentiable functions as well."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "The first-order characterization of convexity states:",
+        "options": [
+          "f(y) ≥ f(x) for all x,y",
+          "f(y) ≥ f(x) + ∇f(x)ᵀ(y-x)",
+          "f(y) = f(x) + ∇f(x)ᵀ(y-x)",
+          "∇f(x) = 0"
+        ],
+        "correctAnswer": 1,
+        "explanation": "For differentiable convex f, the function lies above all its tangent hyperplanes: f(y) ≥ f(x) + ∇f(x)ᵀ(y-x)."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "Convex combinations use coefficients that:",
+        "options": [
+          "Can be any real numbers",
+          "Must sum to 1",
+          "Must be non-negative and sum to 1",
+          "Must be positive"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Convex combinations require λᵢ ≥ 0 and Σλᵢ = 1, ensuring the result stays within the convex hull."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "The _____ hull of a set S is the smallest convex set containing S.",
+        "correctAnswer": "convex",
+        "explanation": "The convex hull is the set of all convex combinations of points in S, forming the smallest convex set containing S."
+      }
+    ]
+  },
+  {
+    "id": "math404-quiz-4c",
+    "subjectId": "math404",
+    "topicId": "math404-topic-4",
+    "title": "Convex Sets and Functions - Mastery",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "The conjugate function f*(y) = sup_x(yᵀx - f(x)) is always:",
+        "options": [
+          "Differentiable",
+          "Convex",
+          "Finite",
+          "Strictly convex"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The conjugate function is always convex (as a supremum of affine functions), regardless of whether f is convex."
+      },
+      {
+        "id": "q2",
+        "type": "true_false",
+        "prompt": "The separating hyperplane theorem states that two disjoint convex sets can always be strictly separated.",
+        "correctAnswer": false,
+        "explanation": "They can be separated, but strict separation (positive distance) requires additional conditions like one set being compact."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "For a convex function f, which condition on the Hessian ensures strict convexity?",
+        "options": [
+          "∇²f(x) ≥ 0",
+          "∇²f(x) > 0 (positive definite)",
+          "∇²f(x) = 0",
+          "det(∇²f(x)) > 0"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Strict convexity requires the Hessian to be positive definite (not just semidefinite) everywhere."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "A sublevel set {x : f(x) ≤ α} of a convex function is:",
+        "options": [
+          "Always empty",
+          "Always convex",
+          "Always bounded",
+          "Never convex"
+        ],
+        "correctAnswer": 1,
+        "explanation": "All sublevel sets of a convex function are convex sets, which is equivalent to the definition of convexity."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "Jensen's inequality states that for convex f: f(E[X]) _____ E[f(X)].",
+        "correctAnswer": "≤",
+        "explanation": "Jensen's inequality: for convex f, f(E[X]) ≤ E[f(X)]. The expectation of the function is at least the function of the expectation."
+      }
+    ]
+  }
+]

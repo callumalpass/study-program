@@ -1,0 +1,40 @@
+[
+  {
+    "id": "cs405-ex-4-1",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-4",
+    "title": "Deploy Application on Kubernetes",
+    "difficulty": 3,
+    "description": "Create Kubernetes manifests to deploy a web application with:\n\n1. Deployment with 3 replicas\n2. Service (LoadBalancer)\n3. ConfigMap for configuration\n4. Secret for sensitive data\n5. Health probes (liveness and readiness)\n6. Resource requests and limits",
+    "starterCode": "# deployment.yaml\n# TODO: Create Deployment\n\n# service.yaml\n# TODO: Create Service\n\n# configmap.yaml\n# TODO: Create ConfigMap\n\n# secret.yaml\n# TODO: Create Secret",
+    "solution": "# configmap.yaml\napiVersion: v1\nkind: ConfigMap\nmetadata:\n  name: app-config\n  labels:\n    app: webapp\ndata:\n  app.properties: |\n    server.port=8080\n    logging.level=INFO\n    feature.enabled=true\n  database.host: \"postgres.default.svc.cluster.local\"\n  cache.host: \"redis.default.svc.cluster.local\"\n\n---\n# secret.yaml\napiVersion: v1\nkind: Secret\nmetadata:\n  name: app-secrets\n  labels:\n    app: webapp\ntype: Opaque\nstringData:\n  database-password: \"changeme-in-production\"\n  api-key: \"secret-api-key-here\"\n  jwt-secret: \"jwt-signing-secret\"\n\n---\n# deployment.yaml\napiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: webapp\n  labels:\n    app: webapp\n    version: v1\nspec:\n  replicas: 3\n  revisionHistoryLimit: 5\n  strategy:\n    type: RollingUpdate\n    rollingUpdate:\n      maxSurge: 1\n      maxUnavailable: 0\n  selector:\n    matchLabels:\n      app: webapp\n  template:\n    metadata:\n      labels:\n        app: webapp\n        version: v1\n    spec:\n      securityContext:\n        runAsNonRoot: true\n        runAsUser: 1000\n        fsGroup: 2000\n      containers:\n      - name: webapp\n        image: myapp:1.0\n        imagePullPolicy: IfNotPresent\n        ports:\n        - name: http\n          containerPort: 8080\n          protocol: TCP\n        env:\n        - name: NODE_ENV\n          value: \"production\"\n        - name: DB_HOST\n          valueFrom:\n            configMapKeyRef:\n              name: app-config\n              key: database.host\n        - name: DB_PASSWORD\n          valueFrom:\n            secretKeyRef:\n              name: app-secrets\n              key: database-password\n        - name: API_KEY\n          valueFrom:\n            secretKeyRef:\n              name: app-secrets\n              key: api-key\n        volumeMounts:\n        - name: config\n          mountPath: /etc/config\n          readOnly: true\n        - name: cache\n          mountPath: /tmp\n        resources:\n          requests:\n            memory: \"128Mi\"\n            cpu: \"100m\"\n          limits:\n            memory: \"256Mi\"\n            cpu: \"500m\"\n        livenessProbe:\n          httpGet:\n            path: /health\n            port: 8080\n            scheme: HTTP\n          initialDelaySeconds: 30\n          periodSeconds: 10\n          timeoutSeconds: 5\n          successThreshold: 1\n          failureThreshold: 3\n        readinessProbe:\n          httpGet:\n            path: /ready\n            port: 8080\n            scheme: HTTP\n          initialDelaySeconds: 5\n          periodSeconds: 5\n          timeoutSeconds: 3\n          successThreshold: 1\n          failureThreshold: 3\n        securityContext:\n          allowPrivilegeEscalation: false\n          readOnlyRootFilesystem: true\n          runAsNonRoot: true\n          capabilities:\n            drop:\n            - ALL\n      volumes:\n      - name: config\n        configMap:\n          name: app-config\n      - name: cache\n        emptyDir: {}\n\n---\n# service.yaml\napiVersion: v1\nkind: Service\nmetadata:\n  name: webapp-service\n  labels:\n    app: webapp\nspec:\n  type: LoadBalancer\n  selector:\n    app: webapp\n  ports:\n  - name: http\n    protocol: TCP\n    port: 80\n    targetPort: 8080\n  sessionAffinity: ClientIP\n  sessionAffinityConfig:\n    clientIP:\n      timeoutSeconds: 10800\n\n---\n# hpa.yaml (Horizontal Pod Autoscaler)\napiVersion: autoscaling/v2\nkind: HorizontalPodAutoscaler\nmetadata:\n  name: webapp-hpa\nspec:\n  scaleTargetRef:\n    apiVersion: apps/v1\n    kind: Deployment\n    name: webapp\n  minReplicas: 3\n  maxReplicas: 10\n  metrics:\n  - type: Resource\n    resource:\n      name: cpu\n      target:\n        type: Utilization\n        averageUtilization: 70\n  - type: Resource\n    resource:\n      name: memory\n      target:\n        type: Utilization\n        averageUtilization: 80\n  behavior:\n    scaleDown:\n      stabilizationWindowSeconds: 300\n      policies:\n      - type: Percent\n        value: 50\n        periodSeconds: 60\n    scaleUp:\n      stabilizationWindowSeconds: 0\n      policies:\n      - type: Percent\n        value: 100\n        periodSeconds: 30\n\n---\n# pdb.yaml (Pod Disruption Budget)\napiVersion: policy/v1\nkind: PodDisruptionBudget\nmetadata:\n  name: webapp-pdb\nspec:\n  minAvailable: 2\n  selector:\n    matchLabels:\n      app: webapp",
+    "hints": [
+      "Always set resource requests and limits",
+      "Use health probes for reliability",
+      "ConfigMaps for config, Secrets for sensitive data",
+      "Rolling updates prevent downtime",
+      "HPA requires metrics-server"
+    ],
+    "testCases": [
+      {
+        "input": "kubectl apply -f .",
+        "expectedOutput": "All resources created successfully",
+        "isHidden": false,
+        "description": "Apply all Kubernetes manifests"
+      },
+      {
+        "input": "kubectl get pods",
+        "expectedOutput": "3 pods running and ready",
+        "isHidden": false,
+        "description": "Check pod status"
+      },
+      {
+        "input": "kubectl get svc",
+        "expectedOutput": "LoadBalancer service with external IP",
+        "isHidden": false,
+        "description": "Verify service configuration"
+      }
+    ],
+    "language": "yaml"
+  }
+]

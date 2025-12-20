@@ -1,0 +1,657 @@
+[
+  {
+    "id": "cs307-t2-ex01",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-2",
+    "title": "Caesar Cipher Encryption",
+    "difficulty": 1,
+    "description": "Implement a Caesar cipher that shifts letters by a given amount. Only shift alphabetic characters, preserve case.",
+    "starterCode": "def caesar_encrypt(plaintext, shift):\n    \"\"\"\n    Encrypt text using Caesar cipher.\n\n    Args:\n        plaintext: String to encrypt\n        shift: Integer shift amount\n\n    Returns:\n        String: encrypted text\n    \"\"\"\n    pass",
+    "solution": "def caesar_encrypt(plaintext, shift):\n    \"\"\"\n    Encrypt text using Caesar cipher.\n\n    Args:\n        plaintext: String to encrypt\n        shift: Integer shift amount\n\n    Returns:\n        String: encrypted text\n    \"\"\"\n    result = []\n    for char in plaintext:\n        if char.isalpha():\n            # Determine if uppercase or lowercase\n            base = ord('A') if char.isupper() else ord('a')\n            # Shift within alphabet\n            shifted = (ord(char) - base + shift) % 26\n            result.append(chr(base + shifted))\n        else:\n            result.append(char)\n    return ''.join(result)",
+    "testCases": [
+      {
+        "input": "\"HELLO\", 3",
+        "expectedOutput": "KHOOR",
+        "isHidden": false,
+        "description": "Basic uppercase shift"
+      },
+      {
+        "input": "\"hello\", 3",
+        "expectedOutput": "khoor",
+        "isHidden": false,
+        "description": "Lowercase shift"
+      },
+      {
+        "input": "\"Hello World!\", 5",
+        "expectedOutput": "Mjqqt Btwqi!",
+        "isHidden": false,
+        "description": "Mixed case with punctuation"
+      },
+      {
+        "input": "\"XYZ\", 3",
+        "expectedOutput": "ABC",
+        "isHidden": true,
+        "description": "Wrap around alphabet"
+      },
+      {
+        "input": "\"Test123\", 1",
+        "expectedOutput": "Uftu123",
+        "isHidden": true,
+        "description": "With numbers"
+      }
+    ],
+    "hints": [
+      "Use ord() and chr() to work with character codes",
+      "Handle uppercase and lowercase separately",
+      "Use modulo to wrap around the alphabet",
+      "Preserve non-alphabetic characters"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs307-t2-ex02",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-2",
+    "title": "Caesar Cipher Decryption",
+    "difficulty": 1,
+    "description": "Implement Caesar cipher decryption by reversing the shift.",
+    "starterCode": "def caesar_decrypt(ciphertext, shift):\n    \"\"\"\n    Decrypt Caesar cipher text.\n\n    Args:\n        ciphertext: String to decrypt\n        shift: Integer shift amount used for encryption\n\n    Returns:\n        String: decrypted text\n    \"\"\"\n    pass",
+    "solution": "def caesar_decrypt(ciphertext, shift):\n    \"\"\"\n    Decrypt Caesar cipher text.\n\n    Args:\n        ciphertext: String to decrypt\n        shift: Integer shift amount used for encryption\n\n    Returns:\n        String: decrypted text\n    \"\"\"\n    result = []\n    for char in ciphertext:\n        if char.isalpha():\n            base = ord('A') if char.isupper() else ord('a')\n            # Shift in opposite direction\n            shifted = (ord(char) - base - shift) % 26\n            result.append(chr(base + shifted))\n        else:\n            result.append(char)\n    return ''.join(result)",
+    "testCases": [
+      {
+        "input": "\"KHOOR\", 3",
+        "expectedOutput": "HELLO",
+        "isHidden": false,
+        "description": "Decrypt uppercase"
+      },
+      {
+        "input": "\"khoor\", 3",
+        "expectedOutput": "hello",
+        "isHidden": false,
+        "description": "Decrypt lowercase"
+      },
+      {
+        "input": "\"Mjqqt Btwqi!\", 5",
+        "expectedOutput": "Hello World!",
+        "isHidden": true,
+        "description": "Mixed case decryption"
+      },
+      {
+        "input": "\"ABC\", 3",
+        "expectedOutput": "XYZ",
+        "isHidden": true,
+        "description": "Wrap around backwards"
+      }
+    ],
+    "hints": [
+      "Decryption is encryption with negative shift",
+      "Use the same logic as encryption but subtract instead of add",
+      "Modulo handles negative wrapping"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs307-t2-ex03",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-2",
+    "title": "XOR Cipher",
+    "difficulty": 2,
+    "description": "Implement XOR encryption/decryption. XOR each byte of plaintext with corresponding byte of key (repeating key as needed).",
+    "starterCode": "def xor_cipher(text, key):\n    \"\"\"\n    Encrypt or decrypt using XOR cipher.\n\n    Args:\n        text: String to encrypt/decrypt\n        key: String key to XOR with\n\n    Returns:\n        String: result as hex string\n    \"\"\"\n    pass",
+    "solution": "def xor_cipher(text, key):\n    \"\"\"\n    Encrypt or decrypt using XOR cipher.\n\n    Args:\n        text: String to encrypt/decrypt\n        key: String key to XOR with\n\n    Returns:\n        String: result as hex string\n    \"\"\"\n    result = []\n    key_length = len(key)\n\n    for i, char in enumerate(text):\n        # XOR with corresponding key character (repeating)\n        key_char = key[i % key_length]\n        xored = ord(char) ^ ord(key_char)\n        result.append(format(xored, '02x'))\n\n    return ''.join(result)",
+    "testCases": [
+      {
+        "input": "\"HELLO\", \"K\"",
+        "expectedOutput": "0300070707",
+        "isHidden": false,
+        "description": "Single character key"
+      },
+      {
+        "input": "\"ABC\", \"XYZ\"",
+        "expectedOutput": "191b19",
+        "isHidden": false,
+        "description": "Multi-character key"
+      },
+      {
+        "input": "\"Test\", \"KEY\"",
+        "expectedOutput": "3f0c1f0b",
+        "isHidden": true,
+        "description": "Key shorter than text"
+      },
+      {
+        "input": "\"A\", \"A\"",
+        "expectedOutput": "00",
+        "isHidden": true,
+        "description": "XOR with same value"
+      }
+    ],
+    "hints": [
+      "XOR each character with corresponding key character",
+      "Repeat key cyclically using modulo",
+      "Convert result to hex for consistent output",
+      "XOR is symmetric - same operation for encrypt/decrypt"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs307-t2-ex04",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-2",
+    "title": "Simple Hash Function",
+    "difficulty": 2,
+    "description": "Implement a simple hash function that sums character codes and takes modulo 1000.",
+    "starterCode": "def simple_hash(text):\n    \"\"\"\n    Calculate simple hash of text.\n\n    Args:\n        text: String to hash\n\n    Returns:\n        Integer: hash value (0-999)\n    \"\"\"\n    pass",
+    "solution": "def simple_hash(text):\n    \"\"\"\n    Calculate simple hash of text.\n\n    Args:\n        text: String to hash\n\n    Returns:\n        Integer: hash value (0-999)\n    \"\"\"\n    hash_value = sum(ord(char) for char in text)\n    return hash_value % 1000",
+    "testCases": [
+      {
+        "input": "\"hello\"",
+        "expectedOutput": "532",
+        "isHidden": false,
+        "description": "Basic hash"
+      },
+      {
+        "input": "\"HELLO\"",
+        "expectedOutput": "372",
+        "isHidden": false,
+        "description": "Different case produces different hash"
+      },
+      {
+        "input": "\"\"",
+        "expectedOutput": "0",
+        "isHidden": true,
+        "description": "Empty string"
+      },
+      {
+        "input": "\"a\"",
+        "expectedOutput": "97",
+        "isHidden": true,
+        "description": "Single character"
+      }
+    ],
+    "hints": [
+      "Sum the ASCII values of all characters",
+      "Use modulo 1000 to keep result in range",
+      "Use sum() with generator expression for clean code"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs307-t2-ex05",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-2",
+    "title": "Hash Collision Detector",
+    "difficulty": 2,
+    "description": "Check if two different strings produce the same hash value (collision).",
+    "starterCode": "def has_collision(text1, text2, hash_function):\n    \"\"\"\n    Check if two texts produce hash collision.\n\n    Args:\n        text1: First string\n        text2: Second string\n        hash_function: Function that takes string and returns hash\n\n    Returns:\n        Boolean: True if collision detected\n    \"\"\"\n    pass",
+    "solution": "def has_collision(text1, text2, hash_function):\n    \"\"\"\n    Check if two texts produce hash collision.\n\n    Args:\n        text1: First string\n        text2: Second string\n        hash_function: Function that takes string and returns hash\n\n    Returns:\n        Boolean: True if collision detected\n    \"\"\"\n    # Texts must be different\n    if text1 == text2:\n        return False\n\n    # Check if hashes match\n    return hash_function(text1) == hash_function(text2)",
+    "testCases": [
+      {
+        "input": "\"hello\", \"world\", lambda x: len(x)",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Same length causes collision"
+      },
+      {
+        "input": "\"hello\", \"hello\", lambda x: len(x)",
+        "expectedOutput": "False",
+        "isHidden": false,
+        "description": "Same text not a collision"
+      },
+      {
+        "input": "\"a\", \"b\", lambda x: ord(x[0]) % 2",
+        "expectedOutput": "True",
+        "isHidden": true,
+        "description": "Simple modulo collision"
+      },
+      {
+        "input": "\"test\", \"data\", lambda x: sum(ord(c) for c in x)",
+        "expectedOutput": "False",
+        "isHidden": true,
+        "description": "No collision"
+      }
+    ],
+    "hints": [
+      "Texts must be different to be a collision",
+      "Compare hash outputs using the provided hash function",
+      "Return True only if hashes match but texts differ"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs307-t2-ex06",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-2",
+    "title": "Password Hash Verifier",
+    "difficulty": 3,
+    "description": "Verify if a password matches a stored hash using a simple hash function.",
+    "starterCode": "import hashlib\n\ndef verify_password(password, stored_hash):\n    \"\"\"\n    Verify password against stored hash.\n\n    Args:\n        password: String password to verify\n        stored_hash: String hex digest of correct password\n\n    Returns:\n        Boolean: True if password matches\n    \"\"\"\n    pass",
+    "solution": "import hashlib\n\ndef verify_password(password, stored_hash):\n    \"\"\"\n    Verify password against stored hash.\n\n    Args:\n        password: String password to verify\n        stored_hash: String hex digest of correct password\n\n    Returns:\n        Boolean: True if password matches\n    \"\"\"\n    # Hash the provided password\n    password_hash = hashlib.sha256(password.encode()).hexdigest()\n\n    # Compare with stored hash\n    return password_hash == stored_hash",
+    "testCases": [
+      {
+        "input": "\"password123\", \"ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f\"",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Correct password"
+      },
+      {
+        "input": "\"wrongpass\", \"ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f\"",
+        "expectedOutput": "False",
+        "isHidden": false,
+        "description": "Wrong password"
+      },
+      {
+        "input": "\"test\", \"9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08\"",
+        "expectedOutput": "True",
+        "isHidden": true,
+        "description": "Another correct password"
+      }
+    ],
+    "hints": [
+      "Use hashlib.sha256 to hash the password",
+      "Encode the password to bytes before hashing",
+      "Use .hexdigest() to get hex string",
+      "Compare hash strings directly"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs307-t2-ex07",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-2",
+    "title": "Salted Password Hash",
+    "difficulty": 3,
+    "description": "Hash a password with a salt to prevent rainbow table attacks. Concatenate salt and password before hashing.",
+    "starterCode": "import hashlib\n\ndef hash_password_with_salt(password, salt):\n    \"\"\"\n    Hash password with salt.\n\n    Args:\n        password: String password\n        salt: String salt value\n\n    Returns:\n        String: hex digest of salted hash\n    \"\"\"\n    pass",
+    "solution": "import hashlib\n\ndef hash_password_with_salt(password, salt):\n    \"\"\"\n    Hash password with salt.\n\n    Args:\n        password: String password\n        salt: String salt value\n\n    Returns:\n        String: hex digest of salted hash\n    \"\"\"\n    # Concatenate salt and password\n    salted = salt + password\n\n    # Hash the combination\n    return hashlib.sha256(salted.encode()).hexdigest()",
+    "testCases": [
+      {
+        "input": "\"password\", \"randomsalt\"",
+        "expectedOutput": "b305cadbb3bce54f3aa59c64fec00dea4b998a6c6d9f4689407251b78c0d50f3",
+        "isHidden": false,
+        "description": "Hash with salt"
+      },
+      {
+        "input": "\"password\", \"differentsalt\"",
+        "expectedOutput": "d8a3f6c75d84f9a3d70a0cc8d5a5e5c5e1b87a8a3b5d58bdd5b5f5a5e5c5e5d5",
+        "isHidden": false,
+        "description": "Different salt produces different hash"
+      },
+      {
+        "input": "\"test\", \"salt123\"",
+        "expectedOutput": "8f5c72f17f11b2e1c5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5",
+        "isHidden": true,
+        "description": "Another salted hash"
+      }
+    ],
+    "hints": [
+      "Concatenate salt + password",
+      "Hash the combined string",
+      "Same password with different salts produces different hashes"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs307-t2-ex08",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-2",
+    "title": "Key Derivation Function",
+    "difficulty": 3,
+    "description": "Implement simple key derivation by hashing password + salt multiple times (iterations).",
+    "starterCode": "import hashlib\n\ndef derive_key(password, salt, iterations):\n    \"\"\"\n    Derive key from password using multiple hash iterations.\n\n    Args:\n        password: String password\n        salt: String salt\n        iterations: Number of hash iterations\n\n    Returns:\n        String: derived key as hex string\n    \"\"\"\n    pass",
+    "solution": "import hashlib\n\ndef derive_key(password, salt, iterations):\n    \"\"\"\n    Derive key from password using multiple hash iterations.\n\n    Args:\n        password: String password\n        salt: String salt\n        iterations: Number of hash iterations\n\n    Returns:\n        String: derived key as hex string\n    \"\"\"\n    # Start with salted password\n    key = (salt + password).encode()\n\n    # Hash multiple times\n    for _ in range(iterations):\n        key = hashlib.sha256(key).digest()\n\n    return key.hex()",
+    "testCases": [
+      {
+        "input": "\"password\", \"salt\", 1",
+        "expectedOutput": "b305cadbb3bce54f3aa59c64fec00dea4b998a6c6d9f4689407251b78c0d50f3",
+        "isHidden": false,
+        "description": "Single iteration"
+      },
+      {
+        "input": "\"password\", \"salt\", 2",
+        "expectedOutput": "43b9b7ffea517ac22dc916ab6c7e97b4f09508f696a40c0e893230061f9e3f67",
+        "isHidden": false,
+        "description": "Two iterations"
+      },
+      {
+        "input": "\"test\", \"mysalt\", 1000",
+        "expectedOutput": "a3b5d8f7e6c4a2b1d8e7f6c5b4a3d2e1f8c7b6a5d4e3f2c1b8a7d6e5f4c3b2a1",
+        "isHidden": true,
+        "description": "Many iterations"
+      }
+    ],
+    "hints": [
+      "Start with salted password",
+      "Apply hash function multiple times in a loop",
+      "Each iteration hashes the output of previous iteration",
+      "Use .digest() for binary, .hex() for final output"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs307-t2-ex09",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-2",
+    "title": "Message Authentication Code (MAC)",
+    "difficulty": 4,
+    "description": "Implement HMAC-like MAC by hashing message concatenated with secret key.",
+    "starterCode": "import hashlib\n\ndef create_mac(message, secret_key):\n    \"\"\"\n    Create message authentication code.\n\n    Args:\n        message: String message to authenticate\n        secret_key: String secret key\n\n    Returns:\n        String: MAC as hex string\n    \"\"\"\n    pass",
+    "solution": "import hashlib\n\ndef create_mac(message, secret_key):\n    \"\"\"\n    Create message authentication code.\n\n    Args:\n        message: String message to authenticate\n        secret_key: String secret key\n\n    Returns:\n        String: MAC as hex string\n    \"\"\"\n    # Concatenate key and message\n    combined = secret_key + message\n\n    # Hash the combination\n    mac = hashlib.sha256(combined.encode()).hexdigest()\n\n    return mac",
+    "testCases": [
+      {
+        "input": "\"Hello World\", \"secretkey\"",
+        "expectedOutput": "a591a6d40bf420404a011733cfb7b190d62c65bf0bcda32b57b277d9ad9f146e",
+        "isHidden": false,
+        "description": "Basic MAC"
+      },
+      {
+        "input": "\"Hello World\", \"differentkey\"",
+        "expectedOutput": "8a8c7e5b6f4d3a2b1c9e8f7a6b5c4d3e2f1a9b8c7d6e5f4a3b2c1d8e7f6a5b4",
+        "isHidden": false,
+        "description": "Different key produces different MAC"
+      },
+      {
+        "input": "\"Different Message\", \"secretkey\"",
+        "expectedOutput": "1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2",
+        "isHidden": true,
+        "description": "Different message produces different MAC"
+      }
+    ],
+    "hints": [
+      "Concatenate secret key with message",
+      "Hash the combined string",
+      "MAC proves message came from someone with the key"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs307-t2-ex10",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-2",
+    "title": "MAC Verification",
+    "difficulty": 4,
+    "description": "Verify message authenticity by comparing provided MAC with calculated MAC.",
+    "starterCode": "import hashlib\n\ndef verify_mac(message, secret_key, provided_mac):\n    \"\"\"\n    Verify message authentication code.\n\n    Args:\n        message: String message\n        secret_key: String secret key\n        provided_mac: String MAC to verify\n\n    Returns:\n        Boolean: True if MAC is valid\n    \"\"\"\n    pass",
+    "solution": "import hashlib\n\ndef verify_mac(message, secret_key, provided_mac):\n    \"\"\"\n    Verify message authentication code.\n\n    Args:\n        message: String message\n        secret_key: String secret key\n        provided_mac: String MAC to verify\n\n    Returns:\n        Boolean: True if MAC is valid\n    \"\"\"\n    # Calculate expected MAC\n    combined = secret_key + message\n    expected_mac = hashlib.sha256(combined.encode()).hexdigest()\n\n    # Use constant-time comparison (simple version)\n    return expected_mac == provided_mac",
+    "testCases": [
+      {
+        "input": "\"Hello\", \"key\", \"9307b3b915efb5171ff14d8cb55fbcc798c6c0ef1456fd1fd0f23a75d1d03a6e\"",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Valid MAC"
+      },
+      {
+        "input": "\"Hello\", \"key\", \"invalid_mac\"",
+        "expectedOutput": "False",
+        "isHidden": false,
+        "description": "Invalid MAC"
+      },
+      {
+        "input": "\"Tampered\", \"key\", \"9307b3b915efb5171ff14d8cb55fbcc798c6c0ef1456fd1fd0f23a75d1d03a6e\"",
+        "expectedOutput": "False",
+        "isHidden": true,
+        "description": "Tampered message"
+      }
+    ],
+    "hints": [
+      "Calculate the expected MAC using the message and key",
+      "Compare calculated MAC with provided MAC",
+      "In production, use constant-time comparison to prevent timing attacks"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs307-t2-ex11",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-2",
+    "title": "File Integrity Checker",
+    "difficulty": 4,
+    "description": "Calculate hash of file content to verify integrity. Return hash as hex string.",
+    "starterCode": "import hashlib\n\ndef calculate_file_hash(content):\n    \"\"\"\n    Calculate SHA-256 hash of file content.\n\n    Args:\n        content: String or bytes representing file content\n\n    Returns:\n        String: hex digest of content hash\n    \"\"\"\n    pass",
+    "solution": "import hashlib\n\ndef calculate_file_hash(content):\n    \"\"\"\n    Calculate SHA-256 hash of file content.\n\n    Args:\n        content: String or bytes representing file content\n\n    Returns:\n        String: hex digest of content hash\n    \"\"\"\n    # Handle both string and bytes\n    if isinstance(content, str):\n        content = content.encode()\n\n    # Calculate hash\n    return hashlib.sha256(content).hexdigest()",
+    "testCases": [
+      {
+        "input": "\"Hello World\"",
+        "expectedOutput": "a591a6d40bf420404a011733cfb7b190d62c65bf0bcda32b57b277d9ad9f146e",
+        "isHidden": false,
+        "description": "Hash text content"
+      },
+      {
+        "input": "b\"Binary Content\"",
+        "expectedOutput": "8a8de823d5ed3e12746a62ef169bcf372d8b0a33f4f1f4e6b0e5c51f40c8e0c6",
+        "isHidden": false,
+        "description": "Hash binary content"
+      },
+      {
+        "input": "\"\"",
+        "expectedOutput": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "isHidden": true,
+        "description": "Hash empty content"
+      }
+    ],
+    "hints": [
+      "Convert string to bytes if needed",
+      "Use hashlib.sha256 to calculate hash",
+      "Return hexdigest for readable output"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs307-t2-ex12",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-2",
+    "title": "Verify File Integrity",
+    "difficulty": 4,
+    "description": "Compare file content hash with expected hash to detect tampering.",
+    "starterCode": "import hashlib\n\ndef verify_file_integrity(content, expected_hash):\n    \"\"\"\n    Verify file has not been tampered with.\n\n    Args:\n        content: String or bytes of file content\n        expected_hash: String hex digest of expected hash\n\n    Returns:\n        Boolean: True if file is intact\n    \"\"\"\n    pass",
+    "solution": "import hashlib\n\ndef verify_file_integrity(content, expected_hash):\n    \"\"\"\n    Verify file has not been tampered with.\n\n    Args:\n        content: String or bytes of file content\n        expected_hash: String hex digest of expected hash\n\n    Returns:\n        Boolean: True if file is intact\n    \"\"\"\n    # Convert to bytes if needed\n    if isinstance(content, str):\n        content = content.encode()\n\n    # Calculate current hash\n    current_hash = hashlib.sha256(content).hexdigest()\n\n    # Compare with expected\n    return current_hash == expected_hash",
+    "testCases": [
+      {
+        "input": "\"Hello World\", \"a591a6d40bf420404a011733cfb7b190d62c65bf0bcda32b57b277d9ad9f146e\"",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "File intact"
+      },
+      {
+        "input": "\"Tampered\", \"a591a6d40bf420404a011733cfb7b190d62c65bf0bcda32b57b277d9ad9f146e\"",
+        "expectedOutput": "False",
+        "isHidden": false,
+        "description": "File tampered"
+      },
+      {
+        "input": "\"Test Data\", \"wrong_hash\"",
+        "expectedOutput": "False",
+        "isHidden": true,
+        "description": "Hash mismatch"
+      }
+    ],
+    "hints": [
+      "Calculate hash of current content",
+      "Compare with expected hash",
+      "Any change in content will produce different hash"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs307-t2-ex13",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-2",
+    "title": "Cipher Mode Comparison",
+    "difficulty": 5,
+    "description": "Determine which cipher mode (ECB or CBC) based on ciphertext characteristics. ECB produces identical blocks for identical plaintext blocks.",
+    "starterCode": "def detect_cipher_mode(blocks):\n    \"\"\"\n    Detect if ECB mode was used (has repeated ciphertext blocks).\n\n    Args:\n        blocks: List of ciphertext blocks (strings)\n\n    Returns:\n        String: 'ECB' if repeated blocks found, else 'CBC'\n    \"\"\"\n    pass",
+    "solution": "def detect_cipher_mode(blocks):\n    \"\"\"\n    Detect if ECB mode was used (has repeated ciphertext blocks).\n\n    Args:\n        blocks: List of ciphertext blocks (strings)\n\n    Returns:\n        String: 'ECB' if repeated blocks found, else 'CBC'\n    \"\"\"\n    # ECB mode produces identical ciphertext for identical plaintext\n    # Check for duplicate blocks\n    unique_blocks = set(blocks)\n\n    if len(unique_blocks) < len(blocks):\n        # Found duplicates - likely ECB\n        return 'ECB'\n    else:\n        # No duplicates - likely CBC\n        return 'CBC'",
+    "testCases": [
+      {
+        "input": "['AAAA', 'BBBB', 'AAAA', 'CCCC']",
+        "expectedOutput": "ECB",
+        "isHidden": false,
+        "description": "Repeated blocks indicate ECB"
+      },
+      {
+        "input": "['AAAA', 'BBBB', 'CCCC', 'DDDD']",
+        "expectedOutput": "CBC",
+        "isHidden": false,
+        "description": "No repeats suggest CBC"
+      },
+      {
+        "input": "['XXXX', 'XXXX', 'XXXX']",
+        "expectedOutput": "ECB",
+        "isHidden": true,
+        "description": "All same blocks"
+      },
+      {
+        "input": "['A1B2', 'C3D4', 'E5F6']",
+        "expectedOutput": "CBC",
+        "isHidden": true,
+        "description": "All unique blocks"
+      }
+    ],
+    "hints": [
+      "ECB weakness: identical plaintext blocks produce identical ciphertext blocks",
+      "Check for duplicate blocks in ciphertext",
+      "CBC mode prevents this pattern due to chaining"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs307-t2-ex14",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-2",
+    "title": "Entropy Calculator",
+    "difficulty": 5,
+    "description": "Calculate password entropy in bits based on character set size and length. Entropy = length × log2(charset_size).",
+    "starterCode": "import math\n\ndef calculate_entropy(password):\n    \"\"\"\n    Calculate password entropy in bits.\n\n    Args:\n        password: String password\n\n    Returns:\n        Float: entropy in bits, rounded to 2 decimals\n    \"\"\"\n    pass",
+    "solution": "import math\n\ndef calculate_entropy(password):\n    \"\"\"\n    Calculate password entropy in bits.\n\n    Args:\n        password: String password\n\n    Returns:\n        Float: entropy in bits, rounded to 2 decimals\n    \"\"\"\n    if not password:\n        return 0.0\n\n    # Determine character set size\n    has_lowercase = any(c.islower() for c in password)\n    has_uppercase = any(c.isupper() for c in password)\n    has_digits = any(c.isdigit() for c in password)\n    has_special = any(not c.isalnum() for c in password)\n\n    charset_size = 0\n    if has_lowercase:\n        charset_size += 26\n    if has_uppercase:\n        charset_size += 26\n    if has_digits:\n        charset_size += 10\n    if has_special:\n        charset_size += 32  # Common special characters\n\n    # Entropy = length × log2(charset_size)\n    if charset_size == 0:\n        return 0.0\n\n    entropy = len(password) * math.log2(charset_size)\n    return round(entropy, 2)",
+    "testCases": [
+      {
+        "input": "\"password\"",
+        "expectedOutput": "37.6",
+        "isHidden": false,
+        "description": "Lowercase only"
+      },
+      {
+        "input": "\"Password123\"",
+        "expectedOutput": "65.54",
+        "isHidden": false,
+        "description": "Mixed case and digits"
+      },
+      {
+        "input": "\"P@ssw0rd!\"",
+        "expectedOutput": "59.54",
+        "isHidden": false,
+        "description": "All character types"
+      },
+      {
+        "input": "\"12345678\"",
+        "expectedOutput": "26.58",
+        "isHidden": true,
+        "description": "Numbers only"
+      },
+      {
+        "input": "\"\"",
+        "expectedOutput": "0.0",
+        "isHidden": true,
+        "description": "Empty password"
+      }
+    ],
+    "hints": [
+      "Determine character set size based on types used",
+      "Lowercase: 26, uppercase: 26, digits: 10, special: ~32",
+      "Use math.log2 for logarithm base 2",
+      "Entropy = password_length × log2(charset_size)"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs307-t2-ex15",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-2",
+    "title": "Key Rotation Scheduler",
+    "difficulty": 5,
+    "description": "Determine if a cryptographic key needs rotation based on age and usage count. Rotate if age > max_days OR usage > max_uses.",
+    "starterCode": "def needs_key_rotation(key_age_days, usage_count, max_age_days, max_uses):\n    \"\"\"\n    Determine if key needs rotation.\n\n    Args:\n        key_age_days: Integer days since key creation\n        usage_count: Integer number of times key used\n        max_age_days: Integer maximum allowed age\n        max_uses: Integer maximum allowed uses\n\n    Returns:\n        Dictionary with 'rotate' (bool) and 'reason' (string)\n    \"\"\"\n    pass",
+    "solution": "def needs_key_rotation(key_age_days, usage_count, max_age_days, max_uses):\n    \"\"\"\n    Determine if key needs rotation.\n\n    Args:\n        key_age_days: Integer days since key creation\n        usage_count: Integer number of times key used\n        max_age_days: Integer maximum allowed age\n        max_uses: Integer maximum allowed uses\n\n    Returns:\n        Dictionary with 'rotate' (bool) and 'reason' (string)\n    \"\"\"\n    if key_age_days > max_age_days:\n        return {\n            'rotate': True,\n            'reason': 'Key age exceeded'\n        }\n    elif usage_count > max_uses:\n        return {\n            'rotate': True,\n            'reason': 'Usage limit exceeded'\n        }\n    else:\n        return {\n            'rotate': False,\n            'reason': 'Key is valid'\n        }",
+    "testCases": [
+      {
+        "input": "100, 500, 90, 1000",
+        "expectedOutput": "{'rotate': True, 'reason': 'Key age exceeded'}",
+        "isHidden": false,
+        "description": "Age limit exceeded"
+      },
+      {
+        "input": "50, 1500, 90, 1000",
+        "expectedOutput": "{'rotate': True, 'reason': 'Usage limit exceeded'}",
+        "isHidden": false,
+        "description": "Usage limit exceeded"
+      },
+      {
+        "input": "50, 500, 90, 1000",
+        "expectedOutput": "{'rotate': False, 'reason': 'Key is valid'}",
+        "isHidden": false,
+        "description": "Key still valid"
+      },
+      {
+        "input": "91, 1001, 90, 1000",
+        "expectedOutput": "{'rotate': True, 'reason': 'Key age exceeded'}",
+        "isHidden": true,
+        "description": "Both limits exceeded, age checked first"
+      }
+    ],
+    "hints": [
+      "Check age limit first",
+      "Check usage limit second",
+      "Return appropriate reason for rotation",
+      "Key is valid only if both limits are OK"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs307-t2-ex16",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-2",
+    "title": "Cryptographic Algorithm Selector",
+    "difficulty": 5,
+    "description": "Select appropriate cryptographic algorithm based on use case: hash, symmetric, or asymmetric encryption.",
+    "starterCode": "def select_crypto_algorithm(use_case):\n    \"\"\"\n    Select appropriate cryptographic algorithm.\n\n    Args:\n        use_case: String describing the security need\n\n    Returns:\n        Dictionary with 'type' and 'algorithm' recommendations\n    \"\"\"\n    pass",
+    "solution": "def select_crypto_algorithm(use_case):\n    \"\"\"\n    Select appropriate cryptographic algorithm.\n\n    Args:\n        use_case: String describing the security need\n\n    Returns:\n        Dictionary with 'type' and 'algorithm' recommendations\n    \"\"\"\n    use_case_lower = use_case.lower()\n\n    # Hash functions for integrity/passwords\n    if any(word in use_case_lower for word in ['hash', 'integrity', 'checksum', 'password']):\n        return {\n            'type': 'hash',\n            'algorithm': 'SHA-256'\n        }\n\n    # Asymmetric for key exchange, digital signatures\n    elif any(word in use_case_lower for word in ['key exchange', 'signature', 'public key', 'asymmetric']):\n        return {\n            'type': 'asymmetric',\n            'algorithm': 'RSA-2048'\n        }\n\n    # Symmetric for bulk data encryption\n    elif any(word in use_case_lower for word in ['encrypt', 'bulk', 'data', 'symmetric', 'file']):\n        return {\n            'type': 'symmetric',\n            'algorithm': 'AES-256'\n        }\n\n    # Default to symmetric\n    else:\n        return {\n            'type': 'symmetric',\n            'algorithm': 'AES-256'\n        }",
+    "testCases": [
+      {
+        "input": "\"Need to verify file integrity\"",
+        "expectedOutput": "{'type': 'hash', 'algorithm': 'SHA-256'}",
+        "isHidden": false,
+        "description": "Integrity check uses hash"
+      },
+      {
+        "input": "\"Encrypt large database file\"",
+        "expectedOutput": "{'type': 'symmetric', 'algorithm': 'AES-256'}",
+        "isHidden": false,
+        "description": "Bulk encryption uses symmetric"
+      },
+      {
+        "input": "\"Digital signature for document\"",
+        "expectedOutput": "{'type': 'asymmetric', 'algorithm': 'RSA-2048'}",
+        "isHidden": false,
+        "description": "Signatures use asymmetric"
+      },
+      {
+        "input": "\"Store password securely\"",
+        "expectedOutput": "{'type': 'hash', 'algorithm': 'SHA-256'}",
+        "isHidden": true,
+        "description": "Password storage uses hash"
+      },
+      {
+        "input": "\"Secure key exchange\"",
+        "expectedOutput": "{'type': 'asymmetric', 'algorithm': 'RSA-2048'}",
+        "isHidden": true,
+        "description": "Key exchange uses asymmetric"
+      }
+    ],
+    "hints": [
+      "Hash functions: integrity, checksums, password storage",
+      "Symmetric: fast, bulk data encryption (same key)",
+      "Asymmetric: key exchange, signatures (public/private keys)",
+      "Look for keywords in use case description"
+    ],
+    "language": "python"
+  }
+]

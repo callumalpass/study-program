@@ -1,0 +1,239 @@
+[
+  {
+    "id": "cs202-t7-ex1",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic7",
+    "type": "written",
+    "title": "ILP Fundamentals",
+    "description": "Define ILP and explain the difference between ILP available in a program vs ILP exploited by hardware. What limits each?",
+    "difficulty": 2,
+    "hints": [
+      "Program ILP = parallelism in code",
+      "Hardware ILP = what processor extracts",
+      "Consider dependencies"
+    ],
+    "solution": "Instruction-Level Parallelism (ILP):\n\nDefinition: ILP is the potential to execute multiple instructions\nsimultaneously within a single thread.\n\nProgram ILP (inherent):\n- Parallelism available in the instruction stream\n- Limited by true data dependencies\n- Independent of hardware\n\nExample:\na = b + c;     # Independent\nd = e + f;     # Can execute in parallel\ng = a + d;     # Depends on both above\n\nProgram ILP = 2 (first two can be parallel)\n\nExploited ILP (realized):\n- Parallelism actually extracted by hardware\n- Limited by hardware resources and mechanisms\n\nLimits on Program ILP:\n1. True dependencies (RAW - Read After Write)\n   add R1, R2, R3\n   sub R4, R1, R5  # Must wait for R1\n\n2. Control dependencies (branches)\n   beq R1, R2, L1\n   add R3, R4, R5  # Don't know if needed\n\n3. Memory dependencies (potential aliases)\n   store [R1], R2\n   load R3, [R4]   # Might be same address!\n\nLimits on Exploited ILP:\n1. Issue width: How many instructions per cycle?\n2. Window size: How far ahead can we look?\n3. Functional units: Enough ALUs, FPUs?\n4. Register file ports: Can read/write enough?\n5. Branch prediction: Mispredictions waste work\n\nTypical values:\n- Program ILP: Varies widely (2-100+)\n- Exploited ILP: 2-4 (modern CPUs)\n- Gap due to hardware limitations and conservative choices"
+  },
+  {
+    "id": "cs202-t7-ex2",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic7",
+    "type": "written",
+    "title": "Superscalar Basics",
+    "description": "A 4-wide superscalar processor can issue 4 instructions per cycle. Given this code, what is the maximum IPC achievable? \nadd R1, R2, R3\nmul R4, R5, R6\nsub R7, R1, R8\ndiv R9, R4, R10",
+    "difficulty": 3,
+    "hints": [
+      "Check dependencies between instructions",
+      "Consider which can issue together",
+      "Look at RAW hazards"
+    ],
+    "solution": "Superscalar Analysis (4-wide):\n\nInstructions:\nI1: add R1, R2, R3\nI2: mul R4, R5, R6\nI3: sub R7, R1, R8   # Depends on I1 (RAW on R1)\nI4: div R9, R4, R10  # Depends on I2 (RAW on R4)\n\nDependency graph:\nI1 ──────► I3\n    R1\nI2 ──────► I4\n    R4\n\nCycle-by-cycle execution (assuming 1-cycle latency):\n\nCycle 1: Issue I1, I2 (both independent)\n- I1, I2 execute\n- I3 waits for R1\n- I4 waits for R4\n\nCycle 2: Issue I3, I4 (dependencies resolved)\n- I3 uses R1 (forwarded from I1)\n- I4 uses R4 (forwarded from I2)\n\nTotal: 4 instructions in 2 cycles\nIPC = 4 / 2 = 2.0\n\nMaximum theoretical IPC = 4.0 (issue width)\nAchieved IPC = 2.0 (limited by dependencies)\n\nIf all were independent:\nCycle 1: I1, I2, I3, I4 (all 4)\nIPC = 4.0\n\nAnalysis:\n- Dependencies create serialization\n- I1→I3 and I2→I4 each form chains\n- Two chains can execute in parallel\n- But each chain is serialized\n\nBest case for 4-wide superscalar requires\nat least 4 independent instructions per cycle."
+  },
+  {
+    "id": "cs202-t7-ex3",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic7",
+    "type": "written",
+    "title": "Register Renaming",
+    "description": "Explain how register renaming eliminates WAW and WAR hazards. Show the renaming for:\nadd R1, R2, R3\nsub R4, R1, R5\nadd R1, R6, R7\nmul R8, R1, R4",
+    "difficulty": 4,
+    "hints": [
+      "Architectural vs physical registers",
+      "Each write gets new physical register",
+      "Eliminates false dependencies"
+    ],
+    "solution": "Register Renaming:\n\nOriginal code:\nI1: add R1, R2, R3\nI2: sub R4, R1, R5    # RAW on R1 (true)\nI3: add R1, R6, R7    # WAW on R1 (false), WAR with I2\nI4: mul R8, R1, R4    # RAW on R1, R4 (true)\n\nWithout renaming:\n- I3 must wait for I2 to read R1 (WAR hazard)\n- I3 must wait for I1 to write R1 (WAW hazard)\n- Limits parallelism despite no TRUE dependency\n\nWith register renaming:\nPhysical registers: P1, P2, P3, ...\nRegister Alias Table (RAT): maps arch → physical\n\nInitial RAT: R1→P1, R2→P2, R3→P3, R4→P4, ...\n\nI1: add R1, R2, R3\n    Rename: add P10, P2, P3  (new P10 for R1)\n    RAT: R1→P10\n\nI2: sub R4, R1, R5\n    Rename: sub P11, P10, P5  (uses current R1=P10)\n    RAT: R4→P11\n\nI3: add R1, R6, R7\n    Rename: add P12, P6, P7  (new P12 for R1, different!)\n    RAT: R1→P12\n\nI4: mul R8, R1, R4\n    Rename: mul P13, P12, P11  (uses current R1=P12, R4=P11)\n\nAfter renaming:\nadd P10, P2, P3     # No dependencies\nsub P11, P10, P5    # RAW on P10 only\nadd P12, P6, P7     # No dependencies!\nmul P13, P12, P11   # RAW on P12, P11\n\nNow I1 and I3 can execute in parallel!\nWAW and WAR eliminated - only true RAW remains.\n\nParallelism exposed:\nCycle 1: I1, I3 (both independent now)\nCycle 2: I2, I4 (dependencies resolved)"
+  },
+  {
+    "id": "cs202-t7-ex4",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic7",
+    "type": "written",
+    "title": "Tomasulo Algorithm",
+    "description": "Describe the three key components of Tomasulo's algorithm. How does it enable out-of-order execution while maintaining correctness?",
+    "difficulty": 4,
+    "hints": [
+      "Reservation stations",
+      "Common Data Bus",
+      "Register renaming via tags"
+    ],
+    "solution": "Tomasulo's Algorithm Components:\n\n1. Reservation Stations (RS):\n   - Buffer for instructions waiting to execute\n   - Hold operands or tags for pending operands\n   - Distributed (per functional unit)\n\n   Structure:\n   ┌────┬────┬─────┬─────┬─────┬─────┐\n   │ Op │Busy│ Qj  │ Vj  │ Qk  │ Vk  │\n   ├────┼────┼─────┼─────┼─────┼─────┤\n   │ADD │  1 │  -  │ 10  │ RS2 │  -  │\n   │MUL │  1 │ RS1 │  -  │  -  │  5  │\n   └────┴────┴─────┴─────┴─────┴─────┘\n   Q = tag of producing RS (0 = value ready)\n   V = actual value (when ready)\n\n2. Common Data Bus (CDB):\n   - Broadcasts results to all waiting stations\n   - Tag + Value broadcast\n   - All RS snoop for matching tags\n\n   When RS completes:\n   CDB ← {Tag: RS_ID, Value: result}\n   All RS with Qj/Qk = Tag update Vj/Vk\n\n3. Register Status (Rename Table):\n   - Maps arch register to producing RS\n   - Qi = 0 means value in register file\n   - Qi = RSx means wait for RSx result\n\n   ┌──────┬─────┬───────┐\n   │ Reg  │ Qi  │ Value │\n   ├──────┼─────┼───────┤\n   │  R1  │ RS2 │   -   │ (waiting)\n   │  R2  │  0  │  42   │ (ready)\n   └──────┴─────┴───────┘\n\nExecution flow:\n1. Issue: Allocate RS, read ready operands, set tags\n2. Execute: When all operands ready, execute\n3. Write Result: Broadcast on CDB, update waiting RS\n\nCorrectness maintained by:\n- True dependencies: Operand tags ensure waiting\n- WAW/WAR: Eliminated by renaming to RS tags\n- In-order issue: Respects program order\n- Out-of-order execute: Safe due to renaming\n- In-order commit: Via Reorder Buffer (added later)"
+  },
+  {
+    "id": "cs202-t7-ex5",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic7",
+    "type": "written",
+    "title": "Branch Prediction Accuracy",
+    "description": "A processor with 90% branch prediction accuracy executes a program where 20% of instructions are branches. If the misprediction penalty is 15 cycles, what is the CPI impact?",
+    "difficulty": 2,
+    "hints": [
+      "Misprediction rate = 1 - accuracy",
+      "Calculate stall cycles per instruction"
+    ],
+    "solution": "Branch Prediction Impact Analysis:\n\nGiven:\n- Branch prediction accuracy: 90%\n- Branch frequency: 20% of instructions\n- Misprediction penalty: 15 cycles\n- Assume base CPI = 1.0\n\nMisprediction rate:\n= 1 - accuracy = 1 - 0.90 = 0.10 (10%)\n\nBranch misprediction stalls per instruction:\n= Branch_frequency × Misprediction_rate × Penalty\n= 0.20 × 0.10 × 15\n= 0.30 cycles per instruction\n\nCPI with branch stalls:\nCPI = Base_CPI + Branch_stalls\n= 1.0 + 0.30\n= 1.30\n\nPerformance impact:\n- Without branches: CPI = 1.0\n- With branches: CPI = 1.30\n- Slowdown: 30%\n- Speedup potential: 1.30/1.0 = 1.30× with perfect prediction\n\nSensitivity analysis:\n\nIf accuracy improves to 95%:\nStalls = 0.20 × 0.05 × 15 = 0.15\nCPI = 1.15 (15% slowdown)\n\nIf accuracy improves to 99%:\nStalls = 0.20 × 0.01 × 15 = 0.03\nCPI = 1.03 (3% slowdown)\n\nKey insight:\nEvery 1% improvement in branch prediction:\nSaves: 0.20 × 0.01 × 15 = 0.03 CPI\n3% of ideal performance per 1% accuracy\n\nHigh accuracy (>95%) critical for deep pipelines!"
+  },
+  {
+    "id": "cs202-t7-ex6",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic7",
+    "type": "written",
+    "title": "Speculative Execution",
+    "description": "Explain speculative execution and the role of the Reorder Buffer (ROB). What happens on a branch misprediction?",
+    "difficulty": 3,
+    "hints": [
+      "Execute before knowing if needed",
+      "ROB holds speculative results",
+      "Recovery on misprediction"
+    ],
+    "solution": "Speculative Execution:\n\nDefinition:\nExecute instructions before knowing if they should execute\n(usually past unresolved branches)\n\nWhy speculate?\n- Branch takes cycles to resolve\n- Don't waste time waiting\n- High accuracy makes speculation profitable\n\nReorder Buffer (ROB):\n- Holds speculative instruction results\n- Maintains program order\n- Enables in-order commit despite OoO execution\n\nROB structure:\n┌─────┬──────┬───────┬───────┬────────┬─────────┐\n│Entry│ Busy │ Instr │ State │ Dest   │ Value   │\n├─────┼──────┼───────┼───────┼────────┼─────────┤\n│  0  │  1   │ add   │ Commit│  R1    │   42    │\n│  1  │  1   │ beq   │ Exec  │  -     │   -     │\n│  2  │  1   │ mul   │ Done  │  R2    │   15    │ ← Speculative!\n│  3  │  1   │ sub   │ Issue │  R3    │   -     │ ← Speculative!\n└─────┴──────┴───────┴───────┴────────┴─────────┘\n                       ↑\n               Head (oldest)\n\nNormal flow:\n1. Issue: Allocate ROB entry, rename dest to ROB#\n2. Execute: Compute result, write to ROB\n3. Commit: When head of ROB, write to arch register\n\nOn branch misprediction:\n\nBefore misprediction discovered:\nROB: [branch, speculative_instr1, speculative_instr2, ...]\n\nMisprediction detected at commit:\n1. Flush ROB entries after mispredicted branch\n2. Discard speculative results\n3. Restore register rename table to checkpoint\n4. Redirect fetch to correct path\n\nRecovery steps:\n┌────────────────────────────────────────────────┐\n│ 1. Squash: Clear speculative ROB entries       │\n│ 2. Restore: Rename table to safe checkpoint    │\n│ 3. Redirect: PC to correct branch target       │\n│ 4. Resume: Fetch from correct path             │\n└────────────────────────────────────────────────┘\n\nCost of misprediction:\n- Lost work: All speculative instructions wasted\n- Pipeline refill: Frontend delay\n- Penalty: Typically 10-20 cycles on modern CPUs"
+  },
+  {
+    "id": "cs202-t7-ex7",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic7",
+    "type": "written",
+    "title": "VLIW vs Superscalar",
+    "description": "Compare VLIW and superscalar approaches to exploiting ILP. What are the advantages and disadvantages of each?",
+    "difficulty": 3,
+    "hints": [
+      "Who does the scheduling?",
+      "Hardware complexity",
+      "Code compatibility"
+    ],
+    "solution": "VLIW vs Superscalar Comparison:\n\nVLIW (Very Long Instruction Word):\n- Compiler schedules parallel operations\n- Hardware executes bundles as specified\n- Simple hardware, complex compiler\n\nExample VLIW instruction (128-bit):\n┌─────────────┬─────────────┬─────────────┬─────────────┐\n│  ALU Op 1   │  ALU Op 2   │  Memory Op  │  Branch Op  │\n│  add r1,r2  │  mul r3,r4  │  ld r5,[r6] │    nop      │\n└─────────────┴─────────────┴─────────────┴─────────────┘\nCompiler guarantees no conflicts!\n\nSuperscalar:\n- Hardware schedules parallel operations\n- Instructions issued dynamically\n- Complex hardware, standard compiler\n\nComparison:\n┌─────────────────┬───────────────┬────────────────────┐\n│ Aspect          │ VLIW          │ Superscalar        │\n├─────────────────┼───────────────┼────────────────────┤\n│ Scheduling by   │ Compiler      │ Hardware           │\n│ HW complexity   │ Low           │ High               │\n│ Compiler work   │ High          │ Moderate           │\n│ Power           │ Lower         │ Higher             │\n│ Binary compat   │ Poor          │ Good               │\n│ Dynamic adapt   │ No            │ Yes                │\n│ Code size       │ Larger (NOPs) │ Normal             │\n└─────────────────┴───────────────┴────────────────────┘\n\nVLIW Advantages:\n1. Simpler, lower-power hardware\n2. More predictable performance\n3. Compiler has global view\n4. Good for DSPs, embedded (IA-64, TI DSPs)\n\nVLIW Disadvantages:\n1. Code tied to specific implementation\n2. Can't adapt to runtime conditions\n3. NOP waste for low-ILP code\n4. Branch penalties harder to hide\n\nSuperscalar Advantages:\n1. Binary compatibility across generations\n2. Adapts to runtime conditions\n3. Works with legacy code\n4. Handles variable latencies\n\nSuperscalar Disadvantages:\n1. Complex, power-hungry hardware\n2. Scheduling overhead every cycle\n3. Limited by window size\n\nModern trend: Superscalar dominates general-purpose,\nVLIW successful in DSPs and specific domains."
+  },
+  {
+    "id": "cs202-t7-ex8",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic7",
+    "type": "written",
+    "title": "Loop Unrolling",
+    "description": "Show how unrolling this loop by a factor of 4 exposes more ILP:\nfor(i=0; i<100; i++) A[i] = A[i] + B[i];",
+    "difficulty": 3,
+    "hints": [
+      "Replicate loop body",
+      "Separate iterations become parallel",
+      "Reduce loop overhead"
+    ],
+    "solution": "Loop Unrolling Analysis:\n\nOriginal loop:\nfor (i = 0; i < 100; i++)\n    A[i] = A[i] + B[i];\n\nAssembly (simplified):\nloop:\n    load  R1, A[i]      # 1\n    load  R2, B[i]      # 2\n    add   R3, R1, R2    # 3 - depends on 1,2\n    store A[i], R3      # 4 - depends on 3\n    addi  i, i, 1       # 5\n    blt   i, 100, loop  # 6 - depends on 5\n\nILP per iteration: Limited\n- loads can be parallel\n- add waits for loads\n- store waits for add\n- branch overhead each iteration\n\nUnrolled by 4:\nfor (i = 0; i < 100; i += 4) {\n    A[i]   = A[i]   + B[i];\n    A[i+1] = A[i+1] + B[i+1];\n    A[i+2] = A[i+2] + B[i+2];\n    A[i+3] = A[i+3] + B[i+3];\n}\n\nAssembly (unrolled):\nloop:\n    load  R1, A[i]      # Iteration 0\n    load  R2, B[i]\n    load  R3, A[i+1]    # Iteration 1 - PARALLEL!\n    load  R4, B[i+1]\n    load  R5, A[i+2]    # Iteration 2 - PARALLEL!\n    load  R6, B[i+2]\n    load  R7, A[i+3]    # Iteration 3 - PARALLEL!\n    load  R8, B[i+3]\n    add   R9,  R1, R2   # All adds can be parallel!\n    add   R10, R3, R4\n    add   R11, R5, R6\n    add   R12, R7, R8\n    store A[i],   R9    # All stores independent\n    store A[i+1], R10\n    store A[i+2], R11\n    store A[i+3], R12\n    addi  i, i, 4       # Only 1 increment\n    blt   i, 100, loop  # Only 1 branch\n\nBenefits:\n1. 8 loads can issue in parallel\n2. 4 adds can issue in parallel\n3. 4 stores can issue in parallel\n4. Loop overhead reduced 4×\n\nILP exposed: ~8 (vs ~2 before)\nBranches reduced: 4× fewer iterations"
+  },
+  {
+    "id": "cs202-t7-ex9",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic7",
+    "type": "written",
+    "title": "SIMD Operations",
+    "description": "Explain how SIMD (Single Instruction Multiple Data) differs from superscalar. Give an example of adding four pairs of numbers using SSE/AVX.",
+    "difficulty": 2,
+    "hints": [
+      "One instruction, multiple data elements",
+      "Wide registers",
+      "Data-level parallelism"
+    ],
+    "solution": "SIMD (Single Instruction Multiple Data):\n\nConcept:\n- One instruction operates on multiple data elements\n- Wide registers hold vectors of values\n- Same operation applied to all elements\n\nSIMD vs Superscalar:\n┌─────────────────┬─────────────────────┬───────────────────┐\n│ Aspect          │ Superscalar         │ SIMD              │\n├─────────────────┼─────────────────────┼───────────────────┤\n│ Parallelism     │ Different instrs    │ Same instr        │\n│ Data            │ Scalar values       │ Vector of values  │\n│ Control         │ Multiple streams    │ Single stream     │\n│ Best for        │ General code        │ Data parallel     │\n└─────────────────┴─────────────────────┴───────────────────┘\n\nSSE/AVX Example: Add four pairs of floats\n\nScalar code (4 instructions):\n    add r1, a[0], b[0]  # result[0]\n    add r2, a[1], b[1]  # result[1]\n    add r3, a[2], b[2]  # result[2]\n    add r4, a[3], b[3]  # result[3]\n\nSIMD code (1 instruction):\n    vaddps xmm0, xmm1, xmm2  # All 4 at once!\n\n    xmm1: [a[0], a[1], a[2], a[3]]  (128-bit)\n    xmm2: [b[0], b[1], b[2], b[3]]\n    xmm0: [a[0]+b[0], a[1]+b[1], a[2]+b[2], a[3]+b[3]]\n\nAVX-512 example (16 floats at once):\n    vaddps zmm0, zmm1, zmm2\n\n    zmm1: [a[0], a[1], ..., a[15]]  (512-bit)\n    zmm2: [b[0], b[1], ..., b[15]]\n    zmm0: [sum[0], sum[1], ..., sum[15]]\n\nSIMD width progression:\n- MMX: 64-bit (8 × 8-bit or 4 × 16-bit)\n- SSE: 128-bit (4 × 32-bit float)\n- AVX: 256-bit (8 × 32-bit float)\n- AVX-512: 512-bit (16 × 32-bit float)\n\nBest applications:\n- Image/video processing\n- Scientific computing\n- Machine learning\n- Any loop over arrays with same operation"
+  },
+  {
+    "id": "cs202-t7-ex10",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic7",
+    "type": "written",
+    "title": "Amdahl's Law",
+    "description": "A program spends 80% of time in parallelizable code. Using Amdahl's Law, calculate the maximum speedup with infinite parallel processors. What if only 50% is parallelizable?",
+    "difficulty": 2,
+    "hints": [
+      "Serial portion limits speedup",
+      "Formula: 1/((1-P) + P/N)",
+      "Consider N → ∞"
+    ],
+    "solution": "Amdahl's Law Analysis:\n\nAmdahl's Law formula:\nSpeedup = 1 / ((1 - P) + P/N)\n\nWhere:\n- P = parallelizable fraction\n- N = number of processors\n- (1-P) = serial fraction\n\nCase 1: P = 0.80 (80% parallelizable)\n\nWith N = 2 processors:\nSpeedup = 1 / (0.20 + 0.80/2)\n        = 1 / (0.20 + 0.40)\n        = 1 / 0.60\n        = 1.67×\n\nWith N = 4 processors:\nSpeedup = 1 / (0.20 + 0.80/4)\n        = 1 / (0.20 + 0.20)\n        = 1 / 0.40\n        = 2.5×\n\nWith N → ∞ (maximum speedup):\nSpeedup = 1 / (0.20 + 0)\n        = 1 / 0.20\n        = 5× maximum\n\nCase 2: P = 0.50 (50% parallelizable)\n\nWith N → ∞:\nSpeedup = 1 / (0.50 + 0)\n        = 1 / 0.50\n        = 2× maximum\n\nComparison table:\n┌─────────┬──────────────────────────────────┐\n│    N    │  P=50%    P=80%    P=95%    P=99% │\n├─────────┼──────────────────────────────────┤\n│    2    │  1.33×    1.67×    1.90×    1.98× │\n│    4    │  1.60×    2.50×    3.48×    3.88× │\n│    8    │  1.78×    3.33×    5.93×    7.48× │\n│   16    │  1.88×    4.00×    9.14×   13.91× │\n│   ∞     │  2.00×    5.00×   20.00×  100.00× │\n└─────────┴──────────────────────────────────┘\n\nKey insight:\nSerial portion dominates as N increases.\nEven 1% serial limits speedup to 100×!\n\nImplications:\n- Focus optimization on serial bottlenecks\n- Diminishing returns adding processors\n- Need high parallelizable fraction for many-core"
+  },
+  {
+    "id": "cs202-t7-ex11",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic7",
+    "type": "written",
+    "title": "Dependency Types",
+    "description": "Identify all dependencies (RAW, WAR, WAW) in this code:\nI1: R1 = R2 + R3\nI2: R4 = R1 - R5\nI3: R1 = R6 * R7\nI4: R8 = R1 + R4",
+    "difficulty": 3,
+    "hints": [
+      "RAW: true dependency",
+      "WAR: anti-dependency",
+      "WAW: output dependency"
+    ],
+    "solution": "Dependency Analysis:\n\nInstructions:\nI1: R1 = R2 + R3\nI2: R4 = R1 - R5\nI3: R1 = R6 * R7\nI4: R8 = R1 + R4\n\nStep 1: Identify all reads and writes\n\n│ Instr │ Writes │ Reads     │\n├───────┼────────┼───────────┤\n│  I1   │  R1    │ R2, R3    │\n│  I2   │  R4    │ R1, R5    │\n│  I3   │  R1    │ R6, R7    │\n│  I4   │  R8    │ R1, R4    │\n\nStep 2: Find dependencies\n\nRAW (Read After Write) - True dependencies:\n• I1 → I2 on R1 (I1 writes R1, I2 reads R1)\n• I2 → I4 on R4 (I2 writes R4, I4 reads R4)\n• I3 → I4 on R1 (I3 writes R1, I4 reads R1)\n\nWAR (Write After Read) - Anti-dependencies:\n• I2 → I3 on R1 (I2 reads R1, I3 writes R1)\n\nWAW (Write After Write) - Output dependencies:\n• I1 → I3 on R1 (I1 writes R1, I3 writes R1)\n\nDependency diagram:\n        RAW(R1)    WAW(R1)\n    I1 ─────────► I2 ────────┐\n    │             │          │\n    │ WAW(R1)     │ WAR(R1)  │\n    └──────► I3 ◄─┘          │\n              │              │\n              │ RAW(R1)      │ RAW(R4)\n              └──────► I4 ◄──┘\n\nTrue (RAW) dependencies: 3\nAnti (WAR) dependencies: 1\nOutput (WAW) dependencies: 1\n\nWith register renaming (eliminates WAR, WAW):\nI1: P1 = P2 + P3\nI2: P4 = P1 - P5      # RAW on P1\nI3: P10 = P6 + P7     # Renamed! No WAW\nI4: P8 = P10 + P4     # RAW on P10, P4\n\nNow I1, I3 can execute in parallel!"
+  },
+  {
+    "id": "cs202-t7-ex12",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic7",
+    "type": "written",
+    "title": "Issue Width vs Window Size",
+    "description": "Explain the difference between issue width and instruction window size. Why might a processor have a window much larger than its issue width?",
+    "difficulty": 3,
+    "hints": [
+      "Issue width = instructions per cycle",
+      "Window = instructions being examined",
+      "Dependencies may span many instructions"
+    ],
+    "solution": "Issue Width vs Window Size:\n\nIssue Width:\n- Maximum instructions issued per cycle\n- Determines peak IPC\n- Limited by: decode width, rename bandwidth, functional units\n\nInstruction Window (ROB size):\n- Number of instructions \"in-flight\"\n- Instructions between oldest and newest being tracked\n- Determines how far ahead processor can look\n\nTypical values:\n┌────────────────┬──────────────┬─────────────────┐\n│ Processor      │ Issue Width  │ Window (ROB)    │\n├────────────────┼──────────────┼─────────────────┤\n│ Intel Core     │ 4-6          │ 224-352         │\n│ AMD Zen        │ 4-6          │ 256             │\n│ Apple M1       │ 8            │ ~600            │\n│ Typical ratio  │ 1            │ 40-100×         │\n└────────────────┴──────────────┴─────────────────┘\n\nWhy window >> issue width?\n\n1. Finding ILP:\n   Large window needed to find independent instructions\n\n   Example: If dependencies span 10 instructions,\n   need window > 10 to overlap next independent group\n\n2. Hiding latency:\n   Long-latency operations (cache miss = 100s cycles)\n   Need large window to have work during miss\n\n   Example: 4-wide, 200 cycle miss\n   Need 800 entry window to stay busy!\n\n3. Branch coverage:\n   Window spans multiple basic blocks\n   More opportunities to find parallelism\n\n4. Memory-level parallelism:\n   Multiple cache misses in flight\n   Large window = more outstanding misses\n\nAnalogy:\nIssue width = checkout lanes at store\nWindow size = shopping carts in store\n\nMany carts can be filling while few checkout at a time.\nLarge window keeps pipeline fed despite dependencies."
+  },
+  {
+    "id": "cs202-t7-ex13",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic7",
+    "type": "written",
+    "title": "Precise Exceptions",
+    "description": "Why are precise exceptions difficult with out-of-order execution? How does the Reorder Buffer enable precise exceptions?",
+    "difficulty": 4,
+    "hints": [
+      "OoO changes completion order",
+      "Need consistent state on exception",
+      "ROB commits in order"
+    ],
+    "solution": "Precise Exceptions with OoO Execution:\n\nThe problem:\nOut-of-order execution completes instructions in different\norder than program order. But exceptions must show\narchitectural state AS IF program ran in order.\n\nExample:\nI1: div R1, R2, R3     # slow, may trap\nI2: add R4, R5, R6     # fast\nI3: load R7, [R8]      # may trap\n\nExecution order: I2, I3, I1 (div is slow)\n\nIf I1 causes divide-by-zero:\n- I2 has completed (wrote R4)\n- I3 has completed (wrote R7)\n- But they shouldn't have! They're \"after\" I1\n\nImprecise exception state:\nSome later instructions completed\nNot consistent with any program point\n\nReorder Buffer solution:\n\nROB commits instructions IN ORDER regardless of\nwhen they complete execution.\n\nStructure:\n┌─────┬────────┬───────┬──────────┐\n│ ROB │ Instr  │ Done? │ Value    │\n├─────┼────────┼───────┼──────────┤\n│  0  │ I1 div │  No   │ pending  │ ← HEAD (oldest)\n│  1  │ I2 add │  Yes  │ 42       │ (waiting to commit)\n│  2  │ I3 load│  Yes  │ 100      │ (waiting to commit)\n└─────┴────────┴───────┴──────────┘\n\nCommit rules:\n1. Only HEAD can commit\n2. Instruction must be complete\n3. Commit writes to architectural state\n4. Exception checked at commit time\n\nException handling:\n1. I1 completes with exception\n2. At commit: I1 is HEAD, has exception\n3. Flush ROB (I2, I3 results discarded)\n4. Architectural state is precisely before I1\n5. Handle exception\n\nKey insight:\n- Speculative results stay in ROB until commit\n- Architectural registers updated ONLY at commit\n- In-order commit despite out-of-order execution\n- Exception sees clean state at I1\n\nCost:\n- ROB storage for all in-flight results\n- Commit bandwidth limits sustained IPC\n- Worthwhile for correct exception handling"
+  },
+  {
+    "id": "cs202-t7-ex14",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic7",
+    "type": "written",
+    "title": "Memory Disambiguation",
+    "description": "Explain the memory disambiguation problem. How can loads be speculatively executed before earlier stores?",
+    "difficulty": 4,
+    "hints": [
+      "Stores might alias with loads",
+      "Can't know addresses until execution",
+      "Speculation and recovery"
+    ],
+    "solution": "Memory Disambiguation Problem:\n\nThe issue:\nstore [R1], R2\nload  R3, [R4]  # Does R4 == R1? Don't know until execute!\n\nIf R1 == R4: RAW dependency (must wait)\nIf R1 != R4: Independent (can execute in parallel)\n\nChallenge: Addresses computed at execution time\nCan't know dependencies at decode/issue\n\nConservative approach:\nWait for all earlier stores before any load\nKills memory-level parallelism!\n\nAggressive approach (speculation):\nExecute loads before stores, recover if wrong\n\nLoad Store Queue (LSQ) architecture:\n┌─────────────────────────────────────────────┐\n│           Load Store Queue                   │\n│                                              │\n│  Store Queue      │    Load Queue            │\n│ ┌────┬─────┬────┐ │ ┌────┬─────┬────┐       │\n│ │Addr│Data │Done│ │ │Addr│Data │Done│       │\n│ ├────┼─────┼────┤ │ ├────┼─────┼────┤       │\n│ │100 │ 42  │ Y  │ │ │104 │ 15  │ Y  │       │\n│ │ ?  │ 7   │ N  │ │ │ ?  │  ?  │ N  │       │\n│ └────┴─────┴────┘ │ └────┴─────┴────┘       │\n└─────────────────────────────────────────────┘\n\nSpeculative load execution:\n1. Issue load, check store queue\n2. If older store has same address → forward data\n3. If older store address unknown → speculate no conflict\n4. Execute load, get data from cache/memory\n5. When older stores get addresses, verify speculation\n\nStore-to-load forwarding:\nstore [100], R5    # Value in store queue\nload  R6, [100]    # Get value from store queue!\nNo memory access needed - forwarded from store queue\n\nConflict detection:\nWhen older store gets address:\nif (store.addr == speculative_load.addr)\n    # Misspeculation! Flush load and later instructions\n\nModern CPUs:\n- Use predictors to guess load/store independence\n- Sophisticated LSQ searching\n- Store-to-load forwarding common and fast\n- Misspeculation penalty: flush and re-execute"
+  },
+  {
+    "id": "cs202-t7-ex15",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic7",
+    "type": "written",
+    "title": "Limits of ILP",
+    "description": "List five factors that limit achievable ILP in real programs. For each, explain why it's a fundamental limit.",
+    "difficulty": 3,
+    "hints": [
+      "Dependencies, branches, memory, finite resources, power"
+    ],
+    "solution": "Fundamental Limits of ILP:\n\n1. True Data Dependencies\n   Why fundamental: Laws of physics/mathematics\n   - Result must be computed before it's used\n   - Cannot violate causality\n   - Sets minimum serialization\n\n   Example: a = b + c; d = a * 2;\n   Must compute 'a' before 'd'\n\n2. Control Dependencies (Branches)\n   Why fundamental: Program semantics\n   - Don't know which instructions needed until branch resolves\n   - Speculation helps but has limits\n   - Misprediction wastes all speculative work\n\n   Typical impact: 15-20% of instructions are branches\n   Even 95% accuracy = 1 mispredict per 20 branches\n\n3. Memory Latency and Bandwidth\n   Why fundamental: Physical distance, speed of light\n   - Data must travel from memory\n   - Cache misses impose long stalls\n   - Memory bandwidth is finite\n\n   Impact: Cache miss = 100s of potential instructions\n\n4. Finite Hardware Resources\n   Why fundamental: Cost, power, complexity\n   - Limited issue width (decode, rename, issue)\n   - Limited functional units\n   - Limited instruction window (ROB)\n   - Limited physical registers\n\n   Practical limits: ~4-8 wide issue common\n\n5. Power and Thermal Constraints\n   Why fundamental: Physics of computation\n   - More parallelism = more power\n   - Chip can only dissipate so much heat\n   - Diminishing returns on parallelism\n\n   Modern CPUs: Can't use all transistors at once\n\nStudy data (Wall's 1991 limits):\nPerfect predictor, infinite window, infinite resources:\n- Average program ILP: ~50-100\nReal processors achieve: ~2-4 IPC\n\nGap caused by practical limits on all above factors."
+  },
+  {
+    "id": "cs202-t7-ex16",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic7",
+    "type": "written",
+    "title": "SMT Basics",
+    "description": "Explain Simultaneous Multithreading (SMT/Hyper-Threading). How does it improve resource utilization compared to superscalar alone?",
+    "difficulty": 3,
+    "hints": [
+      "Multiple threads share functional units",
+      "Fill bubbles from one thread with another",
+      "Horizontal vs vertical waste"
+    ],
+    "solution": "Simultaneous Multithreading (SMT):\n\nConcept:\nExecute instructions from multiple threads simultaneously\non a single superscalar core.\n\nSuperscalar alone (single-threaded):\nCycle:    1    2    3    4    5    6\nALU 0:  [I1] [ - ] [I5] [ - ] [ - ] [I8]\nALU 1:  [I2] [ - ] [ - ] [I6] [ - ] [ - ]\nFPU:    [I3] [I4] [ - ] [ - ] [I7] [ - ]\nLoad:   [ - ] [ - ] [I5] [ - ] [ - ] [ - ]\n\nBubbles (empty slots) due to:\n- Dependencies in single thread\n- Branch mispredictions\n- Cache misses\n\nSMT (two threads):\nCycle:    1    2    3    4    5    6\nALU 0:  [T1] [T2] [T1] [T2] [T1] [T2]\nALU 1:  [T1] [T2] [T2] [T1] [T2] [T1]\nFPU:    [T2] [T1] [T2] [T1] [T2] [T1]\nLoad:   [T1] [T2] [T1] [T2] [T1] [T2]\n\nFill bubbles from one thread with instructions from another!\n\nResource sharing:\n┌───────────────┬─────────────────────────────────┐\n│ Duplicated    │ Shared                          │\n├───────────────┼─────────────────────────────────┤\n│ Arch state    │ Fetch/decode bandwidth          │\n│ PC            │ Execution units (ALU, FPU)      │\n│ Register file*│ Caches (L1, L2, L3)            │\n│ Small buffers │ Branch predictors (partitioned) │\n└───────────────┴─────────────────────────────────┘\n* Some physical registers per thread, shared pool\n\nPerformance characteristics:\n- Single thread: No improvement (may be slightly worse)\n- Two threads: 10-30% total throughput increase\n- Per-thread performance: May decrease 0-20%\n\nWhy not 2× speedup?\n- Threads compete for resources\n- Cache interference\n- Some resources already well-utilized\n\nSMT vs CMP (Chip Multiprocessor):\nSMT: Share everything, fine-grain mixing\nCMP: Duplicate cores, coarse-grain parallelism\n\nModern CPUs: Both! Multiple SMT cores\nExample: 8 cores × 2 threads = 16 logical processors"
+  }
+]

@@ -1,0 +1,228 @@
+[
+  {
+    "id": "cs202-t1-ex1",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic1",
+    "type": "written",
+    "title": "Identify ISA Components",
+    "description": "Classify the following as part of the ISA or microarchitecture: (a) Number of general-purpose registers (b) Pipeline depth (c) Instruction encoding format (d) Cache size (e) Addressing modes supported",
+    "difficulty": 1,
+    "hints": [
+      "ISA is the interface visible to programmers",
+      "Microarchitecture is about implementation details"
+    ],
+    "solution": "ISA components (visible to programmers):\n(a) Number of general-purpose registers - ISA (programmers must know how many registers are available)\n(c) Instruction encoding format - ISA (assemblers and compilers must know instruction formats)\n(e) Addressing modes supported - ISA (determines how programs specify memory addresses)\n\nMicroarchitecture (implementation details):\n(b) Pipeline depth - Microarchitecture (how instructions flow through hardware)\n(d) Cache size - Microarchitecture (performance optimization, not visible to ISA)\n\nThe ISA is the interface between software and hardware. Different microarchitectures can implement the same ISA differently."
+  },
+  {
+    "id": "cs202-t1-ex2",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic1",
+    "type": "written",
+    "title": "MIPS R-Format Decoding",
+    "description": "Decode the following MIPS instruction: 0x012A4020. Break it down into opcode, rs, rt, rd, shamt, and funct fields, and identify the instruction.",
+    "difficulty": 3,
+    "hints": [
+      "Convert hex to binary first",
+      "R-format: opcode(6) | rs(5) | rt(5) | rd(5) | shamt(5) | funct(6)"
+    ],
+    "solution": "Binary: 0000 0001 0010 1010 0100 0000 0010 0000\n\nField breakdown:\n- opcode (bits 31-26): 000000 = 0 (R-type)\n- rs (bits 25-21): 00001 = 1 ($at or $1)\n- rt (bits 20-16): 01010 = 10 ($t2)\n- rd (bits 15-11): 01000 = 8 ($t0)\n- shamt (bits 10-6): 00000 = 0\n- funct (bits 5-0): 100000 = 32 (add)\n\nInstruction: add $t0, $at, $t2\nOr: add $t0, $1, $10\n\nThis adds the contents of register $at ($1) and $t2 ($10), storing the result in $t0 ($8)."
+  },
+  {
+    "id": "cs202-t1-ex3",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic1",
+    "type": "written",
+    "title": "Address Calculation",
+    "description": "For the instruction \"lw $t0, 100($s0)\", if $s0 contains 0x10000000, calculate the effective memory address. Also explain what type of addressing mode this represents.",
+    "difficulty": 2,
+    "hints": [
+      "Effective Address = Base + Offset",
+      "Convert offset to hex for easier addition"
+    ],
+    "solution": "Effective Address Calculation:\nBase register ($s0): 0x10000000\nOffset: 100 (decimal) = 0x64 (hexadecimal)\n\nEffective Address = Base + Offset\n= 0x10000000 + 0x64\n= 0x10000064\n\nAddressing Mode: Base + Offset (also called Base + Displacement)\n\nThis is the primary addressing mode for accessing arrays and structure fields:\n- Base register points to start of data structure\n- Offset specifies displacement to desired element\n- Very efficient for sequential array access when combined with pointer increment"
+  },
+  {
+    "id": "cs202-t1-ex4",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic1",
+    "type": "written",
+    "title": "Immediate Field Range",
+    "description": "The MIPS I-format uses a 16-bit immediate field. (a) What range of values can be represented as unsigned? (b) What range as signed (two's complement)? (c) How would you load the value 0x12345678 into a register?",
+    "difficulty": 3,
+    "hints": [
+      "Unsigned: 0 to 2^n - 1",
+      "Signed: -2^(n-1) to 2^(n-1) - 1",
+      "lui loads upper 16 bits"
+    ],
+    "solution": "(a) Unsigned range:\n- Minimum: 0\n- Maximum: 2^16 - 1 = 65,535 (0xFFFF)\n- Range: 0 to 65,535\n\n(b) Signed (two's complement) range:\n- Minimum: -2^15 = -32,768 (0x8000 interpreted as signed)\n- Maximum: 2^15 - 1 = 32,767 (0x7FFF)\n- Range: -32,768 to 32,767\n\n(c) Loading 0x12345678 requires two instructions:\nlui $t0, 0x1234      # Load upper 16 bits: $t0 = 0x12340000\nori $t0, $t0, 0x5678 # OR in lower 16 bits: $t0 = 0x12345678\n\nThis is necessary because no single instruction can specify a 32-bit immediate.\nThe assembler pseudo-instruction \"li $t0, 0x12345678\" generates these two instructions automatically."
+  },
+  {
+    "id": "cs202-t1-ex5",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic1",
+    "type": "written",
+    "title": "CISC vs RISC Instruction Comparison",
+    "description": "Compare how x86 (CISC) and MIPS (RISC) would implement: memory[B] = memory[A] + memory[B]. Write the assembly for both and count the memory accesses.",
+    "difficulty": 3,
+    "hints": [
+      "CISC allows memory-to-memory operations",
+      "RISC requires load-store pattern"
+    ],
+    "solution": "x86 (CISC) approach:\nmov eax, [A]        ; Load memory[A] into eax\nadd [B], eax        ; Add eax to memory[B], store result in memory[B]\n\nMemory accesses: 4\n- Read A (1)\n- Read B (for the add, 1)\n- Write B (store result, 1)\n- Plus instruction fetches\n\nTotal instructions: 2\n\nMIPS (RISC) approach:\nlw $t0, A($zero)    ; Load memory[A] into $t0\nlw $t1, B($zero)    ; Load memory[B] into $t1\nadd $t2, $t0, $t1   ; Add: $t2 = $t0 + $t1\nsw $t2, B($zero)    ; Store result to memory[B]\n\nMemory accesses: 3 (2 loads, 1 store)\nTotal instructions: 4\n\nKey differences:\n- CISC: Fewer instructions, but memory-memory operations\n- RISC: More instructions, but load-store only, simpler decode\n- RISC makes pipelining easier because each instruction is simple and regular"
+  },
+  {
+    "id": "cs202-t1-ex6",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic1",
+    "type": "written",
+    "title": "J-Format Address Calculation",
+    "description": "For a MIPS jump instruction at address 0x00400024, with a 26-bit target field of 0x100008, calculate the jump target address. Explain the address calculation process.",
+    "difficulty": 4,
+    "hints": [
+      "Jump uses upper 4 bits of PC+4",
+      "Target is shifted left by 2",
+      "Result is concatenation"
+    ],
+    "solution": "MIPS J-format jump target calculation:\n\nGiven:\n- PC of jump instruction: 0x00400024\n- 26-bit target field: 0x100008 = 00 0001 0000 0000 0000 0000 1000 (binary)\n\nJump target address composition:\n1. Take upper 4 bits of PC+4: 0x004 (from 0x00400028)\n2. Shift 26-bit target left by 2 (word alignment): 0x100008 << 2 = 0x400020\n3. Concatenate: upper 4 bits || (target << 2)\n\nTarget = (PC+4)[31:28] || (target << 2)\n       = 0x0 || 0x0400020\n       = 0x00400020\n\nVerification:\n- Upper 4 bits: 0000 (from PC region)\n- Lower 28 bits: 0x0400020 (target × 4)\n- Full address: 0x00400020\n\nNotes:\n- The shift by 2 allows addressing word-aligned instructions (every 4 bytes)\n- The upper 4 bits from PC mean jumps are limited to the same 256MB region\n- For cross-region jumps, use jr (jump register) instruction"
+  },
+  {
+    "id": "cs202-t1-ex7",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic1",
+    "type": "written",
+    "title": "Instruction Type Identification",
+    "description": "Categorize each instruction by type (data transfer, arithmetic, logical, control flow): ADD, LW, BEQ, AND, SW, JR, SLT, SLL, JAL, SUB",
+    "difficulty": 1,
+    "hints": [
+      "Data transfer moves data between registers and memory",
+      "Control flow changes program execution order"
+    ],
+    "solution": "Data Transfer Instructions (move data between registers and memory):\n- LW (Load Word) - Reads from memory to register\n- SW (Store Word) - Writes from register to memory\n\nArithmetic Instructions (mathematical operations):\n- ADD - Addition\n- SUB - Subtraction\n- SLT (Set Less Than) - Comparison that produces 0 or 1\n\nLogical Instructions (bitwise operations):\n- AND - Bitwise AND\n- SLL (Shift Left Logical) - Bit shifting\n\nControl Flow Instructions (change execution order):\n- BEQ (Branch if Equal) - Conditional branch\n- JR (Jump Register) - Indirect jump\n- JAL (Jump and Link) - Function call\n\nNote: SLT could also be considered logical (produces boolean result).\nCategories can overlap; e.g., CMP in x86 is both arithmetic (subtraction) and comparison."
+  },
+  {
+    "id": "cs202-t1-ex8",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic1",
+    "type": "written",
+    "title": "PC-Relative Addressing",
+    "description": "A BEQ instruction is located at address 0x00400100. If the branch is taken, execution continues at 0x00400120. What is the value stored in the 16-bit offset field of the instruction?",
+    "difficulty": 3,
+    "hints": [
+      "Target = (PC + 4) + (offset × 4)",
+      "Offset is in words, not bytes"
+    ],
+    "solution": "PC-relative addressing in MIPS branches:\n\nGiven:\n- BEQ instruction at: 0x00400100\n- Target address: 0x00400120\n\nBranch target calculation: Target = (PC + 4) + (offset × 4)\n\nSolving for offset:\n0x00400120 = (0x00400100 + 4) + (offset × 4)\n0x00400120 = 0x00400104 + (offset × 4)\n0x00400120 - 0x00400104 = offset × 4\n0x0000001C = offset × 4\noffset = 0x0000001C / 4\noffset = 0x00000007 = 7\n\nThe 16-bit offset field contains: 0x0007 (or just 7)\n\nVerification:\nTarget = 0x00400104 + (7 × 4)\n      = 0x00400104 + 0x1C\n      = 0x00400120 ✓\n\nThe offset is in words (4 bytes), not bytes, extending the branch range by 4×."
+  },
+  {
+    "id": "cs202-t1-ex9",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic1",
+    "type": "written",
+    "title": "Register Conventions Purpose",
+    "description": "Explain why MIPS has conventions for registers like $a0-$a3 (arguments), $v0-$v1 (return values), and $t0-$t9 (temporaries). What would happen without these conventions?",
+    "difficulty": 3,
+    "hints": [
+      "Think about separate compilation",
+      "Consider caller-saved vs callee-saved"
+    ],
+    "solution": "Purpose of Register Conventions:\n\n1. Enable separate compilation:\n   - Caller knows where to put arguments ($a0-$a3)\n   - Callee knows where to find arguments\n   - Libraries can be compiled separately from user code\n\n2. Efficient function calls:\n   - No need to save/restore all registers\n   - Caller-saved ($t0-$t9): Callee can use freely\n   - Callee-saved ($s0-$s7): Callee must preserve\n\n3. Clear responsibility:\n   - $ra: Return address from JAL\n   - $sp: Stack pointer (must be maintained)\n   - $gp: Global pointer (for global data access)\n\nWithout conventions:\n- Every function call would need to save ALL registers\n- Functions couldn't be compiled independently\n- Linking would require knowledge of all register usage\n- No way for caller/callee to agree on interface\n- Libraries would be impossible to use\n\nThe ABI (Application Binary Interface) standardizes these conventions, making interoperability possible."
+  },
+  {
+    "id": "cs202-t1-ex10",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic1",
+    "type": "written",
+    "title": "Fixed vs Variable Length Instructions",
+    "description": "MIPS uses fixed 32-bit instructions while x86 uses variable length (1-15 bytes). Discuss the trade-offs in terms of: (a) code density, (b) decode complexity, (c) pipelining ease.",
+    "difficulty": 4,
+    "hints": [
+      "Consider instruction cache efficiency",
+      "Think about superscalar fetch"
+    ],
+    "solution": "(a) Code Density:\nVariable-length (x86):\n- Common instructions can be short (1-3 bytes)\n- Complex instructions encoded only when needed\n- Better code density (smaller executables)\n\nFixed-length (MIPS):\n- Every instruction is 4 bytes, even simple ones\n- NOPs and padding waste space\n- Typically 25-30% larger executables\n\n(b) Decode Complexity:\nVariable-length (x86):\n- Must determine instruction length before decoding next\n- Prefix bytes, multiple opcode bytes, variable operands\n- Modern x86: Pre-decode stage to find boundaries\n- Historically limited superscalar width\n\nFixed-length (MIPS):\n- Every instruction at PC, PC+4, PC+8, etc.\n- Instruction fields in fixed positions\n- Simple, parallel decode of multiple instructions\n- Enables easy superscalar implementations\n\n(c) Pipelining:\nVariable-length (x86):\n- Instruction cache must deliver variable amounts\n- Branch target might not be instruction-aligned\n- Complex instruction buffer management\n- Harder to fetch/decode multiple per cycle\n\nFixed-length (MIPS):\n- Fetch N × 4 bytes = N instructions\n- Branch targets always word-aligned\n- Simple instruction fetch/buffer\n- Enables efficient wide issue\n\nModern x86 mitigates these issues by converting to fixed-length micro-ops internally."
+  },
+  {
+    "id": "cs202-t1-ex11",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic1",
+    "type": "written",
+    "title": "Endianness Impact",
+    "description": "The 32-bit value 0x12345678 is stored at address 0x1000. Show the byte layout in memory for both big-endian and little-endian systems. Which byte is at address 0x1000 in each case?",
+    "difficulty": 2,
+    "hints": [
+      "Big-endian: Most significant byte first",
+      "Little-endian: Least significant byte first"
+    ],
+    "solution": "Value: 0x12345678\n- Most significant byte: 0x12\n- Least significant byte: 0x78\n\nBig-Endian (MSB at lowest address):\nAddress   Byte\n0x1000    0x12  ← Most significant byte first\n0x1001    0x34\n0x1002    0x56\n0x1003    0x78\n\nLittle-Endian (LSB at lowest address):\nAddress   Byte\n0x1000    0x78  ← Least significant byte first\n0x1001    0x56\n0x1002    0x34\n0x1003    0x12\n\nAt address 0x1000:\n- Big-endian: 0x12\n- Little-endian: 0x78\n\nPractical implications:\n- Network protocols typically use big-endian (\"network byte order\")\n- x86 is little-endian\n- ARM can be configured either way\n- When accessing bytes of a word (e.g., string characters), order matters\n- When reading 32-bit words, hardware handles endianness transparently"
+  },
+  {
+    "id": "cs202-t1-ex12",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic1",
+    "type": "written",
+    "title": "Instruction Encoding",
+    "description": "Encode the MIPS instruction \"addi $t0, $s1, -5\" into its 32-bit binary representation. Show your work.",
+    "difficulty": 3,
+    "hints": [
+      "addi is I-format",
+      "Use two's complement for negative immediate"
+    ],
+    "solution": "Instruction: addi $t0, $s1, -5\n\nMIPS I-format layout:\n| opcode (6) | rs (5) | rt (5) | immediate (16) |\n\nField values:\n- opcode for addi: 001000 (8)\n- rs (source): $s1 = register 17 = 10001\n- rt (destination): $t0 = register 8 = 01000\n- immediate: -5 in 16-bit two's complement\n\nComputing -5 in 16-bit two's complement:\n5 in binary: 0000 0000 0000 0101\nInvert:      1111 1111 1111 1010\nAdd 1:       1111 1111 1111 1011\n-5 =         0xFFFB = 1111 1111 1111 1011\n\nComplete instruction:\n| 001000 | 10001 | 01000 | 1111 1111 1111 1011 |\n\nBinary: 0010 0010 0010 1000 1111 1111 1111 1011\n\nGrouped as hex: 0x2228FFFB\n\nVerification:\n- Opcode 0x08 = addi ✓\n- rs = 17 = $s1 ✓\n- rt = 8 = $t0 ✓\n- imm = 0xFFFB = -5 ✓"
+  },
+  {
+    "id": "cs202-t1-ex13",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic1",
+    "type": "written",
+    "title": "ISA Design Trade-off",
+    "description": "You are designing an ISA for an embedded system with limited memory. You can choose between: (A) 32 registers with 32-bit fixed instructions, or (B) 8 registers with 16-bit fixed instructions. Analyze the trade-offs.",
+    "difficulty": 5,
+    "hints": [
+      "More registers reduce spills to memory",
+      "16-bit instructions have code density advantages"
+    ],
+    "solution": "Analysis of both options:\n\nOption A: 32 registers, 32-bit instructions\n\nAdvantages:\n- More registers reduce memory traffic (less spilling)\n- Larger immediate fields possible\n- More opcodes/functionality available\n- Better for compute-intensive code\n\nDisadvantages:\n- Each instruction is 4 bytes\n- Code size is larger\n- More instruction memory needed\n\nOption B: 8 registers, 16-bit instructions\n\nAdvantages:\n- 2× code density (important for embedded!)\n- Lower instruction cache requirements\n- Lower power for instruction fetch\n- Register specifiers only need 3 bits each\n\nDisadvantages:\n- Frequent register spilling to memory\n- Small immediates (need more instructions for constants)\n- Limited instruction encoding space\n- More memory traffic for spilled registers\n\nRecommendation for embedded:\nConsider a hybrid like ARM Thumb or MIPS16:\n- 16-bit instructions for common operations\n- 32-bit for complex operations\n- Achieves ~70% code size of pure 32-bit\n- Register window or subset addressing\n\nReal-world examples:\n- ARM Thumb-2: Mixed 16/32-bit\n- RISC-V Compressed: 16-bit subset\n- MIPS16e: 16-bit extension mode"
+  },
+  {
+    "id": "cs202-t1-ex14",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic1",
+    "type": "written",
+    "title": "Compare x86 and ARM Instructions",
+    "description": "Compare how x86 and ARM would implement \"if (a == 0) b = c + d\". Write pseudo-assembly for both and highlight ISA differences.",
+    "difficulty": 3,
+    "hints": [
+      "ARM has conditional execution",
+      "x86 uses two-operand format"
+    ],
+    "solution": "Assume: a in R0, b in R1, c in R2, d in R3\n\nx86 approach:\n    cmp eax, 0        ; Compare a with 0, sets flags\n    jne skip          ; Jump if not equal (ZF=0)\n    mov ebx, ecx      ; b = c\n    add ebx, edx      ; b = c + d\nskip:\n\nCharacteristics:\n- Separate compare instruction sets flags\n- Conditional jump based on flags\n- Two-operand instructions (dest = dest op src)\n\nARM approach:\n    cmp r0, #0        ; Compare a with 0, sets flags\n    addeq r1, r2, r3  ; If equal, b = c + d (conditional execution!)\n\nOr without predication:\n    cmp r0, #0\n    bne skip\n    add r1, r2, r3\nskip:\n\nCharacteristics:\n- Predicated execution: most instructions can be conditional\n- Three-operand format (dest, src1, src2)\n- Can avoid branch entirely with conditional execution\n\nKey differences:\n1. ARM has conditional execution on most instructions\n2. ARM uses 3-operand format (non-destructive)\n3. x86 uses 2-operand format (destination is also source)\n4. ARM predication avoids branch penalty for short conditionals\n5. x86 has implicit flags register; ARM sets flags explicitly (S suffix)"
+  },
+  {
+    "id": "cs202-t1-ex15",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic1",
+    "type": "written",
+    "title": "RISC-V Extension Analysis",
+    "description": "RISC-V has a base ISA (RV32I) and optional extensions (M for multiply, F for float, etc.). Discuss advantages and challenges of this modular approach.",
+    "difficulty": 5,
+    "hints": [
+      "Think about customization for different applications",
+      "Consider software ecosystem challenges"
+    ],
+    "solution": "Advantages of Modular Extensions:\n\n1. Customization for application:\n   - Embedded: RV32I only (minimal area)\n   - Scientific: RV64GC (full 64-bit with float)\n   - Crypto: Add Zk extension\n   - No unused hardware for your use case\n\n2. Implementation flexibility:\n   - Simple cores: Trap unimplemented instructions to software\n   - Complex cores: Hardware implementation of all extensions\n   - Same binaries can run (with different performance)\n\n3. Future-proof:\n   - Add new extensions without breaking compatibility\n   - Reserved opcode space for future use\n   - V (vector), P (packed SIMD) added recently\n\n4. Reduces verification burden:\n   - Each extension verified independently\n   - Base ISA is small and well-tested\n\nChallenges:\n\n1. Software compatibility:\n   - Compiler must know which extensions are available\n   - Libraries may need multiple versions\n   - Runtime detection adds complexity\n\n2. Fragmentation risk:\n   - Too many combinations to test\n   - Some extension combinations may conflict\n   - Hardware/software ecosystem splitting\n\n3. Discovery mechanism:\n   - Software must detect available extensions\n   - CSRs (Control/Status Registers) for discovery\n   - Boot-time vs. runtime detection\n\n4. ABI challenges:\n   - Calling conventions depend on extensions (float registers?)\n   - Binary compatibility across extension sets\n   - Dynamic linking with extension-specific code\n\nReal-world status:\n- RISC-V has profiles (RVA, RVB) that define standard combinations\n- This reduces fragmentation while keeping modularity"
+  },
+  {
+    "id": "cs202-t1-ex16",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic1",
+    "type": "written",
+    "title": "Instruction Fetch Width Calculation",
+    "description": "A processor fetches instructions from a 64-byte aligned cache line. For MIPS (32-bit fixed), x86 (variable 1-15 bytes), and Thumb-2 (mixed 16/32-bit), how many instructions can maximally be fetched per cache line?",
+    "difficulty": 3,
+    "hints": [
+      "64 bytes / instruction size = max instructions",
+      "Variable length needs analysis of best/worst case"
+    ],
+    "solution": "64-byte cache line analysis:\n\nMIPS (fixed 32-bit = 4 bytes):\n- Each instruction: 4 bytes\n- Maximum instructions per line: 64 / 4 = 16 instructions\n- Predictable, always 16 instructions (if aligned)\n\nx86 (variable 1-15 bytes):\n- Minimum instruction size: 1 byte\n- Maximum instruction size: 15 bytes\n- Best case: 64 / 1 = 64 instructions (all 1-byte, like NOP)\n- Worst case: 64 / 15 ≈ 4 instructions\n- Typical: ~15-20 instructions (average ~3-4 bytes)\n- Note: Cannot know count without decoding!\n\nARM Thumb-2 (mixed 16/32-bit):\n- 16-bit instructions: 2 bytes\n- 32-bit instructions: 4 bytes\n- Best case: 64 / 2 = 32 instructions (all 16-bit)\n- Worst case: 64 / 4 = 16 instructions (all 32-bit)\n- Typical: ~20-24 instructions (mix of both)\n- Better predictability than x86 (only 2 sizes)\n\nImplications for fetch:\n- MIPS: Simple, fetch exactly N instructions\n- x86: Complex pre-decode to find boundaries\n- Thumb-2: Easier boundary detection than x86\n\nModern x86 CPUs use instruction length decoders in L1 cache to mark boundaries, reducing decode complexity."
+  }
+]

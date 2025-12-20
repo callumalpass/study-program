@@ -1,0 +1,221 @@
+[
+  {
+    "id": "cs402-quiz-6-1",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-6",
+    "title": "Clustering Fundamentals",
+    "questions": [
+      {
+        "id": "cs402-q76",
+        "type": "multiple_choice",
+        "prompt": "What is the goal of K-means clustering?",
+        "options": [
+          "Partition data into K clusters minimizing within-cluster variance",
+          "Find K nearest neighbors",
+          "Reduce dimensionality to K dimensions",
+          "Select K best features"
+        ],
+        "correctAnswer": "Partition data into K clusters minimizing within-cluster variance",
+        "explanation": "K-means aims to minimize the sum of squared distances between points and their assigned cluster centroids, creating K compact clusters."
+      },
+      {
+        "id": "cs402-q77",
+        "type": "multiple_choice",
+        "prompt": "How does the K-means algorithm work?",
+        "options": [
+          "Alternates between assigning points to nearest centroids and updating centroids",
+          "Builds a tree of clusters",
+          "Uses density-based connectivity",
+          "Applies principal component analysis"
+        ],
+        "correctAnswer": "Alternates between assigning points to nearest centroids and updating centroids",
+        "explanation": "K-means iteratively: (1) assigns each point to the nearest centroid, (2) recomputes centroids as cluster means. This process repeats until convergence."
+      },
+      {
+        "id": "cs402-q78",
+        "type": "multiple_choice",
+        "prompt": "What is a major limitation of K-means?",
+        "options": [
+          "Requires specifying K beforehand and sensitive to initialization",
+          "Cannot handle large datasets",
+          "Only works with binary features",
+          "Requires labeled data"
+        ],
+        "correctAnswer": "Requires specifying K beforehand and sensitive to initialization",
+        "explanation": "K-means requires knowing K in advance and can converge to poor local minima depending on initialization. K-means++ initialization helps, but the algorithm remains sensitive to initial centroids."
+      },
+      {
+        "id": "cs402-q79",
+        "type": "multiple_choice",
+        "prompt": "What does hierarchical clustering produce?",
+        "options": [
+          "A dendrogram showing nested cluster relationships",
+          "A single flat partition",
+          "K fixed clusters",
+          "A probability distribution over clusters"
+        ],
+        "correctAnswer": "A dendrogram showing nested cluster relationships",
+        "explanation": "Hierarchical clustering creates a tree structure (dendrogram) showing how clusters merge (agglomerative) or split (divisive), allowing different granularities of clustering."
+      },
+      {
+        "id": "cs402-q80",
+        "type": "multiple_choice",
+        "prompt": "What does DBSCAN use to define clusters?",
+        "options": [
+          "Density: regions with sufficient nearby points",
+          "Distance to centroids",
+          "Hierarchical merging",
+          "Gaussian distributions"
+        ],
+        "correctAnswer": "Density: regions with sufficient nearby points",
+        "explanation": "DBSCAN defines clusters as dense regions (points with many neighbors within radius ε) separated by sparse regions. It can find arbitrary-shaped clusters and identify outliers."
+      }
+    ]
+  },
+  {
+    "id": "cs402-quiz-6-2",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-6",
+    "title": "Dimensionality Reduction",
+    "questions": [
+      {
+        "id": "cs402-q81",
+        "type": "multiple_choice",
+        "prompt": "How can you choose the optimal number of clusters K?",
+        "options": [
+          "Use the elbow method or silhouette analysis on validation data",
+          "Always use K=3",
+          "Use the number of features",
+          "Use the square root of data size"
+        ],
+        "correctAnswer": "Use the elbow method or silhouette analysis on validation data",
+        "explanation": "The elbow method plots within-cluster sum of squares vs K (look for the \"elbow\"). Silhouette analysis measures how well points fit their clusters. Both help select K."
+      },
+      {
+        "id": "cs402-q82",
+        "type": "multiple_choice",
+        "prompt": "What is Principal Component Analysis (PCA) used for?",
+        "options": [
+          "Dimensionality reduction while preserving maximum variance",
+          "Clustering",
+          "Classification",
+          "Feature selection"
+        ],
+        "correctAnswer": "Dimensionality reduction while preserving maximum variance",
+        "explanation": "PCA finds orthogonal directions (principal components) of maximum variance in the data, enabling projection to lower dimensions while retaining most information."
+      },
+      {
+        "id": "cs402-q83",
+        "type": "multiple_choice",
+        "prompt": "What are the steps of PCA?",
+        "options": [
+          "Center data, compute covariance, find eigenvectors, project",
+          "Compute distances, cluster, reduce",
+          "Normalize, classify, validate",
+          "Sample, train, test"
+        ],
+        "correctAnswer": "Center data, compute covariance, find eigenvectors, project",
+        "explanation": "PCA: (1) center data (subtract mean), (2) compute covariance matrix, (3) find eigenvectors/eigenvalues, (4) project onto top k eigenvectors. Eigenvectors with largest eigenvalues are principal components."
+      },
+      {
+        "id": "cs402-q84",
+        "type": "multiple_choice",
+        "prompt": "When would DBSCAN be preferred over K-means?",
+        "options": [
+          "When clusters have arbitrary shapes or there are outliers",
+          "When K is known",
+          "When clusters are spherical",
+          "When speed is critical"
+        ],
+        "correctAnswer": "When clusters have arbitrary shapes or there are outliers",
+        "explanation": "DBSCAN handles non-spherical clusters and automatically identifies outliers as noise. K-means assumes spherical clusters and is sensitive to outliers."
+      },
+      {
+        "id": "cs402-q85",
+        "type": "multiple_choice",
+        "prompt": "What are the two key parameters of DBSCAN?",
+        "options": [
+          "ε (radius) and MinPts (minimum points for core)",
+          "K (clusters) and iterations",
+          "Learning rate and momentum",
+          "Depth and width"
+        ],
+        "correctAnswer": "ε (radius) and MinPts (minimum points for core)",
+        "explanation": "DBSCAN requires ε (neighborhood radius) and MinPts (minimum points to form a dense region). Points with ≥MinPts neighbors within ε are core points that form clusters."
+      }
+    ]
+  },
+  {
+    "id": "cs402-quiz-6-3",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-6",
+    "title": "Advanced Unsupervised Methods",
+    "questions": [
+      {
+        "id": "cs402-q86",
+        "type": "multiple_choice",
+        "prompt": "What is the K-means objective function?",
+        "options": [
+          "J = Σᵢ Σₓ∈Cᵢ ||x - μᵢ||² (minimize within-cluster sum of squares)",
+          "J = Σᵢ ||μᵢ||² (minimize centroid norms)",
+          "J = Σᵢ Σⱼ ||μᵢ - μⱼ||² (maximize between-cluster distance)",
+          "J = log Σᵢ |Cᵢ| (balance cluster sizes)"
+        ],
+        "correctAnswer": "J = Σᵢ Σₓ∈Cᵢ ||x - μᵢ||² (minimize within-cluster sum of squares)",
+        "explanation": "K-means minimizes WCSS (within-cluster sum of squares), the sum of squared distances from each point to its cluster centroid. This is equivalent to maximizing cluster compactness."
+      },
+      {
+        "id": "cs402-q87",
+        "type": "multiple_choice",
+        "prompt": "What does the explained variance ratio tell you in PCA?",
+        "options": [
+          "The proportion of total variance captured by each principal component",
+          "The number of clusters",
+          "The classification accuracy",
+          "The outlier score"
+        ],
+        "correctAnswer": "The proportion of total variance captured by each principal component",
+        "explanation": "Explained variance ratio = λᵢ/Σλⱼ where λᵢ is the eigenvalue of component i. It shows how much information each component retains, helping choose the number of components."
+      },
+      {
+        "id": "cs402-q88",
+        "type": "multiple_choice",
+        "prompt": "How does t-SNE differ from PCA for visualization?",
+        "options": [
+          "t-SNE preserves local structure (neighborhoods), PCA preserves global variance",
+          "t-SNE is faster than PCA",
+          "t-SNE is linear, PCA is non-linear",
+          "t-SNE requires labels, PCA does not"
+        ],
+        "correctAnswer": "t-SNE preserves local structure (neighborhoods), PCA preserves global variance",
+        "explanation": "t-SNE uses probabilistic neighborhoods to preserve local relationships, making it better for visualization. PCA is linear and preserves global variance structure. t-SNE is slower and non-deterministic."
+      },
+      {
+        "id": "cs402-q89",
+        "type": "multiple_choice",
+        "prompt": "What is the Gaussian Mixture Model (GMM) approach to clustering?",
+        "options": [
+          "Assumes data comes from K Gaussian distributions and uses EM to find parameters",
+          "Uses K-means with Gaussian kernels",
+          "Applies Gaussian noise to data",
+          "Normalizes data to Gaussian distribution"
+        ],
+        "correctAnswer": "Assumes data comes from K Gaussian distributions and uses EM to find parameters",
+        "explanation": "GMM models data as mixture of K Gaussians. The EM algorithm iteratively: E-step computes probability of each point belonging to each cluster; M-step updates means, covariances, and mixture weights."
+      },
+      {
+        "id": "cs402-q90",
+        "type": "multiple_choice",
+        "prompt": "What is an autoencoder?",
+        "options": [
+          "A neural network that learns to compress and reconstruct data",
+          "A clustering algorithm",
+          "A classification model",
+          "A data augmentation technique"
+        ],
+        "correctAnswer": "A neural network that learns to compress and reconstruct data",
+        "explanation": "Autoencoders have encoder (compresses input to latent representation) and decoder (reconstructs from latent). They learn useful representations in an unsupervised manner by minimizing reconstruction error."
+      }
+    ]
+  }
+]

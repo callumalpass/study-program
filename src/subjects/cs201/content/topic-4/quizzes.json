@@ -1,0 +1,192 @@
+[
+  {
+    "id": "cs201-quiz-4-1",
+    "subjectId": "cs201",
+    "topicId": "cs201-4",
+    "title": "Divide and Conquer Basics",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "What are the three steps of Divide and Conquer?",
+        "options": [
+          "Split, Sort, Merge",
+          "Divide, Conquer, Combine",
+          "Break, Solve, Join",
+          "Partition, Recurse, Return"
+        ],
+        "correctAnswer": 1,
+        "explanation": "D&C has three steps: Divide the problem, Conquer (solve) subproblems recursively, Combine solutions."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "Which algorithm is NOT a Divide and Conquer algorithm?",
+        "options": [
+          "Merge Sort",
+          "Quick Sort",
+          "Insertion Sort",
+          "Binary Search"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Insertion Sort builds the solution incrementally without dividing the problem into subproblems."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "In Divide and Conquer, subproblems should ideally be independent of each other.",
+        "correctAnswer": true,
+        "explanation": "Independent subproblems allow for efficient solving. Overlapping subproblems are better suited for DP."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "What is the recurrence relation for Merge Sort?",
+        "options": [
+          "T(n) = T(n-1) + O(n)",
+          "T(n) = 2T(n/2) + O(n)",
+          "T(n) = T(n/2) + O(1)",
+          "T(n) = 2T(n-1) + O(1)"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Merge Sort splits into 2 halves (2T(n/2)) and merges in linear time (O(n))."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "The ______ Theorem provides a formula for solving recurrence relations of the form T(n) = aT(n/b) + f(n).",
+        "correctAnswer": "Master",
+        "explanation": "The Master Theorem is a \"recipe\" for solving common divide-and-conquer recurrences."
+      }
+    ]
+  },
+  {
+    "id": "cs201-quiz-4-2",
+    "subjectId": "cs201",
+    "topicId": "cs201-4",
+    "title": "Master Theorem",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "For T(n) = 2T(n/2) + O(1), what is the complexity?",
+        "options": [
+          "O(n)",
+          "O(log n)",
+          "O(n log n)",
+          "O(n^2)"
+        ],
+        "correctAnswer": 0,
+        "explanation": "a=2, b=2, d=0. Since a > b^d (2 > 1), T(n) = O(n^log_b(a)) = O(n)."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "For T(n) = T(n/2) + O(1) (Binary Search), what is the complexity?",
+        "options": [
+          "O(n)",
+          "O(log n)",
+          "O(n log n)",
+          "O(1)"
+        ],
+        "correctAnswer": 1,
+        "explanation": "a=1, b=2, d=0. Since a = b^d (1 = 1), T(n) = O(n^d log n) = O(log n)."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "The Master Theorem can solve all recurrence relations.",
+        "correctAnswer": false,
+        "explanation": "Master Theorem only applies to recurrences of the form T(n) = aT(n/b) + f(n). Many recurrences don't fit this form."
+      },
+      {
+        "id": "q4",
+        "type": "code_output",
+        "prompt": "What is the time complexity of this algorithm?",
+        "codeSnippet": "def mystery(arr, low, high):\n    if low >= high:\n        return\n    mid = (low + high) // 2\n    mystery(arr, low, mid)\n    mystery(arr, mid + 1, high)\n    # O(n) work here\n    merge(arr, low, mid, high)",
+        "options": [
+          "O(n)",
+          "O(n log n)",
+          "O(n^2)",
+          "O(log n)"
+        ],
+        "correctAnswer": 1,
+        "explanation": "This is Merge Sort: T(n) = 2T(n/2) + O(n) = O(n log n) by the Master Theorem."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "In the Master Theorem, when does the \"combine\" step dominate?",
+        "options": [
+          "When a > b^d",
+          "When a = b^d",
+          "When a < b^d",
+          "Never"
+        ],
+        "correctAnswer": 2,
+        "explanation": "When a < b^d, the work done at each level decreases, so the combine step at the root dominates: O(n^d)."
+      }
+    ]
+  },
+  {
+    "id": "cs201-quiz-4-3",
+    "subjectId": "cs201",
+    "topicId": "cs201-4",
+    "title": "D&C Applications",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "The Maximum Subarray problem can be solved in what time using D&C?",
+        "options": [
+          "O(n)",
+          "O(n log n)",
+          "O(n^2)",
+          "O(n^3)"
+        ],
+        "correctAnswer": 1,
+        "explanation": "D&C achieves O(n log n) by splitting, finding max in each half, and checking crossing subarrays."
+      },
+      {
+        "id": "q2",
+        "type": "true_false",
+        "prompt": "Karatsuba multiplication uses Divide and Conquer to multiply large numbers faster than O(n^2).",
+        "correctAnswer": true,
+        "explanation": "Karatsuba achieves O(n^1.585) by cleverly reducing 4 recursive multiplications to 3."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "What happens if Divide and Conquer splits into very unbalanced subproblems?",
+        "options": [
+          "Performance improves",
+          "Performance degrades significantly",
+          "No effect on performance",
+          "Space usage decreases"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Unbalanced splits (like 1 and n-1) lead to O(n^2) instead of O(n log n) - this is why Quick Sort can be slow."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "The Closest Pair of Points problem has what complexity using D&C?",
+        "options": [
+          "O(n)",
+          "O(n log n)",
+          "O(n^2)",
+          "O(n^3)"
+        ],
+        "correctAnswer": 1,
+        "explanation": "D&C achieves O(n log n) for closest pair, much better than brute force O(n^2)."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "When subproblems in D&C overlap significantly, you should use ______ Programming instead.",
+        "correctAnswer": "Dynamic",
+        "explanation": "Dynamic Programming is designed for overlapping subproblems, storing solutions to avoid recomputation."
+      }
+    ]
+  }
+]

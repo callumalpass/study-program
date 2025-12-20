@@ -39,27 +39,38 @@ All subject content is colocated in a single directory:
 - Subject directory: `/home/calluma/projects/comp_sci_degree/src/subjects/{SUBJECT_ID}/`
 
 ## Files to Review
-1. **topics.ts** - Topic definitions (uses glob imports and buildTopicsFromGlob)
-2. **quizzes.json** - Quiz questions for each topic
-3. **exams.json** - Midterm and final exam questions
-4. **exercises.json** - Coding or written exercises for each topic
-5. **projects.json** - Project definitions (CS subjects only)
-6. **content/** - Markdown lesson files with frontmatter (content/topic-N/*.md)
+1. **subject-spec.yaml** - Subject specification (REQUIRED - defines targets)
+2. **topics.ts** - Topic definitions (uses glob imports and buildTopicsFromGlob)
+3. **content/topic-N/exercises.json** - Exercises for each topic (per-topic files)
+4. **content/topic-N/quizzes.json** - Quizzes for each topic (per-topic files)
+5. **exams.json** - Midterm and final exam questions
+6. **projects.json** - Project definitions (if required by spec)
+7. **content/topic-N/*.md** - Markdown lesson files with frontmatter
 
 ## Required Quantities
-- **16 exercises per topic** (minimum)
+
+**Check the subject's `subject-spec.yaml` for actual targets.** Defaults if not specified:
+- **1000 words per subtopic** (per `curriculum.subtopic_word_target`, default 1000)
+- **16 exercises per topic** (may be lower for proof-heavy subjects)
 - **15 quiz questions per topic** (3 quizzes × 5 questions each)
-- **800 words minimum per subtopic**
-- **Midterm and Final exams** for each subject
+- **Midterm (~26q) and Final (~42q) exams** (varies by subject type)
+- **Projects** (if `projects.required: true` in spec)
 
 ## Review Criteria
 
+### 0. Subject Specification (Required)
+- Does `subject-spec.yaml` exist? **If not, this is a critical issue.**
+- Does it include all required sections (role, curriculum, pedagogy, assessment, grading, exercises, quizzes, exams)?
+- Does the `curriculum` section define `subtopic_word_target`, `prerequisite_knowledge`, and `essential_concepts`?
+- Are the choices justified with rationale?
+- Are the targets realistic for the subject type?
+
 ### 1. Content Thoroughness (Rate 1-10)
-- Does the content cover all essential concepts for this subject at university level?
+- Does the content cover all `essential_concepts` listed in the spec's curriculum section?
 - Is the depth appropriate for the course year?
-- Are there any major topics missing?
+- Are there any major topics missing that should be in scope?
 - Is there sufficient explanation with examples, diagrams, and code samples?
-- **Count words in each subtopic - must be 800+ words each**
+- **Count words in each subtopic - must meet `curriculum.subtopic_word_target`** (default 1000)
 
 ### 2. Exercise Quality (Rate 1-10)
 - **Count exercises per topic - must be 16 per topic**
@@ -102,10 +113,15 @@ Write a markdown file with this exact structure:
 
 ## Overall Status: [COMPLETE/NEEDS WORK/INCOMPLETE/EMPTY]
 
+## Subject Specification
+- **Has spec:** [Yes/No]
+- **Spec location:** src/subjects/{SUBJECT_ID}/subject-spec.yaml
+
 ## Scores Summary
 
 | Category | Score | Notes |
 |----------|-------|-------|
+| Subject Spec | ✓/✗ | Required |
 | Content Thoroughness | X/10 | |
 | Exercise Quality | X/10 | |
 | Quiz Quality | X/10 | |
@@ -121,6 +137,7 @@ Write a markdown file with this exact structure:
 - [List what's done well]
 
 ## Critical Issues (Must Fix)
+- [Missing subject-spec.yaml if applicable]
 - [List any blocking problems - missing content, incorrect answers, etc.]
 
 ## Improvements Needed
@@ -164,18 +181,20 @@ Write a markdown file with this exact structure:
 ## Process
 
 1. Run `npm run quality` and `npm run validate` to get automated metrics
-2. Read the subject's index.ts to understand the structure
-3. Read topics.ts to get the list of topics (uses glob imports via buildTopicsFromGlob)
-4. For each topic:
+2. **Check subject-spec.yaml exists** — if missing, this is a critical issue
+3. Read the spec to understand subject-specific targets (exercises, quizzes, exams, projects)
+4. Read topics.ts to get the list of topics (uses glob imports via buildTopicsFromGlob)
+5. For each topic:
    - Count and list subtopics from content/topic-N/*.md files
    - Verify each markdown file has frontmatter (id, title, order)
    - Estimate word count for each subtopic content
-   - Count exercises in exercises.json
-   - Count quiz questions in quizzes.json
-5. Check exams.json for midterm and final
-6. Check projects.json if it exists
-7. Compile findings into the report format above
-8. **Write the report to the specified file path**
+   - Count exercises in content/topic-N/exercises.json
+   - Count quiz questions in content/topic-N/quizzes.json
+6. Check exams.json for midterm and final
+7. Check projects.json if required by spec
+8. Compare counts against spec targets (not just base defaults)
+9. Compile findings into the report format above
+10. **Write the report to the specified file path**
 
 Be thorough and accurate in your counts. The goal is to identify exactly what work remains to complete each subject.
 

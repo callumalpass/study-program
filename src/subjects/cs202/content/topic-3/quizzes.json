@@ -1,0 +1,221 @@
+[
+  {
+    "id": "cs202-topic3-quiz1",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic3",
+    "title": "Datapath Components",
+    "questions": [
+      {
+        "id": "cs202-t3-q1-1",
+        "type": "multiple_choice",
+        "prompt": "Which datapath component is responsible for calculating the next instruction address?",
+        "options": [
+          "ALU",
+          "PC adder",
+          "Register file",
+          "Memory unit"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The PC adder (typically adds 4 to PC for sequential execution) calculates the next instruction address."
+      },
+      {
+        "id": "cs202-t3-q1-2",
+        "type": "multiple_choice",
+        "prompt": "In a single-cycle datapath, when is the register file written?",
+        "options": [
+          "At the beginning of the cycle",
+          "During the middle of the cycle",
+          "At the end of the cycle (falling edge)",
+          "It is never written"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The register file is written at the end of the cycle on the falling clock edge, after all computations are complete."
+      },
+      {
+        "id": "cs202-t3-q1-3",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of the sign-extend unit in the datapath?",
+        "options": [
+          "To extend registers to 64 bits",
+          "To convert 16-bit immediates to 32 bits",
+          "To handle negative memory addresses",
+          "To extend the opcode field"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The sign-extend unit converts 16-bit immediate values to 32 bits by replicating the sign bit."
+      },
+      {
+        "id": "cs202-t3-q1-4",
+        "type": "multiple_choice",
+        "prompt": "How many read ports does a typical MIPS register file have?",
+        "options": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The MIPS register file has 2 read ports (for rs and rt) and 1 write port (for rd), supporting R-type instructions."
+      },
+      {
+        "id": "cs202-t3-q1-5",
+        "type": "multiple_choice",
+        "prompt": "Which multiplexer selects between immediate and register as the second ALU input?",
+        "options": [
+          "PC mux",
+          "RegDst mux",
+          "ALUSrc mux",
+          "MemToReg mux"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The ALUSrc multiplexer selects whether the second ALU operand comes from a register or the sign-extended immediate."
+      }
+    ]
+  },
+  {
+    "id": "cs202-topic3-quiz2",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic3",
+    "title": "Control Unit Design",
+    "questions": [
+      {
+        "id": "cs202-t3-q2-1",
+        "type": "multiple_choice",
+        "prompt": "What input does the main control unit use to generate control signals?",
+        "options": [
+          "Register values",
+          "ALU result",
+          "Opcode field",
+          "Memory data"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The main control unit decodes the opcode (bits 31-26) to determine which control signals to assert."
+      },
+      {
+        "id": "cs202-t3-q2-2",
+        "type": "multiple_choice",
+        "prompt": "For an R-type instruction, what should the RegDst control signal be?",
+        "options": [
+          "0 (use rt)",
+          "1 (use rd)",
+          "Don't care",
+          "Depends on funct"
+        ],
+        "correctAnswer": 1,
+        "explanation": "R-type instructions write to rd (destination register), so RegDst=1 to select the rd field."
+      },
+      {
+        "id": "cs202-t3-q2-3",
+        "type": "multiple_choice",
+        "prompt": "Which control signal determines if data memory is written?",
+        "options": [
+          "RegWrite",
+          "MemWrite",
+          "ALUOp",
+          "Branch"
+        ],
+        "correctAnswer": 1,
+        "explanation": "MemWrite=1 enables writing to data memory, used by store instructions."
+      },
+      {
+        "id": "cs202-t3-q2-4",
+        "type": "multiple_choice",
+        "prompt": "The ALU control unit takes which inputs?",
+        "options": [
+          "Opcode only",
+          "Funct field only",
+          "ALUOp and funct field",
+          "Register values"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The ALU control takes the ALUOp signal from main control and the funct field to determine the specific ALU operation."
+      },
+      {
+        "id": "cs202-t3-q2-5",
+        "type": "multiple_choice",
+        "prompt": "For a beq instruction, when is the branch taken?",
+        "options": [
+          "When ALU result is non-zero",
+          "When ALU result is zero (Zero flag = 1)",
+          "When overflow occurs",
+          "Always"
+        ],
+        "correctAnswer": 1,
+        "explanation": "beq branches when the two registers are equal, which the ALU determines by subtraction giving zero (Zero=1)."
+      }
+    ]
+  },
+  {
+    "id": "cs202-topic3-quiz3",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic3",
+    "title": "Multi-Cycle and Performance",
+    "questions": [
+      {
+        "id": "cs202-t3-q3-1",
+        "type": "multiple_choice",
+        "prompt": "What is the main advantage of multi-cycle design over single-cycle?",
+        "options": [
+          "Simpler control logic",
+          "Faster clock period",
+          "Fewer registers needed",
+          "Less memory bandwidth"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Multi-cycle allows shorter clock periods because each cycle only needs time for one stage, not the longest instruction."
+      },
+      {
+        "id": "cs202-t3-q3-2",
+        "type": "multiple_choice",
+        "prompt": "In multi-cycle design, what is the purpose of the Instruction Register (IR)?",
+        "options": [
+          "To store the next PC value",
+          "To hold the instruction being executed across cycles",
+          "To store ALU results",
+          "To buffer memory data"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The IR holds the current instruction so it remains available throughout all cycles of execution."
+      },
+      {
+        "id": "cs202-t3-q3-3",
+        "type": "multiple_choice",
+        "prompt": "If CPI = 4 and clock rate = 500 MHz, how many instructions execute per second?",
+        "options": [
+          "125 million",
+          "500 million",
+          "2 billion",
+          "4 billion"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Instructions/second = clock rate / CPI = 500 MHz / 4 = 125 million instructions per second."
+      },
+      {
+        "id": "cs202-t3-q3-4",
+        "type": "multiple_choice",
+        "prompt": "Which factor does NOT directly appear in the CPU performance equation?",
+        "options": [
+          "Instruction count",
+          "CPI",
+          "Clock rate",
+          "Number of registers"
+        ],
+        "correctAnswer": 3,
+        "explanation": "CPU time = Instructions × CPI × Clock period. Register count affects CPI indirectly but is not in the equation."
+      },
+      {
+        "id": "cs202-t3-q3-5",
+        "type": "multiple_choice",
+        "prompt": "In a multi-cycle FSM, what does each state typically represent?",
+        "options": [
+          "A different instruction type",
+          "A different clock cycle of execution",
+          "A different register access",
+          "A different memory address"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Each state in the multi-cycle FSM represents one clock cycle of the instruction execution process."
+      }
+    ]
+  }
+]

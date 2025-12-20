@@ -1,0 +1,193 @@
+[
+  {
+    "id": "cs105-quiz-6",
+    "subjectId": "cs105",
+    "topicId": "cs105-topic-6",
+    "title": "Preprocessor Quiz 1: Macros",
+    "questions": [
+      {
+        "id": "cs105-q6-1",
+        "type": "multiple_choice",
+        "prompt": "What character begins a preprocessor directive?",
+        "options": [
+          "@",
+          "#",
+          "!",
+          "$"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Preprocessor directives in C begin with the # character, like #include and #define."
+      },
+      {
+        "id": "cs105-q6-2",
+        "type": "code_output",
+        "prompt": "What does this code print?",
+        "codeSnippet": "#define SQUARE(x) ((x) * (x))\nint a = 3;\nprintf(\"%d\", SQUARE(a + 1));",
+        "correctAnswer": "16",
+        "explanation": "The macro expands to ((a + 1) * (a + 1)) = ((3 + 1) * (3 + 1)) = 16. Parentheses prevent operator precedence issues."
+      },
+      {
+        "id": "cs105-q6-3",
+        "type": "multiple_choice",
+        "prompt": "What is the difference between #include <file.h> and #include \"file.h\"?",
+        "options": [
+          "No difference",
+          "Angle brackets search system directories first",
+          "\"\" is for C++ only",
+          "<> is newer syntax"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Angle brackets <> search system include directories first. Double quotes \"\" search the current directory first, then system directories."
+      },
+      {
+        "id": "cs105-q6-4",
+        "type": "true_false",
+        "prompt": "Macros are type-safe like inline functions.",
+        "correctAnswer": false,
+        "explanation": "Macros are text substitution and have no type checking. They can operate on any type but with potential unexpected behavior."
+      },
+      {
+        "id": "cs105-q6-5",
+        "type": "multiple_choice",
+        "prompt": "What does the ## operator do in macros?",
+        "options": [
+          "Logical AND",
+          "String comparison",
+          "Token concatenation",
+          "Double comment"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The ## operator concatenates two tokens. For example, #define CONCAT(a, b) a##b makes CONCAT(var, 1) become var1."
+      }
+    ]
+  },
+  {
+    "id": "cs105-quiz-6b",
+    "subjectId": "cs105",
+    "topicId": "cs105-topic-6",
+    "title": "Preprocessor Quiz 2: Conditional Compilation",
+    "questions": [
+      {
+        "id": "cs105-q6b-1",
+        "type": "multiple_choice",
+        "prompt": "Which directive tests if a macro is defined?",
+        "options": [
+          "#if",
+          "#ifdef",
+          "#define",
+          "#check"
+        ],
+        "correctAnswer": 1,
+        "explanation": "#ifdef checks if a macro is defined. #if can also check with #if defined(MACRO)."
+      },
+      {
+        "id": "cs105-q6b-2",
+        "type": "multiple_choice",
+        "prompt": "What is an include guard used for?",
+        "options": [
+          "Security",
+          "Preventing multiple inclusions",
+          "Speeding up compilation",
+          "Encryption"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Include guards (#ifndef, #define, #endif pattern) prevent a header file from being included multiple times in the same translation unit."
+      },
+      {
+        "id": "cs105-q6b-3",
+        "type": "code_output",
+        "prompt": "What does this print when DEBUG is defined?",
+        "codeSnippet": "#define DEBUG\n#ifdef DEBUG\nprintf(\"Debug mode\");\n#else\nprintf(\"Release mode\");\n#endif",
+        "correctAnswer": "Debug mode",
+        "explanation": "Since DEBUG is defined, the #ifdef DEBUG block is included and \"Debug mode\" is printed."
+      },
+      {
+        "id": "cs105-q6b-4",
+        "type": "true_false",
+        "prompt": "#pragma once is a standard C feature.",
+        "correctAnswer": false,
+        "explanation": "#pragma once is a widely supported compiler extension but not part of the C standard. Include guards are the portable solution."
+      },
+      {
+        "id": "cs105-q6b-5",
+        "type": "multiple_choice",
+        "prompt": "What does #undef do?",
+        "options": [
+          "Undefines a macro",
+          "Causes undefined behavior",
+          "Declares undefined variable",
+          "Undoes last include"
+        ],
+        "correctAnswer": 0,
+        "explanation": "#undef removes a previously defined macro, allowing it to be redefined or left undefined."
+      }
+    ]
+  },
+  {
+    "id": "cs105-quiz-6c",
+    "subjectId": "cs105",
+    "topicId": "cs105-topic-6",
+    "title": "Preprocessor Quiz 3: Build Systems",
+    "questions": [
+      {
+        "id": "cs105-q6c-1",
+        "type": "multiple_choice",
+        "prompt": "What is a translation unit in C?",
+        "options": [
+          "A function",
+          "A source file after preprocessing",
+          "A library",
+          "A header file"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A translation unit is a source file after all #include directives are resolved and preprocessing is complete."
+      },
+      {
+        "id": "cs105-q6c-2",
+        "type": "multiple_choice",
+        "prompt": "What does the linker do?",
+        "options": [
+          "Preprocesses code",
+          "Compiles to assembly",
+          "Combines object files into executable",
+          "Checks syntax"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The linker combines object files (.o) and resolves external symbols to create the final executable."
+      },
+      {
+        "id": "cs105-q6c-3",
+        "type": "true_false",
+        "prompt": "Header files should contain function implementations.",
+        "correctAnswer": false,
+        "explanation": "Header files should contain declarations, not definitions. Definitions in headers can cause multiple definition errors."
+      },
+      {
+        "id": "cs105-q6c-4",
+        "type": "multiple_choice",
+        "prompt": "What file extension is typically used for object files?",
+        "options": [
+          ".obj or .o",
+          ".exe",
+          ".lib",
+          ".src"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Object files use .o on Unix/Linux and .obj on Windows. They contain compiled but not linked code."
+      },
+      {
+        "id": "cs105-q6c-5",
+        "type": "multiple_choice",
+        "prompt": "In a Makefile, what does a target depend on?",
+        "options": [
+          "Nothing",
+          "Prerequisites listed after the colon",
+          "All source files",
+          "The compiler"
+        ],
+        "correctAnswer": 1,
+        "explanation": "In a Makefile rule \"target: prerequisites\", the target depends on the files listed after the colon."
+      }
+    ]
+  }
+]

@@ -1,0 +1,242 @@
+[
+  {
+    "id": "math404-t6-ex01",
+    "subjectId": "math404",
+    "topicId": "math404-topic-6",
+    "type": "written",
+    "title": "Lagrangian Formulation",
+    "description": "Write the Lagrangian for a constrained optimization problem with equality and inequality constraints.",
+    "difficulty": 1,
+    "hints": [
+      "Lagrangian: L(x,λ,μ) = f(x) + Σλᵢgᵢ(x) + Σμⱼhⱼ(x)",
+      "λᵢ for inequality constraints gᵢ(x) ≤ 0",
+      "μⱼ for equality constraints hⱼ(x) = 0"
+    ],
+    "solution": "**Problem:**\nmin x² + y²\ns.t. x + y ≤ 2\n     x - y = 0\n\n**Identify constraints:**\nInequality: g(x,y) = x + y - 2 ≤ 0\nEquality: h(x,y) = x - y = 0\n\n**Lagrangian:**\nL(x, y, λ, μ) = x² + y² + λ(x + y - 2) + μ(x - y)\n\nwhere λ ≥ 0 (multiplier for inequality) and μ ∈ ℝ (for equality).\n\n**Expanded:**\nL = x² + y² + λx + λy - 2λ + μx - μy\n\n**Interpretation:**\n- The Lagrangian penalizes constraint violations\n- At optimum: ∇ₓL = 0 (stationarity)\n- Multipliers give sensitivity to constraint changes"
+  },
+  {
+    "id": "math404-t6-ex02",
+    "subjectId": "math404",
+    "topicId": "math404-topic-6",
+    "type": "written",
+    "title": "KKT Conditions - Statement",
+    "description": "State the complete KKT conditions for a nonlinear optimization problem.",
+    "difficulty": 2,
+    "hints": [
+      "KKT has four components: stationarity, primal feasibility, dual feasibility, complementary slackness",
+      "These are necessary conditions for local optimality",
+      "Sufficient for convex problems"
+    ],
+    "solution": "**Problem:** min f(x) s.t. gᵢ(x) ≤ 0, hⱼ(x) = 0\n\n**KKT Conditions:**\n\n**1. Stationarity:**\n∇f(x*) + Σλᵢ*∇gᵢ(x*) + Σμⱼ*∇hⱼ(x*) = 0\n\n**2. Primal Feasibility:**\ngᵢ(x*) ≤ 0 for all i\nhⱼ(x*) = 0 for all j\n\n**3. Dual Feasibility:**\nλᵢ* ≥ 0 for all i\n\n**4. Complementary Slackness:**\nλᵢ*gᵢ(x*) = 0 for all i\n\n**Interpretation:**\n- Either constraint is inactive (gᵢ < 0, λᵢ = 0)\n- Or constraint is active (gᵢ = 0, λᵢ ≥ 0)\n\n**When KKT conditions are sufficient:**\n- f convex, gᵢ convex, hⱼ affine\n- Any point satisfying KKT is a global minimum\n\n**When KKT conditions are necessary:**\n- Under constraint qualification (e.g., LICQ, Slater)\n- Any local minimum satisfies KKT"
+  },
+  {
+    "id": "math404-t6-ex03",
+    "subjectId": "math404",
+    "topicId": "math404-topic-6",
+    "type": "written",
+    "title": "KKT Solution - Equality Constraint",
+    "description": "Solve a constrained problem with one equality constraint using KKT conditions.",
+    "difficulty": 2,
+    "hints": [
+      "Form Lagrangian with μ for equality constraint",
+      "Set gradient of Lagrangian to zero",
+      "Solve system of equations"
+    ],
+    "solution": "**Problem:** min x² + y² s.t. x + y = 1\n\n**Lagrangian:**\nL(x, y, μ) = x² + y² + μ(x + y - 1)\n\n**KKT Conditions:**\n\n**Stationarity:**\n∂L/∂x = 2x + μ = 0  →  x = -μ/2\n∂L/∂y = 2y + μ = 0  →  y = -μ/2\n\n**Primal Feasibility:**\nx + y = 1\n(-μ/2) + (-μ/2) = 1\n-μ = 1\nμ = -1\n\n**Solution:**\nx* = y* = 1/2\nμ* = -1\n\n**Verification:**\n- Constraint: 1/2 + 1/2 = 1 ✓\n- Objective: f(1/2, 1/2) = 1/4 + 1/4 = 1/2\n\n**Geometric interpretation:**\nWe're finding the point on the line x + y = 1 closest to the origin.\nThe gradient ∇f = (1, 1) is perpendicular to the constraint."
+  },
+  {
+    "id": "math404-t6-ex04",
+    "subjectId": "math404",
+    "topicId": "math404-topic-6",
+    "type": "written",
+    "title": "KKT Solution - Inequality Constraint",
+    "description": "Solve a constrained problem with one inequality constraint using KKT conditions.",
+    "difficulty": 3,
+    "hints": [
+      "Check if unconstrained optimum is feasible",
+      "If not, constraint must be active at optimum",
+      "Use complementary slackness to determine λ"
+    ],
+    "solution": "**Problem:** min (x-2)² + (y-2)² s.t. x + y ≤ 2\n\n**Step 1: Check unconstrained optimum**\nUnconstrained: (x*, y*) = (2, 2)\nConstraint: 2 + 2 = 4 > 2 (infeasible!)\n\n**Step 2: Solve with active constraint**\nSince unconstrained optimum is infeasible, constraint must be active.\nBy complementary slackness: λ > 0 and x + y = 2\n\n**KKT Conditions:**\n∂L/∂x = 2(x-2) + λ = 0  →  x = 2 - λ/2\n∂L/∂y = 2(y-2) + λ = 0  →  y = 2 - λ/2\n\nx + y = 2:\n(2 - λ/2) + (2 - λ/2) = 2\n4 - λ = 2\nλ = 2\n\n**Solution:**\nx* = y* = 2 - 1 = 1\nλ* = 2\n\n**Verification:**\n- Primal: 1 + 1 = 2 ✓\n- Dual: λ* = 2 ≥ 0 ✓\n- Stationarity: ∇f(1,1) = (-2,-2), λ∇g = 2(1,1), sum = 0 ✓\n- Objective: f(1,1) = 1 + 1 = 2"
+  },
+  {
+    "id": "math404-t6-ex05",
+    "subjectId": "math404",
+    "topicId": "math404-topic-6",
+    "type": "written",
+    "title": "Multiple Inequality Constraints",
+    "description": "Solve a problem with multiple inequality constraints, identifying which are active.",
+    "difficulty": 3,
+    "hints": [
+      "Consider all possible combinations of active constraints",
+      "Check feasibility and KKT for each case",
+      "Active constraints have λ > 0"
+    ],
+    "solution": "**Problem:** min -x - y\ns.t. x² + y² ≤ 1\n     x ≥ 0\n     y ≥ 0\n\nRewrite: max x + y s.t. constraints\n\n**Lagrangian:**\nL = -x - y + λ₁(x² + y² - 1) - λ₂x - λ₃y\n\n**Analyze constraint activity:**\n\n**Case 1: Interior (all constraints inactive)**\n∇(-x-y) = (-1,-1) ≠ 0, so not stationary. ✗\n\n**Case 2: Only circle active**\nBy symmetry: x = y = 1/√2\nCheck bounds: x, y > 0 ✓\n\nKKT: -1 + 2λ₁(1/√2) = 0 → λ₁ = √2/2 ≈ 0.707 > 0 ✓\n\n**Solution:** (x*, y*) = (1/√2, 1/√2), λ₁ = √2/2\n\n**Verification:**\n- x² + y² = 1/2 + 1/2 = 1 ✓\n- x = y = 1/√2 > 0 ✓\n- Objective: x + y = √2 ≈ 1.414\n\n**Alternative cases checked:**\n- x = 0: optimal at (0, 1), value = 1 < √2\n- y = 0: optimal at (1, 0), value = 1 < √2\n- Corner (0,0): value = 0 < √2\n\n**Optimal:** (1/√2, 1/√2) with f* = -√2"
+  },
+  {
+    "id": "math404-t6-ex06",
+    "subjectId": "math404",
+    "topicId": "math404-topic-6",
+    "type": "written",
+    "title": "Constraint Qualification - LICQ",
+    "description": "Verify Linear Independence Constraint Qualification at a candidate optimal point.",
+    "difficulty": 3,
+    "hints": [
+      "LICQ: gradients of active constraints are linearly independent",
+      "Find which constraints are active (equality holds)",
+      "Check if gradient vectors are linearly independent"
+    ],
+    "solution": "**Problem:** min x² + y² s.t.\ng₁(x,y) = x + y - 1 ≤ 0\ng₂(x,y) = x - y ≤ 0\n\n**At point (1/2, 1/2):**\ng₁ = 1/2 + 1/2 - 1 = 0 (active)\ng₂ = 1/2 - 1/2 = 0 (active)\n\n**Gradients of active constraints:**\n∇g₁ = (1, 1)\n∇g₂ = (1, -1)\n\n**Check linear independence:**\nMatrix: [[1, 1], [1, -1]]\ndet = -1 - 1 = -2 ≠ 0\n\n**LICQ holds!** Gradients are linearly independent.\n\n**Consequence:**\nKKT conditions are necessary for optimality at this point.\n\n**Counterexample where LICQ fails:**\n\n**Problem:** min x s.t. x² ≤ 0, -x² ≤ 0\n\nAt x = 0: both constraints active\n∇g₁ = 2x = 0\n∇g₂ = -2x = 0\n\nBoth gradients are zero → LICQ fails!\n\n**Other constraint qualifications:**\n- Slater: ∃x with gᵢ(x) < 0 (strictly feasible)\n- Mangasarian-Fromovitz: weaker than LICQ\n- When CQ holds, KKT conditions are necessary"
+  },
+  {
+    "id": "math404-t6-ex07",
+    "subjectId": "math404",
+    "topicId": "math404-topic-6",
+    "type": "written",
+    "title": "Quadratic Programming with KKT",
+    "description": "Solve a convex QP using KKT conditions.",
+    "difficulty": 3,
+    "hints": [
+      "QP: min (1/2)xᵀQx + cᵀx s.t. Ax ≤ b",
+      "Form Lagrangian and apply KKT conditions",
+      "Use complementary slackness to identify active constraints"
+    ],
+    "solution": "**Problem:** min (1/2)(x₁² + x₂²) - x₁ - x₂\ns.t. x₁ + x₂ ≤ 1, x₁, x₂ ≥ 0\n\n**Standard form:**\ng₁: x₁ + x₂ - 1 ≤ 0\ng₂: -x₁ ≤ 0\ng₃: -x₂ ≤ 0\n\n**Lagrangian:**\nL = (1/2)(x₁² + x₂²) - x₁ - x₂ + λ₁(x₁ + x₂ - 1) - λ₂x₁ - λ₃x₂\n\n**KKT Stationarity:**\nx₁ - 1 + λ₁ - λ₂ = 0\nx₂ - 1 + λ₁ - λ₃ = 0\n\n**Try: interior solution (all λ = 0)**\nx₁ = x₂ = 1\nCheck: x₁ + x₂ = 2 > 1 (infeasible) ✗\n\n**Try: g₁ active, g₂, g₃ inactive (λ₁ > 0, λ₂ = λ₃ = 0)**\nx₁ - 1 + λ₁ = 0 → x₁ = 1 - λ₁\nx₂ - 1 + λ₁ = 0 → x₂ = 1 - λ₁\nx₁ + x₂ = 1 → 2(1 - λ₁) = 1 → λ₁ = 1/2\n\nx₁ = x₂ = 1/2 > 0 ✓\nλ₁ = 1/2 > 0 ✓\n\n**Solution:** x* = (1/2, 1/2), λ₁* = 1/2\n\n**Objective:** f* = (1/2)(1/2) - 1/2 - 1/2 = 1/4 - 1 = -3/4"
+  },
+  {
+    "id": "math404-t6-ex08",
+    "subjectId": "math404",
+    "topicId": "math404-topic-6",
+    "type": "written",
+    "title": "Penalty Method",
+    "description": "Apply the quadratic penalty method to solve a constrained problem.",
+    "difficulty": 3,
+    "hints": [
+      "Penalty function: P_ρ(x) = f(x) + (ρ/2)Σ[gᵢ(x)]₊² + (ρ/2)Σhⱼ(x)²",
+      "Minimize for increasing ρ → ∞",
+      "Solutions converge to constrained optimum"
+    ],
+    "solution": "**Problem:** min x² s.t. x = 1\n\n**Penalty function:**\nP_ρ(x) = x² + (ρ/2)(x - 1)²\n\n**Minimizing P_ρ:**\ndP_ρ/dx = 2x + ρ(x - 1) = 0\n2x + ρx - ρ = 0\nx(2 + ρ) = ρ\nx*(ρ) = ρ/(2 + ρ)\n\n**Convergence:**\n| ρ    | x*(ρ)      | Error |\n|------|------------|-------|\n| 1    | 1/3 ≈ 0.33 | 0.67  |\n| 10   | 10/12 ≈ 0.83| 0.17  |\n| 100  | 100/102 ≈ 0.98| 0.02|\n| 1000 | ≈ 0.998    | 0.002 |\n\nAs ρ → ∞: x*(ρ) → 1 ✓\n\n**Disadvantages:**\n1. Need large ρ for accuracy\n2. Large ρ → ill-conditioning\n3. Hessian of penalty: 2 + ρ → ∞\n\n**For inequality constraints:**\nP_ρ(x) = f(x) + (ρ/2)Σ[max(0, gᵢ(x))]²\n\nExample: min x s.t. x ≥ 1\nP_ρ(x) = x + (ρ/2)[max(0, 1-x)]²"
+  },
+  {
+    "id": "math404-t6-ex09",
+    "subjectId": "math404",
+    "topicId": "math404-topic-6",
+    "type": "written",
+    "title": "Barrier Method",
+    "description": "Apply the log-barrier method to solve an inequality-constrained problem.",
+    "difficulty": 4,
+    "hints": [
+      "Barrier function: φ(x) = -Σlog(-gᵢ(x))",
+      "Solve min f(x) + (1/t)φ(x) for increasing t",
+      "As t → ∞, solutions approach constrained optimum"
+    ],
+    "solution": "**Problem:** min x s.t. x ≥ 1\n\nRewrite: g(x) = 1 - x ≤ 0\n\n**Log-barrier:**\nφ(x) = -log(-(1-x)) = -log(x-1)\n\n**Barrier problem:**\nB_t(x) = x - (1/t)log(x-1)\n\n**Minimizing B_t:**\ndB_t/dx = 1 - 1/(t(x-1)) = 0\nt(x-1) = 1\nx*(t) = 1 + 1/t\n\n**Central path:**\n| t    | x*(t)  | Duality gap |\n|------|--------|-------------|\n| 1    | 2      | 1/t = 1     |\n| 10   | 1.1    | 0.1         |\n| 100  | 1.01   | 0.01        |\n| 1000 | 1.001  | 0.001       |\n\nAs t → ∞: x*(t) → 1 ✓\n\n**Advantages over penalty:**\n1. Stays strictly feasible\n2. Newton's method works well\n3. Polynomial-time complexity\n\n**For multiple constraints:**\nB_t(x) = f(x) - (1/t)Σlog(-gᵢ(x))\n\n**Duality gap:**\nGap ≈ m/t where m = number of constraints\nFor ε-accuracy: t = m/ε"
+  },
+  {
+    "id": "math404-t6-ex10",
+    "subjectId": "math404",
+    "topicId": "math404-topic-6",
+    "type": "written",
+    "title": "Augmented Lagrangian Method",
+    "description": "Apply the augmented Lagrangian method to solve a constrained problem.",
+    "difficulty": 4,
+    "hints": [
+      "Combines Lagrangian with penalty term",
+      "L_ρ(x,λ) = f(x) + λᵀh(x) + (ρ/2)||h(x)||²",
+      "Update multipliers: λ ← λ + ρh(x)"
+    ],
+    "solution": "**Problem:** min x² s.t. x = 1\n\n**Augmented Lagrangian:**\nL_ρ(x, λ) = x² + λ(x - 1) + (ρ/2)(x - 1)²\n\n**Algorithm:**\n1. Fix λ, minimize L_ρ over x\n2. Update λ ← λ + ρ(x - 1)\n3. Optionally increase ρ\n\n**Iteration 1:** λ₀ = 0, ρ = 1\n∂L_ρ/∂x = 2x + λ + ρ(x-1) = 2x + 0 + (x-1) = 3x - 1 = 0\nx₁ = 1/3\n\nλ₁ = λ₀ + ρ(x₁ - 1) = 0 + 1(1/3 - 1) = -2/3\n\n**Iteration 2:** λ₁ = -2/3, ρ = 1\n2x - 2/3 + (x-1) = 3x - 5/3 = 0\nx₂ = 5/9 ≈ 0.56\n\nλ₂ = -2/3 + 1(5/9 - 1) = -2/3 - 4/9 = -10/9\n\n**Iteration 3:**\n2x - 10/9 + (x-1) = 3x - 19/9 = 0\nx₃ = 19/27 ≈ 0.70\n\n**Pattern:** Converging to x* = 1, λ* = -2\n\n**Verification:** At optimum:\n∂L/∂x = 2x + λ = 2(1) + (-2) = 0 ✓\n\n**Advantages:**\n- Bounded penalty parameter ρ\n- Faster convergence than pure penalty\n- Less ill-conditioning"
+  },
+  {
+    "id": "math404-t6-ex11",
+    "subjectId": "math404",
+    "topicId": "math404-topic-6",
+    "type": "written",
+    "title": "Primal-Dual Interior Point Method",
+    "description": "Describe the primal-dual interior point algorithm for QP.",
+    "difficulty": 5,
+    "hints": [
+      "Solve perturbed KKT system",
+      "Replace complementarity λᵢsᵢ = 0 with λᵢsᵢ = μ",
+      "Use Newton to solve system, decrease μ"
+    ],
+    "solution": "**Primal QP:**\nmin (1/2)xᵀQx + cᵀx\ns.t. Ax ≤ b\n\n**KKT System:**\nQx + c + Aᵀλ = 0  (stationarity)\nAx + s = b        (primal feasibility)\nλᵢsᵢ = 0         (complementarity)\nλ, s ≥ 0         (dual feasibility)\n\n**Perturbed KKT (barrier parameter μ):**\nReplace λᵢsᵢ = 0 with λᵢsᵢ = μ\n\n**Newton System:**\n[Q    0   Aᵀ] [Δx]   [-(Qx + c + Aᵀλ)]\n[A    I   0 ] [Δs] = [-(Ax + s - b)   ]\n[0    Λ   S ] [Δλ]   [μe - ΛSe        ]\n\nwhere Λ = diag(λ), S = diag(s), e = (1,...,1)ᵀ\n\n**Algorithm:**\n1. Initialize x, s, λ > 0 (strictly feasible)\n2. While μ > ε:\n   a. Solve Newton system for (Δx, Δs, Δλ)\n   b. Line search to maintain s, λ > 0\n   c. Update: (x,s,λ) ← (x,s,λ) + α(Δx,Δs,Δλ)\n   d. Reduce μ ← σμ (e.g., σ = 0.1)\n\n**Complexity:**\nO(√m log(1/ε)) Newton iterations\nEach iteration: O(n³) for dense, much less for sparse\n\n**Advantages:**\n1. Polynomial worst-case complexity\n2. Very efficient in practice\n3. Warm-starting possible\n\n**Software:** MOSEK, Gurobi, CVXPY all use interior point"
+  },
+  {
+    "id": "math404-t6-ex12",
+    "subjectId": "math404",
+    "topicId": "math404-topic-6",
+    "type": "written",
+    "title": "Duality Gap and Optimality",
+    "description": "Compute the duality gap and use it as an optimality certificate.",
+    "difficulty": 4,
+    "hints": [
+      "Duality gap = primal objective - dual objective",
+      "At optimality, gap = 0 (strong duality)",
+      "Gap provides certificate: both within gap of optimal"
+    ],
+    "solution": "**Primal:** min cᵀx s.t. Ax ≤ b, x ≥ 0\n**Dual:** max bᵀy s.t. Aᵀy ≤ c, y ≥ 0\n\n**Given feasible solutions:**\nPrimal: x = (1, 2) with cᵀx = 5\nDual: y = (1, 0.5) with bᵀy = 4\n\n**Duality gap:** 5 - 4 = 1\n\n**Interpretation:**\n- Primal objective: 5 (upper bound on p*)\n- Dual objective: 4 (lower bound on p*)\n- True optimum: 4 ≤ p* ≤ 5\n\n**For ε-optimality:**\nIf gap < ε, both solutions within ε of optimal.\n\n**Interior Point Gap:**\nAt barrier parameter t with m constraints:\nGap ≈ m/t\n\nExample: m = 100 constraints, t = 10⁶\nGap ≈ 100/10⁶ = 10⁻⁴\n\n**Stopping criterion:**\nStop when gap < ε·(1 + |p|) for relative tolerance ε\n\n**Certificate of optimality:**\n(x*, y*) with:\n- Ax* ≤ b, x* ≥ 0 (primal feasible)\n- Aᵀy* ≤ c, y* ≥ 0 (dual feasible)\n- cᵀx* = bᵀy* (zero gap)\n\nThis certifies x* is optimal!"
+  },
+  {
+    "id": "math404-t6-ex13",
+    "subjectId": "math404",
+    "topicId": "math404-topic-6",
+    "type": "written",
+    "title": "Sequential Quadratic Programming",
+    "description": "Perform one iteration of SQP for a nonlinear constrained problem.",
+    "difficulty": 5,
+    "hints": [
+      "Approximate problem with QP at current point",
+      "Solve QP to get step direction",
+      "Use line search for step size"
+    ],
+    "solution": "**Problem:** min f(x) s.t. h(x) = 0\n\n**SQP subproblem at x_k:**\nmin ∇f(x_k)ᵀd + (1/2)dᵀB_kd\ns.t. h(x_k) + ∇h(x_k)ᵀd = 0\n\nwhere B_k ≈ ∇²L(x_k, λ_k) (Hessian of Lagrangian)\n\n**Example:**\nf(x) = x₁² + x₂²\nh(x) = x₁ + x₂ - 1 = 0\n\nAt x₀ = (0, 0):\n∇f = (0, 0)\n∇h = (1, 1)\nh(x₀) = -1\nB₀ = I (initial approximation)\n\n**QP subproblem:**\nmin (1/2)(d₁² + d₂²)\ns.t. -1 + d₁ + d₂ = 0\n\n**Lagrangian of QP:**\nL = (1/2)(d₁² + d₂²) + μ(d₁ + d₂ - 1)\n\n**KKT:**\nd₁ + μ = 0 → d₁ = -μ\nd₂ + μ = 0 → d₂ = -μ\nd₁ + d₂ = 1 → -2μ = 1 → μ = -1/2\n\n**Solution:** d = (1/2, 1/2)\n\n**Update:** x₁ = x₀ + d = (1/2, 1/2)\n\n**Check:** This is the optimal solution!\n\n**General SQP iteration:**\n1. Solve QP for d_k\n2. Line search: x_{k+1} = x_k + α_k d_k\n3. Update B_k using BFGS on Lagrangian\n4. Update multiplier estimates"
+  },
+  {
+    "id": "math404-t6-ex14",
+    "subjectId": "math404",
+    "topicId": "math404-topic-6",
+    "type": "written",
+    "title": "Active Set Method",
+    "description": "Solve a QP using the active set method.",
+    "difficulty": 4,
+    "hints": [
+      "Maintain a working set of constraints treated as equalities",
+      "Solve equality-constrained problem at each iteration",
+      "Add/remove constraints based on multipliers and feasibility"
+    ],
+    "solution": "**Problem:** min (1/2)(x₁² + x₂²) - 2x₁ - x₂\ns.t. x₁ + x₂ ≤ 2\n     x₁ ≥ 0\n     x₂ ≥ 0\n\n**Iteration 1:** Start at x₀ = (0, 0), Working set W = {x₁ = 0, x₂ = 0}\n\nSolve with equality: x₁ = 0, x₂ = 0\nAlready at this point.\n\nCheck multipliers from ∇L = 0:\n∇f = (x₁ - 2, x₂ - 1) = (-2, -1)\nNeed -2 - λ₂ = 0 → λ₂ = -2 < 0 (remove this constraint)\n\n**Iteration 2:** W = {x₂ = 0}\nSolve: min (1/2)(x₁² + x₂²) - 2x₁ - x₂ s.t. x₂ = 0\n\n∂/∂x₁ = x₁ - 2 = 0 → x₁ = 2\nCheck: x₁ + x₂ = 2 ≤ 2 ✓, x₁ = 2 ≥ 0 ✓\n\nMultiplier for x₂ = 0:\n∇f = (0, -1) at (2, 0)\nNeed -1 - λ₃ = 0 → λ₃ = -1 < 0 (remove this constraint)\n\n**Iteration 3:** W = {} (no active constraints)\nSolve unconstrained: x₁ = 2, x₂ = 1\nCheck: x₁ + x₂ = 3 > 2 ✗ (infeasible)\n\nAdd constraint x₁ + x₂ = 2 to working set.\n\n**Iteration 4:** W = {x₁ + x₂ = 2}\nSolve: min f s.t. x₁ + x₂ = 2\n\nKKT: x₁ - 2 + λ₁ = 0, x₂ - 1 + λ₁ = 0, x₁ + x₂ = 2\nFrom first two: x₁ = 2 - λ₁, x₂ = 1 - λ₁\nSubstitute: 3 - 2λ₁ = 2 → λ₁ = 1/2\n\nx* = (3/2, 1/2), λ₁* = 1/2 > 0 ✓\n\n**Optimal!** f* = (9/8 + 1/8) - 3 - 1/2 = 5/4 - 7/2 = -9/4"
+  },
+  {
+    "id": "math404-t6-ex15",
+    "subjectId": "math404",
+    "topicId": "math404-topic-6",
+    "type": "written",
+    "title": "Second-Order Sufficient Conditions",
+    "description": "Verify second-order sufficient conditions for a constrained local minimum.",
+    "difficulty": 5,
+    "hints": [
+      "SOSC: KKT holds + positive curvature on tangent space",
+      "Tangent space = {d : ∇gᵢ(x)ᵀd = 0 for active i}",
+      "Check dᵀ∇²L(x)d > 0 for all d in tangent space"
+    ],
+    "solution": "**Problem:** min f(x) = x₁² + x₂² - x₁x₂\ns.t. g(x) = x₁ + x₂ - 1 ≤ 0\n\n**Candidate:** x* = (1/2, 1/2), λ* = 1\n\n**Verify KKT:**\n∇f = (2x₁ - x₂, 2x₂ - x₁) = (1/2, 1/2)\n∇g = (1, 1)\n∇f + λ∇g = (1/2, 1/2) + 1(1, 1) = (3/2, 3/2) ≠ 0 ✗\n\nLet me recalculate...\n\nActually, for stationarity: ∇f + λ∇g = 0\n(2x₁ - x₂ + λ, 2x₂ - x₁ + λ) = 0\n\nAt x = (1/2, 1/2):\n2(1/2) - 1/2 + λ = 1/2 + λ = 0 → λ = -1/2\n\nBut λ must be ≥ 0 for inequality constraint!\n\n**Revised problem:** min f s.t. g ≥ 0 (or constraint is equality)\n\nFor equality h(x) = x₁ + x₂ - 1 = 0:\n∇f = (1/2, 1/2), ∇h = (1, 1)\n(1/2, 1/2) + μ(1, 1) = 0 → μ = -1/2 (OK for equality)\n\n**Second-Order Check:**\nHessian of Lagrangian:\n∇²L = ∇²f = [[2, -1], [-1, 2]]\n\nTangent space: {d : ∇hᵀd = 0} = {d : d₁ + d₂ = 0}\nTake d = (1, -1):\ndᵀ∇²Ld = [1,-1][[2,-1],[-1,2]][1,-1]ᵀ\n       = [1,-1][3,-3]ᵀ = 3 + 3 = 6 > 0 ✓\n\n**SOSC verified:** x* = (1/2, 1/2) is a strict local minimum"
+  },
+  {
+    "id": "math404-t6-ex16",
+    "subjectId": "math404",
+    "topicId": "math404-topic-6",
+    "type": "written",
+    "title": "Sensitivity Analysis",
+    "description": "Analyze how the optimal value changes with respect to constraint perturbations.",
+    "difficulty": 4,
+    "hints": [
+      "Optimal Lagrange multiplier = sensitivity to constraint",
+      "For max problem: λ = ∂p*/∂b (marginal value)",
+      "Valid for small perturbations"
+    ],
+    "solution": "**Problem:** min f(x) s.t. h(x) = b\n\n**Sensitivity Theorem:**\nIf (x*, λ*) solves the problem at b*, then:\n∂p*(b)/∂bᵢ = -λᵢ*\n\nwhere p*(b) is the optimal value as function of b.\n\n**Example:**\nmin x² + y² s.t. x + y = b\n\n**Solve:**\nL = x² + y² + μ(x + y - b)\n∇L = (2x + μ, 2y + μ) = 0 → x = y = -μ/2\nx + y = b → -μ = b → μ = -b\n\nx* = y* = b/2\np*(b) = (b/2)² + (b/2)² = b²/2\nλ* = μ = -b\n\n**Verify sensitivity:**\ndp*/db = b = -λ* ✓\n\n**Interpretation:**\n- λ* = -b is the cost of tightening constraint\n- If b = 1, λ* = -1: increasing b by Δ decreases optimal cost by Δ\n\n**For inequalities:**\nmin f(x) s.t. g(x) ≤ b\n\nIf constraint active: ∂p*/∂b = -λ* (shadow price)\nIf constraint inactive: ∂p*/∂b = 0 (no sensitivity)\n\n**Example application:**\nResource allocation: λ* = value of additional resource\nIf λ* = 5, should pay up to $5 for one more unit."
+  }
+]

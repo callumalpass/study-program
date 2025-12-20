@@ -1,0 +1,185 @@
+[
+  {
+    "id": "math203-quiz-2a",
+    "subjectId": "math203",
+    "topicId": "math203-topic-2",
+    "title": "Definition of the Derivative - Fundamentals",
+    "questions": [
+      {
+        "id": "math203-q2a-1",
+        "type": "multiple_choice",
+        "prompt": "The derivative of $f(x)$ at $x = a$ is defined as:",
+        "options": [
+          "$\\frac{f(a+h) - f(a)}{h}$",
+          "$\\lim_{h \\to 0} \\frac{f(a+h) - f(a)}{h}$",
+          "$\\lim_{x \\to a} f(x)$",
+          "$\\frac{f(b) - f(a)}{b - a}$"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The derivative is the limit of the difference quotient as h approaches 0, not just the difference quotient itself."
+      },
+      {
+        "id": "math203-q2a-2",
+        "type": "true_false",
+        "prompt": "If a function is differentiable at a point, it must be continuous at that point.",
+        "correctAnswer": true,
+        "explanation": "True. Differentiability implies continuity. However, the converse is false: a function can be continuous but not differentiable (e.g., |x| at x = 0)."
+      },
+      {
+        "id": "math203-q2a-3",
+        "type": "multiple_choice",
+        "prompt": "What does the derivative $f'(a)$ represent geometrically?",
+        "options": [
+          "The y-intercept of the tangent line",
+          "The slope of the tangent line at $x = a$",
+          "The area under the curve",
+          "The x-intercept of the function"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The derivative at a point gives the slope of the tangent line to the curve at that point."
+      },
+      {
+        "id": "math203-q2a-4",
+        "type": "multiple_choice",
+        "prompt": "Using the limit definition, what is the derivative of $f(x) = x^2$?",
+        "options": [
+          "$x$",
+          "$2x$",
+          "$x^2$",
+          "$2$"
+        ],
+        "correctAnswer": 1,
+        "explanation": "$f'(x) = \\lim_{h \\to 0} \\frac{(x+h)^2 - x^2}{h} = \\lim_{h \\to 0} \\frac{2xh + h^2}{h} = \\lim_{h \\to 0} (2x + h) = 2x$"
+      },
+      {
+        "id": "math203-q2a-5",
+        "type": "fill_blank",
+        "prompt": "The difference quotient $\\frac{f(a+h) - f(a)}{h}$ represents the slope of the ____ line through two points on the curve.",
+        "correctAnswer": "secant",
+        "explanation": "The difference quotient gives the slope of the secant line through the points $(a, f(a))$ and $(a+h, f(a+h))$."
+      }
+    ]
+  },
+  {
+    "id": "math203-quiz-2b",
+    "subjectId": "math203",
+    "topicId": "math203-topic-2",
+    "title": "Definition of the Derivative - Application",
+    "questions": [
+      {
+        "id": "math203-q2b-1",
+        "type": "multiple_choice",
+        "prompt": "At which type of point is a function NOT differentiable?",
+        "options": [
+          "A point where the function is continuous",
+          "A corner or cusp",
+          "An interior point of the domain",
+          "A point where f'(x) = 0"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Functions are not differentiable at corners, cusps, vertical tangents, and discontinuities. A corner or cusp has different left and right derivatives."
+      },
+      {
+        "id": "math203-q2b-2",
+        "type": "multiple_choice",
+        "prompt": "If $f(x) = \\sqrt{x}$, find $f'(4)$ using the limit definition.",
+        "options": [
+          "$\\frac{1}{2}$",
+          "$\\frac{1}{4}$",
+          "$\\frac{1}{8}$",
+          "2"
+        ],
+        "correctAnswer": 1,
+        "explanation": "$f'(x) = \\frac{1}{2\\sqrt{x}}$, so $f'(4) = \\frac{1}{2\\sqrt{4}} = \\frac{1}{4}$."
+      },
+      {
+        "id": "math203-q2b-3",
+        "type": "true_false",
+        "prompt": "The function $f(x) = |x|$ is differentiable at $x = 0$.",
+        "correctAnswer": false,
+        "explanation": "False. The function $|x|$ has a corner at $x = 0$. The left derivative is $-1$ and the right derivative is $1$, so the derivative does not exist at 0."
+      },
+      {
+        "id": "math203-q2b-4",
+        "type": "multiple_choice",
+        "prompt": "What is the equation of the tangent line to $f(x) = x^2$ at $x = 3$?",
+        "options": [
+          "$y = 6x - 9$",
+          "$y = 6x - 3$",
+          "$y = 3x - 9$",
+          "$y = 6x + 9$"
+        ],
+        "correctAnswer": 0,
+        "explanation": "At $x = 3$: $f(3) = 9$ and $f'(3) = 6$. Tangent line: $y - 9 = 6(x - 3)$, which simplifies to $y = 6x - 9$."
+      },
+      {
+        "id": "math203-q2b-5",
+        "type": "fill_blank",
+        "prompt": "If $s(t)$ represents position at time $t$, then $s'(t)$ represents ____.",
+        "correctAnswer": "velocity",
+        "explanation": "The derivative of position with respect to time is velocity. This is the instantaneous rate of change of position."
+      }
+    ]
+  },
+  {
+    "id": "math203-quiz-2c",
+    "subjectId": "math203",
+    "topicId": "math203-topic-2",
+    "title": "Definition of the Derivative - Mastery",
+    "questions": [
+      {
+        "id": "math203-q2c-1",
+        "type": "multiple_choice",
+        "prompt": "Using the limit definition, find the derivative of $f(x) = \\frac{1}{x}$.",
+        "options": [
+          "$\\frac{1}{x^2}$",
+          "$-\\frac{1}{x^2}$",
+          "$-\\frac{1}{x}$",
+          "$\\frac{-2}{x^2}$"
+        ],
+        "correctAnswer": 1,
+        "explanation": "$f'(x) = \\lim_{h \\to 0} \\frac{\\frac{1}{x+h} - \\frac{1}{x}}{h} = \\lim_{h \\to 0} \\frac{x - (x+h)}{h \\cdot x(x+h)} = \\lim_{h \\to 0} \\frac{-1}{x(x+h)} = -\\frac{1}{x^2}$"
+      },
+      {
+        "id": "math203-q2c-2",
+        "type": "multiple_choice",
+        "prompt": "If the velocity $v(t) = s'(t)$ is negative, what does this indicate about the motion?",
+        "options": [
+          "The object is speeding up",
+          "The object is moving in the negative direction",
+          "The object has stopped",
+          "The acceleration is negative"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Negative velocity means the object is moving in the negative direction (decreasing position). This is independent of acceleration."
+      },
+      {
+        "id": "math203-q2c-3",
+        "type": "true_false",
+        "prompt": "A function can be continuous at a point but not differentiable there.",
+        "correctAnswer": true,
+        "explanation": "True. Classic example: $f(x) = |x|$ is continuous at $x = 0$ but not differentiable there due to the corner."
+      },
+      {
+        "id": "math203-q2c-4",
+        "type": "multiple_choice",
+        "prompt": "The average rate of change of $f(x)$ from $x = a$ to $x = b$ is given by:",
+        "options": [
+          "$f'(a)$",
+          "$\\frac{f(b) - f(a)}{b - a}$",
+          "$\\lim_{h \\to 0} \\frac{f(a+h) - f(a)}{h}$",
+          "$f(b) - f(a)$"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The average rate of change is the slope of the secant line: $\\frac{f(b) - f(a)}{b - a}$. This is the difference quotient without the limit."
+      },
+      {
+        "id": "math203-q2c-5",
+        "type": "fill_blank",
+        "prompt": "If $v(t)$ represents velocity, then $v'(t) = a(t)$ represents ____.",
+        "correctAnswer": "acceleration",
+        "explanation": "The derivative of velocity is acceleration. So $a(t) = v'(t) = s''(t)$."
+      }
+    ]
+  }
+]

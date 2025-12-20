@@ -1,0 +1,221 @@
+[
+  {
+    "id": "math302-quiz-5-1",
+    "subjectId": "math302",
+    "topicId": "math302-topic-5",
+    "title": "Laplace Transforms - Definition and Properties",
+    "questions": [
+      {
+        "id": "math302-q61",
+        "type": "multiple_choice",
+        "prompt": "The Laplace transform of f(t) is defined as:",
+        "options": [
+          "L{f(t)} = ∫₀^∞ e^(-st)f(t) dt",
+          "L{f(t)} = ∫₋∞^∞ e^(-st)f(t) dt",
+          "L{f(t)} = ∫₀^∞ e^(st)f(t) dt",
+          "L{f(t)} = d/dt[f(t)]"
+        ],
+        "correctAnswer": "L{f(t)} = ∫₀^∞ e^(-st)f(t) dt",
+        "explanation": "The Laplace transform is L{f(t)} = F(s) = ∫₀^∞ e^(-st)f(t) dt, converting a function of t to a function of s."
+      },
+      {
+        "id": "math302-q62",
+        "type": "multiple_choice",
+        "prompt": "What is L{e^(at)}?",
+        "options": [
+          "1/(s - a) for s > a",
+          "1/(s + a) for s > -a",
+          "a/(s - a)",
+          "e^(a/s)"
+        ],
+        "correctAnswer": "1/(s - a) for s > a",
+        "explanation": "L{e^(at)} = ∫₀^∞ e^(-st)e^(at) dt = ∫₀^∞ e^(-(s-a)t) dt = 1/(s-a) for s > a."
+      },
+      {
+        "id": "math302-q63",
+        "type": "multiple_choice",
+        "prompt": "The first translation theorem states L{e^(at)f(t)} =",
+        "options": [
+          "F(s - a)",
+          "F(s + a)",
+          "e^a F(s)",
+          "F(s)/a"
+        ],
+        "correctAnswer": "F(s - a)",
+        "explanation": "The first translation (shifting) theorem: L{e^(at)f(t)} = F(s-a), where F(s) = L{f(t)}. This shifts in the s-domain."
+      },
+      {
+        "id": "math302-q64",
+        "type": "multiple_choice",
+        "prompt": "What is L{f′(t)}?",
+        "options": [
+          "sF(s) - f(0)",
+          "F′(s)",
+          "sF(s)",
+          "1/s F(s)"
+        ],
+        "correctAnswer": "sF(s) - f(0)",
+        "explanation": "The transform of the derivative: L{f′(t)} = sF(s) - f(0). This property makes Laplace transforms useful for solving DEs."
+      },
+      {
+        "id": "math302-q65",
+        "type": "multiple_choice",
+        "prompt": "What is L{f″(t)}?",
+        "options": [
+          "s²F(s) - sf(0) - f′(0)",
+          "s²F(s) - f(0)",
+          "F″(s)",
+          "sF(s) - f(0)"
+        ],
+        "correctAnswer": "s²F(s) - sf(0) - f′(0)",
+        "explanation": "L{f″(t)} = s²F(s) - sf(0) - f′(0). This incorporates initial conditions, making it ideal for IVPs."
+      }
+    ]
+  },
+  {
+    "id": "math302-quiz-5-2",
+    "subjectId": "math302",
+    "topicId": "math302-topic-5",
+    "title": "Laplace Transforms - Inverse Transform",
+    "questions": [
+      {
+        "id": "math302-q66",
+        "type": "multiple_choice",
+        "prompt": "What is L^(-1){1/s²}?",
+        "options": [
+          "t",
+          "1",
+          "t²/2",
+          "e^t"
+        ],
+        "correctAnswer": "t",
+        "explanation": "Since L{t^n} = n!/s^(n+1), we have L{t} = 1/s², so L^(-1){1/s²} = t."
+      },
+      {
+        "id": "math302-q67",
+        "type": "multiple_choice",
+        "prompt": "To find L^(-1){1/(s² + 4)}, recognize it as:",
+        "options": [
+          "(1/2)sin(2t)",
+          "sin(4t)",
+          "cos(2t)",
+          "e^(-2t)"
+        ],
+        "correctAnswer": "(1/2)sin(2t)",
+        "explanation": "Since L{sin(at)} = a/(s² + a²), we have L{sin(2t)} = 2/(s² + 4), so L^(-1){1/(s² + 4)} = (1/2)sin(2t)."
+      },
+      {
+        "id": "math302-q68",
+        "type": "multiple_choice",
+        "prompt": "Partial fractions are used when:",
+        "options": [
+          "F(s) is a rational function with denominator degree > numerator",
+          "F(s) is exponential",
+          "F(s) is trigonometric",
+          "F(s) has no inverse"
+        ],
+        "correctAnswer": "F(s) is a rational function with denominator degree > numerator",
+        "explanation": "Partial fraction decomposition breaks down rational functions into simpler terms whose inverse transforms are known."
+      },
+      {
+        "id": "math302-q69",
+        "type": "multiple_choice",
+        "prompt": "What is L^(-1){1/((s-2)(s-3))}?",
+        "options": [
+          "e^(3t) - e^(2t)",
+          "e^(2t) - e^(3t)",
+          "e^(5t)",
+          "1/(e^(2t) + e^(3t))"
+        ],
+        "correctAnswer": "e^(3t) - e^(2t)",
+        "explanation": "Using partial fractions: 1/((s-2)(s-3)) = -1/(s-2) + 1/(s-3). Taking inverse: -e^(2t) + e^(3t) = e^(3t) - e^(2t)."
+      },
+      {
+        "id": "math302-q70",
+        "type": "multiple_choice",
+        "prompt": "The second translation theorem (shift in t) states L{u_c(t)f(t-c)} =",
+        "options": [
+          "e^(-cs)F(s)",
+          "e^(cs)F(s)",
+          "F(s - c)",
+          "F(s + c)"
+        ],
+        "correctAnswer": "e^(-cs)F(s)",
+        "explanation": "The second translation theorem: L{u_c(t)f(t-c)} = e^(-cs)F(s), where u_c is the unit step function at t = c."
+      }
+    ]
+  },
+  {
+    "id": "math302-quiz-5-3",
+    "subjectId": "math302",
+    "topicId": "math302-topic-5",
+    "title": "Laplace Transforms - Solving IVPs",
+    "questions": [
+      {
+        "id": "math302-q71",
+        "type": "multiple_choice",
+        "prompt": "To solve y″ + 4y = 0, y(0) = 1, y′(0) = 0 using Laplace transforms, first:",
+        "options": [
+          "Take L of both sides: s²Y - s - 0 + 4Y = 0",
+          "Find the characteristic equation",
+          "Use undetermined coefficients",
+          "Integrate both sides"
+        ],
+        "correctAnswer": "Take L of both sides: s²Y - s - 0 + 4Y = 0",
+        "explanation": "Apply Laplace transform to both sides: L{y″} + 4L{y} = 0 becomes (s²Y - sy(0) - y′(0)) + 4Y = 0."
+      },
+      {
+        "id": "math302-q72",
+        "type": "multiple_choice",
+        "prompt": "For the transform Y(s) = s/(s² + 4) from the previous problem, y(t) is:",
+        "options": [
+          "cos(2t)",
+          "sin(2t)",
+          "e^(2t)",
+          "(1/2)cos(2t)"
+        ],
+        "correctAnswer": "cos(2t)",
+        "explanation": "Since L{cos(at)} = s/(s² + a²), we have Y(s) = s/(s² + 4) = L{cos(2t)}, so y(t) = cos(2t)."
+      },
+      {
+        "id": "math302-q73",
+        "type": "multiple_choice",
+        "prompt": "The convolution theorem states L{f * g} =",
+        "options": [
+          "F(s)G(s)",
+          "F(s) + G(s)",
+          "F(s)/G(s)",
+          "∫f(t)g(t) dt"
+        ],
+        "correctAnswer": "F(s)G(s)",
+        "explanation": "The convolution theorem: L{(f * g)(t)} = F(s)G(s), where (f * g)(t) = ∫₀^t f(τ)g(t-τ) dτ."
+      },
+      {
+        "id": "math302-q74",
+        "type": "multiple_choice",
+        "prompt": "The unit step function u_c(t) equals:",
+        "options": [
+          "0 for t < c, 1 for t ≥ c",
+          "1 for t < c, 0 for t ≥ c",
+          "c for all t",
+          "1 for all t"
+        ],
+        "correctAnswer": "0 for t < c, 1 for t ≥ c",
+        "explanation": "The unit step (Heaviside) function u_c(t) = 0 for t < c and u_c(t) = 1 for t ≥ c. It \"turns on\" at t = c."
+      },
+      {
+        "id": "math302-q75",
+        "type": "multiple_choice",
+        "prompt": "The Dirac delta function δ(t - c) satisfies:",
+        "options": [
+          "∫₋∞^∞ δ(t-c)f(t) dt = f(c)",
+          "δ(t-c) = 0 everywhere",
+          "δ(t-c) = 1 at t = c",
+          "∫δ(t-c) dt = 0"
+        ],
+        "correctAnswer": "∫₋∞^∞ δ(t-c)f(t) dt = f(c)",
+        "explanation": "The Dirac delta satisfies the sifting property: ∫δ(t-c)f(t) dt = f(c). Also, L{δ(t-c)} = e^(-cs)."
+      }
+    ]
+  }
+]

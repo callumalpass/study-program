@@ -37,7 +37,9 @@ You are upgrading subjects in a Computer Science degree curriculum to meet produ
 Read these files for context:
 - Summary of all subjects: docs/reviews/SUMMARY.md
 - Quality Standard: docs/standards/SUBJECT_STANDARD.md
+- Subject Spec Schema: docs/standards/SUBJECT_SPEC_SCHEMA.md
 - Upgrade Instructions: docs/prompts/SUBJECT_UPGRADE_PROMPT.md
+- Example specs: src/subjects/cs101/subject-spec.yaml, src/subjects/math303/subject-spec.yaml
 
 ## Your Task
 
@@ -45,34 +47,46 @@ Read these files for context:
 2. Pick ONE subject from the "Priority Action Items" section (Immediate priority first, then High, then Medium)
 3. Upgrade that subject completely
 
+### Phase 0: Subject Specification (Required First)
+1. Check if src/subjects/{subject}/subject-spec.yaml exists
+2. If missing, create it using the schema at docs/standards/SUBJECT_SPEC_SCHEMA.md
+3. The spec defines:
+   - curriculum.subtopic_word_target (words per subtopic)
+   - curriculum.essential_concepts (what must be covered)
+   - exercises, quizzes, exams, and project targets
+
 ### Phase 1: Select Subject & Audit
 1. Read SUMMARY.md and pick the highest priority incomplete subject
 2. Read its review at docs/reviews/{subject}_review.md
 3. Audit the subject's current state:
-   - Topics in src/data/subjects/{subject}/topics.ts
-   - Subtopics in src/content/subjects/{subject}/topic-N/
-   - Exercises in src/data/subjects/{subject}/exercises/
-   - Quizzes in src/data/subjects/{subject}/quizzes.ts
-   - Exams in src/data/subjects/{subject}/exams.ts
-   - Projects in src/data/subjects/{subject}/projects.ts (CS subjects only)
+   - Subject spec in src/subjects/{subject}/subject-spec.yaml
+   - Topics in src/subjects/{subject}/topics.ts
+   - Subtopics in src/subjects/{subject}/content/topic-N/*.md
+   - Exercises in src/subjects/{subject}/content/topic-N/exercises.json (per-topic)
+   - Quizzes in src/subjects/{subject}/content/topic-N/quizzes.json (per-topic)
+   - Exams in src/subjects/{subject}/exams.json
+   - Projects in src/subjects/{subject}/projects.json (if required by spec)
 
 ### Phase 2: Identify Gaps
-Compare against requirements:
-- 7 topics with 7 subtopics each (800+ words per subtopic)
-- 16 exercises per topic (112 total)
-- 3 quizzes per topic with 5 questions each (105 questions total)
-- Midterm (25-30 questions) and Final (40-45 questions) exams
-- 2-3 projects with rubrics (CS subjects only, not required for MATH subjects)
+Compare against the subject's spec (or defaults if not overridden):
+- 7 topics with 7 subtopics each
+- Words per subtopic (spec.curriculum.subtopic_word_target, default: 1000)
+- Exercises per topic (spec.exercises.per_topic.target, default: 16)
+- Quizzes per topic (spec.quizzes.per_topic, default: 3 × 5 questions)
+- Exams (spec.exams targets, default: ~26 midterm, ~42 final)
+- Projects (spec.projects.required, spec.projects.count)
 
 ### Phase 3: Implementation
-Fix ALL gaps found:
-1. Expand subtopics to 800+ words if any are below minimum
-2. Add missing exercises with proper difficulty distribution (3×D1, 3×D2, 4×D3, 3×D4, 3×D5 per topic)
-3. Add missing quiz questions (5 per quiz, 3 quizzes per topic)
-4. Add/complete exams if needed
-5. For CS subjects: ensure 2-3 projects exist with full rubrics (8-12 requirements, 4-5 rubric criteria, scaffolding)
-6. Ensure all IDs follow naming conventions from SUBJECT_UPGRADE_PROMPT.md
-7. Ensure TypeScript compiles without errors
+Fix ALL gaps found (using spec targets):
+1. Create subject-spec.yaml if missing (required, including curriculum section)
+2. Expand subtopics to meet spec.curriculum.subtopic_word_target (default: 1000 words)
+3. Ensure content covers all spec.curriculum.essential_concepts
+4. Add exercises to content/topic-N/exercises.json (per spec.exercises.per_topic.target)
+5. Add quizzes to content/topic-N/quizzes.json (per spec.quizzes.per_topic)
+6. Add/complete exams in exams.json (per spec.exams targets)
+7. Add projects if spec.projects.required is true
+8. Ensure all IDs follow naming conventions from SUBJECT_UPGRADE_PROMPT.md
+9. Ensure TypeScript compiles without errors
 
 ### Phase 4: Update Reviews (REQUIRED)
 After completing all upgrades:

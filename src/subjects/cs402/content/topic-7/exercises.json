@@ -1,0 +1,321 @@
+[
+  {
+    "id": "cs402-t7-ex01",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-7",
+    "title": "Implement Cross-Validation from Scratch",
+    "difficulty": 2,
+    "description": "Build k-fold cross-validation without sklearn.\n\nRequirements:\n- Split data into k folds\n- Train and evaluate on each fold\n- Return scores for all folds\n- Calculate mean and standard deviation",
+    "starterCode": "import numpy as np\n\ndef cross_validate(model, X, y, k=5):\n    # Split into k folds\n    # Train on k-1, test on 1\n    # Return scores\n    pass",
+    "solution": "import numpy as np\n\ndef cross_validate(model, X, y, k=5):\n    n = len(X)\n    fold_size = n // k\n    indices = np.arange(n)\n    np.random.shuffle(indices)\n    \n    scores = []\n    for i in range(k):\n        # Split\n        test_idx = indices[i*fold_size:(i+1)*fold_size]\n        train_idx = np.concatenate([indices[:i*fold_size], indices[(i+1)*fold_size:]])\n        \n        X_train, X_test = X[train_idx], X[test_idx]\n        y_train, y_test = y[train_idx], y[test_idx]\n        \n        # Train and evaluate\n        model.fit(X_train, y_train)\n        score = model.score(X_test, y_test)\n        scores.append(score)\n\n    return np.array(scores)",
+    "testCases": [],
+    "hints": [
+      "Divide the dataset into k equal-sized folds",
+      "Use shuffled indices to ensure random distribution",
+      "For each fold, use it as test set and remaining folds as training set",
+      "Store the score for each fold in a list",
+      "Return scores as a numpy array for easy statistics calculation"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-ex-7-2",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-7",
+    "title": "Calculate Precision, Recall, and F1",
+    "difficulty": 1,
+    "description": "Compute classification metrics from confusion matrix.\n\nRequirements:\n- Calculate precision: TP / (TP + FP)\n- Calculate recall: TP / (TP + FN)\n- Calculate F1 score: 2 * (precision * recall) / (precision + recall)\n- Handle edge cases (division by zero)",
+    "starterCode": "import numpy as np\n\ndef calculate_metrics(y_true, y_pred):\n    \"\"\"\n    Calculate precision, recall, and F1 score.\n\n    Args:\n        y_true: true labels (0 or 1)\n        y_pred: predicted labels (0 or 1)\n\n    Returns:\n        precision, recall, f1\n    \"\"\"\n    # TODO: Implement\n    pass",
+    "solution": "import numpy as np\n\ndef calculate_metrics(y_true, y_pred):\n    \"\"\"\n    Calculate precision, recall, and F1 score.\n\n    Args:\n        y_true: true labels (0 or 1)\n        y_pred: predicted labels (0 or 1)\n\n    Returns:\n        precision, recall, f1\n    \"\"\"\n    # Convert to numpy arrays\n    y_true = np.array(y_true)\n    y_pred = np.array(y_pred)\n\n    # Calculate confusion matrix components\n    tp = np.sum((y_true == 1) & (y_pred == 1))\n    fp = np.sum((y_true == 0) & (y_pred == 1))\n    fn = np.sum((y_true == 1) & (y_pred == 0))\n    tn = np.sum((y_true == 0) & (y_pred == 0))\n\n    # Calculate precision\n    if tp + fp == 0:\n        precision = 0.0\n    else:\n        precision = tp / (tp + fp)\n\n    # Calculate recall\n    if tp + fn == 0:\n        recall = 0.0\n    else:\n        recall = tp / (tp + fn)\n\n    # Calculate F1 score\n    if precision + recall == 0:\n        f1 = 0.0\n    else:\n        f1 = 2 * (precision * recall) / (precision + recall)\n\n    return precision, recall, f1\n\n# Example\ny_true = [1, 1, 0, 1, 0, 1, 0, 0]\ny_pred = [1, 0, 0, 1, 0, 1, 1, 0]\n\np, r, f1 = calculate_metrics(y_true, y_pred)\nprint(f\"Precision: {p:.3f}, Recall: {r:.3f}, F1: {f1:.3f}\")",
+    "testCases": [],
+    "hints": [
+      "TP: correctly predicted positive examples",
+      "FP: incorrectly predicted as positive (false alarms)",
+      "FN: incorrectly predicted as negative (misses)",
+      "Precision: of predicted positives, how many are correct?",
+      "Recall: of actual positives, how many did we catch?",
+      "F1 is harmonic mean of precision and recall"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-ex-7-3",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-7",
+    "title": "Build Confusion Matrix",
+    "difficulty": 1,
+    "description": "Create confusion matrix for multi-class classification.\n\nRequirements:\n- Support arbitrary number of classes\n- Rows represent true labels, columns represent predictions\n- Include counts for each (true, predicted) pair\n- Visualize as heatmap",
+    "starterCode": "import numpy as np\n\ndef confusion_matrix(y_true, y_pred, n_classes=None):\n    \"\"\"\n    Compute confusion matrix.\n\n    Args:\n        y_true: true labels\n        y_pred: predicted labels\n        n_classes: number of classes (inferred if None)\n\n    Returns:\n        confusion matrix (n_classes x n_classes)\n    \"\"\"\n    # TODO: Implement\n    pass",
+    "solution": "import numpy as np\nimport matplotlib.pyplot as plt\nimport seaborn as sns\n\ndef confusion_matrix(y_true, y_pred, n_classes=None):\n    \"\"\"\n    Compute confusion matrix.\n\n    Args:\n        y_true: true labels\n        y_pred: predicted labels\n        n_classes: number of classes (inferred if None)\n\n    Returns:\n        confusion matrix (n_classes x n_classes)\n    \"\"\"\n    y_true = np.array(y_true)\n    y_pred = np.array(y_pred)\n\n    if n_classes is None:\n        n_classes = max(np.max(y_true), np.max(y_pred)) + 1\n\n    # Initialize confusion matrix\n    cm = np.zeros((n_classes, n_classes), dtype=int)\n\n    # Fill confusion matrix\n    for true_label, pred_label in zip(y_true, y_pred):\n        cm[true_label, pred_label] += 1\n\n    return cm\n\ndef plot_confusion_matrix(cm, class_names=None):\n    \"\"\"Plot confusion matrix as heatmap.\"\"\"\n    plt.figure(figsize=(8, 6))\n\n    if class_names is None:\n        class_names = [str(i) for i in range(len(cm))]\n\n    sns.heatmap(cm, annot=True, fmt='d', cmap='Blues',\n                xticklabels=class_names, yticklabels=class_names)\n\n    plt.ylabel('True Label')\n    plt.xlabel('Predicted Label')\n    plt.title('Confusion Matrix')\n    plt.show()\n\n# Example\ny_true = [0, 1, 2, 0, 1, 2, 1, 2, 0, 1]\ny_pred = [0, 2, 2, 0, 1, 1, 1, 2, 0, 0]\n\ncm = confusion_matrix(y_true, y_pred)\nprint(cm)\nplot_confusion_matrix(cm, ['Class 0', 'Class 1', 'Class 2'])",
+    "testCases": [],
+    "hints": [
+      "Confusion matrix: cm[i][j] = count of true class i predicted as j",
+      "Diagonal elements are correct predictions",
+      "Off-diagonal elements are misclassifications",
+      "Each row sums to total examples of that true class",
+      "Use np.zeros to initialize matrix",
+      "Iterate through (true, pred) pairs and increment counts"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-ex-7-4",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-7",
+    "title": "Implement ROC Curve",
+    "difficulty": 3,
+    "description": "Generate ROC curve and compute AUC.\n\nRequirements:\n- Use predicted probabilities, not hard labels\n- Vary threshold from 0 to 1\n- Calculate TPR and FPR at each threshold\n- Compute Area Under Curve (AUC) using trapezoidal rule",
+    "starterCode": "import numpy as np\n\ndef roc_curve(y_true, y_scores):\n    \"\"\"\n    Compute ROC curve.\n\n    Args:\n        y_true: true binary labels\n        y_scores: predicted probabilities\n\n    Returns:\n        fpr, tpr, thresholds\n    \"\"\"\n    # TODO: Implement\n    pass\n\ndef auc(fpr, tpr):\n    \"\"\"Compute area under ROC curve.\"\"\"\n    # TODO: Implement\n    pass",
+    "solution": "import numpy as np\nimport matplotlib.pyplot as plt\n\ndef roc_curve(y_true, y_scores):\n    \"\"\"\n    Compute ROC curve.\n\n    Args:\n        y_true: true binary labels (0 or 1)\n        y_scores: predicted probabilities\n\n    Returns:\n        fpr, tpr, thresholds\n    \"\"\"\n    y_true = np.array(y_true)\n    y_scores = np.array(y_scores)\n\n    # Get unique thresholds (sorted descending)\n    thresholds = np.sort(np.unique(y_scores))[::-1]\n    thresholds = np.concatenate([[np.inf], thresholds, [-np.inf]])\n\n    # Calculate TPR and FPR for each threshold\n    tpr_list = []\n    fpr_list = []\n\n    n_pos = np.sum(y_true == 1)\n    n_neg = np.sum(y_true == 0)\n\n    for threshold in thresholds:\n        # Predict 1 if score >= threshold\n        y_pred = (y_scores >= threshold).astype(int)\n\n        # Calculate TPR and FPR\n        tp = np.sum((y_true == 1) & (y_pred == 1))\n        fp = np.sum((y_true == 0) & (y_pred == 1))\n\n        tpr = tp / n_pos if n_pos > 0 else 0\n        fpr = fp / n_neg if n_neg > 0 else 0\n\n        tpr_list.append(tpr)\n        fpr_list.append(fpr)\n\n    return np.array(fpr_list), np.array(tpr_list), thresholds\n\ndef auc(fpr, tpr):\n    \"\"\"\n    Compute area under ROC curve using trapezoidal rule.\n\n    Args:\n        fpr: false positive rates\n        tpr: true positive rates\n\n    Returns:\n        area under curve\n    \"\"\"\n    # Sort by fpr\n    sorted_indices = np.argsort(fpr)\n    fpr = fpr[sorted_indices]\n    tpr = tpr[sorted_indices]\n\n    # Trapezoidal integration\n    area = 0\n    for i in range(1, len(fpr)):\n        area += (fpr[i] - fpr[i-1]) * (tpr[i] + tpr[i-1]) / 2\n\n    return area\n\ndef plot_roc_curve(fpr, tpr, auc_score):\n    \"\"\"Plot ROC curve.\"\"\"\n    plt.figure(figsize=(8, 6))\n    plt.plot(fpr, tpr, linewidth=2, label=f'ROC curve (AUC = {auc_score:.3f})')\n    plt.plot([0, 1], [0, 1], 'k--', label='Random classifier')\n    plt.xlabel('False Positive Rate')\n    plt.ylabel('True Positive Rate')\n    plt.title('ROC Curve')\n    plt.legend()\n    plt.grid(True)\n    plt.show()\n\n# Example\ny_true = [0, 0, 1, 1, 0, 1, 0, 1]\ny_scores = [0.1, 0.4, 0.35, 0.8, 0.2, 0.7, 0.3, 0.9]\n\nfpr, tpr, thresholds = roc_curve(y_true, y_scores)\nauc_score = auc(fpr, tpr)\n\nprint(f\"AUC: {auc_score:.3f}\")\nplot_roc_curve(fpr, tpr, auc_score)",
+    "testCases": [],
+    "hints": [
+      "ROC curve: plot TPR vs FPR at different thresholds",
+      "TPR = TP / (TP + FN) = recall = sensitivity",
+      "FPR = FP / (FP + TN) = 1 - specificity",
+      "Start with high threshold (predict all negative), end with low (predict all positive)",
+      "Perfect classifier: AUC = 1.0, Random: AUC = 0.5",
+      "Use trapezoidal rule for integration: sum of trapezoid areas"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-ex-7-5",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-7",
+    "title": "Implement Precision-Recall Curve",
+    "difficulty": 2,
+    "description": "Generate precision-recall curve for imbalanced datasets.\n\nRequirements:\n- Calculate precision and recall at each threshold\n- Plot precision vs recall\n- Compute average precision (AP)\n- Better than ROC for imbalanced classes",
+    "starterCode": "import numpy as np\n\ndef precision_recall_curve(y_true, y_scores):\n    \"\"\"\n    Compute precision-recall curve.\n\n    Args:\n        y_true: true binary labels\n        y_scores: predicted probabilities\n\n    Returns:\n        precision, recall, thresholds\n    \"\"\"\n    # TODO: Implement\n    pass",
+    "solution": "import numpy as np\nimport matplotlib.pyplot as plt\n\ndef precision_recall_curve(y_true, y_scores):\n    \"\"\"\n    Compute precision-recall curve.\n\n    Args:\n        y_true: true binary labels (0 or 1)\n        y_scores: predicted probabilities\n\n    Returns:\n        precision, recall, thresholds\n    \"\"\"\n    y_true = np.array(y_true)\n    y_scores = np.array(y_scores)\n\n    # Get unique thresholds\n    thresholds = np.sort(np.unique(y_scores))[::-1]\n    thresholds = np.concatenate([[np.inf], thresholds])\n\n    precision_list = []\n    recall_list = []\n\n    for threshold in thresholds:\n        y_pred = (y_scores >= threshold).astype(int)\n\n        tp = np.sum((y_true == 1) & (y_pred == 1))\n        fp = np.sum((y_true == 0) & (y_pred == 1))\n        fn = np.sum((y_true == 1) & (y_pred == 0))\n\n        # Precision\n        if tp + fp == 0:\n            precision = 1.0  # No predictions, convention\n        else:\n            precision = tp / (tp + fp)\n\n        # Recall\n        if tp + fn == 0:\n            recall = 0.0\n        else:\n            recall = tp / (tp + fn)\n\n        precision_list.append(precision)\n        recall_list.append(recall)\n\n    return np.array(precision_list), np.array(recall_list), thresholds\n\ndef average_precision(precision, recall):\n    \"\"\"\n    Compute average precision (area under PR curve).\n\n    Args:\n        precision: precision values\n        recall: recall values\n\n    Returns:\n        average precision\n    \"\"\"\n    # Sort by recall\n    sorted_indices = np.argsort(recall)\n    recall = recall[sorted_indices]\n    precision = precision[sorted_indices]\n\n    # Compute AP using trapezoidal rule\n    ap = 0\n    for i in range(1, len(recall)):\n        ap += (recall[i] - recall[i-1]) * precision[i]\n\n    return ap\n\ndef plot_pr_curve(precision, recall, ap):\n    \"\"\"Plot precision-recall curve.\"\"\"\n    plt.figure(figsize=(8, 6))\n    plt.plot(recall, precision, linewidth=2, label=f'PR curve (AP = {ap:.3f})')\n    plt.xlabel('Recall')\n    plt.ylabel('Precision')\n    plt.title('Precision-Recall Curve')\n    plt.legend()\n    plt.grid(True)\n    plt.xlim([0, 1])\n    plt.ylim([0, 1])\n    plt.show()\n\n# Example\ny_true = [0, 0, 1, 1, 0, 1, 0, 1]\ny_scores = [0.1, 0.4, 0.35, 0.8, 0.2, 0.7, 0.3, 0.9]\n\nprecision, recall, thresholds = precision_recall_curve(y_true, y_scores)\nap = average_precision(precision, recall)\n\nprint(f\"Average Precision: {ap:.3f}\")\nplot_pr_curve(precision, recall, ap)",
+    "testCases": [],
+    "hints": [
+      "PR curve plots precision vs recall at different thresholds",
+      "More informative than ROC for imbalanced datasets",
+      "High precision + high recall = good classifier",
+      "Average precision: area under PR curve",
+      "Perfect classifier: AP = 1.0",
+      "Start with high threshold (high precision, low recall)"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-ex-7-6",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-7",
+    "title": "Implement Stratified K-Fold",
+    "difficulty": 2,
+    "description": "Build stratified k-fold cross-validation from scratch.\n\nRequirements:\n- Maintain class distribution in each fold\n- Split data into k stratified folds\n- Ensure each class is represented proportionally\n- Return train/test indices for each fold",
+    "starterCode": "import numpy as np\n\nclass StratifiedKFold:\n    def __init__(self, n_splits=5):\n        self.n_splits = n_splits\n\n    def split(self, X, y):\n        \"\"\"\n        Generate train/test indices.\n\n        Args:\n            X: features\n            y: labels\n\n        Yields:\n            train_idx, test_idx for each fold\n        \"\"\"\n        # TODO: Implement\n        pass",
+    "solution": "import numpy as np\n\nclass StratifiedKFold:\n    def __init__(self, n_splits=5, shuffle=True, random_state=None):\n        self.n_splits = n_splits\n        self.shuffle = shuffle\n        self.random_state = random_state\n\n    def split(self, X, y):\n        \"\"\"\n        Generate stratified train/test indices.\n\n        Args:\n            X: features (n_samples, n_features)\n            y: labels (n_samples,)\n\n        Yields:\n            train_idx, test_idx for each fold\n        \"\"\"\n        y = np.array(y)\n        n_samples = len(y)\n\n        # Get unique classes and their counts\n        classes, class_counts = np.unique(y, return_counts=True)\n\n        # Shuffle indices within each class\n        if self.shuffle:\n            rng = np.random.RandomState(self.random_state)\n            class_indices = {}\n            for cls in classes:\n                indices = np.where(y == cls)[0]\n                rng.shuffle(indices)\n                class_indices[cls] = indices\n        else:\n            class_indices = {cls: np.where(y == cls)[0] for cls in classes}\n\n        # Create folds\n        for fold_idx in range(self.n_splits):\n            test_indices = []\n            train_indices = []\n\n            for cls in classes:\n                indices = class_indices[cls]\n                n_class_samples = len(indices)\n                fold_size = n_class_samples // self.n_splits\n\n                # Test indices for this fold\n                start_idx = fold_idx * fold_size\n                end_idx = start_idx + fold_size if fold_idx < self.n_splits - 1 else n_class_samples\n                test_indices.extend(indices[start_idx:end_idx])\n\n                # Train indices (all others)\n                train_indices.extend(np.concatenate([\n                    indices[:start_idx],\n                    indices[end_idx:]\n                ]))\n\n            yield np.array(train_indices), np.array(test_indices)\n\n# Example usage\nX = np.random.randn(100, 5)\ny = np.array([0] * 30 + [1] * 70)  # Imbalanced\n\nskf = StratifiedKFold(n_splits=5)\n\nfor fold, (train_idx, test_idx) in enumerate(skf.split(X, y)):\n    train_labels = y[train_idx]\n    test_labels = y[test_idx]\n\n    print(f\"Fold {fold + 1}:\")\n    print(f\"  Train: {len(train_idx)} samples, Class dist: {np.bincount(train_labels)}\")\n    print(f\"  Test: {len(test_idx)} samples, Class dist: {np.bincount(test_labels)}\")",
+    "testCases": [],
+    "hints": [
+      "Stratified splitting maintains class proportions in each fold",
+      "Split each class independently into k parts",
+      "For each fold, combine parts from all classes",
+      "Essential for imbalanced datasets",
+      "Shuffle indices within each class before splitting",
+      "Handle uneven divisions by putting remainder in last fold"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-ex-7-7",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-7",
+    "title": "Implement Grid Search",
+    "difficulty": 3,
+    "description": "Build grid search for hyperparameter tuning.\n\nRequirements:\n- Try all combinations of hyperparameter values\n- Use cross-validation to evaluate each combination\n- Track best parameters and best score\n- Support any sklearn-compatible model",
+    "starterCode": "import numpy as np\n\nclass GridSearchCV:\n    def __init__(self, model, param_grid, cv=5):\n        self.model = model\n        self.param_grid = param_grid\n        self.cv = cv\n\n    def fit(self, X, y):\n        # TODO: Implement\n        pass",
+    "solution": "import numpy as np\nfrom itertools import product\nfrom sklearn.model_selection import cross_val_score\nimport copy\n\nclass GridSearchCV:\n    def __init__(self, model, param_grid, cv=5, scoring='accuracy'):\n        self.model = model\n        self.param_grid = param_grid\n        self.cv = cv\n        self.scoring = scoring\n        self.best_params_ = None\n        self.best_score_ = None\n        self.best_model_ = None\n        self.cv_results_ = []\n\n    def fit(self, X, y):\n        \"\"\"\n        Perform grid search with cross-validation.\n\n        Args:\n            X: features\n            y: labels\n        \"\"\"\n        # Generate all combinations of parameters\n        param_names = list(self.param_grid.keys())\n        param_values = list(self.param_grid.values())\n        param_combinations = list(product(*param_values))\n\n        best_score = -np.inf\n\n        for param_combo in param_combinations:\n            # Create parameter dictionary\n            params = dict(zip(param_names, param_combo))\n\n            # Create model with these parameters\n            model = copy.deepcopy(self.model)\n            model.set_params(**params)\n\n            # Evaluate with cross-validation\n            scores = cross_val_score(model, X, y, cv=self.cv, scoring=self.scoring)\n            mean_score = np.mean(scores)\n            std_score = np.std(scores)\n\n            # Store results\n            self.cv_results_.append({\n                'params': params,\n                'mean_score': mean_score,\n                'std_score': std_score,\n                'scores': scores\n            })\n\n            # Update best\n            if mean_score > best_score:\n                best_score = mean_score\n                self.best_params_ = params\n                self.best_score_ = mean_score\n\n        # Train best model on full dataset\n        self.best_model_ = copy.deepcopy(self.model)\n        self.best_model_.set_params(**self.best_params_)\n        self.best_model_.fit(X, y)\n\n        return self\n\n    def predict(self, X):\n        \"\"\"Predict using best model.\"\"\"\n        return self.best_model_.predict(X)\n\n# Example usage\nfrom sklearn.svm import SVC\n\n# Define parameter grid\nparam_grid = {\n    'C': [0.1, 1, 10],\n    'kernel': ['linear', 'rbf'],\n    'gamma': ['scale', 'auto']\n}\n\n# Create grid search\nmodel = SVC()\ngrid_search = GridSearchCV(model, param_grid, cv=5)\n\n# Generate sample data\nX = np.random.randn(100, 5)\ny = np.random.randint(0, 2, 100)\n\n# Fit\ngrid_search.fit(X, y)\n\nprint(f\"Best parameters: {grid_search.best_params_}\")\nprint(f\"Best score: {grid_search.best_score_:.3f}\")",
+    "testCases": [],
+    "hints": [
+      "Use itertools.product to generate all parameter combinations",
+      "For each combination, train model with cross-validation",
+      "Track mean and std of cross-validation scores",
+      "Keep parameters with best mean score",
+      "Train final model on full dataset with best parameters",
+      "Use copy.deepcopy to avoid modifying original model"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-ex-7-8",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-7",
+    "title": "Implement Random Search",
+    "difficulty": 3,
+    "description": "Build random search for hyperparameter tuning.\n\nRequirements:\n- Sample hyperparameters randomly from distributions\n- More efficient than grid search for high-dimensional spaces\n- Support continuous and discrete distributions\n- Track best parameters found",
+    "starterCode": "import numpy as np\n\nclass RandomizedSearchCV:\n    def __init__(self, model, param_distributions, n_iter=10, cv=5):\n        self.model = model\n        self.param_distributions = param_distributions\n        self.n_iter = n_iter\n        self.cv = cv\n\n    def fit(self, X, y):\n        # TODO: Implement\n        pass",
+    "solution": "import numpy as np\nfrom sklearn.model_selection import cross_val_score\nimport copy\n\nclass RandomizedSearchCV:\n    def __init__(self, model, param_distributions, n_iter=10, cv=5,\n                 scoring='accuracy', random_state=None):\n        self.model = model\n        self.param_distributions = param_distributions\n        self.n_iter = n_iter\n        self.cv = cv\n        self.scoring = scoring\n        self.random_state = random_state\n        self.best_params_ = None\n        self.best_score_ = None\n        self.best_model_ = None\n        self.cv_results_ = []\n\n    def sample_params(self, rng):\n        \"\"\"Sample one set of parameters.\"\"\"\n        params = {}\n        for param_name, distribution in self.param_distributions.items():\n            if isinstance(distribution, list):\n                # Discrete choice\n                params[param_name] = rng.choice(distribution)\n            elif hasattr(distribution, 'rvs'):\n                # scipy distribution\n                params[param_name] = distribution.rvs(random_state=rng)\n            elif callable(distribution):\n                # Custom callable\n                params[param_name] = distribution(rng)\n        return params\n\n    def fit(self, X, y):\n        \"\"\"\n        Perform random search with cross-validation.\n\n        Args:\n            X: features\n            y: labels\n        \"\"\"\n        rng = np.random.RandomState(self.random_state)\n        best_score = -np.inf\n\n        for i in range(self.n_iter):\n            # Sample parameters\n            params = self.sample_params(rng)\n\n            # Create model with these parameters\n            model = copy.deepcopy(self.model)\n            try:\n                model.set_params(**params)\n            except ValueError:\n                # Invalid parameter combination, skip\n                continue\n\n            # Evaluate with cross-validation\n            scores = cross_val_score(model, X, y, cv=self.cv, scoring=self.scoring)\n            mean_score = np.mean(scores)\n            std_score = np.std(scores)\n\n            # Store results\n            self.cv_results_.append({\n                'params': params,\n                'mean_score': mean_score,\n                'std_score': std_score,\n                'scores': scores\n            })\n\n            # Update best\n            if mean_score > best_score:\n                best_score = mean_score\n                self.best_params_ = params\n                self.best_score_ = mean_score\n\n            print(f\"Iteration {i+1}/{self.n_iter}: score={mean_score:.3f}, params={params}\")\n\n        # Train best model on full dataset\n        self.best_model_ = copy.deepcopy(self.model)\n        self.best_model_.set_params(**self.best_params_)\n        self.best_model_.fit(X, y)\n\n        return self\n\n    def predict(self, X):\n        \"\"\"Predict using best model.\"\"\"\n        return self.best_model_.predict(X)\n\n# Example usage\nfrom sklearn.ensemble import RandomForestClassifier\nfrom scipy.stats import uniform, randint\n\n# Define parameter distributions\nparam_distributions = {\n    'n_estimators': randint(10, 200),\n    'max_depth': randint(3, 20),\n    'min_samples_split': randint(2, 20),\n    'min_samples_leaf': randint(1, 10),\n    'max_features': uniform(0.1, 0.9)\n}\n\n# Create random search\nmodel = RandomForestClassifier()\nrandom_search = RandomizedSearchCV(model, param_distributions,\n                                   n_iter=20, cv=5, random_state=42)\n\n# Generate sample data\nX = np.random.randn(200, 10)\ny = np.random.randint(0, 2, 200)\n\n# Fit\nrandom_search.fit(X, y)\n\nprint(f\"\\nBest parameters: {random_search.best_params_}\")\nprint(f\"Best score: {random_search.best_score_:.3f}\")",
+    "testCases": [],
+    "hints": [
+      "Sample parameters randomly from distributions",
+      "Use scipy.stats distributions for continuous parameters",
+      "Use lists for discrete categorical parameters",
+      "More efficient than grid search for large parameter spaces",
+      "Can explore wider range of parameter values",
+      "Set random_state for reproducibility"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-ex-7-9",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-7",
+    "title": "Calculate Bootstrap Confidence Intervals",
+    "difficulty": 2,
+    "description": "Use bootstrap resampling to estimate confidence intervals.\n\nRequirements:\n- Resample data with replacement\n- Calculate metric on each bootstrap sample\n- Compute confidence interval from bootstrap distribution\n- Support percentile and BCa methods",
+    "starterCode": "import numpy as np\n\ndef bootstrap_confidence_interval(X, y, model, metric_fn,\n                                   n_bootstrap=1000, confidence=0.95):\n    \"\"\"\n    Compute bootstrap confidence interval.\n\n    Args:\n        X: features\n        y: labels\n        model: fitted model\n        metric_fn: function to compute metric\n        n_bootstrap: number of bootstrap samples\n        confidence: confidence level\n\n    Returns:\n        (lower_bound, upper_bound)\n    \"\"\"\n    # TODO: Implement\n    pass",
+    "solution": "import numpy as np\n\ndef bootstrap_confidence_interval(X, y, model, metric_fn,\n                                   n_bootstrap=1000, confidence=0.95,\n                                   random_state=None):\n    \"\"\"\n    Compute bootstrap confidence interval.\n\n    Args:\n        X: features\n        y: labels\n        model: fitted model (already trained)\n        metric_fn: function(y_true, y_pred) -> score\n        n_bootstrap: number of bootstrap samples\n        confidence: confidence level (e.g., 0.95 for 95%)\n\n    Returns:\n        (lower_bound, upper_bound, bootstrap_scores)\n    \"\"\"\n    rng = np.random.RandomState(random_state)\n    n_samples = len(X)\n\n    bootstrap_scores = []\n\n    for _ in range(n_bootstrap):\n        # Resample with replacement\n        indices = rng.choice(n_samples, size=n_samples, replace=True)\n        X_boot = X[indices]\n        y_boot = y[indices]\n\n        # Make predictions\n        y_pred = model.predict(X_boot)\n\n        # Calculate metric\n        score = metric_fn(y_boot, y_pred)\n        bootstrap_scores.append(score)\n\n    bootstrap_scores = np.array(bootstrap_scores)\n\n    # Compute percentile confidence interval\n    alpha = 1 - confidence\n    lower_percentile = (alpha / 2) * 100\n    upper_percentile = (1 - alpha / 2) * 100\n\n    lower_bound = np.percentile(bootstrap_scores, lower_percentile)\n    upper_bound = np.percentile(bootstrap_scores, upper_percentile)\n\n    return lower_bound, upper_bound, bootstrap_scores\n\n# Example usage\nfrom sklearn.linear_model import LogisticRegression\nfrom sklearn.metrics import accuracy_score\n\n# Generate sample data\nX = np.random.randn(100, 5)\ny = np.random.randint(0, 2, 100)\n\n# Train model\nmodel = LogisticRegression()\nmodel.fit(X, y)\n\n# Compute bootstrap CI for accuracy\nlower, upper, scores = bootstrap_confidence_interval(\n    X, y, model, accuracy_score,\n    n_bootstrap=1000, confidence=0.95, random_state=42\n)\n\nprint(f\"Mean accuracy: {np.mean(scores):.3f}\")\nprint(f\"95% CI: [{lower:.3f}, {upper:.3f}]\")\nprint(f\"Standard error: {np.std(scores):.3f}\")",
+    "testCases": [],
+    "hints": [
+      "Bootstrap: resample data with replacement",
+      "Create n_bootstrap resamples of same size as original",
+      "Calculate metric on each resample",
+      "Confidence interval: percentiles of bootstrap distribution",
+      "For 95% CI: use 2.5th and 97.5th percentiles",
+      "Bootstrap provides estimate of sampling variability"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-ex-7-10",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-7",
+    "title": "Implement Learning Curves",
+    "difficulty": 2,
+    "description": "Plot learning curves to diagnose bias vs variance.\n\nRequirements:\n- Train on increasing amounts of data\n- Track training and validation scores\n- Plot scores vs training set size\n- Diagnose overfitting/underfitting",
+    "starterCode": "import numpy as np\n\ndef learning_curve(model, X, y, train_sizes, cv=5):\n    \"\"\"\n    Compute learning curve.\n\n    Args:\n        model: sklearn model\n        X: features\n        y: labels\n        train_sizes: array of training set sizes\n        cv: number of CV folds\n\n    Returns:\n        train_scores, val_scores for each size\n    \"\"\"\n    # TODO: Implement\n    pass",
+    "solution": "import numpy as np\nfrom sklearn.model_selection import ShuffleSplit\nimport matplotlib.pyplot as plt\nimport copy\n\ndef learning_curve(model, X, y, train_sizes, cv=5, random_state=None):\n    \"\"\"\n    Compute learning curve.\n\n    Args:\n        model: sklearn model\n        X: features (n_samples, n_features)\n        y: labels\n        train_sizes: array of training set sizes (or fractions)\n        cv: number of CV folds\n\n    Returns:\n        train_sizes_abs, train_scores, val_scores\n    \"\"\"\n    n_samples = len(X)\n\n    # Convert fractions to absolute numbers\n    if np.max(train_sizes) <= 1.0:\n        train_sizes_abs = (train_sizes * n_samples).astype(int)\n    else:\n        train_sizes_abs = train_sizes.astype(int)\n\n    train_scores_list = []\n    val_scores_list = []\n\n    for train_size in train_sizes_abs:\n        train_scores = []\n        val_scores = []\n\n        # Create CV splitter\n        cv_splitter = ShuffleSplit(n_splits=cv, train_size=train_size,\n                                    random_state=random_state)\n\n        for train_idx, val_idx in cv_splitter.split(X):\n            X_train, X_val = X[train_idx], X[val_idx]\n            y_train, y_val = y[train_idx], y[val_idx]\n\n            # Train model\n            model_copy = copy.deepcopy(model)\n            model_copy.fit(X_train, y_train)\n\n            # Evaluate\n            train_score = model_copy.score(X_train, y_train)\n            val_score = model_copy.score(X_val, y_val)\n\n            train_scores.append(train_score)\n            val_scores.append(val_score)\n\n        train_scores_list.append(train_scores)\n        val_scores_list.append(val_scores)\n\n    return train_sizes_abs, np.array(train_scores_list), np.array(val_scores_list)\n\ndef plot_learning_curve(train_sizes, train_scores, val_scores):\n    \"\"\"Plot learning curves.\"\"\"\n    train_mean = np.mean(train_scores, axis=1)\n    train_std = np.std(train_scores, axis=1)\n    val_mean = np.mean(val_scores, axis=1)\n    val_std = np.std(val_scores, axis=1)\n\n    plt.figure(figsize=(10, 6))\n\n    # Plot training scores\n    plt.plot(train_sizes, train_mean, 'o-', label='Training score')\n    plt.fill_between(train_sizes,\n                     train_mean - train_std,\n                     train_mean + train_std,\n                     alpha=0.1)\n\n    # Plot validation scores\n    plt.plot(train_sizes, val_mean, 'o-', label='Validation score')\n    plt.fill_between(train_sizes,\n                     val_mean - val_std,\n                     val_mean + val_std,\n                     alpha=0.1)\n\n    plt.xlabel('Training Set Size')\n    plt.ylabel('Score')\n    plt.title('Learning Curves')\n    plt.legend(loc='best')\n    plt.grid(True)\n    plt.show()\n\n# Example usage\nfrom sklearn.tree import DecisionTreeClassifier\n\n# Generate sample data\nX = np.random.randn(500, 10)\ny = np.random.randint(0, 2, 500)\n\n# Compute learning curve\nmodel = DecisionTreeClassifier(max_depth=5)\ntrain_sizes = np.linspace(0.1, 1.0, 10)\nsizes, train_scores, val_scores = learning_curve(model, X, y, train_sizes, cv=5)\n\n# Plot\nplot_learning_curve(sizes, train_scores, val_scores)\n\n# Interpret:\n# - High training score, low val score: overfitting\n# - Both scores low: underfitting\n# - Both scores high and close: good fit",
+    "testCases": [],
+    "hints": [
+      "Train on increasingly large subsets of data",
+      "For each subset size, use cross-validation",
+      "Plot both training and validation scores",
+      "High training score + low validation score = overfitting",
+      "Both scores low = underfitting (high bias)",
+      "Scores converging at high value = good fit"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-ex-7-11",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-7",
+    "title": "Implement McNemar Test",
+    "difficulty": 3,
+    "description": "Use McNemar test to compare two classifiers statistically.\n\nRequirements:\n- Build contingency table of agreements/disagreements\n- Apply McNemar chi-squared test\n- Determine if difference is statistically significant\n- Return p-value and test statistic",
+    "starterCode": "import numpy as np\n\ndef mcnemar_test(y_true, y_pred1, y_pred2):\n    \"\"\"\n    Perform McNemar test.\n\n    Args:\n        y_true: true labels\n        y_pred1: predictions from model 1\n        y_pred2: predictions from model 2\n\n    Returns:\n        statistic, p_value\n    \"\"\"\n    # TODO: Implement\n    pass",
+    "solution": "import numpy as np\nfrom scipy.stats import chi2\n\ndef mcnemar_test(y_true, y_pred1, y_pred2):\n    \"\"\"\n    Perform McNemar test to compare two classifiers.\n\n    Args:\n        y_true: true labels\n        y_pred1: predictions from model 1\n        y_pred2: predictions from model 2\n\n    Returns:\n        statistic, p_value\n    \"\"\"\n    y_true = np.array(y_true)\n    y_pred1 = np.array(y_pred1)\n    y_pred2 = np.array(y_pred2)\n\n    # Build contingency table\n    # Rows: model 1 correct/incorrect\n    # Cols: model 2 correct/incorrect\n\n    # Both correct\n    n_11 = np.sum((y_pred1 == y_true) & (y_pred2 == y_true))\n\n    # Model 1 correct, model 2 incorrect\n    n_10 = np.sum((y_pred1 == y_true) & (y_pred2 != y_true))\n\n    # Model 1 incorrect, model 2 correct\n    n_01 = np.sum((y_pred1 != y_true) & (y_pred2 == y_true))\n\n    # Both incorrect\n    n_00 = np.sum((y_pred1 != y_true) & (y_pred2 != y_true))\n\n    print(f\"Contingency table:\")\n    print(f\"  Both correct: {n_11}\")\n    print(f\"  Only M1 correct: {n_10}\")\n    print(f\"  Only M2 correct: {n_01}\")\n    print(f\"  Both incorrect: {n_00}\")\n\n    # McNemar test statistic\n    # Only disagreements matter (n_01 and n_10)\n    if n_10 + n_01 == 0:\n        return 0.0, 1.0  # No disagreements, models identical\n\n    # Chi-squared test with continuity correction\n    statistic = (abs(n_10 - n_01) - 1)**2 / (n_10 + n_01)\n\n    # p-value from chi-squared distribution with 1 df\n    p_value = 1 - chi2.cdf(statistic, df=1)\n\n    return statistic, p_value\n\n# Example usage\nfrom sklearn.tree import DecisionTreeClassifier\nfrom sklearn.ensemble import RandomForestClassifier\n\n# Generate data\nX = np.random.randn(200, 10)\ny = np.random.randint(0, 2, 200)\n\n# Train two models\nmodel1 = DecisionTreeClassifier(max_depth=5, random_state=42)\nmodel2 = RandomForestClassifier(n_estimators=10, random_state=42)\n\nmodel1.fit(X, y)\nmodel2.fit(X, y)\n\n# Predictions\ny_pred1 = model1.predict(X)\ny_pred2 = model2.predict(X)\n\n# McNemar test\nstat, p_value = mcnemar_test(y, y_pred1, y_pred2)\n\nprint(f\"\\nMcNemar statistic: {stat:.3f}\")\nprint(f\"p-value: {p_value:.4f}\")\n\nif p_value < 0.05:\n    print(\"Significant difference between models (p < 0.05)\")\nelse:\n    print(\"No significant difference between models (p >= 0.05)\")",
+    "testCases": [],
+    "hints": [
+      "McNemar test compares paired predictions from two classifiers",
+      "Build 2x2 contingency table of correct/incorrect predictions",
+      "Test statistic: (|n_01 - n_10| - 1)^2 / (n_01 + n_10)",
+      "Only disagreements matter (where one model correct, other incorrect)",
+      "Use chi-squared distribution with 1 degree of freedom",
+      "Null hypothesis: both models have same error rate"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-ex-7-12",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-7",
+    "title": "Calculate Calibration Curve",
+    "difficulty": 3,
+    "description": "Assess probability calibration of classifier.\n\nRequirements:\n- Bin predictions by probability\n- Calculate empirical probability in each bin\n- Plot predicted vs actual probabilities\n- Compute calibration error (ECE)",
+    "starterCode": "import numpy as np\n\ndef calibration_curve(y_true, y_proba, n_bins=10):\n    \"\"\"\n    Compute calibration curve.\n\n    Args:\n        y_true: true binary labels\n        y_proba: predicted probabilities\n        n_bins: number of bins\n\n    Returns:\n        bin_edges, empirical_probs, predicted_probs\n    \"\"\"\n    # TODO: Implement\n    pass",
+    "solution": "import numpy as np\nimport matplotlib.pyplot as plt\n\ndef calibration_curve(y_true, y_proba, n_bins=10):\n    \"\"\"\n    Compute calibration curve.\n\n    Args:\n        y_true: true binary labels (0 or 1)\n        y_proba: predicted probabilities\n        n_bins: number of bins\n\n    Returns:\n        bin_boundaries, empirical_probs, predicted_probs, counts\n    \"\"\"\n    y_true = np.array(y_true)\n    y_proba = np.array(y_proba)\n\n    # Create bins\n    bin_boundaries = np.linspace(0, 1, n_bins + 1)\n    bin_indices = np.digitize(y_proba, bin_boundaries[:-1]) - 1\n    bin_indices = np.clip(bin_indices, 0, n_bins - 1)\n\n    # Calculate empirical and predicted probabilities per bin\n    empirical_probs = []\n    predicted_probs = []\n    counts = []\n\n    for i in range(n_bins):\n        mask = bin_indices == i\n        count = np.sum(mask)\n\n        if count > 0:\n            # Empirical probability (fraction of positive examples)\n            empirical_prob = np.mean(y_true[mask])\n            # Mean predicted probability\n            predicted_prob = np.mean(y_proba[mask])\n        else:\n            empirical_prob = 0\n            predicted_prob = 0\n\n        empirical_probs.append(empirical_prob)\n        predicted_probs.append(predicted_prob)\n        counts.append(count)\n\n    return bin_boundaries, np.array(empirical_probs), np.array(predicted_probs), np.array(counts)\n\ndef expected_calibration_error(empirical_probs, predicted_probs, counts):\n    \"\"\"Compute Expected Calibration Error (ECE).\"\"\"\n    total_count = np.sum(counts)\n    ece = np.sum(counts * np.abs(empirical_probs - predicted_probs)) / total_count\n    return ece\n\ndef plot_calibration_curve(bin_boundaries, empirical_probs, predicted_probs):\n    \"\"\"Plot calibration curve.\"\"\"\n    plt.figure(figsize=(8, 8))\n\n    # Plot calibration curve\n    bin_centers = (bin_boundaries[:-1] + bin_boundaries[1:]) / 2\n    plt.plot(predicted_probs, empirical_probs, 'o-', linewidth=2, label='Calibration curve')\n\n    # Plot perfect calibration\n    plt.plot([0, 1], [0, 1], 'k--', label='Perfect calibration')\n\n    plt.xlabel('Predicted Probability')\n    plt.ylabel('Empirical Probability')\n    plt.title('Calibration Curve')\n    plt.legend()\n    plt.grid(True)\n    plt.xlim([0, 1])\n    plt.ylim([0, 1])\n    plt.show()\n\n# Example usage\nfrom sklearn.naive_bayes import GaussianNB\nfrom sklearn.linear_model import LogisticRegression\n\n# Generate data\nX = np.random.randn(1000, 10)\ny = (X[:, 0] + X[:, 1] > 0).astype(int)\n\n# Train poorly calibrated model (Naive Bayes)\nmodel_uncalibrated = GaussianNB()\nmodel_uncalibrated.fit(X, y)\ny_proba_uncalibrated = model_uncalibrated.predict_proba(X)[:, 1]\n\n# Train well-calibrated model (Logistic Regression)\nmodel_calibrated = LogisticRegression()\nmodel_calibrated.fit(X, y)\ny_proba_calibrated = model_calibrated.predict_proba(X)[:, 1]\n\n# Compute calibration curves\nbins, emp1, pred1, counts1 = calibration_curve(y, y_proba_uncalibrated, n_bins=10)\nece1 = expected_calibration_error(emp1, pred1, counts1)\n\nbins, emp2, pred2, counts2 = calibration_curve(y, y_proba_calibrated, n_bins=10)\nece2 = expected_calibration_error(emp2, pred2, counts2)\n\nprint(f\"Naive Bayes ECE: {ece1:.3f}\")\nprint(f\"Logistic Regression ECE: {ece2:.3f}\")\n\nplot_calibration_curve(bins, emp1, pred1)\nplot_calibration_curve(bins, emp2, pred2)",
+    "testCases": [],
+    "hints": [
+      "Calibration: predicted probabilities match empirical frequencies",
+      "Bin predictions by probability (e.g., 0-0.1, 0.1-0.2, ...)",
+      "In each bin, compute fraction of positive examples",
+      "Plot predicted vs empirical probabilities",
+      "Perfect calibration: points lie on diagonal",
+      "ECE: average absolute difference weighted by bin size"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-ex-7-13",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-7",
+    "title": "Implement Bayesian Optimization",
+    "difficulty": 5,
+    "description": "Build Bayesian optimization for hyperparameter tuning.\n\nRequirements:\n- Use Gaussian Process as surrogate model\n- Implement acquisition function (Expected Improvement)\n- Iteratively select promising hyperparameters\n- Balance exploration vs exploitation",
+    "starterCode": "import numpy as np\n\nclass BayesianOptimization:\n    def __init__(self, f, bounds, n_iter=25):\n        self.f = f  # Objective function\n        self.bounds = bounds\n        self.n_iter = n_iter\n\n    def optimize(self):\n        # TODO: Implement\n        pass",
+    "solution": "import numpy as np\nfrom scipy.stats import norm\nfrom scipy.optimize import minimize\nfrom sklearn.gaussian_process import GaussianProcessRegressor\nfrom sklearn.gaussian_process.kernels import RBF, ConstantKernel\n\nclass BayesianOptimization:\n    def __init__(self, f, bounds, n_iter=25, n_init=5, random_state=None):\n        \"\"\"\n        Bayesian optimization.\n\n        Args:\n            f: objective function to maximize\n            bounds: list of (min, max) for each parameter\n            n_iter: number of iterations\n            n_init: number of random initialization points\n        \"\"\"\n        self.f = f\n        self.bounds = np.array(bounds)\n        self.n_iter = n_iter\n        self.n_init = n_init\n        self.random_state = random_state\n\n        self.X_observed = []\n        self.y_observed = []\n\n    def expected_improvement(self, X, gp, y_max, xi=0.01):\n        \"\"\"\n        Expected Improvement acquisition function.\n\n        Args:\n            X: points to evaluate\n            gp: fitted Gaussian Process\n            y_max: current best observed value\n            xi: exploration parameter\n\n        Returns:\n            expected improvement values\n        \"\"\"\n        mu, sigma = gp.predict(X, return_std=True)\n        sigma = sigma.reshape(-1, 1)\n\n        # Calculate EI\n        with np.errstate(divide='warn'):\n            Z = (mu - y_max - xi) / sigma\n            ei = (mu - y_max - xi) * norm.cdf(Z) + sigma * norm.pdf(Z)\n            ei[sigma == 0.0] = 0.0\n\n        return ei\n\n    def propose_location(self, gp, y_max):\n        \"\"\"Find point that maximizes acquisition function.\"\"\"\n        min_val = float('inf')\n        min_x = None\n\n        # Try multiple random starting points\n        rng = np.random.RandomState(self.random_state)\n        for _ in range(10):\n            x0 = rng.uniform(self.bounds[:, 0], self.bounds[:, 1])\n\n            # Minimize negative EI\n            res = minimize(\n                lambda x: -self.expected_improvement(x.reshape(1, -1), gp, y_max),\n                x0=x0,\n                bounds=self.bounds,\n                method='L-BFGS-B'\n            )\n\n            if res.fun < min_val:\n                min_val = res.fun\n                min_x = res.x\n\n        return min_x\n\n    def optimize(self):\n        \"\"\"Run Bayesian optimization.\"\"\"\n        rng = np.random.RandomState(self.random_state)\n\n        # Random initialization\n        for _ in range(self.n_init):\n            x = rng.uniform(self.bounds[:, 0], self.bounds[:, 1])\n            y = self.f(x)\n            self.X_observed.append(x)\n            self.y_observed.append(y)\n\n        X = np.array(self.X_observed)\n        y = np.array(self.y_observed).reshape(-1, 1)\n\n        # Bayesian optimization loop\n        for i in range(self.n_iter - self.n_init):\n            # Fit Gaussian Process\n            kernel = ConstantKernel(1.0) * RBF(length_scale=1.0)\n            gp = GaussianProcessRegressor(kernel=kernel, n_restarts_optimizer=10)\n            gp.fit(X, y)\n\n            # Find next point to evaluate\n            y_max = np.max(y)\n            x_next = self.propose_location(gp, y_max)\n\n            # Evaluate objective\n            y_next = self.f(x_next)\n\n            # Update observations\n            self.X_observed.append(x_next)\n            self.y_observed.append(y_next)\n\n            X = np.array(self.X_observed)\n            y = np.array(self.y_observed).reshape(-1, 1)\n\n            print(f\"Iteration {i+1}/{self.n_iter - self.n_init}: \"\n                  f\"x={x_next}, f(x)={y_next:.4f}, best={np.max(y):.4f}\")\n\n        # Return best found\n        best_idx = np.argmax(y)\n        return self.X_observed[best_idx], self.y_observed[best_idx]\n\n# Example usage: optimize hyperparameters of a model\nfrom sklearn.svm import SVC\nfrom sklearn.model_selection import cross_val_score\n\n# Generate data\nX_train = np.random.randn(200, 5)\ny_train = np.random.randint(0, 2, 200)\n\ndef objective(params):\n    \"\"\"Objective function: cross-validation score.\"\"\"\n    C, gamma = params\n    model = SVC(C=10**C, gamma=10**gamma)\n    score = cross_val_score(model, X_train, y_train, cv=3).mean()\n    return score\n\n# Optimize\nbounds = [(-3, 3), (-3, 3)]  # log10(C), log10(gamma)\noptimizer = BayesianOptimization(objective, bounds, n_iter=20, random_state=42)\nbest_params, best_score = optimizer.optimize()\n\nprint(f\"\\nBest parameters: C={10**best_params[0]:.3f}, gamma={10**best_params[1]:.3f}\")\nprint(f\"Best score: {best_score:.3f}\")",
+    "testCases": [],
+    "hints": [
+      "Bayesian optimization uses Gaussian Process as surrogate",
+      "Acquisition function balances exploration vs exploitation",
+      "Expected Improvement: how much better than current best?",
+      "Fit GP to observations, maximize acquisition to get next point",
+      "More sample-efficient than random/grid search",
+      "Good for expensive objective functions (e.g., training deep nets)"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-ex-7-14",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-7",
+    "title": "Implement Early Stopping",
+    "difficulty": 2,
+    "description": "Add early stopping to prevent overfitting during training.\n\nRequirements:\n- Monitor validation loss during training\n- Stop if no improvement for patience epochs\n- Restore best weights\n- Support different monitoring criteria",
+    "starterCode": "import numpy as np\n\nclass EarlyStopping:\n    def __init__(self, patience=5, min_delta=0):\n        self.patience = patience\n        self.min_delta = min_delta\n\n    def __call__(self, val_loss):\n        # TODO: Implement\n        pass",
+    "solution": "import numpy as np\n\nclass EarlyStopping:\n    def __init__(self, patience=5, min_delta=0, mode='min'):\n        \"\"\"\n        Early stopping callback.\n\n        Args:\n            patience: number of epochs with no improvement to wait\n            min_delta: minimum change to qualify as improvement\n            mode: 'min' for loss, 'max' for accuracy\n        \"\"\"\n        self.patience = patience\n        self.min_delta = min_delta\n        self.mode = mode\n        self.counter = 0\n        self.best_score = None\n        self.early_stop = False\n        self.best_weights = None\n\n    def is_improvement(self, score):\n        \"\"\"Check if score is an improvement.\"\"\"\n        if self.best_score is None:\n            return True\n\n        if self.mode == 'min':\n            return score < self.best_score - self.min_delta\n        else:  # mode == 'max'\n            return score > self.best_score + self.min_delta\n\n    def __call__(self, score, model_weights=None):\n        \"\"\"\n        Check if training should stop.\n\n        Args:\n            score: validation score (loss or metric)\n            model_weights: current model weights to save\n\n        Returns:\n            should_stop: whether to stop training\n        \"\"\"\n        if self.is_improvement(score):\n            self.best_score = score\n            self.counter = 0\n            if model_weights is not None:\n                self.best_weights = model_weights.copy()\n        else:\n            self.counter += 1\n            if self.counter >= self.patience:\n                self.early_stop = True\n\n        return self.early_stop\n\n# Example usage with PyTorch-style training loop\nimport torch\nimport torch.nn as nn\nimport torch.optim as optim\n\n# Simple neural network\nclass SimpleNN(nn.Module):\n    def __init__(self, input_dim, hidden_dim, output_dim):\n        super().__init__()\n        self.fc1 = nn.Linear(input_dim, hidden_dim)\n        self.fc2 = nn.Linear(hidden_dim, output_dim)\n\n    def forward(self, x):\n        x = torch.relu(self.fc1(x))\n        x = self.fc2(x)\n        return x\n\n# Generate data\nX_train = torch.randn(500, 10)\ny_train = torch.randint(0, 2, (500,))\nX_val = torch.randn(100, 10)\ny_val = torch.randint(0, 2, (100,))\n\n# Setup\nmodel = SimpleNN(10, 20, 2)\noptimizer = optim.Adam(model.parameters(), lr=0.001)\ncriterion = nn.CrossEntropyLoss()\n\n# Early stopping\nearly_stopping = EarlyStopping(patience=5, min_delta=0.001, mode='min')\n\n# Training loop\nfor epoch in range(100):\n    # Training\n    model.train()\n    optimizer.zero_grad()\n    outputs = model(X_train)\n    loss = criterion(outputs, y_train)\n    loss.backward()\n    optimizer.step()\n\n    # Validation\n    model.eval()\n    with torch.no_grad():\n        val_outputs = model(X_val)\n        val_loss = criterion(val_outputs, y_val).item()\n\n    print(f\"Epoch {epoch+1}: train_loss={loss.item():.4f}, val_loss={val_loss:.4f}\")\n\n    # Check early stopping\n    # In PyTorch, you'd save model.state_dict()\n    if early_stopping(val_loss):\n        print(f\"Early stopping triggered at epoch {epoch+1}\")\n        # Restore best weights here\n        break\n\nprint(f\"Best validation loss: {early_stopping.best_score:.4f}\")",
+    "testCases": [],
+    "hints": [
+      "Monitor validation metric during training",
+      "Keep track of best score seen so far",
+      "Increment counter when no improvement",
+      "Stop when counter reaches patience",
+      "Save best weights to restore later",
+      "Use min_delta to avoid stopping on tiny improvements"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-ex-7-15",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-7",
+    "title": "Calculate Matthews Correlation Coefficient",
+    "difficulty": 2,
+    "description": "Compute MCC for binary classification.\n\nRequirements:\n- Calculate from confusion matrix\n- MCC = (TP*TN - FP*FN) / sqrt((TP+FP)(TP+FN)(TN+FP)(TN+FN))\n- Returns value between -1 and 1\n- Better than accuracy for imbalanced datasets",
+    "starterCode": "import numpy as np\n\ndef matthews_corrcoef(y_true, y_pred):\n    \"\"\"\n    Calculate Matthews Correlation Coefficient.\n\n    Args:\n        y_true: true labels\n        y_pred: predicted labels\n\n    Returns:\n        MCC score\n    \"\"\"\n    # TODO: Implement\n    pass",
+    "solution": "import numpy as np\n\ndef matthews_corrcoef(y_true, y_pred):\n    \"\"\"\n    Calculate Matthews Correlation Coefficient.\n\n    Args:\n        y_true: true binary labels (0 or 1)\n        y_pred: predicted labels (0 or 1)\n\n    Returns:\n        MCC score (-1 to 1)\n    \"\"\"\n    y_true = np.array(y_true)\n    y_pred = np.array(y_pred)\n\n    # Calculate confusion matrix elements\n    tp = np.sum((y_true == 1) & (y_pred == 1))\n    tn = np.sum((y_true == 0) & (y_pred == 0))\n    fp = np.sum((y_true == 0) & (y_pred == 1))\n    fn = np.sum((y_true == 1) & (y_pred == 0))\n\n    # Calculate MCC\n    numerator = tp * tn - fp * fn\n    denominator = np.sqrt((tp + fp) * (tp + fn) * (tn + fp) * (tn + fn))\n\n    if denominator == 0:\n        return 0.0\n\n    mcc = numerator / denominator\n\n    return mcc\n\n# Example usage\ny_true = [1, 1, 0, 1, 0, 1, 0, 0, 1, 0]\ny_pred = [1, 0, 0, 1, 0, 1, 1, 0, 1, 0]\n\nmcc = matthews_corrcoef(y_true, y_pred)\nprint(f\"MCC: {mcc:.3f}\")\n\n# Compare with imbalanced dataset\ny_true_imb = [1] * 95 + [0] * 5\ny_pred_imb = [1] * 100  # Predict all positive\n\nfrom sklearn.metrics import accuracy_score\nacc = accuracy_score(y_true_imb, y_pred_imb)\nmcc_imb = matthews_corrcoef(y_true_imb, y_pred_imb)\n\nprint(f\"\\nImbalanced dataset:\")\nprint(f\"Accuracy: {acc:.3f}\")  # 0.95 (misleading!)\nprint(f\"MCC: {mcc_imb:.3f}\")   # Low (correctly shows poor performance)",
+    "testCases": [],
+    "hints": [
+      "MCC takes into account all four confusion matrix values",
+      "Returns value between -1 (total disagreement) and 1 (perfect)",
+      "MCC = 0 means random prediction",
+      "More robust than accuracy for imbalanced classes",
+      "Handle division by zero when denominator is 0",
+      "Formula: (TP*TN - FP*FN) / sqrt((TP+FP)(TP+FN)(TN+FP)(TN+FN))"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-ex-7-16",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-7",
+    "title": "Implement Nested Cross-Validation",
+    "difficulty": 4,
+    "description": "Build nested CV for unbiased model selection and evaluation.\n\nRequirements:\n- Outer loop: estimate generalization performance\n- Inner loop: hyperparameter tuning\n- Avoid data leakage from parameter selection\n- Return unbiased performance estimate",
+    "starterCode": "import numpy as np\n\ndef nested_cross_validation(model, param_grid, X, y,\n                            outer_cv=5, inner_cv=3):\n    \"\"\"\n    Perform nested cross-validation.\n\n    Args:\n        model: sklearn model\n        param_grid: hyperparameter grid\n        X: features\n        y: labels\n        outer_cv: outer CV folds\n        inner_cv: inner CV folds\n\n    Returns:\n        outer_scores, best_params_per_fold\n    \"\"\"\n    # TODO: Implement\n    pass",
+    "solution": "import numpy as np\nfrom sklearn.model_selection import KFold, GridSearchCV\nimport copy\n\ndef nested_cross_validation(model, param_grid, X, y,\n                            outer_cv=5, inner_cv=3, scoring='accuracy'):\n    \"\"\"\n    Perform nested cross-validation.\n\n    Args:\n        model: sklearn model\n        param_grid: hyperparameter grid\n        X: features (n_samples, n_features)\n        y: labels\n        outer_cv: outer CV folds\n        inner_cv: inner CV folds\n        scoring: scoring metric\n\n    Returns:\n        outer_scores, best_params_per_fold\n    \"\"\"\n    outer_kfold = KFold(n_splits=outer_cv, shuffle=True, random_state=42)\n    outer_scores = []\n    best_params_per_fold = []\n\n    for fold_idx, (train_idx, test_idx) in enumerate(outer_kfold.split(X)):\n        print(f\"\\nOuter fold {fold_idx + 1}/{outer_cv}\")\n\n        # Split data\n        X_train, X_test = X[train_idx], X[test_idx]\n        y_train, y_test = y[train_idx], y[test_idx]\n\n        # Inner loop: hyperparameter tuning\n        inner_cv = GridSearchCV(\n            estimator=model,\n            param_grid=param_grid,\n            cv=inner_cv,\n            scoring=scoring,\n            n_jobs=-1\n        )\n\n        inner_cv.fit(X_train, y_train)\n\n        # Best parameters from inner CV\n        best_params = inner_cv.best_params_\n        best_params_per_fold.append(best_params)\n\n        print(f\"  Best params: {best_params}\")\n        print(f\"  Inner CV score: {inner_cv.best_score_:.3f}\")\n\n        # Evaluate on outer test set\n        test_score = inner_cv.score(X_test, y_test)\n        outer_scores.append(test_score)\n\n        print(f\"  Outer test score: {test_score:.3f}\")\n\n    outer_scores = np.array(outer_scores)\n\n    print(f\"\\n{'='*50}\")\n    print(f\"Nested CV Results:\")\n    print(f\"Mean score: {np.mean(outer_scores):.3f} (+/- {np.std(outer_scores):.3f})\")\n    print(f\"Scores: {outer_scores}\")\n\n    return outer_scores, best_params_per_fold\n\n# Example usage\nfrom sklearn.svm import SVC\nfrom sklearn.datasets import make_classification\n\n# Generate data\nX, y = make_classification(n_samples=200, n_features=10,\n                           n_informative=5, random_state=42)\n\n# Define model and parameter grid\nmodel = SVC()\nparam_grid = {\n    'C': [0.1, 1, 10],\n    'kernel': ['linear', 'rbf'],\n    'gamma': ['scale', 'auto']\n}\n\n# Run nested CV\nscores, best_params = nested_cross_validation(\n    model, param_grid, X, y,\n    outer_cv=5, inner_cv=3\n)\n\nprint(f\"\\nBest parameters per fold:\")\nfor i, params in enumerate(best_params):\n    print(f\"  Fold {i+1}: {params}\")",
+    "testCases": [],
+    "hints": [
+      "Nested CV has two loops: outer (evaluation) and inner (tuning)",
+      "Outer loop: estimate true generalization performance",
+      "Inner loop: select best hyperparameters on training data",
+      "Never use test data for hyperparameter selection",
+      "Each outer fold may select different best parameters",
+      "More computationally expensive but gives unbiased estimate"
+    ],
+    "language": "python"
+  }
+]

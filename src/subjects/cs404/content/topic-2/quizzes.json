@@ -1,0 +1,209 @@
+[
+  {
+    "id": "cs404-quiz-2-1",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-2",
+    "title": "Architecture and Design Fundamentals",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "Which architectural pattern is most appropriate for a typical capstone web application?",
+        "options": [
+          "Microservices",
+          "Event-driven architecture",
+          "Layered monolithic architecture",
+          "Peer-to-peer architecture"
+        ],
+        "correctAnswer": 2,
+        "explanation": "A layered monolithic architecture is most appropriate for capstone projects. It provides clear structure without the complexity of microservices."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "What is the primary purpose of the Repository pattern?",
+        "options": [
+          "To store code in version control",
+          "To separate data access logic from business logic",
+          "To cache database queries",
+          "To manage user sessions"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The Repository pattern abstracts data access, allowing business logic to work with data without knowing database implementation details."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "In database design, what does Third Normal Form (3NF) eliminate?",
+        "options": [
+          "All data redundancy",
+          "Transitive dependencies",
+          "Partial dependencies",
+          "Multi-valued dependencies"
+        ],
+        "correctAnswer": 1,
+        "explanation": "3NF eliminates transitive dependencies, ensuring non-key columns depend only on the primary key, not on other non-key columns."
+      },
+      {
+        "id": "q4",
+        "type": "true_false",
+        "prompt": "The Strategy pattern is useful for implementing different algorithms that can be swapped at runtime based on context.",
+        "correctAnswer": true,
+        "explanation": "The Strategy pattern is perfect for swapping between different algorithms at runtime based on context, such as different calculation methods based on activity type."
+      },
+      {
+        "id": "q5",
+        "type": "code_output",
+        "prompt": "Which HTTP status code should be returned when a user tries to access a resource they own but that doesn't exist?",
+        "options": [
+          "401 Unauthorized",
+          "403 Forbidden",
+          "404 Not Found",
+          "422 Unprocessable Entity"
+        ],
+        "correctAnswer": 2,
+        "explanation": "404 Not Found is appropriate when the resource doesn't exist, regardless of authentication status."
+      }
+    ]
+  },
+  {
+    "id": "cs404-quiz-2-2",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-2",
+    "title": "Database and API Design Application",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of database indexes?",
+        "options": [
+          "To backup data",
+          "To speed up query performance",
+          "To enforce data types",
+          "To compress data"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Indexes speed up query performance by creating data structures that allow fast lookups, especially on columns frequently used in WHERE clauses or joins."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "In RESTful API design, which HTTP method should be idempotent?",
+        "options": [
+          "POST",
+          "PUT",
+          "PATCH",
+          "All of the above"
+        ],
+        "correctAnswer": 1,
+        "explanation": "PUT should be idempotent - making the same request multiple times should have the same effect as making it once. POST is not idempotent."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "When should you use a foreign key constraint in your database?",
+        "options": [
+          "Never, they slow down performance",
+          "When you want to enforce referential integrity",
+          "Only in development environments",
+          "Only for many-to-many relationships"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Foreign key constraints enforce referential integrity, ensuring related records exist and preventing orphaned data when records are deleted."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "Which relationship cardinality requires a junction table?",
+        "options": [
+          "One-to-one",
+          "One-to-many",
+          "Many-to-many",
+          "None of them"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Many-to-many relationships require a junction (join) table to map between the two entities, as each entity can be related to multiple instances of the other."
+      },
+      {
+        "id": "q5",
+        "type": "true_false",
+        "prompt": "API versioning (like /api/v1/) allows you to make breaking changes in new versions while maintaining backwards compatibility for existing clients.",
+        "correctAnswer": true,
+        "explanation": "API versioning enables you to introduce breaking changes in newer versions while keeping old versions running for existing clients, ensuring smooth transitions."
+      }
+    ]
+  },
+  {
+    "id": "cs404-quiz-2-3",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-2",
+    "title": "Security and Scalability Mastery",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of password hashing with bcrypt?",
+        "options": [
+          "To encrypt passwords for storage",
+          "To create one-way hash that cannot be reversed",
+          "To compress passwords to save space",
+          "To validate password format"
+        ],
+        "correctAnswer": 1,
+        "explanation": "bcrypt creates a one-way hash that cannot be reversed. You verify passwords by hashing the input and comparing hashes, never storing plain text."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "What is SQL injection and how do you prevent it?",
+        "options": [
+          "A database backup technique",
+          "Malicious SQL in user input; prevent with parameterized queries",
+          "A method to optimize queries",
+          "A way to migrate databases"
+        ],
+        "correctAnswer": 1,
+        "explanation": "SQL injection occurs when attackers insert malicious SQL in user input. Prevent it using parameterized queries/prepared statements, never string concatenation."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "What is CORS and why do browsers enforce it?",
+        "options": [
+          "A database security feature",
+          "Cross-Origin Resource Sharing; prevents malicious sites from accessing your API",
+          "A caching strategy",
+          "A compression algorithm"
+        ],
+        "correctAnswer": 1,
+        "explanation": "CORS (Cross-Origin Resource Sharing) is a security feature that prevents malicious websites from making unauthorized requests to your API from a user's browser."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "What is database connection pooling?",
+        "options": [
+          "Backing up databases together",
+          "Reusing connections instead of creating new ones for each request",
+          "Storing multiple databases in one location",
+          "Sharing data between databases"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Connection pooling maintains a pool of reusable database connections instead of opening/closing connections for each request, improving performance."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of rate limiting in an API?",
+        "options": [
+          "To slow down all requests equally",
+          "To prevent abuse and ensure fair resource usage",
+          "To cache responses",
+          "To version the API"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Rate limiting restricts the number of requests from a client in a time window, preventing abuse, DoS attacks, and ensuring fair resource usage."
+      }
+    ]
+  }
+]

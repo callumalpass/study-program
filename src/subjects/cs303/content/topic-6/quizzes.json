@@ -1,0 +1,221 @@
+[
+  {
+    "id": "cs303-t6-quiz-1",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-6",
+    "title": "Memory Basics",
+    "questions": [
+      {
+        "id": "cs303-t6-q1-1",
+        "type": "multiple_choice",
+        "prompt": "What is stored on the stack?",
+        "options": [
+          "All variables",
+          "Function call frames and local variables",
+          "Global data",
+          "Objects"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The stack stores function call frames including return addresses, parameters, and local variables."
+      },
+      {
+        "id": "cs303-t6-q1-2",
+        "type": "multiple_choice",
+        "prompt": "What is stored on the heap?",
+        "options": [
+          "Only strings",
+          "Dynamically allocated objects with varying lifetimes",
+          "Function code",
+          "Constants"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The heap stores dynamically allocated data whose lifetime isn't tied to function calls."
+      },
+      {
+        "id": "cs303-t6-q1-3",
+        "type": "multiple_choice",
+        "prompt": "What is a memory leak?",
+        "options": [
+          "Physical damage",
+          "Allocated memory that is no longer accessible but not freed",
+          "Data loss",
+          "Buffer overflow"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A memory leak occurs when allocated memory becomes unreachable but isn't deallocated."
+      },
+      {
+        "id": "cs303-t6-q1-4",
+        "type": "multiple_choice",
+        "prompt": "What is a dangling pointer?",
+        "options": [
+          "An unused pointer",
+          "A pointer to memory that has been freed",
+          "A null pointer",
+          "A pointer arithmetic error"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A dangling pointer references memory that has been deallocated, leading to undefined behavior."
+      },
+      {
+        "id": "cs303-t6-q1-5",
+        "type": "multiple_choice",
+        "prompt": "What is RAII (Resource Acquisition Is Initialization)?",
+        "options": [
+          "A programming language",
+          "Tying resource lifetime to object lifetime",
+          "A memory allocator",
+          "An initialization pattern"
+        ],
+        "correctAnswer": 1,
+        "explanation": "RAII ties resource management to object lifetime: acquire in constructor, release in destructor."
+      }
+    ]
+  },
+  {
+    "id": "cs303-t6-quiz-2",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-6",
+    "title": "Garbage Collection",
+    "questions": [
+      {
+        "id": "cs303-t6-q2-1",
+        "type": "multiple_choice",
+        "prompt": "What is the basic principle of garbage collection?",
+        "options": [
+          "Deleting files",
+          "Automatically reclaiming unreachable memory",
+          "Compressing data",
+          "Defragmenting disk"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Garbage collection automatically identifies and reclaims memory that is no longer reachable by the program."
+      },
+      {
+        "id": "cs303-t6-q2-2",
+        "type": "multiple_choice",
+        "prompt": "How does mark-and-sweep work?",
+        "options": [
+          "Marks files for deletion",
+          "Marks reachable objects, sweeps (frees) unmarked objects",
+          "Marks errors",
+          "Sweeps the stack"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Mark-and-sweep traces from roots marking reachable objects, then frees all unmarked objects."
+      },
+      {
+        "id": "cs303-t6-q2-3",
+        "type": "multiple_choice",
+        "prompt": "What is the main problem with reference counting?",
+        "options": [
+          "Too slow",
+          "Cannot reclaim circular references",
+          "Uses too much memory",
+          "Only works for integers"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Reference counting cannot reclaim cycles where objects reference each other but are unreachable from roots."
+      },
+      {
+        "id": "cs303-t6-q2-4",
+        "type": "multiple_choice",
+        "prompt": "What is generational garbage collection based on?",
+        "options": [
+          "Code generations",
+          "The hypothesis that most objects die young",
+          "Generation gaps",
+          "Old programming styles"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Generational GC exploits the observation that most objects are short-lived, focusing collection on young objects."
+      },
+      {
+        "id": "cs303-t6-q2-5",
+        "type": "multiple_choice",
+        "prompt": "What is a GC root?",
+        "options": [
+          "The main function",
+          "A starting point for reachability tracing",
+          "Root directory",
+          "The heap start"
+        ],
+        "correctAnswer": 1,
+        "explanation": "GC roots are the starting points for tracing: global variables, stack references, and registers."
+      }
+    ]
+  },
+  {
+    "id": "cs303-t6-quiz-3",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-6",
+    "title": "Modern Memory Management",
+    "questions": [
+      {
+        "id": "cs303-t6-q3-1",
+        "type": "multiple_choice",
+        "prompt": "What is Rust's ownership system?",
+        "options": [
+          "Copyright management",
+          "Each value has one owner; ownership can be moved or borrowed",
+          "File ownership",
+          "Thread ownership"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Rust's ownership: each value has one owner, transferring ownership moves the value, borrowing allows temporary access."
+      },
+      {
+        "id": "cs303-t6-q3-2",
+        "type": "multiple_choice",
+        "prompt": "What is the borrow checker in Rust?",
+        "options": [
+          "A library checker",
+          "A compiler component that enforces borrowing rules",
+          "A runtime check",
+          "A linter"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Rust's borrow checker statically enforces that references don't outlive their referents and prevents aliased mutation."
+      },
+      {
+        "id": "cs303-t6-q3-3",
+        "type": "multiple_choice",
+        "prompt": "What is region-based memory management?",
+        "options": [
+          "Geographic allocation",
+          "Allocating objects in regions that are freed together",
+          "Regional programming",
+          "Disk regions"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Region-based management groups objects into regions/arenas that are deallocated together, avoiding individual frees."
+      },
+      {
+        "id": "cs303-t6-q3-4",
+        "type": "multiple_choice",
+        "prompt": "What are linear types used for?",
+        "options": [
+          "Linear algebra",
+          "Ensuring values are used exactly once",
+          "Line-by-line processing",
+          "Linear search"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Linear types ensure each value is used exactly once, enabling safe resource management without GC."
+      },
+      {
+        "id": "cs303-t6-q3-5",
+        "type": "multiple_choice",
+        "prompt": "What is a write barrier in garbage collection?",
+        "options": [
+          "Preventing writes",
+          "Code executed on pointer writes to maintain GC invariants",
+          "A memory protection",
+          "A lock"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Write barriers are hooks on pointer updates that maintain information needed by the garbage collector."
+      }
+    ]
+  }
+]

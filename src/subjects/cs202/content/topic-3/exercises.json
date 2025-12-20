@@ -1,0 +1,237 @@
+[
+  {
+    "id": "cs202-t3-ex1",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic3",
+    "type": "written",
+    "title": "Datapath Components",
+    "description": "List the five major components of a basic MIPS datapath and explain the function of each.",
+    "difficulty": 1,
+    "hints": [
+      "Think about what happens in each stage of execution",
+      "Consider both instruction and data memory"
+    ],
+    "solution": "Five major components of MIPS datapath:\n\n1. Program Counter (PC)\n   - 32-bit register holding address of current instruction\n   - Incremented by 4 each cycle (or set by branch/jump)\n   - Input: next PC value, Output: current instruction address\n\n2. Instruction Memory\n   - Read-only memory containing program instructions\n   - Input: PC address, Output: 32-bit instruction\n   - Addressed by PC\n\n3. Register File\n   - 32 general-purpose 32-bit registers\n   - 2 read ports (rs, rt) and 1 write port (rd)\n   - Read is combinational, write on clock edge\n\n4. ALU (Arithmetic Logic Unit)\n   - Performs arithmetic/logical operations\n   - Inputs: two 32-bit operands, ALU control\n   - Outputs: 32-bit result, zero flag\n\n5. Data Memory\n   - RAM for load/store operations\n   - Inputs: address, write data, control signals\n   - Output: read data (for loads)"
+  },
+  {
+    "id": "cs202-t3-ex2",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic3",
+    "type": "written",
+    "title": "Single-Cycle Add Execution",
+    "description": "Trace the execution of \"add $t0, $s1, $s2\" through a single-cycle datapath. List which components are active and what data flows through each.",
+    "difficulty": 2,
+    "hints": [
+      "R-type instruction",
+      "Follow the instruction through IF, decode, execute, writeback"
+    ],
+    "solution": "Trace of \"add $t0, $s1, $s2\" (R-type):\n\n1. Instruction Fetch:\n   - PC provides address to Instruction Memory\n   - Instruction = 0x02328020 fetched\n   - PC + 4 calculated for next instruction\n\n2. Instruction Decode:\n   - opcode = 000000 → R-type, control signals set\n   - rs = 10001 (17) = $s1 → Read Register 1\n   - rt = 10010 (18) = $s2 → Read Register 2\n   - rd = 01000 (8) = $t0 → Write Register\n   - funct = 100000 → ALU operation = ADD\n\n3. Execute:\n   - Read Data 1 ($s1 value) → ALU input A\n   - Read Data 2 ($s2 value) → ALU input B\n   - ALU performs addition\n   - Result = $s1 + $s2\n\n4. Write Back:\n   - ALU result → Write Data input of Register File\n   - RegWrite = 1 (enabled)\n   - Result written to $t0 on clock edge\n\nData Memory NOT used (no load/store)\nControl signals: RegDst=1, ALUSrc=0, MemtoReg=0, RegWrite=1, MemRead=0, MemWrite=0, Branch=0"
+  },
+  {
+    "id": "cs202-t3-ex3",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic3",
+    "type": "written",
+    "title": "Load Word Datapath",
+    "description": "Show how \"lw $t0, 8($s1)\" uses the datapath. Draw the active paths and list all control signals.",
+    "difficulty": 3,
+    "hints": [
+      "I-type instruction",
+      "ALU calculates address",
+      "Data comes from memory, not ALU"
+    ],
+    "solution": "Execution of \"lw $t0, 8($s1)\":\n\nActive Datapath:\nPC → Instr Mem → Decode → Reg File → ALU → Data Mem → Reg File\n                  ↓           ↓        ↓\n               Control      $s1    address(8)\n\nStep-by-step:\n1. Fetch: PC → Instruction Memory → instruction\n\n2. Decode:\n   - opcode = 100011 (lw)\n   - rs = $s1 (base register)\n   - rt = $t0 (destination)\n   - immediate = 8 (offset)\n\n3. Execute:\n   - $s1 value → ALU input A\n   - Sign-extended immediate (8) → ALU input B (via ALUSrc mux)\n   - ALU computes: address = $s1 + 8\n\n4. Memory:\n   - ALU result → Data Memory address\n   - MemRead = 1 → Data read from memory\n\n5. Write Back:\n   - Memory data → Register File (via MemtoReg mux)\n   - Written to $t0\n\nControl Signals:\n- RegDst = 0 (rt is destination, not rd)\n- ALUSrc = 1 (immediate, not register)\n- MemtoReg = 1 (data from memory, not ALU)\n- RegWrite = 1 (write to register)\n- MemRead = 1 (read from memory)\n- MemWrite = 0\n- Branch = 0"
+  },
+  {
+    "id": "cs202-t3-ex4",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic3",
+    "type": "written",
+    "title": "Branch Datapath",
+    "description": "Explain how \"beq $t0, $t1, label\" determines whether to branch. What components are involved and what calculations are performed?",
+    "difficulty": 3,
+    "hints": [
+      "ALU compares registers",
+      "Branch target calculated in parallel",
+      "Zero flag controls branch"
+    ],
+    "solution": "Branch execution for \"beq $t0, $t1, label\":\n\nComponents involved:\n1. Register File - reads $t0 and $t1\n2. ALU - compares values\n3. Adder - calculates branch target\n4. AND gate - combines Branch signal and Zero flag\n5. MUX - selects next PC\n\nCalculations:\n1. ALU performs: $t0 - $t1\n   - If equal: result = 0, Zero flag = 1\n   - If not equal: result ≠ 0, Zero flag = 0\n\n2. Branch target (calculated in parallel):\n   Target = (PC + 4) + (sign-extended offset × 4)\n\n3. Next PC selection:\n   PCSrc = Branch AND Zero\n   - If beq and equal: PCSrc = 1 → next PC = branch target\n   - Otherwise: PCSrc = 0 → next PC = PC + 4\n\nControl Signals:\n- RegDst = X (don't care, no register write)\n- ALUSrc = 0 (compare two registers)\n- MemtoReg = X\n- RegWrite = 0 (no write)\n- MemRead = 0\n- MemWrite = 0\n- Branch = 1 (this is a branch instruction)\n- ALUOp = 01 (subtract for comparison)"
+  },
+  {
+    "id": "cs202-t3-ex5",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic3",
+    "type": "written",
+    "title": "Control Signal Table",
+    "description": "Create a truth table showing control signals for: R-type, lw, sw, beq. Include RegDst, ALUSrc, MemtoReg, RegWrite, MemRead, MemWrite, Branch.",
+    "difficulty": 2,
+    "hints": [
+      "Consider what each instruction needs",
+      "X means \"don't care\""
+    ],
+    "solution": "Control Signal Truth Table:\n\nInstruction | RegDst | ALUSrc | MemtoReg | RegWrite | MemRead | MemWrite | Branch\n------------|--------|--------|----------|----------|---------|----------|-------\nR-type      |   1    |   0    |    0     |    1     |    0    |    0     |   0\nlw          |   0    |   1    |    1     |    1     |    1    |    0     |   0\nsw          |   X    |   1    |    X     |    0     |    0    |    1     |   0\nbeq         |   X    |   0    |    X     |    0     |    0    |    0     |   1\n\nExplanation:\n- RegDst: 1 selects rd (R-type), 0 selects rt (lw)\n- ALUSrc: 1 uses immediate (lw, sw), 0 uses register (R-type, beq)\n- MemtoReg: 1 writes memory data (lw), 0 writes ALU result (R-type)\n- RegWrite: 1 for instructions that write registers (R-type, lw)\n- MemRead: 1 only for load instructions\n- MemWrite: 1 only for store instructions\n- Branch: 1 only for branch instructions\n\nX = don't care (signal has no effect on this instruction)"
+  },
+  {
+    "id": "cs202-t3-ex6",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic3",
+    "type": "written",
+    "title": "ALU Control",
+    "description": "Given ALUOp = 10 (R-type) and funct = 100010 (sub), determine the ALU control signal. Explain the two-level decoding process.",
+    "difficulty": 3,
+    "hints": [
+      "First level: main control sets ALUOp",
+      "Second level: ALU control decodes funct"
+    ],
+    "solution": "Two-level ALU control decoding:\n\nLevel 1: Main Control → ALUOp\n- 00: lw/sw (add for address calculation)\n- 01: beq (subtract for comparison)\n- 10: R-type (look at funct field)\n\nLevel 2: ALU Control Unit\nInput: ALUOp and funct field\nOutput: 4-bit ALU control signal\n\nFor ALUOp = 10, funct = 100010 (sub):\n┌─────────┬────────┬─────────────┐\n│ ALUOp   │ funct  │ ALU Control │\n├─────────┼────────┼─────────────┤\n│   00    │ XXXXXX │    0010     │ (add)\n│   01    │ XXXXXX │    0110     │ (sub)\n│   10    │ 100000 │    0010     │ (add)\n│   10    │ 100010 │    0110     │ (sub) ← This case\n│   10    │ 100100 │    0000     │ (and)\n│   10    │ 100101 │    0001     │ (or)\n│   10    │ 101010 │    0111     │ (slt)\n└─────────┴────────┴─────────────┘\n\nResult: ALU Control = 0110 (subtract)\n\nALU Control signals:\n0000 = AND\n0001 = OR\n0010 = add\n0110 = subtract\n0111 = set-on-less-than"
+  },
+  {
+    "id": "cs202-t3-ex7",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic3",
+    "type": "written",
+    "title": "Single-Cycle Timing",
+    "description": "Given these delays: Instruction Memory 200ps, Register Read 100ps, ALU 200ps, Data Memory 200ps, Register Write 100ps. What is the minimum clock period for single-cycle?",
+    "difficulty": 2,
+    "hints": [
+      "Find the longest path (critical path)",
+      "lw uses all components",
+      "Add up delays on critical path"
+    ],
+    "solution": "Timing analysis for single-cycle datapath:\n\nComponent delays:\n- Instruction Memory: 200ps\n- Register Read: 100ps\n- ALU: 200ps\n- Data Memory: 200ps\n- Register Write: 100ps\n\nPath analysis by instruction type:\n\nR-type path:\nIM + RegRead + ALU + RegWrite\n= 200 + 100 + 200 + 100 = 600ps\n\nLoad (lw) path - CRITICAL:\nIM + RegRead + ALU + DM + RegWrite\n= 200 + 100 + 200 + 200 + 100 = 800ps\n\nStore (sw) path:\nIM + RegRead + ALU + DM\n= 200 + 100 + 200 + 200 = 700ps\n\nBranch (beq) path:\nIM + RegRead + ALU\n= 200 + 100 + 200 = 500ps\n(plus mux and adder for target, typically parallel)\n\nCritical path = lw = 800ps\n\nMinimum clock period = 800ps\nMaximum frequency = 1/800ps = 1.25 GHz\n\nProblem: Clock period must accommodate slowest instruction,\neven though most instructions are faster."
+  },
+  {
+    "id": "cs202-t3-ex8",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic3",
+    "type": "written",
+    "title": "Multi-Cycle Advantages",
+    "description": "Explain three advantages of multi-cycle datapath over single-cycle. Why doesn't every instruction take 5 cycles?",
+    "difficulty": 2,
+    "hints": [
+      "Consider clock period",
+      "Consider resource sharing",
+      "Consider instruction mix"
+    ],
+    "solution": "Advantages of multi-cycle datapath:\n\n1. Shorter Clock Period\n   - Single-cycle: clock = longest instruction (lw = 800ps)\n   - Multi-cycle: clock = longest stage (200ps)\n   - 4× faster clock (though more cycles per instruction)\n\n2. Resource Sharing\n   - Single memory unit (not separate I-mem and D-mem)\n   - Single ALU (not separate adders for PC and branch)\n   - Reduces hardware cost and complexity\n\n3. Variable Instruction Timing\n   - R-type: 4 cycles (no memory access)\n   - lw: 5 cycles\n   - sw: 4 cycles (no writeback)\n   - beq: 3 cycles (no memory, no writeback)\n   - Jump: 3 cycles\n\nWhy not all 5 cycles?\nDifferent instructions need different stages:\n- beq doesn't need MEM or WB stages\n- sw doesn't need WB stage\n- R-type doesn't need MEM stage\n\nAverage CPI example (assuming instruction mix):\n25% lw (5) + 10% sw (4) + 45% R-type (4) + 15% beq (3) + 5% j (3)\n= 1.25 + 0.4 + 1.8 + 0.45 + 0.15 = 4.05 cycles average\n\nEffective speedup depends on instruction mix and cycle time ratio."
+  },
+  {
+    "id": "cs202-t3-ex9",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic3",
+    "type": "written",
+    "title": "Multi-Cycle States",
+    "description": "List the five states of multi-cycle datapath execution and what happens in each state for a load word instruction.",
+    "difficulty": 3,
+    "hints": [
+      "IF, ID, EX, MEM, WB",
+      "Each state takes one clock cycle",
+      "Intermediate values stored in registers"
+    ],
+    "solution": "Multi-cycle states for lw $t0, offset($s1):\n\nState 0: Instruction Fetch (IF)\n- IR = Memory[PC]  (fetch instruction)\n- PC = PC + 4      (increment PC)\n- 1 cycle\n\nState 1: Instruction Decode (ID)\n- A = Reg[rs]      (read $s1 into A register)\n- B = Reg[rt]      (read $t0 into B register - not used for lw)\n- ALUOut = PC + (sign-extend(offset) << 2)  (compute branch target)\n- 1 cycle\n\nState 2: Execution (EX)\n- ALUOut = A + sign-extend(offset)  (compute memory address)\n- 1 cycle\n\nState 3: Memory Access (MEM)\n- MDR = Memory[ALUOut]  (read data from computed address)\n- 1 cycle\n\nState 4: Write Back (WB)\n- Reg[rt] = MDR    (write loaded data to $t0)\n- 1 cycle\n\nTotal: 5 cycles for lw\n\nKey registers added for multi-cycle:\n- IR: Instruction Register (holds current instruction)\n- MDR: Memory Data Register (holds data from memory)\n- A, B: Hold register values between cycles\n- ALUOut: Holds ALU result between cycles"
+  },
+  {
+    "id": "cs202-t3-ex10",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic3",
+    "type": "written",
+    "title": "ALU Design",
+    "description": "Design a 1-bit ALU slice that supports AND, OR, ADD, and SUB. Show how to cascade these for a 32-bit ALU.",
+    "difficulty": 4,
+    "hints": [
+      "Use a mux to select operation",
+      "Full adder for arithmetic",
+      "Binvert input for subtraction"
+    ],
+    "solution": "1-bit ALU slice design:\n\nInputs: a, b, Binvert, CarryIn, Operation[1:0]\nOutputs: Result, CarryOut\n\n         ┌───────────────────────────────────┐\n    b ──►│ 0──┐                              │\n         │    │ Binvert                       │\n   ~b ──►│ 1──┘──┬──────────────────┐        │\n         │       │                   │        │\n         │       ▼                   ▼        │\n         │    ┌─────┐            ┌─────┐     │\n    a ──►│───►│ AND │           │Full │     │\n    b'──►│───►│     │           │Adder│     │\n         │    └──┬──┘           └──┬──┘     │\n         │       │    ┌─────┐     │  │       │\n    a ──►│───────┼───►│ OR  │     │  │       │\n    b'──►│───────┼───►│     │     │  │       │\n         │       │    └──┬──┘     │  │       │\n         │       │       │        │  │       │\n         │       ▼       ▼        ▼  │       │\n         │    ┌──────────────────────┴──┐    │\n         │    │         4:1 MUX         │    │\n         │    │  00  01  10  11         │───►│Result\n         │    └─────────────────────────┘    │\n         │                           CarryOut│───►\n         └───────────────────────────────────┘\n\nOperations (via Operation[1:0]):\n00: AND (a AND b')\n01: OR (a OR b')\n10: ADD (a + b' + CarryIn)\n11: (reserved for SLT)\n\n32-bit ALU:\n- Chain 32 slices, connecting CarryOut to next CarryIn\n- LSB: CarryIn = Binvert (0 for add, 1 for subtract)\n- Binvert: 0 for normal b, 1 for ~b (used in subtraction)\n- Subtract: Binvert=1, CarryIn=1 (a + ~b + 1 = a - b)"
+  },
+  {
+    "id": "cs202-t3-ex11",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic3",
+    "type": "written",
+    "title": "Register File Design",
+    "description": "Design a register file with 32 registers, 2 read ports, and 1 write port. Show how to implement the read and write operations.",
+    "difficulty": 4,
+    "hints": [
+      "Read is combinational (mux)",
+      "Write is clocked (decoder + registers)"
+    ],
+    "solution": "Register File Design (32 × 32-bit):\n\nRead Ports (combinational):\n- 5-bit Read Register 1 → 32:1 MUX → Read Data 1\n- 5-bit Read Register 2 → 32:1 MUX → Read Data 2\n\n         ┌─────────────────────────────┐\n Read1───►│  5-to-32                   │\n         │  Decoder  ──────┐           │\n         │                 │           │\n         │  ┌──────────────▼───────┐   │\n         │  │      32:1 MUX        │──►│ Data1\n         │  │  (selects register)  │   │\n         │  └──────────────────────┘   │\n         │                             │\n Read2───►│  Same structure           │──► Data2\n         └─────────────────────────────┘\n\nWrite Port (clocked):\n         ┌─────────────────────────────┐\n Write───►│  5-to-32    RegWrite       │\n Reg      │  Decoder ────AND───┐       │\n         │     │               │       │\n         │     ▼               ▼       │\n         │  ┌─────┐         ┌─────┐   │\n Write───►│  │Reg 0│◄────────│ EN  │   │\n Data     │  └─────┘         └─────┘   │\n         │  ┌─────┐                    │\n         │  │Reg 1│◄─────── ...        │\n         │  └─────┘                    │\n         │    ...                      │\n         │  ┌─────┐                    │\n         │  │Reg31│◄───────            │\n         │  └─────┘                    │\n         └─────────────────────────────┘\n\nSpecial: Register 0 ($zero) is hardwired to 0\n- Ignore writes to register 0\n- Read always returns 0\n\nTiming:\n- Read: ~register access time (combinational)\n- Write: On rising clock edge when RegWrite=1"
+  },
+  {
+    "id": "cs202-t3-ex12",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic3",
+    "type": "written",
+    "title": "Jump Instruction Support",
+    "description": "The basic datapath handles R-type, lw, sw, beq. What modifications are needed to support the j (jump) instruction?",
+    "difficulty": 3,
+    "hints": [
+      "J-type uses 26-bit address",
+      "Target = PC[31:28] || address || 00",
+      "Need new mux for PC"
+    ],
+    "solution": "Modifications for jump instruction:\n\nJ-format: | opcode(6) | address(26) |\n\nJump target calculation:\nTarget = PC+4[31:28] || address || 00\n       = Upper 4 bits of PC+4\n         concatenated with\n         26-bit address field\n         concatenated with\n         00 (word aligned)\n\nDatapath modifications:\n\n1. Add shift-left-2 unit for address field:\n   address[25:0] << 2 → address[27:0]\n\n2. Concatenation unit:\n   {PC+4[31:28], address[27:0]} → Jump Target\n\n3. Add MUX to PC input:\n   Before: 2:1 MUX (PC+4 or Branch Target)\n   After: 3:1 MUX (PC+4, Branch Target, or Jump Target)\n\n4. New control signal: Jump\n   - Jump = 1 for j instruction\n   - Combined with Branch for PC selection\n\nPC selection logic:\nif (Jump) PC = JumpTarget\nelse if (Branch && Zero) PC = BranchTarget\nelse PC = PC + 4\n\nControl signals for j:\n- RegWrite = 0\n- MemWrite = 0\n- Jump = 1\n- All others = don't care"
+  },
+  {
+    "id": "cs202-t3-ex13",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic3",
+    "type": "written",
+    "title": "Performance Comparison",
+    "description": "Compare performance of single-cycle vs multi-cycle for a program with: 25% loads, 10% stores, 50% ALU, 10% branches, 5% jumps. Component delays: IM=200ps, Reg=100ps, ALU=200ps, DM=200ps.",
+    "difficulty": 4,
+    "hints": [
+      "Calculate CPI for each design",
+      "Single-cycle CPI = 1 but long clock",
+      "Multi-cycle variable CPI but short clock"
+    ],
+    "solution": "Performance analysis:\n\nSingle-Cycle:\n- Clock period = critical path = lw\n- IM + Reg + ALU + DM + Reg = 200+100+200+200+100 = 800ps\n- CPI = 1 (all instructions take 1 cycle)\n- Execution time per instruction = 800ps\n\nMulti-Cycle:\n- Clock period = longest stage = max(IM, Reg, ALU, DM) = 200ps\n- Cycle counts:\n  * lw: 5 cycles\n  * sw: 4 cycles\n  * ALU: 4 cycles\n  * beq: 3 cycles\n  * j: 3 cycles\n\nAverage CPI (weighted):\n= 0.25(5) + 0.10(4) + 0.50(4) + 0.10(3) + 0.05(3)\n= 1.25 + 0.40 + 2.00 + 0.30 + 0.15\n= 4.10 cycles\n\nMulti-cycle execution time = 4.10 × 200ps = 820ps\n\nComparison:\n- Single-cycle: 800ps per instruction\n- Multi-cycle: 820ps per instruction (average)\n\nIn this case, single-cycle is slightly faster!\nBut multi-cycle uses less hardware (shared ALU, single memory).\n\nMulti-cycle wins when:\n- Instruction mix has more fast instructions (branches, jumps)\n- Memory is slower (larger DM delay increases single-cycle clock)"
+  },
+  {
+    "id": "cs202-t3-ex14",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic3",
+    "type": "written",
+    "title": "Control Unit FSM",
+    "description": "Draw the finite state machine (states and transitions) for the multi-cycle control unit handling lw, sw, and R-type instructions.",
+    "difficulty": 4,
+    "hints": [
+      "Start with common IF and ID states",
+      "Branch based on opcode",
+      "Each instruction type has different path"
+    ],
+    "solution": "Multi-cycle Control FSM:\n\nState 0: Instruction Fetch (IF)\n  - IR = Mem[PC], PC = PC + 4\n  - Next: State 1\n\nState 1: Instruction Decode (ID)\n  - A = Reg[rs], B = Reg[rt]\n  - ALUOut = PC + (offset << 2)  [for branch target]\n  - Next: based on opcode\n    * R-type → State 6\n    * lw/sw → State 2\n    * beq → State 8\n\nState 2: Memory Address (for lw/sw)\n  - ALUOut = A + sign-extend(offset)\n  - Next: lw → State 3, sw → State 5\n\nState 3: Memory Read (lw)\n  - MDR = Mem[ALUOut]\n  - Next: State 4\n\nState 4: Write Back (lw)\n  - Reg[rt] = MDR\n  - Next: State 0 (done)\n\nState 5: Memory Write (sw)\n  - Mem[ALUOut] = B\n  - Next: State 0 (done)\n\nState 6: Execute (R-type)\n  - ALUOut = A op B\n  - Next: State 7\n\nState 7: R-type Write Back\n  - Reg[rd] = ALUOut\n  - Next: State 0 (done)\n\nState 8: Branch Complete (beq)\n  - if (A == B) PC = ALUOut\n  - Next: State 0 (done)\n\nFSM Diagram:\n       ┌──────────────────────────────┐\n       │                              │\n       ▼                              │\n   [State 0] ──► [State 1] ──┬──► [State 6] ──► [State 7] ──┘\n       IF           ID       │       EX           WB\n                             │\n                             ├──► [State 2] ──┬──► [State 3] ──► [State 4] ──┘\n                             │    MemAddr     │    MemRead       WB (lw)\n                             │                │\n                             │                └──► [State 5] ──────────────┘\n                             │                     MemWrite (sw)\n                             │\n                             └──► [State 8] ──────────────────────────────┘\n                                  Branch"
+  },
+  {
+    "id": "cs202-t3-ex15",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic3",
+    "type": "written",
+    "title": "Sign Extension",
+    "description": "Explain why sign extension is needed for I-type instructions. Show the sign extension of 0xFFFC (16-bit) to 32 bits.",
+    "difficulty": 2,
+    "hints": [
+      "Immediate is 16 bits, ALU needs 32 bits",
+      "Preserve the numeric value",
+      "Copy the sign bit"
+    ],
+    "solution": "Why sign extension is needed:\n\nI-type immediate field is 16 bits, but:\n- ALU operates on 32-bit values\n- Addresses are 32 bits\n- Must preserve the signed value\n\nSign extension rule:\n- Copy the most significant bit (sign bit) to fill upper bits\n- Preserves the two's complement value\n\nExample: Sign-extend 0xFFFC (16-bit)\n\n16-bit value: 1111 1111 1111 1100\nDecimal: -4 (two's complement)\n\nSign bit = 1 (negative number)\n\nSign-extended to 32 bits:\n1111 1111 1111 1111 1111 1111 1111 1100\n= 0xFFFFFFFC\nDecimal: -4 ✓ (same value)\n\nExample: Sign-extend 0x0004 (16-bit)\n\n16-bit value: 0000 0000 0000 0100\nDecimal: +4\n\nSign bit = 0 (positive number)\n\nSign-extended to 32 bits:\n0000 0000 0000 0000 0000 0000 0000 0100\n= 0x00000004\nDecimal: +4 ✓\n\nHardware implementation:\n- Take bit 15 of immediate\n- Replicate it 16 times as upper bits\n- Concatenate: {16{imm[15]}, imm[15:0]}"
+  },
+  {
+    "id": "cs202-t3-ex16",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic3",
+    "type": "written",
+    "title": "Extending the ISA",
+    "description": "What datapath and control modifications would be needed to add the \"addi\" instruction to our basic MIPS implementation?",
+    "difficulty": 3,
+    "hints": [
+      "addi is I-type",
+      "Similar to lw but no memory access",
+      "rt is destination (not rd)"
+    ],
+    "solution": "Adding addi $rt, $rs, immediate:\n\nInstruction format: I-type\nopcode | rs | rt | immediate(16)\n\nDesired operation: Reg[rt] = Reg[rs] + sign-extend(imm)\n\nDatapath analysis:\n- Reads rs from register file ✓ (already exists)\n- Uses sign-extended immediate ✓ (already exists)\n- ALU adds them ✓ (already exists)\n- Writes result to rt ✓ (rt path exists for lw)\n\nDatapath modifications needed: NONE!\nThe existing datapath already supports this path.\n\nControl modifications:\n\nNeed to recognize addi opcode (001000) and set:\n- RegDst = 0 (write to rt, not rd) - same as lw\n- ALUSrc = 1 (use immediate) - same as lw\n- MemtoReg = 0 (ALU result, not memory) - same as R-type\n- RegWrite = 1 - same as lw/R-type\n- MemRead = 0 - same as R-type\n- MemWrite = 0 - same as everything except sw\n- Branch = 0\n- ALUOp = 00 (add) - same as lw\n\nControl table addition:\nInstruction | RegDst | ALUSrc | MemtoReg | RegWrite | MemRead | MemWrite | Branch | ALUOp\naddi        |   0    |   1    |    0     |    1     |    0    |    0     |   0    |  00\n\nSummary: Only control unit needs modification (add new opcode decoding).\nNo new datapath components required."
+  }
+]

@@ -1,0 +1,192 @@
+[
+  {
+    "id": "cs205-quiz-3-1",
+    "subjectId": "cs205",
+    "topicId": "cs205-3",
+    "title": "Join Operations",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "Which join returns all rows from the left table and matching rows from the right?",
+        "options": [
+          "INNER JOIN",
+          "LEFT JOIN",
+          "RIGHT JOIN",
+          "FULL JOIN"
+        ],
+        "correctAnswer": 1,
+        "explanation": "LEFT JOIN (LEFT OUTER JOIN) returns all left table rows with matched right table rows or NULL."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "What does CROSS JOIN produce?",
+        "options": [
+          "Only matching rows",
+          "Cartesian product of both tables",
+          "Union of both tables",
+          "Intersection of tables"
+        ],
+        "correctAnswer": 1,
+        "explanation": "CROSS JOIN produces the Cartesian product—every combination of rows from both tables."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "A self-join is a join of a table with itself.",
+        "correctAnswer": true,
+        "explanation": "Self-joins are used to compare rows within the same table, like finding employees and their managers."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "In an INNER JOIN, what happens to rows without matches?",
+        "options": [
+          "They appear with NULL values",
+          "They are excluded from results",
+          "They cause an error",
+          "They appear at the end"
+        ],
+        "correctAnswer": 1,
+        "explanation": "INNER JOIN only returns rows that have matches in both tables."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "A join that matches rows based on columns with the same name is called a ______ join.",
+        "correctAnswer": "natural",
+        "explanation": "NATURAL JOIN automatically matches all columns with identical names in both tables."
+      }
+    ]
+  },
+  {
+    "id": "cs205-quiz-3-2",
+    "subjectId": "cs205",
+    "topicId": "cs205-3",
+    "title": "Subqueries",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "Which operator checks if a subquery returns any rows?",
+        "options": [
+          "IN",
+          "EXISTS",
+          "ANY",
+          "SOME"
+        ],
+        "correctAnswer": 1,
+        "explanation": "EXISTS returns true if the subquery returns at least one row."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "What is a correlated subquery?",
+        "options": [
+          "A subquery that runs once",
+          "A subquery that references outer query columns",
+          "A subquery in the FROM clause",
+          "A subquery that returns one value"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Correlated subqueries reference columns from the outer query and execute once per outer row."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "A scalar subquery must return exactly one value.",
+        "correctAnswer": true,
+        "explanation": "Scalar subqueries return a single value and can be used where single values are expected."
+      },
+      {
+        "id": "q4",
+        "type": "code_output",
+        "prompt": "What does this query find?",
+        "codeSnippet": "SELECT Name FROM Employees\nWHERE Salary > (SELECT AVG(Salary) FROM Employees);",
+        "options": [
+          "Employees with maximum salary",
+          "Employees earning above average",
+          "The average salary",
+          "All employee names"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The subquery calculates average salary, and the outer query finds employees earning more than that."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "Which clause allows a subquery to be treated as a table?",
+        "options": [
+          "WHERE",
+          "SELECT",
+          "FROM",
+          "HAVING"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Subqueries in the FROM clause (derived tables) act as temporary tables."
+      }
+    ]
+  },
+  {
+    "id": "cs205-quiz-3-3",
+    "subjectId": "cs205",
+    "topicId": "cs205-3",
+    "title": "Window Functions",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "What distinguishes window functions from GROUP BY aggregations?",
+        "options": [
+          "Window functions are faster",
+          "Window functions keep individual rows",
+          "Window functions cannot use aggregates",
+          "Window functions require indexes"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Window functions compute values across rows while preserving individual rows in the output."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "What does ROW_NUMBER() do?",
+        "options": [
+          "Counts total rows",
+          "Assigns sequential numbers to rows",
+          "Numbers columns",
+          "Returns row data"
+        ],
+        "correctAnswer": 1,
+        "explanation": "ROW_NUMBER() assigns a unique sequential integer to each row within a partition."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "RANK() and DENSE_RANK() produce the same results when there are no ties.",
+        "correctAnswer": true,
+        "explanation": "Without ties, both functions produce identical sequential numbers. They differ only in handling ties."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "What does PARTITION BY do in a window function?",
+        "options": [
+          "Sorts the results",
+          "Divides rows into groups for separate calculations",
+          "Limits the number of results",
+          "Joins tables"
+        ],
+        "correctAnswer": 1,
+        "explanation": "PARTITION BY divides the result set into partitions where the window function is applied independently."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "The ______() function accesses data from a previous row without a self-join.",
+        "correctAnswer": "LAG",
+        "explanation": "LAG() accesses previous row values; LEAD() accesses subsequent row values."
+      }
+    ]
+  }
+]

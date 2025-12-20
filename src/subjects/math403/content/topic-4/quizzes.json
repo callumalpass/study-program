@@ -1,0 +1,185 @@
+[
+  {
+    "id": "math403-quiz-4-1",
+    "subjectId": "math403",
+    "topicId": "math403-topic-4",
+    "title": "Connectedness - Fundamentals",
+    "questions": [
+      {
+        "id": "math403-q4-1-1",
+        "type": "multiple_choice",
+        "prompt": "A space X is connected if and only if:",
+        "options": [
+          "X cannot be written as a union of two disjoint nonempty open sets",
+          "X is path connected",
+          "Every continuous function f: X → {0, 1} is constant",
+          "Both (a) and (c)"
+        ],
+        "correctAnswer": 3,
+        "explanation": "X is connected iff it cannot be separated into two disjoint nonempty open sets, which is equivalent to every continuous function to the discrete space {0, 1} being constant."
+      },
+      {
+        "id": "math403-q4-1-2",
+        "type": "true_false",
+        "prompt": "Every path connected space is connected.",
+        "correctAnswer": true,
+        "explanation": "True. Path connectedness implies connectedness. However, the converse is false (e.g., the topologist's sine curve)."
+      },
+      {
+        "id": "math403-q4-1-3",
+        "type": "multiple_choice",
+        "prompt": "Which of the following is connected in ℝ with standard topology?",
+        "options": [
+          "[0, 1] ∪ [2, 3]",
+          "(0, 1) ∪ (1, 2)",
+          "[0, 2]",
+          "ℚ (the rationals)"
+        ],
+        "correctAnswer": 2,
+        "explanation": "[0, 2] is connected (all intervals in ℝ are connected). The other options can be separated into disjoint open sets."
+      },
+      {
+        "id": "math403-q4-1-4",
+        "type": "true_false",
+        "prompt": "The continuous image of a connected space is connected.",
+        "correctAnswer": true,
+        "explanation": "True. Connectedness is preserved by continuous functions. If f: X → Y is continuous and X is connected, then f(X) is connected."
+      },
+      {
+        "id": "math403-q4-1-5",
+        "type": "multiple_choice",
+        "prompt": "A connected component of a space X is:",
+        "options": [
+          "The largest connected subset containing a point",
+          "Any connected subset",
+          "A path connected subset",
+          "An open connected subset"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The connected component of x is the maximal connected set containing x. Every point belongs to exactly one connected component."
+      }
+    ]
+  },
+  {
+    "id": "math403-quiz-4-2",
+    "subjectId": "math403",
+    "topicId": "math403-topic-4",
+    "title": "Connectedness - Applications",
+    "questions": [
+      {
+        "id": "math403-q4-2-1",
+        "type": "true_false",
+        "prompt": "ℝ \\ {0} is connected in the standard topology.",
+        "correctAnswer": false,
+        "explanation": "False. ℝ \\ {0} = (-∞, 0) ∪ (0, ∞) is disconnected. It can be written as two disjoint nonempty open sets."
+      },
+      {
+        "id": "math403-q4-2-2",
+        "type": "multiple_choice",
+        "prompt": "If A ⊆ B ⊆ cl(A) and A is connected, then:",
+        "options": [
+          "B must be connected",
+          "B may or may not be connected",
+          "cl(A) is connected",
+          "Both (a) and (c)"
+        ],
+        "correctAnswer": 3,
+        "explanation": "If A is connected and A ⊆ B ⊆ cl(A), then B is connected. In particular, the closure of a connected set is connected."
+      },
+      {
+        "id": "math403-q4-2-3",
+        "type": "multiple_choice",
+        "prompt": "The Intermediate Value Theorem states:",
+        "options": [
+          "Continuous functions map connected sets to connected sets",
+          "If f: [a,b] → ℝ is continuous and f(a) < c < f(b), then c is in the range",
+          "Connected spaces are path connected",
+          "All intervals are connected"
+        ],
+        "correctAnswer": 1,
+        "explanation": "IVT: If f is continuous on [a,b] and f(a) < c < f(b), then ∃x ∈ (a,b) with f(x) = c. This follows from connectedness of intervals."
+      },
+      {
+        "id": "math403-q4-2-4",
+        "type": "true_false",
+        "prompt": "A space is totally disconnected if its only connected subsets are singletons.",
+        "correctAnswer": true,
+        "explanation": "True. In a totally disconnected space, the connected components are precisely the singleton sets. Example: ℚ with subspace topology from ℝ."
+      },
+      {
+        "id": "math403-q4-2-5",
+        "type": "multiple_choice",
+        "prompt": "Which space is NOT connected?",
+        "options": [
+          "S¹ (the circle)",
+          "ℝ²",
+          "The Cantor set",
+          "[0, 1]"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The Cantor set is totally disconnected. The others are all connected (in fact, path connected)."
+      }
+    ]
+  },
+  {
+    "id": "math403-quiz-4-3",
+    "subjectId": "math403",
+    "topicId": "math403-topic-4",
+    "title": "Connectedness - Advanced",
+    "questions": [
+      {
+        "id": "math403-q4-3-1",
+        "type": "multiple_choice",
+        "prompt": "A space X is locally connected if:",
+        "options": [
+          "Every point has arbitrarily small connected neighborhoods",
+          "X is connected",
+          "Every connected component is open",
+          "Both (a) and (c)"
+        ],
+        "correctAnswer": 3,
+        "explanation": "X is locally connected iff every point has a local basis of connected sets, which is equivalent to connected components being open."
+      },
+      {
+        "id": "math403-q4-3-2",
+        "type": "true_false",
+        "prompt": "Every connected space is locally connected.",
+        "correctAnswer": false,
+        "explanation": "False. The topologist's sine curve is connected but not locally connected. Connectedness is global; local connectedness is a local property."
+      },
+      {
+        "id": "math403-q4-3-3",
+        "type": "multiple_choice",
+        "prompt": "Path components are:",
+        "options": [
+          "Always equal to connected components",
+          "Equivalence classes under the path-equivalence relation",
+          "Always open sets",
+          "Always closed sets"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Path components are equivalence classes where x ~ y if there's a path connecting them. They may not equal connected components."
+      },
+      {
+        "id": "math403-q4-3-4",
+        "type": "true_false",
+        "prompt": "If X and Y are connected, then X × Y is connected.",
+        "correctAnswer": true,
+        "explanation": "True. The product of connected spaces is connected. This extends to arbitrary products by Tychonoff-like arguments."
+      },
+      {
+        "id": "math403-q4-3-5",
+        "type": "multiple_choice",
+        "prompt": "Which space is connected but not path connected?",
+        "options": [
+          "ℝ",
+          "The topologist's sine curve",
+          "[0, 1] ∪ [2, 3]",
+          "S¹"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The topologist's sine curve {(x, sin(1/x)) : x > 0} ∪ {(0, y) : -1 ≤ y ≤ 1} is connected but not path connected."
+      }
+    ]
+  }
+]

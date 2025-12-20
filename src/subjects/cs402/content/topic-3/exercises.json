@@ -1,0 +1,306 @@
+[
+  {
+    "id": "cs402-t3-ex01",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-3",
+    "title": "Calculate Gini Impurity",
+    "difficulty": 2,
+    "description": "Implement Gini impurity for decision tree splitting.\n\nRequirements:\n- Calculate class probabilities\n- Gini = 1 - Σ(p_i²)\n- Return impurity score (0 = pure, 0.5 = mixed for binary)\n- Handle multiple classes",
+    "starterCode": "import numpy as np\n\ndef gini_impurity(y):\n    \"\"\"\n    Calculate Gini impurity of a node.\n\n    Args:\n        y: Labels in the node\n\n    Returns:\n        Gini impurity score\n    \"\"\"\n    # TODO: Implement Gini impurity\n    pass",
+    "solution": "import numpy as np\n\ndef gini_impurity(y):\n    \"\"\"\n    Calculate Gini impurity of a node.\n\n    Args:\n        y: Labels in the node\n\n    Returns:\n        Gini impurity score\n    \"\"\"\n    if len(y) == 0:\n        return 0\n\n    # Calculate class probabilities\n    classes, counts = np.unique(y, return_counts=True)\n    probabilities = counts / len(y)\n\n    # Gini = 1 - sum(p_i^2)\n    gini = 1 - np.sum(probabilities ** 2)\n\n    return gini",
+    "testCases": [],
+    "hints": [
+      "Gini = 1 - sum of squared probabilities",
+      "Pure node (all same class) has Gini = 0",
+      "Maximum impurity for binary: Gini = 0.5",
+      "Use np.unique() to count class occurrences",
+      "Probabilities = counts / total samples"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-t3-ex02",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-3",
+    "title": "Calculate Entropy",
+    "difficulty": 2,
+    "description": "Implement entropy for information gain calculation.\n\nRequirements:\n- Calculate class probabilities\n- Entropy = -Σ(p_i * log2(p_i))\n- Handle p = 0 case\n- Return entropy score",
+    "starterCode": "import numpy as np\n\ndef entropy(y):\n    \"\"\"\n    Calculate entropy of a node.\n\n    Args:\n        y: Labels in the node\n\n    Returns:\n        Entropy score\n    \"\"\"\n    # TODO: Implement entropy\n    pass",
+    "solution": "import numpy as np\n\ndef entropy(y):\n    \"\"\"\n    Calculate entropy of a node.\n\n    Args:\n        y: Labels in the node\n\n    Returns:\n        Entropy score\n    \"\"\"\n    if len(y) == 0:\n        return 0\n\n    # Calculate class probabilities\n    classes, counts = np.unique(y, return_counts=True)\n    probabilities = counts / len(y)\n\n    # Entropy = -sum(p_i * log2(p_i))\n    # Filter out zero probabilities to avoid log(0)\n    probabilities = probabilities[probabilities > 0]\n    ent = -np.sum(probabilities * np.log2(probabilities))\n\n    return ent",
+    "testCases": [],
+    "hints": [
+      "Entropy = -sum(p * log2(p))",
+      "Pure node has entropy = 0",
+      "Filter out zero probabilities before log",
+      "Use np.log2() for base-2 logarithm",
+      "Maximum entropy for binary: 1 bit"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-t3-ex03",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-3",
+    "title": "Calculate Information Gain",
+    "difficulty": 2,
+    "description": "Calculate information gain for a split decision.\n\nRequirements:\n- Calculate parent entropy\n- Calculate weighted child entropies\n- Information Gain = parent_entropy - weighted_child_entropy\n- Return gain value",
+    "starterCode": "import numpy as np\n\ndef information_gain(y_parent, y_left, y_right):\n    \"\"\"\n    Calculate information gain from a split.\n\n    Args:\n        y_parent: Labels before split\n        y_left: Labels in left child\n        y_right: Labels in right child\n\n    Returns:\n        Information gain\n    \"\"\"\n    # TODO: Implement information gain\n    pass",
+    "solution": "import numpy as np\n\ndef entropy(y):\n    \"\"\"Calculate entropy.\"\"\"\n    if len(y) == 0:\n        return 0\n    classes, counts = np.unique(y, return_counts=True)\n    probabilities = counts / len(y)\n    probabilities = probabilities[probabilities > 0]\n    return -np.sum(probabilities * np.log2(probabilities))\n\ndef information_gain(y_parent, y_left, y_right):\n    \"\"\"\n    Calculate information gain from a split.\n\n    Args:\n        y_parent: Labels before split\n        y_left: Labels in left child\n        y_right: Labels in right child\n\n    Returns:\n        Information gain\n    \"\"\"\n    n = len(y_parent)\n    n_left = len(y_left)\n    n_right = len(y_right)\n\n    # Parent entropy\n    parent_entropy = entropy(y_parent)\n\n    # Weighted child entropy\n    if n_left == 0 or n_right == 0:\n        return 0\n\n    child_entropy = (n_left / n) * entropy(y_left) + (n_right / n) * entropy(y_right)\n\n    # Information gain\n    gain = parent_entropy - child_entropy\n\n    return gain",
+    "testCases": [],
+    "hints": [
+      "Information Gain = H(parent) - weighted_H(children)",
+      "Weight by proportion of samples in each child",
+      "Higher gain = better split",
+      "If all samples go to one child, gain = 0",
+      "Choose split with maximum information gain"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-t3-ex04",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-3",
+    "title": "Find Best Split",
+    "difficulty": 3,
+    "description": "Find the best feature and threshold to split a node.\n\nRequirements:\n- Try all features and thresholds\n- Calculate information gain for each split\n- Return best feature index and threshold\n- Handle continuous features",
+    "starterCode": "import numpy as np\n\ndef find_best_split(X, y):\n    \"\"\"\n    Find best feature and threshold for splitting.\n\n    Args:\n        X: Feature matrix (n_samples, n_features)\n        y: Labels\n\n    Returns:\n        best_feature: Index of best feature\n        best_threshold: Best threshold value\n        best_gain: Information gain achieved\n    \"\"\"\n    # TODO: Implement best split finding\n    pass",
+    "solution": "import numpy as np\n\ndef entropy(y):\n    \"\"\"Calculate entropy.\"\"\"\n    if len(y) == 0:\n        return 0\n    classes, counts = np.unique(y, return_counts=True)\n    probabilities = counts / len(y)\n    probabilities = probabilities[probabilities > 0]\n    return -np.sum(probabilities * np.log2(probabilities))\n\ndef information_gain(y_parent, y_left, y_right):\n    \"\"\"Calculate information gain.\"\"\"\n    n = len(y_parent)\n    n_left = len(y_left)\n    n_right = len(y_right)\n\n    if n_left == 0 or n_right == 0:\n        return 0\n\n    parent_entropy = entropy(y_parent)\n    child_entropy = (n_left / n) * entropy(y_left) + (n_right / n) * entropy(y_right)\n    return parent_entropy - child_entropy\n\ndef find_best_split(X, y):\n    \"\"\"\n    Find best feature and threshold for splitting.\n\n    Args:\n        X: Feature matrix (n_samples, n_features)\n        y: Labels\n\n    Returns:\n        best_feature: Index of best feature\n        best_threshold: Best threshold value\n        best_gain: Information gain achieved\n    \"\"\"\n    X = np.array(X)\n    y = np.array(y)\n    n_samples, n_features = X.shape\n\n    best_gain = -1\n    best_feature = None\n    best_threshold = None\n\n    # Try each feature\n    for feature_idx in range(n_features):\n        feature_values = X[:, feature_idx]\n\n        # Try each unique value as threshold\n        thresholds = np.unique(feature_values)\n\n        for threshold in thresholds:\n            # Split data\n            left_mask = feature_values <= threshold\n            right_mask = ~left_mask\n\n            if np.sum(left_mask) == 0 or np.sum(right_mask) == 0:\n                continue\n\n            y_left = y[left_mask]\n            y_right = y[right_mask]\n\n            # Calculate gain\n            gain = information_gain(y, y_left, y_right)\n\n            if gain > best_gain:\n                best_gain = gain\n                best_feature = feature_idx\n                best_threshold = threshold\n\n    return best_feature, best_threshold, best_gain",
+    "testCases": [],
+    "hints": [
+      "Try every feature and every unique value as threshold",
+      "Split data: left (<=threshold), right (>threshold)",
+      "Calculate information gain for each split",
+      "Keep track of best split seen so far",
+      "Skip splits that put all samples in one child"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-t3-ex05",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-3",
+    "title": "Implement Decision Tree Node",
+    "difficulty": 3,
+    "description": "Create a node class for decision tree structure.\n\nRequirements:\n- Store feature, threshold for internal nodes\n- Store value for leaf nodes\n- Track left and right children\n- Implement is_leaf method",
+    "starterCode": "class TreeNode:\n    def __init__(self):\n        \"\"\"Initialize tree node.\"\"\"\n        # TODO: Define node attributes\n        pass\n\n    def is_leaf(self):\n        \"\"\"Check if node is a leaf.\"\"\"\n        # TODO: Implement is_leaf\n        pass",
+    "solution": "class TreeNode:\n    def __init__(self, feature=None, threshold=None, left=None, right=None, value=None):\n        \"\"\"\n        Initialize tree node.\n\n        For internal nodes: feature, threshold, left, right are set\n        For leaf nodes: value is set\n        \"\"\"\n        self.feature = feature      # Feature index to split on\n        self.threshold = threshold  # Threshold value for split\n        self.left = left           # Left child node\n        self.right = right         # Right child node\n        self.value = value         # Class label for leaf node\n\n    def is_leaf(self):\n        \"\"\"Check if node is a leaf.\"\"\"\n        return self.value is not None",
+    "testCases": [],
+    "hints": [
+      "Internal nodes have feature and threshold",
+      "Leaf nodes have value (class label)",
+      "Left and right store child nodes",
+      "Node is leaf if it has no children",
+      "value is None for internal nodes"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-t3-ex06",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-3",
+    "title": "Implement Basic Decision Tree",
+    "difficulty": 4,
+    "description": "Implement a basic decision tree classifier from scratch.\n\nRequirements:\n- Recursive tree building\n- Stop at max depth or pure nodes\n- Use Gini impurity for splitting\n- Implement fit and predict methods",
+    "starterCode": "import numpy as np\n\nclass DecisionTreeClassifier:\n    def __init__(self, max_depth=5, min_samples_split=2):\n        self.max_depth = max_depth\n        self.min_samples_split = min_samples_split\n        self.root = None\n\n    def fit(self, X, y):\n        \"\"\"Build decision tree.\"\"\"\n        # TODO: Implement tree building\n        pass\n\n    def predict(self, X):\n        \"\"\"Predict class labels.\"\"\"\n        # TODO: Implement prediction\n        pass",
+    "solution": "import numpy as np\n\nclass TreeNode:\n    def __init__(self, feature=None, threshold=None, left=None, right=None, value=None):\n        self.feature = feature\n        self.threshold = threshold\n        self.left = left\n        self.right = right\n        self.value = value\n\n    def is_leaf(self):\n        return self.value is not None\n\nclass DecisionTreeClassifier:\n    def __init__(self, max_depth=5, min_samples_split=2):\n        self.max_depth = max_depth\n        self.min_samples_split = min_samples_split\n        self.root = None\n\n    def gini_impurity(self, y):\n        \"\"\"Calculate Gini impurity.\"\"\"\n        if len(y) == 0:\n            return 0\n        classes, counts = np.unique(y, return_counts=True)\n        probabilities = counts / len(y)\n        return 1 - np.sum(probabilities ** 2)\n\n    def split(self, X, y, feature, threshold):\n        \"\"\"Split data based on feature and threshold.\"\"\"\n        left_mask = X[:, feature] <= threshold\n        right_mask = ~left_mask\n        return X[left_mask], X[right_mask], y[left_mask], y[right_mask]\n\n    def find_best_split(self, X, y):\n        \"\"\"Find best split.\"\"\"\n        best_gini = float('inf')\n        best_feature = None\n        best_threshold = None\n\n        for feature_idx in range(X.shape[1]):\n            thresholds = np.unique(X[:, feature_idx])\n            for threshold in thresholds:\n                left_mask = X[:, feature_idx] <= threshold\n                right_mask = ~left_mask\n\n                if np.sum(left_mask) == 0 or np.sum(right_mask) == 0:\n                    continue\n\n                y_left, y_right = y[left_mask], y[right_mask]\n                n = len(y)\n                gini = (len(y_left) / n) * self.gini_impurity(y_left) + \\\n                       (len(y_right) / n) * self.gini_impurity(y_right)\n\n                if gini < best_gini:\n                    best_gini = gini\n                    best_feature = feature_idx\n                    best_threshold = threshold\n\n        return best_feature, best_threshold\n\n    def build_tree(self, X, y, depth=0):\n        \"\"\"Recursively build tree.\"\"\"\n        n_samples = len(y)\n        n_classes = len(np.unique(y))\n\n        # Stopping criteria\n        if depth >= self.max_depth or n_classes == 1 or n_samples < self.min_samples_split:\n            leaf_value = np.argmax(np.bincount(y))\n            return TreeNode(value=leaf_value)\n\n        # Find best split\n        feature, threshold = self.find_best_split(X, y)\n\n        if feature is None:\n            leaf_value = np.argmax(np.bincount(y))\n            return TreeNode(value=leaf_value)\n\n        # Split and recurse\n        X_left, X_right, y_left, y_right = self.split(X, y, feature, threshold)\n        left_child = self.build_tree(X_left, y_left, depth + 1)\n        right_child = self.build_tree(X_right, y_right, depth + 1)\n\n        return TreeNode(feature=feature, threshold=threshold, left=left_child, right=right_child)\n\n    def fit(self, X, y):\n        \"\"\"Build decision tree.\"\"\"\n        X = np.array(X)\n        y = np.array(y)\n        self.root = self.build_tree(X, y)\n        return self\n\n    def predict_sample(self, x, node):\n        \"\"\"Predict single sample.\"\"\"\n        if node.is_leaf():\n            return node.value\n\n        if x[node.feature] <= node.threshold:\n            return self.predict_sample(x, node.left)\n        else:\n            return self.predict_sample(x, node.right)\n\n    def predict(self, X):\n        \"\"\"Predict class labels.\"\"\"\n        X = np.array(X)\n        return np.array([self.predict_sample(x, self.root) for x in X])",
+    "testCases": [],
+    "hints": [
+      "Build tree recursively from root to leaves",
+      "Stop when max_depth reached or node is pure",
+      "Choose split with minimum Gini impurity",
+      "Leaf nodes store most common class",
+      "Traverse tree for prediction: left if <=threshold, right otherwise"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-t3-ex07",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-3",
+    "title": "Calculate Feature Importance for Decision Tree",
+    "difficulty": 3,
+    "description": "Calculate feature importance based on impurity reduction.\n\nRequirements:\n- Track total impurity reduction per feature\n- Weight by number of samples\n- Normalize importances to sum to 1\n- Return array of importances",
+    "starterCode": "import numpy as np\n\ndef calculate_feature_importance(tree, n_features):\n    \"\"\"\n    Calculate feature importance for decision tree.\n\n    Args:\n        tree: Trained decision tree with root node\n        n_features: Number of features\n\n    Returns:\n        importances: Array of feature importances\n    \"\"\"\n    # TODO: Implement feature importance calculation\n    pass",
+    "solution": "import numpy as np\n\ndef calculate_feature_importance(tree, n_features):\n    \"\"\"\n    Calculate feature importance for decision tree.\n\n    Args:\n        tree: Trained decision tree with root node\n        n_features: Number of features\n\n    Returns:\n        importances: Array of feature importances\n    \"\"\"\n    importances = np.zeros(n_features)\n\n    def traverse(node, n_samples):\n        \"\"\"Recursively calculate importance.\"\"\"\n        if node.is_leaf():\n            return\n\n        # Importance = (samples at node / total) * impurity reduction\n        # For simplicity, we'll count how often each feature is used\n        importances[node.feature] += n_samples\n\n        # Recurse to children (approximate sample counts)\n        if node.left:\n            traverse(node.left, n_samples / 2)\n        if node.right:\n            traverse(node.right, n_samples / 2)\n\n    # Start traversal\n    traverse(tree.root, 1.0)\n\n    # Normalize to sum to 1\n    if np.sum(importances) > 0:\n        importances = importances / np.sum(importances)\n\n    return importances",
+    "testCases": [],
+    "hints": [
+      "Traverse tree and sum importance per feature",
+      "Importance increases when feature is used for splitting",
+      "Weight by number of samples at node",
+      "Normalize so importances sum to 1",
+      "Features used higher in tree are more important"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-t3-ex08",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-3",
+    "title": "Implement Bootstrap Sampling",
+    "difficulty": 2,
+    "description": "Implement bootstrap sampling for ensemble methods.\n\nRequirements:\n- Sample n samples with replacement\n- Return sampled data and out-of-bag indices\n- Maintain approximately 63% unique samples\n- Support both X and y",
+    "starterCode": "import numpy as np\n\ndef bootstrap_sample(X, y, random_state=None):\n    \"\"\"\n    Create bootstrap sample.\n\n    Args:\n        X: Feature matrix\n        y: Labels\n        random_state: Random seed\n\n    Returns:\n        X_sample, y_sample, oob_indices\n    \"\"\"\n    # TODO: Implement bootstrap sampling\n    pass",
+    "solution": "import numpy as np\n\ndef bootstrap_sample(X, y, random_state=None):\n    \"\"\"\n    Create bootstrap sample.\n\n    Args:\n        X: Feature matrix\n        y: Labels\n        random_state: Random seed\n\n    Returns:\n        X_sample, y_sample, oob_indices\n    \"\"\"\n    if random_state is not None:\n        np.random.seed(random_state)\n\n    n_samples = len(X)\n\n    # Sample with replacement\n    sample_indices = np.random.choice(n_samples, n_samples, replace=True)\n\n    X_sample = X[sample_indices]\n    y_sample = y[sample_indices]\n\n    # Out-of-bag samples (not selected)\n    all_indices = set(range(n_samples))\n    sampled_indices = set(sample_indices)\n    oob_indices = np.array(list(all_indices - sampled_indices))\n\n    return X_sample, y_sample, oob_indices",
+    "testCases": [],
+    "hints": [
+      "Bootstrap: sample n times with replacement",
+      "Use np.random.choice() with replace=True",
+      "OOB samples are those not selected",
+      "About 37% of samples are OOB on average",
+      "OOB samples can be used for validation"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-t3-ex09",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-3",
+    "title": "Implement Random Forest Classifier",
+    "difficulty": 4,
+    "description": "Implement Random Forest using multiple decision trees.\n\nRequirements:\n- Train multiple trees on bootstrap samples\n- Use random feature subset for each split\n- Aggregate predictions by majority voting\n- Track out-of-bag error",
+    "starterCode": "import numpy as np\n\nclass RandomForestClassifier:\n    def __init__(self, n_estimators=10, max_depth=5, max_features='sqrt'):\n        self.n_estimators = n_estimators\n        self.max_depth = max_depth\n        self.max_features = max_features\n        self.trees = []\n\n    def fit(self, X, y):\n        \"\"\"Train random forest.\"\"\"\n        # TODO: Implement random forest training\n        pass\n\n    def predict(self, X):\n        \"\"\"Predict using majority voting.\"\"\"\n        # TODO: Implement prediction\n        pass",
+    "solution": "import numpy as np\n\nclass SimpleDecisionTree:\n    \"\"\"Simplified decision tree for random forest.\"\"\"\n    def __init__(self, max_depth=5, max_features=None):\n        self.max_depth = max_depth\n        self.max_features = max_features\n        self.tree = None\n\n    def fit(self, X, y):\n        self.n_features = X.shape[1]\n        if self.max_features is None:\n            self.max_features = self.n_features\n        self.tree = self._build_tree(X, y, 0)\n        return self\n\n    def _build_tree(self, X, y, depth):\n        if depth >= self.max_depth or len(np.unique(y)) == 1 or len(y) < 2:\n            return {'value': np.argmax(np.bincount(y))}\n\n        # Random feature subset\n        feature_indices = np.random.choice(self.n_features,\n                                          min(self.max_features, self.n_features),\n                                          replace=False)\n\n        best_gain = -1\n        best_feature = None\n        best_threshold = None\n\n        for feature_idx in feature_indices:\n            thresholds = np.unique(X[:, feature_idx])\n            for threshold in thresholds:\n                left_mask = X[:, feature_idx] <= threshold\n                if np.sum(left_mask) == 0 or np.sum(~left_mask) == 0:\n                    continue\n\n                y_left, y_right = y[left_mask], y[~left_mask]\n                n = len(y)\n                gini = (len(y_left) / n) * (1 - np.sum((np.bincount(y_left) / len(y_left)) ** 2)) + \\\n                       (len(y_right) / n) * (1 - np.sum((np.bincount(y_right) / len(y_right)) ** 2))\n\n                gain = 1 - gini\n                if gain > best_gain:\n                    best_gain = gain\n                    best_feature = feature_idx\n                    best_threshold = threshold\n\n        if best_feature is None:\n            return {'value': np.argmax(np.bincount(y))}\n\n        left_mask = X[:, best_feature] <= best_threshold\n        return {\n            'feature': best_feature,\n            'threshold': best_threshold,\n            'left': self._build_tree(X[left_mask], y[left_mask], depth + 1),\n            'right': self._build_tree(X[~left_mask], y[~left_mask], depth + 1)\n        }\n\n    def predict(self, X):\n        return np.array([self._predict_sample(x, self.tree) for x in X])\n\n    def _predict_sample(self, x, node):\n        if 'value' in node:\n            return node['value']\n        if x[node['feature']] <= node['threshold']:\n            return self._predict_sample(x, node['left'])\n        return self._predict_sample(x, node['right'])\n\nclass RandomForestClassifier:\n    def __init__(self, n_estimators=10, max_depth=5, max_features='sqrt'):\n        self.n_estimators = n_estimators\n        self.max_depth = max_depth\n        self.max_features = max_features\n        self.trees = []\n\n    def fit(self, X, y):\n        \"\"\"Train random forest.\"\"\"\n        X = np.array(X)\n        y = np.array(y)\n\n        n_features = X.shape[1]\n        if self.max_features == 'sqrt':\n            max_features = int(np.sqrt(n_features))\n        elif self.max_features == 'log2':\n            max_features = int(np.log2(n_features))\n        else:\n            max_features = n_features\n\n        self.trees = []\n        for _ in range(self.n_estimators):\n            # Bootstrap sample\n            n_samples = len(X)\n            indices = np.random.choice(n_samples, n_samples, replace=True)\n            X_sample = X[indices]\n            y_sample = y[indices]\n\n            # Train tree\n            tree = SimpleDecisionTree(max_depth=self.max_depth, max_features=max_features)\n            tree.fit(X_sample, y_sample)\n            self.trees.append(tree)\n\n        return self\n\n    def predict(self, X):\n        \"\"\"Predict using majority voting.\"\"\"\n        X = np.array(X)\n\n        # Get predictions from all trees\n        tree_preds = np.array([tree.predict(X) for tree in self.trees])\n\n        # Majority voting\n        predictions = []\n        for i in range(len(X)):\n            predictions.append(np.argmax(np.bincount(tree_preds[:, i].astype(int))))\n\n        return np.array(predictions)",
+    "testCases": [],
+    "hints": [
+      "Train each tree on bootstrap sample",
+      "Use random subset of features for each split",
+      "Common max_features: sqrt(n_features) for classification",
+      "Aggregate predictions by majority voting",
+      "More trees generally improve performance"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-t3-ex10",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-3",
+    "title": "Implement K-Nearest Neighbors",
+    "difficulty": 3,
+    "description": "Implement KNN classifier from scratch.\n\nRequirements:\n- Calculate distances to all training samples\n- Find k nearest neighbors\n- Use majority voting for classification\n- Support different distance metrics",
+    "starterCode": "import numpy as np\n\nclass KNNClassifier:\n    def __init__(self, n_neighbors=5, metric='euclidean'):\n        self.n_neighbors = n_neighbors\n        self.metric = metric\n        self.X_train = None\n        self.y_train = None\n\n    def fit(self, X, y):\n        \"\"\"Store training data.\"\"\"\n        # TODO: Implement fit\n        pass\n\n    def predict(self, X):\n        \"\"\"Predict using KNN.\"\"\"\n        # TODO: Implement predict\n        pass",
+    "solution": "import numpy as np\n\nclass KNNClassifier:\n    def __init__(self, n_neighbors=5, metric='euclidean'):\n        self.n_neighbors = n_neighbors\n        self.metric = metric\n        self.X_train = None\n        self.y_train = None\n\n    def fit(self, X, y):\n        \"\"\"Store training data.\"\"\"\n        self.X_train = np.array(X)\n        self.y_train = np.array(y)\n        return self\n\n    def distance(self, x1, x2):\n        \"\"\"Calculate distance between two points.\"\"\"\n        if self.metric == 'euclidean':\n            return np.sqrt(np.sum((x1 - x2) ** 2))\n        elif self.metric == 'manhattan':\n            return np.sum(np.abs(x1 - x2))\n        else:\n            raise ValueError(f\"Unknown metric: {self.metric}\")\n\n    def predict_sample(self, x):\n        \"\"\"Predict single sample.\"\"\"\n        # Calculate distances to all training samples\n        distances = [self.distance(x, x_train) for x_train in self.X_train]\n\n        # Get k nearest neighbors\n        k_indices = np.argsort(distances)[:self.n_neighbors]\n        k_nearest_labels = self.y_train[k_indices]\n\n        # Majority voting\n        most_common = np.argmax(np.bincount(k_nearest_labels))\n        return most_common\n\n    def predict(self, X):\n        \"\"\"Predict using KNN.\"\"\"\n        X = np.array(X)\n        return np.array([self.predict_sample(x) for x in X])",
+    "testCases": [],
+    "hints": [
+      "KNN is instance-based: store training data",
+      "For each test sample, find k nearest training samples",
+      "Use Euclidean distance: sqrt(sum((x1-x2)^2))",
+      "np.argsort() returns indices that sort array",
+      "Majority voting: most common class among k neighbors"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-t3-ex11",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-3",
+    "title": "Implement Naive Bayes Classifier",
+    "difficulty": 3,
+    "description": "Implement Gaussian Naive Bayes from scratch.\n\nRequirements:\n- Calculate prior probabilities P(y)\n- Calculate mean and variance for each feature per class\n- Use Gaussian likelihood P(x|y)\n- Predict using Bayes theorem",
+    "starterCode": "import numpy as np\n\nclass GaussianNaiveBayes:\n    def __init__(self):\n        self.classes = None\n        self.priors = {}\n        self.means = {}\n        self.variances = {}\n\n    def fit(self, X, y):\n        \"\"\"Train Naive Bayes.\"\"\"\n        # TODO: Implement fit\n        pass\n\n    def predict(self, X):\n        \"\"\"Predict using Bayes theorem.\"\"\"\n        # TODO: Implement predict\n        pass",
+    "solution": "import numpy as np\n\nclass GaussianNaiveBayes:\n    def __init__(self):\n        self.classes = None\n        self.priors = {}\n        self.means = {}\n        self.variances = {}\n\n    def fit(self, X, y):\n        \"\"\"Train Naive Bayes.\"\"\"\n        X = np.array(X)\n        y = np.array(y)\n        self.classes = np.unique(y)\n\n        # Calculate statistics for each class\n        for cls in self.classes:\n            X_cls = X[y == cls]\n\n            # Prior probability\n            self.priors[cls] = len(X_cls) / len(X)\n\n            # Mean and variance for each feature\n            self.means[cls] = np.mean(X_cls, axis=0)\n            self.variances[cls] = np.var(X_cls, axis=0) + 1e-9  # Add small value for stability\n\n        return self\n\n    def gaussian_likelihood(self, x, mean, variance):\n        \"\"\"Calculate Gaussian probability density.\"\"\"\n        exponent = -((x - mean) ** 2) / (2 * variance)\n        return (1 / np.sqrt(2 * np.pi * variance)) * np.exp(exponent)\n\n    def predict_sample(self, x):\n        \"\"\"Predict single sample using Bayes theorem.\"\"\"\n        posteriors = {}\n\n        for cls in self.classes:\n            # Start with prior\n            posterior = np.log(self.priors[cls])\n\n            # Multiply likelihoods (add log likelihoods)\n            for i in range(len(x)):\n                likelihood = self.gaussian_likelihood(x[i], self.means[cls][i], self.variances[cls][i])\n                posterior += np.log(likelihood + 1e-9)  # Add small value to avoid log(0)\n\n            posteriors[cls] = posterior\n\n        # Return class with highest posterior\n        return max(posteriors, key=posteriors.get)\n\n    def predict(self, X):\n        \"\"\"Predict using Bayes theorem.\"\"\"\n        X = np.array(X)\n        return np.array([self.predict_sample(x) for x in X])",
+    "testCases": [],
+    "hints": [
+      "Naive Bayes assumes features are independent",
+      "Prior: P(y) = count(y) / total samples",
+      "Gaussian likelihood: (1/√(2πσ²)) * exp(-(x-μ)²/(2σ²))",
+      "Use log probabilities to avoid underflow",
+      "Predict class with highest posterior probability"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-t3-ex12",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-3",
+    "title": "Calculate SVM Margin",
+    "difficulty": 3,
+    "description": "Calculate the margin of a linear SVM.\n\nRequirements:\n- Given weights and bias\n- Calculate distance from hyperplane\n- Margin = 2 / ||w||\n- Identify support vectors",
+    "starterCode": "import numpy as np\n\ndef calculate_margin(w, b, X, y):\n    \"\"\"\n    Calculate SVM margin and identify support vectors.\n\n    Args:\n        w: Weight vector\n        b: Bias term\n        X: Feature matrix\n        y: Labels (-1 or +1)\n\n    Returns:\n        margin: Margin width\n        support_vectors: Indices of support vectors\n    \"\"\"\n    # TODO: Implement margin calculation\n    pass",
+    "solution": "import numpy as np\n\ndef calculate_margin(w, b, X, y):\n    \"\"\"\n    Calculate SVM margin and identify support vectors.\n\n    Args:\n        w: Weight vector\n        b: Bias term\n        X: Feature matrix\n        y: Labels (-1 or +1)\n\n    Returns:\n        margin: Margin width\n        support_vectors: Indices of support vectors\n    \"\"\"\n    w = np.array(w)\n    X = np.array(X)\n    y = np.array(y)\n\n    # Margin = 2 / ||w||\n    margin = 2 / np.linalg.norm(w)\n\n    # Distance from hyperplane: y * (w·x + b)\n    distances = y * (X @ w + b)\n\n    # Support vectors are on the margin: distance = 1\n    support_vectors = np.where(np.abs(distances - 1) < 1e-6)[0]\n\n    return margin, support_vectors",
+    "testCases": [],
+    "hints": [
+      "Decision boundary: w·x + b = 0",
+      "Margin boundaries: w·x + b = ±1",
+      "Margin width: 2 / ||w||",
+      "Support vectors lie on margin boundaries",
+      "Distance from hyperplane: |w·x + b| / ||w||"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-t3-ex13",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-3",
+    "title": "Implement Linear SVM with SGD",
+    "difficulty": 4,
+    "description": "Implement linear SVM using stochastic gradient descent.\n\nRequirements:\n- Hinge loss: max(0, 1 - y*(w·x + b))\n- Add L2 regularization\n- Update weights using SGD\n- Support binary classification",
+    "starterCode": "import numpy as np\n\nclass LinearSVM:\n    def __init__(self, learning_rate=0.01, lambda_param=0.01, n_epochs=1000):\n        self.learning_rate = learning_rate\n        self.lambda_param = lambda_param\n        self.n_epochs = n_epochs\n        self.w = None\n        self.b = None\n\n    def fit(self, X, y):\n        \"\"\"Train SVM using SGD.\"\"\"\n        # TODO: Implement SVM training\n        pass\n\n    def predict(self, X):\n        \"\"\"Predict class labels.\"\"\"\n        # TODO: Implement predict\n        pass",
+    "solution": "import numpy as np\n\nclass LinearSVM:\n    def __init__(self, learning_rate=0.01, lambda_param=0.01, n_epochs=1000):\n        self.learning_rate = learning_rate\n        self.lambda_param = lambda_param\n        self.n_epochs = n_epochs\n        self.w = None\n        self.b = None\n\n    def fit(self, X, y):\n        \"\"\"Train SVM using SGD.\"\"\"\n        X = np.array(X)\n        y = np.array(y)\n\n        # Convert labels to -1, +1\n        y = np.where(y <= 0, -1, 1)\n\n        n_samples, n_features = X.shape\n\n        # Initialize parameters\n        self.w = np.zeros(n_features)\n        self.b = 0\n\n        # SGD\n        for epoch in range(self.n_epochs):\n            for i in range(n_samples):\n                xi = X[i]\n                yi = y[i]\n\n                # Hinge loss condition\n                if yi * (np.dot(self.w, xi) + self.b) >= 1:\n                    # Correct classification\n                    self.w -= self.learning_rate * (2 * self.lambda_param * self.w)\n                else:\n                    # Misclassification or within margin\n                    self.w -= self.learning_rate * (2 * self.lambda_param * self.w - yi * xi)\n                    self.b -= self.learning_rate * (-yi)\n\n        return self\n\n    def predict(self, X):\n        \"\"\"Predict class labels.\"\"\"\n        X = np.array(X)\n        linear_output = X @ self.w + self.b\n        return np.sign(linear_output).astype(int)",
+    "testCases": [],
+    "hints": [
+      "Hinge loss: max(0, 1 - y*(w·x + b))",
+      "If y*(w·x + b) >= 1: only update regularization term",
+      "If y*(w·x + b) < 1: update both hinge loss and regularization",
+      "Gradient for regularization: 2*lambda*w",
+      "Gradient for hinge loss: -y*x"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-t3-ex14",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-3",
+    "title": "Implement RBF Kernel",
+    "difficulty": 3,
+    "description": "Implement Radial Basis Function (Gaussian) kernel for SVM.\n\nRequirements:\n- Calculate RBF kernel: K(x, y) = exp(-γ||x-y||²)\n- Support kernel matrix computation\n- Handle gamma parameter\n- Efficient pairwise distance calculation",
+    "starterCode": "import numpy as np\n\ndef rbf_kernel(X, Y=None, gamma=1.0):\n    \"\"\"\n    Calculate RBF kernel matrix.\n\n    Args:\n        X: First set of samples (n_samples_1, n_features)\n        Y: Second set of samples (n_samples_2, n_features)\n           If None, use Y = X\n        gamma: Kernel coefficient\n\n    Returns:\n        Kernel matrix (n_samples_1, n_samples_2)\n    \"\"\"\n    # TODO: Implement RBF kernel\n    pass",
+    "solution": "import numpy as np\n\ndef rbf_kernel(X, Y=None, gamma=1.0):\n    \"\"\"\n    Calculate RBF kernel matrix.\n\n    Args:\n        X: First set of samples (n_samples_1, n_features)\n        Y: Second set of samples (n_samples_2, n_features)\n           If None, use Y = X\n        gamma: Kernel coefficient\n\n    Returns:\n        Kernel matrix (n_samples_1, n_samples_2)\n    \"\"\"\n    X = np.array(X)\n    if Y is None:\n        Y = X\n    else:\n        Y = np.array(Y)\n\n    # Calculate pairwise squared Euclidean distances\n    # ||x - y||^2 = ||x||^2 + ||y||^2 - 2*x·y\n    X_norm = np.sum(X ** 2, axis=1).reshape(-1, 1)\n    Y_norm = np.sum(Y ** 2, axis=1).reshape(1, -1)\n    distances_squared = X_norm + Y_norm - 2 * X @ Y.T\n\n    # RBF kernel: exp(-gamma * ||x - y||^2)\n    K = np.exp(-gamma * distances_squared)\n\n    return K",
+    "testCases": [],
+    "hints": [
+      "RBF kernel: exp(-gamma * ||x-y||²)",
+      "Efficient computation: ||x-y||² = ||x||² + ||y||² - 2x·y",
+      "gamma controls kernel width",
+      "High gamma: narrow kernel, low gamma: wide kernel",
+      "Kernel matrix is symmetric if X = Y"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-t3-ex15",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-3",
+    "title": "Implement Weighted KNN",
+    "difficulty": 3,
+    "description": "Implement weighted KNN where closer neighbors have higher influence.\n\nRequirements:\n- Weight by inverse distance\n- Handle zero distances\n- Use weighted voting for classification\n- Support different distance metrics",
+    "starterCode": "import numpy as np\n\nclass WeightedKNN:\n    def __init__(self, n_neighbors=5, weights='distance'):\n        self.n_neighbors = n_neighbors\n        self.weights = weights  # 'uniform' or 'distance'\n        self.X_train = None\n        self.y_train = None\n\n    def fit(self, X, y):\n        \"\"\"Store training data.\"\"\"\n        # TODO: Implement fit\n        pass\n\n    def predict(self, X):\n        \"\"\"Predict using weighted KNN.\"\"\"\n        # TODO: Implement weighted prediction\n        pass",
+    "solution": "import numpy as np\n\nclass WeightedKNN:\n    def __init__(self, n_neighbors=5, weights='distance'):\n        self.n_neighbors = n_neighbors\n        self.weights = weights  # 'uniform' or 'distance'\n        self.X_train = None\n        self.y_train = None\n\n    def fit(self, X, y):\n        \"\"\"Store training data.\"\"\"\n        self.X_train = np.array(X)\n        self.y_train = np.array(y)\n        return self\n\n    def predict_sample(self, x):\n        \"\"\"Predict single sample with weighted voting.\"\"\"\n        # Calculate distances\n        distances = np.sqrt(np.sum((self.X_train - x) ** 2, axis=1))\n\n        # Get k nearest neighbors\n        k_indices = np.argsort(distances)[:self.n_neighbors]\n        k_distances = distances[k_indices]\n        k_labels = self.y_train[k_indices]\n\n        if self.weights == 'uniform':\n            # Standard majority voting\n            return np.argmax(np.bincount(k_labels))\n        elif self.weights == 'distance':\n            # Weighted voting\n            # Weight = 1 / distance (handle zero distance)\n            weights = np.where(k_distances == 0, 1e10, 1 / k_distances)\n\n            # Weighted voting for each class\n            classes = np.unique(self.y_train)\n            weighted_votes = np.zeros(len(classes))\n\n            for i, cls in enumerate(classes):\n                weighted_votes[i] = np.sum(weights[k_labels == cls])\n\n            return classes[np.argmax(weighted_votes)]\n\n    def predict(self, X):\n        \"\"\"Predict using weighted KNN.\"\"\"\n        X = np.array(X)\n        return np.array([self.predict_sample(x) for x in X])",
+    "testCases": [],
+    "hints": [
+      "Weight by inverse distance: w = 1/d",
+      "Handle zero distance: set very large weight",
+      "Weighted vote: sum weights for each class",
+      "Closer neighbors have more influence",
+      "Uniform weights = standard KNN"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-t3-ex16",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-3",
+    "title": "Implement AdaBoost",
+    "difficulty": 4,
+    "description": "Implement AdaBoost ensemble method with decision stumps.\n\nRequirements:\n- Use decision stumps (depth-1 trees) as weak learners\n- Update sample weights based on errors\n- Calculate classifier weights (alpha)\n- Combine classifiers for final prediction",
+    "starterCode": "import numpy as np\n\nclass AdaBoost:\n    def __init__(self, n_estimators=50):\n        self.n_estimators = n_estimators\n        self.alphas = []\n        self.classifiers = []\n\n    def fit(self, X, y):\n        \"\"\"Train AdaBoost.\"\"\"\n        # TODO: Implement AdaBoost training\n        pass\n\n    def predict(self, X):\n        \"\"\"Predict using weighted combination.\"\"\"\n        # TODO: Implement prediction\n        pass",
+    "solution": "import numpy as np\n\nclass DecisionStump:\n    \"\"\"Simple decision stump (depth-1 tree).\"\"\"\n    def __init__(self):\n        self.feature_idx = None\n        self.threshold = None\n        self.polarity = 1\n\n    def fit(self, X, y, sample_weights):\n        n_samples, n_features = X.shape\n        best_error = float('inf')\n\n        for feature_idx in range(n_features):\n            thresholds = np.unique(X[:, feature_idx])\n            for threshold in thresholds:\n                for polarity in [1, -1]:\n                    predictions = np.ones(n_samples)\n                    predictions[X[:, feature_idx] < threshold] = -1\n                    if polarity == -1:\n                        predictions = -predictions\n\n                    error = np.sum(sample_weights[predictions != y])\n\n                    if error < best_error:\n                        best_error = error\n                        self.feature_idx = feature_idx\n                        self.threshold = threshold\n                        self.polarity = polarity\n\n        return self\n\n    def predict(self, X):\n        predictions = np.ones(len(X))\n        predictions[X[:, self.feature_idx] < self.threshold] = -1\n        if self.polarity == -1:\n            predictions = -predictions\n        return predictions\n\nclass AdaBoost:\n    def __init__(self, n_estimators=50):\n        self.n_estimators = n_estimators\n        self.alphas = []\n        self.classifiers = []\n\n    def fit(self, X, y):\n        \"\"\"Train AdaBoost.\"\"\"\n        X = np.array(X)\n        y = np.array(y)\n\n        # Convert labels to -1, +1\n        y = np.where(y == 0, -1, 1)\n\n        n_samples = len(X)\n\n        # Initialize weights uniformly\n        sample_weights = np.ones(n_samples) / n_samples\n\n        for _ in range(self.n_estimators):\n            # Train weak classifier\n            stump = DecisionStump()\n            stump.fit(X, y, sample_weights)\n\n            # Get predictions\n            predictions = stump.predict(X)\n\n            # Calculate weighted error\n            error = np.sum(sample_weights[predictions != y])\n\n            # Avoid division by zero\n            error = np.clip(error, 1e-10, 1 - 1e-10)\n\n            # Calculate classifier weight\n            alpha = 0.5 * np.log((1 - error) / error)\n\n            # Update sample weights\n            sample_weights *= np.exp(-alpha * y * predictions)\n            sample_weights /= np.sum(sample_weights)\n\n            # Store classifier and weight\n            self.classifiers.append(stump)\n            self.alphas.append(alpha)\n\n        return self\n\n    def predict(self, X):\n        \"\"\"Predict using weighted combination.\"\"\"\n        X = np.array(X)\n\n        # Weighted sum of classifier predictions\n        clf_preds = np.array([alpha * clf.predict(X) for alpha, clf in zip(self.alphas, self.classifiers)])\n        final_pred = np.sum(clf_preds, axis=0)\n\n        return np.sign(final_pred).astype(int)",
+    "testCases": [],
+    "hints": [
+      "Initialize sample weights uniformly: 1/n",
+      "Train weak classifier on weighted samples",
+      "Calculate error: sum of weights where prediction wrong",
+      "Alpha = 0.5 * log((1-error)/error)",
+      "Update weights: w *= exp(-alpha * y * prediction)"
+    ],
+    "language": "python"
+  }
+]

@@ -7,13 +7,22 @@
  */
 
 import type { Quiz, Exam, Exercise } from '../../core/types';
+import { loadExercisesFromGlob, loadQuizzesFromGlob } from '../loader';
 
-import quizzesData from './quizzes.json';
+// Quizzes are now loaded from topic-level files
+const quizModules = import.meta.glob('./content/*/quizzes.json', {
+  eager: true,
+  import: 'default',
+}) as Record<string, Quiz[]>;
 import examsData from './exams.json';
-import exercisesData from './exercises.json';
+// Exercises are now loaded from topic-level files
+const exerciseModules = import.meta.glob('./content/*/exercises.json', {
+  eager: true,
+  import: 'default',
+}) as Record<string, Exercise[]>;
 import { math404Topics } from './topics';
 
-export const math404Quizzes = quizzesData as Quiz[];
+export const math404Quizzes = loadQuizzesFromGlob(quizModules);
 export const math404Exams = examsData as Exam[];
-export const math404Exercises = exercisesData as Exercise[];
+export const math404Exercises = loadExercisesFromGlob(exerciseModules);
 export { math404Topics };

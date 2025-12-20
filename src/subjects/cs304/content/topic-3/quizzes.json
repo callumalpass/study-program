@@ -1,0 +1,221 @@
+[
+  {
+    "id": "cs304-t3-quiz-1",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-3",
+    "title": "Attribute Grammars",
+    "questions": [
+      {
+        "id": "cs304-t3-q1-1",
+        "type": "multiple_choice",
+        "prompt": "What is a synthesized attribute?",
+        "options": [
+          "Computed from parent nodes",
+          "Computed from child nodes",
+          "Always constant",
+          "Only for terminals"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Synthesized attributes are computed from attributes of child nodes, flowing up the parse tree."
+      },
+      {
+        "id": "cs304-t3-q1-2",
+        "type": "multiple_choice",
+        "prompt": "What is an inherited attribute?",
+        "options": [
+          "Computed from child nodes",
+          "Computed from parent or sibling nodes",
+          "Inherited from the grammar",
+          "Never changes"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Inherited attributes are computed from parent or sibling nodes, flowing down or across the tree."
+      },
+      {
+        "id": "cs304-t3-q1-3",
+        "type": "multiple_choice",
+        "prompt": "What is an S-attributed grammar?",
+        "options": [
+          "A grammar with only synthesized attributes",
+          "A grammar with only string attributes",
+          "A simple grammar",
+          "A structured grammar"
+        ],
+        "correctAnswer": 0,
+        "explanation": "S-attributed grammars use only synthesized attributes, enabling single bottom-up pass evaluation."
+      },
+      {
+        "id": "cs304-t3-q1-4",
+        "type": "multiple_choice",
+        "prompt": "What is an L-attributed grammar?",
+        "options": [
+          "A left-recursive grammar",
+          "Attributes depend only on inherited from parent or synthesized from left siblings",
+          "A linear grammar",
+          "A grammar with lookahead"
+        ],
+        "correctAnswer": 1,
+        "explanation": "L-attributed grammars allow inherited attributes computed from the parent and synthesized attributes from left siblings."
+      },
+      {
+        "id": "cs304-t3-q1-5",
+        "type": "multiple_choice",
+        "prompt": "What is a dependency graph in attribute evaluation?",
+        "options": [
+          "A parse tree",
+          "A graph showing which attributes depend on which others",
+          "A control flow graph",
+          "A call graph"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The dependency graph shows attribute dependencies, determining evaluation order."
+      }
+    ]
+  },
+  {
+    "id": "cs304-t3-quiz-2",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-3",
+    "title": "Symbol Tables and Types",
+    "questions": [
+      {
+        "id": "cs304-t3-q2-1",
+        "type": "multiple_choice",
+        "prompt": "What is the primary purpose of a symbol table?",
+        "options": [
+          "Storing source code",
+          "Mapping identifiers to their attributes",
+          "Generating machine code",
+          "Parsing input"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Symbol tables map identifiers to information like type, scope, and memory location."
+      },
+      {
+        "id": "cs304-t3-q2-2",
+        "type": "multiple_choice",
+        "prompt": "How is lexical scoping typically implemented in symbol tables?",
+        "options": [
+          "Single global table",
+          "Stack of tables or chained hash tables",
+          "Array of identifiers",
+          "Binary search tree"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Lexical scoping uses a stack of tables or chained scopes, with inner scopes shadowing outer ones."
+      },
+      {
+        "id": "cs304-t3-q2-3",
+        "type": "multiple_choice",
+        "prompt": "What is structural type equivalence?",
+        "options": [
+          "Types are equal if they have the same name",
+          "Types are equal if they have the same structure",
+          "Types are equal if declared together",
+          "Types are never equal"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Structural equivalence considers types equal if they have identical structure, regardless of name."
+      },
+      {
+        "id": "cs304-t3-q2-4",
+        "type": "multiple_choice",
+        "prompt": "What is name equivalence for types?",
+        "options": [
+          "Types are equal only if they have the same name",
+          "Types are equal if structurally identical",
+          "Types are equal if in the same scope",
+          "All types are equivalent"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Name equivalence requires types to have the same declared name to be considered equal."
+      },
+      {
+        "id": "cs304-t3-q2-5",
+        "type": "multiple_choice",
+        "prompt": "What is type coercion?",
+        "options": [
+          "Detecting type errors",
+          "Implicit conversion between types",
+          "Declaring types",
+          "Type inheritance"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Type coercion is automatic (implicit) type conversion performed by the compiler."
+      }
+    ]
+  },
+  {
+    "id": "cs304-t3-quiz-3",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-3",
+    "title": "Type Checking and ASTs",
+    "questions": [
+      {
+        "id": "cs304-t3-q3-1",
+        "type": "multiple_choice",
+        "prompt": "What is static type checking?",
+        "options": [
+          "Checking types at runtime",
+          "Checking types at compile time",
+          "Checking only static variables",
+          "Optional type checking"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Static type checking verifies type correctness at compile time, before execution."
+      },
+      {
+        "id": "cs304-t3-q3-2",
+        "type": "multiple_choice",
+        "prompt": "What is the difference between a parse tree and an AST?",
+        "options": [
+          "They are the same",
+          "AST omits syntactic details like parentheses",
+          "Parse tree is more compact",
+          "AST includes tokens"
+        ],
+        "correctAnswer": 1,
+        "explanation": "ASTs abstract away syntactic details (punctuation, grouping) present in parse trees, keeping semantic structure."
+      },
+      {
+        "id": "cs304-t3-q3-3",
+        "type": "multiple_choice",
+        "prompt": "What is a type judgment in type theory?",
+        "options": [
+          "A court ruling",
+          "An assertion that an expression has a certain type",
+          "A type error",
+          "A type definition"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A type judgment (Γ ⊢ e : τ) asserts that expression e has type τ in context Γ."
+      },
+      {
+        "id": "cs304-t3-q3-4",
+        "type": "multiple_choice",
+        "prompt": "What algorithm is commonly used for type inference?",
+        "options": [
+          "Quicksort",
+          "Unification",
+          "Binary search",
+          "Gradient descent"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Unification (Algorithm W) finds substitutions making types equal, central to Hindley-Milner inference."
+      },
+      {
+        "id": "cs304-t3-q3-5",
+        "type": "multiple_choice",
+        "prompt": "What is the visitor pattern used for with ASTs?",
+        "options": [
+          "Creating ASTs",
+          "Traversing and operating on AST nodes",
+          "Parsing input",
+          "Memory management"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The visitor pattern separates operations from AST structure, enabling multiple traversals for different purposes."
+      }
+    ]
+  }
+]

@@ -1,0 +1,221 @@
+[
+  {
+    "id": "cs407-quiz-6-1",
+    "subjectId": "cs407",
+    "topicId": "cs407-t6",
+    "title": "Hadoop and Distributed Storage",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "What does HDFS stand for?",
+        "options": [
+          "Hadoop Data File System",
+          "Hadoop Distributed File System",
+          "High-Density File System",
+          "Hierarchical Data File System"
+        ],
+        "correctAnswer": 1,
+        "explanation": "HDFS (Hadoop Distributed File System) is designed for storing large files across multiple machines."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "What is the primary advantage of distributed computing?",
+        "options": [
+          "Lower cost",
+          "Process large datasets by dividing work across multiple nodes",
+          "Simpler programming",
+          "Better security"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Distributed computing enables parallel processing of large datasets across multiple machines for scalability."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "What is MapReduce?",
+        "options": [
+          "A database system",
+          "A programming model for processing large datasets in parallel",
+          "A data visualization tool",
+          "A machine learning algorithm"
+        ],
+        "correctAnswer": 1,
+        "explanation": "MapReduce is a programming paradigm that divides tasks into Map (process) and Reduce (aggregate) phases."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "What is data replication in HDFS used for?",
+        "options": [
+          "Increase storage capacity",
+          "Fault tolerance and reliability",
+          "Faster writing",
+          "Data compression"
+        ],
+        "correctAnswer": 1,
+        "explanation": "HDFS replicates data blocks across multiple nodes to ensure availability if nodes fail."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "What is the typical block size in HDFS?",
+        "options": [
+          "4 KB",
+          "64 KB",
+          "128 MB",
+          "1 GB"
+        ],
+        "correctAnswer": 2,
+        "explanation": "HDFS uses large block sizes (typically 128 MB or 256 MB) optimized for large file storage and sequential access."
+      }
+    ]
+  },
+  {
+    "id": "cs407-quiz-6-2",
+    "subjectId": "cs407",
+    "topicId": "cs407-t6",
+    "title": "Apache Spark and Data Lakes",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "What is the main advantage of Apache Spark over Hadoop MapReduce?",
+        "options": [
+          "Lower cost",
+          "In-memory processing for faster computation",
+          "Better security",
+          "Easier installation"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Spark performs in-memory processing, making it much faster than disk-based MapReduce for iterative tasks."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "What is an RDD in Spark?",
+        "options": [
+          "Relational Database Driver",
+          "Resilient Distributed Dataset",
+          "Rapid Data Delivery",
+          "Remote Data Directory"
+        ],
+        "correctAnswer": 1,
+        "explanation": "RDD (Resilient Distributed Dataset) is Spark's fundamental data structure for distributed computation."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "What is a data lake?",
+        "options": [
+          "A traditional database",
+          "A centralized repository for storing structured and unstructured data at scale",
+          "A visualization tool",
+          "A data cleaning service"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Data lakes store vast amounts of raw data in native format until needed, unlike structured data warehouses."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "What is the difference between a data lake and a data warehouse?",
+        "options": [
+          "No difference",
+          "Lakes store raw data, warehouses store processed/structured data",
+          "Lakes are smaller",
+          "Warehouses are faster"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Data lakes store raw, unprocessed data while data warehouses contain structured, processed data for specific use cases."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "What does ETL stand for in data engineering?",
+        "options": [
+          "Export, Transfer, Load",
+          "Extract, Transform, Load",
+          "Evaluate, Test, Launch",
+          "Encode, Transmit, Log"
+        ],
+        "correctAnswer": 1,
+        "explanation": "ETL (Extract, Transform, Load) is the process of extracting data from sources, transforming it, and loading into a target system."
+      }
+    ]
+  },
+  {
+    "id": "cs407-quiz-6-3",
+    "subjectId": "cs407",
+    "topicId": "cs407-t6",
+    "title": "Stream Processing and Big Data Workflows",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "What is stream processing?",
+        "options": [
+          "Processing historical data",
+          "Processing data in real-time as it arrives",
+          "Downloading data streams",
+          "Compressing data"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Stream processing analyzes and acts on data continuously as it flows, enabling real-time insights."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "Which technology is commonly used for stream processing?",
+        "options": [
+          "MySQL",
+          "Apache Kafka",
+          "Excel",
+          "SQLite"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Apache Kafka is a distributed streaming platform for building real-time data pipelines and applications."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "What is the CAP theorem in distributed systems?",
+        "options": [
+          "A database optimization technique",
+          "You can only guarantee 2 of 3: Consistency, Availability, Partition tolerance",
+          "A security protocol",
+          "A data compression algorithm"
+        ],
+        "correctAnswer": 1,
+        "explanation": "CAP theorem states distributed systems can only guarantee two of: Consistency, Availability, Partition tolerance."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "What is Apache Airflow used for?",
+        "options": [
+          "Data visualization",
+          "Workflow orchestration and scheduling",
+          "Machine learning",
+          "Data storage"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Apache Airflow orchestrates complex data workflows and pipelines through directed acyclic graphs (DAGs)."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "What is horizontal scaling in big data systems?",
+        "options": [
+          "Increasing storage vertically",
+          "Adding more machines to the cluster",
+          "Upgrading existing hardware",
+          "Reducing data size"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Horizontal scaling (scale-out) adds more nodes to the system, unlike vertical scaling which upgrades existing nodes."
+      }
+    ]
+  }
+]

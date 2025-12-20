@@ -1,0 +1,221 @@
+[
+  {
+    "id": "cs202-topic7-quiz1",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic7",
+    "title": "ILP Fundamentals",
+    "questions": [
+      {
+        "id": "cs202-t7-q1-1",
+        "type": "multiple_choice",
+        "prompt": "What is Instruction-Level Parallelism (ILP)?",
+        "options": [
+          "Running multiple programs simultaneously",
+          "Executing multiple instructions at the same time within a program",
+          "Using multiple CPU cores",
+          "Parallelizing I/O operations"
+        ],
+        "correctAnswer": 1,
+        "explanation": "ILP refers to executing multiple instructions simultaneously from a single instruction stream by exploiting independence between instructions."
+      },
+      {
+        "id": "cs202-t7-q1-2",
+        "type": "multiple_choice",
+        "prompt": "Which dependency type cannot be eliminated by register renaming?",
+        "options": [
+          "WAR (Write After Read)",
+          "WAW (Write After Write)",
+          "RAW (Read After Write)",
+          "All can be eliminated"
+        ],
+        "correctAnswer": 2,
+        "explanation": "RAW (true) dependencies represent actual data flow and cannot be eliminated; WAR and WAW are false dependencies removable by renaming."
+      },
+      {
+        "id": "cs202-t7-q1-3",
+        "type": "multiple_choice",
+        "prompt": "IPC (Instructions Per Cycle) greater than 1 is achieved by:",
+        "options": [
+          "Faster clock speed",
+          "Superscalar or multiple-issue execution",
+          "Larger caches",
+          "Better branch prediction alone"
+        ],
+        "correctAnswer": 1,
+        "explanation": "IPC > 1 requires issuing and executing multiple instructions per cycle, which is the definition of superscalar."
+      },
+      {
+        "id": "cs202-t7-q1-4",
+        "type": "multiple_choice",
+        "prompt": "What limits the amount of ILP available in typical programs?",
+        "options": [
+          "Hardware limitations only",
+          "Data dependencies, branches, and memory latency",
+          "Compiler quality only",
+          "Number of registers"
+        ],
+        "correctAnswer": 1,
+        "explanation": "True data dependencies, control flow (branches), and memory latency fundamentally limit available ILP."
+      },
+      {
+        "id": "cs202-t7-q1-5",
+        "type": "multiple_choice",
+        "prompt": "Typical achieved IPC on modern out-of-order processors is:",
+        "options": [
+          "0.5-1",
+          "1-2",
+          "2-3",
+          "4-6"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Modern OoO processors typically achieve IPC of 2-3, despite theoretical issue widths of 4-8."
+      }
+    ]
+  },
+  {
+    "id": "cs202-topic7-quiz2",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic7",
+    "title": "Dynamic Scheduling",
+    "questions": [
+      {
+        "id": "cs202-t7-q2-1",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of reservation stations in Tomasulo's algorithm?",
+        "options": [
+          "To store instructions waiting for operands",
+          "To hold the program counter",
+          "To cache memory data",
+          "To predict branches"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Reservation stations hold instructions waiting for their source operands to become available."
+      },
+      {
+        "id": "cs202-t7-q2-2",
+        "type": "multiple_choice",
+        "prompt": "The Common Data Bus (CDB) in Tomasulo's algorithm:",
+        "options": [
+          "Connects CPU to memory",
+          "Broadcasts results to all waiting stations",
+          "Fetches instructions",
+          "Handles branch prediction"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The CDB broadcasts results to all reservation stations and registers simultaneously, enabling operand forwarding."
+      },
+      {
+        "id": "cs202-t7-q2-3",
+        "type": "multiple_choice",
+        "prompt": "Register renaming eliminates which hazards?",
+        "options": [
+          "RAW only",
+          "WAR and WAW only",
+          "All hazards",
+          "Structural hazards"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Register renaming eliminates false dependencies (WAR, WAW) by mapping multiple uses of an architectural register to different physical registers."
+      },
+      {
+        "id": "cs202-t7-q2-4",
+        "type": "multiple_choice",
+        "prompt": "The Reorder Buffer (ROB) ensures:",
+        "options": [
+          "Faster execution",
+          "In-order commit despite out-of-order execution",
+          "More reservation stations",
+          "Better cache performance"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The ROB maintains program order for commits, ensuring precise exceptions even when instructions execute out of order."
+      },
+      {
+        "id": "cs202-t7-q2-5",
+        "type": "multiple_choice",
+        "prompt": "Speculative execution means:",
+        "options": [
+          "Guessing instruction addresses",
+          "Executing instructions before knowing if they should execute",
+          "Random instruction selection",
+          "Parallel memory access"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Speculative execution executes instructions past branches before the branch outcome is known, recovering if wrong."
+      }
+    ]
+  },
+  {
+    "id": "cs202-topic7-quiz3",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic7",
+    "title": "VLIW and SIMD",
+    "questions": [
+      {
+        "id": "cs202-t7-q3-1",
+        "type": "multiple_choice",
+        "prompt": "VLIW processors differ from superscalar by:",
+        "options": [
+          "Being slower",
+          "Relying on compiler to find parallelism instead of hardware",
+          "Using more registers",
+          "Having deeper pipelines"
+        ],
+        "correctAnswer": 1,
+        "explanation": "VLIW relies on the compiler to find and encode parallelism in wide instructions, simplifying hardware."
+      },
+      {
+        "id": "cs202-t7-q3-2",
+        "type": "multiple_choice",
+        "prompt": "SIMD (Single Instruction Multiple Data) is best suited for:",
+        "options": [
+          "Branch-heavy code",
+          "Irregular memory access",
+          "Regular operations on arrays of data",
+          "Database queries"
+        ],
+        "correctAnswer": 2,
+        "explanation": "SIMD excels at applying the same operation to many data elements, common in graphics, scientific computing, and ML."
+      },
+      {
+        "id": "cs202-t7-q3-3",
+        "type": "multiple_choice",
+        "prompt": "AVX-512 registers are how many bits wide?",
+        "options": [
+          "128 bits",
+          "256 bits",
+          "512 bits",
+          "1024 bits"
+        ],
+        "correctAnswer": 2,
+        "explanation": "AVX-512 provides 512-bit registers, capable of processing 16 single-precision floats simultaneously."
+      },
+      {
+        "id": "cs202-t7-q3-4",
+        "type": "multiple_choice",
+        "prompt": "A key disadvantage of VLIW is:",
+        "options": [
+          "Higher power consumption",
+          "Poor binary compatibility across implementations",
+          "Smaller code size",
+          "Simpler compilers needed"
+        ],
+        "correctAnswer": 1,
+        "explanation": "VLIW binaries are tied to specific hardware; changing pipeline depth or functional units breaks compatibility."
+      },
+      {
+        "id": "cs202-t7-q3-5",
+        "type": "multiple_choice",
+        "prompt": "The main reason ILP improvements have diminished is:",
+        "options": [
+          "Clock speeds can't increase",
+          "Fundamental limits from dependencies and branches",
+          "Memory got too fast",
+          "Compilers improved too much"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Diminishing ILP returns come from fundamental limits: true dependencies, branch mispredictions, and memory latency."
+      }
+    ]
+  }
+]

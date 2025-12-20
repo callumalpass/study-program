@@ -1,0 +1,244 @@
+[
+  {
+    "id": "math403-t4-ex01",
+    "subjectId": "math403",
+    "topicId": "math403-topic-4",
+    "type": "written",
+    "title": "Connected Space Definition",
+    "description": "Prove that a space X is connected if and only if the only subsets that are both open and closed are ∅ and X.",
+    "difficulty": 3,
+    "hints": [
+      "Use the definition of disconnectedness",
+      "A separation is a pair of nonempty disjoint open sets covering X",
+      "Relate this to clopen sets"
+    ],
+    "solution": "(⇒) Assume X is connected and A is clopen with A ≠ ∅, X. Then X \\ A is also clopen (open by complement, closed as complement of open). Thus X = A ∪ (X \\ A) is a separation, contradicting connectedness. (⇐) Assume the only clopen sets are ∅, X. Suppose X = U ∪ V is a separation. Then U is open and V = X \\ U is open, so U is clopen. Since U ≠ ∅, X, we have a contradiction. Thus X is connected."
+  },
+  {
+    "id": "math403-t4-ex02",
+    "subjectId": "math403",
+    "topicId": "math403-topic-4",
+    "type": "written",
+    "title": "Connected Subsets of ℝ",
+    "description": "Prove that a subset of ℝ is connected if and only if it is an interval.",
+    "difficulty": 4,
+    "hints": [
+      "For (⇐), assume A is not an interval",
+      "Then there exist a, b ∈ A and c ∉ A with a < c < b",
+      "Separate A using (-∞, c) and (c, ∞)"
+    ],
+    "solution": "(⇒) Let A ⊆ ℝ be connected. Suppose A is not an interval. Then there exist a, b ∈ A and c ∉ A with a < c < b. Let U = A ∩ (-∞, c) and V = A ∩ (c, ∞). Then U, V are nonempty (contain a, b respectively), disjoint, open in A, and U ∪ V = A, contradicting connectedness. (⇐) Let I be an interval. Suppose I = U ∪ V is a separation. Take a ∈ U, b ∈ V with a < b. Let c = sup(U ∩ [a, b]). Then c ∈ [a, b] ⊆ I. If c ∈ U, then c < b (else b ∈ U), but then c is not the supremum. If c ∈ V, then c > a, but then c is not in the closure of U ∩ [a, b], contradicting the definition of supremum. Contradiction, so I is connected."
+  },
+  {
+    "id": "math403-t4-ex03",
+    "subjectId": "math403",
+    "topicId": "math403-topic-4",
+    "type": "written",
+    "title": "Continuous Image of Connected Set",
+    "description": "Prove that the continuous image of a connected space is connected.",
+    "difficulty": 3,
+    "hints": [
+      "Let f: X → Y be continuous with X connected",
+      "Suppose f(X) is disconnected",
+      "Pull back the separation to X"
+    ],
+    "solution": "Let f: X → Y be continuous with X connected. Suppose f(X) = U ∪ V is a separation of f(X) (U, V nonempty, disjoint, open in f(X)). Then X = f⁻¹(U) ∪ f⁻¹(V). Since f is continuous and U, V are open in f(X), f⁻¹(U) and f⁻¹(V) are open in X. They are nonempty (f is surjective onto f(X)) and disjoint. Thus X is disconnected, contradiction. Therefore, f(X) is connected."
+  },
+  {
+    "id": "math403-t4-ex04",
+    "subjectId": "math403",
+    "topicId": "math403-topic-4",
+    "type": "written",
+    "title": "Union of Connected Sets",
+    "description": "Let {Aᵢ} be a collection of connected subsets of X such that ⋂ᵢAᵢ ≠ ∅. Prove that ⋃ᵢAᵢ is connected.",
+    "difficulty": 3,
+    "hints": [
+      "Let p ∈ ⋂ᵢAᵢ",
+      "Suppose ⋃ᵢAᵢ = U ∪ V is a separation",
+      "WLOG p ∈ U, then each Aᵢ ⊆ U"
+    ],
+    "solution": "Let p ∈ ⋂ᵢAᵢ and suppose A = ⋃ᵢAᵢ = U ∪ V is a separation. WLOG, p ∈ U. For each i, Aᵢ = (Aᵢ ∩ U) ∪ (Aᵢ ∩ V). Since Aᵢ is connected, either Aᵢ ⊆ U or Aᵢ ⊆ V. Since p ∈ Aᵢ ∩ U for all i, we have Aᵢ ⊆ U for all i. Thus A = ⋃ᵢAᵢ ⊆ U, so V ∩ A = ∅, contradicting V being nonempty. Therefore, A is connected."
+  },
+  {
+    "id": "math403-t4-ex05",
+    "subjectId": "math403",
+    "topicId": "math403-topic-4",
+    "type": "written",
+    "title": "Connected Components",
+    "description": "Prove that connected components of a space form a partition of the space.",
+    "difficulty": 3,
+    "hints": [
+      "Show each point is in some component",
+      "Show distinct components are disjoint",
+      "Use the fact that the union of connected sets with nonempty intersection is connected"
+    ],
+    "solution": "For each x ∈ X, let Cₓ be the union of all connected subsets containing x. Then Cₓ is connected (by the previous result, as all sets in the union contain x). Clearly x ∈ Cₓ, so components cover X. If Cₓ ∩ Cᵧ ≠ ∅, then Cₓ ∪ Cᵧ is connected and contains both x and y. By maximality, Cₓ ∪ Cᵧ ⊆ Cₓ and Cₓ ∪ Cᵧ ⊆ Cᵧ, so Cₓ = Cᵧ. Therefore, distinct components are disjoint, forming a partition."
+  },
+  {
+    "id": "math403-t4-ex06",
+    "subjectId": "math403",
+    "topicId": "math403-topic-4",
+    "type": "written",
+    "title": "Path Connected Implies Connected",
+    "description": "Prove that every path connected space is connected.",
+    "difficulty": 2,
+    "hints": [
+      "Suppose X is path connected but disconnected",
+      "Let X = U ∪ V be a separation",
+      "Take points in U and V and consider a path between them"
+    ],
+    "solution": "Assume X is path connected. Suppose X = U ∪ V is a separation. Take x ∈ U and y ∈ V. Since X is path connected, there exists a continuous path γ: [0, 1] → X with γ(0) = x and γ(1) = y. Then [0, 1] = γ⁻¹(U) ∪ γ⁻¹(V). Since γ is continuous, both sets are open in [0, 1]. They are nonempty (0 ∈ γ⁻¹(U), 1 ∈ γ⁻¹(V)) and disjoint. This contradicts the connectedness of [0, 1]. Therefore, X is connected."
+  },
+  {
+    "id": "math403-t4-ex07",
+    "subjectId": "math403",
+    "topicId": "math403-topic-4",
+    "type": "written",
+    "title": "Path Connected Counterexample",
+    "description": "Show that the topologist's sine curve is connected but not path connected.",
+    "difficulty": 4,
+    "hints": [
+      "T = {(x, sin(1/x)) : x ∈ (0, 1]} ∪ {(0, y) : y ∈ [-1, 1]}",
+      "Show it's connected as closure of connected set",
+      "Show no path exists from the curve to the vertical segment"
+    ],
+    "solution": "Let S = {(x, sin(1/x)) : x ∈ (0, 1]} and T = cl(S). Since S is the continuous image of (0, 1] under x ↦ (x, sin(1/x)), S is connected. Since T = cl(S), T is connected (closure of connected is connected). To show T is not path connected, suppose γ: [0, 1] → T is a path with γ(0) = (0, 0) and γ(1) = (1, sin(1)). Let t₀ = sup{t : γ₁(t) = 0} where γ = (γ₁, γ₂). By continuity, γ(t₀) = (0, y₀) for some y₀. For t > t₀, γ₁(t) > 0, so γ(t) ∈ S. As t → t₀⁺, sin(1/γ₁(t)) oscillates, preventing continuous approach to (0, y₀). Contradiction."
+  },
+  {
+    "id": "math403-t4-ex08",
+    "subjectId": "math403",
+    "topicId": "math403-topic-4",
+    "type": "written",
+    "title": "Path Components",
+    "description": "Define the path component of x as the set of all points path connected to x. Prove that path components are equivalence classes.",
+    "difficulty": 2,
+    "hints": [
+      "Show the relation \"y is path connected to x\" is an equivalence relation",
+      "Reflexivity: constant path",
+      "Symmetry: reverse path",
+      "Transitivity: concatenate paths"
+    ],
+    "solution": "Define x ~ y if there exists a path from x to y. Reflexivity: The constant path γ(t) = x shows x ~ x. Symmetry: If γ is a path from x to y, then γ'(t) = γ(1-t) is a path from y to x. Transitivity: If α is a path from x to y and β is a path from y to z, define γ(t) = α(2t) for t ≤ 1/2 and γ(t) = β(2t-1) for t ≥ 1/2. By the gluing lemma, γ is continuous, so x ~ z. Thus ~ is an equivalence relation, and path components are its equivalence classes."
+  },
+  {
+    "id": "math403-t4-ex09",
+    "subjectId": "math403",
+    "topicId": "math403-topic-4",
+    "type": "written",
+    "title": "Intermediate Value Theorem",
+    "description": "Use connectedness to prove the Intermediate Value Theorem: If f: [a, b] → ℝ is continuous and f(a) < c < f(b), then there exists d ∈ (a, b) with f(d) = c.",
+    "difficulty": 3,
+    "hints": [
+      "[a, b] is connected",
+      "f([a, b]) is connected",
+      "Connected subsets of ℝ are intervals"
+    ],
+    "solution": "Since [a, b] is connected and f is continuous, f([a, b]) is connected. Connected subsets of ℝ are intervals. Since f(a), f(b) ∈ f([a, b]) and f(a) < f(b), f([a, b]) is an interval containing [f(a), f(b)]. Since f(a) < c < f(b), we have c ∈ [f(a), f(b)] ⊆ f([a, b]). Therefore, there exists d ∈ [a, b] with f(d) = c. Since c ≠ f(a), f(b), we must have d ∈ (a, b)."
+  },
+  {
+    "id": "math403-t4-ex10",
+    "subjectId": "math403",
+    "topicId": "math403-topic-4",
+    "type": "written",
+    "title": "Locally Connected Space",
+    "description": "Prove that ℝⁿ with the Euclidean topology is locally connected.",
+    "difficulty": 2,
+    "hints": [
+      "A space is locally connected if each point has a basis of connected neighborhoods",
+      "In ℝⁿ, open balls are path connected",
+      "Path connected implies connected"
+    ],
+    "solution": "A space is locally connected if every point has a basis of connected neighborhoods. Take x ∈ ℝⁿ. The collection {B(x, r) : r > 0} of open balls forms a basis at x. Each ball B(x, r) is path connected: for any y, z ∈ B(x, r), the straight line path γ(t) = (1-t)y + tz lies entirely in B(x, r) (by convexity). Since path connected implies connected, each ball is connected. Therefore, ℝⁿ is locally connected."
+  },
+  {
+    "id": "math403-t4-ex11",
+    "subjectId": "math403",
+    "topicId": "math403-topic-4",
+    "type": "written",
+    "title": "Locally Path Connected",
+    "description": "Show that a space is locally path connected if and only if path components are open.",
+    "difficulty": 3,
+    "hints": [
+      "One direction: take a point in a path component",
+      "Use local path connectedness to find a neighborhood in the component",
+      "Other direction: path components form basis neighborhoods"
+    ],
+    "solution": "(⇒) Assume X is locally path connected. Let P be a path component and x ∈ P. There exists a path-connected neighborhood U of x. Every point in U is path connected to x (via paths in U), hence in P. Thus U ⊆ P, making x interior to P. Therefore P is open. (⇐) Assume path components are open. Take x ∈ X. For any neighborhood U of x, let P be the path component of x in U (using subspace topology). Then P is open in U, so P = U ∩ V for some open V in X. Then V ∩ U is a path-connected neighborhood of x contained in U. Thus X is locally path connected."
+  },
+  {
+    "id": "math403-t4-ex12",
+    "subjectId": "math403",
+    "topicId": "math403-topic-4",
+    "type": "written",
+    "title": "Product of Connected Spaces",
+    "description": "Prove that if X and Y are connected, then X × Y is connected in the product topology.",
+    "difficulty": 3,
+    "hints": [
+      "Fix y₀ ∈ Y",
+      "X × {y₀} is homeomorphic to X",
+      "For each y, {x₀} × Y is connected",
+      "Use union of connected sets with nonempty intersection"
+    ],
+    "solution": "Fix x₀ ∈ X and y₀ ∈ Y. For each x ∈ X, the set {x} × Y is homeomorphic to Y via y ↦ (x, y), so it's connected. Similarly, X × {y₀} is homeomorphic to X, so it's connected. Note that (x, y₀) ∈ (X × {y₀}) ∩ ({x} × Y) for each x. Therefore, Aₓ = (X × {y₀}) ∪ ({x} × Y) is connected (union of connected sets with nonempty intersection). Moreover, (x₀, y₀) ∈ Aₓ for all x. Thus X × Y = ⋃ₓAₓ is connected (union of connected sets with common point)."
+  },
+  {
+    "id": "math403-t4-ex13",
+    "subjectId": "math403",
+    "topicId": "math403-topic-4",
+    "type": "written",
+    "title": "Totally Disconnected Space",
+    "description": "Prove that ℚ with the subspace topology from ℝ is totally disconnected.",
+    "difficulty": 3,
+    "hints": [
+      "A space is totally disconnected if its only connected subsets are singletons",
+      "Take two distinct rationals p < q",
+      "Find an irrational between them"
+    ],
+    "solution": "A space is totally disconnected if connected components are singletons. Take distinct p, q ∈ ℚ with p < q. Choose an irrational r with p < r < q. Then U = ℚ ∩ (-∞, r) and V = ℚ ∩ (r, ∞) are open in ℚ, nonempty (contain p, q), and disjoint. Every connected subset A of ℚ containing both p and q would satisfy A = (A ∩ U) ∪ (A ∩ V), a separation. Thus no connected subset contains two distinct points, so ℚ is totally disconnected."
+  },
+  {
+    "id": "math403-t4-ex14",
+    "subjectId": "math403",
+    "topicId": "math403-topic-4",
+    "type": "written",
+    "title": "Fixed Point Property",
+    "description": "Show that connectedness alone does not imply the fixed point property by considering ℝ with f(x) = x + 1.",
+    "difficulty": 1,
+    "hints": [
+      "ℝ is connected",
+      "f(x) = x + 1 is continuous",
+      "Does f have a fixed point?"
+    ],
+    "solution": "ℝ is connected (it's an interval). The function f: ℝ → ℝ defined by f(x) = x + 1 is continuous. However, f has no fixed point: f(x) = x would imply x + 1 = x, which is impossible. Therefore, connectedness alone does not guarantee the fixed point property. (Note: [0, 1] has the fixed point property by Brouwer's theorem, which requires compactness in addition to connectedness.)"
+  },
+  {
+    "id": "math403-t4-ex15",
+    "subjectId": "math403",
+    "topicId": "math403-topic-4",
+    "type": "written",
+    "title": "Closure and Connectedness",
+    "description": "Prove that if A is connected, then cl(A) is connected.",
+    "difficulty": 3,
+    "hints": [
+      "Suppose cl(A) = U ∪ V is a separation",
+      "Consider A ∩ U and A ∩ V",
+      "Use the fact that A is connected"
+    ],
+    "solution": "Suppose cl(A) = U ∪ V is a separation (U, V nonempty, disjoint, open in cl(A)). Then A = (A ∩ U) ∪ (A ∩ V). Since U and V are open in cl(A), U = W₁ ∩ cl(A) and V = W₂ ∩ cl(A) for open sets W₁, W₂ in X. Then A ∩ U = A ∩ W₁ and A ∩ V = A ∩ W₂ are open in A. Since A is connected, either A ∩ U = ∅ or A ∩ V = ∅. WLOG, A ⊆ U. Then cl(A) ⊆ cl(U). Since U is open in cl(A) and cl(A) is closed, U is relatively closed, so cl(U) ∩ cl(A) = U. Thus cl(A) ⊆ U, contradicting V ≠ ∅. Therefore cl(A) is connected."
+  },
+  {
+    "id": "math403-t4-ex16",
+    "subjectId": "math403",
+    "topicId": "math403-topic-4",
+    "type": "written",
+    "title": "Cantor Set Disconnectedness",
+    "description": "Prove that the Cantor set is totally disconnected.",
+    "difficulty": 3,
+    "hints": [
+      "The Cantor set is constructed by removing middle thirds",
+      "Given two distinct points, they lie in different intervals at some stage",
+      "Separate them using the removed interval"
+    ],
+    "solution": "Let C be the Cantor set and take distinct x, y ∈ C with x < y. At some stage n of the construction, x and y lie in different intervals (since at each stage, intervals are subdivided or removed). Specifically, there exists a removed open interval (a, b) with x < a < b < y. Then U = C ∩ (-∞, a) and V = C ∩ (b, ∞) are open in C, nonempty (contain x, y), disjoint, and cover any connected subset containing both x and y. Thus {x, y} is not contained in a connected subset. Since x, y were arbitrary, every connected subset is a singleton, making C totally disconnected."
+  }
+]

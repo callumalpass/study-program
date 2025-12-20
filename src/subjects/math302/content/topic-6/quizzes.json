@@ -1,0 +1,221 @@
+[
+  {
+    "id": "math302-quiz-6-1",
+    "subjectId": "math302",
+    "topicId": "math302-topic-6",
+    "title": "Series Solutions - Power Series Method",
+    "questions": [
+      {
+        "id": "math302-q76",
+        "type": "multiple_choice",
+        "prompt": "A power series solution has the form:",
+        "options": [
+          "y = Σ(n=0 to ∞) a_n x^n",
+          "y = e^x",
+          "y = sin(x)",
+          "y = a₀ + a₁x"
+        ],
+        "correctAnswer": "y = Σ(n=0 to ∞) a_n x^n",
+        "explanation": "A power series solution is an infinite series y = Σa_n x^n, where coefficients a_n are determined by the differential equation."
+      },
+      {
+        "id": "math302-q77",
+        "type": "multiple_choice",
+        "prompt": "A point x₀ is an ordinary point of y″ + P(x)y′ + Q(x)y = 0 if:",
+        "options": [
+          "P(x) and Q(x) are analytic at x₀",
+          "P(x₀) = Q(x₀) = 0",
+          "P(x) and Q(x) are undefined at x₀",
+          "The equation has no solution at x₀"
+        ],
+        "correctAnswer": "P(x) and Q(x) are analytic at x₀",
+        "explanation": "x₀ is ordinary if P(x) and Q(x) are analytic (have convergent power series) at x₀. Otherwise, it's a singular point."
+      },
+      {
+        "id": "math302-q78",
+        "type": "multiple_choice",
+        "prompt": "For a series solution y = Σa_n x^n, y′ equals:",
+        "options": [
+          "Σ(n=1 to ∞) na_n x^(n-1)",
+          "Σ(n=0 to ∞) na_n x^n",
+          "Σ(n=0 to ∞) a_n x^(n-1)",
+          "Σ(n=0 to ∞) (n+1)a_n x^n"
+        ],
+        "correctAnswer": "Σ(n=1 to ∞) na_n x^(n-1)",
+        "explanation": "Differentiating term by term: y′ = Σna_n x^(n-1), starting from n=1 since the n=0 term has zero derivative."
+      },
+      {
+        "id": "math302-q79",
+        "type": "multiple_choice",
+        "prompt": "When substituting a series into a DE, we typically:",
+        "options": [
+          "Shift indices to align powers of x",
+          "Integrate each term",
+          "Set x = 0",
+          "Use L'Hôpital's rule"
+        ],
+        "correctAnswer": "Shift indices to align powers of x",
+        "explanation": "To combine series, we shift indices so all terms have the same power x^k, then equate coefficients to find recurrence relations."
+      },
+      {
+        "id": "math302-q80",
+        "type": "multiple_choice",
+        "prompt": "A recurrence relation determines:",
+        "options": [
+          "Coefficients a_n in terms of previous coefficients",
+          "The exact solution immediately",
+          "The radius of convergence",
+          "The singular points"
+        ],
+        "correctAnswer": "Coefficients a_n in terms of previous coefficients",
+        "explanation": "Equating coefficients of like powers gives a recurrence relation, expressing a_n in terms of a_(n-1), a_(n-2), etc."
+      }
+    ]
+  },
+  {
+    "id": "math302-quiz-6-2",
+    "subjectId": "math302",
+    "topicId": "math302-topic-6",
+    "title": "Series Solutions - Frobenius Method",
+    "questions": [
+      {
+        "id": "math302-q81",
+        "type": "multiple_choice",
+        "prompt": "The Frobenius method is used near:",
+        "options": [
+          "A regular singular point",
+          "An ordinary point",
+          "An irregular singular point",
+          "Any point"
+        ],
+        "correctAnswer": "A regular singular point",
+        "explanation": "The Frobenius method finds series solutions near regular singular points, using the form y = x^r Σa_n x^n."
+      },
+      {
+        "id": "math302-q82",
+        "type": "multiple_choice",
+        "prompt": "In the Frobenius method, we assume a solution of the form:",
+        "options": [
+          "y = x^r Σ(n=0 to ∞) a_n x^n with a₀ ≠ 0",
+          "y = Σ(n=0 to ∞) a_n x^n",
+          "y = e^(rx)",
+          "y = r^x"
+        ],
+        "correctAnswer": "y = x^r Σ(n=0 to ∞) a_n x^n with a₀ ≠ 0",
+        "explanation": "Frobenius method assumes y = x^r Σa_n x^n = Σa_n x^(n+r), where r is determined by the indicial equation."
+      },
+      {
+        "id": "math302-q83",
+        "type": "multiple_choice",
+        "prompt": "The indicial equation determines:",
+        "options": [
+          "The exponent r in the Frobenius solution",
+          "All coefficients a_n",
+          "The radius of convergence",
+          "Whether the point is singular"
+        ],
+        "correctAnswer": "The exponent r in the Frobenius solution",
+        "explanation": "The indicial equation, obtained from the lowest power of x, determines the possible values of r in y = x^r Σa_n x^n."
+      },
+      {
+        "id": "math302-q84",
+        "type": "multiple_choice",
+        "prompt": "If the indicial equation has roots r₁ and r₂ with r₁ - r₂ = integer, then:",
+        "options": [
+          "The second solution may involve logarithms",
+          "Both solutions are power series",
+          "No solution exists",
+          "The solutions are identical"
+        ],
+        "correctAnswer": "The second solution may involve logarithms",
+        "explanation": "When roots differ by an integer, the second solution may contain logarithmic terms: y₂ = y₁ ln(x) + x^r₂ Σb_n x^n."
+      },
+      {
+        "id": "math302-q85",
+        "type": "multiple_choice",
+        "prompt": "A point x₀ is a regular singular point if:",
+        "options": [
+          "(x-x₀)P(x) and (x-x₀)²Q(x) are analytic at x₀",
+          "P(x) and Q(x) are analytic at x₀",
+          "P(x₀) = ∞",
+          "The equation has no solution at x₀"
+        ],
+        "correctAnswer": "(x-x₀)P(x) and (x-x₀)²Q(x) are analytic at x₀",
+        "explanation": "x₀ is regular singular if (x-x₀)P(x) and (x-x₀)²Q(x) are analytic at x₀. Otherwise, it's irregular singular."
+      }
+    ]
+  },
+  {
+    "id": "math302-quiz-6-3",
+    "subjectId": "math302",
+    "topicId": "math302-topic-6",
+    "title": "Series Solutions - Bessel and Legendre Functions",
+    "questions": [
+      {
+        "id": "math302-q86",
+        "type": "multiple_choice",
+        "prompt": "Bessel's equation of order ν is:",
+        "options": [
+          "x²y″ + xy′ + (x² - ν²)y = 0",
+          "y″ + xy′ + y = 0",
+          "x²y″ - 2xy′ + 2y = 0",
+          "(1 - x²)y″ - 2xy′ + ν(ν+1)y = 0"
+        ],
+        "correctAnswer": "x²y″ + xy′ + (x² - ν²)y = 0",
+        "explanation": "Bessel's equation is x²y″ + xy′ + (x² - ν²)y = 0. It has regular singular point at x = 0 and arises in cylindrical coordinate problems."
+      },
+      {
+        "id": "math302-q87",
+        "type": "multiple_choice",
+        "prompt": "The Bessel function of the first kind J_ν(x) is:",
+        "options": [
+          "A series solution to Bessel's equation",
+          "A polynomial",
+          "An exponential function",
+          "Always zero at x = 0"
+        ],
+        "correctAnswer": "A series solution to Bessel's equation",
+        "explanation": "J_ν(x) is a fundamental solution to Bessel's equation, given by a power series. For integer ν, it's bounded at x = 0."
+      },
+      {
+        "id": "math302-q88",
+        "type": "multiple_choice",
+        "prompt": "Legendre's equation is:",
+        "options": [
+          "(1 - x²)y″ - 2xy′ + n(n+1)y = 0",
+          "x²y″ + xy′ + (x² - n²)y = 0",
+          "y″ + xy = 0",
+          "y″ - 2xy′ + 2ny = 0"
+        ],
+        "correctAnswer": "(1 - x²)y″ - 2xy′ + n(n+1)y = 0",
+        "explanation": "Legendre's equation is (1-x²)y″ - 2xy′ + n(n+1)y = 0, arising in spherical coordinate problems. Has singular points at x = ±1."
+      },
+      {
+        "id": "math302-q89",
+        "type": "multiple_choice",
+        "prompt": "When n is a non-negative integer, Legendre's equation has a polynomial solution called:",
+        "options": [
+          "Legendre polynomial P_n(x)",
+          "Bessel function J_n(x)",
+          "Hermite polynomial",
+          "Chebyshev polynomial"
+        ],
+        "correctAnswer": "Legendre polynomial P_n(x)",
+        "explanation": "For integer n ≥ 0, one solution to Legendre's equation is the Legendre polynomial P_n(x), a polynomial of degree n."
+      },
+      {
+        "id": "math302-q90",
+        "type": "multiple_choice",
+        "prompt": "The Legendre polynomials satisfy the orthogonality relation:",
+        "options": [
+          "∫₋₁¹ P_m(x)P_n(x) dx = 0 for m ≠ n",
+          "∫₀^∞ P_m(x)P_n(x) dx = 0 for m ≠ n",
+          "P_m(x)P_n(x) = 0 for all x",
+          "∫₋₁¹ P_n(x) dx = 0"
+        ],
+        "correctAnswer": "∫₋₁¹ P_m(x)P_n(x) dx = 0 for m ≠ n",
+        "explanation": "Legendre polynomials are orthogonal on [-1,1]: ∫₋₁¹ P_m(x)P_n(x) dx = 0 when m ≠ n, important for expansions."
+      }
+    ]
+  }
+]

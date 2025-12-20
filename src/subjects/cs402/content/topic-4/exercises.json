@@ -1,0 +1,306 @@
+[
+  {
+    "id": "cs402-t4-ex01",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-4",
+    "title": "Implement Step Activation Function",
+    "difficulty": 1,
+    "description": "Implement the step (Heaviside) activation function for perceptron.\n\nRequirements:\n- Return 1 if input >= 0\n- Return 0 if input < 0\n- Handle arrays and scalars\n- Used in binary perceptron",
+    "starterCode": "import numpy as np\n\ndef step_activation(x):\n    \"\"\"\n    Step activation function.\n\n    Args:\n        x: Input (scalar or array)\n\n    Returns:\n        0 or 1\n    \"\"\"\n    # TODO: Implement step activation\n    pass",
+    "solution": "import numpy as np\n\ndef step_activation(x):\n    \"\"\"\n    Step activation function.\n\n    Args:\n        x: Input (scalar or array)\n\n    Returns:\n        0 or 1\n    \"\"\"\n    return np.where(x >= 0, 1, 0)",
+    "testCases": [],
+    "hints": [
+      "Step function: f(x) = 1 if x >= 0, else 0",
+      "Use np.where() for vectorized operation",
+      "Also called Heaviside function",
+      "Non-differentiable at x = 0",
+      "Used in original perceptron"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-t4-ex02",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-4",
+    "title": "Implement Binary Perceptron",
+    "difficulty": 3,
+    "description": "Implement a single perceptron for binary classification.\n\nRequirements:\n- Initialize weights randomly\n- Update rule: w = w + α * (y - ŷ) * x\n- Train until convergence or max iterations\n- Use step activation function",
+    "starterCode": "import numpy as np\n\nclass Perceptron:\n    def __init__(self, learning_rate=0.01, n_iterations=1000):\n        self.learning_rate = learning_rate\n        self.n_iterations = n_iterations\n        self.weights = None\n        self.bias = None\n\n    def fit(self, X, y):\n        \"\"\"Train perceptron.\"\"\"\n        # TODO: Implement perceptron training\n        pass\n\n    def predict(self, X):\n        \"\"\"Predict class labels.\"\"\"\n        # TODO: Implement predict\n        pass",
+    "solution": "import numpy as np\n\nclass Perceptron:\n    def __init__(self, learning_rate=0.01, n_iterations=1000):\n        self.learning_rate = learning_rate\n        self.n_iterations = n_iterations\n        self.weights = None\n        self.bias = None\n\n    def fit(self, X, y):\n        \"\"\"Train perceptron.\"\"\"\n        X = np.array(X)\n        y = np.array(y)\n        n_samples, n_features = X.shape\n\n        # Initialize weights and bias\n        self.weights = np.zeros(n_features)\n        self.bias = 0\n\n        # Training loop\n        for _ in range(self.n_iterations):\n            for i in range(n_samples):\n                xi = X[i]\n                yi = y[i]\n\n                # Forward pass\n                linear_output = np.dot(self.weights, xi) + self.bias\n                y_pred = 1 if linear_output >= 0 else 0\n\n                # Update weights if prediction is wrong\n                error = yi - y_pred\n                self.weights += self.learning_rate * error * xi\n                self.bias += self.learning_rate * error\n\n        return self\n\n    def predict(self, X):\n        \"\"\"Predict class labels.\"\"\"\n        X = np.array(X)\n        linear_output = X @ self.weights + self.bias\n        return np.where(linear_output >= 0, 1, 0)",
+    "testCases": [],
+    "hints": [
+      "Perceptron update rule: w = w + α*(y - ŷ)*x",
+      "Only update when prediction is wrong",
+      "Initialize weights to zeros or small random values",
+      "Linear output: w·x + b",
+      "Apply step function for binary classification"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-t4-ex03",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-4",
+    "title": "Implement ReLU Activation",
+    "difficulty": 1,
+    "description": "Implement ReLU (Rectified Linear Unit) activation function.\n\nRequirements:\n- ReLU(x) = max(0, x)\n- Implement derivative for backpropagation\n- Handle arrays efficiently\n- Most common activation in hidden layers",
+    "starterCode": "import numpy as np\n\ndef relu(x):\n    \"\"\"ReLU activation function.\"\"\"\n    # TODO: Implement ReLU\n    pass\n\ndef relu_derivative(x):\n    \"\"\"Derivative of ReLU.\"\"\"\n    # TODO: Implement ReLU derivative\n    pass",
+    "solution": "import numpy as np\n\ndef relu(x):\n    \"\"\"ReLU activation function.\"\"\"\n    return np.maximum(0, x)\n\ndef relu_derivative(x):\n    \"\"\"Derivative of ReLU.\"\"\"\n    return np.where(x > 0, 1, 0)",
+    "testCases": [],
+    "hints": [
+      "ReLU: f(x) = max(0, x)",
+      "Derivative: 1 if x > 0, else 0",
+      "Use np.maximum() for ReLU",
+      "ReLU helps avoid vanishing gradient",
+      "Most popular activation for hidden layers"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-t4-ex04",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-4",
+    "title": "Implement Tanh Activation",
+    "difficulty": 1,
+    "description": "Implement hyperbolic tangent activation function.\n\nRequirements:\n- tanh(x) = (e^x - e^(-x)) / (e^x + e^(-x))\n- Implement derivative\n- Output range: (-1, 1)\n- Zero-centered unlike sigmoid",
+    "starterCode": "import numpy as np\n\ndef tanh(x):\n    \"\"\"Tanh activation function.\"\"\"\n    # TODO: Implement tanh\n    pass\n\ndef tanh_derivative(x):\n    \"\"\"Derivative of tanh.\"\"\"\n    # TODO: Implement tanh derivative\n    pass",
+    "solution": "import numpy as np\n\ndef tanh(x):\n    \"\"\"Tanh activation function.\"\"\"\n    return np.tanh(x)\n\ndef tanh_derivative(x):\n    \"\"\"Derivative of tanh.\"\"\"\n    # Derivative: 1 - tanh^2(x)\n    return 1 - np.tanh(x) ** 2",
+    "testCases": [],
+    "hints": [
+      "tanh(x) = (e^x - e^(-x)) / (e^x + e^(-x))",
+      "Use np.tanh() for implementation",
+      "Derivative: 1 - tanh²(x)",
+      "Output range: (-1, 1)",
+      "Zero-centered, better than sigmoid"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-t4-ex05",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-4",
+    "title": "Implement Leaky ReLU",
+    "difficulty": 2,
+    "description": "Implement Leaky ReLU to prevent dying ReLU problem.\n\nRequirements:\n- Leaky ReLU: x if x > 0, else alpha*x\n- Implement derivative\n- Small slope for negative values (alpha=0.01)\n- Prevents dead neurons",
+    "starterCode": "import numpy as np\n\ndef leaky_relu(x, alpha=0.01):\n    \"\"\"Leaky ReLU activation function.\"\"\"\n    # TODO: Implement Leaky ReLU\n    pass\n\ndef leaky_relu_derivative(x, alpha=0.01):\n    \"\"\"Derivative of Leaky ReLU.\"\"\"\n    # TODO: Implement derivative\n    pass",
+    "solution": "import numpy as np\n\ndef leaky_relu(x, alpha=0.01):\n    \"\"\"Leaky ReLU activation function.\"\"\"\n    return np.where(x > 0, x, alpha * x)\n\ndef leaky_relu_derivative(x, alpha=0.01):\n    \"\"\"Derivative of Leaky ReLU.\"\"\"\n    return np.where(x > 0, 1, alpha)",
+    "testCases": [],
+    "hints": [
+      "Leaky ReLU: f(x) = x if x > 0, else α*x",
+      "Derivative: 1 if x > 0, else α",
+      "Common α values: 0.01, 0.1",
+      "Prevents dying ReLU problem",
+      "Small gradient for negative inputs"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-t4-ex06",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-4",
+    "title": "Implement Forward Pass",
+    "difficulty": 2,
+    "description": "Implement forward propagation for a single layer.\n\nRequirements:\n- Calculate z = Wx + b\n- Apply activation function\n- Return both pre-activation (z) and activation (a)\n- Support batch processing",
+    "starterCode": "import numpy as np\n\ndef forward_pass(X, W, b, activation='relu'):\n    \"\"\"\n    Forward pass for single layer.\n\n    Args:\n        X: Input (n_samples, n_features)\n        W: Weights (n_features, n_neurons)\n        b: Bias (n_neurons,)\n        activation: Activation function name\n\n    Returns:\n        z: Pre-activation (n_samples, n_neurons)\n        a: Activation output (n_samples, n_neurons)\n    \"\"\"\n    # TODO: Implement forward pass\n    pass",
+    "solution": "import numpy as np\n\ndef relu(x):\n    return np.maximum(0, x)\n\ndef sigmoid(x):\n    return 1 / (1 + np.exp(-np.clip(x, -500, 500)))\n\ndef tanh(x):\n    return np.tanh(x)\n\ndef forward_pass(X, W, b, activation='relu'):\n    \"\"\"\n    Forward pass for single layer.\n\n    Args:\n        X: Input (n_samples, n_features)\n        W: Weights (n_features, n_neurons)\n        b: Bias (n_neurons,)\n        activation: Activation function name\n\n    Returns:\n        z: Pre-activation (n_samples, n_neurons)\n        a: Activation output (n_samples, n_neurons)\n    \"\"\"\n    # Linear transformation\n    z = X @ W + b\n\n    # Apply activation\n    if activation == 'relu':\n        a = relu(z)\n    elif activation == 'sigmoid':\n        a = sigmoid(z)\n    elif activation == 'tanh':\n        a = tanh(z)\n    elif activation == 'linear':\n        a = z\n    else:\n        raise ValueError(f\"Unknown activation: {activation}\")\n\n    return z, a",
+    "testCases": [],
+    "hints": [
+      "Linear transformation: z = X @ W + b",
+      "Apply activation to z to get a",
+      "Store z for backpropagation",
+      "Broadcasting handles bias addition",
+      "Support multiple activation functions"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-t4-ex07",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-4",
+    "title": "Implement Backward Pass for Output Layer",
+    "difficulty": 3,
+    "description": "Implement backpropagation for output layer.\n\nRequirements:\n- Calculate loss gradient\n- Compute weight gradient: dW = X^T @ dL/da\n- Compute bias gradient: db = sum(dL/da)\n- Return gradients for weights and bias",
+    "starterCode": "import numpy as np\n\ndef backward_output_layer(X, y, a, loss='mse'):\n    \"\"\"\n    Backward pass for output layer.\n\n    Args:\n        X: Input to this layer (n_samples, n_features)\n        y: True labels (n_samples, n_outputs)\n        a: Output activations (n_samples, n_outputs)\n        loss: Loss function ('mse' or 'cross_entropy')\n\n    Returns:\n        dW: Weight gradient (n_features, n_outputs)\n        db: Bias gradient (n_outputs,)\n        dX: Gradient w.r.t input (n_samples, n_features)\n    \"\"\"\n    # TODO: Implement backward pass for output layer\n    pass",
+    "solution": "import numpy as np\n\ndef backward_output_layer(X, y, a, loss='mse'):\n    \"\"\"\n    Backward pass for output layer.\n\n    Args:\n        X: Input to this layer (n_samples, n_features)\n        y: True labels (n_samples, n_outputs)\n        a: Output activations (n_samples, n_outputs)\n        loss: Loss function ('mse' or 'cross_entropy')\n\n    Returns:\n        dW: Weight gradient (n_features, n_outputs)\n        db: Bias gradient (n_outputs,)\n        dX: Gradient w.r.t input (n_samples, n_features)\n    \"\"\"\n    n_samples = X.shape[0]\n\n    # Gradient of loss w.r.t. output activation\n    if loss == 'mse':\n        # MSE: (a - y)\n        da = a - y\n    elif loss == 'cross_entropy':\n        # Binary cross-entropy with sigmoid\n        da = a - y\n    else:\n        raise ValueError(f\"Unknown loss: {loss}\")\n\n    # Gradients\n    dW = (1 / n_samples) * X.T @ da\n    db = (1 / n_samples) * np.sum(da, axis=0)\n    dX = da @ W.T  # For propagating to previous layer\n\n    return dW, db, dX",
+    "testCases": [],
+    "hints": [
+      "For MSE: gradient = a - y",
+      "For cross-entropy + sigmoid: gradient = a - y",
+      "Weight gradient: dW = (1/n) * X^T @ da",
+      "Bias gradient: db = (1/n) * sum(da)",
+      "Gradient w.r.t. input: dX = da @ W^T"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-t4-ex08",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-4",
+    "title": "Implement Backward Pass for Hidden Layer",
+    "difficulty": 3,
+    "description": "Implement backpropagation for hidden layer.\n\nRequirements:\n- Calculate gradient from next layer\n- Apply activation derivative\n- Compute weight and bias gradients\n- Return gradients for current and previous layer",
+    "starterCode": "import numpy as np\n\ndef backward_hidden_layer(X, W, z, dA_next, activation='relu'):\n    \"\"\"\n    Backward pass for hidden layer.\n\n    Args:\n        X: Input to this layer (n_samples, n_features)\n        W: Weights (n_features, n_neurons)\n        z: Pre-activation (n_samples, n_neurons)\n        dA_next: Gradient from next layer (n_samples, n_neurons)\n        activation: Activation function\n\n    Returns:\n        dW: Weight gradient (n_features, n_neurons)\n        db: Bias gradient (n_neurons,)\n        dX: Gradient w.r.t input (n_samples, n_features)\n    \"\"\"\n    # TODO: Implement backward pass for hidden layer\n    pass",
+    "solution": "import numpy as np\n\ndef relu_derivative(x):\n    return np.where(x > 0, 1, 0)\n\ndef sigmoid_derivative(x):\n    s = 1 / (1 + np.exp(-np.clip(x, -500, 500)))\n    return s * (1 - s)\n\ndef tanh_derivative(x):\n    return 1 - np.tanh(x) ** 2\n\ndef backward_hidden_layer(X, W, z, dA_next, activation='relu'):\n    \"\"\"\n    Backward pass for hidden layer.\n\n    Args:\n        X: Input to this layer (n_samples, n_features)\n        W: Weights (n_features, n_neurons)\n        z: Pre-activation (n_samples, n_neurons)\n        dA_next: Gradient from next layer (n_samples, n_neurons)\n        activation: Activation function\n\n    Returns:\n        dW: Weight gradient (n_features, n_neurons)\n        db: Bias gradient (n_neurons,)\n        dX: Gradient w.r.t input (n_samples, n_features)\n    \"\"\"\n    n_samples = X.shape[0]\n\n    # Apply activation derivative\n    if activation == 'relu':\n        dz = dA_next * relu_derivative(z)\n    elif activation == 'sigmoid':\n        dz = dA_next * sigmoid_derivative(z)\n    elif activation == 'tanh':\n        dz = dA_next * tanh_derivative(z)\n    elif activation == 'linear':\n        dz = dA_next\n    else:\n        raise ValueError(f\"Unknown activation: {activation}\")\n\n    # Calculate gradients\n    dW = (1 / n_samples) * X.T @ dz\n    db = (1 / n_samples) * np.sum(dz, axis=0)\n    dX = dz @ W.T\n\n    return dW, db, dX",
+    "testCases": [],
+    "hints": [
+      "Chain rule: dz = dA_next * activation_derivative(z)",
+      "Weight gradient: dW = (1/n) * X^T @ dz",
+      "Bias gradient: db = (1/n) * sum(dz)",
+      "Propagate to previous layer: dX = dz @ W^T",
+      "Activation derivative depends on pre-activation z"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-t4-ex09",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-4",
+    "title": "Implement Xavier/Glorot Initialization",
+    "difficulty": 2,
+    "description": "Implement Xavier initialization for neural network weights.\n\nRequirements:\n- Initialize weights from uniform distribution\n- Range: [-√(6/(n_in + n_out)), √(6/(n_in + n_out))]\n- Initialize bias to zeros\n- Helps maintain gradient variance",
+    "starterCode": "import numpy as np\n\ndef xavier_initialization(n_in, n_out, random_state=None):\n    \"\"\"\n    Xavier/Glorot weight initialization.\n\n    Args:\n        n_in: Number of input units\n        n_out: Number of output units\n        random_state: Random seed\n\n    Returns:\n        W: Initialized weights (n_in, n_out)\n        b: Initialized bias (n_out,)\n    \"\"\"\n    # TODO: Implement Xavier initialization\n    pass",
+    "solution": "import numpy as np\n\ndef xavier_initialization(n_in, n_out, random_state=None):\n    \"\"\"\n    Xavier/Glorot weight initialization.\n\n    Args:\n        n_in: Number of input units\n        n_out: Number of output units\n        random_state: Random seed\n\n    Returns:\n        W: Initialized weights (n_in, n_out)\n        b: Initialized bias (n_out,)\n    \"\"\"\n    if random_state is not None:\n        np.random.seed(random_state)\n\n    # Xavier uniform initialization\n    limit = np.sqrt(6 / (n_in + n_out))\n    W = np.random.uniform(-limit, limit, (n_in, n_out))\n\n    # Bias initialized to zeros\n    b = np.zeros(n_out)\n\n    return W, b",
+    "testCases": [],
+    "hints": [
+      "Xavier uniform: W ~ U(-√(6/(n_in+n_out)), √(6/(n_in+n_out)))",
+      "Xavier normal: W ~ N(0, √(2/(n_in+n_out)))",
+      "Bias initialized to zeros",
+      "Helps avoid vanishing/exploding gradients",
+      "Works well with tanh and sigmoid"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-t4-ex10",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-4",
+    "title": "Implement He Initialization",
+    "difficulty": 2,
+    "description": "Implement He initialization for ReLU networks.\n\nRequirements:\n- Initialize weights from normal distribution\n- Mean: 0, Variance: 2/n_in\n- Initialize bias to zeros\n- Optimized for ReLU activation",
+    "starterCode": "import numpy as np\n\ndef he_initialization(n_in, n_out, random_state=None):\n    \"\"\"\n    He weight initialization for ReLU networks.\n\n    Args:\n        n_in: Number of input units\n        n_out: Number of output units\n        random_state: Random seed\n\n    Returns:\n        W: Initialized weights (n_in, n_out)\n        b: Initialized bias (n_out,)\n    \"\"\"\n    # TODO: Implement He initialization\n    pass",
+    "solution": "import numpy as np\n\ndef he_initialization(n_in, n_out, random_state=None):\n    \"\"\"\n    He weight initialization for ReLU networks.\n\n    Args:\n        n_in: Number of input units\n        n_out: Number of output units\n        random_state: Random seed\n\n    Returns:\n        W: Initialized weights (n_in, n_out)\n        b: Initialized bias (n_out,)\n    \"\"\"\n    if random_state is not None:\n        np.random.seed(random_state)\n\n    # He normal initialization\n    std = np.sqrt(2 / n_in)\n    W = np.random.normal(0, std, (n_in, n_out))\n\n    # Bias initialized to zeros\n    b = np.zeros(n_out)\n\n    return W, b",
+    "testCases": [],
+    "hints": [
+      "He normal: W ~ N(0, √(2/n_in))",
+      "He uniform: W ~ U(-√(6/n_in), √(6/n_in))",
+      "Optimized for ReLU and its variants",
+      "Variance: 2/n_in",
+      "Bias initialized to zeros"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-t4-ex11",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-4",
+    "title": "Implement 2-Layer Neural Network",
+    "difficulty": 4,
+    "description": "Implement a complete 2-layer neural network with backpropagation.\n\nRequirements:\n- One hidden layer, one output layer\n- Forward propagation through both layers\n- Backpropagation to compute gradients\n- Gradient descent for training\n- Support different activation functions",
+    "starterCode": "import numpy as np\n\nclass TwoLayerNN:\n    def __init__(self, n_features, n_hidden, n_output, learning_rate=0.01):\n        self.learning_rate = learning_rate\n        # Initialize weights and biases\n        # TODO: Initialize parameters\n        pass\n\n    def forward(self, X):\n        \"\"\"Forward propagation.\"\"\"\n        # TODO: Implement forward pass\n        pass\n\n    def backward(self, X, y):\n        \"\"\"Backward propagation.\"\"\"\n        # TODO: Implement backward pass\n        pass\n\n    def fit(self, X, y, n_epochs=1000):\n        \"\"\"Train the network.\"\"\"\n        # TODO: Implement training loop\n        pass\n\n    def predict(self, X):\n        \"\"\"Make predictions.\"\"\"\n        # TODO: Implement predict\n        pass",
+    "solution": "import numpy as np\n\nclass TwoLayerNN:\n    def __init__(self, n_features, n_hidden, n_output, learning_rate=0.01):\n        self.learning_rate = learning_rate\n\n        # He initialization for hidden layer (ReLU)\n        self.W1 = np.random.randn(n_features, n_hidden) * np.sqrt(2 / n_features)\n        self.b1 = np.zeros(n_hidden)\n\n        # Xavier initialization for output layer (sigmoid)\n        limit = np.sqrt(6 / (n_hidden + n_output))\n        self.W2 = np.random.uniform(-limit, limit, (n_hidden, n_output))\n        self.b2 = np.zeros(n_output)\n\n        # Cache for backpropagation\n        self.cache = {}\n\n    def relu(self, x):\n        return np.maximum(0, x)\n\n    def relu_derivative(self, x):\n        return np.where(x > 0, 1, 0)\n\n    def sigmoid(self, x):\n        return 1 / (1 + np.exp(-np.clip(x, -500, 500)))\n\n    def forward(self, X):\n        \"\"\"Forward propagation.\"\"\"\n        # Hidden layer\n        z1 = X @ self.W1 + self.b1\n        a1 = self.relu(z1)\n\n        # Output layer\n        z2 = a1 @ self.W2 + self.b2\n        a2 = self.sigmoid(z2)\n\n        # Cache for backward pass\n        self.cache = {'X': X, 'z1': z1, 'a1': a1, 'z2': z2, 'a2': a2}\n\n        return a2\n\n    def backward(self, y):\n        \"\"\"Backward propagation.\"\"\"\n        X = self.cache['X']\n        a1 = self.cache['a1']\n        a2 = self.cache['a2']\n        z1 = self.cache['z1']\n\n        n_samples = X.shape[0]\n\n        # Output layer gradients\n        dz2 = a2 - y\n        dW2 = (1 / n_samples) * a1.T @ dz2\n        db2 = (1 / n_samples) * np.sum(dz2, axis=0)\n\n        # Hidden layer gradients\n        da1 = dz2 @ self.W2.T\n        dz1 = da1 * self.relu_derivative(z1)\n        dW1 = (1 / n_samples) * X.T @ dz1\n        db1 = (1 / n_samples) * np.sum(dz1, axis=0)\n\n        return dW1, db1, dW2, db2\n\n    def fit(self, X, y, n_epochs=1000):\n        \"\"\"Train the network.\"\"\"\n        X = np.array(X)\n        y = np.array(y).reshape(-1, 1) if y.ndim == 1 else np.array(y)\n\n        for epoch in range(n_epochs):\n            # Forward pass\n            a2 = self.forward(X)\n\n            # Backward pass\n            dW1, db1, dW2, db2 = self.backward(y)\n\n            # Update parameters\n            self.W1 -= self.learning_rate * dW1\n            self.b1 -= self.learning_rate * db1\n            self.W2 -= self.learning_rate * dW2\n            self.b2 -= self.learning_rate * db2\n\n        return self\n\n    def predict(self, X):\n        \"\"\"Make predictions.\"\"\"\n        X = np.array(X)\n        a2 = self.forward(X)\n        return (a2 >= 0.5).astype(int)",
+    "testCases": [],
+    "hints": [
+      "Forward: X -> hidden (ReLU) -> output (sigmoid)",
+      "Backward: compute gradients layer by layer",
+      "Use chain rule for hidden layer gradients",
+      "Update weights: W -= learning_rate * dW",
+      "Cache intermediate values for backpropagation"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-t4-ex12",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-4",
+    "title": "Implement Batch Normalization",
+    "difficulty": 4,
+    "description": "Implement batch normalization for neural networks.\n\nRequirements:\n- Normalize: (x - mean) / sqrt(var + ε)\n- Scale and shift: γ*x_norm + β\n- Calculate running mean/var for inference\n- Implement forward and backward pass",
+    "starterCode": "import numpy as np\n\nclass BatchNormalization:\n    def __init__(self, n_features, epsilon=1e-5, momentum=0.9):\n        self.epsilon = epsilon\n        self.momentum = momentum\n\n        # Learnable parameters\n        self.gamma = np.ones(n_features)\n        self.beta = np.zeros(n_features)\n\n        # Running statistics for inference\n        self.running_mean = np.zeros(n_features)\n        self.running_var = np.ones(n_features)\n\n    def forward(self, X, training=True):\n        \"\"\"Forward pass.\"\"\"\n        # TODO: Implement forward pass\n        pass\n\n    def backward(self, dout):\n        \"\"\"Backward pass.\"\"\"\n        # TODO: Implement backward pass\n        pass",
+    "solution": "import numpy as np\n\nclass BatchNormalization:\n    def __init__(self, n_features, epsilon=1e-5, momentum=0.9):\n        self.epsilon = epsilon\n        self.momentum = momentum\n\n        # Learnable parameters\n        self.gamma = np.ones(n_features)\n        self.beta = np.zeros(n_features)\n\n        # Running statistics for inference\n        self.running_mean = np.zeros(n_features)\n        self.running_var = np.ones(n_features)\n\n        # Cache for backward pass\n        self.cache = {}\n\n    def forward(self, X, training=True):\n        \"\"\"Forward pass.\"\"\"\n        if training:\n            # Calculate batch statistics\n            batch_mean = np.mean(X, axis=0)\n            batch_var = np.var(X, axis=0)\n\n            # Normalize\n            X_norm = (X - batch_mean) / np.sqrt(batch_var + self.epsilon)\n\n            # Scale and shift\n            out = self.gamma * X_norm + self.beta\n\n            # Update running statistics\n            self.running_mean = self.momentum * self.running_mean + (1 - self.momentum) * batch_mean\n            self.running_var = self.momentum * self.running_var + (1 - self.momentum) * batch_var\n\n            # Cache for backward pass\n            self.cache = {\n                'X': X,\n                'X_norm': X_norm,\n                'batch_mean': batch_mean,\n                'batch_var': batch_var\n            }\n        else:\n            # Use running statistics for inference\n            X_norm = (X - self.running_mean) / np.sqrt(self.running_var + self.epsilon)\n            out = self.gamma * X_norm + self.beta\n\n        return out\n\n    def backward(self, dout):\n        \"\"\"Backward pass.\"\"\"\n        X = self.cache['X']\n        X_norm = self.cache['X_norm']\n        batch_mean = self.cache['batch_mean']\n        batch_var = self.cache['batch_var']\n\n        n_samples = X.shape[0]\n\n        # Gradients for gamma and beta\n        dgamma = np.sum(dout * X_norm, axis=0)\n        dbeta = np.sum(dout, axis=0)\n\n        # Gradient for X_norm\n        dX_norm = dout * self.gamma\n\n        # Gradient for variance\n        dvar = np.sum(dX_norm * (X - batch_mean) * -0.5 * (batch_var + self.epsilon) ** -1.5, axis=0)\n\n        # Gradient for mean\n        dmean = np.sum(dX_norm * -1 / np.sqrt(batch_var + self.epsilon), axis=0) + \\\n                dvar * np.sum(-2 * (X - batch_mean), axis=0) / n_samples\n\n        # Gradient for X\n        dX = dX_norm / np.sqrt(batch_var + self.epsilon) + \\\n             dvar * 2 * (X - batch_mean) / n_samples + \\\n             dmean / n_samples\n\n        return dX, dgamma, dbeta",
+    "testCases": [],
+    "hints": [
+      "Normalize: (x - mean) / sqrt(var + ε)",
+      "Scale and shift: γ * x_norm + β",
+      "Use batch statistics during training",
+      "Use running statistics during inference",
+      "Update running stats with momentum"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-t4-ex13",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-4",
+    "title": "Implement Dropout",
+    "difficulty": 3,
+    "description": "Implement dropout regularization for neural networks.\n\nRequirements:\n- Randomly set neurons to zero during training\n- Scale remaining activations by 1/(1-p)\n- Disable dropout during inference\n- Return mask for backpropagation",
+    "starterCode": "import numpy as np\n\nclass Dropout:\n    def __init__(self, dropout_rate=0.5):\n        self.dropout_rate = dropout_rate\n        self.mask = None\n\n    def forward(self, X, training=True):\n        \"\"\"Forward pass with dropout.\"\"\"\n        # TODO: Implement forward pass\n        pass\n\n    def backward(self, dout):\n        \"\"\"Backward pass with dropout.\"\"\"\n        # TODO: Implement backward pass\n        pass",
+    "solution": "import numpy as np\n\nclass Dropout:\n    def __init__(self, dropout_rate=0.5):\n        self.dropout_rate = dropout_rate\n        self.mask = None\n\n    def forward(self, X, training=True):\n        \"\"\"Forward pass with dropout.\"\"\"\n        if training:\n            # Create dropout mask\n            self.mask = np.random.rand(*X.shape) > self.dropout_rate\n\n            # Apply mask and scale\n            out = X * self.mask / (1 - self.dropout_rate)\n        else:\n            # No dropout during inference\n            out = X\n\n        return out\n\n    def backward(self, dout):\n        \"\"\"Backward pass with dropout.\"\"\"\n        # Apply same mask to gradients\n        dX = dout * self.mask / (1 - self.dropout_rate)\n        return dX",
+    "testCases": [],
+    "hints": [
+      "Create binary mask: np.random.rand() > dropout_rate",
+      "Scale by 1/(1-p) during training (inverted dropout)",
+      "No dropout during inference",
+      "Apply same mask during backward pass",
+      "Typical dropout rates: 0.2-0.5"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-t4-ex14",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-4",
+    "title": "Implement Momentum Optimizer",
+    "difficulty": 3,
+    "description": "Implement momentum-based gradient descent optimization.\n\nRequirements:\n- Maintain velocity for each parameter\n- Update: v = β*v + (1-β)*gradient\n- Parameter update: θ = θ - α*v\n- Accelerates convergence",
+    "starterCode": "import numpy as np\n\nclass MomentumOptimizer:\n    def __init__(self, learning_rate=0.01, momentum=0.9):\n        self.learning_rate = learning_rate\n        self.momentum = momentum\n        self.velocities = {}\n\n    def update(self, params, grads):\n        \"\"\"\n        Update parameters using momentum.\n\n        Args:\n            params: Dictionary of parameters\n            grads: Dictionary of gradients\n\n        Returns:\n            Updated parameters\n        \"\"\"\n        # TODO: Implement momentum update\n        pass",
+    "solution": "import numpy as np\n\nclass MomentumOptimizer:\n    def __init__(self, learning_rate=0.01, momentum=0.9):\n        self.learning_rate = learning_rate\n        self.momentum = momentum\n        self.velocities = {}\n\n    def update(self, params, grads):\n        \"\"\"\n        Update parameters using momentum.\n\n        Args:\n            params: Dictionary of parameters\n            grads: Dictionary of gradients\n\n        Returns:\n            Updated parameters\n        \"\"\"\n        # Initialize velocities if first update\n        if not self.velocities:\n            for key in params:\n                self.velocities[key] = np.zeros_like(params[key])\n\n        # Update parameters\n        for key in params:\n            # Update velocity\n            self.velocities[key] = self.momentum * self.velocities[key] + \\\n                                  (1 - self.momentum) * grads[key]\n\n            # Update parameter\n            params[key] -= self.learning_rate * self.velocities[key]\n\n        return params",
+    "testCases": [],
+    "hints": [
+      "Velocity: v = β*v + (1-β)*gradient",
+      "Update: θ = θ - α*v",
+      "Initialize velocities to zeros",
+      "Typical momentum: 0.9 or 0.99",
+      "Helps escape local minima"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-t4-ex15",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-4",
+    "title": "Implement Adam Optimizer",
+    "difficulty": 4,
+    "description": "Implement Adam (Adaptive Moment Estimation) optimizer.\n\nRequirements:\n- Maintain first moment (mean) and second moment (variance)\n- Bias correction for moments\n- Adaptive learning rate per parameter\n- Combine momentum and RMSprop",
+    "starterCode": "import numpy as np\n\nclass AdamOptimizer:\n    def __init__(self, learning_rate=0.001, beta1=0.9, beta2=0.999, epsilon=1e-8):\n        self.learning_rate = learning_rate\n        self.beta1 = beta1\n        self.beta2 = beta2\n        self.epsilon = epsilon\n        self.m = {}  # First moment\n        self.v = {}  # Second moment\n        self.t = 0   # Time step\n\n    def update(self, params, grads):\n        \"\"\"Update parameters using Adam.\"\"\"\n        # TODO: Implement Adam update\n        pass",
+    "solution": "import numpy as np\n\nclass AdamOptimizer:\n    def __init__(self, learning_rate=0.001, beta1=0.9, beta2=0.999, epsilon=1e-8):\n        self.learning_rate = learning_rate\n        self.beta1 = beta1\n        self.beta2 = beta2\n        self.epsilon = epsilon\n        self.m = {}  # First moment\n        self.v = {}  # Second moment\n        self.t = 0   # Time step\n\n    def update(self, params, grads):\n        \"\"\"Update parameters using Adam.\"\"\"\n        # Initialize moments if first update\n        if not self.m:\n            for key in params:\n                self.m[key] = np.zeros_like(params[key])\n                self.v[key] = np.zeros_like(params[key])\n\n        # Increment time step\n        self.t += 1\n\n        # Update parameters\n        for key in params:\n            # Update biased first moment estimate\n            self.m[key] = self.beta1 * self.m[key] + (1 - self.beta1) * grads[key]\n\n            # Update biased second moment estimate\n            self.v[key] = self.beta2 * self.v[key] + (1 - self.beta2) * (grads[key] ** 2)\n\n            # Bias correction\n            m_hat = self.m[key] / (1 - self.beta1 ** self.t)\n            v_hat = self.v[key] / (1 - self.beta2 ** self.t)\n\n            # Update parameter\n            params[key] -= self.learning_rate * m_hat / (np.sqrt(v_hat) + self.epsilon)\n\n        return params",
+    "testCases": [],
+    "hints": [
+      "First moment: m = β1*m + (1-β1)*gradient",
+      "Second moment: v = β2*v + (1-β2)*gradient²",
+      "Bias correction: m_hat = m/(1-β1^t)",
+      "Update: θ = θ - α*m_hat/(√v_hat + ε)",
+      "Default: β1=0.9, β2=0.999, ε=1e-8"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-t4-ex16",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-4",
+    "title": "Implement Gradient Clipping",
+    "difficulty": 2,
+    "description": "Implement gradient clipping to prevent exploding gradients.\n\nRequirements:\n- Clip gradients by value\n- Clip gradients by norm\n- Support both methods\n- Prevent exploding gradient problem",
+    "starterCode": "import numpy as np\n\ndef clip_gradients(grads, method='value', threshold=1.0):\n    \"\"\"\n    Clip gradients to prevent explosion.\n\n    Args:\n        grads: Dictionary of gradients\n        method: 'value' or 'norm'\n        threshold: Clipping threshold\n\n    Returns:\n        Clipped gradients\n    \"\"\"\n    # TODO: Implement gradient clipping\n    pass",
+    "solution": "import numpy as np\n\ndef clip_gradients(grads, method='value', threshold=1.0):\n    \"\"\"\n    Clip gradients to prevent explosion.\n\n    Args:\n        grads: Dictionary of gradients\n        method: 'value' or 'norm'\n        threshold: Clipping threshold\n\n    Returns:\n        Clipped gradients\n    \"\"\"\n    clipped_grads = {}\n\n    if method == 'value':\n        # Clip each gradient value\n        for key in grads:\n            clipped_grads[key] = np.clip(grads[key], -threshold, threshold)\n\n    elif method == 'norm':\n        # Clip by global norm\n        # Calculate global norm\n        total_norm = 0\n        for key in grads:\n            total_norm += np.sum(grads[key] ** 2)\n        total_norm = np.sqrt(total_norm)\n\n        # Clip if norm exceeds threshold\n        clip_coef = threshold / (total_norm + 1e-6)\n        if clip_coef < 1:\n            for key in grads:\n                clipped_grads[key] = grads[key] * clip_coef\n        else:\n            clipped_grads = grads\n\n    else:\n        raise ValueError(f\"Unknown clipping method: {method}\")\n\n    return clipped_grads",
+    "testCases": [],
+    "hints": [
+      "Value clipping: np.clip(grad, -threshold, threshold)",
+      "Norm clipping: scale gradient if ||grad|| > threshold",
+      "Global norm: sqrt(sum of all gradient squares)",
+      "Clip coefficient: threshold / norm",
+      "Helps with exploding gradients in RNNs"
+    ],
+    "language": "python"
+  }
+]

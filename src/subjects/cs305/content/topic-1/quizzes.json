@@ -1,0 +1,185 @@
+[
+  {
+    "id": "cs305-quiz-1-1",
+    "title": "HTML Basics",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-1",
+    "questions": [
+      {
+        "id": "cs305-q1-1",
+        "type": "multiple_choice",
+        "prompt": "Which HTML element represents the root of an HTML document?",
+        "options": [
+          "<body>",
+          "<head>",
+          "<html>",
+          "<doctype>"
+        ],
+        "correctAnswer": "<html>",
+        "explanation": "The <html> element is the root element of an HTML document and contains all other elements except the <!DOCTYPE> declaration."
+      },
+      {
+        "id": "cs305-q1-2",
+        "type": "true_false",
+        "prompt": "The <meta charset=\"UTF-8\"> tag should be placed inside the <body> element.",
+        "correctAnswer": "false",
+        "explanation": "The <meta charset=\"UTF-8\"> tag should be placed in the <head> section, not the <body>. It defines the character encoding for the document."
+      },
+      {
+        "id": "cs305-q1-3",
+        "type": "multiple_choice",
+        "prompt": "Which attribute is required for the <img> element?",
+        "options": [
+          "title",
+          "alt",
+          "src",
+          "width"
+        ],
+        "correctAnswer": "src",
+        "explanation": "The src attribute is required for <img> elements as it specifies the path to the image. While alt is highly recommended for accessibility, src is technically required."
+      },
+      {
+        "id": "cs305-q1-4",
+        "type": "multiple_choice",
+        "prompt": "What is the correct HTML for creating a hyperlink?",
+        "options": [
+          "<a url=\"http://example.com\">Link</a>",
+          "<a href=\"http://example.com\">Link</a>",
+          "<link>http://example.com</link>",
+          "<hyperlink>http://example.com</hyperlink>"
+        ],
+        "correctAnswer": "<a href=\"http://example.com\">Link</a>",
+        "explanation": "The <a> element with the href attribute is used to create hyperlinks in HTML."
+      },
+      {
+        "id": "cs305-q1-5",
+        "type": "fill_blank",
+        "prompt": "The HTML element used to define the title of a document shown in the browser tab is ___.",
+        "correctAnswer": "<title>",
+        "explanation": "The <title> element, placed in the <head> section, defines the document title shown in the browser tab and search results."
+      }
+    ]
+  },
+  {
+    "id": "cs305-quiz-1-2",
+    "title": "HTML Forms and Input",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-1",
+    "questions": [
+      {
+        "id": "cs305-q1-6",
+        "type": "multiple_choice",
+        "prompt": "Which input type provides a date picker in modern browsers?",
+        "options": [
+          "<input type=\"calendar\">",
+          "<input type=\"date\">",
+          "<input type=\"datetime\">",
+          "<input type=\"picker\">"
+        ],
+        "correctAnswer": "<input type=\"date\">",
+        "explanation": "The <input type=\"date\"> creates a date picker control in browsers that support it, allowing users to select dates easily."
+      },
+      {
+        "id": "cs305-q1-7",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of the \"action\" attribute in a <form> element?",
+        "options": [
+          "It specifies the HTTP method",
+          "It specifies where to send form data",
+          "It validates form inputs",
+          "It styles the form"
+        ],
+        "correctAnswer": "It specifies where to send form data",
+        "explanation": "The action attribute specifies the URL where the form data should be sent when submitted."
+      },
+      {
+        "id": "cs305-q1-8",
+        "type": "true_false",
+        "prompt": "The <label> element can be associated with an input using the \"for\" attribute that matches the input's \"id\".",
+        "correctAnswer": "true",
+        "explanation": "The for attribute of <label> should match the id of the associated input element, improving accessibility and allowing users to click the label to focus the input."
+      },
+      {
+        "id": "cs305-q1-9",
+        "type": "multiple_choice",
+        "prompt": "Which attribute makes an input field required in HTML5?",
+        "options": [
+          "validate=\"true\"",
+          "mandatory",
+          "required",
+          "needed"
+        ],
+        "correctAnswer": "required",
+        "explanation": "The required attribute is a boolean attribute that prevents form submission if the field is empty."
+      },
+      {
+        "id": "cs305-q1-10",
+        "type": "fill_blank",
+        "prompt": "To create a dropdown list in HTML, you use the ___ element with nested <option> elements.",
+        "correctAnswer": "<select>",
+        "explanation": "The <select> element creates a dropdown list, containing one or more <option> elements representing the choices."
+      }
+    ]
+  },
+  {
+    "id": "cs305-quiz-1-3",
+    "title": "Semantic HTML",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-1",
+    "questions": [
+      {
+        "id": "cs305-q1-11",
+        "type": "multiple_choice",
+        "prompt": "Which semantic HTML5 element should be used for a self-contained composition that could be independently distributed?",
+        "options": [
+          "<section>",
+          "<div>",
+          "<article>",
+          "<aside>"
+        ],
+        "correctAnswer": "<article>",
+        "explanation": "<article> represents a self-contained composition intended to be independently distributable or reusable, such as a blog post, news article, or forum post."
+      },
+      {
+        "id": "cs305-q1-12",
+        "type": "multiple_choice",
+        "prompt": "What is the difference between <section> and <div>?",
+        "options": [
+          "No difference, they are identical",
+          "<section> is semantic and represents thematic grouping",
+          "<section> is deprecated",
+          "<div> is semantic while <section> is not"
+        ],
+        "correctAnswer": "<section> is semantic and represents thematic grouping",
+        "explanation": "<section> is a semantic element representing a thematic grouping of content, while <div> is a generic container with no semantic meaning."
+      },
+      {
+        "id": "cs305-q1-13",
+        "type": "true_false",
+        "prompt": "The <nav> element should only be used for the main navigation block and not for all groups of links.",
+        "correctAnswer": "true",
+        "explanation": "The <nav> element should be reserved for major navigation blocks. Not all groups of links need to be in a <nav> element, only sections consisting of major navigation blocks."
+      },
+      {
+        "id": "cs305-q1-14",
+        "type": "multiple_choice",
+        "prompt": "Which element is best for tangentially related content, like a sidebar?",
+        "options": [
+          "<sidebar>",
+          "<aside>",
+          "<related>",
+          "<tangent>"
+        ],
+        "correctAnswer": "<aside>",
+        "explanation": "The <aside> element represents content that is tangentially related to the main content, commonly used for sidebars, pull quotes, or related links."
+      },
+      {
+        "id": "cs305-q1-15",
+        "type": "fill_blank",
+        "prompt": "The ___ element represents introductory content for its nearest ancestor sectioning content or sectioning root element.",
+        "correctAnswer": "<header>",
+        "explanation": "The <header> element represents introductory content, typically containing headings, logos, navigation, or other introductory information."
+      }
+    ]
+  }
+]

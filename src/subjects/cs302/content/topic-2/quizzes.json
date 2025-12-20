@@ -1,0 +1,186 @@
+[
+  {
+    "id": "cs302-quiz-2a",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-2",
+    "title": "Physical and Data Link - Fundamentals",
+    "questions": [
+      {
+        "id": "q2a-1",
+        "type": "multiple_choice",
+        "prompt": "What type of cable is commonly used for Gigabit Ethernet connections up to 100 meters?",
+        "options": [
+          "Coaxial cable",
+          "Cat 5e twisted pair",
+          "Single-mode fiber",
+          "Cat 3 twisted pair"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Cat 5e (or Cat 6) UTP cables support Gigabit Ethernet (1000BASE-T) up to 100 meters."
+      },
+      {
+        "id": "q2a-2",
+        "type": "true_false",
+        "prompt": "CSMA/CD is used in wireless networks to detect collisions.",
+        "correctAnswer": false,
+        "explanation": "Wireless networks use CSMA/CA (Collision Avoidance) because stations cannot detect collisions while transmitting. CSMA/CD is used in wired Ethernet."
+      },
+      {
+        "id": "q2a-3",
+        "type": "multiple_choice",
+        "prompt": "What is the minimum Ethernet frame size (including FCS)?",
+        "options": [
+          "46 bytes",
+          "64 bytes",
+          "1500 bytes",
+          "1518 bytes"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The minimum Ethernet frame size is 64 bytes. If the payload is less than 46 bytes, padding is added. 1518 bytes is the maximum."
+      },
+      {
+        "id": "q2a-4",
+        "type": "fill_blank",
+        "prompt": "The error detection method used in Ethernet frames is ____ (abbreviated).",
+        "correctAnswer": "crc",
+        "explanation": "Ethernet uses CRC-32 (Cyclic Redundancy Check) in the Frame Check Sequence (FCS) field to detect transmission errors."
+      },
+      {
+        "id": "q2a-5",
+        "type": "multiple_choice",
+        "prompt": "What does the EtherType field value 0x0800 indicate?",
+        "options": [
+          "ARP",
+          "IPv4",
+          "IPv6",
+          "VLAN tag"
+        ],
+        "correctAnswer": 1,
+        "explanation": "0x0800 indicates IPv4. ARP is 0x0806, IPv6 is 0x86DD, and VLAN tagging uses 0x8100."
+      }
+    ]
+  },
+  {
+    "id": "cs302-quiz-2b",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-2",
+    "title": "Physical and Data Link - Application",
+    "questions": [
+      {
+        "id": "q2b-1",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of the Spanning Tree Protocol (STP)?",
+        "options": [
+          "To increase network speed",
+          "To prevent loops in switched networks",
+          "To encrypt network traffic",
+          "To compress data frames"
+        ],
+        "correctAnswer": 1,
+        "explanation": "STP (802.1D) prevents layer 2 loops in networks with redundant links by blocking certain ports until needed."
+      },
+      {
+        "id": "q2b-2",
+        "type": "true_false",
+        "prompt": "In half-duplex mode, devices can send and receive data simultaneously.",
+        "correctAnswer": false,
+        "explanation": "Half-duplex allows communication in both directions but not at the same time. Full-duplex allows simultaneous bidirectional communication."
+      },
+      {
+        "id": "q2b-3",
+        "type": "multiple_choice",
+        "prompt": "What Wi-Fi security protocol should never be used due to known vulnerabilities?",
+        "options": [
+          "WPA3",
+          "WPA2",
+          "WPA",
+          "WEP"
+        ],
+        "correctAnswer": 3,
+        "explanation": "WEP (Wired Equivalent Privacy) has serious cryptographic weaknesses and can be cracked in minutes. WPA2 or WPA3 should be used instead."
+      },
+      {
+        "id": "q2b-4",
+        "type": "code_output",
+        "prompt": "What is the broadcast MAC address?",
+        "codeSnippet": "Unicast: First byte even\nMulticast: First byte odd\nBroadcast: All bits set to 1",
+        "correctAnswer": "FF:FF:FF:FF:FF:FF",
+        "explanation": "The broadcast MAC address is FF:FF:FF:FF:FF:FF. All devices on the local network segment receive frames sent to this address."
+      },
+      {
+        "id": "q2b-5",
+        "type": "multiple_choice",
+        "prompt": "In the binary exponential backoff algorithm, after 3 collisions, the random wait is chosen from how many possible slots?",
+        "options": [
+          "2",
+          "4",
+          "8",
+          "16"
+        ],
+        "correctAnswer": 2,
+        "explanation": "After n collisions, the backoff is chosen from 0 to 2^n - 1 slots. After 3 collisions: 2^3 = 8 possible values (0-7)."
+      }
+    ]
+  },
+  {
+    "id": "cs302-quiz-2c",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-2",
+    "title": "Physical and Data Link - Advanced",
+    "questions": [
+      {
+        "id": "q2c-1",
+        "type": "multiple_choice",
+        "prompt": "What does ARP (Address Resolution Protocol) resolve?",
+        "options": [
+          "Domain names to IP addresses",
+          "IP addresses to MAC addresses",
+          "Port numbers to process IDs",
+          "MAC addresses to IP addresses"
+        ],
+        "correctAnswer": 1,
+        "explanation": "ARP maps IP addresses to MAC addresses on a local network, enabling Layer 2 delivery of Layer 3 packets."
+      },
+      {
+        "id": "q2c-2",
+        "type": "fill_blank",
+        "prompt": "IEEE 802.1Q is the standard for ____ tagging.",
+        "correctAnswer": "vlan",
+        "explanation": "802.1Q defines VLAN tagging, adding a 4-byte tag to Ethernet frames to identify virtual LAN membership."
+      },
+      {
+        "id": "q2c-3",
+        "type": "multiple_choice",
+        "prompt": "What mechanism does Wi-Fi use to handle the hidden terminal problem?",
+        "options": [
+          "CSMA/CD",
+          "Token passing",
+          "RTS/CTS",
+          "Polling"
+        ],
+        "correctAnswer": 2,
+        "explanation": "RTS/CTS (Request to Send/Clear to Send) allows stations to reserve the channel, preventing collisions from hidden terminals."
+      },
+      {
+        "id": "q2c-4",
+        "type": "true_false",
+        "prompt": "Single-mode fiber optic cable can transmit data over longer distances than multi-mode fiber.",
+        "correctAnswer": true,
+        "explanation": "Single-mode fiber has a smaller core and uses laser light, enabling transmission up to 100km, while multi-mode is limited to about 2km."
+      },
+      {
+        "id": "q2c-5",
+        "type": "multiple_choice",
+        "prompt": "Which encoding scheme guarantees a transition in every bit period, enabling clock synchronization?",
+        "options": [
+          "NRZ",
+          "NRZI",
+          "Manchester",
+          "4B/5B"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Manchester encoding has a transition in the middle of every bit period (high-to-low for 1, low-to-high for 0), ensuring synchronization."
+      }
+    ]
+  }
+]

@@ -1,0 +1,213 @@
+[
+  {
+    "id": "math301-quiz-6-1",
+    "subjectId": "math301",
+    "topicId": "math301-topic-6",
+    "title": "Line Integrals",
+    "questions": [
+      {
+        "id": "math301-q76",
+        "type": "multiple_choice",
+        "prompt": "The line integral ∫_C f(x,y) ds represents what?",
+        "options": [
+          "Area of fence above curve C",
+          "Length of curve C",
+          "Work done along C",
+          "Flux across C"
+        ],
+        "correctAnswer": "Area of fence above curve C",
+        "explanation": "∫_C f ds gives the area of the \"fence\" with height f(x,y) above the curve C"
+      },
+      {
+        "id": "math301-q77",
+        "type": "multiple_choice",
+        "prompt": "For a curve r(t) = <x(t), y(t)> from t = a to t = b, what is ds?",
+        "options": [
+          "|r'(t)| dt",
+          "r'(t) dt",
+          "|r(t)| dt",
+          "dt"
+        ],
+        "correctAnswer": "|r'(t)| dt",
+        "explanation": "The differential arc length is ds = |r'(t)| dt = √((dx/dt)² + (dy/dt)²) dt"
+      },
+      {
+        "id": "math301-q78",
+        "type": "true_false",
+        "prompt": "The line integral ∫_C f ds depends on the orientation of curve C.",
+        "options": [
+          "True",
+          "False"
+        ],
+        "correctAnswer": "False",
+        "explanation": "∫_C f ds is independent of orientation (reversing direction doesn't change the value)"
+      },
+      {
+        "id": "math301-q79",
+        "type": "multiple_choice",
+        "prompt": "The work done by force field F along curve C is given by which line integral?",
+        "options": [
+          "∫_C F · dr",
+          "∫_C F ds",
+          "∫_C |F| dr",
+          "∫_C F × dr"
+        ],
+        "correctAnswer": "∫_C F · dr",
+        "explanation": "Work = ∫_C F · dr = ∫_C F · T ds, where T is the unit tangent vector"
+      },
+      {
+        "id": "math301-q80",
+        "type": "multiple_choice",
+        "prompt": "For F = <P, Q> and C parameterized by r(t), what is ∫_C F · dr equal to?",
+        "options": [
+          "∫ₐᵇ (P dx/dt + Q dy/dt) dt",
+          "∫ₐᵇ P + Q dt",
+          "∫ₐᵇ (P + Q)|r'| dt",
+          "∫ₐᵇ PQ dt"
+        ],
+        "correctAnswer": "∫ₐᵇ (P dx/dt + Q dy/dt) dt",
+        "explanation": "F · dr = <P,Q> · <dx/dt, dy/dt> dt = (P dx/dt + Q dy/dt) dt"
+      }
+    ]
+  },
+  {
+    "id": "math301-quiz-6-2",
+    "subjectId": "math301",
+    "topicId": "math301-topic-6",
+    "title": "Conservative Fields and Flux",
+    "questions": [
+      {
+        "id": "math301-q81",
+        "type": "true_false",
+        "prompt": "A vector field F is conservative if there exists a potential function f such that F = ∇f.",
+        "options": [
+          "True",
+          "False"
+        ],
+        "correctAnswer": "True",
+        "explanation": "F is conservative ⟺ F = ∇f for some scalar function f (the potential function)"
+      },
+      {
+        "id": "math301-q82",
+        "type": "multiple_choice",
+        "prompt": "For a conservative field F = ∇f, what is ∫_C F · dr from point A to point B?",
+        "options": [
+          "f(B) - f(A)",
+          "f(A) - f(B)",
+          "0",
+          "|B - A|"
+        ],
+        "correctAnswer": "f(B) - f(A)",
+        "explanation": "The Fundamental Theorem for Line Integrals: ∫_C ∇f · dr = f(B) - f(A)"
+      },
+      {
+        "id": "math301-q83",
+        "type": "true_false",
+        "prompt": "If F is conservative, then ∫_C F · dr = 0 for any closed curve C.",
+        "options": [
+          "True",
+          "False"
+        ],
+        "correctAnswer": "True",
+        "explanation": "For conservative fields, line integrals over closed curves are zero (path independence)"
+      },
+      {
+        "id": "math301-q84",
+        "type": "multiple_choice",
+        "prompt": "For F = <P, Q> in 2D, F is conservative if which condition holds?",
+        "options": [
+          "∂P/∂y = ∂Q/∂x",
+          "∂P/∂x = ∂Q/∂y",
+          "P = Q",
+          "∂P/∂x + ∂Q/∂y = 0"
+        ],
+        "correctAnswer": "∂P/∂y = ∂Q/∂x",
+        "explanation": "In a simply connected region, F = <P,Q> is conservative ⟺ ∂P/∂y = ∂Q/∂x (curl = 0)"
+      },
+      {
+        "id": "math301-q85",
+        "type": "multiple_choice",
+        "prompt": "What is the flux of vector field F across curve C?",
+        "options": [
+          "∫_C F · n ds",
+          "∫_C F · T ds",
+          "∫_C F ds",
+          "∫_C |F| ds"
+        ],
+        "correctAnswer": "∫_C F · n ds",
+        "explanation": "Flux = ∫_C F · n ds, where n is the unit normal vector to the curve"
+      }
+    ]
+  },
+  {
+    "id": "math301-quiz-6-3",
+    "subjectId": "math301",
+    "topicId": "math301-topic-6",
+    "title": "Surface Integrals",
+    "questions": [
+      {
+        "id": "math301-q86",
+        "type": "multiple_choice",
+        "prompt": "For a surface S parameterized by r(u,v), what is the surface area element dS?",
+        "options": [
+          "|r_u × r_v| du dv",
+          "|r_u| |r_v| du dv",
+          "r_u · r_v du dv",
+          "du dv"
+        ],
+        "correctAnswer": "|r_u × r_v| du dv",
+        "explanation": "The surface area element is dS = |r_u × r_v| du dv, using the cross product magnitude"
+      },
+      {
+        "id": "math301-q87",
+        "type": "true_false",
+        "prompt": "The surface integral ∫∫_S f(x,y,z) dS can be used to find the surface area when f = 1.",
+        "options": [
+          "True",
+          "False"
+        ],
+        "correctAnswer": "True",
+        "explanation": "When f = 1, ∫∫_S 1 dS equals the surface area of S"
+      },
+      {
+        "id": "math301-q88",
+        "type": "multiple_choice",
+        "prompt": "The flux of F through surface S is given by which integral?",
+        "options": [
+          "∫∫_S F · n dS",
+          "∫∫_S F dS",
+          "∫∫_S |F| dS",
+          "∫∫_S F × n dS"
+        ],
+        "correctAnswer": "∫∫_S F · n dS",
+        "explanation": "Flux = ∫∫_S F · n dS = ∫∫_S F · dS, where n is the unit normal vector"
+      },
+      {
+        "id": "math301-q89",
+        "type": "multiple_choice",
+        "prompt": "For a surface given by z = g(x,y), what is the upward normal vector?",
+        "options": [
+          "<-g_x, -g_y, 1>",
+          "<g_x, g_y, 1>",
+          "<-g_x, -g_y, -1>",
+          "<1, 1, g>"
+        ],
+        "correctAnswer": "<-g_x, -g_y, 1>",
+        "explanation": "For F(x,y,z) = z - g(x,y) = 0, ∇F = <-g_x, -g_y, 1> points upward (positive z-component)"
+      },
+      {
+        "id": "math301-q90",
+        "type": "fill_blank",
+        "prompt": "An oriented surface has a continuously varying what?",
+        "options": [
+          "Normal vector",
+          "Tangent vector",
+          "Curvature",
+          "Boundary"
+        ],
+        "correctAnswer": "Normal vector",
+        "explanation": "An oriented surface has a continuously varying unit normal vector field"
+      }
+    ]
+  }
+]

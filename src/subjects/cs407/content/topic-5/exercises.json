@@ -1,0 +1,453 @@
+[
+  {
+    "id": "cs407-ex-5-1",
+    "subjectId": "cs407",
+    "topicId": "cs407-t5",
+    "title": "Create a Simple Line Plot",
+    "description": "Write a function that creates a line plot using matplotlib with given x and y data, title, and axis labels.",
+    "difficulty": 1,
+    "language": "python",
+    "starterCode": "import matplotlib.pyplot as plt\n\ndef create_line_plot(x, y, title, xlabel, ylabel):\n    # Create a line plot with the given parameters\n    # Return the figure object\n    pass",
+    "solution": "import matplotlib.pyplot as plt\n\ndef create_line_plot(x, y, title, xlabel, ylabel):\n    fig, ax = plt.subplots()\n    ax.plot(x, y)\n    ax.set_title(title)\n    ax.set_xlabel(xlabel)\n    ax.set_ylabel(ylabel)\n    return fig",
+    "testCases": [
+      {
+        "input": "x=[1, 2, 3, 4], y=[1, 4, 9, 16], title=\"Squares\", xlabel=\"Number\", ylabel=\"Square\"",
+        "expectedOutput": "Figure with line plot",
+        "isHidden": false,
+        "description": "Basic line plot"
+      },
+      {
+        "input": "x=[0, 1, 2], y=[0, 1, 0], title=\"Triangle Wave\", xlabel=\"Time\", ylabel=\"Amplitude\"",
+        "expectedOutput": "Figure with triangle wave",
+        "isHidden": false,
+        "description": "Triangle wave plot"
+      }
+    ],
+    "hints": [
+      "Use plt.subplots() to create figure and axes",
+      "Use ax.plot(x, y) to create the line plot",
+      "Use ax.set_title(), ax.set_xlabel(), ax.set_ylabel()",
+      "Return the figure object"
+    ]
+  },
+  {
+    "id": "cs407-ex-5-2",
+    "subjectId": "cs407",
+    "topicId": "cs407-t5",
+    "title": "Create a Bar Chart",
+    "description": "Write a function that creates a bar chart showing categorical data with custom colors.",
+    "difficulty": 1,
+    "language": "python",
+    "starterCode": "import matplotlib.pyplot as plt\n\ndef create_bar_chart(categories, values, title, color='blue'):\n    # Create a bar chart with the given parameters\n    # Return the figure object\n    pass",
+    "solution": "import matplotlib.pyplot as plt\n\ndef create_bar_chart(categories, values, title, color='blue'):\n    fig, ax = plt.subplots()\n    ax.bar(categories, values, color=color)\n    ax.set_title(title)\n    ax.set_xlabel('Category')\n    ax.set_ylabel('Value')\n    return fig",
+    "testCases": [
+      {
+        "input": "categories=[\"A\", \"B\", \"C\"], values=[10, 20, 15], title=\"Sales\", color=\"green\"",
+        "expectedOutput": "Figure with green bar chart",
+        "isHidden": false,
+        "description": "Basic bar chart"
+      },
+      {
+        "input": "categories=[\"Q1\", \"Q2\", \"Q3\", \"Q4\"], values=[100, 120, 110, 130], title=\"Quarterly Revenue\"",
+        "expectedOutput": "Figure with blue bar chart",
+        "isHidden": false,
+        "description": "Quarterly data"
+      }
+    ],
+    "hints": [
+      "Use plt.subplots() to create figure and axes",
+      "Use ax.bar(categories, values, color=color)",
+      "Set title and axis labels",
+      "Return the figure object"
+    ]
+  },
+  {
+    "id": "cs407-ex-5-3",
+    "subjectId": "cs407",
+    "topicId": "cs407-t5",
+    "title": "Create a Scatter Plot",
+    "description": "Write a function that creates a scatter plot with different marker sizes based on a third variable.",
+    "difficulty": 2,
+    "language": "python",
+    "starterCode": "import matplotlib.pyplot as plt\n\ndef create_scatter_plot(x, y, sizes, title):\n    # Create a scatter plot where marker size varies\n    # Return the figure object\n    pass",
+    "solution": "import matplotlib.pyplot as plt\n\ndef create_scatter_plot(x, y, sizes, title):\n    fig, ax = plt.subplots()\n    ax.scatter(x, y, s=sizes, alpha=0.6)\n    ax.set_title(title)\n    ax.set_xlabel('X')\n    ax.set_ylabel('Y')\n    return fig",
+    "testCases": [
+      {
+        "input": "x=[1, 2, 3, 4], y=[2, 4, 6, 8], sizes=[50, 100, 150, 200], title=\"Variable Size Scatter\"",
+        "expectedOutput": "Figure with scatter plot",
+        "isHidden": false,
+        "description": "Scatter with varying sizes"
+      },
+      {
+        "input": "x=[1, 1, 2, 2], y=[1, 2, 1, 2], sizes=[100, 100, 100, 100], title=\"Grid Points\"",
+        "expectedOutput": "Figure with grid scatter",
+        "isHidden": false,
+        "description": "Grid pattern"
+      }
+    ],
+    "hints": [
+      "Use ax.scatter(x, y, s=sizes) for scatter plot",
+      "The s parameter controls marker size",
+      "Add alpha=0.6 for transparency",
+      "Set title and axis labels"
+    ]
+  },
+  {
+    "id": "cs407-ex-5-4",
+    "subjectId": "cs407",
+    "topicId": "cs407-t5",
+    "title": "Create a Histogram",
+    "description": "Write a function that creates a histogram with a specified number of bins.",
+    "difficulty": 2,
+    "language": "python",
+    "starterCode": "import matplotlib.pyplot as plt\n\ndef create_histogram(data, bins, title):\n    # Create a histogram with the given number of bins\n    # Return the figure object\n    pass",
+    "solution": "import matplotlib.pyplot as plt\n\ndef create_histogram(data, bins, title):\n    fig, ax = plt.subplots()\n    ax.hist(data, bins=bins, edgecolor='black', alpha=0.7)\n    ax.set_title(title)\n    ax.set_xlabel('Value')\n    ax.set_ylabel('Frequency')\n    return fig",
+    "testCases": [
+      {
+        "input": "data=[1, 2, 2, 3, 3, 3, 4, 4, 5], bins=5, title=\"Distribution\"",
+        "expectedOutput": "Figure with histogram",
+        "isHidden": false,
+        "description": "Basic histogram"
+      },
+      {
+        "input": "data=[10, 20, 20, 30, 30, 30], bins=3, title=\"Grouped Data\"",
+        "expectedOutput": "Figure with 3-bin histogram",
+        "isHidden": false,
+        "description": "Fewer bins"
+      }
+    ],
+    "hints": [
+      "Use ax.hist(data, bins=bins)",
+      "Add edgecolor=\"black\" for bin borders",
+      "Set alpha=0.7 for transparency",
+      "Label axes appropriately"
+    ]
+  },
+  {
+    "id": "cs407-ex-5-5",
+    "subjectId": "cs407",
+    "topicId": "cs407-t5",
+    "title": "Create Subplots",
+    "description": "Write a function that creates a 2x2 grid of subplots with different plot types.",
+    "difficulty": 2,
+    "language": "python",
+    "starterCode": "import matplotlib.pyplot as plt\n\ndef create_subplot_grid(data):\n    # data is a dict with keys 'line', 'bar', 'scatter', 'hist'\n    # Create 2x2 subplots showing all four plot types\n    # Return the figure object\n    pass",
+    "solution": "import matplotlib.pyplot as plt\n\ndef create_subplot_grid(data):\n    fig, axes = plt.subplots(2, 2, figsize=(10, 8))\n\n    # Line plot\n    axes[0, 0].plot(data['line']['x'], data['line']['y'])\n    axes[0, 0].set_title('Line Plot')\n\n    # Bar plot\n    axes[0, 1].bar(data['bar']['x'], data['bar']['y'])\n    axes[0, 1].set_title('Bar Plot')\n\n    # Scatter plot\n    axes[1, 0].scatter(data['scatter']['x'], data['scatter']['y'])\n    axes[1, 0].set_title('Scatter Plot')\n\n    # Histogram\n    axes[1, 1].hist(data['hist']['values'], bins=10)\n    axes[1, 1].set_title('Histogram')\n\n    plt.tight_layout()\n    return fig",
+    "testCases": [
+      {
+        "input": "data with line, bar, scatter, and hist keys",
+        "expectedOutput": "Figure with 2x2 subplots",
+        "isHidden": false,
+        "description": "Multiple plot types"
+      }
+    ],
+    "hints": [
+      "Use plt.subplots(2, 2) to create a 2x2 grid",
+      "Access subplots with axes[row, col]",
+      "Use different plot methods for each subplot",
+      "Use plt.tight_layout() to adjust spacing"
+    ]
+  },
+  {
+    "id": "cs407-ex-5-6",
+    "subjectId": "cs407",
+    "topicId": "cs407-t5",
+    "title": "Seaborn Box Plot",
+    "description": "Write a function that creates a box plot using seaborn to show distributions across categories.",
+    "difficulty": 2,
+    "language": "python",
+    "starterCode": "import seaborn as sns\nimport matplotlib.pyplot as plt\n\ndef create_box_plot(df, x_col, y_col, title):\n    # Create a box plot showing y_col distribution for each x_col category\n    # Return the figure object\n    pass",
+    "solution": "import seaborn as sns\nimport matplotlib.pyplot as plt\n\ndef create_box_plot(df, x_col, y_col, title):\n    fig, ax = plt.subplots(figsize=(8, 6))\n    sns.boxplot(data=df, x=x_col, y=y_col, ax=ax)\n    ax.set_title(title)\n    return fig",
+    "testCases": [
+      {
+        "input": "df with category and value columns",
+        "expectedOutput": "Figure with box plot",
+        "isHidden": false,
+        "description": "Box plot by category"
+      },
+      {
+        "input": "df with group and score columns",
+        "expectedOutput": "Figure with box plot",
+        "isHidden": false,
+        "description": "Score distribution by group"
+      }
+    ],
+    "hints": [
+      "Use sns.boxplot(data=df, x=x_col, y=y_col, ax=ax)",
+      "Create figure and axes first",
+      "Set the title using ax.set_title()",
+      "Return the figure object"
+    ]
+  },
+  {
+    "id": "cs407-ex-5-7",
+    "subjectId": "cs407",
+    "topicId": "cs407-t5",
+    "title": "Correlation Heatmap",
+    "description": "Write a function that creates a correlation heatmap using seaborn.",
+    "difficulty": 3,
+    "language": "python",
+    "starterCode": "import seaborn as sns\nimport matplotlib.pyplot as plt\n\ndef create_correlation_heatmap(df, title):\n    # Create a heatmap showing correlations between numeric columns\n    # Include annotations showing correlation values\n    # Return the figure object\n    pass",
+    "solution": "import seaborn as sns\nimport matplotlib.pyplot as plt\n\ndef create_correlation_heatmap(df, title):\n    fig, ax = plt.subplots(figsize=(10, 8))\n    correlation_matrix = df.corr()\n    sns.heatmap(correlation_matrix, annot=True, fmt='.2f',\n                cmap='coolwarm', center=0, ax=ax)\n    ax.set_title(title)\n    return fig",
+    "testCases": [
+      {
+        "input": "df with multiple numeric columns",
+        "expectedOutput": "Figure with correlation heatmap",
+        "isHidden": false,
+        "description": "Correlation matrix visualization"
+      },
+      {
+        "input": "df with 3 numeric features",
+        "expectedOutput": "Figure with 3x3 heatmap",
+        "isHidden": false,
+        "description": "Small correlation matrix"
+      }
+    ],
+    "hints": [
+      "Use df.corr() to get correlation matrix",
+      "Use sns.heatmap() with annot=True to show values",
+      "Set fmt=\".2f\" to format decimals",
+      "Use cmap=\"coolwarm\" and center=0 for better visualization"
+    ]
+  },
+  {
+    "id": "cs407-ex-5-8",
+    "subjectId": "cs407",
+    "topicId": "cs407-t5",
+    "title": "Violin Plot with Split",
+    "description": "Write a function that creates a split violin plot to compare two groups.",
+    "difficulty": 3,
+    "language": "python",
+    "starterCode": "import seaborn as sns\nimport matplotlib.pyplot as plt\n\ndef create_split_violin(df, x_col, y_col, hue_col, title):\n    # Create a split violin plot\n    # Return the figure object\n    pass",
+    "solution": "import seaborn as sns\nimport matplotlib.pyplot as plt\n\ndef create_split_violin(df, x_col, y_col, hue_col, title):\n    fig, ax = plt.subplots(figsize=(10, 6))\n    sns.violinplot(data=df, x=x_col, y=y_col, hue=hue_col,\n                   split=True, ax=ax)\n    ax.set_title(title)\n    return fig",
+    "testCases": [
+      {
+        "input": "df with category, value, and group columns",
+        "expectedOutput": "Figure with split violin plot",
+        "isHidden": false,
+        "description": "Comparing two groups"
+      }
+    ],
+    "hints": [
+      "Use sns.violinplot() with split=True",
+      "Specify x, y, and hue parameters",
+      "hue_col determines which groups to split",
+      "Set figure size for better visibility"
+    ]
+  },
+  {
+    "id": "cs407-ex-5-9",
+    "subjectId": "cs407",
+    "topicId": "cs407-t5",
+    "title": "Pair Plot",
+    "description": "Write a function that creates a pair plot to show relationships between all numeric variables.",
+    "difficulty": 3,
+    "language": "python",
+    "starterCode": "import seaborn as sns\n\ndef create_pair_plot(df, hue_col=None):\n    # Create a pair plot showing relationships between all numeric columns\n    # Color by hue_col if provided\n    # Return the PairGrid object\n    pass",
+    "solution": "import seaborn as sns\n\ndef create_pair_plot(df, hue_col=None):\n    if hue_col:\n        pairplot = sns.pairplot(df, hue=hue_col, diag_kind='kde')\n    else:\n        pairplot = sns.pairplot(df, diag_kind='kde')\n    return pairplot",
+    "testCases": [
+      {
+        "input": "df with numeric columns",
+        "expectedOutput": "PairGrid with scatter and KDE plots",
+        "isHidden": false,
+        "description": "Basic pair plot"
+      },
+      {
+        "input": "df with numeric columns and category for hue",
+        "expectedOutput": "Colored pair plot",
+        "isHidden": false,
+        "description": "Pair plot with grouping"
+      }
+    ],
+    "hints": [
+      "Use sns.pairplot(df)",
+      "Add hue=hue_col if hue_col is provided",
+      "Set diag_kind=\"kde\" for diagonal plots",
+      "Return the pairplot object"
+    ]
+  },
+  {
+    "id": "cs407-ex-5-10",
+    "subjectId": "cs407",
+    "topicId": "cs407-t5",
+    "title": "Time Series Plot",
+    "description": "Write a function that creates a time series plot with a rolling average overlay.",
+    "difficulty": 3,
+    "language": "python",
+    "starterCode": "import matplotlib.pyplot as plt\nimport pandas as pd\n\ndef create_time_series_plot(dates, values, window, title):\n    # Create a time series plot with original data and rolling average\n    # window is the rolling window size\n    # Return the figure object\n    pass",
+    "solution": "import matplotlib.pyplot as plt\nimport pandas as pd\n\ndef create_time_series_plot(dates, values, window, title):\n    fig, ax = plt.subplots(figsize=(12, 6))\n\n    # Convert to Series for rolling calculation\n    series = pd.Series(values, index=pd.to_datetime(dates))\n    rolling_avg = series.rolling(window=window).mean()\n\n    ax.plot(series.index, series.values, label='Original', alpha=0.6)\n    ax.plot(rolling_avg.index, rolling_avg.values,\n            label=f'{window}-period Moving Avg', linewidth=2)\n    ax.set_title(title)\n    ax.set_xlabel('Date')\n    ax.set_ylabel('Value')\n    ax.legend()\n    ax.grid(True, alpha=0.3)\n    return fig",
+    "testCases": [
+      {
+        "input": "dates and values with window=3",
+        "expectedOutput": "Figure with time series and moving average",
+        "isHidden": false,
+        "description": "Time series with 3-period average"
+      },
+      {
+        "input": "dates and values with window=7",
+        "expectedOutput": "Figure with 7-period moving average",
+        "isHidden": false,
+        "description": "Weekly moving average"
+      }
+    ],
+    "hints": [
+      "Convert to pandas Series with datetime index",
+      "Use series.rolling(window=window).mean()",
+      "Plot both original and rolling average",
+      "Add legend and grid for clarity"
+    ]
+  },
+  {
+    "id": "cs407-ex-5-11",
+    "subjectId": "cs407",
+    "topicId": "cs407-t5",
+    "title": "Interactive Plotly Scatter",
+    "description": "Write a function that creates an interactive scatter plot using Plotly with hover information.",
+    "difficulty": 3,
+    "language": "python",
+    "starterCode": "import plotly.graph_objects as go\n\ndef create_interactive_scatter(x, y, names, title):\n    # Create an interactive scatter plot with names shown on hover\n    # Return the figure object\n    pass",
+    "solution": "import plotly.graph_objects as go\n\ndef create_interactive_scatter(x, y, names, title):\n    fig = go.Figure(data=go.Scatter(\n        x=x,\n        y=y,\n        mode='markers',\n        text=names,\n        marker=dict(size=10, color='blue', opacity=0.6)\n    ))\n\n    fig.update_layout(\n        title=title,\n        xaxis_title='X',\n        yaxis_title='Y',\n        hovermode='closest'\n    )\n\n    return fig",
+    "testCases": [
+      {
+        "input": "x=[1, 2, 3], y=[2, 4, 6], names=[\"A\", \"B\", \"C\"], title=\"Interactive Plot\"",
+        "expectedOutput": "Plotly figure with interactive scatter",
+        "isHidden": false,
+        "description": "Basic interactive scatter"
+      }
+    ],
+    "hints": [
+      "Use go.Figure() with go.Scatter()",
+      "Set mode=\"markers\" for scatter plot",
+      "Use text parameter for hover labels",
+      "Update layout with title and axis labels"
+    ]
+  },
+  {
+    "id": "cs407-ex-5-12",
+    "subjectId": "cs407",
+    "topicId": "cs407-t5",
+    "title": "Plotly Bar Chart with Animation",
+    "description": "Write a function that creates an animated bar chart using Plotly showing data over time.",
+    "difficulty": 4,
+    "language": "python",
+    "starterCode": "import plotly.express as px\n\ndef create_animated_bar_chart(df, x_col, y_col, animation_col, title):\n    # Create an animated bar chart where frames are determined by animation_col\n    # Return the figure object\n    pass",
+    "solution": "import plotly.express as px\n\ndef create_animated_bar_chart(df, x_col, y_col, animation_col, title):\n    fig = px.bar(df,\n                 x=x_col,\n                 y=y_col,\n                 animation_frame=animation_col,\n                 title=title,\n                 range_y=[0, df[y_col].max() * 1.1])\n\n    fig.update_layout(\n        xaxis_title=x_col,\n        yaxis_title=y_col,\n        showlegend=False\n    )\n\n    return fig",
+    "testCases": [
+      {
+        "input": "df with category, value, and year columns",
+        "expectedOutput": "Animated bar chart by year",
+        "isHidden": false,
+        "description": "Animated over time"
+      }
+    ],
+    "hints": [
+      "Use px.bar() with animation_frame parameter",
+      "Set range_y to keep y-axis stable across frames",
+      "Update layout for better appearance",
+      "animation_frame determines which column creates frames"
+    ]
+  },
+  {
+    "id": "cs407-ex-5-13",
+    "subjectId": "cs407",
+    "topicId": "cs407-t5",
+    "title": "Plotly 3D Surface Plot",
+    "description": "Write a function that creates a 3D surface plot using Plotly.",
+    "difficulty": 4,
+    "language": "python",
+    "starterCode": "import plotly.graph_objects as go\nimport numpy as np\n\ndef create_3d_surface(x, y, z, title):\n    # Create a 3D surface plot\n    # z should be a 2D array\n    # Return the figure object\n    pass",
+    "solution": "import plotly.graph_objects as go\nimport numpy as np\n\ndef create_3d_surface(x, y, z, title):\n    fig = go.Figure(data=[go.Surface(x=x, y=y, z=z)])\n\n    fig.update_layout(\n        title=title,\n        scene=dict(\n            xaxis_title='X',\n            yaxis_title='Y',\n            zaxis_title='Z'\n        ),\n        autosize=True\n    )\n\n    return fig",
+    "testCases": [
+      {
+        "input": "x, y as 1D arrays, z as 2D array",
+        "expectedOutput": "3D surface plot",
+        "isHidden": false,
+        "description": "Surface visualization"
+      }
+    ],
+    "hints": [
+      "Use go.Surface() with x, y, z parameters",
+      "z must be a 2D array (matrix)",
+      "Update layout with scene dict for 3D axis labels",
+      "Set autosize=True for responsive sizing"
+    ]
+  },
+  {
+    "id": "cs407-ex-5-14",
+    "subjectId": "cs407",
+    "topicId": "cs407-t5",
+    "title": "Customized Plot Style",
+    "description": "Write a function that creates a professional-looking plot with custom styling including colors, fonts, and grid.",
+    "difficulty": 3,
+    "language": "python",
+    "starterCode": "import matplotlib.pyplot as plt\n\ndef create_styled_plot(x, y, title):\n    # Create a line plot with professional styling:\n    # - Custom color scheme\n    # - Grid with specific alpha\n    # - Custom font sizes\n    # - Figure size 12x6\n    # Return the figure object\n    pass",
+    "solution": "import matplotlib.pyplot as plt\n\ndef create_styled_plot(x, y, title):\n    plt.style.use('seaborn-v0_8-darkgrid')\n    fig, ax = plt.subplots(figsize=(12, 6))\n\n    ax.plot(x, y, color='#2E86AB', linewidth=2.5, marker='o',\n            markersize=6, markerfacecolor='#A23B72')\n\n    ax.set_title(title, fontsize=16, fontweight='bold', pad=20)\n    ax.set_xlabel('X Axis', fontsize=12)\n    ax.set_ylabel('Y Axis', fontsize=12)\n\n    ax.grid(True, alpha=0.3, linestyle='--')\n    ax.spines['top'].set_visible(False)\n    ax.spines['right'].set_visible(False)\n\n    plt.tight_layout()\n    return fig",
+    "testCases": [
+      {
+        "input": "x=[1, 2, 3, 4, 5], y=[2, 4, 3, 5, 6], title=\"Professional Plot\"",
+        "expectedOutput": "Styled figure with custom colors and formatting",
+        "isHidden": false,
+        "description": "Professional styling"
+      }
+    ],
+    "hints": [
+      "Use plt.style.use() to set a base style",
+      "Customize colors with hex codes",
+      "Set linewidth, marker properties",
+      "Remove top and right spines for cleaner look",
+      "Use fontsize and fontweight for title"
+    ]
+  },
+  {
+    "id": "cs407-ex-5-15",
+    "subjectId": "cs407",
+    "topicId": "cs407-t5",
+    "title": "Dashboard Layout",
+    "description": "Write a function that creates a dashboard layout with multiple plots showing different aspects of the same dataset.",
+    "difficulty": 4,
+    "language": "python",
+    "starterCode": "import matplotlib.pyplot as plt\nimport seaborn as sns\n\ndef create_dashboard(df, numeric_col, category_col):\n    # Create a 3-subplot dashboard:\n    # - Top: distribution histogram\n    # - Bottom left: box plot by category\n    # - Bottom right: violin plot by category\n    # Return the figure object\n    pass",
+    "solution": "import matplotlib.pyplot as plt\nimport seaborn as sns\n\ndef create_dashboard(df, numeric_col, category_col):\n    fig = plt.figure(figsize=(14, 10))\n    gs = fig.add_gridspec(2, 2, hspace=0.3, wspace=0.3)\n\n    # Top subplot - spans both columns\n    ax1 = fig.add_subplot(gs[0, :])\n    ax1.hist(df[numeric_col], bins=20, edgecolor='black', alpha=0.7)\n    ax1.set_title(f'Distribution of {numeric_col}', fontsize=14, fontweight='bold')\n    ax1.set_xlabel(numeric_col)\n    ax1.set_ylabel('Frequency')\n\n    # Bottom left - box plot\n    ax2 = fig.add_subplot(gs[1, 0])\n    sns.boxplot(data=df, x=category_col, y=numeric_col, ax=ax2)\n    ax2.set_title(f'Box Plot by {category_col}', fontsize=12)\n\n    # Bottom right - violin plot\n    ax3 = fig.add_subplot(gs[1, 1])\n    sns.violinplot(data=df, x=category_col, y=numeric_col, ax=ax3)\n    ax3.set_title(f'Violin Plot by {category_col}', fontsize=12)\n\n    return fig",
+    "testCases": [
+      {
+        "input": "df with numeric and categorical columns",
+        "expectedOutput": "Dashboard with 3 plots",
+        "isHidden": false,
+        "description": "Multi-plot dashboard"
+      }
+    ],
+    "hints": [
+      "Use GridSpec for flexible subplot layout",
+      "Top plot spans both columns: gs[0, :]",
+      "Bottom plots use gs[1, 0] and gs[1, 1]",
+      "Set hspace and wspace for spacing",
+      "Use different plot types for different insights"
+    ]
+  },
+  {
+    "id": "cs407-ex-5-16",
+    "subjectId": "cs407",
+    "topicId": "cs407-t5",
+    "title": "Geographic Bubble Map",
+    "description": "Write a function that creates a geographic scatter plot (bubble map) using Plotly where bubble size represents a value.",
+    "difficulty": 4,
+    "language": "python",
+    "starterCode": "import plotly.express as px\n\ndef create_geo_bubble_map(df, lat_col, lon_col, size_col, color_col, title):\n    # Create a geographic bubble map\n    # Bubble size determined by size_col\n    # Bubble color determined by color_col\n    # Return the figure object\n    pass",
+    "solution": "import plotly.express as px\n\ndef create_geo_bubble_map(df, lat_col, lon_col, size_col, color_col, title):\n    fig = px.scatter_geo(df,\n                         lat=lat_col,\n                         lon=lon_col,\n                         size=size_col,\n                         color=color_col,\n                         hover_data=[size_col, color_col],\n                         title=title,\n                         projection='natural earth')\n\n    fig.update_layout(\n        geo=dict(\n            showland=True,\n            landcolor='lightgray',\n            showcountries=True,\n            countrycolor='white'\n        )\n    )\n\n    return fig",
+    "testCases": [
+      {
+        "input": "df with lat, lon, population, and gdp columns",
+        "expectedOutput": "Geographic bubble map",
+        "isHidden": false,
+        "description": "World data visualization"
+      }
+    ],
+    "hints": [
+      "Use px.scatter_geo() for geographic plots",
+      "Specify lat, lon, size, and color parameters",
+      "Set projection (e.g., \"natural earth\")",
+      "Update geo layout for map appearance",
+      "Add hover_data for interactivity"
+    ]
+  }
+]

@@ -1,0 +1,175 @@
+[
+  {
+    "id": "cs103-quiz-5",
+    "subjectId": "cs103",
+    "topicId": "cs103-5",
+    "title": "Design Patterns — Quiz A (Fundamentals)",
+    "questions": [
+      {
+        "id": "cs103-q5a-1",
+        "type": "multiple_choice",
+        "prompt": "What is a design pattern?",
+        "options": [
+          "A finished library you install",
+          "A reusable solution template to a common design problem",
+          "A rule that all code must follow",
+          "A compiler optimization technique"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Patterns describe proven design approaches, not drop-in code."
+      },
+      {
+        "id": "cs103-q5a-2",
+        "type": "multiple_choice",
+        "prompt": "Which category does the Factory pattern belong to?",
+        "options": [
+          "Creational",
+          "Structural",
+          "Behavioral",
+          "Concurrency"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Factories are about object creation and decoupling construction from use."
+      },
+      {
+        "id": "cs103-q5a-3",
+        "type": "true_false",
+        "prompt": "Design patterns should be applied to every problem to ensure best practices.",
+        "correctAnswer": false,
+        "explanation": "Overusing patterns can add complexity; use them when they solve a real design need."
+      },
+      {
+        "id": "cs103-q5a-4",
+        "type": "fill_blank",
+        "prompt": "The Observer pattern is primarily used for ____-driven programming (e.g., event notifications).",
+        "correctAnswer": "event",
+        "explanation": "Observers are notified when something changes, enabling event-driven designs."
+      },
+      {
+        "id": "cs103-q5a-5",
+        "type": "multiple_choice",
+        "prompt": "What does a Singleton pattern guarantee?",
+        "options": [
+          "Many instances created efficiently",
+          "Exactly one instance with a global access point",
+          "No instances can be created",
+          "Instances are immutable"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Singleton restricts instantiation and provides a single shared instance."
+      }
+    ]
+  },
+  {
+    "id": "cs103-quiz-5b",
+    "subjectId": "cs103",
+    "topicId": "cs103-5",
+    "title": "Design Patterns — Quiz B (Application)",
+    "questions": [
+      {
+        "id": "cs103-q5b-1",
+        "type": "multiple_choice",
+        "prompt": "Which scenario best fits the Factory pattern?",
+        "options": [
+          "You need to sort a list",
+          "You need to create different objects based on a configuration value",
+          "You need to store one global number",
+          "You need to compare two strings"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Factories select/construct concrete types based on inputs/config without exposing creation logic to callers."
+      },
+      {
+        "id": "cs103-q5b-2",
+        "type": "code_output",
+        "prompt": "What is printed by this code?",
+        "codeSnippet": "class Notifier:\n    def __init__(self):\n        self._subs = []\n    def subscribe(self, fn):\n        self._subs.append(fn)\n    def notify(self, msg):\n        for fn in self._subs:\n            fn(msg)\n\nn = Notifier()\nn.subscribe(lambda m: print(\"A:\" + m))\nn.subscribe(lambda m: print(\"B:\" + m))\nn.notify(\"hi\")",
+        "correctAnswer": "A:hi\nB:hi",
+        "explanation": "Observer-style: multiple subscribers are notified with the message."
+      },
+      {
+        "id": "cs103-q5b-3",
+        "type": "true_false",
+        "prompt": "A key benefit of patterns is that they can reduce coupling between modules/classes.",
+        "correctAnswer": true,
+        "explanation": "Many patterns isolate responsibilities and dependencies (e.g., Factory, Strategy, Observer)."
+      },
+      {
+        "id": "cs103-q5b-4",
+        "type": "fill_blank",
+        "prompt": "In the Strategy pattern, you typically swap out an object that implements a ____ (algorithm/policy) at runtime.",
+        "correctAnswer": "strategy",
+        "explanation": "The Strategy object represents the interchangeable algorithm/policy."
+      },
+      {
+        "id": "cs103-q5b-5",
+        "type": "multiple_choice",
+        "prompt": "When is a Singleton usually a bad idea?",
+        "options": [
+          "When you need shared configuration",
+          "When global mutable state makes testing and reasoning harder",
+          "When you want a single logger",
+          "When you want one instance of a dataclass"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Singletons can hide dependencies and create global state that is difficult to test."
+      }
+    ]
+  },
+  {
+    "id": "cs103-quiz-5c",
+    "subjectId": "cs103",
+    "topicId": "cs103-5",
+    "title": "Design Patterns — Quiz C (Advanced)",
+    "questions": [
+      {
+        "id": "cs103-q5c-1",
+        "type": "multiple_choice",
+        "prompt": "What is the primary design goal of the Adapter pattern?",
+        "options": [
+          "Guarantee a single instance",
+          "Translate one interface into another expected by clients",
+          "Broadcast messages to many listeners",
+          "Create objects based on type"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Adapters wrap an object to present a compatible interface."
+      },
+      {
+        "id": "cs103-q5c-2",
+        "type": "multiple_choice",
+        "prompt": "Which statement about patterns is most accurate?",
+        "options": [
+          "Patterns are always faster than non-pattern code",
+          "Patterns eliminate the need for refactoring",
+          "Patterns help communicate design intent and typical trade-offs",
+          "Patterns force all code into rigid templates"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Patterns are vocabulary plus trade-offs; they don’t guarantee performance or perfection."
+      },
+      {
+        "id": "cs103-q5c-3",
+        "type": "true_false",
+        "prompt": "A “God Object” is considered an anti-pattern because it centralizes too much responsibility.",
+        "correctAnswer": true,
+        "explanation": "God Objects are hard to test, maintain, and extend because everything depends on them."
+      },
+      {
+        "id": "cs103-q5c-4",
+        "type": "fill_blank",
+        "prompt": "A pattern that adds behavior to an object without modifying its class is ____.",
+        "correctAnswer": "Decorator",
+        "explanation": "Decorator wraps an object to extend behavior while preserving its interface."
+      },
+      {
+        "id": "cs103-q5c-5",
+        "type": "code_output",
+        "prompt": "What is printed by this code?",
+        "codeSnippet": "class Service:\n    def run(self): return \"ok\"\n\nclass LoggingDecorator:\n    def __init__(self, svc): self._svc = svc\n    def run(self):\n        result = self._svc.run()\n        return \"LOG:\" + result\n\nprint(LoggingDecorator(Service()).run())",
+        "correctAnswer": "LOG:ok",
+        "explanation": "Decorator wraps the service and adds behavior (prefixing the result)."
+      }
+    ]
+  }
+]

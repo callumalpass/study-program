@@ -1,0 +1,191 @@
+[
+  {
+    "id": "cs205-quiz-4-1",
+    "subjectId": "cs205",
+    "topicId": "cs205-4",
+    "title": "Functional Dependencies",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "In the functional dependency X → Y, what does X represent?",
+        "options": [
+          "Dependent",
+          "Determinant",
+          "Key",
+          "Foreign key"
+        ],
+        "correctAnswer": 1,
+        "explanation": "X is the determinant—it uniquely determines the value of Y."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "What is a trivial functional dependency?",
+        "options": [
+          "A dependency where X is a primary key",
+          "A dependency where Y is a subset of X",
+          "A dependency with composite keys",
+          "A dependency without NULL values"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A trivial FD is where the dependent (Y) is a subset of the determinant (X), e.g., {A,B} → A."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "If A → B and B → C, then A → C by transitivity.",
+        "correctAnswer": true,
+        "explanation": "Transitivity is one of Armstrong's axioms: if A determines B and B determines C, then A determines C."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "What is the closure of attribute set X?",
+        "options": [
+          "The minimum attributes X can have",
+          "All attributes functionally determined by X",
+          "The primary key containing X",
+          "All attributes in the table"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The closure X⁺ includes all attributes that can be derived from X using the functional dependencies."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "A set of attributes is a superkey if its closure equals ______ attributes of the relation.",
+        "correctAnswer": "all",
+        "explanation": "A superkey's closure must include all attributes, ensuring it can uniquely identify any tuple."
+      }
+    ]
+  },
+  {
+    "id": "cs205-quiz-4-2",
+    "subjectId": "cs205",
+    "topicId": "cs205-4",
+    "title": "Normal Forms",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "A relation is in 1NF if:",
+        "options": [
+          "It has no partial dependencies",
+          "All attributes contain atomic values",
+          "All determinants are superkeys",
+          "It has no transitive dependencies"
+        ],
+        "correctAnswer": 1,
+        "explanation": "1NF requires atomic (indivisible) values and no repeating groups."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "What violation does 2NF eliminate?",
+        "options": [
+          "Transitive dependencies",
+          "Partial dependencies on composite keys",
+          "Multi-valued dependencies",
+          "Non-atomic values"
+        ],
+        "correctAnswer": 1,
+        "explanation": "2NF eliminates partial dependencies where non-key attributes depend on part of a composite key."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "A relation with a single-attribute primary key is automatically in 2NF.",
+        "correctAnswer": true,
+        "explanation": "Partial dependencies can only exist with composite keys, so single-attribute keys are always 2NF."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "What distinguishes BCNF from 3NF?",
+        "options": [
+          "BCNF allows partial dependencies",
+          "BCNF requires all determinants to be superkeys",
+          "BCNF handles multi-valued dependencies",
+          "3NF is stricter than BCNF"
+        ],
+        "correctAnswer": 1,
+        "explanation": "BCNF requires every determinant to be a superkey, while 3NF allows exceptions for key attributes."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "Which normal form addresses multi-valued dependencies?",
+        "options": [
+          "2NF",
+          "3NF",
+          "BCNF",
+          "4NF"
+        ],
+        "correctAnswer": 3,
+        "explanation": "4NF addresses multi-valued dependencies that BCNF doesn't handle."
+      }
+    ]
+  },
+  {
+    "id": "cs205-quiz-4-3",
+    "subjectId": "cs205",
+    "topicId": "cs205-4",
+    "title": "Decomposition",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "What does lossless decomposition guarantee?",
+        "options": [
+          "No duplicate rows",
+          "Original relation can be reconstructed by join",
+          "All foreign keys are preserved",
+          "Faster query performance"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Lossless decomposition ensures the original data can be perfectly recovered by joining the decomposed relations."
+      },
+      {
+        "id": "q2",
+        "type": "true_false",
+        "prompt": "Decomposition to BCNF may lose dependency preservation.",
+        "correctAnswer": true,
+        "explanation": "BCNF decomposition can sometimes make it impossible to enforce certain FDs without joining tables."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "Which property is sometimes sacrificed for BCNF?",
+        "options": [
+          "Lossless join",
+          "Dependency preservation",
+          "Data integrity",
+          "Primary key uniqueness"
+        ],
+        "correctAnswer": 1,
+        "explanation": "BCNF always guarantees lossless join but may sacrifice dependency preservation."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "The 3NF synthesis algorithm guarantees:",
+        "options": [
+          "BCNF and lossless join",
+          "3NF, lossless join, and dependency preservation",
+          "Only dependency preservation",
+          "4NF compliance"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The 3NF synthesis algorithm produces decomposition that is lossless and dependency-preserving."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "Deliberately introducing redundancy for read performance is called ______.",
+        "correctAnswer": "denormalization",
+        "explanation": "Denormalization trades storage and update complexity for faster read queries."
+      }
+    ]
+  }
+]

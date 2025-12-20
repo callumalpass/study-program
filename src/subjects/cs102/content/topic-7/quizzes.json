@@ -1,0 +1,197 @@
+[
+  {
+    "id": "cs102-quiz-7",
+    "subjectId": "cs102",
+    "topicId": "cs102-7",
+    "title": "Memory Hierarchy Basics",
+    "questions": [
+      {
+        "id": "cs102-q7-1",
+        "type": "multiple_choice",
+        "prompt": "Which is fastest?",
+        "options": [
+          "Hard Disk",
+          "RAM",
+          "L1 Cache",
+          "USB Drive"
+        ],
+        "correctAnswer": 2,
+        "explanation": "L1 Cache is closest to CPU."
+      },
+      {
+        "id": "cs102-q7-2",
+        "type": "multiple_choice",
+        "prompt": "Why use a hierarchy?",
+        "options": [
+          "To confuse users",
+          "To balance speed, size, and cost",
+          "To use more power",
+          "Aesthetics"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Fast memory is expensive and small. Slow memory is cheap and large."
+      },
+      {
+        "id": "cs102-q7-3",
+        "type": "true_false",
+        "prompt": "Volatile memory loses data when power is off.",
+        "correctAnswer": true,
+        "explanation": "RAM is volatile. Disk is non-volatile."
+      },
+      {
+        "id": "cs102-q7-4",
+        "type": "multiple_choice",
+        "prompt": "DMA stands for:",
+        "options": [
+          "Direct Memory Access",
+          "Digital Media Audio",
+          "Dynamic Memory Allocation",
+          "Double Mapped Address"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Direct Memory Access."
+      },
+      {
+        "id": "cs102-q7-5",
+        "type": "multiple_choice",
+        "prompt": "Virtual memory uses:",
+        "options": [
+          "Tapes",
+          "Pages",
+          "Blocks only",
+          "Segments only"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Paging is the standard technique."
+      }
+    ]
+  },
+  {
+    "id": "cs102-quiz-7-b",
+    "subjectId": "cs102",
+    "topicId": "cs102-7",
+    "title": "Memory & I/O Application",
+    "questions": [
+      {
+        "id": "cs102-q7-b-1",
+        "type": "multiple_choice",
+        "prompt": "Temporal Locality means:",
+        "options": [
+          "Data nearby is accessed",
+          "Data accessed recently will be accessed again",
+          "Data is temporary",
+          "Data is slow"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Recently used items are likely to be used again."
+      },
+      {
+        "id": "cs102-q7-b-2",
+        "type": "multiple_choice",
+        "prompt": "Interrupt driven I/O is better than Polling because:",
+        "options": [
+          "It uses more CPU",
+          "CPU waits for device",
+          "CPU can do other work",
+          "It is simpler"
+        ],
+        "correctAnswer": 2,
+        "explanation": "CPU doesn't busy-wait."
+      },
+      {
+        "id": "cs102-q7-b-3",
+        "type": "true_false",
+        "prompt": "A Page Fault occurs when data is not in Cache.",
+        "correctAnswer": false,
+        "explanation": "Page Fault is when data is not in RAM (it is swapped to disk). Cache miss is different."
+      },
+      {
+        "id": "cs102-q7-b-4",
+        "type": "multiple_choice",
+        "prompt": "Moving pages between RAM and Disk is called:",
+        "options": [
+          "Thrashing",
+          "Swapping",
+          "Caching",
+          "Flushing"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Swapping (or Paging)."
+      },
+      {
+        "id": "cs102-q7-b-5",
+        "type": "fill_blank",
+        "prompt": "SRAM is used for Cache, DRAM is used for ______.",
+        "correctAnswer": "RAM",
+        "explanation": "Main Memory (RAM)."
+      }
+    ]
+  },
+  {
+    "id": "cs102-quiz-7-c",
+    "subjectId": "cs102",
+    "topicId": "cs102-7",
+    "title": "Memory & I/O Advanced",
+    "questions": [
+      {
+        "id": "cs102-q7-c-1",
+        "type": "multiple_choice",
+        "prompt": "If a cache has a hit rate of 90% and miss penalty is 100 cycles, what is the impact?",
+        "options": [
+          "Huge slowdown",
+          "Minor slowdown",
+          "10 cycles average penalty",
+          "90 cycles average penalty"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Average Memory Access Time uses 0.10 * 100 = 10 cycles added."
+      },
+      {
+        "id": "cs102-q7-c-2",
+        "type": "multiple_choice",
+        "prompt": "LRU stands for:",
+        "options": [
+          "Last Recently Used",
+          "Least Recently Used",
+          "Longest Run Unit",
+          "Linear RAM Util"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Eviction policy: remove the one not used for the longest time."
+      },
+      {
+        "id": "cs102-q7-c-3",
+        "type": "true_false",
+        "prompt": "Thrashing occurs when the OS spends more time paging than executing.",
+        "correctAnswer": true,
+        "explanation": "Performance collapses."
+      },
+      {
+        "id": "cs102-q7-c-4",
+        "type": "multiple_choice",
+        "prompt": "Which write policy updates RAM immediately?",
+        "options": [
+          "Write-Back",
+          "Write-Through",
+          "Write-Allocate",
+          "Write-Around"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Write-Through writes to cache and RAM simultaneously."
+      },
+      {
+        "id": "cs102-q7-c-5",
+        "type": "multiple_choice",
+        "prompt": "TLB (Translation Lookaside Buffer) caches:",
+        "options": [
+          "Instructions",
+          "Data",
+          "Page Table Entries",
+          "Disk sectors"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Caches virtual-to-physical address translations."
+      }
+    ]
+  }
+]

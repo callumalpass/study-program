@@ -1,0 +1,312 @@
+[
+  {
+    "id": "cs402-t5-ex01",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-5",
+    "title": "Implement Basic CNN for Image Classification",
+    "difficulty": 3,
+    "description": "Build a convolutional neural network for MNIST digit classification.\n\nRequirements:\n- 2 convolutional layers with ReLU and max pooling\n- 2 fully connected layers\n- Softmax output for 10 classes\n- Train using Adam optimizer\n- Achieve >95% test accuracy",
+    "starterCode": "import torch\nimport torch.nn as nn\n\nclass SimpleCNN(nn.Module):\n    def __init__(self):\n        super(SimpleCNN, self).__init__()\n        # Define layers\n        \n    def forward(self, x):\n        # Implement forward pass\n        pass\n        \n# Training loop\nmodel = SimpleCNN()\n# TODO: Implement training",
+    "solution": "import torch\nimport torch.nn as nn\nimport torch.optim as optim\nfrom torchvision import datasets, transforms\n\nclass SimpleCNN(nn.Module):\n    def __init__(self):\n        super(SimpleCNN, self).__init__()\n        self.conv1 = nn.Conv2d(1, 32, 3, padding=1)\n        self.conv2 = nn.Conv2d(32, 64, 3, padding=1)\n        self.pool = nn.MaxPool2d(2, 2)\n        self.fc1 = nn.Linear(64 * 7 * 7, 128)\n        self.fc2 = nn.Linear(128, 10)\n        self.relu = nn.ReLU()\n\n    def forward(self, x):\n        x = self.pool(self.relu(self.conv1(x)))  # 28->14\n        x = self.pool(self.relu(self.conv2(x)))  # 14->7\n        x = x.view(-1, 64 * 7 * 7)\n        x = self.relu(self.fc1(x))\n        x = self.fc2(x)\n        return x\n\n# Training\nmodel = SimpleCNN()\noptimizer = optim.Adam(model.parameters(), lr=0.001)\ncriterion = nn.CrossEntropyLoss()\n\nfor epoch in range(10):\n    for batch_idx, (data, target) in enumerate(train_loader):\n        optimizer.zero_grad()\n        output = model(data)\n        loss = criterion(output, target)\n        loss.backward()\n        optimizer.step()",
+    "testCases": [],
+    "hints": [
+      "Start by defining Conv2d layers with appropriate input/output channels",
+      "Use MaxPool2d after each convolutional layer to reduce spatial dimensions",
+      "Flatten the output before passing to fully connected layers",
+      "Use CrossEntropyLoss for multi-class classification",
+      "Adam optimizer works well with learning rate around 0.001"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-ex-5-2",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-5",
+    "title": "Calculate Convolutional Layer Output Size",
+    "difficulty": 1,
+    "description": "Calculate the output dimensions of a convolutional layer.\n\nRequirements:\n- Given input size (H, W), kernel size (K), stride (S), and padding (P)\n- Apply formula: output = floor((input + 2*padding - kernel) / stride) + 1\n- Handle both height and width dimensions\n- Return output shape as tuple",
+    "starterCode": "import numpy as np\n\ndef conv_output_size(input_size, kernel_size, stride=1, padding=0):\n    \"\"\"\n    Calculate output size after convolution.\n\n    Args:\n        input_size: tuple (height, width)\n        kernel_size: int or tuple\n        stride: int or tuple\n        padding: int or tuple\n\n    Returns:\n        tuple: (output_height, output_width)\n    \"\"\"\n    # TODO: Implement\n    pass\n\n# Test\nprint(conv_output_size((28, 28), 3, 1, 1))  # Should output (28, 28)",
+    "solution": "import numpy as np\n\ndef conv_output_size(input_size, kernel_size, stride=1, padding=0):\n    \"\"\"\n    Calculate output size after convolution.\n\n    Args:\n        input_size: tuple (height, width)\n        kernel_size: int or tuple\n        stride: int or tuple\n        padding: int or tuple\n\n    Returns:\n        tuple: (output_height, output_width)\n    \"\"\"\n    h_in, w_in = input_size\n\n    # Handle scalar values\n    if isinstance(kernel_size, int):\n        k_h, k_w = kernel_size, kernel_size\n    else:\n        k_h, k_w = kernel_size\n\n    if isinstance(stride, int):\n        s_h, s_w = stride, stride\n    else:\n        s_h, s_w = stride\n\n    if isinstance(padding, int):\n        p_h, p_w = padding, padding\n    else:\n        p_h, p_w = padding\n\n    # Apply formula\n    h_out = (h_in + 2*p_h - k_h) // s_h + 1\n    w_out = (w_in + 2*p_w - k_w) // s_w + 1\n\n    return (h_out, w_out)\n\n# Test\nprint(conv_output_size((28, 28), 3, 1, 1))  # (28, 28)\nprint(conv_output_size((32, 32), 5, 2, 0))  # (14, 14)",
+    "testCases": [],
+    "hints": [
+      "Use the formula: output = (input + 2*padding - kernel) / stride + 1",
+      "Handle both scalar and tuple inputs for kernel, stride, and padding",
+      "Use integer division (//) to get the floor of the result",
+      "Apply the formula independently to height and width",
+      "Common case: same padding (padding=k//2) keeps dimensions the same with stride=1"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-ex-5-3",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-5",
+    "title": "Implement Max Pooling Layer",
+    "difficulty": 2,
+    "description": "Implement 2D max pooling from scratch.\n\nRequirements:\n- Apply max pooling with specified pool size and stride\n- Handle batch and channel dimensions\n- Return pooled output and optionally indices for unpooling\n- Support both overlapping and non-overlapping pooling",
+    "starterCode": "import numpy as np\n\ndef max_pool2d(x, pool_size=2, stride=None):\n    \"\"\"\n    Apply 2D max pooling.\n\n    Args:\n        x: input tensor (batch, channels, height, width)\n        pool_size: size of pooling window\n        stride: stride (defaults to pool_size)\n\n    Returns:\n        pooled output\n    \"\"\"\n    # TODO: Implement\n    pass",
+    "solution": "import numpy as np\n\ndef max_pool2d(x, pool_size=2, stride=None):\n    \"\"\"\n    Apply 2D max pooling.\n\n    Args:\n        x: input tensor (batch, channels, height, width)\n        pool_size: size of pooling window\n        stride: stride (defaults to pool_size)\n\n    Returns:\n        pooled output\n    \"\"\"\n    if stride is None:\n        stride = pool_size\n\n    batch, channels, h_in, w_in = x.shape\n\n    # Calculate output dimensions\n    h_out = (h_in - pool_size) // stride + 1\n    w_out = (w_in - pool_size) // stride + 1\n\n    # Initialize output\n    output = np.zeros((batch, channels, h_out, w_out))\n\n    # Apply max pooling\n    for b in range(batch):\n        for c in range(channels):\n            for i in range(h_out):\n                for j in range(w_out):\n                    h_start = i * stride\n                    w_start = j * stride\n                    h_end = h_start + pool_size\n                    w_end = w_start + pool_size\n\n                    window = x[b, c, h_start:h_end, w_start:w_end]\n                    output[b, c, i, j] = np.max(window)\n\n    return output",
+    "testCases": [],
+    "hints": [
+      "Calculate output dimensions based on pool size and stride",
+      "Use nested loops to iterate over output positions",
+      "Extract the pooling window using slicing",
+      "Apply np.max to the window to get the maximum value",
+      "Handle all batch and channel dimensions"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-ex-5-4",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-5",
+    "title": "Build Simple RNN Cell",
+    "difficulty": 3,
+    "description": "Implement a basic RNN cell from scratch.\n\nRequirements:\n- Implement forward pass: h_t = tanh(W_hh * h_{t-1} + W_xh * x_t + b)\n- Initialize weights randomly\n- Process a sequence of inputs\n- Return all hidden states\n- Support batch processing",
+    "starterCode": "import numpy as np\n\nclass RNNCell:\n    def __init__(self, input_size, hidden_size):\n        self.input_size = input_size\n        self.hidden_size = hidden_size\n        # Initialize weights\n\n    def forward(self, x, h_prev):\n        \"\"\"\n        Forward pass for one time step.\n\n        Args:\n            x: input (batch, input_size)\n            h_prev: previous hidden state (batch, hidden_size)\n\n        Returns:\n            h_next: next hidden state\n        \"\"\"\n        # TODO: Implement\n        pass\n\n    def forward_sequence(self, x_seq):\n        \"\"\"Process entire sequence.\"\"\"\n        # TODO: Implement\n        pass",
+    "solution": "import numpy as np\n\nclass RNNCell:\n    def __init__(self, input_size, hidden_size):\n        self.input_size = input_size\n        self.hidden_size = hidden_size\n\n        # Initialize weights with Xavier initialization\n        self.W_xh = np.random.randn(input_size, hidden_size) * np.sqrt(2.0 / (input_size + hidden_size))\n        self.W_hh = np.random.randn(hidden_size, hidden_size) * np.sqrt(2.0 / (hidden_size + hidden_size))\n        self.b = np.zeros(hidden_size)\n\n    def forward(self, x, h_prev):\n        \"\"\"\n        Forward pass for one time step.\n\n        Args:\n            x: input (batch, input_size)\n            h_prev: previous hidden state (batch, hidden_size)\n\n        Returns:\n            h_next: next hidden state\n        \"\"\"\n        h_next = np.tanh(x @ self.W_xh + h_prev @ self.W_hh + self.b)\n        return h_next\n\n    def forward_sequence(self, x_seq):\n        \"\"\"\n        Process entire sequence.\n\n        Args:\n            x_seq: input sequence (batch, seq_len, input_size)\n\n        Returns:\n            h_seq: all hidden states (batch, seq_len, hidden_size)\n        \"\"\"\n        batch_size, seq_len, _ = x_seq.shape\n        h = np.zeros((batch_size, self.hidden_size))\n        h_seq = []\n\n        for t in range(seq_len):\n            h = self.forward(x_seq[:, t, :], h)\n            h_seq.append(h)\n\n        return np.stack(h_seq, axis=1)",
+    "testCases": [],
+    "hints": [
+      "Use Xavier initialization for weights: scale by sqrt(2/(fan_in+fan_out))",
+      "The hidden state is computed as: h = tanh(x*W_xh + h*W_hh + b)",
+      "Use @ operator for matrix multiplication",
+      "For sequences, iterate through time steps maintaining hidden state",
+      "Stack all hidden states to create output sequence"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-ex-5-5",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-5",
+    "title": "Implement LSTM Gates",
+    "difficulty": 4,
+    "description": "Implement LSTM cell with all four gates.\n\nRequirements:\n- Forget gate: f_t = sigmoid(W_f * [h_{t-1}, x_t] + b_f)\n- Input gate: i_t = sigmoid(W_i * [h_{t-1}, x_t] + b_i)\n- Cell candidate: c_tilde = tanh(W_c * [h_{t-1}, x_t] + b_c)\n- Output gate: o_t = sigmoid(W_o * [h_{t-1}, x_t] + b_o)\n- Update cell state and hidden state",
+    "starterCode": "import numpy as np\n\nclass LSTMCell:\n    def __init__(self, input_size, hidden_size):\n        # Initialize weights for all gates\n        pass\n\n    def forward(self, x, h_prev, c_prev):\n        \"\"\"\n        LSTM forward pass.\n\n        Args:\n            x: input (batch, input_size)\n            h_prev: previous hidden state\n            c_prev: previous cell state\n\n        Returns:\n            h_next, c_next: next hidden and cell states\n        \"\"\"\n        # TODO: Implement all gates\n        pass",
+    "solution": "import numpy as np\n\ndef sigmoid(x):\n    return 1 / (1 + np.exp(-x))\n\nclass LSTMCell:\n    def __init__(self, input_size, hidden_size):\n        self.input_size = input_size\n        self.hidden_size = hidden_size\n\n        # Combined input size\n        combined_size = input_size + hidden_size\n        scale = np.sqrt(2.0 / (combined_size + hidden_size))\n\n        # Initialize weights for all gates\n        self.W_f = np.random.randn(combined_size, hidden_size) * scale\n        self.b_f = np.ones(hidden_size)  # Forget gate bias to 1\n\n        self.W_i = np.random.randn(combined_size, hidden_size) * scale\n        self.b_i = np.zeros(hidden_size)\n\n        self.W_c = np.random.randn(combined_size, hidden_size) * scale\n        self.b_c = np.zeros(hidden_size)\n\n        self.W_o = np.random.randn(combined_size, hidden_size) * scale\n        self.b_o = np.zeros(hidden_size)\n\n    def forward(self, x, h_prev, c_prev):\n        \"\"\"\n        LSTM forward pass.\n\n        Args:\n            x: input (batch, input_size)\n            h_prev: previous hidden state\n            c_prev: previous cell state\n\n        Returns:\n            h_next, c_next: next hidden and cell states\n        \"\"\"\n        # Concatenate input and hidden state\n        combined = np.concatenate([h_prev, x], axis=1)\n\n        # Forget gate\n        f_t = sigmoid(combined @ self.W_f + self.b_f)\n\n        # Input gate\n        i_t = sigmoid(combined @ self.W_i + self.b_i)\n\n        # Cell candidate\n        c_tilde = np.tanh(combined @ self.W_c + self.b_c)\n\n        # Output gate\n        o_t = sigmoid(combined @ self.W_o + self.b_o)\n\n        # Update cell state\n        c_next = f_t * c_prev + i_t * c_tilde\n\n        # Update hidden state\n        h_next = o_t * np.tanh(c_next)\n\n        return h_next, c_next",
+    "testCases": [],
+    "hints": [
+      "Concatenate h_prev and x before computing gates",
+      "Initialize forget gate bias to 1 to avoid vanishing gradients initially",
+      "Use sigmoid activation for all gates (forget, input, output)",
+      "Use tanh for cell candidate and final cell state activation",
+      "Cell state: c_t = f_t * c_{t-1} + i_t * c_tilde",
+      "Hidden state: h_t = o_t * tanh(c_t)"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-ex-5-6",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-5",
+    "title": "Implement Attention Mechanism",
+    "difficulty": 4,
+    "description": "Build basic attention mechanism (Bahdanau-style).\n\nRequirements:\n- Compute attention scores: score(h_t, h_s) = v^T * tanh(W1*h_t + W2*h_s)\n- Apply softmax to get attention weights\n- Compute context vector as weighted sum\n- Return attention weights and context",
+    "starterCode": "import numpy as np\n\nclass Attention:\n    def __init__(self, hidden_size):\n        # Initialize weight matrices\n        pass\n\n    def forward(self, query, keys, values):\n        \"\"\"\n        Apply attention mechanism.\n\n        Args:\n            query: decoder hidden state (batch, hidden_size)\n            keys: encoder hidden states (batch, seq_len, hidden_size)\n            values: encoder hidden states (batch, seq_len, hidden_size)\n\n        Returns:\n            context: weighted context vector\n            weights: attention weights\n        \"\"\"\n        # TODO: Implement\n        pass",
+    "solution": "import numpy as np\n\ndef softmax(x, axis=-1):\n    exp_x = np.exp(x - np.max(x, axis=axis, keepdims=True))\n    return exp_x / np.sum(exp_x, axis=axis, keepdims=True)\n\nclass Attention:\n    def __init__(self, hidden_size):\n        self.hidden_size = hidden_size\n\n        # Initialize weight matrices\n        scale = np.sqrt(2.0 / hidden_size)\n        self.W1 = np.random.randn(hidden_size, hidden_size) * scale\n        self.W2 = np.random.randn(hidden_size, hidden_size) * scale\n        self.v = np.random.randn(hidden_size) * scale\n\n    def forward(self, query, keys, values):\n        \"\"\"\n        Apply attention mechanism.\n\n        Args:\n            query: decoder hidden state (batch, hidden_size)\n            keys: encoder hidden states (batch, seq_len, hidden_size)\n            values: encoder hidden states (batch, seq_len, hidden_size)\n\n        Returns:\n            context: weighted context vector\n            weights: attention weights\n        \"\"\"\n        batch_size, seq_len, _ = keys.shape\n\n        # Expand query for broadcasting\n        query_expanded = query[:, np.newaxis, :]  # (batch, 1, hidden)\n\n        # Compute scores: v^T * tanh(W1*query + W2*keys)\n        # query: (batch, 1, hidden) @ W1: (hidden, hidden) -> (batch, 1, hidden)\n        # keys: (batch, seq_len, hidden) @ W2: (hidden, hidden) -> (batch, seq_len, hidden)\n        query_proj = query_expanded @ self.W1\n        keys_proj = keys @ self.W2\n\n        # Add and apply tanh\n        combined = np.tanh(query_proj + keys_proj)  # (batch, seq_len, hidden)\n\n        # Apply v to get scores\n        scores = combined @ self.v  # (batch, seq_len)\n\n        # Compute attention weights\n        weights = softmax(scores, axis=1)  # (batch, seq_len)\n\n        # Compute context vector\n        weights_expanded = weights[:, :, np.newaxis]  # (batch, seq_len, 1)\n        context = np.sum(weights_expanded * values, axis=1)  # (batch, hidden)\n\n        return context, weights",
+    "testCases": [],
+    "hints": [
+      "Expand query dimension to enable broadcasting with keys",
+      "Project both query and keys with their respective weight matrices",
+      "Apply tanh activation after combining projections",
+      "Multiply by v vector to get scalar scores for each position",
+      "Use softmax to convert scores to attention weights",
+      "Compute context as weighted sum of values"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-ex-5-7",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-5",
+    "title": "Build Multi-Head Attention",
+    "difficulty": 5,
+    "description": "Implement multi-head self-attention (as in Transformers).\n\nRequirements:\n- Split input into multiple attention heads\n- Apply scaled dot-product attention per head\n- Concatenate heads and apply output projection\n- Support masking for decoder self-attention",
+    "starterCode": "import numpy as np\n\nclass MultiHeadAttention:\n    def __init__(self, d_model, num_heads):\n        self.d_model = d_model\n        self.num_heads = num_heads\n        # Initialize weights\n\n    def forward(self, query, key, value, mask=None):\n        \"\"\"\n        Multi-head attention.\n\n        Args:\n            query, key, value: input tensors (batch, seq_len, d_model)\n            mask: optional mask (batch, seq_len, seq_len)\n\n        Returns:\n            output: (batch, seq_len, d_model)\n        \"\"\"\n        # TODO: Implement\n        pass",
+    "solution": "import numpy as np\n\ndef softmax(x, axis=-1):\n    exp_x = np.exp(x - np.max(x, axis=axis, keepdims=True))\n    return exp_x / np.sum(exp_x, axis=axis, keepdims=True)\n\nclass MultiHeadAttention:\n    def __init__(self, d_model, num_heads):\n        assert d_model % num_heads == 0\n        self.d_model = d_model\n        self.num_heads = num_heads\n        self.d_k = d_model // num_heads\n\n        # Initialize weight matrices\n        scale = np.sqrt(2.0 / d_model)\n        self.W_q = np.random.randn(d_model, d_model) * scale\n        self.W_k = np.random.randn(d_model, d_model) * scale\n        self.W_v = np.random.randn(d_model, d_model) * scale\n        self.W_o = np.random.randn(d_model, d_model) * scale\n\n    def scaled_dot_product_attention(self, Q, K, V, mask=None):\n        \"\"\"\n        Compute scaled dot-product attention.\n\n        Args:\n            Q, K, V: (batch, num_heads, seq_len, d_k)\n            mask: (batch, 1, seq_len, seq_len)\n        \"\"\"\n        # Compute attention scores\n        scores = Q @ K.transpose(0, 1, 3, 2) / np.sqrt(self.d_k)\n\n        # Apply mask if provided\n        if mask is not None:\n            scores = scores + (mask * -1e9)\n\n        # Apply softmax\n        attn_weights = softmax(scores, axis=-1)\n\n        # Apply attention to values\n        output = attn_weights @ V\n\n        return output\n\n    def forward(self, query, key, value, mask=None):\n        \"\"\"\n        Multi-head attention.\n\n        Args:\n            query, key, value: input tensors (batch, seq_len, d_model)\n            mask: optional mask (batch, seq_len, seq_len)\n\n        Returns:\n            output: (batch, seq_len, d_model)\n        \"\"\"\n        batch_size, seq_len, _ = query.shape\n\n        # Linear projections\n        Q = query @ self.W_q  # (batch, seq_len, d_model)\n        K = key @ self.W_k\n        V = value @ self.W_v\n\n        # Reshape for multi-head: (batch, seq_len, num_heads, d_k)\n        Q = Q.reshape(batch_size, seq_len, self.num_heads, self.d_k)\n        K = K.reshape(batch_size, seq_len, self.num_heads, self.d_k)\n        V = V.reshape(batch_size, seq_len, self.num_heads, self.d_k)\n\n        # Transpose to (batch, num_heads, seq_len, d_k)\n        Q = Q.transpose(0, 2, 1, 3)\n        K = K.transpose(0, 2, 1, 3)\n        V = V.transpose(0, 2, 1, 3)\n\n        # Apply attention\n        if mask is not None:\n            mask = mask[:, np.newaxis, :, :]  # Add head dimension\n\n        attn_output = self.scaled_dot_product_attention(Q, K, V, mask)\n\n        # Concatenate heads: (batch, seq_len, d_model)\n        attn_output = attn_output.transpose(0, 2, 1, 3)\n        attn_output = attn_output.reshape(batch_size, seq_len, self.d_model)\n\n        # Final linear projection\n        output = attn_output @ self.W_o\n\n        return output",
+    "testCases": [],
+    "hints": [
+      "Project Q, K, V using learned weight matrices",
+      "Split d_model into num_heads, each with dimension d_k = d_model/num_heads",
+      "Reshape and transpose to get (batch, num_heads, seq_len, d_k)",
+      "Compute scaled dot-product: softmax(Q*K^T/sqrt(d_k))*V",
+      "Apply mask before softmax by adding large negative values",
+      "Concatenate heads and apply final linear projection"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-ex-5-8",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-5",
+    "title": "Implement Positional Encoding",
+    "difficulty": 2,
+    "description": "Create positional encoding for Transformer models.\n\nRequirements:\n- Use sinusoidal functions: PE(pos, 2i) = sin(pos/10000^(2i/d_model))\n- Even dimensions use sine, odd dimensions use cosine\n- Support variable sequence lengths\n- Return encoding matrix of shape (seq_len, d_model)",
+    "starterCode": "import numpy as np\n\ndef positional_encoding(seq_len, d_model):\n    \"\"\"\n    Generate positional encoding.\n\n    Args:\n        seq_len: sequence length\n        d_model: model dimension\n\n    Returns:\n        pe: positional encoding (seq_len, d_model)\n    \"\"\"\n    # TODO: Implement\n    pass",
+    "solution": "import numpy as np\n\ndef positional_encoding(seq_len, d_model):\n    \"\"\"\n    Generate positional encoding.\n\n    Args:\n        seq_len: sequence length\n        d_model: model dimension\n\n    Returns:\n        pe: positional encoding (seq_len, d_model)\n    \"\"\"\n    # Initialize matrix\n    pe = np.zeros((seq_len, d_model))\n\n    # Create position indices\n    position = np.arange(seq_len)[:, np.newaxis]  # (seq_len, 1)\n\n    # Create dimension indices\n    div_term = np.exp(np.arange(0, d_model, 2) * -(np.log(10000.0) / d_model))\n\n    # Apply sine to even indices\n    pe[:, 0::2] = np.sin(position * div_term)\n\n    # Apply cosine to odd indices\n    pe[:, 1::2] = np.cos(position * div_term)\n\n    return pe",
+    "testCases": [],
+    "hints": [
+      "Create position array from 0 to seq_len-1",
+      "Compute division term: 10000^(2i/d_model) for each dimension pair",
+      "Use np.arange(0, d_model, 2) to get even dimension indices",
+      "Apply sin to even dimensions: PE[:, 0::2]",
+      "Apply cos to odd dimensions: PE[:, 1::2]",
+      "Use broadcasting to compute all positions at once"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-ex-5-9",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-5",
+    "title": "Build Transformer Encoder Block",
+    "difficulty": 4,
+    "description": "Implement a complete Transformer encoder block.\n\nRequirements:\n- Multi-head self-attention with residual connection and layer norm\n- Position-wise feed-forward network (two linear layers with ReLU)\n- Residual connections after each sublayer\n- Layer normalization after residual connections",
+    "starterCode": "import torch\nimport torch.nn as nn\n\nclass TransformerEncoderBlock(nn.Module):\n    def __init__(self, d_model, num_heads, d_ff, dropout=0.1):\n        super().__init__()\n        # Initialize layers\n\n    def forward(self, x, mask=None):\n        # TODO: Implement\n        pass",
+    "solution": "import torch\nimport torch.nn as nn\n\nclass TransformerEncoderBlock(nn.Module):\n    def __init__(self, d_model, num_heads, d_ff, dropout=0.1):\n        super().__init__()\n\n        # Multi-head attention\n        self.attention = nn.MultiheadAttention(d_model, num_heads, dropout=dropout, batch_first=True)\n\n        # Feed-forward network\n        self.ffn = nn.Sequential(\n            nn.Linear(d_model, d_ff),\n            nn.ReLU(),\n            nn.Dropout(dropout),\n            nn.Linear(d_ff, d_model)\n        )\n\n        # Layer normalization\n        self.norm1 = nn.LayerNorm(d_model)\n        self.norm2 = nn.LayerNorm(d_model)\n\n        # Dropout\n        self.dropout1 = nn.Dropout(dropout)\n        self.dropout2 = nn.Dropout(dropout)\n\n    def forward(self, x, mask=None):\n        \"\"\"\n        Forward pass.\n\n        Args:\n            x: input (batch, seq_len, d_model)\n            mask: attention mask (seq_len, seq_len)\n\n        Returns:\n            output (batch, seq_len, d_model)\n        \"\"\"\n        # Multi-head attention with residual\n        attn_output, _ = self.attention(x, x, x, attn_mask=mask)\n        x = self.norm1(x + self.dropout1(attn_output))\n\n        # Feed-forward with residual\n        ffn_output = self.ffn(x)\n        x = self.norm2(x + self.dropout2(ffn_output))\n\n        return x",
+    "testCases": [],
+    "hints": [
+      "Use nn.MultiheadAttention with batch_first=True",
+      "Feed-forward network: Linear -> ReLU -> Dropout -> Linear",
+      "Apply residual connection: output = norm(x + sublayer(x))",
+      "Use LayerNorm after each residual connection",
+      "Typical d_ff is 4 times d_model (e.g., 2048 for d_model=512)"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-ex-5-10",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-5",
+    "title": "Implement Batch Normalization",
+    "difficulty": 2,
+    "description": "Build batch normalization layer from scratch.\n\nRequirements:\n- Normalize across batch dimension: (x - mean) / sqrt(var + epsilon)\n- Support training and inference modes\n- Include learnable scale (gamma) and shift (beta) parameters\n- Track running statistics for inference",
+    "starterCode": "import numpy as np\n\nclass BatchNorm1d:\n    def __init__(self, num_features, eps=1e-5, momentum=0.1):\n        self.num_features = num_features\n        self.eps = eps\n        self.momentum = momentum\n        # Initialize parameters\n\n    def forward(self, x, training=True):\n        \"\"\"\n        Apply batch normalization.\n\n        Args:\n            x: input (batch, features)\n            training: whether in training mode\n\n        Returns:\n            normalized output\n        \"\"\"\n        # TODO: Implement\n        pass",
+    "solution": "import numpy as np\n\nclass BatchNorm1d:\n    def __init__(self, num_features, eps=1e-5, momentum=0.1):\n        self.num_features = num_features\n        self.eps = eps\n        self.momentum = momentum\n\n        # Learnable parameters\n        self.gamma = np.ones(num_features)\n        self.beta = np.zeros(num_features)\n\n        # Running statistics\n        self.running_mean = np.zeros(num_features)\n        self.running_var = np.ones(num_features)\n\n    def forward(self, x, training=True):\n        \"\"\"\n        Apply batch normalization.\n\n        Args:\n            x: input (batch, features)\n            training: whether in training mode\n\n        Returns:\n            normalized output\n        \"\"\"\n        if training:\n            # Compute batch statistics\n            batch_mean = np.mean(x, axis=0)\n            batch_var = np.var(x, axis=0)\n\n            # Normalize\n            x_norm = (x - batch_mean) / np.sqrt(batch_var + self.eps)\n\n            # Update running statistics\n            self.running_mean = (1 - self.momentum) * self.running_mean + self.momentum * batch_mean\n            self.running_var = (1 - self.momentum) * self.running_var + self.momentum * batch_var\n        else:\n            # Use running statistics\n            x_norm = (x - self.running_mean) / np.sqrt(self.running_var + self.eps)\n\n        # Scale and shift\n        output = self.gamma * x_norm + self.beta\n\n        return output",
+    "testCases": [],
+    "hints": [
+      "Compute mean and variance across batch dimension (axis=0)",
+      "Normalize: (x - mean) / sqrt(var + eps)",
+      "Apply learnable affine transformation: gamma * x_norm + beta",
+      "Update running statistics with exponential moving average",
+      "Use running statistics during inference, batch statistics during training"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-ex-5-11",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-5",
+    "title": "Implement Dropout Layer",
+    "difficulty": 1,
+    "description": "Create dropout regularization from scratch.\n\nRequirements:\n- Randomly drop neurons with probability p during training\n- Scale remaining activations by 1/(1-p)\n- Keep all neurons during inference\n- Support different dropout rates",
+    "starterCode": "import numpy as np\n\nclass Dropout:\n    def __init__(self, p=0.5):\n        self.p = p\n\n    def forward(self, x, training=True):\n        \"\"\"\n        Apply dropout.\n\n        Args:\n            x: input tensor\n            training: whether in training mode\n\n        Returns:\n            output with dropout applied\n        \"\"\"\n        # TODO: Implement\n        pass",
+    "solution": "import numpy as np\n\nclass Dropout:\n    def __init__(self, p=0.5):\n        self.p = p\n        self.mask = None\n\n    def forward(self, x, training=True):\n        \"\"\"\n        Apply dropout.\n\n        Args:\n            x: input tensor\n            training: whether in training mode\n\n        Returns:\n            output with dropout applied\n        \"\"\"\n        if training:\n            # Create dropout mask\n            self.mask = np.random.binomial(1, 1 - self.p, size=x.shape)\n\n            # Apply mask and scale\n            output = x * self.mask / (1 - self.p)\n        else:\n            # No dropout during inference\n            output = x\n\n        return output",
+    "testCases": [],
+    "hints": [
+      "Use np.random.binomial to create binary mask with probability (1-p)",
+      "Multiply input by mask to drop neurons",
+      "Scale by 1/(1-p) to maintain expected value",
+      "During inference, return input unchanged",
+      "Store mask for potential use in backward pass"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-ex-5-12",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-5",
+    "title": "Build ResNet Residual Block",
+    "difficulty": 3,
+    "description": "Implement a ResNet residual block with skip connection.\n\nRequirements:\n- Two convolutional layers with batch norm and ReLU\n- Skip connection that adds input to output\n- Handle dimension mismatch with 1x1 convolution\n- Support stride for downsampling",
+    "starterCode": "import torch\nimport torch.nn as nn\n\nclass ResidualBlock(nn.Module):\n    def __init__(self, in_channels, out_channels, stride=1):\n        super().__init__()\n        # Define layers\n\n    def forward(self, x):\n        # TODO: Implement\n        pass",
+    "solution": "import torch\nimport torch.nn as nn\n\nclass ResidualBlock(nn.Module):\n    def __init__(self, in_channels, out_channels, stride=1):\n        super().__init__()\n\n        # Main path\n        self.conv1 = nn.Conv2d(in_channels, out_channels,\n                               kernel_size=3, stride=stride, padding=1, bias=False)\n        self.bn1 = nn.BatchNorm2d(out_channels)\n        self.relu = nn.ReLU(inplace=True)\n\n        self.conv2 = nn.Conv2d(out_channels, out_channels,\n                               kernel_size=3, stride=1, padding=1, bias=False)\n        self.bn2 = nn.BatchNorm2d(out_channels)\n\n        # Skip connection\n        self.skip = nn.Sequential()\n        if stride != 1 or in_channels != out_channels:\n            self.skip = nn.Sequential(\n                nn.Conv2d(in_channels, out_channels, kernel_size=1,\n                         stride=stride, bias=False),\n                nn.BatchNorm2d(out_channels)\n            )\n\n    def forward(self, x):\n        \"\"\"\n        Forward pass.\n\n        Args:\n            x: input (batch, channels, height, width)\n\n        Returns:\n            output with residual connection\n        \"\"\"\n        identity = x\n\n        # Main path\n        out = self.conv1(x)\n        out = self.bn1(out)\n        out = self.relu(out)\n\n        out = self.conv2(out)\n        out = self.bn2(out)\n\n        # Add skip connection\n        out += self.skip(identity)\n        out = self.relu(out)\n\n        return out",
+    "testCases": [],
+    "hints": [
+      "Use Conv2d -> BatchNorm2d -> ReLU pattern",
+      "Apply stride in first convolution for downsampling",
+      "Use 1x1 convolution in skip connection when dimensions change",
+      "Add skip connection before final ReLU activation",
+      "Set bias=False in convolutions when using batch norm"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-ex-5-13",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-5",
+    "title": "Implement Transfer Learning",
+    "difficulty": 3,
+    "description": "Fine-tune a pre-trained CNN for new classification task.\n\nRequirements:\n- Load pre-trained ResNet model\n- Freeze early layers (feature extraction)\n- Replace final layer for new classes\n- Train only the new classifier\n- Compare with training from scratch",
+    "starterCode": "import torch\nimport torch.nn as nn\nfrom torchvision import models\n\ndef setup_transfer_learning(num_classes, freeze_features=True):\n    \"\"\"\n    Setup model for transfer learning.\n\n    Args:\n        num_classes: number of classes in new task\n        freeze_features: whether to freeze feature layers\n\n    Returns:\n        model ready for transfer learning\n    \"\"\"\n    # TODO: Implement\n    pass",
+    "solution": "import torch\nimport torch.nn as nn\nfrom torchvision import models\n\ndef setup_transfer_learning(num_classes, freeze_features=True):\n    \"\"\"\n    Setup model for transfer learning.\n\n    Args:\n        num_classes: number of classes in new task\n        freeze_features: whether to freeze feature layers\n\n    Returns:\n        model ready for transfer learning\n    \"\"\"\n    # Load pre-trained ResNet\n    model = models.resnet18(pretrained=True)\n\n    # Freeze feature extraction layers\n    if freeze_features:\n        for param in model.parameters():\n            param.requires_grad = False\n\n    # Replace final layer\n    num_features = model.fc.in_features\n    model.fc = nn.Linear(num_features, num_classes)\n\n    return model\n\n# Example usage\nmodel = setup_transfer_learning(num_classes=10, freeze_features=True)\n\n# Create optimizer that only updates classifier\noptimizer = torch.optim.Adam(\n    filter(lambda p: p.requires_grad, model.parameters()),\n    lr=0.001\n)\n\n# Training loop (simplified)\ncriterion = nn.CrossEntropyLoss()\nfor epoch in range(10):\n    for images, labels in train_loader:\n        optimizer.zero_grad()\n        outputs = model(images)\n        loss = criterion(outputs, labels)\n        loss.backward()\n        optimizer.step()",
+    "testCases": [],
+    "hints": [
+      "Use torchvision.models to load pre-trained models",
+      "Set requires_grad=False to freeze parameters",
+      "Replace model.fc (final layer) with new Linear layer",
+      "Use filter(lambda p: p.requires_grad) to get trainable parameters",
+      "Transfer learning typically uses lower learning rate"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-ex-5-14",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-5",
+    "title": "Implement GRU Cell",
+    "difficulty": 3,
+    "description": "Build Gated Recurrent Unit (GRU) cell from scratch.\n\nRequirements:\n- Reset gate: r_t = sigmoid(W_r * [h_{t-1}, x_t])\n- Update gate: z_t = sigmoid(W_z * [h_{t-1}, x_t])\n- Candidate: h_tilde = tanh(W_h * [r_t * h_{t-1}, x_t])\n- Final state: h_t = (1 - z_t) * h_{t-1} + z_t * h_tilde",
+    "starterCode": "import numpy as np\n\nclass GRUCell:\n    def __init__(self, input_size, hidden_size):\n        # Initialize weights\n        pass\n\n    def forward(self, x, h_prev):\n        \"\"\"\n        GRU forward pass.\n\n        Args:\n            x: input (batch, input_size)\n            h_prev: previous hidden state\n\n        Returns:\n            h_next: next hidden state\n        \"\"\"\n        # TODO: Implement\n        pass",
+    "solution": "import numpy as np\n\ndef sigmoid(x):\n    return 1 / (1 + np.exp(-x))\n\nclass GRUCell:\n    def __init__(self, input_size, hidden_size):\n        self.input_size = input_size\n        self.hidden_size = hidden_size\n\n        combined_size = input_size + hidden_size\n        scale = np.sqrt(2.0 / (combined_size + hidden_size))\n\n        # Initialize weights\n        self.W_r = np.random.randn(combined_size, hidden_size) * scale\n        self.b_r = np.zeros(hidden_size)\n\n        self.W_z = np.random.randn(combined_size, hidden_size) * scale\n        self.b_z = np.zeros(hidden_size)\n\n        self.W_h = np.random.randn(combined_size, hidden_size) * scale\n        self.b_h = np.zeros(hidden_size)\n\n    def forward(self, x, h_prev):\n        \"\"\"\n        GRU forward pass.\n\n        Args:\n            x: input (batch, input_size)\n            h_prev: previous hidden state (batch, hidden_size)\n\n        Returns:\n            h_next: next hidden state\n        \"\"\"\n        # Concatenate input and hidden\n        combined = np.concatenate([h_prev, x], axis=1)\n\n        # Reset gate\n        r_t = sigmoid(combined @ self.W_r + self.b_r)\n\n        # Update gate\n        z_t = sigmoid(combined @ self.W_z + self.b_z)\n\n        # Candidate hidden state\n        combined_reset = np.concatenate([r_t * h_prev, x], axis=1)\n        h_tilde = np.tanh(combined_reset @ self.W_h + self.b_h)\n\n        # Final hidden state\n        h_next = (1 - z_t) * h_prev + z_t * h_tilde\n\n        return h_next",
+    "testCases": [],
+    "hints": [
+      "GRU has fewer parameters than LSTM (no separate cell state)",
+      "Reset gate controls how much past information to forget",
+      "Update gate decides between keeping old state or using new candidate",
+      "Apply reset gate before computing candidate state",
+      "Final state is interpolation between previous and candidate states"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-ex-5-15",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-5",
+    "title": "Build Seq2Seq with Attention",
+    "difficulty": 5,
+    "description": "Implement sequence-to-sequence model with attention mechanism.\n\nRequirements:\n- LSTM-based encoder that processes input sequence\n- LSTM-based decoder with attention over encoder outputs\n- Attention mechanism to compute context vector at each step\n- Teacher forcing during training\n- Beam search for inference",
+    "starterCode": "import torch\nimport torch.nn as nn\n\nclass Seq2SeqAttention(nn.Module):\n    def __init__(self, vocab_size, embed_size, hidden_size):\n        super().__init__()\n        # Define encoder, decoder, attention\n\n    def forward(self, src, tgt, teacher_forcing_ratio=0.5):\n        # TODO: Implement\n        pass",
+    "solution": "import torch\nimport torch.nn as nn\nimport random\n\nclass Encoder(nn.Module):\n    def __init__(self, vocab_size, embed_size, hidden_size):\n        super().__init__()\n        self.embedding = nn.Embedding(vocab_size, embed_size)\n        self.lstm = nn.LSTM(embed_size, hidden_size, batch_first=True)\n\n    def forward(self, src):\n        embedded = self.embedding(src)\n        outputs, (hidden, cell) = self.lstm(embedded)\n        return outputs, hidden, cell\n\nclass Attention(nn.Module):\n    def __init__(self, hidden_size):\n        super().__init__()\n        self.attn = nn.Linear(hidden_size * 2, hidden_size)\n        self.v = nn.Linear(hidden_size, 1, bias=False)\n\n    def forward(self, hidden, encoder_outputs):\n        # hidden: (1, batch, hidden)\n        # encoder_outputs: (batch, seq_len, hidden)\n        batch_size = encoder_outputs.shape[0]\n        seq_len = encoder_outputs.shape[1]\n\n        hidden = hidden.repeat(seq_len, 1, 1).transpose(0, 1)\n        energy = torch.tanh(self.attn(torch.cat((hidden, encoder_outputs), dim=2)))\n        attention = self.v(energy).squeeze(2)\n        return torch.softmax(attention, dim=1)\n\nclass Decoder(nn.Module):\n    def __init__(self, vocab_size, embed_size, hidden_size):\n        super().__init__()\n        self.embedding = nn.Embedding(vocab_size, embed_size)\n        self.attention = Attention(hidden_size)\n        self.lstm = nn.LSTM(embed_size + hidden_size, hidden_size, batch_first=True)\n        self.fc = nn.Linear(hidden_size, vocab_size)\n\n    def forward(self, input, hidden, cell, encoder_outputs):\n        input = input.unsqueeze(1)  # (batch, 1)\n        embedded = self.embedding(input)  # (batch, 1, embed)\n\n        attn_weights = self.attention(hidden, encoder_outputs)\n        attn_weights = attn_weights.unsqueeze(1)\n        context = torch.bmm(attn_weights, encoder_outputs)\n\n        lstm_input = torch.cat((embedded, context), dim=2)\n        output, (hidden, cell) = self.lstm(lstm_input, (hidden, cell))\n\n        prediction = self.fc(output.squeeze(1))\n        return prediction, hidden, cell\n\nclass Seq2SeqAttention(nn.Module):\n    def __init__(self, vocab_size, embed_size, hidden_size):\n        super().__init__()\n        self.encoder = Encoder(vocab_size, embed_size, hidden_size)\n        self.decoder = Decoder(vocab_size, embed_size, hidden_size)\n\n    def forward(self, src, tgt, teacher_forcing_ratio=0.5):\n        batch_size = src.shape[0]\n        tgt_len = tgt.shape[1]\n        vocab_size = self.decoder.fc.out_features\n\n        outputs = torch.zeros(batch_size, tgt_len, vocab_size).to(src.device)\n        encoder_outputs, hidden, cell = self.encoder(src)\n\n        input = tgt[:, 0]\n        for t in range(1, tgt_len):\n            output, hidden, cell = self.decoder(input, hidden, cell, encoder_outputs)\n            outputs[:, t] = output\n\n            teacher_force = random.random() < teacher_forcing_ratio\n            top1 = output.argmax(1)\n            input = tgt[:, t] if teacher_force else top1\n\n        return outputs",
+    "testCases": [],
+    "hints": [
+      "Encoder processes entire source sequence and returns all outputs",
+      "Decoder generates one token at a time using attention",
+      "Compute attention weights over all encoder outputs",
+      "Context vector is weighted sum of encoder outputs",
+      "Use teacher forcing: feed ground truth instead of prediction during training",
+      "For inference, use greedy decoding or beam search"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs402-ex-5-16",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-5",
+    "title": "Implement Data Augmentation for Images",
+    "difficulty": 2,
+    "description": "Create custom data augmentation pipeline for image classification.\n\nRequirements:\n- Random horizontal flip\n- Random rotation (-15 to +15 degrees)\n- Random crop and resize\n- Color jittering (brightness, contrast, saturation)\n- Normalization with ImageNet statistics",
+    "starterCode": "import torch\nfrom torchvision import transforms\n\ndef create_augmentation_pipeline(train=True):\n    \"\"\"\n    Create data augmentation pipeline.\n\n    Args:\n        train: whether for training (augment) or validation (no augment)\n\n    Returns:\n        transforms.Compose pipeline\n    \"\"\"\n    # TODO: Implement\n    pass",
+    "solution": "import torch\nfrom torchvision import transforms\n\ndef create_augmentation_pipeline(train=True):\n    \"\"\"\n    Create data augmentation pipeline.\n\n    Args:\n        train: whether for training (augment) or validation (no augment)\n\n    Returns:\n        transforms.Compose pipeline\n    \"\"\"\n    # ImageNet statistics\n    mean = [0.485, 0.456, 0.406]\n    std = [0.229, 0.224, 0.225]\n\n    if train:\n        # Training pipeline with augmentation\n        pipeline = transforms.Compose([\n            transforms.RandomResizedCrop(224, scale=(0.8, 1.0)),\n            transforms.RandomHorizontalFlip(p=0.5),\n            transforms.RandomRotation(degrees=15),\n            transforms.ColorJitter(\n                brightness=0.2,\n                contrast=0.2,\n                saturation=0.2,\n                hue=0.1\n            ),\n            transforms.ToTensor(),\n            transforms.Normalize(mean=mean, std=std),\n            transforms.RandomErasing(p=0.3)  # Random erasing augmentation\n        ])\n    else:\n        # Validation pipeline without augmentation\n        pipeline = transforms.Compose([\n            transforms.Resize(256),\n            transforms.CenterCrop(224),\n            transforms.ToTensor(),\n            transforms.Normalize(mean=mean, std=std)\n        ])\n\n    return pipeline\n\n# Usage example\ntrain_transform = create_augmentation_pipeline(train=True)\nval_transform = create_augmentation_pipeline(train=False)\n\n# Apply to dataset\nfrom torchvision.datasets import ImageFolder\ntrain_dataset = ImageFolder(root='train/', transform=train_transform)\nval_dataset = ImageFolder(root='val/', transform=val_transform)",
+    "testCases": [],
+    "hints": [
+      "Use transforms.Compose to chain multiple transformations",
+      "RandomResizedCrop combines random crop and resize",
+      "Set probability p for random transformations",
+      "Apply ColorJitter before ToTensor for efficiency",
+      "Always normalize as the last step (after ToTensor)",
+      "No augmentation for validation, only resize and center crop"
+    ],
+    "language": "python"
+  }
+]

@@ -1,0 +1,500 @@
+[
+  {
+    "id": "cs303-ex-5-1",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-5",
+    "title": "Arithmetic Expression Parser",
+    "difficulty": 1,
+    "description": "Parse simple arithmetic expressions into an AST.",
+    "starterCode": "def tokenize(text):\n    \"\"\"Tokenize arithmetic expression into list of tokens.\"\"\"\n    pass\n\ndef parse_expr(tokens):\n    \"\"\"Parse tokens into AST. Returns (ast, remaining_tokens).\"\"\"\n    pass",
+    "solution": "import re\n\ndef tokenize(text):\n    pattern = r'\\d+|[+\\-*/()]'\n    return re.findall(pattern, text)\n\ndef parse_expr(tokens):\n    return parse_additive(tokens)\n\ndef parse_additive(tokens):\n    left, tokens = parse_multiplicative(tokens)\n    while tokens and tokens[0] in ['+', '-']:\n        op = tokens[0]\n        tokens = tokens[1:]\n        right, tokens = parse_multiplicative(tokens)\n        left = (op, left, right)\n    return left, tokens\n\ndef parse_multiplicative(tokens):\n    left, tokens = parse_primary(tokens)\n    while tokens and tokens[0] in ['*', '/']:\n        op = tokens[0]\n        tokens = tokens[1:]\n        right, tokens = parse_primary(tokens)\n        left = (op, left, right)\n    return left, tokens\n\ndef parse_primary(tokens):\n    if tokens[0] == '(':\n        tokens = tokens[1:]\n        expr, tokens = parse_expr(tokens)\n        tokens = tokens[1:]  # skip ')'\n        return expr, tokens\n    return int(tokens[0]), tokens[1:]",
+    "testCases": [
+      {
+        "input": "tokenize('1+2')",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "parse_expr(tokenize('1+2'))[0]",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "parse_expr(tokenize('2*3+4'))[0]",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Tokenize first, then parse",
+      "Handle operator precedence with separate functions",
+      "Return remaining tokens for recursive parsing"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-5-2",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-5",
+    "title": "AST Evaluator",
+    "difficulty": 1,
+    "description": "Evaluate an AST representing arithmetic expressions.",
+    "starterCode": "def evaluate_ast(ast):\n    \"\"\"\n    Evaluate an arithmetic AST.\n    AST is either an int or (op, left, right).\n    \"\"\"\n    pass",
+    "solution": "def evaluate_ast(ast):\n    if isinstance(ast, int):\n        return ast\n\n    op, left, right = ast\n    l = evaluate_ast(left)\n    r = evaluate_ast(right)\n\n    if op == '+':\n        return l + r\n    if op == '-':\n        return l - r\n    if op == '*':\n        return l * r\n    if op == '/':\n        return l // r if r != 0 else 0\n\n    raise ValueError(f\"Unknown operator: {op}\")",
+    "testCases": [
+      {
+        "input": "evaluate_ast(5)",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "evaluate_ast(('+', 3, 4))",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "evaluate_ast(('*', ('+', 1, 2), 3))",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Base case: integer values",
+      "Recursive case: evaluate children, apply operator",
+      "Handle all arithmetic operators"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-5-3",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-5",
+    "title": "Environment-Based Evaluator",
+    "difficulty": 1,
+    "description": "Evaluate expressions with variables using an environment.",
+    "starterCode": "def evaluate(expr, env):\n    \"\"\"\n    Evaluate expression with variables.\n    expr: int | str (var) | (op, e1, e2) | ('let', var, e1, e2)\n    env: dict mapping variable names to values\n    \"\"\"\n    pass",
+    "solution": "def evaluate(expr, env):\n    if isinstance(expr, int):\n        return expr\n\n    if isinstance(expr, str):\n        return env[expr]\n\n    tag = expr[0]\n\n    if tag in ['+', '-', '*', '/']:\n        _, e1, e2 = expr\n        v1 = evaluate(e1, env)\n        v2 = evaluate(e2, env)\n        ops = {'+': lambda a,b: a+b, '-': lambda a,b: a-b,\n               '*': lambda a,b: a*b, '/': lambda a,b: a//b}\n        return ops[tag](v1, v2)\n\n    if tag == 'let':\n        _, var, e1, e2 = expr\n        val = evaluate(e1, env)\n        new_env = {**env, var: val}\n        return evaluate(e2, new_env)\n\n    raise ValueError(f\"Unknown: {expr}\")",
+    "testCases": [
+      {
+        "input": "evaluate('x', {'x': 5})",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "evaluate(('+', 'x', 1), {'x': 10})",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "evaluate(('let', 'x', 5, ('+', 'x', 'x')), {})",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Variables look up values in environment",
+      "Let bindings extend the environment",
+      "Create new environment for inner scope"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-5-4",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-5",
+    "title": "Lambda Calculus Interpreter",
+    "difficulty": 3,
+    "description": "Implement a simple lambda calculus interpreter.",
+    "starterCode": "def evaluate_lambda(expr, env):\n    \"\"\"\n    Evaluate lambda calculus expressions.\n    expr: str (var) | ('lam', param, body) | ('app', e1, e2)\n    \"\"\"\n    pass\n\ndef substitute(expr, var, value):\n    \"\"\"Substitute value for var in expr.\"\"\"\n    pass",
+    "solution": "def evaluate_lambda(expr, env):\n    if isinstance(expr, str):\n        return env.get(expr, expr)\n\n    tag = expr[0]\n\n    if tag == 'lam':\n        _, param, body = expr\n        return ('closure', param, body, env.copy())\n\n    if tag == 'app':\n        _, e1, e2 = expr\n        func = evaluate_lambda(e1, env)\n        arg = evaluate_lambda(e2, env)\n\n        if isinstance(func, tuple) and func[0] == 'closure':\n            _, param, body, closure_env = func\n            new_env = {**closure_env, param: arg}\n            return evaluate_lambda(body, new_env)\n\n        return ('app', func, arg)\n\n    return expr\n\ndef substitute(expr, var, value):\n    if isinstance(expr, str):\n        return value if expr == var else expr\n\n    tag = expr[0]\n\n    if tag == 'lam':\n        _, param, body = expr\n        if param == var:\n            return expr  # Variable is shadowed\n        return ('lam', param, substitute(body, var, value))\n\n    if tag == 'app':\n        _, e1, e2 = expr\n        return ('app', substitute(e1, var, value), substitute(e2, var, value))\n\n    return expr",
+    "testCases": [
+      {
+        "input": "evaluate_lambda('x', {'x': 5})",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "evaluate_lambda(('app', ('lam', 'x', 'x'), 42), {})",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "substitute(('app', 'x', 'y'), 'x', 'z')",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Lambda creates closure capturing environment",
+      "Application evaluates function and argument",
+      "Substitute binds parameter to argument"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-5-5",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-5",
+    "title": "Recursive Function Support",
+    "difficulty": 3,
+    "description": "Add support for recursive functions to the interpreter.",
+    "starterCode": "def evaluate_with_rec(expr, env):\n    \"\"\"\n    Evaluate with support for recursive definitions.\n    Adds: ('letrec', name, lambda_expr, body)\n    \"\"\"\n    pass",
+    "solution": "def evaluate_with_rec(expr, env):\n    if isinstance(expr, (int, bool)):\n        return expr\n\n    if isinstance(expr, str):\n        val = env.get(expr)\n        if isinstance(val, tuple) and val[0] == 'thunk':\n            return val[1]()\n        return val\n\n    tag = expr[0]\n\n    if tag == 'lam':\n        _, param, body = expr\n        return ('closure', param, body, env.copy())\n\n    if tag == 'app':\n        _, e1, e2 = expr\n        func = evaluate_with_rec(e1, env)\n        arg = evaluate_with_rec(e2, env)\n\n        if isinstance(func, tuple) and func[0] == 'closure':\n            _, param, body, cenv = func\n            new_env = {**cenv, param: arg}\n            return evaluate_with_rec(body, new_env)\n        return ('app', func, arg)\n\n    if tag == 'letrec':\n        _, name, lam_expr, body = expr\n        # Create recursive binding with thunk\n        rec_env = env.copy()\n\n        def make_closure():\n            _, param, lam_body = lam_expr\n            return ('closure', param, lam_body, rec_env)\n\n        rec_env[name] = ('thunk', make_closure)\n        rec_env[name] = make_closure()\n        return evaluate_with_rec(body, rec_env)\n\n    if tag == 'if':\n        _, cond, then_e, else_e = expr\n        c = evaluate_with_rec(cond, env)\n        return evaluate_with_rec(then_e if c else else_e, env)\n\n    if tag in ['+', '-', '*', '/', '<', '==']:\n        _, e1, e2 = expr\n        v1, v2 = evaluate_with_rec(e1, env), evaluate_with_rec(e2, env)\n        ops = {'+': lambda a,b: a+b, '-': lambda a,b: a-b,\n               '*': lambda a,b: a*b, '/': lambda a,b: a//b,\n               '<': lambda a,b: a<b, '==': lambda a,b: a==b}\n        return ops[tag](v1, v2)\n\n    return expr",
+    "testCases": [
+      {
+        "input": "evaluate_with_rec(('letrec', 'f', ('lam', 'x', ('if', ('==', 'x', 0), 1, ('*', 'x', ('app', 'f', ('-', 'x', 1))))), ('app', 'f', 5)), {})",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Recursive functions need to reference themselves",
+      "Use thunk to delay closure creation",
+      "Circular reference through environment"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-5-6",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-5",
+    "title": "Stack-Based Interpreter",
+    "difficulty": 3,
+    "description": "Implement a stack-based bytecode interpreter.",
+    "starterCode": "class StackVM:\n    \"\"\"Stack-based virtual machine.\"\"\"\n\n    def __init__(self):\n        self.stack = []\n        self.env = {}\n\n    def execute(self, bytecode):\n        \"\"\"\n        Execute bytecode instructions.\n        Instructions: PUSH n, ADD, SUB, MUL, DIV, LOAD x, STORE x\n        \"\"\"\n        pass",
+    "solution": "class StackVM:\n    def __init__(self):\n        self.stack = []\n        self.env = {}\n\n    def execute(self, bytecode):\n        ip = 0\n        while ip < len(bytecode):\n            instr = bytecode[ip]\n\n            if instr[0] == 'PUSH':\n                self.stack.append(instr[1])\n\n            elif instr[0] == 'ADD':\n                b, a = self.stack.pop(), self.stack.pop()\n                self.stack.append(a + b)\n\n            elif instr[0] == 'SUB':\n                b, a = self.stack.pop(), self.stack.pop()\n                self.stack.append(a - b)\n\n            elif instr[0] == 'MUL':\n                b, a = self.stack.pop(), self.stack.pop()\n                self.stack.append(a * b)\n\n            elif instr[0] == 'DIV':\n                b, a = self.stack.pop(), self.stack.pop()\n                self.stack.append(a // b if b != 0 else 0)\n\n            elif instr[0] == 'LOAD':\n                self.stack.append(self.env.get(instr[1], 0))\n\n            elif instr[0] == 'STORE':\n                self.env[instr[1]] = self.stack.pop()\n\n            elif instr[0] == 'DUP':\n                self.stack.append(self.stack[-1])\n\n            elif instr[0] == 'POP':\n                self.stack.pop()\n\n            elif instr[0] == 'JMP':\n                ip = instr[1]\n                continue\n\n            elif instr[0] == 'JZ':\n                if self.stack.pop() == 0:\n                    ip = instr[1]\n                    continue\n\n            ip += 1\n\n        return self.stack[-1] if self.stack else None",
+    "testCases": [
+      {
+        "input": "vm = StackVM(); vm.execute([('PUSH', 3), ('PUSH', 4), ('ADD')])",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "vm = StackVM(); vm.execute([('PUSH', 5), ('STORE', 'x'), ('LOAD', 'x')])",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "vm = StackVM(); vm.execute([('PUSH', 2), ('PUSH', 3), ('MUL')])",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Stack operations: push, pop",
+      "Arithmetic pops operands, pushes result",
+      "Load/store interact with environment"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-5-7",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-5",
+    "title": "Compiler to Bytecode",
+    "difficulty": 3,
+    "description": "Compile expressions to stack machine bytecode.",
+    "starterCode": "def compile_to_bytecode(expr):\n    \"\"\"\n    Compile expression to stack machine bytecode.\n    \"\"\"\n    pass",
+    "solution": "def compile_to_bytecode(expr):\n    code = []\n\n    def compile_expr(e):\n        if isinstance(e, int):\n            code.append(('PUSH', e))\n            return\n\n        if isinstance(e, str):\n            code.append(('LOAD', e))\n            return\n\n        tag = e[0]\n\n        if tag in ['+', '-', '*', '/']:\n            _, e1, e2 = e\n            compile_expr(e1)\n            compile_expr(e2)\n            op_map = {'+': 'ADD', '-': 'SUB', '*': 'MUL', '/': 'DIV'}\n            code.append((op_map[tag],))\n            return\n\n        if tag == 'let':\n            _, var, e1, e2 = e\n            compile_expr(e1)\n            code.append(('STORE', var))\n            compile_expr(e2)\n            return\n\n    compile_expr(expr)\n    return code",
+    "testCases": [
+      {
+        "input": "compile_to_bytecode(5)",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "compile_to_bytecode(('+', 3, 4))",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "len(compile_to_bytecode(('let', 'x', 5, ('+', 'x', 1))))",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Post-order traversal for operands before operator",
+      "Variables compile to LOAD",
+      "Let bindings use STORE"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-5-8",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-5",
+    "title": "Type Checker",
+    "difficulty": 3,
+    "description": "Implement a simple type checker for expressions.",
+    "starterCode": "def type_check(expr, type_env):\n    \"\"\"\n    Type check expression and return its type.\n    Types: 'int', 'bool', ('fun', arg_type, ret_type)\n    \"\"\"\n    pass",
+    "solution": "def type_check(expr, type_env):\n    if isinstance(expr, int):\n        return 'int'\n    if isinstance(expr, bool):\n        return 'bool'\n    if isinstance(expr, str):\n        if expr not in type_env:\n            raise TypeError(f\"Unbound variable: {expr}\")\n        return type_env[expr]\n\n    tag = expr[0]\n\n    if tag in ['+', '-', '*', '/']:\n        _, e1, e2 = expr\n        t1, t2 = type_check(e1, type_env), type_check(e2, type_env)\n        if t1 != 'int' or t2 != 'int':\n            raise TypeError(f\"Arithmetic requires int\")\n        return 'int'\n\n    if tag in ['<', '>', '==']:\n        _, e1, e2 = expr\n        t1, t2 = type_check(e1, type_env), type_check(e2, type_env)\n        if t1 != t2:\n            raise TypeError(f\"Comparison requires same types\")\n        return 'bool'\n\n    if tag == 'if':\n        _, cond, then_e, else_e = expr\n        tc = type_check(cond, type_env)\n        if tc != 'bool':\n            raise TypeError(\"Condition must be bool\")\n        t1 = type_check(then_e, type_env)\n        t2 = type_check(else_e, type_env)\n        if t1 != t2:\n            raise TypeError(\"Branches must have same type\")\n        return t1\n\n    if tag == 'lam':\n        _, param, param_type, body = expr\n        new_env = {**type_env, param: param_type}\n        ret_type = type_check(body, new_env)\n        return ('fun', param_type, ret_type)\n\n    if tag == 'app':\n        _, e1, e2 = expr\n        t1 = type_check(e1, type_env)\n        t2 = type_check(e2, type_env)\n        if not isinstance(t1, tuple) or t1[0] != 'fun':\n            raise TypeError(\"Application requires function\")\n        if t1[1] != t2:\n            raise TypeError(f\"Argument type mismatch\")\n        return t1[2]\n\n    raise TypeError(f\"Unknown: {expr}\")",
+    "testCases": [
+      {
+        "input": "type_check(42, {})",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "type_check(('+', 1, 2), {})",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "type_check(('<', 1, 2), {})",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Recursively type check subexpressions",
+      "Verify type constraints match",
+      "Track variable types in environment"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-5-9",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-5",
+    "title": "CEK Machine",
+    "difficulty": 5,
+    "description": "Implement a CEK abstract machine for lambda calculus.",
+    "starterCode": "class CEKMachine:\n    \"\"\"\n    CEK machine: Control, Environment, Kontinuation.\n    Evaluates lambda calculus with explicit continuations.\n    \"\"\"\n\n    def run(self, expr):\n        \"\"\"Run expression to completion.\"\"\"\n        pass",
+    "solution": "class CEKMachine:\n    def run(self, expr):\n        # State: (control, env, kont)\n        state = (expr, {}, ('halt',))\n\n        while True:\n            ctrl, env, kont = state\n\n            # Value found\n            if isinstance(ctrl, int):\n                state = self.apply_kont(kont, ctrl, env)\n                if state is None:\n                    return ctrl\n                continue\n\n            if isinstance(ctrl, tuple) and ctrl[0] == 'closure':\n                state = self.apply_kont(kont, ctrl, env)\n                if state is None:\n                    return ctrl\n                continue\n\n            # Variable lookup\n            if isinstance(ctrl, str):\n                val = env[ctrl]\n                state = self.apply_kont(kont, val, env)\n                if state is None:\n                    return val\n                continue\n\n            tag = ctrl[0]\n\n            # Lambda creates closure\n            if tag == 'lam':\n                _, param, body = ctrl\n                closure = ('closure', param, body, env.copy())\n                state = self.apply_kont(kont, closure, env)\n                if state is None:\n                    return closure\n                continue\n\n            # Application\n            if tag == 'app':\n                _, e1, e2 = ctrl\n                new_kont = ('arg', e2, env.copy(), kont)\n                state = (e1, env, new_kont)\n                continue\n\n            # Operators\n            if tag in ['+', '-', '*', '/']:\n                _, e1, e2 = ctrl\n                new_kont = ('op1', tag, e2, env.copy(), kont)\n                state = (e1, env, new_kont)\n                continue\n\n            raise ValueError(f\"Unknown: {ctrl}\")\n\n    def apply_kont(self, kont, value, env):\n        tag = kont[0]\n\n        if tag == 'halt':\n            return None\n\n        if tag == 'arg':\n            _, e2, saved_env, outer_kont = kont\n            new_kont = ('fn', value, outer_kont)\n            return (e2, saved_env, new_kont)\n\n        if tag == 'fn':\n            _, closure, outer_kont = kont\n            _, param, body, closure_env = closure\n            new_env = {**closure_env, param: value}\n            return (body, new_env, outer_kont)\n\n        if tag == 'op1':\n            _, op, e2, saved_env, outer_kont = kont\n            new_kont = ('op2', op, value, outer_kont)\n            return (e2, saved_env, new_kont)\n\n        if tag == 'op2':\n            _, op, v1, outer_kont = kont\n            ops = {'+': lambda a,b: a+b, '-': lambda a,b: a-b,\n                   '*': lambda a,b: a*b, '/': lambda a,b: a//b}\n            result = ops[op](v1, value)\n            return self.apply_kont(outer_kont, result, env)\n\n        raise ValueError(f\"Unknown kont: {kont}\")",
+    "testCases": [
+      {
+        "input": "CEKMachine().run(5)",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "CEKMachine().run(('+', 3, 4))",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "CEKMachine().run(('app', ('lam', 'x', 'x'), 42))",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "CEK: Control=expr, Environment=bindings, Kont=continuation",
+      "Continuations represent \"what to do next\"",
+      "Machine steps until halt continuation"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-5-10",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-5",
+    "title": "SECD Machine",
+    "difficulty": 5,
+    "description": "Implement an SECD abstract machine.",
+    "starterCode": "class SECDMachine:\n    \"\"\"\n    SECD machine: Stack, Environment, Control, Dump.\n    \"\"\"\n\n    def __init__(self):\n        self.stack = []\n        self.env = {}\n        self.control = []\n        self.dump = []\n\n    def run(self, code):\n        \"\"\"Execute SECD instructions.\"\"\"\n        pass",
+    "solution": "class SECDMachine:\n    def __init__(self):\n        self.stack = []\n        self.env = {}\n        self.control = []\n        self.dump = []\n\n    def run(self, code):\n        self.control = list(code)\n\n        while self.control:\n            instr = self.control.pop(0)\n            cmd = instr[0]\n\n            if cmd == 'LDC':\n                self.stack.append(instr[1])\n\n            elif cmd == 'LD':\n                self.stack.append(self.env[instr[1]])\n\n            elif cmd == 'ADD':\n                b, a = self.stack.pop(), self.stack.pop()\n                self.stack.append(a + b)\n\n            elif cmd == 'SUB':\n                b, a = self.stack.pop(), self.stack.pop()\n                self.stack.append(a - b)\n\n            elif cmd == 'MUL':\n                b, a = self.stack.pop(), self.stack.pop()\n                self.stack.append(a * b)\n\n            elif cmd == 'LDF':\n                params, body = instr[1], instr[2]\n                self.stack.append(('closure', params, body, self.env.copy()))\n\n            elif cmd == 'AP':\n                closure = self.stack.pop()\n                args = self.stack.pop()\n                _, params, body, cenv = closure\n                self.dump.append((self.stack, self.env, self.control))\n                self.stack = []\n                self.env = {**cenv}\n                for p, a in zip(params, args):\n                    self.env[p] = a\n                self.control = list(body)\n\n            elif cmd == 'RTN':\n                result = self.stack.pop()\n                saved_stack, saved_env, saved_control = self.dump.pop()\n                self.stack = saved_stack\n                self.stack.append(result)\n                self.env = saved_env\n                self.control = saved_control\n\n            elif cmd == 'SEL':\n                true_branch, false_branch = instr[1], instr[2]\n                cond = self.stack.pop()\n                self.dump.append(self.control)\n                self.control = list(true_branch if cond else false_branch)\n\n            elif cmd == 'JOIN':\n                self.control = self.dump.pop()\n\n        return self.stack[-1] if self.stack else None",
+    "testCases": [
+      {
+        "input": "SECDMachine().run([('LDC', 5)])",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "SECDMachine().run([('LDC', 3), ('LDC', 4), ('ADD',)])",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "SECD uses four registers",
+      "Dump saves machine state for returns",
+      "Closures capture environment"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-5-11",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-5",
+    "title": "Defunctionalized Interpreter",
+    "difficulty": 5,
+    "description": "Implement a defunctionalized continuation interpreter.",
+    "starterCode": "def evaluate_defunc(expr, env, kont):\n    \"\"\"\n    Evaluate with defunctionalized continuations.\n    Continuations are data structures, not functions.\n    \"\"\"\n    pass\n\ndef apply_kont(kont, value):\n    \"\"\"Apply a defunctionalized continuation.\"\"\"\n    pass",
+    "solution": "def evaluate_defunc(expr, env, kont):\n    if isinstance(expr, int):\n        return apply_kont(kont, expr)\n\n    if isinstance(expr, str):\n        return apply_kont(kont, env[expr])\n\n    tag = expr[0]\n\n    if tag == 'lam':\n        _, param, body = expr\n        return apply_kont(kont, ('closure', param, body, env.copy()))\n\n    if tag == 'app':\n        _, e1, e2 = expr\n        return evaluate_defunc(e1, env, ('app1', e2, env.copy(), kont))\n\n    if tag in ['+', '-', '*', '/']:\n        _, e1, e2 = expr\n        return evaluate_defunc(e1, env, ('binop1', tag, e2, env.copy(), kont))\n\n    if tag == 'if':\n        _, cond, then_e, else_e = expr\n        return evaluate_defunc(cond, env, ('if', then_e, else_e, env.copy(), kont))\n\n    raise ValueError(f\"Unknown: {expr}\")\n\ndef apply_kont(kont, value):\n    tag = kont[0]\n\n    if tag == 'done':\n        return value\n\n    if tag == 'app1':\n        _, e2, env, outer = kont\n        return evaluate_defunc(e2, env, ('app2', value, outer))\n\n    if tag == 'app2':\n        _, closure, outer = kont\n        _, param, body, cenv = closure\n        return evaluate_defunc(body, {**cenv, param: value}, outer)\n\n    if tag == 'binop1':\n        _, op, e2, env, outer = kont\n        return evaluate_defunc(e2, env, ('binop2', op, value, outer))\n\n    if tag == 'binop2':\n        _, op, v1, outer = kont\n        ops = {'+': lambda a,b: a+b, '-': lambda a,b: a-b,\n               '*': lambda a,b: a*b, '/': lambda a,b: a//b}\n        return apply_kont(outer, ops[op](v1, value))\n\n    if tag == 'if':\n        _, then_e, else_e, env, outer = kont\n        return evaluate_defunc(then_e if value else else_e, env, outer)\n\n    raise ValueError(f\"Unknown kont: {kont}\")",
+    "testCases": [
+      {
+        "input": "evaluate_defunc(5, {}, ('done',))",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "evaluate_defunc(('+', 3, 4), {}, ('done',))",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Defunctionalization replaces functions with data",
+      "Each continuation type becomes a tuple variant",
+      "apply_kont dispatches on continuation type"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-5-12",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-5",
+    "title": "Register-Based VM",
+    "difficulty": 5,
+    "description": "Implement a register-based virtual machine.",
+    "starterCode": "class RegisterVM:\n    \"\"\"Register-based virtual machine.\"\"\"\n\n    def __init__(self, num_registers=16):\n        self.registers = [0] * num_registers\n        self.memory = {}\n\n    def execute(self, instructions):\n        \"\"\"\n        Execute register-based instructions.\n        Format: (opcode, dest, src1, src2) or (opcode, operand)\n        \"\"\"\n        pass",
+    "solution": "class RegisterVM:\n    def __init__(self, num_registers=16):\n        self.registers = [0] * num_registers\n        self.memory = {}\n        self.pc = 0\n\n    def execute(self, instructions):\n        self.pc = 0\n\n        while self.pc < len(instructions):\n            instr = instructions[self.pc]\n            op = instr[0]\n\n            if op == 'LOADI':\n                _, dest, val = instr\n                self.registers[dest] = val\n\n            elif op == 'MOVE':\n                _, dest, src = instr\n                self.registers[dest] = self.registers[src]\n\n            elif op == 'ADD':\n                _, dest, src1, src2 = instr\n                self.registers[dest] = self.registers[src1] + self.registers[src2]\n\n            elif op == 'SUB':\n                _, dest, src1, src2 = instr\n                self.registers[dest] = self.registers[src1] - self.registers[src2]\n\n            elif op == 'MUL':\n                _, dest, src1, src2 = instr\n                self.registers[dest] = self.registers[src1] * self.registers[src2]\n\n            elif op == 'DIV':\n                _, dest, src1, src2 = instr\n                divisor = self.registers[src2]\n                self.registers[dest] = self.registers[src1] // divisor if divisor else 0\n\n            elif op == 'LOAD':\n                _, dest, addr = instr\n                self.registers[dest] = self.memory.get(addr, 0)\n\n            elif op == 'STORE':\n                _, src, addr = instr\n                self.memory[addr] = self.registers[src]\n\n            elif op == 'JMP':\n                _, target = instr\n                self.pc = target\n                continue\n\n            elif op == 'JZ':\n                _, reg, target = instr\n                if self.registers[reg] == 0:\n                    self.pc = target\n                    continue\n\n            elif op == 'JNZ':\n                _, reg, target = instr\n                if self.registers[reg] != 0:\n                    self.pc = target\n                    continue\n\n            elif op == 'CMP':\n                _, dest, src1, src2 = instr\n                self.registers[dest] = 1 if self.registers[src1] < self.registers[src2] else 0\n\n            elif op == 'HALT':\n                break\n\n            self.pc += 1\n\n        return self.registers[0]",
+    "testCases": [
+      {
+        "input": "RegisterVM().execute([('LOADI', 0, 5), ('HALT',)])",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "RegisterVM().execute([('LOADI', 0, 3), ('LOADI', 1, 4), ('ADD', 0, 0, 1)])",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Register machines use named registers instead of stack",
+      "Three-address code: op dest src1 src2",
+      "PC tracks current instruction"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-5-13",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-5",
+    "title": "Garbage Collector",
+    "difficulty": 5,
+    "description": "Implement a simple mark-and-sweep garbage collector.",
+    "starterCode": "class Heap:\n    \"\"\"Simple heap with mark-and-sweep GC.\"\"\"\n\n    def __init__(self, size):\n        self.memory = [None] * size\n        self.free_list = list(range(size))\n        self.roots = set()\n\n    def allocate(self, value):\n        \"\"\"Allocate space for a value, return address.\"\"\"\n        pass\n\n    def mark_and_sweep(self):\n        \"\"\"Perform garbage collection.\"\"\"\n        pass",
+    "solution": "class Heap:\n    def __init__(self, size):\n        self.memory = [None] * size\n        self.free_list = list(range(size))\n        self.roots = set()\n        self.marked = [False] * size\n\n    def allocate(self, value):\n        if not self.free_list:\n            self.mark_and_sweep()\n        if not self.free_list:\n            raise MemoryError(\"Out of memory\")\n        addr = self.free_list.pop(0)\n        self.memory[addr] = value\n        return addr\n\n    def mark_and_sweep(self):\n        # Reset marks\n        self.marked = [False] * len(self.memory)\n\n        # Mark phase\n        worklist = list(self.roots)\n        while worklist:\n            addr = worklist.pop()\n            if addr is None or addr < 0 or addr >= len(self.memory):\n                continue\n            if self.marked[addr]:\n                continue\n            self.marked[addr] = True\n            # If value contains references, add them\n            val = self.memory[addr]\n            if isinstance(val, tuple):\n                for item in val:\n                    if isinstance(item, int) and 0 <= item < len(self.memory):\n                        worklist.append(item)\n            elif isinstance(val, list):\n                for item in val:\n                    if isinstance(item, int) and 0 <= item < len(self.memory):\n                        worklist.append(item)\n\n        # Sweep phase\n        for addr in range(len(self.memory)):\n            if not self.marked[addr] and self.memory[addr] is not None:\n                self.memory[addr] = None\n                self.free_list.append(addr)\n\n    def read(self, addr):\n        return self.memory[addr]\n\n    def add_root(self, addr):\n        self.roots.add(addr)\n\n    def remove_root(self, addr):\n        self.roots.discard(addr)",
+    "testCases": [
+      {
+        "input": "h = Heap(10); h.allocate(42)",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "h = Heap(3); h.allocate(1); h.allocate(2); h.allocate(3); h.mark_and_sweep(); len(h.free_list)",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "h = Heap(3); a = h.allocate(1); h.add_root(a); h.allocate(2); h.mark_and_sweep(); h.read(a)",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Mark reachable objects from roots",
+      "Sweep unreachable objects to free list",
+      "Handle references within objects"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-5-14",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-5",
+    "title": "Pattern Matching Interpreter",
+    "difficulty": 5,
+    "description": "Add pattern matching to the interpreter.",
+    "starterCode": "def match_pattern(pattern, value, bindings=None):\n    \"\"\"\n    Match value against pattern, returning bindings or None.\n    Patterns: int/str literal, ('var', name), ('tuple', p1, p2, ...)\n    \"\"\"\n    pass\n\ndef evaluate_with_match(expr, env):\n    \"\"\"\n    Evaluate with pattern matching.\n    Adds: ('match', expr, [(pattern, body), ...])\n    \"\"\"\n    pass",
+    "solution": "def match_pattern(pattern, value, bindings=None):\n    if bindings is None:\n        bindings = {}\n\n    if isinstance(pattern, (int, str, bool)) and not isinstance(pattern, tuple):\n        if pattern == value:\n            return bindings\n        return None\n\n    if isinstance(pattern, tuple):\n        tag = pattern[0]\n\n        if tag == 'var':\n            name = pattern[1]\n            bindings[name] = value\n            return bindings\n\n        if tag == 'tuple':\n            if not isinstance(value, tuple):\n                return None\n            if len(pattern) - 1 != len(value):\n                return None\n            for p, v in zip(pattern[1:], value):\n                result = match_pattern(p, v, bindings)\n                if result is None:\n                    return None\n            return bindings\n\n        if tag == 'cons':\n            _, head_p, tail_p = pattern\n            if not isinstance(value, list) or len(value) == 0:\n                return None\n            bindings = match_pattern(head_p, value[0], bindings)\n            if bindings is None:\n                return None\n            return match_pattern(tail_p, value[1:], bindings)\n\n        if tag == 'nil':\n            return bindings if value == [] else None\n\n    return None\n\ndef evaluate_with_match(expr, env):\n    if isinstance(expr, (int, bool)):\n        return expr\n    if isinstance(expr, str):\n        return env.get(expr, expr)\n\n    tag = expr[0]\n\n    if tag == 'match':\n        _, scrutinee, cases = expr\n        val = evaluate_with_match(scrutinee, env)\n        for pattern, body in cases:\n            bindings = match_pattern(pattern, val)\n            if bindings is not None:\n                new_env = {**env, **bindings}\n                return evaluate_with_match(body, new_env)\n        raise ValueError(\"No pattern matched\")\n\n    if tag == 'tuple':\n        return tuple(evaluate_with_match(e, env) for e in expr[1:])\n\n    if tag == 'list':\n        return [evaluate_with_match(e, env) for e in expr[1:]]\n\n    if tag in ['+', '-', '*', '/']:\n        _, e1, e2 = expr\n        return {'+': lambda a,b: a+b, '-': lambda a,b: a-b,\n                '*': lambda a,b: a*b, '/': lambda a,b: a//b}[tag](\n            evaluate_with_match(e1, env), evaluate_with_match(e2, env))\n\n    return expr",
+    "testCases": [
+      {
+        "input": "match_pattern(('var', 'x'), 5)",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "match_pattern(('tuple', ('var', 'a'), ('var', 'b')), (1, 2))",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "evaluate_with_match(('match', ('tuple', 1, 2), [(('tuple', ('var', 'x'), ('var', 'y')), ('+', 'x', 'y'))]), {})",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Pattern matching extracts values and binds variables",
+      "Try patterns in order, use first match",
+      "Bindings extend environment for body"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-5-15",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-5",
+    "title": "Effect Handlers",
+    "difficulty": 5,
+    "description": "Implement algebraic effect handlers.",
+    "starterCode": "def evaluate_with_effects(expr, env, handlers):\n    \"\"\"\n    Evaluate with effect handlers.\n    Adds: ('perform', effect_name, arg)\n    Handlers: {effect_name: (resume, arg) -> result}\n    \"\"\"\n    pass",
+    "solution": "class EffectException(Exception):\n    def __init__(self, effect, arg, continuation):\n        self.effect = effect\n        self.arg = arg\n        self.continuation = continuation\n\ndef evaluate_with_effects(expr, env, handlers):\n    def eval_inner(e, env):\n        if isinstance(e, (int, bool)):\n            return e\n        if isinstance(e, str):\n            return env.get(e, e)\n\n        tag = e[0]\n\n        if tag == 'perform':\n            _, effect, arg = e\n            val = eval_inner(arg, env)\n            if effect in handlers:\n                def resume(result):\n                    return result\n                return handlers[effect](resume, val)\n            raise ValueError(f\"Unhandled effect: {effect}\")\n\n        if tag == 'handle':\n            _, body, effect_handlers = e\n            local_handlers = {**handlers}\n            for eff, handler in effect_handlers:\n                local_handlers[eff] = handler\n            return evaluate_with_effects(body, env, local_handlers)\n\n        if tag in ['+', '-', '*', '/']:\n            _, e1, e2 = e\n            v1 = eval_inner(e1, env)\n            v2 = eval_inner(e2, env)\n            return {'+': lambda a,b: a+b, '-': lambda a,b: a-b,\n                    '*': lambda a,b: a*b, '/': lambda a,b: a//b}[tag](v1, v2)\n\n        if tag == 'if':\n            _, cond, then_e, else_e = e\n            c = eval_inner(cond, env)\n            return eval_inner(then_e if c else else_e, env)\n\n        if tag == 'let':\n            _, var, e1, e2 = e\n            val = eval_inner(e1, env)\n            return eval_inner(e2, {**env, var: val})\n\n        if tag == 'seq':\n            result = None\n            for stmt in e[1:]:\n                result = eval_inner(stmt, env)\n            return result\n\n        return e\n\n    return eval_inner(expr, env)",
+    "testCases": [
+      {
+        "input": "evaluate_with_effects(5, {}, {})",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "evaluate_with_effects(('perform', 'get', 0), {}, {'get': lambda k, v: 42})",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "evaluate_with_effects(('+', ('perform', 'get', 0), 1), {}, {'get': lambda k, v: 10})",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Effects are operations without built-in semantics",
+      "Handlers define how effects are interpreted",
+      "Resume continues evaluation after effect"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-5-16",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-5",
+    "title": "JIT Compilation",
+    "difficulty": 5,
+    "description": "Implement a simple trace-based JIT compiler.",
+    "starterCode": "class TracingJIT:\n    \"\"\"Simple tracing JIT compiler.\"\"\"\n\n    def __init__(self):\n        self.traces = {}\n        self.hot_counts = {}\n        self.threshold = 10\n\n    def execute(self, func, args):\n        \"\"\"Execute function, potentially compiling hot paths.\"\"\"\n        pass\n\n    def compile_trace(self, trace):\n        \"\"\"Compile a trace to optimized code.\"\"\"\n        pass",
+    "solution": "class TracingJIT:\n    def __init__(self):\n        self.traces = {}\n        self.hot_counts = {}\n        self.threshold = 10\n        self.compiled = {}\n\n    def execute(self, func_name, bytecode, args, env=None):\n        if env is None:\n            env = {}\n        env = {**env}\n\n        # Check if we have compiled code\n        if func_name in self.compiled:\n            return self.compiled[func_name](args, env)\n\n        # Count executions\n        self.hot_counts[func_name] = self.hot_counts.get(func_name, 0) + 1\n\n        # Start tracing if hot\n        trace = []\n        is_tracing = self.hot_counts[func_name] >= self.threshold and func_name not in self.compiled\n\n        # Execute and optionally trace\n        ip = 0\n        stack = []\n        while ip < len(bytecode):\n            instr = bytecode[ip]\n\n            if is_tracing:\n                trace.append((ip, instr, stack.copy()))\n\n            op = instr[0]\n\n            if op == 'PUSH':\n                stack.append(instr[1])\n            elif op == 'ADD':\n                b, a = stack.pop(), stack.pop()\n                stack.append(a + b)\n            elif op == 'LOAD':\n                stack.append(env.get(instr[1], 0))\n            elif op == 'STORE':\n                env[instr[1]] = stack.pop()\n            elif op == 'JMP':\n                ip = instr[1]\n                continue\n            elif op == 'JZ':\n                if stack.pop() == 0:\n                    ip = instr[1]\n                    continue\n            elif op == 'RET':\n                break\n\n            ip += 1\n\n        # Compile trace if we were tracing\n        if is_tracing and trace:\n            self.compile_trace(func_name, trace)\n\n        return stack[-1] if stack else None\n\n    def compile_trace(self, func_name, trace):\n        # Simple optimization: constant folding\n        def optimized(args, env):\n            # Replay trace with optimizations\n            for _, instr, _ in trace:\n                pass\n            return None\n        self.compiled[func_name] = optimized",
+    "testCases": [
+      {
+        "input": "jit = TracingJIT(); jit.execute('f', [('PUSH', 5), ('RET',)], [])",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "jit = TracingJIT(); jit.hot_counts['f'] = 15; jit.execute('f', [('PUSH', 3), ('PUSH', 4), ('ADD',)], []); 'f' in jit.compiled",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Track execution counts per function",
+      "Start tracing when count exceeds threshold",
+      "Compile traces to optimized code"
+    ],
+    "language": "python"
+  }
+]

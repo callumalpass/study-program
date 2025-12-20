@@ -1,0 +1,290 @@
+[
+  {
+    "id": "cs401-t3-ex01",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-3",
+    "title": "Two-Phase Commit Coordinator",
+    "difficulty": 3,
+    "description": "Implement a two-phase commit coordinator that manages distributed transactions across multiple participants.",
+    "starterCode": "interface Participant {\n  id: string;\n  prepare(): Promise<boolean>;\n  commit(): Promise<void>;\n  abort(): Promise<void>;\n}\n\nclass TwoPhaseCommitCoordinator {\n  // Implement 2PC coordinator\n}",
+    "solution": "// Solution provided in exercise system",
+    "testCases": [],
+    "hints": [
+      "Phase 1: Send prepare to all participants",
+      "Phase 2: Commit if all voted yes, else abort",
+      "Handle participant failures",
+      "Log decisions for recovery"
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs401-t3-ex02",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-3",
+    "title": "Raft Leader Election",
+    "difficulty": 4,
+    "description": "Implement the leader election mechanism from the Raft consensus algorithm.",
+    "starterCode": "type ServerState = 'follower' | 'candidate' | 'leader';\n\nclass RaftNode {\n  // Implement Raft leader election\n}",
+    "solution": "// Solution provided in exercise system",
+    "testCases": [],
+    "hints": [
+      "Start as follower with election timeout",
+      "Become candidate and request votes",
+      "Become leader if majority votes received",
+      "Reset to follower if higher term seen"
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs401-t3-ex03",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-3",
+    "title": "Raft Log Replication",
+    "difficulty": 4,
+    "description": "Implement log replication in Raft for maintaining consistent state across replicas.",
+    "starterCode": "interface LogEntry {\n  term: number;\n  index: number;\n  command: any;\n}\n\nclass RaftLogReplication {\n  // Implement Raft log replication\n}",
+    "solution": "// Solution provided in exercise system",
+    "testCases": [],
+    "hints": [
+      "Leader appends to own log first",
+      "Replicate to followers via AppendEntries",
+      "Commit when replicated on majority",
+      "Handle log inconsistencies"
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs401-t3-ex04",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-3",
+    "title": "Paxos Proposer",
+    "difficulty": 4,
+    "description": "Implement the proposer role in the Paxos consensus algorithm.",
+    "starterCode": "interface Proposal {\n  proposalNumber: number;\n  value: any;\n}\n\nclass PaxosProposer {\n  // Implement Paxos proposer\n}",
+    "solution": "// Solution provided in exercise system",
+    "testCases": [],
+    "hints": [
+      "Phase 1: Prepare with proposal number",
+      "Phase 2: Accept if prepare succeeds",
+      "Handle promise responses",
+      "Use highest value from promises"
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs401-t3-ex05",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-3",
+    "title": "Consensus Simulator",
+    "difficulty": 3,
+    "description": "Build a simulator that demonstrates how consensus algorithms handle various failure scenarios.",
+    "starterCode": "class ConsensusSimulator {\n  // Implement consensus simulation\n}",
+    "solution": "// Solution provided in exercise system",
+    "testCases": [],
+    "hints": [
+      "Simulate multiple nodes",
+      "Inject failures (crash, network partition)",
+      "Track consensus progress",
+      "Verify safety properties"
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs401-t3-ex06",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-3",
+    "title": "Distributed Lock Manager",
+    "difficulty": 3,
+    "description": "Implement a distributed lock manager using consensus for coordination.",
+    "starterCode": "interface Lock {\n  id: string;\n  holder: string | null;\n  expiresAt: number;\n}\n\nclass DistributedLockManager {\n  // Implement distributed locks\n}",
+    "solution": "// Solution provided in exercise system",
+    "testCases": [],
+    "hints": [
+      "Use consensus to agree on lock holder",
+      "Support lock timeouts",
+      "Handle lock release",
+      "Prevent deadlocks"
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs401-t3-ex07",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-3",
+    "title": "Quorum-Based Voting",
+    "difficulty": 2,
+    "description": "Implement a quorum-based voting system for decision making.",
+    "starterCode": "interface Vote {\n  voter: string;\n  value: any;\n  timestamp: number;\n}\n\nclass QuorumVoting {\n  // Implement quorum voting\n}",
+    "solution": "// Solution provided in exercise system",
+    "testCases": [],
+    "hints": [
+      "Collect votes from nodes",
+      "Require majority for decision",
+      "Handle vote collection timeout",
+      "Support vote counting"
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs401-t3-ex08",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-3",
+    "title": "Leader Lease Management",
+    "difficulty": 3,
+    "description": "Implement leader leases to optimize read operations in consensus systems.",
+    "starterCode": "interface Lease {\n  holder: string;\n  expiresAt: number;\n}\n\nclass LeaderLeaseManager {\n  // Implement leader leases\n}",
+    "solution": "// Solution provided in exercise system",
+    "testCases": [],
+    "hints": [
+      "Grant leases to leader",
+      "Renew before expiration",
+      "Followers defer to lease holder",
+      "Handle lease expiration"
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs401-t3-ex09",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-3",
+    "title": "Atomic Broadcast",
+    "difficulty": 4,
+    "description": "Implement atomic broadcast using consensus for totally ordered delivery.",
+    "starterCode": "interface AtomicMessage {\n  id: string;\n  content: any;\n  sequenceNumber?: number;\n}\n\nclass AtomicBroadcast {\n  // Implement atomic broadcast\n}",
+    "solution": "// Solution provided in exercise system",
+    "testCases": [],
+    "hints": [
+      "Use consensus for ordering",
+      "Assign sequence numbers",
+      "Guarantee total order",
+      "Handle message delivery"
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs401-t3-ex10",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-3",
+    "title": "Byzantine Fault Tolerant Vote",
+    "difficulty": 5,
+    "description": "Implement Byzantine fault tolerant voting requiring 2f+1 honest voters.",
+    "starterCode": "interface ByzantineVote {\n  voter: string;\n  value: any;\n  signature: string;\n}\n\nclass ByzantineFaultTolerantVoting {\n  // Implement BFT voting\n}",
+    "solution": "// Solution provided in exercise system",
+    "testCases": [],
+    "hints": [
+      "Require 2f+1 votes",
+      "Verify signatures",
+      "Detect conflicting votes",
+      "Handle malicious voters"
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs401-t3-ex11",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-3",
+    "title": "Replicated State Machine",
+    "difficulty": 4,
+    "description": "Implement a replicated state machine using consensus for state transitions.",
+    "starterCode": "interface Command {\n  id: string;\n  operation: string;\n  params: any[];\n}\n\nclass ReplicatedStateMachine {\n  // Implement replicated state machine\n}",
+    "solution": "// Solution provided in exercise system",
+    "testCases": [],
+    "hints": [
+      "Apply commands in order",
+      "Use consensus for ordering",
+      "Maintain deterministic execution",
+      "Support state snapshots"
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs401-t3-ex12",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-3",
+    "title": "Three-Phase Commit",
+    "difficulty": 4,
+    "description": "Implement three-phase commit to avoid blocking in two-phase commit.",
+    "starterCode": "interface ThreePhaseParticipant {\n  id: string;\n  prepare(): Promise<boolean>;\n  preCommit(): Promise<boolean>;\n  commit(): Promise<void>;\n  abort(): Promise<void>;\n}\n\nclass ThreePhaseCommitCoordinator {\n  // Implement 3PC coordinator\n}",
+    "solution": "// Solution provided in exercise system",
+    "testCases": [],
+    "hints": [
+      "Add prepare-to-commit phase",
+      "Handle coordinator failure",
+      "Allow participants to timeout",
+      "Maintain commit readiness"
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs401-t3-ex13",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-3",
+    "title": "Epoch-Based Synchronization",
+    "difficulty": 3,
+    "description": "Implement epoch-based synchronization for coordinating distributed operations.",
+    "starterCode": "interface Epoch {\n  number: number;\n  leader: string;\n  members: Set<string>;\n}\n\nclass EpochManager {\n  // Implement epoch management\n}",
+    "solution": "// Solution provided in exercise system",
+    "testCases": [],
+    "hints": [
+      "Track current epoch",
+      "Coordinate epoch transitions",
+      "Handle leader changes",
+      "Synchronize on epoch boundaries"
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs401-t3-ex14",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-3",
+    "title": "Multi-Paxos Implementation",
+    "difficulty": 5,
+    "description": "Implement Multi-Paxos for efficiently agreeing on a sequence of values.",
+    "starterCode": "interface MultiPaxosInstance {\n  instanceNumber: number;\n  value: any;\n  proposalNumber: number;\n}\n\nclass MultiPaxos {\n  // Implement Multi-Paxos\n}",
+    "solution": "// Solution provided in exercise system",
+    "testCases": [],
+    "hints": [
+      "Optimize with stable leader",
+      "Skip prepare phase when possible",
+      "Handle multiple instances",
+      "Maintain instance order"
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs401-t3-ex15",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-3",
+    "title": "Consensus Membership Changes",
+    "difficulty": 4,
+    "description": "Implement safe membership changes in a consensus group (adding/removing nodes).",
+    "starterCode": "interface MembershipChange {\n  type: 'add' | 'remove';\n  nodeId: string;\n}\n\nclass ConsensusMembership {\n  // Implement membership changes\n}",
+    "solution": "// Solution provided in exercise system",
+    "testCases": [],
+    "hints": [
+      "Use joint consensus",
+      "Ensure no split brain",
+      "Commit configuration changes",
+      "Handle transitions safely"
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs401-t3-ex16",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-3",
+    "title": "Consensus with Priority",
+    "difficulty": 3,
+    "description": "Implement priority-based consensus where certain nodes are preferred as leaders.",
+    "starterCode": "interface PriorityNode {\n  id: string;\n  priority: number;\n}\n\nclass PriorityConsensus {\n  // Implement priority-based consensus\n}",
+    "solution": "// Solution provided in exercise system",
+    "testCases": [],
+    "hints": [
+      "Assign priorities to nodes",
+      "Prefer higher priority for leader",
+      "Handle priority ties",
+      "Support priority updates"
+    ],
+    "language": "typescript"
+  }
+]

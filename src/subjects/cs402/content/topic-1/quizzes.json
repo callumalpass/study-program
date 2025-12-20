@@ -1,0 +1,221 @@
+[
+  {
+    "id": "cs402-quiz-1-1",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-1",
+    "title": "ML Fundamentals",
+    "questions": [
+      {
+        "id": "cs402-q1",
+        "type": "multiple_choice",
+        "prompt": "What is the primary difference between supervised and unsupervised learning?",
+        "options": [
+          "Supervised learning uses labeled data, unsupervised learning does not",
+          "Supervised learning is faster than unsupervised learning",
+          "Unsupervised learning is more accurate",
+          "Supervised learning requires more computational power"
+        ],
+        "correctAnswer": "Supervised learning uses labeled data, unsupervised learning does not",
+        "explanation": "The key distinction is that supervised learning trains on labeled examples (input-output pairs), while unsupervised learning finds patterns in unlabeled data without predefined target values."
+      },
+      {
+        "id": "cs402-q2",
+        "type": "multiple_choice",
+        "prompt": "Which of the following is NOT a step in the typical ML workflow?",
+        "options": [
+          "Manual code optimization for production",
+          "Data collection and preprocessing",
+          "Model training and validation",
+          "Feature engineering"
+        ],
+        "correctAnswer": "Manual code optimization for production",
+        "explanation": "The typical ML workflow includes data collection, preprocessing, feature engineering, model selection, training, validation, and deployment. Manual code optimization is not a standard ML workflow step."
+      },
+      {
+        "id": "cs402-q3",
+        "type": "multiple_choice",
+        "prompt": "What does the bias-variance tradeoff describe?",
+        "options": [
+          "The balance between model simplicity (high bias) and flexibility (high variance)",
+          "The choice between accuracy and speed",
+          "The tradeoff between training and test set size",
+          "The balance between false positives and false negatives"
+        ],
+        "correctAnswer": "The balance between model simplicity (high bias) and flexibility (high variance)",
+        "explanation": "The bias-variance tradeoff describes how simple models have high bias (underfitting) but low variance, while complex models have low bias but high variance (overfitting). The goal is to minimize total error."
+      },
+      {
+        "id": "cs402-q4",
+        "type": "multiple_choice",
+        "prompt": "What is feature engineering?",
+        "options": [
+          "Creating new features from raw data to improve model performance",
+          "Reducing the number of features in a dataset",
+          "Normalizing feature values",
+          "Selecting the best machine learning algorithm"
+        ],
+        "correctAnswer": "Creating new features from raw data to improve model performance",
+        "explanation": "Feature engineering is the process of using domain knowledge to create new, informative features from raw data that help machine learning models learn better patterns."
+      },
+      {
+        "id": "cs402-q5",
+        "type": "multiple_choice",
+        "prompt": "Which ML framework is known for dynamic computational graphs and is widely used in research?",
+        "options": [
+          "PyTorch",
+          "Scikit-learn",
+          "XGBoost",
+          "TensorFlow 1.x"
+        ],
+        "correctAnswer": "PyTorch",
+        "explanation": "PyTorch uses dynamic computational graphs (define-by-run), making it flexible and intuitive for research. TensorFlow 2.x also adopted this approach, but PyTorch was the pioneer in this area."
+      }
+    ]
+  },
+  {
+    "id": "cs402-quiz-1-2",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-1",
+    "title": "ML Workflow & Data Preparation",
+    "questions": [
+      {
+        "id": "cs402-q6",
+        "type": "multiple_choice",
+        "prompt": "You have a dataset with 100 features and 200 samples. What problem might you face?",
+        "options": [
+          "Overfitting due to the curse of dimensionality",
+          "Underfitting due to too few features",
+          "Computational efficiency will be excellent",
+          "The model will always generalize well"
+        ],
+        "correctAnswer": "Overfitting due to the curse of dimensionality",
+        "explanation": "With more features than samples (p > n), models can easily overfit. This is the curse of dimensionality - as dimensions increase, data becomes sparse and patterns harder to find reliably."
+      },
+      {
+        "id": "cs402-q7",
+        "type": "multiple_choice",
+        "prompt": "When should you use stratified sampling for train-test split?",
+        "options": [
+          "When you have imbalanced classes and want to preserve class proportions",
+          "When you have too much data",
+          "When features are highly correlated",
+          "When the dataset is perfectly balanced"
+        ],
+        "correctAnswer": "When you have imbalanced classes and want to preserve class proportions",
+        "explanation": "Stratified sampling ensures that train and test sets have the same proportion of classes as the original dataset, which is crucial for imbalanced datasets to avoid biased evaluation."
+      },
+      {
+        "id": "cs402-q8",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of data normalization/standardization?",
+        "options": [
+          "To put features on similar scales so they contribute equally to distance-based models",
+          "To remove outliers from the dataset",
+          "To increase the size of the training set",
+          "To reduce computational complexity"
+        ],
+        "correctAnswer": "To put features on similar scales so they contribute equally to distance-based models",
+        "explanation": "Normalization (scaling to [0,1]) or standardization (zero mean, unit variance) ensures features with different scales don't dominate distance calculations or gradient descent."
+      },
+      {
+        "id": "cs402-q9",
+        "type": "multiple_choice",
+        "prompt": "Your model performs well on training data but poorly on validation data. What is this called?",
+        "options": [
+          "Overfitting",
+          "Underfitting",
+          "Good generalization",
+          "High bias"
+        ],
+        "correctAnswer": "Overfitting",
+        "explanation": "Overfitting occurs when a model learns the training data too well, including noise and specific patterns that don't generalize to new data, resulting in poor validation/test performance."
+      },
+      {
+        "id": "cs402-q10",
+        "type": "multiple_choice",
+        "prompt": "Which technique helps prevent overfitting?",
+        "options": [
+          "Regularization (L1/L2)",
+          "Adding more features",
+          "Increasing model complexity",
+          "Training for more epochs"
+        ],
+        "correctAnswer": "Regularization (L1/L2)",
+        "explanation": "Regularization adds a penalty term to the loss function that discourages complex models, helping prevent overfitting. L1 (Lasso) and L2 (Ridge) are common regularization techniques."
+      }
+    ]
+  },
+  {
+    "id": "cs402-quiz-1-3",
+    "subjectId": "cs402",
+    "topicId": "cs402-topic-1",
+    "title": "Learning Theory",
+    "questions": [
+      {
+        "id": "cs402-q11",
+        "type": "multiple_choice",
+        "prompt": "In the bias-variance decomposition, what does the irreducible error represent?",
+        "options": [
+          "Noise inherent in the data that no model can eliminate",
+          "Error from using wrong model architecture",
+          "Error from insufficient training data",
+          "Error from poor hyperparameter tuning"
+        ],
+        "correctAnswer": "Noise inherent in the data that no model can eliminate",
+        "explanation": "Irreducible error (Bayes error) comes from noise in the data itself - random variation that cannot be predicted by any model. Total error = bias² + variance + irreducible error."
+      },
+      {
+        "id": "cs402-q12",
+        "type": "multiple_choice",
+        "prompt": "What is the VC dimension?",
+        "options": [
+          "A measure of model capacity - the maximum number of points that can be shattered",
+          "The number of features in a dataset",
+          "The depth of a neural network",
+          "The training time complexity"
+        ],
+        "correctAnswer": "A measure of model capacity - the maximum number of points that can be shattered",
+        "explanation": "VC (Vapnik-Chervonenkis) dimension measures hypothesis class complexity. A set of n points is \"shattered\" if the classifier can realize all 2^n possible labelings. Higher VC dimension means more capacity but higher overfitting risk."
+      },
+      {
+        "id": "cs402-q13",
+        "type": "multiple_choice",
+        "prompt": "According to PAC learning theory, what does \"probably approximately correct\" mean?",
+        "options": [
+          "With high probability, the learned hypothesis has low error",
+          "The algorithm always finds the optimal solution",
+          "The model is approximately 100% accurate",
+          "Predictions are always correct within a small margin"
+        ],
+        "correctAnswer": "With high probability, the learned hypothesis has low error",
+        "explanation": "PAC learning provides probabilistic guarantees: with probability ≥(1-δ), the learned hypothesis has error ≤ε, given sufficient samples. It doesn't guarantee perfect learning, just good learning with high probability."
+      },
+      {
+        "id": "cs402-q14",
+        "type": "multiple_choice",
+        "prompt": "What is the sample complexity bound for learning?",
+        "options": [
+          "The number of training examples needed to achieve a given error with given confidence",
+          "The computational time required for training",
+          "The number of parameters in the model",
+          "The memory required to store the dataset"
+        ],
+        "correctAnswer": "The number of training examples needed to achieve a given error with given confidence",
+        "explanation": "Sample complexity bounds (from PAC theory) specify how many training examples m are needed to learn a concept with error ≤ε and confidence ≥(1-δ). Generally m = O((1/ε)log(1/δ)log|H|)."
+      },
+      {
+        "id": "cs402-q15",
+        "type": "multiple_choice",
+        "prompt": "What does the No Free Lunch theorem state?",
+        "options": [
+          "Averaged over all possible problems, no algorithm outperforms random guessing",
+          "Free data is always worse than paid data",
+          "Simple models always outperform complex ones",
+          "Neural networks are always the best choice"
+        ],
+        "correctAnswer": "Averaged over all possible problems, no algorithm outperforms random guessing",
+        "explanation": "The No Free Lunch theorem proves that no single algorithm is universally best. Every algorithm has inductive biases that make it excel on some problems but fail on others. This motivates domain-specific algorithm selection."
+      }
+    ]
+  }
+]

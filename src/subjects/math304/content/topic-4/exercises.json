@@ -1,0 +1,579 @@
+[
+  {
+    "id": "math304-t4-ex01",
+    "subjectId": "math304",
+    "topicId": "math304-topic-4",
+    "title": "Compute Left Coset",
+    "difficulty": 2,
+    "description": "Compute the left coset gH = {g*h : h in H} of a subgroup H by element g.",
+    "starterCode": "def left_coset(g, subgroup, elements, operation_table):\n    \"\"\"\n    Compute left coset gH.\n\n    Args:\n        g: Group element\n        subgroup: List of elements in subgroup H\n        elements: List of all group elements\n        operation_table: 2D list representing group operation\n\n    Returns:\n        Sorted list of elements in gH\n    \"\"\"\n    pass",
+    "solution": "def left_coset(g, subgroup, elements, operation_table):\n    \"\"\"\n    Compute left coset gH.\n\n    Args:\n        g: Group element\n        subgroup: List of elements in subgroup H\n        elements: List of all group elements\n        operation_table: 2D list representing group operation\n\n    Returns:\n        Sorted list of elements in gH\n    \"\"\"\n    coset = []\n    g_index = elements.index(g)\n\n    for h in subgroup:\n        h_index = elements.index(h)\n        product = operation_table[g_index][h_index]\n        coset.append(product)\n\n    return sorted(coset)",
+    "testCases": [
+      {
+        "input": "1, [0, 2], [0, 1, 2, 3], [[0, 1, 2, 3], [1, 2, 3, 0], [2, 3, 0, 1], [3, 0, 1, 2]]",
+        "expectedOutput": "[1, 3]",
+        "isHidden": false,
+        "description": "Left coset 1H in Z4"
+      },
+      {
+        "input": "2, [0, 3], [0, 1, 2, 3, 4, 5], [[0, 1, 2, 3, 4, 5], [1, 2, 3, 4, 5, 0], [2, 3, 4, 5, 0, 1], [3, 4, 5, 0, 1, 2], [4, 5, 0, 1, 2, 3], [5, 0, 1, 2, 3, 4]]",
+        "expectedOutput": "[2, 5]",
+        "isHidden": false,
+        "description": "Left coset in Z6"
+      },
+      {
+        "input": "0, [0, 2], [0, 1, 2, 3], [[0, 1, 2, 3], [1, 2, 3, 0], [2, 3, 0, 1], [3, 0, 1, 2]]",
+        "expectedOutput": "[0, 2]",
+        "isHidden": true,
+        "description": "0H = H"
+      }
+    ],
+    "hints": [
+      "Multiply g by each element in H",
+      "Use the operation table for multiplication",
+      "gH consists of all products g*h"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math304-t4-ex02",
+    "subjectId": "math304",
+    "topicId": "math304-topic-4",
+    "title": "Compute Right Coset",
+    "difficulty": 2,
+    "description": "Compute the right coset Hg = {h*g : h in H} of a subgroup H by element g.",
+    "starterCode": "def right_coset(g, subgroup, elements, operation_table):\n    \"\"\"\n    Compute right coset Hg.\n\n    Args:\n        g: Group element\n        subgroup: List of elements in subgroup H\n        elements: List of all group elements\n        operation_table: 2D list representing group operation\n\n    Returns:\n        Sorted list of elements in Hg\n    \"\"\"\n    pass",
+    "solution": "def right_coset(g, subgroup, elements, operation_table):\n    \"\"\"\n    Compute right coset Hg.\n\n    Args:\n        g: Group element\n        subgroup: List of elements in subgroup H\n        elements: List of all group elements\n        operation_table: 2D list representing group operation\n\n    Returns:\n        Sorted list of elements in Hg\n    \"\"\"\n    coset = []\n    g_index = elements.index(g)\n\n    for h in subgroup:\n        h_index = elements.index(h)\n        product = operation_table[h_index][g_index]\n        coset.append(product)\n\n    return sorted(coset)",
+    "testCases": [
+      {
+        "input": "1, [0, 2], [0, 1, 2, 3], [[0, 1, 2, 3], [1, 2, 3, 0], [2, 3, 0, 1], [3, 0, 1, 2]]",
+        "expectedOutput": "[1, 3]",
+        "isHidden": false,
+        "description": "Right coset H1 in Z4 (abelian)"
+      },
+      {
+        "input": "2, [0, 3], [0, 1, 2, 3, 4, 5], [[0, 1, 2, 3, 4, 5], [1, 2, 3, 4, 5, 0], [2, 3, 4, 5, 0, 1], [3, 4, 5, 0, 1, 2], [4, 5, 0, 1, 2, 3], [5, 0, 1, 2, 3, 4]]",
+        "expectedOutput": "[2, 5]",
+        "isHidden": false,
+        "description": "Right coset in Z6"
+      },
+      {
+        "input": "1, [0], [0, 1, 2], [[0, 1, 2], [1, 2, 0], [2, 0, 1]]",
+        "expectedOutput": "[1]",
+        "isHidden": true,
+        "description": "Right coset of trivial subgroup"
+      }
+    ],
+    "hints": [
+      "Multiply each element in H by g",
+      "Order matters: compute h*g not g*h",
+      "In abelian groups, left and right cosets are equal"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math304-t4-ex03",
+    "subjectId": "math304",
+    "topicId": "math304-topic-4",
+    "title": "Find All Left Cosets",
+    "difficulty": 3,
+    "description": "Find all distinct left cosets of a subgroup H in a group G.",
+    "starterCode": "def all_left_cosets(subgroup, elements, operation_table):\n    \"\"\"\n    Find all distinct left cosets of H.\n\n    Args:\n        subgroup: List of elements in subgroup H\n        elements: List of all group elements\n        operation_table: 2D list representing group operation\n\n    Returns:\n        List of cosets (each coset is a sorted list)\n    \"\"\"\n    pass",
+    "solution": "def all_left_cosets(subgroup, elements, operation_table):\n    \"\"\"\n    Find all distinct left cosets of H.\n\n    Args:\n        subgroup: List of elements in subgroup H\n        elements: List of all group elements\n        operation_table: 2D list representing group operation\n\n    Returns:\n        List of cosets (each coset is a sorted list)\n    \"\"\"\n    cosets = []\n    seen = set()\n\n    for g in elements:\n        coset = []\n        g_index = elements.index(g)\n\n        for h in subgroup:\n            h_index = elements.index(h)\n            product = operation_table[g_index][h_index]\n            coset.append(product)\n\n        coset_tuple = tuple(sorted(coset))\n\n        if coset_tuple not in seen:\n            seen.add(coset_tuple)\n            cosets.append(sorted(coset))\n\n    return sorted(cosets)",
+    "testCases": [
+      {
+        "input": "[0, 2], [0, 1, 2, 3], [[0, 1, 2, 3], [1, 2, 3, 0], [2, 3, 0, 1], [3, 0, 1, 2]]",
+        "expectedOutput": "[[0, 2], [1, 3]]",
+        "isHidden": false,
+        "description": "Left cosets of <2> in Z4"
+      },
+      {
+        "input": "[0, 3], [0, 1, 2, 3, 4, 5], [[0, 1, 2, 3, 4, 5], [1, 2, 3, 4, 5, 0], [2, 3, 4, 5, 0, 1], [3, 4, 5, 0, 1, 2], [4, 5, 0, 1, 2, 3], [5, 0, 1, 2, 3, 4]]",
+        "expectedOutput": "[[0, 3], [1, 4], [2, 5]]",
+        "isHidden": false,
+        "description": "Three cosets in Z6"
+      },
+      {
+        "input": "[0], [0, 1, 2], [[0, 1, 2], [1, 2, 0], [2, 0, 1]]",
+        "expectedOutput": "[[0], [1], [2]]",
+        "isHidden": true,
+        "description": "Trivial subgroup gives all singletons"
+      }
+    ],
+    "hints": [
+      "Compute gH for each g in G",
+      "Remove duplicate cosets",
+      "Number of cosets is |G|/|H|"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math304-t4-ex04",
+    "subjectId": "math304",
+    "topicId": "math304-topic-4",
+    "title": "Verify Lagrange Theorem",
+    "difficulty": 2,
+    "description": "Verify Lagrange's theorem: |G| = |H| × [G:H], where [G:H] is the index (number of cosets).",
+    "starterCode": "def verify_lagrange(subgroup, elements, operation_table):\n    \"\"\"\n    Verify Lagrange's theorem for the given subgroup.\n\n    Args:\n        subgroup: List of elements in subgroup H\n        elements: List of all group elements\n        operation_table: 2D list representing group operation\n\n    Returns:\n        Tuple (|G|, |H|, [G:H], lagrange_holds)\n    \"\"\"\n    pass",
+    "solution": "def verify_lagrange(subgroup, elements, operation_table):\n    \"\"\"\n    Verify Lagrange's theorem for the given subgroup.\n\n    Args:\n        subgroup: List of elements in subgroup H\n        elements: List of all group elements\n        operation_table: 2D list representing group operation\n\n    Returns:\n        Tuple (|G|, |H|, [G:H], lagrange_holds)\n    \"\"\"\n    g_order = len(elements)\n    h_order = len(subgroup)\n\n    # Count distinct cosets\n    seen = set()\n    for g in elements:\n        coset = []\n        g_index = elements.index(g)\n\n        for h in subgroup:\n            h_index = elements.index(h)\n            product = operation_table[g_index][h_index]\n            coset.append(product)\n\n        seen.add(tuple(sorted(coset)))\n\n    index = len(seen)\n    lagrange_holds = (g_order == h_order * index)\n\n    return (g_order, h_order, index, lagrange_holds)",
+    "testCases": [
+      {
+        "input": "[0, 2], [0, 1, 2, 3], [[0, 1, 2, 3], [1, 2, 3, 0], [2, 3, 0, 1], [3, 0, 1, 2]]",
+        "expectedOutput": "(4, 2, 2, True)",
+        "isHidden": false,
+        "description": "Lagrange holds: 4 = 2 × 2"
+      },
+      {
+        "input": "[0, 3], [0, 1, 2, 3, 4, 5], [[0, 1, 2, 3, 4, 5], [1, 2, 3, 4, 5, 0], [2, 3, 4, 5, 0, 1], [3, 4, 5, 0, 1, 2], [4, 5, 0, 1, 2, 3], [5, 0, 1, 2, 3, 4]]",
+        "expectedOutput": "(6, 2, 3, True)",
+        "isHidden": false,
+        "description": "Lagrange holds: 6 = 2 × 3"
+      },
+      {
+        "input": "[0], [0, 1, 2], [[0, 1, 2], [1, 2, 0], [2, 0, 1]]",
+        "expectedOutput": "(3, 1, 3, True)",
+        "isHidden": true,
+        "description": "Trivial subgroup: 3 = 1 × 3"
+      }
+    ],
+    "hints": [
+      "Count group order |G|",
+      "Count subgroup order |H|",
+      "Count number of distinct cosets [G:H]",
+      "Check if |G| = |H| × [G:H]"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math304-t4-ex05",
+    "subjectId": "math304",
+    "topicId": "math304-topic-4",
+    "title": "Check if Subgroup is Normal",
+    "difficulty": 3,
+    "description": "Check if a subgroup H is normal (gH = Hg for all g). Normal subgroups have left and right cosets equal.",
+    "starterCode": "def is_normal_subgroup(subgroup, elements, operation_table):\n    \"\"\"\n    Check if H is a normal subgroup.\n\n    Args:\n        subgroup: List of elements in subgroup H\n        elements: List of all group elements\n        operation_table: 2D list representing group operation\n\n    Returns:\n        True if H is normal, False otherwise\n    \"\"\"\n    pass",
+    "solution": "def is_normal_subgroup(subgroup, elements, operation_table):\n    \"\"\"\n    Check if H is a normal subgroup.\n\n    Args:\n        subgroup: List of elements in subgroup H\n        elements: List of all group elements\n        operation_table: 2D list representing group operation\n\n    Returns:\n        True if H is normal, False otherwise\n    \"\"\"\n    for g in elements:\n        g_index = elements.index(g)\n\n        # Compute left coset gH\n        left_coset = set()\n        for h in subgroup:\n            h_index = elements.index(h)\n            left_coset.add(operation_table[g_index][h_index])\n\n        # Compute right coset Hg\n        right_coset = set()\n        for h in subgroup:\n            h_index = elements.index(h)\n            right_coset.add(operation_table[h_index][g_index])\n\n        if left_coset != right_coset:\n            return False\n\n    return True",
+    "testCases": [
+      {
+        "input": "[0, 2], [0, 1, 2, 3], [[0, 1, 2, 3], [1, 2, 3, 0], [2, 3, 0, 1], [3, 0, 1, 2]]",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "All subgroups of abelian groups are normal"
+      },
+      {
+        "input": "[0, 3], [0, 1, 2, 3, 4, 5], [[0, 1, 2, 3, 4, 5], [1, 2, 3, 4, 5, 0], [2, 3, 4, 5, 0, 1], [3, 4, 5, 0, 1, 2], [4, 5, 0, 1, 2, 3], [5, 0, 1, 2, 3, 4]]",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Subgroup of Z6 is normal"
+      },
+      {
+        "input": "[0], [0, 1, 2], [[0, 1, 2], [1, 2, 0], [2, 0, 1]]",
+        "expectedOutput": "True",
+        "isHidden": true,
+        "description": "Trivial subgroup is always normal"
+      }
+    ],
+    "hints": [
+      "Check gH = Hg for all g in G",
+      "In abelian groups, all subgroups are normal",
+      "Equivalently, check if gHg^(-1) = H"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math304-t4-ex06",
+    "subjectId": "math304",
+    "topicId": "math304-topic-4",
+    "title": "Compute Quotient Group",
+    "difficulty": 4,
+    "description": "Construct the quotient group G/H when H is a normal subgroup. Elements are cosets, operation is (aH)(bH) = (ab)H.",
+    "starterCode": "def quotient_group(subgroup, elements, operation_table):\n    \"\"\"\n    Construct quotient group G/H.\n\n    Args:\n        subgroup: List of elements in normal subgroup H\n        elements: List of all group elements\n        operation_table: 2D list representing group operation\n\n    Returns:\n        Tuple (coset_list, quotient_table) where coset_list[i] is the i-th coset\n    \"\"\"\n    pass",
+    "solution": "def quotient_group(subgroup, elements, operation_table):\n    \"\"\"\n    Construct quotient group G/H.\n\n    Args:\n        subgroup: List of elements in normal subgroup H\n        elements: List of all group elements\n        operation_table: 2D list representing group operation\n\n    Returns:\n        Tuple (coset_list, quotient_table) where coset_list[i] is the i-th coset\n    \"\"\"\n    # Find all distinct cosets\n    cosets = []\n    seen = set()\n    coset_map = {}\n\n    for g in elements:\n        coset = []\n        g_index = elements.index(g)\n\n        for h in subgroup:\n            h_index = elements.index(h)\n            product = operation_table[g_index][h_index]\n            coset.append(product)\n\n        coset_tuple = tuple(sorted(coset))\n\n        if coset_tuple not in seen:\n            seen.add(coset_tuple)\n            cosets.append(sorted(coset))\n\n        # Map each element to its coset index\n        for elem in coset:\n            coset_map[elem] = len(cosets) - 1\n\n    # Build quotient operation table\n    n = len(cosets)\n    quotient_table = [[0] * n for _ in range(n)]\n\n    for i in range(n):\n        for j in range(n):\n            # Pick representatives\n            rep_i = cosets[i][0]\n            rep_j = cosets[j][0]\n\n            # Multiply in G\n            rep_i_idx = elements.index(rep_i)\n            rep_j_idx = elements.index(rep_j)\n            product = operation_table[rep_i_idx][rep_j_idx]\n\n            # Find which coset the product belongs to\n            quotient_table[i][j] = coset_map[product]\n\n    return (cosets, quotient_table)",
+    "testCases": [
+      {
+        "input": "[0, 2], [0, 1, 2, 3], [[0, 1, 2, 3], [1, 2, 3, 0], [2, 3, 0, 1], [3, 0, 1, 2]]",
+        "expectedOutput": "([[0, 2], [1, 3]], [[0, 1], [1, 0]])",
+        "isHidden": false,
+        "description": "Z4/<2> ≅ Z2"
+      },
+      {
+        "input": "[0, 3], [0, 1, 2, 3, 4, 5], [[0, 1, 2, 3, 4, 5], [1, 2, 3, 4, 5, 0], [2, 3, 4, 5, 0, 1], [3, 4, 5, 0, 1, 2], [4, 5, 0, 1, 2, 3], [5, 0, 1, 2, 3, 4]]",
+        "expectedOutput": "([[0, 3], [1, 4], [2, 5]], [[0, 1, 2], [1, 2, 0], [2, 0, 1]])",
+        "isHidden": false,
+        "description": "Z6/<3> ≅ Z3"
+      },
+      {
+        "input": "[0, 1, 2], [0, 1, 2], [[0, 1, 2], [1, 2, 0], [2, 0, 1]]",
+        "expectedOutput": "([[0, 1, 2]], [[0]])",
+        "isHidden": true,
+        "description": "G/G is trivial"
+      }
+    ],
+    "hints": [
+      "Find all cosets of H",
+      "Define operation on cosets: (aH)(bH) = (ab)H",
+      "Build Cayley table for quotient group"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math304-t4-ex07",
+    "subjectId": "math304",
+    "topicId": "math304-topic-4",
+    "title": "Find Coset Representative",
+    "difficulty": 1,
+    "description": "Given an element, find a canonical representative of its coset (typically the smallest element).",
+    "starterCode": "def coset_representative(element, subgroup, elements, operation_table):\n    \"\"\"\n    Find canonical representative of coset containing element.\n\n    Args:\n        element: Group element\n        subgroup: List of elements in subgroup H\n        elements: List of all group elements\n        operation_table: 2D list representing group operation\n\n    Returns:\n        Smallest element in the coset containing element\n    \"\"\"\n    pass",
+    "solution": "def coset_representative(element, subgroup, elements, operation_table):\n    \"\"\"\n    Find canonical representative of coset containing element.\n\n    Args:\n        element: Group element\n        subgroup: List of elements in subgroup H\n        elements: List of all group elements\n        operation_table: 2D list representing group operation\n\n    Returns:\n        Smallest element in the coset containing element\n    \"\"\"\n    # Find which coset element belongs to\n    for g in elements:\n        coset = []\n        g_index = elements.index(g)\n\n        for h in subgroup:\n            h_index = elements.index(h)\n            product = operation_table[g_index][h_index]\n            coset.append(product)\n\n        if element in coset:\n            return min(coset)\n\n    return None",
+    "testCases": [
+      {
+        "input": "3, [0, 2], [0, 1, 2, 3], [[0, 1, 2, 3], [1, 2, 3, 0], [2, 3, 0, 1], [3, 0, 1, 2]]",
+        "expectedOutput": "1",
+        "isHidden": false,
+        "description": "3 is in coset {1, 3}"
+      },
+      {
+        "input": "5, [0, 3], [0, 1, 2, 3, 4, 5], [[0, 1, 2, 3, 4, 5], [1, 2, 3, 4, 5, 0], [2, 3, 4, 5, 0, 1], [3, 4, 5, 0, 1, 2], [4, 5, 0, 1, 2, 3], [5, 0, 1, 2, 3, 4]]",
+        "expectedOutput": "2",
+        "isHidden": false,
+        "description": "5 is in coset {2, 5}"
+      },
+      {
+        "input": "2, [0, 2], [0, 1, 2, 3], [[0, 1, 2, 3], [1, 2, 3, 0], [2, 3, 0, 1], [3, 0, 1, 2]]",
+        "expectedOutput": "0",
+        "isHidden": true,
+        "description": "2 is in H itself"
+      }
+    ],
+    "hints": [
+      "Find which coset contains the element",
+      "Return the minimum element in that coset",
+      "If element in H, representative is min(H)"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math304-t4-ex08",
+    "subjectId": "math304",
+    "topicId": "math304-topic-4",
+    "title": "Check Coset Equality",
+    "difficulty": 2,
+    "description": "Determine if two elements generate the same left coset: aH = bH iff a^(-1)b in H.",
+    "starterCode": "def same_coset(a, b, subgroup, elements, operation_table, identity):\n    \"\"\"\n    Check if a and b are in the same left coset of H.\n\n    Args:\n        a, b: Group elements\n        subgroup: List of elements in subgroup H\n        elements: List of all group elements\n        operation_table: 2D list representing group operation\n        identity: Identity element\n\n    Returns:\n        True if aH = bH, False otherwise\n    \"\"\"\n    pass",
+    "solution": "def same_coset(a, b, subgroup, elements, operation_table, identity):\n    \"\"\"\n    Check if a and b are in the same left coset of H.\n\n    Args:\n        a, b: Group elements\n        subgroup: List of elements in subgroup H\n        elements: List of all group elements\n        operation_table: 2D list representing group operation\n        identity: Identity element\n\n    Returns:\n        True if aH = bH, False otherwise\n    \"\"\"\n    # Find a^(-1)\n    a_index = elements.index(a)\n    a_inv = None\n    for i in range(len(elements)):\n        if operation_table[a_index][i] == identity:\n            a_inv = elements[i]\n            break\n\n    # Compute a^(-1) * b\n    a_inv_index = elements.index(a_inv)\n    b_index = elements.index(b)\n    product = operation_table[a_inv_index][b_index]\n\n    # Check if product is in H\n    return product in subgroup",
+    "testCases": [
+      {
+        "input": "1, 3, [0, 2], [0, 1, 2, 3], [[0, 1, 2, 3], [1, 2, 3, 0], [2, 3, 0, 1], [3, 0, 1, 2]], 0",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "1H = 3H in Z4"
+      },
+      {
+        "input": "1, 2, [0, 2], [0, 1, 2, 3], [[0, 1, 2, 3], [1, 2, 3, 0], [2, 3, 0, 1], [3, 0, 1, 2]], 0",
+        "expectedOutput": "False",
+        "isHidden": false,
+        "description": "1H ≠ 2H in Z4"
+      },
+      {
+        "input": "0, 2, [0, 2], [0, 1, 2, 3], [[0, 1, 2, 3], [1, 2, 3, 0], [2, 3, 0, 1], [3, 0, 1, 2]], 0",
+        "expectedOutput": "True",
+        "isHidden": true,
+        "description": "Both in H"
+      }
+    ],
+    "hints": [
+      "aH = bH iff a^(-1)b ∈ H",
+      "Find inverse of a",
+      "Compute a^(-1)b and check membership in H"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math304-t4-ex09",
+    "subjectId": "math304",
+    "topicId": "math304-topic-4",
+    "title": "Compute Index of Subgroup",
+    "difficulty": 1,
+    "description": "Calculate the index [G:H], which is the number of distinct left (or right) cosets of H in G.",
+    "starterCode": "def subgroup_index(subgroup, elements, operation_table):\n    \"\"\"\n    Compute index [G:H].\n\n    Args:\n        subgroup: List of elements in subgroup H\n        elements: List of all group elements\n        operation_table: 2D list representing group operation\n\n    Returns:\n        Index [G:H]\n    \"\"\"\n    pass",
+    "solution": "def subgroup_index(subgroup, elements, operation_table):\n    \"\"\"\n    Compute index [G:H].\n\n    Args:\n        subgroup: List of elements in subgroup H\n        elements: List of all group elements\n        operation_table: 2D list representing group operation\n\n    Returns:\n        Index [G:H]\n    \"\"\"\n    seen = set()\n\n    for g in elements:\n        coset = []\n        g_index = elements.index(g)\n\n        for h in subgroup:\n            h_index = elements.index(h)\n            product = operation_table[g_index][h_index]\n            coset.append(product)\n\n        seen.add(tuple(sorted(coset)))\n\n    return len(seen)",
+    "testCases": [
+      {
+        "input": "[0, 2], [0, 1, 2, 3], [[0, 1, 2, 3], [1, 2, 3, 0], [2, 3, 0, 1], [3, 0, 1, 2]]",
+        "expectedOutput": "2",
+        "isHidden": false,
+        "description": "[Z4:<2>] = 2"
+      },
+      {
+        "input": "[0, 3], [0, 1, 2, 3, 4, 5], [[0, 1, 2, 3, 4, 5], [1, 2, 3, 4, 5, 0], [2, 3, 4, 5, 0, 1], [3, 4, 5, 0, 1, 2], [4, 5, 0, 1, 2, 3], [5, 0, 1, 2, 3, 4]]",
+        "expectedOutput": "3",
+        "isHidden": false,
+        "description": "[Z6:<3>] = 3"
+      },
+      {
+        "input": "[0, 1, 2], [0, 1, 2], [[0, 1, 2], [1, 2, 0], [2, 0, 1]]",
+        "expectedOutput": "1",
+        "isHidden": true,
+        "description": "[G:G] = 1"
+      }
+    ],
+    "hints": [
+      "Count distinct left cosets",
+      "By Lagrange, [G:H] = |G|/|H|",
+      "Number of left cosets equals number of right cosets"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math304-t4-ex10",
+    "subjectId": "math304",
+    "topicId": "math304-topic-4",
+    "title": "Find All Subgroups of Given Index",
+    "difficulty": 4,
+    "description": "Find all subgroups of a specific index in a group.",
+    "starterCode": "def subgroups_of_index(n, elements, operation_table, identity):\n    \"\"\"\n    Find all subgroups with index n.\n\n    Args:\n        n: Desired index\n        elements: List of all group elements\n        operation_table: 2D list representing group operation\n        identity: Identity element\n\n    Returns:\n        List of subgroups (each as sorted list) with index n\n    \"\"\"\n    pass",
+    "solution": "def subgroups_of_index(n, elements, operation_table, identity):\n    \"\"\"\n    Find all subgroups with index n.\n\n    Args:\n        n: Desired index\n        elements: List of all group elements\n        operation_table: 2D list representing group operation\n        identity: Identity element\n\n    Returns:\n        List of subgroups (each as sorted list) with index n\n    \"\"\"\n    from itertools import combinations\n\n    group_order = len(elements)\n    subgroup_order = group_order // n\n\n    if group_order % n != 0:\n        return []\n\n    result = []\n\n    # Try all subsets of the right size\n    for subset in combinations(elements, subgroup_order):\n        if identity not in subset:\n            continue\n\n        # Check if it's a subgroup\n        subset_set = set(subset)\n\n        # Check closure\n        is_closed = True\n        for a in subset:\n            for b in subset:\n                a_idx = elements.index(a)\n                b_idx = elements.index(b)\n                if operation_table[a_idx][b_idx] not in subset_set:\n                    is_closed = False\n                    break\n            if not is_closed:\n                break\n\n        if not is_closed:\n            continue\n\n        # Check inverses\n        has_inverses = True\n        for a in subset:\n            has_inv = False\n            a_idx = elements.index(a)\n            for b in subset:\n                b_idx = elements.index(b)\n                if operation_table[a_idx][b_idx] == identity:\n                    has_inv = True\n                    break\n            if not has_inv:\n                has_inverses = False\n                break\n\n        if is_closed and has_inverses:\n            result.append(sorted(list(subset)))\n\n    return result",
+    "testCases": [
+      {
+        "input": "2, [0, 1, 2, 3], [[0, 1, 2, 3], [1, 2, 3, 0], [2, 3, 0, 1], [3, 0, 1, 2]], 0",
+        "expectedOutput": "[[0, 2]]",
+        "isHidden": false,
+        "description": "Subgroup of index 2 in Z4"
+      },
+      {
+        "input": "3, [0, 1, 2, 3, 4, 5], [[0, 1, 2, 3, 4, 5], [1, 2, 3, 4, 5, 0], [2, 3, 4, 5, 0, 1], [3, 4, 5, 0, 1, 2], [4, 5, 0, 1, 2, 3], [5, 0, 1, 2, 3, 4]], 0",
+        "expectedOutput": "[[0, 2, 4], [0, 3]]",
+        "isHidden": false,
+        "description": "Two subgroups of index 3 in Z6"
+      },
+      {
+        "input": "1, [0, 1, 2], [[0, 1, 2], [1, 2, 0], [2, 0, 1]], 0",
+        "expectedOutput": "[[0, 1, 2]]",
+        "isHidden": true,
+        "description": "Only G has index 1"
+      }
+    ],
+    "hints": [
+      "Index n means subgroup has order |G|/n",
+      "Try all subsets of correct size",
+      "Verify subgroup axioms"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math304-t4-ex11",
+    "subjectId": "math304",
+    "topicId": "math304-topic-4",
+    "title": "Coset Partition",
+    "difficulty": 2,
+    "description": "Verify that cosets partition the group (every element in exactly one coset).",
+    "starterCode": "def verify_coset_partition(subgroup, elements, operation_table):\n    \"\"\"\n    Verify cosets partition the group.\n\n    Args:\n        subgroup: List of elements in subgroup H\n        elements: List of all group elements\n        operation_table: 2D list representing group operation\n\n    Returns:\n        True if cosets partition G, False otherwise\n    \"\"\"\n    pass",
+    "solution": "def verify_coset_partition(subgroup, elements, operation_table):\n    \"\"\"\n    Verify cosets partition the group.\n\n    Args:\n        subgroup: List of elements in subgroup H\n        elements: List of all group elements\n        operation_table: 2D list representing group operation\n\n    Returns:\n        True if cosets partition G, False otherwise\n    \"\"\"\n    all_coset_elements = set()\n\n    # Collect all cosets\n    seen_cosets = set()\n\n    for g in elements:\n        coset = []\n        g_index = elements.index(g)\n\n        for h in subgroup:\n            h_index = elements.index(h)\n            product = operation_table[g_index][h_index]\n            coset.append(product)\n\n        coset_tuple = tuple(sorted(coset))\n\n        if coset_tuple not in seen_cosets:\n            seen_cosets.add(coset_tuple)\n\n            # Check for overlap\n            coset_set = set(coset)\n            if all_coset_elements & coset_set:\n                return False\n\n            all_coset_elements.update(coset_set)\n\n    # Check all elements covered\n    return all_coset_elements == set(elements)",
+    "testCases": [
+      {
+        "input": "[0, 2], [0, 1, 2, 3], [[0, 1, 2, 3], [1, 2, 3, 0], [2, 3, 0, 1], [3, 0, 1, 2]]",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Cosets partition Z4"
+      },
+      {
+        "input": "[0, 3], [0, 1, 2, 3, 4, 5], [[0, 1, 2, 3, 4, 5], [1, 2, 3, 4, 5, 0], [2, 3, 4, 5, 0, 1], [3, 4, 5, 0, 1, 2], [4, 5, 0, 1, 2, 3], [5, 0, 1, 2, 3, 4]]",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Cosets partition Z6"
+      },
+      {
+        "input": "[0], [0, 1, 2], [[0, 1, 2], [1, 2, 0], [2, 0, 1]]",
+        "expectedOutput": "True",
+        "isHidden": true,
+        "description": "Trivial subgroup partitions"
+      }
+    ],
+    "hints": [
+      "Cosets are either disjoint or equal",
+      "Union of all cosets should equal G",
+      "No element should appear in multiple distinct cosets"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math304-t4-ex12",
+    "subjectId": "math304",
+    "topicId": "math304-topic-4",
+    "title": "Apply Lagrange to Element Orders",
+    "difficulty": 2,
+    "description": "Use Lagrange's theorem to verify that element orders divide group order.",
+    "starterCode": "def verify_order_divides(elements, operation_table, identity):\n    \"\"\"\n    Verify all element orders divide group order.\n\n    Args:\n        elements: List of all group elements\n        operation_table: 2D list representing group operation\n        identity: Identity element\n\n    Returns:\n        True if all element orders divide |G|, False otherwise\n    \"\"\"\n    pass",
+    "solution": "def verify_order_divides(elements, operation_table, identity):\n    \"\"\"\n    Verify all element orders divide group order.\n\n    Args:\n        elements: List of all group elements\n        operation_table: 2D list representing group operation\n        identity: Identity element\n\n    Returns:\n        True if all element orders divide |G|, False otherwise\n    \"\"\"\n    n = len(elements)\n\n    for element in elements:\n        current = element\n        order = 1\n\n        while current != identity:\n            element_index = elements.index(element)\n            current_index = elements.index(current)\n            current = operation_table[current_index][element_index]\n            order += 1\n\n            if order > n:\n                return False\n\n        # Check if order divides n\n        if n % order != 0:\n            return False\n\n    return True",
+    "testCases": [
+      {
+        "input": "[0, 1, 2, 3], [[0, 1, 2, 3], [1, 2, 3, 0], [2, 3, 0, 1], [3, 0, 1, 2]], 0",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Orders in Z4: {1,2,4} all divide 4"
+      },
+      {
+        "input": "[0, 1, 2, 3, 4], [[0, 1, 2, 3, 4], [1, 2, 3, 4, 0], [2, 3, 4, 0, 1], [3, 4, 0, 1, 2], [4, 0, 1, 2, 3]], 0",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Orders in Z5: {1,5} all divide 5"
+      },
+      {
+        "input": "[0, 1, 2], [[0, 1, 2], [1, 2, 0], [2, 0, 1]], 0",
+        "expectedOutput": "True",
+        "isHidden": true,
+        "description": "Orders in Z3: {1,3} all divide 3"
+      }
+    ],
+    "hints": [
+      "Compute order of each element",
+      "Check if |G| is divisible by each order",
+      "This is consequence of Lagrange theorem"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math304-t4-ex13",
+    "subjectId": "math304",
+    "topicId": "math304-topic-4",
+    "title": "Find Normalizer of Subgroup",
+    "difficulty": 4,
+    "description": "Find the normalizer N(H) = {g in G : gHg^(-1) = H}. This is the largest subgroup in which H is normal.",
+    "starterCode": "def normalizer(subgroup, elements, operation_table, identity):\n    \"\"\"\n    Find normalizer of subgroup H.\n\n    Args:\n        subgroup: List of elements in subgroup H\n        elements: List of all group elements\n        operation_table: 2D list representing group operation\n        identity: Identity element\n\n    Returns:\n        Sorted list of elements in N(H)\n    \"\"\"\n    pass",
+    "solution": "def normalizer(subgroup, elements, operation_table, identity):\n    \"\"\"\n    Find normalizer of subgroup H.\n\n    Args:\n        subgroup: List of elements in subgroup H\n        elements: List of all group elements\n        operation_table: 2D list representing group operation\n        identity: Identity element\n\n    Returns:\n        Sorted list of elements in N(H)\n    \"\"\"\n    normalizer_elements = []\n    subgroup_set = set(subgroup)\n\n    for g in elements:\n        g_index = elements.index(g)\n\n        # Find g^(-1)\n        g_inv = None\n        for i in range(len(elements)):\n            if operation_table[g_index][i] == identity:\n                g_inv = elements[i]\n                break\n\n        g_inv_index = elements.index(g_inv)\n\n        # Compute gHg^(-1)\n        conjugate = set()\n        for h in subgroup:\n            h_index = elements.index(h)\n            # Compute g * h * g^(-1)\n            gh = operation_table[g_index][h_index]\n            gh_index = elements.index(gh)\n            ghg_inv = operation_table[gh_index][g_inv_index]\n            conjugate.add(ghg_inv)\n\n        # Check if conjugate equals H\n        if conjugate == subgroup_set:\n            normalizer_elements.append(g)\n\n    return sorted(normalizer_elements)",
+    "testCases": [
+      {
+        "input": "[0, 2], [0, 1, 2, 3], [[0, 1, 2, 3], [1, 2, 3, 0], [2, 3, 0, 1], [3, 0, 1, 2]], 0",
+        "expectedOutput": "[0, 1, 2, 3]",
+        "isHidden": false,
+        "description": "In abelian group, N(H) = G"
+      },
+      {
+        "input": "[0], [0, 1, 2], [[0, 1, 2], [1, 2, 0], [2, 0, 1]], 0",
+        "expectedOutput": "[0, 1, 2]",
+        "isHidden": false,
+        "description": "N({e}) = G"
+      },
+      {
+        "input": "[0, 1, 2], [0, 1, 2], [[0, 1, 2], [1, 2, 0], [2, 0, 1]], 0",
+        "expectedOutput": "[0, 1, 2]",
+        "isHidden": true,
+        "description": "N(G) = G"
+      }
+    ],
+    "hints": [
+      "For each g, check if gHg^(-1) = H",
+      "Compute conjugate of H by g",
+      "H is always in its normalizer"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math304-t4-ex14",
+    "subjectId": "math304",
+    "topicId": "math304-topic-4",
+    "title": "Check Subgroup Index is Prime",
+    "difficulty": 2,
+    "description": "If [G:H] is prime, check that H is maximal (no proper subgroup between H and G).",
+    "starterCode": "def is_prime(n):\n    \"\"\"Check if n is prime.\"\"\"\n    if n < 2:\n        return False\n    for i in range(2, int(n**0.5) + 1):\n        if n % i == 0:\n            return False\n    return True\n\ndef index_is_prime(subgroup, elements, operation_table):\n    \"\"\"\n    Check if index [G:H] is prime.\n\n    Args:\n        subgroup: List of elements in subgroup H\n        elements: List of all group elements\n        operation_table: 2D list representing group operation\n\n    Returns:\n        True if [G:H] is prime, False otherwise\n    \"\"\"\n    pass",
+    "solution": "def is_prime(n):\n    \"\"\"Check if n is prime.\"\"\"\n    if n < 2:\n        return False\n    for i in range(2, int(n**0.5) + 1):\n        if n % i == 0:\n            return False\n    return True\n\ndef index_is_prime(subgroup, elements, operation_table):\n    \"\"\"\n    Check if index [G:H] is prime.\n\n    Args:\n        subgroup: List of elements in subgroup H\n        elements: List of all group elements\n        operation_table: 2D list representing group operation\n\n    Returns:\n        True if [G:H] is prime, False otherwise\n    \"\"\"\n    # Count distinct cosets\n    seen = set()\n\n    for g in elements:\n        coset = []\n        g_index = elements.index(g)\n\n        for h in subgroup:\n            h_index = elements.index(h)\n            product = operation_table[g_index][h_index]\n            coset.append(product)\n\n        seen.add(tuple(sorted(coset)))\n\n    index = len(seen)\n    return is_prime(index)",
+    "testCases": [
+      {
+        "input": "[0, 3], [0, 1, 2, 3, 4, 5], [[0, 1, 2, 3, 4, 5], [1, 2, 3, 4, 5, 0], [2, 3, 4, 5, 0, 1], [3, 4, 5, 0, 1, 2], [4, 5, 0, 1, 2, 3], [5, 0, 1, 2, 3, 4]]",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "[Z6:<3>] = 3 is prime"
+      },
+      {
+        "input": "[0, 2], [0, 1, 2, 3], [[0, 1, 2, 3], [1, 2, 3, 0], [2, 3, 0, 1], [3, 0, 1, 2]]",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "[Z4:<2>] = 2 is prime"
+      },
+      {
+        "input": "[0], [0, 1, 2, 3], [[0, 1, 2, 3], [1, 2, 3, 0], [2, 3, 0, 1], [3, 0, 1, 2]]",
+        "expectedOutput": "False",
+        "isHidden": true,
+        "description": "[Z4:{e}] = 4 is not prime"
+      }
+    ],
+    "hints": [
+      "Compute index [G:H] = |G|/|H|",
+      "Check if index is prime",
+      "If index is prime, H is maximal"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math304-t4-ex15",
+    "subjectId": "math304",
+    "topicId": "math304-topic-4",
+    "title": "Double Coset Decomposition",
+    "difficulty": 5,
+    "description": "Given subgroups H and K, compute the double coset decomposition: G = union of HgK.",
+    "starterCode": "def double_cosets(subgroup_h, subgroup_k, elements, operation_table):\n    \"\"\"\n    Find all double cosets HgK.\n\n    Args:\n        subgroup_h: List of elements in subgroup H\n        subgroup_k: List of elements in subgroup K\n        elements: List of all group elements\n        operation_table: 2D list representing group operation\n\n    Returns:\n        List of double cosets (each as sorted list)\n    \"\"\"\n    pass",
+    "solution": "def double_cosets(subgroup_h, subgroup_k, elements, operation_table):\n    \"\"\"\n    Find all double cosets HgK.\n\n    Args:\n        subgroup_h: List of elements in subgroup H\n        subgroup_k: List of elements in subgroup K\n        elements: List of all group elements\n        operation_table: 2D list representing group operation\n\n    Returns:\n        List of double cosets (each as sorted list)\n    \"\"\"\n    cosets = []\n    seen = set()\n\n    for g in elements:\n        double_coset = set()\n        g_index = elements.index(g)\n\n        # Compute HgK\n        for h in subgroup_h:\n            h_index = elements.index(h)\n            hg = operation_table[h_index][g_index]\n            hg_index = elements.index(hg)\n\n            for k in subgroup_k:\n                k_index = elements.index(k)\n                hgk = operation_table[hg_index][k_index]\n                double_coset.add(hgk)\n\n        coset_tuple = tuple(sorted(double_coset))\n\n        if coset_tuple not in seen:\n            seen.add(coset_tuple)\n            cosets.append(sorted(list(double_coset)))\n\n    return sorted(cosets)",
+    "testCases": [
+      {
+        "input": "[0, 2], [0, 3], [0, 1, 2, 3, 4, 5], [[0, 1, 2, 3, 4, 5], [1, 2, 3, 4, 5, 0], [2, 3, 4, 5, 0, 1], [3, 4, 5, 0, 1, 2], [4, 5, 0, 1, 2, 3], [5, 0, 1, 2, 3, 4]]",
+        "expectedOutput": "[[0, 1, 2, 3, 4, 5]]",
+        "isHidden": false,
+        "description": "Single double coset in Z6"
+      },
+      {
+        "input": "[0], [0], [0, 1, 2], [[0, 1, 2], [1, 2, 0], [2, 0, 1]]",
+        "expectedOutput": "[[0], [1], [2]]",
+        "isHidden": false,
+        "description": "Trivial subgroups give singletons"
+      },
+      {
+        "input": "[0, 1], [0, 1], [0, 1], [[0, 1], [1, 0]]",
+        "expectedOutput": "[[0, 1]]",
+        "isHidden": true,
+        "description": "H=K=G gives one coset"
+      }
+    ],
+    "hints": [
+      "For each g, compute HgK = {hgk : h∈H, k∈K}",
+      "Remove duplicate double cosets",
+      "Double cosets partition G"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math304-t4-ex16",
+    "subjectId": "math304",
+    "topicId": "math304-topic-4",
+    "title": "Verify Correspondence Theorem",
+    "difficulty": 5,
+    "description": "For normal subgroup H, verify the correspondence between subgroups of G containing H and subgroups of G/H.",
+    "starterCode": "def correspondence_theorem(normal_subgroup, elements, operation_table, identity):\n    \"\"\"\n    Find subgroups containing H and corresponding subgroups of G/H.\n\n    Args:\n        normal_subgroup: List of elements in normal subgroup H\n        elements: List of all group elements\n        operation_table: 2D list representing group operation\n        identity: Identity element\n\n    Returns:\n        Number of subgroups containing H\n    \"\"\"\n    pass",
+    "solution": "def correspondence_theorem(normal_subgroup, elements, operation_table, identity):\n    \"\"\"\n    Find subgroups containing H and corresponding subgroups of G/H.\n\n    Args:\n        normal_subgroup: List of elements in normal subgroup H\n        elements: List of all group elements\n        operation_table: 2D list representing group operation\n        identity: Identity element\n\n    Returns:\n        Number of subgroups containing H\n    \"\"\"\n    from itertools import combinations\n\n    normal_set = set(normal_subgroup)\n    count = 0\n\n    # Try all subsets containing H\n    other_elements = [e for e in elements if e not in normal_set]\n\n    for r in range(len(other_elements) + 1):\n        for extra in combinations(other_elements, r):\n            candidate = list(normal_set) + list(extra)\n            candidate_set = set(candidate)\n\n            # Check if it's a subgroup\n            is_closed = True\n            for a in candidate:\n                for b in candidate:\n                    a_idx = elements.index(a)\n                    b_idx = elements.index(b)\n                    if operation_table[a_idx][b_idx] not in candidate_set:\n                        is_closed = False\n                        break\n                if not is_closed:\n                    break\n\n            if not is_closed:\n                continue\n\n            # Check inverses\n            has_inverses = True\n            for a in candidate:\n                has_inv = False\n                a_idx = elements.index(a)\n                for b in candidate:\n                    b_idx = elements.index(b)\n                    if operation_table[a_idx][b_idx] == identity:\n                        has_inv = True\n                        break\n                if not has_inv:\n                    has_inverses = False\n                    break\n\n            if is_closed and has_inverses:\n                count += 1\n\n    return count",
+    "testCases": [
+      {
+        "input": "[0, 2], [0, 1, 2, 3], [[0, 1, 2, 3], [1, 2, 3, 0], [2, 3, 0, 1], [3, 0, 1, 2]], 0",
+        "expectedOutput": "2",
+        "isHidden": false,
+        "description": "H and G contain H in Z4"
+      },
+      {
+        "input": "[0], [0, 1, 2], [[0, 1, 2], [1, 2, 0], [2, 0, 1]], 0",
+        "expectedOutput": "2",
+        "isHidden": false,
+        "description": "{e} and G contain {e}"
+      },
+      {
+        "input": "[0, 1, 2], [0, 1, 2], [[0, 1, 2], [1, 2, 0], [2, 0, 1]], 0",
+        "expectedOutput": "1",
+        "isHidden": true,
+        "description": "Only G contains G"
+      }
+    ],
+    "hints": [
+      "Find all subgroups K with H ⊆ K ⊆ G",
+      "These correspond to subgroups of G/H",
+      "Use subset enumeration with subgroup test"
+    ],
+    "language": "python"
+  }
+]

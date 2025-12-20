@@ -1,0 +1,185 @@
+[
+  {
+    "id": "math204-quiz-7a",
+    "subjectId": "math204",
+    "topicId": "math204-7",
+    "title": "Power Series - Fundamentals",
+    "questions": [
+      {
+        "id": "math204-q7a-1",
+        "type": "multiple_choice",
+        "prompt": "A power series has the form:",
+        "options": [
+          "$\\sum a_n$",
+          "$\\sum a_n x^n$",
+          "$\\sum \\frac{a_n}{n!}$",
+          "$\\sum \\frac{1}{n^p}$"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A power series centered at 0 is $\\sum_{n=0}^\\infty a_n x^n$, or $\\sum a_n (x-c)^n$ centered at $c$."
+      },
+      {
+        "id": "math204-q7a-2",
+        "type": "true_false",
+        "prompt": "Every power series has a radius of convergence, which may be 0, finite, or infinite.",
+        "correctAnswer": true,
+        "explanation": "True. The radius R determines where the series converges: $|x - c| < R$."
+      },
+      {
+        "id": "math204-q7a-3",
+        "type": "multiple_choice",
+        "prompt": "To find the radius of convergence, we typically use:",
+        "options": [
+          "The Ratio Test",
+          "The Root Test",
+          "The Integral Test",
+          "Either A or B"
+        ],
+        "correctAnswer": 3,
+        "explanation": "Both the Ratio Test and Root Test can determine the radius: $R = \\frac{1}{L}$ where $L = \\lim |a_{n+1}/a_n|$ or $L = \\lim \\sqrt[n]{|a_n|}$."
+      },
+      {
+        "id": "math204-q7a-4",
+        "type": "multiple_choice",
+        "prompt": "The interval of convergence is:",
+        "options": [
+          "Always $(-R, R)$",
+          "$(c - R, c + R)$ plus possibly endpoints",
+          "The same as radius",
+          "Always includes endpoints"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The interval is $(c - R, c + R)$ where $R$ is the radius. Check endpoints separately."
+      },
+      {
+        "id": "math204-q7a-5",
+        "type": "fill_blank",
+        "prompt": "The geometric series $\\sum x^n$ converges for $|x|$ ____ 1.",
+        "correctAnswer": "less than",
+        "explanation": "Geometric series $\\sum x^n$ converges when $|x| < 1$, with sum $\\frac{1}{1-x}$."
+      }
+    ]
+  },
+  {
+    "id": "math204-quiz-7b",
+    "subjectId": "math204",
+    "topicId": "math204-7",
+    "title": "Taylor Series - Construction",
+    "questions": [
+      {
+        "id": "math204-q7b-1",
+        "type": "multiple_choice",
+        "prompt": "The Taylor series of $f(x)$ centered at $a$ is:",
+        "options": [
+          "$\\sum \\frac{f(n)}{n!}x^n$",
+          "$\\sum \\frac{f^{(n)}(a)}{n!}(x-a)^n$",
+          "$\\sum f^{(n)}(x)$",
+          "$\\sum \\frac{x^n}{n!}$"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Taylor series: $\\sum_{n=0}^\\infty \\frac{f^{(n)}(a)}{n!}(x-a)^n$ where $f^{(n)}$ is the nth derivative."
+      },
+      {
+        "id": "math204-q7b-2",
+        "type": "true_false",
+        "prompt": "A Maclaurin series is a Taylor series centered at $a = 0$.",
+        "correctAnswer": true,
+        "explanation": "True. Maclaurin series is the special case of Taylor series with $a = 0$."
+      },
+      {
+        "id": "math204-q7b-3",
+        "type": "multiple_choice",
+        "prompt": "The Maclaurin series for $e^x$ is:",
+        "options": [
+          "$\\sum \\frac{x^n}{n}$",
+          "$\\sum \\frac{x^n}{n!}$",
+          "$\\sum nx^{n-1}$",
+          "$\\sum \\frac{1}{x^n}$"
+        ],
+        "correctAnswer": 1,
+        "explanation": "$e^x = \\sum_{n=0}^\\infty \\frac{x^n}{n!} = 1 + x + \\frac{x^2}{2!} + \\frac{x^3}{3!} + \\cdots$"
+      },
+      {
+        "id": "math204-q7b-4",
+        "type": "multiple_choice",
+        "prompt": "The Maclaurin series for $\\sin x$ is:",
+        "options": [
+          "$\\sum \\frac{x^n}{n!}$",
+          "$\\sum \\frac{(-1)^n x^{2n}}{(2n)!}$",
+          "$\\sum \\frac{(-1)^n x^{2n+1}}{(2n+1)!}$",
+          "$\\sum (-1)^n x^n$"
+        ],
+        "correctAnswer": 2,
+        "explanation": "$\\sin x = \\sum_{n=0}^\\infty \\frac{(-1)^n x^{2n+1}}{(2n+1)!} = x - \\frac{x^3}{3!} + \\frac{x^5}{5!} - \\cdots$"
+      },
+      {
+        "id": "math204-q7b-5",
+        "type": "fill_blank",
+        "prompt": "The nth Taylor polynomial $P_n(x)$ is the sum of the first ____ terms of the Taylor series.",
+        "correctAnswer": "n+1",
+        "explanation": "$P_n(x)$ includes terms from $n=0$ to $n=n$, which is $n+1$ terms total."
+      }
+    ]
+  },
+  {
+    "id": "math204-quiz-7c",
+    "subjectId": "math204",
+    "topicId": "math204-7",
+    "title": "Taylor Series - Applications",
+    "questions": [
+      {
+        "id": "math204-q7c-1",
+        "type": "multiple_choice",
+        "prompt": "The Lagrange form of the Taylor remainder is:",
+        "options": [
+          "$R_n(x) = \\frac{f^{(n)}(c)}{n!}x^n$",
+          "$R_n(x) = \\frac{f^{(n+1)}(c)}{(n+1)!}(x-a)^{n+1}$",
+          "$R_n(x) = f(x) - P_n(x)$",
+          "Both B and C"
+        ],
+        "correctAnswer": 3,
+        "explanation": "The remainder $R_n(x) = f(x) - P_n(x) = \\frac{f^{(n+1)}(c)}{(n+1)!}(x-a)^{n+1}$ for some $c$ between $a$ and $x$."
+      },
+      {
+        "id": "math204-q7c-2",
+        "type": "true_false",
+        "prompt": "Taylor polynomials provide better approximations as the degree $n$ increases (within the interval of convergence).",
+        "correctAnswer": true,
+        "explanation": "True. Higher-degree Taylor polynomials generally give better approximations near the center."
+      },
+      {
+        "id": "math204-q7c-3",
+        "type": "multiple_choice",
+        "prompt": "The Maclaurin series for $\\cos x$ is:",
+        "options": [
+          "$\\sum \\frac{x^{2n}}{(2n)!}$",
+          "$\\sum \\frac{(-1)^n x^{2n}}{(2n)!}$",
+          "$\\sum \\frac{(-1)^n x^{2n+1}}{(2n+1)!}$",
+          "$\\sum (-1)^n x^n$"
+        ],
+        "correctAnswer": 1,
+        "explanation": "$\\cos x = \\sum_{n=0}^\\infty \\frac{(-1)^n x^{2n}}{(2n)!} = 1 - \\frac{x^2}{2!} + \\frac{x^4}{4!} - \\cdots$"
+      },
+      {
+        "id": "math204-q7c-4",
+        "type": "multiple_choice",
+        "prompt": "To estimate the error in a Taylor approximation, we use:",
+        "options": [
+          "The next term in the series",
+          "The remainder formula",
+          "The alternating series error bound (if applicable)",
+          "All of the above"
+        ],
+        "correctAnswer": 3,
+        "explanation": "All methods can estimate error: remainder formula (general), alternating series bound (if alternating), or next term (rough estimate)."
+      },
+      {
+        "id": "math204-q7c-5",
+        "type": "fill_blank",
+        "prompt": "The series representation $\\frac{1}{1-x} = \\sum x^n$ is valid for $|x|$ ____ 1.",
+        "correctAnswer": "less than",
+        "explanation": "This geometric series converges when $|x| < 1$."
+      }
+    ]
+  }
+]

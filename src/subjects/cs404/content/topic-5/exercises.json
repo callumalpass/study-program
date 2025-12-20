@@ -1,0 +1,476 @@
+[
+  {
+    "id": "cs404-t5-ex01",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-5",
+    "title": "Basic Unit Test for Pure Function",
+    "difficulty": 1,
+    "description": "Write unit tests for a simple calculator function. Learn the fundamentals of testing pure functions with Jest.",
+    "starterCode": "// Calculator function to test\nfunction add(a: number, b: number): number {\n  return a + b;\n}\n\n// Write your tests here\ndescribe('Calculator', () => {\n  // TODO: Write test cases for the add function\n  // Test: should add two positive numbers\n  // Test: should add negative numbers\n  // Test: should handle zero\n});",
+    "solution": "// Calculator function to test\nfunction add(a: number, b: number): number {\n  return a + b;\n}\n\n// Complete test suite\ndescribe('Calculator', () => {\n  test('should add two positive numbers', () => {\n    expect(add(2, 3)).toBe(5);\n    expect(add(10, 15)).toBe(25);\n  });\n\n  test('should add negative numbers', () => {\n    expect(add(-5, -3)).toBe(-8);\n    expect(add(-10, 5)).toBe(-5);\n  });\n\n  test('should handle zero', () => {\n    expect(add(0, 0)).toBe(0);\n    expect(add(5, 0)).toBe(5);\n    expect(add(0, 7)).toBe(7);\n  });\n\n  test('should add decimal numbers', () => {\n    expect(add(1.5, 2.3)).toBeCloseTo(3.8);\n  });\n});",
+    "hints": [
+      "Use describe() to group related tests together",
+      "Each test() should verify a specific behavior",
+      "Use expect() and toBe() for exact equality checks",
+      "For decimal numbers, use toBeCloseTo() instead of toBe()"
+    ],
+    "testCases": [
+      {
+        "input": "add(2, 3)",
+        "expectedOutput": "5",
+        "description": "Should add two positive numbers"
+      },
+      {
+        "input": "add(-5, -3)",
+        "expectedOutput": "-8",
+        "description": "Should add negative numbers"
+      },
+      {
+        "input": "add(0, 7)",
+        "expectedOutput": "7",
+        "description": "Should handle zero"
+      }
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-t5-ex02",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-5",
+    "title": "Test Fixture Creation",
+    "difficulty": 1,
+    "description": "Create reusable test fixtures for user data. Learn how to set up common test data that can be used across multiple tests.",
+    "starterCode": "interface User {\n  id: string;\n  name: string;\n  email: string;\n  role: 'admin' | 'user' | 'guest';\n}\n\n// TODO: Create test fixtures\n// Create a function createTestUser() that generates a user with default values\n// Allow overriding specific properties\nfunction createTestUser(overrides?: Partial<User>): User {\n  // Your implementation here\n}\n\n// TODO: Write tests using the fixture\ndescribe('User Fixtures', () => {\n  // Test: should create default user\n  // Test: should override specific properties\n});",
+    "solution": "interface User {\n  id: string;\n  name: string;\n  email: string;\n  role: 'admin' | 'user' | 'guest';\n}\n\n// Test fixture factory function\nfunction createTestUser(overrides?: Partial<User>): User {\n  return {\n    id: '123',\n    name: 'Test User',\n    email: 'test@example.com',\n    role: 'user',\n    ...overrides\n  };\n}\n\n// Tests using the fixture\ndescribe('User Fixtures', () => {\n  test('should create default user', () => {\n    const user = createTestUser();\n    expect(user.id).toBe('123');\n    expect(user.name).toBe('Test User');\n    expect(user.email).toBe('test@example.com');\n    expect(user.role).toBe('user');\n  });\n\n  test('should override specific properties', () => {\n    const admin = createTestUser({ role: 'admin', name: 'Admin User' });\n    expect(admin.role).toBe('admin');\n    expect(admin.name).toBe('Admin User');\n    expect(admin.email).toBe('test@example.com'); // default value\n  });\n\n  test('should create multiple unique users', () => {\n    const user1 = createTestUser({ id: '1', email: 'user1@example.com' });\n    const user2 = createTestUser({ id: '2', email: 'user2@example.com' });\n    expect(user1.id).not.toBe(user2.id);\n    expect(user1.email).not.toBe(user2.email);\n  });\n});",
+    "hints": [
+      "Use the spread operator (...) to merge default values with overrides",
+      "Partial<User> allows optional override of any User property",
+      "Test fixtures reduce code duplication across tests",
+      "Factory functions make it easy to create test data with sensible defaults"
+    ],
+    "testCases": [
+      {
+        "input": "createTestUser()",
+        "expectedOutput": "{ id: \"123\", name: \"Test User\", email: \"test@example.com\", role: \"user\" }",
+        "description": "Should create user with default values"
+      },
+      {
+        "input": "createTestUser({ role: \"admin\" })",
+        "expectedOutput": "{ id: \"123\", name: \"Test User\", email: \"test@example.com\", role: \"admin\" }",
+        "description": "Should override role while keeping other defaults"
+      }
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-t5-ex03",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-5",
+    "title": "Bug Report Template Generator",
+    "difficulty": 1,
+    "description": "Create a function that generates structured bug report templates. Learn how to standardize bug reporting for QA processes.",
+    "starterCode": "interface BugReport {\n  title: string;\n  severity: 'critical' | 'high' | 'medium' | 'low';\n  description: string;\n  stepsToReproduce: string[];\n  expectedBehavior: string;\n  actualBehavior: string;\n  environment: string;\n}\n\n// TODO: Implement the bug report generator\nfunction generateBugReport(data: Partial<BugReport>): string {\n  // Return a formatted markdown string\n}\n\n// TODO: Write tests for the generator\ndescribe('Bug Report Generator', () => {\n  // Test: should generate complete report\n  // Test: should handle missing optional fields\n});",
+    "solution": "interface BugReport {\n  title: string;\n  severity: 'critical' | 'high' | 'medium' | 'low';\n  description: string;\n  stepsToReproduce: string[];\n  expectedBehavior: string;\n  actualBehavior: string;\n  environment: string;\n}\n\n// Bug report generator\nfunction generateBugReport(data: Partial<BugReport>): string {\n  const report = `# Bug Report: ${data.title || 'Untitled'}\n\n**Severity:** ${data.severity || 'medium'}\n\n## Description\n${data.description || 'No description provided'}\n\n## Steps to Reproduce\n${data.stepsToReproduce?.map((step, i) => `${i + 1}. ${step}`).join('\\n') || 'No steps provided'}\n\n## Expected Behavior\n${data.expectedBehavior || 'Not specified'}\n\n## Actual Behavior\n${data.actualBehavior || 'Not specified'}\n\n## Environment\n${data.environment || 'Not specified'}\n`;\n  return report;\n}\n\n// Tests\ndescribe('Bug Report Generator', () => {\n  test('should generate complete report', () => {\n    const report = generateBugReport({\n      title: 'Login fails with valid credentials',\n      severity: 'high',\n      description: 'Users cannot log in',\n      stepsToReproduce: ['Navigate to login page', 'Enter valid credentials', 'Click submit'],\n      expectedBehavior: 'User should be logged in',\n      actualBehavior: 'Error message displayed',\n      environment: 'Chrome 120, Windows 11'\n    });\n\n    expect(report).toContain('# Bug Report: Login fails with valid credentials');\n    expect(report).toContain('**Severity:** high');\n    expect(report).toContain('1. Navigate to login page');\n  });\n\n  test('should handle missing optional fields', () => {\n    const report = generateBugReport({ title: 'Test Bug' });\n    expect(report).toContain('# Bug Report: Test Bug');\n    expect(report).toContain('**Severity:** medium');\n    expect(report).toContain('No description provided');\n  });\n});",
+    "hints": [
+      "Use template literals for formatted string output",
+      "Provide default values for missing fields",
+      "Use array.map() to format the steps to reproduce list",
+      "Check if fields exist before accessing them with optional chaining (?.)"
+    ],
+    "testCases": [
+      {
+        "input": "generateBugReport({ title: \"Test Bug\", severity: \"critical\" })",
+        "expectedOutput": "String containing \"# Bug Report: Test Bug\" and \"**Severity:** critical\"",
+        "description": "Should generate report with provided fields"
+      },
+      {
+        "input": "generateBugReport({})",
+        "expectedOutput": "String containing default values",
+        "description": "Should handle empty input with defaults"
+      }
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-t5-ex04",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-5",
+    "title": "Testing Async Functions with Jest",
+    "difficulty": 2,
+    "description": "Write tests for asynchronous functions using async/await. Learn to test promises and handle asynchronous behavior in tests.",
+    "starterCode": "// Async function to fetch user data\nasync function fetchUser(id: string): Promise<{ id: string; name: string }> {\n  return new Promise((resolve) => {\n    setTimeout(() => {\n      resolve({ id, name: `User ${id}` });\n    }, 100);\n  });\n}\n\n// TODO: Write async tests\ndescribe('Async Functions', () => {\n  // Test: should fetch user successfully\n  // Test: should handle multiple async calls\n  // Use async/await pattern\n});",
+    "solution": "// Async function to fetch user data\nasync function fetchUser(id: string): Promise<{ id: string; name: string }> {\n  return new Promise((resolve) => {\n    setTimeout(() => {\n      resolve({ id, name: `User ${id}` });\n    }, 100);\n  });\n}\n\n// Complete async test suite\ndescribe('Async Functions', () => {\n  test('should fetch user successfully', async () => {\n    const user = await fetchUser('123');\n    expect(user.id).toBe('123');\n    expect(user.name).toBe('User 123');\n  });\n\n  test('should handle multiple async calls', async () => {\n    const users = await Promise.all([\n      fetchUser('1'),\n      fetchUser('2'),\n      fetchUser('3')\n    ]);\n\n    expect(users).toHaveLength(3);\n    expect(users[0].id).toBe('1');\n    expect(users[1].id).toBe('2');\n    expect(users[2].id).toBe('3');\n  });\n\n  test('should resolve promises correctly', async () => {\n    await expect(fetchUser('999')).resolves.toEqual({\n      id: '999',\n      name: 'User 999'\n    });\n  });\n\n  test('should complete within timeout', async () => {\n    const start = Date.now();\n    await fetchUser('123');\n    const duration = Date.now() - start;\n    expect(duration).toBeGreaterThanOrEqual(100);\n    expect(duration).toBeLessThan(200);\n  }, 300);\n});",
+    "hints": [
+      "Mark test functions as async when testing async code",
+      "Use await keyword to wait for promises to resolve",
+      "Use expect().resolves for promise matchers",
+      "Promise.all() can test multiple async operations in parallel"
+    ],
+    "testCases": [
+      {
+        "input": "await fetchUser(\"123\")",
+        "expectedOutput": "{ id: \"123\", name: \"User 123\" }",
+        "description": "Should return user object with correct data"
+      },
+      {
+        "input": "await Promise.all([fetchUser(\"1\"), fetchUser(\"2\")])",
+        "expectedOutput": "Array with 2 user objects",
+        "description": "Should handle multiple async calls"
+      }
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-t5-ex05",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-5",
+    "title": "Snapshot Testing for UI Components",
+    "difficulty": 2,
+    "description": "Implement snapshot testing for UI components. Learn how to detect unintended UI changes automatically.",
+    "starterCode": "interface ButtonProps {\n  label: string;\n  variant: 'primary' | 'secondary' | 'danger';\n  disabled?: boolean;\n}\n\n// Simple button renderer\nfunction renderButton(props: ButtonProps): string {\n  const className = `btn btn-${props.variant}${props.disabled ? ' btn-disabled' : ''}`;\n  return `<button class=\"${className}\">${props.label}</button>`;\n}\n\n// TODO: Implement snapshot tests\ndescribe('Button Snapshots', () => {\n  // Test: should match snapshot for primary button\n  // Test: should match snapshot for disabled button\n  // Use toMatchInlineSnapshot() or toMatchSnapshot()\n});",
+    "solution": "interface ButtonProps {\n  label: string;\n  variant: 'primary' | 'secondary' | 'danger';\n  disabled?: boolean;\n}\n\n// Simple button renderer\nfunction renderButton(props: ButtonProps): string {\n  const className = `btn btn-${props.variant}${props.disabled ? ' btn-disabled' : ''}`;\n  return `<button class=\"${className}\">${props.label}</button>`;\n}\n\n// Snapshot tests\ndescribe('Button Snapshots', () => {\n  test('should match snapshot for primary button', () => {\n    const output = renderButton({ label: 'Click me', variant: 'primary' });\n    expect(output).toMatchInlineSnapshot(\n      `\"<button class=\"btn btn-primary\">Click me</button>\"`\n    );\n  });\n\n  test('should match snapshot for secondary button', () => {\n    const output = renderButton({ label: 'Cancel', variant: 'secondary' });\n    expect(output).toMatchInlineSnapshot(\n      `\"<button class=\"btn btn-secondary\">Cancel</button>\"`\n    );\n  });\n\n  test('should match snapshot for disabled button', () => {\n    const output = renderButton({\n      label: 'Submit',\n      variant: 'primary',\n      disabled: true\n    });\n    expect(output).toMatchInlineSnapshot(\n      `\"<button class=\"btn btn-primary btn-disabled\">Submit</button>\"`\n    );\n  });\n\n  test('should match snapshot for danger button', () => {\n    const output = renderButton({ label: 'Delete', variant: 'danger' });\n    expect(output).toMatchInlineSnapshot(\n      `\"<button class=\"btn btn-danger\">Delete</button>\"`\n    );\n  });\n});",
+    "hints": [
+      "Snapshot tests capture the output and compare it on subsequent runs",
+      "Use toMatchInlineSnapshot() to store snapshots directly in the test file",
+      "Snapshots help detect unintended UI changes",
+      "Update snapshots with jest -u when changes are intentional"
+    ],
+    "testCases": [
+      {
+        "input": "renderButton({ label: \"Click me\", variant: \"primary\" })",
+        "expectedOutput": "<button class=\"btn btn-primary\">Click me</button>",
+        "description": "Should render primary button correctly"
+      },
+      {
+        "input": "renderButton({ label: \"Submit\", variant: \"primary\", disabled: true })",
+        "expectedOutput": "<button class=\"btn btn-primary btn-disabled\">Submit</button>",
+        "description": "Should render disabled button with correct classes"
+      }
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-t5-ex06",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-5",
+    "title": "Code Coverage Report Analysis",
+    "difficulty": 2,
+    "description": "Analyze code coverage and write tests to improve coverage. Learn to identify untested code paths and edge cases.",
+    "starterCode": "// Function with multiple branches\nfunction calculateDiscount(price: number, customerType: 'regular' | 'premium' | 'vip'): number {\n  if (price <= 0) {\n    throw new Error('Price must be positive');\n  }\n\n  let discount = 0;\n\n  if (customerType === 'premium') {\n    discount = price * 0.1;\n  } else if (customerType === 'vip') {\n    discount = price * 0.2;\n  }\n\n  if (price > 1000) {\n    discount += 50;\n  }\n\n  return discount;\n}\n\n// TODO: Write comprehensive tests to achieve 100% coverage\n// Cover all branches: regular/premium/vip customers\n// Cover edge cases: price <= 0, price > 1000\ndescribe('Calculate Discount', () => {\n  // Add tests here\n});",
+    "solution": "// Function with multiple branches\nfunction calculateDiscount(price: number, customerType: 'regular' | 'premium' | 'vip'): number {\n  if (price <= 0) {\n    throw new Error('Price must be positive');\n  }\n\n  let discount = 0;\n\n  if (customerType === 'premium') {\n    discount = price * 0.1;\n  } else if (customerType === 'vip') {\n    discount = price * 0.2;\n  }\n\n  if (price > 1000) {\n    discount += 50;\n  }\n\n  return discount;\n}\n\n// Comprehensive test suite with 100% coverage\ndescribe('Calculate Discount', () => {\n  describe('Error cases', () => {\n    test('should throw error for zero price', () => {\n      expect(() => calculateDiscount(0, 'regular')).toThrow('Price must be positive');\n    });\n\n    test('should throw error for negative price', () => {\n      expect(() => calculateDiscount(-10, 'regular')).toThrow('Price must be positive');\n    });\n  });\n\n  describe('Regular customers', () => {\n    test('should return 0 discount for regular customer', () => {\n      expect(calculateDiscount(100, 'regular')).toBe(0);\n    });\n\n    test('should return 50 bonus for regular customer with price > 1000', () => {\n      expect(calculateDiscount(1500, 'regular')).toBe(50);\n    });\n  });\n\n  describe('Premium customers', () => {\n    test('should return 10% discount for premium customer', () => {\n      expect(calculateDiscount(100, 'premium')).toBe(10);\n    });\n\n    test('should return 10% + 50 bonus for premium customer with price > 1000', () => {\n      expect(calculateDiscount(1500, 'premium')).toBe(200); // 150 + 50\n    });\n  });\n\n  describe('VIP customers', () => {\n    test('should return 20% discount for vip customer', () => {\n      expect(calculateDiscount(100, 'vip')).toBe(20);\n    });\n\n    test('should return 20% + 50 bonus for vip customer with price > 1000', () => {\n      expect(calculateDiscount(1500, 'vip')).toBe(350); // 300 + 50\n    });\n  });\n});",
+    "hints": [
+      "Test each branch condition separately (if/else statements)",
+      "Test boundary conditions (price = 0, price = 1000, price = 1001)",
+      "Test error cases with expect(() => fn()).toThrow()",
+      "Organize tests with nested describe() blocks for clarity"
+    ],
+    "testCases": [
+      {
+        "input": "calculateDiscount(100, \"regular\")",
+        "expectedOutput": "0",
+        "description": "Regular customer gets no discount"
+      },
+      {
+        "input": "calculateDiscount(100, \"premium\")",
+        "expectedOutput": "10",
+        "description": "Premium customer gets 10% discount"
+      },
+      {
+        "input": "calculateDiscount(1500, \"vip\")",
+        "expectedOutput": "350",
+        "description": "VIP customer gets 20% + 50 bonus"
+      }
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-t5-ex07",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-5",
+    "title": "Mocking Dependencies with Jest",
+    "difficulty": 3,
+    "description": "Learn to mock external dependencies and isolate units under test. Practice using jest.mock() and mock functions.",
+    "starterCode": "// External API module\nconst API = {\n  fetchUser: async (id: string) => {\n    // Actual implementation would call external API\n    throw new Error('Should be mocked in tests');\n  }\n};\n\n// Service that uses the API\nclass UserService {\n  async getUserName(id: string): Promise<string> {\n    const user = await API.fetchUser(id);\n    return user.name;\n  }\n\n  async isAdmin(id: string): Promise<boolean> {\n    const user = await API.fetchUser(id);\n    return user.role === 'admin';\n  }\n}\n\n// TODO: Write tests with mocked API\n// Mock the API.fetchUser function\n// Test UserService methods without calling real API\ndescribe('UserService with Mocks', () => {\n  // Setup mocks and tests here\n});",
+    "solution": "// External API module\nconst API = {\n  fetchUser: async (id: string) => {\n    // Actual implementation would call external API\n    throw new Error('Should be mocked in tests');\n  }\n};\n\n// Service that uses the API\nclass UserService {\n  async getUserName(id: string): Promise<string> {\n    const user = await API.fetchUser(id);\n    return user.name;\n  }\n\n  async isAdmin(id: string): Promise<boolean> {\n    const user = await API.fetchUser(id);\n    return user.role === 'admin';\n  }\n}\n\n// Tests with mocked dependencies\ndescribe('UserService with Mocks', () => {\n  let service: UserService;\n  let mockFetchUser: jest.SpyInstance;\n\n  beforeEach(() => {\n    service = new UserService();\n    // Mock the API.fetchUser function\n    mockFetchUser = jest.spyOn(API, 'fetchUser');\n  });\n\n  afterEach(() => {\n    // Restore original implementation\n    mockFetchUser.mockRestore();\n  });\n\n  describe('getUserName', () => {\n    test('should return user name from API', async () => {\n      mockFetchUser.mockResolvedValue({ id: '1', name: 'John Doe', role: 'user' });\n\n      const name = await service.getUserName('1');\n\n      expect(name).toBe('John Doe');\n      expect(mockFetchUser).toHaveBeenCalledWith('1');\n      expect(mockFetchUser).toHaveBeenCalledTimes(1);\n    });\n\n    test('should handle API errors', async () => {\n      mockFetchUser.mockRejectedValue(new Error('API Error'));\n\n      await expect(service.getUserName('1')).rejects.toThrow('API Error');\n    });\n  });\n\n  describe('isAdmin', () => {\n    test('should return true for admin user', async () => {\n      mockFetchUser.mockResolvedValue({ id: '1', name: 'Admin', role: 'admin' });\n\n      const isAdmin = await service.isAdmin('1');\n\n      expect(isAdmin).toBe(true);\n    });\n\n    test('should return false for regular user', async () => {\n      mockFetchUser.mockResolvedValue({ id: '2', name: 'User', role: 'user' });\n\n      const isAdmin = await service.isAdmin('2');\n\n      expect(isAdmin).toBe(false);\n    });\n  });\n\n  test('should verify mock was called with correct arguments', async () => {\n    mockFetchUser.mockResolvedValue({ id: '123', name: 'Test', role: 'user' });\n\n    await service.getUserName('123');\n\n    expect(mockFetchUser).toHaveBeenCalledWith('123');\n  });\n});",
+    "hints": [
+      "Use jest.spyOn() to mock methods on existing objects",
+      "mockResolvedValue() sets the resolved value for async functions",
+      "mockRejectedValue() simulates errors from async functions",
+      "Use beforeEach() and afterEach() to set up and clean up mocks"
+    ],
+    "testCases": [
+      {
+        "input": "service.getUserName(\"1\") with mocked API returning { name: \"John\" }",
+        "expectedOutput": "\"John\"",
+        "description": "Should return mocked user name"
+      },
+      {
+        "input": "service.isAdmin(\"1\") with mocked API returning { role: \"admin\" }",
+        "expectedOutput": "true",
+        "description": "Should identify admin users"
+      }
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-t5-ex08",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-5",
+    "title": "Integration Test for API Endpoints",
+    "difficulty": 3,
+    "description": "Write integration tests for REST API endpoints. Test the full request/response cycle including routing and data handling.",
+    "starterCode": "// Simple in-memory store\nconst users: { [id: string]: { id: string; name: string; email: string } } = {};\n\n// API endpoint handlers\nconst api = {\n  createUser: (req: { body: { name: string; email: string } }) => {\n    const id = Math.random().toString(36).substr(2, 9);\n    users[id] = { id, ...req.body };\n    return { status: 201, data: users[id] };\n  },\n\n  getUser: (req: { params: { id: string } }) => {\n    const user = users[req.params.id];\n    if (!user) {\n      return { status: 404, error: 'User not found' };\n    }\n    return { status: 200, data: user };\n  },\n\n  updateUser: (req: { params: { id: string }; body: Partial<{ name: string; email: string }> }) => {\n    const user = users[req.params.id];\n    if (!user) {\n      return { status: 404, error: 'User not found' };\n    }\n    users[req.params.id] = { ...user, ...req.body };\n    return { status: 200, data: users[req.params.id] };\n  }\n};\n\n// TODO: Write integration tests for the API\ndescribe('User API Integration Tests', () => {\n  beforeEach(() => {\n    // Clear users before each test\n  });\n\n  // Test: should create a new user\n  // Test: should get user by id\n  // Test: should return 404 for non-existent user\n  // Test: should update user\n});",
+    "solution": "// Simple in-memory store\nconst users: { [id: string]: { id: string; name: string; email: string } } = {};\n\n// API endpoint handlers\nconst api = {\n  createUser: (req: { body: { name: string; email: string } }) => {\n    const id = Math.random().toString(36).substr(2, 9);\n    users[id] = { id, ...req.body };\n    return { status: 201, data: users[id] };\n  },\n\n  getUser: (req: { params: { id: string } }) => {\n    const user = users[req.params.id];\n    if (!user) {\n      return { status: 404, error: 'User not found' };\n    }\n    return { status: 200, data: user };\n  },\n\n  updateUser: (req: { params: { id: string }; body: Partial<{ name: string; email: string }> }) => {\n    const user = users[req.params.id];\n    if (!user) {\n      return { status: 404, error: 'User not found' };\n    }\n    users[req.params.id] = { ...user, ...req.body };\n    return { status: 200, data: users[req.params.id] };\n  }\n};\n\n// Integration tests\ndescribe('User API Integration Tests', () => {\n  beforeEach(() => {\n    // Clear users before each test\n    Object.keys(users).forEach(key => delete users[key]);\n  });\n\n  describe('POST /users', () => {\n    test('should create a new user', () => {\n      const response = api.createUser({\n        body: { name: 'John Doe', email: 'john@example.com' }\n      });\n\n      expect(response.status).toBe(201);\n      expect(response.data).toHaveProperty('id');\n      expect(response.data.name).toBe('John Doe');\n      expect(response.data.email).toBe('john@example.com');\n    });\n\n    test('should store created user', () => {\n      const createResponse = api.createUser({\n        body: { name: 'Jane Doe', email: 'jane@example.com' }\n      });\n\n      const getResponse = api.getUser({ params: { id: createResponse.data.id } });\n\n      expect(getResponse.status).toBe(200);\n      expect(getResponse.data).toEqual(createResponse.data);\n    });\n  });\n\n  describe('GET /users/:id', () => {\n    test('should get user by id', () => {\n      const createResponse = api.createUser({\n        body: { name: 'Test User', email: 'test@example.com' }\n      });\n\n      const response = api.getUser({ params: { id: createResponse.data.id } });\n\n      expect(response.status).toBe(200);\n      expect(response.data.id).toBe(createResponse.data.id);\n      expect(response.data.name).toBe('Test User');\n    });\n\n    test('should return 404 for non-existent user', () => {\n      const response = api.getUser({ params: { id: 'nonexistent' } });\n\n      expect(response.status).toBe(404);\n      expect(response.error).toBe('User not found');\n    });\n  });\n\n  describe('PUT /users/:id', () => {\n    test('should update user', () => {\n      const createResponse = api.createUser({\n        body: { name: 'Original Name', email: 'original@example.com' }\n      });\n\n      const updateResponse = api.updateUser({\n        params: { id: createResponse.data.id },\n        body: { name: 'Updated Name' }\n      });\n\n      expect(updateResponse.status).toBe(200);\n      expect(updateResponse.data.name).toBe('Updated Name');\n      expect(updateResponse.data.email).toBe('original@example.com');\n    });\n\n    test('should return 404 when updating non-existent user', () => {\n      const response = api.updateUser({\n        params: { id: 'nonexistent' },\n        body: { name: 'New Name' }\n      });\n\n      expect(response.status).toBe(404);\n      expect(response.error).toBe('User not found');\n    });\n  });\n});",
+    "hints": [
+      "Integration tests verify that multiple components work together",
+      "Use beforeEach() to reset state between tests",
+      "Test the complete flow: create, retrieve, update",
+      "Test both success and error cases (404, validation errors)"
+    ],
+    "testCases": [
+      {
+        "input": "api.createUser({ body: { name: \"John\", email: \"john@example.com\" } })",
+        "expectedOutput": "{ status: 201, data: { id: \"...\", name: \"John\", email: \"john@example.com\" } }",
+        "description": "Should create user and return 201 status"
+      },
+      {
+        "input": "api.getUser({ params: { id: \"nonexistent\" } })",
+        "expectedOutput": "{ status: 404, error: \"User not found\" }",
+        "description": "Should return 404 for missing user"
+      }
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-t5-ex09",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-5",
+    "title": "Test-Driven Development (TDD) Practice",
+    "difficulty": 3,
+    "description": "Practice TDD by writing tests first, then implementing code to make them pass. Build a shopping cart with TDD methodology.",
+    "starterCode": "interface CartItem {\n  id: string;\n  name: string;\n  price: number;\n  quantity: number;\n}\n\n// TODO: Implement ShoppingCart class using TDD\n// First write the tests below, then implement the class\nclass ShoppingCart {\n  // Your implementation here\n}\n\n// TODO: Write tests FIRST following TDD\ndescribe('ShoppingCart TDD', () => {\n  // Test: should start with empty cart\n  // Test: should add item to cart\n  // Test: should increase quantity if item exists\n  // Test: should calculate total\n  // Test: should remove item from cart\n  // Test: should apply discount\n});",
+    "solution": "interface CartItem {\n  id: string;\n  name: string;\n  price: number;\n  quantity: number;\n}\n\n// Implementation (written AFTER tests)\nclass ShoppingCart {\n  private items: CartItem[] = [];\n  private discountPercent: number = 0;\n\n  addItem(item: Omit<CartItem, 'quantity'>, quantity: number = 1): void {\n    const existing = this.items.find(i => i.id === item.id);\n    if (existing) {\n      existing.quantity += quantity;\n    } else {\n      this.items.push({ ...item, quantity });\n    }\n  }\n\n  removeItem(id: string): void {\n    this.items = this.items.filter(item => item.id !== id);\n  }\n\n  getItems(): CartItem[] {\n    return [...this.items];\n  }\n\n  getTotal(): number {\n    const subtotal = this.items.reduce((sum, item) => {\n      return sum + (item.price * item.quantity);\n    }, 0);\n    return subtotal * (1 - this.discountPercent / 100);\n  }\n\n  applyDiscount(percent: number): void {\n    this.discountPercent = percent;\n  }\n\n  clear(): void {\n    this.items = [];\n    this.discountPercent = 0;\n  }\n}\n\n// Tests (written FIRST in TDD)\ndescribe('ShoppingCart TDD', () => {\n  let cart: ShoppingCart;\n\n  beforeEach(() => {\n    cart = new ShoppingCart();\n  });\n\n  test('should start with empty cart', () => {\n    expect(cart.getItems()).toEqual([]);\n    expect(cart.getTotal()).toBe(0);\n  });\n\n  test('should add item to cart', () => {\n    cart.addItem({ id: '1', name: 'Apple', price: 1.5 }, 2);\n\n    const items = cart.getItems();\n    expect(items).toHaveLength(1);\n    expect(items[0].id).toBe('1');\n    expect(items[0].quantity).toBe(2);\n  });\n\n  test('should increase quantity if item exists', () => {\n    cart.addItem({ id: '1', name: 'Apple', price: 1.5 }, 2);\n    cart.addItem({ id: '1', name: 'Apple', price: 1.5 }, 3);\n\n    const items = cart.getItems();\n    expect(items).toHaveLength(1);\n    expect(items[0].quantity).toBe(5);\n  });\n\n  test('should calculate total', () => {\n    cart.addItem({ id: '1', name: 'Apple', price: 1.5 }, 2);\n    cart.addItem({ id: '2', name: 'Banana', price: 0.5 }, 3);\n\n    expect(cart.getTotal()).toBe(4.5); // 1.5*2 + 0.5*3 = 4.5\n  });\n\n  test('should remove item from cart', () => {\n    cart.addItem({ id: '1', name: 'Apple', price: 1.5 }, 2);\n    cart.addItem({ id: '2', name: 'Banana', price: 0.5 }, 3);\n\n    cart.removeItem('1');\n\n    const items = cart.getItems();\n    expect(items).toHaveLength(1);\n    expect(items[0].id).toBe('2');\n  });\n\n  test('should apply discount', () => {\n    cart.addItem({ id: '1', name: 'Apple', price: 10 }, 1);\n    cart.applyDiscount(10); // 10% discount\n\n    expect(cart.getTotal()).toBe(9);\n  });\n\n  test('should handle multiple operations', () => {\n    cart.addItem({ id: '1', name: 'Apple', price: 2 }, 5);\n    cart.addItem({ id: '2', name: 'Banana', price: 1 }, 10);\n    cart.removeItem('1');\n    cart.applyDiscount(20);\n\n    expect(cart.getTotal()).toBe(8); // (10 * 1) * 0.8 = 8\n  });\n});",
+    "hints": [
+      "TDD cycle: Write test -> Watch it fail -> Write minimal code -> Pass test -> Refactor",
+      "Write tests that describe the desired behavior before implementation",
+      "Start with simple tests and gradually add complexity",
+      "Each test should verify one specific behavior"
+    ],
+    "testCases": [
+      {
+        "input": "cart.addItem({ id: \"1\", name: \"Apple\", price: 1.5 }, 2); cart.getTotal()",
+        "expectedOutput": "3",
+        "description": "Should calculate correct total"
+      },
+      {
+        "input": "cart.addItem({ id: \"1\", name: \"Apple\", price: 10 }, 1); cart.applyDiscount(10); cart.getTotal()",
+        "expectedOutput": "9",
+        "description": "Should apply discount correctly"
+      }
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-t5-ex10",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-5",
+    "title": "Regression Test Suite",
+    "difficulty": 3,
+    "description": "Create a regression test suite to prevent previously fixed bugs from reoccurring. Learn to document and test bug fixes.",
+    "starterCode": "// Date utility function with historical bugs\nclass DateUtils {\n  // Bug fix #1: Handle month boundaries correctly\n  static addDays(date: Date, days: number): Date {\n    const result = new Date(date);\n    result.setDate(result.getDate() + days);\n    return result;\n  }\n\n  // Bug fix #2: Handle leap years\n  static isLeapYear(year: number): boolean {\n    return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);\n  }\n\n  // Bug fix #3: Calculate business days (excluding weekends)\n  static addBusinessDays(date: Date, days: number): Date {\n    const result = new Date(date);\n    let added = 0;\n\n    while (added < days) {\n      result.setDate(result.getDate() + 1);\n      const dayOfWeek = result.getDay();\n      if (dayOfWeek !== 0 && dayOfWeek !== 6) {\n        added++;\n      }\n    }\n\n    return result;\n  }\n}\n\n// TODO: Create regression tests for each historical bug\ndescribe('DateUtils Regression Tests', () => {\n  // Document each bug and create test to prevent regression\n});",
+    "solution": "// Date utility function with historical bugs\nclass DateUtils {\n  // Bug fix #1: Handle month boundaries correctly\n  static addDays(date: Date, days: number): Date {\n    const result = new Date(date);\n    result.setDate(result.getDate() + days);\n    return result;\n  }\n\n  // Bug fix #2: Handle leap years\n  static isLeapYear(year: number): boolean {\n    return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);\n  }\n\n  // Bug fix #3: Calculate business days (excluding weekends)\n  static addBusinessDays(date: Date, days: number): Date {\n    const result = new Date(date);\n    let added = 0;\n\n    while (added < days) {\n      result.setDate(result.getDate() + 1);\n      const dayOfWeek = result.getDay();\n      if (dayOfWeek !== 0 && dayOfWeek !== 6) {\n        added++;\n      }\n    }\n\n    return result;\n  }\n}\n\n// Regression tests for historical bugs\ndescribe('DateUtils Regression Tests', () => {\n  describe('Bug #1: Month boundary handling', () => {\n    // Original bug: Adding days at end of month caused incorrect dates\n    test('should correctly add days across month boundary', () => {\n      const jan31 = new Date(2024, 0, 31); // January 31\n      const result = DateUtils.addDays(jan31, 1);\n      expect(result.getMonth()).toBe(1); // February\n      expect(result.getDate()).toBe(1);\n    });\n\n    test('should handle end of year boundary', () => {\n      const dec31 = new Date(2024, 11, 31); // December 31\n      const result = DateUtils.addDays(dec31, 1);\n      expect(result.getFullYear()).toBe(2025);\n      expect(result.getMonth()).toBe(0); // January\n      expect(result.getDate()).toBe(1);\n    });\n  });\n\n  describe('Bug #2: Leap year calculation', () => {\n    // Original bug: Only checked divisibility by 4, not century exceptions\n    test('should correctly identify leap years', () => {\n      expect(DateUtils.isLeapYear(2024)).toBe(true);  // Divisible by 4\n      expect(DateUtils.isLeapYear(2000)).toBe(true);  // Divisible by 400\n    });\n\n    test('should correctly identify non-leap years', () => {\n      expect(DateUtils.isLeapYear(2023)).toBe(false); // Not divisible by 4\n      expect(DateUtils.isLeapYear(1900)).toBe(false); // Divisible by 100 but not 400\n      expect(DateUtils.isLeapYear(2100)).toBe(false); // Century year exception\n    });\n  });\n\n  describe('Bug #3: Business days calculation', () => {\n    // Original bug: Didn't skip weekends correctly\n    test('should skip weekends when adding business days', () => {\n      const friday = new Date(2024, 0, 5); // Friday, January 5, 2024\n      const result = DateUtils.addBusinessDays(friday, 1);\n\n      expect(result.getDay()).toBe(1); // Monday\n      expect(result.getDate()).toBe(8); // January 8\n    });\n\n    test('should handle multiple weeks', () => {\n      const monday = new Date(2024, 0, 8); // Monday, January 8, 2024\n      const result = DateUtils.addBusinessDays(monday, 5);\n\n      expect(result.getDate()).toBe(15); // Next Monday (skipped weekend)\n    });\n\n    test('should handle starting from weekend', () => {\n      const saturday = new Date(2024, 0, 6); // Saturday, January 6, 2024\n      const result = DateUtils.addBusinessDays(saturday, 1);\n\n      expect(result.getDay()).toBe(1); // Should be Monday\n    });\n  });\n\n  describe('Integration regression tests', () => {\n    test('should handle leap year February correctly', () => {\n      const feb28_2024 = new Date(2024, 1, 28); // Feb 28 in leap year\n      const result = DateUtils.addDays(feb28_2024, 1);\n      expect(result.getDate()).toBe(29); // Should be Feb 29\n    });\n  });\n});",
+    "hints": [
+      "Regression tests prevent old bugs from coming back",
+      "Document each bug with comments explaining the original issue",
+      "Test edge cases that previously caused failures",
+      "Group related regression tests with describe() blocks"
+    ],
+    "testCases": [
+      {
+        "input": "DateUtils.addDays(new Date(2024, 0, 31), 1)",
+        "expectedOutput": "Date with month=1 (February) and date=1",
+        "description": "Should handle month boundary correctly"
+      },
+      {
+        "input": "DateUtils.isLeapYear(1900)",
+        "expectedOutput": "false",
+        "description": "Should correctly identify century year exception"
+      }
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-t5-ex11",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-5",
+    "title": "Testing React Components with Testing Library",
+    "difficulty": 4,
+    "description": "Write comprehensive tests for React components using Testing Library. Learn to test user interactions and component behavior.",
+    "starterCode": "// Simple Counter component\ninterface CounterProps {\n  initialValue?: number;\n  step?: number;\n  onCountChange?: (count: number) => void;\n}\n\nfunction Counter({ initialValue = 0, step = 1, onCountChange }: CounterProps) {\n  const [count, setCount] = React.useState(initialValue);\n\n  const increment = () => {\n    const newCount = count + step;\n    setCount(newCount);\n    onCountChange?.(newCount);\n  };\n\n  const decrement = () => {\n    const newCount = count - step;\n    setCount(newCount);\n    onCountChange?.(newCount);\n  };\n\n  const reset = () => {\n    setCount(initialValue);\n    onCountChange?.(initialValue);\n  };\n\n  return (\n    <div>\n      <h1>Count: {count}</h1>\n      <button onClick={increment}>Increment</button>\n      <button onClick={decrement}>Decrement</button>\n      <button onClick={reset}>Reset</button>\n    </div>\n  );\n}\n\n// TODO: Write comprehensive component tests\ndescribe('Counter Component', () => {\n  // Test: should render with initial value\n  // Test: should increment count when button clicked\n  // Test: should decrement count\n  // Test: should reset to initial value\n  // Test: should call onCountChange callback\n  // Test: should use custom step value\n});",
+    "solution": "// Simple Counter component\ninterface CounterProps {\n  initialValue?: number;\n  step?: number;\n  onCountChange?: (count: number) => void;\n}\n\nfunction Counter({ initialValue = 0, step = 1, onCountChange }: CounterProps) {\n  const [count, setCount] = React.useState(initialValue);\n\n  const increment = () => {\n    const newCount = count + step;\n    setCount(newCount);\n    onCountChange?.(newCount);\n  };\n\n  const decrement = () => {\n    const newCount = count - step;\n    setCount(newCount);\n    onCountChange?.(newCount);\n  };\n\n  const reset = () => {\n    setCount(initialValue);\n    onCountChange?.(initialValue);\n  };\n\n  return (\n    <div>\n      <h1>Count: {count}</h1>\n      <button onClick={increment}>Increment</button>\n      <button onClick={decrement}>Decrement</button>\n      <button onClick={reset}>Reset</button>\n    </div>\n  );\n}\n\n// Comprehensive component tests\ndescribe('Counter Component', () => {\n  test('should render with default initial value', () => {\n    const { getByText } = render(<Counter />);\n    expect(getByText('Count: 0')).toBeInTheDocument();\n  });\n\n  test('should render with custom initial value', () => {\n    const { getByText } = render(<Counter initialValue={10} />);\n    expect(getByText('Count: 10')).toBeInTheDocument();\n  });\n\n  test('should increment count when button clicked', () => {\n    const { getByText } = render(<Counter />);\n    const incrementButton = getByText('Increment');\n\n    fireEvent.click(incrementButton);\n    expect(getByText('Count: 1')).toBeInTheDocument();\n\n    fireEvent.click(incrementButton);\n    expect(getByText('Count: 2')).toBeInTheDocument();\n  });\n\n  test('should decrement count when button clicked', () => {\n    const { getByText } = render(<Counter initialValue={5} />);\n    const decrementButton = getByText('Decrement');\n\n    fireEvent.click(decrementButton);\n    expect(getByText('Count: 4')).toBeInTheDocument();\n  });\n\n  test('should reset to initial value', () => {\n    const { getByText } = render(<Counter initialValue={10} />);\n\n    fireEvent.click(getByText('Increment'));\n    fireEvent.click(getByText('Increment'));\n    expect(getByText('Count: 12')).toBeInTheDocument();\n\n    fireEvent.click(getByText('Reset'));\n    expect(getByText('Count: 10')).toBeInTheDocument();\n  });\n\n  test('should call onCountChange callback', () => {\n    const mockCallback = jest.fn();\n    const { getByText } = render(<Counter onCountChange={mockCallback} />);\n\n    fireEvent.click(getByText('Increment'));\n    expect(mockCallback).toHaveBeenCalledWith(1);\n\n    fireEvent.click(getByText('Decrement'));\n    expect(mockCallback).toHaveBeenCalledWith(0);\n\n    expect(mockCallback).toHaveBeenCalledTimes(2);\n  });\n\n  test('should use custom step value', () => {\n    const { getByText } = render(<Counter initialValue={0} step={5} />);\n\n    fireEvent.click(getByText('Increment'));\n    expect(getByText('Count: 5')).toBeInTheDocument();\n\n    fireEvent.click(getByText('Increment'));\n    expect(getByText('Count: 10')).toBeInTheDocument();\n\n    fireEvent.click(getByText('Decrement'));\n    expect(getByText('Count: 5')).toBeInTheDocument();\n  });\n\n  test('should handle multiple interactions', () => {\n    const mockCallback = jest.fn();\n    const { getByText } = render(\n      <Counter initialValue={100} step={10} onCountChange={mockCallback} />\n    );\n\n    fireEvent.click(getByText('Increment')); // 110\n    fireEvent.click(getByText('Increment')); // 120\n    fireEvent.click(getByText('Decrement')); // 110\n    fireEvent.click(getByText('Reset'));     // 100\n\n    expect(getByText('Count: 100')).toBeInTheDocument();\n    expect(mockCallback).toHaveBeenCalledTimes(4);\n    expect(mockCallback).toHaveBeenLastCalledWith(100);\n  });\n});",
+    "hints": [
+      "Use render() from Testing Library to render components",
+      "Use getByText() to find elements by their text content",
+      "Use fireEvent.click() to simulate user clicks",
+      "Mock callback functions with jest.fn() to verify they are called"
+    ],
+    "testCases": [
+      {
+        "input": "Click increment button once",
+        "expectedOutput": "Count: 1 displayed",
+        "description": "Should increment count on button click"
+      },
+      {
+        "input": "Click increment twice, then reset",
+        "expectedOutput": "Count: 0 displayed",
+        "description": "Should reset to initial value"
+      }
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-t5-ex12",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-5",
+    "title": "Database Integration Test Setup",
+    "difficulty": 4,
+    "description": "Set up and write integration tests for database operations. Learn to test CRUD operations with a test database.",
+    "starterCode": "// Simple in-memory database\nclass Database {\n  private data: Map<string, any> = new Map();\n\n  async connect(): Promise<void> {\n    // Simulate connection\n    await new Promise(resolve => setTimeout(resolve, 10));\n  }\n\n  async disconnect(): Promise<void> {\n    await new Promise(resolve => setTimeout(resolve, 10));\n  }\n\n  async insert(table: string, record: any): Promise<string> {\n    const id = Math.random().toString(36).substr(2, 9);\n    const key = `${table}:${id}`;\n    this.data.set(key, { id, ...record });\n    return id;\n  }\n\n  async findById(table: string, id: string): Promise<any | null> {\n    return this.data.get(`${table}:${id}`) || null;\n  }\n\n  async update(table: string, id: string, updates: any): Promise<boolean> {\n    const key = `${table}:${id}`;\n    const existing = this.data.get(key);\n    if (!existing) return false;\n    this.data.set(key, { ...existing, ...updates });\n    return true;\n  }\n\n  async delete(table: string, id: string): Promise<boolean> {\n    return this.data.delete(`${table}:${id}`);\n  }\n\n  async clear(): Promise<void> {\n    this.data.clear();\n  }\n}\n\n// TODO: Write database integration tests\ndescribe('Database Integration Tests', () => {\n  let db: Database;\n\n  // Setup: connect before all tests\n  // Cleanup: clear after each test, disconnect after all\n\n  // Test: should insert and retrieve record\n  // Test: should update existing record\n  // Test: should delete record\n  // Test: should return null for non-existent record\n  // Test: should handle concurrent operations\n});",
+    "solution": "// Simple in-memory database\nclass Database {\n  private data: Map<string, any> = new Map();\n\n  async connect(): Promise<void> {\n    // Simulate connection\n    await new Promise(resolve => setTimeout(resolve, 10));\n  }\n\n  async disconnect(): Promise<void> {\n    await new Promise(resolve => setTimeout(resolve, 10));\n  }\n\n  async insert(table: string, record: any): Promise<string> {\n    const id = Math.random().toString(36).substr(2, 9);\n    const key = `${table}:${id}`;\n    this.data.set(key, { id, ...record });\n    return id;\n  }\n\n  async findById(table: string, id: string): Promise<any | null> {\n    return this.data.get(`${table}:${id}`) || null;\n  }\n\n  async update(table: string, id: string, updates: any): Promise<boolean> {\n    const key = `${table}:${id}`;\n    const existing = this.data.get(key);\n    if (!existing) return false;\n    this.data.set(key, { ...existing, ...updates });\n    return true;\n  }\n\n  async delete(table: string, id: string): Promise<boolean> {\n    return this.data.delete(`${table}:${id}`);\n  }\n\n  async clear(): Promise<void> {\n    this.data.clear();\n  }\n}\n\n// Database integration tests\ndescribe('Database Integration Tests', () => {\n  let db: Database;\n\n  beforeAll(async () => {\n    db = new Database();\n    await db.connect();\n  });\n\n  afterAll(async () => {\n    await db.disconnect();\n  });\n\n  afterEach(async () => {\n    await db.clear();\n  });\n\n  describe('CRUD Operations', () => {\n    test('should insert and retrieve record', async () => {\n      const id = await db.insert('users', { name: 'John', email: 'john@example.com' });\n\n      const user = await db.findById('users', id);\n\n      expect(user).not.toBeNull();\n      expect(user.id).toBe(id);\n      expect(user.name).toBe('John');\n      expect(user.email).toBe('john@example.com');\n    });\n\n    test('should update existing record', async () => {\n      const id = await db.insert('users', { name: 'Jane', email: 'jane@example.com' });\n\n      const updated = await db.update('users', id, { name: 'Jane Smith' });\n      expect(updated).toBe(true);\n\n      const user = await db.findById('users', id);\n      expect(user.name).toBe('Jane Smith');\n      expect(user.email).toBe('jane@example.com'); // unchanged\n    });\n\n    test('should delete record', async () => {\n      const id = await db.insert('users', { name: 'Bob' });\n\n      const deleted = await db.delete('users', id);\n      expect(deleted).toBe(true);\n\n      const user = await db.findById('users', id);\n      expect(user).toBeNull();\n    });\n\n    test('should return null for non-existent record', async () => {\n      const user = await db.findById('users', 'nonexistent');\n      expect(user).toBeNull();\n    });\n\n    test('should return false when updating non-existent record', async () => {\n      const updated = await db.update('users', 'nonexistent', { name: 'Test' });\n      expect(updated).toBe(false);\n    });\n\n    test('should return false when deleting non-existent record', async () => {\n      const deleted = await db.delete('users', 'nonexistent');\n      expect(deleted).toBe(false);\n    });\n  });\n\n  describe('Multiple records', () => {\n    test('should handle multiple inserts', async () => {\n      const id1 = await db.insert('users', { name: 'User 1' });\n      const id2 = await db.insert('users', { name: 'User 2' });\n      const id3 = await db.insert('users', { name: 'User 3' });\n\n      const user1 = await db.findById('users', id1);\n      const user2 = await db.findById('users', id2);\n      const user3 = await db.findById('users', id3);\n\n      expect(user1.name).toBe('User 1');\n      expect(user2.name).toBe('User 2');\n      expect(user3.name).toBe('User 3');\n    });\n\n    test('should isolate different tables', async () => {\n      const userId = await db.insert('users', { name: 'John' });\n      const productId = await db.insert('products', { name: 'Widget' });\n\n      const user = await db.findById('users', userId);\n      const product = await db.findById('products', productId);\n\n      expect(user.name).toBe('John');\n      expect(product.name).toBe('Widget');\n\n      // Should not find user in products table\n      const notFound = await db.findById('products', userId);\n      expect(notFound).toBeNull();\n    });\n  });\n\n  describe('Concurrent operations', () => {\n    test('should handle concurrent inserts', async () => {\n      const promises = [\n        db.insert('users', { name: 'User 1' }),\n        db.insert('users', { name: 'User 2' }),\n        db.insert('users', { name: 'User 3' })\n      ];\n\n      const ids = await Promise.all(promises);\n\n      expect(ids).toHaveLength(3);\n      expect(new Set(ids).size).toBe(3); // All IDs should be unique\n    });\n  });\n});",
+    "hints": [
+      "Use beforeAll() to set up database connection once",
+      "Use afterEach() to clear data between tests for isolation",
+      "Test all CRUD operations: Create, Read, Update, Delete",
+      "Test error cases like non-existent records"
+    ],
+    "testCases": [
+      {
+        "input": "await db.insert(\"users\", { name: \"John\" }); await db.findById(\"users\", id)",
+        "expectedOutput": "{ id: \"...\", name: \"John\" }",
+        "description": "Should insert and retrieve record"
+      },
+      {
+        "input": "await db.update(\"users\", \"nonexistent\", { name: \"Test\" })",
+        "expectedOutput": "false",
+        "description": "Should return false for non-existent record"
+      }
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-t5-ex13",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-5",
+    "title": "E2E User Flow Test",
+    "difficulty": 4,
+    "description": "Write end-to-end tests for a complete user flow. Test a multi-step user journey from start to finish.",
+    "starterCode": "// Simple application state\nclass AppState {\n  private user: any = null;\n  private cart: any[] = [];\n  private orders: any[] = [];\n\n  // User authentication\n  login(email: string, password: string): boolean {\n    if (password === 'password123') {\n      this.user = { email, id: '123' };\n      return true;\n    }\n    return false;\n  }\n\n  logout(): void {\n    this.user = null;\n    this.cart = [];\n  }\n\n  isLoggedIn(): boolean {\n    return this.user !== null;\n  }\n\n  // Shopping cart\n  addToCart(product: { id: string; name: string; price: number }): void {\n    if (!this.isLoggedIn()) throw new Error('Must be logged in');\n    this.cart.push(product);\n  }\n\n  getCart(): any[] {\n    return [...this.cart];\n  }\n\n  // Checkout\n  checkout(): { orderId: string; total: number } {\n    if (!this.isLoggedIn()) throw new Error('Must be logged in');\n    if (this.cart.length === 0) throw new Error('Cart is empty');\n\n    const total = this.cart.reduce((sum, item) => sum + item.price, 0);\n    const orderId = Math.random().toString(36).substr(2, 9);\n\n    this.orders.push({ orderId, items: [...this.cart], total });\n    this.cart = [];\n\n    return { orderId, total };\n  }\n\n  getOrders(): any[] {\n    if (!this.isLoggedIn()) throw new Error('Must be logged in');\n    return [...this.orders];\n  }\n}\n\n// TODO: Write E2E test for complete user flow\ndescribe('E2E User Flow Tests', () => {\n  // Test complete flow: login -> add items -> checkout -> verify order\n  // Test error cases: not logged in, empty cart, etc.\n});",
+    "solution": "// Simple application state\nclass AppState {\n  private user: any = null;\n  private cart: any[] = [];\n  private orders: any[] = [];\n\n  // User authentication\n  login(email: string, password: string): boolean {\n    if (password === 'password123') {\n      this.user = { email, id: '123' };\n      return true;\n    }\n    return false;\n  }\n\n  logout(): void {\n    this.user = null;\n    this.cart = [];\n  }\n\n  isLoggedIn(): boolean {\n    return this.user !== null;\n  }\n\n  // Shopping cart\n  addToCart(product: { id: string; name: string; price: number }): void {\n    if (!this.isLoggedIn()) throw new Error('Must be logged in');\n    this.cart.push(product);\n  }\n\n  getCart(): any[] {\n    return [...this.cart];\n  }\n\n  // Checkout\n  checkout(): { orderId: string; total: number } {\n    if (!this.isLoggedIn()) throw new Error('Must be logged in');\n    if (this.cart.length === 0) throw new Error('Cart is empty');\n\n    const total = this.cart.reduce((sum, item) => sum + item.price, 0);\n    const orderId = Math.random().toString(36).substr(2, 9);\n\n    this.orders.push({ orderId, items: [...this.cart], total });\n    this.cart = [];\n\n    return { orderId, total };\n  }\n\n  getOrders(): any[] {\n    if (!this.isLoggedIn()) throw new Error('Must be logged in');\n    return [...this.orders];\n  }\n}\n\n// E2E User Flow Tests\ndescribe('E2E User Flow Tests', () => {\n  let app: AppState;\n\n  beforeEach(() => {\n    app = new AppState();\n  });\n\n  describe('Happy Path: Complete Purchase Flow', () => {\n    test('should complete full purchase journey', () => {\n      // Step 1: User logs in\n      const loginSuccess = app.login('user@example.com', 'password123');\n      expect(loginSuccess).toBe(true);\n      expect(app.isLoggedIn()).toBe(true);\n\n      // Step 2: User adds items to cart\n      app.addToCart({ id: '1', name: 'Product 1', price: 29.99 });\n      app.addToCart({ id: '2', name: 'Product 2', price: 49.99 });\n      app.addToCart({ id: '3', name: 'Product 3', price: 19.99 });\n\n      const cart = app.getCart();\n      expect(cart).toHaveLength(3);\n      expect(cart[0].name).toBe('Product 1');\n\n      // Step 3: User proceeds to checkout\n      const order = app.checkout();\n      expect(order.orderId).toBeDefined();\n      expect(order.total).toBe(99.97); // 29.99 + 49.99 + 19.99\n\n      // Step 4: Cart is cleared after checkout\n      expect(app.getCart()).toHaveLength(0);\n\n      // Step 5: Order appears in order history\n      const orders = app.getOrders();\n      expect(orders).toHaveLength(1);\n      expect(orders[0].orderId).toBe(order.orderId);\n      expect(orders[0].items).toHaveLength(3);\n    });\n\n    test('should handle multiple orders', () => {\n      app.login('user@example.com', 'password123');\n\n      // First order\n      app.addToCart({ id: '1', name: 'Product 1', price: 10 });\n      const order1 = app.checkout();\n\n      // Second order\n      app.addToCart({ id: '2', name: 'Product 2', price: 20 });\n      app.addToCart({ id: '3', name: 'Product 3', price: 30 });\n      const order2 = app.checkout();\n\n      const orders = app.getOrders();\n      expect(orders).toHaveLength(2);\n      expect(orders[0].total).toBe(10);\n      expect(orders[1].total).toBe(50);\n    });\n  });\n\n  describe('Error Cases', () => {\n    test('should prevent adding to cart when not logged in', () => {\n      expect(() => {\n        app.addToCart({ id: '1', name: 'Product', price: 10 });\n      }).toThrow('Must be logged in');\n    });\n\n    test('should prevent checkout when not logged in', () => {\n      expect(() => {\n        app.checkout();\n      }).toThrow('Must be logged in');\n    });\n\n    test('should prevent checkout with empty cart', () => {\n      app.login('user@example.com', 'password123');\n\n      expect(() => {\n        app.checkout();\n      }).toThrow('Cart is empty');\n    });\n\n    test('should fail login with wrong password', () => {\n      const loginSuccess = app.login('user@example.com', 'wrongpassword');\n      expect(loginSuccess).toBe(false);\n      expect(app.isLoggedIn()).toBe(false);\n    });\n\n    test('should clear cart on logout', () => {\n      app.login('user@example.com', 'password123');\n      app.addToCart({ id: '1', name: 'Product', price: 10 });\n\n      expect(app.getCart()).toHaveLength(1);\n\n      app.logout();\n      expect(app.isLoggedIn()).toBe(false);\n    });\n  });\n\n  describe('Edge Cases', () => {\n    test('should handle single item purchase', () => {\n      app.login('user@example.com', 'password123');\n      app.addToCart({ id: '1', name: 'Single Product', price: 99.99 });\n\n      const order = app.checkout();\n      expect(order.total).toBe(99.99);\n    });\n\n    test('should calculate correct total for many items', () => {\n      app.login('user@example.com', 'password123');\n\n      for (let i = 0; i < 10; i++) {\n        app.addToCart({ id: `${i}`, name: `Product ${i}`, price: 10 });\n      }\n\n      const order = app.checkout();\n      expect(order.total).toBe(100);\n    });\n  });\n});",
+    "hints": [
+      "E2E tests verify complete user journeys from start to finish",
+      "Test the happy path (successful flow) and error cases",
+      "Each step should verify the expected state before moving to next step",
+      "Test that side effects occur correctly (cart cleared after checkout)"
+    ],
+    "testCases": [
+      {
+        "input": "login -> addToCart (3 items) -> checkout",
+        "expectedOutput": "Order created with correct total, cart cleared",
+        "description": "Should complete full purchase journey"
+      },
+      {
+        "input": "addToCart without login",
+        "expectedOutput": "Error: Must be logged in",
+        "description": "Should prevent unauthorized actions"
+      }
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-t5-ex14",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-5",
+    "title": "E2E Test with Playwright Basics",
+    "difficulty": 5,
+    "description": "Write end-to-end browser tests using Playwright. Learn to automate browser interactions and test real user scenarios.",
+    "starterCode": "// Playwright test structure for a login form\n// This is pseudocode to demonstrate the testing approach\n\ninterface LoginPage {\n  navigate(): Promise<void>;\n  fillEmail(email: string): Promise<void>;\n  fillPassword(password: string): Promise<void>;\n  clickSubmit(): Promise<void>;\n  getErrorMessage(): Promise<string | null>;\n  isLoggedIn(): Promise<boolean>;\n}\n\n// TODO: Implement LoginPage class and write E2E tests\nclass LoginPageImpl implements LoginPage {\n  // Implement page object methods\n  // Use selectors like: '#email', '#password', 'button[type=\"submit\"]'\n}\n\n// TODO: Write E2E tests\ndescribe('Login E2E Tests', () => {\n  let page: LoginPage;\n\n  // Setup browser before tests\n  // Test: successful login with valid credentials\n  // Test: error message with invalid credentials\n  // Test: validation for empty fields\n  // Test: navigation after successful login\n});",
+    "solution": "// Playwright test structure for a login form\ninterface LoginPage {\n  navigate(): Promise<void>;\n  fillEmail(email: string): Promise<void>;\n  fillPassword(password: string): Promise<void>;\n  clickSubmit(): Promise<void>;\n  getErrorMessage(): Promise<string | null>;\n  isLoggedIn(): Promise<boolean>;\n}\n\n// Mock implementation simulating Playwright page interactions\nclass LoginPageImpl implements LoginPage {\n  private formState = {\n    email: '',\n    password: '',\n    submitted: false,\n    loggedIn: false,\n    error: null as string | null\n  };\n\n  async navigate(): Promise<void> {\n    // Simulate: await page.goto('http://localhost:3000/login')\n    this.formState = {\n      email: '',\n      password: '',\n      submitted: false,\n      loggedIn: false,\n      error: null\n    };\n  }\n\n  async fillEmail(email: string): Promise<void> {\n    // Simulate: await page.fill('#email', email)\n    this.formState.email = email;\n  }\n\n  async fillPassword(password: string): Promise<void> {\n    // Simulate: await page.fill('#password', password)\n    this.formState.password = password;\n  }\n\n  async clickSubmit(): Promise<void> {\n    // Simulate: await page.click('button[type=\"submit\"]')\n    this.formState.submitted = true;\n\n    if (!this.formState.email || !this.formState.password) {\n      this.formState.error = 'Email and password are required';\n      return;\n    }\n\n    if (this.formState.email === 'test@example.com' &&\n        this.formState.password === 'password123') {\n      this.formState.loggedIn = true;\n      this.formState.error = null;\n    } else {\n      this.formState.error = 'Invalid email or password';\n    }\n  }\n\n  async getErrorMessage(): Promise<string | null> {\n    // Simulate: await page.textContent('.error-message')\n    return this.formState.error;\n  }\n\n  async isLoggedIn(): Promise<boolean> {\n    // Simulate: await page.isVisible('.user-dashboard')\n    return this.formState.loggedIn;\n  }\n}\n\n// E2E tests using Page Object pattern\ndescribe('Login E2E Tests', () => {\n  let page: LoginPage;\n\n  beforeEach(async () => {\n    page = new LoginPageImpl();\n    await page.navigate();\n  });\n\n  describe('Successful Login', () => {\n    test('should login with valid credentials', async () => {\n      await page.fillEmail('test@example.com');\n      await page.fillPassword('password123');\n      await page.clickSubmit();\n\n      const isLoggedIn = await page.isLoggedIn();\n      expect(isLoggedIn).toBe(true);\n\n      const error = await page.getErrorMessage();\n      expect(error).toBeNull();\n    });\n\n    test('should redirect to dashboard after login', async () => {\n      await page.fillEmail('test@example.com');\n      await page.fillPassword('password123');\n      await page.clickSubmit();\n\n      // Verify user is on dashboard\n      expect(await page.isLoggedIn()).toBe(true);\n    });\n  });\n\n  describe('Failed Login', () => {\n    test('should show error with invalid credentials', async () => {\n      await page.fillEmail('wrong@example.com');\n      await page.fillPassword('wrongpassword');\n      await page.clickSubmit();\n\n      const error = await page.getErrorMessage();\n      expect(error).toBe('Invalid email or password');\n\n      const isLoggedIn = await page.isLoggedIn();\n      expect(isLoggedIn).toBe(false);\n    });\n\n    test('should show error with wrong password', async () => {\n      await page.fillEmail('test@example.com');\n      await page.fillPassword('wrongpassword');\n      await page.clickSubmit();\n\n      const error = await page.getErrorMessage();\n      expect(error).toBe('Invalid email or password');\n    });\n\n    test('should show error with wrong email', async () => {\n      await page.fillEmail('wrong@example.com');\n      await page.fillPassword('password123');\n      await page.clickSubmit();\n\n      const error = await page.getErrorMessage();\n      expect(error).toBe('Invalid email or password');\n    });\n  });\n\n  describe('Validation', () => {\n    test('should require email field', async () => {\n      await page.fillPassword('password123');\n      await page.clickSubmit();\n\n      const error = await page.getErrorMessage();\n      expect(error).toBe('Email and password are required');\n      expect(await page.isLoggedIn()).toBe(false);\n    });\n\n    test('should require password field', async () => {\n      await page.fillEmail('test@example.com');\n      await page.clickSubmit();\n\n      const error = await page.getErrorMessage();\n      expect(error).toBe('Email and password are required');\n      expect(await page.isLoggedIn()).toBe(false);\n    });\n\n    test('should require both fields', async () => {\n      await page.clickSubmit();\n\n      const error = await page.getErrorMessage();\n      expect(error).toBe('Email and password are required');\n    });\n  });\n\n  describe('User Flow', () => {\n    test('should allow retry after failed login', async () => {\n      // First attempt with wrong credentials\n      await page.fillEmail('wrong@example.com');\n      await page.fillPassword('wrongpassword');\n      await page.clickSubmit();\n\n      expect(await page.getErrorMessage()).toBe('Invalid email or password');\n\n      // Second attempt with correct credentials\n      await page.navigate(); // Reset form\n      await page.fillEmail('test@example.com');\n      await page.fillPassword('password123');\n      await page.clickSubmit();\n\n      expect(await page.isLoggedIn()).toBe(true);\n      expect(await page.getErrorMessage()).toBeNull();\n    });\n  });\n});\n\n/*\nReal Playwright test would look like:\n\nimport { test, expect } from '@playwright/test';\n\ntest('should login successfully', async ({ page }) => {\n  await page.goto('http://localhost:3000/login');\n  await page.fill('#email', 'test@example.com');\n  await page.fill('#password', 'password123');\n  await page.click('button[type=\"submit\"]');\n\n  await expect(page).toHaveURL('http://localhost:3000/dashboard');\n  await expect(page.locator('.user-dashboard')).toBeVisible();\n});\n*/",
+    "hints": [
+      "Use Page Object pattern to encapsulate page interactions",
+      "Test real user flows: fill form, submit, verify results",
+      "Wait for navigation and element visibility in real browser tests",
+      "Test both success and failure scenarios"
+    ],
+    "testCases": [
+      {
+        "input": "Fill email and password, click submit",
+        "expectedOutput": "User logged in, no error message",
+        "description": "Should login with valid credentials"
+      },
+      {
+        "input": "Click submit without filling fields",
+        "expectedOutput": "Error: Email and password are required",
+        "description": "Should validate required fields"
+      }
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-t5-ex15",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-5",
+    "title": "Performance Testing Utilities",
+    "difficulty": 5,
+    "description": "Create utilities for performance testing and benchmarking. Learn to measure execution time, memory usage, and detect performance regressions.",
+    "starterCode": "// Performance testing utilities\ninterface PerformanceResult {\n  name: string;\n  duration: number;\n  iterations: number;\n  avgTime: number;\n  minTime: number;\n  maxTime: number;\n  memoryUsed?: number;\n}\n\n// TODO: Implement performance testing utilities\nclass PerformanceTester {\n  // Measure execution time of a function\n  async benchmark(\n    name: string,\n    fn: () => any,\n    iterations: number = 100\n  ): Promise<PerformanceResult> {\n    // Your implementation here\n  }\n\n  // Compare two implementations\n  async compare(\n    name1: string,\n    fn1: () => any,\n    name2: string,\n    fn2: () => any,\n    iterations: number = 100\n  ): Promise<{ winner: string; speedup: number }> {\n    // Your implementation here\n  }\n\n  // Assert performance threshold\n  assertPerformance(\n    result: PerformanceResult,\n    maxAvgTime: number\n  ): void {\n    // Your implementation here\n  }\n}\n\n// TODO: Write performance tests\ndescribe('Performance Tests', () => {\n  // Test: benchmark a function\n  // Test: compare two implementations\n  // Test: assert performance thresholds\n  // Test: detect performance regressions\n});",
+    "solution": "// Performance testing utilities\ninterface PerformanceResult {\n  name: string;\n  duration: number;\n  iterations: number;\n  avgTime: number;\n  minTime: number;\n  maxTime: number;\n  memoryUsed?: number;\n}\n\n// Performance testing utilities\nclass PerformanceTester {\n  // Measure execution time of a function\n  async benchmark(\n    name: string,\n    fn: () => any,\n    iterations: number = 100\n  ): Promise<PerformanceResult> {\n    const times: number[] = [];\n    const startMemory = process.memoryUsage?.().heapUsed || 0;\n    const startTime = performance.now();\n\n    for (let i = 0; i < iterations; i++) {\n      const iterStart = performance.now();\n      await fn();\n      const iterEnd = performance.now();\n      times.push(iterEnd - iterStart);\n    }\n\n    const endTime = performance.now();\n    const endMemory = process.memoryUsage?.().heapUsed || 0;\n\n    return {\n      name,\n      duration: endTime - startTime,\n      iterations,\n      avgTime: times.reduce((a, b) => a + b, 0) / times.length,\n      minTime: Math.min(...times),\n      maxTime: Math.max(...times),\n      memoryUsed: endMemory - startMemory\n    };\n  }\n\n  // Compare two implementations\n  async compare(\n    name1: string,\n    fn1: () => any,\n    name2: string,\n    fn2: () => any,\n    iterations: number = 100\n  ): Promise<{ winner: string; speedup: number; results: [PerformanceResult, PerformanceResult] }> {\n    const result1 = await this.benchmark(name1, fn1, iterations);\n    const result2 = await this.benchmark(name2, fn2, iterations);\n\n    const winner = result1.avgTime < result2.avgTime ? name1 : name2;\n    const speedup = result1.avgTime < result2.avgTime\n      ? result2.avgTime / result1.avgTime\n      : result1.avgTime / result2.avgTime;\n\n    return { winner, speedup, results: [result1, result2] };\n  }\n\n  // Assert performance threshold\n  assertPerformance(\n    result: PerformanceResult,\n    maxAvgTime: number\n  ): void {\n    if (result.avgTime > maxAvgTime) {\n      throw new Error(\n        `Performance regression: ${result.name} took ${result.avgTime.toFixed(2)}ms ` +\n        `(expected < ${maxAvgTime}ms)`\n      );\n    }\n  }\n\n  // Generate performance report\n  generateReport(results: PerformanceResult[]): string {\n    let report = '\\n=== Performance Report ===\\n';\n    results.forEach(result => {\n      report += `\\n${result.name}:\\n`;\n      report += `  Iterations: ${result.iterations}\\n`;\n      report += `  Total: ${result.duration.toFixed(2)}ms\\n`;\n      report += `  Average: ${result.avgTime.toFixed(2)}ms\\n`;\n      report += `  Min: ${result.minTime.toFixed(2)}ms\\n`;\n      report += `  Max: ${result.maxTime.toFixed(2)}ms\\n`;\n      if (result.memoryUsed) {\n        report += `  Memory: ${(result.memoryUsed / 1024).toFixed(2)}KB\\n`;\n      }\n    });\n    return report;\n  }\n}\n\n// Performance tests\ndescribe('Performance Tests', () => {\n  let tester: PerformanceTester;\n\n  beforeEach(() => {\n    tester = new PerformanceTester();\n  });\n\n  describe('Benchmarking', () => {\n    test('should benchmark a simple function', async () => {\n      const result = await tester.benchmark(\n        'Simple addition',\n        () => {\n          let sum = 0;\n          for (let i = 0; i < 1000; i++) sum += i;\n          return sum;\n        },\n        50\n      );\n\n      expect(result.iterations).toBe(50);\n      expect(result.avgTime).toBeGreaterThan(0);\n      expect(result.minTime).toBeLessThanOrEqual(result.avgTime);\n      expect(result.maxTime).toBeGreaterThanOrEqual(result.avgTime);\n    });\n\n    test('should benchmark async function', async () => {\n      const result = await tester.benchmark(\n        'Async operation',\n        async () => {\n          await new Promise(resolve => setTimeout(resolve, 1));\n        },\n        10\n      );\n\n      expect(result.avgTime).toBeGreaterThan(1);\n      expect(result.iterations).toBe(10);\n    });\n  });\n\n  describe('Performance Comparison', () => {\n    test('should compare two implementations', async () => {\n      // Slower implementation\n      const slowSort = () => {\n        const arr = Array.from({ length: 100 }, () => Math.random());\n        return arr.sort((a, b) => a - b);\n      };\n\n      // Faster implementation (same result, but we'll simulate)\n      const fastSort = () => {\n        const arr = Array.from({ length: 100 }, () => Math.random());\n        return arr.sort((a, b) => a - b);\n      };\n\n      const comparison = await tester.compare(\n        'Implementation A',\n        slowSort,\n        'Implementation B',\n        fastSort,\n        20\n      );\n\n      expect(comparison.winner).toBeDefined();\n      expect(comparison.speedup).toBeGreaterThan(0);\n      expect(comparison.results).toHaveLength(2);\n    });\n\n    test('should identify faster implementation', async () => {\n      const slow = () => {\n        let result = 0;\n        for (let i = 0; i < 10000; i++) {\n          result += Math.sqrt(i);\n        }\n      };\n\n      const fast = () => {\n        let result = 0;\n        for (let i = 0; i < 1000; i++) {\n          result += i;\n        }\n      };\n\n      const comparison = await tester.compare('Slow', slow, 'Fast', fast, 10);\n      expect(comparison.winner).toBe('Fast');\n    });\n  });\n\n  describe('Performance Assertions', () => {\n    test('should pass when performance is acceptable', async () => {\n      const result = await tester.benchmark(\n        'Fast operation',\n        () => 1 + 1,\n        100\n      );\n\n      expect(() => {\n        tester.assertPerformance(result, 10); // Very generous threshold\n      }).not.toThrow();\n    });\n\n    test('should throw when performance threshold exceeded', async () => {\n      const result = await tester.benchmark(\n        'Slow operation',\n        () => {\n          let sum = 0;\n          for (let i = 0; i < 100000; i++) sum += i;\n        },\n        10\n      );\n\n      expect(() => {\n        tester.assertPerformance(result, 0.001); // Unrealistic threshold\n      }).toThrow('Performance regression');\n    });\n  });\n\n  describe('Performance Regression Detection', () => {\n    test('should detect performance regression', async () => {\n      // Baseline performance\n      const baseline = await tester.benchmark(\n        'Baseline',\n        () => {\n          let sum = 0;\n          for (let i = 0; i < 1000; i++) sum += i;\n        },\n        20\n      );\n\n      // Simulated regression (10x slower)\n      const regressed = await tester.benchmark(\n        'Regressed',\n        () => {\n          let sum = 0;\n          for (let i = 0; i < 10000; i++) sum += i;\n        },\n        20\n      );\n\n      // Allow 2x slowdown, but 10x should fail\n      expect(() => {\n        tester.assertPerformance(regressed, baseline.avgTime * 2);\n      }).toThrow();\n    });\n  });\n\n  describe('Report Generation', () => {\n    test('should generate performance report', async () => {\n      const result1 = await tester.benchmark('Test 1', () => 1 + 1, 10);\n      const result2 = await tester.benchmark('Test 2', () => 2 + 2, 10);\n\n      const report = tester.generateReport([result1, result2]);\n\n      expect(report).toContain('Performance Report');\n      expect(report).toContain('Test 1');\n      expect(report).toContain('Test 2');\n      expect(report).toContain('Average:');\n    });\n  });\n});",
+    "hints": [
+      "Use performance.now() for high-resolution timing",
+      "Run multiple iterations to get stable averages",
+      "Track min, max, and average times for comprehensive analysis",
+      "Use process.memoryUsage() to measure memory consumption (Node.js)"
+    ],
+    "testCases": [
+      {
+        "input": "tester.benchmark(\"Test\", () => sum += 1, 100)",
+        "expectedOutput": "PerformanceResult with avgTime, minTime, maxTime",
+        "description": "Should measure function performance"
+      },
+      {
+        "input": "tester.compare(\"Slow\", slowFn, \"Fast\", fastFn, 50)",
+        "expectedOutput": "{ winner: \"Fast\", speedup: 2.5, ... }",
+        "description": "Should identify faster implementation"
+      }
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-t5-ex16",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-5",
+    "title": "CI Test Pipeline Configuration",
+    "difficulty": 5,
+    "description": "Create a CI/CD test pipeline configuration. Learn to automate testing, generate coverage reports, and enforce quality gates.",
+    "starterCode": "// CI Pipeline configuration and testing utilities\ninterface TestResult {\n  passed: number;\n  failed: number;\n  skipped: number;\n  total: number;\n  duration: number;\n  coverage?: {\n    lines: number;\n    branches: number;\n    functions: number;\n    statements: number;\n  };\n}\n\ninterface PipelineConfig {\n  stages: string[];\n  testCommand: string;\n  coverageThreshold: number;\n  failOnWarnings: boolean;\n}\n\n// TODO: Implement CI pipeline utilities\nclass CIPipeline {\n  constructor(private config: PipelineConfig) {}\n\n  // Run test suite and collect results\n  async runTests(): Promise<TestResult> {\n    // Simulate running tests\n  }\n\n  // Generate coverage report\n  async generateCoverage(): Promise<TestResult['coverage']> {\n    // Simulate coverage generation\n  }\n\n  // Check if quality gates pass\n  checkQualityGates(result: TestResult): { passed: boolean; reasons: string[] } {\n    // Implement quality gate checks\n  }\n\n  // Run full pipeline\n  async run(): Promise<{ success: boolean; result: TestResult }> {\n    // Implement pipeline execution\n  }\n}\n\n// TODO: Write tests for CI pipeline\ndescribe('CI Pipeline Tests', () => {\n  // Test: should run all test stages\n  // Test: should fail if coverage below threshold\n  // Test: should enforce quality gates\n  // Test: should generate coverage report\n});",
+    "solution": "// CI Pipeline configuration and testing utilities\ninterface TestResult {\n  passed: number;\n  failed: number;\n  skipped: number;\n  total: number;\n  duration: number;\n  coverage?: {\n    lines: number;\n    branches: number;\n    functions: number;\n    statements: number;\n  };\n}\n\ninterface PipelineConfig {\n  stages: string[];\n  testCommand: string;\n  coverageThreshold: number;\n  failOnWarnings: boolean;\n}\n\n// CI pipeline utilities\nclass CIPipeline {\n  constructor(private config: PipelineConfig) {}\n\n  // Run test suite and collect results\n  async runTests(): Promise<TestResult> {\n    // Simulate running tests with some randomness for realism\n    const total = 100;\n    const failed = Math.floor(Math.random() * 5);\n    const skipped = Math.floor(Math.random() * 3);\n    const passed = total - failed - skipped;\n\n    return {\n      passed,\n      failed,\n      skipped,\n      total,\n      duration: 1500 + Math.random() * 500\n    };\n  }\n\n  // Generate coverage report\n  async generateCoverage(): Promise<TestResult['coverage']> {\n    return {\n      lines: 85 + Math.random() * 15,\n      branches: 80 + Math.random() * 15,\n      functions: 90 + Math.random() * 10,\n      statements: 85 + Math.random() * 15\n    };\n  }\n\n  // Check if quality gates pass\n  checkQualityGates(result: TestResult): { passed: boolean; reasons: string[] } {\n    const reasons: string[] = [];\n\n    // Check for test failures\n    if (result.failed > 0) {\n      reasons.push(`${result.failed} test(s) failed`);\n    }\n\n    // Check coverage threshold\n    if (result.coverage) {\n      const avgCoverage = (\n        result.coverage.lines +\n        result.coverage.branches +\n        result.coverage.functions +\n        result.coverage.statements\n      ) / 4;\n\n      if (avgCoverage < this.config.coverageThreshold) {\n        reasons.push(\n          `Coverage ${avgCoverage.toFixed(2)}% below threshold ${this.config.coverageThreshold}%`\n        );\n      }\n    }\n\n    // Check for warnings (skipped tests)\n    if (this.config.failOnWarnings && result.skipped > 0) {\n      reasons.push(`${result.skipped} test(s) skipped`);\n    }\n\n    return {\n      passed: reasons.length === 0,\n      reasons\n    };\n  }\n\n  // Run full pipeline\n  async run(): Promise<{ success: boolean; result: TestResult; report: string }> {\n    console.log('Starting CI Pipeline...');\n\n    let report = '=== CI Pipeline Report ===\\n\\n';\n\n    // Execute stages\n    for (const stage of this.config.stages) {\n      report += `Stage: ${stage}\\n`;\n\n      if (stage === 'test') {\n        const result = await this.runTests();\n        report += `  Tests: ${result.passed}/${result.total} passed\\n`;\n        if (result.failed > 0) report += `  Failed: ${result.failed}\\n`;\n        if (result.skipped > 0) report += `  Skipped: ${result.skipped}\\n`;\n      }\n\n      if (stage === 'coverage') {\n        const coverage = await this.generateCoverage();\n        report += `  Coverage:\\n`;\n        report += `    Lines: ${coverage.lines.toFixed(2)}%\\n`;\n        report += `    Branches: ${coverage.branches.toFixed(2)}%\\n`;\n        report += `    Functions: ${coverage.functions.toFixed(2)}%\\n`;\n      }\n    }\n\n    // Get final results\n    const testResult = await this.runTests();\n    testResult.coverage = await this.generateCoverage();\n\n    const qualityGates = this.checkQualityGates(testResult);\n\n    report += `\\nQuality Gates: ${qualityGates.passed ? 'PASSED' : 'FAILED'}\\n`;\n    if (!qualityGates.passed) {\n      report += 'Reasons:\\n';\n      qualityGates.reasons.forEach(reason => {\n        report += `  - ${reason}\\n`;\n      });\n    }\n\n    return {\n      success: qualityGates.passed,\n      result: testResult,\n      report\n    };\n  }\n}\n\n// Tests for CI pipeline\ndescribe('CI Pipeline Tests', () => {\n  describe('Test Execution', () => {\n    test('should run all test stages', async () => {\n      const pipeline = new CIPipeline({\n        stages: ['lint', 'test', 'coverage'],\n        testCommand: 'npm test',\n        coverageThreshold: 80,\n        failOnWarnings: false\n      });\n\n      const result = await pipeline.runTests();\n\n      expect(result.total).toBeGreaterThan(0);\n      expect(result.passed + result.failed + result.skipped).toBe(result.total);\n      expect(result.duration).toBeGreaterThan(0);\n    });\n\n    test('should generate coverage report', async () => {\n      const pipeline = new CIPipeline({\n        stages: ['test', 'coverage'],\n        testCommand: 'npm test',\n        coverageThreshold: 80,\n        failOnWarnings: false\n      });\n\n      const coverage = await pipeline.generateCoverage();\n\n      expect(coverage).toBeDefined();\n      expect(coverage.lines).toBeGreaterThan(0);\n      expect(coverage.lines).toBeLessThanOrEqual(100);\n      expect(coverage.branches).toBeGreaterThan(0);\n      expect(coverage.functions).toBeGreaterThan(0);\n      expect(coverage.statements).toBeGreaterThan(0);\n    });\n  });\n\n  describe('Quality Gates', () => {\n    test('should pass quality gates with good results', () => {\n      const pipeline = new CIPipeline({\n        stages: ['test'],\n        testCommand: 'npm test',\n        coverageThreshold: 80,\n        failOnWarnings: false\n      });\n\n      const result: TestResult = {\n        passed: 100,\n        failed: 0,\n        skipped: 0,\n        total: 100,\n        duration: 1500,\n        coverage: {\n          lines: 90,\n          branches: 85,\n          functions: 95,\n          statements: 90\n        }\n      };\n\n      const gates = pipeline.checkQualityGates(result);\n\n      expect(gates.passed).toBe(true);\n      expect(gates.reasons).toHaveLength(0);\n    });\n\n    test('should fail quality gates with test failures', () => {\n      const pipeline = new CIPipeline({\n        stages: ['test'],\n        testCommand: 'npm test',\n        coverageThreshold: 80,\n        failOnWarnings: false\n      });\n\n      const result: TestResult = {\n        passed: 95,\n        failed: 5,\n        skipped: 0,\n        total: 100,\n        duration: 1500,\n        coverage: {\n          lines: 90,\n          branches: 85,\n          functions: 95,\n          statements: 90\n        }\n      };\n\n      const gates = pipeline.checkQualityGates(result);\n\n      expect(gates.passed).toBe(false);\n      expect(gates.reasons).toContain('5 test(s) failed');\n    });\n\n    test('should fail quality gates with low coverage', () => {\n      const pipeline = new CIPipeline({\n        stages: ['test', 'coverage'],\n        testCommand: 'npm test',\n        coverageThreshold: 90,\n        failOnWarnings: false\n      });\n\n      const result: TestResult = {\n        passed: 100,\n        failed: 0,\n        skipped: 0,\n        total: 100,\n        duration: 1500,\n        coverage: {\n          lines: 70,\n          branches: 65,\n          functions: 75,\n          statements: 70\n        }\n      };\n\n      const gates = pipeline.checkQualityGates(result);\n\n      expect(gates.passed).toBe(false);\n      expect(gates.reasons.some(r => r.includes('Coverage'))).toBe(true);\n    });\n\n    test('should fail on warnings when configured', () => {\n      const pipeline = new CIPipeline({\n        stages: ['test'],\n        testCommand: 'npm test',\n        coverageThreshold: 80,\n        failOnWarnings: true\n      });\n\n      const result: TestResult = {\n        passed: 95,\n        failed: 0,\n        skipped: 5,\n        total: 100,\n        duration: 1500\n      };\n\n      const gates = pipeline.checkQualityGates(result);\n\n      expect(gates.passed).toBe(false);\n      expect(gates.reasons).toContain('5 test(s) skipped');\n    });\n  });\n\n  describe('Full Pipeline Execution', () => {\n    test('should run complete pipeline', async () => {\n      const pipeline = new CIPipeline({\n        stages: ['lint', 'test', 'coverage', 'build'],\n        testCommand: 'npm test',\n        coverageThreshold: 70,\n        failOnWarnings: false\n      });\n\n      const execution = await pipeline.run();\n\n      expect(execution.success).toBeDefined();\n      expect(execution.result).toBeDefined();\n      expect(execution.report).toContain('CI Pipeline Report');\n      expect(execution.report).toContain('Quality Gates');\n    });\n\n    test('should generate detailed report', async () => {\n      const pipeline = new CIPipeline({\n        stages: ['test', 'coverage'],\n        testCommand: 'npm test',\n        coverageThreshold: 80,\n        failOnWarnings: false\n      });\n\n      const execution = await pipeline.run();\n\n      expect(execution.report).toContain('Stage: test');\n      expect(execution.report).toContain('Stage: coverage');\n      expect(execution.report).toContain('Coverage:');\n      expect(execution.report).toContain('Lines:');\n    });\n  });\n\n  describe('Configuration Scenarios', () => {\n    test('should handle minimal configuration', async () => {\n      const pipeline = new CIPipeline({\n        stages: ['test'],\n        testCommand: 'npm test',\n        coverageThreshold: 0,\n        failOnWarnings: false\n      });\n\n      const execution = await pipeline.run();\n      expect(execution).toBeDefined();\n    });\n\n    test('should handle strict configuration', async () => {\n      const pipeline = new CIPipeline({\n        stages: ['lint', 'test', 'coverage', 'security', 'build'],\n        testCommand: 'npm test',\n        coverageThreshold: 95,\n        failOnWarnings: true\n      });\n\n      const execution = await pipeline.run();\n      expect(execution.report).toContain('lint');\n      expect(execution.report).toContain('security');\n    });\n  });\n});",
+    "hints": [
+      "CI pipelines automate testing, coverage, and quality checks",
+      "Quality gates prevent merging code that fails standards",
+      "Coverage thresholds ensure code is adequately tested",
+      "Generate detailed reports for debugging pipeline failures"
+    ],
+    "testCases": [
+      {
+        "input": "pipeline.checkQualityGates({ passed: 100, failed: 0, coverage: 90% })",
+        "expectedOutput": "{ passed: true, reasons: [] }",
+        "description": "Should pass with good metrics"
+      },
+      {
+        "input": "pipeline.checkQualityGates({ passed: 95, failed: 5, coverage: 70% })",
+        "expectedOutput": "{ passed: false, reasons: [\"5 test(s) failed\", \"Coverage below threshold\"] }",
+        "description": "Should fail with failures and low coverage"
+      }
+    ],
+    "language": "typescript"
+  }
+]

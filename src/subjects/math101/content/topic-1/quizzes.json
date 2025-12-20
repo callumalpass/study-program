@@ -1,0 +1,185 @@
+[
+  {
+    "id": "math101-quiz-1a",
+    "subjectId": "math101",
+    "topicId": "math101-topic-1",
+    "title": "Propositional Logic - Fundamentals",
+    "questions": [
+      {
+        "id": "math101-q1a-1",
+        "type": "multiple_choice",
+        "prompt": "Which of the following is a proposition?",
+        "options": [
+          "Close the door.",
+          "What time is it?",
+          "x + 5 = 10",
+          "The Earth is flat."
+        ],
+        "correctAnswer": 3,
+        "explanation": "A proposition is a declarative statement that is either true or false. \"The Earth is flat\" is a proposition (it's false, but it's still a proposition). Commands, questions, and statements with variables are not propositions."
+      },
+      {
+        "id": "math101-q1a-2",
+        "type": "true_false",
+        "prompt": "The negation of \"It is raining\" is \"It is sunny.\"",
+        "correctAnswer": false,
+        "explanation": "The negation of \"It is raining\" is \"It is NOT raining.\" The weather could be cloudy, snowy, etc. without being sunny."
+      },
+      {
+        "id": "math101-q1a-3",
+        "type": "multiple_choice",
+        "prompt": "What is the truth value of P ∧ Q when P is True and Q is False?",
+        "options": [
+          "True",
+          "False",
+          "Unknown",
+          "Neither"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The conjunction (AND) is only true when BOTH operands are true. Since Q is False, P ∧ Q is False."
+      },
+      {
+        "id": "math101-q1a-4",
+        "type": "multiple_choice",
+        "prompt": "What is the truth value of P ∨ Q when P is False and Q is True?",
+        "options": [
+          "True",
+          "False",
+          "Unknown",
+          "Neither"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The disjunction (OR) is true when AT LEAST ONE operand is true. Since Q is True, P ∨ Q is True."
+      },
+      {
+        "id": "math101-q1a-5",
+        "type": "true_false",
+        "prompt": "The implication P → Q is only false when P is true and Q is false.",
+        "correctAnswer": true,
+        "explanation": "The implication is false only when the hypothesis (P) is true but the conclusion (Q) is false. In all other cases, the implication is true."
+      }
+    ]
+  },
+  {
+    "id": "math101-quiz-1b",
+    "subjectId": "math101",
+    "topicId": "math101-topic-1",
+    "title": "Propositional Logic - Application",
+    "questions": [
+      {
+        "id": "math101-q1b-1",
+        "type": "multiple_choice",
+        "prompt": "What is the negation of the proposition \"It is raining AND it is cold\"?",
+        "options": [
+          "It is not raining AND it is not cold",
+          "It is not raining OR it is not cold",
+          "It is raining OR it is cold",
+          "It is not raining AND it is cold"
+        ],
+        "correctAnswer": 1,
+        "explanation": "By De Morgan's Law, the negation of (P ∧ Q) is (¬P ∨ ¬Q). So \"NOT (raining AND cold)\" becomes \"NOT raining OR NOT cold\"."
+      },
+      {
+        "id": "math101-q1b-2",
+        "type": "true_false",
+        "prompt": "The proposition (P → Q) is logically equivalent to (¬P ∨ Q).",
+        "correctAnswer": true,
+        "explanation": "This is correct. The implication P → Q is true in all cases except when P is true and Q is false, which matches the truth table for ¬P ∨ Q."
+      },
+      {
+        "id": "math101-q1b-3",
+        "type": "multiple_choice",
+        "prompt": "Which of the following is a tautology?",
+        "options": [
+          "P ∧ ¬P",
+          "P ∨ ¬P",
+          "P → ¬P",
+          "P ∧ Q"
+        ],
+        "correctAnswer": 1,
+        "explanation": "P ∨ ¬P (the law of excluded middle) is always true regardless of the truth value of P. Either P is true or its negation is true."
+      },
+      {
+        "id": "math101-q1b-4",
+        "type": "multiple_choice",
+        "prompt": "What is the contrapositive of \"If it rains, then the ground is wet\"?",
+        "options": [
+          "If it does not rain, then the ground is not wet",
+          "If the ground is wet, then it rains",
+          "If the ground is not wet, then it does not rain",
+          "If it rains, then the ground is not wet"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The contrapositive of P → Q is ¬Q → ¬P. So \"If it rains → ground is wet\" becomes \"If ground is NOT wet → it does NOT rain.\""
+      },
+      {
+        "id": "math101-q1b-5",
+        "type": "fill_blank",
+        "prompt": "The logical connective that is true only when exactly one of its operands is true is called ____.",
+        "correctAnswer": "xor",
+        "explanation": "XOR (exclusive or) is true when exactly one of the operands is true, unlike OR which is also true when both are true."
+      }
+    ]
+  },
+  {
+    "id": "math101-quiz-1c",
+    "subjectId": "math101",
+    "topicId": "math101-topic-1",
+    "title": "Propositional Logic - Advanced",
+    "questions": [
+      {
+        "id": "math101-q1c-1",
+        "type": "multiple_choice",
+        "prompt": "Which of the following is logically equivalent to ¬(P → Q)?",
+        "options": [
+          "¬P → ¬Q",
+          "P ∧ ¬Q",
+          "¬P ∨ Q",
+          "P → ¬Q"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The negation of an implication: ¬(P → Q) ≡ ¬(¬P ∨ Q) ≡ P ∧ ¬Q. \"It is NOT the case that if P then Q\" means \"P is true AND Q is false.\""
+      },
+      {
+        "id": "math101-q1c-2",
+        "type": "true_false",
+        "prompt": "If P → Q and Q → R are both true, then P → R must also be true.",
+        "correctAnswer": true,
+        "explanation": "This is the law of syllogism (transitivity of implication). If P implies Q and Q implies R, then P implies R."
+      },
+      {
+        "id": "math101-q1c-3",
+        "type": "multiple_choice",
+        "prompt": "Which statement is equivalent to \"p only if q\"?",
+        "options": [
+          "q → p",
+          "p → q",
+          "p ↔ q",
+          "¬p → q"
+        ],
+        "correctAnswer": 1,
+        "explanation": "\"p only if q\" means that p cannot be true unless q is also true, which is expressed as p → q."
+      },
+      {
+        "id": "math101-q1c-4",
+        "type": "multiple_choice",
+        "prompt": "What is the result of applying De Morgan's Law to ¬(¬P ∨ Q)?",
+        "options": [
+          "P ∧ ¬Q",
+          "¬P ∧ Q",
+          "P ∨ ¬Q",
+          "¬P ∨ ¬Q"
+        ],
+        "correctAnswer": 0,
+        "explanation": "¬(¬P ∨ Q) = ¬(¬P) ∧ ¬Q = P ∧ ¬Q by De Morgan's Law and double negation."
+      },
+      {
+        "id": "math101-q1c-5",
+        "type": "true_false",
+        "prompt": "The biconditional P ↔ Q is equivalent to (P → Q) ∧ (Q → P).",
+        "correctAnswer": true,
+        "explanation": "The biconditional \"P if and only if Q\" means both implications hold: P implies Q AND Q implies P."
+      }
+    ]
+  }
+]

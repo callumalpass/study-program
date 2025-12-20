@@ -1,0 +1,233 @@
+[
+  {
+    "id": "math202-t5-ex01",
+    "subjectId": "math202",
+    "topicId": "math202-5",
+    "type": "written",
+    "title": "Setting Up Hypotheses",
+    "description": "A manufacturer claims their light bulbs last an average of 1000 hours. You suspect they last less. Set up the null and alternative hypotheses.",
+    "difficulty": 1,
+    "hints": [
+      "H₀ typically contains \"=\"",
+      "Hₐ reflects what you're trying to show"
+    ],
+    "solution": "H₀: μ = 1000 (manufacturer's claim)\nHₐ: μ < 1000 (our suspicion)\n\nThis is a one-tailed (left-tailed) test."
+  },
+  {
+    "id": "math202-t5-ex02",
+    "subjectId": "math202",
+    "topicId": "math202-5",
+    "type": "written",
+    "title": "Type I and Type II Errors",
+    "description": "In a criminal trial, H₀ is \"defendant is innocent\". Describe Type I and Type II errors in this context and their consequences.",
+    "difficulty": 2,
+    "hints": [
+      "Type I: Reject true H₀",
+      "Type II: Fail to reject false H₀"
+    ],
+    "solution": "Type I Error:\n- Reject H₀ when it's true\n- Convict an innocent person\n- Consequence: Injustice to innocent defendant\n- Probability: α (significance level)\n\nType II Error:\n- Fail to reject H₀ when it's false\n- Acquit a guilty person\n- Consequence: Guilty person goes free\n- Probability: β\n\nLegal system is designed to minimize Type I error (\"innocent until proven guilty\"), accepting higher Type II error risk."
+  },
+  {
+    "id": "math202-t5-ex03",
+    "subjectId": "math202",
+    "topicId": "math202-5",
+    "type": "written",
+    "title": "One-Sample Z-Test",
+    "description": "A sample of 36 observations has mean 52. Population standard deviation is known to be σ=12. Test H₀: μ=50 vs Hₐ: μ≠50 at α=0.05.",
+    "difficulty": 2,
+    "hints": [
+      "Test statistic: z = (x̄ - μ₀)/(σ/√n)",
+      "Critical values for two-tailed test: ±1.96"
+    ],
+    "solution": "Given: n=36, x̄=52, σ=12, μ₀=50, α=0.05\n\nTest statistic:\nz = (52 - 50)/(12/√36) = 2/(12/6) = 2/2 = 1\n\nCritical values (two-tailed): ±1.96\n\nDecision: |z| = 1 < 1.96, so fail to reject H₀\n\nConclusion: Insufficient evidence to conclude μ ≠ 50 at α=0.05 level.\n\nP-value ≈ 2×P(Z>1) = 2(0.1587) = 0.317"
+  },
+  {
+    "id": "math202-t5-ex04",
+    "subjectId": "math202",
+    "topicId": "math202-5",
+    "type": "written",
+    "title": "One-Sample t-Test",
+    "description": "A sample of n=16 has x̄=75 and s=8. Test H₀: μ=70 vs Hₐ: μ>70 at α=0.05. (Use t₀.₀₅,₁₅ ≈ 1.753)",
+    "difficulty": 2,
+    "hints": [
+      "Test statistic: t = (x̄ - μ₀)/(s/√n)",
+      "df = n - 1 = 15",
+      "One-tailed test"
+    ],
+    "solution": "Given: n=16, x̄=75, s=8, μ₀=70, α=0.05\n\nTest statistic:\nt = (75 - 70)/(8/√16) = 5/(8/4) = 5/2 = 2.5\n\nCritical value (one-tailed, df=15): t₀.₀₅,₁₅ = 1.753\n\nDecision: t = 2.5 > 1.753, so reject H₀\n\nConclusion: Significant evidence that μ > 70 at α=0.05 level."
+  },
+  {
+    "id": "math202-t5-ex05",
+    "subjectId": "math202",
+    "topicId": "math202-5",
+    "type": "written",
+    "title": "Two-Sample t-Test",
+    "description": "Group 1: n₁=20, x̄₁=85, s₁=10. Group 2: n₂=25, x̄₂=80, s₂=12. Test if the means differ at α=0.05. Assume equal variances.",
+    "difficulty": 3,
+    "hints": [
+      "Pooled variance: s²ₚ = [(n₁-1)s₁² + (n₂-1)s₂²]/(n₁+n₂-2)",
+      "Test statistic: t = (x̄₁ - x̄₂)/√[s²ₚ(1/n₁ + 1/n₂)]",
+      "df = n₁ + n₂ - 2 = 43"
+    ],
+    "solution": "Pooled variance:\ns²ₚ = [(19)(100) + (24)(144)]/43\n= [1900 + 3456]/43 = 5356/43 ≈ 124.56\n\nStandard error:\nSE = √[124.56(1/20 + 1/25)] = √[124.56(0.09)] = √11.21 ≈ 3.35\n\nTest statistic:\nt = (85 - 80)/3.35 = 5/3.35 ≈ 1.49\n\nCritical value (two-tailed, df≈43): t₀.₀₂₅ ≈ 2.02\n\nDecision: |t| = 1.49 < 2.02, fail to reject H₀\n\nConclusion: Insufficient evidence that means differ at α=0.05."
+  },
+  {
+    "id": "math202-t5-ex06",
+    "subjectId": "math202",
+    "topicId": "math202-5",
+    "type": "written",
+    "title": "Paired t-Test",
+    "description": "Before/after measurements for 8 subjects: differences = {2, 5, 3, 4, 6, 1, 3, 4}. Test if there's a significant improvement at α=0.05.",
+    "difficulty": 2,
+    "hints": [
+      "Calculate mean and SD of differences",
+      "Test H₀: μd=0 vs Hₐ: μd>0",
+      "Use t-test with df = n-1 = 7"
+    ],
+    "solution": "Differences: {2, 5, 3, 4, 6, 1, 3, 4}\n\nMean: d̄ = (2+5+3+4+6+1+3+4)/8 = 28/8 = 3.5\n\nSD: sd = √[Σ(di - d̄)²/7]\n= √[(2.25+2.25+0.25+0.25+6.25+6.25+0.25+0.25)/7]\n= √[18/7] ≈ 1.60\n\nTest statistic:\nt = 3.5/(1.60/√8) = 3.5/0.566 ≈ 6.19\n\nCritical value (one-tailed, df=7): t₀.₀₅,₇ ≈ 1.895\n\nDecision: t = 6.19 > 1.895, reject H₀\n\nConclusion: Significant evidence of improvement."
+  },
+  {
+    "id": "math202-t5-ex07",
+    "subjectId": "math202",
+    "topicId": "math202-5",
+    "type": "written",
+    "title": "Test for Proportion",
+    "description": "A company claims 90% customer satisfaction. In a sample of 200, 170 were satisfied. Test the claim at α=0.05.",
+    "difficulty": 2,
+    "hints": [
+      "Sample proportion: p̂ = 170/200",
+      "Test statistic: z = (p̂ - p₀)/√[p₀(1-p₀)/n]"
+    ],
+    "solution": "Given: n=200, x=170, p₀=0.90\np̂ = 170/200 = 0.85\n\nTest statistic:\nz = (0.85 - 0.90)/√[0.90(0.10)/200]\n= -0.05/√0.00045\n= -0.05/0.0212 ≈ -2.36\n\nCritical values (two-tailed): ±1.96\n\nDecision: |z| = 2.36 > 1.96, reject H₀\n\nConclusion: Significant evidence that satisfaction rate ≠ 90%. The actual rate appears lower."
+  },
+  {
+    "id": "math202-t5-ex08",
+    "subjectId": "math202",
+    "topicId": "math202-5",
+    "type": "written",
+    "title": "Chi-Square Goodness of Fit",
+    "description": "A die is rolled 60 times with outcomes: {1:8, 2:12, 3:9, 4:11, 5:10, 6:10}. Test if the die is fair at α=0.05.",
+    "difficulty": 3,
+    "hints": [
+      "Expected frequency for each outcome: 60/6 = 10",
+      "χ² = Σ(O-E)²/E",
+      "df = 6 - 1 = 5"
+    ],
+    "solution": "H₀: Die is fair (all probabilities = 1/6)\nExpected frequency: E = 60/6 = 10 for each outcome\n\nχ² = (8-10)²/10 + (12-10)²/10 + (9-10)²/10 + (11-10)²/10 + (10-10)²/10 + (10-10)²/10\n= 4/10 + 4/10 + 1/10 + 1/10 + 0 + 0\n= 10/10 = 1.0\n\nCritical value (df=5, α=0.05): χ²₀.₀₅,₅ ≈ 11.07\n\nDecision: χ² = 1.0 < 11.07, fail to reject H₀\n\nConclusion: No evidence that die is unfair."
+  },
+  {
+    "id": "math202-t5-ex09",
+    "subjectId": "math202",
+    "topicId": "math202-5",
+    "type": "written",
+    "title": "Chi-Square Test of Independence",
+    "description": "Test if smoking and lung disease are independent:\n             Disease  No Disease\nSmoker         20        30\nNon-smoker     10        40\nUse α=0.05.",
+    "difficulty": 3,
+    "hints": [
+      "Calculate expected frequencies: E = (row total × column total)/grand total",
+      "χ² = ΣΣ(O-E)²/E",
+      "df = (rows-1)(cols-1) = 1"
+    ],
+    "solution": "Row totals: 50, 50. Column totals: 30, 70. Grand total: 100\n\nExpected frequencies:\nE₁₁ = (50×30)/100 = 15\nE₁₂ = (50×70)/100 = 35\nE₂₁ = (50×30)/100 = 15\nE₂₂ = (50×70)/100 = 35\n\nχ² = (20-15)²/15 + (30-35)²/35 + (10-15)²/15 + (40-35)²/35\n= 25/15 + 25/35 + 25/15 + 25/35\n= 1.667 + 0.714 + 1.667 + 0.714 = 4.762\n\nCritical value (df=1, α=0.05): χ²₀.₀₅,₁ = 3.84\n\nDecision: χ² = 4.762 > 3.84, reject H₀\n\nConclusion: Significant evidence that smoking and lung disease are not independent."
+  },
+  {
+    "id": "math202-t5-ex10",
+    "subjectId": "math202",
+    "topicId": "math202-5",
+    "type": "written",
+    "title": "ANOVA F-Test",
+    "description": "Three groups have: Group 1: n₁=5, x̄₁=10, s₁²=4; Group 2: n₂=5, x̄₂=12, s₂²=5; Group 3: n₃=5, x̄₃=15, s₃²=6. Test if means differ at α=0.05.",
+    "difficulty": 4,
+    "hints": [
+      "Grand mean: x̄ = Σnᵢx̄ᵢ/N",
+      "SSB = Σnᵢ(x̄ᵢ - x̄)², MSB = SSB/(k-1)",
+      "SSW = Σ(nᵢ-1)sᵢ², MSW = SSW/(N-k)",
+      "F = MSB/MSW"
+    ],
+    "solution": "N = 15, k = 3\nGrand mean: x̄ = (5×10 + 5×12 + 5×15)/15 = 185/15 ≈ 12.33\n\nSSB = 5(10-12.33)² + 5(12-12.33)² + 5(15-12.33)²\n= 5(5.43) + 5(0.11) + 5(7.13)\n= 27.15 + 0.55 + 35.65 = 63.35\nMSB = 63.35/2 = 31.675\n\nSSW = 4(4) + 4(5) + 4(6) = 16 + 20 + 24 = 60\nMSW = 60/12 = 5\n\nF = 31.675/5 = 6.335\n\nCritical value F₀.₀₅(2,12) ≈ 3.89\n\nDecision: F = 6.335 > 3.89, reject H₀\n\nConclusion: Significant evidence that at least one mean differs."
+  },
+  {
+    "id": "math202-t5-ex11",
+    "subjectId": "math202",
+    "topicId": "math202-5",
+    "type": "written",
+    "title": "p-Value Interpretation",
+    "description": "A test yields p-value = 0.03. Interpret this for α = 0.05 and α = 0.01.",
+    "difficulty": 1,
+    "hints": [
+      "Compare p-value to significance level",
+      "Smaller p-value means stronger evidence against H₀"
+    ],
+    "solution": "p-value = 0.03 means:\n\"If H₀ were true, the probability of observing data as extreme as ours is 0.03 or 3%\"\n\nFor α = 0.05:\np = 0.03 < 0.05, so reject H₀\nResult is statistically significant at the 5% level.\n\nFor α = 0.01:\np = 0.03 > 0.01, so fail to reject H₀\nResult is NOT statistically significant at the 1% level.\n\nConclusion: We have moderate evidence against H₀, significant at 5% but not at 1% level."
+  },
+  {
+    "id": "math202-t5-ex12",
+    "subjectId": "math202",
+    "topicId": "math202-5",
+    "type": "written",
+    "title": "Statistical vs Practical Significance",
+    "description": "A drug lowers blood pressure by an average of 0.5 mmHg with p < 0.001 in a study of 10,000 patients. Discuss statistical vs practical significance.",
+    "difficulty": 2,
+    "hints": [
+      "Consider effect size vs sample size",
+      "Think about clinical relevance"
+    ],
+    "solution": "Statistical significance:\np < 0.001 is highly statistically significant\nWith n=10,000, we have very high power to detect even tiny effects\nWe're very confident the effect is real (not due to chance)\n\nPractical significance:\n0.5 mmHg reduction is clinically trivial\nNormal blood pressure variation is much larger\nThis effect has minimal health impact\n\nConclusion: The result is statistically significant but NOT practically significant. Large samples can detect tiny effects that have no practical importance. Always consider effect size, not just p-value."
+  },
+  {
+    "id": "math202-t5-ex13",
+    "subjectId": "math202",
+    "topicId": "math202-5",
+    "type": "written",
+    "title": "Power of a Test",
+    "description": "Define statistical power. What factors increase the power of a hypothesis test?",
+    "difficulty": 2,
+    "hints": [
+      "Power = 1 - β",
+      "Consider sample size, effect size, significance level"
+    ],
+    "solution": "Statistical Power:\nPower = P(Reject H₀ | H₀ is false) = 1 - β\nProbability of correctly rejecting a false null hypothesis\nProbability of detecting a real effect\n\nFactors that INCREASE power:\n1. Larger sample size (n↑)\n2. Larger effect size (true difference from H₀)\n3. Higher significance level (α↑, but increases Type I error)\n4. Lower population variance (σ²↓)\n5. One-tailed vs two-tailed test (if direction is known)\n\nTypical target: Power ≥ 0.80 (80% chance of detecting effect if it exists)"
+  },
+  {
+    "id": "math202-t5-ex14",
+    "subjectId": "math202",
+    "topicId": "math202-5",
+    "type": "written",
+    "title": "Power Calculation",
+    "description": "For testing H₀: μ=50 vs Hₐ: μ>50 with σ=10, n=25, α=0.05, calculate the power if the true mean is μ=54.",
+    "difficulty": 4,
+    "hints": [
+      "Find critical value for x̄ under H₀",
+      "Calculate probability of exceeding this under true μ=54"
+    ],
+    "solution": "Under H₀: μ₀=50, σx̄ = 10/√25 = 2\nCritical value: z = 1.645\nx̄c = 50 + 1.645(2) = 53.29\n\nUnder true μ=54:\nz = (53.29 - 54)/2 = -0.355\n\nPower = P(x̄ > 53.29 | μ=54)\n= P(Z > -0.355)\n= 1 - P(Z < -0.355)\n≈ 1 - 0.361 = 0.639 or 63.9%\n\nThere's about 64% chance of detecting the difference if μ=54."
+  },
+  {
+    "id": "math202-t5-ex15",
+    "subjectId": "math202",
+    "topicId": "math202-5",
+    "type": "written",
+    "title": "Multiple Testing Problem",
+    "description": "Explain the multiple testing problem. If you conduct 20 independent tests at α=0.05, what is the probability of at least one Type I error?",
+    "difficulty": 3,
+    "hints": [
+      "Each test has 5% chance of Type I error",
+      "Use complement: P(at least 1) = 1 - P(none)"
+    ],
+    "solution": "Multiple Testing Problem:\nWhen conducting multiple hypothesis tests, the probability of at least one Type I error increases.\n\nFor 20 independent tests at α=0.05:\nP(no Type I errors) = (1-0.05)^20 = (0.95)^20 ≈ 0.358\nP(at least one Type I error) = 1 - 0.358 = 0.642\n\nAbout 64% chance of at least one false positive!\n\nSolutions:\n1. Bonferroni correction: Use α/k for each test\n2. False Discovery Rate control\n3. Adjust significance level\n4. Plan analyses in advance, limit exploratory testing\n\nThis is why \"p-hacking\" (testing many hypotheses until finding p<0.05) is problematic."
+  },
+  {
+    "id": "math202-t5-ex16",
+    "subjectId": "math202",
+    "topicId": "math202-5",
+    "type": "written",
+    "title": "Effect Size Measures",
+    "description": "For comparing two means, explain Cohen's d as an effect size measure. Why is it useful beyond just reporting p-values?",
+    "difficulty": 3,
+    "hints": [
+      "Cohen's d = (x̄₁ - x̄₂)/s_pooled",
+      "It standardizes the difference"
+    ],
+    "solution": "Cohen's d = (μ₁ - μ₂)/σ or (x̄₁ - x̄₂)/s_pooled\n\nInterpretation (rough guidelines):\nd ≈ 0.2: Small effect\nd ≈ 0.5: Medium effect\nd ≈ 0.8: Large effect\n\nWhy useful:\n1. Independent of sample size (unlike p-values)\n2. Standardized, allowing comparison across studies\n3. Indicates practical significance, not just statistical\n4. Example: d=0.2 with p<0.001 (large n) vs d=0.8 with p=0.06 (small n)\n   Second has larger effect despite not being \"significant\"\n\nAlways report effect sizes with p-values for complete interpretation."
+  }
+]

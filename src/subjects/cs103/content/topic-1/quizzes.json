@@ -1,0 +1,170 @@
+[
+  {
+    "id": "cs103-quiz-1",
+    "subjectId": "cs103",
+    "topicId": "cs103-1",
+    "title": "Classes and Objects — Quiz A (Fundamentals)",
+    "questions": [
+      {
+        "id": "cs103-q1a-1",
+        "type": "multiple_choice",
+        "prompt": "In OOP, what is a class best described as?",
+        "options": [
+          "A specific instance with state",
+          "A blueprint for creating objects",
+          "A module that holds functions",
+          "A variable that stores methods"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A class defines the structure and behavior that its instances (objects) will have."
+      },
+      {
+        "id": "cs103-q1a-2",
+        "type": "fill_blank",
+        "prompt": "In Python, the constructor method that runs when an object is created is named ____.",
+        "correctAnswer": "__init__",
+        "explanation": "`__init__` initializes a new instance after it has been created."
+      },
+      {
+        "id": "cs103-q1a-3",
+        "type": "true_false",
+        "prompt": "Instance variables are shared across all instances of a class.",
+        "correctAnswer": false,
+        "explanation": "Instance variables belong to each individual object; class variables are shared."
+      },
+      {
+        "id": "cs103-q1a-4",
+        "type": "multiple_choice",
+        "prompt": "What does `self` represent inside an instance method?",
+        "options": [
+          "The class object",
+          "The parent class",
+          "The current instance",
+          "A global reference"
+        ],
+        "correctAnswer": 2,
+        "explanation": "`self` is the current object (instance) the method is operating on."
+      },
+      {
+        "id": "cs103-q1a-5",
+        "type": "multiple_choice",
+        "prompt": "Which dunder method is used by `print(obj)` to produce a human-readable string?",
+        "options": [
+          "__repr__",
+          "__str__",
+          "__call__",
+          "__len__"
+        ],
+        "correctAnswer": 1,
+        "explanation": "`__str__` is used for user-friendly string output; `__repr__` is for debugging."
+      }
+    ]
+  },
+  {
+    "id": "cs103-quiz-1b",
+    "subjectId": "cs103",
+    "topicId": "cs103-1",
+    "title": "Classes and Objects — Quiz B (Application)",
+    "questions": [
+      {
+        "id": "cs103-q1b-1",
+        "type": "code_output",
+        "prompt": "What is printed by this code?",
+        "codeSnippet": "class Counter:\n    def __init__(self):\n        self.count = 0\n    def inc(self):\n        self.count += 1\n\nc1 = Counter()\nc2 = Counter()\nc1.inc()\nc1.inc()\nc2.inc()\nprint(c1.count, c2.count)",
+        "correctAnswer": "2 1",
+        "explanation": "Each instance has its own `count`. `c1` is incremented twice; `c2` once."
+      },
+      {
+        "id": "cs103-q1b-2",
+        "type": "multiple_choice",
+        "prompt": "Which statement correctly creates an instance of class `Dog`?",
+        "options": [
+          "Dog = Dog()",
+          "d = new Dog()",
+          "d = Dog()",
+          "Dog(d)"
+        ],
+        "correctAnswer": 2,
+        "explanation": "In Python you instantiate a class by calling it: `d = Dog()`."
+      },
+      {
+        "id": "cs103-q1b-3",
+        "type": "code_output",
+        "prompt": "What is printed by this code?",
+        "codeSnippet": "class A:\n    x = 0\n    def __init__(self):\n        A.x += 1\n\nA()\nA()\nprint(A.x)",
+        "correctAnswer": "2",
+        "explanation": "`x` is a class variable. Each instantiation increments `A.x`."
+      },
+      {
+        "id": "cs103-q1b-4",
+        "type": "fill_blank",
+        "prompt": "To define a method that belongs to the class (not the instance), you use the ____ decorator.",
+        "correctAnswer": "classmethod",
+        "explanation": "`@classmethod` receives `cls` and is bound to the class rather than an instance."
+      },
+      {
+        "id": "cs103-q1b-5",
+        "type": "true_false",
+        "prompt": "If a class defines `__repr__` but not `__str__`, `print(obj)` will fall back to using `__repr__`.",
+        "correctAnswer": true,
+        "explanation": "Python uses `__str__` if available; otherwise it falls back to `__repr__`."
+      }
+    ]
+  },
+  {
+    "id": "cs103-quiz-1c",
+    "subjectId": "cs103",
+    "topicId": "cs103-1",
+    "title": "Classes and Objects — Quiz C (Advanced)",
+    "questions": [
+      {
+        "id": "cs103-q1c-1",
+        "type": "multiple_choice",
+        "prompt": "Which is the correct way to avoid a mutable default argument in `__init__`?",
+        "options": [
+          "def __init__(self, items=[]): self.items = items",
+          "def __init__(self, items=None): self.items = [] if items is None else items",
+          "def __init__(self, items={}): self.items = items",
+          "def __init__(self, items=list()): self.items = items"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Using `None` avoids sharing a single default list/dict across instances."
+      },
+      {
+        "id": "cs103-q1c-2",
+        "type": "code_output",
+        "prompt": "What is printed by this code?",
+        "codeSnippet": "class C:\n    def __init__(self):\n        self.x = 1\n\nc = C()\nc.y = 99\nprint(hasattr(c, \"y\"), c.y)",
+        "correctAnswer": "True 99",
+        "explanation": "Python objects can have attributes added at runtime unless restricted (e.g., via `__slots__`)."
+      },
+      {
+        "id": "cs103-q1c-3",
+        "type": "multiple_choice",
+        "prompt": "What is the main purpose of `__slots__` in a class?",
+        "options": [
+          "To automatically generate getters and setters",
+          "To prevent inheritance",
+          "To restrict allowed instance attributes and reduce memory usage",
+          "To make methods static by default"
+        ],
+        "correctAnswer": 2,
+        "explanation": "`__slots__` prevents per-instance `__dict__` (in many cases), limiting attributes and saving memory."
+      },
+      {
+        "id": "cs103-q1c-4",
+        "type": "true_false",
+        "prompt": "A `@staticmethod` receives `self` automatically when called on an instance.",
+        "correctAnswer": false,
+        "explanation": "Static methods receive no implicit first argument; they are plain functions stored on a class."
+      },
+      {
+        "id": "cs103-q1c-5",
+        "type": "fill_blank",
+        "prompt": "The dunder method used to customize object creation (before `__init__`) is ____.",
+        "correctAnswer": "__new__",
+        "explanation": "`__new__` creates the instance; `__init__` initializes it."
+      }
+    ]
+  }
+]

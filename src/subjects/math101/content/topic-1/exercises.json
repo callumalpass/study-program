@@ -1,0 +1,295 @@
+[
+  {
+    "id": "math101-t1-drill-1",
+    "subjectId": "math101",
+    "topicId": "math101-topic-1",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Basic AND",
+    "description": "Evaluate: True AND False.",
+    "hints": [
+      "AND is true only if both are true."
+    ],
+    "solution": "False"
+  },
+  {
+    "id": "math101-t1-drill-2",
+    "subjectId": "math101",
+    "topicId": "math101-topic-1",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Basic NOT",
+    "description": "Evaluate: NOT (True OR False).",
+    "hints": [
+      "Evaluate inside the parenthesis first."
+    ],
+    "solution": "NOT (True) = False"
+  },
+  {
+    "id": "math101-t1-drill-3",
+    "subjectId": "math101",
+    "topicId": "math101-topic-1",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Basic Implication",
+    "description": "Evaluate: False IMPLIES True.",
+    "hints": [
+      "Implication is false only if T → F."
+    ],
+    "solution": "True"
+  },
+  {
+    "id": "math101-t1-drill-4",
+    "subjectId": "math101",
+    "topicId": "math101-topic-1",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Simple Translation",
+    "description": "Translate: \"It is not raining\" (let P = \"It is raining\").",
+    "hints": [
+      "Use the negation symbol."
+    ],
+    "solution": "¬P"
+  },
+  {
+    "id": "math101-ex-1",
+    "subjectId": "math101",
+    "topicId": "math101-topic-1",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Truth Tables and Logical Equivalence",
+    "description": "Construct a truth table for the proposition ((P → Q) ∧ (Q → R)) → (P → R). Determine whether this proposition is a tautology, contradiction, or contingency. Then prove that (P → Q) is logically equivalent to (¬Q → ¬P) using a truth table.",
+    "hints": [
+      "List all combinations for P, Q, R before building composite columns.",
+      "A tautology has all true values in its final column.",
+      "For logical equivalence, two expressions must match on every row.",
+      "Remember the contrapositive: (P → Q) ≡ (¬Q → ¬P)."
+    ],
+    "solution": "The truth table shows that ((P → Q) ∧ (Q → R)) → (P → R) is always true, so it is a tautology representing transitivity of implication.\n\nFor the contrapositive, the truth table for (P → Q) and (¬Q → ¬P) is:\nP | Q | P→Q | ¬Q | ¬P | ¬Q→¬P\nT | T |  T  | F  | F  |   T\nT | F |  F  | T  | F  |   F\nF | T |  T  | F  | T  |   T\nF | F |  T  | T  | T  |   T\n\nColumns P→Q and ¬Q→¬P are identical, so they are logically equivalent."
+  },
+  {
+    "id": "math101-t1-ex02",
+    "subjectId": "math101",
+    "topicId": "math101-topic-1",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Basic Truth Table",
+    "description": "Construct a truth table for the proposition P ∧ (Q ∨ ¬P). Identify whether this is a tautology, contradiction, or contingency.",
+    "hints": [
+      "Start with columns for P and Q.",
+      "Compute ¬P, then Q ∨ ¬P, then the final ∧.",
+      "Check if the final column is all T, all F, or mixed."
+    ],
+    "solution": "P | Q | ¬P | Q ∨ ¬P | P ∧ (Q ∨ ¬P)\nT | T |  F |    T    |      T\nT | F |  F |    F    |      F\nF | T |  T |    T    |      F\nF | F |  T |    T    |      F\n\nThe final column has both T and F values, so it is a contingency. Algebraically it simplifies to P ∧ Q."
+  },
+  {
+    "id": "math101-t1-ex03",
+    "subjectId": "math101",
+    "topicId": "math101-topic-1",
+    "type": "written",
+    "difficulty": 2,
+    "title": "De Morgan's Laws",
+    "description": "Use truth tables to verify both of De Morgan's Laws:\n(a) ¬(P ∧ Q) ≡ (¬P ∨ ¬Q)\n(b) ¬(P ∨ Q) ≡ (¬P ∧ ¬Q)",
+    "hints": [
+      "Create a truth table for each side of each equivalence.",
+      "Compare the columns to verify they are identical.",
+      "These laws swap ∧ with ∨ while distributing negation."
+    ],
+    "solution": "(a) ¬(P ∧ Q) ≡ (¬P ∨ ¬Q)\nP | Q | P∧Q | ¬(P∧Q) | ¬P | ¬Q | ¬P∨¬Q\nT | T |  T  |   F    |  F |  F |   F\nT | F |  F  |   T    |  F |  T |   T\nF | T |  F  |   T    |  T |  F |   T\nF | F |  F  |   T    |  T |  T |   T\n\nColumns ¬(P∧Q) and ¬P∨¬Q match. ✓\n\n(b) ¬(P ∨ Q) ≡ (¬P ∧ ¬Q)\nP | Q | P∨Q | ¬(P∨Q) | ¬P | ¬Q | ¬P∧¬Q\nT | T |  T  |   F    |  F |  F |   F\nT | F |  T  |   F    |  F |  T |   F\nF | T |  T  |   F    |  T |  F |   F\nF | F |  F  |   T    |  T |  T |   T\n\nColumns ¬(P∨Q) and ¬P∧¬Q match. ✓"
+  },
+  {
+    "id": "math101-t1-ex04",
+    "subjectId": "math101",
+    "topicId": "math101-topic-1",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Logical Implication",
+    "description": "Given the propositions P = \"It is raining\" and Q = \"The ground is wet\":\n1) Write a proposition capturing \"If it is raining, the ground is wet, and if the ground is not wet, it is not raining.\"\n2) Build a truth table for your proposition.\n3) State whether it is logically equivalent to P ↔ Q.",
+    "hints": [
+      "Translate each conditional separately, then combine with ∧.",
+      "P ↔ Q is shorthand for (P → Q) ∧ (Q → P).",
+      "Check whether your compound proposition has the same truth column as P ↔ Q."
+    ],
+    "solution": "The proposition is (P → Q) ∧ (¬Q → ¬P). The truth table for both (P → Q) ∧ (¬Q → ¬P) and P ↔ Q is T when P and Q match and F otherwise:\nP | Q | P→Q | ¬Q | ¬Q→¬P | (P→Q)∧(¬Q→¬P) | P↔Q\nT | T |  T  |  F |    T   |         T       |  T\nT | F |  F  |  T |    F   |         F       |  F\nF | T |  T  |  F |    T   |         T       |  F\nF | F |  T  |  T |    T   |         T       |  T\n\nSince the final columns match, the statements are equivalent."
+  },
+  {
+    "id": "math101-t1-ex05",
+    "subjectId": "math101",
+    "topicId": "math101-topic-1",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Logical Equivalence Proof",
+    "description": "Use equivalence laws (not a truth table) to prove that (P → (Q ∧ R)) is logically equivalent to (P → Q) ∧ (P → R). Show each algebraic step.",
+    "hints": [
+      "Rewrite implications as ¬P ∨ (Q ∧ R).",
+      "Distribute ∨ over ∧ where appropriate.",
+      "Re-introduce implication form at the end if desired."
+    ],
+    "solution": "(P → (Q ∧ R))\n≡ ¬P ∨ (Q ∧ R)            (implication)\n≡ (¬P ∨ Q) ∧ (¬P ∨ R)      (distribution)\n≡ (P → Q) ∧ (P → R)        (implication, reversed)\n\nTherefore (P → (Q ∧ R)) ≡ (P → Q) ∧ (P → R)."
+  },
+  {
+    "id": "math101-t1-ex06",
+    "subjectId": "math101",
+    "topicId": "math101-topic-1",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Biconditional",
+    "description": "Construct a truth table for P ↔ Q and verify it is equivalent to (P → Q) ∧ (Q → P). State whether the biconditional is a tautology, contradiction, or contingency.",
+    "hints": [
+      "Evaluate P → Q and Q → P in separate columns.",
+      "The biconditional is true when both directions are true.",
+      "Expect a contingency because the result depends on P and Q."
+    ],
+    "solution": "P | Q | P→Q | Q→P | (P→Q)∧(Q→P) | P↔Q\nT | T |  T  |  T  |        T        |  T\nT | F |  F  |  T  |        F        |  F\nF | T |  T  |  F  |        F        |  F\nF | F |  T  |  T  |        T        |  T\n\nThe two final columns match, confirming equivalence. The proposition is a contingency."
+  },
+  {
+    "id": "math101-t1-ex07",
+    "subjectId": "math101",
+    "topicId": "math101-topic-1",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Modus Ponens and Modus Tollens",
+    "description": "Analyze the arguments:\n1) Premises: \"If the circuit is powered, the LED lights\" (P → Q) and \"The circuit is powered\" (P). Conclusion: \"The LED lights\" (Q).\n2) Premises: \"If the circuit is powered, the LED lights\" (P → Q) and \"The LED is not lit\" (¬Q). Conclusion: \"The circuit is not powered\" (¬P).\nName the inference rule in each and state whether the argument is valid.",
+    "hints": [
+      "P → Q, P ⟹ Q is Modus Ponens.",
+      "P → Q, ¬Q ⟹ ¬P is Modus Tollens.",
+      "Both rules are valid forms of inference."
+    ],
+    "solution": "Argument 1 uses Modus Ponens and is valid: from P → Q and P, infer Q.\nArgument 2 uses Modus Tollens and is valid: from P → Q and ¬Q, infer ¬P."
+  },
+  {
+    "id": "math101-t1-ex08",
+    "subjectId": "math101",
+    "topicId": "math101-topic-1",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Simplifying Complex Propositions",
+    "description": "Simplify the proposition (¬P ∧ (P ∨ Q)) ∨ (P ∧ ¬Q) using logical equivalences. Express the result in the simplest form.",
+    "hints": [
+      "Distribute ¬P across (P ∨ Q).",
+      "Combine like terms and use absorption or contradiction rules.",
+      "Look for a form resembling XOR."
+    ],
+    "solution": "(¬P ∧ (P ∨ Q)) ∨ (P ∧ ¬Q)\n≡ (¬P ∧ P) ∨ (¬P ∧ Q) ∨ (P ∧ ¬Q)   (distribution)\n≡ F ∨ (¬P ∧ Q) ∨ (P ∧ ¬Q)           (negation)\n≡ (¬P ∧ Q) ∨ (P ∧ ¬Q)               (identity)\nThis is exactly P ⊕ Q (exclusive or)."
+  },
+  {
+    "id": "math101-t1-ex09",
+    "subjectId": "math101",
+    "topicId": "math101-topic-1",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Functional Completeness of NAND",
+    "description": "Show that NAND alone is functionally complete by expressing ¬P, P ∧ Q, and P ∨ Q using only the NAND operator (↑). Then rewrite P → Q using only NAND.",
+    "hints": [
+      "Recall that P ↑ Q is ¬(P ∧ Q).",
+      "Try NANDing a proposition with itself to get negation.",
+      "Use De Morgan’s laws to build OR from NAND."
+    ],
+    "solution": "Using only NAND (↑):\n¬P = P ↑ P\nP ∧ Q = ¬(P ↑ Q) = (P ↑ Q) ↑ (P ↑ Q)\nP ∨ Q = ¬P ↑ ¬Q = (P ↑ P) ↑ (Q ↑ Q)\nP → Q ≡ ¬P ∨ Q = (P ↑ P) ↑ (Q ↑ Q)\nThus NAND is functionally complete."
+  },
+  {
+    "id": "math101-t1-ex10",
+    "subjectId": "math101",
+    "topicId": "math101-topic-1",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Translation: Logic to English",
+    "description": "Translate the proposition (P ∧ (Q → ¬R)) ∨ (¬P ∧ R) into clear English. Let P = \"You submit the assignment\", Q = \"You have citations\", and R = \"The work is plagiarized\".",
+    "hints": [
+      "Break at the main ∨: either the left conjunction holds or the right.",
+      "Translate conditionals as \"if ... then ...\".",
+      "Keep negations close to the statements they modify."
+    ],
+    "solution": "Either:\n1) You submit the assignment and, if you have citations, then the work is not plagiarized;\nor\n2) You do not submit the assignment and the work is plagiarized."
+  },
+  {
+    "id": "math101-t1-ex11",
+    "subjectId": "math101",
+    "topicId": "math101-topic-1",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Logical Fallacies",
+    "description": "Identify the fallacy, if any:\nPremises: If P then Q. Q is true. Conclusion: Therefore P is true.\nName the fallacy and explain why the argument is invalid.",
+    "hints": [
+      "Compare with valid Modus Ponens.",
+      "Ask whether Q being true guarantees P.",
+      "There may be other reasons Q is true."
+    ],
+    "solution": "This is the fallacy of affirming the consequent. From P → Q and Q you cannot conclude P, because Q could hold for a different reason. A counterexample: \"If it is raining, the ground is wet. The ground is wet. Therefore, it is raining\" fails when sprinklers are on."
+  },
+  {
+    "id": "math101-t1-ex12",
+    "subjectId": "math101",
+    "topicId": "math101-topic-1",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Exclusive OR (XOR)",
+    "description": "Construct a truth table for P ⊕ Q (exclusive or). Express P ⊕ Q using only ∨, ∧, and ¬, and indicate whether the expression is symmetric.",
+    "hints": [
+      "XOR is true exactly when P and Q differ.",
+      "Try the form (P ∨ Q) ∧ ¬(P ∧ Q).",
+      "Symmetry means swapping P and Q does not change the value."
+    ],
+    "solution": "P | Q | P⊕Q\nT | T |  F\nT | F |  T\nF | T |  T\nF | F |  F\n\nP ⊕ Q ≡ (P ∨ Q) ∧ ¬(P ∧ Q). The expression is symmetric in P and Q."
+  },
+  {
+    "id": "math101-t1-ex13",
+    "subjectId": "math101",
+    "topicId": "math101-topic-1",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Normal Forms",
+    "description": "Convert (P → Q) ∨ ¬R into both conjunctive normal form (CNF) and disjunctive normal form (DNF). Show the intermediate equivalence steps.",
+    "hints": [
+      "Rewrite implications as ¬P ∨ Q.",
+      "Push negations inward using De Morgan’s laws.",
+      "For DNF, consider the truth table or distribute ∨ over ∧ after simplifying."
+    ],
+    "solution": "(P → Q) ∨ ¬R\n≡ (¬P ∨ Q) ∨ ¬R                 (implication)\n≡ ¬P ∨ Q ∨ ¬R                   (associative/commutative)\nCNF: (¬P ∨ Q ∨ ¬R)               (already a single clause)\nTo form DNF, list the true rows for P, Q, R:\nRows making the expression false require P = T, Q = F, R = T; all other rows make it true.\nThus DNF is (¬P) ∨ Q ∨ (¬R) ∨ (P ∧ R ∧ Q) which simplifies back to ¬P ∨ Q ∨ ¬R."
+  },
+  {
+    "id": "math101-t1-ex14",
+    "subjectId": "math101",
+    "topicId": "math101-topic-1",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Argument Validity by Truth Table",
+    "description": "Use a truth table to test validity: Premises are (P → Q), (Q → R), and ¬R. Conclusion is ¬P. Is the argument valid?",
+    "hints": [
+      "An argument is valid if no row makes all premises true and the conclusion false.",
+      "Chain implications to see that P would force R.",
+      "Check rows where ¬R is true."
+    ],
+    "solution": "Whenever (P → Q), (Q → R), and ¬R are all true, we must have P = F. If P were T, then Q would be T (from P → Q) and R would be T (from Q → R), contradicting ¬R. Therefore there is no row with all premises true and ¬P false, so the argument is valid."
+  },
+  {
+    "id": "math101-t1-ex15",
+    "subjectId": "math101",
+    "topicId": "math101-topic-1",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Consistency of Propositions",
+    "description": "Determine whether the set {P → Q, Q → R, ¬R, P} is consistent. If inconsistent, identify the contradiction.",
+    "hints": [
+      "Assume P is true and propagate through the implications.",
+      "From P → Q and P, deduce Q. From Q → R and Q, deduce R.",
+      "Contrast R with ¬R."
+    ],
+    "solution": "The set is inconsistent. From P → Q and P we infer Q; from Q → R we infer R. But ¬R is also in the set, so we derive both R and ¬R, a contradiction."
+  },
+  {
+    "id": "math101-t1-ex16",
+    "subjectId": "math101",
+    "topicId": "math101-topic-1",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Contrapositive vs. Proof by Contradiction",
+    "description": "Explain why proving P → Q via the contrapositive ¬Q → ¬P is equivalent to a direct proof of the implication. Provide a short example proof using contrapositive, and indicate how a proof by contradiction would differ.",
+    "hints": [
+      "P → Q and ¬Q → ¬P are logically equivalent.",
+      "Contrapositive proofs assume ¬Q and show ¬P.",
+      "Proof by contradiction assumes P and ¬Q together and derives a contradiction."
+    ],
+    "solution": "Because P → Q ≡ ¬Q → ¬P, proving the contrapositive establishes the original implication. Example: \"If a number is divisible by 4, it is even.\" Contrapositive proof: assume the number is not even (¬Q); then it cannot be divisible by 4 (¬P). Proof by contradiction would assume the number is divisible by 4 (P) and not even (¬Q) and derive a contradiction with the definition of divisibility by 4. Both approaches confirm the implication."
+  }
+]

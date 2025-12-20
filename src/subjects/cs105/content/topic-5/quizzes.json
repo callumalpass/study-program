@@ -1,0 +1,203 @@
+[
+  {
+    "id": "cs105-quiz-5",
+    "subjectId": "cs105",
+    "topicId": "cs105-topic-5",
+    "title": "File I/O Quiz 1: Basics",
+    "questions": [
+      {
+        "id": "cs105-q5-1",
+        "type": "multiple_choice",
+        "prompt": "Which function is used to open a file in C?",
+        "options": [
+          "open()",
+          "fopen()",
+          "file_open()",
+          "readfile()"
+        ],
+        "correctAnswer": 1,
+        "explanation": "fopen() is the standard library function used to open files in C."
+      },
+      {
+        "id": "cs105-q5-2",
+        "type": "multiple_choice",
+        "prompt": "What does the file mode \"w\" do when opening a file?",
+        "options": [
+          "Opens for reading",
+          "Opens for writing (creates/truncates)",
+          "Opens for appending",
+          "Opens for writing only if exists"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Mode \"w\" opens a file for writing, creating it if it doesn't exist and truncating it if it does."
+      },
+      {
+        "id": "cs105-q5-3",
+        "type": "true_false",
+        "prompt": "You must always call fclose() after opening a file with fopen().",
+        "correctAnswer": true,
+        "explanation": "fclose() should always be called to flush buffers, release resources, and ensure data is written properly."
+      },
+      {
+        "id": "cs105-q5-4",
+        "type": "multiple_choice",
+        "prompt": "What does fopen() return if the file cannot be opened?",
+        "options": [
+          "0",
+          "NULL",
+          "-1",
+          "An error code"
+        ],
+        "correctAnswer": 1,
+        "explanation": "fopen() returns NULL if it cannot open the file. Always check for NULL after fopen()."
+      },
+      {
+        "id": "cs105-q5-5",
+        "type": "multiple_choice",
+        "prompt": "What is the difference between \"r\" and \"r+\" modes?",
+        "options": [
+          "No difference",
+          "r+ allows writing too",
+          "r is faster",
+          "r+ creates file if missing"
+        ],
+        "correctAnswer": 1,
+        "explanation": "\"r\" is read-only, while \"r+\" opens for both reading and writing. Both require the file to exist."
+      }
+    ]
+  },
+  {
+    "id": "cs105-quiz-5b",
+    "subjectId": "cs105",
+    "topicId": "cs105-topic-5",
+    "title": "File I/O Quiz 2: Reading and Writing",
+    "questions": [
+      {
+        "id": "cs105-q5b-1",
+        "type": "multiple_choice",
+        "prompt": "Which function reads a line of text from a file?",
+        "options": [
+          "fscanf()",
+          "fgets()",
+          "fread()",
+          "getline()"
+        ],
+        "correctAnswer": 1,
+        "explanation": "fgets() reads a line (up to newline or buffer size) from a file. It's the safest way to read lines."
+      },
+      {
+        "id": "cs105-q5b-2",
+        "type": "true_false",
+        "prompt": "fgets() includes the newline character in the string it reads.",
+        "correctAnswer": true,
+        "explanation": "fgets() includes the newline (if there's room in the buffer) and always null-terminates the string."
+      },
+      {
+        "id": "cs105-q5b-3",
+        "type": "multiple_choice",
+        "prompt": "What is the return value of fgetc() when end of file is reached?",
+        "options": [
+          "0",
+          "NULL",
+          "EOF",
+          "-1"
+        ],
+        "correctAnswer": 2,
+        "explanation": "fgetc() returns EOF (typically -1) when end of file is reached or an error occurs."
+      },
+      {
+        "id": "cs105-q5b-4",
+        "type": "multiple_choice",
+        "prompt": "Why does fgetc() return int instead of char?",
+        "options": [
+          "To return larger values",
+          "To distinguish EOF from valid characters",
+          "To be compatible with Unicode",
+          "Historical reasons only"
+        ],
+        "correctAnswer": 1,
+        "explanation": "fgetc() returns int to distinguish EOF (-1) from the valid character 0xFF (255 as unsigned char)."
+      },
+      {
+        "id": "cs105-q5b-5",
+        "type": "multiple_choice",
+        "prompt": "Which function writes formatted data to a file?",
+        "options": [
+          "printf()",
+          "fprintf()",
+          "fwrite()",
+          "fputs()"
+        ],
+        "correctAnswer": 1,
+        "explanation": "fprintf() writes formatted data to a file, similar to printf() but with a file stream argument."
+      }
+    ]
+  },
+  {
+    "id": "cs105-quiz-5c",
+    "subjectId": "cs105",
+    "topicId": "cs105-topic-5",
+    "title": "File I/O Quiz 3: Binary and Positioning",
+    "questions": [
+      {
+        "id": "cs105-q5c-1",
+        "type": "multiple_choice",
+        "prompt": "What does the \"b\" in \"rb\" mode indicate?",
+        "options": [
+          "Buffered mode",
+          "Binary mode",
+          "Blocked mode",
+          "Both read and write"
+        ],
+        "correctAnswer": 1,
+        "explanation": "\"b\" indicates binary mode, which disables newline translation. Required for non-text files."
+      },
+      {
+        "id": "cs105-q5c-2",
+        "type": "multiple_choice",
+        "prompt": "What function is used to move the file position indicator?",
+        "options": [
+          "fmove()",
+          "fseek()",
+          "fposition()",
+          "fset()"
+        ],
+        "correctAnswer": 1,
+        "explanation": "fseek() moves the file position indicator to a specified location in the file."
+      },
+      {
+        "id": "cs105-q5c-3",
+        "type": "multiple_choice",
+        "prompt": "What does SEEK_END mean in fseek()?",
+        "options": [
+          "Seek to end and stop",
+          "Position relative to end of file",
+          "End seeking mode",
+          "Close file after seek"
+        ],
+        "correctAnswer": 1,
+        "explanation": "SEEK_END means the offset is relative to the end of the file. Often used with offset 0 to go to EOF."
+      },
+      {
+        "id": "cs105-q5c-4",
+        "type": "true_false",
+        "prompt": "fread() and fwrite() work with binary data.",
+        "correctAnswer": true,
+        "explanation": "fread() and fwrite() transfer raw bytes without interpretation, making them ideal for binary I/O."
+      },
+      {
+        "id": "cs105-q5c-5",
+        "type": "multiple_choice",
+        "prompt": "What does ftell() return?",
+        "options": [
+          "Number of bytes written",
+          "Current file position",
+          "File size",
+          "Error code"
+        ],
+        "correctAnswer": 1,
+        "explanation": "ftell() returns the current position in the file (offset from the beginning)."
+      }
+    ]
+  }
+]

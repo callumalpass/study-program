@@ -1,0 +1,179 @@
+[
+  {
+    "id": "math102-q4",
+    "subjectId": "math102",
+    "topicId": "math102-4",
+    "title": "Graph Algorithms - Fundamentals",
+    "questions": [
+      {
+        "id": "math102-q4-1",
+        "type": "multiple_choice",
+        "prompt": "Which traversal algorithm uses a queue data structure?",
+        "options": [
+          "Depth-First Search",
+          "Breadth-First Search",
+          "Topological Sort",
+          "Dijkstra's (basic)"
+        ],
+        "correctAnswer": 1,
+        "explanation": "BFS uses a queue (FIFO) to explore level by level."
+      },
+      {
+        "id": "math102-q4-2",
+        "type": "multiple_choice",
+        "prompt": "What is the time complexity of BFS on a graph with V vertices and E edges?",
+        "options": [
+          "O(V)",
+          "O(E)",
+          "O(V + E)",
+          "O(V × E)"
+        ],
+        "correctAnswer": 2,
+        "explanation": "BFS visits each vertex and edge once: O(V + E)."
+      },
+      {
+        "id": "math102-q4-3",
+        "type": "true_false",
+        "prompt": "Depth-First Search can be used to detect cycles in a directed graph.",
+        "correctAnswer": true,
+        "explanation": "DFS detects cycles by finding back edges to vertices in the current recursion stack."
+      },
+      {
+        "id": "math102-q4-4",
+        "type": "fill_blank",
+        "prompt": "BFS finds the ____ path in an unweighted graph.",
+        "correctAnswer": "shortest",
+        "explanation": "BFS explores by distance from source, finding shortest paths in unweighted graphs."
+      },
+      {
+        "id": "math102-q4-5",
+        "type": "multiple_choice",
+        "prompt": "DFS uses which data structure (implicitly via recursion)?",
+        "options": [
+          "Queue",
+          "Stack",
+          "Heap",
+          "Hash table"
+        ],
+        "correctAnswer": 1,
+        "explanation": "DFS uses a stack - either explicit or via recursion call stack."
+      }
+    ]
+  },
+  {
+    "id": "math102-q4b",
+    "subjectId": "math102",
+    "topicId": "math102-4",
+    "title": "Graph Algorithms - Application",
+    "questions": [
+      {
+        "id": "math102-q4b-1",
+        "type": "multiple_choice",
+        "prompt": "What is the time complexity of Dijkstra's algorithm with a binary heap?",
+        "options": [
+          "O(V)",
+          "O(E log V)",
+          "O((V + E) log V)",
+          "O(V²)"
+        ],
+        "correctAnswer": 2,
+        "explanation": "With binary heap: O((V + E) log V) due to priority queue operations."
+      },
+      {
+        "id": "math102-q4b-2",
+        "type": "true_false",
+        "prompt": "Dijkstra's algorithm works correctly with negative edge weights.",
+        "correctAnswer": false,
+        "explanation": "Dijkstra requires non-negative weights. Use Bellman-Ford for negative weights."
+      },
+      {
+        "id": "math102-q4b-3",
+        "type": "multiple_choice",
+        "prompt": "Topological sort is possible for:",
+        "options": [
+          "Any graph",
+          "Connected graphs only",
+          "Directed acyclic graphs (DAGs)",
+          "Undirected graphs only"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Topological ordering requires a DAG - no cycles allowed."
+      },
+      {
+        "id": "math102-q4b-4",
+        "type": "fill_blank",
+        "prompt": "Bellman-Ford runs ____ iterations of relaxing all edges (V = number of vertices).",
+        "correctAnswer": "V-1",
+        "explanation": "V-1 iterations suffice for shortest paths; an Vth change indicates negative cycle."
+      },
+      {
+        "id": "math102-q4b-5",
+        "type": "multiple_choice",
+        "prompt": "Which algorithm finds all-pairs shortest paths?",
+        "options": [
+          "BFS",
+          "Dijkstra",
+          "Floyd-Warshall",
+          "Kruskal"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Floyd-Warshall computes shortest paths between all pairs in O(V³)."
+      }
+    ]
+  },
+  {
+    "id": "math102-q4c",
+    "subjectId": "math102",
+    "topicId": "math102-4",
+    "title": "Graph Algorithms - Advanced",
+    "questions": [
+      {
+        "id": "math102-q4c-1",
+        "type": "multiple_choice",
+        "prompt": "Kruskal's algorithm uses which data structure for efficient cycle detection?",
+        "options": [
+          "Stack",
+          "Queue",
+          "Union-Find (Disjoint Set)",
+          "Binary Search Tree"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Union-Find efficiently checks if adding an edge creates a cycle."
+      },
+      {
+        "id": "math102-q4c-2",
+        "type": "code_output",
+        "prompt": "What is the time complexity of Floyd-Warshall? Answer in Big-O with V.",
+        "correctAnswer": "O(V^3)",
+        "explanation": "Three nested loops over V vertices gives O(V³)."
+      },
+      {
+        "id": "math102-q4c-3",
+        "type": "true_false",
+        "prompt": "Prim's and Kruskal's algorithms always produce the same minimum spanning tree.",
+        "correctAnswer": false,
+        "explanation": "They find MSTs with same total weight, but may differ if multiple MSTs exist."
+      },
+      {
+        "id": "math102-q4c-4",
+        "type": "multiple_choice",
+        "prompt": "Which is true about Bellman-Ford vs Dijkstra?",
+        "options": [
+          "Bellman-Ford is always faster",
+          "Dijkstra handles negative edges",
+          "Bellman-Ford detects negative cycles",
+          "They have the same complexity"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Bellman-Ford can detect negative cycles; Dijkstra cannot handle negative edges."
+      },
+      {
+        "id": "math102-q4c-5",
+        "type": "fill_blank",
+        "prompt": "The time complexity of Kruskal's algorithm is O(____ log E) where E is edges.",
+        "correctAnswer": "E",
+        "explanation": "Sorting edges: O(E log E). Union-Find operations: nearly O(E). Total: O(E log E)."
+      }
+    ]
+  }
+]

@@ -1,0 +1,185 @@
+[
+  {
+    "id": "cs307-quiz-6-1",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-6",
+    "title": "Network Security - TLS, Firewalls, and IDS/IPS",
+    "questions": [
+      {
+        "id": "cs307-q76",
+        "type": "multiple_choice",
+        "prompt": "What is the primary purpose of TLS/SSL?",
+        "options": [
+          "To compress network traffic",
+          "To provide encrypted, authenticated communication over networks",
+          "To speed up web page loading",
+          "To prevent physical access to servers"
+        ],
+        "correctAnswer": "To provide encrypted, authenticated communication over networks",
+        "explanation": "TLS (Transport Layer Security) provides encryption (confidentiality), authentication (verifying server identity via certificates), and integrity (detecting tampering) for network communications. HTTPS is HTTP over TLS, ensuring secure web browsing."
+      },
+      {
+        "id": "cs307-q77",
+        "type": "true_false",
+        "prompt": "A firewall can prevent all types of cyber attacks by inspecting and blocking malicious traffic.",
+        "correctAnswer": "false",
+        "explanation": "Firewalls are essential but not sufficient. They filter traffic based on rules (ports, IPs, protocols) but cannot detect attacks within allowed traffic like SQL injection in HTTPS requests, or social engineering attacks. Defense in depth requires multiple security layers."
+      },
+      {
+        "id": "cs307-q78",
+        "type": "multiple_choice",
+        "prompt": "What is the difference between IDS and IPS?",
+        "options": [
+          "There is no difference; they are the same",
+          "IDS detects and alerts on threats; IPS detects and actively blocks threats",
+          "IDS is hardware; IPS is software",
+          "IPS only works on encrypted traffic"
+        ],
+        "correctAnswer": "IDS detects and alerts on threats; IPS detects and actively blocks threats",
+        "explanation": "Intrusion Detection Systems (IDS) monitor network traffic and alert on suspicious activity. Intrusion Prevention Systems (IPS) not only detect but also actively block threats by sitting inline and dropping malicious traffic. IPS requires careful tuning to avoid blocking legitimate traffic."
+      },
+      {
+        "id": "cs307-q79",
+        "type": "multiple_choice",
+        "prompt": "Which VPN protocol is considered most secure for modern use?",
+        "options": [
+          "PPTP",
+          "WireGuard or OpenVPN",
+          "Telnet",
+          "FTP"
+        ],
+        "correctAnswer": "WireGuard or OpenVPN",
+        "explanation": "WireGuard and OpenVPN are modern, secure VPN protocols. WireGuard uses contemporary cryptography and has a smaller codebase. PPTP is obsolete and insecure. VPNs encrypt traffic and create secure tunnels over untrusted networks, protecting confidentiality and integrity."
+      },
+      {
+        "id": "cs307-q80",
+        "type": "true_false",
+        "prompt": "DNSSEC helps prevent DNS cache poisoning by using cryptographic signatures to verify DNS responses.",
+        "correctAnswer": "true",
+        "explanation": "DNSSEC (DNS Security Extensions) adds cryptographic signatures to DNS records, allowing resolvers to verify that responses are authentic and haven't been tampered with. This prevents cache poisoning attacks where attackers inject false DNS records to redirect traffic."
+      }
+    ]
+  },
+  {
+    "id": "cs307-quiz-6-2",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-6",
+    "title": "Network Security - MITM, HSTS, and Network Segmentation",
+    "questions": [
+      {
+        "id": "cs307-q81",
+        "type": "multiple_choice",
+        "prompt": "What type of attack involves intercepting and potentially modifying communications between two parties?",
+        "options": [
+          "Denial of Service",
+          "Man-in-the-Middle (MITM)",
+          "SQL Injection",
+          "Buffer Overflow"
+        ],
+        "correctAnswer": "Man-in-the-Middle (MITM)",
+        "explanation": "Man-in-the-Middle attacks occur when an attacker intercepts communication between two parties, potentially reading or modifying data. TLS with proper certificate validation, HSTS, and certificate pinning help prevent MITM attacks by ensuring encrypted, authenticated connections."
+      },
+      {
+        "id": "cs307-q82",
+        "type": "true_false",
+        "prompt": "HTTP Strict Transport Security (HSTS) forces browsers to use HTTPS connections even if users type http:// in the address bar.",
+        "correctAnswer": "true",
+        "explanation": "HSTS is a security header that tells browsers to only connect via HTTPS for a specified period. Once set, browsers automatically upgrade HTTP requests to HTTPS and refuse connections if the certificate is invalid, preventing SSL stripping attacks and accidental insecure connections."
+      },
+      {
+        "id": "cs307-q83",
+        "type": "multiple_choice",
+        "prompt": "What is the primary security benefit of network segmentation?",
+        "options": [
+          "Faster network speeds",
+          "Limiting the blast radius of security breaches by isolating critical systems",
+          "Reducing hardware costs",
+          "Eliminating the need for firewalls"
+        ],
+        "correctAnswer": "Limiting the blast radius of security breaches by isolating critical systems",
+        "explanation": "Network segmentation divides networks into isolated zones (DMZ, internal network, management network). If one segment is compromised, attackers cannot easily access other segments. This limits lateral movement and protects critical assets through defense in depth."
+      },
+      {
+        "id": "cs307-q84",
+        "type": "multiple_choice",
+        "prompt": "Which attack technique amplifies traffic to overwhelm a target using publicly accessible servers?",
+        "options": [
+          "SQL Injection",
+          "DDoS Amplification (like DNS amplification, NTP amplification)",
+          "Phishing",
+          "Privilege Escalation"
+        ],
+        "correctAnswer": "DDoS Amplification (like DNS amplification, NTP amplification)",
+        "explanation": "Amplification attacks use public servers (DNS, NTP, memcached) to multiply traffic volume. Attackers send small requests with spoofed source IPs, causing servers to send large responses to victims. Mitigations include disabling recursion on public DNS servers and rate limiting."
+      },
+      {
+        "id": "cs307-q85",
+        "type": "true_false",
+        "prompt": "Certificate pinning can help prevent MITM attacks by validating that the server certificate matches an expected certificate or public key.",
+        "correctAnswer": "true",
+        "explanation": "Certificate pinning validates that the server's certificate matches a known certificate or public key, preventing attacks where attackers install rogue CA certificates. This adds security beyond normal certificate validation but requires careful management to avoid breaking connectivity during certificate rotation."
+      }
+    ]
+  },
+  {
+    "id": "cs307-quiz-6-3",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-6",
+    "title": "Network Security - WAF, VPN, and Secure Protocols",
+    "questions": [
+      {
+        "id": "cs307-q86",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of a Web Application Firewall (WAF)?",
+        "options": [
+          "To encrypt database connections",
+          "To filter and monitor HTTP traffic to protect web applications from attacks",
+          "To manage user authentication",
+          "To compress web content"
+        ],
+        "correctAnswer": "To filter and monitor HTTP traffic to protect web applications from attacks",
+        "explanation": "WAFs protect web applications by filtering HTTP/HTTPS traffic between clients and servers. They can detect and block attacks like SQL injection, XSS, and CSRF by analyzing request patterns. WAFs provide defense in depth but don't replace secure coding practices."
+      },
+      {
+        "id": "cs307-q87",
+        "type": "true_false",
+        "prompt": "Using public Wi-Fi without VPN is safe because websites use HTTPS encryption.",
+        "correctAnswer": "false",
+        "explanation": "While HTTPS encrypts content, public Wi-Fi has risks: attackers can perform MITM attacks to intercept non-HTTPS traffic, see which sites you visit (DNS queries), create fake hotspots, or exploit vulnerabilities. VPNs add a layer of protection by encrypting all traffic."
+      },
+      {
+        "id": "cs307-q88",
+        "type": "multiple_choice",
+        "prompt": "What protocol should be used instead of Telnet for secure remote server administration?",
+        "options": [
+          "FTP",
+          "HTTP",
+          "SSH (Secure Shell)",
+          "SMTP"
+        ],
+        "correctAnswer": "SSH (Secure Shell)",
+        "explanation": "SSH provides encrypted, authenticated remote access to servers. Telnet transmits everything (including passwords) in plain text and should never be used. SSH uses public key cryptography for authentication and encryption, making it the standard for secure remote administration."
+      },
+      {
+        "id": "cs307-q89",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of rate limiting in network security?",
+        "options": [
+          "To increase network bandwidth",
+          "To restrict the number of requests from a source within a time period, preventing abuse",
+          "To encrypt traffic faster",
+          "To prioritize certain types of traffic"
+        ],
+        "correctAnswer": "To restrict the number of requests from a source within a time period, preventing abuse",
+        "explanation": "Rate limiting restricts how many requests a client can make in a given time period. This mitigates brute force attacks, API abuse, DDoS attacks, and scraping. Implement rate limiting at multiple layers (application, API gateway, CDN, firewall) for defense in depth."
+      },
+      {
+        "id": "cs307-q90",
+        "type": "true_false",
+        "prompt": "Port scanning is an attack technique used to discover which network services are running on a target system.",
+        "correctAnswer": "true",
+        "explanation": "Port scanning identifies open ports and running services on a target. While it's a reconnaissance technique used by attackers, it's also used legitimately by security professionals for vulnerability assessment. Firewalls and IDS can detect and block suspicious port scanning activity."
+      }
+    ]
+  }
+]

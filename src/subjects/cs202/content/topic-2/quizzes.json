@@ -1,0 +1,221 @@
+[
+  {
+    "id": "cs202-topic2-quiz1",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic2",
+    "title": "Assembly Basics",
+    "questions": [
+      {
+        "id": "cs202-t2-q1-1",
+        "type": "multiple_choice",
+        "prompt": "In MIPS assembly, which register is conventionally used for the return address?",
+        "options": [
+          "$v0",
+          "$a0",
+          "$ra",
+          "$sp"
+        ],
+        "correctAnswer": 2,
+        "explanation": "$ra (register 31) holds the return address saved by jal instruction, used to return from procedure calls."
+      },
+      {
+        "id": "cs202-t2-q1-2",
+        "type": "multiple_choice",
+        "prompt": "What does the instruction \"sll $t0, $t1, 2\" accomplish?",
+        "options": [
+          "Adds 2 to $t1 and stores in $t0",
+          "Shifts $t1 left by 2 bits, stores in $t0",
+          "Shifts $t1 right by 2 bits, stores in $t0",
+          "Stores the value 2 in $t0"
+        ],
+        "correctAnswer": 1,
+        "explanation": "sll (shift left logical) shifts the bits of $t1 left by 2 positions (equivalent to multiplying by 4) and stores the result in $t0."
+      },
+      {
+        "id": "cs202-t2-q1-3",
+        "type": "multiple_choice",
+        "prompt": "Which directive is used to define a null-terminated string in MIPS assembly?",
+        "options": [
+          ".word",
+          ".byte",
+          ".asciiz",
+          ".space"
+        ],
+        "correctAnswer": 2,
+        "explanation": ".asciiz creates a null-terminated ASCII string (the z stands for zero-terminated), suitable for use with print_string syscall."
+      },
+      {
+        "id": "cs202-t2-q1-4",
+        "type": "multiple_choice",
+        "prompt": "What is the result of \"andi $t0, $t1, 0xFF\" if $t1 contains 0x12345678?",
+        "options": [
+          "0x12345678",
+          "0x00000078",
+          "0x00000012",
+          "0xFFFFFF78"
+        ],
+        "correctAnswer": 1,
+        "explanation": "andi performs bitwise AND with the immediate value 0xFF, which masks out all but the lowest 8 bits, giving 0x78."
+      },
+      {
+        "id": "cs202-t2-q1-5",
+        "type": "multiple_choice",
+        "prompt": "In MIPS, what is the difference between \"add\" and \"addu\"?",
+        "options": [
+          "add is for floating point, addu for integers",
+          "add can cause overflow exception, addu cannot",
+          "addu is unsigned and uses larger values",
+          "There is no difference"
+        ],
+        "correctAnswer": 1,
+        "explanation": "add generates an overflow exception if the result overflows; addu (unsigned) does not trap on overflow."
+      }
+    ]
+  },
+  {
+    "id": "cs202-topic2-quiz2",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic2",
+    "title": "Control Flow and Memory",
+    "questions": [
+      {
+        "id": "cs202-t2-q2-1",
+        "type": "multiple_choice",
+        "prompt": "What is the target address of \"beq $t0, $t1, label\" if PC=0x1000 and label is at offset +16?",
+        "options": [
+          "0x1000",
+          "0x1010",
+          "0x1014",
+          "0x1004"
+        ],
+        "correctAnswer": 2,
+        "explanation": "beq calculates target as PC+4+(offset×4). With PC=0x1000 and offset=4 words (16 bytes), target is 0x1004+16=0x1014."
+      },
+      {
+        "id": "cs202-t2-q2-2",
+        "type": "multiple_choice",
+        "prompt": "Which instruction would you use to implement \"if (a >= b)\" where a is in $t0 and b is in $t1?",
+        "options": [
+          "bge $t0, $t1, target (pseudo)",
+          "slt $t2, $t0, $t1; beq $t2, $zero, target",
+          "slt $t2, $t1, $t0; bne $t2, $zero, target",
+          "Both B and C are correct"
+        ],
+        "correctAnswer": 3,
+        "explanation": "a >= b is equivalent to NOT(a < b). Both slt/beq and checking b < a work correctly for implementing this condition."
+      },
+      {
+        "id": "cs202-t2-q2-3",
+        "type": "multiple_choice",
+        "prompt": "To load a word from memory address 8($sp), which instruction is used?",
+        "options": [
+          "lb $t0, 8($sp)",
+          "lw $t0, 8($sp)",
+          "sw $t0, 8($sp)",
+          "la $t0, 8($sp)"
+        ],
+        "correctAnswer": 1,
+        "explanation": "lw (load word) loads a 32-bit word from the address computed as $sp + 8 into register $t0."
+      },
+      {
+        "id": "cs202-t2-q2-4",
+        "type": "multiple_choice",
+        "prompt": "In a for loop counting from 0 to N-1, which comparison is most efficient in MIPS?",
+        "options": [
+          "Compare i == N",
+          "Compare i < N",
+          "Compare i != N",
+          "Compare i >= N"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Using bne (branch if not equal) for i != N is efficient as MIPS has a native bne instruction; less-than requires slt."
+      },
+      {
+        "id": "cs202-t2-q2-5",
+        "type": "multiple_choice",
+        "prompt": "What does the \"lui\" instruction do?",
+        "options": [
+          "Loads a byte from memory",
+          "Loads immediate into upper 16 bits of register",
+          "Performs unsigned comparison",
+          "Links to a subroutine"
+        ],
+        "correctAnswer": 1,
+        "explanation": "lui (load upper immediate) loads a 16-bit value into the upper half of a register, setting the lower 16 bits to zero."
+      }
+    ]
+  },
+  {
+    "id": "cs202-topic2-quiz3",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic2",
+    "title": "Procedures and System Calls",
+    "questions": [
+      {
+        "id": "cs202-t2-q3-1",
+        "type": "multiple_choice",
+        "prompt": "Which registers must a callee save before using (callee-saved)?",
+        "options": [
+          "$t0-$t9",
+          "$s0-$s7",
+          "$a0-$a3",
+          "$v0-$v1"
+        ],
+        "correctAnswer": 1,
+        "explanation": "$s0-$s7 are callee-saved registers; if a function uses them, it must save and restore their original values."
+      },
+      {
+        "id": "cs202-t2-q3-2",
+        "type": "multiple_choice",
+        "prompt": "What happens to the stack pointer during a typical function prologue?",
+        "options": [
+          "It increases (moves to higher addresses)",
+          "It decreases (moves to lower addresses)",
+          "It stays the same",
+          "It is reset to zero"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The stack grows downward in MIPS, so the stack pointer decreases to allocate space for local variables and saved registers."
+      },
+      {
+        "id": "cs202-t2-q3-3",
+        "type": "multiple_choice",
+        "prompt": "To print an integer using MIPS syscall, which value should be in $v0?",
+        "options": [
+          "1",
+          "4",
+          "5",
+          "10"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Syscall code 1 prints the integer in $a0. Code 4 prints string, 5 reads integer, 10 exits program."
+      },
+      {
+        "id": "cs202-t2-q3-4",
+        "type": "multiple_choice",
+        "prompt": "In a recursive function, what must always be saved on the stack?",
+        "options": [
+          "Only local variables",
+          "Only the return address",
+          "Return address and any registers the function modifies",
+          "All 32 registers"
+        ],
+        "correctAnswer": 2,
+        "explanation": "A recursive function must save $ra (for nested calls) and any caller-saved registers it needs to preserve across the recursive call."
+      },
+      {
+        "id": "cs202-t2-q3-5",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of the frame pointer ($fp)?",
+        "options": [
+          "To store function return values",
+          "To provide a stable reference to the stack frame",
+          "To count function arguments",
+          "To store the global pointer"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The frame pointer provides a stable base for accessing local variables and parameters, even as $sp changes within the function."
+      }
+    ]
+  }
+]

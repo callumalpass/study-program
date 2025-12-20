@@ -1,0 +1,243 @@
+[
+  {
+    "id": "math404-t1-ex1",
+    "subjectId": "math404",
+    "topicId": "topic-1",
+    "type": "written",
+    "title": "Problem Formulation Basics",
+    "description": "Formulate an optimization problem from a word description, identifying decision variables, objective function, and constraints.",
+    "difficulty": 2,
+    "hints": [
+      "Decision variables are the quantities you can control",
+      "The objective is what you want to maximize or minimize",
+      "Constraints are limitations on the decision variables",
+      "Include non-negativity constraints when appropriate"
+    ],
+    "solution": "To formulate an optimization problem:\n\n1. **Decision Variables**: Identify quantities you can choose\n   Let x₁ = units of product A, x₂ = units of product B\n\n2. **Objective Function**: Write what to optimize\n   max f(x) = 5x₁ + 3x₂ (profit)\n\n3. **Constraints**: List all restrictions\n   2x₁ + x₂ ≤ 100 (labor hours)\n   x₁ + 2x₂ ≤ 80 (material)\n\n4. **Non-negativity**: x₁, x₂ ≥ 0\n\nComplete formulation:\nmax 5x₁ + 3x₂\ns.t. 2x₁ + x₂ ≤ 100\n     x₁ + 2x₂ ≤ 80\n     x₁, x₂ ≥ 0"
+  },
+  {
+    "id": "math404-t1-ex2",
+    "subjectId": "math404",
+    "topicId": "topic-1",
+    "type": "written",
+    "title": "Convexity Verification",
+    "description": "Determine whether the function f(x) = x₁² + x₂² - x₁x₂ is convex by analyzing its Hessian matrix.",
+    "difficulty": 3,
+    "hints": [
+      "Compute the Hessian matrix of second partial derivatives",
+      "A symmetric matrix is PSD if all eigenvalues are non-negative",
+      "For 2×2 matrices, check det(H) ≥ 0 and trace(H) ≥ 0"
+    ],
+    "solution": "f(x) = x₁² + x₂² - x₁x₂\n\n**Step 1: Compute the Hessian**\n∂f/∂x₁ = 2x₁ - x₂\n∂f/∂x₂ = 2x₂ - x₁\n∂²f/∂x₁² = 2\n∂²f/∂x₂² = 2\n∂²f/∂x₁∂x₂ = -1\n\nH = [[2, -1], [-1, 2]]\n\n**Step 2: Check eigenvalues**\ndet(H - λI) = (2-λ)² - 1 = 0\nλ² - 4λ + 3 = 0\nλ = (4 ± 2)/2 → λ₁ = 1, λ₂ = 3\n\n**Conclusion**: Both eigenvalues are positive, so H is positive definite.\nTherefore f is strictly convex."
+  },
+  {
+    "id": "math404-t1-ex3",
+    "subjectId": "math404",
+    "topicId": "topic-1",
+    "type": "written",
+    "title": "First-Order Optimality Conditions",
+    "description": "Find and classify the stationary points of f(x,y) = x³ - 3xy + y³.",
+    "difficulty": 4,
+    "hints": [
+      "Set ∇f = 0 and solve the system of equations",
+      "Use substitution to solve the nonlinear system",
+      "Classify using the second derivative test (Hessian)"
+    ],
+    "solution": "**Finding stationary points:**\n∂f/∂x = 3x² - 3y = 0 → y = x²\n∂f/∂y = -3x + 3y² = 0 → x = y²\n\nSubstituting y = x² into x = y²:\nx = (x²)² = x⁴\nx⁴ - x = 0\nx(x³ - 1) = 0\n\nSo x = 0 or x = 1\nPoints: (0,0) and (1,1)\n\n**Classification using Hessian:**\nH = [[6x, -3], [-3, 6y]]\n\nAt (0,0): H = [[0, -3], [-3, 0]]\ndet(H) = -9 < 0 → **Saddle point**\n\nAt (1,1): H = [[6, -3], [-3, 6]]\ndet(H) = 36 - 9 = 27 > 0\ntrace(H) = 12 > 0 → **Local minimum**\n\nf(1,1) = 1 - 3 + 1 = -1"
+  },
+  {
+    "id": "math404-t1-ex04",
+    "subjectId": "math404",
+    "topicId": "topic-1",
+    "type": "written",
+    "title": "Feasible Region Analysis",
+    "description": "Determine the feasible region for a system of constraints and verify if given points are feasible.",
+    "difficulty": 2,
+    "hints": [
+      "Check each constraint individually",
+      "A point is feasible only if it satisfies ALL constraints",
+      "Sketch the region if working in 2D"
+    ],
+    "solution": "**Constraints:**\nx₁ + 2x₂ ≤ 10\n3x₁ + x₂ ≤ 12\nx₁, x₂ ≥ 0\n\n**Test point (2, 3):**\n- x₁ + 2x₂ = 2 + 6 = 8 ≤ 10 ✓\n- 3x₁ + x₂ = 6 + 3 = 9 ≤ 12 ✓\n- x₁ = 2 ≥ 0, x₂ = 3 ≥ 0 ✓\n**Result:** Feasible\n\n**Test point (5, 4):**\n- x₁ + 2x₂ = 5 + 8 = 13 ≤ 10 ✗\n**Result:** Infeasible\n\n**Vertices of feasible region:**\n- (0, 0)\n- (4, 0)\n- (0, 5)\n- (2, 4): intersection of x₁ + 2x₂ = 10 and 3x₁ + x₂ = 12\n\nThe feasible region is a bounded polyhedron (quadrilateral)."
+  },
+  {
+    "id": "math404-t1-ex05",
+    "subjectId": "math404",
+    "topicId": "topic-1",
+    "type": "written",
+    "title": "Constraint Qualification - LICQ",
+    "description": "Verify whether LICQ (Linear Independence Constraint Qualification) holds at a given point.",
+    "difficulty": 3,
+    "hints": [
+      "LICQ requires active constraint gradients to be linearly independent",
+      "Find which constraints are active (equality holds)",
+      "Compute gradient vectors and check rank"
+    ],
+    "solution": "**Problem:** min f(x) s.t.\ng₁(x) = x₁² + x₂² - 1 ≤ 0\ng₂(x) = x₁ + x₂ - 1 ≤ 0\nh(x) = x₁ - x₂ = 0\n\n**At point x* = (1/√2, 1/√2):**\n\n**Active constraints:**\n- g₁(x*) = 1/2 + 1/2 - 1 = 0 (active)\n- g₂(x*) = 1/√2 + 1/√2 - 1 = √2 - 1 ≈ 0.414 > 0 (inactive)\n- h(x*) = 0 (always active)\n\n**Gradients:**\n∇g₁ = [2x₁, 2x₂] = [√2, √2]\n∇h = [1, -1]\n\n**Check linear independence:**\nForm matrix: [[√2, √2], [1, -1]]\ndet = -√2 - √2 = -2√2 ≠ 0\n\n**Conclusion:** LICQ holds at x* since the gradients are linearly independent."
+  },
+  {
+    "id": "math404-t1-ex06",
+    "subjectId": "math404",
+    "topicId": "topic-1",
+    "type": "written",
+    "title": "Local vs Global Minimum",
+    "description": "Determine whether a local minimum is also a global minimum for a given function.",
+    "difficulty": 3,
+    "hints": [
+      "Check if the function is convex",
+      "For convex functions: local minimum = global minimum",
+      "For non-convex: need to check all critical points"
+    ],
+    "solution": "**Example 1:** f(x) = x² on ℝ\n- f''(x) = 2 > 0 → convex\n- Critical point: f'(x) = 2x = 0 → x* = 0\n- f(0) = 0 is both local and global minimum ✓\n\n**Example 2:** f(x) = x³ - 3x on [-2, 2]\n- f'(x) = 3x² - 3 = 0 → x = ±1\n- f(-1) = -1 + 3 = 2 (local max)\n- f(1) = 1 - 3 = -2 (local min)\n- Boundary: f(-2) = -8 + 6 = -2, f(2) = 8 - 6 = 2\n- Global minimum: min{f(-2), f(1), f(2)} = -2 at x = ±1, -2\n\n**Example 3:** f(x,y) = x² - y² (saddle function)\n- Not convex (indefinite Hessian)\n- (0,0) is stationary but NOT a local minimum\n- No global minimum (unbounded below)\n\n**Key insight:** Convexity guarantees local = global."
+  },
+  {
+    "id": "math404-t1-ex07",
+    "subjectId": "math404",
+    "topicId": "topic-1",
+    "type": "written",
+    "title": "Portfolio Optimization Formulation",
+    "description": "Formulate a portfolio optimization problem with risk and return constraints.",
+    "difficulty": 3,
+    "hints": [
+      "Decision variables: portfolio weights wᵢ",
+      "Objective: minimize risk (variance) or maximize return",
+      "Constraints: weights sum to 1, possibly bounds on weights"
+    ],
+    "solution": "**Problem Statement:**\nInvestor has n assets with expected returns μᵢ and covariance matrix Σ.\nGoal: Find portfolio weights to maximize return for given risk level.\n\n**Decision Variables:**\nw = [w₁, w₂, ..., wₙ]ᵀ (fraction invested in each asset)\n\n**Objective:**\nMaximize expected return: max wᵀμ\nOR minimize risk: min wᵀΣw\n\n**Constraints:**\n1. Σwᵢ = 1 (weights sum to 100%)\n2. w ≥ 0 (no short selling)\n3. wᵀΣw ≤ σ² (risk limit)\n4. wᵀμ ≥ r_target (minimum return)\n\n**Markowitz Mean-Variance:**\nmin (1/2)wᵀΣw - λwᵀμ\ns.t. Σwᵢ = 1, w ≥ 0\n\nwhere λ controls risk-return tradeoff.\n\n**Example with 2 assets:**\nw₁ + w₂ = 1\nmin σ₁²w₁² + σ₂²w₂² + 2ρσ₁σ₂w₁w₂\n\nThis is a convex QP."
+  },
+  {
+    "id": "math404-t1-ex08",
+    "subjectId": "math404",
+    "topicId": "topic-1",
+    "type": "written",
+    "title": "Strict vs Non-Strict Convexity",
+    "description": "Distinguish between strictly convex and convex functions, and identify implications for optimization.",
+    "difficulty": 3,
+    "hints": [
+      "Strict convexity: strict inequality in definition",
+      "Strictly convex functions have unique minimizers",
+      "Check second derivative test"
+    ],
+    "solution": "**Definitions:**\n\n**Convex:** f(λx + (1-λ)y) ≤ λf(x) + (1-λ)f(y)\n**Strictly convex:** f(λx + (1-λ)y) < λf(x) + (1-λ)f(y) for x ≠ y, λ ∈ (0,1)\n\n**Second-order characterization:**\n- Convex: ∇²f(x) ⪰ 0 (PSD)\n- Strictly convex: ∇²f(x) ≻ 0 (PD)\n\n**Examples:**\n\n1. **f(x) = x²** (strictly convex)\n   - f''(x) = 2 > 0\n   - Unique minimizer at x = 0\n\n2. **f(x) = |x|** (convex but not strictly)\n   - Convex but not differentiable at 0\n   - Unique minimizer at x = 0\n\n3. **f(x,y) = x²** (convex but not strictly)\n   - ∇²f = [[2, 0], [0, 0]] (PSD not PD)\n   - Minimizers: entire y-axis (not unique)\n\n**Implications:**\n- Strictly convex → unique global minimum\n- Convex → possibly multiple minimizers (but all optimal)\n- Non-convex → multiple local minima possible"
+  },
+  {
+    "id": "math404-t1-ex09",
+    "subjectId": "math404",
+    "topicId": "topic-1",
+    "type": "written",
+    "title": "Production Planning Formulation",
+    "description": "Formulate an optimization problem for production planning with capacity and demand constraints.",
+    "difficulty": 2,
+    "hints": [
+      "Variables: production quantities for each product",
+      "Objective: maximize profit or minimize cost",
+      "Constraints: resource limits, demand requirements"
+    ],
+    "solution": "**Scenario:**\nFactory produces 3 products using 2 machines.\n- Product A: profit $5, needs 2h machine 1, 1h machine 2\n- Product B: profit $3, needs 1h machine 1, 2h machine 2\n- Product C: profit $4, needs 1h machine 1, 1h machine 2\n- Machine 1: 100 hours available\n- Machine 2: 80 hours available\n- Demand: at least 10 units of product A\n\n**Decision Variables:**\nx₁ = units of product A\nx₂ = units of product B\nx₃ = units of product C\n\n**Objective:**\nmax 5x₁ + 3x₂ + 4x₃\n\n**Constraints:**\n2x₁ + x₂ + x₃ ≤ 100  (machine 1 capacity)\nx₁ + 2x₂ + x₃ ≤ 80   (machine 2 capacity)\nx₁ ≥ 10              (minimum demand)\nx₁, x₂, x₃ ≥ 0       (non-negativity)\n\nThis is a **linear program** that can be solved by simplex or interior point methods."
+  },
+  {
+    "id": "math404-t1-ex10",
+    "subjectId": "math404",
+    "topicId": "topic-1",
+    "type": "written",
+    "title": "Level Sets and Contours",
+    "description": "Analyze the level sets of a function and their relationship to optimization.",
+    "difficulty": 3,
+    "hints": [
+      "Level set: {x : f(x) = c}",
+      "Gradient is perpendicular to level sets",
+      "At optimum, gradient equals zero (flat level set)"
+    ],
+    "solution": "**Function:** f(x,y) = x² + 4y²\n\n**Level sets:** {(x,y) : x² + 4y² = c}\nThese are ellipses with semi-axes √c and √c/2.\n\n**Analysis:**\n- c = 1: ellipse x²/1 + y²/(1/4) = 1\n- c = 4: ellipse x²/4 + y²/1 = 1\n- c → ∞: increasingly large ellipses\n- c = 0: single point (0,0) - the minimum\n\n**Gradient:** ∇f = [2x, 8y]\nAt (2, 1): ∇f = [4, 8], perpendicular to level curve\n\n**Optimization geometry:**\nFor min f(x,y) s.t. g(x,y) = 0:\n- Optimal when ∇f parallel to ∇g\n- This is Lagrange multiplier condition: ∇f = λ∇g\n\n**Example:** min x² + 4y² s.t. x + y = 1\n∇f = [2x, 8y], ∇g = [1, 1]\n[2x, 8y] = λ[1, 1]\n→ 2x = λ, 8y = λ\n→ 2x = 8y → x = 4y\nSubstituting: 4y + y = 1 → y = 1/5, x = 4/5\nOptimal: (4/5, 1/5), f* = 16/25 + 4/25 = 4/5"
+  },
+  {
+    "id": "math404-t1-ex11",
+    "subjectId": "math404",
+    "topicId": "topic-1",
+    "type": "written",
+    "title": "Second-Order Sufficient Conditions",
+    "description": "Apply second-order sufficient conditions to verify local optimality.",
+    "difficulty": 4,
+    "hints": [
+      "First-order: ∇f(x*) = 0 (necessary)",
+      "Second-order: ∇²f(x*) ≻ 0 for minimum (sufficient)",
+      "Check eigenvalues or leading principal minors"
+    ],
+    "solution": "**Problem:** f(x,y) = x³ + y³ - 3xy\n\n**First-order (necessary):**\n∂f/∂x = 3x² - 3y = 0 → y = x²\n∂f/∂y = 3y² - 3x = 0 → x = y²\n\nSolving: x = (x²)² = x⁴ → x(x³ - 1) = 0\nPoints: (0,0) and (1,1)\n\n**Second-order (sufficient):**\n∇²f = [[6x, -3], [-3, 6y]]\n\n**At (0,0):**\nH = [[0, -3], [-3, 0]]\nEigenvalues: λ² - 0 + 9 = 0 → λ = ±3\nOne negative → **saddle point** (not minimum)\n\n**At (1,1):**\nH = [[6, -3], [-3, 6]]\n- Leading minors: M₁ = 6 > 0, M₂ = 36 - 9 = 27 > 0\n- Both positive → H ≻ 0\n**Conclusion:** (1,1) is a strict local minimum by second-order sufficient conditions\n\n**Verification:** f(1,1) = 1 + 1 - 3 = -1\nNearby: f(1.1, 1.1) = 1.331 + 1.331 - 3.63 = -0.968 > -1 ✓"
+  },
+  {
+    "id": "math404-t1-ex12",
+    "subjectId": "math404",
+    "topicId": "topic-1",
+    "type": "written",
+    "title": "Multi-Objective Optimization Setup",
+    "description": "Formulate a multi-objective optimization problem and discuss solution approaches.",
+    "difficulty": 4,
+    "hints": [
+      "Multiple objectives may conflict",
+      "Pareto optimality: no objective can improve without worsening another",
+      "Scalarization: combine objectives with weights"
+    ],
+    "solution": "**Problem:** Design optimization\n- Minimize cost: f₁(x)\n- Maximize performance: f₂(x)\n- Minimize weight: f₃(x)\n\n**Approaches:**\n\n**1. Weighted Sum (Scalarization):**\nmin w₁f₁(x) - w₂f₂(x) + w₃f₃(x)\nwhere w₁ + w₂ + w₃ = 1, wᵢ ≥ 0\n\n**2. ε-Constraint Method:**\nmin f₁(x)\ns.t. f₂(x) ≥ ε₂\n     f₃(x) ≤ ε₃\n\n**3. Pareto Front:**\nSolution x* is Pareto optimal if no x exists such that:\n- fᵢ(x) ≤ fᵢ(x*) for all i\n- fⱼ(x) < fⱼ(x*) for some j\n\n**Example:**\nf₁(x) = x², f₂(x) = (x-2)² on [0,2]\n- Minimize f₁: x = 0 (but f₂ = 4)\n- Minimize f₂: x = 2 (but f₁ = 4)\n- Pareto front: all x ∈ [0,2]\n- Compromise: x = 1 (f₁ = f₂ = 1)\n\n**With weights:** min w₁x² + w₂(x-2)²\nOptimal: x* = 2w₂/(w₁ + w₂)"
+  },
+  {
+    "id": "math404-t1-ex13",
+    "subjectId": "math404",
+    "topicId": "topic-1",
+    "type": "written",
+    "title": "Boundedness and Existence of Solutions",
+    "description": "Determine when an optimization problem has a solution using the extreme value theorem.",
+    "difficulty": 3,
+    "hints": [
+      "Extreme value theorem: continuous f on compact set has min/max",
+      "Compact = closed and bounded",
+      "Check domain and objective function properties"
+    ],
+    "solution": "**Extreme Value Theorem:**\nIf f is continuous and domain S is compact (closed + bounded), then f attains its minimum and maximum on S.\n\n**Example 1:** min x² on [0,1]\n- f(x) = x² is continuous\n- [0,1] is compact\n- **Solution exists:** x* = 0, f* = 0 ✓\n\n**Example 2:** min x² on (0,1)\n- f(x) = x² is continuous\n- (0,1) is NOT closed\n- **No minimum attained** (infimum is 0, not achieved) ✗\n\n**Example 3:** min 1/x on [1,∞)\n- f unbounded domain\n- **No minimum** (approaches 0 as x→∞, never achieved) ✗\n\n**Example 4:** min (x-1)² + (y-2)² s.t. x² + y² ≤ 4\n- f continuous\n- Feasible set is closed ball (compact)\n- **Solution exists** ✓\n\n**Checking compactness:**\n- Closed: includes boundary (≤ not <)\n- Bounded: fits in a ball\n- ℝⁿ is NOT compact\n- Closed ball is compact\n- Open ball is NOT compact\n\n**For unbounded domains:**\nAdd coercivity: f(x) → ∞ as ||x|| → ∞\nThen sublevel sets {x : f(x) ≤ c} are compact."
+  },
+  {
+    "id": "math404-t1-ex14",
+    "subjectId": "math404",
+    "topicId": "topic-1",
+    "type": "written",
+    "title": "Diet Problem Formulation",
+    "description": "Formulate the classic diet problem as a linear optimization model.",
+    "difficulty": 2,
+    "hints": [
+      "Variables: amount of each food",
+      "Objective: minimize cost",
+      "Constraints: meet nutritional requirements"
+    ],
+    "solution": "**Problem:**\nSelect foods to meet daily nutritional needs at minimum cost.\n\n**Data:**\n- n foods: costs cᵢ per unit\n- m nutrients: minimum requirements bⱼ\n- aᵢⱼ = amount of nutrient j in food i\n\n**Decision Variables:**\nxᵢ = units of food i to consume\n\n**Objective:**\nmin Σᵢ cᵢxᵢ (total cost)\n\n**Constraints:**\nΣᵢ aᵢⱼxᵢ ≥ bⱼ  for all nutrients j\nxᵢ ≥ 0\n\n**Concrete Example:**\nFoods: Bread ($2/loaf), Milk ($3/gallon)\nNutrients: Calories (≥2000), Protein (≥50g), Calcium (≥1000mg)\n\n| Food  | Cal | Prot | Calc | Cost |\n|-------|-----|------|------|------|\n| Bread | 1200| 30g  | 200mg| $2   |\n| Milk  | 800 | 40g  | 1200mg|$3   |\n\n**Formulation:**\nmin 2x₁ + 3x₂\ns.t. 1200x₁ + 800x₂ ≥ 2000  (calories)\n     30x₁ + 40x₂ ≥ 50      (protein)\n     200x₁ + 1200x₂ ≥ 1000  (calcium)\n     x₁, x₂ ≥ 0\n\nThis is a linear program."
+  },
+  {
+    "id": "math404-t1-ex15",
+    "subjectId": "math404",
+    "topicId": "topic-1",
+    "type": "written",
+    "title": "Equality vs Inequality Constraints",
+    "description": "Compare optimization problems with equality versus inequality constraints and their geometric interpretation.",
+    "difficulty": 3,
+    "hints": [
+      "Equality constrains to a manifold (lower dimension)",
+      "Inequality defines a region",
+      "Active inequalities behave like equalities at optimum"
+    ],
+    "solution": "**Equality Constraints:** h(x) = 0\n- Reduces dimensionality\n- No \"slack\" - must hold exactly\n- Always active\n\n**Inequality Constraints:** g(x) ≤ 0\n- Defines feasible region\n- May be active (g(x*) = 0) or inactive (g(x*) < 0)\n- Active at boundary, inactive in interior\n\n**Example 1: Equality**\nmin x² + y² s.t. x + y = 1\n- Constraint is a line in ℝ²\n- Feasible set is 1-dimensional\n- Solution: minimize distance to origin from line\n- Optimal: (1/2, 1/2)\n\n**Example 2: Inequality**\nmin x² + y² s.t. x + y ≤ 1\n- Constraint is a half-plane\n- Feasible set is 2-dimensional\n- Unconstrained minimum (0,0) is feasible\n- Optimal: (0, 0) (constraint inactive)\n\n**Example 3: Inequality becomes active**\nmin x² + y² s.t. x + y ≥ 1\n- Unconstrained minimum (0,0) is infeasible\n- Optimal on boundary: (1/2, 1/2)\n- Constraint is active, behaves like equality\n\n**Key insight:**\nAt optimum, active inequalities + equalities determine the solution.\nInactive inequalities have no effect (could remove them).\n\n**Lagrange multipliers:**\n- Equality: λ unrestricted\n- Inequality: λ ≥ 0\n- Complementary slackness: λg(x) = 0"
+  },
+  {
+    "id": "math404-t1-ex16",
+    "subjectId": "math404",
+    "topicId": "topic-1",
+    "type": "written",
+    "title": "Jensen's Inequality Application",
+    "description": "Apply Jensen's inequality to prove bounds and verify convexity properties.",
+    "difficulty": 4,
+    "hints": [
+      "Jensen: f(E[X]) ≤ E[f(X)] for convex f",
+      "Strict inequality if f strictly convex and X non-constant",
+      "Can prove AM-GM inequality as special case"
+    ],
+    "solution": "**Jensen's Inequality:**\nFor convex f and random variable X:\nf(E[X]) ≤ E[f(X)]\n\nEquality iff f is linear or X is constant.\n\n**Application 1: Arithmetic-Geometric Mean**\nLet f(x) = -log(x) (convex for x > 0)\nFor x₁,...,xₙ > 0 with equal weights:\n\nf((x₁+...+xₙ)/n) ≤ (f(x₁)+...+f(xₙ))/n\n-log((x₁+...+xₙ)/n) ≤ -(log x₁+...+log xₙ)/n\nlog((x₁+...+xₙ)/n) ≥ log((x₁···xₙ)^(1/n))\n\nTherefore: **(x₁+...+xₙ)/n ≥ (x₁···xₙ)^(1/n)** (AM-GM)\n\n**Application 2: Variance bound**\nLet f(x) = x² (convex)\nE[X²] ≥ (E[X])²\nTherefore: **Var(X) = E[X²] - (E[X])² ≥ 0**\n\n**Application 3: Log-sum-exp**\nf(x) = eˣ is convex\nFor x₁,...,xₙ:\ne^((x₁+...+xₙ)/n) ≤ (e^x₁+...+e^xₙ)/n\n\n**Application 4: Optimization**\nmin f(x) s.t. x ∈ C (convex)\nAny convex combination of feasible points is feasible.\nIf x*, y* both optimal, then (x*+y*)/2 is also optimal (for strictly convex, this gives uniqueness).\n\n**Reverse Jensen:** For concave f:\nf(E[X]) ≥ E[f(X)]\n\nExample: log is concave\nlog(E[X]) ≥ E[log(X)]"
+  }
+]

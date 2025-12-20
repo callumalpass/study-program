@@ -1,0 +1,173 @@
+[
+  {
+    "id": "math102-q2",
+    "subjectId": "math102",
+    "topicId": "math102-2",
+    "title": "Recurrence Relations - Fundamentals",
+    "questions": [
+      {
+        "id": "math102-q2-1",
+        "type": "multiple_choice",
+        "prompt": "What is the time complexity solution to T(n) = 2T(n/2) + n using the Master Theorem?",
+        "options": [
+          "O(n)",
+          "O(n log n)",
+          "O(n²)",
+          "O(log n)"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Case 2 of Master Theorem: a=2, b=2, f(n)=n, log_b(a)=1, so T(n) = Θ(n log n)."
+      },
+      {
+        "id": "math102-q2-2",
+        "type": "code_output",
+        "prompt": "If F(n) = F(n-1) + F(n-2) with F(0)=0 and F(1)=1, what is F(6)?",
+        "correctAnswer": "8",
+        "explanation": "F(2)=1, F(3)=2, F(4)=3, F(5)=5, F(6)=8. This is the Fibonacci sequence."
+      },
+      {
+        "id": "math102-q2-3",
+        "type": "true_false",
+        "prompt": "The recurrence T(n) = T(n-1) + 1 with T(1) = 1 has solution T(n) = n.",
+        "correctAnswer": true,
+        "explanation": "By iteration: T(n) = T(n-1) + 1 = T(1) + (n-1) = 1 + (n-1) = n."
+      },
+      {
+        "id": "math102-q2-4",
+        "type": "multiple_choice",
+        "prompt": "What is the closed form for T(n) = 2T(n-1) with T(0) = 1?",
+        "options": [
+          "n",
+          "2n",
+          "2^n",
+          "n²"
+        ],
+        "correctAnswer": 2,
+        "explanation": "T(n) = 2^n. Each step doubles: T(0)=1, T(1)=2, T(2)=4, etc."
+      },
+      {
+        "id": "math102-q2-5",
+        "type": "fill_blank",
+        "prompt": "The minimum number of moves to solve Tower of Hanoi with n disks is 2^n - ____.",
+        "correctAnswer": "1",
+        "explanation": "T(n) = 2T(n-1) + 1, with closed form T(n) = 2^n - 1."
+      }
+    ]
+  },
+  {
+    "id": "math102-q2b",
+    "subjectId": "math102",
+    "topicId": "math102-2",
+    "title": "Recurrence Relations - Application",
+    "questions": [
+      {
+        "id": "math102-q2b-1",
+        "type": "multiple_choice",
+        "prompt": "What is the complexity of T(n) = T(n/2) + c using Master Theorem?",
+        "options": [
+          "O(1)",
+          "O(log n)",
+          "O(n)",
+          "O(n log n)"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Case 2 with f(n) = 1: a=1, b=2, log_b(a)=0, f(n)=Θ(1), so T(n)=Θ(log n)."
+      },
+      {
+        "id": "math102-q2b-2",
+        "type": "code_output",
+        "prompt": "For the recurrence a(n) = 3a(n-1) with a(0) = 2, what is a(3)?",
+        "correctAnswer": "54",
+        "explanation": "a(1)=6, a(2)=18, a(3)=54. General solution: a(n) = 2 × 3^n."
+      },
+      {
+        "id": "math102-q2b-3",
+        "type": "multiple_choice",
+        "prompt": "The characteristic equation for a(n) = 5a(n-1) - 6a(n-2) is:",
+        "options": [
+          "x² - 5x + 6 = 0",
+          "x² + 5x - 6 = 0",
+          "x² - 5x - 6 = 0",
+          "x² + 5x + 6 = 0"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Replace a(n) with x^n: x² = 5x - 6, so x² - 5x + 6 = 0."
+      },
+      {
+        "id": "math102-q2b-4",
+        "type": "true_false",
+        "prompt": "The Master Theorem applies to recurrences of the form T(n) = aT(n/b) + f(n).",
+        "correctAnswer": true,
+        "explanation": "Yes, the Master Theorem solves divide-and-conquer recurrences of this form."
+      },
+      {
+        "id": "math102-q2b-5",
+        "type": "multiple_choice",
+        "prompt": "What is T(n) = 4T(n/2) + n² using Master Theorem?",
+        "options": [
+          "O(n²)",
+          "O(n² log n)",
+          "O(n³)",
+          "O(n⁴)"
+        ],
+        "correctAnswer": 1,
+        "explanation": "log_2(4)=2, f(n)=n²=Θ(n²), Case 2 applies: T(n) = Θ(n² log n)."
+      }
+    ]
+  },
+  {
+    "id": "math102-q2c",
+    "subjectId": "math102",
+    "topicId": "math102-2",
+    "title": "Recurrence Relations - Advanced",
+    "questions": [
+      {
+        "id": "math102-q2c-1",
+        "type": "multiple_choice",
+        "prompt": "The roots of x² - x - 1 = 0 (Fibonacci characteristic) are:",
+        "options": [
+          "1 and -1",
+          "(1±√5)/2",
+          "1 and 2",
+          "(-1±√5)/2"
+        ],
+        "correctAnswer": 1,
+        "explanation": "x = (1±√5)/2. The positive root φ ≈ 1.618 is the golden ratio."
+      },
+      {
+        "id": "math102-q2c-2",
+        "type": "code_output",
+        "prompt": "What is the 5th Catalan number C(5)?",
+        "correctAnswer": "42",
+        "explanation": "C(5) = C(2×5,5)/(5+1) = C(10,5)/6 = 252/6 = 42."
+      },
+      {
+        "id": "math102-q2c-3",
+        "type": "fill_blank",
+        "prompt": "For T(n) = 7T(n/2) + n², the Master Theorem gives T(n) = Θ(n^____).",
+        "correctAnswer": "log2(7)",
+        "explanation": "log_2(7) ≈ 2.81. Since f(n)=n² and log_2(7)>2, Case 1 applies."
+      },
+      {
+        "id": "math102-q2c-4",
+        "type": "true_false",
+        "prompt": "The Fibonacci sequence grows exponentially at rate φ^n where φ is the golden ratio.",
+        "correctAnswer": true,
+        "explanation": "F(n) ≈ φ^n/√5, so Fibonacci grows exponentially with base φ ≈ 1.618."
+      },
+      {
+        "id": "math102-q2c-5",
+        "type": "multiple_choice",
+        "prompt": "Which recurrence describes Strassen's matrix multiplication?",
+        "options": [
+          "T(n) = 8T(n/2) + n²",
+          "T(n) = 7T(n/2) + n²",
+          "T(n) = 4T(n/2) + n",
+          "T(n) = 2T(n/2) + n²"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Strassen uses 7 recursive multiplications of n/2 × n/2 matrices, giving O(n^2.81)."
+      }
+    ]
+  }
+]

@@ -1,0 +1,186 @@
+[
+  {
+    "id": "cs302-quiz-1a",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-1",
+    "title": "Network Architecture - Fundamentals",
+    "questions": [
+      {
+        "id": "q1a-1",
+        "type": "multiple_choice",
+        "prompt": "Which layer of the OSI model is responsible for routing packets between networks?",
+        "options": [
+          "Data Link Layer",
+          "Network Layer",
+          "Transport Layer",
+          "Session Layer"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The Network Layer (Layer 3) handles logical addressing and routing packets across different networks using protocols like IP."
+      },
+      {
+        "id": "q1a-2",
+        "type": "multiple_choice",
+        "prompt": "What is the primary difference between a hub and a switch?",
+        "options": [
+          "Hubs are faster than switches",
+          "Switches broadcast to all ports, hubs forward selectively",
+          "Switches forward frames selectively based on MAC addresses, hubs broadcast to all ports",
+          "Hubs operate at Layer 3, switches at Layer 2"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Switches learn MAC addresses and forward frames only to the appropriate port, while hubs simply broadcast all traffic to every port."
+      },
+      {
+        "id": "q1a-3",
+        "type": "true_false",
+        "prompt": "The TCP/IP model has fewer layers than the OSI model.",
+        "correctAnswer": true,
+        "explanation": "The TCP/IP model has 4 layers (Application, Transport, Internet, Network Access), while the OSI model has 7 layers."
+      },
+      {
+        "id": "q1a-4",
+        "type": "fill_blank",
+        "prompt": "The process of adding header information as data moves down the protocol stack is called ____.",
+        "correctAnswer": "encapsulation",
+        "explanation": "Encapsulation is the process where each layer adds its own header (and sometimes trailer) to the data from the layer above."
+      },
+      {
+        "id": "q1a-5",
+        "type": "multiple_choice",
+        "prompt": "Which organization is responsible for developing Internet standards through RFCs?",
+        "options": [
+          "IEEE",
+          "IETF",
+          "ISO",
+          "W3C"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The Internet Engineering Task Force (IETF) develops Internet standards and publishes them as Request for Comments (RFCs)."
+      }
+    ]
+  },
+  {
+    "id": "cs302-quiz-1b",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-1",
+    "title": "Network Architecture - Application",
+    "questions": [
+      {
+        "id": "q1b-1",
+        "type": "multiple_choice",
+        "prompt": "At which OSI layer does a router operate?",
+        "options": [
+          "Layer 1 - Physical",
+          "Layer 2 - Data Link",
+          "Layer 3 - Network",
+          "Layer 4 - Transport"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Routers operate at Layer 3 (Network Layer) because they make forwarding decisions based on IP addresses."
+      },
+      {
+        "id": "q1b-2",
+        "type": "code_output",
+        "prompt": "In the TCP/IP model, which layer would handle the HTTP protocol?",
+        "codeSnippet": "Layer 4: Application\nLayer 3: Transport (TCP/UDP)\nLayer 2: Internet (IP)\nLayer 1: Network Access",
+        "correctAnswer": "Application",
+        "explanation": "HTTP is an application layer protocol in the TCP/IP model, handling web communication between clients and servers."
+      },
+      {
+        "id": "q1b-3",
+        "type": "multiple_choice",
+        "prompt": "What type of network spans a city or metropolitan area?",
+        "options": [
+          "LAN",
+          "WAN",
+          "MAN",
+          "PAN"
+        ],
+        "correctAnswer": 2,
+        "explanation": "A Metropolitan Area Network (MAN) spans a city or large campus, larger than a LAN but smaller than a WAN."
+      },
+      {
+        "id": "q1b-4",
+        "type": "true_false",
+        "prompt": "A MAC address is 32 bits long.",
+        "correctAnswer": false,
+        "explanation": "A MAC address is 48 bits (6 bytes) long, typically written as six pairs of hexadecimal digits (e.g., AA:BB:CC:DD:EE:FF)."
+      },
+      {
+        "id": "q1b-5",
+        "type": "multiple_choice",
+        "prompt": "Which network device creates separate collision domains for each port?",
+        "options": [
+          "Hub",
+          "Repeater",
+          "Switch",
+          "Modem"
+        ],
+        "correctAnswer": 2,
+        "explanation": "A switch creates a separate collision domain for each port, unlike a hub which shares one collision domain across all ports."
+      }
+    ]
+  },
+  {
+    "id": "cs302-quiz-1c",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-1",
+    "title": "Network Architecture - Advanced",
+    "questions": [
+      {
+        "id": "q1c-1",
+        "type": "multiple_choice",
+        "prompt": "Which IEEE standard defines Ethernet?",
+        "options": [
+          "802.1",
+          "802.3",
+          "802.11",
+          "802.15"
+        ],
+        "correctAnswer": 1,
+        "explanation": "802.3 is the IEEE standard for Ethernet. 802.11 is Wi-Fi, 802.15 is Bluetooth, and 802.1 covers bridging and network management."
+      },
+      {
+        "id": "q1c-2",
+        "type": "multiple_choice",
+        "prompt": "In packet switching, what happens to data before transmission?",
+        "options": [
+          "A dedicated circuit is established",
+          "Data is divided into packets that travel independently",
+          "Data is transmitted as a continuous stream",
+          "Bandwidth is reserved for the entire session"
+        ],
+        "correctAnswer": 1,
+        "explanation": "In packet switching, data is broken into packets that can take different paths through the network and be reassembled at the destination."
+      },
+      {
+        "id": "q1c-3",
+        "type": "fill_blank",
+        "prompt": "The first 3 bytes (24 bits) of a MAC address identify the ____ (vendor/manufacturer).",
+        "correctAnswer": "oui",
+        "explanation": "The OUI (Organizationally Unique Identifier) is assigned by IEEE to manufacturers and identifies the vendor of the network interface."
+      },
+      {
+        "id": "q1c-4",
+        "type": "true_false",
+        "prompt": "The OSI model was developed after the TCP/IP model but is more commonly used in actual Internet implementations.",
+        "correctAnswer": false,
+        "explanation": "While OSI was developed to be the standard, TCP/IP was already in use and became the de facto Internet protocol. OSI serves mainly as a reference model."
+      },
+      {
+        "id": "q1c-5",
+        "type": "multiple_choice",
+        "prompt": "Which layer is responsible for end-to-end communication and port addressing?",
+        "options": [
+          "Network Layer",
+          "Transport Layer",
+          "Session Layer",
+          "Application Layer"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The Transport Layer (Layer 4) provides end-to-end communication between applications using port numbers to identify processes."
+      }
+    ]
+  }
+]

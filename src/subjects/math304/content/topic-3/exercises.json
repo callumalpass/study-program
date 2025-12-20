@@ -1,0 +1,575 @@
+[
+  {
+    "id": "math304-t3-ex01",
+    "subjectId": "math304",
+    "topicId": "math304-topic-3",
+    "title": "Compose Two Permutations",
+    "difficulty": 1,
+    "description": "Compose two permutations given in list notation. Permutation composition applies right to left: (fg)(x) = f(g(x)).",
+    "starterCode": "def compose_permutations(f, g):\n    \"\"\"\n    Compose permutations f and g (apply g then f).\n\n    Args:\n        f: First permutation as list where f[i] is image of i\n        g: Second permutation as list where g[i] is image of i\n\n    Returns:\n        Composition f∘g as list\n    \"\"\"\n    pass",
+    "solution": "def compose_permutations(f, g):\n    \"\"\"\n    Compose permutations f and g (apply g then f).\n\n    Args:\n        f: First permutation as list where f[i] is image of i\n        g: Second permutation as list where g[i] is image of i\n\n    Returns:\n        Composition f∘g as list\n    \"\"\"\n    n = len(f)\n    result = []\n\n    for i in range(n):\n        # Apply g first, then f\n        result.append(f[g[i]])\n\n    return result",
+    "testCases": [
+      {
+        "input": "[1, 2, 0], [2, 0, 1]",
+        "expectedOutput": "[0, 1, 2]",
+        "isHidden": false,
+        "description": "Compose two 3-cycles"
+      },
+      {
+        "input": "[1, 0, 2, 3], [0, 1, 3, 2]",
+        "expectedOutput": "[1, 0, 3, 2]",
+        "isHidden": false,
+        "description": "Compose transpositions"
+      },
+      {
+        "input": "[2, 0, 1], [1, 2, 0]",
+        "expectedOutput": "[1, 2, 0]",
+        "isHidden": true,
+        "description": "Composition of cycles"
+      }
+    ],
+    "hints": [
+      "Apply g first, then apply f to the result",
+      "result[i] = f[g[i]]"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math304-t3-ex02",
+    "subjectId": "math304",
+    "topicId": "math304-topic-3",
+    "title": "Find Permutation Inverse",
+    "difficulty": 2,
+    "description": "Find the inverse of a permutation. The inverse satisfies f∘f^(-1) = f^(-1)∘f = identity.",
+    "starterCode": "def permutation_inverse(perm):\n    \"\"\"\n    Find the inverse of a permutation.\n\n    Args:\n        perm: Permutation as list where perm[i] is image of i\n\n    Returns:\n        Inverse permutation as list\n    \"\"\"\n    pass",
+    "solution": "def permutation_inverse(perm):\n    \"\"\"\n    Find the inverse of a permutation.\n\n    Args:\n        perm: Permutation as list where perm[i] is image of i\n\n    Returns:\n        Inverse permutation as list\n    \"\"\"\n    n = len(perm)\n    inverse = [0] * n\n\n    for i in range(n):\n        inverse[perm[i]] = i\n\n    return inverse",
+    "testCases": [
+      {
+        "input": "[1, 2, 0]",
+        "expectedOutput": "[2, 0, 1]",
+        "isHidden": false,
+        "description": "Inverse of 3-cycle"
+      },
+      {
+        "input": "[1, 0, 2, 3]",
+        "expectedOutput": "[1, 0, 2, 3]",
+        "isHidden": false,
+        "description": "Transposition is self-inverse"
+      },
+      {
+        "input": "[3, 0, 1, 2]",
+        "expectedOutput": "[1, 2, 3, 0]",
+        "isHidden": true,
+        "description": "Inverse of 4-cycle"
+      }
+    ],
+    "hints": [
+      "If perm[i] = j, then inverse[j] = i",
+      "The inverse \"undoes\" the permutation"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math304-t3-ex03",
+    "subjectId": "math304",
+    "topicId": "math304-topic-3",
+    "title": "Convert to Cycle Notation",
+    "difficulty": 3,
+    "description": "Convert a permutation from list notation to cycle notation. Express as list of disjoint cycles.",
+    "starterCode": "def to_cycle_notation(perm):\n    \"\"\"\n    Convert permutation to cycle notation.\n\n    Args:\n        perm: Permutation as list where perm[i] is image of i\n\n    Returns:\n        List of cycles (each cycle is a list of elements)\n    \"\"\"\n    pass",
+    "solution": "def to_cycle_notation(perm):\n    \"\"\"\n    Convert permutation to cycle notation.\n\n    Args:\n        perm: Permutation as list where perm[i] is image of i\n\n    Returns:\n        List of cycles (each cycle is a list of elements)\n    \"\"\"\n    n = len(perm)\n    visited = [False] * n\n    cycles = []\n\n    for i in range(n):\n        if not visited[i]:\n            cycle = []\n            current = i\n\n            while not visited[current]:\n                visited[current] = True\n                cycle.append(current)\n                current = perm[current]\n\n            # Only include non-trivial cycles (length > 1)\n            if len(cycle) > 1:\n                cycles.append(cycle)\n\n    return cycles",
+    "testCases": [
+      {
+        "input": "[1, 2, 0, 3]",
+        "expectedOutput": "[[0, 1, 2]]",
+        "isHidden": false,
+        "description": "One 3-cycle"
+      },
+      {
+        "input": "[1, 0, 3, 2]",
+        "expectedOutput": "[[0, 1], [2, 3]]",
+        "isHidden": false,
+        "description": "Two transpositions"
+      },
+      {
+        "input": "[2, 0, 3, 1]",
+        "expectedOutput": "[[0, 2, 3, 1]]",
+        "isHidden": true,
+        "description": "One 4-cycle"
+      }
+    ],
+    "hints": [
+      "Follow each element to see where it goes",
+      "Stop when you return to the starting element",
+      "Skip fixed points (1-cycles)"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math304-t3-ex04",
+    "subjectId": "math304",
+    "topicId": "math304-topic-3",
+    "title": "Convert from Cycle Notation",
+    "difficulty": 2,
+    "description": "Convert a permutation from cycle notation to list notation.",
+    "starterCode": "def from_cycle_notation(cycles, n):\n    \"\"\"\n    Convert cycle notation to list notation.\n\n    Args:\n        cycles: List of cycles (each cycle is a list of elements)\n        n: Size of the permutation\n\n    Returns:\n        Permutation as list\n    \"\"\"\n    pass",
+    "solution": "def from_cycle_notation(cycles, n):\n    \"\"\"\n    Convert cycle notation to list notation.\n\n    Args:\n        cycles: List of cycles (each cycle is a list of elements)\n        n: Size of the permutation\n\n    Returns:\n        Permutation as list\n    \"\"\"\n    perm = list(range(n))  # Start with identity\n\n    for cycle in cycles:\n        if len(cycle) > 1:\n            # Map each element to the next in the cycle\n            for i in range(len(cycle)):\n                perm[cycle[i]] = cycle[(i + 1) % len(cycle)]\n\n    return perm",
+    "testCases": [
+      {
+        "input": "[[0, 1, 2]], 4",
+        "expectedOutput": "[1, 2, 0, 3]",
+        "isHidden": false,
+        "description": "3-cycle on 4 elements"
+      },
+      {
+        "input": "[[0, 1], [2, 3]], 4",
+        "expectedOutput": "[1, 0, 3, 2]",
+        "isHidden": false,
+        "description": "Two transpositions"
+      },
+      {
+        "input": "[[0, 2, 3, 1]], 4",
+        "expectedOutput": "[2, 0, 3, 1]",
+        "isHidden": true,
+        "description": "4-cycle"
+      }
+    ],
+    "hints": [
+      "Start with identity permutation",
+      "For each cycle, map each element to the next",
+      "Last element maps to first"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math304-t3-ex05",
+    "subjectId": "math304",
+    "topicId": "math304-topic-3",
+    "title": "Find Permutation Order",
+    "difficulty": 3,
+    "description": "Find the order of a permutation. The order is the smallest positive integer k such that applying the permutation k times gives the identity.",
+    "starterCode": "def permutation_order(perm):\n    \"\"\"\n    Find the order of a permutation.\n\n    Args:\n        perm: Permutation as list where perm[i] is image of i\n\n    Returns:\n        Order of the permutation\n    \"\"\"\n    pass",
+    "solution": "def permutation_order(perm):\n    \"\"\"\n    Find the order of a permutation.\n\n    Args:\n        perm: Permutation as list where perm[i] is image of i\n\n    Returns:\n        Order of the permutation\n    \"\"\"\n    def gcd(a, b):\n        while b:\n            a, b = b, a % b\n        return a\n\n    def lcm(a, b):\n        return (a * b) // gcd(a, b)\n\n    n = len(perm)\n    visited = [False] * n\n    cycle_lengths = []\n\n    # Find all cycle lengths\n    for i in range(n):\n        if not visited[i]:\n            length = 0\n            current = i\n\n            while not visited[current]:\n                visited[current] = True\n                length += 1\n                current = perm[current]\n\n            cycle_lengths.append(length)\n\n    # Order is LCM of all cycle lengths\n    result = 1\n    for length in cycle_lengths:\n        result = lcm(result, length)\n\n    return result",
+    "testCases": [
+      {
+        "input": "[1, 2, 0, 3]",
+        "expectedOutput": "3",
+        "isHidden": false,
+        "description": "Order of 3-cycle"
+      },
+      {
+        "input": "[1, 0, 3, 2]",
+        "expectedOutput": "2",
+        "isHidden": false,
+        "description": "Order of product of transpositions"
+      },
+      {
+        "input": "[1, 2, 3, 0, 5, 4]",
+        "expectedOutput": "4",
+        "isHidden": true,
+        "description": "LCM of cycles (2,2) = 4"
+      }
+    ],
+    "hints": [
+      "Find cycle decomposition",
+      "Order is LCM of cycle lengths",
+      "Use LCM because cycles are disjoint"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math304-t3-ex06",
+    "subjectId": "math304",
+    "topicId": "math304-topic-3",
+    "title": "Check Permutation Parity",
+    "difficulty": 3,
+    "description": "Determine if a permutation is even or odd. A permutation is even if it can be expressed as product of an even number of transpositions.",
+    "starterCode": "def is_even_permutation(perm):\n    \"\"\"\n    Check if permutation is even.\n\n    Args:\n        perm: Permutation as list where perm[i] is image of i\n\n    Returns:\n        True if even, False if odd\n    \"\"\"\n    pass",
+    "solution": "def is_even_permutation(perm):\n    \"\"\"\n    Check if permutation is even.\n\n    Args:\n        perm: Permutation as list where perm[i] is image of i\n\n    Returns:\n        True if even, False if odd\n    \"\"\"\n    n = len(perm)\n    visited = [False] * n\n    num_cycles = 0\n\n    # Count number of cycles\n    for i in range(n):\n        if not visited[i]:\n            current = i\n            while not visited[current]:\n                visited[current] = True\n                current = perm[current]\n            num_cycles += 1\n\n    # A permutation is even iff (n - number_of_cycles) is even\n    return (n - num_cycles) % 2 == 0",
+    "testCases": [
+      {
+        "input": "[1, 2, 0]",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "3-cycle is even"
+      },
+      {
+        "input": "[1, 0, 2]",
+        "expectedOutput": "False",
+        "isHidden": false,
+        "description": "Transposition is odd"
+      },
+      {
+        "input": "[1, 0, 3, 2]",
+        "expectedOutput": "True",
+        "isHidden": true,
+        "description": "Product of two transpositions is even"
+      }
+    ],
+    "hints": [
+      "Count the number of cycles (including fixed points)",
+      "Permutation is even iff (n - cycles) is even",
+      "Cycle of length k needs k-1 transpositions"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math304-t3-ex07",
+    "subjectId": "math304",
+    "topicId": "math304-topic-3",
+    "title": "Compute Permutation Power",
+    "difficulty": 2,
+    "description": "Compute the k-th power of a permutation (apply it k times).",
+    "starterCode": "def permutation_power(perm, k):\n    \"\"\"\n    Compute perm^k (apply permutation k times).\n\n    Args:\n        perm: Permutation as list where perm[i] is image of i\n        k: Non-negative integer exponent\n\n    Returns:\n        Result of applying perm k times\n    \"\"\"\n    pass",
+    "solution": "def permutation_power(perm, k):\n    \"\"\"\n    Compute perm^k (apply permutation k times).\n\n    Args:\n        perm: Permutation as list where perm[i] is image of i\n        k: Non-negative integer exponent\n\n    Returns:\n        Result of applying perm k times\n    \"\"\"\n    n = len(perm)\n    result = list(range(n))  # Identity\n\n    for _ in range(k):\n        new_result = []\n        for i in range(n):\n            new_result.append(result[perm[i]])\n        result = new_result\n\n    return result",
+    "testCases": [
+      {
+        "input": "[1, 2, 0], 2",
+        "expectedOutput": "[2, 0, 1]",
+        "isHidden": false,
+        "description": "3-cycle squared"
+      },
+      {
+        "input": "[1, 2, 0], 3",
+        "expectedOutput": "[0, 1, 2]",
+        "isHidden": false,
+        "description": "3-cycle cubed is identity"
+      },
+      {
+        "input": "[1, 0, 2, 3], 2",
+        "expectedOutput": "[0, 1, 2, 3]",
+        "isHidden": true,
+        "description": "Transposition squared is identity"
+      }
+    ],
+    "hints": [
+      "Start with identity permutation",
+      "Apply the permutation k times",
+      "Optimize by using order if needed"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math304-t3-ex08",
+    "subjectId": "math304",
+    "topicId": "math304-topic-3",
+    "title": "Count Inversions",
+    "difficulty": 2,
+    "description": "Count the number of inversions in a permutation. An inversion is a pair (i,j) where i < j but perm[i] > perm[j].",
+    "starterCode": "def count_inversions(perm):\n    \"\"\"\n    Count inversions in a permutation.\n\n    Args:\n        perm: Permutation as list\n\n    Returns:\n        Number of inversions\n    \"\"\"\n    pass",
+    "solution": "def count_inversions(perm):\n    \"\"\"\n    Count inversions in a permutation.\n\n    Args:\n        perm: Permutation as list\n\n    Returns:\n        Number of inversions\n    \"\"\"\n    count = 0\n    n = len(perm)\n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if perm[i] > perm[j]:\n                count += 1\n\n    return count",
+    "testCases": [
+      {
+        "input": "[2, 1, 0]",
+        "expectedOutput": "3",
+        "isHidden": false,
+        "description": "Reverse has maximum inversions"
+      },
+      {
+        "input": "[0, 1, 2]",
+        "expectedOutput": "0",
+        "isHidden": false,
+        "description": "Identity has no inversions"
+      },
+      {
+        "input": "[1, 0, 2, 3]",
+        "expectedOutput": "1",
+        "isHidden": true,
+        "description": "One transposition"
+      }
+    ],
+    "hints": [
+      "Check all pairs (i,j) where i < j",
+      "Count pairs where perm[i] > perm[j]",
+      "Parity of inversions matches parity of permutation"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math304-t3-ex09",
+    "subjectId": "math304",
+    "topicId": "math304-topic-3",
+    "title": "Generate Symmetric Group",
+    "difficulty": 4,
+    "description": "Generate all permutations of n elements (the symmetric group Sn).",
+    "starterCode": "def generate_symmetric_group(n):\n    \"\"\"\n    Generate all permutations of {0, 1, ..., n-1}.\n\n    Args:\n        n: Size of the set\n\n    Returns:\n        List of all permutations (each permutation is a list)\n    \"\"\"\n    pass",
+    "solution": "def generate_symmetric_group(n):\n    \"\"\"\n    Generate all permutations of {0, 1, ..., n-1}.\n\n    Args:\n        n: Size of the set\n\n    Returns:\n        List of all permutations (each permutation is a list)\n    \"\"\"\n    def permute(arr, start, result):\n        if start == len(arr):\n            result.append(arr[:])\n            return\n\n        for i in range(start, len(arr)):\n            arr[start], arr[i] = arr[i], arr[start]\n            permute(arr, start + 1, result)\n            arr[start], arr[i] = arr[i], arr[start]\n\n    result = []\n    permute(list(range(n)), 0, result)\n    return sorted(result)",
+    "testCases": [
+      {
+        "input": "2",
+        "expectedOutput": "[[0, 1], [1, 0]]",
+        "isHidden": false,
+        "description": "S2 has 2 permutations"
+      },
+      {
+        "input": "3",
+        "expectedOutput": "[[0, 1, 2], [0, 2, 1], [1, 0, 2], [1, 2, 0], [2, 0, 1], [2, 1, 0]]",
+        "isHidden": false,
+        "description": "S3 has 6 permutations"
+      },
+      {
+        "input": "1",
+        "expectedOutput": "[[0]]",
+        "isHidden": true,
+        "description": "S1 has 1 permutation"
+      }
+    ],
+    "hints": [
+      "Use recursive backtracking",
+      "Swap elements to generate permutations",
+      "|Sn| = n!"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math304-t3-ex10",
+    "subjectId": "math304",
+    "topicId": "math304-topic-3",
+    "title": "Find Conjugate Permutation",
+    "difficulty": 4,
+    "description": "Compute the conjugate of permutation σ by τ: τστ^(-1). Conjugation preserves cycle structure.",
+    "starterCode": "def conjugate_permutation(sigma, tau):\n    \"\"\"\n    Compute τστ^(-1).\n\n    Args:\n        sigma: Permutation to conjugate\n        tau: Conjugating permutation\n\n    Returns:\n        Conjugated permutation\n    \"\"\"\n    pass",
+    "solution": "def conjugate_permutation(sigma, tau):\n    \"\"\"\n    Compute τστ^(-1).\n\n    Args:\n        sigma: Permutation to conjugate\n        tau: Conjugating permutation\n\n    Returns:\n        Conjugated permutation\n    \"\"\"\n    n = len(sigma)\n\n    # Find tau inverse\n    tau_inv = [0] * n\n    for i in range(n):\n        tau_inv[tau[i]] = i\n\n    # Compute tau * sigma * tau_inv\n    result = []\n    for i in range(n):\n        # Apply tau_inv, then sigma, then tau\n        result.append(tau[sigma[tau_inv[i]]])\n\n    return result",
+    "testCases": [
+      {
+        "input": "[1, 2, 0], [0, 2, 1]",
+        "expectedOutput": "[2, 0, 1]",
+        "isHidden": false,
+        "description": "Conjugate 3-cycle"
+      },
+      {
+        "input": "[1, 0, 2, 3], [2, 3, 0, 1]",
+        "expectedOutput": "[3, 2, 0, 1]",
+        "isHidden": false,
+        "description": "Conjugate transposition"
+      },
+      {
+        "input": "[1, 0, 2], [1, 2, 0]",
+        "expectedOutput": "[0, 2, 1]",
+        "isHidden": true,
+        "description": "Conjugation changes cycle"
+      }
+    ],
+    "hints": [
+      "Compute τστ^(-1) by composing three permutations",
+      "First find inverse of τ",
+      "Conjugation preserves cycle type"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math304-t3-ex11",
+    "subjectId": "math304",
+    "topicId": "math304-topic-3",
+    "title": "Find Cycle Type",
+    "difficulty": 2,
+    "description": "Determine the cycle type of a permutation. Cycle type is a partition describing the lengths of disjoint cycles.",
+    "starterCode": "def cycle_type(perm):\n    \"\"\"\n    Find cycle type of permutation.\n\n    Args:\n        perm: Permutation as list\n\n    Returns:\n        Sorted list of cycle lengths (descending order)\n    \"\"\"\n    pass",
+    "solution": "def cycle_type(perm):\n    \"\"\"\n    Find cycle type of permutation.\n\n    Args:\n        perm: Permutation as list\n\n    Returns:\n        Sorted list of cycle lengths (descending order)\n    \"\"\"\n    n = len(perm)\n    visited = [False] * n\n    lengths = []\n\n    for i in range(n):\n        if not visited[i]:\n            length = 0\n            current = i\n\n            while not visited[current]:\n                visited[current] = True\n                length += 1\n                current = perm[current]\n\n            lengths.append(length)\n\n    return sorted(lengths, reverse=True)",
+    "testCases": [
+      {
+        "input": "[1, 2, 0, 4, 3]",
+        "expectedOutput": "[3, 2]",
+        "isHidden": false,
+        "description": "Cycle type (3,2)"
+      },
+      {
+        "input": "[1, 0, 3, 2]",
+        "expectedOutput": "[2, 2]",
+        "isHidden": false,
+        "description": "Cycle type (2,2)"
+      },
+      {
+        "input": "[0, 1, 2, 3]",
+        "expectedOutput": "[1, 1, 1, 1]",
+        "isHidden": true,
+        "description": "Identity has all 1-cycles"
+      }
+    ],
+    "hints": [
+      "Find all cycles including fixed points",
+      "Return sorted list of cycle lengths",
+      "Usually sorted in descending order"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math304-t3-ex12",
+    "subjectId": "math304",
+    "topicId": "math304-topic-3",
+    "title": "Check if Permutations Commute",
+    "difficulty": 2,
+    "description": "Determine if two permutations commute (σ∘τ = τ∘σ). Disjoint cycles always commute.",
+    "starterCode": "def permutations_commute(sigma, tau):\n    \"\"\"\n    Check if two permutations commute.\n\n    Args:\n        sigma: First permutation\n        tau: Second permutation\n\n    Returns:\n        True if they commute, False otherwise\n    \"\"\"\n    pass",
+    "solution": "def permutations_commute(sigma, tau):\n    \"\"\"\n    Check if two permutations commute.\n\n    Args:\n        sigma: First permutation\n        tau: Second permutation\n\n    Returns:\n        True if they commute, False otherwise\n    \"\"\"\n    n = len(sigma)\n\n    # Compute sigma * tau\n    sigma_tau = []\n    for i in range(n):\n        sigma_tau.append(sigma[tau[i]])\n\n    # Compute tau * sigma\n    tau_sigma = []\n    for i in range(n):\n        tau_sigma.append(tau[sigma[i]])\n\n    return sigma_tau == tau_sigma",
+    "testCases": [
+      {
+        "input": "[1, 2, 0, 3], [0, 1, 2, 3]",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Anything commutes with identity"
+      },
+      {
+        "input": "[1, 0, 2, 3], [0, 1, 3, 2]",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Disjoint cycles commute"
+      },
+      {
+        "input": "[1, 0, 2, 3], [1, 2, 0, 3]",
+        "expectedOutput": "False",
+        "isHidden": true,
+        "description": "Non-disjoint cycles do not commute"
+      }
+    ],
+    "hints": [
+      "Compute both compositions σ∘τ and τ∘σ",
+      "Check if they are equal",
+      "Disjoint cycles always commute"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math304-t3-ex13",
+    "subjectId": "math304",
+    "topicId": "math304-topic-3",
+    "title": "Express as Product of Transpositions",
+    "difficulty": 3,
+    "description": "Express a permutation as a product of transpositions (2-cycles).",
+    "starterCode": "def to_transpositions(perm):\n    \"\"\"\n    Express permutation as product of transpositions.\n\n    Args:\n        perm: Permutation as list\n\n    Returns:\n        List of transpositions (each transposition is a 2-element list)\n    \"\"\"\n    pass",
+    "solution": "def to_transpositions(perm):\n    \"\"\"\n    Express permutation as product of transpositions.\n\n    Args:\n        perm: Permutation as list\n\n    Returns:\n        List of transpositions (each transposition is a 2-element list)\n    \"\"\"\n    n = len(perm)\n    visited = [False] * n\n    transpositions = []\n\n    for i in range(n):\n        if not visited[i]:\n            cycle = []\n            current = i\n\n            while not visited[current]:\n                visited[current] = True\n                cycle.append(current)\n                current = perm[current]\n\n            # Convert cycle to transpositions\n            # (a b c d) = (a b)(a c)(a d)\n            if len(cycle) > 1:\n                for j in range(len(cycle) - 1, 0, -1):\n                    transpositions.append([cycle[0], cycle[j]])\n\n    return transpositions",
+    "testCases": [
+      {
+        "input": "[1, 2, 0]",
+        "expectedOutput": "[[0, 2], [0, 1]]",
+        "isHidden": false,
+        "description": "3-cycle = 2 transpositions"
+      },
+      {
+        "input": "[1, 0, 2, 3]",
+        "expectedOutput": "[[0, 1]]",
+        "isHidden": false,
+        "description": "Transposition is already transposition"
+      },
+      {
+        "input": "[0, 1, 2]",
+        "expectedOutput": "[]",
+        "isHidden": true,
+        "description": "Identity has no transpositions"
+      }
+    ],
+    "hints": [
+      "Convert each cycle to transpositions",
+      "Cycle (a b c) = (a c)(a b)",
+      "Apply transpositions right to left"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math304-t3-ex14",
+    "subjectId": "math304",
+    "topicId": "math304-topic-3",
+    "title": "Find Centralizer of Permutation",
+    "difficulty": 5,
+    "description": "Find all permutations that commute with a given permutation. This is the centralizer in the symmetric group.",
+    "starterCode": "def centralizer(perm, n):\n    \"\"\"\n    Find all permutations that commute with perm.\n\n    Args:\n        perm: Permutation as list\n        n: Size of symmetric group\n\n    Returns:\n        List of all permutations that commute with perm\n    \"\"\"\n    pass",
+    "solution": "def centralizer(perm, n):\n    \"\"\"\n    Find all permutations that commute with perm.\n\n    Args:\n        perm: Permutation as list\n        n: Size of symmetric group\n\n    Returns:\n        List of all permutations that commute with perm\n    \"\"\"\n    def generate_permutations(arr, start, result):\n        if start == len(arr):\n            result.append(arr[:])\n            return\n        for i in range(start, len(arr)):\n            arr[start], arr[i] = arr[i], arr[start]\n            generate_permutations(arr, start + 1, result)\n            arr[start], arr[i] = arr[i], arr[start]\n\n    # Generate all permutations\n    all_perms = []\n    generate_permutations(list(range(n)), 0, all_perms)\n\n    # Filter those that commute\n    centralizer_perms = []\n\n    for tau in all_perms:\n        # Check if perm * tau == tau * perm\n        perm_tau = [perm[tau[i]] for i in range(n)]\n        tau_perm = [tau[perm[i]] for i in range(n)]\n\n        if perm_tau == tau_perm:\n            centralizer_perms.append(tau)\n\n    return sorted(centralizer_perms)",
+    "testCases": [
+      {
+        "input": "[1, 0, 2], 3",
+        "expectedOutput": "[[0, 1, 2], [1, 0, 2]]",
+        "isHidden": false,
+        "description": "Centralizer of transposition"
+      },
+      {
+        "input": "[0, 1, 2], 3",
+        "expectedOutput": "[[0, 1, 2], [0, 2, 1], [1, 0, 2], [1, 2, 0], [2, 0, 1], [2, 1, 0]]",
+        "isHidden": false,
+        "description": "Centralizer of identity is whole group"
+      },
+      {
+        "input": "[1, 0], 2",
+        "expectedOutput": "[[0, 1], [1, 0]]",
+        "isHidden": true,
+        "description": "Centralizer in S2"
+      }
+    ],
+    "hints": [
+      "Generate all permutations",
+      "Test each for commutativity with given permutation",
+      "Warning: expensive for n > 4"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math304-t3-ex15",
+    "subjectId": "math304",
+    "topicId": "math304-topic-3",
+    "title": "Count Fixed Points",
+    "difficulty": 1,
+    "description": "Count the number of fixed points of a permutation. A fixed point is an element i where perm[i] = i.",
+    "starterCode": "def count_fixed_points(perm):\n    \"\"\"\n    Count fixed points of permutation.\n\n    Args:\n        perm: Permutation as list\n\n    Returns:\n        Number of fixed points\n    \"\"\"\n    pass",
+    "solution": "def count_fixed_points(perm):\n    \"\"\"\n    Count fixed points of permutation.\n\n    Args:\n        perm: Permutation as list\n\n    Returns:\n        Number of fixed points\n    \"\"\"\n    count = 0\n    for i in range(len(perm)):\n        if perm[i] == i:\n            count += 1\n    return count",
+    "testCases": [
+      {
+        "input": "[0, 1, 2, 3]",
+        "expectedOutput": "4",
+        "isHidden": false,
+        "description": "Identity fixes everything"
+      },
+      {
+        "input": "[1, 0, 2, 3]",
+        "expectedOutput": "2",
+        "isHidden": false,
+        "description": "Transposition fixes 2 points"
+      },
+      {
+        "input": "[2, 0, 1]",
+        "expectedOutput": "0",
+        "isHidden": true,
+        "description": "3-cycle has no fixed points"
+      }
+    ],
+    "hints": [
+      "Check each position i",
+      "Count where perm[i] == i"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math304-t3-ex16",
+    "subjectId": "math304",
+    "topicId": "math304-topic-3",
+    "title": "Check Alternating Group Membership",
+    "difficulty": 2,
+    "description": "Determine if a permutation belongs to the alternating group An (subgroup of even permutations).",
+    "starterCode": "def in_alternating_group(perm):\n    \"\"\"\n    Check if permutation is in the alternating group.\n\n    Args:\n        perm: Permutation as list\n\n    Returns:\n        True if permutation is even, False if odd\n    \"\"\"\n    pass",
+    "solution": "def in_alternating_group(perm):\n    \"\"\"\n    Check if permutation is in the alternating group.\n\n    Args:\n        perm: Permutation as list\n\n    Returns:\n        True if permutation is even, False if odd\n    \"\"\"\n    n = len(perm)\n    visited = [False] * n\n    num_cycles = 0\n\n    for i in range(n):\n        if not visited[i]:\n            current = i\n            while not visited[current]:\n                visited[current] = True\n                current = perm[current]\n            num_cycles += 1\n\n    # Even iff (n - num_cycles) is even\n    return (n - num_cycles) % 2 == 0",
+    "testCases": [
+      {
+        "input": "[1, 2, 0]",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "3-cycle is even"
+      },
+      {
+        "input": "[1, 0, 2, 3]",
+        "expectedOutput": "False",
+        "isHidden": false,
+        "description": "Single transposition is odd"
+      },
+      {
+        "input": "[1, 0, 3, 2]",
+        "expectedOutput": "True",
+        "isHidden": true,
+        "description": "Two transpositions is even"
+      }
+    ],
+    "hints": [
+      "Count cycles (including 1-cycles)",
+      "Permutation is even iff (n - cycle_count) is even",
+      "Alternating group An consists of all even permutations"
+    ],
+    "language": "python"
+  }
+]

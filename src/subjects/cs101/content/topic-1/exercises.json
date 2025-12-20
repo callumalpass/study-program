@@ -1,0 +1,536 @@
+[
+  {
+    "id": "cs101-exercise-1",
+    "subjectId": "cs101",
+    "topicId": "cs101-topic-1",
+    "title": "Temperature Converter",
+    "difficulty": 2,
+    "description": "Create a program that converts temperature from Celsius to Fahrenheit. The formula is: F = (C * 9/5) + 32",
+    "starterCode": "# Complete the function to convert Celsius to Fahrenheit\ndef celsius_to_fahrenheit(celsius):\n    # Your code here\n    pass\n\n# Test your function\nprint(celsius_to_fahrenheit(0))\nprint(celsius_to_fahrenheit(100))",
+    "solution": "def celsius_to_fahrenheit(celsius):\n    fahrenheit = (celsius * 9/5) + 32\n    return fahrenheit\n\nprint(celsius_to_fahrenheit(0))\nprint(celsius_to_fahrenheit(100))",
+    "testCases": [
+      {
+        "input": "0",
+        "isHidden": false,
+        "description": "Freezing point of water"
+      },
+      {
+        "input": "100",
+        "isHidden": false,
+        "description": "Boiling point of water"
+      },
+      {
+        "input": "37",
+        "isHidden": true,
+        "description": "Normal body temperature"
+      }
+    ],
+    "hints": [
+      "Remember the formula: F = (C * 9/5) + 32",
+      "Use parentheses to ensure correct order of operations",
+      "Return the calculated fahrenheit value"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs101-t1-ex02",
+    "subjectId": "cs101",
+    "topicId": "cs101-topic-1",
+    "title": "Variable Swap",
+    "difficulty": 1,
+    "description": "Write a function that takes two values and returns them in swapped order. For example, swap(5, 10) should return (10, 5).",
+    "starterCode": "# Swap two values and return them\ndef swap(a, b):\n    # Your code here\n    pass\n\n# Test your function\nresult = swap(5, 10)\nprint(result)",
+    "solution": "def swap(a, b):\n    return (b, a)\n\nresult = swap(5, 10)\nprint(result)",
+    "testCases": [
+      {
+        "input": "5, 10",
+        "isHidden": false,
+        "description": "Swap two positive integers"
+      },
+      {
+        "input": "\"hello\", \"world\"",
+        "isHidden": false,
+        "description": "Swap two strings"
+      },
+      {
+        "input": "0, -5",
+        "isHidden": true,
+        "description": "Swap with zero and negative"
+      }
+    ],
+    "hints": [
+      "Python can return multiple values as a tuple",
+      "You can return values in any order you want",
+      "Try: return (b, a)"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs101-t1-ex03",
+    "subjectId": "cs101",
+    "topicId": "cs101-topic-1",
+    "title": "Type Checker",
+    "difficulty": 1,
+    "description": "Write a function that takes a value and returns a string describing its type. Return \"integer\", \"float\", \"string\", or \"boolean\" accordingly.",
+    "starterCode": "# Return the type of the value as a string\ndef get_type_name(value):\n    # Your code here\n    pass\n\n# Test your function\nprint(get_type_name(42))\nprint(get_type_name(3.14))\nprint(get_type_name(\"hello\"))\nprint(get_type_name(True))",
+    "solution": "def get_type_name(value):\n    if isinstance(value, bool):\n        return \"boolean\"\n    elif isinstance(value, int):\n        return \"integer\"\n    elif isinstance(value, float):\n        return \"float\"\n    elif isinstance(value, str):\n        return \"string\"\n    else:\n        return \"unknown\"\n\nprint(get_type_name(42))\nprint(get_type_name(3.14))\nprint(get_type_name(\"hello\"))\nprint(get_type_name(True))",
+    "testCases": [
+      {
+        "input": "42",
+        "isHidden": false,
+        "description": "Integer type"
+      },
+      {
+        "input": "3.14",
+        "isHidden": false,
+        "description": "Float type"
+      },
+      {
+        "input": "\"hello\"",
+        "isHidden": false,
+        "description": "String type"
+      },
+      {
+        "input": "True",
+        "isHidden": true,
+        "description": "Boolean type"
+      }
+    ],
+    "hints": [
+      "Use the isinstance() function to check types",
+      "Check for bool before int (bool is a subclass of int in Python)",
+      "isinstance(value, int) checks if value is an integer"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs101-t1-ex04",
+    "subjectId": "cs101",
+    "topicId": "cs101-topic-1",
+    "title": "Circle Calculator",
+    "difficulty": 2,
+    "description": "Write a function that takes a radius and returns the area of a circle. Use 3.14159 for pi. The formula is: area = pi * radius^2",
+    "starterCode": "# Calculate the area of a circle given its radius\ndef circle_area(radius):\n    # Your code here\n    pass\n\n# Test your function\nprint(circle_area(1))\nprint(circle_area(5))",
+    "solution": "def circle_area(radius):\n    pi = 3.14159\n    area = pi * radius ** 2\n    return area\n\nprint(circle_area(1))\nprint(circle_area(5))",
+    "testCases": [
+      {
+        "input": "1",
+        "isHidden": false,
+        "description": "Unit circle"
+      },
+      {
+        "input": "5",
+        "isHidden": false,
+        "description": "Radius of 5"
+      },
+      {
+        "input": "10",
+        "isHidden": true,
+        "description": "Radius of 10"
+      }
+    ],
+    "hints": [
+      "Define pi as a variable: pi = 3.14159",
+      "Use ** for exponentiation (radius ** 2)",
+      "Multiply pi by radius squared"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs101-t1-ex05",
+    "subjectId": "cs101",
+    "topicId": "cs101-topic-1",
+    "title": "String Formatter",
+    "difficulty": 2,
+    "description": "Write a function that takes a name and age, and returns a formatted string: \"Hello, my name is [name] and I am [age] years old.\"",
+    "starterCode": "# Format a greeting with name and age\ndef format_greeting(name, age):\n    # Your code here\n    pass\n\n# Test your function\nprint(format_greeting(\"Alice\", 25))\nprint(format_greeting(\"Bob\", 30))",
+    "solution": "def format_greeting(name, age):\n    return f\"Hello, my name is {name} and I am {age} years old.\"\n\nprint(format_greeting(\"Alice\", 25))\nprint(format_greeting(\"Bob\", 30))",
+    "testCases": [
+      {
+        "input": "\"Alice\", 25",
+        "isHidden": false,
+        "description": "Basic greeting"
+      },
+      {
+        "input": "\"Bob\", 30",
+        "isHidden": false,
+        "description": "Another greeting"
+      },
+      {
+        "input": "\"Charlie\", 0",
+        "isHidden": true,
+        "description": "Edge case with zero age"
+      }
+    ],
+    "hints": [
+      "Use f-strings for easy string formatting: f\"text {variable}\"",
+      "You can also use .format() method or string concatenation",
+      "Make sure to include all the required text exactly as shown"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs101-t1-ex06",
+    "subjectId": "cs101",
+    "topicId": "cs101-topic-1",
+    "title": "Number Rounder",
+    "difficulty": 3,
+    "description": "Write a function that takes a float and an integer n, and returns the float rounded to n decimal places. For example, round_to(3.14159, 2) should return 3.14.",
+    "starterCode": "# Round a number to n decimal places\ndef round_to(number, n):\n    # Your code here\n    pass\n\n# Test your function\nprint(round_to(3.14159, 2))\nprint(round_to(2.71828, 3))",
+    "solution": "def round_to(number, n):\n    return round(number, n)\n\nprint(round_to(3.14159, 2))\nprint(round_to(2.71828, 3))",
+    "testCases": [
+      {
+        "input": "3.14159, 2",
+        "isHidden": false,
+        "description": "Round to 2 decimal places"
+      },
+      {
+        "input": "2.71828, 3",
+        "isHidden": false,
+        "description": "Round to 3 decimal places"
+      },
+      {
+        "input": "1.999, 1",
+        "isHidden": true,
+        "description": "Rounding up"
+      }
+    ],
+    "hints": [
+      "Python has a built-in round() function",
+      "round(number, n) rounds to n decimal places",
+      "The second argument to round() specifies precision"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs101-t1-ex07",
+    "subjectId": "cs101",
+    "topicId": "cs101-topic-1",
+    "title": "BMI Calculator",
+    "difficulty": 3,
+    "description": "Write a function that calculates Body Mass Index (BMI). The formula is: BMI = weight (kg) / height (m)^2. Return the BMI rounded to 1 decimal place.",
+    "starterCode": "# Calculate BMI from weight (kg) and height (m)\ndef calculate_bmi(weight, height):\n    # Your code here\n    pass\n\n# Test your function\nprint(calculate_bmi(70, 1.75))\nprint(calculate_bmi(85, 1.80))",
+    "solution": "def calculate_bmi(weight, height):\n    bmi = weight / (height ** 2)\n    return round(bmi, 1)\n\nprint(calculate_bmi(70, 1.75))\nprint(calculate_bmi(85, 1.80))",
+    "testCases": [
+      {
+        "input": "70, 1.75",
+        "isHidden": false,
+        "description": "Normal BMI"
+      },
+      {
+        "input": "85, 1.80",
+        "isHidden": false,
+        "description": "Overweight BMI"
+      },
+      {
+        "input": "50, 1.60",
+        "isHidden": true,
+        "description": "Lower BMI"
+      }
+    ],
+    "hints": [
+      "First calculate BMI using the formula: weight / height^2",
+      "Use ** for exponentiation: height ** 2",
+      "Round the result to 1 decimal place using round(bmi, 1)"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs101-t1-ex08",
+    "subjectId": "cs101",
+    "topicId": "cs101-topic-1",
+    "title": "Compound Interest Calculator",
+    "difficulty": 4,
+    "description": "Write a function that calculates compound interest. Given principal, annual rate (as decimal), times compounded per year, and years, return the final amount. Formula: A = P(1 + r/n)^(nt). Round to 2 decimal places.",
+    "starterCode": "# Calculate compound interest\n# principal: initial amount\n# rate: annual interest rate (decimal, e.g., 0.05 for 5%)\n# n: times compounded per year\n# years: number of years\ndef compound_interest(principal, rate, n, years):\n    # Your code here\n    pass\n\n# Test: $1000 at 5% compounded monthly for 10 years\nprint(compound_interest(1000, 0.05, 12, 10))\n# Test: $5000 at 3% compounded quarterly for 5 years\nprint(compound_interest(5000, 0.03, 4, 5))",
+    "solution": "def compound_interest(principal, rate, n, years):\n    amount = principal * (1 + rate/n) ** (n * years)\n    return round(amount, 2)\n\nprint(compound_interest(1000, 0.05, 12, 10))\nprint(compound_interest(5000, 0.03, 4, 5))",
+    "testCases": [
+      {
+        "input": "1000, 0.05, 12, 10",
+        "isHidden": false,
+        "description": "$1000 at 5% monthly for 10 years"
+      },
+      {
+        "input": "5000, 0.03, 4, 5",
+        "isHidden": false,
+        "description": "$5000 at 3% quarterly for 5 years"
+      },
+      {
+        "input": "10000, 0.07, 1, 20",
+        "isHidden": true,
+        "description": "$10000 at 7% annually for 20 years"
+      }
+    ],
+    "hints": [
+      "The formula is: A = P(1 + r/n)^(nt)",
+      "P is principal, r is rate, n is compounds per year, t is years",
+      "Use ** for exponentiation",
+      "Remember to round to 2 decimal places"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs101-t1-ex09",
+    "subjectId": "cs101",
+    "topicId": "cs101-topic-1",
+    "title": "Percentage Calculator",
+    "difficulty": 2,
+    "description": "Write a function that takes a value and a total, and returns what percentage the value is of the total. For example, percentage(25, 100) should return 25.0.",
+    "starterCode": "# Calculate what percentage value is of total\ndef percentage(value, total):\n    # Your code here\n    pass\n\n# Test your function\nprint(percentage(25, 100))\nprint(percentage(3, 12))",
+    "solution": "def percentage(value, total):\n    return (value / total) * 100\n\nprint(percentage(25, 100))\nprint(percentage(3, 12))",
+    "testCases": [
+      {
+        "input": "25, 100",
+        "isHidden": false,
+        "description": "25 out of 100"
+      },
+      {
+        "input": "3, 12",
+        "isHidden": false,
+        "description": "3 out of 12"
+      },
+      {
+        "input": "50, 200",
+        "isHidden": true,
+        "description": "50 out of 200"
+      }
+    ],
+    "hints": [
+      "Divide value by total to get the fraction",
+      "Multiply by 100 to convert to percentage",
+      "The formula is: (value / total) * 100"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs101-t1-ex10",
+    "subjectId": "cs101",
+    "topicId": "cs101-topic-1",
+    "title": "String Length Checker",
+    "difficulty": 1,
+    "description": "Write a function that takes a string and returns its length. Then return whether it is \"short\" (less than 5 chars), \"medium\" (5-10 chars), or \"long\" (more than 10 chars).",
+    "starterCode": "# Classify string length\ndef classify_length(text):\n    # Your code here\n    pass\n\n# Test your function\nprint(classify_length(\"Hi\"))\nprint(classify_length(\"Hello\"))\nprint(classify_length(\"Hello, World!\"))",
+    "solution": "def classify_length(text):\n    length = len(text)\n    if length < 5:\n        return \"short\"\n    elif length <= 10:\n        return \"medium\"\n    else:\n        return \"long\"\n\nprint(classify_length(\"Hi\"))\nprint(classify_length(\"Hello\"))\nprint(classify_length(\"Hello, World!\"))",
+    "testCases": [
+      {
+        "input": "\"Hi\"",
+        "isHidden": false,
+        "description": "Short string"
+      },
+      {
+        "input": "\"Hello\"",
+        "isHidden": false,
+        "description": "Medium string"
+      },
+      {
+        "input": "\"Hello, World!\"",
+        "isHidden": true,
+        "description": "Long string"
+      }
+    ],
+    "hints": [
+      "Use len() to get the string length",
+      "Use if/elif/else to check the ranges",
+      "Less than 5 is short, 5-10 is medium, more than 10 is long"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs101-t1-ex11",
+    "subjectId": "cs101",
+    "topicId": "cs101-topic-1",
+    "title": "Debug the Code",
+    "difficulty": 3,
+    "description": "The following code has bugs. Fix them so the function correctly calculates and returns the total price with tax. The tax rate is 8.5%.",
+    "starterCode": "# Fix the bugs in this code\ndef calculate_total(price):\n    tax_rate = \"8.5\"  # Bug 1\n    tax = price * tax_rate  # Bug 2\n    total = price + tax\n    # Bug 3: missing return\n\n# Test - should print 108.5\nresult = calculate_total(100)\nprint(result)",
+    "solution": "def calculate_total(price):\n    tax_rate = 0.085\n    tax = price * tax_rate\n    total = price + tax\n    return total\n\nresult = calculate_total(100)\nprint(result)",
+    "testCases": [
+      {
+        "input": "100",
+        "isHidden": false,
+        "description": "Price of 100"
+      },
+      {
+        "input": "50",
+        "isHidden": true,
+        "description": "Price of 50"
+      }
+    ],
+    "hints": [
+      "The tax rate should be a number (0.085), not a string",
+      "You cannot multiply a number by a string",
+      "The function needs to return the total"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs101-t1-ex12",
+    "subjectId": "cs101",
+    "topicId": "cs101-topic-1",
+    "title": "Extract Initials",
+    "difficulty": 3,
+    "description": "Write a function that takes a full name (first and last) and returns the initials in uppercase. For example, \"john doe\" should return \"JD\".",
+    "starterCode": "# Extract initials from a full name\ndef get_initials(full_name):\n    # Your code here\n    pass\n\n# Test your function\nprint(get_initials(\"john doe\"))\nprint(get_initials(\"Alice Smith\"))",
+    "solution": "def get_initials(full_name):\n    parts = full_name.split()\n    first_initial = parts[0][0].upper()\n    last_initial = parts[1][0].upper()\n    return first_initial + last_initial\n\nprint(get_initials(\"john doe\"))\nprint(get_initials(\"Alice Smith\"))",
+    "testCases": [
+      {
+        "input": "\"john doe\"",
+        "isHidden": false,
+        "description": "Lowercase name"
+      },
+      {
+        "input": "\"Alice Smith\"",
+        "isHidden": false,
+        "description": "Capitalized name"
+      },
+      {
+        "input": "\"bob JONES\"",
+        "isHidden": true,
+        "description": "Mixed case"
+      }
+    ],
+    "hints": [
+      "Use .split() to separate the first and last name",
+      "Get the first character with [0]",
+      "Use .upper() to convert to uppercase"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs101-t1-ex13",
+    "subjectId": "cs101",
+    "topicId": "cs101-topic-1",
+    "title": "Distance Converter",
+    "difficulty": 2,
+    "description": "Write a function that converts miles to kilometers. 1 mile = 1.60934 kilometers. Round the result to 2 decimal places.",
+    "starterCode": "# Convert miles to kilometers\ndef miles_to_km(miles):\n    # Your code here\n    pass\n\n# Test your function\nprint(miles_to_km(1))\nprint(miles_to_km(5))",
+    "solution": "def miles_to_km(miles):\n    km = miles * 1.60934\n    return round(km, 2)\n\nprint(miles_to_km(1))\nprint(miles_to_km(5))",
+    "testCases": [
+      {
+        "input": "1",
+        "isHidden": false,
+        "description": "1 mile"
+      },
+      {
+        "input": "5",
+        "isHidden": false,
+        "description": "5 miles"
+      },
+      {
+        "input": "10",
+        "isHidden": true,
+        "description": "10 miles"
+      }
+    ],
+    "hints": [
+      "Multiply miles by the conversion factor (1.60934)",
+      "Use round(value, 2) to round to 2 decimal places"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs101-t1-ex14",
+    "subjectId": "cs101",
+    "topicId": "cs101-topic-1",
+    "title": "Type Validator",
+    "difficulty": 4,
+    "description": "Write a function that takes a value and an expected type name (as a string: \"int\", \"float\", \"str\", \"bool\") and returns True if the value matches that type, False otherwise.",
+    "starterCode": "# Check if value matches expected type\ndef validate_type(value, expected_type):\n    # Your code here\n    pass\n\n# Test your function\nprint(validate_type(42, \"int\"))\nprint(validate_type(\"hello\", \"str\"))\nprint(validate_type(3.14, \"int\"))",
+    "solution": "def validate_type(value, expected_type):\n    type_map = {\n        \"int\": int,\n        \"float\": float,\n        \"str\": str,\n        \"bool\": bool\n    }\n    if expected_type not in type_map:\n        return False\n    if expected_type == \"int\" and isinstance(value, bool):\n        return False\n    return isinstance(value, type_map[expected_type])\n\nprint(validate_type(42, \"int\"))\nprint(validate_type(\"hello\", \"str\"))\nprint(validate_type(3.14, \"int\"))",
+    "testCases": [
+      {
+        "input": "42, \"int\"",
+        "isHidden": false,
+        "description": "Integer matches int"
+      },
+      {
+        "input": "\"hello\", \"str\"",
+        "isHidden": false,
+        "description": "String matches str"
+      },
+      {
+        "input": "3.14, \"int\"",
+        "isHidden": false,
+        "description": "Float does not match int"
+      },
+      {
+        "input": "True, \"bool\"",
+        "isHidden": true,
+        "description": "Boolean matches bool"
+      }
+    ],
+    "hints": [
+      "Create a dictionary mapping type names to actual types",
+      "Use isinstance() to check if value is the expected type",
+      "Be careful: bool is a subclass of int in Python"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs101-t1-ex15",
+    "subjectId": "cs101",
+    "topicId": "cs101-topic-1",
+    "title": "Parse Coordinates",
+    "difficulty": 4,
+    "description": "Write a function that takes a coordinate string like \"10,20\" and returns a tuple of two floats (10.0, 20.0). Handle potential conversion errors by returning None.",
+    "starterCode": "# Parse coordinate string to tuple of floats\ndef parse_coordinates(coord_string):\n    # Your code here\n    pass\n\n# Test your function\nprint(parse_coordinates(\"10,20\"))\nprint(parse_coordinates(\"3.5,7.2\"))\nprint(parse_coordinates(\"invalid\"))",
+    "solution": "def parse_coordinates(coord_string):\n    try:\n        parts = coord_string.split(\",\")\n        if len(parts) != 2:\n            return None\n        x = float(parts[0])\n        y = float(parts[1])\n        return (x, y)\n    except ValueError:\n        return None\n\nprint(parse_coordinates(\"10,20\"))\nprint(parse_coordinates(\"3.5,7.2\"))\nprint(parse_coordinates(\"invalid\"))",
+    "testCases": [
+      {
+        "input": "\"10,20\"",
+        "isHidden": false,
+        "description": "Integer coordinates"
+      },
+      {
+        "input": "\"3.5,7.2\"",
+        "isHidden": false,
+        "description": "Float coordinates"
+      },
+      {
+        "input": "\"invalid\"",
+        "isHidden": true,
+        "description": "Invalid input"
+      }
+    ],
+    "hints": [
+      "Use .split(\",\") to separate x and y",
+      "Convert each part to float",
+      "Use try/except to handle conversion errors",
+      "Return None if parsing fails"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs101-t1-ex16",
+    "subjectId": "cs101",
+    "topicId": "cs101-topic-1",
+    "title": "Format Currency",
+    "difficulty": 5,
+    "description": "Write a function that takes an amount and a currency code (USD, EUR, GBP) and returns a formatted string. USD uses $, EUR uses €, GBP uses £. Format with 2 decimal places and thousand separators.",
+    "starterCode": "# Format amount as currency\ndef format_currency(amount, currency=\"USD\"):\n    # Your code here\n    pass\n\n# Test your function\nprint(format_currency(1234.5, \"USD\"))\nprint(format_currency(1000000, \"EUR\"))\nprint(format_currency(99.9, \"GBP\"))",
+    "solution": "def format_currency(amount, currency=\"USD\"):\n    symbols = {\n        \"USD\": \"$\",\n        \"EUR\": \"€\",\n        \"GBP\": \"£\"\n    }\n    symbol = symbols.get(currency, \"$\")\n    formatted = f\"{amount:,.2f}\"\n    return f\"{symbol}{formatted}\"\n\nprint(format_currency(1234.5, \"USD\"))\nprint(format_currency(1000000, \"EUR\"))\nprint(format_currency(99.9, \"GBP\"))",
+    "testCases": [
+      {
+        "input": "1234.5, \"USD\"",
+        "isHidden": false,
+        "description": "USD formatting"
+      },
+      {
+        "input": "1000000, \"EUR\"",
+        "isHidden": false,
+        "description": "EUR with millions"
+      },
+      {
+        "input": "99.9, \"GBP\"",
+        "isHidden": true,
+        "description": "GBP small amount"
+      }
+    ],
+    "hints": [
+      "Create a dictionary mapping currency codes to symbols",
+      "Use f-string formatting: {amount:,.2f} for comma separators and 2 decimals",
+      "Combine the symbol with the formatted amount"
+    ],
+    "language": "python"
+  }
+]

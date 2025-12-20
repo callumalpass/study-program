@@ -1,0 +1,510 @@
+[
+  {
+    "id": "cs407-ex-1-1",
+    "subjectId": "cs407",
+    "topicId": "cs407-t1",
+    "title": "Data Quality Checker",
+    "description": "Write a function that analyzes a pandas DataFrame and returns a dictionary with data quality metrics: total rows, missing values per column, and completeness percentage.",
+    "difficulty": 2,
+    "language": "python",
+    "starterCode": "import pandas as pd\n\ndef analyze_data_quality(df):\n    # Return dict with 'total_rows', 'missing_per_column' (dict), 'completeness_pct' (overall)\n    pass",
+    "solution": "import pandas as pd\n\ndef analyze_data_quality(df):\n    total_rows = len(df)\n    missing_per_column = df.isnull().sum().to_dict()\n    total_cells = df.size\n    missing_cells = df.isnull().sum().sum()\n    completeness_pct = ((total_cells - missing_cells) / total_cells * 100) if total_cells > 0 else 100.0\n\n    return {\n        'total_rows': total_rows,\n        'missing_per_column': missing_per_column,\n        'completeness_pct': round(completeness_pct, 2)\n    }",
+    "testCases": [
+      {
+        "input": "pd.DataFrame({\"a\": [1, 2, None], \"b\": [4, None, 6]})",
+        "expectedOutput": "{'total_rows': 3, 'missing_per_column': {'a': 1, 'b': 1}, 'completeness_pct': 66.67}",
+        "isHidden": false,
+        "description": "DataFrame with some missing values"
+      },
+      {
+        "input": "pd.DataFrame({\"x\": [1, 2, 3], \"y\": [4, 5, 6]})",
+        "expectedOutput": "{'total_rows': 3, 'missing_per_column': {'x': 0, 'y': 0}, 'completeness_pct': 100.0}",
+        "isHidden": false,
+        "description": "Complete DataFrame"
+      }
+    ],
+    "hints": [
+      "Use df.isnull() to detect missing values",
+      "Use .sum() on boolean DataFrame to count True values",
+      "Calculate completeness as (total_cells - missing_cells) / total_cells * 100"
+    ]
+  },
+  {
+    "id": "cs407-ex-1-2",
+    "subjectId": "cs407",
+    "topicId": "cs407-t1",
+    "title": "API Data Fetcher",
+    "description": "Write a function that makes a GET request to a JSON API endpoint and returns the parsed data. Handle errors gracefully.",
+    "difficulty": 2,
+    "language": "python",
+    "starterCode": "import requests\n\ndef fetch_api_data(url):\n    # Return parsed JSON data or None if error\n    pass",
+    "solution": "import requests\n\ndef fetch_api_data(url):\n    try:\n        response = requests.get(url, timeout=10)\n        response.raise_for_status()\n        return response.json()\n    except requests.exceptions.RequestException:\n        return None",
+    "testCases": [
+      {
+        "input": "\"https://api.example.com/data\"",
+        "expectedOutput": "dict or None",
+        "isHidden": false,
+        "description": "Fetch from valid endpoint"
+      }
+    ],
+    "hints": [
+      "Use requests.get() to make HTTP requests",
+      "Use response.json() to parse JSON",
+      "Wrap in try-except to handle errors",
+      "Use response.raise_for_status() to check for HTTP errors"
+    ]
+  },
+  {
+    "id": "cs407-ex-1-3",
+    "subjectId": "cs407",
+    "topicId": "cs407-t1",
+    "title": "JSON Data Parser",
+    "description": "Write a function that parses a JSON string and extracts specific nested fields. Handle malformed JSON gracefully.",
+    "difficulty": 2,
+    "language": "python",
+    "starterCode": "import json\n\ndef extract_nested_field(json_string, field_path):\n    # field_path is a list like ['user', 'address', 'city']\n    # Return the value at that path or None if not found\n    pass",
+    "solution": "import json\n\ndef extract_nested_field(json_string, field_path):\n    try:\n        data = json.loads(json_string)\n        for field in field_path:\n            data = data[field]\n        return data\n    except (json.JSONDecodeError, KeyError, TypeError):\n        return None",
+    "testCases": [
+      {
+        "input": "'{\"user\": {\"address\": {\"city\": \"NYC\"}}}', [\"user\", \"address\", \"city\"]",
+        "expectedOutput": "\"NYC\"",
+        "isHidden": false,
+        "description": "Valid nested JSON"
+      },
+      {
+        "input": "'{\"user\": {\"name\": \"John\"}}', [\"user\", \"address\", \"city\"]",
+        "expectedOutput": "None",
+        "isHidden": false,
+        "description": "Missing nested field"
+      },
+      {
+        "input": "'{invalid json}', [\"user\"]",
+        "expectedOutput": "None",
+        "isHidden": false,
+        "description": "Malformed JSON"
+      }
+    ],
+    "hints": [
+      "Use json.loads() to parse JSON string",
+      "Iterate through field_path to access nested fields",
+      "Catch json.JSONDecodeError, KeyError, and TypeError",
+      "Return None for any error"
+    ]
+  },
+  {
+    "id": "cs407-ex-1-4",
+    "subjectId": "cs407",
+    "topicId": "cs407-t1",
+    "title": "CSV to DataFrame Loader",
+    "description": "Write a function that loads a CSV file into a pandas DataFrame and handles common issues (encoding, delimiters, missing headers).",
+    "difficulty": 2,
+    "language": "python",
+    "starterCode": "import pandas as pd\n\ndef load_csv_robust(filepath, delimiter=',', encoding='utf-8', has_header=True):\n    # Return DataFrame or None if error\n    pass",
+    "solution": "import pandas as pd\n\ndef load_csv_robust(filepath, delimiter=',', encoding='utf-8', has_header=True):\n    try:\n        if has_header:\n            df = pd.read_csv(filepath, delimiter=delimiter, encoding=encoding)\n        else:\n            df = pd.read_csv(filepath, delimiter=delimiter, encoding=encoding, header=None)\n        return df\n    except Exception:\n        return None",
+    "testCases": [
+      {
+        "input": "\"data.csv\", \",\", \"utf-8\", True",
+        "expectedOutput": "DataFrame or None",
+        "isHidden": false,
+        "description": "Standard CSV with header"
+      },
+      {
+        "input": "\"data.tsv\", \"\\t\", \"utf-8\", True",
+        "expectedOutput": "DataFrame or None",
+        "isHidden": false,
+        "description": "Tab-separated file"
+      }
+    ],
+    "hints": [
+      "Use pd.read_csv() with appropriate parameters",
+      "Set header=None when has_header is False",
+      "Wrap in try-except to handle file/encoding errors",
+      "Return None on any exception"
+    ]
+  },
+  {
+    "id": "cs407-ex-1-5",
+    "subjectId": "cs407",
+    "topicId": "cs407-t1",
+    "title": "Web Scraper - Extract Links",
+    "description": "Write a function that extracts all hyperlinks from an HTML string using BeautifulSoup.",
+    "difficulty": 2,
+    "language": "python",
+    "starterCode": "from bs4 import BeautifulSoup\n\ndef extract_links(html_string):\n    # Return list of URLs from all <a> tags\n    pass",
+    "solution": "from bs4 import BeautifulSoup\n\ndef extract_links(html_string):\n    soup = BeautifulSoup(html_string, 'html.parser')\n    links = []\n    for a_tag in soup.find_all('a', href=True):\n        links.append(a_tag['href'])\n    return links",
+    "testCases": [
+      {
+        "input": "'<html><a href=\"http://example.com\">Link1</a><a href=\"http://test.com\">Link2</a></html>'",
+        "expectedOutput": "[\"http://example.com\", \"http://test.com\"]",
+        "isHidden": false,
+        "description": "HTML with two links"
+      },
+      {
+        "input": "'<html><p>No links here</p></html>'",
+        "expectedOutput": "[]",
+        "isHidden": false,
+        "description": "HTML with no links"
+      }
+    ],
+    "hints": [
+      "Create BeautifulSoup object with html.parser",
+      "Use .find_all(\"a\", href=True) to find anchor tags with href",
+      "Extract href attribute from each tag",
+      "Return list of URLs"
+    ]
+  },
+  {
+    "id": "cs407-ex-1-6",
+    "subjectId": "cs407",
+    "topicId": "cs407-t1",
+    "title": "REST API Pagination Handler",
+    "description": "Write a function that fetches paginated API data by making multiple requests until all pages are retrieved.",
+    "difficulty": 3,
+    "language": "python",
+    "starterCode": "import requests\n\ndef fetch_paginated_data(base_url, page_param='page', max_pages=10):\n    # Return list of all items from paginated API\n    # Stop when response is empty or max_pages reached\n    pass",
+    "solution": "import requests\n\ndef fetch_paginated_data(base_url, page_param='page', max_pages=10):\n    all_items = []\n    page = 1\n\n    while page <= max_pages:\n        try:\n            response = requests.get(base_url, params={page_param: page}, timeout=10)\n            response.raise_for_status()\n            data = response.json()\n\n            if not data or (isinstance(data, list) and len(data) == 0):\n                break\n\n            if isinstance(data, list):\n                all_items.extend(data)\n            elif isinstance(data, dict) and 'items' in data:\n                all_items.extend(data['items'])\n                if not data['items']:\n                    break\n\n            page += 1\n        except requests.exceptions.RequestException:\n            break\n\n    return all_items",
+    "testCases": [
+      {
+        "input": "\"https://api.example.com/data\", \"page\", 5",
+        "expectedOutput": "list of items from all pages",
+        "isHidden": false,
+        "description": "Paginated API with multiple pages"
+      }
+    ],
+    "hints": [
+      "Use a loop to fetch pages sequentially",
+      "Pass page number as query parameter",
+      "Stop when response is empty or max_pages reached",
+      "Accumulate items from all pages in a list",
+      "Handle both list responses and dict with items key"
+    ]
+  },
+  {
+    "id": "cs407-ex-1-7",
+    "subjectId": "cs407",
+    "topicId": "cs407-t1",
+    "title": "Data Type Validator",
+    "description": "Write a function that validates if DataFrame columns match expected data types and returns a report of mismatches.",
+    "difficulty": 2,
+    "language": "python",
+    "starterCode": "import pandas as pd\n\ndef validate_column_types(df, expected_types):\n    # expected_types is dict like {'col1': 'int64', 'col2': 'object'}\n    # Return dict with mismatched columns and their actual types\n    pass",
+    "solution": "import pandas as pd\n\ndef validate_column_types(df, expected_types):\n    mismatches = {}\n\n    for col, expected_type in expected_types.items():\n        if col not in df.columns:\n            mismatches[col] = 'missing'\n        elif str(df[col].dtype) != expected_type:\n            mismatches[col] = str(df[col].dtype)\n\n    return mismatches",
+    "testCases": [
+      {
+        "input": "pd.DataFrame({\"a\": [1, 2], \"b\": [\"x\", \"y\"]}), {\"a\": \"int64\", \"b\": \"object\"}",
+        "expectedOutput": "{}",
+        "isHidden": false,
+        "description": "All types match"
+      },
+      {
+        "input": "pd.DataFrame({\"a\": [1.0, 2.0], \"b\": [\"x\", \"y\"]}), {\"a\": \"int64\", \"b\": \"object\"}",
+        "expectedOutput": "{\"a\": \"float64\"}",
+        "isHidden": false,
+        "description": "Type mismatch for column a"
+      },
+      {
+        "input": "pd.DataFrame({\"a\": [1, 2]}), {\"a\": \"int64\", \"c\": \"object\"}",
+        "expectedOutput": "{\"c\": \"missing\"}",
+        "isHidden": false,
+        "description": "Missing column c"
+      }
+    ],
+    "hints": [
+      "Iterate through expected_types dictionary",
+      "Check if column exists in DataFrame",
+      "Compare str(df[col].dtype) with expected type",
+      "Store mismatches in result dictionary"
+    ]
+  },
+  {
+    "id": "cs407-ex-1-8",
+    "subjectId": "cs407",
+    "topicId": "cs407-t1",
+    "title": "HTML Table Extractor",
+    "description": "Write a function that extracts the first HTML table from a webpage and converts it to a pandas DataFrame.",
+    "difficulty": 3,
+    "language": "python",
+    "starterCode": "import pandas as pd\nfrom bs4 import BeautifulSoup\n\ndef extract_table_to_dataframe(html_string):\n    # Return first table as DataFrame or None if no table found\n    pass",
+    "solution": "import pandas as pd\nfrom bs4 import BeautifulSoup\n\ndef extract_table_to_dataframe(html_string):\n    soup = BeautifulSoup(html_string, 'html.parser')\n    table = soup.find('table')\n\n    if not table:\n        return None\n\n    rows = []\n    for tr in table.find_all('tr'):\n        cells = [td.get_text(strip=True) for td in tr.find_all(['td', 'th'])]\n        if cells:\n            rows.append(cells)\n\n    if not rows:\n        return None\n\n    # First row as header\n    return pd.DataFrame(rows[1:], columns=rows[0]) if len(rows) > 1 else pd.DataFrame(rows)",
+    "testCases": [
+      {
+        "input": "'<table><tr><th>Name</th><th>Age</th></tr><tr><td>John</td><td>30</td></tr></table>'",
+        "expectedOutput": "DataFrame with columns Name, Age and one row",
+        "isHidden": false,
+        "description": "Valid HTML table"
+      },
+      {
+        "input": "'<html><p>No table here</p></html>'",
+        "expectedOutput": "None",
+        "isHidden": false,
+        "description": "HTML with no table"
+      }
+    ],
+    "hints": [
+      "Use BeautifulSoup to parse HTML",
+      "Find first table element with soup.find(\"table\")",
+      "Extract rows with find_all(\"tr\")",
+      "Extract cells with find_all([\"td\", \"th\"])",
+      "Use first row as column headers"
+    ]
+  },
+  {
+    "id": "cs407-ex-1-9",
+    "subjectId": "cs407",
+    "topicId": "cs407-t1",
+    "title": "JSON Array Flattener",
+    "description": "Write a function that flattens a nested JSON structure into a flat dictionary with dot-notation keys.",
+    "difficulty": 3,
+    "language": "python",
+    "starterCode": "def flatten_json(nested_dict, parent_key='', sep='.'):\n    # Return flattened dict like {'user.name': 'John', 'user.age': 30}\n    pass",
+    "solution": "def flatten_json(nested_dict, parent_key='', sep='.'):\n    items = []\n\n    for key, value in nested_dict.items():\n        new_key = f\"{parent_key}{sep}{key}\" if parent_key else key\n\n        if isinstance(value, dict):\n            items.extend(flatten_json(value, new_key, sep=sep).items())\n        elif isinstance(value, list):\n            for i, item in enumerate(value):\n                if isinstance(item, dict):\n                    items.extend(flatten_json(item, f\"{new_key}[{i}]\", sep=sep).items())\n                else:\n                    items.append((f\"{new_key}[{i}]\", item))\n        else:\n            items.append((new_key, value))\n\n    return dict(items)",
+    "testCases": [
+      {
+        "input": "{\"user\": {\"name\": \"John\", \"age\": 30}}",
+        "expectedOutput": "{\"user.name\": \"John\", \"user.age\": 30}",
+        "isHidden": false,
+        "description": "Nested dictionary"
+      },
+      {
+        "input": "{\"user\": {\"name\": \"John\", \"hobbies\": [\"reading\", \"coding\"]}}",
+        "expectedOutput": "{\"user.name\": \"John\", \"user.hobbies[0]\": \"reading\", \"user.hobbies[1]\": \"coding\"}",
+        "isHidden": false,
+        "description": "Dictionary with array"
+      }
+    ],
+    "hints": [
+      "Use recursion to handle nested dictionaries",
+      "Build new keys by concatenating with separator",
+      "Handle lists by adding index notation [i]",
+      "Accumulate flattened items in a list of tuples"
+    ]
+  },
+  {
+    "id": "cs407-ex-1-10",
+    "subjectId": "cs407",
+    "topicId": "cs407-t1",
+    "title": "API Rate Limiter",
+    "description": "Write a function that fetches data from multiple URLs while respecting a rate limit (requests per second).",
+    "difficulty": 4,
+    "language": "python",
+    "starterCode": "import requests\nimport time\n\ndef fetch_with_rate_limit(urls, requests_per_second=2):\n    # Return list of responses (or None for failed requests)\n    pass",
+    "solution": "import requests\nimport time\n\ndef fetch_with_rate_limit(urls, requests_per_second=2):\n    results = []\n    delay = 1.0 / requests_per_second\n\n    for url in urls:\n        try:\n            response = requests.get(url, timeout=10)\n            response.raise_for_status()\n            results.append(response.json())\n        except requests.exceptions.RequestException:\n            results.append(None)\n\n        if url != urls[-1]:  # Don't delay after last request\n            time.sleep(delay)\n\n    return results",
+    "testCases": [
+      {
+        "input": "[\"https://api.example.com/1\", \"https://api.example.com/2\"], 1",
+        "expectedOutput": "list of 2 responses or None values",
+        "isHidden": false,
+        "description": "Two URLs with 1 request per second"
+      }
+    ],
+    "hints": [
+      "Calculate delay as 1.0 / requests_per_second",
+      "Use time.sleep(delay) between requests",
+      "Store each response in results list",
+      "Append None for failed requests",
+      "Do not delay after the last request"
+    ]
+  },
+  {
+    "id": "cs407-ex-1-11",
+    "subjectId": "cs407",
+    "topicId": "cs407-t1",
+    "title": "CSV Encoding Detector",
+    "description": "Write a function that detects the encoding of a CSV file by trying multiple common encodings.",
+    "difficulty": 3,
+    "language": "python",
+    "starterCode": "import pandas as pd\n\ndef detect_csv_encoding(filepath):\n    # Try encodings: utf-8, latin-1, cp1252, iso-8859-1\n    # Return the first encoding that works or None\n    pass",
+    "solution": "import pandas as pd\n\ndef detect_csv_encoding(filepath):\n    encodings = ['utf-8', 'latin-1', 'cp1252', 'iso-8859-1']\n\n    for encoding in encodings:\n        try:\n            pd.read_csv(filepath, encoding=encoding, nrows=5)\n            return encoding\n        except (UnicodeDecodeError, Exception):\n            continue\n\n    return None",
+    "testCases": [
+      {
+        "input": "\"data_utf8.csv\"",
+        "expectedOutput": "\"utf-8\"",
+        "isHidden": false,
+        "description": "UTF-8 encoded file"
+      },
+      {
+        "input": "\"data_latin1.csv\"",
+        "expectedOutput": "\"latin-1\"",
+        "isHidden": false,
+        "description": "Latin-1 encoded file"
+      }
+    ],
+    "hints": [
+      "Define list of common encodings to try",
+      "Use pd.read_csv() with nrows=5 to test quickly",
+      "Catch UnicodeDecodeError and other exceptions",
+      "Return first encoding that works",
+      "Return None if all encodings fail"
+    ]
+  },
+  {
+    "id": "cs407-ex-1-12",
+    "subjectId": "cs407",
+    "topicId": "cs407-t1",
+    "title": "Web Scraper - Extract Metadata",
+    "description": "Write a function that extracts metadata (title, description, keywords) from HTML meta tags.",
+    "difficulty": 2,
+    "language": "python",
+    "starterCode": "from bs4 import BeautifulSoup\n\ndef extract_metadata(html_string):\n    # Return dict with 'title', 'description', 'keywords'\n    pass",
+    "solution": "from bs4 import BeautifulSoup\n\ndef extract_metadata(html_string):\n    soup = BeautifulSoup(html_string, 'html.parser')\n\n    metadata = {\n        'title': None,\n        'description': None,\n        'keywords': None\n    }\n\n    # Extract title\n    title_tag = soup.find('title')\n    if title_tag:\n        metadata['title'] = title_tag.get_text(strip=True)\n\n    # Extract description\n    desc_tag = soup.find('meta', attrs={'name': 'description'})\n    if desc_tag and desc_tag.get('content'):\n        metadata['description'] = desc_tag['content']\n\n    # Extract keywords\n    keywords_tag = soup.find('meta', attrs={'name': 'keywords'})\n    if keywords_tag and keywords_tag.get('content'):\n        metadata['keywords'] = keywords_tag['content']\n\n    return metadata",
+    "testCases": [
+      {
+        "input": "'<html><head><title>Test Page</title><meta name=\"description\" content=\"A test\"><meta name=\"keywords\" content=\"test,page\"></head></html>'",
+        "expectedOutput": "{\"title\": \"Test Page\", \"description\": \"A test\", \"keywords\": \"test,page\"}",
+        "isHidden": false,
+        "description": "HTML with all metadata"
+      },
+      {
+        "input": "'<html><head><title>Only Title</title></head></html>'",
+        "expectedOutput": "{\"title\": \"Only Title\", \"description\": None, \"keywords\": None}",
+        "isHidden": false,
+        "description": "HTML with only title"
+      }
+    ],
+    "hints": [
+      "Use soup.find(\"title\") for title tag",
+      "Use soup.find(\"meta\", attrs={\"name\": \"description\"}) for description",
+      "Extract content attribute from meta tags",
+      "Return None for missing metadata"
+    ]
+  },
+  {
+    "id": "cs407-ex-1-13",
+    "subjectId": "cs407",
+    "topicId": "cs407-t1",
+    "title": "JSON Schema Validator",
+    "description": "Write a function that validates if a JSON object has all required fields and correct types.",
+    "difficulty": 3,
+    "language": "python",
+    "starterCode": "def validate_json_schema(data, schema):\n    # schema is dict like {'name': str, 'age': int, 'email': str}\n    # Return (is_valid: bool, errors: list)\n    pass",
+    "solution": "def validate_json_schema(data, schema):\n    errors = []\n\n    if not isinstance(data, dict):\n        return (False, ['Data must be a dictionary'])\n\n    for field, expected_type in schema.items():\n        if field not in data:\n            errors.append(f\"Missing required field: {field}\")\n        elif not isinstance(data[field], expected_type):\n            errors.append(f\"Field '{field}' must be {expected_type.__name__}, got {type(data[field]).__name__}\")\n\n    return (len(errors) == 0, errors)",
+    "testCases": [
+      {
+        "input": "{\"name\": \"John\", \"age\": 30}, {\"name\": str, \"age\": int}",
+        "expectedOutput": "(True, [])",
+        "isHidden": false,
+        "description": "Valid data matching schema"
+      },
+      {
+        "input": "{\"name\": \"John\"}, {\"name\": str, \"age\": int}",
+        "expectedOutput": "(False, [\"Missing required field: age\"])",
+        "isHidden": false,
+        "description": "Missing required field"
+      },
+      {
+        "input": "{\"name\": \"John\", \"age\": \"30\"}, {\"name\": str, \"age\": int}",
+        "expectedOutput": "(False, [\"Field 'age' must be int, got str\"])",
+        "isHidden": false,
+        "description": "Wrong type for field"
+      }
+    ],
+    "hints": [
+      "Check if data is a dictionary",
+      "Iterate through schema fields",
+      "Check if field exists in data",
+      "Check if field type matches expected type using isinstance()",
+      "Accumulate errors in a list"
+    ]
+  },
+  {
+    "id": "cs407-ex-1-14",
+    "subjectId": "cs407",
+    "topicId": "cs407-t1",
+    "title": "API Response Cache",
+    "description": "Write a function that caches API responses to avoid redundant requests. Use a dictionary to store responses.",
+    "difficulty": 3,
+    "language": "python",
+    "starterCode": "import requests\n\nclass APICache:\n    def __init__(self):\n        self.cache = {}\n\n    def get(self, url):\n        # Return cached response or fetch if not cached\n        pass",
+    "solution": "import requests\n\nclass APICache:\n    def __init__(self):\n        self.cache = {}\n\n    def get(self, url):\n        if url in self.cache:\n            return self.cache[url]\n\n        try:\n            response = requests.get(url, timeout=10)\n            response.raise_for_status()\n            data = response.json()\n            self.cache[url] = data\n            return data\n        except requests.exceptions.RequestException:\n            return None",
+    "testCases": [
+      {
+        "input": "cache = APICache(); cache.get(\"https://api.example.com/data\")",
+        "expectedOutput": "dict or None (fetched)",
+        "isHidden": false,
+        "description": "First request - fetch"
+      },
+      {
+        "input": "cache = APICache(); cache.get(\"https://api.example.com/data\"); cache.get(\"https://api.example.com/data\")",
+        "expectedOutput": "dict or None (from cache)",
+        "isHidden": false,
+        "description": "Second request - cached"
+      }
+    ],
+    "hints": [
+      "Check if URL is in cache dictionary",
+      "Return cached value if found",
+      "Otherwise fetch from API using requests.get()",
+      "Store response in cache before returning",
+      "Return None on errors"
+    ]
+  },
+  {
+    "id": "cs407-ex-1-15",
+    "subjectId": "cs407",
+    "topicId": "cs407-t1",
+    "title": "Multi-format Data Loader",
+    "description": "Write a function that loads data from CSV, JSON, or Excel files based on file extension.",
+    "difficulty": 3,
+    "language": "python",
+    "starterCode": "import pandas as pd\nimport json\n\ndef load_data_file(filepath):\n    # Return DataFrame for CSV/Excel, dict/list for JSON, or None on error\n    pass",
+    "solution": "import pandas as pd\nimport json\n\ndef load_data_file(filepath):\n    try:\n        if filepath.endswith('.csv'):\n            return pd.read_csv(filepath)\n        elif filepath.endswith('.json'):\n            with open(filepath, 'r') as f:\n                return json.load(f)\n        elif filepath.endswith('.xlsx') or filepath.endswith('.xls'):\n            return pd.read_excel(filepath)\n        else:\n            return None\n    except Exception:\n        return None",
+    "testCases": [
+      {
+        "input": "\"data.csv\"",
+        "expectedOutput": "DataFrame",
+        "isHidden": false,
+        "description": "Load CSV file"
+      },
+      {
+        "input": "\"data.json\"",
+        "expectedOutput": "dict or list",
+        "isHidden": false,
+        "description": "Load JSON file"
+      },
+      {
+        "input": "\"data.xlsx\"",
+        "expectedOutput": "DataFrame",
+        "isHidden": false,
+        "description": "Load Excel file"
+      }
+    ],
+    "hints": [
+      "Check file extension with filepath.endswith()",
+      "Use pd.read_csv() for CSV files",
+      "Use json.load() for JSON files",
+      "Use pd.read_excel() for Excel files",
+      "Return None for unsupported formats or errors"
+    ]
+  },
+  {
+    "id": "cs407-ex-1-16",
+    "subjectId": "cs407",
+    "topicId": "cs407-t1",
+    "title": "Duplicate Data Detector",
+    "description": "Write a function that detects duplicate rows in a DataFrame and returns statistics about duplicates.",
+    "difficulty": 2,
+    "language": "python",
+    "starterCode": "import pandas as pd\n\ndef detect_duplicates(df, subset=None):\n    # Return dict with 'total_duplicates', 'duplicate_percentage', 'duplicate_rows' (indices)\n    pass",
+    "solution": "import pandas as pd\n\ndef detect_duplicates(df, subset=None):\n    duplicates = df.duplicated(subset=subset, keep=False)\n    num_duplicates = duplicates.sum()\n    total_rows = len(df)\n    duplicate_pct = (num_duplicates / total_rows * 100) if total_rows > 0 else 0.0\n    duplicate_indices = df[duplicates].index.tolist()\n\n    return {\n        'total_duplicates': int(num_duplicates),\n        'duplicate_percentage': round(duplicate_pct, 2),\n        'duplicate_rows': duplicate_indices\n    }",
+    "testCases": [
+      {
+        "input": "pd.DataFrame({\"a\": [1, 2, 1, 3], \"b\": [4, 5, 4, 6]})",
+        "expectedOutput": "{\"total_duplicates\": 2, \"duplicate_percentage\": 50.0, \"duplicate_rows\": [0, 2]}",
+        "isHidden": false,
+        "description": "DataFrame with duplicates"
+      },
+      {
+        "input": "pd.DataFrame({\"a\": [1, 2, 3], \"b\": [4, 5, 6]})",
+        "expectedOutput": "{\"total_duplicates\": 0, \"duplicate_percentage\": 0.0, \"duplicate_rows\": []}",
+        "isHidden": false,
+        "description": "DataFrame without duplicates"
+      }
+    ],
+    "hints": [
+      "Use df.duplicated(keep=False) to mark all duplicates",
+      "Count duplicates with .sum() on boolean series",
+      "Calculate percentage as (duplicates / total_rows) * 100",
+      "Get indices with df[duplicates].index.tolist()"
+    ]
+  }
+]

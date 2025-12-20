@@ -1,0 +1,182 @@
+[
+  {
+    "id": "cs104-quiz-1a",
+    "subjectId": "cs104",
+    "topicId": "cs104-topic-1",
+    "title": "Arrays and Linked Lists - Fundamentals",
+    "questions": [
+      {
+        "id": "cs104-q1a-1",
+        "type": "multiple_choice",
+        "prompt": "What is the time complexity of accessing an element by index in an array?",
+        "options": [
+          "O(1)",
+          "O(log n)",
+          "O(n)",
+          "O(n²)"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Arrays provide constant-time O(1) access because elements are stored in contiguous memory, allowing direct address calculation."
+      },
+      {
+        "id": "cs104-q1a-2",
+        "type": "multiple_choice",
+        "prompt": "Which operation is MORE efficient in a linked list compared to an array?",
+        "options": [
+          "Random access by index",
+          "Insertion at the beginning",
+          "Binary search",
+          "Cache locality"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Inserting at the beginning of a linked list is O(1) since it only requires updating the head pointer, while arrays require shifting all elements O(n)."
+      },
+      {
+        "id": "cs104-q1a-3",
+        "type": "true_false",
+        "prompt": "A doubly linked list uses more memory per node than a singly linked list.",
+        "correctAnswer": true,
+        "explanation": "Doubly linked lists store two pointers (next and prev) per node, while singly linked lists only store one (next)."
+      },
+      {
+        "id": "cs104-q1a-4",
+        "type": "fill_blank",
+        "prompt": "In a singly linked list, each node contains data and a reference to the ____ node.",
+        "correctAnswer": "next",
+        "explanation": "Singly linked list nodes contain a \"next\" pointer pointing to the following node in the list."
+      },
+      {
+        "id": "cs104-q1a-5",
+        "type": "multiple_choice",
+        "prompt": "What is the space complexity of storing n elements in an array?",
+        "options": [
+          "O(1)",
+          "O(log n)",
+          "O(n)",
+          "O(n²)"
+        ],
+        "correctAnswer": 2,
+        "explanation": "An array requires O(n) space to store n elements, with each element occupying a fixed amount of memory."
+      }
+    ]
+  },
+  {
+    "id": "cs104-quiz-1b",
+    "subjectId": "cs104",
+    "topicId": "cs104-topic-1",
+    "title": "Arrays and Linked Lists - Application",
+    "questions": [
+      {
+        "id": "cs104-q1b-1",
+        "type": "code_output",
+        "prompt": "What is the output of this linked list traversal?",
+        "codeSnippet": "head = Node(1)\nhead.next = Node(2)\nhead.next.next = Node(3)\ncurrent = head\nwhile current:\n    print(current.value, end=\" \")\n    current = current.next",
+        "correctAnswer": "1 2 3 ",
+        "explanation": "The traversal starts at head (1), follows next pointers through 2 and 3, printing each value."
+      },
+      {
+        "id": "cs104-q1b-2",
+        "type": "multiple_choice",
+        "prompt": "Which technique is commonly used to find the middle element of a linked list efficiently?",
+        "options": [
+          "Binary search",
+          "Two pointers (slow and fast)",
+          "Recursion",
+          "Hash table"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The slow/fast pointer technique uses two pointers where fast moves twice as fast. When fast reaches the end, slow is at the middle."
+      },
+      {
+        "id": "cs104-q1b-3",
+        "type": "code_output",
+        "prompt": "After this code runs, what does arr contain?",
+        "codeSnippet": "arr = [1, 2, 3, 4, 5]\narr.insert(0, 0)\narr.pop()",
+        "correctAnswer": "[0, 1, 2, 3, 4]",
+        "explanation": "insert(0, 0) adds 0 at index 0: [0,1,2,3,4,5]. Then pop() removes the last element: [0,1,2,3,4]."
+      },
+      {
+        "id": "cs104-q1b-4",
+        "type": "true_false",
+        "prompt": "To reverse a linked list in-place, you need O(n) extra space.",
+        "correctAnswer": false,
+        "explanation": "Reversing a linked list in-place only requires O(1) extra space (a few pointers), not O(n). You iterate through and reverse each next pointer."
+      },
+      {
+        "id": "cs104-q1b-5",
+        "type": "multiple_choice",
+        "prompt": "What is the time complexity of deleting the last element from a singly linked list without a tail pointer?",
+        "options": [
+          "O(1)",
+          "O(log n)",
+          "O(n)",
+          "O(n²)"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Without a tail pointer, you must traverse the entire list to find the second-to-last node, making it O(n)."
+      }
+    ]
+  },
+  {
+    "id": "cs104-quiz-1c",
+    "subjectId": "cs104",
+    "topicId": "cs104-topic-1",
+    "title": "Arrays and Linked Lists - Advanced",
+    "questions": [
+      {
+        "id": "cs104-q1c-1",
+        "type": "multiple_choice",
+        "prompt": "Floyd's cycle detection algorithm (tortoise and hare) can detect cycles using:",
+        "options": [
+          "O(n) time and O(n) space",
+          "O(n) time and O(1) space",
+          "O(n²) time and O(1) space",
+          "O(log n) time and O(1) space"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Floyd's algorithm uses two pointers moving at different speeds, requiring O(n) time to detect a cycle and only O(1) space."
+      },
+      {
+        "id": "cs104-q1c-2",
+        "type": "true_false",
+        "prompt": "A circular linked list has a node whose next pointer is NULL.",
+        "correctAnswer": false,
+        "explanation": "In a circular linked list, the last node points back to the first node, so no node has a NULL next pointer."
+      },
+      {
+        "id": "cs104-q1c-3",
+        "type": "multiple_choice",
+        "prompt": "What data structures are typically combined to implement an LRU Cache with O(1) operations?",
+        "options": [
+          "Two arrays",
+          "Array and stack",
+          "Doubly linked list and hash map",
+          "Queue and heap"
+        ],
+        "correctAnswer": 2,
+        "explanation": "LRU Cache uses a doubly linked list (for O(1) removal/insertion) and a hash map (for O(1) lookup)."
+      },
+      {
+        "id": "cs104-q1c-4",
+        "type": "code_output",
+        "prompt": "What does this array rotation output?",
+        "codeSnippet": "arr = [1, 2, 3, 4, 5]\nk = 2\narr = arr[-k:] + arr[:-k]\nprint(arr)",
+        "correctAnswer": "[4, 5, 1, 2, 3]",
+        "explanation": "arr[-2:] is [4, 5] and arr[:-2] is [1, 2, 3]. Concatenating gives [4, 5, 1, 2, 3]—a right rotation by 2."
+      },
+      {
+        "id": "cs104-q1c-5",
+        "type": "multiple_choice",
+        "prompt": "Why do arrays generally have better cache performance than linked lists?",
+        "options": [
+          "Arrays use less memory",
+          "Array elements are stored contiguously",
+          "Arrays have faster pointers",
+          "Linked lists cannot be cached"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Arrays store elements contiguously in memory, so accessing one element likely brings neighboring elements into CPU cache. Linked list nodes can be scattered in memory."
+      }
+    ]
+  }
+]

@@ -1,0 +1,514 @@
+[
+  {
+    "id": "cs103-ex-7",
+    "subjectId": "cs103",
+    "topicId": "cs103-7",
+    "title": "Composition: UserNotifier",
+    "difficulty": 2,
+    "description": "Create an `EmailSender` with `send(to, subject)` returning a string. Create `UserNotifier` that composes a sender and has `welcome(email)`.",
+    "starterCode": "class EmailSender:\n    def send(self, to, subject):\n        pass\n\nclass UserNotifier:\n    def __init__(self, sender):\n        pass\n    def welcome(self, email):\n        pass\n",
+    "solution": "class EmailSender:\n    def send(self, to, subject):\n        return f\"email:{to}:{subject}\"\n\nclass UserNotifier:\n    def __init__(self, sender):\n        self._sender = sender\n    def welcome(self, email):\n        return self._sender.send(email, \"Welcome\")\n",
+    "testCases": [
+      {
+        "input": "print(UserNotifier(EmailSender()).welcome(\"a@b\"))",
+        "isHidden": false,
+        "description": "Delegates to sender"
+      },
+      {
+        "input": "print(UserNotifier(EmailSender()).welcome(\"\"))",
+        "isHidden": true,
+        "description": "Empty email still works"
+      },
+      {
+        "input": "class Fake:\n    def __init__(self): self.calls=[]\n    def send(self, to, subject): self.calls.append((to,subject)); return \"ok\"\n\nf=Fake(); n=UserNotifier(f); print(n.welcome(\"x\"), f.calls)",
+        "isHidden": false,
+        "description": "Fake captures call"
+      }
+    ],
+    "hints": [
+      "Prefer composition: notifier has a sender",
+      "Inject sender via constructor"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs103-t7-ex02",
+    "subjectId": "cs103",
+    "topicId": "cs103-7",
+    "title": "Single Responsibility: Invoice Total",
+    "difficulty": 2,
+    "description": "Create an `Invoice` class that stores line item amounts and computes `total()`. Keep it focused: just store amounts and compute the total.",
+    "starterCode": "class Invoice:\n    def __init__(self):\n        pass\n    def add_amount(self, amount):\n        pass\n    def total(self):\n        pass\n",
+    "solution": "class Invoice:\n    def __init__(self):\n        self._amounts = []\n    def add_amount(self, amount):\n        self._amounts.append(amount)\n    def total(self):\n        return sum(self._amounts)\n",
+    "testCases": [
+      {
+        "input": "i = Invoice(); i.add_amount(10); i.add_amount(5); print(i.total())",
+        "isHidden": false,
+        "description": "Sum amounts"
+      },
+      {
+        "input": "i = Invoice(); print(i.total())",
+        "isHidden": true,
+        "description": "Empty total"
+      },
+      {
+        "input": "i = Invoice(); i.add_amount(-1); print(i.total())",
+        "isHidden": true,
+        "description": "Allows negatives (no validation here)"
+      }
+    ],
+    "hints": [
+      "Store amounts in a list",
+      "Use sum() to total"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs103-t7-ex03",
+    "subjectId": "cs103",
+    "topicId": "cs103-7",
+    "title": "Open/Closed: Add Tax Policies",
+    "difficulty": 3,
+    "description": "Create tax policies with `rate()` method. Implement `FlatTax(rate)` and `ZeroTax`. Create `Cart` that composes a policy and computes `total_with_tax(subtotal)`.",
+    "starterCode": "class FlatTax:\n    def __init__(self, rate):\n        pass\n    def rate(self):\n        pass\n\nclass ZeroTax:\n    def rate(self):\n        pass\n\nclass Cart:\n    def __init__(self, policy):\n        pass\n    def total_with_tax(self, subtotal):\n        pass\n",
+    "solution": "class FlatTax:\n    def __init__(self, rate):\n        self._rate = rate\n    def rate(self):\n        return self._rate\n\nclass ZeroTax:\n    def rate(self):\n        return 0.0\n\nclass Cart:\n    def __init__(self, policy):\n        self.policy = policy\n    def total_with_tax(self, subtotal):\n        return subtotal * (1 + self.policy.rate())\n",
+    "testCases": [
+      {
+        "input": "print(Cart(FlatTax(0.2)).total_with_tax(100))",
+        "isHidden": false,
+        "description": "20% tax"
+      },
+      {
+        "input": "print(Cart(ZeroTax()).total_with_tax(100))",
+        "isHidden": false,
+        "description": "No tax"
+      },
+      {
+        "input": "print(Cart(FlatTax(0.0)).total_with_tax(0))",
+        "isHidden": true,
+        "description": "Zero subtotal"
+      }
+    ],
+    "hints": [
+      "Cart depends on a policy interface (rate())",
+      "Multiply subtotal by (1+rate)"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs103-t7-ex04",
+    "subjectId": "cs103",
+    "topicId": "cs103-7",
+    "title": "Interface Segregation: Printer/Scanner",
+    "difficulty": 3,
+    "description": "Create separate interfaces `Printer` and `Scanner` (base classes raising NotImplementedError). Implement `MultiFunctionDevice` supporting both.",
+    "starterCode": "class Printer:\n    def print_doc(self, text):\n        pass\n\nclass Scanner:\n    def scan(self):\n        pass\n\nclass MultiFunctionDevice(Printer, Scanner):\n    def __init__(self):\n        pass\n    def print_doc(self, text):\n        pass\n    def scan(self):\n        pass\n",
+    "solution": "class Printer:\n    def print_doc(self, text):\n        raise NotImplementedError\n\nclass Scanner:\n    def scan(self):\n        raise NotImplementedError\n\nclass MultiFunctionDevice(Printer, Scanner):\n    def __init__(self):\n        self._printed = []\n        self._scan_value = \"scan\"\n    def print_doc(self, text):\n        self._printed.append(text)\n        return \"printed\"\n    def scan(self):\n        return self._scan_value\n",
+    "testCases": [
+      {
+        "input": "d = MultiFunctionDevice(); print(d.print_doc(\"a\"), d.scan())",
+        "isHidden": false,
+        "description": "Implements both"
+      },
+      {
+        "input": "d = MultiFunctionDevice(); d.print_doc(\"x\"); d.print_doc(\"y\"); print(d._printed)",
+        "isHidden": true,
+        "description": "Tracks printed docs"
+      },
+      {
+        "input": "print(isinstance(MultiFunctionDevice(), Printer), isinstance(MultiFunctionDevice(), Scanner))",
+        "isHidden": true,
+        "description": "Is-a checks"
+      }
+    ],
+    "hints": [
+      "Keep Printer and Scanner separate",
+      "MultiFunctionDevice implements both behaviors"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs103-t7-ex05",
+    "subjectId": "cs103",
+    "topicId": "cs103-7",
+    "title": "Dependency Inversion: Payment Service",
+    "difficulty": 4,
+    "description": "Create `FakeGateway` with `charge(amount)` returning `\"ok\"`. Create `PaymentService` that accepts a gateway and calls it. Do not instantiate the gateway inside PaymentService.",
+    "starterCode": "class FakeGateway:\n    def charge(self, amount):\n        pass\n\nclass PaymentService:\n    def __init__(self, gateway):\n        pass\n    def charge(self, amount):\n        pass\n",
+    "solution": "class FakeGateway:\n    def charge(self, amount):\n        return \"ok\"\n\nclass PaymentService:\n    def __init__(self, gateway):\n        self.gateway = gateway\n    def charge(self, amount):\n        return self.gateway.charge(amount)\n",
+    "testCases": [
+      {
+        "input": "print(PaymentService(FakeGateway()).charge(10))",
+        "isHidden": false,
+        "description": "Delegates"
+      },
+      {
+        "input": "class Spy:\n    def __init__(self): self.calls=[]\n    def charge(self, amount): self.calls.append(amount); return \"ok\"\n\ns=Spy(); ps=PaymentService(s); ps.charge(5); print(s.calls)",
+        "isHidden": false,
+        "description": "Spy records interaction"
+      },
+      {
+        "input": "print(PaymentService(FakeGateway()).charge(0))",
+        "isHidden": true,
+        "description": "Zero amount still delegates"
+      }
+    ],
+    "hints": [
+      "Inject the gateway",
+      "Delegate from service method"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs103-t7-ex06",
+    "subjectId": "cs103",
+    "topicId": "cs103-7",
+    "title": "Refactoring Target: Extract Policy",
+    "difficulty": 4,
+    "description": "Create `PasswordPolicy(min_len)` with `is_valid(pw)` and a `UserService` that uses the policy in `can_register(password)`.",
+    "starterCode": "class PasswordPolicy:\n    def __init__(self, min_len):\n        pass\n    def is_valid(self, pw):\n        pass\n\nclass UserService:\n    def __init__(self, policy):\n        pass\n    def can_register(self, password):\n        pass\n",
+    "solution": "class PasswordPolicy:\n    def __init__(self, min_len):\n        self.min_len = min_len\n    def is_valid(self, pw):\n        return len(pw) >= self.min_len\n\nclass UserService:\n    def __init__(self, policy):\n        self.policy = policy\n    def can_register(self, password):\n        return self.policy.is_valid(password)\n",
+    "testCases": [
+      {
+        "input": "svc = UserService(PasswordPolicy(3)); print(svc.can_register(\"abc\"))",
+        "isHidden": false,
+        "description": "Valid"
+      },
+      {
+        "input": "svc = UserService(PasswordPolicy(3)); print(svc.can_register(\"ab\"))",
+        "isHidden": false,
+        "description": "Too short"
+      },
+      {
+        "input": "svc = UserService(PasswordPolicy(0)); print(svc.can_register(\"\"))",
+        "isHidden": true,
+        "description": "Min 0"
+      }
+    ],
+    "hints": [
+      "Policy is a separate object",
+      "UserService delegates to policy"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs103-t7-ex07",
+    "subjectId": "cs103",
+    "topicId": "cs103-7",
+    "title": "Unit-Testable: Random Provider Injection",
+    "difficulty": 5,
+    "description": "Create `RandomPicker` that picks an item from a list using an injected `rng` object with method `rand_index(n)`. Implement `FakeRng` for deterministic tests.",
+    "starterCode": "class FakeRng:\n    def __init__(self, fixed_index):\n        pass\n    def rand_index(self, n):\n        pass\n\nclass RandomPicker:\n    def __init__(self, rng):\n        pass\n    def pick(self, items):\n        pass\n",
+    "solution": "class FakeRng:\n    def __init__(self, fixed_index):\n        self.fixed_index = fixed_index\n    def rand_index(self, n):\n        return self.fixed_index % n\n\nclass RandomPicker:\n    def __init__(self, rng):\n        self.rng = rng\n    def pick(self, items):\n        return items[self.rng.rand_index(len(items))]\n",
+    "testCases": [
+      {
+        "input": "p = RandomPicker(FakeRng(0)); print(p.pick([\"a\",\"b\"]))",
+        "isHidden": false,
+        "description": "Picks first"
+      },
+      {
+        "input": "p = RandomPicker(FakeRng(3)); print(p.pick([\"a\",\"b\"]))",
+        "isHidden": false,
+        "description": "Wraps index"
+      },
+      {
+        "input": "p = RandomPicker(FakeRng(1)); print(p.pick([10,20,30]))",
+        "isHidden": true,
+        "description": "Works for non-strings"
+      }
+    ],
+    "hints": [
+      "Inject randomness instead of calling random directly",
+      "Use modulo to keep index in bounds"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs103-t7-ex08",
+    "subjectId": "cs103",
+    "topicId": "cs103-7",
+    "title": "Reduce Coupling: Repository Interface",
+    "difficulty": 4,
+    "description": "Create `InMemoryUserRepo` with `add(username)` and `exists(username)`. Create `RegistrationService` that uses a repo to register unique usernames.",
+    "starterCode": "class InMemoryUserRepo:\n    def __init__(self):\n        pass\n    def add(self, username):\n        pass\n    def exists(self, username):\n        pass\n\nclass RegistrationService:\n    def __init__(self, repo):\n        pass\n    def register(self, username):\n        # returns True if registered, False if already exists\n        pass\n",
+    "solution": "class InMemoryUserRepo:\n    def __init__(self):\n        self._users = set()\n    def add(self, username):\n        self._users.add(username)\n    def exists(self, username):\n        return username in self._users\n\nclass RegistrationService:\n    def __init__(self, repo):\n        self.repo = repo\n    def register(self, username):\n        if self.repo.exists(username):\n            return False\n        self.repo.add(username)\n        return True\n",
+    "testCases": [
+      {
+        "input": "repo = InMemoryUserRepo(); s = RegistrationService(repo); print(s.register(\"a\"), s.register(\"a\"))",
+        "isHidden": false,
+        "description": "Reject duplicates"
+      },
+      {
+        "input": "repo = InMemoryUserRepo(); s = RegistrationService(repo); print(s.register(\"x\"))",
+        "isHidden": true,
+        "description": "Registers new"
+      },
+      {
+        "input": "repo = InMemoryUserRepo(); s = RegistrationService(repo); s.register(\"\"); print(repo.exists(\"\"))",
+        "isHidden": true,
+        "description": "Allows empty username (no validation here)"
+      }
+    ],
+    "hints": [
+      "Repo abstracts storage",
+      "Service uses repo methods, not repo internals"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs103-t7-ex09",
+    "subjectId": "cs103",
+    "topicId": "cs103-7",
+    "title": "Avoid Heavy __init__: Lazy Resource",
+    "difficulty": 3,
+    "description": "Create a `LazyValue` class that takes a function `compute`. It should only compute once when `value` property is accessed and cache the result.",
+    "starterCode": "class LazyValue:\n    def __init__(self, compute):\n        pass\n    @property\n    def value(self):\n        pass\n",
+    "solution": "class LazyValue:\n    def __init__(self, compute):\n        self._compute = compute\n        self._has = False\n        self._value = None\n    @property\n    def value(self):\n        if not self._has:\n            self._value = self._compute()\n            self._has = True\n        return self._value\n",
+    "testCases": [
+      {
+        "input": "calls = {\"n\": 0}\ndef f():\n    calls[\"n\"] += 1\n    return 123\n\nlv = LazyValue(f)\nprint(lv.value, lv.value, calls[\"n\"])",
+        "isHidden": false,
+        "description": "Computes once"
+      },
+      {
+        "input": "lv = LazyValue(lambda: \"x\")\nprint(lv.value)",
+        "isHidden": true,
+        "description": "String values"
+      },
+      {
+        "input": "calls = {\"n\": 0}\nlv = LazyValue(lambda: calls.__setitem__(\"n\", calls[\"n\"]+1) or calls[\"n\"])\n_ = lv.value; _ = lv.value\nprint(calls[\"n\"])",
+        "isHidden": true,
+        "description": "Still once"
+      }
+    ],
+    "hints": [
+      "Cache the result after first compute",
+      "Track whether computed with a boolean"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs103-t7-ex10",
+    "subjectId": "cs103",
+    "topicId": "cs103-7",
+    "title": "Testing Collaboration: Spy Writer",
+    "difficulty": 4,
+    "description": "Create a `SpyWriter` that records each call to `write(text)` in a list `writes`. Create `Greeter` that uses a writer to write a greeting.",
+    "starterCode": "class SpyWriter:\n    def __init__(self):\n        pass\n    def write(self, text):\n        pass\n\nclass Greeter:\n    def __init__(self, writer):\n        pass\n    def greet(self, name):\n        pass\n",
+    "solution": "class SpyWriter:\n    def __init__(self):\n        self.writes = []\n    def write(self, text):\n        self.writes.append(text)\n\nclass Greeter:\n    def __init__(self, writer):\n        self.writer = writer\n    def greet(self, name):\n        self.writer.write(\"Hello, \" + name)\n",
+    "testCases": [
+      {
+        "input": "w = SpyWriter(); g = Greeter(w); g.greet(\"Ada\"); print(w.writes)",
+        "isHidden": false,
+        "description": "Records write"
+      },
+      {
+        "input": "w = SpyWriter(); Greeter(w).greet(\"\"); print(w.writes)",
+        "isHidden": true,
+        "description": "Empty name"
+      },
+      {
+        "input": "w = SpyWriter(); g = Greeter(w); g.greet(\"A\"); g.greet(\"B\"); print(w.writes)",
+        "isHidden": true,
+        "description": "Multiple writes"
+      }
+    ],
+    "hints": [
+      "Spy records calls for test assertions",
+      "Greeter delegates to writer"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs103-t7-ex11",
+    "subjectId": "cs103",
+    "topicId": "cs103-7",
+    "title": "Liskov: Preserve Return Types",
+    "difficulty": 5,
+    "description": "Create `BaseList` with `add(x)` returning the new length. Create `UniqueList(BaseList)` that only adds if not present, but still returns an int length.",
+    "starterCode": "class BaseList:\n    def __init__(self):\n        pass\n    def add(self, x):\n        pass\n\nclass UniqueList(BaseList):\n    def add(self, x):\n        pass\n",
+    "solution": "class BaseList:\n    def __init__(self):\n        self._data = []\n    def add(self, x):\n        self._data.append(x)\n        return len(self._data)\n\nclass UniqueList(BaseList):\n    def add(self, x):\n        if x not in self._data:\n            self._data.append(x)\n        return len(self._data)\n",
+    "testCases": [
+      {
+        "input": "u = UniqueList(); print(u.add(1), u.add(1), u.add(2))",
+        "isHidden": false,
+        "description": "Unique behavior"
+      },
+      {
+        "input": "b = BaseList(); print(b.add(\"x\"))",
+        "isHidden": true,
+        "description": "Base returns length"
+      },
+      {
+        "input": "u = UniqueList(); r = u.add(\"a\"); print(isinstance(r, int))",
+        "isHidden": true,
+        "description": "Return type int"
+      }
+    ],
+    "hints": [
+      "Keep the same method signature and return type",
+      "Track data in a list"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs103-t7-ex12",
+    "subjectId": "cs103",
+    "topicId": "cs103-7",
+    "title": "Composition: Feature Flags",
+    "difficulty": 4,
+    "description": "Create `FeatureFlags` with `is_enabled(name)` and `StaticFlags(enabled_set)`. Create `FeatureService` that checks a flag before allowing a feature.",
+    "starterCode": "class StaticFlags:\n    def __init__(self, enabled):\n        pass\n    def is_enabled(self, name):\n        pass\n\nclass FeatureService:\n    def __init__(self, flags):\n        pass\n    def can_use(self, feature_name):\n        pass\n",
+    "solution": "class StaticFlags:\n    def __init__(self, enabled):\n        self._enabled = set(enabled)\n    def is_enabled(self, name):\n        return name in self._enabled\n\nclass FeatureService:\n    def __init__(self, flags):\n        self.flags = flags\n    def can_use(self, feature_name):\n        return self.flags.is_enabled(feature_name)\n",
+    "testCases": [
+      {
+        "input": "s = FeatureService(StaticFlags({\"a\"})); print(s.can_use(\"a\"), s.can_use(\"b\"))",
+        "isHidden": false,
+        "description": "Uses flags"
+      },
+      {
+        "input": "s = FeatureService(StaticFlags(set())); print(s.can_use(\"x\"))",
+        "isHidden": true,
+        "description": "No flags enabled"
+      },
+      {
+        "input": "s = FeatureService(StaticFlags({\"x\",\"y\"})); print(s.can_use(\"y\"))",
+        "isHidden": true,
+        "description": "Multiple flags"
+      }
+    ],
+    "hints": [
+      "Services should delegate to a dependency for feature decisions",
+      "Store enabled flags in a set"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs103-t7-ex13",
+    "subjectId": "cs103",
+    "topicId": "cs103-7",
+    "title": "Small Refactor: Extract Formatter",
+    "difficulty": 5,
+    "description": "Create `Formatter` with `format(name)` returning `\"Hello, <name>!\"`. Create `Greeter` that uses a formatter and provides `greet(name)`.",
+    "starterCode": "class Formatter:\n    def format(self, name):\n        pass\n\nclass Greeter:\n    def __init__(self, formatter):\n        pass\n    def greet(self, name):\n        pass\n",
+    "solution": "class Formatter:\n    def format(self, name):\n        return f\"Hello, {name}!\"\n\nclass Greeter:\n    def __init__(self, formatter):\n        self.formatter = formatter\n    def greet(self, name):\n        return self.formatter.format(name)\n",
+    "testCases": [
+      {
+        "input": "g = Greeter(Formatter()); print(g.greet(\"Ada\"))",
+        "isHidden": false,
+        "description": "Delegates formatting"
+      },
+      {
+        "input": "g = Greeter(Formatter()); print(g.greet(\"\"))",
+        "isHidden": true,
+        "description": "Empty name"
+      },
+      {
+        "input": "print(Formatter().format(\"X\"))",
+        "isHidden": true,
+        "description": "Formatter itself works"
+      }
+    ],
+    "hints": [
+      "Extracting dependencies makes code easier to test and change",
+      "Greeter should delegate to formatter"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs103-t7-ex14",
+    "subjectId": "cs103",
+    "topicId": "cs103-7",
+    "title": "Testable Clock Injection",
+    "difficulty": 5,
+    "description": "Create `Clock` with `now()` and `FixedClock(value)` returning the fixed value. Create `Session` that uses a clock and records `started_at` when `start()` is called.",
+    "starterCode": "class FixedClock:\n    def __init__(self, value):\n        pass\n    def now(self):\n        pass\n\nclass Session:\n    def __init__(self, clock):\n        pass\n    def start(self):\n        pass\n",
+    "solution": "class FixedClock:\n    def __init__(self, value):\n        self.value = value\n    def now(self):\n        return self.value\n\nclass Session:\n    def __init__(self, clock):\n        self.clock = clock\n        self.started_at = None\n    def start(self):\n        self.started_at = self.clock.now()\n",
+    "testCases": [
+      {
+        "input": "s = Session(FixedClock(\"t1\")); s.start(); print(s.started_at)",
+        "isHidden": false,
+        "description": "Uses injected clock"
+      },
+      {
+        "input": "s = Session(FixedClock(123)); s.start(); print(s.started_at)",
+        "isHidden": true,
+        "description": "Any type"
+      },
+      {
+        "input": "s = Session(FixedClock(\"x\")); print(s.started_at is None)",
+        "isHidden": true,
+        "description": "Not started yet"
+      }
+    ],
+    "hints": [
+      "Inject time to avoid real clocks in tests",
+      "Set started_at in start()"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs103-t7-drill-1",
+    "subjectId": "cs103",
+    "topicId": "cs103-7",
+    "title": "Composition Reminder",
+    "difficulty": 1,
+    "description": "Create a `Car` that has an `Engine` and returns the engine type from `describe()`.",
+    "starterCode": "class Engine:\n    def __init__(self, kind):\n        pass\n\nclass Car:\n    def __init__(self, engine):\n        pass\n    def describe(self):\n        pass\n",
+    "solution": "class Engine:\n    def __init__(self, kind):\n        self.kind = kind\n\nclass Car:\n    def __init__(self, engine):\n        self.engine = engine\n    def describe(self):\n        return self.engine.kind\n",
+    "testCases": [
+      {
+        "input": "print(Car(Engine(\"v8\")).describe())",
+        "isHidden": false,
+        "description": "Describes engine"
+      },
+      {
+        "input": "print(Car(Engine(\"electric\")).describe())",
+        "isHidden": true,
+        "description": "Other kind"
+      },
+      {
+        "input": "e = Engine(\"x\"); c = Car(e); print(c.engine is e)",
+        "isHidden": true,
+        "description": "Has-a engine"
+      }
+    ],
+    "hints": [
+      "Car stores the engine object",
+      "Describe uses engine data"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs103-t7-drill-2",
+    "subjectId": "cs103",
+    "topicId": "cs103-7",
+    "title": "Tiny Fake for Testing",
+    "difficulty": 1,
+    "description": "Create a `FakeSender` that stores `(to, subject)` pairs when send is called.",
+    "starterCode": "class FakeSender:\n    def __init__(self):\n        pass\n    def send(self, to, subject):\n        pass\n",
+    "solution": "class FakeSender:\n    def __init__(self):\n        self.sent = []\n    def send(self, to, subject):\n        self.sent.append((to, subject))\n",
+    "testCases": [
+      {
+        "input": "f = FakeSender(); f.send(\"a\", \"b\"); print(f.sent)",
+        "isHidden": false,
+        "description": "Records send"
+      },
+      {
+        "input": "f = FakeSender(); print(f.sent)",
+        "isHidden": true,
+        "description": "Starts empty"
+      },
+      {
+        "input": "f = FakeSender(); f.send(\"\", \"\"); print(f.sent)",
+        "isHidden": true,
+        "description": "Empty values"
+      }
+    ],
+    "hints": [
+      "Store calls in a list",
+      "Append a tuple per call"
+    ],
+    "language": "python"
+  }
+]

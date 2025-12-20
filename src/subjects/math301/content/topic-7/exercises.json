@@ -1,0 +1,486 @@
+[
+  {
+    "id": "math301-t7-ex01",
+    "subjectId": "math301",
+    "topicId": "math301-topic-7",
+    "title": "Curl of Vector Field",
+    "difficulty": 1,
+    "description": "Compute the curl ∇×F of a 3D vector field F = [P, Q, R].",
+    "starterCode": "import numpy as np\n\ndef curl_3d(P, Q, R, point):\n    \"\"\"\n    Compute curl of F = [P, Q, R] at a point.\n    curl F = [∂R/∂y - ∂Q/∂z, ∂P/∂z - ∂R/∂x, ∂Q/∂x - ∂P/∂y]\n\n    Args:\n        P: Component P(x, y, z)\n        Q: Component Q(x, y, z)\n        R: Component R(x, y, z)\n        point: (x, y, z) where to evaluate curl\n    Returns:\n        Curl vector [curl_x, curl_y, curl_z]\n    \"\"\"\n    # Your implementation here\n    pass",
+    "solution": "import numpy as np\n\ndef curl_3d(P, Q, R, point):\n    \"\"\"\n    Compute curl of F = [P, Q, R] at a point.\n    \"\"\"\n    x, y, z = point\n    h = 1e-6\n\n    # ∂R/∂y\n    dR_dy = (R(x, y + h, z) - R(x, y - h, z)) / (2 * h)\n\n    # ∂Q/∂z\n    dQ_dz = (Q(x, y, z + h) - Q(x, y, z - h)) / (2 * h)\n\n    # ∂P/∂z\n    dP_dz = (P(x, y, z + h) - P(x, y, z - h)) / (2 * h)\n\n    # ∂R/∂x\n    dR_dx = (R(x + h, y, z) - R(x - h, y, z)) / (2 * h)\n\n    # ∂Q/∂x\n    dQ_dx = (Q(x + h, y, z) - Q(x - h, y, z)) / (2 * h)\n\n    # ∂P/∂y\n    dP_dy = (P(x, y + h, z) - P(x, y - h, z)) / (2 * h)\n\n    curl = [\n        dR_dy - dQ_dz,\n        dP_dz - dR_dx,\n        dQ_dx - dP_dy\n    ]\n\n    return curl",
+    "testCases": [
+      {
+        "input": "[round(x, 5) for x in curl_3d(lambda x,y,z: 0, lambda x,y,z: 0, lambda x,y,z: 0, (1, 1, 1))]",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "[round(x, 5) for x in curl_3d(lambda x,y,z: -y, lambda x,y,z: x, lambda x,y,z: 0, (0, 0, 0))]",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "[round(x, 5) for x in curl_3d(lambda x,y,z: y*z, lambda x,y,z: x*z, lambda x,y,z: x*y, (1, 1, 1))]",
+        "isHidden": true,
+        "description": "Hidden test"
+      }
+    ],
+    "hints": [
+      "curl F = ∇×F = [∂R/∂y - ∂Q/∂z, ∂P/∂z - ∂R/∂x, ∂Q/∂x - ∂P/∂y]",
+      "Use numerical partial derivatives",
+      "Curl measures rotation of the field"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math301-t7-ex02",
+    "subjectId": "math301",
+    "topicId": "math301-topic-7",
+    "title": "Divergence of Vector Field",
+    "difficulty": 1,
+    "description": "Compute the divergence ∇·F of a vector field F = [P, Q, R].",
+    "starterCode": "import numpy as np\n\ndef divergence_3d(P, Q, R, point):\n    \"\"\"\n    Compute divergence of F = [P, Q, R] at a point.\n    div F = ∂P/∂x + ∂Q/∂y + ∂R/∂z\n\n    Args:\n        P: Component P(x, y, z)\n        Q: Component Q(x, y, z)\n        R: Component R(x, y, z)\n        point: (x, y, z) where to evaluate divergence\n    Returns:\n        Divergence (scalar)\n    \"\"\"\n    # Your implementation here\n    pass",
+    "solution": "import numpy as np\n\ndef divergence_3d(P, Q, R, point):\n    \"\"\"\n    Compute divergence of F = [P, Q, R] at a point.\n    \"\"\"\n    x, y, z = point\n    h = 1e-6\n\n    # ∂P/∂x\n    dP_dx = (P(x + h, y, z) - P(x - h, y, z)) / (2 * h)\n\n    # ∂Q/∂y\n    dQ_dy = (Q(x, y + h, z) - Q(x, y - h, z)) / (2 * h)\n\n    # ∂R/∂z\n    dR_dz = (R(x, y, z + h) - R(x, y, z - h)) / (2 * h)\n\n    return dP_dx + dQ_dy + dR_dz",
+    "testCases": [
+      {
+        "input": "round(divergence_3d(lambda x,y,z: x, lambda x,y,z: y, lambda x,y,z: z, (0, 0, 0)), 5)",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "round(divergence_3d(lambda x,y,z: x**2, lambda x,y,z: y**2, lambda x,y,z: z**2, (1, 1, 1)), 5)",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "round(divergence_3d(lambda x,y,z: -y, lambda x,y,z: x, lambda x,y,z: 0, (1, 1, 1)), 10)",
+        "isHidden": true,
+        "description": "Hidden test"
+      }
+    ],
+    "hints": [
+      "div F = ∇·F = ∂P/∂x + ∂Q/∂y + ∂R/∂z",
+      "Divergence measures \"outflow\" from a point",
+      "Positive divergence = source, negative = sink"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math301-t7-ex03",
+    "subjectId": "math301",
+    "topicId": "math301-topic-7",
+    "title": "Curl in 2D",
+    "difficulty": 2,
+    "description": "Compute the scalar curl of a 2D vector field F = [P, Q].",
+    "starterCode": "import numpy as np\n\ndef curl_2d(P, Q, point):\n    \"\"\"\n    Compute scalar curl of 2D field F = [P, Q].\n    curl F = ∂Q/∂x - ∂P/∂y\n\n    Args:\n        P: Component P(x, y)\n        Q: Component Q(x, y)\n        point: (x, y) where to evaluate\n    Returns:\n        Scalar curl value\n    \"\"\"\n    # Your implementation here\n    pass",
+    "solution": "import numpy as np\n\ndef curl_2d(P, Q, point):\n    \"\"\"\n    Compute scalar curl of 2D field F = [P, Q].\n    \"\"\"\n    x, y = point\n    h = 1e-6\n\n    # ∂Q/∂x\n    dQ_dx = (Q(x + h, y) - Q(x - h, y)) / (2 * h)\n\n    # ∂P/∂y\n    dP_dy = (P(x, y + h) - P(x, y - h)) / (2 * h)\n\n    return dQ_dx - dP_dy",
+    "testCases": [
+      {
+        "input": "round(curl_2d(lambda x, y: -y, lambda x, y: x, (0, 0)), 5)",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "round(curl_2d(lambda x, y: y, lambda x, y: x, (1, 1)), 10)",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "round(curl_2d(lambda x, y: x*y, lambda x, y: x**2, (2, 1)), 5)",
+        "isHidden": true,
+        "description": "Hidden test"
+      }
+    ],
+    "hints": [
+      "In 2D, curl is a scalar: ∂Q/∂x - ∂P/∂y",
+      "This is the k-component of curl if F = [P, Q, 0]",
+      "Measures counterclockwise rotation"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math301-t7-ex04",
+    "subjectId": "math301",
+    "topicId": "math301-topic-7",
+    "title": "Test for Irrotational Field",
+    "difficulty": 2,
+    "description": "Check if a vector field is irrotational (curl = 0).",
+    "starterCode": "import numpy as np\n\ndef is_irrotational(P, Q, R, test_points):\n    \"\"\"\n    Test if F = [P, Q, R] is irrotational by checking if curl F = 0.\n\n    Args:\n        P, Q, R: Vector field components\n        test_points: List of (x, y, z) points to test\n    Returns:\n        True if irrotational, False otherwise\n    \"\"\"\n    # Your implementation here\n    pass",
+    "solution": "import numpy as np\n\ndef is_irrotational(P, Q, R, test_points):\n    \"\"\"\n    Test if F = [P, Q, R] is irrotational by checking if curl F = 0.\n    \"\"\"\n    h = 1e-6\n    tolerance = 1e-4\n\n    for x, y, z in test_points:\n        # Compute curl components\n        dR_dy = (R(x, y + h, z) - R(x, y - h, z)) / (2 * h)\n        dQ_dz = (Q(x, y, z + h) - Q(x, y, z - h)) / (2 * h)\n\n        dP_dz = (P(x, y, z + h) - P(x, y, z - h)) / (2 * h)\n        dR_dx = (R(x + h, y, z) - R(x - h, y, z)) / (2 * h)\n\n        dQ_dx = (Q(x + h, y, z) - Q(x - h, y, z)) / (2 * h)\n        dP_dy = (P(x, y + h, z) - P(x, y - h, z)) / (2 * h)\n\n        curl = [\n            dR_dy - dQ_dz,\n            dP_dz - dR_dx,\n            dQ_dx - dP_dy\n        ]\n\n        # Check if curl is approximately zero\n        if any(abs(c) > tolerance for c in curl):\n            return False\n\n    return True",
+    "testCases": [
+      {
+        "input": "is_irrotational(lambda x,y,z: y*z, lambda x,y,z: x*z, lambda x,y,z: x*y, [(0,0,0), (1,1,1)])",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "is_irrotational(lambda x,y,z: -y, lambda x,y,z: x, lambda x,y,z: 0, [(1,1,1)])",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "is_irrotational(lambda x,y,z: 2*x, lambda x,y,z: 2*y, lambda x,y,z: 2*z, [(1,1,1), (0,0,1)])",
+        "isHidden": true,
+        "description": "Hidden test"
+      }
+    ],
+    "hints": [
+      "Irrotational means curl F = 0 everywhere",
+      "Conservative fields are irrotational",
+      "Check all three components of curl"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math301-t7-ex05",
+    "subjectId": "math301",
+    "topicId": "math301-topic-7",
+    "title": "Test for Incompressible Field",
+    "difficulty": 2,
+    "description": "Check if a vector field is incompressible (div = 0).",
+    "starterCode": "import numpy as np\n\ndef is_incompressible(P, Q, R, test_points):\n    \"\"\"\n    Test if F = [P, Q, R] is incompressible by checking if div F = 0.\n\n    Args:\n        P, Q, R: Vector field components\n        test_points: List of (x, y, z) points to test\n    Returns:\n        True if incompressible, False otherwise\n    \"\"\"\n    # Your implementation here\n    pass",
+    "solution": "import numpy as np\n\ndef is_incompressible(P, Q, R, test_points):\n    \"\"\"\n    Test if F = [P, Q, R] is incompressible by checking if div F = 0.\n    \"\"\"\n    h = 1e-6\n    tolerance = 1e-4\n\n    for x, y, z in test_points:\n        # Compute divergence\n        dP_dx = (P(x + h, y, z) - P(x - h, y, z)) / (2 * h)\n        dQ_dy = (Q(x, y + h, z) - Q(x, y - h, z)) / (2 * h)\n        dR_dz = (R(x, y, z + h) - R(x, y, z - h)) / (2 * h)\n\n        div = dP_dx + dQ_dy + dR_dz\n\n        if abs(div) > tolerance:\n            return False\n\n    return True",
+    "testCases": [
+      {
+        "input": "is_incompressible(lambda x,y,z: -y, lambda x,y,z: x, lambda x,y,z: 0, [(0,0,0), (1,1,1)])",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "is_incompressible(lambda x,y,z: x, lambda x,y,z: y, lambda x,y,z: z, [(1,1,1)])",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "is_incompressible(lambda x,y,z: y, lambda x,y,z: -x, lambda x,y,z: z**2, [(1,1,1), (0,0,1)])",
+        "isHidden": true,
+        "description": "Hidden test"
+      }
+    ],
+    "hints": [
+      "Incompressible means div F = 0",
+      "Fluid with no sources or sinks",
+      "Also called solenoidal field"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math301-t7-ex06",
+    "subjectId": "math301",
+    "topicId": "math301-topic-7",
+    "title": "Green's Theorem Verification",
+    "difficulty": 3,
+    "description": "Verify Green's Theorem: ∮_C F·dr = ∫∫_D (∂Q/∂x - ∂P/∂y) dA.",
+    "starterCode": "import numpy as np\nfrom scipy import integrate\n\ndef verify_greens_theorem(P, Q, r, t_bounds, region_bounds):\n    \"\"\"\n    Verify Green's theorem by computing both sides.\n\n    Args:\n        P, Q: Vector field components F = [P, Q]\n        r: Boundary curve r(t) = [x(t), y(t)]\n        t_bounds: (t_min, t_max) for curve\n        region_bounds: ((x_min, x_max), (y_min, y_max)) for rectangular region\n    Returns:\n        Tuple (line_integral, double_integral)\n    \"\"\"\n    # Your implementation here\n    pass",
+    "solution": "import numpy as np\nfrom scipy import integrate\n\ndef verify_greens_theorem(P, Q, r, t_bounds, region_bounds):\n    \"\"\"\n    Verify Green's theorem by computing both sides.\n    \"\"\"\n    # Line integral ∮_C F·dr\n    def line_integrand(t):\n        pos = r(t)\n        x, y = pos[0], pos[1]\n        field = [P(x, y), Q(x, y)]\n\n        h = 1e-6\n        r_plus = r(t + h)\n        r_minus = r(t - h)\n        dr_dt = [(r_plus[i] - r_minus[i]) / (2 * h) for i in range(2)]\n\n        return field[0] * dr_dt[0] + field[1] * dr_dt[1]\n\n    line_integral, _ = integrate.quad(line_integrand, t_bounds[0], t_bounds[1])\n\n    # Double integral ∫∫_D (∂Q/∂x - ∂P/∂y) dA\n    def double_integrand(y, x):\n        h = 1e-6\n        dQ_dx = (Q(x + h, y) - Q(x - h, y)) / (2 * h)\n        dP_dy = (P(x, y + h) - P(x, y - h)) / (2 * h)\n        return dQ_dx - dP_dy\n\n    x_bounds, y_bounds = region_bounds\n    double_integral, _ = integrate.dblquad(double_integrand,\n                                           x_bounds[0], x_bounds[1],\n                                           y_bounds[0], y_bounds[1])\n\n    return (line_integral, double_integral)",
+    "testCases": [
+      {
+        "input": "tuple(round(x, 5) for x in verify_greens_theorem(lambda x,y: 0, lambda x,y: x, lambda t: [np.cos(t), np.sin(t)], (0, 2*np.pi), ((-1, 1), (-1, 1))))",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "tuple(round(x, 5) for x in verify_greens_theorem(lambda x,y: -y, lambda x,y: x, lambda t: [np.cos(t), np.sin(t)], (0, 2*np.pi), ((-1, 1), (-1, 1))))",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Green's Theorem: ∮_C P dx + Q dy = ∫∫_D (∂Q/∂x - ∂P/∂y) dA",
+      "Compute both the line integral and double integral",
+      "They should be equal (within numerical error)"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math301-t7-ex07",
+    "subjectId": "math301",
+    "topicId": "math301-topic-7",
+    "title": "Area via Green's Theorem",
+    "difficulty": 3,
+    "description": "Use Green's Theorem to compute area: A = (1/2)∮_C (x dy - y dx).",
+    "starterCode": "import numpy as np\nfrom scipy import integrate\n\ndef area_greens(r, t_bounds):\n    \"\"\"\n    Compute area enclosed by curve using Green's theorem.\n    A = (1/2) ∮_C (x dy - y dx)\n\n    Args:\n        r: Boundary curve r(t) = [x(t), y(t)]\n        t_bounds: (t_min, t_max)\n    Returns:\n        Area enclosed by the curve\n    \"\"\"\n    # Your implementation here\n    pass",
+    "solution": "import numpy as np\nfrom scipy import integrate\n\ndef area_greens(r, t_bounds):\n    \"\"\"\n    Compute area enclosed by curve using Green's theorem.\n    \"\"\"\n    def integrand(t):\n        pos = r(t)\n        x, y = pos[0], pos[1]\n\n        h = 1e-6\n        r_plus = r(t + h)\n        r_minus = r(t - h)\n        dx_dt = (r_plus[0] - r_minus[0]) / (2 * h)\n        dy_dt = (r_plus[1] - r_minus[1]) / (2 * h)\n\n        # x dy - y dx = x (dy/dt) dt - y (dx/dt) dt\n        return x * dy_dt - y * dx_dt\n\n    result, _ = integrate.quad(integrand, t_bounds[0], t_bounds[1])\n    return abs(result) / 2",
+    "testCases": [
+      {
+        "input": "round(area_greens(lambda t: [np.cos(t), np.sin(t)], (0, 2*np.pi)), 5)",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "round(area_greens(lambda t: [2*np.cos(t), 2*np.sin(t)], (0, 2*np.pi)), 5)",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "round(area_greens(lambda t: [t, 0] if t <= 1 else [1, t-1] if t <= 2 else [2-t, 1] if t <= 3 else [0, 4-t], (0, 4)), 5)",
+        "isHidden": true,
+        "description": "Hidden test"
+      }
+    ],
+    "hints": [
+      "Green's Theorem: Area = (1/2) ∮_C (x dy - y dx)",
+      "Compute x(dy/dt) - y(dx/dt) and integrate",
+      "Take absolute value and divide by 2"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math301-t7-ex08",
+    "subjectId": "math301",
+    "topicId": "math301-topic-7",
+    "title": "Stokes' Theorem Verification",
+    "difficulty": 4,
+    "description": "Verify Stokes' Theorem: ∮_C F·dr = ∫∫_S (curl F)·n dS.",
+    "starterCode": "import numpy as np\nfrom scipy import integrate\n\ndef verify_stokes(P, Q, R, boundary_curve, t_bounds, surface, u_bounds, v_bounds):\n    \"\"\"\n    Verify Stokes' theorem by computing both sides.\n\n    Args:\n        P, Q, R: Vector field components\n        boundary_curve: Boundary curve r(t)\n        t_bounds: Parameter bounds for curve\n        surface: Surface S parametrized as r(u, v)\n        u_bounds, v_bounds: Parameter bounds for surface\n    Returns:\n        Tuple (line_integral, surface_integral)\n    \"\"\"\n    # Your implementation here\n    pass",
+    "solution": "import numpy as np\nfrom scipy import integrate\n\ndef verify_stokes(P, Q, R, boundary_curve, t_bounds, surface, u_bounds, v_bounds):\n    \"\"\"\n    Verify Stokes' theorem by computing both sides.\n    \"\"\"\n    # Line integral ∮_C F·dr\n    def line_integrand(t):\n        pos = boundary_curve(t)\n        x, y, z = pos[0], pos[1], pos[2]\n        field = [P(x, y, z), Q(x, y, z), R(x, y, z)]\n\n        h = 1e-6\n        r_plus = boundary_curve(t + h)\n        r_minus = boundary_curve(t - h)\n        dr_dt = [(r_plus[i] - r_minus[i]) / (2 * h) for i in range(3)]\n\n        return sum(field[i] * dr_dt[i] for i in range(3))\n\n    line_integral, _ = integrate.quad(line_integrand, t_bounds[0], t_bounds[1])\n\n    # Surface integral ∫∫_S (curl F)·n dS\n    def surface_integrand(v, u):\n        pos = surface(u, v)\n        x, y, z = pos[0], pos[1], pos[2]\n\n        h = 1e-6\n\n        # Compute curl at this point\n        dR_dy = (R(x, y + h, z) - R(x, y - h, z)) / (2 * h)\n        dQ_dz = (Q(x, y, z + h) - Q(x, y, z - h)) / (2 * h)\n        dP_dz = (P(x, y, z + h) - P(x, y, z - h)) / (2 * h)\n        dR_dx = (R(x + h, y, z) - R(x - h, y, z)) / (2 * h)\n        dQ_dx = (Q(x + h, y, z) - Q(x - h, y, z)) / (2 * h)\n        dP_dy = (P(x, y + h, z) - P(x, y - h, z)) / (2 * h)\n\n        curl = [dR_dy - dQ_dz, dP_dz - dR_dx, dQ_dx - dP_dy]\n\n        # Compute normal r_u × r_v\n        r_u_plus = surface(u + h, v)\n        r_u_minus = surface(u - h, v)\n        r_u = [(r_u_plus[i] - r_u_minus[i]) / (2 * h) for i in range(3)]\n\n        r_v_plus = surface(u, v + h)\n        r_v_minus = surface(u, v - h)\n        r_v = [(r_v_plus[i] - r_v_minus[i]) / (2 * h) for i in range(3)]\n\n        normal = [\n            r_u[1] * r_v[2] - r_u[2] * r_v[1],\n            r_u[2] * r_v[0] - r_u[0] * r_v[2],\n            r_u[0] * r_v[1] - r_u[1] * r_v[0]\n        ]\n\n        return sum(curl[i] * normal[i] for i in range(3))\n\n    surface_integral, _ = integrate.dblquad(surface_integrand,\n                                            u_bounds[0], u_bounds[1],\n                                            v_bounds[0], v_bounds[1])\n\n    return (line_integral, surface_integral)",
+    "testCases": [
+      {
+        "input": "tuple(round(x, 5) for x in verify_stokes(lambda x,y,z: -y, lambda x,y,z: x, lambda x,y,z: 0, lambda t: [np.cos(t), np.sin(t), 0], (0, 2*np.pi), lambda u,v: [u*np.cos(v), u*np.sin(v), 0], (0, 1), (0, 2*np.pi)))",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Stokes' Theorem: ∮_C F·dr = ∫∫_S (∇×F)·n dS",
+      "Compute line integral around boundary",
+      "Compute surface integral of curl dotted with normal"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math301-t7-ex09",
+    "subjectId": "math301",
+    "topicId": "math301-topic-7",
+    "title": "Divergence Theorem Verification",
+    "difficulty": 4,
+    "description": "Verify Divergence Theorem: ∫∫∫_V (div F) dV = ∫∫_S F·n dS.",
+    "starterCode": "import numpy as np\nfrom scipy import integrate\n\ndef verify_divergence_theorem(P, Q, R, volume_bounds, surface, u_bounds, v_bounds):\n    \"\"\"\n    Verify Divergence Theorem by computing both sides.\n\n    Args:\n        P, Q, R: Vector field components\n        volume_bounds: ((x_min, x_max), (y_min, y_max), (z_min, z_max))\n        surface: Closed surface parametrization r(u, v)\n        u_bounds, v_bounds: Parameter bounds\n    Returns:\n        Tuple (volume_integral, surface_integral)\n    \"\"\"\n    # Your implementation here\n    pass",
+    "solution": "import numpy as np\nfrom scipy import integrate\n\ndef verify_divergence_theorem(P, Q, R, volume_bounds, surface, u_bounds, v_bounds):\n    \"\"\"\n    Verify Divergence Theorem by computing both sides.\n    \"\"\"\n    # Volume integral ∫∫∫_V (div F) dV\n    def volume_integrand(z, y, x):\n        h = 1e-6\n        dP_dx = (P(x + h, y, z) - P(x - h, y, z)) / (2 * h)\n        dQ_dy = (Q(x, y + h, z) - Q(x, y - h, z)) / (2 * h)\n        dR_dz = (R(x, y, z + h) - R(x, y, z - h)) / (2 * h)\n        return dP_dx + dQ_dy + dR_dz\n\n    x_bounds, y_bounds, z_bounds = volume_bounds\n    volume_integral, _ = integrate.tplquad(volume_integrand,\n                                           x_bounds[0], x_bounds[1],\n                                           y_bounds[0], y_bounds[1],\n                                           z_bounds[0], z_bounds[1])\n\n    # Surface integral ∫∫_S F·n dS\n    def surface_integrand(v, u):\n        pos = surface(u, v)\n        x, y, z = pos[0], pos[1], pos[2]\n        field = [P(x, y, z), Q(x, y, z), R(x, y, z)]\n\n        h = 1e-6\n\n        r_u_plus = surface(u + h, v)\n        r_u_minus = surface(u - h, v)\n        r_u = [(r_u_plus[i] - r_u_minus[i]) / (2 * h) for i in range(3)]\n\n        r_v_plus = surface(u, v + h)\n        r_v_minus = surface(u, v - h)\n        r_v = [(r_v_plus[i] - r_v_minus[i]) / (2 * h) for i in range(3)]\n\n        # Outward normal\n        normal = [\n            r_u[1] * r_v[2] - r_u[2] * r_v[1],\n            r_u[2] * r_v[0] - r_u[0] * r_v[2],\n            r_u[0] * r_v[1] - r_u[1] * r_v[0]\n        ]\n\n        return sum(field[i] * normal[i] for i in range(3))\n\n    surface_integral, _ = integrate.dblquad(surface_integrand,\n                                            u_bounds[0], u_bounds[1],\n                                            v_bounds[0], v_bounds[1])\n\n    return (volume_integral, surface_integral)",
+    "testCases": [
+      {
+        "input": "tuple(round(x, 5) for x in verify_divergence_theorem(lambda x,y,z: x, lambda x,y,z: y, lambda x,y,z: z, ((-1, 1), (-1, 1), (-1, 1)), lambda u,v: [np.sin(v)*np.cos(u), np.sin(v)*np.sin(u), np.cos(v)], (0, 2*np.pi), (0, np.pi)))",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Divergence Theorem: ∫∫∫_V (∇·F) dV = ∫∫_S F·n̂ dS",
+      "Compute triple integral of divergence over volume",
+      "Compute flux through closed surface"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math301-t7-ex10",
+    "subjectId": "math301",
+    "topicId": "math301-topic-7",
+    "title": "Laplacian Operator",
+    "difficulty": 3,
+    "description": "Compute the Laplacian ∇²f = ∂²f/∂x² + ∂²f/∂y² + ∂²f/∂z² of a scalar function.",
+    "starterCode": "import numpy as np\n\ndef laplacian(f, point):\n    \"\"\"\n    Compute Laplacian ∇²f at a point.\n\n    Args:\n        f: Scalar function f(x, y, z)\n        point: (x, y, z) where to evaluate\n    Returns:\n        Laplacian value\n    \"\"\"\n    # Your implementation here\n    pass",
+    "solution": "import numpy as np\n\ndef laplacian(f, point):\n    \"\"\"\n    Compute Laplacian ∇²f at a point.\n    \"\"\"\n    x, y, z = point\n    h = 1e-5\n\n    # ∂²f/∂x²\n    d2f_dx2 = (f(x + h, y, z) - 2 * f(x, y, z) + f(x - h, y, z)) / h**2\n\n    # ∂²f/∂y²\n    d2f_dy2 = (f(x, y + h, z) - 2 * f(x, y, z) + f(x, y - h, z)) / h**2\n\n    # ∂²f/∂z²\n    d2f_dz2 = (f(x, y, z + h) - 2 * f(x, y, z) + f(x, y, z - h)) / h**2\n\n    return d2f_dx2 + d2f_dy2 + d2f_dz2",
+    "testCases": [
+      {
+        "input": "round(laplacian(lambda x, y, z: x**2 + y**2 + z**2, (0, 0, 0)), 5)",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "round(laplacian(lambda x, y, z: x**3 + y**3 + z**3, (1, 1, 1)), 5)",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "round(laplacian(lambda x, y, z: np.sin(x) + np.cos(y) + z, (0, 0, 0)), 10)",
+        "isHidden": true,
+        "description": "Hidden test"
+      }
+    ],
+    "hints": [
+      "Laplacian: ∇²f = ∂²f/∂x² + ∂²f/∂y² + ∂²f/∂z²",
+      "Use second-order finite differences",
+      "Also written as div(grad f)"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math301-t7-ex11",
+    "subjectId": "math301",
+    "topicId": "math301-topic-7",
+    "title": "Harmonic Function Test",
+    "difficulty": 3,
+    "description": "Test if a function is harmonic (∇²f = 0).",
+    "starterCode": "import numpy as np\n\ndef is_harmonic(f, test_points):\n    \"\"\"\n    Test if f is harmonic by checking if ∇²f = 0.\n\n    Args:\n        f: Scalar function f(x, y, z)\n        test_points: List of (x, y, z) points to test\n    Returns:\n        True if harmonic, False otherwise\n    \"\"\"\n    # Your implementation here\n    pass",
+    "solution": "import numpy as np\n\ndef is_harmonic(f, test_points):\n    \"\"\"\n    Test if f is harmonic by checking if ∇²f = 0.\n    \"\"\"\n    h = 1e-5\n    tolerance = 1e-3\n\n    for x, y, z in test_points:\n        # Compute Laplacian\n        d2f_dx2 = (f(x + h, y, z) - 2 * f(x, y, z) + f(x - h, y, z)) / h**2\n        d2f_dy2 = (f(x, y + h, z) - 2 * f(x, y, z) + f(x, y - h, z)) / h**2\n        d2f_dz2 = (f(x, y, z + h) - 2 * f(x, y, z) + f(x, y, z - h)) / h**2\n\n        laplacian = d2f_dx2 + d2f_dy2 + d2f_dz2\n\n        if abs(laplacian) > tolerance:\n            return False\n\n    return True",
+    "testCases": [
+      {
+        "input": "is_harmonic(lambda x, y, z: x**2 - y**2, [(1, 1, 0), (2, 1, 0)])",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "is_harmonic(lambda x, y, z: x**2 + y**2 + z**2, [(1, 1, 1)])",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "is_harmonic(lambda x, y, z: x*y*z, [(1, 1, 1), (0, 0, 1)])",
+        "isHidden": true,
+        "description": "Hidden test"
+      }
+    ],
+    "hints": [
+      "Harmonic function: ∇²f = 0",
+      "Common in physics (gravitational/electric potential)",
+      "Check Laplacian at multiple points"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math301-t7-ex12",
+    "subjectId": "math301",
+    "topicId": "math301-topic-7",
+    "title": "Vector Identity: div(curl F)",
+    "difficulty": 4,
+    "description": "Verify the identity div(curl F) = 0 for any vector field.",
+    "starterCode": "import numpy as np\n\ndef verify_div_curl_zero(P, Q, R, test_points):\n    \"\"\"\n    Verify that div(curl F) = 0 for F = [P, Q, R].\n\n    Args:\n        P, Q, R: Vector field components\n        test_points: List of (x, y, z) points to test\n    Returns:\n        True if div(curl F) ≈ 0 at all test points\n    \"\"\"\n    # Your implementation here\n    pass",
+    "solution": "import numpy as np\n\ndef verify_div_curl_zero(P, Q, R, test_points):\n    \"\"\"\n    Verify that div(curl F) = 0 for F = [P, Q, R].\n    \"\"\"\n    h = 1e-6\n    tolerance = 1e-4\n\n    for x, y, z in test_points:\n        # First compute curl F\n        dR_dy = (R(x, y + h, z) - R(x, y - h, z)) / (2 * h)\n        dQ_dz = (Q(x, y, z + h) - Q(x, y, z - h)) / (2 * h)\n        curl_x = dR_dy - dQ_dz\n\n        dP_dz = (P(x, y, z + h) - P(x, y, z - h)) / (2 * h)\n        dR_dx = (R(x + h, y, z) - R(x - h, y, z)) / (2 * h)\n        curl_y = dP_dz - dR_dx\n\n        dQ_dx = (Q(x + h, y, z) - Q(x - h, y, z)) / (2 * h)\n        dP_dy = (P(x, y + h, z) - P(x, y - h, z)) / (2 * h)\n        curl_z = dQ_dx - dP_dy\n\n        # Now compute divergence of curl\n        # Need to treat curl as a vector field and compute its divergence\n        # This requires second derivatives, but mathematically div(curl F) = 0 always\n\n        # Simplified: compute ∂(curl_x)/∂x + ∂(curl_y)/∂y + ∂(curl_z)/∂z numerically\n        # at this point, which should be 0\n\n        # For verification, we can compute curl at nearby points\n        def curl_component(comp_idx, px, py, pz):\n            if comp_idx == 0:\n                dR_dy_p = (R(px, py + h, pz) - R(px, py - h, pz)) / (2 * h)\n                dQ_dz_p = (Q(px, py, pz + h) - Q(px, py, pz - h)) / (2 * h)\n                return dR_dy_p - dQ_dz_p\n            elif comp_idx == 1:\n                dP_dz_p = (P(px, py, pz + h) - P(px, py, pz - h)) / (2 * h)\n                dR_dx_p = (R(px + h, py, pz) - R(px - h, py, pz)) / (2 * h)\n                return dP_dz_p - dR_dx_p\n            else:\n                dQ_dx_p = (Q(px + h, py, pz) - Q(px - h, py, pz)) / (2 * h)\n                dP_dy_p = (P(px, py + h, pz) - P(px, py - h, pz)) / (2 * h)\n                return dQ_dx_p - dP_dy_p\n\n        # Compute divergence of curl\n        dcurl_x_dx = (curl_component(0, x + h, y, z) - curl_component(0, x - h, y, z)) / (2 * h)\n        dcurl_y_dy = (curl_component(1, x, y + h, z) - curl_component(1, x, y - h, z)) / (2 * h)\n        dcurl_z_dz = (curl_component(2, x, y, z + h) - curl_component(2, x, y, z - h)) / (2 * h)\n\n        div_curl = dcurl_x_dx + dcurl_y_dy + dcurl_z_dz\n\n        if abs(div_curl) > tolerance:\n            return False\n\n    return True",
+    "testCases": [
+      {
+        "input": "verify_div_curl_zero(lambda x,y,z: x*y, lambda x,y,z: y*z, lambda x,y,z: x*z, [(1, 1, 1)])",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "verify_div_curl_zero(lambda x,y,z: x**2, lambda x,y,z: y**2, lambda x,y,z: z**2, [(0, 0, 0), (1, 1, 1)])",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Mathematical identity: ∇·(∇×F) = 0 always",
+      "Curl produces a field with zero divergence",
+      "Consequence of mixed partial derivatives commuting"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math301-t7-ex13",
+    "subjectId": "math301",
+    "topicId": "math301-topic-7",
+    "title": "Vector Identity: curl(grad f)",
+    "difficulty": 4,
+    "description": "Verify the identity curl(grad f) = 0 for any scalar function.",
+    "starterCode": "import numpy as np\n\ndef verify_curl_grad_zero(f, test_points):\n    \"\"\"\n    Verify that curl(∇f) = 0 for scalar function f.\n\n    Args:\n        f: Scalar function f(x, y, z)\n        test_points: List of (x, y, z) points to test\n    Returns:\n        True if curl(grad f) ≈ 0 at all test points\n    \"\"\"\n    # Your implementation here\n    pass",
+    "solution": "import numpy as np\n\ndef verify_curl_grad_zero(f, test_points):\n    \"\"\"\n    Verify that curl(∇f) = 0 for scalar function f.\n    \"\"\"\n    h = 1e-6\n    tolerance = 1e-4\n\n    for x, y, z in test_points:\n        # Gradient components (these become P, Q, R)\n        # P = ∂f/∂x, Q = ∂f/∂y, R = ∂f/∂z\n\n        # Curl of gradient:\n        # curl_x = ∂R/∂y - ∂Q/∂z = ∂²f/∂y∂z - ∂²f/∂z∂y = 0\n        # curl_y = ∂P/∂z - ∂R/∂x = ∂²f/∂z∂x - ∂²f/∂x∂z = 0\n        # curl_z = ∂Q/∂x - ∂P/∂y = ∂²f/∂x∂y - ∂²f/∂y∂x = 0\n\n        # Compute mixed partials\n        # ∂²f/∂y∂z\n        d2f_dydz = (f(x, y + h, z + h) - f(x, y + h, z - h) - f(x, y - h, z + h) + f(x, y - h, z - h)) / (4 * h**2)\n\n        # ∂²f/∂z∂y\n        d2f_dzdy = (f(x, y + h, z + h) - f(x, y - h, z + h) - f(x, y + h, z - h) + f(x, y - h, z - h)) / (4 * h**2)\n\n        curl_x = d2f_dydz - d2f_dzdy\n\n        # ∂²f/∂z∂x\n        d2f_dzdx = (f(x + h, y, z + h) - f(x - h, y, z + h) - f(x + h, y, z - h) + f(x - h, y, z - h)) / (4 * h**2)\n\n        # ∂²f/∂x∂z\n        d2f_dxdz = (f(x + h, y, z + h) - f(x + h, y, z - h) - f(x - h, y, z + h) + f(x - h, y, z - h)) / (4 * h**2)\n\n        curl_y = d2f_dzdx - d2f_dxdz\n\n        # ∂²f/∂x∂y\n        d2f_dxdy = (f(x + h, y + h, z) - f(x + h, y - h, z) - f(x - h, y + h, z) + f(x - h, y - h, z)) / (4 * h**2)\n\n        # ∂²f/∂y∂x\n        d2f_dydx = (f(x + h, y + h, z) - f(x - h, y + h, z) - f(x + h, y - h, z) + f(x - h, y - h, z)) / (4 * h**2)\n\n        curl_z = d2f_dxdy - d2f_dydx\n\n        curl_magnitude = np.sqrt(curl_x**2 + curl_y**2 + curl_z**2)\n\n        if curl_magnitude > tolerance:\n            return False\n\n    return True",
+    "testCases": [
+      {
+        "input": "verify_curl_grad_zero(lambda x, y, z: x**2 + y**2 + z**2, [(1, 1, 1)])",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "verify_curl_grad_zero(lambda x, y, z: x*y*z, [(0, 0, 0), (1, 1, 1)])",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "verify_curl_grad_zero(lambda x, y, z: np.sin(x) * np.cos(y) * z, [(1, 1, 1)])",
+        "isHidden": true,
+        "description": "Hidden test"
+      }
+    ],
+    "hints": [
+      "Mathematical identity: ∇×(∇f) = 0 always",
+      "Conservative fields have zero curl",
+      "Mixed partials commute: ∂²f/∂x∂y = ∂²f/∂y∂x"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math301-t7-ex14",
+    "subjectId": "math301",
+    "topicId": "math301-topic-7",
+    "title": "Maxwell's Equation: Gauss's Law",
+    "difficulty": 5,
+    "description": "Verify Gauss's law for electric field: ∇·E = ρ/ε₀.",
+    "starterCode": "import numpy as np\n\ndef verify_gauss_law(E_x, E_y, E_z, charge_density, test_points, epsilon_0=1.0):\n    \"\"\"\n    Verify Gauss's law: ∇·E = ρ/ε₀\n\n    Args:\n        E_x, E_y, E_z: Electric field components\n        charge_density: Function ρ(x, y, z)\n        test_points: List of (x, y, z) points to test\n        epsilon_0: Permittivity constant (default 1.0)\n    Returns:\n        True if law holds at all test points\n    \"\"\"\n    # Your implementation here\n    pass",
+    "solution": "import numpy as np\n\ndef verify_gauss_law(E_x, E_y, E_z, charge_density, test_points, epsilon_0=1.0):\n    \"\"\"\n    Verify Gauss's law: ∇·E = ρ/ε₀\n    \"\"\"\n    h = 1e-6\n    tolerance = 1e-3\n\n    for x, y, z in test_points:\n        # Compute divergence of E\n        dEx_dx = (E_x(x + h, y, z) - E_x(x - h, y, z)) / (2 * h)\n        dEy_dy = (E_y(x, y + h, z) - E_y(x, y - h, z)) / (2 * h)\n        dEz_dz = (E_z(x, y, z + h) - E_z(x, y, z - h)) / (2 * h)\n\n        div_E = dEx_dx + dEy_dy + dEz_dz\n\n        # Compute ρ/ε₀\n        rho_over_epsilon = charge_density(x, y, z) / epsilon_0\n\n        # Check if they are equal\n        if abs(div_E - rho_over_epsilon) > tolerance:\n            return False\n\n    return True",
+    "testCases": [
+      {
+        "input": "verify_gauss_law(lambda x,y,z: x, lambda x,y,z: y, lambda x,y,z: z, lambda x,y,z: 3, [(0,0,0), (1,1,1)])",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "verify_gauss_law(lambda x,y,z: 0, lambda x,y,z: 0, lambda x,y,z: 0, lambda x,y,z: 0, [(1,1,1)])",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Gauss's law: ∇·E = ρ/ε₀",
+      "Relates electric field divergence to charge density",
+      "One of Maxwell's equations"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math301-t7-ex15",
+    "subjectId": "math301",
+    "topicId": "math301-topic-7",
+    "title": "Heat Equation",
+    "difficulty": 5,
+    "description": "Verify a solution to the heat equation: ∂u/∂t = α∇²u.",
+    "starterCode": "import numpy as np\n\ndef verify_heat_equation(u, alpha, test_points):\n    \"\"\"\n    Verify that u(x,y,z,t) satisfies heat equation: ∂u/∂t = α∇²u\n\n    Args:\n        u: Function u(x, y, z, t)\n        alpha: Thermal diffusivity constant\n        test_points: List of (x, y, z, t) points to test\n    Returns:\n        True if equation holds at all test points\n    \"\"\"\n    # Your implementation here\n    pass",
+    "solution": "import numpy as np\n\ndef verify_heat_equation(u, alpha, test_points):\n    \"\"\"\n    Verify that u(x,y,z,t) satisfies heat equation: ∂u/∂t = α∇²u\n    \"\"\"\n    h = 1e-5\n    tolerance = 1e-3\n\n    for x, y, z, t in test_points:\n        # Compute ∂u/∂t\n        du_dt = (u(x, y, z, t + h) - u(x, y, z, t - h)) / (2 * h)\n\n        # Compute Laplacian ∇²u\n        d2u_dx2 = (u(x + h, y, z, t) - 2 * u(x, y, z, t) + u(x - h, y, z, t)) / h**2\n        d2u_dy2 = (u(x, y + h, z, t) - 2 * u(x, y, z, t) + u(x, y - h, z, t)) / h**2\n        d2u_dz2 = (u(x, y, z + h, t) - 2 * u(x, y, z, t) + u(x, y, z - h, t)) / h**2\n\n        laplacian_u = d2u_dx2 + d2u_dy2 + d2u_dz2\n\n        # Check if ∂u/∂t = α∇²u\n        if abs(du_dt - alpha * laplacian_u) > tolerance:\n            return False\n\n    return True",
+    "testCases": [
+      {
+        "input": "verify_heat_equation(lambda x,y,z,t: np.exp(-t) * np.sin(x), 1.0, [(0,0,0,1), (np.pi/2,0,0,0.5)])",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "verify_heat_equation(lambda x,y,z,t: np.exp(-3*t) * (np.sin(x) + np.sin(y) + np.sin(z)), 1.0, [(0,0,0,0.1)])",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Heat equation: ∂u/∂t = α∇²u",
+      "Describes heat diffusion in space over time",
+      "Check that time derivative equals α times Laplacian"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math301-t7-ex16",
+    "subjectId": "math301",
+    "topicId": "math301-topic-7",
+    "title": "Conservative Field Decomposition",
+    "difficulty": 5,
+    "description": "Decompose a vector field into conservative (curl-free) and solenoidal (div-free) parts.",
+    "starterCode": "import numpy as np\n\ndef helmholtz_decomposition_test(P, Q, R, test_point):\n    \"\"\"\n    For simple fields, test if F can be written as F = ∇φ + ∇×A\n    where ∇φ is conservative and ∇×A is solenoidal.\n    This simplified version just checks properties.\n\n    Args:\n        P, Q, R: Vector field components\n        test_point: (x, y, z) point to analyze\n    Returns:\n        Dict with 'has_conservative_part' and 'has_solenoidal_part'\n    \"\"\"\n    # Your implementation here\n    # Check if curl F = 0 (purely conservative)\n    # Check if div F = 0 (purely solenoidal)\n    pass",
+    "solution": "import numpy as np\n\ndef helmholtz_decomposition_test(P, Q, R, test_point):\n    \"\"\"\n    Test properties related to Helmholtz decomposition.\n    \"\"\"\n    x, y, z = test_point\n    h = 1e-6\n    tolerance = 1e-4\n\n    # Compute divergence\n    dP_dx = (P(x + h, y, z) - P(x - h, y, z)) / (2 * h)\n    dQ_dy = (Q(x, y + h, z) - Q(x, y - h, z)) / (2 * h)\n    dR_dz = (R(x, y, z + h) - R(x, y, z - h)) / (2 * h)\n    div_F = dP_dx + dQ_dy + dR_dz\n\n    # Compute curl\n    dR_dy = (R(x, y + h, z) - R(x, y - h, z)) / (2 * h)\n    dQ_dz = (Q(x, y, z + h) - Q(x, y, z - h)) / (2 * h)\n    dP_dz = (P(x, y, z + h) - P(x, y, z - h)) / (2 * h)\n    dR_dx = (R(x + h, y, z) - R(x - h, y, z)) / (2 * h)\n    dQ_dx = (Q(x + h, y, z) - Q(x - h, y, z)) / (2 * h)\n    dP_dy = (P(x, y + h, z) - P(x, y - h, z)) / (2 * h)\n\n    curl_F = [dR_dy - dQ_dz, dP_dz - dR_dx, dQ_dx - dP_dy]\n    curl_magnitude = np.sqrt(sum(c**2 for c in curl_F))\n\n    result = {\n        'has_conservative_part': abs(div_F) > tolerance or curl_magnitude < tolerance,\n        'has_solenoidal_part': curl_magnitude > tolerance or abs(div_F) < tolerance,\n        'is_purely_conservative': curl_magnitude < tolerance,\n        'is_purely_solenoidal': abs(div_F) < tolerance\n    }\n\n    return result",
+    "testCases": [
+      {
+        "input": "helmholtz_decomposition_test(lambda x,y,z: x, lambda x,y,z: y, lambda x,y,z: z, (1,1,1))[\"is_purely_conservative\"]",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "helmholtz_decomposition_test(lambda x,y,z: -y, lambda x,y,z: x, lambda x,y,z: 0, (1,1,1))[\"is_purely_solenoidal\"]",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Helmholtz: Any field F = ∇φ + ∇×A",
+      "Conservative part: curl = 0",
+      "Solenoidal part: div = 0",
+      "Some fields have both parts"
+    ],
+    "language": "python"
+  }
+]

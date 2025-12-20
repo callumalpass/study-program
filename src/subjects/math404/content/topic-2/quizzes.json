@@ -1,0 +1,179 @@
+[
+  {
+    "id": "math404-quiz-2a",
+    "subjectId": "math404",
+    "topicId": "math404-topic-2",
+    "title": "Linear Programming - Fundamentals",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "In standard form LP, what type of constraints are used?",
+        "options": [
+          "Only inequalities ≤",
+          "Only inequalities ≥",
+          "Only equalities with x ≥ 0",
+          "Mix of equalities and inequalities"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Standard form LP has: min c^T x s.t. Ax = b, x ≥ 0 (equalities with nonnegativity)"
+      },
+      {
+        "id": "q2",
+        "type": "true_false",
+        "prompt": "The simplex algorithm always finds the optimal solution in polynomial time.",
+        "correctAnswer": false,
+        "explanation": "The simplex algorithm has exponential worst-case complexity, though it performs well in practice."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "What is a basic feasible solution (BFS) in linear programming?",
+        "options": [
+          "Any feasible solution to the LP",
+          "A vertex of the feasible polytope",
+          "The optimal solution",
+          "A solution in the interior of the feasible region"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A BFS corresponds to a vertex (extreme point) of the feasible polytope and has exactly n-m nonzero variables."
+      },
+      {
+        "id": "q4",
+        "type": "fill_blank",
+        "prompt": "In the simplex method, the variable entering the basis is chosen based on the most negative _____ cost.",
+        "correctAnswer": "reduced",
+        "explanation": "The entering variable is selected as the one with the most negative reduced cost, indicating the steepest descent direction."
+      },
+      {
+        "id": "q5",
+        "type": "true_false",
+        "prompt": "If an LP has an optimal solution, at least one basic feasible solution is optimal.",
+        "correctAnswer": true,
+        "explanation": "For LPs with bounded optimal solutions, there always exists an optimal BFS at a vertex of the feasible region."
+      }
+    ]
+  },
+  {
+    "id": "math404-quiz-2b",
+    "subjectId": "math404",
+    "topicId": "math404-topic-2",
+    "title": "Linear Programming - Application",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "When using the graphical method for a 2D LP, where is the optimal solution found?",
+        "options": [
+          "Always in the interior of the feasible region",
+          "At a vertex of the feasible region",
+          "On an edge of the feasible region",
+          "Both B and C are possible"
+        ],
+        "correctAnswer": 3,
+        "explanation": "The optimum is at a vertex or, if there are multiple optima, along an edge connecting optimal vertices."
+      },
+      {
+        "id": "q2",
+        "type": "true_false",
+        "prompt": "Degeneracy in linear programming means the LP has no feasible solution.",
+        "correctAnswer": false,
+        "explanation": "Degeneracy occurs when a BFS has more than n-m zero variables, which can cause simplex to cycle but doesn't imply infeasibility."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "What do shadow prices represent in sensitivity analysis?",
+        "options": [
+          "The cost of decision variables",
+          "The marginal value of resources",
+          "The reduced costs",
+          "The objective function coefficients"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Shadow prices (dual variables) represent the rate of change in the optimal objective value per unit increase in a constraint's right-hand side."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "Interior-point methods for LP have what computational complexity?",
+        "options": [
+          "Exponential worst-case",
+          "Pseudo-polynomial",
+          "Polynomial worst-case",
+          "Constant time"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Interior-point methods achieve polynomial worst-case complexity, typically O(n³) per iteration, unlike simplex which is exponential."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "The _____ test determines which variable leaves the basis in the simplex algorithm.",
+        "correctAnswer": "minimum ratio",
+        "explanation": "The minimum ratio test ensures feasibility is maintained when pivoting by determining how far we can move along the entering variable's direction."
+      }
+    ]
+  },
+  {
+    "id": "math404-quiz-2c",
+    "subjectId": "math404",
+    "topicId": "math404-topic-2",
+    "title": "Linear Programming - Mastery",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "Consider max 3x + 2y subject to x + y ≤ 4, 2x + y ≤ 6, x,y ≥ 0. What is the optimal value?",
+        "options": [
+          "10",
+          "12",
+          "14",
+          "16"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The optimal solution is at vertex (2,2), giving objective value 3(2) + 2(2) = 10. We can verify this is optimal by checking all vertices."
+      },
+      {
+        "id": "q2",
+        "type": "true_false",
+        "prompt": "If the LP is unbounded, the simplex algorithm will identify this by finding a direction with negative reduced cost and no positive coefficients in the minimum ratio test.",
+        "correctAnswer": true,
+        "explanation": "Unboundedness is detected when an entering variable can increase indefinitely without violating any constraint (all ratios undefined)."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "In the simplex tableau, what indicates optimality has been reached?",
+        "options": [
+          "All basic variables are positive",
+          "All reduced costs are non-negative (for minimization)",
+          "The right-hand side is all positive",
+          "The basis is identity"
+        ],
+        "correctAnswer": 1,
+        "explanation": "For minimization, optimality is reached when all reduced costs are non-negative, meaning no improving direction exists."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "What is the relationship between the number of pivots in simplex and problem dimensions?",
+        "options": [
+          "Always exactly n pivots",
+          "At most m pivots",
+          "Can be exponential in worst case",
+          "Always polynomial"
+        ],
+        "correctAnswer": 2,
+        "explanation": "While simplex is polynomial on average, pathological cases (e.g., Klee-Minty cube) require exponentially many pivots."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "Bland's rule and _____ rule are anti-cycling strategies that guarantee simplex terminates.",
+        "correctAnswer": "lexicographic",
+        "explanation": "Both Bland's and lexicographic rules prevent cycling by imposing deterministic tie-breaking rules for entering/leaving variables."
+      }
+    ]
+  }
+]

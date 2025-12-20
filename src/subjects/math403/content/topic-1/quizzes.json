@@ -1,0 +1,185 @@
+[
+  {
+    "id": "math403-quiz-1-1",
+    "subjectId": "math403",
+    "topicId": "math403-topic-1",
+    "title": "Topological Spaces - Fundamentals",
+    "questions": [
+      {
+        "id": "math403-q1-1-1",
+        "type": "multiple_choice",
+        "prompt": "Which of the following collections forms a topology on X = {a, b, c}?",
+        "options": [
+          "{∅, X}",
+          "{∅, {a}, {b}, X}",
+          "{∅, {a}, {a, b}, X}",
+          "{∅, {a}, {b}, {a, b}}"
+        ],
+        "correctAnswer": 2,
+        "explanation": "A topology must contain ∅ and X, and be closed under arbitrary unions and finite intersections. Option 2 satisfies all requirements: {a} ∪ {a, b} = {a, b} ✓, {a} ∩ {a, b} = {a} ✓. Option 1 fails because it's missing X at the end."
+      },
+      {
+        "id": "math403-q1-1-2",
+        "type": "true_false",
+        "prompt": "In any topological space, the empty set ∅ is always an open set.",
+        "correctAnswer": true,
+        "explanation": "By definition, a topology must contain both ∅ and the whole space X. Therefore, ∅ is always open in any topology."
+      },
+      {
+        "id": "math403-q1-1-3",
+        "type": "multiple_choice",
+        "prompt": "A set F is closed if and only if:",
+        "options": [
+          "F contains all its limit points",
+          "F is the complement of an open set",
+          "F = cl(F)",
+          "All of the above"
+        ],
+        "correctAnswer": 3,
+        "explanation": "All three statements are equivalent definitions of a closed set. A set is closed iff it equals its closure, iff it contains all its limit points, iff its complement is open."
+      },
+      {
+        "id": "math403-q1-1-4",
+        "type": "true_false",
+        "prompt": "The interior of a set A is the largest open set contained in A.",
+        "correctAnswer": true,
+        "explanation": "By definition, int(A) is the union of all open sets contained in A, making it the largest open set within A."
+      },
+      {
+        "id": "math403-q1-1-5",
+        "type": "multiple_choice",
+        "prompt": "For the set A = [0, 1) in ℝ with standard topology, what is cl(A)?",
+        "options": [
+          "[0, 1)",
+          "(0, 1)",
+          "[0, 1]",
+          "(0, 1]"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The closure of [0, 1) includes all its limit points. Both 0 and 1 are limit points (every neighborhood of 1 intersects [0, 1)), so cl(A) = [0, 1]."
+      }
+    ]
+  },
+  {
+    "id": "math403-quiz-1-2",
+    "subjectId": "math403",
+    "topicId": "math403-topic-1",
+    "title": "Topological Spaces - Open and Closed Sets",
+    "questions": [
+      {
+        "id": "math403-q1-2-1",
+        "type": "true_false",
+        "prompt": "The union of infinitely many closed sets is always closed.",
+        "correctAnswer": false,
+        "explanation": "False. Counterexample: In ℝ, each [1/n, 1] is closed, but ⋃[1/n, 1] = (0, 1] which is not closed. Only finite unions of closed sets are guaranteed to be closed."
+      },
+      {
+        "id": "math403-q1-2-2",
+        "type": "multiple_choice",
+        "prompt": "In the discrete topology on any set X, which sets are open?",
+        "options": [
+          "Only ∅ and X",
+          "Only finite sets",
+          "Only countable sets",
+          "All subsets of X"
+        ],
+        "correctAnswer": 3,
+        "explanation": "In the discrete topology, every subset of X is open (and also closed). This is the finest topology possible on X."
+      },
+      {
+        "id": "math403-q1-2-3",
+        "type": "multiple_choice",
+        "prompt": "What is the interior of ℚ (rationals) in ℝ with standard topology?",
+        "options": [
+          "ℚ",
+          "ℝ",
+          "∅",
+          "{0}"
+        ],
+        "correctAnswer": 2,
+        "explanation": "int(ℚ) = ∅ because ℚ contains no open intervals. Every open interval contains both rationals and irrationals, so no point of ℚ is an interior point."
+      },
+      {
+        "id": "math403-q1-2-4",
+        "type": "true_false",
+        "prompt": "A set can be both open and closed (clopen) in a topological space.",
+        "correctAnswer": true,
+        "explanation": "True. At minimum, ∅ and X are always both open and closed. In some topologies (like discrete), many more sets are clopen."
+      },
+      {
+        "id": "math403-q1-2-5",
+        "type": "multiple_choice",
+        "prompt": "For A = {1/n : n ∈ ℕ} in ℝ, what is cl(A)?",
+        "options": [
+          "A",
+          "A ∪ {0}",
+          "A ∪ {0, 1}",
+          "[0, 1]"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The sequence 1/n → 0 as n → ∞, so 0 is a limit point of A. No other points are limit points, so cl(A) = A ∪ {0}."
+      }
+    ]
+  },
+  {
+    "id": "math403-quiz-1-3",
+    "subjectId": "math403",
+    "topicId": "math403-topic-1",
+    "title": "Topological Spaces - Limit Points and Boundary",
+    "questions": [
+      {
+        "id": "math403-q1-3-1",
+        "type": "multiple_choice",
+        "prompt": "A point x is a limit point of A if:",
+        "options": [
+          "x ∈ A",
+          "Every neighborhood of x intersects A",
+          "Every neighborhood of x contains a point of A different from x",
+          "x ∈ cl(A)"
+        ],
+        "correctAnswer": 2,
+        "explanation": "By definition, x is a limit point of A if every neighborhood of x contains at least one point of A distinct from x. This allows x to be in or out of A."
+      },
+      {
+        "id": "math403-q1-3-2",
+        "type": "true_false",
+        "prompt": "Every point of a set A is necessarily a limit point of A.",
+        "correctAnswer": false,
+        "explanation": "False. In the discrete topology, isolated points exist. For example, in ℝ with discrete topology, no point is a limit point of any set."
+      },
+      {
+        "id": "math403-q1-3-3",
+        "type": "multiple_choice",
+        "prompt": "What is the boundary ∂A of the set A = (0, 1] in ℝ?",
+        "options": [
+          "{0}",
+          "{1}",
+          "{0, 1}",
+          "∅"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The boundary is ∂A = cl(A) \\ int(A). We have cl(A) = [0, 1] and int(A) = (0, 1), so ∂A = {0, 1}."
+      },
+      {
+        "id": "math403-q1-3-4",
+        "type": "true_false",
+        "prompt": "If A is open, then ∂A ∩ A = ∅.",
+        "correctAnswer": true,
+        "explanation": "True. If A is open, then A = int(A). The boundary is ∂A = cl(A) \\ int(A) = cl(A) \\ A, which is disjoint from A."
+      },
+      {
+        "id": "math403-q1-3-5",
+        "type": "multiple_choice",
+        "prompt": "In the indiscrete topology on X = {a, b, c}, how many limit points does {a} have?",
+        "options": [
+          "0",
+          "1",
+          "2",
+          "3"
+        ],
+        "correctAnswer": 3,
+        "explanation": "In the indiscrete topology, the only open sets are ∅ and X. Every neighborhood of any point is X, which always intersects {a}. Therefore, every point a, b, c is a limit point of {a}."
+      }
+    ]
+  }
+]

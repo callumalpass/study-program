@@ -1,0 +1,191 @@
+[
+  {
+    "id": "cs201-quiz-8-1",
+    "subjectId": "cs201",
+    "topicId": "cs201-8",
+    "title": "Proving Correctness",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "A loop invariant must be true at which points?",
+        "options": [
+          "Only at the start of the loop",
+          "Only at the end of the loop",
+          "At initialization, before each iteration, and at termination",
+          "Only when the loop counter is even"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Loop invariants must hold at initialization, be maintained by each iteration, and imply correctness at termination."
+      },
+      {
+        "id": "q2",
+        "type": "true_false",
+        "prompt": "\"It works for all my test cases\" is a valid proof of correctness.",
+        "correctAnswer": false,
+        "explanation": "Testing shows presence of bugs, not absence. A proof must hold for ALL possible inputs."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "To prove a recursive algorithm correct, which technique is most appropriate?",
+        "options": [
+          "Loop invariants",
+          "Mathematical induction",
+          "Empirical testing",
+          "Big-O analysis"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Induction mirrors recursion: prove base case, assume works for smaller inputs, prove it works for current input."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "For Insertion Sort, a good loop invariant is:",
+        "options": [
+          "The array is fully sorted",
+          "arr[0..i-1] contains the original elements in sorted order",
+          "arr[i] is the minimum",
+          "The loop runs n times"
+        ],
+        "correctAnswer": 1,
+        "explanation": "At each iteration, the subarray arr[0..i-1] is sorted and contains the original elements from those positions."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "The three parts of a loop invariant proof are: Initialization, ______, and Termination.",
+        "correctAnswer": "Maintenance",
+        "explanation": "Maintenance shows that if the invariant holds before an iteration, it holds after the iteration too."
+      }
+    ]
+  },
+  {
+    "id": "cs201-quiz-8-2",
+    "subjectId": "cs201",
+    "topicId": "cs201-8",
+    "title": "Complexity Classes",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "What does P stand for in complexity theory?",
+        "options": [
+          "Polynomial time solvable problems",
+          "Probabilistic problems",
+          "Parallel problems",
+          "Pseudo-polynomial problems"
+        ],
+        "correctAnswer": 0,
+        "explanation": "P is the class of problems solvable in polynomial time O(n^k) for some constant k."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "What does NP stand for?",
+        "options": [
+          "Non-Polynomial",
+          "Not Practical",
+          "Nondeterministic Polynomial",
+          "Nearly Polynomial"
+        ],
+        "correctAnswer": 2,
+        "explanation": "NP means Nondeterministic Polynomial - problems whose solutions can be verified in polynomial time."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "Every problem in P is also in NP.",
+        "correctAnswer": true,
+        "explanation": "If you can solve a problem in polynomial time, you can certainly verify a solution in polynomial time. P ⊆ NP."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "If P = NP, what would it mean?",
+        "options": [
+          "Computers would be infinitely fast",
+          "All NP problems would have polynomial-time solutions",
+          "NP problems would become unsolvable",
+          "Nothing would change"
+        ],
+        "correctAnswer": 1,
+        "explanation": "P = NP would mean every problem with efficiently verifiable solutions also has efficient solutions."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "NP-Complete problems are the ______ problems in NP.",
+        "correctAnswer": "hardest",
+        "explanation": "NP-Complete problems are at least as hard as any problem in NP. Solving one efficiently would solve all of NP."
+      }
+    ]
+  },
+  {
+    "id": "cs201-quiz-8-3",
+    "subjectId": "cs201",
+    "topicId": "cs201-8",
+    "title": "NP-Completeness",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "Which of these is an NP-Complete problem?",
+        "options": [
+          "Sorting",
+          "Binary Search",
+          "Traveling Salesman (decision)",
+          "Finding GCD"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Traveling Salesman (decision version: is there a tour ≤ k?) is a classic NP-Complete problem."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "What is a reduction in complexity theory?",
+        "options": [
+          "Making an algorithm faster",
+          "Transforming one problem into another",
+          "Removing redundant code",
+          "Simplifying mathematical expressions"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A reduction transforms problem A into problem B, showing that solving B would solve A."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "If problem A reduces to problem B in polynomial time, and B is in P, then A is in P.",
+        "correctAnswer": true,
+        "explanation": "We can transform A to B in poly-time, solve B in poly-time, giving a poly-time solution for A."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "What should you do if you identify a problem as NP-Complete?",
+        "options": [
+          "Keep trying to find an O(n^2) solution",
+          "Consider approximation algorithms or heuristics",
+          "Prove P = NP first",
+          "Give up on the problem entirely"
+        ],
+        "correctAnswer": 1,
+        "explanation": "For NP-Complete problems, use approximations, heuristics, or special-case solutions instead of exact algorithms."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "SAT (Boolean Satisfiability) is significant because:",
+        "options": [
+          "It was the first problem proven NP-Complete",
+          "It can be solved in linear time",
+          "It has no applications",
+          "It is not in NP"
+        ],
+        "correctAnswer": 0,
+        "explanation": "SAT was proven NP-Complete by Cook in 1971, establishing the foundation of NP-Completeness theory."
+      }
+    ]
+  }
+]

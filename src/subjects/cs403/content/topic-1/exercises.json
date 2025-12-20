@@ -1,0 +1,440 @@
+[
+  {
+    "id": "cs403-t1-ex01",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-1",
+    "title": "Verify 3-SAT Instance",
+    "difficulty": 2,
+    "description": "Given a 3-SAT formula and a truth assignment, verify if the assignment satisfies the formula. This demonstrates that SAT is in NP - verification is polynomial time.",
+    "starterCode": "def verify_3sat(formula, assignment):\n    \"\"\"\n    Verify if a truth assignment satisfies a 3-SAT formula.\n\n    Args:\n        formula: List of clauses, where each clause is a list of literals.\n        assignment: Dictionary mapping variable numbers to boolean values.\n\n    Returns:\n        bool: True if the assignment satisfies the formula, False otherwise.\n    \"\"\"\n    # Your code here\n    pass",
+    "solution": "def verify_3sat(formula, assignment):\n    for clause in formula:\n        clause_satisfied = False\n        for literal in clause:\n            var_num = abs(literal)\n            var_value = assignment.get(var_num, False)\n            if literal > 0:\n                if var_value:\n                    clause_satisfied = True\n                    break\n            else:\n                if not var_value:\n                    clause_satisfied = True\n                    break\n        if not clause_satisfied:\n            return False\n    return True",
+    "testCases": [
+      {
+        "input": "formula = [[1, 2, 3]], assignment = {1: True, 2: False, 3: False}",
+        "isHidden": false,
+        "description": "Single clause satisfied"
+      },
+      {
+        "input": "formula = [[1, -2, 3], [-1, 2, -3]], assignment = {1: True, 2: True, 3: False}",
+        "isHidden": false,
+        "description": "Two clauses satisfied"
+      },
+      {
+        "input": "formula = [[1, 2, 3], [-1, -2, -3]], assignment = {1: False, 2: False, 3: False}",
+        "isHidden": false,
+        "description": "Not satisfied"
+      }
+    ],
+    "hints": [
+      "A clause is satisfied if at least one literal is true",
+      "Check all clauses must be satisfied"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs403-t1-ex02",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-1",
+    "title": "Hamiltonian Cycle Verification",
+    "difficulty": 3,
+    "description": "Given a graph and a proposed Hamiltonian cycle, verify if it is valid. This shows that Hamiltonian Cycle is in NP.",
+    "starterCode": "def verify_hamiltonian_cycle(graph, cycle):\n    \"\"\"\n    Verify if a proposed cycle is a valid Hamiltonian cycle.\n\n    Args:\n        graph: Dictionary representing adjacency list.\n        cycle: List of vertices representing the proposed cycle.\n\n    Returns:\n        bool: True if cycle is a valid Hamiltonian cycle, False otherwise.\n    \"\"\"\n    # Your code here\n    pass",
+    "solution": "def verify_hamiltonian_cycle(graph, cycle):\n    n = len(graph)\n    if len(cycle) != n + 1:\n        return False\n    if cycle[0] != cycle[-1]:\n        return False\n    if len(set(cycle[:-1])) != n:\n        return False\n    for vertex in cycle[:-1]:\n        if vertex not in graph:\n            return False\n    for i in range(len(cycle) - 1):\n        if cycle[i + 1] not in graph[cycle[i]]:\n            return False\n    return True",
+    "testCases": [
+      {
+        "input": "graph = {0: [1, 2], 1: [0, 2], 2: [0, 1]}, cycle = [0, 1, 2, 0]",
+        "isHidden": false,
+        "description": "Valid cycle in triangle"
+      },
+      {
+        "input": "graph = {0: [1, 2], 1: [0, 2], 2: [0, 1]}, cycle = [0, 1, 0]",
+        "isHidden": false,
+        "description": "Invalid - missing vertex"
+      }
+    ],
+    "hints": [
+      "Check cycle visits all vertices exactly once",
+      "Verify edges exist between consecutive vertices"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs403-t1-ex03",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-1",
+    "title": "Vertex Cover Verifier",
+    "difficulty": 2,
+    "description": "Verify if a given set of vertices forms a valid vertex cover of a graph - every edge must have at least one endpoint in the cover.",
+    "starterCode": "def verify_vertex_cover(edges, cover, k):\n    \"\"\"\n    Verify if cover is a valid vertex cover of size at most k.\n\n    Args:\n        edges: List of tuples representing edges [(u, v), ...]\n        cover: Set of vertices in the proposed cover\n        k: Maximum allowed cover size\n\n    Returns:\n        bool: True if cover is valid and |cover| <= k\n    \"\"\"\n    # Your code here\n    pass",
+    "solution": "def verify_vertex_cover(edges, cover, k):\n    if len(cover) > k:\n        return False\n    for u, v in edges:\n        if u not in cover and v not in cover:\n            return False\n    return True",
+    "testCases": [
+      {
+        "input": "edges = [(0,1), (1,2), (2,0)], cover = {0, 1}, k = 2",
+        "isHidden": false,
+        "description": "Valid cover"
+      },
+      {
+        "input": "edges = [(0,1), (1,2), (2,0)], cover = {0}, k = 2",
+        "isHidden": false,
+        "description": "Invalid - edge 1-2 not covered"
+      }
+    ],
+    "hints": [
+      "Check every edge has at least one endpoint in cover",
+      "Verify cover size constraint"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs403-t1-ex04",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-1",
+    "title": "Independent Set Verifier",
+    "difficulty": 2,
+    "description": "Verify if a set of vertices forms an independent set in a graph (no two vertices in the set are adjacent).",
+    "starterCode": "def verify_independent_set(graph, vertices, k):\n    \"\"\"\n    Verify if vertices form an independent set of size at least k.\n\n    Args:\n        graph: Adjacency list representation\n        vertices: Set of vertices in proposed independent set\n        k: Minimum required size\n\n    Returns:\n        bool: True if valid independent set of size >= k\n    \"\"\"\n    # Your code here\n    pass",
+    "solution": "def verify_independent_set(graph, vertices, k):\n    if len(vertices) < k:\n        return False\n    vertex_list = list(vertices)\n    for i in range(len(vertex_list)):\n        for j in range(i + 1, len(vertex_list)):\n            if vertex_list[j] in graph.get(vertex_list[i], []):\n                return False\n    return True",
+    "testCases": [
+      {
+        "input": "graph = {0: [1, 2], 1: [0, 2], 2: [0, 1]}, vertices = {0}, k = 1",
+        "isHidden": false,
+        "description": "Single vertex is independent"
+      },
+      {
+        "input": "graph = {0: [1], 1: [0, 2], 2: [1]}, vertices = {0, 2}, k = 2",
+        "isHidden": false,
+        "description": "Valid independent set"
+      }
+    ],
+    "hints": [
+      "No two vertices in the set should share an edge",
+      "Check all pairs of vertices"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs403-t1-ex05",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-1",
+    "title": "Clique Verifier",
+    "difficulty": 2,
+    "description": "Verify if a set of vertices forms a clique (complete subgraph) in the given graph.",
+    "starterCode": "def verify_clique(graph, vertices, k):\n    \"\"\"\n    Verify if vertices form a clique of size at least k.\n\n    Args:\n        graph: Adjacency list representation\n        vertices: Set of vertices in proposed clique\n        k: Minimum clique size\n\n    Returns:\n        bool: True if valid clique of size >= k\n    \"\"\"\n    # Your code here\n    pass",
+    "solution": "def verify_clique(graph, vertices, k):\n    if len(vertices) < k:\n        return False\n    vertex_list = list(vertices)\n    for i in range(len(vertex_list)):\n        for j in range(i + 1, len(vertex_list)):\n            if vertex_list[j] not in graph.get(vertex_list[i], []):\n                return False\n    return True",
+    "testCases": [
+      {
+        "input": "graph = {0: [1, 2], 1: [0, 2], 2: [0, 1]}, vertices = {0, 1, 2}, k = 3",
+        "isHidden": false,
+        "description": "Triangle is a clique"
+      },
+      {
+        "input": "graph = {0: [1], 1: [0, 2], 2: [1]}, vertices = {0, 2}, k = 2",
+        "isHidden": false,
+        "description": "Invalid - no edge between 0 and 2"
+      }
+    ],
+    "hints": [
+      "Every pair of vertices in a clique must be connected",
+      "Check all pairs"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs403-t1-ex06",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-1",
+    "title": "Subset Sum Verifier",
+    "difficulty": 1,
+    "description": "Verify if a subset of numbers sums to a target value.",
+    "starterCode": "def verify_subset_sum(numbers, subset, target):\n    \"\"\"\n    Verify if the given subset sums to target.\n\n    Args:\n        numbers: List of available numbers\n        subset: Indices of numbers in the proposed subset\n        target: Target sum\n\n    Returns:\n        bool: True if subset sums to target\n    \"\"\"\n    # Your code here\n    pass",
+    "solution": "def verify_subset_sum(numbers, subset, target):\n    total = sum(numbers[i] for i in subset)\n    return total == target",
+    "testCases": [
+      {
+        "input": "numbers = [3, 1, 5, 2], subset = [0, 3], target = 5",
+        "isHidden": false,
+        "description": "3 + 2 = 5"
+      },
+      {
+        "input": "numbers = [1, 2, 3], subset = [0, 1, 2], target = 6",
+        "isHidden": false,
+        "description": "All elements"
+      }
+    ],
+    "hints": [
+      "Sum the elements at the given indices",
+      "Compare to target"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs403-t1-ex07",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-1",
+    "title": "Graph Coloring Verifier",
+    "difficulty": 2,
+    "description": "Verify if a coloring is a valid k-coloring of a graph (no adjacent vertices share a color).",
+    "starterCode": "def verify_coloring(graph, coloring, k):\n    \"\"\"\n    Verify if coloring is a valid k-coloring.\n\n    Args:\n        graph: Adjacency list\n        coloring: Dictionary mapping vertex to color (0 to k-1)\n        k: Number of colors\n\n    Returns:\n        bool: True if valid k-coloring\n    \"\"\"\n    # Your code here\n    pass",
+    "solution": "def verify_coloring(graph, coloring, k):\n    for vertex in graph:\n        if vertex not in coloring or coloring[vertex] >= k:\n            return False\n        for neighbor in graph[vertex]:\n            if coloring.get(vertex) == coloring.get(neighbor):\n                return False\n    return True",
+    "testCases": [
+      {
+        "input": "graph = {0: [1], 1: [0, 2], 2: [1]}, coloring = {0: 0, 1: 1, 2: 0}, k = 2",
+        "isHidden": false,
+        "description": "Valid 2-coloring of path"
+      },
+      {
+        "input": "graph = {0: [1, 2], 1: [0, 2], 2: [0, 1]}, coloring = {0: 0, 1: 1, 2: 0}, k = 2",
+        "isHidden": false,
+        "description": "Invalid - triangle needs 3 colors"
+      }
+    ],
+    "hints": [
+      "Check no adjacent vertices have the same color",
+      "Verify all colors are in range"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs403-t1-ex08",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-1",
+    "title": "Partition Problem Verifier",
+    "difficulty": 2,
+    "description": "Verify if a partition divides a set into two subsets with equal sums.",
+    "starterCode": "def verify_partition(numbers, partition):\n    \"\"\"\n    Verify if partition divides numbers into two equal-sum subsets.\n\n    Args:\n        numbers: List of numbers\n        partition: Set of indices for one subset\n\n    Returns:\n        bool: True if partition is valid\n    \"\"\"\n    # Your code here\n    pass",
+    "solution": "def verify_partition(numbers, partition):\n    total = sum(numbers)\n    if total % 2 != 0:\n        return False\n    subset_sum = sum(numbers[i] for i in partition)\n    return subset_sum == total // 2",
+    "testCases": [
+      {
+        "input": "numbers = [1, 5, 3, 3], partition = {1}",
+        "isHidden": false,
+        "description": "{5} and {1,3,3} both sum to 6"
+      },
+      {
+        "input": "numbers = [1, 2, 3, 5], partition = {0, 2}",
+        "isHidden": false,
+        "description": "Valid partition: {1,3} and {2,5}"
+      }
+    ],
+    "hints": [
+      "Sum must be even for partition to exist",
+      "One subset determines the other"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs403-t1-ex09",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-1",
+    "title": "Reduce Vertex Cover to Independent Set",
+    "difficulty": 4,
+    "description": "Implement a polynomial-time reduction from Vertex Cover to Independent Set. Given a graph and parameter k for vertex cover, output an instance for independent set.",
+    "starterCode": "def reduce_vc_to_is(graph, k):\n    \"\"\"\n    Reduce Vertex Cover to Independent Set.\n\n    Args:\n        graph: Adjacency list (original graph)\n        k: Vertex cover size bound\n\n    Returns:\n        tuple: (same_graph, k_prime) where finding IS of size k_prime\n               in same_graph solves the VC instance\n    \"\"\"\n    # Your code here\n    pass",
+    "solution": "def reduce_vc_to_is(graph, k):\n    n = len(graph)\n    k_prime = n - k  # IS of size n-k exists iff VC of size k exists\n    return (graph, k_prime)",
+    "testCases": [
+      {
+        "input": "graph = {0: [1], 1: [0]}, k = 1",
+        "isHidden": false,
+        "description": "Edge graph: VC=1 iff IS=1"
+      },
+      {
+        "input": "graph = {0: [1, 2], 1: [0, 2], 2: [0, 1]}, k = 2",
+        "isHidden": false,
+        "description": "Triangle: VC=2 iff IS=1"
+      }
+    ],
+    "hints": [
+      "Complement relationship: V - VC is an IS",
+      "Graph stays the same, only k changes"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs403-t1-ex10",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-1",
+    "title": "Reduce 3-SAT to Clique",
+    "difficulty": 5,
+    "description": "Implement the classic reduction from 3-SAT to Clique. Build a graph where satisfying assignments correspond to cliques.",
+    "starterCode": "def reduce_3sat_to_clique(formula):\n    \"\"\"\n    Reduce 3-SAT to Clique problem.\n\n    Args:\n        formula: List of clauses, each with 3 literals\n\n    Returns:\n        tuple: (graph, k) where graph has a clique of size k\n               iff formula is satisfiable\n    \"\"\"\n    # Your code here\n    pass",
+    "solution": "def reduce_3sat_to_clique(formula):\n    k = len(formula)  # One vertex per literal, k clauses\n    graph = {}\n\n    # Create vertices: (clause_index, literal_position)\n    for i, clause in enumerate(formula):\n        for j in range(3):\n            graph[(i, j)] = []\n\n    # Add edges between non-conflicting literals from different clauses\n    for i1, clause1 in enumerate(formula):\n        for j1 in range(3):\n            for i2, clause2 in enumerate(formula):\n                if i1 >= i2:\n                    continue\n                for j2 in range(3):\n                    lit1, lit2 = clause1[j1], clause2[j2]\n                    # Connect if literals don't conflict\n                    if lit1 != -lit2:\n                        graph[(i1, j1)].append((i2, j2))\n                        graph[(i2, j2)].append((i1, j1))\n\n    return (graph, k)",
+    "testCases": [
+      {
+        "input": "formula = [[1, 2, 3], [-1, -2, -3]]",
+        "isHidden": false,
+        "description": "Two clauses"
+      },
+      {
+        "input": "formula = [[1, 2, 3]]",
+        "isHidden": false,
+        "description": "Single clause"
+      }
+    ],
+    "hints": [
+      "Create vertex for each literal occurrence",
+      "Connect non-conflicting literals from different clauses",
+      "Clique size = number of clauses"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs403-t1-ex11",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-1",
+    "title": "Reduce Clique to Vertex Cover",
+    "difficulty": 4,
+    "description": "Implement the reduction from Clique to Vertex Cover using graph complementation.",
+    "starterCode": "def reduce_clique_to_vc(graph, k):\n    \"\"\"\n    Reduce Clique to Vertex Cover.\n\n    Args:\n        graph: Adjacency list\n        k: Clique size bound\n\n    Returns:\n        tuple: (complement_graph, k_prime) for equivalent VC instance\n    \"\"\"\n    # Your code here\n    pass",
+    "solution": "def reduce_clique_to_vc(graph, k):\n    vertices = list(graph.keys())\n    n = len(vertices)\n\n    # Build complement graph\n    complement = {v: [] for v in vertices}\n    for v in vertices:\n        for u in vertices:\n            if u != v and u not in graph[v]:\n                complement[v].append(u)\n\n    k_prime = n - k  # VC of size n-k in complement\n    return (complement, k_prime)",
+    "testCases": [
+      {
+        "input": "graph = {0: [1, 2], 1: [0, 2], 2: [0, 1]}, k = 3",
+        "isHidden": false,
+        "description": "Triangle has clique 3"
+      },
+      {
+        "input": "graph = {0: [1], 1: [0], 2: []}, k = 2",
+        "isHidden": false,
+        "description": "Edge plus isolated vertex"
+      }
+    ],
+    "hints": [
+      "Complement graph: edge iff no edge in original",
+      "Clique in G iff Independent Set in complement"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs403-t1-ex12",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-1",
+    "title": "Traveling Salesman Verifier",
+    "difficulty": 3,
+    "description": "Verify if a proposed tour is a valid Hamiltonian cycle with total weight at most k.",
+    "starterCode": "def verify_tsp(distances, tour, k):\n    \"\"\"\n    Verify if tour is valid TSP solution with cost <= k.\n\n    Args:\n        distances: 2D matrix of distances\n        tour: List of vertices in visit order (including return)\n        k: Maximum allowed tour cost\n\n    Returns:\n        bool: True if valid tour with cost <= k\n    \"\"\"\n    # Your code here\n    pass",
+    "solution": "def verify_tsp(distances, tour, k):\n    n = len(distances)\n    if len(tour) != n + 1:\n        return False\n    if tour[0] != tour[-1]:\n        return False\n    if len(set(tour[:-1])) != n:\n        return False\n\n    total_cost = 0\n    for i in range(len(tour) - 1):\n        total_cost += distances[tour[i]][tour[i + 1]]\n\n    return total_cost <= k",
+    "testCases": [
+      {
+        "input": "distances = [[0,10,15],[10,0,20],[15,20,0]], tour = [0,1,2,0], k = 45",
+        "isHidden": false,
+        "description": "Tour cost = 10+20+15 = 45"
+      },
+      {
+        "input": "distances = [[0,10,15],[10,0,20],[15,20,0]], tour = [0,1,2,0], k = 40",
+        "isHidden": false,
+        "description": "Tour cost exceeds k"
+      }
+    ],
+    "hints": [
+      "Sum edge weights along the tour",
+      "Verify it is a valid Hamiltonian cycle"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs403-t1-ex13",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-1",
+    "title": "Set Cover Verifier",
+    "difficulty": 2,
+    "description": "Verify if a collection of sets covers all elements in the universe.",
+    "starterCode": "def verify_set_cover(universe, sets, selected, k):\n    \"\"\"\n    Verify if selected sets form a valid set cover.\n\n    Args:\n        universe: Set of all elements to cover\n        sets: List of sets available\n        selected: Indices of selected sets\n        k: Maximum number of sets allowed\n\n    Returns:\n        bool: True if selected sets cover universe with |selected| <= k\n    \"\"\"\n    # Your code here\n    pass",
+    "solution": "def verify_set_cover(universe, sets, selected, k):\n    if len(selected) > k:\n        return False\n    covered = set()\n    for i in selected:\n        covered.update(sets[i])\n    return universe.issubset(covered)",
+    "testCases": [
+      {
+        "input": "universe = {1,2,3,4}, sets = [{1,2}, {2,3}, {3,4}], selected = [0, 2], k = 2",
+        "isHidden": false,
+        "description": "{1,2} and {3,4} cover all"
+      },
+      {
+        "input": "universe = {1,2,3,4}, sets = [{1,2}, {3}], selected = [0, 1], k = 2",
+        "isHidden": false,
+        "description": "Missing element 4"
+      }
+    ],
+    "hints": [
+      "Union all selected sets",
+      "Check if universe is covered"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs403-t1-ex14",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-1",
+    "title": "Circuit Satisfiability Verifier",
+    "difficulty": 3,
+    "description": "Verify if a given input assignment satisfies a boolean circuit.",
+    "starterCode": "def verify_circuit_sat(circuit, inputs):\n    \"\"\"\n    Verify if inputs satisfy the boolean circuit.\n\n    Args:\n        circuit: List of gates [(type, input1, input2), ...]\n                 Types: 'AND', 'OR', 'NOT', 'INPUT'\n        inputs: List of input values (True/False)\n\n    Returns:\n        bool: True if circuit outputs True\n    \"\"\"\n    # Your code here\n    pass",
+    "solution": "def verify_circuit_sat(circuit, inputs):\n    values = list(inputs)  # Wire values\n\n    for gate_type, *operands in circuit:\n        if gate_type == 'INPUT':\n            continue\n        elif gate_type == 'AND':\n            result = values[operands[0]] and values[operands[1]]\n        elif gate_type == 'OR':\n            result = values[operands[0]] or values[operands[1]]\n        elif gate_type == 'NOT':\n            result = not values[operands[0]]\n        values.append(result)\n\n    return values[-1]",
+    "testCases": [
+      {
+        "input": "circuit = [('INPUT',), ('INPUT',), ('AND', 0, 1)], inputs = [True, True]",
+        "isHidden": false,
+        "description": "AND gate satisfied"
+      },
+      {
+        "input": "circuit = [('INPUT',), ('NOT', 0)], inputs = [False]",
+        "isHidden": false,
+        "description": "NOT gate satisfied"
+      }
+    ],
+    "hints": [
+      "Evaluate gates in topological order",
+      "Track wire values as you go"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs403-t1-ex15",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-1",
+    "title": "Integer Linear Programming Verifier",
+    "difficulty": 3,
+    "description": "Verify if a proposed solution satisfies integer linear programming constraints.",
+    "starterCode": "def verify_ilp(A, b, c, x, bound):\n    \"\"\"\n    Verify if x is a valid ILP solution with objective >= bound.\n\n    Args:\n        A: Constraint matrix (list of lists)\n        b: Constraint bounds (Ax <= b)\n        c: Objective coefficients\n        x: Proposed solution (integers)\n        bound: Minimum objective value required\n\n    Returns:\n        bool: True if constraints satisfied and c.x >= bound\n    \"\"\"\n    # Your code here\n    pass",
+    "solution": "def verify_ilp(A, b, c, x, bound):\n    # Check all constraints Ax <= b\n    for i, row in enumerate(A):\n        lhs = sum(row[j] * x[j] for j in range(len(x)))\n        if lhs > b[i]:\n            return False\n\n    # Check objective value\n    objective = sum(c[j] * x[j] for j in range(len(x)))\n    return objective >= bound",
+    "testCases": [
+      {
+        "input": "A = [[1, 1], [2, 1]], b = [4, 5], c = [1, 2], x = [1, 2], bound = 4",
+        "isHidden": false,
+        "description": "Valid ILP solution"
+      },
+      {
+        "input": "A = [[1, 1]], b = [2], c = [1, 1], x = [2, 1], bound = 2",
+        "isHidden": false,
+        "description": "Constraint violated"
+      }
+    ],
+    "hints": [
+      "Check each constraint row",
+      "Compute objective function"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs403-t1-ex16",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-1",
+    "title": "Bin Packing Verifier",
+    "difficulty": 2,
+    "description": "Verify if a proposed bin assignment is valid for the bin packing problem.",
+    "starterCode": "def verify_bin_packing(items, capacity, assignment, num_bins):\n    \"\"\"\n    Verify if assignment is valid bin packing with <= num_bins bins.\n\n    Args:\n        items: List of item sizes\n        capacity: Bin capacity\n        assignment: List mapping item index to bin number\n        num_bins: Maximum allowed bins\n\n    Returns:\n        bool: True if valid packing within bin limit\n    \"\"\"\n    # Your code here\n    pass",
+    "solution": "def verify_bin_packing(items, capacity, assignment, num_bins):\n    if max(assignment) >= num_bins:\n        return False\n\n    bin_loads = [0] * num_bins\n    for i, item_size in enumerate(items):\n        bin_loads[assignment[i]] += item_size\n\n    return all(load <= capacity for load in bin_loads)",
+    "testCases": [
+      {
+        "input": "items = [4, 3, 3], capacity = 5, assignment = [0, 1, 1], num_bins = 2",
+        "isHidden": false,
+        "description": "Bin 0: 4, Bin 1: 6 - invalid"
+      },
+      {
+        "input": "items = [2, 3, 2], capacity = 5, assignment = [0, 0, 1], num_bins = 2",
+        "isHidden": false,
+        "description": "Valid packing"
+      }
+    ],
+    "hints": [
+      "Track total size in each bin",
+      "Check no bin exceeds capacity"
+    ],
+    "language": "python"
+  }
+]

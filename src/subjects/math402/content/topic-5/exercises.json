@@ -1,0 +1,403 @@
+[
+  {
+    "id": "math402-ex-5-1",
+    "subjectId": "math402",
+    "topicId": "topic-5",
+    "difficulty": 1,
+    "title": "Forward Substitution",
+    "description": "Implement forward substitution to solve a lower triangular system Lx = b. This is a fundamental operation used in LU decomposition. Write a function that solves the system efficiently by exploiting the triangular structure.",
+    "starterCode": "import numpy as np\n\ndef forward_substitution(L, b):\n    \"\"\"\n    Solve Lx = b where L is lower triangular.\n\n    Parameters:\n    - L: n×n lower triangular matrix\n    - b: n×1 right-hand side vector\n\n    Returns:\n    - x: solution vector\n    \"\"\"\n    # TODO: Implement this function\n    pass\n\n# Test case\nL = np.array([\n    [2.0, 0.0, 0.0],\n    [1.0, 3.0, 0.0],\n    [4.0, 2.0, 5.0]\n], dtype=float)\n\nb = np.array([6.0, 10.0, 27.0])\n\nx = forward_substitution(L, b)\nprint(f\"Solution: {x}\")\nprint(f\"Verification Lx: {L @ x}\")\nprint(f\"Original b: {b}\")",
+    "hints": [
+      "Start from the first equation and solve for x₁",
+      "Use already computed values to solve subsequent equations",
+      "For row i: x[i] = (b[i] - sum(L[i,j]*x[j] for j<i)) / L[i,i]"
+    ],
+    "solution": "import numpy as np\n\ndef forward_substitution(L, b):\n    \"\"\"\n    Solve Lx = b where L is lower triangular.\n\n    Parameters:\n    - L: n×n lower triangular matrix\n    - b: n×1 right-hand side vector\n\n    Returns:\n    - x: solution vector\n    \"\"\"\n    n = len(b)\n    x = np.zeros(n)\n\n    for i in range(n):\n        # Compute sum of known terms\n        sum_term = sum(L[i, j] * x[j] for j in range(i))\n\n        # Check for zero diagonal\n        if abs(L[i, i]) < 1e-15:\n            raise ValueError(f\"Zero diagonal element at position {i}\")\n\n        # Solve for x[i]\n        x[i] = (b[i] - sum_term) / L[i, i]\n\n    return x\n\n# Test case\nL = np.array([\n    [2.0, 0.0, 0.0],\n    [1.0, 3.0, 0.0],\n    [4.0, 2.0, 5.0]\n], dtype=float)\n\nb = np.array([6.0, 10.0, 27.0])\n\nx = forward_substitution(L, b)\nprint(f\"Solution: {x}\")\nprint(f\"Verification Lx: {L @ x}\")\nprint(f\"Original b: {b}\")\nprint(f\"Residual: {np.linalg.norm(L @ x - b):.2e}\")\n\n# Additional test\nL2 = np.array([[1.0, 0.0], [2.0, 1.0]])\nb2 = np.array([3.0, 8.0])\nx2 = forward_substitution(L2, b2)\nassert np.allclose(L2 @ x2, b2)\n\nprint(\"\\nAll tests passed!\")",
+    "testCases": [
+      {
+        "input": "L=[[2,0,0],[1,3,0],[4,2,5]], b=[6,10,27]",
+        "expectedOutput": "x = [3.0, 2.333..., 1.0]",
+        "isHidden": false,
+        "description": "Basic 3×3 lower triangular system"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math402-ex-5-2",
+    "subjectId": "math402",
+    "topicId": "topic-5",
+    "difficulty": 1,
+    "title": "Back Substitution",
+    "description": "Implement back substitution to solve an upper triangular system Ux = b. This completes the LU decomposition solver. Write a function that solves the system by working backwards from the last equation.",
+    "starterCode": "import numpy as np\n\ndef back_substitution(U, b):\n    \"\"\"\n    Solve Ux = b where U is upper triangular.\n\n    Parameters:\n    - U: n×n upper triangular matrix\n    - b: n×1 right-hand side vector\n\n    Returns:\n    - x: solution vector\n    \"\"\"\n    # TODO: Implement this function\n    pass\n\n# Test case\nU = np.array([\n    [3.0, 2.0, 1.0],\n    [0.0, 4.0, 2.0],\n    [0.0, 0.0, 5.0]\n], dtype=float)\n\nb = np.array([10.0, 14.0, 15.0])\n\nx = back_substitution(U, b)\nprint(f\"Solution: {x}\")\nprint(f\"Verification Ux: {U @ x}\")\nprint(f\"Original b: {b}\")",
+    "hints": [
+      "Start from the last equation and solve for xₙ",
+      "Use already computed values to solve previous equations",
+      "Work backwards: for row i, x[i] = (b[i] - sum(U[i,j]*x[j] for j>i)) / U[i,i]"
+    ],
+    "solution": "import numpy as np\n\ndef back_substitution(U, b):\n    \"\"\"\n    Solve Ux = b where U is upper triangular.\n\n    Parameters:\n    - U: n×n upper triangular matrix\n    - b: n×1 right-hand side vector\n\n    Returns:\n    - x: solution vector\n    \"\"\"\n    n = len(b)\n    x = np.zeros(n)\n\n    # Work backwards from last equation\n    for i in range(n - 1, -1, -1):\n        # Compute sum of known terms\n        sum_term = sum(U[i, j] * x[j] for j in range(i + 1, n))\n\n        # Check for zero diagonal\n        if abs(U[i, i]) < 1e-15:\n            raise ValueError(f\"Zero diagonal element at position {i}\")\n\n        # Solve for x[i]\n        x[i] = (b[i] - sum_term) / U[i, i]\n\n    return x\n\n# Test case\nU = np.array([\n    [3.0, 2.0, 1.0],\n    [0.0, 4.0, 2.0],\n    [0.0, 0.0, 5.0]\n], dtype=float)\n\nb = np.array([10.0, 14.0, 15.0])\n\nx = back_substitution(U, b)\nprint(f\"Solution: {x}\")\nprint(f\"Verification Ux: {U @ x}\")\nprint(f\"Original b: {b}\")\nprint(f\"Residual: {np.linalg.norm(U @ x - b):.2e}\")\n\n# Additional test\nU2 = np.array([[2.0, 1.0], [0.0, 3.0]])\nb2 = np.array([5.0, 6.0])\nx2 = back_substitution(U2, b2)\nassert np.allclose(U2 @ x2, b2)\n\nprint(\"\\nAll tests passed!\")",
+    "testCases": [
+      {
+        "input": "U=[[3,2,1],[0,4,2],[0,0,5]], b=[10,14,15]",
+        "expectedOutput": "x = [1.0, 2.0, 3.0]",
+        "isHidden": false,
+        "description": "Basic 3×3 upper triangular system"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math402-ex-5-3",
+    "subjectId": "math402",
+    "topicId": "topic-5",
+    "difficulty": 2,
+    "title": "Gaussian Elimination",
+    "description": "Implement Gaussian elimination to convert a matrix to row echelon form. This is the foundation of many direct methods. Write a function that performs elimination without pivoting and returns the upper triangular matrix and the elimination record.",
+    "starterCode": "import numpy as np\n\ndef gaussian_elimination(A, b):\n    \"\"\"\n    Solve Ax = b using Gaussian elimination.\n\n    Parameters:\n    - A: n×n coefficient matrix\n    - b: n×1 right-hand side vector\n\n    Returns:\n    - x: solution vector\n    \"\"\"\n    # TODO: Implement this function\n    pass\n\n# Test case\nA = np.array([\n    [2.0, 1.0, -1.0],\n    [-3.0, -1.0, 2.0],\n    [-2.0, 1.0, 2.0]\n], dtype=float)\n\nb = np.array([8.0, -11.0, -3.0])\n\nx = gaussian_elimination(A, b)\nprint(f\"Solution: {x}\")\nprint(f\"Verification Ax: {A @ x}\")\nprint(f\"Original b: {b}\")",
+    "hints": [
+      "Make copies of A and b to avoid modifying originals",
+      "For each pivot row, eliminate below by subtracting multiples",
+      "After elimination, use back substitution to solve",
+      "Multiplier for row i, column k: m = A[i,k] / A[k,k]"
+    ],
+    "solution": "import numpy as np\n\ndef gaussian_elimination(A, b):\n    \"\"\"\n    Solve Ax = b using Gaussian elimination.\n\n    Parameters:\n    - A: n×n coefficient matrix\n    - b: n×1 right-hand side vector\n\n    Returns:\n    - x: solution vector\n    \"\"\"\n    # Make copies to avoid modifying inputs\n    A = A.astype(float).copy()\n    b = b.astype(float).copy()\n    n = len(b)\n\n    # Forward elimination\n    for k in range(n - 1):\n        # Check for zero pivot\n        if abs(A[k, k]) < 1e-15:\n            raise ValueError(f\"Zero pivot encountered at position {k}\")\n\n        # Eliminate below pivot\n        for i in range(k + 1, n):\n            # Compute multiplier\n            m = A[i, k] / A[k, k]\n\n            # Update row i\n            A[i, k:] -= m * A[k, k:]\n            b[i] -= m * b[k]\n\n    # Back substitution\n    x = np.zeros(n)\n    for i in range(n - 1, -1, -1):\n        if abs(A[i, i]) < 1e-15:\n            raise ValueError(f\"Zero diagonal at position {i}\")\n        x[i] = (b[i] - np.dot(A[i, i+1:], x[i+1:])) / A[i, i]\n\n    return x\n\n# Test case\nA = np.array([\n    [2.0, 1.0, -1.0],\n    [-3.0, -1.0, 2.0],\n    [-2.0, 1.0, 2.0]\n], dtype=float)\n\nb = np.array([8.0, -11.0, -3.0])\n\nx = gaussian_elimination(A, b)\nprint(f\"Solution: {x}\")\nprint(f\"Verification Ax: {A @ x}\")\nprint(f\"Original b: {b}\")\nprint(f\"Residual: {np.linalg.norm(A @ x - b):.2e}\")\n\n# Additional test\nA2 = np.array([[3.0, 2.0], [1.0, 4.0]])\nb2 = np.array([7.0, 9.0])\nx2 = gaussian_elimination(A2, b2)\nassert np.allclose(A2 @ x2, b2)\n\nprint(\"\\nAll tests passed!\")",
+    "testCases": [
+      {
+        "input": "A=[[2,1,-1],[-3,-1,2],[-2,1,2]], b=[8,-11,-3]",
+        "expectedOutput": "x = [2.0, 3.0, -1.0]",
+        "isHidden": false,
+        "description": "Standard 3×3 linear system"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math402-ex-5-4",
+    "subjectId": "math402",
+    "topicId": "topic-5",
+    "difficulty": 2,
+    "title": "LU Decomposition (Doolittle)",
+    "description": "Implement LU decomposition using Doolittle algorithm (L has 1s on diagonal). Decompose A = LU where L is lower triangular with unit diagonal and U is upper triangular. This factorization enables efficient solution of multiple systems with the same A.",
+    "starterCode": "import numpy as np\n\ndef lu_decompose(A):\n    \"\"\"\n    Compute LU decomposition of A using Doolittle algorithm.\n\n    Parameters:\n    - A: n×n matrix\n\n    Returns:\n    - L: lower triangular with unit diagonal\n    - U: upper triangular\n    \"\"\"\n    # TODO: Implement this function\n    pass\n\n# Test case\nA = np.array([\n    [4.0, 3.0, 0.0],\n    [3.0, 3.0, -1.0],\n    [0.0, -1.0, 1.0]\n], dtype=float)\n\nL, U = lu_decompose(A)\nprint(\"L =\")\nprint(L)\nprint(\"\\nU =\")\nprint(U)\nprint(\"\\nLU =\")\nprint(L @ U)\nprint(\"\\nOriginal A =\")\nprint(A)",
+    "hints": [
+      "L has 1s on diagonal, compute U row by row, then L column by column",
+      "For U[i,j] where j >= i: U[i,j] = A[i,j] - sum(L[i,k]*U[k,j] for k<i)",
+      "For L[i,j] where i > j: L[i,j] = (A[i,j] - sum(L[i,k]*U[k,j] for k<j)) / U[j,j]",
+      "Process in order: row 0 of U, column 0 of L, row 1 of U, column 1 of L, etc."
+    ],
+    "solution": "import numpy as np\n\ndef lu_decompose(A):\n    \"\"\"\n    Compute LU decomposition of A using Doolittle algorithm.\n\n    Parameters:\n    - A: n×n matrix\n\n    Returns:\n    - L: lower triangular with unit diagonal\n    - U: upper triangular\n    \"\"\"\n    A = A.astype(float).copy()\n    n = A.shape[0]\n\n    L = np.eye(n)\n    U = np.zeros((n, n))\n\n    for i in range(n):\n        # Compute U[i, j] for j >= i\n        for j in range(i, n):\n            sum_term = sum(L[i, k] * U[k, j] for k in range(i))\n            U[i, j] = A[i, j] - sum_term\n\n        # Check for zero pivot\n        if abs(U[i, i]) < 1e-15:\n            raise ValueError(f\"Zero pivot at position {i}\")\n\n        # Compute L[j, i] for j > i\n        for j in range(i + 1, n):\n            sum_term = sum(L[j, k] * U[k, i] for k in range(i))\n            L[j, i] = (A[j, i] - sum_term) / U[i, i]\n\n    return L, U\n\ndef lu_solve(L, U, b):\n    \"\"\"Solve Ax = b using LU decomposition.\"\"\"\n    # Forward substitution: Ly = b\n    n = len(b)\n    y = np.zeros(n)\n    for i in range(n):\n        y[i] = b[i] - sum(L[i, j] * y[j] for j in range(i))\n\n    # Back substitution: Ux = y\n    x = np.zeros(n)\n    for i in range(n - 1, -1, -1):\n        x[i] = (y[i] - sum(U[i, j] * x[j] for j in range(i + 1, n))) / U[i, i]\n\n    return x\n\n# Test case\nA = np.array([\n    [4.0, 3.0, 0.0],\n    [3.0, 3.0, -1.0],\n    [0.0, -1.0, 1.0]\n], dtype=float)\n\nL, U = lu_decompose(A)\nprint(\"L =\")\nprint(L)\nprint(\"\\nU =\")\nprint(U)\nprint(\"\\nLU =\")\nprint(L @ U)\nprint(\"\\nOriginal A =\")\nprint(A)\nprint(f\"\\nDecomposition error: {np.linalg.norm(A - L @ U):.2e}\")\n\n# Test solving a system\nb = np.array([1.0, 2.0, 3.0])\nx = lu_solve(L, U, b)\nprint(f\"\\nSolution to Ax = b: {x}\")\nprint(f\"Verification Ax: {A @ x}\")\nprint(f\"Residual: {np.linalg.norm(A @ x - b):.2e}\")\n\nprint(\"\\nAll tests passed!\")",
+    "testCases": [
+      {
+        "input": "A=[[4,3,0],[3,3,-1],[0,-1,1]]",
+        "expectedOutput": "L and U such that LU = A, with L having unit diagonal",
+        "isHidden": false,
+        "description": "LU decomposition of symmetric indefinite matrix"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math402-ex-5-5",
+    "subjectId": "math402",
+    "topicId": "topic-5",
+    "difficulty": 3,
+    "title": "Partial Pivoting",
+    "description": "Implement Gaussian elimination with partial pivoting to improve numerical stability. Partial pivoting selects the largest available pivot at each step to minimize rounding errors. This is essential for practical linear system solvers.",
+    "starterCode": "import numpy as np\n\ndef gaussian_elimination_pivot(A, b):\n    \"\"\"\n    Solve Ax = b using Gaussian elimination with partial pivoting.\n\n    Parameters:\n    - A: n×n coefficient matrix\n    - b: n×1 right-hand side vector\n\n    Returns:\n    - x: solution vector\n    - P: permutation matrix (optional)\n    \"\"\"\n    # TODO: Implement this function\n    pass\n\n# Test case with small pivot\nA = np.array([\n    [1e-20, 1.0, 0.0],\n    [1.0, 2.0, 1.0],\n    [0.0, 1.0, 2.0]\n], dtype=float)\n\nb = np.array([1.0, 4.0, 3.0])\n\nx = gaussian_elimination_pivot(A, b)\nprint(f\"Solution with pivoting: {x}\")\nprint(f\"Residual: {np.linalg.norm(A @ x - b):.2e}\")",
+    "hints": [
+      "At each step k, find the row i >= k with largest |A[i,k]|",
+      "Swap rows k and i in both A and b",
+      "Continue with normal Gaussian elimination",
+      "Keep track of permutations if needed"
+    ],
+    "solution": "import numpy as np\n\ndef gaussian_elimination_pivot(A, b):\n    \"\"\"\n    Solve Ax = b using Gaussian elimination with partial pivoting.\n\n    Parameters:\n    - A: n×n coefficient matrix\n    - b: n×1 right-hand side vector\n\n    Returns:\n    - x: solution vector\n    - P: permutation record\n    \"\"\"\n    A = A.astype(float).copy()\n    b = b.astype(float).copy()\n    n = len(b)\n\n    # Keep track of row swaps\n    perm = list(range(n))\n\n    # Forward elimination with pivoting\n    for k in range(n - 1):\n        # Find pivot: row with largest |A[i,k]| for i >= k\n        pivot_row = k\n        max_val = abs(A[k, k])\n\n        for i in range(k + 1, n):\n            if abs(A[i, k]) > max_val:\n                max_val = abs(A[i, k])\n                pivot_row = i\n\n        # Check for singular matrix\n        if max_val < 1e-15:\n            raise ValueError(f\"Matrix is singular or near-singular at column {k}\")\n\n        # Swap rows if needed\n        if pivot_row != k:\n            A[[k, pivot_row]] = A[[pivot_row, k]]\n            b[[k, pivot_row]] = b[[pivot_row, k]]\n            perm[k], perm[pivot_row] = perm[pivot_row], perm[k]\n\n        # Eliminate below pivot\n        for i in range(k + 1, n):\n            m = A[i, k] / A[k, k]\n            A[i, k:] -= m * A[k, k:]\n            b[i] -= m * b[k]\n\n    # Check final pivot\n    if abs(A[n-1, n-1]) < 1e-15:\n        raise ValueError(\"Matrix is singular\")\n\n    # Back substitution\n    x = np.zeros(n)\n    for i in range(n - 1, -1, -1):\n        x[i] = (b[i] - np.dot(A[i, i+1:], x[i+1:])) / A[i, i]\n\n    return x\n\n# Test case with small pivot (ill-conditioned)\nprint(\"Test 1: Small pivot problem\\n\")\nA1 = np.array([\n    [1e-20, 1.0, 0.0],\n    [1.0, 2.0, 1.0],\n    [0.0, 1.0, 2.0]\n], dtype=float)\nb1 = np.array([1.0, 4.0, 3.0])\n\nx1 = gaussian_elimination_pivot(A1, b1)\nprint(f\"Solution with pivoting: {x1}\")\nprint(f\"Residual: {np.linalg.norm(A1 @ x1 - b1):.2e}\")\n\n# Compare with NumPy\nx_numpy = np.linalg.solve(A1, b1)\nprint(f\"NumPy solution: {x_numpy}\")\nprint(f\"Difference: {np.linalg.norm(x1 - x_numpy):.2e}\")\n\n# Test case 2: Regular matrix\nprint(\"\\n\" + \"=\"*60)\nprint(\"Test 2: Standard system\\n\")\nA2 = np.array([\n    [2.0, 1.0, -1.0],\n    [-3.0, -1.0, 2.0],\n    [-2.0, 1.0, 2.0]\n], dtype=float)\nb2 = np.array([8.0, -11.0, -3.0])\n\nx2 = gaussian_elimination_pivot(A2, b2)\nprint(f\"Solution: {x2}\")\nprint(f\"Residual: {np.linalg.norm(A2 @ x2 - b2):.2e}\")\n\nprint(\"\\nAll tests passed!\")",
+    "testCases": [
+      {
+        "input": "A with small pivot element",
+        "expectedOutput": "Accurate solution despite ill-conditioning",
+        "isHidden": false,
+        "description": "Test numerical stability with partial pivoting"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math402-ex-5-6",
+    "subjectId": "math402",
+    "topicId": "topic-5",
+    "difficulty": 3,
+    "title": "LU with Partial Pivoting (PLU)",
+    "description": "Implement LU decomposition with partial pivoting: PA = LU. This combines the efficiency of LU factorization with the numerical stability of pivoting. The permutation matrix P records row exchanges.",
+    "starterCode": "import numpy as np\n\ndef plu_decompose(A):\n    \"\"\"\n    Compute PLU decomposition: PA = LU.\n\n    Parameters:\n    - A: n×n matrix\n\n    Returns:\n    - P: permutation matrix\n    - L: lower triangular with unit diagonal\n    - U: upper triangular\n    \"\"\"\n    # TODO: Implement this function\n    pass\n\n# Test case\nA = np.array([\n    [1.0, 2.0, 3.0],\n    [4.0, 5.0, 6.0],\n    [7.0, 8.0, 10.0]\n], dtype=float)\n\nP, L, U = plu_decompose(A)\nprint(\"P =\")\nprint(P)\nprint(\"\\nL =\")\nprint(L)\nprint(\"\\nU =\")\nprint(U)\nprint(\"\\nPA =\")\nprint(P @ A)\nprint(\"\\nLU =\")\nprint(L @ U)",
+    "hints": [
+      "Similar to LU decomposition but with row swaps",
+      "At step k, find pivot and swap rows in both A and L",
+      "Keep track of permutations in P matrix",
+      "Can use a permutation vector and convert to matrix at end"
+    ],
+    "solution": "import numpy as np\n\ndef plu_decompose(A):\n    \"\"\"\n    Compute PLU decomposition: PA = LU.\n\n    Parameters:\n    - A: n×n matrix\n\n    Returns:\n    - P: permutation matrix\n    - L: lower triangular with unit diagonal\n    - U: upper triangular\n    \"\"\"\n    A = A.astype(float).copy()\n    n = A.shape[0]\n\n    L = np.eye(n)\n    U = np.zeros((n, n))\n    P = np.eye(n)\n\n    for k in range(n):\n        # Find pivot\n        pivot_row = k\n        max_val = abs(A[k, k])\n        for i in range(k + 1, n):\n            if abs(A[i, k]) > max_val:\n                max_val = abs(A[i, k])\n                pivot_row = i\n\n        # Swap rows in A, P, and already-computed part of L\n        if pivot_row != k:\n            A[[k, pivot_row]] = A[[pivot_row, k]]\n            P[[k, pivot_row]] = P[[pivot_row, k]]\n            if k > 0:\n                L[[k, pivot_row], :k] = L[[pivot_row, k], :k]\n\n        # Check for singular matrix\n        if abs(A[k, k]) < 1e-15:\n            raise ValueError(f\"Matrix is singular at pivot {k}\")\n\n        # Store pivot in U\n        U[k, k] = A[k, k]\n\n        # Compute L[:,k] and U[k,:]\n        for i in range(k + 1, n):\n            L[i, k] = A[i, k] / U[k, k]\n\n        for j in range(k + 1, n):\n            U[k, j] = A[k, j]\n\n        # Update remaining submatrix\n        for i in range(k + 1, n):\n            for j in range(k + 1, n):\n                A[i, j] -= L[i, k] * U[k, j]\n\n    return P, L, U\n\ndef plu_solve(P, L, U, b):\n    \"\"\"Solve Ax = b using PLU decomposition.\"\"\"\n    # Permute b: solve PAx = Pb\n    pb = P @ b\n\n    # Forward substitution: Ly = Pb\n    n = len(b)\n    y = np.zeros(n)\n    for i in range(n):\n        y[i] = pb[i] - sum(L[i, j] * y[j] for j in range(i))\n\n    # Back substitution: Ux = y\n    x = np.zeros(n)\n    for i in range(n - 1, -1, -1):\n        x[i] = (y[i] - sum(U[i, j] * x[j] for j in range(i + 1, n))) / U[i, i]\n\n    return x\n\n# Test case\nA = np.array([\n    [1.0, 2.0, 3.0],\n    [4.0, 5.0, 6.0],\n    [7.0, 8.0, 10.0]\n], dtype=float)\n\nP, L, U = plu_decompose(A)\nprint(\"P =\")\nprint(P)\nprint(\"\\nL =\")\nprint(L)\nprint(\"\\nU =\")\nprint(U)\nprint(\"\\nPA =\")\nprint(P @ A)\nprint(\"\\nLU =\")\nprint(L @ U)\nprint(f\"\\nDecomposition error: {np.linalg.norm(P @ A - L @ U):.2e}\")\n\n# Test solving\nb = np.array([1.0, 2.0, 3.0])\nx = plu_solve(P, L, U, b)\nprint(f\"\\nSolution to Ax = b: {x}\")\nprint(f\"Residual: {np.linalg.norm(A @ x - b):.2e}\")\n\n# Compare with NumPy\nP_np, L_np, U_np = scipy.linalg.lu(A)\nprint(f\"\\nComparison with SciPy PLU:\")\nprint(f\"P difference: {np.linalg.norm(P - P_np):.2e}\")\n\nprint(\"\\nAll tests passed!\")",
+    "testCases": [
+      {
+        "input": "A=[[1,2,3],[4,5,6],[7,8,10]]",
+        "expectedOutput": "P, L, U such that PA = LU",
+        "isHidden": false,
+        "description": "PLU decomposition with row pivoting"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math402-ex-5-7",
+    "subjectId": "math402",
+    "topicId": "topic-5",
+    "difficulty": 3,
+    "title": "Cholesky Decomposition",
+    "description": "Implement Cholesky decomposition for symmetric positive definite matrices: A = LL^T. This specialized factorization is more efficient than LU and guaranteed to be numerically stable for SPD matrices. Used extensively in optimization and statistics.",
+    "starterCode": "import numpy as np\n\ndef cholesky_decompose(A):\n    \"\"\"\n    Compute Cholesky decomposition A = LL^T.\n\n    Parameters:\n    - A: n×n symmetric positive definite matrix\n\n    Returns:\n    - L: lower triangular matrix\n    \"\"\"\n    # TODO: Implement this function\n    pass\n\n# Test case: SPD matrix\nA = np.array([\n    [4.0, 12.0, -16.0],\n    [12.0, 37.0, -43.0],\n    [-16.0, -43.0, 98.0]\n], dtype=float)\n\nL = cholesky_decompose(A)\nprint(\"L =\")\nprint(L)\nprint(\"\\nL @ L^T =\")\nprint(L @ L.T)\nprint(\"\\nOriginal A =\")\nprint(A)",
+    "hints": [
+      "For SPD matrices, all pivots are positive",
+      "L[i,i] = sqrt(A[i,i] - sum(L[i,k]^2 for k<i))",
+      "L[j,i] = (A[j,i] - sum(L[j,k]*L[i,k] for k<i)) / L[i,i] for j > i",
+      "Process column by column, computing diagonal then below-diagonal"
+    ],
+    "solution": "import numpy as np\n\ndef cholesky_decompose(A):\n    \"\"\"\n    Compute Cholesky decomposition A = LL^T.\n\n    Parameters:\n    - A: n×n symmetric positive definite matrix\n\n    Returns:\n    - L: lower triangular matrix\n    \"\"\"\n    # Verify symmetry\n    if not np.allclose(A, A.T):\n        raise ValueError(\"Matrix must be symmetric\")\n\n    A = A.astype(float).copy()\n    n = A.shape[0]\n    L = np.zeros((n, n))\n\n    for i in range(n):\n        # Compute diagonal element\n        sum_sq = sum(L[i, k]**2 for k in range(i))\n        diag_val = A[i, i] - sum_sq\n\n        if diag_val <= 0:\n            raise ValueError(f\"Matrix is not positive definite (negative diagonal at {i})\")\n\n        L[i, i] = np.sqrt(diag_val)\n\n        # Compute below-diagonal elements in column i\n        for j in range(i + 1, n):\n            sum_prod = sum(L[j, k] * L[i, k] for k in range(i))\n            L[j, i] = (A[j, i] - sum_prod) / L[i, i]\n\n    return L\n\ndef cholesky_solve(L, b):\n    \"\"\"Solve Ax = b using Cholesky decomposition A = LL^T.\"\"\"\n    n = len(b)\n\n    # Forward substitution: Ly = b\n    y = np.zeros(n)\n    for i in range(n):\n        y[i] = (b[i] - sum(L[i, j] * y[j] for j in range(i))) / L[i, i]\n\n    # Back substitution: L^T x = y\n    x = np.zeros(n)\n    for i in range(n - 1, -1, -1):\n        x[i] = (y[i] - sum(L[j, i] * x[j] for j in range(i + 1, n))) / L[i, i]\n\n    return x\n\n# Test case: SPD matrix\nA = np.array([\n    [4.0, 12.0, -16.0],\n    [12.0, 37.0, -43.0],\n    [-16.0, -43.0, 98.0]\n], dtype=float)\n\nL = cholesky_decompose(A)\nprint(\"L =\")\nprint(L)\nprint(\"\\nL @ L^T =\")\nprint(L @ L.T)\nprint(\"\\nOriginal A =\")\nprint(A)\nprint(f\"\\nDecomposition error: {np.linalg.norm(A - L @ L.T):.2e}\")\n\n# Test solving\nb = np.array([1.0, 2.0, 3.0])\nx = cholesky_solve(L, b)\nprint(f\"\\nSolution to Ax = b: {x}\")\nprint(f\"Residual: {np.linalg.norm(A @ x - b):.2e}\")\n\n# Compare with NumPy\nL_np = np.linalg.cholesky(A)\nprint(f\"\\nComparison with NumPy:\")\nprint(f\"L difference: {np.linalg.norm(L - L_np):.2e}\")\n\n# Test with simple SPD matrix\nA2 = np.array([[4.0, 2.0], [2.0, 3.0]])\nL2 = cholesky_decompose(A2)\nassert np.allclose(A2, L2 @ L2.T)\n\nprint(\"\\nAll tests passed!\")",
+    "testCases": [
+      {
+        "input": "A=[[4,12,-16],[12,37,-43],[-16,-43,98]]",
+        "expectedOutput": "L such that LL^T = A",
+        "isHidden": false,
+        "description": "Cholesky decomposition of SPD matrix"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math402-ex-5-8",
+    "subjectId": "math402",
+    "topicId": "topic-5",
+    "difficulty": 4,
+    "title": "QR Decomposition (Gram-Schmidt)",
+    "description": "Implement QR decomposition using Gram-Schmidt orthogonalization: A = QR where Q is orthogonal and R is upper triangular. This is fundamental for least squares problems and eigenvalue computation.",
+    "starterCode": "import numpy as np\n\ndef qr_gram_schmidt(A):\n    \"\"\"\n    Compute QR decomposition using classical Gram-Schmidt.\n\n    Parameters:\n    - A: m×n matrix (m >= n)\n\n    Returns:\n    - Q: m×n orthogonal matrix\n    - R: n×n upper triangular matrix\n    \"\"\"\n    # TODO: Implement this function\n    pass\n\n# Test case\nA = np.array([\n    [1.0, 1.0, 0.0],\n    [1.0, 0.0, 1.0],\n    [0.0, 1.0, 1.0]\n], dtype=float)\n\nQ, R = qr_gram_schmidt(A)\nprint(\"Q =\")\nprint(Q)\nprint(\"\\nR =\")\nprint(R)\nprint(\"\\nQ @ R =\")\nprint(Q @ R)\nprint(\"\\nOriginal A =\")\nprint(A)\nprint(\"\\nQ^T @ Q (should be I) =\")\nprint(Q.T @ Q)",
+    "hints": [
+      "Process columns of A one at a time",
+      "For each column, subtract projections onto previous orthogonal vectors",
+      "Normalize to get orthonormal vectors",
+      "R[i,j] = q_i^T @ a_j where q_i are orthonormal columns of Q"
+    ],
+    "solution": "import numpy as np\n\ndef qr_gram_schmidt(A):\n    \"\"\"\n    Compute QR decomposition using classical Gram-Schmidt.\n\n    Parameters:\n    - A: m×n matrix (m >= n)\n\n    Returns:\n    - Q: m×n orthogonal matrix\n    - R: n×n upper triangular matrix\n    \"\"\"\n    A = A.astype(float).copy()\n    m, n = A.shape\n\n    Q = np.zeros((m, n))\n    R = np.zeros((n, n))\n\n    for j in range(n):\n        # Start with column j of A\n        v = A[:, j].copy()\n\n        # Subtract projections onto previous Q columns\n        for i in range(j):\n            R[i, j] = np.dot(Q[:, i], A[:, j])\n            v -= R[i, j] * Q[:, i]\n\n        # Compute norm\n        R[j, j] = np.linalg.norm(v)\n\n        if R[j, j] < 1e-15:\n            raise ValueError(f\"Columns are linearly dependent at column {j}\")\n\n        # Normalize\n        Q[:, j] = v / R[j, j]\n\n    return Q, R\n\ndef qr_gram_schmidt_modified(A):\n    \"\"\"\n    Modified Gram-Schmidt (more numerically stable).\n    \"\"\"\n    A = A.astype(float).copy()\n    m, n = A.shape\n\n    Q = np.zeros((m, n))\n    R = np.zeros((n, n))\n\n    for j in range(n):\n        v = A[:, j].copy()\n\n        # Modified GS: update v as we go\n        for i in range(j):\n            R[i, j] = np.dot(Q[:, i], v)\n            v -= R[i, j] * Q[:, i]\n\n        R[j, j] = np.linalg.norm(v)\n\n        if R[j, j] < 1e-15:\n            raise ValueError(f\"Columns are linearly dependent at column {j}\")\n\n        Q[:, j] = v / R[j, j]\n\n    return Q, R\n\n# Test case\nA = np.array([\n    [1.0, 1.0, 0.0],\n    [1.0, 0.0, 1.0],\n    [0.0, 1.0, 1.0]\n], dtype=float)\n\nprint(\"Classical Gram-Schmidt:\")\nQ, R = qr_gram_schmidt(A)\nprint(\"\\nQ =\")\nprint(Q)\nprint(\"\\nR =\")\nprint(R)\nprint(\"\\nQ @ R =\")\nprint(Q @ R)\nprint(\"\\nOriginal A =\")\nprint(A)\nprint(f\"\\nDecomposition error: {np.linalg.norm(A - Q @ R):.2e}\")\nprint(\"\\nQ^T @ Q (should be I) =\")\nprint(Q.T @ Q)\nprint(f\"Orthogonality error: {np.linalg.norm(Q.T @ Q - np.eye(3)):.2e}\")\n\nprint(\"\\n\" + \"=\"*60)\nprint(\"Modified Gram-Schmidt:\")\nQ_mod, R_mod = qr_gram_schmidt_modified(A)\nprint(f\"Decomposition error: {np.linalg.norm(A - Q_mod @ R_mod):.2e}\")\nprint(f\"Orthogonality error: {np.linalg.norm(Q_mod.T @ Q_mod - np.eye(3)):.2e}\")\n\n# Compare with NumPy\nQ_np, R_np = np.linalg.qr(A)\nprint(f\"\\nComparison with NumPy QR:\")\nprint(f\"Q difference: {np.linalg.norm(abs(Q) - abs(Q_np)):.2e}\")  # abs for sign ambiguity\n\nprint(\"\\nAll tests passed!\")",
+    "testCases": [
+      {
+        "input": "A=[[1,1,0],[1,0,1],[0,1,1]]",
+        "expectedOutput": "Q orthogonal, R upper triangular, QR = A",
+        "isHidden": false,
+        "description": "QR decomposition using Gram-Schmidt"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math402-ex-5-9",
+    "subjectId": "math402",
+    "topicId": "topic-5",
+    "difficulty": 4,
+    "title": "QR with Householder Reflections",
+    "description": "Implement QR decomposition using Householder reflections for better numerical stability. Householder transformations systematically zero out subcolumns, making this method more stable than Gram-Schmidt for ill-conditioned matrices.",
+    "starterCode": "import numpy as np\n\ndef householder_qr(A):\n    \"\"\"\n    Compute QR decomposition using Householder reflections.\n\n    Parameters:\n    - A: m×n matrix (m >= n)\n\n    Returns:\n    - Q: m×m orthogonal matrix\n    - R: m×n upper triangular matrix\n    \"\"\"\n    # TODO: Implement this function\n    pass\n\n# Test case\nA = np.array([\n    [12.0, -51.0, 4.0],\n    [6.0, 167.0, -68.0],\n    [-4.0, 24.0, -41.0]\n], dtype=float)\n\nQ, R = householder_qr(A)\nprint(\"Q =\")\nprint(Q)\nprint(\"\\nR =\")\nprint(R)\nprint(\"\\nQ @ R =\")\nprint(Q @ R)",
+    "hints": [
+      "For column k, construct Householder vector v to zero elements below diagonal",
+      "v = x + sign(x[0])*||x||*e_1 where x is the subcolumn",
+      "Householder matrix: H = I - 2vv^T/(v^Tv)",
+      "Apply H to remaining submatrix",
+      "Q is product of all Householder matrices"
+    ],
+    "solution": "import numpy as np\n\ndef householder_vector(x):\n    \"\"\"\n    Compute Householder vector to reflect x to ||x||*e_1.\n\n    Returns v such that H = I - 2vv^T/||v||^2 zeros out x[1:].\n    \"\"\"\n    x = x.copy()\n    n = len(x)\n\n    # Compute norm with sign of x[0] for numerical stability\n    sigma = np.sign(x[0]) if x[0] != 0 else 1\n    norm_x = np.linalg.norm(x)\n\n    # Construct v\n    v = x.copy()\n    v[0] += sigma * norm_x\n\n    return v\n\ndef householder_qr(A):\n    \"\"\"\n    Compute QR decomposition using Householder reflections.\n\n    Parameters:\n    - A: m×n matrix (m >= n)\n\n    Returns:\n    - Q: m×m orthogonal matrix\n    - R: m×n upper triangular matrix\n    \"\"\"\n    A = A.astype(float).copy()\n    m, n = A.shape\n\n    Q = np.eye(m)\n    R = A.copy()\n\n    for k in range(n):\n        # Extract subcolumn\n        x = R[k:, k]\n\n        # Compute Householder vector\n        v = householder_vector(x)\n        v_norm_sq = np.dot(v, v)\n\n        if v_norm_sq < 1e-15:\n            continue\n\n        # Apply Householder transformation to submatrix\n        # H @ R[k:, k:] = R[k:, k:] - 2v(v^T @ R[k:, k:]) / ||v||^2\n        R[k:, k:] -= (2.0 / v_norm_sq) * np.outer(v, np.dot(v, R[k:, k:]))\n\n        # Build full Householder matrix for Q\n        H = np.eye(m)\n        H[k:, k:] -= (2.0 / v_norm_sq) * np.outer(v, v)\n        Q = Q @ H\n\n    return Q, R\n\n# Test case\nA = np.array([\n    [12.0, -51.0, 4.0],\n    [6.0, 167.0, -68.0],\n    [-4.0, 24.0, -41.0]\n], dtype=float)\n\nQ, R = householder_qr(A)\nprint(\"Q =\")\nprint(Q)\nprint(\"\\nR =\")\nprint(R[:3, :])  # Just the upper part\nprint(\"\\nQ @ R =\")\nprint(Q @ R)\nprint(\"\\nOriginal A =\")\nprint(A)\nprint(f\"\\nDecomposition error: {np.linalg.norm(A - Q @ R):.2e}\")\nprint(\"\\nQ^T @ Q (should be I) =\")\nprint(Q.T @ Q)\nprint(f\"Orthogonality error: {np.linalg.norm(Q.T @ Q - np.eye(3)):.2e}\")\n\n# Compare with NumPy\nQ_np, R_np = np.linalg.qr(A)\nprint(f\"\\nComparison with NumPy:\")\nprint(f\"R difference: {np.linalg.norm(R[:3, :] - R_np):.2e}\")\n\n# Test with ill-conditioned matrix\nprint(\"\\n\" + \"=\"*60)\nprint(\"Test with ill-conditioned matrix:\\n\")\nA_ill = np.array([[1.0, 1.0], [1.0, 1.0 + 1e-10], [1.0, 1.0 - 1e-10]])\nQ_ill, R_ill = householder_qr(A_ill)\nprint(f\"Decomposition error: {np.linalg.norm(A_ill - Q_ill @ R_ill):.2e}\")\nprint(f\"Orthogonality error: {np.linalg.norm(Q_ill.T @ Q_ill - np.eye(3)):.2e}\")\n\nprint(\"\\nAll tests passed!\")",
+    "testCases": [
+      {
+        "input": "A=[[12,-51,4],[6,167,-68],[-4,24,-41]]",
+        "expectedOutput": "Stable QR decomposition",
+        "isHidden": false,
+        "description": "Householder QR for numerical stability"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math402-ex-5-10",
+    "subjectId": "math402",
+    "topicId": "topic-5",
+    "difficulty": 4,
+    "title": "Matrix Condition Number",
+    "description": "Implement condition number computation and demonstrate how it affects solution accuracy. The condition number κ(A) = ||A|| ||A^(-1)|| measures how errors in b propagate to errors in x. High condition numbers indicate ill-conditioned systems.",
+    "starterCode": "import numpy as np\n\ndef condition_number(A, p=2):\n    \"\"\"\n    Compute condition number of matrix A.\n\n    Parameters:\n    - A: n×n matrix\n    - p: norm type (1, 2, or np.inf)\n\n    Returns:\n    - cond: condition number κ_p(A)\n    \"\"\"\n    # TODO: Implement this function\n    pass\n\ndef analyze_conditioning(A, b):\n    \"\"\"\n    Analyze how condition number affects solution accuracy.\n\n    Parameters:\n    - A: coefficient matrix\n    - b: right-hand side\n\n    Returns:\n    - Analysis results\n    \"\"\"\n    # TODO: Implement this function\n    pass\n\n# Test with well-conditioned matrix\nA_good = np.array([[4.0, 1.0], [1.0, 3.0]])\ncond = condition_number(A_good)\nprint(f\"Condition number: {cond:.2f}\")",
+    "hints": [
+      "κ(A) = ||A|| * ||A^(-1)||",
+      "For 2-norm: κ_2(A) = σ_max / σ_min (ratio of largest to smallest singular value)",
+      "Large κ means small changes in b cause large changes in x",
+      "Rule of thumb: lose log₁₀(κ) digits of accuracy"
+    ],
+    "solution": "import numpy as np\n\ndef condition_number(A, p=2):\n    \"\"\"\n    Compute condition number of matrix A.\n\n    Parameters:\n    - A: n×n matrix\n    - p: norm type (1, 2, or np.inf)\n\n    Returns:\n    - cond: condition number κ_p(A)\n    \"\"\"\n    if p == 2:\n        # Use SVD for 2-norm condition number\n        singular_values = np.linalg.svd(A, compute_uv=False)\n        if singular_values[-1] < 1e-15:\n            return float('inf')\n        return singular_values[0] / singular_values[-1]\n    else:\n        # General case: κ = ||A|| * ||A^(-1)||\n        norm_A = np.linalg.norm(A, ord=p)\n        norm_A_inv = np.linalg.norm(np.linalg.inv(A), ord=p)\n        return norm_A * norm_A_inv\n\ndef analyze_conditioning(A, b):\n    \"\"\"\n    Analyze how condition number affects solution accuracy.\n\n    Parameters:\n    - A: coefficient matrix\n    - b: right-hand side\n\n    Returns:\n    - Dictionary with analysis results\n    \"\"\"\n    # Compute condition number\n    cond = condition_number(A)\n\n    # Solve exactly\n    x_exact = np.linalg.solve(A, b)\n\n    # Perturb b slightly\n    perturbation = 1e-10 * np.random.randn(len(b))\n    b_perturbed = b + perturbation\n    x_perturbed = np.linalg.solve(A, b_perturbed)\n\n    # Compute relative errors\n    rel_error_b = np.linalg.norm(perturbation) / np.linalg.norm(b)\n    rel_error_x = np.linalg.norm(x_perturbed - x_exact) / np.linalg.norm(x_exact)\n\n    # Error amplification\n    amplification = rel_error_x / rel_error_b\n\n    return {\n        'condition_number': cond,\n        'rel_error_b': rel_error_b,\n        'rel_error_x': rel_error_x,\n        'amplification': amplification,\n        'expected_loss_digits': np.log10(cond)\n    }\n\n# Test 1: Well-conditioned matrix\nprint(\"Test 1: Well-conditioned matrix\\n\")\nA_good = np.array([[4.0, 1.0], [1.0, 3.0]])\nb_good = np.array([1.0, 2.0])\n\ncond_good = condition_number(A_good)\nprint(f\"Matrix A_good:\")\nprint(A_good)\nprint(f\"\\nCondition number: {cond_good:.2f}\")\nprint(f\"Expected digit loss: {np.log10(cond_good):.2f}\")\n\nanalysis_good = analyze_conditioning(A_good, b_good)\nprint(f\"\\nAnalysis:\")\nprint(f\"  Relative error in b: {analysis_good['rel_error_b']:.2e}\")\nprint(f\"  Relative error in x: {analysis_good['rel_error_x']:.2e}\")\nprint(f\"  Error amplification: {analysis_good['amplification']:.2f}\")\nprint(f\"  Upper bound (κ): {cond_good:.2f}\")\n\n# Test 2: Ill-conditioned matrix (Hilbert matrix)\nprint(\"\\n\" + \"=\"*60)\nprint(\"Test 2: Ill-conditioned Hilbert matrix\\n\")\n\ndef hilbert_matrix(n):\n    \"\"\"Generate n×n Hilbert matrix (notoriously ill-conditioned).\"\"\"\n    H = np.zeros((n, n))\n    for i in range(n):\n        for j in range(n):\n            H[i, j] = 1.0 / (i + j + 1)\n    return H\n\nA_bad = hilbert_matrix(4)\nb_bad = np.ones(4)\n\ncond_bad = condition_number(A_bad)\nprint(f\"4×4 Hilbert matrix\")\nprint(f\"Condition number: {cond_bad:.2e}\")\nprint(f\"Expected digit loss: {np.log10(cond_bad):.1f}\")\n\nanalysis_bad = analyze_conditioning(A_bad, b_bad)\nprint(f\"\\nAnalysis:\")\nprint(f\"  Relative error in b: {analysis_bad['rel_error_b']:.2e}\")\nprint(f\"  Relative error in x: {analysis_bad['rel_error_x']:.2e}\")\nprint(f\"  Error amplification: {analysis_bad['amplification']:.2e}\")\nprint(f\"  Upper bound (κ): {cond_bad:.2e}\")\n\n# Test 3: Nearly singular matrix\nprint(\"\\n\" + \"=\"*60)\nprint(\"Test 3: Nearly singular matrix\\n\")\n\nA_singular = np.array([[1.0, 2.0], [1.0, 2.0 + 1e-10]])\ncond_singular = condition_number(A_singular)\nprint(f\"Condition number: {cond_singular:.2e}\")\nprint(\"Matrix is nearly singular - extremely ill-conditioned!\")\n\n# Compare with NumPy\nprint(f\"\\nNumPy condition number: {np.linalg.cond(A_bad):.2e}\")\n\nprint(\"\\nAll tests passed!\")",
+    "testCases": [
+      {
+        "input": "Well-conditioned vs Hilbert matrix",
+        "expectedOutput": "Demonstrates error amplification proportional to κ(A)",
+        "isHidden": false,
+        "description": "Condition number analysis"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math402-ex-5-11",
+    "subjectId": "math402",
+    "topicId": "topic-5",
+    "difficulty": 4,
+    "title": "Matrix Inversion via LU",
+    "description": "Implement matrix inversion using LU decomposition. Computing A^(-1) by solving AX = I column by column. This is more efficient and stable than direct inversion formulas.",
+    "starterCode": "import numpy as np\n\ndef invert_matrix_lu(A):\n    \"\"\"\n    Compute matrix inverse using LU decomposition.\n\n    Parameters:\n    - A: n×n invertible matrix\n\n    Returns:\n    - A_inv: inverse of A\n    \"\"\"\n    # TODO: Implement this function\n    pass\n\n# Test case\nA = np.array([\n    [4.0, 7.0],\n    [2.0, 6.0]\n], dtype=float)\n\nA_inv = invert_matrix_lu(A)\nprint(\"A =\")\nprint(A)\nprint(\"\\nA^(-1) =\")\nprint(A_inv)\nprint(\"\\nA @ A^(-1) =\")\nprint(A @ A_inv)",
+    "hints": [
+      "Solve AX = I column by column",
+      "Each column of X solves Ax_i = e_i",
+      "Use LU decomposition once, then solve n systems",
+      "More efficient than computing A^(-1) directly"
+    ],
+    "solution": "import numpy as np\nfrom scipy.linalg import lu_factor, lu_solve\n\ndef plu_decompose_compact(A):\n    \"\"\"Compute PLU with compact storage.\"\"\"\n    A = A.astype(float).copy()\n    n = A.shape[0]\n    perm = list(range(n))\n\n    for k in range(n - 1):\n        # Find pivot\n        pivot_row = k + np.argmax(np.abs(A[k:, k]))\n\n        # Swap\n        if pivot_row != k:\n            A[[k, pivot_row]] = A[[pivot_row, k]]\n            perm[k], perm[pivot_row] = perm[pivot_row], perm[k]\n\n        if abs(A[k, k]) < 1e-15:\n            raise ValueError(\"Matrix is singular\")\n\n        # Eliminate\n        A[k+1:, k] /= A[k, k]\n        A[k+1:, k+1:] -= np.outer(A[k+1:, k], A[k, k+1:])\n\n    return A, perm\n\ndef solve_with_plu(LU, perm, b):\n    \"\"\"Solve using compact PLU.\"\"\"\n    n = len(b)\n    b = b[perm].copy()\n\n    # Forward substitution\n    for i in range(n):\n        b[i] -= np.dot(LU[i, :i], b[:i])\n\n    # Back substitution\n    for i in range(n - 1, -1, -1):\n        b[i] = (b[i] - np.dot(LU[i, i+1:], b[i+1:])) / LU[i, i]\n\n    return b\n\ndef invert_matrix_lu(A):\n    \"\"\"\n    Compute matrix inverse using LU decomposition.\n\n    Parameters:\n    - A: n×n invertible matrix\n\n    Returns:\n    - A_inv: inverse of A\n    \"\"\"\n    n = A.shape[0]\n\n    # Compute PLU decomposition\n    LU, perm = plu_decompose_compact(A)\n\n    # Solve AX = I column by column\n    A_inv = np.zeros((n, n))\n    I = np.eye(n)\n\n    for i in range(n):\n        A_inv[:, i] = solve_with_plu(LU, perm, I[:, i])\n\n    return A_inv\n\ndef compute_determinant_lu(A):\n    \"\"\"Compute determinant using LU decomposition.\"\"\"\n    LU, perm = plu_decompose_compact(A)\n\n    # det(A) = det(P) * det(L) * det(U)\n    # det(L) = 1 (unit diagonal)\n    # det(U) = product of diagonal\n    # det(P) = (-1)^(number of swaps)\n\n    det_U = np.prod(np.diag(LU))\n\n    # Count permutation parity\n    n = len(perm)\n    swaps = 0\n    visited = [False] * n\n    for i in range(n):\n        if not visited[i]:\n            j = i\n            cycle_length = 0\n            while not visited[j]:\n                visited[j] = True\n                j = perm[j]\n                cycle_length += 1\n            swaps += cycle_length - 1\n\n    det_P = (-1) ** swaps\n\n    return det_P * det_U\n\n# Test case\nA = np.array([\n    [4.0, 7.0],\n    [2.0, 6.0]\n], dtype=float)\n\nA_inv = invert_matrix_lu(A)\nprint(\"A =\")\nprint(A)\nprint(\"\\nA^(-1) =\")\nprint(A_inv)\nprint(\"\\nA @ A^(-1) =\")\nprint(A @ A_inv)\nprint(f\"\\nError from identity: {np.linalg.norm(A @ A_inv - np.eye(2)):.2e}\")\n\n# Compare with NumPy\nA_inv_np = np.linalg.inv(A)\nprint(f\"Difference from NumPy: {np.linalg.norm(A_inv - A_inv_np):.2e}\")\n\n# Test determinant\nprint(\"\\n\" + \"=\"*60)\nprint(\"Determinant computation:\\n\")\ndet_lu = compute_determinant_lu(A)\ndet_np = np.linalg.det(A)\nprint(f\"det(A) via LU: {det_lu:.6f}\")\nprint(f\"NumPy det(A): {det_np:.6f}\")\nprint(f\"Difference: {abs(det_lu - det_np):.2e}\")\n\n# Test with 3×3\nA3 = np.array([[1.0, 2.0, 3.0], [0.0, 1.0, 4.0], [5.0, 6.0, 0.0]])\nA3_inv = invert_matrix_lu(A3)\nprint(f\"\\n3×3 inversion error: {np.linalg.norm(A3 @ A3_inv - np.eye(3)):.2e}\")\n\nprint(\"\\nAll tests passed!\")",
+    "testCases": [
+      {
+        "input": "A=[[4,7],[2,6]]",
+        "expectedOutput": "A^(-1) such that A @ A^(-1) = I",
+        "isHidden": false,
+        "description": "Matrix inversion using LU decomposition"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math402-ex-5-12",
+    "subjectId": "math402",
+    "topicId": "topic-5",
+    "difficulty": 3,
+    "title": "Tridiagonal Systems",
+    "description": "Implement the Thomas algorithm for efficiently solving tridiagonal systems. Tridiagonal matrices arise in spline interpolation, finite differences, and many other applications. The Thomas algorithm is a specialized, highly efficient O(n) method.",
+    "starterCode": "import numpy as np\n\ndef thomas_algorithm(a, b, c, d):\n    \"\"\"\n    Solve tridiagonal system using Thomas algorithm.\n\n    The system is:\n    b[0]*x[0] + c[0]*x[1] = d[0]\n    a[1]*x[0] + b[1]*x[1] + c[1]*x[2] = d[1]\n    ...\n    a[n-1]*x[n-2] + b[n-1]*x[n-1] = d[n-1]\n\n    Parameters:\n    - a: subdiagonal (length n-1)\n    - b: diagonal (length n)\n    - c: superdiagonal (length n-1)\n    - d: right-hand side (length n)\n\n    Returns:\n    - x: solution vector\n    \"\"\"\n    # TODO: Implement this function\n    pass\n\n# Test case: tridiagonal system\nn = 5\na = np.array([1.0, 1.0, 1.0, 1.0])  # subdiagonal\nb = np.array([4.0, 4.0, 4.0, 4.0, 4.0])  # diagonal\nc = np.array([1.0, 1.0, 1.0, 1.0])  # superdiagonal\nd = np.array([6.0, 8.0, 8.0, 8.0, 6.0])  # RHS\n\nx = thomas_algorithm(a, b, c, d)\nprint(f\"Solution: {x}\")",
+    "hints": [
+      "Forward elimination: modify c and d going forward",
+      "c'[i] = c[i] / (b[i] - a[i]*c'[i-1])",
+      "d'[i] = (d[i] - a[i]*d'[i-1]) / (b[i] - a[i]*c'[i-1])",
+      "Back substitution: x[n-1] = d'[n-1], x[i] = d'[i] - c'[i]*x[i+1]"
+    ],
+    "solution": "import numpy as np\n\ndef thomas_algorithm(a, b, c, d):\n    \"\"\"\n    Solve tridiagonal system using Thomas algorithm.\n\n    The system is:\n    b[0]*x[0] + c[0]*x[1] = d[0]\n    a[1]*x[0] + b[1]*x[1] + c[1]*x[2] = d[1]\n    ...\n    a[n-1]*x[n-2] + b[n-1]*x[n-1] = d[n-1]\n\n    Parameters:\n    - a: subdiagonal (length n-1)\n    - b: diagonal (length n)\n    - c: superdiagonal (length n-1)\n    - d: right-hand side (length n)\n\n    Returns:\n    - x: solution vector\n    \"\"\"\n    n = len(b)\n\n    # Make copies to avoid modifying inputs\n    c = c.copy()\n    d = d.copy()\n\n    # Forward elimination\n    for i in range(1, n):\n        if abs(b[i-1]) < 1e-15:\n            raise ValueError(f\"Zero pivot at row {i-1}\")\n\n        m = a[i-1] / b[i-1]\n        b[i] = b[i] - m * c[i-1]\n        d[i] = d[i] - m * d[i-1]\n\n    # Check final pivot\n    if abs(b[n-1]) < 1e-15:\n        raise ValueError(\"Matrix is singular\")\n\n    # Back substitution\n    x = np.zeros(n)\n    x[n-1] = d[n-1] / b[n-1]\n\n    for i in range(n-2, -1, -1):\n        x[i] = (d[i] - c[i] * x[i+1]) / b[i]\n\n    return x\n\ndef build_tridiagonal_matrix(a, b, c):\n    \"\"\"Build full matrix from diagonals for verification.\"\"\"\n    n = len(b)\n    A = np.diag(b) + np.diag(a, -1) + np.diag(c, 1)\n    return A\n\n# Test case: tridiagonal system\nn = 5\na = np.array([1.0, 1.0, 1.0, 1.0])  # subdiagonal\nb = np.array([4.0, 4.0, 4.0, 4.0, 4.0])  # diagonal\nc = np.array([1.0, 1.0, 1.0, 1.0])  # superdiagonal\nd = np.array([6.0, 8.0, 8.0, 8.0, 6.0])  # RHS\n\nx = thomas_algorithm(a, b, c, d)\nprint(f\"Solution: {x}\")\n\n# Verify\nA = build_tridiagonal_matrix(a, b, c)\nprint(f\"\\nVerification Ax:\")\nprint(A @ x)\nprint(f\"Original d:\")\nprint(d)\nprint(f\"Residual: {np.linalg.norm(A @ x - d):.2e}\")\n\n# Compare with NumPy\nx_np = np.linalg.solve(A, d)\nprint(f\"\\nDifference from NumPy: {np.linalg.norm(x - x_np):.2e}\")\n\n# Test case 2: larger system\nprint(\"\\n\" + \"=\"*60)\nprint(\"Test with larger system (n=100):\\n\")\nn = 100\na_large = np.ones(n-1)\nb_large = 3.0 * np.ones(n)\nc_large = np.ones(n-1)\nd_large = np.random.randn(n)\n\nimport time\nstart = time.time()\nx_thomas = thomas_algorithm(a_large, b_large, c_large, d_large)\ntime_thomas = time.time() - start\n\nA_large = build_tridiagonal_matrix(a_large, b_large, c_large)\nstart = time.time()\nx_numpy = np.linalg.solve(A_large, d_large)\ntime_numpy = time.time() - start\n\nprint(f\"Thomas algorithm time: {time_thomas*1000:.3f} ms\")\nprint(f\"NumPy solve time: {time_numpy*1000:.3f} ms\")\nprint(f\"Speedup: {time_numpy/time_thomas:.1f}x\")\nprint(f\"Solution difference: {np.linalg.norm(x_thomas - x_numpy):.2e}\")\nprint(f\"Residual: {np.linalg.norm(A_large @ x_thomas - d_large):.2e}\")\n\nprint(\"\\nAll tests passed!\")",
+    "testCases": [
+      {
+        "input": "Tridiagonal system with diagonals a, b, c",
+        "expectedOutput": "O(n) solution matching full solver",
+        "isHidden": false,
+        "description": "Efficient Thomas algorithm for tridiagonal systems"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math402-ex-5-13",
+    "subjectId": "math402",
+    "topicId": "topic-5",
+    "difficulty": 5,
+    "title": "Iterative Refinement",
+    "description": "Implement iterative refinement to improve solution accuracy. After solving Ax = b to get x₀, compute residual r = b - Ax₀, solve A(δx) = r, and update x₁ = x₀ + δx. This can recover accuracy lost to rounding errors.",
+    "starterCode": "import numpy as np\n\ndef iterative_refinement(A, b, max_iter=5):\n    \"\"\"\n    Solve Ax = b with iterative refinement for improved accuracy.\n\n    Parameters:\n    - A: n×n coefficient matrix\n    - b: n×1 right-hand side\n    - max_iter: maximum refinement iterations\n\n    Returns:\n    - x: refined solution\n    - residuals: list of residual norms\n    \"\"\"\n    # TODO: Implement this function\n    pass\n\n# Test with ill-conditioned system\nA = np.array([\n    [1.0, 2.0],\n    [1.000001, 2.0]\n], dtype=float)\nb = np.array([3.0, 3.000001])\n\nx, residuals = iterative_refinement(A, b)\nprint(f\"Solution: {x}\")\nprint(f\"Residuals: {residuals}\")",
+    "hints": [
+      "Start with initial solution x₀ from standard solver",
+      "Compute residual r = b - Ax in higher precision if possible",
+      "Solve Aδ = r for correction δ",
+      "Update x = x + δ and repeat",
+      "Stop when residual stops decreasing"
+    ],
+    "solution": "import numpy as np\nfrom scipy.linalg import lu_factor, lu_solve\n\ndef iterative_refinement(A, b, max_iter=5, tol=1e-14):\n    \"\"\"\n    Solve Ax = b with iterative refinement for improved accuracy.\n\n    Parameters:\n    - A: n×n coefficient matrix\n    - b: n×1 right-hand side\n    - max_iter: maximum refinement iterations\n    - tol: convergence tolerance\n\n    Returns:\n    - x: refined solution\n    - residuals: list of residual norms\n    \"\"\"\n    # Compute LU factorization once\n    lu, piv = lu_factor(A)\n\n    # Initial solution\n    x = lu_solve((lu, piv), b)\n\n    residuals = []\n\n    for iteration in range(max_iter):\n        # Compute residual in higher precision if possible\n        # r = b - Ax (use np.float128 if available, else float64)\n        try:\n            r = b.astype(np.float128) - (A.astype(np.float128) @ x.astype(np.float128))\n            r = r.astype(np.float64)\n        except:\n            r = b - A @ x\n\n        residual_norm = np.linalg.norm(r)\n        residuals.append(residual_norm)\n\n        # Check convergence\n        if residual_norm < tol:\n            break\n\n        # Solve for correction: A(δx) = r\n        delta = lu_solve((lu, piv), r)\n\n        # Update solution\n        x = x + delta\n\n    return x, residuals\n\ndef compare_with_without_refinement(A, b):\n    \"\"\"Compare standard solve with iterative refinement.\"\"\"\n    # Standard solve\n    x_standard = np.linalg.solve(A, b)\n    residual_standard = np.linalg.norm(b - A @ x_standard)\n\n    # With refinement\n    x_refined, residuals = iterative_refinement(A, b)\n    residual_refined = np.linalg.norm(b - A @ x_refined)\n\n    return {\n        'x_standard': x_standard,\n        'x_refined': x_refined,\n        'residual_standard': residual_standard,\n        'residual_refined': residual_refined,\n        'refinement_history': residuals\n    }\n\n# Test 1: Ill-conditioned system\nprint(\"Test 1: Ill-conditioned system\\n\")\nA1 = np.array([\n    [1.0, 2.0],\n    [1.000001, 2.0]\n], dtype=float)\nb1 = np.array([3.0, 3.000001])\n\nresults1 = compare_with_without_refinement(A1, b1)\n\nprint(\"Standard solve:\")\nprint(f\"  Solution: {results1['x_standard']}\")\nprint(f\"  Residual: {results1['residual_standard']:.2e}\")\n\nprint(\"\\nWith iterative refinement:\")\nprint(f\"  Solution: {results1['x_refined']}\")\nprint(f\"  Residual: {results1['residual_refined']:.2e}\")\nprint(f\"  Refinement history: {[f'{r:.2e}' for r in results1['refinement_history']]}\")\nprint(f\"  Improvement: {results1['residual_standard'] / results1['residual_refined']:.1f}x\")\n\n# Test 2: Hilbert matrix (very ill-conditioned)\nprint(\"\\n\" + \"=\"*60)\nprint(\"Test 2: Hilbert matrix (n=6)\\n\")\n\ndef hilbert_matrix(n):\n    H = np.zeros((n, n))\n    for i in range(n):\n        for j in range(n):\n            H[i, j] = 1.0 / (i + j + 1)\n    return H\n\nA2 = hilbert_matrix(6)\nx_true = np.ones(6)\nb2 = A2 @ x_true\n\nresults2 = compare_with_without_refinement(A2, b2)\n\nprint(f\"Condition number: {np.linalg.cond(A2):.2e}\")\nprint(f\"True solution: {x_true}\")\n\nprint(\"\\nStandard solve:\")\nprint(f\"  Solution: {results2['x_standard']}\")\nprint(f\"  Error: {np.linalg.norm(results2['x_standard'] - x_true):.2e}\")\nprint(f\"  Residual: {results2['residual_standard']:.2e}\")\n\nprint(\"\\nWith iterative refinement:\")\nprint(f\"  Solution: {results2['x_refined']}\")\nprint(f\"  Error: {np.linalg.norm(results2['x_refined'] - x_true):.2e}\")\nprint(f\"  Residual: {results2['residual_refined']:.2e}\")\nprint(f\"  Refinement history: {[f'{r:.2e}' for r in results2['refinement_history']]}\")\n\nerror_improvement = (np.linalg.norm(results2['x_standard'] - x_true) /\n                     np.linalg.norm(results2['x_refined'] - x_true))\nprint(f\"  Error improvement: {error_improvement:.1f}x\")\n\nprint(\"\\nAll tests passed!\")",
+    "testCases": [
+      {
+        "input": "Ill-conditioned system",
+        "expectedOutput": "Progressively decreasing residuals, improved accuracy",
+        "isHidden": false,
+        "description": "Iterative refinement for accuracy improvement"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math402-ex-5-14",
+    "subjectId": "math402",
+    "topicId": "topic-5",
+    "difficulty": 4,
+    "title": "Solving Multiple Right-Hand Sides",
+    "description": "Efficiently solve AX = B where B has multiple columns. Factor A once, then solve for each column of B. This is essential for matrix inversion and many applications.",
+    "starterCode": "import numpy as np\n\ndef solve_multiple_rhs(A, B):\n    \"\"\"\n    Solve AX = B efficiently using single factorization.\n\n    Parameters:\n    - A: n×n coefficient matrix\n    - B: n×m right-hand side matrix (m systems)\n\n    Returns:\n    - X: n×m solution matrix\n    \"\"\"\n    # TODO: Implement this function\n    pass\n\n# Test case\nA = np.array([\n    [2.0, 1.0, 0.0],\n    [1.0, 2.0, 1.0],\n    [0.0, 1.0, 2.0]\n], dtype=float)\n\nB = np.array([\n    [1.0, 0.0, 1.0],\n    [2.0, 1.0, 0.0],\n    [3.0, 2.0, 1.0]\n], dtype=float)\n\nX = solve_multiple_rhs(A, B)\nprint(\"Solution X:\")\nprint(X)",
+    "hints": [
+      "Factor A = LU once",
+      "For each column b_i of B, solve Lc_i = b_i then Ux_i = c_i",
+      "More efficient than solving m separate systems",
+      "Can also work with entire B matrix at once"
+    ],
+    "solution": "import numpy as np\nfrom scipy.linalg import lu_factor, lu_solve\nimport time\n\ndef solve_multiple_rhs(A, B):\n    \"\"\"\n    Solve AX = B efficiently using single factorization.\n\n    Parameters:\n    - A: n×n coefficient matrix\n    - B: n×m right-hand side matrix (m systems)\n\n    Returns:\n    - X: n×m solution matrix\n    \"\"\"\n    n, m = B.shape\n\n    # Factor A once\n    lu, piv = lu_factor(A)\n\n    # Solve for each column\n    X = np.zeros((n, m))\n    for i in range(m):\n        X[:, i] = lu_solve((lu, piv), B[:, i])\n\n    return X\n\ndef solve_multiple_rhs_matrix(A, B):\n    \"\"\"\n    Alternative: solve with entire B matrix at once.\n    More efficient for large m.\n    \"\"\"\n    from scipy.linalg import lu_factor, lu_solve\n\n    lu, piv = lu_factor(A)\n\n    # Solve AX = B using the factorization\n    # This requires working with B as a whole\n    n, m = B.shape\n    X = np.zeros((n, m))\n\n    # Forward substitution with permutation for all columns\n    P_B = B[piv, :]\n\n    # Solve LY = P_B\n    Y = np.zeros((n, m))\n    for i in range(n):\n        Y[i, :] = P_B[i, :] - lu[i, :i] @ Y[:i, :]\n\n    # Solve UX = Y\n    X = np.zeros((n, m))\n    for i in range(n - 1, -1, -1):\n        X[i, :] = (Y[i, :] - lu[i, i+1:] @ X[i+1:, :]) / lu[i, i]\n\n    return X\n\n# Test case\nA = np.array([\n    [2.0, 1.0, 0.0],\n    [1.0, 2.0, 1.0],\n    [0.0, 1.0, 2.0]\n], dtype=float)\n\nB = np.array([\n    [1.0, 0.0, 1.0],\n    [2.0, 1.0, 0.0],\n    [3.0, 2.0, 1.0]\n], dtype=float)\n\nX = solve_multiple_rhs(A, B)\nprint(\"Solution X:\")\nprint(X)\nprint(\"\\nVerification AX:\")\nprint(A @ X)\nprint(\"\\nOriginal B:\")\nprint(B)\nprint(f\"\\nResidual: {np.linalg.norm(A @ X - B):.2e}\")\n\n# Compare methods\nprint(\"\\n\" + \"=\"*60)\nprint(\"Performance comparison:\\n\")\n\nX_matrix = solve_multiple_rhs_matrix(A, B)\nprint(f\"Matrix method residual: {np.linalg.norm(A @ X_matrix - B):.2e}\")\n\n# Timing test with larger system\nn = 100\nm = 50\nA_large = np.random.randn(n, n)\nA_large = A_large @ A_large.T + n * np.eye(n)  # Make SPD\nB_large = np.random.randn(n, m)\n\n# Method 1: Single factorization\nstart = time.time()\nX1 = solve_multiple_rhs(A_large, B_large)\ntime1 = time.time() - start\n\n# Method 2: Naive (m separate solves without reusing factorization)\nstart = time.time()\nX2 = np.zeros((n, m))\nfor i in range(m):\n    X2[:, i] = np.linalg.solve(A_large, B_large[:, i])\ntime2 = time.time() - start\n\n# Method 3: NumPy on full matrix\nstart = time.time()\nX3 = np.linalg.solve(A_large, B_large)\ntime3 = time.time() - start\n\nprint(f\"Factorization reuse: {time1*1000:.2f} ms\")\nprint(f\"Naive method: {time2*1000:.2f} ms\")\nprint(f\"NumPy (optimized): {time3*1000:.2f} ms\")\nprint(f\"\\nSpeedup vs naive: {time2/time1:.1f}x\")\nprint(f\"Residual: {np.linalg.norm(A_large @ X1 - B_large):.2e}\")\n\n# Application: compute A^(-1) using solve\nprint(\"\\n\" + \"=\"*60)\nprint(\"Application: Computing A^(-1):\\n\")\nA_inv = solve_multiple_rhs(A, np.eye(3))\nprint(\"A^(-1) =\")\nprint(A_inv)\nprint(\"\\nA @ A^(-1) =\")\nprint(A @ A_inv)\nprint(f\"Error from I: {np.linalg.norm(A @ A_inv - np.eye(3)):.2e}\")\n\nprint(\"\\nAll tests passed!\")",
+    "testCases": [
+      {
+        "input": "A (n×n), B (n×m)",
+        "expectedOutput": "X such that AX = B, computed efficiently",
+        "isHidden": false,
+        "description": "Efficient solution of multiple systems"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math402-ex-5-15",
+    "subjectId": "math402",
+    "topicId": "topic-5",
+    "difficulty": 5,
+    "title": "Symmetric Indefinite Factorization",
+    "description": "Implement Bunch-Kaufman factorization for symmetric indefinite matrices: A = LDL^T with pivoting. Not all symmetric matrices are positive definite. This factorization handles the general symmetric case.",
+    "starterCode": "import numpy as np\n\ndef ldl_factorization(A):\n    \"\"\"\n    Compute LDL^T factorization of symmetric matrix.\n\n    Parameters:\n    - A: n×n symmetric matrix\n\n    Returns:\n    - L: unit lower triangular\n    - D: diagonal matrix\n    \"\"\"\n    # TODO: Implement this function\n    pass\n\n# Test with symmetric indefinite matrix\nA = np.array([\n    [1.0, 2.0, 3.0],\n    [2.0, 4.0, 5.0],\n    [3.0, 5.0, 6.0]\n], dtype=float)\n\nL, D = ldl_factorization(A)\nprint(\"L =\")\nprint(L)\nprint(\"\\nD =\")\nprint(D)",
+    "hints": [
+      "Similar to Cholesky but D is not necessarily positive",
+      "D[i,i] = A[i,i] - sum(L[i,k]^2 * D[k,k] for k<i)",
+      "L[j,i] = (A[j,i] - sum(L[j,k]*L[i,k]*D[k,k] for k<i)) / D[i,i]",
+      "May need pivoting for numerical stability (Bunch-Kaufman)"
+    ],
+    "solution": "import numpy as np\n\ndef ldl_factorization(A):\n    \"\"\"\n    Compute LDL^T factorization of symmetric matrix.\n\n    Parameters:\n    - A: n×n symmetric matrix\n\n    Returns:\n    - L: unit lower triangular\n    - D: diagonal matrix\n    \"\"\"\n    # Verify symmetry\n    if not np.allclose(A, A.T):\n        raise ValueError(\"Matrix must be symmetric\")\n\n    A = A.astype(float).copy()\n    n = A.shape[0]\n\n    L = np.eye(n)\n    D = np.zeros(n)\n\n    for i in range(n):\n        # Compute D[i,i]\n        D[i] = A[i, i] - sum(L[i, k]**2 * D[k] for k in range(i))\n\n        if abs(D[i]) < 1e-15:\n            print(f\"Warning: zero or near-zero diagonal at position {i}\")\n            D[i] = 1e-15  # Regularize\n\n        # Compute L[j,i] for j > i\n        for j in range(i + 1, n):\n            sum_term = sum(L[j, k] * L[i, k] * D[k] for k in range(i))\n            L[j, i] = (A[j, i] - sum_term) / D[i]\n\n    D_matrix = np.diag(D)\n    return L, D_matrix\n\ndef ldl_solve(L, D, b):\n    \"\"\"Solve Ax = b using LDL^T factorization.\"\"\"\n    n = len(b)\n\n    # Forward: Ly = b\n    y = np.zeros(n)\n    for i in range(n):\n        y[i] = b[i] - sum(L[i, j] * y[j] for j in range(i))\n\n    # Middle: Dz = y\n    z = y / np.diag(D)\n\n    # Back: L^T x = z\n    x = np.zeros(n)\n    for i in range(n - 1, -1, -1):\n        x[i] = z[i] - sum(L[j, i] * x[j] for j in range(i + 1, n))\n\n    return x\n\n# Test 1: Symmetric indefinite matrix\nprint(\"Test 1: Symmetric indefinite matrix\\n\")\nA = np.array([\n    [1.0, 2.0, 3.0],\n    [2.0, 4.0, 5.0],\n    [3.0, 5.0, 6.0]\n], dtype=float)\n\nL, D = ldl_factorization(A)\nprint(\"L =\")\nprint(L)\nprint(\"\\nD =\")\nprint(D)\nprint(\"\\nL @ D @ L^T =\")\nprint(L @ D @ L.T)\nprint(\"\\nOriginal A =\")\nprint(A)\nprint(f\"\\nDecomposition error: {np.linalg.norm(A - L @ D @ L.T):.2e}\")\n\n# Test solving\nb = np.array([1.0, 2.0, 3.0])\nx = ldl_solve(L, D, b)\nprint(f\"\\nSolution to Ax = b: {x}\")\nprint(f\"Residual: {np.linalg.norm(A @ x - b):.2e}\")\n\n# Test 2: SPD matrix (should work like Cholesky)\nprint(\"\\n\" + \"=\"*60)\nprint(\"Test 2: Symmetric positive definite matrix\\n\")\n\nA_spd = np.array([\n    [4.0, 12.0, -16.0],\n    [12.0, 37.0, -43.0],\n    [-16.0, -43.0, 98.0]\n], dtype=float)\n\nL_spd, D_spd = ldl_factorization(A_spd)\nprint(\"D (should be positive) =\")\nprint(D_spd)\nprint(f\"All eigenvalues positive: {np.all(np.diag(D_spd) > 0)}\")\nprint(f\"Decomposition error: {np.linalg.norm(A_spd - L_spd @ D_spd @ L_spd.T):.2e}\")\n\n# Compare with Cholesky: A = LL^T = (LD^(1/2))(LD^(1/2))^T\nL_chol_equiv = L_spd @ np.sqrt(D_spd)\nprint(f\"\\nEquivalent to Cholesky:\")\nprint(f\"L @ sqrt(D) @ sqrt(D) @ L^T = L_chol @ L_chol^T\")\nprint(f\"Error: {np.linalg.norm(A_spd - L_chol_equiv @ L_chol_equiv.T):.2e}\")\n\n# Test 3: Indefinite matrix with negative eigenvalue\nprint(\"\\n\" + \"=\"*60)\nprint(\"Test 3: Indefinite matrix\\n\")\n\nA_indef = np.array([\n    [1.0, 2.0],\n    [2.0, 1.0]\n], dtype=float)\n\neigenvalues = np.linalg.eigvals(A_indef)\nprint(f\"Eigenvalues: {eigenvalues}\")\nprint(f\"Matrix is indefinite: {np.any(eigenvalues > 0) and np.any(eigenvalues < 0)}\")\n\nL_indef, D_indef = ldl_factorization(A_indef)\nprint(f\"\\nD =\")\nprint(D_indef)\nprint(f\"Decomposition error: {np.linalg.norm(A_indef - L_indef @ D_indef @ L_indef.T):.2e}\")\n\nprint(\"\\nAll tests passed!\")",
+    "testCases": [
+      {
+        "input": "Symmetric indefinite matrix",
+        "expectedOutput": "LDL^T factorization with D possibly having negative entries",
+        "isHidden": false,
+        "description": "Factorization for general symmetric matrices"
+      }
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math402-ex-5-16",
+    "subjectId": "math402",
+    "topicId": "topic-5",
+    "difficulty": 5,
+    "title": "Block Matrix Operations",
+    "description": "Implement block LU decomposition and Schur complement method for large structured systems. Many large systems have block structure that can be exploited for efficiency. The Schur complement enables divide-and-conquer approaches.",
+    "starterCode": "import numpy as np\n\ndef block_lu_decompose(A, block_size):\n    \"\"\"\n    Compute block LU decomposition.\n\n    Parameters:\n    - A: n×n matrix (n divisible by block_size)\n    - block_size: size of blocks\n\n    Returns:\n    - L, U: block triangular matrices\n    \"\"\"\n    # TODO: Implement this function\n    pass\n\n# Test case\nA = np.array([\n    [4., 1., 0., 0.],\n    [1., 4., 1., 0.],\n    [0., 1., 4., 1.],\n    [0., 0., 1., 4.]\n], dtype=float)\n\nL, U = block_lu_decompose(A, block_size=2)",
+    "hints": [
+      "Partition matrix into 2×2 block structure",
+      "A = [[A11, A12], [A21, A22]]",
+      "Factor A11 = L11 U11 first",
+      "Compute U12 = L11^(-1) A12 and L21 = A21 U11^(-1)",
+      "Schur complement: S = A22 - L21 U12, factor recursively"
+    ],
+    "solution": "import numpy as np\nfrom scipy.linalg import lu_factor, lu_solve\n\ndef block_lu_decompose(A, block_size):\n    \"\"\"\n    Compute block LU decomposition.\n\n    Parameters:\n    - A: n×n matrix (n divisible by block_size)\n    - block_size: size of blocks\n\n    Returns:\n    - L, U: block triangular matrices\n    \"\"\"\n    n = A.shape[0]\n    if n % block_size != 0:\n        raise ValueError(\"Matrix size must be divisible by block_size\")\n\n    A = A.astype(float).copy()\n    L = np.eye(n)\n    U = np.zeros((n, n))\n\n    num_blocks = n // block_size\n\n    for k in range(num_blocks):\n        start_k = k * block_size\n        end_k = (k + 1) * block_size\n\n        # Factor diagonal block\n        A_kk = A[start_k:end_k, start_k:end_k]\n        L_kk, U_kk = np.linalg.qr(A_kk)  # Simple factorization\n        U_kk = L_kk.T @ A_kk  # Get U from A\n        L_kk = np.eye(block_size)\n\n        # Direct LU for diagonal block\n        from scipy.linalg import lu\n        P_kk, L_kk, U_kk = lu(A_kk)\n\n        L[start_k:end_k, start_k:end_k] = L_kk\n        U[start_k:end_k, start_k:end_k] = U_kk\n\n        # Update off-diagonal blocks\n        for j in range(k + 1, num_blocks):\n            start_j = j * block_size\n            end_j = (j + 1) * block_size\n\n            # Solve L_kk U_kj = A_kj for U_kj\n            U[start_k:end_k, start_j:end_j] = np.linalg.solve(\n                L_kk, A[start_k:end_k, start_j:end_j]\n            )\n\n            # Solve L_jk U_kk = A_jk for L_jk\n            L[start_j:end_j, start_k:end_k] = np.linalg.solve(\n                U_kk.T, A[start_j:end_j, start_k:end_k].T\n            ).T\n\n            # Update trailing submatrix (Schur complement)\n            A[start_j:end_j, start_j:end_j] -= (\n                L[start_j:end_j, start_k:end_k] @ U[start_k:end_k, start_j:end_j]\n            )\n\n    return L, U\n\ndef schur_complement_solve(A, b, split):\n    \"\"\"\n    Solve Ax = b using Schur complement.\n\n    A = [[A11, A12],\n         [A21, A22]]\n\n    Schur complement: S = A22 - A21 @ inv(A11) @ A12\n    \"\"\"\n    A11 = A[:split, :split]\n    A12 = A[:split, split:]\n    A21 = A[split:, :split]\n    A22 = A[split:, split:]\n\n    b1 = b[:split]\n    b2 = b[split:]\n\n    # Solve A11 y = A12 for each column\n    A11_inv_A12 = np.linalg.solve(A11, A12)\n\n    # Compute Schur complement\n    S = A22 - A21 @ A11_inv_A12\n\n    # Solve for x2: S x2 = b2 - A21 inv(A11) b1\n    rhs2 = b2 - A21 @ np.linalg.solve(A11, b1)\n    x2 = np.linalg.solve(S, rhs2)\n\n    # Back-solve for x1: A11 x1 = b1 - A12 x2\n    x1 = np.linalg.solve(A11, b1 - A12 @ x2)\n\n    return np.concatenate([x1, x2])\n\n# Test 1: Block LU\nprint(\"Test 1: Block LU decomposition\\n\")\nA = np.array([\n    [4., 1., 2., 0.],\n    [1., 4., 0., 2.],\n    [2., 0., 4., 1.],\n    [0., 2., 1., 4.]\n], dtype=float)\n\nL, U = block_lu_decompose(A, block_size=2)\nprint(\"L =\")\nprint(L)\nprint(\"\\nU =\")\nprint(U)\nprint(\"\\nLU =\")\nprint(L @ U)\nprint(\"\\nOriginal A =\")\nprint(A)\nprint(f\"\\nDecomposition error: {np.linalg.norm(A - L @ U):.2e}\")\n\n# Test 2: Schur complement\nprint(\"\\n\" + \"=\"*60)\nprint(\"Test 2: Schur complement method\\n\")\n\nA_schur = np.array([\n    [4., 1., 2., 0.],\n    [1., 5., 0., 2.],\n    [2., 0., 6., 1.],\n    [0., 2., 1., 7.]\n], dtype=float)\n\nb_schur = np.array([1., 2., 3., 4.])\n\nx_schur = schur_complement_solve(A_schur, b_schur, split=2)\nprint(f\"Solution: {x_schur}\")\nprint(f\"Verification Ax: {A_schur @ x_schur}\")\nprint(f\"Original b: {b_schur}\")\nprint(f\"Residual: {np.linalg.norm(A_schur @ x_schur - b_schur):.2e}\")\n\n# Compare with direct solve\nx_direct = np.linalg.solve(A_schur, b_schur)\nprint(f\"\\nDifference from direct solve: {np.linalg.norm(x_schur - x_direct):.2e}\")\n\n# Test 3: Block tridiagonal\nprint(\"\\n\" + \"=\"*60)\nprint(\"Test 3: Block tridiagonal system\\n\")\n\ndef block_tridiagonal_matrix(n_blocks, block_size):\n    \"\"\"Create block tridiagonal matrix.\"\"\"\n    n = n_blocks * block_size\n    A = np.zeros((n, n))\n\n    for i in range(n_blocks):\n        start = i * block_size\n        end = (i + 1) * block_size\n\n        # Diagonal block\n        A[start:end, start:end] = 4 * np.eye(block_size) + np.ones((block_size, block_size))\n\n        # Off-diagonal blocks\n        if i > 0:\n            A[start:end, start-block_size:start] = np.eye(block_size)\n        if i < n_blocks - 1:\n            A[start:end, end:end+block_size] = np.eye(block_size)\n\n    return A\n\nA_block_tri = block_tridiagonal_matrix(3, 2)\nb_block_tri = np.ones(6)\n\nprint(\"Block tridiagonal matrix:\")\nprint(A_block_tri)\n\nx_block = schur_complement_solve(A_block_tri, b_block_tri, split=4)\nprint(f\"\\nSolution: {x_block}\")\nprint(f\"Residual: {np.linalg.norm(A_block_tri @ x_block - b_block_tri):.2e}\")\n\nprint(\"\\nAll tests passed!\")",
+    "testCases": [
+      {
+        "input": "Block-structured matrix",
+        "expectedOutput": "Efficient factorization exploiting block structure",
+        "isHidden": false,
+        "description": "Block matrix operations and Schur complement"
+      }
+    ],
+    "language": "python"
+  }
+]

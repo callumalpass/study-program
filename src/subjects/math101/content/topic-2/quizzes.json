@@ -1,0 +1,185 @@
+[
+  {
+    "id": "math101-quiz-2a",
+    "subjectId": "math101",
+    "topicId": "math101-topic-2",
+    "title": "Proof Techniques - Fundamentals",
+    "questions": [
+      {
+        "id": "math101-q2a-1",
+        "type": "multiple_choice",
+        "prompt": "In a direct proof of \"If P, then Q\", what do you assume and what do you show?",
+        "options": [
+          "Assume Q, show P",
+          "Assume P, show Q",
+          "Assume ¬P, show ¬Q",
+          "Assume ¬Q, show ¬P"
+        ],
+        "correctAnswer": 1,
+        "explanation": "In a direct proof, you assume the hypothesis P is true and use logical steps to show that the conclusion Q follows."
+      },
+      {
+        "id": "math101-q2a-2",
+        "type": "true_false",
+        "prompt": "In proof by contradiction, we assume what we want to prove is true and derive a contradiction.",
+        "correctAnswer": false,
+        "explanation": "False. In proof by contradiction, we assume the NEGATION of what we want to prove is true, and then derive a contradiction from this assumption."
+      },
+      {
+        "id": "math101-q2a-3",
+        "type": "multiple_choice",
+        "prompt": "What is the contrapositive of \"If n² is even, then n is even\"?",
+        "options": [
+          "If n is even, then n² is even",
+          "If n is odd, then n² is odd",
+          "If n² is odd, then n is odd",
+          "If n is not even, then n² is not even"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The contrapositive of \"If P then Q\" is \"If not Q then not P\". So we prove: if n is not even (odd), then n² is not even (odd)."
+      },
+      {
+        "id": "math101-q2a-4",
+        "type": "multiple_choice",
+        "prompt": "Which proof technique is best suited for proving \"√2 is irrational\"?",
+        "options": [
+          "Direct proof",
+          "Proof by contrapositive",
+          "Proof by contradiction",
+          "Proof by cases"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The classic proof of √2 being irrational uses contradiction: assume √2 = a/b in lowest terms, derive that both a and b must be even, contradicting \"lowest terms.\""
+      },
+      {
+        "id": "math101-q2a-5",
+        "type": "true_false",
+        "prompt": "A proof by contrapositive is logically equivalent to a direct proof of the original statement.",
+        "correctAnswer": true,
+        "explanation": "Yes, because P → Q is logically equivalent to ¬Q → ¬P. Proving the contrapositive is just as valid as proving the original implication."
+      }
+    ]
+  },
+  {
+    "id": "math101-quiz-2b",
+    "subjectId": "math101",
+    "topicId": "math101-topic-2",
+    "title": "Proof Techniques - Application",
+    "questions": [
+      {
+        "id": "math101-q2b-1",
+        "type": "multiple_choice",
+        "prompt": "In mathematical induction, what must be shown in the base case?",
+        "options": [
+          "The statement is true for all n",
+          "The statement is true for n = 1 (or the starting value)",
+          "If true for n = k, then true for n = k + 1",
+          "The statement is false for some n"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The base case establishes that the statement holds for the starting value (usually n = 1 or n = 0)."
+      },
+      {
+        "id": "math101-q2b-2",
+        "type": "multiple_choice",
+        "prompt": "In mathematical induction, what must be shown in the inductive step?",
+        "options": [
+          "The statement is true for n = 1",
+          "The statement is true for all n",
+          "If the statement is true for n = k, then it is true for n = k + 1",
+          "The statement is false for some n"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The inductive step proves that if the statement holds for an arbitrary value k, it must also hold for k+1. This creates a chain of implications."
+      },
+      {
+        "id": "math101-q2b-3",
+        "type": "true_false",
+        "prompt": "To prove \"There exists an x such that P(x)\", it suffices to find one specific value of x for which P(x) is true.",
+        "correctAnswer": true,
+        "explanation": "Existential statements only require one witness. Finding any single value that satisfies the property proves the existence claim."
+      },
+      {
+        "id": "math101-q2b-4",
+        "type": "multiple_choice",
+        "prompt": "What is a counterexample?",
+        "options": [
+          "An example that proves a universal statement",
+          "An example that disproves a universal statement",
+          "A proof by contradiction",
+          "The contrapositive of an example"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A counterexample is a specific case that shows a universal statement is false. One counterexample is sufficient to disprove \"For all x, P(x).\""
+      },
+      {
+        "id": "math101-q2b-5",
+        "type": "fill_blank",
+        "prompt": "In strong induction, the inductive hypothesis assumes the statement is true for all values from the base case up to ____.",
+        "correctAnswer": "k",
+        "explanation": "In strong induction, we assume P(1), P(2), ..., P(k) are all true (not just P(k)), and then prove P(k+1)."
+      }
+    ]
+  },
+  {
+    "id": "math101-quiz-2c",
+    "subjectId": "math101",
+    "topicId": "math101-topic-2",
+    "title": "Proof Techniques - Advanced",
+    "questions": [
+      {
+        "id": "math101-q2c-1",
+        "type": "multiple_choice",
+        "prompt": "Which proof technique divides the proof into several exhaustive scenarios?",
+        "options": [
+          "Direct proof",
+          "Proof by contradiction",
+          "Proof by cases",
+          "Proof by induction"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Proof by cases (or proof by exhaustion) divides the problem into all possible cases and proves each one separately."
+      },
+      {
+        "id": "math101-q2c-2",
+        "type": "true_false",
+        "prompt": "If you can prove P → Q and P → ¬Q from assuming P, this proves P is false.",
+        "correctAnswer": true,
+        "explanation": "If assuming P leads to both Q and ¬Q, we have derived a contradiction (Q ∧ ¬Q). This means our assumption P must be false."
+      },
+      {
+        "id": "math101-q2c-3",
+        "type": "multiple_choice",
+        "prompt": "To prove \"For all integers n, if n² is odd, then n is odd\" by contrapositive, what would you prove?",
+        "options": [
+          "If n is odd, then n² is odd",
+          "If n is even, then n² is even",
+          "If n² is even, then n is even",
+          "There exists n such that n² is odd and n is even"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The contrapositive of \"n² odd → n odd\" is \"n not odd → n² not odd\", i.e., \"n even → n² even.\""
+      },
+      {
+        "id": "math101-q2c-4",
+        "type": "multiple_choice",
+        "prompt": "What distinguishes a constructive existence proof from a non-constructive one?",
+        "options": [
+          "Constructive proofs are shorter",
+          "Constructive proofs actually exhibit a witness satisfying the property",
+          "Non-constructive proofs use contradiction",
+          "Constructive proofs only work for finite sets"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A constructive proof provides an explicit example or method to find an object satisfying the property. Non-constructive proofs show existence without providing a specific example."
+      },
+      {
+        "id": "math101-q2c-5",
+        "type": "true_false",
+        "prompt": "In proof by smallest counterexample, you assume there exists a counterexample and consider the smallest one.",
+        "correctAnswer": true,
+        "explanation": "This technique combines contradiction with the well-ordering principle. If counterexamples exist, a smallest one exists, and showing this leads to a smaller counterexample gives a contradiction."
+      }
+    ]
+  }
+]

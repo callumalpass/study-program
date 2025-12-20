@@ -1,0 +1,203 @@
+[
+  {
+    "id": "cs404-quiz-3-1",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-3",
+    "title": "Development Environment Fundamentals",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of a .env file?",
+        "options": [
+          "To store environment-specific configuration and secrets",
+          "To track environment changes in git",
+          "To document the project",
+          "To configure text editors"
+        ],
+        "correctAnswer": 0,
+        "explanation": ".env files store environment-specific configuration like API keys and database URLs. They should never be committed to git."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "What is the advantage of feature branches in git?",
+        "options": [
+          "Faster deployments",
+          "Isolate changes and allow parallel development",
+          "Smaller repository size",
+          "Automatic testing"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Feature branches isolate changes for each feature, allowing multiple developers to work in parallel without interfering with each other or the main branch."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "What should you do before committing code?",
+        "options": [
+          "Run tests and linters locally",
+          "Deploy to production",
+          "Delete all comments",
+          "Rewrite the entire codebase"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Always run tests and linters before committing to catch issues early. This prevents breaking the build for other developers."
+      },
+      {
+        "id": "q4",
+        "type": "true_false",
+        "prompt": "Git hooks are scripts that run automatically at specific points in the git workflow to enforce quality checks.",
+        "correctAnswer": true,
+        "explanation": "Git hooks (pre-commit, pre-push) automatically run scripts at specific workflow points to enforce quality checks like running tests or linters."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "What makes a good commit message?",
+        "options": [
+          "Single word like \"update\"",
+          "Describes what changed and why in clear, concise language",
+          "Lists every file modified",
+          "Includes the current date and time"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Good commit messages clearly describe what changed and why, using imperative mood (\"Add feature\" not \"Added feature\"), and are concise but informative."
+      }
+    ]
+  },
+  {
+    "id": "cs404-quiz-3-2",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-3",
+    "title": "Backend Development Application",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "What is middleware in Express.js?",
+        "options": [
+          "A database layer",
+          "Functions that process requests before reaching route handlers",
+          "Frontend components",
+          "Database migration tools"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Middleware are functions that have access to request/response objects and can modify them, run code, or end the request-response cycle."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of JWT (JSON Web Tokens)?",
+        "options": [
+          "To format JSON responses",
+          "To securely transmit authentication information between parties",
+          "To compress data",
+          "To validate JSON syntax"
+        ],
+        "correctAnswer": 1,
+        "explanation": "JWTs securely encode authentication/authorization information that can be verified without server-side session storage, making them stateless."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "What is an ORM (Object-Relational Mapping)?",
+        "options": [
+          "A security protocol",
+          "A tool that maps database tables to programming language objects",
+          "A testing framework",
+          "A deployment strategy"
+        ],
+        "correctAnswer": 1,
+        "explanation": "ORMs like Prisma or TypeORM map database tables to objects in your programming language, allowing you to work with type-safe objects instead of SQL."
+      },
+      {
+        "id": "q4",
+        "type": "true_false",
+        "prompt": "Database credentials should never be hardcoded because they would be exposed in version control and cannot be changed per environment.",
+        "correctAnswer": true,
+        "explanation": "Hardcoded credentials are exposed in git history, cannot be changed without code changes, and prevent using different credentials per environment."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of input validation?",
+        "options": [
+          "To make code run faster",
+          "To ensure data meets requirements and prevent security vulnerabilities",
+          "To reduce database size",
+          "To format output"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Input validation ensures data meets requirements (format, type, constraints) and prevents security issues like SQL injection or malformed data."
+      }
+    ]
+  },
+  {
+    "id": "cs404-quiz-3-3",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-3",
+    "title": "Frontend Integration Mastery",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of React hooks like useState and useEffect?",
+        "options": [
+          "To style components",
+          "To manage component state and side effects in functional components",
+          "To deploy applications",
+          "To test components"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Hooks allow functional components to have state (useState) and perform side effects (useEffect) without needing class components."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "What is the difference between controlled and uncontrolled form inputs in React?",
+        "options": [
+          "Controlled inputs are disabled",
+          "Controlled inputs are managed by React state, uncontrolled use DOM refs",
+          "Uncontrolled inputs are more secure",
+          "There is no difference"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Controlled inputs are driven by React state (value={state}), giving you control and validation. Uncontrolled inputs manage their own state via DOM refs."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "Why should API calls typically be made in useEffect, not in the component body?",
+        "options": [
+          "useEffect makes requests faster",
+          "To prevent infinite loops and control when requests are made",
+          "It's required by React syntax",
+          "To improve SEO"
+        ],
+        "correctAnswer": 1,
+        "explanation": "API calls in the component body would run on every render, causing infinite loops. useEffect with dependencies controls when calls are made."
+      },
+      {
+        "id": "q4",
+        "type": "code_output",
+        "prompt": "What is AJAX and why is it important for modern web apps?",
+        "options": [
+          "A CSS framework for styling",
+          "Asynchronous JavaScript for updating pages without full reload",
+          "A database query language",
+          "A deployment automation tool"
+        ],
+        "correctAnswer": 1,
+        "explanation": "AJAX allows asynchronous HTTP requests to fetch/send data without page reloads, enabling dynamic, responsive user experiences."
+      },
+      {
+        "id": "q5",
+        "type": "true_false",
+        "prompt": "Loading states in UI are important to provide feedback during async operations and improve user experience.",
+        "correctAnswer": true,
+        "explanation": "Loading states show users that something is happening during async operations (API calls), preventing confusion and improving perceived performance."
+      }
+    ]
+  }
+]

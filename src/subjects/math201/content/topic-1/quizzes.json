@@ -1,0 +1,185 @@
+[
+  {
+    "id": "math201-quiz-1a",
+    "subjectId": "math201",
+    "topicId": "math201-1",
+    "title": "Systems of Linear Equations - Fundamentals",
+    "questions": [
+      {
+        "id": "math201-q1a-1",
+        "type": "multiple_choice",
+        "prompt": "What is the first step in Gaussian elimination?",
+        "options": [
+          "Find the determinant",
+          "Create the augmented matrix",
+          "Find the inverse",
+          "Calculate eigenvalues"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Gaussian elimination begins by writing the system as an augmented matrix, which combines the coefficient matrix and the constant vector."
+      },
+      {
+        "id": "math201-q1a-2",
+        "type": "true_false",
+        "prompt": "A system of linear equations can have exactly two solutions.",
+        "correctAnswer": false,
+        "explanation": "False. A linear system can have exactly one solution (consistent and independent), infinitely many solutions (consistent and dependent), or no solution (inconsistent). It cannot have exactly two solutions."
+      },
+      {
+        "id": "math201-q1a-3",
+        "type": "multiple_choice",
+        "prompt": "What does it mean for a system to be in row echelon form?",
+        "options": [
+          "All zeros are at the bottom",
+          "Leading entries move to the right in successive rows",
+          "All entries below leading entries are zero",
+          "All of the above"
+        ],
+        "correctAnswer": 3,
+        "explanation": "Row echelon form requires: (1) all zero rows at the bottom, (2) the leading entry of each row is to the right of the leading entry above it, and (3) all entries below a leading entry are zero."
+      },
+      {
+        "id": "math201-q1a-4",
+        "type": "multiple_choice",
+        "prompt": "A homogeneous system of linear equations always has at least:",
+        "options": [
+          "One solution",
+          "Two solutions",
+          "No solution",
+          "Infinitely many solutions"
+        ],
+        "correctAnswer": 0,
+        "explanation": "A homogeneous system (where all constants are zero) always has at least the trivial solution (all variables equal zero)."
+      },
+      {
+        "id": "math201-q1a-5",
+        "type": "fill_blank",
+        "prompt": "The matrix equation $Ax = b$ represents a system of ____ equations.",
+        "correctAnswer": "linear",
+        "explanation": "The matrix equation $Ax = b$ is the compact form of a system of linear equations."
+      }
+    ]
+  },
+  {
+    "id": "math201-quiz-1b",
+    "subjectId": "math201",
+    "topicId": "math201-1",
+    "title": "Systems of Linear Equations - Application",
+    "questions": [
+      {
+        "id": "math201-q1b-1",
+        "type": "multiple_choice",
+        "prompt": "If an augmented matrix row reduces to $[0 \\; 0 \\; 0 \\; | \\; 5]$, the system is:",
+        "options": [
+          "Consistent with one solution",
+          "Consistent with infinitely many solutions",
+          "Inconsistent",
+          "Homogeneous"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The row $[0 \\; 0 \\; 0 \\; | \\; 5]$ represents $0 = 5$, which is impossible. Therefore the system is inconsistent (has no solution)."
+      },
+      {
+        "id": "math201-q1b-2",
+        "type": "multiple_choice",
+        "prompt": "Which operation is NOT an elementary row operation?",
+        "options": [
+          "Swap two rows",
+          "Multiply a row by a nonzero scalar",
+          "Add a multiple of one row to another",
+          "Add two rows together and replace both"
+        ],
+        "correctAnswer": 3,
+        "explanation": "The three elementary row operations are: (1) swap rows, (2) multiply a row by a nonzero scalar, and (3) add a multiple of one row to another row. We never replace both rows."
+      },
+      {
+        "id": "math201-q1b-3",
+        "type": "true_false",
+        "prompt": "Reduced row echelon form (RREF) of a matrix is unique.",
+        "correctAnswer": true,
+        "explanation": "True. Every matrix has exactly one reduced row echelon form, though there are many possible row echelon forms."
+      },
+      {
+        "id": "math201-q1b-4",
+        "type": "multiple_choice",
+        "prompt": "A system with more equations than unknowns is called:",
+        "options": [
+          "Overdetermined",
+          "Underdetermined",
+          "Square",
+          "Homogeneous"
+        ],
+        "correctAnswer": 0,
+        "explanation": "An overdetermined system has more equations than unknowns. Such systems are often inconsistent unless there is redundancy."
+      },
+      {
+        "id": "math201-q1b-5",
+        "type": "fill_blank",
+        "prompt": "In RREF, the leading entry in each row is ____ and is the only nonzero entry in its column.",
+        "correctAnswer": "1",
+        "explanation": "In reduced row echelon form, each leading entry (pivot) is 1, and it is the only nonzero entry in its column."
+      }
+    ]
+  },
+  {
+    "id": "math201-quiz-1c",
+    "subjectId": "math201",
+    "topicId": "math201-1",
+    "title": "Systems of Linear Equations - Mastery",
+    "questions": [
+      {
+        "id": "math201-q1c-1",
+        "type": "multiple_choice",
+        "prompt": "If a homogeneous system has more unknowns than equations, it must have:",
+        "options": [
+          "Only the trivial solution",
+          "No solution",
+          "Infinitely many solutions",
+          "Exactly one nontrivial solution"
+        ],
+        "correctAnswer": 2,
+        "explanation": "When a homogeneous system has more variables than equations, there are free variables, guaranteeing infinitely many solutions beyond the trivial solution."
+      },
+      {
+        "id": "math201-q1c-2",
+        "type": "multiple_choice",
+        "prompt": "The solution set of a consistent nonhomogeneous system $Ax = b$ can be written as:",
+        "options": [
+          "$x = p$ where $p$ is a particular solution",
+          "$x = p + v_h$ where $p$ is particular and $v_h$ is from homogeneous",
+          "Only as a unique solution",
+          "As the null space of $A$"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The general solution is $x = p + v_h$ where $p$ is any particular solution to $Ax = b$ and $v_h$ is the general solution to the homogeneous system $Ax = 0$."
+      },
+      {
+        "id": "math201-q1c-3",
+        "type": "true_false",
+        "prompt": "If $Ax = b$ is consistent for every vector $b$, then $A$ must be square.",
+        "correctAnswer": false,
+        "explanation": "False. The statement is true only if we require a unique solution for every $b$. For consistency alone, $A$ could have more rows than columns."
+      },
+      {
+        "id": "math201-q1c-4",
+        "type": "multiple_choice",
+        "prompt": "The equation $Ax = 0$ has only the trivial solution if and only if:",
+        "options": [
+          "The columns of $A$ are linearly independent",
+          "The columns of $A$ are linearly dependent",
+          "$A$ has more rows than columns",
+          "$A$ is symmetric"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The homogeneous equation $Ax = 0$ has only the trivial solution if and only if the columns of $A$ are linearly independent."
+      },
+      {
+        "id": "math201-q1c-5",
+        "type": "fill_blank",
+        "prompt": "A variable that is not a leading variable in RREF is called a ____ variable.",
+        "correctAnswer": "free",
+        "explanation": "Free variables correspond to columns without pivots and can take any value, generating infinitely many solutions."
+      }
+    ]
+  }
+]

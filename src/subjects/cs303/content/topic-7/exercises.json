@@ -1,0 +1,450 @@
+[
+  {
+    "id": "cs303-ex-7-1",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-7",
+    "title": "First-Class Functions",
+    "difficulty": 1,
+    "description": "Work with functions as first-class values.",
+    "starterCode": "def apply_twice(f, x):\n    \"\"\"Apply function f to x twice.\"\"\"\n    pass\n\ndef make_adder(n):\n    \"\"\"Return a function that adds n to its argument.\"\"\"\n    pass\n\ndef compose(f, g):\n    \"\"\"Return composition f(g(x)).\"\"\"\n    pass",
+    "solution": "def apply_twice(f, x):\n    return f(f(x))\n\ndef make_adder(n):\n    return lambda x: x + n\n\ndef compose(f, g):\n    return lambda x: f(g(x))",
+    "testCases": [
+      {
+        "input": "apply_twice(lambda x: x * 2, 3)",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "make_adder(5)(10)",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "compose(lambda x: x + 1, lambda x: x * 2)(3)",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Functions can be passed as arguments",
+      "Functions can be returned from functions",
+      "Use lambda for anonymous functions"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-7-2",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-7",
+    "title": "Closures",
+    "difficulty": 1,
+    "description": "Implement and use closures.",
+    "starterCode": "def make_counter():\n    \"\"\"Return a counter function that increments each call.\"\"\"\n    pass\n\ndef make_password_checker(password):\n    \"\"\"Return a function that checks if input matches password.\"\"\"\n    pass",
+    "solution": "def make_counter():\n    count = 0\n    def counter():\n        nonlocal count\n        count += 1\n        return count\n    return counter\n\ndef make_password_checker(password):\n    attempts = 0\n    def check(guess):\n        nonlocal attempts\n        attempts += 1\n        return guess == password\n    return check",
+    "testCases": [
+      {
+        "input": "c = make_counter(); [c(), c(), c()]",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "checker = make_password_checker(\"secret\"); checker(\"wrong\")",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "checker = make_password_checker(\"secret\"); checker(\"secret\")",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Closures capture variables from enclosing scope",
+      "Use nonlocal to modify captured variables",
+      "Each call to make_counter creates new closure"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-7-3",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-7",
+    "title": "Decorators",
+    "difficulty": 1,
+    "description": "Implement function decorators.",
+    "starterCode": "def trace(func):\n    \"\"\"Decorator that prints function calls.\"\"\"\n    pass\n\ndef memoize(func):\n    \"\"\"Decorator that caches results.\"\"\"\n    pass\n\ndef retry(times):\n    \"\"\"Decorator factory for retrying failed functions.\"\"\"\n    pass",
+    "solution": "def trace(func):\n    def wrapper(*args, **kwargs):\n        print(f\"Calling {func.__name__} with {args}, {kwargs}\")\n        result = func(*args, **kwargs)\n        print(f\"Returned {result}\")\n        return result\n    return wrapper\n\ndef memoize(func):\n    cache = {}\n    def wrapper(*args):\n        if args not in cache:\n            cache[args] = func(*args)\n        return cache[args]\n    return wrapper\n\ndef retry(times):\n    def decorator(func):\n        def wrapper(*args, **kwargs):\n            last_error = None\n            for _ in range(times):\n                try:\n                    return func(*args, **kwargs)\n                except Exception as e:\n                    last_error = e\n            raise last_error\n        return wrapper\n    return decorator",
+    "testCases": [
+      {
+        "input": "@memoize\\ndef fib(n): return n if n<=1 else fib(n-1)+fib(n-2)\\nfib(30)",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "@retry(3)\\ndef fail(): raise ValueError()\\ntry:\\n  fail()\\nexcept: pass",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Decorators wrap functions",
+      "Decorator factories return decorators",
+      "Use *args and **kwargs for flexibility"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-7-4",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-7",
+    "title": "Generators and Iterators",
+    "difficulty": 3,
+    "description": "Implement custom generators and iterators.",
+    "starterCode": "def infinite_sequence(start=0):\n    \"\"\"Generate infinite sequence of integers.\"\"\"\n    pass\n\nclass Range:\n    \"\"\"Custom range iterator.\"\"\"\n    def __init__(self, start, stop, step=1):\n        pass\n\n    def __iter__(self):\n        pass\n\n    def __next__(self):\n        pass",
+    "solution": "def infinite_sequence(start=0):\n    n = start\n    while True:\n        yield n\n        n += 1\n\nclass Range:\n    def __init__(self, start, stop, step=1):\n        self.start = start\n        self.stop = stop\n        self.step = step\n        self.current = start\n\n    def __iter__(self):\n        self.current = self.start\n        return self\n\n    def __next__(self):\n        if (self.step > 0 and self.current >= self.stop) or \\\n           (self.step < 0 and self.current <= self.stop):\n            raise StopIteration\n        value = self.current\n        self.current += self.step\n        return value",
+    "testCases": [
+      {
+        "input": "gen = infinite_sequence(); [next(gen) for _ in range(5)]",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "list(Range(0, 5))",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "list(Range(10, 0, -2))",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "yield pauses generator and returns value",
+      "__iter__ returns iterator",
+      "__next__ returns next value or raises StopIteration"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-7-5",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-7",
+    "title": "Context Managers",
+    "difficulty": 3,
+    "description": "Implement context managers for resource management.",
+    "starterCode": "class Timer:\n    \"\"\"Context manager that measures execution time.\"\"\"\n\n    def __enter__(self):\n        pass\n\n    def __exit__(self, exc_type, exc_val, exc_tb):\n        pass\n\nfrom contextlib import contextmanager\n\n@contextmanager\ndef suppress_exceptions(*exceptions):\n    \"\"\"Suppress specified exception types.\"\"\"\n    pass",
+    "solution": "import time\n\nclass Timer:\n    def __enter__(self):\n        self.start = time.time()\n        return self\n\n    def __exit__(self, exc_type, exc_val, exc_tb):\n        self.end = time.time()\n        self.elapsed = self.end - self.start\n        return False  # Don't suppress exceptions\n\nfrom contextlib import contextmanager\n\n@contextmanager\ndef suppress_exceptions(*exceptions):\n    try:\n        yield\n    except exceptions:\n        pass",
+    "testCases": [
+      {
+        "input": "with Timer() as t: pass; t.elapsed >= 0",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "with suppress_exceptions(ValueError): raise ValueError(); True",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "__enter__ sets up context",
+      "__exit__ cleans up and handles exceptions",
+      "@contextmanager simplifies implementation"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-7-6",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-7",
+    "title": "Coroutines",
+    "difficulty": 3,
+    "description": "Implement coroutines using generators.",
+    "starterCode": "def averager():\n    \"\"\"Coroutine that computes running average.\"\"\"\n    pass\n\ndef grep(pattern):\n    \"\"\"Coroutine that filters lines matching pattern.\"\"\"\n    pass",
+    "solution": "def averager():\n    total = 0.0\n    count = 0\n    average = None\n    while True:\n        value = yield average\n        if value is None:\n            break\n        total += value\n        count += 1\n        average = total / count\n\ndef grep(pattern):\n    while True:\n        line = yield\n        if line is None:\n            break\n        if pattern in line:\n            print(f\"Match: {line}\")",
+    "testCases": [
+      {
+        "input": "avg = averager(); next(avg); avg.send(10); avg.send(20); avg.send(30)",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Coroutines receive values via send()",
+      "yield both receives and produces values",
+      "Prime coroutine with next() before send()"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-7-7",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-7",
+    "title": "Async/Await",
+    "difficulty": 3,
+    "description": "Implement asynchronous functions with async/await.",
+    "starterCode": "import asyncio\n\nasync def fetch_data(url, delay):\n    \"\"\"Simulate async data fetch.\"\"\"\n    pass\n\nasync def fetch_all(urls):\n    \"\"\"Fetch all URLs concurrently.\"\"\"\n    pass",
+    "solution": "import asyncio\n\nasync def fetch_data(url, delay):\n    await asyncio.sleep(delay)\n    return f\"Data from {url}\"\n\nasync def fetch_all(urls):\n    tasks = [fetch_data(url, 0.1) for url in urls]\n    return await asyncio.gather(*tasks)",
+    "testCases": [
+      {
+        "input": "asyncio.run(fetch_data(\"http://example.com\", 0))",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "async def creates coroutine function",
+      "await suspends until awaitable completes",
+      "asyncio.gather runs tasks concurrently"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-7-8",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-7",
+    "title": "Metaclasses",
+    "difficulty": 5,
+    "description": "Use metaclasses to customize class creation.",
+    "starterCode": "class SingletonMeta(type):\n    \"\"\"Metaclass that creates singleton classes.\"\"\"\n    pass\n\nclass RegisteredMeta(type):\n    \"\"\"Metaclass that registers all subclasses.\"\"\"\n    pass",
+    "solution": "class SingletonMeta(type):\n    _instances = {}\n\n    def __call__(cls, *args, **kwargs):\n        if cls not in cls._instances:\n            cls._instances[cls] = super().__call__(*args, **kwargs)\n        return cls._instances[cls]\n\nclass RegisteredMeta(type):\n    registry = {}\n\n    def __new__(mcs, name, bases, namespace):\n        cls = super().__new__(mcs, name, bases, namespace)\n        mcs.registry[name] = cls\n        return cls\n\n    @classmethod\n    def get_registered(mcs):\n        return dict(mcs.registry)",
+    "testCases": [
+      {
+        "input": "class S(metaclass=SingletonMeta): pass\\nS() is S()",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "class R(metaclass=RegisteredMeta): pass\\n\"R\" in RegisteredMeta.registry",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Metaclass controls class creation",
+      "__call__ intercepts instantiation",
+      "__new__ creates class object"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-7-9",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-7",
+    "title": "Descriptors",
+    "difficulty": 5,
+    "description": "Implement descriptors for attribute access.",
+    "starterCode": "class Validated:\n    \"\"\"Descriptor with validation.\"\"\"\n\n    def __init__(self, validator):\n        pass\n\n    def __get__(self, obj, objtype=None):\n        pass\n\n    def __set__(self, obj, value):\n        pass\n\nclass Lazy:\n    \"\"\"Descriptor for lazy computation.\"\"\"\n\n    def __init__(self, func):\n        pass\n\n    def __get__(self, obj, objtype=None):\n        pass",
+    "solution": "class Validated:\n    def __init__(self, validator, name=None):\n        self.validator = validator\n        self.name = name\n\n    def __set_name__(self, owner, name):\n        self.name = name\n\n    def __get__(self, obj, objtype=None):\n        if obj is None:\n            return self\n        return obj.__dict__.get(self.name)\n\n    def __set__(self, obj, value):\n        if not self.validator(value):\n            raise ValueError(f\"Invalid value for {self.name}: {value}\")\n        obj.__dict__[self.name] = value\n\nclass Lazy:\n    def __init__(self, func):\n        self.func = func\n        self.name = None\n\n    def __set_name__(self, owner, name):\n        self.name = name\n\n    def __get__(self, obj, objtype=None):\n        if obj is None:\n            return self\n        if self.name not in obj.__dict__:\n            obj.__dict__[self.name] = self.func(obj)\n        return obj.__dict__[self.name]",
+    "testCases": [
+      {
+        "input": "class C:\\n  x = Validated(lambda v: v > 0)\\nc = C(); c.x = 5; c.x",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Descriptors customize attribute access",
+      "__get__ for reading, __set__ for writing",
+      "__set_name__ provides attribute name"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-7-10",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-7",
+    "title": "Pattern Matching",
+    "difficulty": 5,
+    "description": "Implement structural pattern matching.",
+    "starterCode": "def match(value, *cases):\n    \"\"\"\n    Match value against patterns.\n    Each case is (pattern, handler).\n    \"\"\"\n    pass\n\ndef pattern_var(name):\n    \"\"\"Create a variable pattern.\"\"\"\n    pass\n\ndef pattern_tuple(*patterns):\n    \"\"\"Create a tuple pattern.\"\"\"\n    pass",
+    "solution": "class PatternVar:\n    def __init__(self, name):\n        self.name = name\n\ndef pattern_var(name):\n    return PatternVar(name)\n\ndef pattern_tuple(*patterns):\n    return ('tuple', patterns)\n\ndef match_pattern(pattern, value, bindings=None):\n    if bindings is None:\n        bindings = {}\n\n    if isinstance(pattern, PatternVar):\n        bindings[pattern.name] = value\n        return bindings\n\n    if pattern == '_':\n        return bindings\n\n    if isinstance(pattern, tuple) and pattern[0] == 'tuple':\n        if not isinstance(value, tuple):\n            return None\n        patterns = pattern[1]\n        if len(patterns) != len(value):\n            return None\n        for p, v in zip(patterns, value):\n            result = match_pattern(p, v, bindings)\n            if result is None:\n                return None\n        return bindings\n\n    if pattern == value:\n        return bindings\n\n    return None\n\ndef match(value, *cases):\n    for pattern, handler in cases:\n        bindings = match_pattern(pattern, value)\n        if bindings is not None:\n            if callable(handler):\n                return handler(**bindings)\n            return handler\n    raise ValueError(f\"No pattern matched: {value}\")",
+    "testCases": [
+      {
+        "input": "match(5, (5, \"five\"), (pattern_var(\"x\"), lambda x: x*2))",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "match((1, 2), (pattern_tuple(pattern_var(\"a\"), pattern_var(\"b\")), lambda a, b: a+b))",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Try patterns in order",
+      "Bind variables during matching",
+      "Return None for failed match"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-7-11",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-7",
+    "title": "Macro System",
+    "difficulty": 5,
+    "description": "Implement a simple macro system.",
+    "starterCode": "class MacroExpander:\n    \"\"\"Expand macros in code.\"\"\"\n\n    def __init__(self):\n        self.macros = {}\n\n    def define_macro(self, name, transformer):\n        pass\n\n    def expand(self, expr):\n        pass",
+    "solution": "class MacroExpander:\n    def __init__(self):\n        self.macros = {}\n\n    def define_macro(self, name, transformer):\n        self.macros[name] = transformer\n\n    def expand(self, expr):\n        if isinstance(expr, (int, float, str, bool)):\n            return expr\n\n        if isinstance(expr, tuple) and len(expr) > 0:\n            head = expr[0]\n            if head in self.macros:\n                transformed = self.macros[head](expr)\n                return self.expand(transformed)\n            return tuple(self.expand(e) for e in expr)\n\n        if isinstance(expr, list):\n            return [self.expand(e) for e in expr]\n\n        return expr\n\n# Example macros\ndef unless_macro(expr):\n    _, cond, then_expr = expr\n    return ('if', ('not', cond), then_expr, None)\n\ndef when_macro(expr):\n    _, cond, *body = expr\n    return ('if', cond, ('begin', *body), None)\n\ndef let_star_macro(expr):\n    _, bindings, body = expr\n    if not bindings:\n        return body\n    first = bindings[0]\n    rest = bindings[1:]\n    return ('let', [first], ('let*', rest, body) if rest else body)",
+    "testCases": [
+      {
+        "input": "me = MacroExpander(); me.define_macro(\"unless\", unless_macro); me.expand((\"unless\", True, \"x\"))",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Macros transform syntax",
+      "Expand recursively after transformation",
+      "Check for macro name at head of expression"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-7-12",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-7",
+    "title": "Type Classes",
+    "difficulty": 5,
+    "description": "Implement type class dispatch in Python.",
+    "starterCode": "class TypeClass:\n    \"\"\"Base for type class definitions.\"\"\"\n\n    _instances = {}\n\n    @classmethod\n    def register(cls, type_arg, instance):\n        pass\n\n    @classmethod\n    def dispatch(cls, value):\n        pass",
+    "solution": "class TypeClass:\n    _instances = {}\n\n    @classmethod\n    def register(cls, type_arg, instance):\n        if cls not in cls._instances:\n            cls._instances[cls] = {}\n        cls._instances[cls][type_arg] = instance\n\n    @classmethod\n    def dispatch(cls, value):\n        type_map = cls._instances.get(cls, {})\n        for t, instance in type_map.items():\n            if isinstance(value, t):\n                return instance\n        raise TypeError(f\"No instance for {type(value)}\")\n\nclass Show(TypeClass):\n    @classmethod\n    def show(cls, value):\n        instance = cls.dispatch(value)\n        return instance.show(value)\n\nclass IntShow:\n    def show(self, value):\n        return f\"Int({value})\"\n\nclass StrShow:\n    def show(self, value):\n        return f'Str(\"{value}\")'\n\nShow.register(int, IntShow())\nShow.register(str, StrShow())",
+    "testCases": [
+      {
+        "input": "Show.show(42)",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "Show.show(\"hello\")",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Type classes provide ad-hoc polymorphism",
+      "Dispatch based on value type",
+      "Register instances for each type"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-7-13",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-7",
+    "title": "Delimited Continuations",
+    "difficulty": 5,
+    "description": "Implement delimited continuations.",
+    "starterCode": "class Prompt:\n    \"\"\"Delimits continuation capture.\"\"\"\n    pass\n\nclass Shift:\n    \"\"\"Captures continuation up to prompt.\"\"\"\n    def __init__(self, handler):\n        self.handler = handler\n\ndef reset(thunk):\n    \"\"\"Delimit continuation.\"\"\"\n    pass\n\ndef shift(handler):\n    \"\"\"Capture current continuation.\"\"\"\n    pass",
+    "solution": "class Prompt(Exception):\n    def __init__(self, value):\n        self.value = value\n\nclass Shift(Exception):\n    def __init__(self, handler):\n        self.handler = handler\n\ndef reset(thunk):\n    try:\n        return thunk()\n    except Shift as s:\n        def continuation(value):\n            return reset(lambda: value)\n        return s.handler(continuation)\n\ndef shift(handler):\n    raise Shift(handler)\n\n# Example: non-deterministic choice\ndef amb(choices):\n    def handler(k):\n        results = []\n        for choice in choices:\n            results.append(k(choice))\n        return results\n    return shift(handler)\n\n# Example: state\ndef get_state():\n    return shift(lambda k: lambda s: k(s)(s))\n\ndef put_state(new_state):\n    return shift(lambda k: lambda s: k(None)(new_state))\n\ndef run_state(thunk, initial):\n    return reset(thunk)(initial)",
+    "testCases": [
+      {
+        "input": "reset(lambda: 1 + shift(lambda k: k(5)))",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "reset(lambda: shift(lambda k: k(k(1))))",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Delimited continuations capture partial computation",
+      "reset delimits the captured continuation",
+      "shift captures continuation up to enclosing reset"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-7-14",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-7",
+    "title": "Effect System",
+    "difficulty": 5,
+    "description": "Implement an effect system for tracking side effects.",
+    "starterCode": "class Effect:\n    \"\"\"Base class for effects.\"\"\"\n    pass\n\nclass Reader(Effect):\n    \"\"\"Read from environment effect.\"\"\"\n    pass\n\nclass State(Effect):\n    \"\"\"Stateful computation effect.\"\"\"\n    pass\n\nclass EffectfulComputation:\n    \"\"\"Computation with tracked effects.\"\"\"\n\n    def __init__(self, func, effects):\n        pass\n\n    def run(self, handlers):\n        pass",
+    "solution": "class Effect:\n    pass\n\nclass Reader(Effect):\n    @staticmethod\n    def ask():\n        return ('effect', 'reader', 'ask')\n\nclass State(Effect):\n    @staticmethod\n    def get():\n        return ('effect', 'state', 'get')\n\n    @staticmethod\n    def put(value):\n        return ('effect', 'state', 'put', value)\n\nclass EffectfulComputation:\n    def __init__(self, func, effects=None):\n        self.func = func\n        self.effects = effects or set()\n\n    def run(self, handlers):\n        def handle_effects(value):\n            if isinstance(value, tuple) and value[0] == 'effect':\n                effect_type = value[1]\n                operation = value[2]\n                if effect_type in handlers:\n                    return handlers[effect_type](operation, value[3:] if len(value) > 3 else ())\n                raise ValueError(f\"Unhandled effect: {effect_type}\")\n            return value\n\n        return self.func(handle_effects)\n\n    def map(self, f):\n        def new_func(handle):\n            result = self.func(handle)\n            return f(result)\n        return EffectfulComputation(new_func, self.effects)\n\n    def flat_map(self, f):\n        def new_func(handle):\n            result = self.func(handle)\n            return f(result).func(handle)\n        combined_effects = self.effects\n        return EffectfulComputation(new_func, combined_effects)",
+    "testCases": [
+      {
+        "input": "ec = EffectfulComputation(lambda h: h(Reader.ask()), {\"reader\"}); ec.run({\"reader\": lambda op, args: 42})",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Effects are typed operations",
+      "Handlers interpret effects",
+      "Track which effects computation uses"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-7-15",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-7",
+    "title": "Multimethods",
+    "difficulty": 5,
+    "description": "Implement multiple dispatch.",
+    "starterCode": "class MultiMethod:\n    \"\"\"Function with multiple dispatch based on argument types.\"\"\"\n\n    def __init__(self, name):\n        pass\n\n    def register(self, *types):\n        \"\"\"Decorator to register implementation for types.\"\"\"\n        pass\n\n    def __call__(self, *args):\n        pass",
+    "solution": "class MultiMethod:\n    def __init__(self, name):\n        self.name = name\n        self.implementations = {}\n\n    def register(self, *types):\n        def decorator(func):\n            self.implementations[types] = func\n            return func\n        return decorator\n\n    def __call__(self, *args):\n        types = tuple(type(arg) for arg in args)\n\n        # Exact match\n        if types in self.implementations:\n            return self.implementations[types](*args)\n\n        # Try with inheritance\n        for registered_types, func in self.implementations.items():\n            if len(registered_types) == len(types):\n                if all(issubclass(actual, expected)\n                       for actual, expected in zip(types, registered_types)):\n                    return func(*args)\n\n        raise TypeError(f\"No implementation for {self.name} with types {types}\")\n\n# Example usage\nadd = MultiMethod('add')\n\n@add.register(int, int)\ndef add_int(a, b):\n    return a + b\n\n@add.register(str, str)\ndef add_str(a, b):\n    return a + b\n\n@add.register(list, list)\ndef add_list(a, b):\n    return a + b",
+    "testCases": [
+      {
+        "input": "add(1, 2)",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "add(\"a\", \"b\")",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "add([1], [2])",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Dispatch on types of all arguments",
+      "Try exact match first",
+      "Fall back to inheritance-based match"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-7-16",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-7",
+    "title": "Object Capabilities",
+    "difficulty": 5,
+    "description": "Implement object-capability security.",
+    "starterCode": "class Capability:\n    \"\"\"A capability granting specific access.\"\"\"\n\n    def __init__(self, permissions):\n        pass\n\n    def can(self, permission):\n        pass\n\n    def attenuate(self, *permissions):\n        \"\"\"Create restricted capability.\"\"\"\n        pass\n\nclass SecureObject:\n    \"\"\"Object accessed only through capabilities.\"\"\"\n\n    def __init__(self, value):\n        pass\n\n    def read(self, cap):\n        pass\n\n    def write(self, cap, value):\n        pass",
+    "solution": "class Capability:\n    def __init__(self, permissions):\n        self.permissions = frozenset(permissions)\n\n    def can(self, permission):\n        return permission in self.permissions\n\n    def attenuate(self, *permissions):\n        new_perms = self.permissions & set(permissions)\n        return Capability(new_perms)\n\n    def combine(self, other):\n        return Capability(self.permissions | other.permissions)\n\nclass SecureObject:\n    def __init__(self, value):\n        self._value = value\n\n    def read(self, cap):\n        if not cap.can('read'):\n            raise PermissionError(\"No read permission\")\n        return self._value\n\n    def write(self, cap, value):\n        if not cap.can('write'):\n            raise PermissionError(\"No write permission\")\n        self._value = value\n\n    def get_full_cap(self):\n        return Capability(['read', 'write', 'delete'])\n\n    def get_readonly_cap(self):\n        return Capability(['read'])",
+    "testCases": [
+      {
+        "input": "cap = Capability([\"read\", \"write\"]); cap.can(\"read\")",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "cap = Capability([\"read\", \"write\"]); cap.attenuate(\"read\").can(\"write\")",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "obj = SecureObject(42); obj.read(obj.get_readonly_cap())",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Capabilities are unforgeable permissions",
+      "Attenuation reduces permissions",
+      "Access requires appropriate capability"
+    ],
+    "language": "python"
+  }
+]

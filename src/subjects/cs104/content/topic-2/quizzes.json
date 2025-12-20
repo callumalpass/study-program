@@ -1,0 +1,182 @@
+[
+  {
+    "id": "cs104-quiz-2a",
+    "subjectId": "cs104",
+    "topicId": "cs104-topic-2",
+    "title": "Stacks and Queues - Fundamentals",
+    "questions": [
+      {
+        "id": "cs104-q2a-1",
+        "type": "multiple_choice",
+        "prompt": "Which ordering principle does a stack follow?",
+        "options": [
+          "FIFO (First-In-First-Out)",
+          "LIFO (Last-In-First-Out)",
+          "Priority-based",
+          "Random"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Stacks follow LIFO: the most recently added element is the first to be removed."
+      },
+      {
+        "id": "cs104-q2a-2",
+        "type": "multiple_choice",
+        "prompt": "What are the two primary operations of a queue?",
+        "options": [
+          "push and pop",
+          "enqueue and dequeue",
+          "insert and delete",
+          "add and remove"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Queues use enqueue (add to rear) and dequeue (remove from front)."
+      },
+      {
+        "id": "cs104-q2a-3",
+        "type": "true_false",
+        "prompt": "The peek operation modifies the stack by removing the top element.",
+        "correctAnswer": false,
+        "explanation": "Peek only views the top element without removing it. Pop removes and returns the top element."
+      },
+      {
+        "id": "cs104-q2a-4",
+        "type": "fill_blank",
+        "prompt": "A queue follows the ____ principle where the first element added is the first removed.",
+        "correctAnswer": "FIFO",
+        "explanation": "FIFO stands for First-In-First-Out, the fundamental principle of queues."
+      },
+      {
+        "id": "cs104-q2a-5",
+        "type": "multiple_choice",
+        "prompt": "What is the time complexity of push and pop operations on a stack?",
+        "options": [
+          "O(1)",
+          "O(log n)",
+          "O(n)",
+          "Depends on implementation"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Both push and pop are O(1) operations as they only affect the top of the stack."
+      }
+    ]
+  },
+  {
+    "id": "cs104-quiz-2b",
+    "subjectId": "cs104",
+    "topicId": "cs104-topic-2",
+    "title": "Stacks and Queues - Application",
+    "questions": [
+      {
+        "id": "cs104-q2b-1",
+        "type": "code_output",
+        "prompt": "What is printed after these stack operations?",
+        "codeSnippet": "stack = []\nstack.append(1)\nstack.append(2)\nstack.append(3)\nstack.pop()\nstack.append(4)\nprint(stack.pop())",
+        "correctAnswer": "4",
+        "explanation": "After push 1,2,3 and pop (removes 3), stack is [1,2]. Push 4 makes [1,2,4]. Pop returns 4."
+      },
+      {
+        "id": "cs104-q2b-2",
+        "type": "multiple_choice",
+        "prompt": "Which application commonly uses a stack?",
+        "options": [
+          "Print job scheduling",
+          "Function call management",
+          "BFS traversal",
+          "Task scheduling by priority"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The call stack manages function calls, pushing frames on call and popping on return."
+      },
+      {
+        "id": "cs104-q2b-3",
+        "type": "true_false",
+        "prompt": "Using a Python list's pop(0) for queue dequeue is efficient (O(1)).",
+        "correctAnswer": false,
+        "explanation": "list.pop(0) is O(n) because all elements must shift. Use collections.deque for O(1) popleft()."
+      },
+      {
+        "id": "cs104-q2b-4",
+        "type": "code_output",
+        "prompt": "What is printed?",
+        "codeSnippet": "from collections import deque\nq = deque()\nq.append('A')\nq.append('B')\nq.append('C')\nprint(q.popleft())",
+        "correctAnswer": "A",
+        "explanation": "Queue is FIFO. A was added first, so popleft() returns A."
+      },
+      {
+        "id": "cs104-q2b-5",
+        "type": "multiple_choice",
+        "prompt": "For checking balanced parentheses, which data structure is most appropriate?",
+        "options": [
+          "Queue",
+          "Stack",
+          "Array",
+          "Linked List"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Stack is ideal for matching brackets: push opening brackets, pop when closing brackets match."
+      }
+    ]
+  },
+  {
+    "id": "cs104-quiz-2c",
+    "subjectId": "cs104",
+    "topicId": "cs104-topic-2",
+    "title": "Stacks and Queues - Advanced",
+    "questions": [
+      {
+        "id": "cs104-q2c-1",
+        "type": "multiple_choice",
+        "prompt": "A deque (double-ended queue) allows:",
+        "options": [
+          "Operations only at front",
+          "Operations only at back",
+          "Operations at both front and back",
+          "Random access by index"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Deque supports efficient insertion and deletion at both ends."
+      },
+      {
+        "id": "cs104-q2c-2",
+        "type": "true_false",
+        "prompt": "A stack can be implemented using two queues.",
+        "correctAnswer": true,
+        "explanation": "Yes, you can simulate LIFO with two FIFO queues by rotating elements."
+      },
+      {
+        "id": "cs104-q2c-3",
+        "type": "multiple_choice",
+        "prompt": "A monotonic stack is useful for finding:",
+        "options": [
+          "Maximum element in array",
+          "Next greater element for each element",
+          "Median element",
+          "Duplicate elements"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Monotonic stacks efficiently solve \"next greater/smaller element\" problems in O(n) time."
+      },
+      {
+        "id": "cs104-q2c-4",
+        "type": "code_output",
+        "prompt": "What is the result after evaluating this postfix expression using a stack?",
+        "codeSnippet": "# Postfix: 2 3 + 4 *\n# Trace: push 2, push 3, pop 3 and 2 -> push 5,\n#        push 4, pop 4 and 5 -> push 20",
+        "correctAnswer": "20",
+        "explanation": "2+3=5, then 5*4=20. Postfix evaluation uses a stack to hold operands."
+      },
+      {
+        "id": "cs104-q2c-5",
+        "type": "multiple_choice",
+        "prompt": "Which traversal algorithm uses a queue?",
+        "options": [
+          "Depth-First Search (DFS)",
+          "Breadth-First Search (BFS)",
+          "Preorder traversal",
+          "Postorder traversal"
+        ],
+        "correctAnswer": 1,
+        "explanation": "BFS uses a queue to explore nodes level by level, while DFS uses a stack (or recursion)."
+      }
+    ]
+  }
+]

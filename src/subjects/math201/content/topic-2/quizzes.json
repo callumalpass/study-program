@@ -1,0 +1,185 @@
+[
+  {
+    "id": "math201-quiz-2a",
+    "subjectId": "math201",
+    "topicId": "math201-2",
+    "title": "Matrix Operations - Fundamentals",
+    "questions": [
+      {
+        "id": "math201-q2a-1",
+        "type": "multiple_choice",
+        "prompt": "For matrix multiplication $AB$ to be defined, what must be true?",
+        "options": [
+          "$A$ and $B$ must be square",
+          "Number of columns in $A$ equals number of rows in $B$",
+          "Number of rows in $A$ equals number of columns in $B$",
+          "$A$ and $B$ must have the same dimensions"
+        ],
+        "correctAnswer": 1,
+        "explanation": "For $AB$ to be defined, the number of columns in $A$ must equal the number of rows in $B$."
+      },
+      {
+        "id": "math201-q2a-2",
+        "type": "true_false",
+        "prompt": "Matrix multiplication is commutative: $AB = BA$ for all matrices $A$ and $B$.",
+        "correctAnswer": false,
+        "explanation": "False. Matrix multiplication is NOT commutative in general. Even when both $AB$ and $BA$ are defined, they are usually not equal."
+      },
+      {
+        "id": "math201-q2a-3",
+        "type": "multiple_choice",
+        "prompt": "If $A$ is a $3 \\times 4$ matrix and $B$ is a $4 \\times 2$ matrix, what size is $AB$?",
+        "options": [
+          "$3 \\times 2$",
+          "$4 \\times 4$",
+          "$3 \\times 4$",
+          "$2 \\times 3$"
+        ],
+        "correctAnswer": 0,
+        "explanation": "When multiplying an $m \\times n$ matrix by an $n \\times p$ matrix, the result is $m \\times p$. So $3 \\times 4$ times $4 \\times 2$ gives $3 \\times 2$."
+      },
+      {
+        "id": "math201-q2a-4",
+        "type": "multiple_choice",
+        "prompt": "The transpose of matrix $A$, denoted $A^T$, is formed by:",
+        "options": [
+          "Inverting all the entries",
+          "Swapping rows and columns",
+          "Multiplying by -1",
+          "Taking the reciprocal of each entry"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The transpose $A^T$ is formed by swapping rows and columns: the $(i,j)$ entry of $A$ becomes the $(j,i)$ entry of $A^T$."
+      },
+      {
+        "id": "math201-q2a-5",
+        "type": "fill_blank",
+        "prompt": "A matrix $A$ is invertible if there exists a matrix $B$ such that $AB = BA = $ ____.",
+        "correctAnswer": "I",
+        "explanation": "A matrix is invertible if there exists $B$ (called $A^{-1}$) such that $AB = BA = I$, the identity matrix."
+      }
+    ]
+  },
+  {
+    "id": "math201-quiz-2b",
+    "subjectId": "math201",
+    "topicId": "math201-2",
+    "title": "Matrix Operations - Application",
+    "questions": [
+      {
+        "id": "math201-q2b-1",
+        "type": "multiple_choice",
+        "prompt": "If $A$ is invertible, then $(A^{-1})^T$ equals:",
+        "options": [
+          "$A^T$",
+          "$(A^T)^{-1}$",
+          "$A$",
+          "$-A^T$"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The transpose of the inverse equals the inverse of the transpose: $(A^{-1})^T = (A^T)^{-1}$."
+      },
+      {
+        "id": "math201-q2b-2",
+        "type": "multiple_choice",
+        "prompt": "An elementary matrix is obtained by:",
+        "options": [
+          "Multiplying the identity matrix by a scalar",
+          "Performing one elementary row operation on the identity matrix",
+          "Taking the transpose of a matrix",
+          "Inverting a matrix"
+        ],
+        "correctAnswer": 1,
+        "explanation": "An elementary matrix is obtained by performing a single elementary row operation on an identity matrix."
+      },
+      {
+        "id": "math201-q2b-3",
+        "type": "true_false",
+        "prompt": "Every elementary matrix is invertible.",
+        "correctAnswer": true,
+        "explanation": "True. Every elementary matrix is invertible, and its inverse is also an elementary matrix corresponding to the reverse row operation."
+      },
+      {
+        "id": "math201-q2b-4",
+        "type": "multiple_choice",
+        "prompt": "A diagonal matrix has all nonzero entries:",
+        "options": [
+          "In the first row",
+          "In the first column",
+          "On the main diagonal",
+          "In the last row"
+        ],
+        "correctAnswer": 2,
+        "explanation": "A diagonal matrix has all its nonzero entries on the main diagonal (where row index equals column index)."
+      },
+      {
+        "id": "math201-q2b-5",
+        "type": "fill_blank",
+        "prompt": "If $A^T = A$, then matrix $A$ is called ____.",
+        "correctAnswer": "symmetric",
+        "explanation": "A matrix is symmetric if it equals its own transpose: $A^T = A$."
+      }
+    ]
+  },
+  {
+    "id": "math201-quiz-2c",
+    "subjectId": "math201",
+    "topicId": "math201-2",
+    "title": "Matrix Operations - Mastery",
+    "questions": [
+      {
+        "id": "math201-q2c-1",
+        "type": "multiple_choice",
+        "prompt": "If $A$ and $B$ are invertible matrices of the same size, then $(AB)^{-1}$ equals:",
+        "options": [
+          "$A^{-1}B^{-1}$",
+          "$B^{-1}A^{-1}$",
+          "$(A^{-1})(B^{-1})$",
+          "Cannot be determined"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The inverse of a product is the product of inverses in reverse order: $(AB)^{-1} = B^{-1}A^{-1}$."
+      },
+      {
+        "id": "math201-q2c-2",
+        "type": "multiple_choice",
+        "prompt": "The LU factorization of a matrix $A$ expresses $A$ as:",
+        "options": [
+          "A product of lower and upper triangular matrices",
+          "A sum of lower and upper triangular matrices",
+          "The transpose of a triangular matrix",
+          "A diagonal matrix"
+        ],
+        "correctAnswer": 0,
+        "explanation": "LU factorization expresses $A = LU$ where $L$ is lower triangular and $U$ is upper triangular."
+      },
+      {
+        "id": "math201-q2c-3",
+        "type": "true_false",
+        "prompt": "If $A$ is a square matrix and $AB = I$, then $BA = I$ automatically.",
+        "correctAnswer": true,
+        "explanation": "True. For square matrices, a one-sided inverse is automatically a two-sided inverse. If $AB = I$, then $BA = I$ as well."
+      },
+      {
+        "id": "math201-q2c-4",
+        "type": "multiple_choice",
+        "prompt": "A matrix $A$ is orthogonal if:",
+        "options": [
+          "$A^T = A$",
+          "$A^TA = I$",
+          "$A = -A^T$",
+          "$\\det(A) = 1$"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A matrix is orthogonal if its transpose equals its inverse: $A^TA = AA^T = I$."
+      },
+      {
+        "id": "math201-q2c-5",
+        "type": "fill_blank",
+        "prompt": "The trace of a square matrix is the sum of its ____ entries.",
+        "correctAnswer": "diagonal",
+        "explanation": "The trace is the sum of the diagonal entries: $\\text{tr}(A) = \\sum_{i=1}^n a_{ii}$."
+      }
+    ]
+  }
+]

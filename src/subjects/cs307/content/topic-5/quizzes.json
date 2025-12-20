@@ -1,0 +1,185 @@
+[
+  {
+    "id": "cs307-quiz-5-1",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-5",
+    "title": "Secure Coding - Input Validation and Output Encoding",
+    "questions": [
+      {
+        "id": "cs307-q61",
+        "type": "multiple_choice",
+        "prompt": "What is the most effective way to prevent SQL injection?",
+        "options": [
+          "Escaping special characters in user input",
+          "Using parameterized queries or prepared statements",
+          "Validating input length",
+          "Encrypting database connections"
+        ],
+        "correctAnswer": "Using parameterized queries or prepared statements",
+        "explanation": "Parameterized queries (prepared statements) separate SQL code from data, ensuring user input is never interpreted as SQL commands. This is more reliable than escaping because it prevents all injection attacks regardless of input complexity. ORMs typically use parameterized queries."
+      },
+      {
+        "id": "cs307-q62",
+        "type": "true_false",
+        "prompt": "Input validation should be performed on both client-side and server-side, but server-side validation is critical for security.",
+        "correctAnswer": "true",
+        "explanation": "Client-side validation improves user experience but can be bypassed by attackers. Server-side validation is essential for security because the server must never trust client input. Validate all input for type, length, format, and range on the server."
+      },
+      {
+        "id": "cs307-q63",
+        "type": "multiple_choice",
+        "prompt": "Which approach should be used when validating user input?",
+        "options": [
+          "Blacklist known bad patterns",
+          "Whitelist allowed patterns and reject everything else",
+          "Accept all input and fix issues later",
+          "Rely on client-side validation only"
+        ],
+        "correctAnswer": "Whitelist allowed patterns and reject everything else",
+        "explanation": "Whitelisting (allowing only known good input) is more secure than blacklisting because it's impossible to enumerate all malicious patterns. Define what is acceptable and reject everything else. For example, for a phone number, accept only digits and specific characters."
+      },
+      {
+        "id": "cs307-q64",
+        "type": "multiple_choice",
+        "prompt": "What is the proper way to handle sensitive information in error messages?",
+        "options": [
+          "Display detailed technical errors to help users debug issues",
+          "Show generic error messages to users; log detailed errors securely",
+          "Hide all errors completely",
+          "Display stack traces to all users"
+        ],
+        "correctAnswer": "Show generic error messages to users; log detailed errors securely",
+        "explanation": "Detailed error messages can leak sensitive information like database structure, file paths, or library versions. Show users generic messages (\"An error occurred\") while logging detailed information securely for developers to investigate. Never expose stack traces to users."
+      },
+      {
+        "id": "cs307-q65",
+        "type": "true_false",
+        "prompt": "Output encoding should be applied when displaying user-generated content to prevent XSS attacks.",
+        "correctAnswer": "true",
+        "explanation": "Output encoding (also called escaping) converts special characters to safe representations before rendering. For HTML context, encode <, >, &, \", ' to prevent script execution. Different contexts (HTML, JavaScript, URL, CSS) require different encoding methods."
+      }
+    ]
+  },
+  {
+    "id": "cs307-quiz-5-2",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-5",
+    "title": "Secure Coding - Error Handling and Secret Management",
+    "questions": [
+      {
+        "id": "cs307-q66",
+        "type": "multiple_choice",
+        "prompt": "Which practice helps prevent sensitive data exposure in application logs?",
+        "options": [
+          "Logging all user inputs for debugging",
+          "Sanitizing logs to remove passwords, credit cards, and PII before logging",
+          "Storing logs in plain text files",
+          "Disabling all logging in production"
+        ],
+        "correctAnswer": "Sanitizing logs to remove passwords, credit cards, and PII before logging",
+        "explanation": "Never log sensitive data like passwords, tokens, credit cards, or personal information. Sanitize data before logging and use structured logging to control what gets recorded. Logs should help with debugging and security monitoring without exposing sensitive information."
+      },
+      {
+        "id": "cs307-q67",
+        "type": "true_false",
+        "prompt": "Hard-coding secrets like API keys and passwords in source code is acceptable if the repository is private.",
+        "correctAnswer": "false",
+        "explanation": "Never hard-code secrets in source code, even in private repositories. Secrets can be exposed through repository leaks, insider threats, or version control history. Use environment variables, secret management systems (like HashiCorp Vault, AWS Secrets Manager), or configuration files excluded from version control."
+      },
+      {
+        "id": "cs307-q68",
+        "type": "multiple_choice",
+        "prompt": "What is the principle of \"fail-secure\" in error handling?",
+        "options": [
+          "Display detailed error messages",
+          "Default to denying access when errors occur rather than granting it",
+          "Continue execution despite errors",
+          "Retry failed operations indefinitely"
+        ],
+        "correctAnswer": "Default to denying access when errors occur rather than granting it",
+        "explanation": "Fail-secure means that when errors occur, the system defaults to a secure state (denying access) rather than an insecure state. For example, if authorization checks fail, deny access rather than allowing it. This prevents security bypasses through error conditions."
+      },
+      {
+        "id": "cs307-q69",
+        "type": "multiple_choice",
+        "prompt": "Which is the most secure way to store passwords in a database?",
+        "options": [
+          "Plain text",
+          "Encrypted with a reversible algorithm",
+          "Hashed with a fast algorithm like MD5",
+          "Hashed with a slow, adaptive algorithm like bcrypt or Argon2 with unique salts"
+        ],
+        "correctAnswer": "Hashed with a slow, adaptive algorithm like bcrypt or Argon2 with unique salts",
+        "explanation": "Passwords should be hashed with slow, adaptive algorithms (bcrypt, scrypt, Argon2) that resist brute-force attacks. Each password needs a unique salt. Never use fast algorithms (MD5, SHA-1) or encryption (which is reversible) for passwords."
+      },
+      {
+        "id": "cs307-q70",
+        "type": "true_false",
+        "prompt": "Database credentials should be stored in environment variables or secure configuration systems, not in application code.",
+        "correctAnswer": "true",
+        "explanation": "Database credentials and other secrets should be stored outside source code in environment variables, secure configuration files, or secret management systems. This prevents credentials from being exposed in version control and allows different credentials for different environments."
+      }
+    ]
+  },
+  {
+    "id": "cs307-quiz-5-3",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-5",
+    "title": "Secure Coding - Cryptographic Security and Best Practices",
+    "questions": [
+      {
+        "id": "cs307-q71",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of using secure random number generators for security-sensitive operations?",
+        "options": [
+          "They are faster than standard random functions",
+          "They provide cryptographically unpredictable values suitable for tokens and keys",
+          "They generate truly random hardware-based numbers",
+          "They compress data more efficiently"
+        ],
+        "correctAnswer": "They provide cryptographically unpredictable values suitable for tokens and keys",
+        "explanation": "Cryptographically secure random number generators (like crypto.getRandomValues(), secrets module in Python) are essential for generating session tokens, password reset tokens, and encryption keys. Standard random functions (Math.random(), rand()) are predictable and unsuitable for security."
+      },
+      {
+        "id": "cs307-q72",
+        "type": "true_false",
+        "prompt": "Type confusion vulnerabilities can occur in dynamically typed languages when input is not properly validated and converted to expected types.",
+        "correctAnswer": "true",
+        "explanation": "Type confusion occurs when data is treated as a different type than intended. In JavaScript, for example, comparing \"5\" == 5 returns true, which can lead to security issues. Always validate and explicitly convert input to expected types, and use strict equality (===) in JavaScript."
+      },
+      {
+        "id": "cs307-q73",
+        "type": "multiple_choice",
+        "prompt": "Which security header helps prevent clickjacking attacks by controlling whether your site can be framed?",
+        "options": [
+          "Content-Security-Policy",
+          "X-Frame-Options",
+          "X-XSS-Protection",
+          "Strict-Transport-Security"
+        ],
+        "correctAnswer": "X-Frame-Options",
+        "explanation": "X-Frame-Options (or CSP's frame-ancestors directive) prevents your site from being embedded in iframes on other sites, mitigating clickjacking attacks where attackers trick users into clicking invisible frames. Set to DENY or SAMEORIGIN as appropriate."
+      },
+      {
+        "id": "cs307-q74",
+        "type": "multiple_choice",
+        "prompt": "What is the primary purpose of input sanitization?",
+        "options": [
+          "To make data look better for display",
+          "To remove or encode potentially dangerous characters before processing",
+          "To compress data for storage",
+          "To translate data between languages"
+        ],
+        "correctAnswer": "To remove or encode potentially dangerous characters before processing",
+        "explanation": "Input sanitization modifies input to remove or neutralize potentially malicious content. However, context-specific output encoding is generally preferred over sanitization because sanitization can be incomplete. Validate input strictly, then encode output appropriately for the context."
+      },
+      {
+        "id": "cs307-q75",
+        "type": "true_false",
+        "prompt": "Time-of-check to time-of-use (TOCTOU) vulnerabilities can occur when security checks are separated from resource usage.",
+        "correctAnswer": "true",
+        "explanation": "TOCTOU race conditions occur when a resource is checked (e.g., file permissions) but changes before use. Attackers can exploit the window between check and use. Mitigations include using atomic operations, file locks, or redesigning to eliminate the race condition."
+      }
+    ]
+  }
+]

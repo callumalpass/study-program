@@ -1,0 +1,185 @@
+[
+  {
+    "id": "math201-quiz-3a",
+    "subjectId": "math201",
+    "topicId": "math201-3",
+    "title": "Vector Spaces - Fundamentals",
+    "questions": [
+      {
+        "id": "math201-q3a-1",
+        "type": "multiple_choice",
+        "prompt": "Which of the following is NOT required for a set to be a vector space?",
+        "options": [
+          "Closure under addition",
+          "Closure under scalar multiplication",
+          "Existence of additive identity",
+          "Existence of multiplicative identity"
+        ],
+        "correctAnswer": 3,
+        "explanation": "A vector space requires closure under addition and scalar multiplication, additive identity and inverses, but NOT a multiplicative identity for vectors."
+      },
+      {
+        "id": "math201-q3a-2",
+        "type": "true_false",
+        "prompt": "The set of all $2 \\times 2$ matrices forms a vector space.",
+        "correctAnswer": true,
+        "explanation": "True. The set of all $2 \\times 2$ matrices with standard matrix addition and scalar multiplication satisfies all vector space axioms."
+      },
+      {
+        "id": "math201-q3a-3",
+        "type": "multiple_choice",
+        "prompt": "A subspace of a vector space $V$ must:",
+        "options": [
+          "Be equal to $V$",
+          "Contain only the zero vector",
+          "Be closed under addition and scalar multiplication",
+          "Have the same dimension as $V$"
+        ],
+        "correctAnswer": 2,
+        "explanation": "A subspace must be closed under vector addition and scalar multiplication, and must contain the zero vector. It need not equal $V$ or have the same dimension."
+      },
+      {
+        "id": "math201-q3a-4",
+        "type": "multiple_choice",
+        "prompt": "The null space of matrix $A$ is:",
+        "options": [
+          "The set of all vectors $x$ such that $Ax = 0$",
+          "The set of all vectors $x$ such that $Ax = b$",
+          "The set of column vectors of $A$",
+          "The set of row vectors of $A$"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The null space (kernel) of $A$ is $\\text{Nul}(A) = \\{x : Ax = 0\\}$, the solution set of the homogeneous equation."
+      },
+      {
+        "id": "math201-q3a-5",
+        "type": "fill_blank",
+        "prompt": "The column space of matrix $A$ is the set of all ____ of the columns of $A$.",
+        "correctAnswer": "linear combinations",
+        "explanation": "The column space Col$(A)$ is the span of the columns of $A$, i.e., all linear combinations of its columns."
+      }
+    ]
+  },
+  {
+    "id": "math201-quiz-3b",
+    "subjectId": "math201",
+    "topicId": "math201-3",
+    "title": "Vector Spaces - Application",
+    "questions": [
+      {
+        "id": "math201-q3b-1",
+        "type": "multiple_choice",
+        "prompt": "The span of vectors $\\{v_1, v_2, \\ldots, v_k\\}$ is:",
+        "options": [
+          "The largest vector",
+          "All linear combinations of the vectors",
+          "The sum of the vectors",
+          "The product of the vectors"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Span$\\{v_1, \\ldots, v_k\\}$ is the set of all linear combinations $c_1v_1 + \\cdots + c_kv_k$ where $c_i$ are scalars."
+      },
+      {
+        "id": "math201-q3b-2",
+        "type": "multiple_choice",
+        "prompt": "Vectors $v_1, v_2, \\ldots, v_k$ are linearly independent if:",
+        "options": [
+          "They all have different lengths",
+          "The only solution to $c_1v_1 + \\cdots + c_kv_k = 0$ is all $c_i = 0$",
+          "They span the entire space",
+          "They are orthogonal"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Vectors are linearly independent if the only linear combination that gives the zero vector is the trivial combination (all coefficients zero)."
+      },
+      {
+        "id": "math201-q3b-3",
+        "type": "true_false",
+        "prompt": "If a set contains the zero vector, it cannot be linearly independent.",
+        "correctAnswer": true,
+        "explanation": "True. Any set containing the zero vector is linearly dependent because $1 \\cdot 0 = 0$ provides a nontrivial linear combination equaling zero."
+      },
+      {
+        "id": "math201-q3b-4",
+        "type": "multiple_choice",
+        "prompt": "The dimension of the null space of $A$ is called:",
+        "options": [
+          "The rank",
+          "The nullity",
+          "The trace",
+          "The determinant"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The nullity of $A$ is the dimension of its null space, equal to the number of free variables in $Ax = 0$."
+      },
+      {
+        "id": "math201-q3b-5",
+        "type": "fill_blank",
+        "prompt": "A set of vectors that spans a vector space $V$ and is linearly independent is called a ____ for $V$.",
+        "correctAnswer": "basis",
+        "explanation": "A basis is a linearly independent spanning set. Every vector in $V$ can be uniquely expressed as a linear combination of basis vectors."
+      }
+    ]
+  },
+  {
+    "id": "math201-quiz-3c",
+    "subjectId": "math201",
+    "topicId": "math201-3",
+    "title": "Vector Spaces - Mastery",
+    "questions": [
+      {
+        "id": "math201-q3c-1",
+        "type": "multiple_choice",
+        "prompt": "The dimension of $\\mathbb{R}^n$ is:",
+        "options": [
+          "$1$",
+          "$n-1$",
+          "$n$",
+          "$n+1$"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The standard basis for $\\mathbb{R}^n$ has $n$ vectors, so $\\dim(\\mathbb{R}^n) = n$."
+      },
+      {
+        "id": "math201-q3c-2",
+        "type": "multiple_choice",
+        "prompt": "If $\\{v_1, v_2, v_3\\}$ is a basis for vector space $V$, then $\\dim(V) = $:",
+        "options": [
+          "$1$",
+          "$2$",
+          "$3$",
+          "Cannot be determined"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The dimension of a vector space equals the number of vectors in any basis. Since the basis has 3 vectors, $\\dim(V) = 3$."
+      },
+      {
+        "id": "math201-q3c-3",
+        "type": "true_false",
+        "prompt": "Every basis for $\\mathbb{R}^n$ must contain exactly $n$ vectors.",
+        "correctAnswer": true,
+        "explanation": "True. All bases for a given vector space have the same number of vectors (the dimension). For $\\mathbb{R}^n$, every basis has $n$ vectors."
+      },
+      {
+        "id": "math201-q3c-4",
+        "type": "multiple_choice",
+        "prompt": "The row space and column space of a matrix $A$ have:",
+        "options": [
+          "Different dimensions always",
+          "The same dimension",
+          "No relationship",
+          "The same vectors"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The row space and column space of any matrix have the same dimension, which is the rank of the matrix."
+      },
+      {
+        "id": "math201-q3c-5",
+        "type": "fill_blank",
+        "prompt": "If $H$ is a subspace of finite-dimensional vector space $V$, then $\\dim(H)$ ____ $\\dim(V)$.",
+        "correctAnswer": "<=",
+        "explanation": "Any subspace has dimension less than or equal to the dimension of the containing space: $\\dim(H) \\leq \\dim(V)$."
+      }
+    ]
+  }
+]

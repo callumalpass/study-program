@@ -1,0 +1,170 @@
+[
+  {
+    "id": "cs103-quiz-2",
+    "subjectId": "cs103",
+    "topicId": "cs103-2",
+    "title": "Encapsulation — Quiz A (Fundamentals)",
+    "questions": [
+      {
+        "id": "cs103-q2a-1",
+        "type": "multiple_choice",
+        "prompt": "What is encapsulation primarily about?",
+        "options": [
+          "Making classes inherit from each other",
+          "Hiding internal state and exposing a controlled interface",
+          "Overloading operators for custom types",
+          "Ensuring code runs faster"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Encapsulation protects internal state and provides a safe, stable API."
+      },
+      {
+        "id": "cs103-q2a-2",
+        "type": "multiple_choice",
+        "prompt": "In Python, a leading single underscore (e.g., `_balance`) conventionally means:",
+        "options": [
+          "Truly private and inaccessible",
+          "Protected/internal use by convention",
+          "A constant value",
+          "A class variable"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Python relies on conventions: `_name` signals internal/protected usage."
+      },
+      {
+        "id": "cs103-q2a-3",
+        "type": "fill_blank",
+        "prompt": "The decorator that lets you access a method like an attribute is ____.",
+        "correctAnswer": "property",
+        "explanation": "`@property` creates a managed attribute with getter/setter behavior."
+      },
+      {
+        "id": "cs103-q2a-4",
+        "type": "true_false",
+        "prompt": "Encapsulation makes it easier to change a class’s internal implementation without breaking callers.",
+        "correctAnswer": true,
+        "explanation": "Callers depend on the public interface, not the internal representation."
+      },
+      {
+        "id": "cs103-q2a-5",
+        "type": "multiple_choice",
+        "prompt": "What is name mangling for `__balance` inside class `Account`?",
+        "options": [
+          "_balance",
+          "__balance__",
+          "_Account__balance",
+          "Account__balance"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Double-underscore attributes are name-mangled to `_ClassName__attr`."
+      }
+    ]
+  },
+  {
+    "id": "cs103-quiz-2b",
+    "subjectId": "cs103",
+    "topicId": "cs103-2",
+    "title": "Encapsulation — Quiz B (Application)",
+    "questions": [
+      {
+        "id": "cs103-q2b-1",
+        "type": "code_output",
+        "prompt": "What is printed by this code?",
+        "codeSnippet": "class User:\n    def __init__(self, age):\n        self._age = age\n\n    @property\n    def age(self):\n        return self._age\n\nu = User(10)\nprint(u.age)",
+        "correctAnswer": "10",
+        "explanation": "`age` is exposed as a read-only property backed by `_age`."
+      },
+      {
+        "id": "cs103-q2b-2",
+        "type": "multiple_choice",
+        "prompt": "Why might you return a copy from a getter like `def items(self): return list(self._items)`?",
+        "options": [
+          "To speed up iteration",
+          "To prevent callers from mutating internal state directly",
+          "To allow multiple inheritance",
+          "To enable operator overloading"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Defensive copies avoid leaking mutable internal state."
+      },
+      {
+        "id": "cs103-q2b-3",
+        "type": "fill_blank",
+        "prompt": "To define the setter for a property named `age`, you write `@age.____`.",
+        "correctAnswer": "setter",
+        "explanation": "Property setters use `@prop_name.setter`."
+      },
+      {
+        "id": "cs103-q2b-4",
+        "type": "true_false",
+        "prompt": "Encapsulation means you must make every attribute private using name mangling.",
+        "correctAnswer": false,
+        "explanation": "Good encapsulation is about controlling access where needed; Python commonly uses conventions and properties."
+      },
+      {
+        "id": "cs103-q2b-5",
+        "type": "code_output",
+        "prompt": "What is printed by this code?",
+        "codeSnippet": "class A:\n    def __init__(self):\n        self.__x = 5\n\na = A()\nprint(hasattr(a, \"__x\"), hasattr(a, \"_A__x\"))",
+        "correctAnswer": "False True",
+        "explanation": "Double-underscore attributes are name-mangled, so `__x` becomes `_A__x` on the instance."
+      }
+    ]
+  },
+  {
+    "id": "cs103-quiz-2c",
+    "subjectId": "cs103",
+    "topicId": "cs103-2",
+    "title": "Encapsulation — Quiz C (Advanced)",
+    "questions": [
+      {
+        "id": "cs103-q2c-1",
+        "type": "multiple_choice",
+        "prompt": "Which statement about Python “private” attributes is most accurate?",
+        "options": [
+          "They cannot be accessed outside the class",
+          "They are enforced by the interpreter",
+          "They are name-mangled to reduce accidental access",
+          "They are encrypted in memory"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Name mangling is a convention-based mechanism; it discourages accidental access but doesn’t make access impossible."
+      },
+      {
+        "id": "cs103-q2c-2",
+        "type": "code_output",
+        "prompt": "What is printed by this code?",
+        "codeSnippet": "class Box:\n    def __init__(self, items):\n        self._items = items\n    @property\n    def items(self):\n        return list(self._items)\n\nb = Box([1, 2])\ncopy = b.items\ncopy.append(3)\nprint(b.items)",
+        "correctAnswer": "[1, 2]",
+        "explanation": "The property returns a copy; mutating the copy does not mutate internal state."
+      },
+      {
+        "id": "cs103-q2c-3",
+        "type": "true_false",
+        "prompt": "A property can compute its value dynamically and does not have to store a backing field.",
+        "correctAnswer": true,
+        "explanation": "Properties can be computed on access (e.g., `area` from `radius`)."
+      },
+      {
+        "id": "cs103-q2c-4",
+        "type": "fill_blank",
+        "prompt": "A class that prevents setting attributes not listed is typically implemented using ____.",
+        "correctAnswer": "__slots__",
+        "explanation": "`__slots__` can restrict instance attributes and reduce memory use."
+      },
+      {
+        "id": "cs103-q2c-5",
+        "type": "multiple_choice",
+        "prompt": "What is a good reason to use a custom exception class in an API?",
+        "options": [
+          "It makes code shorter",
+          "It creates faster stack traces",
+          "It lets callers catch and handle domain-specific errors reliably",
+          "It prevents all runtime errors"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Custom exceptions communicate intent and enable targeted error handling."
+      }
+    ]
+  }
+]

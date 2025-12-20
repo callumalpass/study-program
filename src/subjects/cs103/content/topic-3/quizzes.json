@@ -1,0 +1,170 @@
+[
+  {
+    "id": "cs103-quiz-3",
+    "subjectId": "cs103",
+    "topicId": "cs103-3",
+    "title": "Inheritance — Quiz A (Fundamentals)",
+    "questions": [
+      {
+        "id": "cs103-q3a-1",
+        "type": "multiple_choice",
+        "prompt": "Inheritance most directly models which relationship?",
+        "options": [
+          "Has-a",
+          "Is-a",
+          "Part-of",
+          "Depends-on"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Inheritance represents an “is-a” relationship between subtype and supertype."
+      },
+      {
+        "id": "cs103-q3a-2",
+        "type": "fill_blank",
+        "prompt": "In Python, a subclass is declared using `class Child(____):`.",
+        "correctAnswer": "Parent",
+        "explanation": "The parent class appears in parentheses after the subclass name."
+      },
+      {
+        "id": "cs103-q3a-3",
+        "type": "true_false",
+        "prompt": "A subclass automatically inherits methods and attributes from its parent class.",
+        "correctAnswer": true,
+        "explanation": "Unless overridden, the subclass uses the inherited implementations."
+      },
+      {
+        "id": "cs103-q3a-4",
+        "type": "multiple_choice",
+        "prompt": "What does `super()` allow you to do?",
+        "options": [
+          "Call methods on a child class",
+          "Call methods on the next class in the MRO (often the parent)",
+          "Skip method overriding",
+          "Disable inheritance"
+        ],
+        "correctAnswer": 1,
+        "explanation": "`super()` calls the next implementation in the MRO, enabling cooperative inheritance."
+      },
+      {
+        "id": "cs103-q3a-5",
+        "type": "multiple_choice",
+        "prompt": "What is MRO in Python?",
+        "options": [
+          "Memory read-only",
+          "Method resolution order",
+          "Module runtime override",
+          "Multi-return output"
+        ],
+        "correctAnswer": 1,
+        "explanation": "MRO determines which method implementation is chosen in multiple inheritance."
+      }
+    ]
+  },
+  {
+    "id": "cs103-quiz-3b",
+    "subjectId": "cs103",
+    "topicId": "cs103-3",
+    "title": "Inheritance — Quiz B (Application)",
+    "questions": [
+      {
+        "id": "cs103-q3b-1",
+        "type": "code_output",
+        "prompt": "What is printed by this code?",
+        "codeSnippet": "class A:\n    def f(self):\n        return \"A\"\n\nclass B(A):\n    def f(self):\n        return \"B\"\n\nprint(B().f())",
+        "correctAnswer": "B",
+        "explanation": "The subclass overrides `f`, so `B().f()` uses the overridden method."
+      },
+      {
+        "id": "cs103-q3b-2",
+        "type": "code_output",
+        "prompt": "What is printed by this code?",
+        "codeSnippet": "class Base:\n    def __init__(self):\n        self.x = 1\n\nclass Child(Base):\n    def __init__(self):\n        super().__init__()\n        self.x += 2\n\nprint(Child().x)",
+        "correctAnswer": "3",
+        "explanation": "`super().__init__()` sets `x=1`, then the child adds 2."
+      },
+      {
+        "id": "cs103-q3b-3",
+        "type": "multiple_choice",
+        "prompt": "If you override `__init__` in a subclass, what is commonly necessary to preserve base initialization?",
+        "options": [
+          "Call `Base.__new__()`",
+          "Call `super().__init__()`",
+          "Call `del self`",
+          "Nothing is needed"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Calling `super().__init__()` ensures the base class sets up its part of the object."
+      },
+      {
+        "id": "cs103-q3b-4",
+        "type": "true_false",
+        "prompt": "It is always best to use inheritance instead of composition for code reuse.",
+        "correctAnswer": false,
+        "explanation": "Composition often produces more flexible designs and avoids fragile inheritance trees."
+      },
+      {
+        "id": "cs103-q3b-5",
+        "type": "fill_blank",
+        "prompt": "In multiple inheritance, Python chooses methods following the ____.",
+        "correctAnswer": "MRO",
+        "explanation": "MRO (Method Resolution Order) determines the lookup path."
+      }
+    ]
+  },
+  {
+    "id": "cs103-quiz-3c",
+    "subjectId": "cs103",
+    "topicId": "cs103-3",
+    "title": "Inheritance — Quiz C (Advanced)",
+    "questions": [
+      {
+        "id": "cs103-q3c-1",
+        "type": "multiple_choice",
+        "prompt": "Which is a common warning sign that inheritance may be the wrong tool?",
+        "options": [
+          "You need polymorphic behavior",
+          "You are modeling a clear “is-a” relationship",
+          "You are inheriting only to reuse a couple of methods",
+          "You need a shared interface across implementations"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Using inheritance mainly for code reuse can create tight coupling; composition is often better."
+      },
+      {
+        "id": "cs103-q3c-2",
+        "type": "code_output",
+        "prompt": "What is printed by this code?",
+        "codeSnippet": "class A:\n    def f(self): return \"A\"\nclass B(A):\n    def f(self): return \"B\"\nclass C(A):\n    def f(self): return \"C\"\nclass D(B, C):\n    pass\n\nprint(D().f())",
+        "correctAnswer": "B",
+        "explanation": "With `class D(B, C)`, MRO checks `B` before `C`, so `B.f` is chosen."
+      },
+      {
+        "id": "cs103-q3c-3",
+        "type": "true_false",
+        "prompt": "Calling `super()` in multiple inheritance can support cooperative method chaining when all classes participate.",
+        "correctAnswer": true,
+        "explanation": "If each class calls `super()`, method calls can flow through the MRO cleanly."
+      },
+      {
+        "id": "cs103-q3c-4",
+        "type": "fill_blank",
+        "prompt": "A class used to provide a focused feature via inheritance (not meant to stand alone) is often called a ____.",
+        "correctAnswer": "mixin",
+        "explanation": "Mixins add small, reusable behavior to other classes through inheritance."
+      },
+      {
+        "id": "cs103-q3c-5",
+        "type": "multiple_choice",
+        "prompt": "What does Liskov Substitution Principle (LSP) require?",
+        "options": [
+          "Subclasses must have more methods than base classes",
+          "Objects of a subclass should be usable wherever the base class is expected, without breaking behavior",
+          "Every class must have a private attribute",
+          "Inheritance must be single, not multiple"
+        ],
+        "correctAnswer": 1,
+        "explanation": "LSP is about behavioral substitutability and preserving base class contracts."
+      }
+    ]
+  }
+]

@@ -1,0 +1,102 @@
+[
+  {
+    "id": "cs406-t6-ex01",
+    "subjectId": "cs406",
+    "topicId": "cs406-topic-6",
+    "title": "Propositional Logic Evaluation",
+    "difficulty": 2,
+    "description": "Implement a propositional logic evaluator.\n\nYour implementation should:\n- Parse and evaluate propositional formulas\n- Support operators: AND, OR, NOT, IMPLIES\n- Evaluate formulas given truth assignments\n- Check if formulas are tautologies",
+    "starterCode": "class PropFormula:\n    pass\n\nclass Atom(PropFormula):\n    def __init__(self, name):\n        pass\n\nclass Not(PropFormula):\n    def __init__(self, formula):\n        pass\n\nclass And(PropFormula):\n    def __init__(self, left, right):\n        pass\n\ndef evaluate(formula, assignment):\n    # Evaluate formula under given assignment\n    pass\n\ndef is_tautology(formula, variables):\n    # Check if formula is true under all assignments\n    pass",
+    "solution": "from itertools import product\n\nclass PropFormula:\n    \"\"\"Base class for propositional formulas.\"\"\"\n    pass\n\nclass Atom(PropFormula):\n    def __init__(self, name):\n        self.name = name\n\n    def evaluate(self, assignment):\n        return assignment.get(self.name, False)\n\n    def __repr__(self):\n        return self.name\n\nclass Not(PropFormula):\n    def __init__(self, formula):\n        self.formula = formula\n\n    def evaluate(self, assignment):\n        return not self.formula.evaluate(assignment)\n\n    def __repr__(self):\n        return f\"¬{self.formula}\"\n\nclass And(PropFormula):\n    def __init__(self, left, right):\n        self.left = left\n        self.right = right\n\n    def evaluate(self, assignment):\n        return self.left.evaluate(assignment) and self.right.evaluate(assignment)\n\n    def __repr__(self):\n        return f\"({self.left} ∧ {self.right})\"\n\nclass Or(PropFormula):\n    def __init__(self, left, right):\n        self.left = left\n        self.right = right\n\n    def evaluate(self, assignment):\n        return self.left.evaluate(assignment) or self.right.evaluate(assignment)\n\n    def __repr__(self):\n        return f\"({self.left} ∨ {self.right})\"\n\nclass Implies(PropFormula):\n    def __init__(self, left, right):\n        self.left = left\n        self.right = right\n\n    def evaluate(self, assignment):\n        return (not self.left.evaluate(assignment)) or self.right.evaluate(assignment)\n\n    def __repr__(self):\n        return f\"({self.left} → {self.right})\"\n\ndef evaluate(formula, assignment):\n    \"\"\"Evaluate formula under given truth assignment.\"\"\"\n    return formula.evaluate(assignment)\n\ndef is_tautology(formula, variables):\n    \"\"\"Check if formula is true under all possible truth assignments.\"\"\"\n    # Generate all possible assignments\n    for values in product([False, True], repeat=len(variables)):\n        assignment = dict(zip(variables, values))\n\n        if not formula.evaluate(assignment):\n            return False, assignment  # Counterexample\n\n    return True, None\n\ndef truth_table(formula, variables):\n    \"\"\"Generate complete truth table for formula.\"\"\"\n    print(\"Truth table for:\", formula)\n    print()\n\n    # Header\n    header = \" | \".join(variables) + \" | Result\"\n    print(header)\n    print(\"-\" * len(header))\n\n    # Rows\n    for values in product([False, True], repeat=len(variables)):\n        assignment = dict(zip(variables, values))\n        result = formula.evaluate(assignment)\n\n        row = \" | \".join(\"T\" if assignment[v] else \"F\" for v in variables)\n        row += \" | \" + (\"T\" if result else \"F\")\n        print(row)\n\n# Test formulas\nP = Atom('P')\nQ = Atom('Q')\nR = Atom('R')\n\n# P ∧ Q\nformula1 = And(P, Q)\nprint(\"Formula 1:\", formula1)\nprint(\"Evaluation (P=T, Q=T):\", evaluate(formula1, {'P': True, 'Q': True}))\nprint(\"Evaluation (P=T, Q=F):\", evaluate(formula1, {'P': True, 'Q': False}))\nprint()\n\n# P → Q (equivalent to ¬P ∨ Q)\nformula2 = Implies(P, Q)\nprint(\"Formula 2:\", formula2)\ntruth_table(formula2, ['P', 'Q'])\nprint()\n\n# Tautology: P ∨ ¬P\nformula3 = Or(P, Not(P))\nprint(\"Formula 3:\", formula3)\nis_taut, counterex = is_tautology(formula3, ['P'])\nprint(f\"Is tautology: {is_taut}\")\nprint()\n\n# Not a tautology: P ∧ Q\nis_taut, counterex = is_tautology(formula1, ['P', 'Q'])\nprint(f\"Formula 1 is tautology: {is_taut}\")\nif counterex:\n    print(f\"Counterexample: {counterex}\")\nprint()\n\n# Modus ponens: ((P → Q) ∧ P) → Q\nformula4 = Implies(And(Implies(P, Q), P), Q)\nprint(\"Formula 4 (Modus Ponens):\", formula4)\nis_taut, counterex = is_tautology(formula4, ['P', 'Q'])\nprint(f\"Is tautology: {is_taut}\")\ntruth_table(formula4, ['P', 'Q'])",
+    "testCases": [
+      {
+        "input": "evaluate(And(P, Q), {\"P\": True, \"Q\": True})",
+        "isHidden": false,
+        "description": "Test AND evaluation"
+      },
+      {
+        "input": "evaluate(Implies(P, Q), {\"P\": True, \"Q\": False})",
+        "isHidden": false,
+        "description": "Test IMPLIES evaluation"
+      },
+      {
+        "input": "is_tautology(Or(P, Not(P)), [\"P\"])",
+        "isHidden": false,
+        "description": "Test tautology detection (law of excluded middle)"
+      }
+    ],
+    "hints": [
+      "Implement evaluate() method for each formula class (Atom, Not, And, Or, Implies)",
+      "Implies is equivalent to (NOT left) OR right",
+      "For tautology checking, generate all possible truth assignments and verify formula is true for all"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs406-t6-ex02",
+    "subjectId": "cs406",
+    "topicId": "cs406-topic-6",
+    "title": "Resolution Theorem Prover",
+    "difficulty": 3,
+    "description": "Implement a resolution-based theorem prover for propositional logic.\n\nYour implementation should:\n- Convert formulas to CNF (Conjunctive Normal Form)\n- Implement resolution rule\n- Detect when empty clause is derived\n- Prove theorems by refutation",
+    "starterCode": "class Clause:\n    def __init__(self, literals):\n        # Clause is a set of literals\n        pass\n\ndef to_cnf(formula):\n    # Convert formula to CNF\n    # Return: set of clauses\n    pass\n\ndef resolve(clause1, clause2):\n    # Apply resolution rule\n    # Return: set of resolvent clauses\n    pass\n\ndef resolution_prove(kb, query):\n    # Prove query from knowledge base using resolution\n    pass",
+    "solution": "class Literal:\n    def __init__(self, atom, negated=False):\n        self.atom = atom\n        self.negated = negated\n\n    def negate(self):\n        return Literal(self.atom, not self.negated)\n\n    def __eq__(self, other):\n        return self.atom == other.atom and self.negated == other.negated\n\n    def __hash__(self):\n        return hash((self.atom, self.negated))\n\n    def __repr__(self):\n        return f\"¬{self.atom}\" if self.negated else self.atom\n\nclass Clause:\n    def __init__(self, literals):\n        self.literals = frozenset(literals)\n\n    def is_empty(self):\n        return len(self.literals) == 0\n\n    def __eq__(self, other):\n        return self.literals == other.literals\n\n    def __hash__(self):\n        return hash(self.literals)\n\n    def __repr__(self):\n        if self.is_empty():\n            return \"□\"  # Empty clause\n        return \"{\" + \" ∨ \".join(str(lit) for lit in self.literals) + \"}\"\n\ndef resolve(clause1, clause2):\n    \"\"\"\n    Apply resolution rule to two clauses.\n    Returns: set of resolvent clauses (may be empty)\n    \"\"\"\n    resolvents = set()\n\n    # Try to resolve on each pair of complementary literals\n    for lit1 in clause1.literals:\n        for lit2 in clause2.literals:\n            # Check if complementary\n            if lit1.atom == lit2.atom and lit1.negated != lit2.negated:\n                # Resolve: remove complementary pair, union the rest\n                new_literals = (clause1.literals - {lit1}) | (clause2.literals - {lit2})\n                resolvent = Clause(new_literals)\n                resolvents.add(resolvent)\n\n    return resolvents\n\ndef resolution_prove(clauses, query_clause):\n    \"\"\"\n    Prove query using resolution (by refutation).\n    Negate query and add to KB, derive empty clause.\n\n    clauses: set of Clause objects (KB in CNF)\n    query_clause: Clause to prove\n\n    Returns: (proved, steps) where steps shows derivation\n    \"\"\"\n    # Negate query and add to clauses\n    # (Query is a clause, negating means we try to prove its negation leads to contradiction)\n    clauses = set(clauses)\n    clauses.add(query_clause)\n\n    new_clauses = set()\n    steps = []\n\n    iteration = 0\n    max_iterations = 100\n\n    while iteration < max_iterations:\n        iteration += 1\n\n        # Try resolving all pairs of clauses\n        clause_list = list(clauses)\n\n        for i in range(len(clause_list)):\n            for j in range(i + 1, len(clause_list)):\n                resolvents = resolve(clause_list[i], clause_list[j])\n\n                for resolvent in resolvents:\n                    # Check if empty clause derived\n                    if resolvent.is_empty():\n                        steps.append({\n                            'iteration': iteration,\n                            'clause1': clause_list[i],\n                            'clause2': clause_list[j],\n                            'resolvent': resolvent\n                        })\n                        return True, steps\n\n                    new_clauses.add(resolvent)\n                    steps.append({\n                        'iteration': iteration,\n                        'clause1': clause_list[i],\n                        'clause2': clause_list[j],\n                        'resolvent': resolvent\n                    })\n\n        # Check if no new clauses derived\n        if new_clauses.issubset(clauses):\n            return False, steps  # Cannot prove\n\n        clauses |= new_clauses\n\n    return False, steps  # Max iterations reached\n\n# Test\n# KB: {P → Q, Q → R, P}\n# Prove: R\n\n# Convert to CNF:\n# P → Q  ≡  ¬P ∨ Q\n# Q → R  ≡  ¬Q ∨ R\n# P\n\nP = 'P'\nQ = 'Q'\nR = 'R'\n\nkb = {\n    Clause([Literal(P, negated=True), Literal(Q)]),  # ¬P ∨ Q\n    Clause([Literal(Q, negated=True), Literal(R)]),  # ¬Q ∨ R\n    Clause([Literal(P)])  # P\n}\n\n# Query: R\n# To prove R, we negate it and try to derive empty clause\n# ¬R\nquery = Clause([Literal(R, negated=True)])\n\nprint(\"Knowledge Base:\")\nfor clause in kb:\n    print(f\"  {clause}\")\nprint(f\"\\nQuery (negated): {query}\")\nprint()\n\nproved, steps = resolution_prove(kb, query)\n\nprint(f\"Proved: {proved}\")\nprint(f\"\\nDerivation steps:\")\nfor step in steps[-10:]:  # Show last 10 steps\n    print(f\"  {step['clause1']} + {step['clause2']} → {step['resolvent']}\")\n\n# Another example: Modus Ponens\nprint(\"\\n\" + \"=\"*50)\nprint(\"Example 2: Modus Ponens\")\nprint(\"=\"*50)\n\n# KB: {P → Q, P}\n# Prove: Q\n\nA = 'A'\nB = 'B'\n\nkb2 = {\n    Clause([Literal(A, negated=True), Literal(B)]),  # ¬A ∨ B (A → B)\n    Clause([Literal(A)])  # A\n}\n\nquery2 = Clause([Literal(B, negated=True)])  # Prove B (negate it)\n\nprint(\"Knowledge Base:\")\nfor clause in kb2:\n    print(f\"  {clause}\")\nprint(f\"\\nQuery (negated): {query2}\")\n\nproved2, steps2 = resolution_prove(kb2, query2)\n\nprint(f\"\\nProved: {proved2}\")\nprint(f\"Derivation steps:\")\nfor step in steps2:\n    print(f\"  {step['clause1']} + {step['clause2']} → {step['resolvent']}\")",
+    "testCases": [
+      {
+        "input": "resolve(clause1, clause2)",
+        "isHidden": false,
+        "description": "Test resolution produces correct resolvent"
+      },
+      {
+        "input": "resolution_prove(kb, query)",
+        "isHidden": false,
+        "description": "Test resolution proves valid theorem"
+      },
+      {
+        "input": "empty clause derivation",
+        "isHidden": false,
+        "description": "Test proof by refutation derives empty clause"
+      }
+    ],
+    "hints": [
+      "Resolution rule: if one clause contains literal L and another contains ¬L, create new clause with all literals except L and ¬L",
+      "To prove a query, negate it and add to KB, then try to derive the empty clause (contradiction)",
+      "Keep track of which clauses have been resolved to avoid infinite loops"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs406-t6-ex03",
+    "subjectId": "cs406",
+    "topicId": "cs406-topic-6",
+    "title": "First-Order Logic Unification",
+    "difficulty": 4,
+    "description": "Implement unification for first-order logic terms.\n\nYour implementation should:\n- Represent FOL terms (constants, variables, functions)\n- Implement occur check\n- Find most general unifier (MGU) for two terms\n- Handle complex nested terms",
+    "starterCode": "class Term:\n    pass\n\nclass Constant(Term):\n    pass\n\nclass Variable(Term):\n    pass\n\nclass Function(Term):\n    pass\n\ndef unify(term1, term2, subst=None):\n    # Find most general unifier\n    # Returns: substitution dict or None if unification fails\n    pass\n\ndef apply_subst(term, subst):\n    # Apply substitution to term\n    pass",
+    "solution": "class Term:\n    \"\"\"Base class for FOL terms.\"\"\"\n    pass\n\nclass Constant(Term):\n    def __init__(self, name):\n        self.name = name\n\n    def __eq__(self, other):\n        return isinstance(other, Constant) and self.name == other.name\n\n    def __hash__(self):\n        return hash(('const', self.name))\n\n    def __repr__(self):\n        return self.name\n\nclass Variable(Term):\n    def __init__(self, name):\n        self.name = name\n\n    def __eq__(self, other):\n        return isinstance(other, Variable) and self.name == other.name\n\n    def __hash__(self):\n        return hash(('var', self.name))\n\n    def __repr__(self):\n        return f\"?{self.name}\"\n\nclass Function(Term):\n    def __init__(self, name, args):\n        self.name = name\n        self.args = tuple(args)  # List of terms\n\n    def __eq__(self, other):\n        return (isinstance(other, Function) and\n                self.name == other.name and\n                self.args == other.args)\n\n    def __hash__(self):\n        return hash(('func', self.name, self.args))\n\n    def __repr__(self):\n        args_str = \", \".join(str(arg) for arg in self.args)\n        return f\"{self.name}({args_str})\"\n\ndef apply_subst(term, subst):\n    \"\"\"Apply substitution to term.\"\"\"\n    if isinstance(term, Constant):\n        return term\n    elif isinstance(term, Variable):\n        if term in subst:\n            # Recursively apply (for transitive substitutions)\n            return apply_subst(subst[term], subst)\n        return term\n    elif isinstance(term, Function):\n        new_args = [apply_subst(arg, subst) for arg in term.args]\n        return Function(term.name, new_args)\n\ndef occur_check(var, term, subst):\n    \"\"\"Check if var occurs in term (prevents infinite structures).\"\"\"\n    if var == term:\n        return True\n    elif isinstance(term, Variable) and term in subst:\n        return occur_check(var, subst[term], subst)\n    elif isinstance(term, Function):\n        return any(occur_check(var, arg, subst) for arg in term.args)\n    return False\n\ndef unify(term1, term2, subst=None):\n    \"\"\"\n    Find most general unifier for two terms.\n    Returns: substitution dict or None if unification fails\n    \"\"\"\n    if subst is None:\n        subst = {}\n\n    # Apply current substitution\n    term1 = apply_subst(term1, subst)\n    term2 = apply_subst(term2, subst)\n\n    # If identical, already unified\n    if term1 == term2:\n        return subst\n\n    # Variable unification\n    if isinstance(term1, Variable):\n        if occur_check(term1, term2, subst):\n            return None  # Fail\n        subst[term1] = term2\n        return subst\n\n    if isinstance(term2, Variable):\n        if occur_check(term2, term1, subst):\n            return None  # Fail\n        subst[term2] = term1\n        return subst\n\n    # Function unification\n    if isinstance(term1, Function) and isinstance(term2, Function):\n        # Must have same functor and arity\n        if term1.name != term2.name or len(term1.args) != len(term2.args):\n            return None  # Fail\n\n        # Unify arguments pairwise\n        for arg1, arg2 in zip(term1.args, term2.args):\n            subst = unify(arg1, arg2, subst)\n            if subst is None:\n                return None  # Fail\n\n        return subst\n\n    # Constants or mismatched types\n    return None  # Fail\n\n# Test cases\nprint(\"=\"*50)\nprint(\"First-Order Logic Unification Tests\")\nprint(\"=\"*50)\n\n# Test 1: Constant unification\nprint(\"\\nTest 1: Unify constants\")\nc1 = Constant('a')\nc2 = Constant('a')\nc3 = Constant('b')\n\nsubst = unify(c1, c2)\nprint(f\"unify({c1}, {c2}) = {subst}\")\n\nsubst = unify(c1, c3)\nprint(f\"unify({c1}, {c3}) = {subst}\")\n\n# Test 2: Variable unification\nprint(\"\\nTest 2: Unify variables\")\nx = Variable('X')\ny = Variable('Y')\na = Constant('a')\n\nsubst = unify(x, a)\nprint(f\"unify({x}, {a}) = {subst}\")\n\nsubst = unify(x, y)\nprint(f\"unify({x}, {y}) = {subst}\")\n\n# Test 3: Function unification\nprint(\"\\nTest 3: Unify functions\")\n# f(X, a) and f(b, Y)\nf1 = Function('f', [Variable('X'), Constant('a')])\nf2 = Function('f', [Constant('b'), Variable('Y')])\n\nsubst = unify(f1, f2)\nprint(f\"unify({f1}, {f2}) = {subst}\")\n\nif subst:\n    print(f\"  {f1} becomes {apply_subst(f1, subst)}\")\n    print(f\"  {f2} becomes {apply_subst(f2, subst)}\")\n\n# Test 4: Nested functions\nprint(\"\\nTest 4: Nested functions\")\n# g(X, f(X)) and g(f(Y), Y)\nt1 = Function('g', [Variable('X'), Function('f', [Variable('X')])])\nt2 = Function('g', [Function('f', [Variable('Y')]), Variable('Y')])\n\nsubst = unify(t1, t2)\nprint(f\"unify({t1}, {t2}) = {subst}\")\n\nif subst:\n    print(f\"  {t1} becomes {apply_subst(t1, subst)}\")\n    print(f\"  {t2} becomes {apply_subst(t2, subst)}\")\n\n# Test 5: Occur check (should fail)\nprint(\"\\nTest 5: Occur check\")\n# Unify X with f(X) - should fail\nx = Variable('X')\nfx = Function('f', [x])\n\nsubst = unify(x, fx)\nprint(f\"unify({x}, {fx}) = {subst}\")\nprint(\"  (Should fail due to occur check)\")\n\n# Test 6: Complex example\nprint(\"\\nTest 6: Complex example\")\n# loves(X, f(X)) and loves(g(Y), Z)\nt1 = Function('loves', [Variable('X'), Function('f', [Variable('X')])])\nt2 = Function('loves', [Function('g', [Variable('Y')]), Variable('Z')])\n\nsubst = unify(t1, t2)\nprint(f\"unify({t1}, {t2}) = {subst}\")\n\nif subst:\n    print(f\"  {t1} becomes {apply_subst(t1, subst)}\")\n    print(f\"  {t2} becomes {apply_subst(t2, subst)}\")",
+    "testCases": [
+      {
+        "input": "unify(Function(\"f\", [Variable(\"X\")]), Function(\"f\", [Constant(\"a\")]))",
+        "isHidden": false,
+        "description": "Test unifying function terms"
+      },
+      {
+        "input": "unify(Variable(\"X\"), Variable(\"Y\"))",
+        "isHidden": false,
+        "description": "Test unifying two variables"
+      },
+      {
+        "input": "unify(Variable(\"X\"), Function(\"f\", [Variable(\"X\")]))",
+        "isHidden": false,
+        "description": "Test occur check prevents infinite structures"
+      }
+    ],
+    "hints": [
+      "Constants unify only with identical constants",
+      "Variables unify with anything (but check occur check first)",
+      "Functions unify if they have the same name, arity, and all arguments unify",
+      "Occur check: variable X cannot unify with a term containing X (like f(X))"
+    ],
+    "language": "python"
+  }
+]

@@ -1,0 +1,221 @@
+[
+  {
+    "id": "math304-quiz-3-1",
+    "subjectId": "math304",
+    "topicId": "math304-topic-3",
+    "title": "Permutation Groups - Symmetric Group and Cycles",
+    "questions": [
+      {
+        "id": "math304-q31",
+        "type": "multiple_choice",
+        "prompt": "The symmetric group Sₙ consists of:",
+        "options": [
+          "All n×n matrices",
+          "All permutations of n elements",
+          "All rotations in n-dimensional space",
+          "All cyclic permutations of n elements"
+        ],
+        "correctAnswer": "All permutations of n elements",
+        "explanation": "The symmetric group Sₙ is the group of all permutations (bijections) of a set with n elements, under composition."
+      },
+      {
+        "id": "math304-q32",
+        "type": "multiple_choice",
+        "prompt": "What is the order of the symmetric group S₅?",
+        "options": [
+          "5",
+          "25",
+          "60",
+          "120"
+        ],
+        "correctAnswer": "120",
+        "explanation": "The order of Sₙ is n!. For S₅, this is 5! = 5·4·3·2·1 = 120."
+      },
+      {
+        "id": "math304-q33",
+        "type": "multiple_choice",
+        "prompt": "The cycle (1 3 5 2) in S₅ sends 1 to:",
+        "options": [
+          "1",
+          "2",
+          "3",
+          "5"
+        ],
+        "correctAnswer": "3",
+        "explanation": "In cycle notation, (1 3 5 2) means 1→3, 3→5, 5→2, 2→1. So 1 is sent to 3."
+      },
+      {
+        "id": "math304-q34",
+        "type": "multiple_choice",
+        "prompt": "What is the order of the permutation (1 2 3)(4 5) in S₅?",
+        "options": [
+          "2",
+          "3",
+          "5",
+          "6"
+        ],
+        "correctAnswer": "6",
+        "explanation": "The order of a product of disjoint cycles is the lcm of their lengths. Here lcm(3,2) = 6."
+      },
+      {
+        "id": "math304-q35",
+        "type": "multiple_choice",
+        "prompt": "Two cycles are disjoint if:",
+        "options": [
+          "They have no common elements",
+          "They have the same length",
+          "They commute",
+          "Both A and C"
+        ],
+        "correctAnswer": "Both A and C",
+        "explanation": "Two cycles are disjoint if they move no common elements. An important property is that disjoint cycles commute with each other."
+      }
+    ]
+  },
+  {
+    "id": "math304-quiz-3-2",
+    "subjectId": "math304",
+    "topicId": "math304-topic-3",
+    "title": "Permutation Groups - Even/Odd and Alternating Group",
+    "questions": [
+      {
+        "id": "math304-q36",
+        "type": "multiple_choice",
+        "prompt": "A permutation is even if:",
+        "options": [
+          "It can be written as a product of an even number of transpositions",
+          "It has even order",
+          "It moves an even number of elements",
+          "It is in Sₙ where n is even"
+        ],
+        "correctAnswer": "It can be written as a product of an even number of transpositions",
+        "explanation": "A permutation is even if it can be expressed as a product of an even number of transpositions (2-cycles)."
+      },
+      {
+        "id": "math304-q37",
+        "type": "multiple_choice",
+        "prompt": "What is the parity of the permutation (1 2 3 4 5)?",
+        "options": [
+          "Even",
+          "Odd",
+          "Neither",
+          "Depends on the context"
+        ],
+        "correctAnswer": "Even",
+        "explanation": "An n-cycle has parity (-1)^(n-1). The 5-cycle (1 2 3 4 5) has parity (-1)^4 = 1, so it's even. Alternatively, (1 2 3 4 5) = (1 2)(2 3)(3 4)(4 5), which is 4 transpositions, hence even."
+      },
+      {
+        "id": "math304-q38",
+        "type": "multiple_choice",
+        "prompt": "The alternating group Aₙ consists of:",
+        "options": [
+          "All permutations in Sₙ",
+          "All even permutations in Sₙ",
+          "All odd permutations in Sₙ",
+          "All cyclic permutations in Sₙ"
+        ],
+        "correctAnswer": "All even permutations in Sₙ",
+        "explanation": "The alternating group Aₙ is the subgroup of Sₙ consisting of all even permutations."
+      },
+      {
+        "id": "math304-q39",
+        "type": "multiple_choice",
+        "prompt": "What is the order of the alternating group A₄?",
+        "options": [
+          "4",
+          "8",
+          "12",
+          "24"
+        ],
+        "correctAnswer": "12",
+        "explanation": "The alternating group Aₙ has order n!/2. For A₄, this is 4!/2 = 24/2 = 12."
+      },
+      {
+        "id": "math304-q40",
+        "type": "multiple_choice",
+        "prompt": "The product of two even permutations is:",
+        "options": [
+          "Always even",
+          "Always odd",
+          "Sometimes even, sometimes odd",
+          "The identity"
+        ],
+        "correctAnswer": "Always even",
+        "explanation": "The product of two even permutations is even. This is why the set of even permutations forms a subgroup (Aₙ)."
+      }
+    ]
+  },
+  {
+    "id": "math304-quiz-3-3",
+    "subjectId": "math304",
+    "topicId": "math304-topic-3",
+    "title": "Permutation Groups - Dihedral Groups and Cayley's Theorem",
+    "questions": [
+      {
+        "id": "math304-q41",
+        "type": "multiple_choice",
+        "prompt": "The dihedral group Dₙ represents:",
+        "options": [
+          "Rotations of a regular n-gon",
+          "Symmetries (rotations and reflections) of a regular n-gon",
+          "Permutations of n elements",
+          "n×n diagonal matrices"
+        ],
+        "correctAnswer": "Symmetries (rotations and reflections) of a regular n-gon",
+        "explanation": "The dihedral group Dₙ consists of all symmetries of a regular n-gon, including n rotations and n reflections."
+      },
+      {
+        "id": "math304-q42",
+        "type": "multiple_choice",
+        "prompt": "What is the order of the dihedral group D₄ (symmetries of a square)?",
+        "options": [
+          "4",
+          "6",
+          "8",
+          "16"
+        ],
+        "correctAnswer": "8",
+        "explanation": "D₄ has order 2n = 2(4) = 8. It consists of 4 rotations (including the identity) and 4 reflections."
+      },
+      {
+        "id": "math304-q43",
+        "type": "multiple_choice",
+        "prompt": "In the dihedral group Dₙ, if r is a rotation by 360°/n and f is a reflection, which relation holds?",
+        "options": [
+          "rf = fr",
+          "rf = fr⁻¹",
+          "r² = f²",
+          "rf = e"
+        ],
+        "correctAnswer": "rf = fr⁻¹",
+        "explanation": "In Dₙ, the key relation is rf = fr⁻¹ (or equivalently frf = r⁻¹). This captures the non-commutativity of rotations and reflections."
+      },
+      {
+        "id": "math304-q44",
+        "type": "multiple_choice",
+        "prompt": "Cayley's Theorem states that:",
+        "options": [
+          "Every group is cyclic",
+          "Every group is abelian",
+          "Every group is isomorphic to a subgroup of some symmetric group",
+          "Every finite group is isomorphic to Sₙ for some n"
+        ],
+        "correctAnswer": "Every group is isomorphic to a subgroup of some symmetric group",
+        "explanation": "Cayley's Theorem: Every group G is isomorphic to a subgroup of the symmetric group on G, denoted S_G. This shows permutation groups are fundamental."
+      },
+      {
+        "id": "math304-q45",
+        "type": "multiple_choice",
+        "prompt": "According to Cayley's Theorem, a group of order 6 can be embedded in:",
+        "options": [
+          "S₃",
+          "S₄",
+          "S₆",
+          "Any of the above"
+        ],
+        "correctAnswer": "S₆",
+        "explanation": "Cayley's Theorem guarantees that a group of order n embeds in Sₙ. So a group of order 6 embeds in S₆. (It might also embed in smaller Sₘ, but S₆ is guaranteed.)"
+      }
+    ]
+  }
+]

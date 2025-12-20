@@ -1,0 +1,434 @@
+[
+  {
+    "id": "cs403-t5-ex01",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-5",
+    "title": "Matrix Chain Multiplication",
+    "difficulty": 3,
+    "description": "Find the optimal way to multiply a chain of matrices to minimize scalar multiplications.",
+    "starterCode": "def matrix_chain_order(dimensions):\n    \"\"\"\n    Find minimum scalar multiplications for matrix chain.\n\n    Args:\n        dimensions: List where matrix i is dimensions[i-1] x dimensions[i]\n\n    Returns:\n        int: Minimum number of scalar multiplications\n    \"\"\"\n    # Your code here\n    pass",
+    "solution": "def matrix_chain_order(dimensions):\n    n = len(dimensions) - 1\n    dp = [[0] * n for _ in range(n)]\n\n    for l in range(2, n + 1):\n        for i in range(n - l + 1):\n            j = i + l - 1\n            dp[i][j] = float('inf')\n            for k in range(i, j):\n                cost = dp[i][k] + dp[k+1][j] + dimensions[i] * dimensions[k+1] * dimensions[j+1]\n                dp[i][j] = min(dp[i][j], cost)\n\n    return dp[0][n-1]",
+    "testCases": [
+      {
+        "input": "dimensions = [10, 20, 30, 40, 30]",
+        "isHidden": false,
+        "description": "Four matrices"
+      },
+      {
+        "input": "dimensions = [10, 20, 30]",
+        "isHidden": false,
+        "description": "Two matrices"
+      }
+    ],
+    "hints": [
+      "dp[i][j] = min cost to multiply matrices i through j",
+      "Try all split points k"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs403-t5-ex02",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-5",
+    "title": "Edit Distance",
+    "difficulty": 3,
+    "description": "Compute minimum edit distance between two strings using DP.",
+    "starterCode": "def edit_distance(str1, str2):\n    \"\"\"\n    Compute minimum edit distance.\n\n    Args:\n        str1, str2: Input strings\n\n    Returns:\n        int: Minimum operations to transform str1 to str2\n    \"\"\"\n    # Your code here\n    pass",
+    "solution": "def edit_distance(str1, str2):\n    m, n = len(str1), len(str2)\n    dp = [[0] * (n + 1) for _ in range(m + 1)]\n\n    for i in range(m + 1):\n        dp[i][0] = i\n    for j in range(n + 1):\n        dp[0][j] = j\n\n    for i in range(1, m + 1):\n        for j in range(1, n + 1):\n            if str1[i-1] == str2[j-1]:\n                dp[i][j] = dp[i-1][j-1]\n            else:\n                dp[i][j] = 1 + min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1])\n\n    return dp[m][n]",
+    "testCases": [
+      {
+        "input": "str1 = \"kitten\", str2 = \"sitting\"",
+        "isHidden": false,
+        "description": "Classic example"
+      },
+      {
+        "input": "str1 = \"horse\", str2 = \"ros\"",
+        "isHidden": false,
+        "description": "Multiple ops"
+      }
+    ],
+    "hints": [
+      "dp[i][j] = edit distance of first i chars and first j chars",
+      "Three operations: insert, delete, substitute"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs403-t5-ex03",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-5",
+    "title": "Longest Common Subsequence",
+    "difficulty": 2,
+    "description": "Find the length of the longest common subsequence of two strings.",
+    "starterCode": "def lcs_length(str1, str2):\n    \"\"\"\n    Find length of longest common subsequence.\n\n    Args:\n        str1, str2: Input strings\n\n    Returns:\n        int: Length of LCS\n    \"\"\"\n    # Your code here\n    pass",
+    "solution": "def lcs_length(str1, str2):\n    m, n = len(str1), len(str2)\n    dp = [[0] * (n + 1) for _ in range(m + 1)]\n\n    for i in range(1, m + 1):\n        for j in range(1, n + 1):\n            if str1[i-1] == str2[j-1]:\n                dp[i][j] = dp[i-1][j-1] + 1\n            else:\n                dp[i][j] = max(dp[i-1][j], dp[i][j-1])\n\n    return dp[m][n]",
+    "testCases": [
+      {
+        "input": "str1 = \"ABCBDAB\", str2 = \"BDCAB\"",
+        "isHidden": false,
+        "description": "LCS is BCAB or BDAB"
+      },
+      {
+        "input": "str1 = \"AGGTAB\", str2 = \"GXTXAYB\"",
+        "isHidden": false,
+        "description": "LCS is GTAB"
+      }
+    ],
+    "hints": [
+      "If chars match, extend LCS",
+      "Otherwise take max of excluding either char"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs403-t5-ex04",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-5",
+    "title": "Reconstruct LCS",
+    "difficulty": 3,
+    "description": "Not just find the length, but reconstruct an actual LCS.",
+    "starterCode": "def lcs(str1, str2):\n    \"\"\"\n    Find an actual longest common subsequence.\n\n    Args:\n        str1, str2: Input strings\n\n    Returns:\n        str: A longest common subsequence\n    \"\"\"\n    # Your code here\n    pass",
+    "solution": "def lcs(str1, str2):\n    m, n = len(str1), len(str2)\n    dp = [[0] * (n + 1) for _ in range(m + 1)]\n\n    for i in range(1, m + 1):\n        for j in range(1, n + 1):\n            if str1[i-1] == str2[j-1]:\n                dp[i][j] = dp[i-1][j-1] + 1\n            else:\n                dp[i][j] = max(dp[i-1][j], dp[i][j-1])\n\n    # Backtrack\n    result = []\n    i, j = m, n\n    while i > 0 and j > 0:\n        if str1[i-1] == str2[j-1]:\n            result.append(str1[i-1])\n            i -= 1\n            j -= 1\n        elif dp[i-1][j] > dp[i][j-1]:\n            i -= 1\n        else:\n            j -= 1\n\n    return ''.join(reversed(result))",
+    "testCases": [
+      {
+        "input": "str1 = \"ABCDGH\", str2 = \"AEDFHR\"",
+        "isHidden": false,
+        "description": "LCS is ADH"
+      },
+      {
+        "input": "str1 = \"ABC\", str2 = \"AC\"",
+        "isHidden": false,
+        "description": "Simple case"
+      }
+    ],
+    "hints": [
+      "Build DP table first",
+      "Backtrack from dp[m][n] to reconstruct"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs403-t5-ex05",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-5",
+    "title": "0/1 Knapsack",
+    "difficulty": 3,
+    "description": "Solve the classic 0/1 knapsack problem using dynamic programming.",
+    "starterCode": "def knapsack(weights, values, capacity):\n    \"\"\"\n    Find maximum value achievable within capacity.\n\n    Args:\n        weights: List of item weights\n        values: List of item values\n        capacity: Knapsack capacity\n\n    Returns:\n        int: Maximum value\n    \"\"\"\n    # Your code here\n    pass",
+    "solution": "def knapsack(weights, values, capacity):\n    n = len(weights)\n    dp = [[0] * (capacity + 1) for _ in range(n + 1)]\n\n    for i in range(1, n + 1):\n        for w in range(capacity + 1):\n            dp[i][w] = dp[i-1][w]  # Don't take item i\n            if weights[i-1] <= w:\n                dp[i][w] = max(dp[i][w], dp[i-1][w-weights[i-1]] + values[i-1])\n\n    return dp[n][capacity]",
+    "testCases": [
+      {
+        "input": "weights = [2, 3, 4, 5], values = [3, 4, 5, 6], capacity = 8",
+        "isHidden": false,
+        "description": "Standard knapsack"
+      },
+      {
+        "input": "weights = [1, 2, 3], values = [10, 15, 40], capacity = 4",
+        "isHidden": false,
+        "description": "Choose items 2 and 3"
+      }
+    ],
+    "hints": [
+      "dp[i][w] = max value using first i items with capacity w",
+      "Either take or skip each item"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs403-t5-ex06",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-5",
+    "title": "Knapsack Item Reconstruction",
+    "difficulty": 3,
+    "description": "Find which items are selected in optimal knapsack solution.",
+    "starterCode": "def knapsack_items(weights, values, capacity):\n    \"\"\"\n    Find items selected in optimal knapsack solution.\n\n    Args:\n        weights, values: Item weights and values\n        capacity: Knapsack capacity\n\n    Returns:\n        list: Indices of selected items\n    \"\"\"\n    # Your code here\n    pass",
+    "solution": "def knapsack_items(weights, values, capacity):\n    n = len(weights)\n    dp = [[0] * (capacity + 1) for _ in range(n + 1)]\n\n    for i in range(1, n + 1):\n        for w in range(capacity + 1):\n            dp[i][w] = dp[i-1][w]\n            if weights[i-1] <= w:\n                dp[i][w] = max(dp[i][w], dp[i-1][w-weights[i-1]] + values[i-1])\n\n    # Backtrack\n    selected = []\n    w = capacity\n    for i in range(n, 0, -1):\n        if dp[i][w] != dp[i-1][w]:\n            selected.append(i - 1)\n            w -= weights[i-1]\n\n    return selected[::-1]",
+    "testCases": [
+      {
+        "input": "weights = [2, 3, 4, 5], values = [3, 4, 5, 6], capacity = 8",
+        "isHidden": false,
+        "description": "Find selected items"
+      },
+      {
+        "input": "weights = [1, 2, 3], values = [6, 10, 12], capacity = 5",
+        "isHidden": false,
+        "description": "Items 1 and 2"
+      }
+    ],
+    "hints": [
+      "Build DP table first",
+      "Backtrack to find which items were taken"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs403-t5-ex07",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-5",
+    "title": "Unbounded Knapsack",
+    "difficulty": 2,
+    "description": "Solve knapsack where items can be used unlimited times.",
+    "starterCode": "def unbounded_knapsack(weights, values, capacity):\n    \"\"\"\n    Knapsack with unlimited copies of each item.\n\n    Args:\n        weights, values: Item properties\n        capacity: Knapsack capacity\n\n    Returns:\n        int: Maximum value\n    \"\"\"\n    # Your code here\n    pass",
+    "solution": "def unbounded_knapsack(weights, values, capacity):\n    dp = [0] * (capacity + 1)\n\n    for w in range(1, capacity + 1):\n        for i in range(len(weights)):\n            if weights[i] <= w:\n                dp[w] = max(dp[w], dp[w - weights[i]] + values[i])\n\n    return dp[capacity]",
+    "testCases": [
+      {
+        "input": "weights = [1, 3, 4, 5], values = [10, 40, 50, 70], capacity = 8",
+        "isHidden": false,
+        "description": "Can repeat items"
+      },
+      {
+        "input": "weights = [2, 4], values = [5, 11], capacity = 10",
+        "isHidden": false,
+        "description": "Choose wisely"
+      }
+    ],
+    "hints": [
+      "1D DP suffices since items can repeat",
+      "dp[w] = max value with capacity w"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs403-t5-ex08",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-5",
+    "title": "Coin Change Minimum Coins",
+    "difficulty": 2,
+    "description": "Find minimum number of coins to make a given amount.",
+    "starterCode": "def coin_change(coins, amount):\n    \"\"\"\n    Find minimum coins needed for amount.\n\n    Args:\n        coins: List of coin denominations\n        amount: Target amount\n\n    Returns:\n        int: Minimum coins, or -1 if impossible\n    \"\"\"\n    # Your code here\n    pass",
+    "solution": "def coin_change(coins, amount):\n    dp = [float('inf')] * (amount + 1)\n    dp[0] = 0\n\n    for a in range(1, amount + 1):\n        for coin in coins:\n            if coin <= a and dp[a - coin] + 1 < dp[a]:\n                dp[a] = dp[a - coin] + 1\n\n    return dp[amount] if dp[amount] != float('inf') else -1",
+    "testCases": [
+      {
+        "input": "coins = [1, 2, 5], amount = 11",
+        "isHidden": false,
+        "description": "5+5+1 = 3 coins"
+      },
+      {
+        "input": "coins = [2], amount = 3",
+        "isHidden": false,
+        "description": "Impossible"
+      }
+    ],
+    "hints": [
+      "dp[a] = min coins for amount a",
+      "Try all coins that fit"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs403-t5-ex09",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-5",
+    "title": "Coin Change Count Ways",
+    "difficulty": 2,
+    "description": "Count the number of ways to make change for an amount.",
+    "starterCode": "def coin_change_ways(coins, amount):\n    \"\"\"\n    Count ways to make change.\n\n    Args:\n        coins: Coin denominations\n        amount: Target amount\n\n    Returns:\n        int: Number of distinct ways\n    \"\"\"\n    # Your code here\n    pass",
+    "solution": "def coin_change_ways(coins, amount):\n    dp = [0] * (amount + 1)\n    dp[0] = 1\n\n    for coin in coins:\n        for a in range(coin, amount + 1):\n            dp[a] += dp[a - coin]\n\n    return dp[amount]",
+    "testCases": [
+      {
+        "input": "coins = [1, 2, 5], amount = 5",
+        "isHidden": false,
+        "description": "4 ways: 5, 2+2+1, 2+1+1+1, 1+1+1+1+1"
+      },
+      {
+        "input": "coins = [2], amount = 3",
+        "isHidden": false,
+        "description": "0 ways"
+      }
+    ],
+    "hints": [
+      "Process coins one at a time to avoid counting duplicates",
+      "dp[a] = number of ways to make a"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs403-t5-ex10",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-5",
+    "title": "TSP via Bitmask DP",
+    "difficulty": 5,
+    "description": "Solve TSP exactly using Held-Karp algorithm with bitmask DP.",
+    "starterCode": "def tsp_held_karp(dist):\n    \"\"\"\n    Solve TSP using Held-Karp algorithm.\n\n    Args:\n        dist: Distance matrix (n x n)\n\n    Returns:\n        int: Minimum tour cost\n    \"\"\"\n    # Your code here\n    pass",
+    "solution": "def tsp_held_karp(dist):\n    n = len(dist)\n    INF = float('inf')\n    dp = [[INF] * n for _ in range(1 << n)]\n    dp[1][0] = 0  # Start at city 0\n\n    for mask in range(1 << n):\n        for last in range(n):\n            if not (mask & (1 << last)):\n                continue\n            if dp[mask][last] == INF:\n                continue\n\n            for next_city in range(n):\n                if mask & (1 << next_city):\n                    continue\n                new_mask = mask | (1 << next_city)\n                dp[new_mask][next_city] = min(dp[new_mask][next_city],\n                                               dp[mask][last] + dist[last][next_city])\n\n    full_mask = (1 << n) - 1\n    result = min(dp[full_mask][last] + dist[last][0] for last in range(1, n))\n    return result",
+    "testCases": [
+      {
+        "input": "dist = [[0,10,15,20],[10,0,35,25],[15,35,0,30],[20,25,30,0]]",
+        "isHidden": false,
+        "description": "4 cities"
+      },
+      {
+        "input": "dist = [[0,1,2],[1,0,1],[2,1,0]]",
+        "isHidden": false,
+        "description": "3 cities - triangle"
+      }
+    ],
+    "hints": [
+      "Bitmask represents visited cities",
+      "dp[mask][last] = min cost to visit cities in mask, ending at last"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs403-t5-ex11",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-5",
+    "title": "Longest Increasing Subsequence",
+    "difficulty": 3,
+    "description": "Find length of longest strictly increasing subsequence.",
+    "starterCode": "def lis_length(nums):\n    \"\"\"\n    Find length of longest increasing subsequence.\n\n    Args:\n        nums: List of integers\n\n    Returns:\n        int: LIS length\n    \"\"\"\n    # Your code here\n    pass",
+    "solution": "def lis_length(nums):\n    if not nums:\n        return 0\n\n    n = len(nums)\n    dp = [1] * n  # dp[i] = LIS ending at i\n\n    for i in range(1, n):\n        for j in range(i):\n            if nums[j] < nums[i]:\n                dp[i] = max(dp[i], dp[j] + 1)\n\n    return max(dp)",
+    "testCases": [
+      {
+        "input": "nums = [10, 9, 2, 5, 3, 7, 101, 18]",
+        "isHidden": false,
+        "description": "LIS is [2,3,7,101]"
+      },
+      {
+        "input": "nums = [0, 1, 0, 3, 2, 3]",
+        "isHidden": false,
+        "description": "LIS length 4"
+      }
+    ],
+    "hints": [
+      "dp[i] = length of LIS ending at index i",
+      "O(n²) basic, O(n log n) with binary search"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs403-t5-ex12",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-5",
+    "title": "LIS O(n log n)",
+    "difficulty": 4,
+    "description": "Implement the O(n log n) LIS algorithm using binary search.",
+    "starterCode": "def lis_fast(nums):\n    \"\"\"\n    O(n log n) LIS algorithm.\n\n    Args:\n        nums: List of integers\n\n    Returns:\n        int: LIS length\n    \"\"\"\n    # Your code here\n    pass",
+    "solution": "import bisect\n\ndef lis_fast(nums):\n    if not nums:\n        return 0\n\n    tails = []  # tails[i] = smallest tail of LIS of length i+1\n\n    for num in nums:\n        pos = bisect.bisect_left(tails, num)\n        if pos == len(tails):\n            tails.append(num)\n        else:\n            tails[pos] = num\n\n    return len(tails)",
+    "testCases": [
+      {
+        "input": "nums = [10, 9, 2, 5, 3, 7, 101, 18]",
+        "isHidden": false,
+        "description": "Same result, faster"
+      },
+      {
+        "input": "nums = [1, 3, 6, 7, 9, 4, 10, 5, 6]",
+        "isHidden": false,
+        "description": "Longer sequence"
+      }
+    ],
+    "hints": [
+      "Maintain array of smallest tails for each length",
+      "Use binary search to find position"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs403-t5-ex13",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-5",
+    "title": "Optimal Binary Search Tree",
+    "difficulty": 4,
+    "description": "Find the minimum cost BST given search frequencies.",
+    "starterCode": "def optimal_bst(keys, freq):\n    \"\"\"\n    Find minimum expected search cost BST.\n\n    Args:\n        keys: Sorted keys\n        freq: Search frequency for each key\n\n    Returns:\n        float: Minimum expected cost\n    \"\"\"\n    # Your code here\n    pass",
+    "solution": "def optimal_bst(keys, freq):\n    n = len(keys)\n    dp = [[0] * n for _ in range(n)]\n    prefix_sum = [0] * (n + 1)\n    for i in range(n):\n        prefix_sum[i+1] = prefix_sum[i] + freq[i]\n\n    def sum_freq(i, j):\n        return prefix_sum[j+1] - prefix_sum[i]\n\n    for i in range(n):\n        dp[i][i] = freq[i]\n\n    for l in range(2, n + 1):\n        for i in range(n - l + 1):\n            j = i + l - 1\n            dp[i][j] = float('inf')\n            for r in range(i, j + 1):\n                left = dp[i][r-1] if r > i else 0\n                right = dp[r+1][j] if r < j else 0\n                cost = left + right + sum_freq(i, j)\n                dp[i][j] = min(dp[i][j], cost)\n\n    return dp[0][n-1]",
+    "testCases": [
+      {
+        "input": "keys = [10, 12, 20], freq = [34, 8, 50]",
+        "isHidden": false,
+        "description": "Three keys"
+      },
+      {
+        "input": "keys = [1, 2, 3, 4], freq = [1, 2, 3, 4]",
+        "isHidden": false,
+        "description": "Four keys"
+      }
+    ],
+    "hints": [
+      "Try each key as root",
+      "Cost = left subtree + right subtree + sum of frequencies"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs403-t5-ex14",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-5",
+    "title": "Rod Cutting",
+    "difficulty": 2,
+    "description": "Find maximum revenue from cutting a rod into pieces.",
+    "starterCode": "def rod_cutting(prices, n):\n    \"\"\"\n    Find maximum revenue from rod of length n.\n\n    Args:\n        prices: prices[i] = price for rod of length i+1\n        n: Rod length\n\n    Returns:\n        int: Maximum revenue\n    \"\"\"\n    # Your code here\n    pass",
+    "solution": "def rod_cutting(prices, n):\n    dp = [0] * (n + 1)\n\n    for i in range(1, n + 1):\n        for j in range(1, min(i, len(prices)) + 1):\n            dp[i] = max(dp[i], prices[j-1] + dp[i-j])\n\n    return dp[n]",
+    "testCases": [
+      {
+        "input": "prices = [1, 5, 8, 9, 10, 17, 17, 20], n = 8",
+        "isHidden": false,
+        "description": "Rod of length 8"
+      },
+      {
+        "input": "prices = [2, 5, 7, 8], n = 5",
+        "isHidden": false,
+        "description": "Rod of length 5"
+      }
+    ],
+    "hints": [
+      "dp[i] = max revenue for rod of length i",
+      "Try all first cut positions"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs403-t5-ex15",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-5",
+    "title": "Palindrome Partitioning",
+    "difficulty": 4,
+    "description": "Find minimum cuts to partition string into palindromes.",
+    "starterCode": "def min_palindrome_cuts(s):\n    \"\"\"\n    Minimum cuts to partition into palindromes.\n\n    Args:\n        s: Input string\n\n    Returns:\n        int: Minimum number of cuts\n    \"\"\"\n    # Your code here\n    pass",
+    "solution": "def min_palindrome_cuts(s):\n    n = len(s)\n    if n <= 1:\n        return 0\n\n    # Precompute palindrome table\n    is_palin = [[False] * n for _ in range(n)]\n    for i in range(n):\n        is_palin[i][i] = True\n    for i in range(n - 1):\n        is_palin[i][i+1] = (s[i] == s[i+1])\n    for l in range(3, n + 1):\n        for i in range(n - l + 1):\n            j = i + l - 1\n            is_palin[i][j] = (s[i] == s[j]) and is_palin[i+1][j-1]\n\n    # dp[i] = min cuts for s[0..i]\n    dp = list(range(n))\n    for i in range(1, n):\n        if is_palin[0][i]:\n            dp[i] = 0\n        else:\n            for j in range(i):\n                if is_palin[j+1][i]:\n                    dp[i] = min(dp[i], dp[j] + 1)\n\n    return dp[n-1]",
+    "testCases": [
+      {
+        "input": "s = \"aab\"",
+        "isHidden": false,
+        "description": "Cut into \"aa\" and \"b\""
+      },
+      {
+        "input": "s = \"aabba\"",
+        "isHidden": false,
+        "description": "Already palindrome"
+      }
+    ],
+    "hints": [
+      "Precompute all palindrome substrings",
+      "dp[i] = min cuts for prefix of length i+1"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs403-t5-ex16",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-5",
+    "title": "Egg Drop Problem",
+    "difficulty": 4,
+    "description": "Find minimum trials to find critical floor with k eggs and n floors.",
+    "starterCode": "def egg_drop(eggs, floors):\n    \"\"\"\n    Minimum trials for egg drop problem.\n\n    Args:\n        eggs: Number of eggs\n        floors: Number of floors\n\n    Returns:\n        int: Minimum trials in worst case\n    \"\"\"\n    # Your code here\n    pass",
+    "solution": "def egg_drop(eggs, floors):\n    # dp[e][f] = min trials with e eggs and f floors\n    dp = [[0] * (floors + 1) for _ in range(eggs + 1)]\n\n    # Base cases\n    for f in range(floors + 1):\n        dp[1][f] = f  # 1 egg: must try linearly\n\n    for e in range(1, eggs + 1):\n        dp[e][0] = 0\n        dp[e][1] = 1\n\n    for e in range(2, eggs + 1):\n        for f in range(2, floors + 1):\n            dp[e][f] = float('inf')\n            for x in range(1, f + 1):\n                # Drop from floor x\n                breaks = dp[e-1][x-1]      # Egg breaks: search below\n                survives = dp[e][f-x]       # Egg survives: search above\n                worst = 1 + max(breaks, survives)\n                dp[e][f] = min(dp[e][f], worst)\n\n    return dp[eggs][floors]",
+    "testCases": [
+      {
+        "input": "eggs = 2, floors = 10",
+        "isHidden": false,
+        "description": "Classic 2 eggs, 10 floors"
+      },
+      {
+        "input": "eggs = 3, floors = 14",
+        "isHidden": false,
+        "description": "3 eggs, 14 floors"
+      }
+    ],
+    "hints": [
+      "Try dropping from each floor",
+      "Take max of break/survive (worst case), min over choices"
+    ],
+    "language": "python"
+  }
+]

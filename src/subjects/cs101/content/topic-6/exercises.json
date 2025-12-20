@@ -1,0 +1,491 @@
+[
+  {
+    "id": "cs101-exercise-6",
+    "subjectId": "cs101",
+    "topicId": "cs101-topic-6",
+    "title": "Safe Division",
+    "difficulty": 1,
+    "description": "Write a function that divides two numbers but returns None if division by zero is attempted.",
+    "starterCode": "def safe_divide(a, b):\n    # Your code here\n    pass\n\n# Test your function\nprint(safe_divide(10, 2))\nprint(safe_divide(10, 0))",
+    "solution": "def safe_divide(a, b):\n    try:\n        return a / b\n    except ZeroDivisionError:\n        return None\n\nprint(safe_divide(10, 2))\nprint(safe_divide(10, 0))",
+    "testCases": [
+      {
+        "input": "10, 2",
+        "isHidden": false,
+        "description": "Normal division"
+      },
+      {
+        "input": "10, 0",
+        "isHidden": false,
+        "description": "Division by zero"
+      },
+      {
+        "input": "-15, 3",
+        "isHidden": true,
+        "description": "Negative numbers"
+      }
+    ],
+    "hints": [
+      "Use a try/except block",
+      "Catch ZeroDivisionError specifically",
+      "Return None when the exception occurs",
+      "Return the result of a / b otherwise"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs101-t6-ex02",
+    "subjectId": "cs101",
+    "topicId": "cs101-topic-6",
+    "title": "Parse Integer Safely",
+    "difficulty": 1,
+    "description": "Write a function that converts a string to an integer. Return a default value if conversion fails.",
+    "starterCode": "# Convert string to int with default value\ndef parse_int(s, default=0):\n    # Your code here\n    pass\n\n# Test your function\nprint(parse_int(\"42\"))\nprint(parse_int(\"hello\"))\nprint(parse_int(\"abc\", -1))",
+    "solution": "def parse_int(s, default=0):\n    try:\n        return int(s)\n    except ValueError:\n        return default\n\nprint(parse_int(\"42\"))\nprint(parse_int(\"hello\"))\nprint(parse_int(\"abc\", -1))",
+    "testCases": [
+      {
+        "input": "\"42\"",
+        "isHidden": false,
+        "description": "Valid integer string"
+      },
+      {
+        "input": "\"hello\"",
+        "isHidden": false,
+        "description": "Invalid string"
+      },
+      {
+        "input": "\"abc\", -1",
+        "isHidden": false,
+        "description": "Invalid with custom default"
+      }
+    ],
+    "hints": [
+      "Use int() to convert strings to integers",
+      "int() raises ValueError for invalid strings",
+      "Catch ValueError and return the default",
+      "The default parameter has a default value of 0"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs101-t6-ex03",
+    "subjectId": "cs101",
+    "topicId": "cs101-topic-6",
+    "title": "Safe List Access",
+    "difficulty": 2,
+    "description": "Write a function that safely accesses a list element by index, returning None if the index is out of bounds.",
+    "starterCode": "# Safely get element from list\ndef safe_get(lst, index):\n    # Your code here\n    pass\n\n# Test your function\nnumbers = [10, 20, 30]\nprint(safe_get(numbers, 1))\nprint(safe_get(numbers, 10))",
+    "solution": "def safe_get(lst, index):\n    try:\n        return lst[index]\n    except IndexError:\n        return None\n\nnumbers = [10, 20, 30]\nprint(safe_get(numbers, 1))\nprint(safe_get(numbers, 10))",
+    "testCases": [
+      {
+        "input": "[10, 20, 30], 1",
+        "isHidden": false,
+        "description": "Valid index"
+      },
+      {
+        "input": "[10, 20, 30], 10",
+        "isHidden": false,
+        "description": "Index out of bounds"
+      },
+      {
+        "input": "[], 0",
+        "isHidden": true,
+        "description": "Empty list"
+      }
+    ],
+    "hints": [
+      "Try to access lst[index]",
+      "Catch IndexError for out-of-bounds access",
+      "Return None when exception occurs",
+      "Return the element otherwise"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs101-t6-ex04",
+    "subjectId": "cs101",
+    "topicId": "cs101-topic-6",
+    "title": "Safe Dictionary Access",
+    "difficulty": 2,
+    "description": "Write a function that safely accesses a nested dictionary path like \"user.address.city\". Return None if any key is missing.",
+    "starterCode": "# Safely access nested dictionary keys\ndef safe_nested_get(d, path):\n    # path is a string like \"user.address.city\"\n    # Your code here\n    pass\n\n# Test your function\ndata = {\"user\": {\"name\": \"Alice\", \"address\": {\"city\": \"NYC\"}}}\nprint(safe_nested_get(data, \"user.name\"))\nprint(safe_nested_get(data, \"user.address.city\"))\nprint(safe_nested_get(data, \"user.phone\"))",
+    "solution": "def safe_nested_get(d, path):\n    keys = path.split(\".\")\n    current = d\n    try:\n        for key in keys:\n            current = current[key]\n        return current\n    except (KeyError, TypeError):\n        return None\n\ndata = {\"user\": {\"name\": \"Alice\", \"address\": {\"city\": \"NYC\"}}}\nprint(safe_nested_get(data, \"user.name\"))\nprint(safe_nested_get(data, \"user.address.city\"))\nprint(safe_nested_get(data, \"user.phone\"))",
+    "testCases": [
+      {
+        "input": "{\"user\": {\"name\": \"Alice\"}}, \"user.name\"",
+        "isHidden": false,
+        "description": "Valid path"
+      },
+      {
+        "input": "{\"user\": {\"name\": \"Alice\"}}, \"user.phone\"",
+        "isHidden": false,
+        "description": "Missing key"
+      }
+    ],
+    "hints": [
+      "Split the path by \".\" to get individual keys",
+      "Traverse the dictionary one key at a time",
+      "Catch KeyError for missing keys",
+      "Also catch TypeError in case a value is not a dict"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs101-t6-ex05",
+    "subjectId": "cs101",
+    "topicId": "cs101-topic-6",
+    "title": "Validate Positive Number",
+    "difficulty": 2,
+    "description": "Write a function that raises a ValueError if the input is not a positive number.",
+    "starterCode": "# Validate that input is positive\ndef validate_positive(n):\n    # Raise ValueError if not positive\n    # Return n if valid\n    pass\n\n# Test your function\ntry:\n    print(validate_positive(5))\n    print(validate_positive(-3))\nexcept ValueError as e:\n    print(f\"Error: {e}\")",
+    "solution": "def validate_positive(n):\n    if n <= 0:\n        raise ValueError(f\"Expected positive number, got {n}\")\n    return n\n\ntry:\n    print(validate_positive(5))\n    print(validate_positive(-3))\nexcept ValueError as e:\n    print(f\"Error: {e}\")",
+    "testCases": [
+      {
+        "input": "5",
+        "isHidden": false,
+        "description": "Positive number"
+      },
+      {
+        "input": "-3",
+        "isHidden": false,
+        "description": "Negative number raises error"
+      },
+      {
+        "input": "0",
+        "isHidden": true,
+        "description": "Zero raises error"
+      }
+    ],
+    "hints": [
+      "Use if to check if n <= 0",
+      "Use raise ValueError(\"message\") to raise an error",
+      "Include a helpful error message",
+      "Return n if it passes validation"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs101-t6-ex06",
+    "subjectId": "cs101",
+    "topicId": "cs101-topic-6",
+    "title": "Multiple Exception Handler",
+    "difficulty": 3,
+    "description": "Write a function that processes a value: converts it to int, divides 100 by it, and returns the result. Handle ValueError and ZeroDivisionError with specific messages.",
+    "starterCode": "# Process value with multiple possible errors\ndef process_value(value):\n    # Return {\"success\": True, \"result\": ...} or\n    # {\"success\": False, \"error\": \"...\"}\n    pass\n\n# Test your function\nprint(process_value(\"5\"))\nprint(process_value(\"hello\"))\nprint(process_value(\"0\"))",
+    "solution": "def process_value(value):\n    try:\n        num = int(value)\n        result = 100 / num\n        return {\"success\": True, \"result\": result}\n    except ValueError:\n        return {\"success\": False, \"error\": \"Invalid number format\"}\n    except ZeroDivisionError:\n        return {\"success\": False, \"error\": \"Cannot divide by zero\"}\n\nprint(process_value(\"5\"))\nprint(process_value(\"hello\"))\nprint(process_value(\"0\"))",
+    "testCases": [
+      {
+        "input": "\"5\"",
+        "isHidden": false,
+        "description": "Valid input"
+      },
+      {
+        "input": "\"hello\"",
+        "isHidden": false,
+        "description": "Invalid number"
+      },
+      {
+        "input": "\"0\"",
+        "isHidden": false,
+        "description": "Division by zero"
+      }
+    ],
+    "hints": [
+      "First convert to int, then divide",
+      "Use separate except blocks for each error type",
+      "Return a dictionary with success status",
+      "Include descriptive error messages"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs101-t6-ex07",
+    "subjectId": "cs101",
+    "topicId": "cs101-topic-6",
+    "title": "Try-Else-Finally",
+    "difficulty": 3,
+    "description": "Write a function that opens a file, reads its content, and always prints \"Cleanup done\" at the end. Use try/except/else/finally.",
+    "starterCode": "# Read file with proper cleanup\ndef read_with_cleanup(filename):\n    # Use try/except/else/finally\n    # Return content or None if file not found\n    pass\n\n# Test your function\nprint(read_with_cleanup(\"existing.txt\"))\nprint(read_with_cleanup(\"nonexistent.txt\"))",
+    "solution": "def read_with_cleanup(filename):\n    content = None\n    try:\n        file = open(filename, \"r\")\n    except FileNotFoundError:\n        print(\"File not found!\")\n    else:\n        content = file.read()\n        file.close()\n        print(\"File read successfully!\")\n    finally:\n        print(\"Cleanup done\")\n    return content\n\nprint(read_with_cleanup(\"existing.txt\"))\nprint(read_with_cleanup(\"nonexistent.txt\"))",
+    "testCases": [
+      {
+        "input": "\"existing.txt\"",
+        "isHidden": false,
+        "description": "File exists"
+      },
+      {
+        "input": "\"nonexistent.txt\"",
+        "isHidden": false,
+        "description": "File not found"
+      }
+    ],
+    "hints": [
+      "try block attempts to open the file",
+      "except handles FileNotFoundError",
+      "else runs only if no exception occurred (read content here)",
+      "finally always runs (print cleanup message)"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs101-t6-ex08",
+    "subjectId": "cs101",
+    "topicId": "cs101-topic-6",
+    "title": "Custom Exception",
+    "difficulty": 4,
+    "description": "Create a custom InvalidAgeError exception and a function that validates ages (must be between 0 and 150).",
+    "starterCode": "# Define custom exception\nclass InvalidAgeError(Exception):\n    pass\n\n# Validate age\ndef validate_age(age):\n    # Raise InvalidAgeError if age is invalid\n    # Return age if valid\n    pass\n\n# Test your function\ntry:\n    print(validate_age(25))\n    print(validate_age(-5))\nexcept InvalidAgeError as e:\n    print(f\"Invalid: {e}\")",
+    "solution": "class InvalidAgeError(Exception):\n    def __init__(self, age, message=None):\n        self.age = age\n        if message is None:\n            message = f\"Invalid age: {age}. Must be between 0 and 150.\"\n        super().__init__(message)\n\ndef validate_age(age):\n    if age < 0:\n        raise InvalidAgeError(age, \"Age cannot be negative\")\n    if age > 150:\n        raise InvalidAgeError(age, \"Age cannot exceed 150\")\n    return age\n\ntry:\n    print(validate_age(25))\n    print(validate_age(-5))\nexcept InvalidAgeError as e:\n    print(f\"Invalid: {e}\")",
+    "testCases": [
+      {
+        "input": "25",
+        "isHidden": false,
+        "description": "Valid age"
+      },
+      {
+        "input": "-5",
+        "isHidden": false,
+        "description": "Negative age"
+      },
+      {
+        "input": "200",
+        "isHidden": true,
+        "description": "Age too high"
+      }
+    ],
+    "hints": [
+      "Create a class that inherits from Exception",
+      "Override __init__ to accept custom parameters",
+      "Call super().__init__(message) with your message",
+      "Use raise InvalidAgeError(...) in the validation function"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs101-t6-ex09",
+    "subjectId": "cs101",
+    "topicId": "cs101-topic-6",
+    "title": "Assertion Practice",
+    "difficulty": 3,
+    "description": "Write a function that calculates the average of a list, using assertions to validate input: list must not be empty and must contain only numbers.",
+    "starterCode": "# Calculate average with assertions\ndef safe_average(numbers):\n    # Use assertions to validate:\n    # 1. List is not empty\n    # 2. All elements are numbers (int or float)\n    pass\n\n# Test your function\nprint(safe_average([1, 2, 3, 4, 5]))\n# These would fail assertions:\n# safe_average([])\n# safe_average([1, 2, \"three\"])",
+    "solution": "def safe_average(numbers):\n    assert len(numbers) > 0, \"List cannot be empty\"\n    assert all(isinstance(n, (int, float)) for n in numbers), \"All elements must be numbers\"\n    return sum(numbers) / len(numbers)\n\nprint(safe_average([1, 2, 3, 4, 5]))",
+    "testCases": [
+      {
+        "input": "[1, 2, 3, 4, 5]",
+        "isHidden": false,
+        "description": "Valid list"
+      },
+      {
+        "input": "[10.5, 20.5]",
+        "isHidden": true,
+        "description": "Float list"
+      }
+    ],
+    "hints": [
+      "Use assert condition, \"message\"",
+      "len(numbers) > 0 checks for non-empty",
+      "Use all() with isinstance() to check types",
+      "isinstance(n, (int, float)) checks for numbers"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs101-t6-ex10",
+    "subjectId": "cs101",
+    "topicId": "cs101-topic-6",
+    "title": "Error Chain",
+    "difficulty": 4,
+    "description": "Write a function that wraps another function call and re-raises any exception with additional context using \"from\".",
+    "starterCode": "# Wrap function with context\ndef load_config(filename):\n    # Try to read file and parse as JSON\n    # If error, raise RuntimeError with context\n    # preserving original exception\n    pass\n\nimport json\n\n# Test your function\ntry:\n    config = load_config(\"config.json\")\nexcept RuntimeError as e:\n    print(f\"Error: {e}\")\n    print(f\"Original cause: {e.__cause__}\")",
+    "solution": "import json\n\ndef load_config(filename):\n    try:\n        with open(filename, \"r\") as f:\n            return json.load(f)\n    except FileNotFoundError as e:\n        raise RuntimeError(f\"Config file not found: {filename}\") from e\n    except json.JSONDecodeError as e:\n        raise RuntimeError(f\"Invalid JSON in config: {filename}\") from e\n\ntry:\n    config = load_config(\"config.json\")\nexcept RuntimeError as e:\n    print(f\"Error: {e}\")\n    print(f\"Original cause: {e.__cause__}\")",
+    "testCases": [
+      {
+        "input": "\"missing.json\"",
+        "isHidden": false,
+        "description": "File not found"
+      }
+    ],
+    "hints": [
+      "Catch specific exceptions in the try block",
+      "Use \"raise NewError(...) from original_error\"",
+      "The \"from\" keyword chains exceptions",
+      "The original is accessible via __cause__"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs101-t6-ex11",
+    "subjectId": "cs101",
+    "topicId": "cs101-topic-6",
+    "title": "Retry on Error",
+    "difficulty": 4,
+    "description": "Write a function that attempts an operation up to N times, only giving up after all retries fail.",
+    "starterCode": "import random\n\n# Retry function up to max_attempts times\ndef retry(func, max_attempts=3):\n    # Try calling func()\n    # If it raises an exception, retry\n    # Return result on success or raise last exception\n    pass\n\n# Simulated flaky function\ndef flaky_operation():\n    if random.random() < 0.7:\n        raise RuntimeError(\"Random failure\")\n    return \"Success!\"\n\n# Test your function\ntry:\n    result = retry(flaky_operation, 5)\n    print(result)\nexcept RuntimeError as e:\n    print(f\"All attempts failed: {e}\")",
+    "solution": "import random\n\ndef retry(func, max_attempts=3):\n    last_error = None\n    for attempt in range(max_attempts):\n        try:\n            return func()\n        except Exception as e:\n            last_error = e\n            print(f\"Attempt {attempt + 1} failed: {e}\")\n    raise last_error\n\ndef flaky_operation():\n    if random.random() < 0.7:\n        raise RuntimeError(\"Random failure\")\n    return \"Success!\"\n\ntry:\n    result = retry(flaky_operation, 5)\n    print(result)\nexcept RuntimeError as e:\n    print(f\"All attempts failed: {e}\")",
+    "testCases": [
+      {
+        "input": "lambda: \"ok\", 3",
+        "isHidden": false,
+        "description": "Successful function"
+      }
+    ],
+    "hints": [
+      "Use a for loop for the attempts",
+      "Try calling func() in each iteration",
+      "Catch exceptions and save the last one",
+      "If loop completes, raise the last exception"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs101-t6-ex12",
+    "subjectId": "cs101",
+    "topicId": "cs101-topic-6",
+    "title": "Find the Bug",
+    "difficulty": 3,
+    "description": "The following function has a bug. Find and fix it. The function should return the sum of all even numbers in a list.",
+    "starterCode": "# This function has a bug - find and fix it!\ndef sum_evens(numbers):\n    total = 0\n    for i in range(len(numbers)):\n        if numbers[i] % 2 == 0:\n            total += numbers[i + 1]  # Bug is here!\n    return total\n\n# Should print 12 (2 + 4 + 6)\nprint(sum_evens([1, 2, 3, 4, 5, 6]))",
+    "solution": "def sum_evens(numbers):\n    total = 0\n    for i in range(len(numbers)):\n        if numbers[i] % 2 == 0:\n            total += numbers[i]  # Fixed: was numbers[i + 1]\n    return total\n\nprint(sum_evens([1, 2, 3, 4, 5, 6]))",
+    "testCases": [
+      {
+        "input": "[1, 2, 3, 4, 5, 6]",
+        "isHidden": false,
+        "description": "Mixed numbers"
+      },
+      {
+        "input": "[2, 4, 6]",
+        "isHidden": true,
+        "description": "All even"
+      }
+    ],
+    "hints": [
+      "Look at what is being added to total",
+      "Should we add numbers[i] or numbers[i + 1]?",
+      "The bug causes wrong elements to be summed",
+      "It might also cause an IndexError"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs101-t6-ex13",
+    "subjectId": "cs101",
+    "topicId": "cs101-topic-6",
+    "title": "Debug Off-by-One",
+    "difficulty": 3,
+    "description": "Fix the off-by-one error in this function that should print numbers 1 through n.",
+    "starterCode": "# Fix the off-by-one error\ndef print_1_to_n(n):\n    for i in range(n):\n        print(i)\n\n# Should print 1, 2, 3, 4, 5\nprint_1_to_n(5)",
+    "solution": "def print_1_to_n(n):\n    for i in range(1, n + 1):\n        print(i)\n\nprint_1_to_n(5)",
+    "testCases": [
+      {
+        "input": "5",
+        "isHidden": false,
+        "description": "Print 1 to 5"
+      },
+      {
+        "input": "3",
+        "isHidden": true,
+        "description": "Print 1 to 3"
+      }
+    ],
+    "hints": [
+      "range(n) starts at 0 and ends at n-1",
+      "We want to start at 1, not 0",
+      "We want to include n, not stop before it",
+      "Use range(1, n + 1) to get 1 through n"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs101-t6-ex14",
+    "subjectId": "cs101",
+    "topicId": "cs101-topic-6",
+    "title": "Validate Email",
+    "difficulty": 4,
+    "description": "Write a function that validates an email address. It must contain exactly one @ symbol and at least one . after the @. Raise ValueError with a descriptive message if invalid.",
+    "starterCode": "# Validate email address\ndef validate_email(email):\n    # Raise ValueError if:\n    # - No @ symbol\n    # - More than one @ symbol\n    # - No . after the @\n    # Return email if valid\n    pass\n\n# Test your function\ntry:\n    print(validate_email(\"user@example.com\"))\n    print(validate_email(\"invalid-email\"))\nexcept ValueError as e:\n    print(f\"Invalid: {e}\")",
+    "solution": "def validate_email(email):\n    if email.count(\"@\") != 1:\n        raise ValueError(\"Email must contain exactly one @ symbol\")\n    \n    local, domain = email.split(\"@\")\n    \n    if len(local) == 0:\n        raise ValueError(\"Email must have content before @\")\n    \n    if \".\" not in domain:\n        raise ValueError(\"Email domain must contain a dot\")\n    \n    if domain.startswith(\".\") or domain.endswith(\".\"):\n        raise ValueError(\"Email domain cannot start or end with a dot\")\n    \n    return email\n\ntry:\n    print(validate_email(\"user@example.com\"))\n    print(validate_email(\"invalid-email\"))\nexcept ValueError as e:\n    print(f\"Invalid: {e}\")",
+    "testCases": [
+      {
+        "input": "\"user@example.com\"",
+        "isHidden": false,
+        "description": "Valid email"
+      },
+      {
+        "input": "\"invalid-email\"",
+        "isHidden": false,
+        "description": "Missing @"
+      },
+      {
+        "input": "\"user@domain\"",
+        "isHidden": true,
+        "description": "No dot in domain"
+      }
+    ],
+    "hints": [
+      "Use count(\"@\") to check for exactly one @",
+      "Split by @ to get local and domain parts",
+      "Check if \".\" is in the domain part",
+      "Provide clear error messages for each case"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs101-t6-ex15",
+    "subjectId": "cs101",
+    "topicId": "cs101-topic-6",
+    "title": "Exception Logger",
+    "difficulty": 5,
+    "description": "Create a decorator that catches any exception from a function, logs it, and re-raises it.",
+    "starterCode": "# Create a logging decorator\ndef log_exceptions(func):\n    # Return a wrapper that:\n    # 1. Calls the original function\n    # 2. If exception occurs, print it and re-raise\n    pass\n\n# Test your decorator\n@log_exceptions\ndef risky_function(x):\n    return 10 / x\n\ntry:\n    print(risky_function(2))\n    print(risky_function(0))\nexcept ZeroDivisionError:\n    print(\"Caught the re-raised exception\")",
+    "solution": "def log_exceptions(func):\n    def wrapper(*args, **kwargs):\n        try:\n            return func(*args, **kwargs)\n        except Exception as e:\n            print(f\"Exception in {func.__name__}: {type(e).__name__}: {e}\")\n            raise\n    return wrapper\n\n@log_exceptions\ndef risky_function(x):\n    return 10 / x\n\ntry:\n    print(risky_function(2))\n    print(risky_function(0))\nexcept ZeroDivisionError:\n    print(\"Caught the re-raised exception\")",
+    "testCases": [
+      {
+        "input": "2",
+        "isHidden": false,
+        "description": "Successful call"
+      },
+      {
+        "input": "0",
+        "isHidden": false,
+        "description": "Exception logged and re-raised"
+      }
+    ],
+    "hints": [
+      "A decorator returns a wrapper function",
+      "Use *args and **kwargs to accept any arguments",
+      "Catch Exception to catch all exceptions",
+      "Use raise without arguments to re-raise the same exception"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs101-t6-ex16",
+    "subjectId": "cs101",
+    "topicId": "cs101-topic-6",
+    "title": "Safe JSON Parser",
+    "difficulty": 5,
+    "description": "Write a function that safely parses JSON from a string, returning a dictionary with the parsed data or error information.",
+    "starterCode": "import json\n\n# Safely parse JSON\ndef safe_json_parse(json_string):\n    # Return {\"ok\": True, \"data\": ...} on success\n    # Return {\"ok\": False, \"error\": \"...\", \"position\": N} on failure\n    pass\n\n# Test your function\nprint(safe_json_parse('{\"name\": \"Alice\"}'))\nprint(safe_json_parse('{\"name\": invalid}'))\nprint(safe_json_parse('{missing: \"quotes\"}'))",
+    "solution": "import json\n\ndef safe_json_parse(json_string):\n    try:\n        data = json.loads(json_string)\n        return {\"ok\": True, \"data\": data}\n    except json.JSONDecodeError as e:\n        return {\n            \"ok\": False,\n            \"error\": str(e.msg),\n            \"position\": e.pos\n        }\n\nprint(safe_json_parse('{\"name\": \"Alice\"}'))\nprint(safe_json_parse('{\"name\": invalid}'))\nprint(safe_json_parse('{missing: \"quotes\"}'))",
+    "testCases": [
+      {
+        "input": "'{\"name\": \"Alice\"}'",
+        "isHidden": false,
+        "description": "Valid JSON"
+      },
+      {
+        "input": "'{\"name\": invalid}'",
+        "isHidden": false,
+        "description": "Invalid JSON"
+      }
+    ],
+    "hints": [
+      "Use json.loads() to parse JSON strings",
+      "Catch json.JSONDecodeError specifically",
+      "JSONDecodeError has .msg and .pos attributes",
+      "Return a structured dictionary for both success and failure"
+    ],
+    "language": "python"
+  }
+]

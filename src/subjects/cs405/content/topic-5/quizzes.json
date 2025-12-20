@@ -1,0 +1,186 @@
+[
+  {
+    "id": "cs405-quiz-5",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-5",
+    "title": "Serverless - Fundamentals and FaaS",
+    "questions": [
+      {
+        "id": "q5-1",
+        "type": "multiple_choice",
+        "prompt": "What is the main benefit of serverless computing?",
+        "options": [
+          "Servers are eliminated entirely",
+          "You only pay for actual execution time, no idle costs",
+          "Unlimited free computing resources",
+          "Servers never crash"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Serverless means you don't manage servers and only pay for actual execution time. The cloud provider handles infrastructure, scaling, and availability."
+      },
+      {
+        "id": "q5-2",
+        "type": "true_false",
+        "prompt": "Cold starts in serverless functions occur when a function hasn't been invoked recently.",
+        "correctAnswer": true,
+        "explanation": "Cold start is the latency when a function is invoked after being idle. The runtime environment must be initialized, causing higher latency than warm starts."
+      },
+      {
+        "id": "q5-3",
+        "type": "multiple_choice",
+        "prompt": "What is the AWS serverless compute service called?",
+        "options": [
+          "EC2",
+          "Lambda",
+          "ECS",
+          "Batch"
+        ],
+        "correctAnswer": 1,
+        "explanation": "AWS Lambda is AWS's Function-as-a-Service (FaaS) offering. Google Cloud has Cloud Functions, Azure has Azure Functions."
+      },
+      {
+        "id": "q5-4",
+        "type": "multiple_choice",
+        "prompt": "What is the typical maximum execution time for AWS Lambda functions?",
+        "options": [
+          "1 minute",
+          "5 minutes",
+          "15 minutes",
+          "1 hour"
+        ],
+        "correctAnswer": 2,
+        "explanation": "AWS Lambda functions have a maximum execution time of 15 minutes. For longer-running tasks, use services like ECS, Batch, or Step Functions."
+      },
+      {
+        "id": "q5-5",
+        "type": "true_false",
+        "prompt": "Serverless functions should be stateless and idempotent.",
+        "correctAnswer": true,
+        "explanation": "Functions should be stateless (no local state persists) and idempotent (safe to retry). Use external storage (databases, S3) for state persistence."
+      }
+    ]
+  },
+  {
+    "id": "cs405-quiz-5b",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-5",
+    "title": "Serverless - Event-Driven Architecture",
+    "questions": [
+      {
+        "id": "q5b-1",
+        "type": "multiple_choice",
+        "prompt": "What is an event-driven architecture?",
+        "options": [
+          "Applications that run on scheduled timers",
+          "Systems where components communicate through events",
+          "Applications that never fail",
+          "Systems that don't use databases"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Event-driven architecture is a software pattern where components communicate asynchronously through events. Producers emit events, consumers react to them."
+      },
+      {
+        "id": "q5b-2",
+        "type": "true_false",
+        "prompt": "AWS API Gateway can trigger Lambda functions via HTTP requests.",
+        "correctAnswer": true,
+        "explanation": "API Gateway creates RESTful or HTTP APIs that trigger Lambda functions. It handles request routing, authentication, rate limiting, and more."
+      },
+      {
+        "id": "q5b-3",
+        "type": "multiple_choice",
+        "prompt": "Which AWS service is commonly used for event messaging in serverless architectures?",
+        "options": [
+          "RDS",
+          "S3",
+          "SNS/SQS",
+          "Route53"
+        ],
+        "correctAnswer": 2,
+        "explanation": "SNS (Simple Notification Service) and SQS (Simple Queue Service) are AWS messaging services. SNS is pub/sub, SQS is queuing. Both trigger Lambda functions."
+      },
+      {
+        "id": "q5b-4",
+        "type": "multiple_choice",
+        "prompt": "What pattern helps handle Lambda function failures?",
+        "options": [
+          "Ignore failures",
+          "Dead Letter Queues (DLQ)",
+          "Restart the server",
+          "Use larger instances"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Dead Letter Queues (DLQ) capture failed events for later analysis or retry. Lambda can send failed events to SQS or SNS DLQs."
+      },
+      {
+        "id": "q5b-5",
+        "type": "true_false",
+        "prompt": "Lambda functions can be triggered by S3 events like object uploads.",
+        "correctAnswer": true,
+        "explanation": "S3 can trigger Lambda functions on events like object creation, deletion, or modification. Common use case: process uploaded files automatically."
+      }
+    ]
+  },
+  {
+    "id": "cs405-quiz-5c",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-5",
+    "title": "Serverless - Best Practices and Optimization",
+    "questions": [
+      {
+        "id": "q5c-1",
+        "type": "multiple_choice",
+        "prompt": "How can you reduce Lambda cold start times?",
+        "options": [
+          "Use larger memory allocation and keep functions warm",
+          "Add more code",
+          "Use smaller memory settings",
+          "Disable logging"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Reduce cold starts by: increasing memory (faster CPU), keeping functions warm with scheduled pings, using provisioned concurrency, and minimizing dependencies."
+      },
+      {
+        "id": "q5c-2",
+        "type": "true_false",
+        "prompt": "Lambda charges are based on execution time and memory allocated, not actual memory used.",
+        "correctAnswer": true,
+        "explanation": "Lambda pricing is based on: number of requests, execution duration (in GB-seconds), and allocated memory. You're charged for allocated memory, not actual usage."
+      },
+      {
+        "id": "q5c-3",
+        "type": "multiple_choice",
+        "prompt": "What is the recommended way to manage environment-specific configuration in Lambda?",
+        "options": [
+          "Hard-code values in functions",
+          "Use environment variables and Parameter Store/Secrets Manager",
+          "Store in function code",
+          "Use global variables"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Use Lambda environment variables for non-sensitive config. For secrets, use AWS Systems Manager Parameter Store or Secrets Manager."
+      },
+      {
+        "id": "q5c-4",
+        "type": "multiple_choice",
+        "prompt": "Which AWS service helps orchestrate complex serverless workflows?",
+        "options": [
+          "Lambda only",
+          "Step Functions",
+          "CloudWatch",
+          "IAM"
+        ],
+        "correctAnswer": 1,
+        "explanation": "AWS Step Functions orchestrates multiple Lambda functions and services into serverless workflows. It handles state management, error handling, and retries."
+      },
+      {
+        "id": "q5c-5",
+        "type": "code_output",
+        "prompt": "If a Lambda function with 1024 MB memory runs for 500ms and is invoked 1 million times per month, approximately how many GB-seconds are consumed?",
+        "codeSnippet": "# GB-seconds = (Memory in GB) × (Duration in seconds) × Invocations\n# = (1024/1024) × 0.5 × 1,000,000",
+        "correctAnswer": "500000",
+        "explanation": "GB-seconds = 1 GB × 0.5 seconds × 1,000,000 invocations = 500,000 GB-seconds. AWS Lambda pricing is based on GB-seconds consumed."
+      }
+    ]
+  }
+]

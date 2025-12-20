@@ -1,0 +1,274 @@
+# CS101: Introduction to Programming - Subject Specification
+# This spec guides content creation for a beginner-friendly programming course.
+
+# ==============================================================================
+# SUBJECT IDENTITY
+# ==============================================================================
+
+id: cs101
+title: Introduction to Programming
+category: cs
+
+role:
+  level: introductory
+  transformation: >
+    From "I can't program" to "I can break down problems and express solutions
+    as working code." Students should finish confident they can learn any
+    programming language.
+
+# ==============================================================================
+# CURRICULUM
+# ==============================================================================
+
+curriculum:
+  subtopic_word_target: 800
+
+  prerequisite_knowledge:
+    - Basic computer literacy (using files, folders, text editors)
+    - Elementary algebra (variables, simple equations)
+    - Logical thinking (if-then reasoning)
+
+  essential_concepts:
+    - Variables, data types, and expressions
+    - Input/output and basic I/O operations
+    - Conditionals (if/else, boolean logic)
+    - Loops (while, for) and iteration patterns
+    - Functions, parameters, and return values
+    - Basic data structures (lists/arrays, dictionaries/maps)
+    - File I/O and basic text processing
+    - Debugging strategies and reading error messages
+
+  out_of_scope:
+    - Object-oriented programming (covered in CS102)
+    - Recursion beyond basic examples (covered in CS201)
+    - External libraries and package management
+    - Web development, databases, or networking
+
+# ==============================================================================
+# PEDAGOGICAL APPROACH
+# ==============================================================================
+
+pedagogy:
+  knowledge_type: procedural
+
+  mastery_indicators:
+    - Translates word problems into working code without hints
+    - Debugs simple programs using print statements and error messages
+    - Chooses appropriate data structures for given problems
+    - Writes functions that handle edge cases correctly
+    - Reads unfamiliar code and predicts its output
+
+  common_struggles:
+    - Off-by-one errors in loops
+    - Confusing = (assignment) with == (comparison)
+    - Not understanding variable scope
+    - Forgetting to return values from functions
+    - Index errors with lists (0-indexed confusion)
+    - Infinite loops from incorrect loop conditions
+
+# ==============================================================================
+# CONTENT STANDARDS
+# ==============================================================================
+
+content:
+  subtopic_requirements:
+    - Every concept introduced with a minimal working example first
+    - Show the error message students will see when they make common mistakes
+    - Build up from simple to complex within each subtopic
+    - Include "what would happen if...?" variations to build mental models
+    - Exercises in content should be try-it-yourself moments, not just reading
+
+  conventions:
+    - Python 3.10+ syntax
+    - PEP 8 style (snake_case, 4-space indent)
+    - All code examples must be copy-paste runnable
+    - Error messages shown exactly as Python displays them
+
+# ==============================================================================
+# ASSESSMENT PHILOSOPHY
+# ==============================================================================
+
+assessment:
+  philosophy: >
+    Programming fluency comes from volume of practice with immediate feedback.
+    Many small exercises with automated testing builds confidence and catches
+    misconceptions early. Students should never be stuck wondering "is my code
+    right?"—tests tell them immediately.
+
+  measures:
+    - Code correctness (passes all test cases)
+    - Handling of edge cases (empty lists, zero, negative numbers)
+    - Code readability (meaningful names, simple structure)
+    - Problem decomposition (using functions appropriately)
+
+  anti_patterns:
+    - Asking about syntax trivia that IDEs would catch
+    - Problems with only one possible solution approach
+    - Exercises requiring libraries not taught in the course
+    - Trick questions that test gotchas rather than understanding
+
+# ==============================================================================
+# GRADING THRESHOLDS
+# ==============================================================================
+
+grading:
+  passing_score: 70
+
+  thresholds:
+    exercises: 70
+    quizzes: 65
+    exams: 65
+
+  rationale: >
+    Slightly higher passing threshold because this is an introductory subject
+    and students need solid foundations. However, quiz/exam thresholds are
+    lower than exercises because multiple-choice can be tricky even when
+    students understand the concepts.
+
+# ==============================================================================
+# EXERCISE SPECIFICATIONS
+# ==============================================================================
+
+exercises:
+  rationale: >
+    High volume of small, focused exercises builds programming fluency.
+    Immediate feedback from automated tests catches misconceptions early.
+    Exercises progress from single-concept to multi-concept integration.
+    Each exercise should be completable in 5-15 minutes.
+
+  types:
+    coding_with_tests: "95%"
+    coding_ai_evaluated: "5%"
+    written: "0%"
+    justification: >
+      Almost all exercises are coding with automated tests for immediate
+      feedback. A few AI-evaluated coding exercises for open-ended problems
+      where multiple approaches are valid (e.g., "write a program that..."
+      with no single correct output). No written exercises—this is a
+      learn-by-doing subject.
+
+  per_topic:
+    minimum: 14
+    target: 16
+    maximum: 18
+    justification: >
+      Full base standard count. Beginners benefit from volume of practice.
+      Each exercise is small and focused. More practice = more fluency.
+
+  difficulty_distribution:
+    1: 3
+    2: 4
+    3: 5
+    4: 3
+    5: 1
+    justification: >
+      Skewed toward easier exercises for an intro course. Many opportunities
+      for success builds confidence. Only 1 difficulty-5 exercise per topic
+      as a stretch goal. Most exercises at difficulty 2-3.
+
+# ==============================================================================
+# QUIZ SPECIFICATIONS
+# ==============================================================================
+
+quizzes:
+  rationale: >
+    Quizzes test conceptual understanding and code tracing skills that
+    complement hands-on coding exercises. They catch students who can
+    copy-paste but don't understand what code does.
+
+  per_topic:
+    count: 3
+    questions_each: 5
+    justification: >
+      Standard base count. Three quizzes per topic allows progression:
+      Quiz A (definitions), Quiz B (code tracing), Quiz C (edge cases).
+
+  question_types:
+    multiple_choice: "40%"
+    true_false: "15%"
+    fill_blank: "15%"
+    code_output: "30%"
+    coding: "0%"
+    written: "0%"
+    justification: >
+      Heavy on code_output to test whether students can trace execution.
+      Multiple choice for conceptual understanding. Fill-blank for syntax
+      patterns. No coding in quizzes—that's what exercises are for.
+
+# ==============================================================================
+# EXAM SPECIFICATIONS
+# ==============================================================================
+
+exams:
+  rationale: >
+    Exams test understanding without IDE assistance. Mix of code tracing,
+    conceptual questions, and short coding problems. Students should spend
+    2-3 minutes per question on average.
+
+  midterm:
+    questions:
+      minimum: 25
+      target: 30
+      maximum: 35
+    duration_minutes: 75
+    format: >
+      10-12 code tracing questions, 10-12 multiple choice conceptual questions,
+      5-8 short coding problems (write a function in 3-5 lines).
+      Problems should be completable without running code.
+    coverage: "Topics 1-4: Variables, control flow, functions, basic data structures"
+
+  final:
+    questions:
+      minimum: 40
+      target: 45
+      maximum: 50
+    duration_minutes: 120
+    format: >
+      15-18 code tracing, 15-18 multiple choice, 10-14 short coding.
+      Cumulative with emphasis on later topics (functions, data structures,
+      file I/O). At least one problem integrating multiple concepts.
+    coverage: "Comprehensive: all 7 topics"
+    cumulative: true
+
+# ==============================================================================
+# PROJECT SPECIFICATIONS
+# ==============================================================================
+
+projects:
+  required: true
+  count: 2
+  rationale: >
+    Projects give students experience building something larger than an exercise.
+    They integrate multiple concepts and build portfolio pieces. Two projects:
+    one mid-course (simpler), one end-of-course (more complex).
+
+  goals:
+    - Apply multiple concepts learned in the course
+    - Experience building a complete, working program
+    - Practice breaking large problems into functions
+    - Create something students can show to others
+
+  estimated_hours: "8-12"
+
+# ==============================================================================
+# SUBJECT-SPECIFIC RED FLAGS
+# ==============================================================================
+
+red_flags:
+  - Exercise requires syntax not yet taught in the course
+  - Test case expects specific formatting not mentioned in the problem
+  - Solution uses an approach more advanced than course level
+  - Exercise description is ambiguous about expected behavior
+  - Code example in content has syntax errors or doesn't run
+  - Quiz question tests memorization of Python internals rather than practical understanding
+
+# ==============================================================================
+# NOTES
+# ==============================================================================
+
+notes: >
+  This is many students' first programming experience. Content should be
+  encouraging and normalize the frustration of debugging. Error messages
+  should be explained, not just shown. The goal is to build confidence
+  alongside competence. Students who finish CS101 should feel "I can learn
+  any language" rather than "I know Python."

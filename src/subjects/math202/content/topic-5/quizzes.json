@@ -1,0 +1,185 @@
+[
+  {
+    "id": "math202-quiz-5a",
+    "subjectId": "math202",
+    "topicId": "math202-5",
+    "title": "Hypothesis Testing Basics",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "The null hypothesis (H₀) typically represents:",
+        "options": [
+          "The research hypothesis",
+          "No effect or status quo",
+          "The alternative we want to prove",
+          "The most interesting outcome"
+        ],
+        "correctAnswer": 1,
+        "explanation": "H₀ represents the null state, no effect, or status quo that we test against."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "A Type I error occurs when we:",
+        "options": [
+          "Reject H₀ when it is true",
+          "Fail to reject H₀ when it is false",
+          "Correctly reject H₀",
+          "Correctly fail to reject H₀"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Type I error (false positive) is rejecting a true null hypothesis. Its probability is α."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "A Type II error occurs when we:",
+        "options": [
+          "Reject H₀ when it is true",
+          "Fail to reject H₀ when it is false",
+          "Correctly reject H₀",
+          "Correctly fail to reject H₀"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Type II error (false negative) is failing to reject a false null hypothesis. Its probability is β."
+      },
+      {
+        "id": "q4",
+        "type": "true_false",
+        "prompt": "The p-value is the probability that the null hypothesis is true.",
+        "correctAnswer": false,
+        "explanation": "The p-value is the probability of observing data as extreme as ours, assuming H₀ is true. It is NOT the probability that H₀ is true."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "The significance level α is the probability of making a Type ______ error.",
+        "correctAnswer": "I",
+        "explanation": "α (alpha) is the probability of Type I error, typically set at 0.05 or 0.01."
+      }
+    ]
+  },
+  {
+    "id": "math202-quiz-5b",
+    "subjectId": "math202",
+    "topicId": "math202-5",
+    "title": "Z-Tests and t-Tests",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "A z-test is appropriate when:",
+        "options": [
+          "Sample size is small and σ is unknown",
+          "Sample size is large or σ is known",
+          "Testing proportions only",
+          "Data is categorical"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Z-tests are used when the population standard deviation σ is known, or when n is large enough for CLT."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "When should you use a t-test instead of a z-test?",
+        "options": [
+          "When n > 30",
+          "When σ is known",
+          "When n is small and σ is unknown",
+          "When testing proportions"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Use a t-test when the population standard deviation is unknown and sample size is small."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "As degrees of freedom increase, the t-distribution approaches the standard normal distribution.",
+        "correctAnswer": true,
+        "explanation": "The t-distribution converges to N(0,1) as df → ∞."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "For a two-sample t-test, we assume:",
+        "options": [
+          "The populations are identical",
+          "Both populations are approximately normal",
+          "The samples have equal size",
+          "The means are equal"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Two-sample t-tests assume both populations are approximately normally distributed (or large samples)."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "The number of degrees of freedom for a one-sample t-test with n observations is ______.",
+        "correctAnswer": "n-1",
+        "explanation": "Degrees of freedom for a one-sample t-test equals n - 1."
+      }
+    ]
+  },
+  {
+    "id": "math202-quiz-5c",
+    "subjectId": "math202",
+    "topicId": "math202-5",
+    "title": "Chi-Square and ANOVA",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "A chi-square test of independence is used to:",
+        "options": [
+          "Compare means",
+          "Test relationships between categorical variables",
+          "Test normality",
+          "Calculate correlation"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Chi-square tests of independence examine whether two categorical variables are related."
+      },
+      {
+        "id": "q2",
+        "type": "true_false",
+        "prompt": "ANOVA (Analysis of Variance) is used to compare means across three or more groups.",
+        "correctAnswer": true,
+        "explanation": "ANOVA tests whether means differ across multiple groups simultaneously."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "In ANOVA, if the null hypothesis is true, all population means are:",
+        "options": [
+          "Different",
+          "Equal",
+          "Zero",
+          "Positive"
+        ],
+        "correctAnswer": 1,
+        "explanation": "H₀ in ANOVA states that all population means are equal: μ₁ = μ₂ = ... = μₖ."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "The F-statistic in ANOVA compares:",
+        "options": [
+          "Between-group variance to within-group variance",
+          "Sample means to population means",
+          "Two proportions",
+          "Categorical frequencies"
+        ],
+        "correctAnswer": 0,
+        "explanation": "F = (between-group variance)/(within-group variance). Large F suggests group means differ."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "The chi-square goodness of fit test compares observed frequencies to ______ frequencies.",
+        "correctAnswer": "expected",
+        "explanation": "Chi-square tests compare observed data to expected frequencies under the null hypothesis."
+      }
+    ]
+  }
+]

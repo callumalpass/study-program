@@ -1,0 +1,185 @@
+[
+  {
+    "id": "math204-quiz-4a",
+    "subjectId": "math204",
+    "topicId": "math204-4",
+    "title": "Applications - Area and Volume",
+    "questions": [
+      {
+        "id": "math204-q4a-1",
+        "type": "multiple_choice",
+        "prompt": "The area between curves $y = f(x)$ and $y = g(x)$ from $a$ to $b$ (where $f(x) \\geq g(x)$) is:",
+        "options": [
+          "$\\int_a^b f(x) \\, dx$",
+          "$\\int_a^b (f(x) - g(x)) \\, dx$",
+          "$\\int_a^b (g(x) - f(x)) \\, dx$",
+          "$\\int_a^b f(x)g(x) \\, dx$"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Area = $\\int_a^b (\\text{top} - \\text{bottom}) \\, dx = \\int_a^b (f(x) - g(x)) \\, dx$ when $f(x) \\geq g(x)$."
+      },
+      {
+        "id": "math204-q4a-2",
+        "type": "true_false",
+        "prompt": "The disk method uses circular cross-sections perpendicular to the axis of rotation.",
+        "correctAnswer": true,
+        "explanation": "True. The disk method integrates the area of circular disks: $V = \\int_a^b \\pi [f(x)]^2 \\, dx$."
+      },
+      {
+        "id": "math204-q4a-3",
+        "type": "multiple_choice",
+        "prompt": "The volume of a solid of revolution using the disk method is:",
+        "options": [
+          "$V = \\int_a^b f(x) \\, dx$",
+          "$V = \\int_a^b \\pi f(x) \\, dx$",
+          "$V = \\int_a^b [f(x)]^2 \\, dx$",
+          "$V = \\int_a^b \\pi [f(x)]^2 \\, dx$"
+        ],
+        "correctAnswer": 3,
+        "explanation": "Disk method: $V = \\int_a^b \\pi [\\text{radius}]^2 \\, dx = \\int_a^b \\pi [f(x)]^2 \\, dx$."
+      },
+      {
+        "id": "math204-q4a-4",
+        "type": "multiple_choice",
+        "prompt": "The washer method is used when:",
+        "options": [
+          "The solid is hollow",
+          "There are two curves",
+          "Rotating around the y-axis",
+          "All of the above"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The washer method applies when rotating a region with a hole, creating washers: $V = \\int_a^b \\pi ([R(x)]^2 - [r(x)]^2) \\, dx$."
+      },
+      {
+        "id": "math204-q4a-5",
+        "type": "fill_blank",
+        "prompt": "When using the shell method, the volume is $V = \\int_a^b 2\\pi$ (radius)(height) ____.",
+        "correctAnswer": "dx",
+        "explanation": "Shell method: $V = \\int_a^b 2\\pi \\cdot \\text{radius} \\cdot \\text{height} \\, dx$."
+      }
+    ]
+  },
+  {
+    "id": "math204-quiz-4b",
+    "subjectId": "math204",
+    "topicId": "math204-4",
+    "title": "Applications - Arc Length",
+    "questions": [
+      {
+        "id": "math204-q4b-1",
+        "type": "multiple_choice",
+        "prompt": "The arc length of $y = f(x)$ from $a$ to $b$ is:",
+        "options": [
+          "$\\int_a^b \\sqrt{1 + f'(x)} \\, dx$",
+          "$\\int_a^b \\sqrt{1 + [f'(x)]^2} \\, dx$",
+          "$\\int_a^b [f'(x)]^2 \\, dx$",
+          "$\\int_a^b f(x) \\, dx$"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Arc length formula: $L = \\int_a^b \\sqrt{1 + [f'(x)]^2} \\, dx$ or $L = \\int_a^b \\sqrt{1 + (dy/dx)^2} \\, dx$."
+      },
+      {
+        "id": "math204-q4b-2",
+        "type": "true_false",
+        "prompt": "Arc length is always greater than or equal to the straight-line distance between two points.",
+        "correctAnswer": true,
+        "explanation": "True. The shortest distance between two points is a straight line, so the curve length is at least that distance."
+      },
+      {
+        "id": "math204-q4b-3",
+        "type": "multiple_choice",
+        "prompt": "Surface area of revolution about the x-axis is:",
+        "options": [
+          "$S = \\int_a^b 2\\pi f(x) \\, dx$",
+          "$S = \\int_a^b 2\\pi f(x) \\sqrt{1 + [f'(x)]^2} \\, dx$",
+          "$S = \\int_a^b \\pi [f(x)]^2 \\, dx$",
+          "$S = 2\\pi \\int_a^b f(x)f'(x) \\, dx$"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Surface area: $S = \\int_a^b 2\\pi \\cdot \\text{radius} \\cdot ds = \\int_a^b 2\\pi f(x) \\sqrt{1 + [f'(x)]^2} \\, dx$."
+      },
+      {
+        "id": "math204-q4b-4",
+        "type": "multiple_choice",
+        "prompt": "What is the arc length of $y = x$ from $x = 0$ to $x = 1$?",
+        "options": [
+          "$1$",
+          "$\\sqrt{2}$",
+          "$2$",
+          "$\\frac{1}{2}$"
+        ],
+        "correctAnswer": 1,
+        "explanation": "$f'(x) = 1$, so $L = \\int_0^1 \\sqrt{1 + 1^2} \\, dx = \\int_0^1 \\sqrt{2} \\, dx = \\sqrt{2}$."
+      },
+      {
+        "id": "math204-q4b-5",
+        "type": "fill_blank",
+        "prompt": "The differential arc length element is $ds = \\sqrt{1 + (dy/dx)^2}$ ____.",
+        "correctAnswer": "dx",
+        "explanation": "The arc length element is $ds = \\sqrt{1 + (dy/dx)^2} \\, dx$, which we integrate to find total arc length."
+      }
+    ]
+  },
+  {
+    "id": "math204-quiz-4c",
+    "subjectId": "math204",
+    "topicId": "math204-4",
+    "title": "Applications - Work and Physics",
+    "questions": [
+      {
+        "id": "math204-q4c-1",
+        "type": "multiple_choice",
+        "prompt": "Work done by a variable force $F(x)$ from $a$ to $b$ is:",
+        "options": [
+          "$W = F(b) - F(a)$",
+          "$W = \\int_a^b F(x) \\, dx$",
+          "$W = F(x)(b - a)$",
+          "$W = \\int_a^b x \\, dx$"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Work = $W = \\int_a^b F(x) \\, dx$ where $F(x)$ is force as a function of position."
+      },
+      {
+        "id": "math204-q4c-2",
+        "type": "true_false",
+        "prompt": "Hooke's Law states that the force required to stretch a spring is proportional to the displacement: $F = kx$.",
+        "correctAnswer": true,
+        "explanation": "True. $F = kx$ where $k$ is the spring constant and $x$ is displacement from equilibrium."
+      },
+      {
+        "id": "math204-q4c-3",
+        "type": "multiple_choice",
+        "prompt": "The work required to pump water out of a tank is calculated using:",
+        "options": [
+          "Volume of water",
+          "Weight density × volume × distance",
+          "Integration of force over distance",
+          "Both B and C"
+        ],
+        "correctAnswer": 3,
+        "explanation": "Work = $\\int$ (weight of slice)(distance lifted). Weight = density × volume, so we integrate over all slices."
+      },
+      {
+        "id": "math204-q4c-4",
+        "type": "multiple_choice",
+        "prompt": "If a spring has spring constant $k = 10$ N/m, how much work is done stretching it from 0 to 0.5 m?",
+        "options": [
+          "$1.25$ J",
+          "$2.5$ J",
+          "$5$ J",
+          "$10$ J"
+        ],
+        "correctAnswer": 0,
+        "explanation": "$W = \\int_0^{0.5} 10x \\, dx = [5x^2]_0^{0.5} = 5(0.25) = 1.25$ J."
+      },
+      {
+        "id": "math204-q4c-5",
+        "type": "fill_blank",
+        "prompt": "The SI unit of work is the ____ (or N·m).",
+        "correctAnswer": "Joule",
+        "explanation": "Work is measured in Joules (J), which equals Newton-meters (N·m)."
+      }
+    ]
+  }
+]

@@ -1,0 +1,648 @@
+[
+  {
+    "id": "cs404-t4-ex01",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-4",
+    "title": "Debounce User Input",
+    "difficulty": 1,
+    "description": "Create a debounce function that delays the execution of a callback until after a specified wait time has elapsed since the last invocation. This is commonly used for search inputs to reduce API calls.",
+    "starterCode": "function debounce(func: Function, wait: number): Function {\n  // TODO: Implement debounce logic\n  // Return a function that delays calling func\n}\n\n// Example usage:\nconst search = debounce((query: string) => {\n  console.log('Searching for:', query);\n}, 300);",
+    "solution": "function debounce(func: Function, wait: number): Function {\n  let timeout: NodeJS.Timeout | null = null;\n\n  return function(this: any, ...args: any[]) {\n    const context = this;\n\n    if (timeout) {\n      clearTimeout(timeout);\n    }\n\n    timeout = setTimeout(() => {\n      func.apply(context, args);\n    }, wait);\n  };\n}\n\n// Example usage:\nconst search = debounce((query: string) => {\n  console.log('Searching for:', query);\n}, 300);",
+    "hints": [
+      "Use a timeout variable to track the delayed execution",
+      "Clear the previous timeout before setting a new one",
+      "Use setTimeout to delay the function execution",
+      "Preserve the context (this) and arguments when calling the function"
+    ],
+    "testCases": [
+      {
+        "input": "Multiple rapid calls should execute only once",
+        "expected": "Function executes only after wait period",
+        "passed": false
+      },
+      {
+        "input": "Debounced function with 100ms wait",
+        "expected": "Executes after 100ms of inactivity",
+        "passed": false
+      },
+      {
+        "input": "Context and arguments preserved",
+        "expected": "Original function receives correct this and args",
+        "passed": false
+      }
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-t4-ex02",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-4",
+    "title": "Basic Input Validation",
+    "difficulty": 1,
+    "description": "Create a simple input validator that checks if a user registration form has valid data. Validate email format, password length, and username requirements.",
+    "starterCode": "interface UserInput {\n  username: string;\n  email: string;\n  password: string;\n}\n\ninterface ValidationResult {\n  isValid: boolean;\n  errors: string[];\n}\n\nfunction validateUserInput(input: UserInput): ValidationResult {\n  // TODO: Implement validation logic\n  // Username: 3-20 characters, alphanumeric\n  // Email: valid email format\n  // Password: minimum 8 characters\n}",
+    "solution": "interface UserInput {\n  username: string;\n  email: string;\n  password: string;\n}\n\ninterface ValidationResult {\n  isValid: boolean;\n  errors: string[];\n}\n\nfunction validateUserInput(input: UserInput): ValidationResult {\n  const errors: string[] = [];\n\n  // Validate username\n  if (input.username.length < 3 || input.username.length > 20) {\n    errors.push('Username must be 3-20 characters');\n  }\n  if (!/^[a-zA-Z0-9]+$/.test(input.username)) {\n    errors.push('Username must be alphanumeric');\n  }\n\n  // Validate email\n  const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;\n  if (!emailRegex.test(input.email)) {\n    errors.push('Invalid email format');\n  }\n\n  // Validate password\n  if (input.password.length < 8) {\n    errors.push('Password must be at least 8 characters');\n  }\n\n  return {\n    isValid: errors.length === 0,\n    errors\n  };\n}",
+    "hints": [
+      "Create an errors array to collect validation messages",
+      "Use regular expressions to validate email format",
+      "Check string length for username and password constraints",
+      "Return both validity status and error messages"
+    ],
+    "testCases": [
+      {
+        "input": "{ username: \"ab\", email: \"test@test.com\", password: \"password123\" }",
+        "expected": "{ isValid: false, errors: [\"Username must be 3-20 characters\"] }",
+        "passed": false
+      },
+      {
+        "input": "{ username: \"john\", email: \"invalid-email\", password: \"password123\" }",
+        "expected": "{ isValid: false, errors: [\"Invalid email format\"] }",
+        "passed": false
+      },
+      {
+        "input": "{ username: \"john\", email: \"john@example.com\", password: \"pass\" }",
+        "expected": "{ isValid: false, errors: [\"Password must be at least 8 characters\"] }",
+        "passed": false
+      },
+      {
+        "input": "{ username: \"john\", email: \"john@example.com\", password: \"password123\" }",
+        "expected": "{ isValid: true, errors: [] }",
+        "passed": false
+      }
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-t4-ex03",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-4",
+    "title": "ARIA Label Generator",
+    "difficulty": 1,
+    "description": "Create a function that generates appropriate ARIA attributes for common UI elements to improve accessibility. Handle buttons, inputs, and navigation elements.",
+    "starterCode": "type ElementType = 'button' | 'input' | 'nav';\n\ninterface AriaAttributes {\n  role?: string;\n  'aria-label'?: string;\n  'aria-describedby'?: string;\n}\n\nfunction generateAriaAttributes(\n  type: ElementType,\n  label: string,\n  description?: string\n): AriaAttributes {\n  // TODO: Generate appropriate ARIA attributes\n}",
+    "solution": "type ElementType = 'button' | 'input' | 'nav';\n\ninterface AriaAttributes {\n  role?: string;\n  'aria-label'?: string;\n  'aria-describedby'?: string;\n}\n\nfunction generateAriaAttributes(\n  type: ElementType,\n  label: string,\n  description?: string\n): AriaAttributes {\n  const attributes: AriaAttributes = {\n    'aria-label': label\n  };\n\n  if (type === 'button') {\n    attributes.role = 'button';\n  } else if (type === 'input') {\n    attributes.role = 'textbox';\n  } else if (type === 'nav') {\n    attributes.role = 'navigation';\n  }\n\n  if (description) {\n    attributes['aria-describedby'] = `${type}-description`;\n  }\n\n  return attributes;\n}",
+    "hints": [
+      "Set appropriate role based on element type",
+      "Always include aria-label with the provided label",
+      "Add aria-describedby only when description is provided",
+      "Return an object with ARIA attribute key-value pairs"
+    ],
+    "testCases": [
+      {
+        "input": "type: \"button\", label: \"Submit Form\"",
+        "expected": "{ role: \"button\", \"aria-label\": \"Submit Form\" }",
+        "passed": false
+      },
+      {
+        "input": "type: \"input\", label: \"Email Address\", description: \"Enter your email\"",
+        "expected": "{ role: \"textbox\", \"aria-label\": \"Email Address\", \"aria-describedby\": \"input-description\" }",
+        "passed": false
+      },
+      {
+        "input": "type: \"nav\", label: \"Main Navigation\"",
+        "expected": "{ role: \"navigation\", \"aria-label\": \"Main Navigation\" }",
+        "passed": false
+      }
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-t4-ex04",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-4",
+    "title": "React.memo Optimization",
+    "difficulty": 2,
+    "description": "Implement a React component that uses React.memo to prevent unnecessary re-renders. Create a custom comparison function to handle complex props.",
+    "starterCode": "import React from 'react';\n\ninterface UserCardProps {\n  user: {\n    id: number;\n    name: string;\n    email: string;\n    metadata: Record<string, any>;\n  };\n  onSelect: (id: number) => void;\n}\n\n// TODO: Implement UserCard with React.memo\n// Use custom comparison to check only id, name, and email\nconst UserCard: React.FC<UserCardProps> = ({ user, onSelect }) => {\n  return (\n    <div onClick={() => onSelect(user.id)}>\n      <h3>{user.name}</h3>\n      <p>{user.email}</p>\n    </div>\n  );\n};\n\nexport default UserCard;",
+    "solution": "import React from 'react';\n\ninterface UserCardProps {\n  user: {\n    id: number;\n    name: string;\n    email: string;\n    metadata: Record<string, any>;\n  };\n  onSelect: (id: number) => void;\n}\n\nconst UserCard: React.FC<UserCardProps> = ({ user, onSelect }) => {\n  console.log('Rendering UserCard:', user.id);\n\n  return (\n    <div onClick={() => onSelect(user.id)}>\n      <h3>{user.name}</h3>\n      <p>{user.email}</p>\n    </div>\n  );\n};\n\n// Custom comparison function\nfunction arePropsEqual(\n  prevProps: UserCardProps,\n  nextProps: UserCardProps\n): boolean {\n  return (\n    prevProps.user.id === nextProps.user.id &&\n    prevProps.user.name === nextProps.user.name &&\n    prevProps.user.email === nextProps.user.email &&\n    prevProps.onSelect === nextProps.onSelect\n  );\n}\n\nexport default React.memo(UserCard, arePropsEqual);",
+    "hints": [
+      "Use React.memo() to wrap the component",
+      "Create a custom comparison function as the second argument",
+      "Compare only the relevant props (id, name, email)",
+      "Return true if props are equal (skip re-render), false otherwise",
+      "Don't forget to compare the onSelect callback"
+    ],
+    "testCases": [
+      {
+        "input": "Props with same id, name, email but different metadata",
+        "expected": "Component does not re-render",
+        "passed": false
+      },
+      {
+        "input": "Props with different name",
+        "expected": "Component re-renders",
+        "passed": false
+      },
+      {
+        "input": "Props with different onSelect callback",
+        "expected": "Component re-renders",
+        "passed": false
+      }
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-t4-ex05",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-4",
+    "title": "Keyboard Navigation Handler",
+    "difficulty": 2,
+    "description": "Create a keyboard navigation handler for a dropdown menu. Support arrow keys for navigation, Enter for selection, and Escape to close.",
+    "starterCode": "interface MenuItem {\n  id: string;\n  label: string;\n  action: () => void;\n}\n\nclass KeyboardNavigator {\n  private items: MenuItem[];\n  private currentIndex: number = -1;\n\n  constructor(items: MenuItem[]) {\n    this.items = items;\n  }\n\n  handleKeyDown(event: KeyboardEvent): void {\n    // TODO: Implement keyboard navigation\n    // ArrowDown: move to next item\n    // ArrowUp: move to previous item\n    // Enter: select current item\n    // Escape: reset selection\n  }\n\n  getCurrentIndex(): number {\n    return this.currentIndex;\n  }\n}",
+    "solution": "interface MenuItem {\n  id: string;\n  label: string;\n  action: () => void;\n}\n\nclass KeyboardNavigator {\n  private items: MenuItem[];\n  private currentIndex: number = -1;\n\n  constructor(items: MenuItem[]) {\n    this.items = items;\n  }\n\n  handleKeyDown(event: KeyboardEvent): void {\n    switch (event.key) {\n      case 'ArrowDown':\n        event.preventDefault();\n        this.currentIndex = Math.min(\n          this.currentIndex + 1,\n          this.items.length - 1\n        );\n        break;\n\n      case 'ArrowUp':\n        event.preventDefault();\n        this.currentIndex = Math.max(this.currentIndex - 1, 0);\n        break;\n\n      case 'Enter':\n        event.preventDefault();\n        if (this.currentIndex >= 0 && this.currentIndex < this.items.length) {\n          this.items[this.currentIndex].action();\n        }\n        break;\n\n      case 'Escape':\n        event.preventDefault();\n        this.currentIndex = -1;\n        break;\n    }\n  }\n\n  getCurrentIndex(): number {\n    return this.currentIndex;\n  }\n}",
+    "hints": [
+      "Use a switch statement to handle different key events",
+      "Prevent default behavior for navigation keys",
+      "Use Math.min and Math.max to keep index within bounds",
+      "Execute the action of the currently selected item on Enter",
+      "Reset currentIndex to -1 on Escape"
+    ],
+    "testCases": [
+      {
+        "input": "ArrowDown from initial state",
+        "expected": "currentIndex becomes 0",
+        "passed": false
+      },
+      {
+        "input": "ArrowUp when at index 0",
+        "expected": "currentIndex stays at 0",
+        "passed": false
+      },
+      {
+        "input": "ArrowDown at last item",
+        "expected": "currentIndex stays at last index",
+        "passed": false
+      },
+      {
+        "input": "Enter at index 1",
+        "expected": "items[1].action() is called",
+        "passed": false
+      },
+      {
+        "input": "Escape key",
+        "expected": "currentIndex becomes -1",
+        "passed": false
+      }
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-t4-ex06",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-4",
+    "title": "Simple Translation System",
+    "difficulty": 2,
+    "description": "Create a basic internationalization (i18n) system that supports multiple languages and nested translation keys.",
+    "starterCode": "type Translations = {\n  [key: string]: string | Translations;\n};\n\nclass I18n {\n  private translations: Record<string, Translations>;\n  private currentLocale: string;\n\n  constructor(translations: Record<string, Translations>, defaultLocale: string) {\n    this.translations = translations;\n    this.currentLocale = defaultLocale;\n  }\n\n  setLocale(locale: string): void {\n    // TODO: Set the current locale\n  }\n\n  t(key: string): string {\n    // TODO: Get translation for key (supports dot notation like \"user.welcome\")\n    // Return the key itself if translation not found\n  }\n}\n\n// Example usage:\nconst i18n = new I18n({\n  en: {\n    user: {\n      welcome: 'Welcome',\n      goodbye: 'Goodbye'\n    }\n  },\n  es: {\n    user: {\n      welcome: 'Bienvenido',\n      goodbye: 'Adiós'\n    }\n  }\n}, 'en');",
+    "solution": "type Translations = {\n  [key: string]: string | Translations;\n};\n\nclass I18n {\n  private translations: Record<string, Translations>;\n  private currentLocale: string;\n\n  constructor(translations: Record<string, Translations>, defaultLocale: string) {\n    this.translations = translations;\n    this.currentLocale = defaultLocale;\n  }\n\n  setLocale(locale: string): void {\n    if (this.translations[locale]) {\n      this.currentLocale = locale;\n    }\n  }\n\n  t(key: string): string {\n    const keys = key.split('.');\n    let value: any = this.translations[this.currentLocale];\n\n    for (const k of keys) {\n      if (value && typeof value === 'object' && k in value) {\n        value = value[k];\n      } else {\n        return key; // Return key if translation not found\n      }\n    }\n\n    return typeof value === 'string' ? value : key;\n  }\n}\n\n// Example usage:\nconst i18n = new I18n({\n  en: {\n    user: {\n      welcome: 'Welcome',\n      goodbye: 'Goodbye'\n    }\n  },\n  es: {\n    user: {\n      welcome: 'Bienvenido',\n      goodbye: 'Adiós'\n    }\n  }\n}, 'en');",
+    "hints": [
+      "Split the key by dots to handle nested paths",
+      "Traverse the translations object using each key segment",
+      "Return the key itself if translation is not found",
+      "Check if the locale exists before setting it",
+      "Ensure the final value is a string before returning"
+    ],
+    "testCases": [
+      {
+        "input": "i18n.t(\"user.welcome\") with locale \"en\"",
+        "expected": "\"Welcome\"",
+        "passed": false
+      },
+      {
+        "input": "i18n.setLocale(\"es\"); i18n.t(\"user.goodbye\")",
+        "expected": "\"Adiós\"",
+        "passed": false
+      },
+      {
+        "input": "i18n.t(\"user.nonexistent\")",
+        "expected": "\"user.nonexistent\"",
+        "passed": false
+      }
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-t4-ex07",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-4",
+    "title": "useMemo and useCallback Optimization",
+    "difficulty": 3,
+    "description": "Optimize a React component that performs expensive calculations and passes callbacks to child components. Use useMemo for calculations and useCallback for event handlers.",
+    "starterCode": "import React, { useState, useMemo, useCallback } from 'react';\n\ninterface DataItem {\n  id: number;\n  value: number;\n  category: string;\n}\n\ninterface Props {\n  data: DataItem[];\n}\n\n// Expensive calculation (simulated)\nfunction calculateStatistics(data: DataItem[]) {\n  console.log('Calculating statistics...');\n  return {\n    total: data.reduce((sum, item) => sum + item.value, 0),\n    average: data.reduce((sum, item) => sum + item.value, 0) / data.length,\n    max: Math.max(...data.map(item => item.value)),\n    min: Math.min(...data.map(item => item.value))\n  };\n}\n\nconst DataDashboard: React.FC<Props> = ({ data }) => {\n  const [filter, setFilter] = useState('');\n  const [selectedId, setSelectedId] = useState<number | null>(null);\n\n  // TODO: Memoize filtered data\n  const filteredData = data.filter(item =>\n    item.category.toLowerCase().includes(filter.toLowerCase())\n  );\n\n  // TODO: Memoize statistics calculation\n  const stats = calculateStatistics(filteredData);\n\n  // TODO: Memoize callback\n  const handleSelect = (id: number) => {\n    setSelectedId(id);\n    console.log('Selected:', id);\n  };\n\n  return (\n    <div>\n      <input\n        value={filter}\n        onChange={(e) => setFilter(e.target.value)}\n        placeholder=\"Filter by category\"\n      />\n      <div>Total: {stats.total}</div>\n      <div>Average: {stats.average}</div>\n      {/* Child components would use handleSelect */}\n    </div>\n  );\n};",
+    "solution": "import React, { useState, useMemo, useCallback } from 'react';\n\ninterface DataItem {\n  id: number;\n  value: number;\n  category: string;\n}\n\ninterface Props {\n  data: DataItem[];\n}\n\n// Expensive calculation (simulated)\nfunction calculateStatistics(data: DataItem[]) {\n  console.log('Calculating statistics...');\n  return {\n    total: data.reduce((sum, item) => sum + item.value, 0),\n    average: data.reduce((sum, item) => sum + item.value, 0) / data.length,\n    max: Math.max(...data.map(item => item.value)),\n    min: Math.min(...data.map(item => item.value))\n  };\n}\n\nconst DataDashboard: React.FC<Props> = ({ data }) => {\n  const [filter, setFilter] = useState('');\n  const [selectedId, setSelectedId] = useState<number | null>(null);\n\n  // Memoize filtered data - only recalculate when data or filter changes\n  const filteredData = useMemo(() => {\n    console.log('Filtering data...');\n    return data.filter(item =>\n      item.category.toLowerCase().includes(filter.toLowerCase())\n    );\n  }, [data, filter]);\n\n  // Memoize statistics - only recalculate when filtered data changes\n  const stats = useMemo(() => {\n    return calculateStatistics(filteredData);\n  }, [filteredData]);\n\n  // Memoize callback - prevent child re-renders\n  const handleSelect = useCallback((id: number) => {\n    setSelectedId(id);\n    console.log('Selected:', id);\n  }, []); // No dependencies as it only uses setSelectedId (stable)\n\n  return (\n    <div>\n      <input\n        value={filter}\n        onChange={(e) => setFilter(e.target.value)}\n        placeholder=\"Filter by category\"\n      />\n      <div>Total: {stats.total}</div>\n      <div>Average: {stats.average}</div>\n      {/* Child components would use handleSelect */}\n    </div>\n  );\n};",
+    "hints": [
+      "Use useMemo for the filtered data with [data, filter] dependencies",
+      "Use useMemo for statistics with [filteredData] dependency",
+      "Use useCallback for handleSelect to maintain referential equality",
+      "setSelectedId is stable, so handleSelect needs no dependencies",
+      "Add console.logs to verify optimizations are working"
+    ],
+    "testCases": [
+      {
+        "input": "Typing in filter input",
+        "expected": "Filtering runs, stats recalculated, handleSelect reference unchanged",
+        "passed": false
+      },
+      {
+        "input": "selectedId state change",
+        "expected": "No filtering or stats recalculation",
+        "passed": false
+      },
+      {
+        "input": "data prop changes",
+        "expected": "Filtering and stats recalculated",
+        "passed": false
+      }
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-t4-ex08",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-4",
+    "title": "Error Boundary Implementation",
+    "difficulty": 3,
+    "description": "Implement a React Error Boundary component that catches errors in child components, logs them, and displays a fallback UI. Include error recovery functionality.",
+    "starterCode": "import React, { Component, ErrorInfo, ReactNode } from 'react';\n\ninterface Props {\n  children: ReactNode;\n  fallback?: ReactNode;\n  onError?: (error: Error, errorInfo: ErrorInfo) => void;\n}\n\ninterface State {\n  hasError: boolean;\n  error: Error | null;\n}\n\nclass ErrorBoundary extends Component<Props, State> {\n  constructor(props: Props) {\n    super(props);\n    this.state = {\n      hasError: false,\n      error: null\n    };\n  }\n\n  // TODO: Implement static getDerivedStateFromError\n\n  // TODO: Implement componentDidCatch\n\n  // TODO: Implement reset method\n\n  render() {\n    // TODO: Render fallback UI or children\n  }\n}\n\nexport default ErrorBoundary;",
+    "solution": "import React, { Component, ErrorInfo, ReactNode } from 'react';\n\ninterface Props {\n  children: ReactNode;\n  fallback?: ReactNode;\n  onError?: (error: Error, errorInfo: ErrorInfo) => void;\n}\n\ninterface State {\n  hasError: boolean;\n  error: Error | null;\n}\n\nclass ErrorBoundary extends Component<Props, State> {\n  constructor(props: Props) {\n    super(props);\n    this.state = {\n      hasError: false,\n      error: null\n    };\n  }\n\n  static getDerivedStateFromError(error: Error): State {\n    // Update state to trigger fallback UI\n    return {\n      hasError: true,\n      error\n    };\n  }\n\n  componentDidCatch(error: Error, errorInfo: ErrorInfo): void {\n    // Log error to console or error reporting service\n    console.error('Error caught by boundary:', error);\n    console.error('Error info:', errorInfo.componentStack);\n\n    // Call optional error handler\n    if (this.props.onError) {\n      this.props.onError(error, errorInfo);\n    }\n  }\n\n  resetError = (): void => {\n    this.setState({\n      hasError: false,\n      error: null\n    });\n  };\n\n  render() {\n    if (this.state.hasError) {\n      // Render custom fallback or default error UI\n      if (this.props.fallback) {\n        return this.props.fallback;\n      }\n\n      return (\n        <div style={{ padding: '20px', border: '2px solid red' }}>\n          <h2>Something went wrong</h2>\n          <p>{this.state.error?.message}</p>\n          <button onClick={this.resetError}>Try Again</button>\n        </div>\n      );\n    }\n\n    return this.props.children;\n  }\n}\n\nexport default ErrorBoundary;",
+    "hints": [
+      "getDerivedStateFromError should return the new state object",
+      "componentDidCatch is for side effects like logging",
+      "Store both hasError flag and error object in state",
+      "Provide a reset method to clear the error state",
+      "Check for custom fallback prop before rendering default UI"
+    ],
+    "testCases": [
+      {
+        "input": "Child component throws error",
+        "expected": "Fallback UI is displayed",
+        "passed": false
+      },
+      {
+        "input": "Custom fallback provided",
+        "expected": "Custom fallback is rendered instead of default",
+        "passed": false
+      },
+      {
+        "input": "Reset button clicked",
+        "expected": "Error cleared, children re-rendered",
+        "passed": false
+      },
+      {
+        "input": "onError callback provided",
+        "expected": "Callback is called with error and errorInfo",
+        "passed": false
+      }
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-t4-ex09",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-4",
+    "title": "Database Query Optimizer",
+    "difficulty": 3,
+    "description": "Analyze SQL-like query objects and suggest optimizations such as adding indexes, avoiding SELECT *, and fixing N+1 query problems.",
+    "starterCode": "interface Query {\n  table: string;\n  select: string[];\n  where?: Record<string, any>;\n  joins?: Array<{\n    table: string;\n    on: string;\n  }>;\n}\n\ninterface Optimization {\n  type: 'index' | 'select' | 'n+1';\n  message: string;\n  suggestion: string;\n}\n\nfunction analyzeQuery(query: Query, tableColumns: Record<string, string[]>): Optimization[] {\n  // TODO: Analyze the query and return optimization suggestions\n  // 1. Check if SELECT * is used\n  // 2. Check if WHERE clauses would benefit from indexes\n  // 3. Suggest using JOINs instead of multiple queries\n}",
+    "solution": "interface Query {\n  table: string;\n  select: string[];\n  where?: Record<string, any>;\n  joins?: Array<{\n    table: string;\n    on: string;\n  }>;\n}\n\ninterface Optimization {\n  type: 'index' | 'select' | 'n+1';\n  message: string;\n  suggestion: string;\n}\n\nfunction analyzeQuery(query: Query, tableColumns: Record<string, string[]>): Optimization[] {\n  const optimizations: Optimization[] = [];\n\n  // Check for SELECT *\n  if (query.select.includes('*')) {\n    optimizations.push({\n      type: 'select',\n      message: 'Using SELECT * returns unnecessary columns',\n      suggestion: `Specify only needed columns: [${tableColumns[query.table].slice(0, 3).join(', ')}...]`\n    });\n  }\n\n  // Check WHERE clauses for potential indexes\n  if (query.where) {\n    const whereColumns = Object.keys(query.where);\n    whereColumns.forEach(column => {\n      optimizations.push({\n        type: 'index',\n        message: `WHERE clause on '${column}' may benefit from an index`,\n        suggestion: `CREATE INDEX idx_${query.table}_${column} ON ${query.table}(${column})`\n      });\n    });\n  }\n\n  // Check for potential N+1 problems (no joins when filtering on foreign keys)\n  if (query.where && !query.joins) {\n    const potentialForeignKeys = Object.keys(query.where).filter(\n      col => col.endsWith('_id') || col.endsWith('Id')\n    );\n\n    if (potentialForeignKeys.length > 0) {\n      potentialForeignKeys.forEach(fk => {\n        const relatedTable = fk.replace(/_id$|Id$/, '');\n        optimizations.push({\n          type: 'n+1',\n          message: `Filtering on '${fk}' without JOIN may cause N+1 queries`,\n          suggestion: `Add JOIN with ${relatedTable} table to fetch related data in single query`\n        });\n      });\n    }\n  }\n\n  return optimizations;\n}",
+    "hints": [
+      "Check if the select array includes \"*\"",
+      "Iterate through WHERE clause keys to suggest indexes",
+      "Look for foreign key patterns (_id or Id suffix)",
+      "Suggest JOINs when filtering on foreign keys without existing joins",
+      "Return an array of optimization objects with type, message, and suggestion"
+    ],
+    "testCases": [
+      {
+        "input": "{ table: \"users\", select: [\"*\"] }",
+        "expected": "Optimization suggesting specific columns instead of *",
+        "passed": false
+      },
+      {
+        "input": "{ table: \"orders\", select: [\"id\", \"total\"], where: { user_id: 123 } }",
+        "expected": "Suggestions for index on user_id and potential N+1 problem",
+        "passed": false
+      },
+      {
+        "input": "{ table: \"posts\", select: [\"id\"], where: { author_id: 5 }, joins: [{ table: \"authors\", on: \"id\" }] }",
+        "expected": "No N+1 warning (JOIN already present), but index suggestion",
+        "passed": false
+      }
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-t4-ex10",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-4",
+    "title": "Color Contrast Checker",
+    "difficulty": 3,
+    "description": "Create a WCAG 2.1 compliant color contrast checker that validates if text is readable against a background color. Calculate relative luminance and contrast ratio.",
+    "starterCode": "interface ColorRGB {\n  r: number; // 0-255\n  g: number; // 0-255\n  b: number; // 0-255\n}\n\ninterface ContrastResult {\n  ratio: number;\n  passAANormal: boolean;    // 4.5:1\n  passAALarge: boolean;     // 3:1\n  passAAANormal: boolean;   // 7:1\n  passAAALarge: boolean;    // 4.5:1\n}\n\nfunction hexToRgb(hex: string): ColorRGB {\n  // TODO: Convert hex color to RGB\n}\n\nfunction calculateLuminance(color: ColorRGB): number {\n  // TODO: Calculate relative luminance (WCAG formula)\n  // For each channel: if <= 0.03928, divide by 12.92, else ((value + 0.055) / 1.055) ^ 2.4\n  // Luminance = 0.2126 * R + 0.7152 * G + 0.0722 * B\n}\n\nfunction checkContrast(foreground: string, background: string): ContrastResult {\n  // TODO: Calculate contrast ratio and check WCAG compliance\n  // Contrast ratio = (lighter + 0.05) / (darker + 0.05)\n}",
+    "solution": "interface ColorRGB {\n  r: number; // 0-255\n  g: number; // 0-255\n  b: number; // 0-255\n}\n\ninterface ContrastResult {\n  ratio: number;\n  passAANormal: boolean;    // 4.5:1\n  passAALarge: boolean;     // 3:1\n  passAAANormal: boolean;   // 7:1\n  passAAALarge: boolean;    // 4.5:1\n}\n\nfunction hexToRgb(hex: string): ColorRGB {\n  // Remove # if present\n  const cleanHex = hex.replace('#', '');\n\n  return {\n    r: parseInt(cleanHex.substring(0, 2), 16),\n    g: parseInt(cleanHex.substring(2, 4), 16),\n    b: parseInt(cleanHex.substring(4, 6), 16)\n  };\n}\n\nfunction calculateLuminance(color: ColorRGB): number {\n  // Normalize RGB values to 0-1 range\n  const r = color.r / 255;\n  const g = color.g / 255;\n  const b = color.b / 255;\n\n  // Apply gamma correction\n  const rLinear = r <= 0.03928 ? r / 12.92 : Math.pow((r + 0.055) / 1.055, 2.4);\n  const gLinear = g <= 0.03928 ? g / 12.92 : Math.pow((g + 0.055) / 1.055, 2.4);\n  const bLinear = b <= 0.03928 ? b / 12.92 : Math.pow((b + 0.055) / 1.055, 2.4);\n\n  // Calculate luminance using WCAG formula\n  return 0.2126 * rLinear + 0.7152 * gLinear + 0.0722 * bLinear;\n}\n\nfunction checkContrast(foreground: string, background: string): ContrastResult {\n  const fgRgb = hexToRgb(foreground);\n  const bgRgb = hexToRgb(background);\n\n  const fgLuminance = calculateLuminance(fgRgb);\n  const bgLuminance = calculateLuminance(bgRgb);\n\n  // Calculate contrast ratio\n  const lighter = Math.max(fgLuminance, bgLuminance);\n  const darker = Math.min(fgLuminance, bgLuminance);\n  const ratio = (lighter + 0.05) / (darker + 0.05);\n\n  return {\n    ratio: Math.round(ratio * 100) / 100,\n    passAANormal: ratio >= 4.5,\n    passAALarge: ratio >= 3,\n    passAAANormal: ratio >= 7,\n    passAAALarge: ratio >= 4.5\n  };\n}",
+    "hints": [
+      "Remove the # from hex strings before parsing",
+      "Parse hex in pairs: first 2 chars for R, next 2 for G, last 2 for B",
+      "Normalize RGB values by dividing by 255",
+      "Apply gamma correction with the WCAG formula",
+      "Contrast ratio uses the lighter and darker luminance values",
+      "Round the final ratio to 2 decimal places"
+    ],
+    "testCases": [
+      {
+        "input": "foreground: \"#000000\", background: \"#FFFFFF\"",
+        "expected": "ratio: 21, all WCAG levels pass",
+        "passed": false
+      },
+      {
+        "input": "foreground: \"#777777\", background: \"#FFFFFF\"",
+        "expected": "ratio: ~4.48, only AA Large passes",
+        "passed": false
+      },
+      {
+        "input": "foreground: \"#595959\", background: \"#FFFFFF\"",
+        "expected": "ratio: ~7.0, AA passes, AAA Normal passes",
+        "passed": false
+      }
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-t4-ex11",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-4",
+    "title": "Input Validation with Zod",
+    "difficulty": 4,
+    "description": "Create a comprehensive validation system using Zod schemas for a complex form with nested objects, arrays, and custom validation rules.",
+    "starterCode": "import { z } from 'zod';\n\n// TODO: Create Zod schemas for the following requirements:\n// 1. User profile with email, age (18-100), username (3-20 chars)\n// 2. Nested address object (street, city, zipCode, country)\n// 3. Array of skills (min 1, max 10, each 2-50 chars)\n// 4. Phone number (optional, format: +1-XXX-XXX-XXXX or similar)\n// 5. Password with custom validation (min 8 chars, 1 uppercase, 1 number, 1 special char)\n\nconst userProfileSchema = z.object({\n  // TODO: Define schema\n});\n\ntype UserProfile = z.infer<typeof userProfileSchema>;\n\nfunction validateUserProfile(data: unknown): {\n  success: boolean;\n  data?: UserProfile;\n  errors?: string[]\n} {\n  // TODO: Validate data and return formatted result\n}",
+    "solution": "import { z } from 'zod';\n\n// Custom password validator\nconst passwordSchema = z.string()\n  .min(8, 'Password must be at least 8 characters')\n  .regex(/[A-Z]/, 'Password must contain at least one uppercase letter')\n  .regex(/[0-9]/, 'Password must contain at least one number')\n  .regex(/[^A-Za-z0-9]/, 'Password must contain at least one special character');\n\n// Phone number validator (optional)\nconst phoneSchema = z.string()\n  .regex(/^\\+?[1-9]\\d{0,3}-?\\d{3}-?\\d{3}-?\\d{4}$/, 'Invalid phone format')\n  .optional();\n\n// Address schema\nconst addressSchema = z.object({\n  street: z.string().min(1, 'Street is required'),\n  city: z.string().min(1, 'City is required'),\n  zipCode: z.string().regex(/^\\d{5}(-\\d{4})?$/, 'Invalid zip code'),\n  country: z.string().min(2, 'Country code must be at least 2 characters')\n});\n\n// Skills array schema\nconst skillsSchema = z.array(\n  z.string().min(2, 'Skill must be at least 2 characters')\n    .max(50, 'Skill must not exceed 50 characters')\n).min(1, 'At least one skill is required')\n  .max(10, 'Maximum 10 skills allowed');\n\n// Main user profile schema\nconst userProfileSchema = z.object({\n  email: z.string().email('Invalid email format'),\n  age: z.number()\n    .int('Age must be an integer')\n    .min(18, 'Must be at least 18 years old')\n    .max(100, 'Age must not exceed 100'),\n  username: z.string()\n    .min(3, 'Username must be at least 3 characters')\n    .max(20, 'Username must not exceed 20 characters')\n    .regex(/^[a-zA-Z0-9_]+$/, 'Username can only contain letters, numbers, and underscores'),\n  address: addressSchema,\n  skills: skillsSchema,\n  phone: phoneSchema,\n  password: passwordSchema\n});\n\ntype UserProfile = z.infer<typeof userProfileSchema>;\n\nfunction validateUserProfile(data: unknown): {\n  success: boolean;\n  data?: UserProfile;\n  errors?: string[]\n} {\n  try {\n    const validData = userProfileSchema.parse(data);\n    return {\n      success: true,\n      data: validData\n    };\n  } catch (error) {\n    if (error instanceof z.ZodError) {\n      return {\n        success: false,\n        errors: error.errors.map(err => `${err.path.join('.')}: ${err.message}`)\n      };\n    }\n    return {\n      success: false,\n      errors: ['Unknown validation error']\n    };\n  }\n}",
+    "hints": [
+      "Use z.string().regex() for pattern matching (password, phone, zip)",
+      "Chain validation methods like .min(), .max(), .email()",
+      "Use z.array() with min/max for the skills array",
+      "Nest schemas using z.object() for the address",
+      "Use .optional() for the phone field",
+      "Catch ZodError and format errors with path and message",
+      "Use z.infer to extract the TypeScript type from schema"
+    ],
+    "testCases": [
+      {
+        "input": "Valid complete user profile",
+        "expected": "success: true with parsed data",
+        "passed": false
+      },
+      {
+        "input": "Invalid email format",
+        "expected": "success: false with email error message",
+        "passed": false
+      },
+      {
+        "input": "Age = 17 (under minimum)",
+        "expected": "success: false with age error",
+        "passed": false
+      },
+      {
+        "input": "Password without special character",
+        "expected": "success: false with password error",
+        "passed": false
+      },
+      {
+        "input": "Empty skills array",
+        "expected": "success: false with skills minimum error",
+        "passed": false
+      }
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-t4-ex12",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-4",
+    "title": "Code Splitting Implementation",
+    "difficulty": 4,
+    "description": "Implement a dynamic module loader with code splitting that loads modules on-demand, handles loading states, errors, and caching.",
+    "starterCode": "interface Module {\n  default: any;\n  [key: string]: any;\n}\n\ninterface LoaderState<T> {\n  loading: boolean;\n  data: T | null;\n  error: Error | null;\n}\n\nclass DynamicModuleLoader {\n  private cache: Map<string, Promise<Module>>;\n  private loadedModules: Map<string, Module>;\n\n  constructor() {\n    this.cache = new Map();\n    this.loadedModules = new Map();\n  }\n\n  async loadModule<T = any>(modulePath: string): Promise<LoaderState<T>> {\n    // TODO: Implement dynamic module loading\n    // 1. Check if module is already loaded (cache)\n    // 2. If loading, return existing promise\n    // 3. Otherwise, create new import() promise\n    // 4. Handle success and errors\n    // 5. Store in cache\n  }\n\n  preload(modulePaths: string[]): void {\n    // TODO: Preload modules without waiting\n  }\n\n  clearCache(modulePath?: string): void {\n    // TODO: Clear cache for specific module or all modules\n  }\n}",
+    "solution": "interface Module {\n  default: any;\n  [key: string]: any;\n}\n\ninterface LoaderState<T> {\n  loading: boolean;\n  data: T | null;\n  error: Error | null;\n}\n\nclass DynamicModuleLoader {\n  private cache: Map<string, Promise<Module>>;\n  private loadedModules: Map<string, Module>;\n\n  constructor() {\n    this.cache = new Map();\n    this.loadedModules = new Map();\n  }\n\n  async loadModule<T = any>(modulePath: string): Promise<LoaderState<T>> {\n    // Return cached module if already loaded\n    if (this.loadedModules.has(modulePath)) {\n      return {\n        loading: false,\n        data: this.loadedModules.get(modulePath)!.default as T,\n        error: null\n      };\n    }\n\n    // Return in-progress load if already loading\n    if (this.cache.has(modulePath)) {\n      try {\n        const module = await this.cache.get(modulePath)!;\n        return {\n          loading: false,\n          data: module.default as T,\n          error: null\n        };\n      } catch (error) {\n        return {\n          loading: false,\n          data: null,\n          error: error as Error\n        };\n      }\n    }\n\n    // Start new module load\n    const loadPromise = import(/* webpackChunkName: \"[request]\" */ modulePath);\n    this.cache.set(modulePath, loadPromise);\n\n    try {\n      const module = await loadPromise;\n      this.loadedModules.set(modulePath, module);\n      this.cache.delete(modulePath); // Remove from in-progress cache\n\n      return {\n        loading: false,\n        data: module.default as T,\n        error: null\n      };\n    } catch (error) {\n      this.cache.delete(modulePath); // Remove failed load\n\n      return {\n        loading: false,\n        data: null,\n        error: error as Error\n      };\n    }\n  }\n\n  preload(modulePaths: string[]): void {\n    modulePaths.forEach(path => {\n      if (!this.loadedModules.has(path) && !this.cache.has(path)) {\n        const loadPromise = import(/* webpackChunkName: \"[request]\" */ path);\n        this.cache.set(path, loadPromise);\n\n        loadPromise\n          .then(module => {\n            this.loadedModules.set(path, module);\n            this.cache.delete(path);\n          })\n          .catch(() => {\n            this.cache.delete(path);\n          });\n      }\n    });\n  }\n\n  clearCache(modulePath?: string): void {\n    if (modulePath) {\n      this.cache.delete(modulePath);\n      this.loadedModules.delete(modulePath);\n    } else {\n      this.cache.clear();\n      this.loadedModules.clear();\n    }\n  }\n}",
+    "hints": [
+      "Use two separate caches: one for in-progress loads, one for loaded modules",
+      "Check loadedModules first for instant returns",
+      "Check cache for in-progress loads to avoid duplicate requests",
+      "Use dynamic import() with webpack magic comments for chunk names",
+      "Remove from cache after successful load or error",
+      "Preload should fire-and-forget without blocking",
+      "Handle both specific and global cache clearing"
+    ],
+    "testCases": [
+      {
+        "input": "Load module for first time",
+        "expected": "loading: false, data: module content, cached",
+        "passed": false
+      },
+      {
+        "input": "Load same module again",
+        "expected": "Instant return from cache",
+        "passed": false
+      },
+      {
+        "input": "Concurrent loads of same module",
+        "expected": "Only one network request made",
+        "passed": false
+      },
+      {
+        "input": "Preload array of modules",
+        "expected": "All modules load in background",
+        "passed": false
+      },
+      {
+        "input": "clearCache with specific path",
+        "expected": "Only that module removed from cache",
+        "passed": false
+      }
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-t4-ex13",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-4",
+    "title": "Defensive Programming with Type Guards",
+    "difficulty": 4,
+    "description": "Implement defensive programming patterns using TypeScript type guards, runtime validation, and error handling for external API data.",
+    "starterCode": "// External API response (unknown shape)\ninterface ApiResponse {\n  data: unknown;\n  status: number;\n  message?: string;\n}\n\ninterface User {\n  id: number;\n  name: string;\n  email: string;\n  role: 'admin' | 'user' | 'guest';\n  metadata?: {\n    lastLogin?: string;\n    preferences?: Record<string, any>;\n  };\n}\n\n// TODO: Implement type guards\nfunction isString(value: unknown): value is string {\n  // TODO\n}\n\nfunction isNumber(value: unknown): value is number {\n  // TODO\n}\n\nfunction isValidRole(value: unknown): value is 'admin' | 'user' | 'guest' {\n  // TODO\n}\n\nfunction isUser(value: unknown): value is User {\n  // TODO: Comprehensive validation\n}\n\n// TODO: Safe parser with detailed error messages\nfunction parseUserResponse(response: ApiResponse): User {\n  // TODO: Validate and parse safely, throw descriptive errors\n}",
+    "solution": "// External API response (unknown shape)\ninterface ApiResponse {\n  data: unknown;\n  status: number;\n  message?: string;\n}\n\ninterface User {\n  id: number;\n  name: string;\n  email: string;\n  role: 'admin' | 'user' | 'guest';\n  metadata?: {\n    lastLogin?: string;\n    preferences?: Record<string, any>;\n  };\n}\n\n// Type guards\nfunction isString(value: unknown): value is string {\n  return typeof value === 'string';\n}\n\nfunction isNumber(value: unknown): value is number {\n  return typeof value === 'number' && !isNaN(value);\n}\n\nfunction isValidRole(value: unknown): value is 'admin' | 'user' | 'guest' {\n  return value === 'admin' || value === 'user' || value === 'guest';\n}\n\nfunction isObject(value: unknown): value is Record<string, unknown> {\n  return typeof value === 'object' && value !== null && !Array.isArray(value);\n}\n\nfunction isUser(value: unknown): value is User {\n  if (!isObject(value)) {\n    return false;\n  }\n\n  // Check required fields\n  if (!isNumber(value.id) || !isString(value.name) ||\n      !isString(value.email) || !isValidRole(value.role)) {\n    return false;\n  }\n\n  // Validate email format\n  const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;\n  if (!emailRegex.test(value.email)) {\n    return false;\n  }\n\n  // Check optional metadata\n  if (value.metadata !== undefined) {\n    if (!isObject(value.metadata)) {\n      return false;\n    }\n\n    if (value.metadata.lastLogin !== undefined &&\n        !isString(value.metadata.lastLogin)) {\n      return false;\n    }\n\n    if (value.metadata.preferences !== undefined &&\n        !isObject(value.metadata.preferences)) {\n      return false;\n    }\n  }\n\n  return true;\n}\n\n// Safe parser with detailed error messages\nfunction parseUserResponse(response: ApiResponse): User {\n  // Check response status\n  if (response.status !== 200) {\n    throw new Error(\n      `API error: status ${response.status}${\n        response.message ? `, ${response.message}` : ''\n      }`\n    );\n  }\n\n  // Check data exists\n  if (!response.data) {\n    throw new Error('API response missing data field');\n  }\n\n  // Validate data structure\n  if (!isObject(response.data)) {\n    throw new Error(\n      `Expected data to be an object, got ${typeof response.data}`\n    );\n  }\n\n  const data = response.data;\n\n  // Validate required fields with specific errors\n  if (!isNumber(data.id)) {\n    throw new Error(\n      `Invalid id: expected number, got ${typeof data.id}`\n    );\n  }\n\n  if (!isString(data.name)) {\n    throw new Error(\n      `Invalid name: expected string, got ${typeof data.name}`\n    );\n  }\n\n  if (!isString(data.email)) {\n    throw new Error(\n      `Invalid email: expected string, got ${typeof data.email}`\n    );\n  }\n\n  const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;\n  if (!emailRegex.test(data.email)) {\n    throw new Error(`Invalid email format: ${data.email}`);\n  }\n\n  if (!isValidRole(data.role)) {\n    throw new Error(\n      `Invalid role: expected 'admin', 'user', or 'guest', got ${data.role}`\n    );\n  }\n\n  // Use type guard for final validation\n  if (!isUser(data)) {\n    throw new Error('Data failed comprehensive user validation');\n  }\n\n  return data;\n}",
+    "hints": [
+      "Type guards use \"value is Type\" return type syntax",
+      "Check typeof for primitives, but remember typeof null === \"object\"",
+      "For objects, verify it's not null and not an array",
+      "Validate optional fields only when they exist",
+      "Throw specific errors for each validation failure",
+      "Use type guards to narrow types progressively",
+      "Final validation can use comprehensive isUser guard"
+    ],
+    "testCases": [
+      {
+        "input": "Valid user response with all fields",
+        "expected": "Returns parsed User object",
+        "passed": false
+      },
+      {
+        "input": "Response with status 500",
+        "expected": "Throws error with status code",
+        "passed": false
+      },
+      {
+        "input": "Invalid email format",
+        "expected": "Throws \"Invalid email format\" error",
+        "passed": false
+      },
+      {
+        "input": "Invalid role value",
+        "expected": "Throws error about expected roles",
+        "passed": false
+      },
+      {
+        "input": "Missing required field (name)",
+        "expected": "Throws specific error about name field",
+        "passed": false
+      }
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-t4-ex14",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-4",
+    "title": "N+1 Query Detection and Fix",
+    "difficulty": 5,
+    "description": "Build a system that detects N+1 query problems in ORM-like code and automatically suggests JOIN-based solutions. Analyze query patterns and generate optimized versions.",
+    "starterCode": "interface Query {\n  type: 'select' | 'insert' | 'update' | 'delete';\n  table: string;\n  where?: Record<string, any>;\n  select?: string[];\n}\n\ninterface QueryLog {\n  queries: Query[];\n  executionOrder: number[];\n}\n\ninterface N1Problem {\n  initialQuery: Query;\n  repeatedQueries: Query[];\n  count: number;\n  foreignKey: string;\n  optimizedQuery: string;\n}\n\nclass QueryAnalyzer {\n  analyzeQueryLog(log: QueryLog): N1Problem[] {\n    // TODO: Detect N+1 patterns\n    // 1. Find initial query that returns multiple rows\n    // 2. Find subsequent queries in loop with WHERE on foreign key\n    // 3. Group by pattern\n    // 4. Generate optimized JOIN query\n  }\n\n  private generateOptimizedQuery(problem: N1Problem): string {\n    // TODO: Generate SQL with JOIN to eliminate N+1\n  }\n\n  private detectForeignKey(initialTable: string, repeatedQuery: Query): string | null {\n    // TODO: Identify foreign key relationship\n  }\n}",
+    "solution": "interface Query {\n  type: 'select' | 'insert' | 'update' | 'delete';\n  table: string;\n  where?: Record<string, any>;\n  select?: string[];\n}\n\ninterface QueryLog {\n  queries: Query[];\n  executionOrder: number[];\n}\n\ninterface N1Problem {\n  initialQuery: Query;\n  repeatedQueries: Query[];\n  count: number;\n  foreignKey: string;\n  optimizedQuery: string;\n}\n\nclass QueryAnalyzer {\n  analyzeQueryLog(log: QueryLog): N1Problem[] {\n    const problems: N1Problem[] = [];\n    const queries = log.queries;\n\n    for (let i = 0; i < queries.length - 1; i++) {\n      const current = queries[i];\n\n      // Only analyze SELECT queries\n      if (current.type !== 'select') continue;\n\n      // Look for repeated pattern in next queries\n      const pattern = this.findRepeatedPattern(queries, i + 1);\n\n      if (pattern.queries.length >= 2) {\n        const foreignKey = this.detectForeignKey(current.table, pattern.queries[0]);\n\n        if (foreignKey) {\n          const problem: N1Problem = {\n            initialQuery: current,\n            repeatedQueries: pattern.queries,\n            count: pattern.queries.length,\n            foreignKey,\n            optimizedQuery: ''\n          };\n\n          problem.optimizedQuery = this.generateOptimizedQuery(problem);\n          problems.push(problem);\n\n          // Skip past analyzed queries\n          i += pattern.queries.length;\n        }\n      }\n    }\n\n    return problems;\n  }\n\n  private findRepeatedPattern(\n    queries: Query[],\n    startIndex: number\n  ): { queries: Query[] } {\n    const repeated: Query[] = [];\n\n    if (startIndex >= queries.length) {\n      return { queries: repeated };\n    }\n\n    const pattern = queries[startIndex];\n\n    // Find all queries matching the pattern\n    for (let i = startIndex; i < queries.length; i++) {\n      const q = queries[i];\n\n      // Check if query matches pattern (same table and similar WHERE structure)\n      if (q.type === pattern.type &&\n          q.table === pattern.table &&\n          q.where && pattern.where &&\n          this.hasSimilarWhereClause(q.where, pattern.where)) {\n        repeated.push(q);\n      } else if (repeated.length > 0) {\n        // Pattern broken\n        break;\n      }\n    }\n\n    return { queries: repeated };\n  }\n\n  private hasSimilarWhereClause(\n    where1: Record<string, any>,\n    where2: Record<string, any>\n  ): boolean {\n    const keys1 = Object.keys(where1);\n    const keys2 = Object.keys(where2);\n\n    // Same WHERE clause structure (same keys, different values)\n    return keys1.length === keys2.length &&\n           keys1.every(key => keys2.includes(key));\n  }\n\n  private detectForeignKey(initialTable: string, repeatedQuery: Query): string | null {\n    if (!repeatedQuery.where) return null;\n\n    const whereKeys = Object.keys(repeatedQuery.where);\n\n    // Look for foreign key patterns\n    for (const key of whereKeys) {\n      // Pattern 1: table_id (e.g., user_id when initial table is users)\n      if (key === `${initialTable}_id` || key === `${initialTable}Id`) {\n        return key;\n      }\n\n      // Pattern 2: ends with _id or Id\n      if (key.endsWith('_id') || key.endsWith('Id')) {\n        // Check if it could reference the initial table\n        const possibleTable = key.replace(/_id$|Id$/, '');\n        if (possibleTable === initialTable ||\n            possibleTable === initialTable.slice(0, -1)) { // singular form\n          return key;\n        }\n      }\n    }\n\n    return null;\n  }\n\n  private generateOptimizedQuery(problem: N1Problem): string {\n    const { initialQuery, repeatedQueries, foreignKey } = problem;\n\n    // Get columns from both queries\n    const initialColumns = (initialQuery.select || ['*'])\n      .map(col => `${initialQuery.table}.${col}`)\n      .join(', ');\n\n    const repeatedColumns = (repeatedQueries[0].select || ['*'])\n      .map(col => `${repeatedQueries[0].table}.${col}`)\n      .join(', ');\n\n    // Build JOIN query\n    let optimized = `SELECT ${initialColumns}, ${repeatedColumns}\\n`;\n    optimized += `FROM ${initialQuery.table}\\n`;\n    optimized += `LEFT JOIN ${repeatedQueries[0].table} `;\n    optimized += `ON ${initialQuery.table}.id = ${repeatedQueries[0].table}.${foreignKey}`;\n\n    // Add WHERE clause from initial query if exists\n    if (initialQuery.where) {\n      const whereConditions = Object.entries(initialQuery.where)\n        .map(([key, value]) =>\n          `${initialQuery.table}.${key} = ${JSON.stringify(value)}`\n        )\n        .join(' AND ');\n      optimized += `\\nWHERE ${whereConditions}`;\n    }\n\n    return optimized;\n  }\n}",
+    "hints": [
+      "Look for a SELECT query followed by multiple similar SELECTs",
+      "Repeated queries have same table and WHERE clause structure",
+      "Foreign keys often follow patterns like table_id or tableId",
+      "Group consecutive repeated queries together",
+      "Generate LEFT JOIN to include all initial rows",
+      "Combine columns from both tables in SELECT",
+      "Preserve WHERE conditions from initial query",
+      "Skip already-analyzed queries to avoid duplicate detection"
+    ],
+    "testCases": [
+      {
+        "input": "SELECT users, then SELECT posts WHERE user_id for each user",
+        "expected": "Detects N+1, suggests LEFT JOIN users with posts",
+        "passed": false
+      },
+      {
+        "input": "Single query only",
+        "expected": "No N+1 problems detected",
+        "passed": false
+      },
+      {
+        "input": "Multiple different queries",
+        "expected": "No N+1 problems (no pattern)",
+        "passed": false
+      },
+      {
+        "input": "SELECT orders, then 10x SELECT order_items WHERE order_id",
+        "expected": "Detects N+1 with count=10, generates JOIN query",
+        "passed": false
+      }
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-t4-ex15",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-4",
+    "title": "Advanced Code Refactoring Tool",
+    "difficulty": 5,
+    "description": "Create a code analysis tool that detects code duplication, extracts common patterns into reusable functions, and suggests refactoring opportunities.",
+    "starterCode": "interface CodeBlock {\n  code: string;\n  startLine: number;\n  endLine: number;\n}\n\ninterface DuplicationReport {\n  duplicates: Array<{\n    pattern: string;\n    occurrences: CodeBlock[];\n    suggestion: string;\n  }>;\n  complexity: number;\n  recommendations: string[];\n}\n\nclass CodeRefactoringAnalyzer {\n  analyze(code: string, minDuplicateLength: number = 3): DuplicationReport {\n    // TODO: Analyze code for refactoring opportunities\n    // 1. Detect duplicated code blocks\n    // 2. Calculate code complexity\n    // 3. Suggest extracted functions\n  }\n\n  private findDuplicates(lines: string[], minLength: number): Array<{\n    pattern: string;\n    occurrences: CodeBlock[];\n  }> {\n    // TODO: Find duplicate code blocks (ignoring whitespace/variables)\n  }\n\n  private normalizeCode(code: string): string {\n    // TODO: Normalize for comparison (remove whitespace, generalize variables)\n  }\n\n  private calculateComplexity(code: string): number {\n    // TODO: Calculate cyclomatic complexity\n  }\n\n  private generateExtractedFunction(pattern: string, index: number): string {\n    // TODO: Generate extracted function suggestion\n  }\n}",
+    "solution": "interface CodeBlock {\n  code: string;\n  startLine: number;\n  endLine: number;\n}\n\ninterface DuplicationReport {\n  duplicates: Array<{\n    pattern: string;\n    occurrences: CodeBlock[];\n    suggestion: string;\n  }>;\n  complexity: number;\n  recommendations: string[];\n}\n\nclass CodeRefactoringAnalyzer {\n  analyze(code: string, minDuplicateLength: number = 3): DuplicationReport {\n    const lines = code.split('\\n');\n    const duplicates = this.findDuplicates(lines, minDuplicateLength);\n    const complexity = this.calculateComplexity(code);\n    const recommendations: string[] = [];\n\n    // Generate suggestions for each duplicate\n    const duplicatesWithSuggestions = duplicates.map((dup, index) => {\n      const suggestion = this.generateExtractedFunction(dup.pattern, index);\n      return {\n        ...dup,\n        suggestion\n      };\n    });\n\n    // Add recommendations based on analysis\n    if (duplicates.length > 0) {\n      recommendations.push(\n        `Found ${duplicates.length} duplicate code patterns. Consider extracting to functions.`\n      );\n    }\n\n    if (complexity > 10) {\n      recommendations.push(\n        `Cyclomatic complexity is ${complexity}. Consider breaking down into smaller functions.`\n      );\n    }\n\n    if (complexity > 20) {\n      recommendations.push(\n        'High complexity detected. Urgent refactoring recommended.'\n      );\n    }\n\n    return {\n      duplicates: duplicatesWithSuggestions,\n      complexity,\n      recommendations\n    };\n  }\n\n  private findDuplicates(lines: string[], minLength: number): Array<{\n    pattern: string;\n    occurrences: CodeBlock[];\n  }> {\n    const patterns = new Map<string, CodeBlock[]>();\n\n    // Check all possible windows of size >= minLength\n    for (let size = minLength; size <= Math.floor(lines.length / 2); size++) {\n      for (let i = 0; i <= lines.length - size; i++) {\n        const block = lines.slice(i, i + size).join('\\n');\n        const normalized = this.normalizeCode(block);\n\n        // Skip if too simple (empty or just braces)\n        if (normalized.trim().length < 10) continue;\n\n        const codeBlock: CodeBlock = {\n          code: block,\n          startLine: i + 1,\n          endLine: i + size\n        };\n\n        if (patterns.has(normalized)) {\n          // Check if this overlaps with existing occurrences\n          const existing = patterns.get(normalized)!;\n          const overlaps = existing.some(exist =>\n            (codeBlock.startLine >= exist.startLine &&\n             codeBlock.startLine <= exist.endLine) ||\n            (codeBlock.endLine >= exist.startLine &&\n             codeBlock.endLine <= exist.endLine)\n          );\n\n          if (!overlaps) {\n            existing.push(codeBlock);\n          }\n        } else {\n          patterns.set(normalized, [codeBlock]);\n        }\n      }\n    }\n\n    // Filter to only patterns with 2+ occurrences\n    const duplicates: Array<{ pattern: string; occurrences: CodeBlock[] }> = [];\n\n    patterns.forEach((occurrences, pattern) => {\n      if (occurrences.length >= 2) {\n        duplicates.push({ pattern, occurrences });\n      }\n    });\n\n    // Sort by number of occurrences (most duplicated first)\n    return duplicates.sort((a, b) => b.occurrences.length - a.occurrences.length);\n  }\n\n  private normalizeCode(code: string): string {\n    return code\n      // Remove comments\n      .replace(/\\/\\/.*$/gm, '')\n      .replace(/\\/\\*[\\s\\S]*?\\*\\//g, '')\n      // Normalize whitespace\n      .replace(/\\s+/g, ' ')\n      // Remove variable names (replace with placeholder)\n      .replace(/\\b[a-z][a-zA-Z0-9]*\\b/g, 'VAR')\n      // Remove string literals\n      .replace(/\"[^\"]*\"/g, '\"STR\"')\n      .replace(/'[^']*'/g, \"'STR'\")\n      // Remove numbers\n      .replace(/\\b\\d+\\b/g, 'NUM')\n      .trim();\n  }\n\n  private calculateComplexity(code: string): number {\n    let complexity = 1; // Base complexity\n\n    // Decision points increase complexity\n    const decisionKeywords = [\n      /\\bif\\b/g,\n      /\\belse\\s+if\\b/g,\n      /\\bfor\\b/g,\n      /\\bwhile\\b/g,\n      /\\bcase\\b/g,\n      /\\bcatch\\b/g,\n      /\\b&&\\b/g,\n      /\\b\\|\\|\\b/g,\n      /\\?/g, // Ternary operator\n    ];\n\n    decisionKeywords.forEach(keyword => {\n      const matches = code.match(keyword);\n      if (matches) {\n        complexity += matches.length;\n      }\n    });\n\n    return complexity;\n  }\n\n  private generateExtractedFunction(pattern: string, index: number): string {\n    // Identify potential parameters (look for variables)\n    const variables = new Set<string>();\n    const varMatches = pattern.matchAll(/\\b[a-z][a-zA-Z0-9]*\\b/g);\n\n    for (const match of varMatches) {\n      if (!['const', 'let', 'var', 'function', 'return', 'if', 'else',\n           'for', 'while', 'do', 'switch', 'case'].includes(match[0])) {\n        variables.add(match[0]);\n      }\n    }\n\n    const params = Array.from(variables).slice(0, 3).join(', '); // Limit to 3 params\n\n    return `function extracted_${index + 1}(${params}) {\n  // TODO: Implement extracted logic\n  ${pattern.split('\\n').map(line => '  ' + line).join('\\n')}\n}`;\n  }\n}",
+    "hints": [
+      "Use sliding windows to find duplicate blocks of different sizes",
+      "Normalize code by removing whitespace, comments, and variable names",
+      "Replace literals (strings, numbers) with placeholders for comparison",
+      "Track line numbers for each code block",
+      "Avoid overlapping duplicates in the same location",
+      "Calculate cyclomatic complexity by counting decision points",
+      "Count if, for, while, case, catch, &&, ||, and ternary operators",
+      "Generate function names like extracted_1, extracted_2",
+      "Extract variable names from pattern for function parameters"
+    ],
+    "testCases": [
+      {
+        "input": "Code with identical blocks repeated 3 times",
+        "expected": "Detects 1 pattern with 3 occurrences",
+        "passed": false
+      },
+      {
+        "input": "Code with high nesting (if/for/while)",
+        "expected": "High complexity score, recommendations generated",
+        "passed": false
+      },
+      {
+        "input": "Unique code with no duplication",
+        "expected": "No duplicates found, low complexity",
+        "passed": false
+      },
+      {
+        "input": "Similar code with different variable names",
+        "expected": "Detects as duplicate after normalization",
+        "passed": false
+      }
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-t4-ex16",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-4",
+    "title": "Performance Profiler and Optimizer",
+    "difficulty": 5,
+    "description": "Build a comprehensive performance profiler that tracks function execution times, memory usage, identifies bottlenecks, and suggests optimizations.",
+    "starterCode": "interface PerformanceMetric {\n  functionName: string;\n  executionTime: number;\n  callCount: number;\n  averageTime: number;\n  memoryUsed?: number;\n}\n\ninterface PerformanceReport {\n  metrics: PerformanceMetric[];\n  bottlenecks: string[];\n  optimizationSuggestions: Array<{\n    function: string;\n    issue: string;\n    suggestion: string;\n    priority: 'high' | 'medium' | 'low';\n  }>;\n  totalTime: number;\n}\n\nclass PerformanceProfiler {\n  private metrics: Map<string, {\n    times: number[];\n    memory: number[];\n  }>;\n\n  constructor() {\n    this.metrics = new Map();\n  }\n\n  profile<T>(functionName: string, fn: () => T): T {\n    // TODO: Profile function execution\n    // Track time, memory, call count\n  }\n\n  async profileAsync<T>(functionName: string, fn: () => Promise<T>): Promise<T> {\n    // TODO: Profile async function execution\n  }\n\n  generateReport(): PerformanceReport {\n    // TODO: Analyze metrics and generate report\n    // Identify bottlenecks (>100ms or >10% of total time)\n    // Suggest optimizations based on patterns\n  }\n\n  private analyzeBottlenecks(metrics: PerformanceMetric[]): string[] {\n    // TODO: Identify performance bottlenecks\n  }\n\n  private generateOptimizations(metrics: PerformanceMetric[]): Array<{\n    function: string;\n    issue: string;\n    suggestion: string;\n    priority: 'high' | 'medium' | 'low';\n  }> {\n    // TODO: Generate optimization suggestions\n  }\n\n  reset(): void {\n    this.metrics.clear();\n  }\n}",
+    "solution": "interface PerformanceMetric {\n  functionName: string;\n  executionTime: number;\n  callCount: number;\n  averageTime: number;\n  memoryUsed?: number;\n}\n\ninterface PerformanceReport {\n  metrics: PerformanceMetric[];\n  bottlenecks: string[];\n  optimizationSuggestions: Array<{\n    function: string;\n    issue: string;\n    suggestion: string;\n    priority: 'high' | 'medium' | 'low';\n  }>;\n  totalTime: number;\n}\n\nclass PerformanceProfiler {\n  private metrics: Map<string, {\n    times: number[];\n    memory: number[];\n  }>;\n\n  constructor() {\n    this.metrics = new Map();\n  }\n\n  profile<T>(functionName: string, fn: () => T): T {\n    const startTime = performance.now();\n    const startMemory = (performance as any).memory?.usedJSHeapSize || 0;\n\n    try {\n      const result = fn();\n\n      const endTime = performance.now();\n      const endMemory = (performance as any).memory?.usedJSHeapSize || 0;\n\n      this.recordMetric(\n        functionName,\n        endTime - startTime,\n        endMemory - startMemory\n      );\n\n      return result;\n    } catch (error) {\n      // Record even if function throws\n      const endTime = performance.now();\n      this.recordMetric(functionName, endTime - startTime, 0);\n      throw error;\n    }\n  }\n\n  async profileAsync<T>(functionName: string, fn: () => Promise<T>): Promise<T> {\n    const startTime = performance.now();\n    const startMemory = (performance as any).memory?.usedJSHeapSize || 0;\n\n    try {\n      const result = await fn();\n\n      const endTime = performance.now();\n      const endMemory = (performance as any).memory?.usedJSHeapSize || 0;\n\n      this.recordMetric(\n        functionName,\n        endTime - startTime,\n        endMemory - startMemory\n      );\n\n      return result;\n    } catch (error) {\n      const endTime = performance.now();\n      this.recordMetric(functionName, endTime - startTime, 0);\n      throw error;\n    }\n  }\n\n  private recordMetric(functionName: string, time: number, memory: number): void {\n    if (!this.metrics.has(functionName)) {\n      this.metrics.set(functionName, {\n        times: [],\n        memory: []\n      });\n    }\n\n    const metric = this.metrics.get(functionName)!;\n    metric.times.push(time);\n    metric.memory.push(memory);\n  }\n\n  generateReport(): PerformanceReport {\n    const metrics: PerformanceMetric[] = [];\n    let totalTime = 0;\n\n    // Calculate metrics for each function\n    this.metrics.forEach((data, functionName) => {\n      const executionTime = data.times.reduce((a, b) => a + b, 0);\n      const averageTime = executionTime / data.times.length;\n      const averageMemory = data.memory.length > 0\n        ? data.memory.reduce((a, b) => a + b, 0) / data.memory.length\n        : undefined;\n\n      totalTime += executionTime;\n\n      metrics.push({\n        functionName,\n        executionTime,\n        callCount: data.times.length,\n        averageTime,\n        memoryUsed: averageMemory\n      });\n    });\n\n    // Sort by total execution time (descending)\n    metrics.sort((a, b) => b.executionTime - a.executionTime);\n\n    const bottlenecks = this.analyzeBottlenecks(metrics, totalTime);\n    const optimizationSuggestions = this.generateOptimizations(metrics, totalTime);\n\n    return {\n      metrics,\n      bottlenecks,\n      optimizationSuggestions,\n      totalTime\n    };\n  }\n\n  private analyzeBottlenecks(metrics: PerformanceMetric[], totalTime: number): string[] {\n    const bottlenecks: string[] = [];\n\n    metrics.forEach(metric => {\n      const percentOfTotal = (metric.executionTime / totalTime) * 100;\n\n      // Bottleneck if >100ms or >10% of total time\n      if (metric.executionTime > 100 || percentOfTotal > 10) {\n        bottlenecks.push(\n          `${metric.functionName}: ${metric.executionTime.toFixed(2)}ms (${percentOfTotal.toFixed(1)}% of total)`\n        );\n      }\n    });\n\n    return bottlenecks;\n  }\n\n  private generateOptimizations(\n    metrics: PerformanceMetric[],\n    totalTime: number\n  ): Array<{\n    function: string;\n    issue: string;\n    suggestion: string;\n    priority: 'high' | 'medium' | 'low';\n  }> {\n    const suggestions: Array<{\n      function: string;\n      issue: string;\n      suggestion: string;\n      priority: 'high' | 'medium' | 'low';\n    }> = [];\n\n    metrics.forEach(metric => {\n      const percentOfTotal = (metric.executionTime / totalTime) * 100;\n\n      // High priority: slow functions called frequently\n      if (metric.callCount > 100 && metric.averageTime > 10) {\n        suggestions.push({\n          function: metric.functionName,\n          issue: `Called ${metric.callCount} times with ${metric.averageTime.toFixed(2)}ms average`,\n          suggestion: 'Consider memoization or caching results',\n          priority: 'high'\n        });\n      }\n\n      // High priority: major bottleneck\n      if (percentOfTotal > 20) {\n        suggestions.push({\n          function: metric.functionName,\n          issue: `Consumes ${percentOfTotal.toFixed(1)}% of total execution time`,\n          suggestion: 'Critical optimization target. Consider algorithm improvements or code splitting',\n          priority: 'high'\n        });\n      }\n\n      // Medium priority: moderate performance impact\n      if (metric.averageTime > 50 && metric.averageTime <= 100) {\n        suggestions.push({\n          function: metric.functionName,\n          issue: `Average execution time of ${metric.averageTime.toFixed(2)}ms`,\n          suggestion: 'Consider optimizing algorithms or reducing complexity',\n          priority: 'medium'\n        });\n      }\n\n      // Memory-based suggestions\n      if (metric.memoryUsed && metric.memoryUsed > 1000000) { // >1MB\n        suggestions.push({\n          function: metric.functionName,\n          issue: `High memory usage: ${(metric.memoryUsed / 1000000).toFixed(2)}MB`,\n          suggestion: 'Check for memory leaks or large object allocations',\n          priority: 'medium'\n        });\n      }\n\n      // Low priority: minor optimizations\n      if (metric.callCount > 50 && metric.averageTime > 5 && metric.averageTime <= 10) {\n        suggestions.push({\n          function: metric.functionName,\n          issue: `Frequent calls (${metric.callCount}) with small overhead`,\n          suggestion: 'Consider batching operations or debouncing',\n          priority: 'low'\n        });\n      }\n    });\n\n    // Sort by priority\n    const priorityOrder = { high: 0, medium: 1, low: 2 };\n    suggestions.sort((a, b) => priorityOrder[a.priority] - priorityOrder[b.priority]);\n\n    return suggestions;\n  }\n\n  reset(): void {\n    this.metrics.clear();\n  }\n}",
+    "hints": [
+      "Use performance.now() for high-resolution timing",
+      "Access memory via performance.memory API (Chrome-specific)",
+      "Store arrays of times and memory for each function",
+      "Calculate averages, totals, and percentages in report",
+      "Bottlenecks are functions >100ms or >10% of total time",
+      "High priority: functions called frequently with high average time",
+      "Medium priority: moderate execution time or high memory",
+      "Low priority: minor optimizations for frequently called functions",
+      "Record metrics even if function throws error",
+      "Sort metrics by total execution time descending"
+    ],
+    "testCases": [
+      {
+        "input": "Profile fast function called 1000 times",
+        "expected": "High call count, suggestion for memoization",
+        "passed": false
+      },
+      {
+        "input": "Profile slow function taking 200ms",
+        "expected": "Identified as bottleneck, high priority optimization",
+        "passed": false
+      },
+      {
+        "input": "Profile multiple functions, one consuming 50% of time",
+        "expected": "Critical optimization suggestion for dominant function",
+        "passed": false
+      },
+      {
+        "input": "Profile async function",
+        "expected": "Correctly measures async execution time",
+        "passed": false
+      },
+      {
+        "input": "Generate report after multiple profiled functions",
+        "expected": "Metrics sorted by total time, bottlenecks identified",
+        "passed": false
+      }
+    ],
+    "language": "typescript"
+  }
+]

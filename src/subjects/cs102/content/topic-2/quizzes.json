@@ -1,0 +1,191 @@
+[
+  {
+    "id": "cs102-quiz-2",
+    "subjectId": "cs102",
+    "topicId": "cs102-2",
+    "title": "Binary Arithmetic Fundamentals",
+    "questions": [
+      {
+        "id": "cs102-q2-1",
+        "type": "multiple_choice",
+        "prompt": "1011 + 0110 = ?",
+        "options": [
+          "10000",
+          "10001",
+          "10010",
+          "10011"
+        ],
+        "correctAnswer": 1,
+        "explanation": "11 + 6 = 17 (10001)."
+      },
+      {
+        "id": "cs102-q2-2",
+        "type": "multiple_choice",
+        "prompt": "The two's complement of 0101 is:",
+        "options": [
+          "1010",
+          "1011",
+          "1100",
+          "0101"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Invert 0101 -> 1010. Add 1 -> 1011."
+      },
+      {
+        "id": "cs102-q2-3",
+        "type": "true_false",
+        "prompt": "Adding two positive numbers can result in a negative number in signed arithmetic.",
+        "correctAnswer": true,
+        "explanation": "This is called \"overflow\"."
+      },
+      {
+        "id": "cs102-q2-4",
+        "type": "multiple_choice",
+        "prompt": "Subtracting binary is equivalent to:",
+        "options": [
+          "Adding the inverse",
+          "Adding the two's complement",
+          "ANDing the bits",
+          "ORing the bits"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A - B = A + (-B)."
+      },
+      {
+        "id": "cs102-q2-5",
+        "type": "multiple_choice",
+        "prompt": "1111 (signed 4-bit) represents:",
+        "options": [
+          "15",
+          "-1",
+          "-0",
+          "1"
+        ],
+        "correctAnswer": 1,
+        "explanation": "In two's complement, all 1s is -1."
+      }
+    ]
+  },
+  {
+    "id": "cs102-quiz-2-b",
+    "subjectId": "cs102",
+    "topicId": "cs102-2",
+    "title": "Binary Arithmetic Application",
+    "questions": [
+      {
+        "id": "cs102-q2-b-1",
+        "type": "multiple_choice",
+        "prompt": "Perform logical left shift on 0011 by 1.",
+        "options": [
+          "0001",
+          "0110",
+          "1100",
+          "0111"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Shift bits left, fill with 0. 0011 -> 0110."
+      },
+      {
+        "id": "cs102-q2-b-2",
+        "type": "fill_blank",
+        "prompt": "What is 1010 (binary) multiplied by 10 (binary) in binary?",
+        "correctAnswer": "10100",
+        "explanation": "Multiplying by 2 (10 bin) is a left shift. 1010 -> 10100."
+      },
+      {
+        "id": "cs102-q2-b-3",
+        "type": "true_false",
+        "prompt": "In unsigned arithmetic, a carry out of the MSB indicates overflow.",
+        "correctAnswer": true,
+        "explanation": "If the result is too large to fit, a carry occurs."
+      },
+      {
+        "id": "cs102-q2-b-4",
+        "type": "multiple_choice",
+        "prompt": "Which operation clears a specific bit?",
+        "options": [
+          "OR with 1",
+          "AND with 0",
+          "XOR with 1",
+          "NOT"
+        ],
+        "correctAnswer": 1,
+        "explanation": "ANDing with 0 forces the bit to 0."
+      },
+      {
+        "id": "cs102-q2-b-5",
+        "type": "multiple_choice",
+        "prompt": "What is -3 in 4-bit two's complement?",
+        "options": [
+          "1101",
+          "1011",
+          "1100",
+          "1110"
+        ],
+        "correctAnswer": 0,
+        "explanation": "+3 is 0011. Invert -> 1100. Add 1 -> 1101."
+      }
+    ]
+  },
+  {
+    "id": "cs102-quiz-2-c",
+    "subjectId": "cs102",
+    "topicId": "cs102-2",
+    "title": "Binary Arithmetic Advanced",
+    "questions": [
+      {
+        "id": "cs102-q2-c-1",
+        "type": "multiple_choice",
+        "prompt": "What is 0x80 + 0x80 in 8-bit signed arithmetic?",
+        "options": [
+          "0x00 with Overflow",
+          "0x100",
+          "0x00",
+          "0xFF"
+        ],
+        "correctAnswer": 0,
+        "explanation": "-128 + -128 = -256, which cannot fit in 8 bits (range -128 to +127). Result bits are 00, but overflow flag is set."
+      },
+      {
+        "id": "cs102-q2-c-2",
+        "type": "multiple_choice",
+        "prompt": "Arithmetic Right Shift of 1100 (signed) by 1 yields:",
+        "options": [
+          "0110",
+          "1110",
+          "0011",
+          "1001"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Arithmetic shift preserves the sign bit (1). So 1... shifts in. 1100 -> 1110."
+      },
+      {
+        "id": "cs102-q2-c-3",
+        "type": "fill_blank",
+        "prompt": "The range of a 5-bit two's complement number is -16 to ...?",
+        "correctAnswer": "15",
+        "explanation": "2^(5-1) - 1 = 15."
+      },
+      {
+        "id": "cs102-q2-c-4",
+        "type": "true_false",
+        "prompt": "XORing a value with itself results in 0.",
+        "correctAnswer": true,
+        "explanation": "Always true. 1^1=0, 0^0=0."
+      },
+      {
+        "id": "cs102-q2-c-5",
+        "type": "multiple_choice",
+        "prompt": "To toggle the LSB of a number, you should:",
+        "options": [
+          "AND with 1",
+          "OR with 1",
+          "XOR with 1",
+          "ADD 1"
+        ],
+        "correctAnswer": 2,
+        "explanation": "XOR with 1 flips the bit."
+      }
+    ]
+  }
+]

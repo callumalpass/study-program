@@ -1,0 +1,500 @@
+[
+  {
+    "id": "cs305-t7-ex01",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-7",
+    "title": "Create CommonJS Module",
+    "description": "Write a function that exports a simple calculator object with add and subtract methods using CommonJS module.exports.",
+    "difficulty": 1,
+    "language": "javascript",
+    "starterCode": "// Create calculator module\nfunction createCalculator() {\n  // Your code here\n}",
+    "solution": "function createCalculator() {\n  return {\n    add: (a, b) => a + b,\n    subtract: (a, b) => a - b\n  };\n}\n\nmodule.exports = createCalculator();",
+    "testCases": [
+      {
+        "input": "calculator.add(5, 3)",
+        "expectedOutput": "8",
+        "isHidden": false,
+        "description": "Addition works"
+      },
+      {
+        "input": "calculator.subtract(10, 4)",
+        "expectedOutput": "6",
+        "isHidden": false,
+        "description": "Subtraction works"
+      }
+    ],
+    "hints": [
+      "Create an object with add and subtract methods",
+      "Use module.exports to export the object",
+      "Each method should take two parameters and return the result"
+    ]
+  },
+  {
+    "id": "cs305-t7-ex02",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-7",
+    "title": "ES6 Named Exports",
+    "description": "Create a utilities module with named exports for formatDate(date) and formatCurrency(amount). Use ES6 export syntax.",
+    "difficulty": 1,
+    "language": "javascript",
+    "starterCode": "// Create utility functions\n// Your code here",
+    "solution": "export function formatDate(date) {\n  return date.toLocaleDateString('en-US');\n}\n\nexport function formatCurrency(amount) {\n  return `$${amount.toFixed(2)}`;\n}",
+    "testCases": [
+      {
+        "input": "formatDate(new Date(\"2024-01-15\"))",
+        "expectedOutput": "\"1/15/2024\"",
+        "isHidden": false,
+        "description": "Format date"
+      },
+      {
+        "input": "formatCurrency(19.99)",
+        "expectedOutput": "\"$19.99\"",
+        "isHidden": false,
+        "description": "Format currency"
+      }
+    ],
+    "hints": [
+      "Use export keyword before each function",
+      "formatDate should use toLocaleDateString()",
+      "formatCurrency should format to 2 decimal places with $ prefix"
+    ]
+  },
+  {
+    "id": "cs305-t7-ex03",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-7",
+    "title": "Create Component with Default Export",
+    "description": "Write a function `createButton(text, onClick)` that returns a button configuration object and export it as default.",
+    "difficulty": 1,
+    "language": "javascript",
+    "starterCode": "function createButton(text, onClick) {\n  // Your code here\n}\n\n// Add export here",
+    "solution": "function createButton(text, onClick) {\n  return {\n    type: 'button',\n    text,\n    onClick,\n    render() {\n      return `<button onclick=\"...\">${this.text}</button>`;\n    }\n  };\n}\n\nexport default createButton;",
+    "testCases": [
+      {
+        "input": "createButton(\"Click me\", () => {})",
+        "expectedOutput": "{type: \"button\", text: \"Click me\", ...}",
+        "isHidden": false,
+        "description": "Create button config"
+      }
+    ],
+    "hints": [
+      "Return an object with type, text, and onClick properties",
+      "Add a render method that returns HTML string",
+      "Use export default to export the function"
+    ]
+  },
+  {
+    "id": "cs305-t7-ex04",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-7",
+    "title": "Stateful Component Factory",
+    "description": "Create a function `createCounter()` that returns a component with state and methods: getCount(), increment(), decrement().",
+    "difficulty": 2,
+    "language": "javascript",
+    "starterCode": "function createCounter() {\n  // Your code here\n}",
+    "solution": "function createCounter() {\n  let count = 0;\n\n  return {\n    getCount() {\n      return count;\n    },\n    increment() {\n      count++;\n      return count;\n    },\n    decrement() {\n      count--;\n      return count;\n    }\n  };\n}",
+    "testCases": [
+      {
+        "input": "counter.increment(); counter.increment(); counter.getCount()",
+        "expectedOutput": "2",
+        "isHidden": false,
+        "description": "Increment twice"
+      },
+      {
+        "input": "counter.increment(); counter.decrement(); counter.getCount()",
+        "expectedOutput": "0",
+        "isHidden": false,
+        "description": "Increment then decrement"
+      }
+    ],
+    "hints": [
+      "Use closure to maintain private state",
+      "Initialize count to 0",
+      "Each method should modify or return the count",
+      "Increment/decrement should return the new value"
+    ]
+  },
+  {
+    "id": "cs305-t7-ex05",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-7",
+    "title": "Validate Component Props",
+    "description": "Write a function `validateProps(props, schema)` that validates props against a schema. Schema: {name: \"string\", age: \"number\"}. Return {valid: boolean, errors: []}.",
+    "difficulty": 2,
+    "language": "javascript",
+    "starterCode": "function validateProps(props, schema) {\n  // Your code here\n}",
+    "solution": "function validateProps(props, schema) {\n  const errors = [];\n\n  for (const [key, expectedType] of Object.entries(schema)) {\n    if (!(key in props)) {\n      errors.push(`Missing required prop: ${key}`);\n    } else if (typeof props[key] !== expectedType) {\n      errors.push(`Invalid type for ${key}: expected ${expectedType}, got ${typeof props[key]}`);\n    }\n  }\n\n  return {\n    valid: errors.length === 0,\n    errors\n  };\n}",
+    "testCases": [
+      {
+        "input": "{name: \"Alice\", age: 30}, {name: \"string\", age: \"number\"}",
+        "expectedOutput": "{valid: true, errors: []}",
+        "isHidden": false,
+        "description": "Valid props"
+      },
+      {
+        "input": "{name: \"Bob\"}, {name: \"string\", age: \"number\"}",
+        "expectedOutput": "{valid: false, errors: [\"Missing required prop: age\"]}",
+        "isHidden": false,
+        "description": "Missing prop"
+      },
+      {
+        "input": "{name: \"Carol\", age: \"30\"}, {name: \"string\", age: \"number\"}",
+        "expectedOutput": "{valid: false, errors: [\"Invalid type for age: ...\"]}",
+        "isHidden": false,
+        "description": "Wrong type"
+      }
+    ],
+    "hints": [
+      "Iterate through schema entries",
+      "Check if each key exists in props",
+      "Check if the type matches using typeof",
+      "Collect all errors before returning"
+    ]
+  },
+  {
+    "id": "cs305-t7-ex06",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-7",
+    "title": "Create Test Assertion Helper",
+    "description": "Write a function `assertEquals(actual, expected, message)` that throws an error if values don't match, otherwise logs success.",
+    "difficulty": 2,
+    "language": "javascript",
+    "starterCode": "function assertEquals(actual, expected, message) {\n  // Your code here\n}",
+    "solution": "function assertEquals(actual, expected, message) {\n  if (actual !== expected) {\n    throw new Error(`${message}: Expected ${expected}, but got ${actual}`);\n  }\n  console.log(`✓ ${message}`);\n}",
+    "testCases": [
+      {
+        "input": "assertEquals(5, 5, \"Math works\")",
+        "expectedOutput": "\"✓ Math works\" (logged)",
+        "isHidden": false,
+        "description": "Passing test"
+      },
+      {
+        "input": "assertEquals(5, 6, \"Math broken\")",
+        "expectedOutput": "Throws error",
+        "isHidden": false,
+        "description": "Failing test"
+      }
+    ],
+    "hints": [
+      "Compare actual and expected using strict equality",
+      "Throw an Error with descriptive message if they don't match",
+      "Log success message if they do match",
+      "Include the custom message in both cases"
+    ]
+  },
+  {
+    "id": "cs305-t7-ex07",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-7",
+    "title": "Simple Test Runner",
+    "description": "Create a function `describe(suiteName, tests)` that runs an object of test functions and reports results. Tests is an object where keys are test names and values are test functions.",
+    "difficulty": 3,
+    "language": "javascript",
+    "starterCode": "function describe(suiteName, tests) {\n  // Your code here\n}",
+    "solution": "function describe(suiteName, tests) {\n  console.log(`\\nTest Suite: ${suiteName}`);\n  let passed = 0;\n  let failed = 0;\n\n  for (const [testName, testFn] of Object.entries(tests)) {\n    try {\n      testFn();\n      console.log(`  ✓ ${testName}`);\n      passed++;\n    } catch (error) {\n      console.log(`  ✗ ${testName}`);\n      console.log(`    ${error.message}`);\n      failed++;\n    }\n  }\n\n  console.log(`\\nResults: ${passed} passed, ${failed} failed`);\n  return { passed, failed };\n}",
+    "testCases": [
+      {
+        "input": "describe(\"Math\", {add: () => assertEquals(2+2, 4, \"Addition\")})",
+        "expectedOutput": "{passed: 1, failed: 0}",
+        "isHidden": false,
+        "description": "All tests pass"
+      },
+      {
+        "input": "Mixed passing and failing tests",
+        "expectedOutput": "{passed: X, failed: Y}",
+        "isHidden": false,
+        "description": "Mixed results"
+      }
+    ],
+    "hints": [
+      "Iterate through test entries",
+      "Wrap each test execution in try/catch",
+      "Count passed and failed tests",
+      "Log results with visual indicators (✓ and ✗)",
+      "Return summary object"
+    ]
+  },
+  {
+    "id": "cs305-t7-ex08",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-7",
+    "title": "Resolve Module Dependencies",
+    "description": "Write a function `resolveDependencies(modules)` that takes a dependency graph and returns modules in correct load order. Input: {a: [], b: [\"a\"], c: [\"a\", \"b\"]}.",
+    "difficulty": 4,
+    "language": "javascript",
+    "starterCode": "function resolveDependencies(modules) {\n  // Your code here\n}",
+    "solution": "function resolveDependencies(modules) {\n  const resolved = [];\n  const visited = new Set();\n\n  function visit(module) {\n    if (visited.has(module)) return;\n    visited.add(module);\n\n    const deps = modules[module] || [];\n    for (const dep of deps) {\n      visit(dep);\n    }\n\n    resolved.push(module);\n  }\n\n  for (const module of Object.keys(modules)) {\n    visit(module);\n  }\n\n  return resolved;\n}",
+    "testCases": [
+      {
+        "input": "{a: [], b: [\"a\"], c: [\"a\", \"b\"]}",
+        "expectedOutput": "[\"a\", \"b\", \"c\"]",
+        "isHidden": false,
+        "description": "Linear dependencies"
+      },
+      {
+        "input": "{x: [\"y\"], y: [\"z\"], z: []}",
+        "expectedOutput": "[\"z\", \"y\", \"x\"]",
+        "isHidden": false,
+        "description": "Chain dependencies"
+      }
+    ],
+    "hints": [
+      "Use topological sort algorithm",
+      "Track visited modules to avoid duplicates",
+      "Recursively visit dependencies first",
+      "Add module to result after all dependencies are resolved"
+    ]
+  },
+  {
+    "id": "cs305-t7-ex09",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-7",
+    "title": "Implement Component Lifecycle",
+    "description": "Create a function `createComponent(config)` that supports lifecycle hooks: onMount, onUpdate, onUnmount. Return object with mount(), update(), and unmount() methods.",
+    "difficulty": 3,
+    "language": "javascript",
+    "starterCode": "function createComponent(config) {\n  // Your code here\n}",
+    "solution": "function createComponent(config) {\n  let isMounted = false;\n\n  return {\n    mount() {\n      if (!isMounted) {\n        isMounted = true;\n        if (config.onMount) config.onMount();\n      }\n    },\n    update(newData) {\n      if (isMounted && config.onUpdate) {\n        config.onUpdate(newData);\n      }\n    },\n    unmount() {\n      if (isMounted) {\n        isMounted = false;\n        if (config.onUnmount) config.onUnmount();\n      }\n    }\n  };\n}",
+    "testCases": [
+      {
+        "input": "createComponent({onMount: () => console.log(\"mounted\")})",
+        "expectedOutput": "Calls onMount when mount() is called",
+        "isHidden": false,
+        "description": "Mount lifecycle"
+      },
+      {
+        "input": "Component with all hooks",
+        "expectedOutput": "All hooks called at appropriate times",
+        "isHidden": false,
+        "description": "Full lifecycle"
+      }
+    ],
+    "hints": [
+      "Track mounted state with a boolean",
+      "Only call onMount when mounting for the first time",
+      "Only allow updates when mounted",
+      "Only call onUnmount when actually mounted",
+      "Check if hooks exist before calling them"
+    ]
+  },
+  {
+    "id": "cs305-t7-ex10",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-7",
+    "title": "Generate Build Configuration",
+    "description": "Write a function `generateBuildConfig(env)` that returns different build configurations for \"development\" or \"production\" environments. Include sourceMap, minify, and outputPath.",
+    "difficulty": 2,
+    "language": "javascript",
+    "starterCode": "function generateBuildConfig(env) {\n  // Your code here\n}",
+    "solution": "function generateBuildConfig(env) {\n  const baseConfig = {\n    entry: './src/index.js',\n    outputPath: './dist'\n  };\n\n  if (env === 'production') {\n    return {\n      ...baseConfig,\n      sourceMap: false,\n      minify: true,\n      mode: 'production'\n    };\n  } else {\n    return {\n      ...baseConfig,\n      sourceMap: true,\n      minify: false,\n      mode: 'development'\n    };\n  }\n}",
+    "testCases": [
+      {
+        "input": "\"production\"",
+        "expectedOutput": "{sourceMap: false, minify: true, mode: \"production\", ...}",
+        "isHidden": false,
+        "description": "Production config"
+      },
+      {
+        "input": "\"development\"",
+        "expectedOutput": "{sourceMap: true, minify: false, mode: \"development\", ...}",
+        "isHidden": false,
+        "description": "Development config"
+      }
+    ],
+    "hints": [
+      "Create a base configuration object",
+      "Add environment-specific settings",
+      "Production should minify and exclude source maps",
+      "Development should include source maps and skip minification",
+      "Use object spread to combine base and env-specific config"
+    ]
+  },
+  {
+    "id": "cs305-t7-ex11",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-7",
+    "title": "Create Mock Function",
+    "description": "Write a function `createMock(returnValue)` that returns a mock function which tracks calls and arguments. Mock should have .calls array and .calledWith(args) method.",
+    "difficulty": 3,
+    "language": "javascript",
+    "starterCode": "function createMock(returnValue) {\n  // Your code here\n}",
+    "solution": "function createMock(returnValue) {\n  const calls = [];\n\n  const mockFn = function(...args) {\n    calls.push(args);\n    return returnValue;\n  };\n\n  mockFn.calls = calls;\n  mockFn.calledWith = (...expectedArgs) => {\n    return calls.some(args =>\n      args.length === expectedArgs.length &&\n      args.every((arg, i) => arg === expectedArgs[i])\n    );\n  };\n\n  return mockFn;\n}",
+    "testCases": [
+      {
+        "input": "mock = createMock(42); mock(1, 2)",
+        "expectedOutput": "42 and tracks call",
+        "isHidden": false,
+        "description": "Basic mock usage"
+      },
+      {
+        "input": "mock.calledWith(1, 2)",
+        "expectedOutput": "true",
+        "isHidden": false,
+        "description": "Verify call arguments"
+      }
+    ],
+    "hints": [
+      "Use a closure to maintain calls array",
+      "Create a function that records arguments on each call",
+      "Add calls and calledWith as properties of the function",
+      "calledWith should check if any call matches the expected arguments"
+    ]
+  },
+  {
+    "id": "cs305-t7-ex12",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-7",
+    "title": "Simple State Management",
+    "description": "Create a function `createStore(initialState)` that returns {getState, setState, subscribe}. Subscribers should be called when state changes.",
+    "difficulty": 3,
+    "language": "javascript",
+    "starterCode": "function createStore(initialState) {\n  // Your code here\n}",
+    "solution": "function createStore(initialState) {\n  let state = initialState;\n  const subscribers = [];\n\n  return {\n    getState() {\n      return state;\n    },\n    setState(newState) {\n      state = { ...state, ...newState };\n      subscribers.forEach(fn => fn(state));\n    },\n    subscribe(fn) {\n      subscribers.push(fn);\n      return () => {\n        const index = subscribers.indexOf(fn);\n        if (index > -1) subscribers.splice(index, 1);\n      };\n    }\n  };\n}",
+    "testCases": [
+      {
+        "input": "store = createStore({count: 0}); store.setState({count: 1})",
+        "expectedOutput": "State updated and subscribers notified",
+        "isHidden": false,
+        "description": "State update"
+      },
+      {
+        "input": "Subscribe and unsubscribe",
+        "expectedOutput": "Unsubscribed function not called",
+        "isHidden": false,
+        "description": "Subscription management"
+      }
+    ],
+    "hints": [
+      "Store state in a closure variable",
+      "Maintain an array of subscriber functions",
+      "Notify all subscribers when state changes",
+      "subscribe should return an unsubscribe function",
+      "Use object spread to merge new state with old state"
+    ]
+  },
+  {
+    "id": "cs305-t7-ex13",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-7",
+    "title": "Create Plugin Architecture",
+    "description": "Write a function `createApp()` that returns an app with plugin support. App should have use(plugin) method and run() method that executes all plugins in order.",
+    "difficulty": 4,
+    "language": "javascript",
+    "starterCode": "function createApp() {\n  // Your code here\n}",
+    "solution": "function createApp() {\n  const plugins = [];\n  const app = {\n    context: {}\n  };\n\n  return {\n    use(plugin) {\n      plugins.push(plugin);\n      return this;\n    },\n    run() {\n      plugins.forEach(plugin => {\n        plugin(app.context);\n      });\n      return app.context;\n    },\n    getContext() {\n      return app.context;\n    }\n  };\n}",
+    "testCases": [
+      {
+        "input": "app.use(ctx => ctx.a = 1).use(ctx => ctx.b = 2).run()",
+        "expectedOutput": "{a: 1, b: 2}",
+        "isHidden": false,
+        "description": "Chain plugins"
+      },
+      {
+        "input": "Multiple plugins modifying context",
+        "expectedOutput": "All plugins executed in order",
+        "isHidden": false,
+        "description": "Plugin execution order"
+      }
+    ],
+    "hints": [
+      "Store plugins in an array",
+      "Maintain a shared context object",
+      "use() should add plugin to array and return this for chaining",
+      "run() should execute each plugin with the context",
+      "Plugins are functions that receive the context"
+    ]
+  },
+  {
+    "id": "cs305-t7-ex14",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-7",
+    "title": "Detect Unused Exports",
+    "description": "Write a function `findUnusedExports(moduleExports, imports)` that identifies exports that are never imported. Return array of unused export names.",
+    "difficulty": 3,
+    "language": "javascript",
+    "starterCode": "function findUnusedExports(moduleExports, imports) {\n  // Your code here\n}",
+    "solution": "function findUnusedExports(moduleExports, imports) {\n  const usedExports = new Set(imports.flat());\n  return moduleExports.filter(exp => !usedExports.has(exp));\n}",
+    "testCases": [
+      {
+        "input": "[\"a\", \"b\", \"c\"], [[\"a\"], [\"b\"]]",
+        "expectedOutput": "[\"c\"]",
+        "isHidden": false,
+        "description": "One unused export"
+      },
+      {
+        "input": "[\"x\", \"y\"], [[\"x\", \"y\"]]",
+        "expectedOutput": "[]",
+        "isHidden": false,
+        "description": "All exports used"
+      }
+    ],
+    "hints": [
+      "Flatten the imports array to get all imported names",
+      "Use a Set for efficient lookup",
+      "Filter exports to find those not in the used set"
+    ]
+  },
+  {
+    "id": "cs305-t7-ex15",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-7",
+    "title": "Calculate Test Coverage",
+    "description": "Create a function `calculateCoverage(totalLines, coveredLines)` that returns coverage statistics: {percentage, covered, total, uncovered}.",
+    "difficulty": 2,
+    "language": "javascript",
+    "starterCode": "function calculateCoverage(totalLines, coveredLines) {\n  // Your code here\n}",
+    "solution": "function calculateCoverage(totalLines, coveredLines) {\n  const percentage = (coveredLines / totalLines) * 100;\n  const uncovered = totalLines - coveredLines;\n\n  return {\n    percentage: Math.round(percentage * 100) / 100,\n    covered: coveredLines,\n    total: totalLines,\n    uncovered\n  };\n}",
+    "testCases": [
+      {
+        "input": "100, 80",
+        "expectedOutput": "{percentage: 80, covered: 80, total: 100, uncovered: 20}",
+        "isHidden": false,
+        "description": "80% coverage"
+      },
+      {
+        "input": "50, 50",
+        "expectedOutput": "{percentage: 100, covered: 50, total: 50, uncovered: 0}",
+        "isHidden": false,
+        "description": "100% coverage"
+      }
+    ],
+    "hints": [
+      "Calculate percentage: (covered / total) * 100",
+      "Calculate uncovered: total - covered",
+      "Round percentage to 2 decimal places",
+      "Return object with all statistics"
+    ]
+  },
+  {
+    "id": "cs305-t7-ex16",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-7",
+    "title": "Optimize Bundle Configuration",
+    "description": "Write a function `optimizeBundle(files)` that takes an array of file objects {name, size, essential} and returns optimized bundle config. Remove non-essential files over 100KB, return {files, totalSize, savings}.",
+    "difficulty": 4,
+    "language": "javascript",
+    "starterCode": "function optimizeBundle(files) {\n  // Your code here\n}",
+    "solution": "function optimizeBundle(files) {\n  const originalSize = files.reduce((sum, f) => sum + f.size, 0);\n\n  const optimized = files.filter(file =>\n    file.essential || file.size <= 100\n  );\n\n  const totalSize = optimized.reduce((sum, f) => sum + f.size, 0);\n  const savings = originalSize - totalSize;\n\n  return {\n    files: optimized,\n    totalSize,\n    savings,\n    savingsPercentage: Math.round((savings / originalSize) * 100)\n  };\n}",
+    "testCases": [
+      {
+        "input": "[{name: \"a\", size: 150, essential: false}, {name: \"b\", size: 50, essential: true}]",
+        "expectedOutput": "Removes file \"a\", keeps \"b\"",
+        "isHidden": false,
+        "description": "Remove large non-essential file"
+      },
+      {
+        "input": "All essential files",
+        "expectedOutput": "All files kept regardless of size",
+        "isHidden": false,
+        "description": "Keep essential files"
+      }
+    ],
+    "hints": [
+      "Calculate original total size first",
+      "Filter files: keep if essential OR size <= 100",
+      "Calculate new total size after filtering",
+      "Calculate savings as difference",
+      "Include savings percentage in result"
+    ]
+  }
+]

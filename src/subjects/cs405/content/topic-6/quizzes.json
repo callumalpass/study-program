@@ -1,0 +1,185 @@
+[
+  {
+    "id": "cs405-quiz-6",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-6",
+    "title": "Cloud Storage - Types and Object Storage",
+    "questions": [
+      {
+        "id": "q6-1",
+        "type": "multiple_choice",
+        "prompt": "What are the three main types of cloud storage?",
+        "options": [
+          "Fast, Medium, Slow",
+          "Object, Block, File",
+          "SQL, NoSQL, Graph",
+          "Hot, Warm, Cold"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The three main types are: Object storage (S3, Blob), Block storage (EBS, persistent disks), and File storage (EFS, Azure Files)."
+      },
+      {
+        "id": "q6-2",
+        "type": "true_false",
+        "prompt": "Object storage is ideal for frequently modified files like databases.",
+        "correctAnswer": false,
+        "explanation": "Object storage is optimized for read-heavy workloads and immutable data. For frequently modified files, use block or file storage. Databases need block storage."
+      },
+      {
+        "id": "q6-3",
+        "type": "multiple_choice",
+        "prompt": "Which S3 storage class is most cost-effective for archival data accessed less than once per year?",
+        "options": [
+          "S3 Standard",
+          "S3 Intelligent-Tiering",
+          "S3 Glacier Deep Archive",
+          "S3 One Zone-IA"
+        ],
+        "correctAnswer": 2,
+        "explanation": "S3 Glacier Deep Archive is the lowest-cost storage for archival data accessed rarely (once or twice per year). Retrieval takes 12-48 hours."
+      },
+      {
+        "id": "q6-4",
+        "type": "multiple_choice",
+        "prompt": "What is the maximum size of a single object in S3?",
+        "options": [
+          "1 GB",
+          "5 GB",
+          "100 GB",
+          "5 TB"
+        ],
+        "correctAnswer": 3,
+        "explanation": "S3 supports objects up to 5 TB. Files larger than 100 MB should use multipart upload. Single PUT operations are limited to 5 GB."
+      },
+      {
+        "id": "q6-5",
+        "type": "true_false",
+        "prompt": "S3 bucket names must be globally unique across all AWS accounts.",
+        "correctAnswer": true,
+        "explanation": "S3 bucket names must be globally unique across all AWS accounts and regions. They're used in DNS, so duplicates aren't allowed."
+      }
+    ]
+  },
+  {
+    "id": "cs405-quiz-6b",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-6",
+    "title": "Cloud Storage - Block and File Storage",
+    "questions": [
+      {
+        "id": "q6b-1",
+        "type": "multiple_choice",
+        "prompt": "What is AWS EBS primarily used for?",
+        "options": [
+          "Object storage",
+          "Block storage for EC2 instances",
+          "File sharing between multiple instances",
+          "Database backups"
+        ],
+        "correctAnswer": 1,
+        "explanation": "EBS (Elastic Block Store) provides block-level storage volumes for EC2 instances. It's like a virtual hard drive attached to a VM."
+      },
+      {
+        "id": "q6b-2",
+        "type": "true_false",
+        "prompt": "An EBS volume can be attached to multiple EC2 instances simultaneously.",
+        "correctAnswer": false,
+        "explanation": "Standard EBS volumes can only attach to one instance at a time. Multi-attach is available for specific EBS volume types (io1/io2) in limited scenarios."
+      },
+      {
+        "id": "q6b-3",
+        "type": "multiple_choice",
+        "prompt": "Which storage type allows multiple instances to access the same files simultaneously?",
+        "options": [
+          "Object storage (S3)",
+          "Block storage (EBS)",
+          "File storage (EFS)",
+          "Instance store"
+        ],
+        "correctAnswer": 2,
+        "explanation": "File storage like EFS (Elastic File System) allows multiple EC2 instances to mount and access the same file system concurrently using NFS protocol."
+      },
+      {
+        "id": "q6b-4",
+        "type": "multiple_choice",
+        "prompt": "What is IOPS in the context of EBS?",
+        "options": [
+          "Internet Operations Per Second",
+          "Input/Output Operations Per Second",
+          "Instance Operations Per Second",
+          "Internal Only Processing Speed"
+        ],
+        "correctAnswer": 1,
+        "explanation": "IOPS (Input/Output Operations Per Second) measures storage performance. Higher IOPS means faster disk operations. Provisioned IOPS SSD (io1/io2) offers consistent performance."
+      },
+      {
+        "id": "q6b-5",
+        "type": "true_false",
+        "prompt": "EBS snapshots are incremental backups stored in S3.",
+        "correctAnswer": true,
+        "explanation": "EBS snapshots are incremental: only changed blocks are saved. They're stored in S3 (transparently) and can restore volumes or create new volumes in any AZ."
+      }
+    ]
+  },
+  {
+    "id": "cs405-quiz-6c",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-6",
+    "title": "Cloud Storage - Databases and Optimization",
+    "questions": [
+      {
+        "id": "q6c-1",
+        "type": "multiple_choice",
+        "prompt": "What type of database is DynamoDB?",
+        "options": [
+          "Relational",
+          "NoSQL Key-Value",
+          "Graph",
+          "Time-series"
+        ],
+        "correctAnswer": 1,
+        "explanation": "DynamoDB is a fully managed NoSQL key-value and document database. It provides single-digit millisecond performance at any scale."
+      },
+      {
+        "id": "q6c-2",
+        "type": "true_false",
+        "prompt": "RDS (Relational Database Service) automatically handles backups, patching, and failover.",
+        "correctAnswer": true,
+        "explanation": "RDS is a managed relational database service. AWS handles backups, software patching, automatic failure detection, and recovery."
+      },
+      {
+        "id": "q6c-3",
+        "type": "multiple_choice",
+        "prompt": "Which AWS database is best for serverless applications requiring unpredictable workloads?",
+        "options": [
+          "RDS with provisioned capacity",
+          "DynamoDB on-demand",
+          "Self-managed MySQL",
+          "Redis"
+        ],
+        "correctAnswer": 1,
+        "explanation": "DynamoDB on-demand mode automatically scales and charges per-request, ideal for unpredictable workloads. RDS requires provisioned capacity planning."
+      },
+      {
+        "id": "q6c-4",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of CloudFront CDN with S3?",
+        "options": [
+          "Increase storage capacity",
+          "Cache content at edge locations for faster delivery",
+          "Encrypt data",
+          "Backup data automatically"
+        ],
+        "correctAnswer": 1,
+        "explanation": "CloudFront is a CDN that caches content at edge locations worldwide. It reduces latency and improves performance by serving content from locations closer to users."
+      },
+      {
+        "id": "q6c-5",
+        "type": "true_false",
+        "prompt": "Using S3 Intelligent-Tiering automatically moves objects between storage classes based on access patterns.",
+        "correctAnswer": true,
+        "explanation": "S3 Intelligent-Tiering automatically moves objects between frequent and infrequent access tiers based on usage patterns, optimizing costs without performance impact."
+      }
+    ]
+  }
+]

@@ -1,0 +1,490 @@
+[
+  {
+    "id": "cs303-ex-6-1",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-6",
+    "title": "Reference Counting",
+    "difficulty": 1,
+    "description": "Implement basic reference counting for memory management.",
+    "starterCode": "class RefCounted:\n    \"\"\"Object with reference counting.\"\"\"\n\n    def __init__(self, value):\n        self.value = value\n        self.ref_count = 1\n\n    def add_ref(self):\n        pass\n\n    def release(self):\n        pass",
+    "solution": "class RefCounted:\n    def __init__(self, value):\n        self.value = value\n        self.ref_count = 1\n        self.freed = False\n\n    def add_ref(self):\n        if not self.freed:\n            self.ref_count += 1\n\n    def release(self):\n        if not self.freed:\n            self.ref_count -= 1\n            if self.ref_count == 0:\n                self.freed = True\n                self.value = None\n                return True\n        return False",
+    "testCases": [
+      {
+        "input": "r = RefCounted(42); r.ref_count",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "r = RefCounted(42); r.add_ref(); r.ref_count",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "r = RefCounted(42); r.release(); r.freed",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Increment count when adding reference",
+      "Decrement and free when releasing",
+      "Free when count reaches zero"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-6-2",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-6",
+    "title": "Manual Memory Pool",
+    "difficulty": 1,
+    "description": "Implement a simple memory pool allocator.",
+    "starterCode": "class MemoryPool:\n    \"\"\"Fixed-size memory pool.\"\"\"\n\n    def __init__(self, block_size, num_blocks):\n        pass\n\n    def allocate(self):\n        \"\"\"Allocate a block, return index or -1.\"\"\"\n        pass\n\n    def free(self, index):\n        \"\"\"Free a block.\"\"\"\n        pass",
+    "solution": "class MemoryPool:\n    def __init__(self, block_size, num_blocks):\n        self.block_size = block_size\n        self.num_blocks = num_blocks\n        self.blocks = [None] * num_blocks\n        self.free_list = list(range(num_blocks))\n\n    def allocate(self):\n        if not self.free_list:\n            return -1\n        index = self.free_list.pop(0)\n        self.blocks[index] = [0] * self.block_size\n        return index\n\n    def free(self, index):\n        if 0 <= index < self.num_blocks and index not in self.free_list:\n            self.blocks[index] = None\n            self.free_list.append(index)\n\n    def read(self, index, offset):\n        if self.blocks[index]:\n            return self.blocks[index][offset]\n        return None\n\n    def write(self, index, offset, value):\n        if self.blocks[index]:\n            self.blocks[index][offset] = value",
+    "testCases": [
+      {
+        "input": "pool = MemoryPool(4, 3); pool.allocate()",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "pool = MemoryPool(4, 2); pool.allocate(); pool.allocate(); pool.allocate()",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "pool = MemoryPool(4, 2); a = pool.allocate(); pool.free(a); pool.allocate()",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Use free list for available blocks",
+      "Return -1 when pool exhausted",
+      "Add freed blocks back to list"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-6-3",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-6",
+    "title": "Bump Allocator",
+    "difficulty": 1,
+    "description": "Implement a bump allocator (arena allocator).",
+    "starterCode": "class BumpAllocator:\n    \"\"\"Simple bump allocator - allocates by incrementing pointer.\"\"\"\n\n    def __init__(self, size):\n        pass\n\n    def allocate(self, num_bytes):\n        \"\"\"Allocate bytes, return start address or -1.\"\"\"\n        pass\n\n    def reset(self):\n        \"\"\"Reset allocator, freeing all memory.\"\"\"\n        pass",
+    "solution": "class BumpAllocator:\n    def __init__(self, size):\n        self.memory = bytearray(size)\n        self.size = size\n        self.ptr = 0\n\n    def allocate(self, num_bytes):\n        if self.ptr + num_bytes > self.size:\n            return -1\n        addr = self.ptr\n        self.ptr += num_bytes\n        return addr\n\n    def reset(self):\n        self.ptr = 0\n        self.memory = bytearray(self.size)\n\n    def used(self):\n        return self.ptr\n\n    def available(self):\n        return self.size - self.ptr",
+    "testCases": [
+      {
+        "input": "ba = BumpAllocator(100); ba.allocate(10)",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "ba = BumpAllocator(100); ba.allocate(10); ba.allocate(20)",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "ba = BumpAllocator(10); ba.allocate(20)",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Track current position with pointer",
+      "Increment pointer on each allocation",
+      "Reset pointer to free all memory"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-6-4",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-6",
+    "title": "Mark-Sweep Garbage Collector",
+    "difficulty": 3,
+    "description": "Implement a mark-and-sweep garbage collector.",
+    "starterCode": "class MarkSweepGC:\n    \"\"\"Mark-and-sweep garbage collector.\"\"\"\n\n    def __init__(self, heap_size):\n        pass\n\n    def allocate(self, value):\n        \"\"\"Allocate object, return address.\"\"\"\n        pass\n\n    def collect(self, roots):\n        \"\"\"Run garbage collection given root set.\"\"\"\n        pass",
+    "solution": "class MarkSweepGC:\n    def __init__(self, heap_size):\n        self.heap = [None] * heap_size\n        self.marked = [False] * heap_size\n        self.free_list = list(range(heap_size))\n\n    def allocate(self, value):\n        if not self.free_list:\n            return -1\n        addr = self.free_list.pop(0)\n        self.heap[addr] = value\n        return addr\n\n    def collect(self, roots):\n        # Mark phase\n        self.marked = [False] * len(self.heap)\n        worklist = list(roots)\n\n        while worklist:\n            addr = worklist.pop()\n            if addr < 0 or addr >= len(self.heap):\n                continue\n            if self.marked[addr]:\n                continue\n            self.marked[addr] = True\n\n            # Add references from this object\n            obj = self.heap[addr]\n            if isinstance(obj, dict):\n                for v in obj.values():\n                    if isinstance(v, int) and 0 <= v < len(self.heap):\n                        worklist.append(v)\n            elif isinstance(obj, (list, tuple)):\n                for v in obj:\n                    if isinstance(v, int) and 0 <= v < len(self.heap):\n                        worklist.append(v)\n\n        # Sweep phase\n        freed = 0\n        for addr in range(len(self.heap)):\n            if not self.marked[addr] and self.heap[addr] is not None:\n                self.heap[addr] = None\n                self.free_list.append(addr)\n                freed += 1\n\n        return freed\n\n    def read(self, addr):\n        return self.heap[addr]",
+    "testCases": [
+      {
+        "input": "gc = MarkSweepGC(10); gc.allocate(42)",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "gc = MarkSweepGC(10); gc.allocate(1); gc.allocate(2); gc.collect([0])",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "gc = MarkSweepGC(10); a = gc.allocate({\"ref\": 1}); b = gc.allocate(42); gc.collect([a])",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Mark all reachable objects from roots",
+      "Sweep unmarked objects to free list",
+      "Follow references during marking"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-6-5",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-6",
+    "title": "Copying Garbage Collector",
+    "difficulty": 3,
+    "description": "Implement a semi-space copying collector.",
+    "starterCode": "class CopyingGC:\n    \"\"\"Semi-space copying garbage collector.\"\"\"\n\n    def __init__(self, space_size):\n        pass\n\n    def allocate(self, value):\n        pass\n\n    def collect(self, roots):\n        \"\"\"Copy live objects to new space.\"\"\"\n        pass",
+    "solution": "class CopyingGC:\n    def __init__(self, space_size):\n        self.space_size = space_size\n        self.from_space = [None] * space_size\n        self.to_space = [None] * space_size\n        self.alloc_ptr = 0\n        self.forwarding = {}\n\n    def allocate(self, value):\n        if self.alloc_ptr >= self.space_size:\n            return -1\n        addr = self.alloc_ptr\n        self.from_space[addr] = value\n        self.alloc_ptr += 1\n        return addr\n\n    def collect(self, roots):\n        self.to_space = [None] * self.space_size\n        self.forwarding = {}\n        scan = 0\n        free = 0\n\n        # Copy roots\n        new_roots = []\n        for root in roots:\n            new_addr = self.copy(root, free)\n            if new_addr >= 0:\n                new_roots.append(new_addr)\n                free += 1\n\n        # Scan and copy referenced objects\n        while scan < free:\n            obj = self.to_space[scan]\n            if isinstance(obj, dict):\n                for k, v in obj.items():\n                    if isinstance(v, int) and v in self.forwarding:\n                        obj[k] = self.forwarding[v]\n                    elif isinstance(v, int) and 0 <= v < self.space_size:\n                        new_addr = self.copy(v, free)\n                        if new_addr >= 0:\n                            obj[k] = new_addr\n                            free += 1\n            elif isinstance(obj, list):\n                for i, v in enumerate(obj):\n                    if isinstance(v, int) and v in self.forwarding:\n                        obj[i] = self.forwarding[v]\n                    elif isinstance(v, int) and 0 <= v < self.space_size:\n                        new_addr = self.copy(v, free)\n                        if new_addr >= 0:\n                            obj[i] = new_addr\n                            free += 1\n            scan += 1\n\n        # Swap spaces\n        self.from_space, self.to_space = self.to_space, self.from_space\n        self.alloc_ptr = free\n\n        return new_roots\n\n    def copy(self, addr, to_addr):\n        if addr < 0 or addr >= self.space_size:\n            return -1\n        if addr in self.forwarding:\n            return self.forwarding[addr]\n        obj = self.from_space[addr]\n        if obj is None:\n            return -1\n        self.to_space[to_addr] = obj\n        self.forwarding[addr] = to_addr\n        return to_addr\n\n    def read(self, addr):\n        return self.from_space[addr]",
+    "testCases": [
+      {
+        "input": "gc = CopyingGC(10); gc.allocate(42)",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "gc = CopyingGC(10); gc.allocate(1); gc.allocate(2); gc.allocate(3); gc.collect([0]); gc.alloc_ptr",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Copy live objects to new space",
+      "Use forwarding pointers for moved objects",
+      "Swap spaces after collection"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-6-6",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-6",
+    "title": "Generational GC",
+    "difficulty": 3,
+    "description": "Implement a simple generational garbage collector.",
+    "starterCode": "class GenerationalGC:\n    \"\"\"Two-generation garbage collector.\"\"\"\n\n    def __init__(self, young_size, old_size):\n        pass\n\n    def allocate(self, value):\n        \"\"\"Allocate in young generation.\"\"\"\n        pass\n\n    def minor_collect(self, roots):\n        \"\"\"Collect young generation.\"\"\"\n        pass\n\n    def major_collect(self, roots):\n        \"\"\"Collect both generations.\"\"\"\n        pass",
+    "solution": "class GenerationalGC:\n    def __init__(self, young_size, old_size):\n        self.young = [None] * young_size\n        self.old = [None] * old_size\n        self.young_ptr = 0\n        self.old_ptr = 0\n        self.ages = {}  # addr -> age\n        self.threshold = 2\n\n    def allocate(self, value):\n        if self.young_ptr >= len(self.young):\n            return -1\n        addr = self.young_ptr\n        self.young[addr] = value\n        self.ages[('young', addr)] = 0\n        self.young_ptr += 1\n        return ('young', addr)\n\n    def minor_collect(self, roots):\n        # Mark reachable in young generation\n        marked = set()\n        worklist = [r for r in roots if isinstance(r, tuple) and r[0] == 'young']\n\n        while worklist:\n            ref = worklist.pop()\n            if ref in marked:\n                continue\n            marked.add(ref)\n            gen, addr = ref\n            obj = self.young[addr] if gen == 'young' else self.old[addr]\n            # Would follow references here\n\n        # Promote or free\n        promoted = 0\n        freed = 0\n        for addr in range(self.young_ptr):\n            ref = ('young', addr)\n            if ref in marked:\n                self.ages[ref] = self.ages.get(ref, 0) + 1\n                if self.ages[ref] >= self.threshold:\n                    # Promote to old\n                    if self.old_ptr < len(self.old):\n                        self.old[self.old_ptr] = self.young[addr]\n                        self.old_ptr += 1\n                        promoted += 1\n                    self.young[addr] = None\n            else:\n                self.young[addr] = None\n                freed += 1\n\n        # Compact young generation\n        new_ptr = 0\n        for addr in range(self.young_ptr):\n            if self.young[addr] is not None:\n                if addr != new_ptr:\n                    self.young[new_ptr] = self.young[addr]\n                    self.young[addr] = None\n                new_ptr += 1\n        self.young_ptr = new_ptr\n\n        return {'promoted': promoted, 'freed': freed}\n\n    def major_collect(self, roots):\n        # Full collection of both generations\n        self.minor_collect(roots)\n        # Would also collect old generation\n        return {'young_used': self.young_ptr, 'old_used': self.old_ptr}",
+    "testCases": [
+      {
+        "input": "gc = GenerationalGC(10, 20); gc.allocate(42)",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "gc = GenerationalGC(10, 20); gc.allocate(1); gc.allocate(2); gc.minor_collect([])[\"freed\"]",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Young generation for new objects",
+      "Promote survivors to old generation",
+      "Minor collection is faster than major"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-6-7",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-6",
+    "title": "Cycle Detection",
+    "difficulty": 3,
+    "description": "Implement cycle detection for reference counting.",
+    "starterCode": "class CycleDetector:\n    \"\"\"Detect cycles in object graph.\"\"\"\n\n    def __init__(self):\n        self.objects = {}\n\n    def add_object(self, id, refs):\n        \"\"\"Add object with given references.\"\"\"\n        pass\n\n    def find_cycles(self):\n        \"\"\"Find all cycles in object graph.\"\"\"\n        pass",
+    "solution": "class CycleDetector:\n    def __init__(self):\n        self.objects = {}\n\n    def add_object(self, obj_id, refs):\n        self.objects[obj_id] = refs\n\n    def find_cycles(self):\n        cycles = []\n        visited = set()\n        rec_stack = set()\n\n        def dfs(node, path):\n            if node in rec_stack:\n                cycle_start = path.index(node)\n                cycles.append(path[cycle_start:])\n                return\n\n            if node in visited:\n                return\n\n            visited.add(node)\n            rec_stack.add(node)\n            path.append(node)\n\n            for ref in self.objects.get(node, []):\n                if ref in self.objects:\n                    dfs(ref, path.copy())\n\n            rec_stack.remove(node)\n\n        for obj_id in self.objects:\n            if obj_id not in visited:\n                dfs(obj_id, [])\n\n        return cycles\n\n    def break_cycles(self):\n        cycles = self.find_cycles()\n        broken = 0\n        for cycle in cycles:\n            if len(cycle) > 0:\n                # Remove last reference to break cycle\n                last = cycle[-1]\n                first = cycle[0]\n                if first in self.objects.get(last, []):\n                    self.objects[last].remove(first)\n                    broken += 1\n        return broken",
+    "testCases": [
+      {
+        "input": "cd = CycleDetector(); cd.add_object(\"a\", [\"b\"]); cd.add_object(\"b\", [\"a\"]); len(cd.find_cycles())",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "cd = CycleDetector(); cd.add_object(\"a\", [\"b\"]); cd.add_object(\"b\", []); len(cd.find_cycles())",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Use DFS with recursion stack",
+      "Cycle exists if we revisit node in current path",
+      "Track path to reconstruct cycle"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-6-8",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-6",
+    "title": "Stack Allocation",
+    "difficulty": 3,
+    "description": "Implement stack-based memory allocation.",
+    "starterCode": "class StackAllocator:\n    \"\"\"Stack-based allocator with scoped deallocation.\"\"\"\n\n    def __init__(self, size):\n        pass\n\n    def push_frame(self):\n        \"\"\"Start new allocation frame.\"\"\"\n        pass\n\n    def allocate(self, size):\n        \"\"\"Allocate in current frame.\"\"\"\n        pass\n\n    def pop_frame(self):\n        \"\"\"Pop frame, freeing all its allocations.\"\"\"\n        pass",
+    "solution": "class StackAllocator:\n    def __init__(self, size):\n        self.memory = bytearray(size)\n        self.size = size\n        self.ptr = 0\n        self.frame_stack = []\n\n    def push_frame(self):\n        self.frame_stack.append(self.ptr)\n\n    def allocate(self, num_bytes):\n        if self.ptr + num_bytes > self.size:\n            return -1\n        addr = self.ptr\n        self.ptr += num_bytes\n        return addr\n\n    def pop_frame(self):\n        if self.frame_stack:\n            self.ptr = self.frame_stack.pop()\n            return True\n        return False\n\n    def current_frame_size(self):\n        if self.frame_stack:\n            return self.ptr - self.frame_stack[-1]\n        return self.ptr\n\n    def total_used(self):\n        return self.ptr\n\n    def write(self, addr, data):\n        for i, b in enumerate(data):\n            if addr + i < self.size:\n                self.memory[addr + i] = b\n\n    def read(self, addr, size):\n        return bytes(self.memory[addr:addr + size])",
+    "testCases": [
+      {
+        "input": "sa = StackAllocator(100); sa.push_frame(); sa.allocate(10)",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "sa = StackAllocator(100); sa.push_frame(); sa.allocate(10); sa.pop_frame(); sa.ptr",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "sa = StackAllocator(100); sa.push_frame(); sa.allocate(10); sa.push_frame(); sa.allocate(20); sa.pop_frame(); sa.ptr",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Track frame boundaries on stack",
+      "Allocation bumps pointer forward",
+      "Pop frame resets to frame start"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-6-9",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-6",
+    "title": "Region-Based Memory",
+    "difficulty": 5,
+    "description": "Implement region-based memory management.",
+    "starterCode": "class Region:\n    \"\"\"Memory region with bulk deallocation.\"\"\"\n\n    def __init__(self, name, size):\n        pass\n\n    def allocate(self, value):\n        pass\n\nclass RegionManager:\n    \"\"\"Manage multiple memory regions.\"\"\"\n\n    def __init__(self):\n        pass\n\n    def create_region(self, name, size):\n        pass\n\n    def allocate_in(self, region_name, value):\n        pass\n\n    def free_region(self, name):\n        pass",
+    "solution": "class Region:\n    def __init__(self, name, size):\n        self.name = name\n        self.memory = [None] * size\n        self.ptr = 0\n\n    def allocate(self, value):\n        if self.ptr >= len(self.memory):\n            return -1\n        addr = self.ptr\n        self.memory[addr] = value\n        self.ptr += 1\n        return addr\n\n    def free_all(self):\n        self.memory = [None] * len(self.memory)\n        self.ptr = 0\n\n    def read(self, addr):\n        return self.memory[addr] if 0 <= addr < len(self.memory) else None\n\nclass RegionManager:\n    def __init__(self):\n        self.regions = {}\n\n    def create_region(self, name, size):\n        region = Region(name, size)\n        self.regions[name] = region\n        return region\n\n    def allocate_in(self, region_name, value):\n        if region_name not in self.regions:\n            return None\n        addr = self.regions[region_name].allocate(value)\n        return (region_name, addr) if addr >= 0 else None\n\n    def free_region(self, name):\n        if name in self.regions:\n            self.regions[name].free_all()\n            del self.regions[name]\n            return True\n        return False\n\n    def read(self, ref):\n        if ref and len(ref) == 2:\n            region_name, addr = ref\n            if region_name in self.regions:\n                return self.regions[region_name].read(addr)\n        return None",
+    "testCases": [
+      {
+        "input": "rm = RegionManager(); rm.create_region(\"temp\", 10); rm.allocate_in(\"temp\", 42)",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "rm = RegionManager(); rm.create_region(\"r\", 10); rm.allocate_in(\"r\", 1); rm.free_region(\"r\"); \"r\" in rm.regions",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Regions group related allocations",
+      "Free entire region at once",
+      "Useful for phase-based computation"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-6-10",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-6",
+    "title": "Ownership System",
+    "difficulty": 5,
+    "description": "Implement a Rust-like ownership system.",
+    "starterCode": "class OwnedValue:\n    \"\"\"Value with single owner.\"\"\"\n\n    def __init__(self, value):\n        pass\n\n    def move_to(self):\n        \"\"\"Move ownership, invalidating this reference.\"\"\"\n        pass\n\n    def borrow(self):\n        \"\"\"Create immutable borrow.\"\"\"\n        pass\n\n    def borrow_mut(self):\n        \"\"\"Create mutable borrow.\"\"\"\n        pass",
+    "solution": "class OwnedValue:\n    def __init__(self, value):\n        self._value = value\n        self._valid = True\n        self._borrows = 0\n        self._mut_borrowed = False\n\n    def move_to(self):\n        if not self._valid:\n            raise ValueError(\"Use after move\")\n        if self._borrows > 0 or self._mut_borrowed:\n            raise ValueError(\"Cannot move while borrowed\")\n        value = self._value\n        self._value = None\n        self._valid = False\n        return OwnedValue(value)\n\n    def borrow(self):\n        if not self._valid:\n            raise ValueError(\"Use after move\")\n        if self._mut_borrowed:\n            raise ValueError(\"Cannot borrow while mutably borrowed\")\n        self._borrows += 1\n        return BorrowedRef(self)\n\n    def borrow_mut(self):\n        if not self._valid:\n            raise ValueError(\"Use after move\")\n        if self._borrows > 0:\n            raise ValueError(\"Cannot mutably borrow while borrowed\")\n        if self._mut_borrowed:\n            raise ValueError(\"Already mutably borrowed\")\n        self._mut_borrowed = True\n        return MutBorrowedRef(self)\n\n    def get(self):\n        if not self._valid:\n            raise ValueError(\"Use after move\")\n        return self._value\n\nclass BorrowedRef:\n    def __init__(self, owner):\n        self._owner = owner\n\n    def get(self):\n        return self._owner._value\n\n    def release(self):\n        self._owner._borrows -= 1\n\nclass MutBorrowedRef:\n    def __init__(self, owner):\n        self._owner = owner\n\n    def get(self):\n        return self._owner._value\n\n    def set(self, value):\n        self._owner._value = value\n\n    def release(self):\n        self._owner._mut_borrowed = False",
+    "testCases": [
+      {
+        "input": "o = OwnedValue(42); o.get()",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "o = OwnedValue(42); o2 = o.move_to(); o2.get()",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "o = OwnedValue(42); b = o.borrow(); b.get()",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Move invalidates original owner",
+      "Cannot borrow while mutably borrowed",
+      "Cannot mutably borrow while any borrows exist"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-6-11",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-6",
+    "title": "Linear Types",
+    "difficulty": 5,
+    "description": "Implement linear type checking ensuring single use.",
+    "starterCode": "class LinearTypeChecker:\n    \"\"\"Check that linear values are used exactly once.\"\"\"\n\n    def __init__(self):\n        self.linear_vars = set()\n\n    def declare_linear(self, var):\n        pass\n\n    def use_var(self, var):\n        pass\n\n    def check_all_used(self):\n        pass",
+    "solution": "class LinearTypeChecker:\n    def __init__(self):\n        self.linear_vars = {}  # var -> (declared, used)\n        self.errors = []\n\n    def declare_linear(self, var):\n        if var in self.linear_vars:\n            self.errors.append(f\"Redeclaration of linear variable: {var}\")\n        else:\n            self.linear_vars[var] = {'declared': True, 'used': False}\n\n    def use_var(self, var):\n        if var not in self.linear_vars:\n            return True  # Non-linear variable, always ok\n        if self.linear_vars[var]['used']:\n            self.errors.append(f\"Linear variable used twice: {var}\")\n            return False\n        self.linear_vars[var]['used'] = True\n        return True\n\n    def check_all_used(self):\n        for var, state in self.linear_vars.items():\n            if not state['used']:\n                self.errors.append(f\"Linear variable never used: {var}\")\n        return len(self.errors) == 0\n\n    def get_errors(self):\n        return self.errors\n\n    def check_expr(self, expr, env=None):\n        if env is None:\n            env = set()\n\n        if isinstance(expr, str):\n            return self.use_var(expr)\n\n        if isinstance(expr, tuple):\n            tag = expr[0]\n            if tag == 'let_linear':\n                _, var, e1, e2 = expr\n                self.declare_linear(var)\n                ok1 = self.check_expr(e1, env)\n                ok2 = self.check_expr(e2, env | {var})\n                return ok1 and ok2\n            else:\n                return all(self.check_expr(e, env) for e in expr[1:] if not isinstance(e, str) or e not in ['+', '-', '*', '/'])\n\n        return True",
+    "testCases": [
+      {
+        "input": "lc = LinearTypeChecker(); lc.declare_linear(\"x\"); lc.use_var(\"x\"); lc.check_all_used()",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "lc = LinearTypeChecker(); lc.declare_linear(\"x\"); lc.check_all_used()",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "lc = LinearTypeChecker(); lc.declare_linear(\"x\"); lc.use_var(\"x\"); lc.use_var(\"x\"); len(lc.errors)",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Linear types must be used exactly once",
+      "Track declaration and usage",
+      "Report errors for unused or double-used"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-6-12",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-6",
+    "title": "Escape Analysis",
+    "difficulty": 5,
+    "description": "Implement escape analysis to determine stack vs heap allocation.",
+    "starterCode": "class EscapeAnalyzer:\n    \"\"\"Analyze whether values escape their scope.\"\"\"\n\n    def analyze(self, func_ast):\n        \"\"\"\n        Analyze function and return which variables escape.\n        func_ast: ('func', params, body)\n        \"\"\"\n        pass",
+    "solution": "class EscapeAnalyzer:\n    def __init__(self):\n        self.escaping = set()\n        self.returned = set()\n\n    def analyze(self, func_ast):\n        self.escaping = set()\n        self.returned = set()\n\n        if func_ast[0] != 'func':\n            return self.escaping\n\n        _, params, body = func_ast\n        self._analyze_expr(body, set(params))\n\n        return self.escaping\n\n    def _analyze_expr(self, expr, local_vars):\n        if isinstance(expr, str):\n            return\n\n        if not isinstance(expr, tuple):\n            return\n\n        tag = expr[0]\n\n        if tag == 'let':\n            _, var, init, body = expr\n            self._analyze_expr(init, local_vars)\n            self._analyze_expr(body, local_vars | {var})\n\n        elif tag == 'return':\n            _, ret_expr = expr\n            self._mark_escaping(ret_expr, local_vars)\n            self._analyze_expr(ret_expr, local_vars)\n\n        elif tag == 'store_global':\n            _, var = expr\n            if var in local_vars:\n                self.escaping.add(var)\n\n        elif tag == 'call':\n            # Arguments passed to functions might escape\n            for arg in expr[2:]:\n                if isinstance(arg, str) and arg in local_vars:\n                    self.escaping.add(arg)\n                self._analyze_expr(arg, local_vars)\n\n        elif tag == 'closure':\n            # Variables captured by closures escape\n            _, params, body, captured = expr\n            for var in captured:\n                if var in local_vars:\n                    self.escaping.add(var)\n\n        else:\n            for sub in expr[1:]:\n                self._analyze_expr(sub, local_vars)\n\n    def _mark_escaping(self, expr, local_vars):\n        if isinstance(expr, str):\n            if expr in local_vars:\n                self.escaping.add(expr)\n        elif isinstance(expr, tuple):\n            for sub in expr[1:]:\n                self._mark_escaping(sub, local_vars)\n\n    def can_stack_allocate(self, var):\n        return var not in self.escaping",
+    "testCases": [
+      {
+        "input": "ea = EscapeAnalyzer(); ea.analyze(('func', ['x'], ('return', 'x'))); 'x' in ea.escaping",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "ea = EscapeAnalyzer(); ea.analyze(('func', ['x'], ('let', 'y', 'x', 'y'))); 'y' in ea.escaping",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Values escape if returned or stored globally",
+      "Closure capture causes escape",
+      "Non-escaping values can be stack allocated"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-6-13",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-6",
+    "title": "Weak References",
+    "difficulty": 5,
+    "description": "Implement weak references that dont prevent collection.",
+    "starterCode": "class WeakRef:\n    \"\"\"Reference that doesn't prevent garbage collection.\"\"\"\n\n    def __init__(self, target_id, registry):\n        pass\n\n    def get(self):\n        \"\"\"Get target if still alive, else None.\"\"\"\n        pass\n\nclass GCWithWeakRefs:\n    \"\"\"GC supporting weak references.\"\"\"\n\n    def __init__(self, size):\n        pass\n\n    def allocate(self, value):\n        pass\n\n    def create_weak_ref(self, target_id):\n        pass\n\n    def collect(self, roots):\n        \"\"\"Collect, clearing weak refs to collected objects.\"\"\"\n        pass",
+    "solution": "class WeakRef:\n    def __init__(self, target_id, registry):\n        self.target_id = target_id\n        self.registry = registry\n\n    def get(self):\n        if self.target_id in self.registry.alive:\n            return self.registry.heap[self.target_id]\n        return None\n\n    def is_valid(self):\n        return self.target_id in self.registry.alive\n\nclass GCWithWeakRefs:\n    def __init__(self, size):\n        self.heap = [None] * size\n        self.free_list = list(range(size))\n        self.weak_refs = []\n        self.alive = set()\n\n    def allocate(self, value):\n        if not self.free_list:\n            return -1\n        addr = self.free_list.pop(0)\n        self.heap[addr] = value\n        self.alive.add(addr)\n        return addr\n\n    def create_weak_ref(self, target_id):\n        weak = WeakRef(target_id, self)\n        self.weak_refs.append(weak)\n        return weak\n\n    def collect(self, roots):\n        # Mark phase (only strong refs)\n        marked = set()\n        worklist = list(roots)\n\n        while worklist:\n            addr = worklist.pop()\n            if addr < 0 or addr >= len(self.heap):\n                continue\n            if addr in marked:\n                continue\n            marked.add(addr)\n\n            obj = self.heap[addr]\n            if isinstance(obj, dict):\n                for v in obj.values():\n                    if isinstance(v, int):\n                        worklist.append(v)\n            elif isinstance(obj, list):\n                for v in obj:\n                    if isinstance(v, int):\n                        worklist.append(v)\n\n        # Sweep phase\n        freed = 0\n        for addr in range(len(self.heap)):\n            if addr not in marked and self.heap[addr] is not None:\n                self.heap[addr] = None\n                self.alive.discard(addr)\n                self.free_list.append(addr)\n                freed += 1\n\n        return freed",
+    "testCases": [
+      {
+        "input": "gc = GCWithWeakRefs(10); a = gc.allocate(42); w = gc.create_weak_ref(a); w.get()",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "gc = GCWithWeakRefs(10); a = gc.allocate(42); w = gc.create_weak_ref(a); gc.collect([]); w.get()",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Weak refs dont keep objects alive",
+      "Check validity before returning target",
+      "Clear weak refs during collection"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-6-14",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-6",
+    "title": "Incremental GC",
+    "difficulty": 5,
+    "description": "Implement incremental garbage collection.",
+    "starterCode": "class IncrementalGC:\n    \"\"\"Garbage collector with incremental marking.\"\"\"\n\n    def __init__(self, size):\n        pass\n\n    def allocate(self, value):\n        pass\n\n    def step(self, work_limit=10):\n        \"\"\"Do limited GC work, return True if complete.\"\"\"\n        pass\n\n    def start_collection(self, roots):\n        \"\"\"Start a new collection cycle.\"\"\"\n        pass",
+    "solution": "class IncrementalGC:\n    def __init__(self, size):\n        self.heap = [None] * size\n        self.free_list = list(range(size))\n        self.marked = set()\n        self.worklist = []\n        self.collecting = False\n        self.roots = []\n\n    def allocate(self, value):\n        if not self.free_list:\n            return -1\n        addr = self.free_list.pop(0)\n        self.heap[addr] = value\n        # If allocating during collection, mark as gray\n        if self.collecting:\n            self.worklist.append(addr)\n        return addr\n\n    def start_collection(self, roots):\n        self.marked = set()\n        self.worklist = list(roots)\n        self.roots = roots\n        self.collecting = True\n\n    def step(self, work_limit=10):\n        if not self.collecting:\n            return True\n\n        work_done = 0\n\n        # Mark phase\n        while self.worklist and work_done < work_limit:\n            addr = self.worklist.pop()\n            if addr < 0 or addr >= len(self.heap):\n                continue\n            if addr in self.marked:\n                continue\n\n            self.marked.add(addr)\n            work_done += 1\n\n            obj = self.heap[addr]\n            if isinstance(obj, dict):\n                for v in obj.values():\n                    if isinstance(v, int) and v not in self.marked:\n                        self.worklist.append(v)\n            elif isinstance(obj, list):\n                for v in obj:\n                    if isinstance(v, int) and v not in self.marked:\n                        self.worklist.append(v)\n\n        # If marking complete, do sweep\n        if not self.worklist:\n            for addr in range(len(self.heap)):\n                if addr not in self.marked and self.heap[addr] is not None:\n                    self.heap[addr] = None\n                    self.free_list.append(addr)\n            self.collecting = False\n            return True\n\n        return False\n\n    def is_collecting(self):\n        return self.collecting",
+    "testCases": [
+      {
+        "input": "gc = IncrementalGC(10); gc.allocate(1); gc.allocate(2)",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "gc = IncrementalGC(10); gc.allocate(1); gc.start_collection([]); gc.step(100)",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Do limited work per step",
+      "Maintain worklist between steps",
+      "Handle allocations during collection"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-6-15",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-6",
+    "title": "Write Barrier",
+    "difficulty": 5,
+    "description": "Implement write barriers for concurrent GC.",
+    "starterCode": "class WriteBarrierGC:\n    \"\"\"GC with write barriers for correctness.\"\"\"\n\n    def __init__(self, size):\n        pass\n\n    def write(self, obj_addr, field, value):\n        \"\"\"Write with barrier.\"\"\"\n        pass\n\n    def snapshot_at_beginning(self, old_value, new_value):\n        \"\"\"SATB write barrier.\"\"\"\n        pass\n\n    def incremental_update(self, obj_addr, new_ref):\n        \"\"\"Incremental update barrier.\"\"\"\n        pass",
+    "solution": "class WriteBarrierGC:\n    def __init__(self, size):\n        self.heap = [None] * size\n        self.free_list = list(range(size))\n        self.marked = set()\n        self.gray_set = set()\n        self.collecting = False\n        self.satb_queue = []\n\n    def allocate(self, value):\n        if not self.free_list:\n            return -1\n        addr = self.free_list.pop(0)\n        self.heap[addr] = value\n        return addr\n\n    def write(self, obj_addr, field, value):\n        obj = self.heap[obj_addr]\n        if obj is None or not isinstance(obj, dict):\n            return\n\n        old_value = obj.get(field)\n\n        # Apply write barrier\n        if self.collecting:\n            self.snapshot_at_beginning(old_value, value)\n            self.incremental_update(obj_addr, value)\n\n        obj[field] = value\n\n    def snapshot_at_beginning(self, old_value, new_value):\n        # Remember old references that might be overwritten\n        if isinstance(old_value, int) and old_value >= 0:\n            if old_value not in self.marked:\n                self.satb_queue.append(old_value)\n\n    def incremental_update(self, obj_addr, new_ref):\n        # If writing a reference to a black object, mark target gray\n        if obj_addr in self.marked and isinstance(new_ref, int):\n            if new_ref >= 0 and new_ref not in self.marked:\n                self.gray_set.add(new_ref)\n\n    def start_collection(self, roots):\n        self.marked = set()\n        self.gray_set = set(roots)\n        self.collecting = True\n        self.satb_queue = []\n\n    def step(self):\n        if not self.collecting:\n            return True\n\n        # Process gray objects\n        while self.gray_set:\n            addr = self.gray_set.pop()\n            if addr in self.marked:\n                continue\n            self.marked.add(addr)\n\n            obj = self.heap[addr]\n            if isinstance(obj, dict):\n                for v in obj.values():\n                    if isinstance(v, int) and v not in self.marked:\n                        self.gray_set.add(v)\n\n        # Process SATB queue\n        while self.satb_queue:\n            addr = self.satb_queue.pop()\n            if addr not in self.marked:\n                self.gray_set.add(addr)\n\n        if not self.gray_set and not self.satb_queue:\n            self.collecting = False\n            return True\n\n        return False",
+    "testCases": [
+      {
+        "input": "gc = WriteBarrierGC(10); gc.allocate({\"a\": 1})",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "gc = WriteBarrierGC(10); a = gc.allocate({\"ref\": -1}); gc.write(a, \"ref\", 5); gc.heap[a][\"ref\"]",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Write barriers track reference changes",
+      "SATB preserves snapshot of graph",
+      "Incremental update re-marks affected objects"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs303-ex-6-16",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-6",
+    "title": "Memory Profiler",
+    "difficulty": 5,
+    "description": "Implement a memory profiler tracking allocations.",
+    "starterCode": "class MemoryProfiler:\n    \"\"\"Track memory allocations and find leaks.\"\"\"\n\n    def __init__(self):\n        pass\n\n    def record_allocation(self, addr, size, stack_trace):\n        pass\n\n    def record_free(self, addr):\n        pass\n\n    def get_live_allocations(self):\n        pass\n\n    def find_leaks(self, known_roots):\n        pass",
+    "solution": "import time\n\nclass MemoryProfiler:\n    def __init__(self):\n        self.allocations = {}\n        self.freed = set()\n        self.total_allocated = 0\n        self.total_freed = 0\n\n    def record_allocation(self, addr, size, stack_trace):\n        self.allocations[addr] = {\n            'size': size,\n            'stack_trace': stack_trace,\n            'time': time.time(),\n            'freed': False\n        }\n        self.total_allocated += size\n\n    def record_free(self, addr):\n        if addr in self.allocations and not self.allocations[addr]['freed']:\n            self.allocations[addr]['freed'] = True\n            self.freed.add(addr)\n            self.total_freed += self.allocations[addr]['size']\n\n    def get_live_allocations(self):\n        return {\n            addr: info\n            for addr, info in self.allocations.items()\n            if not info['freed']\n        }\n\n    def find_leaks(self, known_roots):\n        live = self.get_live_allocations()\n        leaks = []\n\n        for addr, info in live.items():\n            if addr not in known_roots:\n                leaks.append({\n                    'addr': addr,\n                    'size': info['size'],\n                    'stack_trace': info['stack_trace'],\n                    'age': time.time() - info['time']\n                })\n\n        return sorted(leaks, key=lambda x: x['size'], reverse=True)\n\n    def get_stats(self):\n        live = self.get_live_allocations()\n        return {\n            'total_allocated': self.total_allocated,\n            'total_freed': self.total_freed,\n            'current_usage': self.total_allocated - self.total_freed,\n            'num_live': len(live),\n            'num_freed': len(self.freed)\n        }\n\n    def get_allocation_by_stack(self):\n        by_stack = {}\n        for addr, info in self.get_live_allocations().items():\n            trace = tuple(info['stack_trace'])\n            if trace not in by_stack:\n                by_stack[trace] = {'count': 0, 'total_size': 0}\n            by_stack[trace]['count'] += 1\n            by_stack[trace]['total_size'] += info['size']\n        return by_stack",
+    "testCases": [
+      {
+        "input": "mp = MemoryProfiler(); mp.record_allocation(0, 100, [\"main\"]); mp.get_stats()[\"current_usage\"]",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "mp = MemoryProfiler(); mp.record_allocation(0, 100, [\"main\"]); mp.record_free(0); mp.get_stats()[\"current_usage\"]",
+        "isHidden": false,
+        "description": "Test case"
+      },
+      {
+        "input": "mp = MemoryProfiler(); mp.record_allocation(0, 100, [\"main\"]); len(mp.find_leaks([]))",
+        "isHidden": false,
+        "description": "Test case"
+      }
+    ],
+    "hints": [
+      "Track allocation with metadata",
+      "Compare live allocations against roots",
+      "Group by stack trace to find sources"
+    ],
+    "language": "python"
+  }
+]

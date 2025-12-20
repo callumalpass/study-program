@@ -1,0 +1,185 @@
+[
+  {
+    "id": "cs307-quiz-7-1",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-7",
+    "title": "Security Testing - SAST, DAST, and Fuzzing",
+    "questions": [
+      {
+        "id": "cs307-q91",
+        "type": "multiple_choice",
+        "prompt": "What is the primary difference between vulnerability scanning and penetration testing?",
+        "options": [
+          "There is no difference",
+          "Vulnerability scanning automatically identifies potential vulnerabilities; penetration testing actively exploits them",
+          "Vulnerability scanning is illegal; penetration testing is legal",
+          "Penetration testing is fully automated; vulnerability scanning is manual"
+        ],
+        "correctAnswer": "Vulnerability scanning automatically identifies potential vulnerabilities; penetration testing actively exploits them",
+        "explanation": "Vulnerability scanners (like Nessus, OpenVAS) automatically detect known vulnerabilities. Penetration testing involves security professionals actively attempting to exploit vulnerabilities to assess real-world impact. Both are valuable and complementary security testing approaches."
+      },
+      {
+        "id": "cs307-q92",
+        "type": "true_false",
+        "prompt": "Static Application Security Testing (SAST) analyzes source code without executing the program.",
+        "correctAnswer": "true",
+        "explanation": "SAST tools analyze source code, bytecode, or binaries without execution to find security vulnerabilities like SQL injection, XSS, or buffer overflows. They can be integrated into CI/CD pipelines to catch issues early but may produce false positives requiring manual review."
+      },
+      {
+        "id": "cs307-q93",
+        "type": "multiple_choice",
+        "prompt": "Which testing approach executes the application and monitors its behavior to find vulnerabilities?",
+        "options": [
+          "Static Application Security Testing (SAST)",
+          "Code Review",
+          "Dynamic Application Security Testing (DAST)",
+          "Threat Modeling"
+        ],
+        "correctAnswer": "Dynamic Application Security Testing (DAST)",
+        "explanation": "DAST tools test running applications from the outside, similar to how an attacker would. They send various inputs and analyze responses to find vulnerabilities like XSS, SQL injection, or authentication issues. DAST complements SAST by finding runtime and configuration issues."
+      },
+      {
+        "id": "cs307-q94",
+        "type": "multiple_choice",
+        "prompt": "What is a key advantage of Interactive Application Security Testing (IAST)?",
+        "options": [
+          "It requires no access to the application",
+          "It combines aspects of SAST and DAST by instrumenting the running application",
+          "It only works on compiled languages",
+          "It eliminates all false positives"
+        ],
+        "correctAnswer": "It combines aspects of SAST and DAST by instrumenting the running application",
+        "explanation": "IAST instruments the application (using agents or profilers) to monitor behavior during testing. This provides accurate results with low false positives, showing exactly where vulnerabilities exist in code. It combines the depth of SAST with the runtime context of DAST."
+      },
+      {
+        "id": "cs307-q95",
+        "type": "true_false",
+        "prompt": "Fuzzing involves sending random or malformed inputs to applications to discover crashes, memory leaks, or security vulnerabilities.",
+        "correctAnswer": "true",
+        "explanation": "Fuzzing (or fuzz testing) automatically generates massive amounts of random, malformed, or edge-case inputs to find bugs that cause crashes, assertions, memory leaks, or security issues. It's particularly effective at finding input validation vulnerabilities and memory safety issues."
+      }
+    ]
+  },
+  {
+    "id": "cs307-quiz-7-2",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-7",
+    "title": "Security Testing - Penetration Testing and Bug Bounties",
+    "questions": [
+      {
+        "id": "cs307-q96",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of a bug bounty program?",
+        "options": [
+          "To pay employees for finding bugs",
+          "To incentivize external security researchers to report vulnerabilities responsibly",
+          "To automatically fix security issues",
+          "To test employee security awareness"
+        ],
+        "correctAnswer": "To incentivize external security researchers to report vulnerabilities responsibly",
+        "explanation": "Bug bounty programs reward external security researchers for discovering and responsibly disclosing vulnerabilities. This harnesses the collective expertise of the security community, often finding issues that internal teams miss. Programs like HackerOne and Bugcrowd facilitate these."
+      },
+      {
+        "id": "cs307-q97",
+        "type": "true_false",
+        "prompt": "Security testing should only be performed before initial deployment, not continuously throughout the application lifecycle.",
+        "correctAnswer": "false",
+        "explanation": "Security testing must be continuous throughout the development lifecycle and after deployment. New vulnerabilities are discovered, code changes introduce risks, and dependencies get updated. Integrate security testing into CI/CD pipelines and perform regular assessments in production."
+      },
+      {
+        "id": "cs307-q98",
+        "type": "multiple_choice",
+        "prompt": "What type of penetration testing provides testers with full knowledge of the system including source code and architecture?",
+        "options": [
+          "Black box testing",
+          "Gray box testing",
+          "White box testing",
+          "Red team testing"
+        ],
+        "correctAnswer": "White box testing",
+        "explanation": "White box testing (clear box) provides full knowledge including code, architecture, and credentials. Black box has no prior knowledge (simulating external attackers). Gray box has partial knowledge (simulating insider threats). Each approach has different benefits and use cases."
+      },
+      {
+        "id": "cs307-q99",
+        "type": "multiple_choice",
+        "prompt": "What is the primary goal of security code review?",
+        "options": [
+          "To improve code formatting",
+          "To identify security vulnerabilities and design flaws through manual examination",
+          "To optimize performance",
+          "To reduce code size"
+        ],
+        "correctAnswer": "To identify security vulnerabilities and design flaws through manual examination",
+        "explanation": "Security-focused code reviews involve manually examining code for vulnerabilities, insecure patterns, and design flaws. Experienced reviewers can find subtle issues that automated tools miss, like business logic flaws, authorization issues, or cryptographic misuse."
+      },
+      {
+        "id": "cs307-q100",
+        "type": "true_false",
+        "prompt": "Software Composition Analysis (SCA) tools help identify vulnerabilities in third-party libraries and dependencies.",
+        "correctAnswer": "true",
+        "explanation": "SCA tools analyze project dependencies to identify known vulnerabilities (CVEs), license compliance issues, and outdated components. They're essential because modern applications use many third-party libraries, and vulnerable dependencies are a common attack vector (supply chain attacks)."
+      }
+    ]
+  },
+  {
+    "id": "cs307-quiz-7-3",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-7",
+    "title": "Security Testing - Threat Modeling and Red Teaming",
+    "questions": [
+      {
+        "id": "cs307-q101",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of threat modeling in the security development lifecycle?",
+        "options": [
+          "To test the application after deployment",
+          "To proactively identify potential threats and design countermeasures during development",
+          "To monitor production systems",
+          "To train developers on coding standards"
+        ],
+        "correctAnswer": "To proactively identify potential threats and design countermeasures during development",
+        "explanation": "Threat modeling is performed during design to identify potential security threats, assess risks, and plan mitigations before code is written. Using frameworks like STRIDE or PASTA, teams systematically analyze attack vectors and design secure architectures, catching issues early when they're cheaper to fix."
+      },
+      {
+        "id": "cs307-q102",
+        "type": "true_false",
+        "prompt": "Red team exercises involve friendly attackers attempting to breach systems to test defensive capabilities.",
+        "correctAnswer": "true",
+        "explanation": "Red teams simulate real-world attackers to test security controls and incident response. Blue teams defend and detect attacks. These exercises reveal gaps in security controls, monitoring, and response procedures that might not be found through standard testing approaches."
+      },
+      {
+        "id": "cs307-q103",
+        "type": "multiple_choice",
+        "prompt": "Which metric is most useful for tracking security testing effectiveness over time?",
+        "options": [
+          "Number of developers",
+          "Mean Time to Remediate (MTTR) vulnerabilities",
+          "Lines of code written",
+          "Server uptime"
+        ],
+        "correctAnswer": "Mean Time to Remediate (MTTR) vulnerabilities",
+        "explanation": "MTTR measures how quickly vulnerabilities are fixed after discovery. Other useful metrics include vulnerability density (vulnerabilities per KLOC), time to detection, severity distribution, and recurrence rate. Tracking these over time shows security program maturity and effectiveness."
+      },
+      {
+        "id": "cs307-q104",
+        "type": "multiple_choice",
+        "prompt": "What is the primary benefit of shift-left security?",
+        "options": [
+          "Moving security testing to the end of development",
+          "Integrating security early in development to find and fix issues when they're cheaper to remediate",
+          "Outsourcing security to third parties",
+          "Delaying security testing until production"
+        ],
+        "correctAnswer": "Integrating security early in development to find and fix issues when they're cheaper to remediate",
+        "explanation": "Shift-left security integrates security practices early in the SDLC (design, development) rather than at the end. Finding vulnerabilities during design or development is far cheaper than fixing them in production. Tools like SAST in IDEs and security training enable shift-left."
+      },
+      {
+        "id": "cs307-q105",
+        "type": "true_false",
+        "prompt": "A comprehensive security testing program should include multiple testing approaches (SAST, DAST, penetration testing, code review) for defense in depth.",
+        "correctAnswer": "true",
+        "explanation": "No single testing approach finds all vulnerabilities. SAST finds code-level issues, DAST finds runtime issues, penetration testing validates exploitability, and code review finds logic flaws. A comprehensive program uses multiple complementary approaches throughout the development lifecycle for thorough coverage."
+      }
+    ]
+  }
+]

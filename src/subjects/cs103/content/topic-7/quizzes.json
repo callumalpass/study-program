@@ -1,0 +1,175 @@
+[
+  {
+    "id": "cs103-quiz-7a",
+    "subjectId": "cs103",
+    "topicId": "cs103-7",
+    "title": "Design Principles and Testing — Quiz A (Fundamentals)",
+    "questions": [
+      {
+        "id": "cs103-q7a-1",
+        "type": "multiple_choice",
+        "prompt": "“Composition over inheritance” mainly recommends:",
+        "options": [
+          "Never use inheritance",
+          "Prefer building behavior by combining objects rather than subclassing for reuse",
+          "Always use multiple inheritance",
+          "Replace classes with global functions"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Composition can reduce coupling and make designs more flexible."
+      },
+      {
+        "id": "cs103-q7a-2",
+        "type": "multiple_choice",
+        "prompt": "Which SOLID principle is most directly about “one reason to change”?",
+        "options": [
+          "SRP",
+          "OCP",
+          "LSP",
+          "DIP"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Single Responsibility Principle (SRP) recommends focused classes/modules."
+      },
+      {
+        "id": "cs103-q7a-3",
+        "type": "true_false",
+        "prompt": "Dependency injection generally improves testability.",
+        "correctAnswer": true,
+        "explanation": "Injecting dependencies makes it easy to swap real implementations for fakes in tests."
+      },
+      {
+        "id": "cs103-q7a-4",
+        "type": "fill_blank",
+        "prompt": "A test double that records calls and arguments is often called a ____.",
+        "correctAnswer": "spy",
+        "explanation": "Spies track interactions so tests can assert how collaborators were used."
+      },
+      {
+        "id": "cs103-q7a-5",
+        "type": "multiple_choice",
+        "prompt": "What is the best focus for a unit test of a class?",
+        "options": [
+          "Private helper methods",
+          "Public behavior and outputs",
+          "Exact line-by-line execution order",
+          "Internal variable names"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Unit tests should validate externally visible behavior, not internal implementation details."
+      }
+    ]
+  },
+  {
+    "id": "cs103-quiz-7b",
+    "subjectId": "cs103",
+    "topicId": "cs103-7",
+    "title": "Design Principles and Testing — Quiz B (Application)",
+    "questions": [
+      {
+        "id": "cs103-q7b-1",
+        "type": "multiple_choice",
+        "prompt": "What is a common symptom of high coupling?",
+        "options": [
+          "Changes are localized",
+          "Small changes require edits in many places",
+          "Tests are fast and simple",
+          "Classes are small and focused"
+        ],
+        "correctAnswer": 1,
+        "explanation": "High coupling causes change ripples across the codebase."
+      },
+      {
+        "id": "cs103-q7b-2",
+        "type": "code_output",
+        "prompt": "What is printed by this code?",
+        "codeSnippet": "class FakeSender:\n    def __init__(self): self.sent = []\n    def send(self, to, subject): self.sent.append((to, subject))\n\nclass Notifier:\n    def __init__(self, sender): self.sender = sender\n    def welcome(self, email): self.sender.send(email, \"Welcome\")\n\nsender = FakeSender()\nNotifier(sender).welcome(\"a@example.com\")\nprint(sender.sent)",
+        "correctAnswer": "[('a@example.com', 'Welcome')]",
+        "explanation": "A fake dependency captures calls so you can assert behavior without real side effects."
+      },
+      {
+        "id": "cs103-q7b-3",
+        "type": "true_false",
+        "prompt": "Constructors (`__init__`) should generally avoid slow or external operations (network, disk).",
+        "correctAnswer": true,
+        "explanation": "Keeping constructors lightweight makes code easier to test and reason about."
+      },
+      {
+        "id": "cs103-q7b-4",
+        "type": "fill_blank",
+        "prompt": "Refactoring means improving internal code structure without changing ____ behavior.",
+        "correctAnswer": "external",
+        "explanation": "Refactoring changes design while preserving what the program does from the outside."
+      },
+      {
+        "id": "cs103-q7b-5",
+        "type": "multiple_choice",
+        "prompt": "Which is the best reason to introduce an interface/abstraction?",
+        "options": [
+          "Because patterns require it",
+          "Because you have only one implementation",
+          "Because you need to swap implementations or isolate dependencies",
+          "Because it makes code longer"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Abstractions are useful when they reduce coupling and support extension/testing."
+      }
+    ]
+  },
+  {
+    "id": "cs103-quiz-7c",
+    "subjectId": "cs103",
+    "topicId": "cs103-7",
+    "title": "Design Principles and Testing — Quiz C (Advanced)",
+    "questions": [
+      {
+        "id": "cs103-q7c-1",
+        "type": "multiple_choice",
+        "prompt": "Which change most strongly improves testability of a class?",
+        "options": [
+          "Make all fields global",
+          "Hard-code dependencies inside methods",
+          "Inject dependencies through the constructor",
+          "Use inheritance everywhere"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Injected dependencies can be replaced by fakes in tests."
+      },
+      {
+        "id": "cs103-q7c-2",
+        "type": "true_false",
+        "prompt": "A unit test that asserts private attributes directly is usually brittle.",
+        "correctAnswer": true,
+        "explanation": "Private/internal details change during refactors; tests should focus on public behavior."
+      },
+      {
+        "id": "cs103-q7c-3",
+        "type": "fill_blank",
+        "prompt": "When a subclass strengthens preconditions or weakens postconditions, it risks violating ____.",
+        "correctAnswer": "LSP",
+        "explanation": "Liskov Substitution Principle requires subclasses to honor base class contracts."
+      },
+      {
+        "id": "cs103-q7c-4",
+        "type": "multiple_choice",
+        "prompt": "Which is a good heuristic for deciding to refactor?",
+        "options": [
+          "Refactor every file daily",
+          "Refactor when you feel real design pressure (duplication, confusing dependencies, hard-to-test code)",
+          "Refactor only after adding new features",
+          "Never refactor working code"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Refactor to reduce friction and risk when the design is making change difficult."
+      },
+      {
+        "id": "cs103-q7c-5",
+        "type": "code_output",
+        "prompt": "What is printed by this code?",
+        "codeSnippet": "class TaxPolicy:\n    def rate(self): return 0.2\n\nclass Cart:\n    def __init__(self, policy): self.policy = policy\n    def total_with_tax(self, subtotal):\n        return subtotal * (1 + self.policy.rate())\n\nprint(Cart(TaxPolicy()).total_with_tax(100))",
+        "correctAnswer": "120.0",
+        "explanation": "Cart composes a policy object; changing the policy changes behavior without subclassing Cart."
+      }
+    ]
+  }
+]

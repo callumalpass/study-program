@@ -1,0 +1,221 @@
+[
+  {
+    "id": "cs304-t6-quiz-1",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-6",
+    "title": "Local Optimization",
+    "questions": [
+      {
+        "id": "cs304-t6-q1-1",
+        "type": "multiple_choice",
+        "prompt": "What is constant folding?",
+        "options": [
+          "Folding code",
+          "Evaluating constant expressions at compile time",
+          "Reducing constants",
+          "Inlining constants"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Constant folding evaluates expressions with known constant values at compile time rather than runtime."
+      },
+      {
+        "id": "cs304-t6-q1-2",
+        "type": "multiple_choice",
+        "prompt": "What is strength reduction?",
+        "options": [
+          "Making code weaker",
+          "Replacing expensive operations with equivalent cheaper ones",
+          "Reducing variable count",
+          "Loop removal"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Strength reduction replaces expensive operations (e.g., multiply) with cheaper equivalents (e.g., shift)."
+      },
+      {
+        "id": "cs304-t6-q1-3",
+        "type": "multiple_choice",
+        "prompt": "What is common subexpression elimination (CSE)?",
+        "options": [
+          "Removing duplicate code",
+          "Reusing previously computed values instead of recomputing",
+          "Removing comments",
+          "Simplifying expressions"
+        ],
+        "correctAnswer": 1,
+        "explanation": "CSE identifies expressions computed multiple times and reuses the first computation."
+      },
+      {
+        "id": "cs304-t6-q1-4",
+        "type": "multiple_choice",
+        "prompt": "What is dead code elimination?",
+        "options": [
+          "Removing syntax errors",
+          "Removing code whose results are never used",
+          "Removing comments",
+          "Removing old code"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Dead code elimination removes computations whose results are never used by the program."
+      },
+      {
+        "id": "cs304-t6-q1-5",
+        "type": "multiple_choice",
+        "prompt": "What is copy propagation?",
+        "options": [
+          "Copying code",
+          "Replacing variable uses with their known values after assignment",
+          "Propagating errors",
+          "Memory copying"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Copy propagation replaces uses of a variable with its value when the value is a copy of another variable."
+      }
+    ]
+  },
+  {
+    "id": "cs304-t6-quiz-2",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-6",
+    "title": "Loop Optimization",
+    "questions": [
+      {
+        "id": "cs304-t6-q2-1",
+        "type": "multiple_choice",
+        "prompt": "What is loop invariant code motion?",
+        "options": [
+          "Removing loops",
+          "Moving computations that don't change across iterations out of the loop",
+          "Loop parallelization",
+          "Loop counting"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Loop invariant code motion hoists computations whose values don't change across iterations outside the loop."
+      },
+      {
+        "id": "cs304-t6-q2-2",
+        "type": "multiple_choice",
+        "prompt": "What is an induction variable?",
+        "options": [
+          "A loop counter",
+          "A variable that changes by a constant amount each iteration",
+          "An initialized variable",
+          "A global variable"
+        ],
+        "correctAnswer": 1,
+        "explanation": "An induction variable changes by a constant (or linear function of another induction variable) each iteration."
+      },
+      {
+        "id": "cs304-t6-q2-3",
+        "type": "multiple_choice",
+        "prompt": "What is loop unrolling?",
+        "options": [
+          "Removing loops",
+          "Replicating the loop body to reduce iteration overhead",
+          "Flattening nested loops",
+          "Loop reversal"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Loop unrolling duplicates the loop body multiple times, reducing branch overhead and enabling more optimization."
+      },
+      {
+        "id": "cs304-t6-q2-4",
+        "type": "multiple_choice",
+        "prompt": "What is loop fusion?",
+        "options": [
+          "Splitting loops",
+          "Combining adjacent loops with the same iteration space",
+          "Removing loops",
+          "Parallelizing loops"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Loop fusion combines multiple loops with compatible iteration spaces into a single loop."
+      },
+      {
+        "id": "cs304-t6-q2-5",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of loop tiling/blocking?",
+        "options": [
+          "Making loops tile-shaped",
+          "Improving cache locality by processing data in blocks",
+          "Dividing work among processors",
+          "Reducing loop count"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Loop tiling restructures loops to process data in cache-friendly blocks, improving memory hierarchy utilization."
+      }
+    ]
+  },
+  {
+    "id": "cs304-t6-quiz-3",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-6",
+    "title": "Data Flow Analysis",
+    "questions": [
+      {
+        "id": "cs304-t6-q3-1",
+        "type": "multiple_choice",
+        "prompt": "What is reaching definitions analysis?",
+        "options": [
+          "Checking if code is reachable",
+          "Finding which definitions may reach each program point",
+          "Defining reach",
+          "Code coverage"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Reaching definitions determines which variable assignments might reach (still be valid at) each program point."
+      },
+      {
+        "id": "cs304-t6-q3-2",
+        "type": "multiple_choice",
+        "prompt": "What is live variable analysis?",
+        "options": [
+          "Checking if variables exist",
+          "Determining which variables may be used before being redefined",
+          "Memory liveness",
+          "Variable counting"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Live variable analysis finds variables whose values may be used in the future before being overwritten."
+      },
+      {
+        "id": "cs304-t6-q3-3",
+        "type": "multiple_choice",
+        "prompt": "What is a forward vs backward data flow analysis?",
+        "options": [
+          "Same direction",
+          "Forward propagates from entry; backward from exit",
+          "Forward is faster",
+          "Backward is more accurate"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Forward analyses flow information from entry to exit; backward analyses flow from exit to entry."
+      },
+      {
+        "id": "cs304-t6-q3-4",
+        "type": "multiple_choice",
+        "prompt": "What is alias analysis?",
+        "options": [
+          "Finding function aliases",
+          "Determining when pointers/references may refer to the same memory",
+          "Variable renaming",
+          "Type analysis"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Alias analysis determines when two pointer expressions may or must refer to the same memory location."
+      },
+      {
+        "id": "cs304-t6-q3-5",
+        "type": "multiple_choice",
+        "prompt": "Why is precise alias analysis difficult?",
+        "options": [
+          "Too many variables",
+          "Undecidable in general; must use conservative approximations",
+          "Requires too much memory",
+          "Not needed"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Precise alias analysis is undecidable; compilers use safe approximations that may miss optimization opportunities."
+      }
+    ]
+  }
+]

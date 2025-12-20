@@ -1,0 +1,102 @@
+[
+  {
+    "id": "cs406-t5-ex01",
+    "subjectId": "cs406",
+    "topicId": "cs406-topic-5",
+    "title": "STRIPS Planning Representation",
+    "difficulty": 2,
+    "description": "Implement a STRIPS-style planning problem representation.\n\nYour implementation should:\n- Define states as sets of propositions\n- Define actions with preconditions and effects\n- Check if an action is applicable in a state\n- Apply actions to generate successor states",
+    "starterCode": "class Action:\n    def __init__(self, name, preconditions, add_effects, delete_effects):\n        pass\n\n    def is_applicable(self, state):\n        # Check if action can be applied in state\n        pass\n\n    def apply(self, state):\n        # Apply action to state, return new state\n        pass\n\nclass PlanningProblem:\n    def __init__(self, initial_state, goal, actions):\n        pass\n\n# Example: Blocks World\n# Blocks: A, B, C\n# States: sets like {'on(A,B)', 'on(B,table)', 'clear(A)', 'clear(C)'}",
+    "solution": "class Action:\n    def __init__(self, name, preconditions, add_effects, delete_effects):\n        self.name = name\n        self.preconditions = set(preconditions)\n        self.add_effects = set(add_effects)\n        self.delete_effects = set(delete_effects)\n\n    def is_applicable(self, state):\n        \"\"\"Check if all preconditions are satisfied in state.\"\"\"\n        return self.preconditions.issubset(state)\n\n    def apply(self, state):\n        \"\"\"Apply action to state, return new state.\"\"\"\n        if not self.is_applicable(state):\n            return None\n\n        new_state = state.copy()\n        new_state -= self.delete_effects\n        new_state |= self.add_effects\n\n        return new_state\n\n    def __repr__(self):\n        return f\"Action({self.name})\"\n\nclass PlanningProblem:\n    def __init__(self, initial_state, goal, actions):\n        self.initial_state = initial_state\n        self.goal = goal\n        self.actions = actions\n\n    def is_goal(self, state):\n        \"\"\"Check if state satisfies goal.\"\"\"\n        return self.goal.issubset(state)\n\n    def get_applicable_actions(self, state):\n        \"\"\"Return list of actions applicable in state.\"\"\"\n        return [action for action in self.actions if action.is_applicable(state)]\n\n# Blocks World Example\n# Actions: move(X, Y) - move block X onto block Y\n\ndef create_blocks_world():\n    \"\"\"Create a simple blocks world problem.\"\"\"\n\n    initial_state = {\n        'on(A,table)', 'on(B,table)', 'on(C,A)',\n        'clear(C)', 'clear(B)', 'handempty'\n    }\n\n    goal = {\n        'on(A,B)', 'on(B,C)'\n    }\n\n    actions = []\n\n    # Action: pickup(X) - pick up block X from table\n    for block in ['A', 'B', 'C']:\n        actions.append(Action(\n            name=f'pickup({block})',\n            preconditions=[f'on({block},table)', f'clear({block})', 'handempty'],\n            add_effects=[f'holding({block})'],\n            delete_effects=[f'on({block},table)', f'clear({block})', 'handempty']\n        ))\n\n    # Action: putdown(X) - put down block X on table\n    for block in ['A', 'B', 'C']:\n        actions.append(Action(\n            name=f'putdown({block})',\n            preconditions=[f'holding({block})'],\n            add_effects=[f'on({block},table)', f'clear({block})', 'handempty'],\n            delete_effects=[f'holding({block})']\n        ))\n\n    # Action: stack(X, Y) - stack block X on block Y\n    for x in ['A', 'B', 'C']:\n        for y in ['A', 'B', 'C']:\n            if x != y:\n                actions.append(Action(\n                    name=f'stack({x},{y})',\n                    preconditions=[f'holding({x})', f'clear({y})'],\n                    add_effects=[f'on({x},{y})', f'clear({x})', 'handempty'],\n                    delete_effects=[f'holding({x})', f'clear({y})']\n                ))\n\n    # Action: unstack(X, Y) - unstack block X from block Y\n    for x in ['A', 'B', 'C']:\n        for y in ['A', 'B', 'C']:\n            if x != y:\n                actions.append(Action(\n                    name=f'unstack({x},{y})',\n                    preconditions=[f'on({x},{y})', f'clear({x})', 'handempty'],\n                    add_effects=[f'holding({x})', f'clear({y})'],\n                    delete_effects=[f'on({x},{y})', f'clear({x})', 'handempty']\n                ))\n\n    return PlanningProblem(initial_state, goal, actions)\n\n# Test\nproblem = create_blocks_world()\nprint(\"Initial state:\", problem.initial_state)\nprint(\"Goal:\", problem.goal)\nprint(f\"Is goal satisfied? {problem.is_goal(problem.initial_state)}\")\n\n# Test action application\nstate = problem.initial_state\nprint(f\"\\nApplicable actions in initial state:\")\nfor action in problem.get_applicable_actions(state):\n    print(f\"  {action.name}\")\n\n# Apply an action\nunstack_c_a = [a for a in problem.actions if a.name == 'unstack(C,A)'][0]\nnew_state = unstack_c_a.apply(state)\nprint(f\"\\nAfter {unstack_c_a.name}:\")\nprint(new_state)",
+    "testCases": [
+      {
+        "input": "action.is_applicable(state)",
+        "isHidden": false,
+        "description": "Test action applicability checking"
+      },
+      {
+        "input": "action.apply(state)",
+        "isHidden": false,
+        "description": "Test action application produces correct successor state"
+      },
+      {
+        "input": "problem.get_applicable_actions(state)",
+        "isHidden": false,
+        "description": "Test finding all applicable actions in a state"
+      }
+    ],
+    "hints": [
+      "States are sets of propositions (strings like \"on(A,B)\", \"clear(C)\")",
+      "An action is applicable if all its preconditions are in the current state",
+      "Apply an action by removing delete effects and adding add effects to the state"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs406-t5-ex02",
+    "subjectId": "cs406",
+    "topicId": "cs406-topic-5",
+    "title": "Forward State-Space Planning",
+    "difficulty": 3,
+    "description": "Implement forward state-space search for planning.\n\nYour implementation should:\n- Search forward from initial state\n- Use A* with a planning heuristic\n- Generate successor states by applying actions\n- Return the plan (sequence of actions)",
+    "starterCode": "import heapq\n\ndef h_goal_count(state, goal):\n    # Heuristic: number of unsatisfied goal propositions\n    pass\n\ndef forward_search(problem):\n    # Implement forward A* search for planning\n    # Return: list of actions (plan) or None\n    pass",
+    "solution": "import heapq\n\ndef h_goal_count(state, goal):\n    \"\"\"Heuristic: number of unsatisfied goal propositions.\"\"\"\n    return len(goal - state)\n\ndef forward_search(problem, heuristic=h_goal_count):\n    \"\"\"\n    Forward state-space A* search for planning.\n    Returns: list of actions (plan) or None if no plan found\n    \"\"\"\n    initial = problem.initial_state\n\n    # Priority queue: (f, g, state, plan)\n    frontier = [(heuristic(initial, problem.goal), 0, initial, [])]\n    explored = set()\n\n    nodes_expanded = 0\n\n    while frontier:\n        f, g, state, plan = heapq.heappop(frontier)\n\n        # Convert state to frozenset for hashing\n        state_key = frozenset(state)\n\n        if state_key in explored:\n            continue\n\n        explored.add(state_key)\n        nodes_expanded += 1\n\n        # Goal check\n        if problem.is_goal(state):\n            print(f\"Plan found! Nodes expanded: {nodes_expanded}\")\n            return plan\n\n        # Expand state\n        for action in problem.get_applicable_actions(state):\n            new_state = action.apply(state)\n\n            if new_state is None:\n                continue\n\n            new_state_key = frozenset(new_state)\n\n            if new_state_key in explored:\n                continue\n\n            new_g = g + 1  # Unit cost per action\n            new_h = heuristic(new_state, problem.goal)\n            new_f = new_g + new_h\n            new_plan = plan + [action]\n\n            heapq.heappush(frontier, (new_f, new_g, new_state, new_plan))\n\n    print(f\"No plan found. Nodes expanded: {nodes_expanded}\")\n    return None\n\n# Test with Blocks World\nfrom topic5_strips import create_blocks_world\n\nproblem = create_blocks_world()\nprint(\"Initial state:\", problem.initial_state)\nprint(\"Goal:\", problem.goal)\n\nplan = forward_search(problem)\n\nif plan:\n    print(f\"\\nPlan ({len(plan)} steps):\")\n    state = problem.initial_state\n    for i, action in enumerate(plan):\n        print(f\"{i+1}. {action.name}\")\n        state = action.apply(state)\n    print(\"\\nFinal state:\", state)\n    print(f\"Goal satisfied: {problem.is_goal(state)}\")\nelse:\n    print(\"No plan found!\")\n\n# Test with more complex delete-relaxation heuristic\ndef h_delete_relaxation(state, goal):\n    \"\"\"\n    Better heuristic: solve delete-relaxed problem.\n    (Simplified version: just count goal propositions)\n    \"\"\"\n    # In full implementation, this would solve the problem\n    # ignoring delete effects to get admissible estimate\n    return len(goal - state)\n\nprint(\"\\n--- Testing with delete-relaxation heuristic ---\")\nplan2 = forward_search(problem, heuristic=h_delete_relaxation)\n\nif plan2:\n    print(f\"Plan length: {len(plan2)}\")",
+    "testCases": [
+      {
+        "input": "forward_search(problem)",
+        "isHidden": false,
+        "description": "Test forward search finds valid plan"
+      },
+      {
+        "input": "h_goal_count(state, goal)",
+        "isHidden": false,
+        "description": "Test heuristic counts unsatisfied goals"
+      },
+      {
+        "input": "plan execution reaches goal",
+        "isHidden": false,
+        "description": "Test executing plan satisfies goal"
+      }
+    ],
+    "hints": [
+      "Use A* search with states instead of paths - the g-value is the number of actions taken",
+      "The goal-count heuristic counts propositions in the goal that are not in the current state",
+      "Use frozenset to make states hashable for the explored set"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs406-t5-ex03",
+    "subjectId": "cs406",
+    "topicId": "cs406-topic-5",
+    "title": "GraphPlan Algorithm",
+    "difficulty": 4,
+    "description": "Implement a simplified GraphPlan algorithm.\n\nYour implementation should:\n- Build planning graph with alternating proposition/action layers\n- Identify mutex relations between actions\n- Extract solution from the graph\n- Handle multiple levels until fixed point",
+    "starterCode": "class PlanningGraph:\n    def __init__(self, problem):\n        self.problem = problem\n        self.prop_layers = []\n        self.action_layers = []\n\n    def expand(self):\n        # Add one proposition and action layer\n        pass\n\n    def extract_solution(self):\n        # Try to extract plan from graph\n        pass\n\ndef graphplan(problem):\n    # Implement GraphPlan\n    pass",
+    "solution": "class PlanningGraph:\n    def __init__(self, problem):\n        self.problem = problem\n        self.prop_layers = [problem.initial_state.copy()]\n        self.action_layers = []\n\n    def expand(self):\n        \"\"\"Add one proposition layer and one action layer.\"\"\"\n        if not self.prop_layers:\n            return False\n\n        prev_props = self.prop_layers[-1]\n\n        # Action layer: applicable actions from previous prop layer\n        applicable = []\n        for action in self.problem.actions:\n            if action.is_applicable(prev_props):\n                applicable.append(action)\n\n        # Add no-op actions for each proposition\n        for prop in prev_props:\n            from topic5_strips import Action\n            noop = Action(\n                name=f'no-op({prop})',\n                preconditions=[prop],\n                add_effects=[prop],\n                delete_effects=[]\n            )\n            applicable.append(noop)\n\n        self.action_layers.append(applicable)\n\n        # Proposition layer: effects of all actions in action layer\n        new_props = set()\n        for action in applicable:\n            new_props |= action.add_effects\n\n        self.prop_layers.append(new_props)\n\n        return True\n\n    def all_goals_reachable(self):\n        \"\"\"Check if all goal propositions are in latest layer.\"\"\"\n        if not self.prop_layers:\n            return False\n\n        return self.problem.goal.issubset(self.prop_layers[-1])\n\n    def extract_solution(self, level=None):\n        \"\"\"\n        Try to extract plan from graph at given level.\n        Simplified version: just check if goals are reachable.\n        \"\"\"\n        if level is None:\n            level = len(self.prop_layers) - 1\n\n        if level < 0:\n            return None\n\n        # Check if goals are in this layer\n        if not self.problem.goal.issubset(self.prop_layers[level]):\n            return None\n\n        # For simplicity, find actions that achieve goals\n        # (Full GraphPlan would do backward search with mutex checking)\n\n        plan = []\n        current_goals = self.problem.goal.copy()\n        current_level = level\n\n        while current_level > 0 and current_goals:\n            # Find actions in previous layer that achieve current goals\n            actions = self.action_layers[current_level - 1]\n\n            # Greedy selection (not optimal)\n            selected = []\n            achieved = set()\n\n            for action in actions:\n                if action.name.startswith('no-op'):\n                    continue\n\n                # Check if action achieves any goal\n                if action.add_effects & current_goals:\n                    selected.append(action)\n                    achieved |= action.add_effects\n\n            plan = selected + plan\n            current_goals = set()\n\n            # New goals = preconditions of selected actions\n            for action in selected:\n                current_goals |= action.preconditions\n\n            current_level -= 1\n\n        return plan if current_level == 0 else None\n\n    def has_reached_fixed_point(self):\n        \"\"\"Check if two consecutive prop layers are identical.\"\"\"\n        if len(self.prop_layers) < 2:\n            return False\n\n        return self.prop_layers[-1] == self.prop_layers[-2]\n\ndef graphplan(problem, max_levels=10):\n    \"\"\"\n    GraphPlan algorithm (simplified).\n    Returns: plan (list of actions) or None\n    \"\"\"\n    graph = PlanningGraph(problem)\n\n    for level in range(max_levels):\n        print(f\"Level {level}: {len(graph.prop_layers[-1])} propositions\")\n\n        # Check if all goals are reachable\n        if graph.all_goals_reachable():\n            print(f\"Goals reachable at level {level}\")\n\n            # Try to extract solution\n            plan = graph.extract_solution()\n\n            if plan:\n                return plan\n\n        # Expand graph\n        graph.expand()\n\n        # Check for fixed point\n        if graph.has_reached_fixed_point():\n            print(\"Fixed point reached, no solution exists\")\n            return None\n\n    print(\"Max levels reached\")\n    return None\n\n# Test\nfrom topic5_strips import create_blocks_world\n\nproblem = create_blocks_world()\nprint(\"Initial state:\", problem.initial_state)\nprint(\"Goal:\", problem.goal)\n\nplan = graphplan(problem)\n\nif plan:\n    print(f\"\\nGraphPlan found plan ({len(plan)} steps):\")\n    state = problem.initial_state\n    for i, action in enumerate(plan):\n        print(f\"{i+1}. {action.name}\")\n        state = action.apply(state)\n\n    print(\"\\nFinal state:\", state)\n    print(f\"Goal satisfied: {problem.is_goal(state)}\")\nelse:\n    print(\"\\nNo plan found\")\n\n# Compare with forward search\nfrom topic5_forward import forward_search\nprint(\"\\n--- Comparing with Forward Search ---\")\nplan_forward = forward_search(problem)\nif plan_forward:\n    print(f\"Forward search plan length: {len(plan_forward)}\")\nif plan:\n    print(f\"GraphPlan plan length: {len(plan)}\")",
+    "testCases": [
+      {
+        "input": "graphplan(problem)",
+        "isHidden": false,
+        "description": "Test GraphPlan finds valid plan"
+      },
+      {
+        "input": "graph.expand()",
+        "isHidden": false,
+        "description": "Test graph expansion adds proposition and action layers"
+      },
+      {
+        "input": "graph.all_goals_reachable()",
+        "isHidden": false,
+        "description": "Test goal reachability detection"
+      }
+    ],
+    "hints": [
+      "Build alternating layers: propositions, then actions, then propositions, etc.",
+      "Include no-op actions for each proposition to maintain persistence",
+      "Extract solution by working backwards from the goal layer, selecting actions that achieve goals",
+      "Reach fixed point when two consecutive proposition layers are identical (no new propositions)"
+    ],
+    "language": "python"
+  }
+]

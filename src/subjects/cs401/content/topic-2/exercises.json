@@ -1,0 +1,570 @@
+[
+  {
+    "id": "cs401-t2-ex01",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-2",
+    "title": "Lamport Logical Clock Implementation",
+    "difficulty": 2,
+    "description": "Implement Lamport logical clocks for ordering events in a distributed system.\n\nYour implementation should:\n- Maintain a logical clock counter\n- Increment on local events\n- Update clock on message send/receive\n- Compare event timestamps",
+    "starterCode": "interface Event {\n  processId: string;\n  timestamp: number;\n  type: 'local' | 'send' | 'receive';\n  data?: any;\n}\n\nclass LamportClock {\n  // Implement Lamport clock\n}",
+    "solution": "interface Event {\n  processId: string;\n  timestamp: number;\n  type: 'local' | 'send' | 'receive';\n  data?: any;\n}\n\nclass LamportClock {\n  private processId: string;\n  private clock: number = 0;\n  private events: Event[] = [];\n\n  constructor(processId: string) {\n    this.processId = processId;\n  }\n\n  localEvent(data?: any): number {\n    this.clock++;\n    const timestamp = this.clock;\n\n    this.events.push({\n      processId: this.processId,\n      timestamp,\n      type: 'local',\n      data\n    });\n\n    return timestamp;\n  }\n\n  prepareSend(data?: any): { timestamp: number; message: any } {\n    this.clock++;\n    const timestamp = this.clock;\n\n    this.events.push({\n      processId: this.processId,\n      timestamp,\n      type: 'send',\n      data\n    });\n\n    return {\n      timestamp,\n      message: {\n        from: this.processId,\n        timestamp,\n        data\n      }\n    };\n  }\n\n  receiveMessage(messageTimestamp: number, from: string, data?: any): number {\n    this.clock = Math.max(this.clock, messageTimestamp) + 1;\n    const timestamp = this.clock;\n\n    this.events.push({\n      processId: this.processId,\n      timestamp,\n      type: 'receive',\n      data: { from, data }\n    });\n\n    return timestamp;\n  }\n\n  getClock(): number {\n    return this.clock;\n  }\n\n  getEvents(): Event[] {\n    return [...this.events];\n  }\n\n  // Check if event a happened before event b\n  happenedBefore(timestampA: number, timestampB: number): boolean {\n    return timestampA < timestampB;\n  }\n\n  // Get total ordering of events\n  getTotalOrder(events: Event[]): Event[] {\n    return events.sort((a, b) => {\n      if (a.timestamp !== b.timestamp) {\n        return a.timestamp - b.timestamp;\n      }\n      // Tie-break using process ID\n      return a.processId.localeCompare(b.processId);\n    });\n  }\n}",
+    "testCases": [
+      {
+        "input": "Local event increments clock",
+        "expectedOutput": "Clock: 1",
+        "isHidden": false,
+        "description": "Should increment clock on local event"
+      },
+      {
+        "input": "Receive message with timestamp 5 when clock is 2",
+        "expectedOutput": "Clock updated to 6",
+        "isHidden": false,
+        "description": "Should update clock to max(local, received) + 1"
+      },
+      {
+        "input": "Compare timestamps",
+        "expectedOutput": "Correct happens-before relationship",
+        "isHidden": false,
+        "description": "Should determine event ordering"
+      }
+    ],
+    "hints": [
+      "Increment clock before each event",
+      "On receive: max(local, message) + 1",
+      "Timestamps provide total ordering",
+      "Store events for audit trail"
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs401-t2-ex02",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-2",
+    "title": "Vector Clock Implementation",
+    "difficulty": 3,
+    "description": "Implement vector clocks to track causality and detect concurrent events.\n\nYour implementation should:\n- Maintain a vector of logical times\n- Update vector on events and messages\n- Compare vectors to determine causality\n- Detect concurrent events",
+    "starterCode": "type VectorTime = Map<string, number>;\n\nclass VectorClock {\n  // Implement vector clock\n}",
+    "solution": "type VectorTime = Map<string, number>;\n\ninterface VectorMessage {\n  from: string;\n  vector: VectorTime;\n  data?: any;\n}\n\nclass VectorClock {\n  private processId: string;\n  private vector: VectorTime;\n  private processes: Set<string>;\n\n  constructor(processId: string, allProcesses: string[]) {\n    this.processId = processId;\n    this.processes = new Set(allProcesses);\n    this.vector = new Map();\n\n    // Initialize vector with zeros\n    allProcesses.forEach(pid => {\n      this.vector.set(pid, 0);\n    });\n  }\n\n  localEvent(): VectorTime {\n    const currentValue = this.vector.get(this.processId) || 0;\n    this.vector.set(this.processId, currentValue + 1);\n    return this.copyVector();\n  }\n\n  prepareSend(data?: any): VectorMessage {\n    // Increment local clock\n    const currentValue = this.vector.get(this.processId) || 0;\n    this.vector.set(this.processId, currentValue + 1);\n\n    return {\n      from: this.processId,\n      vector: this.copyVector(),\n      data\n    };\n  }\n\n  receiveMessage(message: VectorMessage): VectorTime {\n    // Update vector: V[i] = max(V[i], message.V[i]) for all i\n    message.vector.forEach((value, pid) => {\n      const currentValue = this.vector.get(pid) || 0;\n      this.vector.set(pid, Math.max(currentValue, value));\n    });\n\n    // Increment own clock\n    const currentValue = this.vector.get(this.processId) || 0;\n    this.vector.set(this.processId, currentValue + 1);\n\n    return this.copyVector();\n  }\n\n  getVector(): VectorTime {\n    return this.copyVector();\n  }\n\n  private copyVector(): VectorTime {\n    return new Map(this.vector);\n  }\n\n  // Check if vectorA happened before vectorB (vectorA < vectorB)\n  happenedBefore(vectorA: VectorTime, vectorB: VectorTime): boolean {\n    let hasLess = false;\n    let allLessOrEqual = true;\n\n    this.processes.forEach(pid => {\n      const a = vectorA.get(pid) || 0;\n      const b = vectorB.get(pid) || 0;\n\n      if (a > b) {\n        allLessOrEqual = false;\n      }\n      if (a < b) {\n        hasLess = true;\n      }\n    });\n\n    return allLessOrEqual && hasLess;\n  }\n\n  // Check if two vectors represent concurrent events\n  isConcurrent(vectorA: VectorTime, vectorB: VectorTime): boolean {\n    return !this.happenedBefore(vectorA, vectorB) &&\n           !this.happenedBefore(vectorB, vectorA);\n  }\n\n  // Check if vectors are equal\n  isEqual(vectorA: VectorTime, vectorB: VectorTime): boolean {\n    let equal = true;\n\n    this.processes.forEach(pid => {\n      const a = vectorA.get(pid) || 0;\n      const b = vectorB.get(pid) || 0;\n      if (a !== b) {\n        equal = false;\n      }\n    });\n\n    return equal;\n  }\n\n  toString(): string {\n    const entries: string[] = [];\n    this.vector.forEach((value, pid) => {\n      entries.push(`${pid}:${value}`);\n    });\n    return `[${entries.join(', ')}]`;\n  }\n}",
+    "testCases": [
+      {
+        "input": "Local event increments own position",
+        "expectedOutput": "Vector[processId] increased by 1",
+        "isHidden": false,
+        "description": "Should increment own position in vector"
+      },
+      {
+        "input": "Receive message updates vector",
+        "expectedOutput": "Vector updated to component-wise max",
+        "isHidden": false,
+        "description": "Should merge vectors on message receive"
+      },
+      {
+        "input": "Detect concurrent events",
+        "expectedOutput": "Correctly identifies concurrent vectors",
+        "isHidden": false,
+        "description": "Should detect when events are concurrent"
+      }
+    ],
+    "hints": [
+      "Vector has one entry per process",
+      "Update own position on every event",
+      "Component-wise max on receive",
+      "Concurrent if neither vector ≤ other"
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs401-t2-ex03",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-2",
+    "title": "Causal Message Ordering",
+    "difficulty": 3,
+    "description": "Implement a causal ordering protocol that ensures messages are delivered in causal order using vector clocks.",
+    "starterCode": "interface CausalMessage {\n  from: string;\n  vector: Map<string, number>;\n  content: any;\n  sequenceNumber: number;\n}\n\nclass CausalOrderingProtocol {\n  // Implement causal ordering\n}",
+    "solution": "interface CausalMessage {\n  from: string;\n  vector: Map<string, number>;\n  content: any;\n  sequenceNumber: number;\n}\n\nclass CausalOrderingProtocol {\n  private processId: string;\n  private vector: Map<string, number>;\n  private processes: Set<string>;\n  private messageQueue: CausalMessage[] = [];\n  private delivered: CausalMessage[] = [];\n  private sequenceNumber: number = 0;\n\n  constructor(processId: string, allProcesses: string[]) {\n    this.processId = processId;\n    this.processes = new Set(allProcesses);\n    this.vector = new Map();\n\n    allProcesses.forEach(pid => {\n      this.vector.set(pid, 0);\n    });\n  }\n\n  send(content: any): CausalMessage {\n    // Increment own clock\n    const currentValue = this.vector.get(this.processId) || 0;\n    this.vector.set(this.processId, currentValue + 1);\n\n    const message: CausalMessage = {\n      from: this.processId,\n      vector: new Map(this.vector),\n      content,\n      sequenceNumber: ++this.sequenceNumber\n    };\n\n    return message;\n  }\n\n  receive(message: CausalMessage): void {\n    // Add to queue\n    this.messageQueue.push(message);\n\n    // Try to deliver queued messages\n    this.tryDeliver();\n  }\n\n  private tryDeliver(): void {\n    let delivered = true;\n\n    while (delivered) {\n      delivered = false;\n\n      for (let i = 0; i < this.messageQueue.length; i++) {\n        const message = this.messageQueue[i];\n\n        if (this.canDeliver(message)) {\n          // Remove from queue\n          this.messageQueue.splice(i, 1);\n\n          // Deliver message\n          this.deliverMessage(message);\n\n          delivered = true;\n          break;\n        }\n      }\n    }\n  }\n\n  private canDeliver(message: CausalMessage): boolean {\n    // Can deliver if:\n    // 1. V[sender] = local[sender] + 1\n    // 2. V[k] <= local[k] for all k != sender\n\n    const senderClock = message.vector.get(message.from) || 0;\n    const localSenderClock = this.vector.get(message.from) || 0;\n\n    if (senderClock !== localSenderClock + 1) {\n      return false;\n    }\n\n    // Check all other processes\n    for (const pid of this.processes) {\n      if (pid !== message.from) {\n        const messageClock = message.vector.get(pid) || 0;\n        const localClock = this.vector.get(pid) || 0;\n\n        if (messageClock > localClock) {\n          return false;\n        }\n      }\n    }\n\n    return true;\n  }\n\n  private deliverMessage(message: CausalMessage): void {\n    // Update vector\n    message.vector.forEach((value, pid) => {\n      const currentValue = this.vector.get(pid) || 0;\n      this.vector.set(pid, Math.max(currentValue, value));\n    });\n\n    this.delivered.push(message);\n  }\n\n  getDelivered(): CausalMessage[] {\n    return [...this.delivered];\n  }\n\n  getQueueSize(): number {\n    return this.messageQueue.length;\n  }\n\n  getVector(): Map<string, number> {\n    return new Map(this.vector);\n  }\n}",
+    "testCases": [
+      {
+        "input": "Messages arrive in causal order",
+        "expectedOutput": "Delivered immediately",
+        "isHidden": false,
+        "description": "Should deliver messages in causal order"
+      },
+      {
+        "input": "Message arrives before its causal predecessor",
+        "expectedOutput": "Buffered until predecessor arrives",
+        "isHidden": false,
+        "description": "Should buffer out-of-order messages"
+      },
+      {
+        "input": "Predecessor arrives",
+        "expectedOutput": "Both messages delivered in correct order",
+        "isHidden": false,
+        "description": "Should deliver buffered messages when safe"
+      }
+    ],
+    "hints": [
+      "Buffer messages that cannot be delivered yet",
+      "Check delivery conditions using vector clocks",
+      "Deliver when V[sender] = local[sender] + 1",
+      "Try delivering buffered messages after each receive"
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs401-t2-ex04",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-2",
+    "title": "Happens-Before Relationship Tracker",
+    "difficulty": 2,
+    "description": "Build a system that tracks and visualizes happens-before relationships between events in a distributed system.",
+    "starterCode": "interface DistributedEvent {\n  id: string;\n  processId: string;\n  timestamp: number;\n  type: string;\n}\n\nclass HappenBeforeTracker {\n  // Implement happens-before tracking\n}",
+    "solution": "interface DistributedEvent {\n  id: string;\n  processId: string;\n  timestamp: number;\n  type: string;\n  causedBy?: string[];\n}\n\nclass HappensBeforeTracker {\n  private events: Map<string, DistributedEvent> = new Map();\n  private happensBefore: Map<string, Set<string>> = new Map();\n\n  addEvent(event: DistributedEvent): void {\n    this.events.set(event.id, event);\n\n    if (!this.happensBefore.has(event.id)) {\n      this.happensBefore.set(event.id, new Set());\n    }\n\n    // Add causal relationships\n    if (event.causedBy) {\n      event.causedBy.forEach(causeId => {\n        this.addHappensBefore(causeId, event.id);\n      });\n    }\n  }\n\n  addHappensBefore(beforeId: string, afterId: string): void {\n    if (!this.happensBefore.has(afterId)) {\n      this.happensBefore.set(afterId, new Set());\n    }\n\n    // Add direct relationship\n    this.happensBefore.get(afterId)!.add(beforeId);\n\n    // Add transitive relationships\n    const beforePredecessors = this.happensBefore.get(beforeId);\n    if (beforePredecessors) {\n      beforePredecessors.forEach(predId => {\n        this.happensBefore.get(afterId)!.add(predId);\n      });\n    }\n\n    // Update all events that happen after 'afterId'\n    this.happensBefore.forEach((predecessors, eventId) => {\n      if (predecessors.has(afterId)) {\n        predecessors.add(beforeId);\n        if (beforePredecessors) {\n          beforePredecessors.forEach(predId => {\n            predecessors.add(predId);\n          });\n        }\n      }\n    });\n  }\n\n  happensBefore(eventA: string, eventB: string): boolean {\n    const predecessors = this.happensBefore.get(eventB);\n    return predecessors ? predecessors.has(eventA) : false;\n  }\n\n  areConcurrent(eventA: string, eventB: string): boolean {\n    return !this.happensBefore(eventA, eventB) &&\n           !this.happensBefore(eventB, eventA) &&\n           eventA !== eventB;\n  }\n\n  getCausalHistory(eventId: string): string[] {\n    const predecessors = this.happensBefore.get(eventId);\n    return predecessors ? Array.from(predecessors) : [];\n  }\n\n  getConcurrentEvents(eventId: string): string[] {\n    const concurrent: string[] = [];\n\n    this.events.forEach((_, otherId) => {\n      if (this.areConcurrent(eventId, otherId)) {\n        concurrent.push(otherId);\n      }\n    });\n\n    return concurrent;\n  }\n\n  getTopologicalOrder(): DistributedEvent[] {\n    const visited = new Set<string>();\n    const result: DistributedEvent[] = [];\n\n    const visit = (eventId: string) => {\n      if (visited.has(eventId)) {\n        return;\n      }\n\n      visited.add(eventId);\n\n      // Visit all predecessors first\n      const predecessors = this.happensBefore.get(eventId);\n      if (predecessors) {\n        predecessors.forEach(predId => visit(predId));\n      }\n\n      const event = this.events.get(eventId);\n      if (event) {\n        result.push(event);\n      }\n    };\n\n    this.events.forEach((_, eventId) => visit(eventId));\n\n    return result;\n  }\n}",
+    "testCases": [
+      {
+        "input": "Add events with causal relationships",
+        "expectedOutput": "Relationships tracked correctly",
+        "isHidden": false,
+        "description": "Should track happens-before relationships"
+      },
+      {
+        "input": "Check if event A happens before event B",
+        "expectedOutput": "Correct causal relationship returned",
+        "isHidden": false,
+        "description": "Should determine causality"
+      },
+      {
+        "input": "Find concurrent events",
+        "expectedOutput": "Events with no causal relationship",
+        "isHidden": false,
+        "description": "Should identify concurrent events"
+      }
+    ],
+    "hints": [
+      "Maintain adjacency list for happens-before relation",
+      "Handle transitive closure of relationships",
+      "Concurrent if neither happens-before the other",
+      "Use topological sort for ordering"
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs401-t2-ex05",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-2",
+    "title": "Physical Clock Synchronization",
+    "difficulty": 3,
+    "description": "Simulate physical clock synchronization using a simplified version of the Cristian's algorithm.",
+    "starterCode": "interface ClockReading {\n  time: number;\n  measurementTime: number;\n}\n\nclass PhysicalClockSync {\n  // Implement clock synchronization\n}",
+    "solution": "interface ClockReading {\n  time: number;\n  measurementTime: number;\n}\n\ninterface SyncResult {\n  offset: number;\n  roundTripTime: number;\n  uncertainty: number;\n}\n\nclass PhysicalClockSync {\n  private localClock: number;\n  private drift: number; // Clock drift rate (1.0 = no drift)\n\n  constructor(initialTime: number = Date.now(), drift: number = 1.0) {\n    this.localClock = initialTime;\n    this.drift = drift;\n  }\n\n  // Simulate time passing\n  tick(milliseconds: number): void {\n    this.localClock += milliseconds * this.drift;\n  }\n\n  getTime(): number {\n    return Math.floor(this.localClock);\n  }\n\n  // Client requests time from server\n  requestTimeSync(serverTime: () => number, networkDelay: number): SyncResult {\n    const requestTime = this.getTime();\n\n    // Simulate network delay\n    const oneWayDelay = networkDelay / 2;\n\n    // Server processes request (gets its time)\n    const serverResponseTime = serverTime();\n\n    // Simulate return network delay\n    const responseTime = this.getTime();\n\n    const roundTripTime = responseTime - requestTime;\n    const estimatedServerTime = serverResponseTime + oneWayDelay;\n\n    const offset = estimatedServerTime - responseTime;\n    const uncertainty = roundTripTime / 2;\n\n    return {\n      offset,\n      roundTripTime,\n      uncertainty\n    };\n  }\n\n  // Adjust clock based on sync result\n  adjustClock(syncResult: SyncResult): void {\n    // Gradually adjust clock to avoid large jumps\n    const maxAdjustment = 100; // Maximum single adjustment in ms\n\n    if (Math.abs(syncResult.offset) <= maxAdjustment) {\n      this.localClock += syncResult.offset;\n    } else {\n      // For large offsets, adjust gradually\n      const sign = syncResult.offset > 0 ? 1 : -1;\n      this.localClock += sign * maxAdjustment;\n    }\n  }\n\n  // Perform multiple sync attempts and use best result\n  synchronize(\n    serverTime: () => number,\n    networkDelay: number,\n    attempts: number = 5\n  ): SyncResult {\n    let bestResult: SyncResult | null = null;\n\n    for (let i = 0; i < attempts; i++) {\n      const result = this.requestTimeSync(serverTime, networkDelay);\n\n      if (!bestResult || result.roundTripTime < bestResult.roundTripTime) {\n        bestResult = result;\n      }\n\n      // Small delay between attempts\n      this.tick(10);\n    }\n\n    if (bestResult) {\n      this.adjustClock(bestResult);\n    }\n\n    return bestResult!;\n  }\n\n  setDrift(drift: number): void {\n    this.drift = drift;\n  }\n\n  getDrift(): number {\n    return this.drift;\n  }\n}",
+    "testCases": [
+      {
+        "input": "Sync with server",
+        "expectedOutput": "Clock adjusted based on offset",
+        "isHidden": false,
+        "description": "Should synchronize with time server"
+      },
+      {
+        "input": "Multiple sync attempts",
+        "expectedOutput": "Best result (lowest RTT) used",
+        "isHidden": false,
+        "description": "Should use best sync result"
+      },
+      {
+        "input": "Clock with drift",
+        "expectedOutput": "Gradually diverges from correct time",
+        "isHidden": false,
+        "description": "Should simulate clock drift"
+      }
+    ],
+    "hints": [
+      "Estimate one-way delay as RTT/2",
+      "Calculate offset between local and server time",
+      "Use multiple samples and choose best (lowest RTT)",
+      "Avoid large sudden clock adjustments"
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs401-t2-ex06",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-2",
+    "title": "Hybrid Logical Clock",
+    "difficulty": 4,
+    "description": "Implement hybrid logical clocks that combine physical and logical time for better ordering.",
+    "starterCode": "interface HLCTimestamp {\n  physicalTime: number;\n  logicalTime: number;\n}\n\nclass HybridLogicalClock {\n  // Implement hybrid logical clock\n}",
+    "solution": "interface HLCTimestamp {\n  physicalTime: number;\n  logicalTime: number;\n}\n\nclass HybridLogicalClock {\n  private lastPhysicalTime: number = 0;\n  private logicalTime: number = 0;\n\n  private getPhysicalTime(): number {\n    return Date.now();\n  }\n\n  now(): HLCTimestamp {\n    const physicalTime = this.getPhysicalTime();\n\n    if (physicalTime > this.lastPhysicalTime) {\n      this.lastPhysicalTime = physicalTime;\n      this.logicalTime = 0;\n    } else {\n      this.logicalTime++;\n    }\n\n    return {\n      physicalTime: this.lastPhysicalTime,\n      logicalTime: this.logicalTime\n    };\n  }\n\n  update(remoteTimestamp: HLCTimestamp): HLCTimestamp {\n    const physicalTime = this.getPhysicalTime();\n    const maxPhysical = Math.max(\n      physicalTime,\n      this.lastPhysicalTime,\n      remoteTimestamp.physicalTime\n    );\n\n    if (maxPhysical === this.lastPhysicalTime) {\n      // Same physical time as before\n      this.logicalTime++;\n    } else if (maxPhysical === remoteTimestamp.physicalTime) {\n      // Remote time is newer\n      this.lastPhysicalTime = remoteTimestamp.physicalTime;\n      this.logicalTime = remoteTimestamp.logicalTime + 1;\n    } else {\n      // Physical time advanced\n      this.lastPhysicalTime = maxPhysical;\n      this.logicalTime = 0;\n    }\n\n    return {\n      physicalTime: this.lastPhysicalTime,\n      logicalTime: this.logicalTime\n    };\n  }\n\n  compare(a: HLCTimestamp, b: HLCTimestamp): number {\n    if (a.physicalTime !== b.physicalTime) {\n      return a.physicalTime - b.physicalTime;\n    }\n    return a.logicalTime - b.logicalTime;\n  }\n\n  happensBefore(a: HLCTimestamp, b: HLCTimestamp): boolean {\n    return this.compare(a, b) < 0;\n  }\n\n  toString(timestamp: HLCTimestamp): string {\n    return `${timestamp.physicalTime}.${timestamp.logicalTime}`;\n  }\n\n  fromString(str: string): HLCTimestamp {\n    const [physical, logical] = str.split('.').map(Number);\n    return {\n      physicalTime: physical,\n      logicalTime: logical\n    };\n  }\n}",
+    "testCases": [
+      {
+        "input": "Generate timestamp",
+        "expectedOutput": "HLC timestamp with physical and logical components",
+        "isHidden": false,
+        "description": "Should generate hybrid timestamps"
+      },
+      {
+        "input": "Update with remote timestamp",
+        "expectedOutput": "Local HLC updated correctly",
+        "isHidden": false,
+        "description": "Should update HLC on message receive"
+      },
+      {
+        "input": "Compare timestamps",
+        "expectedOutput": "Correct ordering determined",
+        "isHidden": false,
+        "description": "Should compare HLC timestamps correctly"
+      }
+    ],
+    "hints": [
+      "Use physical time when it advances",
+      "Use logical counter when physical time same",
+      "Take max of local, remote, and current physical time",
+      "Compare physical time first, then logical"
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs401-t2-ex07",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-2",
+    "title": "Total Ordering Service",
+    "difficulty": 3,
+    "description": "Implement a centralized total ordering service that assigns sequence numbers to events.",
+    "starterCode": "interface OrderedEvent {\n  eventId: string;\n  sequenceNumber: number;\n  timestamp: number;\n  data: any;\n}\n\nclass TotalOrderingService {\n  // Implement total ordering\n}",
+    "solution": "interface OrderedEvent {\n  eventId: string;\n  sequenceNumber: number;\n  timestamp: number;\n  data: any;\n}\n\ninterface EventRequest {\n  eventId: string;\n  data: any;\n  requestTime: number;\n}\n\nclass TotalOrderingService {\n  private sequenceNumber: number = 0;\n  private orderedEvents: OrderedEvent[] = [];\n  private pendingRequests: EventRequest[] = [];\n\n  submitEvent(eventId: string, data: any): Promise<OrderedEvent> {\n    const request: EventRequest = {\n      eventId,\n      data,\n      requestTime: Date.now()\n    };\n\n    this.pendingRequests.push(request);\n\n    return new Promise((resolve) => {\n      // Simulate async processing\n      setTimeout(() => {\n        const orderedEvent = this.processEvent(request);\n        resolve(orderedEvent);\n      }, 10);\n    });\n  }\n\n  private processEvent(request: EventRequest): OrderedEvent {\n    const orderedEvent: OrderedEvent = {\n      eventId: request.eventId,\n      sequenceNumber: ++this.sequenceNumber,\n      timestamp: Date.now(),\n      data: request.data\n    };\n\n    this.orderedEvents.push(orderedEvent);\n\n    // Remove from pending\n    const index = this.pendingRequests.indexOf(request);\n    if (index > -1) {\n      this.pendingRequests.splice(index, 1);\n    }\n\n    return orderedEvent;\n  }\n\n  getOrderedEvents(): OrderedEvent[] {\n    return [...this.orderedEvents];\n  }\n\n  getEventBySequence(sequenceNumber: number): OrderedEvent | undefined {\n    return this.orderedEvents.find(e => e.sequenceNumber === sequenceNumber);\n  }\n\n  getEventsInRange(start: number, end: number): OrderedEvent[] {\n    return this.orderedEvents.filter(\n      e => e.sequenceNumber >= start && e.sequenceNumber <= end\n    );\n  }\n\n  getCurrentSequence(): number {\n    return this.sequenceNumber;\n  }\n\n  getPendingCount(): number {\n    return this.pendingRequests.length;\n  }\n}",
+    "testCases": [
+      {
+        "input": "Submit multiple events",
+        "expectedOutput": "Events assigned sequential numbers",
+        "isHidden": false,
+        "description": "Should assign total order to events"
+      },
+      {
+        "input": "Retrieve events by sequence",
+        "expectedOutput": "Events returned in total order",
+        "isHidden": false,
+        "description": "Should maintain total ordering"
+      }
+    ],
+    "hints": [
+      "Centralized sequencer assigns numbers",
+      "Increment sequence number for each event",
+      "Maintain ordered list of events",
+      "Handle async event submission"
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs401-t2-ex08",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-2",
+    "title": "Clock Drift Simulator",
+    "difficulty": 2,
+    "description": "Simulate clock drift in distributed systems and measure the divergence over time.",
+    "starterCode": "class ClockDriftSimulator {\n  // Implement clock drift simulation\n}",
+    "solution": "interface Clock {\n  id: string;\n  currentTime: number;\n  driftRate: number; // Parts per million (ppm)\n  lastUpdate: number;\n}\n\nclass ClockDriftSimulator {\n  private clocks: Map<string, Clock> = new Map();\n  private referenceTime: number;\n\n  constructor() {\n    this.referenceTime = Date.now();\n  }\n\n  addClock(id: string, driftRate: number): void {\n    this.clocks.set(id, {\n      id,\n      currentTime: this.referenceTime,\n      driftRate,\n      lastUpdate: this.referenceTime\n    });\n  }\n\n  simulate(durationMs: number, steps: number = 100): void {\n    const stepSize = durationMs / steps;\n\n    for (let i = 0; i < steps; i++) {\n      this.clocks.forEach(clock => {\n        this.updateClock(clock, stepSize);\n      });\n    }\n  }\n\n  private updateClock(clock: Clock, elapsedMs: number): void {\n    // Calculate drift: drift = elapsed * (driftRate / 1_000_000)\n    const drift = elapsedMs * (clock.driftRate / 1_000_000);\n    clock.currentTime += elapsedMs + drift;\n    clock.lastUpdate += elapsedMs;\n  }\n\n  getClockTime(id: string): number | null {\n    const clock = this.clocks.get(id);\n    return clock ? clock.currentTime : null;\n  }\n\n  getSkew(clockA: string, clockB: string): number | null {\n    const timeA = this.getClockTime(clockA);\n    const timeB = this.getClockTime(clockB);\n\n    if (timeA === null || timeB === null) {\n      return null;\n    }\n\n    return timeA - timeB;\n  }\n\n  getAllSkews(): Map<string, number> {\n    const skews = new Map<string, number>();\n\n    if (this.clocks.size < 2) {\n      return skews;\n    }\n\n    const clockIds = Array.from(this.clocks.keys());\n    const referenceClock = clockIds[0];\n    const referenceTime = this.getClockTime(referenceClock)!;\n\n    clockIds.forEach(id => {\n      const time = this.getClockTime(id)!;\n      skews.set(id, time - referenceTime);\n    });\n\n    return skews;\n  }\n\n  synchronizeClocks(targetClockId: string): void {\n    const targetTime = this.getClockTime(targetClockId);\n    if (targetTime === null) {\n      return;\n    }\n\n    this.clocks.forEach(clock => {\n      if (clock.id !== targetClockId) {\n        clock.currentTime = targetTime;\n      }\n    });\n  }\n\n  reset(): void {\n    this.referenceTime = Date.now();\n    this.clocks.forEach(clock => {\n      clock.currentTime = this.referenceTime;\n      clock.lastUpdate = this.referenceTime;\n    });\n  }\n\n  getMaxSkew(): number {\n    if (this.clocks.size < 2) {\n      return 0;\n    }\n\n    const times = Array.from(this.clocks.values()).map(c => c.currentTime);\n    return Math.max(...times) - Math.min(...times);\n  }\n}",
+    "testCases": [
+      {
+        "input": "Add clocks with different drift rates",
+        "expectedOutput": "Clocks registered",
+        "isHidden": false,
+        "description": "Should track multiple clocks"
+      },
+      {
+        "input": "Simulate time passing",
+        "expectedOutput": "Clocks diverge based on drift rates",
+        "isHidden": false,
+        "description": "Should simulate clock drift"
+      },
+      {
+        "input": "Measure skew between clocks",
+        "expectedOutput": "Correct skew calculated",
+        "isHidden": false,
+        "description": "Should calculate clock skew"
+      }
+    ],
+    "hints": [
+      "Drift rate in parts per million (ppm)",
+      "Update each clock based on elapsed time and drift",
+      "Skew is difference between two clocks",
+      "Track maximum divergence across all clocks"
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs401-t2-ex09",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-2",
+    "title": "Event Log with Causal Ordering",
+    "difficulty": 3,
+    "description": "Implement an event log that maintains causal ordering of events across distributed processes.",
+    "starterCode": "interface LogEntry {\n  eventId: string;\n  processId: string;\n  vector: Map<string, number>;\n  content: any;\n}\n\nclass CausalEventLog {\n  // Implement causal event log\n}",
+    "solution": "interface LogEntry {\n  eventId: string;\n  processId: string;\n  vector: Map<string, number>;\n  content: any;\n  timestamp: number;\n}\n\nclass CausalEventLog {\n  private log: LogEntry[] = [];\n  private processId: string;\n  private vector: Map<string, number>;\n  private processes: Set<string>;\n\n  constructor(processId: string, allProcesses: string[]) {\n    this.processId = processId;\n    this.processes = new Set(allProcesses);\n    this.vector = new Map();\n\n    allProcesses.forEach(pid => {\n      this.vector.set(pid, 0);\n    });\n  }\n\n  append(eventId: string, content: any): LogEntry {\n    // Increment own clock\n    const currentValue = this.vector.get(this.processId) || 0;\n    this.vector.set(this.processId, currentValue + 1);\n\n    const entry: LogEntry = {\n      eventId,\n      processId: this.processId,\n      vector: new Map(this.vector),\n      content,\n      timestamp: Date.now()\n    };\n\n    this.log.push(entry);\n    return entry;\n  }\n\n  merge(entries: LogEntry[]): void {\n    entries.forEach(entry => {\n      // Update vector clock\n      entry.vector.forEach((value, pid) => {\n        const currentValue = this.vector.get(pid) || 0;\n        this.vector.set(pid, Math.max(currentValue, value));\n      });\n\n      // Add to log if not already present\n      const exists = this.log.some(e => e.eventId === entry.eventId);\n      if (!exists) {\n        this.log.push(entry);\n      }\n    });\n\n    // Sort log by causal order\n    this.sortLog();\n  }\n\n  private sortLog(): void {\n    this.log.sort((a, b) => {\n      // Try to order by vector clock\n      const aBeforeB = this.vectorLessThan(a.vector, b.vector);\n      const bBeforeA = this.vectorLessThan(b.vector, a.vector);\n\n      if (aBeforeB) return -1;\n      if (bBeforeA) return 1;\n\n      // Concurrent events: order by timestamp, then eventId\n      if (a.timestamp !== b.timestamp) {\n        return a.timestamp - b.timestamp;\n      }\n      return a.eventId.localeCompare(b.eventId);\n    });\n  }\n\n  private vectorLessThan(a: Map<string, number>, b: Map<string, number>): boolean {\n    let hasLess = false;\n    let allLessOrEqual = true;\n\n    this.processes.forEach(pid => {\n      const aVal = a.get(pid) || 0;\n      const bVal = b.get(pid) || 0;\n\n      if (aVal > bVal) {\n        allLessOrEqual = false;\n      }\n      if (aVal < bVal) {\n        hasLess = true;\n      }\n    });\n\n    return allLessOrEqual && hasLess;\n  }\n\n  getLog(): LogEntry[] {\n    return [...this.log];\n  }\n\n  getLogSince(vector: Map<string, number>): LogEntry[] {\n    return this.log.filter(entry => {\n      return !this.vectorLessThanOrEqual(entry.vector, vector);\n    });\n  }\n\n  private vectorLessThanOrEqual(a: Map<string, number>, b: Map<string, number>): boolean {\n    let allLessOrEqual = true;\n\n    this.processes.forEach(pid => {\n      const aVal = a.get(pid) || 0;\n      const bVal = b.get(pid) || 0;\n\n      if (aVal > bVal) {\n        allLessOrEqual = false;\n      }\n    });\n\n    return allLessOrEqual;\n  }\n\n  getVector(): Map<string, number> {\n    return new Map(this.vector);\n  }\n\n  size(): number {\n    return this.log.size();\n  }\n}",
+    "testCases": [
+      {
+        "input": "Append events",
+        "expectedOutput": "Events added to log with vector clocks",
+        "isHidden": false,
+        "description": "Should append events to log"
+      },
+      {
+        "input": "Merge logs from different processes",
+        "expectedOutput": "Logs merged and sorted in causal order",
+        "isHidden": false,
+        "description": "Should merge logs maintaining causal order"
+      }
+    ],
+    "hints": [
+      "Attach vector clock to each log entry",
+      "Sort entries by causal order",
+      "Use timestamp for concurrent events",
+      "Support incremental log synchronization"
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs401-t2-ex10",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-2",
+    "title": "Distributed Snapshot Algorithm",
+    "difficulty": 4,
+    "description": "Implement the Chandy-Lamport snapshot algorithm for capturing a consistent global state.",
+    "starterCode": "interface ProcessState {\n  processId: string;\n  localState: any;\n  channelStates: Map<string, any[]>;\n}\n\nclass DistributedSnapshot {\n  // Implement distributed snapshot\n}",
+    "solution": "interface ProcessState {\n  processId: string;\n  localState: any;\n  channelStates: Map<string, any[]>;\n}\n\ninterface Message {\n  from: string;\n  to: string;\n  content: any;\n  isMarker?: boolean;\n}\n\nclass DistributedSnapshot {\n  private processId: string;\n  private state: any;\n  private neighbors: Set<string>;\n  private snapshotState: ProcessState | null = null;\n  private recordingChannels: Map<string, any[]> = new Map();\n  private markersSeen: Set<string> = new Set();\n  private snapshotInitiator: boolean = false;\n\n  constructor(processId: string, neighbors: string[], initialState: any) {\n    this.processId = processId;\n    this.neighbors = new Set(neighbors);\n    this.state = initialState;\n  }\n\n  initiateSnapshot(): ProcessState {\n    // Record own state\n    this.snapshotState = {\n      processId: this.processId,\n      localState: JSON.parse(JSON.stringify(this.state)),\n      channelStates: new Map()\n    };\n\n    this.snapshotInitiator = true;\n\n    // Start recording on all incoming channels\n    this.neighbors.forEach(neighbor => {\n      this.recordingChannels.set(neighbor, []);\n    });\n\n    // Send markers to all neighbors\n    // (In real implementation, would actually send messages)\n\n    return this.snapshotState;\n  }\n\n  receiveMarker(from: string): void {\n    if (!this.markersSeen.has(from)) {\n      this.markersSeen.add(from);\n\n      if (!this.snapshotState) {\n        // First marker received - record own state\n        this.snapshotState = {\n          processId: this.processId,\n          localState: JSON.parse(JSON.stringify(this.state)),\n          channelStates: new Map()\n        };\n\n        // Stop recording from sender\n        this.snapshotState.channelStates.set(from, []);\n\n        // Start recording on other channels\n        this.neighbors.forEach(neighbor => {\n          if (neighbor !== from) {\n            this.recordingChannels.set(neighbor, []);\n          }\n        });\n\n        // Send markers to all neighbors (except sender)\n        // (In real implementation)\n      } else {\n        // Subsequent marker - stop recording from this channel\n        const messages = this.recordingChannels.get(from) || [];\n        this.snapshotState.channelStates.set(from, messages);\n        this.recordingChannels.delete(from);\n      }\n    }\n\n    // Check if snapshot complete\n    if (this.isSnapshotComplete()) {\n      this.finalizeSnapshot();\n    }\n  }\n\n  receiveMessage(message: Message): void {\n    if (message.isMarker) {\n      this.receiveMarker(message.from);\n    } else {\n      // Regular message\n      // If recording from this channel, add to channel state\n      if (this.recordingChannels.has(message.from)) {\n        this.recordingChannels.get(message.from)!.push(message.content);\n      }\n\n      // Process message (update local state)\n      // Implementation specific\n    }\n  }\n\n  private isSnapshotComplete(): boolean {\n    if (!this.snapshotState) {\n      return false;\n    }\n\n    // Snapshot complete when we've received markers from all neighbors\n    return this.markersSeen.size === this.neighbors.size;\n  }\n\n  private finalizeSnapshot(): void {\n    if (!this.snapshotState) {\n      return;\n    }\n\n    // Add any remaining channel states\n    this.recordingChannels.forEach((messages, channel) => {\n      this.snapshotState!.channelStates.set(channel, messages);\n    });\n\n    this.recordingChannels.clear();\n  }\n\n  getSnapshot(): ProcessState | null {\n    return this.snapshotState;\n  }\n\n  reset(): void {\n    this.snapshotState = null;\n    this.recordingChannels.clear();\n    this.markersSeen.clear();\n    this.snapshotInitiator = false;\n  }\n\n  updateState(newState: any): void {\n    this.state = newState;\n  }\n}",
+    "testCases": [
+      {
+        "input": "Initiate snapshot",
+        "expectedOutput": "Local state recorded, markers sent",
+        "isHidden": false,
+        "description": "Should initiate distributed snapshot"
+      },
+      {
+        "input": "Receive marker",
+        "expectedOutput": "Channel states recorded correctly",
+        "isHidden": false,
+        "description": "Should handle marker messages"
+      },
+      {
+        "input": "Complete snapshot",
+        "expectedOutput": "Consistent global state captured",
+        "isHidden": false,
+        "description": "Should capture consistent snapshot"
+      }
+    ],
+    "hints": [
+      "Record local state on first marker",
+      "Record channel state between first marker and marker from that channel",
+      "Send markers to all neighbors",
+      "Snapshot complete when markers received from all"
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs401-t2-ex11",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-2",
+    "title": "Version Vector for Conflict Detection",
+    "difficulty": 3,
+    "description": "Implement version vectors for detecting conflicts in replicated data.",
+    "starterCode": "type VersionVector = Map<string, number>;\n\nclass VersionVectorManager {\n  // Implement version vector management\n}",
+    "solution": "type VersionVector = Map<string, number>;\n\ninterface VersionedValue {\n  value: any;\n  version: VersionVector;\n}\n\nclass VersionVectorManager {\n  private replicaId: string;\n  private vector: VersionVector;\n  private replicas: Set<string>;\n\n  constructor(replicaId: string, allReplicas: string[]) {\n    this.replicaId = replicaId;\n    this.replicas = new Set(allReplicas);\n    this.vector = new Map();\n\n    allReplicas.forEach(rid => {\n      this.vector.set(rid, 0);\n    });\n  }\n\n  increment(): VersionVector {\n    const current = this.vector.get(this.replicaId) || 0;\n    this.vector.set(this.replicaId, current + 1);\n    return this.getVector();\n  }\n\n  merge(otherVector: VersionVector): void {\n    otherVector.forEach((value, rid) => {\n      const current = this.vector.get(rid) || 0;\n      this.vector.set(rid, Math.max(current, value));\n    });\n  }\n\n  getVector(): VersionVector {\n    return new Map(this.vector);\n  }\n\n  // Check if vectorA happened before vectorB\n  happenedBefore(vectorA: VersionVector, vectorB: VersionVector): boolean {\n    let hasLess = false;\n    let allLessOrEqual = true;\n\n    this.replicas.forEach(rid => {\n      const a = vectorA.get(rid) || 0;\n      const b = vectorB.get(rid) || 0;\n\n      if (a > b) {\n        allLessOrEqual = false;\n      }\n      if (a < b) {\n        hasLess = true;\n      }\n    });\n\n    return allLessOrEqual && hasLess;\n  }\n\n  // Check if two version vectors are concurrent (conflict)\n  isConflict(vectorA: VersionVector, vectorB: VersionVector): boolean {\n    return !this.happenedBefore(vectorA, vectorB) &&\n           !this.happenedBefore(vectorB, vectorA) &&\n           !this.areEqual(vectorA, vectorB);\n  }\n\n  areEqual(vectorA: VersionVector, vectorB: VersionVector): boolean {\n    let equal = true;\n\n    this.replicas.forEach(rid => {\n      const a = vectorA.get(rid) || 0;\n      const b = vectorB.get(rid) || 0;\n      if (a !== b) {\n        equal = false;\n      }\n    });\n\n    return equal;\n  }\n\n  // Determine which values to keep (dominating versions)\n  reconcile(values: VersionedValue[]): VersionedValue[] {\n    const dominating: VersionedValue[] = [];\n\n    values.forEach(valueA => {\n      let isDominated = false;\n\n      for (const valueB of values) {\n        if (valueA !== valueB &&\n            this.happenedBefore(valueA.version, valueB.version)) {\n          isDominated = true;\n          break;\n        }\n      }\n\n      if (!isDominated) {\n        dominating.push(valueA);\n      }\n    });\n\n    return dominating;\n  }\n}",
+    "testCases": [
+      {
+        "input": "Increment version vector",
+        "expectedOutput": "Own position incremented",
+        "isHidden": false,
+        "description": "Should increment version vector"
+      },
+      {
+        "input": "Detect conflict between concurrent versions",
+        "expectedOutput": "Conflict detected",
+        "isHidden": false,
+        "description": "Should detect version conflicts"
+      },
+      {
+        "input": "Reconcile conflicting versions",
+        "expectedOutput": "Dominating versions identified",
+        "isHidden": false,
+        "description": "Should reconcile conflicts"
+      }
+    ],
+    "hints": [
+      "Version vector tracks updates from each replica",
+      "Conflict when neither vector dominates",
+      "Reconcile by finding non-dominated versions",
+      "Merge takes component-wise maximum"
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs401-t2-ex12",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-2",
+    "title": "Timestamp Ordering for Transactions",
+    "difficulty": 3,
+    "description": "Implement timestamp-based concurrency control for distributed transactions.",
+    "starterCode": "interface Transaction {\n  id: string;\n  timestamp: number;\n  operations: Operation[];\n}\n\ninterface Operation {\n  type: 'read' | 'write';\n  key: string;\n  value?: any;\n}\n\nclass TimestampOrdering {\n  // Implement timestamp ordering\n}",
+    "solution": "interface Transaction {\n  id: string;\n  timestamp: number;\n  operations: Operation[];\n  status: 'active' | 'committed' | 'aborted';\n}\n\ninterface Operation {\n  type: 'read' | 'write';\n  key: string;\n  value?: any;\n}\n\ninterface DataItem {\n  value: any;\n  readTimestamp: number;\n  writeTimestamp: number;\n}\n\nclass TimestampOrdering {\n  private data: Map<string, DataItem> = new Map();\n  private transactions: Map<string, Transaction> = new Map();\n  private timestampCounter: number = 0;\n\n  beginTransaction(id: string): Transaction {\n    const transaction: Transaction = {\n      id,\n      timestamp: ++this.timestampCounter,\n      operations: [],\n      status: 'active'\n    };\n\n    this.transactions.set(id, transaction);\n    return transaction;\n  }\n\n  read(transactionId: string, key: string): any | null {\n    const transaction = this.transactions.get(transactionId);\n    if (!transaction || transaction.status !== 'active') {\n      return null;\n    }\n\n    let item = this.data.get(key);\n    if (!item) {\n      item = {\n        value: null,\n        readTimestamp: 0,\n        writeTimestamp: 0\n      };\n      this.data.set(key, item);\n    }\n\n    // Check timestamp ordering rule for reads\n    if (transaction.timestamp < item.writeTimestamp) {\n      // Transaction reading a value written by a later transaction - abort\n      this.abort(transactionId);\n      throw new Error(`Transaction ${transactionId} aborted - timestamp ordering violation on read`);\n    }\n\n    // Update read timestamp\n    item.readTimestamp = Math.max(item.readTimestamp, transaction.timestamp);\n\n    transaction.operations.push({ type: 'read', key });\n\n    return item.value;\n  }\n\n  write(transactionId: string, key: string, value: any): boolean {\n    const transaction = this.transactions.get(transactionId);\n    if (!transaction || transaction.status !== 'active') {\n      return false;\n    }\n\n    let item = this.data.get(key);\n    if (!item) {\n      item = {\n        value: null,\n        readTimestamp: 0,\n        writeTimestamp: 0\n      };\n      this.data.set(key, item);\n    }\n\n    // Check timestamp ordering rules for writes\n    if (transaction.timestamp < item.readTimestamp) {\n      // Transaction writing a value that was read by a later transaction - abort\n      this.abort(transactionId);\n      throw new Error(`Transaction ${transactionId} aborted - timestamp ordering violation on write (read)`);\n    }\n\n    if (transaction.timestamp < item.writeTimestamp) {\n      // Transaction writing a value that was written by a later transaction - abort (or ignore write)\n      // Thomas Write Rule: can ignore this write\n      transaction.operations.push({ type: 'write', key, value });\n      return true;\n    }\n\n    // Perform write\n    item.value = value;\n    item.writeTimestamp = transaction.timestamp;\n\n    transaction.operations.push({ type: 'write', key, value });\n\n    return true;\n  }\n\n  commit(transactionId: string): boolean {\n    const transaction = this.transactions.get(transactionId);\n    if (!transaction || transaction.status !== 'active') {\n      return false;\n    }\n\n    transaction.status = 'committed';\n    return true;\n  }\n\n  abort(transactionId: string): void {\n    const transaction = this.transactions.get(transactionId);\n    if (transaction) {\n      transaction.status = 'aborted';\n    }\n  }\n\n  getTransaction(id: string): Transaction | undefined {\n    return this.transactions.get(id);\n  }\n\n  getData(key: string): any {\n    return this.data.get(key)?.value;\n  }\n}",
+    "testCases": [
+      {
+        "input": "Transaction with valid timestamp ordering",
+        "expectedOutput": "Transaction commits successfully",
+        "isHidden": false,
+        "description": "Should allow transactions in timestamp order"
+      },
+      {
+        "input": "Transaction violates timestamp ordering",
+        "expectedOutput": "Transaction aborted",
+        "isHidden": false,
+        "description": "Should abort transactions violating ordering"
+      }
+    ],
+    "hints": [
+      "Assign monotonically increasing timestamps",
+      "Track read and write timestamps per data item",
+      "Abort if T(i) < write timestamp on read",
+      "Abort if T(i) < read timestamp on write"
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs401-t2-ex13",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-2",
+    "title": "Message Reordering Detector",
+    "difficulty": 2,
+    "description": "Build a system that detects when messages arrive out of order and can reorder them.",
+    "starterCode": "interface SequencedMessage {\n  id: string;\n  sequence: number;\n  content: any;\n}\n\nclass MessageReorderingDetector {\n  // Implement message reordering detection\n}",
+    "solution": "interface SequencedMessage {\n  id: string;\n  sequence: number;\n  content: any;\n  receivedAt: number;\n}\n\nclass MessageReorderingDetector {\n  private expectedSequence: number = 1;\n  private buffer: Map<number, SequencedMessage> = new Map();\n  private delivered: SequencedMessage[] = [];\n  private reorderedCount: number = 0;\n\n  receiveMessage(message: SequencedMessage): void {\n    const receivedMessage = {\n      ...message,\n      receivedAt: Date.now()\n    };\n\n    if (message.sequence === this.expectedSequence) {\n      // In-order message\n      this.deliverMessage(receivedMessage);\n      this.expectedSequence++;\n\n      // Check buffer for subsequent messages\n      this.deliverBuffered();\n    } else if (message.sequence > this.expectedSequence) {\n      // Out-of-order message (early arrival)\n      this.buffer.set(message.sequence, receivedMessage);\n      this.reorderedCount++;\n    } else {\n      // Duplicate or very late message - ignore\n      console.warn(`Ignoring duplicate/late message: ${message.id}`);\n    }\n  }\n\n  private deliverMessage(message: SequencedMessage): void {\n    this.delivered.push(message);\n  }\n\n  private deliverBuffered(): void {\n    while (this.buffer.has(this.expectedSequence)) {\n      const message = this.buffer.get(this.expectedSequence)!;\n      this.buffer.delete(this.expectedSequence);\n      this.deliverMessage(message);\n      this.expectedSequence++;\n    }\n  }\n\n  getDelivered(): SequencedMessage[] {\n    return [...this.delivered];\n  }\n\n  getBufferSize(): number {\n    return this.buffer.size;\n  }\n\n  getReorderedCount(): number {\n    return this.reorderedCount;\n  }\n\n  getMissingSequences(): number[] {\n    if (this.buffer.size === 0) {\n      return [];\n    }\n\n    const bufferedSequences = Array.from(this.buffer.keys()).sort((a, b) => a - b);\n    const missing: number[] = [];\n\n    for (let seq = this.expectedSequence; seq < bufferedSequences[bufferedSequences.length - 1]; seq++) {\n      if (!this.buffer.has(seq)) {\n        missing.push(seq);\n      }\n    }\n\n    return missing;\n  }\n\n  reset(): void {\n    this.expectedSequence = 1;\n    this.buffer.clear();\n    this.delivered = [];\n    this.reorderedCount = 0;\n  }\n}",
+    "testCases": [
+      {
+        "input": "Messages arrive in order",
+        "expectedOutput": "Delivered immediately, no buffering",
+        "isHidden": false,
+        "description": "Should handle in-order messages"
+      },
+      {
+        "input": "Message arrives out of order",
+        "expectedOutput": "Buffered until gap filled",
+        "isHidden": false,
+        "description": "Should buffer out-of-order messages"
+      },
+      {
+        "input": "Missing message arrives",
+        "expectedOutput": "Gap filled, buffered messages delivered",
+        "isHidden": false,
+        "description": "Should deliver buffered messages when gap filled"
+      }
+    ],
+    "hints": [
+      "Track expected next sequence number",
+      "Buffer messages that arrive early",
+      "Deliver buffered messages when gap is filled",
+      "Detect and report missing sequences"
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs401-t2-ex14",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-2",
+    "title": "Event Time vs Processing Time",
+    "difficulty": 3,
+    "description": "Implement a system that tracks both event time (when event occurred) and processing time (when event was processed), handling out-of-order events.",
+    "starterCode": "interface TimedEvent {\n  id: string;\n  eventTime: number;\n  processingTime?: number;\n  data: any;\n}\n\nclass EventTimeProcessor {\n  // Implement event time processing\n}",
+    "solution": "interface TimedEvent {\n  id: string;\n  eventTime: number;\n  processingTime?: number;\n  data: any;\n}\n\ninterface TimeWindow {\n  start: number;\n  end: number;\n  events: TimedEvent[];\n}\n\nclass EventTimeProcessor {\n  private events: TimedEvent[] = [];\n  private watermark: number = 0;\n  private allowedLateness: number;\n\n  constructor(allowedLateness: number = 5000) { // 5 seconds default\n    this.allowedLateness = allowedLateness;\n  }\n\n  processEvent(event: TimedEvent): { accepted: boolean; reason?: string } {\n    const processingTime = Date.now();\n    const eventWithProcessingTime = {\n      ...event,\n      processingTime\n    };\n\n    // Check if event is too late (before watermark - allowed lateness)\n    if (event.eventTime < this.watermark - this.allowedLateness) {\n      return {\n        accepted: false,\n        reason: 'Event too late - beyond allowed lateness'\n      };\n    }\n\n    this.events.push(eventWithProcessingTime);\n\n    // Update watermark (simulated)\n    // In real system, watermark would be based on event time progress\n    this.updateWatermark(event.eventTime);\n\n    return { accepted: true };\n  }\n\n  private updateWatermark(eventTime: number): void {\n    // Simplified watermark: max event time seen minus allowed lateness\n    const maxEventTime = Math.max(\n      ...this.events.map(e => e.eventTime),\n      eventTime\n    );\n\n    this.watermark = Math.max(this.watermark, maxEventTime - this.allowedLateness);\n  }\n\n  getEventsInWindow(startTime: number, endTime: number): TimedEvent[] {\n    return this.events\n      .filter(e => e.eventTime >= startTime && e.eventTime < endTime)\n      .sort((a, b) => a.eventTime - b.eventTime);\n  }\n\n  getTumblingWindows(windowSize: number): TimeWindow[] {\n    if (this.events.length === 0) {\n      return [];\n    }\n\n    const minTime = Math.min(...this.events.map(e => e.eventTime));\n    const maxTime = Math.max(...this.events.map(e => e.eventTime));\n\n    const windows: TimeWindow[] = [];\n    let start = Math.floor(minTime / windowSize) * windowSize;\n\n    while (start <= maxTime) {\n      const end = start + windowSize;\n      const windowEvents = this.getEventsInWindow(start, end);\n\n      if (windowEvents.length > 0) {\n        windows.push({ start, end, events: windowEvents });\n      }\n\n      start = end;\n    }\n\n    return windows;\n  }\n\n  getSlidingWindows(windowSize: number, slideSize: number): TimeWindow[] {\n    if (this.events.length === 0) {\n      return [];\n    }\n\n    const minTime = Math.min(...this.events.map(e => e.eventTime));\n    const maxTime = Math.max(...this.events.map(e => e.eventTime));\n\n    const windows: TimeWindow[] = [];\n    let start = Math.floor(minTime / slideSize) * slideSize;\n\n    while (start <= maxTime) {\n      const end = start + windowSize;\n      const windowEvents = this.getEventsInWindow(start, end);\n\n      if (windowEvents.length > 0) {\n        windows.push({ start, end, events: windowEvents });\n      }\n\n      start += slideSize;\n    }\n\n    return windows;\n  }\n\n  getLateness(): Array<{ eventId: string; lateness: number }> {\n    return this.events\n      .filter(e => e.processingTime !== undefined)\n      .map(e => ({\n        eventId: e.id,\n        lateness: e.processingTime! - e.eventTime\n      }))\n      .sort((a, b) => b.lateness - a.lateness);\n  }\n\n  getWatermark(): number {\n    return this.watermark;\n  }\n\n  getEventCount(): number {\n    return this.events.length;\n  }\n}",
+    "testCases": [
+      {
+        "input": "Process events with varying event times",
+        "expectedOutput": "Events accepted and tracked",
+        "isHidden": false,
+        "description": "Should track event time vs processing time"
+      },
+      {
+        "input": "Events arrive late but within allowed lateness",
+        "expectedOutput": "Events accepted",
+        "isHidden": false,
+        "description": "Should handle late events within bounds"
+      },
+      {
+        "input": "Events arrive too late",
+        "expectedOutput": "Events rejected",
+        "isHidden": false,
+        "description": "Should reject events beyond allowed lateness"
+      }
+    ],
+    "hints": [
+      "Event time is when event occurred",
+      "Processing time is when event was processed",
+      "Watermark tracks event time progress",
+      "Allow late events within configured lateness bound"
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs401-t2-ex15",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-2",
+    "title": "Logical Clock Comparison Utility",
+    "difficulty": 2,
+    "description": "Create a utility library for comparing and manipulating different types of logical clocks.",
+    "starterCode": "type LamportTimestamp = number;\ntype VectorTimestamp = Map<string, number>;\ntype HLCTimestamp = { physical: number; logical: number };\n\nclass LogicalClockUtils {\n  // Implement clock utilities\n}",
+    "solution": "type LamportTimestamp = number;\ntype VectorTimestamp = Map<string, number>;\ntype HLCTimestamp = { physical: number; logical: number };\n\nclass LogicalClockUtils {\n  // Lamport Clock utilities\n  static compareLamport(a: LamportTimestamp, b: LamportTimestamp): number {\n    return a - b;\n  }\n\n  static lamportHappensBefore(a: LamportTimestamp, b: LamportTimestamp): boolean {\n    return a < b;\n  }\n\n  // Vector Clock utilities\n  static compareVector(\n    a: VectorTimestamp,\n    b: VectorTimestamp,\n    processes: string[]\n  ): 'less' | 'greater' | 'equal' | 'concurrent' {\n    let hasLess = false;\n    let hasGreater = false;\n\n    processes.forEach(pid => {\n      const aVal = a.get(pid) || 0;\n      const bVal = b.get(pid) || 0;\n\n      if (aVal < bVal) hasLess = true;\n      if (aVal > bVal) hasGreater = true;\n    });\n\n    if (!hasLess && !hasGreater) return 'equal';\n    if (hasLess && !hasGreater) return 'less';\n    if (!hasLess && hasGreater) return 'greater';\n    return 'concurrent';\n  }\n\n  static vectorHappensBefore(\n    a: VectorTimestamp,\n    b: VectorTimestamp,\n    processes: string[]\n  ): boolean {\n    return this.compareVector(a, b, processes) === 'less';\n  }\n\n  static vectorConcurrent(\n    a: VectorTimestamp,\n    b: VectorTimestamp,\n    processes: string[]\n  ): boolean {\n    return this.compareVector(a, b, processes) === 'concurrent';\n  }\n\n  static mergeVectors(\n    a: VectorTimestamp,\n    b: VectorTimestamp,\n    processes: string[]\n  ): VectorTimestamp {\n    const result = new Map<string, number>();\n\n    processes.forEach(pid => {\n      const aVal = a.get(pid) || 0;\n      const bVal = b.get(pid) || 0;\n      result.set(pid, Math.max(aVal, bVal));\n    });\n\n    return result;\n  }\n\n  // HLC utilities\n  static compareHLC(a: HLCTimestamp, b: HLCTimestamp): number {\n    if (a.physical !== b.physical) {\n      return a.physical - b.physical;\n    }\n    return a.logical - b.logical;\n  }\n\n  static hlcHappensBefore(a: HLCTimestamp, b: HLCTimestamp): boolean {\n    return this.compareHLC(a, b) < 0;\n  }\n\n  static hlcToString(timestamp: HLCTimestamp): string {\n    return `${timestamp.physical}.${timestamp.logical}`;\n  }\n\n  static hlcFromString(str: string): HLCTimestamp {\n    const [physical, logical] = str.split('.').map(Number);\n    return { physical, logical };\n  }\n\n  // Conversion utilities\n  static vectorToString(vector: VectorTimestamp): string {\n    const entries: string[] = [];\n    vector.forEach((value, key) => {\n      entries.push(`${key}:${value}`);\n    });\n    return `{${entries.join(', ')}}`;\n  }\n\n  static vectorFromString(str: string, processes: string[]): VectorTimestamp {\n    const vector = new Map<string, number>();\n\n    // Initialize with zeros\n    processes.forEach(pid => vector.set(pid, 0));\n\n    // Parse string\n    const content = str.slice(1, -1); // Remove { }\n    if (content) {\n      content.split(', ').forEach(entry => {\n        const [key, value] = entry.split(':');\n        vector.set(key, parseInt(value));\n      });\n    }\n\n    return vector;\n  }\n\n  // Utility for debugging\n  static printComparison(\n    a: any,\n    b: any,\n    type: 'lamport' | 'vector' | 'hlc',\n    processes?: string[]\n  ): string {\n    switch (type) {\n      case 'lamport':\n        const cmpL = this.compareLamport(a, b);\n        return `Lamport: ${a} ${cmpL < 0 ? '<' : cmpL > 0 ? '>' : '='} ${b}`;\n\n      case 'vector':\n        const cmpV = this.compareVector(a, b, processes!);\n        return `Vector: ${this.vectorToString(a)} ${cmpV} ${this.vectorToString(b)}`;\n\n      case 'hlc':\n        const cmpH = this.compareHLC(a, b);\n        return `HLC: ${this.hlcToString(a)} ${cmpH < 0 ? '<' : cmpH > 0 ? '>' : '='} ${this.hlcToString(b)}`;\n\n      default:\n        return 'Unknown type';\n    }\n  }\n}",
+    "testCases": [
+      {
+        "input": "Compare Lamport timestamps",
+        "expectedOutput": "Correct ordering determined",
+        "isHidden": false,
+        "description": "Should compare Lamport clocks"
+      },
+      {
+        "input": "Compare vector clocks",
+        "expectedOutput": "Correct relationship (less/greater/concurrent)",
+        "isHidden": false,
+        "description": "Should compare vector clocks"
+      },
+      {
+        "input": "Merge vector clocks",
+        "expectedOutput": "Component-wise maximum",
+        "isHidden": false,
+        "description": "Should merge vector clocks"
+      }
+    ],
+    "hints": [
+      "Provide comparison methods for each clock type",
+      "Support serialization/deserialization",
+      "Implement merge operation for vector clocks",
+      "Provide debugging/visualization utilities"
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs401-t2-ex16",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-2",
+    "title": "Causal Broadcast Implementation",
+    "difficulty": 4,
+    "description": "Implement a causal broadcast protocol that ensures messages are delivered in causal order to all processes.",
+    "starterCode": "interface CausalMessage {\n  from: string;\n  vector: Map<string, number>;\n  content: any;\n}\n\nclass CausalBroadcast {\n  // Implement causal broadcast\n}",
+    "solution": "interface CausalMessage {\n  from: string;\n  vector: Map<string, number>;\n  content: any;\n  id: string;\n}\n\nclass CausalBroadcast {\n  private processId: string;\n  private vector: Map<string, number>;\n  private processes: Set<string>;\n  private pending: CausalMessage[] = [];\n  private delivered: CausalMessage[] = [];\n  private deliveryCallbacks: Array<(msg: CausalMessage) => void> = [];\n\n  constructor(processId: string, allProcesses: string[]) {\n    this.processId = processId;\n    this.processes = new Set(allProcesses);\n    this.vector = new Map();\n\n    allProcesses.forEach(pid => {\n      this.vector.set(pid, 0);\n    });\n  }\n\n  broadcast(content: any): CausalMessage {\n    // Increment own clock\n    const current = this.vector.get(this.processId) || 0;\n    this.vector.set(this.processId, current + 1);\n\n    const message: CausalMessage = {\n      id: `${this.processId}-${current + 1}`,\n      from: this.processId,\n      vector: new Map(this.vector),\n      content\n    };\n\n    // Deliver to self immediately\n    this.deliverMessage(message);\n\n    return message;\n  }\n\n  receive(message: CausalMessage): void {\n    // Add to pending\n    this.pending.push(message);\n\n    // Try to deliver pending messages\n    this.tryDeliverPending();\n  }\n\n  private tryDeliverPending(): void {\n    let delivered = true;\n\n    while (delivered) {\n      delivered = false;\n\n      for (let i = 0; i < this.pending.length; i++) {\n        const message = this.pending[i];\n\n        if (this.canDeliver(message)) {\n          // Remove from pending\n          this.pending.splice(i, 1);\n\n          // Deliver\n          this.deliverMessage(message);\n\n          delivered = true;\n          break;\n        }\n      }\n    }\n  }\n\n  private canDeliver(message: CausalMessage): boolean {\n    // Can deliver if:\n    // 1. V_msg[sender] = V_local[sender] + 1\n    // 2. V_msg[k] <= V_local[k] for all k != sender\n\n    const senderClock = message.vector.get(message.from) || 0;\n    const localSenderClock = this.vector.get(message.from) || 0;\n\n    if (senderClock !== localSenderClock + 1) {\n      return false;\n    }\n\n    for (const pid of this.processes) {\n      if (pid !== message.from) {\n        const messageClock = message.vector.get(pid) || 0;\n        const localClock = this.vector.get(pid) || 0;\n\n        if (messageClock > localClock) {\n          return false;\n        }\n      }\n    }\n\n    return true;\n  }\n\n  private deliverMessage(message: CausalMessage): void {\n    // Update vector clock\n    message.vector.forEach((value, pid) => {\n      const current = this.vector.get(pid) || 0;\n      this.vector.set(pid, Math.max(current, value));\n    });\n\n    // Add to delivered\n    this.delivered.push(message);\n\n    // Notify callbacks\n    this.deliveryCallbacks.forEach(callback => {\n      try {\n        callback(message);\n      } catch (error) {\n        console.error('Error in delivery callback:', error);\n      }\n    });\n  }\n\n  onDeliver(callback: (msg: CausalMessage) => void): void {\n    this.deliveryCallbacks.push(callback);\n  }\n\n  getDelivered(): CausalMessage[] {\n    return [...this.delivered];\n  }\n\n  getPendingCount(): number {\n    return this.pending.length;\n  }\n\n  getVector(): Map<string, number> {\n    return new Map(this.vector);\n  }\n}",
+    "testCases": [
+      {
+        "input": "Broadcast messages in causal order",
+        "expectedOutput": "All processes deliver in same causal order",
+        "isHidden": false,
+        "description": "Should maintain causal order across all processes"
+      },
+      {
+        "input": "Concurrent broadcasts",
+        "expectedOutput": "All processes deliver, may be different order",
+        "isHidden": false,
+        "description": "Should handle concurrent broadcasts"
+      }
+    ],
+    "hints": [
+      "Use vector clocks for causality tracking",
+      "Buffer messages that arrive too early",
+      "Deliver when causal dependencies satisfied",
+      "Support callback notification on delivery"
+    ],
+    "language": "typescript"
+  }
+]

@@ -1,0 +1,221 @@
+[
+  {
+    "id": "cs401-quiz-4-1",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-4",
+    "title": "Replication and Consistency - Consistency Models",
+    "questions": [
+      {
+        "id": "cs401-q46",
+        "type": "multiple_choice",
+        "prompt": "What is the primary purpose of data replication?",
+        "options": [
+          "Improve availability and fault tolerance",
+          "Reduce storage costs",
+          "Simplify programming",
+          "Increase latency"
+        ],
+        "correctAnswer": "Improve availability and fault tolerance",
+        "explanation": "Data replication maintains multiple copies of data across different nodes, improving availability (data accessible despite failures) and fault tolerance (surviving failures)."
+      },
+      {
+        "id": "cs401-q47",
+        "type": "multiple_choice",
+        "prompt": "What is strong consistency?",
+        "options": [
+          "All reads see the most recent write",
+          "Reads may see stale data",
+          "Eventually consistent",
+          "No consistency guarantees"
+        ],
+        "correctAnswer": "All reads see the most recent write",
+        "explanation": "Strong consistency (also called linearizability) guarantees that all reads return the value of the most recent write, making the system appear as if there is only one copy of the data."
+      },
+      {
+        "id": "cs401-q48",
+        "type": "multiple_choice",
+        "prompt": "What tradeoff does eventual consistency make?",
+        "options": [
+          "Sacrifices immediate consistency for availability",
+          "Sacrifices availability for consistency",
+          "Eliminates partitions",
+          "Requires synchronous replication"
+        ],
+        "correctAnswer": "Sacrifices immediate consistency for availability",
+        "explanation": "Eventual consistency allows replicas to temporarily diverge (sacrificing immediate consistency) to remain available, guaranteeing only that replicas will converge if updates stop."
+      },
+      {
+        "id": "cs401-q49",
+        "type": "multiple_choice",
+        "prompt": "What is read-your-writes consistency?",
+        "options": [
+          "A client sees their own updates immediately",
+          "All clients see all updates immediately",
+          "No guarantees on read ordering",
+          "Writes are never visible"
+        ],
+        "correctAnswer": "A client sees their own updates immediately",
+        "explanation": "Read-your-writes (also called read-after-write) consistency guarantees that a client will always see their own updates, even if other clients might see stale data temporarily."
+      },
+      {
+        "id": "cs401-q50",
+        "type": "multiple_choice",
+        "prompt": "What is monotonic reads consistency?",
+        "options": [
+          "Reads never go backwards in time",
+          "Reads are always increasing",
+          "All reads see same value",
+          "Reads are ordered by timestamp"
+        ],
+        "correctAnswer": "Reads never go backwards in time",
+        "explanation": "Monotonic reads guarantee that if a client reads a value, any subsequent reads will see that value or a more recent one, never an older value."
+      }
+    ]
+  },
+  {
+    "id": "cs401-quiz-4-2",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-4",
+    "title": "Replication and Consistency - Replication Strategies",
+    "questions": [
+      {
+        "id": "cs401-q51",
+        "type": "multiple_choice",
+        "prompt": "What is the difference between primary-backup and multi-primary replication?",
+        "options": [
+          "Primary-backup has one writer, multi-primary has many",
+          "Primary-backup is faster",
+          "Multi-primary uses less storage",
+          "Primary-backup requires no coordination"
+        ],
+        "correctAnswer": "Primary-backup has one writer, multi-primary has many",
+        "explanation": "Primary-backup replication has a single primary that handles all writes, while multi-primary allows multiple nodes to accept writes, increasing complexity but enabling geo-distribution."
+      },
+      {
+        "id": "cs401-q52",
+        "type": "multiple_choice",
+        "prompt": "What is a quorum in distributed systems?",
+        "options": [
+          "Minimum number of nodes needed for an operation",
+          "All nodes in the system",
+          "The leader node",
+          "Backup nodes"
+        ],
+        "correctAnswer": "Minimum number of nodes needed for an operation",
+        "explanation": "A quorum is the minimum number of nodes that must participate in an operation (read or write) to ensure consistency. Typically a majority to guarantee overlap between operations."
+      },
+      {
+        "id": "cs401-q53",
+        "type": "multiple_choice",
+        "prompt": "In quorum-based replication with N replicas, what is a common quorum size?",
+        "options": [
+          "N/2 + 1 (majority)",
+          "N (all replicas)",
+          "1 (any replica)",
+          "log(N)"
+        ],
+        "correctAnswer": "N/2 + 1 (majority)",
+        "explanation": "A majority quorum (N/2 + 1) ensures that any two quorums overlap, guaranteeing that reads will see recent writes. This allows tolerating N/2 failures while maintaining consistency."
+      },
+      {
+        "id": "cs401-q54",
+        "type": "multiple_choice",
+        "prompt": "What are CRDTs (Conflict-free Replicated Data Types)?",
+        "options": [
+          "Data structures that merge automatically without conflicts",
+          "Encrypted data types",
+          "Compressed data formats",
+          "Cloud-based databases"
+        ],
+        "correctAnswer": "Data structures that merge automatically without conflicts",
+        "explanation": "CRDTs are data structures designed to be replicated across nodes where concurrent updates can be merged automatically without conflicts, enabling strong eventual consistency."
+      },
+      {
+        "id": "cs401-q55",
+        "type": "multiple_choice",
+        "prompt": "What property must CRDT merge operations satisfy?",
+        "options": [
+          "Commutative, associative, and idempotent",
+          "Fast and efficient",
+          "Encrypted and secure",
+          "Ordered and sequential"
+        ],
+        "correctAnswer": "Commutative, associative, and idempotent",
+        "explanation": "CRDT merges must be commutative (order doesn't matter), associative (grouping doesn't matter), and idempotent (applying twice has same effect), enabling automatic conflict resolution."
+      }
+    ]
+  },
+  {
+    "id": "cs401-quiz-4-3",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-4",
+    "title": "Replication and Consistency - CRDTs",
+    "questions": [
+      {
+        "id": "cs401-q56",
+        "type": "multiple_choice",
+        "prompt": "What is an example of a state-based CRDT?",
+        "options": [
+          "Grow-only counter",
+          "String",
+          "Integer",
+          "Linked list"
+        ],
+        "correctAnswer": "Grow-only counter",
+        "explanation": "State-based CRDTs (like grow-only counters, grow-only sets) share entire state and merge using a semilattice structure, where merging is the join operation."
+      },
+      {
+        "id": "cs401-q57",
+        "type": "multiple_choice",
+        "prompt": "What is an operation-based (Op-based) CRDT?",
+        "options": [
+          "CRDTs that share operations instead of state",
+          "CRDTs for mathematical operations",
+          "CRDTs that don't merge",
+          "CRDTs for encryption"
+        ],
+        "correctAnswer": "CRDTs that share operations instead of state",
+        "explanation": "Operation-based CRDTs share operations (like \"increment\", \"add element\") instead of full state. Operations must commute, and typically require causal delivery of operations."
+      },
+      {
+        "id": "cs401-q58",
+        "type": "multiple_choice",
+        "prompt": "What is session consistency?",
+        "options": [
+          "Consistency guarantees within a single client session",
+          "Consistency across all sessions",
+          "No consistency guarantees",
+          "Physical clock synchronization"
+        ],
+        "correctAnswer": "Consistency guarantees within a single client session",
+        "explanation": "Session consistency provides consistency guarantees (like read-your-writes, monotonic reads) within a single client session, but not across different clients or sessions."
+      },
+      {
+        "id": "cs401-q59",
+        "type": "multiple_choice",
+        "prompt": "What is the advantage of async replication over sync replication?",
+        "options": [
+          "Lower latency and better availability",
+          "Stronger consistency",
+          "No data loss",
+          "Simpler implementation"
+        ],
+        "correctAnswer": "Lower latency and better availability",
+        "explanation": "Asynchronous replication doesn't wait for acknowledgment from replicas before confirming writes, providing lower latency and better availability, though risking data loss on failures."
+      },
+      {
+        "id": "cs401-q60",
+        "type": "multiple_choice",
+        "prompt": "What is linearizability?",
+        "options": [
+          "Operations appear to execute atomically at some point between invocation and response",
+          "Operations execute in a line",
+          "Linear time complexity",
+          "Sequential consistency"
+        ],
+        "correctAnswer": "Operations appear to execute atomically at some point between invocation and response",
+        "explanation": "Linearizability (the strongest consistency model) requires that operations appear to execute instantaneously at some point between their invocation and response, with a total order consistent with real-time."
+      }
+    ]
+  }
+]

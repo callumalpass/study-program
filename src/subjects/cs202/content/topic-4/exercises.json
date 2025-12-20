@@ -1,0 +1,237 @@
+[
+  {
+    "id": "cs202-t4-ex1",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic4",
+    "type": "written",
+    "title": "Pipeline Basics",
+    "description": "A non-pipelined processor takes 800ps per instruction. If we split it into 5 equal stages, what is the ideal speedup? What factors reduce the actual speedup?",
+    "difficulty": 1,
+    "hints": [
+      "Ideal speedup = number of stages",
+      "Consider pipeline register overhead and hazards"
+    ],
+    "solution": "Ideal speedup analysis:\n\nNon-pipelined: 800ps per instruction\nPipelined: 5 stages of 800/5 = 160ps each\n\nIdeal speedup = number of stages = 5×\n\nThroughput improvement:\n- Non-pipelined: 1 instruction per 800ps\n- Pipelined: 1 instruction per 160ps (after pipeline fills)\n\nFactors reducing actual speedup:\n\n1. Pipeline register overhead\n   - Each stage needs registers to hold intermediate values\n   - Adds ~20ps per stage\n   - New clock period: 160 + 20 = 180ps\n   - Actual speedup: 800/180 = 4.44×\n\n2. Pipeline hazards cause stalls:\n   - Data hazards: instruction depends on previous result\n   - Control hazards: branches change instruction flow\n   - Structural hazards: resource conflicts (rare in MIPS)\n\n3. Unbalanced stages\n   - If stages aren't equal, clock = slowest stage\n   - Fast stages waste time waiting\n\n4. Pipeline fill/drain\n   - First instruction takes 5 cycles\n   - Last instructions drain without new work\n   - Matters for short programs"
+  },
+  {
+    "id": "cs202-t4-ex2",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic4",
+    "type": "written",
+    "title": "Identify Hazards",
+    "description": "Identify all hazards in this sequence:\nadd $t0, $t1, $t2\nsub $t3, $t0, $t4\nand $t5, $t0, $t3\nlw $t6, 0($t3)",
+    "difficulty": 2,
+    "hints": [
+      "Look for RAW (read-after-write) dependencies",
+      "Check which registers are read vs written"
+    ],
+    "solution": "Hazard analysis:\n\nI1: add $t0, $t1, $t2    # Writes $t0\nI2: sub $t3, $t0, $t4    # Reads $t0, writes $t3\nI3: and $t5, $t0, $t3    # Reads $t0 and $t3\nI4: lw  $t6, 0($t3)      # Reads $t3\n\nData hazards (RAW - Read After Write):\n\n1. I1 → I2 on $t0 (distance 1)\n   - add writes $t0, sub reads $t0\n   - Most severe: add in EX when sub in ID\n\n2. I1 → I3 on $t0 (distance 2)\n   - add writes $t0, and reads $t0\n   - Less severe due to distance\n\n3. I2 → I3 on $t3 (distance 1)\n   - sub writes $t3, and reads $t3\n   - Severe hazard\n\n4. I2 → I4 on $t3 (distance 2)\n   - sub writes $t3, lw reads $t3 for address\n   - Less severe\n\nPipeline diagram showing hazards:\nCycle:    1    2    3    4    5    6    7    8\nI1 add:  IF   ID   EX   MEM  WB\nI2 sub:       IF   ID   EX   MEM  WB\n              ↑hazard on $t0\nI3 and:            IF   ID   EX   MEM  WB\n                   ↑hazard on $t0, $t3\nI4 lw:                  IF   ID   EX   MEM  WB\n                        ↑hazard on $t3\n\nNo structural hazards (separate I-mem and D-mem).\nNo control hazards (no branches)."
+  },
+  {
+    "id": "cs202-t4-ex3",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic4",
+    "type": "written",
+    "title": "Forwarding Paths",
+    "description": "Draw the pipeline diagram for the sequence in the previous exercise with forwarding. Show which forwarding paths are used.",
+    "difficulty": 3,
+    "hints": [
+      "EX/MEM → EX forward",
+      "MEM/WB → EX forward",
+      "Forwarding eliminates most stalls"
+    ],
+    "solution": "Pipeline with forwarding:\n\nCycle:    1    2    3    4    5    6    7    8\nI1 add:  IF   ID   EX   MEM  WB\nI2 sub:       IF   ID   EX   MEM  WB\nI3 and:            IF   ID   EX   MEM  WB\nI4 lw:                  IF   ID   EX   MEM  WB\n\nForwarding paths used:\n\n1. I1 → I2 (EX/MEM → EX forward)\n   - Cycle 4: add finishes EX, result in EX/MEM register\n   - Cycle 4: sub needs value in EX stage\n   - Forward from EX/MEM to ALU input\n\n2. I1 → I3 (MEM/WB → EX forward)\n   - Cycle 5: add finishes MEM, result in MEM/WB register\n   - Cycle 5: and needs value in EX stage\n   - Forward from MEM/WB to ALU input\n\n3. I2 → I3 (EX/MEM → EX forward)\n   - Cycle 5: sub finishes EX, result in EX/MEM register\n   - Cycle 5: and needs value in EX stage\n   - Forward from EX/MEM to ALU input\n\n4. I2 → I4 (MEM/WB → EX forward)\n   - Cycle 6: sub finishes MEM, result in MEM/WB register\n   - Cycle 6: lw needs value in EX stage (address calc)\n   - Forward from MEM/WB to ALU input\n\nNo stalls needed! Forwarding handles all hazards.\n\nForwarding unit logic:\nif (EX/MEM.RegWrite && EX/MEM.Rd == ID/EX.Rs)\n    ForwardA = EX/MEM.ALUResult\nelse if (MEM/WB.RegWrite && MEM/WB.Rd == ID/EX.Rs)\n    ForwardA = MEM/WB.Result\nelse\n    ForwardA = ID/EX.ReadData1"
+  },
+  {
+    "id": "cs202-t4-ex4",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic4",
+    "type": "written",
+    "title": "Load-Use Hazard",
+    "description": "Why can't forwarding alone solve the load-use hazard? Show the pipeline diagram for:\nlw $t0, 0($t1)\nadd $t2, $t0, $t3",
+    "difficulty": 3,
+    "hints": [
+      "When is load data available?",
+      "When does add need it?",
+      "Data travels back in time?"
+    ],
+    "solution": "Load-use hazard analysis:\n\nlw  $t0, 0($t1)    # Load value into $t0\nadd $t2, $t0, $t3  # Use $t0 immediately\n\nPipeline without stall (impossible):\nCycle:    1    2    3    4    5\nlw:      IF   ID   EX   MEM  WB\nadd:          IF   ID   EX   MEM  WB\n                   ↑    ↑\n              needs   data\n              data   ready\n\nThe problem:\n- add needs $t0 in cycle 3 (for EX stage)\n- lw produces $t0 in cycle 4 (end of MEM stage)\n- Data arrives one cycle AFTER it's needed!\n- Forwarding cannot send data backwards in time\n\nSolution: Pipeline stall (bubble)\n\nCycle:    1    2    3    4    5    6\nlw:      IF   ID   EX   MEM  WB\nadd:          IF   ID   --   EX   MEM  WB\n                   ↑stall\n\nWith stall:\n- Cycle 3: ID repeated for add (or bubble inserted)\n- Cycle 4: lw finishes MEM, data available\n- Cycle 5: add EX uses forwarded data from MEM/WB\n\nThe stall costs 1 cycle but is unavoidable.\n\nHardware detection:\nif (ID/EX.MemRead &&\n    ID/EX.Rt == IF/ID.Rs || ID/EX.Rt == IF/ID.Rt)\n    stall pipeline\n\nThis is why lw followed by dependent instruction costs extra cycle."
+  },
+  {
+    "id": "cs202-t4-ex5",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic4",
+    "type": "written",
+    "title": "Branch Prediction",
+    "description": "Compare static \"always not taken\" prediction vs a 1-bit dynamic predictor for a loop that executes 10 times.",
+    "difficulty": 3,
+    "hints": [
+      "Count mispredictions for each",
+      "When does 1-bit predictor change?"
+    ],
+    "solution": "Loop executing 10 times analysis:\n\nStatic \"Always Not Taken\":\nIteration 1-9: branch taken → misprediction (9 wrong)\nIteration 10: branch not taken → correct (1 right)\nAccuracy: 1/10 = 10%\nMispredictions: 9\n\n1-bit Dynamic Predictor:\n(Starts with \"not taken\" prediction)\n\nIter | Actual | Predict | Result    | Next State\n-----|--------|---------|-----------|------------\n  1  | taken  | NT      | WRONG     | T\n  2  | taken  | T       | correct   | T\n  3  | taken  | T       | correct   | T\n  4  | taken  | T       | correct   | T\n  5  | taken  | T       | correct   | T\n  6  | taken  | T       | correct   | T\n  7  | taken  | T       | correct   | T\n  8  | taken  | T       | correct   | T\n  9  | taken  | T       | correct   | T\n 10  | NT     | T       | WRONG     | NT\n\nAccuracy: 8/10 = 80%\nMispredictions: 2 (first and last iterations)\n\n1-bit predictor is much better for loops!\n\nProblem with 1-bit: Nested loops cause issues\n- Outer loop ending mispredicts\n- Inner loop starting mispredicts\n- 2 mispredictions per outer iteration\n\n2-bit predictor solution:\n- Takes 2 mispredictions to change prediction\n- Better handles loop exit transitions"
+  },
+  {
+    "id": "cs202-t4-ex6",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic4",
+    "type": "written",
+    "title": "2-bit Saturating Counter",
+    "description": "Draw the state machine for a 2-bit saturating counter branch predictor. Show all states and transitions for taken/not-taken outcomes.",
+    "difficulty": 2,
+    "hints": [
+      "4 states: strongly/weakly taken/not-taken",
+      "Takes 2 wrong predictions to flip"
+    ],
+    "solution": "2-bit Saturating Counter Branch Predictor:\n\nStates:\n00: Strongly Not Taken (predict NT)\n01: Weakly Not Taken (predict NT)\n10: Weakly Taken (predict T)\n11: Strongly Taken (predict T)\n\nState Machine:\n                    NT                 NT\n           ┌───────────────┐   ┌───────────────┐\n           │               ▼   │               ▼\n        ┌──┴──┐         ┌──┴──┐         ┌─────┐         ┌─────┐\n        │ 00  │◄───NT───│ 01  │◄───NT───│ 10  │◄───NT───│ 11  │\n        │ SNT │         │ WNT │         │ WT  │         │ ST  │\n        │     │───T────►│     │───T────►│     │───T────►│     │\n        └─────┘         └─────┘         └─────┘         └──┬──┘\n           │               ▲               ▲               │\n           └───────────────┘               └───────────────┘\n                    T                              T\n\nPrediction based on MSB:\n- States 00, 01 → Predict Not Taken\n- States 10, 11 → Predict Taken\n\nAdvantages over 1-bit:\n1. Loop example (10 iterations):\n   - Start at SNT (00)\n   - Iter 1: T, wrong → WNT (01)\n   - Iter 2: T, wrong → WT (10), now predicting T\n   - Iter 3-9: T, correct → stays WT or ST\n   - Iter 10: NT, wrong → WNT\n   - Only 3 mispredictions vs 2 for 1-bit\n\n2. Better for loop in loop:\n   - Inner loop exit: wrong → weakly change\n   - Next inner loop start: still predicts taken\n   - Avoids double misprediction"
+  },
+  {
+    "id": "cs202-t4-ex7",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic4",
+    "type": "written",
+    "title": "Control Hazard Penalty",
+    "description": "Calculate the CPI for a processor where 20% of instructions are branches, branch prediction accuracy is 85%, and misprediction penalty is 3 cycles.",
+    "difficulty": 2,
+    "hints": [
+      "Base CPI = 1 with no hazards",
+      "Add penalty cycles for mispredictions"
+    ],
+    "solution": "Control hazard CPI calculation:\n\nGiven:\n- Base CPI = 1 (ideal pipelined)\n- Branch frequency = 20%\n- Prediction accuracy = 85%\n- Misprediction penalty = 3 cycles\n\nMisprediction rate = 1 - 0.85 = 0.15 (15%)\n\nStall cycles due to branches:\n= branch_frequency × misprediction_rate × penalty\n= 0.20 × 0.15 × 3\n= 0.09 cycles per instruction\n\nActual CPI = Base CPI + Branch stalls\n= 1 + 0.09\n= 1.09\n\nPerformance impact:\n- Ideal: 1.0 CPI\n- Actual: 1.09 CPI\n- Slowdown: 9%\n\nSensitivity analysis:\nIf prediction improves to 95%:\nStalls = 0.20 × 0.05 × 3 = 0.03\nCPI = 1.03 (only 3% slowdown)\n\nIf penalty increases to 5 cycles:\nStalls = 0.20 × 0.15 × 5 = 0.15\nCPI = 1.15 (15% slowdown)\n\nThis shows importance of:\n1. Better branch prediction\n2. Lower misprediction penalty (resolve branches earlier)"
+  },
+  {
+    "id": "cs202-t4-ex8",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic4",
+    "type": "written",
+    "title": "Pipeline Diagram with Hazards",
+    "description": "Draw the complete pipeline diagram showing stalls for:\nlw $t0, 0($s0)\nadd $t1, $t0, $t2\nsub $t3, $t1, $t4\nAssume forwarding is available.",
+    "difficulty": 3,
+    "hints": [
+      "Load-use requires one stall",
+      "add-sub can be forwarded",
+      "Show bubble in diagram"
+    ],
+    "solution": "Pipeline diagram with hazards:\n\nInstructions:\nI1: lw  $t0, 0($s0)    # loads into $t0\nI2: add $t1, $t0, $t2  # uses $t0 (load-use hazard)\nI3: sub $t3, $t1, $t4  # uses $t1\n\nCycle:    1    2    3    4    5    6    7    8\nI1 lw:   IF   ID   EX   MEM  WB\nI2 add:       IF   ID   **   EX   MEM  WB\n                   stall\nI3 sub:            IF   **   ID   EX   MEM  WB\n                        stall\n\n** = stall/bubble\n\nDetailed analysis:\n\nCycle 1: I1 in IF\nCycle 2: I1 in ID, I2 in IF\nCycle 3: I1 in EX, I2 in ID\n         - Hazard detected: I1 is lw, I2 reads $t0\n         - Must stall I2 (and I3)\nCycle 4: I1 in MEM, I2 stalled (ID repeated), I3 stalled\n         - Bubble inserted in EX stage\nCycle 5: I1 in WB, I2 in EX (forward from MEM/WB), I3 in ID\nCycle 6: I2 in MEM, I3 in EX (forward from EX/MEM)\nCycle 7: I2 in WB, I3 in MEM\nCycle 8: I3 in WB\n\nForwarding paths:\n- Cycle 5: MEM/WB.Data → I2 EX (load result)\n- Cycle 6: EX/MEM.ALUOut → I3 EX (add result)\n\nTotal cycles: 8 (instead of 7 without hazard)\nStall cycles: 1"
+  },
+  {
+    "id": "cs202-t4-ex9",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic4",
+    "type": "written",
+    "title": "Exception Handling",
+    "description": "Explain how a pipelined processor handles an arithmetic overflow exception in the EX stage. What happens to instructions in earlier and later stages?",
+    "difficulty": 4,
+    "hints": [
+      "Precise exceptions",
+      "Instructions before must complete",
+      "Instructions after must be cancelled"
+    ],
+    "solution": "Exception handling in pipelined processor:\n\nScenario: Overflow occurs during add in EX stage\n\nPipeline state at exception:\nCycle N:\nIF:  I4 (being fetched)\nID:  I3 (being decoded)\nEX:  I2 add - OVERFLOW!\nMEM: I1 (in memory stage)\nWB:  I0 (completing)\n\nRequirements for precise exception:\n1. All instructions before I2 must complete (I0, I1)\n2. I2 and all instructions after must be cancelled (I2, I3, I4)\n3. Exception handler must see state as if I2 never started\n\nSteps:\n\n1. Detect exception in EX stage\n   - Overflow flag set by ALU\n   - EX/MEM pipeline register marks exception\n\n2. Let earlier instructions complete\n   - I0 finishes WB normally\n   - I1 finishes MEM, then WB\n\n3. Flush later stages\n   - Convert I2, I3, I4 to NOPs (bubbles)\n   - Prevent any state changes\n\n4. Save exception state\n   - EPC = address of I2 (excepting instruction)\n   - Cause register = overflow\n   - Save any needed state\n\n5. Jump to handler\n   - PC = exception handler address\n   - Begin fetching handler code\n\nPipeline after handling:\nCycle N+1: Flush I4, I3, I2\nCycle N+2: I1 in WB, handler IF\nCycle N+3: Handler executing\n\nChallenges:\n- Multiple exceptions in different stages\n- Handling exceptions in order (oldest first)\n- Speculative instructions (branch misprediction)"
+  },
+  {
+    "id": "cs202-t4-ex10",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic4",
+    "type": "written",
+    "title": "Delayed Branch",
+    "description": "Explain the MIPS delayed branch mechanism. Why does MIPS have a \"branch delay slot\"? Fill the delay slot for: beq $t0, $t1, target followed by add $s0, $s1, $s2",
+    "difficulty": 3,
+    "hints": [
+      "Instruction after branch always executes",
+      "Can often be filled with useful work",
+      "Compiler responsibility"
+    ],
+    "solution": "MIPS Delayed Branch:\n\nIn MIPS, the instruction immediately after a branch ALWAYS executes,\nregardless of whether the branch is taken. This is the \"delay slot.\"\n\nWhy delayed branch exists:\n- Original MIPS had no branch prediction\n- Branch target not known until ID/EX\n- 1 cycle penalty inevitable\n- Rather than waste the cycle, execute useful instruction\n\nExample:\n    beq $t0, $t1, target\n    add $s0, $s1, $s2    # Branch delay slot - ALWAYS executes\n    ...\ntarget:\n    ...\n\nFilling strategies:\n\n1. Move instruction from BEFORE branch (best):\nBefore:\n    add $s0, $s1, $s2\n    beq $t0, $t1, target\n\nAfter (optimized):\n    beq $t0, $t1, target\n    add $s0, $s1, $s2    # From before branch, no dependency\n\n2. Move from branch target (if taken likely):\n    beq $t0, $t1, target\n    first_target_inst    # Duplicated from target\n\n3. Move from fall-through (if not-taken likely):\n    beq $t0, $t1, target\n    fall_through_inst    # Only safe if branch usually not taken\n\n4. NOP if nothing safe:\n    beq $t0, $t1, target\n    nop                  # Wasted slot\n\nFor the given code:\n    beq $t0, $t1, target\n    add $s0, $s1, $s2\n\nIf add is independent of branch (doesn't use $t0, $t1 or affect branch):\n- Keep as is - add always executes\n- Works correctly whether branch taken or not\n\nModern processors use branch prediction instead."
+  },
+  {
+    "id": "cs202-t4-ex11",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic4",
+    "type": "written",
+    "title": "Structural Hazards",
+    "description": "A processor has a single memory port for both instructions and data. Show how this causes structural hazards. What is the solution in MIPS?",
+    "difficulty": 2,
+    "hints": [
+      "IF and MEM both need memory",
+      "When do they conflict?",
+      "Harvard architecture"
+    ],
+    "solution": "Structural hazard with single memory port:\n\nSingle-port memory (von Neumann):\n- Both IF and MEM need memory access\n- Only one access per cycle possible\n\nConflict scenario:\nCycle:    1    2    3    4    5    6\nI1:      IF   ID   EX   MEM  WB\nI2:           IF   ID   EX   MEM  WB\nI3:                IF   ID   EX   MEM\nI4:                     IF   ID   EX\n                        ↑    ↑\n                      Conflict!\n\nAt cycle 4:\n- I1 needs memory for data (MEM stage) - e.g., lw\n- I4 needs memory for instruction (IF stage)\n- Both cannot be served!\n\nSolutions:\n\n1. Stall one stage (poor performance):\nCycle:    1    2    3    4    5    6    7\nI1 lw:   IF   ID   EX   MEM  WB\nI2:           IF   ID   EX   MEM  WB\nI3:                IF   ID   EX   MEM  WB\nI4:                     IF   **   ID   EX\n                        stall\n\n2. MIPS solution - Harvard Architecture:\n- Separate instruction memory and data memory\n- IF uses I-cache, MEM uses D-cache\n- No structural hazard possible\n\nIn cache-based systems:\n- L1 split into I-cache and D-cache\n- Both can be accessed simultaneously\n- Unified L2/L3 can still have conflicts (handled by cache controller)\n\nRegister file structural hazard:\n- Potential conflict: ID reads, WB writes\n- Solution: Write in first half of cycle, read in second half\n- Or: Multiple read/write ports"
+  },
+  {
+    "id": "cs202-t4-ex12",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic4",
+    "type": "written",
+    "title": "WAW and WAR Hazards",
+    "description": "Define WAW (Write After Write) and WAR (Write After Read) hazards. Do they occur in a standard 5-stage MIPS pipeline? Why or why not?",
+    "difficulty": 3,
+    "hints": [
+      "Consider in-order vs out-of-order execution",
+      "All writes happen in WB stage",
+      "Consider instruction ordering"
+    ],
+    "solution": "WAW and WAR Hazard Analysis:\n\nWAW (Write After Write):\n- Later instruction writes before earlier instruction\n- Example: I1 writes R1, I3 writes R1\n- If I3 writes first, I1 overwrites with stale value\n\nWAR (Write After Read):\n- Later instruction writes before earlier instruction reads\n- Example: I1 reads R1, I3 writes R1\n- If I3 writes first, I1 reads new (wrong) value\n\nIn standard 5-stage MIPS pipeline:\n\nWAW hazards - NO\n- All writes happen in WB stage (stage 5)\n- Instructions proceed in order\n- Earlier instruction always reaches WB first\n- Correct final value guaranteed\n\nExample:\nI1: add $t0, $t1, $t2    # writes $t0 in cycle 5\nI2: ...\nI3: sub $t0, $t3, $t4    # writes $t0 in cycle 7\nResult: $t0 = sub result (correct - latest write wins)\n\nWAR hazards - NO\n- All reads happen in ID stage (stage 2)\n- All writes happen in WB stage (stage 5)\n- Reads always happen before writes in pipeline order\n- No way for later write to overtake earlier read\n\nExample:\nI1: add $t0, $s0, $s1    # reads $s0 in cycle 2\nI2: sub $s0, $t1, $t2    # writes $s0 in cycle 6\nI1 reads $s0 long before I2 writes it - no hazard\n\nWhen do WAW/WAR occur?\n- Out-of-order execution\n- Variable-latency operations (FP divide)\n- Multi-cycle operations completing out of order\n- Solved with register renaming in superscalar processors"
+  },
+  {
+    "id": "cs202-t4-ex13",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic4",
+    "type": "written",
+    "title": "Deep Pipeline Trade-offs",
+    "description": "A processor has the option of a 5-stage or 10-stage pipeline. Compare the trade-offs including clock speed, CPI, and hazard impacts.",
+    "difficulty": 4,
+    "hints": [
+      "More stages = higher clock frequency",
+      "More stages = more hazard penalties",
+      "Consider branch misprediction cost"
+    ],
+    "solution": "Deep Pipeline Analysis: 5-stage vs 10-stage\n\nClock Speed:\n- 5-stage: Stage delay = total/5, clock = 1/(stage + overhead)\n- 10-stage: Stage delay = total/10, clock = 1/(stage + overhead)\n- 10-stage has ~2× higher frequency (ideally)\n- But overhead (pipeline registers) is larger fraction of shorter stages\n\nExample: 1000ps total logic, 50ps register overhead\n- 5-stage: 200ps + 50ps = 250ps clock → 4 GHz\n- 10-stage: 100ps + 50ps = 150ps clock → 6.67 GHz\n- Actual speedup: 1.67× (not 2×)\n\nHazard Impacts:\n\nData hazards:\n- 5-stage: Load-use = 1 stall cycle\n- 10-stage: More stages between load and use\n- May need 2-3 stall cycles for load-use\n\nBranch misprediction:\n- 5-stage: ~2-3 cycle penalty (IF, ID, EX flushed)\n- 10-stage: ~5-6 cycle penalty (more stages to flush)\n- Misprediction much more expensive!\n\nCPI Analysis:\nAssume: 20% branches, 15% misprediction, 25% loads, 50% load-use\n\n5-stage:\nBranch penalty: 0.20 × 0.15 × 3 = 0.09\nLoad-use stalls: 0.25 × 0.50 × 1 = 0.125\nCPI = 1 + 0.09 + 0.125 = 1.215\n\n10-stage:\nBranch penalty: 0.20 × 0.15 × 6 = 0.18\nLoad-use stalls: 0.25 × 0.50 × 2 = 0.25\nCPI = 1 + 0.18 + 0.25 = 1.43\n\nPerformance comparison:\n5-stage: 4 GHz / 1.215 = 3.29 billion inst/sec\n10-stage: 6.67 GHz / 1.43 = 4.66 billion inst/sec\n\n10-stage is faster despite higher CPI due to clock speed.\nBut needs better branch prediction to be worthwhile."
+  },
+  {
+    "id": "cs202-t4-ex14",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic4",
+    "type": "written",
+    "title": "Code Scheduling",
+    "description": "Reorder these instructions to minimize stalls (assume forwarding):\nlw $t0, 0($s0)\nlw $t1, 4($s0)\nadd $t2, $t0, $t1\nsw $t2, 8($s0)",
+    "difficulty": 3,
+    "hints": [
+      "Load-use hazards cause stalls",
+      "Put independent instructions between load and use",
+      "Both loads can happen early"
+    ],
+    "solution": "Code scheduling to minimize stalls:\n\nOriginal code:\n    lw  $t0, 0($s0)     # I1\n    lw  $t1, 4($s0)     # I2\n    add $t2, $t0, $t1   # I3: uses $t0 (load-use!), uses $t1 (load-use!)\n    sw  $t2, 8($s0)     # I4: uses $t2\n\nOriginal pipeline (with stalls):\nCycle:  1   2   3   4   5   6   7   8   9   10\nI1 lw: IF  ID  EX  MEM WB\nI2 lw:     IF  ID  EX  MEM WB\nI3 add:        IF  ID  **  EX  MEM WB\n                   stall (wait for $t1)\nI4 sw:             IF  **  ID  EX  MEM WB\n\nStalls: 2 cycles (one for each load-use)\nTotal: 10 cycles\n\nScheduled code (no reordering possible to eliminate both):\nThe problem: add needs BOTH $t0 and $t1\n- $t0 available after I1 MEM (cycle 4)\n- $t1 available after I2 MEM (cycle 5)\n- add in EX needs both in cycle 5 at earliest\n\nBetter schedule:\n    lw  $t0, 0($s0)     # I1\n    lw  $t1, 4($s0)     # I2\n    nop                  # or move unrelated instruction here\n    add $t2, $t0, $t1   # I3: now both values available via forwarding\n    sw  $t2, 8($s0)     # I4\n\nCycle:  1   2   3   4   5   6   7   8   9\nI1 lw: IF  ID  EX  MEM WB\nI2 lw:     IF  ID  EX  MEM WB\nnop:           IF  ID  EX  MEM WB\nI3 add:            IF  ID  EX  MEM WB\nI4 sw:                 IF  ID  EX  MEM\n\nWith proper scheduling: 9 cycles (1 stall or nop)\nSaved 1 cycle!\n\nThe key insight:\n- Start both loads early\n- Give time for both to reach MEM before add needs them"
+  },
+  {
+    "id": "cs202-t4-ex15",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic4",
+    "type": "written",
+    "title": "Forwarding Unit Design",
+    "description": "Write the logic equations for the forwarding unit that detects when to forward from EX/MEM or MEM/WB to the ALU inputs.",
+    "difficulty": 4,
+    "hints": [
+      "Check destination register matches source",
+      "EX/MEM has priority over MEM/WB",
+      "Must check RegWrite is enabled"
+    ],
+    "solution": "Forwarding Unit Logic Design:\n\nInputs:\n- EX/MEM.RegisterRd: destination of instruction in MEM\n- MEM/WB.RegisterRd: destination of instruction in WB\n- ID/EX.RegisterRs: first source of instruction in EX\n- ID/EX.RegisterRt: second source of instruction in EX\n- EX/MEM.RegWrite: is MEM instruction writing?\n- MEM/WB.RegWrite: is WB instruction writing?\n\nOutputs:\n- ForwardA[1:0]: mux select for first ALU operand\n- ForwardB[1:0]: mux select for second ALU operand\n\nForwardA/B encoding:\n00 = use register file output (no forwarding)\n01 = forward from MEM/WB\n10 = forward from EX/MEM\n\nLogic for ForwardA (first ALU input):\n\n// EX hazard (forward from EX/MEM)\nEX_hazard_A = EX/MEM.RegWrite\n           && (EX/MEM.RegisterRd != 0)\n           && (EX/MEM.RegisterRd == ID/EX.RegisterRs)\n\n// MEM hazard (forward from MEM/WB)\nMEM_hazard_A = MEM/WB.RegWrite\n            && (MEM/WB.RegisterRd != 0)\n            && (MEM/WB.RegisterRd == ID/EX.RegisterRs)\n            && NOT(EX_hazard_A)  // EX hazard has priority\n\nForwardA = EX_hazard_A ? 10 :\n           MEM_hazard_A ? 01 :\n           00\n\nLogic for ForwardB (second ALU input):\n\n// Same logic but with RegisterRt\nEX_hazard_B = EX/MEM.RegWrite\n           && (EX/MEM.RegisterRd != 0)\n           && (EX/MEM.RegisterRd == ID/EX.RegisterRt)\n\nMEM_hazard_B = MEM/WB.RegWrite\n            && (MEM/WB.RegisterRd != 0)\n            && (MEM/WB.RegisterRd == ID/EX.RegisterRt)\n            && NOT(EX_hazard_B)\n\nForwardB = EX_hazard_B ? 10 :\n           MEM_hazard_B ? 01 :\n           00\n\nKey points:\n- Check Rd != 0 because $zero is hardwired\n- EX/MEM has priority (more recent value)\n- Must check RegWrite (not all instructions write)"
+  },
+  {
+    "id": "cs202-t4-ex16",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic4",
+    "type": "written",
+    "title": "Pipeline Performance Equation",
+    "description": "Derive the speedup formula for pipelining. Calculate the speedup for a 5-stage pipeline with 20% stall cycles due to hazards.",
+    "difficulty": 3,
+    "hints": [
+      "Throughput vs latency",
+      "Consider steady state",
+      "CPI with stalls"
+    ],
+    "solution": "Pipeline Speedup Derivation:\n\nNon-pipelined execution time for N instructions:\nT_unpipelined = N × (k × t)\nwhere k = number of stages, t = stage time\n\nPipelined execution time:\n- First instruction: k cycles (fills pipeline)\n- Remaining N-1 instructions: 1 cycle each (ideally)\n- Plus stall cycles\n\nT_pipelined_ideal = (k + N - 1) × t\n\nFor large N:\nT_pipelined_ideal ≈ N × t\n\nIdeal Speedup = T_unpipelined / T_pipelined\n             = (N × k × t) / (N × t)\n             = k\n\nWith stalls (CPI > 1):\nT_pipelined = N × CPI × t\n\nActual Speedup = (N × k × t) / (N × CPI × t)\n               = k / CPI\n\nGiven: 5-stage pipeline, 20% stall cycles\nCPI = 1 + 0.20 = 1.20\n\nSpeedup = 5 / 1.20 = 4.17×\n\nComparison:\n- Ideal: 5× speedup\n- Actual: 4.17× speedup\n- Lost: 0.83× due to hazards\n\nBreaking down the loss:\n- Stall cycles waste potential throughput\n- 20% of cycles are bubbles\n- Effective utilization: 1/1.20 = 83.3%\n\nGeneral formula:\nSpeedup = Pipeline_depth / (1 + Stall_rate)\n\nOr: Speedup = Pipeline_depth × Pipeline_efficiency\nwhere efficiency = 1 / CPI"
+  }
+]

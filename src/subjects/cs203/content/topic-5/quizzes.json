@@ -1,0 +1,221 @@
+[
+  {
+    "id": "cs203-topic-5-quiz-1",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-5",
+    "title": "TM Definition and Computation",
+    "questions": [
+      {
+        "id": "cs203-t5-q1-1",
+        "type": "multiple_choice",
+        "prompt": "A Turing machine differs from a PDA by:",
+        "options": [
+          "Having a finite tape",
+          "Having a read/write tape head that moves both directions",
+          "Being deterministic only",
+          "Not having states"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A TM has an infinite read/write tape with a head that can move left or right, unlike a PDA's one-way input and LIFO stack."
+      },
+      {
+        "id": "cs203-t5-q1-2",
+        "type": "multiple_choice",
+        "prompt": "A TM transition δ(q, a) = (r, b, L) means:",
+        "options": [
+          "Read b, write a, move right",
+          "In state q reading a, write b, move left, go to state r",
+          "Move to state a from state q",
+          "Loop in state q"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The transition reads a in state q, writes b, moves head left (L), and transitions to state r."
+      },
+      {
+        "id": "cs203-t5-q1-3",
+        "type": "multiple_choice",
+        "prompt": "A TM accepts an input if:",
+        "options": [
+          "It ever visits an accept state",
+          "It halts in an accept state",
+          "It processes all symbols",
+          "The tape becomes empty"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A TM accepts by entering the accept state q_accept. It rejects by entering q_reject or may loop forever."
+      },
+      {
+        "id": "cs203-t5-q1-4",
+        "type": "multiple_choice",
+        "prompt": "A language is Turing-recognizable if:",
+        "options": [
+          "Some TM decides it",
+          "Some TM accepts exactly its strings (may not halt on non-members)",
+          "It is finite",
+          "It has a regular expression"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Turing-recognizable (r.e.) languages have TMs that accept all members. The TM may loop forever on non-members."
+      },
+      {
+        "id": "cs203-t5-q1-5",
+        "type": "multiple_choice",
+        "prompt": "A language is decidable if:",
+        "options": [
+          "Some TM recognizes it",
+          "Some TM accepts members and rejects non-members (always halts)",
+          "It is context-free",
+          "It is finite"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Decidable (recursive) languages have TMs that halt on all inputs, accepting members and rejecting non-members."
+      }
+    ]
+  },
+  {
+    "id": "cs203-topic-5-quiz-2",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-5",
+    "title": "TM Variants and Design",
+    "questions": [
+      {
+        "id": "cs203-t5-q2-1",
+        "type": "multiple_choice",
+        "prompt": "Multi-tape Turing machines:",
+        "options": [
+          "Are more powerful than single-tape TMs",
+          "Are equivalent in power to single-tape TMs",
+          "Can only recognize regular languages",
+          "Require exponentially more time"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Multi-tape TMs can be simulated by single-tape TMs (with polynomial slowdown). They recognize the same languages."
+      },
+      {
+        "id": "cs203-t5-q2-2",
+        "type": "multiple_choice",
+        "prompt": "Nondeterministic Turing machines:",
+        "options": [
+          "Are strictly more powerful than deterministic TMs",
+          "Recognize the same languages as deterministic TMs",
+          "Cannot simulate deterministic TMs",
+          "Always halt"
+        ],
+        "correctAnswer": 1,
+        "explanation": "NTMs and DTMs are equivalent in computational power - they recognize the same languages (though DTM simulation may be slower)."
+      },
+      {
+        "id": "cs203-t5-q2-3",
+        "type": "multiple_choice",
+        "prompt": "The Universal Turing Machine:",
+        "options": [
+          "Can simulate any other TM given its encoding",
+          "Is faster than all other TMs",
+          "Has unlimited states",
+          "Only recognizes decidable languages"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The UTM takes ⟨M, w⟩ as input and simulates M on w. It can run any TM, making it a \"programmable computer.\""
+      },
+      {
+        "id": "cs203-t5-q2-4",
+        "type": "multiple_choice",
+        "prompt": "To design a TM for {ww | w ∈ {a,b}*}:",
+        "options": [
+          "Use a single-tape TM with one pass",
+          "Mark symbols and compare halves",
+          "It is impossible - language not recognizable",
+          "Use a PDA instead"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A TM can mark/cross off symbols while zigzagging to compare the two halves. This requires read/write and bidirectional movement."
+      },
+      {
+        "id": "cs203-t5-q2-5",
+        "type": "multiple_choice",
+        "prompt": "Encoding a TM as a string allows:",
+        "options": [
+          "Faster execution",
+          "TMs to take other TMs as input",
+          "Infinite computation",
+          "Smaller state space"
+        ],
+        "correctAnswer": 1,
+        "explanation": "String encoding enables TMs to operate on descriptions of other TMs, essential for the UTM and undecidability proofs."
+      }
+    ]
+  },
+  {
+    "id": "cs203-topic-5-quiz-3",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-5",
+    "title": "Church-Turing Thesis",
+    "questions": [
+      {
+        "id": "cs203-t5-q3-1",
+        "type": "multiple_choice",
+        "prompt": "The Church-Turing thesis states:",
+        "options": [
+          "Turing machines are the fastest model of computation",
+          "Any effectively computable function can be computed by a TM",
+          "All languages are decidable",
+          "P = NP"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The thesis asserts TMs capture the intuitive notion of \"algorithm\" - anything we'd consider computable can be TM-computed."
+      },
+      {
+        "id": "cs203-t5-q3-2",
+        "type": "multiple_choice",
+        "prompt": "The Church-Turing thesis is:",
+        "options": [
+          "A proven mathematical theorem",
+          "A falsified conjecture",
+          "An unprovable philosophical claim",
+          "Only applicable to finite computations"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The thesis cannot be mathematically proven because \"effectively computable\" is an informal notion. It is strongly supported by evidence."
+      },
+      {
+        "id": "cs203-t5-q3-3",
+        "type": "multiple_choice",
+        "prompt": "Which model is NOT equivalent to Turing machines?",
+        "options": [
+          "Lambda calculus",
+          "Recursive functions",
+          "Finite automata",
+          "Post systems"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Finite automata are strictly weaker than TMs - they can only recognize regular languages, not all decidable languages."
+      },
+      {
+        "id": "cs203-t5-q3-4",
+        "type": "multiple_choice",
+        "prompt": "Evidence for the Church-Turing thesis includes:",
+        "options": [
+          "TMs are the simplest model",
+          "All proposed computation models are equivalent to TMs",
+          "TMs can solve any problem",
+          "TMs are always efficient"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Every reasonable computation model proposed (lambda calculus, recursive functions, etc.) has been proven equivalent to TMs."
+      },
+      {
+        "id": "cs203-t5-q3-5",
+        "type": "multiple_choice",
+        "prompt": "Modern computers compared to Turing machines:",
+        "options": [
+          "Are strictly more powerful",
+          "Have the same computational power (with unlimited memory)",
+          "Cannot simulate TMs",
+          "Are strictly less powerful even with unlimited memory"
+        ],
+        "correctAnswer": 1,
+        "explanation": "With unlimited memory, a computer has exactly TM power. Real computers are limited by finite memory but theoretically equivalent."
+      }
+    ]
+  }
+]

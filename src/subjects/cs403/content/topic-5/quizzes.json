@@ -1,0 +1,180 @@
+[
+  {
+    "id": "cs403-quiz-5-1",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-5",
+    "title": "Topic 5: Advanced DP — Fundamentals",
+    "questions": [
+      {
+        "id": "cs403-q61",
+        "type": "multiple_choice",
+        "prompt": "Dynamic programming is most appropriate when a problem has:",
+        "options": [
+          "Optimal substructure and overlapping subproblems",
+          "Only optimal substructure",
+          "Only overlapping subproblems",
+          "No repeated states"
+        ],
+        "correctAnswer": "Optimal substructure and overlapping subproblems",
+        "explanation": "DP exploits overlapping subproblems (reuse) and optimal substructure (optimal solution can be built from optimal subsolutions)."
+      },
+      {
+        "id": "cs403-q62",
+        "type": "fill_blank",
+        "prompt": "In matrix-chain multiplication, the DP recurrence typically considers splitting the chain at an index _____.",
+        "correctAnswer": "k",
+        "explanation": "The recurrence tries all split points k between i and j and chooses the one minimizing total multiplications."
+      },
+      {
+        "id": "cs403-q63",
+        "type": "true_false",
+        "prompt": "The standard matrix-chain multiplication DP runs in O(n^3) time and O(n^2) space.",
+        "correctAnswer": true,
+        "explanation": "The DP fills an n×n table and for each (i, j) considers O(n) split points, yielding O(n^3) time and O(n^2) space."
+      },
+      {
+        "id": "cs403-q64",
+        "type": "multiple_choice",
+        "prompt": "Which DP problem is commonly solved using an edit-distance table?",
+        "options": [
+          "String similarity",
+          "Maximum flow",
+          "Convex hull",
+          "Set cover"
+        ],
+        "correctAnswer": "String similarity",
+        "explanation": "Edit distance computes the minimum number of edits to transform one string into another using a DP table over prefix lengths."
+      },
+      {
+        "id": "cs403-q65",
+        "type": "code_output",
+        "prompt": "What does this print?",
+        "codeSnippet": "const dp: number[] = [0, 1, 1, 2];\nconsole.log(dp[3]);",
+        "correctAnswer": "2",
+        "explanation": "The code prints the element at index 3 of the array, which is 2."
+      }
+    ]
+  },
+  {
+    "id": "cs403-quiz-5-2",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-5",
+    "title": "Topic 5: Advanced DP — Application",
+    "questions": [
+      {
+        "id": "cs403-q66",
+        "type": "multiple_choice",
+        "prompt": "In Longest Common Subsequence DP, the table entry dp[i][j] typically represents:",
+        "options": [
+          "LCS length of prefixes X[0..i) and Y[0..j)",
+          "Shortest path between i and j",
+          "Number of mismatches in prefixes",
+          "The lexicographically smallest subsequence"
+        ],
+        "correctAnswer": "LCS length of prefixes X[0..i) and Y[0..j)",
+        "explanation": "Standard LCS DP defines dp[i][j] as the LCS length of the first i characters of X and the first j characters of Y."
+      },
+      {
+        "id": "cs403-q67",
+        "type": "true_false",
+        "prompt": "For edit distance with unit costs, dp[i][j] can be computed from dp[i-1][j], dp[i][j-1], and dp[i-1][j-1].",
+        "correctAnswer": true,
+        "explanation": "Insert, delete, and substitute correspond to dp[i][j-1], dp[i-1][j], and dp[i-1][j-1] transitions."
+      },
+      {
+        "id": "cs403-q68",
+        "type": "multiple_choice",
+        "prompt": "Held–Karp for TSP is an example of DP over:",
+        "options": [
+          "Subsets",
+          "Trees only",
+          "Matrices only",
+          "Greedy choices"
+        ],
+        "correctAnswer": "Subsets",
+        "explanation": "Held–Karp uses DP over subsets of visited cities and an endpoint, leading to O(n^2 2^n) time."
+      },
+      {
+        "id": "cs403-q69",
+        "type": "fill_blank",
+        "prompt": "The typical time complexity of Held–Karp TSP is O(n^2 · _____).",
+        "correctAnswer": "2^n",
+        "explanation": "Held–Karp runs in O(n^2 2^n) time by iterating over all subsets and endpoints."
+      },
+      {
+        "id": "cs403-q70",
+        "type": "multiple_choice",
+        "prompt": "Which optimization can reduce a DP from O(n^2) space to O(n) space in many problems?",
+        "options": [
+          "Keeping only the previous row/column when transitions are local",
+          "Using recursion instead of iteration",
+          "Sorting the input first",
+          "Using a heap"
+        ],
+        "correctAnswer": "Keeping only the previous row/column when transitions are local",
+        "explanation": "If dp[i][*] depends only on dp[i-1][*] (or a constant number of prior rows), you can roll arrays and reduce space."
+      }
+    ]
+  },
+  {
+    "id": "cs403-quiz-5-3",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-5",
+    "title": "Topic 5: Advanced DP — Mastery",
+    "questions": [
+      {
+        "id": "cs403-q71",
+        "type": "multiple_choice",
+        "prompt": "Knuth optimization applies to certain interval DP recurrences when:",
+        "options": [
+          "Quadrangle inequality / monotone optima conditions hold",
+          "The DP is over subsets",
+          "The DP is randomized",
+          "The DP table is sparse"
+        ],
+        "correctAnswer": "Quadrangle inequality / monotone optima conditions hold",
+        "explanation": "Knuth optimization reduces O(n^3) interval DP to O(n^2) when the argmin is monotone and the cost function satisfies required properties."
+      },
+      {
+        "id": "cs403-q72",
+        "type": "true_false",
+        "prompt": "Bitset convolution tricks can sometimes speed up subset DP for moderate n by using word-level parallelism.",
+        "correctAnswer": true,
+        "explanation": "Representing sets as bitsets can accelerate transitions via bit operations and SIMD-like parallelism, although it depends on the DP structure."
+      },
+      {
+        "id": "cs403-q73",
+        "type": "fill_blank",
+        "prompt": "A common technique to speed up DP transitions is to maintain the best candidate in a monotone queue (a form of _____ optimization).",
+        "correctAnswer": "convex hull",
+        "explanation": "Certain DP recurrences can be optimized using convex hull trick (CHT) or monotone queue techniques when transitions have linear/convex structure."
+      },
+      {
+        "id": "cs403-q74",
+        "type": "multiple_choice",
+        "prompt": "For subset DP, a typical state is dp[S][v], where S is a subset and v is:",
+        "options": [
+          "An endpoint/last element",
+          "A random seed",
+          "A hash function",
+          "A heap size"
+        ],
+        "correctAnswer": "An endpoint/last element",
+        "explanation": "Subset DP often tracks the cost of visiting exactly S and ending at v (e.g., Held–Karp). v encodes the “last” choice."
+      },
+      {
+        "id": "cs403-q75",
+        "type": "multiple_choice",
+        "prompt": "Which statement about DP is generally true?",
+        "options": [
+          "DP trades space for time by reusing computed subproblems",
+          "DP always yields exponential-time algorithms",
+          "DP never uses recursion",
+          "DP requires randomness"
+        ],
+        "correctAnswer": "DP trades space for time by reusing computed subproblems",
+        "explanation": "DP stores intermediate results to avoid recomputation, often reducing exponential recursion to polynomial time at the cost of additional memory."
+      }
+    ]
+  }
+]

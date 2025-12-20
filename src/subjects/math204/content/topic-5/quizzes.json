@@ -1,0 +1,185 @@
+[
+  {
+    "id": "math204-quiz-5a",
+    "subjectId": "math204",
+    "topicId": "math204-5",
+    "title": "Improper Integrals - Infinite Limits",
+    "questions": [
+      {
+        "id": "math204-q5a-1",
+        "type": "multiple_choice",
+        "prompt": "An improper integral has:",
+        "options": [
+          "A negative integrand",
+          "Infinite limits or discontinuous integrand",
+          "Complex numbers",
+          "No antiderivative"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Improper integrals have infinite limits of integration or the integrand has infinite discontinuities."
+      },
+      {
+        "id": "math204-q5a-2",
+        "type": "true_false",
+        "prompt": "To evaluate $\\int_1^\\infty \\frac{1}{x^2} \\, dx$, we take the limit as the upper bound approaches infinity.",
+        "correctAnswer": true,
+        "explanation": "True. $\\int_1^\\infty \\frac{1}{x^2} \\, dx = \\lim_{t \\to \\infty} \\int_1^t \\frac{1}{x^2} \\, dx$."
+      },
+      {
+        "id": "math204-q5a-3",
+        "type": "multiple_choice",
+        "prompt": "What is $\\int_1^\\infty \\frac{1}{x^2} \\, dx$?",
+        "options": [
+          "$0$",
+          "$1$",
+          "$\\infty$",
+          "Diverges"
+        ],
+        "correctAnswer": 1,
+        "explanation": "$\\int_1^\\infty \\frac{1}{x^2} \\, dx = \\lim_{t \\to \\infty} [-\\frac{1}{x}]_1^t = \\lim_{t \\to \\infty} (-\\frac{1}{t} + 1) = 0 + 1 = 1$."
+      },
+      {
+        "id": "math204-q5a-4",
+        "type": "multiple_choice",
+        "prompt": "Does $\\int_1^\\infty \\frac{1}{x} \\, dx$ converge or diverge?",
+        "options": [
+          "Converges to 0",
+          "Converges to 1",
+          "Diverges",
+          "Converges to e"
+        ],
+        "correctAnswer": 2,
+        "explanation": "$\\int_1^\\infty \\frac{1}{x} \\, dx = \\lim_{t \\to \\infty} [\\ln x]_1^t = \\lim_{t \\to \\infty} \\ln t = \\infty$, so it diverges."
+      },
+      {
+        "id": "math204-q5a-5",
+        "type": "fill_blank",
+        "prompt": "An improper integral ____ if the limit exists and is finite.",
+        "correctAnswer": "converges",
+        "explanation": "An improper integral converges if the limit is finite, otherwise it diverges."
+      }
+    ]
+  },
+  {
+    "id": "math204-quiz-5b",
+    "subjectId": "math204",
+    "topicId": "math204-5",
+    "title": "Improper Integrals - Comparison Tests",
+    "questions": [
+      {
+        "id": "math204-q5b-1",
+        "type": "multiple_choice",
+        "prompt": "The Direct Comparison Test compares an integral to:",
+        "options": [
+          "Its derivative",
+          "A known convergent or divergent integral",
+          "A polynomial",
+          "Zero"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Compare to a known integral: if $0 \\leq f(x) \\leq g(x)$ and $\\int g$ converges, then $\\int f$ converges."
+      },
+      {
+        "id": "math204-q5b-2",
+        "type": "true_false",
+        "prompt": "The p-test states that $\\int_1^\\infty \\frac{1}{x^p} \\, dx$ converges if and only if $p > 1$.",
+        "correctAnswer": true,
+        "explanation": "True. For the p-test: converges if $p > 1$, diverges if $p \\leq 1$."
+      },
+      {
+        "id": "math204-q5b-3",
+        "type": "multiple_choice",
+        "prompt": "By the p-test, $\\int_1^\\infty \\frac{1}{x^{0.5}} \\, dx$:",
+        "options": [
+          "Converges",
+          "Diverges",
+          "Equals 1",
+          "Equals 0"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Since $p = 0.5 < 1$, the integral diverges by the p-test."
+      },
+      {
+        "id": "math204-q5b-4",
+        "type": "multiple_choice",
+        "prompt": "The Limit Comparison Test is useful when:",
+        "options": [
+          "Direct comparison is difficult",
+          "The functions behave similarly at infinity",
+          "We need to find the limit of a ratio",
+          "All of the above"
+        ],
+        "correctAnswer": 3,
+        "explanation": "Limit Comparison Test: if $\\lim_{x \\to \\infty} \\frac{f(x)}{g(x)} = L$ where $0 < L < \\infty$, then both integrals converge or both diverge."
+      },
+      {
+        "id": "math204-q5b-5",
+        "type": "fill_blank",
+        "prompt": "For $\\int_1^\\infty \\frac{1}{x^p} \\, dx$ to converge, p must be ____ than 1.",
+        "correctAnswer": "greater",
+        "explanation": "The p-test: converges if $p > 1$, diverges if $p \\leq 1$."
+      }
+    ]
+  },
+  {
+    "id": "math204-quiz-5c",
+    "subjectId": "math204",
+    "topicId": "math204-5",
+    "title": "Improper Integrals - Discontinuities",
+    "questions": [
+      {
+        "id": "math204-q5c-1",
+        "type": "multiple_choice",
+        "prompt": "If $f$ has a discontinuity at $x = a$ in $(a, b]$, then $\\int_a^b f(x) \\, dx =$:",
+        "options": [
+          "$0$",
+          "$\\lim_{t \\to a^+} \\int_t^b f(x) \\, dx$",
+          "$f(b) - f(a)$",
+          "undefined"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Handle discontinuity at $a$ by taking the limit from the right: $\\int_a^b f(x) \\, dx = \\lim_{t \\to a^+} \\int_t^b f(x) \\, dx$."
+      },
+      {
+        "id": "math204-q5c-2",
+        "type": "true_false",
+        "prompt": "If the integrand has an infinite discontinuity in the interval, the integral is improper.",
+        "correctAnswer": true,
+        "explanation": "True. Infinite discontinuities make the integral improper, requiring limit evaluation."
+      },
+      {
+        "id": "math204-q5c-3",
+        "type": "multiple_choice",
+        "prompt": "Evaluate $\\int_0^1 \\frac{1}{\\sqrt{x}} \\, dx$ (discontinuity at $x = 0$):",
+        "options": [
+          "$0$",
+          "$1$",
+          "$2$",
+          "Diverges"
+        ],
+        "correctAnswer": 2,
+        "explanation": "$\\int_0^1 \\frac{1}{\\sqrt{x}} \\, dx = \\lim_{t \\to 0^+} \\int_t^1 x^{-1/2} \\, dx = \\lim_{t \\to 0^+} [2\\sqrt{x}]_t^1 = \\lim_{t \\to 0^+} (2 - 2\\sqrt{t}) = 2$."
+      },
+      {
+        "id": "math204-q5c-4",
+        "type": "multiple_choice",
+        "prompt": "If a discontinuity occurs at an interior point $c$ in $[a, b]$, split the integral into:",
+        "options": [
+          "$\\int_a^c + \\int_c^b$",
+          "$\\int_a^{c^-} + \\int_{c^+}^b$",
+          "Two separate limits approaching c",
+          "Both B and C"
+        ],
+        "correctAnswer": 3,
+        "explanation": "Split at $c$: $\\int_a^b = \\lim_{t \\to c^-} \\int_a^t + \\lim_{s \\to c^+} \\int_s^b$. Both limits must exist for convergence."
+      },
+      {
+        "id": "math204-q5c-5",
+        "type": "fill_blank",
+        "prompt": "When evaluating $\\int_0^1 \\frac{1}{x} \\, dx$, we must recognize the infinite discontinuity at x = ____.",
+        "correctAnswer": "0",
+        "explanation": "$\\frac{1}{x}$ has an infinite discontinuity at $x = 0$, making this an improper integral (which diverges)."
+      }
+    ]
+  }
+]

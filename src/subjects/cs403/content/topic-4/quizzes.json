@@ -1,0 +1,180 @@
+[
+  {
+    "id": "cs403-quiz-4-1",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-4",
+    "title": "Topic 4: Online — Fundamentals",
+    "questions": [
+      {
+        "id": "cs403-q46",
+        "type": "multiple_choice",
+        "prompt": "An online algorithm is one that:",
+        "options": [
+          "Makes decisions without knowledge of future inputs",
+          "Runs only on the internet",
+          "Is randomized by definition",
+          "Always has a polynomial-time guarantee"
+        ],
+        "correctAnswer": "Makes decisions without knowledge of future inputs",
+        "explanation": "Online algorithms must decide as inputs arrive, without seeing the future. This is why competitive analysis compares them to an optimal offline algorithm."
+      },
+      {
+        "id": "cs403-q47",
+        "type": "fill_blank",
+        "prompt": "The competitive ratio compares an online algorithm’s cost to the cost of an optimal _____ algorithm.",
+        "correctAnswer": "offline",
+        "explanation": "Competitive analysis compares an online algorithm to an optimal offline algorithm that knows the entire sequence in advance."
+      },
+      {
+        "id": "cs403-q48",
+        "type": "multiple_choice",
+        "prompt": "For deterministic paging with cache size k, the competitive ratio lower bound is:",
+        "options": [
+          "k",
+          "log k",
+          "2",
+          "1"
+        ],
+        "correctAnswer": "k",
+        "explanation": "No deterministic online paging algorithm can do better than k-competitive in general; LRU and FIFO achieve k-competitive."
+      },
+      {
+        "id": "cs403-q49",
+        "type": "true_false",
+        "prompt": "In the ski rental problem, buying immediately is always optimal.",
+        "correctAnswer": false,
+        "explanation": "Buying immediately is optimal only if you know you will ski long enough. Without future knowledge, you trade off between renting and buying; the classic deterministic strategy buys after B rental days."
+      },
+      {
+        "id": "cs403-q50",
+        "type": "multiple_choice",
+        "prompt": "In the secretary problem, the optimal strategy rejects about the first:",
+        "options": [
+          "n/e candidates",
+          "n/2 candidates",
+          "n/3 candidates",
+          "log n candidates"
+        ],
+        "correctAnswer": "n/e candidates",
+        "explanation": "The classic optimal stopping rule observes the first ~n/e candidates, then selects the next candidate better than all observed, achieving success probability ~1/e."
+      }
+    ]
+  },
+  {
+    "id": "cs403-quiz-4-2",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-4",
+    "title": "Topic 4: Online — Application",
+    "questions": [
+      {
+        "id": "cs403-q51",
+        "type": "multiple_choice",
+        "prompt": "Suppose ski rental buy cost B = 10 and rent cost per day is 1. If you rent for 10 days and then buy, your cost is:",
+        "options": [
+          "10",
+          "11",
+          "20",
+          "100"
+        ],
+        "correctAnswer": "20",
+        "explanation": "Renting 10 days costs 10, then buying costs 10, total 20."
+      },
+      {
+        "id": "cs403-q52",
+        "type": "multiple_choice",
+        "prompt": "For paging with cache size k=2, consider request sequence A, B, C, A, B, C. Which algorithm tends to do poorly on this cyclic pattern?",
+        "options": [
+          "LRU",
+          "OPT",
+          "An offline algorithm",
+          "A clairvoyant algorithm"
+        ],
+        "correctAnswer": "LRU",
+        "explanation": "With cache size 2 and a cycle of 3 pages, LRU will fault on every request after warm-up because it always evicts the page needed soon. OPT would keep the two pages used soonest."
+      },
+      {
+        "id": "cs403-q53",
+        "type": "true_false",
+        "prompt": "For paging, OPT can be implemented online without future knowledge.",
+        "correctAnswer": false,
+        "explanation": "OPT (Belady’s algorithm) evicts the page whose next use is farthest in the future, which requires future knowledge and is therefore offline."
+      },
+      {
+        "id": "cs403-q54",
+        "type": "code_output",
+        "prompt": "What does this print?",
+        "codeSnippet": "function rentThenBuy(days: number, B: number): number {\n  let cost = 0;\n  for (let d = 1; d <= days; d++) {\n    cost += 1;\n    if (d === B) cost += B;\n  }\n  return cost;\n}\n\nconsole.log(rentThenBuy(3, 2));",
+        "correctAnswer": "5",
+        "explanation": "Day 1 adds 1 (cost=1). Day 2 adds 1 then buys for 2 (cost=4). Day 3 adds 1 (cost=5), so it prints 5."
+      },
+      {
+        "id": "cs403-q55",
+        "type": "fill_blank",
+        "prompt": "A deterministic algorithm for ski rental that buys after B rental days is _____-competitive.",
+        "correctAnswer": "2",
+        "explanation": "Buying after B days yields a worst-case competitive ratio of 2 for the ski rental problem (with unit rental cost and buy cost B)."
+      }
+    ]
+  },
+  {
+    "id": "cs403-quiz-4-3",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-4",
+    "title": "Topic 4: Online — Mastery",
+    "questions": [
+      {
+        "id": "cs403-q56",
+        "type": "multiple_choice",
+        "prompt": "Randomization can improve competitive ratios by:",
+        "options": [
+          "Making it harder for an adaptive adversary to force worst-case behavior",
+          "Allowing access to future inputs",
+          "Turning NP-hard problems into P",
+          "Eliminating the need for proofs"
+        ],
+        "correctAnswer": "Making it harder for an adaptive adversary to force worst-case behavior",
+        "explanation": "In some online problems, randomized strategies achieve better expected competitive ratios against an oblivious adversary, compared to deterministic lower bounds."
+      },
+      {
+        "id": "cs403-q57",
+        "type": "true_false",
+        "prompt": "A competitive ratio of 1 means an online algorithm matches OPT on every input sequence.",
+        "correctAnswer": true,
+        "explanation": "1-competitive means cost(A) ≤ 1·OPT + c, so aside from an additive constant, it matches optimal for all sequences."
+      },
+      {
+        "id": "cs403-q58",
+        "type": "multiple_choice",
+        "prompt": "In online bipartite matching, the classic Karp–Vazirani–Vazirani algorithm achieves competitive ratio:",
+        "options": [
+          "1 - 1/e",
+          "1/2",
+          "2/3",
+          "1/e"
+        ],
+        "correctAnswer": "1 - 1/e",
+        "explanation": "The randomized Ranking algorithm achieves a (1−1/e)-competitive ratio for online bipartite matching under standard models."
+      },
+      {
+        "id": "cs403-q59",
+        "type": "fill_blank",
+        "prompt": "In competitive analysis for minimization, we compare costs; for maximization, we compare achieved value relative to OPT, yielding a competitive _____.",
+        "correctAnswer": "ratio",
+        "explanation": "Both settings use a ratio notion; the inequality direction flips for maximization, but the concept remains a competitive ratio against OPT."
+      },
+      {
+        "id": "cs403-q60",
+        "type": "multiple_choice",
+        "prompt": "The k-server problem is challenging primarily because:",
+        "options": [
+          "The state depends on server positions and future requests are unknown",
+          "Distances are always zero",
+          "It reduces to sorting",
+          "It can be solved by a single greedy choice"
+        ],
+        "correctAnswer": "The state depends on server positions and future requests are unknown",
+        "explanation": "k-server decisions depend on current server configuration and unknown future requests, leading to complex adversarial sequences and deep competitive analysis."
+      }
+    ]
+  }
+]

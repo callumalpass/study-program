@@ -1,0 +1,215 @@
+[
+  {
+    "id": "math301-quiz-4-1",
+    "subjectId": "math301",
+    "topicId": "math301-topic-4",
+    "title": "Critical Points and Extrema",
+    "questions": [
+      {
+        "id": "math301-q46",
+        "type": "multiple_choice",
+        "prompt": "At a critical point of f(x,y), what condition must the gradient satisfy?",
+        "options": [
+          "∇f = 0",
+          "∇f = 1",
+          "|∇f| = maximum",
+          "∇f is undefined"
+        ],
+        "correctAnswer": "∇f = 0",
+        "explanation": "Critical points occur where ∇f = 0 (or where partial derivatives don't exist)"
+      },
+      {
+        "id": "math301-q47",
+        "type": "multiple_choice",
+        "prompt": "For f(x,y) = x² + y² - 4x - 6y, what is the critical point?",
+        "options": [
+          "(2, 3)",
+          "(4, 6)",
+          "(-2, -3)",
+          "(0, 0)"
+        ],
+        "correctAnswer": "(2, 3)",
+        "explanation": "f_x = 2x - 4 = 0 → x = 2; f_y = 2y - 6 = 0 → y = 3. Critical point: (2, 3)"
+      },
+      {
+        "id": "math301-q48",
+        "type": "true_false",
+        "prompt": "Every critical point is either a local maximum, local minimum, or saddle point.",
+        "options": [
+          "True",
+          "False"
+        ],
+        "correctAnswer": "True",
+        "explanation": "For functions of two variables with continuous second derivatives, critical points are classified as local max, local min, or saddle points"
+      },
+      {
+        "id": "math301-q49",
+        "type": "multiple_choice",
+        "prompt": "The discriminant D for the second derivative test is D = f_xx·f_yy - (f_xy)². What indicates a saddle point?",
+        "options": [
+          "D < 0",
+          "D > 0 and f_xx > 0",
+          "D > 0 and f_xx < 0",
+          "D = 0"
+        ],
+        "correctAnswer": "D < 0",
+        "explanation": "When D < 0, the critical point is a saddle point (neither max nor min)"
+      },
+      {
+        "id": "math301-q50",
+        "type": "multiple_choice",
+        "prompt": "For f(x,y) = x² - y², what type of critical point is (0,0)?",
+        "options": [
+          "Saddle point",
+          "Local minimum",
+          "Local maximum",
+          "Not a critical point"
+        ],
+        "correctAnswer": "Saddle point",
+        "explanation": "f_xx = 2, f_yy = -2, f_xy = 0. D = (2)(-2) - 0 = -4 < 0, so (0,0) is a saddle point"
+      }
+    ]
+  },
+  {
+    "id": "math301-quiz-4-2",
+    "subjectId": "math301",
+    "topicId": "math301-topic-4",
+    "title": "Lagrange Multipliers",
+    "questions": [
+      {
+        "id": "math301-q51",
+        "type": "multiple_choice",
+        "prompt": "The method of Lagrange multipliers is used to find extrema subject to what?",
+        "options": [
+          "A constraint",
+          "No restrictions",
+          "A bounded region",
+          "Initial conditions"
+        ],
+        "correctAnswer": "A constraint",
+        "explanation": "Lagrange multipliers find extrema of f(x,y) subject to a constraint g(x,y) = k"
+      },
+      {
+        "id": "math301-q52",
+        "type": "multiple_choice",
+        "prompt": "For Lagrange multipliers, the condition ∇f = λ∇g means what geometrically?",
+        "options": [
+          "∇f and ∇g are parallel",
+          "∇f and ∇g are perpendicular",
+          "∇f = ∇g",
+          "|∇f| = |∇g|"
+        ],
+        "correctAnswer": "∇f and ∇g are parallel",
+        "explanation": "The equation ∇f = λ∇g means the gradients are parallel (one is a scalar multiple of the other)"
+      },
+      {
+        "id": "math301-q53",
+        "type": "true_false",
+        "prompt": "Lagrange multipliers can be used for optimization with multiple constraints.",
+        "options": [
+          "True",
+          "False"
+        ],
+        "correctAnswer": "True",
+        "explanation": "With k constraints g₁ = c₁, ..., g_k = c_k, we use ∇f = λ₁∇g₁ + ... + λ_k∇g_k"
+      },
+      {
+        "id": "math301-q54",
+        "type": "multiple_choice",
+        "prompt": "To maximize f(x,y) = xy subject to x + y = 10, what is the Lagrange function L?",
+        "options": [
+          "L = xy - λ(x + y - 10)",
+          "L = xy + λ(x + y)",
+          "L = xy - (x + y - 10)",
+          "L = xy + x + y - 10"
+        ],
+        "correctAnswer": "L = xy - λ(x + y - 10)",
+        "explanation": "The Lagrange function is L(x,y,λ) = f(x,y) - λ(g(x,y) - c) = xy - λ(x + y - 10)"
+      },
+      {
+        "id": "math301-q55",
+        "type": "multiple_choice",
+        "prompt": "For the optimization problem: maximize x²y subject to x² + y² = 1, how many equations do we get from ∇f = λ∇g and the constraint?",
+        "options": [
+          "3",
+          "2",
+          "4",
+          "1"
+        ],
+        "correctAnswer": "3",
+        "explanation": "∇f = λ∇g gives 2 equations (one per variable), plus 1 constraint equation = 3 total"
+      }
+    ]
+  },
+  {
+    "id": "math301-quiz-4-3",
+    "subjectId": "math301",
+    "topicId": "math301-topic-4",
+    "title": "Constrained Optimization",
+    "questions": [
+      {
+        "id": "math301-q56",
+        "type": "true_false",
+        "prompt": "Absolute extrema on a closed, bounded region can occur at critical points in the interior or on the boundary.",
+        "options": [
+          "True",
+          "False"
+        ],
+        "correctAnswer": "True",
+        "explanation": "By the Extreme Value Theorem, we must check critical points in the interior and points on the boundary"
+      },
+      {
+        "id": "math301-q57",
+        "type": "multiple_choice",
+        "prompt": "For f(x,y) = x² + 2y² with D = {(x,y): x² + y² ≤ 1}, where should we check for absolute extrema?",
+        "options": [
+          "Interior critical points and boundary",
+          "Only the origin",
+          "Only the boundary",
+          "Only corners"
+        ],
+        "correctAnswer": "Interior critical points and boundary",
+        "explanation": "Check critical points where ∇f = 0 in the interior, and use Lagrange multipliers or parametrization for the boundary"
+      },
+      {
+        "id": "math301-q58",
+        "type": "multiple_choice",
+        "prompt": "What is the second derivative test conclusion when D > 0 and f_xx > 0?",
+        "options": [
+          "Local minimum",
+          "Local maximum",
+          "Saddle point",
+          "Inconclusive"
+        ],
+        "correctAnswer": "Local minimum",
+        "explanation": "When D = f_xx f_yy - (f_xy)² > 0 and f_xx > 0, the surface is concave up → local minimum"
+      },
+      {
+        "id": "math301-q59",
+        "type": "multiple_choice",
+        "prompt": "What is the second derivative test conclusion when D > 0 and f_xx < 0?",
+        "options": [
+          "Local maximum",
+          "Local minimum",
+          "Saddle point",
+          "Inconclusive"
+        ],
+        "correctAnswer": "Local maximum",
+        "explanation": "When D > 0 and f_xx < 0, the surface is concave down → local maximum"
+      },
+      {
+        "id": "math301-q60",
+        "type": "fill_blank",
+        "prompt": "When D = 0 in the second derivative test, the test is what?",
+        "options": [
+          "Inconclusive",
+          "Saddle point",
+          "Maximum",
+          "Minimum"
+        ],
+        "correctAnswer": "Inconclusive",
+        "explanation": "When D = 0, the second derivative test fails and we need other methods to classify the critical point"
+      }
+    ]
+  }
+]

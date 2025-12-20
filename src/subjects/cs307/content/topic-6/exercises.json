@@ -1,0 +1,593 @@
+[
+  {
+    "id": "cs307-t6-ex01",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-6",
+    "title": "Parse TLS Version",
+    "difficulty": 1,
+    "description": "Write a function to extract and validate TLS version from a server configuration string.",
+    "starterCode": "def parse_tls_version(config_line):\n    # Extract TLS version (e.g., \"TLSv1.2\", \"TLSv1.3\")\n    pass\n\nprint(parse_tls_version(\"ssl_protocols TLSv1.2 TLSv1.3;\"))\nprint(parse_tls_version(\"ssl_protocols SSLv3;\"))",
+    "solution": "def parse_tls_version(config_line):\n    versions = []\n    if 'TLSv1.3' in config_line:\n        versions.append('TLSv1.3')\n    if 'TLSv1.2' in config_line:\n        versions.append('TLSv1.2')\n    if 'TLSv1.1' in config_line:\n        versions.append('TLSv1.1')\n    if 'TLSv1.0' in config_line:\n        versions.append('TLSv1.0')\n\n    return versions if versions else None\n\nprint(parse_tls_version(\"ssl_protocols TLSv1.2 TLSv1.3;\"))\nprint(parse_tls_version(\"ssl_protocols SSLv3;\"))",
+    "testCases": [
+      {
+        "input": "\"ssl_protocols TLSv1.2 TLSv1.3;\"",
+        "expectedOutput": "['TLSv1.3', 'TLSv1.2']",
+        "isHidden": false,
+        "description": "Parse modern TLS"
+      },
+      {
+        "input": "\"ssl_protocols SSLv3;\"",
+        "expectedOutput": "None",
+        "isHidden": false,
+        "description": "No valid TLS"
+      },
+      {
+        "input": "\"ssl_protocols TLSv1.0;\"",
+        "expectedOutput": "['TLSv1.0']",
+        "isHidden": true,
+        "description": "Old TLS version"
+      }
+    ],
+    "hints": [
+      "Check for TLS version strings in config",
+      "Return list of found versions",
+      "Return None if no TLS versions found"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs307-t6-ex02",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-6",
+    "title": "Validate Certificate Expiry",
+    "difficulty": 2,
+    "description": "Write a function to check if a certificate expiry date is valid (not expired and not too far in future).",
+    "starterCode": "from datetime import datetime, timedelta\n\ndef is_valid_cert_date(expiry_date_str, current_date_str):\n    # Check if cert is valid (not expired, not > 398 days)\n    pass\n\nprint(is_valid_cert_date(\"2026-12-31\", \"2025-12-17\"))\nprint(is_valid_cert_date(\"2025-01-01\", \"2025-12-17\"))",
+    "solution": "from datetime import datetime, timedelta\n\ndef is_valid_cert_date(expiry_date_str, current_date_str):\n    try:\n        expiry = datetime.strptime(expiry_date_str, \"%Y-%m-%d\")\n        current = datetime.strptime(current_date_str, \"%Y-%m-%d\")\n\n        # Check if expired\n        if expiry <= current:\n            return False\n\n        # Check if validity period exceeds 398 days (browser limit)\n        days_valid = (expiry - current).days\n        if days_valid > 398:\n            return False\n\n        return True\n    except ValueError:\n        return False\n\nprint(is_valid_cert_date(\"2026-12-31\", \"2025-12-17\"))\nprint(is_valid_cert_date(\"2025-01-01\", \"2025-12-17\"))",
+    "testCases": [
+      {
+        "input": "\"2026-12-31\", \"2025-12-17\"",
+        "expectedOutput": "False",
+        "isHidden": false,
+        "description": "Too far in future"
+      },
+      {
+        "input": "\"2025-01-01\", \"2025-12-17\"",
+        "expectedOutput": "False",
+        "isHidden": false,
+        "description": "Already expired"
+      },
+      {
+        "input": "\"2026-06-01\", \"2025-12-17\"",
+        "expectedOutput": "True",
+        "isHidden": true,
+        "description": "Valid cert"
+      }
+    ],
+    "hints": [
+      "Parse dates using datetime.strptime",
+      "Check if expiry is after current date",
+      "Verify validity period is <= 398 days",
+      "Handle parsing errors"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs307-t6-ex03",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-6",
+    "title": "Firewall Rule Parser",
+    "difficulty": 3,
+    "description": "Write a function to parse a firewall rule and extract action, protocol, source, and destination.",
+    "starterCode": "def parse_firewall_rule(rule_string):\n    # Parse: \"ALLOW TCP 192.168.1.0/24 -> 10.0.0.5:443\"\n    # Return dict with action, protocol, source, dest\n    pass\n\nprint(parse_firewall_rule(\"ALLOW TCP 192.168.1.0/24 -> 10.0.0.5:443\"))\nprint(parse_firewall_rule(\"DENY UDP 0.0.0.0/0 -> 10.0.0.10:53\"))",
+    "solution": "def parse_firewall_rule(rule_string):\n    try:\n        parts = rule_string.split()\n        if len(parts) < 5:\n            return None\n\n        action = parts[0]\n        protocol = parts[1]\n        source = parts[2]\n        # parts[3] is '->'\n        destination = parts[4]\n\n        return {\n            'action': action,\n            'protocol': protocol,\n            'source': source,\n            'destination': destination\n        }\n    except (IndexError, ValueError):\n        return None\n\nprint(parse_firewall_rule(\"ALLOW TCP 192.168.1.0/24 -> 10.0.0.5:443\"))\nprint(parse_firewall_rule(\"DENY UDP 0.0.0.0/0 -> 10.0.0.10:53\"))",
+    "testCases": [
+      {
+        "input": "\"ALLOW TCP 192.168.1.0/24 -> 10.0.0.5:443\"",
+        "expectedOutput": "dict with action=ALLOW",
+        "isHidden": false,
+        "description": "Parse ALLOW rule"
+      },
+      {
+        "input": "\"DENY UDP 0.0.0.0/0 -> 10.0.0.10:53\"",
+        "expectedOutput": "dict with protocol=UDP",
+        "isHidden": false,
+        "description": "Parse DENY rule"
+      },
+      {
+        "input": "\"INVALID RULE\"",
+        "expectedOutput": "None",
+        "isHidden": true,
+        "description": "Invalid rule format"
+      }
+    ],
+    "hints": [
+      "Split rule string by spaces",
+      "Extract action (first word)",
+      "Extract protocol (second word)",
+      "Parse source and destination"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs307-t6-ex04",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-6",
+    "title": "Validate IP Address",
+    "difficulty": 2,
+    "description": "Write a function to validate if a string is a valid IPv4 address.",
+    "starterCode": "def is_valid_ipv4(ip_string):\n    # Validate IPv4 format (e.g., \"192.168.1.1\")\n    pass\n\nprint(is_valid_ipv4(\"192.168.1.1\"))\nprint(is_valid_ipv4(\"256.1.1.1\"))\nprint(is_valid_ipv4(\"192.168.1\"))",
+    "solution": "def is_valid_ipv4(ip_string):\n    try:\n        parts = ip_string.split('.')\n\n        # Must have exactly 4 parts\n        if len(parts) != 4:\n            return False\n\n        # Each part must be 0-255\n        for part in parts:\n            num = int(part)\n            if num < 0 or num > 255:\n                return False\n\n            # No leading zeros (except for \"0\")\n            if len(part) > 1 and part[0] == '0':\n                return False\n\n        return True\n    except (ValueError, AttributeError):\n        return False\n\nprint(is_valid_ipv4(\"192.168.1.1\"))\nprint(is_valid_ipv4(\"256.1.1.1\"))\nprint(is_valid_ipv4(\"192.168.1\"))",
+    "testCases": [
+      {
+        "input": "\"192.168.1.1\"",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Valid IPv4"
+      },
+      {
+        "input": "\"256.1.1.1\"",
+        "expectedOutput": "False",
+        "isHidden": false,
+        "description": "Octet out of range"
+      },
+      {
+        "input": "\"192.168.1\"",
+        "expectedOutput": "False",
+        "isHidden": true,
+        "description": "Incomplete address"
+      }
+    ],
+    "hints": [
+      "Split on dots, must have 4 parts",
+      "Each part must be 0-255",
+      "Reject leading zeros",
+      "Handle conversion errors"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs307-t6-ex05",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-6",
+    "title": "Parse Security Log Entry",
+    "difficulty": 3,
+    "description": "Write a function to parse a security log entry and extract timestamp, IP, action, and status.",
+    "starterCode": "def parse_security_log(log_line):\n    # Parse: \"2025-12-17 10:30:45 192.168.1.100 LOGIN SUCCESS\"\n    pass\n\nprint(parse_security_log(\"2025-12-17 10:30:45 192.168.1.100 LOGIN SUCCESS\"))\nprint(parse_security_log(\"2025-12-17 10:31:00 10.0.0.50 ACCESS DENIED\"))",
+    "solution": "def parse_security_log(log_line):\n    try:\n        parts = log_line.split()\n        if len(parts) < 5:\n            return None\n\n        timestamp = f\"{parts[0]} {parts[1]}\"\n        ip_address = parts[2]\n        action = parts[3]\n        status = parts[4]\n\n        return {\n            'timestamp': timestamp,\n            'ip': ip_address,\n            'action': action,\n            'status': status\n        }\n    except (IndexError, ValueError):\n        return None\n\nprint(parse_security_log(\"2025-12-17 10:30:45 192.168.1.100 LOGIN SUCCESS\"))\nprint(parse_security_log(\"2025-12-17 10:31:00 10.0.0.50 ACCESS DENIED\"))",
+    "testCases": [
+      {
+        "input": "\"2025-12-17 10:30:45 192.168.1.100 LOGIN SUCCESS\"",
+        "expectedOutput": "dict with status=SUCCESS",
+        "isHidden": false,
+        "description": "Parse successful login"
+      },
+      {
+        "input": "\"2025-12-17 10:31:00 10.0.0.50 ACCESS DENIED\"",
+        "expectedOutput": "dict with action=ACCESS",
+        "isHidden": false,
+        "description": "Parse denied access"
+      },
+      {
+        "input": "\"INVALID LOG\"",
+        "expectedOutput": "None",
+        "isHidden": true,
+        "description": "Invalid format"
+      }
+    ],
+    "hints": [
+      "Split by spaces",
+      "Combine first two parts for timestamp",
+      "Extract IP, action, and status",
+      "Handle malformed logs"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs307-t6-ex06",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-6",
+    "title": "Detect Port Scan",
+    "difficulty": 4,
+    "description": "Write a function to detect potential port scans by analyzing connection attempts from the same IP.",
+    "starterCode": "def detect_port_scan(connection_logs):\n    # connection_logs: list of (ip, port, timestamp) tuples\n    # Return IPs with > 10 different ports in 60 seconds\n    pass\n\nlogs = [\n    (\"192.168.1.50\", 80, 100),\n    (\"192.168.1.50\", 443, 105),\n    (\"192.168.1.50\", 22, 110),\n    # ... more ports\n]\nprint(detect_port_scan(logs))",
+    "solution": "def detect_port_scan(connection_logs):\n    from collections import defaultdict\n\n    # Group by IP\n    ip_connections = defaultdict(list)\n\n    for ip, port, timestamp in connection_logs:\n        ip_connections[ip].append((port, timestamp))\n\n    suspicious_ips = []\n\n    for ip, connections in ip_connections.items():\n        # Check for different ports in short time\n        unique_ports = set()\n        min_time = float('inf')\n        max_time = 0\n\n        for port, timestamp in connections:\n            unique_ports.add(port)\n            min_time = min(min_time, timestamp)\n            max_time = max(max_time, timestamp)\n\n        time_window = max_time - min_time\n\n        # If > 10 different ports in <= 60 seconds\n        if len(unique_ports) > 10 and time_window <= 60:\n            suspicious_ips.append(ip)\n\n    return suspicious_ips\n\nlogs = [\n    (\"192.168.1.50\", 80, 100),\n    (\"192.168.1.50\", 443, 105),\n    (\"192.168.1.50\", 22, 110),\n]\nprint(detect_port_scan(logs))",
+    "testCases": [
+      {
+        "input": "logs with 15 ports in 60s",
+        "expectedOutput": "Returns IP",
+        "isHidden": false,
+        "description": "Detect scan"
+      },
+      {
+        "input": "logs with 5 ports",
+        "expectedOutput": "Empty list",
+        "isHidden": false,
+        "description": "Normal traffic"
+      },
+      {
+        "input": "logs with 15 ports in 120s",
+        "expectedOutput": "Empty list",
+        "isHidden": true,
+        "description": "Too slow for scan"
+      }
+    ],
+    "hints": [
+      "Group connections by source IP",
+      "Count unique ports per IP",
+      "Calculate time window",
+      "Flag IPs with > 10 ports in <= 60s"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs307-t6-ex07",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-6",
+    "title": "Validate Subnet Mask",
+    "difficulty": 2,
+    "description": "Write a function to validate if a subnet mask is valid (contiguous 1s followed by 0s in binary).",
+    "starterCode": "def is_valid_subnet_mask(mask):\n    # Validate subnet mask (e.g., \"255.255.255.0\")\n    pass\n\nprint(is_valid_subnet_mask(\"255.255.255.0\"))\nprint(is_valid_subnet_mask(\"255.255.0.255\"))",
+    "solution": "def is_valid_subnet_mask(mask):\n    try:\n        # Parse octets\n        octets = mask.split('.')\n        if len(octets) != 4:\n            return False\n\n        # Convert to binary\n        binary_str = ''\n        for octet in octets:\n            num = int(octet)\n            if num < 0 or num > 255:\n                return False\n            binary_str += format(num, '08b')\n\n        # Check for contiguous 1s followed by 0s\n        # Valid pattern: 1*0* (all 1s, then all 0s)\n        seen_zero = False\n        for bit in binary_str:\n            if bit == '0':\n                seen_zero = True\n            elif seen_zero:  # Found 1 after 0\n                return False\n\n        return True\n    except (ValueError, AttributeError):\n        return False\n\nprint(is_valid_subnet_mask(\"255.255.255.0\"))\nprint(is_valid_subnet_mask(\"255.255.0.255\"))",
+    "testCases": [
+      {
+        "input": "\"255.255.255.0\"",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Valid /24 mask"
+      },
+      {
+        "input": "\"255.255.0.255\"",
+        "expectedOutput": "False",
+        "isHidden": false,
+        "description": "Non-contiguous bits"
+      },
+      {
+        "input": "\"255.255.255.128\"",
+        "expectedOutput": "True",
+        "isHidden": true,
+        "description": "Valid /25 mask"
+      }
+    ],
+    "hints": [
+      "Convert mask to binary representation",
+      "Check for pattern: 1s followed by 0s",
+      "No 1s should appear after first 0",
+      "Validate each octet is 0-255"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs307-t6-ex08",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-6",
+    "title": "Check Weak Cipher Suite",
+    "difficulty": 2,
+    "description": "Write a function to check if a cipher suite is considered weak or deprecated.",
+    "starterCode": "def is_weak_cipher(cipher_name):\n    # Check if cipher uses weak algorithms\n    pass\n\nprint(is_weak_cipher(\"TLS_RSA_WITH_AES_128_GCM_SHA256\"))\nprint(is_weak_cipher(\"TLS_RSA_WITH_DES_CBC_SHA\"))",
+    "solution": "def is_weak_cipher(cipher_name):\n    weak_algorithms = [\n        'DES',\n        'RC4',\n        'MD5',\n        '3DES',\n        'NULL',\n        'EXPORT',\n        'anon',\n        'ADH'\n    ]\n\n    cipher_upper = cipher_name.upper()\n\n    for weak in weak_algorithms:\n        if weak in cipher_upper:\n            return True\n\n    # Also check for very old SSL versions\n    if cipher_upper.startswith('SSL_'):\n        return True\n\n    return False\n\nprint(is_weak_cipher(\"TLS_RSA_WITH_AES_128_GCM_SHA256\"))\nprint(is_weak_cipher(\"TLS_RSA_WITH_DES_CBC_SHA\"))",
+    "testCases": [
+      {
+        "input": "\"TLS_RSA_WITH_AES_128_GCM_SHA256\"",
+        "expectedOutput": "False",
+        "isHidden": false,
+        "description": "Strong cipher"
+      },
+      {
+        "input": "\"TLS_RSA_WITH_DES_CBC_SHA\"",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Weak DES cipher"
+      },
+      {
+        "input": "\"TLS_RSA_WITH_RC4_128_SHA\"",
+        "expectedOutput": "True",
+        "isHidden": true,
+        "description": "Weak RC4 cipher"
+      }
+    ],
+    "hints": [
+      "List weak algorithms: DES, RC4, MD5, 3DES",
+      "Check if cipher name contains weak algorithm",
+      "Flag SSL_ prefixed ciphers as weak",
+      "Use case-insensitive comparison"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs307-t6-ex09",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-6",
+    "title": "Calculate Network Address",
+    "difficulty": 3,
+    "description": "Write a function to calculate the network address from an IP and subnet mask.",
+    "starterCode": "def get_network_address(ip, mask):\n    # Calculate network address using bitwise AND\n    pass\n\nprint(get_network_address(\"192.168.1.100\", \"255.255.255.0\"))\nprint(get_network_address(\"10.20.30.40\", \"255.255.0.0\"))",
+    "solution": "def get_network_address(ip, mask):\n    try:\n        # Parse IP octets\n        ip_parts = [int(x) for x in ip.split('.')]\n        mask_parts = [int(x) for x in mask.split('.')]\n\n        if len(ip_parts) != 4 or len(mask_parts) != 4:\n            return None\n\n        # Bitwise AND each octet\n        network_parts = []\n        for i in range(4):\n            network_parts.append(ip_parts[i] & mask_parts[i])\n\n        return '.'.join(map(str, network_parts))\n    except (ValueError, IndexError):\n        return None\n\nprint(get_network_address(\"192.168.1.100\", \"255.255.255.0\"))\nprint(get_network_address(\"10.20.30.40\", \"255.255.0.0\"))",
+    "testCases": [
+      {
+        "input": "\"192.168.1.100\", \"255.255.255.0\"",
+        "expectedOutput": "\"192.168.1.0\"",
+        "isHidden": false,
+        "description": "/24 network"
+      },
+      {
+        "input": "\"10.20.30.40\", \"255.255.0.0\"",
+        "expectedOutput": "\"10.20.0.0\"",
+        "isHidden": false,
+        "description": "/16 network"
+      },
+      {
+        "input": "\"172.16.50.25\", \"255.255.255.128\"",
+        "expectedOutput": "\"172.16.50.0\"",
+        "isHidden": true,
+        "description": "/25 network"
+      }
+    ],
+    "hints": [
+      "Split IP and mask into octets",
+      "Convert each octet to integer",
+      "Use bitwise AND (&) on each pair",
+      "Join results back to dotted notation"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs307-t6-ex10",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-6",
+    "title": "Analyze Failed Login Attempts",
+    "difficulty": 3,
+    "description": "Write a function to identify IPs with excessive failed login attempts (potential brute force).",
+    "starterCode": "def detect_brute_force(login_logs):\n    # login_logs: list of (ip, status, timestamp) tuples\n    # Return IPs with >= 5 failures in 300 seconds\n    pass\n\nlogs = [\n    (\"192.168.1.50\", \"FAIL\", 1000),\n    (\"192.168.1.50\", \"FAIL\", 1050),\n    # ...\n]\nprint(detect_brute_force(logs))",
+    "solution": "def detect_brute_force(login_logs):\n    from collections import defaultdict\n\n    # Group failures by IP\n    ip_failures = defaultdict(list)\n\n    for ip, status, timestamp in login_logs:\n        if status == \"FAIL\":\n            ip_failures[ip].append(timestamp)\n\n    suspicious_ips = []\n\n    for ip, timestamps in ip_failures.items():\n        if len(timestamps) < 5:\n            continue\n\n        # Sort timestamps\n        timestamps.sort()\n\n        # Check for 5+ failures in 300 second window\n        for i in range(len(timestamps) - 4):\n            window = timestamps[i + 4] - timestamps[i]\n            if window <= 300:\n                suspicious_ips.append(ip)\n                break\n\n    return suspicious_ips\n\nlogs = [\n    (\"192.168.1.50\", \"FAIL\", 1000),\n    (\"192.168.1.50\", \"FAIL\", 1050),\n]\nprint(detect_brute_force(logs))",
+    "testCases": [
+      {
+        "input": "logs with 6 failures in 200s",
+        "expectedOutput": "Returns IP",
+        "isHidden": false,
+        "description": "Detect brute force"
+      },
+      {
+        "input": "logs with 3 failures",
+        "expectedOutput": "Empty list",
+        "isHidden": false,
+        "description": "Too few failures"
+      },
+      {
+        "input": "logs with 5 failures in 400s",
+        "expectedOutput": "Empty list",
+        "isHidden": true,
+        "description": "Window too large"
+      }
+    ],
+    "hints": [
+      "Filter for failed login attempts",
+      "Group by source IP",
+      "Check for 5+ failures in 300s window",
+      "Use sliding window approach"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs307-t6-ex11",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-6",
+    "title": "Validate DNS Record",
+    "difficulty": 2,
+    "description": "Write a function to validate a DNS A record format.",
+    "starterCode": "def is_valid_dns_a_record(record):\n    # Validate: \"hostname.example.com IN A 192.168.1.1\"\n    pass\n\nprint(is_valid_dns_a_record(\"www.example.com IN A 192.168.1.1\"))\nprint(is_valid_dns_a_record(\"invalid record\"))",
+    "solution": "def is_valid_dns_a_record(record):\n    try:\n        parts = record.split()\n        if len(parts) != 4:\n            return False\n\n        hostname, in_class, record_type, ip_address = parts\n\n        # Check IN class\n        if in_class != \"IN\":\n            return False\n\n        # Check A record type\n        if record_type != \"A\":\n            return False\n\n        # Validate IP address\n        ip_parts = ip_address.split('.')\n        if len(ip_parts) != 4:\n            return False\n\n        for part in ip_parts:\n            num = int(part)\n            if num < 0 or num > 255:\n                return False\n\n        return True\n    except (ValueError, IndexError):\n        return False\n\nprint(is_valid_dns_a_record(\"www.example.com IN A 192.168.1.1\"))\nprint(is_valid_dns_a_record(\"invalid record\"))",
+    "testCases": [
+      {
+        "input": "\"www.example.com IN A 192.168.1.1\"",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Valid A record"
+      },
+      {
+        "input": "\"invalid record\"",
+        "expectedOutput": "False",
+        "isHidden": false,
+        "description": "Invalid format"
+      },
+      {
+        "input": "\"test.com IN A 256.1.1.1\"",
+        "expectedOutput": "False",
+        "isHidden": true,
+        "description": "Invalid IP"
+      }
+    ],
+    "hints": [
+      "Split record into 4 parts",
+      "Verify IN class and A type",
+      "Validate IP address format",
+      "Handle parsing errors"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs307-t6-ex12",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-6",
+    "title": "Parse HTTP Security Headers",
+    "difficulty": 3,
+    "description": "Write a function to extract security headers from HTTP response headers.",
+    "starterCode": "def extract_security_headers(headers_dict):\n    # Extract: CSP, HSTS, X-Frame-Options, etc.\n    pass\n\nheaders = {\n    \"Content-Type\": \"text/html\",\n    \"Strict-Transport-Security\": \"max-age=31536000\",\n    \"X-Frame-Options\": \"DENY\"\n}\nprint(extract_security_headers(headers))",
+    "solution": "def extract_security_headers(headers_dict):\n    security_header_names = [\n        'Strict-Transport-Security',\n        'Content-Security-Policy',\n        'X-Frame-Options',\n        'X-Content-Type-Options',\n        'X-XSS-Protection',\n        'Referrer-Policy'\n    ]\n\n    security_headers = {}\n\n    for header in security_header_names:\n        # Case-insensitive lookup\n        for key, value in headers_dict.items():\n            if key.lower() == header.lower():\n                security_headers[header] = value\n                break\n\n    return security_headers\n\nheaders = {\n    \"Content-Type\": \"text/html\",\n    \"Strict-Transport-Security\": \"max-age=31536000\",\n    \"X-Frame-Options\": \"DENY\"\n}\nprint(extract_security_headers(headers))",
+    "testCases": [
+      {
+        "input": "headers with HSTS",
+        "expectedOutput": "dict with HSTS",
+        "isHidden": false,
+        "description": "Extract HSTS"
+      },
+      {
+        "input": "headers with no security",
+        "expectedOutput": "Empty dict",
+        "isHidden": false,
+        "description": "No security headers"
+      },
+      {
+        "input": "headers with CSP",
+        "expectedOutput": "dict with CSP",
+        "isHidden": true,
+        "description": "Extract CSP"
+      }
+    ],
+    "hints": [
+      "Define list of security header names",
+      "Search headers dictionary case-insensitively",
+      "Return dict of found security headers",
+      "Include HSTS, CSP, X-Frame-Options"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs307-t6-ex13",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-6",
+    "title": "Validate MAC Address",
+    "difficulty": 1,
+    "description": "Write a function to validate MAC address format.",
+    "starterCode": "def is_valid_mac_address(mac):\n    # Validate: \"AA:BB:CC:DD:EE:FF\" or \"AA-BB-CC-DD-EE-FF\"\n    pass\n\nprint(is_valid_mac_address(\"AA:BB:CC:DD:EE:FF\"))\nprint(is_valid_mac_address(\"AA:BB:CC:DD:EE\"))\nprint(is_valid_mac_address(\"GG:HH:II:JJ:KK:LL\"))",
+    "solution": "def is_valid_mac_address(mac):\n    import re\n\n    # Support both : and - separators\n    pattern = r'^([0-9A-Fa-f]{2}[:-]){5}[0-9A-Fa-f]{2}$'\n\n    if re.match(pattern, mac):\n        return True\n    return False\n\nprint(is_valid_mac_address(\"AA:BB:CC:DD:EE:FF\"))\nprint(is_valid_mac_address(\"AA:BB:CC:DD:EE\"))\nprint(is_valid_mac_address(\"GG:HH:II:JJ:KK:LL\"))",
+    "testCases": [
+      {
+        "input": "\"AA:BB:CC:DD:EE:FF\"",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Valid MAC with colons"
+      },
+      {
+        "input": "\"AA:BB:CC:DD:EE\"",
+        "expectedOutput": "False",
+        "isHidden": false,
+        "description": "Incomplete MAC"
+      },
+      {
+        "input": "\"AA-BB-CC-DD-EE-FF\"",
+        "expectedOutput": "True",
+        "isHidden": true,
+        "description": "Valid MAC with dashes"
+      }
+    ],
+    "hints": [
+      "MAC has 6 pairs of hex digits",
+      "Separated by : or -",
+      "Use regex or manual parsing",
+      "Validate hex characters (0-9, A-F)"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs307-t6-ex14",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-6",
+    "title": "Detect DNS Tunneling",
+    "difficulty": 4,
+    "description": "Write a function to detect potential DNS tunneling based on suspicious domain patterns.",
+    "starterCode": "def detect_dns_tunneling(dns_queries):\n    # dns_queries: list of domain names\n    # Flag long, random-looking subdomains\n    pass\n\nqueries = [\n    \"www.google.com\",\n    \"a3f9d8e2b1c4.malicious.com\",\n    \"very-long-random-subdomain-xyz123abc.evil.com\"\n]\nprint(detect_dns_tunneling(queries))",
+    "solution": "def detect_dns_tunneling(dns_queries):\n    suspicious_domains = []\n\n    for domain in dns_queries:\n        parts = domain.split('.')\n\n        for part in parts[:-2]:  # Exclude TLD and domain\n            # Check subdomain length\n            if len(part) > 20:\n                suspicious_domains.append(domain)\n                break\n\n            # Check for high entropy (random-looking)\n            if len(part) > 10:\n                # Count hex-like characters\n                hex_chars = sum(1 for c in part if c in '0123456789abcdef')\n                if hex_chars / len(part) > 0.6:  # 60% hex chars\n                    suspicious_domains.append(domain)\n                    break\n\n    return suspicious_domains\n\nqueries = [\n    \"www.google.com\",\n    \"a3f9d8e2b1c4.malicious.com\",\n    \"very-long-random-subdomain-xyz123abc.evil.com\"\n]\nprint(detect_dns_tunneling(queries))",
+    "testCases": [
+      {
+        "input": "Normal domains",
+        "expectedOutput": "Empty list",
+        "isHidden": false,
+        "description": "Legitimate DNS"
+      },
+      {
+        "input": "Long random subdomain",
+        "expectedOutput": "Returns domain",
+        "isHidden": false,
+        "description": "Detect tunneling"
+      },
+      {
+        "input": "High entropy subdomain",
+        "expectedOutput": "Returns domain",
+        "isHidden": true,
+        "description": "Detect encoded data"
+      }
+    ],
+    "hints": [
+      "Check subdomain length (> 20 chars suspicious)",
+      "Calculate entropy or randomness",
+      "Look for hex-encoded patterns",
+      "Exclude normal TLD and domain"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs307-t6-ex15",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-6",
+    "title": "VPN Log Parser",
+    "difficulty": 3,
+    "description": "Write a function to parse VPN connection logs and extract user, timestamp, and connection status.",
+    "starterCode": "def parse_vpn_log(log_line):\n    # Parse: \"2025-12-17 10:00:00 user@example.com CONNECTED from 203.0.113.5\"\n    pass\n\nprint(parse_vpn_log(\"2025-12-17 10:00:00 user@example.com CONNECTED from 203.0.113.5\"))",
+    "solution": "def parse_vpn_log(log_line):\n    try:\n        parts = log_line.split()\n        if len(parts) < 6:\n            return None\n\n        timestamp = f\"{parts[0]} {parts[1]}\"\n        user = parts[2]\n        status = parts[3]\n        # parts[4] is \"from\"\n        source_ip = parts[5]\n\n        return {\n            'timestamp': timestamp,\n            'user': user,\n            'status': status,\n            'source_ip': source_ip\n        }\n    except (IndexError, ValueError):\n        return None\n\nprint(parse_vpn_log(\"2025-12-17 10:00:00 user@example.com CONNECTED from 203.0.113.5\"))",
+    "testCases": [
+      {
+        "input": "VPN connect log",
+        "expectedOutput": "dict with status=CONNECTED",
+        "isHidden": false,
+        "description": "Parse connection"
+      },
+      {
+        "input": "VPN disconnect log",
+        "expectedOutput": "dict with status=DISCONNECTED",
+        "isHidden": false,
+        "description": "Parse disconnection"
+      },
+      {
+        "input": "Invalid log",
+        "expectedOutput": "None",
+        "isHidden": true,
+        "description": "Handle errors"
+      }
+    ],
+    "hints": [
+      "Split log line by spaces",
+      "Extract timestamp (first two parts)",
+      "Parse user, status, and source IP",
+      "Handle malformed logs"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs307-t6-ex16",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-6",
+    "title": "Check Certificate Chain",
+    "difficulty": 4,
+    "description": "Write a function to validate a certificate chain by checking issuer/subject relationships.",
+    "starterCode": "def validate_cert_chain(certificates):\n    # certificates: list of dicts with 'subject' and 'issuer'\n    # Verify chain: each cert issued by next in chain\n    pass\n\ncerts = [\n    {\"subject\": \"www.example.com\", \"issuer\": \"Intermediate CA\"},\n    {\"subject\": \"Intermediate CA\", \"issuer\": \"Root CA\"},\n    {\"subject\": \"Root CA\", \"issuer\": \"Root CA\"}\n]\nprint(validate_cert_chain(certs))",
+    "solution": "def validate_cert_chain(certificates):\n    if not certificates:\n        return False\n\n    # Check each cert is issued by the next\n    for i in range(len(certificates) - 1):\n        current_cert = certificates[i]\n        next_cert = certificates[i + 1]\n\n        # Current cert's issuer should match next cert's subject\n        if current_cert['issuer'] != next_cert['subject']:\n            return False\n\n    # Last cert should be self-signed (root CA)\n    last_cert = certificates[-1]\n    if last_cert['subject'] != last_cert['issuer']:\n        return False\n\n    return True\n\ncerts = [\n    {\"subject\": \"www.example.com\", \"issuer\": \"Intermediate CA\"},\n    {\"subject\": \"Intermediate CA\", \"issuer\": \"Root CA\"},\n    {\"subject\": \"Root CA\", \"issuer\": \"Root CA\"}\n]\nprint(validate_cert_chain(certs))",
+    "testCases": [
+      {
+        "input": "Valid cert chain",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Valid chain"
+      },
+      {
+        "input": "Broken chain",
+        "expectedOutput": "False",
+        "isHidden": false,
+        "description": "Invalid chain"
+      },
+      {
+        "input": "No root CA",
+        "expectedOutput": "False",
+        "isHidden": true,
+        "description": "Missing self-signed root"
+      }
+    ],
+    "hints": [
+      "Check each cert is issued by next in chain",
+      "Verify issuer of cert[i] matches subject of cert[i+1]",
+      "Last cert should be self-signed (root CA)",
+      "Root CA: subject == issuer"
+    ],
+    "language": "python"
+  }
+]

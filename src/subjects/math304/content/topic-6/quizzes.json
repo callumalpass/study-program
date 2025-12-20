@@ -1,0 +1,221 @@
+[
+  {
+    "id": "math304-quiz-6-1",
+    "subjectId": "math304",
+    "topicId": "math304-topic-6",
+    "title": "Rings and Fields - Ring Definitions and Properties",
+    "questions": [
+      {
+        "id": "math304-q76",
+        "type": "multiple_choice",
+        "prompt": "A ring (R, +, ·) must satisfy all of the following EXCEPT:",
+        "options": [
+          "(R, +) is an abelian group",
+          "(R, ·) has an identity element",
+          "Distributive laws: a(b+c) = ab + ac and (a+b)c = ac + bc",
+          "Closure under multiplication"
+        ],
+        "correctAnswer": "(R, ·) has an identity element",
+        "explanation": "A ring requires (R,+) to be an abelian group, multiplication to be associative and closed, and distributive laws. A multiplicative identity is not required (though rings with identity are common). Rings with multiplicative identity are called \"rings with unity.\""
+      },
+      {
+        "id": "math304-q77",
+        "type": "multiple_choice",
+        "prompt": "In any ring R, the additive identity 0 satisfies:",
+        "options": [
+          "0 · a = a for all a",
+          "0 · a = 0 for all a",
+          "0 · a = 1 for all a",
+          "0 has a multiplicative inverse"
+        ],
+        "correctAnswer": "0 · a = 0 for all a",
+        "explanation": "In any ring, 0·a = 0 for all a ∈ R. This follows from 0·a = (0+0)·a = 0·a + 0·a, which implies 0·a = 0."
+      },
+      {
+        "id": "math304-q78",
+        "type": "multiple_choice",
+        "prompt": "A commutative ring is one where:",
+        "options": [
+          "Addition is commutative",
+          "Multiplication is commutative",
+          "Both operations are commutative",
+          "Neither operation is commutative"
+        ],
+        "correctAnswer": "Multiplication is commutative",
+        "explanation": "A ring is commutative if ab = ba for all a, b ∈ R. Addition is always commutative in any ring (since (R,+) is an abelian group)."
+      },
+      {
+        "id": "math304-q79",
+        "type": "multiple_choice",
+        "prompt": "Which of the following is NOT a ring?",
+        "options": [
+          "(Z, +, ·)",
+          "(2Z, +, ·) where 2Z is the even integers",
+          "(Q, +, ·)",
+          "(N, +, ·) where N is the natural numbers"
+        ],
+        "correctAnswer": "(N, +, ·) where N is the natural numbers",
+        "explanation": "N is not a ring because (N,+) is not a group - natural numbers lack additive inverses. All the others are rings."
+      },
+      {
+        "id": "math304-q80",
+        "type": "multiple_choice",
+        "prompt": "A unit in a ring R with identity is an element that:",
+        "options": [
+          "Equals 1",
+          "Has a multiplicative inverse",
+          "Is the additive identity",
+          "Equals 0"
+        ],
+        "correctAnswer": "Has a multiplicative inverse",
+        "explanation": "A unit (or invertible element) is an element a ∈ R such that there exists b ∈ R with ab = ba = 1."
+      }
+    ]
+  },
+  {
+    "id": "math304-quiz-6-2",
+    "subjectId": "math304",
+    "topicId": "math304-topic-6",
+    "title": "Rings and Fields - Integral Domains and Fields",
+    "questions": [
+      {
+        "id": "math304-q81",
+        "type": "multiple_choice",
+        "prompt": "An integral domain is a commutative ring with unity that has:",
+        "options": [
+          "No units",
+          "No zero divisors",
+          "Exactly two elements",
+          "No ideals"
+        ],
+        "correctAnswer": "No zero divisors",
+        "explanation": "An integral domain is a commutative ring with 1 ≠ 0 and no zero divisors (if ab = 0, then a = 0 or b = 0)."
+      },
+      {
+        "id": "math304-q82",
+        "type": "multiple_choice",
+        "prompt": "In the ring Z₁₂, which element is a zero divisor?",
+        "options": [
+          "1",
+          "3",
+          "5",
+          "11"
+        ],
+        "correctAnswer": "3",
+        "explanation": "In Z₁₂, 3 is a zero divisor because 3·4 = 12 ≡ 0 (mod 12), and neither 3 nor 4 is zero. Elements 1, 5, 11 are units."
+      },
+      {
+        "id": "math304-q83",
+        "type": "multiple_choice",
+        "prompt": "A field is a commutative ring with unity where:",
+        "options": [
+          "Every element is a unit",
+          "Every nonzero element is a unit",
+          "No element is a unit",
+          "Only 1 is a unit"
+        ],
+        "correctAnswer": "Every nonzero element is a unit",
+        "explanation": "A field is a commutative ring with 1 ≠ 0 where every nonzero element has a multiplicative inverse."
+      },
+      {
+        "id": "math304-q84",
+        "type": "multiple_choice",
+        "prompt": "Which of the following is a field?",
+        "options": [
+          "Z under standard addition and multiplication",
+          "Q under standard addition and multiplication",
+          "Z₆ under addition and multiplication modulo 6",
+          "2Z under standard addition and multiplication"
+        ],
+        "correctAnswer": "Q under standard addition and multiplication",
+        "explanation": "Q is a field: every nonzero rational has a multiplicative inverse. Z is not (e.g., 2 has no inverse), Z₆ is not (3 is a zero divisor), 2Z doesn't even have unity."
+      },
+      {
+        "id": "math304-q85",
+        "type": "multiple_choice",
+        "prompt": "For which values of n is Zₙ a field?",
+        "options": [
+          "All n",
+          "n prime",
+          "n composite",
+          "n even"
+        ],
+        "correctAnswer": "n prime",
+        "explanation": "Zₙ is a field if and only if n is prime. When n is prime, every nonzero element is coprime to n and thus has a multiplicative inverse."
+      }
+    ]
+  },
+  {
+    "id": "math304-quiz-6-3",
+    "subjectId": "math304",
+    "topicId": "math304-topic-6",
+    "title": "Rings and Fields - Ideals and Polynomial Rings",
+    "questions": [
+      {
+        "id": "math304-q86",
+        "type": "multiple_choice",
+        "prompt": "An ideal I of a ring R is a subring such that:",
+        "options": [
+          "rI ⊆ I and Ir ⊆ I for all r ∈ R",
+          "I = R",
+          "I contains only units",
+          "I is a field"
+        ],
+        "correctAnswer": "rI ⊆ I and Ir ⊆ I for all r ∈ R",
+        "explanation": "An ideal I is a subring closed under multiplication by any element from R: if a ∈ I and r ∈ R, then ra ∈ I and ar ∈ I."
+      },
+      {
+        "id": "math304-q87",
+        "type": "multiple_choice",
+        "prompt": "In the ring Z, which of the following is an ideal?",
+        "options": [
+          "{1, 2, 3}",
+          "6Z = {..., -6, 0, 6, 12, ...}",
+          "{0, 1}",
+          "Q"
+        ],
+        "correctAnswer": "6Z = {..., -6, 0, 6, 12, ...}",
+        "explanation": "For any n, nZ is an ideal of Z. If a ∈ nZ and r ∈ Z, then ra ∈ nZ. In fact, every ideal of Z has this form."
+      },
+      {
+        "id": "math304-q88",
+        "type": "multiple_choice",
+        "prompt": "A principal ideal is an ideal that:",
+        "options": [
+          "Contains the identity",
+          "Can be generated by a single element",
+          "Has exactly two elements",
+          "Is not proper"
+        ],
+        "correctAnswer": "Can be generated by a single element",
+        "explanation": "A principal ideal is one of the form ⟨a⟩ = {ra : r ∈ R} for some a ∈ R. In Z, all ideals are principal."
+      },
+      {
+        "id": "math304-q89",
+        "type": "multiple_choice",
+        "prompt": "In the polynomial ring R[x] where R is a ring, elements are:",
+        "options": [
+          "Only linear polynomials",
+          "Polynomials with coefficients from R",
+          "Real numbers",
+          "Matrices"
+        ],
+        "correctAnswer": "Polynomials with coefficients from R",
+        "explanation": "R[x] is the ring of polynomials with coefficients in R, under usual polynomial addition and multiplication."
+      },
+      {
+        "id": "math304-q90",
+        "type": "multiple_choice",
+        "prompt": "If F is a field, then F[x] is:",
+        "options": [
+          "A field",
+          "An integral domain but not a field",
+          "Not even a ring",
+          "Contains zero divisors"
+        ],
+        "correctAnswer": "An integral domain but not a field",
+        "explanation": "If F is a field, F[x] is an integral domain (no zero divisors) but not a field, since polynomials of degree ≥ 1 don't have multiplicative inverses in F[x]."
+      }
+    ]
+  }
+]

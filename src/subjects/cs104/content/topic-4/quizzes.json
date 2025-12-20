@@ -1,0 +1,181 @@
+[
+  {
+    "id": "cs104-quiz-4a",
+    "subjectId": "cs104",
+    "topicId": "cs104-topic-4",
+    "title": "Hash Tables - Fundamentals",
+    "questions": [
+      {
+        "id": "cs104-q4a-1",
+        "type": "multiple_choice",
+        "prompt": "What is the average-case time complexity for hash table lookups?",
+        "options": [
+          "O(1)",
+          "O(log n)",
+          "O(n)",
+          "O(n²)"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Hash tables provide O(1) average-case lookup using hash functions to compute indices directly."
+      },
+      {
+        "id": "cs104-q4a-2",
+        "type": "fill_blank",
+        "prompt": "When two different keys hash to the same index, this is called a ____.",
+        "correctAnswer": "collision",
+        "explanation": "A collision occurs when different keys produce the same hash value/index."
+      },
+      {
+        "id": "cs104-q4a-3",
+        "type": "true_false",
+        "prompt": "Chaining resolves collisions by storing multiple elements at the same index using a linked list.",
+        "correctAnswer": true,
+        "explanation": "Chaining maintains a linked list (or other structure) at each bucket to handle multiple key-value pairs."
+      },
+      {
+        "id": "cs104-q4a-4",
+        "type": "multiple_choice",
+        "prompt": "What is the load factor of a hash table?",
+        "options": [
+          "Number of buckets / Number of elements",
+          "Number of elements / Number of buckets",
+          "Number of collisions / Total operations",
+          "Hash value / Table size"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Load factor = n/capacity (number of elements divided by number of buckets)."
+      },
+      {
+        "id": "cs104-q4a-5",
+        "type": "multiple_choice",
+        "prompt": "A good hash function should:",
+        "options": [
+          "Always return the same value",
+          "Distribute keys uniformly",
+          "Return sequential values",
+          "Maximize collisions"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A good hash function distributes keys uniformly across buckets to minimize collisions."
+      }
+    ]
+  },
+  {
+    "id": "cs104-quiz-4b",
+    "subjectId": "cs104",
+    "topicId": "cs104-topic-4",
+    "title": "Hash Tables - Application",
+    "questions": [
+      {
+        "id": "cs104-q4b-1",
+        "type": "code_output",
+        "prompt": "What is printed?",
+        "codeSnippet": "d = {}\nd['a'] = 1\nd['b'] = 2\nd['a'] = 3\nprint(d['a'])",
+        "correctAnswer": "3",
+        "explanation": "The second assignment d[\"a\"] = 3 overwrites the previous value. Final value for key \"a\" is 3."
+      },
+      {
+        "id": "cs104-q4b-2",
+        "type": "multiple_choice",
+        "prompt": "Which problem is efficiently solved using a hash table?",
+        "options": [
+          "Finding minimum element",
+          "Checking for duplicates",
+          "Sorting elements",
+          "Finding median"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Hash tables enable O(1) lookup, making duplicate detection O(n) overall instead of O(n²)."
+      },
+      {
+        "id": "cs104-q4b-3",
+        "type": "true_false",
+        "prompt": "Python dictionaries maintain insertion order as of Python 3.7+.",
+        "correctAnswer": true,
+        "explanation": "Since Python 3.7, dictionaries preserve insertion order as a language feature."
+      },
+      {
+        "id": "cs104-q4b-4",
+        "type": "code_output",
+        "prompt": "What does this \"two sum\" approach return?",
+        "codeSnippet": "def two_sum(nums, target):\n    seen = {}\n    for i, n in enumerate(nums):\n        if target - n in seen:\n            return [seen[target-n], i]\n        seen[n] = i\n    return []\nprint(two_sum([2, 7, 11, 15], 9))",
+        "correctAnswer": "[0, 1]",
+        "explanation": "Target is 9. When we see 7 (index 1), we check for 9-7=2, which is at index 0. Return [0, 1]."
+      },
+      {
+        "id": "cs104-q4b-5",
+        "type": "multiple_choice",
+        "prompt": "To group anagrams, you can use as hash key:",
+        "options": [
+          "The original string",
+          "The sorted string",
+          "The string length",
+          "The first character"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Anagrams have the same sorted character sequence, making it a perfect hash key for grouping."
+      }
+    ]
+  },
+  {
+    "id": "cs104-quiz-4c",
+    "subjectId": "cs104",
+    "topicId": "cs104-topic-4",
+    "title": "Hash Tables - Advanced",
+    "questions": [
+      {
+        "id": "cs104-q4c-1",
+        "type": "multiple_choice",
+        "prompt": "Linear probing is a technique for:",
+        "options": [
+          "Hash function design",
+          "Collision resolution in open addressing",
+          "Dynamic resizing",
+          "Key generation"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Linear probing resolves collisions by checking the next available slot linearly."
+      },
+      {
+        "id": "cs104-q4c-2",
+        "type": "true_false",
+        "prompt": "Mutable objects like lists can be used as dictionary keys in Python.",
+        "correctAnswer": false,
+        "explanation": "Dictionary keys must be hashable. Mutable objects like lists cannot be hashed."
+      },
+      {
+        "id": "cs104-q4c-3",
+        "type": "multiple_choice",
+        "prompt": "What happens when the load factor exceeds a threshold (e.g., 0.75)?",
+        "options": [
+          "Collisions stop",
+          "The table is resized",
+          "Operations become O(n²)",
+          "Keys are deleted"
+        ],
+        "correctAnswer": 1,
+        "explanation": "High load factor triggers resizing (usually doubling) and rehashing all elements to maintain performance."
+      },
+      {
+        "id": "cs104-q4c-4",
+        "type": "multiple_choice",
+        "prompt": "The worst-case time complexity for hash table operations occurs when:",
+        "options": [
+          "The table is empty",
+          "All keys hash to the same index",
+          "The load factor is low",
+          "Keys are unique"
+        ],
+        "correctAnswer": 1,
+        "explanation": "When all keys collide to the same bucket, operations degrade to O(n) (searching through a long chain)."
+      },
+      {
+        "id": "cs104-q4c-5",
+        "type": "fill_blank",
+        "prompt": "Python's built-in hash table implementations are called dict and ____.",
+        "correctAnswer": "set",
+        "explanation": "Both dict (key-value) and set (keys only) use hash tables internally."
+      }
+    ]
+  }
+]

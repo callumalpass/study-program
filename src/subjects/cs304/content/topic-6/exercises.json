@@ -1,0 +1,578 @@
+[
+  {
+    "id": "cs304-t6-ex01",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-6",
+    "title": "Constant Folding",
+    "difficulty": 1,
+    "description": "Implement constant folding optimization that evaluates constant expressions at compile time.",
+    "starterCode": "class ConstantFolder:\n    def fold(self, expr):\n        \"\"\"\n        Fold constant expressions.\n        expr: dict with 'op' and 'left'/'right', or 'value' for constants\n        Returns: simplified expression\n        \"\"\"\n        # TODO: Implement constant folding\n        pass\n\n# Example: {'op': '+', 'left': {'value': 5}, 'right': {'value': 3}} -> {'value': 8}",
+    "solution": "class ConstantFolder:\n    def fold(self, expr):\n        \"\"\"\n        Fold constant expressions.\n        expr: dict with 'op' and 'left'/'right', or 'value' for constants\n        Returns: simplified expression\n        \"\"\"\n        # Base case: already a constant\n        if 'value' in expr:\n            return expr\n\n        # Recursively fold subexpressions\n        left = self.fold(expr['left'])\n        right = self.fold(expr['right'])\n\n        # If both operands are constants, evaluate\n        if 'value' in left and 'value' in right:\n            left_val = left['value']\n            right_val = right['value']\n\n            if expr['op'] == '+':\n                return {'value': left_val + right_val}\n            elif expr['op'] == '-':\n                return {'value': left_val - right_val}\n            elif expr['op'] == '*':\n                return {'value': left_val * right_val}\n            elif expr['op'] == '/':\n                if right_val != 0:\n                    return {'value': left_val // right_val}\n\n        # Cannot fold - return expression with folded subexpressions\n        return {'op': expr['op'], 'left': left, 'right': right}",
+    "testCases": [
+      {
+        "input": "folder = ConstantFolder()\nresult = folder.fold({'op': '+', 'left': {'value': 5}, 'right': {'value': 3}})\nprint(result['value'])",
+        "expectedOutput": "8",
+        "isHidden": false,
+        "description": "Simple addition folding"
+      },
+      {
+        "input": "folder = ConstantFolder()\nresult = folder.fold({'op': '*', 'left': {'op': '+', 'left': {'value': 2}, 'right': {'value': 3}}, 'right': {'value': 4}})\nprint(result['value'])",
+        "expectedOutput": "20",
+        "isHidden": false,
+        "description": "Nested expression (2 + 3) * 4"
+      },
+      {
+        "input": "folder = ConstantFolder()\nresult = folder.fold({'op': '+', 'left': {'value': 10}, 'right': {'var': 'x'}})\nprint('op' in result)",
+        "isHidden": true,
+        "description": "Cannot fold with variable operand"
+      }
+    ],
+    "hints": [
+      "Recursively fold left and right subexpressions first",
+      "Check if both operands are constants after folding",
+      "If both are constants, evaluate the operation",
+      "Return the folded subexpressions if they cannot be completely evaluated"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs304-t6-ex02",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-6",
+    "title": "Constant Propagation",
+    "difficulty": 2,
+    "description": "Implement constant propagation that tracks constant values of variables and substitutes them in expressions.",
+    "starterCode": "class ConstantPropagator:\n    def __init__(self):\n        self.constants = {}  # variable -> constant value\n\n    def propagate(self, statements):\n        \"\"\"\n        Propagate constants through statements.\n        statements: list of (var, expr) tuples\n        Returns: list of optimized statements\n        \"\"\"\n        # TODO: Implement constant propagation\n        pass",
+    "solution": "class ConstantPropagator:\n    def __init__(self):\n        self.constants = {}  # variable -> constant value\n\n    def evaluate(self, expr):\n        \"\"\"Evaluate expression using known constants.\"\"\"\n        if isinstance(expr, int):\n            return expr\n\n        if isinstance(expr, str):\n            # Variable reference\n            if expr in self.constants:\n                return self.constants[expr]\n            return expr\n\n        if isinstance(expr, dict):\n            if 'value' in expr:\n                return expr['value']\n\n            if 'var' in expr:\n                var = expr['var']\n                if var in self.constants:\n                    return self.constants[var]\n                return expr\n\n            # Binary operation\n            if 'op' in expr:\n                left = self.evaluate(expr['left'])\n                right = self.evaluate(expr['right'])\n\n                # If both are constants, evaluate\n                if isinstance(left, int) and isinstance(right, int):\n                    if expr['op'] == '+':\n                        return left + right\n                    elif expr['op'] == '-':\n                        return left - right\n                    elif expr['op'] == '*':\n                        return left * right\n                    elif expr['op'] == '/':\n                        return left // right if right != 0 else expr\n\n                return {'op': expr['op'], 'left': left, 'right': right}\n\n        return expr\n\n    def propagate(self, statements):\n        \"\"\"\n        Propagate constants through statements.\n        statements: list of (var, expr) tuples\n        Returns: list of optimized statements\n        \"\"\"\n        optimized = []\n\n        for var, expr in statements:\n            # Evaluate expression with known constants\n            result = self.evaluate(expr)\n\n            # If result is a constant, record it\n            if isinstance(result, int):\n                self.constants[var] = result\n\n            optimized.append((var, result))\n\n        return optimized",
+    "testCases": [
+      {
+        "input": "prop = ConstantPropagator()\nstmts = [('x', 5), ('y', {'op': '+', 'left': {'var': 'x'}, 'right': 3})]\nresult = prop.propagate(stmts)\nprint(result[1][1])",
+        "expectedOutput": "8",
+        "isHidden": false,
+        "description": "Propagate x=5 into y=x+3"
+      },
+      {
+        "input": "prop = ConstantPropagator()\nstmts = [('a', 10), ('b', 20), ('c', {'op': '*', 'left': {'var': 'a'}, 'right': {'var': 'b'}})]\nresult = prop.propagate(stmts)\nprint(result[2][1])",
+        "expectedOutput": "200",
+        "isHidden": false,
+        "description": "Propagate both operands"
+      },
+      {
+        "input": "prop = ConstantPropagator()\nstmts = [('x', 5), ('y', {'var': 'x'}), ('z', {'op': '+', 'left': {'var': 'y'}, 'right': 1})]\nresult = prop.propagate(stmts)\nprint(result[2][1])",
+        "isHidden": true,
+        "description": "Transitive propagation"
+      }
+    ],
+    "hints": [
+      "Maintain a map of variables to their constant values",
+      "When evaluating expressions, substitute known constant values",
+      "Update the constant map when a variable is assigned a constant",
+      "Recursively evaluate nested expressions"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs304-t6-ex03",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-6",
+    "title": "Dead Code Elimination",
+    "difficulty": 2,
+    "description": "Implement dead code elimination that removes assignments to variables that are never used.",
+    "starterCode": "class DeadCodeEliminator:\n    def eliminate(self, statements):\n        \"\"\"\n        Remove dead code (assignments to unused variables).\n        statements: list of (var, expr) tuples\n        Returns: list of statements with dead code removed\n        \"\"\"\n        # TODO: Implement dead code elimination\n        # Hint: Work backwards to track which variables are used\n        pass",
+    "solution": "class DeadCodeEliminator:\n    def get_used_vars(self, expr):\n        \"\"\"Extract variables used in an expression.\"\"\"\n        if isinstance(expr, str):\n            return {expr}\n\n        if isinstance(expr, int):\n            return set()\n\n        if isinstance(expr, dict):\n            if 'var' in expr:\n                return {expr['var']}\n\n            if 'value' in expr:\n                return set()\n\n            if 'op' in expr:\n                left_vars = self.get_used_vars(expr['left'])\n                right_vars = self.get_used_vars(expr['right'])\n                return left_vars | right_vars\n\n        return set()\n\n    def eliminate(self, statements):\n        \"\"\"\n        Remove dead code (assignments to unused variables).\n        statements: list of (var, expr) tuples\n        Returns: list of statements with dead code removed\n        \"\"\"\n        # First pass: collect all used variables (working backwards)\n        live = set()\n        used_in = {}  # var -> set of variables it uses\n\n        for var, expr in statements:\n            used_vars = self.get_used_vars(expr)\n            used_in[var] = used_vars\n\n        # Mark variables as live if they're used in live variables\n        # Start by assuming last statement is live\n        if statements:\n            live.add(statements[-1][0])\n\n        # Work backwards\n        changed = True\n        while changed:\n            changed = False\n            for var, expr in reversed(statements):\n                if var in live:\n                    # This variable is live, so variables it uses are live\n                    for used_var in used_in.get(var, []):\n                        if used_var not in live:\n                            live.add(used_var)\n                            changed = True\n\n        # Second pass: keep only live statements\n        result = []\n        for var, expr in statements:\n            if var in live or not isinstance(expr, (int, dict)):\n                result.append((var, expr))\n\n        return result",
+    "testCases": [
+      {
+        "input": "elim = DeadCodeEliminator()\nstmts = [('x', 5), ('y', 10), ('z', {'op': '+', 'left': {'var': 'x'}, 'right': 3})]\nresult = elim.eliminate(stmts)\nprint(len(result))",
+        "expectedOutput": "2",
+        "isHidden": false,
+        "description": "Remove unused y assignment"
+      },
+      {
+        "input": "elim = DeadCodeEliminator()\nstmts = [('a', 1), ('b', 2), ('c', 3)]\nresult = elim.eliminate(stmts)\nprint(len(result))",
+        "expectedOutput": "1",
+        "isHidden": false,
+        "description": "Keep only last assignment"
+      },
+      {
+        "input": "elim = DeadCodeEliminator()\nstmts = [('x', 5), ('y', {'var': 'x'}), ('z', {'var': 'y'})]\nresult = elim.eliminate(stmts)\nprint(len(result))",
+        "isHidden": true,
+        "description": "Keep all in use chain"
+      }
+    ],
+    "hints": [
+      "Work backwards from the end of the statements",
+      "Track which variables are live (will be used later)",
+      "A variable is live if it appears in the expression of a live variable",
+      "Remove assignments to variables that are never live"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs304-t6-ex04",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-6",
+    "title": "Common Subexpression Elimination",
+    "difficulty": 3,
+    "description": "Implement CSE to identify and eliminate redundant computations by reusing previously computed values.",
+    "starterCode": "class CSE:\n    def __init__(self):\n        self.expressions = {}  # expr_str -> variable holding result\n        self.temp_count = 0\n\n    def expr_to_string(self, expr):\n        \"\"\"Convert expression to canonical string form.\"\"\"\n        # TODO: Implement expression serialization\n        pass\n\n    def eliminate(self, statements):\n        \"\"\"\n        Eliminate common subexpressions.\n        statements: list of (var, expr) tuples\n        Returns: optimized statements\n        \"\"\"\n        # TODO: Implement CSE\n        pass",
+    "solution": "class CSE:\n    def __init__(self):\n        self.expressions = {}  # expr_str -> variable holding result\n        self.temp_count = 0\n\n    def expr_to_string(self, expr):\n        \"\"\"Convert expression to canonical string form.\"\"\"\n        if isinstance(expr, int):\n            return str(expr)\n\n        if isinstance(expr, str):\n            return expr\n\n        if isinstance(expr, dict):\n            if 'value' in expr:\n                return str(expr['value'])\n\n            if 'var' in expr:\n                return expr['var']\n\n            if 'op' in expr:\n                left_str = self.expr_to_string(expr['left'])\n                right_str = self.expr_to_string(expr['right'])\n                # Canonical form for commutative operators\n                if expr['op'] in ['+', '*']:\n                    left_str, right_str = sorted([left_str, right_str])\n                return f\"({left_str} {expr['op']} {right_str})\"\n\n        return str(expr)\n\n    def eliminate(self, statements):\n        \"\"\"\n        Eliminate common subexpressions.\n        statements: list of (var, expr) tuples\n        Returns: optimized statements\n        \"\"\"\n        optimized = []\n\n        for var, expr in statements:\n            # Only eliminate non-trivial expressions\n            if isinstance(expr, dict) and 'op' in expr:\n                expr_str = self.expr_to_string(expr)\n\n                if expr_str in self.expressions:\n                    # Reuse previous computation\n                    prev_var = self.expressions[expr_str]\n                    optimized.append((var, {'var': prev_var}))\n                else:\n                    # New expression - compute and record it\n                    self.expressions[expr_str] = var\n                    optimized.append((var, expr))\n            else:\n                optimized.append((var, expr))\n\n                # If assigning a simple value, invalidate expressions using old value of var\n                # For simplicity, we'll just add the statement\n                # In practice, would need to track which expressions are invalidated\n\n        return optimized",
+    "testCases": [
+      {
+        "input": "cse = CSE()\nstmts = [\n    ('t1', {'op': '+', 'left': {'var': 'a'}, 'right': {'var': 'b'}}),\n    ('t2', {'op': '+', 'left': {'var': 'a'}, 'right': {'var': 'b'}})\n]\nresult = cse.eliminate(stmts)\nprint(result[1][1])",
+        "expectedOutput": "{'var': 't1'}",
+        "isHidden": false,
+        "description": "Eliminate duplicate a+b"
+      },
+      {
+        "input": "cse = CSE()\nstmts = [\n    ('t1', {'op': '*', 'left': {'var': 'x'}, 'right': {'value': 2}}),\n    ('t2', {'op': '+', 'left': {'var': 't1'}, 'right': 1}),\n    ('t3', {'op': '*', 'left': {'var': 'x'}, 'right': {'value': 2}})\n]\nresult = cse.eliminate(stmts)\nprint(result[2][1])",
+        "expectedOutput": "{'var': 't1'}",
+        "isHidden": false,
+        "description": "Reuse x*2 computation"
+      },
+      {
+        "input": "cse = CSE()\nstmts = [\n    ('t1', {'op': '+', 'left': {'var': 'a'}, 'right': {'var': 'b'}}),\n    ('t2', {'op': '+', 'left': {'var': 'b'}, 'right': {'var': 'a'}})\n]\nresult = cse.eliminate(stmts)\nprint(result[1][1])",
+        "isHidden": true,
+        "description": "Commutative operation a+b = b+a"
+      }
+    ],
+    "hints": [
+      "Convert expressions to a canonical string representation",
+      "For commutative operators (+, *), sort operands to ensure a+b and b+a match",
+      "Maintain a map from expression strings to variables holding their results",
+      "Replace duplicate expressions with references to the first computation"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs304-t6-ex05",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-6",
+    "title": "Copy Propagation",
+    "difficulty": 2,
+    "description": "Implement copy propagation that replaces uses of a variable with its copied value.",
+    "starterCode": "class CopyPropagator:\n    def __init__(self):\n        self.copies = {}  # variable -> variable it copies\n\n    def propagate(self, statements):\n        \"\"\"\n        Propagate copies through statements.\n        statements: list of (var, expr) tuples\n        Returns: optimized statements\n        \"\"\"\n        # TODO: Implement copy propagation\n        pass",
+    "solution": "class CopyPropagator:\n    def __init__(self):\n        self.copies = {}  # variable -> variable it copies\n\n    def substitute(self, expr):\n        \"\"\"Substitute variables with their copied values.\"\"\"\n        if isinstance(expr, str):\n            # Variable reference\n            if expr in self.copies:\n                return self.substitute(self.copies[expr])\n            return expr\n\n        if isinstance(expr, int):\n            return expr\n\n        if isinstance(expr, dict):\n            if 'var' in expr:\n                var = expr['var']\n                if var in self.copies:\n                    return {'var': self.substitute(self.copies[var])}\n                return expr\n\n            if 'value' in expr:\n                return expr\n\n            if 'op' in expr:\n                left = self.substitute(expr['left'])\n                right = self.substitute(expr['right'])\n                return {'op': expr['op'], 'left': left, 'right': right}\n\n        return expr\n\n    def propagate(self, statements):\n        \"\"\"\n        Propagate copies through statements.\n        statements: list of (var, expr) tuples\n        Returns: optimized statements\n        \"\"\"\n        optimized = []\n\n        for var, expr in statements:\n            # Substitute in the expression\n            new_expr = self.substitute(expr)\n\n            # Check if this is a copy assignment\n            if isinstance(new_expr, dict) and 'var' in new_expr:\n                # Record the copy\n                self.copies[var] = new_expr['var']\n\n            # If variable is redefined, it's no longer a copy\n            if var in self.copies and not (isinstance(new_expr, dict) and 'var' in new_expr):\n                del self.copies[var]\n\n            optimized.append((var, new_expr))\n\n        return optimized",
+    "testCases": [
+      {
+        "input": "prop = CopyPropagator()\nstmts = [('x', 5), ('y', {'var': 'x'}), ('z', {'op': '+', 'left': {'var': 'y'}, 'right': 1})]\nresult = prop.propagate(stmts)\nprint(result[2][1]['left']['var'])",
+        "expectedOutput": "x",
+        "isHidden": false,
+        "description": "Propagate y=x, replace y with x"
+      },
+      {
+        "input": "prop = CopyPropagator()\nstmts = [('a', {'var': 'b'}), ('c', {'var': 'a'}), ('d', {'var': 'c'})]\nresult = prop.propagate(stmts)\nprint(result[2][1]['var'])",
+        "expectedOutput": "b",
+        "isHidden": false,
+        "description": "Transitive copy propagation"
+      },
+      {
+        "input": "prop = CopyPropagator()\nstmts = [('x', {'var': 'y'}), ('x', 10), ('z', {'var': 'x'})]\nresult = prop.propagate(stmts)\nprint(result[2][1])",
+        "isHidden": true,
+        "description": "Copy invalidated by reassignment"
+      }
+    ],
+    "hints": [
+      "Track which variables are copies of other variables",
+      "When substituting, follow the chain of copies transitively",
+      "Replace uses of copy variables with the original variable",
+      "Invalidate copy information when a variable is reassigned"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs304-t6-ex06",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-6",
+    "title": "Reaching Definitions Analysis",
+    "difficulty": 3,
+    "description": "Implement reaching definitions data flow analysis to determine which definitions reach each program point.",
+    "starterCode": "class ReachingDefinitions:\n    def __init__(self):\n        self.definitions = {}  # variable -> list of definition points\n\n    def analyze(self, statements):\n        \"\"\"\n        Compute reaching definitions for each statement.\n        statements: list of (var, expr) tuples\n        Returns: dict mapping line_number -> set of (var, def_line) reaching that point\n        \"\"\"\n        # TODO: Implement reaching definitions analysis\n        pass",
+    "solution": "class ReachingDefinitions:\n    def __init__(self):\n        self.definitions = {}  # variable -> list of definition points\n\n    def analyze(self, statements):\n        \"\"\"\n        Compute reaching definitions for each statement.\n        statements: list of (var, expr) tuples\n        Returns: dict mapping line_number -> set of (var, def_line) reaching that point\n        \"\"\"\n        reaching = {}  # line -> set of (var, def_line)\n\n        # Initialize: no definitions reach the start\n        reaching[0] = set()\n\n        # Process each statement\n        for i, (var, expr) in enumerate(statements):\n            # Definitions reaching this point are those from previous point\n            if i == 0:\n                reaching[i] = set()\n            else:\n                reaching[i] = reaching[i - 1].copy()\n\n            # This statement kills previous definitions of var\n            reaching[i] = {(v, line) for v, line in reaching[i] if v != var}\n\n            # This statement generates a new definition of var\n            reaching[i].add((var, i))\n\n            # Propagate to next statement\n            if i + 1 not in reaching:\n                reaching[i + 1] = set()\n\n        return reaching",
+    "testCases": [
+      {
+        "input": "rd = ReachingDefinitions()\nstmts = [('x', 1), ('y', 2), ('x', 3)]\nresult = rd.analyze(stmts)\ndefs = result[2]\nx_defs = [line for var, line in defs if var == 'x']\nprint(x_defs[0])",
+        "expectedOutput": "2",
+        "isHidden": false,
+        "description": "Second definition of x kills first"
+      },
+      {
+        "input": "rd = ReachingDefinitions()\nstmts = [('a', 1), ('b', 2)]\nresult = rd.analyze(stmts)\nprint(len(result[2]))",
+        "expectedOutput": "2",
+        "isHidden": false,
+        "description": "Both definitions reach end"
+      },
+      {
+        "input": "rd = ReachingDefinitions()\nstmts = [('x', 5), ('y', {'var': 'x'}), ('x', 10)]\nresult = rd.analyze(stmts)\nx_defs = [line for var, line in result[3] if var == 'x']\nprint(x_defs[0])",
+        "isHidden": true,
+        "description": "Most recent x definition reaches end"
+      }
+    ],
+    "hints": [
+      "At each program point, track which definitions are live",
+      "A new definition of a variable kills previous definitions of that variable",
+      "Propagate reaching definitions forward through the program",
+      "Each definition is identified by (variable, line_number) pair"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs304-t6-ex07",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-6",
+    "title": "Live Variable Analysis",
+    "difficulty": 3,
+    "description": "Implement live variable analysis to determine which variables are live (will be used in the future) at each program point.",
+    "starterCode": "class LiveVariableAnalysis:\n    def get_uses(self, expr):\n        \"\"\"Get variables used in an expression.\"\"\"\n        # TODO: Extract variables from expression\n        pass\n\n    def analyze(self, statements):\n        \"\"\"\n        Compute live variables at each program point.\n        statements: list of (var, expr) tuples\n        Returns: dict mapping line_number -> set of live variables\n        \"\"\"\n        # TODO: Implement backward data flow analysis\n        pass",
+    "solution": "class LiveVariableAnalysis:\n    def get_uses(self, expr):\n        \"\"\"Get variables used in an expression.\"\"\"\n        if isinstance(expr, str):\n            return {expr}\n\n        if isinstance(expr, int):\n            return set()\n\n        if isinstance(expr, dict):\n            if 'var' in expr:\n                return {expr['var']}\n\n            if 'value' in expr:\n                return set()\n\n            if 'op' in expr:\n                left_uses = self.get_uses(expr['left'])\n                right_uses = self.get_uses(expr['right'])\n                return left_uses | right_uses\n\n        return set()\n\n    def analyze(self, statements):\n        \"\"\"\n        Compute live variables at each program point.\n        statements: list of (var, expr) tuples\n        Returns: dict mapping line_number -> set of live variables\n        \"\"\"\n        n = len(statements)\n        live = {}\n\n        # Initialize: nothing is live after the last statement\n        for i in range(n + 1):\n            live[i] = set()\n\n        # Iterate backwards until fixed point\n        changed = True\n        while changed:\n            changed = False\n            for i in range(n - 1, -1, -1):\n                var, expr = statements[i]\n\n                # live_out[i] = live_in[i+1]\n                old_live = live[i].copy()\n\n                # live_in[i] = (live_out[i] - {var}) ∪ uses(expr)\n                live[i] = live[i + 1].copy()\n                live[i].discard(var)  # var is defined here\n                live[i].update(self.get_uses(expr))  # variables used here\n\n                if live[i] != old_live:\n                    changed = True\n\n        return live",
+    "testCases": [
+      {
+        "input": "lva = LiveVariableAnalysis()\nstmts = [('x', 5), ('y', {'var': 'x'})]\nresult = lva.analyze(stmts)\nprint('x' in result[0])",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "x is live at start (used later)"
+      },
+      {
+        "input": "lva = LiveVariableAnalysis()\nstmts = [('a', 1), ('b', 2), ('c', {'var': 'a'})]\nresult = lva.analyze(stmts)\nprint('b' in result[3])",
+        "expectedOutput": "False",
+        "isHidden": false,
+        "description": "b is not live at end (not used after definition)"
+      },
+      {
+        "input": "lva = LiveVariableAnalysis()\nstmts = [('x', 5), ('x', 10), ('y', {'var': 'x'})]\nresult = lva.analyze(stmts)\nprint('x' in result[0])",
+        "isHidden": true,
+        "description": "First x is not live (overwritten before use)"
+      }
+    ],
+    "hints": [
+      "Work backwards from the end of the program",
+      "A variable is live if it will be used before being redefined",
+      "At each point: live = (live_after - defined) ∪ used",
+      "Iterate until the live sets stop changing (fixed point)"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs304-t6-ex08",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-6",
+    "title": "Strength Reduction",
+    "difficulty": 3,
+    "description": "Implement strength reduction to replace expensive operations (multiplication, division) with cheaper ones (addition, shifts).",
+    "starterCode": "class StrengthReducer:\n    def reduce(self, expr):\n        \"\"\"\n        Apply strength reduction to expressions.\n        - Replace multiplication by power of 2 with left shift\n        - Replace division by power of 2 with right shift\n        - Replace x * 1 with x, x * 0 with 0\n        \"\"\"\n        # TODO: Implement strength reduction\n        pass",
+    "solution": "class StrengthReducer:\n    def is_power_of_2(self, n):\n        \"\"\"Check if n is a power of 2.\"\"\"\n        return n > 0 and (n & (n - 1)) == 0\n\n    def log2(self, n):\n        \"\"\"Compute log base 2 of n (assumes n is power of 2).\"\"\"\n        count = 0\n        while n > 1:\n            n >>= 1\n            count += 1\n        return count\n\n    def reduce(self, expr):\n        \"\"\"\n        Apply strength reduction to expressions.\n        - Replace multiplication by power of 2 with left shift\n        - Replace division by power of 2 with right shift\n        - Replace x * 1 with x, x * 0 with 0\n        \"\"\"\n        if not isinstance(expr, dict) or 'op' not in expr:\n            return expr\n\n        # Recursively reduce subexpressions\n        left = self.reduce(expr['left'])\n        right = self.reduce(expr['right'])\n\n        op = expr['op']\n\n        # Get constant value if right operand is constant\n        right_val = None\n        if isinstance(right, dict) and 'value' in right:\n            right_val = right['value']\n        elif isinstance(right, int):\n            right_val = right\n\n        # Multiplication optimizations\n        if op == '*':\n            if right_val == 0:\n                return {'value': 0}\n            elif right_val == 1:\n                return left\n            elif right_val is not None and self.is_power_of_2(right_val):\n                # Replace with left shift\n                shift = self.log2(right_val)\n                return {'op': '<<', 'left': left, 'right': {'value': shift}}\n\n        # Division optimizations\n        elif op == '/':\n            if right_val == 1:\n                return left\n            elif right_val is not None and self.is_power_of_2(right_val):\n                # Replace with right shift\n                shift = self.log2(right_val)\n                return {'op': '>>', 'left': left, 'right': {'value': shift}}\n\n        return {'op': op, 'left': left, 'right': right}",
+    "testCases": [
+      {
+        "input": "reducer = StrengthReducer()\nexpr = {'op': '*', 'left': {'var': 'x'}, 'right': {'value': 8}}\nresult = reducer.reduce(expr)\nprint(result['op'])",
+        "expectedOutput": "<<",
+        "isHidden": false,
+        "description": "x * 8 becomes x << 3"
+      },
+      {
+        "input": "reducer = StrengthReducer()\nexpr = {'op': '*', 'left': {'var': 'x'}, 'right': {'value': 1}}\nresult = reducer.reduce(expr)\nprint(result)",
+        "expectedOutput": "{'var': 'x'}",
+        "isHidden": false,
+        "description": "x * 1 becomes x"
+      },
+      {
+        "input": "reducer = StrengthReducer()\nexpr = {'op': '/', 'left': {'var': 'y'}, 'right': {'value': 16}}\nresult = reducer.reduce(expr)\nprint(result['right']['value'])",
+        "isHidden": true,
+        "description": "y / 16 becomes y >> 4"
+      }
+    ],
+    "hints": [
+      "Check if multiplier/divisor is a power of 2",
+      "Multiplication by 2^n can be replaced with left shift by n",
+      "Division by 2^n can be replaced with right shift by n",
+      "Handle identity cases: x * 1 = x, x * 0 = 0"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs304-t6-ex09",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-6",
+    "title": "Loop Invariant Code Motion",
+    "difficulty": 4,
+    "description": "Implement loop invariant code motion to move computations that don't change in a loop outside the loop.",
+    "starterCode": "class LoopInvariantMotion:\n    def __init__(self):\n        self.loop_vars = set()  # Variables modified in loop\n\n    def is_invariant(self, expr, loop_vars):\n        \"\"\"Check if expression is loop invariant.\"\"\"\n        # TODO: Determine if expr depends only on non-loop variables\n        pass\n\n    def hoist(self, loop_body):\n        \"\"\"\n        Move loop-invariant code out of loop.\n        loop_body: list of (var, expr) tuples\n        Returns: (preheader, new_loop_body)\n        \"\"\"\n        # TODO: Implement hoisting\n        pass",
+    "solution": "class LoopInvariantMotion:\n    def __init__(self):\n        self.loop_vars = set()  # Variables modified in loop\n\n    def get_vars(self, expr):\n        \"\"\"Get all variables used in an expression.\"\"\"\n        if isinstance(expr, str):\n            return {expr}\n\n        if isinstance(expr, int):\n            return set()\n\n        if isinstance(expr, dict):\n            if 'var' in expr:\n                return {expr['var']}\n\n            if 'value' in expr:\n                return set()\n\n            if 'op' in expr:\n                left_vars = self.get_vars(expr['left'])\n                right_vars = self.get_vars(expr['right'])\n                return left_vars | right_vars\n\n        return set()\n\n    def is_invariant(self, expr, loop_vars):\n        \"\"\"Check if expression is loop invariant.\"\"\"\n        # Get all variables used in expression\n        used_vars = self.get_vars(expr)\n\n        # Invariant if no loop-modified variables are used\n        return len(used_vars & loop_vars) == 0\n\n    def hoist(self, loop_body):\n        \"\"\"\n        Move loop-invariant code out of loop.\n        loop_body: list of (var, expr) tuples\n        Returns: (preheader, new_loop_body)\n        \"\"\"\n        # First pass: identify variables modified in loop\n        loop_vars = set()\n        for var, expr in loop_body:\n            loop_vars.add(var)\n\n        # Second pass: identify invariant statements\n        preheader = []\n        new_body = []\n\n        for var, expr in loop_body:\n            if self.is_invariant(expr, loop_vars) and isinstance(expr, dict):\n                # This is invariant - hoist it\n                preheader.append((var, expr))\n            else:\n                # Keep in loop\n                new_body.append((var, expr))\n\n        return preheader, new_body",
+    "testCases": [
+      {
+        "input": "lim = LoopInvariantMotion()\nloop = [('x', {'op': '+', 'left': {'var': 'a'}, 'right': {'var': 'b'}}), ('i', {'op': '+', 'left': {'var': 'i'}, 'right': 1})]\npreheader, body = lim.hoist(loop)\nprint(len(preheader))",
+        "expectedOutput": "1",
+        "isHidden": false,
+        "description": "Hoist a+b (invariant)"
+      },
+      {
+        "input": "lim = LoopInvariantMotion()\nloop = [('x', {'op': '*', 'left': {'var': 'i'}, 'right': 2}), ('i', {'op': '+', 'left': {'var': 'i'}, 'right': 1})]\npreheader, body = lim.hoist(loop)\nprint(len(preheader))",
+        "expectedOutput": "0",
+        "isHidden": false,
+        "description": "Cannot hoist i*2 (i is modified)"
+      },
+      {
+        "input": "lim = LoopInvariantMotion()\nloop = [('y', {'op': '+', 'left': {'value': 5}, 'right': {'value': 3}}), ('z', {'var': 'y'})]\npreheader, body = lim.hoist(loop)\nprint(len(preheader))",
+        "isHidden": true,
+        "description": "Hoist constant expression"
+      }
+    ],
+    "hints": [
+      "First identify all variables that are modified in the loop",
+      "An expression is invariant if it uses only non-loop variables",
+      "Hoist invariant computations to a preheader before the loop",
+      "Be careful with dependencies: hoisted code should not use loop variables"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs304-t6-ex10",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-6",
+    "title": "Induction Variable Elimination",
+    "difficulty": 4,
+    "description": "Identify and optimize induction variables in loops by replacing derived induction variables with computations based on the basic induction variable.",
+    "starterCode": "class InductionVariableOptimizer:\n    def find_basic_induction_vars(self, loop_body):\n        \"\"\"\n        Find basic induction variables (vars of form i = i + c).\n        Returns dict: var -> increment\n        \"\"\"\n        # TODO: Identify basic induction variables\n        pass\n\n    def optimize(self, loop_body):\n        \"\"\"\n        Optimize induction variables.\n        Replace j = c1 * i + c2 with incremental updates.\n        \"\"\"\n        # TODO: Implement induction variable optimization\n        pass",
+    "solution": "class InductionVariableOptimizer:\n    def find_basic_induction_vars(self, loop_body):\n        \"\"\"\n        Find basic induction variables (vars of form i = i + c).\n        Returns dict: var -> increment\n        \"\"\"\n        basic_ivs = {}\n\n        for var, expr in loop_body:\n            if isinstance(expr, dict) and expr.get('op') == '+':\n                left = expr['left']\n                right = expr['right']\n\n                # Check for i = i + c\n                if isinstance(left, dict) and left.get('var') == var:\n                    if isinstance(right, dict) and 'value' in right:\n                        basic_ivs[var] = right['value']\n                    elif isinstance(right, int):\n                        basic_ivs[var] = right\n\n        return basic_ivs\n\n    def optimize(self, loop_body):\n        \"\"\"\n        Optimize induction variables.\n        Replace j = c1 * i + c2 with incremental updates.\n        \"\"\"\n        # Find basic induction variables\n        basic_ivs = self.find_basic_induction_vars(loop_body)\n\n        optimized = []\n\n        for var, expr in loop_body:\n            # Check if this is a derived induction variable: j = c * i + d\n            if isinstance(expr, dict) and expr.get('op') in ['+', '*']:\n                # Simplified check for j = c * i form\n                if expr['op'] == '*':\n                    left = expr['left']\n                    right = expr['right']\n\n                    # Check if multiplying by a basic IV\n                    basic_iv = None\n                    multiplier = None\n\n                    if isinstance(left, dict) and left.get('var') in basic_ivs:\n                        basic_iv = left['var']\n                        if isinstance(right, dict) and 'value' in right:\n                            multiplier = right['value']\n\n                    if basic_iv and multiplier:\n                        # This is a derived IV: j = c * i\n                        # Can optimize to: j = j + c * increment_of_i\n                        increment = basic_ivs[basic_iv] * multiplier\n                        new_expr = {\n                            'op': '+',\n                            'left': {'var': var},\n                            'right': {'value': increment}\n                        }\n                        optimized.append((var, new_expr))\n                        continue\n\n            # Keep statement as-is\n            optimized.append((var, expr))\n\n        return optimized",
+    "testCases": [
+      {
+        "input": "ivo = InductionVariableOptimizer()\nloop = [('i', {'op': '+', 'left': {'var': 'i'}, 'right': {'value': 1}})]\nbasic = ivo.find_basic_induction_vars(loop)\nprint(basic['i'])",
+        "expectedOutput": "1",
+        "isHidden": false,
+        "description": "Identify basic IV i = i + 1"
+      },
+      {
+        "input": "ivo = InductionVariableOptimizer()\nloop = [\n    ('i', {'op': '+', 'left': {'var': 'i'}, 'right': {'value': 1}}),\n    ('j', {'op': '*', 'left': {'var': 'i'}, 'right': {'value': 4}})\n]\noptimized = ivo.optimize(loop)\nprint(optimized[1][1]['right']['value'])",
+        "expectedOutput": "4",
+        "isHidden": false,
+        "description": "Transform j = i * 4 to j = j + 4"
+      },
+      {
+        "input": "ivo = InductionVariableOptimizer()\nloop = [\n    ('i', {'op': '+', 'left': {'var': 'i'}, 'right': {'value': 2}}),\n    ('j', {'op': '*', 'left': {'var': 'i'}, 'right': {'value': 3}})\n]\noptimized = ivo.optimize(loop)\nprint(optimized[1][1]['right']['value'])",
+        "isHidden": true,
+        "description": "j = i * 3 becomes j = j + 6 (since i += 2)"
+      }
+    ],
+    "hints": [
+      "Basic induction variables have the form i = i + c",
+      "Derived induction variables are linear functions of basic IVs",
+      "Replace j = c * i with j = j + (c * increment_of_i)",
+      "Track the increment value for each basic induction variable"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs304-t6-ex11",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-6",
+    "title": "Algebraic Simplification",
+    "difficulty": 2,
+    "description": "Implement algebraic simplifications like x + 0 = x, x * 1 = x, x - x = 0, etc.",
+    "starterCode": "class AlgebraicSimplifier:\n    def simplify(self, expr):\n        \"\"\"\n        Apply algebraic simplifications.\n        - x + 0 = x, 0 + x = x\n        - x * 1 = x, 1 * x = x\n        - x * 0 = 0, 0 * x = 0\n        - x - 0 = x\n        - x - x = 0\n        \"\"\"\n        # TODO: Implement simplifications\n        pass",
+    "solution": "class AlgebraicSimplifier:\n    def expr_equal(self, e1, e2):\n        \"\"\"Check if two expressions are equal.\"\"\"\n        if isinstance(e1, int) and isinstance(e2, int):\n            return e1 == e2\n\n        if isinstance(e1, str) and isinstance(e2, str):\n            return e1 == e2\n\n        if isinstance(e1, dict) and isinstance(e2, dict):\n            if 'var' in e1 and 'var' in e2:\n                return e1['var'] == e2['var']\n            if 'value' in e1 and 'value' in e2:\n                return e1['value'] == e2['value']\n\n        return False\n\n    def get_value(self, expr):\n        \"\"\"Get constant value if expression is a constant.\"\"\"\n        if isinstance(expr, int):\n            return expr\n        if isinstance(expr, dict) and 'value' in expr:\n            return expr['value']\n        return None\n\n    def simplify(self, expr):\n        \"\"\"\n        Apply algebraic simplifications.\n        - x + 0 = x, 0 + x = x\n        - x * 1 = x, 1 * x = x\n        - x * 0 = 0, 0 * x = 0\n        - x - 0 = x\n        - x - x = 0\n        \"\"\"\n        if not isinstance(expr, dict) or 'op' not in expr:\n            return expr\n\n        # Recursively simplify subexpressions\n        left = self.simplify(expr['left'])\n        right = self.simplify(expr['right'])\n\n        op = expr['op']\n        left_val = self.get_value(left)\n        right_val = self.get_value(right)\n\n        # Addition simplifications\n        if op == '+':\n            if left_val == 0:\n                return right\n            if right_val == 0:\n                return left\n\n        # Subtraction simplifications\n        elif op == '-':\n            if right_val == 0:\n                return left\n            if self.expr_equal(left, right):\n                return {'value': 0}\n\n        # Multiplication simplifications\n        elif op == '*':\n            if left_val == 0 or right_val == 0:\n                return {'value': 0}\n            if left_val == 1:\n                return right\n            if right_val == 1:\n                return left\n\n        # Division simplifications\n        elif op == '/':\n            if right_val == 1:\n                return left\n\n        return {'op': op, 'left': left, 'right': right}",
+    "testCases": [
+      {
+        "input": "simp = AlgebraicSimplifier()\nresult = simp.simplify({'op': '+', 'left': {'var': 'x'}, 'right': {'value': 0}})\nprint(result)",
+        "expectedOutput": "{'var': 'x'}",
+        "isHidden": false,
+        "description": "x + 0 = x"
+      },
+      {
+        "input": "simp = AlgebraicSimplifier()\nresult = simp.simplify({'op': '*', 'left': {'var': 'y'}, 'right': {'value': 1}})\nprint(result)",
+        "expectedOutput": "{'var': 'y'}",
+        "isHidden": false,
+        "description": "y * 1 = y"
+      },
+      {
+        "input": "simp = AlgebraicSimplifier()\nresult = simp.simplify({'op': '-', 'left': {'var': 'z'}, 'right': {'var': 'z'}})\nprint(result['value'])",
+        "isHidden": true,
+        "description": "z - z = 0"
+      }
+    ],
+    "hints": [
+      "Check for identity elements: 0 for addition, 1 for multiplication",
+      "Handle both left and right operand positions",
+      "For x - x, check if both operands are the same variable",
+      "Recursively simplify subexpressions first"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs304-t6-ex12",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-6",
+    "title": "Available Expressions Analysis",
+    "difficulty": 3,
+    "description": "Implement available expressions analysis to determine which expressions have been computed and are still valid at each program point.",
+    "starterCode": "class AvailableExpressions:\n    def expr_to_str(self, expr):\n        \"\"\"Convert expression to string for comparison.\"\"\"\n        # TODO: Implement\n        pass\n\n    def analyze(self, statements):\n        \"\"\"\n        Compute available expressions at each program point.\n        Returns: dict mapping line_number -> set of available expression strings\n        \"\"\"\n        # TODO: Implement forward data flow analysis\n        pass",
+    "solution": "class AvailableExpressions:\n    def expr_to_str(self, expr):\n        \"\"\"Convert expression to string for comparison.\"\"\"\n        if isinstance(expr, int):\n            return str(expr)\n\n        if isinstance(expr, str):\n            return expr\n\n        if isinstance(expr, dict):\n            if 'value' in expr:\n                return str(expr['value'])\n\n            if 'var' in expr:\n                return expr['var']\n\n            if 'op' in expr:\n                left = self.expr_to_str(expr['left'])\n                right = self.expr_to_str(expr['right'])\n                return f\"({left} {expr['op']} {right})\"\n\n        return \"\"\n\n    def get_exprs(self, expr):\n        \"\"\"Get all subexpressions.\"\"\"\n        exprs = set()\n\n        if isinstance(expr, dict) and 'op' in expr:\n            expr_str = self.expr_to_str(expr)\n            exprs.add(expr_str)\n\n            # Recursively get subexpressions\n            exprs.update(self.get_exprs(expr['left']))\n            exprs.update(self.get_exprs(expr['right']))\n\n        return exprs\n\n    def analyze(self, statements):\n        \"\"\"\n        Compute available expressions at each program point.\n        Returns: dict mapping line_number -> set of available expression strings\n        \"\"\"\n        n = len(statements)\n        available = {}\n\n        # Initialize: no expressions available at start\n        for i in range(n + 1):\n            available[i] = set()\n\n        # Iterate forward until fixed point\n        changed = True\n        while changed:\n            changed = False\n\n            for i, (var, expr) in enumerate(statements):\n                # available_in[i] = available_out[i-1]\n                old_available = available[i].copy()\n\n                if i > 0:\n                    available[i] = available[i - 1].copy()\n                else:\n                    available[i] = set()\n\n                # Kill expressions that use the variable being defined\n                available[i] = {e for e in available[i] if var not in e}\n\n                # Gen: add new expressions computed here\n                new_exprs = self.get_exprs(expr)\n                available[i].update(new_exprs)\n\n                # Propagate to next point\n                available[i + 1] = available[i].copy()\n\n                if available[i] != old_available:\n                    changed = True\n\n        return available",
+    "testCases": [
+      {
+        "input": "ae = AvailableExpressions()\nstmts = [('t1', {'op': '+', 'left': {'var': 'a'}, 'right': {'var': 'b'}}), ('t2', {'var': 't1'})]\nresult = ae.analyze(stmts)\nprint('(a + b)' in result[1])",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "a+b is available after first statement"
+      },
+      {
+        "input": "ae = AvailableExpressions()\nstmts = [('x', {'op': '+', 'left': {'var': 'a'}, 'right': {'var': 'b'}}), ('a', 10)]\nresult = ae.analyze(stmts)\nprint('(a + b)' in result[2])",
+        "expectedOutput": "False",
+        "isHidden": false,
+        "description": "a+b is killed when a is redefined"
+      },
+      {
+        "input": "ae = AvailableExpressions()\nstmts = [('t1', {'op': '*', 'left': {'var': 'x'}, 'right': {'value': 2}}), ('t2', {'op': '+', 'left': {'var': 't1'}, 'right': 1})]\nresult = ae.analyze(stmts)\nprint('(x * 2)' in result[2])",
+        "isHidden": true,
+        "description": "x*2 remains available"
+      }
+    ],
+    "hints": [
+      "Work forwards through the program",
+      "An expression is available if it has been computed and not invalidated",
+      "Kill expressions when any variable they use is redefined",
+      "Generate new expressions when they are computed"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs304-t6-ex13",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-6",
+    "title": "Partial Redundancy Elimination",
+    "difficulty": 5,
+    "description": "Implement partial redundancy elimination to optimize cases where an expression is redundant on some paths but not others.",
+    "starterCode": "class PartialRedundancyElimination:\n    def __init__(self):\n        self.anticipated = {}  # Anticipated expressions\n        self.available = {}  # Available expressions\n\n    def compute_anticipated(self, cfg):\n        \"\"\"\n        Compute anticipated expressions (will be used on all paths).\n        cfg: list of basic blocks, each block is list of statements\n        \"\"\"\n        # TODO: Backward analysis\n        pass\n\n    def eliminate(self, cfg):\n        \"\"\"\n        Perform partial redundancy elimination.\n        Insert computations at optimal points.\n        \"\"\"\n        # TODO: Implement PRE\n        pass",
+    "solution": "class PartialRedundancyElimination:\n    def __init__(self):\n        self.anticipated = {}  # Anticipated expressions\n        self.available = {}  # Available expressions\n\n    def expr_to_str(self, expr):\n        \"\"\"Convert expression to string.\"\"\"\n        if isinstance(expr, dict) and 'op' in expr:\n            left = self.expr_to_str(expr.get('left', ''))\n            right = self.expr_to_str(expr.get('right', ''))\n            return f\"({left} {expr['op']} {right})\"\n        if isinstance(expr, dict) and 'var' in expr:\n            return expr['var']\n        if isinstance(expr, dict) and 'value' in expr:\n            return str(expr['value'])\n        return str(expr)\n\n    def get_exprs(self, block):\n        \"\"\"Get all expressions in a block.\"\"\"\n        exprs = set()\n        for var, expr in block:\n            if isinstance(expr, dict) and 'op' in expr:\n                exprs.add(self.expr_to_str(expr))\n        return exprs\n\n    def compute_anticipated(self, cfg):\n        \"\"\"\n        Compute anticipated expressions (will be used on all paths).\n        cfg: list of basic blocks, each block is list of statements\n        Simplified: just check if expression appears in block\n        \"\"\"\n        for i, block in enumerate(cfg):\n            self.anticipated[i] = self.get_exprs(block)\n\n    def eliminate(self, cfg):\n        \"\"\"\n        Perform partial redundancy elimination.\n        Insert computations at optimal points.\n        Simplified implementation: identify common expressions across blocks\n        \"\"\"\n        # Compute anticipated expressions\n        self.compute_anticipated(cfg)\n\n        # Find expressions that appear in multiple blocks\n        all_exprs = set()\n        expr_blocks = {}\n\n        for i, block in enumerate(cfg):\n            exprs = self.get_exprs(block)\n            all_exprs.update(exprs)\n\n            for expr in exprs:\n                if expr not in expr_blocks:\n                    expr_blocks[expr] = []\n                expr_blocks[expr].append(i)\n\n        # Identify partially redundant expressions (appear in 2+ blocks)\n        partially_redundant = {expr: blocks for expr, blocks in expr_blocks.items() if len(blocks) > 1}\n\n        return partially_redundant",
+    "testCases": [
+      {
+        "input": "pre = PartialRedundancyElimination()\ncfg = [\n    [('t1', {'op': '+', 'left': {'var': 'a'}, 'right': {'var': 'b'}})],\n    [('t2', {'op': '+', 'left': {'var': 'a'}, 'right': {'var': 'b'}})]\n]\nresult = pre.eliminate(cfg)\nprint(len(result))",
+        "expectedOutput": "1",
+        "isHidden": false,
+        "description": "Find one partially redundant expression"
+      },
+      {
+        "input": "pre = PartialRedundancyElimination()\ncfg = [\n    [('x', 1)],\n    [('y', 2)]\n]\nresult = pre.eliminate(cfg)\nprint(len(result))",
+        "expectedOutput": "0",
+        "isHidden": false,
+        "description": "No redundant expressions"
+      },
+      {
+        "input": "pre = PartialRedundancyElimination()\ncfg = [\n    [('t1', {'op': '*', 'left': {'var': 'x'}, 'right': {'value': 2}})],\n    [('t2', 5)],\n    [('t3', {'op': '*', 'left': {'var': 'x'}, 'right': {'value': 2}})]\n]\nresult = pre.eliminate(cfg)\nprint('(x * 2)' in result)",
+        "isHidden": true,
+        "description": "Expression in blocks 0 and 2"
+      }
+    ],
+    "hints": [
+      "PRE combines anticipation and availability analysis",
+      "An expression is partially redundant if it's redundant on some paths",
+      "Insert computations at optimal points to make expressions fully redundant",
+      "This is a simplified version focusing on identifying redundancy"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs304-t6-ex14",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-6",
+    "title": "Tail Call Optimization",
+    "difficulty": 3,
+    "description": "Implement tail call optimization to convert tail-recursive functions into iterative loops.",
+    "starterCode": "class TailCallOptimizer:\n    def is_tail_call(self, function_body):\n        \"\"\"\n        Check if last statement is a recursive call.\n        function_body: list of statements, last should be return statement\n        \"\"\"\n        # TODO: Check for tail recursion pattern\n        pass\n\n    def optimize(self, function_name, function_body):\n        \"\"\"\n        Convert tail recursive function to loop.\n        Returns optimized function body.\n        \"\"\"\n        # TODO: Transform to iterative version\n        pass",
+    "solution": "class TailCallOptimizer:\n    def is_tail_call(self, function_body, function_name):\n        \"\"\"\n        Check if last statement is a recursive call.\n        function_body: list of statements\n        \"\"\"\n        if not function_body:\n            return False\n\n        last_stmt = function_body[-1]\n\n        # Check if it's a return statement with a call\n        if isinstance(last_stmt, dict) and last_stmt.get('type') == 'return':\n            expr = last_stmt.get('value')\n            if isinstance(expr, dict) and expr.get('type') == 'call':\n                return expr.get('function') == function_name\n\n        return False\n\n    def optimize(self, function_name, params, function_body):\n        \"\"\"\n        Convert tail recursive function to loop.\n        params: list of parameter names\n        function_body: list of statement dicts\n        Returns optimized function body.\n        \"\"\"\n        if not self.is_tail_call(function_body, function_name):\n            return function_body\n\n        # Create loop structure\n        optimized = []\n\n        # Add loop start label\n        optimized.append({'type': 'label', 'name': 'loop_start'})\n\n        # Transform body: replace return with jump to start and parameter updates\n        for stmt in function_body[:-1]:\n            optimized.append(stmt)\n\n        # Last statement is the tail call - replace with parameter updates and loop\n        last_stmt = function_body[-1]\n        if isinstance(last_stmt, dict) and last_stmt.get('type') == 'return':\n            call_expr = last_stmt['value']\n            if isinstance(call_expr, dict) and call_expr.get('type') == 'call':\n                # Update parameters with new arguments\n                args = call_expr.get('args', [])\n                for i, arg in enumerate(args):\n                    if i < len(params):\n                        optimized.append({\n                            'type': 'assign',\n                            'var': params[i],\n                            'value': arg\n                        })\n\n                # Jump back to loop start\n                optimized.append({'type': 'goto', 'label': 'loop_start'})\n\n        return optimized",
+    "testCases": [
+      {
+        "input": "tco = TailCallOptimizer()\nbody = [\n    {'type': 'if', 'condition': 'n == 0', 'then': [{'type': 'return', 'value': 1}]},\n    {'type': 'return', 'value': {'type': 'call', 'function': 'fact', 'args': ['n-1', 'acc*n']}}\n]\nis_tail = tco.is_tail_call(body, 'fact')\nprint(is_tail)",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Detect tail recursive call"
+      },
+      {
+        "input": "tco = TailCallOptimizer()\nbody = [\n    {'type': 'assign', 'var': 'x', 'value': 1},\n    {'type': 'return', 'value': {'type': 'call', 'function': 'foo', 'args': ['x']}}\n]\noptimized = tco.optimize('foo', ['n'], body)\nprint(optimized[-1]['type'])",
+        "expectedOutput": "goto",
+        "isHidden": false,
+        "description": "Transform to loop with goto"
+      },
+      {
+        "input": "tco = TailCallOptimizer()\nbody = [{'type': 'return', 'value': 'n'}]\noptimized = tco.optimize('foo', ['n'], body)\nprint(len(optimized))",
+        "isHidden": true,
+        "description": "Non-tail-recursive function unchanged"
+      }
+    ],
+    "hints": [
+      "A tail call is when the last action is a recursive call",
+      "Convert the tail call into a loop that updates parameters and restarts",
+      "Replace the return statement with parameter updates and a jump to the start",
+      "Add a loop label at the beginning of the function"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs304-t6-ex15",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-6",
+    "title": "Unreachable Code Elimination",
+    "difficulty": 2,
+    "description": "Implement unreachable code elimination to remove code that can never be executed.",
+    "starterCode": "class UnreachableCodeEliminator:\n    def find_reachable(self, cfg, entry_block=0):\n        \"\"\"\n        Find all reachable basic blocks.\n        cfg: dict mapping block_id -> {'code': [...], 'successors': [block_ids]}\n        Returns: set of reachable block IDs\n        \"\"\"\n        # TODO: Implement reachability analysis\n        pass\n\n    def eliminate(self, cfg, entry_block=0):\n        \"\"\"Remove unreachable blocks from CFG.\"\"\"\n        # TODO: Remove unreachable blocks\n        pass",
+    "solution": "class UnreachableCodeEliminator:\n    def find_reachable(self, cfg, entry_block=0):\n        \"\"\"\n        Find all reachable basic blocks.\n        cfg: dict mapping block_id -> {'code': [...], 'successors': [block_ids]}\n        Returns: set of reachable block IDs\n        \"\"\"\n        reachable = set()\n        worklist = [entry_block]\n\n        while worklist:\n            current = worklist.pop(0)\n\n            if current in reachable:\n                continue\n\n            reachable.add(current)\n\n            # Add successors to worklist\n            if current in cfg:\n                successors = cfg[current].get('successors', [])\n                for succ in successors:\n                    if succ not in reachable:\n                        worklist.append(succ)\n\n        return reachable\n\n    def eliminate(self, cfg, entry_block=0):\n        \"\"\"Remove unreachable blocks from CFG.\"\"\"\n        reachable = self.find_reachable(cfg, entry_block)\n\n        # Create new CFG with only reachable blocks\n        new_cfg = {}\n        for block_id in reachable:\n            if block_id in cfg:\n                new_cfg[block_id] = cfg[block_id]\n\n        return new_cfg",
+    "testCases": [
+      {
+        "input": "uce = UnreachableCodeEliminator()\ncfg = {\n    0: {'code': ['x = 1'], 'successors': [1]},\n    1: {'code': ['y = 2'], 'successors': []},\n    2: {'code': ['z = 3'], 'successors': []}\n}\nreachable = uce.find_reachable(cfg, 0)\nprint(2 in reachable)",
+        "expectedOutput": "False",
+        "isHidden": false,
+        "description": "Block 2 is unreachable from entry"
+      },
+      {
+        "input": "uce = UnreachableCodeEliminator()\ncfg = {\n    0: {'code': ['x = 1'], 'successors': [1, 2]},\n    1: {'code': ['y = 2'], 'successors': [3]},\n    2: {'code': ['z = 3'], 'successors': [3]},\n    3: {'code': ['return'], 'successors': []}\n}\nnew_cfg = uce.eliminate(cfg, 0)\nprint(len(new_cfg))",
+        "expectedOutput": "4",
+        "isHidden": false,
+        "description": "All blocks reachable"
+      },
+      {
+        "input": "uce = UnreachableCodeEliminator()\ncfg = {\n    0: {'code': ['x = 1'], 'successors': [1]},\n    1: {'code': ['return'], 'successors': []},\n    2: {'code': ['y = 2'], 'successors': [3]},\n    3: {'code': ['z = 3'], 'successors': []}\n}\nnew_cfg = uce.eliminate(cfg, 0)\nprint(len(new_cfg))",
+        "isHidden": true,
+        "description": "Blocks 2 and 3 unreachable"
+      }
+    ],
+    "hints": [
+      "Use a worklist algorithm starting from the entry block",
+      "Mark blocks as reachable when visited",
+      "Add successor blocks to the worklist",
+      "Remove blocks that are never marked as reachable"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs304-t6-ex16",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-6",
+    "title": "Inline Expansion",
+    "difficulty": 4,
+    "description": "Implement function inlining to replace function calls with the function body for small functions.",
+    "starterCode": "class FunctionInliner:\n    def __init__(self, inline_threshold=5):\n        self.inline_threshold = inline_threshold\n        self.functions = {}  # function_name -> body\n\n    def should_inline(self, function_name):\n        \"\"\"Decide if function should be inlined based on size.\"\"\"\n        # TODO: Check function size\n        pass\n\n    def inline_call(self, call_site, function_name, args):\n        \"\"\"\n        Inline a function call.\n        call_site: (var, call_expr)\n        Returns: list of statements replacing the call\n        \"\"\"\n        # TODO: Substitute parameters with arguments\n        # Rename local variables to avoid conflicts\n        pass",
+    "solution": "class FunctionInliner:\n    def __init__(self, inline_threshold=5):\n        self.inline_threshold = inline_threshold\n        self.functions = {}  # function_name -> {'params': [...], 'body': [...]}\n        self.inline_counter = 0\n\n    def register_function(self, name, params, body):\n        \"\"\"Register a function for potential inlining.\"\"\"\n        self.functions[name] = {'params': params, 'body': body}\n\n    def should_inline(self, function_name):\n        \"\"\"Decide if function should be inlined based on size.\"\"\"\n        if function_name not in self.functions:\n            return False\n\n        body = self.functions[function_name]['body']\n        return len(body) <= self.inline_threshold\n\n    def rename_var(self, var, suffix):\n        \"\"\"Rename a variable to avoid conflicts.\"\"\"\n        if isinstance(var, str):\n            return f\"{var}_{suffix}\"\n        if isinstance(var, dict) and 'var' in var:\n            return {'var': f\"{var['var']}_{suffix}\"}\n        return var\n\n    def rename_expr(self, expr, suffix, param_map):\n        \"\"\"Rename variables in an expression.\"\"\"\n        if isinstance(expr, str):\n            if expr in param_map:\n                return param_map[expr]\n            return f\"{expr}_{suffix}\"\n\n        if isinstance(expr, int):\n            return expr\n\n        if isinstance(expr, dict):\n            if 'var' in expr:\n                var = expr['var']\n                if var in param_map:\n                    return param_map[var]\n                return {'var': f\"{var}_{suffix}\"}\n\n            if 'value' in expr:\n                return expr\n\n            if 'op' in expr:\n                left = self.rename_expr(expr['left'], suffix, param_map)\n                right = self.rename_expr(expr['right'], suffix, param_map)\n                return {'op': expr['op'], 'left': left, 'right': right}\n\n        return expr\n\n    def inline_call(self, result_var, function_name, args):\n        \"\"\"\n        Inline a function call.\n        Returns: list of statements replacing the call\n        \"\"\"\n        if not self.should_inline(function_name):\n            return None\n\n        func_info = self.functions[function_name]\n        params = func_info['params']\n        body = func_info['body']\n\n        # Create unique suffix for this inlining\n        suffix = f\"inline{self.inline_counter}\"\n        self.inline_counter += 1\n\n        # Create parameter substitution map\n        param_map = {}\n        for i, param in enumerate(params):\n            if i < len(args):\n                param_map[param] = args[i]\n\n        # Inline the body with renamed variables\n        inlined = []\n        for var, expr in body:\n            new_var = f\"{var}_{suffix}\"\n            new_expr = self.rename_expr(expr, suffix, param_map)\n            inlined.append((new_var, new_expr))\n\n        # Last statement's result should be assigned to result_var\n        if inlined:\n            last_var = inlined[-1][0]\n            inlined.append((result_var, {'var': last_var}))\n\n        return inlined",
+    "testCases": [
+      {
+        "input": "inliner = FunctionInliner(inline_threshold=5)\ninliner.register_function('add', ['a', 'b'], [('result', {'op': '+', 'left': {'var': 'a'}, 'right': {'var': 'b'}})])\nshould = inliner.should_inline('add')\nprint(should)",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Small function should be inlined"
+      },
+      {
+        "input": "inliner = FunctionInliner(inline_threshold=5)\ninliner.register_function('foo', ['x'], [('t1', 1), ('t2', 2)])\ninlined = inliner.inline_call('result', 'foo', [{'value': 10}])\nprint(len(inlined))",
+        "expectedOutput": "3",
+        "isHidden": false,
+        "description": "Inlined body plus result assignment"
+      },
+      {
+        "input": "inliner = FunctionInliner(inline_threshold=2)\ninliner.register_function('big', ['x'], [('t1', 1), ('t2', 2), ('t3', 3)])\nshould = inliner.should_inline('big')\nprint(should)",
+        "isHidden": true,
+        "description": "Large function should not be inlined"
+      }
+    ],
+    "hints": [
+      "Check function size against threshold to decide if it should be inlined",
+      "Substitute formal parameters with actual arguments",
+      "Rename local variables to avoid name conflicts with the caller",
+      "Connect the inlined code result to the call site result variable"
+    ],
+    "language": "python"
+  }
+]

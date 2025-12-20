@@ -1,0 +1,221 @@
+[
+  {
+    "id": "cs401-quiz-3-1",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-3",
+    "title": "Consensus and Coordination - Fundamentals",
+    "questions": [
+      {
+        "id": "cs401-q31",
+        "type": "multiple_choice",
+        "prompt": "What is the distributed consensus problem?",
+        "options": [
+          "Getting all nodes to agree on a single value",
+          "Synchronizing physical clocks",
+          "Load balancing requests",
+          "Encrypting communications"
+        ],
+        "correctAnswer": "Getting all nodes to agree on a single value",
+        "explanation": "Distributed consensus requires all non-faulty nodes to agree on a single value, with the agreement being final and irrevocable, despite failures and asynchrony."
+      },
+      {
+        "id": "cs401-q32",
+        "type": "multiple_choice",
+        "prompt": "Which property is NOT required for consensus?",
+        "options": [
+          "Fast execution",
+          "Agreement (all decide same value)",
+          "Validity (decided value was proposed)",
+          "Termination (all processes eventually decide)"
+        ],
+        "correctAnswer": "Fast execution",
+        "explanation": "Consensus requires agreement, validity, and termination, but not necessarily fast execution. Speed is a practical concern but not a correctness requirement."
+      },
+      {
+        "id": "cs401-q33",
+        "type": "multiple_choice",
+        "prompt": "What does the FLP impossibility result state?",
+        "options": [
+          "Consensus is impossible in asynchronous systems with one failure",
+          "Consensus requires Byzantine fault tolerance",
+          "Three-phase commit always works",
+          "Physical clock synchronization is impossible"
+        ],
+        "correctAnswer": "Consensus is impossible in asynchronous systems with one failure",
+        "explanation": "The FLP (Fischer, Lynch, Paterson) impossibility result proves that no deterministic consensus algorithm can guarantee termination in an asynchronous system with even one crash failure."
+      },
+      {
+        "id": "cs401-q34",
+        "type": "multiple_choice",
+        "prompt": "How do practical consensus algorithms overcome FLP impossibility?",
+        "options": [
+          "Use timeouts and assume partial synchrony",
+          "Ignore the theorem",
+          "Guarantee no failures occur",
+          "Use quantum computing"
+        ],
+        "correctAnswer": "Use timeouts and assume partial synchrony",
+        "explanation": "Practical algorithms like Raft and Paxos assume partial synchrony (timeouts eventually work) and use failure detectors, trading theoretical guarantees for practical functionality."
+      },
+      {
+        "id": "cs401-q35",
+        "type": "multiple_choice",
+        "prompt": "What is two-phase commit (2PC) used for?",
+        "options": [
+          "Atomic distributed transactions",
+          "Leader election",
+          "Clock synchronization",
+          "Load balancing"
+        ],
+        "correctAnswer": "Atomic distributed transactions",
+        "explanation": "Two-phase commit ensures that a distributed transaction either commits on all nodes or aborts on all nodes, maintaining atomicity across multiple participants."
+      }
+    ]
+  },
+  {
+    "id": "cs401-quiz-3-2",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-3",
+    "title": "Consensus and Coordination - Two-Phase Commit",
+    "questions": [
+      {
+        "id": "cs401-q36",
+        "type": "multiple_choice",
+        "prompt": "What are the two phases in two-phase commit?",
+        "options": [
+          "Prepare and Commit",
+          "Request and Response",
+          "Lock and Unlock",
+          "Send and Receive"
+        ],
+        "correctAnswer": "Prepare and Commit",
+        "explanation": "In 2PC, the coordinator first asks participants to prepare (vote on whether they can commit), then based on votes, instructs them to commit or abort in the second phase."
+      },
+      {
+        "id": "cs401-q37",
+        "type": "multiple_choice",
+        "prompt": "What is a major weakness of two-phase commit?",
+        "options": [
+          "Coordinator failure blocks progress",
+          "Too many network messages",
+          "Cannot handle reads",
+          "Requires Byzantine fault tolerance"
+        ],
+        "correctAnswer": "Coordinator failure blocks progress",
+        "explanation": "If the coordinator fails after participants prepare but before sending commit/abort decisions, participants are blocked indefinitely, unable to unilaterally decide the transaction outcome."
+      },
+      {
+        "id": "cs401-q38",
+        "type": "multiple_choice",
+        "prompt": "What does three-phase commit (3PC) add to avoid blocking?",
+        "options": [
+          "A prepare-to-commit phase",
+          "More participants",
+          "Faster networks",
+          "Byzantine fault tolerance"
+        ],
+        "correctAnswer": "A prepare-to-commit phase",
+        "explanation": "3PC adds a prepare-to-commit phase between prepare and commit, allowing participants to timeout and make progress if the coordinator fails, though this requires synchrony assumptions."
+      },
+      {
+        "id": "cs401-q39",
+        "type": "multiple_choice",
+        "prompt": "What is the primary goal of the Paxos algorithm?",
+        "options": [
+          "Achieve consensus on a single value",
+          "Synchronize clocks",
+          "Implement transactions",
+          "Detect failures"
+        ],
+        "correctAnswer": "Achieve consensus on a single value",
+        "explanation": "Paxos is a consensus algorithm that allows a collection of nodes to agree on a single value even in the presence of failures, forming the basis for many distributed systems."
+      },
+      {
+        "id": "cs401-q40",
+        "type": "multiple_choice",
+        "prompt": "What are the three roles in Paxos?",
+        "options": [
+          "Proposer, Acceptor, Learner",
+          "Client, Server, Coordinator",
+          "Leader, Follower, Observer",
+          "Master, Slave, Backup"
+        ],
+        "correctAnswer": "Proposer, Acceptor, Learner",
+        "explanation": "Paxos defines three roles: Proposers propose values, Acceptors vote on proposals (forming a quorum), and Learners learn which value was chosen. Nodes can play multiple roles."
+      }
+    ]
+  },
+  {
+    "id": "cs401-quiz-3-3",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-3",
+    "title": "Consensus and Coordination - Raft",
+    "questions": [
+      {
+        "id": "cs401-q41",
+        "type": "multiple_choice",
+        "prompt": "How does Raft differ from Paxos?",
+        "options": [
+          "Raft is designed to be more understandable",
+          "Raft is faster",
+          "Raft handles Byzantine failures",
+          "Raft doesn't use leaders"
+        ],
+        "correctAnswer": "Raft is designed to be more understandable",
+        "explanation": "Raft was designed as a more understandable alternative to Paxos, using a strong leader model and clear separation of concerns (leader election, log replication, safety)."
+      },
+      {
+        "id": "cs401-q42",
+        "type": "multiple_choice",
+        "prompt": "What is a term in Raft?",
+        "options": [
+          "A period of time with at most one leader",
+          "The length of log entries",
+          "Number of nodes",
+          "Transaction duration"
+        ],
+        "correctAnswer": "A period of time with at most one leader",
+        "explanation": "Terms in Raft are logical time periods, each with at most one leader. Terms are numbered consecutively and used to detect stale information and ensure safety."
+      },
+      {
+        "id": "cs401-q43",
+        "type": "multiple_choice",
+        "prompt": "How does a candidate win a Raft election?",
+        "options": [
+          "Receives votes from a majority of servers",
+          "Has the highest ID",
+          "Requests first",
+          "Has the most log entries"
+        ],
+        "correctAnswer": "Receives votes from a majority of servers",
+        "explanation": "A candidate becomes leader by receiving votes from a majority of servers in the cluster, ensuring at most one leader per term since majorities overlap."
+      },
+      {
+        "id": "cs401-q44",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of log replication in Raft?",
+        "options": [
+          "Keep state machine replicas synchronized",
+          "Backup configuration",
+          "Audit trail",
+          "Performance optimization"
+        ],
+        "correctAnswer": "Keep state machine replicas synchronized",
+        "explanation": "Raft replicates a log of commands to all nodes, ensuring all state machines execute the same commands in the same order, maintaining consistency across replicas."
+      },
+      {
+        "id": "cs401-q45",
+        "type": "multiple_choice",
+        "prompt": "When is a log entry committed in Raft?",
+        "options": [
+          "When replicated on a majority of servers",
+          "When written to leader",
+          "When all servers acknowledge",
+          "After one second"
+        ],
+        "correctAnswer": "When replicated on a majority of servers",
+        "explanation": "An entry is committed once the leader has replicated it to a majority of servers, guaranteeing it won't be lost and can be safely applied to state machines."
+      }
+    ]
+  }
+]

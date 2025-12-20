@@ -1,0 +1,221 @@
+[
+  {
+    "id": "cs407-quiz-2-1",
+    "subjectId": "cs407",
+    "topicId": "cs407-t2",
+    "title": "Missing Data and Imputation",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "What does MCAR stand for in missing data analysis?",
+        "options": [
+          "Missing Completely At Random",
+          "Missing Conditionally At Random",
+          "Missing Continuously At Random",
+          "Missing Categorically At Random"
+        ],
+        "correctAnswer": 0,
+        "explanation": "MCAR means missingness is independent of both observed and unobserved data."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "Which imputation method uses nearby observations to estimate missing values?",
+        "options": [
+          "Mean imputation",
+          "KNN imputation",
+          "Forward fill",
+          "Mode imputation"
+        ],
+        "correctAnswer": 1,
+        "explanation": "K-Nearest Neighbors imputation uses values from similar observations."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "What is the IQR method used for?",
+        "options": [
+          "Missing data imputation",
+          "Outlier detection",
+          "Feature scaling",
+          "Data validation"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The Interquartile Range (IQR) method identifies outliers based on quartile statistics."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "Which transformation is best for reducing right-skewed data?",
+        "options": [
+          "Square transformation",
+          "Logarithmic transformation",
+          "Exponential transformation",
+          "Linear transformation"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Log transformation compresses large values more than small ones, reducing right skew."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "What does StandardScaler in sklearn do?",
+        "options": [
+          "Scales to [0, 1] range",
+          "Scales to zero mean and unit variance",
+          "Removes outliers",
+          "Fills missing values"
+        ],
+        "correctAnswer": 1,
+        "explanation": "StandardScaler standardizes features by removing the mean and scaling to unit variance."
+      }
+    ]
+  },
+  {
+    "id": "cs407-quiz-2-2",
+    "subjectId": "cs407",
+    "topicId": "cs407-t2",
+    "title": "Outlier Detection and Handling",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "What is the IQR rule for identifying outliers?",
+        "options": [
+          "Values beyond mean ± 2 standard deviations",
+          "Values beyond Q1 - 1.5×IQR or Q3 + 1.5×IQR",
+          "Values in the top and bottom 5%",
+          "Values beyond the median ± IQR"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The IQR rule defines outliers as values below Q1 - 1.5×IQR or above Q3 + 1.5×IQR."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "Which method is best for detecting outliers in multivariate data?",
+        "options": [
+          "Z-score",
+          "IQR method",
+          "Mahalanobis distance",
+          "Visual inspection"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Mahalanobis distance measures how far a point is from the center of a multivariate distribution."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "What is winsorization?",
+        "options": [
+          "Removing all outliers",
+          "Replacing outliers with mean values",
+          "Capping extreme values at specified percentiles",
+          "Transforming data to remove outliers"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Winsorization caps extreme values at specified percentiles instead of removing them."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "Which imputation method preserves the original distribution best?",
+        "options": [
+          "Mean imputation",
+          "Median imputation",
+          "Multiple imputation",
+          "Zero imputation"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Multiple imputation creates several plausible values, preserving uncertainty and distribution characteristics."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "What does MAR stand for in missing data terminology?",
+        "options": [
+          "Missing At Random",
+          "Missing After Removal",
+          "Missing And Removed",
+          "Missing All Records"
+        ],
+        "correctAnswer": 0,
+        "explanation": "MAR (Missing At Random) means missingness depends on observed data but not on the missing values themselves."
+      }
+    ]
+  },
+  {
+    "id": "cs407-quiz-2-3",
+    "subjectId": "cs407",
+    "topicId": "cs407-t2",
+    "title": "Data Transformation and Normalization",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of Min-Max scaling?",
+        "options": [
+          "Remove outliers",
+          "Scale features to a specific range (usually 0-1)",
+          "Center data around zero",
+          "Reduce skewness"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Min-Max scaling transforms features to a specified range, typically [0, 1]."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "When should you use robust scaling instead of standard scaling?",
+        "options": [
+          "When data is normally distributed",
+          "When data contains many outliers",
+          "When features are categorical",
+          "When data is already normalized"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Robust scaling uses median and IQR, making it resistant to outliers unlike standard scaling."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "What is the Box-Cox transformation used for?",
+        "options": [
+          "Detecting outliers",
+          "Making data more normally distributed",
+          "Encoding categorical variables",
+          "Splitting datasets"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Box-Cox transformation stabilizes variance and makes data more normally distributed."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "Which technique is used to check if data follows a normal distribution?",
+        "options": [
+          "T-test",
+          "Chi-square test",
+          "Shapiro-Wilk test",
+          "F-test"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The Shapiro-Wilk test is specifically designed to test for normality in a dataset."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "What is data deduplication?",
+        "options": [
+          "Removing duplicate records",
+          "Creating backup copies",
+          "Splitting data into training and test sets",
+          "Merging multiple datasets"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Data deduplication identifies and removes duplicate records to ensure data quality."
+      }
+    ]
+  }
+]

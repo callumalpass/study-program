@@ -1,0 +1,185 @@
+[
+  {
+    "id": "cs405-quiz-3",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-3",
+    "title": "Containers and Docker - Fundamentals",
+    "questions": [
+      {
+        "id": "q3-1",
+        "type": "multiple_choice",
+        "prompt": "What is the key difference between containers and virtual machines?",
+        "options": [
+          "Containers are slower than VMs",
+          "Containers share the host OS kernel, VMs have separate kernels",
+          "VMs are more portable than containers",
+          "Containers require more resources than VMs"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Containers share the host OS kernel and provide process-level isolation, making them lighter and faster. VMs have complete operating systems with separate kernels."
+      },
+      {
+        "id": "q3-2",
+        "type": "true_false",
+        "prompt": "Docker containers can run on any operating system without modification.",
+        "correctAnswer": false,
+        "explanation": "Docker containers must share the host OS type. Linux containers run on Linux hosts, Windows containers on Windows hosts. Though Docker Desktop uses a Linux VM to run Linux containers on Windows/Mac."
+      },
+      {
+        "id": "q3-3",
+        "type": "multiple_choice",
+        "prompt": "Which Linux kernel feature provides process isolation for containers?",
+        "options": [
+          "cgroups",
+          "namespaces",
+          "SELinux",
+          "iptables"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Namespaces provide isolation (PID, network, mount, etc.). Cgroups limit resources. Together they form the foundation of container isolation."
+      },
+      {
+        "id": "q3-4",
+        "type": "multiple_choice",
+        "prompt": "What is the difference between a Docker image and a container?",
+        "options": [
+          "They are the same thing",
+          "Image is the template, container is the running instance",
+          "Container is the template, image is the running instance",
+          "Images are bigger than containers"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A Docker image is a read-only template containing the application and dependencies. A container is a running instance of an image."
+      },
+      {
+        "id": "q3-5",
+        "type": "true_false",
+        "prompt": "Each layer in a Docker image is read-only except the top container layer.",
+        "correctAnswer": true,
+        "explanation": "Docker images consist of read-only layers stacked together. When a container runs, a writable layer is added on top for runtime changes."
+      }
+    ]
+  },
+  {
+    "id": "cs405-quiz-3b",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-3",
+    "title": "Containers and Docker - Images and Networking",
+    "questions": [
+      {
+        "id": "q3b-1",
+        "type": "multiple_choice",
+        "prompt": "In a Dockerfile, which instruction creates a new layer?",
+        "options": [
+          "ENV",
+          "RUN",
+          "LABEL",
+          "EXPOSE"
+        ],
+        "correctAnswer": 1,
+        "explanation": "RUN, COPY, and ADD instructions create new layers. ENV, LABEL, EXPOSE, and other metadata instructions don't create layers."
+      },
+      {
+        "id": "q3b-2",
+        "type": "true_false",
+        "prompt": "Multi-stage builds in Docker help reduce final image size.",
+        "correctAnswer": true,
+        "explanation": "Multi-stage builds allow using build tools in early stages while copying only necessary artifacts to the final stage, significantly reducing image size."
+      },
+      {
+        "id": "q3b-3",
+        "type": "multiple_choice",
+        "prompt": "What is the default Docker network mode?",
+        "options": [
+          "host",
+          "bridge",
+          "overlay",
+          "none"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Bridge network is the default. Containers get private IPs and can communicate with each other via the bridge. Port mapping is required for external access."
+      },
+      {
+        "id": "q3b-4",
+        "type": "multiple_choice",
+        "prompt": "Which Docker networking mode gives containers direct access to the host network stack?",
+        "options": [
+          "bridge",
+          "host",
+          "overlay",
+          "macvlan"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Host networking mode removes network isolation, giving containers direct access to the host's network stack. No port mapping needed but less isolation."
+      },
+      {
+        "id": "q3b-5",
+        "type": "true_false",
+        "prompt": "Docker layers are cached, which speeds up subsequent image builds.",
+        "correctAnswer": true,
+        "explanation": "Docker caches layers. If a Dockerfile step hasn't changed, Docker reuses the cached layer, significantly speeding up builds. Order instructions from least to most frequently changing."
+      }
+    ]
+  },
+  {
+    "id": "cs405-quiz-3c",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-3",
+    "title": "Containers and Docker - Storage and Security",
+    "questions": [
+      {
+        "id": "q3c-1",
+        "type": "multiple_choice",
+        "prompt": "What is the recommended way to persist data in Docker?",
+        "options": [
+          "Store in container filesystem",
+          "Use Docker volumes",
+          "Use environment variables",
+          "Store in Docker images"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Docker volumes are the recommended way to persist data. They're managed by Docker, exist outside containers, and survive container deletion."
+      },
+      {
+        "id": "q3c-2",
+        "type": "true_false",
+        "prompt": "Data stored in a container's writable layer persists after the container is deleted.",
+        "correctAnswer": false,
+        "explanation": "Data in the container's writable layer is ephemeral and deleted when the container is removed. Use volumes for persistence."
+      },
+      {
+        "id": "q3c-3",
+        "type": "multiple_choice",
+        "prompt": "What is the difference between Docker volumes and bind mounts?",
+        "options": [
+          "No difference, they are the same",
+          "Volumes are managed by Docker, bind mounts reference host paths",
+          "Bind mounts are faster than volumes",
+          "Volumes only work on Linux"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Volumes are managed by Docker in /var/lib/docker/volumes. Bind mounts reference specific host filesystem paths. Volumes are recommended for most use cases."
+      },
+      {
+        "id": "q3c-4",
+        "type": "multiple_choice",
+        "prompt": "Why should containers avoid running as root?",
+        "options": [
+          "Root containers run slower",
+          "Security risk if container compromised",
+          "Root not supported in Docker",
+          "Licensing restrictions"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Running as root is a security risk. If a container is compromised, the attacker has root privileges. Use USER instruction to run as non-root user."
+      },
+      {
+        "id": "q3c-5",
+        "type": "true_false",
+        "prompt": "Docker Compose is used to define and run multi-container applications.",
+        "correctAnswer": true,
+        "explanation": "Docker Compose uses YAML files to define multi-container applications with their networks, volumes, and configurations, enabling easy deployment and management."
+      }
+    ]
+  }
+]

@@ -1,0 +1,203 @@
+[
+  {
+    "id": "cs306-quiz-4-1",
+    "subjectId": "cs306",
+    "topicId": "cs306-topic-4",
+    "title": "Rasterization Fundamentals",
+    "questions": [
+      {
+        "id": "cs306-q46",
+        "type": "multiple_choice",
+        "prompt": "What is the primary purpose of rasterization?",
+        "options": [
+          "Convert geometric primitives to discrete pixels/fragments",
+          "Transform vertices to screen space",
+          "Calculate lighting and shading",
+          "Apply texture mapping"
+        ],
+        "correctAnswer": "Convert geometric primitives to discrete pixels/fragments",
+        "explanation": "Rasterization is the process of determining which pixels are covered by geometric primitives (triangles, lines) and generating fragments for those pixels."
+      },
+      {
+        "id": "cs306-q47",
+        "type": "multiple_choice",
+        "prompt": "Which algorithm is commonly used for line rasterization?",
+        "options": [
+          "Bresenham's algorithm",
+          "Depth-first search",
+          "Quick sort",
+          "Binary search"
+        ],
+        "correctAnswer": "Bresenham's algorithm",
+        "explanation": "Bresenham's algorithm efficiently rasterizes lines using only integer arithmetic and addition, making it fast for determining which pixels to draw along a line."
+      },
+      {
+        "id": "cs306-q48",
+        "type": "true_false",
+        "prompt": "Barycentric coordinates are used to interpolate attributes across a triangle.",
+        "correctAnswer": "true",
+        "explanation": "Barycentric coordinates express a point as a weighted combination of triangle vertices, enabling smooth interpolation of colors, normals, and texture coordinates across the triangle."
+      },
+      {
+        "id": "cs306-q49",
+        "type": "multiple_choice",
+        "prompt": "What is anti-aliasing used for in rasterization?",
+        "options": [
+          "Reduce jagged edges and staircase effects",
+          "Improve rendering speed",
+          "Increase color depth",
+          "Enhance texture quality"
+        ],
+        "correctAnswer": "Reduce jagged edges and staircase effects",
+        "explanation": "Anti-aliasing smooths jagged edges (aliasing artifacts) that occur when representing continuous lines and shapes with discrete pixels, improving visual quality."
+      },
+      {
+        "id": "cs306-q50",
+        "type": "multiple_choice",
+        "prompt": "In triangle rasterization, what does the edge function test determine?",
+        "options": [
+          "Whether a point is inside or outside the triangle",
+          "The depth of a fragment",
+          "The color of a pixel",
+          "The texture coordinate"
+        ],
+        "correctAnswer": "Whether a point is inside or outside the triangle",
+        "explanation": "The edge function evaluates which side of an edge a point lies on. A point is inside the triangle if it's on the correct side of all three edges."
+      }
+    ]
+  },
+  {
+    "id": "cs306-quiz-4-2",
+    "subjectId": "cs306",
+    "topicId": "cs306-topic-4",
+    "title": "Anti-Aliasing and Scanlines",
+    "questions": [
+      {
+        "id": "cs306-q51",
+        "type": "multiple_choice",
+        "prompt": "What is supersampling (SSAA) anti-aliasing?",
+        "options": [
+          "Rendering at higher resolution then downsampling",
+          "Sampling only edge pixels",
+          "Using multiple rendering passes",
+          "Blurring the final image"
+        ],
+        "correctAnswer": "Rendering at higher resolution then downsampling",
+        "explanation": "Supersampling renders the scene at a higher resolution (e.g., 2x or 4x) and then averages down to the target resolution, effectively sampling multiple points per pixel for smoother edges."
+      },
+      {
+        "id": "cs306-q52",
+        "type": "true_false",
+        "prompt": "Scanline rasterization processes one horizontal row of pixels at a time.",
+        "correctAnswer": "true",
+        "explanation": "Scanline rasterization works row by row (scanline by scanline), determining which primitives intersect each row and filling the appropriate pixels, which is cache-friendly."
+      },
+      {
+        "id": "cs306-q53",
+        "type": "multiple_choice",
+        "prompt": "What coordinate system do barycentric coordinates (α, β, γ) satisfy?",
+        "options": [
+          "α + β + γ = 1",
+          "α² + β² + γ² = 1",
+          "α × β × γ = 1",
+          "α - β + γ = 0"
+        ],
+        "correctAnswer": "α + β + γ = 1",
+        "explanation": "Barycentric coordinates sum to 1, where each coordinate represents the weight of the corresponding vertex. A point is inside the triangle when all three are between 0 and 1."
+      },
+      {
+        "id": "cs306-q54",
+        "type": "multiple_choice",
+        "prompt": "What is MSAA (Multi-Sample Anti-Aliasing)?",
+        "options": [
+          "Sampling coverage at multiple points per pixel but shading once",
+          "Rendering the scene multiple times",
+          "Sampling and shading multiple times per pixel",
+          "Post-processing blur filter"
+        ],
+        "correctAnswer": "Sampling coverage at multiple points per pixel but shading once",
+        "explanation": "MSAA samples geometric coverage at multiple sub-pixel locations but runs the pixel shader only once per pixel, making it more efficient than SSAA while still reducing edge aliasing."
+      },
+      {
+        "id": "cs306-q55",
+        "type": "multiple_choice",
+        "prompt": "What is the fill convention in triangle rasterization?",
+        "options": [
+          "Rules for which pixels to fill when a triangle edge passes exactly through pixel centers",
+          "The order in which triangles are filled",
+          "The color used to fill triangles",
+          "The pattern used for texture filling"
+        ],
+        "correctAnswer": "Rules for which pixels to fill when a triangle edge passes exactly through pixel centers",
+        "explanation": "Fill conventions (like top-left rule) determine which pixels to rasterize when edges pass exactly through pixel centers, ensuring consistent results and preventing gaps or overlaps between adjacent triangles."
+      }
+    ]
+  },
+  {
+    "id": "cs306-quiz-4-3",
+    "subjectId": "cs306",
+    "topicId": "cs306-topic-4",
+    "title": "Advanced Rasterization",
+    "questions": [
+      {
+        "id": "cs306-q56",
+        "type": "multiple_choice",
+        "prompt": "What is perspective-correct interpolation used for?",
+        "options": [
+          "Correctly interpolating attributes in screen space accounting for depth",
+          "Faster rasterization",
+          "Anti-aliasing",
+          "Depth buffer optimization"
+        ],
+        "correctAnswer": "Correctly interpolating attributes in screen space accounting for depth",
+        "explanation": "Perspective-correct interpolation accounts for perspective division by interpolating in 3D space rather than 2D screen space, preventing distortion in texture coordinates and other attributes."
+      },
+      {
+        "id": "cs306-q57",
+        "type": "true_false",
+        "prompt": "The painter's algorithm renders objects from back to front.",
+        "correctAnswer": "true",
+        "explanation": "The painter's algorithm sorts objects by depth and renders from farthest to nearest (back to front), with nearer objects overwriting farther ones, like a painter working on a canvas."
+      },
+      {
+        "id": "cs306-q58",
+        "type": "multiple_choice",
+        "prompt": "What is a fragment in the graphics pipeline?",
+        "options": [
+          "A pixel-sized piece of a primitive with associated data",
+          "A broken triangle",
+          "A vertex after transformation",
+          "A texture sample"
+        ],
+        "correctAnswer": "A pixel-sized piece of a primitive with associated data",
+        "explanation": "A fragment is the rasterizer's output: a potential pixel with interpolated attributes (color, depth, texture coordinates) that will be processed by the fragment shader."
+      },
+      {
+        "id": "cs306-q59",
+        "type": "multiple_choice",
+        "prompt": "Which anti-aliasing technique analyzes the final image to smooth edges?",
+        "options": [
+          "FXAA (Fast Approximate Anti-Aliasing)",
+          "SSAA (Supersampling)",
+          "MSAA (Multi-Sample Anti-Aliasing)",
+          "CSAA (Coverage Sampling Anti-Aliasing)"
+        ],
+        "correctAnswer": "FXAA (Fast Approximate Anti-Aliasing)",
+        "explanation": "FXAA is a post-processing technique that analyzes the rendered image to detect and smooth edges using a shader, making it very fast but potentially less accurate than sampling-based methods."
+      },
+      {
+        "id": "cs306-q60",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of early Z-testing (early depth testing)?",
+        "options": [
+          "Discard fragments before expensive shader execution",
+          "Improve anti-aliasing",
+          "Speed up vertex processing",
+          "Enhance texture filtering"
+        ],
+        "correctAnswer": "Discard fragments before expensive shader execution",
+        "explanation": "Early Z-testing performs the depth test before fragment shading, discarding occluded fragments early to avoid unnecessary pixel shader execution, significantly improving performance."
+      }
+    ]
+  }
+]

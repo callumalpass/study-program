@@ -1,0 +1,174 @@
+[
+  {
+    "id": "cs101-quiz-7",
+    "subjectId": "cs101",
+    "topicId": "cs101-topic-7",
+    "title": "Recursion - Fundamentals",
+    "questions": [
+      {
+        "id": "q7-1",
+        "type": "multiple_choice",
+        "prompt": "What is recursion in programming?",
+        "options": [
+          "A loop that runs forever",
+          "A function that calls itself",
+          "A way to iterate over lists",
+          "A type of error handling"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Recursion is when a function calls itself to solve a problem by breaking it into smaller subproblems."
+      },
+      {
+        "id": "q7-2",
+        "type": "multiple_choice",
+        "prompt": "What is the \"base case\" in a recursive function?",
+        "options": [
+          "The first call to the function",
+          "The condition that stops the recursion",
+          "The recursive call itself",
+          "The return value"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The base case is the condition that stops recursion. Without it, the function would call itself forever."
+      },
+      {
+        "id": "q7-3",
+        "type": "code_output",
+        "prompt": "What will this code print?",
+        "codeSnippet": "def factorial(n):\n    if n <= 1:\n        return 1\n    return n * factorial(n - 1)\n\nprint(factorial(4))",
+        "correctAnswer": "24",
+        "explanation": "factorial(4) = 4 * 3 * 2 * 1 = 24. The recursion unfolds as 4 * factorial(3) * factorial(2) * factorial(1)."
+      },
+      {
+        "id": "q7-4",
+        "type": "true_false",
+        "prompt": "Every recursive function must have at least one base case.",
+        "correctAnswer": true,
+        "explanation": "Without a base case, recursion never stops, causing infinite recursion and eventually a stack overflow error."
+      },
+      {
+        "id": "q7-5",
+        "type": "multiple_choice",
+        "prompt": "What error occurs when a recursive function calls itself too many times?",
+        "options": [
+          "MemoryError",
+          "RecursionError",
+          "StackOverflowError",
+          "LoopError"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Python raises RecursionError when the maximum recursion depth is exceeded (typically around 1000 calls)."
+      }
+    ]
+  },
+  {
+    "id": "cs101-quiz-7b",
+    "subjectId": "cs101",
+    "topicId": "cs101-topic-7",
+    "title": "Recursion - Tracing and Patterns",
+    "questions": [
+      {
+        "id": "q7b-1",
+        "type": "code_output",
+        "prompt": "What will this code print?",
+        "codeSnippet": "def countdown(n):\n    if n <= 0:\n        print(\"Go!\")\n        return\n    print(n)\n    countdown(n - 1)\n\ncountdown(3)",
+        "correctAnswer": "3\n2\n1\nGo!",
+        "explanation": "Each call prints n, then calls countdown(n-1). When n reaches 0, it prints \"Go!\" and returns."
+      },
+      {
+        "id": "q7b-2",
+        "type": "code_output",
+        "prompt": "What will this code print?",
+        "codeSnippet": "def sum_list(lst):\n    if len(lst) == 0:\n        return 0\n    return lst[0] + sum_list(lst[1:])\n\nprint(sum_list([2, 3, 5]))",
+        "correctAnswer": "10",
+        "explanation": "The function recursively adds: 2 + sum_list([3, 5]) = 2 + 3 + sum_list([5]) = 2 + 3 + 5 + sum_list([]) = 10."
+      },
+      {
+        "id": "q7b-3",
+        "type": "multiple_choice",
+        "prompt": "In the Fibonacci sequence, what is F(6)?",
+        "options": [
+          "5",
+          "8",
+          "13",
+          "21"
+        ],
+        "correctAnswer": 1,
+        "explanation": "F(0)=0, F(1)=1, F(2)=1, F(3)=2, F(4)=3, F(5)=5, F(6)=8. Each number is the sum of the two before it."
+      },
+      {
+        "id": "q7b-4",
+        "type": "code_output",
+        "prompt": "What will this code print?",
+        "codeSnippet": "def mystery(n):\n    if n == 0:\n        return 0\n    return n % 10 + mystery(n // 10)\n\nprint(mystery(123))",
+        "correctAnswer": "6",
+        "explanation": "This sums the digits: 3 + mystery(12) = 3 + 2 + mystery(1) = 3 + 2 + 1 + mystery(0) = 6."
+      },
+      {
+        "id": "q7b-5",
+        "type": "true_false",
+        "prompt": "A recursive solution can always be converted to an iterative (loop-based) solution.",
+        "correctAnswer": true,
+        "explanation": "Any recursive algorithm can be rewritten using loops and explicit stacks, though the recursive version may be more elegant."
+      }
+    ]
+  },
+  {
+    "id": "cs101-quiz-7c",
+    "subjectId": "cs101",
+    "topicId": "cs101-topic-7",
+    "title": "Recursion - Advanced Concepts",
+    "questions": [
+      {
+        "id": "q7c-1",
+        "type": "code_output",
+        "prompt": "What will this code print?",
+        "codeSnippet": "def power(base, exp):\n    if exp == 0:\n        return 1\n    return base * power(base, exp - 1)\n\nprint(power(2, 4))",
+        "correctAnswer": "16",
+        "explanation": "power(2, 4) = 2 * power(2, 3) = 2 * 2 * power(2, 2) = ... = 2 * 2 * 2 * 2 * 1 = 16."
+      },
+      {
+        "id": "q7c-2",
+        "type": "multiple_choice",
+        "prompt": "What is \"memoization\" in the context of recursion?",
+        "options": [
+          "Writing down the algorithm steps",
+          "Caching results to avoid redundant calculations",
+          "Converting recursion to iteration",
+          "Limiting recursion depth"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Memoization caches the results of function calls so that repeated calls with the same arguments return instantly."
+      },
+      {
+        "id": "q7c-3",
+        "type": "code_output",
+        "prompt": "What will this code print?",
+        "codeSnippet": "def reverse(s):\n    if len(s) <= 1:\n        return s\n    return s[-1] + reverse(s[:-1])\n\nprint(reverse(\"abc\"))",
+        "correctAnswer": "cba",
+        "explanation": "reverse(\"abc\") = \"c\" + reverse(\"ab\") = \"c\" + \"b\" + reverse(\"a\") = \"c\" + \"b\" + \"a\" = \"cba\"."
+      },
+      {
+        "id": "q7c-4",
+        "type": "code_output",
+        "prompt": "What will this code print?",
+        "codeSnippet": "def count(n):\n    if n <= 0:\n        return 0\n    return 1 + count(n // 2)\n\nprint(count(8))",
+        "correctAnswer": "4",
+        "explanation": "count(8)=1+count(4)=1+1+count(2)=1+1+1+count(1)=1+1+1+1+count(0)=4. This counts floor(log2(n))+1."
+      },
+      {
+        "id": "q7c-5",
+        "type": "multiple_choice",
+        "prompt": "Why is the naive recursive Fibonacci function inefficient for large n?",
+        "options": [
+          "It uses too much memory",
+          "It recalculates the same values many times",
+          "Python cannot handle large numbers",
+          "The base case is wrong"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Naive Fibonacci has exponential time complexity because it recalculates F(k) multiple times. Memoization solves this."
+      }
+    ]
+  }
+]

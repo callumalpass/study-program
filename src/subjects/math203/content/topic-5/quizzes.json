@@ -1,0 +1,185 @@
+[
+  {
+    "id": "math203-quiz-5a",
+    "subjectId": "math203",
+    "topicId": "math203-topic-5",
+    "title": "Optimization Problems - Fundamentals",
+    "questions": [
+      {
+        "id": "math203-q5a-1",
+        "type": "multiple_choice",
+        "prompt": "To find the maximum area of a rectangle with a fixed perimeter, you should:",
+        "options": [
+          "Make it as long as possible",
+          "Make it as wide as possible",
+          "Make it a square",
+          "Make all sides different"
+        ],
+        "correctAnswer": 2,
+        "explanation": "A square maximizes area for a given perimeter. This can be proven using calculus by setting up the area function and finding its maximum."
+      },
+      {
+        "id": "math203-q5a-2",
+        "type": "true_false",
+        "prompt": "In optimization problems, the maximum or minimum always occurs at a critical point.",
+        "correctAnswer": false,
+        "explanation": "False. On a closed interval, the absolute extremum can occur at an endpoint, not just at critical points. Always check both."
+      },
+      {
+        "id": "math203-q5a-3",
+        "type": "multiple_choice",
+        "prompt": "In an optimization problem, the constraint equation is used to:",
+        "options": [
+          "Find the critical points directly",
+          "Reduce the objective function to one variable",
+          "Determine the domain",
+          "Both B and C"
+        ],
+        "correctAnswer": 3,
+        "explanation": "The constraint helps express the objective function in terms of one variable AND often determines the valid domain for that variable."
+      },
+      {
+        "id": "math203-q5a-4",
+        "type": "multiple_choice",
+        "prompt": "Which step comes first in solving an optimization problem?",
+        "options": [
+          "Take the derivative",
+          "Set up the objective function and constraint",
+          "Find critical points",
+          "Check the second derivative"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Always start by identifying what you want to optimize (objective function) and any constraints. Then reduce to one variable before taking derivatives."
+      },
+      {
+        "id": "math203-q5a-5",
+        "type": "fill_blank",
+        "prompt": "The function we want to maximize or minimize is called the ____ function.",
+        "correctAnswer": "objective",
+        "explanation": "The objective function is what we aim to optimize. The constraint equation provides the restriction that links variables together."
+      }
+    ]
+  },
+  {
+    "id": "math203-quiz-5b",
+    "subjectId": "math203",
+    "topicId": "math203-topic-5",
+    "title": "Optimization Problems - Application",
+    "questions": [
+      {
+        "id": "math203-q5b-1",
+        "type": "multiple_choice",
+        "prompt": "An open-top box is made from a square sheet by cutting corners. To maximize volume:",
+        "options": [
+          "Cut the largest possible squares",
+          "Cut the smallest possible squares",
+          "Cut squares whose side is 1/6 of the sheet side",
+          "Cut squares whose side is 1/4 of the sheet side"
+        ],
+        "correctAnswer": 2,
+        "explanation": "For a square sheet of side $s$, the optimal cut is $x = s/6$. This can be verified by setting $V'(x) = 0$."
+      },
+      {
+        "id": "math203-q5b-2",
+        "type": "multiple_choice",
+        "prompt": "A farmer wants to enclose a rectangular field using 200 meters of fencing, with a river forming one side (no fence needed). What dimensions maximize area?",
+        "options": [
+          "$50 \\times 100$",
+          "$100 \\times 50$",
+          "$50 \\times 50$",
+          "$40 \\times 60$"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Let width be $w$ and length be $L$. Constraint: $2w + L = 200$. Area $A = wL = w(200-2w) = 200w - 2w^2$. $A'(w) = 200 - 4w = 0$ gives $w = 50$, $L = 100$."
+      },
+      {
+        "id": "math203-q5b-3",
+        "type": "true_false",
+        "prompt": "If a problem asks to minimize cost with a constraint, you should first express cost in terms of a single variable.",
+        "correctAnswer": true,
+        "explanation": "True. Use the constraint to eliminate one variable, reducing the problem to single-variable calculus."
+      },
+      {
+        "id": "math203-q5b-4",
+        "type": "multiple_choice",
+        "prompt": "To find the point on $y = x^2$ closest to $(0, 1)$, you minimize:",
+        "options": [
+          "$y - 1$",
+          "$x^2 + y^2$",
+          "$x^2 + (y - 1)^2$",
+          "$|x| + |y - 1|$"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Distance squared from $(x, y)$ to $(0, 1)$ is $x^2 + (y-1)^2$. Since $y = x^2$, minimize $D^2 = x^2 + (x^2 - 1)^2$."
+      },
+      {
+        "id": "math203-q5b-5",
+        "type": "fill_blank",
+        "prompt": "To minimize distance, we often minimize distance ____ instead, to avoid square roots.",
+        "correctAnswer": "squared",
+        "explanation": "Minimizing $D^2$ gives the same result as minimizing $D$ (since $D \\geq 0$), but is algebraically simpler."
+      }
+    ]
+  },
+  {
+    "id": "math203-quiz-5c",
+    "subjectId": "math203",
+    "topicId": "math203-topic-5",
+    "title": "Optimization Problems - Mastery",
+    "questions": [
+      {
+        "id": "math203-q5c-1",
+        "type": "multiple_choice",
+        "prompt": "A cylindrical can must hold 1000 cm³. To minimize surface area, the optimal ratio of height to radius is:",
+        "options": [
+          "$h = r$",
+          "$h = 2r$",
+          "$h = 3r$",
+          "$h = \\frac{r}{2}$"
+        ],
+        "correctAnswer": 1,
+        "explanation": "For a cylinder with fixed volume, the surface area is minimized when $h = 2r$. This classic result comes from setting $\\frac{dS}{dr} = 0$."
+      },
+      {
+        "id": "math203-q5c-2",
+        "type": "multiple_choice",
+        "prompt": "In a closed interval optimization problem, the absolute maximum occurs:",
+        "options": [
+          "Only at critical points",
+          "Only at endpoints",
+          "At critical points or endpoints",
+          "Where the second derivative is negative"
+        ],
+        "correctAnswer": 2,
+        "explanation": "On a closed interval, check all critical points AND endpoints. The absolute maximum is the largest value among all candidates."
+      },
+      {
+        "id": "math203-q5c-3",
+        "type": "true_false",
+        "prompt": "If a continuous function on an open interval has exactly one critical point and it's a local maximum, then it's also the absolute maximum.",
+        "correctAnswer": true,
+        "explanation": "True. With only one critical point that is a local max, the function must decrease on both sides toward the boundaries, making this the global maximum on the interval."
+      },
+      {
+        "id": "math203-q5c-4",
+        "type": "multiple_choice",
+        "prompt": "When finding the minimum distance from a point to a line, the optimal path is:",
+        "options": [
+          "Parallel to the x-axis",
+          "Parallel to the y-axis",
+          "Perpendicular to the line",
+          "At a 45° angle"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The shortest distance from a point to a line is along the perpendicular from the point to the line."
+      },
+      {
+        "id": "math203-q5c-5",
+        "type": "fill_blank",
+        "prompt": "When the domain is an open interval, verify your critical point gives the desired extremum by checking the ____ of the second derivative.",
+        "correctAnswer": "sign",
+        "explanation": "On open intervals without endpoints to check, use the second derivative test to confirm whether a critical point is a maximum ($f''<0$) or minimum ($f''>0$)."
+      }
+    ]
+  }
+]

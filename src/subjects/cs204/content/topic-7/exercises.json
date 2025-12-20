@@ -1,0 +1,242 @@
+[
+  {
+    "id": "cs204-t7-ex1",
+    "subjectId": "cs204",
+    "topicId": "cs204-topic-7",
+    "type": "written",
+    "title": "Agile Manifesto Values",
+    "description": "List and explain the four core values of the Agile Manifesto. For each value, give a practical example.",
+    "difficulty": 1,
+    "hints": [
+      "Focus on what is valued MORE, not exclusively",
+      "Consider customer collaboration",
+      "Think about working software"
+    ],
+    "solution": "**The Four Values:**\n\n1. **Individuals and interactions** over processes and tools\n   - Example: Face-to-face discussion vs lengthy documentation\n\n2. **Working software** over comprehensive documentation\n   - Example: Ship MVP quickly, document as needed\n\n3. **Customer collaboration** over contract negotiation\n   - Example: Regular demos and feedback sessions\n\n4. **Responding to change** over following a plan\n   - Example: Reprioritize backlog based on market changes\n\n**Key:** Items on right still have value; items on left valued MORE."
+  },
+  {
+    "id": "cs204-t7-ex2",
+    "subjectId": "cs204",
+    "topicId": "cs204-topic-7",
+    "type": "written",
+    "title": "Scrum Roles",
+    "description": "Describe the three Scrum roles: Product Owner, Scrum Master, and Development Team. What are their responsibilities?",
+    "difficulty": 1,
+    "hints": [
+      "Product Owner owns the what",
+      "Scrum Master facilitates process",
+      "Team owns the how"
+    ],
+    "solution": "**Product Owner:**\n- Owns product backlog and prioritization\n- Represents stakeholders and customers\n- Defines acceptance criteria\n- Makes scope decisions\n\n**Scrum Master:**\n- Facilitates Scrum process and ceremonies\n- Removes impediments for team\n- Coaches team on Agile practices\n- NOT a project manager\n\n**Development Team:**\n- Cross-functional, self-organizing\n- Owns technical decisions (how to build)\n- Commits to sprint work\n- Delivers potentially shippable increment\n\n**Key:** No hierarchy between roles; each has distinct accountability."
+  },
+  {
+    "id": "cs204-t7-ex3",
+    "subjectId": "cs204",
+    "topicId": "cs204-topic-7",
+    "type": "written",
+    "title": "Scrum Ceremonies",
+    "description": "Describe the five Scrum ceremonies. For each, explain its purpose, participants, and typical duration.",
+    "difficulty": 2,
+    "hints": [
+      "Sprint Planning, Daily Standup, Sprint Review, Retrospective",
+      "Consider timeboxing",
+      "Who attends each ceremony?"
+    ],
+    "solution": "**Sprint Planning** (2-4 hours for 2-week sprint)\n- Purpose: Select backlog items, create sprint goal\n- Participants: Entire Scrum team\n\n**Daily Standup** (15 minutes)\n- Purpose: Sync, identify blockers (yesterday/today/blockers)\n- Participants: Development team (others observe)\n\n**Sprint Review** (1-2 hours)\n- Purpose: Demo completed work, gather feedback\n- Participants: Scrum team + stakeholders\n\n**Sprint Retrospective** (1-1.5 hours)\n- Purpose: Improve process (what went well/poorly/actions)\n- Participants: Scrum team only\n\n**Backlog Refinement** (ongoing, ~10% of sprint)\n- Purpose: Clarify, estimate, split stories\n- Participants: Product Owner + team"
+  },
+  {
+    "id": "cs204-t7-ex4",
+    "subjectId": "cs204",
+    "topicId": "cs204-topic-7",
+    "type": "written",
+    "title": "User Stories",
+    "description": "Explain user story format and the INVEST criteria. Write a user story with acceptance criteria for a login feature.",
+    "difficulty": 2,
+    "hints": [
+      "As a [user], I want [feature], so that [benefit]",
+      "INVEST: Independent, Negotiable, Valuable...",
+      "Acceptance criteria define \"done\""
+    ],
+    "solution": "**User Story Format:**\n\"As a [type of user], I want [feature], so that [benefit]\"\n\n**INVEST Criteria:**\n- **I**ndependent: Can be developed separately\n- **N**egotiable: Details can be discussed\n- **V**aluable: Delivers user/business value\n- **E**stimable: Team can size it\n- **S**mall: Fits in one sprint\n- **T**estable: Clear pass/fail criteria\n\n**Example:**\n\"As a registered user, I want to log in with email and password, so that I can access my account.\"\n\n**Acceptance Criteria:**\n- Valid email + password → redirects to dashboard\n- Invalid credentials → shows error, no details\n- Account locked after 5 failures\n- \"Forgot password\" link visible"
+  },
+  {
+    "id": "cs204-t7-ex5",
+    "subjectId": "cs204",
+    "topicId": "cs204-topic-7",
+    "type": "written",
+    "title": "Story Point Estimation",
+    "description": "Explain story points and Planning Poker. Why use relative estimation instead of hours?",
+    "difficulty": 2,
+    "hints": [
+      "Story points measure complexity/effort",
+      "Relative sizing is easier than absolute",
+      "Fibonacci sequence often used"
+    ],
+    "solution": "**Story Points:** Relative measure of effort/complexity/uncertainty (not time).\n\n**Why Relative Estimation:**\n- Humans better at comparing than absolute estimates\n- Accounts for complexity, not just hours\n- More consistent across team members\n- Velocity normalizes over time\n\n**Planning Poker:**\n1. Product Owner presents story\n2. Team discusses and asks questions\n3. Each member privately selects estimate (Fibonacci: 1,2,3,5,8,13...)\n4. Reveal simultaneously\n5. Discuss outliers, re-estimate until consensus\n\n**Benefits:**\n- Reveals misunderstandings early\n- Avoids anchoring bias\n- Promotes discussion"
+  },
+  {
+    "id": "cs204-t7-ex6",
+    "subjectId": "cs204",
+    "topicId": "cs204-topic-7",
+    "type": "written",
+    "title": "Kanban vs Scrum",
+    "description": "Compare Kanban and Scrum methodologies. When would you choose one over the other?",
+    "difficulty": 3,
+    "hints": [
+      "Scrum has fixed iterations",
+      "Kanban is continuous flow",
+      "Consider work predictability"
+    ],
+    "solution": "**Scrum:**\n- Fixed-length sprints (1-4 weeks)\n- Defined roles (PO, SM, Team)\n- Sprint planning, commitment\n- Changes during sprint discouraged\n\n**Kanban:**\n- Continuous flow, no iterations\n- Fewer prescribed roles\n- Pull-based work (WIP limits)\n- Changes anytime\n\n**Choose Scrum when:**\n- Work is plannable in chunks\n- Need predictable delivery cycles\n- Team new to Agile (more structure)\n\n**Choose Kanban when:**\n- Work is unpredictable (support, ops)\n- Need continuous delivery\n- Frequent priority changes\n- Already have process, need improvement\n\n**Hybrid (Scrumban):** Sprints + WIP limits"
+  },
+  {
+    "id": "cs204-t7-ex7",
+    "subjectId": "cs204",
+    "topicId": "cs204-topic-7",
+    "type": "written",
+    "title": "Code Smells",
+    "description": "Define code smells and describe five common ones. For each, explain why it is problematic.",
+    "difficulty": 3,
+    "hints": [
+      "Smells indicate potential problems",
+      "Not bugs, but design issues",
+      "Long methods, duplicate code..."
+    ],
+    "solution": "**Code Smells:** Indicators of deeper design problems; not bugs but warning signs.\n\n**Common Smells:**\n\n1. **Long Method:** Hard to understand, test, reuse\n   - Fix: Extract methods\n\n2. **Duplicate Code:** Same logic in multiple places\n   - Fix: Extract to shared function/class\n\n3. **Large Class:** Too many responsibilities\n   - Fix: Extract classes (SRP)\n\n4. **Feature Envy:** Method uses another class's data more than its own\n   - Fix: Move method to appropriate class\n\n5. **Primitive Obsession:** Using primitives instead of small objects (Money, Email)\n   - Fix: Introduce value objects\n\n**Also:** Long parameter lists, switch statements, comments explaining bad code"
+  },
+  {
+    "id": "cs204-t7-ex8",
+    "subjectId": "cs204",
+    "topicId": "cs204-topic-7",
+    "type": "written",
+    "title": "Refactoring Techniques",
+    "description": "Explain Extract Method and Rename refactorings. Demonstrate each with a before/after code example.",
+    "difficulty": 3,
+    "hints": [
+      "Refactoring changes structure, not behavior",
+      "Extract Method improves readability",
+      "Good names are documentation"
+    ],
+    "solution": "**Extract Method:** Pull code into new method with descriptive name.\n\n// Before\nfunction processOrder(order) {\n  // validate\n  if (!order.items.length) throw new Error(\"Empty\");\n  if (!order.customer) throw new Error(\"No customer\");\n  // calculate total\n  let total = 0;\n  for (const item of order.items) {\n    total += item.price * item.qty;\n  }\n  return total;\n}\n\n// After\nfunction processOrder(order) {\n  validateOrder(order);\n  return calculateTotal(order.items);\n}\n\n**Rename:** Change name to reveal intent.\n\n// Before: function calc(a, b) { return a * b * 0.0725; }\n// After:  function calculateSalesTax(price, quantity) {...}\n\n**Key:** Tests must pass before and after refactoring."
+  },
+  {
+    "id": "cs204-t7-ex9",
+    "subjectId": "cs204",
+    "topicId": "cs204-topic-7",
+    "type": "written",
+    "title": "Technical Debt",
+    "description": "Define technical debt. Explain intentional vs unintentional debt and strategies for managing it.",
+    "difficulty": 3,
+    "hints": [
+      "Debt metaphor: interest compounds",
+      "Not all debt is bad",
+      "Balance speed vs quality"
+    ],
+    "solution": "**Technical Debt:** Sub-optimal code/design choices that create future work. Like financial debt: quick benefit now, pay interest later.\n\n**Types:**\n- **Intentional/Deliberate:** Conscious shortcuts for speed\n  - \"We know this isn't ideal, but ship now, fix later\"\n- **Unintentional/Accidental:** Unknown best practices, evolving requirements\n  - \"We didn't know better\" or \"Requirements changed\"\n\n**Management Strategies:**\n1. **Track it:** Document debt in backlog\n2. **Make visible:** Show stakeholders the cost\n3. **Pay regularly:** Allocate % of each sprint\n4. **Boy Scout Rule:** Leave code better than found\n5. **Refactor during feature work:** Opportunistic cleanup\n\n**Balance:** Some debt is strategic (ship MVP fast); excessive debt slows all future work."
+  },
+  {
+    "id": "cs204-t7-ex10",
+    "subjectId": "cs204",
+    "topicId": "cs204-topic-7",
+    "type": "written",
+    "title": "Code Review Best Practices",
+    "description": "List five best practices for effective code reviews. Explain both reviewer and author responsibilities.",
+    "difficulty": 2,
+    "hints": [
+      "Small PRs are easier to review",
+      "Focus on code, not person",
+      "Automate what can be automated"
+    ],
+    "solution": "**For Authors:**\n- Keep PRs small and focused (<400 lines ideal)\n- Write clear description explaining WHY\n- Self-review before requesting review\n- Respond to feedback constructively\n- Don't take criticism personally\n\n**For Reviewers:**\n- Review promptly (within hours, not days)\n- Focus on logic, design, readability—not style (automate that)\n- Ask questions rather than make demands\n- Acknowledge good work, not just problems\n- Approve when good enough, not perfect\n\n**General:**\n- Automate style checks (linting, formatting)\n- Use PR templates for consistency\n- Pair program for complex changes\n- Limit review time (60 min max in one session)\n- Establish team standards"
+  },
+  {
+    "id": "cs204-t7-ex11",
+    "subjectId": "cs204",
+    "topicId": "cs204-topic-7",
+    "type": "written",
+    "title": "Sprint Velocity",
+    "description": "Explain sprint velocity. How is it calculated and used? What are common pitfalls in using velocity?",
+    "difficulty": 3,
+    "hints": [
+      "Velocity = completed story points per sprint",
+      "Used for planning, not performance",
+      "Average over multiple sprints"
+    ],
+    "solution": "**Velocity:** Average story points completed per sprint.\n\n**Calculation:**\n- Sum story points of DONE stories (not partial)\n- Average over 3-5 sprints for stability\n- Example: Sprints completed 20, 18, 22 → velocity ≈ 20\n\n**Uses:**\n- Sprint planning: Don't commit more than velocity\n- Release planning: Estimate how many sprints for backlog\n- Capacity planning: Adjust for holidays, team changes\n\n**Pitfalls:**\n- Using for individual performance (encourages gaming)\n- Comparing across teams (points mean different things)\n- Inflating points to look faster\n- Counting incomplete work\n- Changing point scale mid-project\n\n**Key:** Velocity is a planning tool, not a performance metric."
+  },
+  {
+    "id": "cs204-t7-ex12",
+    "subjectId": "cs204",
+    "topicId": "cs204-topic-7",
+    "type": "written",
+    "title": "Definition of Done",
+    "description": "Explain what Definition of Done (DoD) is. Create a sample DoD checklist for a development team.",
+    "difficulty": 2,
+    "hints": [
+      "Shared understanding of complete",
+      "Quality gate for all work",
+      "Team creates and owns it"
+    ],
+    "solution": "**Definition of Done:** Shared checklist defining when a story is truly complete. Prevents \"90% done\" syndrome.\n\n**Sample DoD Checklist:**\n\n**Code:**\n- [ ] Code reviewed and approved\n- [ ] Unit tests written and passing\n- [ ] Integration tests passing\n- [ ] No new linting warnings\n- [ ] Code merged to main\n\n**Quality:**\n- [ ] Acceptance criteria verified\n- [ ] No known defects\n- [ ] Performance acceptable\n- [ ] Security review (if applicable)\n\n**Documentation:**\n- [ ] API documentation updated\n- [ ] README updated (if needed)\n\n**Deployment:**\n- [ ] Deployed to staging\n- [ ] Smoke tests passing\n- [ ] Product Owner accepted\n\n**Note:** DoD applies to ALL stories; acceptance criteria are story-specific."
+  },
+  {
+    "id": "cs204-t7-ex13",
+    "subjectId": "cs204",
+    "topicId": "cs204-topic-7",
+    "type": "written",
+    "title": "Pair Programming",
+    "description": "Describe pair programming, including driver/navigator roles. What are the benefits and when is it most valuable?",
+    "difficulty": 2,
+    "hints": [
+      "Two programmers, one computer",
+      "Roles should switch frequently",
+      "Knowledge sharing benefit"
+    ],
+    "solution": "**Pair Programming:** Two developers working together at one workstation.\n\n**Roles:**\n- **Driver:** Types code, focuses on immediate task\n- **Navigator:** Reviews, thinks ahead, spots issues\n- Switch roles every 15-30 minutes\n\n**Benefits:**\n- Fewer bugs (real-time review)\n- Knowledge sharing (no silos)\n- Better design decisions\n- Faster onboarding for new team members\n- Focused work (less distraction)\n\n**Most Valuable When:**\n- Complex/critical code\n- Onboarding new team members\n- Learning new technologies\n- Solving difficult problems\n- High-risk changes\n\n**Challenges:** Can be tiring, personalities may clash, requires scheduling. Not needed for all tasks."
+  },
+  {
+    "id": "cs204-t7-ex14",
+    "subjectId": "cs204",
+    "topicId": "cs204-topic-7",
+    "type": "written",
+    "title": "Retrospective Formats",
+    "description": "Describe two different retrospective formats. How do you ensure retrospectives lead to actionable improvements?",
+    "difficulty": 3,
+    "hints": [
+      "Start/Stop/Continue is classic",
+      "Keep it varied to stay fresh",
+      "Action items are key"
+    ],
+    "solution": "**Format 1: Start/Stop/Continue**\n- What should we START doing?\n- What should we STOP doing?\n- What should we CONTINUE doing?\n\n**Format 2: 4Ls**\n- **Liked:** What went well?\n- **Learned:** What did we learn?\n- **Lacked:** What was missing?\n- **Longed for:** What do we wish for?\n\n**Ensuring Action:**\n1. Limit to 1-3 actions per retro\n2. Make actions SMART (Specific, Measurable, Assignable...)\n3. Assign owner to each action\n4. Review previous actions at next retro\n5. Track completion rate\n\n**Tips:**\n- Rotate facilitator\n- Vary format to keep engagement\n- Create safe space (no blame)\n- Time-box discussions"
+  },
+  {
+    "id": "cs204-t7-ex15",
+    "subjectId": "cs204",
+    "topicId": "cs204-topic-7",
+    "type": "written",
+    "title": "Agile Scaling Frameworks",
+    "description": "Compare SAFe and LeSS as frameworks for scaling Agile to large organizations.",
+    "difficulty": 4,
+    "hints": [
+      "SAFe is more prescriptive",
+      "LeSS is lighter weight",
+      "Consider organization size and culture"
+    ],
+    "solution": "**SAFe (Scaled Agile Framework):**\n- Very prescriptive, detailed practices\n- Roles: Release Train Engineer, Product Manager, etc.\n- Program Increment (PI) planning events\n- Portfolio, program, team levels\n- Best for: Large enterprises, regulated industries\n\n**LeSS (Large-Scale Scrum):**\n- Minimal additions to Scrum\n- Single Product Owner for multiple teams\n- Same sprint for all teams\n- Keeps things simple, fewer new roles\n- Best for: Organizations wanting to stay close to Scrum\n\n**Key Differences:**\n- SAFe adds more structure; LeSS extends Scrum directly\n- SAFe has more ceremonies; LeSS keeps it minimal\n- SAFe better for 50+ teams; LeSS for 2-8 teams\n\n**Choice depends on:** Organization size, culture, existing processes, risk tolerance"
+  },
+  {
+    "id": "cs204-t7-ex16",
+    "subjectId": "cs204",
+    "topicId": "cs204-topic-7",
+    "type": "written",
+    "title": "Agile Transformation Challenges",
+    "description": "Identify five common challenges when organizations adopt Agile. For each, suggest a mitigation strategy.",
+    "difficulty": 5,
+    "hints": [
+      "Culture change is hardest",
+      "Management buy-in crucial",
+      "Agile is mindset, not just process"
+    ],
+    "solution": "**1. Resistance to Change**\n- Challenge: \"We've always done it this way\"\n- Mitigation: Start small (pilot team), show results, involve skeptics\n\n**2. Lack of Management Support**\n- Challenge: Executives expect results without changing behavior\n- Mitigation: Executive coaching, demonstrate ROI, align metrics\n\n**3. Partial Adoption (Agile in Name Only)**\n- Challenge: Cherry-picking practices without mindset shift\n- Mitigation: Training, coaching, address root causes not symptoms\n\n**4. Distributed Teams**\n- Challenge: Time zones, communication barriers\n- Mitigation: Overlap hours, good tooling, occasional in-person meetings\n\n**5. Legacy Processes/Contracts**\n- Challenge: Fixed-scope contracts, waterfall dependencies\n- Mitigation: Renegotiate contracts, create buffers, incremental process change\n\n**Key:** Agile transformation is organizational change, not just development process change."
+  }
+]

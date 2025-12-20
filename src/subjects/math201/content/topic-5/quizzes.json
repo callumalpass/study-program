@@ -1,0 +1,185 @@
+[
+  {
+    "id": "math201-quiz-5a",
+    "subjectId": "math201",
+    "topicId": "math201-5",
+    "title": "Determinants - Fundamentals",
+    "questions": [
+      {
+        "id": "math201-q5a-1",
+        "type": "multiple_choice",
+        "prompt": "The determinant of a $2 \\times 2$ matrix $\\begin{bmatrix} a & b \\\\ c & d \\end{bmatrix}$ is:",
+        "options": [
+          "$a + d$",
+          "$ad - bc$",
+          "$ac - bd$",
+          "$a - b - c + d$"
+        ],
+        "correctAnswer": 1,
+        "explanation": "For a $2 \\times 2$ matrix, $\\det\\begin{bmatrix} a & b \\\\ c & d \\end{bmatrix} = ad - bc$."
+      },
+      {
+        "id": "math201-q5a-2",
+        "type": "true_false",
+        "prompt": "If $\\det(A) = 0$, then $A$ is not invertible.",
+        "correctAnswer": true,
+        "explanation": "True. A matrix is invertible if and only if its determinant is nonzero. If $\\det(A) = 0$, the matrix is singular (not invertible)."
+      },
+      {
+        "id": "math201-q5a-3",
+        "type": "multiple_choice",
+        "prompt": "If you swap two rows of a matrix $A$, the determinant:",
+        "options": [
+          "Stays the same",
+          "Changes sign",
+          "Becomes zero",
+          "Doubles"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Swapping two rows (or two columns) of a matrix changes the sign of the determinant."
+      },
+      {
+        "id": "math201-q5a-4",
+        "type": "multiple_choice",
+        "prompt": "The determinant of the identity matrix $I_n$ is:",
+        "options": [
+          "$0$",
+          "$1$",
+          "$n$",
+          "$-1$"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The determinant of any identity matrix is 1: $\\det(I_n) = 1$."
+      },
+      {
+        "id": "math201-q5a-5",
+        "type": "fill_blank",
+        "prompt": "The $(i,j)$-cofactor of matrix $A$ is $C_{ij} = (-1)^{i+j}$ times the ____ of the $(i,j)$ submatrix.",
+        "correctAnswer": "determinant",
+        "explanation": "The cofactor $C_{ij} = (-1)^{i+j}M_{ij}$ where $M_{ij}$ is the determinant of the submatrix obtained by deleting row $i$ and column $j$."
+      }
+    ]
+  },
+  {
+    "id": "math201-quiz-5b",
+    "subjectId": "math201",
+    "topicId": "math201-5",
+    "title": "Determinants - Application",
+    "questions": [
+      {
+        "id": "math201-q5b-1",
+        "type": "multiple_choice",
+        "prompt": "If you multiply a row of matrix $A$ by scalar $k$, the determinant:",
+        "options": [
+          "Is multiplied by $k$",
+          "Is multiplied by $k^2$",
+          "Stays the same",
+          "Becomes zero"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Multiplying one row by $k$ multiplies the determinant by $k$. Therefore $\\det(kA) = k^n\\det(A)$ for an $n \\times n$ matrix."
+      },
+      {
+        "id": "math201-q5b-2",
+        "type": "multiple_choice",
+        "prompt": "For square matrices $A$ and $B$ of the same size, $\\det(AB) = $:",
+        "options": [
+          "$\\det(A) + \\det(B)$",
+          "$\\det(A) \\cdot \\det(B)$",
+          "$\\det(A) - \\det(B)$",
+          "Cannot be determined"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The determinant of a product equals the product of determinants: $\\det(AB) = \\det(A)\\det(B)$."
+      },
+      {
+        "id": "math201-q5b-3",
+        "type": "true_false",
+        "prompt": "If $A$ is invertible, then $\\det(A^{-1}) = \\frac{1}{\\det(A)}$.",
+        "correctAnswer": true,
+        "explanation": "True. Since $AA^{-1} = I$, we have $\\det(A)\\det(A^{-1}) = \\det(I) = 1$, so $\\det(A^{-1}) = \\frac{1}{\\det(A)}$."
+      },
+      {
+        "id": "math201-q5b-4",
+        "type": "multiple_choice",
+        "prompt": "Cramer's Rule can be used to solve $Ax = b$ when:",
+        "options": [
+          "$A$ is square and invertible",
+          "$A$ is any matrix",
+          "$A$ is symmetric",
+          "$\\det(A) = 1$"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Cramer's Rule applies when $A$ is square and invertible (i.e., $\\det(A) \\neq 0$). Each component is $x_i = \\frac{\\det(A_i)}{\\det(A)}$."
+      },
+      {
+        "id": "math201-q5b-5",
+        "type": "fill_blank",
+        "prompt": "The determinant of a triangular matrix equals the product of its ____ entries.",
+        "correctAnswer": "diagonal",
+        "explanation": "For any triangular matrix (upper or lower), the determinant is the product of the diagonal entries."
+      }
+    ]
+  },
+  {
+    "id": "math201-quiz-5c",
+    "subjectId": "math201",
+    "topicId": "math201-5",
+    "title": "Determinants - Mastery",
+    "questions": [
+      {
+        "id": "math201-q5c-1",
+        "type": "multiple_choice",
+        "prompt": "The area of the parallelogram formed by vectors $\\begin{bmatrix} a \\\\ b \\end{bmatrix}$ and $\\begin{bmatrix} c \\\\ d \\end{bmatrix}$ is:",
+        "options": [
+          "$|ad - bc|$",
+          "$ad + bc$",
+          "$\\sqrt{a^2 + b^2}$",
+          "$ac + bd$"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The area is the absolute value of the determinant: $|\\det\\begin{bmatrix} a & c \\\\ b & d \\end{bmatrix}| = |ad - bc|$."
+      },
+      {
+        "id": "math201-q5c-2",
+        "type": "multiple_choice",
+        "prompt": "If $A$ has two identical rows, then $\\det(A) = $:",
+        "options": [
+          "$0$",
+          "$1$",
+          "$2$",
+          "Depends on the entries"
+        ],
+        "correctAnswer": 0,
+        "explanation": "If a matrix has two identical rows (or columns), its determinant is 0 because the rows are linearly dependent."
+      },
+      {
+        "id": "math201-q5c-3",
+        "type": "true_false",
+        "prompt": "For any square matrix $A$, $\\det(A^T) = \\det(A)$.",
+        "correctAnswer": true,
+        "explanation": "True. The determinant of a matrix equals the determinant of its transpose: $\\det(A^T) = \\det(A)$."
+      },
+      {
+        "id": "math201-q5c-4",
+        "type": "multiple_choice",
+        "prompt": "The adjugate (classical adjoint) of matrix $A$ is:",
+        "options": [
+          "The transpose of $A$",
+          "The transpose of the cofactor matrix",
+          "The inverse of $A$",
+          "The determinant of $A$"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The adjugate adj$(A)$ is the transpose of the cofactor matrix. It satisfies $A \\cdot \\text{adj}(A) = \\det(A) \\cdot I$."
+      },
+      {
+        "id": "math201-q5c-5",
+        "type": "fill_blank",
+        "prompt": "If $A$ is $n \\times n$ and $\\det(A) = d$, then $\\det(2A) = $ ____ (in terms of $d$ and $n$).",
+        "correctAnswer": "2^n * d",
+        "explanation": "Multiplying every entry by 2 multiplies each of the $n$ rows by 2, so $\\det(2A) = 2^n\\det(A) = 2^n d$."
+      }
+    ]
+  }
+]

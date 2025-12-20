@@ -1,0 +1,221 @@
+[
+  {
+    "id": "cs202-topic5-quiz1",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic5",
+    "title": "Cache Basics",
+    "questions": [
+      {
+        "id": "cs202-t5-q1-1",
+        "type": "multiple_choice",
+        "prompt": "What principle makes caches effective?",
+        "options": [
+          "Memory speed",
+          "CPU frequency",
+          "Locality of reference",
+          "Instruction pipelining"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Caches work because programs exhibit locality: recently accessed data (temporal) and nearby data (spatial) are likely to be accessed again."
+      },
+      {
+        "id": "cs202-t5-q1-2",
+        "type": "multiple_choice",
+        "prompt": "In a cache address breakdown, what do the tag bits identify?",
+        "options": [
+          "Which byte within a block",
+          "Which cache line to check",
+          "Which memory block is stored",
+          "The memory bank number"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The tag bits uniquely identify which memory block is stored in a cache line, distinguishing between blocks that map to the same index."
+      },
+      {
+        "id": "cs202-t5-q1-3",
+        "type": "multiple_choice",
+        "prompt": "A cache with 64-byte blocks requires how many offset bits?",
+        "options": [
+          "4",
+          "5",
+          "6",
+          "7"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Block offset bits = log₂(block size) = log₂(64) = 6 bits to address any byte within the 64-byte block."
+      },
+      {
+        "id": "cs202-t5-q1-4",
+        "type": "multiple_choice",
+        "prompt": "What does the valid bit indicate?",
+        "options": [
+          "The data has been modified",
+          "The cache line contains valid data",
+          "The address is valid",
+          "The cache is enabled"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The valid bit indicates whether the cache line contains valid data; it's 0 on startup and after invalidation."
+      },
+      {
+        "id": "cs202-t5-q1-5",
+        "type": "multiple_choice",
+        "prompt": "AMAT (Average Memory Access Time) is calculated as:",
+        "options": [
+          "Hit time × Miss rate",
+          "Hit time + Miss rate × Miss penalty",
+          "Miss rate + Miss penalty",
+          "Hit time + Miss penalty"
+        ],
+        "correctAnswer": 1,
+        "explanation": "AMAT = Hit time + Miss rate × Miss penalty, accounting for both hit and miss scenarios."
+      }
+    ]
+  },
+  {
+    "id": "cs202-topic5-quiz2",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic5",
+    "title": "Cache Organization",
+    "questions": [
+      {
+        "id": "cs202-t5-q2-1",
+        "type": "multiple_choice",
+        "prompt": "In a direct-mapped cache, each memory block maps to:",
+        "options": [
+          "Any cache line",
+          "Exactly one cache line",
+          "Two possible cache lines",
+          "Four possible cache lines"
+        ],
+        "correctAnswer": 1,
+        "explanation": "In direct-mapped caches, each memory block maps to exactly one cache line, determined by its address."
+      },
+      {
+        "id": "cs202-t5-q2-2",
+        "type": "multiple_choice",
+        "prompt": "A 4-way set-associative cache requires how many tag comparisons per access?",
+        "options": [
+          "1",
+          "2",
+          "4",
+          "8"
+        ],
+        "correctAnswer": 2,
+        "explanation": "A 4-way cache has 4 blocks per set, requiring 4 tag comparisons (done in parallel) to check for a hit."
+      },
+      {
+        "id": "cs202-t5-q2-3",
+        "type": "multiple_choice",
+        "prompt": "Which cache type has the lowest conflict miss rate?",
+        "options": [
+          "Direct-mapped",
+          "2-way set-associative",
+          "4-way set-associative",
+          "Fully associative"
+        ],
+        "correctAnswer": 3,
+        "explanation": "Fully associative caches have no conflict misses because any block can go anywhere."
+      },
+      {
+        "id": "cs202-t5-q2-4",
+        "type": "multiple_choice",
+        "prompt": "For a 32KB, 4-way set-associative cache with 64-byte blocks, how many sets are there?",
+        "options": [
+          "64",
+          "128",
+          "256",
+          "512"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Total blocks = 32KB / 64B = 512. Sets = 512 / 4 ways = 128 sets."
+      },
+      {
+        "id": "cs202-t5-q2-5",
+        "type": "multiple_choice",
+        "prompt": "LRU replacement policy evicts:",
+        "options": [
+          "The newest block",
+          "The block accessed longest ago",
+          "A random block",
+          "The block with most accesses"
+        ],
+        "correctAnswer": 1,
+        "explanation": "LRU (Least Recently Used) evicts the block that has not been accessed for the longest time."
+      }
+    ]
+  },
+  {
+    "id": "cs202-topic5-quiz3",
+    "subjectId": "cs202",
+    "topicId": "cs202-topic5",
+    "title": "Write Policies and Optimization",
+    "questions": [
+      {
+        "id": "cs202-t5-q3-1",
+        "type": "multiple_choice",
+        "prompt": "Write-through policy means:",
+        "options": [
+          "Writes go only to cache",
+          "Writes go to both cache and memory",
+          "Writes bypass the cache",
+          "Writes are buffered indefinitely"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Write-through writes data to both the cache and main memory on every write, keeping them consistent."
+      },
+      {
+        "id": "cs202-t5-q3-2",
+        "type": "multiple_choice",
+        "prompt": "What does the dirty bit indicate in write-back caches?",
+        "options": [
+          "The block is invalid",
+          "The block has been modified and differs from memory",
+          "The block is being accessed",
+          "The block should be written through"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The dirty bit indicates the cache block has been modified and must be written to memory when evicted."
+      },
+      {
+        "id": "cs202-t5-q3-3",
+        "type": "multiple_choice",
+        "prompt": "Which type of miss cannot be avoided by increasing cache size?",
+        "options": [
+          "Compulsory miss",
+          "Capacity miss",
+          "Conflict miss",
+          "Coherence miss"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Compulsory (cold) misses occur on the first access to a block and cannot be avoided by larger caches."
+      },
+      {
+        "id": "cs202-t5-q3-4",
+        "type": "multiple_choice",
+        "prompt": "A write buffer helps by:",
+        "options": [
+          "Increasing hit rate",
+          "Hiding write latency from the processor",
+          "Reducing cache size needed",
+          "Eliminating dirty bits"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Write buffers queue writes and allow the CPU to continue without waiting for memory writes to complete."
+      },
+      {
+        "id": "cs202-t5-q3-5",
+        "type": "multiple_choice",
+        "prompt": "Prefetching reduces which type of misses?",
+        "options": [
+          "Conflict misses only",
+          "Capacity misses only",
+          "Compulsory misses",
+          "All miss types equally"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Prefetching fetches data before it's needed, primarily reducing compulsory misses by having data ready."
+      }
+    ]
+  }
+]

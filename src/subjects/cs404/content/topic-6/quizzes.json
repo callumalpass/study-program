@@ -1,0 +1,209 @@
+[
+  {
+    "id": "cs404-quiz-6-1",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-6",
+    "title": "Deployment Fundamentals",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "What is the main benefit of Continuous Integration (CI)?",
+        "options": [
+          "Automatic deployment to production",
+          "Early detection of integration issues",
+          "Eliminates need for testing",
+          "Reduces code complexity"
+        ],
+        "correctAnswer": 1,
+        "explanation": "CI automatically builds and tests code on every commit, catching integration issues early before they compound."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "Which platform is recommended for deploying Next.js applications?",
+        "options": [
+          "AWS EC2",
+          "Vercel",
+          "Kubernetes",
+          "Traditional web hosting"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Vercel is built specifically for Next.js (by the same team), offering automatic deployments, serverless functions, and excellent developer experience."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of environment variables in deployment?",
+        "options": [
+          "To make code run faster",
+          "To separate configuration from code",
+          "To track deployment history",
+          "To compress application size"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Environment variables externalize configuration (API keys, database URLs) so code can run in different environments without changes."
+      },
+      {
+        "id": "q4",
+        "type": "true_false",
+        "prompt": "When a production deployment fails, you should always rollback to the previous working version first before debugging.",
+        "correctAnswer": true,
+        "explanation": "Always rollback first to restore service, then debug the issue in a non-production environment to minimize downtime."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "What is the main purpose of application monitoring tools like Sentry?",
+        "options": [
+          "To prevent errors from occurring",
+          "To detect and track errors in production",
+          "To automatically fix bugs",
+          "To improve application performance"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Monitoring tools track errors and exceptions in production, providing stack traces and context to help debug issues."
+      }
+    ]
+  },
+  {
+    "id": "cs404-quiz-6-2",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-6",
+    "title": "CI/CD and Containerization Application",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "What is the difference between Continuous Integration and Continuous Deployment?",
+        "options": [
+          "They are the same thing",
+          "CI automates testing; CD automates deployment to production",
+          "CD is for databases only",
+          "CI is older technology"
+        ],
+        "correctAnswer": 1,
+        "explanation": "CI automatically builds and tests code on every commit. CD extends this by automatically deploying passing builds to production."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "What is Docker and why is it useful?",
+        "options": [
+          "A programming language",
+          "A containerization platform that packages apps with dependencies",
+          "A database system",
+          "A testing framework"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Docker containers package applications with all dependencies, ensuring consistent behavior across development, testing, and production environments."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "What is a Dockerfile?",
+        "options": [
+          "A Docker configuration file",
+          "A text file with instructions to build a Docker image",
+          "A database schema",
+          "A deployment script"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A Dockerfile contains instructions (FROM, RUN, COPY, CMD) to build a Docker image, defining the environment and how to run the application."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "What should a CI/CD pipeline include at minimum?",
+        "options": [
+          "Only deployment steps",
+          "Build, test, and deploy stages with failure notifications",
+          "Just compilation",
+          "Only manual approval steps"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A good CI/CD pipeline includes automated build, test (unit/integration), and deployment stages with notifications when steps fail."
+      },
+      {
+        "id": "q5",
+        "type": "true_false",
+        "prompt": "Deployment previews create temporary environments for each pull request, allowing you to test changes before merging.",
+        "correctAnswer": true,
+        "explanation": "Deployment previews create temporary environments for each pull request, allowing you to test changes in isolation before merging to production."
+      }
+    ]
+  },
+  {
+    "id": "cs404-quiz-6-3",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-6",
+    "title": "Monitoring and Production Mastery",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "What metrics should you monitor in production?",
+        "options": [
+          "Only error rates",
+          "Error rates, response times, resource usage, and user activity",
+          "Just server uptime",
+          "No monitoring is needed"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Monitor error rates, API response times, CPU/memory usage, database performance, and user activity to catch issues early."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of application logging?",
+        "options": [
+          "To slow down the application",
+          "To record events and debug issues in production",
+          "To replace testing",
+          "To store user data"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Logging records application events, errors, and debugging information, helping you understand what happened when issues occur in production."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "What is a rollback strategy and why is it important?",
+        "options": [
+          "A backup plan",
+          "A way to quickly revert to previous version when deployment fails",
+          "A testing technique",
+          "A database migration tool"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A rollback strategy allows you to quickly revert to the previous working version if a deployment introduces critical bugs, minimizing downtime."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "What is health check endpoint and why is it important?",
+        "options": [
+          "An API to check user health data",
+          "An endpoint that verifies the application is running correctly",
+          "A security feature",
+          "A testing utility"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Health check endpoints (like /health) verify application and dependencies are working, allowing load balancers and monitoring to detect failures."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "What is the difference between logs and metrics?",
+        "options": [
+          "They are the same thing",
+          "Logs are event records; metrics are numerical measurements over time",
+          "Metrics are only for databases",
+          "Logs are only for errors"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Logs are detailed event records (timestamped messages). Metrics are numerical measurements over time (CPU usage, request count, response time)."
+      }
+    ]
+  }
+]

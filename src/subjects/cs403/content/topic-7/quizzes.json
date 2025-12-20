@@ -1,0 +1,180 @@
+[
+  {
+    "id": "cs403-quiz-7-1",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-7",
+    "title": "Topic 7: Geometry — Fundamentals",
+    "questions": [
+      {
+        "id": "cs403-q91",
+        "type": "multiple_choice",
+        "prompt": "The convex hull of a set of points in the plane is:",
+        "options": [
+          "The smallest convex polygon containing all points",
+          "The set of all points",
+          "The Delaunay triangulation",
+          "The minimum spanning tree"
+        ],
+        "correctAnswer": "The smallest convex polygon containing all points",
+        "explanation": "The convex hull is the minimal convex set containing the points; in 2D it is a convex polygon whose vertices are a subset of the points."
+      },
+      {
+        "id": "cs403-q92",
+        "type": "fill_blank",
+        "prompt": "Graham scan runs in O(n _____) time due to sorting by angle.",
+        "correctAnswer": "log n",
+        "explanation": "Graham scan sorts points (O(n log n)) and then does a linear scan, so the total time is O(n log n)."
+      },
+      {
+        "id": "cs403-q93",
+        "type": "true_false",
+        "prompt": "Orientation tests in computational geometry can be computed using a 2D cross product (signed area).",
+        "correctAnswer": true,
+        "explanation": "The sign of the cross product (b−a)×(c−a) indicates clockwise vs counterclockwise turn, central to convex hull and segment intersection algorithms."
+      },
+      {
+        "id": "cs403-q94",
+        "type": "multiple_choice",
+        "prompt": "A sweep line algorithm is characterized by:",
+        "options": [
+          "Processing events in sorted order while maintaining an active set",
+          "Randomly sampling points",
+          "Always recursing on halves",
+          "Using max flow as a subroutine"
+        ],
+        "correctAnswer": "Processing events in sorted order while maintaining an active set",
+        "explanation": "Sweep line methods sort “events” (like segment endpoints) and maintain a data structure of active objects intersecting the sweep line."
+      },
+      {
+        "id": "cs403-q95",
+        "type": "code_output",
+        "prompt": "What does this print?",
+        "codeSnippet": "function cross(ax: number, ay: number, bx: number, by: number): number {\n  return ax * by - ay * bx;\n}\n// a=(0,0), b=(1,0), c=(1,1)\nconst ab = { x: 1, y: 0 };\nconst ac = { x: 1, y: 1 };\nconsole.log(Math.sign(cross(ab.x, ab.y, ac.x, ac.y)));",
+        "correctAnswer": "1",
+        "explanation": "The cross product is 1*1 − 0*1 = 1, positive, indicating a counterclockwise turn; Math.sign prints 1."
+      }
+    ]
+  },
+  {
+    "id": "cs403-quiz-7-2",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-7",
+    "title": "Topic 7: Geometry — Application",
+    "questions": [
+      {
+        "id": "cs403-q96",
+        "type": "multiple_choice",
+        "prompt": "The divide-and-conquer closest pair of points algorithm runs in:",
+        "options": [
+          "O(n log n)",
+          "O(n^2)",
+          "O(log n)",
+          "O(n log^2 n)"
+        ],
+        "correctAnswer": "O(n log n)",
+        "explanation": "Closest pair can be solved in O(n log n) by sorting once and using a divide-and-conquer merge step that checks a constant number of neighbors in the strip."
+      },
+      {
+        "id": "cs403-q97",
+        "type": "true_false",
+        "prompt": "Line segment intersection can be solved in O(n log n) time for n segments using a sweep line algorithm.",
+        "correctAnswer": true,
+        "explanation": "Bentley–Ottmann finds all intersections in O((n+k) log n), and detecting whether any intersection exists can be done in O(n log n)."
+      },
+      {
+        "id": "cs403-q98",
+        "type": "fill_blank",
+        "prompt": "Voronoi diagrams are dual to the _____ triangulation.",
+        "correctAnswer": "Delaunay",
+        "explanation": "The Delaunay triangulation is the geometric dual of the Voronoi diagram: edges connect sites with adjacent Voronoi cells."
+      },
+      {
+        "id": "cs403-q99",
+        "type": "multiple_choice",
+        "prompt": "A common data structure for 2D orthogonal range searching is a:",
+        "options": [
+          "Range tree",
+          "Heap",
+          "Union-find",
+          "Trie"
+        ],
+        "correctAnswer": "Range tree",
+        "explanation": "Range trees (and kd-trees) are standard structures for orthogonal range searching, enabling sublinear query times with preprocessing."
+      },
+      {
+        "id": "cs403-q100",
+        "type": "multiple_choice",
+        "prompt": "Polygon triangulation is often used to:",
+        "options": [
+          "Decompose a polygon into triangles for rendering or dynamic programming",
+          "Compute max flow",
+          "Solve set cover exactly",
+          "Generate random graphs"
+        ],
+        "correctAnswer": "Decompose a polygon into triangles for rendering or dynamic programming",
+        "explanation": "Triangulation breaks a polygon into triangles, useful in graphics and as a basis for DP solutions on polygons."
+      }
+    ]
+  },
+  {
+    "id": "cs403-quiz-7-3",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-7",
+    "title": "Topic 7: Geometry — Mastery",
+    "questions": [
+      {
+        "id": "cs403-q101",
+        "type": "multiple_choice",
+        "prompt": "Robust computational geometry implementations must often address:",
+        "options": [
+          "Floating-point precision and degeneracies (collinearity, duplicates)",
+          "Only asymptotic runtime",
+          "That all inputs are in general position",
+          "That sorting is impossible"
+        ],
+        "correctAnswer": "Floating-point precision and degeneracies (collinearity, duplicates)",
+        "explanation": "Geometric predicates are sensitive to numeric error and degenerate cases. Robust implementations use exact arithmetic, epsilons carefully, or symbolic perturbation."
+      },
+      {
+        "id": "cs403-q102",
+        "type": "true_false",
+        "prompt": "In the plane, computing a convex hull can be done in expected O(n) time using randomized incremental construction.",
+        "correctAnswer": true,
+        "explanation": "There are randomized incremental algorithms with expected linear time under certain models, though the most common deterministic algorithms are O(n log n)."
+      },
+      {
+        "id": "cs403-q103",
+        "type": "fill_blank",
+        "prompt": "A standard approach to avoid many floating-point issues in orientation is to use exact _____ arithmetic when feasible.",
+        "correctAnswer": "integer",
+        "explanation": "If coordinates are integers and within safe range, computing cross products with integer arithmetic avoids rounding error (though overflow must still be managed)."
+      },
+      {
+        "id": "cs403-q104",
+        "type": "multiple_choice",
+        "prompt": "The output-sensitive convex hull algorithm Jarvis March runs in:",
+        "options": [
+          "O(nh)",
+          "O(n log n)",
+          "O(n^2)",
+          "O(h log n)"
+        ],
+        "correctAnswer": "O(nh)",
+        "explanation": "Jarvis March (gift wrapping) takes O(nh) time where h is the number of hull vertices, making it fast when the hull is small."
+      },
+      {
+        "id": "cs403-q105",
+        "type": "multiple_choice",
+        "prompt": "Which statement about computational geometry algorithms is generally true?",
+        "options": [
+          "Many algorithms rely on sorting events/points and geometric predicates like orientation",
+          "Most problems reduce to max flow",
+          "Precision issues never arise in practice",
+          "All problems have linear-time deterministic solutions"
+        ],
+        "correctAnswer": "Many algorithms rely on sorting events/points and geometric predicates like orientation",
+        "explanation": "A large fraction of planar computational geometry uses sorting and a small set of geometric predicates (orientation, in-circle), combined with sweeps or divide-and-conquer."
+      }
+    ]
+  }
+]

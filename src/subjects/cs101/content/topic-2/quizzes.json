@@ -1,0 +1,163 @@
+[
+  {
+    "id": "cs101-quiz-2",
+    "subjectId": "cs101",
+    "topicId": "cs101-topic-2",
+    "title": "Control Flow - Fundamentals",
+    "questions": [
+      {
+        "id": "q2-1",
+        "type": "multiple_choice",
+        "prompt": "What keyword is used to exit a loop early?",
+        "options": [
+          "continue",
+          "break",
+          "exit",
+          "return"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The \"break\" keyword immediately exits the current loop. \"continue\" skips to the next iteration, and \"return\" exits a function."
+      },
+      {
+        "id": "q2-2",
+        "type": "code_output",
+        "prompt": "How many times will \"Hello\" be printed?",
+        "codeSnippet": "for i in range(3):\n    print(\"Hello\")",
+        "correctAnswer": "3",
+        "explanation": "range(3) generates numbers 0, 1, 2 (3 numbers total), so the loop executes 3 times."
+      },
+      {
+        "id": "q2-3",
+        "type": "multiple_choice",
+        "prompt": "Which statement checks if x is greater than 10 AND less than 20?",
+        "options": [
+          "if x > 10 and x < 20:",
+          "if x > 10 or x < 20:",
+          "if x > 10 & x < 20:",
+          "if x > 10 && x < 20:"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Use \"and\" to combine conditions that must both be true. Python uses \"and\"/\"or\", not \"&&\"/\"||\" like some other languages."
+      },
+      {
+        "id": "q2-4",
+        "type": "true_false",
+        "prompt": "The condition \"if 0:\" will execute the if block.",
+        "correctAnswer": false,
+        "explanation": "0 is a \"falsy\" value in Python. The if block only executes when the condition is truthy. Other falsy values include None, \"\", [], {}."
+      },
+      {
+        "id": "q2-5",
+        "type": "code_output",
+        "prompt": "What will this code print?",
+        "codeSnippet": "x = 5\nif x > 10:\n    print(\"A\")\nelif x > 3:\n    print(\"B\")\nelse:\n    print(\"C\")",
+        "correctAnswer": "B",
+        "explanation": "x is 5, which is not > 10 (so \"A\" is skipped), but it is > 3, so \"B\" is printed. Only one branch executes."
+      }
+    ]
+  },
+  {
+    "id": "cs101-quiz-2b",
+    "subjectId": "cs101",
+    "topicId": "cs101-topic-2",
+    "title": "Control Flow - Loops",
+    "questions": [
+      {
+        "id": "q2b-1",
+        "type": "code_output",
+        "prompt": "What will this code print?",
+        "codeSnippet": "for i in range(1, 4):\n    print(i, end=\" \")",
+        "correctAnswer": "1 2 3 ",
+        "explanation": "range(1, 4) generates 1, 2, 3 (starts at 1, stops before 4). end=\" \" makes print use a space instead of newline."
+      },
+      {
+        "id": "q2b-2",
+        "type": "multiple_choice",
+        "prompt": "What does range(0, 10, 2) generate?",
+        "options": [
+          "0, 2, 4, 6, 8, 10",
+          "0, 2, 4, 6, 8",
+          "2, 4, 6, 8",
+          "0, 1, 2, 3, 4, 5, 6, 7, 8, 9"
+        ],
+        "correctAnswer": 1,
+        "explanation": "range(start, stop, step) with step=2 generates every second number. It stops before 10, so: 0, 2, 4, 6, 8."
+      },
+      {
+        "id": "q2b-3",
+        "type": "code_output",
+        "prompt": "What will this code print?",
+        "codeSnippet": "count = 0\nwhile count < 3:\n    count += 1\nprint(count)",
+        "correctAnswer": "3",
+        "explanation": "The loop runs while count < 3. It increments count to 1, 2, then 3. When count is 3, the condition is false and the loop exits. Then 3 is printed."
+      },
+      {
+        "id": "q2b-4",
+        "type": "true_false",
+        "prompt": "A for loop can iterate over a string, processing each character.",
+        "correctAnswer": true,
+        "explanation": "Strings are iterable in Python. \"for char in string:\" will loop through each character one at a time."
+      },
+      {
+        "id": "q2b-5",
+        "type": "code_output",
+        "prompt": "What will this code print?",
+        "codeSnippet": "for i in range(5):\n    if i == 2:\n        continue\n    print(i, end=\"\")",
+        "correctAnswer": "0134",
+        "explanation": "The continue statement skips the rest of the loop body for that iteration. When i is 2, it skips printing, so we get 0, 1, 3, 4."
+      }
+    ]
+  },
+  {
+    "id": "cs101-quiz-2c",
+    "subjectId": "cs101",
+    "topicId": "cs101-topic-2",
+    "title": "Control Flow - Mastery",
+    "questions": [
+      {
+        "id": "q2c-1",
+        "type": "code_output",
+        "prompt": "What will this code print?",
+        "codeSnippet": "for i in range(3):\n    for j in range(2):\n        print(f\"{i},{j}\", end=\" \")",
+        "correctAnswer": "0,0 0,1 1,0 1,1 2,0 2,1 ",
+        "explanation": "Nested loops: the outer loop runs 3 times (i=0,1,2), and for each outer iteration, the inner loop runs twice (j=0,1)."
+      },
+      {
+        "id": "q2c-2",
+        "type": "multiple_choice",
+        "prompt": "What happens when a while loop condition is never False?",
+        "options": [
+          "The loop runs once",
+          "The program crashes immediately",
+          "The loop runs forever (infinite loop)",
+          "Python raises a SyntaxError"
+        ],
+        "correctAnswer": 2,
+        "explanation": "If the condition never becomes False, the loop runs forever. This is called an infinite loop and usually requires Ctrl+C to stop."
+      },
+      {
+        "id": "q2c-3",
+        "type": "code_output",
+        "prompt": "What will this code print?",
+        "codeSnippet": "for i in range(5):\n    if i == 3:\n        break\nelse:\n    print(\"Done\")\nprint(\"End\")",
+        "correctAnswer": "End",
+        "explanation": "The else block after a for loop only runs if the loop completes without break. Since break is called when i=3, \"Done\" is skipped."
+      },
+      {
+        "id": "q2c-4",
+        "type": "true_false",
+        "prompt": "The expression \"not True and False\" evaluates to False.",
+        "correctAnswer": true,
+        "explanation": "\"not True\" evaluates to False first, then \"False and False\" evaluates to False. Operator precedence: not > and > or."
+      },
+      {
+        "id": "q2c-5",
+        "type": "code_output",
+        "prompt": "What will this code print?",
+        "codeSnippet": "nums = [1, 2, 3]\nfor i, num in enumerate(nums):\n    print(i, end=\"\")",
+        "correctAnswer": "012",
+        "explanation": "enumerate() returns both the index and value. Here we only print the index i, which goes 0, 1, 2."
+      }
+    ]
+  }
+]

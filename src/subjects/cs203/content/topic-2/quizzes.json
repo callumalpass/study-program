@@ -1,0 +1,221 @@
+[
+  {
+    "id": "cs203-topic-2-quiz-1",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-2",
+    "title": "Regular Expression Syntax and Semantics",
+    "questions": [
+      {
+        "id": "cs203-t2-q1-1",
+        "type": "multiple_choice",
+        "prompt": "The regular expression (a|b)*abb represents:",
+        "options": [
+          "All strings ending in abb",
+          "All strings over {a,b} ending in abb",
+          "Only the string abb",
+          "All strings containing abb"
+        ],
+        "correctAnswer": 1,
+        "explanation": "(a|b)* matches any string over {a,b}, followed by the literal \"abb\", so the language is all strings over {a,b} ending in abb."
+      },
+      {
+        "id": "cs203-t2-q1-2",
+        "type": "multiple_choice",
+        "prompt": "The base cases in regular expression definition are:",
+        "options": [
+          "∅, ε, and single symbols",
+          "Only single symbols",
+          "∅ and ε only",
+          "Any finite set of strings"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Regular expressions are built from ∅ (empty language), ε (empty string), and single symbols a ∈ Σ using union, concatenation, and Kleene star."
+      },
+      {
+        "id": "cs203-t2-q1-3",
+        "type": "multiple_choice",
+        "prompt": "What does (ab)* represent?",
+        "options": [
+          "Zero or more a's followed by zero or more b's",
+          "Zero or more repetitions of \"ab\"",
+          "The string \"ab\" only",
+          "Any string of a's and b's"
+        ],
+        "correctAnswer": 1,
+        "explanation": "(ab)* means zero or more concatenations of \"ab\", producing {ε, ab, abab, ababab, ...}."
+      },
+      {
+        "id": "cs203-t2-q1-4",
+        "type": "multiple_choice",
+        "prompt": "Which is equivalent to a+ (one or more a's)?",
+        "options": [
+          "a*",
+          "aa*",
+          "(aa)*",
+          "a|a*"
+        ],
+        "correctAnswer": 1,
+        "explanation": "a+ = aa* because a+ requires at least one \"a\" followed by zero or more additional \"a\"s."
+      },
+      {
+        "id": "cs203-t2-q1-5",
+        "type": "multiple_choice",
+        "prompt": "L(∅) equals:",
+        "options": [
+          "{ε}",
+          "{}",
+          "Σ*",
+          "undefined"
+        ],
+        "correctAnswer": 1,
+        "explanation": "∅ represents the empty language containing no strings at all, denoted {} or ∅."
+      }
+    ]
+  },
+  {
+    "id": "cs203-topic-2-quiz-2",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-2",
+    "title": "Conversions and Equivalence",
+    "questions": [
+      {
+        "id": "cs203-t2-q2-1",
+        "type": "multiple_choice",
+        "prompt": "Thompson's construction converts:",
+        "options": [
+          "DFA to regex",
+          "Regex to NFA",
+          "NFA to DFA",
+          "CFG to PDA"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Thompson's construction builds an NFA from a regular expression using recursive structural composition."
+      },
+      {
+        "id": "cs203-t2-q2-2",
+        "type": "multiple_choice",
+        "prompt": "The state elimination method for FA to regex works by:",
+        "options": [
+          "Adding states until a pattern emerges",
+          "Removing states while updating edge labels with regex",
+          "Converting to DFA first",
+          "Using the pumping lemma"
+        ],
+        "correctAnswer": 1,
+        "explanation": "State elimination removes intermediate states one by one, combining their transitions into regular expression labels."
+      },
+      {
+        "id": "cs203-t2-q2-3",
+        "type": "multiple_choice",
+        "prompt": "Kleene's theorem states:",
+        "options": [
+          "Every DFA has a minimum number of states",
+          "Regular expressions and finite automata describe the same languages",
+          "The pumping lemma holds for regular languages",
+          "DFAs are more powerful than NFAs"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Kleene's theorem establishes equivalence: a language is regular iff it can be described by a regular expression iff it is recognized by a finite automaton."
+      },
+      {
+        "id": "cs203-t2-q2-4",
+        "type": "multiple_choice",
+        "prompt": "In Thompson's construction, for regex r₁|r₂:",
+        "options": [
+          "Build NFAs in sequence",
+          "Create new start state with ε-transitions to both NFA start states",
+          "Use product construction",
+          "Combine accepting states"
+        ],
+        "correctAnswer": 1,
+        "explanation": "For union, Thompson's construction creates a new start state with ε-transitions to both sub-NFAs, and a new accept state reached by ε from both sub-NFA accept states."
+      },
+      {
+        "id": "cs203-t2-q2-5",
+        "type": "multiple_choice",
+        "prompt": "Converting an n-state NFA to a regex can produce an expression of size:",
+        "options": [
+          "O(n)",
+          "O(n²)",
+          "O(4ⁿ)",
+          "O(n!)"
+        ],
+        "correctAnswer": 2,
+        "explanation": "State elimination can produce exponentially large regular expressions, with worst-case O(4ⁿ) size."
+      }
+    ]
+  },
+  {
+    "id": "cs203-topic-2-quiz-3",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-2",
+    "title": "Properties and Decision Problems",
+    "questions": [
+      {
+        "id": "cs203-t2-q3-1",
+        "type": "multiple_choice",
+        "prompt": "Which algebraic identity is correct for regular expressions?",
+        "options": [
+          "r|r = ε",
+          "r·∅ = r",
+          "r|∅ = r",
+          "r* = r"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The empty language ∅ is the identity for union: r|∅ = r because adding no strings leaves the language unchanged."
+      },
+      {
+        "id": "cs203-t2-q3-2",
+        "type": "multiple_choice",
+        "prompt": "Testing if L(M) = ∅ for DFA M is:",
+        "options": [
+          "Undecidable",
+          "Decidable in O(n²)",
+          "Decidable in O(n)",
+          "NP-complete"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Emptiness is decidable in O(n) by checking if any accepting state is reachable from the start state (simple graph traversal)."
+      },
+      {
+        "id": "cs203-t2-q3-3",
+        "type": "multiple_choice",
+        "prompt": "Testing equivalence of two DFAs M₁ and M₂ involves:",
+        "options": [
+          "Checking if they have the same number of states",
+          "Testing if L(M₁) △ L(M₂) = ∅",
+          "Running both on all possible inputs",
+          "Converting both to regular expressions and comparing"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Equivalence is tested by checking if the symmetric difference is empty: L(M₁) = L(M₂) iff (L(M₁)∩L̄(M₂)) ∪ (L̄(M₁)∩L(M₂)) = ∅."
+      },
+      {
+        "id": "cs203-t2-q3-4",
+        "type": "multiple_choice",
+        "prompt": "Which property does NOT hold for regular languages?",
+        "options": [
+          "Closure under reversal",
+          "Closure under homomorphism",
+          "Closure under arbitrary intersection",
+          "Closure under complement"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Regular languages are closed under finite intersection, but infinite intersection of regular languages can produce non-regular languages."
+      },
+      {
+        "id": "cs203-t2-q3-5",
+        "type": "multiple_choice",
+        "prompt": "The membership problem for regular languages is:",
+        "options": [
+          "Undecidable",
+          "O(n) where n is string length",
+          "O(2ⁿ)",
+          "NP-complete"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Given a DFA and string w, membership is O(|w|) - just simulate the DFA on w and check if it ends in an accepting state."
+      }
+    ]
+  }
+]

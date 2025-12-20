@@ -1,0 +1,185 @@
+[
+  {
+    "id": "math201-quiz-7a",
+    "subjectId": "math201",
+    "topicId": "math201-7",
+    "title": "Linear Transformations - Fundamentals",
+    "questions": [
+      {
+        "id": "math201-q7a-1",
+        "type": "multiple_choice",
+        "prompt": "A transformation $T: \\mathbb{R}^n \\to \\mathbb{R}^m$ is linear if:",
+        "options": [
+          "$T(u + v) = T(u) + T(v)$ for all vectors $u, v$",
+          "$T(cu) = cT(u)$ for all scalars $c$ and vectors $u$",
+          "Both of the above",
+          "Neither of the above"
+        ],
+        "correctAnswer": 2,
+        "explanation": "A transformation is linear if it preserves both addition and scalar multiplication: $T(u+v) = T(u)+T(v)$ and $T(cu) = cT(u)$."
+      },
+      {
+        "id": "math201-q7a-2",
+        "type": "true_false",
+        "prompt": "Every linear transformation $T: \\mathbb{R}^n \\to \\mathbb{R}^m$ can be represented as $T(x) = Ax$ for some matrix $A$.",
+        "correctAnswer": true,
+        "explanation": "True. Every linear transformation between finite-dimensional vector spaces can be represented as matrix multiplication."
+      },
+      {
+        "id": "math201-q7a-3",
+        "type": "multiple_choice",
+        "prompt": "The kernel (null space) of linear transformation $T$ is:",
+        "options": [
+          "The set of all outputs of $T$",
+          "The set of all inputs that $T$ maps to zero",
+          "The set of all invertible vectors",
+          "The dimension of the domain"
+        ],
+        "correctAnswer": 1,
+        "explanation": "ker$(T) = \\{x : T(x) = 0\\}$, the set of all vectors that map to the zero vector."
+      },
+      {
+        "id": "math201-q7a-4",
+        "type": "multiple_choice",
+        "prompt": "The range of linear transformation $T: \\mathbb{R}^n \\to \\mathbb{R}^m$ is:",
+        "options": [
+          "All of $\\mathbb{R}^n$",
+          "The set $\\{T(x) : x \\in \\mathbb{R}^n\\}$",
+          "The kernel of $T$",
+          "The null space of $T$"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The range of $T$ is the set of all possible outputs: range$(T) = \\{T(x) : x \\in \\mathbb{R}^n\\}$. For $T(x) = Ax$, this is Col$(A)$."
+      },
+      {
+        "id": "math201-q7a-5",
+        "type": "fill_blank",
+        "prompt": "For any linear transformation $T$, we always have $T(0) = $ ____.",
+        "correctAnswer": "0",
+        "explanation": "Linear transformations always map the zero vector to the zero vector: $T(0) = T(0 \\cdot v) = 0 \\cdot T(v) = 0$."
+      }
+    ]
+  },
+  {
+    "id": "math201-quiz-7b",
+    "subjectId": "math201",
+    "topicId": "math201-7",
+    "title": "Linear Transformations - Application",
+    "questions": [
+      {
+        "id": "math201-q7b-1",
+        "type": "multiple_choice",
+        "prompt": "A linear transformation $T$ is one-to-one if and only if:",
+        "options": [
+          "ker$(T) = \\{0\\}$",
+          "range$(T) = \\mathbb{R}^m$",
+          "$T$ is invertible",
+          "The matrix is square"
+        ],
+        "correctAnswer": 0,
+        "explanation": "A linear transformation is one-to-one (injective) if and only if its kernel contains only the zero vector: ker$(T) = \\{0\\}$."
+      },
+      {
+        "id": "math201-q7b-2",
+        "type": "multiple_choice",
+        "prompt": "A linear transformation $T: \\mathbb{R}^n \\to \\mathbb{R}^m$ is onto if:",
+        "options": [
+          "Every vector in $\\mathbb{R}^m$ is in the range of $T$",
+          "ker$(T) = \\{0\\}$",
+          "$n = m$",
+          "$T$ is one-to-one"
+        ],
+        "correctAnswer": 0,
+        "explanation": "A transformation is onto (surjective) if its range equals the entire codomain: range$(T) = \\mathbb{R}^m$."
+      },
+      {
+        "id": "math201-q7b-3",
+        "type": "true_false",
+        "prompt": "If $T: \\mathbb{R}^n \\to \\mathbb{R}^n$ is both one-to-one and onto, then $T$ is invertible.",
+        "correctAnswer": true,
+        "explanation": "True. A linear transformation from $\\mathbb{R}^n$ to $\\mathbb{R}^n$ that is both one-to-one and onto is an isomorphism and has an inverse."
+      },
+      {
+        "id": "math201-q7b-4",
+        "type": "multiple_choice",
+        "prompt": "The composition of linear transformations $T_1: \\mathbb{R}^n \\to \\mathbb{R}^m$ and $T_2: \\mathbb{R}^m \\to \\mathbb{R}^p$ is:",
+        "options": [
+          "Always linear",
+          "Never linear",
+          "Linear only if both are invertible",
+          "Linear only if $n = p$"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The composition $(T_2 \\circ T_1)(x) = T_2(T_1(x))$ is always linear if both $T_1$ and $T_2$ are linear."
+      },
+      {
+        "id": "math201-q7b-5",
+        "type": "fill_blank",
+        "prompt": "If $T(x) = Ax$ where $A$ is $m \\times n$, then $T$ maps $\\mathbb{R}^n$ to $\\mathbb{R}^{____}$.",
+        "correctAnswer": "m",
+        "explanation": "Matrix multiplication $Ax$ where $A$ is $m \\times n$ and $x$ is $n \\times 1$ produces an $m \\times 1$ vector in $\\mathbb{R}^m$."
+      }
+    ]
+  },
+  {
+    "id": "math201-quiz-7c",
+    "subjectId": "math201",
+    "topicId": "math201-7",
+    "title": "Linear Transformations - Mastery",
+    "questions": [
+      {
+        "id": "math201-q7c-1",
+        "type": "multiple_choice",
+        "prompt": "Two matrices $A$ and $B$ are similar if there exists invertible $P$ such that:",
+        "options": [
+          "$A = B$",
+          "$A = PBP^{-1}$",
+          "$A + B = P$",
+          "$AP = PB$"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Matrices $A$ and $B$ are similar if $A = PBP^{-1}$ for some invertible matrix $P$. Similar matrices represent the same transformation in different bases."
+      },
+      {
+        "id": "math201-q7c-2",
+        "type": "multiple_choice",
+        "prompt": "Similar matrices have the same:",
+        "options": [
+          "Entries",
+          "Eigenvalues",
+          "Eigenvectors",
+          "Columns"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Similar matrices have the same eigenvalues, determinant, trace, and characteristic polynomial, but generally different eigenvectors and entries."
+      },
+      {
+        "id": "math201-q7c-3",
+        "type": "true_false",
+        "prompt": "A rotation in $\\mathbb{R}^2$ is a linear transformation.",
+        "correctAnswer": true,
+        "explanation": "True. Rotation about the origin is a linear transformation represented by a rotation matrix. It preserves addition and scalar multiplication."
+      },
+      {
+        "id": "math201-q7c-4",
+        "type": "multiple_choice",
+        "prompt": "Which transformation is NOT linear?",
+        "options": [
+          "Rotation about the origin",
+          "Reflection across a line through the origin",
+          "Translation by a nonzero vector",
+          "Projection onto a subspace"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Translation by a nonzero vector is not linear because it doesn't map the zero vector to zero: $T(0) = b \\neq 0$ for translation by $b$."
+      },
+      {
+        "id": "math201-q7c-5",
+        "type": "fill_blank",
+        "prompt": "The standard matrix of a linear transformation $T: \\mathbb{R}^n \\to \\mathbb{R}^m$ has columns that are $T(e_1), T(e_2), \\ldots, T(e_n)$ where $e_i$ are the ____ vectors.",
+        "correctAnswer": "standard basis",
+        "explanation": "The standard matrix $A$ is formed by computing $T$ applied to each standard basis vector: $A = [T(e_1) \\; T(e_2) \\; \\cdots \\; T(e_n)]$."
+      }
+    ]
+  }
+]

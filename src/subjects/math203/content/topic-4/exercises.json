@@ -1,0 +1,295 @@
+[
+  {
+    "id": "math203-t4-drill-1",
+    "subjectId": "math203",
+    "topicId": "math203-topic-4",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Finding Critical Points",
+    "description": "Find the critical points of $f(x) = x^3 - 3x$.",
+    "hints": [
+      "Set f'(x) = 0 and solve."
+    ],
+    "solution": "$f'(x) = 3x^2 - 3 = 3(x^2 - 1) = 3(x-1)(x+1) = 0$\nCritical points: $x = -1$ and $x = 1$"
+  },
+  {
+    "id": "math203-t4-drill-2",
+    "subjectId": "math203",
+    "topicId": "math203-topic-4",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Increasing/Decreasing",
+    "description": "If $f'(x) = x - 2$, on what interval is $f$ increasing?",
+    "hints": [
+      "f is increasing where f'(x) > 0."
+    ],
+    "solution": "$f'(x) > 0$ when $x - 2 > 0$, i.e., $x > 2$.\nf is increasing on $(2, \\infty)$."
+  },
+  {
+    "id": "math203-t4-drill-3",
+    "subjectId": "math203",
+    "topicId": "math203-topic-4",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Concavity",
+    "description": "If $f''(x) = 6x$, where is $f$ concave up?",
+    "hints": [
+      "f is concave up where f''(x) > 0."
+    ],
+    "solution": "$f''(x) > 0$ when $6x > 0$, i.e., $x > 0$.\nf is concave up on $(0, \\infty)$."
+  },
+  {
+    "id": "math203-t4-drill-4",
+    "subjectId": "math203",
+    "topicId": "math203-topic-4",
+    "type": "written",
+    "difficulty": 1,
+    "title": "Drill: Second Derivative Test",
+    "description": "If $f'(2) = 0$ and $f''(2) = -5$, classify the critical point at $x = 2$.",
+    "hints": [
+      "f''(c) < 0 means the function is concave down there."
+    ],
+    "solution": "Since $f''(2) = -5 < 0$, the function is concave down at $x = 2$.\nTherefore, $x = 2$ is a **local maximum**."
+  },
+  {
+    "id": "math203-t4-ex01",
+    "subjectId": "math203",
+    "topicId": "math203-topic-4",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Finding Intervals of Increase and Decrease",
+    "description": "For $f(x) = x^3 - 12x + 1$:\n\n(a) Find all critical points.\n(b) Determine where $f$ is increasing and where it is decreasing.\n(c) Identify local maxima and minima.",
+    "hints": [
+      "Find f'(x) and set it equal to zero.",
+      "Make a sign chart for f'(x).",
+      "f increases where f' > 0 and decreases where f' < 0."
+    ],
+    "solution": "(a) $f'(x) = 3x^2 - 12 = 3(x^2 - 4) = 3(x-2)(x+2)$\nCritical points: $x = -2$ and $x = 2$\n\n(b) Sign chart for $f'(x) = 3(x-2)(x+2)$:\n- For $x < -2$: $(-)(-) = +$, so $f' > 0$ → increasing\n- For $-2 < x < 2$: $(+)(-) = -$, so $f' < 0$ → decreasing\n- For $x > 2$: $(+)(+) = +$, so $f' > 0$ → increasing\n\n$f$ increasing on $(-\\infty, -2)$ and $(2, \\infty)$\n$f$ decreasing on $(-2, 2)$\n\n(c) At $x = -2$: $f'$ changes from + to − → **local maximum**\n$f(-2) = -8 + 24 + 1 = 17$\n\nAt $x = 2$: $f'$ changes from − to + → **local minimum**\n$f(2) = 8 - 24 + 1 = -15$\n\nLocal max at $(-2, 17)$, local min at $(2, -15)$"
+  },
+  {
+    "id": "math203-t4-ex02",
+    "subjectId": "math203",
+    "topicId": "math203-topic-4",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Concavity and Inflection Points",
+    "description": "For $f(x) = x^4 - 4x^3$:\n\n(a) Find all inflection points.\n(b) Determine intervals of concavity.",
+    "hints": [
+      "Find f''(x) and set it equal to zero.",
+      "Check for sign changes in f''(x).",
+      "Inflection points require a sign change in f''."
+    ],
+    "solution": "$f'(x) = 4x^3 - 12x^2 = 4x^2(x - 3)$\n$f''(x) = 12x^2 - 24x = 12x(x - 2)$\n\n(a) $f''(x) = 0$ when $x = 0$ or $x = 2$.\n\nSign chart for $f''(x) = 12x(x-2)$:\n- For $x < 0$: $(-)(-)=+$ → concave up\n- For $0 < x < 2$: $(+)(-)=-$ → concave down\n- For $x > 2$: $(+)(+)=+$ → concave up\n\nSign changes at $x = 0$ and $x = 2$, so both are **inflection points**.\n\n$f(0) = 0$, $f(2) = 16 - 32 = -16$\n\n**Inflection points:** $(0, 0)$ and $(2, -16)$\n\n(b) Concave up on $(-\\infty, 0) \\cup (2, \\infty)$\nConcave down on $(0, 2)$"
+  },
+  {
+    "id": "math203-t4-ex03",
+    "subjectId": "math203",
+    "topicId": "math203-topic-4",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Second Derivative Test",
+    "description": "Use the second derivative test to classify the critical points of:\n\n(a) $f(x) = x^3 - 3x^2 - 9x + 5$\n\n(b) $g(x) = x^4 - 4x^2$",
+    "hints": [
+      "Find critical points from f'(x) = 0.",
+      "Evaluate f''(x) at each critical point.",
+      "If f''(c) > 0 → min; if f''(c) < 0 → max; if f''(c) = 0 → inconclusive."
+    ],
+    "solution": "(a) $f'(x) = 3x^2 - 6x - 9 = 3(x^2 - 2x - 3) = 3(x-3)(x+1) = 0$\nCritical points: $x = -1, x = 3$\n\n$f''(x) = 6x - 6$\n$f''(-1) = -6 - 6 = -12 < 0$ → **local maximum** at $x = -1$\n$f''(3) = 18 - 6 = 12 > 0$ → **local minimum** at $x = 3$\n\n(b) $g'(x) = 4x^3 - 8x = 4x(x^2 - 2) = 0$\nCritical points: $x = 0, x = \\pm\\sqrt{2}$\n\n$g''(x) = 12x^2 - 8$\n$g''(0) = -8 < 0$ → **local maximum** at $x = 0$\n$g''(\\sqrt{2}) = 24 - 8 = 16 > 0$ → **local minimum** at $x = \\sqrt{2}$\n$g''(-\\sqrt{2}) = 24 - 8 = 16 > 0$ → **local minimum** at $x = -\\sqrt{2}$"
+  },
+  {
+    "id": "math203-t4-ex04",
+    "subjectId": "math203",
+    "topicId": "math203-topic-4",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Absolute Extrema on Closed Intervals",
+    "description": "Find the absolute maximum and minimum of each function on the given interval:\n\n(a) $f(x) = x^3 - 3x + 2$ on $[-2, 3]$\n\n(b) $g(x) = x^2 e^{-x}$ on $[0, 4]$",
+    "hints": [
+      "Find critical points in the interior of the interval.",
+      "Evaluate f at critical points and endpoints.",
+      "Compare all values to find absolute max and min."
+    ],
+    "solution": "(a) $f'(x) = 3x^2 - 3 = 0 \\Rightarrow x = \\pm 1$\nBoth are in $[-2, 3]$.\n\nEvaluate:\n- $f(-2) = -8 + 6 + 2 = 0$\n- $f(-1) = -1 + 3 + 2 = 4$\n- $f(1) = 1 - 3 + 2 = 0$\n- $f(3) = 27 - 9 + 2 = 20$\n\n**Absolute max:** $f(3) = 20$\n**Absolute min:** $f(-2) = f(1) = 0$\n\n(b) $g'(x) = 2xe^{-x} + x^2(-e^{-x}) = e^{-x}(2x - x^2) = xe^{-x}(2-x) = 0$\nCritical points: $x = 0$ and $x = 2$ (both in $[0, 4]$)\n\nEvaluate:\n- $g(0) = 0$\n- $g(2) = 4e^{-2} \\approx 0.541$\n- $g(4) = 16e^{-4} \\approx 0.293$\n\n**Absolute max:** $g(2) = 4e^{-2}$\n**Absolute min:** $g(0) = 0$"
+  },
+  {
+    "id": "math203-t4-ex05",
+    "subjectId": "math203",
+    "topicId": "math203-topic-4",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Mean Value Theorem",
+    "description": "Verify that the Mean Value Theorem applies and find the value(s) of $c$:\n\n(a) $f(x) = x^3 - x$ on $[0, 2]$\n\n(b) $f(x) = \\sqrt{x}$ on $[0, 4]$",
+    "hints": [
+      "Check that f is continuous on [a,b] and differentiable on (a,b).",
+      "Find the slope of the secant: (f(b) - f(a))/(b - a).",
+      "Solve f'(c) = secant slope."
+    ],
+    "solution": "(a) $f(x) = x^3 - x$ is a polynomial, so continuous and differentiable everywhere. ✓\n\nSecant slope: $\\frac{f(2) - f(0)}{2 - 0} = \\frac{(8-2) - 0}{2} = 3$\n\n$f'(x) = 3x^2 - 1$\n$f'(c) = 3 \\Rightarrow 3c^2 - 1 = 3 \\Rightarrow c^2 = \\frac{4}{3} \\Rightarrow c = \\frac{2}{\\sqrt{3}} = \\frac{2\\sqrt{3}}{3}$\n(taking positive value since $c \\in (0, 2)$)\n\n(b) $f(x) = \\sqrt{x}$ is continuous on $[0, 4]$ and differentiable on $(0, 4)$. ✓\n\nSecant slope: $\\frac{f(4) - f(0)}{4 - 0} = \\frac{2 - 0}{4} = \\frac{1}{2}$\n\n$f'(x) = \\frac{1}{2\\sqrt{x}}$\n$f'(c) = \\frac{1}{2} \\Rightarrow \\frac{1}{2\\sqrt{c}} = \\frac{1}{2} \\Rightarrow \\sqrt{c} = 1 \\Rightarrow c = 1$"
+  },
+  {
+    "id": "math203-t4-ex06",
+    "subjectId": "math203",
+    "topicId": "math203-topic-4",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Applications of MVT",
+    "description": "Use the Mean Value Theorem to prove:\n\n(a) $|\\sin a - \\sin b| \\leq |a - b|$ for all $a, b$.\n\n(b) If $f'(x) = 0$ for all $x$ in an interval, then $f$ is constant on that interval.",
+    "hints": [
+      "Apply MVT and use the bound on the derivative.",
+      "For (a), what is the maximum value of |cos c|?",
+      "For (b), apply MVT between any two points in the interval."
+    ],
+    "solution": "(a) Let $f(x) = \\sin x$. By MVT, there exists $c$ between $a$ and $b$ such that:\n$\\frac{\\sin b - \\sin a}{b - a} = \\cos c$\n\nTherefore: $|\\sin b - \\sin a| = |\\cos c| \\cdot |b - a|$\n\nSince $|\\cos c| \\leq 1$ for all $c$:\n$|\\sin b - \\sin a| \\leq |b - a|$ ∎\n\n(b) Let $a < b$ be any two points in the interval. By MVT, there exists $c \\in (a, b)$ such that:\n$f'(c) = \\frac{f(b) - f(a)}{b - a}$\n\nSince $f'(x) = 0$ for all $x$, we have $f'(c) = 0$:\n$0 = \\frac{f(b) - f(a)}{b - a}$\n$f(b) - f(a) = 0$\n$f(b) = f(a)$\n\nSince this holds for any two points in the interval, $f$ is constant. ∎"
+  },
+  {
+    "id": "math203-t4-ex07",
+    "subjectId": "math203",
+    "topicId": "math203-topic-4",
+    "type": "written",
+    "difficulty": 2,
+    "title": "First Derivative Test in Detail",
+    "description": "For $f(x) = x^4 - 4x^3 + 4x^2$:\n\n(a) Factor $f'(x)$ completely.\n(b) Find all critical points.\n(c) Use the first derivative test to classify each.\n(d) Sketch the general shape of $f$.",
+    "hints": [
+      "Factor out common terms.",
+      "Check sign of f' on each interval between critical points.",
+      "No sign change means neither max nor min."
+    ],
+    "solution": "(a) $f'(x) = 4x^3 - 12x^2 + 8x = 4x(x^2 - 3x + 2) = 4x(x-1)(x-2)$\n\n(b) Critical points: $x = 0, 1, 2$\n\n(c) Sign chart for $f'(x) = 4x(x-1)(x-2)$:\n- $x < 0$: $(-)(-)(-)= -$ → decreasing\n- $0 < x < 1$: $(+)(-)(-)= +$ → increasing\n- $1 < x < 2$: $(+)(+)(-)= -$ → decreasing\n- $x > 2$: $(+)(+)(+)= +$ → increasing\n\nAt $x = 0$: − to + → **local minimum**, $f(0) = 0$\nAt $x = 1$: + to − → **local maximum**, $f(1) = 1 - 4 + 4 = 1$\nAt $x = 2$: − to + → **local minimum**, $f(2) = 16 - 32 + 16 = 0$\n\n(d) Shape: Starts high (as $x \\to -\\infty$, $f \\to +\\infty$), decreases to local min at (0,0), increases to local max at (1,1), decreases to local min at (2,0), then increases to infinity."
+  },
+  {
+    "id": "math203-t4-ex08",
+    "subjectId": "math203",
+    "topicId": "math203-topic-4",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Critical Points Where Derivative Doesn't Exist",
+    "description": "Find all critical points and classify them:\n\n(a) $f(x) = |x^2 - 4|$\n\n(b) $g(x) = x^{2/3}(x - 5)$",
+    "hints": [
+      "Critical points occur where f' = 0 OR f' doesn't exist.",
+      "For (a), consider where x² - 4 changes sign.",
+      "For (b), find where g'(x) = 0 or undefined."
+    ],
+    "solution": "(a) $f(x) = |x^2 - 4| = \\begin{cases} x^2 - 4 & |x| \\geq 2 \\\\ -(x^2 - 4) = 4 - x^2 & |x| < 2 \\end{cases}$\n\nFor $|x| > 2$: $f'(x) = 2x$\nFor $|x| < 2$: $f'(x) = -2x$\nAt $x = \\pm 2$: $f'$ doesn't exist (corner)\n\nCritical points: $x = 0$ (where $f' = 0$) and $x = \\pm 2$ (where $f'$ DNE)\n\nAt $x = 0$: local max ($f(0) = 4$)\nAt $x = \\pm 2$: local min ($f(\\pm 2) = 0$)\n\n(b) $g(x) = x^{2/3}(x - 5)$\n$g'(x) = \\frac{2}{3}x^{-1/3}(x-5) + x^{2/3} = \\frac{2(x-5)}{3x^{1/3}} + x^{2/3}$\n$= \\frac{2(x-5) + 3x}{3x^{1/3}} = \\frac{5x - 10}{3x^{1/3}} = \\frac{5(x-2)}{3x^{1/3}}$\n\n$g'(x) = 0$ when $x = 2$\n$g'(x)$ undefined when $x = 0$\n\nCritical points: $x = 0$ and $x = 2$\n\nSign analysis:\n- $x < 0$: $(-)/(-)= +$\n- $0 < x < 2$: $(-)/(+)= -$\n- $x > 2$: $(+)/(+)= +$\n\nAt $x = 0$: local max (cusp), $g(0) = 0$\nAt $x = 2$: local min, $g(2) = 2^{2/3}(-3) = -3\\sqrt[3]{4}$"
+  },
+  {
+    "id": "math203-t4-ex09",
+    "subjectId": "math203",
+    "topicId": "math203-topic-4",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Rolle's Theorem Application",
+    "description": "Show that the equation $x^3 + 3x - 5 = 0$ has exactly one real root.",
+    "hints": [
+      "Use IVT to show at least one root exists.",
+      "Use Rolle's Theorem (or derivative analysis) to show at most one root.",
+      "If there were two roots, what would Rolle's Theorem say about f'?"
+    ],
+    "solution": "Let $f(x) = x^3 + 3x - 5$.\n\n**At least one root (IVT):**\n$f(1) = 1 + 3 - 5 = -1 < 0$\n$f(2) = 8 + 6 - 5 = 9 > 0$\nBy IVT, there is at least one root in $(1, 2)$.\n\n**At most one root (via Rolle's Theorem):**\nSuppose there were two roots $a < b$ with $f(a) = f(b) = 0$.\nBy Rolle's Theorem, there would exist $c \\in (a, b)$ with $f'(c) = 0$.\n\nBut $f'(x) = 3x^2 + 3 = 3(x^2 + 1) \\geq 3 > 0$ for all $x$.\n\nThis is a contradiction! So there cannot be two roots.\n\n**Conclusion:** The equation has exactly one real root. ∎"
+  },
+  {
+    "id": "math203-t4-ex10",
+    "subjectId": "math203",
+    "topicId": "math203-topic-4",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Motion Analysis",
+    "description": "A particle moves along a line with position $s(t) = t^3 - 6t^2 + 9t + 2$ for $t \\geq 0$.\n\n(a) Find velocity and acceleration functions.\n(b) When is the particle at rest?\n(c) When is it moving to the right (positive direction)?\n(d) When is it speeding up?",
+    "hints": [
+      "Velocity = s'(t), Acceleration = s''(t).",
+      "At rest means velocity = 0.",
+      "Moving right means v(t) > 0.",
+      "Speeding up means v and a have the same sign."
+    ],
+    "solution": "(a) $v(t) = s'(t) = 3t^2 - 12t + 9 = 3(t^2 - 4t + 3) = 3(t-1)(t-3)$\n$a(t) = v'(t) = 6t - 12 = 6(t - 2)$\n\n(b) At rest when $v(t) = 0$: $t = 1$ and $t = 3$\n\n(c) Moving right when $v(t) > 0$:\n$v(t) = 3(t-1)(t-3) > 0$ when $t < 1$ or $t > 3$\n(For $t \\geq 0$: on $[0, 1) \\cup (3, \\infty)$)\n\n(d) Speeding up when $v$ and $a$ have the same sign:\n- $v(t) > 0$ on $(0, 1) \\cup (3, \\infty)$\n- $a(t) > 0$ on $(2, \\infty)$\n- $v(t) < 0$ on $(1, 3)$\n- $a(t) < 0$ on $(0, 2)$\n\nSame sign: $(1, 2)$ (both negative) and $(3, \\infty)$ (both positive)\n\n**Speeding up on $(1, 2) \\cup (3, \\infty)$**"
+  },
+  {
+    "id": "math203-t4-ex11",
+    "subjectId": "math203",
+    "topicId": "math203-topic-4",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Complete Function Analysis",
+    "description": "Analyze $f(x) = \\frac{x^2}{x^2 - 1}$ completely:\n\n(a) Domain\n(b) Intercepts\n(c) Symmetry\n(d) Asymptotes\n(e) Intervals of increase/decrease\n(f) Local extrema\n(g) Concavity and inflection points",
+    "hints": [
+      "Domain excludes where denominator = 0.",
+      "Check if f(-x) = f(x) or f(-x) = -f(x).",
+      "Use quotient rule for derivatives."
+    ],
+    "solution": "(a) **Domain:** $x \\neq \\pm 1$, i.e., $(-\\infty, -1) \\cup (-1, 1) \\cup (1, \\infty)$\n\n(b) **Intercepts:**\ny-intercept: $f(0) = 0$, so $(0, 0)$\nx-intercept: $x^2 = 0 \\Rightarrow x = 0$, so $(0, 0)$\n\n(c) **Symmetry:** $f(-x) = \\frac{(-x)^2}{(-x)^2 - 1} = \\frac{x^2}{x^2 - 1} = f(x)$\nEven function (symmetric about y-axis)\n\n(d) **Asymptotes:**\nVertical: $x = 1$ and $x = -1$\nHorizontal: $\\lim_{x \\to \\pm\\infty} \\frac{x^2}{x^2 - 1} = 1$, so $y = 1$\n\n(e) $f'(x) = \\frac{2x(x^2-1) - x^2(2x)}{(x^2-1)^2} = \\frac{-2x}{(x^2-1)^2}$\nCritical point: $x = 0$\n$f' > 0$ for $x < 0$ (increasing)\n$f' < 0$ for $x > 0$ (decreasing)\n\n(f) **Local max at $x = 0$:** $f(0) = 0$\n\n(g) $f''(x) = \\frac{-2(x^2-1)^2 - (-2x) \\cdot 2(x^2-1)(2x)}{(x^2-1)^4} = \\frac{-2(x^2-1) + 8x^2}{(x^2-1)^3} = \\frac{6x^2 + 2}{(x^2-1)^3}$\n\n$f'' > 0$ when $(x^2-1)^3 > 0$, i.e., $|x| > 1$: concave up on $(-\\infty, -1) \\cup (1, \\infty)$\n$f'' < 0$ when $|x| < 1$: concave down on $(-1, 1)$\n\nNo inflection points (concavity changes only at asymptotes)"
+  },
+  {
+    "id": "math203-t4-ex12",
+    "subjectId": "math203",
+    "topicId": "math203-topic-4",
+    "type": "written",
+    "difficulty": 3,
+    "title": "L'Hôpital's Rule with Derivatives",
+    "description": "Use L'Hôpital's Rule to evaluate:\n\n(a) $\\lim_{x \\to 0} \\frac{e^x - 1 - x}{x^2}$\n\n(b) $\\lim_{x \\to 0} \\frac{\\tan x - x}{x^3}$\n\n(c) $\\lim_{x \\to \\infty} x \\ln\\left(1 + \\frac{1}{x}\\right)$",
+    "hints": [
+      "Check indeterminate form before applying.",
+      "May need to apply L'Hôpital multiple times.",
+      "For (c), rewrite as a quotient first."
+    ],
+    "solution": "(a) Form: $\\frac{0}{0}$\n$\\lim_{x \\to 0} \\frac{e^x - 1 - x}{x^2} = \\lim_{x \\to 0} \\frac{e^x - 1}{2x}$ (still $\\frac{0}{0}$)\n$= \\lim_{x \\to 0} \\frac{e^x}{2} = \\frac{1}{2}$\n\n(b) Form: $\\frac{0}{0}$\n$\\lim_{x \\to 0} \\frac{\\tan x - x}{x^3} = \\lim_{x \\to 0} \\frac{\\sec^2 x - 1}{3x^2}$ (still $\\frac{0}{0}$)\n$= \\lim_{x \\to 0} \\frac{2\\sec^2 x \\tan x}{6x}$ (still $\\frac{0}{0}$)\n$= \\lim_{x \\to 0} \\frac{2\\sec^2 x \\cdot \\sec^2 x + 2\\tan x \\cdot 2\\sec^2 x \\tan x}{6}$\nAt $x = 0$: $= \\frac{2 \\cdot 1 + 0}{6} = \\frac{1}{3}$\n\n(c) Rewrite: $\\frac{\\ln(1 + 1/x)}{1/x}$ as $x \\to \\infty$\nLet $u = 1/x \\to 0^+$:\n$\\lim_{u \\to 0^+} \\frac{\\ln(1 + u)}{u}$ (form $\\frac{0}{0}$)\n$= \\lim_{u \\to 0^+} \\frac{1/(1+u)}{1} = 1$"
+  },
+  {
+    "id": "math203-t4-ex13",
+    "subjectId": "math203",
+    "topicId": "math203-topic-4",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Proving Inequalities with Derivatives",
+    "description": "Use calculus to prove:\n\n(a) $e^x \\geq 1 + x$ for all $x$\n\n(b) $\\ln x \\leq x - 1$ for $x > 0$\n\n(c) $\\sin x \\leq x$ for $x \\geq 0$",
+    "hints": [
+      "Consider the function f(x) = (left side) - (right side).",
+      "Show f has a minimum at the point where equality holds.",
+      "Use the sign of f' to analyze f's behavior."
+    ],
+    "solution": "(a) Let $f(x) = e^x - 1 - x$\n$f'(x) = e^x - 1 = 0 \\Rightarrow x = 0$\n$f''(x) = e^x > 0$ always, so $f$ is concave up everywhere.\n\n$f(0) = 1 - 1 - 0 = 0$ is the minimum.\nTherefore $f(x) \\geq 0$ for all $x$, i.e., $e^x \\geq 1 + x$. ∎\n\n(b) Let $f(x) = \\ln x - (x - 1) = \\ln x - x + 1$ for $x > 0$\n$f'(x) = \\frac{1}{x} - 1 = 0 \\Rightarrow x = 1$\n$f''(x) = -\\frac{1}{x^2} < 0$ always, so $f$ is concave down.\n\n$f(1) = 0 - 1 + 1 = 0$ is the maximum.\nTherefore $f(x) \\leq 0$ for $x > 0$, i.e., $\\ln x \\leq x - 1$. ∎\n\n(c) Let $f(x) = x - \\sin x$ for $x \\geq 0$\n$f'(x) = 1 - \\cos x \\geq 0$ for all $x$ (since $\\cos x \\leq 1$)\n\n$f$ is increasing on $[0, \\infty)$ and $f(0) = 0$.\nTherefore $f(x) \\geq 0$ for $x \\geq 0$, i.e., $x \\geq \\sin x$. ∎"
+  },
+  {
+    "id": "math203-t4-ex14",
+    "subjectId": "math203",
+    "topicId": "math203-topic-4",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Analyzing Exponential and Logarithmic Functions",
+    "description": "Analyze $f(x) = x e^{-x}$ for $x \\geq 0$:\n\n(a) Find critical points and determine local extrema.\n(b) Find inflection points.\n(c) Find limits as $x \\to 0^+$ and $x \\to \\infty$.\n(d) Sketch the graph.",
+    "hints": [
+      "Use the product rule.",
+      "Remember lim x→∞ of x/e^x = 0.",
+      "Factor the derivatives to analyze signs."
+    ],
+    "solution": "(a) $f'(x) = e^{-x} + x(-e^{-x}) = e^{-x}(1 - x)$\n$f'(x) = 0$ when $x = 1$\n\n$f' > 0$ for $x < 1$ (increasing)\n$f' < 0$ for $x > 1$ (decreasing)\n\n**Local maximum at $x = 1$:** $f(1) = e^{-1} = \\frac{1}{e}$\n\n(b) $f''(x) = -e^{-x}(1-x) + e^{-x}(-1) = e^{-x}(x - 2)$\n$f''(x) = 0$ when $x = 2$\n\n$f'' < 0$ for $x < 2$ (concave down)\n$f'' > 0$ for $x > 2$ (concave up)\n\n**Inflection point at $(2, 2e^{-2})$**\n\n(c) $\\lim_{x \\to 0^+} xe^{-x} = 0 \\cdot 1 = 0$\n$\\lim_{x \\to \\infty} xe^{-x} = \\lim_{x \\to \\infty} \\frac{x}{e^x} = 0$ (by L'Hôpital)\n\n(d) Starts at origin, increases to max at $(1, 1/e)$, decreases through inflection at $(2, 2/e^2)$, approaches 0 as $x \\to \\infty$."
+  },
+  {
+    "id": "math203-t4-ex15",
+    "subjectId": "math203",
+    "topicId": "math203-topic-4",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Antiderivative Reasoning",
+    "description": "If $f'(x) = 6x^2 - 4x + 3$ and $f(0) = 5$, find $f(x)$.",
+    "hints": [
+      "Integrate f'(x) to get f(x) + C.",
+      "Use the initial condition to find C.",
+      "Verify by differentiating your answer."
+    ],
+    "solution": "Integrate $f'(x) = 6x^2 - 4x + 3$:\n$f(x) = \\int (6x^2 - 4x + 3) dx = 2x^3 - 2x^2 + 3x + C$\n\nUse initial condition $f(0) = 5$:\n$f(0) = 0 - 0 + 0 + C = C = 5$\n\nTherefore: $\\boxed{f(x) = 2x^3 - 2x^2 + 3x + 5}$\n\nVerification: $f'(x) = 6x^2 - 4x + 3$ ✓"
+  },
+  {
+    "id": "math203-t4-ex16",
+    "subjectId": "math203",
+    "topicId": "math203-topic-4",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Graphical Interpretation of Derivatives",
+    "description": "Given that $f$ is continuous and differentiable everywhere with:\n- $f(0) = 2$\n- $f'(x) > 0$ for $x < 1$ and $x > 3$\n- $f'(x) < 0$ for $1 < x < 3$\n- $f'(1) = f'(3) = 0$\n- $f''(x) > 0$ for $x > 2$\n- $f''(x) < 0$ for $x < 2$\n\nDescribe the behavior of $f$ and sketch a possible graph.",
+    "hints": [
+      "f' > 0 means increasing, f' < 0 means decreasing.",
+      "Critical points where f' = 0.",
+      "f'' > 0 means concave up, f'' < 0 means concave down."
+    ],
+    "solution": "**Analysis:**\n\n**Critical points:** $x = 1$ and $x = 3$ (where $f' = 0$)\n\n**Increasing/Decreasing:**\n- Increasing on $(-\\infty, 1)$ and $(3, \\infty)$\n- Decreasing on $(1, 3)$\n\n**Local extrema:**\n- At $x = 1$: changes from increasing to decreasing → **local maximum**\n- At $x = 3$: changes from decreasing to increasing → **local minimum**\n\n**Concavity:**\n- Concave down on $(-\\infty, 2)$\n- Concave up on $(2, \\infty)$\n- **Inflection point at $x = 2$** (concavity changes)\n\n**Key points:**\n- $(0, 2)$ is on the graph\n- Local max somewhere above the point $(1, f(1))$\n- Inflection at $x = 2$ (on the decreasing part)\n- Local min at $x = 3$\n\n**Sketch description:** The function starts low on the left, increases (concave down) to a local max at $x=1$, decreases through an inflection at $x=2$, reaches a local min at $x=3$, then increases (concave up) toward infinity."
+  }
+]

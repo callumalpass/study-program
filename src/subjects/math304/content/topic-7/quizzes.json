@@ -1,0 +1,221 @@
+[
+  {
+    "id": "math304-quiz-7-1",
+    "subjectId": "math304",
+    "topicId": "math304-topic-7",
+    "title": "Cryptography - Modular Arithmetic and Euler's Theorem",
+    "questions": [
+      {
+        "id": "math304-q91",
+        "type": "multiple_choice",
+        "prompt": "Euler's totient function φ(n) counts:",
+        "options": [
+          "The number of prime divisors of n",
+          "The number of integers between 1 and n that are coprime to n",
+          "The sum of divisors of n",
+          "The largest prime less than n"
+        ],
+        "correctAnswer": "The number of integers between 1 and n that are coprime to n",
+        "explanation": "φ(n) = |{k : 1 ≤ k ≤ n and gcd(k,n) = 1}|. This counts the units in Zₙ."
+      },
+      {
+        "id": "math304-q92",
+        "type": "multiple_choice",
+        "prompt": "What is φ(12)?",
+        "options": [
+          "2",
+          "4",
+          "6",
+          "12"
+        ],
+        "correctAnswer": "4",
+        "explanation": "The integers coprime to 12 between 1 and 12 are: 1, 5, 7, 11. So φ(12) = 4. Alternatively, φ(12) = φ(4)φ(3) = 2·2 = 4."
+      },
+      {
+        "id": "math304-q93",
+        "type": "multiple_choice",
+        "prompt": "Euler's Theorem states that if gcd(a,n) = 1, then:",
+        "options": [
+          "a^n ≡ 1 (mod n)",
+          "a^φ(n) ≡ 1 (mod n)",
+          "a ≡ 1 (mod n)",
+          "φ(a) ≡ 1 (mod n)"
+        ],
+        "correctAnswer": "a^φ(n) ≡ 1 (mod n)",
+        "explanation": "Euler's Theorem: If gcd(a,n) = 1, then a^φ(n) ≡ 1 (mod n). This generalizes Fermat's Little Theorem."
+      },
+      {
+        "id": "math304-q94",
+        "type": "multiple_choice",
+        "prompt": "Fermat's Little Theorem states that if p is prime and gcd(a,p) = 1, then:",
+        "options": [
+          "a^p ≡ a (mod p)",
+          "a^(p-1) ≡ 1 (mod p)",
+          "a ≡ p (mod p)",
+          "Both A and B"
+        ],
+        "correctAnswer": "Both A and B",
+        "explanation": "Fermat's Little Theorem has two forms: a^(p-1) ≡ 1 (mod p) when gcd(a,p)=1, and a^p ≡ a (mod p) for all a. Both are equivalent."
+      },
+      {
+        "id": "math304-q95",
+        "type": "multiple_choice",
+        "prompt": "To find the multiplicative inverse of 7 modulo 26, we need to solve:",
+        "options": [
+          "7x ≡ 0 (mod 26)",
+          "7x ≡ 1 (mod 26)",
+          "7 + x ≡ 1 (mod 26)",
+          "x/7 ≡ 1 (mod 26)"
+        ],
+        "correctAnswer": "7x ≡ 1 (mod 26)",
+        "explanation": "The multiplicative inverse of a mod n is the value x such that ax ≡ 1 (mod n). For 7 mod 26, we solve 7x ≡ 1 (mod 26), giving x = 15."
+      }
+    ]
+  },
+  {
+    "id": "math304-quiz-7-2",
+    "subjectId": "math304",
+    "topicId": "math304-topic-7",
+    "title": "Cryptography - RSA Algorithm",
+    "questions": [
+      {
+        "id": "math304-q96",
+        "type": "multiple_choice",
+        "prompt": "In RSA encryption, the public key consists of:",
+        "options": [
+          "(n, e) where n = pq and e is the encryption exponent",
+          "(p, q) where p and q are prime",
+          "(n, d) where d is the decryption exponent",
+          "φ(n) only"
+        ],
+        "correctAnswer": "(n, e) where n = pq and e is the encryption exponent",
+        "explanation": "The RSA public key is (n, e) where n = pq for primes p, q, and e is chosen coprime to φ(n). The private key is (n, d) where ed ≡ 1 (mod φ(n))."
+      },
+      {
+        "id": "math304-q97",
+        "type": "multiple_choice",
+        "prompt": "In RSA, if p = 3, q = 11, what is n and φ(n)?",
+        "options": [
+          "n = 33, φ(n) = 20",
+          "n = 14, φ(n) = 6",
+          "n = 33, φ(n) = 32",
+          "n = 8, φ(n) = 4"
+        ],
+        "correctAnswer": "n = 33, φ(n) = 20",
+        "explanation": "n = pq = 3·11 = 33. φ(n) = φ(pq) = (p-1)(q-1) = 2·10 = 20."
+      },
+      {
+        "id": "math304-q98",
+        "type": "multiple_choice",
+        "prompt": "In RSA, the relationship between the encryption exponent e and decryption exponent d is:",
+        "options": [
+          "e + d = φ(n)",
+          "ed ≡ 1 (mod φ(n))",
+          "e = d",
+          "d = e^(-1) in R"
+        ],
+        "correctAnswer": "ed ≡ 1 (mod φ(n))",
+        "explanation": "The decryption exponent d is the multiplicative inverse of e modulo φ(n): ed ≡ 1 (mod φ(n))."
+      },
+      {
+        "id": "math304-q99",
+        "type": "multiple_choice",
+        "prompt": "RSA encryption of message m with public key (n, e) produces ciphertext:",
+        "options": [
+          "c = m + e (mod n)",
+          "c = m · e (mod n)",
+          "c = m^e (mod n)",
+          "c = e^m (mod n)"
+        ],
+        "correctAnswer": "c = m^e (mod n)",
+        "explanation": "RSA encryption: c ≡ m^e (mod n). Decryption: m ≡ c^d (mod n)."
+      },
+      {
+        "id": "math304-q100",
+        "type": "multiple_choice",
+        "prompt": "The security of RSA is based on the difficulty of:",
+        "options": [
+          "Computing φ(n) given n = pq without knowing p and q",
+          "Factoring large composite numbers",
+          "Computing discrete logarithms",
+          "Both A and B"
+        ],
+        "correctAnswer": "Both A and B",
+        "explanation": "RSA security relies on the difficulty of factoring n = pq and computing φ(n) without knowing the prime factors. These are computationally equivalent problems."
+      }
+    ]
+  },
+  {
+    "id": "math304-quiz-7-3",
+    "subjectId": "math304",
+    "topicId": "math304-topic-7",
+    "title": "Cryptography - Diffie-Hellman and Elliptic Curves",
+    "questions": [
+      {
+        "id": "math304-q101",
+        "type": "multiple_choice",
+        "prompt": "The Diffie-Hellman key exchange allows two parties to:",
+        "options": [
+          "Encrypt messages directly",
+          "Agree on a shared secret key over an insecure channel",
+          "Factor large numbers",
+          "Verify digital signatures"
+        ],
+        "correctAnswer": "Agree on a shared secret key over an insecure channel",
+        "explanation": "Diffie-Hellman enables two parties to establish a shared secret key over a public channel, without transmitting the key itself."
+      },
+      {
+        "id": "math304-q102",
+        "type": "multiple_choice",
+        "prompt": "In Diffie-Hellman, if Alice sends A = g^a mod p and Bob sends B = g^b mod p, the shared secret is:",
+        "options": [
+          "g^(ab) mod p",
+          "g^(a+b) mod p",
+          "ab mod p",
+          "a + b mod p"
+        ],
+        "correctAnswer": "g^(ab) mod p",
+        "explanation": "Alice computes K = B^a = (g^b)^a = g^(ab) mod p. Bob computes K = A^b = (g^a)^b = g^(ab) mod p. Both get the same shared secret."
+      },
+      {
+        "id": "math304-q103",
+        "type": "multiple_choice",
+        "prompt": "The security of Diffie-Hellman is based on the difficulty of:",
+        "options": [
+          "Factoring large numbers",
+          "The discrete logarithm problem",
+          "Computing square roots",
+          "Prime number generation"
+        ],
+        "correctAnswer": "The discrete logarithm problem",
+        "explanation": "Diffie-Hellman security relies on the difficulty of computing a from g^a mod p (the discrete logarithm problem)."
+      },
+      {
+        "id": "math304-q104",
+        "type": "multiple_choice",
+        "prompt": "Elliptic curve cryptography (ECC) operates over:",
+        "options": [
+          "Points on an elliptic curve over a finite field",
+          "Real numbers only",
+          "Complex numbers",
+          "Polynomial rings"
+        ],
+        "correctAnswer": "Points on an elliptic curve over a finite field",
+        "explanation": "ECC uses points on curves of the form y² = x³ + ax + b over finite fields like Z_p for prime p. The group operation is point addition."
+      },
+      {
+        "id": "math304-q105",
+        "type": "multiple_choice",
+        "prompt": "Compared to RSA, elliptic curve cryptography:",
+        "options": [
+          "Requires larger key sizes for equivalent security",
+          "Provides equivalent security with smaller key sizes",
+          "Is less secure",
+          "Cannot be used for encryption"
+        ],
+        "correctAnswer": "Provides equivalent security with smaller key sizes",
+        "explanation": "ECC provides equivalent security to RSA with much smaller key sizes (e.g., 256-bit ECC ≈ 3072-bit RSA), making it more efficient."
+      }
+    ]
+  }
+]

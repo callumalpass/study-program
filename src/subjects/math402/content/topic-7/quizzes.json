@@ -1,0 +1,197 @@
+[
+  {
+    "id": "math402-quiz-7a",
+    "subjectId": "math402",
+    "topicId": "math402-topic-7",
+    "title": "Numerical Solutions of ODEs - Fundamentals",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "Euler's method approximates y' = f(t,y) using:",
+        "options": [
+          "y_{n+1} = y_n + h·f(t_n, y_n)",
+          "y_{n+1} = y_n + (h/2)·(f(t_n, y_n) + f(t_{n+1}, y_{n+1}))",
+          "y_{n+1} = y_n + h·f(t_{n+1}, y_n)",
+          "y_{n+1} = y_n + h^2·f(t_n, y_n)"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Euler's method uses forward difference: y_{n+1} = y_n + h·f(t_n, y_n). It's the simplest one-step method with local error O(h^2) and global error O(h)."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "The order of accuracy of Euler's method is:",
+        "options": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Euler's method has order 1: the global error is O(h). Each step introduces local truncation error O(h^2), but accumulating over O(1/h) steps gives O(h) global error."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "The classical RK4 (fourth-order Runge-Kutta) method requires four function evaluations per step.",
+        "correctAnswer": true,
+        "explanation": "True. RK4 uses four stages (k1, k2, k3, k4) with specific weights, achieving fourth-order accuracy with four function evaluations per step."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "A numerical ODE method is explicit if:",
+        "options": [
+          "y_{n+1} can be computed directly from y_n without solving equations",
+          "It requires solving a nonlinear system for y_{n+1}",
+          "It uses values from multiple previous steps",
+          "It has high accuracy"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Explicit methods compute y_{n+1} directly (e.g., Euler, RK4). Implicit methods require solving equations for y_{n+1} (e.g., backward Euler: y_{n+1} = y_n + h·f(t_{n+1}, y_{n+1}))."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "The ____ method uses a weighted average of slopes at multiple points within the interval to improve accuracy.",
+        "correctAnswer": "Runge-Kutta",
+        "explanation": "Runge-Kutta methods evaluate f at multiple intermediate points to approximate higher-order Taylor terms without computing derivatives."
+      }
+    ]
+  },
+  {
+    "id": "math402-quiz-7b",
+    "subjectId": "math402",
+    "topicId": "math402-topic-7",
+    "title": "Numerical Solutions of ODEs - Application",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "The trapezoidal method (implicit Euler) for y' = f(t,y) is:",
+        "options": [
+          "y_{n+1} = y_n + h·f(t_n, y_n)",
+          "y_{n+1} = y_n + (h/2)·[f(t_n, y_n) + f(t_{n+1}, y_{n+1})]",
+          "y_{n+1} = y_n + h·f(t_{n+1}, y_{n+1})",
+          "y_{n+1} = 2y_n - y_{n-1} + h^2·f(t_n, y_n)"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The trapezoidal (Crank-Nicolson) method averages slopes at t_n and t_{n+1}. It's implicit (requires solving for y_{n+1}), second-order accurate, and A-stable."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "Multistep methods (like Adams-Bashforth) use:",
+        "options": [
+          "Only the current point y_n",
+          "Values from multiple previous steps y_{n}, y_{n-1}, ...",
+          "Multiple stages within a single step",
+          "Random sampling points"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Multistep methods use values from k previous steps: y_{n+1} = Σ a_i y_{n-i} + h Σ b_i f(t_{n-i}, y_{n-i}). They achieve high order efficiently but require special starting procedures."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "Implicit methods generally have better stability properties than explicit methods.",
+        "correctAnswer": true,
+        "explanation": "True. Implicit methods can be A-stable (stable for all h on Re(λ) < 0), making them superior for stiff problems where explicit methods require tiny h for stability despite accuracy needs."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "A stiff differential equation is characterized by:",
+        "options": [
+          "Large right-hand side values",
+          "Multiple time scales with vastly different rates",
+          "Nonlinear terms",
+          "Discontinuous solutions"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Stiffness arises when solutions have multiple components evolving at vastly different rates. Explicit methods become impractical (require tiny h for stability), but implicit methods handle stiffness well."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "The stability region of a numerical ODE method is:",
+        "options": [
+          "The set of h for which roundoff errors are small",
+          "The set of hλ values (in the complex plane) for which the method is stable",
+          "The interval where the method converges",
+          "The domain of the exact solution"
+        ],
+        "correctAnswer": 1,
+        "explanation": "For y' = λy, the stability region S = {z = hλ ∈ ℂ : method is stable}. For RK4, S is a bounded region. A-stable methods have S containing all Re(z) ≤ 0."
+      }
+    ]
+  },
+  {
+    "id": "math402-quiz-7c",
+    "subjectId": "math402",
+    "topicId": "math402-topic-7",
+    "title": "Numerical Solutions of ODEs - Mastery",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "A-stability for an ODE method means:",
+        "options": [
+          "The method has high accuracy",
+          "The stability region contains the entire left half-plane Re(z) ≤ 0",
+          "The method is explicit",
+          "The method works for all ODEs"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A-stable methods have stability regions containing {z ∈ ℂ : Re(z) ≤ 0}, making them stable for all h on stiff problems (where λ has large negative real part). Backward Euler and trapezoidal method are A-stable."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "Adaptive step size control typically uses:",
+        "options": [
+          "Fixed reduction/increase of h",
+          "Error estimates from comparing methods of different orders",
+          "User-specified h",
+          "Random step sizes"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Adaptive methods estimate local error (e.g., Richardson extrapolation or embedded RK pairs like RK45) and adjust h to maintain error within tolerance: h_new ≈ h(tol/error)^{1/(p+1)}."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "For stiff ODEs, implicit methods can use much larger step sizes than explicit methods while maintaining stability.",
+        "correctAnswer": true,
+        "explanation": "True. Explicit methods require h < 2/|λ_max| for stability on stiff problems, which can be very restrictive. A-stable implicit methods have no such restriction, allowing h to be chosen based on accuracy alone."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "Boundary value problems (BVPs) differ from initial value problems (IVPs) by:",
+        "options": [
+          "Having conditions specified at multiple points, not just t_0",
+          "Being easier to solve numerically",
+          "Always having unique solutions",
+          "Not requiring derivative information"
+        ],
+        "correctAnswer": 0,
+        "explanation": "BVPs specify conditions at multiple points (e.g., y(a) and y(b)), requiring different techniques like shooting methods or finite differences. IVPs specify all conditions at t_0."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "The shooting method for BVPs works by:",
+        "options": [
+          "Directly discretizing the BVP into a linear system",
+          "Converting the BVP into an IVP by guessing missing initial conditions",
+          "Using finite element methods",
+          "Eliminating boundary conditions"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Shooting converts the BVP into an IVP by guessing unknown initial conditions, solving the IVP, and iterating (e.g., Newton's method) until boundary conditions are satisfied. Simple but can be unstable for some BVPs."
+      }
+    ]
+  }
+]

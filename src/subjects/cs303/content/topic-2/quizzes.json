@@ -1,0 +1,221 @@
+[
+  {
+    "id": "cs303-t2-quiz-1",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-2",
+    "title": "Type Fundamentals",
+    "questions": [
+      {
+        "id": "cs303-t2-q1-1",
+        "type": "multiple_choice",
+        "prompt": "What is the primary purpose of a type system?",
+        "options": [
+          "To make code run faster",
+          "To prevent certain kinds of errors",
+          "To reduce code size",
+          "To improve readability only"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Type systems prevent type errors by ensuring operations are applied to appropriate values."
+      },
+      {
+        "id": "cs303-t2-q1-2",
+        "type": "multiple_choice",
+        "prompt": "When are types checked in a statically-typed language?",
+        "options": [
+          "At runtime",
+          "At compile time",
+          "At linking time",
+          "Never"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Static typing checks types at compile time, catching errors before the program runs."
+      },
+      {
+        "id": "cs303-t2-q1-3",
+        "type": "multiple_choice",
+        "prompt": "Which language uses dynamic typing?",
+        "options": [
+          "Java",
+          "C",
+          "Python",
+          "Haskell"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Python uses dynamic typing where type checking occurs at runtime rather than compile time."
+      },
+      {
+        "id": "cs303-t2-q1-4",
+        "type": "multiple_choice",
+        "prompt": "What is type inference?",
+        "options": [
+          "Guessing types at runtime",
+          "Automatic deduction of types by the compiler",
+          "Converting between types",
+          "Defining new types"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Type inference allows the compiler to deduce types automatically without explicit annotations."
+      },
+      {
+        "id": "cs303-t2-q1-5",
+        "type": "multiple_choice",
+        "prompt": "What does \"strongly typed\" typically mean?",
+        "options": [
+          "Types are checked at compile time",
+          "Implicit type conversions are restricted",
+          "Variables must have types",
+          "Types cannot change"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Strong typing restricts implicit type conversions, requiring explicit conversion between incompatible types."
+      }
+    ]
+  },
+  {
+    "id": "cs303-t2-quiz-2",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-2",
+    "title": "Advanced Types",
+    "questions": [
+      {
+        "id": "cs303-t2-q2-1",
+        "type": "multiple_choice",
+        "prompt": "What is parametric polymorphism?",
+        "options": [
+          "Multiple inheritance",
+          "Functions that work on multiple types uniformly",
+          "Method overloading",
+          "Type casting"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Parametric polymorphism allows functions to work uniformly over any type, using type parameters (generics)."
+      },
+      {
+        "id": "cs303-t2-q2-2",
+        "type": "multiple_choice",
+        "prompt": "What is an algebraic data type?",
+        "options": [
+          "A type for mathematical operations",
+          "A composite type formed by sum and product types",
+          "A numeric type",
+          "A type alias"
+        ],
+        "correctAnswer": 1,
+        "explanation": "ADTs combine sum types (variants/enums) and product types (tuples/records) to model data structures."
+      },
+      {
+        "id": "cs303-t2-q2-3",
+        "type": "multiple_choice",
+        "prompt": "What is the Hindley-Milner type system known for?",
+        "options": [
+          "No type inference",
+          "Complete and decidable type inference",
+          "Only supporting integers",
+          "Manual type annotations required"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Hindley-Milner provides complete, decidable type inference with principal types, used in ML and Haskell."
+      },
+      {
+        "id": "cs303-t2-q2-4",
+        "type": "multiple_choice",
+        "prompt": "What is subtype polymorphism?",
+        "options": [
+          "Types that are smaller in memory",
+          "A subtype can be used where a supertype is expected",
+          "Creating subtypes dynamically",
+          "Type parameters"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Subtype polymorphism (Liskov substitution) allows a subtype to be used wherever its supertype is expected."
+      },
+      {
+        "id": "cs303-t2-q2-5",
+        "type": "multiple_choice",
+        "prompt": "What are dependent types?",
+        "options": [
+          "Types that depend on runtime",
+          "Types that can depend on values",
+          "Types with dependencies",
+          "Circular type definitions"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Dependent types allow types to depend on values, enabling more expressive type-level programming."
+      }
+    ]
+  },
+  {
+    "id": "cs303-t2-quiz-3",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-2",
+    "title": "Type Soundness",
+    "questions": [
+      {
+        "id": "cs303-t2-q3-1",
+        "type": "multiple_choice",
+        "prompt": "What does type soundness guarantee?",
+        "options": [
+          "Fast compilation",
+          "Well-typed programs don't get stuck",
+          "Optimal performance",
+          "No memory leaks"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Type soundness guarantees that well-typed programs won't encounter type errors at runtime (won't get stuck)."
+      },
+      {
+        "id": "cs303-t2-q3-2",
+        "type": "multiple_choice",
+        "prompt": "What are the two properties that prove type soundness?",
+        "options": [
+          "Speed and correctness",
+          "Progress and preservation",
+          "Soundness and completeness",
+          "Safety and liveness"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Type soundness is proven through progress (well-typed terms can take a step) and preservation (typing is preserved after steps)."
+      },
+      {
+        "id": "cs303-t2-q3-3",
+        "type": "multiple_choice",
+        "prompt": "What is ad-hoc polymorphism?",
+        "options": [
+          "Random polymorphism",
+          "Polymorphism through overloading or type classes",
+          "Temporary polymorphism",
+          "Polymorphism without types"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Ad-hoc polymorphism provides different implementations for different types through overloading or type classes."
+      },
+      {
+        "id": "cs303-t2-q3-4",
+        "type": "multiple_choice",
+        "prompt": "What is a phantom type?",
+        "options": [
+          "A type that doesn't exist",
+          "A type parameter not used in the data structure but provides compile-time information",
+          "A deleted type",
+          "A runtime-only type"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Phantom types are type parameters that don't appear in the data structure but carry compile-time information."
+      },
+      {
+        "id": "cs303-t2-q3-5",
+        "type": "multiple_choice",
+        "prompt": "What problem does the Option/Maybe type solve?",
+        "options": [
+          "Memory management",
+          "Null pointer exceptions",
+          "Concurrency",
+          "Performance"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Option/Maybe types make absence of values explicit in the type system, eliminating null pointer exceptions."
+      }
+    ]
+  }
+]

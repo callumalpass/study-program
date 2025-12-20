@@ -1,0 +1,191 @@
+[
+  {
+    "id": "cs205-quiz-6-1",
+    "subjectId": "cs205",
+    "topicId": "cs205-6",
+    "title": "Index Fundamentals",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "What is the primary purpose of a database index?",
+        "options": [
+          "Reduce storage space",
+          "Speed up data retrieval",
+          "Enforce constraints",
+          "Backup data"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Indexes speed up queries by providing quick access paths to data, avoiding full table scans."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "A clustered index determines:",
+        "options": [
+          "Index naming convention",
+          "Physical storage order of table data",
+          "Number of indexes allowed",
+          "Query syntax"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Clustered indexes sort and store table rows in order based on the index key."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "A table can have multiple clustered indexes.",
+        "correctAnswer": false,
+        "explanation": "A table can have only one clustered index since data can only be physically sorted one way."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "What is the main disadvantage of having many indexes on a table?",
+        "options": [
+          "Slower reads",
+          "Slower inserts/updates/deletes",
+          "Less accurate queries",
+          "Reduced security"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Each index must be maintained during write operations, adding overhead."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "An index that contains all columns needed by a query is called a ______ index.",
+        "correctAnswer": "covering",
+        "explanation": "Covering indexes satisfy queries entirely from the index without accessing the table."
+      }
+    ]
+  },
+  {
+    "id": "cs205-quiz-6-2",
+    "subjectId": "cs205",
+    "topicId": "cs205-6",
+    "title": "B-Tree Structure",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "Why are B-trees ideal for database indexes?",
+        "options": [
+          "They use minimal memory",
+          "They minimize disk I/O with high fanout",
+          "They are easier to implement",
+          "They don't require maintenance"
+        ],
+        "correctAnswer": 1,
+        "explanation": "B-trees have high fanout (many children per node), keeping tree height low and reducing disk reads."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "In a B+ tree, where is all data stored?",
+        "options": [
+          "Root node only",
+          "Internal nodes",
+          "Leaf nodes only",
+          "All nodes equally"
+        ],
+        "correctAnswer": 2,
+        "explanation": "B+ trees store all data pointers in leaf nodes; internal nodes contain only keys for navigation."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "B+ tree leaf nodes are linked for efficient range queries.",
+        "correctAnswer": true,
+        "explanation": "B+ tree leaves are linked sequentially, enabling efficient range scans without traversing internal nodes."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "What operation is triggered when a B-tree node becomes full during insertion?",
+        "options": [
+          "Rotation",
+          "Split",
+          "Deletion",
+          "Compression"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Node splits divide full nodes and promote the median key to the parent."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "The time complexity for searching in a B-tree with n elements is:",
+        "options": [
+          "O(1)",
+          "O(log n)",
+          "O(n)",
+          "O(n log n)"
+        ],
+        "correctAnswer": 1,
+        "explanation": "B-tree search is O(log n) due to the balanced tree structure."
+      }
+    ]
+  },
+  {
+    "id": "cs205-quiz-6-3",
+    "subjectId": "cs205",
+    "topicId": "cs205-6",
+    "title": "Index Types and Selection",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "Hash indexes are best for:",
+        "options": [
+          "Range queries",
+          "Equality comparisons only",
+          "Pattern matching",
+          "Sorting operations"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Hash indexes provide O(1) lookup for exact matches but cannot support range queries."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "A composite index on (A, B, C) can efficiently support which query?",
+        "options": [
+          "WHERE B = 1",
+          "WHERE A = 1 AND C = 3",
+          "WHERE A = 1 AND B = 2",
+          "WHERE C = 3"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Composite indexes follow leftmost prefix—queries must use leading columns (A, then B, then C)."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "A partial index indexes only a subset of rows based on a condition.",
+        "correctAnswer": true,
+        "explanation": "Partial indexes are smaller and more efficient when queries frequently filter on specific conditions."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "Which index type would you choose for full-text search?",
+        "options": [
+          "B-tree",
+          "Hash",
+          "GIN/Full-text",
+          "Bitmap"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Full-text indexes (GIN in PostgreSQL) support word-based searches with relevance ranking."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "Bitmap indexes are most effective for columns with ______ cardinality.",
+        "correctAnswer": "low",
+        "explanation": "Bitmap indexes work well for columns with few distinct values (like status or gender)."
+      }
+    ]
+  }
+]

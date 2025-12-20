@@ -1,0 +1,221 @@
+[
+  {
+    "id": "math302-quiz-7-1",
+    "subjectId": "math302",
+    "topicId": "math302-topic-7",
+    "title": "Applications - Population and Growth Models",
+    "questions": [
+      {
+        "id": "math302-q91",
+        "type": "multiple_choice",
+        "prompt": "The exponential growth model dP/dt = kP has solution:",
+        "options": [
+          "P(t) = P₀e^(kt)",
+          "P(t) = P₀ + kt",
+          "P(t) = k/t",
+          "P(t) = P₀sin(kt)"
+        ],
+        "correctAnswer": "P(t) = P₀e^(kt)",
+        "explanation": "This separable equation gives P(t) = P₀e^(kt), where k > 0 for growth, k < 0 for decay. Models unconstrained population growth."
+      },
+      {
+        "id": "math302-q92",
+        "type": "multiple_choice",
+        "prompt": "The logistic equation dP/dt = kP(1 - P/M) models:",
+        "options": [
+          "Population growth with carrying capacity M",
+          "Exponential decay",
+          "Harmonic motion",
+          "Radioactive decay"
+        ],
+        "correctAnswer": "Population growth with carrying capacity M",
+        "explanation": "The logistic model includes a carrying capacity M. Growth slows as P approaches M, modeling limited resources."
+      },
+      {
+        "id": "math302-q93",
+        "type": "multiple_choice",
+        "prompt": "For the logistic equation, the equilibrium solutions are:",
+        "options": [
+          "P = 0 (unstable) and P = M (stable)",
+          "P = M (unstable) and P = 0 (stable)",
+          "P = k and P = M",
+          "No equilibrium exists"
+        ],
+        "correctAnswer": "P = 0 (unstable) and P = M (stable)",
+        "explanation": "Setting dP/dt = 0 gives P = 0 and P = M. P = 0 is unstable (populations grow from small values), P = M is stable."
+      },
+      {
+        "id": "math302-q94",
+        "type": "multiple_choice",
+        "prompt": "Radioactive decay follows the equation dN/dt = -λN, where λ is:",
+        "options": [
+          "The decay constant (λ > 0)",
+          "The growth rate",
+          "The half-life",
+          "The initial amount"
+        ],
+        "correctAnswer": "The decay constant (λ > 0)",
+        "explanation": "Radioactive decay: dN/dt = -λN, solution N(t) = N₀e^(-λt). The decay constant λ relates to half-life: t₁/₂ = ln(2)/λ."
+      },
+      {
+        "id": "math302-q95",
+        "type": "multiple_choice",
+        "prompt": "Newton's law of cooling states that dT/dt is proportional to:",
+        "options": [
+          "T - T_ambient",
+          "T",
+          "t",
+          "T²"
+        ],
+        "correctAnswer": "T - T_ambient",
+        "explanation": "Newton's law: dT/dt = -k(T - T_m), where T_m is ambient temperature. The rate of cooling is proportional to the temperature difference."
+      }
+    ]
+  },
+  {
+    "id": "math302-quiz-7-2",
+    "subjectId": "math302",
+    "topicId": "math302-topic-7",
+    "title": "Applications - Mechanical and Electrical Systems",
+    "questions": [
+      {
+        "id": "math302-q96",
+        "type": "multiple_choice",
+        "prompt": "The spring-mass system mx″ + bx′ + kx = 0 represents:",
+        "options": [
+          "Damped harmonic motion",
+          "Exponential growth",
+          "Logistic growth",
+          "Steady-state flow"
+        ],
+        "correctAnswer": "Damped harmonic motion",
+        "explanation": "This is the damped harmonic oscillator: m = mass, b = damping coefficient, k = spring constant. Describes vibrating systems."
+      },
+      {
+        "id": "math302-q97",
+        "type": "multiple_choice",
+        "prompt": "For the undamped oscillator x″ + ω²x = 0, the general solution is:",
+        "options": [
+          "x = C₁cos(ωt) + C₂sin(ωt)",
+          "x = Ce^(ωt)",
+          "x = C₁e^(ωt) + C₂e^(-ωt)",
+          "x = Ct²"
+        ],
+        "correctAnswer": "x = C₁cos(ωt) + C₂sin(ωt)",
+        "explanation": "With b = 0, we get simple harmonic motion: x″ + ω²x = 0, where ω² = k/m. Solution: x = C₁cos(ωt) + C₂sin(ωt)."
+      },
+      {
+        "id": "math302-q98",
+        "type": "multiple_choice",
+        "prompt": "An RLC circuit satisfies the equation LI″ + RI′ + (1/C)I = E′(t), where:",
+        "options": [
+          "L = inductance, R = resistance, C = capacitance",
+          "L = length, R = radius, C = current",
+          "L = Laplace transform, R = recurrence, C = constant",
+          "L = limit, R = rate, C = coefficient"
+        ],
+        "correctAnswer": "L = inductance, R = resistance, C = capacitance",
+        "explanation": "RLC circuit equation: LI″ + RI′ + I/C = E′(t) is analogous to spring-mass system. I = current, E(t) = voltage source."
+      },
+      {
+        "id": "math302-q99",
+        "type": "multiple_choice",
+        "prompt": "Critical damping occurs when the damping coefficient b equals:",
+        "options": [
+          "2√(mk)",
+          "√(mk)",
+          "mk",
+          "2mk"
+        ],
+        "correctAnswer": "2√(mk)",
+        "explanation": "Critical damping: b = 2√(mk), giving repeated characteristic roots. System returns to equilibrium fastest without oscillation."
+      },
+      {
+        "id": "math302-q100",
+        "type": "multiple_choice",
+        "prompt": "Resonance occurs when the forcing frequency equals:",
+        "options": [
+          "The natural frequency of the system",
+          "Zero",
+          "Infinity",
+          "The damping coefficient"
+        ],
+        "correctAnswer": "The natural frequency of the system",
+        "explanation": "Resonance occurs when external forcing frequency matches natural frequency ω₀ = √(k/m), causing amplitude to grow dramatically."
+      }
+    ]
+  },
+  {
+    "id": "math302-quiz-7-3",
+    "subjectId": "math302",
+    "topicId": "math302-topic-7",
+    "title": "Applications - Numerical Methods",
+    "questions": [
+      {
+        "id": "math302-q101",
+        "type": "multiple_choice",
+        "prompt": "Euler's method approximates y(x + h) as:",
+        "options": [
+          "y(x) + hf(x, y)",
+          "y(x) + f(x, y)",
+          "y(x)·f(x, y)",
+          "y(x) + h²f(x, y)"
+        ],
+        "correctAnswer": "y(x) + hf(x, y)",
+        "explanation": "Euler's method: y_{n+1} = y_n + hf(x_n, y_n), using the tangent line approximation. Simple but has O(h) local error."
+      },
+      {
+        "id": "math302-q102",
+        "type": "multiple_choice",
+        "prompt": "The improved Euler (Heun) method is a:",
+        "options": [
+          "Predictor-corrector method",
+          "Implicit method",
+          "Series solution method",
+          "Separation of variables"
+        ],
+        "correctAnswer": "Predictor-corrector method",
+        "explanation": "Improved Euler predicts using Euler's method, then corrects using average of slopes. Better accuracy than basic Euler method."
+      },
+      {
+        "id": "math302-q103",
+        "type": "multiple_choice",
+        "prompt": "The classical Runge-Kutta method (RK4) has local truncation error of order:",
+        "options": [
+          "O(h⁵)",
+          "O(h)",
+          "O(h²)",
+          "O(h³)"
+        ],
+        "correctAnswer": "O(h⁵)",
+        "explanation": "Fourth-order Runge-Kutta (RK4) has local error O(h⁵), global error O(h⁴). Very accurate and widely used numerical method."
+      },
+      {
+        "id": "math302-q104",
+        "type": "multiple_choice",
+        "prompt": "The main advantage of numerical methods is:",
+        "options": [
+          "They work when analytical solutions are unavailable",
+          "They give exact solutions",
+          "They are faster than analytical methods",
+          "They require no initial conditions"
+        ],
+        "correctAnswer": "They work when analytical solutions are unavailable",
+        "explanation": "Numerical methods approximate solutions for equations that cannot be solved analytically, though they introduce discretization error."
+      },
+      {
+        "id": "math302-q105",
+        "type": "multiple_choice",
+        "prompt": "Stability of a numerical method means:",
+        "options": [
+          "Errors do not grow unboundedly as steps progress",
+          "The method always converges",
+          "The step size can be arbitrarily large",
+          "The solution is exact"
+        ],
+        "correctAnswer": "Errors do not grow unboundedly as steps progress",
+        "explanation": "A stable method controls error propagation. Unstable methods can produce growing errors even with small step size h."
+      }
+    ]
+  }
+]

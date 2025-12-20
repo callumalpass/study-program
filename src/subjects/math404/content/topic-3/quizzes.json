@@ -1,0 +1,179 @@
+[
+  {
+    "id": "math404-quiz-3a",
+    "subjectId": "math404",
+    "topicId": "math404-topic-3",
+    "title": "Duality Theory - Fundamentals",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "What does weak duality guarantee for a primal maximization LP and its dual?",
+        "options": [
+          "Primal optimal ≤ Dual optimal",
+          "Primal optimal ≥ Dual optimal",
+          "Primal optimal = Dual optimal",
+          "No relationship exists"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Weak duality states that any dual feasible solution provides an upper bound on the primal optimal value."
+      },
+      {
+        "id": "q2",
+        "type": "true_false",
+        "prompt": "If both primal and dual have feasible solutions, strong duality holds.",
+        "correctAnswer": true,
+        "explanation": "For linear programs, if both primal and dual are feasible, both have optimal solutions with equal values."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "In the dual of an LP, what does each dual variable correspond to?",
+        "options": [
+          "A primal decision variable",
+          "A primal constraint",
+          "An objective coefficient",
+          "A basis element"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Each dual variable corresponds to a primal constraint, representing its shadow price or marginal value."
+      },
+      {
+        "id": "q4",
+        "type": "fill_blank",
+        "prompt": "The dual of the dual LP is the _____ LP.",
+        "correctAnswer": "primal",
+        "explanation": "Taking the dual twice returns to the original primal problem, showing the symmetric relationship between primal and dual."
+      },
+      {
+        "id": "q5",
+        "type": "true_false",
+        "prompt": "Strong duality can fail for linear programs.",
+        "correctAnswer": false,
+        "explanation": "Strong duality always holds for linear programs when both primal and dual are feasible. This is a fundamental property of LP."
+      }
+    ]
+  },
+  {
+    "id": "math404-quiz-3b",
+    "subjectId": "math404",
+    "topicId": "math404-topic-3",
+    "title": "Duality Theory - Application",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "What does complementary slackness state?",
+        "options": [
+          "Primal and dual are both feasible",
+          "λᵢ(bᵢ - aᵢᵀx) = 0 for all i",
+          "All constraints are binding",
+          "The duality gap is positive"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Complementary slackness: for each constraint i, either it is tight (bᵢ = aᵢᵀx) or the dual variable is zero (λᵢ = 0)."
+      },
+      {
+        "id": "q2",
+        "type": "true_false",
+        "prompt": "If a primal constraint has positive slack at optimum, its dual variable must be zero.",
+        "correctAnswer": true,
+        "explanation": "This is complementary slackness: λᵢ · slack = 0, so positive slack implies λᵢ = 0."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "Farkas' Lemma provides a certificate for what property?",
+        "options": [
+          "Optimality",
+          "Infeasibility",
+          "Boundedness",
+          "Degeneracy"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Farkas' Lemma gives a certificate of infeasibility: if no x satisfies Ax ≤ b, then there exists y such that Aᵀy = 0, bᵀy < 0, y ≥ 0."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "What economic interpretation do dual variables have?",
+        "options": [
+          "Production costs",
+          "Shadow prices of resources",
+          "Profit margins",
+          "Inventory levels"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Dual variables are shadow prices, representing the marginal value of relaxing a constraint by one unit."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "The _____ gap is the difference between primal and dual objective values.",
+        "correctAnswer": "duality",
+        "explanation": "The duality gap measures the difference between primal and dual objectives. It is zero at optimality for LPs (strong duality)."
+      }
+    ]
+  },
+  {
+    "id": "math404-quiz-3c",
+    "subjectId": "math404",
+    "topicId": "math404-topic-3",
+    "title": "Duality Theory - Mastery",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "Given primal: max cᵀx s.t. Ax ≤ b, x ≥ 0, what is the dual?",
+        "options": [
+          "min bᵀy s.t. Aᵀy ≥ c, y ≥ 0",
+          "max bᵀy s.t. Aᵀy ≤ c, y ≥ 0",
+          "min bᵀy s.t. Aᵀy = c, y ≥ 0",
+          "max bᵀy s.t. Aᵀy ≥ c, y ≥ 0"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The dual of max cᵀx s.t. Ax ≤ b, x ≥ 0 is min bᵀy s.t. Aᵀy ≥ c, y ≥ 0."
+      },
+      {
+        "id": "q2",
+        "type": "true_false",
+        "prompt": "The dual simplex method solves the dual problem directly without forming it explicitly.",
+        "correctAnswer": false,
+        "explanation": "The dual simplex maintains dual feasibility while seeking primal feasibility, working on the primal tableau but using dual logic."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "If the primal is unbounded, what can we conclude about the dual?",
+        "options": [
+          "Dual is also unbounded",
+          "Dual is infeasible",
+          "Dual is feasible",
+          "Cannot determine"
+        ],
+        "correctAnswer": 1,
+        "explanation": "If the primal is unbounded, weak duality implies the dual must be infeasible (otherwise dual feasible would bound primal)."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "For an equality constraint h(x) = 0 in the primal, what is the corresponding dual variable?",
+        "options": [
+          "Must be non-negative",
+          "Must be non-positive",
+          "Unrestricted in sign",
+          "Must be zero"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Equality constraints in the primal correspond to unrestricted (free) dual variables that can be positive, negative, or zero."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "If a primal variable has a strict inequality bound (x > 0 not x ≥ 0), the corresponding dual constraint must hold with _____.",
+        "correctAnswer": "equality",
+        "explanation": "Strict inequalities in variable bounds correspond to equality in the dual constraints by complementary slackness."
+      }
+    ]
+  }
+]

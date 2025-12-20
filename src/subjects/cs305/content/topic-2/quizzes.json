@@ -1,0 +1,185 @@
+[
+  {
+    "id": "cs305-quiz-2-1",
+    "title": "CSS Basics",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-2",
+    "questions": [
+      {
+        "id": "cs305-q2-1",
+        "type": "multiple_choice",
+        "prompt": "Which CSS property is used to change the text color of an element?",
+        "options": [
+          "text-color",
+          "font-color",
+          "color",
+          "text-style"
+        ],
+        "correctAnswer": "color",
+        "explanation": "The color property in CSS is used to set the color of text content."
+      },
+      {
+        "id": "cs305-q2-2",
+        "type": "multiple_choice",
+        "prompt": "What is the correct syntax for selecting all <p> elements?",
+        "options": [
+          ".p",
+          "#p",
+          "p",
+          "*p"
+        ],
+        "correctAnswer": "p",
+        "explanation": "Element selectors use just the element name without any prefix. Classes use \".\", IDs use \"#\", and \"*\" is the universal selector."
+      },
+      {
+        "id": "cs305-q2-3",
+        "type": "true_false",
+        "prompt": "In CSS, \"padding\" adds space outside the element's border.",
+        "correctAnswer": "false",
+        "explanation": "Padding adds space inside the element's border, between the content and the border. Margin adds space outside the border."
+      },
+      {
+        "id": "cs305-q2-4",
+        "type": "multiple_choice",
+        "prompt": "Which property is used to change the background color?",
+        "options": [
+          "bg-color",
+          "background-color",
+          "color-background",
+          "bgcolor"
+        ],
+        "correctAnswer": "background-color",
+        "explanation": "The background-color property sets the background color of an element."
+      },
+      {
+        "id": "cs305-q2-5",
+        "type": "fill_blank",
+        "prompt": "The CSS box model consists of content, padding, ___, and margin.",
+        "correctAnswer": "border",
+        "explanation": "The CSS box model layers are: content (innermost), padding, border, and margin (outermost)."
+      }
+    ]
+  },
+  {
+    "id": "cs305-quiz-2-2",
+    "title": "Flexbox and Grid",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-2",
+    "questions": [
+      {
+        "id": "cs305-q2-6",
+        "type": "multiple_choice",
+        "prompt": "What does \"display: flex\" do to an element?",
+        "options": [
+          "Makes it flexible in size",
+          "Makes it a flex container",
+          "Makes it transparent",
+          "Makes it responsive"
+        ],
+        "correctAnswer": "Makes it a flex container",
+        "explanation": "display: flex makes an element a flex container, enabling flexbox layout for its children (flex items)."
+      },
+      {
+        "id": "cs305-q2-7",
+        "type": "multiple_choice",
+        "prompt": "Which flexbox property aligns items along the main axis?",
+        "options": [
+          "align-items",
+          "justify-content",
+          "align-content",
+          "flex-align"
+        ],
+        "correctAnswer": "justify-content",
+        "explanation": "justify-content aligns flex items along the main axis (horizontal by default), while align-items works on the cross axis."
+      },
+      {
+        "id": "cs305-q2-8",
+        "type": "true_false",
+        "prompt": "CSS Grid is one-dimensional while Flexbox is two-dimensional.",
+        "correctAnswer": "false",
+        "explanation": "This is backwards: Flexbox is one-dimensional (row or column), while CSS Grid is two-dimensional (rows and columns simultaneously)."
+      },
+      {
+        "id": "cs305-q2-9",
+        "type": "multiple_choice",
+        "prompt": "Which position value removes an element from the document flow?",
+        "options": [
+          "position: relative",
+          "position: static",
+          "position: absolute",
+          "position: fixed"
+        ],
+        "correctAnswer": "position: absolute",
+        "explanation": "Both absolute and fixed remove elements from the document flow, but absolute is the most common answer. Fixed also removes from flow but is positioned relative to viewport."
+      },
+      {
+        "id": "cs305-q2-10",
+        "type": "fill_blank",
+        "prompt": "The CSS property ___ is used to control the stacking order of overlapping elements.",
+        "correctAnswer": "z-index",
+        "explanation": "z-index controls the stack order of positioned elements (elements with position other than static). Higher values appear in front."
+      }
+    ]
+  },
+  {
+    "id": "cs305-quiz-2-3",
+    "title": "Advanced CSS Techniques",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-2",
+    "questions": [
+      {
+        "id": "cs305-q2-11",
+        "type": "multiple_choice",
+        "prompt": "What is the specificity order from lowest to highest?",
+        "options": [
+          "element, class, ID, inline",
+          "inline, ID, class, element",
+          "class, element, ID, inline",
+          "element, ID, class, inline"
+        ],
+        "correctAnswer": "element, class, ID, inline",
+        "explanation": "CSS specificity from lowest to highest: element selectors (1), class selectors (10), ID selectors (100), inline styles (1000)."
+      },
+      {
+        "id": "cs305-q2-12",
+        "type": "code_output",
+        "prompt": "Given CSS Grid: grid-template-columns: repeat(3, 1fr); What does \"1fr\" represent?",
+        "options": [
+          "1 pixel",
+          "1 fraction of available space",
+          "1 fixed ratio",
+          "1 full row"
+        ],
+        "correctAnswer": "1 fraction of available space",
+        "explanation": "The \"fr\" unit represents a fraction of the available space in the grid container. \"1fr\" means one fractional unit of the remaining space."
+      },
+      {
+        "id": "cs305-q2-13",
+        "type": "true_false",
+        "prompt": "The :nth-child(2n) selector targets every even child element.",
+        "correctAnswer": "true",
+        "explanation": ":nth-child(2n) or :nth-child(even) selects every even-numbered child (2nd, 4th, 6th, etc.)."
+      },
+      {
+        "id": "cs305-q2-14",
+        "type": "multiple_choice",
+        "prompt": "What is the difference between \"em\" and \"rem\" units?",
+        "options": [
+          "No difference",
+          "em is relative to parent, rem to root element",
+          "rem is relative to parent, em to root element",
+          "em is pixels, rem is percentages"
+        ],
+        "correctAnswer": "em is relative to parent, rem to root element",
+        "explanation": "em units are relative to the font-size of the parent element, while rem (root em) units are relative to the root element (<html>) font-size."
+      },
+      {
+        "id": "cs305-q2-15",
+        "type": "fill_blank",
+        "prompt": "The CSS property ___ can be used to create a grid container with implicit row sizing.",
+        "correctAnswer": "grid-auto-rows",
+        "explanation": "grid-auto-rows specifies the size of implicitly-created grid rows (rows not explicitly defined with grid-template-rows)."
+      }
+    ]
+  }
+]

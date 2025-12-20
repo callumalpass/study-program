@@ -1,0 +1,185 @@
+[
+  {
+    "id": "math101-quiz-4a",
+    "subjectId": "math101",
+    "topicId": "math101-topic-4",
+    "title": "Relations - Fundamentals",
+    "questions": [
+      {
+        "id": "math101-q4a-1",
+        "type": "multiple_choice",
+        "prompt": "A relation R on set A is reflexive if:",
+        "options": [
+          "For all a ∈ A: (a, a) ∈ R",
+          "For all a, b ∈ A: if (a, b) ∈ R then (b, a) ∈ R",
+          "For all a ∈ A: (a, a) ∉ R",
+          "There exist a, b such that (a, b) ∈ R"
+        ],
+        "correctAnswer": 0,
+        "explanation": "A relation is reflexive if every element is related to itself. For all a in A, (a, a) must be in R."
+      },
+      {
+        "id": "math101-q4a-2",
+        "type": "true_false",
+        "prompt": "The relation \"less than\" (<) on integers is reflexive.",
+        "correctAnswer": false,
+        "explanation": "No, because no integer is less than itself. For reflexivity, we would need n < n for all n, which is false."
+      },
+      {
+        "id": "math101-q4a-3",
+        "type": "multiple_choice",
+        "prompt": "A relation R on set A is symmetric if:",
+        "options": [
+          "For all a ∈ A: (a, a) ∈ R",
+          "For all a, b ∈ A: if (a, b) ∈ R then (b, a) ∈ R",
+          "For all a, b, c ∈ A: if (a, b) ∈ R and (b, c) ∈ R then (a, c) ∈ R",
+          "For all a ∈ A: (a, a) ∉ R"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A relation is symmetric if whenever a is related to b, then b is also related to a."
+      },
+      {
+        "id": "math101-q4a-4",
+        "type": "multiple_choice",
+        "prompt": "Which property does the relation \"less than\" (<) on integers NOT have?",
+        "options": [
+          "Transitive",
+          "Antisymmetric",
+          "Reflexive",
+          "Irreflexive"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The < relation is not reflexive because no number is less than itself. It IS transitive (a<b and b<c implies a<c), antisymmetric, and irreflexive."
+      },
+      {
+        "id": "math101-q4a-5",
+        "type": "true_false",
+        "prompt": "If a relation is both symmetric and antisymmetric, then it can only contain pairs of the form (a, a).",
+        "correctAnswer": true,
+        "explanation": "If (a, b) is in R with a ≠ b, symmetry requires (b, a) ∈ R, but antisymmetry then requires a = b. Contradiction. So only (a, a) pairs are possible."
+      }
+    ]
+  },
+  {
+    "id": "math101-quiz-4b",
+    "subjectId": "math101",
+    "topicId": "math101-topic-4",
+    "title": "Relations - Application",
+    "questions": [
+      {
+        "id": "math101-q4b-1",
+        "type": "multiple_choice",
+        "prompt": "Which combination of properties defines an equivalence relation?",
+        "options": [
+          "Reflexive, symmetric, transitive",
+          "Reflexive, antisymmetric, transitive",
+          "Symmetric, antisymmetric, transitive",
+          "Reflexive, symmetric, antisymmetric"
+        ],
+        "correctAnswer": 0,
+        "explanation": "An equivalence relation must be reflexive (aRa), symmetric (aRb implies bRa), and transitive (aRb and bRc implies aRc)."
+      },
+      {
+        "id": "math101-q4b-2",
+        "type": "true_false",
+        "prompt": "An equivalence relation partitions a set into disjoint equivalence classes.",
+        "correctAnswer": true,
+        "explanation": "True. Every equivalence relation creates a partition of the set into disjoint equivalence classes, where each element belongs to exactly one class."
+      },
+      {
+        "id": "math101-q4b-3",
+        "type": "multiple_choice",
+        "prompt": "Which combination of properties defines a partial order?",
+        "options": [
+          "Reflexive, symmetric, transitive",
+          "Reflexive, antisymmetric, transitive",
+          "Irreflexive, symmetric, transitive",
+          "Reflexive, symmetric, antisymmetric"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A partial order is reflexive, antisymmetric, and transitive. Example: ≤ on integers, ⊆ on sets."
+      },
+      {
+        "id": "math101-q4b-4",
+        "type": "multiple_choice",
+        "prompt": "The relation \"is a sibling of\" on a set of people (excluding oneself) is:",
+        "options": [
+          "Reflexive and symmetric",
+          "Symmetric but not reflexive",
+          "Transitive and reflexive",
+          "Antisymmetric and transitive"
+        ],
+        "correctAnswer": 1,
+        "explanation": "You are not your own sibling (not reflexive), but if A is B's sibling, B is A's sibling (symmetric). It's not transitive (siblings of siblings might be the same person, not siblings)."
+      },
+      {
+        "id": "math101-q4b-5",
+        "type": "fill_blank",
+        "prompt": "The equivalence class containing element a is denoted [a] and contains all elements b such that ____ is in R.",
+        "correctAnswer": "(a, b)",
+        "explanation": "The equivalence class [a] = {b ∈ A : (a, b) ∈ R} = {b ∈ A : a R b}."
+      }
+    ]
+  },
+  {
+    "id": "math101-quiz-4c",
+    "subjectId": "math101",
+    "topicId": "math101-topic-4",
+    "title": "Relations - Advanced",
+    "questions": [
+      {
+        "id": "math101-q4c-1",
+        "type": "multiple_choice",
+        "prompt": "The transitive closure of a relation R is:",
+        "options": [
+          "The smallest reflexive relation containing R",
+          "The smallest symmetric relation containing R",
+          "The smallest transitive relation containing R",
+          "The largest relation contained in R"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The transitive closure is the smallest transitive relation that contains R. It adds all pairs needed to make R transitive."
+      },
+      {
+        "id": "math101-q4c-2",
+        "type": "true_false",
+        "prompt": "In a total order (linear order), every two distinct elements are comparable.",
+        "correctAnswer": true,
+        "explanation": "A total order is a partial order where for any a, b, either a ≤ b or b ≤ a. All elements are comparable (no incomparable pairs)."
+      },
+      {
+        "id": "math101-q4c-3",
+        "type": "multiple_choice",
+        "prompt": "If R is an equivalence relation on a set of 10 elements and creates 3 equivalence classes, what can we say?",
+        "options": [
+          "Each class has exactly 3 elements",
+          "The sum of the sizes of the classes is 10",
+          "R contains exactly 30 ordered pairs",
+          "At least one class has 10 elements"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Equivalence classes partition the set, so every element belongs to exactly one class. The sizes must sum to 10."
+      },
+      {
+        "id": "math101-q4c-4",
+        "type": "multiple_choice",
+        "prompt": "The composition R ∘ S of relations R and S contains (a, c) if:",
+        "options": [
+          "There exists b such that (a, b) ∈ S and (b, c) ∈ R",
+          "There exists b such that (a, b) ∈ R and (b, c) ∈ S",
+          "(a, c) ∈ R and (a, c) ∈ S",
+          "(a, c) ∈ R or (a, c) ∈ S"
+        ],
+        "correctAnswer": 0,
+        "explanation": "For composition R ∘ S, we apply S first then R. So (a, c) ∈ R ∘ S if there exists b with (a, b) ∈ S and (b, c) ∈ R."
+      },
+      {
+        "id": "math101-q4c-5",
+        "type": "true_false",
+        "prompt": "The inverse relation R⁻¹ contains (b, a) if and only if (a, b) ∈ R.",
+        "correctAnswer": true,
+        "explanation": "The inverse relation R⁻¹ = {(b, a) : (a, b) ∈ R}. It reverses all the ordered pairs in R."
+      }
+    ]
+  }
+]

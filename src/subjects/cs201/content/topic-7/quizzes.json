@@ -1,0 +1,192 @@
+[
+  {
+    "id": "cs201-quiz-7-1",
+    "subjectId": "cs201",
+    "topicId": "cs201-7",
+    "title": "Graph Basics",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "What is the space complexity of an adjacency matrix for a graph with V vertices?",
+        "options": [
+          "O(V)",
+          "O(E)",
+          "O(V^2)",
+          "O(V + E)"
+        ],
+        "correctAnswer": 2,
+        "explanation": "An adjacency matrix is a V×V 2D array, requiring O(V^2) space regardless of edge count."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "Which representation is better for sparse graphs?",
+        "options": [
+          "Adjacency Matrix",
+          "Adjacency List",
+          "Both are equal",
+          "Edge List"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Adjacency List uses O(V + E) space, much better than O(V^2) for sparse graphs where E << V^2."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "BFS uses a queue while DFS uses a stack (or recursion).",
+        "correctAnswer": true,
+        "explanation": "BFS explores level by level (FIFO queue), DFS goes deep first (LIFO stack/recursion)."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "What is the time complexity of BFS on a graph with V vertices and E edges?",
+        "options": [
+          "O(V)",
+          "O(E)",
+          "O(V + E)",
+          "O(V * E)"
+        ],
+        "correctAnswer": 2,
+        "explanation": "BFS visits each vertex once O(V) and examines each edge once O(E), giving O(V + E)."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "BFS finds the shortest path in ______ graphs.",
+        "correctAnswer": "unweighted",
+        "explanation": "BFS guarantees shortest path only when all edges have equal weight (unweighted). For weighted graphs, use Dijkstra."
+      }
+    ]
+  },
+  {
+    "id": "cs201-quiz-7-2",
+    "subjectId": "cs201",
+    "topicId": "cs201-7",
+    "title": "Shortest Paths",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "Dijkstra's algorithm fails when the graph has:",
+        "options": [
+          "Cycles",
+          "Disconnected components",
+          "Negative edge weights",
+          "More than 1000 vertices"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Dijkstra assumes once a node is finalized, its distance is optimal. Negative edges can violate this."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "What is the time complexity of Dijkstra with a binary heap?",
+        "options": [
+          "O(V^2)",
+          "O(E log V)",
+          "O(V + E)",
+          "O(E * V)"
+        ],
+        "correctAnswer": 1,
+        "explanation": "With a binary heap, each of E edge relaxations takes O(log V), giving O(E log V)."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "Bellman-Ford can detect negative cycles in a graph.",
+        "correctAnswer": true,
+        "explanation": "After V-1 iterations, if any edge can still be relaxed, a negative cycle exists."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "What is the time complexity of Bellman-Ford?",
+        "options": [
+          "O(V + E)",
+          "O(E log V)",
+          "O(V * E)",
+          "O(V^3)"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Bellman-Ford relaxes all E edges V-1 times, giving O(V * E)."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "For single-source shortest paths with non-negative weights, which algorithm is fastest?",
+        "options": [
+          "BFS",
+          "Dijkstra",
+          "Bellman-Ford",
+          "Floyd-Warshall"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Dijkstra O(E log V) is faster than Bellman-Ford O(VE) for non-negative weights."
+      }
+    ]
+  },
+  {
+    "id": "cs201-quiz-7-3",
+    "subjectId": "cs201",
+    "topicId": "cs201-7",
+    "title": "Graph Applications",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "Topological sort is only possible for:",
+        "options": [
+          "Undirected graphs",
+          "Directed Acyclic Graphs (DAGs)",
+          "Complete graphs",
+          "Weighted graphs"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Topological ordering requires no cycles (a node can't come before itself), so only DAGs qualify."
+      },
+      {
+        "id": "q2",
+        "type": "true_false",
+        "prompt": "DFS can be used to detect cycles in a directed graph.",
+        "correctAnswer": true,
+        "explanation": "During DFS, if we encounter a node that's currently in the recursion stack, there's a cycle."
+      },
+      {
+        "id": "q3",
+        "type": "code_output",
+        "prompt": "What does this code compute?",
+        "codeSnippet": "def traverse(graph, start):\n    visited = set()\n    queue = deque([start])\n    visited.add(start)\n    dist = {start: 0}\n    while queue:\n        node = queue.popleft()\n        for neighbor in graph[node]:\n            if neighbor not in visited:\n                visited.add(neighbor)\n                dist[neighbor] = dist[node] + 1\n                queue.append(neighbor)\n    return dist",
+        "options": [
+          "DFS traversal order",
+          "Shortest distances from start (unweighted)",
+          "Topological sort",
+          "Connected components"
+        ],
+        "correctAnswer": 1,
+        "explanation": "This is BFS tracking distances. Each neighbor is one step further than the current node."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "What is a common application of topological sort?",
+        "options": [
+          "Finding shortest paths",
+          "Build system dependencies",
+          "Detecting cycles",
+          "Finding connected components"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Topological sort orders tasks so dependencies come first - essential for build systems and scheduling."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "The Union-Find (Disjoint Set Union) data structure is commonly used in ______'s algorithm for MST.",
+        "correctAnswer": "Kruskal",
+        "explanation": "Kruskal's algorithm uses Union-Find to efficiently check if adding an edge creates a cycle."
+      }
+    ]
+  }
+]

@@ -1,0 +1,227 @@
+[
+  {
+    "id": "math202-t6-ex01",
+    "subjectId": "math202",
+    "topicId": "math202-6",
+    "type": "written",
+    "title": "Simple Linear Regression Coefficients",
+    "description": "Given data points (1,2), (2,4), (3,5), (4,7), (5,8), find the least squares regression line ŷ = β₀ + β₁x.",
+    "difficulty": 3,
+    "hints": [
+      "β₁ = Σ(xᵢ-x̄)(yᵢ-ȳ) / Σ(xᵢ-x̄)²",
+      "β₀ = ȳ - β₁x̄",
+      "Calculate means first"
+    ],
+    "solution": "x̄ = (1+2+3+4+5)/5 = 3\nȳ = (2+4+5+7+8)/5 = 5.2\n\nΣ(xᵢ-x̄)(yᵢ-ȳ) = (-2)(-3.2) + (-1)(-1.2) + (0)(-0.2) + (1)(1.8) + (2)(2.8)\n= 6.4 + 1.2 + 0 + 1.8 + 5.6 = 15\n\nΣ(xᵢ-x̄)² = 4 + 1 + 0 + 1 + 4 = 10\n\nβ₁ = 15/10 = 1.5\nβ₀ = 5.2 - 1.5(3) = 5.2 - 4.5 = 0.7\n\nRegression line: ŷ = 0.7 + 1.5x"
+  },
+  {
+    "id": "math202-t6-ex02",
+    "subjectId": "math202",
+    "topicId": "math202-6",
+    "type": "written",
+    "title": "Coefficient of Determination",
+    "description": "For a regression with SST=100 and SSE=25, calculate R² and interpret it.",
+    "difficulty": 2,
+    "hints": [
+      "R² = 1 - SSE/SST = SSR/SST",
+      "R² represents proportion of variance explained"
+    ],
+    "solution": "R² = 1 - SSE/SST = 1 - 25/100 = 1 - 0.25 = 0.75\n\nInterpretation: 75% of the variance in Y is explained by the linear relationship with X. The model explains a substantial portion of the variability in the response variable."
+  },
+  {
+    "id": "math202-t6-ex03",
+    "subjectId": "math202",
+    "topicId": "math202-6",
+    "type": "written",
+    "title": "Residual Analysis",
+    "description": "Observed y: {2, 4, 5, 7, 8}. Predicted ŷ: {2.2, 3.7, 5.2, 6.7, 8.2}. Calculate the residuals and SSE.",
+    "difficulty": 2,
+    "hints": [
+      "Residual eᵢ = yᵢ - ŷᵢ",
+      "SSE = Σeᵢ²"
+    ],
+    "solution": "Residuals:\ne₁ = 2 - 2.2 = -0.2\ne₂ = 4 - 3.7 = 0.3\ne₃ = 5 - 5.2 = -0.2\ne₄ = 7 - 6.7 = 0.3\ne₅ = 8 - 8.2 = -0.2\n\nSSE = (-0.2)² + (0.3)² + (-0.2)² + (0.3)² + (-0.2)²\n= 0.04 + 0.09 + 0.04 + 0.09 + 0.04 = 0.30"
+  },
+  {
+    "id": "math202-t6-ex04",
+    "subjectId": "math202",
+    "topicId": "math202-6",
+    "type": "written",
+    "title": "Testing Slope Significance",
+    "description": "For a regression with β₁=2.5, SE(β₁)=0.8, n=20, test H₀: β₁=0 vs Hₐ: β₁≠0 at α=0.05.",
+    "difficulty": 2,
+    "hints": [
+      "Test statistic: t = β₁/SE(β₁)",
+      "df = n - 2",
+      "Critical value for df=18: t₀.₀₂₅ ≈ 2.101"
+    ],
+    "solution": "t = 2.5/0.8 = 3.125\n\ndf = 20 - 2 = 18\nCritical value (two-tailed): t₀.₀₂₅,₁₈ ≈ 2.101\n\nDecision: |t| = 3.125 > 2.101, reject H₀\n\nConclusion: Significant evidence that the slope is not zero. X is a significant predictor of Y."
+  },
+  {
+    "id": "math202-t6-ex05",
+    "subjectId": "math202",
+    "topicId": "math202-6",
+    "type": "written",
+    "title": "Prediction vs Confidence Intervals",
+    "description": "Explain the difference between a confidence interval for the mean response and a prediction interval for a new observation at x=x₀.",
+    "difficulty": 2,
+    "hints": [
+      "Confidence interval is for E[Y|x₀]",
+      "Prediction interval is for a new y₀",
+      "Which has more uncertainty?"
+    ],
+    "solution": "Confidence Interval for Mean Response:\n- Estimates E[Y|x=x₀], the average Y at x₀\n- Narrower interval\n- Formula: ŷ ± t × SE(ŷ)\n- Uncertainty only from estimating the regression line\n\nPrediction Interval for New Observation:\n- Predicts individual y₀ at x=x₀\n- Wider interval\n- Formula: ŷ ± t × √[SE(ŷ)² + MSE]\n- Additional uncertainty from individual variation around the line\n\nPrediction intervals are always wider because they account for both estimation uncertainty AND natural variability of individual observations."
+  },
+  {
+    "id": "math202-t6-ex06",
+    "subjectId": "math202",
+    "topicId": "math202-6",
+    "type": "written",
+    "title": "Correlation vs Regression",
+    "description": "For the same data, the correlation is r=0.9. Explain the relationship between r and the regression slope β₁.",
+    "difficulty": 2,
+    "hints": [
+      "β₁ = r(sy/sx)",
+      "r is standardized, β₁ depends on units"
+    ],
+    "solution": "Relationship: β₁ = r × (sy/sx)\n\nKey differences:\n1. Correlation r:\n   - Ranges from -1 to 1\n   - Symmetric: r(X,Y) = r(Y,X)\n   - Unit-free\n   - Measures strength of linear relationship\n\n2. Slope β₁:\n   - Can be any value\n   - NOT symmetric: regressing Y on X gives different slope than X on Y\n   - Has units: (units of Y)/(units of X)\n   - Measures rate of change\n\nExample: If sy=10, sx=5, r=0.9, then β₁ = 0.9(10/5) = 1.8"
+  },
+  {
+    "id": "math202-t6-ex07",
+    "subjectId": "math202",
+    "topicId": "math202-6",
+    "type": "written",
+    "title": "Regression Assumptions",
+    "description": "List the four main assumptions of linear regression and describe how to check each.",
+    "difficulty": 2,
+    "hints": [
+      "LINE: Linearity, Independence, Normality, Equal variance"
+    ],
+    "solution": "1. Linearity:\n   - Relationship between X and Y is linear\n   - Check: Scatterplot of Y vs X, residual plot\n   - Violation: Curved pattern in residuals\n\n2. Independence:\n   - Observations are independent\n   - Check: Consider study design, plot residuals vs time/order\n   - Violation: Patterns in residual plot suggest dependence\n\n3. Normality:\n   - Residuals are normally distributed\n   - Check: Normal probability plot (Q-Q plot), histogram of residuals\n   - Violation: Q-Q plot deviates from straight line\n\n4. Equal variance (Homoscedasticity):\n   - Variance of residuals is constant across X\n   - Check: Residual plot (residuals vs fitted values)\n   - Violation: \"Fan\" or \"funnel\" shape in residual plot"
+  },
+  {
+    "id": "math202-t6-ex08",
+    "subjectId": "math202",
+    "topicId": "math202-6",
+    "type": "written",
+    "title": "Influential Points",
+    "description": "Explain the concepts of leverage and influence. Can a point have high leverage but low influence?",
+    "difficulty": 3,
+    "hints": [
+      "Leverage: distance from x̄",
+      "Influence: effect on regression line"
+    ],
+    "solution": "Leverage:\n- Measure of how far xᵢ is from x̄\n- High leverage points have extreme x values\n- Potential to influence the fit\n\nInfluence:\n- Actual effect on regression coefficients\n- Measured by Cook's distance\n- A point is influential if removing it substantially changes the fit\n\nHigh Leverage, Low Influence:\nYES - if a high leverage point falls close to the regression line determined by other points, it has low influence.\n\nExample: If most data shows y = 2x, and we add point (100, 200), it has:\n- High leverage (x=100 is far from other x values)\n- Low influence (it follows the same pattern, y ≈ 2x)\n\nMost concerning: High leverage AND doesn't fit pattern = highly influential outlier"
+  },
+  {
+    "id": "math202-t6-ex09",
+    "subjectId": "math202",
+    "topicId": "math202-6",
+    "type": "written",
+    "title": "Multiple Regression Basics",
+    "description": "For ŷ = 10 + 2x₁ + 3x₂, interpret the coefficients β₁=2 and β₂=3.",
+    "difficulty": 1,
+    "hints": [
+      "Interpret each coefficient holding others constant"
+    ],
+    "solution": "β₁ = 2:\nHolding x₂ constant, for each one-unit increase in x₁, y increases by 2 units on average.\n\nβ₂ = 3:\nHolding x₁ constant, for each one-unit increase in x₂, y increases by 3 units on average.\n\nβ₀ = 10:\nWhen x₁=0 and x₂=0, the predicted value of y is 10.\n\nKey point: In multiple regression, each coefficient represents the partial effect of that predictor, controlling for all other predictors in the model."
+  },
+  {
+    "id": "math202-t6-ex10",
+    "subjectId": "math202",
+    "topicId": "math202-6",
+    "type": "written",
+    "title": "Adjusted R²",
+    "description": "Model 1: R²=0.75, k=2, n=50. Model 2: R²=0.78, k=8, n=50. Calculate adjusted R² for each and compare.",
+    "difficulty": 3,
+    "hints": [
+      "R²_adj = 1 - (1-R²)(n-1)/(n-k-1)",
+      "Adjusted R² penalizes adding predictors"
+    ],
+    "solution": "Model 1: R²=0.75, k=2, n=50\nR²_adj = 1 - (1-0.75)(49)/(50-2-1)\n= 1 - 0.25(49/47)\n= 1 - 0.2606 = 0.7394\n\nModel 2: R²=0.78, k=8, n=50\nR²_adj = 1 - (1-0.78)(49)/(50-8-1)\n= 1 - 0.22(49/41)\n= 1 - 0.2629 = 0.7371\n\nDespite Model 2 having higher R² (0.78 vs 0.75), Model 1 has higher adjusted R² (0.739 vs 0.737).\n\nConclusion: The extra 6 predictors in Model 2 don't justify their addition. Model 1 is preferred - simpler with similar explanatory power."
+  },
+  {
+    "id": "math202-t6-ex11",
+    "subjectId": "math202",
+    "topicId": "math202-6",
+    "type": "written",
+    "title": "Multicollinearity Detection",
+    "description": "In a multiple regression, predictor x₁ has VIF=8.5. What does this indicate and what problems might it cause?",
+    "difficulty": 2,
+    "hints": [
+      "VIF > 5 or 10 suggests multicollinearity",
+      "VIF = 1/(1-R²ⱼ) where R²ⱼ is from regressing xⱼ on other predictors"
+    ],
+    "solution": "VIF = 8.5 indicates significant multicollinearity.\n\nFrom VIF = 1/(1-R²₁):\n8.5 = 1/(1-R²₁)\nR²₁ = 1 - 1/8.5 = 0.882\n\nThis means 88.2% of variance in x₁ is explained by other predictors - high correlation with other variables.\n\nProblems caused:\n1. Inflated standard errors for coefficients\n2. Unstable coefficient estimates (sensitive to small data changes)\n3. Difficult to determine individual predictor effects\n4. Coefficients may have wrong signs\n5. Overall model may fit well (high R²) but individual predictors appear non-significant\n\nSolutions:\n- Remove one of the correlated predictors\n- Combine correlated predictors (e.g., principal components)\n- Increase sample size\n- Use ridge regression or other regularization"
+  },
+  {
+    "id": "math202-t6-ex12",
+    "subjectId": "math202",
+    "topicId": "math202-6",
+    "type": "written",
+    "title": "F-Test in Regression",
+    "description": "For a multiple regression with k=3 predictors, n=24, SSR=300, SSE=100, test if the model is significant at α=0.05.",
+    "difficulty": 3,
+    "hints": [
+      "F = (SSR/k) / (SSE/(n-k-1))",
+      "df₁ = k, df₂ = n-k-1"
+    ],
+    "solution": "MSR = SSR/k = 300/3 = 100\nMSE = SSE/(n-k-1) = 100/(24-3-1) = 100/20 = 5\n\nF = MSR/MSE = 100/5 = 20\n\ndf₁ = 3, df₂ = 20\nCritical value F₀.₀₅(3,20) ≈ 3.10\n\nDecision: F = 20 > 3.10, reject H₀\n\nConclusion: The model is highly significant. At least one predictor is significantly related to Y.\n\nNote: This tests H₀: β₁ = β₂ = β₃ = 0 (all slopes zero) vs Hₐ: at least one βᵢ ≠ 0"
+  },
+  {
+    "id": "math202-t6-ex13",
+    "subjectId": "math202",
+    "topicId": "math202-6",
+    "type": "written",
+    "title": "Model Selection with AIC",
+    "description": "Model A: k=2, log-likelihood=-120. Model B: k=5, log-likelihood=-115. Calculate AIC for each. Which is preferred?",
+    "difficulty": 2,
+    "hints": [
+      "AIC = 2k - 2×log-likelihood",
+      "Lower AIC is better"
+    ],
+    "solution": "Model A:\nAIC_A = 2(2) - 2(-120) = 4 + 240 = 244\n\nModel B:\nAIC_B = 2(5) - 2(-115) = 10 + 230 = 240\n\nModel B has lower AIC (240 < 244), so it's preferred.\n\nInterpretation: Despite having 3 more parameters, Model B's improved fit (higher log-likelihood) more than compensates for the complexity penalty.\n\nAIC balances:\n- Goodness of fit (log-likelihood, higher is better)\n- Model complexity (number of parameters, lower is better)"
+  },
+  {
+    "id": "math202-t6-ex14",
+    "subjectId": "math202",
+    "topicId": "math202-6",
+    "type": "written",
+    "title": "Polynomial Regression",
+    "description": "When might you use polynomial regression? What are the risks of high-degree polynomials?",
+    "difficulty": 2,
+    "hints": [
+      "Consider non-linear relationships",
+      "Think about overfitting"
+    ],
+    "solution": "When to use polynomial regression:\n1. Scatterplot shows curved relationship\n2. Theory suggests non-linear relationship\n3. Residual plot shows systematic pattern\n4. Example: ŷ = β₀ + β₁x + β₂x² (quadratic)\n\nRisks of high-degree polynomials:\n1. Overfitting:\n   - Fits noise in the data\n   - Poor prediction for new data\n   - High variance\n\n2. Extrapolation problems:\n   - Extreme predictions outside data range\n   - Polynomials can diverge to ±∞\n\n3. Interpretation difficulty:\n   - Hard to interpret β coefficients\n   - Effect of x depends on x value\n\n4. Multicollinearity:\n   - High correlation between x, x², x³, etc.\n   - Inflated standard errors\n\nRecommendation: Rarely go beyond quadratic (x²) or cubic (x³). Consider alternative approaches like splines for complex curves."
+  },
+  {
+    "id": "math202-t6-ex15",
+    "subjectId": "math202",
+    "topicId": "math202-6",
+    "type": "written",
+    "title": "Interaction Terms",
+    "description": "Model: ŷ = 50 + 2x₁ + 3x₂ + 0.5x₁x₂. Interpret the interaction term. What is the effect of x₁ when x₂=10?",
+    "difficulty": 3,
+    "hints": [
+      "Interaction means effect of one variable depends on another",
+      "Calculate ∂ŷ/∂x₁"
+    ],
+    "solution": "ŷ = 50 + 2x₁ + 3x₂ + 0.5x₁x₂\n\nInteraction term 0.5x₁x₂:\nThe effect of x₁ on y depends on the value of x₂ (and vice versa).\n\nEffect of x₁:\n∂ŷ/∂x₁ = 2 + 0.5x₂\n\nWhen x₂ = 0: effect of x₁ is 2\nWhen x₂ = 10: effect of x₁ is 2 + 0.5(10) = 7\nWhen x₂ = 20: effect of x₁ is 2 + 0.5(20) = 12\n\nInterpretation: As x₂ increases, the effect of x₁ becomes stronger. For each unit increase in x₂, the slope for x₁ increases by 0.5.\n\nWithout interaction, the effect of x₁ would be constant (2) regardless of x₂ value."
+  },
+  {
+    "id": "math202-t6-ex16",
+    "subjectId": "math202",
+    "topicId": "math202-6",
+    "type": "written",
+    "title": "Standardized Regression",
+    "description": "Why might we standardize variables before regression? How does this affect interpretation of coefficients?",
+    "difficulty": 2,
+    "hints": [
+      "Standardize: z = (x - x̄)/s",
+      "Consider comparing coefficients"
+    ],
+    "solution": "Standardizing variables (converting to z-scores):\nz = (x - x̄)/s\n\nReasons to standardize:\n1. Compare coefficient magnitudes:\n   - Original coefficients depend on units\n   - Standardized coefficients (β*) are unit-free\n   - Can compare which predictors have stronger effects\n\n2. Multicollinearity reduction:\n   - Centering can help with polynomial terms\n   - Reduces correlation between x and x²\n\n3. Interpretation when variables on different scales:\n   - Age (years) vs Income ($) vs Test scores\n   - Standardization puts all on same scale\n\nInterpretation after standardizing:\nβ* represents change in Y (in standard deviations) for one standard deviation change in X.\n\nExample:\nBefore: ŷ = 10 + 2000×(income in $1000s)\nAfter: ŷ = 10 + 0.8×(standardized income)\n\nβ*=0.8 means: one SD increase in income → 0.8 SD increase in ŷ"
+  }
+]

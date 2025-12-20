@@ -1,0 +1,243 @@
+[
+  {
+    "id": "cs203-t4-ex1",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-4",
+    "type": "written",
+    "title": "PDA for Equal a's and b's",
+    "description": "Design a PDA that accepts L = {w ∈ {a,b}* | w has equal numbers of a's and b's}. Use acceptance by empty stack.",
+    "difficulty": 3,
+    "hints": [
+      "Use stack to track the \"imbalance\" between a's and b's",
+      "Push for one symbol, pop for the other",
+      "What if we see a \"b\" when expecting \"a\" on stack?"
+    ],
+    "solution": "**PDA for equal a's and b's (empty stack acceptance)**\n\n**Intuition:**\n- Track excess a's or excess b's on stack\n- Use different stack symbols for each case\n- Accept when balanced (stack empty)\n\n**PDA M = (Q, Σ, Γ, δ, q₀, Z₀, F):**\n- Q = {q}\n- Σ = {a, b}\n- Γ = {A, B, Z₀}\n- q₀ = q\n- Z₀ = Z₀ (initial stack symbol)\n- F = ∅ (accept by empty stack)\n\n**Transitions:**\n\nStart: pop Z₀ if balanced, or begin tracking\n- δ(q, ε, Z₀) = {(q, ε)} — accept empty string\n- δ(q, a, Z₀) = {(q, A)} — first symbol is a\n- δ(q, b, Z₀) = {(q, B)} — first symbol is b\n\nTracking excess a's (A on stack):\n- δ(q, a, A) = {(q, AA)} — more a's, push A\n- δ(q, b, A) = {(q, ε)} — b cancels an a\n\nTracking excess b's (B on stack):\n- δ(q, b, B) = {(q, BB)} — more b's, push B\n- δ(q, a, B) = {(q, ε)} — a cancels a b\n\n**Trace for \"abba\":**\n(q, abba, Z₀)\n⊢ (q, bba, A) — read a, push A\n⊢ (q, ba, ε) — read b, pop A, stack empty!\nNeed to handle empty stack mid-computation...\n\n**Revised design with bottom marker:**\n\n- δ(q, a, Z₀) = {(q, AZ₀)}\n- δ(q, b, Z₀) = {(q, BZ₀)}\n- δ(q, a, A) = {(q, AA)}\n- δ(q, b, A) = {(q, ε)}\n- δ(q, b, B) = {(q, BB)}\n- δ(q, a, B) = {(q, ε)}\n- δ(q, ε, Z₀) = {(q, ε)} — accept when only Z₀ remains\n\n**Trace for \"abba\":**\n(q, abba, Z₀) ⊢ (q, bba, AZ₀) ⊢ (q, ba, Z₀) ⊢ (q, a, BZ₀) ⊢ (q, ε, Z₀) ⊢ (q, ε, ε) Accept! ✓"
+  },
+  {
+    "id": "cs203-t4-ex2",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-4",
+    "type": "written",
+    "title": "PDA for Palindromes",
+    "description": "Design a PDA for L = {wwᴿ | w ∈ {a,b}*}, palindromes of even length. Use acceptance by final state.",
+    "difficulty": 3,
+    "hints": [
+      "Push first half, match second half",
+      "Need to guess where the middle is",
+      "Use nondeterminism to guess the midpoint"
+    ],
+    "solution": "**PDA for even-length palindromes {wwᴿ}**\n\n**Strategy:**\n1. Push symbols for the first half\n2. Nondeterministically guess when we're at the middle\n3. Pop and match for the second half\n\n**PDA M = (Q, Σ, Γ, δ, q₀, Z₀, F):**\n- Q = {q₀, q₁, q₂}\n- Σ = {a, b}\n- Γ = {a, b, Z₀}\n- Start: q₀\n- F = {q₂}\n\n**States:**\n- q₀: pushing (first half)\n- q₁: popping and matching (second half)\n- q₂: accept state\n\n**Transitions:**\n\nIn q₀ (pushing first half):\n- δ(q₀, a, Z₀) = {(q₀, aZ₀)} — push a\n- δ(q₀, b, Z₀) = {(q₀, bZ₀)} — push b\n- δ(q₀, a, a) = {(q₀, aa)} — push a\n- δ(q₀, a, b) = {(q₀, ab)} — push a\n- δ(q₀, b, a) = {(q₀, ba)} — push b\n- δ(q₀, b, b) = {(q₀, bb)} — push b\n- δ(q₀, ε, Z₀) = {(q₁, Z₀)} — guess middle (empty w case)\n- δ(q₀, ε, a) = {(q₁, a)} — guess middle\n- δ(q₀, ε, b) = {(q₁, b)} — guess middle\n\nIn q₁ (matching second half):\n- δ(q₁, a, a) = {(q₁, ε)} — match a\n- δ(q₁, b, b) = {(q₁, ε)} — match b\n- δ(q₁, ε, Z₀) = {(q₂, Z₀)} — done, accept\n\n**Trace for \"abba\":**\n(q₀, abba, Z₀)\n⊢ (q₀, bba, aZ₀)\n⊢ (q₀, ba, baZ₀)\n⊢ (q₁, ba, baZ₀) — guess middle here\n⊢ (q₁, a, aZ₀) — match b\n⊢ (q₁, ε, Z₀) — match a\n⊢ (q₂, ε, Z₀) — accept ✓"
+  },
+  {
+    "id": "cs203-t4-ex3",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-4",
+    "type": "written",
+    "title": "Converting Acceptance Modes",
+    "description": "Given a PDA that accepts by final state, describe how to construct an equivalent PDA that accepts by empty stack.",
+    "difficulty": 5,
+    "hints": [
+      "Add a new bottom-of-stack marker",
+      "When original would accept, pop everything",
+      "Need to handle both acceptance and emptying"
+    ],
+    "solution": "**Converting Final State PDA to Empty Stack PDA**\n\n**Given:** PDA P = (Q, Σ, Γ, δ, q₀, Z₀, F) accepting by final state\n\n**Construct:** PDA P' = (Q', Σ, Γ', δ', q'₀, X₀, ∅) accepting by empty stack\n\n**Construction:**\n\n**New components:**\n- Q' = Q ∪ {q'₀, q_empty} (add new start and emptying state)\n- Γ' = Γ ∪ {X₀} (add new bottom marker)\n- Start state: q'₀\n- No accepting states (accept by empty stack)\n\n**Transitions:**\n\n**1. Setup:** Push original start config on stack\nδ'(q'₀, ε, X₀) = {(q₀, Z₀X₀)}\n\n**2. Original transitions:** Keep all of P's transitions\nFor all (q, a, Y) → (p, γ) in P:\n  add δ'(q, a, Y) = {(p, γ)} (plus whatever was there)\n\n**3. Enter emptying mode:** When P would accept\nFor all q ∈ F and all Y ∈ Γ':\n  add (q_empty, ε) to δ'(q, ε, Y)\n\n**4. Empty the stack:** Pop everything in emptying mode\nFor all Y ∈ Γ':\n  δ'(q_empty, ε, Y) = {(q_empty, ε)}\n\n**Why it works:**\n\n- X₀ ensures we don't accidentally empty during computation\n- Original computation proceeds normally\n- When original P reaches accepting state, we can ε-transition to q_empty\n- q_empty pops everything including X₀\n- Empty stack = acceptance\n\n**Correctness argument:**\n- If w is accepted by P (ends in state q ∈ F with some stack γX₀):\n  P' can reach (q, ε, γX₀), then (q_empty, ε, γX₀), then empty the stack\n- If P' accepts w (empty stack):\n  Must have gone through q_empty, which requires visiting some q ∈ F\n  Therefore P accepts w\n\n**Reverse construction (empty stack → final state) is similar:**\n- Detect when original would empty (can't directly detect, so use bottom marker)\n- Transition to accepting state when bottom marker is about to be popped"
+  },
+  {
+    "id": "cs203-t4-ex4",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-4",
+    "type": "written",
+    "title": "PDA Computation Trace",
+    "description": "For the PDA with δ(q₀, a, Z) = {(q₀, AZ)}, δ(q₀, b, A) = {(q₁, ε)}, δ(q₁, b, A) = {(q₁, ε)}, δ(q₁, ε, Z) = {(q₂, Z)}, start q₀, stack symbol Z, accept {q₂}. Trace the computation on \"aabb\".",
+    "difficulty": 1,
+    "hints": [
+      "Write out each configuration (state, remaining input, stack)",
+      "Stack is written with top on the left",
+      "Follow the unique path (this PDA is deterministic)"
+    ],
+    "solution": "**PDA Trace for \"aabb\"**\n\n**PDA definition:**\n- δ(q₀, a, Z) = {(q₀, AZ)} — push A\n- δ(q₀, b, A) = {(q₁, ε)} — pop A, change state\n- δ(q₁, b, A) = {(q₁, ε)} — continue popping A's\n- δ(q₁, ε, Z) = {(q₂, Z)} — accept when only Z left\n\n**Configuration notation:** (state, remaining input, stack)\nStack written top-first: \"AZ\" means A is on top, Z at bottom\n\n**Trace:**\n\n```\nStep 0: (q₀, aabb, Z)\n        Read 'a', see Z: apply δ(q₀, a, Z) = {(q₀, AZ)}\n\nStep 1: (q₀, abb, AZ)\n        Read 'a', see A: no transition for (q₀, a, A)!\n```\n\n**Wait - there's no transition for (q₀, a, A)!**\n\nLet me check: the PDA only has δ(q₀, a, Z), not δ(q₀, a, A).\n\n**This PDA does not accept \"aabb\".**\n\nLet's try \"abb\":\n\n```\nStep 0: (q₀, abb, Z)\n        Read 'a', see Z: δ(q₀, a, Z) = (q₀, AZ)\n\nStep 1: (q₀, bb, AZ)\n        Read 'b', see A: δ(q₀, b, A) = (q₁, ε)\n\nStep 2: (q₁, b, Z)\n        Read 'b', see Z: no transition for (q₁, b, Z)!\n```\n\n**\"abb\" also not accepted.**\n\nLet's try \"ab\":\n\n```\nStep 0: (q₀, ab, Z)\n        Read 'a', see Z: δ(q₀, a, Z) = (q₀, AZ)\n\nStep 1: (q₀, b, AZ)\n        Read 'b', see A: δ(q₀, b, A) = (q₁, ε)\n\nStep 2: (q₁, ε, Z)\n        ε-transition, see Z: δ(q₁, ε, Z) = (q₂, Z)\n\nStep 3: (q₂, ε, Z)\n        Accept! (q₂ ∈ F and input consumed)\n```\n\n**\"ab\" is accepted!**\n\nThis PDA recognizes {aⁿbⁿ} but seems to only work for n=1 based on the given transitions. For n>1, we'd need δ(q₀, a, A) = {(q₀, AA)}."
+  },
+  {
+    "id": "cs203-t4-ex5",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-4",
+    "type": "written",
+    "title": "CFG to PDA Conversion",
+    "description": "Convert the CFG S → aSb | ε to an equivalent PDA using the standard construction. Show the transitions.",
+    "difficulty": 3,
+    "hints": [
+      "Use a 3-state construction: start, loop, accept",
+      "Push start symbol, then simulate derivation",
+      "Variables: expand by pushing production RHS",
+      "Terminals: match against input"
+    ],
+    "solution": "**CFG to PDA Conversion**\n\n**Given CFG:**\nS → aSb | ε\n\n**Standard construction produces PDA M = (Q, Σ, Γ, δ, q₀, Z₀, F):**\n\n- Q = {q₀, q₁, q₂}\n- Σ = {a, b}\n- Γ = {S, a, b, Z₀}\n- Start: q₀\n- F = {q₂}\n\n**States:**\n- q₀: initial state\n- q₁: main processing loop\n- q₂: accept state\n\n**Transitions:**\n\n**Setup:**\nδ(q₀, ε, Z₀) = {(q₁, SZ₀)}  — push start symbol S\n\n**For variable S on stack, apply productions:**\nδ(q₁, ε, S) = {(q₁, aSb), (q₁, ε)}\n- First option: S → aSb, push \"aSb\" (b first, then S, then a on top)\n- Second option: S → ε, pop S\n\n**For terminals on stack, match against input:**\nδ(q₁, a, a) = {(q₁, ε)}  — match a\nδ(q₁, b, b) = {(q₁, ε)}  — match b\n\n**Accept:**\nδ(q₁, ε, Z₀) = {(q₂, Z₀)}  — accept when stack has only Z₀\n\n**Trace for \"aabb\":**\n```\n(q₀, aabb, Z₀)\n⊢ (q₁, aabb, SZ₀)      — push S\n⊢ (q₁, aabb, aSbZ₀)    — expand S → aSb\n⊢ (q₁, abb, SbZ₀)      — match a\n⊢ (q₁, abb, aSbbZ₀)    — expand S → aSb\n⊢ (q₁, bb, SbbZ₀)      — match a\n⊢ (q₁, bb, bbZ₀)       — expand S → ε\n⊢ (q₁, b, bZ₀)         — match b\n⊢ (q₁, ε, Z₀)          — match b\n⊢ (q₂, ε, Z₀)          — accept ✓\n```\n\n**Note:** Stack shows rightmost symbol at bottom. When pushing \"aSb\", we push b, S, a in that order so a is on top."
+  },
+  {
+    "id": "cs203-t4-ex6",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-4",
+    "type": "written",
+    "title": "PDA to CFG Conversion",
+    "description": "Explain the construction for converting a PDA to an equivalent CFG. What do the variables in the constructed grammar represent?",
+    "difficulty": 5,
+    "hints": [
+      "Variables are triples [p, A, q] representing \"from p to q while net-popping A\"",
+      "If PDA goes from p to q while removing A from stack, variable [p,A,q] derives input consumed",
+      "Productions capture how transitions affect the stack"
+    ],
+    "solution": "**PDA to CFG Conversion**\n\n**Given:** PDA P = (Q, Σ, Γ, δ, q₀, Z₀, ∅) accepting by empty stack\n\n**Construct:** CFG G = (V, Σ, R, S)\n\n**Variable Interpretation:**\nVariables have form [p, A, q] meaning:\n\"Starting in state p with A on top of stack, the PDA can reach state q having exactly popped A (and anything pushed then popped in between).\"\n\n**Construction:**\n\n**Variables:**\nV = {[p, A, q] | p, q ∈ Q, A ∈ Γ} ∪ {S}\n\n**Start symbol:**\nS with production S → [q₀, Z₀, q] for each q ∈ Q\n\n**Productions from transitions:**\n\n**Case 1:** δ(p, a, A) contains (r, ε) — pop A directly\nAdd: [p, A, r] → a\n\n**Case 2:** δ(p, a, A) contains (r, B₁B₂...Bₖ) — replace A with B₁...Bₖ\nFor all choices of states q₁, q₂, ..., qₖ₊₁ where qₖ₊₁ is the \"final\" state:\nAdd: [p, A, qₖ₊₁] → a [r, B₁, q₁] [q₁, B₂, q₂] ... [qₖ₋₁, Bₖ, qₖ₊₁]\n\n**Intuition for Case 2:**\n- Start in p with A on stack\n- Read a, replace A with B₁B₂...Bₖ, go to state r\n- From r, pop B₁, ending in state q₁\n- From q₁, pop B₂, ending in state q₂\n- ...\n- From qₖ₋₁, pop Bₖ, ending in final state\n\n**Example:**\nIf δ(p, a, A) = {(r, BC)}:\n[p, A, q₂] → a [r, B, q₁] [q₁, C, q₂] for all q₁, q₂ ∈ Q\n\n**Why it works:**\n- [p, A, q] derives exactly strings that take PDA from (p, w, Aγ) to (q, ε, γ) for any γ\n- The construction captures all possible state sequences\n- Nondeterminism in PDA becomes nondeterminism in grammar (multiple productions)\n\n**Correctness:**\nS ⇒* w ⟺ (q₀, w, Z₀) ⊢* (q, ε, ε) for some q ⟺ P accepts w\n\n**Size:** O(|Q|³|Γ||R|) variables and productions in worst case"
+  },
+  {
+    "id": "cs203-t4-ex7",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-4",
+    "type": "written",
+    "title": "DPDA Limitations",
+    "description": "Prove that the language L = {wwᴿ | w ∈ {a,b}*} cannot be recognized by a DPDA (deterministic pushdown automaton).",
+    "difficulty": 5,
+    "hints": [
+      "DPDA must know when to switch from pushing to popping",
+      "For wwᴿ, the middle is not marked",
+      "Contrast with wcwᴿ which IS recognizable by DPDA"
+    ],
+    "solution": "**Proof that {wwᴿ} is not a DCFL (not recognizable by DPDA)**\n\n**Language:** L = {wwᴿ | w ∈ {a,b}*} (even-length palindromes)\n\n**Key insight:** A DPDA must deterministically decide when it's at the middle of the string, but there's no marker to indicate this.\n\n**Proof (informal):**\n\nConsider the strings a²ⁿb²ⁿ for various n.\nAt position n (after reading aⁿ), a DPDA processing aⁿb...bⁿaⁿ must:\n- Either commit to \"we're at the middle\" (start matching)\n- Or continue pushing (we're still in first half)\n\n**Problem:** The same prefix aⁿ could be:\n- The first half of aⁿaⁿ (middle after aⁿ)\n- The first quarter of aⁿaⁿaⁿaⁿ... (middle much later)\n\nA DPDA must make the same decision for the same configuration.\n\n**Formal argument using prefix property:**\n\nL is prefix-free at no length. For any w₁ ∈ L:\n- Consider w₁ = u₁u₁ᴿ\n- There exists w₂ = u₁u₁ᴿu₂u₂ᴿ ∈ L where w₁ is a proper prefix of w₂\n\nWhen a DPDA finishes reading w₁, it must accept (if w₁ ∈ L).\nBut then for w₂ = w₁u₂u₂ᴿ, after reading w₁ prefix, the DPDA already accepted!\n\nDCFLs have the property that we can detect acceptance at end of input.\n\n**Closure argument:**\n- DCFLs are closed under complement\n- If {wwᴿ} were DCFL, so would its complement\n- The complement of {wwᴿ} is not even context-free!\n  (Actually this argument doesn't work since complement of CFL might not be CFL)\n\n**Better argument - Pumping for DCFLs:**\nThere's a stronger pumping lemma for DCFLs showing that palindromes cannot be DCFL.\n\n**Contrast with wcwᴿ:**\nL' = {wcwᴿ | w ∈ {a,b}*} IS a DCFL:\n- Push until seeing c\n- After c, pop and match\n- The marker c provides deterministic information about the middle\n\n**Conclusion:** {wwᴿ} requires nondeterminism to guess the middle, so it's not a DCFL. ∎"
+  },
+  {
+    "id": "cs203-t4-ex8",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-4",
+    "type": "written",
+    "title": "PDA for Unequal Strings",
+    "description": "Design a PDA for L = {aⁱbʲ | i ≠ j}. Hint: This is the union of {aⁱbʲ | i > j} and {aⁱbʲ | i < j}.",
+    "difficulty": 5,
+    "hints": [
+      "Handle i > j and i < j separately",
+      "Use nondeterminism to guess which case",
+      "For i > j: push a's, pop for b's, must have a's left"
+    ],
+    "solution": "**PDA for {aⁱbʲ | i ≠ j}**\n\n**Strategy:**\nL = {aⁱbʲ | i > j} ∪ {aⁱbʲ | i < j}\n\nUse nondeterminism to guess which case at the start.\n\n**PDA M = (Q, Σ, Γ, δ, q₀, Z₀, F):**\n- Q = {q₀, q_more_a, q_match_a, q_more_b, q_match_b, q_accept}\n- Σ = {a, b}\n- Γ = {A, B, Z₀}\n- F = {q_accept}\n\n**Branch 1: i > j (more a's than b's)**\n\nStart: guess this case\n- δ(q₀, ε, Z₀) = {(q_more_a, Z₀), (q_more_b, Z₀)}\n\nIn q_more_a: push all a's\n- δ(q_more_a, a, Z₀) = {(q_more_a, AZ₀)}\n- δ(q_more_a, a, A) = {(q_more_a, AA)}\n\nSwitch to matching when b's start, but ensure extra a's exist:\n- δ(q_more_a, b, A) = {(q_match_a, ε)}\n\nIn q_match_a: pop A's for b's\n- δ(q_match_a, b, A) = {(q_match_a, ε)}\n\nAccept when b's done but A's remain:\n- δ(q_match_a, ε, A) = {(q_accept, A)}\n- δ(q_accept, ε, A) = {(q_accept, ε)} — clean up\n\n**Branch 2: i < j (more b's than a's)**\n\nIn q_more_b: push all a's\n- δ(q_more_b, a, Z₀) = {(q_more_b, AZ₀)}\n- δ(q_more_b, a, A) = {(q_more_b, AA)}\n\nStart matching b's:\n- δ(q_more_b, b, A) = {(q_match_b, ε)}\n- δ(q_more_b, b, Z₀) = {(q_match_b, BZ₀)} — no a's case\n\nIn q_match_b: pop A's, then start pushing B's for excess b's\n- δ(q_match_b, b, A) = {(q_match_b, ε)}\n- δ(q_match_b, b, Z₀) = {(q_match_b, BZ₀)} — all a's matched, start counting excess\n- δ(q_match_b, b, B) = {(q_match_b, BB)}\n\nAccept when done reading and B's on stack (excess b's):\n- δ(q_match_b, ε, B) = {(q_accept, B)}\n\n**Trace for \"aab\" (i > j):**\n(q₀, aab, Z₀) ⊢ (q_more_a, aab, Z₀) ⊢ (q_more_a, ab, AZ₀) ⊢ (q_more_a, b, AAZ₀)\n⊢ (q_match_a, ε, AZ₀) ⊢ (q_accept, ε, AZ₀) ✓"
+  },
+  {
+    "id": "cs203-t4-ex9",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-4",
+    "type": "written",
+    "title": "Two-Stack PDA Power",
+    "description": "Explain why a PDA with two stacks is equivalent to a Turing machine in computational power.",
+    "difficulty": 5,
+    "hints": [
+      "A TM tape can be split at the head position",
+      "One stack holds left part, other holds right part",
+      "Moving the head = transferring between stacks"
+    ],
+    "solution": "**Two-Stack PDA = Turing Machine Power**\n\n**Theorem:** A PDA with two stacks can simulate any Turing machine.\n\n**Intuition:**\nA TM has a tape that extends infinitely in both directions from the head.\nTwo stacks can represent:\n- Stack 1: tape contents to the LEFT of the head\n- Stack 2: tape contents to the RIGHT of the head (including current cell)\n\n**Simulation:**\n\n**TM Configuration:** ...□ a b c [d] e f □ ...\n                     ←left→ ^head ←right→\n\n**Two-stack representation:**\n- Stack 1 (left of head): top→ c b a □ ... ←bottom\n- Stack 2 (right of head): top→ d e f □ ... ←bottom\n- Current symbol: top of Stack 2\n\n**Simulating TM operations:**\n\n**1. Read current symbol:**\nRead top of Stack 2 (the cell under the head)\n\n**2. Write symbol:**\nPop Stack 2, push new symbol to Stack 2\n\n**3. Move head RIGHT:**\nPop Stack 2 (current cell), push it to Stack 1\nNow top of Stack 2 is new current cell\n\n**4. Move head LEFT:**\nPop Stack 1 (cell to left), push to Stack 2\nNow top of Stack 2 is new current cell\n\n**Handling tape boundaries:**\nIf a stack is empty when we need to pop, push a blank (□) to the other stack first (extending the tape).\n\n**State simulation:**\nTwo-stack PDA states correspond directly to TM states.\n\n**Why single-stack PDA is weaker:**\n- Single stack gives LIFO access only\n- Can't \"see\" both sides of current position\n- Can only match nested/recursive patterns, not arbitrary tape manipulation\n\n**Corollary:**\n- Two-stack PDA can recognize non-context-free languages\n- Two-stack PDA can recognize {aⁿbⁿcⁿ}\n- Two-stack PDA faces undecidability (halting problem)\n\n**Hierarchy:**\nDFA < PDA (1 stack) < 2-stack PDA = TM\n\nThe jump from 1 to 2 stacks crosses the computability boundary from CFLs to recursively enumerable languages."
+  },
+  {
+    "id": "cs203-t4-ex10",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-4",
+    "type": "written",
+    "title": "PDA for Dyck Language",
+    "description": "The Dyck language D₂ consists of balanced strings of two types of brackets: () and []. Design a PDA for D₂.",
+    "difficulty": 3,
+    "hints": [
+      "Push opening brackets, pop and match closing brackets",
+      "Different stack symbols for different bracket types",
+      "Accept when input is consumed and stack has only the bottom marker"
+    ],
+    "solution": "**PDA for Dyck Language D₂**\n\n**Language:** Balanced strings over {(, ), [, ]}\n\n**Examples:**\n- \"()\" ✓, \"[]\" ✓, \"([])\" ✓, \"()[()]\" ✓\n- \"(\" ✗, \"[(])\" ✗, \"([)]\" ✗\n\n**PDA M = (Q, Σ, Γ, δ, q₀, Z₀, F):**\n- Q = {q, q_acc}\n- Σ = {(, ), [, ]}\n- Γ = {P, B, Z₀}  (P for (, B for [)\n- Start: q\n- F = {q_acc}\n\n**Transitions:**\n\n**Push opening brackets:**\n- δ(q, (, Z₀) = {(q, PZ₀)}\n- δ(q, (, P) = {(q, PP)}\n- δ(q, (, B) = {(q, PB)}\n- δ(q, [, Z₀) = {(q, BZ₀)}\n- δ(q, [, P) = {(q, BP)}\n- δ(q, [, B) = {(q, BB)}\n\n**Pop and match closing brackets:**\n- δ(q, ), P) = {(q, ε)}  — match ( with )\n- δ(q, ], B) = {(q, ε)}  — match [ with ]\n\n**Accept when balanced:**\n- δ(q, ε, Z₀) = {(q_acc, Z₀)}\n\n**Note:** No transitions for mismatches like δ(q, ), B) or δ(q, ], P) — these cause rejection.\n\n**Trace for \"([()])\":**\n```\n(q, ([()])], Z₀)\n⊢ (q, [()]), PZ₀)      — push (\n⊢ (q, ()]), BPZ₀)      — push [\n⊢ (q, )]), PBP Z₀)     — push (\n⊢ (q, ]), BPZ₀)        — match )\n⊢ (q, ), PZ₀)          — match ]\n⊢ (q, ε, Z₀)           — match )\n⊢ (q_acc, ε, Z₀)       — accept ✓\n```\n\n**Trace for \"([)]\" (mismatched):**\n```\n(q, ([)], Z₀)\n⊢ (q, [)], PZ₀)        — push (\n⊢ (q, )], BPZ₀)        — push [\n⊢ STUCK!               — see ), top is B, no matching transition\n```\n\nComputation blocks, string rejected. ✓"
+  },
+  {
+    "id": "cs203-t4-ex11",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-4",
+    "type": "written",
+    "title": "PDA with Multiple Stack Symbols",
+    "description": "Design a PDA that accepts {aⁿbᵐcⁿ⁺ᵐ | n, m ≥ 0}. The number of c's equals the sum of a's and b's.",
+    "difficulty": 5,
+    "hints": [
+      "Push something for each a and each b",
+      "Pop one symbol for each c",
+      "Can use the same or different stack symbols"
+    ],
+    "solution": "**PDA for {aⁿbᵐcⁿ⁺ᵐ | n, m ≥ 0}**\n\n**Analysis:**\n- Read a's, push a marker for each\n- Read b's, push a marker for each\n- Read c's, pop one marker for each\n- Accept when stack has only bottom marker (counts match)\n\n**Simple approach:** Use same symbol X for both a's and b's\n\n**PDA M = (Q, Σ, Γ, δ, q₀, Z₀, F):**\n- Q = {q_a, q_b, q_c, q_acc}\n- Σ = {a, b, c}\n- Γ = {X, Z₀}\n- Start: q_a\n- F = {q_acc}\n\n**Transitions:**\n\n**Reading a's (push X for each):**\n- δ(q_a, a, Z₀) = {(q_a, XZ₀)}\n- δ(q_a, a, X) = {(q_a, XX)}\n\n**Transition to reading b's:**\n- δ(q_a, b, Z₀) = {(q_b, XZ₀)}  — no a's, start b's\n- δ(q_a, b, X) = {(q_b, XX)}    — done with a's, start b's\n- δ(q_a, ε, Z₀) = {(q_b, Z₀)}   — no a's, maybe no b's\n\n**Reading b's (push X for each):**\n- δ(q_b, b, Z₀) = {(q_b, XZ₀)}\n- δ(q_b, b, X) = {(q_b, XX)}\n\n**Transition to reading c's:**\n- δ(q_b, c, X) = {(q_c, ε)}     — start c's, pop first X\n- δ(q_b, ε, Z₀) = {(q_acc, Z₀)} — no b's or c's, accept\n\n**Reading c's (pop X for each):**\n- δ(q_c, c, X) = {(q_c, ε)}\n\n**Accept when c's done and stack is empty of X's:**\n- δ(q_c, ε, Z₀) = {(q_acc, Z₀)}\n\n**Trace for \"aabccc\" (n=2, m=1, n+m=3):**\n```\n(q_a, aabccc, Z₀)\n⊢ (q_a, abccc, XZ₀)       — push for first a\n⊢ (q_a, bccc, XXZ₀)       — push for second a\n⊢ (q_b, ccc, XXXZ₀)       — push for b\n⊢ (q_c, cc, XXZ₀)         — pop for first c\n⊢ (q_c, c, XZ₀)           — pop for second c\n⊢ (q_c, ε, Z₀)            — pop for third c\n⊢ (q_acc, ε, Z₀)          — accept ✓\n```\n\n**Trace for \"c\" (n=0, m=0, need 0 c's, not 1):**\n```\n(q_a, c, Z₀)\n⊢ (q_b, c, Z₀)             — ε-move, no a's\n  No transition for (q_b, c, Z₀)!\n  STUCK — rejected ✓\n```"
+  },
+  {
+    "id": "cs203-t4-ex12",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-4",
+    "type": "written",
+    "title": "ε-Transitions in PDAs",
+    "description": "Explain the role of ε-transitions in PDAs. Can every PDA be converted to an equivalent PDA with no ε-transitions on input?",
+    "difficulty": 3,
+    "hints": [
+      "ε-transitions allow stack manipulation without reading input",
+      "Consider what would happen without them",
+      "Think about NPDAs vs DPDAs"
+    ],
+    "solution": "**Role of ε-Transitions in PDAs**\n\n**ε-transitions in PDAs:** Transitions of the form δ(q, ε, A) = {...}\n- Can be taken without consuming any input symbol\n- Allow stack manipulation independent of input\n\n**Key uses of ε-transitions:**\n\n**1. Nondeterministic guessing:**\n- Guess where the middle of a palindrome is\n- Choose between different parsing strategies\n- δ(q, ε, A) = {(p₁, γ₁), (p₂, γ₂)} — choose nondeterministically\n\n**2. Stack setup/cleanup:**\n- Initialize stack before processing\n- Clean up stack before accepting\n- δ(q₀, ε, Z₀) = {(q₁, SZ₀)} — push start symbol\n\n**3. Mode changes:**\n- Switch from \"pushing phase\" to \"matching phase\"\n- Change states based on stack, not input\n- δ(q_push, ε, X) = {(q_pop, X)} — switch to popping mode\n\n**Can we eliminate ε-transitions?**\n\n**For NPDAs:** Generally NO, not in a straightforward way.\n\n**Problem:** ε-transitions allow the PDA to examine and modify the stack without reading input. This is essential for:\n- Simulating CFG derivations (expand variables before matching)\n- Making decisions based on stack contents alone\n\n**Simulation attempt:**\nIf we try to fold ε-transitions into regular transitions, we face issues:\n- Don't know when an ε-loop terminates\n- May need unbounded ε-moves between inputs\n- Stack can change arbitrarily on ε-moves\n\n**However:** We can convert to a PDA where ε-transitions don't change the stack \"net effect\" per input symbol, but some ε-moves may remain.\n\n**For DPDAs:** Different constraints apply, and ε-transitions are more limited.\n\n**Key theorem:** NPDAs (even with ε-transitions) recognize exactly the CFLs. The ε-transitions add convenience but not power — they're part of the standard model.\n\n**Contrast with NFAs:**\n- NFAs: ε-transitions can be eliminated (subset construction preserves this)\n- NPDAs: ε-transitions are more intrinsic due to stack operations"
+  },
+  {
+    "id": "cs203-t4-ex13",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-4",
+    "type": "written",
+    "title": "PDA Instantaneous Description",
+    "description": "Define the instantaneous description (ID) of a PDA and the yields relation (⊢). Show how to formalize PDA computation.",
+    "difficulty": 1,
+    "hints": [
+      "ID captures the complete state of a PDA at any moment",
+      "Similar to TM configurations",
+      "⊢ shows one computation step"
+    ],
+    "solution": "**Instantaneous Description (ID) of a PDA**\n\n**Definition:**\nAn instantaneous description (ID) or configuration of a PDA is a triple:\n\n**(q, w, γ)**\n\nwhere:\n- q ∈ Q is the current state\n- w ∈ Σ* is the remaining (unread) input\n- γ ∈ Γ* is the current stack contents (top on left)\n\n**The Yields Relation ⊢**\n\n**(q, aw, Aβ) ⊢ (p, w, γβ)** if (p, γ) ∈ δ(q, a, A)\n\nThis means: In state q, reading input symbol a (or ε), with A on top of stack, the PDA can transition to state p, consuming a, and replacing A with γ.\n\n**Variants:**\n- **(q, w, Aβ) ⊢ (p, w, γβ)** if (p, γ) ∈ δ(q, ε, A) — ε-transition\n\n**Reflexive-transitive closure:**\n- **⊢*** : zero or more steps\n- **(q, w, γ) ⊢* (p, w', γ')** means the PDA can reach (p, w', γ') from (q, w, γ)\n\n**Acceptance definitions:**\n\n**By final state:**\nL(M) = {w | (q₀, w, Z₀) ⊢* (q, ε, γ) for some q ∈ F, γ ∈ Γ*}\n\n**By empty stack:**\nN(M) = {w | (q₀, w, Z₀) ⊢* (q, ε, ε) for some q ∈ Q}\n\n**Example computation:**\n\nPDA: δ(q₀, a, Z) = {(q₀, AZ)}, δ(q₀, b, A) = {(q₁, ε)}, δ(q₁, ε, Z) = {(q₂, Z)}\n\nInput: \"ab\"\n\n```\n(q₀, ab, Z)\n  ⊢ (q₀, b, AZ)      by δ(q₀, a, Z) = {(q₀, AZ)}\n  ⊢ (q₁, ε, Z)       by δ(q₀, b, A) = {(q₁, ε)}\n  ⊢ (q₂, ε, Z)       by δ(q₁, ε, Z) = {(q₂, Z)}\n```\n\nSince (q₀, ab, Z) ⊢* (q₂, ε, Z) and q₂ ∈ F, string \"ab\" is accepted."
+  },
+  {
+    "id": "cs203-t4-ex14",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-4",
+    "type": "written",
+    "title": "DCFL Closure Properties",
+    "description": "Which closure properties do deterministic context-free languages (DCFLs) have that general CFLs don't? Explain.",
+    "difficulty": 3,
+    "hints": [
+      "Consider complement closure",
+      "Think about what determinism guarantees",
+      "DCFLs are recognized by DPDAs"
+    ],
+    "solution": "**DCFL Closure Properties**\n\n**Recall:**\n- DCFLs = languages recognized by deterministic PDAs\n- DCFLs ⊊ CFLs (proper subset)\n\n**Key property: DCFLs are CLOSED under complement**\n\n**Why CFLs are NOT closed under complement:**\nIf CFLs were closed under complement, they'd be closed under intersection:\nL₁ ∩ L₂ = complement(complement(L₁) ∪ complement(L₂))\n\nBut we know CFLs aren't closed under intersection (example: {aⁿbⁿcᵐ} ∩ {aᵐbⁿcⁿ} = {aⁿbⁿcⁿ}).\n\n**Why DCFLs ARE closed under complement:**\n\nFor a DPDA M recognizing L:\n- At each step, exactly one transition applies (determinism)\n- M processes all of input and either accepts or rejects\n- To recognize L̄: swap accepting and rejecting outcomes\n\n**Technical details:**\n1. First convert DPDA to one that always reads entire input\n2. For accept by final state: F' = Q - F\n3. Must handle cases where DPDA gets stuck or loops\n\n**Formal complement construction:**\nGiven DPDA M for L, construct DPDA M' for L̄:\n- Make M read all input (add error state if needed)\n- Swap accept/reject (complement accepting states)\n- Handle end-of-input ε-moves carefully\n\n**Other DCFL closure properties:**\n\n**Closed under:**\n- Complement ✓ (as shown above)\n- Intersection with regular languages ✓\n- Inverse homomorphism ✓\n\n**NOT closed under:**\n- Union ✗ (L₁ ∪ L₂ may require nondeterminism to choose)\n- Intersection ✗\n- Concatenation ✗\n- Kleene star ✗\n\n**Example of union failure:**\nL₁ = {aⁿbⁿ | n ≥ 0} and L₂ = {aⁿb²ⁿ | n ≥ 0}\nBoth are DCFLs, but L₁ ∪ L₂ is not (would need to guess which pattern).\n\n**Significance:**\nComplement closure makes DCFLs \"nicer\" for some applications (parsing). It's a key distinguishing property from general CFLs."
+  },
+  {
+    "id": "cs203-t4-ex15",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-4",
+    "type": "written",
+    "title": "LR Parsing and DPDAs",
+    "description": "Explain the connection between LR parsing and deterministic pushdown automata.",
+    "difficulty": 5,
+    "hints": [
+      "LR parsers are essentially DPDAs",
+      "The stack holds parser states and grammar symbols",
+      "Shift = push, Reduce = pop and push"
+    ],
+    "solution": "**LR Parsing and DPDAs**\n\n**Key insight:** LR parsers ARE DPDAs (with lookup tables for efficiency).\n\n**LR Parser Components:**\n1. **Input:** String to parse\n2. **Stack:** Parser states + grammar symbols\n3. **Parse table:** ACTION and GOTO tables\n4. **Output:** Sequence of reductions (derivation)\n\n**Correspondence with DPDAs:**\n\n| LR Parser | DPDA |\n|-----------|------|\n| States (in table) | States Q |\n| Stack | Stack Γ |\n| ACTION[s,a] = shift | δ(s, a, X) = (s', YX) push |\n| ACTION[s,a] = reduce | δ(s, ε, ...) pop and push |\n| Lookahead | Reading input |\n| Accept | Reaching accept state |\n\n**LR Parsing Actions:**\n\n**Shift:**\n- Read input symbol a\n- Push new state s' onto stack\n- Like DPDA reading and pushing\n\n**Reduce by A → β:**\n- Pop |β| symbols from stack (the handle)\n- Push A (the non-terminal)\n- GOTO gives new state\n- Like DPDA ε-transitions modifying stack\n\n**Why DPDA is appropriate:**\n1. LR(k) grammars have the \"deterministic\" property\n2. At each step, the parser knows exactly what to do\n3. No backtracking needed\n4. Stack holds sufficient context for decisions\n\n**LR(k) Languages = DCFLs:**\n\n**Theorem:** A language is DCFL if and only if it has an LR(k) grammar for some k.\n\nThis establishes:\n- Every LR-parsable language has a DPDA\n- Every DPDA language has an LR grammar (after end-marker)\n\n**Practical implications:**\n- Most programming languages are designed to be LR(1)\n- Parser generators (yacc, bison) build DPDAs from grammars\n- Conflicts (shift-reduce, reduce-reduce) indicate grammar is not LR\n\n**Non-LR example:**\nPalindromes {wwᴿ} are CFL but not DCFL, so no LR grammar exists.\nThis is why natural language parsing is harder!"
+  },
+  {
+    "id": "cs203-t4-ex16",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-4",
+    "type": "written",
+    "title": "PDA for Prefix-Free Language",
+    "description": "A language L is prefix-free if no string in L is a prefix of another. Show that if L is a CFL and prefix-free, then L is a DCFL.",
+    "difficulty": 5,
+    "hints": [
+      "With prefix-freeness, we know acceptance immediately at end of string",
+      "Don't need to look ahead or guess",
+      "Construct a DPDA from any PDA for L"
+    ],
+    "solution": "**Theorem:** If L is context-free and prefix-free, then L is deterministic context-free.\n\n**Prefix-free definition:**\nL is prefix-free if for all w₁, w₂ ∈ L: w₁ is not a proper prefix of w₂.\n\n**Proof Idea:**\n\n**Why prefix-freeness helps:**\n\nConsider an NPDA M for L. When M accepts string w:\n- Some computation path reaches acceptance\n- Other paths may continue or reject\n\n**Key observation:**\nIf L is prefix-free and w ∈ L, then no extension wv (v ≠ ε) is in L.\n\nThis means: Once we've read w ∈ L, we don't need to consider accepting longer strings.\n\n**Construction sketch:**\n\nGiven NPDA M for L, construct DPDA M':\n\n1. **Determinize carefully:**\n   - At each step, track set of possible configurations\n   - This would normally cause exponential blowup\n\n2. **Use prefix-freeness:**\n   - If any configuration in the set would accept, we can accept immediately\n   - No need to continue reading for alternative acceptances\n   - Once we accept, we know no extension is in L\n\n3. **Handle ambiguity:**\n   - Different paths reaching different configurations\n   - Since L is prefix-free, at most one path leads to acceptance at each input length\n   - Can resolve nondeterminism \"lazily\"\n\n**More formal approach:**\n\nUse the fact that:\n- Prefix-free CFLs have unambiguous grammars\n- These correspond to grammars where end-of-string is unambiguous\n- Such grammars are essentially LR\n\n**Alternative proof using complement:**\n\n1. L is CFL and prefix-free\n2. L$ (with end marker $) is DCFL (can detect end of accepting string)\n3. L$ being DCFL implies L is DCFL (remove end marker)\n\n**Significance:**\n- Prefix-freeness removes the \"guessing\" problem\n- Many practical languages are designed to be prefix-free\n- Tokenization often produces prefix-free token sequences\n\n**Counterexample without prefix-freeness:**\n{wwᴿ} is CFL but not prefix-free (\"ε\" is prefix of \"aa\") and not DCFL."
+  }
+]

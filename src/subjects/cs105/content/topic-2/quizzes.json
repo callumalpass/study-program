@@ -1,0 +1,183 @@
+[
+  {
+    "id": "cs105-quiz-2",
+    "subjectId": "cs105",
+    "topicId": "cs105-topic-2",
+    "title": "Pointers Quiz 1: Basics",
+    "questions": [
+      {
+        "id": "cs105-q2-1",
+        "type": "multiple_choice",
+        "prompt": "What operator is used to get the address of a variable?",
+        "options": [
+          "*",
+          "&",
+          "->",
+          "%"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The & operator (address-of operator) returns the memory address of a variable."
+      },
+      {
+        "id": "cs105-q2-2",
+        "type": "multiple_choice",
+        "prompt": "If int *ptr points to an integer variable x, how do you access the value of x through ptr?",
+        "options": [
+          "&ptr",
+          "ptr",
+          "*ptr",
+          "ptr->x"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The * operator dereferences a pointer, accessing the value at the memory address it stores."
+      },
+      {
+        "id": "cs105-q2-3",
+        "type": "code_output",
+        "prompt": "What value does this code print?",
+        "codeSnippet": "int x = 10;\nint *ptr = &x;\n*ptr = 20;\nprintf(\"%d\", x);",
+        "correctAnswer": "20",
+        "explanation": "The pointer ptr points to x, so *ptr = 20 modifies x directly. Therefore x becomes 20."
+      },
+      {
+        "id": "cs105-q2-4",
+        "type": "multiple_choice",
+        "prompt": "What is a NULL pointer?",
+        "options": [
+          "A pointer to zero",
+          "A pointer that points to nothing",
+          "An uninitialized pointer",
+          "A pointer to an empty string"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A NULL pointer is a special pointer value that indicates the pointer points to nothing (no valid memory location)."
+      },
+      {
+        "id": "cs105-q2-5",
+        "type": "true_false",
+        "prompt": "The size of a pointer is always the same regardless of the data type it points to.",
+        "correctAnswer": true,
+        "explanation": "On a given system, all pointers have the same size (e.g., 8 bytes on 64-bit systems) regardless of data type."
+      }
+    ]
+  },
+  {
+    "id": "cs105-quiz-2b",
+    "subjectId": "cs105",
+    "topicId": "cs105-topic-2",
+    "title": "Pointers Quiz 2: Arithmetic and Arrays",
+    "questions": [
+      {
+        "id": "cs105-q2b-1",
+        "type": "code_output",
+        "prompt": "What does this code print?",
+        "codeSnippet": "int arr[] = {10, 20, 30};\nint *p = arr;\nprintf(\"%d\", *(p + 1));",
+        "correctAnswer": "20",
+        "explanation": "p + 1 points to the second element (index 1), and *(p + 1) dereferences it to get 20."
+      },
+      {
+        "id": "cs105-q2b-2",
+        "type": "multiple_choice",
+        "prompt": "If int *p = arr; what is the relationship between p[i] and *(p + i)?",
+        "options": [
+          "They are different",
+          "They are equivalent",
+          "p[i] is faster",
+          "*(p+i) is faster"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Array indexing and pointer arithmetic are equivalent: arr[i] is exactly the same as *(arr + i)."
+      },
+      {
+        "id": "cs105-q2b-3",
+        "type": "code_output",
+        "prompt": "What does this code print?",
+        "codeSnippet": "int a[] = {1, 2, 3, 4, 5};\nint *p = a + 2;\nprintf(\"%d\", p[-1]);",
+        "correctAnswer": "2",
+        "explanation": "p points to a[2] (value 3). p[-1] is equivalent to *(p-1), which is a[1] (value 2)."
+      },
+      {
+        "id": "cs105-q2b-4",
+        "type": "multiple_choice",
+        "prompt": "What happens when you increment an int pointer by 1?",
+        "options": [
+          "Address increases by 1 byte",
+          "Address increases by sizeof(int) bytes",
+          "Value at pointer increases by 1",
+          "Nothing"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Pointer arithmetic scales by the size of the pointed-to type. For int*, p+1 moves by sizeof(int) bytes."
+      },
+      {
+        "id": "cs105-q2b-5",
+        "type": "true_false",
+        "prompt": "You can subtract two pointers of the same type to find the number of elements between them.",
+        "correctAnswer": true,
+        "explanation": "Subtracting pointers gives the number of elements between them, not the byte difference."
+      }
+    ]
+  },
+  {
+    "id": "cs105-quiz-2c",
+    "subjectId": "cs105",
+    "topicId": "cs105-topic-2",
+    "title": "Pointers Quiz 3: Advanced Pointers",
+    "questions": [
+      {
+        "id": "cs105-q2c-1",
+        "type": "multiple_choice",
+        "prompt": "What is a double pointer (int **)?",
+        "options": [
+          "A pointer to two integers",
+          "A pointer to a pointer",
+          "A 2D array",
+          "A pointer with double precision"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A double pointer (int **) is a pointer that stores the address of another pointer."
+      },
+      {
+        "id": "cs105-q2c-2",
+        "type": "code_output",
+        "prompt": "What does this code print?",
+        "codeSnippet": "int x = 5;\nint *p = &x;\nint **pp = &p;\nprintf(\"%d\", **pp);",
+        "correctAnswer": "5",
+        "explanation": "**pp first dereferences pp to get p, then dereferences p to get x, which is 5."
+      },
+      {
+        "id": "cs105-q2c-3",
+        "type": "multiple_choice",
+        "prompt": "What is the syntax for a function pointer that takes two ints and returns an int?",
+        "options": [
+          "int (*fp)(int, int)",
+          "int *fp(int, int)",
+          "int fp*(int, int)",
+          "func<int(int,int)> fp"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Function pointer syntax: return_type (*pointer_name)(parameter_types). The parentheses around *fp are crucial."
+      },
+      {
+        "id": "cs105-q2c-4",
+        "type": "multiple_choice",
+        "prompt": "What does \"const int *p\" mean?",
+        "options": [
+          "p is a constant pointer",
+          "The value pointed to cannot be changed through p",
+          "Both p and *p are constant",
+          "p points to constant memory"
+        ],
+        "correctAnswer": 1,
+        "explanation": "const int *p means p points to a const int - you cannot modify *p, but you can change what p points to."
+      },
+      {
+        "id": "cs105-q2c-5",
+        "type": "true_false",
+        "prompt": "A void pointer (void *) can be directly dereferenced.",
+        "correctAnswer": false,
+        "explanation": "void * must be cast to a specific type before dereferencing because the compiler needs to know the data size."
+      }
+    ]
+  }
+]

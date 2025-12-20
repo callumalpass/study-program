@@ -1,0 +1,418 @@
+[
+  {
+    "id": "cs305-t4-ex01",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-4",
+    "title": "Select Element by ID",
+    "difficulty": 1,
+    "description": "Create a function that selects an element by its ID and returns its text content.",
+    "starterCode": "// Get text content of element with ID\nfunction getTextById(id) {\n  // Your code here\n}",
+    "solution": "function getTextById(id) {\n  const element = document.getElementById(id);\n  return element ? element.textContent : null;\n}",
+    "testCases": [
+      {
+        "input": "document.body.innerHTML = '<div id=\"test\">Hello</div>'; getTextById(\"test\")",
+        "expectedOutput": "Hello",
+        "isHidden": false,
+        "description": "Should get text content by ID"
+      },
+      {
+        "input": "getTextById(\"nonexistent\")",
+        "expectedOutput": "null",
+        "isHidden": false,
+        "description": "Should return null for missing element"
+      }
+    ],
+    "hints": [
+      "Use document.getElementById()",
+      "Check if element exists before accessing properties",
+      "textContent gets the text inside an element"
+    ],
+    "language": "javascript"
+  },
+  {
+    "id": "cs305-t4-ex02",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-4",
+    "title": "Select Elements by Class",
+    "difficulty": 1,
+    "description": "Create a function that counts how many elements have a specific class.",
+    "starterCode": "// Count elements with a class\nfunction countByClass(className) {\n  // Your code here\n}",
+    "solution": "function countByClass(className) {\n  const elements = document.getElementsByClassName(className);\n  return elements.length;\n}",
+    "testCases": [
+      {
+        "input": "document.body.innerHTML = '<div class=\"item\"></div><div class=\"item\"></div>'; countByClass(\"item\")",
+        "expectedOutput": "2",
+        "isHidden": false,
+        "description": "Should count elements by class"
+      },
+      {
+        "input": "countByClass(\"missing\")",
+        "expectedOutput": "0",
+        "isHidden": false,
+        "description": "Should return 0 for missing class"
+      }
+    ],
+    "hints": [
+      "Use document.getElementsByClassName()",
+      "Returns an HTMLCollection",
+      "Access length property to count"
+    ],
+    "language": "javascript"
+  },
+  {
+    "id": "cs305-t4-ex03",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-4",
+    "title": "Query Selector",
+    "difficulty": 1,
+    "description": "Use querySelector to find the first paragraph inside a div with class \"container\".",
+    "starterCode": "// Find first paragraph in container\nfunction findFirstParagraph() {\n  // Your code here\n}",
+    "solution": "function findFirstParagraph() {\n  return document.querySelector('.container p');\n}",
+    "testCases": [
+      {
+        "input": "document.body.innerHTML = '<div class=\"container\"><p>First</p><p>Second</p></div>'; findFirstParagraph().textContent",
+        "expectedOutput": "First",
+        "isHidden": false,
+        "description": "Should find first paragraph in container"
+      }
+    ],
+    "hints": [
+      "querySelector uses CSS selector syntax",
+      "Space between selectors means descendant",
+      "Returns only the first matching element"
+    ],
+    "language": "javascript"
+  },
+  {
+    "id": "cs305-t4-ex04",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-4",
+    "title": "Query Selector All",
+    "difficulty": 1,
+    "description": "Use querySelectorAll to get all list items and return their text content as an array.",
+    "starterCode": "// Get text from all list items\nfunction getAllListItemsText() {\n  // Your code here\n}",
+    "solution": "function getAllListItemsText() {\n  const items = document.querySelectorAll('li');\n  return Array.from(items).map(item => item.textContent);\n}",
+    "testCases": [
+      {
+        "input": "document.body.innerHTML = '<ul><li>A</li><li>B</li><li>C</li></ul>'; getAllListItemsText()",
+        "expectedOutput": "[\"A\", \"B\", \"C\"]",
+        "isHidden": false,
+        "description": "Should get all li text content"
+      }
+    ],
+    "hints": [
+      "querySelectorAll returns a NodeList",
+      "Convert NodeList to array with Array.from()",
+      "Use map() to extract text from each element"
+    ],
+    "language": "javascript"
+  },
+  {
+    "id": "cs305-t4-ex05",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-4",
+    "title": "Modify Element Text",
+    "difficulty": 2,
+    "description": "Create a function that changes the text content of an element.",
+    "starterCode": "// Change element text\nfunction changeText(id, newText) {\n  // Your code here\n}",
+    "solution": "function changeText(id, newText) {\n  const element = document.getElementById(id);\n  if (element) {\n    element.textContent = newText;\n    return true;\n  }\n  return false;\n}",
+    "testCases": [
+      {
+        "input": "document.body.innerHTML = '<div id=\"msg\">Old</div>'; changeText(\"msg\", \"New\"); document.getElementById(\"msg\").textContent",
+        "expectedOutput": "New",
+        "isHidden": false,
+        "description": "Should change text content"
+      }
+    ],
+    "hints": [
+      "Use getElementById to find the element",
+      "Set textContent property to change text",
+      "Check if element exists before modifying"
+    ],
+    "language": "javascript"
+  },
+  {
+    "id": "cs305-t4-ex06",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-4",
+    "title": "Add and Remove Classes",
+    "difficulty": 2,
+    "description": "Create functions to add and remove classes from an element.",
+    "starterCode": "// Toggle class on element\nfunction toggleClass(id, className) {\n  // Your code here\n}",
+    "solution": "function toggleClass(id, className) {\n  const element = document.getElementById(id);\n  if (element) {\n    element.classList.toggle(className);\n    return element.classList.contains(className);\n  }\n  return false;\n}",
+    "testCases": [
+      {
+        "input": "document.body.innerHTML = '<div id=\"box\"></div>'; toggleClass(\"box\", \"active\")",
+        "expectedOutput": "true",
+        "isHidden": false,
+        "description": "Should add class when not present"
+      },
+      {
+        "input": "document.body.innerHTML = '<div id=\"box\" class=\"active\"></div>'; toggleClass(\"box\", \"active\")",
+        "expectedOutput": "false",
+        "isHidden": false,
+        "description": "Should remove class when present"
+      }
+    ],
+    "hints": [
+      "Use element.classList to work with classes",
+      "toggle() adds class if missing, removes if present",
+      "contains() checks if class exists"
+    ],
+    "language": "javascript"
+  },
+  {
+    "id": "cs305-t4-ex07",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-4",
+    "title": "Modify Element Attributes",
+    "difficulty": 2,
+    "description": "Create a function that sets multiple attributes on an element.",
+    "starterCode": "// Set multiple attributes\nfunction setAttributes(id, attributes) {\n  // attributes is an object like {href: \"...\", target: \"...\"}\n  // Your code here\n}",
+    "solution": "function setAttributes(id, attributes) {\n  const element = document.getElementById(id);\n  if (element) {\n    Object.entries(attributes).forEach(([key, value]) => {\n      element.setAttribute(key, value);\n    });\n    return true;\n  }\n  return false;\n}",
+    "testCases": [
+      {
+        "input": "document.body.innerHTML = '<a id=\"link\">Link</a>'; setAttributes(\"link\", {href: \"https://example.com\", target: \"_blank\"}); document.getElementById(\"link\").href",
+        "expectedOutput": "https://example.com",
+        "isHidden": false,
+        "description": "Should set href attribute"
+      }
+    ],
+    "hints": [
+      "Use setAttribute(name, value) to set attributes",
+      "Use Object.entries() to iterate over attributes object",
+      "forEach() to apply each attribute"
+    ],
+    "language": "javascript"
+  },
+  {
+    "id": "cs305-t4-ex08",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-4",
+    "title": "Create and Append Elements",
+    "difficulty": 2,
+    "description": "Create a function that creates a new paragraph element and appends it to a container.",
+    "starterCode": "// Create and append paragraph\nfunction addParagraph(containerId, text) {\n  // Your code here\n}",
+    "solution": "function addParagraph(containerId, text) {\n  const container = document.getElementById(containerId);\n  if (container) {\n    const p = document.createElement('p');\n    p.textContent = text;\n    container.appendChild(p);\n    return p;\n  }\n  return null;\n}",
+    "testCases": [
+      {
+        "input": "document.body.innerHTML = '<div id=\"container\"></div>'; addParagraph(\"container\", \"Hello\"); document.getElementById(\"container\").children.length",
+        "expectedOutput": "1",
+        "isHidden": false,
+        "description": "Should append paragraph to container"
+      }
+    ],
+    "hints": [
+      "Use document.createElement() to create elements",
+      "Set textContent to add text",
+      "Use appendChild() to add element to parent"
+    ],
+    "language": "javascript"
+  },
+  {
+    "id": "cs305-t4-ex09",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-4",
+    "title": "Simple Click Event Handler",
+    "difficulty": 3,
+    "description": "Add a click event listener to a button that increments a counter.",
+    "starterCode": "// Add click handler to increment counter\nfunction setupCounter(buttonId, counterId) {\n  let count = 0;\n  // Your code here\n}",
+    "solution": "function setupCounter(buttonId, counterId) {\n  let count = 0;\n  const button = document.getElementById(buttonId);\n  const counter = document.getElementById(counterId);\n\n  if (button && counter) {\n    button.addEventListener('click', () => {\n      count++;\n      counter.textContent = count;\n    });\n  }\n}",
+    "testCases": [
+      {
+        "input": "document.body.innerHTML = '<button id=\"btn\"></button><span id=\"count\">0</span>'; setupCounter(\"btn\", \"count\"); document.getElementById(\"btn\").click(); document.getElementById(\"count\").textContent",
+        "expectedOutput": "1",
+        "isHidden": false,
+        "description": "Should increment counter on click"
+      }
+    ],
+    "hints": [
+      "Use addEventListener(\"click\", callback)",
+      "Update textContent in the event handler",
+      "Use closure to maintain count variable"
+    ],
+    "language": "javascript"
+  },
+  {
+    "id": "cs305-t4-ex10",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-4",
+    "title": "Input Event Handler",
+    "difficulty": 3,
+    "description": "Add an input event listener that displays the current value in real-time.",
+    "starterCode": "// Mirror input value to display element\nfunction mirrorInput(inputId, displayId) {\n  // Your code here\n}",
+    "solution": "function mirrorInput(inputId, displayId) {\n  const input = document.getElementById(inputId);\n  const display = document.getElementById(displayId);\n\n  if (input && display) {\n    input.addEventListener('input', (e) => {\n      display.textContent = e.target.value;\n    });\n  }\n}",
+    "testCases": [
+      {
+        "input": "document.body.innerHTML = '<input id=\"inp\"><div id=\"disp\"></div>'; mirrorInput(\"inp\", \"disp\"); const inp = document.getElementById(\"inp\"); inp.value = \"test\"; inp.dispatchEvent(new Event(\"input\")); document.getElementById(\"disp\").textContent",
+        "expectedOutput": "test",
+        "isHidden": false,
+        "description": "Should mirror input value"
+      }
+    ],
+    "hints": [
+      "Use \"input\" event for real-time updates",
+      "Event object has target.value for input value",
+      "Update display element in event handler"
+    ],
+    "language": "javascript"
+  },
+  {
+    "id": "cs305-t4-ex11",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-4",
+    "title": "Remove Elements",
+    "difficulty": 3,
+    "description": "Create a function that removes all elements with a specific class.",
+    "starterCode": "// Remove all elements with class\nfunction removeElementsByClass(className) {\n  // Your code here\n}",
+    "solution": "function removeElementsByClass(className) {\n  const elements = document.querySelectorAll(`.${className}`);\n  elements.forEach(element => element.remove());\n  return elements.length;\n}",
+    "testCases": [
+      {
+        "input": "document.body.innerHTML = '<div class=\"remove\"></div><div class=\"remove\"></div><div class=\"keep\"></div>'; removeElementsByClass(\"remove\")",
+        "expectedOutput": "2",
+        "isHidden": false,
+        "description": "Should remove elements and return count"
+      }
+    ],
+    "hints": [
+      "Use querySelectorAll to find all elements",
+      "Call remove() method on each element",
+      "forEach works on NodeLists"
+    ],
+    "language": "javascript"
+  },
+  {
+    "id": "cs305-t4-ex12",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-4",
+    "title": "Dynamic List Creation",
+    "difficulty": 3,
+    "description": "Create a function that generates a list from an array of items.",
+    "starterCode": "// Create ul with li elements from array\nfunction createList(containerId, items) {\n  // Your code here\n}",
+    "solution": "function createList(containerId, items) {\n  const container = document.getElementById(containerId);\n  if (!container) return null;\n\n  const ul = document.createElement('ul');\n  items.forEach(item => {\n    const li = document.createElement('li');\n    li.textContent = item;\n    ul.appendChild(li);\n  });\n\n  container.appendChild(ul);\n  return ul;\n}",
+    "testCases": [
+      {
+        "input": "document.body.innerHTML = '<div id=\"list\"></div>'; createList(\"list\", [\"A\", \"B\", \"C\"]); document.querySelectorAll(\"li\").length",
+        "expectedOutput": "3",
+        "isHidden": false,
+        "description": "Should create list with 3 items"
+      }
+    ],
+    "hints": [
+      "Create ul element first",
+      "Loop through items array",
+      "Create li for each item and append to ul"
+    ],
+    "language": "javascript"
+  },
+  {
+    "id": "cs305-t4-ex13",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-4",
+    "title": "Event Delegation",
+    "difficulty": 4,
+    "description": "Use event delegation to handle clicks on dynamically added list items.",
+    "starterCode": "// Setup event delegation for list clicks\nfunction setupListClickHandler(listId, callback) {\n  // callback receives the clicked item's text\n  // Your code here\n}",
+    "solution": "function setupListClickHandler(listId, callback) {\n  const list = document.getElementById(listId);\n  if (!list) return;\n\n  list.addEventListener('click', (e) => {\n    if (e.target.tagName === 'LI') {\n      callback(e.target.textContent);\n    }\n  });\n}",
+    "testCases": [
+      {
+        "input": "document.body.innerHTML = '<ul id=\"list\"><li>Item 1</li></ul>'; let result; setupListClickHandler(\"list\", (text) => result = text); document.querySelector(\"li\").click(); result",
+        "expectedOutput": "Item 1",
+        "isHidden": false,
+        "description": "Should handle li click via delegation"
+      }
+    ],
+    "hints": [
+      "Add listener to parent element (ul)",
+      "Check e.target.tagName to filter clicks",
+      "Event bubbles up from child to parent"
+    ],
+    "language": "javascript"
+  },
+  {
+    "id": "cs305-t4-ex14",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-4",
+    "title": "Form Validation",
+    "difficulty": 4,
+    "description": "Create a form validation function that checks if required fields are filled.",
+    "starterCode": "// Validate form fields\nfunction validateForm(formId) {\n  // Return object with isValid and errors array\n  // Your code here\n}",
+    "solution": "function validateForm(formId) {\n  const form = document.getElementById(formId);\n  if (!form) return { isValid: false, errors: ['Form not found'] };\n\n  const errors = [];\n  const requiredFields = form.querySelectorAll('[required]');\n\n  requiredFields.forEach(field => {\n    if (!field.value.trim()) {\n      errors.push(`${field.name || field.id} is required`);\n    }\n  });\n\n  return {\n    isValid: errors.length === 0,\n    errors\n  };\n}",
+    "testCases": [
+      {
+        "input": "document.body.innerHTML = '<form id=\"f\"><input name=\"email\" required value=\"\"></form>'; validateForm(\"f\").isValid",
+        "expectedOutput": "false",
+        "isHidden": false,
+        "description": "Should fail validation for empty required field"
+      },
+      {
+        "input": "document.body.innerHTML = '<form id=\"f\"><input name=\"email\" required value=\"test@test.com\"></form>'; validateForm(\"f\").isValid",
+        "expectedOutput": "true",
+        "isHidden": false,
+        "description": "Should pass validation when filled"
+      }
+    ],
+    "hints": [
+      "Use querySelectorAll(\"[required]\") to find required fields",
+      "Check if value.trim() is empty",
+      "Build errors array with field names"
+    ],
+    "language": "javascript"
+  },
+  {
+    "id": "cs305-t4-ex15",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-4",
+    "title": "Prevent Default Form Submission",
+    "difficulty": 4,
+    "description": "Create a form submit handler that prevents default submission and processes data.",
+    "starterCode": "// Handle form submission\nfunction handleFormSubmit(formId, callback) {\n  // callback receives form data as object\n  // Your code here\n}",
+    "solution": "function handleFormSubmit(formId, callback) {\n  const form = document.getElementById(formId);\n  if (!form) return;\n\n  form.addEventListener('submit', (e) => {\n    e.preventDefault();\n    const formData = new FormData(form);\n    const data = Object.fromEntries(formData.entries());\n    callback(data);\n  });\n}",
+    "testCases": [
+      {
+        "input": "document.body.innerHTML = '<form id=\"f\"><input name=\"username\" value=\"john\"></form>'; let result; handleFormSubmit(\"f\", (data) => result = data); document.getElementById(\"f\").dispatchEvent(new Event(\"submit\")); result.username",
+        "expectedOutput": "john",
+        "isHidden": false,
+        "description": "Should pass form data to callback"
+      }
+    ],
+    "hints": [
+      "Use e.preventDefault() to stop form submission",
+      "FormData API extracts form values",
+      "Object.fromEntries converts FormData to object"
+    ],
+    "language": "javascript"
+  },
+  {
+    "id": "cs305-t4-ex16",
+    "subjectId": "cs305",
+    "topicId": "cs305-topic-4",
+    "title": "Complete Todo List Manager",
+    "difficulty": 5,
+    "description": "Create a complete todo list manager with add, remove, and toggle functionality.",
+    "starterCode": "// Create todo list manager\nfunction createTodoList(containerId) {\n  // Return object with methods: addTodo, removeTodo, toggleTodo, render\n  // Your code here\n}",
+    "solution": "function createTodoList(containerId) {\n  const container = document.getElementById(containerId);\n  if (!container) return null;\n\n  let todos = [];\n  let nextId = 1;\n\n  function render() {\n    container.innerHTML = '';\n    const ul = document.createElement('ul');\n\n    todos.forEach(todo => {\n      const li = document.createElement('li');\n      li.style.textDecoration = todo.completed ? 'line-through' : 'none';\n      li.textContent = todo.text;\n      li.dataset.id = todo.id;\n\n      const deleteBtn = document.createElement('button');\n      deleteBtn.textContent = 'Delete';\n      deleteBtn.onclick = () => removeTodo(todo.id);\n\n      li.onclick = () => toggleTodo(todo.id);\n      li.appendChild(deleteBtn);\n      ul.appendChild(li);\n    });\n\n    container.appendChild(ul);\n  }\n\n  function addTodo(text) {\n    todos.push({ id: nextId++, text, completed: false });\n    render();\n  }\n\n  function removeTodo(id) {\n    todos = todos.filter(todo => todo.id !== id);\n    render();\n  }\n\n  function toggleTodo(id) {\n    const todo = todos.find(todo => todo.id === id);\n    if (todo) {\n      todo.completed = !todo.completed;\n      render();\n    }\n  }\n\n  render();\n\n  return {\n    addTodo,\n    removeTodo,\n    toggleTodo,\n    render,\n    getTodos: () => todos\n  };\n}",
+    "testCases": [
+      {
+        "input": "document.body.innerHTML = '<div id=\"todos\"></div>'; const mgr = createTodoList(\"todos\"); mgr.addTodo(\"Test\"); mgr.getTodos().length",
+        "expectedOutput": "1",
+        "isHidden": false,
+        "description": "Should add todo"
+      },
+      {
+        "input": "document.body.innerHTML = '<div id=\"todos\"></div>'; const mgr = createTodoList(\"todos\"); mgr.addTodo(\"Test\"); mgr.toggleTodo(1); mgr.getTodos()[0].completed",
+        "expectedOutput": "true",
+        "isHidden": false,
+        "description": "Should toggle todo completion"
+      }
+    ],
+    "hints": [
+      "Maintain todos array as state",
+      "Each todo needs unique id, text, and completed status",
+      "render() recreates DOM from current state",
+      "Event handlers call methods that update state and re-render",
+      "Return object with public methods"
+    ],
+    "language": "javascript"
+  }
+]

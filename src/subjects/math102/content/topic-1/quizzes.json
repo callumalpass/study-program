@@ -1,0 +1,185 @@
+[
+  {
+    "id": "math102-q1",
+    "subjectId": "math102",
+    "topicId": "math102-1",
+    "title": "Combinatorics - Fundamentals",
+    "questions": [
+      {
+        "id": "math102-q1-1",
+        "type": "multiple_choice",
+        "prompt": "How many different ways can you arrange 5 distinct books on a shelf?",
+        "options": [
+          "25",
+          "60",
+          "120",
+          "720"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The number of permutations of 5 distinct objects is 5! = 5 × 4 × 3 × 2 × 1 = 120."
+      },
+      {
+        "id": "math102-q1-2",
+        "type": "multiple_choice",
+        "prompt": "How many ways can you choose 3 students from a class of 10 to form a committee?",
+        "options": [
+          "30",
+          "120",
+          "720",
+          "1000"
+        ],
+        "correctAnswer": 1,
+        "explanation": "This is C(10,3) = 10!/(3! × 7!) = 120. Order does not matter for committees."
+      },
+      {
+        "id": "math102-q1-3",
+        "type": "true_false",
+        "prompt": "The pigeonhole principle states that if n items are placed into m containers where n > m, at least one container must contain more than one item.",
+        "correctAnswer": true,
+        "explanation": "This is the correct statement of the pigeonhole principle."
+      },
+      {
+        "id": "math102-q1-4",
+        "type": "fill_blank",
+        "prompt": "The formula for combinations C(n,k) is n! / (k! × ____!).",
+        "correctAnswer": "n-k",
+        "explanation": "C(n,k) = n! / (k! × (n-k)!), representing choosing k items from n."
+      },
+      {
+        "id": "math102-q1-5",
+        "type": "multiple_choice",
+        "prompt": "What is C(8,3)?",
+        "options": [
+          "24",
+          "56",
+          "336",
+          "40320"
+        ],
+        "correctAnswer": 1,
+        "explanation": "C(8,3) = 8!/(3!×5!) = (8×7×6)/(3×2×1) = 336/6 = 56."
+      }
+    ]
+  },
+  {
+    "id": "math102-q1b",
+    "subjectId": "math102",
+    "topicId": "math102-1",
+    "title": "Combinatorics - Application",
+    "questions": [
+      {
+        "id": "math102-q1b-1",
+        "type": "multiple_choice",
+        "prompt": "A password consists of 3 uppercase letters followed by 2 digits. How many passwords are possible?",
+        "options": [
+          "17,576",
+          "175,760",
+          "1,757,600",
+          "17,576,000"
+        ],
+        "correctAnswer": 2,
+        "explanation": "26³ × 10² = 17,576 × 100 = 1,757,600 possible passwords."
+      },
+      {
+        "id": "math102-q1b-2",
+        "type": "code_output",
+        "prompt": "What is P(5,3), the number of permutations of 5 items taken 3 at a time?",
+        "correctAnswer": "60",
+        "explanation": "P(5,3) = 5!/(5-3)! = 5!/2! = 120/2 = 60."
+      },
+      {
+        "id": "math102-q1b-3",
+        "type": "multiple_choice",
+        "prompt": "How many ways can the letters in \"MISSISSIPPI\" be arranged?",
+        "options": [
+          "34650",
+          "39916800",
+          "332640",
+          "11!"
+        ],
+        "correctAnswer": 0,
+        "explanation": "11!/(4!×4!×2!) = 39916800/(24×24×2) = 34650. Divide by factorials of repeated letters."
+      },
+      {
+        "id": "math102-q1b-4",
+        "type": "true_false",
+        "prompt": "The number of subsets of a set with n elements is 2^n.",
+        "correctAnswer": true,
+        "explanation": "Each element has 2 choices (in or out), so 2^n total subsets including empty set."
+      },
+      {
+        "id": "math102-q1b-5",
+        "type": "multiple_choice",
+        "prompt": "How many paths exist from (0,0) to (3,2) moving only right or up?",
+        "options": [
+          "5",
+          "6",
+          "10",
+          "12"
+        ],
+        "correctAnswer": 2,
+        "explanation": "C(3+2, 2) = C(5,2) = 10. We choose 2 of 5 moves to be \"up\"."
+      }
+    ]
+  },
+  {
+    "id": "math102-q1c",
+    "subjectId": "math102",
+    "topicId": "math102-1",
+    "title": "Combinatorics - Advanced",
+    "questions": [
+      {
+        "id": "math102-q1c-1",
+        "type": "multiple_choice",
+        "prompt": "Using inclusion-exclusion, how many integers from 1-100 are divisible by 2 or 3?",
+        "options": [
+          "50",
+          "67",
+          "83",
+          "66"
+        ],
+        "correctAnswer": 1,
+        "explanation": "|A∪B| = |A| + |B| - |A∩B| = 50 + 33 - 16 = 67."
+      },
+      {
+        "id": "math102-q1c-2",
+        "type": "multiple_choice",
+        "prompt": "How many ways can 5 identical balls be distributed into 3 distinct boxes?",
+        "options": [
+          "15",
+          "21",
+          "35",
+          "243"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Stars and bars: C(5+3-1, 3-1) = C(7,2) = 21."
+      },
+      {
+        "id": "math102-q1c-3",
+        "type": "fill_blank",
+        "prompt": "The number of derangements D(3) (permutations with no fixed points) is ____.",
+        "correctAnswer": "2",
+        "explanation": "D(3) = 3! × (1/0! - 1/1! + 1/2! - 1/3!) = 6 × (1-1+0.5-0.167) = 2."
+      },
+      {
+        "id": "math102-q1c-4",
+        "type": "true_false",
+        "prompt": "In any group of 13 people, at least two must share the same birth month.",
+        "correctAnswer": true,
+        "explanation": "Pigeonhole: 13 people into 12 months means at least one month has ⌈13/12⌉ = 2 people."
+      },
+      {
+        "id": "math102-q1c-5",
+        "type": "multiple_choice",
+        "prompt": "The number of binary strings of length 6 with exactly 3 ones is:",
+        "options": [
+          "15",
+          "20",
+          "30",
+          "64"
+        ],
+        "correctAnswer": 1,
+        "explanation": "C(6,3) = 20. Choose 3 positions for the ones."
+      }
+    ]
+  }
+]

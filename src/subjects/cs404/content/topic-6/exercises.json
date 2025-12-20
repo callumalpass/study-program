@@ -1,0 +1,551 @@
+[
+  {
+    "id": "cs404-t6-ex01",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-6",
+    "title": "Basic GitHub Actions Workflow",
+    "difficulty": 1,
+    "description": "Create a basic GitHub Actions workflow YAML configuration that runs on push to main branch and executes npm install and npm test commands.",
+    "starterCode": "// Create a GitHub Actions workflow configuration\n// Return the YAML content as a string\nfunction createBasicWorkflow(): string {\n  // TODO: Return YAML configuration string\n  return ``;\n}",
+    "solution": "function createBasicWorkflow(): string {\n  return `name: CI\n\non:\n  push:\n    branches: [ main ]\n\njobs:\n  test:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v3\n      - name: Setup Node.js\n        uses: actions/setup-node@v3\n        with:\n          node-version: '18'\n      - name: Install dependencies\n        run: npm install\n      - name: Run tests\n        run: npm test`;\n}",
+    "testCases": [
+      {
+        "input": "const yaml = createBasicWorkflow(); console.log(yaml.includes(\"npm install\") && yaml.includes(\"npm test\"))",
+        "isHidden": false,
+        "description": "Includes npm commands"
+      },
+      {
+        "input": "const yaml = createBasicWorkflow(); console.log(yaml.includes(\"on:\") && yaml.includes(\"push:\"))",
+        "isHidden": false,
+        "description": "Has push trigger"
+      },
+      {
+        "input": "const yaml = createBasicWorkflow(); console.log(yaml.includes(\"ubuntu-latest\"))",
+        "isHidden": true,
+        "description": "Uses Ubuntu runner"
+      }
+    ],
+    "hints": [
+      "Use YAML syntax with proper indentation",
+      "Start with name and on triggers",
+      "Define jobs with runs-on and steps",
+      "Use actions/checkout to get the code"
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-t6-ex02",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-6",
+    "title": "Health Check Endpoint",
+    "difficulty": 1,
+    "description": "Create a health check endpoint function that returns status \"ok\" and the current timestamp.",
+    "starterCode": "interface HealthCheckResponse {\n  status: string;\n  timestamp: number;\n}\n\nfunction healthCheck(): HealthCheckResponse {\n  // TODO: Return health check response\n}",
+    "solution": "interface HealthCheckResponse {\n  status: string;\n  timestamp: number;\n}\n\nfunction healthCheck(): HealthCheckResponse {\n  return {\n    status: 'ok',\n    timestamp: Date.now(),\n  };\n}",
+    "testCases": [
+      {
+        "input": "const result = healthCheck(); console.log(result.status === \"ok\")",
+        "isHidden": false,
+        "description": "Status is ok"
+      },
+      {
+        "input": "const result = healthCheck(); console.log(typeof result.timestamp === \"number\")",
+        "isHidden": false,
+        "description": "Timestamp is a number"
+      },
+      {
+        "input": "const r1 = healthCheck(); const r2 = healthCheck(); console.log(r2.timestamp >= r1.timestamp)",
+        "isHidden": true,
+        "description": "Timestamp updates"
+      }
+    ],
+    "hints": [
+      "Return an object with status and timestamp",
+      "Use Date.now() for current timestamp",
+      "Status should be \"ok\" when healthy"
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-t6-ex03",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-6",
+    "title": "Environment Variable Parser",
+    "difficulty": 1,
+    "description": "Create a function that parses environment variables from a .env file format string and returns them as an object.",
+    "starterCode": "function parseEnvFile(content: string): Record<string, string> {\n  // TODO: Parse KEY=VALUE lines into object\n}",
+    "solution": "function parseEnvFile(content: string): Record<string, string> {\n  const result: Record<string, string> = {};\n  const lines = content.split('\\n');\n\n  for (const line of lines) {\n    const trimmed = line.trim();\n    if (!trimmed || trimmed.startsWith('#')) continue;\n\n    const [key, ...valueParts] = trimmed.split('=');\n    if (key && valueParts.length > 0) {\n      result[key.trim()] = valueParts.join('=').trim();\n    }\n  }\n\n  return result;\n}",
+    "testCases": [
+      {
+        "input": "const env = parseEnvFile(\"PORT=3000\\nHOST=localhost\"); console.log(env.PORT === \"3000\" && env.HOST === \"localhost\")",
+        "isHidden": false,
+        "description": "Parses basic key-value pairs"
+      },
+      {
+        "input": "const env = parseEnvFile(\"# Comment\\nKEY=value\"); console.log(Object.keys(env).length === 1)",
+        "isHidden": false,
+        "description": "Ignores comments"
+      },
+      {
+        "input": "const env = parseEnvFile(\"URL=http://example.com\"); console.log(env.URL === \"http://example.com\")",
+        "isHidden": true,
+        "description": "Handles values with ="
+      }
+    ],
+    "hints": [
+      "Split content by newlines",
+      "Skip empty lines and comments (starting with #)",
+      "Split each line by = to get key and value",
+      "Handle values that contain = character"
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-t6-ex04",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-6",
+    "title": "CI Pipeline with Multiple Stages",
+    "difficulty": 2,
+    "description": "Create a function that generates a GitHub Actions workflow with separate lint, test, and build stages that run in sequence.",
+    "starterCode": "function createMultiStageWorkflow(): string {\n  // TODO: Create workflow with lint, test, build stages\n  return ``;\n}",
+    "solution": "function createMultiStageWorkflow(): string {\n  return `name: CI Pipeline\n\non:\n  push:\n    branches: [ main ]\n  pull_request:\n    branches: [ main ]\n\njobs:\n  lint:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v3\n      - uses: actions/setup-node@v3\n        with:\n          node-version: '18'\n      - run: npm ci\n      - run: npm run lint\n\n  test:\n    needs: lint\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v3\n      - uses: actions/setup-node@v3\n        with:\n          node-version: '18'\n      - run: npm ci\n      - run: npm test\n\n  build:\n    needs: test\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v3\n      - uses: actions/setup-node@v3\n        with:\n          node-version: '18'\n      - run: npm ci\n      - run: npm run build`;\n}",
+    "testCases": [
+      {
+        "input": "const yaml = createMultiStageWorkflow(); console.log(yaml.includes(\"lint\") && yaml.includes(\"test\") && yaml.includes(\"build\"))",
+        "isHidden": false,
+        "description": "Has all three stages"
+      },
+      {
+        "input": "const yaml = createMultiStageWorkflow(); console.log(yaml.includes(\"needs:\"))",
+        "isHidden": false,
+        "description": "Uses needs for sequencing"
+      },
+      {
+        "input": "const yaml = createMultiStageWorkflow(); console.log(yaml.includes(\"pull_request\"))",
+        "isHidden": true,
+        "description": "Runs on PRs"
+      }
+    ],
+    "hints": [
+      "Create separate jobs for lint, test, and build",
+      "Use needs keyword to create dependencies between jobs",
+      "Each job should checkout code and setup Node.js",
+      "Run appropriate npm commands in each job"
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-t6-ex05",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-6",
+    "title": "Basic Dockerfile Generator",
+    "difficulty": 2,
+    "description": "Create a function that generates a Dockerfile for a Node.js application with proper multi-stage build.",
+    "starterCode": "function generateDockerfile(nodeVersion: string = '18'): string {\n  // TODO: Generate Dockerfile content\n  return ``;\n}",
+    "solution": "function generateDockerfile(nodeVersion: string = '18'): string {\n  return `FROM node:${nodeVersion}-alpine AS builder\n\nWORKDIR /app\n\nCOPY package*.json ./\nRUN npm ci\n\nCOPY . .\nRUN npm run build\n\nFROM node:${nodeVersion}-alpine\n\nWORKDIR /app\n\nCOPY package*.json ./\nRUN npm ci --production\n\nCOPY --from=builder /app/dist ./dist\n\nEXPOSE 3000\n\nCMD [\"node\", \"dist/index.js\"]`;\n}",
+    "testCases": [
+      {
+        "input": "const df = generateDockerfile(); console.log(df.includes(\"FROM node:\") && df.includes(\"WORKDIR\"))",
+        "isHidden": false,
+        "description": "Has FROM and WORKDIR"
+      },
+      {
+        "input": "const df = generateDockerfile(\"16\"); console.log(df.includes(\"node:16\"))",
+        "isHidden": false,
+        "description": "Uses specified version"
+      },
+      {
+        "input": "const df = generateDockerfile(); console.log(df.includes(\"COPY --from=builder\"))",
+        "isHidden": true,
+        "description": "Multi-stage build"
+      }
+    ],
+    "hints": [
+      "Use multi-stage build with AS builder",
+      "Copy package.json first for layer caching",
+      "Run npm ci for reproducible builds",
+      "Copy build artifacts from builder stage",
+      "Use --production for final image"
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-t6-ex06",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-6",
+    "title": "Structured Logger",
+    "difficulty": 2,
+    "description": "Create a structured logger that outputs JSON-formatted logs with timestamp, level, message, and metadata.",
+    "starterCode": "interface LogEntry {\n  timestamp: string;\n  level: string;\n  message: string;\n  metadata?: Record<string, any>;\n}\n\nclass StructuredLogger {\n  log(level: string, message: string, metadata?: Record<string, any>): string {\n    // TODO: Create and return JSON log entry\n  }\n\n  info(message: string, metadata?: Record<string, any>): string {\n    // TODO: Log at info level\n  }\n\n  error(message: string, metadata?: Record<string, any>): string {\n    // TODO: Log at error level\n  }\n}",
+    "solution": "interface LogEntry {\n  timestamp: string;\n  level: string;\n  message: string;\n  metadata?: Record<string, any>;\n}\n\nclass StructuredLogger {\n  log(level: string, message: string, metadata?: Record<string, any>): string {\n    const entry: LogEntry = {\n      timestamp: new Date().toISOString(),\n      level,\n      message,\n    };\n\n    if (metadata && Object.keys(metadata).length > 0) {\n      entry.metadata = metadata;\n    }\n\n    return JSON.stringify(entry);\n  }\n\n  info(message: string, metadata?: Record<string, any>): string {\n    return this.log('info', message, metadata);\n  }\n\n  error(message: string, metadata?: Record<string, any>): string {\n    return this.log('error', message, metadata);\n  }\n}",
+    "testCases": [
+      {
+        "input": "const logger = new StructuredLogger(); const log = JSON.parse(logger.info(\"test\")); console.log(log.level === \"info\" && log.message === \"test\")",
+        "isHidden": false,
+        "description": "Logs info messages"
+      },
+      {
+        "input": "const logger = new StructuredLogger(); const log = JSON.parse(logger.error(\"err\", {code: 500})); console.log(log.metadata.code === 500)",
+        "isHidden": false,
+        "description": "Includes metadata"
+      },
+      {
+        "input": "const logger = new StructuredLogger(); const log = JSON.parse(logger.log(\"warn\", \"msg\")); console.log(log.timestamp && log.level)",
+        "isHidden": true,
+        "description": "Has timestamp and level"
+      }
+    ],
+    "hints": [
+      "Create log entry object with required fields",
+      "Use new Date().toISOString() for timestamp",
+      "Only include metadata if provided",
+      "Return JSON.stringify of the entry"
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-t6-ex07",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-6",
+    "title": "Docker Compose Configuration",
+    "difficulty": 3,
+    "description": "Create a function that generates a docker-compose.yml for an app with web service and PostgreSQL database.",
+    "starterCode": "function generateDockerCompose(): string {\n  // TODO: Generate docker-compose.yml content\n  return ``;\n}",
+    "solution": "function generateDockerCompose(): string {\n  return `version: '3.8'\n\nservices:\n  web:\n    build: .\n    ports:\n      - \"3000:3000\"\n    environment:\n      - DATABASE_URL=postgres://user:password@db:5432/myapp\n      - NODE_ENV=production\n    depends_on:\n      - db\n    restart: unless-stopped\n\n  db:\n    image: postgres:15-alpine\n    environment:\n      - POSTGRES_USER=user\n      - POSTGRES_PASSWORD=password\n      - POSTGRES_DB=myapp\n    volumes:\n      - postgres_data:/var/lib/postgresql/data\n    restart: unless-stopped\n\nvolumes:\n  postgres_data:`;\n}",
+    "testCases": [
+      {
+        "input": "const dc = generateDockerCompose(); console.log(dc.includes(\"services:\") && dc.includes(\"web:\") && dc.includes(\"db:\"))",
+        "isHidden": false,
+        "description": "Has services section"
+      },
+      {
+        "input": "const dc = generateDockerCompose(); console.log(dc.includes(\"depends_on\"))",
+        "isHidden": false,
+        "description": "Web depends on db"
+      },
+      {
+        "input": "const dc = generateDockerCompose(); console.log(dc.includes(\"volumes:\") && dc.includes(\"postgres_data\"))",
+        "isHidden": true,
+        "description": "Has persistent volumes"
+      }
+    ],
+    "hints": [
+      "Use version 3.8 for docker-compose",
+      "Define web and db services",
+      "Web service should depend_on db",
+      "Use environment variables for database connection",
+      "Create named volume for database persistence"
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-t6-ex08",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-6",
+    "title": "Environment-Aware Configuration",
+    "difficulty": 3,
+    "description": "Create a configuration manager that loads different settings based on NODE_ENV (development, staging, production).",
+    "starterCode": "interface Config {\n  environment: string;\n  port: number;\n  databaseUrl: string;\n  logLevel: string;\n  enableDebug: boolean;\n}\n\nclass ConfigManager {\n  getConfig(env: string): Config {\n    // TODO: Return environment-specific config\n  }\n}",
+    "solution": "interface Config {\n  environment: string;\n  port: number;\n  databaseUrl: string;\n  logLevel: string;\n  enableDebug: boolean;\n}\n\nclass ConfigManager {\n  getConfig(env: string): Config {\n    const baseConfig = {\n      environment: env,\n    };\n\n    switch (env) {\n      case 'production':\n        return {\n          ...baseConfig,\n          port: 80,\n          databaseUrl: process.env.DATABASE_URL || 'postgres://prod-db:5432/app',\n          logLevel: 'error',\n          enableDebug: false,\n        };\n\n      case 'staging':\n        return {\n          ...baseConfig,\n          port: 3000,\n          databaseUrl: process.env.DATABASE_URL || 'postgres://staging-db:5432/app',\n          logLevel: 'warn',\n          enableDebug: true,\n        };\n\n      case 'development':\n      default:\n        return {\n          ...baseConfig,\n          port: 3000,\n          databaseUrl: 'postgres://localhost:5432/app_dev',\n          logLevel: 'debug',\n          enableDebug: true,\n        };\n    }\n  }\n}",
+    "testCases": [
+      {
+        "input": "const cm = new ConfigManager(); const cfg = cm.getConfig(\"production\"); console.log(cfg.enableDebug === false && cfg.logLevel === \"error\")",
+        "isHidden": false,
+        "description": "Production disables debug"
+      },
+      {
+        "input": "const cm = new ConfigManager(); const cfg = cm.getConfig(\"development\"); console.log(cfg.enableDebug === true && cfg.logLevel === \"debug\")",
+        "isHidden": false,
+        "description": "Development enables debug"
+      },
+      {
+        "input": "const cm = new ConfigManager(); const cfg = cm.getConfig(\"staging\"); console.log(cfg.port === 3000 && cfg.logLevel === \"warn\")",
+        "isHidden": true,
+        "description": "Staging config"
+      }
+    ],
+    "hints": [
+      "Use switch statement for different environments",
+      "Production should have minimal logging and no debug",
+      "Development should have verbose logging",
+      "Allow environment variable overrides"
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-t6-ex09",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-6",
+    "title": "Metric Collector",
+    "difficulty": 3,
+    "description": "Create a metric collector that tracks request count, response times, and calculates average response time.",
+    "starterCode": "interface Metrics {\n  requestCount: number;\n  totalResponseTime: number;\n  averageResponseTime: number;\n  errors: number;\n}\n\nclass MetricCollector {\n  private requestCount = 0;\n  private totalResponseTime = 0;\n  private errors = 0;\n\n  recordRequest(responseTimeMs: number, isError: boolean = false): void {\n    // TODO: Record metrics\n  }\n\n  getMetrics(): Metrics {\n    // TODO: Return current metrics\n  }\n\n  reset(): void {\n    // TODO: Reset all metrics\n  }\n}",
+    "solution": "interface Metrics {\n  requestCount: number;\n  totalResponseTime: number;\n  averageResponseTime: number;\n  errors: number;\n}\n\nclass MetricCollector {\n  private requestCount = 0;\n  private totalResponseTime = 0;\n  private errors = 0;\n\n  recordRequest(responseTimeMs: number, isError: boolean = false): void {\n    this.requestCount++;\n    this.totalResponseTime += responseTimeMs;\n    if (isError) {\n      this.errors++;\n    }\n  }\n\n  getMetrics(): Metrics {\n    return {\n      requestCount: this.requestCount,\n      totalResponseTime: this.totalResponseTime,\n      averageResponseTime: this.requestCount > 0\n        ? this.totalResponseTime / this.requestCount\n        : 0,\n      errors: this.errors,\n    };\n  }\n\n  reset(): void {\n    this.requestCount = 0;\n    this.totalResponseTime = 0;\n    this.errors = 0;\n  }\n}",
+    "testCases": [
+      {
+        "input": "const mc = new MetricCollector(); mc.recordRequest(100); mc.recordRequest(200); const m = mc.getMetrics(); console.log(m.requestCount === 2 && m.averageResponseTime === 150)",
+        "isHidden": false,
+        "description": "Tracks requests and average"
+      },
+      {
+        "input": "const mc = new MetricCollector(); mc.recordRequest(100, true); const m = mc.getMetrics(); console.log(m.errors === 1)",
+        "isHidden": false,
+        "description": "Counts errors"
+      },
+      {
+        "input": "const mc = new MetricCollector(); mc.recordRequest(100); mc.reset(); const m = mc.getMetrics(); console.log(m.requestCount === 0)",
+        "isHidden": true,
+        "description": "Reset clears metrics"
+      }
+    ],
+    "hints": [
+      "Increment counters in recordRequest",
+      "Track total response time for average calculation",
+      "Average = total / count (handle division by zero)",
+      "Reset should clear all private fields"
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-t6-ex10",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-6",
+    "title": "Vercel Deployment Configuration",
+    "difficulty": 3,
+    "description": "Create a function that generates a vercel.json configuration file with redirects, headers, and environment variables.",
+    "starterCode": "function generateVercelConfig(): string {\n  // TODO: Generate vercel.json configuration\n  return ``;\n}",
+    "solution": "function generateVercelConfig(): string {\n  const config = {\n    version: 2,\n    builds: [\n      {\n        src: 'package.json',\n        use: '@vercel/node',\n      },\n    ],\n    routes: [\n      {\n        src: '/api/(.*)',\n        dest: '/api/$1',\n      },\n      {\n        src: '/(.*)',\n        dest: '/$1',\n      },\n    ],\n    headers: [\n      {\n        source: '/(.*)',\n        headers: [\n          {\n            key: 'X-Content-Type-Options',\n            value: 'nosniff',\n          },\n          {\n            key: 'X-Frame-Options',\n            value: 'DENY',\n          },\n          {\n            key: 'X-XSS-Protection',\n            value: '1; mode=block',\n          },\n        ],\n      },\n    ],\n    env: {\n      NODE_ENV: 'production',\n    },\n  };\n\n  return JSON.stringify(config, null, 2);\n}",
+    "testCases": [
+      {
+        "input": "const cfg = JSON.parse(generateVercelConfig()); console.log(cfg.version === 2 && cfg.builds)",
+        "isHidden": false,
+        "description": "Has version and builds"
+      },
+      {
+        "input": "const cfg = JSON.parse(generateVercelConfig()); console.log(cfg.headers && cfg.headers.length > 0)",
+        "isHidden": false,
+        "description": "Includes security headers"
+      },
+      {
+        "input": "const cfg = JSON.parse(generateVercelConfig()); console.log(cfg.env.NODE_ENV === \"production\")",
+        "isHidden": true,
+        "description": "Sets NODE_ENV"
+      }
+    ],
+    "hints": [
+      "Use version 2 of Vercel config",
+      "Define builds with @vercel/node",
+      "Add security headers (X-Frame-Options, etc.)",
+      "Set up routing for API and static files"
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-t6-ex11",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-6",
+    "title": "Database Backup Script Generator",
+    "difficulty": 4,
+    "description": "Create a function that generates a PostgreSQL backup script with compression and timestamped filenames.",
+    "starterCode": "interface BackupConfig {\n  host: string;\n  database: string;\n  user: string;\n  backupDir: string;\n}\n\nfunction generateBackupScript(config: BackupConfig): string {\n  // TODO: Generate backup shell script\n  return ``;\n}",
+    "solution": "interface BackupConfig {\n  host: string;\n  database: string;\n  user: string;\n  backupDir: string;\n}\n\nfunction generateBackupScript(config: BackupConfig): string {\n  return `#!/bin/bash\n\n# PostgreSQL Backup Script\n# Generated: ${new Date().toISOString()}\n\nset -e\n\nBACKUP_DIR=\"${config.backupDir}\"\nTIMESTAMP=$(date +%Y%m%d_%H%M%S)\nBACKUP_FILE=\"${BACKUP_DIR}/${config.database}_${TIMESTAMP}.sql.gz\"\n\n# Create backup directory if it doesn't exist\nmkdir -p \"${BACKUP_DIR}\"\n\n# Perform backup\necho \"Starting backup of ${config.database}...\"\npg_dump -h ${config.host} -U ${config.user} -d ${config.database} | gzip > \"${BACKUP_FILE}\"\n\n# Verify backup\nif [ -f \"${BACKUP_FILE}\" ]; then\n  SIZE=$(du -h \"${BACKUP_FILE}\" | cut -f1)\n  echo \"Backup completed: ${BACKUP_FILE} (${SIZE})\"\nelse\n  echo \"Backup failed!\" >&2\n  exit 1\nfi\n\n# Remove backups older than 30 days\nfind \"${BACKUP_DIR}\" -name \"*.sql.gz\" -mtime +30 -delete\necho \"Old backups cleaned up\"\n\nexit 0`;\n}",
+    "testCases": [
+      {
+        "input": "const script = generateBackupScript({host: \"localhost\", database: \"mydb\", user: \"admin\", backupDir: \"/backups\"}); console.log(script.includes(\"pg_dump\") && script.includes(\"gzip\"))",
+        "isHidden": false,
+        "description": "Uses pg_dump with compression"
+      },
+      {
+        "input": "const script = generateBackupScript({host: \"db.example.com\", database: \"prod\", user: \"backup\", backupDir: \"/data\"}); console.log(script.includes(\"TIMESTAMP\"))",
+        "isHidden": false,
+        "description": "Includes timestamp in filename"
+      },
+      {
+        "input": "const script = generateBackupScript({host: \"localhost\", database: \"test\", user: \"user\", backupDir: \"/tmp\"}); console.log(script.includes(\"mtime +30\"))",
+        "isHidden": true,
+        "description": "Cleans up old backups"
+      }
+    ],
+    "hints": [
+      "Start with #!/bin/bash shebang",
+      "Use date command for timestamp",
+      "Pipe pg_dump output to gzip",
+      "Add error checking and cleanup of old files",
+      "Use set -e to exit on error"
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-t6-ex12",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-6",
+    "title": "Feature Flag System",
+    "difficulty": 4,
+    "description": "Create a feature flag system that can enable/disable features based on environment and user percentage rollout.",
+    "starterCode": "interface FeatureFlag {\n  name: string;\n  enabled: boolean;\n  environments: string[];\n  rolloutPercentage: number;\n}\n\nclass FeatureFlagManager {\n  private flags: Map<string, FeatureFlag> = new Map();\n\n  addFlag(flag: FeatureFlag): void {\n    // TODO: Add feature flag\n  }\n\n  isEnabled(flagName: string, environment: string, userId?: string): boolean {\n    // TODO: Check if feature is enabled\n  }\n\n  private hashUserId(userId: string): number {\n    // TODO: Simple hash function for consistent rollout\n  }\n}",
+    "solution": "interface FeatureFlag {\n  name: string;\n  enabled: boolean;\n  environments: string[];\n  rolloutPercentage: number;\n}\n\nclass FeatureFlagManager {\n  private flags: Map<string, FeatureFlag> = new Map();\n\n  addFlag(flag: FeatureFlag): void {\n    this.flags.set(flag.name, flag);\n  }\n\n  isEnabled(flagName: string, environment: string, userId?: string): boolean {\n    const flag = this.flags.get(flagName);\n\n    if (!flag) {\n      return false;\n    }\n\n    if (!flag.enabled) {\n      return false;\n    }\n\n    if (!flag.environments.includes(environment)) {\n      return false;\n    }\n\n    // Check rollout percentage\n    if (flag.rolloutPercentage < 100 && userId) {\n      const hash = this.hashUserId(userId);\n      const userPercentage = hash % 100;\n      return userPercentage < flag.rolloutPercentage;\n    }\n\n    return flag.rolloutPercentage === 100;\n  }\n\n  private hashUserId(userId: string): number {\n    let hash = 0;\n    for (let i = 0; i < userId.length; i++) {\n      hash = ((hash << 5) - hash) + userId.charCodeAt(i);\n      hash = hash & hash; // Convert to 32-bit integer\n    }\n    return Math.abs(hash);\n  }\n}",
+    "testCases": [
+      {
+        "input": "const fm = new FeatureFlagManager(); fm.addFlag({name: \"new-ui\", enabled: true, environments: [\"production\"], rolloutPercentage: 100}); console.log(fm.isEnabled(\"new-ui\", \"production\"))",
+        "isHidden": false,
+        "description": "100% rollout enabled"
+      },
+      {
+        "input": "const fm = new FeatureFlagManager(); fm.addFlag({name: \"beta\", enabled: true, environments: [\"staging\"], rolloutPercentage: 100}); console.log(!fm.isEnabled(\"beta\", \"production\"))",
+        "isHidden": false,
+        "description": "Environment restrictions work"
+      },
+      {
+        "input": "const fm = new FeatureFlagManager(); fm.addFlag({name: \"test\", enabled: false, environments: [\"production\"], rolloutPercentage: 100}); console.log(!fm.isEnabled(\"test\", \"production\"))",
+        "isHidden": true,
+        "description": "Disabled flags return false"
+      }
+    ],
+    "hints": [
+      "Check if flag exists and is enabled",
+      "Verify environment is in allowed list",
+      "For percentage rollout, hash userId consistently",
+      "Return true only if all conditions pass"
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-t6-ex13",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-6",
+    "title": "Rollback Strategy Manager",
+    "difficulty": 4,
+    "description": "Create a deployment rollback manager that tracks versions and can rollback to previous stable version.",
+    "starterCode": "interface Deployment {\n  version: string;\n  timestamp: number;\n  status: 'success' | 'failed' | 'rolled-back';\n  healthCheckPassed: boolean;\n}\n\nclass RollbackManager {\n  private deployments: Deployment[] = [];\n\n  recordDeployment(version: string, healthCheckPassed: boolean): void {\n    // TODO: Record deployment\n  }\n\n  shouldRollback(): boolean {\n    // TODO: Determine if rollback needed\n  }\n\n  rollback(): string | null {\n    // TODO: Perform rollback to last stable version\n  }\n\n  getCurrentVersion(): string | null {\n    // TODO: Get current deployed version\n  }\n}",
+    "solution": "interface Deployment {\n  version: string;\n  timestamp: number;\n  status: 'success' | 'failed' | 'rolled-back';\n  healthCheckPassed: boolean;\n}\n\nclass RollbackManager {\n  private deployments: Deployment[] = [];\n\n  recordDeployment(version: string, healthCheckPassed: boolean): void {\n    const deployment: Deployment = {\n      version,\n      timestamp: Date.now(),\n      status: healthCheckPassed ? 'success' : 'failed',\n      healthCheckPassed,\n    };\n    this.deployments.push(deployment);\n  }\n\n  shouldRollback(): boolean {\n    if (this.deployments.length === 0) {\n      return false;\n    }\n\n    const latest = this.deployments[this.deployments.length - 1];\n    return !latest.healthCheckPassed;\n  }\n\n  rollback(): string | null {\n    if (this.deployments.length < 2) {\n      return null;\n    }\n\n    // Mark current as rolled back\n    const current = this.deployments[this.deployments.length - 1];\n    current.status = 'rolled-back';\n\n    // Find last successful deployment\n    for (let i = this.deployments.length - 2; i >= 0; i--) {\n      if (this.deployments[i].status === 'success' && this.deployments[i].healthCheckPassed) {\n        return this.deployments[i].version;\n      }\n    }\n\n    return null;\n  }\n\n  getCurrentVersion(): string | null {\n    if (this.deployments.length === 0) {\n      return null;\n    }\n\n    // Find the most recent non-rolled-back deployment\n    for (let i = this.deployments.length - 1; i >= 0; i--) {\n      if (this.deployments[i].status !== 'rolled-back') {\n        return this.deployments[i].version;\n      }\n    }\n\n    return null;\n  }\n}",
+    "testCases": [
+      {
+        "input": "const rm = new RollbackManager(); rm.recordDeployment(\"v1.0\", true); rm.recordDeployment(\"v1.1\", false); console.log(rm.shouldRollback())",
+        "isHidden": false,
+        "description": "Detects failed deployment"
+      },
+      {
+        "input": "const rm = new RollbackManager(); rm.recordDeployment(\"v1.0\", true); rm.recordDeployment(\"v1.1\", false); const prev = rm.rollback(); console.log(prev === \"v1.0\")",
+        "isHidden": false,
+        "description": "Rolls back to stable version"
+      },
+      {
+        "input": "const rm = new RollbackManager(); rm.recordDeployment(\"v1.0\", true); console.log(rm.getCurrentVersion() === \"v1.0\")",
+        "isHidden": true,
+        "description": "Tracks current version"
+      }
+    ],
+    "hints": [
+      "Store deployments in chronological order",
+      "Track health check results",
+      "Rollback should find last successful deployment",
+      "Mark rolled-back deployments appropriately"
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-t6-ex14",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-6",
+    "title": "Blue-Green Deployment Router",
+    "difficulty": 5,
+    "description": "Create a blue-green deployment router that can switch traffic between two environments and handle gradual migration.",
+    "starterCode": "interface Environment {\n  name: 'blue' | 'green';\n  version: string;\n  healthy: boolean;\n}\n\nclass BlueGreenRouter {\n  private blue: Environment;\n  private green: Environment;\n  private activeEnvironment: 'blue' | 'green' = 'blue';\n  private trafficSplit: number = 100; // Percentage to active\n\n  constructor() {\n    this.blue = { name: 'blue', version: '0.0.0', healthy: true };\n    this.green = { name: 'green', version: '0.0.0', healthy: true };\n  }\n\n  deployToInactive(version: string): 'blue' | 'green' {\n    // TODO: Deploy to inactive environment\n  }\n\n  switchTraffic(percentage: number): void {\n    // TODO: Gradually shift traffic (0-100)\n  }\n\n  completeSwitch(): void {\n    // TODO: Complete switch to new environment\n  }\n\n  routeRequest(requestId: string): 'blue' | 'green' {\n    // TODO: Route request based on traffic split\n  }\n\n  getStatus(): { active: string; version: string; split: number } {\n    // TODO: Return current status\n  }\n}",
+    "solution": "interface Environment {\n  name: 'blue' | 'green';\n  version: string;\n  healthy: boolean;\n}\n\nclass BlueGreenRouter {\n  private blue: Environment;\n  private green: Environment;\n  private activeEnvironment: 'blue' | 'green' = 'blue';\n  private trafficSplit: number = 100; // Percentage to active\n\n  constructor() {\n    this.blue = { name: 'blue', version: '0.0.0', healthy: true };\n    this.green = { name: 'green', version: '0.0.0', healthy: true };\n  }\n\n  deployToInactive(version: string): 'blue' | 'green' {\n    const inactive = this.activeEnvironment === 'blue' ? 'green' : 'blue';\n    const env = inactive === 'blue' ? this.blue : this.green;\n    env.version = version;\n    env.healthy = true;\n    return inactive;\n  }\n\n  switchTraffic(percentage: number): void {\n    // Clamp percentage between 0 and 100\n    this.trafficSplit = Math.max(0, Math.min(100, percentage));\n  }\n\n  completeSwitch(): void {\n    // Switch active environment\n    this.activeEnvironment = this.activeEnvironment === 'blue' ? 'green' : 'blue';\n    this.trafficSplit = 100;\n  }\n\n  routeRequest(requestId: string): 'blue' | 'green' {\n    if (this.trafficSplit === 100) {\n      return this.activeEnvironment;\n    }\n\n    if (this.trafficSplit === 0) {\n      return this.activeEnvironment === 'blue' ? 'green' : 'blue';\n    }\n\n    // Hash request ID for consistent routing\n    let hash = 0;\n    for (let i = 0; i < requestId.length; i++) {\n      hash = ((hash << 5) - hash) + requestId.charCodeAt(i);\n      hash = hash & hash;\n    }\n\n    const percentage = Math.abs(hash) % 100;\n\n    if (percentage < this.trafficSplit) {\n      return this.activeEnvironment;\n    } else {\n      return this.activeEnvironment === 'blue' ? 'green' : 'blue';\n    }\n  }\n\n  getStatus(): { active: string; version: string; split: number } {\n    const activeEnv = this.activeEnvironment === 'blue' ? this.blue : this.green;\n    return {\n      active: this.activeEnvironment,\n      version: activeEnv.version,\n      split: this.trafficSplit,\n    };\n  }\n}",
+    "testCases": [
+      {
+        "input": "const router = new BlueGreenRouter(); const inactive = router.deployToInactive(\"v2.0\"); console.log(inactive === \"green\")",
+        "isHidden": false,
+        "description": "Deploys to inactive env"
+      },
+      {
+        "input": "const router = new BlueGreenRouter(); router.switchTraffic(50); const status = router.getStatus(); console.log(status.split === 50)",
+        "isHidden": false,
+        "description": "Splits traffic"
+      },
+      {
+        "input": "const router = new BlueGreenRouter(); router.deployToInactive(\"v2.0\"); router.completeSwitch(); console.log(router.getStatus().active === \"green\")",
+        "isHidden": true,
+        "description": "Completes switch"
+      }
+    ],
+    "hints": [
+      "Track which environment is active",
+      "Deploy new version to inactive environment",
+      "Use traffic split percentage for gradual migration",
+      "Hash request ID for consistent routing",
+      "Complete switch changes active environment"
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-t6-ex15",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-6",
+    "title": "SSL/TLS Configuration Validator",
+    "difficulty": 5,
+    "description": "Create an SSL/TLS configuration validator that checks certificate expiry, protocols, and cipher suites.",
+    "starterCode": "interface SSLConfig {\n  certificateExpiry: Date;\n  protocols: string[];\n  cipherSuites: string[];\n  httpsOnly: boolean;\n  hsts: boolean;\n}\n\ninterface ValidationResult {\n  valid: boolean;\n  warnings: string[];\n  errors: string[];\n}\n\nclass SSLValidator {\n  private readonly SECURE_PROTOCOLS = ['TLSv1.2', 'TLSv1.3'];\n  private readonly INSECURE_CIPHERS = ['RC4', 'MD5', 'DES', '3DES'];\n\n  validate(config: SSLConfig): ValidationResult {\n    // TODO: Validate SSL configuration\n  }\n\n  private checkCertificateExpiry(expiry: Date): { error?: string; warning?: string } {\n    // TODO: Check certificate expiration\n  }\n\n  private checkProtocols(protocols: string[]): { errors: string[]; warnings: string[] } {\n    // TODO: Check TLS protocols\n  }\n\n  private checkCiphers(cipherSuites: string[]): { errors: string[]; warnings: string[] } {\n    // TODO: Check cipher suites\n  }\n}",
+    "solution": "interface SSLConfig {\n  certificateExpiry: Date;\n  protocols: string[];\n  cipherSuites: string[];\n  httpsOnly: boolean;\n  hsts: boolean;\n}\n\ninterface ValidationResult {\n  valid: boolean;\n  warnings: string[];\n  errors: string[];\n}\n\nclass SSLValidator {\n  private readonly SECURE_PROTOCOLS = ['TLSv1.2', 'TLSv1.3'];\n  private readonly INSECURE_CIPHERS = ['RC4', 'MD5', 'DES', '3DES'];\n\n  validate(config: SSLConfig): ValidationResult {\n    const warnings: string[] = [];\n    const errors: string[] = [];\n\n    // Check certificate expiry\n    const expiryCheck = this.checkCertificateExpiry(config.certificateExpiry);\n    if (expiryCheck.error) errors.push(expiryCheck.error);\n    if (expiryCheck.warning) warnings.push(expiryCheck.warning);\n\n    // Check protocols\n    const protocolCheck = this.checkProtocols(config.protocols);\n    errors.push(...protocolCheck.errors);\n    warnings.push(...protocolCheck.warnings);\n\n    // Check ciphers\n    const cipherCheck = this.checkCiphers(config.cipherSuites);\n    errors.push(...cipherCheck.errors);\n    warnings.push(...cipherCheck.warnings);\n\n    // Check HTTPS and HSTS\n    if (!config.httpsOnly) {\n      errors.push('HTTPS-only mode is not enabled');\n    }\n\n    if (!config.hsts) {\n      warnings.push('HSTS header is not enabled');\n    }\n\n    return {\n      valid: errors.length === 0,\n      warnings,\n      errors,\n    };\n  }\n\n  private checkCertificateExpiry(expiry: Date): { error?: string; warning?: string } {\n    const now = new Date();\n    const daysUntilExpiry = Math.floor((expiry.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));\n\n    if (daysUntilExpiry < 0) {\n      return { error: 'Certificate has expired' };\n    }\n\n    if (daysUntilExpiry < 30) {\n      return { warning: `Certificate expires in ${daysUntilExpiry} days` };\n    }\n\n    return {};\n  }\n\n  private checkProtocols(protocols: string[]): { errors: string[]; warnings: string[] } {\n    const errors: string[] = [];\n    const warnings: string[] = [];\n\n    if (protocols.length === 0) {\n      errors.push('No TLS protocols configured');\n      return { errors, warnings };\n    }\n\n    const hasSecureProtocol = protocols.some(p => this.SECURE_PROTOCOLS.includes(p));\n    if (!hasSecureProtocol) {\n      errors.push('No secure TLS protocol (TLSv1.2 or TLSv1.3) enabled');\n    }\n\n    const insecureProtocols = protocols.filter(p => !this.SECURE_PROTOCOLS.includes(p));\n    if (insecureProtocols.length > 0) {\n      warnings.push(`Insecure protocols enabled: ${insecureProtocols.join(', ')}`);\n    }\n\n    return { errors, warnings };\n  }\n\n  private checkCiphers(cipherSuites: string[]): { errors: string[]; warnings: string[] } {\n    const errors: string[] = [];\n    const warnings: string[] = [];\n\n    if (cipherSuites.length === 0) {\n      errors.push('No cipher suites configured');\n      return { errors, warnings };\n    }\n\n    const insecureCiphers = cipherSuites.filter(cipher =>\n      this.INSECURE_CIPHERS.some(insecure => cipher.includes(insecure))\n    );\n\n    if (insecureCiphers.length > 0) {\n      errors.push(`Insecure ciphers detected: ${insecureCiphers.join(', ')}`);\n    }\n\n    return { errors, warnings };\n  }\n}",
+    "testCases": [
+      {
+        "input": "const validator = new SSLValidator(); const result = validator.validate({certificateExpiry: new Date(Date.now() - 1000), protocols: [\"TLSv1.2\"], cipherSuites: [\"AES256\"], httpsOnly: true, hsts: true}); console.log(!result.valid && result.errors.some(e => e.includes(\"expired\")))",
+        "isHidden": false,
+        "description": "Detects expired certificate"
+      },
+      {
+        "input": "const validator = new SSLValidator(); const result = validator.validate({certificateExpiry: new Date(Date.now() + 100000000), protocols: [\"TLSv1.0\"], cipherSuites: [\"AES256\"], httpsOnly: true, hsts: true}); console.log(result.warnings.some(w => w.includes(\"Insecure\")))",
+        "isHidden": false,
+        "description": "Warns about insecure protocols"
+      },
+      {
+        "input": "const validator = new SSLValidator(); const result = validator.validate({certificateExpiry: new Date(Date.now() + 100000000), protocols: [\"TLSv1.3\"], cipherSuites: [\"RC4-SHA\"], httpsOnly: true, hsts: true}); console.log(!result.valid && result.errors.some(e => e.includes(\"cipher\")))",
+        "isHidden": true,
+        "description": "Detects insecure ciphers"
+      }
+    ],
+    "hints": [
+      "Check certificate expiry date against current time",
+      "Validate TLS protocols (1.2 and 1.3 are secure)",
+      "Check for insecure ciphers (RC4, MD5, DES)",
+      "Verify HTTPS-only and HSTS settings",
+      "Separate errors (must fix) from warnings (should fix)"
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-t6-ex16",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-6",
+    "title": "Production Readiness Checklist",
+    "difficulty": 5,
+    "description": "Create a production readiness checker that validates all deployment requirements are met before going live.",
+    "starterCode": "interface ChecklistItem {\n  category: string;\n  item: string;\n  required: boolean;\n  checked: boolean;\n}\n\ninterface ReadinessReport {\n  ready: boolean;\n  completionPercentage: number;\n  categories: {\n    [category: string]: {\n      total: number;\n      completed: number;\n      blocking: number;\n    };\n  };\n  blockers: string[];\n}\n\nclass ProductionReadinessChecker {\n  private checklist: ChecklistItem[] = [];\n\n  addItem(category: string, item: string, required: boolean = true): void {\n    // TODO: Add checklist item\n  }\n\n  checkItem(category: string, item: string): void {\n    // TODO: Mark item as checked\n  }\n\n  getReport(): ReadinessReport {\n    // TODO: Generate readiness report\n  }\n\n  isReady(): boolean {\n    // TODO: Check if all required items are complete\n  }\n}",
+    "solution": "interface ChecklistItem {\n  category: string;\n  item: string;\n  required: boolean;\n  checked: boolean;\n}\n\ninterface ReadinessReport {\n  ready: boolean;\n  completionPercentage: number;\n  categories: {\n    [category: string]: {\n      total: number;\n      completed: number;\n      blocking: number;\n    };\n  };\n  blockers: string[];\n}\n\nclass ProductionReadinessChecker {\n  private checklist: ChecklistItem[] = [];\n\n  addItem(category: string, item: string, required: boolean = true): void {\n    this.checklist.push({\n      category,\n      item,\n      required,\n      checked: false,\n    });\n  }\n\n  checkItem(category: string, item: string): void {\n    const checklistItem = this.checklist.find(\n      i => i.category === category && i.item === item\n    );\n\n    if (checklistItem) {\n      checklistItem.checked = true;\n    }\n  }\n\n  getReport(): ReadinessReport {\n    const categories: ReadinessReport['categories'] = {};\n    const blockers: string[] = [];\n\n    // Group by category\n    for (const item of this.checklist) {\n      if (!categories[item.category]) {\n        categories[item.category] = {\n          total: 0,\n          completed: 0,\n          blocking: 0,\n        };\n      }\n\n      categories[item.category].total++;\n\n      if (item.checked) {\n        categories[item.category].completed++;\n      } else if (item.required) {\n        categories[item.category].blocking++;\n        blockers.push(`[${item.category}] ${item.item}`);\n      }\n    }\n\n    // Calculate completion percentage\n    const totalItems = this.checklist.length;\n    const completedItems = this.checklist.filter(i => i.checked).length;\n    const completionPercentage = totalItems > 0\n      ? Math.round((completedItems / totalItems) * 100)\n      : 0;\n\n    // Check if ready (all required items complete)\n    const ready = this.isReady();\n\n    return {\n      ready,\n      completionPercentage,\n      categories,\n      blockers,\n    };\n  }\n\n  isReady(): boolean {\n    return this.checklist\n      .filter(item => item.required)\n      .every(item => item.checked);\n  }\n}",
+    "testCases": [
+      {
+        "input": "const checker = new ProductionReadinessChecker(); checker.addItem(\"Security\", \"SSL configured\", true); checker.addItem(\"Security\", \"CORS configured\", true); checker.checkItem(\"Security\", \"SSL configured\"); console.log(!checker.isReady())",
+        "isHidden": false,
+        "description": "Not ready with unchecked required items"
+      },
+      {
+        "input": "const checker = new ProductionReadinessChecker(); checker.addItem(\"Monitoring\", \"Logs configured\", true); checker.checkItem(\"Monitoring\", \"Logs configured\"); const report = checker.getReport(); console.log(report.ready && report.completionPercentage === 100)",
+        "isHidden": false,
+        "description": "Ready when all items checked"
+      },
+      {
+        "input": "const checker = new ProductionReadinessChecker(); checker.addItem(\"Performance\", \"CDN\", false); checker.addItem(\"Security\", \"SSL\", true); checker.checkItem(\"Security\", \"SSL\"); console.log(checker.isReady())",
+        "isHidden": true,
+        "description": "Optional items do not block"
+      }
+    ],
+    "hints": [
+      "Store checklist items with category, name, required flag, and checked status",
+      "Group items by category for reporting",
+      "Track blocking items (required but not checked)",
+      "Calculate completion percentage across all items",
+      "Ready = all required items are checked"
+    ],
+    "language": "typescript"
+  }
+]

@@ -1,0 +1,191 @@
+[
+  {
+    "id": "cs307-quiz-1-1",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-1",
+    "title": "Security Principles - CIA Triad and Threat Modeling",
+    "questions": [
+      {
+        "id": "cs307-q1",
+        "type": "multiple_choice",
+        "prompt": "Which component of the CIA triad ensures that data is protected from unauthorized modifications?",
+        "options": [
+          "Confidentiality",
+          "Integrity",
+          "Availability",
+          "Authentication"
+        ],
+        "correctAnswer": "Integrity",
+        "explanation": "Integrity ensures that data remains accurate and unaltered by unauthorized parties. Confidentiality protects against unauthorized access, while Availability ensures systems remain accessible."
+      },
+      {
+        "id": "cs307-q2",
+        "type": "true_false",
+        "prompt": "Defense in depth means relying on a single, strong security control to protect your system.",
+        "correctAnswer": "false",
+        "explanation": "Defense in depth is the opposite - it involves layering multiple security controls so that if one fails, others are still in place to protect the system."
+      },
+      {
+        "id": "cs307-q3",
+        "type": "multiple_choice",
+        "prompt": "What does the principle of least privilege recommend?",
+        "options": [
+          "Grant all users administrative access for convenience",
+          "Users should have only the minimum permissions necessary to perform their job",
+          "Privilege escalation should be enabled by default",
+          "All permissions should be granted temporarily"
+        ],
+        "correctAnswer": "Users should have only the minimum permissions necessary to perform their job",
+        "explanation": "The principle of least privilege states that users, programs, and processes should have only the minimum privileges necessary to complete their tasks, reducing the attack surface."
+      },
+      {
+        "id": "cs307-q4",
+        "type": "multiple_choice",
+        "prompt": "In threat modeling, what does STRIDE stand for?",
+        "options": [
+          "Security, Threats, Risks, Implementation, Detection, Evaluation",
+          "Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, Elevation of Privilege",
+          "System, Testing, Review, Integration, Deployment, Execution",
+          "Strategies, Tactics, Risks, Incidents, Defense, Escalation"
+        ],
+        "correctAnswer": "Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, Elevation of Privilege",
+        "explanation": "STRIDE is a threat modeling framework developed by Microsoft that categorizes threats into six types: Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, and Elevation of Privilege."
+      },
+      {
+        "id": "cs307-q5",
+        "type": "true_false",
+        "prompt": "Availability in the CIA triad refers to ensuring that authorized users can access systems and data when needed.",
+        "correctAnswer": "true",
+        "explanation": "Availability ensures that systems, applications, and data are accessible to authorized users when required. DDoS attacks and system failures are common threats to availability."
+      }
+    ]
+  },
+  {
+    "id": "cs307-quiz-1-2",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-1",
+    "title": "Security Principles - Defense in Depth and Secure Design",
+    "questions": [
+      {
+        "id": "cs307-q6",
+        "type": "multiple_choice",
+        "prompt": "Which security principle suggests that a system should fail in a secure state?",
+        "options": [
+          "Fail-open",
+          "Fail-secure (fail-closed)",
+          "Fail-fast",
+          "Fail-over"
+        ],
+        "correctAnswer": "Fail-secure (fail-closed)",
+        "explanation": "Fail-secure (or fail-closed) means that when a system encounters an error or failure, it should default to a secure state that denies access rather than allowing unrestricted access."
+      },
+      {
+        "id": "cs307-q7",
+        "type": "multiple_choice",
+        "prompt": "What is the primary purpose of security through obscurity?",
+        "options": [
+          "It is a recommended best practice for all security systems",
+          "Hiding implementation details as the sole security measure",
+          "Encrypting all data at rest",
+          "Using complex passwords"
+        ],
+        "correctAnswer": "Hiding implementation details as the sole security measure",
+        "explanation": "Security through obscurity relies on keeping the implementation secret. This is generally discouraged as a primary security measure because once the secret is discovered, the system is compromised. It may be used as an additional layer but never as the only defense."
+      },
+      {
+        "id": "cs307-q8",
+        "type": "true_false",
+        "prompt": "The principle of separation of duties helps prevent fraud by requiring multiple people to complete critical tasks.",
+        "correctAnswer": "true",
+        "explanation": "Separation of duties divides critical functions among multiple people to prevent fraud and errors. For example, the person who approves payments should not be the same person who processes them."
+      },
+      {
+        "id": "cs307-q9",
+        "type": "multiple_choice",
+        "prompt": "What does the principle of \"complete mediation\" require?",
+        "options": [
+          "All access attempts must be checked every time",
+          "Access checks should be cached for performance",
+          "Only the first access attempt needs verification",
+          "Mediation should only occur during login"
+        ],
+        "correctAnswer": "All access attempts must be checked every time",
+        "explanation": "Complete mediation requires that every access to every resource is checked against the access control mechanism. This prevents attackers from exploiting cached permissions or bypassing checks after initial authentication."
+      },
+      {
+        "id": "cs307-q10",
+        "type": "multiple_choice",
+        "prompt": "Which concept describes the attack surface of a system?",
+        "options": [
+          "The total number of users in the system",
+          "The sum of all points where an attacker can try to enter or extract data",
+          "The physical size of the data center",
+          "The number of lines of code in the application"
+        ],
+        "correctAnswer": "The sum of all points where an attacker can try to enter or extract data",
+        "explanation": "The attack surface encompasses all the different points where an unauthorized user could potentially enter data or extract data from a system. Reducing the attack surface is a key security principle."
+      }
+    ]
+  },
+  {
+    "id": "cs307-quiz-1-3",
+    "subjectId": "cs307",
+    "topicId": "cs307-topic-1",
+    "title": "Security Principles - Zero Trust and Attack Surface",
+    "questions": [
+      {
+        "id": "cs307-q11",
+        "type": "true_false",
+        "prompt": "A zero-trust security model assumes that nothing inside or outside the network perimeter should be trusted by default.",
+        "correctAnswer": "true",
+        "explanation": "Zero-trust architecture operates on the principle of \"never trust, always verify.\" It assumes breach and verifies every request regardless of where it originates, eliminating implicit trust based on network location."
+      },
+      {
+        "id": "cs307-q12",
+        "type": "multiple_choice",
+        "prompt": "What is the primary goal of threat modeling?",
+        "options": [
+          "To eliminate all possible threats",
+          "To identify, prioritize, and mitigate potential security threats early in development",
+          "To create a list of past security incidents",
+          "To test the system for vulnerabilities after deployment"
+        ],
+        "correctAnswer": "To identify, prioritize, and mitigate potential security threats early in development",
+        "explanation": "Threat modeling is a proactive approach to identify potential security threats and vulnerabilities early in the development lifecycle, allowing teams to prioritize and implement appropriate countermeasures before deployment."
+      },
+      {
+        "id": "cs307-q13",
+        "type": "multiple_choice",
+        "prompt": "Which principle states that security mechanisms should be simple and easy to understand?",
+        "options": [
+          "Economy of mechanism",
+          "Psychological acceptability",
+          "Open design",
+          "Least common mechanism"
+        ],
+        "correctAnswer": "Economy of mechanism",
+        "explanation": "Economy of mechanism (also called simplicity) advocates for keeping security designs as simple as possible. Simple mechanisms are easier to verify, test, and are less likely to contain vulnerabilities than complex ones."
+      },
+      {
+        "id": "cs307-q14",
+        "type": "true_false",
+        "prompt": "The principle of open design suggests that security should rely on keeping the design secret.",
+        "correctAnswer": "false",
+        "explanation": "The principle of open design (Kerckhoffs's principle) states that the security of a system should not depend on the secrecy of its design. Instead, security should rely on the secrecy of keys or credentials, allowing the design to be publicly scrutinized."
+      },
+      {
+        "id": "cs307-q15",
+        "type": "multiple_choice",
+        "prompt": "What is the main benefit of implementing defense in depth?",
+        "options": [
+          "It eliminates the need for security updates",
+          "It provides multiple layers of protection so compromise of one layer doesn't compromise the entire system",
+          "It makes systems immune to all attacks",
+          "It reduces the cost of security implementation"
+        ],
+        "correctAnswer": "It provides multiple layers of protection so compromise of one layer doesn't compromise the entire system",
+        "explanation": "Defense in depth uses multiple, overlapping security controls. If one layer is compromised, additional layers continue to provide protection, making it significantly harder for attackers to breach the entire system."
+      }
+    ]
+  }
+]

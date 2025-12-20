@@ -1,0 +1,578 @@
+[
+  {
+    "id": "cs304-t7-ex01",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-7",
+    "title": "Simple Memory Allocator",
+    "difficulty": 2,
+    "description": "Implement a basic memory allocator using a free list to manage heap memory allocation and deallocation.",
+    "starterCode": "class MemoryAllocator:\n    def __init__(self, heap_size):\n        self.heap_size = heap_size\n        # Free list: list of (start, size) tuples\n        self.free_list = [(0, heap_size)]\n        self.allocated = {}  # address -> size\n\n    def allocate(self, size):\n        \"\"\"\n        Allocate a block of memory.\n        Returns: starting address or None if allocation fails\n        \"\"\"\n        # TODO: Implement first-fit allocation\n        pass\n\n    def free(self, address):\n        \"\"\"Free a previously allocated block.\"\"\"\n        # TODO: Return block to free list\n        pass",
+    "solution": "class MemoryAllocator:\n    def __init__(self, heap_size):\n        self.heap_size = heap_size\n        # Free list: list of (start, size) tuples\n        self.free_list = [(0, heap_size)]\n        self.allocated = {}  # address -> size\n\n    def allocate(self, size):\n        \"\"\"\n        Allocate a block of memory.\n        Returns: starting address or None if allocation fails\n        \"\"\"\n        # First-fit: find first free block large enough\n        for i, (start, block_size) in enumerate(self.free_list):\n            if block_size >= size:\n                # Allocate from this block\n                self.allocated[start] = size\n\n                # Update free list\n                if block_size == size:\n                    # Exact fit - remove block\n                    self.free_list.pop(i)\n                else:\n                    # Split block\n                    self.free_list[i] = (start + size, block_size - size)\n\n                return start\n\n        # No suitable block found\n        return None\n\n    def free(self, address):\n        \"\"\"Free a previously allocated block.\"\"\"\n        if address not in self.allocated:\n            return False\n\n        size = self.allocated[address]\n        del self.allocated[address]\n\n        # Add to free list\n        self.free_list.append((address, size))\n\n        # Sort free list by address for coalescing\n        self.free_list.sort()\n\n        # Coalesce adjacent free blocks\n        i = 0\n        while i < len(self.free_list) - 1:\n            start1, size1 = self.free_list[i]\n            start2, size2 = self.free_list[i + 1]\n\n            # If blocks are adjacent, merge them\n            if start1 + size1 == start2:\n                self.free_list[i] = (start1, size1 + size2)\n                self.free_list.pop(i + 1)\n            else:\n                i += 1\n\n        return True",
+    "testCases": [
+      {
+        "input": "allocator = MemoryAllocator(1000)\naddr1 = allocator.allocate(100)\nprint(addr1)",
+        "expectedOutput": "0",
+        "isHidden": false,
+        "description": "First allocation at address 0"
+      },
+      {
+        "input": "allocator = MemoryAllocator(1000)\naddr1 = allocator.allocate(100)\naddr2 = allocator.allocate(200)\nprint(addr2)",
+        "expectedOutput": "100",
+        "isHidden": false,
+        "description": "Second allocation after first"
+      },
+      {
+        "input": "allocator = MemoryAllocator(1000)\naddr1 = allocator.allocate(100)\nallocator.free(addr1)\naddr2 = allocator.allocate(50)\nprint(addr2)",
+        "isHidden": true,
+        "description": "Reuse freed memory"
+      }
+    ],
+    "hints": [
+      "Use first-fit strategy: allocate from the first free block that is large enough",
+      "Split free blocks when they are larger than the requested size",
+      "When freeing, add the block back to the free list",
+      "Coalesce adjacent free blocks to reduce fragmentation"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs304-t7-ex02",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-7",
+    "title": "Mark and Sweep Garbage Collector",
+    "difficulty": 3,
+    "description": "Implement a mark-and-sweep garbage collector that identifies and reclaims unreachable objects.",
+    "starterCode": "class MarkSweepGC:\n    def __init__(self):\n        self.objects = {}  # address -> {'size': N, 'refs': [addresses]}\n        self.roots = set()  # Root set (global variables, stack)\n        self.next_addr = 0\n\n    def allocate(self, size, refs=None):\n        \"\"\"Allocate an object. Returns address.\"\"\"\n        addr = self.next_addr\n        self.next_addr += size\n        self.objects[addr] = {'size': size, 'refs': refs or [], 'marked': False}\n        return addr\n\n    def add_root(self, address):\n        \"\"\"Add an address to the root set.\"\"\"\n        self.roots.add(address)\n\n    def mark(self):\n        \"\"\"Mark all reachable objects starting from roots.\"\"\"\n        # TODO: Implement marking phase\n        pass\n\n    def sweep(self):\n        \"\"\"Reclaim unmarked objects.\"\"\"\n        # TODO: Implement sweep phase\n        pass\n\n    def collect(self):\n        \"\"\"Run garbage collection.\"\"\"\n        self.mark()\n        self.sweep()",
+    "solution": "class MarkSweepGC:\n    def __init__(self):\n        self.objects = {}  # address -> {'size': N, 'refs': [addresses]}\n        self.roots = set()  # Root set (global variables, stack)\n        self.next_addr = 0\n\n    def allocate(self, size, refs=None):\n        \"\"\"Allocate an object. Returns address.\"\"\"\n        addr = self.next_addr\n        self.next_addr += size\n        self.objects[addr] = {'size': size, 'refs': refs or [], 'marked': False}\n        return addr\n\n    def add_root(self, address):\n        \"\"\"Add an address to the root set.\"\"\"\n        self.roots.add(address)\n\n    def mark(self):\n        \"\"\"Mark all reachable objects starting from roots.\"\"\"\n        # Clear all marks\n        for obj in self.objects.values():\n            obj['marked'] = False\n\n        # Mark from roots using DFS\n        worklist = list(self.roots)\n\n        while worklist:\n            addr = worklist.pop()\n\n            if addr not in self.objects:\n                continue\n\n            obj = self.objects[addr]\n\n            if obj['marked']:\n                continue\n\n            # Mark this object\n            obj['marked'] = True\n\n            # Add referenced objects to worklist\n            for ref_addr in obj['refs']:\n                if ref_addr in self.objects and not self.objects[ref_addr]['marked']:\n                    worklist.append(ref_addr)\n\n    def sweep(self):\n        \"\"\"Reclaim unmarked objects.\"\"\"\n        # Collect addresses of unmarked objects\n        to_delete = []\n        for addr, obj in self.objects.items():\n            if not obj['marked']:\n                to_delete.append(addr)\n\n        # Delete unmarked objects\n        for addr in to_delete:\n            del self.objects[addr]\n\n    def collect(self):\n        \"\"\"Run garbage collection.\"\"\"\n        self.mark()\n        self.sweep()",
+    "testCases": [
+      {
+        "input": "gc = MarkSweepGC()\nobj1 = gc.allocate(10)\nobj2 = gc.allocate(20)\ngc.add_root(obj1)\ngc.collect()\nprint(obj1 in gc.objects)",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Root object is not collected"
+      },
+      {
+        "input": "gc = MarkSweepGC()\nobj1 = gc.allocate(10)\nobj2 = gc.allocate(20)\ngc.add_root(obj1)\ngc.collect()\nprint(obj2 in gc.objects)",
+        "expectedOutput": "False",
+        "isHidden": false,
+        "description": "Unreachable object is collected"
+      },
+      {
+        "input": "gc = MarkSweepGC()\nobj1 = gc.allocate(10, refs=[])\nobj2 = gc.allocate(20, refs=[])\ngc.objects[obj1]['refs'] = [obj2]\ngc.add_root(obj1)\ngc.collect()\nprint(obj2 in gc.objects)",
+        "isHidden": true,
+        "description": "Referenced object is not collected"
+      }
+    ],
+    "hints": [
+      "Mark phase: traverse from roots and mark all reachable objects",
+      "Use a worklist to perform depth-first or breadth-first traversal",
+      "Sweep phase: delete all objects that are not marked",
+      "Clear marks before each collection cycle"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs304-t7-ex03",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-7",
+    "title": "Reference Counting Collector",
+    "difficulty": 2,
+    "description": "Implement reference counting garbage collection where objects are freed when their reference count reaches zero.",
+    "starterCode": "class RefCountingGC:\n    def __init__(self):\n        self.objects = {}  # address -> {'size': N, 'refcount': M}\n        self.next_addr = 0\n\n    def allocate(self, size):\n        \"\"\"Allocate an object with refcount 1. Returns address.\"\"\"\n        addr = self.next_addr\n        self.next_addr += size\n        self.objects[addr] = {'size': size, 'refcount': 1}\n        return addr\n\n    def add_ref(self, address):\n        \"\"\"Increment reference count.\"\"\"\n        # TODO: Implement\n        pass\n\n    def remove_ref(self, address):\n        \"\"\"Decrement reference count and free if zero.\"\"\"\n        # TODO: Implement\n        pass",
+    "solution": "class RefCountingGC:\n    def __init__(self):\n        self.objects = {}  # address -> {'size': N, 'refcount': M}\n        self.next_addr = 0\n\n    def allocate(self, size):\n        \"\"\"Allocate an object with refcount 1. Returns address.\"\"\"\n        addr = self.next_addr\n        self.next_addr += size\n        self.objects[addr] = {'size': size, 'refcount': 1}\n        return addr\n\n    def add_ref(self, address):\n        \"\"\"Increment reference count.\"\"\"\n        if address in self.objects:\n            self.objects[address]['refcount'] += 1\n\n    def remove_ref(self, address):\n        \"\"\"Decrement reference count and free if zero.\"\"\"\n        if address not in self.objects:\n            return\n\n        self.objects[address]['refcount'] -= 1\n\n        # Free if refcount reaches zero\n        if self.objects[address]['refcount'] == 0:\n            del self.objects[address]",
+    "testCases": [
+      {
+        "input": "gc = RefCountingGC()\nobj = gc.allocate(100)\ngc.add_ref(obj)\nprint(gc.objects[obj]['refcount'])",
+        "expectedOutput": "2",
+        "isHidden": false,
+        "description": "Reference count incremented"
+      },
+      {
+        "input": "gc = RefCountingGC()\nobj = gc.allocate(100)\ngc.remove_ref(obj)\nprint(obj in gc.objects)",
+        "expectedOutput": "False",
+        "isHidden": false,
+        "description": "Object freed when refcount reaches 0"
+      },
+      {
+        "input": "gc = RefCountingGC()\nobj = gc.allocate(100)\ngc.add_ref(obj)\ngc.remove_ref(obj)\nprint(obj in gc.objects)",
+        "isHidden": true,
+        "description": "Object remains while refcount > 0"
+      }
+    ],
+    "hints": [
+      "Initialize objects with refcount 1 when allocated",
+      "Increment refcount when a new reference is created",
+      "Decrement refcount when a reference is removed",
+      "Free the object when refcount reaches zero"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs304-t7-ex04",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-7",
+    "title": "Copying Collector",
+    "difficulty": 3,
+    "description": "Implement a copying garbage collector that moves live objects to a new space and compacts memory.",
+    "starterCode": "class CopyingGC:\n    def __init__(self, heap_size):\n        self.heap_size = heap_size\n        self.from_space = {'start': 0, 'end': heap_size // 2, 'next': 0}\n        self.to_space = {'start': heap_size // 2, 'end': heap_size, 'next': heap_size // 2}\n        self.objects = {}  # old_addr -> {'size': N, 'new_addr': M, 'refs': [...]}\n        self.roots = set()\n\n    def allocate(self, size, refs=None):\n        \"\"\"Allocate in from-space. Returns address.\"\"\"\n        # TODO: Allocate from from_space\n        pass\n\n    def collect(self):\n        \"\"\"Perform copying collection.\"\"\"\n        # TODO: Copy live objects to to-space and update references\n        # Then swap spaces\n        pass",
+    "solution": "class CopyingGC:\n    def __init__(self, heap_size):\n        self.heap_size = heap_size\n        self.from_space = {'start': 0, 'end': heap_size // 2, 'next': 0}\n        self.to_space = {'start': heap_size // 2, 'end': heap_size, 'next': heap_size // 2}\n        self.objects = {}  # old_addr -> {'size': N, 'new_addr': M, 'refs': [...]}\n        self.roots = set()\n\n    def allocate(self, size, refs=None):\n        \"\"\"Allocate in from-space. Returns address.\"\"\"\n        addr = self.from_space['start'] + self.from_space['next']\n\n        if addr + size > self.from_space['end']:\n            return None  # Out of memory\n\n        self.objects[addr] = {'size': size, 'new_addr': None, 'refs': refs or []}\n        self.from_space['next'] += size\n\n        return addr\n\n    def add_root(self, address):\n        \"\"\"Add a root reference.\"\"\"\n        self.roots.add(address)\n\n    def copy_object(self, old_addr):\n        \"\"\"Copy an object to to-space. Returns new address.\"\"\"\n        if old_addr not in self.objects:\n            return old_addr\n\n        obj = self.objects[old_addr]\n\n        # If already copied, return new address\n        if obj['new_addr'] is not None:\n            return obj['new_addr']\n\n        # Allocate in to-space\n        new_addr = self.to_space['start'] + self.to_space['next']\n        self.to_space['next'] += obj['size']\n\n        # Record new address\n        obj['new_addr'] = new_addr\n\n        return new_addr\n\n    def collect(self):\n        \"\"\"Perform copying collection.\"\"\"\n        # Reset to-space\n        self.to_space['next'] = 0\n\n        # Copy roots and update root references\n        new_roots = set()\n        for old_addr in self.roots:\n            new_addr = self.copy_object(old_addr)\n            new_roots.add(new_addr)\n\n        # Process worklist: copy transitively reachable objects\n        worklist = list(new_roots)\n        visited = set()\n\n        while worklist:\n            addr = worklist.pop()\n\n            if addr in visited:\n                continue\n\n            visited.add(addr)\n\n            # Find corresponding old address\n            old_addr = None\n            for old, obj in self.objects.items():\n                if obj['new_addr'] == addr:\n                    old_addr = old\n                    break\n\n            if old_addr is None:\n                continue\n\n            obj = self.objects[old_addr]\n\n            # Copy referenced objects\n            new_refs = []\n            for ref in obj['refs']:\n                new_ref = self.copy_object(ref)\n                new_refs.append(new_ref)\n                if new_ref not in visited:\n                    worklist.append(new_ref)\n\n            obj['refs'] = new_refs\n\n        # Rebuild objects table with new addresses\n        new_objects = {}\n        for old_addr, obj in self.objects.items():\n            if obj['new_addr'] is not None:\n                new_objects[obj['new_addr']] = {'size': obj['size'], 'new_addr': None, 'refs': obj['refs']}\n\n        self.objects = new_objects\n        self.roots = new_roots\n\n        # Swap from-space and to-space\n        self.from_space, self.to_space = self.to_space, self.from_space\n        self.from_space['next'] = self.to_space['next']\n        self.to_space['next'] = 0",
+    "testCases": [
+      {
+        "input": "gc = CopyingGC(1000)\nobj1 = gc.allocate(10)\ngc.add_root(obj1)\nbefore_count = len(gc.objects)\ngc.collect()\nafter_count = len(gc.objects)\nprint(before_count == after_count)",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Root object survives collection"
+      },
+      {
+        "input": "gc = CopyingGC(1000)\nobj1 = gc.allocate(10)\nobj2 = gc.allocate(20)\ngc.add_root(obj1)\ngc.collect()\nprint(len(gc.objects))",
+        "expectedOutput": "1",
+        "isHidden": false,
+        "description": "Unreachable object not copied"
+      },
+      {
+        "input": "gc = CopyingGC(1000)\nobj1 = gc.allocate(10, [])\nobj2 = gc.allocate(20, [])\ngc.objects[obj1]['refs'] = [obj2]\ngc.add_root(obj1)\ngc.collect()\nprint(len(gc.objects))",
+        "isHidden": true,
+        "description": "Referenced object is copied"
+      }
+    ],
+    "hints": [
+      "Divide heap into two semispaces: from-space and to-space",
+      "Copy live objects from from-space to to-space",
+      "Update all references to point to new addresses",
+      "Swap spaces after collection is complete"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs304-t7-ex05",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-7",
+    "title": "Generational Garbage Collector",
+    "difficulty": 4,
+    "description": "Implement a simple generational garbage collector with young and old generations.",
+    "starterCode": "class GenerationalGC:\n    def __init__(self):\n        self.young = {}  # Young generation objects\n        self.old = {}  # Old generation objects\n        self.roots = set()\n        self.next_addr = 0\n        self.survivor_threshold = 2  # Promote after 2 collections\n\n    def allocate(self, size):\n        \"\"\"Allocate in young generation.\"\"\"\n        addr = self.next_addr\n        self.next_addr += size\n        self.young[addr] = {'size': size, 'age': 0, 'marked': False}\n        return addr\n\n    def minor_collection(self):\n        \"\"\"Collect young generation only.\"\"\"\n        # TODO: Collect young generation, promote survivors\n        pass\n\n    def major_collection(self):\n        \"\"\"Collect both generations.\"\"\"\n        # TODO: Full collection\n        pass",
+    "solution": "class GenerationalGC:\n    def __init__(self):\n        self.young = {}  # Young generation objects\n        self.old = {}  # Old generation objects\n        self.roots = set()\n        self.next_addr = 0\n        self.survivor_threshold = 2  # Promote after 2 collections\n\n    def allocate(self, size):\n        \"\"\"Allocate in young generation.\"\"\"\n        addr = self.next_addr\n        self.next_addr += size\n        self.young[addr] = {'size': size, 'age': 0, 'marked': False}\n        return addr\n\n    def add_root(self, address):\n        \"\"\"Add a root reference.\"\"\"\n        self.roots.add(address)\n\n    def mark_from_roots(self, generation):\n        \"\"\"Mark objects in a generation reachable from roots.\"\"\"\n        for addr in self.roots:\n            if addr in generation:\n                generation[addr]['marked'] = True\n\n    def minor_collection(self):\n        \"\"\"Collect young generation only.\"\"\"\n        # Mark young objects reachable from roots\n        self.mark_from_roots(self.young)\n\n        # Also mark young objects referenced from old generation\n        for old_obj in self.old.values():\n            # In a real implementation, would track old->young references\n            pass\n\n        # Collect unmarked young objects\n        to_delete = []\n        to_promote = []\n\n        for addr, obj in self.young.items():\n            if obj['marked']:\n                # Survivor - increment age\n                obj['age'] += 1\n                obj['marked'] = False\n\n                # Check if should be promoted\n                if obj['age'] >= self.survivor_threshold:\n                    to_promote.append(addr)\n            else:\n                # Not marked - collect it\n                to_delete.append(addr)\n\n        # Delete dead objects\n        for addr in to_delete:\n            del self.young[addr]\n\n        # Promote old survivors to old generation\n        for addr in to_promote:\n            self.old[addr] = self.young[addr]\n            del self.young[addr]\n\n    def major_collection(self):\n        \"\"\"Collect both generations.\"\"\"\n        # Mark all reachable objects\n        self.mark_from_roots(self.young)\n        self.mark_from_roots(self.old)\n\n        # Sweep young generation\n        to_delete_young = [addr for addr, obj in self.young.items() if not obj['marked']]\n        for addr in to_delete_young:\n            del self.young[addr]\n\n        # Sweep old generation\n        to_delete_old = [addr for addr, obj in self.old.items() if not obj['marked']]\n        for addr in to_delete_old:\n            del self.old[addr]\n\n        # Clear marks\n        for obj in self.young.values():\n            obj['marked'] = False\n        for obj in self.old.values():\n            obj['marked'] = False",
+    "testCases": [
+      {
+        "input": "gc = GenerationalGC()\nobj = gc.allocate(10)\ngc.add_root(obj)\ngc.minor_collection()\nprint(obj in gc.young)",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Young survivor stays in young generation initially"
+      },
+      {
+        "input": "gc = GenerationalGC()\nobj = gc.allocate(10)\ngc.add_root(obj)\ngc.minor_collection()\ngc.minor_collection()\nprint(obj in gc.old)",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Object promoted after threshold"
+      },
+      {
+        "input": "gc = GenerationalGC()\nobj1 = gc.allocate(10)\nobj2 = gc.allocate(20)\ngc.add_root(obj1)\ngc.minor_collection()\nprint(obj2 in gc.young)",
+        "isHidden": true,
+        "description": "Unreachable object collected"
+      }
+    ],
+    "hints": [
+      "Allocate new objects in the young generation",
+      "Minor collection only collects the young generation",
+      "Promote objects that survive multiple collections to old generation",
+      "Major collection collects both generations"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs304-t7-ex06",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-7",
+    "title": "Stack Frame Manager",
+    "difficulty": 2,
+    "description": "Implement a stack frame manager for function calls that manages activation records.",
+    "starterCode": "class StackFrameManager:\n    def __init__(self, stack_size=1000):\n        self.stack = [None] * stack_size\n        self.sp = 0  # Stack pointer\n        self.fp = 0  # Frame pointer\n\n    def push_frame(self, num_locals, return_address):\n        \"\"\"\n        Create a new stack frame.\n        Returns the new frame pointer.\n        \"\"\"\n        # TODO: Save old FP, create new frame\n        pass\n\n    def pop_frame(self):\n        \"\"\"\n        Remove the current stack frame.\n        Returns the return address.\n        \"\"\"\n        # TODO: Restore old FP and SP\n        pass\n\n    def set_local(self, offset, value):\n        \"\"\"Set a local variable in current frame.\"\"\"\n        # TODO: Store at FP + offset\n        pass\n\n    def get_local(self, offset):\n        \"\"\"Get a local variable from current frame.\"\"\"\n        # TODO: Load from FP + offset\n        pass",
+    "solution": "class StackFrameManager:\n    def __init__(self, stack_size=1000):\n        self.stack = [None] * stack_size\n        self.sp = 0  # Stack pointer\n        self.fp = 0  # Frame pointer\n        self.frames = []  # Track frame information\n\n    def push_frame(self, num_locals, return_address):\n        \"\"\"\n        Create a new stack frame.\n        Frame layout: [old_fp, return_addr, local0, local1, ...]\n        Returns the new frame pointer.\n        \"\"\"\n        # Save current frame info\n        self.frames.append({'fp': self.fp, 'sp': self.sp})\n\n        # Push old frame pointer\n        self.stack[self.sp] = self.fp\n        self.sp += 1\n\n        # Push return address\n        self.stack[self.sp] = return_address\n        self.sp += 1\n\n        # Set new frame pointer\n        self.fp = self.sp\n\n        # Allocate space for locals\n        self.sp += num_locals\n\n        return self.fp\n\n    def pop_frame(self):\n        \"\"\"\n        Remove the current stack frame.\n        Returns the return address.\n        \"\"\"\n        # Reset SP to FP\n        self.sp = self.fp\n\n        # Get return address (just below FP)\n        return_address = self.stack[self.fp - 1]\n\n        # Restore old FP\n        self.fp = self.stack[self.fp - 2]\n\n        # Pop saved FP and return address\n        self.sp -= 2\n\n        # Restore previous frame info\n        if self.frames:\n            self.frames.pop()\n\n        return return_address\n\n    def set_local(self, offset, value):\n        \"\"\"Set a local variable in current frame.\"\"\"\n        self.stack[self.fp + offset] = value\n\n    def get_local(self, offset):\n        \"\"\"Get a local variable from current frame.\"\"\"\n        return self.stack[self.fp + offset]",
+    "testCases": [
+      {
+        "input": "sm = StackFrameManager()\nfp = sm.push_frame(3, 'return_here')\nsm.set_local(0, 42)\nprint(sm.get_local(0))",
+        "expectedOutput": "42",
+        "isHidden": false,
+        "description": "Set and get local variable"
+      },
+      {
+        "input": "sm = StackFrameManager()\nfp1 = sm.push_frame(2, 'ret1')\nfp2 = sm.push_frame(3, 'ret2')\nret = sm.pop_frame()\nprint(ret)",
+        "expectedOutput": "ret2",
+        "isHidden": false,
+        "description": "Return address from pop"
+      },
+      {
+        "input": "sm = StackFrameManager()\nfp1 = sm.push_frame(2, 'ret1')\nsm.set_local(0, 100)\nfp2 = sm.push_frame(1, 'ret2')\nsm.pop_frame()\nprint(sm.get_local(0))",
+        "isHidden": true,
+        "description": "Locals preserved across nested calls"
+      }
+    ],
+    "hints": [
+      "Each frame contains: saved frame pointer, return address, and local variables",
+      "Frame pointer points to the base of the current frame",
+      "Stack pointer points to the top of the stack",
+      "When pushing a frame, save the old FP and set FP to current SP"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs304-t7-ex07",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-7",
+    "title": "Exception Handler",
+    "difficulty": 3,
+    "description": "Implement exception handling runtime support with try-catch blocks and exception propagation.",
+    "starterCode": "class ExceptionHandler:\n    def __init__(self):\n        self.handler_stack = []  # Stack of exception handlers\n        self.current_exception = None\n\n    def enter_try(self, handler_address):\n        \"\"\"Enter a try block - register exception handler.\"\"\"\n        # TODO: Push handler onto stack\n        pass\n\n    def exit_try(self):\n        \"\"\"Exit a try block - remove handler.\"\"\"\n        # TODO: Pop handler from stack\n        pass\n\n    def throw(self, exception):\n        \"\"\"Throw an exception.\"\"\"\n        # TODO: Find and invoke appropriate handler\n        pass",
+    "solution": "class ExceptionHandler:\n    def __init__(self):\n        self.handler_stack = []  # Stack of exception handlers\n        self.current_exception = None\n\n    def enter_try(self, handler_address, exception_type=None):\n        \"\"\"Enter a try block - register exception handler.\"\"\"\n        self.handler_stack.append({\n            'handler': handler_address,\n            'exception_type': exception_type\n        })\n\n    def exit_try(self):\n        \"\"\"Exit a try block - remove handler.\"\"\"\n        if self.handler_stack:\n            self.handler_stack.pop()\n\n    def throw(self, exception):\n        \"\"\"\n        Throw an exception.\n        Returns the handler address to jump to, or None if unhandled.\n        \"\"\"\n        self.current_exception = exception\n\n        # Search for matching handler (most recent first)\n        while self.handler_stack:\n            handler_info = self.handler_stack.pop()\n\n            # Check if handler matches exception type\n            exception_type = handler_info['exception_type']\n\n            if exception_type is None or exception_type == exception.get('type'):\n                # Found matching handler\n                return handler_info['handler']\n\n        # No handler found\n        return None\n\n    def get_exception(self):\n        \"\"\"Get the current exception.\"\"\"\n        return self.current_exception",
+    "testCases": [
+      {
+        "input": "eh = ExceptionHandler()\neh.enter_try('handler1')\nhandler = eh.throw({'type': 'ValueError', 'msg': 'bad value'})\nprint(handler)",
+        "expectedOutput": "handler1",
+        "isHidden": false,
+        "description": "Find exception handler"
+      },
+      {
+        "input": "eh = ExceptionHandler()\neh.enter_try('handler1', 'TypeError')\neh.enter_try('handler2', 'ValueError')\nhandler = eh.throw({'type': 'ValueError', 'msg': 'bad value'})\nprint(handler)",
+        "expectedOutput": "handler2",
+        "isHidden": false,
+        "description": "Match most recent handler"
+      },
+      {
+        "input": "eh = ExceptionHandler()\nhandler = eh.throw({'type': 'Error', 'msg': 'oops'})\nprint(handler is None)",
+        "isHidden": true,
+        "description": "Unhandled exception returns None"
+      }
+    ],
+    "hints": [
+      "Maintain a stack of active exception handlers",
+      "When entering a try block, push the handler address",
+      "When throwing, search the handler stack from most recent to oldest",
+      "Pop handlers until a matching one is found or stack is empty"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs304-t7-ex08",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-7",
+    "title": "Symbol Linker",
+    "difficulty": 3,
+    "description": "Implement a simple linker that resolves symbols across object files and produces an executable.",
+    "starterCode": "class Linker:\n    def __init__(self):\n        self.symbol_table = {}  # symbol_name -> address\n        self.relocations = []  # (location, symbol_name)\n        self.code = []  # Final executable code\n\n    def add_object_file(self, symbols, code, relocs):\n        \"\"\"\n        Add an object file.\n        symbols: dict of symbol_name -> offset in code\n        code: list of instructions/data\n        relocs: list of (offset, symbol_name) needing relocation\n        \"\"\"\n        # TODO: Merge symbols and track relocations\n        pass\n\n    def link(self):\n        \"\"\"Resolve all relocations and produce executable.\"\"\"\n        # TODO: Resolve symbols and patch addresses\n        pass",
+    "solution": "class Linker:\n    def __init__(self):\n        self.symbol_table = {}  # symbol_name -> address\n        self.relocations = []  # (location, symbol_name)\n        self.code = []  # Final executable code\n        self.next_address = 0\n\n    def add_object_file(self, symbols, code, relocs):\n        \"\"\"\n        Add an object file.\n        symbols: dict of symbol_name -> offset in code\n        code: list of instructions/data\n        relocs: list of (offset, symbol_name) needing relocation\n        \"\"\"\n        base_address = self.next_address\n\n        # Add code to executable\n        self.code.extend(code)\n\n        # Add symbols with relocated addresses\n        for symbol, offset in symbols.items():\n            absolute_address = base_address + offset\n\n            if symbol in self.symbol_table:\n                raise ValueError(f\"Duplicate symbol: {symbol}\")\n\n            self.symbol_table[symbol] = absolute_address\n\n        # Add relocations with relocated positions\n        for offset, symbol in relocs:\n            absolute_location = base_address + offset\n            self.relocations.append((absolute_location, symbol))\n\n        # Update next available address\n        self.next_address += len(code)\n\n    def link(self):\n        \"\"\"Resolve all relocations and produce executable.\"\"\"\n        # Resolve all relocations\n        for location, symbol in self.relocations:\n            if symbol not in self.symbol_table:\n                raise ValueError(f\"Undefined symbol: {symbol}\")\n\n            # Get symbol address\n            symbol_address = self.symbol_table[symbol]\n\n            # Patch the code at location\n            # Assuming instruction format allows direct address patching\n            if location < len(self.code):\n                # Replace placeholder with actual address\n                instr = self.code[location]\n                if isinstance(instr, str):\n                    # Replace symbol reference with address\n                    self.code[location] = instr.replace(\"$\" + symbol, str(symbol_address))\n\n        return self.code",
+    "testCases": [
+      {
+        "input": "linker = Linker()\nlinker.add_object_file({'main': 0}, ['CALL $func', 'RET'], [(0, 'func')])\nlinker.add_object_file({'func': 0}, ['PUSH', 'POP', 'RET'], [])\nlinker.link()\nprint(linker.symbol_table['func'])",
+        "expectedOutput": "2",
+        "isHidden": false,
+        "description": "Symbol in second object file"
+      },
+      {
+        "input": "linker = Linker()\nlinker.add_object_file({'foo': 0, 'bar': 1}, ['NOP', 'NOP'], [])\nprint(len(linker.symbol_table))",
+        "expectedOutput": "2",
+        "isHidden": false,
+        "description": "Multiple symbols in one file"
+      },
+      {
+        "input": "linker = Linker()\nlinker.add_object_file({'start': 0}, ['CALL $helper'], [(0, 'helper')])\nlinker.add_object_file({'helper': 1}, ['NOP', 'RET'], [])\ncode = linker.link()\nprint('2' in code[0])",
+        "isHidden": true,
+        "description": "Relocation resolved correctly"
+      }
+    ],
+    "hints": [
+      "Combine code from all object files sequentially",
+      "Track base address for each object file",
+      "Adjust symbol addresses by adding base address",
+      "Patch relocations by replacing symbol references with actual addresses"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs304-t7-ex09",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-7",
+    "title": "Dynamic Loader",
+    "difficulty": 3,
+    "description": "Implement a dynamic loader that loads shared libraries at runtime and resolves symbols.",
+    "starterCode": "class DynamicLoader:\n    def __init__(self):\n        self.loaded_libs = {}  # lib_name -> {'base': addr, 'symbols': {...}}\n        self.next_address = 1000\n\n    def load_library(self, lib_name, symbols, size):\n        \"\"\"\n        Load a shared library.\n        symbols: dict of symbol_name -> offset\n        size: library size in bytes\n        \"\"\"\n        # TODO: Allocate memory and record symbols\n        pass\n\n    def resolve_symbol(self, symbol_name):\n        \"\"\"Look up a symbol in loaded libraries. Returns address.\"\"\"\n        # TODO: Search all loaded libraries\n        pass",
+    "solution": "class DynamicLoader:\n    def __init__(self):\n        self.loaded_libs = {}  # lib_name -> {'base': addr, 'symbols': {...}}\n        self.next_address = 1000\n\n    def load_library(self, lib_name, symbols, size):\n        \"\"\"\n        Load a shared library.\n        symbols: dict of symbol_name -> offset\n        size: library size in bytes\n        Returns: base address where library was loaded\n        \"\"\"\n        if lib_name in self.loaded_libs:\n            # Already loaded - return existing base\n            return self.loaded_libs[lib_name]['base']\n\n        # Allocate memory for library\n        base_address = self.next_address\n        self.next_address += size\n\n        # Record library information\n        self.loaded_libs[lib_name] = {\n            'base': base_address,\n            'symbols': symbols,\n            'size': size\n        }\n\n        return base_address\n\n    def resolve_symbol(self, symbol_name):\n        \"\"\"Look up a symbol in loaded libraries. Returns address.\"\"\"\n        # Search all loaded libraries\n        for lib_name, lib_info in self.loaded_libs.items():\n            symbols = lib_info['symbols']\n\n            if symbol_name in symbols:\n                # Found symbol - compute absolute address\n                offset = symbols[symbol_name]\n                base = lib_info['base']\n                return base + offset\n\n        # Symbol not found\n        return None\n\n    def unload_library(self, lib_name):\n        \"\"\"Unload a library.\"\"\"\n        if lib_name in self.loaded_libs:\n            del self.loaded_libs[lib_name]\n            return True\n        return False",
+    "testCases": [
+      {
+        "input": "loader = DynamicLoader()\nbase = loader.load_library('libc', {'printf': 10, 'malloc': 50}, 200)\naddr = loader.resolve_symbol('printf')\nprint(addr)",
+        "expectedOutput": "1010",
+        "isHidden": false,
+        "description": "Resolve symbol to absolute address"
+      },
+      {
+        "input": "loader = DynamicLoader()\nloader.load_library('lib1', {'foo': 0}, 100)\nloader.load_library('lib2', {'bar': 20}, 100)\naddr = loader.resolve_symbol('bar')\nprint(addr)",
+        "expectedOutput": "1120",
+        "isHidden": false,
+        "description": "Symbol in second library"
+      },
+      {
+        "input": "loader = DynamicLoader()\nloader.load_library('mylib', {'func': 5}, 50)\naddr = loader.resolve_symbol('unknown')\nprint(addr is None)",
+        "isHidden": true,
+        "description": "Unknown symbol returns None"
+      }
+    ],
+    "hints": [
+      "Assign each library a base address in memory",
+      "Store library symbols with their offsets from the base",
+      "To resolve a symbol, search all loaded libraries",
+      "Compute absolute address as base + offset"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs304-t7-ex10",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-7",
+    "title": "Virtual Method Table",
+    "difficulty": 3,
+    "description": "Implement virtual method tables (vtables) for dynamic dispatch in object-oriented languages.",
+    "starterCode": "class VTableManager:\n    def __init__(self):\n        self.vtables = {}  # class_name -> [method_addresses]\n        self.objects = {}  # object_id -> class_name\n\n    def create_vtable(self, class_name, methods):\n        \"\"\"\n        Create a vtable for a class.\n        methods: list of (method_name, address) tuples in order\n        \"\"\"\n        # TODO: Store vtable\n        pass\n\n    def create_object(self, object_id, class_name):\n        \"\"\"Create an object instance of a class.\"\"\"\n        # TODO: Associate object with its vtable\n        pass\n\n    def call_method(self, object_id, method_index):\n        \"\"\"\n        Perform virtual method call.\n        Returns the method address to call.\n        \"\"\"\n        # TODO: Look up method in object's vtable\n        pass",
+    "solution": "class VTableManager:\n    def __init__(self):\n        self.vtables = {}  # class_name -> {'methods': [...], 'parent': class_name}\n        self.objects = {}  # object_id -> class_name\n\n    def create_vtable(self, class_name, methods, parent=None):\n        \"\"\"\n        Create a vtable for a class.\n        methods: list of (method_name, address) tuples in order\n        parent: parent class name for inheritance\n        \"\"\"\n        vtable = []\n\n        # If there's a parent, start with parent's methods\n        if parent and parent in self.vtables:\n            vtable = self.vtables[parent]['methods'].copy()\n\n        # Override or add methods\n        method_dict = {name: addr for name, addr in methods}\n\n        # Update vtable with new/overridden methods\n        for i, (name, addr) in enumerate(vtable):\n            if name in method_dict:\n                # Override parent method\n                vtable[i] = (name, method_dict[name])\n                del method_dict[name]\n\n        # Add new methods\n        for name, addr in methods:\n            if name in method_dict:\n                vtable.append((name, addr))\n\n        self.vtables[class_name] = {\n            'methods': vtable,\n            'parent': parent\n        }\n\n    def create_object(self, object_id, class_name):\n        \"\"\"Create an object instance of a class.\"\"\"\n        if class_name not in self.vtables:\n            raise ValueError(f\"Unknown class: {class_name}\")\n\n        self.objects[object_id] = class_name\n\n    def call_method(self, object_id, method_index):\n        \"\"\"\n        Perform virtual method call.\n        Returns the method address to call.\n        \"\"\"\n        if object_id not in self.objects:\n            raise ValueError(f\"Unknown object: {object_id}\")\n\n        class_name = self.objects[object_id]\n        vtable = self.vtables[class_name]['methods']\n\n        if method_index >= len(vtable):\n            raise ValueError(f\"Method index out of bounds: {method_index}\")\n\n        method_name, method_address = vtable[method_index]\n        return method_address",
+    "testCases": [
+      {
+        "input": "vtm = VTableManager()\nvtm.create_vtable('Animal', [('speak', 100), ('move', 200)])\nvtm.create_object('obj1', 'Animal')\naddr = vtm.call_method('obj1', 0)\nprint(addr)",
+        "expectedOutput": "100",
+        "isHidden": false,
+        "description": "Call first method"
+      },
+      {
+        "input": "vtm = VTableManager()\nvtm.create_vtable('Base', [('foo', 100)])\nvtm.create_vtable('Derived', [('foo', 300)], parent='Base')\nvtm.create_object('obj', 'Derived')\naddr = vtm.call_method('obj', 0)\nprint(addr)",
+        "expectedOutput": "300",
+        "isHidden": false,
+        "description": "Overridden method in derived class"
+      },
+      {
+        "input": "vtm = VTableManager()\nvtm.create_vtable('Class1', [('method1', 100), ('method2', 200)])\nvtm.create_object('obj', 'Class1')\naddr = vtm.call_method('obj', 1)\nprint(addr)",
+        "isHidden": true,
+        "description": "Call second method"
+      }
+    ],
+    "hints": [
+      "Store a vtable (array of method addresses) for each class",
+      "Each object has a pointer to its class's vtable",
+      "Method calls use the method index to look up the address in the vtable",
+      "For inheritance, derived class vtables can override parent methods"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs304-t7-ex11",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-7",
+    "title": "Garbage Collection Write Barrier",
+    "difficulty": 4,
+    "description": "Implement a write barrier for incremental garbage collection that tracks pointer updates.",
+    "starterCode": "class WriteBarrierGC:\n    def __init__(self):\n        self.objects = {}  # address -> {'refs': [...], 'color': 'white/gray/black'}\n        self.gray_set = set()  # Objects to scan\n\n    def allocate(self, address, refs=None):\n        \"\"\"Allocate an object.\"\"\"\n        self.objects[address] = {'refs': refs or [], 'color': 'white'}\n\n    def write_barrier(self, obj_addr, field, new_ref):\n        \"\"\"\n        Write barrier for pointer update.\n        obj_addr: object being modified\n        field: field index\n        new_ref: new reference value\n        \"\"\"\n        # TODO: Update reference and maintain GC invariants\n        pass\n\n    def mark_step(self):\n        \"\"\"Perform one step of incremental marking.\"\"\"\n        # TODO: Mark one gray object\n        pass",
+    "solution": "class WriteBarrierGC:\n    def __init__(self):\n        self.objects = {}  # address -> {'refs': [...], 'color': 'white/gray/black'}\n        self.gray_set = set()  # Objects to scan\n        self.roots = set()\n\n    def allocate(self, address, refs=None):\n        \"\"\"Allocate an object.\"\"\"\n        self.objects[address] = {'refs': refs or [], 'color': 'white'}\n\n    def add_root(self, address):\n        \"\"\"Add a root reference.\"\"\"\n        self.roots.add(address)\n        if address in self.objects:\n            self.objects[address]['color'] = 'gray'\n            self.gray_set.add(address)\n\n    def write_barrier(self, obj_addr, field, new_ref):\n        \"\"\"\n        Write barrier for pointer update.\n        Maintains tri-color invariant: no black object points to white object.\n        \"\"\"\n        if obj_addr not in self.objects:\n            return\n\n        obj = self.objects[obj_addr]\n\n        # Update the reference\n        while len(obj['refs']) <= field:\n            obj['refs'].append(None)\n        obj['refs'][field] = new_ref\n\n        # Apply write barrier\n        # If object is black and new reference is white, shade the reference gray\n        if obj['color'] == 'black' and new_ref in self.objects:\n            target = self.objects[new_ref]\n            if target['color'] == 'white':\n                target['color'] = 'gray'\n                self.gray_set.add(new_ref)\n\n    def mark_step(self):\n        \"\"\"Perform one step of incremental marking.\"\"\"\n        if not self.gray_set:\n            return False  # Marking complete\n\n        # Pick a gray object\n        obj_addr = self.gray_set.pop()\n        obj = self.objects[obj_addr]\n\n        # Mark it black\n        obj['color'] = 'black'\n\n        # Shade all white children gray\n        for ref in obj['refs']:\n            if ref in self.objects:\n                target = self.objects[ref]\n                if target['color'] == 'white':\n                    target['color'] = 'gray'\n                    self.gray_set.add(ref)\n\n        return True  # More work to do\n\n    def start_collection(self):\n        \"\"\"Start a new GC cycle.\"\"\"\n        # Reset colors\n        for obj in self.objects.values():\n            obj['color'] = 'white'\n\n        self.gray_set.clear()\n\n        # Mark roots gray\n        for root in self.roots:\n            if root in self.objects:\n                self.objects[root]['color'] = 'gray'\n                self.gray_set.add(root)",
+    "testCases": [
+      {
+        "input": "gc = WriteBarrierGC()\ngc.allocate(100, [])\ngc.allocate(200, [])\ngc.add_root(100)\ngc.objects[100]['color'] = 'black'\ngc.write_barrier(100, 0, 200)\nprint(gc.objects[200]['color'])",
+        "expectedOutput": "gray",
+        "isHidden": false,
+        "description": "Write barrier shades white object gray"
+      },
+      {
+        "input": "gc = WriteBarrierGC()\ngc.allocate(100, [])\ngc.add_root(100)\ngc.mark_step()\nprint(gc.objects[100]['color'])",
+        "expectedOutput": "black",
+        "isHidden": false,
+        "description": "Mark step colors gray object black"
+      },
+      {
+        "input": "gc = WriteBarrierGC()\ngc.allocate(100, [200])\ngc.allocate(200, [])\ngc.add_root(100)\ngc.mark_step()\nprint(200 in gc.gray_set)",
+        "isHidden": true,
+        "description": "Referenced white objects become gray"
+      }
+    ],
+    "hints": [
+      "Use tri-color marking: white (unvisited), gray (to scan), black (scanned)",
+      "Write barrier maintains invariant: no black->white pointers",
+      "When a black object gets a white reference, shade the reference gray",
+      "Incremental marking processes gray objects one at a time"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs304-t7-ex12",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-7",
+    "title": "Memory Defragmentation",
+    "difficulty": 3,
+    "description": "Implement memory defragmentation (compaction) to eliminate fragmentation in a heap.",
+    "starterCode": "class MemoryCompactor:\n    def __init__(self, heap_size):\n        self.heap_size = heap_size\n        self.allocations = {}  # start_addr -> {'size': N, 'id': obj_id}\n        self.object_refs = {}  # obj_id -> start_addr\n\n    def compact(self):\n        \"\"\"\n        Compact memory by moving allocations to eliminate gaps.\n        Returns: dict mapping old_address -> new_address\n        \"\"\"\n        # TODO: Move allocations to eliminate fragmentation\n        pass",
+    "solution": "class MemoryCompactor:\n    def __init__(self, heap_size):\n        self.heap_size = heap_size\n        self.allocations = {}  # start_addr -> {'size': N, 'id': obj_id}\n        self.object_refs = {}  # obj_id -> start_addr\n\n    def allocate(self, obj_id, size):\n        \"\"\"Allocate memory for an object.\"\"\"\n        # Find free space (simplified: linear search)\n        occupied = set()\n        for addr, alloc in self.allocations.items():\n            for i in range(addr, addr + alloc['size']):\n                occupied.add(i)\n\n        # Find first fit\n        for start in range(self.heap_size - size + 1):\n            if all(i not in occupied for i in range(start, start + size)):\n                self.allocations[start] = {'size': size, 'id': obj_id}\n                self.object_refs[obj_id] = start\n                return start\n\n        return None\n\n    def free(self, obj_id):\n        \"\"\"Free an object's memory.\"\"\"\n        if obj_id in self.object_refs:\n            addr = self.object_refs[obj_id]\n            del self.allocations[addr]\n            del self.object_refs[obj_id]\n\n    def compact(self):\n        \"\"\"\n        Compact memory by moving allocations to eliminate gaps.\n        Returns: dict mapping old_address -> new_address\n        \"\"\"\n        # Sort allocations by address\n        sorted_allocs = sorted(self.allocations.items(), key=lambda x: x[0])\n\n        relocation_map = {}\n        new_allocations = {}\n        new_object_refs = {}\n\n        next_addr = 0\n\n        for old_addr, alloc in sorted_allocs:\n            obj_id = alloc['id']\n            size = alloc['size']\n\n            # Move to next available address\n            new_addr = next_addr\n            relocation_map[old_addr] = new_addr\n\n            # Update allocations\n            new_allocations[new_addr] = {'size': size, 'id': obj_id}\n            new_object_refs[obj_id] = new_addr\n\n            next_addr += size\n\n        # Update internal state\n        self.allocations = new_allocations\n        self.object_refs = new_object_refs\n\n        return relocation_map\n\n    def fragmentation(self):\n        \"\"\"Calculate fragmentation: (largest_gap / total_free) if free > 0, else 0.\"\"\"\n        if not self.allocations:\n            return 0.0\n\n        # Find all gaps\n        occupied = []\n        for addr, alloc in self.allocations.items():\n            occupied.append((addr, addr + alloc['size']))\n\n        occupied.sort()\n\n        gaps = []\n        last_end = 0\n\n        for start, end in occupied:\n            if start > last_end:\n                gaps.append(start - last_end)\n            last_end = end\n\n        # Gap at end\n        if last_end < self.heap_size:\n            gaps.append(self.heap_size - last_end)\n\n        if not gaps:\n            return 0.0\n\n        total_free = sum(gaps)\n        largest_gap = max(gaps)\n\n        return largest_gap / total_free if total_free > 0 else 0.0",
+    "testCases": [
+      {
+        "input": "mc = MemoryCompactor(1000)\nmc.allocate('obj1', 100)\nmc.allocate('obj2', 200)\nmc.free('obj1')\nmc.allocate('obj3', 50)\nreloc = mc.compact()\nprint(mc.object_refs['obj3'])",
+        "expectedOutput": "200",
+        "isHidden": false,
+        "description": "Objects compacted to eliminate gaps"
+      },
+      {
+        "input": "mc = MemoryCompactor(1000)\nmc.allocate('a', 100)\nmc.allocate('b', 100)\nreloc = mc.compact()\nprint(len(reloc))",
+        "expectedOutput": "2",
+        "isHidden": false,
+        "description": "Relocation map for all objects"
+      },
+      {
+        "input": "mc = MemoryCompactor(1000)\nmc.allocate('x', 100)\nmc.allocate('y', 100)\nmc.free('x')\nmc.allocate('z', 50)\nbefore_frag = mc.fragmentation()\nmc.compact()\nafter_frag = mc.fragmentation()\nprint(after_frag < before_frag)",
+        "isHidden": true,
+        "description": "Compaction reduces fragmentation"
+      }
+    ],
+    "hints": [
+      "Sort allocations by address",
+      "Move each allocation to the next available address sequentially",
+      "Maintain a mapping of old addresses to new addresses",
+      "After compaction, all allocations should be contiguous"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs304-t7-ex13",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-7",
+    "title": "JIT Code Cache",
+    "difficulty": 3,
+    "description": "Implement a code cache for a JIT compiler that manages compiled code and handles cache eviction.",
+    "starterCode": "class JITCodeCache:\n    def __init__(self, max_size):\n        self.max_size = max_size\n        self.cache = {}  # bytecode_id -> {'code': ..., 'size': N, 'hits': M}\n        self.current_size = 0\n\n    def compile_and_cache(self, bytecode_id, compiled_code, code_size):\n        \"\"\"\n        Add compiled code to cache.\n        If cache is full, evict least-used entries.\n        \"\"\"\n        # TODO: Implement caching with LRU eviction\n        pass\n\n    def lookup(self, bytecode_id):\n        \"\"\"Look up compiled code. Returns code or None.\"\"\"\n        # TODO: Return cached code and update stats\n        pass",
+    "solution": "class JITCodeCache:\n    def __init__(self, max_size):\n        self.max_size = max_size\n        self.cache = {}  # bytecode_id -> {'code': ..., 'size': N, 'hits': M, 'last_used': T}\n        self.current_size = 0\n        self.time = 0\n\n    def compile_and_cache(self, bytecode_id, compiled_code, code_size):\n        \"\"\"\n        Add compiled code to cache.\n        If cache is full, evict least-used entries.\n        \"\"\"\n        # Check if already cached\n        if bytecode_id in self.cache:\n            return\n\n        # Make room if necessary\n        while self.current_size + code_size > self.max_size and self.cache:\n            self.evict_lru()\n\n        # Add to cache\n        if self.current_size + code_size <= self.max_size:\n            self.cache[bytecode_id] = {\n                'code': compiled_code,\n                'size': code_size,\n                'hits': 0,\n                'last_used': self.time\n            }\n            self.current_size += code_size\n            self.time += 1\n\n    def lookup(self, bytecode_id):\n        \"\"\"Look up compiled code. Returns code or None.\"\"\"\n        if bytecode_id in self.cache:\n            entry = self.cache[bytecode_id]\n            entry['hits'] += 1\n            entry['last_used'] = self.time\n            self.time += 1\n            return entry['code']\n\n        return None\n\n    def evict_lru(self):\n        \"\"\"Evict least recently used entry.\"\"\"\n        if not self.cache:\n            return\n\n        # Find LRU entry\n        lru_id = None\n        lru_time = float('inf')\n\n        for bytecode_id, entry in self.cache.items():\n            if entry['last_used'] < lru_time:\n                lru_time = entry['last_used']\n                lru_id = bytecode_id\n\n        # Evict it\n        if lru_id:\n            entry = self.cache[lru_id]\n            self.current_size -= entry['size']\n            del self.cache[lru_id]",
+    "testCases": [
+      {
+        "input": "cache = JITCodeCache(max_size=100)\ncache.compile_and_cache('func1', 'compiled_code_1', 50)\ncode = cache.lookup('func1')\nprint(code)",
+        "expectedOutput": "compiled_code_1",
+        "isHidden": false,
+        "description": "Lookup cached code"
+      },
+      {
+        "input": "cache = JITCodeCache(max_size=100)\ncache.compile_and_cache('func1', 'code1', 60)\ncache.compile_and_cache('func2', 'code2', 60)\nprint('func1' in cache.cache)",
+        "expectedOutput": "False",
+        "isHidden": false,
+        "description": "LRU eviction when cache is full"
+      },
+      {
+        "input": "cache = JITCodeCache(max_size=100)\ncache.compile_and_cache('a', 'code_a', 40)\ncache.compile_and_cache('b', 'code_b', 40)\ncache.lookup('a')\ncache.compile_and_cache('c', 'code_c', 40)\nprint('b' in cache.cache)",
+        "isHidden": true,
+        "description": "Recent lookup prevents eviction"
+      }
+    ],
+    "hints": [
+      "Track the size of cached code to enforce size limit",
+      "Use LRU (Least Recently Used) eviction policy",
+      "Update last-used time on each lookup",
+      "When adding code, evict entries until there is enough space"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs304-t7-ex14",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-7",
+    "title": "Position-Independent Code Generator",
+    "difficulty": 4,
+    "description": "Generate position-independent code (PIC) that can be loaded at any memory address.",
+    "starterCode": "class PICGenerator:\n    def __init__(self):\n        self.got = {}  # Global Offset Table: symbol -> GOT offset\n        self.got_size = 0\n\n    def add_global_symbol(self, symbol):\n        \"\"\"Add a global symbol to GOT.\"\"\"\n        # TODO: Add symbol to GOT if not present\n        pass\n\n    def generate_call(self, function_name):\n        \"\"\"\n        Generate PIC code to call a function.\n        Uses GOT for indirection.\n        \"\"\"\n        # TODO: Generate code using GOT\n        pass",
+    "solution": "class PICGenerator:\n    def __init__(self):\n        self.got = {}  # Global Offset Table: symbol -> GOT offset\n        self.got_size = 0\n        self.instructions = []\n\n    def add_global_symbol(self, symbol):\n        \"\"\"Add a global symbol to GOT.\"\"\"\n        if symbol not in self.got:\n            self.got[symbol] = self.got_size\n            self.got_size += 4  # Assume 4-byte pointers\n\n    def generate_call(self, function_name):\n        \"\"\"\n        Generate PIC code to call a function.\n        Uses GOT for indirection.\n        \"\"\"\n        # Ensure function is in GOT\n        self.add_global_symbol(function_name)\n\n        got_offset = self.got[function_name]\n\n        # Generate PIC code:\n        # 1. Get PC (program counter)\n        # 2. Calculate GOT address relative to PC\n        # 3. Load function address from GOT\n        # 4. Call the function\n\n        self.instructions.extend([\n            f\"# Call {function_name} via GOT\",\n            f\"CALL get_pc\",  # Get PC into a register\n            f\"ADD r_pc, GOT_BASE\",  # Calculate GOT base\n            f\"LOAD r_func, [r_pc + {got_offset}]\",  # Load function address\n            f\"CALL r_func\"  # Indirect call\n        ])\n\n        return self.instructions\n\n    def generate_global_access(self, var_name):\n        \"\"\"Generate PIC code to access a global variable.\"\"\"\n        self.add_global_symbol(var_name)\n\n        got_offset = self.got[var_name]\n\n        self.instructions.extend([\n            f\"# Access global {var_name} via GOT\",\n            f\"CALL get_pc\",\n            f\"ADD r_pc, GOT_BASE\",\n            f\"LOAD r_addr, [r_pc + {got_offset}]\",  # Load variable address\n            f\"LOAD r_val, [r_addr]\"  # Load variable value\n        ])\n\n        return self.instructions",
+    "testCases": [
+      {
+        "input": "pic = PICGenerator()\npic.generate_call('printf')\nprint('GOT' in pic.instructions[2])",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Generated code uses GOT"
+      },
+      {
+        "input": "pic = PICGenerator()\npic.add_global_symbol('foo')\npic.add_global_symbol('bar')\nprint(pic.got_size)",
+        "expectedOutput": "8",
+        "isHidden": false,
+        "description": "GOT size for 2 symbols"
+      },
+      {
+        "input": "pic = PICGenerator()\npic.generate_call('func1')\npic.generate_call('func1')\nprint(len(pic.got))",
+        "isHidden": true,
+        "description": "Same symbol not duplicated in GOT"
+      }
+    ],
+    "hints": [
+      "Use a Global Offset Table (GOT) to store addresses of global symbols",
+      "Generate code that calculates addresses relative to PC (program counter)",
+      "Load addresses from GOT using PC-relative addressing",
+      "All global accesses go through the GOT for position independence"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs304-t7-ex15",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-7",
+    "title": "Thread-Local Storage Manager",
+    "difficulty": 3,
+    "description": "Implement thread-local storage (TLS) that provides each thread with its own copy of variables.",
+    "starterCode": "class TLSManager:\n    def __init__(self):\n        self.tls_data = {}  # thread_id -> {var_name: value}\n        self.current_thread = None\n\n    def set_current_thread(self, thread_id):\n        \"\"\"Switch to a different thread context.\"\"\"\n        # TODO: Set current thread\n        pass\n\n    def set_tls_var(self, var_name, value):\n        \"\"\"Set a thread-local variable for current thread.\"\"\"\n        # TODO: Store in current thread's TLS\n        pass\n\n    def get_tls_var(self, var_name):\n        \"\"\"Get a thread-local variable for current thread.\"\"\"\n        # TODO: Retrieve from current thread's TLS\n        pass",
+    "solution": "class TLSManager:\n    def __init__(self):\n        self.tls_data = {}  # thread_id -> {var_name: value}\n        self.current_thread = None\n\n    def set_current_thread(self, thread_id):\n        \"\"\"Switch to a different thread context.\"\"\"\n        self.current_thread = thread_id\n\n        # Initialize TLS for this thread if needed\n        if thread_id not in self.tls_data:\n            self.tls_data[thread_id] = {}\n\n    def set_tls_var(self, var_name, value):\n        \"\"\"Set a thread-local variable for current thread.\"\"\"\n        if self.current_thread is None:\n            raise RuntimeError(\"No current thread set\")\n\n        if self.current_thread not in self.tls_data:\n            self.tls_data[self.current_thread] = {}\n\n        self.tls_data[self.current_thread][var_name] = value\n\n    def get_tls_var(self, var_name):\n        \"\"\"Get a thread-local variable for current thread.\"\"\"\n        if self.current_thread is None:\n            raise RuntimeError(\"No current thread set\")\n\n        if self.current_thread not in self.tls_data:\n            return None\n\n        return self.tls_data[self.current_thread].get(var_name)\n\n    def clear_thread_data(self, thread_id):\n        \"\"\"Clear all TLS data for a thread (when thread exits).\"\"\"\n        if thread_id in self.tls_data:\n            del self.tls_data[thread_id]",
+    "testCases": [
+      {
+        "input": "tls = TLSManager()\ntls.set_current_thread('thread1')\ntls.set_tls_var('x', 100)\nprint(tls.get_tls_var('x'))",
+        "expectedOutput": "100",
+        "isHidden": false,
+        "description": "Set and get TLS variable"
+      },
+      {
+        "input": "tls = TLSManager()\ntls.set_current_thread('thread1')\ntls.set_tls_var('x', 100)\ntls.set_current_thread('thread2')\ntls.set_tls_var('x', 200)\ntls.set_current_thread('thread1')\nprint(tls.get_tls_var('x'))",
+        "expectedOutput": "100",
+        "isHidden": false,
+        "description": "Each thread has its own TLS"
+      },
+      {
+        "input": "tls = TLSManager()\ntls.set_current_thread('thread1')\ntls.set_tls_var('y', 42)\ntls.clear_thread_data('thread1')\ntls.set_current_thread('thread1')\nprint(tls.get_tls_var('y') is None)",
+        "isHidden": true,
+        "description": "Clearing thread data works"
+      }
+    ],
+    "hints": [
+      "Maintain separate storage for each thread",
+      "Track which thread is currently executing",
+      "Store thread-local variables in a nested dictionary structure",
+      "Each thread accesses only its own TLS data"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs304-t7-ex16",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-7",
+    "title": "Lazy Symbol Resolution",
+    "difficulty": 4,
+    "description": "Implement lazy symbol resolution where symbols are only resolved when first used, improving startup time.",
+    "starterCode": "class LazyResolver:\n    def __init__(self):\n        self.symbol_table = {}  # symbol -> actual_address\n        self.plt = {}  # symbol -> PLT stub address\n        self.resolved = {}  # symbol -> resolved address\n\n    def register_symbol(self, symbol, address):\n        \"\"\"Register a symbol with its actual address.\"\"\"\n        self.symbol_table[symbol] = address\n\n    def create_plt_stub(self, symbol):\n        \"\"\"\n        Create a PLT (Procedure Linkage Table) stub for lazy resolution.\n        Returns PLT stub address.\n        \"\"\"\n        # TODO: Create stub that will resolve on first call\n        pass\n\n    def resolve_symbol(self, symbol):\n        \"\"\"\n        Resolve a symbol (called by PLT stub).\n        Returns actual address.\n        \"\"\"\n        # TODO: Look up symbol and cache resolution\n        pass",
+    "solution": "class LazyResolver:\n    def __init__(self):\n        self.symbol_table = {}  # symbol -> actual_address\n        self.plt = {}  # symbol -> PLT stub address\n        self.resolved = {}  # symbol -> resolved address\n        self.next_plt_addr = 10000  # PLT starts at 10000\n        self.resolve_count = 0  # Track resolution calls\n\n    def register_symbol(self, symbol, address):\n        \"\"\"Register a symbol with its actual address.\"\"\"\n        self.symbol_table[symbol] = address\n\n    def create_plt_stub(self, symbol):\n        \"\"\"\n        Create a PLT (Procedure Linkage Table) stub for lazy resolution.\n        Returns PLT stub address.\n        \"\"\"\n        if symbol in self.plt:\n            return self.plt[symbol]\n\n        # Allocate PLT stub address\n        plt_addr = self.next_plt_addr\n        self.next_plt_addr += 16  # Each stub is 16 bytes\n\n        self.plt[symbol] = {\n            'address': plt_addr,\n            'symbol': symbol,\n            'resolved': False\n        }\n\n        return plt_addr\n\n    def resolve_symbol(self, symbol):\n        \"\"\"\n        Resolve a symbol (called by PLT stub).\n        Returns actual address.\n        \"\"\"\n        self.resolve_count += 1\n\n        # Check if already resolved\n        if symbol in self.resolved:\n            return self.resolved[symbol]\n\n        # Look up symbol\n        if symbol not in self.symbol_table:\n            raise ValueError(f\"Undefined symbol: {symbol}\")\n\n        actual_address = self.symbol_table[symbol]\n\n        # Cache resolution\n        self.resolved[symbol] = actual_address\n\n        # Mark PLT stub as resolved\n        if symbol in self.plt:\n            self.plt[symbol]['resolved'] = True\n\n        return actual_address\n\n    def call_symbol(self, symbol):\n        \"\"\"\n        Simulate calling a symbol (goes through PLT).\n        Returns actual address to call.\n        \"\"\"\n        # Get or create PLT stub\n        if symbol not in self.plt:\n            self.create_plt_stub(symbol)\n\n        # Check if already resolved\n        if symbol in self.resolved:\n            return self.resolved[symbol]\n\n        # Not resolved - trigger lazy resolution\n        return self.resolve_symbol(symbol)",
+    "testCases": [
+      {
+        "input": "resolver = LazyResolver()\nresolver.register_symbol('printf', 5000)\nplt_addr = resolver.create_plt_stub('printf')\nprint(plt_addr)",
+        "expectedOutput": "10000",
+        "isHidden": false,
+        "description": "PLT stub created at fixed address"
+      },
+      {
+        "input": "resolver = LazyResolver()\nresolver.register_symbol('malloc', 6000)\naddr = resolver.call_symbol('malloc')\nprint(addr)",
+        "expectedOutput": "6000",
+        "isHidden": false,
+        "description": "Lazy resolution returns actual address"
+      },
+      {
+        "input": "resolver = LazyResolver()\nresolver.register_symbol('foo', 7000)\nresolver.call_symbol('foo')\nresolver.call_symbol('foo')\nprint(resolver.resolve_count)",
+        "isHidden": true,
+        "description": "Symbol resolved only once"
+      }
+    ],
+    "hints": [
+      "Create PLT stubs that defer symbol resolution until first call",
+      "Cache resolved addresses to avoid repeated lookups",
+      "Track which symbols have been resolved",
+      "First call triggers resolution, subsequent calls use cached address"
+    ],
+    "language": "python"
+  }
+]

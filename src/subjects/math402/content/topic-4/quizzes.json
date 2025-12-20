@@ -1,0 +1,197 @@
+[
+  {
+    "id": "math402-quiz-4a",
+    "subjectId": "math402",
+    "topicId": "math402-topic-4",
+    "title": "Numerical Differentiation and Integration - Fundamentals",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "The forward difference approximation f'(x) ≈ (f(x+h) - f(x))/h has truncation error of order:",
+        "options": [
+          "O(h^2)",
+          "O(h)",
+          "O(1)",
+          "O(h^3)"
+        ],
+        "correctAnswer": 1,
+        "explanation": "By Taylor expansion: f(x+h) = f(x) + hf'(x) + (h^2/2)f''(x) + ..., so the forward difference has error O(h)."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "Which formula provides a better approximation for f'(x)?",
+        "options": [
+          "Forward difference: (f(x+h) - f(x))/h",
+          "Backward difference: (f(x) - f(x-h))/h",
+          "Centered difference: (f(x+h) - f(x-h))/(2h)",
+          "All are equally accurate"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Centered difference is O(h^2) accurate (even terms in Taylor series cancel), while forward and backward differences are only O(h)."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "The trapezoidal rule is exact for linear functions.",
+        "correctAnswer": true,
+        "explanation": "True. The trapezoidal rule integrates by approximating the function as a line segment, so it exactly integrates any linear function f(x) = ax + b."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "Simpson's rule uses what type of interpolation?",
+        "options": [
+          "Linear",
+          "Quadratic",
+          "Cubic",
+          "Exponential"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Simpson's rule approximates the integrand using quadratic polynomials through three points, integrating exactly all polynomials of degree ≤ 2."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "The ____ rule divides the interval into equal subintervals and approximates the area using trapezoids.",
+        "correctAnswer": "trapezoidal",
+        "explanation": "The trapezoidal rule (or composite trapezoidal rule) sums the areas of trapezoids to approximate the integral."
+      }
+    ]
+  },
+  {
+    "id": "math402-quiz-4b",
+    "subjectId": "math402",
+    "topicId": "math402-topic-4",
+    "title": "Numerical Differentiation and Integration - Application",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "The composite trapezoidal rule with n subintervals has error of order:",
+        "options": [
+          "O(h)",
+          "O(h^2)",
+          "O(h^3)",
+          "O(h^4)"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The composite trapezoidal rule has global error O(h^2), where h = (b-a)/n. Each panel has local error O(h^3), but summing n = O(1/h) panels gives O(h^2)."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "Richardson extrapolation improves the order of accuracy by:",
+        "options": [
+          "Using smaller step sizes",
+          "Combining approximations at different step sizes to cancel leading error terms",
+          "Using higher-order polynomials",
+          "Averaging forward and backward differences"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Richardson extrapolation combines results at different h values (e.g., h and h/2) with appropriate weights to eliminate the leading error term, increasing accuracy."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "Simpson's rule has error O(h^4) per panel despite using only quadratic interpolation.",
+        "correctAnswer": true,
+        "explanation": "True. Simpson's rule is exact for cubics (not just quadratics) due to symmetry, giving local error O(h^5) and global error O(h^4)."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "When computing numerical derivatives, making h too small can:",
+        "options": [
+          "Increase truncation error",
+          "Increase roundoff error",
+          "Improve accuracy indefinitely",
+          "Have no effect"
+        ],
+        "correctAnswer": 1,
+        "explanation": "For very small h, the subtraction f(x+h) - f(x) suffers catastrophic cancellation, amplifying roundoff error. There's an optimal h balancing truncation and roundoff."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "Romberg integration uses Richardson extrapolation on:",
+        "options": [
+          "Simpson's rule",
+          "Gaussian quadrature",
+          "Trapezoidal rule",
+          "Midpoint rule"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Romberg integration applies Richardson extrapolation to the trapezoidal rule with successively halved step sizes, building a triangular table of increasingly accurate approximations."
+      }
+    ]
+  },
+  {
+    "id": "math402-quiz-4c",
+    "subjectId": "math402",
+    "topicId": "math402-topic-4",
+    "title": "Numerical Differentiation and Integration - Mastery",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "Gaussian quadrature with n points integrates exactly polynomials of degree up to:",
+        "options": [
+          "n-1",
+          "n",
+          "2n-1",
+          "2n"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Gaussian quadrature optimally chooses both nodes and weights, achieving exactness for polynomials of degree up to 2n-1 using n points (compared to 2n-1 for Newton-Cotes with n points)."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "The optimal step size h for centered difference approximation balancing truncation O(h^2) and roundoff O(ε/h) is approximately:",
+        "options": [
+          "ε",
+          "√ε",
+          "ε^{1/3}",
+          "ε^{2/3}"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Total error is Ch^2 + Dε/h. Minimizing: 2Ch - Dε/h^2 = 0 gives h ∝ (ε/C)^{1/3} = O(ε^{1/3}). For ε ≈ 10^{-16}, optimal h ≈ 10^{-5}."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "Adaptive quadrature methods recursively subdivide intervals where the estimated error exceeds a tolerance.",
+        "correctAnswer": true,
+        "explanation": "True. Adaptive methods like adaptive Simpson's estimate local error and refine the mesh only where needed, achieving target accuracy efficiently even for irregular integrands."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "For the Euler-Maclaurin formula, the trapezoidal rule has asymptotic error expansion in powers of:",
+        "options": [
+          "h",
+          "h^2",
+          "h and h^2",
+          "All powers of h"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The Euler-Maclaurin formula shows that trapezoidal rule error has asymptotic expansion in even powers: E = c_2h^2 + c_4h^4 + ... This enables Richardson extrapolation."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "Which statement about Gaussian vs Newton-Cotes quadrature is correct?",
+        "options": [
+          "Gaussian quadrature uses predetermined equally-spaced nodes",
+          "Newton-Cotes has higher degree of exactness for given n",
+          "Gaussian quadrature optimizes both nodes and weights for maximum exactness",
+          "They perform identically for polynomial integrands"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Gaussian quadrature chooses optimal (non-equally-spaced) nodes as zeros of orthogonal polynomials, plus optimal weights, achieving degree 2n-1 exactness vs n-1 for Newton-Cotes with n points."
+      }
+    ]
+  }
+]

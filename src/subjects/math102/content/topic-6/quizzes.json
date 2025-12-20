@@ -1,0 +1,167 @@
+[
+  {
+    "id": "math102-q6",
+    "subjectId": "math102",
+    "topicId": "math102-6",
+    "title": "Advanced Counting - Fundamentals",
+    "questions": [
+      {
+        "id": "math102-q6-1",
+        "type": "multiple_choice",
+        "prompt": "The generating function for the sequence 1, 1, 1, 1, ... is:",
+        "options": [
+          "1/(1+x)",
+          "1/(1-x)",
+          "x/(1-x)",
+          "1/(1-x)²"
+        ],
+        "correctAnswer": 1,
+        "explanation": "1 + x + x² + x³ + ... = 1/(1-x) for |x| < 1."
+      },
+      {
+        "id": "math102-q6-2",
+        "type": "code_output",
+        "prompt": "What is the 5th Bell number B(5)?",
+        "correctAnswer": "52",
+        "explanation": "B(5) = S(5,1) + S(5,2) + S(5,3) + S(5,4) + S(5,5) = 1 + 15 + 25 + 10 + 1 = 52."
+      },
+      {
+        "id": "math102-q6-3",
+        "type": "true_false",
+        "prompt": "Stirling numbers of the second kind S(n,k) count partitions of n elements into k non-empty subsets.",
+        "correctAnswer": true,
+        "explanation": "S(n,k) = number of ways to partition n elements into exactly k non-empty subsets."
+      },
+      {
+        "id": "math102-q6-4",
+        "type": "fill_blank",
+        "prompt": "The number of integer partitions of 5 is ____.",
+        "correctAnswer": "7",
+        "explanation": "Partitions: 5, 4+1, 3+2, 3+1+1, 2+2+1, 2+1+1+1, 1+1+1+1+1 = 7 total."
+      },
+      {
+        "id": "math102-q6-5",
+        "type": "multiple_choice",
+        "prompt": "S(4, 2), the Stirling number of the second kind, equals:",
+        "options": [
+          "3",
+          "6",
+          "7",
+          "11"
+        ],
+        "correctAnswer": 2,
+        "explanation": "S(4,2) = 7. Partitions of {1,2,3,4} into 2 non-empty subsets."
+      }
+    ]
+  },
+  {
+    "id": "math102-q6b",
+    "subjectId": "math102",
+    "topicId": "math102-6",
+    "title": "Advanced Counting - Application",
+    "questions": [
+      {
+        "id": "math102-q6b-1",
+        "type": "multiple_choice",
+        "prompt": "The recurrence for Stirling numbers S(n,k) is:",
+        "options": [
+          "S(n,k) = S(n-1,k-1) + S(n-1,k)",
+          "S(n,k) = k·S(n-1,k) + S(n-1,k-1)",
+          "S(n,k) = S(n-1,k-1) + k·S(n-1,k)",
+          "S(n,k) = n·S(n-1,k-1)"
+        ],
+        "correctAnswer": 1,
+        "explanation": "S(n,k) = k·S(n-1,k) + S(n-1,k-1). New element joins existing subset or forms new one."
+      },
+      {
+        "id": "math102-q6b-2",
+        "type": "true_false",
+        "prompt": "The number of partitions of n into distinct parts equals partitions into odd parts.",
+        "correctAnswer": true,
+        "explanation": "This is a classic partition identity proved using generating functions."
+      },
+      {
+        "id": "math102-q6b-3",
+        "type": "code_output",
+        "prompt": "If G(x) generates {1, 2, 3, 4, ...}, what generates {2, 4, 6, 8, ...}?",
+        "correctAnswer": "2G(x)",
+        "explanation": "Multiplying G(x) by 2 doubles each coefficient: {2, 4, 6, ...}."
+      },
+      {
+        "id": "math102-q6b-4",
+        "type": "multiple_choice",
+        "prompt": "The number of surjections from a 4-set to a 3-set is:",
+        "options": [
+          "18",
+          "24",
+          "36",
+          "81"
+        ],
+        "correctAnswer": 2,
+        "explanation": "3! × S(4,3) = 6 × 6 = 36. Or use inclusion-exclusion directly."
+      },
+      {
+        "id": "math102-q6b-5",
+        "type": "fill_blank",
+        "prompt": "The generating function for Fibonacci is x/(1 - x - ____).",
+        "correctAnswer": "x^2",
+        "explanation": "F(n) = F(n-1) + F(n-2) gives GF: x/(1 - x - x²)."
+      }
+    ]
+  },
+  {
+    "id": "math102-q6c",
+    "subjectId": "math102",
+    "topicId": "math102-6",
+    "title": "Advanced Counting - Advanced",
+    "questions": [
+      {
+        "id": "math102-q6c-1",
+        "type": "multiple_choice",
+        "prompt": "The unsigned Stirling number |s(4, 2)| counts:",
+        "options": [
+          "Partitions into 2 subsets",
+          "Permutations with 2 cycles",
+          "Rising factorials",
+          "Derangements"
+        ],
+        "correctAnswer": 1,
+        "explanation": "First kind Stirling numbers count permutations by number of cycles."
+      },
+      {
+        "id": "math102-q6c-2",
+        "type": "code_output",
+        "prompt": "What is S(5, 5)?",
+        "correctAnswer": "1",
+        "explanation": "S(n,n) = 1 always. Only one way to put each element in its own subset."
+      },
+      {
+        "id": "math102-q6c-3",
+        "type": "true_false",
+        "prompt": "Exponential generating functions are used for labeled structures (permutations).",
+        "correctAnswer": true,
+        "explanation": "EGFs use x^n/n! coefficients, suitable for ordered/labeled counting."
+      },
+      {
+        "id": "math102-q6c-4",
+        "type": "multiple_choice",
+        "prompt": "The Bell number B(n) satisfies:",
+        "options": [
+          "B(n) = Σ S(n,k)",
+          "B(n) = n!",
+          "B(n) = 2^n",
+          "B(n) = C(2n,n)"
+        ],
+        "correctAnswer": 0,
+        "explanation": "B(n) = Σ(k=0 to n) S(n,k), the total number of partitions."
+      },
+      {
+        "id": "math102-q6c-5",
+        "type": "fill_blank",
+        "prompt": "The partition function p(4) = ____.",
+        "correctAnswer": "5",
+        "explanation": "p(4): 4, 3+1, 2+2, 2+1+1, 1+1+1+1 = 5 partitions."
+      }
+    ]
+  }
+]

@@ -1,0 +1,178 @@
+[
+  {
+    "id": "cs105-quiz-1",
+    "subjectId": "cs105",
+    "topicId": "cs105-topic-1",
+    "title": "C Basics Quiz 1: Syntax and Variables",
+    "questions": [
+      {
+        "id": "cs105-q1-1",
+        "type": "multiple_choice",
+        "prompt": "What is the correct way to declare an integer variable named count in C?",
+        "options": [
+          "int count;",
+          "integer count;",
+          "count: int;",
+          "var count: int;"
+        ],
+        "correctAnswer": 0,
+        "explanation": "In C, variables are declared with the type followed by the variable name, so \"int count;\" is correct."
+      },
+      {
+        "id": "cs105-q1-2",
+        "type": "multiple_choice",
+        "prompt": "Which header file must be included to use printf and scanf?",
+        "options": [
+          "stdlib.h",
+          "stdio.h",
+          "string.h",
+          "conio.h"
+        ],
+        "correctAnswer": 1,
+        "explanation": "stdio.h (standard input/output header) contains declarations for printf, scanf, and other I/O functions."
+      },
+      {
+        "id": "cs105-q1-3",
+        "type": "code_output",
+        "prompt": "What does the following code print?",
+        "codeSnippet": "int x = 5;\nint y = 2;\nprintf(\"%d\", x / y);",
+        "correctAnswer": "2",
+        "explanation": "Integer division in C truncates the decimal part, so 5/2 equals 2, not 2.5."
+      },
+      {
+        "id": "cs105-q1-4",
+        "type": "multiple_choice",
+        "prompt": "What is the size of char data type in C?",
+        "options": [
+          "1 byte",
+          "2 bytes",
+          "4 bytes",
+          "Depends on system"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The char type is always exactly 1 byte in C, which is guaranteed by the standard."
+      },
+      {
+        "id": "cs105-q1-5",
+        "type": "true_false",
+        "prompt": "In C, variable names can start with a number.",
+        "correctAnswer": false,
+        "explanation": "C variable names must start with a letter or underscore. They cannot start with a number."
+      }
+    ]
+  },
+  {
+    "id": "cs105-quiz-1b",
+    "subjectId": "cs105",
+    "topicId": "cs105-topic-1",
+    "title": "C Basics Quiz 2: Operators and Expressions",
+    "questions": [
+      {
+        "id": "cs105-q1b-1",
+        "type": "code_output",
+        "prompt": "What does this code print?",
+        "codeSnippet": "int a = 10, b = 3;\nprintf(\"%d\", a % b);",
+        "correctAnswer": "1",
+        "explanation": "The modulo operator % returns the remainder. 10 divided by 3 is 3 with remainder 1."
+      },
+      {
+        "id": "cs105-q1b-2",
+        "type": "multiple_choice",
+        "prompt": "What is the value of x after: int x = 5; x += 3;",
+        "options": [
+          "5",
+          "3",
+          "8",
+          "15"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The += operator adds the right operand to the left operand. x += 3 is equivalent to x = x + 3."
+      },
+      {
+        "id": "cs105-q1b-3",
+        "type": "code_output",
+        "prompt": "What does this code print?",
+        "codeSnippet": "int x = 5;\nprintf(\"%d %d\", x++, ++x);",
+        "correctAnswer": "5 7",
+        "explanation": "x++ returns 5 then increments to 6. ++x increments to 7 then returns 7. (Note: behavior may vary due to sequence points)"
+      },
+      {
+        "id": "cs105-q1b-4",
+        "type": "multiple_choice",
+        "prompt": "Which operator has the highest precedence?",
+        "options": [
+          "+",
+          "*",
+          "==",
+          "()"
+        ],
+        "correctAnswer": 3,
+        "explanation": "Parentheses have the highest precedence and are used to override default operator precedence."
+      },
+      {
+        "id": "cs105-q1b-5",
+        "type": "true_false",
+        "prompt": "The expression 5 == 5 evaluates to 1 in C.",
+        "correctAnswer": true,
+        "explanation": "C uses 1 for true and 0 for false. The equality operator returns 1 if operands are equal."
+      }
+    ]
+  },
+  {
+    "id": "cs105-quiz-1c",
+    "subjectId": "cs105",
+    "topicId": "cs105-topic-1",
+    "title": "C Basics Quiz 3: Control Flow and Functions",
+    "questions": [
+      {
+        "id": "cs105-q1c-1",
+        "type": "code_output",
+        "prompt": "What does this code print?",
+        "codeSnippet": "for (int i = 0; i < 3; i++) {\n    printf(\"%d \", i);\n}",
+        "correctAnswer": "0 1 2 ",
+        "explanation": "The loop iterates while i < 3, printing 0, 1, 2 with spaces after each."
+      },
+      {
+        "id": "cs105-q1c-2",
+        "type": "multiple_choice",
+        "prompt": "Which statement is used to exit a loop immediately?",
+        "options": [
+          "return",
+          "break",
+          "continue",
+          "exit"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The break statement exits the innermost loop immediately."
+      },
+      {
+        "id": "cs105-q1c-3",
+        "type": "multiple_choice",
+        "prompt": "What happens if a function with return type int does not return a value?",
+        "options": [
+          "Compilation error",
+          "Returns 0",
+          "Undefined behavior",
+          "Returns -1"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Not returning a value from a non-void function is undefined behavior. The compiler may warn but typically allows it."
+      },
+      {
+        "id": "cs105-q1c-4",
+        "type": "code_output",
+        "prompt": "What does this code print?",
+        "codeSnippet": "int i = 0;\nwhile (i < 5) {\n    if (i == 3) break;\n    printf(\"%d \", i++);\n}",
+        "correctAnswer": "0 1 2 ",
+        "explanation": "The loop prints 0, 1, 2, then when i becomes 3, break exits the loop before printing 3."
+      },
+      {
+        "id": "cs105-q1c-5",
+        "type": "true_false",
+        "prompt": "A function in C can return multiple values directly.",
+        "correctAnswer": false,
+        "explanation": "C functions can only return a single value. To return multiple values, use pointers or structures."
+      }
+    ]
+  }
+]

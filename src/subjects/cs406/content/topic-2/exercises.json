@@ -1,0 +1,101 @@
+[
+  {
+    "id": "cs406-t2-ex01",
+    "subjectId": "cs406",
+    "topicId": "cs406-topic-2",
+    "title": "Breadth-First Search Implementation",
+    "difficulty": 2,
+    "description": "Implement BFS for finding the shortest path in a graph.\n\nYour implementation should:\n- Use a queue for frontier management\n- Track explored nodes\n- Return the path from start to goal\n- Handle graphs with cycles",
+    "starterCode": "from collections import deque\n\ndef bfs(graph, start, goal):\n    \"\"\"\n    graph: dict where graph[node] = list of neighbors\n    start: starting node\n    goal: goal node\n    Returns: path from start to goal, or None if no path exists\n    \"\"\"\n    # TODO: Implement BFS\n    pass\n\n# Example:\n# graph = {\n#     'A': ['B', 'C'],\n#     'B': ['A', 'D', 'E'],\n#     'C': ['A', 'F'],\n#     'D': ['B'],\n#     'E': ['B', 'F'],\n#     'F': ['C', 'E']\n# }\n# print(bfs(graph, 'A', 'F'))  # Should return path like ['A', 'C', 'F']",
+    "solution": "from collections import deque\n\ndef bfs(graph, start, goal):\n    \"\"\"\n    graph: dict where graph[node] = list of neighbors\n    start: starting node\n    goal: goal node\n    Returns: path from start to goal, or None if no path exists\n    \"\"\"\n    if start == goal:\n        return [start]\n\n    # Queue stores (node, path to that node)\n    frontier = deque([(start, [start])])\n    explored = set()\n\n    while frontier:\n        node, path = frontier.popleft()\n\n        if node in explored:\n            continue\n\n        explored.add(node)\n\n        for neighbor in graph.get(node, []):\n            if neighbor in explored:\n                continue\n\n            new_path = path + [neighbor]\n\n            if neighbor == goal:\n                return new_path\n\n            frontier.append((neighbor, new_path))\n\n    return None  # No path found\n\n# Test\ngraph = {\n    'A': ['B', 'C'],\n    'B': ['A', 'D', 'E'],\n    'C': ['A', 'F'],\n    'D': ['B'],\n    'E': ['B', 'F'],\n    'F': ['C', 'E']\n}\nprint(bfs(graph, 'A', 'F'))  # ['A', 'C', 'F']\nprint(bfs(graph, 'A', 'D'))  # ['A', 'B', 'D']",
+    "testCases": [
+      {
+        "input": "bfs(graph, 'A', 'F')",
+        "isHidden": false,
+        "description": "Test BFS finds shortest path from A to F"
+      },
+      {
+        "input": "bfs(graph, 'A', 'D')",
+        "isHidden": false,
+        "description": "Test BFS finds shortest path from A to D"
+      },
+      {
+        "input": "bfs(graph, 'A', 'A')",
+        "isHidden": false,
+        "description": "Test BFS with start == goal"
+      }
+    ],
+    "hints": [
+      "Use a deque (double-ended queue) for efficient frontier management",
+      "Track the path to each node, not just the node itself, in the frontier",
+      "Use a set to keep track of explored nodes to avoid revisiting them"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs406-t2-ex02",
+    "subjectId": "cs406",
+    "topicId": "cs406-topic-2",
+    "title": "A* Search with Manhattan Distance",
+    "difficulty": 3,
+    "description": "Implement A* search for pathfinding on a 2D grid with obstacles.\n\nYour implementation should:\n- Use Manhattan distance as heuristic\n- Handle obstacles (blocked cells)\n- Return the optimal path\n- Use a priority queue for the frontier",
+    "starterCode": "import heapq\n\ndef manhattan_distance(pos1, pos2):\n    # Calculate Manhattan distance\n    pass\n\ndef astar(grid, start, goal):\n    \"\"\"\n    grid: 2D list where 0=free, 1=obstacle\n    start: (x, y) starting position\n    goal: (x, y) goal position\n    Returns: list of (x, y) positions in path, or None\n    \"\"\"\n    # TODO: Implement A*\n    pass\n\n# Example:\n# grid = [\n#     [0, 0, 0, 0, 0],\n#     [0, 1, 1, 1, 0],\n#     [0, 0, 0, 0, 0],\n#     [0, 1, 1, 1, 0],\n#     [0, 0, 0, 0, 0]\n# ]\n# print(astar(grid, (0, 0), (4, 4)))",
+    "solution": "import heapq\n\ndef manhattan_distance(pos1, pos2):\n    return abs(pos1[0] - pos2[0]) + abs(pos1[1] - pos2[1])\n\ndef astar(grid, start, goal):\n    \"\"\"\n    grid: 2D list where 0=free, 1=obstacle\n    start: (x, y) starting position\n    goal: (x, y) goal position\n    Returns: list of (x, y) positions in path, or None\n    \"\"\"\n    rows, cols = len(grid), len(grid[0])\n\n    # Priority queue: (f_score, g_score, position, path)\n    frontier = [(0 + manhattan_distance(start, goal), 0, start, [start])]\n    explored = set()\n\n    while frontier:\n        f_score, g_score, pos, path = heapq.heappop(frontier)\n\n        if pos == goal:\n            return path\n\n        if pos in explored:\n            continue\n\n        explored.add(pos)\n\n        # Explore neighbors (up, down, left, right)\n        x, y = pos\n        for dx, dy in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            nx, ny = x + dx, y + dy\n\n            # Check bounds\n            if not (0 <= nx < cols and 0 <= ny < rows):\n                continue\n\n            # Check obstacle\n            if grid[ny][nx] == 1:\n                continue\n\n            if (nx, ny) in explored:\n                continue\n\n            new_g = g_score + 1\n            new_h = manhattan_distance((nx, ny), goal)\n            new_f = new_g + new_h\n            new_path = path + [(nx, ny)]\n\n            heapq.heappush(frontier, (new_f, new_g, (nx, ny), new_path))\n\n    return None  # No path found\n\n# Test\ngrid = [\n    [0, 0, 0, 0, 0],\n    [0, 1, 1, 1, 0],\n    [0, 0, 0, 0, 0],\n    [0, 1, 1, 1, 0],\n    [0, 0, 0, 0, 0]\n]\npath = astar(grid, (0, 0), (4, 4))\nprint(path)\nprint(f\"Path length: {len(path) if path else 'No path'}\")",
+    "testCases": [
+      {
+        "input": "astar(grid, (0, 0), (4, 4))",
+        "isHidden": false,
+        "description": "Test A* finds path in grid with obstacles"
+      },
+      {
+        "input": "manhattan_distance((0, 0), (3, 4))",
+        "isHidden": false,
+        "description": "Test Manhattan distance calculation"
+      },
+      {
+        "input": "astar(grid, (0, 0), (1, 1))",
+        "isHidden": false,
+        "description": "Test A* finds short path"
+      }
+    ],
+    "hints": [
+      "Manhattan distance is |x1-x2| + |y1-y2|, a common heuristic for grid-based pathfinding",
+      "Use a priority queue (heapq) to always expand the node with lowest f = g + h",
+      "Remember to check for obstacles and bounds before adding neighbors to the frontier"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs406-t2-ex03",
+    "subjectId": "cs406",
+    "topicId": "cs406-topic-2",
+    "title": "Hill Climbing for 8-Queens",
+    "difficulty": 3,
+    "description": "Implement hill climbing to solve the 8-queens problem.\n\nYour implementation should:\n- Start with a random configuration\n- Use conflicts as the cost function\n- Implement steepest-ascent hill climbing\n- Detect local minima\n- Support random restarts",
+    "starterCode": "import random\n\ndef count_conflicts(board):\n    # Count number of pairs of queens attacking each other\n    pass\n\ndef get_neighbors(board):\n    # Generate all neighbor states (move one queen in its column)\n    pass\n\ndef hill_climbing(n=8, max_restarts=100):\n    # Implement hill climbing with random restarts\n    pass",
+    "solution": "import random\n\ndef count_conflicts(board):\n    \"\"\"Count number of pairs of queens attacking each other.\"\"\"\n    n = len(board)\n    conflicts = 0\n\n    for i in range(n):\n        for j in range(i + 1, n):\n            # Same row\n            if board[i] == board[j]:\n                conflicts += 1\n            # Same diagonal\n            if abs(board[i] - board[j]) == abs(i - j):\n                conflicts += 1\n\n    return conflicts\n\ndef get_neighbors(board):\n    \"\"\"Generate all neighbor states by moving one queen in its column.\"\"\"\n    n = len(board)\n    neighbors = []\n\n    for col in range(n):\n        for row in range(n):\n            if row != board[col]:\n                neighbor = board[:]\n                neighbor[col] = row\n                neighbors.append(neighbor)\n\n    return neighbors\n\ndef hill_climbing(n=8, max_restarts=100):\n    \"\"\"Hill climbing with random restarts for n-queens.\"\"\"\n\n    for restart in range(max_restarts):\n        # Random initial state: each queen in random row of its column\n        current = [random.randint(0, n - 1) for _ in range(n)]\n        current_cost = count_conflicts(current)\n\n        while True:\n            if current_cost == 0:\n                return current, restart  # Solution found\n\n            # Find best neighbor\n            neighbors = get_neighbors(current)\n            best_neighbor = None\n            best_cost = current_cost\n\n            for neighbor in neighbors:\n                cost = count_conflicts(neighbor)\n                if cost < best_cost:\n                    best_neighbor = neighbor\n                    best_cost = cost\n\n            # If no improvement, we're stuck (local minimum)\n            if best_neighbor is None:\n                break  # Restart\n\n            current = best_neighbor\n            current_cost = best_cost\n\n    return None, max_restarts  # Failed to find solution\n\n# Test\nsolution, restarts = hill_climbing(8, max_restarts=100)\nif solution:\n    print(f\"Solution found after {restarts} restarts:\")\n    print(solution)\n    print(f\"Conflicts: {count_conflicts(solution)}\")\nelse:\n    print(\"No solution found\")\n\n# Visualize\ndef print_board(board):\n    n = len(board)\n    for row in range(n):\n        line = \"\"\n        for col in range(n):\n            if board[col] == row:\n                line += \"Q \"\n            else:\n                line += \". \"\n        print(line)\n\nif solution:\n    print(\"\\nBoard visualization:\")\n    print_board(solution)",
+    "testCases": [
+      {
+        "input": "hill_climbing(8, max_restarts=100)",
+        "isHidden": false,
+        "description": "Test hill climbing solves 8-queens"
+      },
+      {
+        "input": "count_conflicts([0,1,2,3,4,5,6,7])",
+        "isHidden": false,
+        "description": "Test conflict counting for diagonal board"
+      },
+      {
+        "input": "len(get_neighbors([0,0,0,0,0,0,0,0]))",
+        "isHidden": false,
+        "description": "Test neighbor generation produces correct number of states"
+      }
+    ],
+    "hints": [
+      "Count conflicts by checking all pairs of queens for row and diagonal attacks",
+      "Steepest-ascent means always picking the best neighbor, not just the first improvement",
+      "When stuck in a local minimum (no improving neighbors), restart with a new random state"
+    ],
+    "language": "python"
+  }
+]

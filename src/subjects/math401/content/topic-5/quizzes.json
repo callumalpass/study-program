@@ -1,0 +1,213 @@
+[
+  {
+    "id": "math401-quiz-5-1",
+    "subjectId": "math401",
+    "topicId": "math401-topic-5",
+    "title": "Power Series Basics",
+    "questions": [
+      {
+        "id": "math401-q41",
+        "type": "multiple_choice",
+        "prompt": "What is the radius of convergence of Σ(z^n/n!)?",
+        "options": [
+          "0",
+          "1",
+          "e",
+          "∞"
+        ],
+        "correctAnswer": "∞",
+        "explanation": "This is the series for e^z, which is entire. Using ratio test: lim(1/(n+1)!) / (1/n!) = 0, so R = ∞"
+      },
+      {
+        "id": "math401-q42",
+        "type": "multiple_choice",
+        "prompt": "The Taylor series of f around a has radius R. What is R?",
+        "options": [
+          "Distance to nearest pole",
+          "Distance to nearest zero",
+          "1",
+          "∞"
+        ],
+        "correctAnswer": "Distance to nearest pole",
+        "explanation": "The radius of convergence is the distance from the center to the nearest singularity"
+      },
+      {
+        "id": "math401-q43",
+        "type": "true_false",
+        "prompt": "A Laurent series can have both positive and negative powers of (z - a).",
+        "options": [
+          "True",
+          "False"
+        ],
+        "correctAnswer": "True",
+        "explanation": "Laurent series: f(z) = Σ_{n=-∞}^∞ aₙ(z-a)^n, including negative powers"
+      },
+      {
+        "id": "math401-q44",
+        "type": "multiple_choice",
+        "prompt": "What type of singularity does f(z) = 1/z have at z = 0?",
+        "options": [
+          "Removable",
+          "Pole of order 1",
+          "Pole of order 2",
+          "Essential"
+        ],
+        "correctAnswer": "Pole of order 1",
+        "explanation": "f(z) = 1/z has Laurent series with leading term z^(-1), so it's a simple pole"
+      },
+      {
+        "id": "math401-q45",
+        "type": "multiple_choice",
+        "prompt": "A removable singularity at z = a means that lim_{z→a} f(z) is:",
+        "options": [
+          "0",
+          "∞",
+          "Finite",
+          "Undefined"
+        ],
+        "correctAnswer": "Finite",
+        "explanation": "Removable singularity: limit exists and is finite, allowing f to be extended continuously"
+      }
+    ]
+  },
+  {
+    "id": "math401-quiz-5-2",
+    "subjectId": "math401",
+    "topicId": "math401-topic-5",
+    "title": "Laurent Series and Singularities",
+    "questions": [
+      {
+        "id": "math401-q46",
+        "type": "multiple_choice",
+        "prompt": "What type of singularity does f(z) = e^(1/z) have at z = 0?",
+        "options": [
+          "Removable",
+          "Pole",
+          "Essential",
+          "None"
+        ],
+        "correctAnswer": "Essential",
+        "explanation": "e^(1/z) = Σ(1/(n!z^n)) has infinitely many negative powers, so z = 0 is an essential singularity"
+      },
+      {
+        "id": "math401-q47",
+        "type": "true_false",
+        "prompt": "The Laurent series is unique for a given annular region.",
+        "options": [
+          "True",
+          "False"
+        ],
+        "correctAnswer": "True",
+        "explanation": "For a given function and annular region, the Laurent series coefficients are uniquely determined"
+      },
+      {
+        "id": "math401-q48",
+        "type": "multiple_choice",
+        "prompt": "Analytic continuation extends a function beyond its:",
+        "options": [
+          "Domain of analyticity",
+          "Range",
+          "Zeros",
+          "Poles"
+        ],
+        "correctAnswer": "Domain of analyticity",
+        "explanation": "Analytic continuation extends an analytic function to a larger domain while preserving analyticity"
+      },
+      {
+        "id": "math401-q49",
+        "type": "multiple_choice",
+        "prompt": "What is the order of the pole of f(z) = 1/(z²(z-1)) at z = 0?",
+        "options": [
+          "1",
+          "2",
+          "3",
+          "0"
+        ],
+        "correctAnswer": "2",
+        "explanation": "Near z = 0: f(z) ≈ 1/z² × 1/(0-1) = -1/z², so pole of order 2"
+      },
+      {
+        "id": "math401-q50",
+        "type": "true_false",
+        "prompt": "Within the radius of convergence, a power series can be differentiated term by term.",
+        "options": [
+          "True",
+          "False"
+        ],
+        "correctAnswer": "True",
+        "explanation": "Power series can be differentiated term by term within their radius of convergence"
+      }
+    ]
+  },
+  {
+    "id": "math401-quiz-5-3",
+    "subjectId": "math401",
+    "topicId": "math401-topic-5",
+    "title": "Series and Singularities Advanced",
+    "questions": [
+      {
+        "id": "math401-q91",
+        "type": "multiple_choice",
+        "prompt": "What is the radius of convergence of Σ(n!z^n)?",
+        "options": [
+          "0",
+          "1",
+          "e",
+          "∞"
+        ],
+        "correctAnswer": "0",
+        "explanation": "Using ratio test: lim|(n+1)!/n!| = lim(n+1) = ∞, so R = 1/∞ = 0"
+      },
+      {
+        "id": "math401-q92",
+        "type": "true_false",
+        "prompt": "A Laurent series in an annulus converges to an analytic function in that annulus.",
+        "options": [
+          "True",
+          "False"
+        ],
+        "correctAnswer": "True",
+        "explanation": "Laurent series converges to an analytic function in its annulus of convergence"
+      },
+      {
+        "id": "math401-q93",
+        "type": "multiple_choice",
+        "prompt": "What is the coefficient a₋₁ in a Laurent series called?",
+        "options": [
+          "Leading coefficient",
+          "Residue",
+          "Principal part",
+          "Order"
+        ],
+        "correctAnswer": "Residue",
+        "explanation": "The coefficient of (z-a)^(-1) in the Laurent series is called the residue"
+      },
+      {
+        "id": "math401-q94",
+        "type": "multiple_choice",
+        "prompt": "If f has a removable singularity at z = a, then lim_{z→a} f(z) is:",
+        "options": [
+          "0",
+          "∞",
+          "Finite and non-zero",
+          "Finite (possibly 0)"
+        ],
+        "correctAnswer": "Finite (possibly 0)",
+        "explanation": "Removable singularity means the limit exists and is finite"
+      },
+      {
+        "id": "math401-q95",
+        "type": "multiple_choice",
+        "prompt": "A function f has an essential singularity at a if:",
+        "options": [
+          "lim f(z) = ∞",
+          "lim f(z) exists",
+          "Laurent series has infinitely many negative powers",
+          "f is undefined at a"
+        ],
+        "correctAnswer": "Laurent series has infinitely many negative powers",
+        "explanation": "Essential singularity is characterized by infinitely many negative power terms in Laurent series"
+      }
+    ]
+  }
+]

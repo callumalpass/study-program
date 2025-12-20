@@ -1,0 +1,179 @@
+[
+  {
+    "id": "math404-quiz-5a",
+    "subjectId": "math404",
+    "topicId": "math404-topic-5",
+    "title": "Convex Optimization - Fundamentals",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "What makes semidefinite programming (SDP) special?",
+        "options": [
+          "Variables are vectors",
+          "Constraints include matrix positive semidefiniteness",
+          "Only linear objectives allowed",
+          "Always has integer solutions"
+        ],
+        "correctAnswer": 1,
+        "explanation": "SDP has constraints of the form X ⪰ 0 (matrix is positive semidefinite)."
+      },
+      {
+        "id": "q2",
+        "type": "true_false",
+        "prompt": "Every local minimum of a convex optimization problem is a global minimum.",
+        "correctAnswer": true,
+        "explanation": "This is a fundamental property of convex optimization that makes it tractable."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "Second-order cone programming (SOCP) involves constraints of the form:",
+        "options": [
+          "||Ax + b|| = c",
+          "||Ax + b|| ≤ cᵀx + d",
+          "xᵀQx ≤ 1",
+          "Ax = b"
+        ],
+        "correctAnswer": 1,
+        "explanation": "SOCP constraints have the form ||Ax + b|| ≤ cᵀx + d, defining a second-order (Lorentz) cone."
+      },
+      {
+        "id": "q4",
+        "type": "fill_blank",
+        "prompt": "In geometric programming, a _____ is a sum of monomials.",
+        "correctAnswer": "posynomial",
+        "explanation": "A posynomial is a function of the form Σcᵢx₁^(aᵢ₁)···xₙ^(aᵢₙ) with cᵢ > 0, which becomes convex after log transformation."
+      },
+      {
+        "id": "q5",
+        "type": "true_false",
+        "prompt": "Convex optimization problems can always be solved in polynomial time.",
+        "correctAnswer": true,
+        "explanation": "Convex optimization problems can be solved to arbitrary precision in polynomial time using interior-point methods."
+      }
+    ]
+  },
+  {
+    "id": "math404-quiz-5b",
+    "subjectId": "math404",
+    "topicId": "math404-topic-5",
+    "title": "Convex Optimization - Application",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "What transformation makes geometric programming convex?",
+        "options": [
+          "Squaring variables",
+          "Log transformation of variables and objective",
+          "Adding slack variables",
+          "Linearization"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Taking logarithms of variables (yᵢ = log xᵢ) transforms posynomial geometric programs into convex problems."
+      },
+      {
+        "id": "q2",
+        "type": "true_false",
+        "prompt": "Quadratic programming is a special case of semidefinite programming.",
+        "correctAnswer": true,
+        "explanation": "QP can be formulated as SDP by expressing the quadratic form as a matrix constraint."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "In robust optimization, the uncertainty set should be:",
+        "options": [
+          "As large as possible",
+          "A singleton",
+          "Convex for tractability",
+          "Always unbounded"
+        ],
+        "correctAnswer": 2,
+        "explanation": "A convex uncertainty set keeps the robust counterpart tractable, often remaining convex."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "A quasiconvex function has what property?",
+        "options": [
+          "Convex sublevel sets",
+          "Convex epigraph",
+          "Positive definite Hessian",
+          "Linear gradient"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Quasiconvexity is defined by having convex sublevel sets, which is weaker than convexity."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "The max-cut SDP relaxation provides a _____ bound for the integer program.",
+        "correctAnswer": "upper",
+        "explanation": "SDP relaxations of combinatorial problems provide upper bounds (for maximization) that can be used in approximation algorithms."
+      }
+    ]
+  },
+  {
+    "id": "math404-quiz-5c",
+    "subjectId": "math404",
+    "topicId": "math404-topic-5",
+    "title": "Convex Optimization - Mastery",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "For matrix X ⪰ 0 to hold, all eigenvalues must be:",
+        "options": [
+          "Positive",
+          "Non-negative",
+          "Equal to 1",
+          "Real"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Positive semidefinite (⪰ 0) requires all eigenvalues ≥ 0. Positive definite (≻ 0) requires all eigenvalues > 0."
+      },
+      {
+        "id": "q2",
+        "type": "true_false",
+        "prompt": "Quasiconvex optimization can be solved by bisection on the objective value.",
+        "correctAnswer": true,
+        "explanation": "Quasiconvex problems can be solved by binary search on α, checking feasibility of {x : f(x) ≤ α} at each step."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "The worst-case robust optimization formulation min_x max_{u∈U} f(x,u) is:",
+        "options": [
+          "Always convex",
+          "Convex if f is convex in x for each u and U is convex",
+          "Never convex",
+          "Convex only if U is a singleton"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The pointwise maximum over u preserves convexity in x if each f(·,u) is convex and U is convex."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "Which problem class is most general?",
+        "options": [
+          "Linear Programming",
+          "Quadratic Programming",
+          "Second-Order Cone Programming",
+          "Semidefinite Programming"
+        ],
+        "correctAnswer": 3,
+        "explanation": "SDP is most general: LP ⊂ SOCP ⊂ SDP. Each can be reformulated as the next more general class."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "The Goemans-Williamson algorithm uses SDP to achieve a _____ approximation for Max-Cut.",
+        "correctAnswer": "0.878",
+        "explanation": "The Goemans-Williamson algorithm uses SDP relaxation with randomized rounding to achieve a 0.878-approximation ratio for Max-Cut."
+      }
+    ]
+  }
+]

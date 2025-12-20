@@ -1,0 +1,199 @@
+[
+  {
+    "id": "cs205-quiz-2-1",
+    "subjectId": "cs205",
+    "topicId": "cs205-2",
+    "title": "DDL and Table Creation",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "Which SQL command is used to create a new table?",
+        "options": [
+          "INSERT TABLE",
+          "MAKE TABLE",
+          "CREATE TABLE",
+          "NEW TABLE"
+        ],
+        "correctAnswer": 2,
+        "explanation": "CREATE TABLE is the DDL command for defining a new table structure."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "What constraint ensures a column cannot contain NULL values?",
+        "options": [
+          "UNIQUE",
+          "NOT NULL",
+          "CHECK",
+          "DEFAULT"
+        ],
+        "correctAnswer": 1,
+        "explanation": "NOT NULL constraint prevents NULL values in a column."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "The ALTER TABLE command can add new columns to an existing table.",
+        "correctAnswer": true,
+        "explanation": "ALTER TABLE can add, modify, or drop columns and constraints."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "Which command removes a table and all its data permanently?",
+        "options": [
+          "DELETE TABLE",
+          "REMOVE TABLE",
+          "DROP TABLE",
+          "CLEAR TABLE"
+        ],
+        "correctAnswer": 2,
+        "explanation": "DROP TABLE removes the table structure and all data permanently."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "What does CASCADE do in a foreign key constraint?",
+        "options": [
+          "Prevents deletion of referenced rows",
+          "Automatically deletes or updates related rows",
+          "Creates a backup of deleted rows",
+          "Logs all delete operations"
+        ],
+        "correctAnswer": 1,
+        "explanation": "ON DELETE CASCADE automatically deletes child rows when the parent row is deleted."
+      }
+    ]
+  },
+  {
+    "id": "cs205-quiz-2-2",
+    "subjectId": "cs205",
+    "topicId": "cs205-2",
+    "title": "SELECT Queries",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "What is the correct order of clauses in a SELECT statement?",
+        "options": [
+          "SELECT, WHERE, FROM, ORDER BY",
+          "SELECT, FROM, WHERE, ORDER BY",
+          "FROM, SELECT, WHERE, ORDER BY",
+          "SELECT, FROM, ORDER BY, WHERE"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The standard order is: SELECT, FROM, WHERE, GROUP BY, HAVING, ORDER BY."
+      },
+      {
+        "id": "q2",
+        "type": "code_output",
+        "prompt": "What does this query return?",
+        "codeSnippet": "SELECT DISTINCT Department FROM Employees;",
+        "options": [
+          "All departments with duplicates",
+          "Unique department names only",
+          "Employee names by department",
+          "Department count"
+        ],
+        "correctAnswer": 1,
+        "explanation": "DISTINCT eliminates duplicate values in the result set."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "The WHERE clause can reference column aliases defined in the SELECT clause.",
+        "correctAnswer": false,
+        "explanation": "Column aliases in SELECT are not available in WHERE because WHERE is evaluated before SELECT."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "Which operator is used to match patterns in strings?",
+        "options": [
+          "MATCH",
+          "LIKE",
+          "PATTERN",
+          "SIMILAR"
+        ],
+        "correctAnswer": 1,
+        "explanation": "LIKE operator with wildcards (% and _) is used for pattern matching."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "To sort results in descending order, use ORDER BY column_name ______.",
+        "correctAnswer": "DESC",
+        "explanation": "DESC specifies descending order; ASC (default) specifies ascending order."
+      }
+    ]
+  },
+  {
+    "id": "cs205-quiz-2-3",
+    "subjectId": "cs205",
+    "topicId": "cs205-2",
+    "title": "Aggregation and Grouping",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "Which aggregate function counts non-NULL values in a column?",
+        "options": [
+          "COUNT(*)",
+          "COUNT(column)",
+          "SUM(column)",
+          "TOTAL(column)"
+        ],
+        "correctAnswer": 1,
+        "explanation": "COUNT(column) counts non-NULL values, while COUNT(*) counts all rows."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "Which clause filters groups after aggregation?",
+        "options": [
+          "WHERE",
+          "HAVING",
+          "FILTER",
+          "GROUP FILTER"
+        ],
+        "correctAnswer": 1,
+        "explanation": "HAVING filters groups after GROUP BY, while WHERE filters rows before grouping."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "All non-aggregated columns in SELECT must appear in the GROUP BY clause.",
+        "correctAnswer": true,
+        "explanation": "Standard SQL requires non-aggregated columns to be in GROUP BY for deterministic results."
+      },
+      {
+        "id": "q4",
+        "type": "code_output",
+        "prompt": "What does this query return?",
+        "codeSnippet": "SELECT Department, COUNT(*), AVG(Salary)\nFROM Employees\nGROUP BY Department\nHAVING COUNT(*) > 5;",
+        "options": [
+          "All departments with employee count and average salary",
+          "Departments with more than 5 employees",
+          "Departments with average salary over 5",
+          "All employees grouped by salary"
+        ],
+        "correctAnswer": 1,
+        "explanation": "HAVING COUNT(*) > 5 filters to only departments with more than 5 employees."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "What is the result of AVG() on an empty group?",
+        "options": [
+          "0",
+          "NULL",
+          "1",
+          "Error"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Most aggregate functions return NULL for empty groups or when all values are NULL."
+      }
+    ]
+  }
+]

@@ -1,0 +1,191 @@
+[
+  {
+    "id": "cs205-quiz-1-1",
+    "subjectId": "cs205",
+    "topicId": "cs205-1",
+    "title": "Relational Model Fundamentals",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "In the relational model, what is a tuple?",
+        "options": [
+          "A column in a table",
+          "A row in a table",
+          "A table name",
+          "A database schema"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A tuple represents a single row in a relation (table), containing one value for each attribute."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "What property must a primary key satisfy?",
+        "options": [
+          "It can contain NULL values",
+          "It must be unique and not null",
+          "It must be an integer",
+          "It can have duplicate values"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A primary key must uniquely identify each row and cannot contain NULL values."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "A relation can have multiple candidate keys.",
+        "correctAnswer": true,
+        "explanation": "A relation can have multiple candidate keys (minimal superkeys), but only one is chosen as the primary key."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "What does referential integrity ensure?",
+        "options": [
+          "All columns have unique names",
+          "Foreign key values exist in the referenced table",
+          "All rows have primary keys",
+          "Tables have at least one column"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Referential integrity ensures that foreign key values either match a primary key in the referenced table or are NULL."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "The number of attributes in a relation is called its ______.",
+        "correctAnswer": "degree",
+        "explanation": "Degree is the number of attributes (columns), while cardinality is the number of tuples (rows)."
+      }
+    ]
+  },
+  {
+    "id": "cs205-quiz-1-2",
+    "subjectId": "cs205",
+    "topicId": "cs205-1",
+    "title": "ER Diagrams",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "In an ER diagram, what shape represents an entity?",
+        "options": [
+          "Diamond",
+          "Rectangle",
+          "Oval",
+          "Triangle"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Entities are represented by rectangles, relationships by diamonds, and attributes by ovals."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "A weak entity depends on:",
+        "options": [
+          "Its own attributes only",
+          "A strong entity for its identification",
+          "The database schema",
+          "Foreign keys only"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A weak entity cannot be uniquely identified by its own attributes and depends on a strong (owner) entity."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "A multivalued attribute can hold multiple values for a single entity instance.",
+        "correctAnswer": true,
+        "explanation": "Multivalued attributes (like phone numbers) can have multiple values per entity, unlike single-valued attributes."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "In a many-to-many relationship between Students and Courses, what happens during mapping?",
+        "options": [
+          "Add StudentID to Courses table",
+          "Add CourseID to Students table",
+          "Create a new junction table",
+          "Merge the two tables"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Many-to-many relationships require a junction (bridge) table containing foreign keys to both participating entities."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "What does total participation (double line) in an ER diagram indicate?",
+        "options": [
+          "The relationship is optional",
+          "Every entity must participate in the relationship",
+          "The relationship has no attributes",
+          "The entities are weak"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Total participation means every instance of the entity must participate in at least one relationship instance."
+      }
+    ]
+  },
+  {
+    "id": "cs205-quiz-1-3",
+    "subjectId": "cs205",
+    "topicId": "cs205-1",
+    "title": "Relational Algebra",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "Which relational algebra operation selects rows based on a condition?",
+        "options": [
+          "Projection (π)",
+          "Selection (σ)",
+          "Join (⋈)",
+          "Union (∪)"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Selection (σ) filters rows based on a predicate, while projection (π) selects columns."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "What does the projection operation (π) do?",
+        "options": [
+          "Filters rows by condition",
+          "Selects specific columns",
+          "Joins two tables",
+          "Removes duplicates"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Projection selects specific attributes (columns) from a relation."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "The natural join automatically matches columns with the same name.",
+        "correctAnswer": true,
+        "explanation": "Natural join matches all columns with identical names in both relations."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "Which operation returns rows in relation R but not in relation S?",
+        "options": [
+          "Union",
+          "Intersection",
+          "Difference",
+          "Cartesian Product"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Set difference (R - S) returns tuples that are in R but not in S."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "The Cartesian product of relations with m and n tuples produces ______ tuples.",
+        "correctAnswer": "m*n",
+        "explanation": "Cartesian product combines every tuple from the first relation with every tuple from the second, yielding m × n tuples."
+      }
+    ]
+  }
+]

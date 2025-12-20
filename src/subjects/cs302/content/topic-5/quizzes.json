@@ -1,0 +1,181 @@
+[
+  {
+    "id": "cs302-quiz-5a",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-5",
+    "title": "Transport Layer - Fundamentals",
+    "questions": [
+      {
+        "id": "q5a-1",
+        "type": "multiple_choice",
+        "prompt": "Which transport protocol provides reliable, ordered delivery?",
+        "options": [
+          "UDP",
+          "TCP",
+          "IP",
+          "ICMP"
+        ],
+        "correctAnswer": 1,
+        "explanation": "TCP (Transmission Control Protocol) provides reliable, ordered delivery through acknowledgments, sequence numbers, and retransmission."
+      },
+      {
+        "id": "q5a-2",
+        "type": "true_false",
+        "prompt": "UDP provides flow control to prevent overwhelming the receiver.",
+        "correctAnswer": false,
+        "explanation": "UDP is connectionless and does not provide flow control. TCP provides flow control through the sliding window mechanism."
+      },
+      {
+        "id": "q5a-3",
+        "type": "fill_blank",
+        "prompt": "Port numbers in the range 0-1023 are called ____ ports.",
+        "correctAnswer": "well-known",
+        "explanation": "Well-known ports (0-1023) are reserved for standard services like HTTP (80), HTTPS (443), SSH (22), and DNS (53)."
+      },
+      {
+        "id": "q5a-4",
+        "type": "multiple_choice",
+        "prompt": "What is the standard port number for HTTP?",
+        "options": [
+          "21",
+          "22",
+          "80",
+          "443"
+        ],
+        "correctAnswer": 2,
+        "explanation": "HTTP uses port 80 by default. HTTPS uses 443, SSH uses 22, and FTP uses 20/21."
+      },
+      {
+        "id": "q5a-5",
+        "type": "multiple_choice",
+        "prompt": "How many bytes is the UDP header?",
+        "options": [
+          "4 bytes",
+          "8 bytes",
+          "16 bytes",
+          "20 bytes"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The UDP header is 8 bytes: source port (2), destination port (2), length (2), and checksum (2)."
+      }
+    ]
+  },
+  {
+    "id": "cs302-quiz-5b",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-5",
+    "title": "Transport Layer - Application",
+    "questions": [
+      {
+        "id": "q5b-1",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of the TCP three-way handshake?",
+        "options": [
+          "To encrypt the connection",
+          "To establish a connection and synchronize sequence numbers",
+          "To negotiate compression",
+          "To verify user authentication"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The TCP three-way handshake (SYN, SYN-ACK, ACK) establishes a connection and allows both sides to synchronize sequence numbers."
+      },
+      {
+        "id": "q5b-2",
+        "type": "code_output",
+        "prompt": "What is the sequence of TCP flags in a three-way handshake?",
+        "codeSnippet": "Client → Server: ?\nServer → Client: ?\nClient → Server: ?",
+        "correctAnswer": "SYN, SYN-ACK, ACK",
+        "explanation": "The three-way handshake: Client sends SYN, Server responds with SYN-ACK, Client sends ACK."
+      },
+      {
+        "id": "q5b-3",
+        "type": "true_false",
+        "prompt": "TCP sequence numbers start at 0 for every connection.",
+        "correctAnswer": false,
+        "explanation": "TCP uses a random Initial Sequence Number (ISN) to prevent sequence prediction attacks and conflicts with old connections."
+      },
+      {
+        "id": "q5b-4",
+        "type": "multiple_choice",
+        "prompt": "What TCP flag is used to gracefully close a connection?",
+        "options": [
+          "SYN",
+          "ACK",
+          "FIN",
+          "RST"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The FIN (Finish) flag is used for graceful connection termination. RST is used for immediate, abrupt termination."
+      },
+      {
+        "id": "q5b-5",
+        "type": "fill_blank",
+        "prompt": "TCP congestion control starts with ____ start, then switches to congestion avoidance.",
+        "correctAnswer": "slow",
+        "explanation": "TCP slow start begins with a small congestion window and doubles it each RTT until reaching the slow start threshold (ssthresh)."
+      }
+    ]
+  },
+  {
+    "id": "cs302-quiz-5c",
+    "subjectId": "cs302",
+    "topicId": "cs302-topic-5",
+    "title": "Transport Layer - Advanced",
+    "questions": [
+      {
+        "id": "q5c-1",
+        "type": "multiple_choice",
+        "prompt": "What does the TCP receive window field control?",
+        "options": [
+          "Congestion control",
+          "Flow control",
+          "Error detection",
+          "Routing"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The receive window advertises how much buffer space is available, implementing flow control to prevent the sender from overwhelming the receiver."
+      },
+      {
+        "id": "q5c-2",
+        "type": "multiple_choice",
+        "prompt": "Which TCP congestion control algorithm uses packet loss as a signal of congestion?",
+        "options": [
+          "TCP Tahoe",
+          "TCP Vegas",
+          "DCTCP",
+          "All of the above"
+        ],
+        "correctAnswer": 0,
+        "explanation": "TCP Tahoe (and Reno) use packet loss as the primary congestion signal. TCP Vegas uses RTT changes, and DCTCP uses ECN marking."
+      },
+      {
+        "id": "q5c-3",
+        "type": "true_false",
+        "prompt": "Nagle's algorithm combines small TCP segments to reduce overhead.",
+        "correctAnswer": true,
+        "explanation": "Nagle's algorithm delays sending small segments when there is unacknowledged data, improving efficiency but potentially increasing latency."
+      },
+      {
+        "id": "q5c-4",
+        "type": "code_output",
+        "prompt": "If TCP's congestion window is 4 segments and loss occurs, what is the new ssthresh under TCP Reno?",
+        "codeSnippet": "Congestion window (cwnd) = 4\nPacket loss detected\nNew ssthresh = cwnd / 2",
+        "correctAnswer": "2",
+        "explanation": "When loss is detected, TCP Reno sets ssthresh to half the current congestion window. 4 / 2 = 2 segments."
+      },
+      {
+        "id": "q5c-5",
+        "type": "multiple_choice",
+        "prompt": "What problem does TCP Fast Retransmit address?",
+        "options": [
+          "Slow connection establishment",
+          "Waiting for timeout before retransmitting",
+          "Large receive windows",
+          "DNS resolution delays"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Fast Retransmit triggers retransmission after receiving 3 duplicate ACKs, instead of waiting for the retransmission timeout."
+      }
+    ]
+  }
+]

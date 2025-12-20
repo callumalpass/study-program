@@ -1,0 +1,192 @@
+[
+  {
+    "id": "cs201-quiz-6-1",
+    "subjectId": "cs201",
+    "topicId": "cs201-6",
+    "title": "Greedy Fundamentals",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "What is the Greedy Choice Property?",
+        "options": [
+          "Always choose the largest element",
+          "A globally optimal solution can be reached by making locally optimal choices",
+          "Sort the input before processing",
+          "Use recursion for all decisions"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Greedy algorithms work when making the best local choice at each step leads to a global optimum."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "Which problem can be solved optimally with a greedy algorithm?",
+        "options": [
+          "0/1 Knapsack",
+          "Longest Common Subsequence",
+          "Activity Selection",
+          "Traveling Salesman"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Activity Selection (choosing non-overlapping activities) has the greedy choice property."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "Greedy algorithms always find the optimal solution.",
+        "correctAnswer": false,
+        "explanation": "Greedy only works for problems with the greedy choice property. It fails for 0/1 Knapsack, TSP, etc."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "In Activity Selection, what greedy strategy works?",
+        "options": [
+          "Choose the longest activity first",
+          "Choose the activity that starts earliest",
+          "Choose the activity that finishes earliest",
+          "Choose randomly"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Selecting the earliest-finishing activity leaves maximum time for remaining activities."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "In Fractional Knapsack, items are sorted by their value-to-______ ratio.",
+        "correctAnswer": "weight",
+        "explanation": "Taking items with highest value/weight ratio first maximizes value per unit capacity."
+      }
+    ]
+  },
+  {
+    "id": "cs201-quiz-6-2",
+    "subjectId": "cs201",
+    "topicId": "cs201-6",
+    "title": "Greedy vs DP",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "Why does greedy fail for 0/1 Knapsack?",
+        "options": [
+          "Items are too heavy",
+          "Taking the \"best\" item may prevent better combinations",
+          "The problem is NP-hard",
+          "Sorting is too slow"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Taking a high-ratio item might use capacity that could hold multiple smaller items with greater total value."
+      },
+      {
+        "id": "q2",
+        "type": "true_false",
+        "prompt": "Fractional Knapsack can be solved greedily, but 0/1 Knapsack cannot.",
+        "correctAnswer": true,
+        "explanation": "Fractional Knapsack allows partial items, so greedy by value/weight ratio works. 0/1 requires DP."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "What is typically the time complexity of greedy algorithms?",
+        "options": [
+          "O(1)",
+          "O(n)",
+          "O(n log n)",
+          "O(2^n)"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Most greedy algorithms involve sorting O(n log n) followed by a linear scan O(n)."
+      },
+      {
+        "id": "q4",
+        "type": "code_output",
+        "prompt": "This greedy approach fails for which coin set?",
+        "codeSnippet": "def min_coins(coins, amount):\n    coins.sort(reverse=True)\n    count = 0\n    for coin in coins:\n        while amount >= coin:\n            amount -= coin\n            count += 1\n    return count",
+        "options": [
+          "coins = [1, 5, 10, 25]",
+          "coins = [1, 3, 4]",
+          "coins = [1, 2, 5]",
+          "coins = [1]"
+        ],
+        "correctAnswer": 1,
+        "explanation": "For coins [1,3,4] and amount 6: greedy gives 4+1+1=3 coins, but optimal is 3+3=2 coins."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "When should you use DP instead of Greedy?",
+        "options": [
+          "When the input is sorted",
+          "When local choices affect future options in complex ways",
+          "When the input is small",
+          "When speed is critical"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Use DP when the optimal choice depends on exploring multiple possibilities, not just the locally best one."
+      }
+    ]
+  },
+  {
+    "id": "cs201-quiz-6-3",
+    "subjectId": "cs201",
+    "topicId": "cs201-6",
+    "title": "Greedy Applications",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "Huffman Coding is a greedy algorithm for:",
+        "options": [
+          "Sorting data",
+          "Data compression",
+          "Graph traversal",
+          "Searching"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Huffman Coding creates optimal prefix-free codes for data compression by greedily combining lowest-frequency nodes."
+      },
+      {
+        "id": "q2",
+        "type": "true_false",
+        "prompt": "Dijkstra's shortest path algorithm uses a greedy approach.",
+        "correctAnswer": true,
+        "explanation": "Dijkstra greedily selects the unvisited node with smallest distance, which works for non-negative weights."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "What data structure is commonly used in greedy algorithms?",
+        "options": [
+          "Stack",
+          "Queue",
+          "Priority Queue (Heap)",
+          "Linked List"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Priority queues efficiently retrieve the \"best\" element (min or max), essential for greedy selection."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "Which Minimum Spanning Tree algorithm is greedy?",
+        "options": [
+          "Only Kruskal's",
+          "Only Prim's",
+          "Both Kruskal's and Prim's",
+          "Neither"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Both are greedy: Kruskal's picks smallest edges globally, Prim's picks smallest edges from current tree."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "To prove a greedy algorithm is correct, we often use the ______ argument.",
+        "correctAnswer": "exchange",
+        "explanation": "The exchange argument shows that swapping a non-greedy choice with a greedy one never makes things worse."
+      }
+    ]
+  }
+]

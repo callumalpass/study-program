@@ -1,20 +1,78 @@
 # Subject Quality Standard
 
-This document defines the minimum requirements every subject must meet to be considered **production-ready**. Use this as a checklist when creating or reviewing subjects.
+This document defines the requirements every subject must meet to be considered **production-ready**. Each subject must have a `subject-spec.yaml` that defines its specific requirements based on its pedagogy.
 
 ---
 
 ## Quick Reference
 
-| Component | Requirement | Per Topic | Per Subject |
-|-----------|-------------|-----------|-------------|
-| Topics | 7 topics per subject | — | 7 |
-| Subtopics | 7 subtopics per topic | 7 | 49 |
-| Subtopic Word Count | 800+ words each | 5,600+ | 39,200+ |
-| Exercises | 16 per topic | 16 | 112 |
-| Quiz Questions | 15 per topic (3 quizzes × 5) | 15 | 105 |
-| Exams | Midterm + Final | — | 2 |
-| Projects | 2-3 (CS only) | — | 2-3 |
+| Component | Requirement |
+|-----------|-------------|
+| Subject Spec | **Required** — `subject-spec.yaml` defining targets |
+| Topics | 7 topics per subject |
+| Subtopics | 7 subtopics per topic (49 total) |
+| Subtopic Word Count | 800+ words each |
+| Exercises | Per spec (base default: 16/topic) |
+| Quizzes | Per spec (base default: 3/topic × 5 questions) |
+| Exams | Midterm + Final (question counts per spec) |
+| Projects | Per spec (default: required for CS, none for MATH) |
+
+---
+
+## Per-Subject Specifications
+
+Every subject **must** have a `subject-spec.yaml` that documents its pedagogical approach and assessment requirements. This ensures that content creators understand what "good" looks like for each specific subject.
+
+### Why Required?
+
+Different subjects have fundamentally different pedagogical needs:
+
+| Subject Type | Characteristics |
+|--------------|-----------------|
+| Proof-based Math | Fewer, deeper exercises; proofs take time |
+| Intro Programming | High volume practice; immediate feedback |
+| Theory/Algorithms | Mix of proofs and implementation |
+| Applied/Capstone | Project-focused; reduced exams |
+
+A single universal standard cannot serve all subjects well. The spec ensures each subject's requirements are intentional and justified.
+
+### Subject Spec Location
+
+```
+src/subjects/{subject}/subject-spec.yaml
+```
+
+### What a Subject Spec Contains
+
+| Section | Purpose |
+|---------|---------|
+| `role` | Where the subject fits in the curriculum; the transformation it achieves |
+| `pedagogy` | Knowledge type, mastery indicators, common struggles |
+| `content` | Subject-specific content requirements and conventions |
+| `assessment` | Philosophy, what assessments measure, anti-patterns |
+| `grading` | Passing thresholds with rationale |
+| `exercises` | Types, quantities (with ranges and justification), difficulty distribution |
+| `quizzes` | Structure, question types with justification |
+| `exams` | Question counts, formats, coverage with justification |
+| `projects` | Whether required, count, goals |
+| `red_flags` | Subject-specific content problems to avoid |
+
+### Base Defaults
+
+When a spec doesn't override a value, these defaults apply:
+
+| Component | Default |
+|-----------|---------|
+| Exercises per topic | 16 |
+| Quizzes per topic | 3 (5 questions each) |
+| Midterm questions | 26 |
+| Final questions | 42 |
+| Projects | Required for CS, none for MATH |
+| Passing score | 70% |
+
+### Schema Reference
+
+See [`SUBJECT_SPEC_SCHEMA.md`](./SUBJECT_SPEC_SCHEMA.md) for the full schema definition with all available fields.
 
 ---
 
@@ -372,15 +430,16 @@ Each rubric criterion must have:
 ## 8. Quality Checklist
 
 ### Per Subject
+- [ ] `subject-spec.yaml` exists with all required sections
 - [ ] 7 topics defined
 - [ ] All topic IDs follow convention
 - [ ] Subject exports all content correctly in index.ts
 
 ### Per Topic
 - [ ] 7 subtopics with 800+ words each
-- [ ] 16 exercises with difficulty 1-5
-- [ ] 3 quizzes with 5 questions each
-- [ ] Quiz/exercise IDs linked in topic definition
+- [ ] Exercises per spec target (default: 16), difficulty 1-5
+- [ ] Quizzes per spec target (default: 3 × 5 questions)
+- [ ] `exercises.json` and `quizzes.json` in topic directory
 
 ### Per Subtopic
 - [ ] Minimum 800 words
@@ -425,18 +484,21 @@ Each subject is fully self-contained in a single directory with all content and 
 
 ```
 src/subjects/{subject}/
+├── subject-spec.yaml     # REQUIRED: Subject specification (pedagogy, targets)
 ├── content/              # Markdown lesson content (with frontmatter)
-│   ├── topic-1/          # Subtopic markdown files
-│   │   ├── 01-intro.md   # Each file has frontmatter (id, title, order)
+│   ├── topic-1/          # Topic directory
+│   │   ├── 01-intro.md   # Subtopic (frontmatter: id, title, order)
+│   │   ├── 02-...md
+│   │   ├── exercises.json # Exercises for this topic
+│   │   ├── quizzes.json   # Quizzes for this topic
 │   │   └── ...
-│   ├── topic-1.md        # Topic overview (optional, legacy)
+│   ├── topic-2/
+│   │   └── ...
 │   └── ...
 ├── index.ts              # TypeScript exports (imports from JSON)
 ├── topics.ts             # Topic definitions (uses glob imports)
-├── quizzes.json          # All quizzes for the subject
 ├── exams.json            # Midterm and final exams
-├── exercises.json        # All exercises for the subject
-└── projects.json         # Projects (CS subjects only)
+└── projects.json         # Projects (if required by spec)
 ```
 
 ### Shared Loader
@@ -518,6 +580,9 @@ The loader automatically:
 To validate a subject meets standards:
 
 ```bash
+# Check subject spec exists
+ls src/subjects/{subject}/subject-spec.yaml
+
 # Count subtopics per topic
 find src/subjects/{subject}/content/topic-* -name "*.md" | wc -l
 # Expected: 49 (7 topics × 7 subtopics)
@@ -525,19 +590,15 @@ find src/subjects/{subject}/content/topic-* -name "*.md" | wc -l
 # Estimate word counts
 wc -w src/subjects/{subject}/content/topic-*/*.md
 
-# Count exercises (from JSON)
-jq 'length' src/subjects/{subject}/exercises.json
-# Expected: 112
+# Count exercises (per-topic JSONs)
+find src/subjects/{subject}/content -name "exercises.json" -exec jq 'length' {} \; | paste -sd+ | bc
+# Expected: per subject spec (default 112)
 
-# Count quizzes
-jq 'length' src/subjects/{subject}/quizzes.json
-# Expected: 21
+# Count quizzes (per-topic JSONs)
+find src/subjects/{subject}/content -name "quizzes.json" -exec jq 'length' {} \; | paste -sd+ | bc
+# Expected: per subject spec (default 21)
 
-# Count quiz questions total
-jq '[.[].questions | length] | add' src/subjects/{subject}/quizzes.json
-# Expected: 105 (21 quizzes × 5 questions)
-
-# Run quality analysis
+# Run quality analysis (checks all subjects against their specs)
 npm run quality
 ```
 
@@ -547,6 +608,7 @@ npm run quality
 
 | Version | Date | Changes |
 |---------|------|---------|
+| 1.4 | 2025-12-20 | Made subject-spec.yaml mandatory; moved exercises/quizzes to per-topic directories |
 | 1.3 | 2025-12-20 | Added glob imports, frontmatter, and shared loader for simplified topics.ts |
 | 1.2 | 2025-12-20 | Colocated content and data into unified src/subjects/ structure |
 | 1.1 | 2025-12-20 | Migrated assessment data from TypeScript to JSON format |
@@ -558,18 +620,19 @@ npm run quality
 
 A production-ready subject requires:
 
-| Component | Quantity |
-|-----------|----------|
+| Component | Requirement |
+|-----------|-------------|
+| Subject Spec | `subject-spec.yaml` (mandatory) |
 | Topics | 7 |
 | Subtopics | 49 (800+ words each) |
-| Exercises | 112 (16 per topic) |
-| Quiz Questions | 105 (15 per topic) |
-| Exams | 2 (Midterm + Final) |
-| Projects | 2-3 (CS) or 0 (MATH) |
+| Exercises | Per spec (base: 112) |
+| Quiz Questions | Per spec (base: 105) |
+| Exams | 2 (Midterm + Final, question counts per spec) |
+| Projects | Per spec |
 
-**Total estimated content per subject:**
+**Estimated content per subject (with base defaults):**
 - ~40,000+ words of educational content
 - ~112 coding/written exercises with solutions
 - ~105 quiz questions with explanations
 - ~70 exam questions
-- ~25 project requirements with rubrics (CS only)
+- Project requirements with rubrics (if required by spec)

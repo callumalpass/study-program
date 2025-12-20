@@ -1,0 +1,481 @@
+[
+  {
+    "id": "cs407-ex-6-1",
+    "subjectId": "cs407",
+    "topicId": "cs407-t6",
+    "title": "Create Spark DataFrame",
+    "description": "Write a function that creates a PySpark DataFrame from a list of tuples with column names.",
+    "difficulty": 1,
+    "language": "python",
+    "starterCode": "from pyspark.sql import SparkSession\n\ndef create_spark_dataframe(data, columns):\n    # data is a list of tuples\n    # columns is a list of column names\n    # Return a Spark DataFrame\n    pass",
+    "solution": "from pyspark.sql import SparkSession\n\ndef create_spark_dataframe(data, columns):\n    spark = SparkSession.builder.appName(\"CreateDF\").getOrCreate()\n    df = spark.createDataFrame(data, columns)\n    return df",
+    "testCases": [
+      {
+        "input": "data=[(1, \"Alice\", 25), (2, \"Bob\", 30)], columns=[\"id\", \"name\", \"age\"]",
+        "expectedOutput": "Spark DataFrame with 2 rows",
+        "isHidden": false,
+        "description": "Basic DataFrame creation"
+      },
+      {
+        "input": "data=[(100, \"Product A\"), (200, \"Product B\")], columns=[\"price\", \"name\"]",
+        "expectedOutput": "Spark DataFrame with product data",
+        "isHidden": false,
+        "description": "Product DataFrame"
+      }
+    ],
+    "hints": [
+      "Get or create a SparkSession",
+      "Use spark.createDataFrame(data, columns)",
+      "data should be a list of tuples",
+      "Return the DataFrame"
+    ]
+  },
+  {
+    "id": "cs407-ex-6-2",
+    "subjectId": "cs407",
+    "topicId": "cs407-t6",
+    "title": "Filter Spark DataFrame",
+    "description": "Write a function that filters a Spark DataFrame based on a condition.",
+    "difficulty": 1,
+    "language": "python",
+    "starterCode": "def filter_dataframe(df, column, value):\n    # Filter df where column equals value\n    # Return filtered DataFrame\n    pass",
+    "solution": "def filter_dataframe(df, column, value):\n    return df.filter(df[column] == value)",
+    "testCases": [
+      {
+        "input": "df with age column, filter age > 25",
+        "expectedOutput": "Filtered DataFrame",
+        "isHidden": false,
+        "description": "Filter by age"
+      },
+      {
+        "input": "df with category column, filter category = \"A\"",
+        "expectedOutput": "Filtered DataFrame with category A",
+        "isHidden": false,
+        "description": "Filter by category"
+      }
+    ],
+    "hints": [
+      "Use df.filter() method",
+      "Access column with df[column]",
+      "Use == for equality comparison",
+      "Return the filtered DataFrame"
+    ]
+  },
+  {
+    "id": "cs407-ex-6-3",
+    "subjectId": "cs407",
+    "topicId": "cs407-t6",
+    "title": "Select and Rename Columns",
+    "description": "Write a function that selects specific columns and renames them.",
+    "difficulty": 2,
+    "language": "python",
+    "starterCode": "def select_and_rename(df, old_names, new_names):\n    # Select columns in old_names and rename to new_names\n    # Return transformed DataFrame\n    pass",
+    "solution": "def select_and_rename(df, old_names, new_names):\n    selected = df.select(*old_names)\n    for old, new in zip(old_names, new_names):\n        selected = selected.withColumnRenamed(old, new)\n    return selected",
+    "testCases": [
+      {
+        "input": "df with columns, old_names=[\"col1\", \"col2\"], new_names=[\"a\", \"b\"]",
+        "expectedOutput": "DataFrame with renamed columns",
+        "isHidden": false,
+        "description": "Select and rename"
+      }
+    ],
+    "hints": [
+      "Use df.select(*old_names) to select columns",
+      "Use withColumnRenamed(old, new) for renaming",
+      "Loop through old and new names together",
+      "Return the transformed DataFrame"
+    ]
+  },
+  {
+    "id": "cs407-ex-6-4",
+    "subjectId": "cs407",
+    "topicId": "cs407-t6",
+    "title": "Add Computed Column",
+    "description": "Write a function that adds a new column based on a computation from existing columns.",
+    "difficulty": 2,
+    "language": "python",
+    "starterCode": "from pyspark.sql import functions as F\n\ndef add_computed_column(df, col1, col2, new_col_name):\n    # Add a new column that is the sum of col1 and col2\n    # Return DataFrame with new column\n    pass",
+    "solution": "from pyspark.sql import functions as F\n\ndef add_computed_column(df, col1, col2, new_col_name):\n    return df.withColumn(new_col_name, F.col(col1) + F.col(col2))",
+    "testCases": [
+      {
+        "input": "df with columns a and b, add column c = a + b",
+        "expectedOutput": "DataFrame with new computed column",
+        "isHidden": false,
+        "description": "Sum two columns"
+      },
+      {
+        "input": "df with price and tax, add total = price + tax",
+        "expectedOutput": "DataFrame with total column",
+        "isHidden": false,
+        "description": "Calculate total"
+      }
+    ],
+    "hints": [
+      "Use withColumn(new_col_name, expression)",
+      "Use F.col() to reference columns",
+      "Add columns with + operator",
+      "Return the modified DataFrame"
+    ]
+  },
+  {
+    "id": "cs407-ex-6-5",
+    "subjectId": "cs407",
+    "topicId": "cs407-t6",
+    "title": "Group By and Aggregate",
+    "description": "Write a function that groups data by a column and computes aggregates.",
+    "difficulty": 2,
+    "language": "python",
+    "starterCode": "from pyspark.sql import functions as F\n\ndef group_and_aggregate(df, group_col, agg_col):\n    # Group by group_col and compute sum, mean, and count of agg_col\n    # Return aggregated DataFrame\n    pass",
+    "solution": "from pyspark.sql import functions as F\n\ndef group_and_aggregate(df, group_col, agg_col):\n    return df.groupBy(group_col).agg(\n        F.sum(agg_col).alias(f'{agg_col}_sum'),\n        F.mean(agg_col).alias(f'{agg_col}_mean'),\n        F.count(agg_col).alias(f'{agg_col}_count')\n    )",
+    "testCases": [
+      {
+        "input": "df with category and sales columns",
+        "expectedOutput": "Aggregated DataFrame with sum, mean, count",
+        "isHidden": false,
+        "description": "Sales aggregation"
+      },
+      {
+        "input": "df with department and employee_count",
+        "expectedOutput": "Aggregated by department",
+        "isHidden": false,
+        "description": "Department statistics"
+      }
+    ],
+    "hints": [
+      "Use df.groupBy(group_col)",
+      "Use .agg() with multiple aggregation functions",
+      "F.sum(), F.mean(), F.count() for aggregations",
+      "Use .alias() to name aggregated columns"
+    ]
+  },
+  {
+    "id": "cs407-ex-6-6",
+    "subjectId": "cs407",
+    "topicId": "cs407-t6",
+    "title": "Join DataFrames",
+    "description": "Write a function that performs an inner join between two Spark DataFrames.",
+    "difficulty": 2,
+    "language": "python",
+    "starterCode": "def join_dataframes(df1, df2, join_column):\n    # Perform inner join on join_column\n    # Return joined DataFrame\n    pass",
+    "solution": "def join_dataframes(df1, df2, join_column):\n    return df1.join(df2, on=join_column, how='inner')",
+    "testCases": [
+      {
+        "input": "df1 with id and name, df2 with id and age, join on id",
+        "expectedOutput": "Joined DataFrame",
+        "isHidden": false,
+        "description": "Inner join on id"
+      },
+      {
+        "input": "customers and orders DataFrames, join on customer_id",
+        "expectedOutput": "Joined customer orders",
+        "isHidden": false,
+        "description": "Customer orders join"
+      }
+    ],
+    "hints": [
+      "Use df1.join(df2, on=join_column)",
+      "Set how=\"inner\" for inner join",
+      "Both DataFrames must have the join_column",
+      "Return the joined DataFrame"
+    ]
+  },
+  {
+    "id": "cs407-ex-6-7",
+    "subjectId": "cs407",
+    "topicId": "cs407-t6",
+    "title": "Handle Null Values",
+    "description": "Write a function that removes rows with null values in specific columns.",
+    "difficulty": 2,
+    "language": "python",
+    "starterCode": "def remove_nulls(df, columns):\n    # Remove rows where any of the specified columns have null values\n    # Return cleaned DataFrame\n    pass",
+    "solution": "def remove_nulls(df, columns):\n    return df.dropna(subset=columns)",
+    "testCases": [
+      {
+        "input": "df with nulls, columns=[\"age\", \"name\"]",
+        "expectedOutput": "DataFrame without nulls in age or name",
+        "isHidden": false,
+        "description": "Drop nulls in specific columns"
+      },
+      {
+        "input": "df with nulls, columns=[\"price\"]",
+        "expectedOutput": "DataFrame without nulls in price",
+        "isHidden": false,
+        "description": "Drop nulls in price"
+      }
+    ],
+    "hints": [
+      "Use df.dropna() to remove null values",
+      "Specify subset=columns to target specific columns",
+      "This removes entire rows with nulls",
+      "Return the cleaned DataFrame"
+    ]
+  },
+  {
+    "id": "cs407-ex-6-8",
+    "subjectId": "cs407",
+    "topicId": "cs407-t6",
+    "title": "Window Functions",
+    "description": "Write a function that adds a ranking column using window functions.",
+    "difficulty": 3,
+    "language": "python",
+    "starterCode": "from pyspark.sql import Window\nfrom pyspark.sql import functions as F\n\ndef add_rank_column(df, partition_col, order_col, rank_col_name):\n    # Add ranking within each partition\n    # Rank by order_col (descending)\n    # Return DataFrame with rank column\n    pass",
+    "solution": "from pyspark.sql import Window\nfrom pyspark.sql import functions as F\n\ndef add_rank_column(df, partition_col, order_col, rank_col_name):\n    window_spec = Window.partitionBy(partition_col).orderBy(F.col(order_col).desc())\n    return df.withColumn(rank_col_name, F.rank().over(window_spec))",
+    "testCases": [
+      {
+        "input": "df with category and sales, rank sales within each category",
+        "expectedOutput": "DataFrame with rank column",
+        "isHidden": false,
+        "description": "Rank sales by category"
+      },
+      {
+        "input": "df with department and score, rank by score",
+        "expectedOutput": "DataFrame with rankings",
+        "isHidden": false,
+        "description": "Rank employees by score"
+      }
+    ],
+    "hints": [
+      "Create Window.partitionBy(partition_col)",
+      "Add .orderBy(F.col(order_col).desc())",
+      "Use F.rank().over(window_spec)",
+      "Add column with withColumn()"
+    ]
+  },
+  {
+    "id": "cs407-ex-6-9",
+    "subjectId": "cs407",
+    "topicId": "cs407-t6",
+    "title": "Pivot Table",
+    "description": "Write a function that creates a pivot table in Spark.",
+    "difficulty": 3,
+    "language": "python",
+    "starterCode": "from pyspark.sql import functions as F\n\ndef create_pivot_table(df, index_col, pivot_col, value_col):\n    # Create pivot table with index_col as rows,\n    # pivot_col values as columns, and sum of value_col as values\n    # Return pivoted DataFrame\n    pass",
+    "solution": "from pyspark.sql import functions as F\n\ndef create_pivot_table(df, index_col, pivot_col, value_col):\n    return df.groupBy(index_col).pivot(pivot_col).sum(value_col)",
+    "testCases": [
+      {
+        "input": "df with date, product, sales - pivot by product",
+        "expectedOutput": "Pivoted DataFrame with products as columns",
+        "isHidden": false,
+        "description": "Sales pivot table"
+      },
+      {
+        "input": "df with region, year, revenue - pivot by year",
+        "expectedOutput": "Pivoted by year",
+        "isHidden": false,
+        "description": "Regional revenue by year"
+      }
+    ],
+    "hints": [
+      "Use df.groupBy(index_col)",
+      "Chain .pivot(pivot_col)",
+      "Apply aggregation like .sum(value_col)",
+      "Return the pivoted result"
+    ]
+  },
+  {
+    "id": "cs407-ex-6-10",
+    "subjectId": "cs407",
+    "topicId": "cs407-t6",
+    "title": "Read and Write Parquet",
+    "description": "Write functions to read from and write to Parquet format.",
+    "difficulty": 2,
+    "language": "python",
+    "starterCode": "def write_parquet(df, path):\n    # Write DataFrame to parquet format at path\n    pass\n\ndef read_parquet(spark, path):\n    # Read parquet file from path\n    # Return DataFrame\n    pass",
+    "solution": "def write_parquet(df, path):\n    df.write.parquet(path, mode='overwrite')\n\ndef read_parquet(spark, path):\n    return spark.read.parquet(path)",
+    "testCases": [
+      {
+        "input": "df and path=\"/tmp/data.parquet\"",
+        "expectedOutput": "DataFrame written and read successfully",
+        "isHidden": false,
+        "description": "Parquet I/O"
+      }
+    ],
+    "hints": [
+      "Use df.write.parquet(path) to write",
+      "Use spark.read.parquet(path) to read",
+      "Set mode=\"overwrite\" when writing",
+      "Parquet is a columnar storage format"
+    ]
+  },
+  {
+    "id": "cs407-ex-6-11",
+    "subjectId": "cs407",
+    "topicId": "cs407-t6",
+    "title": "SQL Query on DataFrame",
+    "description": "Write a function that executes a SQL query on a Spark DataFrame.",
+    "difficulty": 3,
+    "language": "python",
+    "starterCode": "def execute_sql_query(df, table_name, query):\n    # Register df as a temporary table\n    # Execute SQL query\n    # Return result DataFrame\n    pass",
+    "solution": "def execute_sql_query(df, table_name, query):\n    df.createOrReplaceTempView(table_name)\n    spark = df.sparkSession\n    return spark.sql(query)",
+    "testCases": [
+      {
+        "input": "df, \"people\", \"SELECT * FROM people WHERE age > 25\"",
+        "expectedOutput": "Filtered DataFrame",
+        "isHidden": false,
+        "description": "SQL SELECT with WHERE"
+      },
+      {
+        "input": "df, \"sales\", \"SELECT category, SUM(amount) FROM sales GROUP BY category\"",
+        "expectedOutput": "Aggregated DataFrame",
+        "isHidden": false,
+        "description": "SQL GROUP BY"
+      }
+    ],
+    "hints": [
+      "Use df.createOrReplaceTempView(table_name)",
+      "Get SparkSession with df.sparkSession",
+      "Execute query with spark.sql(query)",
+      "Return the result DataFrame"
+    ]
+  },
+  {
+    "id": "cs407-ex-6-12",
+    "subjectId": "cs407",
+    "topicId": "cs407-t6",
+    "title": "Union DataFrames",
+    "description": "Write a function that combines multiple DataFrames vertically.",
+    "difficulty": 2,
+    "language": "python",
+    "starterCode": "def union_dataframes(dfs):\n    # dfs is a list of DataFrames\n    # Union all DataFrames\n    # Return combined DataFrame\n    pass",
+    "solution": "def union_dataframes(dfs):\n    if not dfs:\n        return None\n    result = dfs[0]\n    for df in dfs[1:]:\n        result = result.union(df)\n    return result",
+    "testCases": [
+      {
+        "input": "list of 3 DataFrames with same schema",
+        "expectedOutput": "Combined DataFrame with all rows",
+        "isHidden": false,
+        "description": "Union multiple DataFrames"
+      },
+      {
+        "input": "list of 2 DataFrames",
+        "expectedOutput": "Combined DataFrame",
+        "isHidden": false,
+        "description": "Union two DataFrames"
+      }
+    ],
+    "hints": [
+      "Start with the first DataFrame",
+      "Loop through remaining DataFrames",
+      "Use result.union(df) to combine",
+      "All DataFrames must have same schema"
+    ]
+  },
+  {
+    "id": "cs407-ex-6-13",
+    "subjectId": "cs407",
+    "topicId": "cs407-t6",
+    "title": "Distinct Values",
+    "description": "Write a function that returns distinct values from a column.",
+    "difficulty": 1,
+    "language": "python",
+    "starterCode": "def get_distinct_values(df, column):\n    # Get distinct values from column\n    # Return list of distinct values\n    pass",
+    "solution": "def get_distinct_values(df, column):\n    distinct_rows = df.select(column).distinct()\n    return [row[column] for row in distinct_rows.collect()]",
+    "testCases": [
+      {
+        "input": "df with category column having [\"A\", \"B\", \"A\", \"C\"]",
+        "expectedOutput": "[\"A\", \"B\", \"C\"]",
+        "isHidden": false,
+        "description": "Distinct categories"
+      },
+      {
+        "input": "df with status column",
+        "expectedOutput": "List of unique statuses",
+        "isHidden": false,
+        "description": "Unique statuses"
+      }
+    ],
+    "hints": [
+      "Use df.select(column) to select the column",
+      "Use .distinct() to get unique values",
+      "Use .collect() to get rows",
+      "Extract values from rows and return as list"
+    ]
+  },
+  {
+    "id": "cs407-ex-6-14",
+    "subjectId": "cs407",
+    "topicId": "cs407-t6",
+    "title": "Cache and Persist",
+    "description": "Write a function that caches a DataFrame for better performance.",
+    "difficulty": 2,
+    "language": "python",
+    "starterCode": "from pyspark import StorageLevel\n\ndef cache_dataframe(df, storage_level='MEMORY_AND_DISK'):\n    # Cache the DataFrame with specified storage level\n    # Return cached DataFrame\n    pass",
+    "solution": "from pyspark import StorageLevel\n\ndef cache_dataframe(df, storage_level='MEMORY_AND_DISK'):\n    if storage_level == 'MEMORY_ONLY':\n        return df.cache()\n    elif storage_level == 'MEMORY_AND_DISK':\n        return df.persist(StorageLevel.MEMORY_AND_DISK)\n    elif storage_level == 'DISK_ONLY':\n        return df.persist(StorageLevel.DISK_ONLY)\n    return df.cache()",
+    "testCases": [
+      {
+        "input": "df, storage_level=\"MEMORY_ONLY\"",
+        "expectedOutput": "Cached DataFrame in memory",
+        "isHidden": false,
+        "description": "Memory caching"
+      },
+      {
+        "input": "df, storage_level=\"MEMORY_AND_DISK\"",
+        "expectedOutput": "Persisted DataFrame",
+        "isHidden": false,
+        "description": "Memory and disk persistence"
+      }
+    ],
+    "hints": [
+      "Use df.cache() for memory-only caching",
+      "Use df.persist(StorageLevel.X) for other levels",
+      "Common levels: MEMORY_ONLY, MEMORY_AND_DISK, DISK_ONLY",
+      "Caching improves performance for repeated operations"
+    ]
+  },
+  {
+    "id": "cs407-ex-6-15",
+    "subjectId": "cs407",
+    "topicId": "cs407-t6",
+    "title": "Broadcast Join",
+    "description": "Write a function that performs a broadcast join for joining a large DataFrame with a small one.",
+    "difficulty": 3,
+    "language": "python",
+    "starterCode": "from pyspark.sql.functions import broadcast\n\ndef broadcast_join(large_df, small_df, join_column):\n    # Perform broadcast join\n    # Broadcast the small DataFrame\n    # Return joined DataFrame\n    pass",
+    "solution": "from pyspark.sql.functions import broadcast\n\ndef broadcast_join(large_df, small_df, join_column):\n    return large_df.join(broadcast(small_df), on=join_column, how='inner')",
+    "testCases": [
+      {
+        "input": "large transaction df, small product lookup df",
+        "expectedOutput": "Joined DataFrame with product info",
+        "isHidden": false,
+        "description": "Broadcast small lookup table"
+      }
+    ],
+    "hints": [
+      "Use broadcast(small_df) to mark for broadcasting",
+      "Use .join() as normal",
+      "Broadcasting avoids shuffling the large DataFrame",
+      "Only broadcast small DataFrames that fit in memory"
+    ]
+  },
+  {
+    "id": "cs407-ex-6-16",
+    "subjectId": "cs407",
+    "topicId": "cs407-t6",
+    "title": "ETL Pipeline",
+    "description": "Write a function that implements a simple ETL pipeline: Extract from CSV, Transform data, Load to Parquet.",
+    "difficulty": 4,
+    "language": "python",
+    "starterCode": "from pyspark.sql import functions as F\n\ndef etl_pipeline(spark, input_path, output_path, filter_col, filter_value):\n    # Extract: Read CSV from input_path\n    # Transform: Filter rows where filter_col > filter_value, add processed_date column\n    # Load: Write to Parquet at output_path\n    # Return the transformed DataFrame\n    pass",
+    "solution": "from pyspark.sql import functions as F\n\ndef etl_pipeline(spark, input_path, output_path, filter_col, filter_value):\n    # Extract\n    df = spark.read.csv(input_path, header=True, inferSchema=True)\n\n    # Transform\n    filtered_df = df.filter(F.col(filter_col) > filter_value)\n    transformed_df = filtered_df.withColumn('processed_date', F.current_date())\n\n    # Load\n    transformed_df.write.parquet(output_path, mode='overwrite')\n\n    return transformed_df",
+    "testCases": [
+      {
+        "input": "CSV with sales data, filter amount > 100",
+        "expectedOutput": "Filtered and transformed data in Parquet",
+        "isHidden": false,
+        "description": "Sales ETL pipeline"
+      },
+      {
+        "input": "CSV with user data, filter age > 18",
+        "expectedOutput": "Adult users in Parquet",
+        "isHidden": false,
+        "description": "User filtering pipeline"
+      }
+    ],
+    "hints": [
+      "Extract: spark.read.csv() with header=True",
+      "Transform: Use .filter() and .withColumn()",
+      "Add current_date with F.current_date()",
+      "Load: df.write.parquet() with mode=\"overwrite\"",
+      "Return the transformed DataFrame"
+    ]
+  }
+]

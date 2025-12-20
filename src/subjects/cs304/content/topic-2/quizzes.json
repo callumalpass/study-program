@@ -1,0 +1,221 @@
+[
+  {
+    "id": "cs304-t2-quiz-1",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-2",
+    "title": "Context-Free Grammars",
+    "questions": [
+      {
+        "id": "cs304-t2-q1-1",
+        "type": "multiple_choice",
+        "prompt": "In a context-free grammar, what appears on the left side of a production?",
+        "options": [
+          "Only terminals",
+          "Only non-terminals",
+          "A single non-terminal",
+          "Any string of symbols"
+        ],
+        "correctAnswer": 2,
+        "explanation": "CFG productions have exactly one non-terminal on the left side, distinguishing them from unrestricted grammars."
+      },
+      {
+        "id": "cs304-t2-q1-2",
+        "type": "multiple_choice",
+        "prompt": "What is an ambiguous grammar?",
+        "options": [
+          "A grammar with errors",
+          "A grammar that can produce multiple parse trees for some input",
+          "A grammar with no valid derivations",
+          "A grammar with left recursion"
+        ],
+        "correctAnswer": 1,
+        "explanation": "An ambiguous grammar allows more than one parse tree (derivation) for the same input string."
+      },
+      {
+        "id": "cs304-t2-q1-3",
+        "type": "multiple_choice",
+        "prompt": "What is the start symbol in a grammar?",
+        "options": [
+          "The first terminal",
+          "The non-terminal from which all derivations begin",
+          "Any symbol can be the start",
+          "The most frequently used symbol"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The start symbol is the designated non-terminal from which all valid derivations must begin."
+      },
+      {
+        "id": "cs304-t2-q1-4",
+        "type": "multiple_choice",
+        "prompt": "What is a leftmost derivation?",
+        "options": [
+          "Deriving left-recursive rules first",
+          "Always replacing the leftmost non-terminal",
+          "Starting from the left of the input",
+          "Using left-associative operators"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A leftmost derivation always expands the leftmost non-terminal at each step."
+      },
+      {
+        "id": "cs304-t2-q1-5",
+        "type": "multiple_choice",
+        "prompt": "What is the yield of a parse tree?",
+        "options": [
+          "The root node",
+          "The leftmost leaf",
+          "The string of terminals at the leaves read left to right",
+          "The number of nodes"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The yield is the string formed by concatenating the leaves (terminals) from left to right."
+      }
+    ]
+  },
+  {
+    "id": "cs304-t2-quiz-2",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-2",
+    "title": "Top-Down Parsing",
+    "questions": [
+      {
+        "id": "cs304-t2-q2-1",
+        "type": "multiple_choice",
+        "prompt": "What is the main challenge with left-recursive grammars in top-down parsing?",
+        "options": [
+          "They are ambiguous",
+          "They cause infinite recursion",
+          "They cannot express all languages",
+          "They are slower to parse"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Left recursion causes recursive descent parsers to loop infinitely without consuming input."
+      },
+      {
+        "id": "cs304-t2-q2-2",
+        "type": "multiple_choice",
+        "prompt": "What is the FIRST set of a grammar symbol?",
+        "options": [
+          "The first production for that symbol",
+          "The set of terminals that can begin strings derived from it",
+          "The first symbol in each production",
+          "The highest-priority terminal"
+        ],
+        "correctAnswer": 1,
+        "explanation": "FIRST(X) is the set of terminals that can appear as the first symbol of any string derived from X."
+      },
+      {
+        "id": "cs304-t2-q2-3",
+        "type": "multiple_choice",
+        "prompt": "When is epsilon (ε) in the FIRST set of a non-terminal?",
+        "options": [
+          "Never",
+          "When it can derive the empty string",
+          "When it appears in a production",
+          "When it is the start symbol"
+        ],
+        "correctAnswer": 1,
+        "explanation": "ε ∈ FIRST(A) if A can derive the empty string (A ⇒* ε)."
+      },
+      {
+        "id": "cs304-t2-q2-4",
+        "type": "multiple_choice",
+        "prompt": "What is the FOLLOW set used for in LL parsing?",
+        "options": [
+          "Determining operator precedence",
+          "Deciding which production to use when FIRST sets overlap or contain ε",
+          "Detecting left recursion",
+          "Optimizing the parse table"
+        ],
+        "correctAnswer": 1,
+        "explanation": "FOLLOW sets help choose productions when the current non-terminal can derive ε."
+      },
+      {
+        "id": "cs304-t2-q2-5",
+        "type": "multiple_choice",
+        "prompt": "What does LL(1) mean?",
+        "options": [
+          "Left-to-right, Leftmost derivation, 1 symbol lookahead",
+          "Left-to-right, Left recursion, 1 pass",
+          "Linear time, Linear space, 1 table",
+          "Lexical, Logical, 1 phase"
+        ],
+        "correctAnswer": 0,
+        "explanation": "LL(1): scan Left-to-right, produce Leftmost derivation, using 1 token of lookahead."
+      }
+    ]
+  },
+  {
+    "id": "cs304-t2-quiz-3",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-2",
+    "title": "Bottom-Up Parsing",
+    "questions": [
+      {
+        "id": "cs304-t2-q3-1",
+        "type": "multiple_choice",
+        "prompt": "What are the two main actions in shift-reduce parsing?",
+        "options": [
+          "Push and pop",
+          "Read and write",
+          "Shift (push token) and reduce (apply production)",
+          "Accept and reject"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Shift pushes input onto the stack; reduce replaces a production's RHS with its LHS."
+      },
+      {
+        "id": "cs304-t2-q3-2",
+        "type": "multiple_choice",
+        "prompt": "What is a handle in bottom-up parsing?",
+        "options": [
+          "The next token",
+          "A string matching a production's RHS that should be reduced",
+          "The stack top",
+          "An error condition"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A handle is a substring matching a production body that, when reduced, leads to a valid parse."
+      },
+      {
+        "id": "cs304-t2-q3-3",
+        "type": "multiple_choice",
+        "prompt": "What is a shift-reduce conflict?",
+        "options": [
+          "Two reductions possible",
+          "Parser cannot decide between shifting and reducing",
+          "Invalid input detected",
+          "Stack overflow"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A shift-reduce conflict occurs when the parser cannot decide whether to shift the next token or reduce the current handle."
+      },
+      {
+        "id": "cs304-t2-q3-4",
+        "type": "multiple_choice",
+        "prompt": "Which is more powerful: LL(1) or LR(1)?",
+        "options": [
+          "LL(1)",
+          "LR(1)",
+          "They are equivalent",
+          "Depends on the grammar"
+        ],
+        "correctAnswer": 1,
+        "explanation": "LR(1) parsers can handle a strictly larger class of grammars than LL(1) parsers."
+      },
+      {
+        "id": "cs304-t2-q3-5",
+        "type": "multiple_choice",
+        "prompt": "What tool generates LALR parsers from grammar specifications?",
+        "options": [
+          "lex",
+          "flex",
+          "yacc/bison",
+          "make"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Yacc (and GNU bison) generate LALR(1) parsers from grammar specifications."
+      }
+    ]
+  }
+]

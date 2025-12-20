@@ -1,0 +1,221 @@
+[
+  {
+    "id": "cs304-t7-quiz-1",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-7",
+    "title": "Memory Management",
+    "questions": [
+      {
+        "id": "cs304-t7-q1-1",
+        "type": "multiple_choice",
+        "prompt": "What is the heap used for in program execution?",
+        "options": [
+          "Function calls",
+          "Dynamically allocated data with programmer-controlled lifetime",
+          "Local variables",
+          "Constants"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The heap stores dynamically allocated data whose lifetime is controlled by the programmer (or garbage collector)."
+      },
+      {
+        "id": "cs304-t7-q1-2",
+        "type": "multiple_choice",
+        "prompt": "What is fragmentation in heap management?",
+        "options": [
+          "Memory corruption",
+          "Wasted space due to allocation patterns",
+          "Memory overflow",
+          "Pointer errors"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Fragmentation occurs when free memory is broken into small, unusable pieces between allocations."
+      },
+      {
+        "id": "cs304-t7-q1-3",
+        "type": "multiple_choice",
+        "prompt": "What is the mark-sweep garbage collection algorithm?",
+        "options": [
+          "Sweeping memory",
+          "Mark reachable objects, then sweep (free) unmarked objects",
+          "Marking errors",
+          "Memory cleanup"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Mark-sweep traces from roots marking reachable objects, then frees all unmarked (unreachable) objects."
+      },
+      {
+        "id": "cs304-t7-q1-4",
+        "type": "multiple_choice",
+        "prompt": "What is the advantage of copying garbage collection?",
+        "options": [
+          "Uses less memory",
+          "Compacts memory and has allocation cost proportional to live data",
+          "Never pauses",
+          "Simpler implementation"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Copying GC compacts memory during collection and only touches live data, making it efficient for short-lived objects."
+      },
+      {
+        "id": "cs304-t7-q1-5",
+        "type": "multiple_choice",
+        "prompt": "What is generational garbage collection based on?",
+        "options": [
+          "Object types",
+          "The hypothesis that most objects die young",
+          "Random selection",
+          "Object size"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Generational GC exploits the generational hypothesis: most objects die young, so focus collection on young generation."
+      }
+    ]
+  },
+  {
+    "id": "cs304-t7-quiz-2",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-7",
+    "title": "Virtual Machines and JIT",
+    "questions": [
+      {
+        "id": "cs304-t7-q2-1",
+        "type": "multiple_choice",
+        "prompt": "What is a stack-based virtual machine?",
+        "options": [
+          "A VM using hardware stacks",
+          "A VM that uses a stack for operands instead of registers",
+          "A VM for stack languages",
+          "A VM with call stacks"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Stack-based VMs use an operand stack for computation instead of named registers (e.g., JVM)."
+      },
+      {
+        "id": "cs304-t7-q2-2",
+        "type": "multiple_choice",
+        "prompt": "What is bytecode?",
+        "options": [
+          "Binary code",
+          "Portable intermediate code for virtual machines",
+          "Compressed code",
+          "Encrypted code"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Bytecode is a portable, compact intermediate representation executed by a virtual machine interpreter or JIT compiler."
+      },
+      {
+        "id": "cs304-t7-q2-3",
+        "type": "multiple_choice",
+        "prompt": "What is JIT (Just-In-Time) compilation?",
+        "options": [
+          "Ahead-of-time compilation",
+          "Compiling code to native during execution",
+          "Delayed compilation",
+          "Incremental compilation"
+        ],
+        "correctAnswer": 1,
+        "explanation": "JIT compilation translates bytecode to native machine code at runtime, combining interpretation flexibility with native speed."
+      },
+      {
+        "id": "cs304-t7-q2-4",
+        "type": "multiple_choice",
+        "prompt": "What is a tracing JIT?",
+        "options": [
+          "A debugging JIT",
+          "A JIT that compiles frequently executed paths (traces)",
+          "A JIT with logging",
+          "A sequential JIT"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Tracing JITs record and compile hot execution paths (traces), optimizing the common case."
+      },
+      {
+        "id": "cs304-t7-q2-5",
+        "type": "multiple_choice",
+        "prompt": "What is tiered compilation?",
+        "options": [
+          "Compilation in tiers",
+          "Using multiple compilation levels based on method hotness",
+          "Parallel compilation",
+          "Incremental compilation"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Tiered compilation uses quick compilation for cold code and aggressive optimization for frequently executed hot code."
+      }
+    ]
+  },
+  {
+    "id": "cs304-t7-quiz-3",
+    "subjectId": "cs304",
+    "topicId": "cs304-topic-7",
+    "title": "Linking and Loading",
+    "questions": [
+      {
+        "id": "cs304-t7-q3-1",
+        "type": "multiple_choice",
+        "prompt": "What is the linker responsible for?",
+        "options": [
+          "Compiling code",
+          "Combining object files and resolving external references",
+          "Running programs",
+          "Memory allocation"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The linker combines object files, resolves symbol references, and produces an executable or library."
+      },
+      {
+        "id": "cs304-t7-q3-2",
+        "type": "multiple_choice",
+        "prompt": "What is relocation in linking?",
+        "options": [
+          "Moving files",
+          "Adjusting addresses in object code when combined",
+          "Loading programs",
+          "Memory management"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Relocation patches addresses in object code to reflect the final layout when files are combined."
+      },
+      {
+        "id": "cs304-t7-q3-3",
+        "type": "multiple_choice",
+        "prompt": "What is dynamic linking?",
+        "options": [
+          "Fast linking",
+          "Deferring library linking until runtime",
+          "Linking during compilation",
+          "Automatic linking"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Dynamic linking resolves library references at runtime, allowing shared libraries and late binding."
+      },
+      {
+        "id": "cs304-t7-q3-4",
+        "type": "multiple_choice",
+        "prompt": "What is position-independent code (PIC)?",
+        "options": [
+          "Relocatable code",
+          "Code that executes correctly regardless of its load address",
+          "Portable code",
+          "Optimized code"
+        ],
+        "correctAnswer": 1,
+        "explanation": "PIC can execute at any address without modification, essential for shared libraries loaded at varying addresses."
+      },
+      {
+        "id": "cs304-t7-q3-5",
+        "type": "multiple_choice",
+        "prompt": "What is the Global Offset Table (GOT)?",
+        "options": [
+          "A function table",
+          "A table of addresses for position-independent access to global data",
+          "A hash table",
+          "An optimization table"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The GOT enables position-independent code to access global variables through a level of indirection."
+      }
+    ]
+  }
+]

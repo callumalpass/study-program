@@ -1,0 +1,183 @@
+[
+  {
+    "id": "cs105-quiz-7",
+    "subjectId": "cs105",
+    "topicId": "cs105-topic-7",
+    "title": "Advanced C Quiz 1: Bitwise Operations",
+    "questions": [
+      {
+        "id": "cs105-q7-1",
+        "type": "code_output",
+        "prompt": "What does this code print?",
+        "codeSnippet": "unsigned int x = 5;  // 0101 in binary\nprintf(\"%u\", x << 1);",
+        "correctAnswer": "10",
+        "explanation": "Left shift by 1 multiplies by 2. 5 (0101) becomes 10 (1010)."
+      },
+      {
+        "id": "cs105-q7-2",
+        "type": "code_output",
+        "prompt": "What does this code print?",
+        "codeSnippet": "int a = 12;  // 1100\nint b = 10;  // 1010\nprintf(\"%d\", a & b);",
+        "correctAnswer": "8",
+        "explanation": "Bitwise AND: 1100 & 1010 = 1000 = 8. Only bits set in both values remain."
+      },
+      {
+        "id": "cs105-q7-3",
+        "type": "multiple_choice",
+        "prompt": "Which operation is commonly used to check if a bit is set?",
+        "options": [
+          "OR",
+          "AND",
+          "XOR",
+          "NOT"
+        ],
+        "correctAnswer": 1,
+        "explanation": "AND with a mask checks if specific bits are set: if (value & (1 << bit)) tests if bit is set."
+      },
+      {
+        "id": "cs105-q7-4",
+        "type": "code_output",
+        "prompt": "What does this code print?",
+        "codeSnippet": "int x = 5;  // 0101\nx ^= 3;      // 0011\nprintf(\"%d\", x);",
+        "correctAnswer": "6",
+        "explanation": "XOR: 0101 ^ 0011 = 0110 = 6. XOR flips bits where the mask has 1s."
+      },
+      {
+        "id": "cs105-q7-5",
+        "type": "true_false",
+        "prompt": "Right shifting a signed negative integer is implementation-defined.",
+        "correctAnswer": true,
+        "explanation": "Right shifting signed negative values may fill with 0s or 1s depending on the compiler (logical vs arithmetic shift)."
+      }
+    ]
+  },
+  {
+    "id": "cs105-quiz-7b",
+    "subjectId": "cs105",
+    "topicId": "cs105-topic-7",
+    "title": "Advanced C Quiz 2: Unions and Enums",
+    "questions": [
+      {
+        "id": "cs105-q7b-1",
+        "type": "multiple_choice",
+        "prompt": "What is the size of a union?",
+        "options": [
+          "Sum of all members",
+          "Size of largest member",
+          "Always 4 bytes",
+          "Size of first member"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A union is large enough to hold its largest member, since all members share the same memory."
+      },
+      {
+        "id": "cs105-q7b-2",
+        "type": "code_output",
+        "prompt": "What does this code print?",
+        "codeSnippet": "enum Color { RED, GREEN = 5, BLUE };\nprintf(\"%d\", BLUE);",
+        "correctAnswer": "6",
+        "explanation": "Enum values continue from the last specified value. GREEN = 5, so BLUE = 6."
+      },
+      {
+        "id": "cs105-q7b-3",
+        "type": "true_false",
+        "prompt": "Reading a different union member than was last written is undefined behavior.",
+        "correctAnswer": false,
+        "explanation": "Type punning through unions is allowed in C (unlike C++). It's commonly used to reinterpret bit patterns."
+      },
+      {
+        "id": "cs105-q7b-4",
+        "type": "multiple_choice",
+        "prompt": "What are unions commonly used for?",
+        "options": [
+          "Inheritance",
+          "Memory saving/type punning",
+          "Function overloading",
+          "Encryption"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Unions save memory when only one of several types is needed at a time, and enable type punning."
+      },
+      {
+        "id": "cs105-q7b-5",
+        "type": "multiple_choice",
+        "prompt": "What is a tagged union?",
+        "options": [
+          "A union with a label",
+          "A union paired with an enum indicating active member",
+          "A union of strings",
+          "A union in a struct"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A tagged union combines a union with an enum or integer that tracks which member is currently valid."
+      }
+    ]
+  },
+  {
+    "id": "cs105-quiz-7c",
+    "subjectId": "cs105",
+    "topicId": "cs105-topic-7",
+    "title": "Advanced C Quiz 3: Type Qualifiers and Variadic Functions",
+    "questions": [
+      {
+        "id": "cs105-q7c-1",
+        "type": "multiple_choice",
+        "prompt": "What does the volatile keyword indicate?",
+        "options": [
+          "Variable is temporary",
+          "Variable may change unexpectedly",
+          "Variable is thread-safe",
+          "Variable is fast"
+        ],
+        "correctAnswer": 1,
+        "explanation": "volatile tells the compiler the variable may be changed by external factors, preventing certain optimizations."
+      },
+      {
+        "id": "cs105-q7c-2",
+        "type": "multiple_choice",
+        "prompt": "What does restrict mean for a pointer?",
+        "options": [
+          "Pointer is read-only",
+          "Pointer is the only way to access that memory",
+          "Pointer cannot be NULL",
+          "Pointer is aligned"
+        ],
+        "correctAnswer": 1,
+        "explanation": "restrict promises the compiler that the pointer is the only way to access its memory, enabling optimizations."
+      },
+      {
+        "id": "cs105-q7c-3",
+        "type": "multiple_choice",
+        "prompt": "Which header is needed for variadic functions?",
+        "options": [
+          "stdio.h",
+          "stdarg.h",
+          "stdlib.h",
+          "varargs.h"
+        ],
+        "correctAnswer": 1,
+        "explanation": "stdarg.h provides va_list, va_start, va_arg, and va_end for implementing variadic functions."
+      },
+      {
+        "id": "cs105-q7c-4",
+        "type": "true_false",
+        "prompt": "A variadic function must have at least one fixed parameter.",
+        "correctAnswer": true,
+        "explanation": "The C standard requires at least one named parameter before the ellipsis (...) in a variadic function."
+      },
+      {
+        "id": "cs105-q7c-5",
+        "type": "multiple_choice",
+        "prompt": "What does va_arg do?",
+        "options": [
+          "Starts argument processing",
+          "Retrieves next argument of specified type",
+          "Counts arguments",
+          "Ends argument processing"
+        ],
+        "correctAnswer": 1,
+        "explanation": "va_arg(ap, type) retrieves the next argument from the va_list, interpreting it as the specified type."
+      }
+    ]
+  }
+]

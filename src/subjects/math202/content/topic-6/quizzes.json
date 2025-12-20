@@ -1,0 +1,185 @@
+[
+  {
+    "id": "math202-quiz-6a",
+    "subjectId": "math202",
+    "topicId": "math202-6",
+    "title": "Simple Linear Regression",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "In the regression equation Y = β₀ + β₁X + ε, what does β₁ represent?",
+        "options": [
+          "The intercept",
+          "The slope",
+          "The error term",
+          "The correlation"
+        ],
+        "correctAnswer": 1,
+        "explanation": "β₁ is the slope coefficient, representing the change in Y for a one-unit change in X."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "The least squares method minimizes:",
+        "options": [
+          "Sum of errors",
+          "Sum of absolute errors",
+          "Sum of squared errors",
+          "Maximum error"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Least squares minimizes the sum of squared residuals: Σ(yᵢ - ŷᵢ)²."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "The correlation coefficient r is always between -1 and 1.",
+        "correctAnswer": true,
+        "explanation": "The correlation coefficient r ranges from -1 (perfect negative) to +1 (perfect positive)."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "R² (coefficient of determination) represents:",
+        "options": [
+          "The correlation",
+          "The slope",
+          "The proportion of variance explained",
+          "The residual variance"
+        ],
+        "correctAnswer": 2,
+        "explanation": "R² indicates the proportion of variance in Y explained by X. R² = 0.8 means 80% of variance is explained."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "The difference between an observed value and the predicted value is called a ______.",
+        "correctAnswer": "residual",
+        "explanation": "Residuals (errors) are the differences between observed and fitted values: eᵢ = yᵢ - ŷᵢ."
+      }
+    ]
+  },
+  {
+    "id": "math202-quiz-6b",
+    "subjectId": "math202",
+    "topicId": "math202-6",
+    "title": "Regression Inference and Diagnostics",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "Which assumption is NOT required for linear regression?",
+        "options": [
+          "Linearity",
+          "Independence of errors",
+          "X and Y are normally distributed",
+          "Homoscedasticity"
+        ],
+        "correctAnswer": 2,
+        "explanation": "We assume errors are normally distributed, not necessarily X and Y themselves."
+      },
+      {
+        "id": "q2",
+        "type": "true_false",
+        "prompt": "Homoscedasticity means the variance of errors is constant across all values of X.",
+        "correctAnswer": true,
+        "explanation": "Homoscedasticity (constant variance) is one of the key assumptions of linear regression."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "A residual plot showing a clear pattern suggests:",
+        "options": [
+          "Good model fit",
+          "Violation of assumptions",
+          "High R²",
+          "Strong correlation"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Patterns in residual plots indicate violations of regression assumptions (non-linearity, heteroscedasticity, etc.)."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "To test if the slope β₁ is significantly different from zero, we use:",
+        "options": [
+          "Chi-square test",
+          "t-test",
+          "F-test",
+          "Z-test"
+        ],
+        "correctAnswer": 1,
+        "explanation": "We use a t-test to test H₀: β₁ = 0 vs. H₁: β₁ ≠ 0."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "An influential point that doesn't follow the pattern of other data is called an ______.",
+        "correctAnswer": "outlier",
+        "explanation": "Outliers are observations that are far from the regression line and can heavily influence the fit."
+      }
+    ]
+  },
+  {
+    "id": "math202-quiz-6c",
+    "subjectId": "math202",
+    "topicId": "math202-6",
+    "title": "Multiple Regression",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "In multiple regression with k predictors, the model is:",
+        "options": [
+          "Y = β₀ + β₁X + ε",
+          "Y = β₀ + β₁X₁ + β₂X₂ + ... + βₖXₖ + ε",
+          "Y = β₁X₁ + ε",
+          "Y = ΣXᵢ + ε"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Multiple regression includes multiple predictor variables X₁, X₂, ..., Xₖ."
+      },
+      {
+        "id": "q2",
+        "type": "true_false",
+        "prompt": "Multicollinearity occurs when predictor variables are highly correlated with each other.",
+        "correctAnswer": true,
+        "explanation": "Multicollinearity makes it difficult to determine the individual effect of each predictor."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "Adjusted R² is preferred over R² in multiple regression because:",
+        "options": [
+          "It is always larger",
+          "It accounts for the number of predictors",
+          "It is easier to calculate",
+          "It doesn't require assumptions"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Adjusted R² penalizes models for including unnecessary predictors, preventing overfitting."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "The F-test in multiple regression tests:",
+        "options": [
+          "Individual coefficients",
+          "Overall model significance",
+          "Normality",
+          "Homoscedasticity"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The F-test tests H₀: β₁ = β₂ = ... = βₖ = 0 (whether the model as a whole is significant)."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "The Variance Inflation Factor (VIF) is used to detect ______.",
+        "correctAnswer": "multicollinearity",
+        "explanation": "VIF measures how much the variance of a coefficient is inflated due to multicollinearity."
+      }
+    ]
+  }
+]

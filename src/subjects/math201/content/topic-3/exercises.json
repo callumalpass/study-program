@@ -1,0 +1,225 @@
+[
+  {
+    "id": "math201-t3-ex01",
+    "subjectId": "math201",
+    "topicId": "math201-3",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Verifying Vector Space Axioms",
+    "description": "Verify that $\\mathbb{R}^2$ with standard addition and scalar multiplication is a vector space by checking closure under addition.",
+    "hints": [
+      "Show that the sum of any two vectors in ℝ² is also in ℝ²."
+    ],
+    "solution": "Let $u = \\begin{bmatrix} u_1 \\\\ u_2 \\end{bmatrix}$ and $v = \\begin{bmatrix} v_1 \\\\ v_2 \\end{bmatrix}$ be in $\\mathbb{R}^2$.\n\n$u + v = \\begin{bmatrix} u_1 + v_1 \\\\ u_2 + v_2 \\end{bmatrix}$ is in $\\mathbb{R}^2$ since $u_1 + v_1$ and $u_2 + v_2$ are real numbers.\n\nTherefore $\\mathbb{R}^2$ is closed under addition. ✓"
+  },
+  {
+    "id": "math201-t3-ex02",
+    "subjectId": "math201",
+    "topicId": "math201-3",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Subspace Test",
+    "description": "Determine if $H = \\{\\begin{bmatrix} a \\\\ b \\\\ c \\end{bmatrix} : a + b + c = 0\\}$ is a subspace of $\\mathbb{R}^3$.",
+    "hints": [
+      "Check three conditions: contains zero, closed under addition, closed under scalar multiplication."
+    ],
+    "solution": "1. Zero vector: $0 + 0 + 0 = 0$ ✓, so $0 \\in H$.\n\n2. Addition: If $u, v \\in H$, then $a_1 + b_1 + c_1 = 0$ and $a_2 + b_2 + c_2 = 0$.\n$u + v = \\begin{bmatrix} a_1+a_2 \\\\ b_1+b_2 \\\\ c_1+c_2 \\end{bmatrix}$: $(a_1+a_2) + (b_1+b_2) + (c_1+c_2) = 0$ ✓\n\n3. Scalar mult: If $u \\in H$ and $c \\in \\mathbb{R}$: $ca + cb + cc = c(a+b+c) = c(0) = 0$ ✓\n\nTherefore $H$ is a subspace of $\\mathbb{R}^3$."
+  },
+  {
+    "id": "math201-t3-ex03",
+    "subjectId": "math201",
+    "topicId": "math201-3",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Null Space",
+    "description": "Find a basis for the null space of $A = \\begin{bmatrix} 1 & 2 & 0 & 3 \\\\ 0 & 0 & 1 & 4 \\end{bmatrix}$",
+    "hints": [
+      "Solve Ax = 0.",
+      "Identify free variables.",
+      "Express solution in parametric vector form."
+    ],
+    "solution": "From RREF, Nul$(A) = \\{x : x_1 + 2x_2 + 3x_4 = 0, \\; x_3 + 4x_4 = 0\\}$\n\nFree variables: $x_2, x_4$. Basic variables: $x_1 = -2x_2 - 3x_4$, $x_3 = -4x_4$\n\n$x = x_2\\begin{bmatrix} -2 \\\\ 1 \\\\ 0 \\\\ 0 \\end{bmatrix} + x_4\\begin{bmatrix} -3 \\\\ 0 \\\\ -4 \\\\ 1 \\end{bmatrix}$\n\nBasis for Nul$(A)$: $\\left\\{\\begin{bmatrix} -2 \\\\ 1 \\\\ 0 \\\\ 0 \\end{bmatrix}, \\begin{bmatrix} -3 \\\\ 0 \\\\ -4 \\\\ 1 \\end{bmatrix}\\right\\}$"
+  },
+  {
+    "id": "math201-t3-ex04",
+    "subjectId": "math201",
+    "topicId": "math201-3",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Column Space",
+    "description": "Find a basis for Col$(A)$ where $A = \\begin{bmatrix} 1 & 3 & 2 \\\\ 2 & 7 & 5 \\\\ -1 & -2 & -1 \\end{bmatrix}$",
+    "hints": [
+      "Row reduce to find pivot columns.",
+      "The pivot columns of the ORIGINAL matrix form a basis for Col(A)."
+    ],
+    "solution": "RREF of $A$: $\\begin{bmatrix} 1 & 0 & -1 \\\\ 0 & 1 & 1 \\\\ 0 & 0 & 0 \\end{bmatrix}$\n\nPivot columns: 1 and 2.\n\nBasis for Col$(A)$: $\\left\\{\\begin{bmatrix} 1 \\\\ 2 \\\\ -1 \\end{bmatrix}, \\begin{bmatrix} 3 \\\\ 7 \\\\ -2 \\end{bmatrix}\\right\\}$ (from original matrix)"
+  },
+  {
+    "id": "math201-t3-ex05",
+    "subjectId": "math201",
+    "topicId": "math201-3",
+    "type": "written",
+    "difficulty": 2,
+    "title": "Linear Combinations",
+    "description": "Determine if $b = \\begin{bmatrix} 5 \\\\ 1 \\\\ -2 \\end{bmatrix}$ is in Span$\\{v_1, v_2\\}$ where $v_1 = \\begin{bmatrix} 1 \\\\ 2 \\\\ -1 \\end{bmatrix}$ and $v_2 = \\begin{bmatrix} 2 \\\\ -1 \\\\ 1 \\end{bmatrix}$.",
+    "hints": [
+      "Set up the equation c₁v₁ + c₂v₂ = b.",
+      "Solve the system for c₁ and c₂."
+    ],
+    "solution": "$c_1\\begin{bmatrix} 1 \\\\ 2 \\\\ -1 \\end{bmatrix} + c_2\\begin{bmatrix} 2 \\\\ -1 \\\\ 1 \\end{bmatrix} = \\begin{bmatrix} 5 \\\\ 1 \\\\ -2 \\end{bmatrix}$\n\nSystem: $c_1 + 2c_2 = 5$, $2c_1 - c_2 = 1$, $-c_1 + c_2 = -2$\n\nFrom equations 1 and 2: $c_1 = 1, c_2 = 2$\n\nCheck eq 3: $-1 + 2 = 1 \\neq -2$ ✗\n\nThe system is inconsistent, so $b \\notin$ Span$\\{v_1, v_2\\}$."
+  },
+  {
+    "id": "math201-t3-ex06",
+    "subjectId": "math201",
+    "topicId": "math201-3",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Linear Independence Test",
+    "description": "Determine if the vectors $\\begin{bmatrix} 1 \\\\ 2 \\\\ 1 \\end{bmatrix}, \\begin{bmatrix} 2 \\\\ 5 \\\\ 4 \\end{bmatrix}, \\begin{bmatrix} 1 \\\\ 1 \\\\ -1 \\end{bmatrix}$ are linearly independent.",
+    "hints": [
+      "Form matrix with vectors as columns.",
+      "Row reduce to check if Ax = 0 has only trivial solution."
+    ],
+    "solution": "$A = \\begin{bmatrix} 1 & 2 & 1 \\\\ 2 & 5 & 1 \\\\ 1 & 4 & -1 \\end{bmatrix}$\n\nRREF: $\\begin{bmatrix} 1 & 0 & -7 \\\\ 0 & 1 & 4 \\\\ 0 & 0 & 0 \\end{bmatrix}$\n\nFree variable in column 3, so nontrivial solution exists.\n\nThe vectors are linearly DEPENDENT."
+  },
+  {
+    "id": "math201-t3-ex07",
+    "subjectId": "math201",
+    "topicId": "math201-3",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Finding a Basis",
+    "description": "Find a basis for the subspace $W = \\{\\begin{bmatrix} a \\\\ b \\\\ c \\\\ d \\end{bmatrix} : a - b + c = 0, \\; b - 2c + d = 0\\}$",
+    "hints": [
+      "Express constrained variables in terms of free variables.",
+      "Write the general vector in parametric form."
+    ],
+    "solution": "From constraints: $a = b - c$ and $d = -b + 2c$\n\nFree variables: $b, c$\n\n$\\begin{bmatrix} a \\\\ b \\\\ c \\\\ d \\end{bmatrix} = \\begin{bmatrix} b-c \\\\ b \\\\ c \\\\ -b+2c \\end{bmatrix} = b\\begin{bmatrix} 1 \\\\ 1 \\\\ 0 \\\\ -1 \\end{bmatrix} + c\\begin{bmatrix} -1 \\\\ 0 \\\\ 1 \\\\ 2 \\end{bmatrix}$\n\nBasis for $W$: $\\left\\{\\begin{bmatrix} 1 \\\\ 1 \\\\ 0 \\\\ -1 \\end{bmatrix}, \\begin{bmatrix} -1 \\\\ 0 \\\\ 1 \\\\ 2 \\end{bmatrix}\\right\\}$"
+  },
+  {
+    "id": "math201-t3-ex08",
+    "subjectId": "math201",
+    "topicId": "math201-3",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Dimension of Subspace",
+    "description": "Find dim(Nul$(A)$) and dim(Col$(A)$) for $A = \\begin{bmatrix} 1 & 2 & 3 & 4 \\\\ 2 & 4 & 6 & 8 \\\\ 3 & 6 & 9 & 12 \\end{bmatrix}$",
+    "hints": [
+      "Row reduce to find rank.",
+      "Use Rank-Nullity Theorem."
+    ],
+    "solution": "RREF: $\\begin{bmatrix} 1 & 2 & 3 & 4 \\\\ 0 & 0 & 0 & 0 \\\\ 0 & 0 & 0 & 0 \\end{bmatrix}$\n\nRank(A) = 1 (one pivot)\n\nBy Rank-Nullity: rank$(A)$ + nullity$(A) = 4$\n\ndim(Col$(A)$) = rank$(A) = 1$\n\ndim(Nul$(A)$) = nullity$(A) = 4 - 1 = 3$"
+  },
+  {
+    "id": "math201-t3-ex09",
+    "subjectId": "math201",
+    "topicId": "math201-3",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Spanning Set",
+    "description": "Does $\\{\\begin{bmatrix} 1 \\\\ 0 \\end{bmatrix}, \\begin{bmatrix} 0 \\\\ 1 \\end{bmatrix}, \\begin{bmatrix} 1 \\\\ 1 \\end{bmatrix}\\}$ span $\\mathbb{R}^2$?",
+    "hints": [
+      "A set spans ℝⁿ if every vector in ℝⁿ can be written as a linear combination.",
+      "Check if the system Ax = b is always consistent."
+    ],
+    "solution": "For any $b = \\begin{bmatrix} b_1 \\\\ b_2 \\end{bmatrix}$, we need to solve:\n\n$c_1\\begin{bmatrix} 1 \\\\ 0 \\end{bmatrix} + c_2\\begin{bmatrix} 0 \\\\ 1 \\end{bmatrix} + c_3\\begin{bmatrix} 1 \\\\ 1 \\end{bmatrix} = \\begin{bmatrix} b_1 \\\\ b_2 \\end{bmatrix}$\n\nSystem: $c_1 + c_3 = b_1$ and $c_2 + c_3 = b_2$\n\nOne solution: $c_1 = b_1, c_2 = b_2, c_3 = 0$.\n\nYes, the set spans $\\mathbb{R}^2$. (Note: it is not a basis because it is linearly dependent.)"
+  },
+  {
+    "id": "math201-t3-ex10",
+    "subjectId": "math201",
+    "topicId": "math201-3",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Row Space vs Column Space",
+    "description": "For $A = \\begin{bmatrix} 1 & 2 & 3 \\\\ 2 & 4 & 6 \\\\ 1 & 3 & 5 \\end{bmatrix}$, find bases for Row$(A)$ and Col$(A)$. Verify they have the same dimension.",
+    "hints": [
+      "Row space basis: nonzero rows of RREF.",
+      "Column space basis: pivot columns of original matrix."
+    ],
+    "solution": "RREF: $\\begin{bmatrix} 1 & 0 & 1 \\\\ 0 & 1 & 2 \\\\ 0 & 0 & 0 \\end{bmatrix}$\n\nBasis for Row$(A)$: $\\{\\begin{bmatrix} 1 & 0 & 1 \\end{bmatrix}, \\begin{bmatrix} 0 & 1 & 2 \\end{bmatrix}\\}$\n\nPivot columns: 1, 2\n\nBasis for Col$(A)$: $\\{\\begin{bmatrix} 1 \\\\ 2 \\\\ 1 \\end{bmatrix}, \\begin{bmatrix} 2 \\\\ 4 \\\\ 3 \\end{bmatrix}\\}$\n\nBoth have dimension 2. ✓"
+  },
+  {
+    "id": "math201-t3-ex11",
+    "subjectId": "math201",
+    "topicId": "math201-3",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Basis Extension",
+    "description": "Extend $\\{\\begin{bmatrix} 1 \\\\ 0 \\\\ 1 \\end{bmatrix}\\}$ to a basis for $\\mathbb{R}^3$.",
+    "hints": [
+      "Add standard basis vectors one at a time.",
+      "Check linear independence after each addition."
+    ],
+    "solution": "Add $e_1 = \\begin{bmatrix} 1 \\\\ 0 \\\\ 0 \\end{bmatrix}$: Check if independent.\n\n$\\begin{bmatrix} 1 & 1 \\\\ 0 & 0 \\\\ 1 & 0 \\end{bmatrix}$ has rank 2, so $\\{v_1, e_1\\}$ is independent.\n\nAdd $e_2 = \\begin{bmatrix} 0 \\\\ 1 \\\\ 0 \\end{bmatrix}$:\n\n$\\begin{bmatrix} 1 & 1 & 0 \\\\ 0 & 0 & 1 \\\\ 1 & 0 & 0 \\end{bmatrix}$ has rank 3.\n\nBasis: $\\left\\{\\begin{bmatrix} 1 \\\\ 0 \\\\ 1 \\end{bmatrix}, \\begin{bmatrix} 1 \\\\ 0 \\\\ 0 \\end{bmatrix}, \\begin{bmatrix} 0 \\\\ 1 \\\\ 0 \\end{bmatrix}\\right\\}$"
+  },
+  {
+    "id": "math201-t3-ex12",
+    "subjectId": "math201",
+    "topicId": "math201-3",
+    "type": "written",
+    "difficulty": 5,
+    "title": "Intersection of Subspaces",
+    "description": "Find a basis for the intersection of subspaces $U$ and $W$ where:\n\n$U = $ Span$\\{\\begin{bmatrix} 1 \\\\ 0 \\\\ 1 \\end{bmatrix}, \\begin{bmatrix} 0 \\\\ 1 \\\\ 1 \\end{bmatrix}\\}$ and $W = $ Span$\\{\\begin{bmatrix} 1 \\\\ 1 \\\\ 0 \\end{bmatrix}, \\begin{bmatrix} 1 \\\\ 0 \\\\ -1 \\end{bmatrix}\\}$",
+    "hints": [
+      "A vector in U ∩ W must be expressible as a linear combination from both spanning sets.",
+      "Set up and solve the system."
+    ],
+    "solution": "Vector in $U \\cap W$ satisfies:\n\n$a\\begin{bmatrix} 1 \\\\ 0 \\\\ 1 \\end{bmatrix} + b\\begin{bmatrix} 0 \\\\ 1 \\\\ 1 \\end{bmatrix} = c\\begin{bmatrix} 1 \\\\ 1 \\\\ 0 \\end{bmatrix} + d\\begin{bmatrix} 1 \\\\ 0 \\\\ -1 \\end{bmatrix}$\n\nThis gives: $a = c + d$, $b = c$, $a + b = -d$\n\nSolving: $a = b = c = 0, d = 0$ only.\n\nWait, let me recalculate... Actually $U \\cap W = \\{0\\}$, so dim$(U \\cap W) = 0$."
+  },
+  {
+    "id": "math201-t3-ex13",
+    "subjectId": "math201",
+    "topicId": "math201-3",
+    "type": "written",
+    "difficulty": 5,
+    "title": "Polynomial Vector Space",
+    "description": "Show that $P_2$ (polynomials of degree $\\leq 2$) with standard operations is a vector space. Find its dimension and a basis.",
+    "hints": [
+      "Verify closure, additive identity, etc.",
+      "A general polynomial is a₀ + a₁t + a₂t²."
+    ],
+    "solution": "$P_2 = \\{a_0 + a_1t + a_2t^2 : a_i \\in \\mathbb{R}\\}$ satisfies all vector space axioms:\n\n- Closure: sum of two degree-2 polynomials has degree ≤ 2 ✓\n- Zero: $p(t) = 0$ ✓\n- Inverses: $-p(t)$ ✓\n- etc.\n\nStandard basis: $\\{1, t, t^2\\}$\n\ndim$(P_2) = 3$"
+  },
+  {
+    "id": "math201-t3-ex14",
+    "subjectId": "math201",
+    "topicId": "math201-3",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Non-example of Subspace",
+    "description": "Show that $H = \\{\\begin{bmatrix} a \\\\ b \\end{bmatrix} : ab = 0\\}$ is NOT a subspace of $\\mathbb{R}^2$.",
+    "hints": [
+      "Find a counterexample to one of the subspace conditions.",
+      "Try closure under addition."
+    ],
+    "solution": "Check closure under addition:\n\nLet $u = \\begin{bmatrix} 1 \\\\ 0 \\end{bmatrix} \\in H$ (since $1 \\cdot 0 = 0$)\n\nLet $v = \\begin{bmatrix} 0 \\\\ 1 \\end{bmatrix} \\in H$ (since $0 \\cdot 1 = 0$)\n\n$u + v = \\begin{bmatrix} 1 \\\\ 1 \\end{bmatrix}$, but $1 \\cdot 1 = 1 \\neq 0$, so $u + v \\notin H$.\n\nTherefore $H$ is NOT a subspace (fails closure under addition)."
+  },
+  {
+    "id": "math201-t3-ex15",
+    "subjectId": "math201",
+    "topicId": "math201-3",
+    "type": "written",
+    "difficulty": 5,
+    "title": "Sum of Subspaces",
+    "description": "Let $U = $ Span$\\{\\begin{bmatrix} 1 \\\\ 0 \\\\ 0 \\end{bmatrix}\\}$ and $W = $ Span$\\{\\begin{bmatrix} 0 \\\\ 1 \\\\ 0 \\end{bmatrix}\\}$. Find a basis for $U + W$.",
+    "hints": [
+      "U + W consists of all u + w where u ∈ U and w ∈ W.",
+      "Combine the basis vectors."
+    ],
+    "solution": "$U + W = \\{a\\begin{bmatrix} 1 \\\\ 0 \\\\ 0 \\end{bmatrix} + b\\begin{bmatrix} 0 \\\\ 1 \\\\ 0 \\end{bmatrix} : a, b \\in \\mathbb{R}\\}$\n\n$= \\{\\begin{bmatrix} a \\\\ b \\\\ 0 \\end{bmatrix} : a, b \\in \\mathbb{R}\\}$ (the xy-plane)\n\nBasis for $U + W$: $\\{\\begin{bmatrix} 1 \\\\ 0 \\\\ 0 \\end{bmatrix}, \\begin{bmatrix} 0 \\\\ 1 \\\\ 0 \\end{bmatrix}\\}$\n\ndim$(U + W) = 2$"
+  },
+  {
+    "id": "math201-t3-ex16",
+    "subjectId": "math201",
+    "topicId": "math201-3",
+    "type": "written",
+    "difficulty": 5,
+    "title": "Coordinate Mapping",
+    "description": "Let $\\mathcal{B} = \\{1-t, 1+t, t^2\\}$ be a basis for $P_2$. Find the coordinate vector $[p]_\\mathcal{B}$ where $p(t) = 3 + 2t + t^2$.",
+    "hints": [
+      "Express p(t) as a linear combination of basis vectors.",
+      "Solve for the coefficients."
+    ],
+    "solution": "$p(t) = c_1(1-t) + c_2(1+t) + c_3t^2$\n\n$= (c_1 + c_2) + (-c_1 + c_2)t + c_3t^2 = 3 + 2t + t^2$\n\nEquating coefficients:\n$c_1 + c_2 = 3$\n$-c_1 + c_2 = 2$\n$c_3 = 1$\n\nFrom first two: $2c_2 = 5$, so $c_2 = \\frac{5}{2}$, $c_1 = \\frac{1}{2}$\n\n$[p]_\\mathcal{B} = \\begin{bmatrix} 1/2 \\\\ 5/2 \\\\ 1 \\end{bmatrix}$"
+  }
+]

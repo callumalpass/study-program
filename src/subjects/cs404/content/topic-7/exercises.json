@@ -1,0 +1,322 @@
+[
+  {
+    "id": "cs404-ex-7-1",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-7",
+    "title": "README Generator",
+    "difficulty": 2,
+    "description": "Create a function that generates a standard README structure.\n\nGiven a project configuration object (name, description, installation, usage), return a formatted Markdown string.",
+    "starterCode": "interface ProjectConfig {\n  name: string;\n  description: string;\n  installation: string;\n  usage: string;\n  license: string;\n}\n\nfunction generateReadme(config: ProjectConfig): string {\n  // TODO: Return formatted Markdown\n  return '';\n}",
+    "solution": "interface ProjectConfig {\n  name: string;\n  description: string;\n  installation: string;\n  usage: string;\n  license: string;\n}\n\nfunction generateReadme(config: ProjectConfig): string {\n  return ` # ${config.name}\n\n${config.description}\n\n## Installation\n\n```bash\n${config.installation}\n```\n\n## Usage\n\n${config.usage}\n\n## License\n\n${config.license}\n`;\n}",
+    "hints": [
+      "Use template literals for multiline strings",
+      "Include standard headers like # and ##",
+      "Wrap code blocks in ```"
+    ],
+    "testCases": [
+      {
+        "input": "{ name: 'Test', description: 'Desc', installation: 'npm i', usage: 'start', license: 'MIT' }",
+        "expectedOutput": "# Test\n\nDesc\n\n## Installation\n\n```bash\nnpm i\n```\n\n## Usage\n\nstart\n\n## License\n\nMIT\n",
+        "isHidden": false,
+        "description": "Generates basic README"
+      }
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-ex-7-2",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-7",
+    "title": "JSDoc Generator",
+    "difficulty": 3,
+    "description": "Implement a function that generates a JSDoc comment block for a function signature.\n\nInput: function name, parameters (name, type), return type, and description.\nOutput: A string containing the JSDoc comment.",
+    "starterCode": "interface Param {\n  name: string;\n  type: string;\n  description: string;\n}\n\ninterface FunctionInfo {\n  name: string;\n  params: Param[];\n  returnType: string;\n  returnDescription: string;\n  description: string;\n}\n\nfunction generateJSDoc(info: FunctionInfo): string {\n  // TODO: Generate JSDoc block\n  return '';\n}",
+    "solution": "interface Param {\n  name: string;\n  type: string;\n  description: string;\n}\n\ninterface FunctionInfo {\n  name: string;\n  params: Param[];\n  returnType: string;\n  returnDescription: string;\n  description: string;\n}\n\nfunction generateJSDoc(info: FunctionInfo): string {\n  const lines = ['/**'];\n  lines.push(` * ${info.description}`);\n  lines.push(' *');\n  \n  info.params.forEach(p => {\n    lines.push(` * @param {${p.type}} ${p.name} - ${p.description}`);\n  });\n  \n  lines.push(` * @returns {${info.returnType}} ${info.returnDescription}`);\n  lines.push(' */');\n  \n  return lines.join('\n');\n}",
+    "hints": [
+      "Start with /** and end with */",
+      "Use @param for arguments",
+      "Use @returns for return value",
+      "Align asterisks for readability"
+    ],
+    "testCases": [
+      {
+        "input": "{ name: 'add', params: [{name: 'a', type: 'number', description: 'First'}], returnType: 'number', returnDescription: 'Sum', description: 'Adds numbers' }",
+        "isHidden": false,
+        "description": "Generates simple JSDoc"
+      }
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-ex-7-3",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-7",
+    "title": "Changelog Parser",
+    "difficulty": 3,
+    "description": "Parse a list of commit messages and group them into a Changelog object.\n\nCommits follow the Conventional Commits format (e.g., 'feat: add login', 'fix: resolve bug').\nGroup by 'feat', 'fix', and 'other'.",
+    "starterCode": "interface Changelog {\n  features: string[];\n  fixes: string[];\n  others: string[];\n}\n\nfunction parseChangelog(commits: string[]): Changelog {\n  // TODO: Parse commits\n  return { features: [], fixes: [], others: [] };\n}",
+    "solution": "interface Changelog {\n  features: string[];\n  fixes: string[];\n  others: string[];\n}\n\nfunction parseChangelog(commits: string[]): Changelog {\n  const changelog: Changelog = { features: [], fixes: [], others: [] };\n  \n  commits.forEach(msg => {\n    if (msg.startsWith('feat:')) {\n      changelog.features.push(msg.substring(5).trim());\n    } else if (msg.startsWith('fix:')) {\n      changelog.fixes.push(msg.substring(4).trim());\n    } else {\n      changelog.others.push(msg);\n    }\n  });\n  \n  return changelog;\n}",
+    "hints": [
+      "Use string.startsWith()",
+      "Remove the prefix (feat:, fix:) using substring",
+      "Trim whitespace",
+      "Handle case sensitivity if needed (assume lowercase for this)"
+    ],
+    "testCases": [
+      {
+        "input": "['feat: login', 'fix: crash', 'chore: update']",
+        "expectedOutput": "{ features: ['login'], fixes: ['crash'], others: ['chore: update'] }",
+        "isHidden": false,
+        "description": "Groups commits correctly"
+      }
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-ex-7-4",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-7",
+    "title": "SemVer Incrementer",
+    "difficulty": 2,
+    "description": "Implement a function to increment a Semantic Version string.\n\nInputs: version string (e.g., '1.0.0'), release type ('major', 'minor', 'patch').\nOutput: New version string.",
+    "starterCode": "type ReleaseType = 'major' | 'minor' | 'patch';\n\nfunction incrementVersion(version: string, type: ReleaseType): string {\n  // TODO: Parse and increment version\n  return '';\n}",
+    "solution": "type ReleaseType = 'major' | 'minor' | 'patch';\n\nfunction incrementVersion(version: string, type: ReleaseType): string {\n  const parts = version.split('.').map(Number);\n  let [major, minor, patch] = parts;\n  \n  switch (type) {\n    case 'major':\n      major++;\n      minor = 0;\n      patch = 0;\n      break;\n    case 'minor':\n      minor++;\n      patch = 0;\n      break;\n    case 'patch':\n      patch++;\n      break;\n  }\n  \n  return `${major}.${minor}.${patch}`;
+}",
+    "hints": [
+      "Split the string by '.'",
+      "Parse parts to integers",
+      "Reset lower version numbers when incrementing higher ones (e.g., minor resets patch)"
+    ],
+    "testCases": [
+      {
+        "input": "['1.2.3', 'minor']",
+        "expectedOutput": "'1.3.0'",
+        "isHidden": false,
+        "description": "Increments minor version"
+      },
+      {
+        "input": "['1.2.3', 'major']",
+        "expectedOutput": "'2.0.0'",
+        "isHidden": false,
+        "description": "Increments major version"
+      }
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-ex-7-5",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-7",
+    "title": "Documentation Link Validator",
+    "difficulty": 3,
+    "description": "Validate that all internal links in a documentation page resolve to existing headers.\n\nInput: markdown content string.\nOutput: Array of broken link texts (e.g., '[Link](#missing)').",
+    "starterCode": "function validateLinks(markdown: string): string[] {\n  // TODO: Find [text](#anchor) and check if #anchor exists as header\n  return [];\n}",
+    "solution": "function validateLinks(markdown: string): string[] {\n  const brokenLinks: string[] = [];\n  \n  const headers = new Set<string>();\n  const headerRegex = /^#+\s+(.+)$/gm;\n  let match;\n  while ((match = headerRegex.exec(markdown)) !== null) {\n    const slug = match[1].toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');\n    headers.add(slug);\n  }\n  \n  const linkRegex = /\\\[.*?\]\(#([^)]+)\)/g;\n  while ((match = linkRegex.exec(markdown)) !== null) {\n    const anchor = match[1];\n    if (!headers.has(anchor)) {\n      brokenLinks.push(match[0]);\n    }\n  }\n  \n  return brokenLinks;\n}",
+    "hints": [
+      "Regex for headers: /^#+\s+(.+)$/gm",
+      "Regex for links: /\\\[.*?\]\(#([^)]+)\)/g",
+      "Slugify header text to match anchor format"
+    ],
+    "testCases": [],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-ex-7-6",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-7",
+    "title": "Presentation Timer",
+    "difficulty": 1,
+    "description": "Calculate the total estimated time for a presentation.\n\nInput: Array of slides, where each slide has an estimated minute count.\nOutput: Total minutes.",
+    "starterCode": "interface Slide {\n  title: string;\n  minutes: number;\n}\n\nfunction calculatePresentationTime(slides: Slide[]): number {\n  // TODO: Sum minutes\n  return 0;\n}",
+    "solution": "interface Slide {\n  title: string;\n  minutes: number;\n}\n\nfunction calculatePresentationTime(slides: Slide[]): number {\n  return slides.reduce((total, slide) => total + slide.minutes, 0);\n}",
+    "hints": [
+      "Use array.reduce"
+    ],
+    "testCases": [
+      {
+        "input": "[{title: 'Intro', minutes: 2}, {title: 'Demo', minutes: 5}]",
+        "expectedOutput": "7",
+        "isHidden": false,
+        "description": "Sums correctly"
+      }
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-ex-7-7",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-7",
+    "title": "Release Note Formatter",
+    "difficulty": 2,
+    "description": "Format a release note object into a readable text block.\n\nInput: version, date, features list, bugs list.\nOutput: Formatted string.",
+    "starterCode": "interface Release {\n  version: string;\n  date: string;\n  features: string[];\n  bugs: string[];\n}\n\nfunction formatReleaseNote(release: Release): string {\n  // TODO: Format output\n  return '';\n}",
+    "solution": "interface Release {\n  version: string;\n  date: string;\n  features: string[];\n  bugs: string[];\n}\n\nfunction formatReleaseNote(release: Release): string {\n  let output = `Release ${release.version} (${release.date})\n\n`;\n  \n  if (release.features.length > 0) {\n    output += 'New Features:\n';\n    release.features.forEach(f => output += `- ${f}\n`);\n    output += '\n';\n  }\n  \n  if (release.bugs.length > 0) {\n    output += 'Bug Fixes:\n';\n    release.bugs.forEach(b => output += `- ${b}\n`);\n  }\n  \n  return output.trim();\n}",
+    "hints": [
+      "Check if arrays are empty before adding headers",
+      "Use template literals",
+      "Trim the final output"
+    ],
+    "testCases": [],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-ex-7-8",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-7",
+    "title": "User Guide To HTML",
+    "difficulty": 3,
+    "description": "Convert a simple User Guide custom text format to HTML.\n\nFormat: Lines starting with '*' are list items, lines starting with '#' are headers, others are paragraphs.",
+    "starterCode": "function convertToHTML(text: string): string {\n  // TODO: Convert lines to HTML tags\n  return '';\n}",
+    "solution": "function convertToHTML(text: string): string {\n  const lines = text.split('\n');\n  let html = '';\n  let inList = false;\n  \n  lines.forEach(line => {\n    if (line.startsWith('# ')) {\n      if (inList) { html += '</ul>\n'; inList = false; }\n      html += `<h1>${line.substring(2)}</h1>\n`;\n    } else if (line.startsWith('* ')) {\n      if (!inList) { html += '<ul>\n'; inList = true; }\n      html += `  <li>${line.substring(2)}</li>\n`;\n    } else if (line.trim() !== '') {\n      if (inList) { html += '</ul>\n'; inList = false; }\n      html += `<p>${line}</p>\n`;\n    }\n  });\n  \n  if (inList) html += '</ul>\n';\n  return html.trim();\n}",
+    "hints": [
+      "Process line by line",
+      "Track state for lists (<ul> tag)",
+      "Close open tags when switching formats"
+    ],
+    "testCases": [],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-ex-7-9",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-7",
+    "title": "Code Comment Density",
+    "difficulty": 2,
+    "description": "Calculate the percentage of lines of code that are comments.\n\nInput: string of code.\nOutput: percentage (0-100).\nAssume lines starting with // are comments.",
+    "starterCode": "function calculateCommentDensity(code: string): number {\n  // TODO: Calculate %\n  return 0;\n}",
+    "solution": "function calculateCommentDensity(code: string): number {\n  const lines = code.split('\n').filter(l => l.trim() !== ''); // Ignore empty lines\n  if (lines.length === 0) return 0;\n  \n  const commentLines = lines.filter(l => l.trim().startsWith('//')).length;\n  return Math.round((commentLines / lines.length) * 100);\n}",
+    "hints": [
+      "Filter out empty lines first",
+      "Count lines starting with //",
+      "Divide and multiply by 100"
+    ],
+    "testCases": [
+      {
+        "input": "'// Comment\nconst a = 1;\n// Another'",
+        "expectedOutput": "67",
+        "isHidden": false,
+        "description": "Calculates correctly"
+      }
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-ex-7-10",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-7",
+    "title": "Screenshot Config Generator",
+    "difficulty": 1,
+    "description": "Generate a configuration object for an automated screenshot tool.\n\nInput: list of URLs and output directory.\nOutput: Config object.",
+    "starterCode": "interface ScreenshotConfig {\n  urls: string[];\n  outputDir: string;\n  format: 'png' | 'jpg';\n  fullPage: boolean;\n}\n\nfunction createConfig(urls: string[], dir: string): ScreenshotConfig {\n  // TODO: Return defaults with input values\n  return {} as ScreenshotConfig;\n}",
+    "solution": "interface ScreenshotConfig {\n  urls: string[];\n  outputDir: string;\n  format: 'png' | 'jpg';\n  fullPage: boolean;\n}\n\nfunction createConfig(urls: string[], dir: string): ScreenshotConfig {\n  return {\n    urls,\n    outputDir: dir,\n    format: 'png',\n    fullPage: true\n  };\n}",
+    "hints": [
+      "Just construct the object",
+      "Set defaults for format and fullPage"
+    ],
+    "testCases": [],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-ex-7-11",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-7",
+    "title": "License Header Applicator",
+    "difficulty": 2,
+    "description": "Prepend a license header to a file content if it's missing.\n\nInput: file content, license header.\nOutput: file content with header.",
+    "starterCode": "function applyLicense(content: string, license: string): string {\n  // TODO: Check if header exists, if not prepend it\n  return content;\n}",
+    "solution": "function applyLicense(content: string, license: string): string {\n  if (content.startsWith(license)) {\n    return content;\n  }\n  return license + '\n' + content;\n}",
+    "hints": [
+      "Use startsWith",
+      "Add newline separator"
+    ],
+    "testCases": [],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-ex-7-12",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-7",
+    "title": "PDF Export Options",
+    "difficulty": 1,
+    "description": "Create a function to validate PDF export options.\n\nMargins must be non-negative. Page format must be A4 or Letter.",
+    "starterCode": "interface PdfOptions {\n  margin: number;\n  format: 'A4' | 'Letter';\n}\n\nfunction validatePdfOptions(options: PdfOptions): boolean {\n  // TODO: Validate\n  return true;\n}",
+    "solution": "interface PdfOptions {\n  margin: number;\n  format: 'A4' | 'Letter';\n}\n\nfunction validatePdfOptions(options: PdfOptions): boolean {\n  if (options.margin < 0) return false;\n  if (options.format !== 'A4' && options.format !== 'Letter') return false;\n  return true;\n}",
+    "hints": [
+      "Check condition by condition"
+    ],
+    "testCases": [],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-ex-7-13",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-7",
+    "title": "Demo Script Prompter",
+    "difficulty": 2,
+    "description": "Given a script with steps and durations, return the current step based on elapsed time.",
+    "starterCode": "interface Step {\n  text: string;\n  duration: number; // seconds\n}\n\nfunction getCurrentStep(script: Step[], elapsedSeconds: number): string {\n  // TODO: Find which step corresponds to the time\n  return '';\n}",
+    "solution": "interface Step {\n  text: string;\n  duration: number;\n}\n\nfunction getCurrentStep(script: Step[], elapsedSeconds: number): string {\n  let currentTime = 0;\n  for (const step of script) {\n    if (elapsedSeconds < currentTime + step.duration) {\n      return step.text;\n    }\n    currentTime += step.duration;\n  }\n  return 'Done';\n}",
+    "hints": [
+      "Accumulate time in a loop",
+      "Check if elapsedSeconds falls in current window"
+    ],
+    "testCases": [
+      {
+        "input": "[[{text:'A', duration: 10}, {text:'B', duration: 10}], 15]",
+        "expectedOutput": "'B'",
+        "isHidden": false,
+        "description": "Finds second step"
+      }
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-ex-7-14",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-7",
+    "title": "Feedback Analyzer",
+    "difficulty": 3,
+    "description": "Analyze an array of feedback scores (1-5) and text comments.\n\nReturn average score and count of 'positive' comments (containing 'great' or 'good').",
+    "starterCode": "interface Feedback {\n  score: number;\n  comment: string;\n}\n\nfunction analyzeFeedback(feedbacks: Feedback[]): { average: number, positiveCount: number } {\n  // TODO: Calculate stats\n  return { average: 0, positiveCount: 0 };\n}",
+    "solution": "interface Feedback {\n  score: number;\n  comment: string;\n}\n\nfunction analyzeFeedback(feedbacks: Feedback[]): { average: number, positiveCount: number } {\n  if (feedbacks.length === 0) return { average: 0, positiveCount: 0 };\n  \n  const totalScore = feedbacks.reduce((sum, f) => sum + f.score, 0);\n  const average = totalScore / feedbacks.length;\n  \n  const positiveCount = feedbacks.filter(f => \n    f.comment.toLowerCase().includes('great') || \n    f.comment.toLowerCase().includes('good')\n  ).length;\n  \n  return { average, positiveCount };\n}",
+    "hints": [
+      "Use reduce for sum",
+      "Use filter for counting positive comments",
+      "Handle empty array case"
+    ],
+    "testCases": [],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-ex-7-15",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-7",
+    "title": "Project Reflection Stats",
+    "difficulty": 3,
+    "description": "Calculate project statistics for a reflection report.\n\nInput: completed tasks (estimated vs actual hours), bugs found.\nOutput: Accuracy ratio (total estimated / total actual) and bug density (bugs / task count).",
+    "starterCode": "interface TaskStat {\n  estimated: number;\n  actual: number;\n}\n\nfunction calculateStats(tasks: TaskStat[], bugs: number): { accuracy: number, bugDensity: number } {\n  // TODO: Calculate ratios\n  return { accuracy: 0, bugDensity: 0 };\n}",
+    "solution": "interface TaskStat {\n  estimated: number;\n  actual: number;\n}\n\nfunction calculateStats(tasks: TaskStat[], bugs: number): { accuracy: number, bugDensity: number } {\n  if (tasks.length === 0) return { accuracy: 0, bugDensity: 0 };\n  \n  const totalEst = tasks.reduce((s, t) => s + t.estimated, 0);\n  const totalAct = tasks.reduce((s, t) => s + t.actual, 0);\n  \n  const accuracy = totalAct === 0 ? 0 : totalEst / totalAct;\n  const bugDensity = bugs / tasks.length;\n  \n  return { accuracy, bugDensity };\n}",
+    "hints": [
+      "Sum estimated and actual hours",
+      "Handle division by zero"
+    ],
+    "testCases": [],
+    "language": "typescript"
+  },
+  {
+    "id": "cs404-ex-7-16",
+    "subjectId": "cs404",
+    "topicId": "cs404-topic-7",
+    "title": "Portfolio Card Generator",
+    "difficulty": 2,
+    "description": "Generate HTML for a portfolio project card.\n\nInput: project title, image URL, link.\nOutput: HTML string.",
+    "starterCode": "function generateCard(title: string, img: string, link: string): string {\n  // TODO: Return HTML div\n  return '';\n}",
+    "solution": "function generateCard(title: string, img: string, link: string): string {\n  return `<div class=\"card\">\n  <img src=\"${img}\" alt=\"${title}\">\n  <h3>${title}</h3>\n  <a href=\"${link}\">View Project</a>\n</div>`;\n}",
+    "hints": [
+      "Use template literals",
+      "Include standard classes"
+    ],
+    "testCases": [],
+    "language": "typescript"
+  }
+]

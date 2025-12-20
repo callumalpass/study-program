@@ -1,0 +1,101 @@
+[
+  {
+    "id": "cs406-t4-ex01",
+    "subjectId": "cs406",
+    "topicId": "cs406-topic-4",
+    "title": "Backtracking Search for CSP",
+    "difficulty": 2,
+    "description": "Implement backtracking search for constraint satisfaction problems.\n\nYour implementation should:\n- Assign variables one at a time\n- Check constraints after each assignment\n- Backtrack when no legal values remain\n- Solve the N-Queens problem as a test case",
+    "starterCode": "def is_consistent(assignment, var, value, constraints):\n    # Check if assigning value to var is consistent\n    pass\n\ndef backtracking_search(variables, domains, constraints):\n    # Implement backtracking search\n    # Returns: complete assignment or None\n    pass\n\n# Example: 4-Queens\n# variables = [0, 1, 2, 3]  # columns\n# domains = {i: [0, 1, 2, 3] for i in range(4)}  # rows\n# constraints = lambda v1, val1, v2, val2: ... # no attacks",
+    "solution": "def is_consistent(assignment, var, value, constraints):\n    \"\"\"Check if assigning value to var is consistent with current assignment.\"\"\"\n    for assigned_var, assigned_value in assignment.items():\n        if not constraints(var, value, assigned_var, assigned_value):\n            return False\n    return True\n\ndef backtracking_search(variables, domains, constraints, assignment=None):\n    \"\"\"\n    Backtracking search for CSP.\n    Returns: complete assignment or None if no solution\n    \"\"\"\n    if assignment is None:\n        assignment = {}\n\n    # Check if assignment is complete\n    if len(assignment) == len(variables):\n        return assignment\n\n    # Select unassigned variable\n    unassigned = [v for v in variables if v not in assignment]\n    var = unassigned[0]\n\n    # Try each value in domain\n    for value in domains[var]:\n        if is_consistent(assignment, var, value, constraints):\n            assignment[var] = value\n\n            result = backtracking_search(variables, domains, constraints, assignment)\n\n            if result is not None:\n                return result\n\n            # Backtrack\n            del assignment[var]\n\n    return None  # No solution found\n\n# N-Queens constraints\ndef queens_constraint(col1, row1, col2, row2):\n    \"\"\"Two queens don't attack each other.\"\"\"\n    # Not same row\n    if row1 == row2:\n        return False\n    # Not same diagonal\n    if abs(row1 - row2) == abs(col1 - col2):\n        return False\n    return True\n\n# Solve 4-Queens\nn = 4\nvariables = list(range(n))  # columns\ndomains = {i: list(range(n)) for i in range(n)}  # rows\n\nsolution = backtracking_search(variables, domains, queens_constraint)\n\nif solution:\n    print(\"4-Queens solution:\", solution)\n    # Visualize\n    for row in range(n):\n        line = \"\"\n        for col in range(n):\n            if solution[col] == row:\n                line += \"Q \"\n            else:\n                line += \". \"\n        print(line)\nelse:\n    print(\"No solution found\")\n\n# Test with 8-Queens\nn = 8\nvariables = list(range(n))\ndomains = {i: list(range(n)) for i in range(n)}\n\nsolution = backtracking_search(variables, domains, queens_constraint)\nprint(f\"\\n8-Queens solution found: {solution is not None}\")",
+    "testCases": [
+      {
+        "input": "backtracking_search(variables, domains, queens_constraint)",
+        "isHidden": false,
+        "description": "Test backtracking solves 4-Queens"
+      },
+      {
+        "input": "is_consistent(assignment, var, value, constraints)",
+        "isHidden": false,
+        "description": "Test consistency checking"
+      },
+      {
+        "input": "backtracking with 8-Queens",
+        "isHidden": false,
+        "description": "Test backtracking finds solution for 8-Queens"
+      }
+    ],
+    "hints": [
+      "Check consistency by verifying the new assignment doesn't violate constraints with existing assignments",
+      "Select any unassigned variable and try values from its domain in order",
+      "When a value fails, backtrack by removing it from the assignment and trying the next value"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs406-t4-ex02",
+    "subjectId": "cs406",
+    "topicId": "cs406-topic-4",
+    "title": "AC-3 Constraint Propagation",
+    "difficulty": 3,
+    "description": "Implement the AC-3 algorithm for arc consistency.\n\nYour implementation should:\n- Maintain a queue of arcs to check\n- Remove inconsistent values from domains\n- Add affected arcs back to queue when domains change\n- Return False if any domain becomes empty",
+    "starterCode": "def revise(xi, xj, domains, constraints):\n    # Remove values from domain of xi that are inconsistent with xj\n    # Return True if domain was revised\n    pass\n\ndef ac3(variables, domains, constraints):\n    # Implement AC-3 algorithm\n    # Returns: True if arc consistent, False if inconsistent\n    pass",
+    "solution": "from collections import deque\n\ndef revise(xi, xj, domains, constraints):\n    \"\"\"\n    Remove values from domain of xi that are inconsistent with xj.\n    Returns True if domain was revised.\n    \"\"\"\n    revised = False\n\n    # For each value in xi's domain\n    for x in list(domains[xi]):\n        # Check if there exists a value in xj's domain that satisfies constraint\n        satisfies = False\n\n        for y in domains[xj]:\n            if constraints(xi, x, xj, y):\n                satisfies = True\n                break\n\n        # If no value in xj's domain satisfies, remove x from xi's domain\n        if not satisfies:\n            domains[xi].remove(x)\n            revised = True\n\n    return revised\n\ndef ac3(variables, domains, constraints):\n    \"\"\"\n    AC-3 algorithm for arc consistency.\n    Returns: (consistent, domains) where consistent is True if arc consistent\n    \"\"\"\n    # Copy domains to avoid modifying original\n    domains = {var: domain[:] for var, domain in domains.items()}\n\n    # Initialize queue with all arcs\n    queue = deque()\n    for xi in variables:\n        for xj in variables:\n            if xi != xj:\n                queue.append((xi, xj))\n\n    while queue:\n        xi, xj = queue.popleft()\n\n        if revise(xi, xj, domains, constraints):\n            # Domain was revised\n\n            # If domain is empty, no solution exists\n            if len(domains[xi]) == 0:\n                return False, domains\n\n            # Add all arcs (xk, xi) where xk != xi and xk != xj\n            for xk in variables:\n                if xk != xi and xk != xj:\n                    queue.append((xk, xi))\n\n    return True, domains\n\n# Test with N-Queens\ndef queens_constraint(col1, row1, col2, row2):\n    \"\"\"Two queens don't attack each other.\"\"\"\n    if row1 == row2:\n        return False\n    if abs(row1 - row2) == abs(col1 - col2):\n        return False\n    return True\n\n# 4-Queens\nn = 4\nvariables = list(range(n))\ndomains = {i: list(range(n)) for i in range(n)}\n\nprint(\"Initial domains:\", domains)\n\nconsistent, new_domains = ac3(variables, domains, queens_constraint)\n\nprint(f\"Arc consistent: {consistent}\")\nprint(\"Reduced domains:\", new_domains)\n\n# Now use backtracking with reduced domains\nfrom topic4_backtracking import backtracking_search\n\nif consistent:\n    solution = backtracking_search(variables, new_domains, queens_constraint)\n    print(\"Solution:\", solution)\n\n    if solution:\n        for row in range(n):\n            line = \"\"\n            for col in range(n):\n                if solution[col] == row:\n                    line += \"Q \"\n                else:\n                    line += \". \"\n            print(line)\n\n# Test with graph coloring\nprint(\"\\n--- Graph Coloring Test ---\")\n\n# Graph: nodes and edges\nnodes = ['A', 'B', 'C', 'D']\nedges = [('A', 'B'), ('A', 'C'), ('B', 'C'), ('B', 'D'), ('C', 'D')]\ncolors = ['red', 'green', 'blue']\n\ndomains_coloring = {node: colors[:] for node in nodes}\n\ndef coloring_constraint(n1, c1, n2, c2):\n    \"\"\"Adjacent nodes must have different colors.\"\"\"\n    # Check if nodes are adjacent\n    if (n1, n2) in edges or (n2, n1) in edges:\n        return c1 != c2\n    return True\n\nconsistent, new_domains = ac3(nodes, domains_coloring, coloring_constraint)\nprint(f\"Coloring arc consistent: {consistent}\")\nprint(\"Reduced domains:\", new_domains)",
+    "testCases": [
+      {
+        "input": "ac3(variables, domains, queens_constraint)",
+        "isHidden": false,
+        "description": "Test AC-3 reduces domains for N-Queens"
+      },
+      {
+        "input": "revise(xi, xj, domains, constraints)",
+        "isHidden": false,
+        "description": "Test revise removes inconsistent values"
+      },
+      {
+        "input": "ac3 with graph coloring",
+        "isHidden": false,
+        "description": "Test AC-3 with different constraint type"
+      }
+    ],
+    "hints": [
+      "Revise removes values from xi's domain that have no supporting value in xj's domain",
+      "When a domain is revised, add all arcs (xk, xi) back to the queue to propagate changes",
+      "Return False immediately if any domain becomes empty (no solution exists)"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs406-t4-ex03",
+    "subjectId": "cs406",
+    "topicId": "cs406-topic-4",
+    "title": "CSP with MRV and Forward Checking",
+    "difficulty": 3,
+    "description": "Enhance backtracking with Minimum Remaining Values heuristic and forward checking.\n\nYour implementation should:\n- Use MRV to select variables (most constrained first)\n- Use forward checking to prune domains after each assignment\n- Track inference made during search\n- Restore domains when backtracking",
+    "starterCode": "def select_unassigned_variable_mrv(variables, assignment, domains):\n    # Select variable with minimum remaining values\n    pass\n\ndef forward_check(var, value, assignment, domains, constraints):\n    # Check consistency and prune domains\n    # Return: (consistent, inferences)\n    pass\n\ndef backtracking_mrv_fc(variables, domains, constraints):\n    # Backtracking with MRV and forward checking\n    pass",
+    "solution": "def select_unassigned_variable_mrv(variables, assignment, domains):\n    \"\"\"Select unassigned variable with minimum remaining values (MRV).\"\"\"\n    unassigned = [v for v in variables if v not in assignment]\n\n    if not unassigned:\n        return None\n\n    # Select variable with smallest domain\n    return min(unassigned, key=lambda var: len(domains[var]))\n\ndef forward_check(var, value, assignment, domains, constraints):\n    \"\"\"\n    Perform forward checking after assigning var = value.\n    Returns: (consistent, inferences) where inferences = {var: [removed_values]}\n    \"\"\"\n    inferences = {}\n\n    for other_var in domains:\n        if other_var == var or other_var in assignment:\n            continue\n\n        removed = []\n\n        for other_value in list(domains[other_var]):\n            if not constraints(var, value, other_var, other_value):\n                removed.append(other_value)\n                domains[other_var].remove(other_value)\n\n        if removed:\n            inferences[other_var] = removed\n\n        # If domain becomes empty, inconsistent\n        if len(domains[other_var]) == 0:\n            return False, inferences\n\n    return True, inferences\n\ndef restore_domains(domains, inferences):\n    \"\"\"Restore domains by adding back inferred removals.\"\"\"\n    for var, removed_values in inferences.items():\n        domains[var].extend(removed_values)\n\ndef backtracking_mrv_fc(variables, domains, constraints, assignment=None, stats=None):\n    \"\"\"\n    Backtracking with MRV variable selection and forward checking.\n    Returns: complete assignment or None\n    \"\"\"\n    if stats is None:\n        stats = {'nodes': 0, 'backtracks': 0}\n\n    if assignment is None:\n        assignment = {}\n\n    stats['nodes'] += 1\n\n    # Check if assignment is complete\n    if len(assignment) == len(variables):\n        return assignment\n\n    # Select variable using MRV\n    var = select_unassigned_variable_mrv(variables, assignment, domains)\n\n    if var is None:\n        return assignment\n\n    # Try each value in domain (could add LCV here)\n    for value in list(domains[var]):\n        # Check consistency\n        consistent = True\n        for assigned_var, assigned_value in assignment.items():\n            if not constraints(var, value, assigned_var, assigned_value):\n                consistent = False\n                break\n\n        if consistent:\n            assignment[var] = value\n\n            # Save domain state\n            old_domain = domains[var]\n            domains[var] = [value]\n\n            # Forward checking\n            fc_consistent, inferences = forward_check(var, value, assignment, domains, constraints)\n\n            if fc_consistent:\n                result = backtracking_mrv_fc(variables, domains, constraints, assignment, stats)\n\n                if result is not None:\n                    return result\n\n            # Backtrack\n            stats['backtracks'] += 1\n            del assignment[var]\n            domains[var] = old_domain\n            restore_domains(domains, inferences)\n\n    return None\n\n# Test with 8-Queens\ndef queens_constraint(col1, row1, col2, row2):\n    if row1 == row2:\n        return False\n    if abs(row1 - row2) == abs(col1 - col2):\n        return False\n    return True\n\nn = 8\nvariables = list(range(n))\ndomains = {i: list(range(n)) for i in range(n)}\n\nstats = {'nodes': 0, 'backtracks': 0}\nsolution = backtracking_mrv_fc(variables, domains, queens_constraint, stats=stats)\n\nprint(f\"8-Queens solution found: {solution is not None}\")\nprint(f\"Nodes explored: {stats['nodes']}\")\nprint(f\"Backtracks: {stats['backtracks']}\")\n\nif solution:\n    print(\"\\nSolution:\")\n    for row in range(n):\n        line = \"\"\n        for col in range(n):\n            if solution[col] == row:\n                line += \"Q \"\n            else:\n                line += \". \"\n        print(line)\n\n# Compare with basic backtracking\nfrom topic4_backtracking import backtracking_search\n\ndomains_basic = {i: list(range(n)) for i in range(n)}\nstats_basic = {'nodes': 0}\n\ndef backtracking_with_stats(variables, domains, constraints, assignment=None, stats=None):\n    if assignment is None:\n        assignment = {}\n    stats['nodes'] += 1\n    if len(assignment) == len(variables):\n        return assignment\n    unassigned = [v for v in variables if v not in assignment]\n    var = unassigned[0]\n    for value in domains[var]:\n        consistent = True\n        for av, aval in assignment.items():\n            if not constraints(var, value, av, aval):\n                consistent = False\n                break\n        if consistent:\n            assignment[var] = value\n            result = backtracking_with_stats(variables, domains, constraints, assignment, stats)\n            if result is not None:\n                return result\n            del assignment[var]\n    return None\n\nsolution_basic = backtracking_with_stats(variables, domains_basic, queens_constraint, stats=stats_basic)\nprint(f\"\\nBasic backtracking nodes: {stats_basic['nodes']}\")\nprint(f\"MRV+FC improvement: {100 * (1 - stats['nodes'] / stats_basic['nodes']):.1f}% fewer nodes\")",
+    "testCases": [
+      {
+        "input": "backtracking_mrv_fc(variables, domains, queens_constraint)",
+        "isHidden": false,
+        "description": "Test MRV+FC solves 8-Queens"
+      },
+      {
+        "input": "select_unassigned_variable_mrv(variables, assignment, domains)",
+        "isHidden": false,
+        "description": "Test MRV selects most constrained variable"
+      },
+      {
+        "input": "forward_check(var, value, assignment, domains, constraints)",
+        "isHidden": false,
+        "description": "Test forward checking prunes domains"
+      }
+    ],
+    "hints": [
+      "MRV heuristic: select the variable with the smallest remaining domain (most constrained)",
+      "Forward checking: after assigning a variable, remove inconsistent values from neighbors' domains",
+      "Remember to restore domains when backtracking by adding back removed values"
+    ],
+    "language": "python"
+  }
+]

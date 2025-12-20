@@ -1,0 +1,213 @@
+[
+  {
+    "id": "math401-quiz-2-1",
+    "subjectId": "math401",
+    "topicId": "math401-topic-2",
+    "title": "Analytic Functions Basics",
+    "questions": [
+      {
+        "id": "math401-q11",
+        "type": "multiple_choice",
+        "prompt": "Which of the following is NOT a Cauchy-Riemann equation?",
+        "options": [
+          "∂u/∂x = ∂v/∂y",
+          "∂u/∂y = -∂v/∂x",
+          "∂u/∂x = -∂v/∂y",
+          "∂v/∂x = -∂u/∂y"
+        ],
+        "correctAnswer": "∂u/∂x = -∂v/∂y",
+        "explanation": "The Cauchy-Riemann equations are: ∂u/∂x = ∂v/∂y and ∂u/∂y = -∂v/∂x"
+      },
+      {
+        "id": "math401-q12",
+        "type": "true_false",
+        "prompt": "Every analytic function is continuous.",
+        "options": [
+          "True",
+          "False"
+        ],
+        "correctAnswer": "True",
+        "explanation": "Analyticity implies differentiability, which implies continuity in complex analysis"
+      },
+      {
+        "id": "math401-q13",
+        "type": "multiple_choice",
+        "prompt": "If f(z) = u + iv is analytic, what PDE does u satisfy?",
+        "options": [
+          "∂²u/∂x² + ∂²u/∂y² = 0",
+          "∂²u/∂x² - ∂²u/∂y² = 0",
+          "∂u/∂x = ∂u/∂y",
+          "∂²u/∂x∂y = 0"
+        ],
+        "correctAnswer": "∂²u/∂x² + ∂²u/∂y² = 0",
+        "explanation": "The real and imaginary parts of an analytic function are harmonic: they satisfy Laplace's equation"
+      },
+      {
+        "id": "math401-q14",
+        "type": "multiple_choice",
+        "prompt": "What is the derivative of f(z) = z²?",
+        "options": [
+          "z",
+          "2z",
+          "z²",
+          "2"
+        ],
+        "correctAnswer": "2z",
+        "explanation": "Using the power rule (which applies to analytic functions): d/dz(z²) = 2z"
+      },
+      {
+        "id": "math401-q15",
+        "type": "true_false",
+        "prompt": "The function f(z) = z̄ (complex conjugate) is nowhere analytic.",
+        "options": [
+          "True",
+          "False"
+        ],
+        "correctAnswer": "True",
+        "explanation": "f(z) = z̄ does not satisfy the Cauchy-Riemann equations anywhere, so it is nowhere analytic"
+      }
+    ]
+  },
+  {
+    "id": "math401-quiz-2-2",
+    "subjectId": "math401",
+    "topicId": "math401-topic-2",
+    "title": "Analytic Functions Properties",
+    "questions": [
+      {
+        "id": "math401-q16",
+        "type": "multiple_choice",
+        "prompt": "Which function is entire (analytic everywhere in ℂ)?",
+        "options": [
+          "1/z",
+          "tan(z)",
+          "e^z",
+          "log(z)"
+        ],
+        "correctAnswer": "e^z",
+        "explanation": "e^z is entire (analytic everywhere). 1/z has a pole at 0, tan(z) has poles, log(z) has a branch cut"
+      },
+      {
+        "id": "math401-q17",
+        "type": "multiple_choice",
+        "prompt": "What is the real part of f(z) = z³ where z = x + iy?",
+        "options": [
+          "x³",
+          "x³ - 3xy²",
+          "x³ + 3xy²",
+          "3x²y - y³"
+        ],
+        "correctAnswer": "x³ - 3xy²",
+        "explanation": "z³ = (x + iy)³ = x³ + 3x²(iy) + 3x(iy)² + (iy)³ = x³ - 3xy² + i(3x²y - y³), so Re(z³) = x³ - 3xy²"
+      },
+      {
+        "id": "math401-q18",
+        "type": "true_false",
+        "prompt": "If f is analytic and |f| is constant, then f is constant.",
+        "options": [
+          "True",
+          "False"
+        ],
+        "correctAnswer": "True",
+        "explanation": "This is a consequence of the maximum modulus principle and Cauchy-Riemann equations"
+      },
+      {
+        "id": "math401-q19",
+        "type": "multiple_choice",
+        "prompt": "The principal branch of log(z) has a branch cut along which ray?",
+        "options": [
+          "Positive real axis",
+          "Negative real axis",
+          "Positive imaginary axis",
+          "Negative imaginary axis"
+        ],
+        "correctAnswer": "Negative real axis",
+        "explanation": "The principal branch is defined with argument in (-π, π], requiring a cut along the negative real axis"
+      },
+      {
+        "id": "math401-q20",
+        "type": "multiple_choice",
+        "prompt": "What is sin(i)?",
+        "options": [
+          "i sinh(1)",
+          "sinh(1)",
+          "i cosh(1)",
+          "cosh(1)"
+        ],
+        "correctAnswer": "i sinh(1)",
+        "explanation": "sin(iz) = i sinh(z), so sin(i) = i sinh(1)"
+      }
+    ]
+  },
+  {
+    "id": "math401-quiz-2-3",
+    "subjectId": "math401",
+    "topicId": "math401-topic-2",
+    "title": "Analytic Functions Advanced",
+    "questions": [
+      {
+        "id": "math401-q76",
+        "type": "multiple_choice",
+        "prompt": "If f(z) = u + iv is analytic, which equation relates u and v?",
+        "options": [
+          "∇²u = ∇²v",
+          "u = v",
+          "Cauchy-Riemann equations",
+          "u·v = 0"
+        ],
+        "correctAnswer": "Cauchy-Riemann equations",
+        "explanation": "Analyticity is equivalent to satisfying the Cauchy-Riemann equations"
+      },
+      {
+        "id": "math401-q77",
+        "type": "multiple_choice",
+        "prompt": "What is the derivative of f(z) = 1/z for z ≠ 0?",
+        "options": [
+          "1/z²",
+          "-1/z²",
+          "1/z",
+          "-1/z"
+        ],
+        "correctAnswer": "-1/z²",
+        "explanation": "Using power rule: d/dz(z^(-1)) = -1·z^(-2) = -1/z²"
+      },
+      {
+        "id": "math401-q78",
+        "type": "true_false",
+        "prompt": "If u is harmonic, then iu is also harmonic.",
+        "options": [
+          "True",
+          "False"
+        ],
+        "correctAnswer": "False",
+        "explanation": "Multiplying by i doesn't preserve harmonicity. If u is harmonic, then u satisfies ∇²u = 0, but iu is not a real-valued function"
+      },
+      {
+        "id": "math401-q79",
+        "type": "multiple_choice",
+        "prompt": "The function f(z) = Re(z) is:",
+        "options": [
+          "Analytic everywhere",
+          "Nowhere analytic",
+          "Analytic at origin only",
+          "Analytic on real axis"
+        ],
+        "correctAnswer": "Nowhere analytic",
+        "explanation": "Re(z) = x has u = x, v = 0. C-R: ∂u/∂x = 1 but ∂v/∂y = 0, so C-R equations fail everywhere"
+      },
+      {
+        "id": "math401-q80",
+        "type": "multiple_choice",
+        "prompt": "What is |e^z| in terms of z = x + iy?",
+        "options": [
+          "e^x",
+          "e^y",
+          "e^|z|",
+          "1"
+        ],
+        "correctAnswer": "e^x",
+        "explanation": "|e^z| = |e^x e^(iy)| = |e^x| · |e^(iy)| = e^x · 1 = e^x"
+      }
+    ]
+  }
+]

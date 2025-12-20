@@ -1,0 +1,221 @@
+[
+  {
+    "id": "cs203-topic-6-quiz-1",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-6",
+    "title": "Decidable and Recognizable Languages",
+    "questions": [
+      {
+        "id": "cs203-t6-q1-1",
+        "type": "multiple_choice",
+        "prompt": "Every decidable language is:",
+        "options": [
+          "Finite",
+          "Context-free",
+          "Turing-recognizable",
+          "Regular"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Decidable ⊂ Turing-recognizable. A decider is a recognizer that always halts, so all decidable languages are recognizable."
+      },
+      {
+        "id": "cs203-t6-q1-2",
+        "type": "multiple_choice",
+        "prompt": "A language L is co-Turing-recognizable if:",
+        "options": [
+          "L is finite",
+          "L̄ (complement of L) is Turing-recognizable",
+          "L is decidable",
+          "L is regular"
+        ],
+        "correctAnswer": 1,
+        "explanation": "L is co-Turing-recognizable (co-r.e.) if its complement L̄ is Turing-recognizable."
+      },
+      {
+        "id": "cs203-t6-q1-3",
+        "type": "multiple_choice",
+        "prompt": "L is decidable if and only if:",
+        "options": [
+          "L is Turing-recognizable",
+          "L is finite",
+          "Both L and L̄ are Turing-recognizable",
+          "L is context-free"
+        ],
+        "correctAnswer": 2,
+        "explanation": "A language is decidable iff both it and its complement are recognizable. We can dovetail two recognizers to decide."
+      },
+      {
+        "id": "cs203-t6-q1-4",
+        "type": "multiple_choice",
+        "prompt": "The hierarchy from most to least restrictive is:",
+        "options": [
+          "Decidable ⊂ Recognizable ⊂ All languages",
+          "Recognizable ⊂ Decidable ⊂ All languages",
+          "All languages ⊂ Recognizable ⊂ Decidable",
+          "They are all equal"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Decidable ⊊ Recognizable ⊊ All languages. Each containment is strict - there exist non-decidable recognizable languages and non-recognizable languages."
+      },
+      {
+        "id": "cs203-t6-q1-5",
+        "type": "multiple_choice",
+        "prompt": "Which problem is decidable?",
+        "options": [
+          "Does TM M halt on input w?",
+          "Is CFG G ambiguous?",
+          "Does DFA M accept string w?",
+          "Does TM M accept any string?"
+        ],
+        "correctAnswer": 2,
+        "explanation": "DFA membership is decidable - just simulate the DFA. The others are undecidable problems."
+      }
+    ]
+  },
+  {
+    "id": "cs203-topic-6-quiz-2",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-6",
+    "title": "The Halting Problem and Diagonalization",
+    "questions": [
+      {
+        "id": "cs203-t6-q2-1",
+        "type": "multiple_choice",
+        "prompt": "The halting problem asks:",
+        "options": [
+          "How long does TM M run on input w?",
+          "Does TM M halt on input w?",
+          "What does TM M output on input w?",
+          "How many states does TM M use?"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The halting problem: given ⟨M, w⟩, determine whether TM M halts (accepts or rejects) when run on input w."
+      },
+      {
+        "id": "cs203-t6-q2-2",
+        "type": "multiple_choice",
+        "prompt": "The halting problem is:",
+        "options": [
+          "Decidable",
+          "Undecidable but recognizable",
+          "Not recognizable",
+          "Context-free"
+        ],
+        "correctAnswer": 1,
+        "explanation": "HALT is undecidable (no TM can decide it) but Turing-recognizable (we can simulate and accept if M halts)."
+      },
+      {
+        "id": "cs203-t6-q2-3",
+        "type": "multiple_choice",
+        "prompt": "Diagonalization proves undecidability by:",
+        "options": [
+          "Showing too many TMs exist",
+          "Constructing a machine that differs from each TM on some input",
+          "Counting states",
+          "Simulating all possible computations"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Diagonalization constructs a machine D that on input ⟨M⟩ does the opposite of M on ⟨M⟩, creating a contradiction."
+      },
+      {
+        "id": "cs203-t6-q2-4",
+        "type": "multiple_choice",
+        "prompt": "The key to the halting problem proof is:",
+        "options": [
+          "Running M forever",
+          "Assuming a halting decider exists, then deriving a contradiction",
+          "Using finite automata",
+          "Encoding in binary"
+        ],
+        "correctAnswer": 1,
+        "explanation": "We assume a decider H exists, build a machine D using H, and show D on ⟨D⟩ creates a paradox: it halts iff it doesn't."
+      },
+      {
+        "id": "cs203-t6-q2-5",
+        "type": "multiple_choice",
+        "prompt": "ATM = {⟨M,w⟩ | M accepts w} is:",
+        "options": [
+          "Decidable",
+          "Undecidable but recognizable",
+          "Not recognizable",
+          "Regular"
+        ],
+        "correctAnswer": 1,
+        "explanation": "ATM is Turing-recognizable (simulate M on w, accept if M accepts) but undecidable (reduces from HALT)."
+      }
+    ]
+  },
+  {
+    "id": "cs203-topic-6-quiz-3",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-6",
+    "title": "Reductions and Rice's Theorem",
+    "questions": [
+      {
+        "id": "cs203-t6-q3-1",
+        "type": "multiple_choice",
+        "prompt": "A reduction from A to B shows:",
+        "options": [
+          "A is decidable",
+          "If B is decidable, then A is decidable",
+          "B is undecidable",
+          "A and B are equal"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A ≤ B means A is \"no harder than\" B. If we can solve B, we can solve A. Equivalently, if A is undecidable, so is B."
+      },
+      {
+        "id": "cs203-t6-q3-2",
+        "type": "multiple_choice",
+        "prompt": "To prove problem B is undecidable using reduction:",
+        "options": [
+          "Reduce B to a known undecidable problem",
+          "Reduce a known undecidable problem to B",
+          "Show B has infinitely many instances",
+          "Show B is in NP"
+        ],
+        "correctAnswer": 1,
+        "explanation": "We reduce a known undecidable problem A to B. If B were decidable, so would A be - contradiction. Hence B is undecidable."
+      },
+      {
+        "id": "cs203-t6-q3-3",
+        "type": "multiple_choice",
+        "prompt": "Rice's theorem states that every non-trivial property of:",
+        "options": [
+          "Turing machines is undecidable",
+          "The language of a TM is undecidable",
+          "Context-free grammars is undecidable",
+          "Regular expressions is undecidable"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Rice's theorem: Any non-trivial semantic property of TM languages (not TMs themselves) is undecidable."
+      },
+      {
+        "id": "cs203-t6-q3-4",
+        "type": "multiple_choice",
+        "prompt": "A property is \"trivial\" in Rice's theorem sense if:",
+        "options": [
+          "It's easy to check",
+          "Either all TMs have it or no TM has it",
+          "It involves finite languages",
+          "It's syntactic"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Trivial means the property holds for all TMs (all languages) or no TMs (no languages). Non-trivial means some but not all."
+      },
+      {
+        "id": "cs203-t6-q3-5",
+        "type": "multiple_choice",
+        "prompt": "Which is decidable (NOT covered by Rice's theorem)?",
+        "options": [
+          "Does TM M accept the empty string?",
+          "Is L(M) empty?",
+          "Does M have at least 5 states?",
+          "Is L(M) = Σ*?"
+        ],
+        "correctAnswer": 2,
+        "explanation": "\"M has at least 5 states\" is a syntactic property of the TM, not a semantic property of its language. We can count states."
+      }
+    ]
+  }
+]

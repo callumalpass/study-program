@@ -1,0 +1,185 @@
+[
+  {
+    "id": "math203-quiz-6a",
+    "subjectId": "math203",
+    "topicId": "math203-topic-6",
+    "title": "Related Rates - Fundamentals",
+    "questions": [
+      {
+        "id": "math203-q6a-1",
+        "type": "multiple_choice",
+        "prompt": "In a related rates problem, you should substitute known values:",
+        "options": [
+          "Before differentiating",
+          "After differentiating",
+          "It doesn't matter",
+          "Only for constant values"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Always differentiate first, then substitute. Substituting before differentiating treats changing quantities as constants, giving wrong results."
+      },
+      {
+        "id": "math203-q6a-2",
+        "type": "true_false",
+        "prompt": "If a balloon's volume is increasing at a constant rate, its radius is also increasing at a constant rate.",
+        "correctAnswer": false,
+        "explanation": "False. Since $V = \\frac{4}{3}\\pi r^3$, differentiating gives $\\frac{dV}{dt} = 4\\pi r^2 \\frac{dr}{dt}$. Even with constant $\\frac{dV}{dt}$, as $r$ increases, $\\frac{dr}{dt}$ must decrease."
+      },
+      {
+        "id": "math203-q6a-3",
+        "type": "multiple_choice",
+        "prompt": "A ladder slides down a wall. The relationship between x (base distance) and y (height) is:",
+        "options": [
+          "$x + y = L$",
+          "$xy = L$",
+          "$x^2 + y^2 = L^2$",
+          "$x^2 - y^2 = L^2$"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The Pythagorean theorem applies: $x^2 + y^2 = L^2$ where $L$ is the (constant) ladder length."
+      },
+      {
+        "id": "math203-q6a-4",
+        "type": "multiple_choice",
+        "prompt": "When differentiating $x^2 + y^2 = 25$ with respect to time $t$:",
+        "options": [
+          "$2x + 2y = 0$",
+          "$2x\\frac{dx}{dt} + 2y\\frac{dy}{dt} = 0$",
+          "$x^2 \\frac{dx}{dt} + y^2 \\frac{dy}{dt} = 0$",
+          "$\\frac{dx}{dt} + \\frac{dy}{dt} = 0$"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Apply the chain rule to each term: $\\frac{d}{dt}[x^2] = 2x\\frac{dx}{dt}$ and similarly for $y^2$. The constant 25 differentiates to 0."
+      },
+      {
+        "id": "math203-q6a-5",
+        "type": "fill_blank",
+        "prompt": "In related rates, $\\frac{dx}{dt}$ represents the rate of change of $x$ with respect to ____.",
+        "correctAnswer": "time",
+        "explanation": "In related rates problems, we differentiate with respect to time $t$, so $\\frac{dx}{dt}$ is the rate of change of $x$ with respect to time."
+      }
+    ]
+  },
+  {
+    "id": "math203-quiz-6b",
+    "subjectId": "math203",
+    "topicId": "math203-topic-6",
+    "title": "Related Rates - Application",
+    "questions": [
+      {
+        "id": "math203-q6b-1",
+        "type": "multiple_choice",
+        "prompt": "A spherical balloon has $V = \\frac{4}{3}\\pi r^3$. If $\\frac{dV}{dt} = 10$ cm³/s when $r = 5$ cm, what is $\\frac{dr}{dt}$?",
+        "options": [
+          "$\\frac{1}{10\\pi}$ cm/s",
+          "$\\frac{1}{5\\pi}$ cm/s",
+          "$\\frac{10}{100\\pi}$ cm/s",
+          "$\\frac{1}{100\\pi}$ cm/s"
+        ],
+        "correctAnswer": 0,
+        "explanation": "$\\frac{dV}{dt} = 4\\pi r^2 \\frac{dr}{dt}$. So $10 = 4\\pi(25)\\frac{dr}{dt}$, giving $\\frac{dr}{dt} = \\frac{10}{100\\pi} = \\frac{1}{10\\pi}$ cm/s."
+      },
+      {
+        "id": "math203-q6b-2",
+        "type": "multiple_choice",
+        "prompt": "For a cone with $V = \\frac{1}{3}\\pi r^2 h$, if $r$ and $h$ are both changing, the differentiated equation involves:",
+        "options": [
+          "Only $\\frac{dr}{dt}$",
+          "Only $\\frac{dh}{dt}$",
+          "Both $\\frac{dr}{dt}$ and $\\frac{dh}{dt}$",
+          "Neither rate"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Using product rule: $\\frac{dV}{dt} = \\frac{1}{3}\\pi(2rh\\frac{dr}{dt} + r^2\\frac{dh}{dt})$. Both rates appear."
+      },
+      {
+        "id": "math203-q6b-3",
+        "type": "true_false",
+        "prompt": "In a related rates problem, if one quantity is decreasing, its rate is negative.",
+        "correctAnswer": true,
+        "explanation": "True. A negative rate indicates the quantity is decreasing with respect to time."
+      },
+      {
+        "id": "math203-q6b-4",
+        "type": "multiple_choice",
+        "prompt": "A light at height 6m casts a shadow of a 2m tall person walking away at 1 m/s. The shadow length is increasing at:",
+        "options": [
+          "$\\frac{1}{2}$ m/s",
+          "$1$ m/s",
+          "$\\frac{3}{2}$ m/s",
+          "$2$ m/s"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Using similar triangles: $\\frac{6}{x+s} = \\frac{2}{s}$, so $6s = 2x + 2s$, giving $s = \\frac{x}{2}$. Thus $\\frac{ds}{dt} = \\frac{1}{2}\\frac{dx}{dt} = \\frac{1}{2}$ m/s."
+      },
+      {
+        "id": "math203-q6b-5",
+        "type": "fill_blank",
+        "prompt": "When a ladder slides down a wall, if $\\frac{dy}{dt} < 0$, the top of the ladder is ____.",
+        "correctAnswer": "falling",
+        "explanation": "Negative $\\frac{dy}{dt}$ means $y$ (height) is decreasing, so the top of the ladder is falling/sliding down."
+      }
+    ]
+  },
+  {
+    "id": "math203-quiz-6c",
+    "subjectId": "math203",
+    "topicId": "math203-topic-6",
+    "title": "Related Rates - Mastery",
+    "questions": [
+      {
+        "id": "math203-q6c-1",
+        "type": "multiple_choice",
+        "prompt": "Two cars start from the same point, one going north at 40 mph and one east at 30 mph. After 2 hours, how fast is the distance between them increasing?",
+        "options": [
+          "50 mph",
+          "70 mph",
+          "100 mph",
+          "35 mph"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Distance $D = \\sqrt{x^2 + y^2}$. After 2h: $x = 60$, $y = 80$, $D = 100$. $\\frac{dD}{dt} = \\frac{x\\frac{dx}{dt} + y\\frac{dy}{dt}}{D} = \\frac{60(30) + 80(40)}{100} = 50$ mph."
+      },
+      {
+        "id": "math203-q6c-2",
+        "type": "multiple_choice",
+        "prompt": "Water drains from a conical tank at 5 ft³/min. If at some instant $r = 2$ ft, $h = 4$ ft, and the ratio $r/h$ remains constant, what is $\\frac{dh}{dt}$?",
+        "options": [
+          "$-\\frac{5}{4\\pi}$ ft/min",
+          "$-\\frac{5}{2\\pi}$ ft/min",
+          "$-\\frac{5}{\\pi}$ ft/min",
+          "$-\\frac{5}{8\\pi}$ ft/min"
+        ],
+        "correctAnswer": 0,
+        "explanation": "If $r/h = 1/2$, then $r = h/2$. $V = \\frac{\\pi}{12}h^3$. $\\frac{dV}{dt} = \\frac{\\pi}{4}h^2\\frac{dh}{dt}$. So $-5 = \\frac{\\pi}{4}(16)\\frac{dh}{dt}$, giving $\\frac{dh}{dt} = -\\frac{5}{4\\pi}$."
+      },
+      {
+        "id": "math203-q6c-3",
+        "type": "true_false",
+        "prompt": "In a related rates problem, the rates $\\frac{dx}{dt}$ and $\\frac{dy}{dt}$ always have opposite signs.",
+        "correctAnswer": false,
+        "explanation": "False. The signs depend on the specific relationship and situation. In some problems both can be positive or both negative."
+      },
+      {
+        "id": "math203-q6c-4",
+        "type": "multiple_choice",
+        "prompt": "If $A = \\frac{1}{2}bh$ for a triangle where both base and height are changing, then $\\frac{dA}{dt}$ equals:",
+        "options": [
+          "$\\frac{1}{2}(b\\frac{dh}{dt} + h\\frac{db}{dt})$",
+          "$\\frac{1}{2}\\frac{db}{dt}\\frac{dh}{dt}$",
+          "$\\frac{1}{2}(\\frac{db}{dt} + \\frac{dh}{dt})$",
+          "$bh\\frac{dA}{dt}$"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Using the product rule: $\\frac{dA}{dt} = \\frac{1}{2}(b\\frac{dh}{dt} + h\\frac{db}{dt})$."
+      },
+      {
+        "id": "math203-q6c-5",
+        "type": "fill_blank",
+        "prompt": "The key step in solving related rates problems is to differentiate both sides of the equation with respect to ____ using the chain rule.",
+        "correctAnswer": "time",
+        "explanation": "We differentiate with respect to time $t$ since related rates problems involve quantities changing over time."
+      }
+    ]
+  }
+]

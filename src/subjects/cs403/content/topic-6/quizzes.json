@@ -1,0 +1,185 @@
+[
+  {
+    "id": "cs403-quiz-6-1",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-6",
+    "title": "Topic 6: Network Flow — Fundamentals",
+    "questions": [
+      {
+        "id": "cs403-q76",
+        "type": "multiple_choice",
+        "prompt": "A flow network is typically a:",
+        "options": [
+          "Directed graph with capacities",
+          "Undirected graph with weights",
+          "Tree with priorities",
+          "Planar graph only"
+        ],
+        "correctAnswer": "Directed graph with capacities",
+        "explanation": "Standard max-flow is defined on directed edges with nonnegative capacities, with a source and sink."
+      },
+      {
+        "id": "cs403-q77",
+        "type": "fill_blank",
+        "prompt": "In a flow network, the residual capacity on a forward edge (u, v) is c(u, v) − _____.",
+        "correctAnswer": "f(u, v)",
+        "explanation": "Residual capacity tracks how much more flow can be pushed: c_f(u,v) = c(u,v) − f(u,v) for forward edges."
+      },
+      {
+        "id": "cs403-q78",
+        "type": "true_false",
+        "prompt": "If there is no s→t path in the residual graph, the current flow is maximum.",
+        "correctAnswer": true,
+        "explanation": "Ford–Fulkerson stops when no augmenting path exists. At that point, the reachable set from s defines a cut whose capacity equals the flow value, proving optimality."
+      },
+      {
+        "id": "cs403-q79",
+        "type": "multiple_choice",
+        "prompt": "Edmonds–Karp is Ford–Fulkerson where augmenting paths are found using:",
+        "options": [
+          "BFS (shortest in edges)",
+          "DFS (deepest first)",
+          "Dijkstra",
+          "Bellman–Ford"
+        ],
+        "correctAnswer": "BFS (shortest in edges)",
+        "explanation": "Edmonds–Karp chooses shortest augmenting paths by number of edges using BFS, yielding a polynomial-time bound."
+      },
+      {
+        "id": "cs403-q80",
+        "type": "multiple_choice",
+        "prompt": "The max-flow min-cut theorem states that:",
+        "options": [
+          "The value of the maximum s–t flow equals the capacity of the minimum s–t cut",
+          "The minimum cut is always unique",
+          "Every flow is a cut",
+          "Max flow equals number of vertices"
+        ],
+        "correctAnswer": "The value of the maximum s–t flow equals the capacity of the minimum s–t cut",
+        "explanation": "Max-flow min-cut connects flows (primal) and cuts (dual): the maximum flow value equals the minimum cut capacity."
+      }
+    ]
+  },
+  {
+    "id": "cs403-quiz-6-2",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-6",
+    "title": "Topic 6: Network Flow — Application",
+    "questions": [
+      {
+        "id": "cs403-q81",
+        "type": "multiple_choice",
+        "prompt": "Bipartite matching can be reduced to max flow by:",
+        "options": [
+          "Adding a source connected to left nodes and a sink connected from right nodes, all capacities 1",
+          "Running Dijkstra on the bipartite graph",
+          "Taking the MST of the bipartite graph",
+          "Using dynamic programming over subsets"
+        ],
+        "correctAnswer": "Adding a source connected to left nodes and a sink connected from right nodes, all capacities 1",
+        "explanation": "Construct a flow network with unit capacities: source→left (1), left→right edges (1), right→sink (1). The max flow equals maximum matching size."
+      },
+      {
+        "id": "cs403-q82",
+        "type": "true_false",
+        "prompt": "Push–relabel maintains a preflow that may violate flow conservation at intermediate vertices.",
+        "correctAnswer": true,
+        "explanation": "Push–relabel algorithms allow excess at vertices (preflow) and iteratively push excess and relabel heights until a valid maximum flow is obtained."
+      },
+      {
+        "id": "cs403-q83",
+        "type": "multiple_choice",
+        "prompt": "Minimum-cost flow extends max flow by also minimizing:",
+        "options": [
+          "Total edge cost of the shipped flow",
+          "Number of vertices used",
+          "Graph diameter",
+          "Maximum degree"
+        ],
+        "correctAnswer": "Total edge cost of the shipped flow",
+        "explanation": "Min-cost flow assigns costs to edges and seeks a feasible flow of given value with minimum total cost."
+      },
+      {
+        "id": "cs403-q84",
+        "type": "fill_blank",
+        "prompt": "A circulation is a flow with no designated source/sink that satisfies conservation at _____ vertices.",
+        "correctAnswer": "all",
+        "explanation": "A circulation respects flow conservation at every vertex; constraints come from demands/supplies and edge capacities."
+      },
+      {
+        "id": "cs403-q85",
+        "type": "multiple_choice",
+        "prompt": "Which application is a natural fit for max flow?",
+        "options": [
+          "Project selection / closure problems",
+          "Sorting numbers",
+          "Computing convex hull",
+          "Finding primes"
+        ],
+        "correctAnswer": "Project selection / closure problems",
+        "explanation": "Many selection problems reduce to min-cut / max-flow (e.g., maximum closure, project selection with prerequisites) by building a flow network and taking an s–t cut."
+      }
+    ]
+  },
+  {
+    "id": "cs403-quiz-6-3",
+    "subjectId": "cs403",
+    "topicId": "cs403-topic-6",
+    "title": "Topic 6: Network Flow — Mastery",
+    "questions": [
+      {
+        "id": "cs403-q86",
+        "type": "multiple_choice",
+        "prompt": "A standard reason Ford–Fulkerson can take exponential time is that:",
+        "options": [
+          "With irrational capacities, it may never terminate (or may take extremely many augmentations)",
+          "BFS is too slow",
+          "It requires planar graphs",
+          "It always picks minimum cuts first"
+        ],
+        "correctAnswer": "With irrational capacities, it may never terminate (or may take extremely many augmentations)",
+        "explanation": "Ford–Fulkerson’s augmentation count can depend on the numeric value of capacities and the choice of augmenting paths; with irrational capacities it may not terminate."
+      },
+      {
+        "id": "cs403-q87",
+        "type": "true_false",
+        "prompt": "In Edmonds–Karp, the shortest-path distance (in edges) from s to any vertex in the residual graph never decreases over time.",
+        "correctAnswer": true,
+        "explanation": "A key invariant in Edmonds–Karp is that BFS layer distances in the residual graph are nondecreasing as augmentations proceed, leading to O(VE^2) time."
+      },
+      {
+        "id": "cs403-q88",
+        "type": "multiple_choice",
+        "prompt": "The min-cut in an s–t flow network can be recovered at termination by:",
+        "options": [
+          "Taking vertices reachable from s in the final residual graph",
+          "Taking vertices with maximum degree",
+          "Taking the smallest SCC",
+          "Sorting edges by capacity"
+        ],
+        "correctAnswer": "Taking vertices reachable from s in the final residual graph",
+        "explanation": "When no augmenting path exists, the reachable set S from s in the residual graph forms an s–t cut (S, V\\S) whose capacity equals the max flow value."
+      },
+      {
+        "id": "cs403-q89",
+        "type": "fill_blank",
+        "prompt": "The dual of the max-flow LP corresponds to the minimum _____ problem.",
+        "correctAnswer": "cut",
+        "explanation": "Max flow and min cut are primal/dual linear programs, and strong duality yields equality of optimal values."
+      },
+      {
+        "id": "cs403-q90",
+        "type": "multiple_choice",
+        "prompt": "Multi-commodity flow differs from single-commodity max flow because:",
+        "options": [
+          "Multiple flows share edge capacities, creating coupling constraints",
+          "It requires a single source and sink",
+          "It forbids fractional solutions",
+          "It can be solved by one BFS"
+        ],
+        "correctAnswer": "Multiple flows share edge capacities, creating coupling constraints",
+        "explanation": "In multi-commodity flow, different commodities compete for capacity on the same edges, leading to coupled constraints and typically harder optimization problems."
+      }
+    ]
+  }
+]

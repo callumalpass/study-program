@@ -1,0 +1,221 @@
+[
+  {
+    "id": "cs203-topic-3-quiz-1",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-3",
+    "title": "Grammar Fundamentals",
+    "questions": [
+      {
+        "id": "cs203-t3-q1-1",
+        "type": "multiple_choice",
+        "prompt": "A context-free grammar consists of:",
+        "options": [
+          "States, transitions, and accepting states",
+          "Variables, terminals, productions, and start symbol",
+          "Stack, input tape, and control unit",
+          "Regular expressions only"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A CFG G = (V, Σ, R, S) has variables (non-terminals), terminals, production rules, and a start symbol."
+      },
+      {
+        "id": "cs203-t3-q1-2",
+        "type": "multiple_choice",
+        "prompt": "In the production A → aAb | ε, what language does A generate?",
+        "options": [
+          "{aⁿbⁿ | n ≥ 0}",
+          "{aⁿbᵐ | n,m ≥ 0}",
+          "All strings over {a,b}",
+          "{ab}*"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Each application of A → aAb adds one \"a\" to the left and one \"b\" to the right. A → ε terminates, giving equal counts."
+      },
+      {
+        "id": "cs203-t3-q1-3",
+        "type": "multiple_choice",
+        "prompt": "A leftmost derivation:",
+        "options": [
+          "Always replaces the rightmost variable",
+          "Always replaces the leftmost variable",
+          "Can replace any variable",
+          "Only works for regular languages"
+        ],
+        "correctAnswer": 1,
+        "explanation": "In a leftmost derivation, we always expand the leftmost variable at each step. This gives a canonical derivation order."
+      },
+      {
+        "id": "cs203-t3-q1-4",
+        "type": "multiple_choice",
+        "prompt": "The yield of a parse tree is:",
+        "options": [
+          "The root symbol",
+          "The sequence of leaves read left to right",
+          "The depth of the tree",
+          "The number of internal nodes"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The yield (or frontier) of a parse tree is the string of terminal symbols at the leaves, read from left to right."
+      },
+      {
+        "id": "cs203-t3-q1-5",
+        "type": "multiple_choice",
+        "prompt": "Which language is context-free but not regular?",
+        "options": [
+          "a*b*",
+          "{w | w has equal a's and b's}",
+          "{w | |w| is even}",
+          "All of the above"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Equal counts of a's and b's requires counting/matching that FAs cannot do, but CFGs can (S → aSb | bSa | SS | ε)."
+      }
+    ]
+  },
+  {
+    "id": "cs203-topic-3-quiz-2",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-3",
+    "title": "Ambiguity and Normal Forms",
+    "questions": [
+      {
+        "id": "cs203-t3-q2-1",
+        "type": "multiple_choice",
+        "prompt": "A grammar is ambiguous if:",
+        "options": [
+          "It has more than one production",
+          "Some string has more than one parse tree",
+          "It generates an infinite language",
+          "It has ε-productions"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Ambiguity means at least one string in the language has multiple distinct parse trees (equivalently, multiple leftmost derivations)."
+      },
+      {
+        "id": "cs203-t3-q2-2",
+        "type": "multiple_choice",
+        "prompt": "In Chomsky Normal Form, productions have the form:",
+        "options": [
+          "A → BC or A → a",
+          "A → aB or A → a",
+          "A → α where |α| ≤ 2",
+          "A → BCD or A → ab"
+        ],
+        "correctAnswer": 0,
+        "explanation": "CNF requires all productions to be A → BC (two variables) or A → a (single terminal), plus S → ε if needed."
+      },
+      {
+        "id": "cs203-t3-q2-3",
+        "type": "multiple_choice",
+        "prompt": "Converting to CNF requires eliminating:",
+        "options": [
+          "Only ε-productions",
+          "ε-productions, unit productions, and useless symbols",
+          "Only long productions",
+          "All recursive rules"
+        ],
+        "correctAnswer": 1,
+        "explanation": "CNF conversion eliminates: ε-productions (except S→ε), unit productions (A→B), useless symbols, and long/mixed productions."
+      },
+      {
+        "id": "cs203-t3-q2-4",
+        "type": "multiple_choice",
+        "prompt": "Greibach Normal Form requires:",
+        "options": [
+          "All productions A → BC",
+          "All productions A → aα where a is terminal",
+          "No recursive productions",
+          "Binary branching only"
+        ],
+        "correctAnswer": 1,
+        "explanation": "GNF requires every production to start with a terminal: A → aα where a ∈ Σ and α ∈ V*."
+      },
+      {
+        "id": "cs203-t3-q2-5",
+        "type": "multiple_choice",
+        "prompt": "The CYK parsing algorithm requires the grammar to be in:",
+        "options": [
+          "Any form",
+          "Chomsky Normal Form",
+          "Greibach Normal Form",
+          "Backus-Naur Form"
+        ],
+        "correctAnswer": 1,
+        "explanation": "CYK uses dynamic programming based on substring lengths, which relies on the binary branching structure of CNF."
+      }
+    ]
+  },
+  {
+    "id": "cs203-topic-3-quiz-3",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-3",
+    "title": "CFL Pumping Lemma and Closure",
+    "questions": [
+      {
+        "id": "cs203-t3-q3-1",
+        "type": "multiple_choice",
+        "prompt": "The pumping lemma for CFLs states that long strings can be written as:",
+        "options": [
+          "xyz with y pumpable",
+          "uvxyz with vy pumpable",
+          "uvwxy with vx pumpable",
+          "abcde with bd pumpable"
+        ],
+        "correctAnswer": 1,
+        "explanation": "CFL pumping: s = uvxyz where |vy| > 0, |vxy| ≤ p, and uvⁱxyⁱz ∈ L for all i ≥ 0."
+      },
+      {
+        "id": "cs203-t3-q3-2",
+        "type": "multiple_choice",
+        "prompt": "Context-free languages are NOT closed under:",
+        "options": [
+          "Union",
+          "Concatenation",
+          "Intersection",
+          "Kleene star"
+        ],
+        "correctAnswer": 2,
+        "explanation": "CFLs are closed under union, concatenation, and Kleene star, but NOT under intersection or complement."
+      },
+      {
+        "id": "cs203-t3-q3-3",
+        "type": "multiple_choice",
+        "prompt": "{aⁿbⁿcⁿ | n ≥ 0} is:",
+        "options": [
+          "Regular",
+          "Context-free",
+          "Not context-free",
+          "Undecidable"
+        ],
+        "correctAnswer": 2,
+        "explanation": "This language requires matching three counts simultaneously, which CFGs cannot do. The CFL pumping lemma proves this."
+      },
+      {
+        "id": "cs203-t3-q3-4",
+        "type": "multiple_choice",
+        "prompt": "CFLs are closed under intersection with:",
+        "options": [
+          "Other CFLs",
+          "Regular languages",
+          "Neither",
+          "Both"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Intersection of a CFL with a regular language is always context-free (proven by product construction with PDA and DFA)."
+      },
+      {
+        "id": "cs203-t3-q3-5",
+        "type": "multiple_choice",
+        "prompt": "An inherently ambiguous language is:",
+        "options": [
+          "One with no grammar",
+          "One where every grammar is ambiguous",
+          "One that is not context-free",
+          "One with only one string"
+        ],
+        "correctAnswer": 1,
+        "explanation": "An inherently ambiguous CFL has no unambiguous grammar - every CFG for it is ambiguous."
+      }
+    ]
+  }
+]

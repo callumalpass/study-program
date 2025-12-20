@@ -1,0 +1,221 @@
+[
+  {
+    "id": "cs203-topic-4-quiz-1",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-4",
+    "title": "PDA Definition and Computation",
+    "questions": [
+      {
+        "id": "cs203-t4-q1-1",
+        "type": "multiple_choice",
+        "prompt": "A PDA differs from an NFA by having:",
+        "options": [
+          "Multiple tapes",
+          "A stack",
+          "Deterministic transitions",
+          "Two-way input head"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A PDA extends an NFA with a stack for auxiliary memory, enabling recognition of context-free languages."
+      },
+      {
+        "id": "cs203-t4-q1-2",
+        "type": "multiple_choice",
+        "prompt": "In a PDA transition (q, a, X) → (p, γ):",
+        "options": [
+          "a must be a stack symbol",
+          "X is pushed onto the stack",
+          "X is popped and γ is pushed",
+          "The stack is cleared"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The transition reads a from input, pops X from stack top, pushes string γ onto the stack, and moves to state p."
+      },
+      {
+        "id": "cs203-t4-q1-3",
+        "type": "multiple_choice",
+        "prompt": "ε-transitions in a PDA:",
+        "options": [
+          "Clear the stack",
+          "Can occur without reading input",
+          "Are not allowed",
+          "Must push to the stack"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A PDA can take an ε-transition (not reading input) while still potentially modifying the stack."
+      },
+      {
+        "id": "cs203-t4-q1-4",
+        "type": "multiple_choice",
+        "prompt": "A configuration of a PDA is described by:",
+        "options": [
+          "Current state only",
+          "(current state, remaining input, stack contents)",
+          "Stack contents only",
+          "Number of steps taken"
+        ],
+        "correctAnswer": 1,
+        "explanation": "An instantaneous description (ID) captures the complete PDA state: (q, w, γ) for state, unread input, and stack."
+      },
+      {
+        "id": "cs203-t4-q1-5",
+        "type": "multiple_choice",
+        "prompt": "PDAs are nondeterministic because:",
+        "options": [
+          "They can choose which transition to take",
+          "They have infinite states",
+          "The stack is unbounded",
+          "They can read multiple symbols at once"
+        ],
+        "correctAnswer": 0,
+        "explanation": "PDAs can have multiple applicable transitions from a configuration, allowing nondeterministic choice."
+      }
+    ]
+  },
+  {
+    "id": "cs203-topic-4-quiz-2",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-4",
+    "title": "Acceptance Modes and Design",
+    "questions": [
+      {
+        "id": "cs203-t4-q2-1",
+        "type": "multiple_choice",
+        "prompt": "Acceptance by final state requires:",
+        "options": [
+          "Empty stack and accepting state",
+          "Input consumed and in accepting state",
+          "Stack has exactly one symbol",
+          "All paths accept"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Final state acceptance: input is consumed AND PDA is in an accepting state (stack contents don't matter)."
+      },
+      {
+        "id": "cs203-t4-q2-2",
+        "type": "multiple_choice",
+        "prompt": "Acceptance by empty stack requires:",
+        "options": [
+          "Stack is empty after consuming input",
+          "Being in an accepting state",
+          "Both empty stack and accepting state",
+          "Stack contains only the initial symbol"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Empty stack acceptance: input is consumed AND stack is empty (no accepting states needed)."
+      },
+      {
+        "id": "cs203-t4-q2-3",
+        "type": "multiple_choice",
+        "prompt": "Final state acceptance and empty stack acceptance:",
+        "options": [
+          "Accept different classes of languages",
+          "Are equivalent in power",
+          "Final state is strictly more powerful",
+          "Empty stack is strictly more powerful"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Both acceptance modes define exactly the context-free languages. Any PDA can be converted between modes."
+      },
+      {
+        "id": "cs203-t4-q2-4",
+        "type": "multiple_choice",
+        "prompt": "To recognize {aⁿbⁿ}, a PDA should:",
+        "options": [
+          "Count a's in the state",
+          "Push a's, then pop for each b",
+          "Use two stacks",
+          "Ignore the stack"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Push each \"a\" onto the stack, then pop one symbol for each \"b\". Accept if stack empties exactly when input ends."
+      },
+      {
+        "id": "cs203-t4-q2-5",
+        "type": "multiple_choice",
+        "prompt": "A PDA for balanced parentheses uses the stack to:",
+        "options": [
+          "Count total symbols",
+          "Track unmatched open parentheses",
+          "Store the entire input",
+          "Nothing - the stack is unused"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Push for \"(\", pop for \")\". The string is balanced iff the stack empties exactly when input is consumed."
+      }
+    ]
+  },
+  {
+    "id": "cs203-topic-4-quiz-3",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-4",
+    "title": "PDA-CFG Equivalence and DPDAs",
+    "questions": [
+      {
+        "id": "cs203-t4-q3-1",
+        "type": "multiple_choice",
+        "prompt": "The equivalence of PDAs and CFGs means:",
+        "options": [
+          "Every PDA can be simulated by a DFA",
+          "PDAs recognize exactly the context-free languages",
+          "CFGs are more powerful than PDAs",
+          "PDAs cannot recognize regular languages"
+        ],
+        "correctAnswer": 1,
+        "explanation": "PDAs and CFGs are equivalent: L is context-free iff some PDA accepts L iff some CFG generates L."
+      },
+      {
+        "id": "cs203-t4-q3-2",
+        "type": "multiple_choice",
+        "prompt": "Converting a CFG to a PDA uses:",
+        "options": [
+          "One state per variable",
+          "Simulate leftmost derivations via the stack",
+          "Subset construction",
+          "Thompson's construction"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The standard construction uses the stack to track the sentential form, expanding variables and matching terminals."
+      },
+      {
+        "id": "cs203-t4-q3-3",
+        "type": "multiple_choice",
+        "prompt": "A DPDA (deterministic PDA):",
+        "options": [
+          "Accepts exactly the regular languages",
+          "Accepts a proper subset of CFLs",
+          "Is equivalent to nondeterministic PDAs",
+          "Cannot use ε-transitions"
+        ],
+        "correctAnswer": 1,
+        "explanation": "DPDAs are strictly weaker than NPDAs. Some CFLs (like palindromes over {a,b}) are not recognizable by any DPDA."
+      },
+      {
+        "id": "cs203-t4-q3-4",
+        "type": "multiple_choice",
+        "prompt": "Which language is NOT recognizable by a DPDA?",
+        "options": [
+          "{aⁿbⁿ}",
+          "{ww^R | w ∈ {a,b}*}",
+          "{aⁿbⁿcⁿ}",
+          "Balanced parentheses"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Palindromes require \"guessing\" the middle, which needs nondeterminism. DPDAs cannot recognize them."
+      },
+      {
+        "id": "cs203-t4-q3-5",
+        "type": "multiple_choice",
+        "prompt": "Deterministic context-free languages are:",
+        "options": [
+          "Not closed under complement",
+          "Closed under complement",
+          "The same as all CFLs",
+          "A superset of CFLs"
+        ],
+        "correctAnswer": 1,
+        "explanation": "DCFLs (languages recognized by DPDAs) are closed under complement, unlike general CFLs."
+      }
+    ]
+  }
+]

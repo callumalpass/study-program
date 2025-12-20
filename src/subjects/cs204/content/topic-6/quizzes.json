@@ -1,0 +1,221 @@
+[
+  {
+    "id": "cs204-topic-6-quiz-1",
+    "subjectId": "cs204",
+    "topicId": "cs204-topic-6",
+    "title": "Version Control Basics",
+    "questions": [
+      {
+        "id": "cs204-t6-q1-1",
+        "type": "multiple_choice",
+        "prompt": "What is the primary purpose of version control?",
+        "options": [
+          "To make code run faster",
+          "To track changes to code over time and enable collaboration",
+          "To compile code",
+          "To test code"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Version control tracks changes to code over time, enabling multiple developers to work together, maintain history, and revert to previous versions if needed."
+      },
+      {
+        "id": "cs204-t6-q1-2",
+        "type": "multiple_choice",
+        "prompt": "What is the difference between centralized and distributed version control?",
+        "options": [
+          "They are the same",
+          "Centralized has one central repository; distributed gives each developer a complete repository",
+          "Centralized is faster",
+          "Distributed does not support branching"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Centralized VCS has one central repository (e.g., SVN), while distributed VCS (e.g., Git) gives each developer a complete local repository with full history."
+      },
+      {
+        "id": "cs204-t6-q1-3",
+        "type": "multiple_choice",
+        "prompt": "What is a commit in version control?",
+        "options": [
+          "Deleting code",
+          "A snapshot of changes saved to the repository",
+          "Running tests",
+          "Deploying code"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A commit is a snapshot of changes saved to the repository with a message describing what changed and why."
+      },
+      {
+        "id": "cs204-t6-q1-4",
+        "type": "multiple_choice",
+        "prompt": "What is a branch in version control?",
+        "options": [
+          "A copy of the codebase for independent development",
+          "A deleted file",
+          "A test case",
+          "A deployment target"
+        ],
+        "correctAnswer": 0,
+        "explanation": "A branch is an independent line of development, allowing you to work on features or fixes without affecting the main codebase."
+      },
+      {
+        "id": "cs204-t6-q1-5",
+        "type": "multiple_choice",
+        "prompt": "What does merging in version control do?",
+        "options": [
+          "Deletes branches",
+          "Combines changes from different branches",
+          "Commits changes",
+          "Reverts changes"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Merging integrates changes from one branch into another, combining the work from different lines of development."
+      }
+    ]
+  },
+  {
+    "id": "cs204-topic-6-quiz-2",
+    "subjectId": "cs204",
+    "topicId": "cs204-topic-6",
+    "title": "Git and Collaboration",
+    "questions": [
+      {
+        "id": "cs204-t6-q2-1",
+        "type": "multiple_choice",
+        "prompt": "In Git, what is the purpose of \"git clone\"?",
+        "options": [
+          "To delete a repository",
+          "To create a local copy of a remote repository",
+          "To merge branches",
+          "To commit changes"
+        ],
+        "correctAnswer": 1,
+        "explanation": "\"git clone\" creates a local copy of a remote repository, including all files, branches, and commit history."
+      },
+      {
+        "id": "cs204-t6-q2-2",
+        "type": "multiple_choice",
+        "prompt": "What is a pull request (or merge request)?",
+        "options": [
+          "Downloading code",
+          "A request to merge changes from one branch into another for review",
+          "Deleting a branch",
+          "Creating a new repository"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A pull request is a request to merge changes from one branch into another, enabling code review and discussion before integration."
+      },
+      {
+        "id": "cs204-t6-q2-3",
+        "type": "multiple_choice",
+        "prompt": "What is Git Flow?",
+        "options": [
+          "A Git command",
+          "A branching strategy with specific branch types (main, develop, feature, release, hotfix)",
+          "A testing framework",
+          "A deployment tool"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Git Flow is a branching strategy that defines specific branch types and rules for how they interact, suitable for release-based workflows."
+      },
+      {
+        "id": "cs204-t6-q2-4",
+        "type": "multiple_choice",
+        "prompt": "What is trunk-based development?",
+        "options": [
+          "Using many long-lived branches",
+          "Developers integrate small changes frequently into a single main branch",
+          "Never using branches",
+          "Only using Git"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Trunk-based development has developers integrate small changes frequently into a single main branch (trunk), with short-lived feature branches if any."
+      },
+      {
+        "id": "cs204-t6-q2-5",
+        "type": "multiple_choice",
+        "prompt": "What is a merge conflict?",
+        "options": [
+          "An error in the code",
+          "When Git cannot automatically merge changes because of overlapping edits",
+          "A deleted file",
+          "A failed test"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A merge conflict occurs when Git cannot automatically merge changes because the same lines were modified differently in the branches being merged."
+      }
+    ]
+  },
+  {
+    "id": "cs204-topic-6-quiz-3",
+    "subjectId": "cs204",
+    "topicId": "cs204-topic-6",
+    "title": "CI/CD Pipelines",
+    "questions": [
+      {
+        "id": "cs204-t6-q3-1",
+        "type": "multiple_choice",
+        "prompt": "What is Continuous Integration (CI)?",
+        "options": [
+          "Deploying to production continuously",
+          "Automatically building and testing code on every commit",
+          "Manual testing only",
+          "Writing documentation"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Continuous Integration automatically builds and tests code whenever changes are committed, providing rapid feedback on integration issues."
+      },
+      {
+        "id": "cs204-t6-q3-2",
+        "type": "multiple_choice",
+        "prompt": "What is Continuous Deployment (CD)?",
+        "options": [
+          "Manual deployment only",
+          "Automatically deploying every change that passes tests to production",
+          "Testing code",
+          "Writing code"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Continuous Deployment automatically deploys every change that passes the automated tests to production, with no manual intervention."
+      },
+      {
+        "id": "cs204-t6-q3-3",
+        "type": "multiple_choice",
+        "prompt": "What is the difference between Continuous Delivery and Continuous Deployment?",
+        "options": [
+          "They are the same",
+          "Delivery requires manual approval for production; Deployment is fully automatic",
+          "Delivery is slower",
+          "Deployment does not use tests"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Continuous Delivery means code is always in a deployable state but requires manual approval for production. Continuous Deployment is fully automatic."
+      },
+      {
+        "id": "cs204-t6-q3-4",
+        "type": "multiple_choice",
+        "prompt": "What is a CI/CD pipeline?",
+        "options": [
+          "A water pipe",
+          "An automated sequence of stages (build, test, deploy) triggered by code changes",
+          "A manual process",
+          "A database"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A CI/CD pipeline is an automated sequence of stages (like build, test, and deploy) that code changes pass through, ensuring quality and enabling rapid delivery."
+      },
+      {
+        "id": "cs204-t6-q3-5",
+        "type": "multiple_choice",
+        "prompt": "What is a key benefit of CI/CD?",
+        "options": [
+          "Eliminates need for testing",
+          "Faster feedback, reduced integration issues, and more frequent releases",
+          "Makes code perfect",
+          "No need for version control"
+        ],
+        "correctAnswer": 1,
+        "explanation": "CI/CD provides faster feedback on changes, reduces integration issues by integrating frequently, and enables more frequent and reliable releases."
+      }
+    ]
+  }
+]

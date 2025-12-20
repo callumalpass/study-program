@@ -1,0 +1,167 @@
+[
+  {
+    "id": "math102-q7",
+    "subjectId": "math102",
+    "topicId": "math102-7",
+    "title": "Probability - Fundamentals",
+    "questions": [
+      {
+        "id": "math102-q7-1",
+        "type": "multiple_choice",
+        "prompt": "A fair die is rolled. What is P(even number)?",
+        "options": [
+          "1/6",
+          "1/3",
+          "1/2",
+          "2/3"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Even numbers: 2, 4, 6. P(even) = 3/6 = 1/2."
+      },
+      {
+        "id": "math102-q7-2",
+        "type": "code_output",
+        "prompt": "What is P(A ∪ B) if P(A) = 0.3, P(B) = 0.4, P(A ∩ B) = 0.1?",
+        "correctAnswer": "0.6",
+        "explanation": "P(A ∪ B) = P(A) + P(B) - P(A ∩ B) = 0.3 + 0.4 - 0.1 = 0.6."
+      },
+      {
+        "id": "math102-q7-3",
+        "type": "true_false",
+        "prompt": "If A and B are independent, then P(A ∩ B) = P(A) × P(B).",
+        "correctAnswer": true,
+        "explanation": "Independence means P(A ∩ B) = P(A) × P(B) by definition."
+      },
+      {
+        "id": "math102-q7-4",
+        "type": "fill_blank",
+        "prompt": "The expected value of a fair die roll is ____.",
+        "correctAnswer": "3.5",
+        "explanation": "E[X] = (1+2+3+4+5+6)/6 = 21/6 = 3.5."
+      },
+      {
+        "id": "math102-q7-5",
+        "type": "multiple_choice",
+        "prompt": "P(A|B) is defined as:",
+        "options": [
+          "P(A) / P(B)",
+          "P(A ∩ B) / P(B)",
+          "P(A ∩ B) / P(A)",
+          "P(A) × P(B)"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Conditional probability: P(A|B) = P(A ∩ B) / P(B)."
+      }
+    ]
+  },
+  {
+    "id": "math102-q7b",
+    "subjectId": "math102",
+    "topicId": "math102-7",
+    "title": "Probability - Application",
+    "questions": [
+      {
+        "id": "math102-q7b-1",
+        "type": "multiple_choice",
+        "prompt": "In the birthday problem with 23 people, P(at least 2 share birthday) is approximately:",
+        "options": [
+          "23/365",
+          "0.25",
+          "0.50",
+          "0.75"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The birthday paradox: with 23 people, P ≈ 50.7%."
+      },
+      {
+        "id": "math102-q7b-2",
+        "type": "true_false",
+        "prompt": "E[X + Y] = E[X] + E[Y] even if X and Y are not independent.",
+        "correctAnswer": true,
+        "explanation": "Linearity of expectation holds regardless of dependence."
+      },
+      {
+        "id": "math102-q7b-3",
+        "type": "code_output",
+        "prompt": "For Binomial(10, 0.5), what is E[X]?",
+        "correctAnswer": "5",
+        "explanation": "E[X] = np = 10 × 0.5 = 5 for binomial distribution."
+      },
+      {
+        "id": "math102-q7b-4",
+        "type": "multiple_choice",
+        "prompt": "The variance of a Bernoulli(p) random variable is:",
+        "options": [
+          "p",
+          "p²",
+          "p(1-p)",
+          "1-p"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Var(X) = E[X²] - E[X]² = p - p² = p(1-p)."
+      },
+      {
+        "id": "math102-q7b-5",
+        "type": "fill_blank",
+        "prompt": "The expected number of coin flips until first heads (Geometric dist.) is ____.",
+        "correctAnswer": "2",
+        "explanation": "For Geometric(p) with p=0.5, E[X] = 1/p = 2."
+      }
+    ]
+  },
+  {
+    "id": "math102-q7c",
+    "subjectId": "math102",
+    "topicId": "math102-7",
+    "title": "Probability - Advanced",
+    "questions": [
+      {
+        "id": "math102-q7c-1",
+        "type": "multiple_choice",
+        "prompt": "Bayes' Theorem states P(A|B) equals:",
+        "options": [
+          "P(B|A) × P(A) / P(B)",
+          "P(A) × P(B)",
+          "P(B|A) / P(A)",
+          "P(A|B) × P(B)"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Bayes: P(A|B) = P(B|A) × P(A) / P(B)."
+      },
+      {
+        "id": "math102-q7c-2",
+        "type": "code_output",
+        "prompt": "Expected fixed points in a random permutation of n elements is always:",
+        "correctAnswer": "1",
+        "explanation": "By linearity: E[Σ Xᵢ] = Σ E[Xᵢ] = n × (1/n) = 1."
+      },
+      {
+        "id": "math102-q7c-3",
+        "type": "true_false",
+        "prompt": "For independent X and Y, Var(X + Y) = Var(X) + Var(Y).",
+        "correctAnswer": true,
+        "explanation": "Variance is additive for independent random variables."
+      },
+      {
+        "id": "math102-q7c-4",
+        "type": "multiple_choice",
+        "prompt": "The coupon collector problem: expected draws to collect all n coupons is approximately:",
+        "options": [
+          "n",
+          "n²",
+          "n ln n",
+          "2^n"
+        ],
+        "correctAnswer": 2,
+        "explanation": "E[X] = n × H(n) ≈ n ln n + γn where H(n) is the harmonic number."
+      },
+      {
+        "id": "math102-q7c-5",
+        "type": "fill_blank",
+        "prompt": "Binomial(n, p) has variance np(____), where the blank is a function of p.",
+        "correctAnswer": "1-p",
+        "explanation": "Var(Binomial) = np(1-p)."
+      }
+    ]
+  }
+]

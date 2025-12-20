@@ -1,0 +1,197 @@
+[
+  {
+    "id": "cs105-quiz-3",
+    "subjectId": "cs105",
+    "topicId": "cs105-topic-3",
+    "title": "Memory Quiz 1: Allocation Basics",
+    "questions": [
+      {
+        "id": "cs105-q3-1",
+        "type": "multiple_choice",
+        "prompt": "Which function is used to allocate memory dynamically in C?",
+        "options": [
+          "alloc()",
+          "malloc()",
+          "new()",
+          "create()"
+        ],
+        "correctAnswer": 1,
+        "explanation": "malloc (memory allocation) from stdlib.h allocates a specified number of bytes on the heap."
+      },
+      {
+        "id": "cs105-q3-2",
+        "type": "multiple_choice",
+        "prompt": "What happens if you forget to call free() after malloc()?",
+        "options": [
+          "Compilation error",
+          "Memory leak",
+          "Segmentation fault",
+          "Nothing, memory is auto-freed"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Failing to free dynamically allocated memory causes a memory leak, where memory is not returned to the system."
+      },
+      {
+        "id": "cs105-q3-3",
+        "type": "true_false",
+        "prompt": "The calloc() function initializes allocated memory to zero.",
+        "correctAnswer": true,
+        "explanation": "Unlike malloc, calloc initializes all bytes in the allocated memory to zero."
+      },
+      {
+        "id": "cs105-q3-4",
+        "type": "multiple_choice",
+        "prompt": "What does malloc return if allocation fails?",
+        "options": [
+          "0",
+          "NULL",
+          "-1",
+          "Throws an exception"
+        ],
+        "correctAnswer": 1,
+        "explanation": "malloc returns NULL if it cannot allocate the requested memory. Always check for NULL after malloc."
+      },
+      {
+        "id": "cs105-q3-5",
+        "type": "multiple_choice",
+        "prompt": "What is the difference between malloc(10) and calloc(10, 1)?",
+        "options": [
+          "No difference",
+          "calloc initializes to zero",
+          "malloc is faster",
+          "calloc allocates more memory"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Both allocate 10 bytes, but calloc also initializes all bytes to zero while malloc leaves them uninitialized."
+      }
+    ]
+  },
+  {
+    "id": "cs105-quiz-3b",
+    "subjectId": "cs105",
+    "topicId": "cs105-topic-3",
+    "title": "Memory Quiz 2: Stack vs Heap",
+    "questions": [
+      {
+        "id": "cs105-q3b-1",
+        "type": "multiple_choice",
+        "prompt": "Where are local variables stored?",
+        "options": [
+          "Heap",
+          "Stack",
+          "Global memory",
+          "CPU registers"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Local variables are stored on the stack and are automatically deallocated when the function returns."
+      },
+      {
+        "id": "cs105-q3b-2",
+        "type": "true_false",
+        "prompt": "Memory allocated with malloc() is automatically freed when a function returns.",
+        "correctAnswer": false,
+        "explanation": "Heap memory persists until explicitly freed with free(). It is not automatically deallocated."
+      },
+      {
+        "id": "cs105-q3b-3",
+        "type": "multiple_choice",
+        "prompt": "What is a stack overflow?",
+        "options": [
+          "Allocating too much heap memory",
+          "Using too many recursive calls or large local arrays",
+          "Accessing freed memory",
+          "Integer overflow"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Stack overflow occurs when the stack runs out of space, often due to deep recursion or large local arrays."
+      },
+      {
+        "id": "cs105-q3b-4",
+        "type": "multiple_choice",
+        "prompt": "Which memory region grows toward lower addresses?",
+        "options": [
+          "Stack",
+          "Heap",
+          "Data segment",
+          "Code segment"
+        ],
+        "correctAnswer": 0,
+        "explanation": "On most systems, the stack grows downward (toward lower addresses) while the heap grows upward."
+      },
+      {
+        "id": "cs105-q3b-5",
+        "type": "true_false",
+        "prompt": "Static local variables are stored on the stack.",
+        "correctAnswer": false,
+        "explanation": "Static variables are stored in the data segment, not the stack. They persist for the program lifetime."
+      }
+    ]
+  },
+  {
+    "id": "cs105-quiz-3c",
+    "subjectId": "cs105",
+    "topicId": "cs105-topic-3",
+    "title": "Memory Quiz 3: Common Errors",
+    "questions": [
+      {
+        "id": "cs105-q3c-1",
+        "type": "multiple_choice",
+        "prompt": "What is a \"dangling pointer\"?",
+        "options": [
+          "A NULL pointer",
+          "A pointer to freed memory",
+          "An uninitialized pointer",
+          "A pointer to stack memory"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A dangling pointer points to memory that has been freed. Using it causes undefined behavior."
+      },
+      {
+        "id": "cs105-q3c-2",
+        "type": "multiple_choice",
+        "prompt": "What is a \"double free\" error?",
+        "options": [
+          "Freeing twice the allocated size",
+          "Calling free() twice on the same pointer",
+          "Freeing a double pointer",
+          "Freeing static memory"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Double free means calling free() twice on the same memory address, which corrupts the heap."
+      },
+      {
+        "id": "cs105-q3c-3",
+        "type": "true_false",
+        "prompt": "It is safe to call free(NULL).",
+        "correctAnswer": true,
+        "explanation": "free(NULL) is defined to do nothing. This is safe and a common pattern for cleanup code."
+      },
+      {
+        "id": "cs105-q3c-4",
+        "type": "multiple_choice",
+        "prompt": "Which tool is commonly used to detect memory errors in C programs?",
+        "options": [
+          "GDB",
+          "Valgrind",
+          "GCC",
+          "Make"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Valgrind is a tool that detects memory leaks, invalid accesses, and other memory errors."
+      },
+      {
+        "id": "cs105-q3c-5",
+        "type": "multiple_choice",
+        "prompt": "What is \"use after free\"?",
+        "options": [
+          "Using malloc after free",
+          "Accessing memory after it has been freed",
+          "Using free without malloc",
+          "Freeing uninitialized memory"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Use after free means accessing memory through a pointer after that memory has been freed."
+      }
+    ]
+  }
+]

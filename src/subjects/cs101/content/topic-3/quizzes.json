@@ -1,0 +1,163 @@
+[
+  {
+    "id": "cs101-quiz-3",
+    "subjectId": "cs101",
+    "topicId": "cs101-topic-3",
+    "title": "Functions - Fundamentals",
+    "questions": [
+      {
+        "id": "q3-1",
+        "type": "multiple_choice",
+        "prompt": "What keyword is used to define a function in Python?",
+        "options": [
+          "function",
+          "def",
+          "func",
+          "define"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Python uses the \"def\" keyword to define functions, short for \"define\"."
+      },
+      {
+        "id": "q3-2",
+        "type": "code_output",
+        "prompt": "What does this function return?",
+        "codeSnippet": "def multiply(a, b=2):\n    return a * b\n\nresult = multiply(5)\nprint(result)",
+        "correctAnswer": "10",
+        "explanation": "The function multiplies a by b. Since b has a default value of 2 and we only passed 5 for a, it calculates 5 * 2 = 10."
+      },
+      {
+        "id": "q3-3",
+        "type": "true_false",
+        "prompt": "A function in Python must always return a value.",
+        "correctAnswer": false,
+        "explanation": "Functions can perform actions without returning values. If no return statement is used, the function implicitly returns None."
+      },
+      {
+        "id": "q3-4",
+        "type": "multiple_choice",
+        "prompt": "What is the difference between a parameter and an argument?",
+        "options": [
+          "They are the same thing",
+          "Parameter is in the function definition; argument is the value passed when calling",
+          "Argument is in the function definition; parameter is the value passed",
+          "Parameters are for numbers; arguments are for strings"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Parameters are variables in the function definition (e.g., def greet(name)). Arguments are actual values passed when calling (e.g., greet(\"Alice\"))."
+      },
+      {
+        "id": "q3-5",
+        "type": "code_output",
+        "prompt": "What will this code print?",
+        "codeSnippet": "def greet(name):\n    print(f\"Hello, {name}\")\n\nresult = greet(\"World\")\nprint(result)",
+        "correctAnswer": "Hello, World\nNone",
+        "explanation": "greet() prints \"Hello, World\" but has no return statement, so it returns None. Then print(result) outputs None."
+      }
+    ]
+  },
+  {
+    "id": "cs101-quiz-3b",
+    "subjectId": "cs101",
+    "topicId": "cs101-topic-3",
+    "title": "Functions - Arguments and Scope",
+    "questions": [
+      {
+        "id": "q3b-1",
+        "type": "code_output",
+        "prompt": "What will this code print?",
+        "codeSnippet": "def add(a, b, c=0):\n    return a + b + c\n\nprint(add(1, 2))",
+        "correctAnswer": "3",
+        "explanation": "c has a default value of 0. When called with only two arguments, a=1, b=2, c=0, so 1+2+0=3."
+      },
+      {
+        "id": "q3b-2",
+        "type": "multiple_choice",
+        "prompt": "What happens if you try to use a local variable outside its function?",
+        "options": [
+          "It works normally",
+          "Python returns None",
+          "NameError is raised",
+          "The global value is used"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Local variables only exist inside the function. Trying to access them outside raises a NameError because the name is not defined in that scope."
+      },
+      {
+        "id": "q3b-3",
+        "type": "code_output",
+        "prompt": "What will this code print?",
+        "codeSnippet": "def outer():\n    x = 10\n    def inner():\n        return x * 2\n    return inner()\n\nprint(outer())",
+        "correctAnswer": "20",
+        "explanation": "inner() can access x from the enclosing scope (outer). This is called a closure. inner() returns 10*2=20, which outer() returns."
+      },
+      {
+        "id": "q3b-4",
+        "type": "true_false",
+        "prompt": "Keyword arguments must always come after positional arguments in a function call.",
+        "correctAnswer": true,
+        "explanation": "Python requires positional arguments first, then keyword arguments. greet(\"Hi\", name=\"Bob\") is valid, but greet(name=\"Bob\", \"Hi\") is not."
+      },
+      {
+        "id": "q3b-5",
+        "type": "code_output",
+        "prompt": "What will this code print?",
+        "codeSnippet": "def get_info():\n    return \"Alice\", 30\n\nname, age = get_info()\nprint(age)",
+        "correctAnswer": "30",
+        "explanation": "Functions can return multiple values as a tuple. Tuple unpacking assigns \"Alice\" to name and 30 to age."
+      }
+    ]
+  },
+  {
+    "id": "cs101-quiz-3c",
+    "subjectId": "cs101",
+    "topicId": "cs101-topic-3",
+    "title": "Functions - Mastery",
+    "questions": [
+      {
+        "id": "q3c-1",
+        "type": "code_output",
+        "prompt": "What will this code print?",
+        "codeSnippet": "def add_item(item, lst=[]):\n    lst.append(item)\n    return lst\n\nprint(add_item(1))\nprint(add_item(2))",
+        "correctAnswer": "[1]\n[1, 2]",
+        "explanation": "Mutable default arguments are shared between calls! The same list is used each time, so items accumulate. Use None as default instead."
+      },
+      {
+        "id": "q3c-2",
+        "type": "multiple_choice",
+        "prompt": "What does *args allow in a function definition?",
+        "options": [
+          "Required arguments only",
+          "Keyword arguments only",
+          "Variable number of positional arguments",
+          "Exactly two arguments"
+        ],
+        "correctAnswer": 2,
+        "explanation": "*args collects any number of positional arguments into a tuple. def func(*args) can accept func(1), func(1,2), func(1,2,3), etc."
+      },
+      {
+        "id": "q3c-3",
+        "type": "code_output",
+        "prompt": "What will this code print?",
+        "codeSnippet": "square = lambda x: x ** 2\nprint(square(5))",
+        "correctAnswer": "25",
+        "explanation": "Lambda functions are anonymous functions. \"lambda x: x ** 2\" creates a function that squares its input. 5**2 = 25."
+      },
+      {
+        "id": "q3c-4",
+        "type": "true_false",
+        "prompt": "A function can modify a global variable without using the global keyword if that variable is a list.",
+        "correctAnswer": true,
+        "explanation": "You can modify mutable objects (lists, dicts) without global. You only need global to reassign the variable itself to a new object."
+      },
+      {
+        "id": "q3c-5",
+        "type": "code_output",
+        "prompt": "What will this code print?",
+        "codeSnippet": "def factorial(n):\n    if n <= 1:\n        return 1\n    return n * factorial(n - 1)\n\nprint(factorial(4))",
+        "correctAnswer": "24",
+        "explanation": "This is a recursive function. factorial(4) = 4 * factorial(3) = 4 * 3 * factorial(2) = 4 * 3 * 2 * factorial(1) = 4 * 3 * 2 * 1 = 24."
+      }
+    ]
+  }
+]

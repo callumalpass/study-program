@@ -1,0 +1,242 @@
+[
+  {
+    "id": "cs203-t5-ex1",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-5",
+    "type": "written",
+    "title": "TM for Palindrome Detection",
+    "description": "Design a Turing machine that accepts palindromes over {a, b}. Describe the high-level algorithm and key states.",
+    "difficulty": 3,
+    "hints": [
+      "Compare first and last symbols",
+      "Mark or erase matched symbols",
+      "Repeat until string is empty or mismatch found"
+    ],
+    "solution": "**Turing Machine for Palindromes**\n\n**High-level algorithm:**\n1. Read first symbol, remember it, mark it (or erase)\n2. Scan right to find last symbol\n3. Compare with remembered symbol\n4. If match: mark last symbol, go back to start, repeat\n5. If mismatch: reject\n6. If only blanks/marks remain: accept\n\n**States:**\n- q₀: start state\n- q_a: remembered first symbol is 'a'\n- q_b: remembered first symbol is 'b'\n- q_left: scanning left to find start\n- q_accept: accepting state\n- q_reject: rejecting state\n\n**Key transitions:**\n\n**From q₀ (read first symbol):**\n- δ(q₀, a) = (q_a, X, R) — mark 'a' as X, remember 'a'\n- δ(q₀, b) = (q_b, X, R) — mark 'b' as X, remember 'b'\n- δ(q₀, X) = (q₀, X, R) — skip marked symbols\n- δ(q₀, □) = (q_accept, □, R) — empty/all marked, accept\n\n**Scan right (q_a or q_b):**\n- δ(q_a, a) = (q_a, a, R) — keep going right\n- δ(q_a, b) = (q_a, b, R)\n- δ(q_a, □) = (q_check_a, □, L) — found end, go back to check\n\n**Check last symbol (q_check_a):**\n- δ(q_check_a, a) = (q_left, X, L) — match! mark it\n- δ(q_check_a, b) = (q_reject, b, R) — mismatch, reject\n- δ(q_check_a, X) = (q_check_a, X, L) — skip marks (single char palindrome)\n\n**Scan back left:**\n- δ(q_left, a) = (q_left, a, L)\n- δ(q_left, b) = (q_left, b, L)\n- δ(q_left, X) = (q₀, X, R) — found marked start, restart\n\n**Example trace for \"aba\":**\n```\nq₀: [a]ba□ → q_a: X[b]a□ → X[b]a□ → Xb[a]□ → Xba[□]\nq_check_a: Xb[a]□ → q_left: X[b]X□ → [X]bX□\nq₀: X[b]X□ → q_b: XX[X]□ → XXX[□]\nq_check_b: XX[X]□ → (only marks, no unmatched)\nq_accept ✓\n```"
+  },
+  {
+    "id": "cs203-t5-ex2",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-5",
+    "type": "written",
+    "title": "TM Configuration Notation",
+    "description": "Define the configuration (instantaneous description) of a Turing machine. Write the sequence of configurations for a TM that erases its input, starting with \"ab\".",
+    "difficulty": 1,
+    "hints": [
+      "Configuration shows tape contents, head position, and state",
+      "Use notation like \"abq₀cd\" meaning head at position before c, in state q₀",
+      "A simple erasing TM writes blanks moving right"
+    ],
+    "solution": "**Turing Machine Configuration**\n\n**Definition:**\nA configuration (or instantaneous description) of a TM captures the complete machine state:\n- Current state\n- Tape contents\n- Head position\n\n**Notation:** αqβ where:\n- q is the current state\n- α is the tape content to the LEFT of the head\n- β is the tape content from the head position onward\n- First symbol of β is under the head\n- Blanks on ends can be omitted\n\n**Example:** \"abq₃cd\" means:\n- State: q₃\n- Tape: ...□abcd□...\n- Head is positioned at 'c'\n- α = \"ab\", β = \"cd\"\n\n**TM to erase input:**\nStates: q₀ (erasing), q_acc (accept)\nTransitions:\n- δ(q₀, a) = (q₀, □, R) — erase a\n- δ(q₀, b) = (q₀, □, R) — erase b\n- δ(q₀, □) = (q_acc, □, R) — done, accept\n\n**Configuration sequence for input \"ab\":**\n\n```\nq₀ab      Initial: head at 'a', state q₀\n□q₀b      After erasing 'a', move right\n□□q₀□     After erasing 'b', move right\n□□□q_acc  Read blank, accept\n```\n\nOr in cleaner notation:\n```\n[a]b → q₀ reads 'a', writes □, moves R\n□[b] → q₀ reads 'b', writes □, moves R\n□□[□] → q₀ reads □, transitions to q_acc\n```\n\n**Key points:**\n- Configuration uniquely determines future computation\n- Sequence of configurations is the computation history\n- Accepting computation ends in q_accept configuration\n- Rejecting computation ends in q_reject configuration\n- Some computations never halt (loop forever)"
+  },
+  {
+    "id": "cs203-t5-ex3",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-5",
+    "type": "written",
+    "title": "Multi-tape TM Simulation",
+    "description": "Explain how a single-tape TM can simulate a k-tape TM. What is the time overhead of this simulation?",
+    "difficulty": 5,
+    "hints": [
+      "Encode all k tapes on one tape",
+      "Use special markers for tape boundaries and head positions",
+      "Each step of k-tape TM requires scanning the single tape"
+    ],
+    "solution": "**Simulating k-tape TM with Single-tape TM**\n\n**Encoding k tapes on one tape:**\n\nFor k-tape TM M with tapes T₁, T₂, ..., Tₖ:\n\n**Format:** #T₁#T₂#...#Tₖ#\n\n**Mark head positions:** Use dotted symbols\n- If Tᵢ has \"abc\" with head on 'b': encode as \"aḃc\"\n- ḃ indicates head position on tape i\n\n**Example (2 tapes):**\nT₁: ab with head on 'a' → ȧb\nT₂: cd with head on 'd' → cd̊\n\nSingle tape: #ȧb#cd̊#\n\n**Simulation algorithm:**\n\n**To simulate one step of M:**\n\n1. **Scan right:** Find all marked (dotted) symbols\n   - Record symbol under each head in finite state\n   - This requires O(n) where n is used tape length\n\n2. **Determine transitions:** Based on state and k symbols\n   - Look up M's transition: (q, a₁, ..., aₖ) → (q', b₁, ..., bₖ, D₁, ..., Dₖ)\n\n3. **Update tape:** Scan again to:\n   - Write new symbols at head positions\n   - Move head markers according to Dᵢ\n   - May need to shift content if tape boundary reached\n\n4. **Return to left:** Scan back to the leftmost #\n\n**Time analysis:**\n\n**Single step of M:** O(n) time on single-tape simulator\n- Must scan entire tape to find/update all heads\n- n = total symbols across all tapes\n\n**If M runs in T(n) steps:**\n- After T(n) steps, tape length is at most T(n) · k (each step adds at most k symbols)\n- Each step costs O(T(n) · k) on simulator\n\n**Total simulation time:**\nT(n) steps × O(T(n)) per step = **O(T(n)²)**\n\n**Space:** Only O(T(n)) — linear in original space\n\n**Theorem:**\nAny k-tape TM running in time T(n) can be simulated by a single-tape TM in time O(T(n)²).\n\n**Significance:**\n- Multi-tape TMs are at most polynomially faster\n- Same languages are recognized (equivalent power)\n- Quadratic overhead is acceptable for theoretical purposes\n- In practice, multi-tape gives more efficient algorithms"
+  },
+  {
+    "id": "cs203-t5-ex4",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-5",
+    "type": "written",
+    "title": "Universal Turing Machine",
+    "description": "Describe the Universal Turing Machine (UTM). What does it take as input, and how does it operate?",
+    "difficulty": 5,
+    "hints": [
+      "UTM takes encoded TM + input as its input",
+      "It simulates any TM on any input",
+      "Like an interpreter for TM programs"
+    ],
+    "solution": "**The Universal Turing Machine (UTM)**\n\n**Definition:**\nA Universal Turing Machine U is a specific TM that can simulate any other TM M on any input w.\n\n**Input to U:** ⟨M, w⟩\n- Encoded description of TM M\n- Input string w\n\n**Output:** U accepts ⟨M, w⟩ iff M accepts w\n\n**Encoding a TM:**\nEncode M = (Q, Σ, Γ, δ, q₀, q_accept, q_reject):\n- States: q₁, q₂, ... (numbered)\n- Tape symbols: 0, 1, B (fixed small alphabet)\n- Transitions: List of tuples δ(qᵢ, aⱼ) = (qₖ, aₗ, D)\n- Use delimiter to separate components\n\n**How U operates:**\n\n**Setup (3 tapes conceptually):**\n1. Tape 1: Description of M (⟨M⟩)\n2. Tape 2: Simulated tape of M (initially w)\n3. Tape 3: Current state of M (initially q₀)\n\n**Simulation loop:**\n1. Read current state from Tape 3\n2. Read symbol under simulated head from Tape 2\n3. Search Tape 1 for matching transition δ(state, symbol)\n4. If found: Execute transition\n   - Write new symbol on Tape 2\n   - Move simulated head on Tape 2\n   - Update state on Tape 3\n5. If M in q_accept: U accepts\n6. If M in q_reject: U rejects\n7. Loop\n\n**Key properties:**\n\n**Universality:** U can compute anything computable\n- Any TM can be simulated by U\n- U is a \"programmable computer\"\n\n**Self-reference:** U can simulate itself\n- U on ⟨U, ⟨M, w⟩⟩ simulates U simulating M on w\n\n**Efficiency:** U is slower than direct simulation\n- O(T(n) log T(n)) overhead typically\n- But polynomial slowdown, not exponential\n\n**Existence:** Turing proved UTM exists\n- Can be built with fixed finite number of states\n- Shows TMs can interpret other TMs\n\n**Historical significance:**\n- Foundation of stored-program computers\n- Separation of \"hardware\" (U) from \"software\" (⟨M⟩)\n- Basis for undecidability proofs (halting problem)"
+  },
+  {
+    "id": "cs203-t5-ex5",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-5",
+    "type": "written",
+    "title": "Decidable vs Recognizable",
+    "description": "Explain the difference between decidable (recursive) and Turing-recognizable (recursively enumerable) languages. Give an example of each.",
+    "difficulty": 3,
+    "hints": [
+      "Decidable: TM always halts with yes/no answer",
+      "Recognizable: TM halts and accepts for yes, may loop for no",
+      "Decidable ⊂ Recognizable"
+    ],
+    "solution": "**Decidable vs Turing-Recognizable Languages**\n\n**Decidable (Recursive) Languages:**\n\n**Definition:** L is decidable if there exists a TM M such that:\n- For w ∈ L: M accepts w (halts in q_accept)\n- For w ∉ L: M rejects w (halts in q_reject)\n- M halts on ALL inputs\n\n**Key property:** Always get a definite yes/no answer.\n\n**Turing-Recognizable (R.E.) Languages:**\n\n**Definition:** L is Turing-recognizable if there exists a TM M such that:\n- For w ∈ L: M accepts w (halts in q_accept)\n- For w ∉ L: M either rejects OR loops forever\n\n**Key property:** May never get an answer for non-members.\n\n**Relationship:**\nDecidable ⊊ Recognizable ⊊ All languages\n\nEvery decidable language is recognizable (a decider is a special recognizer), but not vice versa.\n\n**Examples:**\n\n**Decidable languages:**\n- All regular languages\n- All context-free languages\n- {aⁿbⁿcⁿ | n ≥ 0} (TM can count and compare)\n- {⟨M⟩ | M is a valid DFA encoding}\n- {⟨G, w⟩ | CFG G generates string w}\n\n**Recognizable but NOT decidable:**\n- A_TM = {⟨M, w⟩ | TM M accepts w}\n  - Recognizable: simulate M on w, accept if M accepts\n  - Not decidable: can't detect if M loops forever\n\n- HALT = {⟨M, w⟩ | TM M halts on w}\n  - Recognizable: simulate M, accept if M halts\n  - Not decidable: halting problem\n\n**Not even recognizable:**\n- Ā_TM = {⟨M, w⟩ | TM M does NOT accept w}\n- {⟨M⟩ | M accepts all strings}\n- Complements of recognizable-but-not-decidable languages\n\n**Key theorems:**\n1. L is decidable ⟺ both L and L̄ are recognizable\n2. If L is recognizable but not decidable, then L̄ is not recognizable"
+  },
+  {
+    "id": "cs203-t5-ex6",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-5",
+    "type": "written",
+    "title": "TM for String Comparison",
+    "description": "Design a TM that accepts L = {w#w | w ∈ {a,b}*}. The input consists of two copies of the same string separated by #.",
+    "difficulty": 3,
+    "hints": [
+      "Match symbols one at a time across the #",
+      "Mark matched symbols on both sides",
+      "Accept if all symbols match"
+    ],
+    "solution": "**TM for {w#w | w ∈ {a,b}*}**\n\n**Algorithm:**\n1. Mark first unmatched symbol in first w\n2. Remember it, scan past # to second w\n3. Find corresponding position, compare\n4. If match: mark it, go back to step 1\n5. If mismatch: reject\n6. If both sides fully matched: accept\n\n**States:**\n- q₀: start, looking for next symbol to match\n- q_a: carrying 'a' to compare\n- q_b: carrying 'b' to compare\n- q_back: scanning back to left side\n- q_check: verifying all matched\n- q_accept, q_reject\n\n**Key transitions:**\n\n**Starting from left (q₀):**\n- δ(q₀, a) = (q_a, X, R) — mark 'a' as X, remember 'a'\n- δ(q₀, b) = (q_b, X, R) — mark 'b' as X, remember 'b'\n- δ(q₀, X) = (q₀, X, R) — skip marked symbols\n- δ(q₀, #) = (q_check, #, R) — done with left side\n\n**Scanning right (q_a):**\n- δ(q_a, a) = (q_a, a, R)\n- δ(q_a, b) = (q_a, b, R)\n- δ(q_a, #) = (q_a', #, R) — crossed #, now find first unmarked\n- δ(q_a', X) = (q_a', X, R) — skip marks on right side\n- δ(q_a', a) = (q_back, X, L) — found 'a', match! mark it\n- δ(q_a', b) = (q_reject, b, R) — mismatch\n- δ(q_a', □) = (q_reject, □, R) — second w shorter\n\n**Scanning back left (q_back):**\n- δ(q_back, X) = (q_back, X, L)\n- δ(q_back, a) = (q_back, a, L)\n- δ(q_back, b) = (q_back, b, L)\n- δ(q_back, #) = (q_back, #, L)\n- δ(q_back, □) = (q₀, □, R) — reached left end, restart\n\n**Final check (q_check):**\n- δ(q_check, X) = (q_check, X, R) — skip marks\n- δ(q_check, □) = (q_accept, □, R) — all matched!\n- δ(q_check, a) = (q_reject, a, R) — unmatched in second w\n- δ(q_check, b) = (q_reject, b, R)\n\n**Trace for \"ab#ab\":**\n```\nq₀: [a]b#ab → q_a: X[b]#ab → Xb[#]ab → Xb#[a]b\nq_a': Xb#X[b] → reject? No wait...\n```\n\nNeed to track positions properly. The key is matching 1st symbol of left with 1st unmarked of right."
+  },
+  {
+    "id": "cs203-t5-ex7",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-5",
+    "type": "written",
+    "title": "Church-Turing Thesis",
+    "description": "State the Church-Turing thesis and explain why it cannot be formally proven. Give three pieces of evidence supporting it.",
+    "difficulty": 3,
+    "hints": [
+      "The thesis is about the informal notion of \"algorithm\"",
+      "It connects formal TMs to intuitive computability",
+      "Evidence comes from equivalent models"
+    ],
+    "solution": "**The Church-Turing Thesis**\n\n**Statement:**\nEvery function that is intuitively computable (by an algorithm) is computable by a Turing machine.\n\nOr equivalently:\nThe informal notion of \"effective procedure\" or \"algorithm\" is exactly captured by the formal notion of Turing machine.\n\n**Why it cannot be formally proven:**\n\n1. **One side is informal:** \"Intuitive computability\" is not a mathematical definition\n   - We can't prove something about an informal concept\n   - Any formal definition would just be another formal model\n\n2. **It's a definition/thesis, not theorem:**\n   - Proposes that TMs correctly model computation\n   - Like defining \"line\" in geometry—can't prove a definition\n\n3. **Could potentially be refuted:**\n   - If someone found an \"algorithmic\" process not TM-computable\n   - No such counterexample has ever been found\n\n**Evidence Supporting the Thesis:**\n\n**1. Equivalent formal models all compute the same functions:**\n- Lambda calculus (Church, 1936)\n- General recursive functions (Gödel-Kleene)\n- Post systems\n- Markov algorithms\n- Register machines\n- RAM model\n- Modern programming languages\n\nAll define exactly the same class of computable functions!\n\n**2. Robustness to variations:**\n- Multi-tape TMs\n- Nondeterministic TMs\n- Two-way infinite tape\n- Multiple heads\n- Multi-dimensional tape\n\nAll equivalent to basic TM model.\n\n**3. No counterexamples found:**\n- 80+ years of effort\n- Every proposed \"algorithm\" has been shown TM-computable\n- Physical computation seems bounded by TM power\n\n**4. Natural problems:**\n- No natural problem is known to be \"computable but not TM-computable\"\n- Suggests TMs capture something fundamental\n\n**Variations:**\n- **Physical Church-Turing:** No physical device computes more than TM\n- **Extended (Strong):** Includes efficiency claims (polynomial overhead)\n\n**Challenges:**\n- Quantum computing (same power, different efficiency?)\n- Hypercomputation proposals (generally rejected)"
+  },
+  {
+    "id": "cs203-t5-ex8",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-5",
+    "type": "written",
+    "title": "Nondeterministic TM",
+    "description": "Define nondeterministic Turing machines. Prove they are equivalent in power to deterministic TMs.",
+    "difficulty": 5,
+    "hints": [
+      "NTM can have multiple transitions from same configuration",
+      "Accepts if ANY computation path accepts",
+      "DTM can simulate by searching all paths"
+    ],
+    "solution": "**Nondeterministic Turing Machines (NTMs)**\n\n**Definition:**\nAn NTM is like a DTM except δ is a relation, not function:\nδ ⊆ (Q × Γ) × (Q × Γ × {L, R})\n\nAt each step, multiple transitions may be applicable.\n\n**Acceptance:**\nAn NTM accepts input w if there EXISTS a sequence of choices (a computation path) that leads to q_accept.\n\n**Visualization:**\nComputation is a tree:\n- Root: initial configuration\n- Branches: different nondeterministic choices\n- Accept if any leaf is accepting\n\n**Theorem: NTMs and DTMs are equivalent in power.**\n\n**Proof:**\n\n**Direction 1: DTM → NTM**\nEvery DTM is already an NTM (with exactly one choice at each step).\n\n**Direction 2: NTM → DTM**\nGiven NTM N, construct DTM D that simulates all possible computation paths.\n\n**Simulation strategy (BFS):**\n\n**Three-tape DTM D:**\n1. Tape 1: Input (read-only)\n2. Tape 2: Current simulation tape\n3. Tape 3: Address of current path in computation tree\n\n**Address encoding:**\n- If N has at most b choices at any step\n- Path after k steps encoded as string from {1,2,...,b}ᵏ\n- \"231\" means: first choice 2, second choice 3, third choice 1\n\n**D's algorithm:**\n1. Initialize Tape 3 to empty (root of tree)\n2. Copy input to Tape 2\n3. Simulate N using choices from Tape 3\n   - If path leads to accept: D accepts\n   - If path exhausted or rejects: go to step 4\n4. Generate next address (BFS order)\n5. Goto step 2\n\n**Why BFS (not DFS):**\n- DFS might go down infinite branch\n- BFS ensures every finite accepting path is found\n- First try all length-1 paths, then length-2, etc.\n\n**Correctness:**\n- If N accepts w: some finite path accepts, D finds it\n- If N doesn't accept w: D never accepts\n\n**Time complexity:**\nIf N accepts in t steps with branching factor b:\nD runs in O(bᵗ) time (exponential)\n\n**Key insight:**\nNTMs don't compute more functions than DTMs, but may be exponentially faster. This exponential gap is central to P vs NP."
+  },
+  {
+    "id": "cs203-t5-ex9",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-5",
+    "type": "written",
+    "title": "TM Encoding",
+    "description": "Describe how to encode a Turing machine as a string over {0,1}. Why is this encoding important?",
+    "difficulty": 3,
+    "hints": [
+      "Need to encode states, alphabet, and transitions",
+      "Use binary for numbers",
+      "Enables TMs to take other TMs as input"
+    ],
+    "solution": "**Encoding Turing Machines as Binary Strings**\n\n**Why encode TMs?**\n- TMs can take other TMs as input\n- Enables universal computation\n- Required for diagonalization proofs\n- Foundation for undecidability results\n\n**TM Components to encode:**\nM = (Q, Σ, Γ, δ, q₀, q_accept, q_reject)\n\n**Encoding scheme:**\n\n**1. Number the states:** q₁, q₂, ..., qₙ\n- q₁ = start state\n- q₂ = accept state\n- q₃ = reject state\n\n**2. Number tape symbols:** a₁, a₂, ..., aₘ\n- a₁ = 0 (input alphabet)\n- a₂ = 1 (input alphabet)\n- a₃ = □ (blank)\n- a₄, ... = other work symbols\n\n**3. Encode transitions:**\nδ(qᵢ, aⱼ) = (qₖ, aₗ, D) encoded as (i, j, k, l, d)\nwhere d = 1 for L, 2 for R\n\n**4. Binary representation:**\n- Integers in binary\n- Use separator (like 00) between numbers\n- Use different separator (like 000) between transitions\n\n**Example encoding:**\nδ(q₁, 0) = (q₂, 1, R) becomes: 1 00 1 00 10 00 10 00 10\n(state 1, symbol 1, state 2, symbol 2, direction 2)\n\n**Full encoding ⟨M⟩:**\n- Number of states (in unary: 1ⁿ for n states)\n- Separator\n- List of all transitions\n- Separators between transitions\n\n**Properties of encoding:**\n\n**1. Computable:** Given M, we can compute ⟨M⟩\n**2. Decodable:** Given ⟨M⟩, we can reconstruct M\n**3. Checkable:** Can verify if string is valid encoding\n**4. Prefix-free (if designed carefully):** No encoding is prefix of another\n\n**Standard notation:**\n- ⟨M⟩: encoding of TM M\n- ⟨M, w⟩: encoding of TM M with input w\n- Often use: ⟨M, w⟩ = ⟨M⟩#w where # separates\n\n**Applications:**\n1. **Universal TM:** Takes ⟨M, w⟩, simulates M on w\n2. **Diagonalization:** Enumerate TMs as ⟨M₁⟩, ⟨M₂⟩, ...\n3. **Rice's theorem:** Reason about TMs as strings\n4. **Undecidability:** Define languages over TM descriptions"
+  },
+  {
+    "id": "cs203-t5-ex10",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-5",
+    "type": "written",
+    "title": "Linear Bounded Automata",
+    "description": "Define Linear Bounded Automata (LBA). What class of languages do they recognize? How do they relate to TMs?",
+    "difficulty": 3,
+    "hints": [
+      "LBA = TM with restricted tape",
+      "Tape limited to input length",
+      "More powerful than PDA, less than TM"
+    ],
+    "solution": "**Linear Bounded Automata (LBA)**\n\n**Definition:**\nAn LBA is a nondeterministic TM where the tape head cannot move beyond the original input boundaries.\n\n**Formal definition:**\n- Same as NTM but with restriction\n- Tape cells: only those containing input (plus end markers)\n- Head cannot write on or move past end markers\n\n**Notation:**\nInput w is placed between end markers: ¢w$\nHead stays within these bounds.\n\n**Language class:**\nLBAs recognize exactly the **context-sensitive languages (CSLs)**.\n\n**Context-Sensitive Grammars:**\nProductions of form αAβ → αγβ where |γ| ≥ 1\n(Can only expand, never shrink — except S → ε if S doesn't appear on right)\n\n**Examples of CSLs (recognized by LBAs):**\n- {aⁿbⁿcⁿ | n ≥ 0}\n- {ww | w ∈ Σ*}\n- {aⁿ | n is prime}\n\n**Hierarchy:**\nRegular ⊂ Context-Free ⊂ Context-Sensitive ⊂ Recursive ⊂ R.E.\nDFA/NFA  ⊂ PDA        ⊂ LBA               ⊂ Decider  ⊂ TM\n\n**Key properties:**\n\n**1. Space bound:** O(n) space on input of length n\n**2. Decidability:**\n   - Membership in L(LBA) is decidable\n   - Only finitely many configurations for length-n input\n   - Number of configurations: |Q| × n × |Γ|ⁿ (finite but exponential)\n\n**3. Emptiness undecidable:**\n   - \"Is L(LBA) = ∅?\" is undecidable\n   - Even though membership is decidable\n\n**4. Deterministic LBA:**\n   - Open problem: Does DLBA = NLBA?\n   - Equivalent to CSL = DCSL question\n\n**Why important:**\n- Models computation with linear memory\n- Many natural languages are context-sensitive\n- Shows hierarchy between CFLs and decidable languages\n- Demonstrates that space bounds affect power\n\n**Comparison:**\n| Feature | PDA | LBA | TM |\n|---------|-----|-----|-----|\n| Memory | Stack | Linear | Infinite |\n| Languages | CFL | CSL | R.E. |\n| Membership | Decidable | Decidable | Undecidable |\n| Emptiness | Decidable | Undecidable | Undecidable |"
+  },
+  {
+    "id": "cs203-t5-ex11",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-5",
+    "type": "written",
+    "title": "TM for Unary Multiplication",
+    "description": "Design a TM that computes multiplication of two unary numbers. Input: 1ⁿ#1ᵐ, Output: 1ⁿᵐ.",
+    "difficulty": 5,
+    "hints": [
+      "Multiplication = repeated addition",
+      "For each 1 in first number, copy second number",
+      "Use markers to track progress"
+    ],
+    "solution": "**TM for Unary Multiplication**\n\n**Input:** 1ⁿ#1ᵐ (n ones, separator #, m ones)\n**Output:** 1ⁿᵐ (n×m ones)\n\n**Algorithm:**\nFor each 1 in the first group:\n  - Copy all 1s from the second group to the output area\nMark/erase processed 1s from first group\n\n**Tape layout:**\nInitial: 1ⁿ#1ᵐ\nWorking: X...X#1ᵐ=1ᵐ...1ᵐ\nFinal: 1ⁿᵐ (after cleanup)\n\n**States:**\n- q₀: start\n- q_copy: copying phase, remember we need to copy second group\n- q_mark: mark a 1 from second group\n- q_paste: add 1 to output\n- q_return: return to second group\n- q_reset: reset second group marks, back to first group\n- q_clean: final cleanup\n- q_halt: done\n\n**Key transitions:**\n\n**Phase 1: Mark next 1 from first group**\n- δ(q₀, 1) = (q_copy, X, R) — mark first-group 1, start copy\n- δ(q₀, X) = (q₀, X, R) — skip marked\n- δ(q₀, #) = (q_clean, □, R) — first group done, cleanup\n\n**Phase 2: Copy second group (q_copy)**\n- δ(q_copy, 1) = (q_copy, 1, R)\n- δ(q_copy, #) = (q_copy, #, R)\n- δ(q_copy, Y) = (q_copy, Y, R) — skip marked in second group\n- δ(q_copy, □) = (q_mark, □, L) — reached end, go back to mark\n\nActually, let me redesign more carefully:\n\n**Better algorithm:**\n1. Mark one 1 from first group (change to X)\n2. For each 1 in second group (change to Y temporarily):\n   - Add one 1 to output area (after =)\n3. Unmark second group (Y → 1)\n4. Repeat until first group is all X's\n5. Clean up (remove X's and #)\n\n**Simplified trace for 1¹#1² = 1×2 = 2:**\n```\n11#11□□\nX1#11□□  (mark first 1)\nX1#Y1□1  (copy first 1 of second group)\nX1#YY□11 (copy second 1)\nX1#11□11 (unmark second group)\nXX#11□11 (mark second first-group 1)\nXX#YY□1111 (copy second group again)\nXX#11□1111 (unmark)\nClean up → 1111\n```\n\nOutput: 1⁴ = 1²×² ✓"
+  },
+  {
+    "id": "cs203-t5-ex12",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-5",
+    "type": "written",
+    "title": "Enumerator Definition",
+    "description": "Define an enumerator. Prove that a language is Turing-recognizable iff some enumerator enumerates it.",
+    "difficulty": 5,
+    "hints": [
+      "Enumerator is TM with output tape",
+      "Prints strings one by one",
+      "Language = set of strings printed"
+    ],
+    "solution": "**Enumerators**\n\n**Definition:**\nAn enumerator E is a TM with:\n- No input tape\n- Output tape (write-only, or printer)\n- Work tape (read/write)\n\nE runs forever (or halts), printing strings separated by #.\nThe language enumerated by E is the set of strings printed.\n\n**Notation:** L(E) = {w | E eventually prints w}\n\n**Theorem:** L is Turing-recognizable ⟺ some enumerator enumerates L.\n\n**Proof (⟸): Enumerator → Recognizer**\n\nGiven enumerator E for L, construct recognizer M for L:\n\nM on input w:\n1. Run E\n2. Every time E prints a string s:\n   - Compare s with w\n   - If s = w: accept\n3. Continue forever (E runs forever)\n\n**Correctness:**\n- If w ∈ L: E eventually prints w, M accepts\n- If w ∉ L: E never prints w, M runs forever\nThis is exactly Turing-recognizable behavior.\n\n**Proof (⟹): Recognizer → Enumerator**\n\nGiven recognizer M for L, construct enumerator E for L:\n\nE's algorithm:\nLet s₁, s₂, s₃, ... be enumeration of all strings (lexicographic order)\n\nFor i = 1, 2, 3, ...:\n  For each j from 1 to i:\n    Run M on sⱼ for i steps\n    If M accepts sⱼ within i steps:\n      Print sⱼ (if not already printed)\n\n**Why this works:**\n- **Dovetailing:** Simulate multiple computations interleaved\n- If w ∈ L: M accepts w in some t steps\n  - When i = max(index of w, t), we run M on w for enough steps\n  - So w gets printed\n- If w ∉ L: M doesn't accept w, never printed\n- Every string gets tested eventually (and repeatedly)\n\n**Key technique: Dovetailing**\nCan't just run M on s₁ (might loop), then s₂, etc.\nInstead, interleave: run each for bounded time, increase bounds.\n\n**Corollary:** L is decidable ⟺ enumerator prints in lexicographic order\n(Can detect when we've passed where w should be)"
+  },
+  {
+    "id": "cs203-t5-ex13",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-5",
+    "type": "written",
+    "title": "Closure Properties of Decidable Languages",
+    "description": "Prove that decidable languages are closed under union, intersection, and complement.",
+    "difficulty": 3,
+    "hints": [
+      "Given deciders for L₁ and L₂, build decider for combination",
+      "Deciders always halt, so we can sequence them",
+      "For complement, swap accept and reject"
+    ],
+    "solution": "**Closure Properties of Decidable Languages**\n\n**Theorem:** Decidable languages are closed under union, intersection, and complement.\n\n**Proof of Union:**\n\nLet M₁ decide L₁ and M₂ decide L₂.\n\nConstruct decider M for L₁ ∪ L₂:\n\nM on input w:\n1. Run M₁ on w\n2. If M₁ accepts, accept\n3. Run M₂ on w\n4. If M₂ accepts, accept\n5. Reject\n\n**Correctness:**\n- M halts: M₁ and M₂ both halt (deciders), so M halts\n- w ∈ L₁ ∪ L₂ ⟺ w ∈ L₁ or w ∈ L₂ ⟺ M₁ or M₂ accepts ⟺ M accepts ✓\n\n**Proof of Intersection:**\n\nConstruct decider M for L₁ ∩ L₂:\n\nM on input w:\n1. Run M₁ on w\n2. If M₁ rejects, reject\n3. Run M₂ on w\n4. If M₂ accepts, accept\n5. Reject\n\n**Correctness:**\n- M halts: both M₁, M₂ halt\n- w ∈ L₁ ∩ L₂ ⟺ w ∈ L₁ and w ∈ L₂ ⟺ both accept ⟺ M accepts ✓\n\n**Proof of Complement:**\n\nLet M decide L.\n\nConstruct decider M' for L̄:\n\nM' on input w:\n1. Run M on w\n2. If M accepts, reject\n3. If M rejects, accept\n\n**Correctness:**\n- M' halts: M halts (decider)\n- w ∈ L̄ ⟺ w ∉ L ⟺ M rejects w ⟺ M' accepts ✓\n\n**Additional closures (similar proofs):**\n- **Concatenation:** Run M₁ on all splits xy = w, accept if any (M₁ on x, M₂ on y) pair accepts\n- **Kleene star:** Similar, check all ways to split into L-words\n- **Reversal:** Run M on reversed input\n\n**Why recognizable languages aren't closed under complement:**\n- If M loops on some w ∉ L, we can't decide to accept w for L̄\n- No way to detect the loop\n- Would need to know when to \"give up\"\n\n**Key insight:** Deciders always halt, enabling sequential composition and complementation."
+  },
+  {
+    "id": "cs203-t5-ex14",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-5",
+    "type": "written",
+    "title": "Turing Machine Variants",
+    "description": "List and briefly describe five TM variants. State which ones are equivalent to the standard TM in computational power.",
+    "difficulty": 1,
+    "hints": [
+      "Consider modifications to tape, head, states",
+      "All \"reasonable\" variants are equivalent",
+      "Some variants are more convenient but not more powerful"
+    ],
+    "solution": "**Turing Machine Variants**\n\n**1. Multi-tape TM**\n- Description: k tapes, k independent heads\n- Transitions: δ(q, a₁,...,aₖ) = (p, b₁,...,bₖ, D₁,...,Dₖ)\n- Power: **Equivalent to standard TM**\n- Simulation: Single tape encodes all k tapes (O(T²) overhead)\n- Advantage: More convenient for algorithms\n\n**2. Multi-head TM**\n- Description: Single tape, multiple heads\n- Each head can read/write independently\n- Power: **Equivalent to standard TM**\n- Simulation: Track head positions, simulate sequentially\n- Advantage: Random access patterns easier\n\n**3. Two-way Infinite Tape**\n- Description: Tape extends infinitely in both directions\n- Standard model: one-way infinite (left bound)\n- Power: **Equivalent to standard TM**\n- Simulation: Track two half-tapes, interleaved on one tape\n- Advantage: Symmetric, no special \"left end\"\n\n**4. Nondeterministic TM (NTM)**\n- Description: Multiple possible transitions, accept if any path accepts\n- Power: **Equivalent to standard TM**\n- Simulation: Search all paths (exponential time)\n- Advantage: Concise specification of search problems\n\n**5. Queue Automaton (instead of stack)**\n- Description: FIFO queue instead of tape\n- Power: **Equivalent to standard TM**\n- Simulation: TM can simulate queue; queue can simulate tape\n- Note: Two stacks = queue = TM power\n\n**6. Two-stack PDA**\n- Description: PDA with two stacks\n- Power: **Equivalent to standard TM**\n- Simulation: Stacks represent tape left/right of head\n- Key insight: Two stacks give random access\n\n**7. Random Access Machine (RAM)**\n- Description: Numbered registers, indirect addressing\n- Power: **Equivalent to standard TM** (if integers bounded)\n- More realistic model of actual computers\n- Polynomial relationship with TM\n\n**8. Multi-dimensional Tape**\n- Description: 2D, 3D, or kD tape\n- Power: **Equivalent to standard TM**\n- Simulation: Encode coordinates, simulate navigation\n\n**Non-equivalent variants (weaker):**\n- Single-tape one-way infinite TM with read-only input: Limited\n- TM that can only write 0s: Can't compute all functions\n- TM with bounded tape: Only regular languages\n\n**Thesis:** All \"reasonable\" models with unbounded memory and finite control are Turing-equivalent."
+  },
+  {
+    "id": "cs203-t5-ex15",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-5",
+    "type": "written",
+    "title": "Tape Alphabet Reduction",
+    "description": "Prove that any TM can be simulated by a TM using only tape alphabet {0, 1, □}.",
+    "difficulty": 3,
+    "hints": [
+      "Encode larger alphabet in binary",
+      "Read multiple cells to decode one symbol",
+      "May need to shift tape contents"
+    ],
+    "solution": "**Reducing Tape Alphabet to {0, 1, □}**\n\n**Theorem:** Any TM M with tape alphabet Γ can be simulated by TM M' with tape alphabet {0, 1, □}.\n\n**Construction:**\n\nLet |Γ| = m. Choose k = ⌈log₂ m⌉.\nEncode each γ ∈ Γ as a k-bit binary string.\n\n**Encoding function:** enc: Γ → {0,1}ᵏ\n- enc(γ₁) = 00...0\n- enc(γ₂) = 00...1\n- etc.\n\n**M' simulates M:**\n\n**Tape representation:**\nM's tape: ... a b c ...\nM' tape: ... enc(a) enc(b) enc(c) ... = ... 010 110 001 ...\n\n**State representation:**\nM' states encode:\n- M's current state\n- Position within current k-block (1 to k)\n- Symbol being read (partially accumulated)\n\n**Simulating one step of M:**\n\n1. **Read:** Scan k cells of M' to read one symbol of M\n   - Accumulate in state memory\n   - Requires k sub-steps\n\n2. **Compute:** Determine M's transition\n   - δ_M(q, a) = (p, b, D)\n\n3. **Write:** Write enc(b) over current k cells\n   - Requires k sub-steps\n\n4. **Move:** Move k cells left or right\n   - If D = L: move k cells left\n   - If D = R: move k cells right\n\n**State blowup:**\n|Q'| = |Q| × k × |Γ| = O(|Q| × log m × m)\n\nStill finite!\n\n**Time overhead:** O(k) = O(log |Γ|) per step\n\n**Handling □:**\n- □ in M' represents multiple □s in encoded tape\n- Or use explicit encoding: enc(□) = 111...1 (or reserved code)\n\n**Key insight:**\nFinite control (states) can remember k bits of encoding.\nBinary is sufficient for any finite alphabet.\n\n**Extensions:**\n- Can reduce to {0, 1} only (use 11 as □ marker, double 1s in data)\n- Can reduce to unary {1, □} (less efficient but possible)"
+  },
+  {
+    "id": "cs203-t5-ex16",
+    "subjectId": "cs203",
+    "topicId": "cs203-topic-5",
+    "type": "written",
+    "title": "Oracle Turing Machines",
+    "description": "Define an oracle Turing machine. Explain how oracle TMs are used in complexity theory.",
+    "difficulty": 5,
+    "hints": [
+      "Oracle provides \"free\" answers to queries about a language",
+      "Measures relative complexity",
+      "Used to study relationships between complexity classes"
+    ],
+    "solution": "**Oracle Turing Machines**\n\n**Definition:**\nAn oracle TM Mᴬ is a TM with access to an \"oracle\" for language A.\n\n**Mechanism:**\n- Special oracle tape\n- Special states: q_query, q_yes, q_no\n- Write query string w on oracle tape\n- Enter q_query\n- Instantly transition to q_yes if w ∈ A, q_no if w ∉ A\n- Oracle answers in one step (no cost)\n\n**Notation:**\n- Mᴬ: TM M with oracle A\n- L(Mᴬ): language decided/recognized by Mᴬ\n- Pᴬ: problems solvable in polynomial time with oracle A\n- NPᴬ: problems in NP with oracle A\n\n**Uses in Complexity Theory:**\n\n**1. Relative complexity:**\nEven if P ≠ NP, we can ask about Pᴬ vs NPᴬ for various A.\n\n**2. Relativization barrier:**\n**Theorem (Baker-Gill-Solovay):**\n- There exists oracle A where Pᴬ = NPᴬ\n- There exists oracle B where Pᴮ ≠ NPᴮ\n\n**Implication:** Any proof that P ≠ NP cannot relativize (must use non-relativizing techniques).\n\n**3. Complexity hierarchies:**\n- PH (polynomial hierarchy) defined using oracles\n- Σₖᴾ = NPᴺᴾᴺᴾ⋅⋅⋅ (k levels of alternating NP)\n\n**4. Reducibility:**\nTuring reducibility: A ≤_T B iff Aᴮ is decidable\nAllows more than one query to oracle.\n\n**5. Hardness for complexity classes:**\nA is NP-hard under Turing reductions iff P = NP implies A ∈ P.\n\n**Examples:**\n\n**Oracle for SAT:**\nWith SAT oracle, can solve any NP problem in polynomial time:\n- Given instance I of NP problem\n- Reduce to SAT formula φ (polynomial time)\n- Query oracle: \"Is φ satisfiable?\"\n- Use answer for I\n\n**Oracle for HALT (halting problem):**\nWith HALT oracle, can decide many undecidable problems:\n- \"Does M accept w?\" — query HALT, then simulate if halts\n- Gives much more power than standard TM\n\n**Arithmetic hierarchy:**\nLevels of oracle power using HALT repeatedly:\n- Σ₁⁰ = RE (recursively enumerable)\n- Π₁⁰ = co-RE\n- Σ₂⁰ = RE with oracle for Σ₁⁰\n- etc.\n\n**Significance:**\nOracle TMs help us understand the structure of complexity, even when absolute questions (like P vs NP) remain open."
+  }
+]

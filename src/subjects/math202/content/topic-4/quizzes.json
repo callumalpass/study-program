@@ -1,0 +1,185 @@
+[
+  {
+    "id": "math202-quiz-4a",
+    "subjectId": "math202",
+    "topicId": "math202-4",
+    "title": "Estimation Fundamentals",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "A point estimate is:",
+        "options": [
+          "A range of plausible values",
+          "A single value estimate of a parameter",
+          "The true population value",
+          "Always equal to the mean"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A point estimate provides a single value as an estimate of the population parameter."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "The sample mean X̄ is an unbiased estimator of the population mean μ because:",
+        "options": [
+          "E[X̄] = μ",
+          "Var(X̄) = 0",
+          "X̄ = μ always",
+          "X̄ > μ"
+        ],
+        "correctAnswer": 0,
+        "explanation": "An estimator is unbiased if its expected value equals the parameter: E[X̄] = μ."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "A confidence interval provides a range of plausible values for a population parameter.",
+        "correctAnswer": true,
+        "explanation": "Confidence intervals give a range of values that likely contain the true parameter with a specified confidence level."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "A 95% confidence interval means:",
+        "options": [
+          "The parameter is in the interval 95% of the time",
+          "95% of sample intervals will contain the true parameter",
+          "The probability the parameter is in the interval is 95%",
+          "We are 95% sure of our sample"
+        ],
+        "correctAnswer": 1,
+        "explanation": "If we repeated sampling many times, 95% of the constructed intervals would contain the true parameter."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "The difference between an estimator and the true parameter value is called ______.",
+        "correctAnswer": "bias",
+        "explanation": "Bias is the systematic difference between the expected value of an estimator and the true parameter."
+      }
+    ]
+  },
+  {
+    "id": "math202-quiz-4b",
+    "subjectId": "math202",
+    "topicId": "math202-4",
+    "title": "Maximum Likelihood Estimation",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "Maximum Likelihood Estimation (MLE) finds the parameter value that:",
+        "options": [
+          "Minimizes variance",
+          "Maximizes the likelihood of observing the data",
+          "Equals the sample mean",
+          "Minimizes bias"
+        ],
+        "correctAnswer": 1,
+        "explanation": "MLE chooses the parameter value that makes the observed data most probable."
+      },
+      {
+        "id": "q2",
+        "type": "true_false",
+        "prompt": "The likelihood function is the same as the probability distribution.",
+        "correctAnswer": false,
+        "explanation": "The likelihood function views the probability as a function of the parameters given the data, not the data given the parameters."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "For computational convenience, we often maximize the ______ instead of the likelihood:",
+        "options": [
+          "Mean",
+          "Variance",
+          "Log-likelihood",
+          "Standard deviation"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The log-likelihood is easier to work with mathematically (turns products into sums) and has the same maximum as the likelihood."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "The MLE for the mean of a normal distribution is:",
+        "options": [
+          "The sample median",
+          "The sample mean",
+          "The sample variance",
+          "The sample mode"
+        ],
+        "correctAnswer": 1,
+        "explanation": "For normal distributions, the MLE of μ is the sample mean X̄."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "The method of ______ estimates parameters by equating sample moments to population moments.",
+        "correctAnswer": "moments",
+        "explanation": "The method of moments matches sample moments (like mean, variance) to their population counterparts."
+      }
+    ]
+  },
+  {
+    "id": "math202-quiz-4c",
+    "subjectId": "math202",
+    "topicId": "math202-4",
+    "title": "Sampling Distributions",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "The Central Limit Theorem states that the sampling distribution of the mean approaches what distribution as n increases?",
+        "options": [
+          "Uniform",
+          "Exponential",
+          "Normal",
+          "Poisson"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The CLT states that sample means approach a normal distribution regardless of the population distribution (for large n)."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "If a population has mean μ and variance σ², what is the variance of the sample mean X̄ based on n observations?",
+        "options": [
+          "σ²",
+          "σ²/n",
+          "σ/√n",
+          "nσ²"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The variance of the sample mean is Var(X̄) = σ²/n."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "The standard error is the standard deviation of a sampling distribution.",
+        "correctAnswer": true,
+        "explanation": "Standard error specifically refers to the standard deviation of a statistic's sampling distribution."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "For the CLT to apply reasonably well, the sample size n should typically be at least:",
+        "options": [
+          "5",
+          "10",
+          "30",
+          "100"
+        ],
+        "correctAnswer": 2,
+        "explanation": "A common rule of thumb is n ≥ 30 for the CLT to provide good approximation, though this depends on the population distribution."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "The distribution of a statistic across all possible samples is called its ______ distribution.",
+        "correctAnswer": "sampling",
+        "explanation": "A sampling distribution shows how a statistic varies across different samples from the same population."
+      }
+    ]
+  }
+]

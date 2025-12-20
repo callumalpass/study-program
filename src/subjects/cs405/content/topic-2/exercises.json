@@ -1,0 +1,77 @@
+[
+  {
+    "id": "cs405-ex-2-1",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-2",
+    "title": "Create and Configure Virtual Machines",
+    "difficulty": 2,
+    "description": "Create a script that uses the VirtualBox CLI (VBoxManage) or libvirt/virsh to:\n\n1. Create a new virtual machine with specified resources\n2. Configure network settings (bridged and NAT)\n3. Attach a virtual disk\n4. List all configured VMs and their states\n\nRequirements:\n- VM should have 2GB RAM and 2 vCPUs\n- Create a 20GB virtual disk\n- Configure both bridged and NAT network adapters\n- Output VM configuration details",
+    "starterCode": "#!/bin/bash\n# VM Management Script\n\nVM_NAME=\"test-vm\"\n# TODO: Define VM parameters\n\n# Function to create VM\ncreate_vm() {\n    # TODO: Implement VM creation\n    echo \"Creating VM...\"\n}\n\n# Function to configure networking\nconfigure_network() {\n    # TODO: Configure network adapters\n    echo \"Configuring network...\"\n}\n\n# Function to attach storage\nattach_storage() {\n    # TODO: Create and attach virtual disk\n    echo \"Attaching storage...\"\n}\n\n# Function to list VMs\nlist_vms() {\n    # TODO: List all VMs and their status\n    echo \"Listing VMs...\"\n}\n\n# Main execution\ncreate_vm\nconfigure_network\nattach_storage\nlist_vms",
+    "solution": "#!/bin/bash\n# Complete VM Management Script using VirtualBox\n\nVM_NAME=\"test-vm\"\nVM_RAM=2048  # MB\nVM_CPUS=2\nDISK_SIZE=20480  # MB\nOSTYPE=\"Ubuntu_64\"\n\n# Function to create VM\ncreate_vm() {\n    echo \"Creating VM: $VM_NAME\"\n\n    # Create VM\n    VBoxManage createvm --name \"$VM_NAME\" --ostype \"$OSTYPE\" --register\n\n    # Configure resources\n    VBoxManage modifyvm \"$VM_NAME\" \\\n        --memory $VM_RAM \\\n        --cpus $VM_CPUS \\\n        --vram 128 \\\n        --boot1 dvd \\\n        --boot2 disk \\\n        --boot3 none \\\n        --boot4 none\n\n    echo \"VM created successfully\"\n}\n\n# Function to configure networking\nconfigure_network() {\n    echo \"Configuring network adapters...\"\n\n    # NAT adapter (adapter 1)\n    VBoxManage modifyvm \"$VM_NAME\" \\\n        --nic1 nat \\\n        --nictype1 82540EM \\\n        --cableconnected1 on\n\n    # Bridged adapter (adapter 2)\n    VBoxManage modifyvm \"$VM_NAME\" \\\n        --nic2 bridged \\\n        --bridgeadapter2 eth0 \\\n        --nictype2 82540EM \\\n        --cableconnected2 on\n\n    echo \"Network configured: NAT + Bridged\"\n}\n\n# Function to attach storage\nattach_storage() {\n    echo \"Creating and attaching virtual disk...\"\n\n    # Create storage controller\n    VBoxManage storagectl \"$VM_NAME\" \\\n        --name \"SATA Controller\" \\\n        --add sata \\\n        --controller IntelAhci\n\n    # Create virtual disk\n    DISK_PATH=\"$HOME/VirtualBox VMs/$VM_NAME/$VM_NAME.vdi\"\n    VBoxManage createhd \\\n        --filename \"$DISK_PATH\" \\\n        --size $DISK_SIZE \\\n        --format VDI\n\n    # Attach disk to VM\n    VBoxManage storageattach \"$VM_NAME\" \\\n        --storagectl \"SATA Controller\" \\\n        --port 0 \\\n        --device 0 \\\n        --type hdd \\\n        --medium \"$DISK_PATH\"\n\n    echo \"Storage attached: ${DISK_SIZE}MB disk\"\n}\n\n# Function to list VMs\nlist_vms() {\n    echo \"\\n=== Virtual Machines ===\"\n    VBoxManage list vms\n\n    echo \"\\n=== Running VMs ===\"\n    VBoxManage list runningvms\n\n    echo \"\\n=== VM Details: $VM_NAME ===\"\n    VBoxManage showvminfo \"$VM_NAME\" --machinereadable | grep -E \"(memory|cpus|nic)\"\n}\n\n# Main execution\necho \"Starting VM setup...\"\ncreate_vm\nconfigure_network\nattach_storage\nlist_vms\n\necho \"\\nVM setup complete!\"\necho \"To start the VM: VBoxManage startvm $VM_NAME --type headless\"\necho \"To stop the VM: VBoxManage controlvm $VM_NAME poweroff\"",
+    "hints": [
+      "Use VBoxManage or virsh for VM operations",
+      "Configure networking before starting the VM",
+      "Check VM state with list commands",
+      "Use --machinereadable for parseable output"
+    ],
+    "testCases": [
+      {
+        "input": "create_vm",
+        "expectedOutput": "VM created with 2GB RAM, 2 vCPUs",
+        "isHidden": false,
+        "description": "Create VM with specified resources"
+      },
+      {
+        "input": "configure_network",
+        "expectedOutput": "NAT and Bridged adapters configured",
+        "isHidden": false,
+        "description": "Configure network adapters"
+      },
+      {
+        "input": "attach_storage",
+        "expectedOutput": "20GB VDI disk attached via SATA",
+        "isHidden": false,
+        "description": "Attach virtual storage"
+      }
+    ],
+    "language": "bash"
+  },
+  {
+    "id": "cs405-ex-2-2",
+    "subjectId": "cs405",
+    "topicId": "cs405-topic-2",
+    "title": "VM Snapshots and Cloning",
+    "difficulty": 3,
+    "description": "Create a script that demonstrates VM snapshot and cloning capabilities:\n\n1. Create a snapshot of an existing VM\n2. Restore from a snapshot\n3. Create a full clone of a VM\n4. Create a linked clone\n5. List all snapshots\n\nInclude error handling and validation.",
+    "starterCode": "#!/bin/bash\n# VM Snapshot and Clone Manager\n\nVM_NAME=\"test-vm\"\n\ncreate_snapshot() {\n    # TODO: Create snapshot\n    echo \"Creating snapshot...\"\n}\n\nrestore_snapshot() {\n    # TODO: Restore from snapshot\n    echo \"Restoring snapshot...\"\n}\n\nclone_vm() {\n    # TODO: Clone VM\n    echo \"Cloning VM...\"\n}",
+    "solution": "#!/bin/bash\n# Complete VM Snapshot and Clone Manager\n\nVM_NAME=\"test-vm\"\n\n# Colors for output\nRED='\\033[0;31m'\nGREEN='\\033[0;32m'\nNC='\\033[0m' # No Color\n\n# Error handling\nset -e\ntrap 'echo \"${RED}Error occurred. Exiting...${NC}\"' ERR\n\n# Check if VM exists\ncheck_vm_exists() {\n    if ! VBoxManage list vms | grep -q \"$1\"; then\n        echo \"${RED}VM $1 does not exist${NC}\"\n        return 1\n    fi\n    return 0\n}\n\n# Create snapshot\ncreate_snapshot() {\n    local vm_name=$1\n    local snapshot_name=$2\n\n    echo \"Creating snapshot: $snapshot_name for VM: $vm_name\"\n\n    if ! check_vm_exists \"$vm_name\"; then\n        return 1\n    fi\n\n    VBoxManage snapshot \"$vm_name\" take \"$snapshot_name\" \\\n        --description \"Snapshot created on $(date)\" \\\n        --live  # Live snapshot if VM is running\n\n    echo \"${GREEN}Snapshot created successfully${NC}\"\n}\n\n# List snapshots\nlist_snapshots() {\n    local vm_name=$1\n\n    echo \"Snapshots for VM: $vm_name\"\n\n    if ! check_vm_exists \"$vm_name\"; then\n        return 1\n    fi\n\n    VBoxManage snapshot \"$vm_name\" list --details\n}\n\n# Restore snapshot\nrestore_snapshot() {\n    local vm_name=$1\n    local snapshot_name=$2\n\n    echo \"Restoring snapshot: $snapshot_name\"\n\n    if ! check_vm_exists \"$vm_name\"; then\n        return 1\n    fi\n\n    # Power off VM if running\n    if VBoxManage list runningvms | grep -q \"$vm_name\"; then\n        echo \"Powering off VM...\"\n        VBoxManage controlvm \"$vm_name\" poweroff\n        sleep 2\n    fi\n\n    VBoxManage snapshot \"$vm_name\" restore \"$snapshot_name\"\n\n    echo \"${GREEN}Snapshot restored successfully${NC}\"\n}\n\n# Delete snapshot\ndelete_snapshot() {\n    local vm_name=$1\n    local snapshot_name=$2\n\n    echo \"Deleting snapshot: $snapshot_name\"\n\n    VBoxManage snapshot \"$vm_name\" delete \"$snapshot_name\"\n\n    echo \"${GREEN}Snapshot deleted${NC}\"\n}\n\n# Create full clone\ncreate_full_clone() {\n    local source_vm=$1\n    local clone_name=$2\n\n    echo \"Creating full clone: $clone_name from $source_vm\"\n\n    if ! check_vm_exists \"$source_vm\"; then\n        return 1\n    fi\n\n    VBoxManage clonevm \"$source_vm\" \\\n        --name \"$clone_name\" \\\n        --mode machine \\\n        --options link \\\n        --register\n\n    echo \"${GREEN}Full clone created: $clone_name${NC}\"\n}\n\n# Create linked clone from snapshot\ncreate_linked_clone() {\n    local source_vm=$1\n    local snapshot_name=$2\n    local clone_name=$3\n\n    echo \"Creating linked clone: $clone_name\"\n\n    if ! check_vm_exists \"$source_vm\"; then\n        return 1\n    fi\n\n    VBoxManage clonevm \"$source_vm\" \\\n        --snapshot \"$snapshot_name\" \\\n        --name \"$clone_name\" \\\n        --options link \\\n        --register\n\n    echo \"${GREEN}Linked clone created: $clone_name${NC}\"\n}\n\n# Demo workflow\ndemo_workflow() {\n    echo \"=== VM Snapshot and Clone Demo ===\"\n\n    # Create snapshots\n    create_snapshot \"$VM_NAME\" \"clean-install\"\n    create_snapshot \"$VM_NAME\" \"after-updates\"\n\n    # List all snapshots\n    list_snapshots \"$VM_NAME\"\n\n    # Create full clone\n    create_full_clone \"$VM_NAME\" \"${VM_NAME}-clone-full\"\n\n    # Create linked clone\n    create_linked_clone \"$VM_NAME\" \"clean-install\" \"${VM_NAME}-clone-linked\"\n\n    # Restore to earlier snapshot\n    restore_snapshot \"$VM_NAME\" \"clean-install\"\n\n    echo \"${GREEN}Demo complete!${NC}\"\n}\n\n# Main execution\ncase \"${1:-demo}\" in\n    create-snapshot)\n        create_snapshot \"$2\" \"$3\"\n        ;;\n    list-snapshots)\n        list_snapshots \"$2\"\n        ;;\n    restore-snapshot)\n        restore_snapshot \"$2\" \"$3\"\n        ;;\n    delete-snapshot)\n        delete_snapshot \"$2\" \"$3\"\n        ;;\n    clone-full)\n        create_full_clone \"$2\" \"$3\"\n        ;;\n    clone-linked)\n        create_linked_clone \"$2\" \"$3\" \"$4\"\n        ;;\n    demo)\n        demo_workflow\n        ;;\n    *)\n        echo \"Usage: $0 {create-snapshot|list-snapshots|restore-snapshot|clone-full|clone-linked|demo} [args]\"\n        exit 1\n        ;;\nesac",
+    "hints": [
+      "Power off VM before restoring snapshots",
+      "Use --live for snapshots of running VMs",
+      "Linked clones save disk space",
+      "Full clones are independent",
+      "Always validate VM exists before operations"
+    ],
+    "testCases": [
+      {
+        "input": "create_snapshot test-vm snapshot-1",
+        "expectedOutput": "Snapshot created with timestamp",
+        "isHidden": false,
+        "description": "Create a snapshot of a VM"
+      },
+      {
+        "input": "list_snapshots test-vm",
+        "expectedOutput": "All snapshots listed with details",
+        "isHidden": false,
+        "description": "List all snapshots for a VM"
+      },
+      {
+        "input": "create_full_clone test-vm clone-1",
+        "expectedOutput": "Independent clone created and registered",
+        "isHidden": false,
+        "description": "Create a full clone of the VM"
+      }
+    ],
+    "language": "bash"
+  }
+]

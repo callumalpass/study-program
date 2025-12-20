@@ -1,0 +1,550 @@
+[
+  {
+    "id": "cs401-t1-ex01",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-1",
+    "title": "Simple RPC Client Implementation",
+    "difficulty": 2,
+    "description": "Implement a simple RPC client that can make remote procedure calls to a server.\n\nYour implementation should:\n- Create a client that connects to a remote server\n- Serialize function calls and parameters\n- Send requests and receive responses\n- Handle basic error cases (timeout, connection failure)",
+    "starterCode": "interface RPCClient {\n  connect(host: string, port: number): Promise<void>;\n  call(method: string, params: any[]): Promise<any>;\n  disconnect(): Promise<void>;\n}\n\nclass SimpleRPCClient implements RPCClient {\n  // Implement the RPC client\n}\n\n// Example usage:\n// const client = new SimpleRPCClient();\n// await client.connect('localhost', 8080);\n// const result = await client.call('add', [5, 3]);\n// console.log(result); // 8",
+    "solution": "interface RPCClient {\n  connect(host: string, port: number): Promise<void>;\n  call(method: string, params: any[]): Promise<any>;\n  disconnect(): Promise<void>;\n}\n\nclass SimpleRPCClient implements RPCClient {\n  private socket: any = null;\n  private requestId: number = 0;\n  private pendingRequests: Map<number, { resolve: Function, reject: Function }> = new Map();\n\n  async connect(host: string, port: number): Promise<void> {\n    return new Promise((resolve, reject) => {\n      // Simulated connection (in real implementation, use net.Socket)\n      this.socket = { connected: true, host, port };\n\n      // Simulate receiving responses\n      this.socket.onMessage = (message: string) => {\n        const response = JSON.parse(message);\n        const pending = this.pendingRequests.get(response.id);\n        if (pending) {\n          if (response.error) {\n            pending.reject(new Error(response.error));\n          } else {\n            pending.resolve(response.result);\n          }\n          this.pendingRequests.delete(response.id);\n        }\n      };\n\n      resolve();\n    });\n  }\n\n  async call(method: string, params: any[]): Promise<any> {\n    if (!this.socket?.connected) {\n      throw new Error('Not connected to server');\n    }\n\n    const id = ++this.requestId;\n    const request = {\n      id,\n      method,\n      params,\n      timestamp: Date.now()\n    };\n\n    return new Promise((resolve, reject) => {\n      // Set timeout for request\n      const timeout = setTimeout(() => {\n        this.pendingRequests.delete(id);\n        reject(new Error('Request timeout'));\n      }, 5000);\n\n      this.pendingRequests.set(id, {\n        resolve: (result: any) => {\n          clearTimeout(timeout);\n          resolve(result);\n        },\n        reject: (error: Error) => {\n          clearTimeout(timeout);\n          reject(error);\n        }\n      });\n\n      // Send request (simulated)\n      const message = JSON.stringify(request);\n      // this.socket.send(message);\n    });\n  }\n\n  async disconnect(): Promise<void> {\n    if (this.socket) {\n      this.socket.connected = false;\n      this.socket = null;\n    }\n    // Reject all pending requests\n    this.pendingRequests.forEach(({ reject }) => {\n      reject(new Error('Connection closed'));\n    });\n    this.pendingRequests.clear();\n  }\n}",
+    "testCases": [
+      {
+        "input": "connect(\"localhost\", 8080)",
+        "expectedOutput": "Connected successfully",
+        "isHidden": false,
+        "description": "Should connect to server"
+      },
+      {
+        "input": "call(\"add\", [5, 3])",
+        "expectedOutput": "8",
+        "isHidden": false,
+        "description": "Should execute remote procedure call"
+      },
+      {
+        "input": "call(\"add\", []) when not connected",
+        "expectedOutput": "Error: Not connected to server",
+        "isHidden": false,
+        "description": "Should handle disconnected state"
+      }
+    ],
+    "hints": [
+      "Use a Map to track pending requests by request ID",
+      "Implement timeout mechanism using setTimeout",
+      "Handle connection state properly",
+      "Serialize requests as JSON for transmission"
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs401-t1-ex02",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-1",
+    "title": "Service Discovery Mock",
+    "difficulty": 2,
+    "description": "Implement a simple service discovery system that allows services to register and discover each other.\n\nYour implementation should:\n- Allow services to register with name, host, and port\n- Support service lookup by name\n- Handle service deregistration\n- Implement health checking (mark unhealthy services as unavailable)",
+    "starterCode": "interface ServiceInfo {\n  name: string;\n  host: string;\n  port: number;\n  healthy: boolean;\n}\n\nclass ServiceRegistry {\n  // Implement service discovery\n}",
+    "solution": "interface ServiceInfo {\n  name: string;\n  host: string;\n  port: number;\n  healthy: boolean;\n  lastHeartbeat: number;\n}\n\nclass ServiceRegistry {\n  private services: Map<string, ServiceInfo[]> = new Map();\n  private healthCheckInterval: number = 5000; // 5 seconds\n\n  constructor() {\n    // Start health check loop\n    setInterval(() => this.checkHealth(), this.healthCheckInterval);\n  }\n\n  register(name: string, host: string, port: number): void {\n    const service: ServiceInfo = {\n      name,\n      host,\n      port,\n      healthy: true,\n      lastHeartbeat: Date.now()\n    };\n\n    if (!this.services.has(name)) {\n      this.services.set(name, []);\n    }\n\n    const instances = this.services.get(name)!;\n    // Remove existing instance with same host:port\n    const filtered = instances.filter(s => !(s.host === host && s.port === port));\n    filtered.push(service);\n    this.services.set(name, filtered);\n  }\n\n  discover(name: string): ServiceInfo[] {\n    const instances = this.services.get(name) || [];\n    return instances.filter(s => s.healthy);\n  }\n\n  deregister(name: string, host: string, port: number): void {\n    const instances = this.services.get(name);\n    if (instances) {\n      const filtered = instances.filter(s => !(s.host === host && s.port === port));\n      this.services.set(name, filtered);\n    }\n  }\n\n  heartbeat(name: string, host: string, port: number): void {\n    const instances = this.services.get(name);\n    if (instances) {\n      const service = instances.find(s => s.host === host && s.port === port);\n      if (service) {\n        service.lastHeartbeat = Date.now();\n        service.healthy = true;\n      }\n    }\n  }\n\n  private checkHealth(): void {\n    const now = Date.now();\n    const timeout = 10000; // 10 seconds\n\n    this.services.forEach((instances) => {\n      instances.forEach(service => {\n        if (now - service.lastHeartbeat > timeout) {\n          service.healthy = false;\n        }\n      });\n    });\n  }\n\n  getAllServices(): Map<string, ServiceInfo[]> {\n    return new Map(this.services);\n  }\n}",
+    "testCases": [
+      {
+        "input": "register(\"api\", \"localhost\", 8080)",
+        "expectedOutput": "Service registered",
+        "isHidden": false,
+        "description": "Should register a service"
+      },
+      {
+        "input": "discover(\"api\")",
+        "expectedOutput": "[{name: \"api\", host: \"localhost\", port: 8080, healthy: true}]",
+        "isHidden": false,
+        "description": "Should discover registered service"
+      },
+      {
+        "input": "discover(\"unknown\")",
+        "expectedOutput": "[]",
+        "isHidden": false,
+        "description": "Should return empty array for unknown service"
+      }
+    ],
+    "hints": [
+      "Use a Map with service name as key and array of instances as value",
+      "Track last heartbeat timestamp for each service",
+      "Implement periodic health checking with setInterval",
+      "Filter unhealthy services in discover method"
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs401-t1-ex03",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-1",
+    "title": "Load Balancer Implementation",
+    "difficulty": 3,
+    "description": "Implement a simple round-robin load balancer that distributes requests across multiple backend servers.\n\nYour implementation should:\n- Support multiple backend servers\n- Use round-robin algorithm for distribution\n- Handle server health checks\n- Skip unhealthy servers when distributing requests",
+    "starterCode": "interface Server {\n  id: string;\n  host: string;\n  port: number;\n  healthy: boolean;\n}\n\nclass LoadBalancer {\n  // Implement load balancer\n}",
+    "solution": "interface Server {\n  id: string;\n  host: string;\n  port: number;\n  healthy: boolean;\n}\n\nclass LoadBalancer {\n  private servers: Server[] = [];\n  private currentIndex: number = 0;\n\n  addServer(id: string, host: string, port: number): void {\n    this.servers.push({ id, host, port, healthy: true });\n  }\n\n  removeServer(id: string): void {\n    this.servers = this.servers.filter(s => s.id !== id);\n    // Reset index if it's out of bounds\n    if (this.currentIndex >= this.servers.length) {\n      this.currentIndex = 0;\n    }\n  }\n\n  markHealthy(id: string, healthy: boolean): void {\n    const server = this.servers.find(s => s.id === id);\n    if (server) {\n      server.healthy = healthy;\n    }\n  }\n\n  getNextServer(): Server | null {\n    const healthyServers = this.servers.filter(s => s.healthy);\n\n    if (healthyServers.length === 0) {\n      return null;\n    }\n\n    // Find next healthy server using round-robin\n    let attempts = 0;\n    while (attempts < this.servers.length) {\n      const server = this.servers[this.currentIndex];\n      this.currentIndex = (this.currentIndex + 1) % this.servers.length;\n\n      if (server.healthy) {\n        return server;\n      }\n      attempts++;\n    }\n\n    return null;\n  }\n\n  getServerStats(): { total: number; healthy: number } {\n    return {\n      total: this.servers.length,\n      healthy: this.servers.filter(s => s.healthy).length\n    };\n  }\n}",
+    "testCases": [
+      {
+        "input": "Add 3 servers and call getNextServer() 3 times",
+        "expectedOutput": "Returns servers in round-robin order",
+        "isHidden": false,
+        "description": "Should distribute requests in round-robin fashion"
+      },
+      {
+        "input": "Mark server unhealthy and call getNextServer()",
+        "expectedOutput": "Skips unhealthy server",
+        "isHidden": false,
+        "description": "Should skip unhealthy servers"
+      },
+      {
+        "input": "All servers unhealthy",
+        "expectedOutput": "null",
+        "isHidden": false,
+        "description": "Should return null when no healthy servers"
+      }
+    ],
+    "hints": [
+      "Maintain a current index for round-robin",
+      "Use modulo operator to wrap around server list",
+      "Filter for healthy servers before selection",
+      "Handle edge case when all servers are unhealthy"
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs401-t1-ex04",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-1",
+    "title": "Peer-to-Peer Node Implementation",
+    "difficulty": 3,
+    "description": "Implement a simple peer-to-peer node that can connect to other peers and exchange messages.\n\nYour implementation should:\n- Maintain a list of connected peers\n- Support adding and removing peers\n- Broadcast messages to all peers\n- Handle peer discovery (find peers of peers)",
+    "starterCode": "interface Peer {\n  id: string;\n  address: string;\n}\n\nclass P2PNode {\n  // Implement P2P node\n}",
+    "solution": "interface Peer {\n  id: string;\n  address: string;\n}\n\ninterface Message {\n  from: string;\n  content: any;\n  timestamp: number;\n}\n\nclass P2PNode {\n  private id: string;\n  private peers: Map<string, Peer> = new Map();\n  private messageHandler: ((msg: Message) => void) | null = null;\n\n  constructor(id: string) {\n    this.id = id;\n  }\n\n  addPeer(peer: Peer): void {\n    if (peer.id !== this.id) {\n      this.peers.set(peer.id, peer);\n    }\n  }\n\n  removePeer(peerId: string): void {\n    this.peers.delete(peerId);\n  }\n\n  getPeers(): Peer[] {\n    return Array.from(this.peers.values());\n  }\n\n  broadcast(content: any): void {\n    const message: Message = {\n      from: this.id,\n      content,\n      timestamp: Date.now()\n    };\n\n    this.peers.forEach(peer => {\n      // Simulate sending message to peer\n      this.sendToPeer(peer.id, message);\n    });\n  }\n\n  sendToPeer(peerId: string, message: Message): void {\n    const peer = this.peers.get(peerId);\n    if (peer) {\n      // Simulated message send\n      console.log(`Sending message from ${this.id} to ${peerId}`);\n    }\n  }\n\n  receiveMessage(message: Message): void {\n    if (this.messageHandler) {\n      this.messageHandler(message);\n    }\n  }\n\n  onMessage(handler: (msg: Message) => void): void {\n    this.messageHandler = handler;\n  }\n\n  discoverPeers(): Peer[] {\n    // Request peer lists from all connected peers\n    const discoveredPeers: Peer[] = [];\n\n    this.peers.forEach(peer => {\n      // In real implementation, would request peer's peer list\n      // For now, just return known peers\n    });\n\n    return discoveredPeers;\n  }\n\n  getId(): string {\n    return this.id;\n  }\n}",
+    "testCases": [
+      {
+        "input": "Create 3 nodes and connect them",
+        "expectedOutput": "Nodes successfully connected",
+        "isHidden": false,
+        "description": "Should establish peer connections"
+      },
+      {
+        "input": "Broadcast message from node1",
+        "expectedOutput": "All peers receive the message",
+        "isHidden": false,
+        "description": "Should broadcast to all peers"
+      },
+      {
+        "input": "Remove peer and broadcast",
+        "expectedOutput": "Removed peer does not receive message",
+        "isHidden": false,
+        "description": "Should not send to removed peers"
+      }
+    ],
+    "hints": [
+      "Use a Map to store peers by their ID",
+      "Iterate over all peers for broadcast",
+      "Don't add self as peer",
+      "Track message timestamps to prevent loops"
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs401-t1-ex05",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-1",
+    "title": "CAP Theorem Simulator",
+    "difficulty": 4,
+    "description": "Create a simulator that demonstrates the CAP theorem by showing the tradeoffs between Consistency, Availability, and Partition tolerance.\n\nYour implementation should:\n- Simulate a distributed system with multiple nodes\n- Support network partition scenarios\n- Demonstrate CP system behavior (reject writes during partition)\n- Demonstrate AP system behavior (accept writes during partition, eventual consistency)",
+    "starterCode": "type SystemMode = 'CP' | 'AP';\n\ninterface Node {\n  id: string;\n  data: Map<string, any>;\n  partitioned: boolean;\n}\n\nclass CAPSimulator {\n  // Implement CAP theorem simulator\n}",
+    "solution": "type SystemMode = 'CP' | 'AP';\n\ninterface Node {\n  id: string;\n  data: Map<string, any>;\n  partitioned: boolean;\n}\n\ninterface WriteResult {\n  success: boolean;\n  message: string;\n}\n\nclass CAPSimulator {\n  private nodes: Node[] = [];\n  private mode: SystemMode;\n\n  constructor(mode: SystemMode, nodeCount: number) {\n    this.mode = mode;\n    for (let i = 0; i < nodeCount; i++) {\n      this.nodes.push({\n        id: `node-${i}`,\n        data: new Map(),\n        partitioned: false\n      });\n    }\n  }\n\n  write(key: string, value: any, nodeId?: string): WriteResult {\n    const targetNode = nodeId\n      ? this.nodes.find(n => n.id === nodeId)\n      : this.nodes[0];\n\n    if (!targetNode) {\n      return { success: false, message: 'Node not found' };\n    }\n\n    const availableNodes = this.nodes.filter(n => !n.partitioned);\n    const majority = Math.floor(this.nodes.length / 2) + 1;\n\n    if (this.mode === 'CP') {\n      // CP: Require majority for consistency\n      if (availableNodes.length < majority) {\n        return {\n          success: false,\n          message: 'Cannot achieve consistency - no majority available'\n        };\n      }\n\n      // Write to majority\n      availableNodes.slice(0, majority).forEach(node => {\n        node.data.set(key, value);\n      });\n\n      return { success: true, message: 'Written to majority (consistent)' };\n    } else {\n      // AP: Always accept writes (eventual consistency)\n      targetNode.data.set(key, value);\n\n      // Async replication to available nodes\n      setTimeout(() => {\n        availableNodes.forEach(node => {\n          if (node.id !== targetNode.id) {\n            node.data.set(key, value);\n          }\n        });\n      }, 100);\n\n      return {\n        success: true,\n        message: 'Written locally (eventually consistent)'\n      };\n    }\n  }\n\n  read(key: string, nodeId?: string): any {\n    const targetNode = nodeId\n      ? this.nodes.find(n => n.id === nodeId)\n      : this.nodes[0];\n\n    if (!targetNode) {\n      return null;\n    }\n\n    if (this.mode === 'CP') {\n      // CP: Read from majority for consistency\n      const availableNodes = this.nodes.filter(n => !n.partitioned);\n      const majority = Math.floor(this.nodes.length / 2) + 1;\n\n      if (availableNodes.length < majority) {\n        throw new Error('Cannot achieve consistency - no majority available');\n      }\n\n      return targetNode.data.get(key);\n    } else {\n      // AP: Always return local value (may be stale)\n      return targetNode.data.get(key);\n    }\n  }\n\n  createPartition(nodeIds: string[]): void {\n    nodeIds.forEach(id => {\n      const node = this.nodes.find(n => n.id === id);\n      if (node) {\n        node.partitioned = true;\n      }\n    });\n  }\n\n  healPartition(): void {\n    this.nodes.forEach(node => {\n      node.partitioned = false;\n    });\n\n    // Reconcile data (last-write-wins for simplicity)\n    if (this.mode === 'AP') {\n      const mergedData = new Map<string, any>();\n      this.nodes.forEach(node => {\n        node.data.forEach((value, key) => {\n          mergedData.set(key, value);\n        });\n      });\n\n      this.nodes.forEach(node => {\n        node.data = new Map(mergedData);\n      });\n    }\n  }\n\n  getNodeStatus(): Array<{ id: string; partitioned: boolean; dataSize: number }> {\n    return this.nodes.map(node => ({\n      id: node.id,\n      partitioned: node.partitioned,\n      dataSize: node.data.size\n    }));\n  }\n}",
+    "testCases": [
+      {
+        "input": "CP system: write during partition",
+        "expectedOutput": "Write rejected - no majority",
+        "isHidden": false,
+        "description": "CP system should reject writes without majority"
+      },
+      {
+        "input": "AP system: write during partition",
+        "expectedOutput": "Write accepted - eventual consistency",
+        "isHidden": false,
+        "description": "AP system should accept writes during partition"
+      },
+      {
+        "input": "Heal partition and verify convergence",
+        "expectedOutput": "All nodes have same data",
+        "isHidden": false,
+        "description": "Should reconcile after partition heals"
+      }
+    ],
+    "hints": [
+      "Calculate majority as floor(n/2) + 1",
+      "CP mode rejects operations without majority",
+      "AP mode accepts operations and replicates asynchronously",
+      "Implement reconciliation strategy for AP mode"
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs401-t1-ex06",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-1",
+    "title": "Transparency Implementation",
+    "difficulty": 2,
+    "description": "Implement a distributed file system interface that provides location transparency - users access files without knowing their physical location.",
+    "starterCode": "interface FileLocation {\n  serverId: string;\n  path: string;\n}\n\nclass TransparentFileSystem {\n  // Implement location transparency\n}",
+    "solution": "interface FileLocation {\n  serverId: string;\n  path: string;\n}\n\nclass TransparentFileSystem {\n  private fileLocations: Map<string, FileLocation> = new Map();\n  private servers: Map<string, Set<string>> = new Map();\n\n  registerServer(serverId: string): void {\n    if (!this.servers.has(serverId)) {\n      this.servers.set(serverId, new Set());\n    }\n  }\n\n  storeFile(fileName: string, serverId: string, path: string): void {\n    this.fileLocations.set(fileName, { serverId, path });\n\n    const serverFiles = this.servers.get(serverId);\n    if (serverFiles) {\n      serverFiles.add(fileName);\n    }\n  }\n\n  getFile(fileName: string): string {\n    const location = this.fileLocations.get(fileName);\n    if (!location) {\n      throw new Error(`File not found: ${fileName}`);\n    }\n\n    // User doesn't need to know actual location\n    return `Content of ${fileName}`;\n  }\n\n  // Internal method - users don't call this\n  private getFileLocation(fileName: string): FileLocation | undefined {\n    return this.fileLocations.get(fileName);\n  }\n\n  moveFile(fileName: string, newServerId: string): void {\n    const location = this.fileLocations.get(fileName);\n    if (!location) {\n      throw new Error(`File not found: ${fileName}`);\n    }\n\n    // Remove from old server\n    this.servers.get(location.serverId)?.delete(fileName);\n\n    // Add to new server\n    const newServerFiles = this.servers.get(newServerId);\n    if (!newServerFiles) {\n      throw new Error(`Server not found: ${newServerId}`);\n    }\n    newServerFiles.add(fileName);\n\n    // Update location\n    this.fileLocations.set(fileName, {\n      serverId: newServerId,\n      path: location.path\n    });\n  }\n\n  listFiles(): string[] {\n    return Array.from(this.fileLocations.keys());\n  }\n}",
+    "testCases": [
+      {
+        "input": "Store file on server1, retrieve it",
+        "expectedOutput": "File content returned without exposing location",
+        "isHidden": false,
+        "description": "Should provide location transparency"
+      },
+      {
+        "input": "Move file to different server, retrieve it",
+        "expectedOutput": "File accessible from new location transparently",
+        "isHidden": false,
+        "description": "Should handle migration transparently"
+      }
+    ],
+    "hints": [
+      "Maintain mapping from logical file names to physical locations",
+      "Hide physical location from users",
+      "Support file migration without changing user interface"
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs401-t1-ex07",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-1",
+    "title": "Request-Response Pattern",
+    "difficulty": 1,
+    "description": "Implement a simple request-response pattern with timeout handling.",
+    "starterCode": "interface Request {\n  id: string;\n  data: any;\n}\n\ninterface Response {\n  requestId: string;\n  data: any;\n  error?: string;\n}\n\nclass RequestResponseHandler {\n  // Implement request-response pattern\n}",
+    "solution": "interface Request {\n  id: string;\n  data: any;\n}\n\ninterface Response {\n  requestId: string;\n  data: any;\n  error?: string;\n}\n\nclass RequestResponseHandler {\n  private pendingRequests: Map<string, {\n    resolve: (value: any) => void;\n    reject: (error: Error) => void;\n    timeout: NodeJS.Timeout;\n  }> = new Map();\n\n  async sendRequest(request: Request, timeoutMs: number = 5000): Promise<any> {\n    return new Promise((resolve, reject) => {\n      const timeout = setTimeout(() => {\n        this.pendingRequests.delete(request.id);\n        reject(new Error(`Request timeout: ${request.id}`));\n      }, timeoutMs);\n\n      this.pendingRequests.set(request.id, { resolve, reject, timeout });\n\n      // Simulate sending request\n      this.transmit(request);\n    });\n  }\n\n  handleResponse(response: Response): void {\n    const pending = this.pendingRequests.get(response.requestId);\n    if (pending) {\n      clearTimeout(pending.timeout);\n      this.pendingRequests.delete(response.requestId);\n\n      if (response.error) {\n        pending.reject(new Error(response.error));\n      } else {\n        pending.resolve(response.data);\n      }\n    }\n  }\n\n  private transmit(request: Request): void {\n    // Simulated network transmission\n    console.log(`Transmitting request: ${request.id}`);\n  }\n\n  getPendingCount(): number {\n    return this.pendingRequests.size;\n  }\n}",
+    "testCases": [
+      {
+        "input": "Send request and receive response",
+        "expectedOutput": "Response data returned",
+        "isHidden": false,
+        "description": "Should handle successful request-response"
+      },
+      {
+        "input": "Send request without response",
+        "expectedOutput": "Timeout error after specified time",
+        "isHidden": false,
+        "description": "Should timeout when no response received"
+      }
+    ],
+    "hints": [
+      "Use Promise to handle async request-response",
+      "Track pending requests with Map",
+      "Implement timeout with setTimeout",
+      "Clean up on response or timeout"
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs401-t1-ex08",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-1",
+    "title": "Simple Publish-Subscribe",
+    "difficulty": 2,
+    "description": "Implement a publish-subscribe messaging system where subscribers can subscribe to topics and publishers can send messages to topics.",
+    "starterCode": "type MessageHandler = (message: any) => void;\n\nclass PubSubSystem {\n  // Implement pub-sub system\n}",
+    "solution": "type MessageHandler = (message: any) => void;\n\nclass PubSubSystem {\n  private subscribers: Map<string, Set<MessageHandler>> = new Map();\n\n  subscribe(topic: string, handler: MessageHandler): () => void {\n    if (!this.subscribers.has(topic)) {\n      this.subscribers.set(topic, new Set());\n    }\n\n    this.subscribers.get(topic)!.add(handler);\n\n    // Return unsubscribe function\n    return () => {\n      const handlers = this.subscribers.get(topic);\n      if (handlers) {\n        handlers.delete(handler);\n        if (handlers.size === 0) {\n          this.subscribers.delete(topic);\n        }\n      }\n    };\n  }\n\n  publish(topic: string, message: any): void {\n    const handlers = this.subscribers.get(topic);\n    if (handlers) {\n      handlers.forEach(handler => {\n        try {\n          handler(message);\n        } catch (error) {\n          console.error(`Error in subscriber: ${error}`);\n        }\n      });\n    }\n  }\n\n  getTopics(): string[] {\n    return Array.from(this.subscribers.keys());\n  }\n\n  getSubscriberCount(topic: string): number {\n    return this.subscribers.get(topic)?.size || 0;\n  }\n}",
+    "testCases": [
+      {
+        "input": "Subscribe to topic and publish message",
+        "expectedOutput": "Subscriber receives message",
+        "isHidden": false,
+        "description": "Should deliver messages to subscribers"
+      },
+      {
+        "input": "Unsubscribe and publish",
+        "expectedOutput": "Unsubscribed handler not called",
+        "isHidden": false,
+        "description": "Should not deliver to unsubscribed handlers"
+      }
+    ],
+    "hints": [
+      "Use Map with topic as key and Set of handlers as value",
+      "Return unsubscribe function from subscribe",
+      "Handle errors in subscriber callbacks gracefully"
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs401-t1-ex09",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-1",
+    "title": "Consistent Hashing Ring",
+    "difficulty": 3,
+    "description": "Implement a consistent hashing ring for distributing keys across nodes with minimal rebalancing when nodes are added or removed.",
+    "starterCode": "class ConsistentHashRing {\n  // Implement consistent hashing\n}",
+    "solution": "class ConsistentHashRing {\n  private ring: Map<number, string> = new Map();\n  private nodes: Set<string> = new Set();\n  private virtualNodes: number;\n\n  constructor(virtualNodes: number = 150) {\n    this.virtualNodes = virtualNodes;\n  }\n\n  private hash(key: string): number {\n    let hash = 0;\n    for (let i = 0; i < key.length; i++) {\n      hash = ((hash << 5) - hash) + key.charCodeAt(i);\n      hash = hash & hash; // Convert to 32-bit integer\n    }\n    return Math.abs(hash);\n  }\n\n  addNode(nodeId: string): void {\n    if (this.nodes.has(nodeId)) {\n      return;\n    }\n\n    this.nodes.add(nodeId);\n\n    // Add virtual nodes\n    for (let i = 0; i < this.virtualNodes; i++) {\n      const virtualKey = `${nodeId}:v${i}`;\n      const hash = this.hash(virtualKey);\n      this.ring.set(hash, nodeId);\n    }\n  }\n\n  removeNode(nodeId: string): void {\n    if (!this.nodes.has(nodeId)) {\n      return;\n    }\n\n    this.nodes.delete(nodeId);\n\n    // Remove virtual nodes\n    const toRemove: number[] = [];\n    this.ring.forEach((node, hash) => {\n      if (node === nodeId) {\n        toRemove.push(hash);\n      }\n    });\n\n    toRemove.forEach(hash => this.ring.delete(hash));\n  }\n\n  getNode(key: string): string | null {\n    if (this.ring.size === 0) {\n      return null;\n    }\n\n    const hash = this.hash(key);\n\n    // Find first node with hash >= key hash\n    const sortedHashes = Array.from(this.ring.keys()).sort((a, b) => a - b);\n\n    for (const nodeHash of sortedHashes) {\n      if (nodeHash >= hash) {\n        return this.ring.get(nodeHash)!;\n      }\n    }\n\n    // Wrap around to first node\n    return this.ring.get(sortedHashes[0])!;\n  }\n\n  getNodes(): string[] {\n    return Array.from(this.nodes);\n  }\n}",
+    "testCases": [
+      {
+        "input": "Add 3 nodes and distribute 100 keys",
+        "expectedOutput": "Keys distributed across nodes",
+        "isHidden": false,
+        "description": "Should distribute keys across nodes"
+      },
+      {
+        "input": "Remove a node",
+        "expectedOutput": "Only keys on removed node are redistributed",
+        "isHidden": false,
+        "description": "Should minimize redistribution"
+      }
+    ],
+    "hints": [
+      "Use virtual nodes to improve distribution",
+      "Store hash-to-node mapping in sorted structure",
+      "Find next node clockwise on ring",
+      "Wrap around to first node if needed"
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs401-t1-ex10",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-1",
+    "title": "Microservice Communication",
+    "difficulty": 3,
+    "description": "Implement a microservice that can communicate with other services using both synchronous (REST-like) and asynchronous (message queue) patterns.",
+    "starterCode": "interface Message {\n  from: string;\n  to: string;\n  payload: any;\n}\n\nclass Microservice {\n  // Implement microservice communication\n}",
+    "solution": "interface Message {\n  from: string;\n  to: string;\n  payload: any;\n  timestamp: number;\n}\n\nclass Microservice {\n  private serviceName: string;\n  private messageQueue: Message[] = [];\n  private requestHandlers: Map<string, (payload: any) => Promise<any>> = new Map();\n  private messageHandlers: Map<string, (message: Message) => void> = new Map();\n\n  constructor(serviceName: string) {\n    this.serviceName = serviceName;\n  }\n\n  // Synchronous request-response\n  async callService(targetService: string, endpoint: string, payload: any): Promise<any> {\n    // Simulate HTTP request\n    const request = {\n      service: this.serviceName,\n      endpoint,\n      payload\n    };\n\n    // In real implementation, would use HTTP client\n    return new Promise((resolve) => {\n      setTimeout(() => {\n        resolve({ status: 'success', data: payload });\n      }, 10);\n    });\n  }\n\n  // Register handler for synchronous requests\n  registerEndpoint(endpoint: string, handler: (payload: any) => Promise<any>): void {\n    this.requestHandlers.set(endpoint, handler);\n  }\n\n  // Asynchronous message sending\n  sendMessage(targetService: string, payload: any): void {\n    const message: Message = {\n      from: this.serviceName,\n      to: targetService,\n      payload,\n      timestamp: Date.now()\n    };\n\n    // In real implementation, would publish to message broker\n    this.messageQueue.push(message);\n  }\n\n  // Register handler for asynchronous messages\n  onMessage(messageType: string, handler: (message: Message) => void): void {\n    this.messageHandlers.set(messageType, handler);\n  }\n\n  // Process incoming message\n  receiveMessage(message: Message): void {\n    const handler = this.messageHandlers.get(message.payload.type);\n    if (handler) {\n      handler(message);\n    }\n  }\n\n  // Get pending messages (simulate message queue)\n  getMessages(): Message[] {\n    return [...this.messageQueue];\n  }\n\n  // Process endpoint request\n  async handleRequest(endpoint: string, payload: any): Promise<any> {\n    const handler = this.requestHandlers.get(endpoint);\n    if (handler) {\n      return await handler(payload);\n    }\n    throw new Error(`Endpoint not found: ${endpoint}`);\n  }\n\n  getName(): string {\n    return this.serviceName;\n  }\n}",
+    "testCases": [
+      {
+        "input": "Call service endpoint synchronously",
+        "expectedOutput": "Response received",
+        "isHidden": false,
+        "description": "Should handle synchronous requests"
+      },
+      {
+        "input": "Send async message",
+        "expectedOutput": "Message queued for delivery",
+        "isHidden": false,
+        "description": "Should queue async messages"
+      }
+    ],
+    "hints": [
+      "Separate handlers for sync and async communication",
+      "Use Promises for synchronous request-response",
+      "Queue messages for asynchronous delivery",
+      "Register handlers using Map for flexibility"
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs401-t1-ex11",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-1",
+    "title": "Distributed Cache",
+    "difficulty": 3,
+    "description": "Implement a simple distributed cache with TTL (time-to-live) support and cache invalidation.",
+    "starterCode": "interface CacheEntry {\n  value: any;\n  expiresAt: number;\n}\n\nclass DistributedCache {\n  // Implement distributed cache\n}",
+    "solution": "interface CacheEntry {\n  value: any;\n  expiresAt: number;\n}\n\nclass DistributedCache {\n  private cache: Map<string, CacheEntry> = new Map();\n  private defaultTTL: number;\n\n  constructor(defaultTTL: number = 60000) { // 60 seconds default\n    this.defaultTTL = defaultTTL;\n\n    // Start cleanup interval\n    setInterval(() => this.cleanup(), 10000);\n  }\n\n  set(key: string, value: any, ttl?: number): void {\n    const expiresAt = Date.now() + (ttl || this.defaultTTL);\n    this.cache.set(key, { value, expiresAt });\n  }\n\n  get(key: string): any | null {\n    const entry = this.cache.get(key);\n\n    if (!entry) {\n      return null;\n    }\n\n    if (Date.now() > entry.expiresAt) {\n      this.cache.delete(key);\n      return null;\n    }\n\n    return entry.value;\n  }\n\n  delete(key: string): boolean {\n    return this.cache.delete(key);\n  }\n\n  invalidatePattern(pattern: RegExp): number {\n    let count = 0;\n    const keysToDelete: string[] = [];\n\n    this.cache.forEach((_, key) => {\n      if (pattern.test(key)) {\n        keysToDelete.push(key);\n      }\n    });\n\n    keysToDelete.forEach(key => {\n      this.cache.delete(key);\n      count++;\n    });\n\n    return count;\n  }\n\n  private cleanup(): void {\n    const now = Date.now();\n    const keysToDelete: string[] = [];\n\n    this.cache.forEach((entry, key) => {\n      if (now > entry.expiresAt) {\n        keysToDelete.push(key);\n      }\n    });\n\n    keysToDelete.forEach(key => this.cache.delete(key));\n  }\n\n  clear(): void {\n    this.cache.clear();\n  }\n\n  size(): number {\n    // Clean before counting\n    this.cleanup();\n    return this.cache.size;\n  }\n\n  has(key: string): boolean {\n    const entry = this.cache.get(key);\n    if (!entry) {\n      return false;\n    }\n\n    if (Date.now() > entry.expiresAt) {\n      this.cache.delete(key);\n      return false;\n    }\n\n    return true;\n  }\n}",
+    "testCases": [
+      {
+        "input": "Set and get value",
+        "expectedOutput": "Value retrieved from cache",
+        "isHidden": false,
+        "description": "Should cache and retrieve values"
+      },
+      {
+        "input": "Get expired value",
+        "expectedOutput": "null",
+        "isHidden": false,
+        "description": "Should return null for expired entries"
+      },
+      {
+        "input": "Invalidate by pattern",
+        "expectedOutput": "Matching entries removed",
+        "isHidden": false,
+        "description": "Should support pattern-based invalidation"
+      }
+    ],
+    "hints": [
+      "Store expiration timestamp with each entry",
+      "Check expiration on get operations",
+      "Implement periodic cleanup of expired entries",
+      "Use RegExp for pattern matching"
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs401-t1-ex12",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-1",
+    "title": "Service Health Monitor",
+    "difficulty": 2,
+    "description": "Implement a health monitoring system that tracks service health and sends alerts when services become unhealthy.",
+    "starterCode": "interface HealthStatus {\n  healthy: boolean;\n  lastCheck: number;\n  consecutiveFailures: number;\n}\n\nclass HealthMonitor {\n  // Implement health monitoring\n}",
+    "solution": "interface HealthStatus {\n  healthy: boolean;\n  lastCheck: number;\n  consecutiveFailures: number;\n}\n\ntype AlertCallback = (serviceName: string, status: HealthStatus) => void;\n\nclass HealthMonitor {\n  private services: Map<string, HealthStatus> = new Map();\n  private checkInterval: number;\n  private failureThreshold: number;\n  private alertCallbacks: AlertCallback[] = [];\n  private intervalId: NodeJS.Timeout | null = null;\n\n  constructor(checkInterval: number = 5000, failureThreshold: number = 3) {\n    this.checkInterval = checkInterval;\n    this.failureThreshold = failureThreshold;\n  }\n\n  registerService(serviceName: string): void {\n    this.services.set(serviceName, {\n      healthy: true,\n      lastCheck: Date.now(),\n      consecutiveFailures: 0\n    });\n  }\n\n  reportHealth(serviceName: string, healthy: boolean): void {\n    const status = this.services.get(serviceName);\n    if (!status) {\n      return;\n    }\n\n    const wasHealthy = status.healthy;\n\n    if (healthy) {\n      status.consecutiveFailures = 0;\n      status.healthy = true;\n    } else {\n      status.consecutiveFailures++;\n\n      if (status.consecutiveFailures >= this.failureThreshold) {\n        status.healthy = false;\n      }\n    }\n\n    status.lastCheck = Date.now();\n\n    // Alert if status changed\n    if (wasHealthy !== status.healthy) {\n      this.triggerAlerts(serviceName, status);\n    }\n  }\n\n  getServiceStatus(serviceName: string): HealthStatus | null {\n    return this.services.get(serviceName) || null;\n  }\n\n  getAllStatuses(): Map<string, HealthStatus> {\n    return new Map(this.services);\n  }\n\n  onAlert(callback: AlertCallback): void {\n    this.alertCallbacks.push(callback);\n  }\n\n  private triggerAlerts(serviceName: string, status: HealthStatus): void {\n    this.alertCallbacks.forEach(callback => {\n      try {\n        callback(serviceName, status);\n      } catch (error) {\n        console.error('Error in alert callback:', error);\n      }\n    });\n  }\n\n  startMonitoring(healthCheck: (serviceName: string) => Promise<boolean>): void {\n    if (this.intervalId) {\n      return;\n    }\n\n    this.intervalId = setInterval(async () => {\n      for (const serviceName of this.services.keys()) {\n        try {\n          const healthy = await healthCheck(serviceName);\n          this.reportHealth(serviceName, healthy);\n        } catch (error) {\n          this.reportHealth(serviceName, false);\n        }\n      }\n    }, this.checkInterval);\n  }\n\n  stopMonitoring(): void {\n    if (this.intervalId) {\n      clearInterval(this.intervalId);\n      this.intervalId = null;\n    }\n  }\n}",
+    "testCases": [
+      {
+        "input": "Report healthy status",
+        "expectedOutput": "Service marked as healthy",
+        "isHidden": false,
+        "description": "Should track healthy services"
+      },
+      {
+        "input": "Report failures exceeding threshold",
+        "expectedOutput": "Service marked unhealthy, alert triggered",
+        "isHidden": false,
+        "description": "Should detect unhealthy services and alert"
+      }
+    ],
+    "hints": [
+      "Track consecutive failures before marking unhealthy",
+      "Use callbacks for alerts",
+      "Implement periodic health checking",
+      "Store last check timestamp"
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs401-t1-ex13",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-1",
+    "title": "API Rate Limiter",
+    "difficulty": 3,
+    "description": "Implement a token bucket rate limiter for API requests.",
+    "starterCode": "class RateLimiter {\n  // Implement rate limiter\n}",
+    "solution": "class RateLimiter {\n  private tokens: number;\n  private maxTokens: number;\n  private refillRate: number; // tokens per second\n  private lastRefill: number;\n\n  constructor(maxTokens: number, refillRate: number) {\n    this.maxTokens = maxTokens;\n    this.tokens = maxTokens;\n    this.refillRate = refillRate;\n    this.lastRefill = Date.now();\n  }\n\n  private refill(): void {\n    const now = Date.now();\n    const timePassed = (now - this.lastRefill) / 1000; // seconds\n    const tokensToAdd = timePassed * this.refillRate;\n\n    this.tokens = Math.min(this.maxTokens, this.tokens + tokensToAdd);\n    this.lastRefill = now;\n  }\n\n  tryConsume(tokens: number = 1): boolean {\n    this.refill();\n\n    if (this.tokens >= tokens) {\n      this.tokens -= tokens;\n      return true;\n    }\n\n    return false;\n  }\n\n  getAvailableTokens(): number {\n    this.refill();\n    return Math.floor(this.tokens);\n  }\n\n  reset(): void {\n    this.tokens = this.maxTokens;\n    this.lastRefill = Date.now();\n  }\n}\n\n// Per-client rate limiter\nclass ClientRateLimiter {\n  private limiters: Map<string, RateLimiter> = new Map();\n  private maxTokens: number;\n  private refillRate: number;\n\n  constructor(maxTokens: number, refillRate: number) {\n    this.maxTokens = maxTokens;\n    this.refillRate = refillRate;\n  }\n\n  allowRequest(clientId: string, tokens: number = 1): boolean {\n    let limiter = this.limiters.get(clientId);\n\n    if (!limiter) {\n      limiter = new RateLimiter(this.maxTokens, this.refillRate);\n      this.limiters.set(clientId, limiter);\n    }\n\n    return limiter.tryConsume(tokens);\n  }\n\n  getClientStatus(clientId: string): number {\n    const limiter = this.limiters.get(clientId);\n    return limiter ? limiter.getAvailableTokens() : this.maxTokens;\n  }\n\n  resetClient(clientId: string): void {\n    const limiter = this.limiters.get(clientId);\n    if (limiter) {\n      limiter.reset();\n    }\n  }\n}",
+    "testCases": [
+      {
+        "input": "Consume tokens within limit",
+        "expectedOutput": "true",
+        "isHidden": false,
+        "description": "Should allow requests within rate limit"
+      },
+      {
+        "input": "Consume tokens exceeding limit",
+        "expectedOutput": "false",
+        "isHidden": false,
+        "description": "Should reject requests exceeding rate limit"
+      },
+      {
+        "input": "Wait and try again",
+        "expectedOutput": "true (tokens refilled)",
+        "isHidden": false,
+        "description": "Should refill tokens over time"
+      }
+    ],
+    "hints": [
+      "Use token bucket algorithm",
+      "Refill tokens based on time passed",
+      "Track last refill timestamp",
+      "Maintain separate limiters per client"
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs401-t1-ex14",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-1",
+    "title": "Service Registry with Leases",
+    "difficulty": 3,
+    "description": "Implement a service registry with lease-based registration where services must renew their registration periodically.",
+    "starterCode": "interface ServiceRegistration {\n  name: string;\n  host: string;\n  port: number;\n  leaseExpiry: number;\n}\n\nclass LeaseBasedRegistry {\n  // Implement lease-based service registry\n}",
+    "solution": "interface ServiceRegistration {\n  name: string;\n  host: string;\n  port: number;\n  leaseExpiry: number;\n}\n\nclass LeaseBasedRegistry {\n  private services: Map<string, ServiceRegistration[]> = new Map();\n  private leaseDuration: number;\n\n  constructor(leaseDuration: number = 30000) { // 30 seconds\n    this.leaseDuration = leaseDuration;\n\n    // Start cleanup\n    setInterval(() => this.cleanup(), 5000);\n  }\n\n  register(name: string, host: string, port: number): string {\n    const registration: ServiceRegistration = {\n      name,\n      host,\n      port,\n      leaseExpiry: Date.now() + this.leaseDuration\n    };\n\n    if (!this.services.has(name)) {\n      this.services.set(name, []);\n    }\n\n    const instances = this.services.get(name)!;\n\n    // Remove existing instance with same host:port\n    const filtered = instances.filter(s =>\n      !(s.host === host && s.port === port)\n    );\n    filtered.push(registration);\n    this.services.set(name, filtered);\n\n    return this.getInstanceId(host, port);\n  }\n\n  renewLease(name: string, host: string, port: number): boolean {\n    const instances = this.services.get(name);\n    if (!instances) {\n      return false;\n    }\n\n    const instance = instances.find(s =>\n      s.host === host && s.port === port\n    );\n\n    if (instance) {\n      instance.leaseExpiry = Date.now() + this.leaseDuration;\n      return true;\n    }\n\n    return false;\n  }\n\n  discover(name: string): ServiceRegistration[] {\n    const instances = this.services.get(name) || [];\n    const now = Date.now();\n\n    // Return only non-expired instances\n    return instances.filter(s => s.leaseExpiry > now);\n  }\n\n  private cleanup(): void {\n    const now = Date.now();\n\n    this.services.forEach((instances, name) => {\n      const active = instances.filter(s => s.leaseExpiry > now);\n\n      if (active.length === 0) {\n        this.services.delete(name);\n      } else if (active.length !== instances.length) {\n        this.services.set(name, active);\n      }\n    });\n  }\n\n  private getInstanceId(host: string, port: number): string {\n    return `${host}:${port}`;\n  }\n\n  getStats(): { services: number; totalInstances: number } {\n    let totalInstances = 0;\n    const now = Date.now();\n\n    this.services.forEach(instances => {\n      totalInstances += instances.filter(s => s.leaseExpiry > now).length;\n    });\n\n    return {\n      services: this.services.size,\n      totalInstances\n    };\n  }\n}",
+    "testCases": [
+      {
+        "input": "Register service and discover",
+        "expectedOutput": "Service found",
+        "isHidden": false,
+        "description": "Should register and discover services"
+      },
+      {
+        "input": "Wait for lease expiry without renewal",
+        "expectedOutput": "Service removed from registry",
+        "isHidden": false,
+        "description": "Should remove expired services"
+      },
+      {
+        "input": "Renew lease before expiry",
+        "expectedOutput": "Service remains registered",
+        "isHidden": false,
+        "description": "Should keep services with renewed leases"
+      }
+    ],
+    "hints": [
+      "Store lease expiry timestamp with each registration",
+      "Implement periodic cleanup of expired leases",
+      "Filter expired services in discover method",
+      "Allow lease renewal before expiry"
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs401-t1-ex15",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-1",
+    "title": "Request Correlation",
+    "difficulty": 2,
+    "description": "Implement request correlation to track requests across multiple services using correlation IDs.",
+    "starterCode": "interface CorrelatedRequest {\n  correlationId: string;\n  serviceName: string;\n  operation: string;\n  timestamp: number;\n  parentId?: string;\n}\n\nclass RequestCorrelation {\n  // Implement request correlation\n}",
+    "solution": "interface CorrelatedRequest {\n  correlationId: string;\n  serviceName: string;\n  operation: string;\n  timestamp: number;\n  parentId?: string;\n}\n\nclass RequestCorrelation {\n  private traces: Map<string, CorrelatedRequest[]> = new Map();\n\n  createCorrelationId(): string {\n    return `req-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;\n  }\n\n  logRequest(request: CorrelatedRequest): void {\n    if (!this.traces.has(request.correlationId)) {\n      this.traces.set(request.correlationId, []);\n    }\n\n    this.traces.get(request.correlationId)!.push(request);\n  }\n\n  getTrace(correlationId: string): CorrelatedRequest[] {\n    return this.traces.get(correlationId) || [];\n  }\n\n  buildTraceTree(correlationId: string): any {\n    const requests = this.getTrace(correlationId);\n\n    if (requests.length === 0) {\n      return null;\n    }\n\n    const root = requests.find(r => !r.parentId);\n    if (!root) {\n      return null;\n    }\n\n    const buildNode = (parentId: string): any => {\n      const parent = requests.find(r =>\n        r.correlationId === correlationId &&\n        (parentId ? r.parentId === parentId : !r.parentId)\n      );\n\n      if (!parent) {\n        return null;\n      }\n\n      const children = requests\n        .filter(r => r.parentId === `${parent.serviceName}:${parent.operation}`)\n        .map(r => buildNode(`${r.serviceName}:${r.operation}`));\n\n      return {\n        service: parent.serviceName,\n        operation: parent.operation,\n        timestamp: parent.timestamp,\n        children: children.filter(c => c !== null)\n      };\n    };\n\n    return buildNode('');\n  }\n\n  cleanup(olderThan: number): void {\n    const cutoff = Date.now() - olderThan;\n\n    const toDelete: string[] = [];\n    this.traces.forEach((requests, correlationId) => {\n      const oldestRequest = requests[0];\n      if (oldestRequest.timestamp < cutoff) {\n        toDelete.push(correlationId);\n      }\n    });\n\n    toDelete.forEach(id => this.traces.delete(id));\n  }\n\n  getActiveTraces(): number {\n    return this.traces.size;\n  }\n}",
+    "testCases": [
+      {
+        "input": "Log requests with same correlation ID",
+        "expectedOutput": "Requests grouped by correlation ID",
+        "isHidden": false,
+        "description": "Should group requests by correlation ID"
+      },
+      {
+        "input": "Build trace tree",
+        "expectedOutput": "Hierarchical trace structure",
+        "isHidden": false,
+        "description": "Should build request trace tree"
+      }
+    ],
+    "hints": [
+      "Generate unique correlation IDs",
+      "Store requests grouped by correlation ID",
+      "Support parent-child relationships",
+      "Implement cleanup for old traces"
+    ],
+    "language": "typescript"
+  },
+  {
+    "id": "cs401-t1-ex16",
+    "subjectId": "cs401",
+    "topicId": "cs401-topic-1",
+    "title": "Distributed Configuration Manager",
+    "difficulty": 3,
+    "description": "Implement a configuration manager that can distribute configuration updates to multiple services and notify them of changes.",
+    "starterCode": "type ConfigChangeCallback = (key: string, value: any) => void;\n\nclass ConfigurationManager {\n  // Implement configuration management\n}",
+    "solution": "type ConfigChangeCallback = (key: string, value: any) => void;\n\ninterface ConfigSubscription {\n  serviceName: string;\n  keys: Set<string>;\n  callback: ConfigChangeCallback;\n}\n\nclass ConfigurationManager {\n  private config: Map<string, any> = new Map();\n  private subscriptions: Map<string, ConfigSubscription[]> = new Map();\n  private version: number = 0;\n\n  set(key: string, value: any): void {\n    const oldValue = this.config.get(key);\n    this.config.set(key, value);\n    this.version++;\n\n    // Notify subscribers if value changed\n    if (oldValue !== value) {\n      this.notifySubscribers(key, value);\n    }\n  }\n\n  get(key: string): any {\n    return this.config.get(key);\n  }\n\n  getAll(): Map<string, any> {\n    return new Map(this.config);\n  }\n\n  subscribe(\n    serviceName: string,\n    keys: string[],\n    callback: ConfigChangeCallback\n  ): () => void {\n    const subscription: ConfigSubscription = {\n      serviceName,\n      keys: new Set(keys),\n      callback\n    };\n\n    keys.forEach(key => {\n      if (!this.subscriptions.has(key)) {\n        this.subscriptions.set(key, []);\n      }\n      this.subscriptions.get(key)!.push(subscription);\n    });\n\n    // Return unsubscribe function\n    return () => {\n      keys.forEach(key => {\n        const subs = this.subscriptions.get(key);\n        if (subs) {\n          const filtered = subs.filter(s => s.serviceName !== serviceName);\n          if (filtered.length === 0) {\n            this.subscriptions.delete(key);\n          } else {\n            this.subscriptions.set(key, filtered);\n          }\n        }\n      });\n    };\n  }\n\n  private notifySubscribers(key: string, value: any): void {\n    const subscribers = this.subscriptions.get(key) || [];\n\n    subscribers.forEach(sub => {\n      try {\n        sub.callback(key, value);\n      } catch (error) {\n        console.error(`Error notifying subscriber ${sub.serviceName}:`, error);\n      }\n    });\n  }\n\n  bulkUpdate(updates: Map<string, any>): void {\n    const changes: Array<{ key: string; value: any }> = [];\n\n    updates.forEach((value, key) => {\n      const oldValue = this.config.get(key);\n      if (oldValue !== value) {\n        this.config.set(key, value);\n        changes.push({ key, value });\n      }\n    });\n\n    this.version++;\n\n    // Notify all changes\n    changes.forEach(({ key, value }) => {\n      this.notifySubscribers(key, value);\n    });\n  }\n\n  getVersion(): number {\n    return this.version;\n  }\n\n  delete(key: string): boolean {\n    const existed = this.config.delete(key);\n    if (existed) {\n      this.version++;\n      this.notifySubscribers(key, undefined);\n    }\n    return existed;\n  }\n}",
+    "testCases": [
+      {
+        "input": "Set config value",
+        "expectedOutput": "Value stored and version incremented",
+        "isHidden": false,
+        "description": "Should store configuration values"
+      },
+      {
+        "input": "Subscribe to config changes",
+        "expectedOutput": "Callback invoked on value change",
+        "isHidden": false,
+        "description": "Should notify subscribers of changes"
+      },
+      {
+        "input": "Bulk update multiple values",
+        "expectedOutput": "All values updated, all subscribers notified",
+        "isHidden": false,
+        "description": "Should handle bulk updates efficiently"
+      }
+    ],
+    "hints": [
+      "Track version number for cache invalidation",
+      "Maintain subscriptions per config key",
+      "Notify subscribers only on actual changes",
+      "Support bulk updates for efficiency"
+    ],
+    "language": "typescript"
+  }
+]

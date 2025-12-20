@@ -1,0 +1,221 @@
+[
+  {
+    "id": "cs303-t3-quiz-1",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-3",
+    "title": "FP Fundamentals",
+    "questions": [
+      {
+        "id": "cs303-t3-q1-1",
+        "type": "multiple_choice",
+        "prompt": "What is a pure function?",
+        "options": [
+          "A function without bugs",
+          "A function that always returns the same output for the same input and has no side effects",
+          "A function with no parameters",
+          "A function that never fails"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Pure functions are deterministic (same input → same output) and have no observable side effects."
+      },
+      {
+        "id": "cs303-t3-q1-2",
+        "type": "multiple_choice",
+        "prompt": "What does immutability mean?",
+        "options": [
+          "Cannot be moved",
+          "Data cannot be changed after creation",
+          "Cannot be deleted",
+          "Cannot be copied"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Immutability means once data is created, it cannot be modified. New data structures are created instead."
+      },
+      {
+        "id": "cs303-t3-q1-3",
+        "type": "multiple_choice",
+        "prompt": "What is a higher-order function?",
+        "options": [
+          "A function in a higher directory",
+          "A function that takes functions as arguments or returns functions",
+          "A more important function",
+          "A recursive function"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Higher-order functions can accept functions as parameters and/or return functions as results."
+      },
+      {
+        "id": "cs303-t3-q1-4",
+        "type": "multiple_choice",
+        "prompt": "What does map do?",
+        "options": [
+          "Creates a geographic map",
+          "Applies a function to each element of a collection",
+          "Maps keys to values",
+          "Reduces a collection"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Map applies a transformation function to each element of a collection, producing a new collection."
+      },
+      {
+        "id": "cs303-t3-q1-5",
+        "type": "multiple_choice",
+        "prompt": "What is function composition?",
+        "options": [
+          "Writing functions",
+          "Combining functions so output of one becomes input of another",
+          "Decomposing functions",
+          "Function documentation"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Function composition creates a new function by chaining functions: (f ∘ g)(x) = f(g(x))."
+      }
+    ]
+  },
+  {
+    "id": "cs303-t3-quiz-2",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-3",
+    "title": "Advanced FP Concepts",
+    "questions": [
+      {
+        "id": "cs303-t3-q2-1",
+        "type": "multiple_choice",
+        "prompt": "What is tail recursion?",
+        "options": [
+          "Recursion at the end of a list",
+          "Recursion where the recursive call is the last operation",
+          "Recursion without a base case",
+          "Infinite recursion"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Tail recursion has the recursive call as the final operation, allowing compiler optimization to avoid stack growth."
+      },
+      {
+        "id": "cs303-t3-q2-2",
+        "type": "multiple_choice",
+        "prompt": "What is a fold/reduce operation?",
+        "options": [
+          "Folding paper",
+          "Combining collection elements into a single value using a function",
+          "Reducing code size",
+          "Compressing data"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Fold/reduce traverses a collection, combining elements into an accumulated result using a combining function."
+      },
+      {
+        "id": "cs303-t3-q2-3",
+        "type": "multiple_choice",
+        "prompt": "In lambda calculus, what is β-reduction?",
+        "options": [
+          "Removing variables",
+          "Substituting arguments into function bodies",
+          "Reducing complexity",
+          "Beta testing"
+        ],
+        "correctAnswer": 1,
+        "explanation": "β-reduction applies a function by substituting the argument for the bound variable in the function body."
+      },
+      {
+        "id": "cs303-t3-q2-4",
+        "type": "multiple_choice",
+        "prompt": "What is lazy evaluation?",
+        "options": [
+          "Slow evaluation",
+          "Delaying evaluation until the result is needed",
+          "Incomplete evaluation",
+          "Parallel evaluation"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Lazy evaluation defers computation until the result is actually needed, enabling infinite data structures."
+      },
+      {
+        "id": "cs303-t3-q2-5",
+        "type": "multiple_choice",
+        "prompt": "What is a thunk?",
+        "options": [
+          "A sound effect",
+          "A suspended computation awaiting evaluation",
+          "A type of error",
+          "A memory block"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A thunk is a deferred computation that captures an expression and its environment for later evaluation."
+      }
+    ]
+  },
+  {
+    "id": "cs303-t3-quiz-3",
+    "subjectId": "cs303",
+    "topicId": "cs303-topic-3",
+    "title": "Monads and Functors",
+    "questions": [
+      {
+        "id": "cs303-t3-q3-1",
+        "type": "multiple_choice",
+        "prompt": "What is a Functor in functional programming?",
+        "options": [
+          "A type of function",
+          "A type that can be mapped over",
+          "A function factory",
+          "A debugging tool"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A Functor is a type with a map operation that applies a function to values inside a context."
+      },
+      {
+        "id": "cs303-t3-q3-2",
+        "type": "multiple_choice",
+        "prompt": "What operations must a Monad support?",
+        "options": [
+          "map and filter",
+          "return/unit and bind/flatMap",
+          "get and set",
+          "read and write"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Monads require return (wrap a value) and bind/flatMap (sequence computations that return wrapped values)."
+      },
+      {
+        "id": "cs303-t3-q3-3",
+        "type": "multiple_choice",
+        "prompt": "What problem does the IO Monad solve in Haskell?",
+        "options": [
+          "Memory management",
+          "Sequencing side effects in a pure language",
+          "Parallel I/O",
+          "File compression"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The IO Monad allows Haskell to sequence I/O operations while maintaining purity and referential transparency."
+      },
+      {
+        "id": "cs303-t3-q3-4",
+        "type": "multiple_choice",
+        "prompt": "What is the difference between foldl and foldr?",
+        "options": [
+          "No difference",
+          "foldl processes left-to-right, foldr right-to-left",
+          "foldl is faster",
+          "foldr is safer"
+        ],
+        "correctAnswer": 1,
+        "explanation": "foldl accumulates from the left (beginning), foldr from the right (end), affecting associativity and laziness."
+      },
+      {
+        "id": "cs303-t3-q3-5",
+        "type": "multiple_choice",
+        "prompt": "What is an Applicative Functor?",
+        "options": [
+          "A functor for applications",
+          "A functor that allows applying wrapped functions to wrapped values",
+          "A special kind of monad",
+          "A debugging functor"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Applicative Functors extend Functors with the ability to apply functions inside a context to values inside a context."
+      }
+    ]
+  }
+]

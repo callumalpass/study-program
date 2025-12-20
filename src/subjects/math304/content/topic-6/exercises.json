@@ -1,0 +1,577 @@
+[
+  {
+    "id": "math304-t6-ex01",
+    "subjectId": "math304",
+    "topicId": "math304-topic-6",
+    "title": "Verify Ring Axioms",
+    "difficulty": 3,
+    "description": "Check if a set with two operations forms a ring. Must satisfy: abelian group under addition, monoid under multiplication, and distributivity.",
+    "starterCode": "def is_ring(elements, add_table, mul_table, zero):\n    \"\"\"\n    Check if structure is a ring.\n\n    Args:\n        elements: List of ring elements\n        add_table: Addition operation table\n        mul_table: Multiplication operation table\n        zero: Additive identity\n\n    Returns:\n        True if ring, False otherwise\n    \"\"\"\n    pass",
+    "solution": "def is_ring(elements, add_table, mul_table, zero):\n    \"\"\"\n    Check if structure is a ring.\n\n    Args:\n        elements: List of ring elements\n        add_table: Addition operation table\n        mul_table: Multiplication operation table\n        zero: Additive identity\n\n    Returns:\n        True if ring, False otherwise\n    \"\"\"\n    n = len(elements)\n\n    # Check abelian group under addition (simplified check)\n    # Identity exists (given as zero)\n    # Check associativity, commutativity, inverses for addition\n    for i in range(n):\n        for j in range(n):\n            # Commutativity\n            if add_table[i][j] != add_table[j][i]:\n                return False\n\n    # Check distributivity\n    for i in range(n):\n        for j in range(n):\n            for k in range(n):\n                # a(b+c) = ab + ac\n                bc = add_table[j][k]\n                bc_idx = elements.index(bc)\n                left = mul_table[i][bc_idx]\n\n                ab = mul_table[i][j]\n                ac = mul_table[i][k]\n                ab_idx = elements.index(ab)\n                ac_idx = elements.index(ac)\n                right = add_table[ab_idx][ac_idx]\n\n                if left != right:\n                    return False\n\n                # (a+b)c = ac + bc\n                ab_sum = add_table[i][j]\n                ab_sum_idx = elements.index(ab_sum)\n                left2 = mul_table[ab_sum_idx][k]\n\n                ac2 = mul_table[i][k]\n                bc2 = mul_table[j][k]\n                ac2_idx = elements.index(ac2)\n                bc2_idx = elements.index(bc2)\n                right2 = add_table[ac2_idx][bc2_idx]\n\n                if left2 != right2:\n                    return False\n\n    return True",
+    "testCases": [
+      {
+        "input": "[0, 1, 2], [[0, 1, 2], [1, 2, 0], [2, 0, 1]], [[0, 0, 0], [0, 1, 2], [0, 2, 1]], 0",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Z3 is a ring"
+      },
+      {
+        "input": "[0, 1], [[0, 1], [1, 0]], [[0, 0], [0, 1]], 0",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Z2 is a ring"
+      },
+      {
+        "input": "[0, 1, 2, 3], [[0, 1, 2, 3], [1, 2, 3, 0], [2, 3, 0, 1], [3, 0, 1, 2]], [[0, 0, 0, 0], [0, 1, 2, 3], [0, 2, 0, 2], [0, 3, 2, 1]], 0",
+        "expectedOutput": "True",
+        "isHidden": true,
+        "description": "Z4 is a ring"
+      }
+    ],
+    "hints": [
+      "Check addition is abelian group",
+      "Check distributivity a(b+c) = ab+ac",
+      "Check distributivity (a+b)c = ac+bc"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math304-t6-ex02",
+    "subjectId": "math304",
+    "topicId": "math304-topic-6",
+    "title": "Check Commutative Ring",
+    "difficulty": 1,
+    "description": "Determine if a ring is commutative. A ring is commutative if ab = ba for all elements.",
+    "starterCode": "def is_commutative_ring(elements, mul_table):\n    \"\"\"\n    Check if ring is commutative.\n\n    Args:\n        elements: List of ring elements\n        mul_table: Multiplication operation table\n\n    Returns:\n        True if commutative, False otherwise\n    \"\"\"\n    pass",
+    "solution": "def is_commutative_ring(elements, mul_table):\n    \"\"\"\n    Check if ring is commutative.\n\n    Args:\n        elements: List of ring elements\n        mul_table: Multiplication operation table\n\n    Returns:\n        True if commutative, False otherwise\n    \"\"\"\n    n = len(elements)\n\n    for i in range(n):\n        for j in range(n):\n            if mul_table[i][j] != mul_table[j][i]:\n                return False\n\n    return True",
+    "testCases": [
+      {
+        "input": "[0, 1, 2], [[0, 0, 0], [0, 1, 2], [0, 2, 1]]",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Z3 is commutative"
+      },
+      {
+        "input": "[0, 1], [[0, 0], [0, 1]]",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Z2 is commutative"
+      },
+      {
+        "input": "[0, 1, 2, 3], [[0, 0, 0, 0], [0, 1, 2, 3], [0, 2, 0, 2], [0, 3, 2, 1]]",
+        "expectedOutput": "True",
+        "isHidden": true,
+        "description": "Z4 is commutative"
+      }
+    ],
+    "hints": [
+      "Check if multiplication table is symmetric",
+      "Compare mul_table[i][j] with mul_table[j][i]"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math304-t6-ex03",
+    "subjectId": "math304",
+    "topicId": "math304-topic-6",
+    "title": "Find Zero Divisors",
+    "difficulty": 2,
+    "description": "Find all zero divisors in a ring. Element a is a zero divisor if there exists nonzero b with ab = 0 or ba = 0.",
+    "starterCode": "def find_zero_divisors(elements, mul_table, zero):\n    \"\"\"\n    Find all zero divisors.\n\n    Args:\n        elements: List of ring elements\n        mul_table: Multiplication operation table\n        zero: Zero element\n\n    Returns:\n        Sorted list of zero divisors (excluding zero itself)\n    \"\"\"\n    pass",
+    "solution": "def find_zero_divisors(elements, mul_table, zero):\n    \"\"\"\n    Find all zero divisors.\n\n    Args:\n        elements: List of ring elements\n        mul_table: Multiplication operation table\n        zero: Zero element\n\n    Returns:\n        Sorted list of zero divisors (excluding zero itself)\n    \"\"\"\n    zero_divisors = []\n    n = len(elements)\n\n    for i in range(n):\n        a = elements[i]\n        if a == zero:\n            continue\n\n        is_zero_divisor = False\n\n        for j in range(n):\n            b = elements[j]\n            if b == zero:\n                continue\n\n            # Check ab = 0 or ba = 0\n            if mul_table[i][j] == zero or mul_table[j][i] == zero:\n                is_zero_divisor = True\n                break\n\n        if is_zero_divisor:\n            zero_divisors.append(a)\n\n    return sorted(zero_divisors)",
+    "testCases": [
+      {
+        "input": "[0, 1, 2, 3, 4], [[0, 0, 0, 0, 0], [0, 1, 2, 3, 4], [0, 2, 4, 1, 3], [0, 3, 1, 4, 2], [0, 4, 3, 2, 1]], 0",
+        "expectedOutput": "[]",
+        "isHidden": false,
+        "description": "Z5 has no zero divisors (field)"
+      },
+      {
+        "input": "[0, 1, 2, 3], [[0, 0, 0, 0], [0, 1, 2, 3], [0, 2, 0, 2], [0, 3, 2, 1]], 0",
+        "expectedOutput": "[2]",
+        "isHidden": false,
+        "description": "Z4 has zero divisor 2"
+      },
+      {
+        "input": "[0, 1, 2], [[0, 0, 0], [0, 1, 2], [0, 2, 1]], 0",
+        "expectedOutput": "[]",
+        "isHidden": true,
+        "description": "Z3 has no zero divisors"
+      }
+    ],
+    "hints": [
+      "For each nonzero a, check if ab = 0 for some nonzero b",
+      "Zero divisors prevent cancellation",
+      "Integral domains have no zero divisors"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math304-t6-ex04",
+    "subjectId": "math304",
+    "topicId": "math304-topic-6",
+    "title": "Find Units in Ring",
+    "difficulty": 2,
+    "description": "Find all units (invertible elements) in a ring. Element a is a unit if there exists b with ab = ba = 1.",
+    "starterCode": "def find_units(elements, mul_table, one):\n    \"\"\"\n    Find all units in the ring.\n\n    Args:\n        elements: List of ring elements\n        mul_table: Multiplication operation table\n        one: Multiplicative identity\n\n    Returns:\n        Sorted list of units\n    \"\"\"\n    pass",
+    "solution": "def find_units(elements, mul_table, one):\n    \"\"\"\n    Find all units in the ring.\n\n    Args:\n        elements: List of ring elements\n        mul_table: Multiplication operation table\n        one: Multiplicative identity\n\n    Returns:\n        Sorted list of units\n    \"\"\"\n    units = []\n    n = len(elements)\n\n    for i in range(n):\n        a = elements[i]\n        has_inverse = False\n\n        for j in range(n):\n            # Check if ab = ba = 1\n            if mul_table[i][j] == one and mul_table[j][i] == one:\n                has_inverse = True\n                break\n\n        if has_inverse:\n            units.append(a)\n\n    return sorted(units)",
+    "testCases": [
+      {
+        "input": "[0, 1, 2, 3, 4], [[0, 0, 0, 0, 0], [0, 1, 2, 3, 4], [0, 2, 4, 1, 3], [0, 3, 1, 4, 2], [0, 4, 3, 2, 1]], 1",
+        "expectedOutput": "[1, 2, 3, 4]",
+        "isHidden": false,
+        "description": "All nonzero elements in Z5 are units"
+      },
+      {
+        "input": "[0, 1, 2, 3], [[0, 0, 0, 0], [0, 1, 2, 3], [0, 2, 0, 2], [0, 3, 2, 1]], 1",
+        "expectedOutput": "[1, 3]",
+        "isHidden": false,
+        "description": "Units in Z4 are 1 and 3"
+      },
+      {
+        "input": "[0, 1, 2], [[0, 0, 0], [0, 1, 2], [0, 2, 1]], 1",
+        "expectedOutput": "[1, 2]",
+        "isHidden": true,
+        "description": "Units in Z3"
+      }
+    ],
+    "hints": [
+      "Find elements with multiplicative inverse",
+      "Check if ab = ba = 1 for some b",
+      "Units form a group under multiplication"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math304-t6-ex05",
+    "subjectId": "math304",
+    "topicId": "math304-topic-6",
+    "title": "Check if Element in Ideal",
+    "difficulty": 2,
+    "description": "Check if an element belongs to an ideal generated by a set. Ideal I is closed under addition and absorption (ra, ar in I for all r in R).",
+    "starterCode": "def in_ideal(element, generators, elements, add_table, mul_table):\n    \"\"\"\n    Check if element is in ideal generated by generators.\n\n    Args:\n        element: Element to check\n        generators: List of ideal generators\n        elements: List of ring elements\n        add_table: Addition table\n        mul_table: Multiplication table\n\n    Returns:\n        True if element in ideal, False otherwise\n    \"\"\"\n    pass",
+    "solution": "def in_ideal(element, generators, elements, add_table, mul_table):\n    \"\"\"\n    Check if element is in ideal generated by generators.\n\n    Args:\n        element: Element to check\n        generators: List of ideal generators\n        elements: List of ring elements\n        add_table: Addition table\n        mul_table: Multiplication table\n\n    Returns:\n        True if element in ideal, False otherwise\n    \"\"\"\n    # Generate ideal by closure\n    ideal = set(generators)\n    changed = True\n\n    while changed:\n        changed = False\n        new_elements = set()\n\n        # Add sums of ideal elements\n        for a in ideal:\n            for b in ideal:\n                a_idx = elements.index(a)\n                b_idx = elements.index(b)\n                sum_elem = add_table[a_idx][b_idx]\n                if sum_elem not in ideal:\n                    new_elements.add(sum_elem)\n                    changed = True\n\n        # Add multiples ra and ar for all r\n        for r in elements:\n            for a in ideal:\n                r_idx = elements.index(r)\n                a_idx = elements.index(a)\n\n                ra = mul_table[r_idx][a_idx]\n                ar = mul_table[a_idx][r_idx]\n\n                if ra not in ideal:\n                    new_elements.add(ra)\n                    changed = True\n\n                if ar not in ideal:\n                    new_elements.add(ar)\n                    changed = True\n\n        ideal.update(new_elements)\n\n    return element in ideal",
+    "testCases": [
+      {
+        "input": "2, [2], [0, 1, 2, 3], [[0, 1, 2, 3], [1, 2, 3, 0], [2, 3, 0, 1], [3, 0, 1, 2]], [[0, 0, 0, 0], [0, 1, 2, 3], [0, 2, 0, 2], [0, 3, 2, 1]]",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "2 in ideal <2> in Z4"
+      },
+      {
+        "input": "1, [2], [0, 1, 2, 3], [[0, 1, 2, 3], [1, 2, 3, 0], [2, 3, 0, 1], [3, 0, 1, 2]], [[0, 0, 0, 0], [0, 1, 2, 3], [0, 2, 0, 2], [0, 3, 2, 1]]",
+        "expectedOutput": "False",
+        "isHidden": false,
+        "description": "1 not in ideal <2> in Z4"
+      },
+      {
+        "input": "0, [2], [0, 1, 2, 3], [[0, 1, 2, 3], [1, 2, 3, 0], [2, 3, 0, 1], [3, 0, 1, 2]], [[0, 0, 0, 0], [0, 1, 2, 3], [0, 2, 0, 2], [0, 3, 2, 1]]",
+        "expectedOutput": "True",
+        "isHidden": true,
+        "description": "0 always in ideal"
+      }
+    ],
+    "hints": [
+      "Generate ideal by closure under addition and multiplication",
+      "Keep adding elements until no new elements found",
+      "Ideal contains 0 and is closed under ra and ar"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math304-t6-ex06",
+    "subjectId": "math304",
+    "topicId": "math304-topic-6",
+    "title": "Generate Principal Ideal",
+    "difficulty": 3,
+    "description": "Generate the principal ideal <a> = {ra : r in R} in a commutative ring.",
+    "starterCode": "def principal_ideal(generator, elements, mul_table):\n    \"\"\"\n    Generate principal ideal <a>.\n\n    Args:\n        generator: Ideal generator\n        elements: List of ring elements\n        mul_table: Multiplication table\n\n    Returns:\n        Sorted list of elements in <a>\n    \"\"\"\n    pass",
+    "solution": "def principal_ideal(generator, elements, mul_table):\n    \"\"\"\n    Generate principal ideal <a>.\n\n    Args:\n        generator: Ideal generator\n        elements: List of ring elements\n        mul_table: Multiplication table\n\n    Returns:\n        Sorted list of elements in <a>\n    \"\"\"\n    ideal = set()\n    gen_idx = elements.index(generator)\n\n    # Multiply generator by all ring elements\n    for i in range(len(elements)):\n        product = mul_table[i][gen_idx]\n        ideal.add(product)\n\n    return sorted(list(ideal))",
+    "testCases": [
+      {
+        "input": "2, [0, 1, 2, 3, 4, 5], [[0, 0, 0, 0, 0, 0], [0, 1, 2, 3, 4, 5], [0, 2, 4, 0, 2, 4], [0, 3, 0, 3, 0, 3], [0, 4, 2, 0, 4, 2], [0, 5, 4, 3, 2, 1]]",
+        "expectedOutput": "[0, 2, 4]",
+        "isHidden": false,
+        "description": "<2> in Z6"
+      },
+      {
+        "input": "1, [0, 1, 2, 3, 4], [[0, 0, 0, 0, 0], [0, 1, 2, 3, 4], [0, 2, 4, 1, 3], [0, 3, 1, 4, 2], [0, 4, 3, 2, 1]]",
+        "expectedOutput": "[0, 1, 2, 3, 4]",
+        "isHidden": false,
+        "description": "<1> = Z5 (unit)"
+      },
+      {
+        "input": "0, [0, 1, 2], [[0, 0, 0], [0, 1, 2], [0, 2, 1]]",
+        "expectedOutput": "[0]",
+        "isHidden": true,
+        "description": "<0> = {0}"
+      }
+    ],
+    "hints": [
+      "Compute ra for all r in R",
+      "In commutative ring, this equals {ar}",
+      "Ideal contains all multiples of generator"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math304-t6-ex07",
+    "subjectId": "math304",
+    "topicId": "math304-topic-6",
+    "title": "Check if Ideal is Prime",
+    "difficulty": 4,
+    "description": "Check if an ideal I is prime. I is prime if ab in I implies a in I or b in I.",
+    "starterCode": "def is_prime_ideal(ideal, elements, mul_table, zero):\n    \"\"\"\n    Check if ideal is prime.\n\n    Args:\n        ideal: List of elements in the ideal\n        elements: List of ring elements\n        mul_table: Multiplication table\n        zero: Zero element\n\n    Returns:\n        True if prime ideal, False otherwise\n    \"\"\"\n    pass",
+    "solution": "def is_prime_ideal(ideal, elements, mul_table, zero):\n    \"\"\"\n    Check if ideal is prime.\n\n    Args:\n        ideal: List of elements in the ideal\n        elements: List of ring elements\n        mul_table: Multiplication table\n        zero: Zero element\n\n    Returns:\n        True if prime ideal, False otherwise\n    \"\"\"\n    ideal_set = set(ideal)\n\n    # Prime ideal must be proper (not the whole ring)\n    if ideal_set == set(elements):\n        return False\n\n    # Check: if ab in I, then a in I or b in I\n    for i in range(len(elements)):\n        for j in range(len(elements)):\n            a = elements[i]\n            b = elements[j]\n            ab = mul_table[i][j]\n\n            if ab in ideal_set:\n                if a not in ideal_set and b not in ideal_set:\n                    return False\n\n    return True",
+    "testCases": [
+      {
+        "input": "[0, 2, 4], [0, 1, 2, 3, 4, 5], [[0, 0, 0, 0, 0, 0], [0, 1, 2, 3, 4, 5], [0, 2, 4, 0, 2, 4], [0, 3, 0, 3, 0, 3], [0, 4, 2, 0, 4, 2], [0, 5, 4, 3, 2, 1]], 0",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "<2> is prime in Z6"
+      },
+      {
+        "input": "[0], [0, 1, 2, 3, 4], [[0, 0, 0, 0, 0], [0, 1, 2, 3, 4], [0, 2, 4, 1, 3], [0, 3, 1, 4, 2], [0, 4, 3, 2, 1]], 0",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "{0} is prime in Z5"
+      },
+      {
+        "input": "[0, 2], [0, 1, 2, 3], [[0, 0, 0, 0], [0, 1, 2, 3], [0, 2, 0, 2], [0, 3, 2, 1]], 0",
+        "expectedOutput": "False",
+        "isHidden": true,
+        "description": "<2> not prime in Z4 (2*2=0)"
+      }
+    ],
+    "hints": [
+      "Check if ideal is proper (not whole ring)",
+      "For all a, b: if ab in I, then a in I or b in I",
+      "Prime ideals correspond to integral domains in quotient"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math304-t6-ex08",
+    "subjectId": "math304",
+    "topicId": "math304-topic-6",
+    "title": "Check if Ideal is Maximal",
+    "difficulty": 4,
+    "description": "Check if an ideal I is maximal. I is maximal if there is no proper ideal J with I ⊂ J ⊂ R.",
+    "starterCode": "def is_maximal_ideal(ideal, elements, add_table, mul_table, zero):\n    \"\"\"\n    Check if ideal is maximal.\n\n    Args:\n        ideal: List of elements in the ideal\n        elements: List of ring elements\n        add_table: Addition table\n        mul_table: Multiplication table\n        zero: Zero element\n\n    Returns:\n        True if maximal, False otherwise\n    \"\"\"\n    pass",
+    "solution": "def is_maximal_ideal(ideal, elements, add_table, mul_table, zero):\n    \"\"\"\n    Check if ideal is maximal.\n\n    Args:\n        ideal: List of elements in the ideal\n        elements: List of ring elements\n        add_table: Addition table\n        mul_table: Multiplication table\n        zero: Zero element\n\n    Returns:\n        True if maximal, False otherwise\n    \"\"\"\n    from itertools import combinations\n\n    ideal_set = set(ideal)\n\n    # Must be proper ideal\n    if ideal_set == set(elements):\n        return False\n\n    # Try adding each element not in I\n    for elem in elements:\n        if elem in ideal_set:\n            continue\n\n        # Generate ideal containing I and elem\n        new_ideal = set(ideal)\n        new_ideal.add(elem)\n\n        changed = True\n        while changed:\n            changed = False\n            to_add = set()\n\n            # Add sums\n            for a in new_ideal:\n                for b in new_ideal:\n                    a_idx = elements.index(a)\n                    b_idx = elements.index(b)\n                    sum_elem = add_table[a_idx][b_idx]\n                    if sum_elem not in new_ideal:\n                        to_add.add(sum_elem)\n                        changed = True\n\n            # Add multiples\n            for r in elements:\n                for a in new_ideal:\n                    r_idx = elements.index(r)\n                    a_idx = elements.index(a)\n                    ra = mul_table[r_idx][a_idx]\n                    ar = mul_table[a_idx][r_idx]\n                    if ra not in new_ideal:\n                        to_add.add(ra)\n                        changed = True\n                    if ar not in new_ideal:\n                        to_add.add(ar)\n                        changed = True\n\n            new_ideal.update(to_add)\n\n        # If new ideal is whole ring, continue; otherwise not maximal\n        if new_ideal != set(elements):\n            return False\n\n    return True",
+    "testCases": [
+      {
+        "input": "[0, 2, 4], [0, 1, 2, 3, 4, 5], [[0, 1, 2, 3, 4, 5], [1, 2, 3, 4, 5, 0], [2, 3, 4, 5, 0, 1], [3, 4, 5, 0, 1, 2], [4, 5, 0, 1, 2, 3], [5, 0, 1, 2, 3, 4]], [[0, 0, 0, 0, 0, 0], [0, 1, 2, 3, 4, 5], [0, 2, 4, 0, 2, 4], [0, 3, 0, 3, 0, 3], [0, 4, 2, 0, 4, 2], [0, 5, 4, 3, 2, 1]], 0",
+        "expectedOutput": "False",
+        "isHidden": false,
+        "description": "<2> not maximal in Z6"
+      },
+      {
+        "input": "[0, 3], [0, 1, 2, 3, 4, 5], [[0, 1, 2, 3, 4, 5], [1, 2, 3, 4, 5, 0], [2, 3, 4, 5, 0, 1], [3, 4, 5, 0, 1, 2], [4, 5, 0, 1, 2, 3], [5, 0, 1, 2, 3, 4]], [[0, 0, 0, 0, 0, 0], [0, 1, 2, 3, 4, 5], [0, 2, 4, 0, 2, 4], [0, 3, 0, 3, 0, 3], [0, 4, 2, 0, 4, 2], [0, 5, 4, 3, 2, 1]], 0",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "<3> is maximal in Z6"
+      },
+      {
+        "input": "[0], [0, 1, 2], [[0, 1, 2], [1, 2, 0], [2, 0, 1]], [[0, 0, 0], [0, 1, 2], [0, 2, 1]], 0",
+        "expectedOutput": "True",
+        "isHidden": true,
+        "description": "{0} maximal in field Z3"
+      }
+    ],
+    "hints": [
+      "Check if ideal is proper",
+      "For each element not in I, check if <I, a> = R",
+      "Maximal ideals correspond to fields in quotient"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math304-t6-ex09",
+    "subjectId": "math304",
+    "topicId": "math304-topic-6",
+    "title": "Check Integral Domain",
+    "difficulty": 2,
+    "description": "Check if a commutative ring is an integral domain (no zero divisors).",
+    "starterCode": "def is_integral_domain(elements, mul_table, zero):\n    \"\"\"\n    Check if ring is an integral domain.\n\n    Args:\n        elements: List of ring elements\n        mul_table: Multiplication table\n        zero: Zero element\n\n    Returns:\n        True if integral domain, False otherwise\n    \"\"\"\n    pass",
+    "solution": "def is_integral_domain(elements, mul_table, zero):\n    \"\"\"\n    Check if ring is an integral domain.\n\n    Args:\n        elements: List of ring elements\n        mul_table: Multiplication table\n        zero: Zero element\n\n    Returns:\n        True if integral domain, False otherwise\n    \"\"\"\n    n = len(elements)\n\n    # Check for zero divisors\n    for i in range(n):\n        if elements[i] == zero:\n            continue\n\n        for j in range(n):\n            if elements[j] == zero:\n                continue\n\n            if mul_table[i][j] == zero:\n                return False\n\n    return True",
+    "testCases": [
+      {
+        "input": "[0, 1, 2, 3, 4], [[0, 0, 0, 0, 0], [0, 1, 2, 3, 4], [0, 2, 4, 1, 3], [0, 3, 1, 4, 2], [0, 4, 3, 2, 1]], 0",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Z5 is integral domain"
+      },
+      {
+        "input": "[0, 1, 2, 3], [[0, 0, 0, 0], [0, 1, 2, 3], [0, 2, 0, 2], [0, 3, 2, 1]], 0",
+        "expectedOutput": "False",
+        "isHidden": false,
+        "description": "Z4 not integral domain (2*2=0)"
+      },
+      {
+        "input": "[0, 1, 2], [[0, 0, 0], [0, 1, 2], [0, 2, 1]], 0",
+        "expectedOutput": "True",
+        "isHidden": true,
+        "description": "Z3 is integral domain"
+      }
+    ],
+    "hints": [
+      "Check if there exist nonzero a, b with ab = 0",
+      "Integral domain = commutative ring with no zero divisors",
+      "All fields are integral domains"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math304-t6-ex10",
+    "subjectId": "math304",
+    "topicId": "math304-topic-6",
+    "title": "Check if Ring is Field",
+    "difficulty": 2,
+    "description": "Check if a ring is a field. A field is a commutative ring where every nonzero element is a unit.",
+    "starterCode": "def is_field(elements, mul_table, zero, one):\n    \"\"\"\n    Check if ring is a field.\n\n    Args:\n        elements: List of ring elements\n        mul_table: Multiplication table\n        zero: Zero element\n        one: Multiplicative identity\n\n    Returns:\n        True if field, False otherwise\n    \"\"\"\n    pass",
+    "solution": "def is_field(elements, mul_table, zero, one):\n    \"\"\"\n    Check if ring is a field.\n\n    Args:\n        elements: List of ring elements\n        mul_table: Multiplication table\n        zero: Zero element\n        one: Multiplicative identity\n\n    Returns:\n        True if field, False otherwise\n    \"\"\"\n    n = len(elements)\n\n    # Check every nonzero element has inverse\n    for i in range(n):\n        if elements[i] == zero:\n            continue\n\n        has_inverse = False\n        for j in range(n):\n            if mul_table[i][j] == one and mul_table[j][i] == one:\n                has_inverse = True\n                break\n\n        if not has_inverse:\n            return False\n\n    return True",
+    "testCases": [
+      {
+        "input": "[0, 1, 2, 3, 4], [[0, 0, 0, 0, 0], [0, 1, 2, 3, 4], [0, 2, 4, 1, 3], [0, 3, 1, 4, 2], [0, 4, 3, 2, 1]], 0, 1",
+        "expectedOutput": "True",
+        "isHidden": false,
+        "description": "Z5 is a field"
+      },
+      {
+        "input": "[0, 1, 2, 3], [[0, 0, 0, 0], [0, 1, 2, 3], [0, 2, 0, 2], [0, 3, 2, 1]], 0, 1",
+        "expectedOutput": "False",
+        "isHidden": false,
+        "description": "Z4 not a field"
+      },
+      {
+        "input": "[0, 1, 2], [[0, 0, 0], [0, 1, 2], [0, 2, 1]], 0, 1",
+        "expectedOutput": "True",
+        "isHidden": true,
+        "description": "Z3 is a field"
+      }
+    ],
+    "hints": [
+      "Check if every nonzero element has multiplicative inverse",
+      "Field = commutative division ring",
+      "Zp is field iff p is prime"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math304-t6-ex11",
+    "subjectId": "math304",
+    "topicId": "math304-topic-6",
+    "title": "Compute Characteristic of Ring",
+    "difficulty": 3,
+    "description": "Find the characteristic of a ring. The characteristic is the smallest positive n with n·1 = 0, or 0 if no such n exists.",
+    "starterCode": "def ring_characteristic(elements, add_table, zero, one):\n    \"\"\"\n    Compute characteristic of ring.\n\n    Args:\n        elements: List of ring elements\n        add_table: Addition table\n        zero: Zero element\n        one: Multiplicative identity\n\n    Returns:\n        Characteristic of the ring\n    \"\"\"\n    pass",
+    "solution": "def ring_characteristic(elements, add_table, zero, one):\n    \"\"\"\n    Compute characteristic of ring.\n\n    Args:\n        elements: List of ring elements\n        add_table: Addition table\n        zero: Zero element\n        one: Multiplicative identity\n\n    Returns:\n        Characteristic of the ring\n    \"\"\"\n    current = one\n    n = 1\n    one_idx = elements.index(one)\n\n    while current != zero and n <= len(elements):\n        current_idx = elements.index(current)\n        current = add_table[current_idx][one_idx]\n        n += 1\n\n    if current == zero:\n        return n - 1\n    else:\n        return 0",
+    "testCases": [
+      {
+        "input": "[0, 1, 2, 3, 4], [[0, 1, 2, 3, 4], [1, 2, 3, 4, 0], [2, 3, 4, 0, 1], [3, 4, 0, 1, 2], [4, 0, 1, 2, 3]], 0, 1",
+        "expectedOutput": "5",
+        "isHidden": false,
+        "description": "Z5 has characteristic 5"
+      },
+      {
+        "input": "[0, 1, 2, 3], [[0, 1, 2, 3], [1, 2, 3, 0], [2, 3, 0, 1], [3, 0, 1, 2]], 0, 1",
+        "expectedOutput": "4",
+        "isHidden": false,
+        "description": "Z4 has characteristic 4"
+      },
+      {
+        "input": "[0, 1, 2], [[0, 1, 2], [1, 2, 0], [2, 0, 1]], 0, 1",
+        "expectedOutput": "3",
+        "isHidden": true,
+        "description": "Z3 has characteristic 3"
+      }
+    ],
+    "hints": [
+      "Add 1 to itself repeatedly",
+      "Count how many times until you get 0",
+      "Characteristic divides ring order for finite rings"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math304-t6-ex12",
+    "subjectId": "math304",
+    "topicId": "math304-topic-6",
+    "title": "Find Nilpotent Elements",
+    "difficulty": 3,
+    "description": "Find all nilpotent elements in a ring. Element a is nilpotent if a^n = 0 for some positive integer n.",
+    "starterCode": "def find_nilpotent_elements(elements, mul_table, zero):\n    \"\"\"\n    Find all nilpotent elements.\n\n    Args:\n        elements: List of ring elements\n        mul_table: Multiplication table\n        zero: Zero element\n\n    Returns:\n        Sorted list of nilpotent elements\n    \"\"\"\n    pass",
+    "solution": "def find_nilpotent_elements(elements, mul_table, zero):\n    \"\"\"\n    Find all nilpotent elements.\n\n    Args:\n        elements: List of ring elements\n        mul_table: Multiplication table\n        zero: Zero element\n\n    Returns:\n        Sorted list of nilpotent elements\n    \"\"\"\n    nilpotent = []\n    n = len(elements)\n\n    for i in range(n):\n        a = elements[i]\n        current = a\n        current_idx = i\n\n        # Compute powers until we reach zero or exceed ring size\n        for _ in range(n):\n            if current == zero:\n                nilpotent.append(a)\n                break\n\n            # Compute current * a\n            a_idx = elements.index(a)\n            current = mul_table[current_idx][a_idx]\n            current_idx = elements.index(current)\n\n    return sorted(nilpotent)",
+    "testCases": [
+      {
+        "input": "[0, 1, 2, 3], [[0, 0, 0, 0], [0, 1, 2, 3], [0, 2, 0, 2], [0, 3, 2, 1]], 0",
+        "expectedOutput": "[0, 2]",
+        "isHidden": false,
+        "description": "0 and 2 are nilpotent in Z4"
+      },
+      {
+        "input": "[0, 1, 2, 3, 4], [[0, 0, 0, 0, 0], [0, 1, 2, 3, 4], [0, 2, 4, 1, 3], [0, 3, 1, 4, 2], [0, 4, 3, 2, 1]], 0",
+        "expectedOutput": "[0]",
+        "isHidden": false,
+        "description": "Only 0 nilpotent in Z5"
+      },
+      {
+        "input": "[0, 1, 2], [[0, 0, 0], [0, 1, 2], [0, 2, 1]], 0",
+        "expectedOutput": "[0]",
+        "isHidden": true,
+        "description": "Only 0 nilpotent in Z3"
+      }
+    ],
+    "hints": [
+      "For each element, compute successive powers",
+      "Check if any power equals zero",
+      "Zero is always nilpotent"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math304-t6-ex13",
+    "subjectId": "math304",
+    "topicId": "math304-topic-6",
+    "title": "Find Idempotent Elements in Ring",
+    "difficulty": 2,
+    "description": "Find all idempotent elements in a ring. Element a is idempotent if a² = a.",
+    "starterCode": "def find_ring_idempotents(elements, mul_table):\n    \"\"\"\n    Find all idempotent elements.\n\n    Args:\n        elements: List of ring elements\n        mul_table: Multiplication table\n\n    Returns:\n        Sorted list of idempotent elements\n    \"\"\"\n    pass",
+    "solution": "def find_ring_idempotents(elements, mul_table):\n    \"\"\"\n    Find all idempotent elements.\n\n    Args:\n        elements: List of ring elements\n        mul_table: Multiplication table\n\n    Returns:\n        Sorted list of idempotent elements\n    \"\"\"\n    idempotents = []\n    n = len(elements)\n\n    for i in range(n):\n        # Check if a² = a\n        if mul_table[i][i] == elements[i]:\n            idempotents.append(elements[i])\n\n    return sorted(idempotents)",
+    "testCases": [
+      {
+        "input": "[0, 1, 2, 3], [[0, 0, 0, 0], [0, 1, 2, 3], [0, 2, 0, 2], [0, 3, 2, 1]]",
+        "expectedOutput": "[0, 1]",
+        "isHidden": false,
+        "description": "0 and 1 are idempotent in Z4"
+      },
+      {
+        "input": "[0, 1, 2, 3, 4], [[0, 0, 0, 0, 0], [0, 1, 2, 3, 4], [0, 2, 4, 1, 3], [0, 3, 1, 4, 2], [0, 4, 3, 2, 1]]",
+        "expectedOutput": "[0, 1]",
+        "isHidden": false,
+        "description": "Only 0 and 1 in Z5"
+      },
+      {
+        "input": "[0, 1, 2], [[0, 0, 0], [0, 1, 2], [0, 2, 1]]",
+        "expectedOutput": "[0, 1]",
+        "isHidden": true,
+        "description": "Idempotents in Z3"
+      }
+    ],
+    "hints": [
+      "Check diagonal of multiplication table",
+      "a is idempotent if a² = a",
+      "0 and 1 are always idempotent"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math304-t6-ex14",
+    "subjectId": "math304",
+    "topicId": "math304-topic-6",
+    "title": "Sum of Ideals",
+    "difficulty": 3,
+    "description": "Compute the sum of two ideals I + J = {i + j : i ∈ I, j ∈ J}.",
+    "starterCode": "def ideal_sum(ideal1, ideal2, elements, add_table, mul_table):\n    \"\"\"\n    Compute sum of two ideals.\n\n    Args:\n        ideal1, ideal2: Lists of elements in ideals\n        elements: List of ring elements\n        add_table: Addition table\n        mul_table: Multiplication table\n\n    Returns:\n        Sorted list of elements in I + J\n    \"\"\"\n    pass",
+    "solution": "def ideal_sum(ideal1, ideal2, elements, add_table, mul_table):\n    \"\"\"\n    Compute sum of two ideals.\n\n    Args:\n        ideal1, ideal2: Lists of elements in ideals\n        elements: List of ring elements\n        add_table: Addition table\n        mul_table: Multiplication table\n\n    Returns:\n        Sorted list of elements in I + J\n    \"\"\"\n    # Start with union\n    result = set(ideal1) | set(ideal2)\n\n    changed = True\n    while changed:\n        changed = False\n        new_elements = set()\n\n        # Add sums\n        for a in result:\n            for b in result:\n                a_idx = elements.index(a)\n                b_idx = elements.index(b)\n                sum_elem = add_table[a_idx][b_idx]\n                if sum_elem not in result:\n                    new_elements.add(sum_elem)\n                    changed = True\n\n        # Add multiples (ideal property)\n        for r in elements:\n            for a in result:\n                r_idx = elements.index(r)\n                a_idx = elements.index(a)\n                ra = mul_table[r_idx][a_idx]\n                ar = mul_table[a_idx][r_idx]\n                if ra not in result:\n                    new_elements.add(ra)\n                    changed = True\n                if ar not in result:\n                    new_elements.add(ar)\n                    changed = True\n\n        result.update(new_elements)\n\n    return sorted(list(result))",
+    "testCases": [
+      {
+        "input": "[0, 2, 4], [0, 3], [0, 1, 2, 3, 4, 5], [[0, 1, 2, 3, 4, 5], [1, 2, 3, 4, 5, 0], [2, 3, 4, 5, 0, 1], [3, 4, 5, 0, 1, 2], [4, 5, 0, 1, 2, 3], [5, 0, 1, 2, 3, 4]], [[0, 0, 0, 0, 0, 0], [0, 1, 2, 3, 4, 5], [0, 2, 4, 0, 2, 4], [0, 3, 0, 3, 0, 3], [0, 4, 2, 0, 4, 2], [0, 5, 4, 3, 2, 1]]",
+        "expectedOutput": "[0, 1, 2, 3, 4, 5]",
+        "isHidden": false,
+        "description": "<2> + <3> = Z6"
+      },
+      {
+        "input": "[0, 2], [0, 3], [0, 1, 2, 3, 4, 5], [[0, 1, 2, 3, 4, 5], [1, 2, 3, 4, 5, 0], [2, 3, 4, 5, 0, 1], [3, 4, 5, 0, 1, 2], [4, 5, 0, 1, 2, 3], [5, 0, 1, 2, 3, 4]], [[0, 0, 0, 0, 0, 0], [0, 1, 2, 3, 4, 5], [0, 2, 4, 0, 2, 4], [0, 3, 0, 3, 0, 3], [0, 4, 2, 0, 4, 2], [0, 5, 4, 3, 2, 1]]",
+        "expectedOutput": "[0, 1, 2, 3, 4, 5]",
+        "isHidden": false,
+        "description": "Sum of coprime ideals"
+      },
+      {
+        "input": "[0], [0], [0, 1, 2], [[0, 1, 2], [1, 2, 0], [2, 0, 1]], [[0, 0, 0], [0, 1, 2], [0, 2, 1]]",
+        "expectedOutput": "[0]",
+        "isHidden": true,
+        "description": "{0} + {0} = {0}"
+      }
+    ],
+    "hints": [
+      "Start with union of both ideals",
+      "Close under addition and multiplication",
+      "I + J is smallest ideal containing both"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math304-t6-ex15",
+    "subjectId": "math304",
+    "topicId": "math304-topic-6",
+    "title": "Intersection of Ideals",
+    "difficulty": 2,
+    "description": "Compute the intersection of two ideals I ∩ J.",
+    "starterCode": "def ideal_intersection(ideal1, ideal2):\n    \"\"\"\n    Compute intersection of two ideals.\n\n    Args:\n        ideal1, ideal2: Lists of elements in ideals\n\n    Returns:\n        Sorted list of elements in I ∩ J\n    \"\"\"\n    pass",
+    "solution": "def ideal_intersection(ideal1, ideal2):\n    \"\"\"\n    Compute intersection of two ideals.\n\n    Args:\n        ideal1, ideal2: Lists of elements in ideals\n\n    Returns:\n        Sorted list of elements in I ∩ J\n    \"\"\"\n    intersection = set(ideal1) & set(ideal2)\n    return sorted(list(intersection))",
+    "testCases": [
+      {
+        "input": "[0, 2, 4], [0, 3]",
+        "expectedOutput": "[0]",
+        "isHidden": false,
+        "description": "<2> ∩ <3> = {0} in Z6"
+      },
+      {
+        "input": "[0, 2, 4], [0, 2, 4]",
+        "expectedOutput": "[0, 2, 4]",
+        "isHidden": false,
+        "description": "I ∩ I = I"
+      },
+      {
+        "input": "[0, 1, 2], [0, 2]",
+        "expectedOutput": "[0, 2]",
+        "isHidden": true,
+        "description": "Intersection with subset"
+      }
+    ],
+    "hints": [
+      "Intersection is set intersection",
+      "I ∩ J is automatically an ideal",
+      "Simple set operation"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "math304-t6-ex16",
+    "subjectId": "math304",
+    "topicId": "math304-topic-6",
+    "title": "Product of Ideals",
+    "difficulty": 4,
+    "description": "Compute the product of two ideals IJ = {finite sums of ij : i ∈ I, j ∈ J}.",
+    "starterCode": "def ideal_product(ideal1, ideal2, elements, add_table, mul_table):\n    \"\"\"\n    Compute product of two ideals.\n\n    Args:\n        ideal1, ideal2: Lists of elements in ideals\n        elements: List of ring elements\n        add_table: Addition table\n        mul_table: Multiplication table\n\n    Returns:\n        Sorted list of elements in IJ\n    \"\"\"\n    pass",
+    "solution": "def ideal_product(ideal1, ideal2, elements, add_table, mul_table):\n    \"\"\"\n    Compute product of two ideals.\n\n    Args:\n        ideal1, ideal2: Lists of elements in ideals\n        elements: List of ring elements\n        add_table: Addition table\n        mul_table: Multiplication table\n\n    Returns:\n        Sorted list of elements in IJ\n    \"\"\"\n    # Start with products ij\n    result = set()\n\n    for i in ideal1:\n        for j in ideal2:\n            i_idx = elements.index(i)\n            j_idx = elements.index(j)\n            product = mul_table[i_idx][j_idx]\n            result.add(product)\n\n    # Close under addition and absorption\n    changed = True\n    while changed:\n        changed = False\n        new_elements = set()\n\n        # Add sums\n        for a in result:\n            for b in result:\n                a_idx = elements.index(a)\n                b_idx = elements.index(b)\n                sum_elem = add_table[a_idx][b_idx]\n                if sum_elem not in result:\n                    new_elements.add(sum_elem)\n                    changed = True\n\n        # Add multiples\n        for r in elements:\n            for a in result:\n                r_idx = elements.index(r)\n                a_idx = elements.index(a)\n                ra = mul_table[r_idx][a_idx]\n                ar = mul_table[a_idx][r_idx]\n                if ra not in result:\n                    new_elements.add(ra)\n                    changed = True\n                if ar not in result:\n                    new_elements.add(ar)\n                    changed = True\n\n        result.update(new_elements)\n\n    return sorted(list(result))",
+    "testCases": [
+      {
+        "input": "[0, 2, 4], [0, 3], [0, 1, 2, 3, 4, 5], [[0, 1, 2, 3, 4, 5], [1, 2, 3, 4, 5, 0], [2, 3, 4, 5, 0, 1], [3, 4, 5, 0, 1, 2], [4, 5, 0, 1, 2, 3], [5, 0, 1, 2, 3, 4]], [[0, 0, 0, 0, 0, 0], [0, 1, 2, 3, 4, 5], [0, 2, 4, 0, 2, 4], [0, 3, 0, 3, 0, 3], [0, 4, 2, 0, 4, 2], [0, 5, 4, 3, 2, 1]]",
+        "expectedOutput": "[0]",
+        "isHidden": false,
+        "description": "<2><3> = {0} in Z6"
+      },
+      {
+        "input": "[0, 2], [0, 2], [0, 1, 2, 3], [[0, 1, 2, 3], [1, 2, 3, 0], [2, 3, 0, 1], [3, 0, 1, 2]], [[0, 0, 0, 0], [0, 1, 2, 3], [0, 2, 0, 2], [0, 3, 2, 1]]",
+        "expectedOutput": "[0]",
+        "isHidden": false,
+        "description": "<2>² = {0} in Z4"
+      },
+      {
+        "input": "[0, 1, 2], [0, 1, 2], [0, 1, 2], [[0, 1, 2], [1, 2, 0], [2, 0, 1]], [[0, 0, 0], [0, 1, 2], [0, 2, 1]]",
+        "expectedOutput": "[0, 1, 2]",
+        "isHidden": true,
+        "description": "R·R = R"
+      }
+    ],
+    "hints": [
+      "Generate all products ij",
+      "Close under addition and ideal absorption",
+      "IJ ⊆ I ∩ J"
+    ],
+    "language": "python"
+  }
+]

@@ -1,0 +1,179 @@
+[
+  {
+    "id": "math404-quiz-7a",
+    "subjectId": "math404",
+    "topicId": "math404-topic-7",
+    "title": "Constrained Optimization - Fundamentals",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "What does complementary slackness require?",
+        "options": [
+          "All constraints are active",
+          "All multipliers are positive",
+          "λᵢgᵢ(x) = 0 for all i",
+          "The gradient is zero"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Complementary slackness: either the constraint is active (gᵢ = 0) or its multiplier is zero (λᵢ = 0)."
+      },
+      {
+        "id": "q2",
+        "type": "true_false",
+        "prompt": "KKT conditions are sufficient for optimality in convex problems.",
+        "correctAnswer": true,
+        "explanation": "For convex problems with constraint qualification, KKT conditions are both necessary and sufficient."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "The Lagrangian for min f(x) s.t. g(x) ≤ 0, h(x) = 0 is:",
+        "options": [
+          "L = f(x) + λᵀg(x)",
+          "L = f(x) + λᵀg(x) + μᵀh(x)",
+          "L = f(x) - λᵀg(x)",
+          "L = f(x) + μᵀh(x)"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The Lagrangian is L(x,λ,μ) = f(x) + λᵀg(x) + μᵀh(x), with λ ≥ 0 for inequalities."
+      },
+      {
+        "id": "q4",
+        "type": "fill_blank",
+        "prompt": "The KKT stationarity condition requires ∇_x L(x*,λ*,μ*) = _____.",
+        "correctAnswer": "0",
+        "explanation": "Stationarity requires the gradient of the Lagrangian with respect to x to be zero at the optimal point."
+      },
+      {
+        "id": "q5",
+        "type": "true_false",
+        "prompt": "Inequality constraint multipliers in KKT must be non-negative.",
+        "correctAnswer": true,
+        "explanation": "For inequality constraints g(x) ≤ 0, the dual variables λ must satisfy λ ≥ 0 (dual feasibility)."
+      }
+    ]
+  },
+  {
+    "id": "math404-quiz-7b",
+    "subjectId": "math404",
+    "topicId": "math404-topic-7",
+    "title": "Constrained Optimization - Application",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "The augmented Lagrangian method adds what to the Lagrangian?",
+        "options": [
+          "A linear penalty term",
+          "A quadratic penalty term",
+          "An exponential term",
+          "A logarithmic barrier"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Augmented Lagrangian adds (ρ/2)||g(x)||² to improve conditioning while maintaining exact penalty at convergence."
+      },
+      {
+        "id": "q2",
+        "type": "true_false",
+        "prompt": "Penalty methods require penalty parameter ρ → ∞ for exact solutions.",
+        "correctAnswer": true,
+        "explanation": "Pure penalty methods require ρ → ∞ to enforce constraints exactly, which can cause ill-conditioning."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "Interior-point methods for NLP use:",
+        "options": [
+          "Exact penalties",
+          "Barrier functions",
+          "Active set strategies",
+          "Gradient projection"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Interior-point methods use barrier functions (e.g., -log(-g(x))) to keep iterates in the interior of the feasible region."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "Sequential Quadratic Programming (SQP) solves a sequence of:",
+        "options": [
+          "Linear programs",
+          "Quadratic programs",
+          "Unconstrained problems",
+          "Integer programs"
+        ],
+        "correctAnswer": 1,
+        "explanation": "SQP solves QP subproblems that locally approximate the original NLP using quadratic models."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "The method of Lagrange multipliers applies to problems with _____ constraints only.",
+        "correctAnswer": "equality",
+        "explanation": "Classical Lagrange multipliers handle equality constraints. The KKT conditions generalize to include inequality constraints."
+      }
+    ]
+  },
+  {
+    "id": "math404-quiz-7c",
+    "subjectId": "math404",
+    "topicId": "math404-topic-7",
+    "title": "Constrained Optimization - Mastery",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "prompt": "LICQ (Linear Independence Constraint Qualification) requires:",
+        "options": [
+          "All constraints are linear",
+          "Gradients of active constraints are linearly independent",
+          "The feasible region is convex",
+          "All multipliers are positive"
+        ],
+        "correctAnswer": 1,
+        "explanation": "LICQ requires linear independence of gradients of active inequality constraints and all equality constraints at x*."
+      },
+      {
+        "id": "q2",
+        "type": "true_false",
+        "prompt": "If KKT conditions hold but constraint qualification fails, x* may not be optimal.",
+        "correctAnswer": false,
+        "explanation": "KKT conditions are sufficient for optimality in convex problems regardless of constraint qualification. CQ affects necessity."
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "prompt": "The central path in interior-point methods:",
+        "options": [
+          "Lies on the boundary",
+          "Connects all vertices",
+          "Passes through the interior approaching the optimum",
+          "Is always a straight line"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The central path parameterized by barrier parameter μ lies in the interior and converges to the optimum as μ → 0."
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "prompt": "The QP subproblem in SQP approximates the original problem using:",
+        "options": [
+          "Linear objective and linear constraints",
+          "Quadratic objective and linearized constraints",
+          "Linear objective and quadratic constraints",
+          "Quadratic objective and constraints"
+        ],
+        "correctAnswer": 1,
+        "explanation": "SQP uses quadratic approximation of the objective (using Hessian or quasi-Newton) and first-order Taylor expansion of constraints."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "ALM (Augmented Lagrangian Method) is also known as the method of _____.",
+        "correctAnswer": "multipliers",
+        "explanation": "The Augmented Lagrangian Method is also called the Method of Multipliers, combining penalty methods with Lagrange multipliers."
+      }
+    ]
+  }
+]
