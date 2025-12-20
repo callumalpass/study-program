@@ -1,6 +1,23 @@
 # Time Complexity
 
-**Time complexity** measures the computational resources—specifically running time—required to solve problems. It classifies problems by how quickly they can be solved.
+**Time complexity** measures the computational resources—specifically running time—required to solve problems. It provides a framework for classifying problems by how quickly they can be solved, independent of specific hardware or implementation details.
+
+## Why Time Complexity Matters
+
+Understanding time complexity is essential for practical software development and theoretical computer science:
+
+**Algorithm Selection**: When choosing between algorithms, time complexity tells us which will scale better. An O(n log n) sorting algorithm will dramatically outperform an O(n²) algorithm on large inputs.
+
+**Feasibility Assessment**: Some problems have algorithms, but the algorithms are too slow to be practical. A problem solvable in O(2ⁿ) time is effectively unsolvable for large n, even though it's technically decidable.
+
+**Problem Classification**: Time complexity classes like P and NP categorize problems by their inherent difficulty, revealing deep structure in what computers can efficiently compute.
+
+## Historical Context
+
+Complexity theory emerged in the 1960s-70s as computer scientists sought to understand the intrinsic difficulty of problems. Key milestones include:
+- Hartmanis and Stearns (1965): Introduced time complexity classes
+- Cook (1971): Proved SAT is NP-complete, launching P vs NP research
+- Karp (1972): Identified 21 NP-complete problems, showing NP-completeness is pervasive
 
 ## Measuring Time
 
@@ -102,3 +119,32 @@ Proving lower bounds is harder:
 Time can be converted to space and vice versa (with overhead):
 - SPACE(s(n)) ⊆ TIME(2^O(s(n)))
 - TIME(t(n)) ⊆ SPACE(t(n))
+
+## Practical Perspective
+
+Understanding these complexity bounds has real-world implications:
+
+**Polynomial Time (Efficient)**: Problems in O(n), O(n²), O(n³) are generally tractable. Even O(n⁵) can be practical with optimizations. These correspond to the class P.
+
+**Exponential Time (Intractable)**: Problems requiring O(2ⁿ), O(n!), or O(nⁿ) time quickly become infeasible. With n=100, operations exceeding 2¹⁰⁰ cannot complete before the heat death of the universe.
+
+**The Threshold**: The boundary between polynomial and exponential separates problems we can solve from those we effectively cannot—at least without breakthrough algorithmic ideas.
+
+## Connecting to P and NP
+
+The study of time complexity leads naturally to fundamental questions:
+- **Class P**: Problems solvable in polynomial time (efficient algorithms exist)
+- **Class NP**: Problems where solutions can be verified in polynomial time
+- **P vs NP**: Are these classes equal? The most important open problem in computer science
+
+These classes and their relationships are explored in subsequent subtopics.
+
+## Key Takeaways
+
+- Time complexity measures algorithm efficiency as a function of input size
+- We use worst-case analysis and asymptotic notation (Big-O) for clean comparisons
+- Common complexity classes form a hierarchy: O(1) ⊂ O(log n) ⊂ O(n) ⊂ O(n log n) ⊂ O(n²) ⊂ O(2ⁿ)
+- The Time Hierarchy Theorem proves more time strictly means more computational power
+- Polynomial vs exponential is the key practical boundary for tractability
+- Time complexity classes (like P and NP) categorize problems by inherent difficulty
+- Model choice (single-tape vs multi-tape TM) affects time by polynomial factors, not fundamentally

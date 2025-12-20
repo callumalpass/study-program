@@ -140,3 +140,185 @@ Finding a derivation for w ∈ L(G):
 
 Top-down parsing builds leftmost derivation.
 Bottom-up parsing builds rightmost derivation in reverse.
+
+## Detailed Example: Complex Expression
+
+Let's work through a complete example with a more complex expression grammar to illustrate derivation techniques.
+
+**Grammar**:
+- E → E + T | E - T | T
+- T → T * F | T / F | F
+- F → (E) | num | id
+
+**String to derive**: id + num * id
+
+### Complete Leftmost Derivation
+
+$$
+\begin{align*}
+E &\Rightarrow_{\text{lm}} E + T \\
+  &\Rightarrow_{\text{lm}} T + T \\
+  &\Rightarrow_{\text{lm}} F + T \\
+  &\Rightarrow_{\text{lm}} \text{id} + T \\
+  &\Rightarrow_{\text{lm}} \text{id} + T * F \\
+  &\Rightarrow_{\text{lm}} \text{id} + F * F \\
+  &\Rightarrow_{\text{lm}} \text{id} + \text{num} * F \\
+  &\Rightarrow_{\text{lm}} \text{id} + \text{num} * \text{id}
+\end{align*}
+$$
+
+Notice that at each step, we identify the leftmost variable in the current sentential form and replace it using an appropriate production rule. This process is deterministic once we choose which production to use for each variable.
+
+### Complete Rightmost Derivation
+
+$$
+\begin{align*}
+E &\Rightarrow_{\text{rm}} E + T \\
+  &\Rightarrow_{\text{rm}} E + T * F \\
+  &\Rightarrow_{\text{rm}} E + T * \text{id} \\
+  &\Rightarrow_{\text{rm}} E + F * \text{id} \\
+  &\Rightarrow_{\text{rm}} E + \text{num} * \text{id} \\
+  &\Rightarrow_{\text{rm}} T + \text{num} * \text{id} \\
+  &\Rightarrow_{\text{rm}} F + \text{num} * \text{id} \\
+  &\Rightarrow_{\text{rm}} \text{id} + \text{num} * \text{id}
+\end{align*}
+$$
+
+Both derivations produce the same final string, but in different orders. The leftmost derivation expands from left to right, while the rightmost derivation works from right to left.
+
+## Derivation Strategies and Choice
+
+When performing a derivation, we often face choices:
+- Which variable to expand next?
+- Which production rule to use?
+
+**For leftmost/rightmost derivations**: The first choice is eliminated by the constraint (always leftmost/rightmost variable).
+
+**For general derivations**: We can choose any variable, leading to many possible derivation sequences for the same string.
+
+## Example: Derivation with Multiple Paths
+
+Consider the grammar:
+- S → AB
+- A → aA | a
+- B → bB | b
+
+Derive "aabb":
+
+**Path 1** (expand A fully first):
+$$
+S \Rightarrow AB \Rightarrow aAB \Rightarrow aaB \Rightarrow aabB \Rightarrow aabb
+$$
+
+**Path 2** (alternate between A and B):
+$$
+S \Rightarrow AB \Rightarrow aAB \Rightarrow aAbB \Rightarrow aaB \Rightarrow aabb
+$$
+
+**Path 3** (expand B first):
+$$
+S \Rightarrow AB \Rightarrow AbB \Rightarrow Abb \Rightarrow aAbb \Rightarrow aabb
+$$
+
+All three paths lead to the same string and represent the same underlying structure, just with different expansion orders.
+
+## Applications of Leftmost Derivations
+
+### Top-Down Parsing
+Predictive parsers and recursive descent parsers construct leftmost derivations:
+- Start with start symbol
+- Process input left to right
+- Predict which production to use based on lookahead
+
+**LL(k) parsers** construct leftmost derivations using k symbols of lookahead.
+
+### Syntax-Directed Translation
+Compilers often use leftmost derivations because:
+- Natural reading order (left to right)
+- Attributes can be computed incrementally
+- Matches typical program structure
+
+## Applications of Rightmost Derivations
+
+### Bottom-Up Parsing
+Shift-reduce parsers and LR parsers construct rightmost derivations in reverse:
+- Start with input string
+- Reduce substrings to variables
+- End at start symbol
+
+**LR(k) parsers** construct rightmost derivations in reverse using k symbols of lookahead.
+
+### Handle Identification
+The rightmost derivation helps identify **handles**—substrings that can be reduced:
+- In rightmost derivation, the last step reduces the handle
+- Working backward reveals reduction sequence
+
+## Derivation Ambiguity vs Grammar Ambiguity
+
+It's crucial to distinguish:
+- **Multiple derivation sequences**: Different orders of applying rules (normal for unambiguous grammars)
+- **Multiple parse trees**: Different structures (indicates ambiguous grammar)
+
+An unambiguous grammar can have:
+- Many general derivations per string
+- Exactly one leftmost derivation per string
+- Exactly one rightmost derivation per string
+- Exactly one parse tree per string
+
+## Derivation Length and Bounds
+
+For a grammar G in Chomsky Normal Form and string w of length n:
+
+**Theorem**: Any derivation of w has exactly 2n - 1 steps.
+
+**Proof**:
+- CNF productions are A → BC or A → a
+- Parse tree has n leaves (terminals)
+- Parse tree has n - 1 internal nodes with two children (from A → BC rules)
+- Parse tree has n leaf-producing nodes (from A → a rules)
+- Total steps = (n - 1) + n = 2n - 1
+
+For general CFGs, derivation length varies:
+- Minimum: Can be as short as n (all productions of form A → w)
+- Maximum: Unbounded (epsilon productions and unit productions can extend derivations)
+
+## Verifying Derivations
+
+To verify a derivation sequence is valid:
+
+1. **Check start**: First sentential form must be S
+2. **Check each step**: Each αAβ ⇒ αγβ requires A → γ in grammar
+3. **Check variables**: Ensure leftmost/rightmost constraint if specified
+4. **Check end**: Final sentential form must be the target string
+
+## Advanced: Derivation Graphs
+
+A **derivation graph** represents all possible derivations:
+- Nodes are sentential forms
+- Edges represent single derivation steps
+- Paths from S to w represent derivations
+
+For unambiguous grammars, all paths from S to w converge to the same parse tree structure.
+
+## Canonical Derivations
+
+**Canonical derivations** are standard forms used for comparison:
+- Leftmost derivation is canonical for top-down parsing
+- Rightmost derivation is canonical for bottom-up parsing
+
+Using canonical forms:
+- Simplifies algorithm design
+- Enables efficient parsing
+- Makes grammar analysis tractable
+
+## Key Takeaways
+
+- Derivations show the step-by-step generation of strings from a grammar's start symbol
+- Leftmost derivations always expand the leftmost variable at each step
+- Rightmost derivations always expand the rightmost variable at each step
+- A single parse tree corresponds to many derivation sequences but only one leftmost and one rightmost derivation
+- Top-down parsers build leftmost derivations; bottom-up parsers build rightmost derivations in reverse
+- The order of rule applications affects the derivation sequence but not the final parse tree for unambiguous grammars
+- Sentential forms are intermediate strings in derivations that may contain both variables and terminals
+- Derivation length depends on grammar form; CNF grammars have predictable derivation lengths
+- Understanding derivations is essential for parsing algorithm design and language recognition

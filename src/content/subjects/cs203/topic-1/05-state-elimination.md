@@ -109,9 +109,214 @@ This establishes the equivalence of the three characterizations:
 2. Recognized by NFA
 3. Described by regular expression
 
+## Detailed Worked Example
+
+Convert the following DFA to a regular expression.
+
+**DFA**: Accepts strings over {0,1} with an odd number of 1s.
+
+States: $\{q_0, q_1\}$
+- $q_0$: even number of 1s (start state)
+- $q_1$: odd number of 1s (accepting state)
+
+Transitions:
+- $\delta(q_0, 0) = q_0$, $\delta(q_0, 1) = q_1$
+- $\delta(q_1, 0) = q_1$, $\delta(q_1, 1) = q_0$
+
+**Step 1**: Convert to GNFA
+- Add new start state $q_s$ with $\varepsilon$-transition to $q_0$
+- Add new accept state $q_f$ with $\varepsilon$-transition from $q_1$
+- Add $\emptyset$ transitions where none exist
+
+**Step 2**: Eliminate $q_0$
+
+For path $q_s \to q_0 \to q_1$:
+- $R(q_s, q_0) = \varepsilon$
+- $R(q_0, q_0) = 0$ (loop)
+- $R(q_0, q_1) = 1$
+- New transition: $q_s \to q_1 = \varepsilon \cdot 0^* \cdot 1 = 0^*1$
+
+For path $q_1 \to q_0 \to q_1$ (affects $q_1$'s loop):
+- $R(q_1, q_0) = 1$
+- $R(q_0, q_0) = 0$
+- $R(q_0, q_1) = 1$
+- Add to existing loop: $0 \mid 10^*1$
+
+**Step 3**: Eliminate $q_1$
+
+Final transition from $q_s$ to $q_f$:
+- Enter $q_1$: $0^*1$
+- Loop at $q_1$: $(0 \mid 10^*1)^*$
+- Exit $q_1$: $\varepsilon$
+
+**Result**: $0^*1(0 \mid 10^*1)^*$
+
+This can be simplified to: $0^*1(0 \mid 10^*1)^*$ which describes strings with odd number of 1s.
+
+## Step-by-Step Elimination Formula
+
+When eliminating state $q_{rip}$, for each pair of states $(q_i, q_j)$ where $i \neq j$:
+
+$$R_{new}(q_i, q_j) = R(q_i, q_j) \mid R(q_i, q_{rip}) \cdot R(q_{rip}, q_{rip})^* \cdot R(q_{rip}, q_j)$$
+
+Breaking this down:
+- **$R(q_i, q_j)$**: Direct path from $q_i$ to $q_j$ (may be $\emptyset$)
+- **$R(q_i, q_{rip})$**: Enter the eliminated state
+- **$R(q_{rip}, q_{rip})^*$**: Loop zero or more times
+- **$R(q_{rip}, q_j)$**: Exit to $q_j$
+- **Union ($\mid$)**: Either take direct path or go through $q_{rip}$
+
+## Second Worked Example: Complex Automaton
+
+**DFA**: Accepts strings ending in "01" over {0,1}.
+
+States: $\{A, B, C\}$
+- $A$: start state, no recent match
+- $B$: just saw 0
+- $C$: just saw "01" (accepting)
+
+Transitions:
+- From $A$: 0→B, 1→A
+- From $B$: 0→B, 1→C
+- From $C$: 0→B, 1→A
+
+**Converting to GNFA**: Add $q_s$ and $q_f$.
+
+**Eliminate A**:
+- Path $q_s \to A \to B$: $\varepsilon \cdot 1^* \cdot 0 = 1^*0$
+- Loop at B (via A): $0 \mid 11^*0$
+- Path $B \to A \to B$: $1 \cdot 1^* \cdot 0 = 11^*0$
+
+After eliminating A, update B's self-loop: $(0 \mid 11^*0)$
+
+Continue elimination... Final regex: $(0|1)^*01$
+
+## Algebraic Simplification
+
+Regular expressions from state elimination often need simplification:
+
+**Common identities**:
+- $R \mid R = R$ (idempotence)
+- $R \mid \emptyset = R$ (identity)
+- $R \cdot \varepsilon = \varepsilon \cdot R = R$ (identity)
+- $R \cdot \emptyset = \emptyset \cdot R = \emptyset$ (annihilation)
+- $\varepsilon^* = \varepsilon$
+- $\emptyset^* = \varepsilon$
+- $(R^*)^* = R^*$
+- $R^* = \varepsilon \mid RR^*$ (unfolding)
+
+**Example simplification**:
+- Original: $\varepsilon \mid (a \mid b)^*a(a \mid b)^*$
+- Simplify: $(a \mid b)^*a(a \mid b)^*$
+
+(Since $(a|b)^*$ already includes $\varepsilon$)
+
+## Choosing Elimination Order
+
+The order of elimination can dramatically affect expression size.
+
+**Heuristic 1**: Eliminate states with fewest connections first.
+
+**Heuristic 2**: Eliminate states that create small expressions.
+
+**Example**: For a linear chain $q_0 \to q_1 \to q_2 \to q_3$:
+- Eliminate middle states first: results in $(a \cdot b \cdot c)$
+- Eliminate end states first: may create $(a \mid (b \mid c))$
+
+**Bad order**: Can produce expressions exponentially larger than necessary.
+
+**Good order**: Often produces expressions close to minimal.
+
+## Connection to Thompson's Construction
+
+State elimination and Thompson's construction are **inverses**:
+
+**Thompson's construction**: Regex → NFA
+- Build small NFAs for base cases
+- Combine using ε-transitions
+- Result: NFA with O(n) states for regex of size n
+
+**State elimination**: NFA → Regex
+- Start with NFA
+- Eliminate states while preserving language
+- Result: Regular expression (possibly large)
+
+**Round trip**:
+- Regex → NFA (Thompson) → DFA (subset construction) → Regex (state elimination)
+- May not return to original regex (but describes same language!)
+
+## Correctness Proof Sketch
+
+**Theorem**: State elimination preserves language.
+
+**Proof by induction** on number of states:
+
+**Base case**: 2 states (just start and accept).
+- The single transition label is a regex for L.
+
+**Inductive case**: k+1 states.
+- Choose any state $q$ (not start or accept)
+- After eliminating $q$, the GNFA has k states
+- For any string $w$:
+  - If $w \in L$, some path accepts it
+  - Either path avoids $q$, or goes through $q$ some number of times
+  - The new regex captures both cases via union and Kleene star
+  - Therefore $w$ is still accepted
+
+By induction, the process preserves L until 2 states remain. $\square$
+
+## Size Analysis
+
+**Worst case**: Exponential blowup in expression size.
+
+For an n-state DFA:
+- Each elimination can **square** the expression size (in worst case)
+- After n-2 eliminations, size could be $2^{2^n}$
+
+**Typical case**: Polynomial growth
+- Most real automata produce manageable expressions
+- Algebraic simplification helps significantly
+
+**Comparison**:
+- DFA state count: n
+- Regex from elimination: O(n³) symbols (typical)
+- Regex from elimination: O(4^n) symbols (worst case)
+
+## Applications Beyond Conversion
+
+State elimination techniques apply to:
+
+**DFA-to-Regex conversion**:
+- Theoretical proofs about regular languages
+- Generating regex from automata
+- Understanding equivalence of models
+
+**Model checking**:
+- Computing reachability paths
+- Generating counter-examples as regular expressions
+
+**Automatic documentation**:
+- Describing protocol behavior symbolically
+- Generating human-readable summaries from state machines
+
 ## Practical Considerations
 
 State elimination can produce exponentially large expressions. In practice:
-- Use heuristics for elimination order
-- Apply algebraic simplifications
-- For matching, convert regex → NFA → DFA instead
+- Use **heuristics** for elimination order (fewest edges, smallest expressions)
+- Apply **algebraic simplifications** incrementally during elimination
+- For matching, convert regex → NFA → DFA instead (state elimination rarely used for matching)
+- Use **symbolic computation** tools to manage complex expressions
+- Consider **alternative representations** (e.g., decision diagrams) for very large automata
+
+The algorithm is primarily of **theoretical interest**, proving Kleene's theorem. For practical regex construction, designers usually write patterns directly rather than deriving them from automata.
+
+## Key Takeaways
+
+- State elimination converts finite automata to equivalent regular expressions
+- GNFAs allow regex labels on transitions, simplifying the algorithm
+- Eliminating a state creates paths that bypass it using concatenation and Kleene star
+- The elimination order affects expression size but not the language
+- Combined with Thompson's construction, proves regex and automata equivalence
+- Kleene's theorem: Regular languages = DFA = NFA = Regex
+- Worst-case exponential expression size, but often manageable in practice
+- Primarily theoretical tool; practical regex design is usually manual

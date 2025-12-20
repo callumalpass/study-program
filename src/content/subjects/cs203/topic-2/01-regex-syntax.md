@@ -113,3 +113,114 @@ Testing equivalence:
 | (Σ*aΣ*aΣ*) | Strings with at least two a's |
 | (ΣΣ)* | Even-length strings |
 | b*ab*ab* | Exactly two a's |
+
+## Worked Examples
+
+### Example 1: Binary Numbers Divisible by 3
+
+**Problem**: Create a regex for binary strings representing numbers divisible by 3.
+
+**Solution**: This requires tracking remainders mod 3. While possible with a DFA, expressing it as a regex is complex. A simpler approach:
+
+For alphabet {0,1}, the pattern is: $(0 \mid 1(01^*0)^*1)^*$
+
+This uses the mathematical property that alternating sums of bits determine divisibility.
+
+### Example 2: Email-like Patterns
+
+**Problem**: Match simplified email patterns: `word@word.word`
+
+**Solution**: Using extended syntax:
+- $[a\text{-}z]^+ @ [a\text{-}z]^+ \backslash. [a\text{-}z]^+$
+
+Breaking it down:
+- $[a\text{-}z]^+$: one or more lowercase letters
+- $@$: literal at symbol
+- $\backslash.$: escaped dot (dot is wildcard otherwise)
+
+### Example 3: Comments in Programming
+
+**Problem**: Match C-style comments `/* ... */`
+
+**Solution**: $/\backslash* \Sigma^* \backslash*/$
+
+However, this is greedy and matches too much. The correct minimal match requires:
+$$/\backslash* (\Sigma - \{*\})^* \backslash*^+ ((\Sigma - \{/, *\}) (\Sigma - \{*\})^* \backslash*^+)^* /$$
+
+This demonstrates regex complexity for seemingly simple patterns.
+
+## Practical Applications
+
+### Text Processing
+
+Regular expressions are ubiquitous in text manipulation:
+- **Search and replace**: editors like vim, emacs, VSCode
+- **Validation**: email addresses, phone numbers, dates
+- **Extraction**: parsing log files, extracting data from text
+
+### Lexical Analysis
+
+Compilers use regex for tokenization:
+```
+IDENTIFIER: [a-zA-Z_][a-zA-Z0-9_]*
+NUMBER: [0-9]+(\.[0-9]+)?
+STRING: "([^"\\]|\\.)*"
+```
+
+The lexer converts source code into tokens, with each token type defined by a regex.
+
+### Pattern Matching in Programming Languages
+
+Modern languages provide regex support:
+- **Python**: `re` module
+- **JavaScript**: built-in regex literals `/pattern/flags`
+- **Java**: `java.util.regex` package
+- **Perl**: native regex integration
+
+## Design Considerations
+
+### Writing Clear Regexes
+
+1. **Use parentheses liberally**: Make precedence explicit
+2. **Factor common patterns**: $(abc \mid abd) \rightarrow ab(c \mid d)$
+3. **Avoid redundancy**: $a^*a^* \rightarrow a^*$
+4. **Document complex patterns**: Add comments explaining intent
+
+### Performance Implications
+
+Different constructions have different costs:
+- **DFA matching**: $O(n)$ time, guaranteed
+- **NFA backtracking**: Potentially exponential
+- **Greedy vs. non-greedy**: Affects match length and speed
+
+For critical applications, convert to DFA or use DFA-based engines.
+
+## Connection to Formal Language Theory
+
+Regular expressions are equivalent in power to:
+- **Finite automata** (DFA/NFA)
+- **Right-linear grammars**
+- **Monadic second-order logic** (MSO) over strings
+
+This equivalence means:
+- Any regex can be converted to a DFA
+- Any DFA can be converted to a regex
+- Regex can express exactly the regular languages, no more, no less
+
+Languages **not** expressible by regex:
+- $\{a^n b^n \mid n \geq 0\}$: balanced parentheses
+- $\{ww \mid w \in \Sigma^*\}$: repeated substrings
+- Prime-length strings (in unary)
+
+These require more powerful models like context-free grammars or Turing machines.
+
+## Key Takeaways
+
+- Regular expressions provide a **concise algebraic notation** for describing regular languages using three basic operations: union, concatenation, and Kleene star
+- **Operator precedence** matters: star binds tightest, then concatenation, then union (use parentheses for clarity)
+- The formal definition uses **inductive construction**: base cases (ε, ∅, single symbols) and recursive cases (union, concatenation, star)
+- **Extended syntax** (like +, ?, character classes, bounded repetition) adds convenience but doesn't increase expressive power
+- Two regexes are **equivalent** if they denote the same language; testing equivalence requires converting to minimal DFAs
+- Regular expressions are widely used in **text processing, lexical analysis, and pattern matching** across programming languages
+- Regex design should balance **clarity, simplicity, and performance**; complex patterns may need conversion to DFA for efficiency
+- Regular expressions are **equivalent to finite automata** and can express exactly the regular languages—no more, no less
