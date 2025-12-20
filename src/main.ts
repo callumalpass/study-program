@@ -18,6 +18,7 @@ import { renderSettingsPage } from './pages/settings';
 import { renderQuizPage, renderExercisePage, renderProjectPage, renderExamPage } from './pages/assessment';
 import { renderExportPage } from './pages/export';
 import { renderTimelinePage } from './pages/timeline';
+import { renderCourseBuilderPage } from './pages/course-builder';
 
 // Import all subject content from central registry
 import { allQuizzes, allExercises, allProjects, allExams } from './subjects';
@@ -242,6 +243,8 @@ async function initApp(): Promise<void> {
         renderExportPage(mainEl, curriculum, allQuizzes, allExercises, allProjects);
       } else if (path === '/timeline') {
         renderTimelinePage(mainEl, curriculum);
+      } else if (path === '/course-builder') {
+        renderCourseBuilderPage(mainEl);
       } else if (path.startsWith('/subject/')) {
         const subjectId = params.id;
 

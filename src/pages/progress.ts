@@ -25,14 +25,21 @@ let expandedYears: ExpandedYears = {
  */
 export function renderProgressPage(container: HTMLElement, subjects: Subject[]): void {
   const userProgress = progressStorage.getProgress();
-  const overallProgress = calculateOverallProgress(subjects, userProgress);
-  const groupedSubjects = getSubjectsByYearAndSemester(subjects);
+
+  // Filter subjects by user selection (if they have selected subjects)
+  const selectedIds = progressStorage.getSelectedSubjects();
+  const filteredSubjects = selectedIds.length > 0
+    ? subjects.filter(s => selectedIds.includes(s.id))
+    : subjects;
+
+  const overallProgress = calculateOverallProgress(filteredSubjects, userProgress);
+  const groupedSubjects = getSubjectsByYearAndSemester(filteredSubjects);
 
   // Calculate per-year statistics
-  const yearStats = calculateYearStatistics(subjects, userProgress);
+  const yearStats = calculateYearStatistics(filteredSubjects, userProgress);
 
   // Calculate achievements
-  const achievements = calculateAchievements(subjects, userProgress);
+  const achievements = calculateAchievements(filteredSubjects, userProgress);
 
   container.innerHTML = `
     <div class="progress-page">

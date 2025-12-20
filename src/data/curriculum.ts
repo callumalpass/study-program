@@ -37,6 +37,7 @@ export const curriculum: Subject[] = [
   {
     id: 'cs101',
     code: 'CS101',
+    category: 'cs',
     title: 'Introduction to Programming',
     year: 1,
     semester: 1,
@@ -60,6 +61,7 @@ export const curriculum: Subject[] = [
   {
     id: 'math101',
     code: 'MATH101',
+    category: 'math',
     title: 'Discrete Mathematics I',
     year: 1,
     semester: 1,
@@ -83,6 +85,7 @@ export const curriculum: Subject[] = [
   {
     id: 'cs102',
     code: 'CS102',
+    category: 'cs',
     title: 'Computer Systems Fundamentals',
     year: 1,
     semester: 1,
@@ -106,6 +109,7 @@ export const curriculum: Subject[] = [
   {
     id: 'cs103',
     code: 'CS103',
+    category: 'cs',
     title: 'Object-Oriented Programming',
     year: 1,
     semester: 1,
@@ -133,6 +137,7 @@ export const curriculum: Subject[] = [
   {
     id: 'math102',
     code: 'MATH102',
+    category: 'math',
     title: 'Discrete Mathematics II',
     year: 1,
     semester: 2,
@@ -155,6 +160,7 @@ export const curriculum: Subject[] = [
   {
     id: 'cs104',
     code: 'CS104',
+    category: 'cs',
     title: 'Data Structures',
     year: 1,
     semester: 2,
@@ -178,6 +184,7 @@ export const curriculum: Subject[] = [
   {
     id: 'cs105',
     code: 'CS105',
+    category: 'cs',
     title: 'Introduction to C Programming',
     year: 1,
     semester: 2,
@@ -205,6 +212,7 @@ export const curriculum: Subject[] = [
   {
     id: 'cs201',
     code: 'CS201',
+    category: 'cs',
     title: 'Algorithms',
     year: 2,
     semester: 1,
@@ -228,6 +236,7 @@ export const curriculum: Subject[] = [
   {
     id: 'cs202',
     code: 'CS202',
+    category: 'cs',
     title: 'Computer Architecture',
     year: 2,
     semester: 1,
@@ -251,6 +260,7 @@ export const curriculum: Subject[] = [
   {
     id: 'cs203',
     code: 'CS203',
+    category: 'cs',
     title: 'Theory of Computation',
     year: 2,
     semester: 1,
@@ -274,6 +284,7 @@ export const curriculum: Subject[] = [
   {
     id: 'math203',
     code: 'MATH203',
+    category: 'math',
     title: 'Calculus I',
     year: 2,
     semester: 1,
@@ -296,6 +307,7 @@ export const curriculum: Subject[] = [
   {
     id: 'cs204',
     code: 'CS204',
+    category: 'cs',
     title: 'Software Engineering',
     year: 2,
     semester: 1,
@@ -323,6 +335,7 @@ export const curriculum: Subject[] = [
   {
     id: 'cs205',
     code: 'CS205',
+    category: 'cs',
     title: 'Database Systems',
     year: 2,
     semester: 2,
@@ -346,6 +359,7 @@ export const curriculum: Subject[] = [
   {
     id: 'math201',
     code: 'MATH201',
+    category: 'math',
     title: 'Linear Algebra',
     year: 2,
     semester: 2,
@@ -368,6 +382,7 @@ export const curriculum: Subject[] = [
   {
     id: 'math202',
     code: 'MATH202',
+    category: 'math',
     title: 'Probability and Statistics',
     year: 2,
     semester: 2,
@@ -390,6 +405,7 @@ export const curriculum: Subject[] = [
   {
     id: 'math204',
     code: 'MATH204',
+    category: 'math',
     title: 'Calculus II',
     year: 2,
     semester: 2,
@@ -416,6 +432,7 @@ export const curriculum: Subject[] = [
   {
     id: 'cs301',
     code: 'CS301',
+    category: 'cs',
     title: 'Operating Systems',
     year: 3,
     semester: 1,
@@ -446,6 +463,7 @@ export const curriculum: Subject[] = [
   {
     id: 'cs302',
     code: 'CS302',
+    category: 'cs',
     title: 'Computer Networks',
     year: 3,
     semester: 1,
@@ -469,6 +487,7 @@ export const curriculum: Subject[] = [
   {
     id: 'cs303',
     code: 'CS303',
+    category: 'cs',
     title: 'Programming Languages',
     year: 3,
     semester: 1,
@@ -492,6 +511,7 @@ export const curriculum: Subject[] = [
   {
     id: 'cs304',
     code: 'CS304',
+    category: 'cs',
     title: 'Compilers',
     year: 3,
     semester: 1,
@@ -515,6 +535,7 @@ export const curriculum: Subject[] = [
   {
     id: 'math301',
     code: 'MATH301',
+    category: 'math',
     title: 'Multivariable Calculus',
     year: 3,
     semester: 1,
@@ -544,6 +565,7 @@ export const curriculum: Subject[] = [
   {
     id: 'math302',
     code: 'MATH302',
+    category: 'math',
     title: 'Ordinary Differential Equations',
     year: 3,
     semester: 1,
@@ -577,6 +599,7 @@ export const curriculum: Subject[] = [
   {
     id: 'cs305',
     code: 'CS305',
+    category: 'cs',
     title: 'Web Development',
     year: 3,
     semester: 2,
@@ -600,6 +623,7 @@ export const curriculum: Subject[] = [
   {
     id: 'cs306',
     code: 'CS306',
+    category: 'cs',
     title: 'Computer Graphics',
     year: 3,
     semester: 2,
@@ -623,6 +647,7 @@ export const curriculum: Subject[] = [
   {
     id: 'cs307',
     code: 'CS307',
+    category: 'cs',
     title: 'Security Fundamentals',
     year: 3,
     semester: 2,
@@ -652,6 +677,7 @@ export const curriculum: Subject[] = [
   {
     id: 'math303',
     code: 'MATH303',
+    category: 'math',
     title: 'Real Analysis',
     year: 3,
     semester: 2,
@@ -681,6 +707,7 @@ export const curriculum: Subject[] = [
   {
     id: 'math304',
     code: 'MATH304',
+    category: 'math',
     title: 'Abstract Algebra',
     year: 3,
     semester: 2,
@@ -714,6 +741,7 @@ export const curriculum: Subject[] = [
   {
     id: 'cs401',
     code: 'CS401',
+    category: 'cs',
     title: 'Distributed Systems',
     year: 4,
     semester: 1,
@@ -743,6 +771,7 @@ export const curriculum: Subject[] = [
   {
     id: 'cs402',
     code: 'CS402',
+    category: 'cs',
     title: 'Machine Learning',
     year: 4,
     semester: 1,
@@ -773,6 +802,7 @@ export const curriculum: Subject[] = [
   {
     id: 'cs403',
     code: 'CS403',
+    category: 'cs',
     title: 'Advanced Algorithms',
     year: 4,
     semester: 1,
@@ -802,6 +832,7 @@ export const curriculum: Subject[] = [
   {
     id: 'cs405',
     code: 'CS405',
+    category: 'cs',
     title: 'Cloud Computing',
     year: 4,
     semester: 1,
@@ -832,6 +863,7 @@ export const curriculum: Subject[] = [
   {
     id: 'math401',
     code: 'MATH401',
+    category: 'math',
     title: 'Complex Analysis',
     year: 4,
     semester: 1,
@@ -861,6 +893,7 @@ export const curriculum: Subject[] = [
   {
     id: 'math402',
     code: 'MATH402',
+    category: 'math',
     title: 'Numerical Methods',
     year: 4,
     semester: 1,
@@ -894,6 +927,7 @@ export const curriculum: Subject[] = [
   {
     id: 'cs404',
     code: 'CS404',
+    category: 'cs',
     title: 'Capstone Project',
     year: 4,
     semester: 2,
@@ -924,6 +958,7 @@ export const curriculum: Subject[] = [
   {
     id: 'cs406',
     code: 'CS406',
+    category: 'cs',
     title: 'Artificial Intelligence',
     year: 4,
     semester: 2,
@@ -954,6 +989,7 @@ export const curriculum: Subject[] = [
   {
     id: 'cs407',
     code: 'CS407',
+    category: 'cs',
     title: 'Data Science and Analytics',
     year: 4,
     semester: 2,
@@ -984,6 +1020,7 @@ export const curriculum: Subject[] = [
   {
     id: 'math403',
     code: 'MATH403',
+    category: 'math',
     title: 'Introduction to Topology',
     year: 4,
     semester: 2,
@@ -1013,6 +1050,7 @@ export const curriculum: Subject[] = [
   {
     id: 'math404',
     code: 'MATH404',
+    category: 'math',
     title: 'Optimization Theory',
     year: 4,
     semester: 2,

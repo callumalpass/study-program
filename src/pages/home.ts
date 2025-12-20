@@ -94,18 +94,25 @@ function renderDailyReviewSection(): string {
  */
 export function renderHomePage(container: HTMLElement, subjects: Subject[]): void {
   const userProgress = progressStorage.getProgress();
-  const overallProgress = calculateOverallProgress(subjects, userProgress);
-  const inProgressSubjects = getInProgressSubjects(subjects, userProgress);
-  const nextRecommended = getNextRecommendedSubject(subjects, userProgress);
+
+  // Filter subjects by user selection (if they have selected subjects)
+  const selectedIds = progressStorage.getSelectedSubjects();
+  const filteredSubjects = selectedIds.length > 0
+    ? subjects.filter(s => selectedIds.includes(s.id))
+    : subjects;
+
+  const overallProgress = calculateOverallProgress(filteredSubjects, userProgress);
+  const inProgressSubjects = getInProgressSubjects(filteredSubjects, userProgress);
+  const nextRecommended = getNextRecommendedSubject(filteredSubjects, userProgress);
 
   // Calculate stats
-  const stats = calculateStats(subjects, userProgress);
+  const stats = calculateStats(filteredSubjects, userProgress);
 
   container.innerHTML = `
     <div class="home-page">
       <header class="home-header">
         <h1>Groundwork</h1>
-        <p class="subtitle">A self-study platform covering a 4-year undergraduate CS and mathematics curriculum. 28 subjects with lessons, quizzes, coding exercises, projects, and practice exams. Code runs in the browser via Pyodide.</p>
+        <p class="subtitle">A self-study platform covering undergraduate CS and mathematics curriculum. ${filteredSubjects.length} subjects with lessons, quizzes, coding exercises, projects, and practice exams. Code runs in the browser via Pyodide.</p>
       </header>
 
       <section class="progress-summary">

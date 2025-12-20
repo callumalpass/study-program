@@ -6,12 +6,14 @@ export type ProgrammingLanguage = 'javascript' | 'typescript' | 'python' | 'java
 export type Theme = 'light' | 'dark' | 'auto';
 export type ExerciseDifficulty = 1 | 2 | 3 | 4 | 5; // 1=easiest, 5=hardest (internal use)
 export type AssessmentType = 'quiz' | 'exam';
+export type SubjectCategory = 'cs' | 'math' | 'physics' | 'philosophy' | 'economics' | 'statistics';
 
 // Subject and Curriculum Types
 export interface Subject {
   id: string;
   code: string;
   title: string;
+  category: SubjectCategory;
   year: number;
   semester: number;
   prerequisites: string[]; // Array of subject IDs
@@ -21,6 +23,7 @@ export interface Subject {
   estimatedHours: number;
   examIds?: string[];
   projectIds?: string[];
+  tags?: string[]; // e.g., ['ml', 'theory', 'systems', 'foundational']
 }
 
 export interface Subtopic {
@@ -186,6 +189,7 @@ export interface UserProgress {
   subjects: Record<string, SubjectProgress>;
   settings: UserSettings;
   reviewQueue?: ReviewItem[]; // Spaced repetition review queue
+  selectedSubjectIds?: string[]; // Subjects in user's course plan (undefined = legacy user, migrate to all)
 }
 
 export interface SubtopicView {
@@ -327,4 +331,14 @@ export interface ExerciseRouteParams extends RouteParams {
 export interface ProjectRouteParams extends RouteParams {
   id: string;
   projId: string;
+}
+
+// Course Builder Types
+export interface CourseTemplate {
+  id: string;
+  name: string;
+  description: string;
+  subjectIds: string[];
+  estimatedHours: number;
+  icon?: string;
 }

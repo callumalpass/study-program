@@ -15,7 +15,15 @@ import type {
 import { githubService } from '../services/github';
 
 const STORAGE_KEY = 'cs_degree_progress';
-const CURRENT_VERSION = 3;
+const CURRENT_VERSION = 4;
+
+// All subject IDs for migration (existing users get all subjects selected)
+const ALL_SUBJECT_IDS = [
+  'cs101', 'math101', 'cs102', 'cs103', 'math102', 'cs104', 'cs105',
+  'cs201', 'cs202', 'cs203', 'math203', 'cs204', 'cs205', 'math201', 'math202', 'math204',
+  'cs301', 'cs302', 'cs303', 'cs304', 'math301', 'math302', 'cs305', 'cs306', 'cs307', 'math303', 'math304',
+  'cs401', 'cs402', 'cs403', 'cs405', 'math401', 'math402', 'cs404', 'cs406', 'cs407', 'math403', 'math404',
+];
 
 /**
  * Calculate the next review interval based on streak and pass/fail
@@ -254,6 +262,12 @@ export class ProgressStorage {
     // Add reviewQueue if missing (v3+)
     if (!migrated.reviewQueue) {
       migrated.reviewQueue = [];
+    }
+
+    // Add selectedSubjectIds if missing (v4+)
+    // Existing users get all subjects selected to preserve current behavior
+    if (!migrated.selectedSubjectIds) {
+      migrated.selectedSubjectIds = [...ALL_SUBJECT_IDS];
     }
 
     // Ensure subject containers include new structures
@@ -591,6 +605,64 @@ export class ProgressStorage {
   getSettings(): UserSettings {
     return this.progress.settings;
   }
+
+  // ==================== Course Selection Methods ====================
+
+  /**
+   * Get the list of selected subject IDs
+   * Returns empty array for new users, all subjects for migrated users
+   */
+  getSelectedSubjects(): string[] {
+    return this.progress.selectedSubjectIds || [];
+  }
+
+  /**
+   * Set the complete list of selected subject IDs
+   */
+  setSelectedSubjects(subjectIds: string[]): void {
+    this.progress.selectedSubjectIds = [...subjectIds];
+    this.save();
+  }
+
+  /**
+   * Add a subject to the selection
+   */
+  addToSelection(subjectId: string): void {
+    if (!this.progress.selectedSubjectIds) {
+      this.progress.selectedSubjectIds = [];
+    }
+    if (!this.progress.selectedSubjectIds.includes(subjectId)) {
+      this.progress.selectedSubjectIds.push(subjectId);
+      this.save();
+    }
+  }
+
+  /**
+   * Remove a subject from the selection
+   */
+  removeFromSelection(subjectId: string): void {
+    if (!this.progress.selectedSubjectIds) return;
+    this.progress.selectedSubjectIds = this.progress.selectedSubjectIds.filter(
+      id => id !== subjectId
+    );
+    this.save();
+  }
+
+  /**
+   * Check if a subject is selected
+   */
+  isSubjectSelected(subjectId: string): boolean {
+    return this.progress.selectedSubjectIds?.includes(subjectId) ?? false;
+  }
+
+  /**
+   * Check if user has any subjects selected (for onboarding flow)
+   */
+  hasSelectedSubjects(): boolean {
+    return (this.progress.selectedSubjectIds?.length ?? 0) > 0;
+  }
+
+  // ==================== End Course Selection Methods ====================
 
   /**
    * Export progress as JSON string

@@ -6,7 +6,7 @@ import {
   arePrerequisitesMet,
   calculateSubjectCompletion,
 } from '@/core/progress';
-import { navigateToSubject } from '@/core/router';
+import { navigateToSubject, navigateToCourseBuilder } from '@/core/router';
 import { Icons } from '@/components/icons';
 import { CurriculumGraph } from '@/components/curriculum-graph';
 
@@ -27,14 +27,28 @@ let currentFilters: CurriculumFilters = {
  */
 export function renderCurriculumPage(container: HTMLElement, subjects: Subject[]): void {
   const userProgress = progressStorage.getProgress();
-  const groupedSubjects = getSubjectsByYearAndSemester(subjects);
+
+  // Filter subjects by user selection (if they have selected subjects)
+  const selectedIds = progressStorage.getSelectedSubjects();
+  const filteredSubjects = selectedIds.length > 0
+    ? subjects.filter(s => selectedIds.includes(s.id))
+    : subjects;
+
+  const groupedSubjects = getSubjectsByYearAndSemester(filteredSubjects);
+  const totalSubjectCount = subjects.length;
+  const selectedCount = filteredSubjects.length;
+  const isFiltered = selectedIds.length > 0 && selectedCount < totalSubjectCount;
 
   container.innerHTML = `
     <div class="curriculum-page">
       <header class="curriculum-header">
         <div>
           <h1>Curriculum</h1>
-          <p class="subtitle">4-Year Computer Science Program</p>
+          <p class="subtitle">
+            ${isFiltered
+              ? `${selectedCount} of ${totalSubjectCount} subjects selected`
+              : `${totalSubjectCount} subjects in your program`}
+          </p>
         </div>
         <div class="curriculum-filters">
           <div class="view-toggle">
@@ -67,6 +81,9 @@ export function renderCurriculumPage(container: HTMLElement, subjects: Subject[]
               <span>Show completed</span>
             </label>
           </div>
+          <button class="btn btn-secondary btn-sm" id="edit-selection-btn">
+            ${Icons.CourseBuilder} Edit Selection
+          </button>
         </div>
       </header>
 
@@ -101,17 +118,17 @@ export function renderCurriculumPage(container: HTMLElement, subjects: Subject[]
     const contentArea = container.querySelector('#curriculum-content-area');
     if (contentArea) {
       // Filter subjects based on year if selected
-      let displaySubjects = subjects;
+      let displaySubjects = filteredSubjects;
       if (currentFilters.selectedYear) {
-        displaySubjects = subjects.filter(s => s.year === currentFilters.selectedYear);
+        displaySubjects = filteredSubjects.filter(s => s.year === currentFilters.selectedYear);
       }
-      
+
       const graph = new CurriculumGraph(displaySubjects, userProgress);
       contentArea.appendChild(graph.render());
     }
   }
 
-  attachEventListeners(container, subjects);
+  attachEventListeners(container, subjects, filteredSubjects);
 }
 
 /**
@@ -269,7 +286,7 @@ function truncateText(text: string, maxLength: number): string {
 /**
  * Attach event listeners
  */
-function attachEventListeners(container: HTMLElement, subjects: Subject[]): void {
+function attachEventListeners(container: HTMLElement, allSubjects: Subject[], filteredSubjects: Subject[]): void {
   // Subject card clicks
   container.querySelectorAll('.subject-card:not(.locked)').forEach(card => {
     card.addEventListener('click', () => {
@@ -283,7 +300,7 @@ function attachEventListeners(container: HTMLElement, subjects: Subject[]): void
     btn.addEventListener('click', (e) => {
       const view = (e.currentTarget as HTMLElement).dataset.view as 'list' | 'graph';
       currentFilters.viewMode = view;
-      renderCurriculumPage(container, subjects);
+      renderCurriculumPage(container, allSubjects);
     });
   });
 
@@ -293,7 +310,7 @@ function attachEventListeners(container: HTMLElement, subjects: Subject[]): void
     yearFilter.addEventListener('change', (e) => {
       const value = (e.target as HTMLSelectElement).value;
       currentFilters.selectedYear = value ? parseInt(value) : null;
-      renderCurriculumPage(container, subjects);
+      renderCurriculumPage(container, allSubjects);
     });
   }
 
@@ -302,7 +319,15 @@ function attachEventListeners(container: HTMLElement, subjects: Subject[]): void
   if (showCompletedFilter) {
     showCompletedFilter.addEventListener('change', (e) => {
       currentFilters.showCompleted = (e.target as HTMLInputElement).checked;
-      renderCurriculumPage(container, subjects);
+      renderCurriculumPage(container, allSubjects);
+    });
+  }
+
+  // Edit selection button
+  const editSelectionBtn = container.querySelector('#edit-selection-btn');
+  if (editSelectionBtn) {
+    editSelectionBtn.addEventListener('click', () => {
+      navigateToCourseBuilder();
     });
   }
 }

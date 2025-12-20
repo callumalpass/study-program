@@ -81,6 +81,11 @@ export class Router {
       paramNames: [],
       template: '/timeline',
     },
+    courseBuilder: {
+      pattern: /^#?\/course-builder$/,
+      paramNames: [],
+      template: '/course-builder',
+    },
   };
 
   constructor() {
@@ -244,6 +249,7 @@ export const navigateToProgress = () => navigate('/progress');
 export const navigateToSettings = () => navigate('/settings');
 export const navigateToExport = () => navigate('/export');
 export const navigateToTimeline = () => navigate('/timeline');
+export const navigateToCourseBuilder = () => navigate('/course-builder');
 
 // Export route matching utilities
 export const onRouteChange = (handler: RouteHandler) => router.onRouteChange(handler);

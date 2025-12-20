@@ -15,12 +15,18 @@ export function renderTimelinePage(
   const userProgress = progressStorage.getProgress();
   const studyPlan = userProgress.settings.studyPlan;
 
+  // Filter subjects by user selection (if they have selected subjects)
+  const selectedIds = progressStorage.getSelectedSubjects();
+  const filteredSubjects = selectedIds.length > 0
+    ? subjects.filter(s => selectedIds.includes(s.id))
+    : subjects;
+
   if (!studyPlan) {
     // Show planner setup
-    renderPlannerSetup(container, subjects);
+    renderPlannerSetup(container, filteredSubjects);
   } else {
     // Show timeline
-    renderTimeline(container, subjects, studyPlan);
+    renderTimeline(container, filteredSubjects, studyPlan);
   }
 }
 
