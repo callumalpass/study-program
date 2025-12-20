@@ -206,5 +206,65 @@
       "Use the Integral Test with $u = \\ln x$."
     ],
     "solution": "Let $f(x) = \\frac{1}{x(\\ln x)^2}$ for $x \\geq 2$. This is positive, continuous, and decreasing.\\n\\n$\\int_2^\\infty \\frac{1}{x(\\ln x)^2} \\, dx$\\n\\nLet $u = \\ln x$, then $du = \\frac{1}{x} \\, dx$. When $x = 2$, $u = \\ln 2$; as $x \\to \\infty$, $u \\to \\infty$.\\n\\n$= \\int_{\\ln 2}^\\infty \\frac{1}{u^2} \\, du = \\lim_{t \\to \\infty} \\left[-\\frac{1}{u}\\right]_{\\ln 2}^t = \\lim_{t \\to \\infty} \\left(-\\frac{1}{t} + \\frac{1}{\\ln 2}\\right) = \\frac{1}{\\ln 2}$\\n\\nSince the integral converges, by the Integral Test, $\\sum_{n=2}^\\infty \\frac{1}{n(\\ln n)^2}$ **converges**."
+  },
+  {
+    "id": "math204-t6-ex13",
+    "subjectId": "math204",
+    "topicId": "math204-6",
+    "type": "written",
+    "difficulty": 3,
+    "title": "p-Series Test",
+    "description": "For each series, determine if it converges or diverges:\n\n(a) $\\sum_{n=1}^\\infty \\frac{1}{n^{3/2}}$\n\n(b) $\\sum_{n=1}^\\infty \\frac{1}{n^{0.99}}$\n\n(c) $\\sum_{n=1}^\\infty \\frac{1}{\\sqrt[3]{n^2}}$",
+    "hints": [
+      "A p-series $\\sum \\frac{1}{n^p}$ converges if $p > 1$ and diverges if $p \\leq 1$.",
+      "For (c), rewrite in the form $\\frac{1}{n^p}$.",
+      "Identify the value of $p$ in each case."
+    ],
+    "solution": "(a) $\\sum_{n=1}^\\infty \\frac{1}{n^{3/2}}$: This is a p-series with $p = 3/2 > 1$. **Converges.**\n\n(b) $\\sum_{n=1}^\\infty \\frac{1}{n^{0.99}}$: This is a p-series with $p = 0.99 < 1$. **Diverges.**\n\n(c) $\\sum_{n=1}^\\infty \\frac{1}{\\sqrt[3]{n^2}} = \\sum_{n=1}^\\infty \\frac{1}{n^{2/3}}$: This is a p-series with $p = 2/3 < 1$. **Diverges.**"
+  },
+  {
+    "id": "math204-t6-ex14",
+    "subjectId": "math204",
+    "topicId": "math204-6",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Alternating Series Error Bound",
+    "description": "How many terms of the series $\\sum_{n=1}^\\infty \\frac{(-1)^{n+1}}{n^2}$ are needed to approximate the sum to within 0.01?",
+    "hints": [
+      "For an alternating series, the error is bounded by the absolute value of the first omitted term.",
+      "Find the smallest $n$ such that $\\frac{1}{n^2} < 0.01$.",
+      "This means we need $n^2 > 100$."
+    ],
+    "solution": "By the Alternating Series Estimation Theorem, the error after using $n$ terms is at most $|a_{n+1}| = \\frac{1}{(n+1)^2}$.\n\nWe need: $\\frac{1}{(n+1)^2} < 0.01 = \\frac{1}{100}$\n\nThis requires $(n+1)^2 > 100$, so $n+1 > 10$, meaning $n \\geq 10$.\n\n**Answer:** We need at least **10 terms** to ensure the error is less than 0.01."
+  },
+  {
+    "id": "math204-t6-ex15",
+    "subjectId": "math204",
+    "topicId": "math204-6",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Factorial Series",
+    "description": "Use the Ratio Test to determine if $\\sum_{n=1}^\\infty \\frac{2^n}{n!}$ converges.",
+    "hints": [
+      "Compute $\\frac{a_{n+1}}{a_n}$ where $a_n = \\frac{2^n}{n!}$.",
+      "Recall that $(n+1)! = (n+1) \\cdot n!$.",
+      "Take the limit as $n \\to \\infty$."
+    ],
+    "solution": "$a_n = \\frac{2^n}{n!}$\n\n$\\frac{a_{n+1}}{a_n} = \\frac{2^{n+1}/(n+1)!}{2^n/n!} = \\frac{2^{n+1}}{(n+1)!} \\cdot \\frac{n!}{2^n} = \\frac{2 \\cdot 2^n}{(n+1) \\cdot n!} \\cdot \\frac{n!}{2^n}$\n\n$= \\frac{2}{n+1}$\n\n$L = \\lim_{n \\to \\infty} \\frac{2}{n+1} = 0 < 1$\n\nBy the Ratio Test, the series **converges**.\n\n(In fact, this series converges to $e^2 - 1$.)"
+  },
+  {
+    "id": "math204-t6-ex16",
+    "subjectId": "math204",
+    "topicId": "math204-6",
+    "type": "written",
+    "difficulty": 5,
+    "title": "Challenge: Strategy Selection",
+    "description": "For each series, select the most efficient test and determine convergence:\n\n(a) $\\sum_{n=1}^\\infty \\frac{n!}{n^n}$\n\n(b) $\\sum_{n=1}^\\infty \\frac{\\sin n}{n^2}$",
+    "hints": [
+      "For (a), factorials suggest the Ratio Test.",
+      "For (b), note that $|\\sin n| \\leq 1$, so compare to a p-series.",
+      "Consider whether absolute convergence applies."
+    ],
+    "solution": "**(a) $\\sum_{n=1}^\\infty \\frac{n!}{n^n}$**\n\nUse the Ratio Test:\n$\\frac{a_{n+1}}{a_n} = \\frac{(n+1)!}{(n+1)^{n+1}} \\cdot \\frac{n^n}{n!} = \\frac{(n+1) \\cdot n^n}{(n+1)^{n+1}} = \\frac{n^n}{(n+1)^n}$\n\n$= \\left(\\frac{n}{n+1}\\right)^n = \\left(\\frac{1}{1+1/n}\\right)^n \\to \\frac{1}{e}$ as $n \\to \\infty$\n\nSince $1/e < 1$, the series **converges** by the Ratio Test.\n\n**(b) $\\sum_{n=1}^\\infty \\frac{\\sin n}{n^2}$**\n\nCheck absolute convergence:\n$\\left|\\frac{\\sin n}{n^2}\\right| \\leq \\frac{1}{n^2}$\n\nSince $\\sum \\frac{1}{n^2}$ converges (p-series, $p = 2 > 1$), by the Comparison Test, $\\sum \\left|\\frac{\\sin n}{n^2}\\right|$ converges.\n\nTherefore $\\sum \\frac{\\sin n}{n^2}$ **converges absolutely**."
   }
 ]

@@ -211,5 +211,65 @@
       "Let $u = \\sqrt{x}$, so $x = u^2$ and $dx = 2u \\, du$."
     ],
     "solution": "Let $u = \\sqrt{x}$, so $x = u^2$ and $dx = 2u \\, du$.\nWhen $x = 1$: $u = 1$\nWhen $x = 4$: $u = 2$\n\n$\\int_1^4 \\frac{1}{2\\sqrt{x}} \\, dx = \\int_1^2 \\frac{1}{2u} \\cdot 2u \\, du = \\int_1^2 1 \\, du = [u]_1^2 = 2 - 1 = 1$\n\nAlternative: $\\int_1^4 \\frac{1}{2\\sqrt{x}} \\, dx = \\int_1^4 \\frac{1}{2}x^{-1/2} \\, dx = \\frac{1}{2}\\left[\\frac{x^{1/2}}{1/2}\\right]_1^4 = [\\sqrt{x}]_1^4 = 2 - 1 = 1$"
+  },
+  {
+    "id": "math204-t2-ex13",
+    "subjectId": "math204",
+    "topicId": "math204-2",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Mean Value Theorem for Integrals",
+    "description": "Find the value $c$ guaranteed by the Mean Value Theorem for Integrals for $f(x) = x^2$ on $[0, 3]$.",
+    "hints": [
+      "The MVT states there exists $c$ such that $f(c) = \\frac{1}{b-a}\\int_a^b f(x) \\, dx$.",
+      "First compute the average value of $f$ on $[0, 3]$.",
+      "Then solve $f(c) = $ average value."
+    ],
+    "solution": "Average value $= \\frac{1}{3-0}\\int_0^3 x^2 \\, dx = \\frac{1}{3}\\left[\\frac{x^3}{3}\\right]_0^3 = \\frac{1}{3} \\cdot 9 = 3$\n\nFind $c$ such that $f(c) = 3$:\n$c^2 = 3$\n$c = \\sqrt{3}$ (taking positive root since $c \\in [0, 3]$)\n\nVerify: $\\sqrt{3} \\approx 1.73 \\in [0, 3]$ ✓"
+  },
+  {
+    "id": "math204-t2-ex14",
+    "subjectId": "math204",
+    "topicId": "math204-2",
+    "type": "written",
+    "difficulty": 4,
+    "title": "FTC with Variable Limits",
+    "description": "Find $\\frac{d}{dx}\\int_{x^2}^{x^3} \\cos t \\, dt$",
+    "hints": [
+      "Split the integral: $\\int_{x^2}^{x^3} = \\int_0^{x^3} - \\int_0^{x^2}$.",
+      "Apply the chain rule version of FTC to each part.",
+      "Remember: $\\frac{d}{dx}\\int_0^{g(x)} f(t) \\, dt = f(g(x)) \\cdot g'(x)$."
+    ],
+    "solution": "Let $F(x) = \\int_0^x \\cos t \\, dt$. Then:\n$\\int_{x^2}^{x^3} \\cos t \\, dt = F(x^3) - F(x^2)$\n\nDifferentiate:\n$\\frac{d}{dx}[F(x^3) - F(x^2)] = F'(x^3) \\cdot 3x^2 - F'(x^2) \\cdot 2x$\n\nSince $F'(u) = \\cos u$ by FTC:\n$= \\cos(x^3) \\cdot 3x^2 - \\cos(x^2) \\cdot 2x$\n\n$= 3x^2\\cos(x^3) - 2x\\cos(x^2)$"
+  },
+  {
+    "id": "math204-t2-ex15",
+    "subjectId": "math204",
+    "topicId": "math204-2",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Riemann Sum to Integral",
+    "description": "Express $\\lim_{n \\to \\infty} \\sum_{i=1}^{n} \\frac{2}{n}\\left(1 + \\frac{2i}{n}\\right)^3$ as a definite integral and evaluate it.",
+    "hints": [
+      "Identify $\\Delta x = \\frac{b-a}{n}$ and $x_i = a + i\\Delta x$.",
+      "Here $\\Delta x = \\frac{2}{n}$ and $x_i = 1 + \\frac{2i}{n}$, so $a = 1$ and $b = 3$.",
+      "The function is $f(x) = x^3$."
+    ],
+    "solution": "The Riemann sum has the form $\\sum_{i=1}^n f(x_i)\\Delta x$ where:\n- $\\Delta x = \\frac{2}{n}$, so $b - a = 2$\n- $x_i = 1 + \\frac{2i}{n}$, so $a = 1$ and $b = 3$\n- $f(x_i) = (x_i)^3$, so $f(x) = x^3$\n\nTherefore: $\\lim_{n \\to \\infty} \\sum_{i=1}^{n} \\frac{2}{n}\\left(1 + \\frac{2i}{n}\\right)^3 = \\int_1^3 x^3 \\, dx$\n\n$= \\left[\\frac{x^4}{4}\\right]_1^3 = \\frac{81}{4} - \\frac{1}{4} = \\frac{80}{4} = 20$"
+  },
+  {
+    "id": "math204-t2-ex16",
+    "subjectId": "math204",
+    "topicId": "math204-2",
+    "type": "written",
+    "difficulty": 5,
+    "title": "Challenge: Total Area vs Net Area",
+    "description": "For $f(x) = x^3 - x$ on $[-1, 2]$:\n\n(a) Find the net signed area $\\int_{-1}^2 f(x) \\, dx$.\n\n(b) Find the total area between the curve and the x-axis.",
+    "hints": [
+      "For (b), find where $f(x) = 0$ to identify sign changes.",
+      "Factor: $x^3 - x = x(x-1)(x+1)$.",
+      "Split the integral at the zeros and take absolute values."
+    ],
+    "solution": "(a) Net signed area:\n$\\int_{-1}^2 (x^3 - x) \\, dx = \\left[\\frac{x^4}{4} - \\frac{x^2}{2}\\right]_{-1}^2$\n$= \\left(4 - 2\\right) - \\left(\\frac{1}{4} - \\frac{1}{2}\\right) = 2 - (-\\frac{1}{4}) = \\frac{9}{4}$\n\n(b) Find zeros: $x(x-1)(x+1) = 0$ gives $x = -1, 0, 1$.\n\nCheck signs:\n- On $[-1, 0]$: $f(-0.5) = -0.125 + 0.5 > 0$ (above x-axis)\n- On $[0, 1]$: $f(0.5) = 0.125 - 0.5 < 0$ (below x-axis)\n- On $[1, 2]$: $f(1.5) = 3.375 - 1.5 > 0$ (above x-axis)\n\nTotal area:\n$= \\int_{-1}^0 (x^3-x) \\, dx - \\int_0^1 (x^3-x) \\, dx + \\int_1^2 (x^3-x) \\, dx$\n$= \\frac{1}{4} - (-\\frac{1}{4}) + \\frac{9}{4} - \\frac{1}{4}$\n$= \\frac{1}{4} + \\frac{1}{4} + 2 = \\frac{5}{2}$"
   }
 ]

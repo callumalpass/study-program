@@ -207,5 +207,65 @@
       "Shells: easier. Disks: requires solving for $x$ in terms of $y$."
     ],
     "solution": "Shell Method: radius = $x$, height = $e^x$\\n\\n$V = \\int_0^1 2\\pi x e^x \\, dx$\\n\\nBy parts ($u=x, dv=e^x dx$):\\n$= 2\\pi[xe^x - e^x]_0^1 = 2\\pi[(e - e) - (0 - 1)] = 2\\pi$\\n\\nDisk Method: $x = \\ln y$, so $y \\in [1, e]$\\n\\n$V = \\int_1^e \\pi(\\ln y)^2 \\, dy$\\n\\nBy parts twice (omitted): this gives the same answer $2\\pi$"
+  },
+  {
+    "id": "math204-t4-ex13",
+    "subjectId": "math204",
+    "topicId": "math204-4",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Arc Length Calculation",
+    "description": "Find the arc length of $y = \\frac{x^{3/2}}{3}$ from $x = 0$ to $x = 4$.",
+    "hints": [
+      "First find $\\frac{dy}{dx}$.",
+      "Use the arc length formula $L = \\int_a^b \\sqrt{1 + (y')^2} \\, dx$.",
+      "Simplify the expression under the square root."
+    ],
+    "solution": "$y = \\frac{x^{3/2}}{3}$, so $\\frac{dy}{dx} = \\frac{3}{2} \\cdot \\frac{x^{1/2}}{3} = \\frac{\\sqrt{x}}{2}$\n\n$(y')^2 = \\frac{x}{4}$\n\n$L = \\int_0^4 \\sqrt{1 + \\frac{x}{4}} \\, dx = \\int_0^4 \\sqrt{\\frac{4+x}{4}} \\, dx = \\frac{1}{2}\\int_0^4 \\sqrt{4+x} \\, dx$\n\nLet $u = 4 + x$, $du = dx$. When $x = 0$, $u = 4$; when $x = 4$, $u = 8$.\n\n$= \\frac{1}{2}\\int_4^8 u^{1/2} \\, du = \\frac{1}{2} \\cdot \\frac{2}{3}[u^{3/2}]_4^8 = \\frac{1}{3}(8^{3/2} - 4^{3/2})$\n\n$= \\frac{1}{3}(16\\sqrt{2} - 8) = \\frac{8(2\\sqrt{2} - 1)}{3}$"
+  },
+  {
+    "id": "math204-t4-ex14",
+    "subjectId": "math204",
+    "topicId": "math204-4",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Center of Mass",
+    "description": "Find the centroid of the region bounded by $y = x^2$ and $y = 4$.",
+    "hints": [
+      "By symmetry, $\\bar{x} = 0$.",
+      "For $\\bar{y}$, use $\\bar{y} = \\frac{\\int y \\, dA}{\\int dA}$.",
+      "Integrate with respect to $y$ from 0 to 4."
+    ],
+    "solution": "The region extends from $x = -2$ to $x = 2$ (where $x^2 = 4$).\n\n**By symmetry:** $\\bar{x} = 0$\n\n**Area:** $A = \\int_{-2}^2 (4 - x^2) \\, dx = \\left[4x - \\frac{x^3}{3}\\right]_{-2}^2 = \\left(8 - \\frac{8}{3}\\right) - \\left(-8 + \\frac{8}{3}\\right) = \\frac{32}{3}$\n\n**For $\\bar{y}$:** Using horizontal slices:\n$\\bar{y} = \\frac{1}{A}\\int_0^4 y \\cdot 2\\sqrt{y} \\, dy = \\frac{3}{32}\\int_0^4 2y^{3/2} \\, dy$\n\n$= \\frac{6}{32}\\left[\\frac{2y^{5/2}}{5}\\right]_0^4 = \\frac{6}{32} \\cdot \\frac{2(32)}{5} = \\frac{6 \\cdot 64}{32 \\cdot 5} = \\frac{12}{5}$\n\n**Centroid:** $(0, \\frac{12}{5})$"
+  },
+  {
+    "id": "math204-t4-ex15",
+    "subjectId": "math204",
+    "topicId": "math204-4",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Hydrostatic Force",
+    "description": "A vertical plate in the shape of a semicircle of radius 2 m is submerged in water with its diameter at the surface. Find the hydrostatic force on the plate. (Use $\\rho g = 9800$ N/m³).",
+    "hints": [
+      "Place the origin at the center of the diameter at the surface.",
+      "At depth $y$ (below surface), the width of the semicircle is $2\\sqrt{4 - y^2}$.",
+      "Force = $\\int \\rho g y \\cdot w(y) \\, dy$."
+    ],
+    "solution": "Taking downward as positive $y$, the semicircle extends from $y = 0$ to $y = 2$.\n\nAt depth $y$: width $= 2\\sqrt{4 - y^2}$\n\n$F = \\int_0^2 \\rho g y \\cdot 2\\sqrt{4 - y^2} \\, dy = 2(9800)\\int_0^2 y\\sqrt{4 - y^2} \\, dy$\n\nLet $u = 4 - y^2$, then $du = -2y \\, dy$. When $y = 0$, $u = 4$; when $y = 2$, $u = 0$.\n\n$= 19600 \\cdot (-\\frac{1}{2})\\int_4^0 \\sqrt{u} \\, du = -9800\\left[\\frac{2u^{3/2}}{3}\\right]_4^0$\n\n$= -9800 \\cdot \\frac{2}{3}(0 - 8) = \\frac{9800 \\cdot 16}{3} = \\frac{156800}{3} \\approx 52267$ N"
+  },
+  {
+    "id": "math204-t4-ex16",
+    "subjectId": "math204",
+    "topicId": "math204-4",
+    "type": "written",
+    "difficulty": 5,
+    "title": "Challenge: Cross-Sectional Volume",
+    "description": "The base of a solid is the region bounded by $y = x^2$ and $y = 1$. Cross-sections perpendicular to the y-axis are equilateral triangles. Find the volume.",
+    "hints": [
+      "For each $y$ from 0 to 1, the base of the triangle has length $2\\sqrt{y}$.",
+      "Area of equilateral triangle with side $s$: $A = \\frac{\\sqrt{3}}{4}s^2$.",
+      "Integrate with respect to $y$."
+    ],
+    "solution": "At height $y$, the parabola $y = x^2$ gives $x = \\pm\\sqrt{y}$.\n\nBase of triangle: $s = 2\\sqrt{y}$\n\nArea of equilateral triangle: $A(y) = \\frac{\\sqrt{3}}{4}(2\\sqrt{y})^2 = \\frac{\\sqrt{3}}{4} \\cdot 4y = \\sqrt{3}y$\n\nVolume:\n$V = \\int_0^1 A(y) \\, dy = \\int_0^1 \\sqrt{3}y \\, dy = \\sqrt{3}\\left[\\frac{y^2}{2}\\right]_0^1 = \\frac{\\sqrt{3}}{2}$"
   }
 ]

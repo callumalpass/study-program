@@ -207,5 +207,65 @@
       "Try $u = x^2+1$ or use trig substitution."
     ],
     "solution": "Method 1 - Substitution: Let $u = x^2+1$, then $du = 2x \\, dx$ and $x^2 = u-1$.\\n\\n$\\int \\frac{x^3}{\\sqrt{x^2+1}} \\, dx = \\int \\frac{x^2 \\cdot x}{\\sqrt{x^2+1}} \\, dx = \\int \\frac{(u-1)}{\\sqrt{u}} \\cdot \\frac{1}{2} \\, du$\\n\\n$= \\frac{1}{2}\\int (u^{1/2} - u^{-1/2}) \\, du = \\frac{1}{2}\\left(\\frac{2u^{3/2}}{3} - 2u^{1/2}\\right) + C$\\n\\n$= \\frac{u^{3/2}}{3} - u^{1/2} + C = \\frac{(x^2+1)^{3/2}}{3} - \\sqrt{x^2+1} + C$\\n\\n$= \\frac{(x^2+1)^{3/2} - 3\\sqrt{x^2+1}}{3} + C = \\frac{\\sqrt{x^2+1}(x^2+1-3)}{3} + C = \\frac{(x^2-2)\\sqrt{x^2+1}}{3} + C$"
+  },
+  {
+    "id": "math204-t3-ex13",
+    "subjectId": "math204",
+    "topicId": "math204-3",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Repeated Linear Factors",
+    "description": "Evaluate $\\int \\frac{2x+3}{(x+1)^2} \\, dx$",
+    "hints": [
+      "Use partial fractions: $\\frac{2x+3}{(x+1)^2} = \\frac{A}{x+1} + \\frac{B}{(x+1)^2}$.",
+      "Multiply both sides by $(x+1)^2$ and solve for A and B.",
+      "Integrate each term separately."
+    ],
+    "solution": "$\\frac{2x+3}{(x+1)^2} = \\frac{A}{x+1} + \\frac{B}{(x+1)^2}$\n\nMultiply by $(x+1)^2$: $2x + 3 = A(x+1) + B$\n\nLet $x = -1$: $1 = B$\nCompare coefficients of $x$: $2 = A$\n\n$\\int \\frac{2x+3}{(x+1)^2} \\, dx = \\int \\frac{2}{x+1} \\, dx + \\int \\frac{1}{(x+1)^2} \\, dx$\n\n$= 2\\ln|x+1| - \\frac{1}{x+1} + C$"
+  },
+  {
+    "id": "math204-t3-ex14",
+    "subjectId": "math204",
+    "topicId": "math204-3",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Irreducible Quadratic Factor",
+    "description": "Evaluate $\\int \\frac{x}{x^2 + 4} \\, dx$ and $\\int \\frac{1}{x^2 + 4} \\, dx$",
+    "hints": [
+      "For the first integral, try $u = x^2 + 4$.",
+      "For the second, use the arctan formula.",
+      "Compare the techniques for each."
+    ],
+    "solution": "**First integral:** Let $u = x^2 + 4$, then $du = 2x \\, dx$.\n$\\int \\frac{x}{x^2 + 4} \\, dx = \\frac{1}{2}\\int \\frac{1}{u} \\, du = \\frac{1}{2}\\ln|x^2 + 4| + C = \\frac{1}{2}\\ln(x^2 + 4) + C$\n\n**Second integral:** Using $\\int \\frac{1}{x^2 + a^2} \\, dx = \\frac{1}{a}\\arctan\\frac{x}{a} + C$ with $a = 2$:\n$\\int \\frac{1}{x^2 + 4} \\, dx = \\frac{1}{2}\\arctan\\frac{x}{2} + C$"
+  },
+  {
+    "id": "math204-t3-ex15",
+    "subjectId": "math204",
+    "topicId": "math204-3",
+    "type": "written",
+    "difficulty": 5,
+    "title": "Challenge: Integration by Parts with Inverse Trig",
+    "description": "Evaluate $\\int \\arctan x \\, dx$",
+    "hints": [
+      "Use integration by parts with $u = \\arctan x$ and $dv = dx$.",
+      "You'll get an integral of the form $\\int \\frac{x}{1+x^2} \\, dx$.",
+      "Use substitution for the remaining integral."
+    ],
+    "solution": "Let $u = \\arctan x$ and $dv = dx$.\nThen $du = \\frac{1}{1+x^2} \\, dx$ and $v = x$.\n\n$\\int \\arctan x \\, dx = x \\arctan x - \\int \\frac{x}{1+x^2} \\, dx$\n\nFor $\\int \\frac{x}{1+x^2} \\, dx$, let $w = 1 + x^2$, then $dw = 2x \\, dx$:\n$\\int \\frac{x}{1+x^2} \\, dx = \\frac{1}{2}\\ln(1+x^2) + C$\n\nTherefore:\n$\\int \\arctan x \\, dx = x \\arctan x - \\frac{1}{2}\\ln(1+x^2) + C$"
+  },
+  {
+    "id": "math204-t3-ex16",
+    "subjectId": "math204",
+    "topicId": "math204-3",
+    "type": "written",
+    "difficulty": 5,
+    "title": "Challenge: Rational Function Requiring Long Division",
+    "description": "Evaluate $\\int \\frac{x^3 + 1}{x^2 + 1} \\, dx$",
+    "hints": [
+      "Since the degree of the numerator equals or exceeds the denominator, perform polynomial division first.",
+      "Write as quotient + remainder/divisor.",
+      "Integrate each part separately."
+    ],
+    "solution": "Perform polynomial division:\n$\\frac{x^3 + 1}{x^2 + 1} = x + \\frac{-x + 1}{x^2 + 1} = x - \\frac{x}{x^2+1} + \\frac{1}{x^2+1}$\n\nNow integrate each term:\n$\\int \\frac{x^3 + 1}{x^2 + 1} \\, dx = \\int x \\, dx - \\int \\frac{x}{x^2+1} \\, dx + \\int \\frac{1}{x^2+1} \\, dx$\n\n$= \\frac{x^2}{2} - \\frac{1}{2}\\ln(x^2+1) + \\arctan x + C$"
   }
 ]

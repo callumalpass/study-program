@@ -1,0 +1,260 @@
+# MATH204: Calculus II - Subject Specification
+# This spec guides content creation for an intermediate calculus course focusing on integration.
+
+# ==============================================================================
+# SUBJECT IDENTITY
+# ==============================================================================
+
+id: math204
+title: Calculus II
+category: math
+
+role:
+  level: intermediate
+  transformation: >
+    From "I can differentiate functions" to "I can integrate functions using
+    various techniques, apply integration to solve real-world problems, and
+    analyze infinite sequences and series for convergence."
+
+# ==============================================================================
+# CURRICULUM
+# ==============================================================================
+
+curriculum:
+  subtopic_word_target: 1000
+
+  prerequisite_knowledge:
+    - Calculus I (limits, derivatives, basic differentiation rules)
+    - Trigonometry (unit circle, identities)
+    - Algebra (polynomial manipulation, factoring)
+    - Basic understanding of functions and their graphs
+
+  essential_concepts:
+    - Antiderivatives and indefinite integrals
+    - U-substitution and integration by parts
+    - Definite integrals and the Fundamental Theorem of Calculus
+    - Integration techniques (trigonometric, partial fractions)
+    - Applications of integration (area, volume, arc length)
+    - Improper integrals and convergence
+    - Sequences and series (convergence tests)
+    - Taylor and Maclaurin series
+
+  out_of_scope:
+    - Multivariable calculus (covered in MATH301)
+    - Differential equations beyond introductory examples
+    - Numerical methods beyond basic approximation
+    - Complex analysis
+
+# ==============================================================================
+# PEDAGOGICAL APPROACH
+# ==============================================================================
+
+pedagogy:
+  knowledge_type: mixed
+
+  mastery_indicators:
+    - Selects the appropriate integration technique for a given integral
+    - Applies the Fundamental Theorem of Calculus correctly
+    - Sets up and evaluates integrals for geometric applications
+    - Determines convergence or divergence of improper integrals
+    - Applies various convergence tests to series
+    - Constructs Taylor series and estimates approximation error
+
+  common_struggles:
+    - Choosing between integration techniques
+    - Setting up bounds for definite integrals
+    - Understanding why improper integrals converge or diverge
+    - Confusing series convergence tests
+    - Taylor series remainder estimation
+    - Trigonometric substitution choices
+
+# ==============================================================================
+# CONTENT STANDARDS
+# ==============================================================================
+
+content:
+  subtopic_requirements:
+    - Each integration technique should include multiple worked examples
+    - Show how to recognize which technique applies
+    - Include geometric visualizations for applications
+    - Provide step-by-step derivations for key formulas
+    - Contrast similar convergence tests
+
+  conventions:
+    - LaTeX for all mathematical expressions
+    - Standard calculus notation (dx, limits, summation)
+    - Clear labeling of constants of integration
+    - Consistent use of interval notation
+
+# ==============================================================================
+# ASSESSMENT PHILOSOPHY
+# ==============================================================================
+
+assessment:
+  philosophy: >
+    Calculus II requires both computational fluency and conceptual understanding.
+    Students must practice many integrals to develop pattern recognition, while
+    also understanding why techniques work. Problem-solving should emphasize
+    strategy selection as much as execution.
+
+  measures:
+    - Correct application of integration techniques
+    - Proper setup of definite integrals for applications
+    - Accurate convergence analysis with justification
+    - Taylor series construction and error estimation
+
+  anti_patterns:
+    - Problems solvable by a single memorized formula
+    - Integrals requiring tricks not taught in the course
+    - Convergence questions answerable without showing work
+    - Problems where any technique works equally well
+
+# ==============================================================================
+# GRADING THRESHOLDS
+# ==============================================================================
+
+grading:
+  passing_score: 70
+
+  thresholds:
+    exercises: 70
+    quizzes: 70
+    exams: 65
+
+  rationale: >
+    Standard thresholds for a foundational STEM course. Slightly lower exam
+    threshold acknowledges the time pressure of integration problems. Students
+    need solid integration skills for upper-level mathematics and physics.
+
+# ==============================================================================
+# EXERCISE SPECIFICATIONS
+# ==============================================================================
+
+exercises:
+  rationale: >
+    Integration requires extensive practice to develop pattern recognition.
+    Exercises progress from basic technique application to problems requiring
+    strategy selection. Each topic needs sufficient drill and challenging problems.
+
+  types:
+    coding_with_tests: "0%"
+    coding_ai_evaluated: "0%"
+    written: "100%"
+    justification: >
+      Pure mathematics subject. All exercises are written solutions evaluated
+      by AI against reference solutions. Focus on showing complete work.
+
+  per_topic:
+    minimum: 14
+    target: 16
+    maximum: 18
+    justification: >
+      Full base standard count. Integration technique mastery requires volume
+      of practice. Each exercise should be completable in 10-20 minutes.
+      16 exercises per topic provides sufficient variety.
+
+  difficulty_distribution:
+    1: 3
+    2: 3
+    3: 4
+    4: 3
+    5: 3
+    justification: >
+      Standard distribution. Difficulty 1-2 for technique practice, 3-4 for
+      combined techniques, 5 for challenging applications. Balanced approach
+      for an intermediate course.
+
+# ==============================================================================
+# QUIZ SPECIFICATIONS
+# ==============================================================================
+
+quizzes:
+  rationale: >
+    Quizzes check formula recall, technique recognition, and basic computation.
+    They prepare students for longer exercises by ensuring foundational knowledge.
+
+  per_topic:
+    count: 3
+    questions_each: 5
+    justification: >
+      Standard base count. Three quizzes per topic: fundamentals, application,
+      and mastery levels. 15 questions per topic provides broad coverage.
+
+  question_types:
+    multiple_choice: "50%"
+    true_false: "15%"
+    fill_blank: "20%"
+    code_output: "0%"
+    coding: "0%"
+    written: "15%"
+    justification: >
+      Heavy on multiple choice for formula and technique recognition.
+      Fill-blank for key integration results. Limited written for short
+      computations. No coding for a pure mathematics course.
+
+# ==============================================================================
+# EXAM SPECIFICATIONS
+# ==============================================================================
+
+exams:
+  rationale: >
+    Exams test integration fluency under time pressure. Mix of computational
+    problems and conceptual questions. Time allocation allows 2-3 minutes per
+    question for basic problems, longer for proofs and applications.
+
+  midterm:
+    questions:
+      minimum: 24
+      target: 26
+      maximum: 30
+    duration_minutes: 90
+    format: >
+      10-12 integration problems (various techniques), 6-8 conceptual questions,
+      6-8 application problems (area, volume). Mix of multiple choice and written.
+    coverage: "Topics 1-4: Antiderivatives, Definite Integrals, Techniques, Applications"
+
+  final:
+    questions:
+      minimum: 38
+      target: 42
+      maximum: 48
+    duration_minutes: 120
+    format: >
+      20-25 integration and series problems, 10-12 conceptual questions,
+      8-10 application problems. Emphasis on series and Taylor series from later topics.
+    coverage: "Comprehensive: all 7 topics with emphasis on sequences and series"
+    cumulative: true
+
+# ==============================================================================
+# PROJECT SPECIFICATIONS
+# ==============================================================================
+
+projects:
+  required: false
+  count: 0
+  rationale: >
+    Pure mathematics course assessed via problem sets and exams. The exercises
+    effectively serve as ongoing practice. No separate projects needed.
+
+# ==============================================================================
+# SUBJECT-SPECIFIC RED FLAGS
+# ==============================================================================
+
+red_flags:
+  - Integration problem solvable only with a trick not taught
+  - Series convergence test not covered in the material
+  - Application problem with ambiguous setup requirements
+  - Taylor series problem requiring terms beyond what's reasonable by hand
+  - Improper integral with non-obvious singularities
+
+# ==============================================================================
+# NOTES
+# ==============================================================================
+
+notes: >
+  Calculus II is a critical transition course. Integration technique mastery
+  is essential for later mathematics and physics courses. Content should
+  emphasize pattern recognition and strategy selection. Series topics often
+  feel disconnected from integration—content should bridge this gap by showing
+  how series arise from integration problems (e.g., integral of 1/(1+x) = ln(1+x)
+  and its series expansion).

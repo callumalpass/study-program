@@ -7,9 +7,9 @@
 
 | Status | Count | Percentage |
 |--------|-------|------------|
-| COMPLETE (10/10) | 29 | 76% |
+| COMPLETE (10/10) | 30 | 79% |
 | COMPLETE (7-9/10) | 6 | 16% |
-| NEEDS WORK | 3 | 8% |
+| NEEDS WORK | 2 | 5% |
 | INCOMPLETE | 0 | 0% |
 
 ## Subjects by Status
@@ -37,6 +37,7 @@
 - MATH201: Linear Algebra
 - MATH202: Probability and Statistics
 - MATH203: Calculus I
+- MATH204: Calculus II
 - MATH302: Ordinary Differential Equations
 - MATH304: Abstract Algebra
 - MATH401: Complex Analysis
@@ -55,7 +56,6 @@
 ### Needs Significant Work (4-6/10)
 - CS104: Data Structures (8/10) - exercise count shortfall
 - CS405: Cloud Computing (8/10) - exercise shortage
-- MATH204: Calculus II (4/10) - exercise shortage
 - MATH404: Optimization Theory (7/10) - exercises complete, quizzes/content need work
 
 ## Common Issues
@@ -77,8 +77,7 @@ Some subjects have subtopics below the 800-word minimum:
 (None - all immediate blockers resolved)
 
 ### High Priority
-1. **MATH204**: Add exercises
-2. **CS405**: Add exercises
+1. **CS405**: Add exercises
 
 ## Year-by-Year Summary
 
@@ -88,9 +87,8 @@ Some subjects have subtopics below the 800-word minimum:
 - **Needs Work:** CS104
 
 ### Year 2 (9 subjects)
-- **Complete:** CS202, CS203, CS204, CS205, MATH201, MATH202, MATH203
+- **Complete:** CS202, CS203, CS204, CS205, MATH201, MATH202, MATH203, MATH204
 - **Good:** CS201
-- **Needs Work:** MATH204
 
 ### Year 3 (11 subjects)
 - **Complete:** CS301, CS303, CS304, CS305, CS306, CS307, MATH302, MATH304
@@ -105,15 +103,15 @@ Some subjects have subtopics below the 800-word minimum:
 
 | Subject | Estimated Hours |
 |---------|-----------------|
-| MATH204 | 10-15 |
 | CS405 | 5-10 |
 | Others | 5-10 each |
 
-**Total Estimated:** 15-35 hours to bring all subjects to production quality.
+**Total Estimated:** 5-20 hours to bring all subjects to production quality.
 
 ## Recent Updates (2025-12-21)
 
 ### Subjects Upgraded to Production Ready
+- **MATH204: Calculus II** - Added 28 exercises (4 per topic, now 16/16 each), created subject-spec.yaml, all 49 subtopics exceed 800 words, 105 quiz questions (15/topic), midterm (26q) + final (42q), TypeScript build passes
 - **MATH401: Complex Analysis** - Verified complete: 49 subtopics (avg 1,629 words), 112 exercises (16/topic), 21 quizzes (105 questions), midterm (26q) + final (42q), subject-spec.yaml present, TypeScript build passes, quality score 100%
 - **CS407: Data Science and Analytics** - Verified complete: all 49 subtopics at 1,000+ words (range: 1,134-4,062), 112 exercises (16/topic), 21 quizzes (3/topic × 5 questions), midterm (26 questions) + final (42 questions), 2 projects with rubrics, TypeScript build passes
 - **CS406: Artificial Intelligence** - Expanded Topic 3 and Topic 7 subtopics to 800+ words, added 65 exercises (Topics 3-7 now have 16 each), verified all 105 quiz questions, TypeScript build passes

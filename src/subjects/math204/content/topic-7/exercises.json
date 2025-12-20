@@ -206,5 +206,65 @@
       "Use the binomial series $(1+x)^{1/2}$ or compute derivatives."
     ],
     "solution": "Method 1 - Derivatives:\\n$f(x) = (1+x)^{1/2}, f(0) = 1$\\n$f'(x) = \\frac{1}{2}(1+x)^{-1/2}, f'(0) = \\frac{1}{2}$\\n$f''(x) = -\\frac{1}{4}(1+x)^{-3/2}, f''(0) = -\\frac{1}{4}$\\n$f'''(x) = \\frac{3}{8}(1+x)^{-5/2}, f'''(0) = \\frac{3}{8}$\\n\\n$\\sqrt{1+x} = 1 + \\frac{1}{2}x + \\frac{-1/4}{2!}x^2 + \\frac{3/8}{3!}x^3 + \\cdots$\\n\\n$= 1 + \\frac{x}{2} - \\frac{x^2}{8} + \\frac{x^3}{16} - \\cdots$\\n\\nMethod 2 - Binomial Series:\\n$(1+x)^{1/2} = \\sum_{n=0}^\\infty \\binom{1/2}{n}x^n = 1 + \\frac{1}{2}x + \\frac{(1/2)(-1/2)}{2!}x^2 + \\frac{(1/2)(-1/2)(-3/2)}{3!}x^3 + \\cdots$"
+  },
+  {
+    "id": "math204-t7-ex13",
+    "subjectId": "math204",
+    "topicId": "math204-7",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Manipulating Power Series",
+    "description": "Find the power series for $f(x) = \\frac{1}{(1-x)^2}$ by differentiating the geometric series.",
+    "hints": [
+      "Start with $\\frac{1}{1-x} = \\sum_{n=0}^\\infty x^n$ for $|x| < 1$.",
+      "Differentiate both sides with respect to $x$.",
+      "What is $\\frac{d}{dx}\\left(\\frac{1}{1-x}\\right)$?"
+    ],
+    "solution": "Start with: $\\frac{1}{1-x} = \\sum_{n=0}^\\infty x^n = 1 + x + x^2 + x^3 + \\cdots$\n\nDifferentiate both sides:\n$\\frac{d}{dx}\\left(\\frac{1}{1-x}\\right) = \\frac{1}{(1-x)^2}$\n\n$\\frac{d}{dx}\\sum_{n=0}^\\infty x^n = \\sum_{n=1}^\\infty nx^{n-1} = 1 + 2x + 3x^2 + 4x^3 + \\cdots$\n\nTherefore:\n$\\frac{1}{(1-x)^2} = \\sum_{n=1}^\\infty nx^{n-1} = \\sum_{n=0}^\\infty (n+1)x^n$ for $|x| < 1$"
+  },
+  {
+    "id": "math204-t7-ex14",
+    "subjectId": "math204",
+    "topicId": "math204-7",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Finding Limits Using Series",
+    "description": "Use Taylor series to evaluate $\\lim_{x \\to 0} \\frac{\\sin x - x}{x^3}$.",
+    "hints": [
+      "Write the Maclaurin series for $\\sin x$.",
+      "Subtract $x$ from the series.",
+      "Divide by $x^3$ and take the limit."
+    ],
+    "solution": "The Maclaurin series for $\\sin x$ is:\n$\\sin x = x - \\frac{x^3}{3!} + \\frac{x^5}{5!} - \\frac{x^7}{7!} + \\cdots$\n\nSubtract $x$:\n$\\sin x - x = -\\frac{x^3}{6} + \\frac{x^5}{120} - \\cdots$\n\nDivide by $x^3$:\n$\\frac{\\sin x - x}{x^3} = -\\frac{1}{6} + \\frac{x^2}{120} - \\cdots$\n\nTaking the limit as $x \\to 0$:\n$\\lim_{x \\to 0} \\frac{\\sin x - x}{x^3} = -\\frac{1}{6}$"
+  },
+  {
+    "id": "math204-t7-ex15",
+    "subjectId": "math204",
+    "topicId": "math204-7",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Series Multiplication",
+    "description": "Find the first 4 terms of the Maclaurin series for $e^x \\cos x$.",
+    "hints": [
+      "Write out the first few terms of $e^x$ and $\\cos x$.",
+      "Multiply the series together.",
+      "Collect terms by power of $x$."
+    ],
+    "solution": "$e^x = 1 + x + \\frac{x^2}{2} + \\frac{x^3}{6} + \\cdots$\n\n$\\cos x = 1 - \\frac{x^2}{2} + \\frac{x^4}{24} - \\cdots$\n\nMultiply (collecting up to $x^3$):\n\n$e^x \\cos x = \\left(1 + x + \\frac{x^2}{2} + \\frac{x^3}{6}\\right)\\left(1 - \\frac{x^2}{2} + \\cdots\\right)$\n\n- Constant term: $1 \\cdot 1 = 1$\n- Coefficient of $x$: $x \\cdot 1 = x$\n- Coefficient of $x^2$: $1 \\cdot (-\\frac{1}{2}) + \\frac{1}{2} \\cdot 1 = 0$\n- Coefficient of $x^3$: $x \\cdot (-\\frac{x^2}{2}) + \\frac{x^3}{6} \\cdot 1 = -\\frac{x^3}{2} + \\frac{x^3}{6} = -\\frac{x^3}{3}$\n\n$e^x \\cos x = 1 + x - \\frac{x^3}{3} + \\cdots$"
+  },
+  {
+    "id": "math204-t7-ex16",
+    "subjectId": "math204",
+    "topicId": "math204-7",
+    "type": "written",
+    "difficulty": 5,
+    "title": "Challenge: Integration Using Series",
+    "description": "Express $\\int_0^{0.5} \\frac{\\sin x}{x} \\, dx$ as an infinite series and estimate its value using the first 3 non-zero terms.",
+    "hints": [
+      "Write $\\frac{\\sin x}{x}$ as a power series by dividing the $\\sin x$ series by $x$.",
+      "Integrate term by term from 0 to 0.5.",
+      "Evaluate the first few terms numerically."
+    ],
+    "solution": "$\\sin x = x - \\frac{x^3}{6} + \\frac{x^5}{120} - \\frac{x^7}{5040} + \\cdots$\n\n$\\frac{\\sin x}{x} = 1 - \\frac{x^2}{6} + \\frac{x^4}{120} - \\frac{x^6}{5040} + \\cdots$\n\nIntegrate from 0 to $t$:\n$\\int_0^t \\frac{\\sin x}{x} \\, dx = t - \\frac{t^3}{18} + \\frac{t^5}{600} - \\frac{t^7}{35280} + \\cdots$\n\nSubstitute $t = 0.5$:\n- First term: $0.5 = 0.5$\n- Second term: $-\\frac{(0.5)^3}{18} = -\\frac{0.125}{18} \\approx -0.00694$\n- Third term: $\\frac{(0.5)^5}{600} = \\frac{0.03125}{600} \\approx 0.0000521$\n\nSum: $0.5 - 0.00694 + 0.0000521 \\approx 0.4931$\n\n(The actual value is approximately 0.4931...)"
   }
 ]

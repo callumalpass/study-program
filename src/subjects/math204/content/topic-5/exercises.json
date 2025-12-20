@@ -206,5 +206,65 @@
       "Discontinuity at $x = 0$. Evaluate the limit."
     ],
     "solution": "$\\int_0^1 \\frac{1}{x^a} \\, dx = \\lim_{t \\to 0^+} \\int_t^1 x^{-a} \\, dx$\\n\\nIf $a \\neq 1$:\\n$= \\lim_{t \\to 0^+} \\left[\\frac{x^{1-a}}{1-a}\\right]_t^1 = \\lim_{t \\to 0^+} \\frac{1 - t^{1-a}}{1-a}$\\n\\nThis converges if $1-a > 0$, i.e., $a < 1$.\\n\\nIf $a = 1$: $\\int_0^1 \\frac{1}{x} \\, dx = \\lim_{t \\to 0^+} [\\ln x]_t^1 = \\lim_{t \\to 0^+} (0 - \\ln t) = \\infty$, diverges.\\n\\n**Answer**: Converges for $a < 1$."
+  },
+  {
+    "id": "math204-t5-ex13",
+    "subjectId": "math204",
+    "topicId": "math204-5",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Negative Infinity Limit",
+    "description": "Evaluate $\\int_{-\\infty}^0 e^{2x} \\, dx$",
+    "hints": [
+      "Replace the lower limit with a variable and take the limit.",
+      "The antiderivative of $e^{2x}$ is $\\frac{1}{2}e^{2x}$.",
+      "Evaluate $\\lim_{t \\to -\\infty} e^{2t}$."
+    ],
+    "solution": "$\\int_{-\\infty}^0 e^{2x} \\, dx = \\lim_{t \\to -\\infty} \\int_t^0 e^{2x} \\, dx$\n\n$= \\lim_{t \\to -\\infty} \\left[\\frac{1}{2}e^{2x}\\right]_t^0 = \\lim_{t \\to -\\infty} \\left(\\frac{1}{2} - \\frac{1}{2}e^{2t}\\right)$\n\nAs $t \\to -\\infty$, $e^{2t} \\to 0$.\n\n$= \\frac{1}{2} - 0 = \\frac{1}{2}$"
+  },
+  {
+    "id": "math204-t5-ex14",
+    "subjectId": "math204",
+    "topicId": "math204-5",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Gamma Function Application",
+    "description": "Evaluate $\\int_0^\\infty x^2 e^{-x} \\, dx$",
+    "hints": [
+      "Use integration by parts twice, or recognize this as $\\Gamma(3)$.",
+      "The gamma function satisfies $\\Gamma(n) = (n-1)!$ for positive integers.",
+      "Alternatively, use tabular integration by parts."
+    ],
+    "solution": "**Method: Integration by Parts (twice)**\n\nFirst application: $u = x^2$, $dv = e^{-x}dx$, so $du = 2x \\, dx$, $v = -e^{-x}$.\n\n$\\int_0^\\infty x^2 e^{-x} \\, dx = \\left[-x^2 e^{-x}\\right]_0^\\infty + 2\\int_0^\\infty x e^{-x} \\, dx$\n\n$= 0 + 2\\int_0^\\infty x e^{-x} \\, dx$\n\nSecond application: $u = x$, $dv = e^{-x}dx$.\n\n$\\int_0^\\infty x e^{-x} \\, dx = \\left[-x e^{-x}\\right]_0^\\infty + \\int_0^\\infty e^{-x} \\, dx = 0 + 1 = 1$\n\nTherefore: $\\int_0^\\infty x^2 e^{-x} \\, dx = 2(1) = 2$\n\n(This equals $\\Gamma(3) = 2! = 2$)"
+  },
+  {
+    "id": "math204-t5-ex15",
+    "subjectId": "math204",
+    "topicId": "math204-5",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Probability Distribution",
+    "description": "The exponential distribution has PDF $f(x) = \\lambda e^{-\\lambda x}$ for $x \\geq 0$. Verify that $\\int_0^\\infty f(x) \\, dx = 1$ and find the expected value $E[X] = \\int_0^\\infty x f(x) \\, dx$ for $\\lambda = 2$.",
+    "hints": [
+      "For the first part, evaluate $\\int_0^\\infty 2e^{-2x} \\, dx$.",
+      "For the expected value, use integration by parts.",
+      "The expected value of an exponential distribution is $1/\\lambda$."
+    ],
+    "solution": "**Verify total probability = 1:**\n$\\int_0^\\infty 2e^{-2x} \\, dx = 2\\lim_{t \\to \\infty}\\left[-\\frac{1}{2}e^{-2x}\\right]_0^t = \\lim_{t \\to \\infty}(-e^{-2t} + 1) = 0 + 1 = 1$ ✓\n\n**Expected value:**\n$E[X] = \\int_0^\\infty x \\cdot 2e^{-2x} \\, dx = 2\\int_0^\\infty x e^{-2x} \\, dx$\n\nLet $u = x$, $dv = e^{-2x}dx$. Then $du = dx$, $v = -\\frac{1}{2}e^{-2x}$.\n\n$= 2\\left(\\left[-\\frac{x}{2}e^{-2x}\\right]_0^\\infty + \\frac{1}{2}\\int_0^\\infty e^{-2x} \\, dx\\right)$\n\n$= 2\\left(0 + \\frac{1}{2} \\cdot \\frac{1}{2}\\right) = 2 \\cdot \\frac{1}{4} = \\frac{1}{2}$\n\n(This confirms $E[X] = 1/\\lambda = 1/2$ for $\\lambda = 2$.)"
+  },
+  {
+    "id": "math204-t5-ex16",
+    "subjectId": "math204",
+    "topicId": "math204-5",
+    "type": "written",
+    "difficulty": 5,
+    "title": "Challenge: Combined Improper Integral",
+    "description": "Evaluate $\\int_0^\\infty \\frac{1}{(1+x)\\sqrt{x}} \\, dx$",
+    "hints": [
+      "This integral is improper at both $x = 0$ and $x = \\infty$.",
+      "Use the substitution $u = \\sqrt{x}$, so $x = u^2$ and $dx = 2u \\, du$.",
+      "The result involves the arctangent function."
+    ],
+    "solution": "This integral has potential issues at both $x = 0$ (discontinuity) and $x = \\infty$.\n\nSubstitute $u = \\sqrt{x}$, so $x = u^2$, $dx = 2u \\, du$, and $\\sqrt{x} = u$.\n\nWhen $x = 0$, $u = 0$; as $x \\to \\infty$, $u \\to \\infty$.\n\n$\\int_0^\\infty \\frac{1}{(1+x)\\sqrt{x}} \\, dx = \\int_0^\\infty \\frac{2u \\, du}{(1+u^2)u} = \\int_0^\\infty \\frac{2}{1+u^2} \\, du$\n\n$= 2\\lim_{t \\to \\infty}[\\arctan u]_0^t = 2\\lim_{t \\to \\infty}(\\arctan t - 0)$\n\n$= 2 \\cdot \\frac{\\pi}{2} = \\pi$"
   }
 ]

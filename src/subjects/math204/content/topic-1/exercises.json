@@ -230,5 +230,65 @@
       "Note that $e^{2x} = u - 1$."
     ],
     "solution": "Let $u = e^{2x} + 1$, then $du = 2e^{2x} \\, dx$, so $e^{2x} \\, dx = \\frac{1}{2}du$.\n\nAlso note that $e^{2x} = u - 1$.\n\n$\\int \\frac{e^{2x}}{e^{2x} + 1} \\, dx = \\int \\frac{1}{u} \\cdot \\frac{1}{2} \\, du = \\frac{1}{2}\\ln|u| + C$\n\n$= \\frac{1}{2}\\ln|e^{2x} + 1| + C = \\frac{1}{2}\\ln(e^{2x} + 1) + C$ (absolute value not needed since $e^{2x} + 1 > 0$)"
+  },
+  {
+    "id": "math204-t1-ex13",
+    "subjectId": "math204",
+    "topicId": "math204-1",
+    "type": "written",
+    "difficulty": 3,
+    "title": "Inverse Trigonometric Integration",
+    "description": "Evaluate:\n\n(a) $\\int \\frac{1}{\\sqrt{9 - x^2}} \\, dx$\n\n(b) $\\int \\frac{1}{4 + x^2} \\, dx$\n\n(c) $\\int \\frac{3}{1 + 9x^2} \\, dx$",
+    "hints": [
+      "Use the standard forms: $\\int \\frac{1}{\\sqrt{a^2 - x^2}} \\, dx = \\arcsin\\frac{x}{a} + C$ and $\\int \\frac{1}{a^2 + x^2} \\, dx = \\frac{1}{a}\\arctan\\frac{x}{a} + C$.",
+      "For (c), factor out constants and rewrite in standard form.",
+      "Identify $a$ in each integral."
+    ],
+    "solution": "(a) With $a = 3$: $\\int \\frac{1}{\\sqrt{9 - x^2}} \\, dx = \\arcsin\\frac{x}{3} + C$\n\n(b) With $a = 2$: $\\int \\frac{1}{4 + x^2} \\, dx = \\frac{1}{2}\\arctan\\frac{x}{2} + C$\n\n(c) Rewrite: $\\frac{3}{1 + 9x^2} = \\frac{3}{1 + (3x)^2}$. Let $u = 3x$, then $du = 3 \\, dx$.\n$\\int \\frac{3}{1 + 9x^2} \\, dx = \\int \\frac{1}{1 + u^2} \\, du = \\arctan(u) + C = \\arctan(3x) + C$"
+  },
+  {
+    "id": "math204-t1-ex14",
+    "subjectId": "math204",
+    "topicId": "math204-1",
+    "type": "written",
+    "difficulty": 4,
+    "title": "Nested Substitution",
+    "description": "Evaluate $\\int \\frac{e^{\\arctan x}}{1 + x^2} \\, dx$",
+    "hints": [
+      "Let $u = \\arctan x$.",
+      "Recall that $\\frac{d}{dx}(\\arctan x) = \\frac{1}{1 + x^2}$.",
+      "After substitution, the integral becomes simple."
+    ],
+    "solution": "Let $u = \\arctan x$, then $du = \\frac{1}{1 + x^2} \\, dx$.\n\n$\\int \\frac{e^{\\arctan x}}{1 + x^2} \\, dx = \\int e^u \\, du = e^u + C = e^{\\arctan x} + C$"
+  },
+  {
+    "id": "math204-t1-ex15",
+    "subjectId": "math204",
+    "topicId": "math204-1",
+    "type": "written",
+    "difficulty": 5,
+    "title": "Challenge: Rational with Substitution",
+    "description": "Evaluate $\\int \\frac{x}{\\sqrt{1 - x^4}} \\, dx$",
+    "hints": [
+      "Let $u = x^2$, so $du = 2x \\, dx$.",
+      "After substitution, recognize the arcsin pattern.",
+      "Don't forget to back-substitute."
+    ],
+    "solution": "Let $u = x^2$, then $du = 2x \\, dx$, so $x \\, dx = \\frac{1}{2}du$.\n\nAlso, $1 - x^4 = 1 - u^2$.\n\n$\\int \\frac{x}{\\sqrt{1 - x^4}} \\, dx = \\int \\frac{1}{\\sqrt{1 - u^2}} \\cdot \\frac{1}{2} \\, du = \\frac{1}{2}\\arcsin(u) + C$\n\n$= \\frac{1}{2}\\arcsin(x^2) + C$"
+  },
+  {
+    "id": "math204-t1-ex16",
+    "subjectId": "math204",
+    "topicId": "math204-1",
+    "type": "written",
+    "difficulty": 5,
+    "title": "Challenge: Motion Problem",
+    "description": "A particle moves along a line with velocity $v(t) = 4t - t^2$ for $0 \\leq t \\leq 4$.\n\n(a) Find the position function $s(t)$ if $s(0) = 2$.\n\n(b) Find the total distance traveled during $0 \\leq t \\leq 4$.",
+    "hints": [
+      "For (a), position is the antiderivative of velocity. Use the initial condition.",
+      "For (b), first find when $v(t) = 0$ to identify direction changes.",
+      "Total distance = $\\int_0^4 |v(t)| \\, dt$, split at velocity zeros."
+    ],
+    "solution": "(a) $s(t) = \\int v(t) \\, dt = \\int (4t - t^2) \\, dt = 2t^2 - \\frac{t^3}{3} + C$\n\nUsing $s(0) = 2$: $C = 2$.\n\nTherefore, $s(t) = 2t^2 - \\frac{t^3}{3} + 2$\n\n(b) Find when $v(t) = 0$: $4t - t^2 = t(4 - t) = 0$, so $t = 0$ or $t = 4$.\n\nSince $v(t) \\geq 0$ on $[0, 4]$ (parabola opening down, zeros at endpoints), the particle moves in one direction.\n\nTotal distance $= \\int_0^4 |v(t)| \\, dt = \\int_0^4 (4t - t^2) \\, dt = \\left[2t^2 - \\frac{t^3}{3}\\right]_0^4$\n\n$= 32 - \\frac{64}{3} = \\frac{96 - 64}{3} = \\frac{32}{3}$"
   }
 ]
