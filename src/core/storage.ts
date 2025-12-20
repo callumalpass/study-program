@@ -135,7 +135,9 @@ export class ProgressStorage {
     // Use sendBeacon for reliable delivery during page unload
     // Falls back to synchronous approach if sendBeacon unavailable
     try {
-      const payload = JSON.stringify(this.progress);
+      // Exclude settings (contains sensitive tokens) from sync
+      const { settings, ...progressToSave } = this.progress;
+      const payload = JSON.stringify(progressToSave);
       const url = `https://api.github.com/gists/${gistId}`;
       const body = JSON.stringify({
         files: {
