@@ -122,6 +122,148 @@ Return ONLY the JSON object, no other text.`;
 }
 
 /**
+ * Evaluate a coding exercise submission using Gemini AI
+ * Used when exercises don't have automated test cases defined
+ */
+export async function evaluateCodeExercise(
+  apiKey: string,
+  problem: string,
+  referenceSolution: string,
+  studentCode: string,
+  language: string
+): Promise<EvaluationResult> {
+  const prompt = buildCodeEvaluationPrompt(problem, referenceSolution, studentCode, language);
+
+  const response = await fetch(GEMINI_API_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-goog-api-key': apiKey,
+    },
+    body: JSON.stringify({
+      contents: [{ parts: [{ text: prompt }] }],
+      generationConfig: {
+        thinkingConfig: { thinkingLevel: 'high' },
+        responseMimeType: 'application/json',
+      },
+    }),
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Gemini API error: ${response.status} - ${errorText}`);
+  }
+
+  const data = await response.json();
+
+  const textContent = data.candidates?.[0]?.content?.parts?.find(
+    (part: { text?: string }) => part.text
+  )?.text;
+
+  if (!textContent) {
+    throw new Error('No text content in Gemini response');
+  }
+
+  try {
+    const result = JSON.parse(textContent) as EvaluationResult;
+    return {
+      passed: result.passed ?? false,
+      score: Math.max(0, Math.min(100, result.score ?? 0)),
+      feedback: result.feedback ?? 'Unable to evaluate.',
+      strengths: result.strengths ?? [],
+      improvements: result.improvements ?? [],
+    };
+  } catch {
+    throw new Error('Failed to parse Gemini code evaluation response');
+  }
+}
+
+/**
+ * Build the prompt for code exercise evaluation
+ */
+function buildCodeEvaluationPrompt(
+  problem: string,
+  referenceSolution: string,
+  studentCode: string,
+  language: string
+): string {
+  const languageNotes = getLanguageSpecificNotes(language);
+
+  return `You are evaluating a student's code solution to a programming exercise.
+
+## Problem Description
+${problem}
+
+## Reference Solution (${language})
+\`\`\`${language}
+${referenceSolution}
+\`\`\`
+
+## Student's Code (${language})
+\`\`\`${language}
+${studentCode}
+\`\`\`
+
+## Evaluation Criteria
+Evaluate the student's code for:
+
+1. **Correctness**: Does the code solve the problem? Would it produce correct results for various inputs?
+2. **Algorithm**: Is the approach/algorithm correct? Does it handle the core logic properly?
+3. **Edge Cases**: Does it handle edge cases (empty input, null, boundary conditions)?
+4. **Code Quality**: Is the code reasonably structured and readable?
+${languageNotes}
+
+## Important Guidelines
+- The student does NOT need to match the reference solution exactly
+- Accept alternative valid approaches that solve the problem correctly
+- Focus on whether the code WORKS, not stylistic preferences
+- Different variable names, loop styles, or equivalent algorithms are fine
+- Minor inefficiencies should not cause failure if the code is correct
+
+## Response Format
+Return your evaluation as JSON in this exact format:
+{
+  "passed": boolean,
+  "score": number (0-100),
+  "feedback": "Overall assessment in 2-3 sentences",
+  "strengths": ["strength 1", "strength 2"],
+  "improvements": ["suggestion 1", "suggestion 2"]
+}
+
+## Scoring Guidelines
+- 90-100: Excellent - correct, handles edge cases, clean code
+- 70-89: Good - correct core logic with minor issues (passing)
+- 50-69: Partial - partially correct but has bugs or missing cases
+- Below 50: Incorrect - major logic errors or doesn't solve the problem
+
+A passing score (70+) requires the core algorithm to be correct. The code should work for typical inputs even if edge cases aren't perfectly handled.
+
+Return ONLY the JSON object, no other text.`;
+}
+
+/**
+ * Get language-specific evaluation notes
+ */
+function getLanguageSpecificNotes(language: string): string {
+  switch (language.toLowerCase()) {
+    case 'c':
+    case 'cpp':
+    case 'c++':
+      return `
+5. **Memory Management**: For C/C++, check for memory leaks, null pointer handling, and proper resource cleanup`;
+    case 'python':
+      return `
+5. **Pythonic Code**: Idiomatic Python usage is a plus but not required for passing`;
+    case 'javascript':
+    case 'typescript':
+      return `
+5. **Modern Syntax**: ES6+ features are fine but not required`;
+    default:
+      return '';
+  }
+}
+
+/**
  * Validate that a Gemini API key works
  */
 export async function validateGeminiApiKey(apiKey: string): Promise<boolean> {

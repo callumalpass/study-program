@@ -6,6 +6,8 @@ import { runPython, runTests, runC, runCTests, type TestResult } from '@/compone
 import type { TestCase, ProgrammingLanguage } from '@/core/types';
 import { Icons } from '@/components/icons';
 import { escapeHtml } from '@/utils/html';
+import { progressStorage } from '@/core/storage';
+import { evaluateCodeExercise, type EvaluationResult } from '@/utils/gemini-eval';
 
 /** Languages that support in-browser execution */
 const RUNNABLE_LANGUAGES: ProgrammingLanguage[] = ['python', 'c', 'cpp'];
@@ -36,9 +38,13 @@ export interface CodeEditorProps {
   solution?: string;
   storageKey?: string;
   hideTestResults?: boolean;
+  /** Problem description for AI evaluation context */
+  problem?: string;
   onRun?: (code: string, output: string) => void;
   onTestResults?: (results: TestResult[], allPassed: boolean) => void;
   onChange?: (code: string) => void;
+  /** Callback when AI evaluation completes (for exercises without test cases) */
+  onAiEvaluation?: (result: EvaluationResult) => void;
 }
 
 export interface CodeEditorRef {
@@ -70,9 +76,11 @@ export function CodeEditor({
   solution,
   storageKey,
   hideTestResults = false,
+  problem,
   onRun,
   onTestResults,
   onChange,
+  onAiEvaluation,
 }: CodeEditorProps) {
   const editorContainerRef = useRef<HTMLDivElement>(null);
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
@@ -98,6 +106,14 @@ export function CodeEditor({
   // Test results state
   const [testResults, setTestResults] = useState<TestResult[]>([]);
   const [showTestResults, setShowTestResults] = useState(false);
+
+  // AI evaluation state (for exercises without test cases)
+  const [aiEvaluation, setAiEvaluation] = useState<EvaluationResult | null>(null);
+  const [isAiEvaluating, setIsAiEvaluating] = useState(false);
+
+  // Check if we're in AI evaluation mode (no test cases but has solution)
+  const isAiEvaluationMode = testCases.length === 0 && !!solution && !!problem;
+  const geminiApiKey = progressStorage.getSettings().geminiApiKey;
 
   // Load saved code
   const fullStorageKey = storageKey ? `${STORAGE_PREFIX}${storageKey}` : null;
@@ -330,6 +346,48 @@ export function CodeEditor({
     }
   }, [language, testCases, solution, onTestResults, highlightErrorLine, clearErrorDecorations]);
 
+  // AI evaluation (for exercises without test cases)
+  const handleAiEvaluate = useCallback(async () => {
+    const editor = editorRef.current;
+    if (!editor || !solution || !problem || !geminiApiKey) return;
+
+    const code = editor.getValue().trim();
+    if (!code) {
+      setOutput('Please write some code before requesting AI evaluation.');
+      setShowOutput(true);
+      setIsError(true);
+      return;
+    }
+
+    setIsAiEvaluating(true);
+    setAiEvaluation(null);
+    setOutput('Evaluating with AI...');
+    setShowOutput(true);
+    setIsError(false);
+
+    try {
+      const result = await evaluateCodeExercise(
+        geminiApiKey,
+        problem,
+        solution,
+        code,
+        language
+      );
+
+      setAiEvaluation(result);
+      setOutput(result.passed ? 'AI Evaluation: Passed!' : 'AI Evaluation: Needs work');
+      setIsError(!result.passed);
+
+      onAiEvaluation?.(result);
+    } catch (error) {
+      setIsError(true);
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      setOutput(`AI Evaluation Error: ${errorMessage}`);
+    } finally {
+      setIsAiEvaluating(false);
+    }
+  }, [language, solution, problem, geminiApiKey, onAiEvaluation]);
+
   // Reset to starter code
   const handleReset = useCallback(() => {
     if (!confirm('Reset code to starter template? Your changes will be lost.')) return;
@@ -347,6 +405,7 @@ export function CodeEditor({
     setShowTestResults(false);
     setTestResults([]);
     setExecutionTime(null);
+    setAiEvaluation(null);
     clearErrorDecorations();
   }, [starterCode, initialValue, fullStorageKey, clearErrorDecorations]);
 
@@ -358,6 +417,7 @@ export function CodeEditor({
     setShowTestResults(false);
     setTestResults([]);
     setExecutionTime(null);
+    setAiEvaluation(null);
   }, []);
 
   // Copy code
@@ -445,6 +505,17 @@ export function CodeEditor({
                 {testCases.length > 0 && (
                   <button class="btn btn-secondary btn-run-tests" onClick={handleRunTests} title="Run all test cases (Ctrl+Shift+Enter)">
                     <span class="btn-icon">✓</span> Run Tests
+                  </button>
+                )}
+                {isAiEvaluationMode && (
+                  <button
+                    class="btn btn-secondary btn-ai-evaluate"
+                    onClick={handleAiEvaluate}
+                    disabled={!geminiApiKey || isAiEvaluating}
+                    title={!geminiApiKey ? 'Configure Gemini API key in Settings to enable AI evaluation' : 'Evaluate code with AI'}
+                  >
+                    <span class="btn-icon" dangerouslySetInnerHTML={{ __html: Icons.Sparkles }} />
+                    {isAiEvaluating ? 'Evaluating...' : 'AI Evaluate'}
                   </button>
                 )}
                 <button class="btn btn-ghost btn-clear" onClick={handleClearOutput}>
@@ -561,6 +632,44 @@ export function CodeEditor({
                   )}
                 </div>
               ))
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* AI Evaluation result panel */}
+      {aiEvaluation && (
+        <div class="ai-evaluation-section">
+          <div class="ai-evaluation-header">
+            <span class="panel-icon" dangerouslySetInnerHTML={{ __html: Icons.Sparkles }} />
+            {' '}AI Evaluation
+          </div>
+          <div class={`evaluation-result ${aiEvaluation.passed ? 'passed' : 'not-passed'}`}>
+            <div class="result-header">
+              <span class={`result-badge ${aiEvaluation.passed ? 'passed' : 'not-passed'}`}>
+                <span dangerouslySetInnerHTML={{ __html: aiEvaluation.passed ? Icons.Check : Icons.Cross }} />
+                {' '}{aiEvaluation.passed ? 'Passed' : 'Needs Work'}
+              </span>
+              <span class="result-score">Score: {aiEvaluation.score}/100</span>
+            </div>
+            <div class="result-feedback">
+              <p>{aiEvaluation.feedback}</p>
+            </div>
+            {aiEvaluation.strengths.length > 0 && (
+              <div class="result-section strengths">
+                <strong>Strengths:</strong>
+                <ul>
+                  {aiEvaluation.strengths.map((s, i) => <li key={i}>{s}</li>)}
+                </ul>
+              </div>
+            )}
+            {aiEvaluation.improvements.length > 0 && (
+              <div class="result-section improvements">
+                <strong>Suggestions for improvement:</strong>
+                <ul>
+                  {aiEvaluation.improvements.map((s, i) => <li key={i}>{s}</li>)}
+                </ul>
+              </div>
             )}
           </div>
         </div>

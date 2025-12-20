@@ -8,6 +8,7 @@ import { renderMarkdown } from '@/components/markdown';
 import { CodeEditor } from './CodeEditor';
 import { ProofEditor } from './ProofEditor';
 import type { TestResult } from '@/components/code-runner';
+import type { EvaluationResult } from '@/utils/gemini-eval';
 
 // Type guard for CodingExercise
 function isCodingExercise(exercise: Exercise): exercise is CodingExercise {
@@ -155,6 +156,26 @@ function CodingExercisePage({
     setCompletion(newCompletion);
   }, [subjectId, exerciseId, startTimeRef, setCompletion]);
 
+  // Handle AI evaluation for exercises without test cases
+  const handleAiEvaluation = useCallback((result: EvaluationResult) => {
+    const timeSpent = Math.round((Date.now() - startTimeRef.current) / 1000);
+
+    const newCompletion: ExerciseCompletion = {
+      completionId: `completion_${Date.now()}`,
+      timestamp: new Date().toISOString(),
+      code: '',
+      passed: result.passed,
+      timeSpentSeconds: timeSpent,
+      type: 'coding',
+    };
+
+    progressStorage.addExerciseCompletion(subjectId, exerciseId, newCompletion);
+    setCompletion(newCompletion);
+  }, [subjectId, exerciseId, startTimeRef, setCompletion]);
+
+  // Check if this exercise uses AI evaluation (no test cases)
+  const isAiEvaluationMode = exercise.testCases.length === 0 && !!exercise.solution;
+
   return (
     <div class="exercise-page">
       <nav class="breadcrumb">
@@ -177,16 +198,20 @@ function CodingExercisePage({
             {formatLanguage(exercise.language)}
           </span>
           <span class="info-item">
-            <span class="icon" dangerouslySetInnerHTML={{ __html: Icons.Beaker }} />
-            {exercise.testCases.length} test cases
+            <span class="icon" dangerouslySetInnerHTML={{ __html: isAiEvaluationMode ? Icons.Sparkles : Icons.Beaker }} />
+            {isAiEvaluationMode ? 'AI Evaluation' : `${exercise.testCases.length} test cases`}
           </span>
           {isPassed ? (
             <span class="completion-badge passed">
               <span dangerouslySetInnerHTML={{ __html: Icons.Check }} /> Completed
             </span>
-          ) : completion ? (
+          ) : completion && !isAiEvaluationMode ? (
             <span class="completion-badge partial">
               {completion.passedTestCases ?? 0}/{completion.totalTestCases ?? 0} passed
+            </span>
+          ) : completion && isAiEvaluationMode ? (
+            <span class="completion-badge partial">
+              AI evaluated - needs work
             </span>
           ) : null}
         </div>
@@ -209,9 +234,11 @@ function CodingExercisePage({
           testCases={exercise.testCases}
           hints={exercise.hints}
           solution={exercise.solution}
+          problem={exercise.description}
           storageKey={`exercise_${subjectId}_${exerciseId}`}
           height="400px"
           onTestResults={handleTestResults}
+          onAiEvaluation={handleAiEvaluation}
         />
       </section>
 
