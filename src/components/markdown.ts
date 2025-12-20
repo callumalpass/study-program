@@ -4,6 +4,7 @@ import katex from 'katex';
 import mermaid from 'mermaid';
 import 'katex/dist/katex.min.css';
 import { escapeHtml } from '@/utils/html';
+import { parseFrontmatter } from '@/subjects/loader';
 
 // Initialize mermaid with default config
 mermaid.initialize({
@@ -104,7 +105,10 @@ export function renderMarkdown(content: string): string {
   }
 
   try {
-    let html = marked.parse(content) as string;
+    // Strip frontmatter if present
+    const { content: markdownContent } = parseFrontmatter(content);
+
+    let html = marked.parse(markdownContent) as string;
 
     // Post-process for any additional features
     html = processLatex(html);
