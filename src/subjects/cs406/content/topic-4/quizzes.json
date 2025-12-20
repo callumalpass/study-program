@@ -1,155 +1,169 @@
 [
   {
-    "id": "cs406-quiz-4-1",
+    "id": "cs406-quiz-4a",
     "subjectId": "cs406",
     "topicId": "cs406-topic-4",
-    "title": "CSP Fundamentals",
+    "title": "Topic 4 - Quiz Fundamentals",
     "questions": [
       {
-        "id": "cs406-q16",
+        "id": "q1",
         "type": "multiple_choice",
-        "prompt": "In a CSP, what is a constraint?",
+        "prompt": "In a Constraint Satisfaction Problem (CSP), what is a domain?",
         "options": [
-          "A restriction on the values variables can simultaneously take",
-          "The set of possible values for a variable",
-          "The order in which variables are assigned",
-          "The goal state"
+          "The set of possible values that a variable can take",
+          "A restriction on which variable combinations are valid",
+          "The order in which variables should be assigned",
+          "The goal state we are trying to reach"
         ],
-        "correctAnswer": "A restriction on the values variables can simultaneously take",
-        "explanation": "Constraints specify which combinations of variable values are permitted, e.g., \"X ≠ Y\" for map coloring."
+        "correctAnswer": 0,
+        "explanation": "A domain is the set of all possible values that can be assigned to a variable. For example, in map coloring, the domain might be {red, green, blue}. This is distinct from constraints, which limit which combinations of values are permitted across multiple variables."
       },
       {
-        "id": "cs406-q17",
+        "id": "q2",
         "type": "multiple_choice",
-        "prompt": "Arc consistency AC-3 ensures:",
+        "prompt": "What is the main purpose of the AC-3 algorithm in CSP?",
         "options": [
-          "For each value in a variables domain, there exists a consistent value in each neighbors domain",
-          "All constraints are satisfied",
-          "A solution exists",
-          "All variables have the same domain size"
+          "To find the optimal solution quickly",
+          "To enforce arc consistency by removing inconsistent values from domains",
+          "To select which variable to assign next",
+          "To backtrack when a dead end is reached"
         ],
-        "correctAnswer": "For each value in a variables domain, there exists a consistent value in each neighbors domain",
-        "explanation": "AC-3 makes each arc (directed constraint) consistent by removing domain values that have no supporting values in constrained variables."
+        "correctAnswer": 1,
+        "explanation": "AC-3 (Arc Consistency Algorithm 3) enforces arc consistency by iteratively removing values from variable domains that have no supporting values in constrained neighbor variables. This preprocessing step can significantly reduce the search space before or during backtracking search."
       },
       {
-        "id": "cs406-q18",
-        "type": "multiple_choice",
-        "prompt": "The Minimum Remaining Values (MRV) heuristic chooses:",
-        "options": [
-          "The variable with the fewest legal values remaining",
-          "The variable with the most constraints",
-          "The first unassigned variable",
-          "The variable with the most remaining values"
-        ],
-        "correctAnswer": "The variable with the fewest legal values remaining",
-        "explanation": "MRV (most constrained variable) chooses the variable most likely to cause failure soon, detecting failures early and reducing search."
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "The Minimum Remaining Values (MRV) heuristic always guarantees finding a solution faster than choosing variables in a fixed order.",
+        "correctAnswer": false,
+        "explanation": "While MRV often improves performance by detecting failures early, it does not guarantee faster solution finding in all cases. The effectiveness depends on the problem structure. MRV chooses the most constrained variable, which typically prunes the search space more effectively, but worst-case complexity remains the same."
+      },
+      {
+        "id": "q4",
+        "type": "fill_blank",
+        "prompt": "The heuristic that selects the value that rules out the fewest choices for neighboring variables is called _____.",
+        "correctAnswer": "Least Constraining Value",
+        "explanation": "The Least Constraining Value (LCV) heuristic prefers the value that leaves maximum flexibility for future assignments. By choosing values that impose the fewest constraints on unassigned variables, LCV increases the likelihood of finding a solution without backtracking."
+      },
+      {
+        "id": "q5",
+        "type": "code_output",
+        "prompt": "What is the output of this CSP backtracking pseudocode when all domains become empty for an unassigned variable?",
+        "codeSnippet": "def backtrack(assignment, csp):\n    if is_complete(assignment):\n        return assignment\n    var = select_unassigned_variable(csp)\n    for value in order_domain_values(var, csp):\n        if is_consistent(value, assignment, csp):\n            assignment[var] = value\n            result = backtrack(assignment, csp)\n            if result is not None:\n                return result\n            del assignment[var]\n    print(\"Backtracking from\", var)\n    return None",
+        "correctAnswer": "None",
+        "explanation": "When no values in a variable's domain are consistent with the current assignment, the inner loop completes without finding a valid assignment, and the function returns None to trigger backtracking. This is the fundamental mechanism for exploring the search space by undoing previous assignments when conflicts arise."
       }
     ]
   },
   {
-    "id": "cs406-quiz-4-2",
+    "id": "cs406-quiz-4b",
     "subjectId": "cs406",
     "topicId": "cs406-topic-4",
-    "title": "CSP Algorithms",
+    "title": "Topic 4 - Quiz Application",
     "questions": [
       {
-        "id": "cs406-q17",
+        "id": "q1",
         "type": "multiple_choice",
-        "prompt": "Arc consistency AC-3 ensures:",
+        "prompt": "What does forward checking do after assigning a value to a variable?",
         "options": [
-          "For each value in a variables domain, there exists a consistent value in each neighbors domain",
-          "All constraints are satisfied",
-          "A solution exists",
-          "All variables have the same domain size"
+          "Checks if the goal state has been reached",
+          "Removes inconsistent values from domains of unassigned neighboring variables",
+          "Verifies that all constraints in the problem are satisfied",
+          "Selects the next variable to assign using MRV"
         ],
-        "correctAnswer": "For each value in a variables domain, there exists a consistent value in each neighbors domain",
-        "explanation": "AC-3 makes each arc (directed constraint) consistent by removing domain values that have no supporting values in constrained variables."
+        "correctAnswer": 1,
+        "explanation": "Forward checking is a constraint propagation technique that, after each assignment, immediately removes values from the domains of unassigned variables that are neighbors of the assigned variable if those values would violate constraints. This early detection of failures reduces unnecessary search."
       },
       {
-        "id": "cs406-q18",
-        "type": "multiple_choice",
-        "prompt": "The Minimum Remaining Values (MRV) heuristic chooses:",
-        "options": [
-          "The variable with the fewest legal values remaining",
-          "The variable with the most constraints",
-          "The first unassigned variable",
-          "The variable with the most remaining values"
-        ],
-        "correctAnswer": "The variable with the fewest legal values remaining",
-        "explanation": "MRV (most constrained variable) chooses the variable most likely to cause failure soon, detecting failures early and reducing search."
+        "id": "q2",
+        "type": "code_output",
+        "prompt": "Given a map coloring CSP where WA=red, what happens to NT's domain {red,green,blue} after forward checking?",
+        "codeSnippet": "# CSP: WA, NT, Q, NSW, V, SA, T\n# Constraint: Adjacent regions have different colors\n# WA neighbors: NT, SA\n# Initial domains: {red, green, blue}\nassignment = {'WA': 'red'}\nforward_check(assignment, 'NT')\nprint(domain['NT'])",
+        "correctAnswer": "{green, blue}",
+        "explanation": "Since WA (Western Australia) is assigned red and is adjacent to NT (Northern Territory), forward checking removes 'red' from NT's domain to maintain the constraint that adjacent regions must have different colors. This leaves NT with the domain {green, blue}."
       },
       {
-        "id": "cs406-q19",
-        "type": "multiple_choice",
-        "prompt": "Forward checking in CSP backtracking:",
-        "options": [
-          "Removes inconsistent values from unassigned variables after each assignment",
-          "Checks all constraints before starting search",
-          "Looks ahead to detect solutions",
-          "Uses arc consistency on all variables"
-        ],
-        "correctAnswer": "Removes inconsistent values from unassigned variables after each assignment",
-        "explanation": "Forward checking propagates constraints immediately after each assignment, removing values from unassigned neighbors that conflict."
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "Min-conflicts is a complete algorithm that guarantees finding a solution if one exists.",
+        "correctAnswer": false,
+        "explanation": "Min-conflicts is a local search algorithm that is incomplete - it may get stuck in local minima and fail to find a solution even when one exists. However, it is very effective for certain problems like n-queens and can find solutions quickly when they exist, especially with random restarts."
       },
       {
-        "id": "cs406-q20",
+        "id": "q4",
         "type": "multiple_choice",
-        "prompt": "The min-conflicts algorithm for CSP:",
+        "prompt": "In the min-conflicts algorithm, how is the next variable selected?",
         "options": [
-          "Uses local search by changing one variable to minimize constraint violations",
-          "Uses backtracking with forward checking",
-          "Guarantees finding a solution",
-          "Maintains arc consistency"
+          "The variable with the most remaining values",
+          "A randomly chosen conflicted variable",
+          "The variable with the fewest legal values",
+          "The first unassigned variable in order"
         ],
-        "correctAnswer": "Uses local search by changing one variable to minimize constraint violations",
-        "explanation": "Min-conflicts is a local search method that repeatedly selects a conflicting variable and changes it to minimize total conflicts."
+        "correctAnswer": 1,
+        "explanation": "Min-conflicts randomly selects a variable that is currently in conflict (violating at least one constraint). It then changes that variable's value to the one that minimizes the number of conflicts. This random selection helps avoid getting stuck and provides good practical performance."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "The degree heuristic selects the variable with the _____ number of constraints on remaining variables.",
+        "correctAnswer": "largest",
+        "explanation": "The degree heuristic chooses the variable involved in the largest number of constraints with other unassigned variables. This is often used as a tie-breaker with MRV, helping to reduce branching factor early by assigning highly connected variables first."
       }
     ]
   },
   {
-    "id": "cs406-quiz-4-3",
+    "id": "cs406-quiz-4c",
     "subjectId": "cs406",
     "topicId": "cs406-topic-4",
-    "title": "CSP Applications",
+    "title": "Topic 4 - Quiz Mastery",
     "questions": [
       {
-        "id": "cs406-q19",
+        "id": "q1",
         "type": "multiple_choice",
-        "prompt": "Forward checking in CSP backtracking:",
+        "prompt": "Which of the following is true about maintaining arc consistency (MAC) during backtracking?",
         "options": [
-          "Removes inconsistent values from unassigned variables after each assignment",
-          "Checks all constraints before starting search",
-          "Looks ahead to detect solutions",
-          "Uses arc consistency on all variables"
+          "It runs AC-3 after each variable assignment and before selecting the next variable",
+          "It only checks arcs once at the beginning of search",
+          "It guarantees finding the optimal solution",
+          "It is less effective than simple forward checking"
         ],
-        "correctAnswer": "Removes inconsistent values from unassigned variables after each assignment",
-        "explanation": "Forward checking propagates constraints immediately after each assignment, removing values from unassigned neighbors that conflict."
+        "correctAnswer": 0,
+        "explanation": "Maintaining Arc Consistency (MAC) enforces arc consistency after each assignment by running AC-3 on the arcs involving unassigned variables. This is more powerful than forward checking as it propagates constraints further, often detecting failures earlier and reducing the search space more effectively."
       },
       {
-        "id": "cs406-q20",
-        "type": "multiple_choice",
-        "prompt": "The min-conflicts algorithm for CSP:",
-        "options": [
-          "Uses local search by changing one variable to minimize constraint violations",
-          "Uses backtracking with forward checking",
-          "Guarantees finding a solution",
-          "Maintains arc consistency"
-        ],
-        "correctAnswer": "Uses local search by changing one variable to minimize constraint violations",
-        "explanation": "Min-conflicts is a local search method that repeatedly selects a conflicting variable and changes it to minimize total conflicts."
+        "id": "q2",
+        "type": "code_output",
+        "prompt": "What is printed when this min-conflicts iteration runs on a 4-queens problem with conflicts at rows [3,0,2,1]?",
+        "codeSnippet": "# Current state: queens at rows [3,0,2,1] for columns 0-3\n# Conflicts: queen at col 0 conflicts with col 2\nconflicted_vars = [0, 2]\nvar = random.choice(conflicted_vars)  # Assume chooses 0\nmin_conf_value = min_conflicts_value(var, current)\nprint(f\"Move queen at col {var} to row {min_conf_value}\")",
+        "correctAnswer": "Move queen at col 0 to row 1",
+        "explanation": "For column 0, the algorithm evaluates moving the queen from row 3 to each possible row (0-3) and counts conflicts. Row 1 minimizes conflicts with the other queens. Min-conflicts chooses this value to reduce the total number of constraint violations."
       },
       {
-        "id": "cs406-q21",
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "Arc consistency eliminates all values that could not be part of any solution to the CSP.",
+        "correctAnswer": false,
+        "explanation": "Arc consistency only ensures local consistency between pairs of variables. It does not guarantee global consistency or eliminate all values that cannot be part of a solution. Stronger notions like path consistency or k-consistency are needed for more comprehensive pruning, but even these may not eliminate all impossible values."
+      },
+      {
+        "id": "q4",
+        "type": "fill_blank",
+        "prompt": "In CSP, a _____ constraint involves more than two variables and cannot be reduced to binary constraints.",
+        "correctAnswer": "global",
+        "explanation": "Global constraints (also called n-ary or higher-order constraints) involve three or more variables and often have special-purpose propagation algorithms. Examples include AllDifferent (all variables must have different values) and resource constraints. These are more expressive and efficient than decomposing into multiple binary constraints."
+      },
+      {
+        "id": "q5",
         "type": "multiple_choice",
-        "prompt": "STRIPS operators consist of:",
+        "prompt": "What is the time complexity of the AC-3 algorithm in the worst case?",
         "options": [
-          "Preconditions, add list, and delete list",
-          "Only preconditions",
-          "States and actions",
-          "Goals and subgoals"
+          "O(n²d) where n is variables and d is domain size",
+          "O(ed³) where e is arcs and d is domain size",
+          "O(n!) where n is the number of variables",
+          "O(d^n) where d is domain size and n is variables"
         ],
-        "correctAnswer": "Preconditions, add list, and delete list",
-        "explanation": "STRIPS operators specify preconditions (what must be true to apply), add list (what becomes true), and delete list (what becomes false)."
+        "correctAnswer": 1,
+        "explanation": "AC-3 has worst-case time complexity O(ed³) where e is the number of arcs (constraints) and d is the maximum domain size. Each arc can be added to the queue at most d times, and checking consistency for each value takes O(d²) time in the worst case. This is polynomial in the problem size, making AC-3 practical for preprocessing."
       }
     ]
   }

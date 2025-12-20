@@ -97,5 +97,435 @@
       "When stuck in a local minimum (no improving neighbors), restart with a new random state"
     ],
     "language": "python"
+  },
+  {
+    "id": "cs406-t2-ex04",
+    "subjectId": "cs406",
+    "topicId": "cs406-topic-2",
+    "title": "Depth-First Search with Cycle Detection",
+    "difficulty": 1,
+    "description": "Implement DFS to find a path in a graph and detect cycles.\n\nYour implementation should:\n- Use a stack (recursion or explicit) for frontier management\n- Track visited nodes to detect cycles\n- Return a path from start to goal if it exists\n- Return True/False for cycle detection",
+    "starterCode": "def dfs(graph, start, goal, visited=None):\n    \"\"\"\n    graph: dict where graph[node] = list of neighbors\n    start: starting node\n    goal: goal node\n    visited: set of visited nodes (for recursion)\n    Returns: path from start to goal, or None if no path exists\n    \"\"\"\n    # TODO: Implement DFS\n    pass\n\ndef has_cycle(graph, start, visited=None, rec_stack=None):\n    \"\"\"\n    Detect if graph has a cycle starting from start node.\n    Returns: True if cycle detected, False otherwise\n    \"\"\"\n    # TODO: Implement cycle detection\n    pass\n\n# Example:\n# graph = {\n#     'A': ['B', 'C'],\n#     'B': ['D'],\n#     'C': ['D'],\n#     'D': ['E'],\n#     'E': []\n# }\n# print(dfs(graph, 'A', 'E'))",
+    "solution": "def dfs(graph, start, goal, visited=None):\n    \"\"\"\n    graph: dict where graph[node] = list of neighbors\n    start: starting node\n    goal: goal node\n    visited: set of visited nodes (for recursion)\n    Returns: path from start to goal, or None if no path exists\n    \"\"\"\n    if visited is None:\n        visited = set()\n    \n    if start == goal:\n        return [start]\n    \n    visited.add(start)\n    \n    for neighbor in graph.get(start, []):\n        if neighbor not in visited:\n            path = dfs(graph, neighbor, goal, visited)\n            if path:\n                return [start] + path\n    \n    return None\n\ndef has_cycle(graph, start, visited=None, rec_stack=None):\n    \"\"\"\n    Detect if graph has a cycle starting from start node.\n    Returns: True if cycle detected, False otherwise\n    \"\"\"\n    if visited is None:\n        visited = set()\n    if rec_stack is None:\n        rec_stack = set()\n    \n    visited.add(start)\n    rec_stack.add(start)\n    \n    for neighbor in graph.get(start, []):\n        if neighbor not in visited:\n            if has_cycle(graph, neighbor, visited, rec_stack):\n                return True\n        elif neighbor in rec_stack:\n            return True\n    \n    rec_stack.remove(start)\n    return False\n\n# Test\ngraph = {\n    'A': ['B', 'C'],\n    'B': ['D'],\n    'C': ['D'],\n    'D': ['E'],\n    'E': []\n}\nprint(dfs(graph, 'A', 'E'))  # ['A', 'B', 'D', 'E']\nprint(has_cycle(graph, 'A'))  # False\n\n# Graph with cycle\ncyclic_graph = {\n    'A': ['B'],\n    'B': ['C'],\n    'C': ['A']\n}\nprint(has_cycle(cyclic_graph, 'A'))  # True",
+    "testCases": [
+      {
+        "input": "dfs(graph, 'A', 'E')",
+        "isHidden": false,
+        "description": "Test DFS finds path from A to E"
+      },
+      {
+        "input": "has_cycle(graph, 'A')",
+        "isHidden": false,
+        "description": "Test cycle detection on acyclic graph"
+      },
+      {
+        "input": "has_cycle(cyclic_graph, 'A')",
+        "isHidden": false,
+        "description": "Test cycle detection on cyclic graph"
+      }
+    ],
+    "hints": [
+      "DFS uses recursion or a stack, unlike BFS which uses a queue",
+      "For cycle detection, maintain a recursion stack separate from the visited set",
+      "A cycle exists if you encounter a node that's in the current recursion stack"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs406-t2-ex05",
+    "subjectId": "cs406",
+    "topicId": "cs406-topic-2",
+    "title": "Heuristic Admissibility Checker",
+    "difficulty": 2,
+    "description": "Implement a function to verify if a heuristic is admissible for A* search.\n\nA heuristic h(n) is admissible if it never overestimates the true cost to reach the goal. Your implementation should:\n- Take a graph with actual distances and a heuristic function\n- Compute true shortest paths using Dijkstra's algorithm\n- Compare heuristic values to actual costs\n- Return whether the heuristic is admissible",
+    "starterCode": "import heapq\n\ndef dijkstra(graph, start, goal):\n    \"\"\"\n    Find shortest path cost using Dijkstra's algorithm.\n    graph: dict where graph[node] = [(neighbor, cost), ...]\n    Returns: shortest path cost from start to goal\n    \"\"\"\n    # TODO: Implement Dijkstra\n    pass\n\ndef is_admissible(graph, heuristic, goal):\n    \"\"\"\n    Check if heuristic is admissible.\n    graph: dict where graph[node] = [(neighbor, cost), ...]\n    heuristic: dict where heuristic[node] = estimated cost to goal\n    goal: goal node\n    Returns: (True/False, violating_nodes)\n    \"\"\"\n    # TODO: Check admissibility\n    pass\n\n# Example:\n# graph = {\n#     'A': [('B', 1), ('C', 4)],\n#     'B': [('C', 2), ('D', 5)],\n#     'C': [('D', 1)],\n#     'D': []\n# }\n# heuristic = {'A': 5, 'B': 4, 'C': 2, 'D': 0}\n# print(is_admissible(graph, heuristic, 'D'))",
+    "solution": "import heapq\n\ndef dijkstra(graph, start, goal):\n    \"\"\"\n    Find shortest path cost using Dijkstra's algorithm.\n    graph: dict where graph[node] = [(neighbor, cost), ...]\n    Returns: shortest path cost from start to goal\n    \"\"\"\n    # Priority queue: (cost, node)\n    frontier = [(0, start)]\n    visited = set()\n    costs = {start: 0}\n    \n    while frontier:\n        cost, node = heapq.heappop(frontier)\n        \n        if node == goal:\n            return cost\n        \n        if node in visited:\n            continue\n        \n        visited.add(node)\n        \n        for neighbor, edge_cost in graph.get(node, []):\n            new_cost = cost + edge_cost\n            if neighbor not in costs or new_cost < costs[neighbor]:\n                costs[neighbor] = new_cost\n                heapq.heappush(frontier, (new_cost, neighbor))\n    \n    return float('inf')  # No path found\n\ndef is_admissible(graph, heuristic, goal):\n    \"\"\"\n    Check if heuristic is admissible.\n    graph: dict where graph[node] = [(neighbor, cost), ...]\n    heuristic: dict where heuristic[node] = estimated cost to goal\n    goal: goal node\n    Returns: (True/False, violating_nodes)\n    \"\"\"\n    violating_nodes = []\n    \n    # Check each node\n    for node in heuristic:\n        true_cost = dijkstra(graph, node, goal)\n        h_value = heuristic[node]\n        \n        # Admissible means h(n) <= true_cost\n        if h_value > true_cost:\n            violating_nodes.append((node, h_value, true_cost))\n    \n    is_valid = len(violating_nodes) == 0\n    return is_valid, violating_nodes\n\n# Test\ngraph = {\n    'A': [('B', 1), ('C', 4)],\n    'B': [('C', 2), ('D', 5)],\n    'C': [('D', 1)],\n    'D': []\n}\n\n# Admissible heuristic\nadmissible_h = {'A': 5, 'B': 4, 'C': 2, 'D': 0}\nresult, violations = is_admissible(graph, admissible_h, 'D')\nprint(f\"Admissible: {result}\")\nprint(f\"Violations: {violations}\")\n\n# Non-admissible heuristic\nnonadmissible_h = {'A': 10, 'B': 8, 'C': 5, 'D': 0}\nresult, violations = is_admissible(graph, nonadmissible_h, 'D')\nprint(f\"\\nAdmissible: {result}\")\nprint(f\"Violations: {violations}\")",
+    "testCases": [
+      {
+        "input": "dijkstra(graph, 'A', 'D')",
+        "isHidden": false,
+        "description": "Test Dijkstra computes shortest path"
+      },
+      {
+        "input": "is_admissible(graph, admissible_h, 'D')",
+        "isHidden": false,
+        "description": "Test admissible heuristic is recognized"
+      },
+      {
+        "input": "is_admissible(graph, nonadmissible_h, 'D')",
+        "isHidden": false,
+        "description": "Test non-admissible heuristic is detected"
+      }
+    ],
+    "hints": [
+      "Use Dijkstra's algorithm to find the true shortest path cost from each node to the goal",
+      "A heuristic is admissible if h(n) <= actual_cost for all nodes n",
+      "Compare the heuristic value for each node against its true cost to the goal"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs406-t2-ex06",
+    "subjectId": "cs406",
+    "topicId": "cs406-topic-2",
+    "title": "Simulated Annealing for TSP",
+    "difficulty": 4,
+    "description": "Implement simulated annealing to solve the Traveling Salesman Problem.\n\nYour implementation should:\n- Start with a random tour\n- Use tour length as the cost function\n- Implement temperature-based acceptance of worse solutions\n- Use exponential cooling schedule\n- Return the best tour found",
+    "starterCode": "import random\nimport math\n\ndef tour_length(tour, distances):\n    \"\"\"\n    Calculate total length of a tour.\n    tour: list of city indices\n    distances: 2D list where distances[i][j] = distance from city i to j\n    \"\"\"\n    # TODO: Calculate tour length\n    pass\n\ndef get_neighbor(tour):\n    \"\"\"\n    Generate neighbor by swapping two random cities.\n    Returns: new tour\n    \"\"\"\n    # TODO: Generate neighbor\n    pass\n\ndef simulated_annealing(distances, initial_temp=1000, cooling_rate=0.995, min_temp=1):\n    \"\"\"\n    Solve TSP using simulated annealing.\n    Returns: (best_tour, best_cost)\n    \"\"\"\n    # TODO: Implement simulated annealing\n    pass",
+    "solution": "import random\nimport math\n\ndef tour_length(tour, distances):\n    \"\"\"\n    Calculate total length of a tour.\n    tour: list of city indices\n    distances: 2D list where distances[i][j] = distance from city i to j\n    \"\"\"\n    length = 0\n    n = len(tour)\n    for i in range(n):\n        length += distances[tour[i]][tour[(i + 1) % n]]\n    return length\n\ndef get_neighbor(tour):\n    \"\"\"\n    Generate neighbor by swapping two random cities.\n    Returns: new tour\n    \"\"\"\n    new_tour = tour[:]\n    i, j = random.sample(range(len(tour)), 2)\n    new_tour[i], new_tour[j] = new_tour[j], new_tour[i]\n    return new_tour\n\ndef simulated_annealing(distances, initial_temp=1000, cooling_rate=0.995, min_temp=1):\n    \"\"\"\n    Solve TSP using simulated annealing.\n    Returns: (best_tour, best_cost)\n    \"\"\"\n    n = len(distances)\n    # Random initial tour\n    current_tour = list(range(n))\n    random.shuffle(current_tour)\n    current_cost = tour_length(current_tour, distances)\n    \n    best_tour = current_tour[:]\n    best_cost = current_cost\n    \n    temp = initial_temp\n    \n    while temp > min_temp:\n        # Generate neighbor\n        neighbor_tour = get_neighbor(current_tour)\n        neighbor_cost = tour_length(neighbor_tour, distances)\n        \n        # Calculate delta\n        delta = neighbor_cost - current_cost\n        \n        # Accept if better, or with probability based on temperature\n        if delta < 0 or random.random() < math.exp(-delta / temp):\n            current_tour = neighbor_tour\n            current_cost = neighbor_cost\n            \n            # Update best\n            if current_cost < best_cost:\n                best_tour = current_tour[:]\n                best_cost = current_cost\n        \n        # Cool down\n        temp *= cooling_rate\n    \n    return best_tour, best_cost\n\n# Test with small TSP instance\ndistances = [\n    [0, 10, 15, 20],\n    [10, 0, 35, 25],\n    [15, 35, 0, 30],\n    [20, 25, 30, 0]\n]\n\ntour, cost = simulated_annealing(distances, initial_temp=1000, cooling_rate=0.99)\nprint(f\"Best tour: {tour}\")\nprint(f\"Tour length: {cost}\")\nprint(f\"Expected optimal: ~80 (for this specific instance)\")",
+    "testCases": [
+      {
+        "input": "tour_length([0, 1, 2, 3], distances)",
+        "isHidden": false,
+        "description": "Test tour length calculation"
+      },
+      {
+        "input": "simulated_annealing(distances, initial_temp=1000, cooling_rate=0.99)",
+        "isHidden": false,
+        "description": "Test simulated annealing finds good tour"
+      },
+      {
+        "input": "len(get_neighbor([0, 1, 2, 3]))",
+        "isHidden": false,
+        "description": "Test neighbor generation maintains tour size"
+      }
+    ],
+    "hints": [
+      "Accept worse solutions with probability exp(-delta/T) where delta is the cost increase",
+      "Temperature decreases geometrically: T = T * cooling_rate each iteration",
+      "Track the best solution seen, not just the current solution, as SA can move away from optima"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs406-t2-ex07",
+    "subjectId": "cs406",
+    "topicId": "cs406-topic-2",
+    "title": "Beam Search Implementation",
+    "difficulty": 3,
+    "description": "Implement beam search for graph pathfinding with a limited beam width.\n\nBeam search keeps only the k best nodes at each level, reducing memory usage. Your implementation should:\n- Maintain a beam of k best nodes at each level\n- Use a heuristic to rank nodes\n- Expand only the k most promising nodes\n- Handle the case where the goal is pruned",
+    "starterCode": "import heapq\n\ndef beam_search(graph, start, goal, heuristic, beam_width=2):\n    \"\"\"\n    Perform beam search.\n    graph: dict where graph[node] = list of neighbors\n    start: starting node\n    goal: goal node\n    heuristic: dict mapping nodes to heuristic values\n    beam_width: number of nodes to keep at each level\n    Returns: path from start to goal, or None\n    \"\"\"\n    # TODO: Implement beam search\n    pass\n\n# Example:\n# graph = {\n#     'A': ['B', 'C', 'D'],\n#     'B': ['E', 'F'],\n#     'C': ['G'],\n#     'D': ['H'],\n#     'E': ['I'],\n#     'F': ['I'],\n#     'G': ['I'],\n#     'H': ['I'],\n#     'I': []\n# }",
+    "solution": "import heapq\n\ndef beam_search(graph, start, goal, heuristic, beam_width=2):\n    \"\"\"\n    Perform beam search.\n    graph: dict where graph[node] = list of neighbors\n    start: starting node\n    goal: goal node\n    heuristic: dict mapping nodes to heuristic values\n    beam_width: number of nodes to keep at each level\n    Returns: path from start to goal, or None\n    \"\"\"\n    # Beam stores (heuristic_value, node, path)\n    beam = [(heuristic.get(start, 0), start, [start])]\n    visited = set()\n    \n    while beam:\n        # Check if goal is in current beam\n        for h_val, node, path in beam:\n            if node == goal:\n                return path\n        \n        # Generate all successors\n        successors = []\n        for h_val, node, path in beam:\n            if node in visited:\n                continue\n            visited.add(node)\n            \n            for neighbor in graph.get(node, []):\n                if neighbor not in visited:\n                    new_path = path + [neighbor]\n                    h = heuristic.get(neighbor, 0)\n                    successors.append((h, neighbor, new_path))\n        \n        if not successors:\n            return None  # No path found\n        \n        # Keep only k best successors (lowest heuristic values)\n        successors.sort(key=lambda x: x[0])\n        beam = successors[:beam_width]\n    \n    return None\n\n# Test\ngraph = {\n    'A': ['B', 'C', 'D'],\n    'B': ['E', 'F'],\n    'C': ['G'],\n    'D': ['H'],\n    'E': ['I'],\n    'F': ['I'],\n    'G': ['I'],\n    'H': ['I'],\n    'I': []\n}\n\n# Heuristic favoring path through C and G\nheuristic = {\n    'A': 4, 'B': 3, 'C': 2, 'D': 5,\n    'E': 2, 'F': 2, 'G': 1, 'H': 3,\n    'I': 0\n}\n\npath = beam_search(graph, 'A', 'I', heuristic, beam_width=2)\nprint(f\"Path found: {path}\")\nprint(f\"Beam width 2 may find: ['A', 'C', 'G', 'I']\")\n\n# With larger beam width\npath = beam_search(graph, 'A', 'I', heuristic, beam_width=3)\nprint(f\"\\nWith beam width 3: {path}\")",
+    "testCases": [
+      {
+        "input": "beam_search(graph, 'A', 'I', heuristic, beam_width=2)",
+        "isHidden": false,
+        "description": "Test beam search with width 2"
+      },
+      {
+        "input": "beam_search(graph, 'A', 'I', heuristic, beam_width=3)",
+        "isHidden": false,
+        "description": "Test beam search with width 3"
+      },
+      {
+        "input": "beam_search(graph, 'A', 'A', heuristic, beam_width=2)",
+        "isHidden": false,
+        "description": "Test beam search with start == goal"
+      }
+    ],
+    "hints": [
+      "At each level, keep only the k nodes with the best (lowest) heuristic values",
+      "Beam search is incomplete - it may miss the goal if it's pruned from the beam",
+      "Unlike best-first search, beam search limits memory by discarding unpromising nodes"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs406-t2-ex08",
+    "subjectId": "cs406",
+    "topicId": "cs406-topic-2",
+    "title": "Search Complexity Analyzer",
+    "difficulty": 2,
+    "description": "Implement a function to analyze and compare the complexity of different search algorithms.\n\nYour implementation should:\n- Count nodes expanded by BFS, DFS, and A*\n- Track maximum frontier size\n- Measure search depth\n- Return statistics for comparison",
+    "starterCode": "from collections import deque\nimport heapq\n\ndef analyze_bfs(graph, start, goal):\n    \"\"\"\n    Run BFS and return statistics.\n    Returns: dict with 'nodes_expanded', 'max_frontier', 'depth', 'path'\n    \"\"\"\n    # TODO: Implement BFS with statistics\n    pass\n\ndef analyze_dfs(graph, start, goal, max_depth=100):\n    \"\"\"\n    Run DFS and return statistics.\n    Returns: dict with 'nodes_expanded', 'max_frontier', 'depth', 'path'\n    \"\"\"\n    # TODO: Implement DFS with statistics\n    pass\n\ndef compare_searches(graph, start, goal):\n    \"\"\"\n    Compare BFS and DFS on the same problem.\n    Returns: dict with statistics for each algorithm\n    \"\"\"\n    # TODO: Run both and compare\n    pass",
+    "solution": "from collections import deque\nimport heapq\n\ndef analyze_bfs(graph, start, goal):\n    \"\"\"\n    Run BFS and return statistics.\n    Returns: dict with 'nodes_expanded', 'max_frontier', 'depth', 'path'\n    \"\"\"\n    if start == goal:\n        return {'nodes_expanded': 0, 'max_frontier': 1, 'depth': 0, 'path': [start]}\n    \n    frontier = deque([(start, [start])])\n    explored = set()\n    nodes_expanded = 0\n    max_frontier = 1\n    \n    while frontier:\n        max_frontier = max(max_frontier, len(frontier))\n        node, path = frontier.popleft()\n        \n        if node in explored:\n            continue\n        \n        explored.add(node)\n        nodes_expanded += 1\n        \n        for neighbor in graph.get(node, []):\n            if neighbor not in explored:\n                new_path = path + [neighbor]\n                \n                if neighbor == goal:\n                    return {\n                        'nodes_expanded': nodes_expanded,\n                        'max_frontier': max_frontier,\n                        'depth': len(new_path) - 1,\n                        'path': new_path\n                    }\n                \n                frontier.append((neighbor, new_path))\n    \n    return {'nodes_expanded': nodes_expanded, 'max_frontier': max_frontier, 'depth': -1, 'path': None}\n\ndef analyze_dfs(graph, start, goal, max_depth=100):\n    \"\"\"\n    Run DFS and return statistics.\n    Returns: dict with 'nodes_expanded', 'max_frontier', 'depth', 'path'\n    \"\"\"\n    stats = {'nodes_expanded': 0, 'max_frontier': 0}\n    \n    def dfs_helper(node, path, visited):\n        if len(path) > max_depth:\n            return None\n        \n        stats['nodes_expanded'] += 1\n        \n        if node == goal:\n            return path\n        \n        visited.add(node)\n        \n        for neighbor in graph.get(node, []):\n            if neighbor not in visited:\n                result = dfs_helper(neighbor, path + [neighbor], visited)\n                if result:\n                    return result\n        \n        visited.remove(node)\n        return None\n    \n    path = dfs_helper(start, [start], set())\n    \n    return {\n        'nodes_expanded': stats['nodes_expanded'],\n        'max_frontier': stats['nodes_expanded'],  # DFS uses recursion, approx by expansions\n        'depth': len(path) - 1 if path else -1,\n        'path': path\n    }\n\ndef compare_searches(graph, start, goal):\n    \"\"\"\n    Compare BFS and DFS on the same problem.\n    Returns: dict with statistics for each algorithm\n    \"\"\"\n    bfs_stats = analyze_bfs(graph, start, goal)\n    dfs_stats = analyze_dfs(graph, start, goal)\n    \n    return {\n        'BFS': bfs_stats,\n        'DFS': dfs_stats\n    }\n\n# Test\ngraph = {\n    'A': ['B', 'C'],\n    'B': ['D', 'E'],\n    'C': ['F', 'G'],\n    'D': ['H'],\n    'E': ['H'],\n    'F': ['H'],\n    'G': ['H'],\n    'H': []\n}\n\nresults = compare_searches(graph, 'A', 'H')\nprint(\"BFS Statistics:\")\nfor key, value in results['BFS'].items():\n    print(f\"  {key}: {value}\")\n\nprint(\"\\nDFS Statistics:\")\nfor key, value in results['DFS'].items():\n    print(f\"  {key}: {value}\")",
+    "testCases": [
+      {
+        "input": "analyze_bfs(graph, 'A', 'H')",
+        "isHidden": false,
+        "description": "Test BFS statistics collection"
+      },
+      {
+        "input": "analyze_dfs(graph, 'A', 'H')",
+        "isHidden": false,
+        "description": "Test DFS statistics collection"
+      },
+      {
+        "input": "compare_searches(graph, 'A', 'H')",
+        "isHidden": false,
+        "description": "Test comparison between BFS and DFS"
+      }
+    ],
+    "hints": [
+      "Count each node when you remove it from the frontier (not when you add it)",
+      "Track the maximum size of the frontier throughout the search",
+      "BFS typically expands more nodes but guarantees shortest path; DFS may be lucky or unlucky"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs406-t2-ex09",
+    "subjectId": "cs406",
+    "topicId": "cs406-topic-2",
+    "title": "Bidirectional Search Implementation",
+    "difficulty": 4,
+    "description": "Implement bidirectional BFS that searches from both start and goal simultaneously.\n\nYour implementation should:\n- Run two BFS searches in parallel (one from start, one from goal)\n- Detect when the searches meet\n- Construct the complete path from start to goal\n- Handle directed graphs correctly",
+    "starterCode": "from collections import deque\n\ndef bidirectional_search(graph, reverse_graph, start, goal):\n    \"\"\"\n    Bidirectional BFS search.\n    graph: forward adjacency list\n    reverse_graph: backward adjacency list (for searching from goal)\n    start: starting node\n    goal: goal node\n    Returns: path from start to goal, or None\n    \"\"\"\n    # TODO: Implement bidirectional search\n    pass\n\ndef build_reverse_graph(graph):\n    \"\"\"\n    Build reverse graph for bidirectional search.\n    \"\"\"\n    # TODO: Build reverse graph\n    pass",
+    "solution": "from collections import deque\n\ndef bidirectional_search(graph, reverse_graph, start, goal):\n    \"\"\"\n    Bidirectional BFS search.\n    graph: forward adjacency list\n    reverse_graph: backward adjacency list (for searching from goal)\n    start: starting node\n    goal: goal node\n    Returns: path from start to goal, or None\n    \"\"\"\n    if start == goal:\n        return [start]\n    \n    # Forward search from start\n    forward_frontier = deque([start])\n    forward_visited = {start: None}  # Maps node to parent\n    \n    # Backward search from goal\n    backward_frontier = deque([goal])\n    backward_visited = {goal: None}\n    \n    while forward_frontier and backward_frontier:\n        # Expand forward\n        if forward_frontier:\n            node = forward_frontier.popleft()\n            for neighbor in graph.get(node, []):\n                if neighbor not in forward_visited:\n                    forward_visited[neighbor] = node\n                    \n                    # Check if searches meet\n                    if neighbor in backward_visited:\n                        return construct_path(forward_visited, backward_visited, neighbor)\n                    \n                    forward_frontier.append(neighbor)\n        \n        # Expand backward\n        if backward_frontier:\n            node = backward_frontier.popleft()\n            for neighbor in reverse_graph.get(node, []):\n                if neighbor not in backward_visited:\n                    backward_visited[neighbor] = node\n                    \n                    # Check if searches meet\n                    if neighbor in forward_visited:\n                        return construct_path(forward_visited, backward_visited, neighbor)\n                    \n                    backward_frontier.append(neighbor)\n    \n    return None  # No path found\n\ndef construct_path(forward_visited, backward_visited, meeting_node):\n    \"\"\"Construct complete path from start to goal.\"\"\"\n    # Build path from start to meeting node\n    path = []\n    node = meeting_node\n    while node is not None:\n        path.append(node)\n        node = forward_visited[node]\n    path.reverse()\n    \n    # Add path from meeting node to goal\n    node = backward_visited[meeting_node]\n    while node is not None:\n        path.append(node)\n        node = backward_visited[node]\n    \n    return path\n\ndef build_reverse_graph(graph):\n    \"\"\"\n    Build reverse graph for bidirectional search.\n    \"\"\"\n    reverse = {}\n    for node in graph:\n        for neighbor in graph[node]:\n            if neighbor not in reverse:\n                reverse[neighbor] = []\n            reverse[neighbor].append(node)\n    return reverse\n\n# Test\ngraph = {\n    'A': ['B', 'C'],\n    'B': ['D'],\n    'C': ['D'],\n    'D': ['E'],\n    'E': ['F'],\n    'F': []\n}\n\nreverse_graph = build_reverse_graph(graph)\npath = bidirectional_search(graph, reverse_graph, 'A', 'F')\nprint(f\"Path: {path}\")\nprint(f\"Path length: {len(path) - 1 if path else 'No path'}\")",
+    "testCases": [
+      {
+        "input": "bidirectional_search(graph, reverse_graph, 'A', 'F')",
+        "isHidden": false,
+        "description": "Test bidirectional search finds path"
+      },
+      {
+        "input": "build_reverse_graph(graph)",
+        "isHidden": false,
+        "description": "Test reverse graph construction"
+      },
+      {
+        "input": "bidirectional_search(graph, reverse_graph, 'A', 'A')",
+        "isHidden": false,
+        "description": "Test bidirectional search with start == goal"
+      }
+    ],
+    "hints": [
+      "Alternate between expanding one node from each frontier to keep searches balanced",
+      "Check if a newly expanded node exists in the other search's visited set",
+      "When the searches meet, construct the path by combining both partial paths"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs406-t2-ex10",
+    "subjectId": "cs406",
+    "topicId": "cs406-topic-2",
+    "title": "Iterative Deepening Search",
+    "difficulty": 2,
+    "description": "Implement iterative deepening depth-first search (IDDFS).\n\nIDDFS combines the space efficiency of DFS with the optimality of BFS. Your implementation should:\n- Perform DFS with increasing depth limits\n- Track the depth limit for each iteration\n- Return the path when goal is found\n- Count total nodes expanded",
+    "starterCode": "def dfs_limited(graph, start, goal, limit, visited=None):\n    \"\"\"\n    DFS with depth limit.\n    Returns: (path, nodes_expanded) or (None, nodes_expanded)\n    \"\"\"\n    # TODO: Implement depth-limited DFS\n    pass\n\ndef iddfs(graph, start, goal, max_depth=100):\n    \"\"\"\n    Iterative deepening depth-first search.\n    Returns: (path, total_nodes_expanded, depth_limit_used)\n    \"\"\"\n    # TODO: Implement IDDFS\n    pass\n\n# Example:\n# graph = {\n#     'A': ['B', 'C'],\n#     'B': ['D', 'E'],\n#     'C': ['F'],\n#     'D': [],\n#     'E': ['G'],\n#     'F': [],\n#     'G': []\n# }",
+    "solution": "def dfs_limited(graph, start, goal, limit, visited=None, depth=0):\n    \"\"\"\n    DFS with depth limit.\n    Returns: (path, nodes_expanded) or (None, nodes_expanded)\n    \"\"\"\n    if visited is None:\n        visited = set()\n    \n    nodes_expanded = 1\n    \n    if start == goal:\n        return [start], nodes_expanded\n    \n    if depth >= limit:\n        return None, nodes_expanded\n    \n    visited.add(start)\n    \n    for neighbor in graph.get(start, []):\n        if neighbor not in visited:\n            path, expanded = dfs_limited(graph, neighbor, goal, limit, visited, depth + 1)\n            nodes_expanded += expanded\n            \n            if path:\n                return [start] + path, nodes_expanded\n    \n    visited.remove(start)\n    return None, nodes_expanded\n\ndef iddfs(graph, start, goal, max_depth=100):\n    \"\"\"\n    Iterative deepening depth-first search.\n    Returns: (path, total_nodes_expanded, depth_limit_used)\n    \"\"\"\n    total_nodes = 0\n    \n    for depth_limit in range(max_depth + 1):\n        path, nodes_expanded = dfs_limited(graph, start, goal, depth_limit)\n        total_nodes += nodes_expanded\n        \n        if path:\n            return path, total_nodes, depth_limit\n    \n    return None, total_nodes, max_depth\n\n# Test\ngraph = {\n    'A': ['B', 'C'],\n    'B': ['D', 'E'],\n    'C': ['F'],\n    'D': [],\n    'E': ['G'],\n    'F': [],\n    'G': []\n}\n\npath, total_nodes, depth = iddfs(graph, 'A', 'G', max_depth=10)\nprint(f\"Path: {path}\")\nprint(f\"Total nodes expanded: {total_nodes}\")\nprint(f\"Depth limit used: {depth}\")\n\n# Compare with direct DFS\npath2, nodes2 = dfs_limited(graph, 'A', 'G', limit=10)\nprint(f\"\\nDirect DFS nodes expanded: {nodes2}\")\nprint(\"IDDFS expands more nodes but guarantees shortest path\")",
+    "testCases": [
+      {
+        "input": "iddfs(graph, 'A', 'G', max_depth=10)",
+        "isHidden": false,
+        "description": "Test IDDFS finds path to G"
+      },
+      {
+        "input": "dfs_limited(graph, 'A', 'G', limit=3)",
+        "isHidden": false,
+        "description": "Test depth-limited DFS with limit 3"
+      },
+      {
+        "input": "iddfs(graph, 'A', 'F', max_depth=10)",
+        "isHidden": false,
+        "description": "Test IDDFS finds shorter path to F"
+      }
+    ],
+    "hints": [
+      "Start with depth limit 0 and increment by 1 each iteration",
+      "For each depth limit, run a complete depth-limited DFS",
+      "IDDFS re-expands nodes from previous iterations but uses O(bd) space like DFS"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs406-t2-ex11",
+    "subjectId": "cs406",
+    "topicId": "cs406-topic-2",
+    "title": "Water Jug Problem Solver",
+    "difficulty": 3,
+    "description": "Formulate and solve the water jug problem as a search problem.\n\nGiven two jugs with capacities a and b liters, and a goal amount g, find a sequence of actions to measure exactly g liters. Actions are:\n- Fill jug 1 or 2 completely\n- Empty jug 1 or 2 completely\n- Pour from jug 1 to 2 (or vice versa) until one is empty or full\n\nYour implementation should:\n- Generate successor states from current state\n- Use BFS to find shortest solution\n- Return the sequence of actions",
+    "starterCode": "from collections import deque\n\ndef get_successors(state, cap1, cap2):\n    \"\"\"\n    Generate all possible successor states.\n    state: (jug1_amount, jug2_amount)\n    cap1, cap2: capacities of jugs\n    Returns: list of (new_state, action) tuples\n    \"\"\"\n    # TODO: Generate successors\n    pass\n\ndef solve_water_jug(cap1, cap2, goal):\n    \"\"\"\n    Solve water jug problem.\n    Returns: list of actions to reach goal, or None\n    \"\"\"\n    # TODO: Use BFS to solve\n    pass\n\n# Example:\n# solve_water_jug(4, 3, 2)\n# Should return actions to measure 2 liters",
+    "solution": "from collections import deque\n\ndef get_successors(state, cap1, cap2):\n    \"\"\"\n    Generate all possible successor states.\n    state: (jug1_amount, jug2_amount)\n    cap1, cap2: capacities of jugs\n    Returns: list of (new_state, action) tuples\n    \"\"\"\n    j1, j2 = state\n    successors = []\n    \n    # Fill jug 1\n    if j1 < cap1:\n        successors.append(((cap1, j2), \"Fill jug 1\"))\n    \n    # Fill jug 2\n    if j2 < cap2:\n        successors.append(((j1, cap2), \"Fill jug 2\"))\n    \n    # Empty jug 1\n    if j1 > 0:\n        successors.append(((0, j2), \"Empty jug 1\"))\n    \n    # Empty jug 2\n    if j2 > 0:\n        successors.append(((j1, 0), \"Empty jug 2\"))\n    \n    # Pour from jug 1 to jug 2\n    if j1 > 0 and j2 < cap2:\n        amount = min(j1, cap2 - j2)\n        successors.append(((j1 - amount, j2 + amount), f\"Pour {amount}L from jug 1 to jug 2\"))\n    \n    # Pour from jug 2 to jug 1\n    if j2 > 0 and j1 < cap1:\n        amount = min(j2, cap1 - j1)\n        successors.append(((j1 + amount, j2 - amount), f\"Pour {amount}L from jug 2 to jug 1\"))\n    \n    return successors\n\ndef solve_water_jug(cap1, cap2, goal):\n    \"\"\"\n    Solve water jug problem.\n    Returns: list of actions to reach goal, or None\n    \"\"\"\n    start = (0, 0)\n    \n    # BFS\n    frontier = deque([(start, [])])\n    visited = {start}\n    \n    while frontier:\n        state, actions = frontier.popleft()\n        \n        # Check if goal reached\n        if state[0] == goal or state[1] == goal:\n            return actions\n        \n        # Expand successors\n        for new_state, action in get_successors(state, cap1, cap2):\n            if new_state not in visited:\n                visited.add(new_state)\n                frontier.append((new_state, actions + [action]))\n    \n    return None  # No solution\n\n# Test\nactions = solve_water_jug(4, 3, 2)\nif actions:\n    print(f\"Solution found in {len(actions)} steps:\")\n    for i, action in enumerate(actions, 1):\n        print(f\"{i}. {action}\")\nelse:\n    print(\"No solution found\")\n\n# Test another case\nprint(\"\\nSolving for 3L with jugs of capacity 5L and 3L:\")\nactions = solve_water_jug(5, 3, 4)\nif actions:\n    for i, action in enumerate(actions, 1):\n        print(f\"{i}. {action}\")",
+    "testCases": [
+      {
+        "input": "solve_water_jug(4, 3, 2)",
+        "isHidden": false,
+        "description": "Test solving for 2L with 4L and 3L jugs"
+      },
+      {
+        "input": "solve_water_jug(5, 3, 4)",
+        "isHidden": false,
+        "description": "Test solving for 4L with 5L and 3L jugs"
+      },
+      {
+        "input": "len(get_successors((0, 0), 4, 3))",
+        "isHidden": false,
+        "description": "Test successor generation from initial state"
+      }
+    ],
+    "hints": [
+      "State representation: (amount_in_jug1, amount_in_jug2)",
+      "There are 6 possible actions from any state (fill, empty, or pour for each jug)",
+      "Use BFS to find the shortest sequence of actions to reach the goal"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs406-t2-ex12",
+    "subjectId": "cs406",
+    "topicId": "cs406-topic-2",
+    "title": "A* with Multiple Heuristics",
+    "difficulty": 4,
+    "description": "Implement A* that can use multiple heuristics and chooses the maximum (most informed while staying admissible).\n\nYour implementation should:\n- Support multiple admissible heuristic functions\n- Use max of all heuristics (remains admissible)\n- Compare performance with single heuristics\n- Track nodes expanded for each approach",
+    "starterCode": "import heapq\n\ndef manhattan_distance(pos1, pos2):\n    return abs(pos1[0] - pos2[0]) + abs(pos1[1] - pos2[1])\n\ndef euclidean_distance(pos1, pos2):\n    return ((pos1[0] - pos2[0])**2 + (pos1[1] - pos2[1])**2)**0.5\n\ndef chebyshev_distance(pos1, pos2):\n    return max(abs(pos1[0] - pos2[0]), abs(pos1[1] - pos2[1]))\n\ndef astar_multi_heuristic(grid, start, goal, heuristics):\n    \"\"\"\n    A* using maximum of multiple heuristics.\n    heuristics: list of heuristic functions\n    Returns: (path, nodes_expanded)\n    \"\"\"\n    # TODO: Implement A* with multiple heuristics\n    pass\n\n# Example:\n# grid = [\n#     [0, 0, 0, 0],\n#     [0, 1, 1, 0],\n#     [0, 0, 0, 0]\n# ]",
+    "solution": "import heapq\n\ndef manhattan_distance(pos1, pos2):\n    return abs(pos1[0] - pos2[0]) + abs(pos1[1] - pos2[1])\n\ndef euclidean_distance(pos1, pos2):\n    return ((pos1[0] - pos2[0])**2 + (pos1[1] - pos2[1])**2)**0.5\n\ndef chebyshev_distance(pos1, pos2):\n    return max(abs(pos1[0] - pos2[0]), abs(pos1[1] - pos2[1]))\n\ndef astar_multi_heuristic(grid, start, goal, heuristics):\n    \"\"\"\n    A* using maximum of multiple heuristics.\n    heuristics: list of heuristic functions\n    Returns: (path, nodes_expanded)\n    \"\"\"\n    rows, cols = len(grid), len(grid[0])\n    \n    # Compute max heuristic\n    def h(pos):\n        return max(heuristic(pos, goal) for heuristic in heuristics)\n    \n    # Priority queue: (f_score, g_score, position, path)\n    frontier = [(h(start), 0, start, [start])]\n    explored = set()\n    nodes_expanded = 0\n    \n    while frontier:\n        f_score, g_score, pos, path = heapq.heappop(frontier)\n        \n        if pos == goal:\n            return path, nodes_expanded\n        \n        if pos in explored:\n            continue\n        \n        explored.add(pos)\n        nodes_expanded += 1\n        \n        # Explore neighbors\n        x, y = pos\n        for dx, dy in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            nx, ny = x + dx, y + dy\n            \n            # Check bounds\n            if not (0 <= nx < cols and 0 <= ny < rows):\n                continue\n            \n            # Check obstacle\n            if grid[ny][nx] == 1:\n                continue\n            \n            if (nx, ny) in explored:\n                continue\n            \n            new_g = g_score + 1\n            new_h = h((nx, ny))\n            new_f = new_g + new_h\n            new_path = path + [(nx, ny)]\n            \n            heapq.heappush(frontier, (new_f, new_g, (nx, ny), new_path))\n    \n    return None, nodes_expanded\n\n# Test\ngrid = [\n    [0, 0, 0, 0, 0],\n    [0, 1, 1, 1, 0],\n    [0, 0, 0, 0, 0],\n    [0, 1, 1, 1, 0],\n    [0, 0, 0, 0, 0]\n]\n\nstart = (0, 0)\ngoal = (4, 4)\n\n# Single heuristic\npath1, nodes1 = astar_multi_heuristic(grid, start, goal, [manhattan_distance])\nprint(f\"Manhattan only: {nodes1} nodes expanded\")\n\n# Multiple heuristics\npath2, nodes2 = astar_multi_heuristic(grid, start, goal, [manhattan_distance, chebyshev_distance])\nprint(f\"Multi-heuristic: {nodes2} nodes expanded\")\nprint(f\"Path length: {len(path2) - 1 if path2 else 'No path'}\")\nprint(\"Using max of multiple admissible heuristics keeps admissibility and may expand fewer nodes\")",
+    "testCases": [
+      {
+        "input": "astar_multi_heuristic(grid, (0, 0), (4, 4), [manhattan_distance])",
+        "isHidden": false,
+        "description": "Test A* with single heuristic"
+      },
+      {
+        "input": "astar_multi_heuristic(grid, (0, 0), (4, 4), [manhattan_distance, chebyshev_distance])",
+        "isHidden": false,
+        "description": "Test A* with multiple heuristics"
+      },
+      {
+        "input": "manhattan_distance((0, 0), (3, 4))",
+        "isHidden": false,
+        "description": "Test Manhattan distance calculation"
+      }
+    ],
+    "hints": [
+      "The maximum of multiple admissible heuristics is still admissible",
+      "A more informed (higher) admissible heuristic typically expands fewer nodes",
+      "Each heuristic should never overestimate the true cost to maintain admissibility"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs406-t2-ex13",
+    "subjectId": "cs406",
+    "topicId": "cs406-topic-2",
+    "title": "Greedy Best-First Search",
+    "difficulty": 1,
+    "description": "Implement greedy best-first search that expands nodes with the best heuristic value.\n\nYour implementation should:\n- Use only the heuristic (no path cost) to order nodes\n- Use a priority queue for the frontier\n- Return a path (not necessarily optimal)\n- Compare with A* on the same problem",
+    "starterCode": "import heapq\n\ndef greedy_search(graph, start, goal, heuristic):\n    \"\"\"\n    Greedy best-first search.\n    graph: dict where graph[node] = list of neighbors\n    heuristic: dict mapping nodes to heuristic values\n    Returns: path from start to goal, or None\n    \"\"\"\n    # TODO: Implement greedy best-first search\n    pass\n\n# Example:\n# graph = {\n#     'A': ['B', 'C'],\n#     'B': ['D', 'E'],\n#     'C': ['F'],\n#     'D': ['G'],\n#     'E': ['G'],\n#     'F': ['G'],\n#     'G': []\n# }",
+    "solution": "import heapq\n\ndef greedy_search(graph, start, goal, heuristic):\n    \"\"\"\n    Greedy best-first search.\n    graph: dict where graph[node] = list of neighbors\n    heuristic: dict mapping nodes to heuristic values\n    Returns: path from start to goal, or None\n    \"\"\"\n    if start == goal:\n        return [start]\n    \n    # Priority queue: (heuristic_value, node, path)\n    frontier = [(heuristic.get(start, 0), start, [start])]\n    explored = set()\n    \n    while frontier:\n        h_val, node, path = heapq.heappop(frontier)\n        \n        if node in explored:\n            continue\n        \n        explored.add(node)\n        \n        for neighbor in graph.get(node, []):\n            if neighbor in explored:\n                continue\n            \n            new_path = path + [neighbor]\n            \n            if neighbor == goal:\n                return new_path\n            \n            h = heuristic.get(neighbor, 0)\n            heapq.heappush(frontier, (h, neighbor, new_path))\n    \n    return None  # No path found\n\n# Test\ngraph = {\n    'A': ['B', 'C'],\n    'B': ['D', 'E'],\n    'C': ['F'],\n    'D': ['G'],\n    'E': ['G'],\n    'F': ['G'],\n    'G': []\n}\n\n# Heuristic values (estimated distance to G)\nheuristic = {\n    'A': 6,\n    'B': 4,\n    'C': 4,\n    'D': 2,\n    'E': 2,\n    'F': 2,\n    'G': 0\n}\n\npath = greedy_search(graph, 'A', 'G', heuristic)\nprint(f\"Greedy path: {path}\")\nprint(f\"Path length: {len(path) - 1}\")\nprint(\"Note: Greedy search may not find the optimal path\")\n\n# Create a scenario where greedy finds suboptimal path\nprint(\"\\nExample where greedy is suboptimal:\")\ngraph2 = {\n    'A': ['B', 'C'],\n    'B': ['D'],  # Long path\n    'C': ['D'],  # Short path\n    'D': []\n}\nheuristic2 = {\n    'A': 10,\n    'B': 1,  # B looks closer to goal\n    'C': 5,\n    'D': 0\n}\npath2 = greedy_search(graph2, 'A', 'D', heuristic2)\nprint(f\"Greedy chooses: {path2}\")\nprint(\"This shows greedy search can be misled by the heuristic\")",
+    "testCases": [
+      {
+        "input": "greedy_search(graph, 'A', 'G', heuristic)",
+        "isHidden": false,
+        "description": "Test greedy search finds path"
+      },
+      {
+        "input": "greedy_search(graph, 'A', 'A', heuristic)",
+        "isHidden": false,
+        "description": "Test greedy search with start == goal"
+      },
+      {
+        "input": "greedy_search(graph2, 'A', 'D', heuristic2)",
+        "isHidden": false,
+        "description": "Test greedy search can find suboptimal paths"
+      }
+    ],
+    "hints": [
+      "Greedy search only uses h(n), not g(n) + h(n) like A*",
+      "Always expand the node with the lowest heuristic value",
+      "Greedy search is faster but may not find the optimal path"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs406-t2-ex14",
+    "subjectId": "cs406",
+    "topicId": "cs406-topic-2",
+    "title": "Sliding Puzzle Solver with A*",
+    "difficulty": 5,
+    "description": "Implement A* to solve the 8-puzzle (3x3 sliding tile puzzle).\n\nYour implementation should:\n- Represent states as tuples for hashing\n- Implement Manhattan distance heuristic for tiles\n- Generate successor states by sliding tiles\n- Use A* to find optimal solution\n- Handle unsolvable puzzles",
+    "starterCode": "import heapq\n\ndef manhattan_distance_puzzle(state, goal):\n    \"\"\"\n    Calculate Manhattan distance for puzzle state.\n    state and goal are tuples of 9 elements (0 represents empty)\n    \"\"\"\n    # TODO: Calculate Manhattan distance\n    pass\n\ndef get_successors_puzzle(state):\n    \"\"\"\n    Generate successor states by sliding tiles.\n    Returns: list of new states\n    \"\"\"\n    # TODO: Generate successors\n    pass\n\ndef solve_puzzle(start, goal):\n    \"\"\"\n    Solve 8-puzzle using A*.\n    Returns: (path, nodes_expanded) or (None, nodes_expanded)\n    \"\"\"\n    # TODO: Implement A* for puzzle\n    pass\n\n# Example:\n# start = (1, 2, 3, 4, 0, 5, 6, 7, 8)  # 0 is empty\n# goal = (1, 2, 3, 4, 5, 6, 7, 8, 0)",
+    "solution": "import heapq\n\ndef manhattan_distance_puzzle(state, goal):\n    \"\"\"\n    Calculate Manhattan distance for puzzle state.\n    state and goal are tuples of 9 elements (0 represents empty)\n    \"\"\"\n    distance = 0\n    for i in range(9):\n        if state[i] != 0:  # Don't count empty tile\n            # Find where this tile should be in goal\n            goal_pos = goal.index(state[i])\n            # Convert to 2D coordinates\n            current_row, current_col = i // 3, i % 3\n            goal_row, goal_col = goal_pos // 3, goal_pos % 3\n            # Add Manhattan distance\n            distance += abs(current_row - goal_row) + abs(current_col - goal_col)\n    return distance\n\ndef get_successors_puzzle(state):\n    \"\"\"\n    Generate successor states by sliding tiles.\n    Returns: list of new states\n    \"\"\"\n    successors = []\n    state_list = list(state)\n    empty_pos = state.index(0)\n    row, col = empty_pos // 3, empty_pos % 3\n    \n    # Possible moves: up, down, left, right\n    moves = []\n    if row > 0:  # Can move up\n        moves.append(empty_pos - 3)\n    if row < 2:  # Can move down\n        moves.append(empty_pos + 3)\n    if col > 0:  # Can move left\n        moves.append(empty_pos - 1)\n    if col < 2:  # Can move right\n        moves.append(empty_pos + 1)\n    \n    for new_empty_pos in moves:\n        new_state = state_list[:]\n        # Swap empty with tile\n        new_state[empty_pos], new_state[new_empty_pos] = new_state[new_empty_pos], new_state[empty_pos]\n        successors.append(tuple(new_state))\n    \n    return successors\n\ndef solve_puzzle(start, goal):\n    \"\"\"\n    Solve 8-puzzle using A*.\n    Returns: (path, nodes_expanded) or (None, nodes_expanded)\n    \"\"\"\n    # Priority queue: (f_score, g_score, state, path)\n    h_start = manhattan_distance_puzzle(start, goal)\n    frontier = [(h_start, 0, start, [start])]\n    explored = set()\n    nodes_expanded = 0\n    \n    while frontier:\n        f_score, g_score, state, path = heapq.heappop(frontier)\n        \n        if state == goal:\n            return path, nodes_expanded\n        \n        if state in explored:\n            continue\n        \n        explored.add(state)\n        nodes_expanded += 1\n        \n        # Generate successors\n        for successor in get_successors_puzzle(state):\n            if successor not in explored:\n                new_g = g_score + 1\n                new_h = manhattan_distance_puzzle(successor, goal)\n                new_f = new_g + new_h\n                new_path = path + [successor]\n                heapq.heappush(frontier, (new_f, new_g, successor, new_path))\n    \n    return None, nodes_expanded\n\n# Test\nstart = (1, 2, 3, 4, 0, 5, 7, 8, 6)  # 0 is empty\ngoal = (1, 2, 3, 4, 5, 6, 7, 8, 0)\n\nprint(\"Solving 8-puzzle...\")\npath, nodes = solve_puzzle(start, goal)\n\nif path:\n    print(f\"Solution found in {len(path) - 1} moves\")\n    print(f\"Nodes expanded: {nodes}\")\n    print(\"\\nFirst few states:\")\n    for i, state in enumerate(path[:min(5, len(path))]):\n        print(f\"Step {i}:\")\n        for row in range(3):\n            print(f\"  {state[row*3:(row+1)*3]}\")\n        print()\nelse:\n    print(f\"No solution found. Nodes expanded: {nodes}\")",
+    "testCases": [
+      {
+        "input": "solve_puzzle((1, 2, 3, 4, 0, 5, 7, 8, 6), (1, 2, 3, 4, 5, 6, 7, 8, 0))",
+        "isHidden": false,
+        "description": "Test puzzle solving with easy case"
+      },
+      {
+        "input": "manhattan_distance_puzzle((1, 2, 3, 4, 0, 5, 7, 8, 6), (1, 2, 3, 4, 5, 6, 7, 8, 0))",
+        "isHidden": false,
+        "description": "Test Manhattan distance calculation"
+      },
+      {
+        "input": "len(get_successors_puzzle((1, 2, 3, 4, 0, 5, 7, 8, 6)))",
+        "isHidden": false,
+        "description": "Test successor generation for center position"
+      }
+    ],
+    "hints": [
+      "Manhattan distance for a tile is the sum of horizontal and vertical distance from current to goal position",
+      "The empty tile can move up, down, left, or right (if not at boundary)",
+      "Use tuple representation for states to enable hashing in the explored set"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs406-t2-ex15",
+    "subjectId": "cs406",
+    "topicId": "cs406-topic-2",
+    "title": "Uniform Cost Search Implementation",
+    "difficulty": 3,
+    "description": "Implement Uniform Cost Search (UCS) for weighted graphs.\n\nUCS is a variant of Dijkstra's algorithm that finds the lowest-cost path. Your implementation should:\n- Use a priority queue ordered by path cost\n- Handle graphs with different edge weights\n- Return both the path and its total cost\n- Guarantee optimal solution",
+    "starterCode": "import heapq\n\ndef uniform_cost_search(graph, start, goal):\n    \"\"\"\n    Uniform cost search for weighted graphs.\n    graph: dict where graph[node] = [(neighbor, cost), ...]\n    start: starting node\n    goal: goal node\n    Returns: (path, total_cost) or (None, None)\n    \"\"\"\n    # TODO: Implement UCS\n    pass\n\n# Example:\n# graph = {\n#     'A': [('B', 1), ('C', 5)],\n#     'B': [('D', 2), ('E', 4)],\n#     'C': [('E', 1)],\n#     'D': [('F', 3)],\n#     'E': [('F', 2)],\n#     'F': []\n# }",
+    "solution": "import heapq\n\ndef uniform_cost_search(graph, start, goal):\n    \"\"\"\n    Uniform cost search for weighted graphs.\n    graph: dict where graph[node] = [(neighbor, cost), ...]\n    start: starting node\n    goal: goal node\n    Returns: (path, total_cost) or (None, None)\n    \"\"\"\n    if start == goal:\n        return [start], 0\n    \n    # Priority queue: (total_cost, node, path)\n    frontier = [(0, start, [start])]\n    explored = set()\n    \n    while frontier:\n        cost, node, path = heapq.heappop(frontier)\n        \n        if node == goal:\n            return path, cost\n        \n        if node in explored:\n            continue\n        \n        explored.add(node)\n        \n        for neighbor, edge_cost in graph.get(node, []):\n            if neighbor not in explored:\n                new_cost = cost + edge_cost\n                new_path = path + [neighbor]\n                heapq.heappush(frontier, (new_cost, neighbor, new_path))\n    \n    return None, None  # No path found\n\n# Test\ngraph = {\n    'A': [('B', 1), ('C', 5)],\n    'B': [('D', 2), ('E', 4)],\n    'C': [('E', 1)],\n    'D': [('F', 3)],\n    'E': [('F', 2)],\n    'F': []\n}\n\npath, cost = uniform_cost_search(graph, 'A', 'F')\nprint(f\"Optimal path: {path}\")\nprint(f\"Total cost: {cost}\")\nprint(\"Expected: ['A', 'B', 'D', 'F'] with cost 6\")\n\n# Compare different paths\nprint(\"\\nOther possible paths:\")\nprint(\"A -> C -> E -> F: cost = 5 + 1 + 2 = 8\")\nprint(\"A -> B -> E -> F: cost = 1 + 4 + 2 = 7\")\nprint(\"UCS finds the lowest-cost path\")",
+    "testCases": [
+      {
+        "input": "uniform_cost_search(graph, 'A', 'F')",
+        "isHidden": false,
+        "description": "Test UCS finds lowest-cost path"
+      },
+      {
+        "input": "uniform_cost_search(graph, 'A', 'A')",
+        "isHidden": false,
+        "description": "Test UCS with start == goal"
+      },
+      {
+        "input": "uniform_cost_search(graph, 'A', 'C')",
+        "isHidden": false,
+        "description": "Test UCS for intermediate goal"
+      }
+    ],
+    "hints": [
+      "UCS is essentially Dijkstra's algorithm but stops when the goal is found",
+      "Always expand the node with the lowest path cost so far",
+      "Unlike BFS, UCS guarantees the optimal solution for weighted graphs"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs406-t2-ex16",
+    "subjectId": "cs406",
+    "topicId": "cs406-topic-2",
+    "title": "Robot Path Planning Formulation",
+    "difficulty": 4,
+    "description": "Formulate a real-world robot path planning problem and solve it using A*.\n\nGiven a robot on a grid with obstacles, varying terrain costs, and battery constraints, find the optimal path. Your implementation should:\n- Model grid cells with different traversal costs\n- Track battery consumption\n- Include charging stations\n- Use A* with a custom heuristic\n- Handle the constraint that the robot must reach a charging station before battery depletes",
+    "starterCode": "import heapq\n\ndef robot_path_planning(grid, start, goal, battery, charging_stations):\n    \"\"\"\n    Find path for robot with battery constraints.\n    grid: 2D list where grid[y][x] = terrain cost (1-5), -1 for obstacle\n    start: (x, y) starting position\n    goal: (x, y) goal position\n    battery: initial battery level\n    charging_stations: list of (x, y) positions\n    Returns: (path, total_cost, final_battery) or (None, None, None)\n    \"\"\"\n    # TODO: Implement robot path planning\n    pass\n\n# Example:\n# grid = [\n#     [1, 1, 2, 3, 1],\n#     [1, -1, -1, 3, 1],\n#     [1, 2, 1, 1, 1],\n#     [1, -1, -1, 2, 1],\n#     [1, 1, 1, 1, 1]\n# ]",
+    "solution": "import heapq\n\ndef robot_path_planning(grid, start, goal, battery, charging_stations):\n    \"\"\"\n    Find path for robot with battery constraints.\n    grid: 2D list where grid[y][x] = terrain cost (1-5), -1 for obstacle\n    start: (x, y) starting position\n    goal: (x, y) goal position\n    battery: initial battery level\n    charging_stations: set of (x, y) positions\n    Returns: (path, total_cost, final_battery) or (None, None, None)\n    \"\"\"\n    rows, cols = len(grid), len(grid[0])\n    charging_set = set(charging_stations) if charging_stations else set()\n    \n    def heuristic(pos):\n        # Manhattan distance to goal\n        return abs(pos[0] - goal[0]) + abs(pos[1] - goal[1])\n    \n    # State: (position, battery_remaining)\n    # Priority queue: (f_score, g_score, position, battery, path)\n    h_start = heuristic(start)\n    frontier = [(h_start, 0, start, battery, [start])]\n    \n    # explored: dict mapping (pos, battery) to best cost\n    explored = {}\n    \n    while frontier:\n        f_score, g_score, pos, batt, path = heapq.heappop(frontier)\n        \n        # Goal check\n        if pos == goal:\n            return path, g_score, batt\n        \n        # Check if we've seen this state with more battery\n        state = (pos, batt)\n        if state in explored and explored[state] <= g_score:\n            continue\n        explored[state] = g_score\n        \n        # Explore neighbors\n        x, y = pos\n        for dx, dy in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            nx, ny = x + dx, y + dy\n            \n            # Check bounds\n            if not (0 <= nx < cols and 0 <= ny < rows):\n                continue\n            \n            # Check obstacle\n            if grid[ny][nx] == -1:\n                continue\n            \n            # Get terrain cost\n            terrain_cost = grid[ny][nx]\n            \n            # Battery consumption equals terrain cost\n            new_battery = batt - terrain_cost\n            \n            # Check if we have enough battery\n            if new_battery < 0:\n                continue\n            \n            # Recharge at charging station\n            if (nx, ny) in charging_set:\n                new_battery = battery  # Full recharge\n            \n            new_g = g_score + terrain_cost\n            new_h = heuristic((nx, ny))\n            new_f = new_g + new_h\n            new_path = path + [(nx, ny)]\n            \n            heapq.heappush(frontier, (new_f, new_g, (nx, ny), new_battery, new_path))\n    \n    return None, None, None  # No path found\n\n# Test\ngrid = [\n    [1, 1, 2, 3, 1],\n    [1, -1, -1, 3, 1],\n    [1, 2, 1, 1, 1],\n    [1, -1, -1, 2, 1],\n    [1, 1, 1, 1, 1]\n]\n\nstart = (0, 0)\ngoal = (4, 4)\ninitial_battery = 15\ncharging_stations = [(2, 2)]  # One charging station in the middle\n\npath, cost, final_battery = robot_path_planning(grid, start, goal, initial_battery, charging_stations)\n\nif path:\n    print(f\"Path found: {path}\")\n    print(f\"Total cost: {cost}\")\n    print(f\"Final battery: {final_battery}\")\n    print(f\"Path length: {len(path) - 1} steps\")\n    \n    # Visualize\n    print(\"\\nPath visualization:\")\n    for y in range(len(grid)):\n        row = \"\"\n        for x in range(len(grid[0])):\n            if (x, y) in path:\n                row += \"* \"\n            elif grid[y][x] == -1:\n                row += \"# \"\n            elif (x, y) in charging_stations:\n                row += \"C \"\n            else:\n                row += \". \"\n        print(row)\nelse:\n    print(\"No path found (battery constraint violated)\")",
+    "testCases": [
+      {
+        "input": "robot_path_planning(grid, (0, 0), (4, 4), 15, [(2, 2)])",
+        "isHidden": false,
+        "description": "Test robot path planning with charging station"
+      },
+      {
+        "input": "robot_path_planning(grid, (0, 0), (4, 4), 5, [(2, 2)])",
+        "isHidden": false,
+        "description": "Test with low battery requiring charging"
+      },
+      {
+        "input": "robot_path_planning(grid, (0, 0), (4, 4), 50, [])",
+        "isHidden": false,
+        "description": "Test with high battery and no charging stations"
+      }
+    ],
+    "hints": [
+      "State must include both position and remaining battery to handle charging",
+      "Battery consumption can be proportional to terrain cost",
+      "At a charging station, battery is replenished to maximum",
+      "Use A* with Manhattan distance as heuristic, modified for terrain costs"
+    ],
+    "language": "python"
   }
 ]

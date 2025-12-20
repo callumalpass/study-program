@@ -1,116 +1,169 @@
 [
   {
-    "id": "cs406-quiz-6-1",
+    "id": "cs406-quiz-6a",
     "subjectId": "cs406",
     "topicId": "cs406-topic-6",
-    "title": "Logic Fundamentals",
+    "title": "Topic 6 - Quiz Fundamentals",
     "questions": [
       {
-        "id": "cs406-q23",
+        "id": "q1",
         "type": "multiple_choice",
-        "prompt": "Modus Ponens is the inference rule:",
+        "prompt": "What is a model in propositional logic?",
         "options": [
-          "From α ⇒ β and α, infer β",
-          "From α and β, infer α ⇒ β",
-          "From α ⇒ β and β, infer α",
-          "From α ⇒ β and ¬β, infer ¬α"
+          "An assignment of truth values to propositional symbols that satisfies a sentence",
+          "A set of inference rules",
+          "A logical formula in conjunctive normal form",
+          "A proof of a theorem"
         ],
-        "correctAnswer": "From α ⇒ β and α, infer β",
-        "explanation": "Modus Ponens: if we know an implication and its antecedent, we can infer the consequent. Its the fundamental rule of forward chaining."
+        "correctAnswer": 0,
+        "explanation": "A model is a possible world - an assignment of truth values (true/false) to all propositional symbols - in which a given sentence evaluates to true. For example, {P=true, Q=false} is a model of 'P ∨ Q'. The concept of models is central to semantic reasoning in logic."
       },
       {
-        "id": "cs406-q24",
-        "type": "multiple_choice",
-        "prompt": "Resolution in propositional logic:",
-        "options": [
-          "Combines complementary literals to derive new clauses",
-          "Resolves conflicts between rules",
-          "Finds solutions to equations",
-          "Resolves ambiguous statements"
-        ],
-        "correctAnswer": "Combines complementary literals to derive new clauses",
-        "explanation": "Resolution takes two clauses with complementary literals (P and ¬P) and produces a new clause combining their other literals, used for refutation proofs."
+        "id": "q2",
+        "type": "fill_blank",
+        "prompt": "In first-order logic, a _____ is a function that maps constant symbols, function symbols, and predicate symbols to objects and relations in the domain.",
+        "correctAnswer": "interpretation",
+        "explanation": "An interpretation (or structure) specifies the domain of discourse and the meaning of each symbol in the language. It maps constants to domain objects, function symbols to functions over the domain, and predicate symbols to relations. Together with a variable assignment, an interpretation determines the truth value of any FOL sentence."
       },
       {
-        "id": "cs406-q25",
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "Modus Ponens is a sound inference rule in propositional logic.",
+        "correctAnswer": true,
+        "explanation": "Modus Ponens (from 'α ⇒ β' and 'α', infer 'β') is both sound and complete for propositional logic. Soundness means it only derives true conclusions from true premises. This rule forms the basis of forward chaining and is one of the most fundamental inference patterns in logic."
+      },
+      {
+        "id": "q4",
         "type": "multiple_choice",
-        "prompt": "Bayes rule states:",
+        "prompt": "What is resolution in propositional logic?",
         "options": [
-          "P(A|B) = P(B|A)P(A) / P(B)",
-          "P(A|B) = P(A)P(B)",
-          "P(A|B) = P(B|A)",
-          "P(A|B) = 1 - P(B|A)"
+          "Combining two clauses that contain complementary literals to produce a new clause",
+          "Resolving conflicts between contradictory rules",
+          "Finding a satisfying assignment for a formula",
+          "Converting a formula to conjunctive normal form"
         ],
-        "correctAnswer": "P(A|B) = P(B|A)P(A) / P(B)",
-        "explanation": "Bayes rule allows computing P(A|B) from P(B|A), enabling inference from evidence to causes."
+        "correctAnswer": 0,
+        "explanation": "Resolution is an inference rule that takes two clauses containing complementary literals (P and ¬P) and produces a new clause containing all other literals from both clauses. For example, from (P ∨ Q) and (¬P ∨ R), resolution produces (Q ∨ R). This single rule is sufficient for complete inference in propositional logic."
+      },
+      {
+        "id": "q5",
+        "type": "code_output",
+        "prompt": "What does this resolution step produce?",
+        "codeSnippet": "clause1 = {\"P\", \"Q\"}  # P ∨ Q\nclause2 = {\"~P\", \"R\"}  # ¬P ∨ R\nresolvent = resolve(clause1, clause2, \"P\")\nprint(sorted(list(resolvent)))",
+        "correctAnswer": "['Q', 'R']",
+        "explanation": "Resolution eliminates the complementary literals P and ¬P from the two clauses and combines the remaining literals. From (P ∨ Q) and (¬P ∨ R), we get (Q ∨ R). This new clause is a logical consequence of the original two clauses."
       }
     ]
   },
   {
-    "id": "cs406-quiz-6-2",
+    "id": "cs406-quiz-6b",
     "subjectId": "cs406",
     "topicId": "cs406-topic-6",
-    "title": "Inference and Resolution",
+    "title": "Topic 6 - Quiz Application",
     "questions": [
       {
-        "id": "cs406-q24",
+        "id": "q1",
         "type": "multiple_choice",
-        "prompt": "Resolution in propositional logic:",
+        "prompt": "In first-order logic, what does the existential quantifier ∃ mean?",
         "options": [
-          "Combines complementary literals to derive new clauses",
-          "Resolves conflicts between rules",
-          "Finds solutions to equations",
-          "Resolves ambiguous statements"
+          "There exists at least one object in the domain for which the statement is true",
+          "The statement is true for all objects in the domain",
+          "The statement is true for exactly one object",
+          "The statement may or may not be true"
         ],
-        "correctAnswer": "Combines complementary literals to derive new clauses",
-        "explanation": "Resolution takes two clauses with complementary literals (P and ¬P) and produces a new clause combining their other literals, used for refutation proofs."
+        "correctAnswer": 0,
+        "explanation": "The existential quantifier ∃x P(x) means 'there exists at least one x such that P(x) is true'. For example, ∃x Mortal(x) means at least one thing is mortal. This is distinct from the universal quantifier ∀, which requires the statement to hold for all objects in the domain."
       },
       {
-        "id": "cs406-q25",
+        "id": "q2",
+        "type": "code_output",
+        "prompt": "What is the output of converting this sentence to CNF?",
+        "codeSnippet": "# Sentence: (P ∧ Q) ⇒ R\n# Step 1: Eliminate ⇒\nstep1 = \"¬(P ∧ Q) ∨ R\"\n# Step 2: Apply De Morgan's law\nstep2 = \"(¬P ∨ ¬Q) ∨ R\"\n# Step 3: Associativity\ncnf = \"¬P ∨ ¬Q ∨ R\"\nprint(\"CNF:\", cnf)",
+        "correctAnswer": "CNF: ¬P ∨ ¬Q ∨ R",
+        "explanation": "Converting to Conjunctive Normal Form (CNF) involves eliminating implications, moving negations inward using De Morgan's laws, and distributing ∨ over ∧. The result is a conjunction of disjunctions of literals. In this case, the formula is already a single clause after conversion."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "Resolution is complete for first-order logic, meaning it can derive any entailed sentence in finite time.",
+        "correctAnswer": false,
+        "explanation": "Resolution is refutation-complete for FOL (can prove unsatisfiability if KB is inconsistent), but FOL is only semi-decidable. If a sentence is entailed, resolution will eventually prove it, but if it's not entailed, the algorithm may run forever. There is no general algorithm that can determine entailment in FOL in finite time for all cases."
+      },
+      {
+        "id": "q4",
+        "type": "fill_blank",
+        "prompt": "The process of replacing variables with ground terms to eliminate quantifiers in FOL is called _____.",
+        "correctAnswer": "instantiation",
+        "explanation": "Instantiation (or grounding) replaces variables with specific constants or terms from the domain. Universal instantiation replaces ∀x with specific instances, while existential instantiation introduces new constant symbols (Skolem constants) for ∃x. This process is essential for applying propositional inference techniques to FOL."
+      },
+      {
+        "id": "q5",
         "type": "multiple_choice",
-        "prompt": "Bayes rule states:",
+        "prompt": "What is the purpose of unification in first-order logic?",
         "options": [
-          "P(A|B) = P(B|A)P(A) / P(B)",
-          "P(A|B) = P(A)P(B)",
-          "P(A|B) = P(B|A)",
-          "P(A|B) = 1 - P(B|A)"
+          "To find a substitution that makes different logical expressions identical",
+          "To combine multiple knowledge bases",
+          "To convert sentences to CNF",
+          "To eliminate quantifiers from formulas"
         ],
-        "correctAnswer": "P(A|B) = P(B|A)P(A) / P(B)",
-        "explanation": "Bayes rule allows computing P(A|B) from P(B|A), enabling inference from evidence to causes."
+        "correctAnswer": 0,
+        "explanation": "Unification finds the most general substitution (most general unifier, MGU) that makes two expressions syntactically identical. For example, unifying P(x, B) and P(A, y) gives the substitution {x/A, y/B}. Unification is crucial for resolution in FOL and for pattern matching in logic programming."
       }
     ]
   },
   {
-    "id": "cs406-quiz-6-3",
+    "id": "cs406-quiz-6c",
     "subjectId": "cs406",
     "topicId": "cs406-topic-6",
-    "title": "Knowledge Representation",
+    "title": "Topic 6 - Quiz Mastery",
     "questions": [
       {
-        "id": "cs406-q23",
+        "id": "q1",
         "type": "multiple_choice",
-        "prompt": "Modus Ponens is the inference rule:",
+        "prompt": "What is Skolemization used for in first-order logic?",
         "options": [
-          "From α ⇒ β and α, infer β",
-          "From α and β, infer α ⇒ β",
-          "From α ⇒ β and β, infer α",
-          "From α ⇒ β and ¬β, infer ¬α"
+          "Eliminating existential quantifiers by introducing new function symbols",
+          "Converting universal quantifiers to existential ones",
+          "Simplifying propositional formulas",
+          "Proving theorems more efficiently"
         ],
-        "correctAnswer": "From α ⇒ β and α, infer β",
-        "explanation": "Modus Ponens: if we know an implication and its antecedent, we can infer the consequent. Its the fundamental rule of forward chaining."
+        "correctAnswer": 0,
+        "explanation": "Skolemization removes existential quantifiers by replacing existentially quantified variables with Skolem functions whose arguments are the universally quantified variables in whose scope the existential appears. For example, ∀x ∃y Loves(x,y) becomes ∀x Loves(x, f(x)) where f is a Skolem function. This preserves satisfiability while enabling resolution."
       },
       {
-        "id": "cs406-q24",
+        "id": "q2",
+        "type": "code_output",
+        "prompt": "What is the result of this unification attempt?",
+        "codeSnippet": "# Unify: P(x, f(y)) with P(A, f(B))\nterm1 = Parse(\"P(x, f(y))\")\nterm2 = Parse(\"P(A, f(B))\")\nmgu = unify(term1, term2)\nprint(f\"Substitution: {mgu}\")",
+        "correctAnswer": "Substitution: {x/A, y/B}",
+        "explanation": "Unification recursively matches the structure of both terms. The predicate symbols match (both P), so we unify arguments pairwise. x unifies with A giving {x/A}, and f(y) unifies with f(B) requiring {y/B}. The most general unifier is {x/A, y/B}, which makes both expressions identical when applied."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "Semantic networks can represent all the expressive power of first-order logic.",
+        "correctAnswer": false,
+        "explanation": "Semantic networks typically represent binary relations as labeled links between nodes, making them convenient for certain kinds of knowledge but less expressive than full FOL. They struggle with negation, disjunction, complex quantification, and functions. While useful for inheritance and taxonomic reasoning, semantic networks are a subset of what FOL can express."
+      },
+      {
+        "id": "q4",
+        "type": "fill_blank",
+        "prompt": "In resolution theorem proving, the _____ clause indicates that the knowledge base is unsatisfiable, proving the query by contradiction.",
+        "correctAnswer": "empty",
+        "explanation": "Resolution refutation works by negating the query and adding it to the knowledge base. If this leads to deriving the empty clause (□), it proves the original KB was inconsistent with the negated query, thus the query must be entailed. The empty clause represents a contradiction and is the goal of resolution-based theorem proving."
+      },
+      {
+        "id": "q5",
         "type": "multiple_choice",
-        "prompt": "Resolution in propositional logic:",
+        "prompt": "Which inference algorithm for FOL uses backward chaining?",
         "options": [
-          "Combines complementary literals to derive new clauses",
-          "Resolves conflicts between rules",
-          "Finds solutions to equations",
-          "Resolves ambiguous statements"
+          "Logic programming systems like Prolog",
+          "Forward chaining with modus ponens",
+          "Resolution refutation",
+          "Model checking"
         ],
-        "correctAnswer": "Combines complementary literals to derive new clauses",
-        "explanation": "Resolution takes two clauses with complementary literals (P and ¬P) and produces a new clause combining their other literals, used for refutation proofs."
+        "correctAnswer": 0,
+        "explanation": "Logic programming languages like Prolog use backward chaining, starting from the query goal and working backwards to find facts that support it. The algorithm tries to match the goal with rule heads, generating subgoals from rule bodies. This goal-directed approach is efficient when you have a specific query and many irrelevant facts in the KB."
       }
     ]
   }

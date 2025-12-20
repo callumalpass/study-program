@@ -1,103 +1,169 @@
 [
   {
-    "id": "cs406-quiz-7-1",
+    "id": "cs406-quiz-7a",
     "subjectId": "cs406",
     "topicId": "cs406-topic-7",
-    "title": "Probability and Bayes",
+    "title": "Topic 7 - Quiz Fundamentals",
     "questions": [
       {
-        "id": "cs406-q25",
+        "id": "q1",
         "type": "multiple_choice",
-        "prompt": "Bayes rule states:",
+        "prompt": "What does Bayes' theorem allow us to compute?",
         "options": [
-          "P(A|B) = P(B|A)P(A) / P(B)",
-          "P(A|B) = P(A)P(B)",
-          "P(A|B) = P(B|A)",
-          "P(A|B) = 1 - P(B|A)"
+          "The posterior probability P(A|B) from the likelihood P(B|A) and prior P(A)",
+          "The joint probability P(A,B) from marginal probabilities",
+          "The expected value of a random variable",
+          "The most likely state sequence in an HMM"
         ],
-        "correctAnswer": "P(A|B) = P(B|A)P(A) / P(B)",
-        "explanation": "Bayes rule allows computing P(A|B) from P(B|A), enabling inference from evidence to causes."
+        "correctAnswer": 0,
+        "explanation": "Bayes' theorem states P(A|B) = P(B|A)P(A) / P(B), allowing us to invert conditional probabilities. This is fundamental for reasoning from effects to causes - we can compute the probability of a hypothesis given evidence by using our knowledge of how likely the evidence is given the hypothesis. This enables diagnostic reasoning in AI systems."
       },
       {
-        "id": "cs406-q26",
-        "type": "multiple_choice",
-        "prompt": "In a Bayesian network, d-separation determines:",
-        "options": [
-          "Conditional independence between variables",
-          "The direction of causality",
-          "The distance between nodes",
-          "Whether the network is connected"
-        ],
-        "correctAnswer": "Conditional independence between variables",
-        "explanation": "d-separation is a graphical criterion for determining conditional independence: if X and Y are d-separated given Z, then X ⊥ Y | Z."
+        "id": "q2",
+        "type": "code_output",
+        "prompt": "What is the output of this Bayes' theorem calculation?",
+        "codeSnippet": "# P(Disease) = 0.01, P(Test+|Disease) = 0.95\n# P(Test+|No Disease) = 0.05\nprior = 0.01\nlikelihood = 0.95\nfalse_pos = 0.05\nevidence = likelihood * prior + false_pos * (1 - prior)\nposterior = (likelihood * prior) / evidence\nprint(f\"P(Disease|Test+) = {posterior:.3f}\")",
+        "correctAnswer": "P(Disease|Test+) = 0.161",
+        "explanation": "Using Bayes' theorem, we compute P(Disease|Test+) = P(Test+|Disease)P(Disease) / P(Test+). The evidence P(Test+) = 0.95×0.01 + 0.05×0.99 = 0.059. The posterior is 0.0095/0.059 ≈ 0.161. Despite a 95% accurate test, the posterior probability is only 16% because the disease is rare, illustrating the importance of base rates."
       },
       {
-        "id": "cs406-q27",
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "In a Bayesian network, a node is conditionally independent of its non-descendants given its parents.",
+        "correctAnswer": true,
+        "explanation": "This is the Markov condition (or local semantics) of Bayesian networks. Each node is conditionally independent of all its non-descendants given its parents. This allows factorization of the joint distribution into local conditional probability tables, making both representation and inference tractable. This property is fundamental to the efficiency of Bayesian networks."
+      },
+      {
+        "id": "q4",
+        "type": "fill_blank",
+        "prompt": "The graphical criterion for determining conditional independence in Bayesian networks is called _____.",
+        "correctAnswer": "d-separation",
+        "explanation": "d-separation (directional separation) is a graphical test for conditional independence. If sets of variables X and Y are d-separated by set Z in the network graph, then X is conditionally independent of Y given Z. This allows us to read independence relations directly from the graph structure without examining probability values."
+      },
+      {
+        "id": "q5",
         "type": "multiple_choice",
-        "prompt": "The forward algorithm for HMMs computes:",
+        "prompt": "What are the three types of connections where d-separation is blocked by evidence?",
         "options": [
-          "P(X_t | e_1:t) - filtering",
-          "P(X_t | e_1:T) - smoothing",
-          "argmax P(x_1:T | e_1:T) - most likely sequence",
-          "P(e_1:t) - likelihood"
+          "Causal chain, common cause, and common effect (only when evidence on effect or descendants)",
+          "Series, parallel, and feedback connections",
+          "Forward, backward, and bidirectional links",
+          "Root, leaf, and intermediate nodes"
         ],
-        "correctAnswer": "P(X_t | e_1:t) - filtering",
-        "explanation": "The forward algorithm recursively computes the belief state P(X_t | e_1:t), filtering the current state given all evidence so far."
+        "correctAnswer": 0,
+        "explanation": "d-separation considers three structures: (1) causal chains X→Z→Y (blocked when Z observed), (2) common cause X←Z→Y (blocked when Z observed), and (3) common effect (v-structure) X→Z←Y (blocked when Z and descendants unobserved). Understanding these patterns is crucial for determining independence and designing efficient inference algorithms."
       }
     ]
   },
   {
-    "id": "cs406-quiz-7-2",
+    "id": "cs406-quiz-7b",
     "subjectId": "cs406",
     "topicId": "cs406-topic-7",
-    "title": "Bayesian Networks",
+    "title": "Topic 7 - Quiz Application",
     "questions": [
       {
-        "id": "cs406-q26",
+        "id": "q1",
         "type": "multiple_choice",
-        "prompt": "In a Bayesian network, d-separation determines:",
+        "prompt": "What does the forward algorithm compute in Hidden Markov Models?",
         "options": [
-          "Conditional independence between variables",
-          "The direction of causality",
-          "The distance between nodes",
-          "Whether the network is connected"
+          "The filtering distribution P(X_t | e_1:t) for the current state given all evidence so far",
+          "The smoothing distribution P(X_t | e_1:T) using all evidence",
+          "The most likely state sequence using Viterbi algorithm",
+          "The probability of the evidence sequence P(e_1:t)"
         ],
-        "correctAnswer": "Conditional independence between variables",
-        "explanation": "d-separation is a graphical criterion for determining conditional independence: if X and Y are d-separated given Z, then X ⊥ Y | Z."
+        "correctAnswer": 0,
+        "explanation": "The forward algorithm recursively computes the belief state P(X_t | e_1:t), which is the filtering distribution - the probability distribution over the current state given all observations up to time t. This is essential for online state estimation in temporal models and forms the basis for other HMM algorithms."
       },
       {
-        "id": "cs406-q27",
+        "id": "q2",
+        "type": "fill_blank",
+        "prompt": "The algorithm that finds the most likely state sequence in an HMM given observations is called the _____ algorithm.",
+        "correctAnswer": "Viterbi",
+        "explanation": "The Viterbi algorithm uses dynamic programming to find argmax P(x_1:T | e_1:T), the most probable sequence of states given all observations. Unlike filtering or smoothing which compute probability distributions, Viterbi finds the single best explanation. It's widely used in speech recognition, part-of-speech tagging, and other sequence labeling tasks."
+      },
+      {
+        "id": "q3",
+        "type": "code_output",
+        "prompt": "What does this forward algorithm iteration compute?",
+        "codeSnippet": "# HMM: Rain/Sunny states, Umbrella observations\n# f_t-1 = [0.7, 0.3]  # P(Rain), P(Sunny) at t-1\n# Evidence: Umbrella=true at time t\n# Transition: [[0.7,0.3],[0.3,0.7]], Sensor: [0.9,0.2]\nf_prev = np.array([0.7, 0.3])\nf_t = sensor_model @ transition @ f_prev\nf_t = f_t / f_t.sum()  # normalize\nprint(f\"P(Rain|e_1:t) = {f_t[0]:.2f}\")",
+        "correctAnswer": "P(Rain|e_1:t) = 0.82",
+        "explanation": "The forward algorithm updates beliefs in two steps: (1) prediction using the transition model, (2) update using the sensor model for the current observation. Given prior belief favoring Rain and evidence of umbrella (which is more likely with rain), the posterior strongly supports Rain at ~82%, illustrating how the algorithm combines temporal dynamics with evidence."
+      },
+      {
+        "id": "q4",
+        "type": "true_false",
+        "prompt": "The Kalman filter assumes linear Gaussian dynamics and can compute exact posterior distributions efficiently.",
+        "correctAnswer": true,
+        "explanation": "The Kalman filter is the optimal solution for tracking continuous state variables under linear Gaussian assumptions. Both the transition and sensor models are linear with Gaussian noise, allowing the posterior to remain Gaussian. This enables exact inference in closed form with computational complexity linear in time, making it extremely practical for robotics and control."
+      },
+      {
+        "id": "q5",
         "type": "multiple_choice",
-        "prompt": "The forward algorithm for HMMs computes:",
+        "prompt": "What is the main purpose of particle filtering in probabilistic inference?",
         "options": [
-          "P(X_t | e_1:t) - filtering",
-          "P(X_t | e_1:T) - smoothing",
-          "argmax P(x_1:T | e_1:T) - most likely sequence",
-          "P(e_1:t) - likelihood"
+          "To approximate complex posterior distributions using a set of weighted samples",
+          "To filter out noise from sensor readings",
+          "To discretize continuous state spaces",
+          "To find exact solutions faster than other methods"
         ],
-        "correctAnswer": "P(X_t | e_1:t) - filtering",
-        "explanation": "The forward algorithm recursively computes the belief state P(X_t | e_1:t), filtering the current state given all evidence so far."
+        "correctAnswer": 0,
+        "explanation": "Particle filtering (sequential Monte Carlo) represents the posterior distribution as a collection of weighted samples (particles). Each particle is a hypothesis about the state. Through resampling based on weights, particles concentrate in high-probability regions. This allows approximate inference for nonlinear, non-Gaussian models where exact inference is intractable."
       }
     ]
   },
   {
-    "id": "cs406-quiz-7-3",
+    "id": "cs406-quiz-7c",
     "subjectId": "cs406",
     "topicId": "cs406-topic-7",
-    "title": "Probabilistic Models",
+    "title": "Topic 7 - Quiz Mastery",
     "questions": [
       {
-        "id": "cs406-q27",
+        "id": "q1",
         "type": "multiple_choice",
-        "prompt": "The forward algorithm for HMMs computes:",
+        "prompt": "What is the Markov assumption in temporal models?",
         "options": [
-          "P(X_t | e_1:t) - filtering",
-          "P(X_t | e_1:T) - smoothing",
-          "argmax P(x_1:T | e_1:T) - most likely sequence",
-          "P(e_1:t) - likelihood"
+          "The current state depends only on a finite fixed number of previous states",
+          "All states are equally likely",
+          "The future is independent of the past",
+          "The state space is discrete and finite"
         ],
-        "correctAnswer": "P(X_t | e_1:t) - filtering",
-        "explanation": "The forward algorithm recursively computes the belief state P(X_t | e_1:t), filtering the current state given all evidence so far."
+        "correctAnswer": 0,
+        "explanation": "The Markov assumption (or Markov property) states that the current state X_t is conditionally independent of all earlier states given the immediately preceding state(s). In first-order Markov models, P(X_t | X_0:t-1) = P(X_t | X_t-1). This assumption dramatically simplifies temporal reasoning by bounding the relevant history."
+      },
+      {
+        "id": "q2",
+        "type": "code_output",
+        "prompt": "What is the output of this Kalman filter prediction step?",
+        "codeSnippet": "# 1D position tracking: x_t = x_t-1 + v_t-1\n# Current: mean=10, variance=1\n# Velocity: mean=2, variance=0.5\nmu_prev = 10\nsigma_prev = 1\nvelocity_mu = 2\nvelocity_sigma = 0.5\nmu_pred = mu_prev + velocity_mu\nsigma_pred = sigma_prev + velocity_sigma\nprint(f\"Predicted: N({mu_pred}, {sigma_pred})\")",
+        "correctAnswer": "Predicted: N(12, 1.5)",
+        "explanation": "The Kalman filter prediction step propagates the belief through the transition model. The mean is updated using the deterministic part of the dynamics (10 + 2 = 12), while the variance increases due to process noise (1 + 0.5 = 1.5). This reflects increased uncertainty before incorporating new measurements. The update step will then reduce uncertainty."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "In Bayesian networks, exact inference using variable elimination is always polynomial in the number of variables.",
+        "correctAnswer": false,
+        "explanation": "Variable elimination's complexity is exponential in the treewidth of the network. For networks with low treewidth (tree-like structures), it's efficient. However, for densely connected networks with high treewidth, exact inference becomes intractable. This is why approximate inference methods like sampling and variational approaches are often necessary for complex models."
+      },
+      {
+        "id": "q4",
+        "type": "fill_blank",
+        "prompt": "The task of computing P(X_t | e_1:T) where T > t, using evidence from both past and future, is called _____.",
+        "correctAnswer": "smoothing",
+        "explanation": "Smoothing computes the posterior distribution over past states given all evidence including future observations. This is more accurate than filtering because it incorporates additional information. The forward-backward algorithm efficiently computes smoothing by combining forward messages (past evidence) with backward messages (future evidence)."
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "prompt": "What distinguishes Dynamic Bayesian Networks (DBNs) from Hidden Markov Models (HMMs)?",
+        "options": [
+          "DBNs can represent multiple state variables and complex dependencies, while HMMs have a single discrete state variable",
+          "DBNs can only model discrete variables",
+          "HMMs are more expressive than DBNs",
+          "DBNs cannot be used for temporal reasoning"
+        ],
+        "correctAnswer": 0,
+        "explanation": "DBNs are a general framework for temporal reasoning that extends HMMs. While HMMs have a single discrete state variable, DBNs can represent multiple state variables (discrete or continuous) with complex dependencies between them. HMMs are actually a special case of DBNs, and DBNs provide much greater representational flexibility for modeling complex temporal processes."
       }
     ]
   }

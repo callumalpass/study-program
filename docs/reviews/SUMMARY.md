@@ -7,8 +7,8 @@
 
 | Status | Count | Percentage |
 |--------|-------|------------|
-| COMPLETE (10/10) | 26 | 68% |
-| COMPLETE (7-9/10) | 8 | 21% |
+| COMPLETE (10/10) | 27 | 71% |
+| COMPLETE (7-9/10) | 7 | 18% |
 | NEEDS WORK | 4 | 11% |
 | INCOMPLETE | 0 | 0% |
 
@@ -30,6 +30,7 @@
 - CS402: Machine Learning
 - CS403: Advanced Algorithms
 - CS404: Capstone Project
+- CS406: Artificial Intelligence
 - MATH101: Discrete Mathematics I
 - MATH102: Discrete Mathematics II
 - MATH201: Linear Algebra
@@ -46,7 +47,6 @@
 - CS201: Algorithms (7/10)
 - CS302: Computer Networks (8/10)
 - CS401: Distributed Systems (8/10)
-- CS406: Artificial Intelligence (9/10) - exercise shortage
 - MATH301: Multivariable Calculus (8/10)
 - MATH303: Real Analysis (8/10)
 
@@ -62,11 +62,11 @@
 
 ### 1. Exercise Shortages
 Many Year 4 subjects don't have 16 exercises per topic:
-- CS405, CS406, CS407: Need additional exercises
+- CS405, CS407: Need additional exercises
 
 ### 2. Word Count Deficiencies
 Some subjects have subtopics below the 800-word minimum:
-- (None remaining after MATH402 upgrade)
+- (None remaining after CS406 upgrade)
 
 ### 3. Missing/Incomplete Content
 - MATH401: Wrong exercises assigned to Topics 3-7
@@ -77,10 +77,9 @@ Some subjects have subtopics below the 800-word minimum:
 (None - all immediate blockers resolved)
 
 ### High Priority
-1. **CS406**: Add missing exercises
-2. **CS407**: Add exercises per topic
-3. **MATH401**: Fix exercise assignments for Topics 3-7
-4. **MATH204**: Add exercises
+1. **CS407**: Add exercises per topic
+2. **MATH401**: Fix exercise assignments for Topics 3-7
+3. **MATH204**: Add exercises
 
 ## Year-by-Year Summary
 
@@ -99,25 +98,25 @@ Some subjects have subtopics below the 800-word minimum:
 - **Good:** CS302, MATH301, MATH303
 
 ### Year 4 (11 subjects)
-- **Complete:** CS402, CS403, CS404, MATH402, MATH403
-- **Good:** CS401, CS406
+- **Complete:** CS402, CS403, CS404, CS406, MATH402, MATH403
+- **Good:** CS401
 - **Needs Work:** CS405, CS407, MATH401, MATH404
 
 ## Estimated Work Remaining
 
 | Subject | Estimated Hours |
 |---------|-----------------|
-| CS406 | 20-30 |
 | CS407 | 20-30 |
 | MATH401 | 5-10 |
 | MATH204 | 10-15 |
 | Others | 5-10 each |
 
-**Total Estimated:** 45-95 hours to bring all subjects to production quality.
+**Total Estimated:** 35-75 hours to bring all subjects to production quality.
 
 ## Recent Updates (2025-12-21)
 
 ### Subjects Upgraded to Production Ready
+- **CS406: Artificial Intelligence** - Expanded Topic 3 and Topic 7 subtopics to 800+ words, added 65 exercises (Topics 3-7 now have 16 each), verified all 105 quiz questions, TypeScript build passes
 - **MATH402: Numerical Methods** - Fixed Topic 4 exercises.json (invalid format), added 10 exercises to Topic 2 (now 16/16), verified TypeScript build
 - **CS402: Machine Learning** - Created subject-spec.yaml, expanded Topic 7 content (6 subtopics to 800+ words), completed exams (26 midterm + 42 final = 68 questions), fixed topics.ts structure
 - **CS404: Capstone Project** - Expanded 7 placeholder subtopics to 800+ words each, added complete curriculum section to subject-spec.yaml

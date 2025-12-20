@@ -7,28 +7,16 @@
     "difficulty": 2,
     "description": "Implement the Minimax algorithm for Tic-Tac-Toe.\n\nYour implementation should:\n- Evaluate terminal states (+1 for X win, -1 for O win, 0 for draw)\n- Recursively evaluate all possible moves\n- MAX player maximizes, MIN player minimizes\n- Return the best move and its value",
     "starterCode": "def check_winner(board):\n    # Return 'X', 'O', 'draw', or None (game ongoing)\n    pass\n\ndef get_moves(board):\n    # Return list of available positions\n    pass\n\ndef minimax(board, is_max_player):\n    # Implement minimax\n    # Returns: (best_value, best_move)\n    pass\n\n# Board: 3x3 list, with 'X', 'O', or None",
-    "solution": "def check_winner(board):\n    \"\"\"Check if there's a winner. Returns 'X', 'O', 'draw', or None.\"\"\"\n    # Check rows\n    for row in board:\n        if row[0] == row[1] == row[2] and row[0] is not None:\n            return row[0]\n\n    # Check columns\n    for col in range(3):\n        if board[0][col] == board[1][col] == board[2][col] and board[0][col] is not None:\n            return board[0][col]\n\n    # Check diagonals\n    if board[0][0] == board[1][1] == board[2][2] and board[0][0] is not None:\n        return board[0][0]\n    if board[0][2] == board[1][1] == board[2][0] and board[0][2] is not None:\n        return board[0][2]\n\n    # Check if board is full (draw)\n    if all(board[i][j] is not None for i in range(3) for j in range(3)):\n        return 'draw'\n\n    return None  # Game ongoing\n\ndef get_moves(board):\n    \"\"\"Return list of available (row, col) positions.\"\"\"\n    moves = []\n    for i in range(3):\n        for j in range(3):\n            if board[i][j] is None:\n                moves.append((i, j))\n    return moves\n\ndef minimax(board, is_max_player):\n    \"\"\"\n    Minimax algorithm for Tic-Tac-Toe.\n    Returns: (best_value, best_move)\n    \"\"\"\n    winner = check_winner(board)\n\n    # Terminal states\n    if winner == 'X':\n        return (1, None)\n    elif winner == 'O':\n        return (-1, None)\n    elif winner == 'draw':\n        return (0, None)\n\n    moves = get_moves(board)\n    player = 'X' if is_max_player else 'O'\n\n    if is_max_player:\n        best_value = float('-inf')\n        best_move = None\n\n        for move in moves:\n            i, j = move\n            board[i][j] = player\n\n            value, _ = minimax(board, False)\n\n            board[i][j] = None  # Undo move\n\n            if value > best_value:\n                best_value = value\n                best_move = move\n\n        return (best_value, best_move)\n    else:\n        best_value = float('inf')\n        best_move = None\n\n        for move in moves:\n            i, j = move\n            board[i][j] = player\n\n            value, _ = minimax(board, True)\n\n            board[i][j] = None  # Undo move\n\n            if value < best_value:\n                best_value = value\n                best_move = move\n\n        return (best_value, best_move)\n\n# Test\nboard = [\n    ['X', 'O', 'X'],\n    ['O', 'X', None],\n    [None, None, 'O']\n]\n\nvalue, move = minimax(board, True)  # X's turn (MAX)\nprint(f\"Best move for X: {move}, value: {value}\")\n\n# Empty board test\nempty_board = [[None]*3 for _ in range(3)]\nvalue, move = minimax(empty_board, True)\nprint(f\"Best first move: {move}, value: {value}\")",
+    "solution": "def check_winner(board):\n    for row in board:\n        if row[0] == row[1] == row[2] and row[0] is not None:\n            return row[0]\n    for col in range(3):\n        if board[0][col] == board[1][col] == board[2][col] and board[0][col] is not None:\n            return board[0][col]\n    if board[0][0] == board[1][1] == board[2][2] and board[0][0] is not None:\n        return board[0][0]\n    if board[0][2] == board[1][1] == board[2][0] and board[0][2] is not None:\n        return board[0][2]\n    if all(board[i][j] is not None for i in range(3) for j in range(3)):\n        return 'draw'\n    return None\n\ndef get_moves(board):\n    return [(i, j) for i in range(3) for j in range(3) if board[i][j] is None]\n\ndef minimax(board, is_max_player):\n    winner = check_winner(board)\n    if winner == 'X': return (1, None)\n    if winner == 'O': return (-1, None)\n    if winner == 'draw': return (0, None)\n    \n    moves = get_moves(board)\n    player = 'X' if is_max_player else 'O'\n    best_move = None\n    \n    if is_max_player:\n        best_value = float('-inf')\n        for i, j in moves:\n            board[i][j] = player\n            value, _ = minimax(board, False)\n            board[i][j] = None\n            if value > best_value:\n                best_value, best_move = value, (i, j)\n        return (best_value, best_move)\n    else:\n        best_value = float('inf')\n        for i, j in moves:\n            board[i][j] = player\n            value, _ = minimax(board, True)\n            board[i][j] = None\n            if value < best_value:\n                best_value, best_move = value, (i, j)\n        return (best_value, best_move)",
     "testCases": [
-      {
-        "input": "minimax(board, True)",
-        "isHidden": false,
-        "description": "Test minimax finds best move for X"
-      },
-      {
-        "input": "check_winner(board)",
-        "isHidden": false,
-        "description": "Test winner detection"
-      },
-      {
-        "input": "minimax(empty_board, True)",
-        "isHidden": false,
-        "description": "Test minimax on empty board"
-      }
+      {"input": "minimax([[None]*3]*3, True)", "isHidden": false, "description": "Test minimax on empty board"},
+      {"input": "check_winner([['X','X','X'],[None]*3,[None]*3])", "isHidden": false, "description": "Test winner detection"},
+      {"input": "minimax([['X','O','X'],['O','X',None],[None,None,'O']], True)", "isHidden": true, "description": "Test minimax finds winning move"}
     ],
     "hints": [
       "Base case: return immediately if the game is over (win/loss/draw)",
       "MAX player (X) wants to maximize the value, MIN player (O) wants to minimize",
-      "Remember to undo moves after exploring each branch (set cell back to None)"
+      "Remember to undo moves after exploring each branch"
     ],
     "language": "python"
   },
@@ -38,30 +26,18 @@
     "topicId": "cs406-topic-3",
     "title": "Alpha-Beta Pruning",
     "difficulty": 3,
-    "description": "Extend Minimax with alpha-beta pruning for efficiency.\n\nYour implementation should:\n- Track alpha (best MAX can guarantee) and beta (best MIN can guarantee)\n- Prune branches when alpha >= beta\n- Count nodes pruned to demonstrate efficiency\n- Return same result as regular minimax",
-    "starterCode": "def alpha_beta(board, depth, alpha, beta, is_max_player, nodes_visited):\n    # Implement alpha-beta pruning\n    # Return: (value, move, nodes_visited)\n    pass",
-    "solution": "def check_winner(board):\n    \"\"\"Check if there's a winner. Returns 'X', 'O', 'draw', or None.\"\"\"\n    for row in board:\n        if row[0] == row[1] == row[2] and row[0] is not None:\n            return row[0]\n\n    for col in range(3):\n        if board[0][col] == board[1][col] == board[2][col] and board[0][col] is not None:\n            return board[0][col]\n\n    if board[0][0] == board[1][1] == board[2][2] and board[0][0] is not None:\n        return board[0][0]\n    if board[0][2] == board[1][1] == board[2][0] and board[0][2] is not None:\n        return board[0][2]\n\n    if all(board[i][j] is not None for i in range(3) for j in range(3)):\n        return 'draw'\n\n    return None\n\ndef get_moves(board):\n    moves = []\n    for i in range(3):\n        for j in range(3):\n            if board[i][j] is None:\n                moves.append((i, j))\n    return moves\n\ndef alpha_beta(board, depth, alpha, beta, is_max_player, nodes_visited={'count': 0}):\n    \"\"\"\n    Alpha-beta pruning for Tic-Tac-Toe.\n    Returns: (value, move, nodes_visited)\n    \"\"\"\n    nodes_visited['count'] += 1\n\n    winner = check_winner(board)\n\n    # Terminal states\n    if winner == 'X':\n        return (1, None)\n    elif winner == 'O':\n        return (-1, None)\n    elif winner == 'draw':\n        return (0, None)\n\n    moves = get_moves(board)\n    player = 'X' if is_max_player else 'O'\n\n    if is_max_player:\n        best_value = float('-inf')\n        best_move = None\n\n        for move in moves:\n            i, j = move\n            board[i][j] = player\n\n            value, _ = alpha_beta(board, depth + 1, alpha, beta, False, nodes_visited)\n\n            board[i][j] = None\n\n            if value > best_value:\n                best_value = value\n                best_move = move\n\n            alpha = max(alpha, value)\n\n            # Beta cutoff\n            if beta <= alpha:\n                break  # Prune remaining branches\n\n        return (best_value, best_move)\n    else:\n        best_value = float('inf')\n        best_move = None\n\n        for move in moves:\n            i, j = move\n            board[i][j] = player\n\n            value, _ = alpha_beta(board, depth + 1, alpha, beta, True, nodes_visited)\n\n            board[i][j] = None\n\n            if value < best_value:\n                best_value = value\n                best_move = move\n\n            beta = min(beta, value)\n\n            # Alpha cutoff\n            if beta <= alpha:\n                break  # Prune remaining branches\n\n        return (best_value, best_move)\n\n# Test and compare with regular minimax\nboard = [\n    ['X', 'O', 'X'],\n    ['O', None, None],\n    [None, None, 'O']\n]\n\n# With alpha-beta\nnodes_ab = {'count': 0}\nvalue_ab, move_ab = alpha_beta(board, 0, float('-inf'), float('inf'), True, nodes_ab)\nprint(f\"Alpha-Beta: value={value_ab}, move={move_ab}, nodes visited={nodes_ab['count']}\")\n\n# Compare with regular minimax\nfrom topic3_minimax import minimax\nnodes_mm = {'count': 0}\n\ndef minimax_with_count(board, is_max_player, nodes):\n    nodes['count'] += 1\n    winner = check_winner(board)\n    if winner == 'X':\n        return (1, None)\n    elif winner == 'O':\n        return (-1, None)\n    elif winner == 'draw':\n        return (0, None)\n\n    moves = get_moves(board)\n    player = 'X' if is_max_player else 'O'\n\n    if is_max_player:\n        best_value = float('-inf')\n        best_move = None\n        for move in moves:\n            i, j = move\n            board[i][j] = player\n            value, _ = minimax_with_count(board, False, nodes)\n            board[i][j] = None\n            if value > best_value:\n                best_value = value\n                best_move = move\n        return (best_value, best_move)\n    else:\n        best_value = float('inf')\n        best_move = None\n        for move in moves:\n            i, j = move\n            board[i][j] = player\n            value, _ = minimax_with_count(board, True, nodes)\n            board[i][j] = None\n            if value < best_value:\n                best_value = value\n                best_move = move\n        return (best_value, best_move)\n\nvalue_mm, move_mm = minimax_with_count(board, True, nodes_mm)\nprint(f\"Regular Minimax: value={value_mm}, move={move_mm}, nodes visited={nodes_mm['count']}\")\nprint(f\"Pruning efficiency: {100 * (1 - nodes_ab['count'] / nodes_mm['count']):.1f}% fewer nodes\")",
+    "description": "Extend Minimax with alpha-beta pruning for efficiency.\n\nYour implementation should:\n- Track alpha (best MAX can guarantee) and beta (best MIN can guarantee)\n- Prune branches when alpha >= beta\n- Return same result as regular minimax but visit fewer nodes",
+    "starterCode": "def alpha_beta(board, depth, alpha, beta, is_max_player):\n    # Implement alpha-beta pruning\n    # Return: (value, move)\n    pass",
+    "solution": "def alpha_beta(board, depth, alpha, beta, is_max_player):\n    winner = check_winner(board)\n    if winner == 'X': return (1, None)\n    if winner == 'O': return (-1, None)\n    if winner == 'draw': return (0, None)\n    \n    moves = get_moves(board)\n    player = 'X' if is_max_player else 'O'\n    best_move = None\n    \n    if is_max_player:\n        best_value = float('-inf')\n        for i, j in moves:\n            board[i][j] = player\n            value, _ = alpha_beta(board, depth+1, alpha, beta, False)\n            board[i][j] = None\n            if value > best_value:\n                best_value, best_move = value, (i, j)\n            alpha = max(alpha, value)\n            if beta <= alpha:\n                break\n        return (best_value, best_move)\n    else:\n        best_value = float('inf')\n        for i, j in moves:\n            board[i][j] = player\n            value, _ = alpha_beta(board, depth+1, alpha, beta, True)\n            board[i][j] = None\n            if value < best_value:\n                best_value, best_move = value, (i, j)\n            beta = min(beta, value)\n            if beta <= alpha:\n                break\n        return (best_value, best_move)",
     "testCases": [
-      {
-        "input": "alpha_beta(board, 0, -inf, +inf, True, nodes)",
-        "isHidden": false,
-        "description": "Test alpha-beta returns same result as minimax"
-      },
-      {
-        "input": "nodes_ab['count'] < nodes_mm['count']",
-        "isHidden": false,
-        "description": "Test alpha-beta visits fewer nodes"
-      },
-      {
-        "input": "alpha_beta with pruning",
-        "isHidden": false,
-        "description": "Test pruning occurs when alpha >= beta"
-      }
+      {"input": "alpha_beta(board, 0, -inf, inf, True)", "isHidden": false, "description": "Test alpha-beta returns same result as minimax"},
+      {"input": "alpha_beta with pruning", "isHidden": false, "description": "Test pruning occurs when alpha >= beta"},
+      {"input": "alpha_beta visits fewer nodes", "isHidden": true, "description": "Test efficiency improvement"}
     ],
     "hints": [
       "Alpha is the best value MAX can guarantee, beta is the best value MIN can guarantee",
-      "Prune (break) when beta <= alpha because the opponent won't allow this branch",
-      "Always update alpha in MAX nodes and beta in MIN nodes after evaluating children"
+      "Prune when beta <= alpha because the opponent won't allow this branch",
+      "Update alpha in MAX nodes and beta in MIN nodes after evaluating children"
     ],
     "language": "python"
   },
@@ -69,33 +45,293 @@
     "id": "cs406-t3-ex03",
     "subjectId": "cs406",
     "topicId": "cs406-topic-3",
-    "title": "Monte Carlo Tree Search (MCTS)",
+    "title": "Monte Carlo Tree Search",
     "difficulty": 4,
-    "description": "Implement basic MCTS with UCB1 for game playing.\n\nYour implementation should:\n- Implement all four MCTS phases: selection, expansion, simulation, backpropagation\n- Use UCB1 formula for selection\n- Perform random playouts for simulation\n- Update win statistics during backpropagation",
-    "starterCode": "import math\nimport random\n\nclass MCTSNode:\n    def __init__(self, state, parent=None):\n        self.state = state\n        self.parent = parent\n        self.children = []\n        self.visits = 0\n        self.wins = 0\n\n    def ucb1(self, c=1.41):\n        # Calculate UCB1 value\n        pass\n\ndef mcts_search(root_state, iterations=1000):\n    # Implement MCTS\n    pass",
-    "solution": "import math\nimport random\n\nclass MCTSNode:\n    def __init__(self, state, parent=None, move=None):\n        self.state = state  # Game state\n        self.parent = parent\n        self.move = move  # Move that led to this state\n        self.children = []\n        self.visits = 0\n        self.wins = 0\n        self.untried_moves = self.get_legal_moves()\n\n    def get_legal_moves(self):\n        # Get available moves for current state\n        moves = []\n        for i in range(3):\n            for j in range(3):\n                if self.state[i][j] is None:\n                    moves.append((i, j))\n        return moves\n\n    def ucb1(self, c=1.41):\n        \"\"\"Calculate UCB1 value for this node.\"\"\"\n        if self.visits == 0:\n            return float('inf')\n\n        exploitation = self.wins / self.visits\n        exploration = c * math.sqrt(math.log(self.parent.visits) / self.visits)\n\n        return exploitation + exploration\n\n    def select_child(self):\n        \"\"\"Select child with highest UCB1 value.\"\"\"\n        return max(self.children, key=lambda child: child.ucb1())\n\n    def expand(self):\n        \"\"\"Expand by adding a child for an untried move.\"\"\"\n        move = self.untried_moves.pop()\n        i, j = move\n\n        # Create new state\n        new_state = [row[:] for row in self.state]\n        player = 'X' if self.is_x_turn() else 'O'\n        new_state[i][j] = player\n\n        child = MCTSNode(new_state, parent=self, move=move)\n        self.children.append(child)\n        return child\n\n    def is_x_turn(self):\n        \"\"\"Determine whose turn it is based on piece count.\"\"\"\n        x_count = sum(row.count('X') for row in self.state)\n        o_count = sum(row.count('O') for row in self.state)\n        return x_count == o_count\n\n    def is_terminal(self):\n        \"\"\"Check if state is terminal.\"\"\"\n        return check_winner(self.state) is not None\n\n    def simulate(self):\n        \"\"\"Random playout from this state.\"\"\"\n        state = [row[:] for row in self.state]\n        x_turn = self.is_x_turn()\n\n        while True:\n            winner = check_winner(state)\n            if winner is not None:\n                if winner == 'X':\n                    return 1\n                elif winner == 'O':\n                    return 0\n                else:  # draw\n                    return 0.5\n\n            # Make random move\n            moves = []\n            for i in range(3):\n                for j in range(3):\n                    if state[i][j] is None:\n                        moves.append((i, j))\n\n            i, j = random.choice(moves)\n            state[i][j] = 'X' if x_turn else 'O'\n            x_turn = not x_turn\n\n    def backpropagate(self, result):\n        \"\"\"Backpropagate result up the tree.\"\"\"\n        self.visits += 1\n        self.wins += result\n\n        if self.parent:\n            # Flip result for opponent\n            self.parent.backpropagate(1 - result)\n\ndef check_winner(board):\n    \"\"\"Check winner (same as before).\"\"\"\n    for row in board:\n        if row[0] == row[1] == row[2] and row[0] is not None:\n            return row[0]\n    for col in range(3):\n        if board[0][col] == board[1][col] == board[2][col] and board[0][col] is not None:\n            return board[0][col]\n    if board[0][0] == board[1][1] == board[2][2] and board[0][0] is not None:\n        return board[0][0]\n    if board[0][2] == board[1][1] == board[2][0] and board[0][2] is not None:\n        return board[0][2]\n    if all(board[i][j] is not None for i in range(3) for j in range(3)):\n        return 'draw'\n    return None\n\ndef mcts_search(root_state, iterations=1000):\n    \"\"\"\n    MCTS main search function.\n    Returns best move from root state.\n    \"\"\"\n    root = MCTSNode(root_state)\n\n    for _ in range(iterations):\n        node = root\n\n        # 1. Selection\n        while node.untried_moves == [] and node.children != []:\n            node = node.select_child()\n\n        # 2. Expansion\n        if node.untried_moves != []:\n            node = node.expand()\n\n        # 3. Simulation\n        result = node.simulate()\n\n        # 4. Backpropagation\n        node.backpropagate(result)\n\n    # Return most visited child (most robust)\n    best_child = max(root.children, key=lambda c: c.visits)\n    return best_child.move\n\n# Test\nboard = [\n    ['X', 'O', 'X'],\n    ['O', None, None],\n    [None, None, 'O']\n]\n\nmove = mcts_search(board, iterations=1000)\nprint(f\"MCTS recommends move: {move}\")\n\n# Compare with minimax for validation\nfrom topic3_minimax import minimax\nvalue, minimax_move = minimax(board, True)\nprint(f\"Minimax recommends: {minimax_move}\")",
+    "description": "Implement basic MCTS with UCB1 for game playing.\n\nYour implementation should:\n- Implement all four MCTS phases: selection, expansion, simulation, backpropagation\n- Use UCB1 formula for selection\n- Perform random playouts for simulation",
+    "starterCode": "import math\nimport random\n\nclass MCTSNode:\n    def __init__(self, state, parent=None):\n        self.state = state\n        self.parent = parent\n        self.children = []\n        self.visits = 0\n        self.wins = 0\n\n    def ucb1(self, c=1.41):\n        pass\n\ndef mcts_search(root_state, iterations=1000):\n    pass",
+    "solution": "import math\nimport random\n\nclass MCTSNode:\n    def __init__(self, state, parent=None, move=None):\n        self.state = state\n        self.parent = parent\n        self.move = move\n        self.children = []\n        self.visits = 0\n        self.wins = 0\n        self.untried_moves = [(i,j) for i in range(3) for j in range(3) if state[i][j] is None]\n\n    def ucb1(self, c=1.41):\n        if self.visits == 0: return float('inf')\n        return self.wins/self.visits + c*math.sqrt(math.log(self.parent.visits)/self.visits)\n\n    def expand(self):\n        move = self.untried_moves.pop()\n        new_state = [row[:] for row in self.state]\n        x_count = sum(row.count('X') for row in self.state)\n        o_count = sum(row.count('O') for row in self.state)\n        new_state[move[0]][move[1]] = 'X' if x_count == o_count else 'O'\n        child = MCTSNode(new_state, self, move)\n        self.children.append(child)\n        return child\n\n    def simulate(self):\n        state = [row[:] for row in self.state]\n        x_turn = sum(row.count('X') for row in state) == sum(row.count('O') for row in state)\n        while True:\n            winner = check_winner(state)\n            if winner: return 1 if winner=='X' else (0 if winner=='O' else 0.5)\n            moves = [(i,j) for i in range(3) for j in range(3) if state[i][j] is None]\n            i,j = random.choice(moves)\n            state[i][j] = 'X' if x_turn else 'O'\n            x_turn = not x_turn\n\n    def backpropagate(self, result):\n        self.visits += 1\n        self.wins += result\n        if self.parent: self.parent.backpropagate(1-result)\n\ndef mcts_search(root_state, iterations=1000):\n    root = MCTSNode(root_state)\n    for _ in range(iterations):\n        node = root\n        while not node.untried_moves and node.children:\n            node = max(node.children, key=lambda c: c.ucb1())\n        if node.untried_moves:\n            node = node.expand()\n        result = node.simulate()\n        node.backpropagate(result)\n    return max(root.children, key=lambda c: c.visits).move",
     "testCases": [
-      {
-        "input": "mcts_search(board, iterations=1000)",
-        "isHidden": false,
-        "description": "Test MCTS finds good move"
-      },
-      {
-        "input": "node.ucb1()",
-        "isHidden": false,
-        "description": "Test UCB1 calculation balances exploration/exploitation"
-      },
-      {
-        "input": "node.simulate()",
-        "isHidden": false,
-        "description": "Test random playout returns win/loss/draw result"
-      }
+      {"input": "mcts_search(board, 1000)", "isHidden": false, "description": "Test MCTS finds good move"},
+      {"input": "node.ucb1()", "isHidden": false, "description": "Test UCB1 calculation"},
+      {"input": "node.simulate()", "isHidden": true, "description": "Test random playout"}
     ],
     "hints": [
-      "UCB1 formula: exploitation + c * sqrt(ln(parent_visits) / node_visits)",
-      "Selection phase: traverse tree using UCB1 until reaching a node with unexplored children",
-      "Simulation phase: perform random playout from selected node to terminal state",
-      "Backpropagation: update visit counts and win statistics for all nodes in path"
+      "UCB1 formula: wins/visits + c * sqrt(ln(parent_visits) / visits)",
+      "Selection: traverse tree using UCB1 until reaching unexplored node",
+      "Backpropagation: flip result for opponent perspective"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs406-t3-ex04",
+    "subjectId": "cs406",
+    "topicId": "cs406-topic-3",
+    "title": "Game Tree Node Count",
+    "difficulty": 1,
+    "description": "Calculate the number of nodes in a game tree.\n\nGiven a branching factor and depth, compute:\n- Total number of nodes in the tree\n- Number of leaf nodes\n- Demonstrate how game tree size grows exponentially",
+    "starterCode": "def count_nodes(branching_factor, depth):\n    # Return total number of nodes in game tree\n    pass\n\ndef count_leaves(branching_factor, depth):\n    # Return number of leaf nodes\n    pass\n\ndef tree_size_analysis(max_depth=5, branching_factor=3):\n    # Print analysis of tree growth\n    pass",
+    "solution": "def count_nodes(branching_factor, depth):\n    if branching_factor == 1:\n        return depth + 1\n    return (branching_factor ** (depth + 1) - 1) // (branching_factor - 1)\n\ndef count_leaves(branching_factor, depth):\n    return branching_factor ** depth\n\ndef tree_size_analysis(max_depth=5, branching_factor=3):\n    print(f\"Branching factor: {branching_factor}\")\n    print(f\"{'Depth':<8}{'Total Nodes':<15}{'Leaf Nodes':<15}\")\n    print(\"-\" * 38)\n    for d in range(max_depth + 1):\n        total = count_nodes(branching_factor, d)\n        leaves = count_leaves(branching_factor, d)\n        print(f\"{d:<8}{total:<15}{leaves:<15}\")\n\n# Chess has ~35 branching factor\nprint(\"\\nChess tree analysis (b=35):\")\nfor d in [2, 4, 6, 8]:\n    print(f\"Depth {d}: {count_nodes(35, d):,} nodes\")",
+    "testCases": [
+      {"input": "count_nodes(2, 3)", "isHidden": false, "description": "Binary tree depth 3"},
+      {"input": "count_leaves(3, 4)", "isHidden": false, "description": "Ternary tree leaves at depth 4"},
+      {"input": "count_nodes(35, 4)", "isHidden": true, "description": "Chess-like tree"}
+    ],
+    "hints": [
+      "Total nodes = sum of nodes at each level = b^0 + b^1 + ... + b^d",
+      "This is a geometric series: (b^(d+1) - 1) / (b - 1)",
+      "Leaf nodes are simply b^d"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs406-t3-ex05",
+    "subjectId": "cs406",
+    "topicId": "cs406-topic-3",
+    "title": "Evaluation Function Design",
+    "difficulty": 2,
+    "description": "Design and implement an evaluation function for a Connect Four game.\n\nYour evaluation function should:\n- Score board positions for a non-terminal state\n- Consider number of pieces in a row\n- Weight center control higher\n- Return positive values for MAX, negative for MIN",
+    "starterCode": "def evaluate_connect4(board, player):\n    # board is 6x7, player is 'X' or 'O'\n    # Return numeric evaluation of position\n    pass\n\ndef count_windows(board, player, length):\n    # Count windows of given length for player\n    pass",
+    "solution": "def evaluate_connect4(board, player):\n    opponent = 'O' if player == 'X' else 'X'\n    score = 0\n    \n    # Center column preference\n    center_col = 3\n    center_count = sum(1 for row in board if row[center_col] == player)\n    score += center_count * 3\n    \n    # Count potential winning windows\n    score += count_windows(board, player, 4) * 100  # Win\n    score += count_windows(board, player, 3) * 5    # Three in a row\n    score += count_windows(board, player, 2) * 2    # Two in a row\n    \n    # Penalize opponent's threats\n    score -= count_windows(board, opponent, 4) * 100\n    score -= count_windows(board, opponent, 3) * 4\n    \n    return score\n\ndef count_windows(board, player, length):\n    count = 0\n    rows, cols = 6, 7\n    \n    # Horizontal\n    for r in range(rows):\n        for c in range(cols - 3):\n            window = [board[r][c+i] for i in range(4)]\n            if window.count(player) == length and window.count(None) == 4 - length:\n                count += 1\n    \n    # Vertical\n    for r in range(rows - 3):\n        for c in range(cols):\n            window = [board[r+i][c] for i in range(4)]\n            if window.count(player) == length and window.count(None) == 4 - length:\n                count += 1\n    \n    # Diagonal (positive slope)\n    for r in range(rows - 3):\n        for c in range(cols - 3):\n            window = [board[r+i][c+i] for i in range(4)]\n            if window.count(player) == length and window.count(None) == 4 - length:\n                count += 1\n    \n    # Diagonal (negative slope)\n    for r in range(3, rows):\n        for c in range(cols - 3):\n            window = [board[r-i][c+i] for i in range(4)]\n            if window.count(player) == length and window.count(None) == 4 - length:\n                count += 1\n    \n    return count",
+    "testCases": [
+      {"input": "evaluate_connect4(empty_board, 'X')", "isHidden": false, "description": "Empty board evaluation"},
+      {"input": "count_windows(board, 'X', 3)", "isHidden": false, "description": "Count three-in-a-row"},
+      {"input": "evaluate_connect4(winning_board, 'X')", "isHidden": true, "description": "Winning position"}
+    ],
+    "hints": [
+      "Weight different features: winning > three-in-row > two-in-row > center",
+      "Check all four directions: horizontal, vertical, both diagonals",
+      "A 'window' is a group of 4 consecutive cells that could form a win"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs406-t3-ex06",
+    "subjectId": "cs406",
+    "topicId": "cs406-topic-3",
+    "title": "Iterative Deepening for Games",
+    "difficulty": 3,
+    "description": "Implement iterative deepening with alpha-beta for game search.\n\nYour implementation should:\n- Search progressively deeper until time limit\n- Use the best move from previous iteration for move ordering\n- Return the best move found within time constraint",
+    "starterCode": "import time\n\ndef iterative_deepening(board, time_limit):\n    # Search with increasing depth until time limit\n    # Return: best_move, best_value, depth_reached\n    pass\n\ndef alpha_beta_depth_limited(board, depth, alpha, beta, is_max):\n    # Alpha-beta with depth limit\n    pass",
+    "solution": "import time\n\ndef iterative_deepening(board, time_limit):\n    start_time = time.time()\n    best_move = None\n    best_value = 0\n    depth = 1\n    \n    while True:\n        if time.time() - start_time >= time_limit:\n            break\n        \n        value, move = alpha_beta_depth_limited(board, depth, float('-inf'), float('inf'), True)\n        \n        if move is not None:\n            best_move = move\n            best_value = value\n        \n        # Stop if found winning move or max depth\n        if abs(value) >= 1000 or depth > 20:\n            break\n        \n        depth += 1\n    \n    return best_move, best_value, depth - 1\n\ndef alpha_beta_depth_limited(board, depth, alpha, beta, is_max):\n    winner = check_winner(board)\n    if winner == 'X': return (1000, None)\n    if winner == 'O': return (-1000, None)\n    if winner == 'draw': return (0, None)\n    \n    if depth == 0:\n        return (evaluate(board), None)\n    \n    moves = get_moves(board)\n    player = 'X' if is_max else 'O'\n    best_move = moves[0] if moves else None\n    \n    if is_max:\n        best_value = float('-inf')\n        for i, j in moves:\n            board[i][j] = player\n            value, _ = alpha_beta_depth_limited(board, depth-1, alpha, beta, False)\n            board[i][j] = None\n            if value > best_value:\n                best_value, best_move = value, (i, j)\n            alpha = max(alpha, value)\n            if beta <= alpha:\n                break\n        return (best_value, best_move)\n    else:\n        best_value = float('inf')\n        for i, j in moves:\n            board[i][j] = player\n            value, _ = alpha_beta_depth_limited(board, depth-1, alpha, beta, True)\n            board[i][j] = None\n            if value < best_value:\n                best_value, best_move = value, (i, j)\n            beta = min(beta, value)\n            if beta <= alpha:\n                break\n        return (best_value, best_move)\n\ndef evaluate(board):\n    return 0  # Simple placeholder",
+    "testCases": [
+      {"input": "iterative_deepening(board, 1.0)", "isHidden": false, "description": "Test iterative deepening with 1 second"},
+      {"input": "alpha_beta_depth_limited(board, 4, -inf, inf, True)", "isHidden": false, "description": "Test depth-limited search"},
+      {"input": "iterative_deepening finds winning move", "isHidden": true, "description": "Test finds forced win"}
+    ],
+    "hints": [
+      "Start at depth 1 and increment until time runs out",
+      "Always save the best move from completed iterations",
+      "Use evaluation function at depth limit instead of searching further"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs406-t3-ex07",
+    "subjectId": "cs406",
+    "topicId": "cs406-topic-3",
+    "title": "Move Ordering Heuristics",
+    "difficulty": 3,
+    "description": "Implement move ordering to improve alpha-beta pruning efficiency.\n\nYour implementation should:\n- Order moves by heuristic value before searching\n- Use killer move heuristic\n- Implement history heuristic for move ordering",
+    "starterCode": "class MoveOrderer:\n    def __init__(self):\n        self.killer_moves = {}  # depth -> [move1, move2]\n        self.history = {}  # move -> score\n\n    def order_moves(self, moves, depth):\n        # Return moves ordered by heuristic\n        pass\n\n    def update_killer(self, move, depth):\n        pass\n\n    def update_history(self, move, depth):\n        pass",
+    "solution": "class MoveOrderer:\n    def __init__(self):\n        self.killer_moves = {}\n        self.history = {}\n\n    def order_moves(self, moves, board, depth):\n        scored_moves = []\n        for move in moves:\n            score = 0\n            \n            # Killer move bonus\n            if depth in self.killer_moves:\n                if move in self.killer_moves[depth]:\n                    score += 10000\n            \n            # History heuristic\n            if move in self.history:\n                score += self.history[move]\n            \n            # Center preference for tic-tac-toe\n            i, j = move\n            if (i, j) == (1, 1):\n                score += 100\n            elif i == 1 or j == 1:\n                score += 50\n            \n            scored_moves.append((score, move))\n        \n        scored_moves.sort(reverse=True)\n        return [move for score, move in scored_moves]\n\n    def update_killer(self, move, depth):\n        if depth not in self.killer_moves:\n            self.killer_moves[depth] = []\n        killers = self.killer_moves[depth]\n        if move not in killers:\n            killers.insert(0, move)\n            if len(killers) > 2:\n                killers.pop()\n\n    def update_history(self, move, depth):\n        if move not in self.history:\n            self.history[move] = 0\n        self.history[move] += depth * depth  # Weight by depth squared\n\ndef alpha_beta_ordered(board, depth, alpha, beta, is_max, orderer):\n    winner = check_winner(board)\n    if winner: return evaluate_terminal(winner)\n    if depth == 0: return evaluate(board)\n    \n    moves = get_moves(board)\n    moves = orderer.order_moves(moves, board, depth)\n    player = 'X' if is_max else 'O'\n    \n    if is_max:\n        value = float('-inf')\n        for move in moves:\n            board[move[0]][move[1]] = player\n            v = alpha_beta_ordered(board, depth-1, alpha, beta, False, orderer)\n            board[move[0]][move[1]] = None\n            if v > value:\n                value = v\n            if value > alpha:\n                alpha = value\n                orderer.update_history(move, depth)\n            if beta <= alpha:\n                orderer.update_killer(move, depth)\n                break\n        return value\n    else:\n        value = float('inf')\n        for move in moves:\n            board[move[0]][move[1]] = player\n            v = alpha_beta_ordered(board, depth-1, alpha, beta, True, orderer)\n            board[move[0]][move[1]] = None\n            value = min(value, v)\n            if value < beta:\n                beta = value\n            if beta <= alpha:\n                orderer.update_killer(move, depth)\n                break\n        return value",
+    "testCases": [
+      {"input": "orderer.order_moves(moves, board, 3)", "isHidden": false, "description": "Test move ordering"},
+      {"input": "orderer.update_killer(move, depth)", "isHidden": false, "description": "Test killer move update"},
+      {"input": "alpha_beta_ordered with fewer nodes", "isHidden": true, "description": "Test improved pruning"}
+    ],
+    "hints": [
+      "Killer moves are moves that caused cutoffs at sibling nodes",
+      "History heuristic tracks which moves are generally good",
+      "Better move ordering leads to more pruning"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs406-t3-ex08",
+    "subjectId": "cs406",
+    "topicId": "cs406-topic-3",
+    "title": "Transposition Table",
+    "difficulty": 4,
+    "description": "Implement a transposition table to avoid re-evaluating identical positions.\n\nYour implementation should:\n- Hash board positions efficiently\n- Store and retrieve search results\n- Handle different entry types (exact, lower bound, upper bound)",
+    "starterCode": "class TranspositionTable:\n    def __init__(self, size=1000000):\n        self.table = {}\n        self.size = size\n\n    def hash_board(self, board):\n        pass\n\n    def store(self, board, depth, value, flag, best_move):\n        pass\n\n    def lookup(self, board, depth, alpha, beta):\n        # Return (found, value, best_move)\n        pass",
+    "solution": "class TranspositionTable:\n    EXACT = 0\n    LOWER = 1\n    UPPER = 2\n    \n    def __init__(self, size=1000000):\n        self.table = {}\n        self.size = size\n\n    def hash_board(self, board):\n        # Simple hash using tuple conversion\n        return hash(tuple(tuple(row) for row in board))\n\n    def store(self, board, depth, value, flag, best_move):\n        key = self.hash_board(board)\n        # Only store if deeper or same depth search\n        if key in self.table:\n            if self.table[key]['depth'] > depth:\n                return\n        self.table[key] = {\n            'depth': depth,\n            'value': value,\n            'flag': flag,\n            'best_move': best_move\n        }\n\n    def lookup(self, board, depth, alpha, beta):\n        key = self.hash_board(board)\n        if key not in self.table:\n            return False, None, None\n        \n        entry = self.table[key]\n        if entry['depth'] < depth:\n            return False, None, entry['best_move']  # Return move for ordering\n        \n        if entry['flag'] == self.EXACT:\n            return True, entry['value'], entry['best_move']\n        elif entry['flag'] == self.LOWER and entry['value'] >= beta:\n            return True, entry['value'], entry['best_move']\n        elif entry['flag'] == self.UPPER and entry['value'] <= alpha:\n            return True, entry['value'], entry['best_move']\n        \n        return False, None, entry['best_move']\n\ndef alpha_beta_tt(board, depth, alpha, beta, is_max, tt):\n    orig_alpha = alpha\n    \n    # TT lookup\n    found, value, tt_move = tt.lookup(board, depth, alpha, beta)\n    if found:\n        return value, tt_move\n    \n    winner = check_winner(board)\n    if winner: return evaluate_terminal(winner), None\n    if depth == 0: return evaluate(board), None\n    \n    moves = get_moves(board)\n    if tt_move and tt_move in moves:\n        moves.remove(tt_move)\n        moves.insert(0, tt_move)  # Try TT move first\n    \n    player = 'X' if is_max else 'O'\n    best_move = moves[0]\n    \n    if is_max:\n        value = float('-inf')\n        for move in moves:\n            board[move[0]][move[1]] = player\n            v, _ = alpha_beta_tt(board, depth-1, alpha, beta, False, tt)\n            board[move[0]][move[1]] = None\n            if v > value:\n                value, best_move = v, move\n            alpha = max(alpha, value)\n            if beta <= alpha:\n                break\n    else:\n        value = float('inf')\n        for move in moves:\n            board[move[0]][move[1]] = player\n            v, _ = alpha_beta_tt(board, depth-1, alpha, beta, True, tt)\n            board[move[0]][move[1]] = None\n            if v < value:\n                value, best_move = v, move\n            beta = min(beta, value)\n            if beta <= alpha:\n                break\n    \n    # Store in TT\n    if value <= orig_alpha:\n        flag = TranspositionTable.UPPER\n    elif value >= beta:\n        flag = TranspositionTable.LOWER\n    else:\n        flag = TranspositionTable.EXACT\n    tt.store(board, depth, value, flag, best_move)\n    \n    return value, best_move",
+    "testCases": [
+      {"input": "tt.store(board, 5, 10, EXACT, move)", "isHidden": false, "description": "Test storing entry"},
+      {"input": "tt.lookup(board, 3, -inf, inf)", "isHidden": false, "description": "Test lookup"},
+      {"input": "alpha_beta_tt avoids recomputation", "isHidden": true, "description": "Test efficiency"}
+    ],
+    "hints": [
+      "EXACT means the value is the true minimax value",
+      "LOWER means the value is a lower bound (caused beta cutoff)",
+      "UPPER means the value is an upper bound (all moves were <= alpha)"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs406-t3-ex09",
+    "subjectId": "cs406",
+    "topicId": "cs406-topic-3",
+    "title": "Negamax Implementation",
+    "difficulty": 2,
+    "description": "Implement Negamax, a simplified variant of Minimax.\n\nNegamax simplifies minimax by using the fact that max(a,b) = -min(-a,-b).\nThis eliminates the need for separate MAX and MIN logic.",
+    "starterCode": "def negamax(board, depth, color):\n    # color: 1 for MAX, -1 for MIN\n    # Return: value from perspective of current player\n    pass\n\ndef negamax_ab(board, depth, alpha, beta, color):\n    # Negamax with alpha-beta\n    pass",
+    "solution": "def negamax(board, depth, color):\n    winner = check_winner(board)\n    if winner == 'X': return color * 1\n    if winner == 'O': return color * -1\n    if winner == 'draw': return 0\n    if depth == 0: return color * evaluate(board)\n    \n    moves = get_moves(board)\n    player = 'X' if color == 1 else 'O'\n    best_value = float('-inf')\n    \n    for i, j in moves:\n        board[i][j] = player\n        value = -negamax(board, depth-1, -color)\n        board[i][j] = None\n        best_value = max(best_value, value)\n    \n    return best_value\n\ndef negamax_ab(board, depth, alpha, beta, color):\n    winner = check_winner(board)\n    if winner == 'X': return color * 1, None\n    if winner == 'O': return color * -1, None\n    if winner == 'draw': return 0, None\n    if depth == 0: return color * evaluate(board), None\n    \n    moves = get_moves(board)\n    player = 'X' if color == 1 else 'O'\n    best_value = float('-inf')\n    best_move = moves[0] if moves else None\n    \n    for i, j in moves:\n        board[i][j] = player\n        value, _ = negamax_ab(board, depth-1, -beta, -alpha, -color)\n        value = -value\n        board[i][j] = None\n        \n        if value > best_value:\n            best_value = value\n            best_move = (i, j)\n        alpha = max(alpha, value)\n        if alpha >= beta:\n            break\n    \n    return best_value, best_move\n\n# Test\nboard = [[None]*3 for _ in range(3)]\nvalue, move = negamax_ab(board, 9, float('-inf'), float('inf'), 1)\nprint(f\"Best move: {move}, value: {value}\")",
+    "testCases": [
+      {"input": "negamax(board, 5, 1)", "isHidden": false, "description": "Test negamax for MAX"},
+      {"input": "negamax_ab(board, 5, -inf, inf, 1)", "isHidden": false, "description": "Test negamax with alpha-beta"},
+      {"input": "negamax equals minimax", "isHidden": true, "description": "Test equivalence"}
+    ],
+    "hints": [
+      "The key insight: always maximize from current player's perspective",
+      "Negate the recursive result: what's good for opponent is bad for us",
+      "For alpha-beta, swap and negate bounds: -beta becomes alpha"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs406-t3-ex10",
+    "subjectId": "cs406",
+    "topicId": "cs406-topic-3",
+    "title": "Quiescence Search",
+    "difficulty": 4,
+    "description": "Implement quiescence search to avoid horizon effect.\n\nIn chess, evaluate only 'quiet' positions where no captures are available.\nThis prevents the algorithm from missing obvious tactics.",
+    "starterCode": "def quiescence_search(board, alpha, beta, is_max):\n    # Search only capture moves until position is quiet\n    pass\n\ndef get_captures(board):\n    # Return list of capture moves\n    pass\n\ndef is_capture(move, board):\n    # Check if move is a capture\n    pass",
+    "solution": "def quiescence_search(board, alpha, beta, is_max):\n    # Stand-pat: evaluate current position\n    stand_pat = evaluate(board)\n    \n    if is_max:\n        if stand_pat >= beta:\n            return beta  # Beta cutoff\n        alpha = max(alpha, stand_pat)\n    else:\n        if stand_pat <= alpha:\n            return alpha  # Alpha cutoff\n        beta = min(beta, stand_pat)\n    \n    # Search only capture moves\n    captures = get_captures(board)\n    if not captures:\n        return stand_pat\n    \n    for move in captures:\n        make_move(board, move)\n        score = quiescence_search(board, alpha, beta, not is_max)\n        undo_move(board, move)\n        \n        if is_max:\n            if score >= beta:\n                return beta\n            alpha = max(alpha, score)\n        else:\n            if score <= alpha:\n                return alpha\n            beta = min(beta, score)\n    \n    return alpha if is_max else beta\n\ndef alpha_beta_with_quiescence(board, depth, alpha, beta, is_max):\n    if depth == 0:\n        return quiescence_search(board, alpha, beta, is_max)\n    \n    winner = check_winner(board)\n    if winner:\n        return evaluate_terminal(winner)\n    \n    moves = get_moves(board)\n    player = 'X' if is_max else 'O'\n    \n    if is_max:\n        value = float('-inf')\n        for move in moves:\n            make_move(board, move, player)\n            value = max(value, alpha_beta_with_quiescence(board, depth-1, alpha, beta, False))\n            undo_move(board, move)\n            alpha = max(alpha, value)\n            if beta <= alpha:\n                break\n        return value\n    else:\n        value = float('inf')\n        for move in moves:\n            make_move(board, move, player)\n            value = min(value, alpha_beta_with_quiescence(board, depth-1, alpha, beta, True))\n            undo_move(board, move)\n            beta = min(beta, value)\n            if beta <= alpha:\n                break\n        return value\n\ndef get_captures(board):\n    # For chess-like games, return capture moves\n    return []  # Placeholder\n\ndef make_move(board, move, player='X'):\n    board[move[0]][move[1]] = player\n\ndef undo_move(board, move):\n    board[move[0]][move[1]] = None",
+    "testCases": [
+      {"input": "quiescence_search(board, -inf, inf, True)", "isHidden": false, "description": "Test quiescence search"},
+      {"input": "alpha_beta_with_quiescence(board, 4, -inf, inf, True)", "isHidden": false, "description": "Test integration"},
+      {"input": "avoids horizon effect", "isHidden": true, "description": "Test tactical awareness"}
+    ],
+    "hints": [
+      "Stand-pat: option to not make any move if current position is good enough",
+      "Only search 'noisy' moves like captures that could change evaluation significantly",
+      "Called at leaf nodes of regular search instead of static evaluation"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs406-t3-ex11",
+    "subjectId": "cs406",
+    "topicId": "cs406-topic-3",
+    "title": "Principal Variation Search",
+    "difficulty": 5,
+    "description": "Implement Principal Variation Search (PVS), an enhancement to alpha-beta.\n\nPVS assumes the first move searched is the best (the principal variation).\nIt uses a null window search to verify this assumption efficiently.",
+    "starterCode": "def pvs(board, depth, alpha, beta, is_max):\n    # Principal Variation Search\n    # Use null window for non-PV nodes\n    pass\n\ndef null_window_search(board, depth, beta, is_max):\n    # Search with window [beta-1, beta]\n    pass",
+    "solution": "def pvs(board, depth, alpha, beta, is_max):\n    winner = check_winner(board)\n    if winner:\n        return evaluate_terminal(winner), None\n    if depth == 0:\n        return evaluate(board), None\n    \n    moves = get_moves(board)\n    if not moves:\n        return evaluate(board), None\n    \n    player = 'X' if is_max else 'O'\n    best_move = moves[0]\n    \n    # Search first move with full window (assumed to be best)\n    board[moves[0][0]][moves[0][1]] = player\n    best_value, _ = pvs(board, depth-1, -beta, -alpha, not is_max)\n    best_value = -best_value\n    board[moves[0][0]][moves[0][1]] = None\n    \n    if best_value >= beta:\n        return best_value, best_move\n    if best_value > alpha:\n        alpha = best_value\n    \n    # Search remaining moves with null window\n    for move in moves[1:]:\n        board[move[0]][move[1]] = player\n        \n        # Null window search\n        value, _ = pvs(board, depth-1, -alpha-1, -alpha, not is_max)\n        value = -value\n        \n        # Re-search if null window failed high\n        if value > alpha and value < beta:\n            value, _ = pvs(board, depth-1, -beta, -alpha, not is_max)\n            value = -value\n        \n        board[move[0]][move[1]] = None\n        \n        if value > best_value:\n            best_value = value\n            best_move = move\n        \n        if value >= beta:\n            return value, best_move\n        if value > alpha:\n            alpha = value\n    \n    return best_value, best_move\n\ndef null_window_search(board, depth, beta, is_max):\n    # Equivalent to alpha-beta with window [beta-1, beta]\n    return pvs(board, depth, beta-1, beta, is_max)\n\n# Test\nboard = [[None]*3 for _ in range(3)]\nvalue, move = pvs(board, 9, float('-inf'), float('inf'), True)\nprint(f\"PVS result: move={move}, value={value}\")",
+    "testCases": [
+      {"input": "pvs(board, 6, -inf, inf, True)", "isHidden": false, "description": "Test PVS search"},
+      {"input": "pvs matches alpha-beta", "isHidden": false, "description": "Test correctness"},
+      {"input": "pvs is faster with good ordering", "isHidden": true, "description": "Test efficiency"}
+    ],
+    "hints": [
+      "PV node: first move searched, assumed to be best, use full window",
+      "Other nodes: use null window [alpha, alpha+1] for fast verification",
+      "If null window fails (score > alpha), re-search with full window"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs406-t3-ex12",
+    "subjectId": "cs406",
+    "topicId": "cs406-topic-3",
+    "title": "Expectiminimax for Dice Games",
+    "difficulty": 3,
+    "description": "Implement Expectiminimax for games with chance nodes (like Backgammon).\n\nExtend minimax to handle dice rolls or other random events by computing expected values at chance nodes.",
+    "starterCode": "def expectiminimax(state, depth, player):\n    # player: 'max', 'min', or 'chance'\n    # Return expected value\n    pass\n\ndef get_dice_outcomes():\n    # Return list of (probability, outcome) tuples\n    pass",
+    "solution": "def expectiminimax(state, depth, player):\n    if is_terminal(state) or depth == 0:\n        return evaluate(state)\n    \n    if player == 'max':\n        best = float('-inf')\n        for move in get_moves(state, 'max'):\n            new_state = apply_move(state, move)\n            value = expectiminimax(new_state, depth-1, 'chance')\n            best = max(best, value)\n        return best\n    \n    elif player == 'min':\n        best = float('inf')\n        for move in get_moves(state, 'min'):\n            new_state = apply_move(state, move)\n            value = expectiminimax(new_state, depth-1, 'chance')\n            best = min(best, value)\n        return best\n    \n    else:  # chance node\n        expected = 0\n        for prob, outcome in get_dice_outcomes():\n            new_state = apply_chance(state, outcome)\n            next_player = 'max' if state['turn'] == 'max' else 'min'\n            value = expectiminimax(new_state, depth-1, next_player)\n            expected += prob * value\n        return expected\n\ndef get_dice_outcomes():\n    # Two dice: 36 possible outcomes\n    outcomes = []\n    for d1 in range(1, 7):\n        for d2 in range(1, 7):\n            if d1 == d2:  # Doubles\n                outcomes.append((1/36, (d1, d2, d1, d2)))\n            else:\n                outcomes.append((1/36, (d1, d2)))\n    return outcomes\n\ndef is_terminal(state):\n    return state.get('winner') is not None\n\ndef evaluate(state):\n    # Simple evaluation for backgammon-like game\n    return state.get('score', 0)\n\ndef apply_move(state, move):\n    new_state = state.copy()\n    # Apply move logic\n    return new_state\n\ndef apply_chance(state, dice):\n    new_state = state.copy()\n    new_state['dice'] = dice\n    return new_state\n\ndef get_moves(state, player):\n    return []  # Placeholder\n\n# Test with simple game\nstate = {'turn': 'max', 'score': 0}\nvalue = expectiminimax(state, 3, 'max')\nprint(f\"Expected value: {value}\")",
+    "testCases": [
+      {"input": "expectiminimax(state, 3, 'max')", "isHidden": false, "description": "Test from MAX perspective"},
+      {"input": "expectiminimax(state, 3, 'chance')", "isHidden": false, "description": "Test chance node"},
+      {"input": "dice probabilities sum to 1", "isHidden": true, "description": "Test probability handling"}
+    ],
+    "hints": [
+      "Chance nodes compute weighted average over possible outcomes",
+      "Each outcome has an associated probability",
+      "Expected value = sum of (probability * value) for all outcomes"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs406-t3-ex13",
+    "subjectId": "cs406",
+    "topicId": "cs406-topic-3",
+    "title": "Game State Zobrist Hashing",
+    "difficulty": 3,
+    "description": "Implement Zobrist hashing for efficient game state identification.\n\nZobrist hashing uses XOR of random bitstrings to create unique hashes that can be incrementally updated when moves are made.",
+    "starterCode": "import random\n\nclass ZobristHash:\n    def __init__(self, board_size, num_piece_types):\n        # Initialize random bitstrings\n        pass\n\n    def compute_hash(self, board):\n        # Compute full hash of board\n        pass\n\n    def update_hash(self, current_hash, position, old_piece, new_piece):\n        # Incrementally update hash after move\n        pass",
+    "solution": "import random\n\nclass ZobristHash:\n    def __init__(self, board_size, num_piece_types):\n        self.board_size = board_size\n        self.num_pieces = num_piece_types\n        \n        # Initialize random bitstrings for each (position, piece) pair\n        random.seed(42)  # For reproducibility\n        self.table = {}\n        \n        for i in range(board_size):\n            for j in range(board_size):\n                for piece in range(num_piece_types):\n                    self.table[(i, j, piece)] = random.getrandbits(64)\n        \n        # Side to move\n        self.side_hash = random.getrandbits(64)\n\n    def piece_to_int(self, piece):\n        if piece is None: return 0\n        if piece == 'X': return 1\n        if piece == 'O': return 2\n        return 0\n\n    def compute_hash(self, board, side_to_move='X'):\n        h = 0\n        for i in range(len(board)):\n            for j in range(len(board[0])):\n                piece = board[i][j]\n                if piece is not None:\n                    piece_int = self.piece_to_int(piece)\n                    h ^= self.table[(i, j, piece_int)]\n        \n        if side_to_move == 'O':\n            h ^= self.side_hash\n        \n        return h\n\n    def update_hash(self, current_hash, position, old_piece, new_piece):\n        i, j = position\n        \n        # XOR out old piece\n        if old_piece is not None:\n            old_int = self.piece_to_int(old_piece)\n            current_hash ^= self.table[(i, j, old_int)]\n        \n        # XOR in new piece\n        if new_piece is not None:\n            new_int = self.piece_to_int(new_piece)\n            current_hash ^= self.table[(i, j, new_int)]\n        \n        # Toggle side to move\n        current_hash ^= self.side_hash\n        \n        return current_hash\n\n# Test\nzh = ZobristHash(3, 3)  # 3x3 board, 3 piece types (None, X, O)\n\nboard = [[None]*3 for _ in range(3)]\ninitial_hash = zh.compute_hash(board)\nprint(f\"Initial hash: {initial_hash}\")\n\n# Make a move\nboard[1][1] = 'X'\nhash_after_move = zh.compute_hash(board, 'O')\nprint(f\"Hash after X at (1,1): {hash_after_move}\")\n\n# Verify incremental update\nincremental_hash = zh.update_hash(initial_hash, (1,1), None, 'X')\nprint(f\"Incremental hash: {incremental_hash}\")\nprint(f\"Match: {hash_after_move == incremental_hash}\")",
+    "testCases": [
+      {"input": "zh.compute_hash(board)", "isHidden": false, "description": "Test full hash computation"},
+      {"input": "zh.update_hash(h, pos, None, 'X')", "isHidden": false, "description": "Test incremental update"},
+      {"input": "same position same hash", "isHidden": true, "description": "Test hash consistency"}
+    ],
+    "hints": [
+      "XOR is its own inverse: a ^ b ^ b = a",
+      "To update hash: XOR out old piece, XOR in new piece",
+      "Include side-to-move in hash to distinguish positions"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs406-t3-ex14",
+    "subjectId": "cs406",
+    "topicId": "cs406-topic-3",
+    "title": "Multi-Player Game Tree",
+    "difficulty": 4,
+    "description": "Extend game tree search to handle games with more than 2 players.\n\nIn multi-player games, each player maximizes their own utility. Implement the max^n algorithm where each player's node maximizes that player's component of the utility vector.",
+    "starterCode": "def maxn(state, depth, player, num_players):\n    # Return utility vector (one value per player)\n    pass\n\ndef get_next_player(current, num_players):\n    pass",
+    "solution": "def maxn(state, depth, player, num_players):\n    if is_terminal(state) or depth == 0:\n        return evaluate_multi(state, num_players)\n    \n    moves = get_moves(state, player)\n    if not moves:\n        return evaluate_multi(state, num_players)\n    \n    best_utilities = None\n    \n    for move in moves:\n        new_state = apply_move(state, move, player)\n        next_player = get_next_player(player, num_players)\n        utilities = maxn(new_state, depth-1, next_player, num_players)\n        \n        # Current player maximizes their own utility\n        if best_utilities is None or utilities[player] > best_utilities[player]:\n            best_utilities = utilities\n    \n    return best_utilities\n\ndef get_next_player(current, num_players):\n    return (current + 1) % num_players\n\ndef evaluate_multi(state, num_players):\n    # Return list of utilities, one per player\n    # Example: could be scores in a 3-player game\n    scores = [0] * num_players\n    for i in range(num_players):\n        scores[i] = state.get(f'score_{i}', 0)\n    return scores\n\ndef is_terminal(state):\n    return state.get('game_over', False)\n\ndef get_moves(state, player):\n    return state.get(f'moves_{player}', [])\n\ndef apply_move(state, move, player):\n    new_state = state.copy()\n    # Apply move logic\n    return new_state\n\ndef maxn_with_pruning(state, depth, player, num_players, bounds):\n    \"\"\"Max^n with shallow pruning using sum bounds.\"\"\"\n    if is_terminal(state) or depth == 0:\n        return evaluate_multi(state, num_players)\n    \n    moves = get_moves(state, player)\n    best_utilities = None\n    \n    for move in moves:\n        new_state = apply_move(state, move, player)\n        next_player = get_next_player(player, num_players)\n        \n        # Update bounds for pruning\n        new_bounds = bounds.copy()\n        utilities = maxn_with_pruning(new_state, depth-1, next_player, num_players, new_bounds)\n        \n        if best_utilities is None or utilities[player] > best_utilities[player]:\n            best_utilities = utilities\n        \n        # Shallow pruning: if current player's utility + max possible for others > total\n        # This is a simplification; full pruning is more complex\n    \n    return best_utilities\n\n# Test with 3-player game\nstate = {\n    'game_over': False,\n    'score_0': 5,\n    'score_1': 3,\n    'score_2': 2,\n    'moves_0': ['a', 'b'],\n    'moves_1': ['c', 'd'],\n    'moves_2': ['e', 'f']\n}\n\nutilities = maxn(state, 3, 0, 3)\nprint(f\"Utilities for 3 players: {utilities}\")",
+    "testCases": [
+      {"input": "maxn(state, 3, 0, 3)", "isHidden": false, "description": "Test 3-player game"},
+      {"input": "get_next_player(2, 4)", "isHidden": false, "description": "Test player rotation"},
+      {"input": "maxn handles ties", "isHidden": true, "description": "Test tie handling"}
+    ],
+    "hints": [
+      "Each player maximizes their own component of the utility vector",
+      "Unlike 2-player zero-sum, utilities don't sum to zero",
+      "Player rotation: next_player = (current + 1) % num_players"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs406-t3-ex15",
+    "subjectId": "cs406",
+    "topicId": "cs406-topic-3",
+    "title": "UCT Algorithm Implementation",
+    "difficulty": 5,
+    "description": "Implement UCT (Upper Confidence bounds for Trees), the core algorithm behind modern game-playing AI.\n\nUCT combines MCTS with UCB1 and adds progressive widening for large action spaces.",
+    "starterCode": "import math\nimport random\n\nclass UCTNode:\n    def __init__(self, state, parent=None, action=None):\n        pass\n\ndef uct_search(root_state, iterations, c=1.41):\n    # UCT with configurable exploration constant\n    pass\n\ndef progressive_widening(node, k=1.0, alpha=0.5):\n    # Limit children based on visit count\n    pass",
+    "solution": "import math\nimport random\n\nclass UCTNode:\n    def __init__(self, state, parent=None, action=None):\n        self.state = state\n        self.parent = parent\n        self.action = action\n        self.children = []\n        self.visits = 0\n        self.total_reward = 0\n        self.untried_actions = self.get_legal_actions()\n    \n    def get_legal_actions(self):\n        return get_moves(self.state)\n    \n    def ucb1(self, c=1.41):\n        if self.visits == 0:\n            return float('inf')\n        exploitation = self.total_reward / self.visits\n        exploration = c * math.sqrt(math.log(self.parent.visits) / self.visits)\n        return exploitation + exploration\n    \n    def best_child(self, c=1.41):\n        return max(self.children, key=lambda n: n.ucb1(c))\n    \n    def expand(self):\n        action = self.untried_actions.pop()\n        new_state = apply_move(self.state, action)\n        child = UCTNode(new_state, self, action)\n        self.children.append(child)\n        return child\n    \n    def is_fully_expanded(self):\n        return len(self.untried_actions) == 0\n    \n    def is_terminal(self):\n        return is_terminal(self.state)\n    \n    def rollout(self):\n        state = copy_state(self.state)\n        while not is_terminal(state):\n            moves = get_moves(state)\n            if not moves:\n                break\n            action = random.choice(moves)\n            state = apply_move(state, action)\n        return evaluate(state)\n    \n    def backpropagate(self, reward):\n        self.visits += 1\n        self.total_reward += reward\n        if self.parent:\n            # Negate for opponent\n            self.parent.backpropagate(1 - reward)\n\ndef uct_search(root_state, iterations, c=1.41):\n    root = UCTNode(root_state)\n    \n    for _ in range(iterations):\n        node = root\n        \n        # Selection\n        while not node.is_terminal() and node.is_fully_expanded():\n            node = node.best_child(c)\n        \n        # Expansion\n        if not node.is_terminal() and not node.is_fully_expanded():\n            node = node.expand()\n        \n        # Simulation\n        reward = node.rollout()\n        \n        # Backpropagation\n        node.backpropagate(reward)\n    \n    # Return most visited child's action\n    return max(root.children, key=lambda n: n.visits).action\n\ndef progressive_widening(node, k=1.0, alpha=0.5):\n    \"\"\"Limit number of children based on visit count.\"\"\"\n    max_children = int(k * (node.visits ** alpha))\n    return len(node.children) < max_children and node.untried_actions\n\ndef uct_progressive_widening(root_state, iterations, c=1.41, k=1.0, alpha=0.5):\n    root = UCTNode(root_state)\n    \n    for _ in range(iterations):\n        node = root\n        \n        while not node.is_terminal():\n            if progressive_widening(node, k, alpha):\n                node = node.expand()\n                break\n            elif node.children:\n                node = node.best_child(c)\n            else:\n                break\n        \n        reward = node.rollout()\n        node.backpropagate(reward)\n    \n    return max(root.children, key=lambda n: n.visits).action\n\n# Helper functions (stubs)\ndef get_moves(state): return [(i,j) for i in range(3) for j in range(3) if state[i][j] is None]\ndef apply_move(state, action): \n    new = [row[:] for row in state]\n    x_count = sum(row.count('X') for row in state)\n    o_count = sum(row.count('O') for row in state)\n    new[action[0]][action[1]] = 'X' if x_count == o_count else 'O'\n    return new\ndef copy_state(state): return [row[:] for row in state]\ndef is_terminal(state): return check_winner(state) is not None\ndef evaluate(state):\n    w = check_winner(state)\n    return 1 if w == 'X' else (0 if w == 'O' else 0.5)",
+    "testCases": [
+      {"input": "uct_search(board, 1000)", "isHidden": false, "description": "Test UCT search"},
+      {"input": "progressive_widening(node)", "isHidden": false, "description": "Test progressive widening"},
+      {"input": "UCT finds good move", "isHidden": true, "description": "Test move quality"}
+    ],
+    "hints": [
+      "UCT = MCTS with UCB1 for tree policy",
+      "Progressive widening: num_children < k * visits^alpha",
+      "Higher c = more exploration, lower c = more exploitation"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs406-t3-ex16",
+    "subjectId": "cs406",
+    "topicId": "cs406-topic-3",
+    "title": "Information Set MCTS",
+    "difficulty": 5,
+    "description": "Implement MCTS for games with imperfect information.\n\nIn games like Poker, players don't know the full state. Use determinization: sample possible hidden states and run MCTS on each.",
+    "starterCode": "import random\n\nclass ISMCTSNode:\n    def __init__(self, info_set, parent=None):\n        pass\n\ndef ismcts_search(info_set, iterations, num_determinizations=10):\n    # Information Set MCTS\n    pass\n\ndef sample_determinization(info_set):\n    # Sample a concrete state consistent with info set\n    pass",
+    "solution": "import random\nfrom collections import defaultdict\n\nclass ISMCTSNode:\n    def __init__(self, info_set, action=None):\n        self.info_set = info_set  # What player can observe\n        self.action = action\n        self.children = {}  # action -> child node\n        self.visits = 0\n        self.total_reward = 0\n    \n    def ucb1(self, parent_visits, c=1.41):\n        if self.visits == 0:\n            return float('inf')\n        return self.total_reward / self.visits + c * (parent_visits ** 0.5) / (1 + self.visits)\n    \n    def get_or_create_child(self, action, info_set):\n        if action not in self.children:\n            self.children[action] = ISMCTSNode(info_set, action)\n        return self.children[action]\n\ndef ismcts_search(info_set, iterations, num_determinizations=10):\n    \"\"\"Information Set MCTS using determinization.\"\"\"\n    action_values = defaultdict(lambda: {'visits': 0, 'reward': 0})\n    \n    for _ in range(iterations):\n        # Sample a determinization consistent with what we know\n        state = sample_determinization(info_set)\n        \n        # Run single MCTS iteration on this determinization\n        root = ISMCTSNode(info_set)\n        \n        # Selection & Expansion\n        node = root\n        path = []\n        current_state = copy_state(state)\n        \n        while not is_terminal(current_state):\n            actions = get_legal_actions(current_state, info_set['player'])\n            if not actions:\n                break\n            \n            # Select action using UCB1 or expand\n            unexplored = [a for a in actions if a not in node.children]\n            if unexplored:\n                action = random.choice(unexplored)\n            else:\n                action = max(actions, key=lambda a: node.children[a].ucb1(node.visits))\n            \n            path.append((node, action))\n            current_state = apply_action(current_state, action)\n            new_info_set = get_info_set(current_state, info_set['player'])\n            node = node.get_or_create_child(action, new_info_set)\n        \n        # Simulation\n        reward = simulate(current_state, info_set['player'])\n        \n        # Backpropagation\n        for parent, action in path:\n            parent.visits += 1\n            if action in parent.children:\n                parent.children[action].visits += 1\n                parent.children[action].total_reward += reward\n            action_values[action]['visits'] += 1\n            action_values[action]['reward'] += reward\n    \n    # Return best action across all determinizations\n    best_action = max(action_values.keys(), \n                     key=lambda a: action_values[a]['reward'] / max(1, action_values[a]['visits']))\n    return best_action\n\ndef sample_determinization(info_set):\n    \"\"\"Sample concrete state consistent with information set.\"\"\"\n    # For poker-like game: sample opponent's cards from remaining deck\n    known_cards = info_set.get('my_cards', [])\n    remaining_deck = [c for c in full_deck() if c not in known_cards]\n    random.shuffle(remaining_deck)\n    \n    state = {\n        'player_cards': {0: known_cards, 1: remaining_deck[:2]},\n        'community': info_set.get('community', []),\n        'pot': info_set.get('pot', 0),\n        'to_act': info_set.get('player', 0)\n    }\n    return state\n\ndef full_deck():\n    suits = ['h', 'd', 'c', 's']\n    ranks = ['2','3','4','5','6','7','8','9','T','J','Q','K','A']\n    return [r+s for r in ranks for s in suits]\n\n# Helper stubs\ndef copy_state(s): return s.copy()\ndef is_terminal(s): return s.get('terminal', False)\ndef get_legal_actions(s, p): return ['fold', 'call', 'raise']\ndef apply_action(s, a): return s\ndef get_info_set(s, p): return s\ndef simulate(s, p): return random.random()\n\n# Test\ninfo_set = {\n    'player': 0,\n    'my_cards': ['As', 'Kh'],\n    'community': ['Jd', '7c', '2h'],\n    'pot': 100\n}\n\naction = ismcts_search(info_set, 100)\nprint(f\"Recommended action: {action}\")",
+    "testCases": [
+      {"input": "ismcts_search(info_set, 100)", "isHidden": false, "description": "Test IS-MCTS"},
+      {"input": "sample_determinization(info_set)", "isHidden": false, "description": "Test determinization"},
+      {"input": "handles uncertainty", "isHidden": true, "description": "Test with hidden info"}
+    ],
+    "hints": [
+      "Determinization: sample a concrete state from the info set",
+      "Average results over multiple determinizations",
+      "Info set groups states that look the same to the player"
     ],
     "language": "python"
   }

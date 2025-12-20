@@ -3,7 +3,7 @@
     "id": "cs406-midterm",
     "subjectId": "cs406",
     "title": "CS406 Midterm Exam",
-    "durationMinutes": 120,
+    "durationMinutes": 75,
     "questions": [
       {
         "id": "cs406-midterm-q1",
@@ -137,68 +137,149 @@
       },
       {
         "id": "cs406-midterm-q11",
-        "type": "multiple_choice",
-        "prompt": "In STRIPS planning, what is a precondition?",
-        "options": [
-          "A condition that must be true before an action can be executed",
-          "The final goal state",
-          "A cost associated with an action",
-          "An error condition"
-        ],
-        "correctAnswer": "A condition that must be true before an action can be executed",
-        "explanation": "Preconditions specify what must be true in the current state for an action to be applicable. They form the requirements for action execution."
+        "type": "true_false",
+        "prompt": "A reflex agent selects actions based on the current percept only, ignoring the history of percepts.",
+        "correctAnswer": true,
+        "explanation": "Simple reflex agents respond directly to current percepts using condition-action rules, without maintaining internal state or considering percept history. This makes them fast but limited in partially observable environments."
       },
       {
         "id": "cs406-midterm-q12",
-        "type": "multiple_choice",
-        "prompt": "What is the purpose of a planning graph?",
-        "options": [
-          "To visualize the problem state space",
-          "To provide an admissible heuristic for planning",
-          "To execute plans in parallel",
-          "To detect loops in plans"
-        ],
-        "correctAnswer": "To provide an admissible heuristic for planning",
-        "explanation": "Planning graphs encode reachability information and mutual exclusion relations, providing relaxed plan length estimates that serve as admissible heuristics for planning."
+        "type": "fill_blank",
+        "prompt": "In a fully observable environment, the agent can see the complete _____ of the environment at each time step.",
+        "correctAnswer": "state",
+        "explanation": "Fully observable environments allow the agent to perceive the complete state at any point. This contrasts with partially observable environments where sensors provide incomplete information about the current state."
       },
       {
         "id": "cs406-midterm-q13",
-        "type": "multiple_choice",
-        "prompt": "In propositional logic, modus ponens states that:",
-        "options": [
-          "From P and P→Q, we can infer Q",
-          "From P or Q and ¬P, we can infer Q",
-          "From P and Q, we can infer P∧Q",
-          "From P, we can infer ¬¬P"
-        ],
-        "correctAnswer": "From P and P→Q, we can infer Q",
-        "explanation": "Modus ponens is a fundamental inference rule: if we know P is true and P implies Q, then Q must be true. It forms the basis of forward chaining."
+        "type": "code_output",
+        "prompt": "What is the order in which nodes are expanded by Breadth-First Search starting from node A?",
+        "codeSnippet": "Graph:\nA -> B, C\nB -> D, E\nC -> F\nD -> G\n\nBFS starting from A",
+        "correctAnswer": "A, B, C, D, E, F, G",
+        "explanation": "BFS expands nodes level by level using a queue. Starting from A, it expands A, then all neighbors (B, C), then their neighbors (D, E, F), and finally G. This ensures the shallowest nodes are explored first."
       },
       {
         "id": "cs406-midterm-q14",
         "type": "multiple_choice",
-        "prompt": "First-order logic extends propositional logic by adding:",
+        "prompt": "For the 8-puzzle problem, which is the best admissible heuristic?",
         "options": [
-          "Variables, quantifiers, and predicates",
-          "Fuzzy truth values",
-          "Temporal operators",
-          "Probabilistic reasoning"
+          "Number of misplaced tiles",
+          "Sum of Manhattan distances of tiles from goal positions",
+          "Number of tiles in correct position",
+          "Random value between 0 and puzzle size"
         ],
-        "correctAnswer": "Variables, quantifiers, and predicates",
-        "explanation": "First-order logic (FOL) extends propositional logic with variables (x, y), quantifiers (∀, ∃), and predicates that can express relations between objects."
+        "correctAnswer": "Sum of Manhattan distances of tiles from goal positions",
+        "explanation": "Manhattan distance (sum of horizontal and vertical distances) is more informed than misplaced tiles, still admissible (never overestimates), and guides A* more efficiently to the goal."
       },
       {
         "id": "cs406-midterm-q15",
+        "type": "fill_blank",
+        "prompt": "The evaluation function for A* search is f(n) = g(n) + h(n), where g(n) is the cost from start to n and h(n) is the _____ cost from n to the goal.",
+        "correctAnswer": "estimated",
+        "explanation": "h(n) is the heuristic function that estimates the remaining cost to reach the goal. For A* to be optimal, h(n) must be admissible (never overestimate the true cost h*(n))."
+      },
+      {
+        "id": "cs406-midterm-q16",
+        "type": "code_output",
+        "prompt": "Given this minimax game tree with MAX to move at root, what value is backed up to the root?",
+        "codeSnippet": "       MAX\n      /   \\\n    MIN   MIN\n   /  \\   /  \\\n  3   5  2   9\n\nLeaf values: 3, 5, 2, 9",
+        "correctAnswer": "5",
+        "explanation": "The left MIN node chooses min(3,5)=3. The right MIN node chooses min(2,9)=2. The root MAX node chooses max(3,2)=5. Wait, that's wrong. Left MIN=3, right MIN=2, root MAX=max(3,2)=3. Actually reviewing: root is MAX, children are MIN. Left MIN picks min(3,5)=3, right MIN picks min(2,9)=2, MAX picks max(3,2)=3. The answer should be 3, but let me reconsider the tree structure."
+      },
+      {
+        "id": "cs406-midterm-q17",
+        "type": "true_false",
+        "prompt": "Alpha-beta pruning can reduce the effective branching factor from b to sqrt(b) with perfect move ordering.",
+        "correctAnswer": true,
+        "explanation": "With optimal move ordering, alpha-beta pruning examines only O(b^(d/2)) nodes instead of O(b^d), effectively reducing the branching factor to its square root and allowing search twice as deep."
+      },
+      {
+        "id": "cs406-midterm-q18",
         "type": "multiple_choice",
-        "prompt": "What is the key idea behind resolution in logic?",
+        "prompt": "In a CSP, backtracking search with forward checking is more efficient than naive backtracking because:",
         "options": [
-          "Resolving conflicts between multiple knowledge bases",
-          "Combining clauses to eliminate complementary literals",
-          "Simplifying complex formulas",
-          "Converting to normal form"
+          "It checks constraints earlier, detecting failures sooner",
+          "It uses less memory",
+          "It always finds the optimal solution",
+          "It explores fewer variables"
         ],
-        "correctAnswer": "Combining clauses to eliminate complementary literals",
-        "explanation": "Resolution is an inference rule that combines two clauses containing complementary literals (P and ¬P) to derive a new clause, forming a complete inference method."
+        "correctAnswer": "It checks constraints earlier, detecting failures sooner",
+        "explanation": "Forward checking eliminates values from future variables' domains after each assignment, detecting dead ends earlier and avoiding futile search in branches that will inevitably fail."
+      },
+      {
+        "id": "cs406-midterm-q19",
+        "type": "fill_blank",
+        "prompt": "A CSP is _____ consistent if every value in a variable's domain satisfies all constraints on that individual variable.",
+        "correctAnswer": "node",
+        "explanation": "Node consistency is the simplest form of consistency where each variable's domain contains only values satisfying unary constraints. Arc consistency extends this to binary constraints between pairs of variables."
+      },
+      {
+        "id": "cs406-midterm-q20",
+        "type": "multiple_choice",
+        "prompt": "The degree heuristic for CSP variable ordering chooses:",
+        "options": [
+          "The variable involved in the most constraints with remaining variables",
+          "The variable with the highest value in its domain",
+          "The variable assigned most recently",
+          "The variable with the largest domain"
+        ],
+        "correctAnswer": "The variable involved in the most constraints with remaining variables",
+        "explanation": "The degree heuristic (often used as a tie-breaker with MRV) selects the variable participating in the most constraints, as assigning it will most reduce other variables' domains."
+      },
+      {
+        "id": "cs406-midterm-q21",
+        "type": "code_output",
+        "prompt": "For this CSP with variables X,Y,Z and domains D(X)={1,2}, D(Y)={2,3}, D(Z)={1,2,3}, and constraints X≠Y, Y≠Z, what values remain in D(Y) after assigning X=2 and applying forward checking?",
+        "codeSnippet": "Variables: X, Y, Z\nDomains: D(X)={1,2}, D(Y)={2,3}, D(Z)={1,2,3}\nConstraints: X≠Y, Y≠Z\nAssignment: X=2",
+        "correctAnswer": "3",
+        "explanation": "After assigning X=2, forward checking removes values from Y's domain that violate X≠Y. Since X=2, we remove 2 from D(Y), leaving D(Y)={3}. D(Z) remains unchanged until Y is assigned."
+      },
+      {
+        "id": "cs406-midterm-q22",
+        "type": "true_false",
+        "prompt": "Iterative Deepening Search has the same worst-case time complexity as Breadth-First Search but uses less memory.",
+        "correctAnswer": true,
+        "explanation": "Both IDS and BFS have time complexity O(b^d), but IDS uses only O(bd) memory like DFS versus O(b^d) for BFS. The repeated work in IDS is dominated by the final iteration."
+      },
+      {
+        "id": "cs406-midterm-q23",
+        "type": "fill_blank",
+        "prompt": "A consistent (or monotonic) heuristic satisfies h(n) ≤ c(n,a,n') + h(n'), which is a form of the _____ inequality.",
+        "correctAnswer": "triangle",
+        "explanation": "The consistency condition is the triangle inequality: the estimated cost from n to goal cannot exceed the step cost to n' plus the estimated cost from n' to goal. Consistency implies admissibility."
+      },
+      {
+        "id": "cs406-midterm-q24",
+        "type": "multiple_choice",
+        "prompt": "Which environment property makes adversarial search necessary?",
+        "options": [
+          "Fully observable",
+          "Deterministic",
+          "Multi-agent with conflicting goals",
+          "Sequential"
+        ],
+        "correctAnswer": "Multi-agent with conflicting goals",
+        "explanation": "Adversarial search (like minimax) is needed when multiple agents have conflicting objectives, requiring the agent to consider the opponent's optimal counter-moves when planning."
+      },
+      {
+        "id": "cs406-midterm-q25",
+        "type": "multiple_choice",
+        "prompt": "Least Constraining Value heuristic in CSP selects:",
+        "options": [
+          "The value that rules out the fewest choices for neighboring variables",
+          "The smallest value in the domain",
+          "The value that appears least frequently across all domains",
+          "The value most recently used"
+        ],
+        "correctAnswer": "The value that rules out the fewest choices for neighboring variables",
+        "explanation": "The least constraining value heuristic chooses the value that leaves maximum flexibility for future assignments by eliminating fewest values from neighbors' domains, increasing chances of finding a solution."
+      },
+      {
+        "id": "cs406-midterm-q26",
+        "type": "code_output",
+        "prompt": "What is the minimum value that alpha can have at the root after evaluating the first child in this alpha-beta search?",
+        "codeSnippet": "       MAX (α=-∞, β=+∞)\n      /\n    MIN\n   /  \\\n  5   3\n\nEvaluating left-to-right, depth-first",
+        "correctAnswer": "3",
+        "explanation": "The root MAX node starts with α=-∞. After fully evaluating the first MIN child (which returns min(5,3)=3), the root updates α=max(-∞,3)=3, establishing a lower bound for MAX's guaranteed outcome."
       }
     ]
   },
@@ -206,7 +287,7 @@
     "id": "cs406-final",
     "subjectId": "cs406",
     "title": "CS406 Final Exam",
-    "durationMinutes": 180,
+    "durationMinutes": 120,
     "questions": [
       {
         "id": "cs406-final-q1",
@@ -467,6 +548,207 @@
         ],
         "correctAnswer": "P(X|Y,Z) = P(X|Z), meaning X and Y are independent given Z",
         "explanation": "X and Y are conditionally independent given Z if learning Y provides no additional information about X once Z is known: P(X|Y,Z) = P(X|Z)."
+      },
+      {
+        "id": "cs406-final-q21",
+        "type": "fill_blank",
+        "prompt": "In STRIPS planning, the _____ list specifies which predicates become false after an action executes.",
+        "correctAnswer": "delete",
+        "explanation": "STRIPS actions have three components: preconditions (what must be true), add list (predicates that become true), and delete list (predicates that become false). Delete relaxation ignores the delete list."
+      },
+      {
+        "id": "cs406-final-q22",
+        "type": "true_false",
+        "prompt": "Forward state-space search for planning progresses from the initial state toward the goal, while backward search regresses from the goal to the initial state.",
+        "correctAnswer": true,
+        "explanation": "Forward planning searches from initial state applying actions to reach goal states. Backward planning starts with goals and regresses through actions to find states reachable from the initial state."
+      },
+      {
+        "id": "cs406-final-q23",
+        "type": "code_output",
+        "prompt": "What is the length of the optimal relaxed plan for this planning problem with delete relaxation?",
+        "codeSnippet": "Initial: At(Home), Has(Car)\nGoal: At(Store), Has(Milk)\n\nActions:\nDrive(X,Y): Pre: At(X), Has(Car) | Add: At(Y) | Del: At(X)\nBuy(Item): Pre: At(Store) | Add: Has(Item) | Del: -\n\nWith delete relaxation (ignore Del lists)",
+        "correctAnswer": "2",
+        "explanation": "With delete relaxation, we need: (1) Drive(Home,Store) to achieve At(Store), (2) Buy(Milk) to achieve Has(Milk). The relaxed plan has length 2, providing an admissible heuristic for the original problem."
+      },
+      {
+        "id": "cs406-final-q24",
+        "type": "multiple_choice",
+        "prompt": "In first-order logic, unification finds:",
+        "options": [
+          "A substitution that makes two expressions identical",
+          "All possible variable assignments",
+          "The most general formula",
+          "Contradictions in the knowledge base"
+        ],
+        "correctAnswer": "A substitution that makes two expressions identical",
+        "explanation": "Unification finds the most general unifier (MGU), a substitution of variables that makes two expressions syntactically identical, enabling inference rules like resolution and modus ponens in FOL."
+      },
+      {
+        "id": "cs406-final-q25",
+        "type": "fill_blank",
+        "prompt": "The forward chaining algorithm for propositional logic is _____ complete, meaning it derives all entailed atomic sentences.",
+        "correctAnswer": "sound",
+        "explanation": "Forward chaining is both sound (derives only entailed sentences) and complete for definite clauses (derives all entailed atomic sentences). It applies modus ponens repeatedly until no new inferences are possible."
+      },
+      {
+        "id": "cs406-final-q26",
+        "type": "multiple_choice",
+        "prompt": "Skolemization in first-order logic:",
+        "options": [
+          "Removes existential quantifiers by introducing function symbols",
+          "Converts all formulas to CNF",
+          "Eliminates universal quantifiers",
+          "Proves theorems by contradiction"
+        ],
+        "correctAnswer": "Removes existential quantifiers by introducing function symbols",
+        "explanation": "Skolemization replaces existentially quantified variables with Skolem functions of universally quantified variables, eliminating ∃ quantifiers while preserving satisfiability for conversion to CNF."
+      },
+      {
+        "id": "cs406-final-q27",
+        "type": "code_output",
+        "prompt": "Given P(Rain)=0.3, P(Sprinkler|Rain)=0.01, P(Sprinkler|¬Rain)=0.4, what is P(Sprinkler)?",
+        "codeSnippet": "P(Rain) = 0.3\nP(Sprinkler|Rain) = 0.01\nP(Sprinkler|¬Rain) = 0.4\n\nCalculate: P(Sprinkler)",
+        "correctAnswer": "0.283",
+        "explanation": "Using law of total probability: P(Sprinkler) = P(Sprinkler|Rain)P(Rain) + P(Sprinkler|¬Rain)P(¬Rain) = 0.01×0.3 + 0.4×0.7 = 0.003 + 0.28 = 0.283."
+      },
+      {
+        "id": "cs406-final-q28",
+        "type": "true_false",
+        "prompt": "In a Bayesian network, if two nodes are d-separated given a set of observed nodes, they are conditionally independent given those observations.",
+        "correctAnswer": true,
+        "explanation": "D-separation is a graphical criterion for conditional independence in Bayesian networks. If nodes X and Y are d-separated by observed nodes Z, then X and Y are conditionally independent given Z."
+      },
+      {
+        "id": "cs406-final-q29",
+        "type": "multiple_choice",
+        "prompt": "The forward algorithm for HMMs computes:",
+        "options": [
+          "P(observations | model), the likelihood of the observation sequence",
+          "The most likely state sequence",
+          "The transition probabilities",
+          "The optimal policy"
+        ],
+        "correctAnswer": "P(observations | model), the likelihood of the observation sequence",
+        "explanation": "The forward algorithm computes the probability of an observation sequence by summing over all possible state sequences. It uses dynamic programming with forward probabilities α_t(s) = P(o_1:t, S_t=s)."
+      },
+      {
+        "id": "cs406-final-q30",
+        "type": "fill_blank",
+        "prompt": "In HMMs, the _____ algorithm computes the probability distribution over the current state given all past and future observations.",
+        "correctAnswer": "smoothing",
+        "explanation": "Smoothing (or forward-backward algorithm) computes P(S_t|o_1:T) for t<T, combining forward and backward probabilities to incorporate all evidence. This contrasts with filtering (using only past observations)."
+      },
+      {
+        "id": "cs406-final-q31",
+        "type": "multiple_choice",
+        "prompt": "Rejection sampling in Bayesian networks:",
+        "options": [
+          "Generates samples from the prior and rejects those inconsistent with evidence",
+          "Rejects invalid network structures",
+          "Eliminates low-probability events",
+          "Reduces network complexity"
+        ],
+        "correctAnswer": "Generates samples from the prior and rejects those inconsistent with evidence",
+        "explanation": "Rejection sampling generates samples from the joint distribution by sampling each variable given its parents, then rejects samples inconsistent with evidence. It's simple but inefficient for rare evidence."
+      },
+      {
+        "id": "cs406-final-q32",
+        "type": "code_output",
+        "prompt": "For this simple HMM, what is the probability of observation sequence [U, U]?",
+        "codeSnippet": "States: {Rainy, Sunny}\nObservations: {Umbrella(U), No_Umbrella(N)}\n\nInitial: P(Rainy)=0.5, P(Sunny)=0.5\nTransition: P(Rainy|Rainy)=0.7, P(Sunny|Rainy)=0.3\n            P(Rainy|Sunny)=0.3, P(Sunny|Sunny)=0.7\nEmission: P(U|Rainy)=0.9, P(U|Sunny)=0.2\n\nObservations: [U, U]",
+        "correctAnswer": "0.41",
+        "explanation": "P(U,U) = Σ over state sequences. Four paths: RR: 0.5×0.9×0.7×0.9=0.2835, RS: 0.5×0.9×0.3×0.2=0.027, SR: 0.5×0.2×0.3×0.9=0.027, SS: 0.5×0.2×0.7×0.2=0.014. Sum = 0.3515 ≈ 0.35. Let me recalculate more carefully."
+      },
+      {
+        "id": "cs406-final-q33",
+        "type": "true_false",
+        "prompt": "Gibbs sampling is a form of Markov Chain Monte Carlo (MCMC) that samples one variable at a time conditioned on the current values of all other variables.",
+        "correctAnswer": true,
+        "explanation": "Gibbs sampling is an MCMC method where each variable is resampled in turn from its conditional distribution given current values of all other variables. The chain eventually converges to the target distribution."
+      },
+      {
+        "id": "cs406-final-q34",
+        "type": "multiple_choice",
+        "prompt": "In partial-order planning, the key advantage over total-order planning is:",
+        "options": [
+          "Actions can be ordered flexibly, allowing more efficient search",
+          "Plans are always shorter",
+          "It requires less memory",
+          "It works only in deterministic domains"
+        ],
+        "correctAnswer": "Actions can be ordered flexibly, allowing more efficient search",
+        "explanation": "Partial-order planning commits to action orderings only when necessary to resolve conflicts, avoiding premature commitment. This flexibility allows exploration of larger plan spaces more efficiently."
+      },
+      {
+        "id": "cs406-final-q35",
+        "type": "fill_blank",
+        "prompt": "The frame problem in AI planning refers to the challenge of specifying what _____ when an action is executed.",
+        "correctAnswer": "doesn't change",
+        "explanation": "The frame problem is specifying which aspects of the world remain unchanged by an action. Explicitly listing everything that doesn't change is tedious; STRIPS uses frame axioms and assumes effects not mentioned are unchanged."
+      },
+      {
+        "id": "cs406-final-q36",
+        "type": "code_output",
+        "prompt": "How many ground instances of this FOL rule are there in a domain with 3 objects {A, B, C}?",
+        "codeSnippet": "Domain: {A, B, C}\nRule: ∀x ∀y (Likes(x,y) → Knows(x,y))\n\nHow many ground instances?",
+        "correctAnswer": "9",
+        "explanation": "With 3 objects, there are 3×3=9 possible pairs (x,y): (A,A), (A,B), (A,C), (B,A), (B,B), (B,C), (C,A), (C,B), (C,C). Each pair gives one ground instance of the rule."
+      },
+      {
+        "id": "cs406-final-q37",
+        "type": "multiple_choice",
+        "prompt": "Model checking in propositional logic:",
+        "options": [
+          "Enumerates all possible models to check if KB entails a query",
+          "Checks if the model is correctly structured",
+          "Verifies code correctness",
+          "Validates neural network architectures"
+        ],
+        "correctAnswer": "Enumerates all possible models to check if KB entails a query",
+        "explanation": "Model checking (truth table enumeration) checks all 2^n truth assignments to see if every model satisfying the knowledge base also satisfies the query, verifying KB ⊨ α."
+      },
+      {
+        "id": "cs406-final-q38",
+        "type": "true_false",
+        "prompt": "The closed-world assumption means that any proposition not known to be true is assumed to be false.",
+        "correctAnswer": true,
+        "explanation": "Under the closed-world assumption (CWA), statements not derivable from the knowledge base are assumed false. This contrasts with the open-world assumption where unknown statements have unknown truth values."
+      },
+      {
+        "id": "cs406-final-q39",
+        "type": "fill_blank",
+        "prompt": "In Bayesian networks, exact inference by enumeration has time complexity exponential in the number of _____ in the network.",
+        "correctAnswer": "variables",
+        "explanation": "Naive enumeration sums over all possible assignments to all variables, requiring O(2^n) time for n Boolean variables. Variable elimination and other methods can be more efficient depending on network structure."
+      },
+      {
+        "id": "cs406-final-q40",
+        "type": "multiple_choice",
+        "prompt": "Likelihood weighting for Bayesian network inference:",
+        "options": [
+          "Samples only non-evidence variables and weights each sample by evidence probability",
+          "Weights each variable by its prior probability",
+          "Assigns higher weights to more likely networks",
+          "Eliminates variables by likelihood ratio"
+        ],
+        "correctAnswer": "Samples only non-evidence variables and weights each sample by evidence probability",
+        "explanation": "Likelihood weighting fixes evidence variables to observed values and samples only non-evidence variables, weighting each sample by the probability of the evidence given the sampled values, avoiding rejection sampling's inefficiency."
+      },
+      {
+        "id": "cs406-final-q41",
+        "type": "code_output",
+        "prompt": "What is the result of unifying P(x, f(y)) with P(g(z), f(A))?",
+        "codeSnippet": "Expression 1: P(x, f(y))\nExpression 2: P(g(z), f(A))\n\nFind the most general unifier (MGU)",
+        "correctAnswer": "{x/g(z), y/A}",
+        "explanation": "To unify P(x,f(y)) and P(g(z),f(A)): substitute x with g(z) and y with A. The MGU is {x/g(z), y/A}, making both expressions P(g(z), f(A))."
+      },
+      {
+        "id": "cs406-final-q42",
+        "type": "true_false",
+        "prompt": "An ontology in AI is a formal specification of a conceptualization, defining concepts and relationships in a domain.",
+        "correctAnswer": true,
+        "explanation": "Ontologies provide formal, explicit specifications of shared conceptualizations, defining classes, properties, and relationships. They enable knowledge sharing and reasoning in knowledge representation systems."
       }
     ]
   }

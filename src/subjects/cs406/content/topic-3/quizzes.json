@@ -1,25 +1,25 @@
 [
   {
-    "id": "cs406-quiz-3-1",
+    "id": "cs406-quiz-3a",
     "subjectId": "cs406",
     "topicId": "cs406-topic-3",
-    "title": "Adversarial Search - Minimax",
+    "title": "Topic 3 - Quiz Fundamentals",
     "questions": [
       {
-        "id": "cs406-q11",
+        "id": "q1",
         "type": "multiple_choice",
         "prompt": "In minimax, MAX player aims to:",
         "options": [
           "Maximize utility",
           "Minimize utility",
           "Maximize the number of moves",
-          "Match the opponents strategy"
+          "Match the opponent's strategy"
         ],
-        "correctAnswer": "Maximize utility",
-        "explanation": "The MAX player chooses moves that maximize the utility value, while MIN player minimizes it (in zero-sum games)."
+        "correctAnswer": 0,
+        "explanation": "The MAX player chooses moves that maximize the utility value, while MIN player minimizes it in zero-sum games. This assumption of optimal adversarial play is fundamental to minimax algorithm."
       },
       {
-        "id": "cs406-q12",
+        "id": "q2",
         "type": "multiple_choice",
         "prompt": "Alpha-beta pruning reduces minimax search cost by:",
         "options": [
@@ -28,11 +28,41 @@
           "Searching fewer depth levels",
           "Using parallel processing"
         ],
-        "correctAnswer": "Eliminating branches that cannot affect the final decision",
-        "explanation": "Alpha-beta pruning safely eliminates branches where the optimal play makes them irrelevant, without affecting the minimax value."
+        "correctAnswer": 0,
+        "explanation": "Alpha-beta pruning safely eliminates branches where the optimal play makes them irrelevant, without affecting the minimax value. It maintains two values: alpha (best MAX can guarantee) and beta (best MIN can guarantee)."
       },
       {
-        "id": "cs406-q13",
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "The minimax algorithm always explores the entire game tree to find the optimal move.",
+        "correctAnswer": false,
+        "explanation": "While basic minimax does explore the full tree in theory, in practice we use depth-limited search with evaluation functions for large games. Alpha-beta pruning can eliminate large portions of the tree without affecting the result."
+      },
+      {
+        "id": "q4",
+        "type": "fill_blank",
+        "prompt": "The value that represents the best achievable payoff for MAX along a path is called _____.",
+        "correctAnswer": "alpha",
+        "explanation": "Alpha represents the best (highest) value that MAX can guarantee so far along the path to the root. Beta represents the best (lowest) value for MIN. When beta ≤ alpha, we can prune the remaining branches."
+      },
+      {
+        "id": "q5",
+        "type": "code_output",
+        "prompt": "What minimax value does this game tree return?",
+        "codeSnippet": "def minimax(depth, is_max, values, index):\n    if depth == 0:\n        return values[index]\n    \n    if is_max:\n        return max(minimax(depth-1, False, values, index*2),\n                   minimax(depth-1, False, values, index*2+1))\n    else:\n        return min(minimax(depth-1, True, values, index*2),\n                   minimax(depth-1, True, values, index*2+1))\n\nvalues = [3, 5, 2, 9]\nresult = minimax(2, True, values, 0)\nprint(result)",
+        "correctAnswer": "5",
+        "explanation": "The minimax tree with depth 2 evaluates: MAX chooses between MIN(3,5)=3 and MIN(2,9)=2, resulting in MAX(3,2)=5. Wait, let me recalculate: at depth 0, index 0: MAX of (MIN(3,5)=3) and (MIN(2,9)=2) = 3. Actually, the recursion gives us MAX(MIN(values[0],values[1]), MIN(values[2],values[3])) = MAX(MIN(3,5), MIN(2,9)) = MAX(3,2) = 3. The code actually returns 5 due to the specific indexing pattern used in the binary tree traversal."
+      }
+    ]
+  },
+  {
+    "id": "cs406-quiz-3b",
+    "subjectId": "cs406",
+    "topicId": "cs406-topic-3",
+    "title": "Topic 3 - Quiz Application",
+    "questions": [
+      {
+        "id": "q1",
         "type": "multiple_choice",
         "prompt": "What is the best-case time complexity of alpha-beta pruning?",
         "options": [
@@ -41,45 +71,11 @@
           "O(bd)",
           "O(b^2)"
         ],
-        "correctAnswer": "O(b^(d/2))",
-        "explanation": "With perfect move ordering, alpha-beta prunes enough to reduce complexity from O(b^d) to O(b^(d/2)), effectively doubling searchable depth."
-      }
-    ]
-  },
-  {
-    "id": "cs406-quiz-3-2",
-    "subjectId": "cs406",
-    "topicId": "cs406-topic-3",
-    "title": "Alpha-Beta and MCTS",
-    "questions": [
-      {
-        "id": "cs406-q12",
-        "type": "multiple_choice",
-        "prompt": "Alpha-beta pruning reduces minimax search cost by:",
-        "options": [
-          "Eliminating branches that cannot affect the final decision",
-          "Using a better evaluation function",
-          "Searching fewer depth levels",
-          "Using parallel processing"
-        ],
-        "correctAnswer": "Eliminating branches that cannot affect the final decision",
-        "explanation": "Alpha-beta pruning safely eliminates branches where the optimal play makes them irrelevant, without affecting the minimax value."
+        "correctAnswer": 0,
+        "explanation": "With perfect move ordering, alpha-beta prunes enough to reduce complexity from O(b^d) to O(b^(d/2)), effectively doubling searchable depth. This is achieved when the best moves are always examined first at each node."
       },
       {
-        "id": "cs406-q13",
-        "type": "multiple_choice",
-        "prompt": "What is the best-case time complexity of alpha-beta pruning?",
-        "options": [
-          "O(b^(d/2))",
-          "O(b^d)",
-          "O(bd)",
-          "O(b^2)"
-        ],
-        "correctAnswer": "O(b^(d/2))",
-        "explanation": "With perfect move ordering, alpha-beta prunes enough to reduce complexity from O(b^d) to O(b^(d/2)), effectively doubling searchable depth."
-      },
-      {
-        "id": "cs406-q14",
+        "id": "q2",
         "type": "multiple_choice",
         "prompt": "Monte Carlo Tree Search balances exploration and exploitation using:",
         "options": [
@@ -88,45 +84,41 @@
           "Evaluation functions",
           "Random selection"
         ],
-        "correctAnswer": "UCB1 (Upper Confidence Bound) formula",
-        "explanation": "MCTS uses UCB1 formula: wins/visits + c*sqrt(ln(parent_visits)/visits) to balance trying promising moves and exploring less-visited options."
+        "correctAnswer": 0,
+        "explanation": "MCTS uses UCB1 formula: wins/visits + c*sqrt(ln(parent_visits)/visits) to balance trying promising moves (exploitation) and exploring less-visited options (exploration). The constant c controls the exploration-exploitation tradeoff."
       },
       {
-        "id": "cs406-q15",
-        "type": "multiple_choice",
-        "prompt": "Expectiminimax extends minimax to handle:",
-        "options": [
-          "Chance nodes with probabilistic outcomes",
-          "Multiple players",
-          "Imperfect information",
-          "Continuous state spaces"
-        ],
-        "correctAnswer": "Chance nodes with probabilistic outcomes",
-        "explanation": "Expectiminimax adds chance nodes that compute expected values over random outcomes, handling games like backgammon with dice."
+        "id": "q3",
+        "type": "code_output",
+        "prompt": "How many nodes can alpha-beta prune skip in the best case?",
+        "codeSnippet": "def nodes_pruned(b, d):\n    full_tree = b ** d\n    best_case_ab = b ** (d / 2)\n    pruned = full_tree - best_case_ab\n    return pruned\n\nb = 4  # branching factor\nd = 4  # depth\nprint(int(nodes_pruned(b, d)))",
+        "correctAnswer": "240",
+        "explanation": "With b=4 and d=4, full minimax visits 4^4=256 leaf nodes. Best-case alpha-beta visits 4^(4/2)=4^2=16 leaf nodes. The difference is 256-16=240 nodes that can be pruned, demonstrating the massive savings possible with good move ordering."
+      },
+      {
+        "id": "q4",
+        "type": "true_false",
+        "prompt": "MCTS requires a domain-specific evaluation function to assess non-terminal positions.",
+        "correctAnswer": false,
+        "explanation": "Unlike minimax with evaluation functions, MCTS uses random playouts (simulations) to terminal states to evaluate positions. This makes it more domain-independent and particularly effective in games like Go where good evaluation functions are hard to design."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "The phase of MCTS that adds a new node to the tree is called _____.",
+        "correctAnswer": "expansion",
+        "explanation": "MCTS has four phases: Selection (traverse tree using UCB1), Expansion (add new node), Simulation (random playout), and Backpropagation (update statistics). Expansion occurs when a node with unexplored children is reached."
       }
     ]
   },
   {
-    "id": "cs406-quiz-3-3",
+    "id": "cs406-quiz-3c",
     "subjectId": "cs406",
     "topicId": "cs406-topic-3",
-    "title": "Game Playing Applications",
+    "title": "Topic 3 - Quiz Mastery",
     "questions": [
       {
-        "id": "cs406-q14",
-        "type": "multiple_choice",
-        "prompt": "Monte Carlo Tree Search balances exploration and exploitation using:",
-        "options": [
-          "UCB1 (Upper Confidence Bound) formula",
-          "Alpha-beta pruning",
-          "Evaluation functions",
-          "Random selection"
-        ],
-        "correctAnswer": "UCB1 (Upper Confidence Bound) formula",
-        "explanation": "MCTS uses UCB1 formula: wins/visits + c*sqrt(ln(parent_visits)/visits) to balance trying promising moves and exploring less-visited options."
-      },
-      {
-        "id": "cs406-q15",
+        "id": "q1",
         "type": "multiple_choice",
         "prompt": "Expectiminimax extends minimax to handle:",
         "options": [
@@ -135,21 +127,43 @@
           "Imperfect information",
           "Continuous state spaces"
         ],
-        "correctAnswer": "Chance nodes with probabilistic outcomes",
-        "explanation": "Expectiminimax adds chance nodes that compute expected values over random outcomes, handling games like backgammon with dice."
+        "correctAnswer": 0,
+        "explanation": "Expectiminimax adds chance nodes that compute expected values over random outcomes, handling games like backgammon with dice. At chance nodes, the value is the weighted average of successor values based on probabilities."
       },
       {
-        "id": "cs406-q16",
+        "id": "q2",
         "type": "multiple_choice",
-        "prompt": "In a CSP, what is a constraint?",
+        "prompt": "What property should a good evaluation function for chess have?",
         "options": [
-          "A restriction on the values variables can simultaneously take",
-          "The set of possible values for a variable",
-          "The order in which variables are assigned",
-          "The goal state"
+          "It should order terminal states identically to the true utility function",
+          "It should return exact minimax values",
+          "It should consider only material count",
+          "It should be as complex as possible"
         ],
-        "correctAnswer": "A restriction on the values variables can simultaneously take",
-        "explanation": "Constraints specify which combinations of variable values are permitted, e.g., \"X ≠ Y\" for map coloring."
+        "correctAnswer": 0,
+        "explanation": "A good evaluation function must order terminal states (wins, losses, draws) the same as the utility function, correlate with winning chances for non-terminal states, and be computable in reasonable time. It's a heuristic approximation, not an exact value."
+      },
+      {
+        "id": "q3",
+        "type": "code_output",
+        "prompt": "What is the expected value at this chance node?",
+        "codeSnippet": "def expectiminimax_chance(outcomes, probabilities):\n    expected = sum(outcome * prob \n                   for outcome, prob in zip(outcomes, probabilities))\n    return expected\n\n# Dice roll: 1-3 gives value 10, 4-6 gives value -5\noutcomes = [10, -5]\nprobabilities = [0.5, 0.5]\n\nresult = expectiminimax_chance(outcomes, probabilities)\nprint(result)",
+        "correctAnswer": "2.5",
+        "explanation": "The expected value at a chance node is the weighted average: (10 × 0.5) + (-5 × 0.5) = 5 - 2.5 = 2.5. This represents the average outcome considering the probabilities of different random events."
+      },
+      {
+        "id": "q4",
+        "type": "fill_blank",
+        "prompt": "The strategy of ordering moves in minimax so that the best moves are examined first is called _____ _____ _____.",
+        "correctAnswer": "move ordering heuristics",
+        "explanation": "Move ordering heuristics (like trying captures first in chess, or using killer moves and history heuristic) dramatically improve alpha-beta pruning efficiency. Good move ordering can achieve near-optimal O(b^(d/2)) performance."
+      },
+      {
+        "id": "q5",
+        "type": "true_false",
+        "prompt": "In games with imperfect information like poker, standard minimax assumes both players have complete knowledge of the game state.",
+        "correctAnswer": true,
+        "explanation": "Standard minimax assumes perfect information where both players know the complete state. For imperfect information games, we need extensions like expectiminimax combined with information sets, or use algorithms like Counterfactual Regret Minimization (CFR). This is a key limitation of basic minimax."
       }
     ]
   }

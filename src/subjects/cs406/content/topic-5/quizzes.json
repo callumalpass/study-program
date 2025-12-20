@@ -1,116 +1,169 @@
 [
   {
-    "id": "cs406-quiz-5-1",
+    "id": "cs406-quiz-5a",
     "subjectId": "cs406",
     "topicId": "cs406-topic-5",
-    "title": "Planning Fundamentals",
+    "title": "Topic 5 - Quiz Fundamentals",
     "questions": [
       {
-        "id": "cs406-q21",
+        "id": "q1",
         "type": "multiple_choice",
-        "prompt": "STRIPS operators consist of:",
+        "prompt": "In the STRIPS representation, what does the 'add list' of an action specify?",
         "options": [
-          "Preconditions, add list, and delete list",
-          "Only preconditions",
-          "States and actions",
-          "Goals and subgoals"
+          "The propositions that become true after executing the action",
+          "The preconditions required for the action",
+          "The propositions that become false after the action",
+          "The cost of executing the action"
         ],
-        "correctAnswer": "Preconditions, add list, and delete list",
-        "explanation": "STRIPS operators specify preconditions (what must be true to apply), add list (what becomes true), and delete list (what becomes false)."
+        "correctAnswer": 0,
+        "explanation": "In STRIPS, each action has an add list (also called effects or positive effects) that specifies which propositions become true when the action is executed. Together with the delete list (negative effects) and preconditions, this fully defines how actions change the world state."
       },
       {
-        "id": "cs406-q22",
-        "type": "multiple_choice",
-        "prompt": "The delete-relaxation heuristic works by:",
-        "options": [
-          "Ignoring delete effects to create an easier problem",
-          "Deleting unnecessary operators",
-          "Removing goals from the problem",
-          "Deleting constraints"
-        ],
-        "correctAnswer": "Ignoring delete effects to create an easier problem",
-        "explanation": "Delete-relaxation removes all delete effects from operators, creating a simpler problem where achieved facts stay true, providing an admissible heuristic."
+        "id": "q2",
+        "type": "fill_blank",
+        "prompt": "The planning approach that starts from the initial state and applies actions forward until reaching the goal is called _____ search.",
+        "correctAnswer": "forward",
+        "explanation": "Forward search (also called progression planning) starts from the initial state and applies applicable actions to generate successor states, continuing until a state satisfying the goal is found. This is the most straightforward planning approach and is similar to classical search algorithms like A*."
       },
       {
-        "id": "cs406-q23",
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "Backward search in planning is always more efficient than forward search.",
+        "correctAnswer": false,
+        "explanation": "Neither forward nor backward search is universally more efficient. The effectiveness depends on the problem structure, branching factor, and goal specificity. Backward search (regression) can be more efficient when goals are specific, while forward search may be better when the initial state is more constraining."
+      },
+      {
+        "id": "q4",
         "type": "multiple_choice",
-        "prompt": "Modus Ponens is the inference rule:",
+        "prompt": "What is the main idea behind the delete-relaxation heuristic?",
         "options": [
-          "From α ⇒ β and α, infer β",
-          "From α and β, infer α ⇒ β",
-          "From α ⇒ β and β, infer α",
-          "From α ⇒ β and ¬β, infer ¬α"
+          "Remove all delete effects from actions to create an easier problem",
+          "Delete unnecessary actions from the plan",
+          "Remove impossible goal states",
+          "Delete redundant preconditions"
         ],
-        "correctAnswer": "From α ⇒ β and α, infer β",
-        "explanation": "Modus Ponens: if we know an implication and its antecedent, we can infer the consequent. Its the fundamental rule of forward chaining."
+        "correctAnswer": 0,
+        "explanation": "The delete-relaxation heuristic ignores all delete effects from actions, creating a relaxed problem where facts, once achieved, remain true forever. The cost of solving this easier problem provides an admissible heuristic for the original problem, as any solution to the original problem is also valid for the relaxed problem."
+      },
+      {
+        "id": "q5",
+        "type": "code_output",
+        "prompt": "Given this STRIPS action, what is in the delete list?",
+        "codeSnippet": "Action: Move(block, from, to)\nPreconditions: On(block, from), Clear(block), Clear(to)\nEffects:\n  Add: On(block, to), Clear(from)\n  Delete: On(block, from), Clear(to)\nprint(\"Delete list:\", delete_list)",
+        "correctAnswer": "[On(block, from), Clear(to)]",
+        "explanation": "The delete list contains the propositions that become false when the action is executed. Moving a block from one location to another makes 'On(block, from)' false (block is no longer at the source) and 'Clear(to)' false (destination is no longer clear). These deletions reflect the physical constraints of the blocks world."
       }
     ]
   },
   {
-    "id": "cs406-quiz-5-2",
+    "id": "cs406-quiz-5b",
     "subjectId": "cs406",
     "topicId": "cs406-topic-5",
-    "title": "Planning Algorithms",
+    "title": "Topic 5 - Quiz Application",
     "questions": [
       {
-        "id": "cs406-q22",
+        "id": "q1",
         "type": "multiple_choice",
-        "prompt": "The delete-relaxation heuristic works by:",
+        "prompt": "What is the primary advantage of Hierarchical Task Network (HTN) planning?",
         "options": [
-          "Ignoring delete effects to create an easier problem",
-          "Deleting unnecessary operators",
-          "Removing goals from the problem",
-          "Deleting constraints"
+          "It always finds optimal solutions",
+          "It incorporates domain knowledge through task decomposition",
+          "It requires no search at all",
+          "It works without defining preconditions"
         ],
-        "correctAnswer": "Ignoring delete effects to create an easier problem",
-        "explanation": "Delete-relaxation removes all delete effects from operators, creating a simpler problem where achieved facts stay true, providing an admissible heuristic."
+        "correctAnswer": 1,
+        "explanation": "HTN planning uses domain knowledge encoded as methods that decompose high-level tasks into subtasks. This hierarchical structure mirrors how humans think about complex problems and can dramatically reduce the search space by incorporating expert knowledge about how tasks should be accomplished in specific domains."
       },
       {
-        "id": "cs406-q23",
+        "id": "q2",
+        "type": "code_output",
+        "prompt": "What does this forward search planning snippet output when the goal is reached?",
+        "codeSnippet": "state = initial_state  # {At(Home), HasKeys}\ngoal = {At(Work)}  # Must satisfy all\nwhile not goal.issubset(state):\n    action = select_action(state)\n    state = apply(action, state)\nprint(f\"Goal reached in {len(plan)} steps\")\n# Assume plan = [Drive(Home, Work)] was found",
+        "correctAnswer": "Goal reached in 1 steps",
+        "explanation": "Forward search progresses the state by applying actions until the goal conditions are satisfied. In this simple example, a single action Drive(Home, Work) achieves the goal At(Work), resulting in a plan of length 1. The search terminates when all goal propositions are present in the current state."
+      },
+      {
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "GraphPlan can detect when no plan exists by identifying a fixed point where the planning graph stops growing.",
+        "correctAnswer": true,
+        "explanation": "GraphPlan builds a planning graph level by level. If two consecutive levels are identical (a fixed point is reached) and the goal is still not achievable without mutex relations, then no plan exists. This provides a sound and complete termination condition, making GraphPlan both powerful and efficient for plan existence detection."
+      },
+      {
+        "id": "q4",
+        "type": "fill_blank",
+        "prompt": "In planning graphs, two actions are _____ if they interfere with each other or have inconsistent preconditions.",
+        "correctAnswer": "mutex",
+        "explanation": "Mutex (mutually exclusive) relations in planning graphs indicate that two actions cannot occur simultaneously. Actions are mutex if one deletes a precondition or effect of the other (interference), or if their preconditions are mutex. These relations help prune the search space and detect unreachable goals."
+      },
+      {
+        "id": "q5",
         "type": "multiple_choice",
-        "prompt": "Modus Ponens is the inference rule:",
+        "prompt": "Which planning heuristic counts the number of unsatisfied goals without considering interactions?",
         "options": [
-          "From α ⇒ β and α, infer β",
-          "From α and β, infer α ⇒ β",
-          "From α ⇒ β and β, infer α",
-          "From α ⇒ β and ¬β, infer ¬α"
+          "Hadd - additive heuristic",
+          "Hmax - max heuristic",
+          "h^FF - FF heuristic",
+          "h^0 - zero heuristic"
         ],
-        "correctAnswer": "From α ⇒ β and α, infer β",
-        "explanation": "Modus Ponens: if we know an implication and its antecedent, we can infer the consequent. Its the fundamental rule of forward chaining."
+        "correctAnswer": 0,
+        "explanation": "The additive heuristic (hadd) sums the costs of achieving each goal independently, ignoring positive interactions between subgoals. While not admissible due to this independence assumption, it is often more informative than the max heuristic and provides good guidance for satisficing planners like FF."
       }
     ]
   },
   {
-    "id": "cs406-quiz-5-3",
+    "id": "cs406-quiz-5c",
     "subjectId": "cs406",
     "topicId": "cs406-topic-5",
-    "title": "Planning Applications",
+    "title": "Topic 5 - Quiz Mastery",
     "questions": [
       {
-        "id": "cs406-q21",
+        "id": "q1",
         "type": "multiple_choice",
-        "prompt": "STRIPS operators consist of:",
+        "prompt": "What is the purpose of the 'protection interval' in partial-order planning?",
         "options": [
-          "Preconditions, add list, and delete list",
-          "Only preconditions",
-          "States and actions",
-          "Goals and subgoals"
+          "To ensure an action's effect is not undone before it is needed",
+          "To protect the initial state from modification",
+          "To prevent cycles in the plan",
+          "To limit the planning time"
         ],
-        "correctAnswer": "Preconditions, add list, and delete list",
-        "explanation": "STRIPS operators specify preconditions (what must be true to apply), add list (what becomes true), and delete list (what becomes false)."
+        "correctAnswer": 0,
+        "explanation": "In partial-order planning, a causal link (or protection interval) from action A to action B protects a proposition p that A achieves and B needs. No action that deletes p can be placed between A and B. This maintains the causal structure of the plan and ensures that achieved preconditions remain true when needed."
       },
       {
-        "id": "cs406-q22",
+        "id": "q2",
+        "type": "code_output",
+        "prompt": "What is the output of this relaxed planning graph level expansion?",
+        "codeSnippet": "# Level 0: {At(A), HasGas}\n# Available actions: Drive(A,B) needs {At(A), HasGas}\nlevel_0 = {'At(A)', 'HasGas'}\nactions = apply_all_possible(level_0)\nlevel_1 = level_0.union(add_effects(actions))\nprint(sorted(level_1))",
+        "correctAnswer": "['At(A)', 'At(B)', 'HasGas']",
+        "explanation": "In the relaxed planning graph (delete-relaxation), propositions persist across levels and new effects are added. Drive(A,B) adds 'At(B)' to the state. Since delete effects are ignored, 'At(A)' and 'HasGas' remain true, resulting in all three propositions being present at level 1."
+      },
+      {
+        "id": "q3",
+        "type": "fill_blank",
+        "prompt": "The FF planner uses _____ to extract a relaxed plan from the planning graph and guide search.",
+        "correctAnswer": "Enforced Hill-Climbing",
+        "explanation": "FF (Fast-Forward) uses enforced hill-climbing search guided by the heuristic extracted from solving the delete-relaxed problem. When hill-climbing gets stuck, it performs a breadth-first search until finding a state with a better heuristic value. This combination provides excellent performance on many benchmark planning problems."
+      },
+      {
+        "id": "q4",
+        "type": "true_false",
+        "prompt": "In STRIPS planning, the frame problem refers to the need to explicitly specify everything that does NOT change when an action is executed.",
+        "correctAnswer": true,
+        "explanation": "The frame problem is the challenge of representing all the things that remain unchanged by an action. STRIPS addresses this with the STRIPS assumption: any proposition not mentioned in the add or delete list remains unchanged. This implicit frame axiom makes planning tractable by avoiding explicit enumeration of all unchanged facts."
+      },
+      {
+        "id": "q5",
         "type": "multiple_choice",
-        "prompt": "The delete-relaxation heuristic works by:",
+        "prompt": "What distinguishes satisficing planners from optimal planners?",
         "options": [
-          "Ignoring delete effects to create an easier problem",
-          "Deleting unnecessary operators",
-          "Removing goals from the problem",
-          "Deleting constraints"
+          "Satisficing planners find any valid plan, not necessarily the shortest or cheapest",
+          "Satisficing planners always run faster",
+          "Satisficing planners cannot handle complex domains",
+          "Satisficing planners use backward search exclusively"
         ],
-        "correctAnswer": "Ignoring delete effects to create an easier problem",
-        "explanation": "Delete-relaxation removes all delete effects from operators, creating a simpler problem where achieved facts stay true, providing an admissible heuristic."
+        "correctAnswer": 0,
+        "explanation": "Satisficing planners (like FF) aim to find any valid plan quickly, without guaranteeing optimality. They use non-admissible heuristics and greedy search strategies. Optimal planners (like those using A* with admissible heuristics) guarantee finding the lowest-cost plan but may take much longer. The choice depends on whether solution quality or speed is more important."
       }
     ]
   }

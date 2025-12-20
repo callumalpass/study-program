@@ -99,5 +99,434 @@
       "Resample when effective sample size drops below threshold to avoid particle depletion"
     ],
     "language": "python"
+  },
+  {
+    "id": "cs406-t7-ex04",
+    "subjectId": "cs406",
+    "topicId": "cs406-topic-7",
+    "title": "Naive Bayes Classifier",
+    "difficulty": 2,
+    "description": "Implement a Naive Bayes classifier for text classification.\n\nYour implementation should:\n- Learn class prior probabilities from training data\n- Learn conditional word probabilities with Laplace smoothing\n- Classify new documents using Bayes' rule\n- Handle unseen words gracefully",
+    "starterCode": "class NaiveBayesClassifier:\n    def __init__(self):\n        self.class_priors = {}    # P(class)\n        self.word_probs = {}      # P(word|class)\n        self.vocabulary = set()\n    \n    def train(self, documents, labels):\n        # Learn probabilities from training data\n        pass\n    \n    def predict(self, document):\n        # Classify a document\n        # Return: (predicted_class, probabilities)\n        pass\n    \n    def predict_proba(self, document):\n        # Return class probabilities\n        pass",
+    "solution": "import math\nfrom collections import Counter, defaultdict\n\nclass NaiveBayesClassifier:\n    def __init__(self, alpha=1.0):\n        self.alpha = alpha  # Laplace smoothing parameter\n        self.class_priors = {}\n        self.word_probs = {}\n        self.vocabulary = set()\n        self.classes = set()\n    \n    def tokenize(self, document):\n        \"\"\"Simple tokenization.\"\"\"\n        return document.lower().split()\n    \n    def train(self, documents, labels):\n        \"\"\"Learn probabilities from training data.\"\"\"\n        n_docs = len(documents)\n        \n        # Count documents per class\n        class_counts = Counter(labels)\n        self.classes = set(labels)\n        \n        # Compute class priors\n        for cls, count in class_counts.items():\n            self.class_priors[cls] = count / n_docs\n        \n        # Count words per class\n        word_counts = defaultdict(lambda: defaultdict(int))\n        class_word_totals = defaultdict(int)\n        \n        for doc, label in zip(documents, labels):\n            words = self.tokenize(doc)\n            for word in words:\n                self.vocabulary.add(word)\n                word_counts[label][word] += 1\n                class_word_totals[label] += 1\n        \n        # Compute word probabilities with Laplace smoothing\n        vocab_size = len(self.vocabulary)\n        \n        for cls in self.classes:\n            self.word_probs[cls] = {}\n            total = class_word_totals[cls]\n            \n            for word in self.vocabulary:\n                count = word_counts[cls][word]\n                # Laplace smoothing\n                self.word_probs[cls][word] = (count + self.alpha) / (total + self.alpha * vocab_size)\n    \n    def predict_log_proba(self, document):\n        \"\"\"Return log probabilities for each class.\"\"\"\n        words = self.tokenize(document)\n        log_probs = {}\n        vocab_size = len(self.vocabulary)\n        \n        for cls in self.classes:\n            # Start with log prior\n            log_prob = math.log(self.class_priors[cls])\n            \n            # Add log likelihoods\n            for word in words:\n                if word in self.word_probs[cls]:\n                    log_prob += math.log(self.word_probs[cls][word])\n                else:\n                    # Handle unseen words with smoothing\n                    log_prob += math.log(self.alpha / (self.alpha * vocab_size))\n            \n            log_probs[cls] = log_prob\n        \n        return log_probs\n    \n    def predict_proba(self, document):\n        \"\"\"Return normalized probabilities.\"\"\"\n        log_probs = self.predict_log_proba(document)\n        \n        # Convert to probabilities with normalization\n        max_log = max(log_probs.values())\n        probs = {cls: math.exp(lp - max_log) for cls, lp in log_probs.items()}\n        total = sum(probs.values())\n        \n        return {cls: p / total for cls, p in probs.items()}\n    \n    def predict(self, document):\n        \"\"\"Classify a document.\"\"\"\n        log_probs = self.predict_log_proba(document)\n        predicted = max(log_probs, key=log_probs.get)\n        return predicted, self.predict_proba(document)\n\n# Test: Spam classification\nprint(\"Naive Bayes Text Classifier\")\nprint(\"=\"*50)\n\n# Training data\ndocuments = [\n    \"buy cheap viagra now discount\",\n    \"limited offer free money\",\n    \"win lottery million dollars\",\n    \"cheap pills prescription discount\",\n    \"meeting tomorrow morning office\",\n    \"project deadline next week\",\n    \"lunch today cafeteria\",\n    \"presentation slides ready\",\n    \"quarterly report due friday\",\n    \"team meeting agenda items\"\n]\n\nlabels = ['spam', 'spam', 'spam', 'spam', 'ham', 'ham', 'ham', 'ham', 'ham', 'ham']\n\n# Train classifier\nnb = NaiveBayesClassifier(alpha=1.0)\nnb.train(documents, labels)\n\nprint(\"Training complete!\")\nprint(f\"Vocabulary size: {len(nb.vocabulary)}\")\nprint(f\"Class priors: {nb.class_priors}\")\nprint()\n\n# Test classification\ntest_docs = [\n    \"free money discount offer\",\n    \"meeting project deadline\",\n    \"cheap pills buy now\",\n    \"presentation tomorrow office\"\n]\n\nprint(\"Classification results:\")\nfor doc in test_docs:\n    pred, probs = nb.predict(doc)\n    print(f\"\\n  '{doc}'\")\n    print(f\"  Predicted: {pred}\")\n    print(f\"  P(spam): {probs['spam']:.4f}, P(ham): {probs['ham']:.4f}\")",
+    "testCases": [
+      {
+        "input": "nb.train(documents, labels)",
+        "isHidden": false,
+        "description": "Test training computes priors and likelihoods"
+      },
+      {
+        "input": "nb.predict('spam words')",
+        "isHidden": false,
+        "description": "Test classification of spam-like text"
+      },
+      {
+        "input": "nb.predict('normal meeting text')",
+        "isHidden": false,
+        "description": "Test classification of ham-like text"
+      }
+    ],
+    "hints": [
+      "Use log probabilities to avoid underflow",
+      "Laplace smoothing: P(w|c) = (count + alpha) / (total + alpha * vocab_size)",
+      "For unseen words, use the smoothed probability"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs406-t7-ex05",
+    "subjectId": "cs406",
+    "topicId": "cs406-topic-7",
+    "title": "Variable Elimination",
+    "difficulty": 3,
+    "description": "Implement the variable elimination algorithm for Bayesian network inference.\n\nYour implementation should:\n- Represent factors (probability tables)\n- Implement factor product and marginalization\n- Eliminate variables in a specified order\n- Compute posterior probabilities efficiently",
+    "starterCode": "class Factor:\n    def __init__(self, variables, values):\n        self.variables = variables  # List of variable names\n        self.values = values        # Dict mapping assignments to probabilities\n\ndef factor_product(f1, f2):\n    # Multiply two factors\n    pass\n\ndef factor_marginalize(factor, variable):\n    # Sum out a variable\n    pass\n\ndef variable_elimination(factors, query_var, evidence, elim_order):\n    # Compute P(query_var | evidence)\n    pass",
+    "solution": "from itertools import product\nfrom collections import defaultdict\n\nclass Factor:\n    def __init__(self, variables, values):\n        self.variables = tuple(variables)\n        self.values = values  # Dict: assignment tuple -> probability\n    \n    def __repr__(self):\n        return f\"Factor({self.variables})\"\n    \n    def get_value(self, assignment):\n        key = tuple(assignment[v] for v in self.variables)\n        return self.values.get(key, 0.0)\n\ndef factor_product(f1, f2):\n    \"\"\"Multiply two factors.\"\"\"\n    # Combine variables (preserving order)\n    new_vars = list(f1.variables)\n    for v in f2.variables:\n        if v not in new_vars:\n            new_vars.append(v)\n    \n    # Compute product for all assignments\n    new_values = {}\n    \n    # Get domains (assume binary for simplicity)\n    domains = {v: [True, False] for v in new_vars}\n    \n    for assignment in product(*[domains[v] for v in new_vars]):\n        assign_dict = dict(zip(new_vars, assignment))\n        \n        # Get values from both factors\n        val1 = f1.get_value(assign_dict)\n        val2 = f2.get_value(assign_dict)\n        \n        if val1 > 0 and val2 > 0:\n            new_values[assignment] = val1 * val2\n    \n    return Factor(new_vars, new_values)\n\ndef factor_marginalize(factor, variable):\n    \"\"\"Sum out a variable from factor.\"\"\"\n    if variable not in factor.variables:\n        return factor\n    \n    new_vars = [v for v in factor.variables if v != variable]\n    var_idx = factor.variables.index(variable)\n    \n    new_values = defaultdict(float)\n    \n    for assignment, prob in factor.values.items():\n        # Remove the marginalized variable from assignment\n        new_assignment = tuple(a for i, a in enumerate(assignment) if i != var_idx)\n        new_values[new_assignment] += prob\n    \n    return Factor(new_vars, dict(new_values))\n\ndef factor_reduce(factor, variable, value):\n    \"\"\"Reduce factor by setting variable to value (evidence).\"\"\"\n    if variable not in factor.variables:\n        return factor\n    \n    new_vars = [v for v in factor.variables if v != variable]\n    var_idx = factor.variables.index(variable)\n    \n    new_values = {}\n    \n    for assignment, prob in factor.values.items():\n        if assignment[var_idx] == value:\n            new_assignment = tuple(a for i, a in enumerate(assignment) if i != var_idx)\n            new_values[new_assignment] = prob\n    \n    return Factor(new_vars, new_values)\n\ndef variable_elimination(factors, query_var, evidence, elim_order):\n    \"\"\"Compute P(query_var | evidence) using variable elimination.\"\"\"\n    # Make a copy of factors\n    factors = list(factors)\n    \n    # Apply evidence to all factors\n    for var, val in evidence.items():\n        factors = [factor_reduce(f, var, val) for f in factors]\n    \n    # Eliminate variables in order\n    for var in elim_order:\n        if var == query_var or var in evidence:\n            continue\n        \n        # Collect factors containing this variable\n        relevant = [f for f in factors if var in f.variables]\n        remaining = [f for f in factors if var not in f.variables]\n        \n        if relevant:\n            # Multiply all relevant factors\n            product_factor = relevant[0]\n            for f in relevant[1:]:\n                product_factor = factor_product(product_factor, f)\n            \n            # Marginalize out the variable\n            new_factor = factor_marginalize(product_factor, var)\n            \n            factors = remaining + [new_factor]\n    \n    # Multiply remaining factors\n    if not factors:\n        return {}\n    \n    result = factors[0]\n    for f in factors[1:]:\n        result = factor_product(result, f)\n    \n    # Normalize\n    total = sum(result.values.values())\n    if total > 0:\n        normalized = {k: v / total for k, v in result.values.items()}\n        return normalized\n    \n    return result.values\n\n# Test: Simple Bayesian Network\nprint(\"Variable Elimination Algorithm\")\nprint(\"=\"*50)\n\n# Network: A -> B -> C\n# P(A)\nf_a = Factor(['A'], {\n    (True,): 0.3,\n    (False,): 0.7\n})\n\n# P(B|A)\nf_b_a = Factor(['A', 'B'], {\n    (True, True): 0.8,\n    (True, False): 0.2,\n    (False, True): 0.1,\n    (False, False): 0.9\n})\n\n# P(C|B)\nf_c_b = Factor(['B', 'C'], {\n    (True, True): 0.9,\n    (True, False): 0.1,\n    (False, True): 0.2,\n    (False, False): 0.8\n})\n\nfactors = [f_a, f_b_a, f_c_b]\n\nprint(\"Network: A -> B -> C\")\nprint()\n\n# Query P(C) - marginal\nresult = variable_elimination(factors, 'C', {}, ['A', 'B'])\nprint(f\"P(C) = {result}\")\n\n# Query P(A | C=True)\nresult = variable_elimination(factors, 'A', {'C': True}, ['B'])\nprint(f\"P(A | C=True) = {result}\")\n\n# Query P(B | A=True, C=True)\nresult = variable_elimination(factors, 'B', {'A': True, 'C': True}, [])\nprint(f\"P(B | A=True, C=True) = {result}\")",
+    "testCases": [
+      {
+        "input": "factor_product(f1, f2)",
+        "isHidden": false,
+        "description": "Test factor multiplication"
+      },
+      {
+        "input": "factor_marginalize(factor, 'var')",
+        "isHidden": false,
+        "description": "Test variable marginalization"
+      },
+      {
+        "input": "variable_elimination(factors, query, evidence, order)",
+        "isHidden": false,
+        "description": "Test complete VE algorithm"
+      }
+    ],
+    "hints": [
+      "Factor product: new_value = f1[x,y] * f2[y,z] for matching y values",
+      "Marginalization: sum over all values of the eliminated variable",
+      "Eliminate variables in order, collecting and multiplying relevant factors"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs406-t7-ex06",
+    "subjectId": "cs406",
+    "topicId": "cs406-topic-7",
+    "title": "Gibbs Sampling",
+    "difficulty": 3,
+    "description": "Implement Gibbs sampling for approximate inference in Bayesian networks.\n\nYour implementation should:\n- Initialize variables randomly consistent with evidence\n- Sample each non-evidence variable from its conditional distribution\n- Collect samples after burn-in period\n- Estimate probabilities from sample frequencies",
+    "starterCode": "class GibbsSampler:\n    def __init__(self, bn):\n        self.bn = bn  # Bayesian network\n    \n    def markov_blanket_prob(self, var, value, state):\n        # Compute P(var=value | Markov blanket)\n        pass\n    \n    def sample(self, evidence, num_samples, burn_in=100):\n        # Run Gibbs sampling\n        # Return: dict of variable -> probability\n        pass",
+    "solution": "import random\nfrom collections import Counter\n\nclass SimpleBN:\n    \"\"\"Simple Bayesian Network representation.\"\"\"\n    def __init__(self):\n        self.variables = []\n        self.parents = {}  # var -> list of parents\n        self.children = {}  # var -> list of children\n        self.cpts = {}  # var -> CPT dict\n    \n    def add_variable(self, var, parents, cpt):\n        self.variables.append(var)\n        self.parents[var] = parents\n        self.cpts[var] = cpt\n        \n        if var not in self.children:\n            self.children[var] = []\n        for p in parents:\n            if p not in self.children:\n                self.children[p] = []\n            self.children[p].append(var)\n    \n    def get_prob(self, var, value, parent_values):\n        cpt = self.cpts[var]\n        if not self.parents[var]:\n            return cpt.get(value, 0.0)\n        key = tuple(parent_values[p] for p in self.parents[var])\n        return cpt.get((key, value), 0.0)\n\nclass GibbsSampler:\n    def __init__(self, bn):\n        self.bn = bn\n    \n    def markov_blanket_prob(self, var, value, state):\n        \"\"\"Compute P(var=value | Markov blanket).\n        \n        Markov blanket = parents + children + parents of children\n        P(X|MB) proportional to P(X|parents) * product of P(child|parents of child)\n        \"\"\"\n        # P(var | parents)\n        prob = self.bn.get_prob(var, value, state)\n        \n        # P(child | parents of child) for each child\n        for child in self.bn.children.get(var, []):\n            child_state = state.copy()\n            child_state[var] = value\n            child_prob = self.bn.get_prob(child, state[child], child_state)\n            prob *= child_prob\n        \n        return prob\n    \n    def sample_variable(self, var, state):\n        \"\"\"Sample var from P(var | Markov blanket).\"\"\"\n        probs = {}\n        for value in [True, False]:\n            probs[value] = self.markov_blanket_prob(var, value, state)\n        \n        # Normalize\n        total = sum(probs.values())\n        if total == 0:\n            return random.choice([True, False])\n        \n        probs = {k: v / total for k, v in probs.items()}\n        \n        # Sample\n        if random.random() < probs[True]:\n            return True\n        return False\n    \n    def sample(self, evidence, query_var, num_samples=1000, burn_in=100):\n        \"\"\"Run Gibbs sampling.\"\"\"\n        # Initialize state randomly (consistent with evidence)\n        state = {}\n        for var in self.bn.variables:\n            if var in evidence:\n                state[var] = evidence[var]\n            else:\n                state[var] = random.choice([True, False])\n        \n        # Non-evidence variables\n        non_evidence = [v for v in self.bn.variables if v not in evidence]\n        \n        # Collect samples\n        samples = []\n        \n        for i in range(num_samples + burn_in):\n            # Sample each non-evidence variable\n            for var in non_evidence:\n                state[var] = self.sample_variable(var, state)\n            \n            # Collect sample after burn-in\n            if i >= burn_in:\n                samples.append(state[query_var])\n        \n        # Estimate probabilities\n        counts = Counter(samples)\n        total = len(samples)\n        \n        return {\n            True: counts[True] / total,\n            False: counts[False] / total\n        }\n\n# Test: Alarm network\nprint(\"Gibbs Sampling\")\nprint(\"=\"*50)\n\nbn = SimpleBN()\n\nbn.add_variable('Burglary', [], {\n    True: 0.001, False: 0.999\n})\n\nbn.add_variable('Earthquake', [], {\n    True: 0.002, False: 0.998\n})\n\nbn.add_variable('Alarm', ['Burglary', 'Earthquake'], {\n    ((True, True), True): 0.95, ((True, True), False): 0.05,\n    ((True, False), True): 0.94, ((True, False), False): 0.06,\n    ((False, True), True): 0.29, ((False, True), False): 0.71,\n    ((False, False), True): 0.001, ((False, False), False): 0.999\n})\n\nbn.add_variable('JohnCalls', ['Alarm'], {\n    ((True,), True): 0.90, ((True,), False): 0.10,\n    ((False,), True): 0.05, ((False,), False): 0.95\n})\n\nbn.add_variable('MaryCalls', ['Alarm'], {\n    ((True,), True): 0.70, ((True,), False): 0.30,\n    ((False,), True): 0.01, ((False,), False): 0.99\n})\n\nsampler = GibbsSampler(bn)\n\nprint(\"Query: P(Burglary | JohnCalls=True, MaryCalls=True)\")\nprint()\n\n# Run multiple times to show variance\nfor trial in range(3):\n    result = sampler.sample(\n        evidence={'JohnCalls': True, 'MaryCalls': True},\n        query_var='Burglary',\n        num_samples=10000,\n        burn_in=500\n    )\n    print(f\"Trial {trial+1}: P(Burglary=True) = {result[True]:.4f}\")\n\nprint(\"\\nNote: Results should be close to ~0.284 (exact answer)\")",
+    "testCases": [
+      {
+        "input": "sampler.markov_blanket_prob(var, value, state)",
+        "isHidden": false,
+        "description": "Test Markov blanket probability computation"
+      },
+      {
+        "input": "sampler.sample(evidence, query, num_samples)",
+        "isHidden": false,
+        "description": "Test Gibbs sampling produces reasonable estimates"
+      },
+      {
+        "input": "convergence with more samples",
+        "isHidden": false,
+        "description": "Test estimates improve with more samples"
+      }
+    ],
+    "hints": [
+      "Markov blanket includes parents, children, and parents of children",
+      "P(X|MB) proportional to P(X|parents) * product of P(children|their parents)",
+      "Burn-in period lets the chain reach stationary distribution"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs406-t7-ex07",
+    "subjectId": "cs406",
+    "topicId": "cs406-topic-7",
+    "title": "Forward-Backward Algorithm",
+    "difficulty": 3,
+    "description": "Implement the forward-backward algorithm for HMM smoothing.\n\nYour implementation should:\n- Compute forward probabilities (filtering)\n- Compute backward probabilities\n- Combine to get smoothed state estimates\n- Return P(state_t | all observations)",
+    "starterCode": "class HMM:\n    def __init__(self, states, start_prob, trans_prob, emit_prob):\n        self.states = states\n        self.start_prob = start_prob\n        self.trans_prob = trans_prob\n        self.emit_prob = emit_prob\n\ndef forward(hmm, observations):\n    # Compute forward probabilities\n    # Return: alpha[t][state] = P(o_1:t, state_t)\n    pass\n\ndef backward(hmm, observations):\n    # Compute backward probabilities\n    # Return: beta[t][state] = P(o_t+1:T | state_t)\n    pass\n\ndef smooth(hmm, observations):\n    # Compute smoothed state probabilities\n    # Return: gamma[t][state] = P(state_t | o_1:T)\n    pass",
+    "solution": "class HMM:\n    def __init__(self, states, start_prob, trans_prob, emit_prob):\n        self.states = states\n        self.start_prob = start_prob\n        self.trans_prob = trans_prob\n        self.emit_prob = emit_prob\n\ndef forward(hmm, observations):\n    \"\"\"Compute forward probabilities.\n    alpha[t][state] = P(o_1:t, state_t = state)\n    \"\"\"\n    T = len(observations)\n    alpha = [{} for _ in range(T)]\n    \n    # Initialize (t=0)\n    for state in hmm.states:\n        start_p = hmm.start_prob.get(state, 0)\n        emit_p = hmm.emit_prob.get((state, observations[0]), 0)\n        alpha[0][state] = start_p * emit_p\n    \n    # Forward pass\n    for t in range(1, T):\n        for curr_state in hmm.states:\n            total = 0\n            for prev_state in hmm.states:\n                trans_p = hmm.trans_prob.get((prev_state, curr_state), 0)\n                total += alpha[t-1][prev_state] * trans_p\n            \n            emit_p = hmm.emit_prob.get((curr_state, observations[t]), 0)\n            alpha[t][curr_state] = total * emit_p\n    \n    return alpha\n\ndef backward(hmm, observations):\n    \"\"\"Compute backward probabilities.\n    beta[t][state] = P(o_t+1:T | state_t = state)\n    \"\"\"\n    T = len(observations)\n    beta = [{} for _ in range(T)]\n    \n    # Initialize (t=T-1)\n    for state in hmm.states:\n        beta[T-1][state] = 1.0\n    \n    # Backward pass\n    for t in range(T-2, -1, -1):\n        for curr_state in hmm.states:\n            total = 0\n            for next_state in hmm.states:\n                trans_p = hmm.trans_prob.get((curr_state, next_state), 0)\n                emit_p = hmm.emit_prob.get((next_state, observations[t+1]), 0)\n                total += trans_p * emit_p * beta[t+1][next_state]\n            \n            beta[t][curr_state] = total\n    \n    return beta\n\ndef smooth(hmm, observations):\n    \"\"\"Compute smoothed state probabilities.\n    gamma[t][state] = P(state_t = state | o_1:T)\n    \"\"\"\n    alpha = forward(hmm, observations)\n    beta = backward(hmm, observations)\n    \n    T = len(observations)\n    gamma = [{} for _ in range(T)]\n    \n    for t in range(T):\n        # Compute unnormalized gamma\n        total = 0\n        for state in hmm.states:\n            gamma[t][state] = alpha[t][state] * beta[t][state]\n            total += gamma[t][state]\n        \n        # Normalize\n        if total > 0:\n            for state in hmm.states:\n                gamma[t][state] /= total\n    \n    return gamma\n\ndef filter_only(hmm, observations):\n    \"\"\"Forward filtering only (for comparison).\"\"\"\n    alpha = forward(hmm, observations)\n    T = len(observations)\n    \n    filtered = [{} for _ in range(T)]\n    \n    for t in range(T):\n        total = sum(alpha[t].values())\n        if total > 0:\n            filtered[t] = {s: p / total for s, p in alpha[t].items()}\n    \n    return filtered\n\n# Test\nprint(\"Forward-Backward Algorithm (HMM Smoothing)\")\nprint(\"=\"*50)\n\n# Weather HMM\nhmm = HMM(\n    states=['Sunny', 'Rainy'],\n    start_prob={'Sunny': 0.6, 'Rainy': 0.4},\n    trans_prob={\n        ('Sunny', 'Sunny'): 0.7, ('Sunny', 'Rainy'): 0.3,\n        ('Rainy', 'Sunny'): 0.4, ('Rainy', 'Rainy'): 0.6\n    },\n    emit_prob={\n        ('Sunny', 'Walk'): 0.6, ('Sunny', 'Shop'): 0.3, ('Sunny', 'Clean'): 0.1,\n        ('Rainy', 'Walk'): 0.1, ('Rainy', 'Shop'): 0.4, ('Rainy', 'Clean'): 0.5\n    }\n)\n\nobservations = ['Walk', 'Shop', 'Clean', 'Walk']\n\nprint(f\"Observations: {observations}\")\nprint()\n\n# Filtering (forward only)\nfiltered = filter_only(hmm, observations)\nprint(\"Filtering (using only past observations):\")\nfor t, obs in enumerate(observations):\n    print(f\"  t={t} ({obs}): P(Sunny)={filtered[t]['Sunny']:.4f}, P(Rainy)={filtered[t]['Rainy']:.4f}\")\n\nprint()\n\n# Smoothing (forward-backward)\nsmoothed = smooth(hmm, observations)\nprint(\"Smoothing (using all observations):\")\nfor t, obs in enumerate(observations):\n    print(f\"  t={t} ({obs}): P(Sunny)={smoothed[t]['Sunny']:.4f}, P(Rainy)={smoothed[t]['Rainy']:.4f}\")\n\nprint(\"\\nNote: Smoothing uses future observations to refine estimates\")",
+    "testCases": [
+      {
+        "input": "forward(hmm, observations)",
+        "isHidden": false,
+        "description": "Test forward probabilities computation"
+      },
+      {
+        "input": "backward(hmm, observations)",
+        "isHidden": false,
+        "description": "Test backward probabilities computation"
+      },
+      {
+        "input": "smooth(hmm, observations)",
+        "isHidden": false,
+        "description": "Test smoothed probabilities"
+      }
+    ],
+    "hints": [
+      "Forward: alpha[t][s] = P(o_1:t, s_t = s)",
+      "Backward: beta[t][s] = P(o_t+1:T | s_t = s)",
+      "Smoothing: gamma[t][s] proportional to alpha[t][s] * beta[t][s]"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs406-t7-ex08",
+    "subjectId": "cs406",
+    "topicId": "cs406-topic-7",
+    "title": "Kalman Filter",
+    "difficulty": 4,
+    "description": "Implement a 1D Kalman filter for state estimation.\n\nYour implementation should:\n- Track state mean and variance\n- Implement prediction step (motion model)\n- Implement update step (measurement model)\n- Handle linear Gaussian systems",
+    "starterCode": "class KalmanFilter1D:\n    def __init__(self, initial_mean, initial_var):\n        self.mean = initial_mean\n        self.var = initial_var\n    \n    def predict(self, motion, motion_var):\n        # Prediction step\n        pass\n    \n    def update(self, measurement, measurement_var):\n        # Update step (measurement correction)\n        pass\n    \n    def get_state(self):\n        # Return current state estimate\n        pass",
+    "solution": "import math\n\nclass KalmanFilter1D:\n    \"\"\"1D Kalman Filter for linear Gaussian systems.\"\"\"\n    \n    def __init__(self, initial_mean, initial_var):\n        self.mean = initial_mean\n        self.var = initial_var\n    \n    def predict(self, motion, motion_var):\n        \"\"\"Prediction step (motion update).\n        \n        New mean = old mean + motion\n        New variance = old variance + motion variance\n        \"\"\"\n        self.mean = self.mean + motion\n        self.var = self.var + motion_var\n        return self.mean, self.var\n    \n    def update(self, measurement, measurement_var):\n        \"\"\"Update step (measurement correction).\n        \n        Uses Kalman gain to optimally combine prediction and measurement.\n        \"\"\"\n        # Kalman gain\n        K = self.var / (self.var + measurement_var)\n        \n        # Update mean\n        self.mean = self.mean + K * (measurement - self.mean)\n        \n        # Update variance\n        self.var = (1 - K) * self.var\n        \n        return self.mean, self.var, K\n    \n    def get_state(self):\n        return self.mean, self.var\n    \n    def gaussian_pdf(self, x):\n        \"\"\"Probability density at x.\"\"\"\n        return (1 / math.sqrt(2 * math.pi * self.var)) * \\\n               math.exp(-(x - self.mean)**2 / (2 * self.var))\n\nclass KalmanFilter2D:\n    \"\"\"2D Kalman Filter with velocity tracking.\"\"\"\n    \n    def __init__(self, x, y, vx, vy, var_pos, var_vel):\n        import numpy as np\n        # State: [x, y, vx, vy]\n        self.state = np.array([x, y, vx, vy])\n        self.P = np.diag([var_pos, var_pos, var_vel, var_vel])\n    \n    def predict(self, dt, process_var):\n        import numpy as np\n        # State transition matrix (constant velocity model)\n        F = np.array([\n            [1, 0, dt, 0],\n            [0, 1, 0, dt],\n            [0, 0, 1, 0],\n            [0, 0, 0, 1]\n        ])\n        \n        # Process noise\n        Q = process_var * np.eye(4)\n        \n        self.state = F @ self.state\n        self.P = F @ self.P @ F.T + Q\n        \n        return self.state, self.P\n    \n    def update(self, measurement, measurement_var):\n        import numpy as np\n        # Measurement matrix (only observe position)\n        H = np.array([\n            [1, 0, 0, 0],\n            [0, 1, 0, 0]\n        ])\n        \n        # Measurement noise\n        R = measurement_var * np.eye(2)\n        \n        # Kalman gain\n        S = H @ self.P @ H.T + R\n        K = self.P @ H.T @ np.linalg.inv(S)\n        \n        # Update\n        y = measurement - H @ self.state\n        self.state = self.state + K @ y\n        self.P = (np.eye(4) - K @ H) @ self.P\n        \n        return self.state, self.P\n\n# Test 1D Kalman Filter\nprint(\"1D Kalman Filter\")\nprint(\"=\"*50)\n\n# Track position of an object moving in 1D\nkf = KalmanFilter1D(initial_mean=0, initial_var=1000)  # Uncertain initial position\n\n# True position (unknown to filter)\ntrue_positions = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\n\n# Simulate noisy measurements\nimport random\nrandom.seed(42)\nmeasurements = [p + random.gauss(0, 2) for p in true_positions]\n\nprint(\"Time | True Pos | Measurement | Estimated | Variance | Kalman Gain\")\nprint(\"-\" * 70)\n\nfor t, (true_pos, measurement) in enumerate(zip(true_positions, measurements)):\n    # Prediction step (motion of +1)\n    if t > 0:\n        kf.predict(motion=1, motion_var=0.5)\n    \n    # Update step\n    est_mean, est_var, K = kf.update(measurement, measurement_var=4)\n    \n    print(f\"{t:4d} | {true_pos:8.2f} | {measurement:11.2f} | {est_mean:9.2f} | {est_var:8.4f} | {K:.4f}\")\n\nprint(\"\\nNote: Variance decreases as more measurements are incorporated\")\nprint(\"Kalman gain decreases as we become more certain of our estimate\")",
+    "testCases": [
+      {
+        "input": "kf.predict(motion, motion_var)",
+        "isHidden": false,
+        "description": "Test prediction increases uncertainty"
+      },
+      {
+        "input": "kf.update(measurement, measurement_var)",
+        "isHidden": false,
+        "description": "Test update decreases uncertainty"
+      },
+      {
+        "input": "tracking sequence",
+        "isHidden": false,
+        "description": "Test filter converges to true state"
+      }
+    ],
+    "hints": [
+      "Prediction: mean += motion, variance += motion_variance",
+      "Kalman gain K = predicted_var / (predicted_var + measurement_var)",
+      "Update: new_mean = predicted + K * (measurement - predicted)"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs406-t7-ex09",
+    "subjectId": "cs406",
+    "topicId": "cs406-topic-7",
+    "title": "Dynamic Bayesian Network",
+    "difficulty": 3,
+    "description": "Implement a simple Dynamic Bayesian Network for temporal reasoning.\n\nYour implementation should:\n- Represent time-sliced Bayesian network\n- Support inter-slice and intra-slice dependencies\n- Implement forward filtering for temporal inference\n- Track belief state over time",
+    "starterCode": "class DBN:\n    def __init__(self):\n        self.variables = []      # Variables per time slice\n        self.intra_deps = {}     # Dependencies within time slice\n        self.inter_deps = {}     # Dependencies across time slices\n        self.cpts = {}           # Conditional probability tables\n    \n    def add_variable(self, name, parents_intra, parents_inter, cpt):\n        # parents_intra: parents in same time slice\n        # parents_inter: parents from previous time slice\n        pass\n    \n    def forward_filter(self, evidence_sequence):\n        # Compute belief state at each time step\n        pass",
+    "solution": "from itertools import product\nfrom collections import defaultdict\n\nclass DBN:\n    \"\"\"Simple Dynamic Bayesian Network.\"\"\"\n    \n    def __init__(self):\n        self.variables = []\n        self.intra_deps = {}  # var -> parents in same slice\n        self.inter_deps = {}  # var -> parents from previous slice\n        self.cpts = {}  # var -> CPT\n        self.initial_probs = {}  # Initial distribution\n    \n    def add_variable(self, name, parents_intra=None, parents_inter=None, \n                     cpt=None, initial_prob=None):\n        \"\"\"Add a variable to the DBN.\"\"\"\n        self.variables.append(name)\n        self.intra_deps[name] = parents_intra or []\n        self.inter_deps[name] = parents_inter or []\n        self.cpts[name] = cpt or {}\n        if initial_prob:\n            self.initial_probs[name] = initial_prob\n    \n    def get_prob(self, var, value, prev_state, curr_state):\n        \"\"\"Get P(var=value | parents).\"\"\"\n        cpt = self.cpts[var]\n        \n        # Collect parent values\n        parent_vals = []\n        for p in self.inter_deps[var]:\n            parent_vals.append(prev_state.get(p, False))\n        for p in self.intra_deps[var]:\n            parent_vals.append(curr_state.get(p, False))\n        \n        if not parent_vals:\n            return cpt.get(value, 0.5)\n        \n        key = (tuple(parent_vals), value)\n        return cpt.get(key, 0.0)\n    \n    def get_initial_prob(self, var, value):\n        \"\"\"Get initial probability.\"\"\"\n        if var in self.initial_probs:\n            return self.initial_probs[var].get(value, 0.5)\n        return 0.5\n    \n    def forward_filter(self, evidence_sequence):\n        \"\"\"Forward filtering to compute belief at each time step.\"\"\"\n        T = len(evidence_sequence)\n        beliefs = []\n        \n        # Initial belief (t=0)\n        belief = {}\n        evidence = evidence_sequence[0]\n        \n        for var in self.variables:\n            if var in evidence:\n                belief[var] = {evidence[var]: 1.0, not evidence[var]: 0.0}\n            else:\n                prob_true = self.get_initial_prob(var, True)\n                belief[var] = {True: prob_true, False: 1 - prob_true}\n        \n        beliefs.append(belief)\n        \n        # Forward pass\n        for t in range(1, T):\n            evidence = evidence_sequence[t]\n            new_belief = {}\n            \n            for var in self.variables:\n                if var in evidence:\n                    new_belief[var] = {evidence[var]: 1.0, not evidence[var]: 0.0}\n                else:\n                    # Sum over previous state assignments\n                    probs = {True: 0.0, False: 0.0}\n                    \n                    # Enumerate previous state assignments\n                    prev_vars = self.inter_deps[var]\n                    if prev_vars:\n                        for prev_vals in product([True, False], repeat=len(prev_vars)):\n                            prev_state = dict(zip(prev_vars, prev_vals))\n                            \n                            # Probability of this previous state\n                            prev_prob = 1.0\n                            for pv, pval in prev_state.items():\n                                prev_prob *= beliefs[t-1][pv][pval]\n                            \n                            for value in [True, False]:\n                                trans_prob = self.get_prob(var, value, prev_state, {})\n                                probs[value] += prev_prob * trans_prob\n                    else:\n                        for value in [True, False]:\n                            probs[value] = self.get_prob(var, value, {}, {})\n                    \n                    # Normalize\n                    total = sum(probs.values())\n                    if total > 0:\n                        probs = {k: v / total for k, v in probs.items()}\n                    \n                    new_belief[var] = probs\n            \n            beliefs.append(new_belief)\n        \n        return beliefs\n\n# Test: Umbrella World DBN\nprint(\"Dynamic Bayesian Network\")\nprint(\"=\"*50)\nprint(\"\\nUmbrella World: Rain(t) -> Rain(t+1), Rain(t) -> Umbrella(t)\")\n\ndbn = DBN()\n\n# Rain: depends on Rain from previous time\ndbn.add_variable(\n    'Rain',\n    parents_intra=[],\n    parents_inter=['Rain'],\n    cpt={\n        ((True,), True): 0.7,   # P(Rain_t | Rain_t-1)\n        ((True,), False): 0.3,\n        ((False,), True): 0.3,\n        ((False,), False): 0.7\n    },\n    initial_prob={True: 0.5, False: 0.5}\n)\n\n# Umbrella: depends on Rain in same time slice\ndbn.add_variable(\n    'Umbrella',\n    parents_intra=['Rain'],\n    parents_inter=[],\n    cpt={\n        ((True,), True): 0.9,   # P(Umbrella | Rain)\n        ((True,), False): 0.1,\n        ((False,), True): 0.2,\n        ((False,), False): 0.8\n    }\n)\n\n# Evidence sequence (umbrella observations)\nevidence_sequence = [\n    {'Umbrella': True},\n    {'Umbrella': True},\n    {'Umbrella': False},\n    {'Umbrella': True},\n    {'Umbrella': True}\n]\n\nprint(\"\\nEvidence sequence (Umbrella observations):\")\nfor t, e in enumerate(evidence_sequence):\n    print(f\"  t={t}: {e}\")\n\nbeliefs = dbn.forward_filter(evidence_sequence)\n\nprint(\"\\nFiltering results (P(Rain | Umbrella observations)):\")\nfor t, belief in enumerate(beliefs):\n    print(f\"  t={t}: P(Rain=True) = {belief['Rain'][True]:.4f}\")",
+    "testCases": [
+      {
+        "input": "dbn.forward_filter(evidence_sequence)",
+        "isHidden": false,
+        "description": "Test filtering with temporal evidence"
+      },
+      {
+        "input": "belief updates",
+        "isHidden": false,
+        "description": "Test belief changes with evidence"
+      },
+      {
+        "input": "inter-slice dependencies",
+        "isHidden": false,
+        "description": "Test temporal dependencies"
+      }
+    ],
+    "hints": [
+      "DBN unfolds to form a static BN over time",
+      "Inter-slice edges connect t-1 to t",
+      "Forward filtering: P(X_t|e_1:t) from P(X_t-1|e_1:t-1)"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs406-t7-ex10",
+    "subjectId": "cs406",
+    "topicId": "cs406-topic-7",
+    "title": "Information Entropy and Mutual Information",
+    "difficulty": 2,
+    "description": "Implement calculations for information-theoretic quantities.\n\nYour implementation should:\n- Calculate entropy of a probability distribution\n- Calculate conditional entropy\n- Calculate mutual information between variables\n- Calculate information gain for decision trees",
+    "starterCode": "import math\n\ndef entropy(probs):\n    # H(X) = -sum(p * log2(p))\n    pass\n\ndef conditional_entropy(joint_probs, marginal_probs):\n    # H(Y|X) = sum_x P(x) * H(Y|X=x)\n    pass\n\ndef mutual_information(joint_probs):\n    # I(X;Y) = H(X) + H(Y) - H(X,Y)\n    pass\n\ndef information_gain(data, attribute, label):\n    # IG = H(label) - H(label|attribute)\n    pass",
+    "solution": "import math\nfrom collections import Counter\n\ndef entropy(probs):\n    \"\"\"Calculate entropy: H(X) = -sum(p * log2(p)).\"\"\"\n    h = 0\n    for p in probs:\n        if p > 0:\n            h -= p * math.log2(p)\n    return h\n\ndef entropy_from_counts(counts):\n    \"\"\"Calculate entropy from counts.\"\"\"\n    total = sum(counts.values())\n    if total == 0:\n        return 0\n    probs = [c / total for c in counts.values()]\n    return entropy(probs)\n\ndef conditional_entropy(y_values, x_values):\n    \"\"\"Calculate H(Y|X) = sum_x P(x) * H(Y|X=x).\"\"\"\n    # Group y values by x values\n    groups = {}\n    for x, y in zip(x_values, y_values):\n        if x not in groups:\n            groups[x] = []\n        groups[x].append(y)\n    \n    total = len(y_values)\n    h = 0\n    \n    for x, y_group in groups.items():\n        p_x = len(y_group) / total\n        counts = Counter(y_group)\n        h += p_x * entropy_from_counts(counts)\n    \n    return h\n\ndef mutual_information(x_values, y_values):\n    \"\"\"Calculate I(X;Y) = H(Y) - H(Y|X).\"\"\"\n    h_y = entropy_from_counts(Counter(y_values))\n    h_y_given_x = conditional_entropy(y_values, x_values)\n    return h_y - h_y_given_x\n\ndef information_gain(data, attribute_idx, label_idx):\n    \"\"\"Calculate information gain for an attribute.\n    \n    IG(attribute) = H(label) - H(label | attribute)\n    \"\"\"\n    labels = [row[label_idx] for row in data]\n    attributes = [row[attribute_idx] for row in data]\n    \n    h_label = entropy_from_counts(Counter(labels))\n    h_label_given_attr = conditional_entropy(labels, attributes)\n    \n    return h_label - h_label_given_attr\n\ndef best_attribute(data, attribute_indices, label_idx):\n    \"\"\"Find attribute with highest information gain.\"\"\"\n    best_attr = None\n    best_gain = -1\n    \n    for attr_idx in attribute_indices:\n        gain = information_gain(data, attr_idx, label_idx)\n        if gain > best_gain:\n            best_gain = gain\n            best_attr = attr_idx\n    \n    return best_attr, best_gain\n\n# Test\nprint(\"Information Theory Calculations\")\nprint(\"=\"*50)\n\n# Test 1: Entropy\nprint(\"\\n1. Entropy:\")\nprint(f\"   H([0.5, 0.5]) = {entropy([0.5, 0.5]):.4f} bits (maximum uncertainty)\")\nprint(f\"   H([0.9, 0.1]) = {entropy([0.9, 0.1]):.4f} bits (low uncertainty)\")\nprint(f\"   H([1.0, 0.0]) = {entropy([1.0, 0.0]):.4f} bits (certain)\")\nprint(f\"   H([0.25]*4) = {entropy([0.25]*4):.4f} bits (4 equally likely outcomes)\")\n\n# Test 2: Mutual Information\nprint(\"\\n2. Mutual Information:\")\n# Perfect correlation\nx1 = ['A', 'A', 'B', 'B']\ny1 = ['0', '0', '1', '1']\nmi1 = mutual_information(x1, y1)\nprint(f\"   Perfect correlation: I(X;Y) = {mi1:.4f} bits\")\n\n# No correlation\nx2 = ['A', 'A', 'B', 'B']\ny2 = ['0', '1', '0', '1']\nmi2 = mutual_information(x2, y2)\nprint(f\"   No correlation: I(X;Y) = {mi2:.4f} bits\")\n\n# Test 3: Information Gain for Decision Tree\nprint(\"\\n3. Information Gain (Decision Tree):\")\n# Play Tennis dataset (simplified)\n# [Outlook, Temp, Humidity, Wind, PlayTennis]\ndata = [\n    ['Sunny', 'Hot', 'High', 'Weak', 'No'],\n    ['Sunny', 'Hot', 'High', 'Strong', 'No'],\n    ['Overcast', 'Hot', 'High', 'Weak', 'Yes'],\n    ['Rain', 'Mild', 'High', 'Weak', 'Yes'],\n    ['Rain', 'Cool', 'Normal', 'Weak', 'Yes'],\n    ['Rain', 'Cool', 'Normal', 'Strong', 'No'],\n    ['Overcast', 'Cool', 'Normal', 'Strong', 'Yes'],\n    ['Sunny', 'Mild', 'High', 'Weak', 'No'],\n    ['Sunny', 'Cool', 'Normal', 'Weak', 'Yes'],\n    ['Rain', 'Mild', 'Normal', 'Weak', 'Yes'],\n    ['Sunny', 'Mild', 'Normal', 'Strong', 'Yes'],\n    ['Overcast', 'Mild', 'High', 'Strong', 'Yes'],\n    ['Overcast', 'Hot', 'Normal', 'Weak', 'Yes'],\n    ['Rain', 'Mild', 'High', 'Strong', 'No']\n]\n\nattributes = ['Outlook', 'Temp', 'Humidity', 'Wind']\nlabel_idx = 4\n\nprint(f\"   Base entropy H(PlayTennis) = {entropy_from_counts(Counter([r[4] for r in data])):.4f}\")\nprint()\n\nfor i, attr in enumerate(attributes):\n    ig = information_gain(data, i, label_idx)\n    print(f\"   IG({attr}) = {ig:.4f}\")\n\nbest_attr, best_gain = best_attribute(data, list(range(4)), label_idx)\nprint(f\"\\n   Best attribute: {attributes[best_attr]} (IG = {best_gain:.4f})\")",
+    "testCases": [
+      {
+        "input": "entropy([0.5, 0.5])",
+        "isHidden": false,
+        "description": "Test entropy of uniform distribution"
+      },
+      {
+        "input": "mutual_information(x, y)",
+        "isHidden": false,
+        "description": "Test mutual information calculation"
+      },
+      {
+        "input": "information_gain(data, attr, label)",
+        "isHidden": false,
+        "description": "Test information gain for decision tree"
+      }
+    ],
+    "hints": [
+      "Entropy: H(X) = -sum(p * log2(p)), define 0*log(0) = 0",
+      "Mutual information: I(X;Y) = H(Y) - H(Y|X)",
+      "Information gain is mutual information between attribute and label"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs406-t7-ex11",
+    "subjectId": "cs406",
+    "topicId": "cs406-topic-7",
+    "title": "Belief Propagation",
+    "difficulty": 4,
+    "description": "Implement the belief propagation (sum-product) algorithm for tree-structured graphical models.\n\nYour implementation should:\n- Pass messages between nodes in a factor graph\n- Compute marginal probabilities at each node\n- Handle both leaf-to-root and root-to-leaf passes\n- Work on tree-structured graphs",
+    "starterCode": "class FactorGraph:\n    def __init__(self):\n        self.variables = {}\n        self.factors = []\n        self.neighbors = {}  # node -> list of neighbors\n\ndef compute_message(source, target, messages, factor_graph):\n    # Compute message from source to target\n    pass\n\ndef belief_propagation(factor_graph, root=None):\n    # Run sum-product belief propagation\n    # Return: marginal probabilities for each variable\n    pass",
+    "solution": "from collections import defaultdict\nfrom itertools import product\n\nclass Variable:\n    def __init__(self, name, domain):\n        self.name = name\n        self.domain = domain\n    \n    def __repr__(self):\n        return f\"Var({self.name})\"\n    \n    def __hash__(self):\n        return hash(self.name)\n    \n    def __eq__(self, other):\n        return self.name == other.name\n\nclass Factor:\n    def __init__(self, name, variables, values):\n        self.name = name\n        self.variables = variables  # List of Variable objects\n        self.values = values  # Dict: assignment tuple -> value\n    \n    def __repr__(self):\n        return f\"Factor({self.name})\"\n    \n    def __hash__(self):\n        return hash(self.name)\n    \n    def get_value(self, assignment):\n        key = tuple(assignment[v.name] for v in self.variables)\n        return self.values.get(key, 0.0)\n\nclass FactorGraph:\n    def __init__(self):\n        self.variables = {}\n        self.factors = []\n        self.var_to_factors = defaultdict(list)\n        self.factor_to_vars = {}\n    \n    def add_variable(self, var):\n        self.variables[var.name] = var\n    \n    def add_factor(self, factor):\n        self.factors.append(factor)\n        self.factor_to_vars[factor] = factor.variables\n        for var in factor.variables:\n            self.var_to_factors[var].append(factor)\n\ndef belief_propagation(fg, num_iterations=10):\n    \"\"\"Sum-product belief propagation.\"\"\"\n    # Initialize messages\n    messages = {}  # (from, to) -> message dict (value -> prob)\n    \n    # Initialize all messages to uniform\n    for factor in fg.factors:\n        for var in factor.variables:\n            # Factor to variable messages\n            messages[(factor, var)] = {v: 1.0 for v in var.domain}\n            # Variable to factor messages\n            messages[(var, factor)] = {v: 1.0 for v in var.domain}\n    \n    # Iterate message passing\n    for iteration in range(num_iterations):\n        # Update variable to factor messages\n        for var in fg.variables.values():\n            for target_factor in fg.var_to_factors[var]:\n                msg = {}\n                for val in var.domain:\n                    prod = 1.0\n                    for other_factor in fg.var_to_factors[var]:\n                        if other_factor != target_factor:\n                            prod *= messages[(other_factor, var)][val]\n                    msg[val] = prod\n                \n                # Normalize\n                total = sum(msg.values())\n                if total > 0:\n                    msg = {k: v / total for k, v in msg.items()}\n                \n                messages[(var, target_factor)] = msg\n        \n        # Update factor to variable messages\n        for factor in fg.factors:\n            for target_var in factor.variables:\n                other_vars = [v for v in factor.variables if v != target_var]\n                msg = {}\n                \n                for target_val in target_var.domain:\n                    total = 0.0\n                    \n                    # Sum over all assignments to other variables\n                    if other_vars:\n                        domains = [v.domain for v in other_vars]\n                        for other_vals in product(*domains):\n                            assignment = {target_var.name: target_val}\n                            assignment.update(dict(zip([v.name for v in other_vars], other_vals)))\n                            \n                            factor_val = factor.get_value(assignment)\n                            \n                            # Product of incoming messages\n                            prod = 1.0\n                            for ov, oval in zip(other_vars, other_vals):\n                                prod *= messages[(ov, factor)][oval]\n                            \n                            total += factor_val * prod\n                    else:\n                        assignment = {target_var.name: target_val}\n                        total = factor.get_value(assignment)\n                    \n                    msg[target_val] = total\n                \n                messages[(factor, target_var)] = msg\n    \n    # Compute marginals\n    marginals = {}\n    \n    for var in fg.variables.values():\n        belief = {}\n        for val in var.domain:\n            prod = 1.0\n            for factor in fg.var_to_factors[var]:\n                prod *= messages[(factor, var)][val]\n            belief[val] = prod\n        \n        # Normalize\n        total = sum(belief.values())\n        if total > 0:\n            belief = {k: v / total for k, v in belief.items()}\n        \n        marginals[var.name] = belief\n    \n    return marginals\n\n# Test: Simple chain A - B - C\nprint(\"Belief Propagation (Sum-Product Algorithm)\")\nprint(\"=\"*50)\n\nfg = FactorGraph()\n\n# Variables\nA = Variable('A', [0, 1])\nB = Variable('B', [0, 1])\nC = Variable('C', [0, 1])\n\nfg.add_variable(A)\nfg.add_variable(B)\nfg.add_variable(C)\n\n# Factors\n# P(A)\nf_a = Factor('f_A', [A], {\n    (0,): 0.3,\n    (1,): 0.7\n})\n\n# P(B|A) as pairwise factor\nf_ab = Factor('f_AB', [A, B], {\n    (0, 0): 0.8,\n    (0, 1): 0.2,\n    (1, 0): 0.3,\n    (1, 1): 0.7\n})\n\n# P(C|B) as pairwise factor\nf_bc = Factor('f_BC', [B, C], {\n    (0, 0): 0.6,\n    (0, 1): 0.4,\n    (1, 0): 0.1,\n    (1, 1): 0.9\n})\n\nfg.add_factor(f_a)\nfg.add_factor(f_ab)\nfg.add_factor(f_bc)\n\nprint(\"Factor graph: A -- f_AB -- B -- f_BC -- C\")\nprint()\n\n# Run belief propagation\nmarginals = belief_propagation(fg, num_iterations=10)\n\nprint(\"Marginal probabilities:\")\nfor var, probs in marginals.items():\n    print(f\"  P({var}): {probs}\")\n\nprint(\"\\nVerification:\")\nprint(f\"  P(A=1) = 0.7 (prior)\")\nprint(f\"  P(B=1) = P(B=1|A=0)*P(A=0) + P(B=1|A=1)*P(A=1)\")\nprint(f\"         = 0.2*0.3 + 0.7*0.7 = 0.55\")",
+    "testCases": [
+      {
+        "input": "belief_propagation(chain_graph)",
+        "isHidden": false,
+        "description": "Test BP on chain graph"
+      },
+      {
+        "input": "messages converge",
+        "isHidden": false,
+        "description": "Test message convergence"
+      },
+      {
+        "input": "marginals are valid probabilities",
+        "isHidden": false,
+        "description": "Test marginals sum to 1"
+      }
+    ],
+    "hints": [
+      "Variable to factor: product of incoming messages from other factors",
+      "Factor to variable: marginalize product of factor and incoming messages",
+      "Alternate between updating variable-to-factor and factor-to-variable messages"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs406-t7-ex12",
+    "subjectId": "cs406",
+    "topicId": "cs406-topic-7",
+    "title": "Rejection Sampling",
+    "difficulty": 2,
+    "description": "Implement rejection sampling for approximate Bayesian inference.\n\nYour implementation should:\n- Generate samples from the prior distribution\n- Reject samples inconsistent with evidence\n- Estimate probabilities from accepted samples\n- Handle the efficiency trade-off with rare evidence",
+    "starterCode": "import random\n\nclass BayesNet:\n    def __init__(self):\n        self.variables = []\n        self.parents = {}\n        self.cpts = {}\n    \n    def sample_prior(self):\n        # Generate sample from prior distribution\n        pass\n\ndef rejection_sampling(bn, query_var, evidence, num_samples):\n    # Estimate P(query_var | evidence) using rejection sampling\n    pass",
+    "solution": "import random\nfrom collections import Counter\n\nclass BayesNet:\n    def __init__(self):\n        self.variables = []\n        self.parents = {}\n        self.cpts = {}\n    \n    def add_variable(self, name, parents, cpt):\n        self.variables.append(name)\n        self.parents[name] = parents\n        self.cpts[name] = cpt\n    \n    def get_prob(self, var, value, parent_values):\n        cpt = self.cpts[var]\n        if not self.parents[var]:\n            return cpt.get(value, 0.5)\n        key = tuple(parent_values[p] for p in self.parents[var])\n        return cpt.get((key, value), 0.0)\n    \n    def sample_prior(self):\n        \"\"\"Generate one sample from prior distribution.\"\"\"\n        sample = {}\n        \n        for var in self.variables:\n            parent_vals = sample\n            prob_true = self.get_prob(var, True, parent_vals)\n            \n            if random.random() < prob_true:\n                sample[var] = True\n            else:\n                sample[var] = False\n        \n        return sample\n    \n    def consistent_with_evidence(self, sample, evidence):\n        \"\"\"Check if sample is consistent with evidence.\"\"\"\n        for var, value in evidence.items():\n            if sample.get(var) != value:\n                return False\n        return True\n\ndef rejection_sampling(bn, query_var, evidence, num_samples):\n    \"\"\"Estimate P(query_var | evidence) using rejection sampling.\"\"\"\n    accepted_samples = []\n    rejected_count = 0\n    \n    for _ in range(num_samples):\n        sample = bn.sample_prior()\n        \n        if bn.consistent_with_evidence(sample, evidence):\n            accepted_samples.append(sample[query_var])\n        else:\n            rejected_count += 1\n    \n    # Estimate probability\n    if not accepted_samples:\n        return None, 0, rejected_count\n    \n    counts = Counter(accepted_samples)\n    total = len(accepted_samples)\n    \n    probs = {\n        True: counts[True] / total,\n        False: counts[False] / total\n    }\n    \n    return probs, len(accepted_samples), rejected_count\n\n# Test\nprint(\"Rejection Sampling\")\nprint(\"=\"*50)\n\nbn = BayesNet()\n\nbn.add_variable('Cloudy', [], {\n    True: 0.5, False: 0.5\n})\n\nbn.add_variable('Sprinkler', ['Cloudy'], {\n    ((True,), True): 0.1, ((True,), False): 0.9,\n    ((False,), True): 0.5, ((False,), False): 0.5\n})\n\nbn.add_variable('Rain', ['Cloudy'], {\n    ((True,), True): 0.8, ((True,), False): 0.2,\n    ((False,), True): 0.2, ((False,), False): 0.8\n})\n\nbn.add_variable('WetGrass', ['Sprinkler', 'Rain'], {\n    ((True, True), True): 0.99, ((True, True), False): 0.01,\n    ((True, False), True): 0.9, ((True, False), False): 0.1,\n    ((False, True), True): 0.9, ((False, True), False): 0.1,\n    ((False, False), True): 0.0, ((False, False), False): 1.0\n})\n\nprint(\"Network: Cloudy -> Sprinkler, Rain -> WetGrass\")\nprint()\n\n# Query without evidence\nprint(\"Query: P(Rain)\")\nfor num_samples in [1000, 10000, 100000]:\n    probs, accepted, rejected = rejection_sampling(bn, 'Rain', {}, num_samples)\n    print(f\"  {num_samples:6d} samples: P(Rain=True) = {probs[True]:.4f}\")\n\nprint(\"\\nQuery: P(Rain | WetGrass=True)\")\nfor num_samples in [1000, 10000, 100000]:\n    probs, accepted, rejected = rejection_sampling(\n        bn, 'Rain', {'WetGrass': True}, num_samples\n    )\n    if probs:\n        print(f\"  {num_samples:6d} samples: P(Rain=True) = {probs[True]:.4f} \"\n              f\"(accepted: {accepted}, rejected: {rejected})\")\n    else:\n        print(f\"  {num_samples:6d} samples: No accepted samples!\")\n\nprint(\"\\nQuery: P(Cloudy | Sprinkler=True, Rain=True)\")\nprobs, accepted, rejected = rejection_sampling(\n    bn, 'Cloudy', {'Sprinkler': True, 'Rain': True}, 100000\n)\nprint(f\"  P(Cloudy=True) = {probs[True]:.4f} (acceptance rate: {accepted/(accepted+rejected):.4f})\")",
+    "testCases": [
+      {
+        "input": "bn.sample_prior()",
+        "isHidden": false,
+        "description": "Test sampling from prior"
+      },
+      {
+        "input": "rejection_sampling(bn, query, {}, n)",
+        "isHidden": false,
+        "description": "Test sampling without evidence"
+      },
+      {
+        "input": "rejection_sampling(bn, query, evidence, n)",
+        "isHidden": false,
+        "description": "Test sampling with evidence"
+      }
+    ],
+    "hints": [
+      "Sample in topological order so parents are sampled before children",
+      "Reject samples that don't match evidence",
+      "More samples = better estimate, but rare evidence = many rejections"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs406-t7-ex13",
+    "subjectId": "cs406",
+    "topicId": "cs406-topic-7",
+    "title": "Likelihood Weighting",
+    "difficulty": 2,
+    "description": "Implement likelihood weighting for more efficient approximate inference.\n\nYour implementation should:\n- Fix evidence variables to their observed values\n- Weight samples by likelihood of evidence given parents\n- Estimate weighted probabilities\n- Compare efficiency to rejection sampling",
+    "starterCode": "def likelihood_weighting(bn, query_var, evidence, num_samples):\n    # Estimate P(query_var | evidence) using likelihood weighting\n    pass\n\ndef weighted_sample(bn, evidence):\n    # Generate a weighted sample\n    # Return: (sample, weight)\n    pass",
+    "solution": "import random\nfrom collections import defaultdict\n\nclass BayesNet:\n    def __init__(self):\n        self.variables = []\n        self.parents = {}\n        self.cpts = {}\n    \n    def add_variable(self, name, parents, cpt):\n        self.variables.append(name)\n        self.parents[name] = parents\n        self.cpts[name] = cpt\n    \n    def get_prob(self, var, value, parent_values):\n        cpt = self.cpts[var]\n        if not self.parents[var]:\n            return cpt.get(value, 0.5)\n        key = tuple(parent_values[p] for p in self.parents[var])\n        return cpt.get((key, value), 0.0)\n\ndef weighted_sample(bn, evidence):\n    \"\"\"Generate a weighted sample.\n    \n    Fix evidence variables, weight by their probability.\n    \"\"\"\n    sample = {}\n    weight = 1.0\n    \n    for var in bn.variables:\n        if var in evidence:\n            # Evidence variable: fix value and multiply weight\n            sample[var] = evidence[var]\n            prob = bn.get_prob(var, evidence[var], sample)\n            weight *= prob\n        else:\n            # Non-evidence: sample normally\n            prob_true = bn.get_prob(var, True, sample)\n            if random.random() < prob_true:\n                sample[var] = True\n            else:\n                sample[var] = False\n    \n    return sample, weight\n\ndef likelihood_weighting(bn, query_var, evidence, num_samples):\n    \"\"\"Estimate P(query_var | evidence) using likelihood weighting.\"\"\"\n    weighted_counts = defaultdict(float)\n    total_weight = 0.0\n    \n    for _ in range(num_samples):\n        sample, weight = weighted_sample(bn, evidence)\n        \n        query_value = sample[query_var]\n        weighted_counts[query_value] += weight\n        total_weight += weight\n    \n    if total_weight == 0:\n        return None\n    \n    probs = {\n        True: weighted_counts[True] / total_weight,\n        False: weighted_counts[False] / total_weight\n    }\n    \n    return probs, total_weight / num_samples  # avg weight = acceptance rate equivalent\n\n# Test\nprint(\"Likelihood Weighting\")\nprint(\"=\"*50)\n\nbn = BayesNet()\n\nbn.add_variable('Cloudy', [], {\n    True: 0.5, False: 0.5\n})\n\nbn.add_variable('Sprinkler', ['Cloudy'], {\n    ((True,), True): 0.1, ((True,), False): 0.9,\n    ((False,), True): 0.5, ((False,), False): 0.5\n})\n\nbn.add_variable('Rain', ['Cloudy'], {\n    ((True,), True): 0.8, ((True,), False): 0.2,\n    ((False,), True): 0.2, ((False,), False): 0.8\n})\n\nbn.add_variable('WetGrass', ['Sprinkler', 'Rain'], {\n    ((True, True), True): 0.99, ((True, True), False): 0.01,\n    ((True, False), True): 0.9, ((True, False), False): 0.1,\n    ((False, True), True): 0.9, ((False, True), False): 0.1,\n    ((False, False), True): 0.0, ((False, False), False): 1.0\n})\n\nprint(\"Comparing Likelihood Weighting vs theoretical values\")\nprint()\n\n# Query: P(Rain | WetGrass=True)\nprint(\"Query: P(Rain | WetGrass=True)\")\nfor num_samples in [1000, 10000, 100000]:\n    probs, avg_weight = likelihood_weighting(\n        bn, 'Rain', {'WetGrass': True}, num_samples\n    )\n    print(f\"  {num_samples:6d} samples: P(Rain=True) = {probs[True]:.4f}\")\n\n# Query with multiple evidence\nprint(\"\\nQuery: P(Cloudy | Sprinkler=True, Rain=True)\")\nfor num_samples in [1000, 10000, 100000]:\n    probs, avg_weight = likelihood_weighting(\n        bn, 'Cloudy', {'Sprinkler': True, 'Rain': True}, num_samples\n    )\n    print(f\"  {num_samples:6d} samples: P(Cloudy=True) = {probs[True]:.4f} (avg weight: {avg_weight:.4f})\")\n\n# Compare with rejection sampling\nprint(\"\\nAdvantage over rejection sampling:\")\nprint(\"  - Every sample is used (no rejection)\")\nprint(\"  - More efficient when evidence is unlikely\")\nprint(\"  - Weight gives importance of each sample\")",
+    "testCases": [
+      {
+        "input": "weighted_sample(bn, evidence)",
+        "isHidden": false,
+        "description": "Test weighted sample generation"
+      },
+      {
+        "input": "likelihood_weighting(bn, query, evidence, n)",
+        "isHidden": false,
+        "description": "Test likelihood weighting estimation"
+      },
+      {
+        "input": "compare with rejection sampling",
+        "isHidden": false,
+        "description": "Test improved efficiency"
+      }
+    ],
+    "hints": [
+      "Fix evidence variables instead of rejecting inconsistent samples",
+      "Weight = product of P(evidence_var | parents) for all evidence",
+      "Weighted average gives the probability estimate"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs406-t7-ex14",
+    "subjectId": "cs406",
+    "topicId": "cs406-topic-7",
+    "title": "Maximum A Posteriori Estimation",
+    "difficulty": 2,
+    "description": "Implement MAP estimation to find the most likely explanation.\n\nYour implementation should:\n- Find the most probable complete assignment given evidence\n- Use log probabilities for numerical stability\n- Compare with exhaustive search for verification\n- Handle larger state spaces efficiently",
+    "starterCode": "def map_exhaustive(bn, evidence):\n    # Find MAP assignment by exhaustive search\n    pass\n\ndef map_hill_climbing(bn, evidence, restarts=10):\n    # Find MAP using local search\n    pass\n\ndef mpe(bn, evidence):\n    # Most Probable Explanation\n    pass",
+    "solution": "import math\nimport random\nfrom itertools import product\n\nclass BayesNet:\n    def __init__(self):\n        self.variables = []\n        self.parents = {}\n        self.cpts = {}\n    \n    def add_variable(self, name, parents, cpt):\n        self.variables.append(name)\n        self.parents[name] = parents\n        self.cpts[name] = cpt\n    \n    def get_prob(self, var, value, state):\n        cpt = self.cpts[var]\n        if not self.parents[var]:\n            return cpt.get(value, 0.5)\n        key = tuple(state[p] for p in self.parents[var])\n        return cpt.get((key, value), 0.0)\n    \n    def log_probability(self, state):\n        \"\"\"Compute log P(state) = sum of log P(var | parents).\"\"\"\n        log_prob = 0.0\n        for var in self.variables:\n            prob = self.get_prob(var, state[var], state)\n            if prob <= 0:\n                return float('-inf')\n            log_prob += math.log(prob)\n        return log_prob\n\ndef map_exhaustive(bn, evidence):\n    \"\"\"Find MAP assignment by exhaustive search.\"\"\"\n    # Variables to optimize (non-evidence)\n    query_vars = [v for v in bn.variables if v not in evidence]\n    \n    best_assignment = None\n    best_log_prob = float('-inf')\n    \n    # Enumerate all assignments\n    for values in product([True, False], repeat=len(query_vars)):\n        assignment = dict(zip(query_vars, values))\n        assignment.update(evidence)\n        \n        log_prob = bn.log_probability(assignment)\n        \n        if log_prob > best_log_prob:\n            best_log_prob = log_prob\n            best_assignment = assignment.copy()\n    \n    return best_assignment, best_log_prob\n\ndef map_hill_climbing(bn, evidence, restarts=10, max_iters=100):\n    \"\"\"Find MAP using local search with random restarts.\"\"\"\n    query_vars = [v for v in bn.variables if v not in evidence]\n    \n    best_overall = None\n    best_log_prob = float('-inf')\n    \n    for _ in range(restarts):\n        # Random initial assignment\n        current = {v: random.choice([True, False]) for v in query_vars}\n        current.update(evidence)\n        \n        for _ in range(max_iters):\n            improved = False\n            current_log_prob = bn.log_probability(current)\n            \n            # Try flipping each variable\n            for var in query_vars:\n                neighbor = current.copy()\n                neighbor[var] = not neighbor[var]\n                \n                neighbor_log_prob = bn.log_probability(neighbor)\n                \n                if neighbor_log_prob > current_log_prob:\n                    current = neighbor\n                    current_log_prob = neighbor_log_prob\n                    improved = True\n            \n            if not improved:\n                break\n        \n        if current_log_prob > best_log_prob:\n            best_log_prob = current_log_prob\n            best_overall = current\n    \n    return best_overall, best_log_prob\n\ndef mpe(bn, evidence):\n    \"\"\"Most Probable Explanation (wrapper).\"\"\"\n    return map_exhaustive(bn, evidence)\n\n# Test\nprint(\"Maximum A Posteriori (MAP) Estimation\")\nprint(\"=\"*50)\n\nbn = BayesNet()\n\nbn.add_variable('A', [], {True: 0.3, False: 0.7})\nbn.add_variable('B', ['A'], {\n    ((True,), True): 0.9, ((True,), False): 0.1,\n    ((False,), True): 0.2, ((False,), False): 0.8\n})\nbn.add_variable('C', ['B'], {\n    ((True,), True): 0.7, ((True,), False): 0.3,\n    ((False,), True): 0.1, ((False,), False): 0.9\n})\n\nprint(\"Network: A -> B -> C\")\nprint()\n\n# MPE with no evidence\nprint(\"1. MPE with no evidence:\")\nmap_state, log_prob = map_exhaustive(bn, {})\nprint(f\"   Most probable state: {map_state}\")\nprint(f\"   Log probability: {log_prob:.4f}\")\nprint(f\"   Probability: {math.exp(log_prob):.4f}\")\n\n# MPE with evidence\nprint(\"\\n2. MPE given C=True:\")\nmap_state, log_prob = map_exhaustive(bn, {'C': True})\nprint(f\"   Most probable state: {map_state}\")\nprint(f\"   Log probability: {log_prob:.4f}\")\n\nprint(\"\\n3. MPE given C=False:\")\nmap_state, log_prob = map_exhaustive(bn, {'C': False})\nprint(f\"   Most probable state: {map_state}\")\nprint(f\"   Log probability: {log_prob:.4f}\")\n\n# Compare methods\nprint(\"\\n4. Comparing exhaustive vs hill climbing:\")\nfor trial in range(3):\n    hc_state, hc_log_prob = map_hill_climbing(bn, {'C': True}, restarts=5)\n    print(f\"   Trial {trial+1}: {hc_state}, log_prob={hc_log_prob:.4f}\")",
+    "testCases": [
+      {
+        "input": "map_exhaustive(bn, {})",
+        "isHidden": false,
+        "description": "Test MPE with no evidence"
+      },
+      {
+        "input": "map_exhaustive(bn, evidence)",
+        "isHidden": false,
+        "description": "Test MPE with evidence"
+      },
+      {
+        "input": "map_hill_climbing(bn, evidence)",
+        "isHidden": false,
+        "description": "Test hill climbing finds same solution"
+      }
+    ],
+    "hints": [
+      "Use log probabilities to avoid underflow",
+      "MAP finds argmax P(all vars | evidence)",
+      "Hill climbing with restarts can handle larger networks"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs406-t7-ex15",
+    "subjectId": "cs406",
+    "topicId": "cs406-topic-7",
+    "title": "Baum-Welch Algorithm",
+    "difficulty": 4,
+    "description": "Implement the Baum-Welch algorithm for HMM parameter learning.\n\nYour implementation should:\n- Use forward-backward to compute expected counts\n- Update transition and emission probabilities\n- Iterate until convergence\n- Handle the E-step and M-step of EM",
+    "starterCode": "class HMM:\n    def __init__(self, num_states, num_observations):\n        self.num_states = num_states\n        self.num_obs = num_observations\n        # Initialize parameters randomly\n\ndef baum_welch(observations, num_states, max_iters=100):\n    # Learn HMM parameters using EM\n    pass\n\ndef e_step(hmm, observations):\n    # Compute expected state occupancies\n    pass\n\ndef m_step(hmm, observations, gamma, xi):\n    # Update parameters from expected counts\n    pass",
+    "solution": "import random\nimport math\n\nclass HMM:\n    def __init__(self, num_states, num_observations):\n        self.num_states = num_states\n        self.num_obs = num_observations\n        \n        # Initialize parameters randomly\n        self.start_prob = self._random_dist(num_states)\n        self.trans_prob = [self._random_dist(num_states) for _ in range(num_states)]\n        self.emit_prob = [self._random_dist(num_observations) for _ in range(num_states)]\n    \n    def _random_dist(self, n):\n        probs = [random.random() for _ in range(n)]\n        total = sum(probs)\n        return [p / total for p in probs]\n    \n    def forward(self, observations):\n        T = len(observations)\n        alpha = [[0] * self.num_states for _ in range(T)]\n        \n        # Initialize\n        for s in range(self.num_states):\n            alpha[0][s] = self.start_prob[s] * self.emit_prob[s][observations[0]]\n        \n        # Forward pass\n        for t in range(1, T):\n            for s in range(self.num_states):\n                for prev_s in range(self.num_states):\n                    alpha[t][s] += alpha[t-1][prev_s] * self.trans_prob[prev_s][s]\n                alpha[t][s] *= self.emit_prob[s][observations[t]]\n        \n        return alpha\n    \n    def backward(self, observations):\n        T = len(observations)\n        beta = [[0] * self.num_states for _ in range(T)]\n        \n        # Initialize\n        for s in range(self.num_states):\n            beta[T-1][s] = 1.0\n        \n        # Backward pass\n        for t in range(T-2, -1, -1):\n            for s in range(self.num_states):\n                for next_s in range(self.num_states):\n                    beta[t][s] += (self.trans_prob[s][next_s] *\n                                   self.emit_prob[next_s][observations[t+1]] *\n                                   beta[t+1][next_s])\n        \n        return beta\n    \n    def log_likelihood(self, observations):\n        alpha = self.forward(observations)\n        return math.log(sum(alpha[-1]) + 1e-10)\n\ndef baum_welch(observations, num_states, num_obs, max_iters=100, tol=1e-6):\n    \"\"\"Learn HMM parameters using EM (Baum-Welch).\"\"\"\n    hmm = HMM(num_states, num_obs)\n    T = len(observations)\n    \n    prev_ll = float('-inf')\n    \n    for iteration in range(max_iters):\n        # E-step: compute gamma and xi\n        alpha = hmm.forward(observations)\n        beta = hmm.backward(observations)\n        \n        # Compute gamma[t][s] = P(state_t = s | observations)\n        gamma = [[0] * num_states for _ in range(T)]\n        for t in range(T):\n            total = sum(alpha[t][s] * beta[t][s] for s in range(num_states))\n            for s in range(num_states):\n                gamma[t][s] = (alpha[t][s] * beta[t][s]) / (total + 1e-10)\n        \n        # Compute xi[t][s][s'] = P(state_t = s, state_t+1 = s' | observations)\n        xi = [[[0] * num_states for _ in range(num_states)] for _ in range(T-1)]\n        for t in range(T-1):\n            total = 0\n            for s in range(num_states):\n                for s_next in range(num_states):\n                    xi[t][s][s_next] = (alpha[t][s] *\n                                         hmm.trans_prob[s][s_next] *\n                                         hmm.emit_prob[s_next][observations[t+1]] *\n                                         beta[t+1][s_next])\n                    total += xi[t][s][s_next]\n            \n            for s in range(num_states):\n                for s_next in range(num_states):\n                    xi[t][s][s_next] /= (total + 1e-10)\n        \n        # M-step: update parameters\n        # Update start probabilities\n        for s in range(num_states):\n            hmm.start_prob[s] = gamma[0][s]\n        \n        # Update transition probabilities\n        for s in range(num_states):\n            denom = sum(gamma[t][s] for t in range(T-1))\n            for s_next in range(num_states):\n                numer = sum(xi[t][s][s_next] for t in range(T-1))\n                hmm.trans_prob[s][s_next] = numer / (denom + 1e-10)\n        \n        # Update emission probabilities\n        for s in range(num_states):\n            denom = sum(gamma[t][s] for t in range(T))\n            for o in range(num_obs):\n                numer = sum(gamma[t][s] for t in range(T) if observations[t] == o)\n                hmm.emit_prob[s][o] = numer / (denom + 1e-10)\n        \n        # Check convergence\n        ll = hmm.log_likelihood(observations)\n        if abs(ll - prev_ll) < tol:\n            print(f\"Converged at iteration {iteration}\")\n            break\n        prev_ll = ll\n    \n    return hmm\n\n# Test\nprint(\"Baum-Welch Algorithm (HMM Learning)\")\nprint(\"=\"*50)\n\n# Generate observations from a known HMM\nrandom.seed(42)\n\n# True HMM\ntrue_hmm = HMM(2, 3)\ntrue_hmm.start_prob = [0.6, 0.4]\ntrue_hmm.trans_prob = [[0.7, 0.3], [0.4, 0.6]]\ntrue_hmm.emit_prob = [[0.5, 0.4, 0.1], [0.1, 0.3, 0.6]]\n\n# Generate observations\ndef generate_sequence(hmm, length):\n    obs = []\n    state = 0 if random.random() < hmm.start_prob[0] else 1\n    \n    for _ in range(length):\n        # Emit observation\n        r = random.random()\n        cumsum = 0\n        for o, p in enumerate(hmm.emit_prob[state]):\n            cumsum += p\n            if r < cumsum:\n                obs.append(o)\n                break\n        \n        # Transition\n        r = random.random()\n        if r < hmm.trans_prob[state][0]:\n            state = 0\n        else:\n            state = 1\n    \n    return obs\n\nobservations = generate_sequence(true_hmm, 100)\nprint(f\"Generated {len(observations)} observations\")\nprint(f\"Observation sample: {observations[:20]}...\")\nprint()\n\n# Learn HMM\nprint(\"Learning HMM parameters...\")\nlearned_hmm = baum_welch(observations, num_states=2, num_obs=3, max_iters=50)\n\nprint(\"\\nTrue parameters:\")\nprint(f\"  Start: {true_hmm.start_prob}\")\nprint(f\"  Trans[0]: {true_hmm.trans_prob[0]}\")\nprint(f\"  Trans[1]: {true_hmm.trans_prob[1]}\")\n\nprint(\"\\nLearned parameters:\")\nprint(f\"  Start: {[f'{p:.3f}' for p in learned_hmm.start_prob]}\")\nprint(f\"  Trans[0]: {[f'{p:.3f}' for p in learned_hmm.trans_prob[0]]}\")\nprint(f\"  Trans[1]: {[f'{p:.3f}' for p in learned_hmm.trans_prob[1]]}\")",
+    "testCases": [
+      {
+        "input": "hmm.forward(observations)",
+        "isHidden": false,
+        "description": "Test forward probabilities"
+      },
+      {
+        "input": "baum_welch(observations, num_states, num_obs)",
+        "isHidden": false,
+        "description": "Test Baum-Welch learning"
+      },
+      {
+        "input": "convergence",
+        "isHidden": false,
+        "description": "Test likelihood increases"
+      }
+    ],
+    "hints": [
+      "E-step: compute gamma (state occupancy) and xi (transition counts)",
+      "M-step: update parameters from expected counts",
+      "gamma[t][s] = alpha[t][s] * beta[t][s] / P(observations)"
+    ],
+    "language": "python"
+  },
+  {
+    "id": "cs406-t7-ex16",
+    "subjectId": "cs406",
+    "topicId": "cs406-topic-7",
+    "title": "Probabilistic PCA",
+    "difficulty": 3,
+    "description": "Implement probabilistic PCA for dimensionality reduction.\n\nYour implementation should:\n- Model data as low-dimensional latent variables plus noise\n- Use EM algorithm to learn the transformation matrix\n- Compute latent representations for data points\n- Compare with standard PCA",
+    "starterCode": "import numpy as np\n\nclass ProbabilisticPCA:\n    def __init__(self, n_components):\n        self.n_components = n_components\n        self.W = None  # Transformation matrix\n        self.mu = None  # Data mean\n        self.sigma = None  # Noise variance\n    \n    def fit(self, X, max_iters=100):\n        # Learn parameters using EM\n        pass\n    \n    def transform(self, X):\n        # Project data to latent space\n        pass\n    \n    def inverse_transform(self, Z):\n        # Reconstruct from latent space\n        pass",
+    "solution": "import numpy as np\n\nclass ProbabilisticPCA:\n    \"\"\"Probabilistic PCA using EM algorithm.\"\"\"\n    \n    def __init__(self, n_components):\n        self.n_components = n_components\n        self.W = None  # D x K transformation matrix\n        self.mu = None  # Data mean\n        self.sigma_sq = None  # Noise variance\n    \n    def fit(self, X, max_iters=100, tol=1e-6):\n        \"\"\"Learn PPCA parameters using EM.\"\"\"\n        n_samples, n_features = X.shape\n        K = self.n_components\n        \n        # Compute and subtract mean\n        self.mu = np.mean(X, axis=0)\n        X_centered = X - self.mu\n        \n        # Initialize W randomly and sigma\n        self.W = np.random.randn(n_features, K) * 0.1\n        self.sigma_sq = 1.0\n        \n        prev_ll = float('-inf')\n        \n        for iteration in range(max_iters):\n            # E-step: compute expected latent variables\n            # M = W^T W + sigma^2 I\n            M = self.W.T @ self.W + self.sigma_sq * np.eye(K)\n            M_inv = np.linalg.inv(M)\n            \n            # E[z_n] = M^{-1} W^T (x_n - mu)\n            E_z = X_centered @ self.W @ M_inv.T  # n x K\n            \n            # E[z_n z_n^T] = sigma^2 M^{-1} + E[z_n] E[z_n]^T\n            E_zz = self.sigma_sq * M_inv\n            \n            # M-step: update W and sigma\n            # W_new = (sum x_n E[z_n]^T) (sum E[z_n z_n^T])^{-1}\n            sum_xz = X_centered.T @ E_z  # D x K\n            sum_zz = n_samples * E_zz + E_z.T @ E_z  # K x K\n            \n            self.W = sum_xz @ np.linalg.inv(sum_zz)\n            \n            # sigma^2 = 1/(ND) sum ||x_n - mu||^2 - 2 E[z_n]^T W^T (x_n - mu) + trace(E[z z^T] W^T W)\n            term1 = np.sum(X_centered ** 2)\n            term2 = 2 * np.sum(E_z @ self.W.T * X_centered)\n            term3 = n_samples * np.trace(E_zz @ self.W.T @ self.W) + np.trace((E_z.T @ E_z) @ self.W.T @ self.W)\n            \n            self.sigma_sq = (term1 - term2 + term3) / (n_samples * n_features)\n            self.sigma_sq = max(self.sigma_sq, 1e-6)  # Ensure positive\n            \n            # Compute log-likelihood (for monitoring)\n            ll = self._log_likelihood(X_centered)\n            \n            if abs(ll - prev_ll) < tol:\n                print(f\"Converged at iteration {iteration}\")\n                break\n            prev_ll = ll\n        \n        return self\n    \n    def _log_likelihood(self, X_centered):\n        \"\"\"Compute log-likelihood.\"\"\"\n        n_samples, n_features = X_centered.shape\n        K = self.n_components\n        \n        C = self.W @ self.W.T + self.sigma_sq * np.eye(n_features)\n        \n        sign, logdet = np.linalg.slogdet(C)\n        C_inv = np.linalg.inv(C)\n        \n        ll = -0.5 * n_samples * (n_features * np.log(2 * np.pi) + logdet)\n        ll -= 0.5 * np.sum(X_centered @ C_inv * X_centered)\n        \n        return ll\n    \n    def transform(self, X):\n        \"\"\"Project data to latent space.\"\"\"\n        X_centered = X - self.mu\n        M = self.W.T @ self.W + self.sigma_sq * np.eye(self.n_components)\n        M_inv = np.linalg.inv(M)\n        return X_centered @ self.W @ M_inv.T\n    \n    def inverse_transform(self, Z):\n        \"\"\"Reconstruct from latent space.\"\"\"\n        return Z @ self.W.T + self.mu\n    \n    def get_components(self):\n        \"\"\"Get principal components (columns of W).\"\"\"\n        return self.W\n\n# Test\nprint(\"Probabilistic PCA\")\nprint(\"=\"*50)\n\nnp.random.seed(42)\n\n# Generate synthetic data from a 2D subspace in 5D\nn_samples = 200\nn_features = 5\ntrue_K = 2\n\n# True latent variables\nZ_true = np.random.randn(n_samples, true_K)\n\n# True transformation\nW_true = np.random.randn(n_features, true_K)\n\n# Generate data with noise\nX = Z_true @ W_true.T + 0.5 * np.random.randn(n_samples, n_features)\n\nprint(f\"Data shape: {X.shape}\")\nprint(f\"True latent dimension: {true_K}\")\nprint()\n\n# Fit PPCA\nppca = ProbabilisticPCA(n_components=2)\nppca.fit(X, max_iters=50)\n\nprint(f\"\\nLearned noise variance: {ppca.sigma_sq:.4f}\")\nprint(f\"True noise variance: 0.25\")\n\n# Transform and reconstruct\nZ = ppca.transform(X)\nX_reconstructed = ppca.inverse_transform(Z)\n\nreconstruction_error = np.mean((X - X_reconstructed) ** 2)\nprint(f\"\\nReconstruction error: {reconstruction_error:.4f}\")\n\n# Compare with standard PCA\nfrom numpy.linalg import svd\nX_centered = X - np.mean(X, axis=0)\nU, S, Vt = svd(X_centered, full_matrices=False)\nZ_pca = X_centered @ Vt[:2].T\nX_pca_recon = Z_pca @ Vt[:2] + np.mean(X, axis=0)\n\npca_error = np.mean((X - X_pca_recon) ** 2)\nprint(f\"Standard PCA reconstruction error: {pca_error:.4f}\")\n\nprint(\"\\nNote: PPCA provides a probabilistic model with noise estimation\")",
+    "testCases": [
+      {
+        "input": "ppca.fit(X)",
+        "isHidden": false,
+        "description": "Test PPCA fitting"
+      },
+      {
+        "input": "ppca.transform(X)",
+        "isHidden": false,
+        "description": "Test projection to latent space"
+      },
+      {
+        "input": "ppca.inverse_transform(Z)",
+        "isHidden": false,
+        "description": "Test reconstruction"
+      }
+    ],
+    "hints": [
+      "Model: x = Wz + mu + epsilon, where z ~ N(0,I), epsilon ~ N(0, sigma^2 I)",
+      "E-step: E[z|x] = M^{-1} W^T (x - mu) where M = W^T W + sigma^2 I",
+      "M-step: update W and sigma^2 from expected sufficient statistics"
+    ],
+    "language": "python"
   }
 ]

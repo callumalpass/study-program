@@ -1,0 +1,277 @@
+# CS406: Artificial Intelligence - Subject Specification
+# This spec guides content creation for a comprehensive AI course covering classical and modern techniques.
+
+# ==============================================================================
+# SUBJECT IDENTITY
+# ==============================================================================
+
+id: cs406
+title: Artificial Intelligence
+category: cs
+
+role:
+  level: advanced
+  transformation: >
+    From "AI is a black box of magic" to "I understand the fundamental algorithms,
+    representations, and reasoning techniques that power intelligent systems, and can
+    implement and analyze them for real-world applications."
+
+# ==============================================================================
+# CURRICULUM
+# ==============================================================================
+
+curriculum:
+  subtopic_word_target: 800
+
+  prerequisite_knowledge:
+    - Data structures and algorithms (CS201 level)
+    - Probability and statistics (MATH202 level)
+    - Linear algebra basics (MATH201 level)
+    - Programming proficiency in Python
+    - Basic calculus (derivatives, optimization concepts)
+
+  essential_concepts:
+    - Intelligent agents and their environments
+    - Search algorithms (uninformed, informed, local)
+    - Adversarial search and game playing
+    - Constraint satisfaction problems
+    - Classical planning and representation
+    - Knowledge representation and logical reasoning
+    - Probabilistic reasoning and Bayesian networks
+    - Machine learning foundations (covered in CS402)
+
+  out_of_scope:
+    - Deep learning architectures (covered in CS402)
+    - Natural language processing details (separate course)
+    - Computer vision specifics (separate course)
+    - Reinforcement learning depth (covered in CS402)
+
+# ==============================================================================
+# PEDAGOGICAL APPROACH
+# ==============================================================================
+
+pedagogy:
+  knowledge_type: mixed
+
+  mastery_indicators:
+    - Implements search algorithms from scratch and analyzes their complexity
+    - Formulates real problems as CSPs and applies appropriate solving techniques
+    - Constructs Bayesian networks and performs probabilistic inference
+    - Designs evaluation functions for game-playing agents
+    - Applies logical inference to knowledge bases
+    - Selects appropriate AI techniques for given problem domains
+
+  common_struggles:
+    - Confusing search algorithm properties (completeness, optimality)
+    - Incorrectly computing heuristic admissibility
+    - Misunderstanding alpha-beta pruning mechanics
+    - Probability calculation errors in Bayesian networks
+    - Confusing forward and backward chaining in logical inference
+    - Failing to properly formulate problems as search/CSP problems
+
+# ==============================================================================
+# CONTENT STANDARDS
+# ==============================================================================
+
+content:
+  subtopic_requirements:
+    - Every algorithm must include pseudocode and Python implementation
+    - Complexity analysis (time and space) for all algorithms
+    - Worked examples showing step-by-step algorithm execution
+    - Comparison between related approaches (e.g., DFS vs BFS)
+    - Practical application examples for each technique
+
+  conventions:
+    - Python 3.10+ for all code examples
+    - LaTeX for mathematical notation and formulas
+    - Mermaid diagrams for algorithm visualization
+    - Consistent notation for search (state space, operators)
+
+# ==============================================================================
+# ASSESSMENT PHILOSOPHY
+# ==============================================================================
+
+assessment:
+  philosophy: >
+    AI requires both theoretical understanding and practical implementation skills.
+    Students must understand why algorithms work (theory) and be able to implement
+    them correctly (practice). Assessments balance code implementation with
+    conceptual analysis and algorithm tracing.
+
+  measures:
+    - Correct algorithm implementation
+    - Complexity analysis accuracy
+    - Problem formulation skills (modeling as search, CSP, etc.)
+    - Algorithm trace correctness (step-by-step execution)
+    - Appropriate technique selection for given problems
+
+  anti_patterns:
+    - Memorizing algorithm code without understanding
+    - Questions answerable by pattern matching
+    - Problems with only one valid approach
+    - Ignoring edge cases in implementations
+
+# ==============================================================================
+# GRADING THRESHOLDS
+# ==============================================================================
+
+grading:
+  passing_score: 70
+
+  thresholds:
+    exercises: 70
+    quizzes: 65
+    exams: 65
+
+  rationale: >
+    Standard thresholds for an advanced CS course. Implementation exercises have
+    higher requirements because partial solutions often don't function. Quiz and
+    exam thresholds slightly lower to account for conceptual complexity.
+
+# ==============================================================================
+# EXERCISE SPECIFICATIONS
+# ==============================================================================
+
+exercises:
+  rationale: >
+    AI exercises mix algorithm implementation with problem analysis. Students
+    should implement core algorithms from scratch to understand them deeply,
+    then apply them to novel problems. Each topic balances coding with
+    conceptual exercises.
+
+  types:
+    coding_with_tests: "75%"
+    coding_ai_evaluated: "15%"
+    written: "10%"
+    justification: >
+      Most exercises are coding with automated tests for immediate feedback on
+      algorithm correctness. Some AI-evaluated coding for open-ended design
+      problems (evaluation functions, heuristics). Written exercises for
+      analysis and proof-style questions.
+
+  per_topic:
+    minimum: 14
+    target: 16
+    maximum: 18
+    justification: >
+      Full base count. AI concepts require substantial practice implementing
+      algorithms and solving problems. Each exercise should take 15-30 minutes.
+
+  difficulty_distribution:
+    1: 2
+    2: 3
+    3: 5
+    4: 4
+    5: 2
+    justification: >
+      Slightly harder distribution than intro courses. Difficulty 1-2 for
+      implementing basic algorithm variants. Difficulty 3-4 for applying
+      algorithms to novel problems. Difficulty 5 for optimization and
+      advanced analysis.
+
+# ==============================================================================
+# QUIZ SPECIFICATIONS
+# ==============================================================================
+
+quizzes:
+  rationale: >
+    Quizzes test algorithm tracing and conceptual understanding. Students should
+    be able to trace algorithm execution by hand and predict outcomes. Questions
+    cover properties, complexity, and correct application of techniques.
+
+  per_topic:
+    count: 3
+    questions_each: 5
+    justification: >
+      Standard base count. Three quizzes allow progression from basic concepts
+      to algorithm tracing to analysis questions.
+
+  question_types:
+    multiple_choice: "40%"
+    true_false: "15%"
+    fill_blank: "15%"
+    code_output: "30%"
+    coding: "0%"
+    written: "0%"
+    justification: >
+      Heavy on code_output for algorithm tracing (predict search order, values).
+      Multiple choice for conceptual understanding. Fill-blank for terminology
+      and algorithm properties.
+
+# ==============================================================================
+# EXAM SPECIFICATIONS
+# ==============================================================================
+
+exams:
+  rationale: >
+    Exams test comprehensive understanding of AI techniques. Mix of algorithm
+    tracing, implementation, and analysis. Students should be able to trace
+    algorithms by hand, implement them in pseudocode, and analyze complexity.
+
+  midterm:
+    questions:
+      minimum: 24
+      target: 26
+      maximum: 30
+    duration_minutes: 75
+    format: >
+      8-10 algorithm tracing questions (search, minimax), 8-10 multiple choice
+      conceptual questions, 5-8 short coding/pseudocode problems.
+    coverage: "Topics 1-4: AI fundamentals, search, adversarial search, CSP"
+
+  final:
+    questions:
+      minimum: 38
+      target: 42
+      maximum: 48
+    duration_minutes: 120
+    format: >
+      12-15 algorithm tracing, 12-15 multiple choice, 10-15 short problems.
+      Cumulative with emphasis on later topics (planning, logic, probability).
+    coverage: "Comprehensive: all 7 topics"
+    cumulative: true
+
+# ==============================================================================
+# PROJECT SPECIFICATIONS
+# ==============================================================================
+
+projects:
+  required: true
+  count: 2
+  rationale: >
+    AI projects integrate multiple techniques for substantial applications.
+    Projects give students experience building complete AI systems (game players,
+    planners, inference engines) that apply course concepts.
+
+  goals:
+    - Integrate multiple AI techniques in one system
+    - Experience building complete intelligent agents
+    - Apply algorithms to real or realistic problems
+    - Practice algorithm selection and tuning
+    - Create portfolio-worthy AI projects
+
+  estimated_hours: "15-25"
+
+# ==============================================================================
+# SUBJECT-SPECIFIC RED FLAGS
+# ==============================================================================
+
+red_flags:
+  - Exercise requires libraries not taught (e.g., scikit-learn for core algorithms)
+  - Algorithm trace question has ambiguous tie-breaking rules
+  - Heuristic exercise doesn't clarify admissibility requirements
+  - CSP exercise missing variable domain specifications
+  - Probability question uses incorrect independence assumptions
+  - Search problem missing goal test or cost function
+
+# ==============================================================================
+# NOTES
+# ==============================================================================
+
+notes: >
+  CS406 covers classical AI techniques that form the foundation for modern AI.
+  While machine learning and deep learning are transformative, students need
+  solid grounding in search, logic, and probability. Content should emphasize
+  that these techniques remain essential and are often combined with learning
+  approaches in modern systems. Code should be clear and well-commented,
+  suitable for students new to AI implementation.

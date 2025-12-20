@@ -1,12 +1,12 @@
 [
   {
-    "id": "cs406-quiz-2-1",
+    "id": "cs406-quiz-2a",
     "subjectId": "cs406",
     "topicId": "cs406-topic-2",
-    "title": "Search Algorithms - Uninformed",
+    "title": "Topic 2 - Quiz Fundamentals",
     "questions": [
       {
-        "id": "cs406-q6",
+        "id": "q1",
         "type": "multiple_choice",
         "prompt": "What is the time complexity of breadth-first search?",
         "options": [
@@ -15,24 +15,54 @@
           "O(b + d)",
           "O(d^b)"
         ],
-        "correctAnswer": "O(b^d) where b is branching factor and d is depth",
-        "explanation": "BFS explores all nodes at each depth level, resulting in exponential time complexity: 1 + b + b² + ... + b^d = O(b^d)."
+        "correctAnswer": 0,
+        "explanation": "BFS explores all nodes at each depth level, resulting in exponential time complexity: 1 + b + b² + ... + b^d = O(b^d). This makes BFS impractical for problems with large branching factors or deep solutions."
       },
       {
-        "id": "cs406-q7",
+        "id": "q2",
         "type": "multiple_choice",
         "prompt": "Which search algorithm has the best space complexity while maintaining completeness and optimality?",
         "options": [
-          "Iterative Deepening DFS",
           "Breadth-First Search",
+          "Iterative Deepening DFS",
           "Depth-First Search",
           "Uniform-Cost Search"
         ],
-        "correctAnswer": "Iterative Deepening DFS",
-        "explanation": "IDDFS combines BFS completeness and optimality with DFS space efficiency O(bd), making it ideal for large state spaces."
+        "correctAnswer": 1,
+        "explanation": "IDDFS combines BFS completeness and optimality with DFS space efficiency O(bd), making it ideal for large state spaces. It repeatedly runs depth-limited search with increasing depth limits until the goal is found."
       },
       {
-        "id": "cs406-q8",
+        "id": "q3",
+        "type": "true_false",
+        "prompt": "Depth-first search is guaranteed to find the optimal solution in all problem spaces.",
+        "correctAnswer": false,
+        "explanation": "DFS is not optimal because it returns the first solution found, which may not be the shallowest or lowest-cost solution. It can find very deep solutions when shallower ones exist. Only complete and optimal algorithms like BFS (for unweighted graphs) or UCS guarantee optimal solutions."
+      },
+      {
+        "id": "q4",
+        "type": "fill_blank",
+        "prompt": "The search algorithm that expands nodes in order of increasing path cost is called _____.",
+        "correctAnswer": "Uniform-Cost Search",
+        "explanation": "Uniform-Cost Search (UCS) expands the node with the lowest path cost g(n) from the start node. It's optimal and complete for non-negative edge costs, generalizing BFS to weighted graphs."
+      },
+      {
+        "id": "q5",
+        "type": "code_output",
+        "prompt": "What is the order of node expansion for BFS starting from A?",
+        "codeSnippet": "from collections import deque\n\ngraph = {'A': ['B', 'C'], 'B': ['D'], 'C': ['E'], 'D': [], 'E': []}\n\ndef bfs(start):\n    queue = deque([start])\n    visited = set([start])\n    order = []\n    while queue:\n        node = queue.popleft()\n        order.append(node)\n        for neighbor in graph[node]:\n            if neighbor not in visited:\n                visited.add(neighbor)\n                queue.append(neighbor)\n    return ''.join(order)\n\nprint(bfs('A'))",
+        "correctAnswer": "ABCDE",
+        "explanation": "BFS explores nodes level by level. Starting from A, it visits A, then A's children B and C, then their children D and E, producing the order ABCDE. This breadth-first exploration is characteristic of the algorithm."
+      }
+    ]
+  },
+  {
+    "id": "cs406-quiz-2b",
+    "subjectId": "cs406",
+    "topicId": "cs406-topic-2",
+    "title": "Topic 2 - Quiz Application",
+    "questions": [
+      {
+        "id": "q1",
         "type": "multiple_choice",
         "prompt": "An admissible heuristic must:",
         "options": [
@@ -41,45 +71,54 @@
           "Never underestimate the cost",
           "Be consistent"
         ],
-        "correctAnswer": "Never overestimate the cost to reach the goal",
-        "explanation": "An admissible heuristic never overestimates h*(n), ensuring A* finds optimal solutions. Consistency is stronger but not required for optimality with tree search."
+        "correctAnswer": 0,
+        "explanation": "An admissible heuristic never overestimates h*(n), ensuring A* finds optimal solutions. Consistency is a stronger property but not required for optimality with tree search. Examples include straight-line distance for route finding."
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "prompt": "What does A* use to evaluate nodes?",
+        "options": [
+          "Only the heuristic h(n)",
+          "f(n) = g(n) + h(n) where g is actual cost and h is heuristic estimate",
+          "Only the actual cost g(n)",
+          "The number of steps from the start"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A* combines actual path cost g(n) with heuristic estimate h(n) to evaluate the estimated total cost f(n) = g(n) + h(n). This allows A* to efficiently find optimal solutions by preferring nodes with low total estimated cost."
+      },
+      {
+        "id": "q3",
+        "type": "code_output",
+        "prompt": "What f-value does A* assign to node B?",
+        "codeSnippet": "# g(B) = actual cost from start to B\n# h(B) = heuristic estimate from B to goal\n\ng_B = 5  # actual cost to reach B\nh_B = 8  # heuristic estimate to goal\n\nf_B = g_B + h_B\nprint(f_B)",
+        "correctAnswer": "13",
+        "explanation": "A* calculates f(n) = g(n) + h(n). With g(B) = 5 and h(B) = 8, we get f(B) = 5 + 8 = 13. The f-value represents the estimated total cost of the path through B to the goal."
+      },
+      {
+        "id": "q4",
+        "type": "true_false",
+        "prompt": "Greedy best-first search using an admissible heuristic is guaranteed to find the optimal solution.",
+        "correctAnswer": false,
+        "explanation": "Greedy best-first search only considers h(n) and ignores g(n), so it's not optimal even with an admissible heuristic. It can be misled by the heuristic into suboptimal paths. Only A* with an admissible heuristic guarantees optimality."
+      },
+      {
+        "id": "q5",
+        "type": "fill_blank",
+        "prompt": "A heuristic that satisfies h(n) ≤ c(n,a,n') + h(n') for every edge is called _____.",
+        "correctAnswer": "consistent",
+        "explanation": "A consistent (or monotone) heuristic satisfies the triangle inequality: the heuristic cost from n to goal is no greater than the step cost to n' plus the heuristic from n' to goal. Consistency implies admissibility and is stronger."
       }
     ]
   },
   {
-    "id": "cs406-quiz-2-2",
+    "id": "cs406-quiz-2c",
     "subjectId": "cs406",
     "topicId": "cs406-topic-2",
-    "title": "Search Algorithms - Informed",
+    "title": "Topic 2 - Quiz Mastery",
     "questions": [
       {
-        "id": "cs406-q8",
-        "type": "multiple_choice",
-        "prompt": "An admissible heuristic must:",
-        "options": [
-          "Never overestimate the cost to reach the goal",
-          "Always equal the true cost",
-          "Never underestimate the cost",
-          "Be consistent"
-        ],
-        "correctAnswer": "Never overestimate the cost to reach the goal",
-        "explanation": "An admissible heuristic never overestimates h*(n), ensuring A* finds optimal solutions. Consistency is stronger but not required for optimality with tree search."
-      },
-      {
-        "id": "cs406-q9",
-        "type": "multiple_choice",
-        "prompt": "What does A* use to evaluate nodes?",
-        "options": [
-          "f(n) = g(n) + h(n) where g is actual cost and h is heuristic estimate",
-          "Only the heuristic h(n)",
-          "Only the actual cost g(n)",
-          "The number of steps from the start"
-        ],
-        "correctAnswer": "f(n) = g(n) + h(n) where g is actual cost and h is heuristic estimate",
-        "explanation": "A* combines actual path cost g(n) with heuristic estimate h(n) to evaluate the estimated total cost f(n) = g(n) + h(n)."
-      },
-      {
-        "id": "cs406-q10",
+        "id": "q1",
         "type": "multiple_choice",
         "prompt": "Hill climbing can get stuck in:",
         "options": [
@@ -88,68 +127,43 @@
           "Infinite loops",
           "Optimal solutions"
         ],
-        "correctAnswer": "Local maxima, plateaus, and ridges",
-        "explanation": "Hill climbing is susceptible to local maxima (peaks that arent global), plateaus (flat regions), and ridges (difficult to navigate)."
+        "correctAnswer": 0,
+        "explanation": "Hill climbing is susceptible to local maxima (peaks that aren't global), plateaus (flat regions with no gradient), and ridges (difficult to navigate). Random restart and simulated annealing can help overcome these limitations."
       },
       {
-        "id": "cs406-q11",
+        "id": "q2",
         "type": "multiple_choice",
-        "prompt": "In minimax, MAX player aims to:",
+        "prompt": "What is the main advantage of beam search over greedy search?",
         "options": [
-          "Maximize utility",
-          "Minimize utility",
-          "Maximize the number of moves",
-          "Match the opponents strategy"
+          "It keeps track of k best states instead of just one",
+          "It always finds the optimal solution",
+          "It uses less memory",
+          "It doesn't need a heuristic"
         ],
-        "correctAnswer": "Maximize utility",
-        "explanation": "The MAX player chooses moves that maximize the utility value, while MIN player minimizes it (in zero-sum games)."
-      }
-    ]
-  },
-  {
-    "id": "cs406-quiz-2-3",
-    "subjectId": "cs406",
-    "topicId": "cs406-topic-2",
-    "title": "Search Complexity and Applications",
-    "questions": [
-      {
-        "id": "cs406-q9",
-        "type": "multiple_choice",
-        "prompt": "What does A* use to evaluate nodes?",
-        "options": [
-          "f(n) = g(n) + h(n) where g is actual cost and h is heuristic estimate",
-          "Only the heuristic h(n)",
-          "Only the actual cost g(n)",
-          "The number of steps from the start"
-        ],
-        "correctAnswer": "f(n) = g(n) + h(n) where g is actual cost and h is heuristic estimate",
-        "explanation": "A* combines actual path cost g(n) with heuristic estimate h(n) to evaluate the estimated total cost f(n) = g(n) + h(n)."
+        "correctAnswer": 0,
+        "explanation": "Beam search maintains k states at each level instead of just one, providing more robustness than greedy search while using less memory than breadth-first search. However, it's still incomplete and not optimal."
       },
       {
-        "id": "cs406-q10",
-        "type": "multiple_choice",
-        "prompt": "Hill climbing can get stuck in:",
-        "options": [
-          "Local maxima, plateaus, and ridges",
-          "Only global maxima",
-          "Infinite loops",
-          "Optimal solutions"
-        ],
-        "correctAnswer": "Local maxima, plateaus, and ridges",
-        "explanation": "Hill climbing is susceptible to local maxima (peaks that arent global), plateaus (flat regions), and ridges (difficult to navigate)."
+        "id": "q3",
+        "type": "code_output",
+        "prompt": "How many nodes does IDDFS visit at depth limit 2?",
+        "codeSnippet": "def count_iddfs_nodes(b, depth_limit):\n    total = 0\n    for d in range(depth_limit + 1):\n        # Nodes visited at each iteration: 1 + b + b^2 + ... + b^d\n        total += sum(b**i for i in range(d + 1))\n    return total\n\nb = 2  # branching factor\ndepth_limit = 2\nprint(count_iddfs_nodes(b, depth_limit))",
+        "correctAnswer": "11",
+        "explanation": "IDDFS with b=2 and depth limit 2 runs three iterations: depth 0 visits 1 node, depth 1 visits 1+2=3 nodes, depth 2 visits 1+2+4=7 nodes. Total: 1+3+7=11 nodes. The redundant node regeneration is the cost of achieving BFS-like properties with DFS memory."
       },
       {
-        "id": "cs406-q11",
-        "type": "multiple_choice",
-        "prompt": "In minimax, MAX player aims to:",
-        "options": [
-          "Maximize utility",
-          "Minimize utility",
-          "Maximize the number of moves",
-          "Match the opponents strategy"
-        ],
-        "correctAnswer": "Maximize utility",
-        "explanation": "The MAX player chooses moves that maximize the utility value, while MIN player minimizes it (in zero-sum games)."
+        "id": "q4",
+        "type": "fill_blank",
+        "prompt": "The search algorithm that uses a probability distribution to escape local maxima is called _____ _____.",
+        "correctAnswer": "simulated annealing",
+        "explanation": "Simulated annealing allows occasional uphill moves with probability that decreases over time (controlled by temperature parameter). This helps escape local maxima and is inspired by the physical annealing process in metallurgy."
+      },
+      {
+        "id": "q5",
+        "type": "true_false",
+        "prompt": "In local beam search with k states, the algorithm keeps only the k best successors from all k states, not k successors from each state.",
+        "correctAnswer": true,
+        "explanation": "Local beam search generates all successors of k states but keeps only the k best overall, allowing information sharing between parallel search threads. This differs from k independent random restarts, which don't share information. However, it can lead to lack of diversity in the beam."
       }
     ]
   }
